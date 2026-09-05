@@ -119,7 +119,6 @@ public sealed class Sl016WakeupTests
             "D5/S0/Carrier/BackfillTarget",
             FrozenStatementReceiptTestData.Id('0'));
         fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
-        fixture.ForkPoint.Remove(RuleFixture.FixtureCasPath);
         var context = fixture.Build(RawChangeSet.CreateWithKinds(
             [(RuleFixture.FixtureCasPath, RawChangeKind.Added)]));
         var document = BackfillInventoryLoader.LoadCandidateDelta(
@@ -283,7 +282,7 @@ public sealed class Sl016WakeupTests
         var fixture = CoverageReceiptFixture(
             targetGid,
             FrozenStatementReceiptTestData.Id('a'));
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[AtomPath] = files[AtomPath].Replace(
                 "receipts:\n",
@@ -329,7 +328,7 @@ public sealed class Sl016WakeupTests
             + ".yaml";
         var otherCasPath = DigestionCasStore.RootPath
             + otherFingerprint.RawSha256["sha256:".Length..];
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[otherAtomPath] = files[AtomPath]
                 .Replace(
@@ -371,7 +370,7 @@ public sealed class Sl016WakeupTests
     {
         var fixture = new RuleFixture();
         fixture.UseValidDirectoryBackfill();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[AtomPath] = files[AtomPath].Replace(
                 "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
@@ -570,7 +569,7 @@ public sealed class Sl016WakeupTests
             fixture.Files,
             coverageGid);
         var mismatchSha256 = "sha256:" + new string('0', 64);
-        foreach (var files in new[] { fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Baseline })
         {
             files[targetPath] = fixture.Files[targetPath];
             files[definitionPath] = baselineDefinition;
@@ -591,7 +590,6 @@ public sealed class Sl016WakeupTests
         if (gapExistsInBaseline || candidateScribeInputsChanged)
         {
             fixture.Baseline[AtomPath] = AddReceipts(fixture.Baseline[AtomPath], receiptProjection);
-            fixture.ForkPoint[AtomPath] = AddReceipts(fixture.ForkPoint[AtomPath], receiptProjection);
         }
 
         var verifiedScribeEmissions = VerifiedScribeEmissions.Create(
@@ -656,7 +654,7 @@ public sealed class Sl016WakeupTests
         fixture.UseValidDirectoryBackfill();
         InstallFrozenModules(fixture, "D5/S0/Carrier/BackfillTarget");
         const string targetPath = "D5/S0/Carrier/BackfillTarget.lean";
-        foreach (var files in new[] { fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Baseline })
         {
             files[targetPath] = fixture.Files[targetPath];
         }
@@ -669,7 +667,7 @@ public sealed class Sl016WakeupTests
                 gid,
                 FrozenStatementReceiptTestData.Id('a')))
             .ToArray();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             InstallFrozenModulesInto(files, modules);
         }
@@ -683,7 +681,7 @@ public sealed class Sl016WakeupTests
             + $"    target_statement_id: {targetStatementId}\n"
             + "receipts:\n"
             + "  scribe: []";
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[AtomPath] = AddReceipts(files[AtomPath], receipt);
         }

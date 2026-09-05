@@ -150,7 +150,6 @@ public sealed class CoverageCommandTests
         var fixture = new RuleFixture();
         fixture.Files[accepted.Path.Value] = storedEvent;
         fixture.Baseline[accepted.Path.Value] = storedEvent;
-        fixture.ForkPoint[accepted.Path.Value] = storedEvent;
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
