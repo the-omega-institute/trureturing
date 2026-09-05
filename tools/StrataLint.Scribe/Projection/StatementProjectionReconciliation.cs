@@ -7,6 +7,8 @@ namespace StrataLint.Scribe;
 public static class StatementProjectionReconciliation
 {
     private const string FixtureRoot = "Golden/Projection/";
+    private const string PilotFixture = "statement-projection-pilot-v1.json";
+    private const string ExpansionFixture = "statement-projection-expansion-v1.json";
 
     internal static bool IsAffectedBy(RawChangeSet? changes)
     {
@@ -34,6 +36,10 @@ public static class StatementProjectionReconciliation
         }
     }
 
+    internal static bool IsVerificationInput(RepoPath path) =>
+        path.Value == FixtureRoot + PilotFixture
+        || path.Value == FixtureRoot + ExpansionFixture;
+
     public static ImmutableArray<string> Check(string repositoryRoot, DeclarationCatalog catalog)
     {
         ArgumentNullException.ThrowIfNull(catalog);
@@ -44,8 +50,8 @@ public static class StatementProjectionReconciliation
         string repositoryRoot,
         IEnumerable<LeanDeclaration> declarations)
     {
-        using var pilot = LoadFixture(repositoryRoot, "statement-projection-pilot-v1.json");
-        using var expansion = LoadFixture(repositoryRoot, "statement-projection-expansion-v1.json");
+        using var pilot = LoadFixture(repositoryRoot, PilotFixture);
+        using var expansion = LoadFixture(repositoryRoot, ExpansionFixture);
         var expected = new[] { pilot, expansion }
             .SelectMany(fixture => fixture.RootElement.GetProperty("declarations").EnumerateArray())
             .ToDictionary(

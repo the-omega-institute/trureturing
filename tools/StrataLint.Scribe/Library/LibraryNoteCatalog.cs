@@ -39,6 +39,8 @@ internal sealed record LibraryNoteCatalogInspection(
 
 internal sealed class LibraryNoteCatalog
 {
+    private const string LibraryRoot = "Library/";
+
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly HashSet<string> RequiredKeys =
     [
@@ -144,6 +146,9 @@ internal sealed class LibraryNoteCatalog
                 .ThenBy(static finding => finding.Message, StringComparer.Ordinal)
                 .ToImmutableArray());
     }
+
+    internal static bool IsVerificationInput(RepoPath path) =>
+        path.Value.StartsWith(LibraryRoot, StringComparison.Ordinal);
 
     private static LibraryNote Parse(string repositoryRoot, string path)
     {

@@ -9,9 +9,19 @@ internal sealed class MaterializedRepositorySnapshot : IDisposable
 
     internal string Root { get; }
 
-    internal static MaterializedRepositorySnapshot Create(RepositorySnapshot snapshot)
+    internal static MaterializedRepositorySnapshot Create(
+        RepositorySnapshot snapshot,
+        params Func<RepoPath, bool>[] inputPredicates)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentNullException.ThrowIfNull(inputPredicates);
+        if (inputPredicates.Length == 0 || inputPredicates.Any(static predicate => predicate is null))
+        {
+            throw new ArgumentException(
+                "at least one non-null input predicate is required",
+                nameof(inputPredicates));
+        }
+
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-snapshot-" + Guid.NewGuid().ToString("N"));
@@ -19,6 +29,7 @@ internal sealed class MaterializedRepositorySnapshot : IDisposable
         try
         {
             foreach (var (path, file) in snapshot.Files
+                .Where(item => inputPredicates.Any(predicate => predicate(item.Key)))
                 .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
             {
                 var destination = Path.Combine(
@@ -70,7 +81,10 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(report);
-        using var materialized = MaterializedRepositorySnapshot.Create(snapshot);
+        using var materialized = MaterializedRepositorySnapshot.Create(
+            snapshot,
+            ScribeEmitter.VerificationInputPredicate(snapshot),
+            StatementProjectionReconciliation.IsVerificationInput);
         if (StatementProjectionReconciliation.IsAffectedBy(changes))
         {
             StatementProjectionReconciliation.Verify(
