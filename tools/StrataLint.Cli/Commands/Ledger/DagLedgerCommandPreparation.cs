@@ -157,25 +157,6 @@ internal static class DagLedgerCommandPreparation
             baseView.ActiveByPath);
     }
 
-    internal static FrozenMaterialCatalog BuildAdmissionCatalog(
-        RepositorySnapshot snapshot,
-        AcceptedLeanClosure lean,
-        ImmutableDictionary<RepoPath, TruthState> states,
-        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
-        FrozenLedgerBaseView baseView,
-        FrozenLedgerAdmissionScope scope,
-        FrozenRevisionIdentity currentIdentity)
-    {
-        _ = currentIdentity;
-        return FrozenContentAddress.BuildAdmissionCatalog(
-            snapshot,
-            lean,
-            states,
-            adjacency,
-            scope.Paths,
-            baseView.ActiveByPath);
-    }
-
     /// Builds material for every Closed module. Strict read-model consumers need the complete
     /// catalog so ValidateHistory can reconcile the entire active frozen set, not only a changed
     /// candidate scope.
@@ -282,7 +263,7 @@ internal static class DagLedgerCommandPreparation
     internal sealed class LeanReportUnusableException(Exception inner)
         : Exception("raw Lean report is unusable", inner);
 
-    private sealed class FileLeanReportSource(string path) : ILeanReportSource
+    internal sealed class FileLeanReportSource(string path) : ILeanReportSource
     {
         public LeanAxiomReport Load(RepositorySnapshot snapshot) =>
             RawLeanReportArtifact.ReadFile(path, snapshot);

@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: The heading announces a two-phase division but does not define a typed verdict-channel carrier, an origin classifier, or a totality law from which an exhaustive dichotomy can be proved.
+    reentry_condition: Reenter when the source defines the verdict-channel type and proves that every channel is classified as self-produced or externally frozen.
+    blocker_class: multi-clause-guard

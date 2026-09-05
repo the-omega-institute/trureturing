@@ -129,10 +129,14 @@ internal static class DagLedgerMathlibReanchorWriter
                     "authorization diagnostics disagree with the canonical authorization result");
             }
 
-            DagLedgerAppendWriter.ReplaceEventFiles(
+            FrozenLedgerPublication.PublishSnapshot(
+                repositoryRoot,
                 LedgerPath(repositoryRoot),
                 replacementFiles,
-                currentLedgerFiles);
+                currentLedgerFiles,
+                deltaEvents,
+                [],
+                "ledger-reanchor-mathlib");
             return new CommandResult(
                 true,
                 RenderResult(

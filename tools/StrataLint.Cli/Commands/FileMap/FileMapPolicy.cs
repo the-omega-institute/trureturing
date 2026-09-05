@@ -18,6 +18,8 @@ internal static class FileMapPolicy
         "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
         "tools/StrataLint.Scribe/FileMap/FileMapManifest.cs";
+    private const string FrozenStateRecordLoaderPath =
+        "tools/StrataLint.Engine/FrozenState/FrozenStateRecord.cs";
     private const string LibraryNoteCatalogPath =
         "tools/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
     private const string ProblemCandidateCatalogPath =
@@ -52,6 +54,7 @@ internal static class FileMapPolicy
         {
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
+            ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
@@ -184,7 +187,23 @@ internal static class FileMapPolicy
 
     internal static IReadOnlyList<FileMapFinding> InspectRepository(string repositoryRoot)
     {
-        var manifest = FileMapLoader.LoadRepository(repositoryRoot);
+        FileMapManifest manifest;
+        try
+        {
+            manifest = FileMapLoader.LoadRepository(repositoryRoot);
+        }
+        catch (FileMapAdmissionPlaneException exception)
+        {
+            return [new FileMapFinding(exception.Code, exception.Path, exception.Message)];
+        }
+        catch (FileMapPatternException exception)
+        {
+            return [new FileMapFinding(
+                FileMapPatternException.FindingCode,
+                exception.Pattern,
+                exception.Message)];
+        }
+
         var paths = TrackedPaths(repositoryRoot);
         var trackedModes = TrackedModes(repositoryRoot);
         var files = paths
@@ -384,7 +403,7 @@ internal static class FileMapPolicy
 
     private static bool IsDataKeyedGeneratedSet(FileMapEntry entry) =>
         string.Equals(entry.ArtifactId, "none", StringComparison.Ordinal)
-        && (entry.Pattern.Contains('*') || entry.Pattern.Contains('?'));
+        && entry.Pattern.Contains('*');
 
     internal static IReadOnlyList<FileMapFinding> InspectRegistryRootAlignment(
         IEnumerable<string> registryRootFiles,
@@ -521,6 +540,8 @@ internal static class FileMapPolicy
         var trackedPaths = paths.ToArray();
         return manifest.Entries
             .Where(static entry => entry.RuntimeDisposition != "run-local")
+            // L3 expand starts with no state shards; ledger-align populates this exact set.
+            .Where(static entry => entry.Pattern != "Golden/Frozen/state/**/*.json")
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(
                 "FILEMAP-PATTERN-EMPTY",
@@ -582,12 +603,23 @@ internal static class FileMapPolicy
 
             var entry = matches[0];
             var kind = entry.Kind;
+            if (path == FileMapLoader.RelativePath
+                && entry.AdmissionPlane is not FileMapAdmissionPlane.Judge)
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-ADMISSION-PLANE-INVALID",
+                    path,
+                    "FILEMAP policy source must be assigned to the judge admission plane"));
+            }
+
             if (path.Split('/').Contains("Generated", StringComparer.Ordinal)
                 && kind is not FileMapKind.Generated
                 || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
                 || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-                    && kind is not FileMapKind.Ledger)
+                    && kind is not FileMapKind.Ledger
+                || FrozenStatePath.IsUnderRoot(path)
+                    && kind is not FileMapKind.Data)
             {
                 findings.Add(new FileMapFinding(
                     "FILEMAP-DIRECTORY-KIND",

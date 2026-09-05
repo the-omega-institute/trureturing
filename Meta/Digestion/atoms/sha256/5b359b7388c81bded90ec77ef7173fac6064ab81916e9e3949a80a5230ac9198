@@ -1,0 +1,61 @@
+# 第两千一百三十三部　短 gaps 不是“起飞力”，而是隐藏 odd channel 的 sticky grain
+
+这带来一个重要修正。
+
+短 prime gaps 使：
+
+$$
+\Delta\log p
+$$
+
+很小。
+
+所以它们不是强横向分裂源，而是：
+
+$$
+\boxed{
+\text{低秩、长相干、难以由有限观察者分辨的频率 grain。}
+}
+$$
+
+这更接近 Kakeya 中的 sticky tubes。
+
+单个短隙簇能够让多个 prime modes 在很长时间内表现得几乎同相：
+
+$$
+\tau\ll\frac P D.
+$$
+
+与此同时，实部偏移造成的内部幅度分裂也很难看到：
+
+$$
+|\delta|\frac DP\ll1.
+$$
+
+所以 short gaps 提供的是一个可以隐藏法向奇通道的局部空间。
+
+若要真正产生离线零点，还需要：
+
+$$
+\boxed{
+\text{这类 sticky prime grains 在许多不同尺度上相容嵌套，}
+}
+$$
+
+使同一条一维相位流能够同时关闭：
+
+* 全局偶通道；
+* 法向奇通道。
+
+一座单独的短素数簇远远不够。
+
+真正可能关联 RH 的是：
+
+$$
+\boxed{
+\text{multiscale tower of short-gap clusters}.
+}
+$$
+
+---
+

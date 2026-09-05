@@ -1,0 +1,34 @@
+## B14.5 二次 observer
+
+Gram determinant、smallest singular value、negative log fidelity 与 odd energy 读取 CUT/FLOW 差异的平方大小。
+
+四类角色原语自身先形成
+
+$$
+\boxed{
+K_{\rm primitive}
+=K_{\rm ADMIT}
+\cap K_{\rm ANCHOR}
+\cap K_{\rm FLOW}
+\cap K_{\rm CUT}.}
+\tag{B14.5}
+$$
+
+若二次 observer 已由这些原语构造，并且它的 collision relation 被登记为一个 packed observer atom，则记其 kernel 为 $K_{\rm quad}$。它必须按其数学来源归入既有的 `CUT`、`FLOW`、`ADMIT` 或 `ANCHOR` 角色之一；`ENERGY` 不是第五种 CIRPT role。加入该 observer 后的联合观察 kernel 为
+
+$$
+\boxed{
+K_{\rm observed}
+=K_{\rm primitive}\cap K_{\rm quad}.}
+\tag{B14.6}
+$$
+
+只有在证明严格包含
+
+$$
+K_{\rm observed}\subsetneq K_{\rm primitive}
+\tag{B14.7}
+$$
+
+或给出相应 leave-one-out witness 以后，才能声称二次 observer 具有严格正的信息增益。删除一个层通常只保证 kernel 不缩小；是否严格扩大必须单独证明，不能由层名推出。
+

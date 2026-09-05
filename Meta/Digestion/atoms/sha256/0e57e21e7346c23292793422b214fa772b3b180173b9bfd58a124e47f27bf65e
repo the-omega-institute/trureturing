@@ -1,0 +1,2 @@
+**候签定理 4.91(倒数和恒等式与 PPN 的整数形)**〔open;落 `D5/S3/PrimeForms/PrimaryPseudoperfectPorts`〕。令 `squarefreeDeriv n := ∑_{p ∈ n.primeFactors} n / p`,`IsPPN n := Squarefree n ∧ 1 < n ∧ n = 1 + squarefreeDeriv n`。对 n ≠ 0,`1/(n:ℚ) + ∑_{p ∈ n.primeFactors} 1/(p:ℚ) = 1 ↔ n = 1 + squarefreeDeriv n`;从而 `IsPPN n ↔ Squarefree n ∧ 1 < n ∧ (1/(n:ℚ) + ∑_{p | n} 1/(p:ℚ) = 1)`。
+

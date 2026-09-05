@@ -1,0 +1,26 @@
+## 4.2 completed Cayley–Lee–Yang 圆
+
+对 completed function 的中心变量
+
+$$
+u=s-\frac12,
+$$
+
+取 $a>1/2$，定义
+
+$$
+w=C_a(u)=\frac{a+u}{a-u}.
+\tag{A4.3}
+$$
+
+则
+
+$$
+|w|=1
+\Longleftrightarrow
+\Re s=\frac12.
+\tag{A4.4}
+$$
+
+这是本卷前文使用的 RH 临界圆。
+

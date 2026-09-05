@@ -28,7 +28,7 @@ public sealed partial class ProductionEnvironmentTests
             reportInputsChanged: false,
             "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
 
-        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+        var protectedChange = RequireProtectedSurfaceChange(outcome);
         Assert.DoesNotContain(protectedChange.Observations, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
         Assert.Equal(["std3"], verifier.AxiomBadges);
@@ -40,7 +40,7 @@ public sealed partial class ProductionEnvironmentTests
         var (outcome, verifier) = CheckForkPointOnlyReportProducerInputStock(
             "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
 
-        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+        var protectedChange = RequireProtectedSurfaceChange(outcome);
         Assert.DoesNotContain(protectedChange.Observations, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
         Assert.Equal(["std3"], verifier.AxiomBadges);
@@ -52,7 +52,7 @@ public sealed partial class ProductionEnvironmentTests
         var (outcome, verifier) = CheckProducerPathSetsDifferStock(
             "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
 
-        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+        var protectedChange = RequireProtectedSurfaceChange(outcome);
         Assert.DoesNotContain(protectedChange.Observations, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
         Assert.Equal(["std3"], verifier.AxiomBadges);
@@ -135,11 +135,18 @@ public sealed partial class ProductionEnvironmentTests
                 "protectedTargetFixture",
                 "def",
                 "Unit",
-                ImmutableArray<string>.Empty)]);
+                ImmutableArray<string>.Empty)
+            {
+                NameKey = "ns(n0,22:protectedTargetFixture)",
+                PrecomputedStatementId = targetStatementId,
+            }]);
         fixture.Reports[targetPath] = targetReport;
         fixture.BaselineReports[targetPath] = targetReport;
-        AddFrozenTarget(fixture.Files, targetPath);
-        AddFrozenTarget(fixture.Baseline, targetPath);
+        var moduleStatementId = FrozenContentAddress.ComputeModuleStatementId(
+            RepoPath.CreateKnown(targetPath),
+            targetReport);
+        AddFrozenTarget(fixture.Files, targetPath, moduleStatementId);
+        AddFrozenTarget(fixture.Baseline, targetPath, moduleStatementId);
         const string newScribePath = "Blueprint/D5/S0/Carrier/NewDeposit.scribe.cs";
         fixture.Files[newScribePath] = "// candidate-only Scribe definition\n";
         var current = Decode(Snapshot(fixture.Files));
@@ -234,6 +241,22 @@ public sealed partial class ProductionEnvironmentTests
             false,
             additionalChanges);
 
+    private static AdmissionOutcome.ProtectedSurfaceChange RequireProtectedSurfaceChange(
+        AdmissionOutcome outcome)
+    {
+        Assert.True(
+            outcome is AdmissionOutcome.ProtectedSurfaceChange,
+            outcome switch
+            {
+                AdmissionOutcome.RuleRejected rejected => string.Join(
+                    '\n',
+                    rejected.Diagnostics.Select(static diagnostic => diagnostic.Render())),
+                AdmissionOutcome.InfrastructureFailure failure => failure.Message,
+                _ => outcome.GetType().FullName,
+            });
+        return Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+    }
+
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
         CheckForkPointOnlyReportProducerInputStock(params string[] additionalChanges) =>
         CheckReportDerivedScribeStockCore(false, false, true, false, additionalChanges);
@@ -271,7 +294,11 @@ public sealed partial class ProductionEnvironmentTests
             "protectedTargetFixture",
             "def",
             "Unit",
-            []);
+            [])
+        {
+            NameKey = "ns(n0,22:protectedTargetFixture)",
+            PrecomputedStatementId = FrozenStatementReceiptTestData.Id('b'),
+        };
         var reportAxioms = ImmutableArray.Create("Classical.choice", "Quot.sound", "propext");
         fixture.Reports[targetPath] = new LeanFileReport(
             [],
@@ -291,6 +318,9 @@ public sealed partial class ProductionEnvironmentTests
         fixture.BaselineReports[targetPath] = new LeanFileReport(
             [],
             [baselineDeclaration with { Axioms = reportInputsChanged ? [] : reportAxioms }]);
+        var moduleStatementId = FrozenContentAddress.ComputeModuleStatementId(
+            RepoPath.CreateKnown(targetPath),
+            fixture.Reports[targetPath]);
 
         var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
         var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
@@ -317,7 +347,7 @@ public sealed partial class ProductionEnvironmentTests
             : DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(baselineEmission)).RawSha256;
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
-            AddFrozenTarget(files, targetPath);
+            AddFrozenTarget(files, targetPath, moduleStatementId);
             InstallLedger(files);
         }
 
@@ -346,8 +376,7 @@ public sealed partial class ProductionEnvironmentTests
                     ? Snapshot(fixture.ForkPoint)
                     : null),
             new FakeLeanReportSource(null),
-            verifier,
-            new NoOpFrozenLedgerAdmissionServices());
+            verifier);
 
         return (
             environment.Check(["--candidate-lean-report", candidateReport]),
@@ -381,12 +410,13 @@ public sealed partial class ProductionEnvironmentTests
 
     private static void AddFrozenTarget(
         IDictionary<string, string> files,
-        string targetPath) =>
+        string targetPath,
+        StatementId moduleStatementId) =>
         FrozenStatementReceiptTestData.AddLedger(
             files,
             new FrozenStatementReceiptTestData.Module(
                 targetPath,
-                FrozenStatementReceiptTestData.Id('a'),
+                moduleStatementId.Value,
                 [
                     new FrozenStatementReceiptTestData.Declaration(
                         "protectedTargetFixture",
@@ -440,24 +470,4 @@ internal sealed class ReportDerivedScribeEmissionVerifier(
 
     private static string AxiomBadge(IEnumerable<string> axioms) =>
         axioms.Any() ? "std3" : "constructive";
-}
-
-internal sealed class NoOpFrozenLedgerAdmissionServices : IFrozenLedgerAdmissionServices
-{
-    public IReadOnlySet<string> LeanReportProducerPaths { get; } =
-        ImmutableHashSet<string>.Empty;
-
-    public FrozenLedgerAdmissionPreparation Prepare(
-        RepositorySnapshot current,
-        RepositorySnapshot protectedBase,
-        RawChangeSet changes) => null!;
-
-    public AdmissionOutcome? Validate(
-        FrozenLedgerAdmissionPreparation preparation,
-        RepositorySnapshot current,
-        AcceptedLeanClosure lean,
-        LeanAxiomReport report,
-        RawChangeSet changes,
-        FrozenRevisionIdentity currentIdentity,
-        AdmissionCheckTiming timing) => null;
 }

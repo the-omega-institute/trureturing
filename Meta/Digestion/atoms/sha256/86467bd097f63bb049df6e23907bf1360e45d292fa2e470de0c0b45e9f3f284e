@@ -1,0 +1,36 @@
+## 9.1 prime cluster relation energy
+
+固定有限 prime cluster
+
+$$
+\mathcal C=\{p_1,\ldots,p_m\}
+\tag{A9.1}
+$$
+
+和非负 pair weights $W_{ij}$。记
+
+$$
+\Delta\omega_{ij}
+=
+\log p_j-\log p_i.
+\tag{A9.2}
+$$
+
+定义 cluster log-frequency 二阶量
+
+$$
+\boxed{
+\mathcal V_{\mathcal C}
+=
+\sum_{i<j}W_{ij}(\Delta\omega_{ij})^2.
+}
+\tag{A9.3}
+$$
+
+若至少一个不同 prime pair 具有正权重，则
+
+$$
+\mathcal V_{\mathcal C}>0.
+\tag{A9.4}
+$$
+

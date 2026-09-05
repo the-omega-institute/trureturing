@@ -8,6 +8,7 @@ namespace StrataLint.Tests;
 public sealed class CoverageCommandTests
 {
     private const string DescriptorSelector = "D5/S0/Tower/Fixture.lean";
+    private const string StateDescriptorSelector = "D5/S0/Tower/StateFixture.lean";
 
     [Theory]
     [InlineData(false)]
@@ -40,6 +41,30 @@ public sealed class CoverageCommandTests
         {
             Assert.StartsWith("HARNESS_COVERAGE schema=1\n", first.Output, StringComparison.Ordinal);
         }
+    }
+
+    [Fact]
+    public void CoverageUsesFrozenStateMembershipInsteadOfAcceptedEvents()
+    {
+        using var directory = new TemporaryDirectory();
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), Snapshot(), null);
+        var source = new FakeLeanReportSource(Report());
+        var environment = new ProductionCliEnvironment(directory.Path, gateway, source);
+        var console = new BufferedConsole();
+
+        var exit = CliApplication.Run(["coverage", "--json"], environment, console);
+
+        Assert.True(exit == 0, console.Error);
+        using var document = JsonDocument.Parse(console.Output);
+        var artifacts = document.RootElement.GetProperty("artifacts").EnumerateArray().ToArray();
+        var acceptedOnly = Assert.Single(
+            artifacts,
+            artifact => artifact.GetProperty("path").GetString() == DescriptorSelector);
+        var stateMember = Assert.Single(
+            artifacts,
+            artifact => artifact.GetProperty("path").GetString() == StateDescriptorSelector);
+        Assert.Equal(JsonValueKind.Null, acceptedOnly.GetProperty("ledger_state").ValueKind);
+        Assert.Equal("frozen", stateMember.GetProperty("ledger_state").GetString());
     }
 
     [Fact]
@@ -111,17 +136,21 @@ public sealed class CoverageCommandTests
     }
 
     [Fact]
-    public void AcceptedEventImplementationChangeTrustsStoredEventWithoutReplayingWriteGate()
+    public void AcceptedEventImplementationChangeDoesNotReplayStoredSemanticValidation()
     {
         var decoded = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(Snapshot(terminateAcceptedEvent: false))).Snapshot;
+            SnapshotDecoder.Decode(Snapshot())).Snapshot;
         var accepted = Assert.Single(
             decoded.Files.Values,
             file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value));
+        var storedEvent = accepted.Text.Replace(
+            "sha256:" + new string('d', 64),
+            "not-a-statement-id",
+            StringComparison.Ordinal);
         var fixture = new RuleFixture();
-        fixture.Files[accepted.Path.Value] = accepted.Text;
-        fixture.Baseline[accepted.Path.Value] = accepted.Text;
-        fixture.ForkPoint[accepted.Path.Value] = accepted.Text;
+        fixture.Files[accepted.Path.Value] = storedEvent;
+        fixture.Baseline[accepted.Path.Value] = storedEvent;
+        fixture.ForkPoint[accepted.Path.Value] = storedEvent;
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
@@ -182,6 +211,9 @@ public sealed class CoverageCommandTests
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             [DescriptorSelector] = "theorem fixture : True := by trivial\n",
+            [StateDescriptorSelector] = "theorem stateFixture : True := by trivial\n",
+            ["Golden/Frozen/state/D5/S0/Tower/StateFixture.lean.json"] =
+                "{\"statement_id\":\"sha256:" + new string('c', 64) + "\"}\n",
             [FrozenLedgerChangeClassifier.AcceptedRoot
                 + "/" + eventHash[7..] + ".json"] = eventBytes,
             [RuleFixture.TowerManifestPath] = TowerYaml.Replace(
@@ -201,6 +233,12 @@ public sealed class CoverageCommandTests
                 [new LeanDeclaration("fixture", "theorem", "statement-v1(True)", [])
                 {
                     NameKey = "ns(n0,7:fixture)",
+                }]),
+            [StateDescriptorSelector] = new(
+                [],
+                [new LeanDeclaration("stateFixture", "theorem", "statement-v1(True)", [])
+                {
+                    NameKey = "ns(n0,12:stateFixture)",
                 }]),
         });
 

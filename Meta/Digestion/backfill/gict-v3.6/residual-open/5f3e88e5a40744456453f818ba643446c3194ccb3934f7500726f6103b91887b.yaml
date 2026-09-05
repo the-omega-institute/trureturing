@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: 'Frozen owners `D5/S1/Words/GoldenMechanicalWord.goldenMechanicalLetter` and `D5/S1/Words/Mechanical/MechanicalGoldenBridge.lowerMechanicalWord_golden` carry the floor-word and golden mechanical-word clauses; `D5/S1/Words/GoldenFactorComplexity.golden_factor_complexity` and `D5/S1/Words/Complexity/MechanicalComplexityCharacterization.lower_mechanical_factor_complexity_iff_irrational_iff_not_eventuallyPeriodic` carry exact complexity p(n) = n + 1 and its irrational mechanical-family characterization; `D5/S1/Words/GoldenSubstFixed.golden_word_substitution_fixed` carries substitution fixedness. No exact frozen owner was found for the one-dimensional cut-and-project identification. The uniqueness clause is false: two irrational slopes in [0,1) yield distinct Sturmian subshifts with p(n) = n + 1 (checked by `/private/tmp/w73e28-atom2-probe.lean`, exit 0).'
+    reentry_condition: Obtain source errata replacing `唯一` with the Sturmian-family statement or withdrawing the false uniqueness clause, resolve the cut-and-project clause with an exact carrier, then cover the carried and corrected clauses in source order.
+    blocker_class: multi-clause-guard

@@ -1,0 +1,25 @@
+## 8.2 prime power 的 Fibonacci shell factorization
+
+取
+
+$$
+n=p^v,
+\qquad
+v=\sum_{k\in Z(v)}F_k
+\tag{A8.4}
+$$
+
+为 $v$ 的 canonical Zeckendorf 分解。因为 translations 构成交换群，
+
+$$
+\boxed{
+\mathsf T_{v\log p}
+=
+\prod_{k\in Z(v)}
+\mathsf T_{F_k\log p}.
+}
+\tag{A8.5}
+$$
+
+这不是近似，而是精确因子分解。
+

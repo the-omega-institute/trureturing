@@ -1,0 +1,12 @@
+#### 证明
+
+由定理 A2.1 对有限和重标即可。
+
+这条定理比某个特定配分函数更重要。它说明：任何完全因子化为
+
+$$
+\Omega_Q\xrightarrow{E_Q}\{0,\ldots,M_Q-1\}\xrightarrow{a}A
+$$
+
+的读出，都只看见整数能量，不看见 Zeckendorf locality。
+

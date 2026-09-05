@@ -1,0 +1,38 @@
+## B1.2 谱曲线
+
+定义二次谱覆盖
+
+$$
+\boxed{
+\Sigma
+=
+\{(z,y)\in\mathbb C^2:y^2=1+4z\}.
+}
+\tag{B1.6}
+$$
+
+在 $\Sigma$ 上，
+
+$$
+\lambda_\pm=\frac{1\pm y}{2}.
+\tag{B1.7}
+$$
+
+覆盖的 deck involution 为
+
+$$
+\boxed{
+\iota(z,y)=(z,-y),
+}
+\tag{B1.8}
+$$
+
+它精确交换
+
+$$
+\lambda_+\longleftrightarrow\lambda_-.
+\tag{B1.9}
+$$
+
+因此“二通道”不是人为把一个标量复制两次，而是单值化平方根所必需的最小谱覆盖。
+

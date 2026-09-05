@@ -1,0 +1,127 @@
+# 第二百四十四部　短间隔导致 prime Fourier frame 退化
+
+在固定观察窗
+
+$$
+[-T,T]
+$$
+
+上，定义归一化 prime-frequency vector：
+
+$$
+v_p(t)
+=
+\frac1{\sqrt{2T}}
+e^{it\log p}.
+$$
+
+其内积为：
+
+$$
+\langle v_p,v_q\rangle
+=
+\operatorname{sinc}
+\left(
+T\log\frac qp
+\right),
+$$
+
+其中
+
+$$
+\operatorname{sinc}(x)=\frac{\sin x}{x}.
+$$
+
+二点 Gram 矩阵为：
+
+$$
+G_{p,q}
+=
+\begin{pmatrix}
+1&\operatorname{sinc}(T\Delta)\\
+\operatorname{sinc}(T\Delta)&1
+\end{pmatrix},
+\qquad
+\Delta=\log(q/p).
+$$
+
+本征向量正是偶、奇通道：
+
+$$
+v_+=v_p+v_q,
+\qquad
+v_-=v_p-v_q.
+$$
+
+对应本征值：
+
+$$
+\lambda_+
+=
+1+\operatorname{sinc}(T\Delta),
+$$
+
+$$
+\lambda_-
+=
+1-\operatorname{sinc}(T\Delta).
+$$
+
+当 \(\Delta\to0\) 时：
+
+$$
+\lambda_+
+\to2,
+$$
+
+而
+
+$$
+\boxed{
+\lambda_-
+=
+\frac{T^2\Delta^2}{6}
++
+O(\Delta^4).
+}
+$$
+
+对于 \(q-p\le186\)：
+
+$$
+\boxed{
+\lambda_-
+=
+O\left(
+\frac{T^2}{p^2}
+\right).
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{偶方向保持宏观范数，奇方向坍缩为近零方向。}
+}
+$$
+
+相应 Gram 条件数满足：
+
+$$
+\operatorname{cond}(G_{p,q})
+=
+\frac{\lambda_+}{\lambda_-}
+\asymp
+\frac{12}
+{T^2\log^2(q/p)}
+\gtrsim
+\frac{p^2}{T^2\,186^2}.
+$$
+
+这意味着，在任何固定时间窗内，short-gap prime pairs 会产生任意病态的观测坐标。
+
+在该项目的三个输入前提下，\(\mathrm{DHL}[40,2]\) 与直径 \(186\) 的显式 admissible tuple 给出相应的 gap-liminf 结论；这里的形式化仍是条件性的，而不是三项输入均已在 Lean 中消除。
+
+---
+

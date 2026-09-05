@@ -1,0 +1,6 @@
+## 一　G-c-L2a 预登记:曲率界与 log 2 精度(`GermWindow/GermZeroCertificateJet`,绑第一层)
+
+**义务**:公开定理 `g60_curvature_le : ∀ s ∈ Q, ‖deriv (deriv (g 60)) s‖ ≤ 400`(经中间公开定理 `g60_curvature_le_118 : ∀ s ∈ Q, ‖deriv (deriv (g 60)) s‖ ≤ 118`),`log_two_binary_60 : |Real.log 2 - r| ≤ 1 / 2 ^ 60`(r 为模块内公开的有理常数,由 60 项级数 `Real.abs_log_sub_add_sum_range_le` 包络得出),以及前缀定理 `g1_deriv_re_gt_one : 1 < (deriv (g 1) c).re`。
+**逃逸见证(探针已证,写在实施之前)**:曲率界的几何优函数 (log 2)² Σ β(v)² 2^{−σ₋β(v)} 的闭式有理上界 117.79;log 2 的 2⁻⁶⁰ 级数包络;v ≤ 1 前缀的显式相位估计。
+**边界**:T3 是 `germ_zero_of_center_jet` 三条假设之一,落地后该归约只剩两条假设。
+

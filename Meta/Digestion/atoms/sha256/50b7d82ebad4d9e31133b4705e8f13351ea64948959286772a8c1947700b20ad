@@ -1,0 +1,31 @@
+\[
+\boxed{
+\operatorname{Shadow}_q(a)
+=
+\{x:X:
+q(x)=q(a)
+\land
+x\ne a\}.
+}
+\]
+
+若：
+
+\[
+\operatorname{Shadow}_q(a)=\varnothing,
+\]
+
+则当前 CUT 唯一识别该实际锚点。
+
+若对所有 \(a\) 均为空，则 \(q\) 单射。
+
+锚点影子非空表示：
+
+\[
+\boxed{
+\text{当前现象坐标不足以确定实际状态。}
+}
+\]
+
+---
+

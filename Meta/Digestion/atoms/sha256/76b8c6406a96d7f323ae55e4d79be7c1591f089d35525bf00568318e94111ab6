@@ -1,0 +1,34 @@
+# 第二百四十八部　Kloosterman 输入是角向坐标升维
+
+公开形式化消费两类有限域相位界：
+
+$$
+|\mathrm{Kl}_3(c;p)|\le3,
+$$
+
+以及
+
+$$
+\left|
+\sum_{t\ne0,-1}
+K_2(A/t;p)
+K_2(B/(t+1);p)
+\right|
+\le
+8p\sqrt p.
+$$
+
+这两项在 Lean 中仍是明确命名的输入公理；README 将它们分别对应到 Katz/Deligne 型 rank-three 界和 Fouvry–Kowalski–Michel 的 shifted Kloosterman correlation。
+
+其结构意义非常重要：
+
+$$
+\boxed{
+\text{实数轴上接近的 prime coordinates
+需要在有限域相位空间中获得额外分辨维度。}
+}
+$$
+
+也就是说：
+
+* 单素数密度是零阶信息；

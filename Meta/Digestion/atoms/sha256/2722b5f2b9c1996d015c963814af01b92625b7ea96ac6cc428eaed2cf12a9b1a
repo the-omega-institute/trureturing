@@ -1,0 +1,41 @@
+## 12.3 第一离线时刻的连续 gap closing
+
+设 $(T_{\mathrm{off}},\delta_*)$ 是第一离线事件，并选择环带包含 $\delta_*$。则对 $T<T_{\mathrm{off}}$，
+
+$$
+\mathfrak C_{\mathcal C}(T;\varepsilon,\eta)>0,
+$$
+
+而
+
+$$
+\mathfrak C_{\mathcal C}(T_{\mathrm{off}};\varepsilon,\eta)=0.
+$$
+
+与最大位移 $M(T)$ 的正跳跃不同，coercivity gap 通常从左侧连续趋于零。若第一离线零点是孤立的 $m$ 重零点，则沿固定 $\delta_*$ 有上界
+
+$$
+\mathfrak C_{\mathcal C}(T;\varepsilon,\eta)
+\le
+\frac{|c|^2}{R_{\mathcal C}(\delta_*)}
+(T_{\mathrm{off}}-T)^{2m}
++
+o((T_{\mathrm{off}}-T)^{2m}).
+\tag{12.4}
+$$
+
+在唯一局部最小分支与全局分离条件下，该式提升为同阶渐近。
+
+因此同一事件同时表现为：
+
+$$
+\boxed{
+\text{序参量跳起，coercivity gap 闭合。}
+}
+\tag{12.5}
+$$
+
+这正是相变语言中“新相出现”与“旧相稳定性消失”的双重读法。
+
+---
+

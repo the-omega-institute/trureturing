@@ -6,6 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: 'Three clauses are carried by the frozen children D5/S3/Axis/AxisTraceDefinitions.axis_trace_definitions, D5/S3/Axis/AxisRecurrencePair.axis_recurrence_pair, and D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package. The fourth orbit-limit and double-exponential convergence clause is false on the unrestricted carrier: at x = y = 0 every weight is 1, so axisPartialSum 0 0 K follows the recurrence pair to equal fib(K+1) and has no finite limit. The statement needs a source restriction such as 0 < x before any limit theorem can be attempted.'
+    reentry_condition: Reenter after source errata restrict (x, y) to the intended window indicated by the atom's window certificate and a proved limit-and-rate theorem exists on that window; the parent may then absorb through ordered cover.
+    blocker_class: multi-clause-guard
   chain_atoms:
     - 7c7b3a76d05c9abcaadc344ac6d2d92b3d4339e997f318e147be6d9741b7fe7a
     - e54274710dfae75da8fb393d2dedb31f37a6a6b352ec72636c403e3243a1ffec

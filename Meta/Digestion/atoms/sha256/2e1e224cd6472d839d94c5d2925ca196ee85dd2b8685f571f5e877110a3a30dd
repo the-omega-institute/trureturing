@@ -1,0 +1,26 @@
+## 59. 记忆
+
+给定当前 CUT \(q\) 和 FLOW 族 \(F\)，若：
+
+\[
+\ker q
+\ne
+\ker\widehat q_F,
+\]
+
+则当前概念不是 Markov 的。
+
+记忆需求为：
+
+\[
+\boxed{
+\ker q
+\setminus
+\ker\widehat q_F.
+}
+\]
+
+记忆是为了使 FLOW 能够在概念状态上闭合而必须保留的最小额外区别。
+
+---
+
