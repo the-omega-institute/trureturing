@@ -171,7 +171,9 @@ public sealed partial class MakeWorkflowTests
             .Where(static line => line.Contains("make preflight", StringComparison.Ordinal))
             .ToArray();
         Assert.Equal(2, formalizePreflightLines.Length);
-        Assert.Equal(2, ingestPreflightLines.Length);
+#pragma warning disable xUnit2013 // The exact numeric call-site count is part of this repository-reading contract.
+        Assert.Equal(1, ingestPreflightLines.Length);
+#pragma warning restore xUnit2013
         Assert.All(
             formalizePreflightLines,
             line => Assert.Contains(invocation, line, StringComparison.Ordinal));
