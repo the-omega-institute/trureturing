@@ -89,6 +89,58 @@ public sealed class RuleEngineCapacityDerivationTests
     }
 
     [Fact]
+    public void Sl003UsesTestMapStoreForBothSidesWhenPresent()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[RuleFixture.BlueprintSourcePath] += "// current-only change\n";
+        var changes = RawChangeSet.Create([RuleFixture.BlueprintSourcePath]);
+        var context = fixture.Build(changes);
+        var environment = new ScribeTestMapEnvironment(
+            "test-rid",
+            ".NET test framework",
+            "10.0.100-test");
+        var storage = new CapacityMemoryStorage();
+        var forkPointDigest = ScribeTestMapStore.ComputeInputDigest(context.ForkPoint);
+        storage.Write(
+            forkPointDigest + ".json",
+            ScribeTestMapEnvelope.Create(
+                forkPointDigest,
+                environment,
+                ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint)).Write());
+        var store = new ScribeTestMapStore(storage, environment);
+        var cachedContext = RuleEvaluationContext.Create(
+            context.Current,
+            context.Baseline,
+            context.Policy,
+            context.Lean,
+            context.Changes,
+            context.MetaEvaluation,
+            context.VerifiedScribeEmissions,
+            context.ForkPoint,
+            store);
+        var rule = Assert.Single(
+            RepositoryRules.CreateRegistrations(),
+            static item => item.Descriptor.Id == RuleId.CreateKnown(3)).Rule;
+
+        var expected = rule.Evaluate(context);
+        var actual = rule.Evaluate(cachedContext);
+
+        Assert.Equal(expected, actual);
+        var currentDigest = ScribeTestMapStore.ComputeInputDigest(context.Current);
+        Assert.NotEqual(forkPointDigest, currentDigest);
+        Assert.Equal(
+            ["hit"],
+            store.Events
+                .Where(item => item.InputDigest == forkPointDigest)
+                .Select(static item => item.Outcome));
+        Assert.Equal(
+            ["miss", "stored"],
+            store.Events
+                .Where(item => item.InputDigest == currentDigest)
+                .Select(static item => item.Outcome));
+    }
+
+    [Fact]
     public async Task Sl003PassesDerivedMapsToUnknownDebtPolicyInCurrentForkPointOrder()
     {
         var fixture = new RuleFixture();
@@ -271,4 +323,23 @@ public sealed class RuleEngineCapacityDerivationTests
             [],
             [],
             []);
+
+    private sealed class CapacityMemoryStorage : IScribeTestMapStorage
+    {
+        private readonly ConcurrentDictionary<string, byte[]> files = new(StringComparer.Ordinal);
+
+        public bool TryRead(string name, out byte[] bytes)
+        {
+            if (files.TryGetValue(name, out var stored))
+            {
+                bytes = stored.ToArray();
+                return true;
+            }
+
+            bytes = [];
+            return false;
+        }
+
+        public void Write(string name, byte[] bytes) => files[name] = bytes.ToArray();
+    }
 }
