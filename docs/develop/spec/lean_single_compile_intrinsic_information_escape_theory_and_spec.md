@@ -537,14 +537,15 @@ $$
 
 $$
 U_i=U^R_{A,i}
-=D_A\cap\bigl(K^R_{A,I_{R,A}\setminus\{i\}}\setminus K_{A,i}\bigr),
+=D_A\cap\bigl(K^R_{A,I_{R,A}\setminus\{i\}}\setminus K^R_{A,i}\bigr),
 \qquad
 \delta_i=\delta^R_{A,i}=|U^R_{A,i}|/|D_A|.
 $$
 
-这里的“完整族”只指 $R$ 所在模块本地 elaboration 的、归属于 $A$ 的所有 theorem
-occurrences 所成的 canonical maximal catalog $C_{R,A}$。imported `.olean` 中的登记
-不会自动进入该集合；analysis sub-catalog 也不能替代它或用于证明 positivity。
+这里的“完整族”只指在 sealing root $R$ 模块自身显式登记、归属于 $A$ 的所有 theorem
+occurrences 所成的 canonical maximal catalog $C_{R,A}$。imported `.olean` 中持久可见的登记
+不是该 seal 的成员；analysis sub-catalog 也不能替代它或用于证明 positivity。此句是 v4.2
+目标契约；已落地 v4.1 registry 的导入行为及第 3 步所需迁移见第 25.2、37、39 节。
 
 ### 5.1 完整族
 
@@ -554,7 +555,8 @@ $$
 I.
 $$
 
-这里的完整意味着“本次 root module 导入并登记的全部 theorem units”，不是历史仓库状态。
+这里的完整意味着“entries explicitly registered in the root module itself”，不是该模块可见的
+全部 imported entries，也不是历史仓库状态。
 
 ### 5.2 留一族
 
@@ -685,7 +687,7 @@ $$
 以下量全部只在同一个 $(R,A)$ 内定义。令 occurrence $i$ 的 separation/capture set 为：
 
 $$
-\operatorname{Cap}^R_{A,i}=D_A\setminus K_{A,i}.
+\operatorname{Cap}^R_{A,i}=D_A\setminus K^R_{A,i}.
 $$
 
 则 peer-relative exclusive capture 也可写为：
@@ -715,14 +717,14 @@ o^R_{A,ij}=|O^R_{A,ij}|,
 \omega^R_{A,ij}=o^R_{A,ij}/|D_A|.
 $$
 
-该矩阵对称，且 $O_{ii}=\operatorname{Cap}_i$。overlap 只描述共同捕获，单独不构成
+该矩阵对称，且 $O^R_{A,ii}=\operatorname{Cap}^R_{A,i}$。overlap 只描述共同捕获，单独不构成
 冗余判词。
 
 定义 kernel refinement：
 
 $$
 \operatorname{KernelRefines}_{R,A}(i,j)
-:\Longleftrightarrow K_{A,i}\subseteq K_{A,j}.
+:\Longleftrightarrow K^R_{A,i}\subseteq K^R_{A,j}.
 $$
 
 即 $i$ 至少与 $j$ 一样细。它是 preorder；互相 refinement 等价于 kernel equality。
@@ -764,13 +766,18 @@ $$
 \sum_k k\,h^R_A(k)=\sum_i|\operatorname{Cap}^R_{A,i}|,
 $$
 
-以及 second-moment identity：
+以及 order-free second-moment identity：
 
 $$
-\sum_{i<j}|O^R_{A,ij}|
+\sum_{i\in I_{R,A}}\ \sum_{j\in I_{R,A}\setminus\{i\}}
+|O^R_{A,ij}|
 =
-\sum_k\binom{k}{2}h^R_A(k).
+\sum_k k(k-1)h^R_A(k).
 $$
+
+左侧对每个 unordered pair 计数两次，因此不需要给 `Catalog.Index` 增加次序。若实现为
+canonical upper triangle，则可在局部显式引入 `[LinearOrder catalog.Index]`，但其结果必须由
+上式证明与所选次序无关；规范 API 不要求或冻结该次序。
 
 $h(k\ge2)$ 描述多重捕获 pair，不单独判定 theorem 冗余。
 
@@ -812,7 +819,17 @@ $$
 `unresolved` 的 $|R_\ell|$ 与 $|R_\ell|/|D_A|$ 单列，不混入 capture spectrum。
 
 $L_0,\ldots,L_\ell$ 两两不交并分割 $D_A\setminus K_\ell$；再加 $R_\ell$ 后分割
-整个 $D_A$。对 $r>0$：
+整个 $D_A$。初层满足：
+
+$$
+L_0\neq\varnothing
+\Longleftrightarrow
+D_A\nsubseteq K_0
+\Longleftrightarrow
+\exists x\ne y,\ \neg K_0(x,y).
+$$
+
+对 $r>0$：
 
 $$
 L_r\neq\varnothing
@@ -823,8 +840,17 @@ $$
 因此“观测 $\subsetneq$ 干预 $\subsetneq$ 反事实各自拥有多少”在本规范中指 ordered
 layered counts $(|L_0|,\ldots,|L_\ell|)$，不是把累计 readouts 放进平坦共享 catalog 后的
 leave-one-out counts。若平坦 catalog 同时含 $K_j\subsetneq K_i$，则较粗成员 $i$ 的
-$U_i$ 为零；对 $K_{cf}\subsetneq K_{int}\subsetneq K_{obs}$，必有
-$U_{obs}=U_{int}=\varnothing$，而 $U_{cf}=D_A\cap(K_{int}\setminus K_{cf})$。
+$U_i$ 为零。对含有 $K_{cf}\subsetneq K_{int}\subsetneq K_{obs}$ 的任意 flat catalog，必有
+$U_{obs}=U_{int}=\varnothing$，而一般式为：
+
+$$
+U_{cf}=\bigl(D_A\cap(K_{int}\setminus K_{cf})\bigr)
+\setminus
+\bigcup_{k\in I_{R,A}\setminus\{obs,int,cf\}}\operatorname{Cap}^R_{A,k}.
+$$
+
+只有当该 analysis view 恰有 `obs`、`int`、`cf` 三个 members 时，才可化简为
+$U_{cf}=D_A\cap(K_{int}\setminus K_{cf})$。
 
 ---
 
@@ -1020,6 +1046,12 @@ $$
 \operatorname{CatalogIrredundant}(C_{R_\star,A}).
 $$
 
+第 23.5 节以 universe-correct 的 dependent `PackedCatalog` 和有限
+`DesignatedRootCatalogSuite` 实现这一定义。规范中旧名 `SystemWidePositive` 只允许作为
+同一 one-root proposition 的 abbreviation，并由
+`systemWidePositive_iff_systemCatalogIrredundant` 以 `Iff.rfl` 关联；不得再定义一个遍历
+多个 roots 的替代性质。
+
 只有这个 universal conjunction 控制系统准入。辅助 root（例如 `CausalHierarchyRoot`）
 是有边界的分析：它既不能证明指定 root 全正，也不能为指定 root 中的零 occurrence
 提供 exemption。analysis view 可以取得完整的 negative verdict certificate，但不能
@@ -1127,7 +1159,7 @@ $$
 
 系统不会替人选择哪一种不可约基；它只拒绝同一编译中同时保留一个过完备族。
 
-更一般地，只要同一 catalog 中存在 $j\neq i$ 且 $K_{A,j}\subseteq K_{A,i}$，较细的
+更一般地，只要同一 catalog 中存在 $j\neq i$ 且 $K^R_{A,j}\subseteq K^R_{A,i}$，较细的
 $j$ 已捕获 $i$ 能捕获的全部 pair，故 $U^R_{A,i}=\varnothing$。这包括但不限于同核
 重述与 product 包装。
 
@@ -1719,14 +1751,14 @@ $$
 `KernelRefines` 自反且传递；按 kernel equality 取商后为 partial order。并且：
 
 $$
-K_{A,i}\subseteq K_{A,j}
+K^R_{A,i}\subseteq K^R_{A,j}
 \Longleftrightarrow
 \operatorname{Cap}^R_{A,j}\subseteq\operatorname{Cap}^R_{A,i}.
 $$
 
 ### IE-028　`kernelRefines_implies_zero_uniqueCapture`
 
-若 $i\neq j$ 且 $K_{A,i}\subseteq K_{A,j}$，则：
+若 $i\neq j$ 且 $K^R_{A,i}\subseteq K^R_{A,j}$，则：
 
 $$
 U^R_{A,j}=\varnothing,
@@ -1769,12 +1801,39 @@ $$
 \sum_k k\,h^R_A(k)=\sum_i|\operatorname{Cap}^R_{A,i}|.
 $$
 
-### IE-034　`pairwiseOverlap_spectrum_double_count`
+### IE-034　`Catalog.pairwiseOverlap_spectrum_doubleCount`
 
 $$
-\sum_{i<j}|O^R_{A,ij}|=
-\sum_k\binom{k}{2}h^R_A(k).
+\sum_{i\in I_{R,A}}\ \sum_{j\in I_{R,A}\setminus\{i\}}
+|O^R_{A,ij}|
+=\sum_k k(k-1)h^R_A(k).
 $$
+
+规范 Lean signature 不假设 `Catalog.Index` 有序，并把所有 typeclass 使用封装在可执行定义体内：
+
+```lean
+def Catalog.orderedDistinctOverlapTotal (catalog : Catalog arena) : Nat := by
+  letI := catalog.indexFintype
+  letI := catalog.indexDecidableEq
+  exact ∑ i : catalog.Index,
+    ∑ j in (Finset.univ : Finset catalog.Index).erase i,
+      catalog.pairwiseCaptureOverlapCount i j
+
+def Catalog.captureSpectrumSecondFactorialMoment
+    (catalog : Catalog arena) : Nat := by
+  letI := catalog.indexFintype
+  exact ∑ k : Fin (@Fintype.card catalog.Index catalog.indexFintype + 1),
+    k.1 * (k.1 - 1) * catalog.captureSpectrum k
+
+theorem Catalog.pairwiseOverlap_spectrum_doubleCount
+    (catalog : Catalog arena) :
+    catalog.orderedDistinctOverlapTotal =
+      catalog.captureSpectrumSecondFactorialMoment := by
+  ...
+```
+
+左侧是 unordered-pair overlap 总量的两倍，故 theorem 对任何额外选择的
+`[LinearOrder catalog.Index]` 都不变。
 
 ### IE-035　`catalogRoleHistogram_sum`
 
@@ -1795,7 +1854,15 @@ $$
 
 ### IE-037　`strictRefinement_iff_layeredCapture_nonempty`
 
-对 $1\le r\le\ell$：
+初层及后续层的完整非空判据为：
+
+$$
+L_0\neq\varnothing
+\Longleftrightarrow D_A\nsubseteq K_0
+\Longleftrightarrow \exists x\ne y,\ \neg K_0(x,y),
+$$
+
+且对 $1\le r\le\ell$：
 
 $$
 K_r\subsetneq K_{r-1}
@@ -1808,7 +1875,7 @@ $$
 若 flat catalog 中有 $i\neq j$ 且 $K_j\subseteq K_i$，则 $U_i=\varnothing$。因此
 strict cumulative chain 不蕴含每个 flat member 的 leave-one-out capture 为正。
 
-### IE-039　`systemWidePositive_iff_all_catalogs`
+### IE-039　`systemWidePositive_iff_systemCatalogIrredundant`
 
 对显式指定的 system root $R_\star$：
 
@@ -3094,7 +3161,7 @@ $$
 ## CIRPT-23　完整 theorem catalog 的 primitive kernel
 
 设当前 sealing root 为 $R$，canonical object arena 为 $A$，其唯一 maximal catalog
-$C_{R,A}$ 的 occurrence index 为 $I_{R,A}$，每个 occurrence 有 kernel $K_{A,i}$。
+$C_{R,A}$ 的 occurrence index 为 $I_{R,A}$，每个 occurrence 有 kernel $K^R_{A,i}$。
 本节以下省略的 $R,A$ 仅是排版简写，绝不表示跨 arena 的一个 catalog。
 
 完整 catalog kernel：
@@ -3103,7 +3170,7 @@ $$
 \boxed{
 K^R_{A,I_{R,A}}
 =
-\bigcap_{i:I_{R,A}}K_{A,i}.
+\bigcap_{i:I_{R,A}}K^R_{A,i}.
 }
 $$
 
@@ -3112,7 +3179,7 @@ $$
 $$
 K^{R,-i}_A
 =
-\bigcap_{j\in I_{R,A},\ j\ne i}K_{A,j}.
+\bigcap_{j\in I_{R,A},\ j\ne i}K^R_{A,j}.
 $$
 
 原 SPEC 的绝对 escape 为：
@@ -3194,13 +3261,59 @@ $$
 $$
 
 所以 cumulative readouts 的严格层级不蕴含每个成员都有正 leave-one-out capture。
-若 $K_{cf}\subsetneq K_{int}\subsetneq K_{obs}$ 同时作为 flat members，则：
+若 $K_{cf}\subsetneq K_{int}\subsetneq K_{obs}$ 同时作为任意 flat catalog 的 members，则
+$U_{obs}=U_{int}=\varnothing$，而 finest member 的一般式是：
 
 $$
-U_{obs}=U_{int}=\varnothing,
-\qquad
-U_{cf}=D_A\cap(K_{int}\setminus K_{cf}).
+U_{cf}=\bigl(D_A\cap(K_{int}\setminus K_{cf})\bigr)
+\setminus
+\bigcup_{k\in I_{R,A}\setminus\{obs,int,cf\}}\operatorname{Cap}^R_{A,k}.
 $$
+
+只有 flat catalog 恰由这三个 members 构成时，才有
+$U_{cf}=D_A\cap(K_{int}\setminus K_{cf})$。
+
+对应的 order-free Lean signatures 不要求 `Catalog.Index` 上有次序：
+
+```lean
+theorem nested_flat_catalog_coarse_member_zero
+    (catalog : Catalog arena) {coarse finer : catalog.Index}
+    (distinct : finer ≠ coarse)
+    (refines : catalog.KernelRefines finer coarse) :
+    catalog.uniqueCaptureCount coarse = 0 := by
+  ...
+
+theorem nested_flat_catalog_finest_unique_capture_iff
+    (catalog : Catalog arena) (obs int cf : catalog.Index)
+    (obs_ne_int : obs ≠ int) (obs_ne_cf : obs ≠ cf) (int_ne_cf : int ≠ cf)
+    (cf_refines_int : catalog.KernelRefines cf int)
+    (int_refines_obs : catalog.KernelRefines int obs)
+    (x y : arena.State) :
+    (x ≠ y ∧
+      (∀ k, k ≠ cf → (catalog.theoremAt k).primitives.agrees x y) ∧
+      ¬(catalog.theoremAt cf).primitives.agrees x y) ↔
+    (x ≠ y ∧
+      (catalog.theoremAt int).primitives.agrees x y ∧
+      ¬(catalog.theoremAt cf).primitives.agrees x y ∧
+      ∀ k, k ≠ obs → k ≠ int → k ≠ cf →
+        (catalog.theoremAt k).primitives.agrees x y) := by
+  ...
+
+theorem nested_flat_exactly_three_finest_unique_capture_iff
+    (catalog : Catalog arena) (obs int cf : catalog.Index)
+    (obs_ne_int : obs ≠ int) (obs_ne_cf : obs ≠ cf) (int_ne_cf : int ≠ cf)
+    (covers : ∀ k : catalog.Index, k = obs ∨ k = int ∨ k = cf)
+    (cf_refines_int : catalog.KernelRefines cf int)
+    (int_refines_obs : catalog.KernelRefines int obs)
+    (x y : arena.State) :
+    (x ≠ y ∧
+      (∀ k, k ≠ cf → (catalog.theoremAt k).primitives.agrees x y) ∧
+      ¬(catalog.theoremAt cf).primitives.agrees x y) ↔
+    (x ≠ y ∧
+      (catalog.theoremAt int).primitives.agrees x y ∧
+      ¬(catalog.theoremAt cf).primitives.agrees x y) := by
+  ...
+```
 
 这与 T-005 中 product member 被其坐标 peers 捕获是同一个数学现象；T-005/T-006
 的既有期望保持不变。
@@ -3232,6 +3345,14 @@ theorem registration。
 ### CIRPT-24.3　严格 refinement 的精确判据
 
 ### 定理 CIRPT-IE-026　`kernelChain_increment_nonempty_iff_strict`
+
+初层的完整判据是：
+
+$$
+L_0\neq\varnothing
+\Longleftrightarrow D_A\nsubseteq K_0
+\Longleftrightarrow \exists x\ne y,\ \neg K_0(x,y).
+$$
 
 对 $r>0$：
 
@@ -3818,8 +3939,10 @@ def PrimitiveBundle.agrees
 
 def PrimitiveBundle.agreesB
     (bundle : PrimitiveBundle arena)
-    (left right : arena.State) : Bool :=
-  Finset.univ.all fun index =>
+    (left right : arena.State) : Bool := by
+  letI := bundle.indexFintype
+  letI := bundle.indexDecidableEq
+  exact Finset.univ.all fun index =>
     decide ((bundle.atom index).kernel.relation left right)
 ```
 
@@ -3924,8 +4047,10 @@ def axisOrdinal : PrimitiveAxis → Fin 4
 def PrimitiveBundle.separatesOnAxis
     (bundle : PrimitiveBundle arena)
     (axis : PrimitiveAxis)
-    (left right : arena.State) : Bool :=
-  Finset.univ.any fun index =>
+    (left right : arena.State) : Bool := by
+  letI := bundle.indexFintype
+  letI := bundle.indexDecidableEq
+  exact Finset.univ.any fun index =>
     decide ((bundle.atom index).axis = axis) &&
       decide (¬(bundle.atom index).kernel.relation left right)
 
@@ -3972,15 +4097,20 @@ def pairwiseCaptureOverlapRate (catalog : Catalog arena)
 
 def KernelRefines (catalog : Catalog arena)
     (finer coarser : catalog.Index) : Prop :=
-  ∀ x y, catalog.theoremAgrees finer x y →
-    catalog.theoremAgrees coarser x y
+  ∀ x y,
+    (catalog.theoremAt finer).primitives.agrees x y →
+      (catalog.theoremAt coarser).primitives.agrees x y
 
 def KernelEquivalent (catalog : Catalog arena)
     (left right : catalog.Index) : Prop :=
   catalog.KernelRefines left right ∧ catalog.KernelRefines right left
 
 instance (catalog : Catalog arena) (i j : catalog.Index) :
-    Decidable (catalog.KernelRefines i j)
+    Decidable (catalog.KernelRefines i j) := by
+  letI := arena.stateFintype
+  letI := arena.stateDecidableEq
+  unfold KernelRefines
+  infer_instance
 
 inductive KernelComparison
   | equal | strictlyFiner | strictlyCoarser | incomparable
@@ -3997,7 +4127,7 @@ def captureMultiplicity (catalog : Catalog arena)
     (pair : arena.State × arena.State) : Nat
 
 def captureSpectrum (catalog : Catalog arena) :
-    Fin (Fintype.card catalog.Index + 1) → Nat
+    Fin (@Fintype.card catalog.Index catalog.indexFintype + 1) → Nat
 
 def roleHistogramTotal (catalog : Catalog arena)
     (signature : Fin 4 → Bool) : Nat
@@ -4044,6 +4174,20 @@ def unresolvedCount (chain : LayerChain arena) : Nat
 
 def unresolvedRate (chain : LayerChain arena) : Rat
 
+theorem layeredCapture_zero_nonempty_iff (chain : LayerChain arena) :
+    (chain.layeredCapturePairs ⟨0, Nat.zero_lt_succ _⟩).Nonempty ↔
+      ∃ x y, x ≠ y ∧
+        ¬(chain.kernel ⟨0, Nat.zero_lt_succ _⟩).relation x y := by
+  ...
+
+theorem layeredCapture_succ_nonempty_iff_strict
+    (chain : LayerChain arena) (r : Fin chain.length) :
+    (chain.layeredCapturePairs r.succ).Nonempty ↔
+      ∃ x y,
+        (chain.kernel r.castSucc).relation x y ∧
+          ¬(chain.kernel r.succ).relation x y := by
+  ...
+
 end LayerChain
 ```
 
@@ -4059,6 +4203,8 @@ Catalog.captureSpectrum_zero_eq_fullEscape
 Catalog.captureSpectrum_one_eq_sum_unique
 Catalog.captureSpectrum_incidence_doubleCount
 Catalog.pairwiseOverlap_spectrum_doubleCount
+LayerChain.layeredCapture_zero_nonempty_iff
+LayerChain.layeredCapture_succ_nonempty_iff_strict
 Catalog.catalogRoleHistogram_sum
 Catalog.catalogRedundant_iff_not_irredundant
 LayerChain.layeredCapture_partition
@@ -4132,7 +4278,8 @@ InformationEscape finite engine
 14. overlap、refinement、spectrum、role totals、verdict 与 layer-chain inclusion/count identity 均有 Lean certificate；
 15. refinement matrix 的 true cell 有 inclusion proof，false cell 有确定性 witness pair；
 16. 在触发 IE-C007 前计算并验证完整 `redundantIndices`，不得 first-zero 短路；
-17. canonical maximal catalog 失败时不写 artifact；显式 `analysis_view` 只有在全部 exact negative certificates staged 且 kernel-checked 后才可写 redundant projection；
+17. canonical maximal catalog 失败时不写 artifact；显式 `analysis_view` 只有在全部 exact
+    negative certificates staged 且 kernel-checked 后才可写 redundant projection；
 18. seal 只消费命令所在模块本地 elaborated registrations；imported `.olean` registrations 不进入 root；
 19. designated root 的 `SystemCatalogIrredundant` 是其全部 maximal catalogs 的 conjunction；
 20. kernel-address coincidence 只进入 diagnostic projection，绝不进入证明、grouping 或 verdict；
@@ -4157,33 +4304,93 @@ v3 的规范形状为：
 }
 ```
 
-root 与 arena/catalog 字段如下：
+下表是 v3 的 exhaustive inventory；未列字段不得写入。certification level 的封闭词表为：
+`S` = schema/canonical-encoding check，`E` = elaborated environment/registry identity check，
+`K` = Lean proposition proof，`R` = reflected numeral/finite equality tied to a Lean theorem，
+`D` = verdict 后生成、不得回流的 diagnostic-only projection。容器字段的 level 同时约束其
+元素 schema；元素自己的数学强度由对应 nested row 给出。
 
-| scope | field | normative value |
-|---|---|---|
-| root | `schema` | new shared artifacts 固定为 `lean-intrinsic-information-escape-v3` |
-| root | `root_id` | canonical sealing-root `Name` |
-| root | `seal_scope` | 固定为 `module-local` |
-| root | `system_catalog_irredundant` | designated root 全部 maximal catalogs 的 universal verdict |
-| root | `kernel_address_coincidence_classes` | address、occurrences、serializer 与 `diagnostic_only: true` |
-| catalog | `catalog_id` | stable root-scoped identity |
-| catalog | `catalog_kind` | `canonical_maximal` 或 `analysis_view`，不得由 namespace 推断 |
-| catalog | `object_arena` | grouping 使用的 canonical `Arena` declaration |
-| catalog | `catalog_verdict` | `irredundant` 或 `redundant` |
-| catalog | `redundant_theorems` | 完整零 unique-capture occurrence names |
-| catalog | `verdict_certificate` | catalog-qualified positive 或 negative Lean certificate |
-| catalog | `exclusive_capture_total` | $\sum_i|U_i|$ |
-| catalog | `pairwise_capture_overlap` | canonical upper triangle 的 exact count/rate rows |
-| catalog | `kernel_refinement` | directed cells；proof 或 counterexample reference |
-| catalog | `kernel_equivalence_classes` | mutual-refinement classes |
-| catalog | `catalog_unique_capture_by_role_signature` | exact role column totals |
-| catalog | `capture_multiplicity_spectrum` | decimal $k$ 到 exact count/rate 的映射 |
-| catalog | `layer_chains` | ordered kernels、adjacent counts/rates、unresolved 与 certificates |
-| occurrence | `catalog_membership` | `root_id` 与 `catalog_id` |
-| occurrence | `certificate` | catalog-qualified companion `Name` |
-| occurrence | `gain_rate` | 既有 exact per-arena normalization |
+| scope | field | normative value | certification level |
+|---|---|---|---|
+| root | `schema` | 固定为 `lean-intrinsic-information-escape-v3` | S |
+| root | `root_id` | canonical sealing-root `Name` | E |
+| root | `seal_scope` | 固定为 `module-local` | S+E |
+| root | `system_catalog_irredundant` | designated root 全部 maximal catalogs 的 conjunction | K |
+| root | `kernel_address_coincidence_classes` | diagnostic coincidence-class array | S+D |
+| root | `catalogs` | 该 root 的完整 catalog array | E |
+| coincidence class | `primitive_kernel_address` | canonical serializer 的 SHA-256 address | S+D |
+| coincidence class | `occurrences` | qualified occurrence names 的 canonical-sorted array | E+D |
+| coincidence class | `serializer` | serializer 名与版本 | S+D |
+| coincidence class | `diagnostic_only` | 必须为 `true` | S+D |
+| catalog | `catalog_id` | stable root-scoped identity | E |
+| catalog | `catalog_kind` | `canonical_maximal` 或 `analysis_view` | E |
+| catalog | `object_arena` | grouping 使用的 canonical `Arena` declaration | E |
+| catalog | `state_card` | arena state cardinality | R |
+| catalog | `off_diagonal_pair_count` | $B(C)=|D_A|$ | R |
+| catalog | `full_escape_count` | $|E^R_A|$ | R |
+| catalog | `full_escape_rate` | exact per-arena rate record | R |
+| catalog | `catalog_verdict` | `irredundant` 或 `redundant` | K |
+| catalog | `redundant_theorems` | 完整 zero unique-capture occurrence array | K+R |
+| catalog | `verdict_certificate` | qualified positive/negative Lean certificate | K+E |
+| catalog | `exclusive_capture_total` | $\sum_i|U^R_{A,i}|$ | R |
+| catalog | `pairwise_capture_overlap` | canonical upper-triangle row array | K+R |
+| catalog | `kernel_refinement` | complete directed comparison-cell array | K |
+| catalog | `kernel_equivalence_classes` | mutual-refinement class array | K |
+| catalog | `catalog_unique_capture_by_role_signature` | exact role column-total map | K+R |
+| catalog | `capture_multiplicity_spectrum` | complete bucket-row array for $0\le k\le|I_{R,A}|$ | K+R |
+| catalog | `layer_chains` | declared ordered-chain array | K+R |
+| catalog | `theorems` | complete occurrence-record array | E |
+| exact rate | `numerator` | reduced nonnegative numerator | R |
+| exact rate | `denominator` | common positive $|D_A|$ denominator | R |
+| overlap row | `left` | canonical first qualified occurrence | E |
+| overlap row | `right` | canonical second qualified occurrence | E |
+| overlap row | `count` | $|O^R_{A,ij}|$ | R |
+| overlap row | `rate` | exact rate record | R |
+| overlap row | `certificate` | symmetry/count certificate reference | K+E |
+| refinement cell | `finer` | directed source occurrence | E |
+| refinement cell | `coarser` | directed target occurrence | E |
+| refinement cell | `comparison` | one of four `KernelComparison` values | K |
+| refinement cell | `proof` | inclusion proof reference, otherwise `null` | K+E |
+| refinement cell | `counterexample` | deterministic witness pair, otherwise `null` | K+R |
+| equivalence class | `members` | canonical-sorted mutual-refinement members | K+E |
+| equivalence class | `certificate` | mutual-refinement certificate reference | K+E |
+| role-total entry | `<four-bit-signature>` | exact column count; `0000` forbidden | R |
+| spectrum entry | `k` | decimal multiplicity key | S |
+| spectrum entry | `count` | $h^R_A(k)$ | R |
+| spectrum entry | `rate` | exact rate record | R |
+| spectrum entry | `certificate` | spectrum identity certificate reference | K+E |
+| layer chain | `chain_id` | stable catalog-scoped identity | E |
+| layer chain | `kernels` | ordered kernel-row array | E |
+| layer chain | `inclusion_certificates` | one proof per adjacent pair | K+E |
+| layer chain | `layers` | $L_0,\ldots,L_\ell$ row array | K+R |
+| layer chain | `unresolved` | finest unresolved row | K+R |
+| layer chain | `partition_certificate` | whole-partition certificate reference | K+E |
+| kernel row | `position` | zero-based chain position | S |
+| kernel row | `kernel` | canonical kernel declaration name | E |
+| layer row | `position` | zero-based layer position | S |
+| layer row | `count` | exact layered count | R |
+| layer row | `rate` | exact rate record | R |
+| layer row | `certificate` | layer count/nonemptiness certificate reference | K+E |
+| unresolved row | `count` | exact finest unresolved count | R |
+| unresolved row | `rate` | exact rate record | R |
+| unresolved row | `certificate` | unresolved-count certificate reference | K+E |
+| occurrence | `theorem` | original theorem declaration `Name` | E |
+| occurrence | `catalog_membership` | qualified membership record | E |
+| occurrence | `unit` | catalog-qualified theorem-unit `Name` | E |
+| occurrence | `primitive_count` | bundle cardinality | R |
+| occurrence | `primitive_axes` | canonical axis array | E+R |
+| occurrence | `primitive_kernel_address` | diagnostic kernel address | S+D |
+| occurrence | `full_escape_count` | catalog full escape count | R |
+| occurrence | `without_escape_count` | leave-one-out escape count | R |
+| occurrence | `unique_capture_count` | peer-relative unique count | R |
+| occurrence | `unique_capture_by_role_signature` | exact nonzero role-row map | K+R |
+| occurrence | `gain_rate` | exact per-arena rate record | R |
+| occurrence | `lowers_escape` | theorem occurrence positivity | K |
+| occurrence | `certificate` | catalog-qualified companion `Name` | K+E |
+| catalog membership | `root_id` | enclosing root identity | E |
+| catalog membership | `catalog_id` | enclosing catalog identity | E |
 
-每个 theorem 记录可以新增：
+上表中的每个 v3 occurrence 记录必须包含对应字段；以下仅展示 role 分解片段：
 
 ```json
 {
@@ -4224,6 +4431,9 @@ manual_bonus
 ---
 
 ## CIRPT-42　新增编译错误
+
+IE-C024…IE-C033 的 trigger、deterministic message shape 与 required payload keys 以第 31 节
+三张耦合表为规范定义；本节给出其语义解释。
 
 ### IE-C013　MissingPrimitiveBundle
 
@@ -4819,6 +5029,7 @@ theorem law；它的 `toArena` 必须 definitionally 等于 occurrence 声明的
 def Catalog.fullIndexSet
     (catalog : Catalog arena) : Finset catalog.Index := by
   letI := catalog.indexFintype
+  letI := catalog.indexDecidableEq
   exact Finset.univ
 ```
 
@@ -4915,8 +5126,9 @@ def escapePairs
 ```lean
 def without
     (catalog : Catalog arena)
-    (index : catalog.Index) : Finset catalog.Index :=
-  (catalog.fullIndexSet).erase index
+    (index : catalog.Index) : Finset catalog.Index := by
+  letI := catalog.indexDecidableEq
+  exact (catalog.fullIndexSet).erase index
 ```
 
 ### 20.5 独有捕获 pair
@@ -4947,8 +5159,10 @@ theorem uniqueCapturePairs_eq_sdiff :
 ```lean
 def Catalog.capturePairs (catalog : Catalog arena)
     (index : catalog.Index) :
-    Finset (arena.State × arena.State) :=
-  offDiagonalPairs arena \ escapePairs catalog {index}
+    Finset (arena.State × arena.State) := by
+  letI := arena.stateDecidableEq
+  letI := catalog.indexDecidableEq
+  exact offDiagonalPairs arena \ escapePairs catalog {index}
 
 def Catalog.exclusiveCaptureVector (catalog : Catalog arena) :
     catalog.Index → Nat :=
@@ -4964,8 +5178,9 @@ def Catalog.exclusiveCaptureVector (catalog : Catalog arena) :
 ```lean
 def Catalog.pairwiseCaptureOverlapPairs (catalog : Catalog arena)
     (left right : catalog.Index) :
-    Finset (arena.State × arena.State) :=
-  catalog.capturePairs left ∩ catalog.capturePairs right
+    Finset (arena.State × arena.State) := by
+  letI := arena.stateDecidableEq
+  exact catalog.capturePairs left ∩ catalog.capturePairs right
 
 def Catalog.pairwiseCaptureOverlapCount (catalog : Catalog arena)
     (left right : catalog.Index) : Nat :=
@@ -4980,12 +5195,20 @@ def Catalog.pairwiseCaptureOverlapCount (catalog : Catalog arena)
 ```lean
 def Catalog.KernelRefines (catalog : Catalog arena)
     (finer coarser : catalog.Index) : Prop :=
-  ∀ x y, catalog.theoremAgrees finer x y →
-    catalog.theoremAgrees coarser x y
+  ∀ x y,
+    (catalog.theoremAt finer).primitives.agrees x y →
+      (catalog.theoremAt coarser).primitives.agrees x y
 
 def Catalog.KernelEquivalent (catalog : Catalog arena)
     (left right : catalog.Index) : Prop :=
   catalog.KernelRefines left right ∧ catalog.KernelRefines right left
+
+instance (catalog : Catalog arena) (i j : catalog.Index) :
+    Decidable (catalog.KernelRefines i j) := by
+  letI := arena.stateFintype
+  letI := arena.stateDecidableEq
+  unfold Catalog.KernelRefines
+  infer_instance
 
 def Catalog.kernelComparison (catalog : Catalog arena)
     (left right : catalog.Index) : KernelComparison
@@ -5003,8 +5226,10 @@ $K_i(x,y)\land\neg K_j(x,y)$ 的 deterministic witness。只打印 Boolean 不�
 
 ```lean
 def Catalog.roleHistogramTotal (catalog : Catalog arena)
-    (signature : Fin 4 → Bool) : Nat :=
-  ∑ index, catalog.roleHistogram index signature
+    (signature : Fin 4 → Bool) : Nat := by
+  letI := catalog.indexFintype
+  letI := catalog.indexDecidableEq
+  exact ∑ index, catalog.roleHistogram index signature
 
 def Catalog.roleProfileEq (catalog : Catalog arena)
     (left right : catalog.Index) : Prop :=
@@ -5024,12 +5249,15 @@ catalog column total 及 unweighted difference vector；不得生成 role score 
 
 ```lean
 def Catalog.captureMultiplicity (catalog : Catalog arena)
-    (pair : arena.State × arena.State) : Nat :=
-  ((Finset.univ : Finset catalog.Index).filter fun index =>
+    (pair : arena.State × arena.State) : Nat := by
+  letI := catalog.indexFintype
+  letI := catalog.indexDecidableEq
+  letI := arena.stateDecidableEq
+  exact ((Finset.univ : Finset catalog.Index).filter fun index =>
     pair ∈ catalog.capturePairs index).card
 
 def Catalog.captureSpectrum (catalog : Catalog arena) :
-    Fin (Fintype.card catalog.Index + 1) → Nat :=
+    Fin (@Fintype.card catalog.Index catalog.indexFintype + 1) → Nat :=
   ...
 ```
 
@@ -5274,8 +5502,10 @@ instance catalogIrredundantDecidable
 
 ```lean
 def Catalog.redundantIndices (catalog : Catalog arena) :
-    Finset catalog.Index :=
-  Finset.univ.filter fun index => catalog.uniqueCaptureCount index = 0
+    Finset catalog.Index := by
+  letI := catalog.indexFintype
+  letI := catalog.indexDecidableEq
+  exact Finset.univ.filter fun index => catalog.uniqueCaptureCount index = 0
 
 def CatalogRedundant (catalog : Catalog arena) : Prop :=
   ∃ index, catalog.uniqueCaptureCount index = 0
@@ -5287,20 +5517,40 @@ theorem catalogRedundant_iff_not_irredundant
     [Nonempty catalog.Index] :
     CatalogRedundant catalog ↔ ¬CatalogIrredundant catalog
 
-structure SystemCatalogSuite where
-  RootIndex : Type
-  rootFintype : Fintype RootIndex
-  ArenaIndex : RootIndex → Type
-  arenaFintype : ∀ root, Fintype (ArenaIndex root)
-  catalog : ∀ root arena, PackedCatalog
+universe u v w z
 
-def SystemWidePositive (suite : SystemCatalogSuite) : Prop :=
-  ∀ root arena, CatalogIrredundant (suite.catalog root arena).catalog
+/-- One dependent arena/catalog pair; the catalog is definitionally over this arena. -/
+structure PackedCatalog where
+  arena : Arena.{u}
+  catalog : Catalog.{u, v, w} arena
+
+/-- The finite maximal-catalog family owned by one designated sealing root. -/
+structure DesignatedRootCatalogSuite where
+  rootId : Name
+  CatalogIndex : Type z
+  catalogIndexFintype : Fintype CatalogIndex
+  catalogIndexDecidableEq : DecidableEq CatalogIndex
+  maximalCatalog : CatalogIndex → PackedCatalog.{u, v, w}
+
+def SystemCatalogIrredundant
+    (suite : DesignatedRootCatalogSuite) : Prop :=
+  ∀ index, CatalogIrredundant (suite.maximalCatalog index).catalog
+
+/-- Compatibility name for the same one-root proposition; it does not quantify roots. -/
+abbrev SystemWidePositive
+    (suite : DesignatedRootCatalogSuite) : Prop :=
+  SystemCatalogIrredundant suite
+
+theorem systemWidePositive_iff_systemCatalogIrredundant
+    (suite : DesignatedRootCatalogSuite) :
+    SystemWidePositive suite ↔ SystemCatalogIrredundant suite :=
+  Iff.rfl
 ```
 
-v4.2 的 canonical deployment 使用恰好一个 designated root，故它的 system theorem 是
-该 root 内 maximal catalogs 的有限 conjunction。`SystemCatalogSuite` 只给显式 closed
-suite 使用，不得把未枚举 auxiliary roots 暗中算作系统。negative verdict 必须含完整
+`DesignatedRootCatalogSuite` 的每个 `PackedCatalog` 同时携带 arena 与恰在该 arena 上的
+catalog，且整个有限 family 只属于 `rootId` 这一 designated root。`SystemWidePositive`
+只是 `SystemCatalogIrredundant` 的显式同义名；不存在另一个量化 plural roots 的性质。
+不得把未枚举 auxiliary roots 暗中算作系统。negative verdict 必须含完整
 `redundantIndices` 与证明；不能只报告第一个零成员。
 
 ---
@@ -5435,18 +5685,28 @@ grouping key 只取 `objectArenaName`；`lawArenaName` 是 `PrimitiveLawArena` p
 
 ### 25.2 持久性
 
-registry 可继续使用 Lean environment extension 保存 elaboration state，但 v4.2 bless 的
-root 语义是 **module-local registrations**：
+已落地 v4.1 的事实是：`Registry.lean` 使用 `SimplePersistentEnvExtension`，其
+`addImportedFn` 拼接 imported registrations；`CatalogBuilder.lean` 当前消费全部
+`InformationRegistry.entries`。因此 imported entries 对 consumers 可见且会进入 v4.1 seal。
+
+v4.2 的目标 root 语义改为 **module-local seal membership**。landing step 3 必须在不隐藏
+consumer 可见 imported entries 的前提下，以 imported-entry filtering 或显式 root-ownership
+field 实现：
 
 - 每个 seal 只消费与该命令在同一 root module 中显式 elaborated 的 entries；
-- import 某个已经 sealed 的 `.olean` 对当前 root 贡献零 registrations；
+- import 某个已经 sealed 的 `.olean` 仍使 entries 对 registry consumers 可见，但对当前 seal
+  membership 贡献零；
 - 要让 frozen theorem 进入新 root，必须在新 root 用 `register_information_theorem` 显式重新登记；
 - re-registration 产生新 catalog-qualified occurrence 与 realization reference；
+- 跨 root scopes 的相同 theorem/catalog spelling 不是 collision；同一
+  `(root_id,catalog_id,theoremName)` 内重复才触发 IE-C025；
 - 无需扫描源文本；
 - 无需 Git 文件列表。
 
-不得再声称 imported `.olean` registrations 会自动进入当前 seal。未来若要引入另一种
-import contract，必须另立、测试并迁移，本版本不预留双语义。
+`RegistrationPersistence`、`RegistryConsumer` 与 `SealCollision` 不得静默删除：第 3 步必须
+按上述语义重写 fixtures，使前两者继续证明 imported visibility，而 seal membership 为
+root-local；第三者分别覆盖跨 root 非 collision 与 root/catalog 内 IE-C025。该迁移完成前，
+不得把 v4.2 module-local sealing 冒充为 landed current behavior。
 
 ### 25.3 环境真源
 
@@ -5781,6 +6041,10 @@ v3 catalog record 必须另含：
   "catalog_id": "causal-unified-transitions",
   "catalog_kind": "canonical_maximal",
   "object_arena": "D5.S3.Example.UnifiedArena",
+  "state_card": 48,
+  "off_diagonal_pair_count": 2256,
+  "full_escape_count": 0,
+  "full_escape_rate": {"numerator": 0, "denominator": 2256},
   "catalog_verdict": "irredundant",
   "redundant_theorems": [],
   "verdict_certificate": "...",
@@ -5789,7 +6053,7 @@ v3 catalog record 必须另含：
   "kernel_refinement": [],
   "kernel_equivalence_classes": [],
   "catalog_unique_capture_by_role_signature": {},
-  "capture_multiplicity_spectrum": {},
+  "capture_multiplicity_spectrum": [],
   "layer_chains": [],
   "theorems": []
 }
@@ -5797,9 +6061,38 @@ v3 catalog record 必须另含：
 
 counts 与 rates 一律同时保存 exact numerator/denominator；refinement cell 一律引用 proof
 或 counterexample certificate。`analysis_view` 可有 `redundant` verdict，但不能被根级
-`system_catalog_irredundant` 当作 positivity evidence。
+`system_catalog_irredundant` 当作 positivity evidence。第 CIRPT-41 节的 exhaustive inventory
+是 v3 字段与 certification level 的唯一规范清单；本节 JSON 只展示容器形状。
 
-### 30.3 theorem 记录
+### 30.3 schema-v2 theorem 记录（冻结）
+
+```json
+{
+  "theorem": "D5.S3.Example.first_coordinate_theorem",
+  "unit": "D5.S3.Example.first_coordinate_theorem.__information_unit",
+  "primitive_count": 1,
+  "primitive_axes": ["cut"],
+  "primitive_kernel_address": "sha256:...",
+  "full_escape_count": 0,
+  "without_escape_count": 4,
+  "unique_capture_count": 4,
+  "unique_capture_by_role_signature": {
+    "1000": 4
+  },
+  "gain_rate": {
+    "numerator": 4,
+    "denominator": 12
+  },
+  "lowers_escape": true,
+  "certificate": "D5.S3.Example.first_coordinate_theorem.__lowers_escape"
+}
+```
+
+上面的 JSON block 与已落地 v2 theorem-record contract byte-for-byte 相同。冻结 v2 artifact
+不得要求、允许或容忍任何 v3-only 字段；尤其不得出现 `catalog_membership`、catalog-qualified
+`unit`/`certificate`、shared matrix、spectrum、layer-chain 或 root verdict。
+
+#### 30.3.1 schema-v3-only occurrence 记录
 
 ```json
 {
@@ -5826,6 +6119,9 @@ counts 与 rates 一律同时保存 exact numerator/denominator；refinement cel
   "certificate": "catalog-qualified-certificate-name"
 }
 ```
+
+该 block 仅属于 `lean-intrinsic-information-escape-v3`。v3 fields 不迁回、不覆盖也不改变
+冻结 v2 artifact 的字段集合或名字语义。
 
 ### 30.4 禁止字段
 
@@ -5871,7 +6167,9 @@ minimum_threshold
 
 ### IE-C002　DuplicateRegistration
 
-同一 theorem 被登记超过一次。
+冻结 v2 compatibility path 中同一 legacy theorem 被重复登记。v4.2 occurrence-aware path 不以
+裸 theorem name 作全局 collision key；同一 `(root_id,catalog_id,theorem_name)` 内的重复统一发
+IE-C025，跨 root scopes 不碰撞。
 
 ### IE-C003　ArenaResolutionFailed
 
@@ -5926,20 +6224,48 @@ $$
 
 检测到外部程序试图提供 accept/reject 判词。
 
-IE-C013…IE-C023 的名称与含义由 CIRPT-42 保持不变。v4.2 追加：
+IE-C013…IE-C023 的名称与含义由 CIRPT-42 保持不变。v4.2 的新增错误由以下三张耦合表
+完整定义。所有 `{...}` 按 canonical `Name` encoding 输出；数组先 canonical sort 后以 JSON
+compact form 输出，缺少任何 required payload key 本身即 IE-C028。
 
-| code | name | fail-closed condition |
+| code | name | exact fail-closed trigger |
 |---|---|---|
-| IE-C024 | `SplitCanonicalArenaCatalog` | 同 root、同 canonical arena 被拆分或 analysis view 冒充 maximal |
-| IE-C025 | `DuplicateCatalogOccurrence` | occurrence key 重复 |
-| IE-C026 | `MissingMaximalCatalog` | 某 arena 没有包含全部 occurrences 的 maximal catalog |
-| IE-C027 | `UncertifiedKernelRefinement` | refinement cell 无 proof/counterexample |
-| IE-C028 | `AnalysisCertificateMismatch` | matrix/spectrum/role/verdict/layer certificate 不完整或不一致 |
-| IE-C029 | `UnfaithfulCrossArenaRealization` | realization 忽略输入 law 或缺 injection/restriction fidelity |
-| IE-C030 | `KernelAddressUsedAsSemanticEvidence` | digest 被用于 grouping、transport、rate 或 verdict |
-| IE-C031 | `InvalidLayerChain` | chain inclusion、order、partition 或 count certificate 失败 |
-| IE-C032 | `SizeBudgetRequiresReflectedSeal` | 超 pair budget catalog 未使用 refl lane seal |
-| IE-C033 | `IncompleteRedundantIndexSet` | 未收集全部零成员或 canonical failure 后写 artifact |
+| IE-C024 | `SplitCanonicalArenaCatalog` | 同 root/arena 有多个 maximal catalog，或 view 冒充 maximal |
+| IE-C025 | `DuplicateCatalogOccurrence` | 同一 `(root_id,catalog_id,theorem_name)` 出现至少两次 |
+| IE-C026 | `MissingMaximalCatalog` | arena 有 root-local occurrences，但无恰好覆盖全集的唯一 maximal catalog |
+| IE-C027 | `UncertifiedKernelRefinement` | true cell 缺 inclusion proof，或 false cell 缺 witness pair |
+| IE-C028 | `AnalysisCertificateMismatch` | analysis component 缺项、reflected value 不等或 certificate 不闭合 |
+| IE-C029 | `UnfaithfulCrossArenaRealization` | realization 任一方向不消费 hypothesis，或 injection/restriction equation 缺失 |
+| IE-C030 | `KernelAddressUsedAsSemanticEvidence` | kernel address 流入 grouping、transport、refinement、rate 或 verdict |
+| IE-C031 | `InvalidLayerChain` | adjacency proof、顺序、partition、nonemptiness 或 reflected count 失败 |
+| IE-C032 | `SizeBudgetRequiresReflectedSeal` | `pair_budget > 65536` 且无可解析的 refl-lane seal |
+| IE-C033 | `IncompleteRedundantIndexSet` | zero set 未完整认证、first-zero 短路，或 canonical failure 后写 artifact |
+
+| code | exact deterministic message shape |
+|---|---|
+| IE-C024 | `IE-C024 SplitCanonicalArenaCatalog root={root_id} arena={object_arena} catalogs={catalog_ids}` |
+| IE-C025 | `IE-C025 DuplicateCatalogOccurrence root={root_id} catalog={catalog_id} theorem={theorem_name} count={count}` |
+| IE-C026 | `IE-C026 MissingMaximalCatalog root={root_id} arena={object_arena} occurrences={occurrence_names}` |
+| IE-C027 | `IE-C027 UncertifiedKernelRefinement root={root_id} catalog={catalog_id} finer={finer} coarser={coarser} missing={missing}` |
+| IE-C028 | `IE-C028 AnalysisCertificateMismatch root={root_id} catalog={catalog_id} component={component} expected={expected} actual={actual}` |
+| IE-C029 | `IE-C029 UnfaithfulCrossArenaRealization key={root_id}/{catalog_id}/{theorem_name} realization={realization_name} direction={direction}` |
+| IE-C030 | `IE-C030 KernelAddressUsedAsSemanticEvidence root={root_id} catalog={catalog_id} address={address} consumer={consumer}` |
+| IE-C031 | `IE-C031 InvalidLayerChain root={root_id} catalog={catalog_id} chain={chain_id} layer={layer} reason={reason}` |
+| IE-C032 | `IE-C032 SizeBudgetRequiresReflectedSeal root={root_id} catalog={catalog_id} pair_budget={pair_budget} limit=65536 seal={seal_name}` |
+| IE-C033 | `IE-C033 IncompleteRedundantIndexSet key={root_id}/{catalog_id} expected={expected_zero} certified={certified_zero} phase={phase}` |
+
+| code | required payload keys |
+|---|---|
+| IE-C024 | `root_id, object_arena, catalog_ids` |
+| IE-C025 | `root_id, catalog_id, theorem_name, count` |
+| IE-C026 | `root_id, object_arena, occurrence_names` |
+| IE-C027 | `root_id, catalog_id, finer, coarser, missing` |
+| IE-C028 | `root_id, catalog_id, component, expected, actual` |
+| IE-C029 | `root_id, catalog_id, theorem_name, realization_name, direction` |
+| IE-C030 | `root_id, catalog_id, address, consumer` |
+| IE-C031 | `root_id, catalog_id, chain_id, layer, reason` |
+| IE-C032 | `root_id, catalog_id, pair_budget, limit, seal_name` |
+| IE-C033 | `root_id, catalog_id, expected_zero, certified_zero, phase` |
 
 ---
 
@@ -6032,7 +6358,7 @@ def directOrderedPairBudget : Nat := 65536
 
 $B(C)\le65536$ 时可使用普通 reduction/枚举 proof。$B(C)>65536$ 不表示数学拒绝，
 但必须使用 refl lane 提供的 reflected seal，把 exact measurements 经一般 correctness
-theorems送回 kernel；缺少该前置即 IE-C032。预算逐 catalog 判断，不把多个 arenas 的
+theorems 送回 kernel；缺少该前置即 IE-C032。预算逐 catalog 判断，不把多个 arenas 的
 pairs 相加成全局 scalar。
 
 ### 33.1 朴素算法
@@ -6326,7 +6652,8 @@ spectrum 为 $\{0\mapsto0,1\mapsto0,2\mapsto8,3\mapsto4\}$；analysis view 取�
 
 ### T-023　nested cumulative chain
 
-对 $K_2\subsetneq K_1\subsetneq K_0$，把三者作为 flat cumulative members 时期望
+对 $K_2\subsetneq K_1\subsetneq K_0$，固定一个**恰含这三个 members、没有额外 peer** 的
+analysis view；把三者作为 flat cumulative members 时期望
 $U_0=U_1=\varnothing$，$U_2=D_A\cap(K_1\setminus K_2)$；同一 kernels 的 chain view
 中相邻 $L_1,L_2$ 均非空。该测试防止 flat exclusive 与 ordered layered 混称。
 
@@ -6342,9 +6669,11 @@ maximal same-arena catalog；期望 IE-C024。
 
 ### T-026　module-local root scope
 
-import 一个已 sealed root 对当前 seal 贡献零 registrations；在新 root 显式调用
-`register_information_theorem` 后 occurrence 才出现。undeclared auxiliary root 不改变
-designated system verdict。
+`RegistrationPersistence` 与 `RegistryConsumer` fixture 必须继续证明 imported persistent
+entries 对 environment consumers 可见；同一 imported entries 对当前 seal membership 贡献零，
+直到新 root 显式调用 `register_information_theorem`。`SealCollision` 改为证明跨 root scopes
+的同名 occurrence 不碰撞，而同一 `(root_id,catalog_id,theoremName)` 内重复稳定发 IE-C025。
+undeclared auxiliary root 不改变 designated system verdict。
 
 ### T-027　refinement matrix
 
@@ -6360,9 +6689,22 @@ aggregation 或 admission evidence。尝试消费该地址得 IE-C030。
 
 ### T-029　catalog role totals
 
-每个 role-histogram row 的和等于对应 unique count；catalog columns 的和等于所有
-theorem unique counts 与 $h(1)$。reindex 保持结果；任意非 role-preserving 同核 bundle
-不冒领 histogram invariance。
+具名 fixture `RoleTotalsBoolPair` 使用 arena `Bool × Bool` 与两个 occurrences：`fst-cut`
+读取 `Prod.fst` 且 axis=`cut`，`snd-flow` 读取 `Prod.snd` 且 axis=`flow`。12 个 ordered
+off-diagonal pairs 上的 expected matrix rows 固定为：
+
+| occurrence | `1000` | `0100` | `0010` | `0001` | row total |
+|---|---:|---:|---:|---:|---:|
+| `fst-cut` | 4 | 0 | 0 | 0 | 4 |
+| `snd-flow` | 0 | 4 | 0 | 0 | 4 |
+| catalog total | 4 | 4 | 0 | 0 | 8 |
+
+明确期望 `unique_capture_count=(4,4)`、`exclusive_capture_total=8`、$h(1)=8$。按列序
+`1000,0100,0010,0001`，具名行差 `fst-cut - snd-flow` 是 unweighted vector
+`(4,-4,0,0)`；反向差为 `(-4,4,0,0)`。重排 catalog indices 后，按 occurrence name
+对齐的 rows、catalog totals 与这两个 directed deltas 逐项不变。另将 `fst-cut` 的同一
+kernel 非 role-preserving 地重标为 `flow` 时，unique count 仍为 4，但 row 从
+`(4,0,0,0)` 变为 `(0,4,0,0)`，因此不得冒领 histogram invariance。
 
 ### T-030　negative verdict artifact ordering
 
@@ -6372,7 +6714,7 @@ IE-C007，写文件前失败；first-zero 短路得 IE-C033。
 
 ### T-031　unified causal hierarchy
 
-第 43.1 节的 `UnifiedBoolSCM := IC ⊕ OI` 有 48 states、2,256 ordered pairs。两个 frozen
+第 43.1 节的 `UnifiedBoolSCM := IC.Model ⊕ OI.Model` 有 48 states、2,256 ordered pairs。两个 frozen
 witness 经 injection/restriction faithful transport；$K_{cf}\subsetneq K_{int}\subsetneq
 K_{obs}$，三个 layered increments 均为正，而 cumulative flat catalog 的 observation 与
 intervention members 为零。可选 512-state product 必须因 261,632 pairs 使用 refl seal。
@@ -6582,7 +6924,9 @@ dependency-correct landing order 固定为：
 
 1. 本 v4.2 spec PR，仅改本文档；
 2. D5 engine analysis modules（deposit）：capture/overlap/refinement/spectrum/layer laws；
-3. judge registry/identity mechanics：occurrence keys、canonical arena grouping、qualified names、module-local roots、structured negative diagnostics；
+3. judge registry/identity mechanics：occurrence keys、canonical arena grouping、qualified names、
+   structured negative diagnostics，并以 imported-entry filtering 或显式 root-ownership field
+   实现 module-local seal membership；
 4. unified causal math modules（deposit）：48-state carrier、readouts、factorizations、strict witnesses 与 faithful realizations；
 5. 新 designated v4.2 system root（deposit）：显式 re-register 全部 occurrences 并登记 causal chain view；
 6. judge schema-v3 analysis projection；
@@ -6591,6 +6935,10 @@ dependency-correct landing order 固定为：
 第 3 步必须先于任何 shared causal re-registration；纯 causal math 可以先 deposit，但不能
 调用尚不存在的 catalog-qualified registry API。refl lane 的 reflected seal 是任何
 $B(C)>65536$ catalog 的前置，不满足时该 catalog 不得在上述顺序中提前落地。
+第 3 步还必须保留 imported registrations 对 environment consumers 的可见性，并 deliberate
+地重写 `RegistrationPersistence`、`RegistryConsumer`、`SealCollision`：consumer visibility
+保留，seal membership 改为 root-local，跨 root duplicates 不碰撞，同一 root/catalog 内
+duplicates 稳定发 IE-C025。
 
 ---
 
@@ -6664,14 +7012,17 @@ original.__escape_enriched
 designated root environment 中对每个 canonical arena $A$ 都存在 catalog-qualified theorem：
 
 ```lean
-compiledCatalog_irredundant A : CatalogIrredundant (maximalCatalog A)
+theorem compiledCatalog_irredundant
+    (suite : DesignatedRootCatalogSuite) (index : suite.CatalogIndex) :
+    CatalogIrredundant (suite.maximalCatalog index).catalog
 ```
 
 并存在根级：
 
 ```lean
-systemCatalogIrredundant :
-  ∀ A, CatalogIrredundant (maximalCatalog A)
+theorem systemCatalogIrredundant
+    (suite : DesignatedRootCatalogSuite) :
+    SystemCatalogIrredundant suite
 ```
 
 它可由所有 catalog companion proofs 组装，也可由一次有限决定直接证明。analysis views
@@ -6722,8 +7073,10 @@ rates 均被认证，且 flat unique capture 与 ordered layered capture 在 API
 
 ### AC-016　Module-local designated root
 
-seal 只消费自身模块的 registrations；恰有一个 designated v4.2 system root。辅助 roots
-既不证明也不豁免 system-wide positivity。
+seal 只消费自身模块的 registrations；恰有一个 designated v4.2 system root。imported
+registrations 仍对 environment consumers 可见，但不是当前 seal members。跨 root scopes
+的 duplicates 不碰撞，同一 `(root_id,catalog_id,theoremName)` 内 duplicates 发 IE-C025。
+辅助 roots 既不证明也不豁免 system-wide positivity。
 
 ### AC-017　Causal alignment
 
@@ -6740,6 +7093,16 @@ strict refinement 有 Lean proofs；cumulative flat coarse layers 的零 capture
 
 frozen `InformationRoot`、其十一项 singleton counts 与 schema-v2 语义不变；v4.2 结果
 使用新 root、catalog identities 与 schema v3。
+
+### AC-020　Dependency-correct landing
+
+完成态必须由第 37 节固定的七步顺序产生：spec → D5 analysis laws → judge registry/identity
+mechanics → unified causal math → designated v4.2 root → schema-v3 projection → fixtures。
+judge 的 occurrence identity、root ownership/filtering 与 structured diagnostics 必须先于任何
+shared causal re-registration。任何 $B(C)>65536$ catalog 必须在其登记或执行前已有 refl-lane
+reflected seal。第 3 步必须先重规格化并通过 `RegistrationPersistence`、`RegistryConsumer`
+与 `SealCollision` 的 imported-visibility/root-local-membership/collision 语义；不得以最终树
+碰巧满足 AC-011--AC-019 代替这条依赖顺序。
 
 ---
 
@@ -6791,6 +7154,7 @@ def agrees (bundle : PrimitiveBundle arena)
 def agreesB (bundle : PrimitiveBundle arena)
     (left right : arena.State) : Bool := by
   letI := bundle.indexFintype
+  letI := bundle.indexDecidableEq
   exact Finset.univ.all fun index =>
     @decide ((bundle.atom index).kernel.relation left right)
       ((bundle.atom index).kernel.decidableRelation left right)
@@ -6822,6 +7186,7 @@ variable {arena : Arena} (catalog : Catalog arena)
 
 def fullIndexSet : Finset catalog.Index := by
   letI := catalog.indexFintype
+  letI := catalog.indexDecidableEq
   exact Finset.univ
 
 def without (index : catalog.Index) : Finset catalog.Index := by
@@ -7083,6 +7448,15 @@ end OI
 open D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner
 
 abbrev UnifiedBoolSCM := IC.Model ⊕ OI.Model
+
+def unifiedArena : Arena := by
+  letI : Fintype IC.Model :=
+    D5.S3.ConceptDynamics.InformationEscapeArenas.
+      FourthFifthArenas.modelFintype
+  letI : DecidableEq IC.Model :=
+    D5.S3.ConceptDynamics.InformationEscapeArenas.
+      FourthFifthArenas.modelDecidableEq
+  exact Arena.ofFintype UnifiedBoolSCM
 ```
 
 `IC` 有 16 states，`OI` 有 32 states，所以 `UnifiedBoolSCM` 有 48 states、
@@ -7099,7 +7473,67 @@ abbrev OIIntTable := Bool → Bool → Bool × Bool
 
 abbrev ObsOut := ICObsTable ⊕ OIObsTable
 abbrev IntOut := ICIntTable ⊕ (OIObsTable × OIIntTable)
-abbrev CfOut := ICCFTable ⊕ OI
+abbrev CfOut := ICCFTable ⊕ OI.Model
+
+inductive UnifiedObservationInterventionReadout
+  | observation | intervention
+  deriving DecidableEq, Fintype
+
+def unifiedObservationInterventionSignature :
+    PrimitiveSignature UnifiedBoolSCM where
+  Index := UnifiedObservationInterventionReadout
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  Output
+    | .observation => Option OIObsTable
+    | .intervention => Option OIIntTable
+  outputDecidableEq := by intro i; cases i <;> infer_instance
+  axis := fun _ => .cut
+  readoutAxisNotAnchor := by simp
+  AnchorIndex := Fin 0
+  anchorFintype := inferInstance
+  anchorDecidableEq := inferInstance
+
+def observationInterventionUnifiedRealization :
+    PrimitiveRealization unifiedObservationInterventionSignature where
+  readout
+    | .observation => fun
+        | .inl _ => none
+        | .inr M => some (OI.Obs M)
+    | .intervention => fun
+        | .inl _ => none
+        | .inr M => some (OI.Int M)
+  anchor := fun index => Fin.elim0 index
+
+inductive UnifiedInterventionCounterfactualReadout
+  | intervention | counterfactual
+  deriving DecidableEq, Fintype
+
+def unifiedInterventionCounterfactualSignature :
+    PrimitiveSignature UnifiedBoolSCM where
+  Index := UnifiedInterventionCounterfactualReadout
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  Output
+    | .intervention => Option ICIntTable
+    | .counterfactual => Option ICCFTable
+  outputDecidableEq := by intro i; cases i <;> infer_instance
+  axis := fun _ => .cut
+  readoutAxisNotAnchor := by simp
+  AnchorIndex := Fin 0
+  anchorFintype := inferInstance
+  anchorDecidableEq := inferInstance
+
+def interventionCounterfactualUnifiedRealization :
+    PrimitiveRealization unifiedInterventionCounterfactualSignature where
+  readout
+    | .intervention => fun
+        | .inl M => some (IC.Int M)
+        | .inr _ => none
+    | .counterfactual => fun
+        | .inl M => some (IC.CF M)
+        | .inr _ => none
+  anchor := fun index => Fin.elim0 index
 ```
 
 在 coproduct 上定义累计三层 readout：
@@ -7159,13 +7593,26 @@ theorems：
 另取一个 OI branch 上与 `OI.xCausesYModel` 的 `Obs` 不同的显式 model，即可证明
 $D_A\setminus K_{obs}$ 非空；该 positivity 不从另外两条 strictness theorem 冒推。
 
-规范 theorem 名为：
+前两条规范 theorem 的完整 signature 同时携 factorization implication 与指定 injected
+strictness witness：
 
-```text
-CAUSAL-IE-001 unified_observation_intervention_strict_refinement
-CAUSAL-IE-002 unified_intervention_counterfactual_strict_refinement
-CAUSAL-IE-003 unified_frozen_transition_catalog_irredundant
+```lean
+/-- CAUSAL-IE-001. -/
+theorem unified_observation_intervention_strict_refinement :
+    (∀ M N : UnifiedBoolSCM, IntU M = IntU N → ObsU M = ObsU N) ∧
+    (ObsU (.inr OI.xCausesYModel) = ObsU (.inr OI.yCausesXModel) ∧
+      IntU (.inr OI.xCausesYModel) ≠ IntU (.inr OI.yCausesXModel)) := by
+  ...
+
+/-- CAUSAL-IE-002. -/
+theorem unified_intervention_counterfactual_strict_refinement :
+    (∀ M N : UnifiedBoolSCM, CfU M = CfU N → IntU M = IntU N) ∧
+    (IntU (.inl IC.noEffectModel) = IntU (.inl IC.flipEffectModel) ∧
+      CfU (.inl IC.noEffectModel) ≠ CfU (.inl IC.flipEffectModel)) := by
+  ...
 ```
+
+`CAUSAL-IE-003` 在下文显式两成员 catalog 定义之后给出。
 
 由前两条建立 `LayerChain`：
 
@@ -7192,7 +7639,8 @@ $E_{cf}=D_A\cap K_{cf}$ 后分割 $D_A$。三项在此 construction 上均非空
 sizes、rates、overlaps 与 histograms 由 engine reflected measurement 给出，不在 spec
 预写数值。
 
-若把 `ObsU`、`IntU`、`CfU` 三个累计 kernels 当作 flat catalog members，则
+若把 `ObsU`、`IntU`、`CfU` 三个累计 kernels 固定为恰含这三者、没有额外 peer 的 flat
+analysis-view catalog，则
 CIRPT-IE-024 强制：
 
 $$
@@ -7207,9 +7655,9 @@ $$
 两条 frozen theorem 的 canonical shared catalog 使用两个 branch-local primitive law
 presentations，它们的 `toArena` definitionally 是同一个 unified `Arena`：
 
-- observation/intervention law 量化 $M,N:OI$，只在 `.inr M/.inr N` 上比较 branch-local
+- observation/intervention law 量化 $M,N:\texttt{OI.Model}$，只在 `.inr M/.inr N` 上比较 branch-local
   `OI.Obs` 与 `OI.Int` readouts；在 IC branch 两个 readouts 都为同一 `none`；
-- intervention/counterfactual law 量化 $M,N:IC$，只在 `.inl M/.inl N` 上比较
+- intervention/counterfactual law 量化 $M,N:\texttt{IC.Model}$，只在 `.inl M/.inl N` 上比较
   branch-local `IC.Int` 与 `IC.CF` readouts；在 OI branch 两个 readouts 都为同一 `none`。
 
 对应 API 形状为：
@@ -7217,34 +7665,68 @@ presentations，它们的 `toArena` definitionally 是同一个 unified `Arena`�
 ```lean
 def observationInterventionLawArena : PrimitiveLawArena where
   toArena := unifiedArena
-  signature := observationInterventionSignature
-  Law := fun r => ∃ M N : OI,
+  signature := unifiedObservationInterventionSignature
+  Law := fun r => ∃ M N : OI.Model,
     r.readout .observation (.inr M) = r.readout .observation (.inr N) ∧
     r.readout .intervention (.inr M) ≠ r.readout .intervention (.inr N)
 
 def interventionCounterfactualLawArena : PrimitiveLawArena where
   toArena := unifiedArena
-  signature := interventionCounterfactualSignature
-  Law := fun r => ∃ M N : IC,
+  signature := unifiedInterventionCounterfactualSignature
+  Law := fun r => ∃ M N : IC.Model,
     r.readout .intervention (.inl M) = r.readout .intervention (.inl N) ∧
     r.readout .counterfactual (.inl M) ≠ r.readout .counterfactual (.inl N)
 
 theorem observation_intervention_unified_realization :
     LegacyPrimitiveRealization observationInterventionLawArena
       (∃ M N : OI.Model, OI.Obs M = OI.Obs N ∧ OI.Int M ≠ OI.Int N)
-      observationInterventionUnifiedRealization
+      observationInterventionUnifiedRealization := by
+  ...
 
 theorem intervention_counterfactual_unified_realization :
     LegacyPrimitiveRealization interventionCounterfactualLawArena
       (∃ M N : IC.Model, IC.Int M = IC.Int N ∧ IC.CF M ≠ IC.CF N)
-      interventionCounterfactualUnifiedRealization
+      interventionCounterfactualUnifiedRealization := by
+  ...
+
+def unifiedObservationInterventionUnit : TheoremUnit unifiedArena :=
+  LegacyPrimitiveRealization.toTheoremUnit
+    observation_intervention_unified_realization
+    D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.
+      observation_strictly_weaker_than_intervention
+
+def unifiedInterventionCounterfactualUnit : TheoremUnit unifiedArena :=
+  LegacyPrimitiveRealization.toTheoremUnit
+    intervention_counterfactual_unified_realization
+    D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.
+      intervention_strictly_weaker_than_counterfactual
+
+inductive UnifiedFrozenTransitionIndex
+  | observationIntervention
+  | interventionCounterfactual
+  deriving DecidableEq, Fintype
+
+def unifiedFrozenTransitionCatalog : Catalog unifiedArena where
+  Index := UnifiedFrozenTransitionIndex
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  theoremAt
+    | .observationIntervention => unifiedObservationInterventionUnit
+    | .interventionCounterfactual => unifiedInterventionCounterfactualUnit
+
+/-- CAUSAL-IE-003. -/
+theorem unified_frozen_transition_catalog_irredundant :
+    CatalogIrredundant unifiedFrozenTransitionCatalog := by
+  ...
 ```
 
 每个 `equivalence` 的 forward direction 注入 frozen witness，reverse direction 从 law
 witness restriction 回取原 witness；两向都必须使用其 hypothesis 与 injection/restriction
 equations。空洞地引用两条已证明 existential Props 而忽略输入触发 IE-C029。
 
-OI frozen witness 在 OI branch 使 IC unit 的 local readouts 同为 `none`；IC frozen witness
+`unifiedFrozenTransitionCatalog` 恰有上面两个 occurrences；designated v4.2 root 以
+`catalog_id = causal-unified-transitions` 分别登记它们，且不把累计 chain readouts 加入该
+catalog。OI frozen witness 在 OI branch 使 IC unit 的 local readouts 同为 `none`；IC frozen witness
 在 IC branch 使 OI unit 的 local readouts 同为 `none`。因此两 occurrence 各有独有 pair，
 `CAUSAL-IE-003` 证明两成员 maximal theorem catalog irredundant。branch-local theorem
 kernel 与累计 `ObsU/IntU/CfU` chain 是两个不同关系，artifact 必须分别命名。
@@ -7319,7 +7801,7 @@ $$
 ## 46. 唯一实现闭环
 
 ```text
-current root-local Lean theorem occurrences and proofs
+v4.2 sealing-root-local Lean theorem occurrences and proofs
         ↓
 C-IRPT primitive normalization
         ↓
@@ -7413,7 +7895,9 @@ v4.2 不推翻第 48 节；它在 v4.1 kernel-residual 内核上作 additive 扩
 1. 分析成员的身份是 root/catalog-qualified occurrence；同一 occurrence key 恰出现一次；
 2. 分组键是 canonical object `Arena` declaration，不是 carrier coincidence、namespace 或 `PrimitiveLawArena`；
 3. 同 root、同 arena 的全部 occurrences 构成唯一 maximal catalog，sub-catalog 只作 analysis view；
-4. module-local root semantics 是现役真相；imported sealed roots 不自动贡献 registrations；
+4. v4.1（landed）imports persistent registrations；v4.2 要求 sealing root 只消费在 root module
+   自身 elaborated 的 registrations，landing step 3 必须以 imported-entry filtering 或显式
+   root-ownership field 实现，同时保留 imported entries 对 consumers 的可见性；
 5. 恰有一个 designated v4.2 system root，其 positivity 是全部 maximal catalogs 的 conjunction；
 6. namespace、root、catalog、cloned arena 与 positive-elsewhere 均不构成 exemption；
 7. flat leave-one-out exclusive capture 与 ordered layered capture 是两个不同量；
