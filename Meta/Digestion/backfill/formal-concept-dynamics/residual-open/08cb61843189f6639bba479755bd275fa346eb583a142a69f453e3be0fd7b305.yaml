@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `- 共同体准入 doctrine；` is a bare bridge label and states no community carrier, admission policy, or conclusion that a public theorem can cover. Retrieval receipts: exact D5 search `community admission|admission doctrine|admissionPolicy|准入` exited 1; broader ConceptDynamics search found `ProvenanceAdmissionCountermodel.equal_content_does_not_determine_admission`, which governs provenance-bearing reports rather than community membership or permission on DescriptiveStructure. Pinned Mathlib search exited 1. GitHub Lean-code search `community admission` exited 0 with no hits. Local construction probe `/private/tmp/w73e33-atom1-probe.lean` exited 1 after the exact separation conclusion closed, at the exact unsolved goal `⊢ communityAdmissionDoctrine`; assuming that goal would be hollow."
+    reentry_condition: "Add a canonical community-membership and admission-policy carrier on the source state-action domain, plus a frozen bridge theorem relating admission to the permission predicate."
+    blocker_class: multi-clause-guard

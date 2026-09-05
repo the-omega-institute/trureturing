@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `判读` is a status paragraph rather than one formal proposition: it combines primary-filtration status, secondary runtime status, a separate entropy-rate result, and the claim that this is the intrinsic shape of one tax bill. Retrieval receipts: D5 search `tax column|tax bill|primary filtration|secondary filtration|derived column|multi-filtration|joint budget|complexity density|rate column` exited 0 and found the separate frozen owners `ProgramCostFiltration.program_cost_filtration_classification`, `MultiFiltrationNamingSystem.joint_budget_layer_finite`, and `ComplexityDensityExchangeRate.complexity_density_ratio_tendsto_entropy_ratio`, but no public theorem joins their carriers into one four-column classification. Pinned Mathlib search exited 1. GitHub Lean-code searches `multi-filtration` and `Levin Kt` exited 0 with no matching tax-column theorem. Local construction probe `/private/tmp/w73e33-atom2-probe.lean` exited 1 after the exact three-clause program-cost theorem closed, at the exact unsolved goal `⊢ intrinsicTaxStructure`; assuming that goal would be hollow."
+    reentry_condition: "Add a canonical tax-column carrier joining program description length, runtime cost, and entropy rate on one naming system, plus a frozen theorem classifying its primary, secondary, and derived columns."
+    blocker_class: multi-clause-guard

@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `- 角色义务；` is a bare bridge label and states no role carrier, obligation relation, or conclusion that a public theorem can cover. Retrieval receipts: D5 search `role obligation|roleObligation|obligation|duty|角色义务` exited 0; nearby frozen owners `UniversalValueRoleInvariance.structural_universal_core_is_role_natural`, `FullRoleInvarianceOrbitFactorization.full_role_invariance_iff_orbit_factorization`, and the Contracts obligation theorems use separately specified carriers and state no role-duty bridge to DescriptiveStructure. Pinned Mathlib search exited 1. GitHub Lean-code search `role obligation` exited 0 with no hits. Local construction probe `/private/tmp/w73e33-atom1-probe.lean` exited 1 after the exact separation conclusion closed, at the exact unsolved goal `⊢ roleObligation`; assuming that goal would be hollow."
+    reentry_condition: "Add a canonical role-indexed obligation relation on the source state-action carrier and a frozen theorem mapping satisfied role obligations to the permission predicate."
+    blocker_class: multi-clause-guard
