@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:7db30125277bbce6bc6e1f2a2a0aa99ef14d20f88e8b8a4ba047eae4338927db
+  normalized_sha256: sha256:7db30125277bbce6bc6e1f2a2a0aa99ef14d20f88e8b8a4ba047eae4338927db
+cas_ref: sha256:7db30125277bbce6bc6e1f2a2a0aa99ef14d20f88e8b8a4ba047eae4338927db
+coverage_gids:
+  - gid: D5/S3/Observer/DefectModularFirstLaw/ThermofieldMarginalModularSpectrum.local_modular_first_law_from_thermofield_marginal
+    target_statement_id: sha256:c52515c90c6a0b036be5300c8713e80d43fed8bcf853265d68f3c1ab1b63a85e
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/DefectModularFirstLaw/ThermofieldMarginalModularSpectrum.local_modular_first_law_from_thermofield_marginal
+      definition_sha256: sha256:c6111133fa1f9d3f79a6b0344ce0ec170fb1a6904a4ee4722e1ccb1fcf7c1033
+      emission_sha256: sha256:daa950b9fa0a7c9f947a5c05cdbada5a7065f37a5223bafa157f9d5e4f9a6a41
+  unresolved_subitems: []
