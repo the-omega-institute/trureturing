@@ -36,7 +36,7 @@ concurrency:
 jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     # 20 分钟对本 job 已结构性不足:凡改动命中 tools/** 者,EngineeringScope 的测试选择器
     # 选中 0 个、回退 full,跑满全部测试套件,实测 20–21 分钟(#3940)。
     # 证据:PR #3943(生产 +4/-4、新增测试实测 221ms)连续五次 CANCELLED
@@ -542,7 +542,7 @@ jobs:
   baseline-admission:
     name: Content-addressed dev baseline admission
     needs: lean-inspect
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 20
     env:
       DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}
