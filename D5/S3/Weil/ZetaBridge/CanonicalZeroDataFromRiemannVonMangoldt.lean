@@ -63,7 +63,7 @@ multiplicity counts are bounded by the total carrier multiplicity. -/
 theorem dyadic_zero_count_bounded_of_finite_carrier
     (Z : ZeroConfig) (hfinite : Z.carrier.Finite) :
     ∃ M : ℕ, ∀ T : ℝ, Z.N T (2 * T) ≤ M := by
-  let M : ℕ := ∑ rho in hfinite.toFinset, Z.mult rho
+  let M : ℕ := ∑ rho ∈ hfinite.toFinset, Z.mult rho
   refine ⟨M, ?_⟩
   intro T
   unfold ZeroConfig.N
