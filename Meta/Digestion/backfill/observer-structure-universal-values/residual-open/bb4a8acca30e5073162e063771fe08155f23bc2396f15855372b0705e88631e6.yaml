@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:bb4a8acca30e5073162e063771fe08155f23bc2396f15855372b0705e88631e6
+  normalized_sha256: sha256:bb4a8acca30e5073162e063771fe08155f23bc2396f15855372b0705e88631e6
+cas_ref: sha256:bb4a8acca30e5073162e063771fe08155f23bc2396f15855372b0705e88631e6
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: 'Whole-atom multi-clause guard after review pass 1. CARRIED by frozen owner `D5/S3/ConceptDynamics/Fibers/ObserverConceptReadoutCorrespondence.observer_concept_readout_correspondence`: "每个概念是一个(准入恒真的)观察者结构" is stated by the `conceptObserver` computation-rule conjuncts at `ObserverConceptReadoutCorrespondence.lean:63-65`; "每个观察者结构的读数部分是一个联合概念" is stated by the `forgotten` quotient at `:60-62` together with its kernel equivalence at `:69-71`; and "这不是同构——遗忘方向丢掉准入与锚点" is witnessed by the Bool non-recoverability existential conjuncts at `:72-79`. UNCARRIED interpretive sentences, quoted verbatim: "而那正是价值所在(评注 2.3)" and "「概念」「读数」「观察者」是同一对象在不同粒度上的名字". The public theorem states no value-locus or terminological-identity conjunct, and the Scribe commentary stops at non-recoverability.'
+    reentry_condition: 'These are interpretive/philosophical claims. Cover requires either a frozen statement of the value-locus claim, for example a theorem that admission/anchor data is exactly what the forgetful map loses and what distinguishes observers with equal readouts, or an errata that marks the sentences as commentary.'
+    blocker_class: multi-clause-guard
