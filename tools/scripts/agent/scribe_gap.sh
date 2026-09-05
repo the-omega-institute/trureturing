@@ -15,6 +15,7 @@
 #
 # usage: scribe_gap.sh REPO [OUT.txt]
 # 哨兵: SCRIBE_GAP_OK frozen=<n> missing=<n>
+#       扫描失败即 SCRIBE_GAP_SCAN_FAILED + exit 69,绝不以部分结果打成功哨兵
 set -euo pipefail
 REPO="${1:-}"
 [ -n "$REPO" ] || { echo "SCRIBE_GAP_USAGE: scribe_gap.sh REPO [OUT.txt]" >&2; exit 64; }
@@ -24,7 +25,19 @@ REPO="${1:-}"
 OUT="${2:-/dev/stdout}"
 cd "$REPO"
 tmp=$(mktemp)
-trap 'rm -f "$tmp"' EXIT
+states=$(mktemp)
+trap 'rm -f "$tmp" "$states"' EXIT
+# find 的失败必须传回主流程。进程替换 `< <(find …)` 会把 find 的退出码丢在子 shell 里:
+# 遍历中途因不可读目录而失败时,循环照常正常结束,哨兵照常打印 SCRIBE_GAP_OK 且 exit=0
+# —— 那是器律④ 所禁的坏原材料(部分结果冒充完整结果)。
+# 独立评审席 2026-09-06 以合成夹具实测该形态:含不可读子目录的状态树上
+# stderr 出 Permission denied,而脚本仍报 frozen=1 missing=0 exit=0。
+# 故先把清单落盘并显式判 find 的退出码,再进循环。
+if ! find Golden/Frozen/state -name '*.lean.json' > "$states"; then
+  echo "SCRIBE_GAP_SCAN_FAILED root=Golden/Frozen/state" >&2
+  exit 69
+fi
+sort -o "$states" "$states"
 frozen=0
 missing=0
 while IFS= read -r state; do
@@ -35,7 +48,7 @@ while IFS= read -r state; do
     missing=$((missing + 1))
     printf '%s\n' "$rel" >> "$tmp"
   fi
-done < <(find Golden/Frozen/state -name '*.lean.json' | sort)
+done < "$states"
 [ "$frozen" -gt 0 ] || { echo "SCRIBE_GAP_EMPTY_FROZEN_STATE" >&2; exit 68; }
 sort -u "$tmp" > "$OUT"
 echo "SCRIBE_GAP_OK frozen=$frozen missing=$missing"
