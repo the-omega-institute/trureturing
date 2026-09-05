@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
@@ -24,7 +23,7 @@ public static class StatementProjectionReconciliation
     public static void Verify(string repositoryRoot, DeclarationCatalog catalog)
     {
         ArgumentNullException.ThrowIfNull(catalog);
-        var findings = Check(repositoryRoot, catalog.Declarations);
+        var findings = Check(repositoryRoot, catalog);
         if (!findings.IsEmpty)
         {
             throw new InvalidDataException(
@@ -37,52 +36,33 @@ public static class StatementProjectionReconciliation
     public static ImmutableArray<string> Check(string repositoryRoot, DeclarationCatalog catalog)
     {
         ArgumentNullException.ThrowIfNull(catalog);
-        return Check(repositoryRoot, catalog.Declarations);
-    }
-
-    private static ImmutableArray<string> Check(
-        string repositoryRoot,
-        IEnumerable<LeanDeclaration> declarations)
-    {
-        using var pilot = LoadFixture(repositoryRoot, "statement-projection-pilot-v1.json");
-        using var expansion = LoadFixture(repositoryRoot, "statement-projection-expansion-v1.json");
-        var expected = new[] { pilot, expansion }
-            .SelectMany(fixture => fixture.RootElement.GetProperty("declarations").EnumerateArray())
-            .ToDictionary(
-                item => item.GetProperty("name").GetString()!,
-                item => item.GetProperty("type").GetString()!,
-                StringComparer.Ordinal);
-        var actual = declarations
-            .Where(item => expected.ContainsKey(item.Name))
-            .GroupBy(item => item.Name, StringComparer.Ordinal)
-            .ToDictionary(
-                group => group.Key,
-                group => group.ToArray(),
-                StringComparer.Ordinal);
+        var expected = StatementProjectionFixtureLoader.LoadStatements(repositoryRoot).Values
+            .SelectMany(static module => module);
         var findings = ImmutableArray.CreateBuilder<string>();
 
-        foreach (var item in expected.OrderBy(static item => item.Key, StringComparer.Ordinal))
+        foreach (var item in expected.OrderBy(static item => item.SourcePath.Value, StringComparer.Ordinal)
+                     .ThenBy(static item => item.Name, StringComparer.Ordinal))
         {
-            if (!actual.TryGetValue(item.Key, out var live))
+            var live = catalog.DeclarationsFor(item.SourcePath, item.Name);
+            var identity = $"{item.Name} ({item.SourcePath.Value})";
+            if (live.IsEmpty)
             {
-                findings.Add($"pinned statement projection is missing from live report: {item.Key}");
+                findings.Add($"pinned statement projection is missing from live report: {identity}");
             }
             else if (live.Length != 1)
             {
                 findings.Add(
-                    $"pinned statement projection is ambiguous in live report: {item.Key} ({live.Length} declarations)");
+                    $"pinned statement projection is ambiguous in live report: {identity} ({live.Length} declarations)");
             }
-            else if (!StringComparer.Ordinal.Equals(item.Value, live[0].LoadTypeRepresentation()))
+            else if (!StringComparer.Ordinal.Equals(item.Kind, live[0].Kind)
+                     || !StringComparer.Ordinal.Equals(item.Type, live[0].LoadTypeRepresentation()))
             {
-                findings.Add($"pinned statement projection differs from live report: {item.Key}");
+                findings.Add($"pinned statement projection differs from live report: {identity}");
             }
         }
 
         return findings.ToImmutable();
     }
-
-    private static JsonDocument LoadFixture(string repositoryRoot, string name) =>
-        JsonDocument.Parse(File.ReadAllBytes(Path.Combine(repositoryRoot, "Golden", "Projection", name)));
 
     private static bool IsImplementationInput(string path)
     {

@@ -70,7 +70,7 @@ public sealed partial class FormalizeCandidatesTests
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
         Assert.Equal(
-            ["corollary", "lemma", "proposition", "theorem"],
+            ["corollary", "lemma", "proposition", "theorem", "theorem-form"],
             json.RootElement.GetProperty("candidates")
                 .EnumerateArray()
                 .Select(static candidate => candidate.GetProperty("kind").GetString())

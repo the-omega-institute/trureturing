@@ -1,0 +1,57 @@
+# 四、Zeckendorf 在这里怎样决定“作用量层级”？
+
+取：
+
+$$
+G_0=1,\quad G_1=2,\quad G_{L+2}=G_{L+1}+G_L.
+$$
+
+当指数窗口恰好完整时：
+
+$$
+a=G_L-1.
+$$
+
+这时：
+
+$$
+\ell=a+1=G_L,
+$$
+
+所以：
+
+$$
+\boxed{
+\mathscr S_{p,L}=G_L\ln p,
+}
+$$
+
+$$
+\boxed{
+u_{p,L}=p^{-G_L}.
+}
+\tag{4.1}
+$$
+
+于是立即得到：
+
+$$
+\boxed{
+\mathscr S_{p,L+2}
+=
+\mathscr S_{p,L+1}+\mathscr S_{p,L},
+}
+\tag{4.2}
+$$
+
+以及：
+
+$$
+\boxed{
+u_{p,L+2}
+=
+u_{p,L+1}u_{p,L}.
+}
+\tag{4.3}
+$$
+

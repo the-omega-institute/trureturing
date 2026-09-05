@@ -33,6 +33,10 @@ information_theorem idTheorem
   primitives idRealization
   : arena.Law idRealization := by trivial
 
+expect_information_occurrence idTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealIdentity"
+
 #seal_information_theory
 
 example :

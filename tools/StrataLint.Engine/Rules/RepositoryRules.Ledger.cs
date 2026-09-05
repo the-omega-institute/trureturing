@@ -138,8 +138,8 @@ internal static partial class RepositoryRules
     private static bool ChangedLeanTaskSet(RuleEvaluationContext context)
     {
         var currentTasks = CollectTaskCodes(context.Current);
-        var forkPointTasks = CollectTaskCodes(context.ForkPoint);
-        return !currentTasks.SetEquals(forkPointTasks);
+        var baselineTasks = CollectTaskCodes(context.Baseline);
+        return !currentTasks.SetEquals(baselineTasks);
     }
 
     private static bool PolicyDataChanged(RuleEvaluationContext context) =>

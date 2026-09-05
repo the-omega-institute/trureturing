@@ -1,0 +1,49 @@
+# 十、现在真正需要证明的算术内容是什么？
+
+我们已经知道实际 \(\mu_n\) 全部是正、偶、严格递减的概率密度。
+
+还需要证明的是：
+
+$$
+\boxed{
+\int_{\mathbb R}
+\mu_n(s)\cos(\sqrt2ts)\,ds\ge0
+\quad\forall n,t.
+}
+\tag{Q36}
+$$
+
+等价地，这些具体的 \(\mu_n\) 还必须自身具有正定性，而不只是作为概率密度逐点为正。实际关联核与这种 Fourier 正性之间的关系，正是经典广义 Laguerre 研究中的核心区分。([arXiv][3])
+
+一种足够强的证明方式是，从实际 theta 结构独立构造 \(h_n\)，使：
+
+$$
+\boxed{
+\mu_n(s)
+=
+\int_{\mathbb R}
+h_n(x+s)\overline{h_n(x)}\,dx.
+}
+\tag{Q37}
+$$
+
+那么 Fourier 变换就是：
+
+$$
+|\widehat h_n|^2\ge0.
+$$
+
+但不能先假设 \(\widehat\mu_n\ge0\)，定义：
+
+$$
+\widehat h_n=\sqrt{\widehat\mu_n},
+$$
+
+再宣布证明了正性。那只是循环。
+
+对于 \(n=0\)，原始两副本的卷积结构已经给出：
+
+$$
+R_0(t)=A(t)^2\ge0.
+$$
+
