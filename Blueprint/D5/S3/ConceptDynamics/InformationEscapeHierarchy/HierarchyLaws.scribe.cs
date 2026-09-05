@@ -82,14 +82,31 @@ internal sealed class HierarchyLawsDocument : IScribeDocumentDefinition
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);
 
+    private static Formula Or(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Or, right);
+
     private static Formula ImpliesFormula(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+
+    private static Formula Paren(Formula formula) => Seq(Open, formula, Close);
 
     private static Formula C() => F.Id("C");
     private static Formula P() => F.Id("P");
     private static Formula Q() => F.Id("Q");
     private static Formula I() => F.Id("i");
     private static Formula J() => F.Id("j");
+    private static Formula GeneratedKernelType(Formula catalog) =>
+        Call("GeneratedKernel", catalog);
+    private static Formula Generated(Formula catalog, Formula selected) =>
+        Call("generatedKernel", catalog, selected);
+    private static Formula Singleton(Formula value) => Call("singleton", value);
+    private static Formula FullSet(Formula catalog) => Call("fullIndexSet", catalog);
+    private static Formula LessEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Comparable(Formula catalog) => Seq(
+        Forall, Sp, P(), Comma, Sp, Q(), Colon, Sp,
+        GeneratedKernelType(catalog), Comma, Sp,
+        Or(LessEqual(P(), Q()), LessEqual(Q(), P())));
 
     private static Formula CoverFormula() => Seq(
         Call("IsCover", C(), Q(), P()), Sp, Iff, Sp, Call("CovBy", Q(), P()));
@@ -103,49 +120,92 @@ internal sealed class HierarchyLawsDocument : IScribeDocumentDefinition
         Call("GeneratorsComparableAfterClosure", C()), Sp, Iff, Sp,
         Call("PairwiseComparableSingletonKernels", C()));
 
-    private static Formula HasseChainFormula() => And(
-        Seq(Call("HasHassePath", C()), Sp, Iff, Sp, Call("Chain", C())),
-        Seq(Call("Chain", C()), Sp, Iff, Sp,
-            Call("GeneratorsComparableAfterClosure", C())));
+    private static Formula HasseChainFormula()
+    {
+        Formula firstIff = Seq(Call("HasHassePath", C()), Sp, Iff, Sp,
+            Comparable(C()));
+        Formula secondIff = Seq(Paren(Comparable(C())), Sp, Iff, Sp,
+            Call("GeneratorsComparableAfterClosure", C()));
+        return And(Paren(firstIff), Paren(secondIff));
+    }
 
-    private static Formula ShortcutFormula() => And(
-        Call("Chain", Call("ShortcutCatalog")),
-        And(Call("StrictIdentityStep", Call("ShortcutCatalog")),
-            Seq(Neg, Sp, Call("IsCover", Call("IdentityShortcut")))));
+    private static Formula ShortcutFormula()
+    {
+        Formula catalog = F.Id("shortcutCatalog");
+        Formula empty = Generated(catalog, Emptyset);
+        Formula full = Generated(catalog, FullSet(catalog));
+        Formula strictStep = Call("StrictGeneratorStep", catalog, empty, full, D(2));
+        Formula notCover = Seq(Neg, Call("IsCover", full, empty));
+        return And(Paren(Comparable(catalog)), And(strictStep, notCover));
+    }
 
     private static Formula ChainBoundFormula() => Seq(
-        Call("length", Call("chain")), Sp, Leq, Sp,
-        Call("card", Call("arena")), Sp, Minus, Sp, D(1));
+        Call("length", F.Id("chain")), Sp, Leq, Sp,
+        Call("card", F.Id("arena")), Sp, Minus, Sp, D(1));
 
     private static Formula NestedZeroFormula() => ImpliesFormula(
         And(Seq(I(), Sp, Neq, Sp, J()),
-            Call("Refines", Call("singletonKernel", J()),
-                Call("singletonKernel", I()))),
+            LessEqual(Generated(C(), Singleton(J())),
+                Generated(C(), Singleton(I())))),
         Seq(Call("uniqueCapturePairs", C(), I()), Sp, Eq, Sp, Emptyset));
 
-    private static Formula E1CountsFormula() => And(
-        Seq(Call("kernelClassCount", Call("E1")), Sp, Eq, Sp, D(4)),
-        Seq(Call("escapeCounts", Call("E1")), Sp, Eq, Sp,
-            Call("quadruple", D(1, 2), D(4), D(4), D(0))));
+    private static Formula E1Catalog() => F.Id("e1Catalog");
+    private static Formula E1Generated(Formula selected) =>
+        Generated(E1Catalog(), selected);
+    private static Formula E1EscapeCard(Formula selected) =>
+        Call("card", Call("escapeAt", E1Generated(selected)));
 
-    private static Formula E1DiamondFormula() => And(
-        Call("Incomparable", Call("Kfst"), Call("Ksnd")),
-        And(Call("StrictGeneratorStep", Call("Kempty"), Call("Kfst"), Call("fst")),
-            And(Call("StrictGeneratorStep", Call("Kfst"), Call("Kfull"), Call("snd")),
-                And(Call("StrictGeneratorStep", Call("Kempty"), Call("Ksnd"), Call("snd")),
-                    And(Call("StrictGeneratorStep", Call("Ksnd"), Call("Kfull"), Call("fst")),
-                        Call("StrictGeneratorStep", Call("Kempty"), Call("Kfull"),
-                            Call("identity")))))));
+    private static Formula E1CountsFormula() => And(
+        Seq(Call("card", F.Id("e1KernelClasses")), Sp, Eq, Sp, D(4)),
+        And(Seq(E1EscapeCard(Emptyset), Sp, Eq, Sp, D(1, 2)),
+            And(Seq(E1EscapeCard(Singleton(D(0))), Sp, Eq, Sp, D(4)),
+                And(Seq(E1EscapeCard(Singleton(D(1))), Sp, Eq, Sp, D(4)),
+                    Seq(E1EscapeCard(Singleton(D(2))), Sp, Eq, Sp, D(0))))));
+
+    private static Formula E1Strict(
+        Formula source, Formula target, Formula added) =>
+        Call("StrictGeneratorStep", E1Catalog(), source, target, added);
+
+    private static Formula E1DiamondFormula()
+    {
+        Formula empty = E1Generated(Emptyset);
+        Formula first = E1Generated(Singleton(D(0)));
+        Formula second = E1Generated(Singleton(D(1)));
+        Formula full = E1Generated(FullSet(E1Catalog()));
+        Formula firstNotSecond = Seq(Neg, LessEqual(first, second));
+        Formula secondNotFirst = Seq(Neg, LessEqual(second, first));
+        return And(firstNotSecond, And(secondNotFirst,
+            And(E1Strict(empty, first, D(0)),
+                And(E1Strict(first, full, D(1)),
+                    And(E1Strict(empty, second, D(1)),
+                        And(E1Strict(second, full, D(0)),
+                            E1Strict(empty, full, D(2))))))));
+    }
+
+    private static Formula Vector(Formula first, Formula second, Formula third) =>
+        Seq(Bang, OpenBracket, first, Comma, Sp, second, Comma, Sp, third,
+            CloseBracket);
+
+    private static Formula IncrementFunction(Formula schedule) => Seq(
+        LambdaLower, Sp, I(), Comma, Sp, Call("incrementCount", schedule, I()));
 
     private static Formula E1SchedulesFormula() => And(
-        Seq(Call("increments", Call("fstSndId")), Sp, Eq, Sp,
-            Call("triple", D(8), D(4), D(0))),
-        Seq(Call("increments", Call("idFstSnd")), Sp, Eq, Sp,
-            Call("triple", D(1, 2), D(0), D(0))));
+        Seq(Paren(IncrementFunction(F.Id("e1CoordinateSchedule"))), Sp, Eq, Sp,
+            Vector(D(8), D(4), D(0))),
+        Seq(Paren(IncrementFunction(F.Id("e1IdentitySchedule"))), Sp, Eq, Sp,
+            Vector(D(1, 2), D(0), D(0))));
+
+    private static Formula E1Unique(Formula index) =>
+        Call("uniqueCapturePairs", E1Catalog(), index);
+    private static Formula E1Spectrum(Formula multiplicity) =>
+        Call("captureSpectrum", E1Catalog(), multiplicity);
 
     private static Formula E1SpectrumFormula() => And(
-        Seq(Call("uniqueCaptureVector", Call("E1")), Sp, Eq, Sp,
-            Call("triple", Emptyset, Emptyset, Emptyset)),
-        Seq(Call("spectrum", Call("E1")), Sp, Eq, Sp,
-            Call("quadruple", D(0), D(0), D(8), D(4))));
+        Seq(E1Unique(D(0)), Sp, Eq, Sp, Emptyset),
+        And(Seq(E1Unique(D(1)), Sp, Eq, Sp, Emptyset),
+            And(Seq(E1Unique(D(2)), Sp, Eq, Sp, Emptyset),
+                And(Seq(E1Spectrum(D(0)), Sp, Eq, Sp, D(0)),
+                    And(Seq(E1Spectrum(D(1)), Sp, Eq, Sp, D(0)),
+                        And(Seq(E1Spectrum(D(2)), Sp, Eq, Sp, D(8)),
+                            Seq(E1Spectrum(D(3)), Sp, Eq, Sp, D(4))))))));
 }

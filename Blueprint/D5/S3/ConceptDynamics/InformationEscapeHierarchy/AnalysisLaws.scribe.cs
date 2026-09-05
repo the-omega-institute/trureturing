@@ -31,22 +31,6 @@ internal sealed class AnalysisLawsDocument : IScribeDocumentDefinition
                 "The finer occurrence agreement relation is pointwise contained in the coarser relation."),
             Definition("kernel-equivalent", "KernelEquivalent", "Occurrence kernel equivalence",
                 "Two occurrence kernels are equivalent when they refine one another."),
-            Definition("kernel-comparison", "KernelComparison", "Kernel comparison cases",
-                "The four cases distinguish equality, either strict direction, and incomparability."),
-            Definition("classify-kernel-comparison", "kernelComparison",
-                "Classified kernel comparison",
-                "The two decidable inclusion cells determine the four-way kernel classification."),
-            Definition("refinement-witness", "refinementWitness", "Refinement failure witness",
-                "A deterministic finite search returns a state pair witnessing a false refinement cell."),
-            Theorem("refinement-witness-none-iff-included", "refinementWitness_eq_none_iff",
-                "No witness exactly means refinement", WitnessNone()),
-            Theorem("refinement-witness-some-is-sound", "refinementWitness_eq_some_implies",
-                "A returned refinement witness is sound", WitnessSome()),
-            Theorem("refinement-witness-exists-iff-not-refines",
-                "refinementWitness_exists_iff_not_kernelRefines",
-                "A false cell has a deterministic witness", WitnessExistsIff()),
-            Theorem("kernel-comparison-spec", "kernelComparison_spec",
-                "Kernel comparison carries all inclusion and witness payloads", ComparisonSpec()),
             Definition("capture-multiplicity", "captureMultiplicity", "Capture multiplicity",
                 "Multiplicity counts how many catalog occurrences capture one ordered state pair."),
             Definition("capture-spectrum", "captureSpectrum", "Capture-multiplicity spectrum",
@@ -182,12 +166,13 @@ internal sealed class AnalysisLawsDocument : IScribeDocumentDefinition
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
 
+    private static Formula Paren(Formula formula) => Seq(Open, formula, Close);
+
     private static Formula Catalog() => F.Id("C");
     private static Formula Index() => F.Id("i");
     private static Formula OtherIndex() => F.Id("j");
     private static Formula Finer() => F.Id("i");
     private static Formula Coarser() => F.Id("j");
-    private static Formula Pair() => F.Id("p");
     private static Formula Multiplicity() => F.Id("k");
     private static Formula Signature() => F.Id("s");
     private static Formula Capture(Formula index) => Call("capturePairs", Catalog(), index);
@@ -197,20 +182,18 @@ internal sealed class AnalysisLawsDocument : IScribeDocumentDefinition
         Call("pairwiseCaptureOverlapPairs", Catalog(), left, right);
     private static Formula Refines(Formula finer, Formula coarser) =>
         Call("KernelRefines", Catalog(), finer, coarser);
-    private static Formula Witness(Formula finer, Formula coarser) =>
-        Call("refinementWitness", Catalog(), finer, coarser);
-    private static Formula WitnessExists(Formula finer, Formula coarser) => Seq(
-        Exists, Sp, Pair(), Comma, Sp, Witness(finer, coarser), Sp, Eq, Sp,
-        Call("some", Pair()));
-    private static Formula Comparison(Formula value) => Seq(
-        Call("kernelComparison", Catalog(), Index(), OtherIndex()), Sp, Eq, Sp, value);
     private static Formula Histogram(Formula index, Formula signature) =>
         Call("roleHistogram", Catalog(), index, signature);
     private static Formula Difference() =>
         Call("roleHistogramDifference", Catalog(), Index(), OtherIndex(), Signature());
     private static Formula Spectrum(Formula multiplicity) =>
         Call("captureSpectrum", Catalog(), multiplicity);
-    private static Formula Sum(Formula term) => Call("sum", term);
+    private static Formula Sum(Formula binder, Formula term) =>
+        Seq(F.Sum, Underscore, Grp(binder), Sp, term);
+    private static Formula SumWith(
+        Formula binder, Formula condition, Formula term) =>
+        Seq(F.Sum, Underscore,
+            Grp(Seq(binder, Sp, F.Id("with"), Sp, condition)), Sp, term);
     private static Formula Card(Formula set) => Call("card", set);
     private static Formula FullEscape() =>
         Call("escapePairs", Catalog(), Call("fullIndexSet", Catalog()));
@@ -218,15 +201,18 @@ internal sealed class AnalysisLawsDocument : IScribeDocumentDefinition
     private static Formula UniqueAsDifference() => Seq(
         Unique(Index()), Sp, Eq, Sp,
         Call("sdiff", Capture(Index()),
-            Call("biUnion", Call("erase", Call("univ"), Index()), Capture(OtherIndex()))));
+            Call("biUnion", Call("erase", Call("univ"), Index()),
+                Seq(LambdaLower, Sp, OtherIndex(), Comma, Sp,
+                    Capture(OtherIndex())))));
 
     private static Formula UniqueDisjoint() => Implies(
         Seq(Index(), Sp, Neq, Sp, OtherIndex()),
         Call("Disjoint", Unique(Index()), Unique(OtherIndex())));
 
     private static Formula UniqueBound() => new Formula.Relation(
-        Sum(UniqueCount(Index())), FormulaRelationOperator.LessThanOrEqual,
-        Card(Call("sdiff", Call("offDiagonalPairs", Catalog()), FullEscape())));
+        Sum(Index(), UniqueCount(Index())), FormulaRelationOperator.LessThanOrEqual,
+        Card(Call("sdiff", Call("offDiagonalPairs", Call("State", F.Id("A"))),
+            FullEscape())));
 
     private static Formula OverlapComm() => Seq(
         Overlap(Index(), OtherIndex()), Sp, Eq, Sp, Overlap(OtherIndex(), Index()));
@@ -245,8 +231,12 @@ internal sealed class AnalysisLawsDocument : IScribeDocumentDefinition
             Sp, Leq, Sp, Card(Capture(OtherIndex()))));
 
     private static Formula RefinesPreorder() => And(
-        Call("Reflexive", Call("KernelRefines", Catalog())),
-        Call("Transitive", Call("KernelRefines", Catalog())));
+        Paren(Seq(Forall, Sp, Index(), Comma, Sp, Refines(Index(), Index()))),
+        Paren(Seq(Forall, Sp, F.Id("i"), Comma, Sp, F.Id("j"), Comma, Sp,
+            F.Id("k"), Comma, Sp,
+            Implies(Refines(F.Id("i"), F.Id("j")),
+                Implies(Refines(F.Id("j"), F.Id("k")),
+                    Refines(F.Id("i"), F.Id("k")))))));
 
     private static Formula RefinesCapture() => Seq(
         Refines(Finer(), Coarser()), Sp, Leftrightarrow, Sp,
@@ -254,38 +244,6 @@ internal sealed class AnalysisLawsDocument : IScribeDocumentDefinition
 
     private static Formula RefinementPremises() => And(
         Seq(Finer(), Sp, Neq, Sp, Coarser()), Refines(Finer(), Coarser()));
-
-    private static Formula WitnessNone() => Seq(
-        Witness(Finer(), Coarser()), Sp, Eq, Sp, Call("none"),
-        Sp, Leftrightarrow, Sp, Refines(Finer(), Coarser()));
-
-    private static Formula WitnessSome()
-    {
-        Formula fineAgrees = Call("agrees", Catalog(), Finer(),
-            Call("fst", Pair()), Call("snd", Pair()));
-        Formula coarseAgrees = Call("agrees", Catalog(), Coarser(),
-            Call("fst", Pair()), Call("snd", Pair()));
-        return Implies(
-            Seq(Witness(Finer(), Coarser()), Sp, Eq, Sp, Call("some", Pair())),
-            And(fineAgrees, Seq(Neg, coarseAgrees)));
-    }
-
-    private static Formula WitnessExistsIff() => Seq(
-        WitnessExists(Finer(), Coarser()), Sp, Leftrightarrow, Sp,
-        Neg, Refines(Finer(), Coarser()));
-
-    private static Formula ComparisonSpec()
-    {
-        Formula equal = Seq(Comparison(F.Id("equal")), Sp, Leftrightarrow, Sp,
-            And(Refines(Index(), OtherIndex()), Refines(OtherIndex(), Index())));
-        Formula finer = Seq(Comparison(F.Id("strictlyFiner")), Sp, Leftrightarrow, Sp,
-            And(Refines(Index(), OtherIndex()), WitnessExists(OtherIndex(), Index())));
-        Formula coarser = Seq(Comparison(F.Id("strictlyCoarser")), Sp, Leftrightarrow, Sp,
-            And(WitnessExists(Index(), OtherIndex()), Refines(OtherIndex(), Index())));
-        Formula incomparable = Seq(Comparison(F.Id("incomparable")), Sp, Leftrightarrow, Sp,
-            And(WitnessExists(Index(), OtherIndex()), WitnessExists(OtherIndex(), Index())));
-        return And(equal, And(finer, And(coarser, incomparable)));
-    }
 
     private static Formula RefinesZeroSet() => Implies(
         RefinementPremises(), Seq(Unique(Coarser()), Sp, Eq, Sp, Emptyset));
@@ -314,19 +272,20 @@ internal sealed class AnalysisLawsDocument : IScribeDocumentDefinition
         Forall, Sp, Signature(), Comma, Sp, Difference(), Sp, Eq, Sp, D(0));
 
     private static Formula SpectrumTotal() => Seq(
-        Sum(Spectrum(Multiplicity())), Sp, Eq, Sp,
-        Card(Call("offDiagonalPairs", Catalog())));
+        Sum(Multiplicity(), Spectrum(Multiplicity())), Sp, Eq, Sp,
+        Card(Call("offDiagonalPairs", Call("State", F.Id("A")))));
 
     private static Formula SpectrumZero() => Seq(
         Spectrum(D(0)), Sp, Eq, Sp, Card(FullEscape()));
 
     private static Formula SpectrumUnique() => Seq(
         Spectrum(Call("captureMultiplicityOne", Catalog())), Sp, Eq, Sp,
-        Sum(UniqueCount(Index())));
+        Sum(Index(), UniqueCount(Index())));
 
     private static Formula SpectrumFirst() => Seq(
-        Sum(Seq(Multiplicity(), Sp, Times, Sp, Spectrum(Multiplicity()))),
-        Sp, Eq, Sp, Sum(Card(Capture(Index()))));
+        Sum(Multiplicity(),
+            Seq(Multiplicity(), Sp, Times, Sp, Spectrum(Multiplicity()))),
+        Sp, Eq, Sp, Sum(Index(), Card(Capture(Index()))));
 
     private static Formula SpectrumSecond() => Seq(
         Call("orderedDistinctOverlapTotal", Catalog()), Sp, Eq, Sp,
@@ -338,9 +297,12 @@ internal sealed class AnalysisLawsDocument : IScribeDocumentDefinition
 
     private static Formula RoleHistogramSum()
     {
-        Formula roleTotal = Call("sumNonzeroSignatures",
+        Formula zeroSignature = Paren(Seq(
+            LambdaLower, Sp, F.Id("b"), Comma, Sp, F.Id("false")));
+        Formula roleTotal = SumWith(Signature(),
+            Seq(Signature(), Sp, Neq, Sp, zeroSignature),
             Call("roleHistogramTotal", Catalog(), Signature()));
-        Formula uniqueTotal = Sum(UniqueCount(Index()));
+        Formula uniqueTotal = Sum(Index(), UniqueCount(Index()));
         Formula firstBucket = Spectrum(Call("captureMultiplicityOne", Catalog()));
         return And(Seq(roleTotal, Sp, Eq, Sp, uniqueTotal),
             Seq(uniqueTotal, Sp, Eq, Sp, firstBucket));

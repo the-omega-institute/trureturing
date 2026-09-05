@@ -100,91 +100,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.K
 
 Two occurrence kernels are equivalent when they refine one another.
 
-**Definition 1.9 (Kernel comparison cases).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.KernelComparison`
-
-*Formalization.* `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.KernelComparison` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The four cases distinguish equality, either strict direction, and incomparability.
-
-**Definition 1.10 (Classified kernel comparison).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.kernelComparison`
-
-*Formalization.* `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.kernelComparison` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The two decidable inclusion cells determine the four-way kernel classification.
-
-**Definition 1.11 (Refinement failure witness).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinementWitness`
-
-*Formalization.* `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinementWitness` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A deterministic finite search returns a state pair witnessing a false refinement cell.
-
-**Theorem 1.12 (No witness exactly means refinement).**
-
-$$\operatorname{refinementWitness}(C, i, j) = \operatorname{none}() \Leftrightarrow \operatorname{KernelRefines}(C, i, j).$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinementWitness_eq_none_iff` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
-
-**Theorem 1.13 (A returned refinement witness is sound).**
-
-$$\operatorname{refinementWitness}(C, i, j) = \operatorname{some}(p) \Rightarrow \left(\operatorname{agrees}(C, i, \operatorname{fst}(p), \operatorname{snd}(p)) \land \neg\operatorname{agrees}(C, j, \operatorname{fst}(p), \operatorname{snd}(p))\right).$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinementWitness_eq_some_implies` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
-
-**Theorem 1.14 (A false cell has a deterministic witness).**
-
-$$\exists p, \operatorname{refinementWitness}(C, i, j) = \operatorname{some}(p) \Leftrightarrow \neg\operatorname{KernelRefines}(C, i, j).$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinementWitness_exists_iff_not_kernelRefines` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
-
-**Theorem 1.15 (Kernel comparison carries all inclusion and witness payloads).**
-
-$$\operatorname{kernelComparison}(C, i, j) = equal \Leftrightarrow \operatorname{KernelRefines}(C, i, j) \land \operatorname{KernelRefines}(C, j, i) \land \left(\operatorname{kernelComparison}(C, i, j) = strictlyFiner \Leftrightarrow \operatorname{KernelRefines}(C, i, j) \land \exists p, \operatorname{refinementWitness}(C, j, i) = \operatorname{some}(p) \land \left(\operatorname{kernelComparison}(C, i, j) = strictlyCoarser \Leftrightarrow \exists p, \operatorname{refinementWitness}(C, i, j) = \operatorname{some}(p) \land \operatorname{KernelRefines}(C, j, i) \land \operatorname{kernelComparison}(C, i, j) = incomparable \Leftrightarrow \exists p, \operatorname{refinementWitness}(C, i, j) = \operatorname{some}(p) \land \exists p, \operatorname{refinementWitness}(C, j, i) = \operatorname{some}(p)\right)\right).$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.kernelComparison_spec` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
-
-**Definition 1.16 (Capture multiplicity).**
+**Definition 1.9 (Capture multiplicity).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.captureMultiplicity`
 
@@ -196,7 +112,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.c
 
 Multiplicity counts how many catalog occurrences capture one ordered state pair.
 
-**Definition 1.17 (Capture-multiplicity spectrum).**
+**Definition 1.10 (Capture-multiplicity spectrum).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.captureSpectrum`
 
@@ -208,7 +124,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.c
 
 Each bucket counts off-diagonal pairs having exactly its indexed multiplicity.
 
-**Definition 1.18 (Multiplicity-one index).**
+**Definition 1.11 (Multiplicity-one index).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.captureMultiplicityOne`
 
@@ -220,7 +136,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.c
 
 A nonempty catalog has a genuine spectrum coordinate for multiplicity one.
 
-**Definition 1.19 (Ordered distinct overlap total).**
+**Definition 1.12 (Ordered distinct overlap total).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.orderedDistinctOverlapTotal`
 
@@ -232,7 +148,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.o
 
 The total sums all overlap counts over ordered distinct occurrence pairs.
 
-**Definition 1.20 (Second factorial spectrum moment).**
+**Definition 1.13 (Second factorial spectrum moment).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.captureSpectrumSecondFactorialMoment`
 
@@ -244,7 +160,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.c
 
 The second factorial moment weights each bucket by k times k minus one.
 
-**Definition 1.21 (Role column total).**
+**Definition 1.14 (Role column total).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.roleHistogramTotal`
 
@@ -256,7 +172,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.r
 
 A role-signature column is summed across the entire catalog.
 
-**Definition 1.22 (Role profile equality).**
+**Definition 1.15 (Role profile equality).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.roleProfileEq`
 
@@ -268,7 +184,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.r
 
 Two occurrences have equal role profiles when every role-signature count agrees.
 
-**Definition 1.23 (Role histogram difference).**
+**Definition 1.16 (Role histogram difference).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.roleHistogramDifference`
 
@@ -280,7 +196,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.r
 
 A signed column difference compares two catalog occurrences.
 
-**Theorem 1.24 (Zero role difference exactly means equal counts).**
+**Theorem 1.17 (Zero role difference exactly means equal counts).**
 
 $$\operatorname{roleHistogramDifference}(C, i, j, s) = 0 \Leftrightarrow \operatorname{roleHistogram}(C, i, s) = \operatorname{roleHistogram}(C, j, s).$$
 
@@ -292,7 +208,7 @@ $$\operatorname{roleHistogramDifference}(C, i, j, s) = 0 \Leftrightarrow \operat
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.25 (Role profiles agree exactly when every difference vanishes).**
+**Theorem 1.18 (Role profiles agree exactly when every difference vanishes).**
 
 $$\operatorname{roleProfileEq}(C, i, j) \Leftrightarrow \forall s, \operatorname{roleHistogramDifference}(C, i, j, s) = 0.$$
 
@@ -304,7 +220,7 @@ $$\operatorname{roleProfileEq}(C, i, j) \Leftrightarrow \forall s, \operatorname
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Definition 1.26 (Redundant occurrence indices).**
+**Definition 1.19 (Redundant occurrence indices).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.redundantIndices`
 
@@ -316,7 +232,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.r
 
 The redundant-index set contains exactly occurrences with zero unique capture.
 
-**Definition 1.27 (Catalog redundancy).**
+**Definition 1.20 (Catalog redundancy).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.CatalogRedundant`
 
@@ -328,9 +244,9 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.C
 
 A catalog is redundant when at least one occurrence has zero unique capture.
 
-**Theorem 1.28 (Unique capture is capture minus peer capture).**
+**Theorem 1.21 (Unique capture is capture minus peer capture).**
 
-$$\operatorname{uniqueCapturePairs}(C, i) = \operatorname{sdiff}(\operatorname{capturePairs}(C, i), \operatorname{biUnion}(\operatorname{erase}(\operatorname{univ}(), i), \operatorname{capturePairs}(C, j))).$$
+$$\operatorname{uniqueCapturePairs}(C, i) = \operatorname{sdiff}(\operatorname{capturePairs}(C, i), \operatorname{biUnion}(\operatorname{erase}(\operatorname{univ}(), i), \lambda j, \operatorname{capturePairs}(C, j))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.uniqueCapturePairs_eq_capture_sdiff_iUnion` (`✓ std3`). ∎
 
@@ -340,7 +256,7 @@ $$\operatorname{uniqueCapturePairs}(C, i) = \operatorname{sdiff}(\operatorname{c
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.29 (Unique-capture sets are pairwise disjoint).**
+**Theorem 1.22 (Unique-capture sets are pairwise disjoint).**
 
 $$i \neq j \Rightarrow \operatorname{Disjoint}(\operatorname{uniqueCapturePairs}(C, i), \operatorname{uniqueCapturePairs}(C, j)).$$
 
@@ -352,9 +268,9 @@ $$i \neq j \Rightarrow \operatorname{Disjoint}(\operatorname{uniqueCapturePairs}
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.30 (Exclusive capture is bounded by full capture).**
+**Theorem 1.23 (Exclusive capture is bounded by full capture).**
 
-$$\operatorname{sum}(\operatorname{uniqueCaptureCount}(C, i)) \le \operatorname{card}(\operatorname{sdiff}(\operatorname{offDiagonalPairs}(C), \operatorname{escapePairs}(C, \operatorname{fullIndexSet}(C)))).$$
+$$\sum_{i} \operatorname{uniqueCaptureCount}(C, i) \le \operatorname{card}(\operatorname{sdiff}(\operatorname{offDiagonalPairs}(\operatorname{State}(A)), \operatorname{escapePairs}(C, \operatorname{fullIndexSet}(C)))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.sum_uniqueCaptureCount_le_capturedCount` (`✓ std3`). ∎
 
@@ -364,7 +280,7 @@ $$\operatorname{sum}(\operatorname{uniqueCaptureCount}(C, i)) \le \operatorname{
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.31 (Pairwise overlap is symmetric).**
+**Theorem 1.24 (Pairwise overlap is symmetric).**
 
 $$\operatorname{pairwiseCaptureOverlapPairs}(C, i, j) = \operatorname{pairwiseCaptureOverlapPairs}(C, j, i).$$
 
@@ -376,7 +292,7 @@ $$\operatorname{pairwiseCaptureOverlapPairs}(C, i, j) = \operatorname{pairwiseCa
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.32 (Diagonal overlap is capture).**
+**Theorem 1.25 (Diagonal overlap is capture).**
 
 $$\operatorname{pairwiseCaptureOverlapPairs}(C, i, i) = \operatorname{capturePairs}(C, i).$$
 
@@ -388,7 +304,7 @@ $$\operatorname{pairwiseCaptureOverlapPairs}(C, i, i) = \operatorname{capturePai
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.33 (Overlap lies in both capture cells).**
+**Theorem 1.26 (Overlap lies in both capture cells).**
 
 $$\operatorname{pairwiseCaptureOverlapPairs}(C, i, j) \subseteq \operatorname{capturePairs}(C, i) \land \operatorname{pairwiseCaptureOverlapPairs}(C, i, j) \subseteq \operatorname{capturePairs}(C, j).$$
 
@@ -400,7 +316,7 @@ $$\operatorname{pairwiseCaptureOverlapPairs}(C, i, j) \subseteq \operatorname{ca
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.34 (Overlap count is bounded by both capture counts).**
+**Theorem 1.27 (Overlap count is bounded by both capture counts).**
 
 $$\operatorname{pairwiseCaptureOverlapCount}(C, i, j) \leq \operatorname{card}(\operatorname{capturePairs}(C, i)) \land \operatorname{pairwiseCaptureOverlapCount}(C, i, j) \leq \operatorname{card}(\operatorname{capturePairs}(C, j)).$$
 
@@ -412,9 +328,9 @@ $$\operatorname{pairwiseCaptureOverlapCount}(C, i, j) \leq \operatorname{card}(\
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.35 (Kernel refinement is a preorder).**
+**Theorem 1.28 (Kernel refinement is a preorder).**
 
-$$\operatorname{Reflexive}(\operatorname{KernelRefines}(C)) \land \operatorname{Transitive}(\operatorname{KernelRefines}(C)).$$
+$$(\forall i, \operatorname{KernelRefines}(C, i, i)) \land (\forall i, j, k, \operatorname{KernelRefines}(C, i, j) \Rightarrow \left(\operatorname{KernelRefines}(C, j, k) \Rightarrow \operatorname{KernelRefines}(C, i, k)\right)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.kernelRefines_preorder` (`✓ std3`). ∎
 
@@ -424,7 +340,7 @@ $$\operatorname{Reflexive}(\operatorname{KernelRefines}(C)) \land \operatorname{
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.36 (Refinement reverses capture inclusion).**
+**Theorem 1.29 (Refinement reverses capture inclusion).**
 
 $$\operatorname{KernelRefines}(C, i, j) \Leftrightarrow \operatorname{capturePairs}(C, j) \subseteq \operatorname{capturePairs}(C, i).$$
 
@@ -436,7 +352,7 @@ $$\operatorname{KernelRefines}(C, i, j) \Leftrightarrow \operatorname{capturePai
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.37 (A distinct finer peer zeros coarser unique capture).**
+**Theorem 1.30 (A distinct finer peer zeros coarser unique capture).**
 
 $$\left(i \neq j \land \operatorname{KernelRefines}(C, i, j)\right) \Rightarrow \operatorname{uniqueCapturePairs}(C, j) = \emptyset.$$
 
@@ -448,7 +364,7 @@ $$\left(i \neq j \land \operatorname{KernelRefines}(C, i, j)\right) \Rightarrow 
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.38 (A distinct finer peer zeros coarser unique count).**
+**Theorem 1.31 (A distinct finer peer zeros coarser unique count).**
 
 $$\left(i \neq j \land \operatorname{KernelRefines}(C, i, j)\right) \Rightarrow \operatorname{uniqueCaptureCount}(C, j) = 0.$$
 
@@ -460,7 +376,7 @@ $$\left(i \neq j \land \operatorname{KernelRefines}(C, i, j)\right) \Rightarrow 
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.39 (Redundancy is existence of a zero coordinate).**
+**Theorem 1.32 (Redundancy is existence of a zero coordinate).**
 
 $$\operatorname{CatalogRedundant}(C) \Leftrightarrow \exists i, \operatorname{uniqueCaptureCount}(C, i) = 0.$$
 
@@ -472,7 +388,7 @@ $$\operatorname{CatalogRedundant}(C) \Leftrightarrow \exists i, \operatorname{un
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.40 (Redundancy negates catalog irredundancy).**
+**Theorem 1.33 (Redundancy negates catalog irredundancy).**
 
 $$\operatorname{CatalogRedundant}(C) \Leftrightarrow \neg\operatorname{CatalogIrredundant}(C).$$
 
@@ -484,7 +400,7 @@ $$\operatorname{CatalogRedundant}(C) \Leftrightarrow \neg\operatorname{CatalogIr
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.41 (Irredundancy empties the redundant-index set).**
+**Theorem 1.34 (Irredundancy empties the redundant-index set).**
 
 $$\operatorname{CatalogIrredundant}(C) \Leftrightarrow \operatorname{redundantIndices}(C) = \emptyset.$$
 
@@ -496,7 +412,7 @@ $$\operatorname{CatalogIrredundant}(C) \Leftrightarrow \operatorname{redundantIn
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.42 (Spec-name redundancy equivalence).**
+**Theorem 1.35 (Spec-name redundancy equivalence).**
 
 $$\operatorname{CatalogRedundant}(C) \Leftrightarrow \neg\operatorname{CatalogIrredundant}(C).$$
 
@@ -508,9 +424,9 @@ $$\operatorname{CatalogRedundant}(C) \Leftrightarrow \neg\operatorname{CatalogIr
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.43 (Spectrum buckets partition the arena denominator).**
+**Theorem 1.36 (Spectrum buckets partition the arena denominator).**
 
-$$\operatorname{sum}(\operatorname{captureSpectrum}(C, k)) = \operatorname{card}(\operatorname{offDiagonalPairs}(C)).$$
+$$\sum_{k} \operatorname{captureSpectrum}(C, k) = \operatorname{card}(\operatorname{offDiagonalPairs}(\operatorname{State}(A))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.captureSpectrum_sum_eq_denominator` (`✓ std3`). ∎
 
@@ -520,7 +436,7 @@ $$\operatorname{sum}(\operatorname{captureSpectrum}(C, k)) = \operatorname{card}
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.44 (Zero multiplicity is full escape).**
+**Theorem 1.37 (Zero multiplicity is full escape).**
 
 $$\operatorname{captureSpectrum}(C, 0) = \operatorname{card}(\operatorname{escapePairs}(C, \operatorname{fullIndexSet}(C))).$$
 
@@ -532,9 +448,9 @@ $$\operatorname{captureSpectrum}(C, 0) = \operatorname{card}(\operatorname{escap
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.45 (Multiplicity one is total exclusive capture).**
+**Theorem 1.38 (Multiplicity one is total exclusive capture).**
 
-$$\operatorname{captureSpectrum}(C, \operatorname{captureMultiplicityOne}(C)) = \operatorname{sum}(\operatorname{uniqueCaptureCount}(C, i)).$$
+$$\operatorname{captureSpectrum}(C, \operatorname{captureMultiplicityOne}(C)) = \sum_{i} \operatorname{uniqueCaptureCount}(C, i).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.captureSpectrum_one_eq_sum_unique` (`✓ std3`). ∎
 
@@ -544,9 +460,9 @@ $$\operatorname{captureSpectrum}(C, \operatorname{captureMultiplicityOne}(C)) = 
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.46 (The first moment double-counts capture incidence).**
+**Theorem 1.39 (The first moment double-counts capture incidence).**
 
-$$\operatorname{sum}(k \times \operatorname{captureSpectrum}(C, k)) = \operatorname{sum}(\operatorname{card}(\operatorname{capturePairs}(C, i))).$$
+$$\sum_{k} k \times \operatorname{captureSpectrum}(C, k) = \sum_{i} \operatorname{card}(\operatorname{capturePairs}(C, i)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.captureSpectrum_incidence_double_count` (`✓ std3`). ∎
 
@@ -556,7 +472,7 @@ $$\operatorname{sum}(k \times \operatorname{captureSpectrum}(C, k)) = \operatorn
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.47 (Overlap is the second factorial moment).**
+**Theorem 1.40 (Overlap is the second factorial moment).**
 
 $$\operatorname{orderedDistinctOverlapTotal}(C) = \operatorname{captureSpectrumSecondFactorialMoment}(C).$$
 
@@ -568,9 +484,9 @@ $$\operatorname{orderedDistinctOverlapTotal}(C) = \operatorname{captureSpectrumS
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.48 (Role columns sum to exclusive capture).**
+**Theorem 1.41 (Role columns sum to exclusive capture).**
 
-$$\operatorname{sumNonzeroSignatures}(\operatorname{roleHistogramTotal}(C, s)) = \operatorname{sum}(\operatorname{uniqueCaptureCount}(C, i)) \land \operatorname{sum}(\operatorname{uniqueCaptureCount}(C, i)) = \operatorname{captureSpectrum}(C, \operatorname{captureMultiplicityOne}(C)).$$
+$$\sum_{s with s \neq (\lambda b, false)} \operatorname{roleHistogramTotal}(C, s) = \sum_{i} \operatorname{uniqueCaptureCount}(C, i) \land \sum_{i} \operatorname{uniqueCaptureCount}(C, i) = \operatorname{captureSpectrum}(C, \operatorname{captureMultiplicityOne}(C)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.catalogRoleHistogram_sum` (`✓ std3`). ∎
 
@@ -580,9 +496,9 @@ $$\operatorname{sumNonzeroSignatures}(\operatorname{roleHistogramTotal}(C, s)) =
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.49 (Hierarchy spectrum total).**
+**Theorem 1.42 (Hierarchy spectrum total).**
 
-$$\operatorname{sum}(\operatorname{captureSpectrum}(C, k)) = \operatorname{card}(\operatorname{offDiagonalPairs}(C)).$$
+$$\sum_{k} \operatorname{captureSpectrum}(C, k) = \operatorname{card}(\operatorname{offDiagonalPairs}(\operatorname{State}(A))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.spectrum_total` (`✓ std3`). ∎
 
@@ -592,7 +508,7 @@ $$\operatorname{sum}(\operatorname{captureSpectrum}(C, k)) = \operatorname{card}
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.50 (Hierarchy zero-multiplicity bucket).**
+**Theorem 1.43 (Hierarchy zero-multiplicity bucket).**
 
 $$\operatorname{captureSpectrum}(C, 0) = \operatorname{card}(\operatorname{escapePairs}(C, \operatorname{fullIndexSet}(C))).$$
 
@@ -604,9 +520,9 @@ $$\operatorname{captureSpectrum}(C, 0) = \operatorname{card}(\operatorname{escap
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.51 (Hierarchy multiplicity-one bucket).**
+**Theorem 1.44 (Hierarchy multiplicity-one bucket).**
 
-$$\operatorname{captureSpectrum}(C, \operatorname{captureMultiplicityOne}(C)) = \operatorname{sum}(\operatorname{uniqueCaptureCount}(C, i)).$$
+$$\operatorname{captureSpectrum}(C, \operatorname{captureMultiplicityOne}(C)) = \sum_{i} \operatorname{uniqueCaptureCount}(C, i).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.spectrum_unique` (`✓ std3`). ∎
 
@@ -616,9 +532,9 @@ $$\operatorname{captureSpectrum}(C, \operatorname{captureMultiplicityOne}(C)) = 
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.52 (Hierarchy first spectrum moment).**
+**Theorem 1.45 (Hierarchy first spectrum moment).**
 
-$$\operatorname{sum}(k \times \operatorname{captureSpectrum}(C, k)) = \operatorname{sum}(\operatorname{card}(\operatorname{capturePairs}(C, i))).$$
+$$\sum_{k} k \times \operatorname{captureSpectrum}(C, k) = \sum_{i} \operatorname{card}(\operatorname{capturePairs}(C, i)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.spectrum_first_moment` (`✓ std3`). ∎
 
@@ -628,7 +544,7 @@ $$\operatorname{sum}(k \times \operatorname{captureSpectrum}(C, k)) = \operatorn
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.53 (Hierarchy second spectrum moment).**
+**Theorem 1.46 (Hierarchy second spectrum moment).**
 
 $$\operatorname{captureSpectrumSecondFactorialMoment}(C) = \operatorname{orderedDistinctOverlapTotal}(C).$$
 
@@ -640,7 +556,7 @@ $$\operatorname{captureSpectrumSecondFactorialMoment}(C) = \operatorname{ordered
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.54 (Overlap symmetry and diagonal law).**
+**Theorem 1.47 (Overlap symmetry and diagonal law).**
 
 $$\operatorname{pairwiseCaptureOverlapPairs}(C, i, j) = \operatorname{pairwiseCaptureOverlapPairs}(C, j, i) \land \operatorname{pairwiseCaptureOverlapPairs}(C, i, i) = \operatorname{capturePairs}(C, i).$$
 
@@ -652,7 +568,7 @@ $$\operatorname{pairwiseCaptureOverlapPairs}(C, i, j) = \operatorname{pairwiseCa
 
 The certificate follows from finite capture-set algebra and the landed escape and role-histogram laws.
 
-**Theorem 1.55 (Refinement determines overlap).**
+**Theorem 1.48 (Refinement determines overlap).**
 
 $$\operatorname{KernelRefines}(C, i, j) \Rightarrow \left(\operatorname{capturePairs}(C, j) \subseteq \operatorname{capturePairs}(C, i) \land \operatorname{pairwiseCaptureOverlapPairs}(C, i, j) = \operatorname{capturePairs}(C, j)\right).$$
 
@@ -667,7 +583,6 @@ The certificate follows from finite capture-set algebra and the landed escape an
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.CatalogRedundant`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.KernelComparison`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.KernelEquivalent`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.KernelRefines`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.captureMultiplicity`
@@ -685,8 +600,6 @@ The certificate follows from finite capture-set algebra and the landed escape an
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.catalogRedundant_iff_not_irredundant`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.catalogRoleHistogram_sum`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.exclusiveCaptureVector`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.kernelComparison`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.kernelComparison_spec`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.kernelRefines_iff_capturePairs_subset`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.kernelRefines_implies_zero_uniqueCapture`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.kernelRefines_implies_zero_uniqueCaptureCount`
@@ -702,10 +615,6 @@ The certificate follows from finite capture-set algebra and the landed escape an
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.pairwiseCaptureOverlap_subset`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.pairwiseOverlap_spectrum_doubleCount`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.redundantIndices`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinementWitness`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinementWitness_eq_none_iff`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinementWitness_eq_some_implies`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinementWitness_exists_iff_not_kernelRefines`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.refinement_overlap`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.roleHistogramDifference`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.roleHistogramDifference_eq_zero_iff`

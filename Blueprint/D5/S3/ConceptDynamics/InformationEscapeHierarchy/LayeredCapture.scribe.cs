@@ -41,6 +41,10 @@ internal sealed class LayeredCaptureDocument : IScribeDocumentDefinition
                 "The exact unresolved rate uses the same arena denominator as every layer."),
             Theorem("initial-layer-nonempty-criterion", "layeredCapture_zero_nonempty_iff",
                 "Initial capture nonemptiness", InitialNonempty()),
+            Theorem("initial-layer-nonempty-not-subset",
+                "layeredCapture_zero_nonempty_iff_not_subset",
+                "Initial capture is failure of off-diagonal containment",
+                InitialNotSubset()),
             Theorem("successor-layer-nonempty-criterion",
                 "layeredCapture_succ_nonempty_iff_strict",
                 "Successor capture nonemptiness", SuccessorNonempty()),
@@ -108,6 +112,8 @@ internal sealed class LayeredCaptureDocument : IScribeDocumentDefinition
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
 
+    private static Formula Paren(Formula formula) => Seq(Open, formula, Close);
+
     private static Formula Chain() => F.Id("C");
     private static Formula Catalog() => F.Id("A");
     private static Formula Layer() => F.Id("r");
@@ -115,17 +121,33 @@ internal sealed class LayeredCaptureDocument : IScribeDocumentDefinition
     private static Formula OtherIndex() => F.Id("j");
     private static Formula Left() => F.Id("x");
     private static Formula Right() => F.Id("y");
+    private static Formula Pair() => F.Id("p");
+    private static Formula ArenaState() => Call("State", F.Id("arena"));
+    private static Formula LayerType() => Call("Fin",
+        Seq(Call("length", Chain()), Sp, Plus, Sp, D(1)));
     private static Formula Captures(Formula layer) =>
         Call("layeredCapturePairs", Chain(), layer);
     private static Formula Kernel(Formula layer) => Call("kernel", Chain(), layer);
+    private static Formula RelationFunction(Formula kernel) =>
+        Call("relation", kernel);
     private static Formula Relation(Formula kernel) =>
         Call("relation", kernel, Left(), Right());
+    private static Formula RelationAt(Formula kernel, Formula pair) =>
+        Call("relation", kernel, Call("fst", pair), Call("snd", pair));
+    private static Formula LessEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
 
     private static Formula InitialNonempty() => Seq(
         Call("Nonempty", Captures(Call("zero"))), Sp, Leftrightarrow, Sp,
         Exists, Sp, Left(), Comma, Sp, Right(), Comma, Sp,
         And(Seq(Left(), Sp, Neq, Sp, Right()),
             Seq(Neg, Relation(Kernel(Call("zero"))))));
+
+    private static Formula InitialNotSubset() => Seq(
+        Call("Nonempty", Captures(Call("zero"))), Sp, Leftrightarrow, Sp,
+        Neg, Paren(Seq(Call("coe", Call("offDiagonalPairs", ArenaState())),
+            Sp, Subseteq, Sp,
+            Call("setOf", Pair(), RelationAt(Kernel(Call("zero")), Pair())))));
 
     private static Formula SuccessorNonempty() => Seq(
         Call("Nonempty", Captures(Call("succ", Layer()))), Sp, Leftrightarrow, Sp,
@@ -135,21 +157,31 @@ internal sealed class LayeredCaptureDocument : IScribeDocumentDefinition
 
     private static Formula Partition()
     {
-        Formula pairwise = Call("PairwiseDisjoint", Call("layers", Chain()));
-        Formula unresolvedDisjoint =
-            Call("DisjointFrom", Call("layers", Chain()), Call("unresolvedPairs", Chain()));
+        Formula pairwise = Seq(
+            Forall, Sp, Layer(), Comma, Sp, F.Id("s"), Colon, Sp, LayerType(),
+            Comma, Sp,
+            Implies(Seq(Layer(), Sp, Neq, Sp, F.Id("s")),
+                Call("Disjoint", Captures(Layer()), Captures(F.Id("s")))));
+        Formula unresolvedDisjoint = Seq(
+            Forall, Sp, Layer(), Colon, Sp, LayerType(), Comma, Sp,
+            Call("Disjoint", Captures(Layer()), Call("unresolvedPairs", Chain())));
         Formula covers = Seq(
-            Call("union", Call("biUnion", Call("layers", Chain())),
+            Call("union", Call("biUnion", Call("univ"),
+                    Call("layeredCapturePairs", Chain())),
                 Call("unresolvedPairs", Chain())),
-            Sp, Eq, Sp, Call("offDiagonalPairs", Chain()));
-        return And(pairwise, And(unresolvedDisjoint, covers));
+            Sp, Eq, Sp, Call("offDiagonalPairs", ArenaState()));
+        return And(Paren(pairwise), And(Paren(unresolvedDisjoint), covers));
     }
 
-    private static Formula StrictRefinement() => Seq(
-        Call("StrictSubset", Call("relation", Kernel(Call("succ", Layer()))),
-            Call("relation", Kernel(Call("castSucc", Layer())))),
-        Sp, Leftrightarrow, Sp,
-        Call("Nonempty", Captures(Call("succ", Layer()))));
+    private static Formula StrictRefinement()
+    {
+        Formula next = RelationFunction(Kernel(Call("succ", Layer())));
+        Formula previous = RelationFunction(Kernel(Call("castSucc", Layer())));
+        Formula strict = And(LessEqual(next, previous),
+            Seq(Neg, Paren(LessEqual(previous, next))));
+        return Seq(Open, strict, Close, Sp, Leftrightarrow, Sp,
+            Call("Nonempty", Captures(Call("succ", Layer()))));
+    }
 
     private static Formula CoarserZero()
     {

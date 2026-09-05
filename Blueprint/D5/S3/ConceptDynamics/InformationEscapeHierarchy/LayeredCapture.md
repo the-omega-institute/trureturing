@@ -160,7 +160,19 @@ $$\operatorname{Nonempty}(\operatorname{layeredCapturePairs}(C, \operatorname{ze
 
 The certificate follows from the typed chain data and finite kernel-set algebra.
 
-**Theorem 1.14 (Successor capture nonemptiness).**
+**Theorem 1.14 (Initial capture is failure of off-diagonal containment).**
+
+$$\operatorname{Nonempty}(\operatorname{layeredCapturePairs}(C, \operatorname{zero}())) \Leftrightarrow \neg(\operatorname{coe}(\operatorname{offDiagonalPairs}(\operatorname{State}(arena))) \subseteq \operatorname{setOf}(p, \operatorname{relation}(\operatorname{kernel}(C, \operatorname{zero}()), \operatorname{fst}(p), \operatorname{snd}(p)))).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.layeredCapture_zero_nonempty_iff_not_subset` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The certificate follows from the typed chain data and finite kernel-set algebra.
+
+**Theorem 1.15 (Successor capture nonemptiness).**
 
 $$\operatorname{Nonempty}(\operatorname{layeredCapturePairs}(C, \operatorname{succ}(r))) \Leftrightarrow \exists x, y, \operatorname{relation}(\operatorname{kernel}(C, \operatorname{castSucc}(r)), x, y) \land \neg\operatorname{relation}(\operatorname{kernel}(C, \operatorname{succ}(r)), x, y).$$
 
@@ -172,9 +184,9 @@ $$\operatorname{Nonempty}(\operatorname{layeredCapturePairs}(C, \operatorname{su
 
 The certificate follows from the typed chain data and finite kernel-set algebra.
 
-**Theorem 1.15 (Layered capture partition).**
+**Theorem 1.16 (Layered capture partition).**
 
-$$\operatorname{PairwiseDisjoint}(\operatorname{layers}(C)) \land \left(\operatorname{DisjointFrom}(\operatorname{layers}(C), \operatorname{unresolvedPairs}(C)) \land \operatorname{union}(\operatorname{biUnion}(\operatorname{layers}(C)), \operatorname{unresolvedPairs}(C)) = \operatorname{offDiagonalPairs}(C)\right).$$
+$$(\forall r, s: \operatorname{Fin}(\operatorname{length}(C) + 1), r \neq s \Rightarrow \operatorname{Disjoint}(\operatorname{layeredCapturePairs}(C, r), \operatorname{layeredCapturePairs}(C, s))) \land \left((\forall r: \operatorname{Fin}(\operatorname{length}(C) + 1), \operatorname{Disjoint}(\operatorname{layeredCapturePairs}(C, r), \operatorname{unresolvedPairs}(C))) \land \operatorname{union}(\operatorname{biUnion}(\operatorname{univ}(), \operatorname{layeredCapturePairs}(C)), \operatorname{unresolvedPairs}(C)) = \operatorname{offDiagonalPairs}(\operatorname{State}(arena))\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.layeredCapture_partition` (`✓ std3`). ∎
 
@@ -184,9 +196,9 @@ $$\operatorname{PairwiseDisjoint}(\operatorname{layers}(C)) \land \left(\operato
 
 The certificate follows from the typed chain data and finite kernel-set algebra.
 
-**Theorem 1.16 (Strict refinement is nonempty capture).**
+**Theorem 1.17 (Strict refinement is nonempty capture).**
 
-$$\operatorname{StrictSubset}(\operatorname{relation}(\operatorname{kernel}(C, \operatorname{succ}(r))), \operatorname{relation}(\operatorname{kernel}(C, \operatorname{castSucc}(r)))) \Leftrightarrow \operatorname{Nonempty}(\operatorname{layeredCapturePairs}(C, \operatorname{succ}(r))).$$
+$$(\operatorname{relation}(\operatorname{kernel}(C, \operatorname{succ}(r))) \le \operatorname{relation}(\operatorname{kernel}(C, \operatorname{castSucc}(r))) \land \neg(\operatorname{relation}(\operatorname{kernel}(C, \operatorname{castSucc}(r))) \le \operatorname{relation}(\operatorname{kernel}(C, \operatorname{succ}(r))))) \Leftrightarrow \operatorname{Nonempty}(\operatorname{layeredCapturePairs}(C, \operatorname{succ}(r))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.strictRefinement_iff_layeredCapture_nonempty` (`✓ std3`). ∎
 
@@ -196,7 +208,7 @@ $$\operatorname{StrictSubset}(\operatorname{relation}(\operatorname{kernel}(C, \
 
 The certificate follows from the typed chain data and finite kernel-set algebra.
 
-**Theorem 1.17 (A finer peer zeros coarser unique capture).**
+**Theorem 1.18 (A finer peer zeros coarser unique capture).**
 
 $$\left(i \neq j \land \operatorname{KernelRefines}(A, i, j)\right) \Rightarrow \operatorname{uniqueCapturePairs}(A, j) = \emptyset.$$
 
@@ -208,7 +220,7 @@ $$\left(i \neq j \land \operatorname{KernelRefines}(A, i, j)\right) \Rightarrow 
 
 The certificate follows from the typed chain data and finite kernel-set algebra.
 
-**Definition 1.18 (Packed catalog).**
+**Definition 1.19 (Packed catalog).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.PackedCatalog`
 
@@ -220,7 +232,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture
 
 A packed catalog stores an arena together with a catalog definitionally over that arena.
 
-**Definition 1.19 (Designated root catalog suite).**
+**Definition 1.20 (Designated root catalog suite).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.DesignatedRootCatalogSuite`
 
@@ -232,7 +244,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture
 
 A finite dependent catalogAt family lists every maximal catalog owned by one sealing root.
 
-**Definition 1.20 (System catalog irredundancy).**
+**Definition 1.21 (System catalog irredundancy).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.SystemCatalogIrredundant`
 
@@ -244,7 +256,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture
 
 Every maximal catalog in the designated root must be irredundant.
 
-**Definition 1.21 (System-wide positivity).**
+**Definition 1.22 (System-wide positivity).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.SystemWidePositive`
 
@@ -256,7 +268,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture
 
 The compatibility name denotes the same one-root universal proposition.
 
-**Theorem 1.22 (System positivity is designated-root irredundancy).**
+**Theorem 1.23 (System positivity is designated-root irredundancy).**
 
 $$\operatorname{SystemWidePositive}(S) \Leftrightarrow \operatorname{SystemCatalogIrredundant}(S).$$
 
@@ -268,7 +280,7 @@ $$\operatorname{SystemWidePositive}(S) \Leftrightarrow \operatorname{SystemCatal
 
 The certificate follows from the typed chain data and finite kernel-set algebra.
 
-**Definition 1.23 (Generated schedule layer chain).**
+**Definition 1.24 (Generated schedule layer chain).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.toLayerChain`
 
@@ -280,7 +292,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture
 
 A classified generator schedule yields a certified general kernel chain.
 
-**Theorem 1.24 (Generated layered captures are schedule increments).**
+**Theorem 1.25 (Generated layered captures are schedule increments).**
 
 $$\operatorname{layeredCapturePairs}(\operatorname{toLayerChain}(G), \operatorname{succ}(r)) = \operatorname{increment}(G, r).$$
 
@@ -310,6 +322,7 @@ The certificate follows from the typed chain data and finite kernel-set algebra.
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.layeredCapture_partition`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.layeredCapture_succ_nonempty_iff_strict`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.layeredCapture_zero_nonempty_iff`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.layeredCapture_zero_nonempty_iff_not_subset`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.maximalCatalog`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.strictRefinement_iff_layeredCapture_nonempty`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.systemWidePositive_iff_systemCatalogIrredundant`

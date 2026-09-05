@@ -59,7 +59,8 @@ structure CatalogOccurrence (arena : Arena.{u}) where
   realizationName : Name
   unit : TheoremUnit.{u, v} arena
 
-/-- Assemble the canonical catalog at one root and object arena from its occurrence closure. -/
+/-- Assemble the canonical catalog at one root and object arena from its occurrence closure.
+Spec spelling: `DesignatedRootCatalogSuite.maximalCatalog`. -/
 def maximalCatalog {arena : Arena.{u}} (rootId objectArenaName : Name)
     (occurrences : Array (CatalogOccurrence.{u, v} arena)) : Catalog.{u, v, 0} arena := by
   let members := occurrences.filter fun occurrence =>
@@ -231,6 +232,24 @@ theorem layeredCapture_zero_nonempty_iff
     · simp [stagePairs, offDiagonalPairs, distinct]
     · intro inFirstKernel
       exact separated (Finset.mem_filter.mp inFirstKernel).2
+
+/-- IE-037: the initial layer is nonempty exactly when `D_A` is not contained
+in the first kernel. -/
+theorem layeredCapture_zero_nonempty_iff_not_subset
+    {arena : Arena.{u}} (chain : LayerChain arena) :
+    (chain.layeredCapturePairs ⟨0, Nat.zero_lt_succ _⟩).Nonempty ↔
+      ¬(↑(offDiagonalPairs arena.State) : Set (arena.State × arena.State)) ⊆
+        {pair | (chain.kernel ⟨0, Nat.zero_lt_succ _⟩).relation pair.1 pair.2} := by
+  rw [chain.layeredCapture_zero_nonempty_iff]
+  constructor
+  · rintro ⟨x, y, distinct, separated⟩ subset
+    apply separated
+    exact subset (show (x, y) ∈
+      (↑(offDiagonalPairs arena.State) : Set (arena.State × arena.State)) by
+        simpa [offDiagonalPairs] using distinct)
+  · intro notSubset
+    obtain ⟨pair, offDiagonal, separated⟩ := Set.not_subset.mp notSubset
+    exact ⟨pair.1, pair.2, by simpa [offDiagonalPairs] using offDiagonal, separated⟩
 
 /-- A successor layer is nonempty exactly when the next kernel removes a related pair. -/
 theorem layeredCapture_succ_nonempty_iff_strict

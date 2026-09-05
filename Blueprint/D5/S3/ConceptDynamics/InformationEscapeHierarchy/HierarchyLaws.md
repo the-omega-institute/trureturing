@@ -42,7 +42,7 @@ Every two singleton generator kernels are comparable after quotienting by exact 
 
 **Theorem 1.4 (Hasse paths characterize chains).**
 
-$$\operatorname{HasHassePath}(C) \iff \operatorname{Chain}(C) \land \operatorname{Chain}(C) \iff \operatorname{GeneratorsComparableAfterClosure}(C).$$
+$$(\operatorname{HasHassePath}(C) \iff \forall P, Q: \operatorname{GeneratedKernel}(C), P \le Q \lor Q \le P) \land ((\forall P, Q: \operatorname{GeneratedKernel}(C), P \le Q \lor Q \le P) \iff \operatorname{GeneratorsComparableAfterClosure}(C)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/HierarchyLaws.hasse_path_iff_chain` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ Finite generated lattices have path-shaped Hasse graphs exactly when every pair 
 
 **Theorem 1.5 (Strict generator edges need not be covers).**
 
-$$\operatorname{Chain}(\operatorname{ShortcutCatalog}()) \land \left(\operatorname{StrictIdentityStep}(\operatorname{ShortcutCatalog}()) \land \neg \operatorname{IsCover}(\operatorname{IdentityShortcut}())\right).$$
+$$(\forall P, Q: \operatorname{GeneratedKernel}(shortcutCatalog), P \le Q \lor Q \le P) \land \left(\operatorname{StrictGeneratorStep}(shortcutCatalog, \operatorname{generatedKernel}(shortcutCatalog, \emptyset), \operatorname{generatedKernel}(shortcutCatalog, \operatorname{fullIndexSet}(shortcutCatalog)), 2) \land \neg\operatorname{IsCover}(\operatorname{generatedKernel}(shortcutCatalog, \operatorname{fullIndexSet}(shortcutCatalog)), \operatorname{generatedKernel}(shortcutCatalog, \emptyset))\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/HierarchyLaws.strict_generator_dag_shortcut_not_cover` (`✓ std3`). ∎
 
@@ -66,7 +66,7 @@ A constant, first-coordinate, and identity catalog forms a chain while its direc
 
 **Theorem 1.6 (Strict chain length is bounded by arena size).**
 
-$$\operatorname{length}(\operatorname{chain}()) \leq \operatorname{card}(\operatorname{arena}()) - 1.$$
+$$\operatorname{length}(chain) \leq \operatorname{card}(arena) - 1.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/HierarchyLaws.strict_chain_length_le_card_sub_one` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ Each strict step increases the finite kernel-profile range, so at most one fewer
 
 **Theorem 1.7 (Nested coarser generators have zero flat capture).**
 
-$$\left(i \neq j \land \operatorname{Refines}(\operatorname{singletonKernel}(j), \operatorname{singletonKernel}(i))\right) \Rightarrow \operatorname{uniqueCapturePairs}(C, i) = \emptyset.$$
+$$\left(i \neq j \land \operatorname{generatedKernel}(C, \operatorname{singleton}(j)) \le \operatorname{generatedKernel}(C, \operatorname{singleton}(i))\right) \Rightarrow \operatorname{uniqueCapturePairs}(C, i) = \emptyset.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/HierarchyLaws.nested_flat_coarse_zero` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ The shared-arena refinement law is applied to singleton generated kernels.
 
 **Theorem 1.8 (E1 has four extensional nodes).**
 
-$$\operatorname{kernelClassCount}(\operatorname{E1}()) = 4 \land \operatorname{escapeCounts}(\operatorname{E1}()) = \operatorname{quadruple}(12, 4, 4, 0).$$
+$$\operatorname{card}(e1KernelClasses) = 4 \land \left(\operatorname{card}(\operatorname{escapeAt}(\operatorname{generatedKernel}(e1Catalog, \emptyset))) = 12 \land \left(\operatorname{card}(\operatorname{escapeAt}(\operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(0)))) = 4 \land \left(\operatorname{card}(\operatorname{escapeAt}(\operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(1)))) = 4 \land \operatorname{card}(\operatorname{escapeAt}(\operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(2)))) = 0\right)\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/HierarchyLaws.e1_four_node_escape_counts` (`✓ std3`). ∎
 
@@ -102,7 +102,7 @@ Kernel reflection checks four quotient classes with escape counts twelve, four, 
 
 **Theorem 1.9 (E1 forms a strict diamond).**
 
-$$\operatorname{Incomparable}(\operatorname{Kfst}(), \operatorname{Ksnd}()) \land \left(\operatorname{StrictGeneratorStep}(\operatorname{Kempty}(), \operatorname{Kfst}(), \operatorname{fst}()) \land \left(\operatorname{StrictGeneratorStep}(\operatorname{Kfst}(), \operatorname{Kfull}(), \operatorname{snd}()) \land \left(\operatorname{StrictGeneratorStep}(\operatorname{Kempty}(), \operatorname{Ksnd}(), \operatorname{snd}()) \land \left(\operatorname{StrictGeneratorStep}(\operatorname{Ksnd}(), \operatorname{Kfull}(), \operatorname{fst}()) \land \operatorname{StrictGeneratorStep}(\operatorname{Kempty}(), \operatorname{Kfull}(), \operatorname{identity}())\right)\right)\right)\right).$$
+$$\neg\operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(0)) \le \operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(1)) \land \left(\neg\operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(1)) \le \operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(0)) \land \left(\operatorname{StrictGeneratorStep}(e1Catalog, \operatorname{generatedKernel}(e1Catalog, \emptyset), \operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(0)), 0) \land \left(\operatorname{StrictGeneratorStep}(e1Catalog, \operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(0)), \operatorname{generatedKernel}(e1Catalog, \operatorname{fullIndexSet}(e1Catalog)), 1) \land \left(\operatorname{StrictGeneratorStep}(e1Catalog, \operatorname{generatedKernel}(e1Catalog, \emptyset), \operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(1)), 1) \land \left(\operatorname{StrictGeneratorStep}(e1Catalog, \operatorname{generatedKernel}(e1Catalog, \operatorname{singleton}(1)), \operatorname{generatedKernel}(e1Catalog, \operatorname{fullIndexSet}(e1Catalog)), 0) \land \operatorname{StrictGeneratorStep}(e1Catalog, \operatorname{generatedKernel}(e1Catalog, \emptyset), \operatorname{generatedKernel}(e1Catalog, \operatorname{fullIndexSet}(e1Catalog)), 2)\right)\right)\right)\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/HierarchyLaws.e1_diamond_strict_steps` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ The coordinate kernels are incomparable; both coordinate paths and the direct id
 
 **Theorem 1.10 (E1 schedule increments).**
 
-$$\operatorname{increments}(\operatorname{fstSndId}()) = \operatorname{triple}(8, 4, 0) \land \operatorname{increments}(\operatorname{idFstSnd}()) = \operatorname{triple}(12, 0, 0).$$
+$$(\lambda i, \operatorname{incrementCount}(e1CoordinateSchedule, i)) = ![8, 4, 0] \land (\lambda i, \operatorname{incrementCount}(e1IdentitySchedule, i)) = ![12, 0, 0].$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/HierarchyLaws.e1_schedule_increment_counts` (`✓ std3`). ∎
 
@@ -126,7 +126,7 @@ The coordinate-first and identity-first classified schedules have the two specif
 
 **Theorem 1.11 (E1 flat capture and multiplicity spectrum).**
 
-$$\operatorname{uniqueCaptureVector}(\operatorname{E1}()) = \operatorname{triple}(\emptyset, \emptyset, \emptyset) \land \operatorname{spectrum}(\operatorname{E1}()) = \operatorname{quadruple}(0, 0, 8, 4).$$
+$$\operatorname{uniqueCapturePairs}(e1Catalog, 0) = \emptyset \land \left(\operatorname{uniqueCapturePairs}(e1Catalog, 1) = \emptyset \land \left(\operatorname{uniqueCapturePairs}(e1Catalog, 2) = \emptyset \land \left(\operatorname{captureSpectrum}(e1Catalog, 0) = 0 \land \left(\operatorname{captureSpectrum}(e1Catalog, 1) = 0 \land \left(\operatorname{captureSpectrum}(e1Catalog, 2) = 8 \land \operatorname{captureSpectrum}(e1Catalog, 3) = 4\right)\right)\right)\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/HierarchyLaws.e1_unique_capture_and_spectrum` (`✓ std3`). ∎
 

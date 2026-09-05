@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/InformationEscapeHierarchy/HierarchyLaws
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Hasse paths characterize chain hierarchies, whose strict length is bounded by arena size. -/
+   digest: Hasse paths characterize chain hierarchies, with length bounded by arena size. -/
 
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.AnalysisLaws
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.KernelChain
@@ -282,7 +282,8 @@ private theorem shortcutCatalog_chain :
       | _ secondSelected =>
           have concrete : ∀ left right : Finset (Fin 3),
               shortcutCatalog.generatedKernel left ≤ shortcutCatalog.generatedKernel right ∨
-                shortcutCatalog.generatedKernel right ≤ shortcutCatalog.generatedKernel left := by
+              shortcutCatalog.generatedKernel right ≤
+                shortcutCatalog.generatedKernel left := by
             decide
           exact concrete firstSelected secondSelected
 

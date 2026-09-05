@@ -75,72 +75,6 @@ instance kernelRefinesDecidable {arena : Arena.{u}}
     Decidable (catalog.KernelRefines finer coarser) := by
   unfold KernelRefines
   infer_instance
-inductive KernelComparison
-  | equal
-  | strictlyFiner
-  | strictlyCoarser
-  | incomparable
-  deriving DecidableEq, Repr
-def kernelComparison {arena : Arena.{u}}
-    (catalog : Catalog.{u, v, w} arena) (left right : catalog.Index) :
-    KernelComparison :=
-  if catalog.KernelRefines left right then
-    if catalog.KernelRefines right left then .equal else .strictlyFiner
-  else if catalog.KernelRefines right left then .strictlyCoarser
-  else .incomparable
-noncomputable def refinementWitness {arena : Arena.{u}}
-    (catalog : Catalog.{u, v, w} arena) (finer coarser : catalog.Index) :
-    Option (arena.State × arena.State) := by
-  exact ((Finset.univ : Finset (arena.State × arena.State)).filter fun pair =>
-    (catalog.theoremAt finer).primitives.agrees pair.1 pair.2 ∧
-      ¬(catalog.theoremAt coarser).primitives.agrees pair.1 pair.2).toList.head?
-theorem refinementWitness_eq_none_iff {arena : Arena.{u}}
-    (catalog : Catalog.{u, v, w} arena) (finer coarser : catalog.Index) :
-    catalog.refinementWitness finer coarser = none ↔
-      catalog.KernelRefines finer coarser := by
-  simp only [refinementWitness, KernelRefines, List.head?_eq_none_iff,
-    Finset.toList_eq_nil, Finset.filter_eq_empty_iff, Finset.mem_univ, true_implies]
-  push Not
-  constructor
-  · intro h left right agrees; exact h (x := (left, right)) agrees
-  · intro h pair agrees; exact h pair.1 pair.2 agrees
-theorem refinementWitness_eq_some_implies {arena : Arena.{u}}
-    (catalog : Catalog.{u, v, w} arena) (finer coarser : catalog.Index)
-    (pair : arena.State × arena.State)
-    (found : catalog.refinementWitness finer coarser = some pair) :
-    (catalog.theoremAt finer).primitives.agrees pair.1 pair.2 ∧
-      ¬(catalog.theoremAt coarser).primitives.agrees pair.1 pair.2 := by
-  unfold refinementWitness at found
-  obtain ⟨tail, listEq⟩ := List.head?_eq_some_iff.mp found
-  have memList : pair ∈ (((Finset.univ : Finset (arena.State × arena.State)).filter fun p =>
-      (catalog.theoremAt finer).primitives.agrees p.1 p.2 ∧
-        ¬(catalog.theoremAt coarser).primitives.agrees p.1 p.2).toList) := by
-    rw [listEq]; exact List.mem_cons_self
-  exact (Finset.mem_filter.mp (Finset.mem_toList.mp memList)).2
-theorem refinementWitness_exists_iff_not_kernelRefines {arena : Arena.{u}}
-    (catalog : Catalog.{u, v, w} arena) (finer coarser : catalog.Index) :
-    (∃ pair, catalog.refinementWitness finer coarser = some pair) ↔
-      ¬catalog.KernelRefines finer coarser := by
-  rw [← not_congr (catalog.refinementWitness_eq_none_iff finer coarser)]
-  cases h : catalog.refinementWitness finer coarser <;> simp [h]
-theorem kernelComparison_spec {arena : Arena.{u}}
-    (catalog : Catalog.{u, v, w} arena) (left right : catalog.Index) :
-    (catalog.kernelComparison left right = .equal ↔
-      catalog.KernelRefines left right ∧ catalog.KernelRefines right left) ∧
-    (catalog.kernelComparison left right = .strictlyFiner ↔
-      catalog.KernelRefines left right ∧
-        ∃ pair, catalog.refinementWitness right left = some pair) ∧
-    (catalog.kernelComparison left right = .strictlyCoarser ↔
-      (∃ pair, catalog.refinementWitness left right = some pair) ∧
-        catalog.KernelRefines right left) ∧
-    (catalog.kernelComparison left right = .incomparable ↔
-      (∃ pair, catalog.refinementWitness left right = some pair) ∧
-        ∃ pair, catalog.refinementWitness right left = some pair) := by
-  unfold kernelComparison
-  rw [catalog.refinementWitness_exists_iff_not_kernelRefines left right,
-    catalog.refinementWitness_exists_iff_not_kernelRefines right left]
-  by_cases forward : catalog.KernelRefines left right <;>
-    by_cases reverse : catalog.KernelRefines right left <;> simp [forward, reverse]
 def captureMultiplicity {arena : Arena.{u}}
     (catalog : Catalog.{u, v, w} arena)
     (pair : arena.State × arena.State) : Nat := by
@@ -613,8 +547,11 @@ private theorem overlapCount_eq_sum_indicator
   simp only [Finset.mem_filter, Finset.mem_inter]
   constructor
   · rintro ⟨leftCaptured, rightCaptured⟩
+    have leftMembership :=
+      (catalog.pairwiseCaptureOverlap_subset left right).1
+        (Finset.mem_inter.mpr ⟨leftCaptured, rightCaptured⟩)
     exact ⟨by simpa [offDiagonalPairs] using
-      (mem_capturePairs_iff catalog left pair).mp leftCaptured |>.1,
+      (mem_capturePairs_iff catalog left pair).mp leftMembership |>.1,
       leftCaptured, rightCaptured⟩
   · rintro ⟨_, leftCaptured, rightCaptured⟩
     exact ⟨leftCaptured, rightCaptured⟩
