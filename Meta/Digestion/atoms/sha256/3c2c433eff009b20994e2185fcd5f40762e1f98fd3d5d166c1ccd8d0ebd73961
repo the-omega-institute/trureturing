@@ -1,0 +1,79 @@
+# 十、回到量子核：正性已经有了，缺的是跨尺度的大小控制
+
+本轮还给此前的量子表示一个很直接的实例。
+
+在固定 Hilbert 空间
+
+$$
+\mathcal H=L^2([1,2],du)
+$$
+
+中，定义
+
+$$
+\boxed{
+\Phi_X(u)
+=
+\frac{Y(Xu)}{\sqrt X\,u}.
+}
+\tag{38}
+$$
+
+则
+
+$$
+\|\Phi_X\|^2
+=
+\mathfrak J(X).
+$$
+
+因此秩一算子
+
+$$
+\boxed{
+K_X=|\Phi_X\rangle\langle\Phi_X|
+}
+\tag{39}
+$$
+
+总是半正定，并且
+
+$$
+\boxed{
+\operatorname{Tr}K_X
+=
+\mathfrak J(X)
+=
+\mathfrak R(X)-c_0+o(1).
+}
+\tag{40}
+$$
+
+这给出三个不同层次：
+
+$$
+\boxed{
+K_X\succeq0
+}
+$$
+
+对每个有限 \(X\) 自动成立；
+
+$$
+\boxed{
+\mathfrak R(X)\ge c_0-o(1)
+}
+$$
+
+由这种正性强制得到；
+
+但
+
+$$
+\boxed{
+\operatorname{Tr}K_{2^j}\le C(1+j)^A
+}
+$$
+
+才是足以推出 RH 的跨尺度约束。
+

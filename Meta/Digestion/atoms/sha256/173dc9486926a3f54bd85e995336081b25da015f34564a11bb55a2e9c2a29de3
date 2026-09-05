@@ -1,0 +1,71 @@
+## 定义 111.1　静态经典扇区
+
+设结构空间为有限维 Hilbert 空间：
+
+$$
+\mathcal H_G,\qquad \dim\mathcal H_G=D.
+$$
+
+给定一组正定钟速算子：
+
+$$
+\widehat n_1,\ldots,\widehat n_m>0.
+$$
+
+对指定标量钟速：
+
+$$
+\nu_1,\ldots,\nu_m>0,
+$$
+
+定义共同经典扇区：
+
+$$
+\boxed{
+\mathcal E_\nu
+=
+\bigcap_{a=1}^m
+\ker(\widehat n_a-\nu_aI).
+}
+\tag{111.1}
+$$
+
+记其正交投影为 \(P\)，并要求：
+
+$$
+P\ne0.
+$$
+
+对任意支持在该扇区中的状态 \(\sigma\)：
+
+$$
+\widehat n_aP=\nu_aP,
+$$
+
+所以对应钟交互不会把结构的不同分量转译成不同钟速。
+
+现在加入结构自身的 Hamiltonian：
+
+$$
+H_G=H_G^\dagger.
+$$
+
+完整的观察者—结构 Hamiltonian 取为：
+
+$$
+\boxed{
+H_{\mathrm{tot}}
+=
+H_O\otimes I_G
++
+I_O\otimes H_G
++
+\sum_aF_a\otimes\widehat n_a,
+}
+\tag{111.2}
+$$
+
+其中 \(F_a=F_a^\dagger\) 是观察者钟或控制寄存器上的算子。
+
+---
+

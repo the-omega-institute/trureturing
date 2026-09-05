@@ -1,0 +1,9 @@
+**剩下的实际算术目标可以比上一轮写得更弱、也更集中：对一个固定 \(h\)，证明交叉能量具有某个统一的多项式上界，例如式（38）。**
+
+这条上界尚未得到。但一旦从真实素数结构中证明它成立，便不必再单独猜测二次主项如何精确抵消：本轮建立的解析增长约束会迫使那种抵消发生。
+
+[1]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/html/2206.03682v4 "Aspects of the screw function corresponding to the Riemann zeta-function"
+[3]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[4]: https://terrytao.wordpress.com/2015/01/04/254a-supplement-4-probabilistic-models-and-heuristics-for-the-primes-optional/ "254A, Supplement 4: Probabilistic models and heuristics for the primes (optional) | What's new"
+[5]: https://terrytao.wordpress.com/2013/12/11/mertens-theorems/ "Mertens’ theorems | What's new"

@@ -1,0 +1,28 @@
+## 定理 M1：维数稀释界
+
+在式（M5）下，对所有 \(k\ge0\)：
+
+$$
+\boxed{
+0\le b_{d,k}\le\frac{L^{2k}}{d^{\overline k}}.
+}
+\tag{M8}
+$$
+
+特别地，当：
+
+$$
+0\le r<\frac d{L^2},
+$$
+
+有：
+
+$$
+\boxed{
+1\le\mathcal H_d(r)
+\le
+\frac1{1-rL^2/d}.
+}
+\tag{M9}
+$$
+

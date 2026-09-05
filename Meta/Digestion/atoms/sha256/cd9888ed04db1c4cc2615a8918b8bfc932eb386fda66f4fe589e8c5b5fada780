@@ -1,0 +1,37 @@
+### 第二步：方差有一个无法被独立性消去的线性项
+
+由独立性，
+
+$$
+\begin{aligned}
+\operatorname{Var}(\mathcal D_h^{\mathrm B}(T))
+&=
+\sum_{n\ge3}
+\frac{\log n-1}{n}
+k_h(\log n-T)^2.
+\end{aligned}
+$$
+
+再次作求和—积分比较：
+
+$$
+\begin{aligned}
+\operatorname{Var}(\mathcal D_h^{\mathrm B}(T))
+&=
+\int_0^{4h}(T+s-1)k_h(s)^2\,ds+o(1)\\
+&=
+A_hT+O_h(1).
+\end{aligned}
+$$
+
+所以
+
+$$
+\boxed{
+\mathbb E\mathcal E_h^{\mathrm B}(L)
+=
+\frac{A_h}{2}L^2+O_h(L).
+}
+\tag{12}
+$$
+

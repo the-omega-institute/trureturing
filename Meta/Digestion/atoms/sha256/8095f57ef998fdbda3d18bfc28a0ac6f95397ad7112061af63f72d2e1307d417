@@ -1,0 +1,59 @@
+## 定理 4.5　满窗因数语言
+
+若：
+
+$$
+m=\prod_pp^{G_{L_p}-1},
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Div}(m)
+\cong
+\prod_p\mathcal W_{L_p}.
+}
+\tag{4.5}
+$$
+
+### 证明
+
+因数 \(d\mid m\) 的每个素数指数满足：
+
+$$
+0\le v_p(d)<G_{L_p}.
+$$
+
+定理 2.2 将这个区间与 \(\mathcal W_{L_p}\) 双射。对有限个活跃素数取直积即可。证毕。
+
+对 5040：
+
+$$
+\boxed{
+\operatorname{Div}(5040)
+\cong
+\mathcal W_3\times\mathcal W_2\times\mathcal W_1\times\mathcal W_1.
+}
+$$
+
+因而：
+
+$$
+|\operatorname{Div}(5040)|=5\cdot3\cdot2\cdot2=60.
+$$
+
+与此同时：
+
+$$
+\boxed{
+\mathscr C_{5040}
+=
+\{5040,10080,15120,20160,30240,60480\}.
+}
+$$
+
+前者是 60 个因数状态；后者是 6 个具有同一观察结果的整数状态。两者是不同的数学对象。
+
+---
+

@@ -1,0 +1,61 @@
+# 理论结论
+
+现在建立的并不是“黄金比例、5040、熵之间存在某种神秘必然性”，而是一个确定的数学体系：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Zeckendorf 合法语言}
+&\longrightarrow
+\text{完整指数窗口};\\
+\text{完整指数窗口}
+&\longrightarrow
+\text{黄金算术观察者};\\
+\text{观察者}
+&\longrightarrow
+\text{有限纤维与残差信息};\\
+\text{因数 Gibbs 权重}
+&\longrightarrow
+\text{熵—规模平衡};\\
+\text{Kraft 约束}
+&\longrightarrow
+\text{最优分块信息预算};\\
+\text{Robin 定理}
+&\longrightarrow
+\text{全部黄金单元的严格临界界}.
+\end{aligned}
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\varphi
+\text{ 决定规范语言与分辨率的增长；}
+}
+$$
+
+$$
+\boxed{
+\gamma
+\text{ 决定算术权重的尖锐极限标尺；}
+}
+$$
+
+$$
+\boxed{
+5040
+\text{ 是一个可完整分析的有限最优配置及边界实例。}
+}
+$$
+
+**理论的实质目标，不是证明所有信息都能由少数符号表达——这一点已有规范双射；而是证明，在全部尺度上，可表达状态的加权总量与观察纤维的最坏影响，始终满足指定的严格预算。**
+
+这个全局任务已经被准确定位为命题 \((G)\)。它不再是未定义的“最高压缩率”或“最大熵”，而是一个具有明确状态空间、观察映射、目标函数、局部证书和完整等价关系的数学问题。
+
+[1]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[2]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
+[3]: https://arxiv.org/html/2002.03361v3 "https://arxiv.org/html/2002.03361v3"
+[4]: https://arxiv.org/html/1211.2147v3 "https://arxiv.org/html/1211.2147v3"
+[5]: https://dlmf.nist.gov/25.2 "https://dlmf.nist.gov/25.2"

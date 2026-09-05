@@ -1,0 +1,51 @@
+## 定理 109.2　一般共同经典化的交换子必要条件
+
+令：
+
+$$
+\delta_a
+=
+\|(\widehat n_a-n_aI)\sigma^{1/2}\|_2,
+$$
+
+$$
+\delta_b
+=
+\|(\widehat n_b-n_bI)\sigma^{1/2}\|_2.
+$$
+
+则：
+
+$$
+\boxed{
+\|[\widehat n_a,\widehat n_b]\sigma^{1/2}\|_2
+\le
+\|\widehat n_a-n_aI\|_{\mathrm{op}}\delta_b
++
+\|\widehat n_b-n_bI\|_{\mathrm{op}}\delta_a.
+}
+\tag{109.3}
+$$
+
+### 证明
+
+记：
+
+$$
+D_a=\widehat n_a-n_aI,
+\qquad
+D_b=\widehat n_b-n_bI.
+$$
+
+则：
+
+$$
+[\widehat n_a,\widehat n_b]\sigma^{1/2}
+=
+D_aD_b\sigma^{1/2}
+-
+D_bD_a\sigma^{1/2}.
+$$
+
+应用三角不等式与乘积范数界。∎
+

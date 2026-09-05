@@ -1,0 +1,68 @@
+## 第二项现象：连线性增长的历史也可能看不见
+
+这个固定三模结构的 Cauchy 极限可以直接写成：
+
+$$
+\boxed{
+\mathcal F_*(\vartheta)
+=
+\frac1{
+(1-4\vartheta)
+(1-2\vartheta)^2
+(1+4\vartheta+8\vartheta^2)^2
+(1+4\vartheta^2)
+}.
+}
+\tag{M22}
+$$
+
+它来自：
+
+$$
+\prod_{i,j=1}^{3}(1-\vartheta z_i\overline z_j)^{-1},
+\qquad
+(z_1,z_2,z_3)=(-2,1+i,1-i).
+$$
+
+由于这里只有三个非零中心化模式，可以把收敛范围扩大到：
+
+$$
+|\vartheta|<\frac14.
+$$
+
+于是对每个：
+
+$$
+0<\vartheta<\frac14,
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal H_N(N\vartheta)\longrightarrow\mathcal F_*(\vartheta),
+}
+$$
+
+但：
+
+$$
+\boxed{
+\mathcal Z_N(N\vartheta)
+=
+e^{-4N\vartheta}\mathcal H_N(N\vartheta)
+\longrightarrow0.
+}
+\tag{M23}
+$$
+
+同时，对每个固定 \(N\)：
+
+$$
+\boxed{
+\lim_{r\to\infty}\frac{\log\mathcal Z_N(r)}r=4.
+}
+$$
+
+所以，一边的极限看起来越来越“压制”，另一边却始终能检测到非实谱增长。
+

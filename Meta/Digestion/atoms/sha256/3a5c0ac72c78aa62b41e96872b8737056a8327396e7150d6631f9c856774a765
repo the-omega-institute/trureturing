@@ -1,0 +1,101 @@
+## 证明：多项式能量界推出 RH
+
+若
+
+$$
+\mathcal E_h(L)=O((1+L)^A),
+$$
+
+则对每个 \(\sigma>0\)，Cauchy–Schwarz 和分段求和给出
+
+$$
+\int_0^\infty e^{-\sigma T}|\mathcal D_h(T)|\,dT<\infty.
+$$
+
+因此其 Laplace 变换在
+
+$$
+\Re r>0
+$$
+
+内解析。
+
+另一方面，定义
+
+$$
+L_{\mathbb P}(s)=\sum_p\frac{\log p}{p^s}.
+$$
+
+最初在 \(\Re r>1/2\) 内，
+
+$$
+\boxed{
+\widehat{\mathcal D_h}(r)
+=
+Q_h(e^{hr})
+\frac{L_{\mathbb P}(1/2+r)}{r^2}
+-
+B_h(r),
+}
+\tag{20}
+$$
+
+其中 \(B_h\) 是由有限时间边界产生的整函数。
+
+由 Euler 乘积，
+
+$$
+L_{\mathbb P}(s)
+=
+-\frac{\zeta'(s)}{\zeta(s)}
++
+\frac{\zeta'(2s)}{\zeta(2s)}
+-
+J_{\mathrm o}(s),
+$$
+
+且 \(J_{\mathrm o}\) 在 \(\Re s>1/3\) 解析。这是上一轮奇偶幂分解，所需的绝对收敛级数来自标准 Euler 乘积。([DLMF][2])
+
+若存在
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad 0<\delta<\frac12,
+$$
+
+则式（20）在
+
+$$
+r_0=\delta+i\gamma
+$$
+
+有候选极点。它不能被滤波器消掉，因为
+
+$$
+1<|e^{hr_0}|<e^{h/2},
+$$
+
+而 \(Q_h\) 的根只有 \(1\) 和 \(e^{h/2}\)。
+
+所以该极点不可去，与右半平面解析性矛盾。利用零点反射对称性，得到 RH。证毕。
+
+---
+
+这个判据的意义是：
+
+$$
+\boxed{
+\text{不必证明每个时间点都很小，}
+}
+$$
+
+但可以尝试证明
+
+$$
+\boxed{
+\text{整个时间区间内的平方总量只按长度增长。}
+}
+$$
+
+接下来把这个平方总量展开，就能看到真正缺失的相关项。
+

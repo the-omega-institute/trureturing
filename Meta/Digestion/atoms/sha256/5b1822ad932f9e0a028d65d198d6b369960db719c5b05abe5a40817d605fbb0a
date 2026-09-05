@@ -1,0 +1,39 @@
+# 一、首先区分：保留代数平方，还是只保留模平方
+
+沿用实际对象：
+
+$$
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k,
+$$
+
+以及：
+
+$$
+P_d(v)=\sum_{k=0}^{d}\frac{(d)_k}{d^k}a_kv^k,
+\qquad
+q_d(x)=x^dP_d(-1/x).
+$$
+
+其中 ξ 始终采用标准 completed 定义，系数由同一个实际 theta 核固定。([DLMF][1])
+
+令 \(C_d\) 为 \(q_d\) 的伴随矩阵：
+
+$$
+\det(xI-C_d)=q_d(x).
+$$
+
+经典 Jensen–Pólya 判据仍然提供：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+q_d\text{ 的全部根为正实数，}\quad\forall d.
+}
+\tag{N1}
+$$
+
+这里没有把自伴性放进 \(C_d\) 的定义。([arXiv][2])
+

@@ -1,0 +1,65 @@
+## 假设 103.1　算子值平方钟律
+
+在局部方向域：
+
+$$
+U\subset\mathbb R^d
+$$
+
+上定义：
+
+$$
+\boxed{
+\widehat R(v)
+=
+\widehat A
++
+2\sum_i v_i\widehat B_i
+-
+\sum_{i,j}v_iv_j\widehat C_{ij}.
+}
+\tag{103.1}
+$$
+
+要求各系数 Hermitian，且：
+
+$$
+\widehat C_{ij}=\widehat C_{ji}.
+$$
+
+此外，存在 \(a_*,c_*>0\)，使：
+
+$$
+\widehat A\ge a_*I,
+$$
+
+以及对全部实向量 \(\xi\)：
+
+$$
+\boxed{
+\sum_{i,j}\xi_i\xi_j\widehat C_{ij}
+\ge
+c_*\|\xi\|^2I.
+}
+\tag{103.2}
+$$
+
+并在 \(U\) 内要求：
+
+$$
+\widehat R(v)>0.
+$$
+
+定义实际钟速算子：
+
+$$
+\boxed{
+\widehat n(v)=\widehat R(v)^{1/2}.
+}
+\tag{103.3}
+$$
+
+这些矩阵目前是**钟响应的算子系数**，不预先宣称它们已经构成一个完整量子时空度量。
+
+---
+

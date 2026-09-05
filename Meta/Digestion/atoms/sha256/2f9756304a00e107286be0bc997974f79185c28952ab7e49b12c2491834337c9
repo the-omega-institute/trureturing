@@ -1,0 +1,40 @@
+## 定义 102.1　两个不同的钟速矩
+
+定义：
+
+$$
+m_1(v)=\operatorname{Tr}\bigl[\sigma\widehat n(v)\bigr],
+$$
+
+$$
+m_2(v)=\operatorname{Tr}\bigl[\sigma\widehat n(v)^2\bigr].
+$$
+
+由式（101.3）：
+
+$$
+\boxed{
+\chi_v'(0)=-i\omega m_1(v),
+\qquad
+\chi_v''(0)=-\omega^2m_2(v).
+}
+\tag{102.1}
+$$
+
+因此：
+
+$$
+\boxed{
+m_2(v)-m_1(v)^2
+=
+\operatorname{Var}_\sigma(\widehat n(v)).
+}
+\tag{102.2}
+$$
+
+**平均平方钟速与平均钟速的平方，不是同一个量。**
+
+只拟合其中一个，就可能丢掉另一种实验能够识别的结构。
+
+---
+

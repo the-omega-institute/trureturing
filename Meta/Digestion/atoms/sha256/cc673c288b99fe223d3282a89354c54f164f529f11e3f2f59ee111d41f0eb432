@@ -1,0 +1,29 @@
+## 带误差指数的版本
+
+同一个证明还给出：
+
+如果对某个 \(0\le\eta<1\)，
+
+$$
+\boxed{
+\mathfrak R(2^j)
+=
+O\!\left(2^{\eta j}(1+j)^A\right),
+}
+\tag{33}
+$$
+
+那么
+
+$$
+\boxed{
+\left|\Re\rho-\frac12\right|
+\le\frac\eta2.
+}
+\tag{34}
+$$
+
+因为这时式（31）的能量至多按 \(e^{\eta L}\) 乘多项式增长，Laplace 变换在 \(\Re s>\eta/2\) 内解析。
+
+因此，相关余项的增长指数直接对应尚未排除的零点条带。
+

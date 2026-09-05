@@ -1,0 +1,38 @@
+## 推论 108.1　结构复归与最大纠缠相容
+
+初始两钟为：
+
+$$
+|+\rangle_A|+\rangle_B,
+$$
+
+结构初态可为任意 \(\sigma\)，且初始时与两钟独立。
+
+最终态为：
+
+$$
+\boxed{
+|G\rangle_{AB}\langle G|\otimes\sigma,
+}
+\tag{108.3}
+$$
+
+其中：
+
+$$
+\boxed{
+|G\rangle
+=
+\frac{|00\rangle+|01\rangle+|10\rangle-|11\rangle}{2}.
+}
+\tag{108.4}
+$$
+
+\(|G\rangle\) 与 Bell 态局部酉等价，因此两钟最大纠缠。
+
+### 证明
+
+将式（108.2）作用于初态即可。∎
+
+---
+

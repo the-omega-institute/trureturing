@@ -1,0 +1,76 @@
+## 定理 102.1　确定性钟律的充要条件
+
+对固定方向 \(v\) 和实数 \(n_v>0\)，以下条件等价：
+
+1. 对全部钟初态，在一个包含零的时间区间中，
+
+   $$
+   \Phi_{v,t}(\rho)
+   =
+   e^{-in_vH_Ct/\hbar}
+   \rho
+   e^{in_vH_Ct/\hbar};
+   $$
+2. $$
+   \boxed{
+   \bigl(\widehat n(v)-n_vI\bigr)\sigma^{1/2}=0;
+   }
+   \tag{102.3}
+   $$
+3. $$
+   \boxed{
+   \widehat n(v)P=n_vP;
+   }
+   \tag{102.4}
+   $$
+4. $$
+   m_1(v)=n_v,
+   \qquad
+   m_2(v)=n_v^2.
+   $$
+
+### 证明
+
+若条件 1 成立，则：
+
+$$
+\chi_v(t)=e^{-i\omega n_vt}.
+$$
+
+比较零点的一阶、二阶导数，得到条件 4。
+
+条件 4 给出：
+
+$$
+\begin{aligned}
+0
+&=
+m_2(v)-2n_vm_1(v)+n_v^2\\
+&=
+\operatorname{Tr}
+\left[
+\sigma(\widehat n(v)-n_vI)^2
+\right]\\
+&=
+\left\|
+(\widehat n(v)-n_vI)\sigma^{1/2}
+\right\|_2^2.
+\end{aligned}
+$$
+
+因此得到条件 2。
+
+有限维中，\(\sigma^{1/2}\) 的像恰为 \(P\mathcal H_G\)，故条件 2、3 等价。
+
+最后，条件 3 表明在实际初态的支持上：
+
+$$
+e^{-i\omega t\widehat n(v)}P
+=
+e^{-i\omega n_vt}P.
+$$
+
+代入式（101.3），得到条件 1。∎
+
+---
+

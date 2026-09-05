@@ -1,0 +1,91 @@
+## 定义 P1：实际整函数 \(F\)
+
+令：
+
+$$
+\boxed{
+F(z)=D(-\ell z)=\sum_{n\ge0}p_nz^n,
+\qquad
+p_n=(-\ell)^na_n.
+}
+\tag{P6}
+$$
+
+因此：
+
+$$
+F(0)=1.
+$$
+
+在零附近：
+
+$$
+\frac{F'(z)}{F(z)}
+=
+-\ell s_1-\sum_{n\ge1}\ell^{n+1}s_{n+1}z^n.
+$$
+
+所以：
+
+$$
+\boxed{
+-\frac{
+F'(z)/F(z)-F'(w)/F(w)
+}{z-w}
+=
+\sum_{i,j\ge0}\mathsf H_{ij}z^iw^j.
+}
+\tag{P7}
+$$
+
+右边是上一轮滤波算子的生成核。
+
+它包含对数导数，因此在 \(F\) 的零点处有极点。现在乘回分母，定义：
+
+$$
+\boxed{
+\mathcal B_F(z,w)
+=
+\frac{
+F(z)F'(w)-F'(z)F(w)
+}{
+z-w
+}.
+}
+\tag{P8}
+$$
+
+分子在 \(z=w\) 时为零，故奇点可去。于是：
+
+$$
+\boxed{
+\mathcal B_F\text{ 是两个变量上的整函数}.
+}
+$$
+
+在对角线上：
+
+$$
+\boxed{
+\mathcal B_F(z,z)=F'(z)^2-F(z)F''(z).
+}
+\tag{P9}
+$$
+
+这类函数—导数差商与实根二次型之间的联系，属于经典 Bézout、Hermite–Sylvester 方法；本轮使用的是实际整函数 \(F\)，不是任意选择的实根多项式。([arXiv][3])
+
+定义其系数矩阵：
+
+$$
+\boxed{
+\mathcal B_F(z,w)
+=
+\sum_{i,j\ge0}\mathsf B_{ij}z^iw^j.
+}
+\tag{P10}
+$$
+
+下面证明：**乘掉这些极点，没有乘掉负证据。**
+
+---
+

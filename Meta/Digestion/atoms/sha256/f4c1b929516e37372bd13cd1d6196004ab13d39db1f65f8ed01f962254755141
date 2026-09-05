@@ -1,0 +1,71 @@
+# 六、非实谱在历史寄存器里表现为什么？不是消失，而是中心发生位移
+
+对非零本征向量：
+
+$$
+Cv=(\alpha+i\beta)v,
+$$
+
+对应历史概率密度为：
+
+$$
+p_v(\tau)
+=
+\frac{
+g_T(\tau)e^{2\beta\tau}
+}{
+\int g_T(s)e^{2\beta s}\,ds
+}.
+$$
+
+完成平方：
+
+$$
+\boxed{
+p_v(\tau)
+=
+\frac1{\sqrt{2\pi}T}
+\exp\!\left[
+-\frac{(\tau-2\beta T^2)^2}{2T^2}
+\right].
+}
+\tag{I16}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathbb E_v[\tau]=2\beta T^2,
+\qquad
+\operatorname{Var}_v(\tau)=T^2.
+}
+$$
+
+谱的实部 \(\alpha\) 进入振荡相位；谱的虚部 \(\beta\) 进入历史分布的中心。
+
+所以：
+
+$$
+\boxed{
+\beta=\frac{\mathbb E_v[\tau]}{2T^2}.
+}
+\tag{I17}
+$$
+
+这不是把虚部“平均没了”。相反，观察窗口越宽，它造成的中心位移按 \(T^2\) 增大。
+
+从整体算子上也能得到：
+
+$$
+\boxed{
+\frac{W_TC-C^*W_T}{2i}
+=
+\frac1{2T^2}
+\int_{\mathbb R}\tau\,g_T(\tau)U(\tau)^*U(\tau)\,d\tau.
+}
+\tag{I18}
+$$
+
+所以，非自伴残差就是**历史中心在全部输入方向上的归一化最大偏移**。
+

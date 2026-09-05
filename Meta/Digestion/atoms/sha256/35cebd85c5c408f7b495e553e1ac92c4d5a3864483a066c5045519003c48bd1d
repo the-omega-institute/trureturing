@@ -1,0 +1,62 @@
+## 定理 137.1　该度量族在共同区域内非退化
+
+有
+
+$$
+\boxed{
+\cos(\Omega u)\le b_\varepsilon(u)\le1
+\qquad(0\le u\le L).
+}
+\tag{137.3}
+$$
+
+因此，在共同区域内
+
+$$
+b_\varepsilon(u)\ge\cos(\Omega L)>0.
+$$
+
+### 证明
+
+在 \(b_\varepsilon\) 尚为正的区间上，
+
+$$
+b_\varepsilon''\le0,
+$$
+
+故 \(b_\varepsilon\le1\)。
+
+改写方程为
+
+$$
+b_\varepsilon''+\Omega^2b_\varepsilon
+=
+\Omega^2\sin^2(u/\varepsilon)b_\varepsilon.
+$$
+
+由常系数方程的积分表示，
+
+$$
+b_\varepsilon(u)
+=
+\cos(\Omega u)
++
+\Omega\int_0^u
+\sin\bigl(\Omega(u-s)\bigr)
+\sin^2(s/\varepsilon)b_\varepsilon(s)\,ds.
+$$
+
+在 \(0\le u\le L<\pi/(2\Omega)\) 上，若之前 \(b_\varepsilon\ge0\)，积分非负。
+
+若存在首个零点 \(u_*\le L\)，则上式给出
+
+$$
+b_\varepsilon(u_*)\ge\cos(\Omega u_*)>0,
+$$
+
+矛盾。
+
+负 \(u\) 部分由方程和初值的偶对称性得到。∎
+
+---
+

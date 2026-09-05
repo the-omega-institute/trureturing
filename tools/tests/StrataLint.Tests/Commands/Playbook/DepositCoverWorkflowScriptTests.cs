@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -8,7 +9,7 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void DepositBuildsEmitsAndFreezesWithoutCommitting()
+    public void DepositBuildsEmitsFreezesCoversAndReemitsWithoutCommitting()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -30,8 +31,94 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
                 "dotnet:ledger-frozen",
+                "dotnet:cover-atom",
+                "make:emit",
             ],
             fixture.CallKinds());
+        Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Equal("emission: covered\n", fixture.EmissionContents());
+    }
+
+    [Fact]
+    public void DepositReplaySkipsExistingFreezeAndCoverageAndReemits()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+        fixture.WriteActiveFreeze();
+        File.WriteAllText(
+            Path.Combine(fixture.Root, TransactionFixture.BackfillPath),
+            $"atom_id: {TransactionFixture.AtomId}\ncoverage: true\naligned: false\n");
+        var ledgerBefore = fixture.LedgerState();
+        var backfillBefore = fixture.BackfillContents();
+
+        var result = fixture.Run("deposit");
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Equal(ledgerBefore, fixture.LedgerState());
+        Assert.Equal(backfillBefore, fixture.BackfillContents());
+        Assert.Equal(
+            [
+                "make:lean-report",
+                "dotnet:deposit-header-check",
+                "make:emit",
+                "dotnet:ledger-frozen",
+                "dotnet:cover-atom",
+                "make:emit",
+            ],
+            fixture.CallKinds());
+        var error = Encoding.UTF8.GetString(result.StandardError);
+        Assert.Contains("PLAYBOOK_SKIP command=deposit detail=module-already-frozen", error);
+        Assert.Contains("PLAYBOOK_SKIP command=cover detail=coverage-already-applied", error);
+    }
+
+    [Fact]
+    public void DepositCoverFailureKeepsFreezeAndReportsFrozenUncovered()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+
+        var result = fixture.Run("deposit", coverDispositionFailure: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(1, fixture.FreezeCount());
+        Assert.Equal(
+            [
+                "make:lean-report",
+                "dotnet:deposit-header-check",
+                "make:emit",
+                "dotnet:ledger-frozen",
+                "dotnet:ledger-align",
+                "dotnet:ledger-frozen",
+                "dotnet:cover-atom",
+            ],
+            fixture.CallKinds());
+        var error = Encoding.UTF8.GetString(result.StandardError);
+        Assert.Contains("COVER_INVALID synthetic disposition", error, StringComparison.Ordinal);
+        Assert.Contains(
+            $"PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id={TransactionFixture.AtomId} "
+                + $"gid={TransactionFixture.Gid} reason=COVER_INVALID synthetic disposition",
+            error,
+            StringComparison.Ordinal);
+        Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.DoesNotContain("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DepositDelegatesCoverageWritingExclusivelyToCoverAtom()
+    {
+        var script = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools/scripts/workflow/playbook-workflows.sh"));
+        var depositStart = script.IndexOf("  deposit)", StringComparison.Ordinal);
+        var coverStart = script.IndexOf("  cover)", depositStart, StringComparison.Ordinal);
+
+        Assert.True(depositStart >= 0 && coverStart > depositStart);
+        var depositCase = script[depositStart..coverStart];
+        Assert.Contains("\n    if cover_row; then\n", depositCase, StringComparison.Ordinal);
+        Assert.DoesNotContain("coverage_gids", script, StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(script, @"run_cli\s+cover-atom\b").Cast<Match>());
     }
 
     [Fact]

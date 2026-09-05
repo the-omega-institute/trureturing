@@ -1,0 +1,119 @@
+## 定理 12.3　连续—整数差额的 KL 分解
+
+固定 \(n>1\)，取 \(T=\ln n\)，令 \(y,\lambda\) 如上。定义：
+
+$$
+\mathfrak D(n)=\Phi(\ln n)-W(n).
+$$
+
+记：
+
+$$
+a_p=v_p(n),
+\qquad
+v_p^*=p^{-(a_p+1)}.
+$$
+
+对于 \(p<y\)，令：
+
+$$
+\mathfrak D_p(n)
+=
+\frac{
+D_{\mathrm{Ber}}(y^{-1}\Vert v_p^*)
+}{
+1-y^{-1}
+}.
+$$
+
+对于 \(p\ge y\)，令：
+
+$$
+\mathfrak D_p(n)
+=
+\frac{
+D_{\mathrm{Ber}}(p^{-1}\Vert v_p^*)
+}{
+1-p^{-1}
+}
++
+\left(\lambda-\frac1{p-1}\right)a_p\ln p.
+$$
+
+其中：
+
+$$
+D_{\mathrm{Ber}}(u\Vert v)
+=
+u\ln\frac uv
++
+(1-u)\ln\frac{1-u}{1-v}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak D(n)=\sum_p\mathfrak D_p(n),
+\qquad
+\mathfrak D_p(n)\ge0.
+}
+\tag{12.4}
+$$
+
+### 证明
+
+定义：
+
+$$
+g_p(x)=f_p(x)-\lambda x\ln p.
+$$
+
+连续最优性保证：
+
+$$
+g_p(x_p^*)-g_p(a_p)\ge0.
+$$
+
+又因为连续配置与整数配置具有相同总规模：
+
+$$
+\sum_px_p^*\ln p=\sum_pa_p\ln p,
+$$
+
+所以：
+
+$$
+\mathfrak D(n)
+=
+\sum_p[g_p(x_p^*)-g_p(a_p)].
+$$
+
+对 \(p<y\)，令 \(u=y^{-1}\)、\(v=v_p^*\)。利用：
+
+$$
+p^{-(x_p^*+1)}=u,
+\qquad
+\lambda=\frac u{1-u},
+$$
+
+展开得到：
+
+$$
+g_p(x_p^*)-g_p(a_p)
+=
+\ln\frac{1-u}{1-v}
++
+\frac u{1-u}\ln\frac uv
+=
+\frac{D_{\mathrm{Ber}}(u\Vert v)}{1-u}.
+$$
+
+对 \(p\ge y\)，最优值为 \(x_p^*=0\)，相同展开给出第二种表达。此时：
+
+$$
+\lambda-\frac1{p-1}\ge0.
+$$
+
+所有项非负。只有 \(p<y\) 或 \(p\mid n\) 的方向可能非零，因此求和实际有限。证毕。
+

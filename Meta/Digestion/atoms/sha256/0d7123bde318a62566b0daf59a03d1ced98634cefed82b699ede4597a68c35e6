@@ -1,0 +1,29 @@
+## 假设 76.1　独立实现的二能级边通道
+
+每条有向边 \(e\) 具有通道
+
+$$
+\mathcal C_e
+\begin{pmatrix}
+a&b\\
+\overline b&d
+\end{pmatrix}
+=
+\begin{pmatrix}
+a&z_eb\\
+\overline{z_e}\,\overline b&d
+\end{pmatrix},
+$$
+
+其中
+
+$$
+z_e=v_e e^{i\theta_e},
+\qquad
+0<v_e\le1.
+$$
+
+不同边使用已经明确准备的独立辅助资源，或已经在完整模型中证明可以这样分解。若重复使用仍然相关的同一参照，下面的简单乘积规律不自动成立。
+
+---
+

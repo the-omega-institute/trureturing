@@ -1,0 +1,68 @@
+## 定理 7.6　临界保留质量要求横向扩窗
+
+设 \(s\downarrow1\) 时，窗口仅使用不超过 \(x(s)\) 的素数，并且存在 \(\eta>0\)，使：
+
+$$
+\frac{Z_{M(s)}(s)}{\zeta(s)}\ge\eta
+$$
+
+最终成立。则：
+
+$$
+\boxed{
+\liminf_{s\downarrow1}(s-1)\ln x(s)
+\ge
+\eta e^{-\gamma}.
+}
+\tag{7.6}
+$$
+
+### 证明
+
+首先 \(x(s)\to\infty\)。否则存在有界子序列，其有限 Euler 乘积有统一上界，无法与趋于无穷的 \(\zeta(s)\) 保持正比例。
+
+其次：
+
+$$
+Z_{M(s)}(s)
+\le
+\prod_{p\le x(s)}(1-p^{-1})^{-1}.
+$$
+
+Mertens 定理给出：
+
+$$
+\prod_{p\le x}(1-p^{-1})^{-1}
+\sim e^\gamma\ln x.
+$$
+
+这是本节使用的经典算术输入。([arXiv][3])
+
+结合：
+
+$$
+(s-1)\zeta(s)\to1,
+$$
+
+以及保留质量下界：
+
+$$
+\eta(s-1)\zeta(s)
+\le
+(s-1)e^\gamma\ln x(s)(1+o(1)).
+$$
+
+取下极限得到结论。证毕。
+
+因此，\(\varphi\) 与 \(\gamma\) 承担不同角色：
+
+$$
+\boxed{
+\varphi:\text{指数方向的分辨率增长};
+\qquad
+\gamma:\text{全素数权重的临界尺度}.
+}
+$$
+
+---
+

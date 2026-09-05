@@ -1,0 +1,36 @@
+## 定义 136.1　非线性下降缺陷
+
+在同一个流形、同一组比较映射和标定中，设
+
+$$
+g_\varepsilon\to g_0
+$$
+
+一致收敛，并假设 \(\mathscr G[g_\varepsilon]\) 存在弱极限。
+
+定义
+
+$$
+\boxed{
+\mathfrak B
+=
+\mathscr G[g_0]
+-
+\operatorname*{wlim}_{\varepsilon\to0}
+\mathscr G[g_\varepsilon].
+}
+\tag{136.1}
+$$
+
+这里的弱极限表示：对任意光滑紧支撑测试张量，相应积分收敛。
+
+\(\mathfrak B\) 衡量以下两种操作的不交换：
+
+$$
+\text{先形成宏观度量，再计算 Einstein 张量};
+$$
+
+$$
+\text{先计算每个微观几何的 Einstein 张量，再取宏观极限}.
+$$
+

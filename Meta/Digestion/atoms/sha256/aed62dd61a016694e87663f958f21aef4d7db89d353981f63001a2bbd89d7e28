@@ -1,0 +1,54 @@
+## 定理 124.1　局域动力学控制宏观钟速残差
+
+有
+
+$$
+\boxed{
+\operatorname{Var}_{\sigma_m}(\widehat R_Q)
+\le
+\Delta_R^2\frac{b_Q(m)}{N_Q},
+}
+\tag{124.1}
+$$
+
+以及
+
+$$
+\boxed{
+\left\|
+(\widehat n_Q-n_Q(m)I)\sigma_m^{1/2}
+\right\|_2
+\le
+\frac{\Delta_R}{2n_*}
+\sqrt{\frac{b_Q(m)}{N_Q}}.
+}
+\tag{124.2}
+$$
+
+### 证明
+
+展开平均算子的方差，并应用定理 123.2，得到式（124.1）。
+
+再使用
+
+$$
+\widehat n_Q-n_QI
+=
+(\widehat n_Q+n_QI)^{-1}
+(\widehat R_Q-r_QI).
+$$
+
+逆算子范数不超过 \(1/(2n_*)\)，故
+
+$$
+\left\|
+(\widehat n_Q-n_QI)\sigma_m^{1/2}
+\right\|_2
+\le
+\frac{\sqrt{\operatorname{Var}(\widehat R_Q)}}{2n_*}.
+$$
+
+代入式（124.1）。∎
+
+---
+

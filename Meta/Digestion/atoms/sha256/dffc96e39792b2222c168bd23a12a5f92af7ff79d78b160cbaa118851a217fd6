@@ -1,0 +1,78 @@
+## 定理 1：缩小窗口的无条件上界
+
+存在绝对常数 \(C\)，使对 \(T\ge1\)、\(0<h\le1\)，
+
+$$
+\boxed{
+|\mathcal D_h(T)|
+\le
+CT\left(h^2e^{T/2}+he^{-T/2}\right).
+}
+\tag{5}
+$$
+
+等价地，写 \(x=e^T\)，
+
+$$
+\boxed{
+|\mathcal D_h(\log x)|
+\le
+C\log x
+\left(h^2\sqrt x+\frac h{\sqrt x}\right).
+}
+\tag{6}
+$$
+
+### 证明
+
+由式（3），
+
+$$
+|w_{E_h}(t)|\le1+E_h\le1+e^{1/2}.
+$$
+
+窗口内每个素数的权重满足
+
+$$
+\frac{\log p}{\sqrt p}
+\le
+(T+4h)e^{-T/2}.
+$$
+
+素数个数不超过该区间的整数个数，而
+
+$$
+\#\{n:e^T<n\le e^{T+4h}\}
+\le
+e^T(e^{4h}-1)+1
+\le C_1he^T+1.
+$$
+
+代入式（4），得到式（5）。证毕。
+
+---
+
+例如取
+
+$$
+h=x^{-1/3},
+$$
+
+则
+
+$$
+\boxed{
+\mathcal D_{x^{-1/3}}(\log x)
+=
+O\!\left(x^{-1/6}\log x\right)
+\longrightarrow0.
+}
+\tag{7}
+$$
+
+此时窗口长度约为
+
+$$
+4x^{2/3}.
+$$
+
