@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2dd574c8d1dfcabf604bf2ccfeb67c6df49970e0bf045a5c2b54b8158b7034ad
+  normalized_sha256: sha256:2dd574c8d1dfcabf604bf2ccfeb67c6df49970e0bf045a5c2b54b8158b7034ad
+cas_ref: sha256:2dd574c8d1dfcabf604bf2ccfeb67c6df49970e0bf045a5c2b54b8158b7034ad
+coverage_gids:
+  - gid: D5/S3/Zeros/Repulsion/FejerNearCollisionBound.fejer_square
+    target_statement_id: sha256:b13fbabf6278173599830df039a062c313b1c0bffbcb1937be92a7af3b82852e
+receipts:
+  scribe:
+    - gid: D5/S3/Zeros/Repulsion/FejerNearCollisionBound.fejer_square
+      definition_sha256: sha256:8e47e57fad1dd272ee3bd9b46b191f9c4933ef9e77de47cfe82690f303810085
+      emission_sha256: sha256:376ccd7aedeffd04a346e71e7653d24415e4acfd438be3b597fd334ab56b7fa1
+  unresolved_subitems: []
