@@ -133,6 +133,16 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git show \"$(printf %s HEAD^1:tools/scripts/workflow/x.sh)\"")]
     [InlineData("git show \"$obj\"")]
     [InlineData("git show $ref -- tools/scripts/workflow/x.sh")]
+    [InlineData("$'git\\000tail' show HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("$'git\\x00tail' show HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git $'show\\400x' HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git archive --no-remote --remote=/tmp/other HEAD")]
+    [InlineData("git $(printf show) HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git \"$(printf show)\" HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git `printf show` HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git $VERB HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("\"$(command -v git)\" show HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("$GIT -C candidate show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git restore --stag --source=HEAD^1 -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --sou=HEAD^1 -- tools/scripts/workflow/x.sh")]
     [InlineData("time -p git show HEAD^1:tools/scripts/workflow/x.sh >out")]
@@ -246,6 +256,15 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("$'\\547it' show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("git show HEAD -- \"$path\"")]
     [InlineData("git show \"HEAD:$path\" > \"$out\"")]
+    [InlineData("$'git\\000tail' show HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git archive --remote=/tmp/other --no-remote HEAD")]
+    [InlineData("$GIT show HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("\"$(command -v git)\" rev-parse HEAD^1")]
+    [InlineData("\"$HOME/.elan/bin/lake\" --version")]
+    [InlineData("\"$HOME/.elan/bin/elan\" toolchain install HEAD^1")]
+    [InlineData("$X $Y HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git restore --source=HEAD^1 --source=HEAD -- tools/scripts/workflow/x.sh")]
+    [InlineData("git restore --source=HEAD^1 --no-source tools/scripts/workflow/x.sh")]
     [InlineData("git read-tree --no-recurse-submodules -u HEAD^{tree}")]
     [InlineData("git restore --staged --source=HEAD -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --conflict=diff3 tools/scripts/workflow/x.sh")]
@@ -318,6 +337,7 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("    steps: [{\"run\" : \"git show HEAD^1:tools/scripts/workflow/x.sh\"}]")]
     [InlineData("        run: !!str\t\"git show HEAD^1:tools/scripts/workflow/x.sh\"")]
     [InlineData("        run: !custom\t'git show HEAD^1:tools/scripts/workflow/x.sh'")]
+    [InlineData("        run: git $(printf show) HEAD^1:tools/scripts/workflow/x.sh")]
     public void WorkflowRunScalarsAreShell(string line)
     {
         var finding = Assert.Single(Evaluate(WorkflowPath, line + "\n"));
@@ -352,6 +372,28 @@ public sealed class JudgeSurfaceRevisionRuleTests
     }
 
     [Fact]
+    public void CommentEndingInABackslashDoesNotSwallowTheNextLine()
+    {
+        var finding = Assert.Single(
+            Evaluate(ScriptPath, "# note \\\n" + "git show HEAD^1:tools/scripts/workflow/x.sh > out\n"));
+        Assert.Contains("line 2:", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CommentEndingInABackslashBeforeAHeadReadIsAllowed()
+    {
+        Assert.Empty(Evaluate(ScriptPath, "# note \\\n" + "git show HEAD:tools/scripts/workflow/x.sh\n"));
+    }
+
+    [Fact]
+    public void SecondCommandInAMultiLineScalarIsReportedAtItsOwnLine()
+    {
+        const string workflow = "      - run: |\n          echo ready\n          git show HEAD^1:tools/scripts/workflow/x.sh\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("line 3:", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ContinuationSplitInsideAWordJoinsWithoutASeparator()
     {
         var finding = Assert.Single(
@@ -364,7 +406,8 @@ public sealed class JudgeSurfaceRevisionRuleTests
     {
         const string workflow = "      - run: >\n          git\n          show HEAD^1:tools/scripts/workflow/x.sh > out\n      - run: echo done\n";
         var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
-        Assert.Contains("line 1", finding.Message, StringComparison.Ordinal);
+        // The folded command starts on the block's first content line, after the `>` indicator.
+        Assert.Contains("line 2:", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -555,7 +598,7 @@ public sealed class JudgeSurfaceRevisionRuleTests
     {
         const string workflow = "      - run: >\n          echo ready\n            git show HEAD^1:tools/scripts/workflow/x.sh\n          echo done\n";
         var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
-        Assert.Contains("line 1:", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("line 3:", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]

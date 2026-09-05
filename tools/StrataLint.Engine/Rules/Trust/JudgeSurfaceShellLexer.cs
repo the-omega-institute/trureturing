@@ -22,13 +22,19 @@ internal static class JudgeSurfaceShellLexer
 
     private const string SubstitutionPlaceholder = "$(...)";
 
-    internal sealed record Result(ImmutableArray<ImmutableArray<string>> Commands, bool Truncated);
+    // A simple command and the line (1-based within the lexed text) where its first word starts.
+    internal sealed record LexedCommand(int Line, ImmutableArray<string> Words);
 
-    internal static Result Commands(string line)
+    internal sealed record Result(ImmutableArray<LexedCommand> Commands, bool Truncated);
+
+    // The whole text of a script or scalar is lexed at once: line continuations, comments and
+    // newlines are the lexer's business alone (review round 14: a comment ending in a backslash
+    // does not continue onto the next line — bash drops the rest of the physical line).
+    internal static Result Commands(string text)
     {
-        var commands = ImmutableArray.CreateBuilder<ImmutableArray<string>>();
+        var commands = ImmutableArray.CreateBuilder<LexedCommand>();
         var truncated = false;
-        Lex(line, 0, line.Length, 0, commands, ref truncated);
+        Lex(text, 0, text.Length, 0, 0, commands, ref truncated);
         return new Result(commands.ToImmutable(), truncated);
     }
 
@@ -37,7 +43,8 @@ internal static class JudgeSurfaceShellLexer
         int start,
         int end,
         int depth,
-        ImmutableArray<ImmutableArray<string>>.Builder commands,
+        int lineOffset,
+        ImmutableArray<LexedCommand>.Builder commands,
         ref bool truncated)
     {
         if (depth > MaximumDepth)
@@ -60,6 +67,8 @@ internal static class JudgeSurfaceShellLexer
         // anything appended after it — quoted, escaped or plain — is the glued target, so the
         // quoted `>` in `>'>'` is a file name and cannot re-open the operator (review round 9).
         var redirectionOperatorLength = 0;
+        // Index of the first character of the current command, for its line number.
+        var commandStart = -1;
 
         void EndWord()
         {
@@ -99,15 +108,24 @@ internal static class JudgeSurfaceShellLexer
             pendingRedirectionTarget = false;
             if (words.Count > 0)
             {
-                commands.Add(words.ToImmutableArray());
+                commands.Add(new LexedCommand(lineOffset + 1 + CountNewlines(text, commandStart), words.ToImmutableArray()));
                 words.Clear();
             }
+
+            commandStart = -1;
         }
 
         var index = start;
         while (index < end)
         {
             var character = text[index];
+            if (commandStart < 0
+                && character is not (' ' or '\t' or '\n' or '\r' or ';' or '&' or '|' or '(' or ')')
+                && !(character == '\\' && index + 1 < end && text[index + 1] == '\n'))
+            {
+                commandStart = index;
+            }
+
             switch (character)
             {
                 case '\'':
@@ -155,13 +173,13 @@ internal static class JudgeSurfaceShellLexer
 
                         if (text[index] == '$' && index + 1 < end && text[index + 1] == '(')
                         {
-                            index = LexDollarSubstitution(text, index, end, depth, commands, word, ref truncated);
+                            index = LexDollarSubstitution(text, index, end, depth, lineOffset, commands, word, ref truncated);
                             continue;
                         }
 
                         if (text[index] == '`')
                         {
-                            index = LexBacktickSubstitution(text, index, end, depth, commands, word, ref truncated);
+                            index = LexBacktickSubstitution(text, index, end, depth, lineOffset, commands, word, ref truncated);
                             continue;
                         }
 
@@ -192,7 +210,7 @@ internal static class JudgeSurfaceShellLexer
 
                 case '$' when index + 1 < end && text[index + 1] == '(':
                     inWord = true;
-                    index = LexDollarSubstitution(text, index, end, depth, commands, word, ref truncated);
+                    index = LexDollarSubstitution(text, index, end, depth, lineOffset, commands, word, ref truncated);
                     continue;
 
                 case '$' when index + 1 < end && text[index + 1] == '\'':
@@ -206,7 +224,18 @@ internal static class JudgeSurfaceShellLexer
                     {
                         if (text[index] == '\\' && index + 1 < end)
                         {
-                            index = AppendAnsiCEscape(text, index, end, word);
+                            index = AppendAnsiCEscape(text, index, end, word, out var nul);
+                            if (nul)
+                            {
+                                // Bash cuts an ANSI-C string at its first NUL: the rest of the
+                                // segment up to the closing quote is dropped (review round 14:
+                                // `$'git\000tail' show …` runs git).
+                                while (index < end && text[index] != '\'')
+                                {
+                                    index += text[index] == '\\' ? 2 : 1;
+                                }
+                            }
+
                             continue;
                         }
 
@@ -220,7 +249,7 @@ internal static class JudgeSurfaceShellLexer
 
                 case '`':
                     inWord = true;
-                    index = LexBacktickSubstitution(text, index, end, depth, commands, word, ref truncated);
+                    index = LexBacktickSubstitution(text, index, end, depth, lineOffset, commands, word, ref truncated);
                     continue;
 
                 case '#' when !inWord:
@@ -257,7 +286,7 @@ internal static class JudgeSurfaceShellLexer
                     // lex it as its own command and keep a placeholder word outside.
                     EndWord();
                     inWord = true;
-                    index = LexDollarSubstitution(text, index, end, depth, commands, word, ref truncated);
+                    index = LexDollarSubstitution(text, index, end, depth, lineOffset, commands, word, ref truncated);
                     continue;
 
                 case '>':
@@ -338,7 +367,8 @@ internal static class JudgeSurfaceShellLexer
         int index,
         int end,
         int depth,
-        ImmutableArray<ImmutableArray<string>>.Builder commands,
+        int lineOffset,
+        ImmutableArray<LexedCommand>.Builder commands,
         StringBuilder word,
         ref bool truncated)
     {
@@ -388,7 +418,7 @@ internal static class JudgeSurfaceShellLexer
         }
 
         var close = cursor < end ? cursor : end;
-        Lex(text, index + 2, close, depth + 1, commands, ref truncated);
+        Lex(text, index + 2, close, depth + 1, lineOffset, commands, ref truncated);
         word.Append(SubstitutionPlaceholder);
         return close + 1;
     }
@@ -398,7 +428,8 @@ internal static class JudgeSurfaceShellLexer
         int index,
         int end,
         int depth,
-        ImmutableArray<ImmutableArray<string>>.Builder commands,
+        int lineOffset,
+        ImmutableArray<LexedCommand>.Builder commands,
         StringBuilder word,
         ref bool truncated)
     {
@@ -413,7 +444,7 @@ internal static class JudgeSurfaceShellLexer
 
         var close = cursor < end ? cursor : end;
         var inner = text[(index + 1)..close].Replace("\\`", "`", StringComparison.Ordinal);
-        Lex(inner, 0, inner.Length, depth + 1, commands, ref truncated);
+        Lex(inner, 0, inner.Length, depth + 1, lineOffset + CountNewlines(text, index), commands, ref truncated);
         word.Append(SubstitutionPlaceholder);
         return close + 1;
     }
@@ -454,8 +485,9 @@ internal static class JudgeSurfaceShellLexer
 
     // `$'…'` escapes as Bash decodes them: `\xHH` (one or two hex digits), `\NNN` (one to three
     // octal digits), the C escapes and `\\` / `\'` / `\"`; `$'\x67it'` is `git` (review round 9).
-    private static int AppendAnsiCEscape(string text, int index, int end, StringBuilder word)
+    private static int AppendAnsiCEscape(string text, int index, int end, StringBuilder word, out bool nul)
     {
+        nul = false;
         var escape = text[index + 1];
         if (escape == 'x')
         {
@@ -467,7 +499,7 @@ internal static class JudgeSurfaceShellLexer
 
             if (digits > 0)
             {
-                word.Append((char)Convert.ToInt32(text.Substring(index + 2, digits), 16));
+                nul = AppendByte(word, Convert.ToInt32(text.Substring(index + 2, digits), 16));
                 return index + 2 + digits;
             }
         }
@@ -480,7 +512,7 @@ internal static class JudgeSurfaceShellLexer
             }
 
             // Bash keeps the low byte of an octal escape (`\547` is 359 → 103 = `g`; review round 13).
-            word.Append((char)(Convert.ToInt32(text.Substring(index + 1, digits), 8) & 0xFF));
+            nul = AppendByte(word, Convert.ToInt32(text.Substring(index + 1, digits), 8) & 0xFF);
             return index + 1 + digits;
         }
 
@@ -497,5 +529,31 @@ internal static class JudgeSurfaceShellLexer
             var other => other,
         });
         return index + 2;
+    }
+
+    // A NUL byte ends an ANSI-C string in bash; nothing after it survives. Returns true for NUL.
+    private static bool AppendByte(StringBuilder word, int value)
+    {
+        if (value == 0)
+        {
+            return true;
+        }
+
+        word.Append((char)value);
+        return false;
+    }
+
+    private static int CountNewlines(string text, int upTo)
+    {
+        var count = 0;
+        for (var index = 0; index < upTo && index < text.Length; index++)
+        {
+            if (text[index] == '\n')
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

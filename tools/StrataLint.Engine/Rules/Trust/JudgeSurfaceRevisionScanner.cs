@@ -60,11 +60,7 @@ internal static partial class JudgeSurfaceRevisionScanner
             return messages.ToImmutable();
         }
 
-        foreach (var (lineNumber, line) in LogicalLines(text))
-        {
-            messages.AddRange(JudgeShell(lineNumber, line));
-        }
-
+        messages.AddRange(JudgeShell(1, text));
         return messages.ToImmutable();
     }
 
@@ -117,7 +113,10 @@ internal static partial class JudgeSurfaceRevisionScanner
                     {
                         if (value is YamlScalarNode run)
                         {
-                            messages.AddRange(JudgeShell((int)run.Start.Line, run.Value ?? string.Empty));
+                            // A block scalar's content starts on the line after its `|` / `>`
+                            // indicator; a flow scalar starts on the key's line.
+                            var firstLine = (int)run.Start.Line + (run.Style is ScalarStyle.Literal or ScalarStyle.Folded ? 1 : 0);
+                            messages.AddRange(JudgeShell(firstLine, run.Value ?? string.Empty));
                         }
                         else
                         {
@@ -156,56 +155,24 @@ internal static partial class JudgeSurfaceRevisionScanner
         }
     }
 
-    private static IEnumerable<string> JudgeShell(int lineNumber, string shell)
+    // `firstLine` is where the text starts in its file (1 for a script, the scalar's start line for
+    // YAML); every command carries its own line within the text, so the diagnostic points at it.
+    private static IEnumerable<string> JudgeShell(int firstLine, string shell)
     {
-        var lexed = JudgeSurfaceShellLexer.Commands(shell);
+        var lexed = JudgeSurfaceShellLexer.Commands(shell.ReplaceLineEndings("\n"));
         if (lexed.Truncated)
         {
-            yield return $"line {lineNumber}: shell nesting deeper than {JudgeSurfaceShellLexer.MaximumDepth} levels is fail-closed" + Suffix;
+            yield return $"line {firstLine}: shell nesting deeper than {JudgeSurfaceShellLexer.MaximumDepth} levels is fail-closed" + Suffix;
         }
 
         foreach (var command in lexed.Commands)
         {
-            var reason = JudgeCommand(command, out var verb);
+            var reason = JudgeCommand(command.Words, out var verb);
             if (reason is not null)
             {
-                yield return $"line {lineNumber}: git {verb} {reason}; only HEAD may be materialized on the judge surface" + Suffix;
+                yield return $"line {firstLine + command.Line - 1}: git {verb} {reason}; only HEAD may be materialized on the judge surface" + Suffix;
             }
         }
-    }
-
-    // Physical lines joined at a trailing unescaped backslash (`git \` + `show …` is one command);
-    // the logical line keeps the first physical line's number for the diagnostic.
-    private static IEnumerable<(int LineNumber, string Line)> LogicalLines(string text)
-    {
-        var lines = text.ReplaceLineEndings("\n").Split('\n');
-        var index = 0;
-        while (index < lines.Length)
-        {
-            var start = index;
-            var builder = new System.Text.StringBuilder(lines[index]);
-            while (EndsWithContinuation(lines[index]) && index + 1 < lines.Length)
-            {
-                // Bash removes the backslash-newline pair outright: `git sh\` + `ow` is `git show`.
-                builder.Length -= 1;
-                index++;
-                builder.Append(lines[index]);
-            }
-
-            yield return (start + 1, builder.ToString());
-            index++;
-        }
-    }
-
-    private static bool EndsWithContinuation(string line)
-    {
-        var trailing = 0;
-        for (var index = line.Length - 1; index >= 0 && line[index] == '\\'; index--)
-        {
-            trailing++;
-        }
-
-        return trailing % 2 == 1;
     }
 
     private static string? JudgeCommand(ImmutableArray<string> words, out string verb)
@@ -255,7 +222,18 @@ internal static partial class JudgeSurfaceRevisionScanner
             break;
         }
 
-        if (first >= words.Length || !IsGit(words[first]))
+        if (first >= words.Length)
+        {
+            return null;
+        }
+
+        // A dynamic command word (`$GIT`, `"$(command -v git)"`) is judged as git when a managed
+        // verb follows it; followed by anything else it is out of class (`${X}` expansions are
+        // declared unsupported). Measured on the real judge surface before choosing this: the
+        // dynamic command words there (`"$HOME/.elan/bin/lake" --version`, …) are never followed
+        // by a managed verb, so no real line is misjudged (review round 14).
+        var dynamicCommand = !IsGit(words[first]) && words[first].Contains('$');
+        if (!IsGit(words[first]) && !dynamicCommand)
         {
             return null;
         }
@@ -289,7 +267,19 @@ internal static partial class JudgeSurfaceRevisionScanner
             return $"option '{option}' is not in the closed global option table (fail-closed)";
         }
 
-        if (index >= words.Length || !Verbs.Contains(words[index]))
+        if (index >= words.Length)
+        {
+            return null;
+        }
+
+        if (!dynamicCommand && words[index].Contains('$'))
+        {
+            // `git $(printf show) HEAD^1:p`: the verb itself is dynamic (review round 14).
+            verb = words[index];
+            return "verb of unknown provenance (fail-closed)";
+        }
+
+        if (!Verbs.Contains(words[index]))
         {
             return null;
         }

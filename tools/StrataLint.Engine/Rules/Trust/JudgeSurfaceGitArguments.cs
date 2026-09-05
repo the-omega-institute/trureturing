@@ -132,7 +132,7 @@ internal static partial class JudgeSurfaceRevisionScanner
             return null;
         }
 
-        if (parsed.Has("--remote"))
+        if (parsed.Effective("--remote"))
         {
             return "--remote archives another repository's tree (fail-closed)";
         }
@@ -196,15 +196,22 @@ internal static partial class JudgeSurfaceRevisionScanner
             return parsed.Error;
         }
 
+        // Git resolves only the effective source: a later `--source` replaces an earlier one and
+        // `--no-source` clears it (review round 14).
+        string? source = null;
         foreach (var (name, value) in parsed.Options)
         {
-            if (name is "--source" or "-s" && value != Head)
+            if (name is "--source" or "-s")
             {
-                return $"--source '{value}' materializes another revision's files";
+                source = value;
+            }
+            else if (name == "--no-source")
+            {
+                source = null;
             }
         }
 
-        return null;
+        return source is null || source == Head ? null : $"--source '{source}' materializes another revision's files";
     }
 
     // `git read-tree <tree-ish>…`: every tree-ish is read into the index.
