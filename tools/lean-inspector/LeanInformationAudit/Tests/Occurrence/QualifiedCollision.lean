@@ -70,7 +70,7 @@ register_information_theorem shared
   primitives realizationA.toPrimitiveBundle
   realization legacyA
 
-/-- error: IE-C025 QualifiedNameCollision root=LeanInformationAudit.Tests.QualifiedCollision catalog=y generated_name=LeanInformationAudit.Tests.QualifiedCollision.shared.LeanInformationAudit.Tests.QualifiedCollision/LeanInformationAudit.Tests.QualifiedCollision.object/«catalog/y».__information_unit occurrences=["LeanInformationAudit.Tests.QualifiedCollision.object/LeanInformationAudit.Tests.QualifiedCollision.shared","LeanInformationAudit.Tests.QualifiedCollision.«object/catalog»/LeanInformationAudit.Tests.QualifiedCollision.shared"] -/
+/-- error: IE-C025 QualifiedNameCollision root=LeanInformationAudit.Tests.Occurrence.QualifiedCollision catalog=y generated_name=LeanInformationAudit.Tests.QualifiedCollision.shared.LeanInformationAudit.Tests.Occurrence.QualifiedCollision/LeanInformationAudit.Tests.QualifiedCollision.object/«catalog/y».__information_unit occurrences=["LeanInformationAudit.Tests.QualifiedCollision.object/LeanInformationAudit.Tests.QualifiedCollision.shared","LeanInformationAudit.Tests.QualifiedCollision.«object/catalog»/LeanInformationAudit.Tests.QualifiedCollision.shared"] -/
 #guard_msgs (error) in
 run_cmd do
   let env <- getEnv

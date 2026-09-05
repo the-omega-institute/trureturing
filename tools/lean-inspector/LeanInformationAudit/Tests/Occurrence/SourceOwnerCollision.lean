@@ -1,5 +1,5 @@
 import LeanInformationAudit.SealCommand
-import LeanInformationAudit.Tests.ImportClosureProducer
+import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -32,11 +32,11 @@ run_cmd do
 
 expect_information_occurrence importedTheorem
   in objectArena
-  from "LeanInformationAudit.Tests.ImportClosureProducer"
+  from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
 expect_information_occurrence other
   in objectArena
-  from "LeanInformationAudit.Tests.SourceOwnerCollision"
+  from "LeanInformationAudit.Tests.Occurrence.SourceOwnerCollision"
 
 run_cmd do
   let env ← getEnv
@@ -45,7 +45,7 @@ run_cmd do
   validateRegistrySnapshot env
   validateSourceEntries env (InformationRegistry.entries env)
 
-/-- error: IE-C025 QualifiedNameCollision root=LeanInformationAudit.Tests.SourceOwnerCollision catalog=importedBool generated_name=LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem.«LeanInformationAudit.Tests.SourceOwnerCollision/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit occurrences=["LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem","LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.SourceOwnerCollision.other"] -/
+/-- error: IE-C025 QualifiedNameCollision root=LeanInformationAudit.Tests.Occurrence.SourceOwnerCollision catalog=importedBool generated_name=LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem.«LeanInformationAudit.Tests.Occurrence.SourceOwnerCollision/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit occurrences=["LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem","LeanInformationAudit.Tests.ImportClosureProducer.objectArena/LeanInformationAudit.Tests.SourceOwnerCollision.other"] -/
 #guard_msgs (error) in
 #seal_information_theory
 

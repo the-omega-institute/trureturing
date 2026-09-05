@@ -76,11 +76,11 @@ register_information_theorem sharedTheorem
 
 expect_information_occurrence sharedTheorem
   in objectA
-  from "LeanInformationAudit.Tests.OccurrenceIdentity"
+  from "LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity"
 
 expect_information_occurrence sharedTheorem
   in objectB
-  from "LeanInformationAudit.Tests.OccurrenceIdentity"
+  from "LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity"
 
 #seal_information_theory output "/tmp/lean-information-audit-occurrence-identity.json"
 
@@ -115,38 +115,38 @@ run_cmd do
     throwError "staged occurrence identities or v2 schema mismatch"
   logInfo "occurrence-qualified staged identities and v2 schema passed"
 
-/-- error: IE-C030 KernelAddressUsedAsSemanticEvidence root=LeanInformationAudit.Tests.OccurrenceIdentity catalog=boolA address=sha256:fixture consumer=arena-grouping -/
+/-- error: IE-C030 KernelAddressUsedAsSemanticEvidence root=LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity catalog=boolA address=sha256:fixture consumer=arena-grouping -/
 #guard_msgs (error) in
 run_cmd do
   match rejectKernelAddressSemanticUse
-      `LeanInformationAudit.Tests.OccurrenceIdentity `boolA
+      `LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity `boolA
       "sha256:fixture" "arena-grouping" with
   | .ok () => pure ()
   | .error message => throwError message
 
 #print axioms
-  sharedTheorem.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__primitive_realization
+  sharedTheorem.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__primitive_realization
 #print axioms
-  sharedTheorem.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__primitive_realization
+  sharedTheorem.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__primitive_realization
 #print axioms
-  sharedTheorem.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__information_unit
+  sharedTheorem.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__information_unit
 #print axioms
-  sharedTheorem.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__information_unit
+  sharedTheorem.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__information_unit
 #print axioms
-  objectA.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__information_catalog
+  objectA.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__information_catalog
 #print axioms
-  objectB.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__information_catalog
+  objectB.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__information_catalog
 #print axioms
-  sharedTheorem.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__lowers_escape
+  sharedTheorem.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__lowers_escape
 #print axioms
-  sharedTheorem.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__escape_enriched
+  sharedTheorem.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__escape_enriched
 #print axioms
-  sharedTheorem.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__lowers_escape
+  sharedTheorem.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__lowers_escape
 #print axioms
-  sharedTheorem.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__escape_enriched
+  sharedTheorem.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__escape_enriched
 #print axioms
-  objectA.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__catalog_irredundant
+  objectA.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectA/boolA».__catalog_irredundant
 #print axioms
-  objectB.«LeanInformationAudit.Tests.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__catalog_irredundant
+  objectB.«LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity/LeanInformationAudit.Tests.OccurrenceIdentity.objectB/boolB».__catalog_irredundant
 
 end LeanInformationAudit.Tests.OccurrenceIdentity

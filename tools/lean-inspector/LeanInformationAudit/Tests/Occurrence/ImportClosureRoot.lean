@@ -1,5 +1,5 @@
 import LeanInformationAudit.SealCommand
-import LeanInformationAudit.Tests.ImportClosureProducer
+import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
 
 open Lean
 open LeanInformationAudit
@@ -11,7 +11,7 @@ set_option linter.style.longLine false
 
 expect_information_occurrence importedTheorem
   in objectArena
-  from "LeanInformationAudit.Tests.ImportClosureProducer"
+  from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
 #seal_information_theory output "/tmp/lean-information-audit-import-closure.json"
 
@@ -77,16 +77,16 @@ run_cmd do
   logInfo "import-closure qualified identity passed"
 
 #print axioms
-  importedTheorem.«LeanInformationAudit.Tests.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__primitive_realization
+  importedTheorem.«LeanInformationAudit.Tests.Occurrence.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__primitive_realization
 #print axioms
-  importedTheorem.«LeanInformationAudit.Tests.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit
+  importedTheorem.«LeanInformationAudit.Tests.Occurrence.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit
 #print axioms
-  objectArena.«LeanInformationAudit.Tests.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_catalog
+  objectArena.«LeanInformationAudit.Tests.Occurrence.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_catalog
 #print axioms
-  importedTheorem.«LeanInformationAudit.Tests.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__lowers_escape
+  importedTheorem.«LeanInformationAudit.Tests.Occurrence.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__lowers_escape
 #print axioms
-  importedTheorem.«LeanInformationAudit.Tests.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__escape_enriched
+  importedTheorem.«LeanInformationAudit.Tests.Occurrence.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__escape_enriched
 #print axioms
-  objectArena.«LeanInformationAudit.Tests.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__catalog_irredundant
+  objectArena.«LeanInformationAudit.Tests.Occurrence.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__catalog_irredundant
 
 end LeanInformationAudit.Tests.ImportClosureRoot

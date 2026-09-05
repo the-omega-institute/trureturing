@@ -50,23 +50,23 @@ information_theorem sndTheorem
 
 expect_information_occurrence fstTheorem
   in objectArena
-  from "LeanInformationAudit.Tests.SplitCanonicalArenaCatalog"
+  from "LeanInformationAudit.Tests.Occurrence.SplitCanonicalArenaCatalog"
 
 expect_information_occurrence sndTheorem
   in objectArena
-  from "LeanInformationAudit.Tests.SplitCanonicalArenaCatalog"
+  from "LeanInformationAudit.Tests.Occurrence.SplitCanonicalArenaCatalog"
 
-/-- error: IE-C024 SplitCanonicalArenaCatalog root=LeanInformationAudit.Tests.SplitCanonicalArenaCatalog arena=LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena catalogs=["left","right"] -/
+/-- error: IE-C024 SplitCanonicalArenaCatalog root=LeanInformationAudit.Tests.Occurrence.SplitCanonicalArenaCatalog arena=LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena catalogs=["left","right"] -/
 #guard_msgs (error) in
 #seal_information_theory
 
 #print axioms
-  fstTheorem.«LeanInformationAudit.Tests.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/left».__primitive_realization
+  fstTheorem.«LeanInformationAudit.Tests.Occurrence.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/left».__primitive_realization
 #print axioms
-  fstTheorem.«LeanInformationAudit.Tests.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/left».__information_unit
+  fstTheorem.«LeanInformationAudit.Tests.Occurrence.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/left».__information_unit
 #print axioms
-  sndTheorem.«LeanInformationAudit.Tests.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/right».__primitive_realization
+  sndTheorem.«LeanInformationAudit.Tests.Occurrence.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/right».__primitive_realization
 #print axioms
-  sndTheorem.«LeanInformationAudit.Tests.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/right».__information_unit
+  sndTheorem.«LeanInformationAudit.Tests.Occurrence.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/right».__information_unit
 
 end LeanInformationAudit.Tests.SplitCanonicalArenaCatalog

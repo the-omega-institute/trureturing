@@ -44,15 +44,15 @@ information_theorem thirdTheorem
 
 expect_information_occurrence firstTheorem
   in arena
-  from "LeanInformationAudit.Tests.CompleteRedundantIndices"
+  from "LeanInformationAudit.Tests.Occurrence.CompleteRedundantIndices"
 
 expect_information_occurrence secondTheorem
   in arena
-  from "LeanInformationAudit.Tests.CompleteRedundantIndices"
+  from "LeanInformationAudit.Tests.Occurrence.CompleteRedundantIndices"
 
 expect_information_occurrence thirdTheorem
   in arena
-  from "LeanInformationAudit.Tests.CompleteRedundantIndices"
+  from "LeanInformationAudit.Tests.Occurrence.CompleteRedundantIndices"
 
 private def fixtureCatalog : Catalog arena.toArena :=
   Catalog.ofVector ![
@@ -72,7 +72,7 @@ run_cmd do
     Lean.Elab.Command.liftIO <| IO.FS.removeFile artifactPath
 
 /--
-info: information seal redundancy: root=LeanInformationAudit.Tests.CompleteRedundantIndices catalog=LeanInformationAudit.Tests.CompleteRedundantIndices.arena counts=[0,0,0] certified=[0,1,2] members=["LeanInformationAudit.Tests.CompleteRedundantIndices.firstTheorem","LeanInformationAudit.Tests.CompleteRedundantIndices.secondTheorem","LeanInformationAudit.Tests.CompleteRedundantIndices.thirdTheorem"]
+info: information seal redundancy: root=LeanInformationAudit.Tests.Occurrence.CompleteRedundantIndices catalog=LeanInformationAudit.Tests.CompleteRedundantIndices.arena counts=[0,0,0] certified=[0,1,2] members=["LeanInformationAudit.Tests.CompleteRedundantIndices.firstTheorem","LeanInformationAudit.Tests.CompleteRedundantIndices.secondTheorem","LeanInformationAudit.Tests.CompleteRedundantIndices.thirdTheorem"]
 ---
 error: IE-C007 ZeroUniqueCapture: theorem LeanInformationAudit.Tests.CompleteRedundantIndices.firstTheorem arena LeanInformationAudit.Tests.CompleteRedundantIndices.arena full 2 without 2
 -/

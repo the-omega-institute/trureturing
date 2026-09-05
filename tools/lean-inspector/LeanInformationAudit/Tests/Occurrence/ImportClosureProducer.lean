@@ -38,8 +38,8 @@ information_theorem importedTheorem
   : lawArena.Law fixtureRealization := by trivial
 
 #print axioms
-  importedTheorem.«LeanInformationAudit.Tests.ImportClosureProducer/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__primitive_realization
+  importedTheorem.«LeanInformationAudit.Tests.Occurrence.ImportClosureProducer/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__primitive_realization
 #print axioms
-  importedTheorem.«LeanInformationAudit.Tests.ImportClosureProducer/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit
+  importedTheorem.«LeanInformationAudit.Tests.Occurrence.ImportClosureProducer/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit
 
 end LeanInformationAudit.Tests.ImportClosureProducer

@@ -11,9 +11,9 @@ theorem expectedButUnregistered : True := trivial
 
 expect_information_occurrence expectedButUnregistered
   in objectArena
-  from "LeanInformationAudit.Tests.ExpectedManifestOmission"
+  from "LeanInformationAudit.Tests.Occurrence.ExpectedManifestOmission"
 
-/-- error: IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.ExpectedManifestOmission catalog=registry-snapshot component=member-set expected=["LeanInformationAudit.Tests.ExpectedManifestOmission.objectArena/LeanInformationAudit.Tests.ExpectedManifestOmission.expectedButUnregistered"] actual=[] -/
+/-- error: IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Occurrence.ExpectedManifestOmission catalog=registry-snapshot component=member-set expected=["LeanInformationAudit.Tests.ExpectedManifestOmission.objectArena/LeanInformationAudit.Tests.ExpectedManifestOmission.expectedButUnregistered"] actual=[] -/
 #guard_msgs (error) in
 #seal_information_theory
 
