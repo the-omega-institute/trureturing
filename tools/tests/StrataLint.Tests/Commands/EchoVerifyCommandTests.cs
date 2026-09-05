@@ -48,8 +48,12 @@ public sealed class EchoVerifyCommandTests
             Entry("source-b", "atom-c", "shared", "b-only"),
         ], []);
 
-        var aggregate = DigestResidualSummary.Render(evaluation);
-        var shards = DigestResidualSummary.RenderShards(evaluation);
+        var aggregate = DigestResidualSummary.Render(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
+        var shards = DigestResidualSummary.RenderShards(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
 
         Assert.Equal(
             Metric(aggregate, "unresolved_subitems"),

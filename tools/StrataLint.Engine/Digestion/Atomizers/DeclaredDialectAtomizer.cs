@@ -18,16 +18,16 @@ internal static class DeclaredDialectAtomizer
         string atomizerId,
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules rules) =>
-        Atomize(atomizerId, bytes, rules, contentKinds: null);
+        AtomizeWithContentKinds(atomizerId, bytes, rules, contentKinds: null);
 
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
         string atomizerId,
         ReadOnlyMemory<byte> bytes,
         TheoryAtomizerRules rules) =>
         AtomizerRegistry.CaptureContentKinds(
-            kinds => Atomize(atomizerId, bytes.Span, rules, kinds));
+            kinds => AtomizeWithContentKinds(atomizerId, bytes.Span, rules, kinds));
 
-    private static AtomizedTheoryDocument Atomize(
+    internal static AtomizedTheoryDocument AtomizeWithContentKinds(
         string atomizerId,
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules rules,
@@ -91,6 +91,6 @@ internal static class DeclaredDialectAtomizer
             unregistered.Add(token);
         }
 
-        return genre is null ? token : genre.Value;
+        return genre is null ? DigestionContentDisposition.Unregistered(token) : genre.Value;
     }
 }

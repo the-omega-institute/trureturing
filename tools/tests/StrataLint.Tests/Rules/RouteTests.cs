@@ -7,6 +7,19 @@ namespace StrataLint.Tests;
 
 public sealed class RouteTests
 {
+    [Fact]
+    public void RouteSkeletonEmitsEditMe()
+    {
+        var manifest = new ManifestSyntax(
+            "D5", "F", "Carrier", "Probe", "G", "", "lean", "", null);
+
+        var routed = Assert.IsType<RouteOutcome.Routed>(RouteEngine.Route(Policy(), manifest));
+
+        Assert.Equal("   anchors: []", routed.Result.Skeleton[4]);
+        Assert.Equal("   utility: EDIT-ME", routed.Result.Skeleton[5]);
+        Assert.Equal("   digest: EDIT-ME -/", routed.Result.Skeleton[6]);
+    }
+
     [Theory]
     [InlineData("F", "Carrier", "Probe", "", "lean", "", "D5/S0/Carrier/Probe", "D5/S0/Carrier/Probe.lean")]
     [InlineData("B", "Carrier", "Probe", "", "markdown", "", "D5/B/S0/Carrier/Probe", "Blueprint/D5/S0/Carrier/Probe.md")]
