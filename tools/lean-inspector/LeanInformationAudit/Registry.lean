@@ -296,12 +296,16 @@ def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
       candidate.theoremName == entry.theoremName
   if !occurrenceMatches.isEmpty then
     return .error (duplicateError entry.theoremName)
-  let nameMatches := entries.filter fun candidate =>
-    candidate.unitName == entry.unitName ||
-      candidate.realizationName == entry.realizationName
-  if !nameMatches.isEmpty then
+  let unitMatches := entries.filter fun candidate =>
+    candidate.unitName == entry.unitName
+  if !unitMatches.isEmpty then
     return .error <| qualifiedNameCollisionError env.header.mainModule
-      entry.effectiveCatalogId entry.unitName (nameMatches.push entry)
+      entry.effectiveCatalogId entry.unitName (unitMatches.push entry)
+  let realizationMatches := entries.filter fun candidate =>
+    candidate.realizationName == entry.realizationName
+  if !realizationMatches.isEmpty then
+    return .error <| qualifiedNameCollisionError env.header.mainModule
+      entry.effectiveCatalogId entry.realizationName (realizationMatches.push entry)
   return .ok ()
 
 /-- Validate an entry already stored in the persistent registry exactly once. -/
