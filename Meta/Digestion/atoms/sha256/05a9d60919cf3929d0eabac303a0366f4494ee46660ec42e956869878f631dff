@@ -1,0 +1,33 @@
+## 定理 9：相邻 Jensen 层的微分关系
+
+对 \(d\ge2\)：
+
+$$
+\boxed{
+P_d(v)-\frac vdP_d'(v)
+=
+P_{d-1}\!\left(\frac{d-1}{d}v\right).
+}
+\tag{26}
+$$
+
+### 证明
+
+逐项比较系数：
+
+$$
+\left(1-\frac kd\right)
+\frac{(d)_k}{d^k}
+=
+\frac{(d-1)_k}{d^k}.
+$$
+
+右边也正是：
+
+$$
+\frac{(d-1)_k}{(d-1)^k}
+\left(\frac{d-1}{d}\right)^k.
+$$
+
+证毕。
+

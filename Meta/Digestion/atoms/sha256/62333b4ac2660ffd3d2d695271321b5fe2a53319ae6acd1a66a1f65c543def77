@@ -1,0 +1,48 @@
+## 定理 17.2　静态响应与结构惯性的谱和规则
+
+有
+
+$$
+\boxed{
+\chi(0)
+=
+\frac2\pi
+\int_0^\infty
+\frac{\operatorname{Im}\chi(\omega+i0)}{\omega}\,d\omega,
+}
+\tag{17.3}
+$$
+
+以及
+
+$$
+\boxed{
+B^{\mathsf T}B
+=
+\frac2\pi
+\int_0^\infty
+\omega\,\operatorname{Im}\chi(\omega+i0)\,d\omega.
+}
+\tag{17.4}
+$$
+
+### 证明
+
+将式（17.1）证明中的离散吸收谱代入积分。第一式得到
+
+$$
+\sum_a\frac{W_a}{\nu_a^2},
+$$
+
+第二式得到
+
+$$
+\sum_aW_a=B^{\mathsf T}B.
+$$
+
+∎
+
+因此，静态恢复响应与短时间惯性不是两个互不相干的测量量，而是同一谱测度的不同矩。
+
+---
+
