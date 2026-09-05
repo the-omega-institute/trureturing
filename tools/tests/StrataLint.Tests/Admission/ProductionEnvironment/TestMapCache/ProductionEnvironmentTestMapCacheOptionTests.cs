@@ -16,7 +16,13 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
     {
         using var temporary = new TemporaryDirectory();
         using var error = new StringWriter();
-        var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error);
+        var descriptions = 0;
+        ScribeTestMapEnvironment Describe()
+        {
+            descriptions++;
+            return DescribeFixedEnvironment();
+        }
+        var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error, Describe);
         var root = Path.Combine(temporary.Path, "cache");
         var console = new BufferedConsole();
 
@@ -33,6 +39,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         ], environment, new BufferedConsole());
         Assert.Equal(firstCode, code);
         Assert.Contains("hit", CacheOutcomes(error.ToString()));
+        Assert.Equal(2, descriptions);
     }
 
     [Theory]
@@ -44,12 +51,18 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         using var temporary = new TemporaryDirectory();
         using var error = new StringWriter();
         var probes = 0;
+        var spawnAttempts = 0;
         ScribeTestMapEnvironment Describe()
         {
             probes++;
             return MsBuildCompileOracle.DescribeEnvironment(
                 () => failure == "host" ? throw new IOException("host resolution failed") : "/selected/dotnet",
-                _ => new ProcessOutput(failure == "exit" ? 7 : 0, " \n"u8.ToArray(), []));
+                _ => new ProcessOutput(failure == "exit" ? 7 : 0, " \n"u8.ToArray(), []),
+                run: (host, arguments, directory, timeout, maximumOutputBytes, standardInput, environment) =>
+                {
+                    spawnAttempts++;
+                    throw new InvalidOperationException("process runner must not be called");
+                });
         }
         var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error, Describe);
         var expected = CliApplication.Run(["check", "--candidate-lean-report", report],
@@ -63,7 +76,9 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         Assert.Equal(expected, actual);
         Assert.NotEqual(2, actual);
         Assert.Equal(1, probes);
-        Assert.StartsWith("disabled:", Assert.Single(CacheOutcomes(error.ToString())));
+        Assert.Equal(0, spawnAttempts);
+        Assert.Equal("disabled:dotnet-version-" + (failure == "host" ? "IOException" : "InvalidOperationException"),
+            Assert.Single(CacheOutcomes(error.ToString())));
     }
 
     [Fact]
@@ -71,7 +86,13 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
     {
         using var temporary = new TemporaryDirectory();
         using var error = new FailingEventWriter();
-        var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error);
+        var descriptions = 0;
+        ScribeTestMapEnvironment Describe()
+        {
+            descriptions++;
+            return DescribeFixedEnvironment();
+        }
+        var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error, Describe);
         var expectedConsole = new BufferedConsole();
         var expected = CliApplication.Run(["check", "--candidate-lean-report", report],
             environment, expectedConsole);
@@ -87,6 +108,32 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         Assert.Equal(expected, actual);
         Assert.Equal(expectedConsole.Output, actualConsole.Output);
         Assert.Equal(expectedConsole.Error, actualConsole.Error);
+        Assert.Equal(1, descriptions);
+    }
+
+    [Fact]
+    public void CheckReportsCacheRootConstructionFailureWithoutProbingEnvironment()
+    {
+        using var temporary = new TemporaryDirectory();
+        using var error = new StringWriter();
+        var probes = 0;
+        ScribeTestMapEnvironment Describe()
+        {
+            probes++;
+            return DescribeFixedEnvironment();
+        }
+        var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error, Describe);
+        var expected = CliApplication.Run(["check", "--candidate-lean-report", report],
+            environment, new BufferedConsole());
+
+        var actual = CliApplication.Run([
+            "check", "--candidate-lean-report", report, "--test-map-cache-root", "\0",
+        ], environment, new BufferedConsole());
+
+        Assert.Equal(expected, actual);
+        Assert.NotEqual(2, actual);
+        Assert.Equal(0, probes);
+        Assert.Equal("disabled:cache-root-ArgumentException", Assert.Single(CacheOutcomes(error.ToString())));
     }
 
     [Fact]
@@ -155,7 +202,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
     }
 
     private static (ProductionCliEnvironment Environment, string Report) EnvironmentWithCheckFixture(
-        string root, TextWriter error, Func<ScribeTestMapEnvironment>? describe = null)
+        string root, TextWriter error, Func<ScribeTestMapEnvironment> describe)
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -175,13 +222,18 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
             new FakeLeanReportSource(null))
         {
             TestMapCacheError = error,
-            DescribeTestMapEnvironment = describe ?? MsBuildCompileOracle.DescribeEnvironment,
+            DescribeTestMapEnvironment = describe,
         };
+        // Assert the injected factory before any CLI path can reach the production process probe.
+        Assert.Equal(describe, environment.DescribeTestMapEnvironment);
         var console = new BufferedConsole();
         var code = CliApplication.Run(["check", "--candidate-lean-report", report], environment, console);
         Assert.True(code != 2, console.Error);
         return (environment, report);
     }
+
+    private static ScribeTestMapEnvironment DescribeFixedEnvironment() =>
+        new("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test", new string('d', 64));
 
     private static string[] CacheOutcomes(string output) => output
         .Split('\n', StringSplitOptions.RemoveEmptyEntries)

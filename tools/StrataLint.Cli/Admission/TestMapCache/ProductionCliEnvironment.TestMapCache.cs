@@ -15,11 +15,20 @@ internal sealed partial class ProductionCliEnvironment
         out string? disabledOutcome)
     {
         disabledOutcome = null;
+        DirectoryScribeTestMapStorage storage;
         try
         {
-            return new ScribeTestMapStore(
-                new DirectoryScribeTestMapStorage(root),
-                DescribeTestMapEnvironment());
+            storage = new DirectoryScribeTestMapStorage(root);
+        }
+        catch (Exception exception)
+        {
+            disabledOutcome = "disabled:cache-root-" + exception.GetType().Name;
+            return null;
+        }
+
+        try
+        {
+            return new ScribeTestMapStore(storage, DescribeTestMapEnvironment());
         }
         catch (Exception exception)
         {

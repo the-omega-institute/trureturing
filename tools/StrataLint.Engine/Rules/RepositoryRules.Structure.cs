@@ -141,6 +141,7 @@ internal static partial class RepositoryRules
         RuleEvaluationContext context,
         Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot)
     {
+        // Wrap both snapshot derivations here so cache outcomes remain observational to capacity findings.
         ScribeTestMap GetMap(RepositorySnapshot snapshot) => context.TestMapStore is null
             ? deriveSnapshot(snapshot)
             : context.TestMapStore.GetOrDerive(snapshot, deriveSnapshot);

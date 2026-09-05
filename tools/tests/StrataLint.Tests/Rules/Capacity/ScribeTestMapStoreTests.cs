@@ -172,6 +172,23 @@ public sealed class ScribeTestMapStoreTests
     }
 
     [Fact]
+    public void SnapshotDerivationIsNotMemoizedWhenMetadataChangesDuringDerivation()
+    {
+        var snapshot = Snapshot(("src/MetadataChangesDuringDerivation.cs", "class Test {}"));
+        var descriptions = 0;
+        IReadOnlyList<string> Describe(IEnumerable<ScribeCompilationProject> _) =>
+            ++descriptions == 1 ? [] : [typeof(object).Assembly.Location];
+
+        var first = ScribeTestMapDeriver.DeriveSnapshot(snapshot, Describe);
+        descriptions = 0;
+        var second = ScribeTestMapDeriver.DeriveSnapshot(snapshot, Describe);
+
+        Assert.NotSame(first, second);
+        Assert.Empty(first.CompileQueryFindings);
+        Assert.Empty(second.CompileQueryFindings);
+    }
+
+    [Fact]
     public void MetadataChangedDuringDerivationSkipsStore()
     {
         var snapshot = Snapshot(("src/Test.cs", "class Test {}"));

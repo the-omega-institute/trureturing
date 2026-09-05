@@ -124,7 +124,7 @@ internal sealed class ScribeTestMapStore(
         try
         {
             if (metadataDigest is null) return map;
-            if (!string.Equals(metadataDigest, ComputeMetadataDigest(snapshot, describeInputPaths), StringComparison.Ordinal))
+            if (!MetadataDigestMatches(snapshot, metadataDigest, describeInputPaths))
             {
                 Record(inputDigest, "store-skipped-metadata-changed");
                 return map;
@@ -165,6 +165,12 @@ internal sealed class ScribeTestMapStore(
 
         return Convert.ToHexStringLower(hash.GetHashAndReset());
     }
+
+    internal static bool MetadataDigestMatches(
+        RepositorySnapshot snapshot,
+        string metadataDigest,
+        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null) =>
+        string.Equals(metadataDigest, ComputeMetadataDigest(snapshot, describeInputPaths), StringComparison.Ordinal);
 
     internal static string ComputeMetadataDigest(
         RepositorySnapshot snapshot,

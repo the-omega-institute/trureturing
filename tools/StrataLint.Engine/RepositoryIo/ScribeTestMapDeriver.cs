@@ -56,9 +56,15 @@ internal static class ScribeTestMapDeriver
             || path.EndsWith("packages.lock.json", StringComparison.Ordinal);
     }
 
-    internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot)
+    internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot) =>
+        DeriveSnapshot(snapshot, null);
+
+    internal static ScribeTestMap DeriveSnapshot(
+        RepositorySnapshot snapshot,
+        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths)
     {
-        var key = SnapshotDerivationKey(snapshot);
+        var metadataDigest = ScribeTestMapStore.ComputeMetadataDigest(snapshot, describeInputPaths);
+        var key = SnapshotDerivationKey(snapshot, metadataDigest);
         var candidate = new Lazy<ScribeTestMap>(
             () => DeriveSnapshotUncached(snapshot),
             LazyThreadSafetyMode.ExecutionAndPublication);
@@ -67,6 +73,10 @@ internal static class ScribeTestMapDeriver
         {
             var map = derivation.Value;
             if (map.CompileQueryFindings.Count != 0)
+            {
+                RemoveSnapshotDerivation(key, derivation);
+            }
+            if (!ScribeTestMapStore.MetadataDigestMatches(snapshot, metadataDigest, describeInputPaths))
             {
                 RemoveSnapshotDerivation(key, derivation);
             }
@@ -114,7 +124,10 @@ internal static class ScribeTestMapDeriver
 
     internal static string SnapshotDerivationKey(
         RepositorySnapshot snapshot,
-        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null)
+        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null) =>
+        SnapshotDerivationKey(snapshot, ScribeTestMapStore.ComputeMetadataDigest(snapshot, describeInputPaths));
+
+    private static string SnapshotDerivationKey(RepositorySnapshot snapshot, string metadataDigest)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         AppendHashString(hash, "snapshot-files");
@@ -144,7 +157,7 @@ internal static class ScribeTestMapDeriver
         AppendHashString(hash, "resolved-user-profile");
         AppendHashString(hash, Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
         AppendHashString(hash, "metadata-digest");
-        AppendHashString(hash, ScribeTestMapStore.ComputeMetadataDigest(snapshot, describeInputPaths));
+        AppendHashString(hash, metadataDigest);
 
         return Convert.ToHexStringLower(hash.GetHashAndReset());
     }
