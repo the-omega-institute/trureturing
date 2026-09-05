@@ -477,6 +477,7 @@ internal static class JudgeSurfaceShellLexer
             // A trailing `\c` has no operand inside the segment; never consume its closing quote.
             if (index + 2 >= end || text[index + 2] == '\'')
             {
+                word.Append("\\c");
                 return index + 2;
             }
 
@@ -488,7 +489,7 @@ internal static class JudgeSurfaceShellLexer
                 Span<byte> bytes = stackalloc byte[4];
                 var length = rune.EncodeToUtf8(bytes);
                 nul = AppendByte(word, bytes[0] & 0x1F);
-                for (var offset = 1; offset < length; offset++)
+                for (var offset = 1; !nul && offset < length; offset++)
                 {
                     AppendByte(word, bytes[offset]);
                 }

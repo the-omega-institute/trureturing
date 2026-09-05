@@ -301,6 +301,8 @@ public sealed class JudgeSurfaceRevisionRuleTests
     // Bash >= 4 semantics: word-initial `#` immediately after `$(` is a comment;
     // bash 3.2 closes early. Keep the fail-closed contract for the CI shell.
     [InlineData("x=\"$(# )\ngit show HEAD^1:p\n)\"")]
+    [InlineData("$'git\\c\u0905' show HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git $'show\\c\u0905' HEAD^1:tools/scripts/workflow/x.sh")]
     public void RepairedShellBoundariesRejectOtherRevision(string script)
     {
         Assert.Single(Evaluate(ScriptPath, script + "\n"));
@@ -320,6 +322,10 @@ public sealed class JudgeSurfaceRevisionRuleTests
     // These git-shaped strings stay inside the enclosing double-quoted assignment.
     [InlineData("x=\"$(echo $(printf x)# ) git show HEAD^1:p\"")]
     [InlineData("x=\"$(echo <(printf x)# ) git show HEAD^1:p\"")]
+    [InlineData("$'git\\c\u0905' show HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git $'show\\c\u0905' HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("$'git\\c' show HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("x=\"$(case x in x) git show HEAD^1:tools/scripts/workflow/x.sh;; esac)\"")] // declared-unsupported: a case-pattern ')' inside $(...) closes the substitution early (rule 19 fail-open counterexample)
     public void RepairedShellBoundariesAllowHeadAndNonCommands(string script)
     {
         Assert.Empty(Evaluate(ScriptPath, script + "\n"));
