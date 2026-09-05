@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "The atom `* 证据 refinement;` is a bare application label under `这统一了` and states no proposition that a public theorem can cover. The named near-miss frozen carrier D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeRefinementMonotonicity.robust_knowledge_monotone_under_refinement in D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeRefinementMonotonicity.lean:30-38 states monotonicity for the separately defined `robustKnowledge` predicate under the separately defined `Refines` relation on concept-valued evidence. It supplies no evidence-update relation connecting that carrier to the parent's set-valued answer images. No frozen public statement gives the label's own evidence-refinement proposition, and no bridge derives the parent's subset and nonempty hypotheses from an evidence-refinement application."
+    reentry_condition: "Add a frozen bridge theorem whose public statement derives the parent's subset and nonempty hypotheses from the named evidence-refinement application, or a frozen public statement of the evidence-refinement application's own proposition, then re-cover."
+    blocker_class: multi-clause-guard

@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "The atom `* 公告更新;` is a bare application label under `这统一了` and states no proposition that a public theorem can cover. Named near-miss frozen carriers are `descriptiveCondition` in D5/S3/ConceptDynamics/Epistemic/DescriptiveAnnouncementCommutation.lean:24-28, which defines announcement update as the separate intersection `admitted ∩ announcement`; D5/S3/ConceptDynamics/PublicAnnouncement/AdmissibleAnnouncementCommonKnowledge.true_public_announcement_is_common_knowledge_on_admitted_domain, which constructs an anchored state and proves the announced predicate along finite reachability in that restricted subtype; and D5/S3/ConceptDynamics/Epistemic/KnowledgeMonotoneRefinement.knowledge_monotone_under_nonempty_refinement, which only states singleton-answer preservation for an arbitrary subset with an explicitly nonempty refinement. No frozen public statement gives the label's own announcement proposition, and no bridge derives the parent's subset and nonempty hypotheses from an announcement application; in particular, the intersection definition alone does not make an update nonempty."
+    reentry_condition: "Add a frozen bridge theorem whose public statement derives the parent's subset and nonempty hypotheses from the named announcement application, or a frozen public statement of the announcement application's own proposition, then re-cover."
+    blocker_class: multi-clause-guard
