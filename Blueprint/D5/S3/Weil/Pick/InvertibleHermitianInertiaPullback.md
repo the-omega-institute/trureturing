@@ -14,8 +14,9 @@ Lean statement: `D5/S3/Weil/Pick/InvertibleHermitianInertiaPullback.inertia_inva
 
 *Commentary.*
 
-Positive-index pullback monotonicity is applied in both directions through the nonsingular inverse. Matrix negation transports the same argument to negative index. The theorem is finite-dimensional and assumes only an invertible square feature matrix.
+Positive-index pullback monotonicity is applied in both directions through the nonsingular inverse; matrix negation transports the same argument to negative index. The theorem is finite-dimensional and assumes only an invertible square feature matrix.
 
 ## References
 
 - Truth anchor: `D5/S3/Weil/Pick/InvertibleHermitianInertiaPullback.inertia_invariant_of_isUnit_det`
+- Dependency: [D5/S3/SpectralTopology/FiniteSpectralLocalizer](../../SpectralTopology/FiniteSpectralLocalizer.md)

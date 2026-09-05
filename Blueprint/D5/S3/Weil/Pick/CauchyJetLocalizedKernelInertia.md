@@ -86,14 +86,18 @@ Lean statement: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.cauchy_jet_loca
 
 *Commentary.*
 
-Distinct signed supports make the feature matrix invertible. Inertia therefore equals diagonal sign count, and positive masses identify that count with active reflected-orbit intervals. Positive and zero negative-index characterizations are included.
+Distinct signed supports make the feature matrix invertible. Inertia therefore equals diagonal sign count, and positive masses identify that count with active reflected-orbit intervals. Positive negative-index and zero negative-index characterizations are included.
 
 ## References
 
-- Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.observerSupportProfile`
-- Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.observerSupportComplex`
-- Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.observerLocalizedWeightProfile`
+- Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.cauchy_jet_localized_kernel_barcode_inertia`
 - Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.observerCauchyJetFeatureMatrix`
 - Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.observerLocalizedCauchyJetGram`
 - Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.observerLocalizedCauchyJetGramIsHermitian`
-- Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.cauchy_jet_localized_kernel_barcode_inertia`
+- Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.observerLocalizedWeightProfile`
+- Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.observerSupportComplex`
+- Truth anchor: `D5/S3/Weil/Pick/CauchyJetLocalizedKernelInertia.observerSupportProfile`
+- Dependency: [D5/S3/Analytic/GoldenTomography/CauchyFeatureRightInverse](../../Analytic/GoldenTomography/CauchyFeatureRightInverse.md)
+- Dependency: [D5/S3/Weil/Pick/DiagonalSignNegativeIndex](DiagonalSignNegativeIndex.md)
+- Dependency: [D5/S3/Weil/Pick/InvertibleHermitianInertiaPullback](InvertibleHermitianInertiaPullback.md)
+- Dependency: [D5/S3/Weil/Pick/ObserverSignedSupportBarcode](ObserverSignedSupportBarcode.md)

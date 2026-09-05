@@ -66,8 +66,9 @@ The negative component of the inertia package is exposed as a direct consumer th
 
 ## References
 
-- Truth anchor: `D5/S3/Weil/Pick/DiagonalSignNegativeIndex.realDiagonal`
-- Truth anchor: `D5/S3/Weil/Pick/DiagonalSignNegativeIndex.positiveWeightCount`
 - Truth anchor: `D5/S3/Weil/Pick/DiagonalSignNegativeIndex.negativeWeightCount`
+- Truth anchor: `D5/S3/Weil/Pick/DiagonalSignNegativeIndex.positiveWeightCount`
+- Truth anchor: `D5/S3/Weil/Pick/DiagonalSignNegativeIndex.realDiagonal`
 - Truth anchor: `D5/S3/Weil/Pick/DiagonalSignNegativeIndex.real_diagonal_inertia_eq_sign_counts`
 - Truth anchor: `D5/S3/Weil/Pick/DiagonalSignNegativeIndex.real_diagonal_negIndex_eq_negative_count`
+- Dependency: [D5/S3/SpectralTopology/PointGapExactInertia](../../SpectralTopology/PointGapExactInertia.md)

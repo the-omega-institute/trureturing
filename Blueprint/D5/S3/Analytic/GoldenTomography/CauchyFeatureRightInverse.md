@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Analytic/GoldenTomography/CauchyFeatureRightInverse.cauch
 
 *Commentary.*
 
-Injectivity survives common translation and inversion. The determinant factors into a nonzero diagonal product and a nonzero Vandermonde determinant.
+Injectivity survives common translation and inversion; the determinant then factors into a nonzero diagonal product and a nonzero Vandermonde determinant.
 
 **Theorem 1.5 (The Cauchy-jet inverse is two-sided).**
 
@@ -66,8 +66,9 @@ The nonsingular inverse supplies both matrix inverse identities and an injective
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/GoldenTomography/CauchyFeatureRightInverse.reciprocalCauchyNode`
 - Truth anchor: `D5/S3/Analytic/GoldenTomography/CauchyFeatureRightInverse.cauchyJetFeatureMatrix`
 - Truth anchor: `D5/S3/Analytic/GoldenTomography/CauchyFeatureRightInverse.cauchyJetFeatureRightInverse`
-- Truth anchor: `D5/S3/Analytic/GoldenTomography/CauchyFeatureRightInverse.cauchy_jet_feature_det_ne_zero`
 - Truth anchor: `D5/S3/Analytic/GoldenTomography/CauchyFeatureRightInverse.cauchy_feature_right_inverse`
+- Truth anchor: `D5/S3/Analytic/GoldenTomography/CauchyFeatureRightInverse.cauchy_jet_feature_det_ne_zero`
+- Truth anchor: `D5/S3/Analytic/GoldenTomography/CauchyFeatureRightInverse.reciprocalCauchyNode`
+- Dependency: [D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography](FiniteVandermondeTomography.md)
