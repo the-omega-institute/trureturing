@@ -2,7 +2,6 @@ using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
-using StrataLint.Tests;
 
 namespace StrataLint.ArchitectureTests;
 
