@@ -43,8 +43,8 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
             Definition("kernel-refines", "KernelRefines",
                 "Kernel refinement",
                 "A finer node relation is pointwise contained in a coarser node relation."),
-            Theorem("generated-kernel-extensionality", "ext",
-                "Generated-kernel extensionality", Extensionality()),
+            TheoremLean("generated-kernel-extensionality", "ext",
+                "Generated-kernel extensionality"),
             Definition("escape-at-node", "escapeAt",
                 "Escape at a node",
                 "Escape is the finite set of off-diagonal pairs still related by the node kernel."),
@@ -125,6 +125,15 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
                 "The certificate is proved from the extensional quotient and the landed catalog kernel laws."))),
             DescribeRole.Theorem);
 
+    private static DocumentBlock.Describe TheoremLean(
+        string id, string declaration, string title) =>
+        Describe.Lean(
+            DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "The certificate is proved from the extensional quotient and the landed catalog kernel laws."))),
+            DescribeRole.Theorem);
+
     private static DocumentBlock.Describe FormulaDefinition(
         string id, string declaration, string title, Formula formula, string paragraph) =>
         Describe.Lean(
@@ -176,12 +185,6 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
     private static Formula NodeEqualityReflection() => Seq(
         Call("nodesEqB", P(), Q()), Sp, Eq, Sp, F.Id("true"), Sp, Iff, Sp,
         P(), Sp, Eq, Sp, Q());
-
-    private static Formula Extensionality() => new Formula.Logic(
-        Seq(Forall, Sp, X(), Comma, Sp, Y(), Comma, Sp,
-            Relation(P()), Sp, Iff, Sp, Relation(Q())),
-        FormulaLogicOperator.Implies,
-        Seq(P(), Sp, Eq, Sp, Q()));
 
     private static Formula EscapeBridge() => Seq(
         Escape(Kernel(S())), Sp, Eq, Sp, Call("escapePairs", C(), S()));
