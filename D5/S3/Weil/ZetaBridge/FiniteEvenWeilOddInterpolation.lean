@@ -117,14 +117,25 @@ def frameDelta (i j : ι) : ℂ := if j = i then 1 else 0
 vector. -/
 noncomputable def frameOddBasisTest
     (F : FiniteEvenWeilOrbitFrame Z ι) (i : ι) : WeilTestFunction :=
-  Classical.choose (exists_even_weil_odd_interpolant F (frameDelta i))
+  Classical.choose (exists_even_weil_frame_interpolant F (frameDelta i))
+
+/-- The basis is selected from the stronger two-sided interpolation theorem.
+This retains zero even channel, rather than forgetting it behind odd readout. -/
+theorem frameOddBasisTest_target_values
+    (F : FiniteEvenWeilOrbitFrame Z ι) (i j : ι) :
+    fourierLaplace (frameOddBasisTest F i) (Z.gamma (F.index j)) = frameDelta i j ∧
+      fourierLaplace (frameOddBasisTest F i) (conj (Z.gamma (F.index j))) =
+        -frameDelta i j :=
+  Classical.choose_spec (exists_even_weil_frame_interpolant F (frameDelta i)) j
 
 @[simp]
 theorem frameOddBasisTest_readout
     (F : FiniteEvenWeilOrbitFrame Z ι) (i j : ι) :
-    frameOddReadout F (frameOddBasisTest F i) j = frameDelta i j :=
-  Classical.choose_spec
-    (exists_even_weil_odd_interpolant F (frameDelta i)) j
+    frameOddReadout F (frameOddBasisTest F i) j = frameDelta i j := by
+  rw [frameOddReadout, oddSpectralChannel,
+    (frameOddBasisTest_target_values F i j).1,
+    (frameOddBasisTest_target_values F i j).2]
+  ring
 
 /-- Odd readout commutes with explicit finite Weil linear combinations. -/
 theorem frameOddReadout_finiteWeilLinearCombination
@@ -171,6 +182,26 @@ theorem frameOddSynthesis_readout
   · intro i _ hij
     simp [hij]
   · simp
+
+/-- Full signed values of the finite synthesis. In particular the target
+ even component vanishes, a stronger property than odd readout alone. -/
+theorem frameOddSynthesis_target_values
+    (F : FiniteEvenWeilOrbitFrame Z ι) (a : ι → ℂ) (j : ι) :
+    fourierLaplace (frameOddSynthesis F a) (Z.gamma (F.index j)) = a j ∧
+      fourierLaplace (frameOddSynthesis F a) (conj (Z.gamma (F.index j))) = -a j := by
+  constructor
+  · rw [frameOddSynthesis, fourierLaplace_finiteWeilLinearCombination]
+    have hval (i : ι) :
+        fourierLaplace (frameOddBasisTest F i) (Z.gamma (F.index j)) = frameDelta i j :=
+      (frameOddBasisTest_target_values F i j).1
+    simp_rw [hval]
+    simp [frameDelta]
+  · rw [frameOddSynthesis, fourierLaplace_finiteWeilLinearCombination]
+    have hval (i : ι) :
+        fourierLaplace (frameOddBasisTest F i) (conj (Z.gamma (F.index j))) =
+          -frameDelta i j := (frameOddBasisTest_target_values F i j).2
+    simp_rw [hval]
+    simp [frameDelta]
 
 /-- The reduced negative sesquilinear form carried by the observable odd
 channels. -/

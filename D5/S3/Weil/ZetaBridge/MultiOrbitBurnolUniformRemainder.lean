@@ -89,12 +89,16 @@ theorem burnolSynthesis_target_values
   have hp : fourierLaplace (finiteWeilLinearCombination a P.killer)
       (Z.gamma (F.index j)) = a j := by
     rw [fourierLaplace_finiteWeilLinearCombination]
-    simp_rw [(P.killer_values _ j).1]
+    have hkill (i : ι) : fourierLaplace (P.killer i)
+        (Z.gamma (F.index j)) = frameDelta i j := (P.killer_values i j).1
+    simp_rw [hkill]
     simp [frameDelta]
   have hm : fourierLaplace (finiteWeilLinearCombination a P.killer)
       (conj (Z.gamma (F.index j))) = -a j := by
     rw [fourierLaplace_finiteWeilLinearCombination]
-    simp_rw [(P.killer_values _ j).2]
+    have hkill (i : ι) : fourierLaplace (P.killer i)
+        (conj (Z.gamma (F.index j))) = -frameDelta i j := (P.killer_values i j).2
+    simp_rw [hkill]
     simp [frameDelta]
   constructor
   · rw [burnolSynthesis_fourierLaplace, (P.peak_values j).1, hp]
@@ -232,7 +236,7 @@ theorem burnolSynthesis_orbit_value
     orbitEvenEnergy (Z.multiplicity (F.index i)) (a i) (-a i) -
       orbitOddEnergy (Z.multiplicity (F.index i)) (a i) (-a i) at h
   rw [h, orbitEvenEnergy, orbitOddEnergy, he, ho]
-  simp
+  simp only [Complex.normSq_zero, mul_zero, zero_sub]
   ring
 
 /-- Disjointness proved from the frame certificate identifies the target
@@ -325,7 +329,7 @@ theorem exists_common_depth_strictly_negative (P : OrbitBurnolPacket F) :
   · norm_num
   · intro i
     have hm : (1 : ℝ) ≤ (Z.multiplicity (F.index i) : ℝ) := by
-      exact_mod_cast (Z.multiplicity_pos (F.index i))
+      exact_mod_cast (Nat.succ_le_iff.mpr (Z.multiplicity_pos (F.index i)))
     nlinarith
   · exact hN
   · intro a

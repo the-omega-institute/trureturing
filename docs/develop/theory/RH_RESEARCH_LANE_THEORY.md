@@ -7128,3 +7128,114 @@ MultiOrbitBurnolUniformRemainder
 \]
 
 关键义务包括全部选定轨道上的目标读数同时保持、其余有限异常零点同时消去、远端零点统一几何衰减、交叉项按 Gram/operator norm 共同控制，以及常数随 frame 大小与最小节点分离显式记账。
+
+
+---
+
+## [PR #5065] UNIFORM_MULTI_ORBIT_BURNOL_REMAINDER
+
+Candidate formalization, 2026-09-05. No successful Lean compilation or axiom audit is claimed by this source-write operation. The reviewed development baseline was `a2412c6c5cbfdcf38145b6386ac54a3cdc536408`; the existing candidate frame APIs were read at `fcfc744126d37ede7750dbecc4b840b5a8923bd7`. This increment stays on the existing draft PR, without merge or rebase.
+
+### Correction and library-first reuse
+
+Scalar even Weil tests remain constant on multiplicity copies and under functional-equation reflection. The result concerns independently observable four-point orbit channels. Multiplicity sets a weight and margin, not extra scalar rank.
+
+The earlier basis constructor chose a witness after forgetting its full signed values. It is now selected from `exists_even_weil_frame_interpolant`. The public `frameOddBasisTest_target_values` and `frameOddSynthesis_target_values` retain the exact +a/-a values and hence zero target even channel.
+
+Eight previously private helper declarations in the existing single-orbit Burnol owner are made public with unchanged proof bodies. These supply the reflection quotient, gamma injectivity, sign separation, actual zero summability, geometric-depth choice, and equality of the symmetric zero sum with its ordinary tsum. They are reused rather than independently redefined.
+
+### Closed finite-frame chain
+
+The four owners below construct a common peak, a common finite exceptional ball, simultaneous signed killers, an absolutely summable majorant for ALL mixed terms, and finally a single common power depth at which every nonzero coefficient vector gives a negative FULL Weil zero sum.
+
+For E(a)=sum_i |a_i|^2, the actual target union contributes -4 sum_i m_i |a_i|^2. The actual complement satisfies
+
+`|R_N(a)| <= (1/4)^(N+1) C_basis E(a)`.
+
+C_basis is the sum of the absolute mixed-convolution majorants. Its finiteness is proved from existing zeta summability. It depends on the fixed finite basis, but not on a or N. The power factor tends to zero. Since each analytic multiplicity is at least one, one common finite N suffices for strict negativity on the whole nonzero coefficient space.
+
+This constructs a jointly localized basis. It does not assert that the older arbitrarily chosen fixed synthesis already had the full remainder estimate.
+
+### Source-level details
+
+#### `FiniteReflectionCompatibleWeilInterpolation`
+
+Status: Candidate source and author projection. Kernel and Scribe reconciliation remain separate checks.
+
+For actual zero data Z, a finite set E of indices, and complex values a satisfying a(R j)=a(j), the module constructs a compact smooth even Weil test g with FT(g)(gamma_j)=a(j) for every j in E.
+
+The construction reuses the reflection representative and frequency-injectivity lemmas from the existing single-orbit separator. It invokes `even_weilTestFunction_finite_interpolation` on the sign quotient. It does not reconstruct the Fourier-Laplace interpolation theorem.
+
+The constant assignment gives a simultaneous unit peak on any finite union of zero orbits.
+
+Main declarations:
+
+- `even_weil_interpolation_on_finite_indices`
+- `exists_even_weil_finite_unit_peak`
+
+#### `FiniteOrbitBurnolPacket`
+
+Status: Candidate source and author projection.
+
+For a valid `FiniteEvenWeilOrbitFrame`, the module first proves that the actual four-point zero orbits are pairwise disjoint. It then constructs one peak b, a finite exceptional spectral ball E, and tests k_i satisfying:
+
+1. FT(b)=1 at both selected conjugate spectral nodes of every channel.
+2. FT(k_i)(gamma_j)=delta_ij and FT(k_i)(conj gamma_j)=-delta_ij.
+3. Every k_i vanishes at all exceptional zero indices outside the target union.
+4. Outside E, both conjugate evaluations of b have norm at most 1/2.
+
+Existence follows from finite compatible interpolation and the existing closed-strip decay estimate. The simultaneous exceptional set is essential: multiplying separately chosen single-orbit packets would not automatically preserve the other target values.
+
+Main declarations: `frame_orbits_pairwise_disjoint`, `exists_common_exceptional_ball`, `exists_orbitBurnolPacket`.
+
+#### `FiniteMixedWeilMajorant`
+
+Status: Candidate source and author projection.
+
+For a finite basis k_i define the actual mixed terms
+
+`M_ij(n) = zeroSummand Z (convolve (k_i) (involution (k_j))) n`.
+
+Every M_ij is absolutely summable by the existing zeta summability theorem. The complete coefficient expansion is
+
+`s_n(a) = sum_ij a_i conjugate(a_j) M_ij(n)`.
+
+With `E(a)=sum_i |a_i|^2` and `B(n)=sum_ij |M_ij(n)|`, the module proves
+
+`|s_n(a)| <= E(a) B(n)` and `sum_n |s_n(a)| <= E(a) C`, where `C=sum_n B(n)`.
+
+B is proved summable. C depends on the fixed basis and includes every mixed term. It is not postulated as an operator-norm hypothesis.
+
+Main declarations: `mixedWeilSummand_summable`, `zeroSummand_finite_synthesis_expansion`, `finiteMixedMajorant_summable`, `finite_synthesis_absolute_sum_le`.
+
+#### `MultiOrbitBurnolUniformRemainder`
+
+Status: Candidate source and author projection. No successful Lean compilation is claimed by this document.
+
+The actual synthesized tests are
+
+`f_N,a = sum_i a_i (b^{*(N+1)} * k_i)`.
+
+Both target signs are preserved at every N. In particular the selected even channels vanish. The exact selected-orbit union contributes
+
+`-4 sum_i m_i |a_i|^2`.
+
+Writing the complete, absolutely convergent Weil zero sum as that contribution plus R_N(a), the module derives
+
+`|R_N(a)| <= (1/4)^(N+1) C_basis sum_i |a_i|^2`.
+
+The factor tends to zero independently of a. Positive integral analytic multiplicities give the target margin 4, so one finite common N makes the full form strictly negative on every nonzero coefficient vector. Reduced odd evaluation remains a right inverse, proving synthesis injective.
+
+This closes the finite-frame remainder obligation that was previously an input to `QuantitativeMultiOrbitWeilNegativeCertificate`. It does not instantiate that older certificate for its arbitrary fixed basis; it constructs a new, jointly localized basis with proved estimates.
+
+The valid frame is the only orbit assumption. Neither existence of off-line zeros nor a uniform estimate over all moving frames is asserted. Empty frames give the zero-dimensional case; a nonempty frame is required to extract an actual negative test.
+
+Main declarations: `burnolSynthesis_target_union_value`, `multiOrbitBurnol_uniform_remainder`, `multiOrbitBurnol_error_tendsto_zero`, `exists_common_depth_strictly_negative`, `finite_multiOrbit_full_weil_negative_family`.
+
+### Boundaries and next quantitative problems
+
+A valid finite frame of nonreal off-line orbits is an input; existence of an off-line zero is never asserted. An empty frame is zero-dimensional. A nonempty frame is required for an actual negative test.
+
+The constant and selected depth are classical and frame dependent. No computable estimate in minimum node separation, frame size, support radius, or height is established. Convolution depth may enlarge support. No uniform support window over all frames, infinite negative-index stability, prime-side coercivity, RH, or stronger zero-density theorem is claimed.
+
+Next load-bearing goals are to package the actual full mixed Gram as a Hermitian matrix and identify its negative inertia with the realized test dimension, then derive explicit interpolation-conditioning and support-growth bounds and independently verifiable prime/Archimedean margins.
