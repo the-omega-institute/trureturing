@@ -213,6 +213,10 @@ internal sealed class RuleEvaluationContext
         Policy = policy;
         Lean = lean;
         Changes = changes;
+        BackfillCandidateDeltaSession = new BackfillCandidateDeltaSession(
+            current,
+            baseline,
+            changes);
         RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
@@ -236,6 +240,10 @@ internal sealed class RuleEvaluationContext
     internal AcceptedLeanClosure Lean { get; }
 
     internal RawChangeSet Changes { get; }
+
+    internal BackfillCandidateDeltaSession BackfillCandidateDeltaSession { get; }
+
+    internal int BackfillCandidateDeltaLoadCount => BackfillCandidateDeltaSession.LoadCount;
 
     internal bool RuleImplementationChanged { get; }
 
