@@ -6,8 +6,8 @@ namespace StrataLint.Cli;
 
 internal sealed partial class ProductionCliEnvironment
 {
-    // This gate runs before canonical FILEMAP validation and fails closed on a malformed
-    // candidate FILEMAP. A repair change carries a valid FILEMAP, so no bootstrap is needed.
+    // This gate classifies changed paths from the candidate FILEMAP before canonical validation.
+    // It fails closed when FILEMAP is missing or invalid, so a correcting PR carries a valid manifest.
     private static readonly RuleDescriptor AdmissionPlaneRule = new(
         RuleId.CreateKnown(29),
         "Admission plane partition",

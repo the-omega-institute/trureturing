@@ -150,6 +150,26 @@ public sealed class EngineeringScopeProgramTests
     }
 
     [Fact]
+    public void AdmissionPlaneFirstCandidateFileMapForcesFullEngineeringScope()
+    {
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                TemporaryFileSystem.File.Delete(Path.Combine(root, FileMapPath));
+            },
+            root => WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge")));
+
+        Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Equal([ProductTestsProject, ScriptTestsProject], result.SelectedProjects);
+        Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            "candidate admission plane judgeonly requires full engineering",
+            result.Output,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ContentPlaneChangeKeepsIncrementalEngineeringScope()
     {
         var result = RunBoundary(
