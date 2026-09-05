@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:c710bd80c5b59b4b121c0468089b9be5b268283de73da0815824e740eba87b84
+  normalized_sha256: sha256:c710bd80c5b59b4b121c0468089b9be5b268283de73da0815824e740eba87b84
+cas_ref: sha256:c710bd80c5b59b4b121c0468089b9be5b268283de73da0815824e740eba87b84
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "The atom `* 安全拒答。` is a bare application label under `这统一了` and states no proposition that a public theorem can cover. Named near-miss frozen carriers are `canonicalSafeAnswer` in D5/S3/ConceptDynamics/Answering/SafeAnswerCoverageMaximality.lean:38-48, which returns `some` of a unique attained target and otherwise `none` (abstains), and D5/S3/ConceptDynamics/Answering/RefinementMonotoneAnswerDomain.refinement_monotone_answer_domain in D5/S3/ConceptDynamics/Answering/RefinementMonotoneAnswerDomain.lean:38-43, which assumes an affirmative coarse answer `some y` and preserves that same affirmative `some y` under refinement. The latter neither defines refusal nor concludes `none`. No frozen public statement gives the label's own safe-refusal proposition, and no bridge derives the parent's subset and nonempty hypotheses from a safe-refusal application."
+    reentry_condition: "Add a frozen bridge theorem whose public statement derives the parent's subset and nonempty hypotheses from the named safe-refusal application, or a frozen public statement of the safe-refusal application's own proposition, then re-cover."
+    blocker_class: multi-clause-guard
