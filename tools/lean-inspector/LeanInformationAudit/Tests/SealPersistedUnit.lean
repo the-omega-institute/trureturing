@@ -40,6 +40,10 @@ run_cmd registerValidatedEntry {
   realizationName := `LeanInformationAudit.Tests.SealPersistedUnit.fixtureRealization
 }
 
+expect_information_occurrence target
+  in arena
+  from "LeanInformationAudit.Tests.SealPersistedUnit"
+
 #seal_information_theory
 
 #check target.__lowers_escape
