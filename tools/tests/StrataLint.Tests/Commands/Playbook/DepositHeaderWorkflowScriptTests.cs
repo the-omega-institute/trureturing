@@ -122,39 +122,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Empty(console.Error);
     }
 
-    internal sealed partial class TransactionFixture
-    {
-        internal void ChangeFormalizationToSevenLineWrappedDigest()
-        {
-            WriteFile(LeanPath, SevenLineWrappedDigest(
-                Gid[..Gid.LastIndexOf('.')],
-                "theorem probe : True := by trivial\n"));
-            WriteFile(DefinitionPath, "definition deposited\n");
-        }
-
-        internal string[] BlueprintState()
-        {
-            var directory = Path.Combine(Root, "Blueprint");
-            return Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
-                .Order(StringComparer.Ordinal)
-                .Select(path => Path.GetRelativePath(Root, path) + "\n" + File.ReadAllText(path))
-                .ToArray();
-        }
-
-        internal static string ExactSixLineLean(string gid, string declaration)
-        {
-            var documentGid = gid[..gid.LastIndexOf('.')];
-            return $"/- GID: {documentGid}\n"
-                + "   generality: G\n"
-                + $"   mirror-B: D5/B/{documentGid[3..]}\n"
-                + "   mirror-E: none(waiver:pure-definition)\n"
-                + "   anchors: []\n"
-                + "   digest: Synthetic deposit workflow fixture. -/\n"
-                + declaration;
-        }
-    }
-
-    private static string SevenLineWrappedDigest(string documentGid, string declaration) =>
+    // TransactionFixture 提升为顶层类后不再能访问本类的 private 成员;
+    // 该辅助被夹具与本类共同使用,故改 internal(同程序集可见,行为与签名不变)。
+    internal static string SevenLineWrappedDigest(string documentGid, string declaration) =>
         $"/- GID: {documentGid}\n"
         + "   generality: G\n"
         + $"   mirror-B: D5/B/{documentGid[3..]}\n"

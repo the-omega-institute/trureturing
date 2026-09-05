@@ -96,7 +96,7 @@ jobs:
           source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/.editorconfig', 'candidate/global.json') }}"
           workflow_ref=HEAD
           if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then workflow_ref=HEAD^1; fi
-          workflow_address="$(git -C candidate show "${workflow_ref}:.github/workflows/ci.yml" | sha256sum | cut -d ' ' -f 1)"
+          workflow_address="$(git -C candidate rev-parse "${workflow_ref}:.github/workflows/ci.yml")"
           source_address="$(printf 'sources=%s\nworkflow=%s\n' "$source_address" "$workflow_address" | sha256sum | cut -d ' ' -f 1)"
           candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
       - name: Restore judge binaries and candidate build outputs
@@ -299,7 +299,7 @@ jobs:
           source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/.editorconfig', 'candidate/global.json') }}"
           workflow_ref=HEAD
           if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then workflow_ref=HEAD^1; fi
-          workflow_address="$(git -C candidate show "${workflow_ref}:.github/workflows/ci.yml" | sha256sum | cut -d ' ' -f 1)"
+          workflow_address="$(git -C candidate rev-parse "${workflow_ref}:.github/workflows/ci.yml")"
           source_address="$(printf 'sources=%s\nworkflow=%s\n' "$source_address" "$workflow_address" | sha256sum | cut -d ' ' -f 1)"
           candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
       - name: Restore judge binaries and candidate build outputs
@@ -598,7 +598,7 @@ jobs:
           source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/.editorconfig', 'candidate/global.json') }}"
           workflow_ref=HEAD
           if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then workflow_ref=HEAD^1; fi
-          workflow_address="$(git -C candidate show "${workflow_ref}:.github/workflows/ci.yml" | sha256sum | cut -d ' ' -f 1)"
+          workflow_address="$(git -C candidate rev-parse "${workflow_ref}:.github/workflows/ci.yml")"
           source_address="$(printf 'sources=%s\nworkflow=%s\n' "$source_address" "$workflow_address" | sha256sum | cut -d ' ' -f 1)"
           candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
       - name: Restore judge binaries and candidate build outputs
