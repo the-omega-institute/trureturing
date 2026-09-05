@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:0eefd5c1a12eb1f8861bd7a3831c5924a1c8a040e1fe590542a8492c89ebcf67
+  normalized_sha256: sha256:0eefd5c1a12eb1f8861bd7a3831c5924a1c8a040e1fe590542a8492c89ebcf67
+cas_ref: sha256:0eefd5c1a12eb1f8861bd7a3831c5924a1c8a040e1fe590542a8492c89ebcf67
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Clause matrix against the near-miss carrier's public statement. Near-miss carrier: `D5/S0/Computability/DescriptionComplexity/ThreeTowerCostSeparation.three_tower_cost_sandwich_and_double_separation`. Clause (a) is carried at `ThreeTowerCostSeparation.lean:134-138`: the `Metric.infDist` chain compares the affordable regions of the quantified `prefixTower`, `testTower`, and `programTower` with the two additive overheads. Clause (b)(i) is not carried on those towers: at line 139 the public statement switches to standalone `prefixValue`, `indexedSpikeValue`, and `indexedSpikeCost` encodings on `Nat -> Bool`; these terms never mention the quantified towers, their name/cost/value fields, affordable regions, or common carrier `X`. Clause (b)(ii) is not carried on those towers: at line 145 the statement switches again to standalone `explicitTableValue`, `explicitTableCost`, `rangeProgramValue`, and `rangeProgramCost` encodings on `Finset Nat`, with the same disconnect from the quantified towers and `X`. Nearby testing-tower carrier modules `TestingTowerStructureMembership`, `TestingTowerValuation`, and `TestingCostClassification` respectively state tower membership, table/program valuation and halting-domain facts, and cost-sublevel classification; none publicly states either prefix-versus-testing or testing-versus-program separation on the same towers used by the sandwich."
+    reentry_condition: "Freeze a public theorem whose sandwich and both separation conjuncts are stated on the same prefix, testing, and program towers through their name, cost, and value fields and affordable regions, or add source errata narrowing clause (b) to the standalone helper models."
+    blocker_class: multi-clause-guard
