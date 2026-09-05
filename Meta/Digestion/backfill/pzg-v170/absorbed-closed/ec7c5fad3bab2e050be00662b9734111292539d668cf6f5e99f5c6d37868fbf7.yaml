@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ec7c5fad3bab2e050be00662b9734111292539d668cf6f5e99f5c6d37868fbf7
+  normalized_sha256: sha256:ec7c5fad3bab2e050be00662b9734111292539d668cf6f5e99f5c6d37868fbf7
+cas_ref: sha256:ec7c5fad3bab2e050be00662b9734111292539d668cf6f5e99f5c6d37868fbf7
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/FiniteCosetPartitionMaximalIndexMultiplicity.prime_le_card_maximalIndex
+    target_statement_id: sha256:4324a89b5f690c5f1a265c83ae9b717d6aedf81ecec1971625c4994d143623e0
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/PrimePowers/FiniteCosetPartitionMaximalIndexMultiplicity.prime_le_card_maximalIndex
+      definition_sha256: sha256:592f9e038524ed2dd7c2e6f69bacfaf76a80835bfa6836d57f39e1d686787e76
+      emission_sha256: sha256:5b5652a00a8a75c5dee5a1c5635524f9af7e1bafae245fbf20a85839bc6f555c
+  unresolved_subitems: []
