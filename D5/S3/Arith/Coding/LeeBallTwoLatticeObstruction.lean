@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Arith/Coding/LeeBallTwoLatticeObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: kind=bounded-enumeration; basis=terminal=atom:7d8c95c432b82f5ca6e54d02d10b5982ee9f0131273d82ae31633aedb934f2dc; result=D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_lattice_obstruction
    digest: The radius-two Lee ball has no injective index-25 lattice quotient in Z cubed. -/
 
 import Mathlib.Algebra.Module.ZMod
