@@ -68,6 +68,8 @@ representation length of each digit position can be arbitrarily large.
   normalization.
 - `GoldenContinuedFraction` and Fibonacci scale give the golden/Ostrowski
   arithmetic that underlies the digit extractor.
+- `ZeckendorfOrder` and the Beatty bridge may support exact generation of
+  constrained positive and negative examples without floating-point phi.
 - The remaining task is automata-theoretic minimality on a sparse input
   language, so the connection is real but one layer farther from existing
   machinery than the other five candidates.
