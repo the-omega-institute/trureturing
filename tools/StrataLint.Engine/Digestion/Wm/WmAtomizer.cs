@@ -7,6 +7,11 @@ namespace StrataLint.Engine;
 
 internal static partial class WmAtomizer
 {
+    internal const string AuditKind = "audit";
+    internal const string MetadataKind = "metadata";
+    internal const string SectionKind = "section";
+    internal const string VersionKind = "version";
+
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex VersionPattern = new(
         "^-\\s+\\*\\*(?<version>v0(?:\\.(?<revision>[1-9][0-9]*))?)\\*\\*",
@@ -104,7 +109,7 @@ internal static partial class WmAtomizer
                     && scaffoldKinds.TryGetValue(source.Atom.Fingerprints.RawSha256, out var captured)
                         ? captured
                         : DisciplinePattern.IsMatch(AtomText(claim))
-                            ? "metadata"
+                            ? MetadataKind
                             : null;
                 if (kind is not null)
                 {
@@ -125,7 +130,7 @@ internal static partial class WmAtomizer
         if (version.Success)
         {
             ParseRevision(version, "WM version ledger");
-            return "version/" + version.Groups["version"].Value;
+            return VersionKind + "/" + version.Groups["version"].Value;
         }
 
         if (VersionLeadPattern.IsMatch(paragraph))
@@ -152,21 +157,21 @@ internal static partial class WmAtomizer
     {
         if (heading == rules.WmHeadings["title"])
         {
-            return "metadata/preamble";
+            return MetadataKind + "/preamble";
         }
 
         var section = SectionHeadingPattern.Match(heading);
         if (section.Success)
         {
-            return "section/" + section.Groups["number"].Value;
+            return SectionKind + "/" + section.Groups["number"].Value;
         }
 
         if (heading == rules.WmHeadings["appendix"])
         {
-            return "section/7-appendix";
+            return SectionKind + "/7-appendix";
         }
 
-        return heading == rules.WmHeadings["audit"] ? "audit" : null;
+        return heading == rules.WmHeadings["audit"] ? AuditKind : null;
     }
 
     private static void ValidateStructure(

@@ -53,7 +53,8 @@ public sealed class ResidualFrontierAssemblerTests
         var canonicalFrontier = DigestionFrontierProjection.Create(
             fixture.Document,
             canonical,
-            DigestionContentKindResolver.Resolve(fixture.Snapshot, fixture.Document));
+            DigestionContentKindResolver.Resolve(fixture.Snapshot, fixture.Document),
+            retryDispositions: false);
         var expected = Encoding.UTF8.GetBytes(
             EchoResidualBlock.Render(DigestResidualSummary.Render(canonical, canonicalFrontier)));
 

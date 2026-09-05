@@ -1,15 +1,12 @@
-using System.Collections.Immutable;
+using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using StrataLint.TestSupport;
 
 namespace StrataLint.Tests;
 
 public sealed class DigestionFrontierViewsAndCorpusTests
 {
-    private static readonly Lazy<CorpusFixture> Corpus = new(LoadCorpus);
-
     [Fact]
     public void ReadinessCandidatesSummaryAndStatusJsonAgreeOnFrontierCounts()
     {
@@ -19,8 +16,7 @@ public sealed class DigestionFrontierViewsAndCorpusTests
             fixture.Projection,
             fixture.Snapshot,
             fixture.Document,
-            selectedAtomId: null,
-            retryDispositions: false);
+            selectedAtomId: null);
         var summary = DigestResidualSummary.Render(fixture.Evaluation, fixture.Projection);
         var statusText = DigestStatusCommand.RenderJson(fixture.Evaluation, fixture.Projection);
 
@@ -90,54 +86,103 @@ public sealed class DigestionFrontierViewsAndCorpusTests
                 .Select(static parent => parent.GetString()));
     }
 
-    [Fact]
-    public void CurrentCorpusHasNoUnresolvedKindsAndPartitionsEveryResidualOpenEntry()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MalformedStatusMarkerIsWithheldByFrontierAndCandidatesInEveryRetryMode(
+        bool retryDispositions)
     {
-        var corpus = Corpus.Value;
+        var marker = DigestionAtomStatusMarker.Parse(
+            Encoding.UTF8.GetBytes("**定理 1.1**〔closed"));
+        Assert.Equal(DigestionAtomStatusMarkerKind.Malformed, marker.Kind);
+        var fixture = DigestionFrontierFixture.Create(
+            retryDispositions,
+            claimStatusMarker: marker);
 
-        Assert.All(corpus.Ledger.RequireDigestionEntries(), entry =>
-        {
-            corpus.ContentKinds.TryGetValue(entry.AtomId, out var kind);
-            _ = DigestionContentDisposition.Resolve(kind);
-        });
+        using var candidates = RenderCandidates(fixture);
+
+        Assert.Equal(1, fixture.Projection.Total.FormalizationFrontier);
+        var expectedWithheld = retryDispositions ? 2 : 3;
+        Assert.Equal(expectedWithheld, fixture.Projection.Total.Withheld);
+        Assert.Equal(1, candidates.RootElement.GetProperty("candidates").GetArrayLength());
         Assert.Equal(
-            corpus.Evaluation.Entries.Count(static item =>
-                item.DerivedStatus.Migration == DigestionMigrationState.Residual
-                && item.DerivedStatus.Truth == DigestionTruthState.Open),
-            corpus.Projection.Total.ResidualOpen);
-        Assert.Equal(
-            corpus.Projection.Total.ResidualOpen,
-            corpus.Projection.Total.Quarantined
-                + corpus.Projection.Total.Withheld
-                + corpus.Projection.Total.ChainChild
-                + corpus.Projection.Total.NotFormalizable
-                + corpus.Projection.Total.FormalizableClaim);
+            expectedWithheld,
+            candidates.RootElement.GetProperty("withheld").GetArrayLength());
+        var withheld = candidates.RootElement.GetProperty("withheld").EnumerateArray()
+            .Single(item => item.GetProperty("atom_id").GetString() == DigestionFrontierFixture.ClaimId);
+        Assert.Equal("malformed-status-marker", withheld.GetProperty("withhold_reason").GetString());
+        var projected = fixture.Projection.Entries.Single(
+            item => item.Entry.AtomId == DigestionFrontierFixture.ClaimId);
+        Assert.Equal(DigestionFrontierDisposition.Withheld, projected.PrimaryDisposition);
+        Assert.Equal("malformed-status-marker", projected.PrimaryDetail);
     }
 
-    private static CorpusFixture LoadCorpus()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void QualifiedClosedStatusMarkerIsWithheldByFrontierAndCandidatesInEveryRetryMode(
+        bool retryDispositions)
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var raw = new GitRepositoryGateway(root).ReadCurrent();
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
-        var ledger = BackfillInventoryLoader.Load(snapshot);
-        var evaluation = new DigestionLedgerEvaluation(
-            ledger.RequireDigestionEntries()
-                .Select(static entry => new DigestionEntryEvaluation(
-                    entry,
-                    DigestionReceiptAlignment.Seen,
-                    entry.ProjectedStatus,
-                    false,
-                    []))
-                .ToImmutableArray(),
-            []);
-        var contentKinds = DigestionContentKindResolver.Resolve(snapshot, ledger);
-        var projection = DigestionFrontierProjection.Create(ledger, evaluation, contentKinds);
-        return new CorpusFixture(ledger, evaluation, contentKinds, projection);
+        var marker = DigestionAtomStatusMarker.Parse(
+            Encoding.UTF8.GetBytes("**定理 1.1**〔closed;数值证书〕。claim。"));
+        Assert.Equal(DigestionAtomStatusMarkerKind.Valid, marker.Kind);
+        var fixture = DigestionFrontierFixture.Create(
+            retryDispositions,
+            claimStatusMarker: marker);
+
+        using var candidates = RenderCandidates(fixture);
+
+        Assert.Equal(1, fixture.Projection.Total.FormalizationFrontier);
+        var expectedWithheld = retryDispositions ? 2 : 3;
+        Assert.Equal(expectedWithheld, fixture.Projection.Total.Withheld);
+        Assert.Equal(1, candidates.RootElement.GetProperty("candidates").GetArrayLength());
+        Assert.Equal(
+            expectedWithheld,
+            candidates.RootElement.GetProperty("withheld").GetArrayLength());
+        var withheld = candidates.RootElement.GetProperty("withheld").EnumerateArray()
+            .Single(item => item.GetProperty("atom_id").GetString() == DigestionFrontierFixture.ClaimId);
+        Assert.Equal("qualified-closed-status", withheld.GetProperty("withhold_reason").GetString());
+        Assert.Equal("数值证书", withheld.GetProperty("status_qualifier").GetString());
+        var projected = fixture.Projection.Entries.Single(
+            item => item.Entry.AtomId == DigestionFrontierFixture.ClaimId);
+        Assert.Equal(DigestionFrontierDisposition.Withheld, projected.PrimaryDisposition);
+        Assert.Equal("qualified-closed-status", projected.PrimaryDetail);
     }
 
-    private sealed record CorpusFixture(
-        BackfillInventoryDocument Ledger,
-        DigestionLedgerEvaluation Evaluation,
-        IReadOnlyDictionary<string, string> ContentKinds,
-        DigestionFrontierProjection Projection);
+    [Theory]
+    [InlineData(false, 2, 2)]
+    [InlineData(true, 3, 1)]
+    public void RetryCoverDispositionUsesTheSameFrontierAsCandidates(
+        bool retryDispositions,
+        int expectedFrontier,
+        int expectedWithheld)
+    {
+        var fixture = DigestionFrontierFixture.Create(
+            retryDispositions,
+            coverKind: "theorem");
+
+        using var candidates = RenderCandidates(fixture);
+
+        Assert.Equal(expectedFrontier, fixture.Projection.Total.FormalizationFrontier);
+        Assert.Equal(expectedWithheld, fixture.Projection.Total.Withheld);
+        Assert.Equal(
+            expectedFrontier,
+            candidates.RootElement.GetProperty("candidates").GetArrayLength());
+        Assert.Equal(
+            expectedWithheld,
+            candidates.RootElement.GetProperty("withheld").GetArrayLength());
+        var candidateIds = candidates.RootElement.GetProperty("candidates").EnumerateArray()
+            .Select(static item => item.GetProperty("atom_id").GetString())
+            .ToArray();
+        Assert.Equal(
+            retryDispositions,
+            candidateIds.Contains(DigestionFrontierFixture.CoverWithheldId, StringComparer.Ordinal));
+    }
+
+    private static JsonDocument RenderCandidates(
+        DigestionFrontierFixture fixture) => JsonDocument.Parse(DigestFormalizeCandidates.Render(
+            fixture.Projection,
+            fixture.Snapshot,
+            fixture.Document,
+            selectedAtomId: null));
 }

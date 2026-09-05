@@ -12,7 +12,7 @@ public sealed class DigestionContentDispositionTests
     {
         var kinds = TheoryAtomizerRules.AllowedKinds
             .Concat(FormalizableAliases)
-            .Concat(["unregistered:未登记体"])
+            .Concat(["none", "unregistered:未登记体"])
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
@@ -49,22 +49,35 @@ public sealed class DigestionContentDispositionTests
             .Concat(rules.Dialects.Values.SelectMany(static dialect =>
                 dialect.Genres.Concat(dialect.GenreSuffixes)))
             .Select(static mapping => mapping.Value);
-        var builtInLocators = new[]
+        var builtInLocatorKinds = new[]
         {
-            "appendix", "audit", "coarse", "item", "metadata", "open", "row", "section",
-            "trace-note", "version",
+            GenericAtomizer.ItemKind,
+            GenericAtomizer.RowKind,
+            GenericAtomizer.SectionKind,
+            GictAtomizer.AppendixKind,
+            PeriodicTreeAtomizer.CoarseKind,
+            PeriodicTreeAtomizer.SectionKind,
+            PzgAtomizer.MetadataKind,
+            PzgAtomizer.OpenKind,
+            PzgAtomizer.RemarkKind,
+            PzgAtomizer.TraceNoteKind,
+            WmAtomizer.AuditKind,
+            WmAtomizer.MetadataKind,
+            WmAtomizer.SectionKind,
+            WmAtomizer.VersionKind,
         };
-        var atomizerDerived = configuredLocators
+        var atomizerDerived = TheoryAtomizerRules.AllowedKinds
+            .Concat(configuredLocators)
             .Concat(registeredGenres)
-            .Concat(builtInLocators)
+            .Concat(builtInLocatorKinds)
             .Select(ContentKind)
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
 
-        Assert.Equal(atomizerDerived, TheoryAtomizerRules.AllowedKinds.Order(StringComparer.Ordinal));
         Assert.Equal(
             atomizerDerived.Concat(FormalizableAliases)
+                .Append("none")
                 .Distinct(StringComparer.Ordinal)
                 .Order(StringComparer.Ordinal),
             DigestionContentDisposition.KnownKindLabels);
@@ -84,4 +97,5 @@ public sealed class DigestionContentDispositionTests
         var separator = locator.IndexOf('/', StringComparison.Ordinal);
         return separator < 0 ? locator : locator[..separator];
     }
+
 }

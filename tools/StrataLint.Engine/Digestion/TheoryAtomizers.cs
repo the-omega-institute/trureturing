@@ -328,6 +328,8 @@ internal sealed class NumberedClaims
 
 internal static class GictAtomizer
 {
+    internal const string AppendixKind = "appendix";
+
     private const string NumberPattern = "[0-9]+\\.[0-9]+";
     private static readonly Regex AppendixClaimPattern = new(
         "^\\*\\*(?<number>E\\.[0-9]+)\\s+[^\\r\\n*]+\\*\\*",
@@ -362,7 +364,7 @@ internal static class GictAtomizer
         var appendix = AppendixClaimPattern.Match(paragraph);
         if (appendix.Success)
         {
-            return "appendix/" + appendix.Groups["number"].Value;
+            return AppendixKind + "/" + appendix.Groups["number"].Value;
         }
 
         return claims.Identify(paragraph)
@@ -378,6 +380,9 @@ internal static class GictAtomizer
 
 internal static class PeriodicTreeAtomizer
 {
+    internal const string CoarseKind = "coarse";
+    internal const string SectionKind = "section";
+
     private static readonly Regex SectionHeadingPattern = new(
         "^(?<number>[0-9]+)\\.\\s+",
         RegexOptions.CultureInvariant);
@@ -413,7 +418,7 @@ internal static class PeriodicTreeAtomizer
             rawBytes,
             DigestionFingerprint.ComputeOpaque(rawBytes.AsSpan()),
             []);
-        AtomizerRegistry.RecordContentKind(contentKinds, atom, "coarse");
+        AtomizerRegistry.RecordContentKind(contentKinds, atom, CoarseKind);
         return new AtomizedTheoryDocument(
             [atom],
             [new DigestionSlice(true, rawBytes)],
@@ -423,12 +428,17 @@ internal static class PeriodicTreeAtomizer
     private static string? IdentifyHeading(string heading)
     {
         var match = SectionHeadingPattern.Match(heading);
-        return match.Success ? "section/" + match.Groups["number"].Value : null;
+        return match.Success ? SectionKind + "/" + match.Groups["number"].Value : null;
     }
 }
 
 internal static class PzgAtomizer
 {
+    internal const string MetadataKind = "metadata";
+    internal const string OpenKind = "open";
+    internal const string RemarkKind = "remark";
+    internal const string TraceNoteKind = "trace-note";
+
     private const string NumberPattern = "[0-9]+\\.[0-9]+(?:\\.[0-9]+)?[′″]*";
     private static readonly Regex OpenPattern = new(
         "^\\*\\*(?<id>O-[0-9]+)\\*\\*",
@@ -560,13 +570,13 @@ internal static class PzgAtomizer
             RegexOptions.CultureInvariant);
         if (trace.Success)
         {
-            return "trace-note/" + trace.Groups["number"].Value;
+            return TraceNoteKind + "/" + trace.Groups["number"].Value;
         }
 
         var open = OpenPattern.Match(paragraph);
         if (open.Success)
         {
-            return "open/" + open.Groups["id"].Value;
+            return OpenKind + "/" + open.Groups["id"].Value;
         }
 
         return claims.Identify(paragraph);
@@ -582,7 +592,7 @@ internal static class PzgAtomizer
             RegexOptions.CultureInvariant);
         if (supplement.Success)
         {
-            return "metadata/supplement/" + supplement.Groups["version"].Value;
+            return MetadataKind + "/supplement/" + supplement.Groups["version"].Value;
         }
 
         var remark = rules.PzgGenres
@@ -595,7 +605,7 @@ internal static class PzgAtomizer
             .FirstOrDefault(static match => match.Success);
         if (remark is { Success: true })
         {
-            return "remark/" + remark.Groups["range"].Value
+            return RemarkKind + "/" + remark.Groups["range"].Value
                 .Replace('–', '-')
                 .Replace('—', '-');
         }

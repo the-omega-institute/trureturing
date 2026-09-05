@@ -25,6 +25,10 @@ namespace StrataLint.Engine;
 /// </summary>
 internal static class GenericAtomizer
 {
+    internal const string ItemKind = "item";
+    internal const string RowKind = "row";
+    internal const string SectionKind = "section";
+
     /// <summary>
     /// 〈word〉 then 〈number〉: the lead shape every numbered dialect already shares. A genre
     /// is a word, so the token holds letters and digits and nothing else — no dash, no
@@ -100,7 +104,7 @@ internal static class GenericAtomizer
     private static string? IdentifyTableRow(MarkdownTableRow row) =>
         row.IsHeader || row.FirstCellText.Length == 0
             ? null
-            : "row/" + Slug(row.FirstCellText);
+            : RowKind + "/" + Slug(row.FirstCellText);
 
     private static string? IdentifyHeading(string heading)
     {
@@ -108,7 +112,7 @@ internal static class GenericAtomizer
         return claim.Success
             ? DigestionContentDisposition.NormalizeNumberedClaimToken(
                 claim.Groups["kind"].Value) + "/" + claim.Groups["number"].Value
-            : "section/" + Slug(heading);
+            : SectionKind + "/" + Slug(heading);
     }
 
     private static bool IsHeadingClaim(string heading) => HeadingClaim.IsMatch(heading);
@@ -123,7 +127,7 @@ internal static class GenericAtomizer
         }
 
         var item = ParagraphItem.Match(paragraph);
-        return item.Success ? "item/" + item.Groups["number"].Value : null;
+        return item.Success ? ItemKind + "/" + item.Groups["number"].Value : null;
     }
 
     /// <summary>

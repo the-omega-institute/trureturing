@@ -20,7 +20,10 @@ internal sealed record DigestionFrontierFixture(
     internal const string StructuralId = "standalone-structural-definition";
     internal const string ClaimId = "formalizable-claim";
 
-    internal static DigestionFrontierFixture Create()
+    internal static DigestionFrontierFixture Create(
+        bool retryDispositions = false,
+        string coverKind = "definition",
+        DigestionAtomStatusMarker? claimStatusMarker = null)
     {
         var quarantined = Entry(
             "source-a",
@@ -33,7 +36,7 @@ internal sealed record DigestionFrontierFixture(
         var coverWithheld = Entry(
             "source-a",
             CoverWithheldId,
-            "definition",
+            coverKind,
             coverDisposition: new DigestionCoverDisposition(
                 new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
                 ["D5/S0/Carrier/Probe.probe"],
@@ -54,7 +57,7 @@ internal sealed record DigestionFrontierFixture(
             ]);
         var structuralChainChild = Entry("source-b", StructuralChainChildId, "definition");
         var structural = Entry("source-b", StructuralId, "definition");
-        var claim = Entry("source-b", ClaimId, "lemma");
+        var claim = Entry("source-b", ClaimId, "lemma", statusMarker: claimStatusMarker);
         var entries = new[]
         {
             quarantined, coverWithheld, stale, chainChild, chainParent, structuralChainChild,
@@ -84,7 +87,11 @@ internal sealed record DigestionFrontierFixture(
                 item.Evaluation.Atom!.RawBytes)));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(rawSnapshot)).Snapshot;
-        var projection = DigestionFrontierProjection.Create(document, evaluation, contentKinds);
+        var projection = DigestionFrontierProjection.Create(
+            document,
+            evaluation,
+            contentKinds,
+            retryDispositions);
         return new DigestionFrontierFixture(
             document,
             evaluation,
@@ -100,7 +107,8 @@ internal sealed record DigestionFrontierFixture(
         ImmutableArray<string> chainAtoms = default,
         ImmutableArray<DigestionGap> gaps = default,
         DigestionQuarantine? quarantine = null,
-        DigestionCoverDisposition? coverDisposition = null)
+        DigestionCoverDisposition? coverDisposition = null,
+        DigestionAtomStatusMarker? statusMarker = null)
     {
         var rawBytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(kind + ":" + atomId + "\n"));
         var fingerprints = DigestionFingerprint.Compute(rawBytes.AsSpan());
@@ -121,7 +129,13 @@ internal sealed record DigestionFrontierFixture(
                 coverDisposition),
             status,
             fingerprints.RawSha256);
-        var atom = new DigestionAtom(0, rawBytes.Length, rawBytes, fingerprints, []);
+        var atom = new DigestionAtom(
+            0,
+            rawBytes.Length,
+            rawBytes,
+            fingerprints,
+            [],
+            statusMarker ?? DigestionAtomStatusMarker.Absent);
         return (
             new DigestionEntryEvaluation(
                 entry,

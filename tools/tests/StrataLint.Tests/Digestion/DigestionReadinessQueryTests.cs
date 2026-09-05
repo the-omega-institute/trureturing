@@ -146,7 +146,8 @@ public sealed class DigestionReadinessQueryTests
         var projection = DigestionFrontierProjection.Create(
             document,
             evaluation,
-            Kinds([deposit, routing, quarantine]));
+            Kinds([deposit, routing, quarantine]),
+            retryDispositions: false);
         var first = DigestionReadinessQuery.Classify(projection);
         var second = DigestionReadinessQuery.Classify(projection);
 
@@ -312,7 +313,8 @@ public sealed class DigestionReadinessQueryTests
         return DigestionReadinessQuery.Classify(DigestionFrontierProjection.Create(
             Document(entries, acknowledgedStale),
             Evaluation(entries),
-            Kinds(entries)));
+            Kinds(entries),
+            retryDispositions: false));
     }
 
     private static DigestionLedgerEvaluation Evaluation(

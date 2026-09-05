@@ -227,6 +227,14 @@ public sealed class TheoryAtomizerDataTests
     }
 
     [Fact]
+    public void LocatorKindAlphabetIsClosedInProgram()
+    {
+        Assert.Equal(
+            new[] { "algorithm", "axiom", "consequence", "contract", "corollary", "criterion", "definition", "entry", "example", "extension-table", "frontier-note", "ledger", "lemma", "note", "observation", "principle", "proposition", "remark", "route", "specification", "survey", "theorem", "theorem-form" },
+            TheoryAtomizerRules.AllowedKinds.Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
     public void LoaderAcceptsGenreSuffixAndDerivesItsKindFromTheBareExactGenre()
     {
         var rules = Load(SuffixData(BareExampleGenre, ExampleSuffix));

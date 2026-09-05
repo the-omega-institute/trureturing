@@ -19,8 +19,7 @@ internal static class DigestFormalizeCandidates
         DigestionFrontierProjection frontier,
         RepositorySnapshot snapshot,
         BackfillInventoryDocument ledger,
-        string? selectedAtomId,
-        bool retryDispositions)
+        string? selectedAtomId)
     {
         ArgumentNullException.ThrowIfNull(frontier);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -28,7 +27,7 @@ internal static class DigestFormalizeCandidates
         var projections = frontier.Entries
             .Where(item => selectedAtomId is null
                 || string.Equals(item.Entry.AtomId, selectedAtomId, StringComparison.Ordinal))
-            .Select(item => Project(item, snapshot, retryDispositions))
+            .Select(item => Project(item, snapshot))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
@@ -53,8 +52,7 @@ internal static class DigestFormalizeCandidates
 
     private static FormalizeProjection? Project(
         DigestionFrontierEntry frontier,
-        RepositorySnapshot snapshot,
-        bool retryDispositions)
+        RepositorySnapshot snapshot)
     {
         var entry = frontier.Entry;
         if (frontier.PrimaryDisposition == DigestionFrontierDisposition.Quarantined)
@@ -73,26 +71,21 @@ internal static class DigestFormalizeCandidates
                 null);
         }
 
-        if (frontier.PrimaryDisposition == DigestionFrontierDisposition.Withheld
-            && !(retryDispositions
-                && frontier.HasCoverDisposition
-                && !frontier.IsAcknowledgedStale
-                && !frontier.IsChainChild
-                && frontier.ContentRole == DigestionContentRole.FormalizableClaim))
+        if (frontier.PrimaryDisposition == DigestionFrontierDisposition.Withheld)
         {
             return new FormalizeProjection(
                 entry.SourceId,
                 entry.AtomId,
                 null,
                 null,
-                new WithheldFormalizeCandidate(entry.AtomId, frontier.PrimaryDetail, null));
+                new WithheldFormalizeCandidate(
+                    entry.AtomId,
+                    frontier.PrimaryDetail,
+                    frontier.StatusQualifier));
         }
 
         if (frontier.PrimaryDisposition is
-                DigestionFrontierDisposition.ChainChild or DigestionFrontierDisposition.NotFormalizable
-            || frontier.ContentRole != DigestionContentRole.FormalizableClaim
-            || frontier.IsChainChild
-            || frontier.IsAcknowledgedStale)
+            DigestionFrontierDisposition.ChainChild or DigestionFrontierDisposition.NotFormalizable)
         {
             return null;
         }
@@ -115,23 +108,6 @@ internal static class DigestFormalizeCandidates
                 exception);
         }
 
-        var status = frontier.Evaluation.Atom?.StatusMarker
-            ?? throw new FormatException($"entry {entry.AtomId} has no canonical atom alignment");
-        if (status.Kind == DigestionAtomStatusMarkerKind.Malformed)
-        {
-            return Withheld(entry, "malformed-status-marker", status.Qualifier);
-        }
-
-        if (status is
-            {
-                Kind: DigestionAtomStatusMarkerKind.Valid,
-                Status: "closed",
-                Qualifier.Length: > 0,
-            })
-        {
-            return Withheld(entry, "qualified-closed-status", status.Qualifier);
-        }
-
         return new FormalizeProjection(
             entry.SourceId,
             entry.AtomId,
@@ -145,16 +121,6 @@ internal static class DigestFormalizeCandidates
             null,
             null);
     }
-
-    private static FormalizeProjection Withheld(
-        DigestionLedgerEntry entry,
-        string reason,
-        string? qualifier) => new(
-            entry.SourceId,
-            entry.AtomId,
-            null,
-            null,
-            new WithheldFormalizeCandidate(entry.AtomId, reason, qualifier));
 
     private sealed record FormalizeCandidate(
         string SourceId,

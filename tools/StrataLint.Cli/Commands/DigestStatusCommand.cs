@@ -85,15 +85,15 @@ internal static class DigestStatusCommand
                 var formalizeFrontier = DigestionFrontierProjection.Create(
                     formalizeDocument,
                     formalizeEvaluation,
-                    formalizeContentKinds);
+                    formalizeContentKinds,
+                    options.RetryDispositions);
                 return new CommandResult(
                     true,
                     DigestFormalizeCandidates.Render(
                         formalizeFrontier,
                         snapshot,
                         formalizeDocument,
-                        options.FormalizeAtomId,
-                        options.RetryDispositions),
+                        options.FormalizeAtomId),
                     string.Empty);
             }
 
@@ -140,7 +140,8 @@ internal static class DigestStatusCommand
                 frontier = DigestionFrontierProjection.Create(
                     document,
                     evaluation,
-                    DigestionContentKindResolver.Resolve(snapshot, document));
+                    DigestionContentKindResolver.Resolve(snapshot, document),
+                    retryDispositions: false);
             }
 
             if (options.Readiness)
@@ -210,7 +211,8 @@ internal static class DigestStatusCommand
         var frontier = DigestionFrontierProjection.Create(
             document,
             evaluation,
-            DigestionContentKindResolver.Resolve(snapshot, document));
+            DigestionContentKindResolver.Resolve(snapshot, document),
+            retryDispositions: false);
         return DigestResidualSummary.RenderShards(evaluation, frontier);
     }
 

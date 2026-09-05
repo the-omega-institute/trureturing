@@ -17,6 +17,7 @@ internal sealed record DigestionFrontierEntry(
     string PrimaryDetail,
     DigestionContentRole ContentRole,
     string KindLabel,
+    string? StatusQualifier,
     bool IsChainChild,
     ImmutableArray<string> ParentAtomIds,
     bool HasCoverDisposition,
@@ -91,7 +92,8 @@ internal sealed class DigestionFrontierProjection
     internal static DigestionFrontierProjection Create(
         BackfillInventoryDocument ledger,
         DigestionLedgerEvaluation evaluation,
-        IReadOnlyDictionary<string, string> contentKinds)
+        IReadOnlyDictionary<string, string> contentKinds,
+        bool retryDispositions)
     {
         ArgumentNullException.ThrowIfNull(ledger);
         ArgumentNullException.ThrowIfNull(evaluation);
@@ -105,7 +107,12 @@ internal sealed class DigestionFrontierProjection
             .Where(static item =>
                 item.DerivedStatus.Migration == DigestionMigrationState.Residual
                 && item.DerivedStatus.Truth == DigestionTruthState.Open)
-            .Select(item => ProjectEntry(item, contentKinds, staleAtomIds, parentsByChild))
+            .Select(item => ProjectEntry(
+                item,
+                contentKinds,
+                staleAtomIds,
+                parentsByChild,
+                retryDispositions))
             .OrderBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item.Entry.AtomId, StringComparer.Ordinal)
             .ToImmutableArray();
@@ -147,26 +154,31 @@ internal sealed class DigestionFrontierProjection
         DigestionEntryEvaluation evaluation,
         IReadOnlyDictionary<string, string> contentKinds,
         IReadOnlySet<string> staleAtomIds,
-        IReadOnlyDictionary<string, ImmutableArray<string>> parentsByChild)
+        IReadOnlyDictionary<string, ImmutableArray<string>> parentsByChild,
+        bool retryDispositions)
     {
         var entry = evaluation.Entry;
         contentKinds.TryGetValue(entry.AtomId, out var contentKind);
         var content = DigestionContentDisposition.Resolve(contentKind);
         var parentIds = parentsByChild.GetValueOrDefault(entry.AtomId, []);
         var isChainChild = !parentIds.IsEmpty;
-        var hasCoverDisposition = DigestionCoverDispositionSelector.IsWithheld(entry);
+        var hasCoverDisposition = entry.Receipts.CoverDisposition is not null;
+        var withholdCoverDisposition = DigestionCoverDispositionSelector.Classify(
+            entry,
+            retryDispositions) == DigestionCoverDispositionSelection.Withheld;
         var isAcknowledgedStale = staleAtomIds.Contains(entry.AtomId);
         DigestionFrontierDisposition disposition;
         string detail;
+        string? statusQualifier = null;
         if (entry.Receipts.Quarantine is { } quarantine)
         {
             disposition = DigestionFrontierDisposition.Quarantined;
             detail = quarantine.BlockerClass ?? "untyped";
         }
-        else if (hasCoverDisposition || isAcknowledgedStale)
+        else if (withholdCoverDisposition || isAcknowledgedStale)
         {
             disposition = DigestionFrontierDisposition.Withheld;
-            detail = hasCoverDisposition
+            detail = withholdCoverDisposition
                 ? DigestionCoverDispositionSelector.WithholdReason
                 : "acknowledged-stale";
         }
@@ -180,6 +192,27 @@ internal sealed class DigestionFrontierProjection
             disposition = DigestionFrontierDisposition.NotFormalizable;
             detail = content.KindLabel;
         }
+        else if (evaluation.Atom?.StatusMarker is not { } status)
+        {
+            throw new FormatException($"entry {entry.AtomId} has no canonical atom alignment");
+        }
+        else if (status.Kind == DigestionAtomStatusMarkerKind.Malformed)
+        {
+            disposition = DigestionFrontierDisposition.Withheld;
+            detail = "malformed-status-marker";
+            statusQualifier = status.Qualifier;
+        }
+        else if (status is
+            {
+                Kind: DigestionAtomStatusMarkerKind.Valid,
+                Status: "closed",
+                Qualifier.Length: > 0,
+            })
+        {
+            disposition = DigestionFrontierDisposition.Withheld;
+            detail = "qualified-closed-status";
+            statusQualifier = status.Qualifier;
+        }
         else
         {
             disposition = DigestionFrontierDisposition.FormalizableClaim;
@@ -192,6 +225,7 @@ internal sealed class DigestionFrontierProjection
             detail,
             content.Role,
             content.KindLabel,
+            statusQualifier,
             isChainChild,
             parentIds,
             hasCoverDisposition,

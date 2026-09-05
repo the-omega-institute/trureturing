@@ -91,6 +91,6 @@ internal static class DeclaredDialectAtomizer
             unregistered.Add(token);
         }
 
-        return genre is null ? token : genre.Value;
+        return genre is null ? DigestionContentDisposition.Unregistered(token) : genre.Value;
     }
 }
