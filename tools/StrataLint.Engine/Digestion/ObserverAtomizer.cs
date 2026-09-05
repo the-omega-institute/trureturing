@@ -43,7 +43,7 @@ internal static class ObserverAtomizer
         {
             var token = TheorySourceFormatException.ClaimLead(paragraph);
             unregistered.Add(token);
-            return token;
+            return DigestionContentDisposition.Unregistered(token);
         }
         return null;
     }

@@ -36,7 +36,11 @@ internal static class ResidualFrontierAssembler
                 + string.Join("; ", evaluation.ReceiptIntegrityFailureReasons));
         }
 
-        var summary = DigestResidualSummary.Render(evaluation);
+        var frontier = DigestionFrontierProjection.Create(
+            document,
+            evaluation,
+            DigestionContentKindResolver.Resolve(snapshot, document));
+        var summary = DigestResidualSummary.Render(evaluation, frontier);
         return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(EchoResidualBlock.Render(summary)));
     }
 }

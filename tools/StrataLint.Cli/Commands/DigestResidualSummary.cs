@@ -15,16 +15,19 @@ internal static class DigestResidualSummary
     private const string ShardDirectory = "Generated/echo-residuals/";
 
     internal static IReadOnlyDictionary<string, string> RenderShards(
-        DigestionLedgerEvaluation evaluation)
+        DigestionLedgerEvaluation evaluation,
+        DigestionFrontierProjection frontier)
     {
         ArgumentNullException.ThrowIfNull(evaluation);
+        ArgumentNullException.ThrowIfNull(frontier);
+        var excludedAtomIds = ExcludedAtomIds(frontier);
         var shards = new SortedDictionary<string, string>(StringComparer.Ordinal);
         foreach (var source in evaluation.Entries
                      .GroupBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
                      .OrderBy(static group => group.Key, StringComparer.Ordinal))
         {
             var atoms = source
-                .Where(static item => !DigestionCoverDispositionSelector.IsWithheld(item.Entry))
+                .Where(item => !excludedAtomIds.Contains(item.Entry.AtomId))
                 .Select(static item => new AtomResiduals(
                     item.Entry.AtomId,
                     item.Gaps
@@ -67,18 +70,20 @@ internal static class DigestResidualSummary
         return shards;
     }
 
-    internal static string Render(DigestionLedgerEvaluation evaluation)
+    internal static string Render(
+        DigestionLedgerEvaluation evaluation,
+        DigestionFrontierProjection frontier)
     {
         ArgumentNullException.ThrowIfNull(evaluation);
+        ArgumentNullException.ThrowIfNull(frontier);
+        var excludedAtomIds = ExcludedAtomIds(frontier);
         var sources = evaluation.Entries
             .GroupBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
             .OrderBy(static group => group.Key, StringComparer.Ordinal)
-            .Select(static group => new SourceResiduals(
+            .Select(group => new SourceResiduals(
                 group.Key,
                 group
-                    .Where(static item =>
-                        item.Entry.Receipts.Quarantine is null
-                        && !DigestionCoverDispositionSelector.IsWithheld(item.Entry))
+                    .Where(item => !excludedAtomIds.Contains(item.Entry.AtomId))
                     .Select(static item => new AtomResiduals(
                         item.Entry.AtomId,
                         item.Gaps
@@ -105,13 +110,14 @@ internal static class DigestResidualSummary
                 .Count() > 1)
             .OrderBy(static residue => residue.Name, StringComparer.Ordinal)
             .ToArray();
-        var quarantined = evaluation.Entries
-            .Where(static item => item.Entry.Receipts.Quarantine is not null)
+        var quarantined = frontier.Entries
+            .Where(static item =>
+                item.PrimaryDisposition == DigestionFrontierDisposition.Quarantined)
             .Select(static item => new QuarantinedResiduals(
                 item.Entry.SourceId,
                 item.Entry.AtomId,
                 item.Entry.Receipts.Quarantine!,
-                item.Gaps
+                item.Evaluation.Gaps
                     .Where(static gap => gap.Code == ResidualGapCode)
                     .Select(static gap => gap.Detail)
                     .OrderBy(static detail => detail, StringComparer.Ordinal)
@@ -125,6 +131,8 @@ internal static class DigestResidualSummary
         writer.WriteLine();
         writer.WriteLine($"- unresolved_subitems: {sources.Sum(static source => source.SubitemCount)}");
         writer.WriteLine($"- mother_residual_atom_ids: {sources.Sum(static source => source.Atoms.Length)}");
+        writer.WriteLine();
+        RenderFrontier(writer, frontier);
         writer.WriteLine();
         writer.WriteLine("## quarantined residuals");
         writer.WriteLine();
@@ -206,6 +214,44 @@ internal static class DigestResidualSummary
         }
 
         return writer.ToString();
+    }
+
+    private static ImmutableHashSet<string> ExcludedAtomIds(
+        DigestionFrontierProjection frontier) => frontier.Entries
+        .Where(static entry => entry.PrimaryDisposition is
+            DigestionFrontierDisposition.Quarantined or DigestionFrontierDisposition.Withheld)
+        .Select(static entry => entry.Entry.AtomId)
+        .ToImmutableHashSet(StringComparer.Ordinal);
+
+    private static void RenderFrontier(
+        StringWriter writer,
+        DigestionFrontierProjection frontier)
+    {
+        writer.WriteLine("## frontier");
+        writer.WriteLine();
+        RenderFrontierCounts(writer, frontier.Total);
+        writer.WriteLine();
+        writer.WriteLine("Per-source frontier:");
+        writer.WriteLine();
+        foreach (var source in frontier.PerSource)
+        {
+            writer.WriteLine($"- `{source.SourceId}`");
+            RenderFrontierCounts(writer, source.Counts, "  ");
+        }
+    }
+
+    private static void RenderFrontierCounts(
+        StringWriter writer,
+        DigestionFrontierCounts counts,
+        string indent = "")
+    {
+        writer.WriteLine($"{indent}- residual_open: {counts.ResidualOpen}");
+        writer.WriteLine($"{indent}- formalization_frontier: {counts.FormalizationFrontier}");
+        writer.WriteLine($"{indent}- quarantined: {counts.Quarantined}");
+        writer.WriteLine($"{indent}- withheld: {counts.Withheld}");
+        writer.WriteLine($"{indent}- chain_child: {counts.ChainChild}");
+        writer.WriteLine($"{indent}- not_formalizable: {counts.NotFormalizable}");
+        writer.WriteLine($"{indent}- formalizable_claim: {counts.FormalizableClaim}");
     }
 
     private sealed record AtomResiduals(string AtomId, string[] Subitems);

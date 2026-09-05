@@ -71,7 +71,7 @@ internal static class ConeAtomizer
             if (mapping is null)
             {
                 unregistered.Add(genre);
-                return genre;
+                return DigestionContentDisposition.Unregistered(genre);
             }
 
             var templates = mapping.Value.Split('|');

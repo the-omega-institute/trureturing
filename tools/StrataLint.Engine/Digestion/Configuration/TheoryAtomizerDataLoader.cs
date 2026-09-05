@@ -38,10 +38,22 @@ internal static class GenreSuffixResolver
 internal sealed class TheoryAtomizerRules
 {
     internal static readonly ImmutableHashSet<string> AllowedKinds = ImmutableHashSet.Create(
-        StringComparer.Ordinal, "theorem", "definition", "proposition", "lemma", "corollary",
-        "observation", "survey", "note", "remark", "ledger", "entry", "axiom", "example",
-        "criterion", "consequence", "principle", "specification", "contract", "theorem-form",
-        "frontier-note", "extension-table", "route", "algorithm");
+        StringComparer.Ordinal,
+        "algorithm", "appendix", "assembly-volume", "audit", "axiom", "chain-court",
+        "classical", "coarse", "cone-engine", "consequence", "constant", "contract",
+        "contraction-spectrum", "corollary", "criterion", "crystallization", "definition",
+        "diagonal-ledger", "dual-heights", "duality", "entanglement", "entropy",
+        "entropy-relativity", "entry", "example", "extension-table", "final-volume",
+        "formal-volume", "freedom", "frontier-note", "interface", "item", "ledger",
+        "ledger-axioms", "ledger-machine", "lemma", "machine-negations", "measurement",
+        "memory", "metadata", "metric-rates", "modular-time", "mountainside", "nameability",
+        "negative-register", "note", "observation", "observer", "observer-clock", "ontology",
+        "open", "path-divergence", "pen-down", "periodic-table", "physics", "premise",
+        "principle", "probability", "proposition", "quotient-court", "remark",
+        "research-boundary", "research-queue", "route", "row", "scope", "section",
+        "semantic-court", "shadow", "shadow-tax", "six-questions", "specification",
+        "stationary-points", "survey", "synthesis", "theorem", "theorem-form", "tower-top",
+        "trace-note", "verdict", "version");
 
     internal TheoryAtomizerRules(
         ImmutableArray<AtomizerMapping> observerClaimPrefixes,

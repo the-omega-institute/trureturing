@@ -318,7 +318,7 @@ internal sealed class NumberedClaims
 
         var token = unknown.Groups["kind"].Value;
         unregistered.Add(token);
-        return token;
+        return DigestionContentDisposition.Unregistered(token);
     }
 
     private string Kind(string value) =>

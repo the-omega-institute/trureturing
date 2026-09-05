@@ -106,7 +106,8 @@ internal static class GenericAtomizer
     {
         var claim = HeadingClaim.Match(heading);
         return claim.Success
-            ? claim.Groups["kind"].Value + "/" + claim.Groups["number"].Value
+            ? DigestionContentDisposition.NormalizeNumberedClaimToken(
+                claim.Groups["kind"].Value) + "/" + claim.Groups["number"].Value
             : "section/" + Slug(heading);
     }
 
@@ -117,7 +118,8 @@ internal static class GenericAtomizer
         var claim = ParagraphClaim.Match(paragraph);
         if (claim.Success)
         {
-            return claim.Groups["kind"].Value + "/" + claim.Groups["number"].Value;
+            return DigestionContentDisposition.NormalizeNumberedClaimToken(
+                claim.Groups["kind"].Value) + "/" + claim.Groups["number"].Value;
         }
 
         var item = ParagraphItem.Match(paragraph);

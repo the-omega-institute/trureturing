@@ -545,6 +545,8 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 
 **双轴状态由机器派生,status 只是受检投影,禁手写冒领。**迁移轴为 `{residual,partial,absorbed}`:仅完成 extract/identify 而无语义目标或收据进展者为 residual;已识别目标 GID 或已有迁移收据但合取未齐者为 partial;原子本地收据与全部 `chain_atoms` 均闭合者才为 absorbed。真值轴为 `{closed,tail,open}`:Lean 闭包 Closed 才是 closed;Tail 只有在 migration 已 absorbed 且 `tools/Authorizations/digestion-tail/<atom_id>.json` 之 canonical 工件逐字绑定 atom 与全部 Tail GID 时才投影为 **absorbed-tail**,否则一律 open;Tail 不计已证。SL-016 对 source 结构、内容指纹、目标 GID、收据、双轴重算一致性逐项 fail-closed,任一 stored status 与派生不同即红。
 
+**残余的查询时分区与 `formalization_frontier`。**持久化 `residual-open` 只保持「无迁移进展且真值 open」之义；可形式化前沿不是第四种账本状态,而是 Engine 对 residual-open 的具名查询时投影,永不对应目录或写回树。投影先为全部 atomizer 可产出的 content kind 作全函数角色分类,再以 `quarantined(blocker_class|untyped) > withheld(cover-disposition|acknowledged-stale) > chain-child > not-formalizable(kind) > formalizable-claim` 的严格优先级把每条 residual-open 恰分入一类；`is_chain_child` 与按序 parent atom IDs 同时作正交事实输出。`formalization_frontier` 恰为 primary disposition 等于 `formalizable-claim` 的条目。content kind 字母表由 Engine 独占；未登记的编号 claim 以 `unregistered:<token>` 归 `not-formalizable`,无 kind 的 scaffold/none 归 `not-formalizable(none)`,而代码或 atomizer 数据引入却未扩表的新 kind 是 developer error `content kind '<k>' has no disposition`,不是可持久化 ledger state。readiness、`digest-status --formalize-candidates`、residual summary 与 status JSON 只消费这一投影；旧 `needs-routing` 分类退役。
+
 **atom↔GID 覆盖边为 M:N,不是所有权。** atom 是启发式切片,故同一 atom 可由多个 declaration GID 合取覆盖,同一 GID 也可覆盖多个 atom;baseline 已出现某 GID、或另一 atom 已登记该 GID,均不构成拒绝理由,仓内不建立全局 `GID→atom` 映射。保留的结构不变量恰为:`atom_id` 全局唯一;单 entry 的 `coverage_gids[].gid` 无重复;每条 `(atom_id,GID)` 边只保存 `{gid,target_statement_id}`,Scribe receipt 仍逐 GID 匹配当前 definition/emission。`target_statement_id` 由 GID 在 active frozen ledger 中唯一解析,模块 GID 取模块 `statement_id`,声明 GID 取对应 `declaration_statement_ids[].statement_id`,不绑定 Lean 文件原始字节;GID 当前不可解析、目标未冻结或其它 target validation 未解析时必须为 `null`,并使 truth 状态派生为 `Open`。`cover-atom` 对本次 GID 逐项要求当前 report 中唯一存在、为 Closed 且满足公理白名单,再把 coverage 边写入工作树;GID 缺失、非唯一或非 Closed 均 fail-closed。`align-digestion-status` 每次从当前 report 与冻结账本直接刷新所有边的 target,不留旧值;写回前须按最终候选相对基线的有效 delta 迭代派生迁移态及其 `chain_atoms` 依赖至固定点,再一次性写回,二次运行必须零字节变化。首次 cover 可一次登记一个或多个 GID;追加边只需在命令中给出本次 GID,不要求重报已有 coverage 首项。
 
 `DigestionLedgerEvaluation.HasReceiptIntegrityFailure` 对 coverage target/Scribe mismatch 的**绝对式谓词本体**不因 M:N 放开而弱化;`digest-status` 等全账读侧仍如实报告全部 fatal identity,闭合仍要求 entry 的全部 GID 边与 Lean/Scribe 条件齐备。为避免存量 backlog 令所有无关写入全局自锁,`cover-atom` 与其 post-cover `align-scribe-receipt` 写前门采用 fork-point delta:按 `(code,atom_id,detail)` 只 grandfather baseline 已存在的同一 fatal identity,任何 candidate-new identity 与所有结构 findings 仍 fail-closed;这只是 writer 消费作用域,不改上述中央谓词。
@@ -901,6 +903,8 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 ---
 
 # CHANGELOG(原位演进史;历史归 git)
+
+- **v7.23**(2026-09-05):§11.21 将 residual-open 的内容处置统一归 Engine 查询投影:新增五类互斥穷尽分区与 `formalization_frontier`,反向 `chain_atoms` 索引给出 chain-child 及 parent IDs,readiness/formalize-candidates/residual summary/status JSON 共用同一结果；atomizer kind 字母表 fail-closed,未登记 token 具名归档,`needs-routing` 退役,不新增目录、持久状态或生成 aggregate。
 
 - **v7.22**(2026-09-05):删除 A16.1;理论卷由 `docs/develop/theory/` 路径规则治理;不存在 two-PR 登记义务;裁决:owner 2026-09-05。
 
