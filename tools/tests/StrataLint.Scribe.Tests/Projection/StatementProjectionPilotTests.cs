@@ -389,6 +389,55 @@ public sealed class StatementProjectionPilotTests
         Assert.IsType<ProjectionOutcome.Projected>(outcome);
     }
 
+    [Fact]
+    public void PinnedHiddenFiberRemainsProjectableWithoutReport()
+    {
+        const string sourcePath = "D5/S1/Solenoid/HiddenFiberCompact.lean";
+        using var repository = new StatementProjectionTestRepository(new StatementProjectionTestRepository.Pin(
+            "D5.S1.Solenoid.hiddenFiber_closed_compact_seqCompact", sourcePath,
+            StatementProjectionResolutionTests.Equality(1)));
+
+        repository.Run(() => StatementProjectionResolutionTests.AssertProjected(
+            LeanDeclarationRef.Create(sourcePath[..^5] + ".hiddenFiber_closed_compact_seqCompact"),
+            "1 = 1", StatementProjectionResolutionTests.Equality(1)));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData("D5/S0/Test/Probe.cs")]
+    public void FixtureLoaderRejectsMissingOrInvalidSourcePath(string? sourcePath)
+    {
+        using var repository = new StatementProjectionTestRepository(new StatementProjectionTestRepository.Pin(
+            "D5.Test.claim", sourcePath, StatementProjectionResolutionTests.Equality(1)));
+
+        var error = Assert.Throws<FormatException>(() => repository.Run(() =>
+            StatementProjectionFixtureLoader.Assess(LeanDeclarationRef.Create("D5/S0/Test/Probe.claim"))));
+
+        Assert.Contains("D5.Test.claim", error.Message, StringComparison.Ordinal);
+        Assert.Contains("source_path", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FixtureLoaderRejectsDuplicateIdentityButKeepsDifferentOwnersDistinct()
+    {
+        var pin = new StatementProjectionTestRepository.Pin(
+            "D5.Test.claim", "D5/S0/Test/Probe.lean", StatementProjectionResolutionTests.Equality(1));
+        using (var duplicate = new StatementProjectionTestRepository(pin))
+        {
+            duplicate.WriteFixture("expansion", pin);
+            var error = Assert.Throws<FormatException>(() => duplicate.Run(() =>
+                StatementProjectionFixtureLoader.Assess(LeanDeclarationRef.Create("D5/S0/Test/Probe.claim"))));
+            Assert.Contains(pin.Name, error.Message, StringComparison.Ordinal);
+        }
+        using var distinct = new StatementProjectionTestRepository(
+            pin, pin with { SourcePath = "D5/S0/Test/Foreign.lean", Type = StatementProjectionResolutionTests.Equality(2) });
+
+        distinct.Run(() => StatementProjectionResolutionTests.AssertProjected(
+            LeanDeclarationRef.Create("D5/S0/Test/Probe.claim"), "1 = 1", pin.Type));
+    }
+
     private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(
         RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation).ReadAllBytes(RepositoryRelativePath.Create(
             $"Golden/Projection/{name}")));
@@ -431,7 +480,7 @@ public sealed class StatementProjectionPilotTests
             var declarations = string.Join(
                 ",",
                 pinnedDeclarations.Select(static item =>
-                    $$"""{"name":{{JsonSerializer.Serialize(item.Name)}},"type":{{JsonSerializer.Serialize(item.Type)}}}"""));
+                    $$"""{"name":{{JsonSerializer.Serialize(item.Name)}},"source_path":"D5/Test.lean","kind":"theorem","type":{{JsonSerializer.Serialize(item.Type)}}}"""));
             TemporaryFileSystem.File.WriteAllText(
                 System.IO.Path.Combine(Path, "Golden", "Projection", "statement-projection-pilot-v1.json"),
                 $$"""{"schema":"statement-projection-pilot-fixture-v1","declarations":[{{declarations}}]}""");
