@@ -142,7 +142,8 @@ public sealed partial class BackfillInventoryLoaderTests
             "  tail_authorization: null\n"
             + "  quarantine:\n"
             + "    justification: \"source's theorem: missing\"\n"
-            + "    reentry_condition: retry\n",
+            + "    reentry_condition: retry\n"
+            + "    blocker_class: missing-prerequisite\n",
             StringComparison.Ordinal);
         var entry = Assert.Single(BackfillInventoryLoader.Load(Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),

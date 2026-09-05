@@ -31,7 +31,8 @@ internal static class DigestResidualSummary
                         .Where(static gap => gap.Code == ResidualGapCode)
                         .Select(static gap => gap.Detail)
                         .OrderBy(static detail => detail, StringComparer.Ordinal)
-                        .ToArray()))
+                        .ToArray(),
+                    item.Entry.Receipts.Quarantine))
                 .Where(static atom => atom.Subitems.Length > 0)
                 .OrderBy(static atom => atom.AtomId, StringComparer.Ordinal)
                 .ToArray();
@@ -52,6 +53,13 @@ internal static class DigestResidualSummary
                 foreach (var atom in atoms)
                 {
                     writer.WriteLine($"- `{atom.AtomId}` ({atom.Subitems.Length})");
+                    if (atom.Quarantine is { } quarantine)
+                    {
+                        writer.WriteLine($"  - blocker_class: `{quarantine.BlockerClass}`");
+                        writer.WriteLine($"  - justification: `{quarantine.Justification}`");
+                        writer.WriteLine($"  - reentry_condition: `{quarantine.ReentryCondition}`");
+                    }
+
                     foreach (var subitem in atom.Subitems)
                     {
                         writer.WriteLine($"  - `{subitem}`");
@@ -85,7 +93,8 @@ internal static class DigestResidualSummary
                             .Where(static gap => gap.Code == ResidualGapCode)
                             .Select(static gap => gap.Detail)
                             .OrderBy(static detail => detail, StringComparer.Ordinal)
-                            .ToArray()))
+                            .ToArray(),
+                        null))
                     .Where(static item => item.Subitems.Length > 0)
                     .OrderBy(static item => item.AtomId, StringComparer.Ordinal)
                     .ToArray()))
@@ -142,6 +151,7 @@ internal static class DigestResidualSummary
             foreach (var item in quarantined)
             {
                 writer.WriteLine($"- `{item.SourceId}/{item.AtomId}` ({item.Subitems.Length})");
+                writer.WriteLine($"  - blocker_class: `{item.Quarantine.BlockerClass}`");
                 writer.WriteLine($"  - justification: `{item.Quarantine.Justification}`");
                 writer.WriteLine($"  - reentry_condition: `{item.Quarantine.ReentryCondition}`");
                 foreach (var subitem in item.Subitems)
@@ -208,7 +218,10 @@ internal static class DigestResidualSummary
         return writer.ToString();
     }
 
-    private sealed record AtomResiduals(string AtomId, string[] Subitems);
+    private sealed record AtomResiduals(
+        string AtomId,
+        string[] Subitems,
+        DigestionQuarantine? Quarantine);
 
     private sealed record ResidueHost(string Residue, string SourceId, string AtomId);
 
