@@ -46,6 +46,16 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git read-tree -u HEAD^1")]
     [InlineData("git read-tree -u \"$BASE\"")]
     [InlineData("git checkout-index -a --prefix=base/")]
+    [InlineData("git worktree add --detach --lock --reason HEAD /tmp/h \"$BASE\"")]
+    [InlineData("git worktree add --frobnicate /tmp/h")]
+    [InlineData("git cat-file -p \"$BASE:tools/scripts/workflow/x.sh\" > out # -e only checks existence")]
+    [InlineData("git cat-file blob \"$oid\" > -e")]
+    [InlineData("git cat-file --textconv HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git read-tree --frob HEAD")]
+    [InlineData("git cat-file -p HEAD^{/derive}")]
+    [InlineData("git --git-dir \"$dir\" cat-file -p \"$oid\"")]
+    [InlineData("git -c core.quotepath=false show HEAD^1:tools/scripts/workflow/x.sh > x.sh")]
+    [InlineData("git --work-tree \"$tree\" --git-dir \"$dir\" checkout \"$BASE\" -- tools/scripts/workflow/x.sh")]
     public void MaterializingAnotherRevisionIsRejected(string line)
     {
         var finding = Assert.Single(Evaluate(ScriptPath, line + "\n"));
@@ -80,6 +90,14 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git worktree remove --force \"$root\"")]
     [InlineData("git worktree list --porcelain")]
     [InlineData("# git worktree add is forbidden here; see SL-030")]
+    [InlineData("git worktree add --quiet --detach /tmp/h HEAD")]
+    [InlineData("git worktree add --detach /tmp/h > log")]
+    [InlineData("git worktree add --reason \"lane\" --lock /tmp/h")]
+    [InlineData("git read-tree HEAD > log")]
+    [InlineData("git cat-file -p HEAD:tools/scripts/workflow/x.sh > out # trailing")]
+    [InlineData("git cat-file -p HEAD^{commit}")]
+    [InlineData("git --no-pager show HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git commit -q -m \"archive HEAD^1 notes\"")]
     public void ReadingHeadOrMetadataIsAllowed(string line)
     {
         Assert.Empty(Evaluate(ScriptPath, line + "\n"));

@@ -55,8 +55,12 @@ internal static class JudgeSurfaceRevisionScanner
 {
     private const string Head = "HEAD";
 
+    // Global options between `git` and the verb: each option token (`-C`, `-c`, `--git-dir`,
+    // `--work-tree`, `--namespace`, `--no-pager`, …) may carry one separated value token, so
+    // `git --git-dir "$dir" cat-file -p "$oid"` still reaches the verb (review round 3 escape).
+    // A first token that is not an option (`git commit -m "show x"`) is not a judge-surface verb.
     private static readonly Regex GitInvocation = new(
-        @"(?<![\w.\-/])git(?:\s+-C\s+\S+|\s+--?[\w\-]+(?:=\S+)?)*\s+"
+        @"(?<![\w.\-/])git(?:\s+-[^\s|;&]*(?:\s+[^\s|;&\-][^\s|;&]*)?)*\s+"
         + @"(?<verb>show|cat-file|archive|worktree|checkout-index|checkout|restore|read-tree)\b"
         + @"(?<rest>[^|;&\n]*)",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
@@ -120,9 +124,7 @@ internal static class JudgeSurfaceRevisionScanner
 
     private static string? Judge(string verb, string rest)
     {
-        var tokens = rest.Replace("\"", string.Empty, StringComparison.Ordinal)
-            .Replace("'", string.Empty, StringComparison.Ordinal)
-            .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
+        var tokens = Arguments(rest);
         return verb switch
         {
             "worktree" => WorktreeAddRevision(tokens),
@@ -158,6 +160,34 @@ internal static class JudgeSurfaceRevisionScanner
         return null;
     }
 
+    // The git arguments of one invocation: quotes stripped, cut at the first shell redirection
+    // (`>`, `2>`, `<`) or comment (`#…`) token. Anything after those is a file name or prose, never
+    // a git operand; classifying it as one produced both false positives (`> log` read as a
+    // commit-ish) and false negatives (`# -e` read as a metadata mode) in review round 3.
+    private static string[] Arguments(string rest)
+    {
+        var tokens = rest.Replace("\"", string.Empty, StringComparison.Ordinal)
+            .Replace("'", string.Empty, StringComparison.Ordinal)
+            .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
+        var end = Array.FindIndex(tokens, static token => IsShellRedirection(token) || token.StartsWith('#'));
+        return end < 0 ? tokens : tokens[..end];
+    }
+
+    // `git worktree add [options] <path> [<commit-ish>]`. Options are a closed table: an option
+    // this table does not know fails closed, because an unknown option may consume the next token
+    // and shift which positional is the commit-ish (review round 3: `--reason HEAD /tmp/h "$BASE"`).
+    private static readonly HashSet<string> WorktreeAddFlags = new(StringComparer.Ordinal)
+    {
+        "--detach", "--lock", "-f", "--force", "--checkout", "--no-checkout", "--orphan",
+        "-q", "--quiet", "--track", "--no-track", "--guess-remote", "--no-guess-remote",
+        "--relative-paths", "--no-relative-paths", "--",
+    };
+
+    private static readonly HashSet<string> WorktreeAddOptionsWithArgument = new(StringComparer.Ordinal)
+    {
+        "-b", "-B", "--reason",
+    };
+
     private static string? WorktreeAddRevision(string[] tokens)
     {
         if (tokens.Length == 0 || tokens[0] != "add")
@@ -169,20 +199,20 @@ internal static class JudgeSurfaceRevisionScanner
         for (var index = 1; index < tokens.Length; index++)
         {
             var token = tokens[index];
-            if (token is "-b" or "-B")
+            if (WorktreeAddOptionsWithArgument.Contains(token))
             {
                 index++;
                 continue;
             }
 
-            if (token is "--detach" or "--lock" or "-f" or "--force" or "--no-checkout" or "--orphan")
+            if (WorktreeAddFlags.Contains(token) || token.StartsWith("--reason=", StringComparison.Ordinal))
             {
                 continue;
             }
 
-            if (token == "--")
+            if (token.StartsWith('-'))
             {
-                continue;
+                return $"add option '{token}' is not in the closed option table (fail-closed)";
             }
 
             positional.Add(token);
@@ -196,15 +226,28 @@ internal static class JudgeSurfaceRevisionScanner
         return $"add commit-ish '{positional[1]}' materializes another revision's tree";
     }
 
+    private static readonly HashSet<string> ReadTreeFlags = new(StringComparer.Ordinal)
+    {
+        "-m", "-u", "-i", "-n", "-v", "--reset", "--empty", "--dry-run", "--trivial", "--aggressive",
+        "--no-sparse-checkout", "--debug-unpack", "--",
+    };
+
     private static string? ReadTreeOperands(string[] tokens)
     {
         var foundTree = false;
         foreach (var token in tokens)
         {
-            if (token is "-u" or "-m" or "--reset" or "--empty" or "-i" or "--"
-                || token.StartsWith("--prefix=", StringComparison.Ordinal))
+            if (ReadTreeFlags.Contains(token)
+                || token.StartsWith("--prefix=", StringComparison.Ordinal)
+                || token.StartsWith("--index-output=", StringComparison.Ordinal)
+                || token.StartsWith("--exclude-per-directory=", StringComparison.Ordinal))
             {
                 continue;
+            }
+
+            if (token.StartsWith('-'))
+            {
+                return $"option '{token}' is not in the closed option table (fail-closed)";
             }
 
             foundTree = true;
@@ -296,22 +339,25 @@ internal static class JudgeSurfaceRevisionScanner
         return null;
     }
 
+    // `git cat-file`: the FIRST mode token decides. Metadata modes (-e/-t/-s) never materialize;
+    // --batch* reads objects of unknown provenance; content modes (-p, blob/tree/commit/tag,
+    // --textconv, --filters) must name a literal HEAD object. Tokens after a redirection or `#`
+    // never reach this method (see Arguments), so a `-e` in a comment cannot flip the mode.
     private static string? CatFileOperand(string[] tokens)
     {
-        if (tokens.Any(static token => token.StartsWith("--batch", StringComparison.Ordinal)))
+        var modeIndex = Array.FindIndex(tokens, static token => IsCatFileMode(token));
+        if (modeIndex < 0)
+        {
+            return RevisionPathOperand(tokens);
+        }
+
+        var mode = tokens[modeIndex];
+        if (mode.StartsWith("--batch", StringComparison.Ordinal))
         {
             return "--batch reads objects of unknown provenance (fail-closed)";
         }
 
-        if (tokens.Any(static token => token is "-e" or "-t" or "-s"))
-        {
-            return null;
-        }
-
-        var modeIndex = Array.FindIndex(
-            tokens,
-            static token => token is "-p" or "blob" or "tree" or "commit" or "tag");
-        if (modeIndex < 0)
+        if (mode is "-e" or "-t" or "-s")
         {
             return null;
         }
@@ -325,11 +371,6 @@ internal static class JudgeSurfaceRevisionScanner
                 continue;
             }
 
-            if (IsShellRedirection(token))
-            {
-                break;
-            }
-
             foundOperand = true;
             if (!IsLiteralHeadObject(token))
             {
@@ -337,15 +378,22 @@ internal static class JudgeSurfaceRevisionScanner
             }
         }
 
-        return foundOperand ? null : $"content mode '{tokens[modeIndex]}' without an operand is fail-closed";
+        return foundOperand ? null : $"content mode '{mode}' without an operand is fail-closed";
     }
 
+    private static bool IsCatFileMode(string token) =>
+        token is "-e" or "-t" or "-s" or "-p" or "blob" or "tree" or "commit" or "tag"
+            or "--textconv" or "--filters"
+        || token.StartsWith("--batch", StringComparison.Ordinal);
+
+    // Exact allow-list: `HEAD^{/regex}` and `HEAD^{…}` in general can walk history
+    // (`HEAD^{/derive}` resolved to an ancestor in review round 3), so only the two peel forms
+    // that cannot leave the checked object are literal HEAD here.
     private static bool IsLiteralHeadObject(string operand) =>
         operand == Head
-        || (operand.StartsWith("HEAD:", StringComparison.Ordinal) && operand.Length > "HEAD:".Length)
-        || (operand.StartsWith("HEAD^{", StringComparison.Ordinal)
-            && operand.EndsWith('}')
-            && operand.Length > "HEAD^{}".Length);
+        || operand == "HEAD^{tree}"
+        || operand == "HEAD^{commit}"
+        || (operand.StartsWith("HEAD:", StringComparison.Ordinal) && operand.Length > "HEAD:".Length);
 
     private static bool IsShellRedirection(string token)
     {
