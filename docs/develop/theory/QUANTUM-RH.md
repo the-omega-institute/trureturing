@@ -18866,3 +18866,2398 @@ $$
 [3]: https://dlmf.nist.gov/27.12 "https://dlmf.nist.gov/27.12"
 [4]: https://arxiv.org/html/1410.7015v4 "https://arxiv.org/html/1410.7015v4"
 [5]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+这次先把上一轮的一项前件补实，再推进到一个更具体的量子结构：
+
+**上一轮提出的 \(V'(x)/x\) 单调性，对实际 theta 核并非仍待证明的猜想，而是已有经典定理的等价形式。它确实能推出整族矩不等式。**
+
+但接下来还可以严格证明：
+
+> **这种很强的密度形状条件，仍然不足以排除非实零点。真正缺少的关系，可以放在同一实际态的两个副本中：对“差模态”作条件筛选以后，“和模态”的干涉振幅是否始终非负。**
+
+这使我们能够区分：哪些正性已经由实际 theta 结构保证，哪些正性仍然承担 RH 的证明责任。
+
+---
+
+# 一、先把上一轮的形状前件升级为经典输入
+
+沿用实际归一化：
+
+$$
+p(x)=\frac{\Phi(x)}{\xi(1/2)},
+\qquad
+\int_{\mathbb R}p(x)\,dx=1,
+$$
+
+以及：
+
+$$
+\boxed{
+A(z)=\int_{\mathbb R}p(x)e^{izx}\,dx
+=
+\frac{\xi(\frac12+iz)}{\xi(\frac12)}.
+}
+\tag{Q1}
+$$
+
+\(p\) 是正、偶、光滑且快速衰减的密度。这里始终使用实际 theta 核，不重新挑选分布。其来源是标准 theta–Mellin 表示。([DLMF][1])
+
+与上一轮的折叠函数关系为：
+
+$$
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+$$
+
+$$
+F(w)=D(-\ell w),
+$$
+
+所以：
+
+$$
+\boxed{
+A(z)=F(z^2/\ell).
+}
+$$
+
+下面只是暂时回到未折叠的谱坐标，以便表达两副本结构。
+
+## 经典输入 Q0
+
+Csordas–Varga 的工作证明了，实际 theta 核满足：
+
+$$
+\boxed{
+\frac{d^2}{du^2}\log\Phi(\sqrt u)<0,
+\qquad u>0.
+}
+\tag{Q2}
+$$
+
+这一结果在 Csordas 的综述中列为定理 4.2(b)，并明确归于 1988 年的工作。不同文献对核的正倍数和坐标缩放，不改变这个性质。
+
+令：
+
+$$
+V(x)=-\log p(x),
+\qquad
+R(x)=\frac{V'(x)}x
+\quad(x>0).
+$$
+
+直接求导：
+
+$$
+\frac{d^2}{du^2}\log p(\sqrt u)
+=
+-\frac{R'(\sqrt u)}{4\sqrt u}.
+$$
+
+因此：
+
+$$
+\boxed{
+R'(x)>0
+\qquad(x>0).
+}
+\tag{Q3}
+$$
+
+**上一轮关于 \(R\) 单调性的前件，可以作为经典已知输入使用；不需要把它继续包装成一个新的开放任务。**
+
+但它究竟能推出多强的结论，需要逐步计算。
+
+---
+
+# 二、它能保证：全部二次倾斜下的相邻矩不等式
+
+对任意实数 \(\lambda\)，定义未归一化矩：
+
+$$
+\boxed{
+b_n(\lambda)
+=
+\int_{\mathbb R}
+x^{2n}e^{\lambda x^2}p(x)\,dx.
+}
+\tag{Q4}
+$$
+
+实际 theta 核衰减足够快，因此这些积分对所有实 \(\lambda\) 都有限。
+
+二次倾斜后的势为：
+
+$$
+V_\lambda(x)=V(x)-\lambda x^2.
+$$
+
+于是：
+
+$$
+\frac{V_\lambda'(x)}x=R(x)-2\lambda.
+$$
+
+其导数仍为 \(R'(x)>0\)。
+
+## 定理 Q1：所有二次倾斜的 Turán 不等式
+
+对所有 \(n\ge1\)、\(\lambda\in\mathbb R\)：
+
+$$
+\boxed{
+b_n(\lambda)^2
+>
+\frac{2n-1}{2n+1}
+b_{n-1}(\lambda)b_{n+1}(\lambda).
+}
+\tag{Q5}
+$$
+
+### 证明
+
+固定 \(n,\lambda\)，考虑概率测度：
+
+$$
+d\mu_{n,\lambda}(x)
+=
+\frac{x^{2n}e^{\lambda x^2}p(x)}{b_n(\lambda)}\,dx.
+$$
+
+记：
+
+$$
+R_\lambda(x)=R(x)-2\lambda.
+$$
+
+分部积分给出：
+
+$$
+\mathbb E_{\mu_{n,\lambda}}[R_\lambda(|X|)]
+=
+(2n-1)\frac{b_{n-1}}{b_n},
+$$
+
+$$
+\mathbb E_{\mu_{n,\lambda}}[X^2]
+=
+\frac{b_{n+1}}{b_n},
+$$
+
+$$
+\mathbb E_{\mu_{n,\lambda}}[X^2R_\lambda(|X|)]
+=
+2n+1.
+$$
+
+因为 \(X^2\) 与 \(R_\lambda(|X|)\) 都是 \(|X|\) 的严格递增函数，其协方差严格为正：
+
+$$
+2n+1
+>
+(2n-1)\frac{b_{n-1}b_{n+1}}{b_n^2}.
+$$
+
+整理即得。证毕。
+
+这给出了经典矩不等式的一条适合当前观察者语言的推导，而不是另造一组评价标准。此类实际 theta 矩不等式正是 Csordas–Varga 研究的对象。([ResearchGate][2])
+
+## 推论：全部标量矩受高斯基准控制
+
+在 \(\lambda=0\) 时，记：
+
+$$
+m_{2n}=b_n(0).
+$$
+
+迭代式（Q5）得到：
+
+$$
+\boxed{
+m_{2n}\le(2n-1)!!\,m_2^n.
+}
+\tag{Q6}
+$$
+
+于是对实 \(b\)：
+
+$$
+\boxed{
+\mathbb E[e^{bX}]
+\le
+e^{m_2b^2/2}.
+}
+\tag{Q7}
+$$
+
+此外，定义：
+
+$$
+\alpha_n(\lambda)
+=
+\frac{n!\,b_n(\lambda)}{(2n)!}.
+$$
+
+则：
+
+$$
+\boxed{
+\alpha_n^2>\alpha_{n-1}\alpha_{n+1}.
+}
+$$
+
+所以每一个二次 Jensen 多项式：
+
+$$
+\alpha_k+2\alpha_{k+1}z+\alpha_{k+2}z^2
+$$
+
+都有两个负实根。
+
+**这一整层正性已经有依据：不只是一个四阶矩，而是全部相邻矩、全部实二次倾斜、全部二次 Jensen 窗口。**
+
+但它还没有处理高阶关系能否共同正实现。
+
+---
+
+# 三、建立一个明确的两副本量子观察者
+
+取前面的纯态：
+
+$$
+\psi(x)=\sqrt{p(x)}.
+$$
+
+准备两个独立副本：
+
+$$
+\psi(x)\psi(y).
+$$
+
+作正交坐标变换：
+
+$$
+\boxed{
+s=\frac{x+y}{\sqrt2},
+\qquad
+u=\frac{x-y}{\sqrt2}.
+}
+\tag{Q8}
+$$
+
+分别称为和模态与差模态。
+
+变换后的波函数为：
+
+$$
+\boxed{
+\chi(s,u)
+=
+\psi\!\left(\frac{s+u}{\sqrt2}\right)
+\psi\!\left(\frac{s-u}{\sqrt2}\right).
+}
+\tag{Q9}
+$$
+
+Jacobian 的绝对值为一，所以这是 \(L^2(\mathbb R^2)\) 上的酉坐标变换，没有丢失信息。
+
+## 定理 Q2：和模态与差模态完全分离，当且仅当原密度为高斯
+
+对正、光滑、可归一化的偶密度 \(p\)，若：
+
+$$
+\chi(s,u)=f(s)g(u),
+$$
+
+则 \(p\) 必为中心高斯密度。反向也成立。
+
+### 证明
+
+因为 \(\chi>0\)，可使用实对数。若能分离，则：
+
+$$
+\partial_s\partial_u\log\chi(s,u)=0.
+$$
+
+但：
+
+$$
+\boxed{
+\partial_s\partial_u\log\chi
+=
+\frac14
+\left[
+(\log p)''\!\left(\frac{s+u}{\sqrt2}\right)
+-
+(\log p)''\!\left(\frac{s-u}{\sqrt2}\right)
+\right].
+}
+$$
+
+两个括号中的位置可以独立取任意实数，因此 \((\log p)''\) 必为常数。
+
+结合偶性及可归一化性：
+
+$$
+\log p(x)=c-ax^2,\qquad a>0.
+$$
+
+反向直接代入。证毕。
+
+因此，对实际非高斯 theta 态：
+
+$$
+\boxed{
+\chi(s,u)\text{ 在和／差模态分解下不是乘积态。}
+}
+$$
+
+**原来两个独立副本，经过这次明确的混合后，产生了模态间的量子关联。**
+
+这不意味着关联越强就越可能离线。它说明：后面筛选差模态时，和模态的读数确实可能改变。
+
+---
+
+# 四、关键恒等式：离线方向的全部信息，进入差模态的偶阶筛选
+
+因为 \(A\) 是实整函数：
+
+$$
+|A(t+iy)|^2=A(t+iy)A(t-iy).
+$$
+
+利用两个独立副本：
+
+$$
+\begin{aligned}
+|A(t+iy)|^2
+&=
+\mathbb E\!\left[
+e^{it(X+Y)}e^{-y(X-Y)}
+\right]\\
+&=
+\mathbb E\!\left[
+e^{i\sqrt2tS}e^{-\sqrt2yU}
+\right].
+\end{aligned}
+$$
+
+差模态分布关于 \(u\) 对称，所以：
+
+$$
+\boxed{
+|A(t+iy)|^2
+=
+\mathbb E\!\left[
+\cos(\sqrt2tS)\cosh(\sqrt2yU)
+\right].
+}
+\tag{Q10}
+$$
+
+定义：
+
+$$
+\boxed{
+L_n(t)
+=
+\frac{2^n}{(2n)!}
+\mathbb E\!\left[
+U^{2n}\cos(\sqrt2tS)
+\right].
+}
+\tag{Q11}
+$$
+
+则：
+
+$$
+\boxed{
+|A(t+iy)|^2
+=
+\sum_{n=0}^{\infty}L_n(t)y^{2n}.
+}
+\tag{Q12}
+$$
+
+等价的导数表达为：
+
+$$
+\boxed{
+L_n(t)
+=
+\frac1{(2n)!}
+\sum_{j=0}^{2n}
+(-1)^{n+j}
+\binom{2n}{j}
+A^{(j)}(t)A^{(2n-j)}(t).
+}
+\tag{Q13}
+$$
+
+特别地：
+
+$$
+L_0(t)=A(t)^2,
+$$
+
+$$
+\boxed{
+L_1(t)=A'(t)^2-A(t)A''(t).
+}
+\tag{Q14}
+$$
+
+这些就是经典广义 Laguerre 表达式。它们与正定关联核的关系已有系统研究；本轮将其写成指定量子态的和／差模态读出。
+
+### 坐标含义不能混淆
+
+由式（Q1）：
+
+$$
+A(t+iy)
+=
+\frac{\xi(\frac12-y+it)}{\xi(\frac12)}.
+$$
+
+所以：
+
+* \(t\) 仍是 ζ 的高度参数；
+* \(y\) 对应偏离临界线的横向位置，符号为 \(-y\)；
+* 它们都不是这里额外引入的物理演化时间。
+
+---
+
+# 五、每个 \(L_n\) 都是一个归一化条件态的干涉读数
+
+定义：
+
+$$
+\boxed{
+Z_n=\mathbb E[U^{2n}]>0.
+}
+$$
+
+只用原始 theta 矩就能计算：
+
+$$
+\boxed{
+Z_n
+=
+2^{-n}
+\sum_{j=0}^{n}
+\binom{2n}{2j}
+m_{2j}m_{2n-2j}.
+}
+\tag{Q15}
+$$
+
+定义归一化态：
+
+$$
+\boxed{
+\chi_n(s,u)=\frac{u^n\chi(s,u)}{\sqrt{Z_n}}.
+}
+\tag{Q16}
+$$
+
+它具有确定的交换奇偶性：
+
+$$
+\chi_n(s,-u)=(-1)^n\chi_n(s,u).
+$$
+
+这里说的是两个寄存器交换下的奇偶，不是仅凭这个式子就认定它们是某种物理费米粒子。
+
+读取和模态上的酉相位：
+
+$$
+\boxed{
+R_n(t)
+=
+\langle\chi_n,e^{i\sqrt2tS}\chi_n\rangle.
+}
+\tag{Q17}
+$$
+
+则：
+
+$$
+\boxed{
+R_n(t)=\frac{L_n(t)}{L_n(0)},
+\qquad
+L_n(0)=\frac{2^nZ_n}{(2n)!}>0.
+}
+\tag{Q18}
+$$
+
+因为和模态分布对称，\(R_n(t)\) 为实数，且：
+
+$$
+-1\le R_n(t)\le1.
+$$
+
+用控制比特作干涉，可将其读为：
+
+$$
+\langle\sigma_x\rangle=R_n(t),
+$$
+
+对应概率：
+
+$$
+p_\pm=\frac{1\pm R_n(t)}2.
+$$
+
+因此：
+
+> **\(L_n(t)<0\) 是一个合法的负相位相关，不是负概率。**
+
+未经截断的乘法 \(u^n\) 不是全空间上的有界 Kraus 算子。这里先定义了一个合法归一化态；后面会补上有界制备与误差界，不能省略。
+
+---
+
+# 六、RH 可以写成这族条件干涉的统一符号条件
+
+## 定理 Q3：实际两模态判据
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+R_n(t)\ge0
+\quad
+\forall n\ge0,\ \forall t\in\mathbb R.
+}
+\tag{Q19}
+$$
+
+这就是广义 Laguerre 判据在当前协议中的表达，不是另外宣称发现了一条未经比较的 RH 新判据。
+
+### 正向证明
+
+若 RH 成立，\(A\) 的全部零点为实数。
+
+它的经典实零点乘积可以由实根多项式局部一致逼近。对一个实根多项式 \(P\)：
+
+$$
+|P(t+iy)|^2
+=
+C^2\prod_j\bigl((t-\gamma_j)^2+y^2\bigr),
+$$
+
+其关于 \(y^2\) 的全部系数非负。
+
+取解析极限后：
+
+$$
+L_n(t)\ge0.
+$$
+
+再使用式（Q18）。
+
+### 反向证明
+
+假设所有 \(L_n(t)\ge0\)，但存在：
+
+$$
+A(t_0+iy_0)=0,\qquad y_0\ne0.
+$$
+
+由式（Q12）：
+
+$$
+0=\sum_{n\ge0}L_n(t_0)y_0^{2n}.
+$$
+
+若 \(A(t_0)\ne0\)，第一项已严格为正，矛盾。
+
+若 \(A\) 在实点 \(t_0\) 有 \(m\) 重零点，则 Taylor 展开给出：
+
+$$
+L_m(t_0)
+=
+\frac{|A^{(m)}(t_0)|^2}{(m!)^2}>0,
+$$
+
+仍然矛盾。
+
+所以没有非实零点，得到 RH。证毕。
+
+## 推论：反例必能表现为某个有限条件读出的负值
+
+若 RH 不成立，则存在有限 \(n\) 和实数 \(t\)，使：
+
+$$
+\boxed{R_n(t)<0.}
+$$
+
+由连续性，\(t\) 还可以换成足够接近的有理数，仍保持严格负性。
+
+**不必让观察者同时知道全部零点。一个有限筛选阶数、一个有限实参数，就可能承载反例。**
+
+但定理没有给出预先统一的小 \(n\)，也没有保证这个负值很容易数值分辨。
+
+---
+
+# 七、已知形状条件让全部条件密度都很规则，却仍未决定干涉符号
+
+把差模态迹掉，得到和模态密度：
+
+$$
+\boxed{
+\mu_n(s)
+=
+\frac1{Z_n}
+\int_{\mathbb R}
+u^{2n}
+p\!\left(\frac{s+u}{\sqrt2}\right)
+p\!\left(\frac{s-u}{\sqrt2}\right)\,du.
+}
+\tag{Q20}
+$$
+
+它满足：
+
+$$
+\mu_n(s)>0,\qquad
+\mu_n(-s)=\mu_n(s),\qquad
+\int\mu_n(s)\,ds=1.
+$$
+
+并且：
+
+$$
+\boxed{
+R_n(t)=\int_{\mathbb R}\mu_n(s)\cos(\sqrt2ts)\,ds.
+}
+\tag{Q21}
+$$
+
+## 定理 Q4：实际 \(\mu_n\) 在正半轴严格递减
+
+对每个 \(n\ge0\)：
+
+$$
+\boxed{\mu_n'(s)<0\qquad(s>0).}
+\tag{Q22}
+$$
+
+### 证明
+
+实际 \(p\) 严格对数凹，因此 \(V'\) 是奇的严格递增函数。这由式（Q2）以及 \(\Phi'(x)<0\) 得到，也是经典 theta 核性质的一部分。
+
+记：
+
+$$
+x=\frac{s+u}{\sqrt2},
+\qquad
+y=\frac{s-u}{\sqrt2}.
+$$
+
+对固定 \(u\)，被积函数的对数关于 \(s\) 的导数为：
+
+$$
+-\frac{V'(x)+V'(y)}{\sqrt2}.
+$$
+
+当 \(s>0\)，有 \(x+y>0\)。
+
+如果 \(x,y\ge0\)，则 \(V'(x)+V'(y)>0\)。如果其中一个为负，由 \(V'\) 奇且严格递增，同样得到该和为正。
+
+所以除零权点外，被积函数严格递减，积分后得到式（Q22）。证毕。
+
+这意味着，每一个条件密度都具有：
+
+$$
+\boxed{
+\text{正、偶、平滑、集中于中心、快速衰减}.
+}
+$$
+
+但这些性质仍然不自动保证：
+
+$$
+R_n(t)\ge0.
+$$
+
+**概率密度为正，与它的 Fourier 变换逐点非负，是不同要求。**
+
+概率密度的特征函数总是正定函数，但正定函数本身可以取负值，不能把“核正定”与“每个函数值非负”混同。
+
+---
+
+## 高斯态为什么特别简单？
+
+若 \(p\) 是方差 \(\sigma^2\) 的中心高斯，则 \(S,U\) 独立。
+
+对 \(U\) 作任何上述偶权重筛选，都不改变 \(S\) 的密度。因此：
+
+$$
+\boxed{
+R_n(t)=e^{-\sigma^2t^2}
+\quad\forall n.
+}
+\tag{Q23}
+$$
+
+实际 theta 态不是高斯，所以差模态筛选会通过原有模态关联改变和模态。
+
+更具体地：
+
+$$
+\boxed{
+\mu_n(s)
+=
+\mu_0(s)\,
+\frac{\mathbb E[U^{2n}\mid S=s]}{\mathbb E[U^{2n}]}.
+}
+\tag{Q24}
+$$
+
+因此，真正需要理解的是：
+
+> **实际条件高阶矩 \(\mathbb E[U^{2n}\mid S=s]\) 怎样随 \(s\) 变化，以及这种重加权是否保持和模态的 Fourier 非负性。**
+
+单独的原密度形状，尚未回答这一点。
+
+---
+
+# 八、一个更强的反例：上一轮的完整形状条件，确实仍然不够
+
+上一轮用了离散分布说明“全部标量矩上界不够”。现在可以加强为**正、偶、光滑、超高斯衰减，而且 \(V'(x)/x\) 严格递增**的连续反例。
+
+取：
+
+$$
+c=\frac32,
+$$
+
+并定义：
+
+$$
+\boxed{
+p_\varepsilon(x)
+=
+\frac1{Z_\varepsilon}
+e^{-x^2-\varepsilon x^4}(c+\cosh x),
+\qquad \varepsilon>0.
+}
+\tag{Q25}
+$$
+
+其势满足：
+
+$$
+\frac{V_\varepsilon'(x)}x
+=
+2+4\varepsilon x^2
+-
+\frac{\sinh x}{x(c+\cosh x)}.
+$$
+
+令：
+
+$$
+h(x)=\frac{\sinh x}{x(c+\cosh x)}.
+$$
+
+考察：
+
+$$
+J(x)=
+\sinh x(c+\cosh x)-x(1+c\cosh x).
+$$
+
+有：
+
+$$
+J(0)=0,
+$$
+
+$$
+\boxed{
+J'(x)
+=
+\sinh x\,[2\sinh x-cx]>0
+\qquad(x>0),
+}
+$$
+
+因为 \(c=\frac32<2\) 且 \(\sinh x>x\)。
+
+而 \(h'(x)\) 的分子为 \(-J(x)\)，所以：
+
+$$
+h'(x)<0.
+$$
+
+因此：
+
+$$
+\boxed{
+\left(\frac{V_\varepsilon'(x)}x\right)'
+=
+8\varepsilon x-h'(x)>0.
+}
+\tag{Q26}
+$$
+
+它满足上一轮所要求的完整形状条件，并由定理 Q1 满足全部二次倾斜的相邻矩不等式。
+
+---
+
+## 但它的第一阶干涉判据已经可以失败
+
+先取 \(\varepsilon=0\)，记：
+
+$$
+d=e^{1/4}.
+$$
+
+归一化 Fourier 变换为：
+
+$$
+\boxed{
+A_0(t)
+=
+e^{-t^2/4}
+\frac{c+d\cos(t/2)}{c+d}.
+}
+\tag{Q27}
+$$
+
+在 \(t_0=2\pi\) 处，直接计算：
+
+$$
+\boxed{
+L_1(t_0;A_0)
+=
+e^{-2\pi^2}
+\frac{(c-d)(2c-3d)}{4(c+d)^2}<0.
+}
+\tag{Q28}
+$$
+
+因为：
+
+$$
+1<d<c=\frac32,
+$$
+
+所以 \(c-d>0\)，而 \(2c-3d=3(1-d)<0\)。
+
+当 \(\varepsilon\downarrow0\)，\(A_\varepsilon\) 及其前两阶导数在固定紧集上一致收敛到 \(A_0\)。因此，对所有足够小但严格为正的 \(\varepsilon\)：
+
+$$
+\boxed{
+L_1(2\pi;A_\varepsilon)<0.
+}
+\tag{Q29}
+$$
+
+这一步不是仅凭数值连续性猜测。令未归一化变换为：
+
+$$
+F_\varepsilon(t)=
+\int e^{-x^2-\varepsilon x^4}(c+\cosh x)e^{itx}\,dx.
+$$
+
+则对 \(k=0,1,2\)：
+
+$$
+|F_\varepsilon^{(k)}(t_0)-F_0^{(k)}(t_0)|
+\le
+\varepsilon
+\int |x|^{k+4}e^{-x^2}(c+\cosh x)\,dx.
+$$
+
+右边是明确有限的高斯矩，因此能给出保持式（Q28）严格负性的正 \(\varepsilon\) 范围。
+
+对于这样的 \(\varepsilon>0\)，核具有超高斯衰减，其 Fourier 变换属于适用实根乘积判据的整函数类别。式（Q29）排除了全部零点为实的可能。
+
+于是：
+
+$$
+\boxed{
+\begin{gathered}
+p>0,\quad p\text{ 偶、光滑、快速衰减},\\
+\left(V'(x)/x\right)'>0,\\
+\text{全部二次倾斜的相邻矩不等式成立}
+\end{gathered}
+\quad\not\Rightarrow\quad
+\text{Fourier 变换全部实根}.
+}
+\tag{Q30}
+$$
+
+**这个反例不是实际 ξ。它严格说明：即使补实了上一轮的形状前件，仍然不能把它当成完整 RH 正性。**
+
+缺少的确实是更深的两模态关联约束，而不是还没把普通集中性证明得足够强。
+
+---
+
+# 九、把理想差模态筛选改成合法的有界操作
+
+回到实际 theta 态。
+
+未经截断的 \(u^n\) 是无界乘法，因此不能直接把它称作对任意状态都合法的成功分支。
+
+取 \(L>0\)，定义：
+
+$$
+\boxed{
+M_{n,L}
+=
+\left(\frac UL\right)^n
+\mathbf1_{\{|U|\le L\}}.
+}
+\tag{Q31}
+$$
+
+则：
+
+$$
+M_{n,L}^*M_{n,L}\le I.
+$$
+
+补上：
+
+$$
+N_{n,L}=\sqrt{I-M_{n,L}^*M_{n,L}},
+$$
+
+得到完整的两结果量子操作。
+
+成功概率为：
+
+$$
+\boxed{
+p_{n,L}
+=
+L^{-2n}
+\mathbb E[U^{2n}\mathbf1_{\{|U|\le L\}}].
+}
+\tag{Q32}
+$$
+
+设成功后的和模态振幅为 \(R_{n,L}(t)\)，再定义尾量：
+
+$$
+\tau_n(L)
+=
+\mathbb E[U^{2n}\mathbf1_{\{|U|>L\}}].
+$$
+
+## 定理 Q5：条件读出的统一误差界
+
+$$
+\boxed{
+\sup_{t\in\mathbb R}
+|R_n(t)-R_{n,L}(t)|
+\le
+\frac{2\tau_n(L)}{Z_n}.
+}
+\tag{Q33}
+$$
+
+### 证明
+
+理想条件分布是截断内、截断外两个条件分布的加权混合。
+
+截断外的权重为 \(\tau_n(L)/Z_n\)，两种特征函数的模长均不超过一，所以差不超过该权重的两倍。证毕。
+
+对任意整数 \(j\ge1\)：
+
+$$
+\boxed{
+\tau_n(L)\le L^{-2j}Z_{n+j}.
+}
+\tag{Q34}
+$$
+
+而由已经补实的高斯矩上界：
+
+$$
+Z_m
+\le
+(2m-1)!!\,m_2^m.
+$$
+
+因此：
+
+$$
+\boxed{
+\tau_n(L)
+\le
+L^{-2j}
+(2n+2j-1)!!\,m_2^{n+j}.
+}
+\tag{Q35}
+$$
+
+这份尾界只使用实际矩，不输入未知零点。
+
+所以，若能严格认证：
+
+$$
+R_{n,L}(t)+\frac{2\tau_n(L)}{Z_n}<0,
+$$
+
+就能推出实际：
+
+$$
+R_n(t)<0.
+$$
+
+但成功概率式（Q32）仍须计入。增大 \(L\) 会改善截断误差，却可能降低该有界滤波方案的成功率。
+
+**有限观察可以承载严格证书，但不能把条件信号清楚误认成总体成本很低。**
+
+---
+
+# 十、现在真正需要证明的算术内容是什么？
+
+我们已经知道实际 \(\mu_n\) 全部是正、偶、严格递减的概率密度。
+
+还需要证明的是：
+
+$$
+\boxed{
+\int_{\mathbb R}
+\mu_n(s)\cos(\sqrt2ts)\,ds\ge0
+\quad\forall n,t.
+}
+\tag{Q36}
+$$
+
+等价地，这些具体的 \(\mu_n\) 还必须自身具有正定性，而不只是作为概率密度逐点为正。实际关联核与这种 Fourier 正性之间的关系，正是经典广义 Laguerre 研究中的核心区分。([arXiv][3])
+
+一种足够强的证明方式是，从实际 theta 结构独立构造 \(h_n\)，使：
+
+$$
+\boxed{
+\mu_n(s)
+=
+\int_{\mathbb R}
+h_n(x+s)\overline{h_n(x)}\,dx.
+}
+\tag{Q37}
+$$
+
+那么 Fourier 变换就是：
+
+$$
+|\widehat h_n|^2\ge0.
+$$
+
+但不能先假设 \(\widehat\mu_n\ge0\)，定义：
+
+$$
+\widehat h_n=\sqrt{\widehat\mu_n},
+$$
+
+再宣布证明了正性。那只是循环。
+
+对于 \(n=0\)，原始两副本的卷积结构已经给出：
+
+$$
+R_0(t)=A(t)^2\ge0.
+$$
+
+**真正需要新算术的是 \(n\ge1\)：差模态的条件高阶权重，为什么不会破坏和模态 Fourier 非负性？**
+
+式（Q30）的连续反例证明，这不能仅靠径向对数凹性回答。
+
+---
+
+# 十一、与项目的准确连接
+
+本轮读取的 `CompletedZetaMellinReconstruction.lean` 保留了实际 theta 尾项、Mellin 重构、极点补偿和反射关系。它能为这里的原始态提供算术来源，但并未自动提供式（Q36）的全阶 Fourier 非负性。
+
+`StaticEffectSequentialSeparation.lean` 证明，相同静态效应可以对应不同的两步联合规律。它也提醒我们：差模态筛选、成功概率、和模态干涉必须作为同一个协议保留，不能只保留一个最终的正概率。
+
+因此，这次的链条是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际 theta 密度}
+&\longrightarrow
+\text{两个独立副本}\\
+&\longrightarrow
+\text{和／差模态混合}\\
+&\longrightarrow
+\text{差模态有限阶筛选}\\
+&\longrightarrow
+\text{和模态干涉符号}\\
+&\longleftrightarrow
+\text{广义 Laguerre 零点判据}.
+\end{aligned}
+}
+$$
+
+其中，密度形状已知能承担矩估计和截断控制；**它尚未承担最后一项统一符号约束。**
+
+---
+
+## 收束
+
+这一轮补实了一项实际已有的输入：
+
+$$
+\boxed{
+\left(\frac{V'(x)}x\right)'>0,
+}
+$$
+
+并从中推出了全部二次倾斜的相邻矩不等式。
+
+但也构造了一个严格的连续反例，说明：
+
+$$
+\boxed{
+\text{同样强的形状条件}
+\not\Rightarrow
+\text{全部零点在线}.
+}
+$$
+
+随后，我们把真正缺少的条件放进一个明确的量子结构：
+
+$$
+\boxed{
+R_n(t)
+=
+\frac{
+\mathbb E[U^{2n}\cos(\sqrt2tS)]
+}{
+\mathbb E[U^{2n}]
+}.
+}
+$$
+
+它是合法条件态的干涉振幅，并满足：
+
+$$
+\boxed{
+\mathrm{RH}\iff R_n(t)\ge0\quad\forall n,t.
+}
+$$
+
+所以，整体问题现在不再是“有没有更高一层的观察者”，而是：
+
+> **同一个实际 theta 态，在和模态与差模态之间具有怎样的条件关联；为什么对差模态作任意有限阶筛选以后，和模态的相位读数仍然不会进入负区间？**
+
+高斯态因为模态独立而自动做到这一点。实际 theta 态不是高斯；一般严格对数凹态也做不到。**真正可能产生突破的，必须是 theta 的特殊模关系或算术结构，而不是普通量子正性或一般集中性。**
+
+本轮没有证明式（Q36）的全体非负，也没有找到实际 ξ 的负证书。已经完成的是：补实上一轮的形状输入、证明其能力边界、构造相应的两副本读出，并给出不省略失败分支的有限制备误差界。新增量子协议与推导仍是聊天中的纸面结果，未修改文件或标记为 Lean 已验证。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://www.researchgate.net/publication/226983979_Moment_inequalities_and_the_Riemann_hypothesis?utm_source=chatgpt.com "(PDF) Moment inequalities and the Riemann hypothesis"
+[3]: https://arxiv.org/pdf/1309.0055 "arXiv:1309.0055v2  [math.CV]  21 Feb 2014"
+继续。这次可以把两个问题同时推进：
+
+**第一，上一轮对真实相关余项提出的“对数幂上界”，可以进一步明确为一个与 RH 等价的常数级有界条件。**
+
+**第二，可以构造一族明确的算术正核：它的所有矩阵元都以 \(O(X^{-1})\) 趋于零，但在长度为 \(X\) 的观察窗口上，联合贡献却趋于一个严格正的常数。重标定后，这族核收敛到一个固定频带上的量子重叠核。**
+
+第二个结论直接回答此前的疑问：
+
+$$
+\boxed{
+\text{每个相关分量都很小，为什么仍然不能删掉它们？}
+}
+$$
+
+因为观察窗口也在增长，相关分量可以保持相干，累积成常数级贡献。
+
+不过，必须区分：**下面构造的是一个来自同余结构的明确正核，不是已经证明它等于实际素数的相关余项。**两者之间的算术连接仍须单独证明。以下给出纸面定理与证明，未进行 Lean 编译。
+
+# 一、保留上一轮已经分离出的实际余项
+
+令
+
+$$
+a(n)=\Lambda(n)-1,
+$$
+
+$$
+M(x)=\lfloor2x\rfloor-\lfloor x\rfloor,
+$$
+
+$$
+Y(x)=\sum_{x<n\le2x}a(n)
+=\psi(2x)-\psi(x)-M(x),
+$$
+
+并定义
+
+$$
+\boxed{
+\mathfrak J(X)=
+\int_X^{2X}\frac{Y(x)^2}{x^2}\,dx.
+}
+\tag{1}
+$$
+
+记窗口重叠权重
+
+$$
+W_X(n,m)=
+\int_X^{2X}
+\frac{
+\mathbf1_{\{x<n\le2x\}}
+\mathbf1_{\{x<m\le2x\}}
+}{x^2}\,dx.
+$$
+
+沿用二点奇异级数 \(\mathfrak S(d)\)，定义真实相关余项
+
+$$
+\boxed{
+\mathfrak R(X)
+=
+\sum_{n\ne m}
+\left[
+a(n)a(m)-\bigl(\mathfrak S(|n-m|)-1\bigr)
+\right]W_X(n,m).
+}
+\tag{2}
+$$
+
+这些都是有限求和。
+
+上一轮得到
+
+$$
+\boxed{
+\mathfrak J(X)=\mathfrak R(X)-c_0+o(1),
+}
+\tag{3}
+$$
+
+其中
+
+$$
+\boxed{
+c_0=
+\log2\left(\gamma_{\mathrm E}+\log\frac{\pi}{2}\right)>0.
+}
+\tag{4}
+$$
+
+这里使用的关键经典输入确实是
+
+$$
+2\sum_{d=1}^{H-1}
+(H-d)(\mathfrak S(d)-1)
+=
+-H\log H+
+(2-\gamma_{\mathrm E}-\log2\pi)H
++O_\varepsilon(H^{1/2+\varepsilon}),
+$$
+
+这是已经证明的奇异级数平均公式，不是尚未证明的素数对渐近式。([arXiv][1])
+
+因此
+
+$$
+\liminf_{X\to\infty}\mathfrak R(X)\ge c_0.
+$$
+
+这说明真实余项不能趋零。但它是否必须增长？下面给出更准确的答案。
+
+# 二、定理一：正确的目标实际上可以是常数级有界
+
+## 定理 1：有界余项判据
+
+以下三个命题等价：
+
+$$
+\boxed{\mathrm{RH};}
+$$
+
+$$
+\boxed{\mathfrak J(X)=O(1);}
+$$
+
+$$
+\boxed{\mathfrak R(X)=O(1).}
+\tag{5}
+$$
+
+反向推导甚至只需在 \(X=2^j\) 上有统一上界：
+
+$$
+\boxed{
+\sup_{j\ge j_0}\mathfrak R(2^j)<\infty
+\Longrightarrow
+\mathrm{RH}.
+}
+\tag{6}
+$$
+
+### 证明：RH 推出常数级均方界
+
+令
+
+$$
+E(x)=\psi(x)-x,
+\qquad
+I(X)=\int_X^{2X}E(x)^2\,dx.
+$$
+
+RH 下，经典的 Cramér 均方估计给出
+
+$$
+I(X)=O(X^2).
+$$
+
+这比直接使用逐点估计 \(E(x)=O(\sqrt x\log^2x)\) 强；后者不能直接产生这个均方界。Brent、Platt、Trudgian 进一步证明了
+
+$$
+\limsup_{X\to\infty}\frac{I(X)}{X^2}\le0.8603
+$$
+
+这一显式版本。([arXiv][2])
+
+现在
+
+$$
+Y(x)=E(2x)-E(x)+x-M(x),
+$$
+
+且
+
+$$
+|x-M(x)|<1.
+$$
+
+由加权 \(L^2\) 三角不等式，
+
+$$
+\begin{aligned}
+\sqrt{\mathfrak J(X)}
+\le{}&
+\left(\int_X^{2X}\frac{E(2x)^2}{x^2}\,dx\right)^{1/2}\\
+&+
+\left(\int_X^{2X}\frac{E(x)^2}{x^2}\,dx\right)^{1/2}
++O(X^{-1/2}).
+\end{aligned}
+$$
+
+而
+
+$$
+\int_X^{2X}\frac{E(2x)^2}{x^2}\,dx
+\le\frac{I(2X)}{2X^2},
+$$
+
+$$
+\int_X^{2X}\frac{E(x)^2}{x^2}\,dx
+\le\frac{I(X)}{X^2}.
+$$
+
+所以 RH 推出 \(\mathfrak J(X)=O(1)\)，并且
+
+$$
+\boxed{
+\limsup_{X\to\infty}\mathfrak J(X)
+\le
+0.8603(1+\sqrt2)^2.
+}
+\tag{7}
+$$
+
+结合式（3），得到 \(\mathfrak R(X)=O(1)\)。
+
+### 证明：有界局部均方推出 RH
+
+令
+
+$$
+r(T)=e^{-T/2}E(e^T),
+$$
+
+$$
+z(T)=e^{-T/2}
+\left[\psi(2e^T)-\psi(e^T)-e^T\right].
+$$
+
+有精确关系
+
+$$
+z(T)=\sqrt2\,r(T+\log2)-r(T).
+$$
+
+把函数分成长度为 \(\log2\) 的区块，记为 \(r_j,z_j\)。于是
+
+$$
+r_j
+=
+2^{-j/2}r_0
++
+\sum_{k=0}^{j-1}2^{-(j-k)/2}z_k.
+\tag{8}
+$$
+
+若 \(\mathfrak J(2^j)\) 一致有界，地板函数修正只产生衰减误差，所以 \(\|z_j\|_2\) 一致有界。
+
+由于
+
+$$
+\sum_{k\ge1}2^{-k/2}<\infty,
+$$
+
+式（8）推出 \(\|r_j\|_2\) 一致有界。因此
+
+$$
+\int_0^L|r(T)|^2\,dT=O(L).
+$$
+
+这保证 \(r\) 的 Laplace 变换在 \(\Re s>0\) 内解析。
+
+另一方面，在初始收敛区域，
+
+$$
+\boxed{
+\widehat r(s)
+=
+-\frac{\zeta'(s+1/2)}
+{(s+1/2)\zeta(s+1/2)}
+-\frac1{s-1/2}.
+}
+\tag{9}
+$$
+
+该式直接来自 von Mangoldt 狄利克雷级数。([DLMF][3])
+
+若存在右侧离线零点
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad \delta>0,
+$$
+
+右边就在 \(s=\delta+i\gamma\) 有不可去极点，矛盾。结合零点反射对称性，得到 RH。
+
+最后，式（3）连接 \(\mathfrak J\) 与 \(\mathfrak R\)。证毕。
+
+---
+
+因此，我们现在知道真实余项的预期尺度应该是：
+
+$$
+\boxed{
+c_0-o(1)\le\mathfrak R(X)\le C
+}
+$$
+
+而不是趋于零。
+
+**这里的 \(O(1)\) 不意味着一定收敛到一个常数。**有界振荡与存在极限仍是不同命题。
+
+# 三、把“局部同余模型”构造成真正的有限正核
+
+接下来研究：怎样在不预设 RH 的条件下，从同余结构产生一个合法正核？
+
+记
+
+$$
+e(t)=e^{2\pi it}.
+$$
+
+定义 Ramanujan 和
+
+$$
+c_q(d)=
+\sum_{\substack{1\le a\le q\\(a,q)=1}}
+e(ad/q).
+$$
+
+这是标准的周期数论函数；它的乘法性使其能够表达奇异级数。([DLMF][4])
+
+## 定义 1：有限同余核
+
+对 \(Q\ge2\)，定义
+
+$$
+\boxed{
+\mathscr K_Q(n,m)
+=
+\sum_{2\le q\le Q}
+\frac{\mu(q)^2}{\varphi(q)^2}
+c_q(n-m).
+}
+\tag{10}
+$$
+
+这里 \(\mu\) 是 Möbius 函数，\(\varphi\) 是 Euler 函数。
+
+## 定理 2：有限同余核始终半正定
+
+对任意有限复向量 \((z_n)\)，
+
+$$
+\boxed{
+\sum_{n,m}\overline{z_n}z_m\mathscr K_Q(n,m)
+=
+\sum_{2\le q\le Q}
+\frac{\mu(q)^2}{\varphi(q)^2}
+\sum_{\substack{a\bmod q\\(a,q)=1}}
+\left|\sum_nz_ne(-an/q)\right|^2
+\ge0.
+}
+\tag{11}
+$$
+
+### 证明
+
+把 Ramanujan 和展开，再交换有限求和，直接得到平方和。证毕。
+
+所以，\(\mathscr K_Q\) 是一个实际构造出来的 Gram 核，而不是先写“假设某个正核存在”。
+
+## 但是，固定位置极限与整体模型极限并不相同
+
+对固定 \(d\ne0\)，有绝对收敛恒等式
+
+$$
+\boxed{
+\mathfrak S(d)-1
+=
+\sum_{q\ge2}
+\frac{\mu(q)^2}{\varphi(q)^2}c_q(d).
+}
+\tag{12}
+$$
+
+证明可逐素数展开：
+
+$$
+c_p(d)=
+\begin{cases}
+p-1,&p\mid d,\\
+-1,&p\nmid d,
+\end{cases}
+$$
+
+从而 Euler 因子正好是二点奇异级数的局部因子。对不整除固定 \(d\) 的素数，绝对值贡献为 \(O(p^{-2})\)，故绝对收敛。这也正是奇异级数平均中使用的 Ramanujan 展开结构。([arXiv][1])
+
+然而在对角线上，
+
+$$
+\mathscr K_Q(n,n)
+=
+\sum_{2\le q\le Q}\frac{\mu(q)^2}{\varphi(q)}
+\longrightarrow\infty.
+\tag{13}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{固定非对角位置存在极限，}
+\quad
+\text{不等于整个有限窗口的协方差已经完成。}
+}
+$$
+
+尤其不能把极限化的非对角项，与另一套给定的对角项拼在一起后，自动认为所得模型仍然正定。
+
+上一轮出现的负基准常数，正是在警告这种拼接需要额外的完成项；它不是对奇异级数平均公式的否定。
+
+# 四、一个可计算的 Euler 平均常数
+
+为了研究随窗口一起移动的模数，定义
+
+$$
+\boxed{
+\alpha(q)=
+\mu(q)^2\left(\frac q{\varphi(q)}\right)^2.
+}
+\tag{14}
+$$
+
+## 引理 1：平均权重
+
+有
+
+$$
+\boxed{
+\sum_{q\le Y}\alpha(q)
+=
+\mathfrak a\,Y+o(Y),
+}
+\tag{15}
+$$
+
+其中
+
+$$
+\boxed{
+\mathfrak a
+=
+\prod_p\left(1+\frac1{p(p-1)}\right)
+=
+\frac{\zeta(2)\zeta(3)}{\zeta(6)}.
+}
+\tag{16}
+$$
+
+这个结论不使用 RH。
+
+### 证明
+
+令 \(g=\alpha*\mu\)，则
+
+$$
+\alpha(n)=\sum_{d\mid n}g(d).
+$$
+
+局部值为
+
+$$
+g(p)=\frac{p^2}{(p-1)^2}-1=O(p^{-1}),
+$$
+
+$$
+g(p^2)=-\frac{p^2}{(p-1)^2},
+$$
+
+$$
+g(p^k)=0\qquad(k\ge3).
+$$
+
+因此
+
+$$
+\sum_{d\ge1}\frac{|g(d)|}{d}<\infty.
+$$
+
+于是由支配收敛，
+
+$$
+\begin{aligned}
+\frac1Y\sum_{q\le Y}\alpha(q)
+&=
+\sum_{d\le Y}g(d)\frac{\lfloor Y/d\rfloor}{Y}\\
+&\longrightarrow
+\sum_{d\ge1}\frac{g(d)}d.
+\end{aligned}
+$$
+
+其 Euler 因子为
+
+$$
+\begin{aligned}
+1+\frac{g(p)}p+\frac{g(p^2)}{p^2}
+&=
+\left(1-\frac1p\right)
+\left(1+\frac{p}{(p-1)^2}\right)\\
+&=
+1+\frac1{p(p-1)}.
+\end{aligned}
+$$
+
+最后利用
+
+$$
+1+\frac1{p(p-1)}
+=
+\frac{1-p^{-6}}{(1-p^{-2})(1-p^{-3})}
+$$
+
+得到式（16）。证毕。
+
+# 五、主定理：矩阵元全部趋零，却留下一个固定量子核
+
+现在令 \(X\) 为正整数，只保留
+
+$$
+4X<q\le8X
+$$
+
+中的两个共轭频率
+
+$$
+a=1,\qquad a=q-1.
+$$
+
+## 定义 2：移动模数带核
+
+定义
+
+$$
+\boxed{
+\mathscr P_X(n,m)
+=
+2\sum_{4X<q\le8X}
+\frac{\mu(q)^2}{\varphi(q)^2}
+\cos\frac{2\pi(n-m)}q.
+}
+\tag{17}
+$$
+
+它是 \(\mathscr K_{8X}-\mathscr K_{4X}\) 中保留部分 Gram 坐标后得到的核，因此
+
+$$
+\mathscr P_X\succeq0.
+$$
+
+这组选取不是从未知零点倒填出来的；它只使用 \(\mu,\varphi\) 与明确的有理频率。
+
+## 定理 3：逐项消失与连续正核极限
+
+首先，
+
+$$
+\boxed{
+\sup_{n,m}|\mathscr P_X(n,m)|=O(X^{-1}).
+}
+\tag{18}
+$$
+
+但是，对固定实数 \(s,t\)，
+
+$$
+\boxed{
+X\,\mathscr P_X(\lfloor Xs\rfloor,\lfloor Xt\rfloor)
+\longrightarrow
+\Gamma(s,t),
+}
+\tag{19}
+$$
+
+其中
+
+$$
+\boxed{
+\Gamma(s,t)
+=
+2\mathfrak a
+\int_{1/8}^{1/4}
+\cos\bigl(2\pi(s-t)\xi\bigr)\,d\xi.
+}
+\tag{20}
+$$
+
+收敛在 \(s,t\) 的固定紧集上一致。
+
+当 \(s\ne t\) 时，
+
+$$
+\boxed{
+\Gamma(s,t)
+=
+\mathfrak a\,
+\frac{
+\sin\bigl(\frac{\pi}{2}(s-t)\bigr)
+-
+\sin\bigl(\frac{\pi}{4}(s-t)\bigr)
+}{
+\pi(s-t)
+}.
+}
+\tag{21}
+$$
+
+对角值为
+
+$$
+\Gamma(s,s)=\frac{\mathfrak a}{4}.
+$$
+
+### 证明
+
+由引理 1，
+
+$$
+\sum_{4X<q\le8X}\alpha(q)=O(X).
+$$
+
+所以
+
+$$
+|\mathscr P_X(n,m)|
+\le
+2\sum_{4X<q\le8X}\frac{\alpha(q)}{q^2}
+=O(X^{-1}),
+$$
+
+证明式（18）。
+
+再写成
+
+$$
+\begin{aligned}
+&X\mathscr P_X(\lfloor Xs\rfloor,\lfloor Xt\rfloor)\\
+&\quad=
+\frac2X
+\sum_{4X<q\le8X}
+\frac{\alpha(q)}{(q/X)^2}
+\cos\left(
+2\pi\frac{(\lfloor Xs\rfloor-\lfloor Xt\rfloor)/X}{q/X}
+\right).
+\end{aligned}
+$$
+
+由式（15），加权测度
+
+$$
+\frac1X\sum_{4X<q\le8X}\alpha(q)\delta_{q/X}
+$$
+
+弱收敛到
+
+$$
+\mathfrak a\,\mathbf1_{[4,8]}(v)\,dv.
+$$
+
+于是极限为
+
+$$
+2\mathfrak a\int_4^8
+\frac{\cos(2\pi(s-t)/v)}{v^2}\,dv.
+$$
+
+令 \(\xi=1/v\)，得到式（20）。
+
+被积函数在固定紧参数集上构成一致有界、等度连续族，因此收敛也在该参数集上一致。证毕。
+
+---
+
+## 这个极限本身就是一个归一化量子重叠核
+
+令频带
+
+$$
+\mathcal B=
+[-1/4,-1/8]\cup[1/8,1/4].
+$$
+
+它的长度为 \(1/4\)。
+
+在 Hilbert 空间
+
+$$
+\mathcal H=L^2(\mathcal B,4\,d\xi)
+$$
+
+中定义单位向量
+
+$$
+v_s(\xi)=e^{-2\pi is\xi}.
+$$
+
+于是
+
+$$
+\boxed{
+\langle v_s,v_t\rangle
+=
+\frac4{\mathfrak a}\Gamma(s,t).
+}
+\tag{22}
+$$
+
+其生成元可以取为有界自伴乘法算子
+
+$$
+(Hf)(\xi)=2\pi\xi f(\xi).
+$$
+
+因此，同一构造有两种精确读出：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有限算术面}
+&:\ q\asymp X\text{ 的有理相位};\\
+\text{重标定连续面}
+&:\ \text{固定频带上的量子重叠核}.
+\end{aligned}
+}
+$$
+
+这里的 \(s\) 首先是缩放后的整数坐标，不自动等同于现实物理时间。
+
+# 六、定理四：这些逐项消失的通道，确实贡献一个正的常数级观察量
+
+定义与实际均方使用相同窗口的模型读出：
+
+$$
+\boxed{
+\mathfrak B(X)
+=
+\int_X^{2X}
+\frac1{x^2}
+\sum_{\substack{x<n\le2x\\x<m\le2x}}
+\mathscr P_X(n,m)\,dx.
+}
+\tag{23}
+$$
+
+因为 \(\mathscr P_X\succeq0\)，有 \(\mathfrak B(X)\ge0\)。
+
+## 定理 4：非消失联合贡献
+
+存在明确常数 \(C_{\mathrm{band}}>0\)，使
+
+$$
+\boxed{
+\mathfrak B(X)\longrightarrow C_{\mathrm{band}}.
+}
+\tag{24}
+$$
+
+其中
+
+$$
+\boxed{
+C_{\mathrm{band}}
+=
+\mathfrak a
+\int_{\mathcal B}\int_1^2
+\frac{
+\left|\displaystyle\int_u^{2u}e^{2\pi i\xi s}\,ds\right|^2
+}{u^2}
+\,du\,d\xi.
+}
+\tag{25}
+$$
+
+并且具有显式上下界
+
+$$
+\boxed{
+\frac{\mathfrak a}{\pi^2}
+\le C_{\mathrm{band}}
+\le\frac{\mathfrak a}{4}.
+}
+\tag{26}
+$$
+
+### 证明
+
+作缩放 \(x=Xu\)，并使用定理 3 的一致核收敛。窗口内的双重和变成 Riemann 和，得到
+
+$$
+\begin{aligned}
+\mathfrak B(X)
+&\longrightarrow
+\int_1^2\frac1{u^2}
+\int_u^{2u}\int_u^{2u}
+\Gamma(s,t)\,ds\,dt\,du.
+\end{aligned}
+$$
+
+代入式（20），即得式（25）。
+
+对于上界，
+
+$$
+\left|\int_u^{2u}e^{2\pi i\xi s}\,ds\right|
+\le u.
+$$
+
+所以
+
+$$
+C_{\mathrm{band}}
+\le
+\mathfrak a\,|\mathcal B|
+=\frac{\mathfrak a}{4}.
+$$
+
+对于下界，
+
+$$
+\left|\int_u^{2u}e^{2\pi i\xi s}\,ds\right|
+=
+\frac{|\sin(\pi u\xi)|}{\pi|\xi|}.
+$$
+
+在当前积分范围内，
+
+$$
+\frac18\le u|\xi|\le\frac12.
+$$
+
+使用
+
+$$
+\sin(\pi y)\ge2y
+\qquad(0\le y\le1/2),
+$$
+
+得到
+
+$$
+\left|\int_u^{2u}e^{2\pi i\xi s}\,ds\right|^2
+\ge\frac{4u^2}{\pi^2}.
+$$
+
+积分后即得下界。证毕。
+
+---
+
+现在有一个完整反例，反对如下推理：
+
+$$
+\text{“每个矩阵元趋零，所以这一部分可以删掉。”}
+$$
+
+实际情况是
+
+$$
+\boxed{
+\sup_{n,m}|\mathscr P_X(n,m)|=O(X^{-1}),
+}
+$$
+
+但
+
+$$
+\boxed{
+\mathfrak B(X)\longrightarrow C_{\mathrm{band}}>0.
+}
+\tag{27}
+$$
+
+原因不是抽象的“无限维神秘效应”，而是：
+
+$$
+\boxed{
+O(X^{-1})\text{ 的相关量}
+\times
+O(X^2)\text{ 个状态对}
+\times
+O(X^{-1})\text{ 的积分归一化}
+=
+O(1).
+}
+$$
+
+而这些相位在整个窗口内并未随机抵消，平方和结构保留了它们的相干贡献。
+
+**但 \(C_{\mathrm{band}}\) 不是前文的 \(c_0\)。**当前没有证明这组模数通道恰好等于实际余项的补偿；我们证明的是，它们能够产生一个此前逐项极限看不到的、明确非零的常数级贡献。
+
+# 七、截断模数应该增长多快？也可以精确回答
+
+上面选择了 \(q\asymp X\)。再考虑只保留两个共轭频率的尾核
+
+$$
+\mathscr P_{>Q}(n,m)
+=
+2\sum_{q>Q}
+\frac{\mu(q)^2}{\varphi(q)^2}
+\cos\frac{2\pi(n-m)}q.
+$$
+
+这个级数绝对收敛，并且仍是正核。
+
+定义相应窗口读出
+
+$$
+\mathfrak B(X,Q)
+=
+\int_X^{2X}
+\frac1{x^2}
+\sum_{x<n,m\le2x}
+\mathscr P_{>Q}(n,m)\,dx.
+$$
+
+## 定理 5：尾部可忽略的尺度条件
+
+若
+
+$$
+X\to\infty,
+\qquad
+\frac QX\to\infty,
+$$
+
+则
+
+$$
+\boxed{
+\mathfrak B(X,Q)
+\sim
+2\mathfrak a\,\frac XQ.
+}
+\tag{28}
+$$
+
+相反，如果 \(Q/X\) 沿某个子序列保持有界，那么这些尾部读出不能沿该子序列趋零。
+
+### 证明
+
+窗口含有 \(M(x)\) 个连续整数，所以
+
+$$
+\left|
+\sum_{x<n\le2x}e(n/q)
+\right|^2
+=
+\frac{\sin^2(\pi M(x)/q)}{\sin^2(\pi/q)}.
+$$
+
+当 \(q>Q\gg X\) 时，一致地有
+
+$$
+\frac{\sin^2(\pi M(x)/q)}{\sin^2(\pi/q)}
+=
+M(x)^2
+\left[1+O\!\left(\frac{X^2}{q^2}\right)\right].
+$$
+
+由引理 1 的分部求和，
+
+$$
+\sum_{q>Q}\frac{\alpha(q)}{q^2}
+=
+\frac{\mathfrak a}{Q}+o(Q^{-1}),
+$$
+
+以及
+
+$$
+\sum_{q>Q}\frac{\alpha(q)}{q^4}=O(Q^{-3}).
+$$
+
+又因为
+
+$$
+\int_X^{2X}\frac{M(x)^2}{x^2}\,dx
+=
+X+O(1),
+$$
+
+得到
+
+$$
+\mathfrak B(X,Q)
+=
+2\mathfrak a\frac XQ(1+o(1))
++
+O\!\left(\frac{X^3}{Q^3}\right).
+$$
+
+即式（28）。
+
+反之，若 \(Q\le CX\)，就在 \(Q\) 以上选择一个固定比例模数带
+
+$$
+AX<q\le2AX,
+\qquad A>C.
+$$
+
+定理 3—4 的同样证明给出该模数带的严格正极限。而整个尾部是它再加上其他正核，所以整体读出不可能趋零。证毕。
+
+---
+
+因此，对这一明确的相干通道族，
+
+$$
+\boxed{
+\text{要把模数尾部作为整体删掉，需要 }Q/X\to\infty.
+}
+\tag{29}
+$$
+
+只知道 \(Q\to\infty\)，甚至只取 \(Q\) 与窗口 \(X\) 同阶，都不够。
+
+这个结论只针对这里保留的两个原始频率通道；**不能未经进一步估计，就宣称它已经控制完整 Ramanujan 核的全部频率尾部。**
+
+# 八、把误差预算写成观察者真正需要的形式
+
+对有限矩阵误差 \(E_X(n,m)\)，定义观察误差
+
+$$
+\delta_X(E_X)
+=
+\left|
+\sum_{n,m}W_X(n,m)E_X(n,m)
+\right|.
+$$
+
+因为 \(W_X(n,m)\ge0\)，并且
+
+$$
+\begin{aligned}
+\sum_{n,m}W_X(n,m)
+&=
+\int_X^{2X}\frac{M(x)^2}{x^2}\,dx\\
+&=X+O(1),
+\end{aligned}
+$$
+
+所以
+
+$$
+\boxed{
+\sup_{n,m}|E_X(n,m)|\le\varepsilon_X
+\Longrightarrow
+\delta_X(E_X)
+\le
+\varepsilon_X\,[X+O(1)].
+}
+\tag{30}
+$$
+
+于是：
+
+$$
+\boxed{
+\varepsilon_X=o(1)
+}
+$$
+
+并不足以保证观察误差趋零。
+
+通过这种逐项估计路线，至少需要
+
+$$
+\boxed{
+\varepsilon_X=o(X^{-1}).
+}
+\tag{31}
+$$
+
+本轮的 \(\mathscr P_X\) 恰好位于临界尺度：
+
+$$
+\varepsilon_X=O(X^{-1}),
+$$
+
+并且它真的留下了非零常数贡献，而不是上界估计虚构出来的可能性。
+
+这给“信息逃逸”一个更准确的表达：
+
+> **一个通道在每个固定状态对上的读出都消失，不代表它在随尺度增长的联合观察中消失。需要控制的是观察误差，而不仅是逐项误差。**
+
+# 九、现在还缺哪一步，才算真的接回实际素数？
+
+目前已经有两类不同的对象。
+
+实际算术对象是
+
+$$
+a(n)a(m)
+=
+(\Lambda(n)-1)(\Lambda(m)-1).
+$$
+
+同余正核对象是
+
+$$
+\mathscr K_Q(n,m),
+$$
+
+以及我们从中提取的
+
+$$
+\mathscr P_X(n,m).
+$$
+
+第二类对象已经有明确的 Gram 表示、正性、尺度极限和尾界。
+
+但还没有证明：
+
+$$
+\boxed{
+\text{实际二点相关}
+\quad\text{能以足够小的观察误差由这些正模态重建。}
+}
+\tag{32}
+$$
+
+这一步不能从正核的存在性自动得到。
+
+尤其不能因为我们已经构造了
+
+$$
+\Gamma(s,t)=\mathfrak a\int_{\mathcal B}e^{2\pi i(s-t)\xi}\,d\xi
+$$
+
+就宣布实际素数的相关余项已经有界。那会把一个具有正确局部结构的候选模型，替换成实际算术锚。
+
+当前有价值的桥接形式应当是：
+
+$$
+\boxed{
+\text{真实相关}
+=
+\text{有限同余模态}
++
+\text{可控的联合误差},
+}
+$$
+
+其中“可控”必须体现在
+
+$$
+\delta_X(E_X)
+$$
+
+或者更强的算子估计上，而不是只说每个固定差值的误差趋零。
+
+---
+
+## 本轮的实质推进
+
+现在可以留下三条更强、也更具体的结论。
+
+首先，实际目标可以明确为
+
+$$
+\boxed{
+\mathrm{RH}\iff\mathfrak R(X)=O(1),
+}
+$$
+
+而不是要求余项趋零。它必须保留至少 \(c_0\) 的正补偿，同时在正确理论下保持常数级大小。
+
+其次，已经构造了一个完全明确的算术正核，使
+
+$$
+\boxed{
+\mathscr P_X(n,m)=O(X^{-1})
+}
+$$
+
+对所有位置成立，但
+
+$$
+\boxed{
+\sum_{n,m}W_X(n,m)\mathscr P_X(n,m)
+\longrightarrow C_{\mathrm{band}}>0.
+}
+$$
+
+最后，这个看似消失的核在正确缩放下，收敛为
+
+$$
+\boxed{
+\text{固定频带上的归一化量子重叠核}.
+}
+$$
+
+所以，前文“缺一个常数级相关补偿”的问题，现在有了一个具体机制：
+
+$$
+\boxed{
+\text{模数与窗口一起增长}
+\longrightarrow
+\text{单个相关分量趋零}
+\longrightarrow
+\text{联合相干贡献仍然存活}.
+}
+$$
+
+**尚未完成的是证明实际素数恰好以受控方式实现这些模态，而不是这些模态是否能够被构造出来。**本轮把这个区别变成了可以计算的阈值：逐项 \(o(1)\) 不够，窗口尺度上的联合误差才是决定性对象。
+
+[1]: https://arxiv.org/html/math/0409258v1 "Primes in short intervals"
+[2]: https://arxiv.org/html/2008.06140v1 "The mean square of the error term in the prime number theorem"
+[3]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[4]: https://dlmf.nist.gov/27.10 "DLMF: §27.10 Periodic Number-Theoretic Functions ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
