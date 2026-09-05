@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d902eb8ca63333bf9efaa2c558205fdc47c9a7d51184f0b599508ab07ced6bc6
+  normalized_sha256: sha256:d902eb8ca63333bf9efaa2c558205fdc47c9a7d51184f0b599508ab07ced6bc6
+cas_ref: sha256:d902eb8ca63333bf9efaa2c558205fdc47c9a7d51184f0b599508ab07ced6bc6
+coverage_gids:
+  - gid: D5/S3/PrimeForms/ErdosStrausResidueReduction.es_explicit_residue_families
+    target_statement_id: sha256:4b151c0588de46b143aa3cec900ccb93862cec66e81904ee9a89f0710746d14f
+receipts:
+  scribe:
+    - gid: D5/S3/PrimeForms/ErdosStrausResidueReduction.es_explicit_residue_families
+      definition_sha256: sha256:ff8613b7231d3b4da28b56013585073ccf975ef1ad398268dc48110deae0e128
+      emission_sha256: sha256:7bb074334d613ce92abd165ba63b986d3ff40f3c9479c1de6a9123799ebcf6c9
+  unresolved_subitems: []

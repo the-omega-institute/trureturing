@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:016579fcde0879d793890c040a351920bcff6291b004e9dec685f78524d9d0f9
+  normalized_sha256: sha256:016579fcde0879d793890c040a351920bcff6291b004e9dec685f78524d9d0f9
+cas_ref: sha256:016579fcde0879d793890c040a351920bcff6291b004e9dec685f78524d9d0f9
+coverage_gids:
+  - gid: D5/S3/PrimeForms/ErdosStrausResidueReduction.es_integer_reciprocal_scaling
+    target_statement_id: sha256:c8395e77ed00ba7ae89053709e1416c99d73aceb59d98d2163cb5caf464618bd
+receipts:
+  scribe:
+    - gid: D5/S3/PrimeForms/ErdosStrausResidueReduction.es_integer_reciprocal_scaling
+      definition_sha256: sha256:ff8613b7231d3b4da28b56013585073ccf975ef1ad398268dc48110deae0e128
+      emission_sha256: sha256:7bb074334d613ce92abd165ba63b986d3ff40f3c9479c1de6a9123799ebcf6c9
+  unresolved_subitems: []
