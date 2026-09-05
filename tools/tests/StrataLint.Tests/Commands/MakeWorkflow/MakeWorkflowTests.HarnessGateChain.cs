@@ -20,7 +20,7 @@ public sealed partial class MakeWorkflowTests
         var binDirectory = Path.Combine(fixture.Path, "bin");
         var explicitReport = Path.Combine(fixture.Path, "explicit-report.json");
         var ambientReport = Path.Combine(fixture.Path, "ambient-report.json");
-        var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.dll");
+        var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.Documents.dll");
         var log = Path.Combine(fixture.Path, "scribe.log");
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(explicitReport, "explicit\n");
@@ -95,7 +95,7 @@ public sealed partial class MakeWorkflowTests
         var binDirectory = Path.Combine(fixture.Path, "bin");
         var emptyReport = Path.Combine(fixture.Path, "empty-report.json");
         var missingReport = Path.Combine(fixture.Path, "missing-report.json");
-        var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.dll");
+        var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.Documents.dll");
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(emptyReport, string.Empty);
         File.WriteAllText(scribe, "fixture\n");
@@ -651,7 +651,7 @@ public sealed partial class MakeWorkflowTests
               exit "$PREFLIGHT_ADMISSION_RC"
             fi
             if [[ "${2:-}" == filemap-conform ]]; then exit 0; fi
-            if [[ "$*" == *StrataLint.Scribe.csproj* && "$*" == *" --check"* ]]; then exit 0; fi
+            if [[ "$*" == *StrataLint.Scribe.Documents.csproj* && "$*" == *" --check"* ]]; then exit 0; fi
             echo "unexpected dotnet invocation: $*" >&2
             exit 91
             """);

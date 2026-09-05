@@ -139,7 +139,9 @@ public sealed class CliVerbLinkageTests
                         && text.Contains("$PROJECT", StringComparison.Ordinal))
                     || text.Contains("$CLI_PROJECT", StringComparison.Ordinal)
                     || text.Contains("$JUDGE_DLL", StringComparison.Ordinal);
-                var namesScribe = text.Contains("StrataLint.Scribe.csproj", StringComparison.Ordinal)
+                var namesScribe = text.Contains(
+                        "StrataLint.Scribe.Documents.csproj",
+                        StringComparison.Ordinal)
                     || (relative == "tools/scripts/scribe.sh"
                         && text.Contains("$PROJECT", StringComparison.Ordinal));
 

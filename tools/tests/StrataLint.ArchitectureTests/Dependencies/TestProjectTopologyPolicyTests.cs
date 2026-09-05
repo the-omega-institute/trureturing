@@ -3,7 +3,7 @@ using TestProjectTopologyPolicy = StrataLint.Engine.RepositoryRules;
 
 namespace StrataLint.ArchitectureTests;
 
-public sealed class TestProjectTopologyPolicyTests
+public sealed partial class TestProjectTopologyPolicyTests
 {
     private const string CanonicalHarnessPath =
         "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
@@ -112,6 +112,85 @@ public sealed class TestProjectTopologyPolicyTests
         Assert.False(result.IsAccepted);
         Assert.Contains(
             Debt("extra-production-reference", "Alpha.Tests", "Beta"),
+            result.IntroducedDebt);
+    }
+
+    [Fact]
+    public void ScribeDocumentsCannotBorrowScribeTestsAsItsOwner()
+    {
+        var scribe = Production("StrataLint.Scribe", "StrataLint.Scribe");
+        var documents = Production(
+            "StrataLint.Scribe.Documents",
+            "StrataLint.Scribe.Documents");
+        var tests = OwnedTest(
+            "StrataLint.Scribe.Tests",
+            "StrataLint.Scribe.Tests",
+            "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
+            "../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj");
+
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(scribe, documents, tests));
+
+        Assert.False(result.IsAccepted);
+        Assert.Contains(
+            Debt(
+                "missing-owned-project",
+                "StrataLint.Scribe.Documents",
+                "StrataLint.Scribe.Documents.Tests"),
+            result.IntroducedDebt);
+        Assert.Contains(
+            Debt(
+                "extra-production-reference",
+                "StrataLint.Scribe.Tests",
+                "StrataLint.Scribe.Documents"),
+            result.IntroducedDebt);
+    }
+
+    [Fact]
+    public void ScribeAndDocumentsEachHaveTheirOwnTestProject()
+    {
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(
+                Production("StrataLint.Scribe", "StrataLint.Scribe"),
+                Production(
+                    "StrataLint.Scribe.Documents",
+                    "StrataLint.Scribe.Documents"),
+                OwnedTest(
+                    "StrataLint.Scribe.Tests",
+                    "StrataLint.Scribe.Tests",
+                    "../../StrataLint.Scribe/StrataLint.Scribe.csproj"),
+                OwnedTest(
+                    "StrataLint.Scribe.Documents.Tests",
+                    "StrataLint.Scribe.Documents.Tests",
+                    "../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj")));
+
+        Assert.True(result.IsAccepted, result.Message);
+        Assert.Empty(result.CandidateDebt);
+    }
+
+    [Fact]
+    public void ScribeDocumentsWithoutItsOwnedTestProjectIsRejected()
+    {
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(
+                Production("StrataLint.Scribe", "StrataLint.Scribe"),
+                Production(
+                    "StrataLint.Scribe.Documents",
+                    "StrataLint.Scribe.Documents"),
+                OwnedTest(
+                    "StrataLint.Scribe.Tests",
+                    "StrataLint.Scribe.Tests",
+                    "../../StrataLint.Scribe/StrataLint.Scribe.csproj")));
+
+        Assert.False(result.IsAccepted);
+        Assert.Contains(
+            Debt(
+                "missing-owned-project",
+                "StrataLint.Scribe.Documents",
+                "StrataLint.Scribe.Documents.Tests"),
             result.IntroducedDebt);
     }
 
@@ -582,91 +661,6 @@ public sealed class TestProjectTopologyPolicyTests
 
         Assert.Single(matchingProjects);
     }
-
-    private static (TestProjectTopologySnapshot ProtectedBase, TestProjectTopologySnapshot Candidate)
-        EqualSizedDebtSwap()
-    {
-        var protectedBase = Snapshot(
-            OwnedTest(
-                "Legacy.Tests",
-                "Legacy.Tests",
-                "../../Legacy/Legacy.csproj"));
-        var candidate = Snapshot(
-            Production("Legacy", "Legacy"),
-            OwnedTest(
-                "Legacy.Tests",
-                "Legacy.Tests",
-                "../../Legacy/Legacy.csproj"),
-            OwnedTest("Rogue.Tests", "Rogue.Tests"));
-        return (protectedBase, candidate);
-    }
-
-    private static TestProjectTopologySnapshot Snapshot(
-        params TestProjectTopologyProject[] projects) => new(projects);
-
-    private static TestProjectTopologyProject Production(
-        string directory,
-        string assembly,
-        string? projectStem = null,
-        string extraProperty = "") => ProjectWithExtraProperty(
-        $"tools/{directory}/{projectStem ?? directory}.csproj",
-        assembly,
-        xunit: false,
-        extraProperty: extraProperty);
-
-    private static TestProjectTopologyProject OwnedTest(
-        string directory,
-        string assembly,
-        params string[] references) => ProjectWithDefaultProperties(
-        $"tools/tests/{directory}/{directory}.csproj",
-        assembly,
-        xunit: true,
-        references: references);
-
-    private static TestProjectTopologyProject ProjectWithDefaultProperties(
-        string path,
-        string assembly,
-        bool xunit,
-        params string[] references) => ProjectWithExtraProperty(
-        path,
-        assembly,
-        xunit,
-        extraProperty: string.Empty,
-        references);
-
-    private static TestProjectTopologyProject ProjectWithExtraProperty(
-        string path,
-        string assembly,
-        bool xunit,
-        string extraProperty,
-        params string[] references)
-    {
-        var packageReference = xunit
-            ? "<PackageReference Include=\"xunit\" />"
-            : string.Empty;
-        var projectReferences = string.Join(
-            string.Empty,
-            references.Select(static reference =>
-                $"<ProjectReference Include=\"{reference}\" />"));
-        var content = $"""
-            <Project Sdk="Microsoft.NET.Sdk">
-              <PropertyGroup>
-                <AssemblyName>{assembly}</AssemblyName>
-                {extraProperty}
-              </PropertyGroup>
-              <ItemGroup>
-                {packageReference}
-                {projectReferences}
-              </ItemGroup>
-            </Project>
-            """;
-        return new TestProjectTopologyProject(path, content);
-    }
-
-    private static TestProjectTopologyDebt Debt(
-        string kind,
-        string subject,
-        string related) => new(kind, subject, related);
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;

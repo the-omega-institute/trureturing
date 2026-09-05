@@ -139,7 +139,12 @@
         }
       },
       "stratalint.testsupport": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.Scribe": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
       },
       "trureturing.truth": {
         "type": "Project"

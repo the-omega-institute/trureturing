@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using StrataLint.Scribe.Documents;
 using Trureturing.Truth;
 
 namespace StrataLint.Cli;
@@ -64,13 +65,11 @@ internal static class DagRenderCommand
         }
         var leanReportDigest = RawLeanReportArtifact.ContentAddress(
             RawLeanReportArtifact.Write(truth.Snapshot, truth.Report).AsSpan());
-        var provenance = new TruthGraphProvenance(
-            SnapshotContentDigest.Compute(truth.Snapshot),
-            leanReportDigest);
         DocumentGraphExportProjection documentProjection;
         try
         {
             documentProjection = DocumentGraphExportProjectionExtensions.AssembleRepository(
+                DocumentAssembly.Value,
                 repositoryRoot,
                 DeclarationCatalog.Create(truth.Report),
                 projection.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal));
@@ -84,6 +83,11 @@ internal static class DagRenderCommand
         {
             return Failure("document graph could not be built", exception);
         }
+        var provenance = new TruthGraphProvenance(
+            SnapshotContentDigest.Compute(
+                truth.Snapshot,
+                documentProjection.Documents.Nodes.Select(static node => node.RepoPath)),
+            leanReportDigest);
         var exit = DagEmitter.Emit(
             repositoryRoot,
             projection,

@@ -37,12 +37,16 @@ public sealed class LeanReportInputScriptTests
         '/', "tools", "StrataLint.Engine", "StrataLint.Engine.csproj");
     private static readonly string ScribeProjectPath = string.Join(
         '/', "tools", "StrataLint.Scribe", "StrataLint.Scribe.csproj");
+    private static readonly string DocumentsProjectPath = string.Join(
+        '/', "tools", "StrataLint.Scribe.Documents", "StrataLint.Scribe.Documents.csproj");
     private static readonly string EngineLockPath = string.Join(
         '/', "tools", "StrataLint.Engine", "packages.lock.json");
     private static readonly string CliLockPath = string.Join(
         '/', "tools", "StrataLint.Cli", "packages.lock.json");
     private static readonly string ScribeLockPath = string.Join(
         '/', "tools", "StrataLint.Scribe", "packages.lock.json");
+    private static readonly string DocumentsLockPath = string.Join(
+        '/', "tools", "StrataLint.Scribe.Documents", "packages.lock.json");
     private static readonly string TruthProjectPath = string.Join(
         '/', "tools", "Trureturing.Truth", "Trureturing.Truth.csproj");
     private static readonly string TruthLockPath = string.Join(
@@ -161,6 +165,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(ScribeSourcePath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(ScribeProjectPath, paths);
+        Assert.Contains(DocumentsProjectPath, paths);
         Assert.Contains(ScribeContentChecksPath, paths);
         Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(derivedProbe, paths);
@@ -315,15 +320,18 @@ public sealed class LeanReportInputScriptTests
             Write("Directory.Packages.props", "<Project />\n");
             Write(CliProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(EngineProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+            Write(ScribeProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(
-                ScribeProjectPath,
+                DocumentsProjectPath,
                 "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup>"
                     + "<Compile Include=\"../../Blueprint/**/*.scribe.cs\" />"
+                    + "<ProjectReference Include=\"../StrataLint.Scribe/StrataLint.Scribe.csproj\" />"
                     + "</ItemGroup></Project>\n");
             Write(TruthProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(EngineLockPath, "{}\n");
             Write(CliLockPath, "{}\n");
             Write(ScribeLockPath, "{}\n");
+            Write(DocumentsLockPath, "{}\n");
             Write(TruthLockPath, "{}\n");
             Write("global.json", "{}\n");
             File.WriteAllText(report, "{}\n", new UTF8Encoding(false));

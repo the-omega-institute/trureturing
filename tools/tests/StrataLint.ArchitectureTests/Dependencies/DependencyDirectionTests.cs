@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using StrataLint.Scribe.Documents;
 using System.Xml.Linq;
 
 namespace StrataLint.ArchitectureTests;
@@ -25,10 +26,10 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet()
+    public void CliReferencesExactlyDocumentsEngineScribeTomlynTruthAndYamlDotNet()
     {
         Assert.Equal(
-            ["StrataLint.Engine", "StrataLint.Scribe", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
+            ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.Scribe.Documents", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
     }
 
@@ -44,6 +45,17 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["Jint", "QuestPDF", "StrataLint.Engine", "Tomlyn", "Trureturing.Truth"],
+            AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
+    }
+
+    [Fact]
+    public void DocumentsReferencesScribeAndScribeDoesNotReferenceDocuments()
+    {
+        Assert.Contains(
+            "StrataLint.Scribe",
+            AssemblyReferencePolicy.NonPlatformReferences(DocumentAssembly.Value));
+        Assert.DoesNotContain(
+            "StrataLint.Scribe.Documents",
             AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
     }
 
@@ -98,6 +110,17 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
+    [CompileTimeInputUniverse("tools/tests/StrataLint.Scribe.Documents.Tests/", ".cs")]
+    [CompileTimeInputUniverse("tools/tests/StrataLint.Scribe.Documents.Tests/", ".csproj")]
+    public void ScribeDocumentsTestsReferenceOnlyDocumentsEngineScribeAndTestSupport()
+    {
+        Assert.Equal(
+            ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.Scribe.Documents", "StrataLint.TestSupport"],
+            AssemblyReferencePolicy.ApplicationReferences(
+                System.Reflection.Assembly.Load("StrataLint.Scribe.Documents.Tests")));
+    }
+
+    [Fact]
     public void ArchitectureTestsReferenceOnlyDeclaredDependencies()
     {
         Assert.Equal(
@@ -105,8 +128,10 @@ public sealed class DependencyDirectionTests
                 "../../StrataLint.Cli/StrataLint.Cli.csproj",
                 "../../StrataLint.Engine/StrataLint.Engine.csproj",
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+                "../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
                 "../StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+                "../StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
                 "../StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
                 "../StrataLint.Tests/StrataLint.Tests.csproj",
             ],

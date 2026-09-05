@@ -1,9 +1,13 @@
 using System.Reflection;
+using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
 
 internal static class AssemblyReferencePolicy
 {
+    [CompileTimeInputUniverse("tools/", ".cs")]
+    [CompileTimeInputUniverse("tools/", ".csproj")]
+    [CompileTimeInputUniverse("tools/", "packages.lock.json")]
     internal static string[] NonPlatformReferences(Assembly assembly) =>
         assembly.GetReferencedAssemblies()
             .Select(static reference => reference.Name

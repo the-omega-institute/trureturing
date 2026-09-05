@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
+using static StrataLint.TestSupport.DescribeReportRepositoryFixture;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -271,32 +272,6 @@ public sealed class DescribeReportTests
     }
 
     [Fact]
-    public void DescribeReportCliReturnsJsonRedAndExitOneForInvalidDoi()
-    {
-        WithRepository(
-            root =>
-            {
-                var output = new StringWriter();
-                var error = new StringWriter();
-
-                var exit = ScribeCli.Run(
-                    ["describe-report", "--json"],
-                    root,
-                    output,
-                    error,
-                    LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()));
-
-                Assert.Equal(1, exit);
-                Assert.Equal(string.Empty, error.ToString());
-                using var document = JsonDocument.Parse(output.ToString());
-                Assert.Contains(
-                    document.RootElement.GetProperty("red_findings").EnumerateArray(),
-                    finding => finding.GetProperty("code").GetString() == "invalid-doi");
-            },
-            doi: "not-a-doi");
-    }
-
-    [Fact]
     public void InsertingAPrecedingDescribeDoesNotRenumberExistingNodeIds()
     {
         WithRepository(root =>
@@ -374,58 +349,4 @@ public sealed class DescribeReportTests
             FormulaRelationOperator.Equal,
             new Formula.Symbol(FormulaIdentifier.Create("x"))));
 
-    private static void WithRepository(
-        Action<string> assertion,
-        string doi = "10.1007/BF01389053")
-    {
-        var root = Path.Combine(Path.GetTempPath(), "stratalint-report-" + Guid.NewGuid().ToString("N"));
-        var formalPath = Path.Combine(root, "D5", "S1", "Phase", "Basic.lean");
-        var notes = Path.Combine(root, "Library", "notes");
-        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(formalPath)!);
-        TemporaryFileSystem.Directory.CreateDirectory(notes);
-        TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(root, "Blueprint"));
-        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "global.json"), "{}\n", new UTF8Encoding(false, true));
-        TemporaryFileSystem.File.WriteAllText(
-            formalPath,
-            "/-- Formula x = y in a Lean docstring. -/\nnamespace D5.S1.Phase\n",
-            new UTF8Encoding(false, true));
-        WriteNote(
-            root,
-            "sos1957threegap",
-            "On the three gap theorem",
-            doi);
-        try
-        {
-            assertion(root);
-        }
-        finally
-        {
-            TemporaryFileSystem.Directory.Delete(root, recursive: true);
-        }
-    }
-
-    private static void WriteNote(
-        string root,
-        string bibkey,
-        string title,
-        string doi)
-    {
-        var notes = Path.Combine(root, "Library", "notes");
-        TemporaryFileSystem.Directory.CreateDirectory(notes);
-        TemporaryFileSystem.File.WriteAllText(
-            Path.Combine(notes, bibkey + ".md"),
-            "---\n"
-            + $"bibkey: {bibkey}\n"
-            + "authors: Vera T. Sos\n"
-            + "year: 1957\n"
-            + $"title: {title}\n"
-            + $"doi: {doi}\n"
-            + "claim: Gap lengths for irrational rotations.\n"
-            + "strata_touched:\n"
-            + "  - D5/S1/Phase/Basic\n"
-            + "license: citation-only\n"
-            + "triage: anchor\n"
-            + "---\n",
-            new UTF8Encoding(false, true));
-    }
 }
