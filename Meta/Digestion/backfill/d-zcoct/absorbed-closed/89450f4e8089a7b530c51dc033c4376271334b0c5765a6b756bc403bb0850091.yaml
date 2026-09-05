@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:89450f4e8089a7b530c51dc033c4376271334b0c5765a6b756bc403bb0850091
+  normalized_sha256: sha256:89450f4e8089a7b530c51dc033c4376271334b0c5765a6b756bc403bb0850091
+cas_ref: sha256:89450f4e8089a7b530c51dc033c4376271334b0c5765a6b756bc403bb0850091
+coverage_gids:
+  - gid: D5/S3/Analytic/ReflectedSpectrum/DiagonalGlobalBalance.diagonal_global_balance
+    target_statement_id: sha256:bb0f2b0331e77b0512dd955ba6e6cd10e183aeb76d1f540ed2767041dc5759ff
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/ReflectedSpectrum/DiagonalGlobalBalance.diagonal_global_balance
+      definition_sha256: sha256:fbcedd973e54cb65cfa5287e2df6d80306667f127fc09a34670d7743dc987d4d
+      emission_sha256: sha256:ded65ef8bc2117fd03cee1518b32bedbb63ae5e745e5240960fbcca3be90888d
+  unresolved_subitems: []
