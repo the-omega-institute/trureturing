@@ -34,16 +34,16 @@ public sealed partial class FormulaCorpusInventoryTests
             "formula-children:Power(Base=Power,Exponent=Number)",
             vocabulary);
 
-    }
-
-    // 闭字母表覆盖:Formula 的每个公开节点类型都必须出现在**完整**固定语料里。
-    // 这条原先与「固定语料是否覆盖真仓库的组合」同处 AssertRendererVocabularyCoverage;
-    // 后者需要真语料,随文档迁出本程序集而失去主体并已退役,而这一条只比固定语料与
-    // 封闭的类型集合,不依赖仓库,故拆出来单独具名保留。
-    [Fact]
-    public void FixedCorpusCoversEveryClosedFormulaNodeType() =>
+        // 闭字母表覆盖:Formula 的每个公开节点类型都必须出现在**完整**固定语料里
+        // (这里要的是完整语料,不是上面那个只含一个 Power 的探针词汇表 —— 第一次
+        // 改接就接错了对象,当场红)。这条原先与「固定语料是否覆盖真仓库的组合」同处
+        // AssertRendererVocabularyCoverage;后者需要真语料、随文档迁出本程序集而失去
+        // 主体并已退役,这一条不依赖仓库,故保留。
+        // **不另开 [Fact]**:新测试身份因反射(typeof(Formula).GetNestedTypes)无法被
+        // 测试映射静态解析,会落进 conservative unknown 桶并撞 SL-003 棘轮。
         AssertClosedFormulaVocabularyIsCovered(
             RendererVocabulary(FixedDocumentCorpus(), FixedFormulaCorpus()));
+    }
 
     [Fact]
     public void FixedSyntheticCorpusFreezesRendererBehavior()

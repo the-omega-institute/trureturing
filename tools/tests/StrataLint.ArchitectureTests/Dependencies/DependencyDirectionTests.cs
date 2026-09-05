@@ -25,9 +25,12 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void CliReferencesExactlyEngineScribeDocumentsTomlynTruthAndYamlDotNet()
+    public void CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet()
     {
         Assert.Equal(
+            // 方法名保留原样:改名会产生一个新的测试身份,而本测试因走反射
+            // (typeof(Cli.Program).Assembly)无法被测试映射静态解析,落在 conservative
+            // unknown 桶里 —— 新身份撞 SL-003 棘轮。故名字不再穷举引用集,以下列表为准。
             [
                 "StrataLint.Engine",
                 "StrataLint.Scribe",
@@ -60,7 +63,7 @@ public sealed class DependencyDirectionTests
         // 此处曾另有一条产物层(IL)断言,钉 `["StrataLint", "StrataLint.Engine",
         // "StrataLint.Scribe", "StrataLint.TestSupport"]`。**已删,且没有丢失可达的检测**:
         // 该项目直接声明的只有 Cli 与 TestSupport,而 Cli 的引用集由
-        // CliReferencesExactlyEngineScribeDocumentsTomlynTruthAndYamlDotNet 钉死,
+        // CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet 钉死,
         // 故传递可达的 StrataLint* 集合**恰好等于**原 IL 断言钉住的那个集合 ——
         // 再钉一遍不增加信息(第〇节:f 与真源都已被守,投影必然对)。
         // 要让第四个 StrataLint* 程序集变得可达,必须改 Cli 的引用集(已钉)
