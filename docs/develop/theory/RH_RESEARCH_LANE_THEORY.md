@@ -6397,3 +6397,558 @@ RH
 \rightarrow
 \texttt{OfflineZeroPickIndexLowerBound}.
 }
+\]
+
+---
+
+## [PR #5602] WEIL_GROUND_MODE_SHIFT_BARRIER
+
+# Weil 最低模态路线中的内部平移障碍与算术边界项
+
+对应真源：`D5/S3/Weil/ZetaBridge/WeilGroundModeShiftBarrier.lean`。
+配套 Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilGroundModeShiftBarrier.scribe.cs`。
+
+本节补入前一轮已提交 Lean 的理论推导。有限平移恒等式、紧支撑非消失性和平方残差下界已有 Lean 证明脚本，尚未经本环境编译。尺度族推论及算术边界展开是纸面推导。没有证明完整算术强制性、最低模态单纯偶性或 RH。
+
+## 1. 同一算术对象与平移探针
+
+令
+
+\[
+C(f,g)(s)=\int_{\mathbb R}f(x)\overline{g(x-s)}\,dx,
+\qquad W(f,g)=\operatorname{literatureRHS}(C(f,g)).
+\]
+
+直接使用 `Zeta23.EF.weilTest` 与 `Zeta23.EF.literatureRHS`，保留实际 von Mangoldt 素数幂系数、两个极点项和 `gammaBracket`。这里的原始相关函数载体允许一般复值函数。已有 `WeilTestFunction` 的偶性约束不能代替完整奇偶空间上的最低模态论证。
+
+Fourier 约定为 `hat f(z)=integral f(x)*exp(i*z*x) dx`。固定 `t>0`，定义
+
+\[
+S_tf(x)=f(x-t)+f(x+t),\qquad B=S_t-\alpha I.
+\]
+
+对归一化候选 `k`，取实数 `alpha=<S_t k,k>`，则 `|alpha|<=2` 且 `Bk` 与 `k` 正交。相关函数满足精确恒等式
+
+\[
+C(Bf,g)=C(f,Bg),\qquad C(Bk,Bk)=C(k,B^2k).
+\]
+
+这些等式在作用整个 `literatureRHS` 之前成立，因此不会丢掉 prime、pole 和 Gamma 项之间的抵消。
+
+## 2. 已提交的方向性残差障碍
+
+当 `Bk` 和 `B^2k` 都是同一窗口算子的合法测试函数时，令
+
+\[
+\mu=\langle k,A_ak\rangle,\qquad R=(A_a-\mu)k,\qquad r=\|R\|_2.
+\]
+
+则
+
+\[
+q_a(Bk)-\mu\|Bk\|_2^2=\Re\langle R,B^2k\rangle.
+\]
+
+结合该方向的强制性与残差配对上界，Lean 证明脚本给出
+
+\[
+\boxed{\delta^2\|Bk\|_2^2\le3(2+\alpha^2)r^2.}
+\]
+
+它没有证明算术强制性本身。利用 `|alpha|<=2`，可读出
+
+\[
+\boxed{r/\delta\ge\|Bk\|_2/\sqrt{18}.}
+\]
+
+## 3. 固定内缩候选的尺度族障碍
+
+设归一化候选满足
+
+\[
+\operatorname{supp}k_a\subset[-a+2t,a-2t],
+\qquad k_a\longrightarrow k_\infty\ne0\text{ in }L^2(\mathbb R),
+\]
+
+其中 `t>0` 固定。内缩余量使一次、两次平移仍为原窗口合法测试函数。此时
+
+\[
+B_ak_a\longrightarrow(S_t-\alpha_\infty)k_\infty.
+\]
+
+右侧非零，因为 Fourier 乘子 `2*cos(t*xi)-alpha_infty` 的零集离散，非零 L2 函数不可能完全支撑于该零测集。因此，若余维一强制性成立，必有
+
+\[
+\boxed{\liminf_{a\to\infty}r_a/\delta_a>0.}
+\]
+
+这个障碍已经存在于偶子空间内部，因为对称平移保持偶性。
+
+## 4. 对明确 Xi 核截断的应用
+
+令
+
+\[
+\Phi(x)=\sum_{n=1}^\infty
+\left(4\pi^2n^4e^{9x/2}-6\pi n^2e^{5x/2}\right)
+\exp(-\pi n^2e^{2x}).
+\]
+
+此 theta 核为偶函数，满足上述 Fourier 约定下的 `hat Phi=Xi`，并具有双指数衰减。取具有固定内缩余量的偶光滑截断 `chi_a`，令
+
+\[
+k_a=\chi_a\Phi/\|\chi_a\Phi\|_2,
+\qquad c_a=\|\chi_a\Phi\|_2.
+\]
+
+双指数衰减给出 `c_a*hat k_a=hat(chi_a*Phi)` 在复平面紧集上一致收敛到 Xi，并且 `c_a` 趋向非零常数。另一方面，第 3 节说明：若强制性成立，
+
+\[
+|c_a|\sqrt{2a}e^{ba}r_a/\delta_a\longrightarrow0
+\]
+
+甚至在 `b=0` 也不成立。因此固定内缩的 Xi 核截断不能同时实现该强制性与此充分收敛条件。本推导不排除触及边界的 prolate 候选，也不排除直接控制 Fourier 观察误差的较弱机制。
+
+## 5. 保留边界后的精确缺陷
+
+令 `P` 为窗口正交截断，`Q=I-P`，`Pk=k`，并记
+
+\[
+v=PBk,\quad h=QBk,\quad w=PBv,\quad e=QBv.
+\]
+
+在混合 Weil 配对合法的条件下，相关函数转移给出
+
+\[
+W(v,v)+W(h,v)=W(k,w)+W(k,e).
+\]
+
+由此
+
+\[
+q_a(v)-\mu\|v\|_2^2
+=\Re\langle R,w\rangle+\mathcal B_a(k,t),
+\]
+
+\[
+\mathcal B_a(k,t)=\Re\{W(k,e)-W(h,v)\}.
+\]
+
+因为 `v` 与 `k` 正交且 `||w||<=4||v||`，强制性要求
+
+\[
+\boxed{\mathcal B_a(k,t)\ge\delta\|v\|_2^2-4r\|v\|_2.}
+\]
+
+中心化系数 `alpha` 在这个边界泛函中抵消。因此该量由明确候选、窗口与平移步长独立决定。边界贡献需要支撑所需谱分离，不能仅以边界 L2 质量小为由忽略。
+
+## 6. 有限素数幂表达与 Abel 变换
+
+设
+
+\[
+d=C(k,e)-C(h,v),\qquad H(s)=\Re(d(s)+d(-s)),\qquad M=2a+t.
+\]
+
+对紧支撑、有限分段光滑的候选，相关函数具有所需正则性。窗口内外正交性及支撑端点给出 `H(0)=H(M)=0`。定义
+
+\[
+\mathfrak D_M(H)=
+\sum_{2\le n\le e^M}\frac{\Lambda(n)}{\sqrt n}H(\log n)
+-\int_0^Me^{s/2}H(s)\,ds.
+\]
+
+保留极点与连续主项的抵消，得到
+
+\[
+\boxed{
+\mathcal B_a(k,t)=-\mathfrak D_M(H)
+-\int_0^M\frac{e^{-5s/2}}{1-e^{-2s}}H(s)\,ds.
+}
+\]
+
+令 `Psi(x)=sum_{n<=x} Lambda(n)`，`E(x)=Psi(x)-x+1`。Abel 分部积分给出
+
+\[
+\mathfrak D_M(H)=-\int_0^ME(e^s)e^{-s/2}
+\left(H'(s)-\tfrac12H(s)\right)ds.
+\]
+
+因此明确候选必须通过的必要检验是
+
+\[
+\begin{aligned}
+&\int_0^ME(e^s)e^{-s/2}\left(H'(s)-\tfrac12H(s)\right)ds\\
+&\quad-\int_0^M\frac{e^{-5s/2}}{1-e^{-2s}}H(s)\,ds
+\ge\delta\|v\|_2^2-4r\|v\|_2.
+\end{aligned}
+\]
+
+该候选下界仍未证明，也不足以单独替代所有正交方向上的强制性。分段光滑定义域延拓、上述边界展开与 Abel 变换尚未全部形式化。
+
+---
+
+## [PR #5602] CANONICAL_GAMMA_TAIL_BOUNDARY_MOMENTS
+
+# 2026-09-05：保留边界矩的 Gamma 尾项压缩与最低模态误差预算
+
+对应 Lean：`D5/S3/Weil/ZetaBridge/WeilArchimedeanTailJet.lean`。
+配套 Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilArchimedeanTailJet.scribe.cs`。
+
+本增补接续内部平移障碍。目标是保留实际候选的边界行为，并量化有限计算省略的 Gamma 尾项。下面第 3 节的逐频率密度误差已有 Lean 证明脚本；脚本经过数学和源码审查，尚未在本环境编译。Fourier 识别、积分预算、正投影修正、奇扇区推广和残差推论是本轮纸面推导。有限频带上的全方向估计与整个窗口 Hilbert 空间上的余维一强制性必须分别证明。
+
+## 1. 文献接口与本轮选择
+
+Connes、Consani、Moscovici 的 *Zeta Spectral Triples*，arXiv:2511.22755v1，第 7 节尤其 Lemma 7.3，已经证明其明确 prolate 模型在相应归一化下具有条带内的 Xi 极限；第 8 节继续要求真实最低模态的单纯偶性及与模型之间足够精确的逼近。该模型极限不能替代真实最低模态识别。
+
+Connes、van Suijlekom 的 *Quadratic Forms, Real Zeros and Echoes of the Spectral Action*，arXiv:2511.23257v1，提供规定分布与定义域条件下的实零点机制。Suzuki 的 *Weil's quadratic form via the screw function*，arXiv:2606.09096v1，给出实际 Weil 算子与 Friedrichs 扩张的另一种描述。使用这些结果需要保持同一算术形式及其定义域，不能将某个微分表达式的最小域直接等同于完成后的算子域。
+
+Groskin 的 *A finite Guinand–Weil dictionary and archimedean tail order for the truncated Weil quadratic form*，arXiv:2607.02828v1，Theorem 3.2 给出有限 Galerkin Gamma 尾项的精确 Cauchy Gram 密度，Lemma 3.1 给出大频率 Gamma 包络。该文已经提供 cutoff-free 组装和区间 LDL 分解。因此本轮不宣称首次消除 Gamma 截断，也不宣称优于其现有算法。本轮从该具体核继续推导保留边界矩的有限秩修正及显式误差预算。投影与几何级数工具本身是经典工具；未作原创优先权声明。
+
+参考地址：
+
+- https://arxiv.org/html/2511.22755v1
+- https://arxiv.org/html/2511.23257v1
+- https://arxiv.org/html/2606.09096v1
+- https://arxiv.org/html/2607.02828
+
+## 2. 归一化与具体 Gamma 尾项
+
+令窗口为 `[-L/2,L/2]`，`L=2a=log c>0`，有限素数幂 cutoff 为 `c=exp L`。定义
+
+\[
+\rho=\frac{2\pi}{L},\qquad b=\rho N,
+\qquad \gamma(t)=\Re\psi_\Gamma(1/4+it/2)-\log\pi.
+\]
+
+这里 `gamma` 直接是仓库已有 `Zeta23.EF.gammaBracket`。Fourier 仍取
+
+\[
+\widehat f(t)=\int_{\mathbb R}f(x)e^{itx}\,dx.
+\]
+
+在零延拓的偶子空间上，取正交归一基
+
+\[
+\varphi_0=L^{-1/2}\mathbf1_I,\qquad
+\varphi_k=(-1)^k\sqrt{2/L}\cos(\rho kx)\mathbf1_I\quad(k\ge1),
+\qquad I=[-L/2,L/2].
+\]
+
+相位 `(-1)^k` 是坐标约定的一部分。删掉它会改变后面的 Cauchy 响应。令 `sigma_0=1`，`sigma_k=sqrt(2)` 对 `k>0`，并设
+
+\[
+f_v=\sum_{k=0}^Nv_k\varphi_k,\qquad
+R_v(t)=\sum_{k=0}^N\frac{\sigma_kv_k}{1-(\rho k/t)^2}.
+\]
+
+逐项积分给出，对 `t>b`，
+
+\[
+\widehat f_v(t)=\frac2{\sqrt L}\frac{\sin(Lt/2)}tR_v(t).
+\]
+
+于是从 `|t|>T` 省略的真实 Gamma 能量矩阵为
+
+\[
+\boxed{v^*E_Tv=\int_T^\infty w_L(t)|R_v(t)|^2\,dt,}
+\]
+
+其中
+
+\[
+\boxed{w_L(t)=\frac{2\rho}{\pi^2}\gamma(t)\frac{\sin^2(Lt/2)}{t^2}.}
+\]
+
+这个公式也由上述 Cauchy Gram 密度经过等距偶嵌入得到。此处只处理 Gamma 积分尾项，prime 与 pole 块保持完整。真实 Weil 形式的其他部分没有被改成正核。
+
+## 3. 已提交的逐频率全方向误差
+
+固定任意自然数 `m`，允许 `m=0`。定义有限矩
+
+\[
+M_{2j}(v)=\sum_{k=0}^N\sigma_k(\rho k)^{2j}v_k,
+\qquad
+P_{m,v}(t)=\sum_{j=0}^{m-1}t^{-2j}M_{2j}(v).
+\]
+
+这些矩直接记录有限三角候选的边界偶阶导数：
+
+\[
+f_v^{(2j)}(L/2)=(-1)^jL^{-1/2}M_{2j}(v).
+\]
+
+保留矩允许候选具有非零边界值及导数。没有要求候选属于 moment-neutral 子空间。
+
+设
+
+\[
+q(t)=(b/t)^2<1.
+\]
+
+精确有限几何余项为
+
+\[
+R_v(t)-P_{m,v}(t)
+=\sum_{k=0}^N\sigma_kv_k
+\frac{(\rho k/t)^{2m}}{1-(\rho k/t)^2}.
+\]
+
+因为
+
+\[
+\left(\sum_k\sigma_k|v_k|\right)^2
+\le(2N+1)\sum_k|v_k|^2,
+\]
+
+有
+
+\[
+|R_v|,|P_{m,v}|
+\le\frac{\sqrt{2N+1}}{1-q(t)}\|v\|_2,
+\]
+
+\[
+|R_v-P_{m,v}|
+\le\frac{\sqrt{2N+1}\,q(t)^m}{1-q(t)}\|v\|_2.
+\]
+
+相乘得到
+
+\[
+\boxed{
+\bigl||R_v(t)|^2-|P_{m,v}(t)|^2\bigr|
+\le\frac{2(2N+1)q(t)^m}{(1-q(t))^2}\|v\|_2^2.
+}
+\]
+
+Lean 主声明 `even_archimedean_tail_density_jet_error` 证明将两边乘以 `|w_L(t)|` 后的精确密度不等式。量词覆盖任意 `N,m`、`L>0`、`t>rho*N` 和任意复系数向量。`N=0`、`m=0` 均包含在陈述内。该定理不假设 Gamma 的符号。
+
+即使在 `w_L>=0` 的区域，两个 Gram 密度之差也不必正半定。因此该直接 Taylor jet 只提供双边误差，不能直接声称一个有序的正修正。
+
+## 4. 直接 jet 的积分误差
+
+以下使用外部 Lemma 3.1 的独立输入
+
+\[
+0<\gamma(t)\le\log t-\frac85\qquad(t\ge7).
+\]
+
+本轮没有重新运行该文用于检查 `gamma(7)>0` 的 Arb 区间程序，也没有把该输入写成新公理。它不属于本轮 Lean 主声明的前提或结论。
+
+取 `T>=7`、`T>b`，记 `theta=b/T<1`。定义
+
+\[
+v^*E_T^{[m]}v=\int_T^\infty w_L(t)|P_{m,v}(t)|^2\,dt.
+\]
+
+逐频率界和
+
+\[
+\int_T^\infty t^{-p-2}\left(\log t-\frac85\right)dt
+=T^{-p-1}\left(\frac{\log T-8/5}{p+1}+\frac1{(p+1)^2}\right)
+\]
+
+给出纸面结论
+
+\[
+\boxed{
+\|E_T-E_T^{[m]}\|\le\varepsilon_m,
+}
+\]
+
+\[
+\varepsilon_m=
+\frac{4\rho(2N+1)}{\pi^2}
+\frac{\theta^{2m}}{(1-\theta^2)^2T}
+\left(\frac{\log T-8/5}{2m+1}+\frac1{(2m+1)^2}\right).
+\]
+
+积分式与算子范数运输尚未写入本轮 Lean。
+
+## 5. 正交投影给出有序的有限秩修正
+
+为获得正半定余量，在加权 Hilbert 空间
+
+\[
+\mathcal H_T=L^2((T,\infty),w_L(t)dt)
+\]
+
+中定义
+
+\[
+h_k(t)=\frac{\sigma_k}{1-(\rho k/t)^2},
+\qquad Vv=\sum_kv_kh_k.
+\]
+
+此时 `E_T=V^*V`。令 `Pi_m` 是到
+
+\[
+\operatorname{span}\{1,t^{-2},\ldots,t^{-2(m-1)}\}
+\]
+
+的正交投影，并定义
+
+\[
+\boxed{E^{\mathrm{opt}}_{T,m}=V^*\Pi_mV.}
+\]
+
+这个修正由 Gamma 核、有限带宽和明确矩空间独立构造，不使用未知最低模态。其矩阵可直接写为
+
+\[
+E^{\mathrm{opt}}_{T,m}=C^*M^{-1}C,
+\]
+
+\[
+M_{ij}=\int_T^\infty w_L(t)t^{-2(i+j)}dt,
+\qquad C_{ik}=\int_T^\infty w_L(t)t^{-2i}h_k(t)dt.
+\]
+
+对 `m>0`，`M` 正定：非零的 `t^{-2}` 多项式不可能在一个区间上恒零，而权密度在离散的正弦零点以外严格为正。对 `m=0` 直接令修正为零，无须求逆。
+
+投影的最小二乘性质给出
+
+\[
+\|(1-\Pi_m)Vv\|_{\mathcal H_T}^2
+\le\|R_v-P_{m,v}\|_{\mathcal H_T}^2.
+\]
+
+结合精确几何余项，得到本轮较强的纸面定理：
+
+\[
+\boxed{
+0\preceq E_T-E^{\mathrm{opt}}_{T,m}
+=V^*(1-\Pi_m)V\preceq\kappa_mI,
+\qquad \operatorname{rank}E^{\mathrm{opt}}_{T,m}\le m,
+}
+\]
+
+其中
+
+\[
+\boxed{
+\kappa_m=
+\frac{2\rho(2N+1)}{\pi^2}
+\frac{\theta^{4m}}{(1-\theta^2)^2T}
+\left(\frac{\log T-8/5}{4m+1}+\frac1{(4m+1)^2}\right).
+}
+\]
+
+证明中先平方余项，使幂次从 `theta^(2m)` 改善到 `theta^(4m)`，再使用 `sin^2<=1` 和 Gamma 包络积分。正余量来自正交投影恒等式，绝不能从直接 Taylor Gram 近似擅自推断。
+
+该定理是本轮纸面证明，尚未经 Lean 验证。实际数值实现还需对 `M`、`C` 的积分以及线性求解做区间控制。使用缩放基 `(T/t)^(2j)` 可以避免部分幂次尺度问题，但它不自动提供良好的矩矩阵条件数。
+
+## 6. 奇扇区的相邻纸面结论
+
+奇基可取 `(-1)^k*sqrt(2/L)*sin(rho*k*x)`，`1<=k<=N`。忽略共同的单位复相位后，其 Fourier 响应为
+
+\[
+R^-_v(t)=\sum_{k=1}^N\sqrt2v_k
+\frac{\rho k/t}{1-(\rho k/t)^2}.
+\]
+
+将矩空间改为
+
+\[
+\operatorname{span}\{t^{-1},t^{-3},\ldots,t^{-(2m-1)}\}
+\]
+
+并重复平方余项证明，得到
+
+\[
+0\preceq E^-_T-E^{-,\mathrm{opt}}_{T,m}\preceq\kappa^-_mI,
+\]
+
+\[
+\kappa^-_m=
+\frac{2\rho(2N)}{\pi^2}
+\frac{\theta^{4m+2}}{(1-\theta^2)^2T}
+\left(\frac{\log T-8/5}{4m+3}+\frac1{(4m+3)^2}\right).
+\]
+
+`N=0` 时奇子空间为零空间。这个相邻结论尚未形式化。它提供奇偶两侧一致的尾项处理方式，没有证明最低模态位于偶扇区。
+
+## 7. 对候选残差和谱分离的用途
+
+这一节仍固定同一个有限 Galerkin 子空间。记
+
+\[
+Q_\infty^N=\widetilde Q^N+S,
+\qquad \widetilde Q^N=Q_T^N+E^{\mathrm{opt}}_{T,m},
+\qquad 0\preceq S\preceq\kappa_m I.
+\]
+
+对归一化明确候选 `k`，令
+
+\[
+\widetilde\mu=\langle k,\widetilde Q^Nk\rangle,
+\quad\eta=\langle k,Sk\rangle\in[0,\kappa_m],
+\quad\mu=\widetilde\mu+\eta.
+\]
+
+若修正矩阵已在 `k` 的正交补上具有间隔 `tilde_delta>kappa_m`，则完整 Gamma 尾项加入后，仍可取
+
+\[
+\delta\ge\widetilde\delta-\kappa_m>0.
+\]
+
+对残差，有更精确的中心化控制：由 `S^2<=kappa_m*S`，
+
+\[
+\|(S-\eta I)k\|^2
+=\langle k,S^2k\rangle-\eta^2
+\le\kappa_m\eta-\eta^2\le\kappa_m^2/4.
+\]
+
+因此
+
+\[
+\boxed{
+r\le\widetilde r+\kappa_m/2,
+\qquad
+\frac r\delta\le
+\frac{\widetilde r+\kappa_m/2}{\widetilde\delta-\kappa_m}.
+}
+\]
+
+这里的 `r` 是完整 Gamma 积分下有限矩阵的残差。整个 Hilbert 空间上的残差还包括 Galerkin 正交补中的分量，整个空间的强制性也需要该正交补的独立下界与块间耦合控制。二者不能由以上有限矩阵估计省略。
+
+## 8. 参数族与诊断量
+
+若 `theta<=theta_0<1`，则
+
+\[
+\kappa_m\le A(L,N,T,\theta_0)\theta_0^{4m},
+\]
+
+\[
+A=\frac{2\rho(2N+1)}{\pi^2}
+\frac{\log T-8/5+1}{(1-\theta_0^2)^2T}.
+\]
+
+所以当 `0<theta_0<1` 时，选取
+
+\[
+m\ge\frac{\max\{0,\log(A/\epsilon)\}}{4\log(1/\theta_0)}
+\]
+
+足以使这个尾项预算不超过给定 `epsilon>0`。此处每个尺度的 `L,N,T` 仍显式保留，没有偷换为一个固定窗口定理。
+
+在文献使用的 `c=100,N=200,T=800` 参数处，代入本轮公式得到
+
+\[
+\theta\approx0.34109408846,
+\qquad \kappa_{32}\approx1.13078458\times10^{-62}.
+\]
+
+该数只是解析预算的高精度数值评价。没有实际组装 `Eopt`、没有认证 `M` 的条件数、没有得到新的最低特征值区间。75 组覆盖零阶、零带宽、复系数和接近带边的随机诊断均满足推导不等式；这些测试也不替代形式证明或区间证书。
+
+## 9. 仍需消除的数学假设
+
+本轮将具体 Gamma 尾项误差变成一个可按精度选择的有限矩预算。完整研究目标仍要求：
+
+1. 对明确算术候选证明有限修正矩阵中的正交补下界，并控制 prime、pole 与边界贡献之间的抵消。
+2. 对 Galerkin 子空间以外的全部方向给出强制性和耦合估计，将矩阵结论提升到同一 Friedrichs Weil 算子。
+3. 沿无界尺度序列联合控制实际候选残差与谱间隔，使误差足以承受复频率权重，并接到文献已有 prolate 模型的 Xi 极限。
+
+其中第 1、2 项仍然是算术承重问题。本轮没有证明新的全空间尺度实例，没有获得无界尺度的单纯偶性，也没有证明真实最低模态变换收敛到 Xi。
