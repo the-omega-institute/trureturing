@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalAlignment
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Two frozen Boolean causal separations align faithfully on one cumulative 48-state coproduct. -/
+   digest: Frozen Boolean causal separations align on one 48-state coproduct. -/
 
 import D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas
 import D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention
@@ -71,7 +71,7 @@ end OI
 
 abbrev UnifiedBoolSCM := IC.Model ⊕ OI.Model
 
- /-- The canonical 48-state coproduct of the two landed Boolean SCM carriers. -/
+-- The canonical 48-state coproduct of the two landed Boolean SCM carriers.
 def unifiedArena : Arena := by
   letI : Fintype IC.Model :=
     D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.modelFintype
@@ -98,7 +98,7 @@ instance : Fintype UnifiedObservationInterventionReadout where
   elems := {.observation, .intervention}
   complete := by intro index; cases index <;> simp
 
- /-- Branch-local observation/intervention slots on the unified carrier. -/
+-- Branch-local observation/intervention slots on the unified carrier.
 def unifiedObservationInterventionSignature :
     PrimitiveSignature UnifiedBoolSCM where
   Index := UnifiedObservationInterventionReadout
@@ -114,7 +114,7 @@ def unifiedObservationInterventionSignature :
   anchorFintype := inferInstance
   anchorDecidableEq := inferInstance
 
- /-- The OI realization is injected into the right coproduct branch. -/
+-- The OI realization is injected into the right coproduct branch.
 def observationInterventionUnifiedRealization :
     PrimitiveRealization unifiedObservationInterventionSignature where
   readout
@@ -135,7 +135,7 @@ instance : Fintype UnifiedInterventionCounterfactualReadout where
   elems := {.intervention, .counterfactual}
   complete := by intro index; cases index <;> simp
 
- /-- Branch-local intervention/counterfactual slots on the unified carrier. -/
+-- Branch-local intervention/counterfactual slots on the unified carrier.
 def unifiedInterventionCounterfactualSignature :
     PrimitiveSignature UnifiedBoolSCM where
   Index := UnifiedInterventionCounterfactualReadout
@@ -151,7 +151,7 @@ def unifiedInterventionCounterfactualSignature :
   anchorFintype := inferInstance
   anchorDecidableEq := inferInstance
 
- /-- The IC realization is injected into the left coproduct branch. -/
+-- The IC realization is injected into the left coproduct branch.
 def interventionCounterfactualUnifiedRealization :
     PrimitiveRealization unifiedInterventionCounterfactualSignature where
   readout
@@ -163,37 +163,37 @@ def interventionCounterfactualUnifiedRealization :
         | .inr _ => none
   anchor := fun index => Fin.elim0 index
 
- /-- The cumulative observation readout. -/
+-- The cumulative observation readout.
 def ObsU : UnifiedBoolSCM → ObsOut
   | .inl model => .inl (IC.Int model false)
   | .inr model => .inr (OI.Obs model)
 
- /-- The cumulative intervention readout. -/
+-- The cumulative intervention readout.
 def IntU : UnifiedBoolSCM → IntOut
   | .inl model => .inl (IC.Int model)
   | .inr model => .inr (OI.Obs model, OI.Int model)
 
- /-- The cumulative counterfactual readout, literal on the OI branch. -/
+-- The cumulative counterfactual readout, literal on the OI branch.
 def CfU : UnifiedBoolSCM → CfOut
   | .inl model => .inl (IC.CF model)
   | .inr model => .inr model
 
- /-- Forget the intervention coordinate down to observation. -/
+-- Forget the intervention coordinate down to observation.
 def obsFromInt : IntOut → ObsOut
   | .inl table => .inl (table false)
   | .inr (observation, _) => .inr observation
 
- /-- Collapse counterfactual data down to intervention data. -/
+-- Collapse counterfactual data down to intervention data.
 def intFromCf : CfOut → IntOut
   | .inl table => .inl (collapse table)
   | .inr model => .inr (OI.Obs model, OI.Int model)
 
- /-- The observation readout factors through the intervention readout. -/
+-- The observation readout factors through the intervention readout.
 theorem obsU_factorization : ObsU = obsFromInt ∘ IntU := by
   funext model
   cases model <;> rfl
 
- /-- The intervention readout factors through the counterfactual readout. -/
+-- The intervention readout factors through the counterfactual readout.
 theorem intU_factorization : IntU = intFromCf ∘ CfU := by
   funext model
   cases model with
@@ -202,13 +202,13 @@ theorem intU_factorization : IntU = intFromCf ∘ CfU := by
         intervention_eq_collapse_counterfactual source]
   | inr source => rfl
 
- /-- A concrete OI model whose observation differs from the named strictness witness. -/
+-- A concrete OI model whose observation differs from the named strictness witness.
 def observationDistinctModel : OI.Model where
   direction := .xCausesY
   root := fun _ => false
   child := fun _ => false
 
- /-- Observation already captures one explicit ordered off-diagonal pair. -/
+-- Observation already captures one explicit ordered off-diagonal pair.
 theorem unified_observation_positive_witness :
     (Sum.inr OI.xCausesYModel : UnifiedBoolSCM) ≠
         .inr observationDistinctModel ∧
@@ -220,7 +220,7 @@ theorem unified_observation_positive_witness :
     exact Bool.false_ne_true (congrArg Prod.fst equalAtTrue).symm
   exact ⟨fun equalModel => readoutDifferent (congrArg ObsU equalModel), readoutDifferent⟩
 
- /-- CAUSAL-IE-001. -/
+-- CAUSAL-IE-001.
 theorem unified_observation_intervention_strict_refinement :
     (∀ M N : UnifiedBoolSCM, IntU M = IntU N → ObsU M = ObsU N) ∧
     (ObsU (.inr OI.xCausesYModel) = ObsU (.inr OI.yCausesXModel) ∧
@@ -236,7 +236,7 @@ theorem unified_observation_intervention_strict_refinement :
         (congrArg Prod.snd (Sum.inr.inj equalIntervention)) false) true
       exact Bool.false_ne_true (congrArg Prod.snd equalAtWitness)
 
- /-- CAUSAL-IE-002. -/
+-- CAUSAL-IE-002.
 theorem unified_intervention_counterfactual_strict_refinement :
     (∀ M N : UnifiedBoolSCM, CfU M = CfU N → IntU M = IntU N) ∧
     (IntU (.inl IC.noEffectModel) = IntU (.inl IC.flipEffectModel) ∧
@@ -255,7 +255,7 @@ theorem unified_intervention_counterfactual_strict_refinement :
       change false = true at falseEqualsTrue
       exact Bool.false_ne_true falseEqualsTrue
 
- /-- The branch-local OI law lives on the common unified arena. -/
+-- The branch-local OI law lives on the common unified arena.
 def observationInterventionLawArena : PrimitiveLawArena where
   toArena := unifiedArena
   signature := unifiedObservationInterventionSignature
@@ -265,7 +265,7 @@ def observationInterventionLawArena : PrimitiveLawArena where
       realization.readout .intervention (.inr M) ≠
         realization.readout .intervention (.inr N)
 
- /-- The branch-local IC law lives on the common unified arena. -/
+-- The branch-local IC law lives on the common unified arena.
 def interventionCounterfactualLawArena : PrimitiveLawArena where
   toArena := unifiedArena
   signature := unifiedInterventionCounterfactualSignature
@@ -275,7 +275,7 @@ def interventionCounterfactualLawArena : PrimitiveLawArena where
       realization.readout .counterfactual (.inl M) ≠
         realization.readout .counterfactual (.inl N)
 
- /-- The frozen OI theorem is faithfully transported by injection and restriction. -/
+-- The frozen OI theorem is faithfully transported by injection and restriction.
 theorem observation_intervention_unified_realization :
     LegacyPrimitiveRealization observationInterventionLawArena
       (∃ M N : OI.Model, OI.Obs M = OI.Obs N ∧ OI.Int M ≠ OI.Int N)
@@ -292,7 +292,7 @@ theorem observation_intervention_unified_realization :
     apply unequalIntervention
     exact congrArg some equalInt
 
- /-- The frozen IC theorem is faithfully transported by injection and restriction. -/
+-- The frozen IC theorem is faithfully transported by injection and restriction.
 theorem intervention_counterfactual_unified_realization :
     LegacyPrimitiveRealization interventionCounterfactualLawArena
       (∃ M N : IC.Model, IC.Int M = IC.Int N ∧ IC.CF M ≠ IC.CF N)
