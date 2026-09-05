@@ -125,6 +125,7 @@ internal sealed class MaximalSpectralSharpnessDocument : IScribeDocumentDefiniti
             Apply(question, i), Eq, D(1), Sp, Lor, Sp,
             Apply(question, i), Eq, Minus, D(1), Close,
             Sp, Land, Sp, Antitone(question), Sp, Land, Sp,
+            Distance(question), Eq, D(1), Sp, Land, Sp,
             Frac, Grp(Capacity(question, r)), Grp(Distance(question)),
             Eq, Sharp(r), Close, Sp, Land, RowBreak,
             Open,

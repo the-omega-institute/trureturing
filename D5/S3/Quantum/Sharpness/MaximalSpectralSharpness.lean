@@ -235,6 +235,7 @@ theorem maximal_spectral_sharpness {n : ℕ} (r : Fin (n + 2) → ℝ)
       (spectralSharpness r) ∧
     ((∀ i, medianCutQuestion (n := n) i = 1 ∨ medianCutQuestion (n := n) i = -1) ∧
       Antitone (medianCutQuestion (n := n)) ∧
+      spectralCenterDistance (medianCutQuestion (n := n)) = 1 ∧
       spectralPairingCapacity r medianCutQuestion /
           spectralCenterDistance (medianCutQuestion (n := n)) = spectralSharpness r) ∧
     (∀ q : Fin 2 → ℝ, (∑ i, q i = 1) →
@@ -248,7 +249,7 @@ theorem maximal_spectral_sharpness {n : ℕ} (r : Fin (n + 2) → ℝ)
   refine ⟨fun a ha => spectralCenterDistance_isLeast a ha,
     normalized_capacity_isGreatest r hmono, ?_,
     qubit_sharpness_eq_purity_radius, ?_, ?_, ?_⟩
-  · refine ⟨?_, medianCutQuestion_antitone, ?_⟩
+  · refine ⟨?_, medianCutQuestion_antitone, medianCutQuestion_distance, ?_⟩
     · intro i
       by_cases hi : i.val < (n + 2) / 2
       · left
