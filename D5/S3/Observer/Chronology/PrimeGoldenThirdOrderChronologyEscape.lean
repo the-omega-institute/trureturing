@@ -3,7 +3,7 @@
    mirror-B: none(waiver:new-cross-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Two prime-golden words can share bidegree, complete scalar trajectory, and the full step-two signature while a cubic ordered moment still separates their chronology. -/
+   digest: A cubic ordered moment separates words sharing count, scalar, and step-two data. -/
 
 import D5.S3.Observer.Chronology.PrimeGoldenChronologyFiberSeparation
 import Mathlib.Tactic
@@ -21,6 +21,10 @@ finite, explicit certificate that bidegree data, scalar Fourier trajectories,
 and degree-two Magnus data do not exhaust chronology. A step-three signature
 or another third-order ordered observer is required whenever the displayed
 cubic difference is nonzero.
+
+The witness ranges over arbitrary event lists. It does not assert that both
+words occur as consecutive factors of the deterministic golden word. Language
+restrictions can make a lower-order observer faithful on a smaller domain.
 
 This file defines only the finite ordered moments needed for the witness. It
 does not construct a complete step-three Hopf algebra, prove a PBW theorem, or
@@ -90,9 +94,11 @@ theorem step_two_signature_abba_eq_baab
     {A : Type u} [Ring A] (a b : A) :
     chronologicalSignature (fun value : A => value) [a, b, b, a] =
       chronologicalSignature (fun value : A => value) [b, a, a, b] := by
-  ext <;>
-    simp [chronologicalSignature, eventSignature,
-      StepTwoSignature.compose] <;>
+  apply StepTwoSignature.ext
+  · simp only [chronologicalSignature, eventSignature,
+      StepTwoSignature.degreeOne_mul, StepTwoSignature.degreeOne_one]
+    abel
+  · simp [chronologicalSignature, eventSignature, StepTwoSignature.compose]
     noncomm_ring
 
 /-- The corresponding prime-golden event words have equal bidegree. -/
