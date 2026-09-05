@@ -13,6 +13,7 @@ run_cmd do
   modifyEnv (·.setMainModule designatedInformationRootId)
   try
     elabCommand (← `(command| #seal_information_theory))
+    if (← get).messages.hasErrors then return
     let env ← getEnv
     let actual := SealRecords.occurrencesForRoot env designatedInformationRootId
     let expected := expectedOccurrencesForRoot env designatedInformationRootId

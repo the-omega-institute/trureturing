@@ -21,11 +21,14 @@ private def rejectsCausalMutation (second extra : Bool) (label : String)
         expected.filter (fun key => !actual.contains key) == missing &&
         actual.filter (fun key => !expected.contains key) == unexpected do
       throwError "{label}: wrong mutation input"
-    let message ← try
-      elabCommand (← `(command| #seal_information_theory))
-      pure "accepted"
-    catch error =>
-      error.toMessageData.toString
+    let savedMessages := (← get).messages
+    modify fun state => { state with messages := {} }
+    elabCommand (← `(command| #seal_information_theory))
+    let errors := (← get).messages.toArray.filter (·.severity == .error)
+    modify fun state => { state with messages := savedMessages }
+    unless errors.size == 1 do
+      throwError "{label}: expected exactly one seal error, got {errors.size}"
+    let message ← errors[0]!.data.toString
     let wanted := s!"IE-C028 AnalysisCertificateMismatch root={designatedInformationRootId} " ++
       "catalog=registry-snapshot component=member-set " ++
       s!"expected={(toJson expected).compress} actual={(toJson actual).compress}"
@@ -37,13 +40,15 @@ private def rejectsCausalMutation (second extra : Bool) (label : String)
   finally
     setEnv original
 
-run_cmd rejectsCausalMutation false false "ROOT-B-causal-missing"
-  #["D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena/" ++
-    "D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation." ++
-    "intervention_strictly_weaker_than_counterfactual"] #[]
+run_cmd do
+  rejectsCausalMutation false false "ROOT-B-causal-missing"
+    #["D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena/" ++
+      "D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation." ++
+      "intervention_strictly_weaker_than_counterfactual"] #[]
 
-run_cmd rejectsCausalMutation true true "ROOT-B-causal-unexpected" #[]
-  #["D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena/" ++
-    "LeanInformationAudit.Tests.RootCausalFixture.extraCausalTheorem"]
+run_cmd do
+  rejectsCausalMutation true true "ROOT-B-causal-unexpected" #[]
+    #["D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena/" ++
+      "LeanInformationAudit.Tests.RootCausalFixture.extraCausalTheorem"]
 
 end LeanInformationAudit.Tests.RootCausalMutations

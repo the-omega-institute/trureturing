@@ -9,7 +9,7 @@ open D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment
 
 namespace LeanInformationAudit.Tests.RootCausalFixture
 
-local instance : DecidableEq IC.Model :=
+instance : DecidableEq IC.Model :=
   D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.modelDecidableEq
 
 theorem extraCausalTheorem :
