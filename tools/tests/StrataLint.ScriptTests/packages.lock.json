@@ -137,6 +137,7 @@
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.Scribe": "[1.0.0, )",
+          "StrataLint.Scribe.Documents": "[1.0.0, )",
           "Tomlyn": "[2.10.1, )",
           "YamlDotNet": "[16.3.0, )"
         }
@@ -166,6 +167,12 @@
           "StrataLint.Engine": "[1.0.0, )",
           "Tomlyn": "[2.10.1, )",
           "Trureturing.Truth": "[0.1.0, )"
+        }
+      },
+      "stratalint.scribe.documents": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Scribe": "[1.0.0, )"
         }
       },
       "stratalint.tests": {
