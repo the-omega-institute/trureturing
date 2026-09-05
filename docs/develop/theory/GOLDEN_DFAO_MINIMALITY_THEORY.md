@@ -469,3 +469,99 @@ The first-return factorization follows directly from the two-state binary Zecken
 A targeted literature search found standard work on automaton minimization, congruence-based learning, typed automata, and proof-carrying SAT, but did not locate this exact weighted first-return formulation for sparse typed DFAO identification. This is evidence for pursuing the construction, not a definitive novelty claim. A publication-level novelty statement requires a broader bibliographic review and comparison with minimization of partial Moore machines, transducers, induced automata, and return-word automata.
 
 The present section records a research target. No new numerical lower bound is claimed until a concrete finite instance and its proof certificate are replayed in Lean.
+
+## 14. M19.2: cost-preserving totalization requires a used signature
+
+Added 2026-09-05. Formal owner:
+
+```text
+D5/S0/Automata/FiniteSampleSkeletonTotalization.lean
+```
+
+The unrestricted statement that every partial skeleton can be made total without increasing signature cost is false. A one-state skeleton with an undefined one-channel has no used signature. Every fully total skeleton on that same nonempty carrier has at least one used signature. This supplies an explicit zero-cost obstruction.
+
+The corrected premise is
+
+\[
+\Sigma(\mathcal K)\ne\varnothing.
+\]
+
+Choose a used signature `seed` and retain the recurrent carrier, start state, and recurrent output map. Define a uniform signature completion
+
+\[
+T(o,t)=\bigl(o,\operatorname{some}(t.\operatorname{getD}(q_0))\bigr).
+\]
+
+Set
+
+\[
+\begin{aligned}
+\widehat A(q)&=\operatorname{some}(A(q).\operatorname{getD}(q_0)),\\
+\widehat S(q)&=\operatorname{some}\bigl(T(S(q).\operatorname{getD}(\mathrm{seed}))\bigr).
+\end{aligned}
+\]
+
+Every original successful evaluation remains successful with the same output:
+
+\[
+\mathcal K(c)=\operatorname{some}(o)
+\Longrightarrow
+\widehat{\mathcal K}(c)=\operatorname{some}(o).
+\]
+
+No equality is claimed for previously undefined evaluations. This is sufficient for positive labeled-sample fitting, including the published power samples. It would be insufficient for a specification that requires particular inputs to remain undefined.
+
+The signature map
+
+\[
+T:\Sigma(\mathcal K)\longrightarrow\Sigma(\widehat{\mathcal K})
+\]
+
+is surjective. For a newly defined one-channel, `seed` supplies the preimage. For an originally defined channel, its old signature supplies the preimage. Consequently
+
+\[
+|\Sigma(\widehat{\mathcal K})|\le|\Sigma(\mathcal K)|,
+\qquad
+\operatorname{cost}(\widehat{\mathcal K})\le\operatorname{cost}(\mathcal K).
+\]
+
+The construction preserves an existing start-zero-loop and preserves the start output. A successful transient-channel observation supplies the nonempty-signature premise: trace that successful run to a defined one-channel. Thus the premise is derivable from any fitted sample family with such an observation, rather than an additional restriction on the intended published instance.
+
+The construction works for all successful evaluations, even for an infinite observation family. Finiteness is needed only for the natural-number cardinality statements.
+
+For a total skeleton, its used signatures in `Output × Option State` are equivalent to the used pairs in `Output × State`. The map removes `some` from the return coordinate; the inverse restores it. This gives the precise carrier bridge to the M18 completion problem and the exact cost identity
+
+\[
+\operatorname{cost}(\widehat{\mathcal K})
+=|C|+|\operatorname{UsedReturnPairs}(\widehat{\mathcal K})|.
+\]
+
+Before invoking the M18 formula for a fixed quotient, requirements belonging to the same recurrent class must be combined and checked for consistency. Conflicting outputs or return classes make that quotient infeasible. The M18 formula applies to the resulting normalized compatible requirements; it does not discharge this consistency obligation.
+
+## 15. A source-count bound removes redundant signature budgets
+
+Every recurrent state requests at most one transient signature. Choose one recurrent source for each used signature. Determinism makes this source map injective, since a common source cannot request two different signatures. Hence, for every finite skeleton,
+
+\[
+\boxed{|\Sigma(\mathcal K)|\le|C|.}
+\]
+
+It follows that its canonical typed machine has
+
+\[
+\boxed{\operatorname{cost}(\mathcal K)\le2|C|.}
+\]
+
+This is a general counting consequence, not a numerical lower-bound certificate for the golden-ratio problem.
+
+In a budget branch `r ≤ R, s ≤ S`, an additional signature bound with `S ≥ R` is redundant. In particular, `(6,8)` has no stricter signature constraint than `(6,6)`. If a concrete sound encoding were to certify that no six-recurrent-state model fits the chosen sample, it would establish `r ≥ 7`, rather than merely exclude one independent eight-signature allocation. The previously reported exploratory UNSAT must still be checked against this implication and replayed with a verified certificate. This section does not upgrade it to a theorem.
+
+For capacity encodings that permit unused states, `s` must count signatures actually requested by represented recurrent states, not arbitrary Boolean indicators allowed to be true. An upper bound on indicators is a safe over-approximation only when every used signature implies its indicator. SAT-to-model reconstruction and any claim of exact cost require the reverse connection or explicit minimization of the unused indicators.
+
+## 16. Verification provenance for the totalization sprint
+
+A local exhaustive implementation check considered 3,548 skeletons with one or two recurrent states, two output symbols, all partial tables, all start states, and every used-signature seed. It checked 5,632 seeded completions and 697,376 evaluations up to block length four. All 274,928 successful original evaluations were preserved, and no completion increased the used-signature count. Strict reductions occurred in 576 seeded completions. These are bounded regression tests, not the universal proof.
+
+The M19.2 Lean source and source-bound Scribe projection are submitted in PR #5405. The M17 dependency is being repaired in PR #5225 after actual canonical logs exposed Lean errors. Earlier reports that inferred Lean success from `Build candidate with warnings as errors` were incorrect: that engineering step builds the .NET tooling. Lean acceptance must be established from the canonical Lean producer or a direct pinned Lean invocation, together with the axiom report.
+
+No concrete at-most-14 CNF/LRAT certificate is supplied by this sprint. The wording `currently reproduced public lower bound` in the earlier roadmap must therefore be read as a planned replay target, not an already completed repository result. No new numerical minimum or solved open problem is asserted here.
