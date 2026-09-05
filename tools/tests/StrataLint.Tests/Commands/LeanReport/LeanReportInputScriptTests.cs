@@ -332,29 +332,58 @@ public sealed class LeanReportInputScriptTests
             Write(TestSourcePath, "// fixture\n");
             Write(BlueprintSourcePath, "// fixture\n");
             Write(ScribeSourcePath, "// fixture\n");
-            var root = TestRepositoryLayout.FindRoot();
-            Write(PairScriptPath, File.ReadAllText(Path.Combine(root, PairScriptPath), Encoding.UTF8));
+            Write(
+                PairScriptPath,
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "lean-report-pair.sh"),
+                    Encoding.UTF8));
             Write(
                 SupervisorScriptPath,
-                File.ReadAllText(Path.Combine(root, SupervisorScriptPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "report", "report-supervisor.sh"),
+                    Encoding.UTF8));
             Write(
                 CiBaselineScriptPath,
-                File.ReadAllText(Path.Combine(root, CiBaselineScriptPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "report", "lean-report-ci-baseline.sh"),
+                    Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
             Write(
                 CachePublishScriptPath,
-                File.ReadAllText(Path.Combine(root, CachePublishScriptPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "worktree", "lean-cache-publish.sh"),
+                    Encoding.UTF8));
             Write(
                 ResourceObservationLibraryPath,
-                File.ReadAllText(Path.Combine(root, ResourceObservationLibraryPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "lib", "resource-observation-lib.sh"),
+                    Encoding.UTF8));
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
             Write(
                 JudgeContentAddressPath,
-                File.ReadAllText(Path.Combine(root, JudgeContentAddressPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "workflow", "judge-content-address.sh"),
+                    Encoding.UTF8));
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
             Write(
                 WorkflowPath,
-                File.ReadAllText(Path.Combine(root, WorkflowPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        ".github", "workflows", "ci.yml"),
+                    Encoding.UTF8));
             Write("Directory.Build.props", "<Project />\n");
             Write("Directory.Packages.props", "<Project />\n");
             Write(CliProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
