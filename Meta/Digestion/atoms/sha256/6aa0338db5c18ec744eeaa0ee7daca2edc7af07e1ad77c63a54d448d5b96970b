@@ -1,0 +1,42 @@
+## 定义 2：窗口重叠权重
+
+对正整数 \(n,m\)，令
+
+$$
+\boxed{
+W_X(n,m)
+=
+\int_X^{2X}
+\frac{
+\mathbf1_{\{x<n\le2x\}}
+\mathbf1_{\{x<m\le2x\}}
+}{x^2}\,dx.
+}
+\tag{6}
+$$
+
+它有显式表达。
+
+设
+
+$$
+A=\max\{X,n/2,m/2\},
+\qquad
+B=\min\{2X,n,m\}.
+$$
+
+那么
+
+$$
+\boxed{
+W_X(n,m)=
+\begin{cases}
+\dfrac1A-\dfrac1B,&A<B,\\[2mm]
+0,&A\ge B.
+\end{cases}
+}
+\tag{7}
+$$
+
+因此所有相关求和都是有限的。
+

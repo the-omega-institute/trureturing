@@ -1,0 +1,50 @@
+# 收束
+
+这次真正向前推进的，不是再增加一种量子空间，而是改变了**算术约束的表达层次**。
+
+原来是：
+
+$$
+\boxed{
+\text{高阶累积量}
+\longrightarrow
+\text{可能不定的 Hankel 算子}.
+}
+$$
+
+现在可以精确改写为：
+
+$$
+\boxed{
+\text{原始 theta 矩的二次组合}
+\longrightarrow
+\text{二变量整核}
+\longrightarrow
+\text{同一个负证据}.
+}
+$$
+
+核心恒等式是：
+
+$$
+\boxed{
+\mathcal B_F(z,w)
+=
+\frac{F(z)F'(w)-F'(z)F(w)}{z-w}.
+}
+$$
+
+它去掉了对数导数的极点，却没有删除离线信息。非实零点仍然留下：
+
+$$
+\boxed{
+\text{零自配对}
+\quad+\quad
+\text{非零交叉配对}
+\quad\Longrightarrow\quad
+\text{严格负方向}.
+}
+$$
+
+与此同时，整核结构给出了更快的有限截断界，并把全阶正性写成同一实际 theta 态两个副本上的期望不等式。
+
