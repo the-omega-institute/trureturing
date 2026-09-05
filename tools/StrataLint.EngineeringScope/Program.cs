@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -65,19 +64,11 @@ internal static class Program
 
     private static int Execute(Options options, string head, string @base)
     {
-        var full = Environment.GetEnvironmentVariable("FULL");
-        if (full is { Length: > 0 } && full != "1")
-        {
-            throw new InvalidOperationException("FULL must be unset or exactly 1");
-        }
-
         var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
         var protectedBaseRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, @base);
         var candidateRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, head);
-        var admissionPlane = full == "1"
-            ? null
-            : AdmissionPlanePolicy.Evaluate(candidateRaw, changedPaths);
-        if (admissionPlane is { IsAdmissible: false })
+        var admissionPlane = AdmissionPlanePolicy.Evaluate(candidateRaw, changedPaths);
+        if (!admissionPlane.IsAdmissible)
         {
             throw new InvalidDataException(
                 $"{admissionPlane.Code} {admissionPlane.Path}: {admissionPlane.Message}");
@@ -85,25 +76,19 @@ internal static class Program
 
         var protectedBase = DecodeSnapshot(protectedBaseRaw, "protected base");
         var candidate = DecodeSnapshot(candidateRaw, "candidate");
-        if (full == "1" || admissionPlane!.RequiresFullEngineering())
+        if (admissionPlane.RequiresFullEngineering())
         {
             var fullPlan = EngineeringTestPlanPolicy.EvaluateOrdinary(
                 changedPaths,
                 RepositoryRules.ReadSnapshotProjects(protectedBase),
                 RepositoryRules.ReadSnapshotProjects(candidate),
-                full: true);
-            if (full != "1")
+                full: true) with
             {
-                fullPlan = fullPlan with
-                {
-                    Reason = $"candidate admission plane "
-                        + $"{admissionPlane!.Classification!.Value.ToString().ToLowerInvariant()} "
-                        + "requires full engineering",
-                };
-            }
-            return ExecutePlan(
-                options.RepositoryRoot,
-                fullPlan);
+                Reason = $"candidate admission plane "
+                    + $"{admissionPlane.Classification!.Value.ToString().ToLowerInvariant()} "
+                    + "requires full engineering",
+            };
+            return ExecutePlan(options.RepositoryRoot, fullPlan);
         }
 
         var protectedBaseController = ControllerClosure.Derive(protectedBase);
@@ -129,19 +114,8 @@ internal static class Program
         string repositoryRoot,
         EngineeringTestInvocation invocation)
     {
-        var evidenceRoot = Environment.GetEnvironmentVariable("ENGINEERING_TRX_DIRECTORY");
-        var preserveEvidence = !string.IsNullOrWhiteSpace(evidenceRoot);
-        var resultsDirectory = preserveEvidence
-            ? Path.Combine(
-                Path.GetFullPath(evidenceRoot!),
-                Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(invocation.ProjectPath)))
-                    .ToLowerInvariant())
-            : Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
-        if (preserveEvidence)
-        {
-            if (Directory.Exists(resultsDirectory)) Directory.Delete(resultsDirectory, recursive: true);
-            Directory.CreateDirectory(resultsDirectory);
-        }
+        var resultsDirectory =
+            Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
         (int ExitCode, string StandardError) Run(bool noBuild)
         {
             var startInfo = new ProcessStartInfo
@@ -199,7 +173,7 @@ internal static class Program
         }
         finally
         {
-            if (!preserveEvidence) Directory.Delete(resultsDirectory, recursive: true);
+            Directory.Delete(resultsDirectory, recursive: true);
         }
     }
 
