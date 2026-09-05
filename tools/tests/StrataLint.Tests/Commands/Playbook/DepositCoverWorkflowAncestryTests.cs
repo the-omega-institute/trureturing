@@ -42,48 +42,4 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Contains("make:preflight BASE=" + deliveryBase, fixture.Calls());
     }
 
-    internal sealed partial class TransactionFixture
-    {
-        internal string HeadRevision() => Git("rev-parse", "HEAD").Trim();
-
-        internal string CommitAll(string message)
-        {
-            Git("add", "-A");
-            Git("commit", "-qm", message);
-            return HeadRevision();
-        }
-
-        internal string WriteAcceptedFreezeV5()
-        {
-            var identity = new string('4', 64);
-            var relativePath = $"{LedgerPath}/{identity}.json";
-            WriteFile(relativePath, JsonSerializer.Serialize(new
-            {
-                event_hash = "sha256:" + identity,
-                event_type = "Freeze",
-                payload = new
-                {
-                    declaration_statement_ids = Array.Empty<object>(),
-                    descriptor_selector = LeanPath,
-                    prerequisite_frozen_node_ids = Array.Empty<string>(),
-                    statement_id = "sha256:" + identity,
-                },
-                schema_version = 5,
-            }) + "\n");
-            return relativePath;
-        }
-
-        internal string WriteLegacyFreeze()
-        {
-            var identity = new string('5', 64);
-            var relativePath = $"{LedgerPath}/{identity}.json";
-            WriteFile(relativePath, JsonSerializer.Serialize(new
-            {
-                event_type = "Freeze",
-                payload = new { descriptor_selector = LeanPath },
-                schema_version = 4,
-            }) + "\n");
-            return relativePath;
-        }
-    }
 }

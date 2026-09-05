@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `或真正有效的否决结构` is a bare doctrine label and states no veto carrier, proposal relation, effectiveness predicate, or conclusion. Retrieval receipts: D5/Blueprint search for `effective veto|veto|blocking right|blocking power|accepted challenge|contestability` exited 0; nearest owner `FullContestability.full_contestability_yields_correct_review` concerns accepted challenges and review correctness, not a veto over fine-readout policy proposals. Pinned Mathlib search for the exact veto and blocking-right terms exited 1. GitHub Lean-code search `effective veto` exited 0 with no hits. Local construction probe `/private/tmp/w73a38-effective-veto-probe.lean` exited 1 after applying frozen `strict_policy_power_growth`, at exact unsolved goal `⊢ effectiveVetoStructure`; assuming that proposition would be hollow."
+    reentry_condition: "Add a canonical veto relation on policy proposals and a frozen theorem that vetoes every policy outside the permitted coarse capability while retaining every implementable permitted policy."
+    blocker_class: multi-clause-guard
