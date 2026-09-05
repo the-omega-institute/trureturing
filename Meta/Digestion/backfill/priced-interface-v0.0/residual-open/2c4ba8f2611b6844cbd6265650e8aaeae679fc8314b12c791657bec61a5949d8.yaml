@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-clause interpretive-child guard. Retrieval receipts name three near-miss public carriers: frozen GID `D5/S3/Estimation/DecisionRisk/FixedSuiteBayesRiskFloor.fixed_suite_bayes_risk_floor` states only the fixed-suite Bayes-risk floor; `D5/S3/Estimation/DecisionRisk/PosteriorStoppingMapErrorBound.posterior_stopping_map_error_bound` bounds posterior reporting error under an explicit modal-mass premise; and `D5/S3/Estimation/DecisionRisk/PosteriorUniversalSufficiency.posterior_universal_sufficiency` preserves conditional Bayes value under equal posteriors. None of those public statements identifies unmeasured deployment mass as both a certification upper-bound carrier and a learning-floor coefficient, assigns the source's institutional roles to fixed and external judges, or states the empirical `v1.4` values `L_A = 0.59` and `L_B = 0.26`. The source marks those values `[机验·示性]` and says the organizational `p_max < 1` premise has not been formally checked, so binding this reading to a nearby mathematical theorem would be hollow."
+    reentry_condition: "Reenter after source errata moves the dual-role and institutional-role reading outside the claim, or after frozen typed statements carry those propositions and a canonical empirical artifact attests the `v1.4` values and organizational prior premise. Then close this child before its parent."
+    blocker_class: multi-clause-guard

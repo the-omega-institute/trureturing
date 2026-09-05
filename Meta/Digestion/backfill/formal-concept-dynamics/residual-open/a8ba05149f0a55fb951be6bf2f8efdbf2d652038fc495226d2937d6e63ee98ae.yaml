@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `独立授权` is a bare doctrine label and states no authorization carrier, joint independence law, policy-selection relation, or conclusion. Retrieval receipts: D5/Blueprint search for `independent authorization|independent approval|authorization.*independent|approval.*independent` exited 0; nearest owners `CommonControlApprovalCollapse.common_control_source_approval_collapse` and `PosteriorApprovalAuthorizationGap.posterior_approval_does_not_imply_prior_authorization` concern common-source factorization and prior-versus-posterior timing, not an independent authorization constraint on fine-readout policies. Pinned Mathlib search for authorization and approval terms exited 1. GitHub Lean-code search `independent authorization` exited 0 with no hits. Local construction probe `/private/tmp/w73a38-independent-authorization-probe.lean` exited 1 after applying frozen `strict_policy_power_growth`, at exact unsolved goal `⊢ independentAuthorization`; assuming that proposition would be hollow."
+    reentry_condition: "Add a canonical joint authorization-control carrier on policy proposals and a frozen bridge theorem proving that independently authorized implementable policies factor through the permitted coarse readout."
+    blocker_class: multi-clause-guard
