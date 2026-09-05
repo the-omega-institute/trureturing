@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:bd1a7872105af042935ae9df198d6fce7075f9d2043331badfeb7a009ad1fc30
+  normalized_sha256: sha256:bd1a7872105af042935ae9df198d6fce7075f9d2043331badfeb7a009ad1fc30
+cas_ref: sha256:bd1a7872105af042935ae9df198d6fce7075f9d2043331badfeb7a009ad1fc30
+coverage_gids:
+  - gid: D5/S1/Phase/CoordinateDeletionFrequencyTransport.quantitative_and_half_frequency_transport
+    target_statement_id: sha256:283b2fd38ee99eb6b799e63de1b97efa291ccfa294c7001fe29ddc75fde799c2
+receipts:
+  scribe:
+    - gid: D5/S1/Phase/CoordinateDeletionFrequencyTransport.quantitative_and_half_frequency_transport
+      definition_sha256: sha256:1ba12b539cacb7999163b70ac1a20060fd2b8df9a0f82b827388e8f1f0caa3f4
+      emission_sha256: sha256:3eda095d48906f3e71f90aad888e6ff7d31d891371f5104abe1f411c6d248229
+  unresolved_subitems: []
