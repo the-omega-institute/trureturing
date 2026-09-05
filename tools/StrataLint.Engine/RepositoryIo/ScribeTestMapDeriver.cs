@@ -58,9 +58,10 @@ internal static class ScribeTestMapDeriver
 
     internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot)
     {
-        var key = SnapshotDerivationKey(snapshot);
+        var projection = CreateEffectiveDerivationInputProjection(snapshot);
+        var key = SnapshotDerivationKey(projection);
         var candidate = new Lazy<ScribeTestMap>(
-            () => DeriveSnapshotUncached(snapshot),
+            () => DeriveSnapshotUncached(snapshot, projection),
             LazyThreadSafetyMode.ExecutionAndPublication);
         var derivation = SnapshotDerivations.GetOrAdd(key, candidate);
         try
@@ -79,7 +80,40 @@ internal static class ScribeTestMapDeriver
         }
     }
 
-    private static ScribeTestMap DeriveSnapshotUncached(RepositorySnapshot snapshot)
+    internal static EffectiveDerivationInputProjection CreateEffectiveDerivationInputProjection(
+        RepositorySnapshot snapshot)
+    {
+        var projectPaths = snapshot.Files.Values
+            .Where(static file => IsTrackedInput(file.Path.Value)
+                && file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(static file => file.Path.Value)
+            .ToArray();
+        return MsBuildCompileOracle.CreateEffectiveDerivationInputProjection(
+            snapshot,
+            IsDerivationInput,
+            projectPaths);
+    }
+
+    internal static bool HasEffectiveDerivationInputChange(
+        RepositorySnapshot current,
+        RepositorySnapshot forkPoint,
+        IEnumerable<string> changedPaths)
+    {
+        var paths = changedPaths.ToArray();
+        if (paths.Any(IsDerivationInput))
+        {
+            return true;
+        }
+
+        var currentProjection = CreateEffectiveDerivationInputProjection(current);
+        var forkPointProjection = CreateEffectiveDerivationInputProjection(forkPoint);
+        return paths.Any(path =>
+            currentProjection.Contains(path) || forkPointProjection.Contains(path));
+    }
+
+    private static ScribeTestMap DeriveSnapshotUncached(
+        RepositorySnapshot snapshot,
+        EffectiveDerivationInputProjection projection)
     {
         var tracked = snapshot.Files.Values
             .Where(static file => IsTrackedInput(file.Path.Value))
@@ -98,7 +132,7 @@ internal static class ScribeTestMapDeriver
 
         try
         {
-            using var checkout = MsBuildCompileOracle.Materialize(snapshot);
+            using var checkout = MsBuildCompileOracle.Materialize(projection);
             return DeriveTracked(tracked, MsBuildCompileOracle.Query(checkout.Root, projects));
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
@@ -112,14 +146,16 @@ internal static class ScribeTestMapDeriver
         }
     }
 
-    private static string SnapshotDerivationKey(RepositorySnapshot snapshot)
+    internal static string SnapshotDerivationKey(EffectiveDerivationInputProjection projection)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
-        AppendHashString(hash, "snapshot-files");
-        AppendHashInt32(hash, snapshot.Files.Count);
-        foreach (var file in snapshot.Files.Values.OrderBy(
-                     static file => file.Path.Value,
-                     StringComparer.Ordinal))
+        AppendHashString(hash, "scribe-test-map-derivation-key");
+        AppendHashString(hash, "schema-v2");
+        AppendHashString(hash, "projection-mode");
+        AppendHashString(hash, projection.RequiresFullSnapshot ? "full" : "sparse");
+        AppendHashString(hash, "projection-files");
+        AppendHashInt32(hash, projection.Files.Count);
+        foreach (var file in projection.Files)
         {
             AppendHashString(hash, file.Path.Value);
             AppendHashBytes(hash, file.RawBytes.AsSpan());

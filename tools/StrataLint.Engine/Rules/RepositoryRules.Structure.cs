@@ -142,8 +142,7 @@ internal static partial class RepositoryRules
         Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        if (context.Changes.Paths.Any(static path =>
-                ScribeTestMapDeriver.IsDerivationInput(path.Value)))
+        if (ScribeDerivationAffected(context))
         {
             findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(
                     deriveSnapshot(context.Current),

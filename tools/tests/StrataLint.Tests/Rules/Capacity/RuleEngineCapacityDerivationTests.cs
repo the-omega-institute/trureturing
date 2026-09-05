@@ -60,6 +60,33 @@ public sealed class RuleEngineCapacityDerivationTests
         Assert.Equal(2, calls);
     }
 
+    [Fact]
+    public void Sl003LiteralImportOutsideSeedWakesOuterAndInnerDerivationGuards()
+    {
+        const string projectPath = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
+        const string importPath = "tools/tests/Synthetic.Tests/build.inputs";
+        var fixture = new RuleFixture();
+        fixture.Files[projectPath] =
+            "<Project><Import Project=\"build.inputs\" /></Project>\n";
+        fixture.Files[importPath] = "<Project />\n";
+        var context = fixture.Build(RawChangeSet.Create([importPath]));
+        var registration = Assert.Single(
+            RepositoryRules.CreateRegistrations(),
+            item => item.Descriptor.Id == RuleId.CreateKnown(3));
+        var calls = 0;
+
+        if (registration.Rule.IsAffectedBy(context))
+        {
+            RepositoryRules.EvaluateCapacity(context, _ =>
+            {
+                calls++;
+                return EmptyTestMap();
+            });
+        }
+
+        Assert.Equal(2, calls);
+    }
+
     [Theory]
     [InlineData("D5/S0/Carrier/Generated.cs")]
     [InlineData("tools/Synthetic/Synthetic.csproj")]

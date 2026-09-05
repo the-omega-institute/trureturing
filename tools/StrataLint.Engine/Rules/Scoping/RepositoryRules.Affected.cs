@@ -18,7 +18,13 @@ internal static partial class RepositoryRules
             !IsCapacityExcluded(path)
             || path.EndsWith(".cs", StringComparison.Ordinal)
             || path.EndsWith(".csproj", StringComparison.Ordinal))
-        || Changed(context, ScribeTestMapDeriver.IsDerivationInput);
+        || ScribeDerivationAffected(context);
+
+    private static bool ScribeDerivationAffected(RuleEvaluationContext context) =>
+        ScribeTestMapDeriver.HasEffectiveDerivationInputChange(
+            context.Current,
+            context.ForkPoint,
+            context.Changes.Paths.Select(static path => path.Value));
 
     private static bool MirrorsAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
