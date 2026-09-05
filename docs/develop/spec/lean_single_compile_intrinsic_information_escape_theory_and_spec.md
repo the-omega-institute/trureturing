@@ -1249,19 +1249,16 @@ inductive UnreachableReason
   | noCanonicalObjectCarrier
   | noFinitePrimitiveBundle
   | noFaithfulPrimitiveRealization
-  | unsupportedDeclarationKind
 ```
 
 - `noCanonicalObjectCarrier`：例如 closed numerical proposition 没有显式 object carrier；其
   proof truth 不得作常值 readout；
 - `noFinitePrimitiveBundle`：语义本质上需要无限 index family，未给出等价 finite bundle；
 - `noFaithfulPrimitiveRealization`：候选 carrier 已知，但尚无 statement 与 primitive law 的
-  kernel-checked faithful bridge；
-- `unsupportedDeclarationKind`：elaborated report 项不是可登记 theorem constant；payload 必须
-  写实际 declaration kind，不能作为普通 theorem 的兜底。
+  kernel-checked faithful bridge。
 
-前两类是 counted／structural engine 的数学边界；后两类是精确入账的未完成工作，不得写成
-“不适用”。census Meta tool 必须遍历完整 frozen report，以 `statement_id` 为 key，输出四类
+`bounded_finite_truncation` 与 `unreachable` 把 counted／structural engine 的边界精确入账；
+前者不冒充全对象结论，后者不以“不适用”隐藏缺失工作。census Meta tool 必须遍历完整 frozen report，以 `statement_id` 为 key，输出四类
 counts 与每个 unreachable reason 的 counts，并证明 inventory keys 与 frozen theorem keys
 相等且无重复。
 
@@ -4760,7 +4757,6 @@ inductive UnreachableReason
   | noCanonicalObjectCarrier
   | noFinitePrimitiveBundle
   | noFaithfulPrimitiveRealization
-  | unsupportedDeclarationKind
 
 inductive AnalysisDisposition (statementId : String) where
   | finiteOccurrence (registration : FiniteOccurrenceRegistration statementId)
@@ -5594,6 +5590,10 @@ lake build D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 14. 对显式 `LayerChain` 证明相邻 inclusions、ordered increments、partition 与 exact rates；
 15. 在 designated root 中组装全部 maximal catalogs 的 `SystemCatalogIrredundant`；
 16. 新共享结果写 schema v3，且不改写 frozen v4.1 schema-v2 singleton baseline。
+17. 为每个 maximal catalog 构造 generated-kernel closure，并输出 bounded hierarchy projection 与 ASCII projection；
+18. 为完整 frozen theorem report 生成 exactly-one `AnalysisDisposition` census；
+19. finite occurrences 继续精确计数，structural occurrences 以 strict inclusion pair witness 认证，truncations 与 unreachable reasons 诚实分栏；
+20. 保持 hierarchy projection 对 admission 的单向性，并把 5⁗ dual-novelty gate 标为 OPEN，直到 owner $\tau$ ruling。
 
 不得：
 
@@ -5629,6 +5629,11 @@ D5/S3/ConceptDynamics/InformationEscape/
   Arena.lean
   TheoremUnit.lean
   JointKernel.lean
+  GeneratedKernel.lean
+  KernelChain.lean
+  HierarchyLaws.lean
+  StructuralArena.lean
+  StructuralCatalog.lean
   EscapePairs.lean
   EscapeRate.lean
   LeaveOneOut.lean
@@ -5647,12 +5652,16 @@ D5/S3/ConceptDynamics/InformationEscapeCounting/
 
 tools/lean-inspector/LeanInformationAudit/
   Registry.lean
+  AnalysisDisposition.lean
+  DispositionCensus.lean
   Syntax.lean
   Reify.lean
   PrimitiveNormalizer.lean
   CatalogBuilder.lean
   ProofBuilder.lean
   SealCommand.lean
+  KernelProjection.lean
+  AsciiHierarchy.lean
   Emit.lean
   Main.lean
 
@@ -6053,6 +6062,75 @@ def Catalog.captureSpectrum (catalog : Catalog arena) :
 必须认证 total、$h(0)$、$h(1)$、incidence first moment 与 overlap second moment；这些
 identity 是 reflected measurements 的 kernel-checked consistency laws。
 
+### 20.11 GeneratedKernel lattice 与 KernelChain
+
+finite API 从 `Catalog.indistinguishable` 的 exact relation 构造 node，不复制第二套 kernel：
+
+```lean
+def Catalog.generatedKernelRelation (catalog : Catalog arena)
+    (selected : Finset catalog.Index) : DecidableKernel arena.State :=
+  ...
+
+def Catalog.GeneratedKernel (catalog : Catalog arena) :=
+  Quotient (Catalog.generatedKernelSetoid catalog)
+
+def Catalog.generatedKernel (catalog : Catalog arena)
+    (selected : Finset catalog.Index) : catalog.GeneratedKernel :=
+  ...
+
+def Catalog.GeneratedKernel.KernelRefines
+    (finer coarser : catalog.GeneratedKernel) : Prop :=
+  finer.relation ≤ coarser.relation
+
+def Catalog.GeneratorStep (catalog : Catalog arena)
+    (from to : catalog.GeneratedKernel) (added : catalog.Index) : Prop :=
+  ∃ selected,
+    catalog.generatedKernel selected = from ∧
+    catalog.generatedKernel (insert added selected) = to
+
+def Catalog.StrictGeneratorStep (catalog : Catalog arena)
+    (from to : catalog.GeneratedKernel) (added : catalog.Index) : Prop :=
+  catalog.GeneratorStep from to added ∧ to.KernelRefines from ∧
+    ¬from.KernelRefines to
+
+def Catalog.GeneratedKernel.escapeAt
+    (node : catalog.GeneratedKernel) :
+    Finset (arena.State × arena.State) :=
+  (offDiagonalPairs arena).filter fun pair =>
+    node.relation pair.1 pair.2
+
+def Catalog.GeneratedKernel.edgeCapture
+    (from to : catalog.GeneratedKernel) :
+    Finset (arena.State × arena.State) :=
+  from.escapeAt \ to.escapeAt
+```
+
+`generatedKernelSetoid` 的 equivalence 必须逐 relation truth table 证明；Quotient equality
+不能由 representative subset、node key 或 SHA-256 给出。`GeneratorStep` 在 quotient 上的
+良定义性由 IE-042 建立。实现还须给 `GeneratedKernel` 的 finite lattice instance，并证明其
+top/bottom/meet/internal join 与 IE-040--IE-041 相同。
+
+任意 State 使用 relation-level chain：
+
+```lean
+structure KernelChain (X : Type u) where
+  length : Nat
+  kernel : Fin (length + 1) → StructuralKernel X
+  refines : ∀ r : Fin length,
+    (kernel r.succ).relation ≤ (kernel r.castSucc).relation
+
+def KernelChain.increment (chain : KernelChain X)
+    (r : Fin chain.length) : Set (X × X) :=
+  {pair | (chain.kernel r.castSucc).relation pair.1 pair.2 ∧
+    ¬(chain.kernel r.succ).relation pair.1 pair.2}
+```
+
+`KernelChain` 本身允许 non-strict adjacency 以承载一个完整 generator schedule；每个
+non-strict step 必须显式分类为 `collapsed_addition`。删除 stutters 后的 strict subsequence
+才是 generator DAG path／decomposition。finite specialization 提供 increments 的 `Finset`、
+counts、exact rates，以及 IE-043--IE-049 的 certificates；arbitrary-State specialization只
+提供 Set equality、disjointness、union 与 pair witnesses。
+
 ---
 
 ## 21. 精确逃逸率 API
@@ -6342,6 +6420,70 @@ catalog；该有限 family 的 membership 来自 `rootId` 的 import closure，�
 只是 `SystemCatalogIrredundant` 的显式同义名；不存在另一个量化 plural roots 的性质。
 不得把 auxiliary-root analysis 暗中算作系统。negative verdict 必须含完整
 `redundantIndices` 与证明；不能只报告第一个零成员。
+
+### 23.6 AnalysisDisposition 与 census API
+
+```lean
+structure StatementKey where
+  theoremName : Name
+  statementId : String
+  deriving DecidableEq, Repr
+
+structure FiniteOccurrenceDisposition (key : StatementKey) where
+  canonicalArena : Name
+  registration : Name
+  realization : Name
+  nondegeneracyCertificate : Name
+  stateEnumerationCertificate : Name
+
+structure StructuralOccurrenceDisposition (key : StatementKey) where
+  canonicalArena : Name
+  registration : Name
+  realization : Name
+  strictnessCertificate : Name
+  witnessCertificate : Name
+
+inductive TruncationCertification
+  | reportOnly
+  | transferred (transferTheorem : Name)
+
+structure BoundedFiniteTruncationDisposition (key : StatementKey) where
+  truncationFamily : Name
+  bound : Nat
+  comparisonStatement : Name
+  certification : TruncationCertification
+
+structure UnreachableDisposition (key : StatementKey) where
+  reason : UnreachableReason
+  evidence : Name
+
+inductive AnalysisDisposition (key : StatementKey) where
+  | finiteOccurrence (value : FiniteOccurrenceDisposition key)
+  | structuralOccurrence (value : StructuralOccurrenceDisposition key)
+  | boundedFiniteTruncation
+      (value : BoundedFiniteTruncationDisposition key)
+  | unreachable (value : UnreachableDisposition key)
+
+structure DispositionInventory where
+  headSha : String
+  entries : Array (Sigma fun key : StatementKey => AnalysisDisposition key)
+
+def DispositionInventory.ExactlyCovers
+    (inventory : DispositionInventory)
+    (frozenTheorems : Finset StatementKey) : Prop :=
+  ...
+```
+
+`ExactlyCovers` 同时断言 keys 相等、每 key 恰一次、`headSha` 与 elaborated report input
+相同，并按 constructor 检查 payload。Meta census 的 canonical order 是 theorem Lean `Name`
+text，再按 `statement_id`；counts 从 rows fold 得到并与 class/reason totals 复核。census 是
+read-only report consumer，不推断 object arena，也不把缺 realization 自动归到 finite。
+
+finite 与 structural constructors 都必须由指定 root maximal catalog occurrence discharge
+`TrivialInCatalog`；bounded truncation 只有 `transferred` constructor 的具名 theorem 所明确
+蕴含的结论可标 certified，`reportOnly` 不参与准入；`unreachable` 没有 positivity verdict。
+disposition coverage 与 5⁗ `AdmissionCertificate` 是不同字段、不同证明义务。后者的 active
+consumer 仍待第 39 节 GATE 的 owner $\tau$ ruling。
 
 ---
 
@@ -6858,6 +7000,7 @@ v3 catalog record 必须另含。下列为示意结构,数值由封印实测：
   "catalog_unique_capture_by_role_signature": {},
   "capture_multiplicity_spectrum": [],
   "layer_chains": [],
+  "kernel_projection": {},
   "theorems": []
 }
 ```
@@ -6866,6 +7009,161 @@ counts 与 rates 一律同时保存 exact numerator/denominator；refinement cel
 或 counterexample certificate。`analysis_view` 可有 `redundant` verdict，但不能被根级
 `system_catalog_irredundant` 当作 positivity evidence。第 CIRPT-41 节的 exhaustive inventory
 是 v3 字段与 certification level 的唯一规范清单；本节 JSON 只展示容器形状。
+
+#### 30.2.1 schema-v3 `kernel_projection`
+
+每个 v3 catalog 恰有一个 additive、bounded hierarchy block：
+
+```json
+{
+  "projection_kind": "boundary-and-certified-chains",
+  "complete_lattice_materialized": false,
+  "nodes": [
+    {
+      "node_key": "<report-only-key>",
+      "selected_cardinality": "<Nat>",
+      "generators": ["<canonical-Lean-Name>"],
+      "escape_count": "<Nat>",
+      "escape_rate": {"numerator": "<Nat>", "denominator": "<Nat>"},
+      "relation_certificate": "<LeanName>"
+    }
+  ],
+  "edges": [
+    {
+      "from": "<node-key>",
+      "to": "<node-key>",
+      "theorem": "<qualified-occurrence>",
+      "capture_count": "<Nat>",
+      "capture_rate": {"numerator": "<Nat>", "denominator": "<Nat>"},
+      "certificate": "<LeanName>"
+    }
+  ],
+  "collapsed_additions": [
+    {
+      "at": "<node-key>",
+      "theorem": "<qualified-occurrence>",
+      "equality_certificate": "<LeanName>"
+    }
+  ],
+  "leave_one_out": [
+    {
+      "theorem": "<qualified-occurrence>",
+      "node": "<node-key>",
+      "unique_capture_count": "<Nat>",
+      "unique_capture_rate": {"numerator": "<Nat>", "denominator": "<Nat>"},
+      "certificate": "<LeanName>"
+    }
+  ],
+  "certified_chains": [
+    {
+      "chain_id": "<report-only-key>",
+      "nodes": ["<node-key>"],
+      "increments": [],
+      "terminal_escape_count": "<Nat>",
+      "partition_certificate": "<LeanName>"
+    }
+  ],
+  "refinement_matrix": [],
+  "overlap_matrix": [],
+  "multiplicity_spectrum": [],
+  "redundant_indices": [],
+  "verdict": "<irredundant-or-redundant>",
+  "certificates": {}
+}
+```
+
+最小 materialized node set 是：$K_\varnothing$、$K_I$、每个
+$K_{I\setminus\{i\}}$、每条 certified chain 上的 nodes，以及显式请求 nodes。先按 exact
+relation equality quotient，再 materialize；同一 relation 不能因多个 subsets 重复出现。
+只有完整枚举所有 subsets、以 truth table 认证 quotient coverage 后，
+`complete_lattice_materialized` 才可为 `true`。通常它为 `false`，但这不降低 boundary、chain
+或 leave-one-out certificates 的数学强度。
+
+determinism rules 固定为：occurrences 按 canonical Lean `Name` text；primitive axes 按
+`cut,flow,admit,anchor`；nodes 按 `selected_cardinality` 后 `node_key`；edges 按
+`from,to,theorem`；collapsed additions 按 `at,theorem`；leave-one-out rows 按 theorem；
+certified chains 按 `chain_id`。同一 relation 的 canonical representative 取 generator-name
+array 字典序最小者；这只决定 presentation，不决定 equality。layout、IDs、hashes、timings、
+greedy 或 Shapley orders 是 `P`／report-only；sets、inclusions、counts、rates、matrices、spectrum
+与 verdict 分别由 `K`／`R` certificates 承重。
+
+ASCII renderer 是该 JSON 的确定性文本投影，grammar 为：
+
+```text
+CATALOG <catalog-id> arena=<Lean-Name> verdict=<verdict>
+NODE <node-key> selected=<Nat> escape=<numerator>/<denominator>
+  +--[<theorem> capture=<numerator>/<denominator> cert=<Lean-Name>]--> <node-key>
+  `--[<theorem> collapsed cert=<Lean-Name>] <same-node-key>
+LOO <theorem> node=<node-key> unique=<numerator>/<denominator> cert=<Lean-Name>
+CHAIN <chain-id> increments=(<Nat>,...) terminal_escape=<Nat> cert=<Lean-Name>
+```
+
+renderer 不重算、补全或裁决数学，只检查 schema 后按既有 rows 排版。三个 normative mocks：
+
+```text
+CATALOG causal-unified-cumulative arena=UnifiedBoolSCM verdict=redundant
+NODE K_empty selected=0 escape=2256/2256
+  +--[ObsU capture=2120/2256 cert=causal_obs_edge]--> K_obs
+NODE K_obs selected=1 escape=136/2256
+  +--[IntU capture=92/2256 cert=causal_int_edge]--> K_int
+NODE K_int selected=2 escape=44/2256
+  +--[CfU capture=44/2256 cert=causal_cf_edge]--> K_cf
+NODE K_cf selected=3 escape=0/2256
+LOO ObsU node=K_cf unique=0/2256 cert=causal_loo_obs
+LOO IntU node=K_cf unique=0/2256 cert=causal_loo_int
+LOO CfU node=K_int unique=44/2256 cert=causal_loo_cf
+CHAIN obs-int-cf increments=(2120,92,44) terminal_escape=0 cert=causal_telescope
+```
+
+这些是第 43.1 节 literal `CfU | .inr N => .inr N` 的 H9 实测值：escape counts
+$2256/136/44/0$，不是已证伪的 $2256/296/44/24$ 预测。
+
+```text
+CATALOG e1-fst-snd-id arena=BoolPair verdict=redundant
+NODE K_empty selected=0 escape=12/12
+  +--[fst capture=8/12 cert=e1_fst]--> K_fst
+  +--[snd capture=8/12 cert=e1_snd]--> K_snd
+  +--[id capture=12/12 cert=e1_id]--> K_full
+NODE K_fst selected=1 escape=4/12
+  +--[snd capture=4/12 cert=e1_fst_snd]--> K_full
+  +--[id capture=4/12 cert=e1_fst_id]--> K_full
+  `--[fst collapsed cert=e1_fst_stutter] K_fst
+NODE K_snd selected=1 escape=4/12
+  +--[fst capture=4/12 cert=e1_snd_fst]--> K_full
+  +--[id capture=4/12 cert=e1_snd_id]--> K_full
+  `--[snd collapsed cert=e1_snd_stutter] K_snd
+NODE K_full selected=1 escape=0/12
+  +--[fst collapsed cert=e1_full_fst_stutter] K_full
+  +--[snd collapsed cert=e1_full_snd_stutter] K_full
+  `--[id collapsed cert=e1_full_id_stutter] K_full
+LOO fst node=K_full unique=0/12 cert=e1_loo_fst
+LOO snd node=K_full unique=0/12 cert=e1_loo_snd
+LOO id node=K_full unique=0/12 cert=e1_loo_id
+CHAIN fst-snd-id increments=(8,4,0) terminal_escape=0 cert=e1_chain_a
+CHAIN id-fst-snd increments=(12,0,0) terminal_escape=0 cert=e1_chain_b
+SPECTRUM h=(0,0,8,4)
+```
+
+E1 的 zero increments 是 certified generator-schedule stutters，列入
+`collapsed_additions`，不是 strict `edges`。四个 nodes 按 relation quotient 计数；
+`K_{fst,snd}` 与 $K_{id}$ 是同一个 `K_full`。
+
+```text
+SINGLETON[01] agenda_power K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[02] two_step_adaptive_residue_identification K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[03] spectrum_atom_index_bijective K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[04] context_parameters_can_select_distinct_fixed_points K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[05] intervention_strictly_weaker_than_counterfactual K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[06] observation_strictly_weaker_than_intervention K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[07] static_exact_design K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[08] commutativity_hypothesis_is_necessary K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[09] compatible_local_laws_can_lack_global_state K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[10] end_state_omits_preempting_cause K_empty --[capture=<v2-certified-count>]--> K_I
+SINGLETON[11] engine_census_self_application K_empty --[capture=<v2-certified-count>]--> K_I
+```
+
+十一项都投影为 one-edge tree；renderer 必须读取各自已认证 count，不能把 placeholder 写入
+真实 artifact。该 compatibility projection 不改写 schema-v2 文件或其字段。
 
 ### 30.3 schema-v2 theorem 记录（冻结）
 
@@ -7074,6 +7372,55 @@ compact form 输出，缺少任何 required payload key 本身即 IE-C028。
 | IE-C032 | `root_id, catalog_id, pair_budget, limit, seal_name` |
 | IE-C033 | `root_id, catalog_id, expected_zero, certified_zero, phase` |
 
+v4.3 active additions 同样由以下三表耦合；IE-C045--IE-C047 仍为 reserved/open，不进入 active
+table，也不得由现有 compiler 发出。
+
+| code | name | exact fail-closed trigger |
+|---|---|---|
+| IE-C034 | `MissingAnalysisDisposition` | frozen theorem key 没有 disposition row |
+| IE-C035 | `DuplicateAnalysisDisposition` | 同一 theorem key 有多于一个 disposition row |
+| IE-C036 | `DispositionIdentityMismatch` | HEAD/name/statement_id/arena 与 elaborated input 不同 |
+| IE-C037 | `DispositionClassMismatch` | class 缺 constructor 所需 payload，或 payload 语义与 class 冲突 |
+| IE-C038 | `MissingStructuralWitness` | structural strictness inclusion/witness 缺失或不成立 |
+| IE-C039 | `InvalidGeneratedKernelNode` | node 非 generated relation，或 extensional equal nodes 未 quotient |
+| IE-C040 | `InvalidGeneratorTransition` | edge 非 single addition/非 strict，或 stutter 未记 collapsed |
+| IE-C041 | `IncompleteKernelProjectionBoundary` | 必需 boundary/leave-one-out/chain/requested node 缺失 |
+| IE-C042 | `KernelProjectionCertificateMismatch` | hierarchy component 与 certificate/reflected value 不同 |
+| IE-C043 | `KernelProjectionUsedForAdmission` | admission consumer 读取任何 hierarchy presentation 字段 |
+| IE-C044 | `DispositionCensusMismatch` | inventory keys/totals 与 frozen report rows 不精确相等 |
+
+| code | exact deterministic message shape |
+|---|---|
+| IE-C034 | `IE-C034 MissingAnalysisDisposition theorem={theorem_name} statement_id={statement_id} head={head_sha}` |
+| IE-C035 | `IE-C035 DuplicateAnalysisDisposition theorem={theorem_name} statement_id={statement_id} records={record_ids}` |
+| IE-C036 | `IE-C036 DispositionIdentityMismatch theorem={theorem_name} component={component} expected={expected} actual={actual}` |
+| IE-C037 | `IE-C037 DispositionClassMismatch theorem={theorem_name} class={class} invalid={invalid}` |
+| IE-C038 | `IE-C038 MissingStructuralWitness theorem={theorem_name} arena={object_arena} missing={missing}` |
+| IE-C039 | `IE-C039 InvalidGeneratedKernelNode root={root_id} catalog={catalog_id} node={node_key} reason={reason}` |
+| IE-C040 | `IE-C040 InvalidGeneratorTransition root={root_id} catalog={catalog_id} from={from} to={to} theorem={theorem_name} reason={reason}` |
+| IE-C041 | `IE-C041 IncompleteKernelProjectionBoundary root={root_id} catalog={catalog_id} missing={missing_nodes}` |
+| IE-C042 | `IE-C042 KernelProjectionCertificateMismatch root={root_id} catalog={catalog_id} component={component} expected={expected} actual={actual}` |
+| IE-C043 | `IE-C043 KernelProjectionUsedForAdmission consumer={consumer} field={field} root={root_id} catalog={catalog_id}` |
+| IE-C044 | `IE-C044 DispositionCensusMismatch head={head_sha} component={component} expected={expected} actual={actual}` |
+
+| code | required payload keys |
+|---|---|
+| IE-C034 | `theorem_name, statement_id, head_sha` |
+| IE-C035 | `theorem_name, statement_id, record_ids` |
+| IE-C036 | `theorem_name, component, expected, actual` |
+| IE-C037 | `theorem_name, class, invalid` |
+| IE-C038 | `theorem_name, object_arena, missing` |
+| IE-C039 | `root_id, catalog_id, node_key, reason` |
+| IE-C040 | `root_id, catalog_id, from, to, theorem_name, reason` |
+| IE-C041 | `root_id, catalog_id, missing_nodes` |
+| IE-C042 | `root_id, catalog_id, component, expected, actual` |
+| IE-C043 | `consumer, field, root_id, catalog_id` |
+| IE-C044 | `head_sha, component, expected, actual` |
+
+所有 arrays 使用 canonical sort 后的 compact JSON；`expected`／`actual` 若是 structured value
+也使用 canonical compact JSON，不退化为不确定的人类散文。reserved IE-C045--IE-C047 只有在
+owner $\tau$ ruling 与 mutation suite 落地后，才可另一个 policy PR 把它们加入这三表。
+
 ---
 
 ## 32. 反平凡化硬规则
@@ -7167,6 +7514,18 @@ $B(C)\le65536$ 时可使用普通 reduction/枚举 proof。$B(C)>65536$ 不表�
 但必须使用 refl lane 提供的 reflected seal，把 exact measurements 经一般 correctness
 theorems 送回 kernel；缺少该前置即 IE-C032。预算逐 catalog 判断，不把多个 arenas 的
 pairs 相加成全局 scalar。
+
+hierarchy projection 另有独立的 subset-explosion 边界。$m$ 个 generators 有 $2^m$ 个 subsets，
+但 schema v3 **永不要求 materialize 全部 $2^m$**。默认只构造 boundary、$m$ 个
+leave-one-out、certified chains 与 requested nodes，并在 relation quotient 后去重；其输出规模
+由实际请求与 chain 长度界定，不由 power set 决定。只有调用者显式选择一个有界 complete
+fixture、完整枚举确实完成且 extensional coverage certificate 闭合时，才可写
+`complete_lattice_materialized: true`。
+
+数学层的 `generatedKernel_finite_lattice` 证明 closure 存在，不要求 seal 把整个 finite lattice
+序列化。对 $N$ states，IE-041 给出 strict chain 长度 $\ell\le N-1$；该 bound 可以约束
+certified-chain projection，却不能用来豁免 full-catalog IE-C007。依工程优化规范 v1 §4 与
+本规范 §30.5，任何 projection budget、截断或 layout 都不进入 admission。
 
 ### 33.1 朴素算法
 
@@ -7537,6 +7896,93 @@ intervention members 为零。可选 512-state product 必须因 261,632 pairs �
 compatibility fixture 中 byte-for-byte 保持；schema-v3 shared results 使用不同 root/catalog
 identity，不覆盖 v2。
 
+### T-033　E1 generated lattice
+
+arena 为 `Bool × Bool`，catalog generators 为 `fst`、`snd`、`id`。按 exact relation equality
+取商后恰有四个 classes：
+
+| node | canonical representative | escape count |
+|---|---|---:|
+| $K_\varnothing$ | `[]` | 12 |
+| $K_{fst}$ | `[fst]` | 4 |
+| $K_{snd}$ | `[snd]` | 4 |
+| $K_{full}$ | `[id]`，并 quotient `[fst,snd]` 及所有含 `id` 的同核 subsets | 0 |
+
+$K_{fst}$ 与 $K_{snd}$ 不可比；strict edges 构成 diamond，并含直接
+$K_\varnothing\xrightarrow{id}K_{full}$ generator edge。固定 schedules
+`fst,snd,id` 与 `id,fst,snd` 的 increments 分别为 $(8,4,0)$ 与 $(12,0,0)$，zero steps 只进入
+`collapsed_additions`。leave-one-out
+$U_{fst}=U_{snd}=U_{id}=\varnothing$，catalog 发完整 redundant verdict；
+$h=(0,0,8,4)$，即 $h(0)=0,h(1)=0,h(2)=8,h(3)=4$。
+
+### T-034　causal measured hierarchy
+
+使用第 43.1 节 literal `CfU`，不得改 readout 追旧预测。48 states、2,256 ordered pairs 上：
+
+| layer | escape count | edge capture |
+|---|---:|---:|
+| $K_\varnothing$ | 2256 | - |
+| $K_{obs}$ | 136 | 2120 |
+| $K_{int}$ | 44 | 92 |
+| $K_{cf}$ | 0 | 44 |
+
+branch cross-check 固定为：IC branch 在 obs/int/cf 后 escape $80/20/0$，OI branch为
+$56/24/0$。证明 $K_{cf}\subsetneq K_{int}\subsetneq K_{obs}$、increments 两两不交且
+$2120+92+44=2256$。恰含三个 cumulative readouts 的 flat view 中
+$U_{Obs}=U_{Int}=0$、$U_{CF}=44$；不得写 H6 已证伪的
+$2256/296/44/24$ 或 $1960/252/20$。
+
+### T-035　structural witness fixture
+
+`StructuralArena.State := Nat`，catalog 与 primitive bundle index 均为 singleton，primitive
+kernel 是 parity equality。without kernel 为 universal relation；`left=0,right=1` 给出
+without agreement 与 full separation，故 strict inclusion 由 kernel proof接受而不枚举
+`Nat`。删除 inclusion、witness 或任一 witness side 分别触发 IE-C038。
+
+### T-036　disposition census fixture
+
+fixture frozen report 恰含四个不同 `statement_id`，分别登记 finite occurrence、structural
+occurrence、bounded report-only truncation 与
+`unreachable/no_canonical_object_carrier`。期望 class counts $(1,1,1,1)$、reason count $1$、
+keys exact cover。删除、复制、stale identity、伪改 class payload 依次触发
+IE-C034--IE-C037；修改 totals 触发 IE-C044。
+
+### T-037　extensional quotient mutation
+
+把 E1 的 `[id]` 与 `[fst,snd]` 强制输出为两个 nodes，期望 IE-C039；恢复 quotient 后 node
+count 回到 4，且 node address 无法作为 equality proof。
+
+### T-038　generator transition mutation
+
+把 E1 schedule 的 zero step 写成 strict edge、把一步多 theorem addition 写成 edge、或删除
+应有 collapsed row，均期望 IE-C040。
+
+### T-039　bounded projection fixture
+
+构造有未 materialize interior nodes 的 catalog；projection 仍精确包含 top、bottom、全部
+leave-one-out、certified-chain 与 requested nodes，且
+`complete_lattice_materialized=false`。逐种删除 required node 得 IE-C041；不得因未输出完整
+$2^m$ 而失败。
+
+### T-040　hierarchy certificate mutations
+
+逐一改动 node escape、edge capture、chain telescope、refinement/overlap cell、spectrum、
+redundant set 与 verdict，均在发射前得 IE-C042。
+
+### T-041　JSON／ASCII non-interference
+
+改变 `node_key`、ASCII indentation、layout 或 report-only chain order，Lean propositions 与
+verdict 不变；让任一 admission code path 读取这些字段得 IE-C043。相同输入重跑的 JSON 与
+ASCII bytes 相同。
+
+### T-042　dual-novelty mutation suite（OPEN）
+
+预登记六项：missing disposition、stale identity、dead `escape_witness`、forged
+`proof_shape` label、zero capture、absent structural witness。object/disposition 侧分别由
+IE-C034、IE-C036、IE-C007、IE-C038 现有设计覆盖；5⁗ dead/forged consumer 与
+IE-C045--IE-C047 activation 必须等 owner $\tau$ ruling，当前测试只冻结 fixture 与 expected
+failure contract，不冒称 required check 已存在。
+
 ---
 
 ## 36. 与现有仓库数学内核的合并原则
@@ -7765,6 +8211,42 @@ $B(C)>65536$ catalog 的前置，不满足时该 catalog 不得在上述顺序�
 semantics：imported registrations 对 environment consumers 可见且进入 seal；同一 arena/theorem
 重复发 IE-C002，合法跨 arena occurrences 的 qualified-name collision 发 IE-C025。
 
+### Phase 10　v4.3 generated-kernel hierarchy
+
+v4.2 dependency chain 落地后，v4.3 固定以下顺序：
+
+1. 已完成的 refutation experiment 固定 T-033 E1 预测，并以 H9 measured causal counts 勘正 T-034；
+2. 本 v4.3 spec-only content PR；
+3. D5 engine deposits：`GeneratedKernel` lattice、`KernelChain`、spectrum/overlap/refinement laws、
+   `StructuralArena` 与 `StructuralCatalog`；
+4. judge v3 `kernel_projection` 与 ASCII renderer；
+5. E1、causal 与十一 singleton compatibility fixtures；
+6. gate design 与 owner $\tau$ ruling request；第 6 项保持 OPEN 时不得接 required check。
+
+第 3 项不依赖 registry，可以在 v4.2 judge identity mechanics 完成前独立实现；但任何 second
+root、catalog projection 或 occurrence census 必须等待 v4.2 step 3 的 import-closure identity／
+root-ownership mechanics。auxiliary root 不得通过避开 imported registrations 冒充完整 root。
+所有 D5 layers 各自 deposit，且不得修改 frozen modules 或 `Trureturing.lean`。
+
+counting 优化若参与 hierarchy reflected values，只能落在工程优化规范 v1 §6.4 指定的 sibling
+目录 `D5/S3/ConceptDynamics/InformationEscapeCounting/`；不得建立更深的
+`InformationEscape/Counting/`，`proof_method` 必须写真实路线。
+
+### Phase 11　v4.3 disposition census
+
+在 v4.2 root-ownership mechanics 与 structural engine 都存在后：
+
+1. Lean Meta tool 只读完整 frozen elaborated report，按 theorem `statement_id` 建 inventory；
+2. 每个 key 恰由 finite／structural／bounded truncation／unreachable 之一覆盖；
+3. 输出全库 counts、每个 unreachable reason counts 与 exact row list，并验证 keys equality；
+4. disposition records 绑定 immutable HEAD/report inputs；census report 不回写数学；
+5. judge projection、census 与 fixtures 完成后，才可请求 dual-novelty gate 的 $\tau$ ruling。
+
+census 的成功条件是 honest complete classification，不是提高 finite percentage。没有 canonical
+finite carrier 的 Real dynamics、function spaces 或 unbounded-index families 优先进入 structural
+class；只有满足 closed reason 的对象才进入 unreachable，bounded experiment 在无 transfer
+theorem 时明确 `report-only`。
+
 ---
 
 ## 38. 明确删除旧设计
@@ -7931,6 +8413,88 @@ judge 的 occurrence identity、import-closure grouping、三项 seal checks 与
 reflected seal。第 3 步必须先重规格化并通过 `RegistrationPersistence`、`RegistryConsumer`
 与 `SealCollision` 的 landed imported-visibility/import-closure-membership/collision 语义；不得以最终树
 碰巧满足 AC-011--AC-019 代替这条依赖顺序。
+
+### AC-021　Generated-kernel lattice
+
+每个 maximal catalog 的 $\mathcal L_C$ 按 exact relation equality 取商，具 finite lattice、
+strict generator DAG、collapsed additions 与 IE-040--IE-055 certificates。tree/chain 与
+incomparable/diamond 判词由数学结构决定，不由 renderer layout 决定。
+
+### AC-022　Finite／structural universality
+
+任何 frozen theorem 都不被笼统称为“不可分析”：finite occurrence 精确计数，任意 State 的
+structural occurrence 以 strict inclusion pair witness 认证，bounded truncation 标明
+report-only／transfer theorem，真正不可达者使用 closed reason。finite embedding 保持 structural
+判词，finite-only `StructuralNovelty` 不冒称 universal。
+
+### AC-023　Disposition census completeness
+
+全库 frozen theorem keys 与 `AnalysisDisposition` keys 完全相等、每 key 恰一次；artifact 报告
+四类 counts、每个 unreachable reason count 与 exact rows。identity 绑定 HEAD elaborated
+`statement_id`，arena 来自显式 realization，不从 statement syntax 推断。
+
+### AC-024　Bounded kernel projection
+
+每个 v3 catalog 的 `kernel_projection` 至少含 top、bottom、全部 leave-one-out、certified-chain
+与 requested nodes，经 relation quotient 去重；strict edges、collapsed additions、LOO、chains、
+matrices、spectrum、redundant set、verdict 与 certificate names 完整。默认不 materialize
+$2^m$，projection/ASCII 不进入 admission。
+
+### AC-025　Hierarchy fixtures
+
+T-033 的 E1 四节点 diamond、$h=(0,0,8,4)$ 与两个 schedules，T-034 的 causal measured
+$2256/136/44/0$、increments $2120/92/44$，T-035 structural witness、T-036 disposition census，
+以及十一项 singleton one-edge compatibility projection 全部通过。
+
+### AC-026　Determinism 与 diagnostics
+
+JSON 与 ASCII 按第 30 节规则 byte-stable；IE-C034--IE-C044 的 trigger、message shape 与 payload
+三表一致。改变 report-only layout 不改 Lean truth；篡改 certified value 或让 projection 回流
+分别 fail closed。
+
+### AC-027　Dependency-correct v4.3 landing
+
+第 37 节 Phase 10--11 顺序成立：spec → D5 hierarchy/structural engine deposits → disposition
+census → judge projection/ASCII → fixtures → gate ruling request。registry consumers 必须等待
+v4.2 root-ownership mechanics；counting modules 留在 GID-compliant sibling directory；frozen D5
+与 `Trureturing.lean` 零修改。
+
+### GATE　delta-first dual novelty gate（OPEN pending owner $\tau$ ruling）
+
+设计对象只包含 base 无现役 Freeze、candidate HEAD 新增首次 Freeze 的 declarations。对每个
+此类 `statement_id`，未来 gate 必须原子验证以下合取，任一项不蕴含另一项：
+
+$$
+\operatorname{DispositionBound}
+\land
+\operatorname{ObjectNovelty}
+\land
+\operatorname{AdmissionCertificateValid}.
+$$
+
+`DispositionBound` 要求 HEAD identity 的 exactly-one disposition。`ObjectNovelty` 要求
+object-realizable theorem 在 designated system root 的 maximal catalog 恰出现一次，finite
+通过 IE-C007 的严格反面、structural 通过具 pair witness 的 strict inclusion；同 catalog 所有
+zero members 先完整收集，再 atomic failure。`AdmissionCertificateValid` 独立消费
+`CLAUDE.md` 5⁗ 的 `proof_shape`、直接 frozen dependencies、`escape_witness` 与
+`admission_basis`；合法 basis 只有 `escape-witness`、`rule-11-upstream-wrapper`、
+`atom-required-bridge`，bind-only companions 必须有 directed use records。
+
+执行次序是 delta-first：先只判 first-freeze delta，再处理 identity-keyed legacy debt set $D$；
+每次必须证明 $D_{head}\subseteq D_{base}$，当 $D=\varnothing$ 时自动切为 full-tree enforcement，
+之后不得重新扩债。mandatory mutations 是 missing disposition、stale identity、dead witness、
+forged label、zero capture 与 absent structural witness。
+
+H4 所称 “base-owned consumer” 在当前 `CLAUDE.md` 的永久 base-judge 禁令下只可解释为
+**protected-base-owned immutable policy/input bytes**；不得 checkout、编译或执行 base code。
+实际 consumer 必须是 candidate-owned judge，读取 SHA-bound protected-base data，并受现有
+judge/content partition 约束。若 owner 对此解释另有裁决，以新的 $\tau$ ruling 更新规范后才可
+实施，不能在 content PR 中自行选择。
+
+本 GATE 改变 `CLAUDE.md` 21／5⁗／20‴ 的 admission policy 与信任成本。故 v4.3 的完成态是：
+设计、census、engine、IE-C007／structural rejection、schema 与 fixtures 可落地；
+IE-C045--IE-C047 仍 `RESERVED / OPEN`，**没有 required check**。只有 owner 明示 $\tau$
+ruling、judge-plane 独立 PR、分区合规与 T-042 mutation suite 全绿后，才可另行 activation。
 
 ---
 
@@ -8750,3 +9314,48 @@ v4.2 不推翻第 48 节；它在 v4.1 kernel-residual 内核上作 additive 扩
 最终边界是：只有 designated maximal catalog 的 `CatalogIrredundant` 控制 admission；
 overlap、rate magnitude、role comparison、spectrum、layered counts 与 address coincidence 都
 是无权重 analysis，不增加第二个 threshold，也不产生跨 arena scalar。
+
+---
+
+## 50. v4.3 generated-kernel hierarchy 与 dispositions 合并裁决
+
+v4.3 不修改第 48、49 节的任何字节；它在 v4.2 shared-arena／analysis 基线上作 additive
+裁决：
+
+1. 每个 maximal canonical catalog 的真正层级对象是 generated joint kernels 按 relation
+   extensional equality 取商所得的 finite closure lattice $\mathcal L_C$；subset、hash 与
+   display node ID 都不是 node identity；
+2. order 是 refinement（finer 为 smaller），top 为 $K_\varnothing$，bottom 为 $K_I$，meet 为
+   intersection，join 只在 generated closure 内取；
+3. user-facing graph 是 strict generator-transition DAG；equal-kernel additions 是 collapsed
+   stutters，generator edges 可以跨 Hasse levels；decomposition 是 strict path，而完整 schedule
+   可以另列 stutters；
+4. hierarchy 为 tree 当且仅当 generated lattice 是 chain；不可比 kernels 产生 diamond 与多条
+   合法分解，任何 renderer 不得把它强画成一棵 canonical tree；
+5. node payload 是 `escapeAt`，edge payload 是 `edgeCapture`；terminal escape、leave-one-out
+   $U_i$、$h(k)$、overlap/refinement matrices 与 catalog verdict 是 chain-independent invariants；
+6. finite State 使用 exact reflected counts/rates；任意 State 使用
+   `StructuralArena`／`StructuralCatalog` 与 strict-inclusion pair witness。已落地
+   `StructuralNovelty` 仍是 finite-only bridge，不称 universal；
+7. elaborated frozen report 中每个 theorem `statement_id` 恰有一个
+   `AnalysisDisposition`：finite occurrence、structural occurrence、bounded finite truncation、
+   unreachable closed reason；object arena 必须显式声明，不能从 closed Prop 真值推断；
+8. `TrivialInCatalog` 是 $U_i=\varnothing$／structural non-strictness，catalog-relative 且对
+   membership 非单调。finite maximal catalog 的 zero members 继续由 IE-C007 全量收集后拒绝；
+9. schema v3 additive `kernel_projection` 采用 `boundary-and-certified-chains`，默认不 materialize
+   $2^m$；JSON/ASCII 是 projection，永不成为 admission input。node keys、layout、hash、timing
+   与 heuristic orders 均 report-only；
+10. T-034 采用 literal causal readouts 的实测 escape counts $2256/136/44/0$ 与 captures
+    $2120/92/44$；旧的 $2256/296/44/24$ 预测已被 refutation experiment 否定，不得复活；
+11. sealing scope 始终是 import closure（工程优化规范 v1 §9/§16）；counting modules 位于
+    GID-compliant sibling `InformationEscapeCounting/`（§6.4）；`proof_method` 如实报告真实路线
+    （§8）；strict chain 的 $\ell\le N-1$ 是 §19 的 lattice fact；
+12. object-level novelty 与 `CLAUDE.md` 5⁗ `proof_shape` 正交，未来 admission 是二者连同
+    exactly-one disposition 的合取。delta-first/debt-ratchet 设计已固定，但 required-check
+    activation 是 admission-policy／$\tau$ 变更，保持 **OPEN pending owner ruling**；
+13. frozen v4.1 schema-v2 artifact、十一 singleton counts、frozen D5 modules、
+    `Trureturing.lean` 与第 48、49 节原文均保持不变。
+
+因此 v4.3 回答“树还是 DAG”：数学对象是有限 closure lattice，操作投影是 strict generator
+DAG；只有 nested chain 特例才是 tree。它也把“适用于所有定理”改写为可验的 total
+disposition census，而不是对不可有限计数对象作虚假统一数值主张。
