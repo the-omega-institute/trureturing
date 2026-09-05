@@ -402,7 +402,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         FileMapConformCommand.Run(arguments, repositoryRoot);
 
     public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
-        DepositHeaderCheckCommand.Run(repository, arguments);
+        DepositHeaderCheckCommand.Run(repository, leanReportSource, arguments);
 
     public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) =>
         LedgerFrozenCommand.Run(repositoryRoot, repository, arguments);
@@ -556,7 +556,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
                 || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 26)
+                || RuleCatalog.Default.Descriptors.Length != 27)
             {
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }
