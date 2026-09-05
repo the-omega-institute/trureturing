@@ -132,6 +132,7 @@ public sealed class FrozenSurfaceRuleTests
     public void Sl008IgnoresModifiedNonFrozenModule()
     {
         var fixture = FrozenFixture(out _);
+        AddState(fixture, FrozenPath, ModuleStatementId(fixture, FrozenPath));
 
         var evaluation = Evaluate(fixture, (OtherPath, RawChangeKind.Modified));
 
