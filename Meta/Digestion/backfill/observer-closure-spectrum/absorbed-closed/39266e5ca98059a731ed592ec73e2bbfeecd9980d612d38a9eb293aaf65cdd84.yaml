@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:39266e5ca98059a731ed592ec73e2bbfeecd9980d612d38a9eb293aaf65cdd84
+  normalized_sha256: sha256:39266e5ca98059a731ed592ec73e2bbfeecd9980d612d38a9eb293aaf65cdd84
+cas_ref: sha256:39266e5ca98059a731ed592ec73e2bbfeecd9980d612d38a9eb293aaf65cdd84
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/PredictionCertificates/ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth
+    target_statement_id: sha256:dad4704e9c9c10a5481b4b632a35a68cbb0b2c15cd3423b2c26280337cb3c2a9
+receipts:
+  scribe:
+    - gid: D5/S3/ObserverMemory/PredictionCertificates/ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth
+      definition_sha256: sha256:8f1ae6272feba053018558ae49b8818aa41a198c229deba36bbab3ab6db3df4f
+      emission_sha256: sha256:e789cd9a3e1ab0d98102a6229d8117ddf52bde760340b81d6d8048913c5dfb9d
+  unresolved_subitems: []
