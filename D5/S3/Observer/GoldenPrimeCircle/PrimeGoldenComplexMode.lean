@@ -39,7 +39,7 @@ theorem first_golden_complex_mode_euler
       Complex.I * ((time * goldenSpectrum (prime, 0) : ℝ) : ℂ) =
         ((time * goldenSpectrum (prime, 0) : ℝ) : ℂ) * Complex.I := by
     ring
-  rw [hcommute]
+  rw [← Complex.ofReal_mul, hcommute]
   simp [Complex.exp_ofReal_mul_I]
 
 /-- The modulus forgets phase and retains exactly the heat amplitude. -/
