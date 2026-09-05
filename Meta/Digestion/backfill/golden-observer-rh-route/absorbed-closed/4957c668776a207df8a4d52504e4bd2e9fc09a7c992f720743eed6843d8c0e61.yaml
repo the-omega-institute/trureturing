@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4957c668776a207df8a4d52504e4bd2e9fc09a7c992f720743eed6843d8c0e61
+  normalized_sha256: sha256:4957c668776a207df8a4d52504e4bd2e9fc09a7c992f720743eed6843d8c0e61
+cas_ref: sha256:4957c668776a207df8a4d52504e4bd2e9fc09a7c992f720743eed6843d8c0e61
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroInfinitude/WindowCount.window_count_lower_log
+    target_statement_id: sha256:7a513848cb7cb748f5141e769e1addf3b87c898ae52a9256e020ee8a4dfc1d1d
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZeroInfinitude/WindowCount.window_count_lower_log
+      definition_sha256: sha256:3eabad814619f90e845e89ac43378ebb3222d9e08b6dcc8da9a9d1a0992b947f
+      emission_sha256: sha256:91f60279adb05562dfd9240cd9b7ac5e5d111bb161f0ab6df8b6ffae0d36ec26
+  unresolved_subitems: []

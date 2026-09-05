@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Xml.Linq;
 using StrataLint.EngineeringScope;
 using StrataLint.TestSupport;
 using Xunit;
@@ -195,6 +196,19 @@ public sealed class EngineeringScopeProgramTests
             "Fails", "Assert.True(false, \"intentional\");", prebuild: true, expectedExitCode: 1, expectedRetryCount: 0);
 
     [Fact]
+    public void CandidateTestInvocationUsesMinimalVerbosity()
+    {
+        var arguments = Program.BuildTestArguments(
+            ProductTestsProject,
+            noBuild: true,
+            resultsDirectory: "/tmp/engineering-results");
+
+        var verbosityIndex = Array.IndexOf(arguments.ToArray(), "--verbosity");
+        Assert.True(verbosityIndex >= 0, $"arguments=[{string.Join(", ", arguments)}]");
+        Assert.Equal("minimal", arguments[verbosityIndex + 1]);
+    }
+
+    [Fact]
     public void ConfiguredEvidenceDirectoryRetainsTrxAfterExecution()
     {
         var evidence = TemporaryFileSystem.Directory.CreateTempSubdirectory(
@@ -212,7 +226,24 @@ public sealed class EngineeringScopeProgramTests
                 root => WriteSmokeTest(root, "ExportsEvidence", "Assert.True(true);"));
 
             Assert.True(result.ExitCode == 0, result.Diagnostic);
-            Assert.NotEmpty(Directory.GetFiles(projectDirectory, "*.trx", SearchOption.TopDirectoryOnly));
+            Assert.Contains(
+                $"ENGINEERING_TEST_EXECUTED project={JsonSerializer.Serialize(ProductTestsProject)} "
+                    + "evidence=trx executed=1",
+                result.Output,
+                StringComparison.Ordinal);
+            var trxPath = Assert.Single(
+                Directory.GetFiles(projectDirectory, "*.trx", SearchOption.TopDirectoryOnly));
+            var trx = XDocument.Load(trxPath, LoadOptions.None);
+            var counters = trx.Descendants()
+                .Single(element => element.Name.LocalName == "Counters");
+            Assert.Equal("1", (string?)counters.Attribute("executed"));
+            Assert.Equal("1", (string?)counters.Attribute("passed"));
+            Assert.Equal("0", (string?)counters.Attribute("failed"));
+            Assert.Equal(
+                ["Passed"],
+                trx.Descendants()
+                    .Where(element => element.Name.LocalName == "UnitTestResult")
+                    .Select(element => (string?)element.Attribute("outcome")));
         }
         finally
         {
