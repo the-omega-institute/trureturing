@@ -223,7 +223,6 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             : null;
         var environment = new List<string>
         {
-            "-u", "FULL",
             "-u", "GIT_CONFIG",
             "-u", "GIT_CONFIG_PARAMETERS",
             $"PATH={binDirectory}:{ExecutablePath}",
