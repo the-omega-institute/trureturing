@@ -71,8 +71,12 @@ run_cmd do
   if <- artifactPath.pathExists then
     Lean.Elab.Command.liftIO <| IO.FS.removeFile artifactPath
 
-/-- error: IE-C007 ZeroUniqueCapture: theorem LeanInformationAudit.Tests.CompleteRedundantIndices.firstTheorem arena LeanInformationAudit.Tests.CompleteRedundantIndices.arena full 2 without 2 -/
-#guard_msgs (error) in
+/--
+info: information seal redundancy: root=LeanInformationAudit.Tests.CompleteRedundantIndices catalog=LeanInformationAudit.Tests.CompleteRedundantIndices.arena counts=[0,0,0] certified=[0,1,2] members=["LeanInformationAudit.Tests.CompleteRedundantIndices.firstTheorem","LeanInformationAudit.Tests.CompleteRedundantIndices.secondTheorem","LeanInformationAudit.Tests.CompleteRedundantIndices.thirdTheorem"]
+---
+error: IE-C007 ZeroUniqueCapture: theorem LeanInformationAudit.Tests.CompleteRedundantIndices.firstTheorem arena LeanInformationAudit.Tests.CompleteRedundantIndices.arena full 2 without 2
+-/
+#guard_msgs in
 #seal_information_theory output "/tmp/lean-information-audit-complete-redundant-indices.json"
 
 /-- info: redundant seal failed before artifact output -/
@@ -80,10 +84,14 @@ run_cmd do
 run_cmd do
   if <- artifactPath.pathExists then
     throwError "failed redundant seal wrote an artifact"
+  unless (SealRecords.forRoot (← getEnv) (← getEnv).header.mainModule).isEmpty &&
+      !((← getEnv).contains
+        `LeanInformationAudit.Tests.CompleteRedundantIndices.arena.__information_catalog) do
+    throwError "failed redundant seal published declarations or records"
   logInfo "redundant seal failed before artifact output"
 
-/- This unit-level pin is the mutation oracle for a first-zero implementation that
-certifies only index 0 instead of the real seal's complete [0,1,2] zero set. -/
+/- The real seal above pins collection and certification; this pins the exact
+completeness diagnostic independently. -/
 /-- error: IE-C033 IncompleteRedundantIndexSet key=fixtureRoot/fixtureCatalog expected=[0,1,2] certified=[0] phase=first-zero -/
 #guard_msgs (error) in
 run_cmd do

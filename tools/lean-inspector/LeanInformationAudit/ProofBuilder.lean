@@ -145,6 +145,19 @@ private def validateRoleHistogram (theoremName : Name) (uniqueCount : Nat)
 private def natArrayJson (values : Array Nat) : String :=
   (Json.arr <| values.map toJson).compress
 
+private def catalogIndexCount {arena : Arena.{u}}
+    (catalog : Catalog.{u, v, w} arena) : Nat :=
+  @Fintype.card catalog.Index catalog.indexFintype
+
+/-- Bind the checked vector to the compiled catalog's full index domain. -/
+def validateCompleteCountVector (rootId : Name) (catalogId : CatalogId)
+    (memberCount : Nat) (expectedCounts checkedCounts : Array Nat) : Except String Unit := do
+  unless expectedCounts.size == memberCount && checkedCounts == expectedCounts do
+    let expected := toJson (memberCount, expectedCounts)
+    let actual := toJson (checkedCounts.size, checkedCounts)
+    throw s!"IE-C028 AnalysisCertificateMismatch root={rootId} catalog={catalogId} \
+component=count-vector expected={expected.compress} actual={actual.compress}"
+
 /-- Independently derive and check every zero index from the complete count vector. -/
 def validateRedundantIndices (rootId : Name) (catalogId : CatalogId)
     (uniqueCounts certified : Array Nat) (phase : String) : Except String Unit := do
@@ -291,6 +304,14 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
       | .reflected _ => pure (fullCount + uniqueCount)
     uniqueCounts := uniqueCounts.push uniqueCount
     withoutCounts := withoutCounts.push withoutCount
+  let compiledSize ← natValue (← mkAppM ``catalogIndexCount #[catalog])
+  let expectedCounts ← match route with
+    | .decide => (Array.range compiledSize).mapM fun indexNat => do
+        let index ← finValue indexNat compiledSize
+        natValue (← mkAppM
+          `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
+          #[catalog, index])
+    | .reflected reflected => pure reflected.snapshot.unique
   let mut redundantIndices := #[]
   for index in [:uniqueCounts.size] do
     if uniqueCounts[index]! == 0 then
@@ -301,7 +322,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
     let uniqueExpr <- mkAppM
       `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
       #[catalog, index]
-    let _ <- proofConstruction record.units[indexNat]!.theoremName <| match route with
+    let zeroProof <- proofConstruction record.units[indexNat]!.theoremName <| match route with
       | .decide => do
           let zeroType <- mkEq uniqueExpr (mkNatLit 0)
           mkDecideProof zeroType
@@ -315,12 +336,22 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
             #[catalog, reflected.witness, reflected.indices, index]
           let actualToFused <- mkAppM ``Eq.symm #[fusedEq]
           mkAppM ``Eq.trans #[actualToFused, fusedZero]
+    checkWithKernel zeroProof
     certifiedRedundantIndices := certifiedRedundantIndices.push indexNat
-  match validateRedundantIndices record.rootId record.catalogId uniqueCounts
+  match validateRedundantIndices record.rootId record.catalogId expectedCounts
       certifiedRedundantIndices "complete-scan" with
   | .ok () => pure ()
   | .error message => throwError message
+  match validateCompleteCountVector record.rootId record.catalogId compiledSize
+      expectedCounts uniqueCounts with
+  | .ok () => pure ()
+  | .error message => throwError message
   if let some firstZero := redundantIndices[0]? then
+    let members := certifiedRedundantIndices.map fun index =>
+      record.units[index]!.theoremName.toString
+    logInfo s!"information seal redundancy: root={record.rootId} catalog={record.catalogId} \
+counts={natArrayJson uniqueCounts} certified={natArrayJson certifiedRedundantIndices} \
+members={(toJson members).compress}"
     let unit := record.units[firstZero]!
     throwError
       "IE-C007 ZeroUniqueCapture: theorem {unit.theoremName} arena {record.arenaName} \
