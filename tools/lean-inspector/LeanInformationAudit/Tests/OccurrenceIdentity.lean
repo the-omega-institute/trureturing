@@ -74,43 +74,46 @@ register_information_theorem sharedTheorem
   primitives realizationA.toPrimitiveBundle
   realization legacyA
 
+expect_information_occurrence sharedTheorem
+  in objectA
+  from "LeanInformationAudit.Tests.OccurrenceIdentity"
+
+expect_information_occurrence sharedTheorem
+  in objectB
+  from "LeanInformationAudit.Tests.OccurrenceIdentity"
+
 #seal_information_theory output "/tmp/lean-information-audit-occurrence-identity.json"
 
-/-- info: occurrence-qualified companions and diagnostic address projection passed -/
+/-- info: occurrence-qualified staged identities and v2 schema passed -/
 #guard_msgs (info) in
 run_cmd do
   let env <- getEnv
   let root := env.header.mainModule
   let theoremName := `LeanInformationAudit.Tests.OccurrenceIdentity.sharedTheorem
-  let first := catalogQualifiedName root
-    `LeanInformationAudit.Tests.OccurrenceIdentity.objectA `boolA theoremName
-    "__lowers_escape"
-  let second := catalogQualifiedName root
-    `LeanInformationAudit.Tests.OccurrenceIdentity.objectB `boolB theoremName
-    "__lowers_escape"
-  if first == second || !env.contains first || !env.contains second then
-    throwError "missing distinct occurrence-qualified companions"
   let contents <- Lean.Elab.Command.liftIO <|
     IO.FS.readFile "/tmp/lean-information-audit-occurrence-identity.json"
   let json <- match Json.parse contents with
     | .ok value => pure value
     | .error message => throwError message
-  let classes <- match Json.getObjVal? json "kernel_address_coincidence_classes" >>=
-      Json.getArr? with
+  let schema <- match Json.getObjVal? json "schema" >>= Json.getStr? with
     | .ok value => pure value
     | .error message => throwError message
-  let some coincidence := classes[0]?
-    | throwError "missing address coincidence class"
-  let diagnosticOnly <- match Json.getObjVal? coincidence "diagnostic_only" >>=
-      Json.getBool? with
-    | .ok value => pure value
-    | .error message => throwError message
-  let occurrences <- match Json.getObjVal? coincidence "occurrences" >>= Json.getArr? with
-    | .ok value => pure value
-    | .error message => throwError message
-  unless classes.size == 1 && diagnosticOnly && occurrences.size == 2 do
-    throwError "address coincidence escaped diagnostic-only projection"
-  logInfo "occurrence-qualified companions and diagnostic address projection passed"
+  let occurrences := SealRecords.occurrencesForRoot env root
+  let validOccurrence (occurrence : SealedOccurrenceState) : Bool :=
+    occurrence.rootId == root && occurrence.theoremName == theoremName &&
+      occurrence.registrationModuleName == root &&
+      occurrence.unitName == catalogQualifiedName root occurrence.objectArenaName
+        occurrence.catalogId theoremName theoremUnitSuffix &&
+      occurrence.realizationName == catalogQualifiedName root occurrence.objectArenaName
+        occurrence.catalogId theoremName primitiveRealizationSuffix &&
+      occurrence.certificateName == catalogQualifiedName root occurrence.objectArenaName
+        occurrence.catalogId theoremName "__lowers_escape"
+  unless schema == "lean-intrinsic-information-escape-v2" &&
+      occurrences.size == 2 && occurrences.all validOccurrence &&
+      occurrences[0]!.unitName != occurrences[1]!.unitName &&
+      SealRecords.systemCatalogIrredundant env root do
+    throwError "staged occurrence identities or v2 schema mismatch"
+  logInfo "occurrence-qualified staged identities and v2 schema passed"
 
 /-- error: IE-C030 KernelAddressUsedAsSemanticEvidence root=LeanInformationAudit.Tests.OccurrenceIdentity catalog=boolA address=sha256:fixture consumer=arena-grouping -/
 #guard_msgs (error) in
