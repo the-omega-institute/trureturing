@@ -37,9 +37,10 @@ internal sealed class UnifiedPinchingFeeDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let t = delta squared over four, u = 1-r, and x = u/(2t). These source "
-                            + "coordinates are the public definitions handTremor, doorGap, and "
-                            + "transitionCoordinate. The fee is the exact binary-entropy increment "
+                        "The source scales t = delta squared over four and u = 1-r are exposed by "
+                            + "handTremor and doorGap. The relation r = 1-2tx is exposed by "
+                            + "boundaryRadius, while the third conjunct uses its inverse substitution "
+                            + "t = doorGap(r)/(2x). The fee is the exact binary-entropy increment "
                             + "quadraticPinchingFee, not a function defined by the target asymptotic.")),
                     Paragraph(Text(
                         "Along r = 1-2tx, the quotient of the exact fee by t times the displayed "
@@ -49,10 +50,18 @@ internal sealed class UnifiedPinchingFeeDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "At the mixed-state end, substituting t = u/(2x) makes the transition "
                             + "coefficient tend to log(2/u). For fixed 0<r<1 and t=delta squared over "
-                            + "four, the fee divided by delta squared tends to r artanh(r)/2.")),
+                            + "four, the fee divided by delta squared tends to r artanh(r)/2; this "
+                            + "fourth limit is the formal first-order content. The fixed-x fee ratio "
+                            + "and the x-to-infinity profile formalize separate regimes and are not "
+                            + "composed into a single limit.")),
                     Paragraph(Text(
-                        "The source's numerical crossover ratio 1.0000 to 0.9946 is an empirical "
-                            + "remark and is outside this theorem."))),
+                        "The source's 'that is' bridge is carried in the gate-closing regime: as r "
+                            + "approaches one from below, the ratio of 2r artanh(r) to "
+                            + "log(2/(1-r)) tends to one. The coefficients are not asserted equal at "
+                            + "a fixed mixed-state radius.")),
+                    Paragraph(Text(
+                        "The source sentence reporting a numerical crossover ratio from 1.0000 to "
+                            + "0.9946 is computational-experiment content and is not formalized."))),
                 DescribeRole.Theorem))));
 
     private static Formula Typed(Formula value, Formula type) =>
@@ -65,6 +74,9 @@ internal sealed class UnifiedPinchingFeeDocument : IScribeDocumentDefinition
 
     private static Formula PositiveFilter() =>
         Call("nhdsWithin", D(0), Call("Ioi", D(0)));
+
+    private static Formula LeftFilter() =>
+        Call("nhdsWithin", D(1), Call("Iio", D(1)));
 
     private static Formula Neighborhood(Formula value) => Call("nhds", value);
 
@@ -152,19 +164,34 @@ internal sealed class UnifiedPinchingFeeDocument : IScribeDocumentDefinition
             PositiveFilter(),
             Neighborhood(Div(Mul(r, Call("artanh", r)), D(2))));
 
-        Formula hypotheses = Seq(
-            D(0), Sp, Leq, Sp, x, Sp, Land, Sp,
-            D(0), Sp, Lt, Sp, r, Sp, Land, Sp,
-            r, Sp, Lt, Sp, D(1));
+        Formula bridgeLimit = Tendsto(
+            Lambda(
+                Typed(r, real),
+                Div(
+                    Mul(Mul(D(2), r), Call("artanh", r)),
+                    Call("log", Div(D(2), Subtract(D(1), r))))),
+            LeftFilter(),
+            Neighborhood(D(1)));
+
+        Formula scopedUniformLimit = Seq(
+            Forall, Sp, Typed(x, real), Comma, Sp,
+            D(0), Sp, Leq, Sp, x, Sp, Rightarrow, Sp, uniformLimit);
+
+        Formula scopedMixedLimit = Seq(
+            Forall, Sp, Typed(r, real), Comma, Sp,
+            r, Sp, Lt, Sp, D(1), Sp, Rightarrow, Sp, mixedLimit);
+
+        Formula scopedCoefficientLimit = Seq(
+            Forall, Sp, Typed(r, real), Comma, Sp,
+            D(0), Sp, Lt, Sp, r, Sp, Rightarrow, Sp,
+            r, Sp, Lt, Sp, D(1), Sp, Rightarrow, Sp, coefficientLimit);
 
         return Disp(new Formula.Aligned([
-            Seq(
-                Forall, Sp, Typed(x, real), Comma, Sp, Typed(r, real), Comma, Sp,
-                hypotheses, Sp, Rightarrow),
-            Seq(Grp(), uniformLimit, Sp, Land),
+            Seq(Grp(), Open, scopedUniformLimit, Close, Sp, Land),
             Seq(Grp(), pureLimit, Sp, Land),
-            Seq(Grp(), mixedLimit, Sp, Land),
-            Seq(Grp(), coefficientLimit, Dot),
+            Seq(Grp(), Open, scopedMixedLimit, Close, Sp, Land),
+            Seq(Grp(), Open, scopedCoefficientLimit, Close, Sp, Land),
+            Seq(Grp(), bridgeLimit, Dot),
         ]));
     }
 }

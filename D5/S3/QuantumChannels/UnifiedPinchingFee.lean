@@ -21,9 +21,6 @@ def handTremor (delta : ℝ) : ℝ := delta ^ 2 / 4
 /-- The distance `u = 1 - r` from the pure-state boundary. -/
 def doorGap (r : ℝ) : ℝ := 1 - r
 
-/-- The transition coordinate `x = u / (2t)`. -/
-def transitionCoordinate (r t : ℝ) : ℝ := doorGap r / (2 * t)
-
 private def entropyIncrement (p shift : ℝ) : ℝ :=
   Real.binEntropy (p + shift) - Real.binEntropy p
 
@@ -387,24 +384,105 @@ private theorem mixed_state_delta_coefficient (r : ℝ) (hr0 : 0 < r) (hr1 : r <
       field_simp [hdelta0]
   · ring_nf
 
+/-- The fixed-gap coefficient and the large-transition-coordinate coefficient agree to leading
+order as the gate closes, even though they are not equal at a fixed mixed-state radius. -/
+theorem mixed_end_constants_bridge :
+    Tendsto
+      (fun r : ℝ => 2 * r * Real.artanh r / Real.log (2 / (1 - r)))
+      (nhdsWithin 1 (Iio 1)) (𝓝 1) := by
+  have hgap :
+      Tendsto (fun r : ℝ => 1 - r)
+        (nhdsWithin 1 (Iio 1)) (nhdsWithin 0 (Ioi 0)) := by
+    refine tendsto_nhdsWithin_iff.mpr ⟨?_, ?_⟩
+    · have hcont : ContinuousAt (fun r : ℝ => 1 - r) 1 := by
+        fun_prop
+      simpa using hcont.tendsto.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with r hr
+      change r < 1 at hr
+      exact sub_pos.mpr hr
+  have hquotient :
+      Tendsto (fun r : ℝ => 2 / (1 - r))
+        (nhdsWithin 1 (Iio 1)) atTop := by
+    have hinverse := tendsto_inv_nhdsGT_zero.comp hgap
+    simpa only [Function.comp_apply, div_eq_mul_inv] using
+      hinverse.const_mul_atTop (by norm_num : (0 : ℝ) < 2)
+  have hdenominator :
+      Tendsto (fun r : ℝ => Real.log (2 / (1 - r)))
+        (nhdsWithin 1 (Iio 1)) atTop :=
+    Real.tendsto_log_atTop.comp hquotient
+  have hnearbyLog :
+      Tendsto (fun r : ℝ => Real.log ((1 + r) / 2))
+        (nhdsWithin 1 (Iio 1)) (𝓝 0) := by
+    have hargument :
+        Tendsto (fun r : ℝ => (1 + r) / 2)
+          (nhdsWithin 1 (Iio 1)) (𝓝 1) := by
+      have hcont : ContinuousAt (fun r : ℝ => (1 + r) / 2) 1 := by
+        fun_prop
+      simpa using hcont.tendsto.mono_left nhdsWithin_le_nhds
+    convert
+      (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.comp hargument using 1
+    · rfl
+    · norm_num
+  have hradius :
+      Tendsto (fun r : ℝ => r) (nhdsWithin 1 (Iio 1)) (𝓝 1) :=
+    tendsto_id.mono_left nhdsWithin_le_nhds
+  have hnormalized :
+      Tendsto
+        (fun r : ℝ =>
+          r * (1 + Real.log ((1 + r) / 2) / Real.log (2 / (1 - r))))
+        (nhdsWithin 1 (Iio 1)) (𝓝 1) := by
+    simpa using hradius.mul
+      (tendsto_const_nhds.add (hnearbyLog.div_atTop hdenominator))
+  refine hnormalized.congr' ?_
+  filter_upwards [Ioo_mem_nhdsLT (show (0 : ℝ) < 1 by norm_num)] with r hr
+  rcases hr with ⟨hr0, hr1⟩
+  have hgapPositive : 0 < 1 - r := sub_pos.mpr hr1
+  have hgap0 : 1 - r ≠ 0 := hgapPositive.ne'
+  have hplusPositive : 0 < (1 + r) / 2 := by positivity
+  have hplus0 : (1 + r) / 2 ≠ 0 := hplusPositive.ne'
+  have hscaledGap0 : 2 / (1 - r) ≠ 0 := div_ne_zero (by norm_num) hgap0
+  have hlogSplit :
+      Real.log ((1 + r) / (1 - r)) =
+        Real.log (2 / (1 - r)) + Real.log ((1 + r) / 2) := by
+    rw [← Real.log_mul hscaledGap0 hplus0]
+    congr 1
+    field_simp [hgap0]
+  have hdenominator0 : Real.log (2 / (1 - r)) ≠ 0 := by
+    apply ne_of_gt
+    apply Real.log_pos
+    apply (lt_div_iff₀ hgapPositive).2
+    linarith
+  rw [Real.artanh_eq_half_log (show r ∈ Icc (-1 : ℝ) 1 by constructor <;> linarith),
+    hlogSplit]
+  field_simp [hdenominator0]
+
 /-- **Unified pinching-fee law.** Along `r = 1 - 2tx`, the exact binary-entropy fee is
 asymptotic to `t` times the uniform transition coefficient. Its correction tends to one at the
 pure-state end, while the fixed-gap scaling tends to `log (2/u)`. For fixed `0 < r < 1`, returning
-to `t = delta^2/4` gives the coefficient `r * artanh r / 2`. -/
-theorem unified_pinching_fee_law (x r : ℝ)
-    (hx : 0 ≤ x) (hr0 : 0 < r) (hr1 : r < 1) :
-    Tendsto
+to `t = delta^2/4` gives the coefficient `r * artanh r / 2`. These two mixed-end coefficients
+agree asymptotically in the separate gate-closing regime `r -> 1` from below. -/
+theorem unified_pinching_fee_law :
+    (∀ x : ℝ, 0 ≤ x →
+      Tendsto
         (fun t : ℝ => boundaryPinchingFee t x / (t * transitionLeading t x))
-        (nhdsWithin 0 (Ioi 0)) (𝓝 1) ∧
+        (nhdsWithin 0 (Ioi 0)) (𝓝 1)) ∧
       Tendsto transitionCorrection (nhdsWithin 0 (Ioi 0)) (𝓝 1) ∧
-      Tendsto
+      (∀ r : ℝ, r < 1 →
+        Tendsto
           (fun y : ℝ => transitionLeading (doorGap r / (2 * y)) y)
-          atTop (𝓝 (Real.log (2 / doorGap r))) ∧
-      Tendsto
+          atTop (𝓝 (Real.log (2 / doorGap r)))) ∧
+      (∀ r : ℝ, 0 < r → r < 1 →
+        Tendsto
           (fun delta : ℝ => quadraticPinchingFee r (handTremor delta) / delta ^ 2)
-          (nhdsWithin 0 (Ioi 0)) (𝓝 (r * Real.artanh r / 2)) := by
-  exact ⟨boundary_pinching_fee_ratio x hx, transition_correction_pure_limit,
-    transition_leading_mixed_limit r hr1, mixed_state_delta_coefficient r hr0 hr1⟩
+          (nhdsWithin 0 (Ioi 0)) (𝓝 (r * Real.artanh r / 2))) ∧
+      Tendsto
+        (fun r : ℝ => 2 * r * Real.artanh r / Real.log (2 / (1 - r)))
+        (nhdsWithin 1 (Iio 1)) (𝓝 1) := by
+  exact ⟨fun x hx => boundary_pinching_fee_ratio x hx,
+    transition_correction_pure_limit,
+    fun r hr1 => transition_leading_mixed_limit r hr1,
+    fun r hr0 hr1 => mixed_state_delta_coefficient r hr0 hr1,
+    mixed_end_constants_bridge⟩
 
 #print axioms unified_pinching_fee_law
 

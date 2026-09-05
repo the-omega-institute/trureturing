@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:ce2173c923ad64a0a2ee48105daa6994054cddd8220fc78a91947a28bd5c7568
+  normalized_sha256: sha256:ce2173c923ad64a0a2ee48105daa6994054cddd8220fc78a91947a28bd5c7568
+cas_ref: sha256:ce2173c923ad64a0a2ee48105daa6994054cddd8220fc78a91947a28bd5c7568
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Whole-atom multi-clause guard after formalization. Frozen carrier `D5/S3/QuantumChannels/UnifiedPinchingFee.unified_pinching_fee_law` with statement ID `sha256:39c94430a5b7ee555a59302fd00fc62bc38f598d40980a51da541d6efe895cf1` publicly states the fixed-coordinate fee ratio for every `x >= 0`, the premise-free pure endpoint, the large-coordinate profile for every `r < 1`, the quadratic coefficient for every `0 < r < 1`, and the gate-closing equivalence of `2*r*artanh(r)` with `log(2/(1-r))` as `r` approaches one from below. Public definitions `handTremor`, `doorGap`, `boundaryRadius`, `quadraticPinchingFee`, and `transitionLeading` expose the source coordinates and exact fee. The fixed-coordinate ratio and large-coordinate profile are separate regimes and are not composed into one limit. The source sentence `跨越区验票比值 1.0000→0.9946 [数]` is a computational report and is uncarried as `计算实验,不形式化`; the cover writer has no unresolved-subitem input for this report because the evaluator records no gap, so adding a coverage edge would incorrectly project the atom as absorbed-closed."
+    reentry_condition: "Add source errata that demotes `跨越区验票比值 1.0000→0.9946 [数]` to a computational remark and states that `即` means coefficient equivalence only in the gate-closing regime `r → 1⁻`, then cover this atom with `D5/S3/QuantumChannels/UnifiedPinchingFee.unified_pinching_fee_law`; alternatively add a certified numerical declaration for the reported crossover values and a public theorem connecting it to the transition fee before covering."
+    blocker_class: multi-clause-guard
