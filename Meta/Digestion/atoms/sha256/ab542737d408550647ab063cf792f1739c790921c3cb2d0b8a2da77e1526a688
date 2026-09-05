@@ -1,0 +1,77 @@
+## C18.1 单矩形证书
+
+对每个离轴有理矩形 $R$，一个完整 finite certificate 可由下列数据组成：
+
+1. 一个有限维 holomorphic transfer $T_N(s)$；
+2. 一个无零 analytic unit $U_N(s)$；
+3. scalar approximant：
+
+$$
+D_N(s)=U_N(s)\det T_N(s);
+\tag{C18.1}
+$$
+
+4. $E_N=T_N^*T_N$ 的 visible–hidden block decomposition；
+5. 整个 $\overline R$ 上：
+
+$$
+D\succeq dI,
+\qquad
+S\succeq\kappa I,
+\qquad
+\|B\|\le b;
+\tag{C18.2}
+$$
+
+6. unit floor：
+
+$$
+|U_N|\ge u>0;
+\tag{C18.3}
+$$
+
+7. certified analytic error：
+
+$$
+\sup_{\partial R}|\Xi-D_N|
+<
+u
+\left(
+\frac{\min\{\kappa,d\}}{(1+b/d)^2}
+\right)^{d_N/2}.
+\tag{C18.4}
+$$
+
+由式 (C18.2)，$T_N$ 在整个矩形内可逆，所以：
+
+$$
+N_{D_N}(R)=0.
+\tag{C18.5}
+$$
+
+由式 (C18.4) 和 Rouché：
+
+$$
+N_\Xi(R)=0.
+\tag{C18.6}
+$$
+
+### 条件定理 C18.1　countable rational certificate criterion implies RH
+
+若每个：
+
+$$
+R\in\mathfrak R_{\mathbb Q}^{\rm off}
+$$
+
+都具有上述某个 finite certificate，则：
+
+$$
+\boxed{\mathrm{RH}.}
+\tag{C18.7}
+$$
+
+#### 证明
+
+每个离轴有理矩形都无零，再用定理 C12.1。
+

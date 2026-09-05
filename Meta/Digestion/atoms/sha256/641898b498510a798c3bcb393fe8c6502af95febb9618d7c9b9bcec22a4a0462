@@ -1,0 +1,6 @@
+- 纵向 phase de-aliasing 深度由 $T\log p$ 控制。
+
+二者共同决定一个有限 RH observer 所需的 Zeckendorf depth。
+
+---
+

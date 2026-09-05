@@ -1,0 +1,25 @@
+## C17.1 label scalarization escape
+
+两个 labelled primes：
+
+$$
+(p^{-u},q^{-u})
+$$
+
+忠实，但乘积：
+
+$$
+(pq)^{-u}
+$$
+
+重新产生 phase alias。
+
+修复对象是：
+
+$$
+\boxed{
+\text{pair / ratio / exterior / ordered holonomy readout}.
+}
+\tag{C17.1}
+$$
+

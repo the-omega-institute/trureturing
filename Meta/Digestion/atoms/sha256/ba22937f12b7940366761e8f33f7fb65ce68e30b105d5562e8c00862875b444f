@@ -1,0 +1,35 @@
+## C14.1 analytic transfer 与 Hermitianization
+
+设：
+
+$$
+T_N(s)\in M_{d_N}(\mathbb C)
+\tag{C14.1}
+$$
+
+在矩形邻域逐项 holomorphic。定义：
+
+$$
+E_N(s)
+=
+T_N(s)^*T_N(s)
+\succeq0.
+\tag{C14.2}
+$$
+
+$E_N$ 不 holomorphic，但：
+
+$$
+\ker E_N(s)=\ker T_N(s),
+\tag{C14.3}
+$$
+
+并且：
+
+$$
+|\det T_N(s)|^2
+=
+\det E_N(s).
+\tag{C14.4}
+$$
+
