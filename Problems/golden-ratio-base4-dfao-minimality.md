@@ -68,8 +68,6 @@ representation length of each digit position can be arbitrarily large.
   normalization.
 - `GoldenContinuedFraction` and Fibonacci scale give the golden/Ostrowski
   arithmetic that underlies the digit extractor.
-- `ZeckendorfOrder` and the Beatty bridge may support exact generation of
-  constrained positive and negative examples without floating-point phi.
 - The remaining task is automata-theoretic minimality on a sparse input
   language, so the connection is real but one layer farther from existing
   machinery than the other five candidates.
@@ -406,3 +404,159 @@ base-b representation of quadratic irrationals using automata*, Theoretical
 Computer Science 1071 (2026), 115843, DOI `10.1016/j.tcs.2026.115843`.
 The author's extended manuscript is `https://cs.curtisbright.com/reports/digits-automata.pdf`;
 Section 6 supplies the reported state-count and sparse-task context.
+
+## 2026-09-05 formal continuation: direct invariant and exact M01 input transport
+
+Two source modules now supply the complete upper-construction argument against
+M01's existing input and digit functions:
+
+- `D5/S1/Digit/GoldenBase4IntervalMachine.lean`;
+- `D5/S1/Digit/GoldenBase4DenseInput.lean`.
+
+Each has a source-bound Scribe companion under `Blueprint/D5/S1/Digit/`.
+The first was committed at `e9307a6d4c6bf064bc74c2cbefd0a996e2214e37`;
+the second at `c54dd3255e4e00a30420ad778be4293cba6d3ef5`.
+This section updates the proof frontier of the preceding research deposit.
+The scripts have not been elaborated by the pinned Lean executable in this
+session. Kernel verification, axiom-closure output and repository admission are
+not asserted. The exact arithmetic checks below are separate executable evidence.
+
+### A smaller correctness argument for the fixed table
+
+The previous derivation described the artificial cuts through irrationality and
+membership in `Z[phi]`. Those facts help explain how the partition was found,
+but are not necessary premises for correctness of this explicit table.
+
+For a word `w`, `fibPair w` is defined using the standard upstream `Nat.fib`
+weights. Its components are the value of `w` and its shifted value. The theorem
+`fibPair_append_digit` derives the update `(q,v) -> (v+a,q+v+2a)`.
+`error_append_digit` then proves the exact affine update
+
+\[
+e(wa)=(1-\varphi)e(w)-a(1-\varphi)^2
+\]
+
+from `Real.goldenRatio_sq`. All machine runs use the existing
+`TypedPartialDFAO` and `runTransition`; no replacement run semantics is introduced.
+
+Let `C_q` be the interval assigned to state `q`, with `C_0={0}`. For every
+noninitial legal transition `q --a--> t`, the finite certificate proves
+
+\[
+t\ne0,\qquad
+\ell_t\le f_a(u_q),\qquad f_a(\ell_q)\le u_t.
+\]
+
+Since the affine slope is negative, these inequalities imply
+`e in C_q -> f_a(e) in C_t`. The two transitions from the singleton are checked
+separately. `initial_cell` starts the induction. Thus every reached error lies
+in its state cell without first proving that a family of cells covers the
+whole real domain, and without an assumption excluding unreachable cut points.
+
+For each state the source supplies an integer strip `m_q` and proves
+
+\[
+m_q+d_q/4\le e<m_q+(d_q+1)/4.
+\]
+
+This identifies both floors and hence the emitted digit. The separate theorem
+`legal_run_exists` shows that every legal base word has a successful machine
+run. This is necessary: correctness conditioned only on successful runs could
+otherwise leave required inputs undefined. Combining these results gives
+`every_legal_word_correct`, for words of arbitrary length.
+
+### Connecting the unchanged canonical input to the invariant
+
+The second module closes the source-level M01 transport obligation rather than
+assuming an encoder-correctness field. It uses the existing `wdigits`,
+`zeckendorfWordLength`, `zeckendorfBit`, and `zeckendorfMSDWord` unchanged.
+
+Upstream `wdigits_isCanonical` gives descending indices separated by at least
+two and bounded below by two. `occupied_index_bounds` places all those indices
+inside the existing dense display. A finite bijection `i -> i+2` identifies the
+selected dense positions with the occupied Fibonacci indices. Together with
+`decode_wdigits`, this yields
+
+\[
+\operatorname{fibPair}(\operatorname{zeckendorfMSDWord}(n))_1=n.
+\]
+
+The guarded induction `separated_bits_run` proves legality of the dense word.
+Entry from the previous-one type requires the next bit to be zero; the proof
+retains that condition rather than resetting the type. It follows that the
+same canonical M01 word has both its exact value and a legal shared-base run.
+
+The endpoint is the following source theorem, with the original M01 functions:
+
+```lean
+theorem twenty_one_state_power_witness :
+    ∃ M : TypedPartialDFAO binaryZeckendorfBase (Fin 4) (Fin 21),
+      (∀ i, M.evalOutput (base4PowerWord i) = some (base4GoldenDigit i)) ∧
+      M.step M.start 0 = some M.start ∧ M.output M.start = 0
+```
+
+The witness is the explicit interval machine. The argument has no finite sample
+extent, no supplied global-correctness hypothesis, and no assumption that a
+chosen input encoder means the desired integer. The original M01 arithmetic
+and dense word are connected by proofs. This supplies a source-level upper
+construction for the concrete task; it does not supply a sparse state lower bound.
+
+### Executed checks on the actual source tables
+
+`check_interval_source.py` parses the finite vector literals in the Lean source
+itself. It reduces algebraic coefficients using `phi^2=phi+1` and uses the exact
+rational bracket `8/5 < phi < 13/8`. It checked all 35 legal transitions, the 66
+noninitial endpoint inequalities, the singleton cases, and all 21 output cells.
+Four mutations of a zero target, a one target, an output and an endpoint were
+rejected. An additional 16,382 finite word-and-appended-bit checks passed for
+the Fibonacci pair recurrence, including noncanonical binary words.
+
+`check_dense_input.py` checked 20,000 consecutive integers and 1,000 power
+inputs, indices 0 through 999. Each case checks the occupied-index bounds,
+separation, range bijection, dense Fibonacci value, legal machine run and exact
+integer-square-root digit oracle. The display of zero is `[0]`, as in M01.
+No floating-point arithmetic is used. These runs do not execute Lean and are
+not substitutes for kernel checking of the universal statements.
+
+The source SHA-256 values for the checked files are:
+
+```
+GoldenBase4IntervalMachine.lean
+6e1de8d37db9ffff38b286079dfcd9a0c4b355a87ceefd164f5b3dafe3d91a55
+GoldenBase4DenseInput.lean
+78c213ad2e9ab3c6709b4c352cb5d8b0d9b61c8c1898534297832a9b7dd8e113
+```
+
+The source-bound interval and dense-input checks can be replayed with:
+
+```sh
+python Evidence/D5/Automata/GoldenBase4/check_interval_source.py \
+  D5/S1/Digit/GoldenBase4IntervalMachine.lean
+python Evidence/D5/Automata/GoldenBase4/check_dense_input.py \
+  D5/S1/Digit/GoldenBase4IntervalMachine.lean
+```
+
+The two Lean files expose 21 public theorem declarations, each with a Scribe
+binding, and the interval Scribe also binds the concrete machine definition.
+No `sorry`, `admit` or newly postulated axiom is used in these new source files.
+
+### The remaining minimum-state question
+
+The exact powers-only minimum is still undetermined. This continuation does
+not increase the published total-state lower bound 15 and does not provide
+refutations for all total budgets through 20. The existing three-transient-state
+refutation and its `s >= 4` consequence still need their Lean checker-soundness
+and transport proofs. They are not asserted to be kernel-certified here.
+
+The author's extended manuscript uses MSD-first inputs and the same zero-based
+digit convention, and reports a 22-state base-four Walnut construction. Its
+original base-four table has not been obtained for a state-by-state comparison.
+The present 21-state upper construction does not identify why that reported
+number differs. A sink explanation, a paper correction and a priority claim
+are not supplied by the construction alone.
+
+After verification of the submitted upper proof, the decisive remaining result
+is either a smaller all-powers-correct machine or complete certified exclusion
+of machines with at most twenty states. The seven budget rectangles recorded
+above remain the relevant coupled lower-bound targets. All-integer distinguishing
+suffixes cannot replace the powers-only sample obligations in those targets.
