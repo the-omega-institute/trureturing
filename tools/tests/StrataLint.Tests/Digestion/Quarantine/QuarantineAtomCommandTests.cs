@@ -24,7 +24,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void QuarantineRequestRejectsUnknownKeyWithoutWriting()
     {
-        using var execution = Execute(
+        var execution = Execute(
             Request() + "unexpected = \"value\"\n");
 
         AssertInvalid(execution, "REQUEST_KEYS_INVALID");
@@ -33,7 +33,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void QuarantineRequestRejectsMissingKeyWithoutWriting()
     {
-        using var execution = Execute(Request().Replace(
+        var execution = Execute(Request().Replace(
             $"reentry_condition = \"{ReentryCondition}\"\n",
             string.Empty,
             StringComparison.Ordinal));
@@ -44,7 +44,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void QuarantineRequestRejectsUnknownBlockerClassWithoutWriting()
     {
-        using var execution = Execute(Request(blockerClass: "unknown-blocker"));
+        var execution = Execute(Request(blockerClass: "unknown-blocker"));
 
         AssertInvalid(execution, "BLOCKER_CLASS_UNKNOWN");
         Assert.Contains($"atom_id={AtomId}", execution.Console.Error, StringComparison.Ordinal);
@@ -58,7 +58,7 @@ public sealed class QuarantineAtomCommandTests
         var request = field == "justification"
             ? Request(justification: "   ")
             : Request(reentryCondition: "   ");
-        using var execution = Execute(request);
+        var execution = Execute(request);
 
         AssertInvalid(execution, "REQUEST_VALUE_BLANK");
         Assert.Contains($"atom_id={AtomId}", execution.Console.Error, StringComparison.Ordinal);
@@ -67,7 +67,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void QuarantineRejectsAbsentAtomWithoutWriting()
     {
-        using var execution = Execute(Request(atomId: OtherAtomId));
+        var execution = Execute(Request(atomId: OtherAtomId));
 
         AssertInvalid(execution, "ATOM_ABSENT");
     }
@@ -75,7 +75,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void QuarantineRejectsAmbiguousAtomWithoutWriting()
     {
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("first", Entry(sourceId: "first")), Source("second", Entry(sourceId: "second"))]);
 
@@ -85,7 +85,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void QuarantineRejectsEntryWithCoverageWithoutWriting()
     {
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("source", Entry(coverage: [new DigestionCoverageEdge(
                 "D5/S0/Carrier/Probe.probe",
@@ -101,7 +101,7 @@ public sealed class QuarantineAtomCommandTests
             new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
             ["D5/S0/Carrier/Probe.probe"],
             [new DigestionDispositionGap("unresolved-subitem", "remaining theorem clause")]);
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("source", Entry(receipts: Receipts(disposition: disposition)))]);
 
@@ -111,7 +111,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void QuarantineRejectsEntryOutsideResidualOpenWithoutWriting()
     {
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("source", Entry(migration: DigestionMigrationState.Partial))]);
 
@@ -122,7 +122,7 @@ public sealed class QuarantineAtomCommandTests
     public void IdenticalQuarantineRerunIsSuccessfulAndByteStable()
     {
         var quarantine = new DigestionQuarantine(Justification, ReentryCondition, BlockerClass);
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("source", Entry(receipts: Receipts(quarantine: quarantine)))]);
 
@@ -132,15 +132,16 @@ public sealed class QuarantineAtomCommandTests
             $"QUARANTINE_WRITTEN atom_id={AtomId} blocker_class={BlockerClass}",
             execution.Console.Output,
             StringComparison.Ordinal);
-        Assert.Equal(execution.BeforeImage, execution.AfterImage);
+        Assert.Empty(ChangedPaths(execution));
         Assert.Equal(0, execution.WriteAtomCalls);
+        Assert.Equal(0, execution.ApplyCalls);
     }
 
     [Fact]
     public void ConflictingQuarantineFailsWithoutWriting()
     {
         var quarantine = new DigestionQuarantine("different reason", ReentryCondition, BlockerClass);
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("source", Entry(receipts: Receipts(quarantine: quarantine)))]);
 
@@ -151,7 +152,7 @@ public sealed class QuarantineAtomCommandTests
     public void ReplaceUpdatesAConflictingQuarantineExplicitly()
     {
         var quarantine = new DigestionQuarantine("different reason", ReentryCondition, BlockerClass);
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("source", Entry(receipts: Receipts(quarantine: quarantine)))],
             ["quarantine-atom", "--request", "quarantine-request.toml", "--base", "baseline", "--replace"]);
@@ -171,7 +172,7 @@ public sealed class QuarantineAtomCommandTests
     public void ClearRemovesTheExistingQuarantineFromOneAtom()
     {
         var quarantine = new DigestionQuarantine(Justification, ReentryCondition, BlockerClass);
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("source", Entry(receipts: Receipts(quarantine: quarantine)))],
             ["quarantine-atom", "--clear", AtomId, "--base", "baseline"]);
@@ -186,7 +187,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void ClearRejectsAtomWithoutQuarantineAndDoesNotWrite()
     {
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             arguments: ["quarantine-atom", "--clear", AtomId, "--base", "baseline"]);
 
@@ -196,7 +197,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void SetPreservesNonEmptyUnresolvedSubitemsByteExactly()
     {
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("source", Entry(receipts: Receipts(unresolvedSubitems: UnresolvedSubitems)))]);
 
@@ -210,7 +211,7 @@ public sealed class QuarantineAtomCommandTests
     public void ReplacePreservesNonEmptyUnresolvedSubitemsByteExactly()
     {
         var quarantine = new DigestionQuarantine("different reason", ReentryCondition, BlockerClass);
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source(
                 "source",
@@ -229,7 +230,7 @@ public sealed class QuarantineAtomCommandTests
     public void ClearPreservesNonEmptyUnresolvedSubitemsByteExactly()
     {
         var quarantine = new DigestionQuarantine(Justification, ReentryCondition, BlockerClass);
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source(
                 "source",
@@ -245,7 +246,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void ValidQuarantineChangesExactlyOneShardAndRoundTrips()
     {
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             [Source("source", Entry(), Entry(OtherAtomId))]);
 
@@ -255,6 +256,8 @@ public sealed class QuarantineAtomCommandTests
             [$"{BackfillInventoryLoader.RootPath}source/residual-open/{AtomId}.yaml"],
             ChangedPaths(execution));
         Assert.Equal(["baseline"], execution.Repository.ReadRevisionCalls);
+        Assert.Equal(1, execution.RequestReadCalls);
+        Assert.Equal(1, execution.ApplyCalls);
         var entry = Assert.Single(
             Load(execution).RequireDigestionEntries(),
             candidate => candidate.AtomId == AtomId);
@@ -271,7 +274,7 @@ public sealed class QuarantineAtomCommandTests
     [Fact]
     public void QuarantineRejectsWriterOutputThatDoesNotRoundTrip()
     {
-        using var execution = Execute(
+        var execution = Execute(
             Request(),
             writeAtom: static entry => BackfillInventoryWriter.WriteAtom(entry).AddRange(
                 Encoding.UTF8.GetBytes("unexpected: value\n")));
@@ -284,14 +287,18 @@ public sealed class QuarantineAtomCommandTests
     public void CliApplicationDispatchesQuarantineAtom()
     {
         Assert.Contains("quarantine-atom", CliApplication.ImplementedCommands);
+        var environment = new QuarantineCliEnvironment();
+        var console = new BufferedConsole();
 
-        using var execution = Execute(
-            Request(),
-            requestPathIsAbsolute: true,
-            dispatchThroughCli: true);
+        var exitCode = CliApplication.Run(
+            ["quarantine-atom", "--synthetic-request"],
+            environment,
+            console);
 
-        Assert.Equal(0, execution.ExitCode);
-        Assert.DoesNotContain("UNKNOWN_COMMAND", execution.Console.Error, StringComparison.Ordinal);
+        Assert.Equal(0, exitCode);
+        Assert.Equal(["--synthetic-request"], environment.Arguments);
+        Assert.Equal("QUARANTINE_DISPATCHED\n", console.Output);
+        Assert.Equal(string.Empty, console.Error);
     }
 
     private static void AssertInvalid(QuarantineExecution execution, string reason)
@@ -299,8 +306,8 @@ public sealed class QuarantineAtomCommandTests
         Assert.NotEqual(0, execution.ExitCode);
         Assert.StartsWith($"QUARANTINE_INVALID {reason}", execution.Console.Error, StringComparison.Ordinal);
         Assert.Equal(string.Empty, execution.Console.Output);
-        Assert.Equal(execution.BeforeImage, execution.AfterImage);
         Assert.Empty(ChangedPaths(execution));
+        Assert.Equal(0, execution.ApplyCalls);
         if (!string.Equals(reason, "ROUND_TRIP_FAILED", StringComparison.Ordinal))
         {
             Assert.Equal(0, execution.WriteAtomCalls);
@@ -319,54 +326,58 @@ public sealed class QuarantineAtomCommandTests
                 quarantine: quarantine,
                 unresolvedSubitems: UnresolvedSubitems)));
         var path = $"{BackfillInventoryLoader.RootPath}source/residual-open/{AtomId}.yaml";
-        Assert.True(expected.AsSpan().SequenceEqual(execution.AfterFiles[path]));
+        var actual = Assert.Single(execution.After.Entries, entry => entry.Path == path).Bytes;
+        Assert.True(expected.AsSpan().SequenceEqual(actual.AsSpan()));
     }
 
     private static BackfillInventoryDocument Load(QuarantineExecution execution) =>
-        BackfillInventoryLoader.LoadRoot(execution.RepositoryRoot.Path);
+        BackfillInventoryLoader.Load(
+            Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+                SnapshotDecoder.Decode(execution.After)).Snapshot);
 
     private static string[] ChangedPaths(QuarantineExecution execution) =>
-        execution.BeforeFiles.Keys
-            .Union(execution.AfterFiles.Keys, StringComparer.Ordinal)
-            .Where(path => !execution.BeforeFiles.TryGetValue(path, out var before)
-                || !execution.AfterFiles.TryGetValue(path, out var after)
-                || !before.AsSpan().SequenceEqual(after))
+        execution.Before.Entries.Select(static entry => entry.Path)
+            .Union(execution.After.Entries.Select(static entry => entry.Path), StringComparer.Ordinal)
+            .Where(path => !TryGetBytes(execution.Before, path, out var before)
+                || !TryGetBytes(execution.After, path, out var after)
+                || !before.AsSpan().SequenceEqual(after.AsSpan()))
             .Order(StringComparer.Ordinal)
             .ToArray();
+
+    private static bool TryGetBytes(
+        RawRepositorySnapshot snapshot,
+        string path,
+        out ImmutableArray<byte> bytes)
+    {
+        var entry = snapshot.Entries.SingleOrDefault(candidate => candidate.Path == path);
+        bytes = entry?.Bytes ?? default;
+        return entry is not null;
+    }
 
     private static QuarantineExecution Execute(
         string request,
         ImmutableArray<DigestionLedgerSource> sources = default,
         IReadOnlyList<string>? arguments = null,
-        bool requestPathIsAbsolute = false,
-        Func<DigestionLedgerEntry, ImmutableArray<byte>>? writeAtom = null,
-        bool dispatchThroughCli = false)
+        Func<DigestionLedgerEntry, ImmutableArray<byte>>? writeAtom = null)
     {
         if (sources.IsDefault)
         {
             sources = [Source("source", Entry())];
         }
 
-        var repositoryRoot = new TemporaryDirectory();
         var files = LedgerFiles(sources);
-        DirectoryLedgerTestSupport.Write(repositoryRoot.Path, files);
-        var requestPath = Path.Combine(repositoryRoot.Path, "quarantine-request.toml");
-        File.WriteAllText(requestPath, request, new UTF8Encoding(false));
-        var beforeFiles = RepositoryFiles(repositoryRoot.Path);
-        var beforeImage = DirectoryLedgerTestSupport.RepositoryImage(repositoryRoot);
-        var raw = RawRepositorySnapshot.Create(files.Select(static pair =>
-            RawRepositoryEntry.FromText(pair.Key, pair.Value)));
-        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw);
-        var environment = new ProductionCliEnvironment(
-            repositoryRoot.Path,
-            gateway,
-            new FakeLeanReportSource(null));
-        var console = new BufferedConsole();
+        var before = RawRepositorySnapshot.Create(files.Select(static pair =>
+                RawRepositoryEntry.FromText(pair.Key, pair.Value))
+            .Append(new RawRepositoryEntry(
+                TheoryAtomizerDataLoader.DataPath,
+                ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes))));
+        var after = before;
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), before, before);
         var effectiveArguments = arguments ??
         [
             "quarantine-atom",
             "--request",
-            requestPathIsAbsolute ? requestPath : "quarantine-request.toml",
+            "quarantine-request.toml",
             "--base",
             "baseline",
         ];
@@ -378,34 +389,51 @@ public sealed class QuarantineAtomCommandTests
             return (writeAtom ?? BackfillInventoryWriter.WriteAtom)(entry);
         }
 
-        int exitCode;
-        if (dispatchThroughCli)
+        var requestReadCalls = 0;
+        ImmutableArray<byte> ReadRequest(string repositoryRoot, string requestedPath)
         {
-            exitCode = CliApplication.Run(effectiveArguments, environment, console);
+            requestReadCalls++;
+            Assert.Equal("synthetic-repository", repositoryRoot);
+            Assert.Equal("quarantine-request.toml", requestedPath);
+            return ImmutableArray.CreateRange(new UTF8Encoding(false, true).GetBytes(request));
         }
-        else
+
+        var applyCalls = 0;
+        void CaptureUpdate(
+            string repositoryRoot,
+            RawRepositorySnapshot current,
+            ImmutableArray<IngestCommand.LedgerUpdate> updates)
         {
-            var result = QuarantineAtomCommand.Run(
-                repositoryRoot.Path,
-                gateway,
-                effectiveArguments.Skip(1).ToArray(),
-                CountedWriteAtom);
-            console.WriteOutput(result.Output);
-            console.WriteError(result.Error);
-            exitCode = result.ExitCode ?? (result.Success ? 0 : 2);
+            applyCalls++;
+            Assert.Equal("synthetic-repository", repositoryRoot);
+            Assert.Same(before, current);
+            var update = Assert.Single(updates);
+            var bytes = Assert.IsType<ImmutableArray<byte>>(update.Bytes);
+            after = RawRepositorySnapshot.Create(current.Entries.Select(entry =>
+                entry.Path == update.Path
+                    ? new RawRepositoryEntry(entry.Path, bytes, entry.GitBlobOid)
+                    : entry));
         }
-        var afterFiles = RepositoryFiles(repositoryRoot.Path);
-        var afterImage = DirectoryLedgerTestSupport.RepositoryImage(repositoryRoot);
+
+        var result = QuarantineAtomCommand.Run(
+            "synthetic-repository",
+            gateway,
+            effectiveArguments.Skip(1).ToArray(),
+            CountedWriteAtom,
+            ReadRequest,
+            CaptureUpdate);
+        var console = new BufferedConsole();
+        console.WriteOutput(result.Output);
+        console.WriteError(result.Error);
         return new QuarantineExecution(
-            repositoryRoot,
             gateway,
             console,
-            exitCode,
-            beforeFiles,
-            afterFiles,
-            beforeImage,
-            afterImage,
-            writeAtomCalls);
+            result.ExitCode ?? (result.Success ? 0 : 2),
+            before,
+            after,
+            writeAtomCalls,
+            requestReadCalls,
+            applyCalls);
     }
 
     private static Dictionary<string, string> LedgerFiles(
@@ -428,14 +456,6 @@ public sealed class QuarantineAtomCommandTests
 
         return result;
     }
-
-    private static Dictionary<string, byte[]> RepositoryFiles(string repositoryRoot) =>
-        Directory.EnumerateFiles(repositoryRoot, "*", SearchOption.AllDirectories)
-            .ToDictionary(
-                path => Path.GetRelativePath(repositoryRoot, path)
-                    .Replace(Path.DirectorySeparatorChar, '/'),
-                File.ReadAllBytes,
-                StringComparer.Ordinal);
 
     private static DigestionLedgerSource Source(
         string sourceId,
@@ -489,16 +509,52 @@ public sealed class QuarantineAtomCommandTests
         + $"reentry_condition = \"{reentryCondition}\"\n";
 
     private sealed record QuarantineExecution(
-        TemporaryDirectory RepositoryRoot,
         FakeRepositoryGateway Repository,
         BufferedConsole Console,
         int ExitCode,
-        Dictionary<string, byte[]> BeforeFiles,
-        Dictionary<string, byte[]> AfterFiles,
-        string BeforeImage,
-        string AfterImage,
-        int WriteAtomCalls) : IDisposable
+        RawRepositorySnapshot Before,
+        RawRepositorySnapshot After,
+        int WriteAtomCalls,
+        int RequestReadCalls,
+        int ApplyCalls);
+
+    private sealed class QuarantineCliEnvironment : ICliEnvironment
     {
-        public void Dispose() => RepositoryRoot.Dispose();
+        internal IReadOnlyList<string> Arguments { get; private set; } = [];
+
+        public CommandResult QuarantineAtom(IReadOnlyList<string> arguments)
+        {
+            Arguments = arguments.ToArray();
+            return new CommandResult(true, "QUARANTINE_DISPATCHED\n", string.Empty);
+        }
+
+        public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) => throw Unsupported();
+        public AdmissionOutcome Check(IReadOnlyList<string> arguments) => throw Unsupported();
+        public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult Coverage(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult DigestStatus(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult ShowAtom(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult Ingest(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult CoverAtom(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult Route(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult SelfTest(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult RenderDag(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult AlignLedger(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult AppendLedger(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult RevokeLedger(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult ReanchorMathlibLedger(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult CleanLanes(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult Worktree(IReadOnlyList<string> arguments) => throw Unsupported();
+
+        private static NotSupportedException Unsupported() => new();
     }
 }

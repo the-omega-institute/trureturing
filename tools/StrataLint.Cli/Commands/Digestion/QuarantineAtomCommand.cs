@@ -24,24 +24,35 @@ internal static class QuarantineAtomCommand
         string repositoryRoot,
         IRepositoryGateway repository,
         IReadOnlyList<string> arguments) =>
-        Run(repositoryRoot, repository, arguments, BackfillInventoryWriter.WriteAtom);
+        Run(
+            repositoryRoot,
+            repository,
+            arguments,
+            BackfillInventoryWriter.WriteAtom,
+            ReadRequestBytes,
+            static (root, current, updates) =>
+                IngestCommand.ApplyLedgerUpdatesAtomically(root, current, updates));
 
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
         IReadOnlyList<string> arguments,
-        Func<DigestionLedgerEntry, ImmutableArray<byte>> writeAtom)
+        Func<DigestionLedgerEntry, ImmutableArray<byte>> writeAtom,
+        Func<string, string, ImmutableArray<byte>> readRequest,
+        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>> applyUpdates)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(writeAtom);
+        ArgumentNullException.ThrowIfNull(readRequest);
+        ArgumentNullException.ThrowIfNull(applyUpdates);
         try
         {
             var options = ParseArguments(arguments);
             var request = options.RequestPath is null
                 ? null
-                : LoadRequest(repositoryRoot, options.RequestPath);
+                : LoadRequest(repositoryRoot, options.RequestPath, readRequest);
             var atomId = request?.AtomId ?? options.ClearAtomId!;
             var currentRaw = repository.ReadCurrent();
             _ = repository.ReadRevision(options.BaseRevision);
@@ -62,7 +73,7 @@ internal static class QuarantineAtomCommand
                 {
                     Receipts = target.Receipts with { Quarantine = null },
                 };
-                Write(repositoryRoot, currentRaw, path, cleared, writeAtom);
+                Write(repositoryRoot, currentRaw, path, cleared, writeAtom, applyUpdates);
                 return Success($"QUARANTINE_CLEARED atom_id={atomId} path={path}");
             }
 
@@ -87,7 +98,7 @@ internal static class QuarantineAtomCommand
             {
                 Receipts = target.Receipts with { Quarantine = planned },
             };
-            Write(repositoryRoot, currentRaw, path, updated, writeAtom);
+            Write(repositoryRoot, currentRaw, path, updated, writeAtom, applyUpdates);
             var sentinel = replacing
                 ? "QUARANTINE_REPLACED"
                 : "QUARANTINE_WRITTEN";
@@ -108,7 +119,8 @@ internal static class QuarantineAtomCommand
         RawRepositorySnapshot current,
         string path,
         DigestionLedgerEntry updated,
-        Func<DigestionLedgerEntry, ImmutableArray<byte>> writeAtom)
+        Func<DigestionLedgerEntry, ImmutableArray<byte>> writeAtom,
+        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>> applyUpdates)
     {
         ImmutableArray<byte> bytes;
         try
@@ -130,19 +142,21 @@ internal static class QuarantineAtomCommand
             throw Invalid("ROUND_TRIP_FAILED", $"atom_id={updated.AtomId} {exception.Message}");
         }
 
-        IngestCommand.ApplyLedgerUpdatesAtomically(
+        applyUpdates(
             repositoryRoot,
             current,
             [new IngestCommand.LedgerUpdate(path, bytes)]);
     }
 
-    private static QuarantineRequest LoadRequest(string repositoryRoot, string requestedPath)
+    private static QuarantineRequest LoadRequest(
+        string repositoryRoot,
+        string requestedPath,
+        Func<string, string, ImmutableArray<byte>> readRequest)
     {
-        var path = ResolveRequestPath(repositoryRoot, requestedPath);
-        byte[] bytes;
+        ImmutableArray<byte> bytes;
         try
         {
-            bytes = File.ReadAllBytes(path);
+            bytes = readRequest(repositoryRoot, requestedPath);
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
         {
@@ -162,7 +176,7 @@ internal static class QuarantineAtomCommand
         string text;
         try
         {
-            text = StrictUtf8.GetString(bytes);
+            text = StrictUtf8.GetString(bytes.AsSpan());
         }
         catch (DecoderFallbackException exception)
         {
@@ -198,6 +212,14 @@ internal static class QuarantineAtomCommand
         }
 
         return new QuarantineRequest(atomId, blockerClass, justification, reentryCondition);
+    }
+
+    private static ImmutableArray<byte> ReadRequestBytes(
+        string repositoryRoot,
+        string requestedPath)
+    {
+        var path = ResolveRequestPath(repositoryRoot, requestedPath);
+        return ImmutableArray.CreateRange(File.ReadAllBytes(path));
     }
 
     private static string RequiredString(TomlTable table, string key, string? atomId = null)
