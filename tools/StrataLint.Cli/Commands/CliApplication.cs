@@ -33,6 +33,8 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments);
+
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
     CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments);
@@ -121,6 +123,8 @@ internal static class CliApplication
                 RenderCommand(environment.AlignLedger(tail), console),
             ["ledger-append"] = static (environment, tail, console) =>
                 RenderCommand(environment.AppendLedger(tail), console),
+            ["ledger-frozen"] = static (environment, tail, console) =>
+                RenderExplicit(environment.LedgerFrozen(tail), console),
             ["ledger-revoke"] = static (environment, tail, console) =>
                 RenderCommand(environment.RevokeLedger(tail), console),
             ["ledger-reanchor-mathlib"] = static (environment, tail, console) =>

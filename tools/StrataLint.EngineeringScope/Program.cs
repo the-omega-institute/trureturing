@@ -71,18 +71,42 @@ internal static class Program
             throw new InvalidOperationException("FULL must be unset or exactly 1");
         }
 
-        var protectedBase = RevisionSnapshot(options.RepositoryRoot, @base, "protected base");
-        var candidate = RevisionSnapshot(options.RepositoryRoot, head, "candidate");
         var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
-        if (full == "1")
+        var protectedBaseRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, @base);
+        var admissionPlane = full == "1"
+            ? null
+            : AdmissionPlanePolicy.Evaluate(protectedBaseRaw, changedPaths);
+        if (admissionPlane is { IsAdmissible: false })
         {
+            throw new InvalidDataException(
+                $"{admissionPlane.Code} {admissionPlane.Path}: {admissionPlane.Message}");
+        }
+
+        var protectedBase = DecodeSnapshot(
+            full == "1" || admissionPlane?.Classification is AdmissionPlaneClassification.Bootstrap
+                ? WithoutFileMap(protectedBaseRaw)
+                : protectedBaseRaw,
+            "protected base");
+        var candidate = RevisionSnapshot(options.RepositoryRoot, head, "candidate");
+        if (full == "1" || admissionPlane!.RequiresFullEngineering())
+        {
+            var fullPlan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+                changedPaths,
+                RepositoryRules.ReadSnapshotProjects(protectedBase),
+                RepositoryRules.ReadSnapshotProjects(candidate),
+                full: true);
+            if (full != "1")
+            {
+                fullPlan = fullPlan with
+                {
+                    Reason = $"protected-base admission plane "
+                        + $"{admissionPlane!.Classification!.Value.ToString().ToLowerInvariant()} "
+                        + "requires full engineering",
+                };
+            }
             return ExecutePlan(
                 options.RepositoryRoot,
-                EngineeringTestPlanPolicy.EvaluateOrdinary(
-                    changedPaths,
-                    RepositoryRules.ReadSnapshotProjects(protectedBase),
-                    RepositoryRules.ReadSnapshotProjects(candidate),
-                    full: true));
+                fullPlan);
         }
 
         var protectedBaseController = ControllerClosure.Derive(protectedBase);
@@ -290,13 +314,22 @@ internal static class Program
         string repositoryRoot,
         string revision,
         string description) =>
-        SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadRevision(repositoryRoot, revision)) switch
+        DecodeSnapshot(GitRepositorySnapshotReader.ReadRevision(repositoryRoot, revision), description);
+
+    private static RepositorySnapshot DecodeSnapshot(
+        RawRepositorySnapshot raw,
+        string description) =>
+        SnapshotDecoder.Decode(raw) switch
         {
             SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
             SnapshotDecodeOutcome.InfrastructureFailure failure =>
                 throw new InvalidDataException($"{description} snapshot is invalid: {failure.Message}"),
             _ => throw new InvalidDataException($"{description} snapshot decode returned an unknown outcome"),
         };
+
+    private static RawRepositorySnapshot WithoutFileMap(RawRepositorySnapshot snapshot) =>
+        RawRepositorySnapshot.Create(snapshot.Entries.Where(
+            static entry => entry.Path != AdmissionPlanePolicy.FileMapPath));
 
     private sealed record Options(string RepositoryRoot, string Head, string Base)
     {

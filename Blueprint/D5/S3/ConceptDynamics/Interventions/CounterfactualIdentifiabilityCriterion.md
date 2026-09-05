@@ -4,7 +4,21 @@
 
 Counterfactual recovery from all single-world marginals is exactly constancy on coupling fibers, and complete Boolean counterfactuals fail this criterion.
 
-**Theorem 1.1 (Single-world identifiability is constancy on coupling fibers).**
+**Theorem 1.1 (Counterfactual identifiability is marginal-fiber constancy).**
+
+$$\begin{gathered}\forall Coupling, Data, Value: \operatorname{Type}, [\operatorname{Nonempty} Value],\\{}marginals: Coupling \to Data, Q: Coupling \to Value,\\{}\left(\exists f \in Data \to Value,\; Q = f \circ marginals\right) \Leftrightarrow \left(\forall c \in Coupling, cPrime \in Coupling,\; marginals\left(c\right) = marginals\left(cPrime\right) \Rightarrow Q\left(c\right) = Q\left(cPrime\right)\right).\end{gathered}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.counterfactual_identifiable_iff_constant_on_fiber` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let a marginal map send each coupling to its complete family of single-world data. A target is recoverable from those data exactly when equal marginal families force equal target values.
+
+The coupling fiber over a data value is constructed as the preimage of that value. Thus the equality-kernel condition states constancy of the target on every coupling fiber.
+
+**Theorem 1.2 (Single-world identifiability is constancy on coupling fibers).**
 
 $$\begin{gathered}\forall Value: \operatorname{Type}, [\operatorname{Nonempty} Value],\\{}Q: BooleanCoupling \to Value,\\{}\left(\exists f \in (Bool \to BooleanMarginal) \to Value,\; Q = f \circ allSingleWorldMarginals\right) \Leftrightarrow \left(\forall mu \in Bool \to BooleanMarginal, M \in BooleanCoupling, N \in BooleanCoupling,\; \left(M \in couplingFiber\left(allSingleWorldMarginals, mu\right) \land N \in couplingFiber\left(allSingleWorldMarginals, mu\right)\right) \Rightarrow Q\left(M\right) = Q\left(N\right)\right).\end{gathered}$$
 
@@ -18,7 +32,7 @@ The observable record of a deterministic Boolean joint model is the family of ou
 
 This specializes the general factorization criterion: a target factors through an observable map exactly when it is constant on every fiber. Nonemptiness of the target type permits the factor map to be extended to observable records outside the map's image.
 
-**Lemma 1.2 (The complete counterfactual varies within one coupling fiber).**
+**Lemma 1.3 (The complete counterfactual varies within one coupling fiber).**
 
 $$\exists mu \in Bool \to BooleanMarginal, M \in BooleanCoupling, N \in BooleanCoupling,\; M \in couplingFiber\left(allSingleWorldMarginals, mu\right) \land \left(N \in couplingFiber\left(allSingleWorldMarginals, mu\right) \land CF\left(M\right) \ne CF\left(N\right)\right)$$
 
@@ -32,7 +46,7 @@ Two deterministic Boolean joint models have the same marginal outcome counts und
 
 Their complete unit-level counterfactual tables nevertheless differ. The observable fiber therefore contains a concrete variation of the counterfactual target.
 
-**Lemma 1.3 (The complete Boolean counterfactual is not identifiable).**
+**Lemma 1.4 (The complete Boolean counterfactual is not identifiable).**
 
 $$\neg \left(\exists f \in (Bool \to BooleanMarginal) \to Bool \to \left(Bool \to \left(Bool \to Bool\right)\right),\; CF = f \circ allSingleWorldMarginals\right)$$
 
@@ -51,4 +65,5 @@ The two-model fiber witness has identical observable marginals but different cou
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.boolean_counterfactual_identifiable_iff_constant_on_coupling_fibers`
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.boolean_counterfactual_not_identifiable`
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.boolean_counterfactual_varies_on_coupling_fiber`
+- Truth anchor: `D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.counterfactual_identifiable_iff_constant_on_fiber`
 - Dependency: [D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation](InterventionCounterfactualSeparation.md)
