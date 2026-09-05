@@ -1775,10 +1775,8 @@ r_0=r_1=r_2=\rho.
 
 ```math
 \boxed{
-\text{modewise orthogonality}+
-\text{coordinate flatness}+\Delta(v)\ne0
-\Longrightarrow
-\text{mode-local partner or dihedral partner}.
+\text{modewise orthogonality}+\text{coordinate flatness}+\Delta(v)\ne0
+\Longrightarrow\text{mode-local partner or dihedral partner}.
 }
 ```
 
@@ -1789,8 +1787,7 @@ r_0=r_1=r_2=\rho.
 尚未证明的是：对于指定 generic strict-X branch，两个共同无偏向量的全局正交是否强制逐模正交。需要发现并精确验证：
 
 ```math
-G(\alpha,v,w)^N
-\sum_{k=0}^2|\langle v_k,w_k\rangle|^2
+G(\alpha,v,w)^N\sum_{k=0}^2|\langle v_k,w_k\rangle|^2
 \in I_{UB}(T;v,w),
 ```
 
@@ -1861,3 +1858,145 @@ K_6\sqcup9K_{3,3}
 ```
 
 三阶刚性已经给出等号障碍，但仍未提供 strict-X completion 下界或 noncanonical orthogonality 分类。六维四 MUB 的全局不存在性仍然开放于本研究线。
+
+## 35. 2026-09-05 勘误：正则 strict-X 点上的全局到逐模桥反例
+
+本节取代第 33 节中以已列 guards 为前提的全 strict-X 逐对证书目标。旧理论和源码保留为历史；不得继续把这个已被反例否定的蕴含用于排除证明。
+
+取精确数域 `Q(i,sqrt(21))` 中的参数：
+
+```math
+b=(-3+4i)/5,\qquad e=(-2+i\sqrt{21})/5.
+```
+
+令 `A=circ(1,b,1)`、`B=circ(1,e,1)`，并令 `H=[A B; B* -A*]`。精确域运算核验所有 entry 平方模为一，且 `HH*=H*H=6I`。去相位后的每行 `-1` 个数是 `(0,0,0,1,1,2)`，每列是 `(0,0,0,2,1,1)`。Matszangosz–Szöllősi 2024, DOI `10.1007/s10623-024-01503-w`, Corollary 23 给出 normalized Fourier/transposed-Fourier 的行列判据，因此这是真实的 strict-X 点；该分类定理是明确的文献输入，不由 Python checker 冒领。
+
+实 signed permutation `M` 由：
+
+```math
+M\bar u=(\bar u_5,\bar u_3,\bar u_4,-\bar u_1,-\bar u_2,-\bar u_0)^T
+```
+
+给定，满足 `M^T=-M`、`MM^T=I`，且 `H* M=N H^T`，其中 `N=[0 -I; I 0]`。因此 `v=u/sqrt(6)` 与 `w=M conjugate(u)/sqrt(6)` 只要一方共同无偏，另一方也共同无偏，而且 `v*w=0` 是精确反对称恒等式。
+
+本轮重放了五实变量 signed Cayley chart 的有理区间证书。`u_0=1`，其余 `u_j=i^q_j(1+i t_j)/(1-i t_j)`，quarter-turn tuple 为 `(0,3,2,0,0,1)`。五个方程是 `|H* u|^2-6` 的前五个分量；第六个由 Gram 恒等式推出。半径 `10^-8` 的 box 具有严格 Krawczyk 包含，预条件 Jacobian 的 infinity contraction 小于 `1/1000`，位移小于 box 半径的 `1/1000`。由 Banach 不动点定理，box 内有唯一真实根。
+
+在整个 box 上，有理区间运算认证：
+
+```math
+|\langle v,Sw\rangle|^2+|\langle v,S^2w\rangle|^2>7/10,
+```
+
+两个 phase determinants 的平方模均大于 `1/200`，所有六个 mode weights 均大于 `1/5`。构造参数 `alpha=-1/5` 的两个 discriminants 是 `-16384/625` 与 `-16464/625`，均非零。因此第 33 节列出的非零 guards 全部成立，但逐模正交结论失败。
+
+行置换 `L` 取 indices `(2,0,1,4,5,3)` 后，矩阵变为：
+
+```math
+H_0=LH=\begin{pmatrix}
+J_3+(b-1)I_3&J_3+(e-1)I_3\\
+J_3+(\bar e-1)I_3&-J_3-(\bar b-1)I_3
+\end{pmatrix}.
+```
+
+它与全部同步 `S3` permutations 交换，并有额外反酉 `Theta0(zL,zR)=(-conjugate(zR),conjugate(zL))`。这类操作可以交换非平凡 Fourier modes，解释了全局正交中保留非零逐模项的相消机制。
+
+上一轮已认证一个十二射线对称轨道的完整诱导图：十二个顶点、二十四条边、每点度数四、二分、clique number 二。所有边由 signed-permutation skewness 证明；所有非边有严格有理区间正下界。它只排除该轨道内部的正交三角形，不排除其与盒外未知射线拼成六元基。
+
+对应源码和证书已在提交 `60c09dd8f75e53f7f2ab605e0305cf0187e45249` 同步到 PR #5028。该提交以 `14a3f29e965650438500fecac9fbac35d899ebd5` 为 parent，保留其他 agents 的全部 seed/seam 提交，未强推。
+
+```text
+D5/S3/Quantum/Tomography/TwoCirculantExtraAntiunitary.lean
+Blueprint/D5/S3/Quantum/Tomography/TwoCirculantExtraAntiunitary.scribe.cs
+scripts/research/check_strict_x_counterexample.py
+docs/develop/certificates/strict_x_counterexample_certificate.json
+docs/develop/certificates/strict_x_counterexample_verification.json
+```
+
+Lean 主定理 `conjugate_block_common_unbiased_orthogonal_partner` 只证明实际 conjugate-block 矩阵的反酉保持与精确正交。它不声称验证 Banach/Krawczyk analytic adapter。新的运行环境仍无 Lean/lake，故源码提交不等于 kernel admission。
+
+## 36. 实参数反例点的六十射线完整诱导图与下一项覆盖义务
+
+### 八个根盒生成六十条真实射线
+
+继续沿第 35 节的同一精确 `H0`，本轮选择八个有理 uniqueness boxes，分别验证五维 Cayley root equations 的严格压缩与内部包含。每个 box 的半径为 `2^-26`，中心及预条件矩阵为 dyadic rationals。验证阶段只使用 `fractions.Fraction`，必要的 dyadic rounding 始终向外。
+
+八个精确根通过同步 `S3` permutations 与 `Theta0` 生成大小为：
+
+```text
+6, 6, 12, 12, 4, 12, 2, 6
+```
+
+的八个轨道，共六十条射线。逐对 inner-product 区间上界严格小于一，认证了所有射线彼此不同。
+
+### 全部 1770 对关系的分类
+
+本轮检查全部 `choose(60,2)=1770` 个无序对。共 `114` 条正交边，其中 `104` 条由精确 skew-symmetry identities 得到，另外 `10` 条由不同三循环特征值的正交性得到。其余 `1656` 对均有：
+
+```math
+|\langle v,w\rangle|^2>10^{-8}.
+```
+
+非边不能通过数值阈值伪装成零；边也不由小数值残差决定。三循环固定射线通过“对称像落回同一个唯一性 box”证明，随后用精确 unitary eigenspace orthogonality 认证跨特征值的边。
+
+完整诱导图的 connected-component signature 为：
+
+```text
+3 components: 6 vertices, 9 edges, bipartite (K3,3)
+3 components: 12 vertices, 24 edges, bipartite
+1 component: 6 vertices, 15 edges (K6)
+```
+
+因此这个六十射线集合中唯一的六元 orthogonal clique 是最后的 `K6`。其六个向量均为三循环特征向量，所以相对同一 rank-two mode decomposition：
+
+```math
+\boxed{\alpha_S(C_{known})=2.}
+```
+
+这里的等式是精确的特征向量结论，不由 floating-point affinity 接近二推出。其余五十四个已认证顶点形成二分子图，不能从其中选出三个两两正交向量。
+
+### 精确范围
+
+已完成的是全部已认证射线之间的边审计，包括不同轨道之间的所有 nonedges。未完成的是共同无偏方程的全局根覆盖。八个 boxes 证明至少有这些根，不能证明盒外没有其他根。因此不得将以下条件句省略前提：
+
+```text
+IF the 60-ray collection is exhaustive,
+THEN the fixed edge has a unique completion and cannot extend to a quartet.
+```
+
+同样，已认证集合上的唯一 completion affinity 等于二，不是对所有实际 completions 的无条件下界。
+
+checker 复用第 35 节的有理区间内核和种子域运算，不新建第二套 interval arithmetic。拟定真源文件：
+
+```text
+scripts/research/check_real_x_complete_induced_graph.py
+docs/develop/certificates/real_x_orbit_cover_certificate.json
+docs/develop/certificates/real_x_induced_graph_verification.json
+```
+
+上述计算证书不属于 Lean kernel 证明。源码、数据和重放日志的实际提交以及 admission 状态必须单独记录。
+
+### 进一步的主线缩减：只需覆盖能进入正交三元组的根
+
+令 `U(T)` 是全部共同无偏射线。定义：
+
+```math
+U_\triangle(T)=\{v\in U(T):\exists w,z\in U(T),\ (v,w,z)\text{ pairwise orthogonal}\}.
+```
+
+完整 completion 中的每个向量都属于 `U_triangle(T)`。因此，除了全局覆盖 `U(T)` 之外，还有一个更窄的可接受覆盖目标：
+
+```math
+\boxed{U_\triangle(T)\subseteq C_{known}.}
+```
+
+该命题成立就足以证明 completion 唯一，不需要枚举不能进入任何正交三角形的孤立 roots 或二分 components。当前的六十射线诱导图为这个目标提供了严格的正控制，但尚未证明盒外的 triangle-bearing roots 被覆盖。
+
+在 projector coordinates 中，三元组证书只需三个 Hermitian rank-one projectors `P0,P1,P2`，两两乘积为零、分别对两个固定基无偏。一个更弱的待证 inequality 是：
+
+```math
+\sum_{r=0}^2\sum_{k=0}^2\operatorname{Tr}(E_kP_r)^2\ge2.
+```
+
+若它对所有实际共同无偏正交三元组成立，则将任意六元 completion 分成两组三元组，得到总 collision 至少四，亦即 `alpha_S(C)>=1`。随后第 31 节排除两个 MUB completions 的预算等号。此三元组 inequality 当前仅是明确的下一项证书目标，不是本轮已经证明的下界。
+
+主线继续避免逐行下界和已被反例否定的全局到逐模蕴含。真正下一步是：精确全局 root cover、triangle-bearing locus 的排除证书，或实际三元组/完整基的 projector-affinity certificate。
