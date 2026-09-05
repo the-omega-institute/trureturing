@@ -1,0 +1,90 @@
+## 定理 57.2　近似局部不可区分的能量下界
+
+定义迹距离：
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+$$
+
+假设对全部输入：
+
+$$
+D(\mathcal N_j(\rho),\tau_j)\le\epsilon_j.
+$$
+
+记：
+
+$$
+w_j=\lambda_{\max}(h_j)-\lambda_{\min}(h_j),
+$$
+
+并允许能量实现误差：
+
+$$
+\left\|
+V^\dagger H_RV-(H_L+E_0I)
+\right\|
+\le\delta_E.
+$$
+
+则：
+
+$$
+\boxed{
+\Delta H_L
+\le
+2\delta_E+2\sum_jw_j\epsilon_j,
+}
+\tag{57.3}
+$$
+
+其中：
+
+$$
+\Delta H_L
+=
+\lambda_{\max}(H_L)-\lambda_{\min}(H_L).
+$$
+
+### 证明
+
+取 \(H_L\) 的最大、最小能量本征态 \(\rho_+,\rho_-\)。
+
+由能量误差界：
+
+$$
+\Delta H_L
+\le
+\left|
+\operatorname{Tr}
+H_R
+\bigl(V\rho_+V^\dagger-V\rho_-V^\dagger\bigr)
+\right|
++2\delta_E.
+$$
+
+而对每个 \(j\)：
+
+$$
+D(\mathcal N_j(\rho_+),\mathcal N_j(\rho_-))
+\le2\epsilon_j.
+$$
+
+利用有限谱宽算子的期望差界：
+
+$$
+|\operatorname{Tr}[h_j(\sigma-\rho)]|
+\le
+w_jD(\sigma,\rho),
+$$
+
+求和即得。∎
+
+### 结论
+
+**如果辐射确实携带一个具有非零能量跨度的内部时间结构，那么在上述有限、可加、近似守恒模型中，局部不可区分程度不能任意完美。**
+
+但这不意味着每个单独片段都必须具有很大的非热修正。偏差可以分散在很多片段中，式（57.3）约束的是总预算。
+
+---
+

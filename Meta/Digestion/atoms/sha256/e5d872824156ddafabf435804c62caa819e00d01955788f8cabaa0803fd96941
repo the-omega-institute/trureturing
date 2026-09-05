@@ -1,0 +1,114 @@
+## 定理 45.1　纠缠熵—能流恒等式
+
+在假设 45.1 下，
+
+$$
+\boxed{
+\mathcal F(u)
+=
+\frac{\hbar}{2\pi}
+\left[
+\frac6\nu\bigl(\mathcal S'(u)\bigr)^2
++
+\mathcal S''(u)
+\right].
+}
+\tag{45.3}
+$$
+
+### 证明
+
+令
+
+$$
+a(u)=\frac{p''(u)}{p'(u)}.
+$$
+
+则
+
+$$
+\mathcal S'=-\frac{\nu}{12}a,
+$$
+
+以及
+
+$$
+\mathcal S''
+=
+-\frac{\nu}{12}
+\left(
+\frac{p'''}{p'}-a^2
+\right).
+$$
+
+因此
+
+$$
+\frac6\nu(\mathcal S')^2+\mathcal S''
+=
+-\frac{\nu}{12}
+\left(
+\frac{p'''}{p'}-\frac32a^2
+\right).
+$$
+
+乘以 \(\hbar/(2\pi)\) 即得。∎
+
+### 对指数映射的推论
+
+若局部或晚时受控渐近为
+
+$$
+p'(u)=A\lambda e^{-\lambda u},
+$$
+
+则
+
+$$
+\boxed{
+\mathcal S'(u)=\frac{\nu\lambda}{12},
+}
+\tag{45.4}
+$$
+
+并且
+
+$$
+\boxed{
+\mathcal F(u)
+=
+\frac{\hbar\nu\lambda^2}{48\pi}.
+}
+\tag{45.5}
+$$
+
+因此，在这个模型中：
+
+$$
+\boxed{
+\text{入射时间相对于出射时间的指数压缩}
+}
+$$
+
+同时表现为
+
+$$
+\boxed{
+\text{出射区与其补集之间的纠缠积累}
+}
+$$
+
+和
+
+$$
+\boxed{
+\text{正的热能流}.
+}
+$$
+
+这正是你的直觉中能够被严格保留的核心联系。
+
+但式（45.1）的 \(\mathcal S\) 仍然不是“黑洞记住了多少个人经历”。它衡量的是指定场态和区域划分下的、相对真空的纠缠结构。
+
+---
+

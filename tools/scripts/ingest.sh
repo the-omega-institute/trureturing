@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 VERB="${1:-}"
 BASE="${2:-}"
+PAYLOAD="${3:-}"
 REPORT="$ROOT/.lake/build/stratalint/raw-lean-report.json"
 CONSUMER="$ROOT/tools/scripts/report/report-consumer.sh"
 INPUT="$ROOT/tools/scripts/report/lean-report-input.sh"
@@ -31,8 +32,12 @@ report_input_state() {
 }
 
 cd "$ROOT"
-[[ -n "$BASE" ]] \
-  || { echo "USAGE: ingest.sh ingest|align-digestion-status|mathlib-reanchor BASE" >&2; exit 2; }
+usage() {
+  echo "USAGE: ingest.sh ingest|align-digestion-status|mathlib-reanchor|quarantine|quarantine-clear BASE [REQUEST|ATOM_ID]" >&2
+  exit 2
+}
+
+[[ -n "$BASE" ]] || usage
 case "$VERB" in
   ingest)
     report_input_state
@@ -55,8 +60,17 @@ case "$VERB" in
       dotnet run --project "$PROJECT" --configuration Release -- \
         align-digestion-status --base "$base_sha"
     ;;
+  quarantine)
+    [[ -n "$PAYLOAD" ]] || usage
+    exec dotnet run --project "$PROJECT" --configuration Release -- \
+      quarantine-atom --request "$PAYLOAD" --base "$BASE"
+    ;;
+  quarantine-clear)
+    [[ -n "$PAYLOAD" ]] || usage
+    exec dotnet run --project "$PROJECT" --configuration Release -- \
+      quarantine-atom --clear "$PAYLOAD" --base "$BASE"
+    ;;
   *)
-    echo "USAGE: ingest.sh ingest|align-digestion-status|mathlib-reanchor BASE" >&2
-    exit 2
+    usage
     ;;
 esac

@@ -1,0 +1,25 @@
+### 数值上的含义也很直接
+
+若只有欧拉常数存在误差 \(\delta\gamma_{\mathrm E}\)，其余输入精确，则：
+
+$$
+\varepsilon=-\frac{\delta\gamma_{\mathrm E}}2,
+$$
+
+从而：
+
+$$
+\boxed{
+|\widetilde\ell_n-\ell_n|
+=
+\frac{4^n}{2}|\delta\gamma_{\mathrm E}|.
+}
+\tag{E13}
+$$
+
+因此，递推式（E6）很容易把很小的初始误差放大成高阶符号错误。
+
+**高阶矩阵出现负数时，必须先排除“把错误锚点注入递推”的可能，不能立即解释成离线零点。**
+
+---
+

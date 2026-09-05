@@ -1,0 +1,30 @@
+## 定理 D2：正实现的最低读数失配
+
+取 \(m=d-1\) 个采样点，满足：
+
+$$
+\Im z_j\ge h>0.
+$$
+
+设实际采样矩阵 \(G_d\) 的最小特征值为：
+
+$$
+\lambda_{\min}(G_d)=-\nu<0.
+$$
+
+若另一个函数 \(\widetilde\Sigma\) 具有正谱回返实现，并且：
+
+$$
+|\widetilde\Sigma(z_j)-\Sigma_d(z_j)|\le\varepsilon
+\quad\forall j,
+$$
+
+那么必须：
+
+$$
+\boxed{
+\varepsilon\ge\frac{h\nu}{m}.
+}
+\tag{D12}
+$$
+

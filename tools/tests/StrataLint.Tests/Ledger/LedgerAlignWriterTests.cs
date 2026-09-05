@@ -318,6 +318,8 @@ public sealed class LedgerAlignWriterTests
         public CommandResult Ingest(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult CoverAtom(IReadOnlyList<string> arguments) => throw Unsupported();
+
+        public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult Route(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult SelfTest(IReadOnlyList<string> arguments) => throw Unsupported();

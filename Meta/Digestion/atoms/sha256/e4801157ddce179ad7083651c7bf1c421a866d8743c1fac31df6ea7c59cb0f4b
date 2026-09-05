@@ -1,0 +1,110 @@
+# 一、把有限系数矩阵，变成一个复频率观测核
+
+沿用前文：
+
+$$
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k,
+$$
+
+$$
+P_d(v)=\sum_{k=0}^{d}\frac{(d)_k}{d^k}a_kv^k,
+$$
+
+$$
+q_d(x)=x^dP_d(-1/x).
+$$
+
+其中全部 \(a_k\) 来自实际 theta 态，不是自由参数。
+
+前文的 Jensen 判据是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+q_d\text{ 的全部根为正实数，}\quad\forall d.
+}
+$$
+
+这是经典 Jensen–Pólya 路线在当前归一化下的表达，不是量子模型自动给出的结论。([arXiv][1])
+
+定义：
+
+$$
+r_d(x)=\frac1d q_d'(x),
+\qquad
+\mu_d=\frac{a_1}{d},
+$$
+
+$$
+n_d(x)=(x-\mu_d)r_d(x)-q_d(x),
+$$
+
+以及回返函数：
+
+$$
+\boxed{
+\Sigma_d(z)=\frac{n_d(z)}{r_d(z)}.
+}
+\tag{D1}
+$$
+
+它是从实际有限系数直接算出的有理函数。此时尚未假定它具有正量子实现。
+
+上一轮定义的 Bézout 核为：
+
+$$
+\mathcal B_d(x,y)
+=
+\frac{r_d(x)n_d(y)-n_d(x)r_d(y)}{x-y},
+$$
+
+写成：
+
+$$
+\mathcal B_d(x,y)
+=
+\mathbf v(x)^{\mathsf T}B_d\mathbf v(y),
+$$
+
+其中：
+
+$$
+\mathbf v(x)=(1,x,\ldots,x^{d-2})^{\mathsf T}.
+$$
+
+现在引入复频率核：
+
+$$
+\boxed{
+\mathcal K_d(z,w)
+=
+-\frac{\Sigma_d(z)-\overline{\Sigma_d(w)}}
+{z-\overline w},
+}
+\tag{D2}
+$$
+
+定义域取在上半平面内，并避开 \(r_d\) 的零点。
+
+直接通分：
+
+$$
+\boxed{
+\mathcal K_d(z,w)
+=
+\frac{
+\mathbf v(z)^{\mathsf T}B_d\overline{\mathbf v(w)}
+}{
+r_d(z)\overline{r_d(w)}
+}.
+}
+\tag{D3}
+$$
+
+这种差商核及其负平方数属于经典 Nevanlinna／不定内积理论；本轮要用的是式（D3）给出的明确系数对应。([Springer][2])
+
+---
+

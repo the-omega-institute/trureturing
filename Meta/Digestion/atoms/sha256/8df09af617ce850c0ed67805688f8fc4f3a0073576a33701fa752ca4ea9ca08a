@@ -1,0 +1,23 @@
+## 定理 E4：有限链精确保留前 \(2N\) 个回返矩
+
+定义：
+
+$$
+\boxed{
+\mathfrak S_N(z)
+=
+M_0\,e_1^{\mathsf T}(zI-J_N)^{-1}e_1.
+}
+\tag{E23}
+$$
+
+则：
+
+$$
+\boxed{
+M_0\,e_1^{\mathsf T}J_N^ke_1=M_k,
+\qquad 0\le k\le2N-1.
+}
+\tag{E24}
+$$
+

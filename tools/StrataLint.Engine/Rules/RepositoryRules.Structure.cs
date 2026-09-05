@@ -141,13 +141,56 @@ internal static partial class RepositoryRules
         RuleEvaluationContext context,
         Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot)
     {
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         if (context.Changes.Paths.Any(static path =>
                 ScribeTestMapDeriver.IsDerivationInput(path.Value)))
         {
-            findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(
-                    deriveSnapshot(context.Current),
-                    deriveSnapshot(context.ForkPoint))
+            var currentDerivation = Task.Run(() => deriveSnapshot(context.Current));
+            var forkPointDerivation = ReferenceEquals(context.Current, context.ForkPoint)
+                ? currentDerivation
+                : Task.Run(() => deriveSnapshot(context.ForkPoint));
+            return EvaluateCapacityAsync(context, currentDerivation, forkPointDerivation)
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        return EvaluateCapacityCore(context, derivedMaps: null);
+    }
+
+    internal static async Task<ImmutableArray<RuleFinding>> EvaluateCapacityAsync(
+        RuleEvaluationContext context,
+        Task<ScribeTestMap> currentDerivation,
+        Task<ScribeTestMap> forkPointDerivation)
+    {
+        var bothDerivations = Task.WhenAll(currentDerivation, forkPointDerivation);
+        try
+        {
+            await bothDerivations.ConfigureAwait(false);
+        }
+        catch
+        {
+            _ = bothDerivations.Exception;
+            if (!currentDerivation.IsCompletedSuccessfully)
+            {
+                await currentDerivation.ConfigureAwait(false);
+            }
+
+            await forkPointDerivation.ConfigureAwait(false);
+            throw;
+        }
+
+        return EvaluateCapacityCore(
+            context,
+            (currentDerivation.Result, forkPointDerivation.Result));
+    }
+
+    private static ImmutableArray<RuleFinding> EvaluateCapacityCore(
+        RuleEvaluationContext context,
+        (ScribeTestMap Current, ScribeTestMap ForkPoint)? derivedMaps)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        if (derivedMaps is { } maps)
+        {
+            findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(maps.Current, maps.ForkPoint)
                 .Select(static finding => new RuleFinding(
                     finding.Path,
                     finding.Message,
