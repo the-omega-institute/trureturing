@@ -322,13 +322,15 @@ public sealed class GenericAtomizerTests
         var claim = Assert.Single(first.Claims);
         var plan = Assert.Single(first.ClausePlans);
         Assert.Equal(claim.Fingerprints.RawSha256, plan.Parent.Fingerprints.RawSha256);
-        Assert.Equal(3, plan.Children.Length);
+        Assert.Equal(2, plan.Children.Length);
+        Assert.Equal(3, plan.Segments.Length);
+        Assert.Equal(DigestionSegmentKind.Structural, plan.Segments[0].Kind);
         Assert.All(plan.Children, child => Assert.Equal(
             DigestionFingerprint.Compute(child.RawBytes.AsSpan()).RawSha256,
             child.Fingerprints.RawSha256));
         Assert.Equal(
             claim.RawBytes.ToArray(),
-            plan.Children.SelectMany(static child => child.RawBytes.ToArray()).ToArray());
+            plan.Segments.SelectMany(static segment => segment.Atom.RawBytes.ToArray()).ToArray());
         Assert.Equal(
             Assert.Single(second.ClausePlans).Children
                 .Select(static child => (child.Fingerprints.RawSha256, child.Fingerprints.RawSha256)),
