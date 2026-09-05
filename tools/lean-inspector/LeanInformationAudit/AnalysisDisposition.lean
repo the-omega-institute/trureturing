@@ -1,5 +1,5 @@
 import Lean
-import Mathlib.Data.Finset.Basic
+import Mathlib.Data.Finset.Card
 
 namespace LeanInformationAudit
 
@@ -76,6 +76,10 @@ deriving instance DecidableEq, Repr for BoundedFiniteTruncationDisposition
 deriving instance DecidableEq, Repr for UnreachableDisposition
 deriving instance DecidableEq, Repr for AnalysisDisposition
 deriving instance DecidableEq, Repr for DispositionInventory
+
+deriving instance Inhabited for StatementKey
+deriving instance Inhabited for FiniteOccurrenceDisposition
+deriving instance Inhabited for AnalysisDisposition
 
 instance (inventory : DispositionInventory) (head : String) (keys : Finset StatementKey) :
     Decidable (inventory.ExactlyCovers head keys) :=
@@ -158,5 +162,19 @@ instance : ToJson DispositionInventory := ⟨fun inventory => Json.mkObj [
   ("head_sha", toJson inventory.headSha),
   ("entries", Json.arr <| inventory.sortedEntries.map dispositionRowJson)]⟩
 
-end LeanInformationAudit
+namespace DispositionCensus
 
+def identityError (name : Name) (component expected actual : String) : String :=
+  s!"IE-C036 DispositionIdentityMismatch theorem={name} component={component} \
+expected={expected} actual={actual}"
+
+def classError (name : Name) (className invalid : String) : String :=
+  s!"IE-C037 DispositionClassMismatch theorem={name} class={className} invalid={invalid}"
+
+def censusError (head component expected actual : String) : String :=
+  s!"IE-C044 DispositionCensusMismatch head={head} component={component} \
+expected={expected} actual={actual}"
+
+end DispositionCensus
+
+end LeanInformationAudit
