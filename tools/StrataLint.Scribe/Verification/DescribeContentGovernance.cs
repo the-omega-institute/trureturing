@@ -6,6 +6,8 @@ namespace StrataLint.Scribe;
 
 internal static class DescribeContentGovernance
 {
+    private const string BlueprintNamespaceRoot = "StrataLint.Scribe.Blueprint";
+
     private static readonly string[] ForbiddenSourceTerms =
     [
         "FormulaTokens",
@@ -51,6 +53,24 @@ internal static class DescribeContentGovernance
                     RegexOptions.Multiline | RegexOptions.CultureInvariant)
                 .Select(static match => match.Groups[1].Value)
                 .ToArray();
+            // τ=0 owner 2026-09-06:「就按 .scribe.cs 单文件算即可。实际上放在一个程序集
+            // 也是为了编译方便,实际应该当脚本那么编译的。」
+            // `Documents.csproj` 把全部 Blueprint 定义编入同一程序集只是**编译便利**,
+            // 不是允许互相引用。一个定义文件只应在**自身的 namespace 声明**里出现
+            // Blueprint 命名空间根;其他任何出现都意味着它在引用另一个定义文件的类型,
+            // 即把脚本当成了库。立条时实测存量违规为 0(3165 个文件),故此为纯增量门。
+            // 这条判据同时是 describe 增量化的前提:唯有文件互不引用,按 changed paths
+            // 收窄才不会漏掉「未改动但受影响」的文档(见 #5634)。
+
+            foreach (var line in CrossDefinitionReferenceLines(source))
+            {
+                findings.Add(new DescribeRedFinding(
+                    "blueprint-cross-definition-reference",
+                    $"{relativePath}:{line}",
+                    "Blueprint definition sources are file-scoped scripts; "
+                        + "referencing another definition's type is not allowed"));
+            }
+
             if (namespaces.Length != 1
                 || !string.Equals(namespaces[0], expectedNamespace, StringComparison.Ordinal))
             {
@@ -270,4 +290,28 @@ internal static class DescribeContentGovernance
         .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
         .ThenBy(static finding => finding.Message, StringComparer.Ordinal)
         .ToImmutableArray();
+
+    /// <summary>
+    /// 返回引用了 Blueprint 命名空间根、却不是自身 namespace 声明的行号(1-based)。
+    /// </summary>
+    private static IEnumerable<int> CrossDefinitionReferenceLines(string source)
+    {
+        var lines = source.Split('\n');
+        for (var index = 0; index < lines.Length; index++)
+        {
+            var line = lines[index].TrimEnd('\r');
+            if (!line.Contains(BlueprintNamespaceRoot, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            if (line.TrimStart().StartsWith("namespace ", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            yield return index + 1;
+        }
+    }
+
 }

@@ -27,6 +27,57 @@ public sealed class DescribeReportTests
         });
     }
 
+    // τ=0 owner 2026-09-06 裁决:`.scribe.cs` 是独立脚本,同程序集只是编译便利。
+    // 引用另一个定义文件的类型即违规 —— 这条同时是 describe 增量化的前提(#5634)。
+    [Fact]
+    public void ContentCheckRejectsCrossDefinitionTypeReference()
+    {
+        WithRepository(root =>
+        {
+            var blueprint = Path.Combine(root, "Blueprint", "D5", "S1", "Phase");
+            TemporaryFileSystem.Directory.CreateDirectory(blueprint);
+            TemporaryFileSystem.File.WriteAllText(
+                Path.Combine(blueprint, "Basic.scribe.cs"),
+                "namespace StrataLint.Scribe.Blueprint.D5.S1.Phase;\n"
+                    + "internal sealed class BasicDocument\n"
+                    + "{\n"
+                    + "    private const string Borrowed =\n"
+                    + "        StrataLint.Scribe.Blueprint.D5.S1.Other.OtherDocument.Prefix;\n"
+                    + "}\n");
+
+            var findings = DescribeContentGovernance.ValidateSources(root);
+
+            var finding = Assert.Single(
+                findings,
+                item => item.Code == "blueprint-cross-definition-reference");
+            Assert.Equal("Blueprint/D5/S1/Phase/Basic.scribe.cs:5", finding.Path);
+        });
+    }
+
+    // 放行侧:自身的 namespace 声明必须被接受,否则该判据会把每个合法文件都判红。
+    [Fact]
+    public void ContentCheckAcceptsOwnNamespaceDeclaration()
+    {
+        WithRepository(root =>
+        {
+            var blueprint = Path.Combine(root, "Blueprint", "D5", "S1", "Phase");
+            TemporaryFileSystem.Directory.CreateDirectory(blueprint);
+            TemporaryFileSystem.File.WriteAllText(
+                Path.Combine(blueprint, "Basic.scribe.cs"),
+                "namespace StrataLint.Scribe.Blueprint.D5.S1.Phase;\n"
+                    + "internal sealed class BasicDocument\n"
+                    + "{\n"
+                    + "    private const string Prefix = \"D5/S1/Phase/Basic.\";\n"
+                    + "}\n");
+
+            var findings = DescribeContentGovernance.ValidateSources(root);
+
+            Assert.DoesNotContain(
+                findings,
+                item => item.Code == "blueprint-cross-definition-reference");
+        });
+    }
+
     [Fact]
     public void IndependentInventoryRejectsMismatchedStatsAndSuspectedNovelNodes()
     {
