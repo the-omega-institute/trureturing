@@ -41,7 +41,7 @@ The first layer proves:
 1. exact rational primal-dual certificates for finite linear objectives;
 2. a generic convex sharp-interval theorem;
 3. an explicit four-cell Frechet coupling with an exact feasible-target theorem;
-4. a disagreement-cap tightening with replayableable slack identities;
+4. a disagreement-cap tightening with replayable slack identities;
 5. a ternary-treatment, ternary-outcome response-type instance;
 6. a nonconvex identification core;
 7. a polynomial cross-world independence example with a sharp singleton query and a globally nonconvex independence family.
