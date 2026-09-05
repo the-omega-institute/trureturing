@@ -1,0 +1,2 @@
+**候签定理 4.100(十进制宽数的唯一三数位分类)**〔open;落 `D5/S1/Digit/DigitProductSlices`〕。沿用定理 4.99 的三个定义。对任意 `N : ℕ`，若 `AllDigitsIn236 N` 且 `countThree N = 1`，则 `digitProduct N ∣ N ↔ N = 3 ∨ N = 36 ∨ N = 2232`；证明须包含 `2 ^ ((Nat.digits 10 N).length - 1) ∣ digitProduct N` 的二进赋值下界、末四位模 16 阻碍与四位以内的有限分类，不断言含至少两个数位 3 的切片。
+

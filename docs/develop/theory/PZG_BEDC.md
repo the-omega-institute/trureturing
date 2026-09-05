@@ -9303,3 +9303,23 @@ v1.6 冠军二度更正 → v1.7 闭式与模板 → v1.8 幸存全证 → v2.0 
 **候签定理 6.216(Schur 提升的数值忠实性)**〔open;同模块伴随声明〕。由 6.212 与 6.213 得 `HasSchurColoring 3 13`，由 6.212 与 6.215 得 `HasSchurColoring 4 42`；判形 bind-only，方向边 `6.216 → 6.213/6.215 → 6.212`（消费者 → 前置）。
 
 **评注 27.807(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第四批〕。逃逸内容:宽十分块的商余加法律 `block_add_coordinates`(结果行进位 ε 与结果列 (u+v+1) mod 10),与表 II 的四条有限相容性证书(新色对、旧色移位进位、尾 A、尾 B;kernel `decide`)——它们全部位于 6.215 任意 n 证明的活路径上,删任一条即主定理不成;经典提升 6.213 的三段区间构造亦为内容;6.216 为伴随声明(bind-only)。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib,不引入冻结 D5 依赖;禁 native_decide。若钉版 API 下分块商余律不能闭合,本候签按 open 记,不得以 `sorry` 或公理代替。结算:五条由一个实施席同 PR `deposit`(绑 6.215)+ `cover`(6.212 / 6.213 / 6.214 / 6.216)落地,三席评审后合入。
+
+**评注 27.808(开放问题线:十进制 {2,3,6} 宽数被数位积整除之无穷性猜想——零三与唯一三两个切片的完全分类;候签定理 4.99–4.100 立案)**〔remark;开放问题线第五批〕。OEIS A394227(数位全在 {2,3,6} 且被其数位积整除的正整数:2, 3, 6, 36, 2232, …)的猜想是**该序列无穷**(Alkauskas 2026;MathSE 5128260 同问),至今开放。本评注下两条候签只立案已 kernel 判定的部分:数位 3 出现零次与恰一次的两个切片之完全分类(前者 {2, 6},后者 {3, 36, 2232}),含至少两个 3 的切片与无穷性本身**不**触碰,记 open。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r6-gptpro-open-any`,候选 #1)提出;探针席 codex-cli(flight `op-p22-digit-product`,worktree `trureturing-op-rev-parity`,base origin/dev)核对 OEIS 原文(纠正了检索席对猜想形状的转述),以 `lake env lean` 整证五条声明,`#print axioms` 均为标准三公理;探针并指出零三切片须加正整数假设(N = 0 时空数位列使陈述为假),候签据此写明。本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点 `D5/S1/Digit/DigitProductSlices`(Digit 桶直接 Lean 文件 17/24,落地后 18/24)。
+
+**候签定理 4.99(十进制宽数的零三数位分类)**〔open;落 `D5/S1/Digit/DigitProductSlices`〕。令 `digitProduct N := (Nat.digits 10 N).prod`、`AllDigitsIn236 N := ∀ d ∈ Nat.digits 10 N, d ∈ ({2,3,6} : Finset ℕ)`、`countThree N := (Nat.digits 10 N).count 3`。对任意正整数 `N`，若 `AllDigitsIn236 N` 且 `countThree N = 0`，则 `digitProduct N ∣ N ↔ N = 2 ∨ N = 6`。
+
+**候签定理 4.100(十进制宽数的唯一三数位分类)**〔open;落 `D5/S1/Digit/DigitProductSlices`〕。沿用定理 4.99 的三个定义。对任意 `N : ℕ`，若 `AllDigitsIn236 N` 且 `countThree N = 1`，则 `digitProduct N ∣ N ↔ N = 3 ∨ N = 36 ∨ N = 2232`；证明须包含 `2 ^ ((Nat.digits 10 N).length - 1) ∣ digitProduct N` 的二进赋值下界、末四位模 16 阻碍与四位以内的有限分类，不断言含至少两个数位 3 的切片。
+
+**评注 27.809(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第五批〕。逃逸内容:①任意长度的二进赋值下界——去掉唯一的 3 后其余数位皆为偶数,故 `2^(length−1) ∣ digitProduct`;②末四位模 16 阻碍——在 countThree ≤ 1 约束下对 3⁴ = 81 个四位后缀的具名穷举(kernel 计算),配合 Mathlib `Nat.self_mod_pow_eq_ofDigits_take` 把 N mod 10⁴ 归到末四位;③长度 ≤ 4 的有限分类。三者皆在 4.100 活证明路径上;4.99 以因子 4 与两位后缀模 4 阻碍同形。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib;禁 native_decide。若钉版 API 下数位列拆分引理不能闭合,本候签按 open 记,不得以 `sorry` 或公理代替。结算:两条由一个实施席同 PR `deposit`(绑 4.100)+ `cover`(4.99)落地,三席评审后合入。
+
+**评注 27.810(开放问题线:Shevelev 恶数多数猜想之六位块二进切片;候签定理 6.217–6.220 立案)**〔remark;开放问题线第五批〕。OEIS A229826 猜想:从正整数中去掉 3 的倍数后,在被 7 整除者的每个前缀中,二进制 1 位数为奇数的 odious 数总占严格多数。本案不触碰全前缀猜想,只立案无穷切片 n = 2^(6k),k >= 1。取 popcount(m) = (Nat.bits m).count true,符号为 (-1)^popcount(m),落点 `D5/S1/Digit/OdiousMajorityDyadicSlice`。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r6-gptpro-open-any`,候选 #2)提出;探针席 codex-cli(flight `op-p23-odious-majority`,worktree `trureturing-op-rev-axis`,base origin/dev)核对 OEIS A229826 原文,以钉版 Mathlib 的 `lake env lean` 整证九条声明(D_2 = −42 在 4096 项上直接 kernel 核验,94s),全部公开声明的 `#print axioms` 只含标准三公理,不用 native_decide;本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点 `D5/S1/Digit/OdiousMajorityDyadicSlice`(与本批 4.100 同桶,Digit 桶落地后 19/24)。
+
+**候签定理 6.217(二进制符号余数向量的 21 态转移)**〔open;落 `D5/S1/Digit/OdiousMajorityDyadicSlice`〕。令 `e_r` 为 Fin 21 的标准列向量,`T e_r = e_(2r)-e_(2r+1)`,`v_n(r) := sum_{0 <= m < 2^n, m mod 21 = r} (-1)^popcount(m)`。则 `v_(n+1)=T v_n`,从而 `v_n=T^n e_0`;证明须在活路径上使用偶奇拆分、`Nat.bit0_bits`/`Nat.bit1_bits` 与余数转移。
+
+**候签定理 6.218(六位块矩阵对 dyadic 差值的忠实解释)**〔open;同模块〕。令 `A=T^6`,`ell` 只取余数 7 与 14,并令 `D_k := sum_{0 <= m < 2^(6k)} if 7|m and not 3|m then (-1)^popcount(m) else 0`。则 `7|m and not 3|m` 当且仅当 `m mod 21 in {7,14}`,且 `D_k = ell dot (A^k e_0)`。
+
+**候签定理 6.219(21 态消去式与三阶递推)**〔open;同模块,本案精确证书〕。普通 kernel `decide` 逐坐标核验 `ell*A*(A^3-19A^2-209A-189I)=0`;并有 `D_1=-6,D_2=-42,D_3=-2070` 及对每个 k >= 1 的递推 `D_(k+3)=19D_(k+2)+209D_(k+1)+189D_k`。其中 D_1 与 D_2 分别直接在 64 与 4096 项范围上核验,D_3 可经矩阵核验。
+
+**候签定理 6.220(Shevelev 猜想的六位块 dyadic 负性切片)**〔open;同模块主定理〕。对每个 k >= 1,`D_k < 0`;故在截止 n = 2^(6k) 的合资格正整数中,odious 数严格多于 evil 数。此结论只覆盖该无穷 dyadic 切片,不得表述为所有 n 的 Shevelev 猜想。
+
+**评注 27.811(6.217–6.220 之可证伪预测与逃逸见证,写在实施之前)**〔remark;第 5⁗ 条〕。拟议逃逸内容三件:6.217 的偶奇范围拆分与二进位符号转移组成的 `state_eq_transfer_pow`;6.219 的 21 坐标精确消去证书 `annihilating_row` 及其等价多项式身份;6.220 从三项负初值与正系数递推作强归纳的符号传播。三件均在主结论活推导路径上,非冻结定理实例化、逻辑投影或规范化重述;判形 content,准入依据 escape-witness。只依赖钉版 Mathlib。若任一转移解释、精确消去式、全 k 递推或负性归纳不能以标准三公理闭合,本组按 open 记,不得以 sorry、native_decide 或 Lean.ofReduceBool 代替。
