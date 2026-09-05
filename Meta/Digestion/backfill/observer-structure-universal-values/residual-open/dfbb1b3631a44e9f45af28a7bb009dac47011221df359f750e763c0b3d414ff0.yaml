@@ -6,6 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-atom coverage is guarded after clause-level review. Frozen GID `D5/S3/ConceptDynamics/NormativeOrbits/RoleSwapOrbitFactorization.role_swap_full_invariance_orbit_factorization` publicly carries (a) swap invariance iff (b) full permutation invariance and (b) iff (c) factorization through the canonical role-orbit quotient; proof-sketch child `65fdd466e78c43dcc09ce5d55b87ef92725650bf222ff33519a34944c16dd9af` is absorbed by that GID. Interpretive child `7fd93ed521fc208e9f0af92958222538fab948313d4fb74df0c9f3665fdec7b6` additionally says `己所不欲,勿施于人`, Kant's universal-law maxim, and Rawls's veil share the invariance core while explicitly denying textual reduction, but provides no typed ethical carriers or interpretation maps. Retrieval receipts: the exact D5 theorem search hit only the named mathematical owner and the precise doctrine search in D5/Blueprint exited 1; pinned Mathlib hit `Equiv.Perm.closure_isSwap`, `Function.FactorsThrough`, and `MulAction.orbitRel.Quotient` but its precise doctrine search exited 1; the same search across installed non-Mathlib packages exited 1; local probe `/private/tmp/w73a37-role-swap-probe.lean` exited 0 by applying the frozen owner to the two mathematical equivalences and leaves no Lean conclusion for the interpretive identifications."
+    reentry_condition: "Add source-authorized typed carriers and interpretation maps for the three named ethical frameworks, with public propositions stating the shared invariance core and the stated limits on textual reduction; then formalize the interpretive child and re-cover the whole atom."
+    blocker_class: multi-clause-guard
   chain_atoms:
     - 56091ea6391c9bfa2ddee161d1bb3d39500706c2a63cd0f92d10dc238cdd0094
     - 65fdd466e78c43dcc09ce5d55b87ef92725650bf222ff33519a34944c16dd9af

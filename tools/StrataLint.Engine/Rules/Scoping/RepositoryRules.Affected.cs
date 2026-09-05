@@ -17,7 +17,8 @@ internal static partial class RepositoryRules
         Changed(context, static path =>
             !IsCapacityExcluded(path)
             || path.EndsWith(".cs", StringComparison.Ordinal)
-            || path.EndsWith(".csproj", StringComparison.Ordinal));
+            || path.EndsWith(".csproj", StringComparison.Ordinal))
+        || Changed(context, ScribeTestMapDeriver.IsDerivationInput);
 
     private static bool MirrorsAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>

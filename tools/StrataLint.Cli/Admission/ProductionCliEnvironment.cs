@@ -38,6 +38,52 @@ internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabl
         }
     }
 
+    internal AdmissionCheckTimingAccumulator CreateAccumulator(string stage)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(stage);
+        return new AdmissionCheckTimingAccumulator(this, stage);
+    }
+
+    internal long? Start() => enabled ? TryGetTimestamp() : null;
+
+    internal void Accumulate(long? started, ref TimeSpan elapsed)
+    {
+        if (!enabled || started is null)
+        {
+            return;
+        }
+
+        try
+        {
+            var duration = timeProvider.GetElapsedTime(started.Value);
+            if (duration > TimeSpan.Zero)
+            {
+                elapsed += duration;
+            }
+        }
+        catch
+        {
+            // Telemetry cannot change the admission decision when the clock is unavailable.
+        }
+    }
+
+    internal void Write(string stage, string status, TimeSpan elapsed)
+    {
+        if (!enabled)
+        {
+            return;
+        }
+
+        try
+        {
+            WriteEvent(stage, status, Math.Max(0, elapsed.TotalSeconds));
+        }
+        catch
+        {
+            // The check result remains the fail-closed signal if timing output is unavailable.
+        }
+    }
+
     private long? TryGetTimestamp()
     {
         try
@@ -63,19 +109,67 @@ internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabl
             var elapsedSeconds = started is null
                 ? 0
                 : Math.Max(0, timeProvider.GetElapsedTime(started.Value).TotalSeconds);
-            Console.Error.WriteLine(JsonSerializer.Serialize(new
-            {
-                @event = "gate_stage_timing",
-                scope = "admission-check",
-                stage,
-                status,
-                elapsed_seconds = elapsedSeconds,
-            }));
+            WriteEvent(stage, status, elapsedSeconds);
         }
         catch
         {
             // The check result remains the fail-closed signal if timing output is unavailable.
         }
+    }
+
+    private static void WriteEvent(string stage, string status, double elapsedSeconds) =>
+        Console.Error.WriteLine(JsonSerializer.Serialize(new
+        {
+            @event = "gate_stage_timing",
+            scope = "admission-check",
+            stage,
+            status,
+            elapsed_seconds = elapsedSeconds,
+        }));
+}
+
+internal sealed class AdmissionCheckTimingAccumulator(
+    AdmissionCheckTiming timing,
+    string stage)
+{
+    private TimeSpan elapsed;
+    private bool completed;
+
+    internal T Measure<T>(Func<T> action)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+        var started = timing.Start();
+        var failed = false;
+        try
+        {
+            return action();
+        }
+        catch
+        {
+            failed = true;
+            throw;
+        }
+        finally
+        {
+            timing.Accumulate(started, ref elapsed);
+            if (failed)
+            {
+                Complete("failed");
+            }
+        }
+    }
+
+    internal void CompletePassed() => Complete("passed");
+
+    private void Complete(string status)
+    {
+        if (completed)
+        {
+            return;
+        }
+
+        completed = true;
+        timing.Write(stage, status, elapsed);
     }
 }
 
@@ -203,21 +297,17 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                     "check requires --candidate-lean-report FILE");
             }
 
-            var currentRaw = repository.ReadCurrent();
-            var baselineRaw = repository.ReadRevision(prepared.Revision);
-            var admissionPlaneEvaluation = timing.Measure(
+            var rawSnapshots = timing.Measure(
+                "repository-read",
+                () => (
+                    Current: repository.ReadCurrent(),
+                    Baseline: repository.ReadRevision(prepared.Revision)));
+            var currentRaw = rawSnapshots.Current;
+            var baselineRaw = rawSnapshots.Baseline;
+            var admissionPlane = timing.Measure(
                 "admission-plane",
-                () =>
-                {
-                    var outcome = EvaluateAdmissionPlane(
-                        baselineRaw,
-                        prepared.Changes,
-                        out var usedBootstrap);
-                    return (Outcome: outcome, UsedBootstrap: usedBootstrap);
-                },
-                static result => result.Outcome is not null);
-            var admissionPlane = admissionPlaneEvaluation.Outcome;
-            var admissionPlaneBootstrap = admissionPlaneEvaluation.UsedBootstrap;
+                () => EvaluateAdmissionPlane(currentRaw, prepared.Changes),
+                static result => result is not null);
             if (admissionPlane is not null)
             {
                 return admissionPlane;
@@ -228,9 +318,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 () =>
                 {
                     var current = Decode(currentRaw);
-                    var baseline = Decode(admissionPlaneBootstrap
-                        ? WithoutFileMap(baselineRaw)
-                        : baselineRaw);
+                    var baseline = Decode(baselineRaw);
                     // Fork-point consumers compare repository structure and ledger bytes, not Lean facts.
                     var forkPoint = string.Equals(
                         prepared.ChangeBase,

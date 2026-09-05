@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "The child text is only `或不可伪造 provenance`; the surrounding source defines truthful reporting and incentive compatibility but gives no provenance carrier, authenticity predicate, adversary model, or theorem relating nonforgeability to recovery of the true report. D5 and Blueprint search `unforgeable provenance|不可伪造|provenance authenticity` exited 1; pinned Mathlib search for truthful reporting and unforgeable provenance exited 1; installed non-Mathlib package search exited 1; A17 is wait-for-capability because its public-source, revision, and license predicates are unavailable. `/private/tmp/w73d37-atom1-probe.lean` exited 0 and checks the frozen countermodel plus the nearest provenance and commitment candidates; neither states this child as a public proposition. A Lean theorem for the bare label would require inventing the missing carrier."
+    reentry_condition: "Provide a typed provenance record, an authenticity and nonforgeability predicate over that record, and a public bridge theorem from authenticated provenance to recovery of the true report."
+    blocker_class: multi-clause-guard

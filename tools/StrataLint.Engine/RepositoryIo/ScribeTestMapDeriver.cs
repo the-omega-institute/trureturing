@@ -33,9 +33,7 @@ internal static class ScribeTestMapDeriver
     {
         var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
         var tracked = files
-            .Where(static file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
-                || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal)
-                || file.RelativePath.EndsWith("packages.lock.json", StringComparison.Ordinal))
+            .Where(static file => IsTrackedInput(file.RelativePath))
             .Select(file => new ScribeTrackedSource(
                 file.RelativePath,
                 File.ReadAllText(file.FullPath)))
@@ -46,6 +44,16 @@ internal static class ScribeTestMapDeriver
         return DeriveTracked(
             tracked,
             MsBuildCompileOracle.Query(repositoryRoot, projectPaths, dotnetExecutable, timeout));
+    }
+
+    internal static bool IsDerivationInput(string path) =>
+        IsTrackedInput(path) || MsBuildCompileOracle.IsBuildInput(path);
+
+    private static bool IsTrackedInput(string path)
+    {
+        return path.EndsWith(".cs", StringComparison.Ordinal)
+            || path.EndsWith(".csproj", StringComparison.Ordinal)
+            || path.EndsWith("packages.lock.json", StringComparison.Ordinal);
     }
 
     internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot)
@@ -74,9 +82,7 @@ internal static class ScribeTestMapDeriver
     private static ScribeTestMap DeriveSnapshotUncached(RepositorySnapshot snapshot)
     {
         var tracked = snapshot.Files.Values
-            .Where(static file => file.Path.Value.EndsWith(".cs", StringComparison.Ordinal)
-                || file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal)
-                || file.Path.Value.EndsWith("packages.lock.json", StringComparison.Ordinal))
+            .Where(static file => IsTrackedInput(file.Path.Value))
             .Select(static file => new ScribeTrackedSource(file.Path.Value, file.Text))
             .ToArray();
         var projects = tracked

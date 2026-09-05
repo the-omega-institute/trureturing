@@ -2697,3 +2697,34 @@ L2a 一席位轮(codex-cli,独立 worktree,`GermWindow/`;同 PR deposit(绑 L2a 
 本节不新增数学命题、不改任何冻结节点;它只把「预测写在实施之前」这条纪律的一次失误(散文误述探针机制)按 5⁗ 的规定形式入账。第二层 L2a/L2b/L2c(增订三十四)的预登记见证是否会遇到同样的转写误差,由其实施时同样对照探针文件核对。
 
 后续增订继续严格追加于本节之后。
+
+# 增订三十六　G-c-L2c 的 v2 重预登记:探针实测后的模块拆分与逐模通用引理(增订三十四 §三)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex,`probe-gc-l2c`,只读树 la103 = dev + L2a 分支,`make lean` EXIT=0、`lake env lean` EXIT=0,全部标准三公理;生成器原型 `gen.py` sha256 `fc31ea65690830655d7307e26c2485741bc9c5de9b339f402a1a30d3b2e0f50f`;数值参照 mpmath,标 ASSUMED-UNVERIFIED)按增订三十四 §三 的预登记整证 61 模证书。散文由 orchestrator(claude 主循环)撰写,**读数除标「席位自报」者外均出自探针信封**。判决日:2026-09-05。lane issue:#4589。
+
+## 〇　为什么重预登记
+
+增订三十四 §三 预登记「每模约 30 条不等式、61 模共约 1800 条、阐释约 15 分钟;若阐释超 1 小时则改分两模块并重新预登记」。探针实测(席位自报,kernel 已过):61 模全部证书 + T1 + T2 + 最终定理在 **139.02 s**(user CPU 602.9 s)内通过,**时间预测应验**;但生成源码 **22,033 行 / 1.94 MB**,远超 SL-003 的单文件硬线 800 行(`ArtifactHardLineLimit`)——预登记没有预测源码体量,这是一个观测到的新约束。第 5⁗ 条:观测到的见证/形态与拟议不同,须以新版本重新预登记,不得事后改标。故本节以 v2 重登记 L2c 的落地形态;义务子句(T1、T2、最终定理)逐字不变,atom `edd4677d…` 保持。
+
+## 一　L2c v2 落地形态(两模块 + 入仓生成器)
+
+**模块 A(通用逐模引理,手写,新义务)**:`D5/S3/Analytic/GermWindow/GermJetModeLemma`。公开定理族 `mode_term_enclosure` / `mode_deriv_enclosure`:给定模 v ≤ 60 的有理数据(由 `o5FloorTable`/`o5Beta_eq_affine` 得的 β 的有理区间、`log_two_binary_70` 级的 log 2 有理区间、`Real.exp_bound`(阶 20)的指数包络、L2b 的 `abs_cos_sub_partial_le`/`abs_sin_sub_partial_le`(阶 10)与 `exists_reduced_phase_pi_of_rat` 的相位约简)与若干**可判定的有理不等式假设**,结论为 `(2:ℂ)^(-c·β v)` 及其对 s 的导数项 `-(β v)·log 2·(2:ℂ)^(-c·β v)` 的实部/虚部有理区间包络。**义务子句**:`mode_term_enclosure` 与 `mode_deriv_enclosure` 的结论对每个 v ≤ 60 给出宽度 ≤ 10⁻¹⁵ 的有理区间(探针实测各坐标宽度 ≤ 3·10⁻¹⁸,导数 ≤ 1.63·10⁻¹⁶)。**逃逸见证**:指数—三角乘积的区间传播引理(exp 包络 × cos/sin 包络 × 相位约简 → 坐标区间),Mathlib 无此组合;不是任一冻结定理的实例化。
+
+**模块 B(生成式实例与闭合,即增订三十四 §三 的 `GermWindow/GermZeroCertificate`)**:61 条模式实例定理(每条 = 模块 A 引理在该模的有理数据上的实例 + `norm_num` 判定假设,bind 形态)、坐标汇总(`sum_re_le_of_bounds`/`sum_im_le_of_bounds`/`norm_le_of_re_im_bounds`)、`g60_center_norm_lt`、`g60_center_deriv_re_gt`、`germLocalFactor_two_has_zero_near_candidate`(义务子句逐字同增订三十四 §三)。**逃逸见证**:61 模有理数据表与两条汇总不等式 ‖g₆₀(c)‖ ≤ 17645257/62500000000000000 ≈ 2.823·10⁻¹⁰ < 4·10⁻¹⁰ 与 Re g₆₀′(c) ≥ 1.877338… > 1.87(探针实测认证余量 1.177·10⁻¹⁰ 与 7.34·10⁻³);最终定理为 L1 `germ_zero_of_center_jet` 对 T1、T2、L2a `g60_curvature_le` 的 bind-only 应用,如实标注。
+
+**生成器**:`tools/scripts/agent/germ_jet_certificate.py`(器律⑨;由探针原型 `gen.py` 收敛而来),输入模式列表与模块路径,输出模块 B 的 Lean 源与元数据;带 `--check` 自校验(重生成并与 tracked 源逐字节比对,退出码可辨)。生成器是 producer、模块 B 是其投影,但模块 B 同时是 Lean 的真值载体(kernel 检查它),故两者皆 tracked,一致性由 `--check` 验算(第〇节投影律的验算项,不进保护面)。
+
+**可证伪预测(写在实施之前)**:①模块 A、B 各 ≤ 800 行(SL-003 硬线),B ≤ 600 行(软线);②`make lean` 增量阐释 A+B ≤ 10 分钟(探针 139 s 为全量单文件,拆分后预期不劣化);③61 条实例每条 ≤ 8 行;④T1 认证上界 ≤ 2.9·10⁻¹⁰、T2 认证下界 ≥ 1.877;⑤`--check` 在 CI 树上退出 0。任一不成即回本节勘误,不放宽阈值。
+
+## 二　旧结算清单(第 5″ 条)
+
+- 增订三十四 §三 义务三条(T1、T2、最终定理)——仍立,逐字不变;
+- 「每模约 30 条不等式、阐释约 15 分钟」——预测应验(139 s),仍立;
+- 「单模块落地」——作废,由本节两模块形态取代(理由:源码体量,非时间);
+- 「若阐释超 1 小时则拆分」——未触发;拆分理由改为 SL-003 行数硬线,本节记为对旧预测的补充而非推翻。
+
+## 三　诚实边界
+
+本节不断言 G-c 为真;两模块合起来若 kernel 通过,证的是 p = 2 局部因子在候选 10⁻⁸ 球内有零点,即增订十「窗口内无消去」为假的 kernel 证实,不涉及 RH 本身。探针的 61 模证书虽已在 kernel 通过,但那是 22k 行的 scratch 单文件;拆分为 A + B 后的形态**尚未整证**,以实施为准。
+
+后续增订继续严格追加于本节之后。

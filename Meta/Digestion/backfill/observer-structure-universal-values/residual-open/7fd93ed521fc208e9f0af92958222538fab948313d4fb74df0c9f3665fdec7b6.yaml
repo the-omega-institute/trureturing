@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Multi-clause guard: frozen owner `D5/S3/ConceptDynamics/NormativeOrbits/RoleSwapOrbitFactorization.role_swap_full_invariance_orbit_factorization` carries swap invariance iff full permutation invariance and full invariance iff orbit factorization. The remaining child says `己所不欲,勿施于人`, Kant's universal-law maxim, and Rawls's veil share that invariance core, while explicitly denying textual reduction; it supplies no typed ethical carriers or interpretation maps that state those identifications. Retrieval receipts: precise D5/Blueprint search for the named doctrines and Chinese phrases exited 1; pinned Mathlib search exited 1; installed non-Mathlib package search across plausible, proofwidgets, batteries, Cli, aesop, importGraph, LeanSearchClient, and Qq exited 1; local probe `/private/tmp/w73a37-role-swap-probe.lean` exited 0 and confirms that the frozen owner derives only the two mathematical equivalences, leaving the interpretive identifications without a Lean conclusion."
+    reentry_condition: "Add source-authorized typed carriers and interpretation maps for the three named ethical frameworks, with public propositions stating the claimed shared core and the stated limits on textual reduction; then formalize those propositions and cover this child."
+    blocker_class: multi-clause-guard

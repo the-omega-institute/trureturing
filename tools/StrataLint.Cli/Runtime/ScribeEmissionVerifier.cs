@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using StrataLint.Scribe.Documents;
 
 namespace StrataLint.Cli;
 
@@ -85,7 +86,7 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
         LeanAxiomReport report)
     {
         var error = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
-        return ScribeEmitter.Verify(repositoryRoot, error, report)
+        return ScribeEmitter.Verify(DocumentAssembly.Value, repositoryRoot, error, report)
             ?? throw new InvalidOperationException(
                 "Scribe emission verification failed: " + error.ToString().Trim());
     }
