@@ -1,8 +1,9 @@
 using StrataLint.Engine;
+using static StrataLint.Tests.UtilityAdmissionTestSupport;
 
 namespace StrataLint.Tests;
 
-public sealed partial class UtilityAdmissionRuleTests
+public sealed class UtilityAdmissionReachabilityTests
 {
     [Fact]
     public void ConsumerWithoutImportPathIsBlocked()

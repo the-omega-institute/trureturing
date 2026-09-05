@@ -1,8 +1,9 @@
 using StrataLint.Engine;
+using static StrataLint.Tests.UtilityAdmissionTestSupport;
 
 namespace StrataLint.Tests;
 
-public sealed partial class UtilityAdmissionRuleTests
+public sealed class UtilityAdmissionObservationTests
 {
     [Fact]
     public void RefutesTaskIsObservedNotBlocked()
@@ -89,7 +90,7 @@ public sealed partial class UtilityAdmissionRuleTests
         var statePath = AddExistingFrozenState(fixture);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            UtilityRuleId,
+            UtilityAdmissionTestSupport.UtilityRuleId,
             fixture.Build(RawChangeSet.CreateWithKinds(
                 [(statePath, RawChangeKind.Added)]))).Diagnostics;
 
@@ -103,7 +104,7 @@ public sealed partial class UtilityAdmissionRuleTests
         var historical = new RuleFixture();
         AddExistingFrozenState(historical);
         Assert.Empty(RuleCatalog.Default.EvaluateSingle(
-            UtilityRuleId,
+            UtilityAdmissionTestSupport.UtilityRuleId,
             historical.Build(RawChangeSet.Create([RuleFixture.BlueprintPath]))).Diagnostics);
 
         var firstFreezeDiagnostic = Assert.Single(
@@ -118,7 +119,7 @@ public sealed partial class UtilityAdmissionRuleTests
         var implementationContext = implementationOnly.Build(RawChangeSet.Create([implementation]));
         Assert.True(UtilityAdmissionRule.IsAffectedBy(implementationContext));
         Assert.Empty(RuleCatalog.Default.EvaluateSingle(
-            UtilityRuleId,
+            UtilityAdmissionTestSupport.UtilityRuleId,
             implementationContext).Diagnostics);
     }
 
@@ -135,7 +136,7 @@ public sealed partial class UtilityAdmissionRuleTests
             "none");
 
         var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
-            UtilityRuleId,
+            UtilityAdmissionTestSupport.UtilityRuleId,
             fixture.Build(RawChangeSet.Create([RuleFixture.RingPath]))).Diagnostics);
 
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
@@ -154,7 +155,7 @@ public sealed partial class UtilityAdmissionRuleTests
         fixture.Files[malformed] = "{}\n";
 
         var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
-            UtilityRuleId,
+            UtilityAdmissionTestSupport.UtilityRuleId,
             fixture.Build(RawChangeSet.CreateWithKinds(
                 [(malformed, RawChangeKind.Added)]))).Diagnostics);
 
@@ -196,7 +197,7 @@ public sealed partial class UtilityAdmissionRuleTests
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome);
         Assert.Contains(
             completed.Capability.Diagnostics,
-            diagnostic => diagnostic.RuleId == UtilityRuleId
+            diagnostic => diagnostic.RuleId == UtilityAdmissionTestSupport.UtilityRuleId
                 && diagnostic.AdmissionEffect is AdmissionEffect.Block
                 && diagnostic.Path == malformedState
                 && diagnostic.Message.Contains(
@@ -229,7 +230,7 @@ public sealed partial class UtilityAdmissionRuleTests
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome);
         Assert.Contains(
             completed.Capability.Diagnostics,
-            diagnostic => diagnostic.RuleId == UtilityRuleId
+            diagnostic => diagnostic.RuleId == UtilityAdmissionTestSupport.UtilityRuleId
                 && diagnostic.AdmissionEffect is AdmissionEffect.Block
                 && diagnostic.Message == $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath} "
                     + $"reason=ambiguous-atom-target:{RuleFixture.FixtureAtomId}");
@@ -269,7 +270,7 @@ public sealed partial class UtilityAdmissionRuleTests
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome);
         var utilityDiagnostics = completed.Capability.Diagnostics
-            .Where(diagnostic => diagnostic.RuleId == UtilityRuleId)
+            .Where(diagnostic => diagnostic.RuleId == UtilityAdmissionTestSupport.UtilityRuleId)
             .ToArray();
         Assert.Contains(
             utilityDiagnostics,
