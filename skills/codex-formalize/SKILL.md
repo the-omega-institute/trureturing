@@ -311,6 +311,37 @@ compliance; they do not judge coverage faithfulness.
   recommendation with nothing written.
 - **Check whether a quarantine record already exists before writing one.** Several drivers work this
   repository concurrently; a blind write silently overwrites another driver's record.
+- **The cover door has a fifth precondition: the atom's `chain_atoms` must already be closed.**
+  A ledger entry may carry `receipts.chain_atoms`, a list of child atom ids. While any child is still
+  open, `DigestionReadinessQuery` classifies the parent as `close-chain` and the door answers
+  `partial-closed deletable=false gaps=chain-migration-incomplete`, naming the offending child in
+  `gaps[].detail`. Landed case (2026-09-06): a pair whose four documented preconditions all passed
+  and whose faithfulness was verified clause by clause — the owner's four conjuncts matched the
+  atom's four load-bearing clauses and `fibonacciSubstitution = !![1,1;1,0]` was confirmed identical
+  to the source's `F(x,y)=(x+y,x)` — was still refused, because one of the two children was open.
+  Check `receipts.chain_atoms` before spending a batch slot on a parent atom; close the children first.
+- **A failed `cover-batch` leaves a partial write, and it is not always the same gap.** The batch is
+  strictly sequential and aborts on the first failure, but before aborting it has already written
+  `receipts.cover_disposition` (`outcome`, `gids`, `gaps`) into that entry's YAML. Restore the file
+  byte-for-byte from `HEAD` before running the remaining pairs, or that speculative disposition ships
+  with the PR. Two distinct gap codes have produced this shape so far
+  (`scribe-declaration-reference-missing`, `chain-migration-incomplete`), so do not pattern-match on
+  the code — check the working tree after every non-zero `cover-batch`.
+- **A read-only mining seat still has to publish `result.json` itself; the runner never extracts it.**
+  The worker alone owns `result.json` and `completion.sentinel`; the runner "never creates, repairs,
+  copies, normalizes, touches, or substitutes" them. A brief that only says "print the envelope to
+  stdout" produces seats that finish the work and are still recorded as
+  `status=NOT_COMPLETE reason_code=RESULT_MISSING` with `carrier_exit=0`. Landed case (2026-09-06):
+  four of five mining seats landed in that state; all five had complete envelopes sitting in
+  `last-message.txt`, so nothing was lost, but the batch report read as a 4/5 failure. State the
+  artifact contract in the brief — write `result.json.tmp` then atomically rename, same for the
+  sentinel — and point at the attempt directory the runner appends to the brief rather than a path
+  you compose yourself.
+- **`NOT_COMPLETE` is a runner-side verdict about artifacts, not a statement about the work.** Before
+  concluding a seat failed, read `status.json` for `reason_code` and `carrier_exit`, and size
+  `last-message.txt`. `carrier_exit=0` with a 30 KB last message means the seat did the work; the
+  envelope is recoverable. This is the codex-log rule (器律⑤) applied to the batch runner: the
+  surface symptom proves only that the observer did not see the result.
 
 ### Moving base (multiple drivers, hourly-advancing dev)
 
