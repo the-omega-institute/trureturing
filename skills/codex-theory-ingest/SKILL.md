@@ -29,8 +29,7 @@ and this file is the bug.
   no-overclaim, worktree isolation, TDD, and machine-only gates.
 - `agents/CONTEXT.md` - owns the finite-context map and routing guidance.
 - `docs/develop/spec/golden-ledger-repo-spec.md` - owns the normative repository
-  specification; read the current A16.1 text in full before acting.
-- `Meta/registry.yaml` - owns the current canonical governance-document list.
+  specification.
 - `skills/codex-formalize/SKILL.md` - owns the downstream open-atom workflow.
 - `make help` - owns the live catalogue of canonical doors.
 - `tools/StrataLint.Engine/Digestion/DigestionIngestor.cs` - owns default source
@@ -46,7 +45,7 @@ Follow these steps in order. Do not pass a step until its postcondition holds.
 Unless a step names a bounded recovery, every command result has exactly one
 successor: exit 0 with the stated postcondition satisfied advances to the next
 step; any nonzero exit or unmet postcondition ends in evidence-complete `open`.
-Pull requests use the bounded observation protocol below: REST-confirmed
+The pull request uses the bounded observation protocol below: REST-confirmed
 `MERGED` advances or completes the workflow; a failed required check, a terminal
 non-merged REST state, an observation failure, or budget exhaustion ends in
 evidence-complete `open`. There are no implicit retries.
@@ -106,7 +105,7 @@ Together, the resolved base, raw porcelain state, per-artifact hashes, and seale
 log identify the uncommitted execution state for another lane. A committed HEAD,
 PR head, branch name, or one atom CAS reference does not substitute for them.
 
-For both pull requests, resolve the PR number immediately after `make pr-open`,
+For the pull request, resolve the PR number immediately after `make pr-open`,
 record the branch's current `commit_sha`, and make the first REST observation.
 That observation must be exit 0 and valid JSON containing `head.sha`, `state`,
 `merged`, and `merged_at`; its `head.sha` must equal `commit_sha`. Capture that
@@ -222,32 +221,7 @@ Postcondition: the normalized bytes retain the author's meaning, provenance and
 truth status are explicit, and at least one intended formalization claim has an
 eligible numbered lowercase heading.
 
-### 3. Register first, then land the volume
-
-Read A16.1 again from the current specification. Its current obligation is two
-ordered pull requests even while its former machine enforcement is deferred.
-
-**Registration PR:** On a dedicated branch, add only the future volume path to
-`Meta/registry.yaml` under `governance_documents`, preserving canonical ordering.
-Do not add the volume or digestion data. Commit, run `make preflight BASE="$(git rev-parse HEAD^1)"`, push, and
-run `make pr-open AUTO_MERGE=1`; every command must exit 0. After `make pr-open`, do not push
-further changes to that branch. Apply the bounded pull-request observation
-protocol. Only its REST-confirmed `MERGED` verdict advances to the theory PR; all
-of its `open` successors use the fixed evidence schema. A green or merely open PR
-is not a postcondition. If the exact path is already present in the protected
-base, prove that fact from `origin/dev` and do not create a duplicate registration
-PR.
-
-**Theory PR:** After registration is merged, create a fresh worktree from the
-new `origin/dev`. Confirm that its registry already contains the path, then add
-only `docs/develop/theory/<filename>.md`. The theory branch must contain no
-registry diff.
-
-Postcondition: the protected base pre-registers the exact path, and the fresh
-theory branch contains one new normalized volume with no edit to an existing
-volume or to `Meta/registry.yaml`.
-
-### 4. Ingest and verify the new atoms
+### 3. Ingest and verify the new atoms
 
 Record `git status --short`, then run the canonical writer:
 
@@ -332,10 +306,10 @@ Postcondition: canonical ingest created the source record and CAS-backed atoms,
 `show-atom` reads at least one eligible claim back with matching hashes, and the
 same atom appears exactly once in the formalization-candidate output.
 
-### 5. Preflight, publish, and wait for the machine verdict
+### 4. Preflight, publish, and wait for the machine verdict
 
 Review `git diff` and require every `Meta/Digestion/**` change to be an output of
-the successful Step 4 writer. Prepare a pull-request body that records:
+the successful Step 3 writer. Prepare a pull-request body that records:
 
 - provenance and the new volume path;
 - source id, residual increment, and eligible atom ids;
