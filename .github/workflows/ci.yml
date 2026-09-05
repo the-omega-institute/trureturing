@@ -419,13 +419,31 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
-      - name: Fetch required Lean release build layer
+      # project 层优先取 Actions cache:它每次 dev push 写一份(约 8 分钟一份),
+      # 而 Release 是 `cron: 0 */6 * * *` 且只许 schedule(实测间隔可达 7h05m)。
+      # 精确命中结构上不可能(key 含 sources_sha256,每个改 Lean 的候选都不同),
+      # 故这里靠 restore-keys 前缀回退取「最近一次 dev push 的 project 层」。
+      - name: Restore candidate Lean project build artifacts
+        id: lake-build-cache
         if: steps.report-reuse.outcome != 'success'
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
+      # Release 只作兜底:仅当 Actions 层**连前缀都没回退到**时才取。
+      # `lake unpack` 是合并语义(Lake 4.33 Lake/Build/Actions.lean:182-191,无预删除),
+      # 无条件执行会让较旧的 Release 按同名路径覆盖较新的 Actions 层,反而增加补编 ——
+      # 这正是 #5640 的方向错误,由 τ=0 owner 2026-09-06 指出并纠正。
+      # 判据用 cache-matched-key 而非 cache-hit:后者仅精确命中为 true,在此恒假。
+      - name: Fetch required Lean release build layer when the Actions layer is absent
+        if: steps.report-reuse.outcome != 'success' && steps.lake-build-cache.outputs.cache-matched-key == ''
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
         shell: bash
         run: |
           set -euo pipefail
-          printf '%s\n' '集成分支要求使用 release cache;取回失败即失败,不回落编译'
+          printf '%s\n' 'Actions project 层缺席;取 release cache,取回失败即失败,不回落编译'
           PATH="$HOME/.elan/bin:$PATH" candidate/tools/scripts/worktree/lean-cache-publish.sh fetch --repository "$GITHUB_WORKSPACE/candidate"
       - name: Produce source-bound canonical Lean reports
         if: steps.report-reuse.outcome != 'success'
@@ -509,6 +527,14 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain') }}
 
       # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
+      - name: Save Lean project build artifacts (dev push only)
+        if: success() && steps.report-reuse.outcome != 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
       - name: Save Lean dependency artifacts (dev push only)
         if: success() && steps.report-reuse.outcome != 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         continue-on-error: true
