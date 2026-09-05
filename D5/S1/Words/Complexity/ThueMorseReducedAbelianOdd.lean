@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/Complexity/ThueMorseReducedAbelianOdd
    mirror-E: none(waiver:pure-word-combinatorics)
    anchors: []
+   utility: none
    digest: Odd Thue-Morse reduced abelian complexity reflects to half length. -/
 
 import Mathlib.Algebra.Ring.Parity
