@@ -11,6 +11,15 @@ universe u v w
 attribute [local instance] Arena.stateFintype Arena.stateDecidableEq
 attribute [local instance] Catalog.indexFintype Catalog.indexDecidableEq
 
+instance projectionEquivalentDecidable {arena : Arena.{u}}
+    (catalog : Catalog.{u, v, w} arena) (a b : catalog.Index) :
+    Decidable (catalog.KernelEquivalent a b) :=
+  inferInstanceAs (Decidable (catalog.KernelRefines a b ∧ catalog.KernelRefines b a))
+
+instance projectionRedundantDecidable {arena : Arena.{u}}
+    (catalog : Catalog.{u, v, w} arena) : Decidable (catalog.CatalogRedundant) :=
+  inferInstanceAs (Decidable (∃ i, catalog.uniqueCaptureCount i = 0))
+
 instance projectionNodeLE {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
     (a b : catalog.GeneratedKernel) : Decidable (a ≤ b) :=
   show Decidable (∀ x y, a.relation x y → b.relation x y) from inferInstance
@@ -154,5 +163,29 @@ def projectionNodeCatalog {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena
       atom := fun _ => ⟨.cut, catalog.generatedKernelRelation (selections index)⟩ }
     Statement := True
     proof := True.intro }
+
+/-- A complete projection represents every extensional generated relation. -/
+def projectionComplete {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    {n : Nat} (selections : Fin n → Finset catalog.Index) : Prop :=
+  ∀ selected : Finset catalog.Index, ∃ i, catalog.generatedKernel selected =
+    catalog.generatedKernel (selections i)
+
+instance projectionCompleteDecidable {arena : Arena.{u}}
+    (catalog : Catalog.{u, v, w} arena) {n : Nat}
+    (selections : Fin n → Finset catalog.Index) : Decidable (projectionComplete catalog selections) :=
+  inferInstanceAs (Decidable (∀ _ : Finset catalog.Index, ∃ _ : Fin n, _))
+
+def projectionSuite {n : Nat} (root : Lean.Name)
+    (catalogs : Fin n → PackedCatalog.{u, v, w}) : DesignatedRootCatalogSuite where
+  rootId := root
+  CatalogIndex := Fin n
+  catalogIndexFintype := inferInstance
+  catalogIndexDecidableEq := inferInstance
+  catalogAt := catalogs
+
+instance projectionSystemDecidable {n : Nat} (root : Lean.Name)
+    (catalogs : Fin n → PackedCatalog.{u, v, w}) :
+    Decidable (SystemCatalogIrredundant (projectionSuite root catalogs)) :=
+  inferInstanceAs (Decidable (∀ i : Fin n, CatalogIrredundant (catalogs i).catalog))
 
 end LeanInformationAudit

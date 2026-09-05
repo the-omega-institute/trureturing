@@ -17,8 +17,11 @@ def unit (readout : Bool × Bool → Bool × Bool) : TheoremUnit arena where
   Statement := True
   proof := trivial
 
-abbrev catalog : Catalog arena := Catalog.ofVector ![
-  unit (fun p => (p.1, false)), unit (fun p => (false, p.2)), unit id]
+def aFst := unit (fun p => (p.1, false))
+def bSnd := unit (fun p => (false, p.2))
+def cId := unit id
+
+abbrev catalog : Catalog arena := Catalog.ofVector ![aFst, bSnd, cId]
 
 example : catalog.generatedKernel ({2} : Finset (Fin 3)) =
     catalog.generatedKernel {0, 1} := by decide

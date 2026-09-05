@@ -1,4 +1,5 @@
 import LeanInformationAudit.AnalysisProjection
+import LeanInformationAudit.ProjectionValidation
 
 namespace LeanInformationAudit
 
@@ -41,14 +42,16 @@ private partial def firstRepresentative (catalog target : Expr) (size : Nat)
   pure none
 
 /-- Search representatives only; this does not materialize or construct a lattice. -/
-private def canonicalSelection (catalog : Expr) (size : Nat) (selected : Array Nat) :
+private def canonicalSelection (catalog : Expr) (members : Array Name) (selected : Array Nat) :
     MetaM (Array Nat) := do
+  let size := members.size
   let selected := normalizeSelection selected
   let target ← generated catalog size selected
   let mut eligible := #[]
   for index in [:size] do
     let singleton ← generated catalog size #[index]
     if ← ProjectionProof.truth (← mkLE target singleton) then eligible := eligible.push index
+  eligible := eligible.qsort fun i j => members[i]!.toString < members[j]!.toString
   for count in [:selected.size + 1] do
     if let some representative ← firstRepresentative catalog target size eligible count 0 #[] then
       return representative
@@ -66,7 +69,8 @@ private def materialize (catalog : Expr) (members : Array Name) (certPrefix : Na
     (required : Array (Array Nat)) : ProjectionM (Array MaterializedKernel) := do
   let mut kernels := #[]
   for selected in required do
-    let selected ← canonicalSelection catalog members.size selected
+    let requestedNode ← generated catalog members.size selected
+    let selected ← canonicalSelection catalog members selected
     let selection ← ProjectionProof.selection members.size selected
     let node ← mkAppM ``Catalog.generatedKernel #[catalog, selection]
     if ← kernels.anyM (fun other => sameNode other.node node) then continue
@@ -74,14 +78,16 @@ private def materialize (catalog : Expr) (members : Array Name) (certPrefix : Na
     let kernelName ← ProjectionProof.value (certPrefix.str key) node
     let escape ← mkAppM ``Catalog.GeneratedKernel.escapeCount #[node]
     let escapeCount : Nat ← reduceEval escape
-    let relationProof ← mkAppM ``Eq.refl #[node]
+    let relationProof ← mkDecideProof (← mkEq requestedNode node)
+    let cardinalityProof ← mkDecideProof (← mkEq
+      (← mkAppM ``Finset.card #[selection]) (mkNatLit selected.size))
     let countProof ← mkDecideProof (← mkEq escape (mkNatLit escapeCount))
     let relationCertificate ← ProjectionProof.proof (certPrefix.str (key ++ "_relation"))
-      (← ProjectionProof.conjunction #[relationProof, countProof])
+      (← ProjectionProof.conjunction #[relationProof, cardinalityProof, countProof])
     kernels := kernels.push {
       selected, selection, node, kernelName,
       row := { key := key, generators := selected.map (members[·]!), escapeCount, relationCertificate } }
-  pure kernels
+  pure (kernels.qsort fun a b => a.kernelName.toString < b.kernelName.toString)
 
 private def prepareEdges (catalog : Expr) (members : Array Name) (certPrefix : Name)
     (kernels : Array MaterializedKernel) :
@@ -142,10 +148,12 @@ private def prepareSchedule (catalog : Expr) (members : Array Name) (certPrefix 
   let mut stepClasses := #[]
   let mut increments := #[]
   let mut stepCertificates := #[]
+  let mut partitionProofs := #[]
   for i in [:order.size + 1] do
     let current ← mkAppM ``GeneratorSchedule.node
       #[schedule, ← ProjectionProof.fin i (order.size + 1)]
     let index ← kernelIndex kernels current
+    partitionProofs := partitionProofs.push (← mkDecideProof (← mkEq current kernels[index]!.node))
     nodes := nodes.push kernels[index]!.row.key
     if i > 0 then
       let source := nodes[i - 1]!
@@ -154,6 +162,8 @@ private def prepareSchedule (catalog : Expr) (members : Array Name) (certPrefix 
       let expression ← mkAppM ``GeneratorSchedule.incrementCount
         #[schedule, ← ProjectionProof.fin (i - 1) order.size]
       let (count, _) ← ProjectionProof.count (certPrefix.str s!"increment_{i - 1}") expression
+      partitionProofs := partitionProofs.push
+        (← mkDecideProof (← mkEq expression (mkNatLit count)))
       increments := increments.push count
       if source == target then
         stepClasses := stepClasses.push "collapsed"
@@ -168,11 +178,14 @@ private def prepareSchedule (catalog : Expr) (members : Array Name) (certPrefix 
           | throwError "missing certified strict schedule step"
         stepCertificates := stepCertificates.push row.certificate
   let layer ← prepareLayerProjection schedule chainId (certPrefix.str "layers")
-  let strictChain ← mkAppM ``GeneratorSchedule.strictSubsequence #[schedule]
-  let mut partitionProofs := #[]
+  let terminal ← mkAppM ``GeneratorSchedule.node
+    #[schedule, ← ProjectionProof.fin order.size (order.size + 1)]
+  partitionProofs := partitionProofs.push (← mkDecideProof (← mkEq
+    (← mkAppM ``Catalog.GeneratedKernel.escapeCount #[terminal])
+    (mkNatLit layer.unresolved.count)))
   for theoremName in #[``chain_increment_pairwise_disjoint, ``chain_increment_union,
       ``chain_count_telescopes] do
-    partitionProofs := partitionProofs.push (← mkAppM theoremName #[strictChain])
+    partitionProofs := partitionProofs.push (← mkAppM theoremName #[schedule])
   partitionProofs := partitionProofs.push
     (← mkAppM ``schedule_terminal_eq_generatedKernel_full #[schedule])
   let partitionCertificate ← ProjectionProof.proof (certPrefix.str "partition")
@@ -183,10 +196,12 @@ private def prepareSchedule (catalog : Expr) (members : Array Name) (certPrefix 
 
 def prepareKernelProjection (catalog arena : Expr) (members : Array Name)
     (rootId catalogId arenaName certPrefix : Name) (request : KernelProjectionRequest := {}) :
-    ProjectionM (KernelProjectionRecord × AnalysisProjectionRecord × Array LayerChainRow) := do
+    ProjectionM (KernelProjectionRecord × AnalysisProjectionRecord × Array LayerChainRow) :=
+    withTransparency .all do
   let size := members.size
   let full := Array.range size
-  let schedules := if request.schedules.isEmpty then #[ ("canonical", full) ]
+  let canonicalOrder := full.qsort fun i j => members[i]!.toString < members[j]!.toString
+  let schedules := if request.schedules.isEmpty then #[ ("canonical", canonicalOrder) ]
     else request.schedules.qsort fun a b => a.1 < b.1
   for (chainId, order) in schedules do
     unless order.qsort (· < ·) == full do
@@ -210,6 +225,11 @@ node=request reason=invalid-generator-index"
   let (edges, collapsedAdditions) ← prepareEdges catalog members certPrefix kernels
   let analysis ← prepareAnalysisProjection catalog enum members (certPrefix.str "analysis")
   let selections ← ProjectionProof.vector (kernels.map (·.selection))
+  let mut completenessCertificates := #[]
+  if request.complete then
+    let certificate ← ProjectionProof.decide (certPrefix.str "complete")
+      (← mkAppM ``projectionComplete #[catalog, selections])
+    completenessCertificates := #[("complete", certificate)]
   let nodeCatalog ← mkAppM ``projectionNodeCatalog #[catalog, selections]
   let (overlapMatrix, refinementMatrix, _, nodeCertificates) ←
     prepareMatrices nodeCatalog enum (kernels.map (·.kernelName)) (certPrefix.str "nodes")
@@ -223,12 +243,13 @@ node=request reason=invalid-generator-index"
     let node := kernels[← kernelIndex kernels withoutNode]!
     let capture ← mkAppM ``Catalog.GeneratedKernel.edgeCapture #[node.node, bottom]
     let unique ← mkAppM ``Catalog.uniqueCapturePairs #[catalog, index]
-    let equality ← mkDecideProof (← mkEq capture unique)
+    let equality ← ProjectionProof.arenaDecideProof arena (← mkEq capture unique)
     let countExpr ← mkAppM ``Catalog.uniqueCaptureCount #[catalog, index]
     let uniqueCaptureCount : Nat ← reduceEval countExpr
     let countProof ← mkDecideProof (← mkEq countExpr (mkNatLit uniqueCaptureCount))
+    let relationProof ← mkDecideProof (← mkEq withoutNode node.node)
     let certificate ← ProjectionProof.proof (certPrefix.str s!"leave_one_out_{i}")
-      (← ProjectionProof.conjunction #[equality, countProof])
+      (← ProjectionProof.conjunction #[relationProof, equality, countProof])
     leaveOneOut := leaveOneOut.push {
       theoremName := members[i]!, node := node.row.key,
       uniqueCaptureCount, certificate }
@@ -240,7 +261,8 @@ node=request reason=invalid-generator-index"
       kernels edges collapsedAdditions chainId order
     certifiedChains := certifiedChains.push chain
     layers := layers.push layer
-  let denominator : Nat ← reduceEval (← mkAppM ``escapeDenominator #[arena])
+  let (denominator, denominatorCertificate) ← ProjectionProof.count
+    (certPrefix.str "denominator") (← mkAppM ``escapeDenominator #[arena])
   let verdict := if redundantIndices.isEmpty then "irredundant" else "redundant"
   let verdictProp ← mkAppM
     (if redundantIndices.isEmpty then ``CatalogIrredundant else ``Catalog.CatalogRedundant)
@@ -250,10 +272,16 @@ node=request reason=invalid-generator-index"
     completeLatticeMaterialized := request.complete, nodes := kernels.map (·.row),
     edges, collapsedAdditions, leaveOneOut, certifiedChains, refinementMatrix, overlapMatrix,
     multiplicitySpectrum := analysis.spectrum, redundantIndices, verdict, denominator,
-    certificates := analysis.certificates ++ nodeCertificates ++ #[("verdict", verdictCertificate)] }
+    certificates := analysis.certificates ++
+      nodeCertificates.map (fun (key, name) => ("node_" ++ key, name)) ++ completenessCertificates ++
+      #[("denominator", denominatorCertificate), ("verdict", verdictCertificate)] }
   match projection.validateReferences rootId catalogId with
   | .error message => throwError message
   | .ok () => pure ()
-  pure (projection.canonical, analysis, layers)
+  let canonical := projection.canonical
+  match validateProjectionSnapshot rootId catalogId projection canonical with
+  | .error message => throwError message
+  | .ok () => pure ()
+  pure (canonical, analysis, layers)
 
 end LeanInformationAudit

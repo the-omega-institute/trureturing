@@ -188,7 +188,17 @@ def KernelProjectionRecord.canonical (projection : KernelProjectionRecord) :
         (a.atNode == b.atNode && a.theoremName.toString < b.theoremName.toString)
     leaveOneOut := projection.leaveOneOut.qsort fun a b =>
       a.theoremName.toString < b.theoremName.toString
-    certifiedChains := projection.certifiedChains.qsort fun a b => a.chainId < b.chainId }
+    certifiedChains := projection.certifiedChains.qsort fun a b => a.chainId < b.chainId
+    refinementMatrix := projection.refinementMatrix.qsort fun a b =>
+      a.finer.toString < b.finer.toString ||
+        (a.finer == b.finer && a.coarser.toString < b.coarser.toString)
+    overlapMatrix := projection.overlapMatrix.qsort fun a b =>
+      a.left.toString < b.left.toString ||
+        (a.left == b.left && a.right.toString < b.right.toString)
+    multiplicitySpectrum := projection.multiplicitySpectrum.qsort fun a b => a.k < b.k
+    redundantIndices := projection.redundantIndices.qsort fun a b => a.toString < b.toString
+    certificates := projection.certificates.qsort fun a b =>
+      a.1 < b.1 || (a.1 == b.1 && a.2.toString < b.2.toString) }
 
 def KernelProjectionRecord.toJson (projection : KernelProjectionRecord) : Json :=
   let p := projection.canonical

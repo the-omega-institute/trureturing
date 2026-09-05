@@ -32,7 +32,7 @@ def selection (size : Nat) (indices : Array Nat) : MetaM Expr := do
   pure selected
 
 def truth (proposition : Expr) : MetaM Bool := do
-  reduceEval (← mkDecide proposition)
+  withTransparency .all <| reduceEval (← mkDecide proposition)
 
 def proof (name : Name) (value : Expr) : ProjectionM Name := do
   let type ← inferType value
@@ -52,7 +52,7 @@ def decide (name : Name) (proposition : Expr) : ProjectionM Name := do
   proof name (← mkDecideProof proposition)
 
 def count (name : Name) (expression : Expr) : ProjectionM (Nat × Name) := do
-  let number : Nat ← reduceEval expression
+  let number : Nat ← withTransparency .all <| reduceEval expression
   let certificate ← decide name (← mkEq expression (mkNatLit number))
   pure (number, certificate)
 
@@ -62,6 +62,12 @@ def conjunction (proofs : Array Expr) : MetaM Expr := do
     result ← mkAppM ``And.intro #[proof, result]
   pure result
 
+def arenaDecideProof (arena proposition : Expr) : MetaM Expr := do
+  let decEq ← mkAppM ``Arena.stateDecidableEq #[arena]
+  withLetDecl `stateDecidableEq (← inferType decEq) decEq fun instanceValue => do
+    withNewLocalInstance ``DecidableEq instanceValue do
+      mkLetFVars #[instanceValue] (← mkDecideProof proposition)
+
 /-- Extract a concrete enumerator and certify it; no unsafe evaluator supplies evidence. -/
 def enumeration (arena : Expr) (arenaName : Name) : MetaM Expr := do
   let name := arenaName.str "__state_enumeration"
@@ -70,18 +76,19 @@ def enumeration (arena : Expr) (arenaName : Name) : MetaM Expr := do
     let expected ← mkAppM ``Arena.StateEnumeration #[arena]
     if ← isDefEq (← inferType candidate) expected then return candidate
   let fintype ← mkAppM ``Arena.stateFintype #[arena]
-  let elems ← mkAppM ``Fintype.elems #[fintype]
+  let stateType ← mkAppM ``Arena.State #[arena]
+  let elems ← mkAppOptM ``Fintype.elems #[some stateType, some fintype]
   let multiset ← whnf (← mkAppM ``Finset.val #[elems])
   unless multiset.isAppOfArity ``Quot.mk 3 do
     throwError "cannot reflect the arena state enumeration: {arenaName}"
   let states := multiset.getArg! 2
-  let nodup ← mkAppM ``List.Nodup #[states]
-  let stateType ← mkAppM ``Arena.State #[arena]
+  let nodupProof ← mkAppM ``Finset.nodup #[elems]
   let decEq ← mkAppM ``Arena.stateDecidableEq #[arena]
   let stateSet ← mkAppOptM ``List.toFinset #[some stateType, some decEq, some states]
   let complete ← mkEq stateSet elems
-  mkAppM ``Arena.StateEnumeration.mk
-    #[states, ← mkDecideProof nodup, ← mkDecideProof complete]
+  let completeProof ← arenaDecideProof arena complete
+  mkAppOptM ``Arena.StateEnumeration.mk
+    #[some arena, some states, some nodupProof, some completeProof]
 
 end ProjectionProof
 

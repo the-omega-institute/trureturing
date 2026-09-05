@@ -50,24 +50,29 @@ def prepareMatrices (catalog enum : Expr) (members : Array Name) (certPrefix : N
       let comparisonLabel : String ← reduceEval
         (← mkAppM ``projectionComparisonLabel #[comparison])
       let inclusion ← mkAppM ``Catalog.KernelRefines #[catalog, left, right]
-      let included ← ProjectionProof.truth inclusion
-      let witness ← mkAppM ``Catalog.refinementWitness #[catalog, enum, left, right]
-      let reducedWitness ← whnf witness
-      let witnessEq ← mkDecideProof (← mkEq witness reducedWitness)
+      let inclusionInstance ← mkAppM ``Catalog.kernelRefinesDecidable #[catalog, left, right]
+      let included : Bool ← reduceEval
+        (← mkAppOptM ``decide #[some inclusion, some inclusionInstance])
+      let ordinalExpression ← mkAppM ``projectionWitnessOrdinals #[catalog, enum, left, right]
+      let ordinals ← whnf ordinalExpression
       let facts ← mkAppM ``Catalog.kernelComparison_spec #[catalog, enum, left, right]
-      let certificate ← ProjectionProof.proof (certPrefix.str suffix)
-        (← ProjectionProof.conjunction #[facts, witnessEq])
-      certificates := certificates.push (suffix, certificate)
       let proofName ← if included then
-        some <$> ProjectionProof.decide (certPrefix.str (suffix ++ "_inclusion")) inclusion
+        let evidence ← mkAppOptM ``of_decide_eq_true #[some inclusion, some inclusionInstance,
+          some (← mkEqRefl (mkConst ``Bool.true))]
+        some <$> ProjectionProof.proof (certPrefix.str (suffix ++ "_inclusion")) evidence
       else pure none
-      let ordinals ← whnf (← mkAppM ``projectionWitnessOrdinals #[catalog, enum, left, right])
       let counterexample ← if ordinals.isAppOfArity ``Option.some 2 then do
         let pair := ordinals.getArg! 1
         let first : Nat ← reduceEval (← mkAppM ``Prod.fst #[pair])
         let second : Nat ← reduceEval (← mkAppM ``Prod.snd #[pair])
         pure (some (first, second))
       else pure none
+      let witnessEq ← mkDecideProof (← mkEq ordinalExpression (toExpr counterexample))
+      let labelEq ← mkDecideProof (← mkEq
+        (← mkAppM ``projectionComparisonLabel #[comparison]) (mkStrLit comparisonLabel))
+      let certificate ← ProjectionProof.proof (certPrefix.str suffix)
+        (← ProjectionProof.conjunction #[facts, witnessEq, labelEq])
+      certificates := certificates.push (suffix, certificate)
       refinement := refinement.push {
         finer := members[i]!, coarser := members[j]!, comparison := comparisonLabel,
         proofName, counterexample }
@@ -88,7 +93,10 @@ def prepareMatrices (catalog enum : Expr) (members : Array Name) (certPrefix : N
       for k in indices do
         let proposition ← mkAppM ``Catalog.KernelEquivalent
           #[catalog, ← ProjectionProof.fin j members.size, ← ProjectionProof.fin k members.size]
-        proofs := proofs.push (← mkDecideProof proposition)
+        let instanceValue ← mkAppM ``projectionEquivalentDecidable
+          #[catalog, ← ProjectionProof.fin j members.size, ← ProjectionProof.fin k members.size]
+        proofs := proofs.push (← mkAppOptM ``of_decide_eq_true
+          #[some proposition, some instanceValue, some (← mkEqRefl (mkConst ``Bool.true))])
     let certificate ← ProjectionProof.proof (certPrefix.str s!"equivalence_{i}")
       (← ProjectionProof.conjunction proofs)
     classes := classes.push { members := classMembers, certificate }

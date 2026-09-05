@@ -1,4 +1,5 @@
 import LeanInformationAudit.ProofBuilder
+import LeanInformationAudit.ProjectionSeal
 import LeanInformationAudit.Syntax
 
 namespace LeanInformationAudit
@@ -110,7 +111,8 @@ theorem={theoremRecord.theoremName} unique={theoremRecord.uniqueCaptureCount} \
 method={theoremRecord.proofMethod}"
 
 syntax (name := sealInformationTheoryCmd)
-  "#seal_information_theory" (" output " str)? : command
+  "#seal_information_theory" (" output " str)?
+    (" analysis_output " str)? (" ascii_output " str)? : command
 
 private def declarationNames (declarations : Array Declaration) : List Name :=
   declarations.toList.foldl (init := []) fun names declaration =>
@@ -260,16 +262,29 @@ private def elabSealInformationTheory : CommandElab := fun stx => do
     let aliasEnv ← getEnv
     let catalogs ← prepareCatalogsFromEntries sourceEntries catalogEntries
     let proofs ← prepareProofs catalogs
-    let declarations := catalogs.map (·.declaration) ++ proofs.declarations
+    let `( #seal_information_theory $[output $outputPath:str]?
+        $[analysis_output $analysisPath:str]? $[ascii_output $asciiPath:str]? ) := stx
+      | Lean.Elab.throwUnsupportedSyntax
+    let analysis ← if analysisPath.isSome || asciiPath.isSome then
+      some <$> prepareAnalysisProofs catalogs proofs
+    else pure none
+    let declarations := catalogs.map (·.declaration) ++ proofs.declarations ++
+      (analysis.map (·.declarations)).getD #[]
     preflightNames aliasEnv proofs.records declarations
-    let stagedEnv ← stageDeclarations aliasEnv
-      (catalogs.map (·.declaration) ++ proofs.declarations)
+    let stagedEnv ← stageDeclarations aliasEnv declarations
     let stagedEnv := retainSealRecords stagedEnv proofs.records
-    match stx with
-    | `(#seal_information_theory output $path:str) =>
-        liftIO <| IO.FS.writeFile path.raw.isStrLit?.get!
-          (serializeV2Artifact proofs.records)
-    | _ => pure ()
+    if let some path := outputPath then
+      liftIO <| IO.FS.writeFile path.raw.isStrLit?.get! (serializeV2Artifact proofs.records)
+    if let some analysis := analysis then
+      if let some path := analysisPath then
+        let contents ← withEnv stagedEnv <| liftTermElabM do
+          serializeV3Artifact baseEnv.header.mainModule analysis.records analysis.systemCertificate
+        liftIO <| IO.FS.writeFile path.raw.isStrLit?.get! contents
+      if let some path := asciiPath then
+        let contents ← match serializeAsciiArtifact analysis.records with
+          | .ok contents => pure contents
+          | .error message => throwError message
+        liftIO <| IO.FS.writeFile path.raw.isStrLit?.get! contents
     setEnv stagedEnv
     proofs.records.forM logSummary
   catch error =>
