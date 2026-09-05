@@ -212,6 +212,24 @@ public sealed class LeanReportInputScriptTests
     }
 
     [Fact]
+    public void JudgeLibraryLeanSourceChangesAddressButUnrelatedFileDoesNot()
+    {
+        using var fixture = new LeanReportInputFixture();
+        const string judgeSource =
+            "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean";
+        const string unrelated = "tools/lean-inspector/LeanInformationAudit/README.md";
+        fixture.WriteSource(judgeSource, "def judgeFixture : True := by trivial\n");
+        fixture.WriteSource(unrelated, "fixture documentation\n");
+        var before = fixture.Address();
+
+        fixture.Append(unrelated, "x");
+        Assert.Equal(before, fixture.Address());
+
+        fixture.Append(judgeSource, "x");
+        Assert.NotEqual(before, fixture.Address());
+    }
+
+    [Fact]
     public void AddingASecondSourceWithIdenticalContentsChangesTheSourcesHash()
     {
         using var fixture = new LeanReportInputFixture();
@@ -472,6 +490,14 @@ public sealed class LeanReportInputScriptTests
             Assert.Equal(0, result.ExitCode);
             return Encoding.UTF8.GetString(result.StandardOutput)
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)[1];
+        }
+
+        internal string Address()
+        {
+            var result = Run("address");
+            Assert.Equal(0, result.ExitCode);
+            return Encoding.UTF8.GetString(result.StandardOutput)
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
         }
 
         internal (string Sources, string Config) CacheIdentity()
