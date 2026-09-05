@@ -6,18 +6,23 @@ permissions:
   contents: read
 jobs:
   sources:
+    if: contains(github.event.head_commit.message, 'context')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          show-progress: false
       - name: Collect exact source inputs
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p probe-context/upstream probe-context/repository probe-context/mathlib
+          mkdir -p probe-context/{upstream,repository,mathlib,pr5236,pr5065}
           git rev-parse HEAD > probe-context/repository-commit.txt
-          git archive HEAD D5 docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md docs/develop/theory/RH_RESEARCH_LANE_THEORY.md tools/lean-inspector tools/StrataLint.Scribe Blueprint/D5/S3/PrimeGaps Blueprint/D5/S3/Weil lakefile.toml lake-manifest.json lean-toolchain CLAUDE.md | tar -x -C probe-context/repository
+          git archive HEAD D5 docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md docs/develop/theory/RH_RESEARCH_LANE_THEORY.md tools/lean-inspector tools/StrataLint.Scribe Blueprint lakefile.toml lake-manifest.json lean-toolchain CLAUDE.md | tar -x -C probe-context/repository
+          git fetch --quiet --depth=1 origin ce2ab347bd43f93526330285b0f616954f408af3 7d3232d942115d2e5aba1bc902233305439d79cc
+          git archive ce2ab347bd43f93526330285b0f616954f408af3 D5/S3/PrimeGaps Blueprint/D5/S3/PrimeGaps | tar -x -C probe-context/pr5236
+          git archive 7d3232d942115d2e5aba1bc902233305439d79cc D5/S3/Weil Blueprint/D5/S3/Weil | tar -x -C probe-context/pr5065
           curl --fail --location --retry 3 https://codeload.github.com/openai/PrimeGaps186/tar.gz/61340d0b74163003b32756bb16e91d9209a5e330 | tar -xz --strip-components=1 -C probe-context/upstream
           curl --fail --location --retry 3 https://codeload.github.com/leanprover-community/mathlib4/tar.gz/refs/tags/v4.33.0 | tar -xz --strip-components=1 -C probe-context/mathlib
           git hash-object probe-context/upstream/PrimeGaps186.lean
@@ -31,18 +36,20 @@ jobs:
           path: prime-weil-source-context.tar.zst
           retention-days: 3
   pinned-lean:
+    if: ${{ !contains(github.event.head_commit.message, '[sources-only]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          show-progress: false
       - uses: actions/cache@v4
         with:
           path: |
             ~/.elan
             .lake
           key: prime-weil-local-probe-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
-      - name: Install exact toolchain and cache only
+      - name: Install exact toolchain and check committed root
         shell: bash
         run: |
           set -euo pipefail
