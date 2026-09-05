@@ -1,0 +1,64 @@
+name: Prime Weil foundations research probe
+on:
+  push:
+    branches: [work/prime-weil-foundations-probe-20260905]
+permissions:
+  contents: read
+jobs:
+  sources:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Collect exact source inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p probe-context/upstream probe-context/repository probe-context/mathlib
+          git rev-parse HEAD > probe-context/repository-commit.txt
+          git archive HEAD D5 docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md docs/develop/theory/RH_RESEARCH_LANE_THEORY.md tools/lean-inspector tools/StrataLint.Scribe Blueprint/D5/S3/PrimeGaps Blueprint/D5/S3/Weil lakefile.toml lake-manifest.json lean-toolchain CLAUDE.md | tar -x -C probe-context/repository
+          curl --fail --location --retry 3 https://codeload.github.com/openai/PrimeGaps186/tar.gz/61340d0b74163003b32756bb16e91d9209a5e330 | tar -xz --strip-components=1 -C probe-context/upstream
+          curl --fail --location --retry 3 https://codeload.github.com/leanprover-community/mathlib4/tar.gz/refs/tags/v4.33.0 | tar -xz --strip-components=1 -C probe-context/mathlib
+          git hash-object probe-context/upstream/PrimeGaps186.lean
+          test "$(git hash-object probe-context/upstream/PrimeGaps186.lean)" = a8d0b8a138c7309f85e3967b24c3b502be5a3917
+          grep -nE 'finiteFragments|fragmentLaw|finitePoissonLaw|weightedEmpirical' probe-context/upstream/PrimeGaps186.lean > probe-context/upstream-fragment-index.txt
+          cat probe-context/upstream-fragment-index.txt
+          tar --zstd -cf prime-weil-source-context.tar.zst probe-context
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prime-weil-source-context
+          path: prime-weil-source-context.tar.zst
+          retention-days: 3
+  pinned-lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.elan
+            .lake
+          key: prime-weil-local-probe-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
+      - name: Install exact toolchain and cache only
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -x "$HOME/.elan/bin/elan" ]; then
+            curl --fail --location --retry 3 https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          fi
+          export PATH="$HOME/.elan/bin:$PATH"
+          lean --version
+          lake exe cache get
+          if [ -f D5/S3/PrimeGaps/PrimeWeilFoundationsRoot.lean ]; then
+            lake build D5.S3.PrimeGaps.PrimeWeilFoundationsRoot 2>&1 | tee prime-weil-build.log
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prime-weil-build-log
+          path: prime-weil-build.log
+          if-no-files-found: ignore
+          retention-days: 3
