@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Replace the opaque 152-cell numerical input by exact typed row, component, and scalar addresses. -/
+   digest: Exact typed row, component, and scalar addresses with constructive finite enumeration. -/
 
 import D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGroups
 
@@ -25,7 +25,10 @@ inductive OuterRowAddress
   | orderFiveHalves (index : Fin 35)
   deriving DecidableEq, Repr
 
-instance : Fintype OuterRowAddress := Fintype.ofFinite _
+instance : Fintype OuterRowAddress where
+  elems := (Finset.univ.image OuterRowAddress.orderTwo) ∪
+    (Finset.univ.image OuterRowAddress.orderFiveHalves)
+  complete := by intro r; cases r <;> simp
 
 inductive InnerRowAddress
   | oldOrderTwo (index : Fin 7)
@@ -34,16 +37,27 @@ inductive InnerRowAddress
   | newOrderFiveHalves (index : Fin 17)
   deriving DecidableEq, Repr
 
-instance : Fintype InnerRowAddress := Fintype.ofFinite _
+instance : Fintype InnerRowAddress where
+  elems := (Finset.univ.image InnerRowAddress.oldOrderTwo) ∪
+    (Finset.univ.image InnerRowAddress.oldOrderFiveHalves) ∪
+    (Finset.univ.image InnerRowAddress.newOrderTwo) ∪
+    (Finset.univ.image InnerRowAddress.newOrderFiveHalves)
+  complete := by intro r; cases r <;> simp
 
 structure OuterBoundAddress where
   row : OuterRowAddress
   component : OuterComponentKind
   deriving DecidableEq, Repr
 
-instance : Fintype OuterBoundAddress := Fintype.ofFinite _
+instance : Fintype OuterBoundAddress where
+  elems := Finset.univ.biUnion (fun r : OuterRowAddress =>
+    Finset.univ.image (fun c : OuterComponentKind => (⟨r, c⟩ : OuterBoundAddress)))
+  complete := by
+    rintro ⟨r, c⟩
+    exact Finset.mem_biUnion.mpr ⟨r, Finset.mem_univ _,
+      Finset.mem_image.mpr ⟨c, Finset.mem_univ _, rfl⟩⟩
 
-/-- The three global cap/trial inequalities appearing at the end of the upstream physical input. -/
+/-- The three global cap/trial inequalities at the end of the upstream physical input. -/
 inductive ScalarBoundAddress
   | trialIHLower
   | trialIHUpper
@@ -60,13 +74,22 @@ inductive PhysicalBoundAddress
   | scalar (address : ScalarBoundAddress)
   deriving DecidableEq, Repr
 
-instance : Fintype PhysicalBoundAddress := Fintype.ofFinite _
+instance : Fintype PhysicalBoundAddress where
+  elems := (Finset.univ.image PhysicalBoundAddress.outer) ∪
+    (Finset.univ.image PhysicalBoundAddress.inner) ∪
+    (Finset.univ.image PhysicalBoundAddress.scalar)
+  complete := by intro a; cases a <;> simp
 
-theorem card_outer_rows : Fintype.card OuterRowAddress = 52 := by native_decide
-theorem card_outer_bounds : Fintype.card OuterBoundAddress = 104 := by native_decide
-theorem card_inner_rows : Fintype.card InnerRowAddress = 45 := by native_decide
-theorem card_scalar_bounds : Fintype.card ScalarBoundAddress = 3 := by native_decide
-theorem card_all_physical_bounds : Fintype.card PhysicalBoundAddress = 152 := by native_decide
+-- These small exact enumerations are reduced by the kernel, without native_decide.
+set_option maxRecDepth 4096 in
+theorem card_outer_rows : Fintype.card OuterRowAddress = 52 := by decide
+set_option maxRecDepth 4096 in
+theorem card_outer_bounds : Fintype.card OuterBoundAddress = 104 := by decide
+set_option maxRecDepth 4096 in
+theorem card_inner_rows : Fintype.card InnerRowAddress = 45 := by decide
+theorem card_scalar_bounds : Fintype.card ScalarBoundAddress = 3 := by decide
+set_option maxRecDepth 4096 in
+theorem card_all_physical_bounds : Fintype.card PhysicalBoundAddress = 152 := by decide
 
 def OuterRowAddress.sourceGroup : OuterRowAddress → PhysicalSourceGroup
   | .orderTwo _ => .outerH2
@@ -109,18 +132,16 @@ def OuterBoundAddress.rowOwner (a : OuterBoundAddress) : PhysicalSourceGroup :=
 
 theorem outer_bounds_double_rows :
     Fintype.card OuterBoundAddress = 2 * Fintype.card OuterRowAddress := by
-  native_decide
+  rw [card_outer_bounds, card_outer_rows]
 
 theorem physical_bound_cardinality_decomposition :
     152 = 2 * (17 + 35) + (7 + 10 + 11 + 17) + 3 := by
   norm_num
 
-#print axioms OuterComponentKind
-#print axioms OuterRowAddress
-#print axioms InnerRowAddress
-#print axioms OuterBoundAddress
-#print axioms ScalarBoundAddress
-#print axioms PhysicalBoundAddress
+#print axioms card_outer_rows
+#print axioms card_outer_bounds
+#print axioms card_inner_rows
+#print axioms card_scalar_bounds
 #print axioms card_all_physical_bounds
 #print axioms outerRow_sourceGroup_isOuter
 #print axioms innerRow_sourceGroup_isInner
