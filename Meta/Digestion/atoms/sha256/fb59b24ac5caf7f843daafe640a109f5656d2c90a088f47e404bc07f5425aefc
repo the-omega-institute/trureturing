@@ -1,0 +1,14 @@
+## 定理 Q1：所有二次倾斜的 Turán 不等式
+
+对所有 \(n\ge1\)、\(\lambda\in\mathbb R\)：
+
+$$
+\boxed{
+b_n(\lambda)^2
+>
+\frac{2n-1}{2n+1}
+b_{n-1}(\lambda)b_{n+1}(\lambda).
+}
+\tag{Q5}
+$$
+

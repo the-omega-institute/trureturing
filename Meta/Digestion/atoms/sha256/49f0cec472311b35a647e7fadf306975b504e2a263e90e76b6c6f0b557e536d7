@@ -1,0 +1,4 @@
+**载体域是本判定的实际难点**:\(\mathbb{Q}(\zeta_5)\) 不是有序域,实化后的证书系数落在 \(K=\mathbb{Q}(R)\) 而非 \(\mathbb{Q}(\sqrt5)\);
+故形式化时正定性只能由**显式 LDL 恒等式加主元不等式**给出,不能依赖判定过程。
+
+[q1]: https://arxiv.org/abs/2512.19657 "Extremizing Measures of Magic on Pure States by Clifford-stabilizer States"

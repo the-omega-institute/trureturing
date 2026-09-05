@@ -1,0 +1,18 @@
+# 六、定理四：这些逐项消失的通道，确实贡献一个正的常数级观察量
+
+定义与实际均方使用相同窗口的模型读出：
+
+$$
+\boxed{
+\mathfrak B(X)
+=
+\int_X^{2X}
+\frac1{x^2}
+\sum_{\substack{x<n\le2x\\x<m\le2x}}
+\mathscr P_X(n,m)\,dx.
+}
+\tag{23}
+$$
+
+因为 \(\mathscr P_X\succeq0\)，有 \(\mathfrak B(X)\ge0\)。
+

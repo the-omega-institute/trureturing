@@ -82,7 +82,6 @@ public sealed partial class FrozenSurfaceRuleTests
         var fixture = new RuleFixture();
         var eventPath = AddFreeze(fixture, FrozenPath);
         fixture.Baseline[eventPath] = fixture.Files[eventPath];
-        fixture.ForkPoint[eventPath] = fixture.Files[eventPath];
 
         var evaluation = Evaluate(fixture);
 

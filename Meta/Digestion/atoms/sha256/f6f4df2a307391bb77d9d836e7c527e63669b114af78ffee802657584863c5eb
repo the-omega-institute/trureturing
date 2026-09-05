@@ -1,0 +1,17 @@
+**真正通向 RH 的最后一步则是：**
+
+$$
+\boxed{
+\text{所有 }n>5040\text{ 的离散边界配置，}
+\quad
+\text{是否始终提供足够的边界代价，抵消全素数累计标尺的超额？}
+}
+$$
+
+现在这个问题已有精确形式——式（7.4）。**5040 不再只是一个需要解释的数字；它成为可以反推资源价格、计算衰减、求解作用量、核算信息代价的有限基准。接下来的证明责任，是把这种有限可解结构推广为对全部尺度都成立的全局约束。**
+
+[1]: https://arxiv.org/html/0901.1523v1 "Lattice Green’s function approach to the solution of the spectrum of an array of quantum dots and its linear conductance"
+[2]: https://arxiv.org/html/1905.09327v4 "Ramanujan’s theorem and highest abundant numbers"
+[3]: https://arxiv.org/pdf/1905.09327?utm_source=chatgpt.com "Ramanujan's theorem and highest abundant numbers"
+[4]: https://arxiv.org/html/2002.03361v3?utm_source=chatgpt.com "Mertens' prime product formula, dissected - arXiv"
+[5]: https://arxiv.org/html/1612.05186v2?utm_source=chatgpt.com "1Introduction"

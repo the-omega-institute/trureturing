@@ -406,7 +406,10 @@ public sealed partial class ProductionEnvironmentTests
                 },
                 "quarantine" => entry.Receipts with
                 {
-                    Quarantine = new DigestionQuarantine("fixture", "fixture cleared"),
+                    Quarantine = new DigestionQuarantine(
+                        "fixture",
+                        "fixture cleared",
+                        "missing-prerequisite"),
                 },
                 "cover-disposition" => entry.Receipts with
                 {

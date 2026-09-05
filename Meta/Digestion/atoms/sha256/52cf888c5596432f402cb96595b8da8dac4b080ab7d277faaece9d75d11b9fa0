@@ -1,0 +1,30 @@
+# 二、它能保证：全部二次倾斜下的相邻矩不等式
+
+对任意实数 \(\lambda\)，定义未归一化矩：
+
+$$
+\boxed{
+b_n(\lambda)
+=
+\int_{\mathbb R}
+x^{2n}e^{\lambda x^2}p(x)\,dx.
+}
+\tag{Q4}
+$$
+
+实际 theta 核衰减足够快，因此这些积分对所有实 \(\lambda\) 都有限。
+
+二次倾斜后的势为：
+
+$$
+V_\lambda(x)=V(x)-\lambda x^2.
+$$
+
+于是：
+
+$$
+\frac{V_\lambda'(x)}x=R(x)-2\lambda.
+$$
+
+其导数仍为 \(R'(x)>0\)。
+
