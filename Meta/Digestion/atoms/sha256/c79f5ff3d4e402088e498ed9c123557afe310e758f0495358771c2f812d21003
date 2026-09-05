@@ -1,0 +1,35 @@
+## 定理 53.1　内外关联守恒式
+
+有：
+
+$$
+\boxed{
+\mathcal I_n+\mathcal L_n=2\log d.
+}
+\tag{53.3}
+$$
+
+### 证明
+
+由于 \(AB_nR^n\) 纯：
+
+$$
+S(AR^n)=S(B_n),
+\qquad
+S(AB_n)=S(R^n).
+$$
+
+因此：
+
+$$
+I(A:R^n)=S(A)+S(R^n)-S(B_n),
+$$
+
+$$
+I(A:B_n)=S(A)+S(B_n)-S(R^n).
+$$
+
+相加即得。∎
+
+---
+

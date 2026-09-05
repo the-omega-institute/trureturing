@@ -1,0 +1,27 @@
+### 为什么说它去掉了高斯背景？
+
+如果给原概率变量加入独立方差为 \(\tau\) 的高斯变量，则：
+
+$$
+D(v)\longmapsto D_\tau(v)=e^{\tau v/2}D(v).
+$$
+
+于是：
+
+$$
+\frac{D_\tau'}{D_\tau}
+=
+\frac{\tau}{2}+\frac{D'}D,
+\qquad
+a_1\longmapsto a_1+\frac{\tau}{2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak S_\tau(z)=\mathfrak S(z).
+}
+\tag{D20}
+$$
+
