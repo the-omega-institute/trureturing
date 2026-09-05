@@ -1,0 +1,122 @@
+# 八、现在把判据直接送回 theta 态的两个副本
+
+这一步使新表达真正接近原始算术核。
+
+定义：
+
+$$
+\boxed{
+\varphi_z(x)
+=
+\sum_{n=0}^{\infty}
+\frac{(-\ell z)^nx^{2n}}{(2n)!}.
+}
+\tag{P27}
+$$
+
+它可以写成 \(\cos(x\sqrt{\ell z})\)，但我们以幂级数为定义，所以没有平方根分支问题。
+
+由原始矩：
+
+$$
+\boxed{
+F(z)=\mathbb E_\nu[\varphi_z(X)].
+}
+\tag{P28}
+$$
+
+取两个独立副本：
+
+$$
+X,Y\sim\nu.
+$$
+
+定义对称的二变量读出：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal V(z,w;X,Y)
+=
+\frac1{2(z-w)}
+\Big[
+&\varphi_z(X)\varphi_w'(Y)
++\varphi_z(Y)\varphi_w'(X)\\
+&-\varphi_z'(X)\varphi_w(Y)
+-\varphi_z'(Y)\varphi_w(X)
+\Big].
+\end{aligned}
+}
+\tag{P29}
+$$
+
+撇号是对生成参数求导，不是对 \(X,Y\) 求导。
+
+分子在 \(z=w\) 时逐点为零，所以该读出也具有可去延拓。
+
+独立性给出：
+
+$$
+\boxed{
+\mathcal B_F(z,w)
+=
+\mathbb E[\mathcal V(z,w;X,Y)].
+}
+\tag{P30}
+$$
+
+将：
+
+$$
+\mathcal V(z,w;X,Y)
+=
+\sum_{i,j\ge0}\mathcal V_{ij}(X,Y)z^iw^j
+$$
+
+展开。每个 \(\mathcal V_{ij}\) 都是一个明确的实多项式。
+
+对有限系数向量 \(c\)，令：
+
+$$
+\boxed{
+\mathcal O_c(X,Y)
+=
+\sum_{i,j<N}c_ic_j\mathcal V_{ij}(X,Y).
+}
+\tag{P31}
+$$
+
+则：
+
+$$
+\boxed{
+c^{\mathsf T}\mathsf B_Nc
+=
+\mathbb E[\mathcal O_c(X,Y)].
+}
+\tag{P32}
+$$
+
+在量子语言中，使用：
+
+$$
+|\psi\rangle\otimes|\psi\rangle,
+\qquad
+\psi(x)=\sqrt{\Phi(x)/\xi(1/2)},
+$$
+
+以及分别作用在两个寄存器上的 \(Q_1,Q_2\)，就得到：
+
+$$
+\boxed{
+c^{\mathsf T}\mathsf B_Nc
+=
+\langle\psi\otimes\psi,
+\mathcal O_c(Q_1,Q_2)
+\psi\otimes\psi\rangle.
+}
+\tag{P33}
+$$
+
+这是同一个实际态的双副本读出。
+

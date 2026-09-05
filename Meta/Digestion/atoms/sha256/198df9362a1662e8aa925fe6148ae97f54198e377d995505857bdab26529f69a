@@ -1,0 +1,33 @@
+# 一、把实际对象固定下来：先不引入随机模型
+
+定义
+
+$$
+\psi(x)=\sum_{n\le x}\Lambda(n),
+$$
+
+以及中心化算术序列
+
+$$
+\boxed{
+a(n)=\Lambda(n)-1.
+}
+\tag{1}
+$$
+
+其中 \(\Lambda(p^k)=\log p\)，其他正整数处为零。
+
+这次显式使用全部素数幂，而不是只用素数。这样可以直接接入 Euler 乘积：
+
+$$
+\boxed{
+\sum_{n\ge1}\frac{\Lambda(n)}{n^s}
+=
+-\frac{\zeta'(s)}{\zeta(s)},
+\qquad \Re s>1.
+}
+\tag{2}
+$$
+
+这是后面把算术增长传回零点位置的解析接口。([DLMF][2])
+

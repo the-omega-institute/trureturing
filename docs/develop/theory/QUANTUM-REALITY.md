@@ -18269,3 +18269,1523 @@ $$
 [1]: https://arxiv.org/html/quant-ph/0603121v1 "Lieb-Robinson bounds and the generation of correlationsand topological quantum order"
 [2]: https://arxiv.org/abs/1810.02428 "[1810.02428] Quasi-Locality Bounds for Quantum Lattice Systems. Part I. Lieb-Robinson Bounds, Quasi-Local Maps, and Spectral Flow Automorphisms"
 [3]: https://davidtong.org/teaching/general-relativity/grhtml/S3.html "3 Introducing Riemannian Geometry‣ General Relativity by David Tong"
+# 曲率的有限观测证书与非线性引力余量
+
+## ——量子观察者—关系时空理论第一百三十一至第一百四十节增订
+
+### 摘要
+
+前文已经证明：在局域性、关联控制与有限实验预算等条件下，量子观察者可以使用一个近似经典的钟律，并由平方钟速重建候选洛伦兹度量。
+
+但还存在两层不同的问题：
+
+$$
+\boxed{
+\text{钟读数接近}
+\quad\text{是否足以保证}\quad
+\text{曲率接近？}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{微观几何被平均后，}
+\quad
+\text{其动力学是否仍由同一个场方程描述？}
+}
+$$
+
+本增订分别处理它们。
+
+首先，从带关联误差的量子实验记录出发，构造有限的导数重建证书，给出度量二阶数据及曲率的误差界。
+
+其次，构造一族**严格满足真空 Einstein 方程的短波几何**，证明它们虽然一致收敛于一个平滑度量，但极限度量具有非零的有效辐射应力。这说明：
+
+> **某些结构可以在有限分辨率的钟读数中消失，却仍通过非线性关系影响宏观动力学。**
+
+后一现象属于引力短波反作用的既有研究方向。这里给出一个可逐项检查的具体构造，并明确说明它如何进入项目的“观察接口—目标残差—动力下降”结构，而不是把已有现象重新宣称为未经核实的新发现。([APS Journals][1])
+
+---
+
+# 131．将曲率重建分解为有限实验任务
+
+## 假设 131.1　局部几何候选与测量记录
+
+设前文的过程级经典性条件已经在指定实验范围内成立，并得到局部坐标域
+
+$$
+U\subset\mathbb R^d.
+$$
+
+当采样覆盖整个时空邻域时，\(d=4\)；若额外假设几何静态，只采样空间坐标，则可以取 \(d=3\)。
+
+这里使用的欧氏坐标范数仅用于描述采样布局和误差，不是预先假定物理时空为欧氏空间。
+
+对一个待重建的度量系数，记
+
+$$
+f(x)=g_{\mu\nu}(x).
+$$
+
+在采样点 \(x_1,\ldots,x_N\)，实际实验产生实随机记录
+
+$$
+Y_1,\ldots,Y_N.
+$$
+
+它们可以由前文的多方向钟测量经过线性重建得到，但必须已经具有以下统计证书：
+
+$$
+\boxed{
+\mathbb E[Y_j]=f(x_j)+b_j,
+\qquad |b_j|\le\beta,
+}
+\tag{131.1}
+$$
+
+以及
+
+$$
+\boxed{
+\max_i\sum_j
+\left|\operatorname{Cov}(Y_i,Y_j)\right|
+\le\Gamma.
+}
+\tag{131.2}
+$$
+
+其中：
+
+* \(\beta\) 控制系统性偏差，包括近似钟律、控制与估计器偏差；
+* \(\Gamma\) 控制随机误差及不同记录之间的关联。
+
+这些条件不要求同时无扰测量所有不对易量。不同设置可以由不同的、已说明制备过程实现；最终记录及其关联必须由实际协议确定。
+
+## 命题 131.1　过程误差可以转化为读数偏差
+
+若一个记录的取值满足
+
+$$
+|Y|\le M,
+$$
+
+且实际与理想记录分布的总变差距离至多为 \(\varepsilon\)，则
+
+$$
+\boxed{
+|\mathbb E_{\mathrm{actual}}Y
+-\mathbb E_{\mathrm{ideal}}Y|
+\le2M\varepsilon.
+}
+\tag{131.3}
+$$
+
+### 证明
+
+将两种概率测度之差记为 \(\delta P\)，则
+
+$$
+\left|\int Y\,d\delta P\right|
+\le
+M\int|d\delta P|
+=
+2M\,\operatorname{TV}(P_{\mathrm{actual}},P_{\mathrm{ideal}}).
+$$
+
+∎
+
+因此，前文的过程误差不能在进入几何重建时被丢弃，而应进入 \(\beta\)。
+
+**量子过程近似、统计估计与几何反演，必须沿同一条误差链连接。**
+
+---
+
+# 132．带有限矩阵证书的导数重建
+
+数值微分会放大读数误差，因此“数据很接近”不能直接替换为“导数很接近”。稳定微分需要正则性条件与明确的离散设计。([arXiv][2])
+
+## 定义 132.1　归一化采样设计
+
+固定目标点 \(p\) 和采样半径 \(h>0\)，写成
+
+$$
+x_j=p+hz_j,
+\qquad \|z_j\|\le1.
+$$
+
+令
+
+$$
+\mathcal B_3=\{\beta\in\mathbb N^d:|\beta|\le3\}.
+$$
+
+定义有限单项式向量
+
+$$
+v(z)=(z^\beta)_{\beta\in\mathcal B_3},
+$$
+
+以及归一化 Gram 矩阵
+
+$$
+\boxed{
+G_h=\frac1N\sum_{j=1}^Nv(z_j)v(z_j)^{\mathsf T}.
+}
+\tag{132.1}
+$$
+
+要求存在已认证的 \(\gamma>0\)，使
+
+$$
+\boxed{G_h\ge\gamma I.}
+\tag{132.2}
+$$
+
+这是一项有限矩阵条件。它防止采样点全部落在无法区分某些多项式方向的退化布局中。
+
+## 定义 132.2　导数权重
+
+对多重指标 \(\alpha\)，其中 \(|\alpha|\le2\)，定义
+
+$$
+\boxed{
+w_j^{(\alpha)}
+=
+\frac{\alpha!}{Nh^{|\alpha|}}
+e_\alpha^{\mathsf T}G_h^{-1}v(z_j).
+}
+\tag{132.3}
+$$
+
+导数估计器为
+
+$$
+\boxed{
+\widehat{\partial^\alpha f}(p)
+=
+\sum_jw_j^{(\alpha)}Y_j.
+}
+\tag{132.4}
+$$
+
+---
+
+## 定理 132.1　多项式精确性与权重范数
+
+对任何次数不超过三的多项式 \(P\)，
+
+$$
+\boxed{
+\sum_jw_j^{(\alpha)}P(x_j)
+=
+\partial^\alpha P(p).
+}
+\tag{132.5}
+$$
+
+同时，
+
+$$
+\boxed{
+\sum_j|w_j^{(\alpha)}|^2
+=
+\frac{(\alpha!)^2}{Nh^{2|\alpha|}}
+e_\alpha^{\mathsf T}G_h^{-1}e_\alpha
+\le
+\frac{(\alpha!)^2}
+{N\gamma h^{2|\alpha|}},
+}
+\tag{132.6}
+$$
+
+以及
+
+$$
+\boxed{
+\sum_j|w_j^{(\alpha)}|
+\le
+\frac{\alpha!}{\sqrt\gamma\,h^{|\alpha|}}.
+}
+\tag{132.7}
+$$
+
+### 证明
+
+把 \(P(p+hz)\) 展开为
+
+$$
+P(p+hz)=\sum_{\beta\in\mathcal B_3}a_\beta z^\beta.
+$$
+
+则
+
+$$
+\partial^\alpha P(p)=\alpha!h^{-|\alpha|}a_\alpha.
+$$
+
+由 \(G_h\) 的定义，
+
+$$
+\frac1N\sum_jG_h^{-1}v(z_j)v(z_j)^{\mathsf T}=I.
+$$
+
+代入权重即可得到式（132.5）。
+
+权重平方和由同一 Gram 恒等式直接得到；再用 \(G_h^{-1}\le\gamma^{-1}I\)，得到式（132.6）。
+
+最后应用
+
+$$
+\|w\|_1\le\sqrt N\,\|w\|_2.
+$$
+
+∎
+
+### 有限实例
+
+在一维中，取采样点
+
+$$
+-h,\quad-\frac h2,\quad0,\quad\frac h2,\quad h.
+$$
+
+上述构造给出
+
+$$
+\boxed{
+\widehat{f''}(0)
+=
+\frac{
+8Y_{-h}-4Y_{-h/2}-8Y_0-4Y_{h/2}+8Y_h
+}{7h^2}.
+}
+\tag{132.8}
+$$
+
+它对全部三次以下多项式精确成立。
+
+这些权重允许出现负数：它们是估计器系数，不是量子态概率。
+
+---
+
+# 133．量子记录的相关性怎样进入二阶导数误差？
+
+## 假设 133.1　局部正则性
+
+设
+
+$$
+f\in C^4(B_h(p)),
+$$
+
+并存在 \(M_4\ge0\)，使其四阶 Fréchet 导数满足
+
+$$
+\|D^4f(x)\|_{\mathrm{op}}\le M_4.
+$$
+
+## 定理 133.1　导数重建的偏差与方差
+
+令 \(k=|\alpha|\le2\)。则
+
+$$
+\boxed{
+\left|
+\mathbb E[\widehat{\partial^\alpha f}]
+-\partial^\alpha f(p)
+\right|
+\le
+\frac{\alpha!}{\sqrt\gamma}
+\left(
+\frac{\beta}{h^k}
++
+\frac{M_4}{24}h^{4-k}
+\right),
+}
+\tag{133.1}
+$$
+
+并且
+
+$$
+\boxed{
+\operatorname{Var}
+\bigl(\widehat{\partial^\alpha f}\bigr)
+\le
+\frac{
+\Gamma(\alpha!)^2
+}{
+N\gamma h^{2k}
+}.
+}
+\tag{133.2}
+$$
+
+### 证明
+
+在 \(p\) 处取三阶 Taylor 多项式 \(P_3\)。余项满足
+
+$$
+|f(x_j)-P_3(x_j)|
+\le
+\frac{M_4h^4}{24}.
+$$
+
+由定理 132.1，多项式部分被精确重建，因此总偏差不超过
+
+$$
+\sum_j|w_j^{(\alpha)}|
+\left(
+\beta+\frac{M_4h^4}{24}
+\right).
+$$
+
+应用式（132.7），得到式（133.1）。
+
+设协方差矩阵为 \(\Sigma\)。则
+
+$$
+\operatorname{Var}\left(\sum_jw_jY_j\right)
+=
+w^{\mathsf T}\Sigma w.
+$$
+
+利用
+
+$$
+2|w_iw_j|\le w_i^2+w_j^2
+$$
+
+和式（131.2），有
+
+$$
+w^{\mathsf T}\Sigma w
+\le
+\Gamma\sum_jw_j^2.
+$$
+
+再代入式（132.6）。∎
+
+---
+
+## 推论 133.1　二阶导数具有额外的分辨代价
+
+对 \(k=2\)，均方根误差可界为
+
+$$
+\boxed{
+\operatorname{RMSE}(\widehat{\partial^\alpha f})
+\le
+\frac{\alpha!}{\sqrt\gamma}
+\left[
+\frac{\beta}{h^2}
++
+\frac1{h^2}\sqrt{\frac{\Gamma}{N}}
++
+\frac{M_4h^2}{24}
+\right].
+}
+\tag{133.3}
+$$
+
+这显示三种性质不同的误差：
+
+$$
+\text{系统偏差放大：}\quad \beta h^{-2};
+$$
+
+$$
+\text{随机误差放大：}\quad
+\sqrt{\Gamma/N}\,h^{-2};
+$$
+
+$$
+\text{局部展开误差：}\quad M_4h^2.
+$$
+
+**缩小采样邻域会减小最后一项，却放大前两项。**
+
+---
+
+## 推论 133.2　有限置信证书
+
+若同时估计有限个 \(J\) 项，并希望总失败概率不超过 \(\eta>0\)，则对每项可以采用
+
+$$
+\boxed{
+\text{误差半径}
+=
+\text{偏差上界}
++
+\sqrt{\frac J\eta}\,
+\text{标准差上界}.
+}
+\tag{133.4}
+$$
+
+由 Chebyshev 不等式与并集界，所有估计同时落在其误差区间内的概率至少为 \(1-\eta\)。
+
+这没有把概率保证改写成逻辑上的绝对正确性；它是关于完整实验程序的一个可证明性质。
+
+---
+
+# 134．从度量的二阶数据到曲率证书
+
+## 定义 134.1　局部二阶几何数据
+
+记
+
+$$
+J^2_pg
+=
+\bigl(
+g_{\mu\nu}(p),
+\partial_\alpha g_{\mu\nu}(p),
+\partial_\alpha\partial_\beta g_{\mu\nu}(p)
+\bigr).
+$$
+
+这组数据通常称为度量在 \(p\) 处的二阶 jet。它不是另一个物理实体，而是计算连接和曲率所需的有限导数集合。
+
+Riemann 曲率在给定坐标中由这些数据及 \(g^{-1}\) 的代数组合确定。([剑桥大学应用与计算数学系][3])
+
+---
+
+## 定理 134.1　非退化区域中的曲率稳定性
+
+设 \(g,\widetilde g\) 为同一坐标域上的 \(C^2\) Lorentz 度量，并具有共同界
+
+$$
+\|g^{-1}\|,\|\widetilde g^{-1}\|\le L,
+$$
+
+$$
+\|\partial g\|,\|\partial\widetilde g\|\le B_1,
+$$
+
+$$
+\|\partial^2g\|,\|\partial^2\widetilde g\|\le B_2.
+$$
+
+定义
+
+$$
+\delta_k
+=
+\|\partial^k\widetilde g-\partial^kg\|,
+\qquad k=0,1,2.
+$$
+
+则存在仅依赖维数与所选分量范数的常数 \(C_d\)，使混合指标曲率满足
+
+$$
+\boxed{
+\begin{aligned}
+\|R(\widetilde g)-R(g)\|
+\le C_d\bigl[
+&L\delta_2
++
+L^2B_1\delta_1\\
+&+
+(L^2B_2+L^3B_1^2)\delta_0
+\bigr].
+\end{aligned}
+}
+\tag{134.1}
+$$
+
+### 证明
+
+首先，由逆矩阵恒等式，
+
+$$
+\widetilde g^{-1}-g^{-1}
+=
+\widetilde g^{-1}(g-\widetilde g)g^{-1},
+$$
+
+故
+
+$$
+\|\widetilde g^{-1}-g^{-1}\|
+\le L^2\delta_0.
+$$
+
+连接系数由 \(g^{-1}\partial g\) 的有限线性组合构成。
+
+曲率展开后仅包含以下两类项：
+
+$$
+g^{-1}\partial^2g,
+$$
+
+$$
+g^{-1}g^{-1}(\partial g)(\partial g).
+$$
+
+对每个乘积逐因子相减。第一类差异受
+
+$$
+L\delta_2+L^2B_2\delta_0
+$$
+
+控制；第二类差异受
+
+$$
+C_d\left(
+L^2B_1\delta_1+L^3B_1^2\delta_0
+\right)
+$$
+
+控制。合并即得。∎
+
+### 非退化性不能省略
+
+若 \(g^{-1}\) 的范数无界，微小系数误差也可能导致巨大曲率误差。
+
+因此，有限重建证书必须同时检查：
+
+$$
+\boxed{
+\text{系数误差}
++
+\text{一阶误差}
++
+\text{二阶误差}
++
+\text{非退化裕量}.
+}
+$$
+
+用钟网络测量曲率已有具体“钟罗盘”方案；本节强调的是从有限读数到曲率之间必须携带的稳定性条件。([arXiv][4])
+
+---
+
+# 135．曲率比钟速需要更强的尺度分离
+
+将前文的局域关联证书代入本节的导数估计。
+
+假设在所讨论采样窗口内：
+
+$$
+\Gamma\le\frac{\Delta^2b_*}{R},
+$$
+
+其中 \(R\) 是经过独立性认证的完整重复次数，\(b_*\) 是记录之间的关联计数上界。
+
+若重复实验没有相应独立性或新的协方差证书，就不能自动除以 \(R\)。
+
+再假设采样数满足
+
+$$
+N_h\ge c_0(h/a)^d,
+$$
+
+其中 \(a\) 是坐标采样间隔。
+
+暂取系统偏差 \(\beta=0\)，并要求 Gram 条件数、度量逆矩阵界与相关正则性常数在尺度窗口内一致受控。
+
+## 定理 135.1　曲率误差的尺度结构
+
+在上述条件下，可获得形如
+
+$$
+\boxed{
+E_{\mathrm{curv}}(h)
+\le
+A\,h^{-(d/2+2)}
++
+B\,h^2
+}
+\tag{135.1}
+$$
+
+的曲率误差证书，其中
+
+$$
+A
+\propto
+\Delta
+\sqrt{\frac{b_*}{R}}\,
+a^{d/2}.
+$$
+
+\(B\) 取决于四阶正则性及定理 134.1 的非线性稳定常数。
+
+### 证明
+
+由式（133.3），二阶随机误差为
+
+$$
+h^{-2}\sqrt{\Gamma/N_h}
+\le
+\frac{\Delta}{\sqrt{c_0}}
+\sqrt{\frac{b_*}{R}}\,
+a^{d/2}h^{-(d/2+2)}.
+$$
+
+Taylor 二阶误差为 \(O(h^2)\)。
+
+在固定小尺度窗口内，零阶和一阶误差不比相应二阶控制更差；代入定理 134.1，并吸收固定常数即可。∎
+
+---
+
+## 定理 135.2　最优认证半径
+
+若 \(A,B>0\)，式（135.1）的连续最优半径为
+
+$$
+\boxed{
+h_*=
+\left(
+\frac{(d+4)A}{4B}
+\right)^{2/(d+8)}.
+}
+\tag{135.2}
+$$
+
+其最小上界为
+
+$$
+\boxed{
+E_*
+=
+\frac{d+8}{d+4}
+B
+\left(
+\frac{(d+4)A}{4B}
+\right)^{4/(d+8)}.
+}
+\tag{135.3}
+$$
+
+### 证明
+
+对
+
+$$
+Ah^{-p}+Bh^2,
+\qquad p=\frac{d+4}{2},
+$$
+
+求导，解
+
+$$
+ph^{-p-1}A=2Bh.
+$$
+
+代回目标函数即可。∎
+
+### 一个重要推论
+
+当其他条件固定而 \(A\propto R^{-1/2}\) 时，
+
+$$
+\boxed{
+E_*\propto R^{-2/(d+8)}.
+}
+\tag{135.4}
+$$
+
+例如，完整四坐标采样中 \(d=4\)，该上界按 \(R^{-1/6}\) 缩小，而不是简单按 \(R^{-1/2}\) 缩小。
+
+这是**当前估计器与当前误差界的尺度关系**，不是所有量子曲率测量的普遍最优极限。
+
+同时：
+
+* 若 \(h_*\) 小于实际采样间隔，必须重新选择可实现半径；
+* 若 \(h_*\) 超出正则性或局域模型窗口，公式不能继续使用；
+* 若 \(\beta\ne0\)，还要保留 \(\beta/h^2\)，增加样本数不能消除它；
+* 采样与汇总仍受前文的因果传播限制，不能瞬时收集整个邻域。
+
+**因此，曲率的可认证性比局部钟律的可使用性更强。**
+
+---
+
+# 136．为什么“先平均，再算引力”可能改变答案？
+
+现在进入一个更深的问题：即使已经获得平滑宏观度量，也不能默认其动力学只是原动力学的直接平均。
+
+用
+
+$$
+\mathscr G[g]
+=
+\operatorname{Ric}(g)
+-\frac12\operatorname{Scal}(g)\,g
+$$
+
+表示 Einstein 张量。
+
+## 定义 136.1　非线性下降缺陷
+
+在同一个流形、同一组比较映射和标定中，设
+
+$$
+g_\varepsilon\to g_0
+$$
+
+一致收敛，并假设 \(\mathscr G[g_\varepsilon]\) 存在弱极限。
+
+定义
+
+$$
+\boxed{
+\mathfrak B
+=
+\mathscr G[g_0]
+-
+\operatorname*{wlim}_{\varepsilon\to0}
+\mathscr G[g_\varepsilon].
+}
+\tag{136.1}
+$$
+
+这里的弱极限表示：对任意光滑紧支撑测试张量，相应积分收敛。
+
+\(\mathfrak B\) 衡量以下两种操作的不交换：
+
+$$
+\text{先形成宏观度量，再计算 Einstein 张量};
+$$
+
+$$
+\text{先计算每个微观几何的 Einstein 张量，再取宏观极限}.
+$$
+
+## 定理 136.1　强二阶控制消除该缺陷
+
+若
+
+$$
+g_\varepsilon\to g_0
+\quad\text{在 }C^2\text{ 中一致收敛},
+$$
+
+且逆度量一致有界，则
+
+$$
+\boxed{\mathfrak B=0.}
+\tag{136.2}
+$$
+
+### 证明
+
+定理 134.1 保证曲率一致收敛，相关代数收缩也连续，因此 Einstein 张量一致收敛。其弱极限必为 \(\mathscr G[g_0]\)。∎
+
+反过来，只有 \(C^0\) 收敛时，该缺陷可以非零。短波引力反作用理论正是严格处理这类非线性极限，而不允许任意指定一个“有效额外物质”。([arXiv][5])
+
+下面给出一个满足真空场方程的具体实例。
+
+---
+
+# 137．精确真空短波模型
+
+本节开始使用经典广义相对论作为已经选定的几何动力学实现。
+
+**因此，本节不是从量子观察者的定义首次推出 Einstein 方程；它检验的是：即使微观几何已经满足该方程，观察者的宏观压缩怎样改变有效源项。**
+
+## 定义 137.1　平面波度量族
+
+取常数 \(\Omega>0\)，定义
+
+$$
+p_\varepsilon(u)
+=
+\varepsilon\Omega\sin(u/\varepsilon).
+$$
+
+令 \(b_\varepsilon\) 是初值问题的解：
+
+$$
+\boxed{
+b_\varepsilon''(u)
++
+\Omega^2\cos^2(u/\varepsilon)b_\varepsilon(u)=0,
+}
+\tag{137.1}
+$$
+
+$$
+b_\varepsilon(0)=1,
+\qquad
+b_\varepsilon'(0)=0.
+$$
+
+在
+
+$$
+|u|\le L<\frac{\pi}{2\Omega}
+$$
+
+内，定义
+
+$$
+\boxed{
+ds_\varepsilon^2
+=
+-2\,du\,dv
++
+b_\varepsilon(u)^2
+\left[
+e^{2p_\varepsilon(u)}dx^2
++
+e^{-2p_\varepsilon(u)}dy^2
+\right].
+}
+\tag{137.2}
+$$
+
+这是平面波的 Rosen 型坐标形式。此类坐标必须限制在尚未发生标架退化的区域；不能把其坐标焦散当作无条件的物理奇点。([arXiv][6])
+
+---
+
+## 定理 137.1　该度量族在共同区域内非退化
+
+有
+
+$$
+\boxed{
+\cos(\Omega u)\le b_\varepsilon(u)\le1
+\qquad(0\le u\le L).
+}
+\tag{137.3}
+$$
+
+因此，在共同区域内
+
+$$
+b_\varepsilon(u)\ge\cos(\Omega L)>0.
+$$
+
+### 证明
+
+在 \(b_\varepsilon\) 尚为正的区间上，
+
+$$
+b_\varepsilon''\le0,
+$$
+
+故 \(b_\varepsilon\le1\)。
+
+改写方程为
+
+$$
+b_\varepsilon''+\Omega^2b_\varepsilon
+=
+\Omega^2\sin^2(u/\varepsilon)b_\varepsilon.
+$$
+
+由常系数方程的积分表示，
+
+$$
+b_\varepsilon(u)
+=
+\cos(\Omega u)
++
+\Omega\int_0^u
+\sin\bigl(\Omega(u-s)\bigr)
+\sin^2(s/\varepsilon)b_\varepsilon(s)\,ds.
+$$
+
+在 \(0\le u\le L<\pi/(2\Omega)\) 上，若之前 \(b_\varepsilon\ge0\)，积分非负。
+
+若存在首个零点 \(u_*\le L\)，则上式给出
+
+$$
+b_\varepsilon(u_*)\ge\cos(\Omega u_*)>0,
+$$
+
+矛盾。
+
+负 \(u\) 部分由方程和初值的偶对称性得到。∎
+
+---
+
+## 定理 137.2　每个有限 \(\varepsilon\) 都严格满足真空方程
+
+对式（137.2），只有 Ricci 分量 \(R_{uu}\) 可能非零，而且
+
+$$
+\boxed{
+R_{uu}
+=
+-2\left[
+\frac{b_\varepsilon''}{b_\varepsilon}
++
+(p_\varepsilon')^2
+\right].
+}
+\tag{137.4}
+$$
+
+因此
+
+$$
+\boxed{
+\operatorname{Ric}(g_\varepsilon)=0,
+\qquad
+\mathscr G[g_\varepsilon]=0.
+}
+\tag{137.5}
+$$
+
+### 证明
+
+对一般函数 \(b,p\)，令
+
+$$
+B=be^p,\qquad C=be^{-p}.
+$$
+
+度量为
+
+$$
+-2\,du\,dv+B(u)^2dx^2+C(u)^2dy^2.
+$$
+
+直接计算连接与 Ricci 张量，得到
+
+$$
+R_{uu}
+=
+-\frac{B''}{B}-\frac{C''}{C}
+=
+-2\left(\frac{b''}{b}+(p')^2\right),
+$$
+
+其余 Ricci 分量为零。
+
+而
+
+$$
+p_\varepsilon'=\Omega\cos(u/\varepsilon).
+$$
+
+结合式（137.1），\(R_{uu}=0\)。∎
+
+这里的真空结论不是近似成立，而是对每个 \(\varepsilon>0\) 精确成立。
+
+---
+
+# 138．平滑极限却具有正的有效辐射源
+
+## 定理 138.1　共同宏观极限
+
+定义
+
+$$
+\omega=\frac{\Omega}{\sqrt2},
+\qquad
+b_0(u)=\cos(\omega u).
+$$
+
+则在上述共同紧区间内，
+
+$$
+\boxed{
+b_\varepsilon\to b_0
+\quad\text{以 }C^1\text{ 范数收敛，误差为 }O(\varepsilon).
+}
+\tag{138.1}
+$$
+
+因此
+
+$$
+\boxed{
+g_\varepsilon\to g_0
+}
+$$
+
+一致收敛，其中
+
+$$
+\boxed{
+ds_0^2
+=
+-2\,du\,dv
++
+\cos^2\!\left(\frac{\Omega u}{\sqrt2}\right)
+(dx^2+dy^2).
+}
+\tag{138.2}
+$$
+
+### 证明
+
+使用
+
+$$
+\cos^2(u/\varepsilon)
+=
+\frac12+\frac12\cos(2u/\varepsilon).
+$$
+
+令 \(d_\varepsilon=b_\varepsilon-b_0\)，则
+
+$$
+d_\varepsilon''+\omega^2d_\varepsilon
+=
+-\frac{\Omega^2}{2}
+\cos(2u/\varepsilon)b_\varepsilon,
+$$
+
+初值为零。
+
+于是
+
+$$
+d_\varepsilon(u)
+=
+-\frac{\Omega^2}{2\omega}
+\int_0^u
+\sin\bigl(\omega(u-s)\bigr)
+b_\varepsilon(s)\cos(2s/\varepsilon)\,ds.
+$$
+
+定理 137.1 给出 \(b_\varepsilon\) 一致有界；原方程还给出
+
+$$
+|b_\varepsilon'(u)|\le\Omega^2L.
+$$
+
+对振荡积分分部积分：
+
+$$
+\int_0^uf(s)\cos(2s/\varepsilon)\,ds
+=
+\frac{\varepsilon}{2}f(u)\sin(2u/\varepsilon)
+-
+\frac{\varepsilon}{2}
+\int_0^uf'(s)\sin(2s/\varepsilon)\,ds.
+$$
+
+应用于 \(d_\varepsilon\) 及其一阶导数的积分表示，得到一致的 \(O(\varepsilon)\) 界。
+
+又因 \(p_\varepsilon=O(\varepsilon)\)，故度量系数一致收敛。∎
+
+---
+
+## 定理 138.2　极限具有非零、正的 null 型有效源
+
+对极限度量 \(g_0\)，
+
+$$
+\boxed{
+\mathscr G[g_0]
+=
+\Omega^2\,du\otimes du.
+}
+\tag{138.3}
+$$
+
+而
+
+$$
+\operatorname{Scal}(g_0)=0.
+$$
+
+因此
+
+$$
+\boxed{
+\mathfrak B
+=
+\Omega^2\,du\otimes du\ne0.
+}
+\tag{138.4}
+$$
+
+若使用引力耦合常数 \(\kappa_E=8\pi G/c^4\)，定义
+
+$$
+\boxed{
+\tau_{\mathrm{eff}}
+=
+\frac{\Omega^2}{\kappa_E}
+\,du\otimes du,
+}
+\tag{138.5}
+$$
+
+则它无迹，并满足弱能量条件。
+
+### 证明
+
+在极限中 \(p=0\)，由式（137.4），
+
+$$
+R_{uu}(g_0)
+=
+-2\frac{b_0''}{b_0}
+=
+\Omega^2.
+$$
+
+只有这一 Ricci 分量非零，而 \(g_0^{uu}=0\)，故标量曲率为零，Einstein 张量即式（138.3）。
+
+对任意类时向量 \(V\)，
+
+$$
+\tau_{\mathrm{eff}}(V,V)
+=
+\frac{\Omega^2}{\kappa_E}[du(V)]^2
+\ge0.
+$$
+
+无迹性来自 \(g_0^{-1}(du,du)=0\)。∎
+
+### 两个重要结果
+
+首先：
+
+$$
+\boxed{
+\forall\varepsilon>0,\quad
+\mathscr G[g_\varepsilon]=0,
+}
+$$
+
+但
+
+$$
+\boxed{
+\mathscr G[g_0]\ne0.
+}
+$$
+
+其次，所有微观度量与极限度量的标量曲率都为零。因此，**只检查标量曲率，也不能判断一个几何是否真空。**
+
+这里的有效源具有单向无质量辐射的应力形式。它不表示产生了热光子，也不是霍金辐射；它是被宏观描述舍弃的短波引力结构所留下的动力学贡献。
+
+真空波的高频极限表现为有效辐射应力，是 Isaacson、Burnett 及后续严格反作用框架中的核心现象；本例给出了一个直接可算的局部实现。([APS Journals][1])
+
+---
+
+## 推论 138.1　固定钟相位协议可以收敛，而引力源项仍不消失
+
+固定一条受控轨迹 \(\gamma\)，假设：
+
+$$
+-g_0(\dot\gamma,\dot\gamma)\ge\nu^2>0,
+$$
+
+并且其坐标速度有一致上界。
+
+则
+
+$$
+\boxed{
+|\tau_\varepsilon[\gamma]-\tau_0[\gamma]|
+=O(\varepsilon).
+}
+\tag{138.6}
+$$
+
+对于固定有限维钟 \(H_C\)，相应内部酉过程满足
+
+$$
+\boxed{
+\frac12\|\mathcal U_\varepsilon-\mathcal U_0\|_\diamond
+\le
+\frac{\|H_C\|}{\hbar}
+|\tau_\varepsilon-\tau_0|
+=O(\varepsilon).
+}
+\tag{138.7}
+$$
+
+### 证明
+
+由度量一致收敛与轨迹远离 null 边界，
+
+$$
+\left|
+\sqrt{-g_\varepsilon(\dot\gamma,\dot\gamma)}
+-
+\sqrt{-g_0(\dot\gamma,\dot\gamma)}
+\right|
+\le C\varepsilon.
+$$
+
+沿有限参数区间积分得到式（138.6）。
+
+再用同一个 \(H_C\) 的指数差界，即得式（138.7）。∎
+
+这只覆盖指定的、固定资源的钟相位协议，不覆盖可以随 \(\varepsilon\) 提高分辨率的潮汐或高频探测实验。
+
+**所以，不可见性始终相对于实验族；动力学余量则可能在更高阶目标中重新出现。**
+
+---
+
+# 139．有效源必须满足闭合条件，不能任意命名
+
+## 假设 139.1　微观场方程与共同极限
+
+假设在同一比较框架中，
+
+$$
+\mathscr G[g_\varepsilon]+\Lambda g_\varepsilon
+=
+\kappa_E T_\varepsilon,
+$$
+
+并且
+
+$$
+g_\varepsilon\to g_0,
+\qquad
+T_\varepsilon\rightharpoonup\overline T,
+$$
+
+且定义 136.1 的弱极限存在。
+
+## 定理 139.1　宏观方程的精确缺项
+
+有
+
+$$
+\boxed{
+\mathscr G[g_0]+\Lambda g_0
+=
+\kappa_E
+\left(
+\overline T+\tau_{\mathrm{eff}}
+\right),
+}
+\tag{139.1}
+$$
+
+其中
+
+$$
+\boxed{
+\tau_{\mathrm{eff}}=\frac{\mathfrak B}{\kappa_E}.
+}
+\tag{139.2}
+$$
+
+### 证明
+
+对微观方程取弱极限：
+
+$$
+\operatorname*{wlim}\mathscr G[g_\varepsilon]
++
+\Lambda g_0
+=
+\kappa_E\overline T.
+$$
+
+用定义
+
+$$
+\mathscr G[g_0]
+=
+\operatorname*{wlim}\mathscr G[g_\varepsilon]
++\mathfrak B
+$$
+
+代入即可。∎
+
+---
+
+## 定理 139.2　宏观总源的守恒约束
+
+若各极限对象具有相应正则性，则
+
+$$
+\boxed{
+\nabla_{g_0}^{\mu}
+\left(
+\overline T_{\mu\nu}
++
+\tau_{\mathrm{eff},\mu\nu}
+\right)=0.
+}
+\tag{139.3}
+$$
+
+### 证明
+
+对式（139.1）取协变散度，使用收缩 Bianchi 恒等式和度量相容性：
+
+$$
+\nabla^\mu\mathscr G_{\mu\nu}=0,
+\qquad
+\nabla^\mu g_{\mu\nu}=0.
+$$
+
+∎
+
+这些恒等式是 Einstein 几何的相容条件，而不是可以任意指定的守恒规则。([David Tong][7])
+
+但一般不能进一步推出
+
+$$
+\nabla^\mu\overline T_{\mu\nu}=0
+$$
+
+和
+
+$$
+\nabla^\mu\tau_{\mathrm{eff},\mu\nu}=0
+$$
+
+分别成立；两部分可能存在有效交换。
+
+### 一个必须避免的循环定义
+
+不能先选择任意喜欢的宏观度量，然后定义
+
+$$
+T:=\frac1{\kappa_E}(\mathscr G[g]+\Lambda g),
+$$
+
+再宣布“已经证明该度量由现实物质产生”。
+
+这只是在代数上补出了一个源，并未证明它来自允许的量子物质模型、满足所需能量条件或与实验相容。
+
+严格反作用研究同样强调：不利用真实场方程和物质约束，便可以构造大量形式上任意的“反作用源”，而它们未必具有所声称的物理意义。([arXiv][8])
+
+---
+
+# 140．从量子观察者到引力动力学，需要两种不同的完成
+
+本轮形成两条互补的推理链。
+
+## 第一条：有限观测的几何完成
+
+$$
+\boxed{
+\text{量子实验记录}
+\longrightarrow
+\text{带偏差与关联界的样本}
+\longrightarrow
+\text{度量二阶数据}
+\longrightarrow
+\text{曲率误差证书}.
+}
+$$
+
+其中每一步都有独立条件：
+
+Gram 矩阵控制有限采样是否可识别；协方差控制统计误差；四阶正则性控制局部截断；逆度量界控制几何非线性是否稳定。
+
+## 第二条：宏观动力学的完成
+
+$$
+\boxed{
+\text{微观几何与动力学}
+\longrightarrow
+\text{指定粗粒化极限}
+\longrightarrow
+\text{非线性下降缺陷}
+\longrightarrow
+\text{受约束的有效源}.
+}
+$$
+
+这个有效源不是“观察者忽略了什么就自动产生什么物质”，而是必须由实际微观解及其极限计算出来。
+
+---
+
+## 与项目结构的具体连接
+
+本次项目读取固定于提交：
+
+```text
+93f7a58b975d9ad023f95ca13bc84e18c433966b
+```
+
+项目现有的完成理论已经区分：
+
+$$
+\text{精确可识别},
+\qquad
+\text{条件良好的识别},
+\qquad
+\text{物理可实现的识别}.
+$$
+
+本轮的 Gram 条件、导数误差和曲率稳定性，分别为这一区分提供了具体几何实例。
+
+同时，`exact_descent_has_no_carry` 要求实际提供交换等式。本轮的非线性缺陷则明确显示：对于只控制度量值的宏观极限，不能默认
+
+$$
+\mathscr G\circ\lim
+=
+\operatorname*{wlim}\circ\mathscr G.
+$$
+
+缺失的桥不是靠重新命名消除，而是需要更强的正则性证书，或者显式保留 \(\mathfrak B\)。
+
+### 本轮的形式化边界
+
+可以依次形式化以下对象：
+
+| 层次    | 有限或解析证明义务              |
+| ----- | ---------------------- |
+| 采样重建  | Gram 正定性、矩条件、权重范数      |
+| 统计证书  | 偏差、协方差、有限失败概率          |
+| 几何稳定性 | 逆矩阵界、二阶数据到曲率的连续性       |
+| 波模型   | 线性常微分方程、正性区间、Ricci 恒等式 |
+| 宏观极限  | 振荡积分估计、弱极限、有效源         |
+| 动力闭合  | 独立物质实现、守恒及适用实验范围       |
+
+本轮已用符号运算核对有限导数权重、一般 Rosen 度量的 Ricci 公式以及极限的 Einstein 张量；也对不同 \(\varepsilon\) 的常微分方程解进行了数值交叉检查。一般结论由上文证明给出，**本轮未执行 Lean 编译**，不将这些新增命题标记为内核已验证。
+
+---
+
+# 结论
+
+本轮最重要的推进是：
+
+$$
+\boxed{
+\text{观察者没有分辨出的结构，
+不一定在有效动力学中没有作用。}
+}
+$$
+
+我们已经把这句话分解为两个严格结果。
+
+**第一，曲率是比钟速更高阶的观测目标。**要从有限量子记录稳定重建曲率，必须支付额外的采样、正则性和条件数成本。
+
+**第二，非线性动力学不一定沿低分辨率几何接口直接下降。**一个每层都严格真空的几何序列，可以在平滑极限中表现为具有正辐射应力的背景。
+
+因此，当前理论不能只以
+
+$$
+g_{\mu\nu}
+$$
+
+作为宏观完成后的唯一对象，而应至少考虑
+
+$$
+\boxed{
+\left(
+g_{\mu\nu},
+\ \text{可认证的导数范围},
+\ \text{允许实验},
+\ \text{误差预算},
+\ \mathfrak B_{\mu\nu}
+\right).
+}
+$$
+
+这里的 \(\mathfrak B_{\mu\nu}\) 记录：那些没有进入当前几何分辨率、却仍通过非线性关系影响动力学的结构。
+
+**这使“量子观察者形成时空”的路线更接近一个真正闭合的物理理论：观察者不仅要说明自己看见了什么，还必须证明，被自己的接口压缩掉的部分，在未来预测和动力学方程中究竟可以忽略，还是必须以明确的有效项重新出现。**
+
+[1]: https://link.aps.org/doi/10.1103/PhysRev.166.1272?utm_source=chatgpt.com "Gravitational Radiation in the Limit of High Frequency. II ..."
+[2]: https://arxiv.org/abs/0711.4403 "[0711.4403] On stable numerical differentiation"
+[3]: https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S3.html?utm_source=chatgpt.com "3 Introducing Riemannian Geometry‣ General Relativity ..."
+[4]: https://arxiv.org/abs/1805.10673?utm_source=chatgpt.com "Gravitational clock compass in General Relativity"
+[5]: https://arxiv.org/html/1011.4920v2 "A new framework for analyzing the effects of small scale inhomogeneities in cosmology"
+[6]: https://arxiv.org/html/1705.09533v2?utm_source=chatgpt.com "A New Twist on the Geometry of Gravitational Plane Waves"
+[7]: https://davidtong.org/teaching/general-relativity/grhtml/S4.html "4 The Einstein Equations‣ General Relativity by David Tong"
+[8]: https://arxiv.org/html/1304.2318v2 "Examples of backreaction of small scale inhomogeneities in cosmology"
