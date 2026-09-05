@@ -36,6 +36,10 @@ public sealed partial class MakeWorkflowTests
     private const string LeanReportPairScriptPath = "tools/scripts/lean-report-pair.sh";
     private const string RendererContractUpdateScriptPath =
         "tools/scripts/update-renderer-contract.sh";
+    private const string EngineeringTestsScriptPath =
+        "tools/scripts/engineering-tests.sh";
+    private const string SegmentEngineeringScriptPath =
+        "tools/scripts/workflow/segment-engineering.sh";
     private const string ToolsMakefilePath = "tools/Makefile";
     private const string CheckFastFilterVariable = "CHECK_FAST_FILTER :=";
     private const string PrOpenScriptPath = "tools/scripts/pr.sh open";
@@ -78,6 +82,7 @@ public sealed partial class MakeWorkflowTests
         "dotnet",
         "check-fast",
         "test",
+        "engineering",
         "engineering-tests",
         "selftest",
         "capacity-audit",

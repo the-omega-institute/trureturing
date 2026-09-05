@@ -51,3 +51,7 @@ entrypoint = "tools/scripts/local-harness-gate.sh"
 [[roots]]
 root_id = "local-harness-gate.sh/setup"
 entrypoint = "tools/scripts/local-harness-gate.sh"
+
+[[roots]]
+root_id = "segment-engineering.sh/engineering"
+entrypoint = "tools/scripts/workflow/segment-engineering.sh"

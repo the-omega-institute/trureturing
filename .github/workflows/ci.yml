@@ -140,68 +140,24 @@ jobs:
             exit 1
           fi
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" "$LEAN_TOOLCHAIN_FILE" --github-path "$GITHUB_PATH"
-      - name: Restore candidate locked dependencies
-        run: |
-          dotnet restore candidate/tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode
-          dotnet restore candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
-      - name: Build candidate with warnings as errors
-        id: build-candidate
-        if: steps.judge-cache.outputs.cache-hit != 'true' && github.event_name != 'schedule'
-        run: make -C candidate/tools dotnet
+      - name: Run canonical candidate engineering judgment
+        id: engineering
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name == 'pull_request_target' && 'PR' || 'push' }}
+          JUDGE_DLL: ${{ steps.judge-cache.outputs.cache-hit == 'true' && format('{0}/candidate/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll', github.workspace) || '' }}
+          JUDGE_SOURCE_ADDRESS: ${{ steps.judge-cache.outputs.cache-hit == 'true' && steps.judge-address.outputs.address || '' }}
+        run: make -C candidate/tools engineering
       - name: Signal PR head branch grammar
         if: github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'
         shell: bash
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: "set +e\nvalidation_output=\"$(dotnet run --project candidate/tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release --no-build --no-launch-profile -- worktree validate-branch --branch \"$HEAD_REF\")\"\nvalidation_exit=$?\nset -e\nhead_ref=\"$HEAD_REF\"\nprintf '%s\\n' \"$validation_output\"\ncase \"$validation_exit\" in\n  0)\n    expected_status=canonical\n    ;;\n  1)\n    expected_status=BRANCH_GRAMMAR_NONCONFORMING\n    ;;\n  *)\n    printf 'BRANCH_GRAMMAR_SIGNAL detector_status=failed exit=%s\\n' \"$validation_exit\" >&2\n    exit \"$validation_exit\"\n    ;;\nesac\nif ! jq -e -s --arg expected_status \"$expected_status\" --arg head_ref \"$HEAD_REF\" 'length == 1 and .[0].event == \"branch_validation\" and .[0].status == $expected_status and .[0].branch == $head_ref and (.[0].canonical == ($expected_status == \"canonical\"))' <<< \"$validation_output\" >/dev/null; then\n  printf 'BRANCH_GRAMMAR_SIGNAL detector_status=invalid_output exit=%s\\n' \"$validation_exit\" >&2\n  exit 1\nfi\nsummary_format='PR head branch \"%s\" has canonical branch grammar status \"%s\". Nonconforming names are advisory; detector faults fail closed.\\n'\nif [[ \"$validation_exit\" -eq 1 ]]; then\n  printf '%s' '::warning title=PR head branch grammar::'\n  printf \"$summary_format\" \"$HEAD_REF\" \"$expected_status\"\nfi\nprintf 'BRANCH_GRAMMAR_SIGNAL status=%s head_ref=%s\\n' \"$expected_status\" \"$HEAD_REF\"\nprintf \"$summary_format\" \"$HEAD_REF\" \"$expected_status\" >> \"$GITHUB_STEP_SUMMARY\"\n"
-      - name: Restore locked packages for the engineering test host (a judge cache hit skips the build)
-        id: restore-packages
-        if: github.event_name != 'schedule'
-        run: dotnet restore candidate/tools/StrataLint.sln --locked-mode
-      - name: Run candidate engineering tests with resource observation
-        shell: bash
-        run: /bin/bash candidate/tools/scripts/workflow/engineering-test-execution-harness.sh "$GITHUB_WORKSPACE/candidate"
-
-      - name: Run candidate selftest twice and compare bytes
-        shell: bash
-        run: make -C candidate/tools selftest
       - name: Audit repository capacity after merge
         if: github.event_name == 'push' && !cancelled()
         shell: bash
         run: make -C candidate/tools capacity-audit REPOSITORY="$GITHUB_WORKSPACE/candidate"
-      - name: Prove missing capability does not compile
-        shell: bash
-        run: |
-          set +e
-          output="$(dotnet build candidate/tools/tests/CompileFailProof/CompileFailProof.csproj --no-restore --configuration Release 2>&1)"
-          status=$?
-          set -e
-          printf '%s\n' "$output"
-          test "$status" -ne 0
-          grep -F "CS7036" <<<"$output"
-          grep -F "MetaClear" <<<"$output"
-      - name: Prove banned deterministic APIs do not compile
-        shell: bash
-        run: |
-          proof="candidate/tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"
-          set +e
-          output="$(dotnet build candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --no-restore --configuration Release 2>&1)"
-          status=$?
-          set -e
-          printf '%s\n' "$output"
-          test "$status" -ne 0
-          mapfile -t expected_lines < <(grep -nF "// banned-api-proof" "$proof" | cut -d: -f1)
-          mapfile -t actual_lines < <(
-            sed -n 's#.*BannedApiViolations.cs(\([0-9][0-9]*\),[0-9][0-9]*): error RS0030:.*#\1#p' <<<"$output" | sort -nu
-          )
-          test "${#expected_lines[@]}" -gt 0
-          test "${#actual_lines[@]}" -eq "${#expected_lines[@]}"
-          test -z "$(grep -F ': error ' <<<"$output" | grep -vF ': error RS0030:' || true)"
-          index=0
-          for expected_line in "${expected_lines[@]}"; do
-            test "${actual_lines[$index]}" = "$expected_line"
-            ((index += 1))
-          done
       - name: Stage judge binaries for the shared cache (dev push only)
         id: stage-judge
         if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
@@ -216,7 +172,7 @@ jobs:
           test -s .judge-binaries/cli/StrataLint.dll
           test -s .judge-binaries/scribe/StrataLint.Scribe.Documents.dll
       - name: Save judge binaries and candidate build outputs by content address (dev push only)
-        if: steps.build-candidate.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.engineering.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: |
