@@ -337,6 +337,32 @@ compliance; they do not judge coverage faithfulness.
   artifact contract in the brief — write `result.json.tmp` then atomically rename, same for the
   sentinel — and point at the attempt directory the runner appends to the brief rather than a path
   you compose yourself.
+- **The bind-only test is "after unfolding the new definitions, is a mathematical fact still
+  missing", not "does the concept appear in the frozen prerequisites' text".** The word-level test
+  passes trivially and is worthless: a new module names new objects by construction, so its
+  prerequisites never mention them. Landed retraction (2026-09-06, #5717): a module was declared
+  `content` with an escape witness on the ground that neither frozen prerequisite's statement
+  mentions `Sym2` or the orbit-name map. An independent reviewer produced a four-step bind path
+  reaching the public conclusion without the claimed witness — unfolding `Injective` and the name
+  map, applying pinned Mathlib's `Sym2.eq_iff`, `or_imp`, and ordinary equality rewriting normalized
+  the "new combinatorial bridge" into `forall x, f x = x`; the remaining half-plane merge used
+  `Surjective.forall` plus an already-frozen `im_ne_zero`. Per 5-quadruple-prime a pinned-Mathlib
+  lemma is not a frozen prerequisite, **but a conclusion obtained by instantiating one is equally
+  not a witness**. Both the deposit and its cover were withdrawn.
+- **Post-hoc classification is disclosure, not admission.** The rule scopes by whether the candidate
+  adds the first `Freeze` event for a descriptor, **not by when the file was written**. Replaying
+  source that never landed still proposes a first freeze, so it gets no exemption, and honestly
+  labelling the classification as after-the-fact does not convert it into an admission basis. Same
+  landed case: the PR said plainly "this is post-hoc, I am not claiming pre-registration" and was
+  still rejected, correctly.
+- **Before drafting a quarantine record, check the entry for `cover_disposition`.** The door refuses
+  to let the two coexist (`BackfillInventoryLoader`: `cover_disposition cannot coexist with
+  quarantine`), and more importantly that disposition is usually an accurate record of the real
+  blocker written by the door itself, which may be a *different* `blocker_class` than the one you
+  are about to write. Landed case (2026-09-06): an entry carried a `cover_disposition` whose three
+  gaps were all `chain-migration-incomplete`, while the draft record was about to label it
+  `multi-clause-guard`. Deleting the door's accurate record to install a less accurate one is a
+  bookkeeping error; the atom was dropped from the batch instead.
 - **`NOT_COMPLETE` is a runner-side verdict about artifacts, not a statement about the work.** Before
   concluding a seat failed, read `status.json` for `reason_code` and `carrier_exit`, and size
   `last-message.txt`. `carrier_exit=0` with a 30 KB last message means the seat did the work; the
