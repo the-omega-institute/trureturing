@@ -27,10 +27,10 @@ public sealed partial class ScriptTestGateClosureTests
             typeof(StrataLint.TestSupport.RepositoryRelativePath).Name);
         Assert.Equal(
             ScriptTestInputDeriver.ScriptHarnessScratchTypeName,
-            typeof(StrataLint.TestSupport.ScriptHarnessScratch).Name);
+            typeof(StrataLint.Tests.ScriptHarnessScratch).Name);
         Assert.Equal(
             ScriptTestInputDeriver.ProcessRunnerTypeName,
-            typeof(StrataLint.TestSupport.TestProcessRunner).Name);
+            typeof(StrataLint.Tests.TestProcessRunner).Name);
     }
 
     private const string ScriptTestsProject =
