@@ -1,0 +1,15 @@
+{
+  "status":"PASS",
+  "tests":[
+    {"case":"wrong_root_center","rejected":true,"exit_code":1,"diagnostic":"FAIL CLOSED: root inclusion failed"},
+    {"case":"duplicate_label","rejected":true,"exit_code":1,"diagnostic":"FAIL CLOSED: bad root label"},
+    {"case":"truncated_catalogue","rejected":true,"exit_code":1,"diagnostic":"FAIL CLOSED: truncated root label"},
+    {"case":"empty_catalogue","rejected":true,"exit_code":1,"diagnostic":"FAIL CLOSED: missing root count"},
+    {"case":"unfinished_partition","rejected":true,"exit_code":2,"diagnostic":"INCOMPLETE: one node processed; two pending nodes remain"},
+    {"case":"wrong_interval_precision","rejected":true,"exit_code":1,"diagnostic":"FAIL CLOSED: wrong interval precision"},
+    {"case":"false_nonedge_among_canonical_roots","rejected":true,"diagnostic":"nonedge 30,31 lacks positive margin"}
+  ],
+  "scope":"Negative tests are not a formal proof of checker soundness.",
+  "core_sha256":"4e22332942242137fd94e6e3317c0eeb8edd70d910881017639e404f19651310",
+  "input_sha256":"cb3a8cbcec587eeaea748c879b1333e06d09685e4b85a7c7755353a75931b153"
+}

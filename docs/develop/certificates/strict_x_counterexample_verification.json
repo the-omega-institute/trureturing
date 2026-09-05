@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "arithmetic": "fractions.Fraction rational interval operations only",
+  "symbolic": {
+    "entrywise_unit": true,
+    "both_Hadamard_Grams": true,
+    "skew_monomial_M": true,
+    "H_adjoint_M_eq_N_H_transpose": true,
+    "Haagerup_value_not_sixth_root": true,
+    "dephased_minus_one_counts_rows": [0, 0, 0, 1, 1, 2],
+    "dephased_minus_one_counts_columns": [0, 0, 0, 2, 1, 1],
+    "strict_X_external_input": "Matszangosz and Szollosi 2024, Corollary 23: the absence of three -1 entries in any normalized row or column excludes both Fourier families. This literature theorem is not reproved by this checker.",
+    "symmetric_block_full_S3_symmetry": true,
+    "symmetric_block_extra_skew_antiunitary": true,
+    "cubic_discriminants": ["-16384/625", "-16464/625"]
+  },
+  "root_existence": {
+    "theorem": "Banach fixed point / Krawczyk inclusion",
+    "dimension": 5,
+    "box_radius": "1/100000000",
+    "preconditioner_determinant_nonzero": true,
+    "contraction_inf_norm_less_than": "1/1000",
+    "Krawczyk_displacement_less_than_radius_over": "1000",
+    "conclusion": "one and only one real root in the stated rational chart box"
+  },
+  "pair": {
+    "shifted_energy_strictly_greater_than": "7/10",
+    "both_phase_determinant_normsq_strictly_greater_than": "1/200",
+    "all_six_mode_weights_strictly_greater_than": "1/5",
+    "global_inner_product_zero_reason": "M^T=-M, hence conjugate(u)^T*M*conjugate(u)=0 exactly",
+    "actual_lower_bounds_decimal_for_display_only": {
+      "shifted_energy": "733374993/1000000000",
+      "phase_det_v_sq": "11534727/1250000000",
+      "phase_det_w_sq": "23069453/2500000000"
+    }
+  },
+  "certified_induced_orbit_graph": {
+    "vertices": 12,
+    "edges": 24,
+    "degrees": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    "bipartition": [[0, 1, 2, 3, 4, 5], [6, 7, 8, 9, 10, 11]],
+    "exact_edge_list": [[0,6],[0,7],[0,8],[0,11],[1,6],[1,7],[1,9],[1,10],[2,6],[2,8],[2,9],[2,10],[3,7],[3,8],[3,9],[3,11],[4,7],[4,8],[4,10],[4,11],[5,6],[5,9],[5,10],[5,11]],
+    "nonedge_inner_normsq_strict_lower_bound": "1/1000",
+    "all_distinct_ray_pairs_inner_normsq_strict_upper_bound": "1/2",
+    "clique_number": 2,
+    "scope": "Exact induced graph on this symmetry orbit, not an assertion that it is a full connected component of all common-unbiased rays."
+  },
+  "scope": "Counterexample at one exact 2-circulant point; no exhaustive root count or four-MUB conclusion.",
+  "formal_status": "Exact independently rerunnable certificate; not yet a Lean kernel proof of the analytic enclosure."
+}

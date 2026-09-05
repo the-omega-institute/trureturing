@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "tests": [
+    {"name":"wrong_root_center","rejected":true,"reason":"uniform Newton image is not internal"},
+    {"name":"replace_actual_edge_by_unneeded_allowed_edge","rejected":true,"reason":"forbidden pair lacks uniform positive margin"},
+    {"name":"unsupported_parameter_radius","rejected":true,"reason":"uniform Newton image is not internal"}
+  ],
+  "mutation_descriptions": [
+    "Add center_denominator // 5 to center_numerators[0][0].",
+    "Replace an allowed noncanonical edge by a currently forbidden opposite-color noncanonical pair, keeping 114 allowed edges. The resulting omitted exact edge must fail the positive lower-bound check.",
+    "Replace parameter_radius by 1/16777216 without changing root boxes."
+  ]
+}
