@@ -419,7 +419,10 @@ public sealed class RuleEngineCapacityTests
             static item => item.Message.Contains("unknown test method", StringComparison.Ordinal));
 
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("DebtTests.Debt280", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Equal(
+            "SL-003 tools/tests/Synthetic.Tests/DebtTests.cs: conservative unknown test method "
+            + "introduced after fork point: tools/tests/Synthetic.Tests::DebtTests.Debt280",
+            diagnostic.Render());
     }
 
     [Fact]
@@ -544,6 +547,8 @@ public sealed class RuleEngineCapacityTests
             AddUnknownDebtPartition(fixture.ForkPoint, partition, methods);
         }
 
+        fixture.Changes.Clear();
+        fixture.Changes.Add($"tools/tests/{current[0].Partition}/DebtTests.cs");
         return fixture;
     }
 

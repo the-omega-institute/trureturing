@@ -2,16 +2,20 @@ using StrataLint.Engine;
 using System.Text;
 using System.Text.Json;
 
-namespace StrataLint.Tests;
+namespace StrataLint.TestSupport;
 
-// 本类此前作为**嵌套 partial 类**散布在 DepositCoverWorkflowScriptTests 的 7 个文件片段中,
-// 却被 5 处 StrataLint.Tests 内部用例与 1 处 ScriptTests 共同消费 ——
-// 「共享夹具寄居在某个测试类内部」。提升为顶层类,使 ScriptTests 不必再引用
-// StrataLint.Tests 的测试**类型**(#5419 的 D 2→1 前置)。
+// playbook-workflows.sh 的脚本 harness:建临时仓、铺桩、执行脚本、收集调用记录。
+// 被 StrataLint.Tests 的 7 个测试文件与 StrataLint.ScriptTests 的 1 个共同消费,
+// 故它是**共享测试脚手架**,归宿是本程序集(非测试程序集),不是任一测试程序集内部。
 //
-// **纯搬迁**:可见性、成员、行为逐字不变。唯一风险是搬漏,
-// 而嵌套改顶层会让任何未更新的引用在**编译期** CS0246 —— 编译器是这一层的判官。
-
+// 迁到这里之前经三层改造,每层都是搬迁的前置条件:
+//   #5509 由散在某测试类里的嵌套 partial 提升为顶层类(嵌套类不能单独搬家)
+//   #5530 SevenLineWrappedDigest 归入本类(反向依赖测试类的夹具搬不过来)
+//   #5532 去掉对 StrataLint.Cli 的编译期依赖(否则本程序集要引用 Cli,
+//         而那会改变每个引用本程序集的测试项目的传递可达集)
+//
+// 保持 internal:Run 返回 Engine 的 internal 类型 ProcessOutput,
+// 与 TestProcessRunner 同理,由本程序集的 AssemblyInfo 具名授权三个消费方。
 internal sealed partial class TransactionFixture : IDisposable
 {
     internal const string AtomId = "atom-1";
@@ -478,7 +482,7 @@ internal sealed partial class TransactionFixture
                 $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                 $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
                 $"PLAYBOOK_USE_CANONICAL_FROZEN_QUERY={(useCanonicalFrozenQuery ? "1" : "0")}",
-                $"PLAYBOOK_REAL_CLI={Path.Combine(Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!, "StrataLint")}",
+                $"PLAYBOOK_REAL_CLI={RealCliPath()}",
                 "/bin/bash",
                 Path.Combine(Root, ScriptPath),
                 command,
@@ -650,4 +654,27 @@ internal sealed partial class TransactionFixture
         + "   digest: Synthetic deposit workflow digest\n"
         + "   wraps onto physical line seven. -/\n"
         + declaration;
+
+    // 此处原为 typeof(StrataLint.Cli.Program).Assembly.Location —— 一条对生产程序集的
+    // **编译期**依赖。它挡住夹具迁往共享测试支持程序集:迁过去就得让该程序集引用 Cli,
+    // 而那会改变**每个**引用它的测试项目的传递可达 StrataLint* 集合,
+    // 而 DependencyDirectionTests 逐项钉住了那些集合。
+    //
+    // 换成运行期目录并**当场断言 apphost 存在**。这不是降级检测(第 20 条红线):
+    // 原写法只证明「Cli 这个类型可见」,新写法证明「那个可执行文件真的在该目录」——
+    // 后者才是脚本实际需要的事实。缺失时抛出点名的异常,不静默给出错路径。
+    //
+    // 实测(2026-09-05):StrataLint.Tests / ScriptTests / ArchitectureTests 三个
+    // 引用 Cli(直接或传递)的测试项目,其输出目录里 StrataLint 与 StrataLint.dll 皆在,
+    // 与 Assembly.Location 给出的目录同一处;不引用 Cli 的 Scribe.Tests 两者皆无。
+    private static string RealCliPath()
+    {
+        var path = Path.Combine(AppContext.BaseDirectory, "StrataLint");
+        return File.Exists(path)
+            ? path
+            : throw new InvalidOperationException(
+                $"PLAYBOOK_REAL_CLI 需要 StrataLint apphost 与测试程序集同目录,但 {path} 不存在;"
+                + "消费该夹具的测试项目必须引用 StrataLint.Cli。");
+    }
+
 }

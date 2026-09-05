@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-clause guard for `* 因果一致性；`. The source supplies no causal model, consistency predicate, or relation from that predicate to its report `R` and true-event readout `O`. D5 search found frozen GID `D5/S3/ConceptDynamics/InterventionsExchange/FactualInterventionConsistency.factual_intervention_consistency`; its public theorem equates factual and potential outcomes under a matching-treatment hypothesis but contains no report, ledger, verification, or truth bridge. The pinned Mathlib search for causal/intervention consistency exited 1. GitHub Lean code search for `causal consistency` exited 0 and returned only that repository theorem. Local probe `/private/tmp/w73e36-atom1-probe.lean` exited 0 with a causal-check readout equal to `O` while `R x ≠ O x`, so the named property alone does not validate the report."
+    reentry_condition: "Specify the causal model and consistency predicate intended by the source, then freeze a public theorem relating satisfaction of that predicate to agreement between the submitted report and true-event readout."
+    blocker_class: multi-clause-guard
