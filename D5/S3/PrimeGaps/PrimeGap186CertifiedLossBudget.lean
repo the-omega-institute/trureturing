@@ -121,8 +121,7 @@ theorem totalLoss_le_recordedBudget (root face : OuterRowAddress → ℝ)
           ∑ r : InnerRowAddress, (innerBudget r : ℝ) := add_le_add ho hi
     _ = (totalRoundedBudget : ℝ) := by
       unfold totalRoundedBudget
-      push_cast
-      rfl
+      push_cast <;> rfl
 
 /-- Effective source density after its exact safety decrement. -/
 def rhoStar : ℚ := physicalSourceRho - 1 / 10000000
@@ -197,7 +196,8 @@ theorem score_gt_one_of_aggregate_loss (I J loss : ℝ)
     (hloss : loss ≤ (totalRoundedBudget : ℝ) + 1 / 12500) :
     1 < (rhoStar : ℝ) * (J / I - loss) := by
   simpa using score_gt_of_aggregate_loss (1 / 12500) 1
-    recorded_additional_loss_is_safe I J loss hIlower hIupper hJlower hloss
+    recorded_additional_loss_is_safe I J loss hIlower hIupper hJlower
+    (by norm_num <;> exact hloss)
 
 /-- Aggregate sufficiency retaining the stronger margin used by the numerical comparison. -/
 theorem score_gt_strict_margin_of_aggregate_loss (I J loss : ℝ)
@@ -207,7 +207,8 @@ theorem score_gt_strict_margin_of_aggregate_loss (I J loss : ℝ)
     (hloss : loss ≤ (totalRoundedBudget : ℝ) + 1 / 100000) :
     1 + 1 / 50000 < (rhoStar : ℝ) * (J / I - loss) := by
   simpa using score_gt_of_aggregate_loss (1 / 100000) (1 + 1 / 50000)
-    recorded_strict_margin_is_safe I J loss hIlower hIupper hJlower hloss
+    recorded_strict_margin_is_safe I J loss hIlower hIupper hJlower
+    (by norm_num <;> exact hloss)
 
 /-- Full typed conditional arithmetic assembly. The 149 component caps and three scalar
 endpoints remain hypotheses, not axioms or conclusions. -/
