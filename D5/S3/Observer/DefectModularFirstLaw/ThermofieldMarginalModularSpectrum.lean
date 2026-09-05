@@ -7,6 +7,7 @@
 
 import D5.S3.Observer.DefectModularFirstLaw.EntropyDerivativeEqualsModularGap
 import D5.S3.Analytic.Zeta.PrimeMarginalEntropy
+import D5.S3.Quantum.PureState.PureStateHandshake
 import Mathlib.Probability.Distributions.Geometric
 import Mathlib.Topology.Instances.Matrix
 
@@ -38,17 +39,13 @@ namespace D5.S3.Observer.DefectModularFirstLaw.ThermofieldMarginalModularSpectru
 open D5.S3.Analytic.Zeta.PrimeMarginalEntropy
 open D5.S3.Analytic.Zeta.ZetaEntropy
 open D5.S3.Observer.DefectModularFirstLaw.EntropyDerivativeEqualsModularGap
+open D5.S3.Quantum.PureState.PureStateHandshake
 
 /-- The countable two-mode Schmidt amplitude with geometric visible weights. -/
 def thermofieldAmplitude (q : Real) (index : Nat × Nat) : Complex :=
   if index.1 = index.2 then
     (Real.sqrt ((1 - q) * q ^ index.1) : Complex)
   else 0
-
-/-- The pure two-mode density matrix obtained as the outer product of the thermofield
-amplitude with its conjugate. -/
-def thermofieldDensity (q : Real) : Matrix (Nat × Nat) (Nat × Nat) Complex :=
-  fun i j => thermofieldAmplitude q i * star (thermofieldAmplitude q j)
 
 /-- Trace out the second countable mode by summing its diagonal matrix blocks. -/
 def countablePartialTraceRight
@@ -91,19 +88,21 @@ private theorem thermalPMF_apply
 
 private theorem thermofield_partial_trace
     (q : Real) (hq0 : 0 < q) (hq1 : q < 1) :
-    countablePartialTraceRight (thermofieldDensity q) = geometricDiagonalDensity q := by
+    countablePartialTraceRight (rankOneDensity (thermofieldAmplitude q)) =
+      geometricDiagonalDensity q := by
   ext i j
   by_cases hij : i = j
   · subst j
     rw [countablePartialTraceRight, tsum_eq_single i]
-    · simp only [thermofieldDensity, thermofieldAmplitude, if_pos,
-        geometricDiagonalDensity, Matrix.diagonal_apply_eq, Complex.star_def,
-        Complex.conj_ofReal, ← Complex.ofReal_mul]
+    · simp only [rankOneDensity, Matrix.vecMulVec_apply, Pi.star_apply,
+        thermofieldAmplitude, if_pos, geometricDiagonalDensity,
+        Matrix.diagonal_apply_eq, Complex.star_def, Complex.conj_ofReal,
+        ← Complex.ofReal_mul]
       norm_cast
       simpa [pow_two] using Real.sq_sqrt
         (mul_nonneg (sub_nonneg.mpr hq1.le) (pow_nonneg hq0.le _))
     · intro k hki
-      simp [thermofieldDensity, thermofieldAmplitude, Ne.symm hki]
+      simp [rankOneDensity, Matrix.vecMulVec_apply, thermofieldAmplitude, Ne.symm hki]
   · rw [countablePartialTraceRight]
     have hzero : (fun k : Nat =>
         (if i = k then (Real.sqrt ((1 - q) * q ^ i) : Complex) else 0) *
@@ -115,8 +114,9 @@ private theorem thermofield_partial_trace
           exact hij (hik.trans h.symm)
         simp [hik, hjk]
       · simp [hik]
-    simp only [thermofieldDensity, thermofieldAmplitude, hzero,
-      geometricDiagonalDensity, Matrix.diagonal_apply_ne _ hij]
+    simp only [rankOneDensity, Matrix.vecMulVec_apply, Pi.star_apply,
+      thermofieldAmplitude, hzero, geometricDiagonalDensity,
+      Matrix.diagonal_apply_ne _ hij]
     exact tsum_zero
 
 private theorem geometricDiagonalDensity_normalized
@@ -127,6 +127,23 @@ private theorem geometricDiagonalDensity_normalized
   simp_rw [geometricDiagonalDensity, Matrix.diagonal_apply_eq, Complex.ofReal_re]
   rw [hgeom.tsum_mul_left, tsum_geometric_of_lt_one hq0.le hq1]
   exact mul_inv_cancel₀ (sub_pos.mpr hq1).ne'
+
+private theorem geometricDiagonalDensity_mean_occupation
+    (q : Real) (hq0 : 0 < q) (hq1 : q < 1) :
+    (∑' n : Nat, (n : Real) * (geometricDiagonalDensity q n n).re) =
+      rankOneThermalOccupation q := by
+  have hnorm : ‖q‖ < 1 := by
+    rw [Real.norm_eq_abs, abs_of_pos hq0]
+    exact hq1
+  simp_rw [geometricDiagonalDensity, Matrix.diagonal_apply_eq, Complex.ofReal_re]
+  have hfactor : ∀ n : Nat,
+      (n : Real) * ((1 - q) * q ^ n) = (1 - q) * ((n : Real) * q ^ n) := by
+    intro n
+    ring
+  simp_rw [hfactor]
+  rw [tsum_mul_left, tsum_coe_mul_geometric_of_norm_lt_one hnorm]
+  unfold rankOneThermalOccupation
+  field_simp [(sub_pos.mpr hq1).ne']
 
 private theorem diagonalEntropy_geometric_eq_rankOneThermalEntropy
     (q : Real) (hq0 : 0 < q) (hq1 : q < 1) :
@@ -166,14 +183,17 @@ private theorem relativeModularEnergy_spacing
 
 /-- The local modular first law on the exact countable thermofield carrier. The frozen
 derivative and differential are retained, while the new clauses construct the hidden-partner
-partial trace, normalize its visible geometric density, identify its entropy with `S(N)`, and
-derive the adjacent relative modular energy spacing from `-log rho_vis`. -/
+partial trace, normalize its visible geometric density, compute its mean occupation, identify
+its entropy with `S(N)`, and derive the adjacent relative modular energy spacing from
+`-log rho_vis`. This is local rank-one modular thermodynamics, not a physical black-hole first
+law. -/
 theorem local_modular_first_law_from_thermofield_marginal
     (delta omega : Real) (homega : 0 < omega) (horizon : omega < delta) :
     let q := localModularWeight delta omega
     let occupation := rankOneThermalOccupation q
     let epsilon := defectModularGap delta omega
-    let visibleDensity := countablePartialTraceRight (thermofieldDensity q)
+    let visibleDensity :=
+      countablePartialTraceRight (rankOneDensity (thermofieldAmplitude q))
     ((HasDerivAt rankOneThermalEntropy
           (Real.log ((occupation + 1) / occupation)) occupation ∧
         Real.log ((occupation + 1) / occupation) = -Real.log q ∧
@@ -183,6 +203,7 @@ theorem local_modular_first_law_from_thermofield_marginal
         epsilon = 2 * Real.log (delta / omega))) ∧
       visibleDensity = geometricDiagonalDensity q ∧
       (∑' n : Nat, (visibleDensity n n).re) = 1 ∧
+      (∑' n : Nat, (n : Real) * (visibleDensity n n).re) = occupation ∧
       diagonalEntropy visibleDensity = rankOneThermalEntropy occupation ∧
       ∀ n : Nat,
         relativeModularEnergy q (n + 1) - relativeModularEnergy q n = epsilon := by
@@ -201,11 +222,15 @@ theorem local_modular_first_law_from_thermofield_marginal
   have htrace := thermofield_partial_trace (localModularWeight delta omega) hq0 hq1
   have hnormal := geometricDiagonalDensity_normalized
     (localModularWeight delta omega) hq0 hq1
+  have hmean := geometricDiagonalDensity_mean_occupation
+    (localModularWeight delta omega) hq0 hq1
   have hentropy := diagonalEntropy_geometric_eq_rankOneThermalEntropy
     (localModularWeight delta omega) hq0 hq1
-  refine ⟨⟨hderivative, hdifferential⟩, htrace, ?_, ?_, ?_⟩
+  refine ⟨⟨hderivative, hdifferential⟩, htrace, ?_, ?_, ?_, ?_⟩
   · rw [htrace]
     exact hnormal
+  · rw [htrace]
+    exact hmean
   · rw [htrace]
     exact hentropy
   · intro n

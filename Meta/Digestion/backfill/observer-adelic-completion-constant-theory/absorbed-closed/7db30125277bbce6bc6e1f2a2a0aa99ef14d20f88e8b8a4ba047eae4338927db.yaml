@@ -4,10 +4,10 @@ fingerprints:
 cas_ref: sha256:7db30125277bbce6bc6e1f2a2a0aa99ef14d20f88e8b8a4ba047eae4338927db
 coverage_gids:
   - gid: D5/S3/Observer/DefectModularFirstLaw/ThermofieldMarginalModularSpectrum.local_modular_first_law_from_thermofield_marginal
-    target_statement_id: sha256:c52515c90c6a0b036be5300c8713e80d43fed8bcf853265d68f3c1ab1b63a85e
+    target_statement_id: sha256:fd7efeed4feda533dfcaf5decf6babaf5c7c3b22ad684b354558f474f579c338
 receipts:
   scribe:
     - gid: D5/S3/Observer/DefectModularFirstLaw/ThermofieldMarginalModularSpectrum.local_modular_first_law_from_thermofield_marginal
-      definition_sha256: sha256:c6111133fa1f9d3f79a6b0344ce0ec170fb1a6904a4ee4722e1ccb1fcf7c1033
-      emission_sha256: sha256:daa950b9fa0a7c9f947a5c05cdbada5a7065f37a5223bafa157f9d5e4f9a6a41
+      definition_sha256: sha256:6526b11971bf2f38c54859b9565f370f649911aeeb363325b1819ec15f25c2a3
+      emission_sha256: sha256:29940b2b8b714040d6e1356ca7a8d2ecae975df40327f7caa5b68787a330105a
   unresolved_subitems: []

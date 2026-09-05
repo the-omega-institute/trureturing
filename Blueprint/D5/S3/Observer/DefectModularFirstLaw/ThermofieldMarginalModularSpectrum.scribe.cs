@@ -22,12 +22,6 @@ internal sealed class ThermofieldMarginalModularSpectrumDocument
                 "The amplitude is supported on matching visible and hidden occupations, with "
                     + "Schmidt coefficient sqrt((1-q)q^n)."),
             Definition(
-                "thermofield-density",
-                "The pure thermofield density",
-                "thermofieldDensity",
-                "The joint density is the outer product of the thermofield amplitude and its "
-                    + "complex conjugate."),
-            Definition(
                 "countable-partial-trace-right",
                 "Partial trace over the hidden mode",
                 "countablePartialTraceRight",
@@ -64,13 +58,14 @@ internal sealed class ThermofieldMarginalModularSpectrumDocument
                     Paragraph(Text(
                         "The frozen derivative theorem supplies the differential law. The new "
                             + "countable Schmidt construction proves that tracing out the hidden "
-                            + "mode gives the normalized geometric density and that its diagonal "
-                            + "entropy is exactly S(N).")),
+                            + "mode from the frozen generic rank-one density gives the normalized "
+                            + "geometric density, whose first moment is N and whose diagonal entropy "
+                            + "is exactly S(N).")),
                     Paragraph(Text(
                         "The negative logarithms of successive visible eigenweights differ by "
                             + "epsilon, so epsilon is the adjacent level spacing of the relative "
-                            + "modular Hamiltonian. This remains a local rank-one modular law and "
-                            + "does not state a physical black-hole first law."))),
+                            + "modular Hamiltonian. This states only local rank-one modular "
+                            + "thermodynamics, not a physical black-hole first law."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(
@@ -109,7 +104,9 @@ internal sealed class ThermofieldMarginalModularSpectrumDocument
         Formula epsilonValue = Call("defectModularGap", delta, omega);
         Formula visibleValue = Call(
             "countablePartialTraceRight",
-            Call("thermofieldDensity", q));
+            Call(
+                "rankOneDensity",
+                Call("thermofieldAmplitude", q)));
         Formula entropy = F.Id("rankOneThermalEntropy");
         Formula logRatio = Logarithm(new Formula.Fraction(
             Seq(occupation, Sp, Plus, Sp, D(1)),
@@ -138,6 +135,18 @@ internal sealed class ThermofieldMarginalModularSpectrumDocument
                     Typed(n, natural),
                     Call("re", Apply(visibleDensity, n, n)))),
             D(1));
+        Formula meanOccupationClause = Equal(
+            Call(
+                "tsum",
+                Lambda(
+                    Typed(n, natural),
+                    Seq(
+                        Open,
+                        Typed(n, real),
+                        Close,
+                        Sp,
+                        Call("re", Apply(visibleDensity, n, n))))),
+            occupation);
         Formula entropyClause = Equal(
             Call("diagonalEntropy", visibleDensity),
             Call("rankOneThermalEntropy", occupation));
@@ -158,6 +167,7 @@ internal sealed class ThermofieldMarginalModularSpectrumDocument
             And(differentialClause, explicitGap),
             marginalClause,
             normalizationClause,
+            meanOccupationClause,
             entropyClause,
             spacingClause);
 
