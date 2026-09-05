@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
-   digest: Transport the existing real absolute-row estimate to complex mixed quadratic forms and convergent matrix series with weighted sign margins. -/
+   digest: Extend the existing row estimate to complex mixed forms and series. -/
 
 import D5.S3.PrimeGaps.GreedyResidues
 
@@ -21,7 +21,7 @@ claim that any zeta instance has passed the repository's admission gates.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open scoped BigOperators
+open scoped BigOperators ComplexConjugate
 
 namespace D5.S3.Weil.ZetaLinear.ComplexQuadraticRowBound
 
@@ -59,7 +59,11 @@ theorem norm_complex_quadratic_le_weighted_energy
     _ ≤ ∑ i, ‖a i‖ ^ 2 * (eta * weight i) :=
       Finset.sum_le_sum fun i _ =>
         mul_le_mul_of_nonneg_left (hrow i) (sq_nonneg _)
-    _ = _ := by simp only [Finset.mul_sum]; apply Finset.sum_congr rfl; intro i _; ring
+    _ = _ := by
+      simp only [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro i _
+      ring
 
 /-- Absolute summability of genuine matrix coefficients turns a row budget on
 the series of norms into a uniform bound for every coefficient vector. -/
@@ -84,7 +88,7 @@ private theorem weighted_energy_pos
     0 < ∑ i, weight i * ‖a i‖ ^ 2 := by
   have hex : ∃ i, a i ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     exact ha (funext h)
   obtain ⟨i, hi⟩ := hex
   apply Finset.sum_pos' (fun j _ => mul_nonneg (hweight j).le (sq_nonneg _))
