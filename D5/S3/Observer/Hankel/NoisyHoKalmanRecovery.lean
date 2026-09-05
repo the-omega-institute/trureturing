@@ -169,7 +169,34 @@ theorem run_noisy_recovery {h p m r : Nat}
   · rw [hC]
     simpa only [fittedC, cErrorBudget, Rat.cast_mul, Rat.cast_natCast] using hW
 
+/-- A successful noisy-data certificate excludes every compatible model of
+strictly smaller state dimension. The candidate dimension d need not equal r. -/
+theorem run_order_lower_bound {h p m r d : Nat}
+    (sh : Samples ℚ h p m) (ε : ℚ) (out : Result h p m r)
+    (ho : run r sh ε = some out)
+    (s : Samples ℝ h p m)
+    (A : Matrix (Fin d) (Fin d) ℝ) (B : Matrix (Fin d) (Fin m) ℝ)
+    (C : Matrix (Fin p) (Fin d) ℝ)
+    (hs : ∀ k : Fin (2 * h), s k = C * A ^ k.val * B)
+    (he : ∀ k i j, |(sh k i j : ℝ) - s k i j| ≤ (ε : ℝ)) : r ≤ d := by
+  have hchoose := (run_fields sh ε out ho).1
+  obtain ⟨hkhat, hε, hm⟩ := choosePivot_certificate sh ε out.pivot hchoose
+  let Q := realMatrix (adjInverse (baseBlock sh out.pivot))
+  have hQ : Q * baseBlock (realSamples sh) out.pivot = 1 := by
+    have hh := congrArg (@realMatrix r r) (adjInverse_mul (baseBlock sh out.pivot) hkhat)
+    simpa only [realMatrix_mul, realMatrix_one] using hh
+  have hq : ‖Q‖ ≤ (inverseBudget sh out.pivot : ℝ) := norm_realMatrix_le_absSum _
+  have hεR : (0 : ℝ) ≤ (ε : ℝ) := by exact_mod_cast hε
+  have hmQ : inverseBudget sh out.pivot * ((r : ℚ) * ε) < 1 := by
+    simpa only [inverseBudget, mul_assoc] using hm
+  have hmR : (inverseBudget sh out.pivot : ℝ) * ((r : ℝ) * (ε : ℝ)) < 1 := by
+    exact_mod_cast hmQ
+  have hK := (sample_noise_blocks s (realSamples sh) out.pivot (ε : ℝ) hεR he).1
+  exact finite_samples_order_lower_bound s out.pivot A B C hs
+    (true_det_ne_zero_of_inverse_margin _ _ Q _ _ hQ hq hK hmR)
+
 #print axioms run_noisy_recovery
+#print axioms run_order_lower_bound
 
 end
 end D5.S3.Observer.Hankel.NoisyHoKalmanRecovery
