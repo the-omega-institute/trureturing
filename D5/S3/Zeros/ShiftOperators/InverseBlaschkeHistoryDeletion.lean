@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Zeros/ShiftOperators/InverseBlaschkeHistoryDeletion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [inverse_blaschke_history_deletion]
+   anchors: []
    digest: An inner isometry has a coisometric adjoint with a finite deleted-history space. -/
 
 import Mathlib.Algebra.Module.LinearMap.Index
