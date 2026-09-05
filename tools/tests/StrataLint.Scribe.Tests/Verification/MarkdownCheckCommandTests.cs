@@ -39,7 +39,12 @@ public sealed class MarkdownCheckCommandTests
         using var temporary = new TemporaryRoot();
         var error = new StringWriter();
 
-        var exit = ScribeCli.Run(arguments, temporary.Path, TextWriter.Null, error);
+        var exit = ScribeCli.Run(
+            DocumentlessAssembly.Value,
+            arguments,
+            temporary.Path,
+            TextWriter.Null,
+            error);
 
         Assert.Equal(2, exit);
         Assert.Contains(
