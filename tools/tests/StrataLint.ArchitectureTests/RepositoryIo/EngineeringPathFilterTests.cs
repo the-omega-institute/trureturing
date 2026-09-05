@@ -14,6 +14,32 @@ public sealed class EngineeringPathFilterTests
         "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
     private const string ScriptTestsProject =
         "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
+    private const string TestSupportProject =
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj";
+
+    // issue #5516:StrataLint.TestSupport 为 TestScratchFramework 派生 XunitTestFramework
+    // 而必须引用 xunit,同时明写 IsTestProject=false。此前 xunit 启发式优先于显式声明,
+    // 把它判成测试项目 -> full plan 选中它 -> dotnet test 对它不产 TRX ->
+    // ENGINEERING_TEST_EVIDENCE_FAILED,阻塞所有 judge 面 PR。
+    [Fact]
+    public void FullPlanExcludesXunitReferencingProjectThatDeclaresItselfNonTest()
+    {
+        var topology = new TestProjectTopologySnapshot(
+        [
+            SupportProjectDeclaringNonTest(TestSupportProject),
+            Project(EngineProject, isTest: false),
+            Project(EngineTestsProject, isTest: true, EngineProject),
+        ]);
+
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            ["tools/StrataLint.Engine/Anything.cs"],
+            topology,
+            topology,
+            full: true);
+
+        Assert.DoesNotContain(TestSupportProject, plan.Projects);
+        Assert.Contains(EngineTestsProject, plan.Projects);
+    }
 
     [Fact]
     public void ScribeChangeSelectsBaseReverseTestProjectClosure()
@@ -122,6 +148,13 @@ public sealed class EngineeringPathFilterTests
             ScribeTestsProject,
             EngineTestsProject),
     ]);
+
+    private static TestProjectTopologyProject SupportProjectDeclaringNonTest(string path) =>
+        new(
+            path,
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup>"
+            + "<IsTestProject>false</IsTestProject></PropertyGroup>"
+            + "<ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>");
 
     private static TestProjectTopologyProject Project(
         string path,
