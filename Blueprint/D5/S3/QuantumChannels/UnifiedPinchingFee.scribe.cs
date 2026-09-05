@@ -40,18 +40,21 @@ internal sealed class UnifiedPinchingFeeDocument : IScribeDocumentDefinition
                         "The source scales t = delta squared over four and u = 1-r are exposed by "
                             + "handTremor and doorGap. The relation r = 1-2tx is exposed by "
                             + "boundaryRadius, while the third conjunct uses its inverse substitution "
-                            + "t = doorGap(r)/(2x). The fee is the exact binary-entropy increment "
-                            + "quadraticPinchingFee, not a function defined by the target asymptotic.")),
+                            + "t = doorGap(r)/(2x). The fee model quadraticPinchingFee is the "
+                            + "binary-entropy increment H2((1-r)/2 + r*t) - H2((1-r)/2). "
+                            + "No public declaration identifies the source's tilted-pinching fee "
+                            + "with this model; the source-fee clauses remain conditional on that "
+                            + "uncarried identification.")),
                     Paragraph(Text(
-                        "Along r = 1-2tx, the quotient of the exact fee by t times the displayed "
+                        "Along r = 1-2tx, the quotient of the fee model by t times the displayed "
                             + "transition coefficient tends to one. The scale-independent correction "
                             + "tends to one at x approaching zero from above, giving the pure-state "
                             + "logarithmic law.")),
                     Paragraph(Text(
                         "At the mixed-state end, substituting t = u/(2x) makes the transition "
                             + "coefficient tend to log(2/u). For fixed 0<r<1 and t=delta squared over "
-                            + "four, the fee divided by delta squared tends to r artanh(r)/2; this "
-                            + "fourth limit is the formal first-order content. The fixed-x fee ratio "
+                            + "four, the model divided by delta squared tends to r artanh(r)/2; this "
+                            + "fourth limit is the model's formal first-order content. The fixed-x fee ratio "
                             + "and the x-to-infinity profile formalize separate regimes and are not "
                             + "composed into a single limit.")),
                     Paragraph(Text(
@@ -112,8 +115,8 @@ internal sealed class UnifiedPinchingFeeDocument : IScribeDocumentDefinition
         Formula xPlusOne = Add(x, D(1));
         Formula logarithmicProfile = Subtract(
             Add(Call("log", inverseT), Mul(x, Call("log", x))),
-            Mul(Grp(xPlusOne), Call("log", xPlusOne)));
-        Formula remainder = Subtract(singularDifference, Grp(logarithmicProfile));
+            Mul(Seq(Open, xPlusOne, Close), Call("log", xPlusOne)));
+        Formula remainder = Subtract(singularDifference, Seq(Open, logarithmicProfile, Close));
         Formula limit = Tendsto(
             Lambda(Typed(t, real), remainder),
             PositiveFilter(),

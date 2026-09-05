@@ -6,7 +6,7 @@ A binary-entropy pinching fee has one transition profile joining its pure- and m
 
 **Lemma 1.1 (The singular boundary remainder vanishes).**
 
-$$\forall x: \mathbb{R}, 0 \leq x \Rightarrow \operatorname{Tendsto}\left((t: \mathbb{R} \mapsto \frac{\operatorname{negMulLog}\left(\operatorname{boundaryUpperProbability}\left(t, x\right)\right) - \operatorname{negMulLog}\left(t \cdot x\right)}{t} - {\operatorname{log}\left(t^{-1}\right) + x \cdot \operatorname{log}\left(x\right) - {x + 1} \cdot \operatorname{log}\left(x + 1\right)}), \operatorname{nhdsWithin}\left(0, \operatorname{Ioi}\left(0\right)\right), \operatorname{nhds}\left(0\right)\right).$$
+$$\forall x: \mathbb{R}, 0 \leq x \Rightarrow \operatorname{Tendsto}\left((t: \mathbb{R} \mapsto \frac{\operatorname{negMulLog}\left(\operatorname{boundaryUpperProbability}\left(t, x\right)\right) - \operatorname{negMulLog}\left(t \cdot x\right)}{t} - (\operatorname{log}\left(t^{-1}\right) + x \cdot \operatorname{log}\left(x\right) - (x + 1) \cdot \operatorname{log}\left(x + 1\right))), \operatorname{nhdsWithin}\left(0, \operatorname{Ioi}\left(0\right)\right), \operatorname{nhds}\left(0\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/UnifiedPinchingFee.singular_boundary_error_limit` (`✓ std3`). ∎
 
@@ -28,11 +28,11 @@ $$\begin{aligned}{}(\forall x: \mathbb{R}, 0 \leq x \Rightarrow \operatorname{Te
 
 *Commentary.*
 
-The source scales t = delta squared over four and u = 1-r are exposed by handTremor and doorGap. The relation r = 1-2tx is exposed by boundaryRadius, while the third conjunct uses its inverse substitution t = doorGap(r)/(2x). The fee is the exact binary-entropy increment quadraticPinchingFee, not a function defined by the target asymptotic.
+The source scales t = delta squared over four and u = 1-r are exposed by handTremor and doorGap. The relation r = 1-2tx is exposed by boundaryRadius, while the third conjunct uses its inverse substitution t = doorGap(r)/(2x). The fee model quadraticPinchingFee is the binary-entropy increment H2((1-r)/2 + r*t) - H2((1-r)/2). No public declaration identifies the source's tilted-pinching fee with this model; the source-fee clauses remain conditional on that uncarried identification.
 
-Along r = 1-2tx, the quotient of the exact fee by t times the displayed transition coefficient tends to one. The scale-independent correction tends to one at x approaching zero from above, giving the pure-state logarithmic law.
+Along r = 1-2tx, the quotient of the fee model by t times the displayed transition coefficient tends to one. The scale-independent correction tends to one at x approaching zero from above, giving the pure-state logarithmic law.
 
-At the mixed-state end, substituting t = u/(2x) makes the transition coefficient tend to log(2/u). For fixed 0<r<1 and t=delta squared over four, the fee divided by delta squared tends to r artanh(r)/2; this fourth limit is the formal first-order content. The fixed-x fee ratio and the x-to-infinity profile formalize separate regimes and are not composed into a single limit.
+At the mixed-state end, substituting t = u/(2x) makes the transition coefficient tend to log(2/u). For fixed 0<r<1 and t=delta squared over four, the model divided by delta squared tends to r artanh(r)/2; this fourth limit is the model's formal first-order content. The fixed-x fee ratio and the x-to-infinity profile formalize separate regimes and are not composed into a single limit.
 
 The source's 'that is' bridge is carried in the gate-closing regime: as r approaches one from below, the ratio of 2r artanh(r) to log(2/(1-r)) tends to one. The coefficients are not asserted equal at a fixed mixed-state radius.
 
