@@ -99,26 +99,33 @@ structure PhysicalComponentAddress where
   phase : PhysicalSchedulePhase
   deriving DecidableEq, Repr
 
-instance : Fintype PhysicalComponentAddress := Fintype.ofFinite _
+instance : Fintype PhysicalComponentAddress where
+  elems := Finset.univ.biUnion (fun g : PhysicalSourceGroup =>
+    Finset.univ.image (fun p : PhysicalSchedulePhase => (⟨g, p⟩ : PhysicalComponentAddress)))
+  complete := by
+    rintro ⟨g, p⟩
+    exact Finset.mem_biUnion.mpr ⟨g, Finset.mem_univ _,
+      Finset.mem_image.mpr ⟨p, Finset.mem_univ _, rfl⟩⟩
 
 /-- Six source groups times three schedule phases. -/
+set_option maxRecDepth 4096 in
 theorem card_physicalComponentAddress :
     Fintype.card PhysicalComponentAddress = 18 := by
-  native_decide
+  decide
 
 /-- The source construction contains exactly six coarse groups. -/
 theorem card_source_groups : Fintype.card PhysicalSourceGroup = 6 := by
-  native_decide
+  decide
 
 /-- Exactly two coarse source groups are outer. -/
 theorem card_outer_source_groups :
     (Finset.univ.filter (fun g : PhysicalSourceGroup => g.isOuter)).card = 2 := by
-  native_decide
+  decide
 
 /-- Exactly four coarse source groups are inner. -/
 theorem card_inner_source_groups :
     (Finset.univ.filter (fun g : PhysicalSourceGroup => !g.isOuter)).card = 4 := by
-  native_decide
+  decide
 
 #print axioms PhysicalSourceGroup
 #print axioms PhysicalSourceGroup.effectiveOrder
