@@ -323,8 +323,8 @@ public sealed class StatementProjectionPilotTests
         Assert.Equal(1, exit);
         Assert.Equal(
             [
-                "pinned statement projection differs from live report: D5.Test.declaration",
-                "pinned statement projection is missing from live report: D5.Test.missing",
+                "pinned statement projection differs from live report: D5.Test.declaration (D5/Test.lean)",
+                "pinned statement projection is missing from live report: D5.Test.missing (D5/Test.lean)",
             ],
             error.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
     }
