@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PatternAvoidance/RotationSumPowerPatternAvoidance
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Powered rotation sums avoid 2143 iff at most one block stays nonidentity. -/
 
 import Mathlib.Algebra.BigOperators.Fin
