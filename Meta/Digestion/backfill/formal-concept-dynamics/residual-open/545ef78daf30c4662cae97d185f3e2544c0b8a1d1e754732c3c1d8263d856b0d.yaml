@@ -6,10 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
-  cover_disposition:
-    outcome: partial-closed
-    gids:
-      - D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.object_domain_expansion_creates_genuine_reopening
-    gaps:
-      - code: scribe-declaration-reference-missing
-        detail: D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.object_domain_expansion_creates_genuine_reopening
+  quarantine:
+    justification: "D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.object_domain_expansion_creates_genuine_reopening at D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.lean:293 is a concrete Bool/Real reopening witness: after unfolding ObjectDomainExpansionReopeningControl it fixes the current domain to {false}, the next domain to Set.univ, a particular Boolean-to-Real target, zero precision, and a constant readout. It is a special-case witness only. The gap is that no frozen public theorem states general object-domain change at the label's generality, and no frozen public theorem bridges such a change to the passive boundary."
+    reentry_condition: "Freeze a general object-domain-change theorem at the label's generality that bridges object-domain change to the passive boundary."
+    blocker_class: multi-clause-guard
