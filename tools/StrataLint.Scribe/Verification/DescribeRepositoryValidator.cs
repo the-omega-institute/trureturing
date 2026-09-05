@@ -136,6 +136,147 @@ internal static class DescribeRepositoryValidator
             .ToImmutableArray();
     }
 
+    internal static ImmutableArray<DescribeRedFinding> ValidateIncremental(
+        string repositoryRoot,
+        ImmutableArray<ScribeDocument> universe,
+        LeanAxiomReport? leanReport,
+        LibraryNoteCatalogInspection libraryInspection,
+        ProblemCandidateCatalogInspection problemInspection,
+        DocumentGraph graph,
+        DescribeCheckScope scope)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(libraryInspection);
+        ArgumentNullException.ThrowIfNull(problemInspection);
+        ArgumentNullException.ThrowIfNull(graph);
+        ArgumentNullException.ThrowIfNull(scope);
+        var generatedPaths = universe
+            .Select(static document => document.Header.MirrorBlueprint.Path.Value)
+            .ToHashSet(StringComparer.Ordinal);
+        var notes = libraryInspection.Notes
+            .GroupBy(static note => note.BibKey.Value, StringComparer.Ordinal)
+            .ToDictionary(
+                static group => group.Key,
+                static group => group.First(),
+                StringComparer.Ordinal);
+        var findings = ImmutableArray.CreateBuilder<DescribeRedFinding>();
+        if (scope.IncludeLibraryCatalogFindings)
+        {
+            findings.AddRange(libraryInspection.Findings.Select(static finding =>
+                new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
+        }
+        findings.AddRange(graph.Findings
+            .Where(finding => scope.DocumentGids.Contains(finding.Path))
+            .Select(static finding =>
+                new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
+
+        foreach (var document in scope.Documents)
+        {
+            ValidateGid(
+                repositoryRoot,
+                document.Header.Gid.Value,
+                document.Header.Gid,
+                generatedPaths,
+                leanReport,
+                findings,
+                "dangling-document-gid");
+            if (document.Header.MirrorEvidence is EvidenceMirror.Artifact artifact)
+            {
+                ValidateGid(
+                    repositoryRoot,
+                    document.Header.Gid.Value,
+                    artifact.Reference,
+                    generatedPaths,
+                    leanReport,
+                    findings,
+                    "dangling-evidence-gid");
+            }
+
+            foreach (var anchor in document.Header.Anchors.OfType<LiteratureAnchor>())
+            {
+                ValidateLiteratureAnchor(
+                    document.Header.Gid.Value,
+                    anchor,
+                    notes,
+                    findings);
+            }
+
+            ValidateBlocks(
+                repositoryRoot,
+                document.Header.Gid.Value,
+                document.Content,
+                generatedPaths,
+                notes,
+                leanReport,
+                findings);
+        }
+
+        foreach (var note in libraryInspection.Notes
+                     .Where(note => scope.LibraryPaths.Contains(note.RelativePath)))
+        {
+            foreach (var reference in note.StrataTouched)
+            {
+                ValidateGid(
+                    repositoryRoot,
+                    note.RelativePath,
+                    reference,
+                    generatedPaths,
+                    leanReport,
+                    findings,
+                    "dangling-library-gid");
+            }
+
+            if (note.Triage is LibraryTriage.Task task)
+            {
+                ValidateGid(
+                    repositoryRoot,
+                    note.RelativePath,
+                    task.Reference,
+                    generatedPaths,
+                    leanReport,
+                    findings,
+                    "dangling-library-gid");
+            }
+        }
+
+        if (scope.IncludeProblemCatalogFindings)
+        {
+            findings.AddRange(problemInspection.Findings.Select(static finding =>
+                new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
+        }
+        var candidates = problemInspection.Candidates
+            .Where(candidate => scope.ProblemPaths.Contains(candidate.RelativePath))
+            .ToImmutableArray();
+        var frozenState = candidates.IsEmpty && scope.FrozenStatePaths.IsEmpty
+            ? null
+            : scope.IsFull
+                ? LoadFrozenStateCatalog(repositoryRoot)
+                : LoadFrozenStateCatalog(repositoryRoot, candidates, scope.FrozenStatePaths);
+        foreach (var candidate in candidates)
+        {
+            foreach (var reference in candidate.MotivationGids)
+            {
+                ValidateProblemMotivationGid(
+                    repositoryRoot,
+                    candidate.RelativePath,
+                    reference,
+                    generatedPaths,
+                    leanReport,
+                    frozenState!,
+                    findings,
+                    "dangling-problem-gid");
+            }
+
+            ValidateProblemSource(candidate, notes, findings);
+        }
+
+        return findings
+            .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
+            .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
+            .ThenBy(static finding => finding.Message, StringComparer.Ordinal)
+            .ToImmutableArray();
+    }
+
     private static FrozenStateCatalog LoadFrozenStateCatalog(string repositoryRoot)
     {
         var stateRoot = new DirectoryInfo(Path.Combine(
@@ -161,6 +302,34 @@ internal static class DescribeRepositoryValidator
                     return new RawRepositoryEntry(relativePath, ImmutableArray.CreateRange(bytes));
                 })
             : [];
+        var snapshot = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries)) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new FormatException(failure.Message),
+        };
+        return FrozenStateCatalog.Load(snapshot);
+    }
+
+    private static FrozenStateCatalog LoadFrozenStateCatalog(
+        string repositoryRoot,
+        IEnumerable<ProblemCandidate> candidates,
+        IEnumerable<string> changedStatePaths)
+    {
+        var entries = candidates
+            .SelectMany(static candidate => candidate.MotivationGids)
+            .Where(static reference => reference.IsFormalDeclaration || reference.IsFormalModule)
+            .Select(static reference => reference.Path.Value)
+            .Distinct(StringComparer.Ordinal)
+            .Select(modulePath => "Golden/Frozen/state/" + modulePath + ".json")
+            .Concat(changedStatePaths)
+            .Distinct(StringComparer.Ordinal)
+            .Select(relativePath => (relativePath, fullPath: Path.Combine(repositoryRoot, relativePath)))
+            .Where(static item => File.Exists(item.fullPath))
+            .OrderBy(static item => item.relativePath, StringComparer.Ordinal)
+            .Select(static item => new RawRepositoryEntry(
+                item.relativePath,
+                ImmutableArray.CreateRange(File.ReadAllBytes(item.fullPath))));
         var snapshot = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries)) switch
         {
             SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,

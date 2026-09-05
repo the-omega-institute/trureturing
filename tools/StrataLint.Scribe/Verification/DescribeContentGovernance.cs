@@ -16,16 +16,28 @@ internal static class DescribeContentGovernance
     ];
 
     internal static ImmutableArray<DescribeRedFinding> ValidateSources(string repositoryRoot)
+        => ValidateSources(repositoryRoot, sourcePaths: null);
+
+    private static ImmutableArray<DescribeRedFinding> ValidateSources(
+        string repositoryRoot,
+        IEnumerable<string>? sourcePaths)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var blueprintRoot = Path.Combine(repositoryRoot, "Blueprint");
         if (!Directory.Exists(blueprintRoot)) return [];
 
         var findings = ImmutableArray.CreateBuilder<DescribeRedFinding>();
-        foreach (var path in Directory.EnumerateFiles(
-                     blueprintRoot,
-                     "*.scribe.cs",
-                     SearchOption.AllDirectories).Order(StringComparer.Ordinal))
+        var paths = sourcePaths is null
+            ? Directory.EnumerateFiles(
+                blueprintRoot,
+                "*.scribe.cs",
+                SearchOption.AllDirectories)
+            : sourcePaths
+                .Where(static path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
+                    && path.EndsWith(".scribe.cs", StringComparison.Ordinal))
+                .Select(path => Path.Combine(repositoryRoot, path))
+                .Where(File.Exists);
+        foreach (var path in paths.Order(StringComparer.Ordinal))
         {
             var relativePath = Path.GetRelativePath(repositoryRoot, path)
                 .Replace(Path.DirectorySeparatorChar, '/');
@@ -72,6 +84,26 @@ internal static class DescribeContentGovernance
     {
         var findings = ValidateSources(repositoryRoot).ToBuilder();
         ValidateCensus(repositoryRoot, documents, findings);
+        ValidateIndependentInventory(documents, reportStats, findings);
+        ValidateReferencedNoteLocators(repositoryRoot, documents, libraryInspection, findings);
+        return Order(findings);
+    }
+
+    internal static ImmutableArray<DescribeRedFinding> ValidateIncremental(
+        string repositoryRoot,
+        ImmutableArray<ScribeDocument> universe,
+        ImmutableArray<ScribeDocument> documents,
+        DescribeNodeStats reportStats,
+        LibraryNoteCatalogInspection libraryInspection,
+        DescribeCheckScope scope)
+    {
+        var findings = (scope.IsFull
+            ? ValidateSources(repositoryRoot)
+            : ValidateSources(repositoryRoot, scope.BlueprintSourcePaths)).ToBuilder();
+        if (scope.ValidateCensus)
+        {
+            ValidateCensus(repositoryRoot, universe, findings);
+        }
         ValidateIndependentInventory(documents, reportStats, findings);
         ValidateReferencedNoteLocators(repositoryRoot, documents, libraryInspection, findings);
         return Order(findings);

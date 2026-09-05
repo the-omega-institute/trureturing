@@ -135,12 +135,17 @@ public static class ScribeCli
 
         if (command == "describe-report")
         {
-            var options = arguments.Skip(1).ToArray();
-            var json = options.Contains("--json", StringComparer.Ordinal);
-            var describeCheck = options.Contains("--check", StringComparer.Ordinal);
-            if (options.Length > 2
-                || options.Distinct(StringComparer.Ordinal).Count() != options.Length
-                || options.Any(static option => option is not ("--json" or "--check")))
+            var json = arguments.Count > 1
+                && string.Equals(arguments[1], "--json", StringComparison.Ordinal);
+            var checkOffset = json ? 2 : 1;
+            var describeCheck = arguments.Count > checkOffset
+                && string.Equals(arguments[checkOffset], "--check", StringComparison.Ordinal);
+            var producerInvocation = arguments.Count == (json ? 2 : 1);
+            var checkInvocation = describeCheck
+                && arguments.Count == checkOffset + 3
+                && string.Equals(arguments[checkOffset + 1], "--paths-from", StringComparison.Ordinal)
+                && !string.IsNullOrWhiteSpace(arguments[checkOffset + 2]);
+            if (!producerInvocation && !checkInvocation)
             {
                 error.WriteLine(Usage);
                 return 2;
@@ -152,11 +157,15 @@ public static class ScribeCli
                 var reportMaterial = leanReport
                     ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
                 var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
-                var report = DescribeReport.Build(
-                    repositoryRoot,
-                    definitions.Select(static definition => definition.Document),
-                    reportMaterial,
-                    validateContentGovernance: describeCheck);
+                var documents = definitions.Select(static definition => definition.Document);
+                var report = describeCheck
+                    ? DescribeReport.BuildIncremental(
+                        repositoryRoot,
+                        documents,
+                        ReadPaths(arguments[checkOffset + 2], input),
+                        reportMaterial,
+                        validateContentGovernance: true)
+                    : DescribeReport.Build(repositoryRoot, documents, reportMaterial);
                 output.Write(json
                     ? DescribeReportWriter.WriteJson(report)
                     : DescribeReportWriter.WriteText(report));
@@ -211,7 +220,8 @@ public static class ScribeCli
 
     private const string Usage =
         "usage: dotnet run --project tools/StrataLint.Scribe.Documents -- "
-        + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
+        + "emit|emit-values|filemap [--check] | describe-report [--json] "
+        + "| describe-report [--json] --check --paths-from <file|-> "
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> --paths-from <file|->";
 
