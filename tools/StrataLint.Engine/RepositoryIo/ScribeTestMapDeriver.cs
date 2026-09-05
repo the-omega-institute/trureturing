@@ -51,11 +51,9 @@ internal static class ScribeTestMapDeriver
 
     private static bool IsTrackedInput(string path)
     {
-        var separator = path.LastIndexOf('/');
-        var fileName = path[(separator + 1)..];
         return path.EndsWith(".cs", StringComparison.Ordinal)
             || path.EndsWith(".csproj", StringComparison.Ordinal)
-            || fileName == "packages.lock.json";
+            || path.EndsWith("packages.lock.json", StringComparison.Ordinal);
     }
 
     internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot)

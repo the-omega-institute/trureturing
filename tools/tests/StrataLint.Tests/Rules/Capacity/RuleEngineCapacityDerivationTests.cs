@@ -52,6 +52,13 @@ public sealed class RuleEngineCapacityDerivationTests
         Assert.True(ScribeTestMapDeriver.IsDerivationInput(path));
     }
 
+    [Fact]
+    public void ScribeDerivationInputIncludesPrefixedLockFileName()
+    {
+        Assert.True(ScribeTestMapDeriver.IsDerivationInput(
+            "tools/tests/Synthetic.Tests/vendor-packages.lock.json"));
+    }
+
     [Theory]
     [InlineData("D5/S0/Carrier/Ring.lean")]
     [InlineData("Blueprint/D5/S0/Carrier/Ring.md")]
