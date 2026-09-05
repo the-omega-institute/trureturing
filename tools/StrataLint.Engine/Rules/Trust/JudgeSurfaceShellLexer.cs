@@ -53,6 +53,9 @@ internal static class JudgeSurfaceShellLexer
         // Set only when an UNQUOTED `>`/`<` starts (or extends a descriptor prefix of) the current
         // word; a quoted or escaped `>` is an ordinary argument (review round 6: `-d '>' HEAD^1`).
         var wordIsRedirection = false;
+        // Set when any quoted or escaped text entered the current word: a quoted `'2'` before `>`
+        // is a path, not a descriptor (review round 7: `-d '2'>out HEAD^1`).
+        var wordHasQuotedContent = false;
 
         void EndWord()
         {
@@ -66,6 +69,7 @@ internal static class JudgeSurfaceShellLexer
             word.Clear();
             inWord = false;
             wordIsRedirection = false;
+            wordHasQuotedContent = false;
             if (pendingRedirectionTarget)
             {
                 pendingRedirectionTarget = false;
@@ -108,6 +112,7 @@ internal static class JudgeSurfaceShellLexer
 
                     word.Append(text, index + 1, close - index - 1);
                     inWord = true;
+                    wordHasQuotedContent = true;
                     index = close + 1;
                     continue;
                 }
@@ -116,6 +121,7 @@ internal static class JudgeSurfaceShellLexer
                 {
                     index++;
                     inWord = true;
+                    wordHasQuotedContent = true;
                     while (index < end && text[index] != '"')
                     {
                         if (text[index] == '\\' && index + 1 < end)
@@ -150,6 +156,7 @@ internal static class JudgeSurfaceShellLexer
                     {
                         word.Append(text[index + 1]);
                         inWord = true;
+                        wordHasQuotedContent = true;
                     }
 
                     index += 2;
@@ -196,7 +203,7 @@ internal static class JudgeSurfaceShellLexer
                 case '<':
                     // Shell splits `HEAD>out` into `HEAD` and `>out`; only a descriptor prefix
                     // (`2>`, `&>`) or a repeated operator (`>>`) stays glued to the operator.
-                    if (inWord && !(wordIsRedirection || IsAllDigits(word)))
+                    if (inWord && !(wordIsRedirection || (IsAllDigits(word) && !wordHasQuotedContent)))
                     {
                         EndWord();
                     }

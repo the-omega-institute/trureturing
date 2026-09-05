@@ -88,6 +88,12 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("! git show HEAD^1:tools/scripts/workflow/x.sh >out")]
     [InlineData("cat <(git show HEAD^1:tools/scripts/workflow/x.sh >out)")]
     [InlineData("git worktree add -- -tmp HEAD^1")]
+    [InlineData("printf '%s\\n' 'contents HEAD^1:tools/scripts/workflow/x.sh' | git cat-file --batch-command > out")]
+    [InlineData("git cat-file --batch-command='%(objectname)' < in")]
+    [InlineData("git worktree add -d '2'>out HEAD^1")]
+    [InlineData("git worktree add -d \\2>out HEAD^1")]
+    [InlineData("if git show HEAD^1:tools/scripts/workflow/x.sh >/dev/null; then :; fi")]
+    [InlineData("while git show HEAD^1:tools/scripts/workflow/x.sh; do :; done")]
     public void MaterializingAnotherRevisionIsRejected(string line)
     {
         var finding = Assert.Single(Evaluate(ScriptPath, line + "\n"));
@@ -156,6 +162,9 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git worktree add -- -tmp HEAD")]
     [InlineData("X=1 git rev-parse HEAD^1")]
     [InlineData("cat <(git show HEAD:tools/scripts/workflow/x.sh)")]
+    [InlineData("git worktree add -d '2'>out HEAD")]
+    [InlineData("git worktree add -d 2>out HEAD")]
+    [InlineData("if git rev-parse HEAD^1; then :; fi")]
     public void ReadingHeadOrMetadataIsAllowed(string line)
     {
         Assert.Empty(Evaluate(ScriptPath, line + "\n"));
@@ -206,6 +215,11 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("      - run: git show HEAD^1:tools/scripts/workflow/x.sh > out")]
     [InlineData("        run: git worktree add /tmp/h \"$BASE\"")]
     [InlineData("      - run: \"git cat-file -p $oid\"")]
+    [InlineData("        run: \"git show HEAD^1:tools/scripts/workflow/x.sh > out\" # explanation")]
+    [InlineData("        run: 'git show HEAD^1:tools/scripts/workflow/x.sh' # note")]
+    [InlineData("        \"run\": git show HEAD^1:tools/scripts/workflow/x.sh > out")]
+    [InlineData("        run: \"\\x67it show HEAD^1:tools/scripts/workflow/x.sh > out\"")]
+    [InlineData("      - run: \"git\\u0020show\\u0020HEAD^1:tools/scripts/workflow/x.sh >out\"")]
     public void WorkflowRunScalarsAreShell(string line)
     {
         var finding = Assert.Single(Evaluate(WorkflowPath, line + "\n"));
@@ -218,6 +232,7 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("      - name: show HEAD^1:tools/scripts/workflow/x.sh in a step name")]
     [InlineData("          git show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("      # ref: ${{ github.base_ref }} — a comment, not a checkout")]
+    [InlineData("        run: \"git show HEAD:tools/scripts/workflow/x.sh\" # ok")]
     public void WorkflowLinesWithoutAMaterializationAreAllowed(string line)
     {
         Assert.Empty(Evaluate(WorkflowPath, line + "\n"));
@@ -231,6 +246,22 @@ public sealed class JudgeSurfaceRevisionRuleTests
             + string.Concat(Enumerable.Repeat(")", JudgeSurfaceShellLexer.MaximumDepth + 2));
         var finding = Assert.Single(Evaluate(ScriptPath, "x=" + nested + "\n"));
         Assert.Contains("nesting deeper", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ContinuationSplitInsideAWordJoinsWithoutASeparator()
+    {
+        var finding = Assert.Single(
+            Evaluate(ScriptPath, "git sh\\\n" + "ow HEAD^1:tools/scripts/workflow/x.sh > out\n"));
+        Assert.Contains("line 1", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FoldedRunBlockIsOneShellCommand()
+    {
+        const string workflow = "      - run: >\n          git\n          show HEAD^1:tools/scripts/workflow/x.sh > out\n      - run: echo done\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("line 1", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
