@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:876b7601d7d1eaf8966b1616ec60909e5e0d509a0cb21bed583c51db7afc3b1c
+  normalized_sha256: sha256:876b7601d7d1eaf8966b1616ec60909e5e0d509a0cb21bed583c51db7afc3b1c
+cas_ref: sha256:876b7601d7d1eaf8966b1616ec60909e5e0d509a0cb21bed583c51db7afc3b1c
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `* 价值权重；` is a bare doctrine label under the parent necessity clause `任何确定裁判都必须加入`; it remains uncarried. Near miss D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement declares `valueDoctrine : Action -> Value` (D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.lean:31-40) and lists doctrine inequality only as one optional leaf of an eight-way disagreement disjunction (D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.lean:45-85). It proves no necessity or operative role and exposes no scalar, order, coefficient, aggregation, or weighting structure: reviewer countermodels are a right-unique decisioner that ignores the field and `Value = Unit`, under which the theorem remains true with no value weighting represented. Supporting near miss D5/S3/ConceptDynamics/DecisionValue/NormativeScaleChoiceReversal.normative_scale_choice_reversal states that positive doctrine-indexed utility rescalings preserve each doctrine's strict ranking while reversing the probability-weighted aggregate choice (D5/S3/ConceptDynamics/DecisionValue/NormativeScaleChoiceReversal.lean:30-81); it has weighting semantics but no result making a value weight necessary for deterministic adjudication of a nonunique public-law fiber."
+    reentry_condition: "Freeze a theorem whose public statement makes value-weight input necessary and operative for deterministic adjudication of a nonunique public-law fiber, then re-cover this child."
+    blocker_class: multi-clause-guard

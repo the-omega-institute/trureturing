@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:a00dd6d457d565a52bf2e0e7fcea7ad5e27e172bcb84168319c365ad1cedd436
+  normalized_sha256: sha256:a00dd6d457d565a52bf2e0e7fcea7ad5e27e172bcb84168319c365ad1cedd436
+cas_ref: sha256:a00dd6d457d565a52bf2e0e7fcea7ad5e27e172bcb84168319c365ad1cedd436
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `* 随机选择；` is a bare doctrine label under the parent necessity clause `任何确定裁判都必须加入`; it remains uncarried. Near miss D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement declares `randomSeed : Seed` (D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.lean:31-40) and lists seed inequality only as one optional leaf of an eight-way disagreement disjunction (D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.lean:45-85). It proves no necessity or operative role and has no random selector, distribution, or sampling law: reviewer countermodels are a right-unique decisioner that ignores the field and `Seed = Unit`, under which the theorem remains true with no randomness represented. Supporting near miss D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique states that a least-Boolean-order tie-breaker selects uniquely from a nonunique optimizer set (D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.lean:28-49); it has no randomness or sampling structure and no doctrine-necessity result. Supporting near miss D5/S3/ConceptDynamics/Attribution/SymmetryBreakingSourceClassification.fixed_symmetry_obstruction_and_source_classification declares `randomIndex` among four symmetry-breaking source classes and classifies a member of a nonempty source set (D5/S3/ConceptDynamics/Attribution/SymmetryBreakingSourceClassification.lean:27-56); it defines a taxonomy, not a random selector or sampling law, and does not make random choice necessary for deterministic adjudication of a nonunique public-law fiber."
+    reentry_condition: "Freeze a theorem whose public statement makes random-choice input necessary and operative for deterministic adjudication of a nonunique public-law fiber, then re-cover this child."
+    blocker_class: multi-clause-guard
