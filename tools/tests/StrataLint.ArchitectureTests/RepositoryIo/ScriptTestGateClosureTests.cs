@@ -27,7 +27,7 @@ public sealed partial class ScriptTestGateClosureTests
             typeof(StrataLint.TestSupport.RepositoryRelativePath).Name);
         Assert.Equal(
             ScriptTestInputDeriver.ScriptHarnessScratchTypeName,
-            typeof(StrataLint.Tests.ScriptHarnessScratch).Name);
+            typeof(StrataLint.TestSupport.ScriptHarnessScratch).Name);
         Assert.Equal(
             ScriptTestInputDeriver.ProcessRunnerTypeName,
             typeof(StrataLint.TestSupport.TestProcessRunner).Name);
