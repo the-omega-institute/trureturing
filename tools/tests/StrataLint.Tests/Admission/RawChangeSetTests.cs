@@ -12,15 +12,10 @@ public sealed class RawChangeSetTests
             ("D5/Alpha.lean", RawChangeKind.Added),
             ("D5/Beta.lean", RawChangeKind.Deleted),
         ]);
-        var containsPath = typeof(RawChangeSet).GetMethod(
-            "ContainsPath",
-            [typeof(string)]);
-        Assert.NotNull(containsPath);
-
-        Assert.True(Contains("D5/Alpha.lean"));
-        Assert.True(Contains("D5/Beta.lean"));
-        Assert.False(Contains("D5/Missing.lean"));
-        Assert.False(Contains("d5/Alpha.lean"));
+        Assert.True(changes.ContainsPath("D5/Alpha.lean"));
+        Assert.True(changes.ContainsPath("D5/Beta.lean"));
+        Assert.False(changes.ContainsPath("D5/Missing.lean"));
+        Assert.False(changes.ContainsPath("d5/Alpha.lean"));
         Assert.Equal(
             [RawChangeKind.Added, RawChangeKind.Deleted],
             changes.Entries.Select(static entry => entry.Kind));
@@ -30,8 +25,5 @@ public sealed class RawChangeSetTests
         Assert.Equal(
             ["D5/Alpha.lean", "D5/Beta.lean"],
             changes.Paths.Select(static path => path.Value));
-
-        bool Contains(string path) =>
-            Assert.IsType<bool>(containsPath.Invoke(changes, [path]));
     }
 }
