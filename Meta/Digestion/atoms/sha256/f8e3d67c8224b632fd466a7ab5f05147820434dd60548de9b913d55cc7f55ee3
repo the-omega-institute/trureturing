@@ -1,0 +1,119 @@
+## 定理 54.1　完整恢复、补侧替换与参照解耦的等价
+
+下列条件等价：
+
+1. 存在式（54.1）的恢复通道；
+2. 存在固定态 \(\sigma_{B_n}\)，使
+
+   $$
+   \boxed{
+   \mathcal C_n(\rho)=\sigma_{B_n}
+   \qquad\forall\rho;
+   }
+   \tag{54.2}
+   $$
+3. 对最大纠缠测试态，
+
+   $$
+   \boxed{
+   I(A:B_n)=0.
+   }
+   \tag{54.3}
+   $$
+
+### 证明
+
+**\(2\Rightarrow1\)。**
+
+写：
+
+$$
+\sigma_{B_n}
+=
+\sum_a\lambda_a|a\rangle\langle a|,
+\qquad
+\lambda_a>0.
+$$
+
+对输入基底 \(|i\rangle\)，将编码展开为：
+
+$$
+V_n|i\rangle
+=
+\sum_a\sqrt{\lambda_a}\,
+|v_{ia}\rangle_{R^n}|a\rangle_{B_n}.
+$$
+
+条件（54.2）不仅约束对角输入，也通过线性性和极化恒等式约束所有 \(|i\rangle\langle j|\)。因此：
+
+$$
+\langle v_{jb}|v_{ia}\rangle
+=
+\delta_{ij}\delta_{ab}.
+$$
+
+所以可以在 \(R^n\) 的相应支持上定义等距解码：
+
+$$
+|v_{ia}\rangle\longmapsto|i\rangle_L|a\rangle_G.
+$$
+
+对辅助寄存器 \(G\) 取偏迹，并在支持之外任意补成保迹操作，即得到恢复通道。
+
+**\(1\Rightarrow3\)。**
+
+恢复后：
+
+$$
+I(A:L)=2\log d.
+$$
+
+由量子数据处理不等式：
+
+$$
+2\log d
+\le I(A:R^n).
+$$
+
+但定理 53.1 给出：
+
+$$
+I(A:R^n)\le2\log d.
+$$
+
+所以：
+
+$$
+I(A:B_n)=0.
+$$
+
+**\(3\Rightarrow2\)。**
+
+零互信息意味着：
+
+$$
+\rho_{AB_n}
+=
+\frac{I_A}{d}\otimes\sigma_{B_n}.
+$$
+
+这是补通道的归一化 Choi 态。比较其全部矩阵块，得到：
+
+$$
+\mathcal C_n(|i\rangle\langle j|)
+=
+\delta_{ij}\sigma_{B_n}.
+$$
+
+由线性性即得式（54.2）。∎
+
+这是量子纠错中恢复与互补通道信息之间的标准关系；上述证明将其直接写成当前内外接口模型。([arXiv][3])
+
+### 结论
+
+**当外侧已经能够完整恢复任意原输入时，补侧不可能还独立保留另一份完整的同一量子信息。**
+
+可以共享某些经典记录，却不能把任意未知量子态复制成两个彼此独立的完整观察者。
+
+---
+

@@ -1,0 +1,69 @@
+## 定理 34.1　时间参数可区分性的缩放
+
+令
+
+$$
+(\Delta H_C)^2
+=
+\langle H_C^2\rangle-\langle H_C\rangle^2.
+$$
+
+关于固有时间和参照时间的纯态量子 Fisher 信息分别为
+
+$$
+\boxed{
+\mathcal F_\tau
+=
+\frac{4(\Delta H_C)^2}{\hbar^2},
+}
+\tag{34.2}
+$$
+
+$$
+\boxed{
+\mathcal F_T
+=
+f(r)\mathcal F_\tau.
+}
+\tag{34.3}
+$$
+
+若 \(\Delta H_C>0\)，则
+
+$$
+\boxed{
+\frac{\mathcal F_T}{\mathcal F_\tau}
+=
+-\frac{\dot r_+\dot r_-}{c^2}
+=
+-\frac{r^2}{4c^2}\theta_+\theta_-.
+}
+\tag{34.4}
+$$
+
+### 证明
+
+纯态族的量子 Fisher 信息为
+
+$$
+\mathcal F_T
+=
+4\left(
+\langle\partial_T\chi|\partial_T\chi\rangle
+-
+|\langle\chi|\partial_T\chi\rangle|^2
+\right).
+$$
+
+由
+
+$$
+\partial_T|\chi\rangle
+=
+-\frac{i\sqrt f}{\hbar}H_C|\chi\rangle,
+$$
+
+得到式（34.3）。固有时间公式同理。再应用定理 32.1 与 33.1。∎
+
+量子 Fisher 信息与酉参数生成元的方差关系，是量子计量中的标准结果；这里的新组合是将其与同一几何中的径向特征和球面膨胀率对应。([arXiv][4])
+

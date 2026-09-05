@@ -1,0 +1,83 @@
+## 定理 3：禁邻配分函数的正行列式实现
+
+$$
+\boxed{
+C_w(v)=\det(I_d+vL_w^{\mathsf T}L_w).
+}
+\tag{11}
+$$
+
+因此，\(C_w\) 的全部零点都为负实数。
+
+### 证明
+
+按路径最后一个位置是否占据，配分函数满足：
+
+$$
+C_m(v)=C_{m-1}(v)+w_mvC_{m-2}(v).
+$$
+
+同样按路径末端展开特征行列式，可得：
+
+$$
+\det(\lambda I_{2d}-T_w)
+=
+\lambda^{2d}C_w(-\lambda^{-2}).
+$$
+
+另一方面，由式（10）：
+
+$$
+\det(\lambda I_{2d}-T_w)
+=
+\det(\lambda^2I_d-L_w^{\mathsf T}L_w).
+$$
+
+比较两个多项式恒等式，即得式（11）。
+
+因为：
+
+$$
+L_w^{\mathsf T}L_w\ge0,
+$$
+
+设其非零本征值为 \(\theta_j>0\)，则：
+
+$$
+C_w(v)=\prod_j(1+\theta_jv).
+$$
+
+零点均为 \(-1/\theta_j<0\)。证毕。
+
+这是加权路径匹配多项式实根性的具体证明；更一般的匹配模型零点定位属于 Heilmann–Lieb 理论。([Princeton University][4])
+
+### 量子观察含义
+
+对于 \(r>0\)，可以制备：
+
+$$
+|\Omega_r\rangle
+=
+\frac1{\sqrt{C_w(r)}}
+\sum_{b\in\Omega_{2d-1}}
+r^{|b|/2}
+\prod_jw_j^{b_j/2}|b\rangle.
+$$
+
+令 \(\widehat N|b\rangle=|b||b\rangle\)，则：
+
+$$
+\boxed{
+\langle\Omega_r,e^{i\theta\widehat N}\Omega_r\rangle
+=
+\frac{C_w(re^{i\theta})}{C_w(r)}.
+}
+\tag{12}
+$$
+
+所以，若能证明 \(C_w=P_d\)，这就是一个读出实际 Jensen 多项式的有限量子观察模型。
+
+但应区分两种空间：禁邻构型空间有 \(F_{2d+1}\) 维，单粒子隧穿矩阵 \(T_w\) 有 \(2d\) 维。**配分函数恒等式不等于两个完整物理系统酉等价。**
+
+---
+

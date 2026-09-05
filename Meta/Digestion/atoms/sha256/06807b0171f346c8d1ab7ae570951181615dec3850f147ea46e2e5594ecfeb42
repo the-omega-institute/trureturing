@@ -1,0 +1,62 @@
+# 结论
+
+前一轮建立了：
+
+$$
+\text{动态响应}
+\longrightarrow
+\text{隐藏记忆与有效传播}.
+$$
+
+本轮进一步证明：
+
+$$
+\boxed{
+\text{有效传播并不自动构成共同物理时空。}
+}
+$$
+
+共同几何必须满足两层相容性：
+
+$$
+\boxed{
+\text{不同内部模的二阶传播相容},
+}
+$$
+
+以及
+
+$$
+\boxed{
+\text{隐藏模式留下的高阶响应，
+仍与同一几何变量相容}.
+}
+$$
+
+最重要的具体结果是：
+
+$$
+\boxed{
+A_2
+=
+\sum_a
+\frac{\lambda_a^2}{\Omega_a^6}
+(c_a^2-c_*^2)^2
+\ge0.
+}
+$$
+
+在所研究的模型族里，平均速度可以通过调参一致，但这一正平方和不会因不同模式的正负失配而相消。它使“所有探针共享一个时空”成为一项可以证明、估计并被实验否定的结构命题。
+
+因此，量子观察者理论可以再收紧为：
+
+> **观察者并不任意选择一个几何来解释数据；它必须检验所有允许的干预、传播与钟比较，能否共同通过同一个几何结构因子化。**
+
+**共同物理时空，就是这种跨探针、跨频率、跨观察接口的一致性结构。**在一致性成立的范围内，几何是有效且可预测的；在高阶响应揭示失配的范围内，理论必须保留更多量子结构，而不能继续把它们压缩成同一张经典时空。
+
+[1]: https://arxiv.org/abs/gr-qc/0111059?utm_source=chatgpt.com "Refringence, field theory, and normal modes"
+[2]: https://arxiv.org/abs/gr-qc/0510125?utm_source=chatgpt.com "Analogue quantum gravity phenomenology from a two-component Bose-Einstein condensate"
+[3]: https://arxiv.org/abs/1011.4411?utm_source=chatgpt.com "Emergent gravitational dynamics from multi-BEC hydrodynamics?"
+[4]: https://arxiv.org/abs/1205.0710?utm_source=chatgpt.com "Heavy fields, reduced speeds of sound and decoupling during inflation"
+[5]: https://arxiv.org/abs/hep-th/9807099?utm_source=chatgpt.com "Towards a Relativistic KMS Condition"
+[6]: https://arxiv.org/abs/1403.7377?utm_source=chatgpt.com "The Confrontation between General Relativity and Experiment"

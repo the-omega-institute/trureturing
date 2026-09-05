@@ -1,0 +1,44 @@
+## 定义 C1：导数多项式与回返分子
+
+对 \(d\ge2\)，定义：
+
+$$
+\boxed{
+r_d(x)=\frac1d q_d'(x),
+\qquad
+\mu_d=\frac{a_1}{d}.
+}
+$$
+
+再定义：
+
+$$
+\boxed{
+n_d(x)=(x-\mu_d)r_d(x)-q_d(x).
+}
+\tag{C3}
+$$
+
+因为最高两阶恰好抵消：
+
+$$
+\deg r_d=d-1,
+\qquad
+\deg n_d\le d-2.
+$$
+
+定义有理函数：
+
+$$
+\boxed{
+\Sigma_d(x)
+=
+\frac{n_d(x)}{r_d(x)}
+=
+x-\mu_d-\frac{dq_d(x)}{q_d'(x)}.
+}
+\tag{C4}
+$$
+
+所有对象都能由 \(a_1,\ldots,a_d\) 直接计算，不需要根。
+

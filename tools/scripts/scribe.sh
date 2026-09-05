@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
-PROJECT="$ROOT/tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+PROJECT="$ROOT/tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
 CLI_PROJECT="$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj"
 LEAN_REPORT="$ROOT/.lake/build/stratalint/raw-lean-report.json"
 CONSUMER="$ROOT/tools/scripts/report/report-consumer.sh"

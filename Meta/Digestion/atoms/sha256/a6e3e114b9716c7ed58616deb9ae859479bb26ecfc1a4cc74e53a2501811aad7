@@ -1,0 +1,4 @@
+## 二　G-h-2 具名缺口(open,不派实施):ζ 分离——在 φ²·(G-c 球)上一致地 ‖ζ‖ ≥ 1/100
+
+**缺口**:`riemannZeta_phi_sq_germ_ball_norm_ge : ∀ w ∈ Metric.ball c (1 / 10 ^ 8), (1 / 100 : ℝ) ≤ ‖riemannZeta (((Real.goldenRatio ^ 2 : ℝ) : ℂ) * w)‖`(φ²c ≈ 0.623 + 13.76 i;面板席位自报 ‖ζ(φ²c)‖ ≈ 0.287,ASSUMED-UNVERIFIED),从而认证零点的延拓 germ 零点不来自 ζ(φ²·);φ³ 因子在 Re > 1 上由欧拉积非零(廉价)。**阻塞**:钉版 Mathlib 只有一阶 Euler–Maclaurin 表示与 eta 交错级数,无带显式余项、可在 0 < Re s < 1 的复盒上认证的 ζ 求值器;须先建认证求值基础设施(与 L2b 同类,但对象是 ζ 而非有限指数和)。**处置**:先派一席探针评估在钉版工具链内建该求值器的成本与 API,产出 open 读数后再决定是否预登记为义务。
+

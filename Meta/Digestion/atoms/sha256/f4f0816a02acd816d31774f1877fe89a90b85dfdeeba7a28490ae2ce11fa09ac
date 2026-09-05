@@ -1,0 +1,65 @@
+## 收束
+
+这一轮最实质的推进，是把“整体关系是否正”变成了三种可互相校验的形式：
+
+$$
+\boxed{
+\text{实际系数的 Bézout 矩阵}
+\longleftrightarrow
+\text{有限复频率观测核}
+\longleftrightarrow
+\text{正谱回返实现}.
+}
+$$
+
+有限层上：
+
+$$
+\boxed{
+n_-(G_d)
+=
+q_d\text{ 的非实共轭根对数}.
+}
+$$
+
+无限极限中：
+
+$$
+\boxed{
+d\Sigma_d(z)\longrightarrow
+\frac{D'(-1/z)}{D(-1/z)}-a_1.
+}
+$$
+
+而欧拉常数固定：
+
+$$
+\boxed{
+-\mathfrak S(-4)=a_1-c.
+}
+$$
+
+因此，你所说的“整体不能被某个局部观察者替代”，现在具有一个很具体的数学版本：
+
+> **每个读数都正常、任意两项都相容，仍然可能不存在容纳全部读数的同一个正结构；但这种失败并非不可言说，它会留下一个有限负二次型，以及无法任意缩小的拟合误差。**
+
+目前尚未证明实际 \(\mathfrak S\) 的正谱表示存在，也没有找到实际负证书。真正需要攻克的算术问题已经集中为：
+
+$$
+\boxed{
+\text{为什么实际 ξ 的高阶回返关系，
+能够——或者不能够——共享同一份正谱测度？}
+}
+$$
+
+继续增加量子空间、黄金编码或参考系，本身不会回答它；只有当这些结构能够给出这个指定回返函数的**实际正分解或严格负测试**时，它们才开始承担零点定位的证明。
+
+[1]: https://arxiv.org/abs/1902.07321?utm_source=chatgpt.com "Jensen polynomials for the Riemann zeta function and other sequences"
+[2]: https://link.springer.com/article/10.1007/s00020-020-02600-w?utm_source=chatgpt.com "Generalized Schur–Nevanlinna functions and their realizations | Integral Equations and Operator Theory | Springer Nature Link"
+[3]: https://www.cambridge.org/core/journals/mathematical-gazette/article/10506-the-hermitesylvester-criterion-for-realrooted-polynomials/7F5C5395F235F18A21A6816C0A78799C?utm_source=chatgpt.com "105.06 The Hermite-Sylvester criterion for real-rooted polynomials | The Mathematical Gazette | Cambridge Core"
+[4]: https://arxiv.org/abs/2105.02058?utm_source=chatgpt.com "The Feshbach-Schur map and perturbation theory"
+[5]: https://arxiv.org/abs/1812.08319?utm_source=chatgpt.com "Quasi-Herglotz functions and convex optimization"
+[6]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[7]: https://dlmf.nist.gov/25.2 "DLMF: §25.2 Definition and Expansions ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+这次可以把前文再推进三步。
+

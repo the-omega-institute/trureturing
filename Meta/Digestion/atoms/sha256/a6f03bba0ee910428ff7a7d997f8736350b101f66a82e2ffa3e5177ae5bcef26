@@ -1,0 +1,29 @@
+# 十一、与项目的准确连接
+
+本轮沿用上一轮固定的 `08e91c3373…` 快照，核对了两个直接相关模块。
+
+`JensenPolynomialObstruction.lean` 已定义 Jensen 多项式与实根谓词，但将两条 Jensen–Pólya 分析桥作为显式前件。它没有无条件证明实际 ξ 的全阶双曲性。
+
+`FiniteZeckendorfEulerIdentity.lean` 已证明合法 Fibonacci 名字与有限整数区间的双射，以及相应数值生成函数的运输。它不自动包含本轮任意正权禁邻配分函数与 Jacobi 矩阵的构造。
+
+因此，本轮给出的具体接口是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际 theta 矩}
+&\longrightarrow P_d\\
+&\longrightarrow q_d\text{ 的 Newton 读数}\\
+&\longrightarrow G_d\\
+&\xrightarrow{\,G_d>0\,}
+K_d\\
+&\longrightarrow L_d\\
+&\longrightarrow\text{正权 Fibonacci 链与隧穿矩阵}.
+\end{aligned}
+}
+$$
+
+箭头中的条件 \(G_d>0\) 不能删除。
+
+---
+

@@ -1,0 +1,37 @@
+**\(2\Rightarrow1\)。**
+
+写：
+
+$$
+\sigma_{B_n}
+=
+\sum_a\lambda_a|a\rangle\langle a|,
+\qquad
+\lambda_a>0.
+$$
+
+对输入基底 \(|i\rangle\)，将编码展开为：
+
+$$
+V_n|i\rangle
+=
+\sum_a\sqrt{\lambda_a}\,
+|v_{ia}\rangle_{R^n}|a\rangle_{B_n}.
+$$
+
+条件（54.2）不仅约束对角输入，也通过线性性和极化恒等式约束所有 \(|i\rangle\langle j|\)。因此：
+
+$$
+\langle v_{jb}|v_{ia}\rangle
+=
+\delta_{ij}\delta_{ab}.
+$$
+
+所以可以在 \(R^n\) 的相应支持上定义等距解码：
+
+$$
+|v_{ia}\rangle\longmapsto|i\rangle_L|a\rangle_G.
+$$
+
+对辅助寄存器 \(G\) 取偏迹，并在支持之外任意补成保迹操作，即得到恢复通道。
+

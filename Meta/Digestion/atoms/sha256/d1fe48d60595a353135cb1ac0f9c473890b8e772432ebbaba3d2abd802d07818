@@ -1,0 +1,54 @@
+### 与上一轮耦合的关系
+
+当 \(r_d\) 有互异实根 \(t_1,\ldots,t_{d-1}\) 时：
+
+$$
+\boxed{
+\Sigma_d(x)=
+\sum_{i=1}^{d-1}\frac{\eta_{d,i}}{x-t_i},
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\eta_{d,i}
+=
+-\frac{d\,q_d(t_i)}{q_d''(t_i)}.
+}
+\tag{C5}
+$$
+
+若这些 \(\eta_{d,i}\ge0\)，它们才可以解释为普通正内积中的耦合平方：
+
+$$
+\Sigma_d(z)
+=
+g_d^\dagger(zI-C_d)^{-1}g_d.
+$$
+
+这里 \(C_d=\operatorname{diag}(t_i)\)，\(|g_{d,i}|^2=\eta_{d,i}\)。
+
+并且当 \(\Im z>0\)：
+
+$$
+\boxed{
+\Im\Sigma_d(z)
+=
+-(\Im z)
+\sum_i\frac{\eta_{d,i}}{|z-t_i|^2}
+\le0.
+}
+\tag{C6}
+$$
+
+所以，“所有耦合平方非负”同时也是这份指定回返函数的半平面符号约束。
+
+反之，若某个 \(\eta_{d,i}<0\)，则在 \(t_i\) 附近：
+
+$$
+\Im\Sigma_d(t_i+i\varepsilon)
+\sim-\frac{\eta_{d,i}}{\varepsilon}>0.
+$$
+

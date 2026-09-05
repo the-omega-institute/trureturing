@@ -1,0 +1,54 @@
+# 结论
+
+前文得到的是：
+
+$$
+\text{静态钟速响应}
+\longrightarrow
+K^{-1}.
+$$
+
+本增订进一步得到：
+
+$$
+\boxed{
+\text{完整动态响应}
+\longrightarrow
+\text{恢复结构、惯性结构与隐藏记忆}.
+}
+$$
+
+在明确平衡条件下，又得到：
+
+$$
+\boxed{
+\text{同一响应谱}
+\longrightarrow
+\text{量子结构涨落}
+\longrightarrow
+\text{观察者钟的相干变化}.
+}
+$$
+
+对具有局域传播实现的模型，隐藏结构的消去还能产生：
+
+$$
+\boxed{
+\text{有效惯性修正}
+\longrightarrow
+\text{有效传播速度}
+\longrightarrow
+\text{受实验窗口限制的几何描述}.
+}
+$$
+
+因此，当前理论的进一步推进不在于把“信息逃逸”统一改名为引力，而在于建立了一个更严格的事实：
+
+> **观察者所见的静态关系、动态记忆、量子噪声和有效传播，并不是可以任意拼接的四套解释；在同一个明确的量子实现中，它们受到共同谱结构的约束。**
+
+这使“由量子观察者重建时空”获得了一条新的可核查路径：**先重建实验响应，再检验其最小物理实现；由实现推导波动与传播，最后判断这些传播是否允许共同的时空几何。**
+
+[1]: https://link.aps.org/doi/10.1103/PhysRevA.37.4419 "https://link.aps.org/doi/10.1103/PhysRevA.37.4419"
+[2]: https://pubs.aip.org/aip/jcp/article/156/24/244105/2841362/Position-dependent-memory-kernel-in-generalized "https://pubs.aip.org/aip/jcp/article/156/24/244105/2841362/Position-dependent-memory-kernel-in-generalized"
+[3]: https://www.weizmann.ac.il/complex/mukamel/sites/complex.mukamel/files/uploads/ftd_kubo_review.pdf "https://www.weizmann.ac.il/complex/mukamel/sites/complex.mukamel/files/uploads/ftd_kubo_review.pdf"
+[4]: https://arxiv.org/abs/quant-ph/9702001 "https://arxiv.org/abs/quant-ph/9702001"
