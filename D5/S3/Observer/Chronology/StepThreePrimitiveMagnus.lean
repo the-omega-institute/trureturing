@@ -33,9 +33,11 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Observer.Chronology.StepThreePrimitiveMagnus
 
-open D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity
 open D5.S3.Observer.Chronology.StepTwoChronologicalSignature
 open D5.S3.Observer.Chronology.StepThreeChronologicalSignature
+
+local notation "ringCommutator" =>
+  D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity.commutator
 
 universe u v
 
@@ -79,19 +81,20 @@ theorem duodecupled_magnus_degree_three_mul
     duodecupledMagnusDegreeThree (left * right) =
       duodecupledMagnusDegreeThree left +
         duodecupledMagnusDegreeThree right +
-        3 * commutator
+        3 * ringCommutator
           (doubledMagnusDegreeTwoOfStepThree left) right.degreeOne +
-        3 * commutator left.degreeOne
+        3 * ringCommutator left.degreeOne
           (doubledMagnusDegreeTwoOfStepThree right) +
-        commutator left.degreeOne
-          (commutator left.degreeOne right.degreeOne) +
-        commutator right.degreeOne
-          (commutator right.degreeOne left.degreeOne) := by
+        ringCommutator left.degreeOne
+          (ringCommutator left.degreeOne right.degreeOne) +
+        ringCommutator right.degreeOne
+          (ringCommutator right.degreeOne left.degreeOne) := by
   rcases left with ⟨leftOne, leftTwo, leftThree⟩
   rcases right with ⟨rightOne, rightTwo, rightThree⟩
   simp [duodecupledMagnusDegreeThree,
     doubledMagnusDegreeTwoOfStepThree, truncateStepTwo,
-    doubledMagnusDegreeTwo, StepThreeSignature.compose, commutator]
+    doubledMagnusDegreeTwo, StepThreeSignature.compose,
+    D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity.commutator]
   noncomm_ring
 
 /-- The degree-two primitive changes sign under the step-three antipode. -/
