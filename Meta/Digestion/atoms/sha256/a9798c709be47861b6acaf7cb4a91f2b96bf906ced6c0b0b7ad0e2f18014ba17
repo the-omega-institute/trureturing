@@ -1,0 +1,54 @@
+# 九、欧拉常数现在进入了被压缩方向的“回返响应”
+
+定义：
+
+$$
+f_d(v)=\frac{P_d'(v)}{P_d(v)},
+\qquad v>0.
+$$
+
+在正实现存在的有限层：
+
+$$
+f_d(v)
+=
+\operatorname{Tr}
+\left[K_d(I+vK_d)^{-1}\right].
+$$
+
+由均衡谱参考向量：
+
+$$
+\begin{aligned}
+\langle u_d,(I+vK_d)^{-1}u_d\rangle
+&=
+\frac1d\operatorname{Tr}(I+vK_d)^{-1}\\
+&=
+1-\frac{vf_d(v)}d.
+\end{aligned}
+$$
+
+另一方面，对分块矩阵作 Schur 消元：
+
+$$
+\boxed{
+\langle u_d,(I+vK_d)^{-1}u_d\rangle
+=
+\frac1{
+1+\frac{va_1}{d}
+-v^2g_d^*(I+vC_d)^{-1}g_d
+}.
+}
+\tag{B20}
+$$
+
+第二项：
+
+$$
+g_d^*(I+vC_d)^{-1}g_d
+$$
+
+正是从被压缩方向进入其余模式、再返回的响应。
+
+项目的 `SchurComplementAssociativity.lean` 已经证明给定逆算子前件时，逐步消元和一次消元相同；这里给出的是该结构在实际 Jensen 层上的一种具体应用。
+

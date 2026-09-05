@@ -441,6 +441,19 @@ internal static partial class BackfillInventoryLoader
             && state[1] is "closed" or "tail" or "open";
     }
 
+    internal static bool IsInputPath(string path) =>
+        path.StartsWith(RootPath, StringComparison.Ordinal)
+        || string.Equals(path, RelativePath, StringComparison.Ordinal)
+        || IsD5LeanPath(path);
+
+    internal static RepositorySnapshot ProjectInputSnapshot(RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        return RepositorySnapshot.Create(snapshot.Files
+            .Where(static pair => IsInputPath(pair.Key.Value))
+            .ToImmutableDictionary());
+    }
+
     internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot) =>
         LoadSnapshot(snapshot, LoadCandidateDirectorySnapshot);
 
@@ -471,14 +484,7 @@ internal static partial class BackfillInventoryLoader
         var changed = changes.Paths
             .Select(static path => path.Value)
             .ToHashSet(StringComparer.Ordinal);
-        var entries = new Dictionary<string, RawRepositoryEntry>(StringComparer.Ordinal);
-        foreach (var (path, file) in candidate.Files)
-        {
-            entries[path.Value] = new RawRepositoryEntry(
-                path.Value,
-                file.RawBytes,
-                file.GitBlobOid);
-        }
+        var files = ProjectInputSnapshot(candidate).Files.ToBuilder();
 
         // Candidate-side parsing is authoritative only for the declared delta. For every
         // unchanged backfill record still present in the candidate, feed the trusted baseline
@@ -490,18 +496,10 @@ internal static partial class BackfillInventoryLoader
                      .Where(pair => candidate.TryGetFile(pair.Key.Value, out _))
                      .Where(pair => !changed.Contains(pair.Key.Value)))
         {
-            entries[path.Value] = new RawRepositoryEntry(
-                path.Value,
-                file.RawBytes,
-                file.GitBlobOid);
+            files[path] = file;
         }
 
-        var decoded = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries.Values));
-        return decoded switch
-        {
-            SnapshotDecodeOutcome.Decoded decodedSnapshot => Load(decodedSnapshot.Snapshot),
-            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
-        };
+        return Load(RepositorySnapshot.Create(files.ToImmutable()));
     }
 
     private static BackfillInventoryDocument LoadSnapshot(
@@ -714,8 +712,7 @@ internal static partial class BackfillInventoryLoader
     {
         var modulesByCase = new SortedDictionary<string, string>(StringComparer.Ordinal);
         foreach (var (path, file) in snapshot.Files
-                     .Where(static pair => pair.Key.Value.StartsWith("D5/", StringComparison.Ordinal)
-                         && pair.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
+                     .Where(static pair => IsD5LeanPath(pair.Key.Value))
                      .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
         {
             var module = path.Value[..^".lean".Length];
@@ -738,6 +735,10 @@ internal static partial class BackfillInventoryLoader
             .Select(static pair => new BackfillTicketReference(pair.Key, pair.Value))
             .ToImmutableArray();
     }
+
+    private static bool IsD5LeanPath(string path) =>
+        path.StartsWith("D5/", StringComparison.Ordinal)
+        && path.EndsWith(".lean", StringComparison.Ordinal);
 
     private static IEnumerable<string> EnumerateD5LeanPaths(string root)
     {

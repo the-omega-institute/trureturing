@@ -1,0 +1,61 @@
+## 定理 28.1　完整多场模型的传播上界
+
+考虑假设 24.1 的常系数完整场方程，并记
+
+$$
+c_{\max}=\max(c_0,c_1,\ldots).
+$$
+
+若初始数据支持在半径为 \(R\) 的球内，则完整无源解在
+
+$$
+|x|>R+c_{\max}t
+$$
+
+处为零。
+
+### 证明
+
+将全部场记为 \(q_a\)。定义局部能量密度
+
+$$
+e
+=
+\frac12\sum_a\dot q_a^2
++
+\frac12\sum_ac_a^2|\nabla q_a|^2
++
+\frac12q^{\mathsf T}Kq,
+$$
+
+以及能流
+
+$$
+j=-\sum_ac_a^2\dot q_a\nabla q_a.
+$$
+
+场方程给出
+
+$$
+\partial_t e+\nabla\cdot j=0.
+$$
+
+对单位法向量 \(n\)，
+
+$$
+\begin{aligned}
+|j\cdot n|
+&\le
+\sum_ac_a^2|\dot q_a|\,|\partial_nq_a|\\
+&\le
+\frac{c_{\max}}2
+\sum_a
+\left(
+\dot q_a^2+c_a^2|\nabla q_a|^2
+\right)\\
+&\le c_{\max}e.
+\end{aligned}
+$$
+
+对向外以速度 \(c_{\max}\) 扩大的球外区域积分，能量不可能从零增加，故球外解保持为零。∎
+

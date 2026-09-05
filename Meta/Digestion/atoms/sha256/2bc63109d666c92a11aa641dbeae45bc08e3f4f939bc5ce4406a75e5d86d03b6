@@ -1,0 +1,35 @@
+## 定理 B3：一步正延拓的精确判据
+
+在上述有限假设下：
+
+$$
+\boxed{
+q_d\text{ 全部为正实根}
+\iff
+\eta_{d,i}\ge0
+\quad\forall i.
+}
+\tag{B13}
+$$
+
+而当这些数非负时，可以构造：
+
+$$
+\boxed{
+K_d=
+\begin{pmatrix}
+a_1/d&\sqrt{\eta_{d,1}}&\cdots&\sqrt{\eta_{d,d-1}}\\
+\sqrt{\eta_{d,1}}&t_1&&0\\
+\vdots&&\ddots&\\
+\sqrt{\eta_{d,d-1}}&0&&t_{d-1}
+\end{pmatrix}>0,
+}
+\tag{B14}
+$$
+
+使：
+
+$$
+\det(xI-K_d)=q_d(x).
+$$
+
