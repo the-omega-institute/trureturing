@@ -1,0 +1,43 @@
+name: Prime Weil theory append once
+on:
+  push:
+    branches: [work/prime-weil-foundations-probe-20260905]
+    paths: [.github/workflows/prime-weil-theory-sync.yml]
+permissions:
+  contents: write
+jobs:
+  append:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          show-progress: false
+      - name: Append to the sole theory volume without changing prior bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = work/prime-weil-foundations-probe-20260905
+          python3 - <<'PY'
+          from pathlib import Path
+          target = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md')
+          fragment = Path('docs/develop/theory/.prime_weil_5562_append.md')
+          marker = b'## [PR #5562] POISSON_FRAGMENT_MESH_AND_QUADRATIC_CERTIFICATES'
+          before = target.read_bytes()
+          addition = fragment.read_bytes()
+          assert marker not in before
+          assert addition.count(marker) == 1
+          target.write_bytes(before + addition)
+          assert target.read_bytes()[:len(before)] == before
+          assert target.read_bytes().count(marker) == 1
+          fragment.unlink()
+          Path('.github/workflows/prime-weil-theory-sync.yml').unlink()
+          print(f'Appended {len(addition)} bytes; preserved {len(before)} previous bytes')
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add docs/develop/theory/RH_RESEARCH_LANE_THEORY.md docs/develop/theory/.prime_weil_5562_append.md .github/workflows/prime-weil-theory-sync.yml
+          git diff --cached --stat
+          git commit -m 'docs: preserve prime-Weil derivations in the cumulative RH theory volume'
+          git push origin HEAD:refs/heads/work/prime-weil-foundations-probe-20260905
+          git rev-parse HEAD
