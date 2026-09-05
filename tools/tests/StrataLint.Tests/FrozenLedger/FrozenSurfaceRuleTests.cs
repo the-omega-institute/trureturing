@@ -1,7 +1,9 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
+using Trureturing.Truth;
 
 namespace StrataLint.Tests;
 
@@ -268,14 +270,21 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Fact]
-    public void Sl008C6IgnoresAddedRevokeWithoutFrozenStatePin()
+    public void Sl008C6FailsClosedForAddedNonFreezeAcceptedEvent()
     {
         var fixture = new RuleFixture();
-        var eventPath = AddNonFreezeAcceptedEvent(fixture, "Revoke", 'c');
+        var eventPath = AddNonFreezeAcceptedEvent(fixture, "Revoke");
 
-        var evaluation = Evaluate(fixture, (eventPath, RawChangeKind.Added));
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (eventPath, RawChangeKind.Added)).Diagnostics);
 
-        Assert.Empty(evaluation.Diagnostics);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(eventPath, diagnostic.Path);
+        Assert.Contains("accepted event could not be loaded", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            "content-addressed event type Revoke is not legal in ledger v5.",
+            diagnostic.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -304,6 +313,26 @@ public sealed class FrozenSurfaceRuleTests
 
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         Assert.Equal(eventPath, diagnostic.Path);
+        Assert.Contains(
+            "content-addressed event envelope has unknown, missing, or duplicate fields.",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl008C6FailsClosedForGarbageEventTypeBeforePinChecks()
+    {
+        var fixture = new RuleFixture();
+        var eventPath = FrozenLedgerChangeClassifier.AcceptedPath(
+            "sha256:" + new string('e', 64));
+        fixture.Files[eventPath] = "{\"event_type\":\"Garbage\"}\n";
+
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (eventPath, RawChangeKind.Added)).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(eventPath, diagnostic.Path);
+        Assert.Contains("accepted event could not be loaded", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains(
             "content-addressed event envelope has unknown, missing, or duplicate fields.",
             diagnostic.Message,
@@ -669,14 +698,20 @@ public sealed class FrozenSurfaceRuleTests
 
     private static string AddNonFreezeAcceptedEvent(
         RuleFixture fixture,
-        string eventType,
-        char hashDigit)
+        string eventType)
     {
-        var eventHash = "sha256:" + new string(hashDigit, 64);
+        var freezePath = AddFreeze(fixture, FrozenPath);
+        var envelope = JsonNode.Parse(fixture.Files[freezePath])!.AsObject();
+        envelope["event_type"] = eventType;
+        envelope.Remove("event_hash");
+        var eventHash = FrozenContentHash.Compute(
+            FrozenHashDomains.FrozenEvent,
+            StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(envelope)).AsSpan());
+        envelope["event_hash"] = eventHash;
         var eventPath = FrozenLedgerChangeClassifier.AcceptedPath(eventHash);
-        fixture.Files[eventPath] =
-            $"{{\"event_hash\":\"{eventHash}\",\"event_type\":\"{eventType}\","
-            + "\"payload\":{},\"schema_version\":5}\n";
+        fixture.Files.Remove(freezePath);
+        fixture.Files[eventPath] = Encoding.UTF8.GetString(
+            StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(envelope)).AsSpan());
         return eventPath;
     }
 

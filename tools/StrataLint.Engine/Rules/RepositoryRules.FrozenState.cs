@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Text.Json;
 
 namespace StrataLint.Engine;
 
@@ -100,12 +99,6 @@ internal static partial class RepositoryRules
                 continue;
             }
 
-            if (TryReadAcceptedEventType(file, out var eventType)
-                && eventType != "Freeze")
-            {
-                continue;
-            }
-
             var load = FrozenAcceptedEventLoader.LoadFiles([file]);
             if (load is DagLedgerFilesLoadOutcome.Invalid invalid)
             {
@@ -156,30 +149,6 @@ internal static partial class RepositoryRules
                     + $"event pin={eventPin.Value} state pin={state.StatementId.Value}"));
             }
         }
-    }
-
-    private static bool TryReadAcceptedEventType(
-        RepositoryFile file,
-        out string eventType)
-    {
-        eventType = string.Empty;
-        try
-        {
-            using var document = JsonDocument.Parse(file.RawBytes.AsSpan().ToArray());
-            if (document.RootElement.ValueKind is JsonValueKind.Object
-                && document.RootElement.TryGetProperty("event_type", out var eventTypeValue)
-                && eventTypeValue.ValueKind is JsonValueKind.String
-                && eventTypeValue.GetString() is { } value)
-            {
-                eventType = value;
-                return true;
-            }
-        }
-        catch (JsonException)
-        {
-        }
-
-        return false;
     }
 
     private static ImmutableArray<RepositoryFile> AffectedFrozenStateFiles(
