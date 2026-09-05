@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b77bf9fc26885dd1e3dbd7213d8fd2b8c0212f5ffc74a83c61681cd8f4c3f89d
+  normalized_sha256: sha256:b77bf9fc26885dd1e3dbd7213d8fd2b8c0212f5ffc74a83c61681cd8f4c3f89d
+cas_ref: sha256:b77bf9fc26885dd1e3dbd7213d8fd2b8c0212f5ffc74a83c61681cd8f4c3f89d
+coverage_gids:
+  - gid: D5/S3/Analytic/PrimeZeckendorf/NoNaturalPrimeChoice.no_prime_is_fixed_by_every_permutation
+    target_statement_id: sha256:f22ce6eefc29385d3d1f4476fb1bd5311afa3b48db8189c1e6f4ee0467c61fd6
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/PrimeZeckendorf/NoNaturalPrimeChoice.no_prime_is_fixed_by_every_permutation
+      definition_sha256: sha256:61748e82ab37d121b4dc368b1f22a4d85dd9785fdf6de1679f37b05b004e0435
+      emission_sha256: sha256:e25033e6ff4652af831db4f62ecf0240e6b9750df1f1a7815eca2666cd50a0c3
+  unresolved_subitems: []
