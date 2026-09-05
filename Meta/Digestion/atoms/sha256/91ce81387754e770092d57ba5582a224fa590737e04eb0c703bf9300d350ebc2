@@ -1,0 +1,2 @@
+**评注 27.809(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第五批〕。逃逸内容:①任意长度的二进赋值下界——去掉唯一的 3 后其余数位皆为偶数,故 `2^(length−1) ∣ digitProduct`;②末四位模 16 阻碍——在 countThree ≤ 1 约束下对 3⁴ = 81 个四位后缀的具名穷举(kernel 计算),配合 Mathlib `Nat.self_mod_pow_eq_ofDigits_take` 把 N mod 10⁴ 归到末四位;③长度 ≤ 4 的有限分类。三者皆在 4.100 活证明路径上;4.99 以因子 4 与两位后缀模 4 阻碍同形。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib;禁 native_decide。若钉版 API 下数位列拆分引理不能闭合,本候签按 open 记,不得以 `sorry` 或公理代替。结算:两条由一个实施席同 PR `deposit`(绑 4.100)+ `cover`(4.99)落地,三席评审后合入。
+
