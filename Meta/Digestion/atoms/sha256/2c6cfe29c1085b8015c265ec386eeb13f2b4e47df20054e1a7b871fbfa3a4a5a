@@ -1,0 +1,24 @@
+## C10.2 radial counting profile
+
+定义：
+
+$$
+\boxed{
+\mathscr Q_a(q,r)
+=
+|G_a(re^{iq})|^2.
+}
+\tag{C10.5}
+$$
+
+在 $\mathscr Q_a>0$ 的位置定义 scale-weighted radial log derivative：
+
+$$
+\boxed{
+\mathscr R_a(q,r)
+=
+r\partial_r\log\mathscr Q_a(q,r).
+}
+\tag{C10.6}
+$$
+

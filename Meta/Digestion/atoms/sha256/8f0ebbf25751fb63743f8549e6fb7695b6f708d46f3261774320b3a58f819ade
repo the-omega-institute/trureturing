@@ -1,0 +1,47 @@
+## C4.1 有限 level family
+
+固定素数 $p$，取非空有限正整数集合 $S$。令：
+
+$$
+L_S=\operatorname{lcm}\{m:m\in S\}.
+\tag{C4.1}
+$$
+
+只观察：
+
+$$
+\left(
+\theta_{p,t}(m)
+\right)_{m\in S}.
+\tag{C4.2}
+$$
+
+### 定理 C4.1　有限 level aliasing 周期
+
+两个实参数 $t,t'$ 在全部 $S$-levels 上不可区分，当且仅当：
+
+$$
+\boxed{
+t-t'
+\in
+\frac{2\pi L_S}{\log p}\mathbb Z.
+}
+\tag{C4.3}
+$$
+
+#### 证明
+
+令：
+
+$$
+x=\frac{(t-t')\log p}{2\pi}.
+$$
+
+在 level $m$ 上 phase 相等，当且仅当 $x/m\in\mathbb Z$，即 $x\in m\mathbb Z$。对所有 $m\in S$ 同时成立，当且仅当：
+
+$$
+x\in\bigcap_{m\in S}m\mathbb Z
+=
+L_S\mathbb Z.
+$$
+

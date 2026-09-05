@@ -1,0 +1,35 @@
+- phase 落在同一个 $P_j$。
+
+所以有序非对角 escape pair 数为：
+
+$$
+\boxed{
+|\operatorname{EscapePairs}|
+=
+c\sum_{j=1}^{r}n_j(n_j-1).
+}
+\tag{C9.3}
+$$
+
+总有序非对角 pair 数为：
+
+$$
+cp(cp-1).
+\tag{C9.4}
+$$
+
+因此 exact escape rate 为：
+
+$$
+\boxed{
+\varepsilon
+=
+\frac{
+\sum_jn_j(n_j-1)
+}{
+p(cp-1)
+}.
+}
+\tag{C9.5}
+$$
+

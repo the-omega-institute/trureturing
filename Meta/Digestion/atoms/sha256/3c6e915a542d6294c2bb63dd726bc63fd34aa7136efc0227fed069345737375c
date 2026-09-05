@@ -1,0 +1,27 @@
+## C0.2 本增订新推导的地位
+
+以下是本增订中的纯数学推导，但尚未作为新的 Lean 真源登记：
+
+- centered prime power thread 的显式构造；
+- prime transverse energy 的 charge-gradient 恒等式；
+- finite level phase aliasing 周期；
+- finite solenoid level structural novelty 的 $\gcd/\operatorname{lcm}$ 判据；
+- one-prime depth / two-prime width faithfulness；
+- charge graph 加 anchor 后的有限 coercivity；
+- off-circle zero 产生 open negative radial precursor；
+- rational rectangle RH 等价族；
+- Schur margin 到 determinant floor 的显式下界；
+- determinant dimension tax；
+- countable Rouché certificate reformulation。
+
+以下仍是开放承重桥：
+
+- canonical prime–Zeckendorf–Gamma analytic transfer；
+- 其 determinant 与 completed $\Xi$ 只差无零 analytic unit；
+- locally uniform、带显式误差界的 approximation；
+- Gamma/pole block 对 ambient common charge mode 的 canonical anchor；
+- finite phase/charge observables 到 zero-side odd orbit energy 的 faithful intertwining；
+- 所有离轴有理矩形上的统一证书。
+
+---
+
