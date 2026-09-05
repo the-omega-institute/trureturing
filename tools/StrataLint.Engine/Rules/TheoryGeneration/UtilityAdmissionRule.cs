@@ -256,7 +256,7 @@ internal static class UtilitySyntax
     }
 }
 
-// SL-029. First-freeze utility admission for computational content.
+// SL-030. First-freeze utility admission for computational content.
 internal static class UtilityAdmissionRule
 {
     internal static bool IsAffectedBy(RuleEvaluationContext context) =>

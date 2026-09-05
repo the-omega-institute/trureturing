@@ -4,7 +4,7 @@ namespace StrataLint.Tests;
 
 public sealed class UtilityAdmissionRuleTests
 {
-    private static readonly RuleId UtilityRuleId = RuleId.CreateKnown(29);
+    private static readonly RuleId UtilityRuleId = RuleId.CreateKnown(30);
 
     [Fact]
     public void FirstFreezeWithoutUtilityIsBlocked()
@@ -277,8 +277,8 @@ public sealed class UtilityAdmissionRuleTests
     }
 
     [Fact]
-    [BaseFactScopeProbe(29)]
-    public void Sl029EvaluateScopesFirstFreezeDeltaAndKeepsImplementationWakeup()
+    [BaseFactScopeProbe(30)]
+    public void Sl030EvaluateScopesFirstFreezeDeltaAndKeepsImplementationWakeup()
     {
         var historical = new RuleFixture();
         AddExistingFrozenState(historical);

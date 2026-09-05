@@ -155,7 +155,7 @@ internal static partial class RepositoryRules
                 DuplicateStatementAdvisory.IsAffectedBy),
             AdmissionEffect.Observe),
         Register(
-            29,
+            30,
             "Computational utility admission",
             new RepositoryRule(
                 Formal,

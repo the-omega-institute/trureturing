@@ -99,7 +99,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var uniqueFinding = new RuleFinding("unique/path.txt", "finding from rule seventeen");
         var registrations = Enumerable.Range(1, 23).Except([5])
-            .Append(25).Append(26).Append(28).Append(29)
+            .Append(25).Append(26).Append(28).Append(30)
             .Select(number => new RuleRegistration(
                 Descriptor(
                     number,
@@ -215,7 +215,7 @@ public sealed class RuleCatalogAssociationTests
         var setterId = RuleId.CreateKnown(1);
         var finderId = RuleId.CreateKnown(2);
         var remainingIds = Enumerable.Range(1, 23).Except([5, 7, 9, 13, 14])
-            .Append(25).Append(26).Append(28).Append(29)
+            .Append(25).Append(26).Append(28).Append(30)
             .Select(RuleId.CreateKnown)
             .Where(id => id != setterId && id != finderId)
             .ToImmutableArray();
@@ -259,7 +259,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var rule = new CountingUnaffectedRule();
         var registrations = Enumerable.Range(1, 23).Except([5])
-            .Append(25).Append(26).Append(28).Append(29)
+            .Append(25).Append(26).Append(28).Append(30)
             .Select(number => Registration(
                 Descriptor(
                     number,
@@ -415,7 +415,7 @@ public sealed class RuleCatalogAssociationTests
     public void DefaultCatalogRootMatchesCharacterizedRegressionValue()
     {
         Assert.Equal(
-            "sha256:661c4dc956c0d56889465cf9b3bce4f5c6626650906e1291a3309a8269e7b954",
+            "sha256:ea1d964e6d5563b88fe7e227956604fcd771af333bbc1840aab1c56382dac67c",
             RuleCatalog.Default.RootSha256);
     }
 
@@ -453,7 +453,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var state = new OrderDependentState();
         var registrations = Enumerable.Range(1, 23).Except([5])
-            .Append(25).Append(26).Append(28).Append(29)
+            .Append(25).Append(26).Append(28).Append(30)
             .Select(number => new RuleRegistration(
                 Descriptor(number, $"descriptor {number}", DisplaySeverity.Error, AdmissionEffect.Block),
                 number switch

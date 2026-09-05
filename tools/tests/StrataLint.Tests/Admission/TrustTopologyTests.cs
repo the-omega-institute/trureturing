@@ -155,7 +155,7 @@ public sealed class TrustTopologyTests
                 .Append(RuleId.CreateKnown(25))
                 .Append(RuleId.CreateKnown(26))
                 .Append(RuleId.CreateKnown(28))
-                .Append(RuleId.CreateKnown(29)),
+                .Append(RuleId.CreateKnown(30)),
             descriptors.Select(item => item.Id));
         Assert.Equal(
             AdmissionEffect.HumanGate,
