@@ -29,28 +29,12 @@ internal static class ScribePathProvenance
             var owner = method.ContainingType.ToDisplayString();
             if (owner == "System.IO.Directory" && method.Name == "CreateTempSubdirectory")
                 return true;
-            // TemporaryFileSystem.EnsureTemporaryPath 运行时强制返回值在进程临时目录下,否则抛。
-            if (owner == "StrataLint.TestSupport.TemporaryFileSystem"
-                && method.Name == "EnsureTemporaryPath")
-                return true;
-            // TestScratchRoot.CreateDirectory() 在进程临时根下建目录;TemporaryDirectory.Path 即其值。
-            if (owner is "StrataLint.TestSupport.TestScratchRoot" or "StrataLint.Tests.TestScratchRoot"
-                && method.Name == "CreateDirectory")
-                return true;
             if (owner == "System.IO.Path"
                 && method.Name is "Combine" or "GetFullPath"
                 && invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression is { } first)
                 return IsNonRepository(first, model, models, visited);
             if (method.Locations.Any(static location => location.IsInSource))
                 return SourceMethodReturns(method, model, models, visited);
-        }
-
-        // TemporaryDirectory.Path 恒来自 TestScratchRoot.CreateDirectory(),在临时根下。
-        if (expression is MemberAccessExpressionSyntax temporaryMember
-            && model.GetSymbolInfo(temporaryMember).Symbol is IPropertySymbol
-            { Name: "Path", ContainingType.Name: "TemporaryDirectory" })
-        {
-            return true;
         }
 
         if (expression is MemberAccessExpressionSyntax member
