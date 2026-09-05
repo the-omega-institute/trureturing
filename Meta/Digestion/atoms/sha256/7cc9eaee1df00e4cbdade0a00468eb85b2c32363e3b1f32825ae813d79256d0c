@@ -1,0 +1,105 @@
+## 定理 114.2　关联求和控制宏观涨落
+
+设 \(\sigma_N\) 为任意联合结构态，定义：
+
+$$
+r_N(v)=\operatorname{Tr}[\sigma_N\widehat R_N(v)].
+$$
+
+若对指定方向 \(v\)：
+
+$$
+\boxed{
+\sum_{i,j}
+\left|
+\operatorname{Cov}_{\sigma_N}
+\bigl(\widehat R^{(i)},\widehat R^{(j)}\bigr)
+\right|
+\le
+N\Gamma(v),
+}
+\tag{114.6}
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Var}_{\sigma_N}(\widehat R_N(v))
+\le
+\frac{\Gamma(v)}N.
+}
+\tag{114.7}
+$$
+
+进一步：
+
+$$
+\boxed{
+\left\|
+\left(
+\widehat n_N(v)-\sqrt{r_N(v)}I
+\right)\sigma_N^{1/2}
+\right\|_2
+\le
+\frac{\sqrt{\Gamma(v)}}{2n_*\sqrt N}.
+}
+\tag{114.8}
+$$
+
+### 证明
+
+方差展开为：
+
+$$
+\operatorname{Var}(\widehat R_N)
+=
+\frac1{N^2}
+\sum_{i,j}
+\operatorname{Cov}(\widehat R^{(i)},\widehat R^{(j)}),
+$$
+
+取绝对值界得到式（114.7）。
+
+由于：
+
+$$
+\widehat n_N\ge n_*I,
+\qquad
+\sqrt{r_N}\ge n_*,
+$$
+
+有：
+
+$$
+\widehat n_N-\sqrt{r_N}I
+=
+(\widehat n_N+\sqrt{r_N}I)^{-1}
+(\widehat R_N-r_NI).
+$$
+
+逆算子范数不超过 \(1/(2n_*)\)，从而得到式（114.8）。∎
+
+### 乘积态特化
+
+若：
+
+$$
+\sigma_N=\tau^{\otimes N},
+$$
+
+则跨单元协方差为零，故：
+
+$$
+\boxed{
+\Gamma(v)=\operatorname{Var}_\tau(\widehat R(v)).
+}
+\tag{114.9}
+$$
+
+这些结果只使用有限维二阶相关求和，不需要先假设一个完整的无限系统。
+
+宏观平均趋于可交换、而适当重标定的涨落仍可保留量子结构，是量子中心极限研究中的已知分层现象。([Springer][2])
+
+---
+

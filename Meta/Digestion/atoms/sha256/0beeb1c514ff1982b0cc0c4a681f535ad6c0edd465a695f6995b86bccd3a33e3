@@ -1,0 +1,23 @@
+**这是一种保存结构的归纳数据，而不只是一个“已证明”布尔值。**
+
+在 Lean 中，应把这类可检查的推理树放在 `Type`，再证明其语义正确性。仅把它放进 `Prop`，不能期待从证明无关性下的证明对象中读取全部运行时推理结构。Lean 的命题具有证明无关性，并在编译运行时被擦除。([Lean Language][1])
+
+一个最小结构片段为：
+
+```lean
+structure ExactStep (A B : Interface) where
+  evolve  : A.State → B.State
+  descend : A.View → B.View
+  square  : ∀ x,
+    B.read (evolve x) = descend (A.read x)
+
+inductive Chain : Interface → Interface → Type _ where
+  | nil (A) : Chain A A
+  | cons (head : ExactStep A B)
+         (tail : Chain B C) : Chain A C
+```
+
+这不是新的逻辑公理系统。它只是把特定种类的数学推导保存为数据，并让 Lean 的既有逻辑检查每个步骤及整条链。
+
+---
+

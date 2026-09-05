@@ -1,0 +1,11 @@
+### 推论 9.3　不存在统一的正余量
+
+由 Gronwall 定理：
+
+$$
+\boxed{
+\liminf_{n\to\infty}\Delta(n)=0.
+}
+\tag{9.7}
+$$
+

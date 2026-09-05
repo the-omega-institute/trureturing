@@ -1,0 +1,8 @@
+## 本轮的 Lean 对应
+
+我生成了一个独立的候选 Lean 源码，包含：
+
+`Interface`、`ExactStep`、保存步骤结构的 `Chain`、完整状态与读数两种执行语义，以及 `chain_sound`、链拼接和 `chain_has_no_carry` 的证明项。
+
+[查看候选 Lean 源码](sandbox:/mnt/data/observer_formalization/ObserverInferenceCore.lean)
+

@@ -1,0 +1,55 @@
+# 二、历史体积可以精确展开成 Schur 多项式的平方和
+
+上一轮定义了单一读出的高斯历史矩阵：
+
+$$
+G_q(r)=
+\int_{\mathbb R}
+\frac{e^{-t^2/(2r)}}{\sqrt{2\pi r}}\,
+e^{itC_q^*}\ell^*\ell e^{-itC_q}\,dt,
+$$
+
+其中：
+
+$$
+\ell=(1,0,\ldots,0).
+$$
+
+并定义：
+
+$$
+\mathcal Z_q(r)
+=
+\frac{\prod_{j=0}^{d-1}j!}{r^{d(d-1)/2}}
+\det G_q(r).
+$$
+
+实数整体平移不改变 \(\mathcal Z_q\)。
+
+定义酉群积分：
+
+$$
+\boxed{
+\mathcal H_q(r)
+=
+\int_{U(d)}
+\exp\!\left[
+r\operatorname{Tr}(A^*UAU^*)
+\right]\,dU.
+}
+\tag{L5}
+$$
+
+这里 \(dU\) 是归一化 Haar 测度。虽然被积函数未必逐点为实，积分却会是一个严格正的实数。
+
+前文的 HCIZ 恒等式给出：
+
+$$
+\boxed{
+\mathcal Z_q(r)=e^{-rS_q}\mathcal H_q(r).
+}
+\tag{L6}
+$$
+
+HCIZ 的行列式公式与 Schur 特征展开是已有的严格关系；它们可以通过解析延拓应用于这里的复谱，而不必预设 Hermitian 谱。([Springer][3])
+

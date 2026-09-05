@@ -1,0 +1,50 @@
+# 八、实际 Jensen 塔的低激发阶数，存在一个可证明的盲区
+
+现在分析 \(d\) 增大时，哪些系数检验能够自动通过。
+
+设中心化根满足：
+
+$$
+\sum_{j=1}^{d}|z_j|\le L.
+$$
+
+对于 \(1\le k\le d\)，有：
+
+$$
+(d)_\lambda\ge(d-k+1)^k
+\qquad(|\lambda|=k).
+$$
+
+另一方面，Schur 的 Cauchy 恒等式给出：
+
+$$
+\sum_\lambda |s_\lambda(z)|^2t^{|\lambda|}
+=
+\exp\left(
+\sum_{m\ge1}
+\frac{|p_m(z)|^2}{m}t^m
+\right),
+$$
+
+其中：
+
+$$
+p_m(z)=\sum_jz_j^m.
+$$
+
+由：
+
+$$
+|p_m(z)|\le L^m,
+$$
+
+逐项比较非负系数：
+
+$$
+\sum_{\lambda\vdash k}|s_\lambda(z)|^2\le L^{2k}.
+$$
+
+这类特征展开、Schur 正交性与酉群矩之间的关系是标准表示论工具。([arXiv][5])
+
+因此：
+

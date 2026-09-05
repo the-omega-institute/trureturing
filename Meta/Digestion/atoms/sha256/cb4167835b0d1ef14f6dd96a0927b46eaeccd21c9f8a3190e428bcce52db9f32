@@ -1,0 +1,59 @@
+## 定理 75.2　任意恢复操作的误差下界
+
+设两个系统标签相差 \(\ell\ne0\)，并令
+
+$$
+v=|\gamma_\ell|.
+$$
+
+对任意恢复信道 \(\mathcal R\)，有
+
+$$
+\boxed{
+\sup_\rho
+D\bigl(\mathcal R\Lambda_c(\rho),\rho\bigr)
+\ge
+\frac{1-v}{2},
+}
+\tag{75.2}
+$$
+
+其中
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+$$
+
+### 证明
+
+取两态
+
+$$
+|\pm\rangle
+=
+\frac{|i\rangle\pm|j\rangle}{\sqrt2}.
+$$
+
+它们的迹距离为一，而
+
+$$
+D\bigl(\Lambda_c(\rho_+),\Lambda_c(\rho_-)\bigr)=v.
+$$
+
+量子通道不增加迹距离，因此
+
+$$
+D\bigl(\mathcal R\Lambda_c(\rho_+),
+       \mathcal R\Lambda_c(\rho_-)\bigr)\le v.
+$$
+
+若最大恢复误差为 \(\varepsilon\)，三角不等式给出
+
+$$
+1\le\varepsilon+v+\varepsilon.
+$$
+
+整理即得。∎
+
+---
+

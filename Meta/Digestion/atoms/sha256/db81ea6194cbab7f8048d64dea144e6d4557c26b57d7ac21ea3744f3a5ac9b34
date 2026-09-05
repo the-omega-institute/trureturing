@@ -1,0 +1,67 @@
+### 证明：上界
+
+对 \(A_T\) 作酉 Schur 分解：
+
+$$
+A_T\sim\Lambda+N,
+$$
+
+其中 \(\Lambda\) 是本征值对角矩阵，\(N\) 严格上三角。
+
+由式（I11），对前 \(k\) 个坐标的投影取迹：
+
+$$
+\boxed{
+\sum_{i\le k<j}|N_{ij}|^2\le\frac{k}{T^2}.
+}
+\tag{I14}
+$$
+
+这是因为该局部迹中的内部行列项相互抵消，只留下跨越前 \(k\) 个坐标边界的条目。
+
+对 \(k=1,\ldots,d-1\) 求和：
+
+$$
+\sum_{i<j}(j-i)|N_{ij}|^2
+\le
+\frac{d(d-1)}{2T^2}.
+$$
+
+因此：
+
+$$
+\|N\|_{\mathrm{HS}}^2
+\le
+\frac{d(d-1)}{2T^2}.
+$$
+
+又因为 \(N\) 严格上三角：
+
+$$
+\left\|
+\frac{N-N^*}{2i}
+\right\|_{\mathrm{HS}}
+=
+\frac{\|N\|_{\mathrm{HS}}}{\sqrt2}.
+$$
+
+所以：
+
+$$
+\begin{aligned}
+\sigma_T(C)
+&\le
+\left\|\frac{\Lambda-\Lambda^*}{2i}\right\|
++
+\left\|\frac{N-N^*}{2i}\right\|\\
+&\le
+\beta(C)+\frac{\sqrt{d(d-1)}}{2T}.
+\end{aligned}
+$$
+
+证毕。
+
+用 Schur 上三角部分量化偏离正规矩阵的程度，是已有矩阵分析方法；这里的关键是从特定历史构造取得式（I11），再得到显式常数。([工业与应用数学学会][5])
+
+---
+

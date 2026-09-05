@@ -1,0 +1,73 @@
+## 定理 79.2　有限实验可以给出有证明的误差概率界
+
+令
+
+$$
+\widehat p=\frac1N\sum_{i=1}^NX_i.
+$$
+
+则
+
+$$
+\mathbb E[\widehat p]=p,
+$$
+
+$$
+\operatorname{Var}(\widehat p)
+=
+\frac{p(1-p)}N
+\le\frac1{4N}.
+$$
+
+对任意 \(r>0\)，
+
+$$
+\boxed{
+\Pr(|\widehat p-p|\ge r)
+\le
+\frac1{4Nr^2}.
+}
+\tag{79.1}
+$$
+
+### 证明
+
+对非负随机变量 \((\widehat p-p)^2\) 使用 Markov 不等式：
+
+$$
+\Pr((\widehat p-p)^2\ge r^2)
+\le
+\frac{\mathbb E[(\widehat p-p)^2]}{r^2},
+$$
+
+再代入方差界。∎
+
+### 形式化后应当怎样表达？
+
+一个实际样本是 ANCHOR；概率误差界是关于实验模型的定理。
+
+不能把
+
+$$
+\Pr(\text{误判})\le\alpha
+$$
+
+改写成
+
+$$
+\text{本次判断在逻辑上必然正确}.
+$$
+
+但可以严格证明：
+
+$$
+\boxed{
+\text{在给定制备、独立性与噪声模型下，
+这一有限程序的错误概率不超过 }\alpha.
+}
+$$
+
+若存在环境记忆或制备相关性，独立 Bernoulli 假设就必须修改。形式化的作用是暴露这种依赖，而不是替我们消除它。
+
+---
+

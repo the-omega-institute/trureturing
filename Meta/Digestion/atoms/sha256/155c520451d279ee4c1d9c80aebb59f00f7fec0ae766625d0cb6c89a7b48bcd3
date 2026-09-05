@@ -1,0 +1,16 @@
+# F_{\mu\nu}(\omega)
+
+\partial_\mu\omega_\nu-\partial_\nu\omega_\mu
++
+[\omega_\mu,\omega_\nu].
+
+$$
+
+### 证明
+
+由于 \(e\) 可逆，式（89.3）由合同变换保持非退化性与符号类型。
+
+使用式（89.1），计算得
+
+$$
+

@@ -1,0 +1,17 @@
+## 定义 8.1　Fibonacci 前缀码
+
+若：
+
+$$
+n=\sum_{j=0}^hb_jG_j,
+\qquad b_h=1,
+$$
+
+定义：
+
+$$
+\mathsf F(n)=b_0b_1\cdots b_h1.
+$$
+
+额外的最后一个 \(1\) 用作终止位。
+

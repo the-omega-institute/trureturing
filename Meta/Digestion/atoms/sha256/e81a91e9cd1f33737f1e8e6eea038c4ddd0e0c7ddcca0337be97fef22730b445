@@ -1,0 +1,73 @@
+## 定理 7.2　保留质量与遗漏分解
+
+$$
+P_s(A_M)=\frac{Z_M(s)}{\zeta(s)}.
+$$
+
+定义：
+
+$$
+\mathcal E_{S,L}(s)
+=
+-\ln P_s(A_M).
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal E_{S,L}(s)
+=
+\sum_{p\notin S}-\ln(1-p^{-s})
++
+\sum_{p\in S}-\ln(1-p^{-sG_{L_p}}).
+}
+\tag{7.1}
+$$
+
+此外：
+
+$$
+\boxed{
+\operatorname{KL}\bigl(P_s(\,\cdot\,\mid A_M)\Vert P_s\bigr)
+=
+\mathcal E_{S,L}(s).
+}
+\tag{7.2}
+$$
+
+### 证明
+
+第一式直接由概率定义成立。
+
+将有限乘积：
+
+$$
+Z_M(s)
+=
+\prod_{p\in S}
+\frac{1-p^{-sG_{L_p}}}{1-p^{-s}}
+$$
+
+与 Euler 乘积相除、取对数，得到式（7.1）。
+
+条件分布在 \(A_M\) 上满足：
+
+$$
+\frac{P_s(n\mid A_M)}{P_s(n)}
+=
+\frac1{P_s(A_M)}.
+$$
+
+其对数为常数，对条件分布取期望便得到式（7.2）。证毕。
+
+式（7.1）严格区分：
+
+$$
+\boxed{
+\text{未加入的素数方向}
+\quad+\quad
+\text{已加入方向中的指数截断}.
+}
+$$
+

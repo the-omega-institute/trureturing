@@ -1,0 +1,34 @@
+## 例 113.1　初始经典，不代表持续经典
+
+取：
+
+$$
+\widehat n=I+\alpha Z,
+\qquad 0<\alpha<1,
+$$
+
+$$
+H_G=\frac{\hbar\Omega}{2}X,
+\qquad
+\sigma(0)=|0\rangle\langle0|.
+$$
+
+则：
+
+$$
+\langle\widehat n\rangle_t
+=
+1+\alpha\cos\Omega t,
+$$
+
+$$
+\boxed{
+\operatorname{Var}_{\sigma(t)}(\widehat n)
+=
+\alpha^2\sin^2\Omega t.
+}
+\tag{113.4}
+$$
+
+初始方差为零，但通常的后续时刻不再为零。
+

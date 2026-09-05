@@ -1,0 +1,24 @@
+## 定义 14.1　黄金单元的临界余量
+
+对满足：
+
+$$
+\mathscr C_m^+
+=
+\mathscr C_m\cap\{n:n>5040\}
+\ne\varnothing
+$$
+
+的黄金满窗整数 \(m\)，定义：
+
+$$
+\boxed{
+\delta_{\mathrm{cell}}(m)
+=
+\min_{n\in\mathscr C_m^+}\Delta(n).
+}
+\tag{14.1}
+$$
+
+每个单元有限，所以最小值存在。
+

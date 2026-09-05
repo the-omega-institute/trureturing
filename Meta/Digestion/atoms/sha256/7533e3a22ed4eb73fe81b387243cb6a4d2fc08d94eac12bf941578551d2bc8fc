@@ -1,0 +1,38 @@
+## 定理 8.3　给定黄金观察结果的最优残差长度
+
+双方已知 \(m\in\mathscr M\)，仅需发送：
+
+$$
+n\in\mathscr C_m.
+$$
+
+令：
+
+$$
+K_m=|\mathscr C_m|.
+$$
+
+则最优的最坏前缀码长为：
+
+$$
+\boxed{
+\left\lceil\log_2K_m\right\rceil.
+}
+\tag{8.3}
+$$
+
+### 证明
+
+偏移向量 \(r_p\) 可以按混合进制排序成 \(K_m\) 个序号，统一使用 \(\lceil\log_2K_m\rceil\) 位即可。
+
+反过来，若所有码长至多 \(L\)，Kraft 不等式给出：
+
+$$
+1\ge\sum_{n\in\mathscr C_m}2^{-L(n)}
+\ge K_m2^{-L}.
+$$
+
+所以 \(L\ge\lceil\log_2K_m\rceil\)。证毕。
+
+对 5040 单元，条件残差的最坏长度为 3 比特。
+

@@ -1,0 +1,58 @@
+## 定理 6：RH 下的精确长期均方
+
+在 RH 前件下，对每个固定 \(h>0\)，极限
+
+$$
+\mathcal V(h)
+=
+\lim_{L\to\infty}\frac{\mathcal E_h(L)}L
+$$
+
+存在，并且
+
+$$
+\boxed{
+\mathcal V(h)
+=
+2\sum_{\gamma>0}
+\frac{
+m_\gamma^2|Q_h(e^{ih\gamma})|^2
+}{\gamma^4}.
+}
+\tag{29}
+$$
+
+这里对不同的正纵坐标求和，\(m_\gamma\) 为重数。
+
+### 证明
+
+把式（19）写成
+
+$$
+\sum_{\gamma>0}
+\left(A_\gamma e^{i\gamma T}
++\overline{A_\gamma}e^{-i\gamma T}\right)+o(1),
+$$
+
+其中
+
+$$
+A_\gamma
+=
+\frac{m_\gamma Q_h(e^{ih\gamma})}{\gamma^2}.
+$$
+
+绝对一致收敛允许先截断再求长期平均。
+
+不同频率的交叉指数平均为零；相同频率贡献
+
+$$
+2|A_\gamma|^2.
+$$
+
+再令截断高度趋于无穷，即得式（29）。证毕。
+
+这里不需要假设零点纵坐标有理线性无关，也不需要 Montgomery 配对相关猜想。重数必须平方，不能把 \(m_\gamma^2\) 偷换成 \(m_\gamma\)。零点均方研究中，对重数的这种区分是实质性的。([arXiv][4])
+
+---
+

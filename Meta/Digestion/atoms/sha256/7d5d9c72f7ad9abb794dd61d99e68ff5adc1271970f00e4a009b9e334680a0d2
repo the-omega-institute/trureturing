@@ -1,0 +1,9 @@
+## 定理 M4：有限算术关系可以精确回读
+
+$$
+\boxed{
+\mathcal R_{n\leftarrow d}[P_d]=P_n.
+}
+\tag{M25}
+$$
+

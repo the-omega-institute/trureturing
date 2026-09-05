@@ -1,0 +1,2 @@
+**全部未来核**用于构造最大稳定经典区，而不是只检查当前读数。`future_kernel_is_maximal_invariant` 已包含其最大性与不变性证明。
+
