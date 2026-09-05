@@ -478,7 +478,7 @@ internal sealed partial class TransactionFixture
                 $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                 $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
                 $"PLAYBOOK_USE_CANONICAL_FROZEN_QUERY={(useCanonicalFrozenQuery ? "1" : "0")}",
-                $"PLAYBOOK_REAL_CLI={Path.Combine(Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!, "StrataLint")}",
+                $"PLAYBOOK_REAL_CLI={RealCliPath()}",
                 "/bin/bash",
                 Path.Combine(Root, ScriptPath),
                 command,
@@ -650,4 +650,27 @@ internal sealed partial class TransactionFixture
         + "   digest: Synthetic deposit workflow digest\n"
         + "   wraps onto physical line seven. -/\n"
         + declaration;
+
+    // 此处原为 typeof(StrataLint.Cli.Program).Assembly.Location —— 一条对生产程序集的
+    // **编译期**依赖。它挡住夹具迁往共享测试支持程序集:迁过去就得让该程序集引用 Cli,
+    // 而那会改变**每个**引用它的测试项目的传递可达 StrataLint* 集合,
+    // 而 DependencyDirectionTests 逐项钉住了那些集合。
+    //
+    // 换成运行期目录并**当场断言 apphost 存在**。这不是降级检测(第 20 条红线):
+    // 原写法只证明「Cli 这个类型可见」,新写法证明「那个可执行文件真的在该目录」——
+    // 后者才是脚本实际需要的事实。缺失时抛出点名的异常,不静默给出错路径。
+    //
+    // 实测(2026-09-05):StrataLint.Tests / ScriptTests / ArchitectureTests 三个
+    // 引用 Cli(直接或传递)的测试项目,其输出目录里 StrataLint 与 StrataLint.dll 皆在,
+    // 与 Assembly.Location 给出的目录同一处;不引用 Cli 的 Scribe.Tests 两者皆无。
+    private static string RealCliPath()
+    {
+        var path = Path.Combine(AppContext.BaseDirectory, "StrataLint");
+        return File.Exists(path)
+            ? path
+            : throw new InvalidOperationException(
+                $"PLAYBOOK_REAL_CLI 需要 StrataLint apphost 与测试程序集同目录,但 {path} 不存在;"
+                + "消费该夹具的测试项目必须引用 StrataLint.Cli。");
+    }
+
 }
