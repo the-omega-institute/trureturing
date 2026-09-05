@@ -1,0 +1,38 @@
+import LeanInformationAudit.Syntax
+
+open LeanInformationAudit
+open D5.S3.ConceptDynamics.InformationEscape
+
+namespace LeanInformationAudit.Tests.ImportClosureProducer
+
+def objectArena : Arena := Arena.ofFintype Bool
+
+def lawArena : PrimitiveLawArena where
+  toArena := objectArena
+  signature :=
+    { Index := Fin 1
+      indexFintype := inferInstance
+      indexDecidableEq := inferInstance
+      Output := fun _ => Bool
+      outputDecidableEq := fun _ => inferInstance
+      axis := fun _ => .cut
+      readoutAxisNotAnchor := by simp
+      AnchorIndex := Fin 0
+      anchorFintype := inferInstance
+      anchorDecidableEq := inferInstance }
+  Law := fun _ => True
+
+local instance : DecidableEq lawArena.State := lawArena.toArena.stateDecidableEq
+
+def realization : PrimitiveRealization lawArena.signature where
+  readout := fun _ state => state
+  anchor := Fin.elim0
+
+information_theorem importedTheorem
+  in lawArena
+  object_arena objectArena
+  catalog importedBool
+  primitives realization
+  : lawArena.Law realization := by trivial
+
+end LeanInformationAudit.Tests.ImportClosureProducer

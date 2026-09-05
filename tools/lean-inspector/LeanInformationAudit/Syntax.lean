@@ -37,6 +37,37 @@ private def resolveTheorem (id : TSyntax `ident) : CommandElabM Name := do
 private def registerEntry (entry : InformationRegistryEntry) : CommandElabM Unit := do
   registerValidatedEntry entry
 
+private def catalogIdFrom (id : TSyntax `ident) : CatalogId :=
+  let name := id.getId
+  if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else name
+
+private def resolveArena (id : TSyntax `ident) : CommandElabM Name := do
+  try
+    liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
+  catch _ =>
+    throwErrorAt id "IE-C003 ArenaResolutionFailed: {id.getId}"
+
+private def ensureOccurrenceRegisterable (env : Environment) (rootId objectArenaName : Name)
+    (catalogId : CatalogId) (theoremName unitName realizationName : Name) :
+    CommandElabM Unit := do
+  if isCompanionName theoremName then
+    throwError "IE-C011 GeneratedCertificateRegistered: {theoremName}"
+  if InformationRegistry.hasOccurrence env objectArenaName theoremName then
+    throwError "IE-C002 DuplicateRegistration: {theoremName}"
+  for generatedName in #[unitName] do
+    if env.contains generatedName then
+      let prospective : InformationRegistryEntry := {
+        theoremName
+        unitName
+        arenaName := objectArenaName
+        realizationName
+        catalogId
+        registrationModuleName := rootId
+        objectArenaName
+        legacyNaming := false
+      }
+      throwError (qualifiedNameCollisionError rootId catalogId generatedName #[prospective])
+
 private def checkRealizationBundle (theoremName arenaName : Name)
     (typedRealization : Expr) (primitiveTerm : TSyntax `term) : CommandElabM Unit := do
   let valid <- liftTermElabM do
@@ -161,5 +192,123 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => do
       arenaName
       realizationName
     }
+
+syntax (name := informationTheoremOccurrenceCmd)
+  "information_theorem " ident ppLine
+    "in " ident ppLine
+    "object_arena " ident ppLine
+    "catalog " ident ppLine
+    "primitives " term ppLine
+    ": " term " := " term : command
+
+@[command_elab informationTheoremOccurrenceCmd]
+private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
+  let theoremId : TSyntax `ident := ⟨stx[1]⟩
+  let lawArenaId : TSyntax `ident := ⟨stx[3]⟩
+  let objectArenaId : TSyntax `ident := ⟨stx[5]⟩
+  let catalogId := catalogIdFrom ⟨stx[7]⟩
+  let primitiveTerm : TSyntax `term := ⟨stx[9]⟩
+  let statementTerm : TSyntax `term := ⟨stx[11]⟩
+  let proofTerm : TSyntax `term := ⟨stx[13]⟩
+  let theoremName <- declarationName theoremId
+  let lawArenaName <- resolveArena lawArenaId
+  let objectArenaName <- resolveArena objectArenaId
+  let rootId := (← getEnv).header.mainModule
+  let unitName := catalogQualifiedName rootId objectArenaName catalogId theoremName
+    theoremUnitSuffix
+  let realizationName := catalogQualifiedName rootId objectArenaName catalogId theoremName
+    primitiveRealizationSuffix
+  ensureOccurrenceRegisterable (← getEnv) rootId objectArenaName catalogId theoremName
+    unitName realizationName
+  let realizationId := absoluteIdentFrom theoremId realizationName
+  elabCommand (← `(command| def $realizationId :
+      D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization
+        ($lawArenaId:ident).signature := $primitiveTerm))
+  checkNativeStatement theoremName lawArenaName realizationName statementTerm
+  elabCommand (← `(command| theorem $theoremId : $statementTerm := $proofTerm))
+  let unitId := absoluteIdentFrom theoremId unitName
+  let unitType <- `(term|
+    D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($objectArenaId:ident))
+  let unitValue <- `(term|
+    D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.mk
+      ($realizationId:ident).toPrimitiveBundle $statementTerm $theoremId)
+  elabCommand (← `(command| def $unitId : $unitType := $unitValue))
+  registerEntry {
+    theoremName
+    unitName
+    arenaName := lawArenaName
+    realizationName
+    catalogId
+    catalogKind := .canonicalMaximal
+    registrationModuleName := rootId
+    objectArenaName
+    legacyNaming := false
+  }
+
+syntax (name := registerInformationTheoremOccurrenceCmd)
+  "register_information_theorem " ident ppLine
+    "in " ident ppLine
+    "object_arena " ident ppLine
+    "catalog " ident ppLine
+    "primitives " term " realization " ident : command
+
+@[command_elab registerInformationTheoremOccurrenceCmd]
+private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx => do
+  let theoremId : TSyntax `ident := ⟨stx[1]⟩
+  let lawArenaId : TSyntax `ident := ⟨stx[3]⟩
+  let objectArenaId : TSyntax `ident := ⟨stx[5]⟩
+  let catalogId := catalogIdFrom ⟨stx[7]⟩
+  let primitiveTerm : TSyntax `term := ⟨stx[9]⟩
+  let realizationId : TSyntax `ident := ⟨stx[11]⟩
+  let theoremName <- resolveTheorem theoremId
+  let lawArenaName <- resolveArena lawArenaId
+  let objectArenaName <- resolveArena objectArenaId
+  let realizationName <- try
+    liftCoreM <| realizeGlobalConstNoOverloadWithInfo realizationId
+  catch _ =>
+    throwError "IE-C006 StatementProofMismatch: {theoremName}"
+  match (← getEnv).find? realizationName with
+  | some (.thmInfo _) => pure ()
+  | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
+  let rootId := (← getEnv).header.mainModule
+  let unitName := catalogQualifiedName rootId objectArenaName catalogId theoremName
+    theoremUnitSuffix
+  ensureOccurrenceRegisterable (← getEnv) rootId objectArenaName catalogId theoremName
+    unitName realizationName
+  let theoremExpr <- liftTermElabM <| mkConstWithFreshMVarLevels theoremName
+  let theoremType <- liftTermElabM do
+    instantiateMVars (← whnfR (← inferType theoremExpr))
+  let realizationExpr <- liftTermElabM <| mkConstWithFreshMVarLevels realizationName
+  let realizationType <- liftTermElabM do
+    instantiateMVars (← whnfR (← inferType realizationExpr))
+  let legacyArgs := realizationType.getAppArgs
+  unless realizationType.getAppFn.constName? ==
+      some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
+      legacyArgs.size == 3 do
+    throwError "IE-C006 StatementProofMismatch: {theoremName}"
+  let validLegacy <- liftTermElabM do
+    return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels lawArenaName)) &&
+      (← isDefEq legacyArgs[1]! theoremType)
+  unless validLegacy do
+    throwError "IE-C006 StatementProofMismatch: {theoremName}"
+  checkRealizationBundle theoremName lawArenaName legacyArgs[2]! primitiveTerm
+  let unitId := absoluteIdentFrom theoremId unitName
+  let unitType <- `(term|
+    D5.S3.ConceptDynamics.InformationEscape.TheoremUnit $objectArenaId:ident)
+  let unitValue <- `(term|
+    D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
+      $realizationId:ident $theoremId:ident)
+  elabCommand (← `(command| def $unitId : $unitType := $unitValue))
+  registerEntry {
+    theoremName
+    unitName
+    arenaName := lawArenaName
+    realizationName
+    catalogId
+    catalogKind := .canonicalMaximal
+    registrationModuleName := rootId
+    objectArenaName
+    legacyNaming := false
+  }
 
 end LeanInformationAudit

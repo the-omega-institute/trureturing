@@ -31,12 +31,70 @@ def generatedCompanionSuffixes : Array String := #[
   "__catalog_irredundant"
 ]
 
+abbrev CatalogId := Name
+
+inductive CatalogKind where
+  | canonicalMaximal
+  | analysisView
+  deriving BEq, Inhabited, Repr
+
+def CatalogKind.artifactName : CatalogKind -> String
+  | .canonicalMaximal => "canonical_maximal"
+  | .analysisView => "analysis_view"
+
 structure InformationRegistryEntry where
   theoremName : Name
   unitName : Name
+  /-- The `PrimitiveLawArena` presentation; retained under its v4.1 field name. -/
   arenaName : Name
   /-- The declaration holding the native realization or the legacy witness. -/
   realizationName : Name
+  catalogId : CatalogId := .anonymous
+  catalogKind : CatalogKind := .canonicalMaximal
+  registrationModuleName : Name := .anonymous
+  objectArenaName : Name := .anonymous
+  /-- False exactly for registrations using the occurrence-aware v4.2 syntax. -/
+  legacyNaming : Bool := true
+
+def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : Name :=
+  entry.arenaName
+
+def InformationRegistryEntry.canonicalObjectArenaName
+    (entry : InformationRegistryEntry) : Name :=
+  if entry.objectArenaName.isAnonymous then entry.arenaName else entry.objectArenaName
+
+def InformationRegistryEntry.effectiveCatalogId
+    (entry : InformationRegistryEntry) : CatalogId :=
+  if entry.catalogId.isAnonymous then entry.arenaName else entry.catalogId
+
+def InformationRegistryEntry.occurrenceKey
+    (entry : InformationRegistryEntry) : Name × Name :=
+  (entry.canonicalObjectArenaName, entry.theoremName)
+
+/-- The one naming function used for all v4.2 occurrence companions. -/
+def catalogQualifiedName (rootId objectArenaName : Name) (catalogId : CatalogId)
+    (theoremName : Name) (suffix : String) : Name :=
+  theoremName
+    |>.str (rootId.toString ++ "/" ++ objectArenaName.toString ++ "/" ++
+      catalogId.toString)
+    |>.str suffix
+
+private def jsonNameArray (names : Array Name) : String :=
+  (Json.arr <| names.map fun name => Json.str name.toString).compress
+
+private def occurrenceLabel (entry : InformationRegistryEntry) : Name :=
+  entry.canonicalObjectArenaName.str entry.theoremName.toString
+
+def qualifiedNameCollisionError (rootId : Name) (catalogId : CatalogId)
+    (generatedName : Name) (entries : Array InformationRegistryEntry) : String :=
+  let occurrences := entries.map occurrenceLabel |>.qsort (fun left right => left.lt right)
+  s!"IE-C025 QualifiedNameCollision root={rootId} catalog={catalogId} \
+generated_name={generatedName} occurrences={jsonNameArray occurrences}"
+
+def rejectKernelAddressSemanticUse (rootId : Name) (catalogId : CatalogId)
+    (address consumer : String) : Except String Unit :=
+  .error s!"IE-C030 KernelAddressUsedAsSemanticEvidence root={rootId} \
+catalog={catalogId} address={address} consumer={consumer}"
 
 private initialize informationRegistryExt :
     SimplePersistentEnvExtension InformationRegistryEntry
@@ -56,6 +114,11 @@ def InformationRegistry.find? (env : Environment) (theoremName : Name) :
 
 def InformationRegistry.hasTheorem (env : Environment) (n : Name) : Bool :=
   (find? env n).isSome
+
+def InformationRegistry.hasOccurrence (env : Environment)
+    (objectArena theoremName : Name) : Bool :=
+  (entries env).any fun entry =>
+    entry.canonicalObjectArenaName == objectArena && entry.theoremName == theoremName
 
 def InformationRegistry.hasUnit (env : Environment) (n : Name) : Bool :=
   (entries env).any fun entry => entry.unitName == n
@@ -84,6 +147,8 @@ private def validateEntryDeclarations (env : Environment)
     throw (statementMismatchError entry.theoremName)
   unless env.contains entry.arenaName do
     throw s!"IE-C003 ArenaResolutionFailed: {entry.arenaName}"
+  unless env.contains entry.canonicalObjectArenaName do
+    throw s!"IE-C003 ArenaResolutionFailed: {entry.canonicalObjectArenaName}"
   unless env.contains entry.realizationName do
     throw (statementMismatchError entry.theoremName)
   let unitInfo := env.find? entry.unitName |>.get!
@@ -137,7 +202,18 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
     let expectedArena <- mkAppM
       `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
       #[arenaExpr]
-    unless ← isDefEq unitArgs.back! expectedArena do
+    let objectArenaExpr <- if entry.objectArenaName.isAnonymous then
+      pure expectedArena
+    else
+      let objectArenaExpr <- mkConstWithFreshMVarLevels entry.objectArenaName
+      let objectArenaType <- instantiateMVars (← whnfR (← inferType objectArenaExpr))
+      unless objectArenaType.getAppFn.constName? ==
+          some `D5.S3.ConceptDynamics.InformationEscape.Arena do
+        return .error s!"IE-C003 ArenaResolutionFailed: {entry.objectArenaName}"
+      unless ← isDefEq expectedArena objectArenaExpr do
+        return .error (statementMismatchError entry.theoremName)
+      pure objectArenaExpr
+    unless ← isDefEq unitArgs.back! objectArenaExpr do
       return .error (statementMismatchError entry.theoremName)
     let statementExpr <- mkAppM
       `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.Statement
@@ -193,7 +269,20 @@ private def sameEntry (left right : InformationRegistryEntry) : Bool :=
   left.theoremName == right.theoremName &&
     left.unitName == right.unitName &&
     left.arenaName == right.arenaName &&
-    left.realizationName == right.realizationName
+    left.realizationName == right.realizationName &&
+    left.effectiveCatalogId == right.effectiveCatalogId &&
+    left.catalogKind == right.catalogKind &&
+    left.registrationModuleName == right.registrationModuleName &&
+    left.canonicalObjectArenaName == right.canonicalObjectArenaName &&
+    left.legacyNaming == right.legacyNaming
+
+private def normalizedEntry (env : Environment)
+    (entry : InformationRegistryEntry) : InformationRegistryEntry :=
+  { entry with
+    registrationModuleName := if entry.registrationModuleName.isAnonymous then
+      env.header.mainModule
+    else
+      entry.registrationModuleName }
 
 /-- Validate a prospective entry before insertion; neither registry key may exist yet. -/
 def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
@@ -202,10 +291,17 @@ def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
   | .error message => return .error message
   | .ok () => pure ()
   let entries := InformationRegistry.entries env
-  if entries.any fun candidate => candidate.theoremName == entry.theoremName then
+  let occurrenceMatches := entries.filter fun candidate =>
+    candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&
+      candidate.theoremName == entry.theoremName
+  if !occurrenceMatches.isEmpty then
     return .error (duplicateError entry.theoremName)
-  if entries.any fun candidate => candidate.unitName == entry.unitName then
-    return .error (duplicateError entry.unitName)
+  let nameMatches := entries.filter fun candidate =>
+    candidate.unitName == entry.unitName ||
+      candidate.realizationName == entry.realizationName
+  if !nameMatches.isEmpty then
+    return .error <| qualifiedNameCollisionError env.header.mainModule
+      entry.effectiveCatalogId entry.unitName (nameMatches.push entry)
   return .ok ()
 
 /-- Validate an entry already stored in the persistent registry exactly once. -/
@@ -215,9 +311,10 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
   | .error message => return .error message
   | .ok () => pure ()
   let entries := InformationRegistry.entries env
-  let theoremMatches := entries.filter fun candidate =>
-    candidate.theoremName == entry.theoremName
-  match theoremMatches.toList with
+  let occurrenceMatches := entries.filter fun candidate =>
+    candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&
+      candidate.theoremName == entry.theoremName
+  match occurrenceMatches.toList with
   | [candidate] =>
     unless sameEntry candidate entry do
       return .error (duplicateError entry.theoremName)
@@ -226,12 +323,24 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
   match unitMatches.toList with
   | [candidate] =>
     unless sameEntry candidate entry do
-      return .error (duplicateError entry.unitName)
-  | _ => return .error (duplicateError entry.unitName)
+      return .error <| qualifiedNameCollisionError env.header.mainModule
+        entry.effectiveCatalogId entry.unitName #[candidate, entry]
+  | _ => return .error (qualifiedNameCollisionError env.header.mainModule
+      entry.effectiveCatalogId entry.unitName unitMatches)
+  let realizationMatches := entries.filter fun candidate =>
+    candidate.realizationName == entry.realizationName
+  match realizationMatches.toList with
+  | [candidate] =>
+    unless sameEntry candidate entry do
+      return .error <| qualifiedNameCollisionError env.header.mainModule
+        entry.effectiveCatalogId entry.realizationName #[candidate, entry]
+  | _ => return .error (qualifiedNameCollisionError env.header.mainModule
+      entry.effectiveCatalogId entry.realizationName realizationMatches)
   return .ok ()
 
 def registerValidatedEntry (entry : InformationRegistryEntry) :
     Lean.Elab.Command.CommandElabM Unit := do
+  let entry := normalizedEntry (← getEnv) entry
   let result <- Lean.Elab.Command.liftTermElabM <|
     validateNewEntry (← getEnv) entry
   match result with

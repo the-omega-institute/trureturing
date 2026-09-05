@@ -14,15 +14,23 @@ open D5.S3.ConceptDynamics.InformationEscape
 structure CatalogUnitRecord where
   theoremName : Name
   unitName : Name
+  realizationName : Name
+  registrationModuleName : Name
   index : Nat
+  deriving Inhabited
 
 structure CatalogRecord where
+  rootId : Name
+  catalogId : CatalogId
+  catalogKind : CatalogKind
   arenaName : Name
   catalogName : Name
   units : Array CatalogUnitRecord
+  compatibilityV2 : Bool
 
 structure PreparedCatalog where
   record : CatalogRecord
+  arenaValue : Expr
   type : Expr
   value : Expr
   declaration : Declaration
@@ -30,13 +38,18 @@ structure PreparedCatalog where
 private def nameLess (left right : Name) : Bool :=
   left.lt right
 
-private def catalogNameFor (arenaName : Name) : Name :=
-  arenaName.str "__information_catalog"
+private def catalogNameFor (rootId arenaName : Name) (catalogId : CatalogId)
+    (compatibilityV2 : Bool) : Name :=
+  if compatibilityV2 then arenaName.str "__information_catalog"
+  else catalogQualifiedName rootId arenaName catalogId arenaName "__information_catalog"
 
-private def arenaValue (arenaName : Name) : MetaM Expr := do
-  mkAppM
-    `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
-    #[mkConst arenaName]
+private def entryArenaValue (entry : InformationRegistryEntry) : MetaM Expr := do
+  if entry.objectArenaName.isAnonymous then
+    mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
+      #[mkConst entry.arenaName]
+  else
+    mkConstWithFreshMVarLevels entry.objectArenaName
 
 private def propositionIsTrue (proposition : Expr) : MetaM Bool := do
   let decision ← mkDecide proposition
@@ -64,11 +77,40 @@ private def makeUnitVector (units : Array Expr) : Lean.Elab.Term.TermElabM Expr 
     vector ← mkAppM ``Matrix.vecCons #[unit, vector]
   pure vector
 
-private def prepareCatalog (arenaName : Name)
+private def nameArrayJson (names : Array Name) : String :=
+  (Json.arr <| names.map fun name => Json.str name.toString).compress
+
+private def distinctNames (names : Array Name) : Array Name :=
+  names.foldl (init := #[]) fun result name =>
+    if result.contains name then result else result.push name
+
+private def validateMaximalCatalog (rootId arenaName : Name)
+    (entries : Array InformationRegistryEntry) : Except String CatalogId := do
+  let catalogIds := distinctNames (entries.map (·.effectiveCatalogId))
+    |>.qsort nameLess
+  if catalogIds.size != 1 then
+    throw s!"IE-C024 SplitCanonicalArenaCatalog root={rootId} arena={arenaName} \
+catalogs={nameArrayJson catalogIds}"
+  let maximal := entries.filter fun entry => entry.catalogKind == .canonicalMaximal
+  if maximal.isEmpty then
+    let occurrences := entries.map (·.theoremName) |>.qsort nameLess
+    throw s!"IE-C026 MissingMaximalCatalog root={rootId} arena={arenaName} \
+occurrences={nameArrayJson occurrences}"
+  if maximal.size != entries.size then
+    throw s!"IE-C024 SplitCanonicalArenaCatalog root={rootId} arena={arenaName} \
+catalogs={nameArrayJson catalogIds}"
+  pure catalogIds[0]!
+
+private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)
     (entries : Array InformationRegistryEntry) :
     Lean.Elab.Term.TermElabM PreparedCatalog := do
   let sorted := entries.qsort fun left right => nameLess left.theoremName right.theoremName
-  let arena ← arenaValue arenaName
+  let catalogId <- match validateMaximalCatalog rootId arenaName sorted with
+    | .ok catalogId => pure catalogId
+    | .error message => throwError message
+  let some firstEntry := sorted[0]?
+    | throwError "IE-C026 MissingMaximalCatalog root={rootId} arena={arenaName} occurrences=[]"
+  let arena ← entryArenaValue firstEntry
   let nondegenerate ← mkAppM
     `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
   unless ← propositionIsTrue nondegenerate do
@@ -81,9 +123,11 @@ private def prepareCatalog (arenaName : Name)
   let units := sorted.mapIdx fun index entry => {
     theoremName := entry.theoremName
     unitName := entry.unitName
+    realizationName := entry.realizationName
+    registrationModuleName := entry.registrationModuleName
     index
   }
-  let catalogName := catalogNameFor arenaName
+  let catalogName := catalogNameFor rootId arenaName catalogId compatibilityV2
   let declaration := .defnDecl {
     name := catalogName
     levelParams := []
@@ -93,7 +137,16 @@ private def prepareCatalog (arenaName : Name)
     safety := .safe
   }
   pure {
-    record := { arenaName, catalogName, units }
+    record := {
+      rootId
+      catalogId
+      catalogKind := .canonicalMaximal
+      arenaName
+      catalogName
+      units
+      compatibilityV2
+    }
+    arenaValue := arena
     type
     value
     declaration
@@ -102,9 +155,9 @@ private def prepareCatalog (arenaName : Name)
 private def groupEntries (entries : Array InformationRegistryEntry) :
     Array (Name × Array InformationRegistryEntry) :=
   entries.foldl (init := #[]) fun groups entry =>
-    match groups.findIdx? fun group => group.1 == entry.arenaName with
+    match groups.findIdx? fun group => group.1 == entry.canonicalObjectArenaName with
     | some index => groups.modify index fun group => (group.1, group.2.push entry)
-    | none => groups.push (entry.arenaName, #[entry])
+    | none => groups.push (entry.canonicalObjectArenaName, #[entry])
 
 /-- Validate the registry and prepare catalogs without changing the environment. -/
 def prepareCatalogs : CommandElabM (Array PreparedCatalog) := do
@@ -113,8 +166,13 @@ def prepareCatalogs : CommandElabM (Array PreparedCatalog) := do
   if entries.isEmpty then
     throwError "IE-C001 UnregisteredTheoremUnit: registry is empty"
   liftTermElabM <| entries.forM (validateEntry env)
+  let rootId := env.header.mainModule
+  let compatibilityV2 := entries.all fun entry =>
+    entry.legacyNaming && entry.registrationModuleName == rootId
   let groups := (groupEntries entries).qsort fun left right => nameLess left.1 right.1
-  liftTermElabM <| groups.mapM fun group =>
-    prepareCatalog group.1 group.2
+  let catalogs <- liftTermElabM <| groups.mapM fun group =>
+    prepareCatalog rootId group.1 compatibilityV2 group.2
+  pure <| catalogs.qsort fun left right =>
+    nameLess left.record.catalogId right.record.catalogId
 
 end LeanInformationAudit
