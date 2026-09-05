@@ -625,8 +625,18 @@ theorem canonicalToOriginal_injective : Function.Injective (canonicalToOriginal 
       machine.stateType r.1 at ht
     rw [(signatureRepresentative machine l).2, r.2] at ht
     cases ht
-  · exact congrArg Sum.inr
-      (signatureRepresentative_injective machine (Subtype.ext h))
+  · change (signatureRepresentative machine l).1 =
+      (signatureRepresentative machine r).1 at h
+    have reps : signatureRepresentative machine l =
+        signatureRepresentative machine r := Subtype.ext h
+    have vals : l.1 = r.1 := by
+      calc
+        l.1 = oneSignature machine (signatureRepresentative machine l) :=
+          (signatureRepresentative_spec machine l).symm
+        _ = oneSignature machine (signatureRepresentative machine r) :=
+          congrArg (oneSignature machine) reps
+        _ = r.1 := signatureRepresentative_spec machine r
+    exact congrArg Sum.inr (Subtype.ext vals)
 
 /-- Canonicalization never increases state cardinality. -/
 theorem canonical_state_card_le [Fintype Output] [Fintype State] :
