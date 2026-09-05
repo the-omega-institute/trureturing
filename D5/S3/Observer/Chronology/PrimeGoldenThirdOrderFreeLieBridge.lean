@@ -7,7 +7,7 @@
 
 import D5.S3.Observer.Chronology.PrimeGoldenThirdOrderChronologyEscape
 import D5.S3.Observer.Chronology.StepTwoFreeLieBridge
-import Mathlib
+import Mathlib.LinearAlgebra.Matrix.Notation
 
 /-!
 # A strict third-order free-Lie chronology refinement
@@ -41,7 +41,6 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Observer.Chronology.PrimeGoldenThirdOrderFreeLieBridge
 
-open D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity
 open D5.S3.Observer.Chronology.StepTwoChronologicalSignature
 open D5.S3.Observer.Chronology.StepTwoFreeLieBridge
 open D5.S3.Observer.Chronology.PrimeWordAntipodeParityStepBridge
@@ -49,8 +48,13 @@ open D5.S3.Observer.Chronology.PrimeGoldenBigradedChronologicalSignature
 open D5.S3.Observer.Chronology.PrimeGoldenChronologyFiberSeparation
 open D5.S3.Observer.Chronology.PrimeGoldenThirdOrderChronologyEscape
 
-attribute [local instance 100] LieRing.ofAssociativeRing
-attribute [local instance 100] LieAlgebra.ofAssociativeAlgebra
+local notation "ringCommutator" =>
+  D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity.commutator
+
+-- Use the same associative-algebra Lie structure as the generic evaluation
+-- owner, including when the scalar ring is specialized to the integers.
+attribute [local instance 2000] LieRing.ofAssociativeRing
+attribute [local instance 2000] LieAlgebra.ofAssociativeAlgebra
 
 noncomputable section
 
@@ -67,10 +71,10 @@ commutator. -/
 theorem cubic_chronology_defect_eq_neg_nested_commutator
     {A : Type u} [Ring A] (a b : A) :
     cubicChronologyDefect a b =
-      -commutator (a + b) (commutator a b) := by
+      -ringCommutator (a + b) (ringCommutator a b) := by
   unfold cubicChronologyDefect
   rw [ordered_triple_moment_abba, ordered_triple_moment_baab]
-  unfold commutator
+  unfold D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity.commutator
   noncomm_ring
 
 /-- Swapping the two event values reverses the orientation of the cubic
@@ -80,7 +84,7 @@ theorem cubic_chronology_defect_swap
     cubicChronologyDefect b a = -cubicChronologyDefect a b := by
   rw [cubic_chronology_defect_eq_neg_nested_commutator,
     cubic_chronology_defect_eq_neg_nested_commutator]
-  unfold commutator
+  unfold D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity.commutator
   noncomm_ring
 
 /-- The universal degree-three free-Lie word underlying the residual
@@ -104,8 +108,8 @@ theorem free_lie_evaluation_third_order
     free_lie_evaluation_generator,
     free_lie_evaluation_bracket]
   change
-    -commutator (observe left + observe right)
-        (commutator (observe left) (observe right)) =
+    -ringCommutator (observe left + observe right)
+        (ringCommutator (observe left) (observe right)) =
       cubicChronologyDefect (observe left) (observe right)
   exact
     (cubic_chronology_defect_eq_neg_nested_commutator
@@ -131,7 +135,8 @@ theorem cubic_chronology_defect_e12_e21 :
   rw [cubic_chronology_defect_eq_neg_nested_commutator]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [e12, e21, cubicWitnessMatrix, commutator,
+    norm_num [e12, e21, cubicWitnessMatrix,
+      D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity.commutator,
       Matrix.mul_apply, Fin.sum_univ_two]
 
 /-- The matrix certificate is nonzero. -/
