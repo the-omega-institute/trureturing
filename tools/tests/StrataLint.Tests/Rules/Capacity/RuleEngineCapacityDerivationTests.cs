@@ -46,6 +46,8 @@ public sealed class RuleEngineCapacityDerivationTests
         var invokingThreadId = Environment.CurrentManagedThreadId;
         var bothStarted = new TaskCompletionSource<bool>(
             TaskCreationOptions.RunContinuationsAsynchronously);
+        var serialInvocationDetected = new TaskCompletionSource<bool>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
         var events = new ConcurrentQueue<string>();
         var started = 0;
         var completedBeforeBothStarted = 0;
@@ -59,13 +61,15 @@ public sealed class RuleEngineCapacityDerivationTests
                 bothStarted.SetResult(true);
             }
 
-            // The current serial implementation runs on the invoking thread. Let it finish
-            // so the red test reports an assertion instead of hanging at the synchronization gate.
-            if (Environment.CurrentManagedThreadId != invokingThreadId)
+            if (Environment.CurrentManagedThreadId == invokingThreadId)
             {
-                bothStarted.Task.GetAwaiter().GetResult();
+                serialInvocationDetected.SetResult(true);
             }
 
+            var openedGate = Task.WhenAny(bothStarted.Task, serialInvocationDetected.Task)
+                .GetAwaiter()
+                .GetResult();
+            Assert.Same(bothStarted.Task, openedGate);
             if (Volatile.Read(ref started) < 2)
             {
                 Interlocked.Exchange(ref completedBeforeBothStarted, 1);
@@ -106,6 +110,34 @@ public sealed class RuleEngineCapacityDerivationTests
     }
 
     [Fact]
+    public void Sl003ProductionEntryBindsCurrentAndForkPointSnapshotsToPolicyOrder()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var currentMap = UnknownTestMap("CurrentDebt");
+        var forkPointMap = UnknownTestMap("ForkPointDebt");
+
+        var findings = RepositoryRules.EvaluateCapacity(context, snapshot =>
+        {
+            if (ReferenceEquals(snapshot, context.Current))
+            {
+                return currentMap;
+            }
+
+            Assert.Same(context.ForkPoint, snapshot);
+            return forkPointMap;
+        });
+
+        var finding = Assert.Single(findings, static item =>
+            item.Message.Contains("unknown test method introduced", StringComparison.Ordinal));
+        Assert.Equal("tools/tests/Synthetic.Tests/DebtTests.cs", finding.Path);
+        Assert.Equal(
+            "conservative unknown test method introduced after fork point: "
+            + "tools/tests/Synthetic.Tests::DebtTests.CurrentDebt",
+            finding.Message);
+    }
+
+    [Fact]
     public async Task Sl003PrefersCurrentFailureAfterObservingBothDerivationFailures()
     {
         var fixture = new RuleFixture();
@@ -121,6 +153,48 @@ public sealed class RuleEngineCapacityDerivationTests
         Assert.Same(currentFailure, thrown);
         var observedForkPointFailure = Assert.IsType<AggregateException>(forkPointTask.Exception);
         Assert.Same(forkPointFailure, Assert.Single(observedForkPointFailure.InnerExceptions));
+    }
+
+    [Fact]
+    public async Task Sl003WaitsForForkPointTerminationBeforeReturningCurrentFailure()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var currentFailure = new InvalidOperationException("current derivation failed");
+        var forkPointFailure = new InvalidOperationException("fork-point derivation failed");
+        var forkPointDerivation = new TaskCompletionSource<ScribeTestMap>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var evaluationReturned = new TaskCompletionSource<bool>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+
+        var evaluation = RepositoryRules.EvaluateCapacityAsync(
+            context,
+            Task.FromException<ScribeTestMap>(currentFailure),
+            forkPointDerivation.Task);
+        var returnObserver = evaluation.ContinueWith(
+            static (_, state) =>
+            {
+                ((TaskCompletionSource<bool>)state!).SetResult(true);
+            },
+            evaluationReturned,
+            CancellationToken.None,
+            TaskContinuationOptions.ExecuteSynchronously,
+            TaskScheduler.Default);
+
+        var returnedBeforeForkPointTerminated = evaluationReturned.Task.IsCompleted;
+        forkPointDerivation.SetException(forkPointFailure);
+
+        var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() => evaluation);
+        await returnObserver;
+        var observedForkPointFailure = Assert.IsType<AggregateException>(
+            forkPointDerivation.Task.Exception);
+
+        Assert.False(
+            returnedBeforeForkPointTerminated,
+            "EvaluateCapacityAsync returned before the ForkPoint derivation reached a terminal state");
+        Assert.Same(currentFailure, thrown);
+        Assert.Same(forkPointFailure, Assert.Single(observedForkPointFailure.InnerExceptions));
+        Assert.True(evaluationReturned.Task.IsCompletedSuccessfully);
     }
 
     [Fact]
