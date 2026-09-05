@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1d7ebe10e30598080d1d3a1d7e2aca2b8bf48f9bdebcb3f7c6a25c528e6e72a7
+  normalized_sha256: sha256:1d7ebe10e30598080d1d3a1d7e2aca2b8bf48f9bdebcb3f7c6a25c528e6e72a7
+cas_ref: sha256:1d7ebe10e30598080d1d3a1d7e2aca2b8bf48f9bdebcb3f7c6a25c528e6e72a7
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/ConservationAutonomySeparation.conservation_and_autonomy_are_distinct
+    target_statement_id: sha256:e8f84ba862ccb29645941731ab56852bf90405fe94812fb9796e90595de309b5
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Dynamics/ConservationAutonomySeparation.conservation_and_autonomy_are_distinct
+      definition_sha256: sha256:88219fd23c38034c9190a8d1bfc499af826d5a5d0fdb5bd9f766948dd978ea46
+      emission_sha256: sha256:9c11a4115f28f82b7357a062594ccd33601a3c2ac299424fb077495287f98bd8
+  unresolved_subitems: []
