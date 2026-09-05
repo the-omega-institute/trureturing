@@ -22,12 +22,16 @@ PASSED=0
 for i in $(seq 1 300); do
   IDLE=$(top -l 2 -n 0 -s 2 | grep 'CPU usage' | tail -1 | sed -E 's/.*, ([0-9.]+)% idle/\1/')
   LEAN=$(pgrep -x lean | wc -l | tr -d ' '); CODEX=$(pgrep -f 'codex exec' | wc -l | tr -d ' ')
-  if awk -v i="$IDLE" -v l="$LEAN" -v c="$CODEX" -v m="$MAXC" 'BEGIN{exit !(i>=20 && l<=4 && c<=m)}'; then PASSED=1; break; fi
-  echo "gate-wait $(date +%T) idle=$IDLE lean=$LEAN codex=$CODEX"; sleep 60
+  # codex upstream health (2026-09-06: llm.aelf.dev returned 502 for hours and every in-flight seat died with turn.failed);
+  # any HTTP status other than 502/503/000 means the gateway answers (401/400/405 are fine — we only need it reachable)
+  EP=$(curl -s -o /dev/null -m 10 -w '%{http_code}' -X POST "${CODEX_HEALTH_URL:-https://llm.aelf.dev/responses}" -H 'content-type: application/json' -d '{}' 2>/dev/null || echo 000)
+  EPOK=1; case "$EP" in 502|503|000) EPOK=0;; esac
+  if [ "$EPOK" -eq 1 ] && awk -v i="$IDLE" -v l="$LEAN" -v c="$CODEX" -v m="$MAXC" 'BEGIN{exit !(i>=20 && l<=4 && c<=m)}'; then PASSED=1; break; fi
+  echo "gate-wait $(date +%T) idle=$IDLE lean=$LEAN codex=$CODEX endpoint=$EP"; sleep 60
 done
 # fail-closed: never launch when the gate did not open (the old version fell through after 90 minutes and
 # launched ~10 seats into a saturated host on 2026-09-05)
 [ "$PASSED" -eq 1 ] || { echo "GATE_TIMEOUT idle=${IDLE:-?} lean=${LEAN:-?} codex=${CODEX:-?} — not launched"; exit 3; }
-echo "GATE_PASS idle=${IDLE:-?} lean=${LEAN:-?} codex=${CODEX:-?} brief=$OUT"
+echo "GATE_PASS idle=${IDLE:-?} lean=${LEAN:-?} codex=${CODEX:-?} endpoint=${EP:-?} brief=$OUT"
 bash "$R" --flight-id "$FLIGHT" --attempt "$ATT" --stage "$STAGE" --work-target "$WT" < "$OUT"
 echo "RUNNER_EXIT=$?"
