@@ -13,6 +13,7 @@ namespace D5.S3.PrimeGaps.LocalGlobalOccupancySeparation
 open D5.S3.PrimeGaps.ShortGapOccupancyBridge
 open D5.S3.PrimeGaps.PrimeGapAdmissibilityContractBridge
 open D5.S3.PrimeGaps.DHLAdmissibleDiameterTransfer
+open D5.S3.Analytic.PrimeProducts.FiniteLocalResidueBlockingCriterion
 
 /-- The normalized twin-offset window. -/
 def twinOffsets : Finset Nat := {0, 2}
