@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.GoldenCriticalSpectrum;
 
@@ -19,7 +21,7 @@ internal sealed class GoldenExponentialPronyCoordinateDocument
                 DeclarationHandle.Create(
                     Prefix + "golden_exponential_prony_coordinate_eq_sampling_atom"),
                 H("The complex coordinate equals the existing golden sampling atom"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(SamplingAtomFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -32,7 +34,7 @@ internal sealed class GoldenExponentialPronyCoordinateDocument
                 DeclarationHandle.Create(
                     Prefix + "golden_exponential_prony_coordinate_add"),
                 H("Lifted addition becomes multiplication of Prony nodes"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(AddFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -45,7 +47,7 @@ internal sealed class GoldenExponentialPronyCoordinateDocument
                 DeclarationHandle.Create(
                     Prefix + "golden_exponential_prony_coordinate_nat_mul"),
                 H("Natural translation depth becomes ordinary powers"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(NatMulFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -58,7 +60,7 @@ internal sealed class GoldenExponentialPronyCoordinateDocument
                 DeclarationHandle.Create(
                     Prefix + "golden_exponential_prony_coordinate_eq_implies_re_eq"),
                 H("Node equality preserves radial displacement"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(ReInjectiveFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -66,4 +68,62 @@ internal sealed class GoldenExponentialPronyCoordinateDocument
                     Paragraph(Text(
                         "Any unresolved collision is therefore purely vertical phase aliasing. No global imaginary-direction injectivity is claimed."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0)
+            {
+                items.Add(Comma);
+                items.Add(Sp);
+            }
+            items.Add(arguments[index]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula SamplingAtomFormula()
+    {
+        Formula z = F.Id("z");
+        return Disp(Seq(
+            Forall, Sp, z, Comma, Sp,
+            Call("goldenExponentialPronyCoordinate", z), Sp, Eq, Sp,
+            Call("goldenSamplingAtom", Call("im", z), Call("re", z)), Dot));
+    }
+
+    private static Formula AddFormula()
+    {
+        Formula z = F.Id("z");
+        Formula w = F.Id("w");
+        return Disp(Seq(
+            Forall, Sp, z, Comma, Sp, Forall, Sp, w, Comma, Sp,
+            Call("goldenExponentialPronyCoordinate", Seq(z, Sp, Plus, Sp, w)), Sp, Eq, Sp,
+            Call("goldenExponentialPronyCoordinate", z), Sp, Cdot, Sp,
+            Call("goldenExponentialPronyCoordinate", w), Dot));
+    }
+
+    private static Formula NatMulFormula()
+    {
+        Formula t = F.Id("t");
+        Formula z = F.Id("z");
+        return Disp(Seq(
+            Forall, Sp, t, Comma, Sp, Forall, Sp, z, Comma, Sp,
+            Call("goldenExponentialPronyCoordinate", Seq(t, Sp, Cdot, Sp, z)), Sp, Eq, Sp,
+            Call("goldenExponentialPronyCoordinate", z), Caret, Grp(t), Dot));
+    }
+
+    private static Formula ReInjectiveFormula()
+    {
+        Formula z = F.Id("z");
+        Formula w = F.Id("w");
+        return Disp(Seq(
+            Forall, Sp, z, Comma, Sp, Forall, Sp, w, Comma, Sp,
+            Call("goldenExponentialPronyCoordinate", z), Sp, Eq, Sp,
+            Call("goldenExponentialPronyCoordinate", w), Sp, Rightarrow, Sp,
+            Call("re", z), Sp, Eq, Sp, Call("re", w), Dot));
+    }
+
 }

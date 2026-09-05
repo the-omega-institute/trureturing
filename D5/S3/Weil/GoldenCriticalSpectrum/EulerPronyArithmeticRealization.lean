@@ -61,7 +61,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 open Filter Function
-open scoped BigOperators ComplexConjugate
+open scoped BigOperators ComplexConjugate Topology
 
 namespace D5.S3.Weil.GoldenCriticalSpectrum.EulerPronyArithmeticRealization
 
@@ -107,12 +107,12 @@ theorem euler_mellin_prony_node_eq_cpow
     exact_mod_cast (Nat.ne_of_gt hAddress)
   rw [Complex.cpow_def_of_ne_zero hAddressC]
   congr 1
-  rw [← Complex.ofReal_log (Nat.cast_nonneg address)]
+  rw [show ((address : ℕ) : ℂ) = (((address : ℝ)) : ℂ) by push_cast; ring,
+    (Complex.ofReal_log (Nat.cast_nonneg address)).symm]
   push_cast
   have hPeriodC : (goldenScalePeriod : ℂ) ≠ 0 := by
     exact_mod_cast golden_scale_period_ne_zero
   field_simp [hPeriodC]
-  ring
 
 /-- Unit Mellin step gives the reciprocal integer node. -/
 theorem euler_mellin_prony_node_one
@@ -216,7 +216,7 @@ theorem continued_euler_trace_eq_single_address_heat_trace
     {s : ℂ} (hs : 1 < s.re) :
     continuedEulerTrace s = singleAddressHeatTrace s := by
   rw [single_address_heat_trace_eq_log_derivative hs]
-  simp [continuedEulerTrace, logDeriv_apply]
+  simp [continuedEulerTrace, logDeriv_apply, neg_div]
 
 /-- A zeta zero of multiplicity `m` is a pole center of the continued Euler
 trace with principal coefficient `-m`. The remaining local term is the
@@ -246,8 +246,7 @@ theorem continued_euler_trace_principal_part
     huAnalyticEventually.filter_mono nhdsWithin_le_nhds,
     huNonzeroEventually.filter_mono nhdsWithin_le_nhds,
     self_mem_nhdsWithin] with z hzLog hzAnalytic hzUnit hzNe
-  have hzSub : z - rho ≠ 0 := by
-    simpa using hzNe
+  have hzSub : z - rho ≠ 0 := sub_ne_zero.mpr hzNe
   have hProduct :
       logDeriv (fun w : ℂ => (w - rho) ^ m * u w) z =
         logDeriv (fun w : ℂ => (w - rho) ^ m) z +
@@ -293,7 +292,7 @@ theorem zeta_zero_prony_node_conj (rho : ℂ) :
   unfold zetaZeroPronyNode
   rw [show starRingEnd ℂ rho - criticalAbscissa =
       starRingEnd ℂ (rho - criticalAbscissa) by
-        simp [criticalAbscissa],
+        simp [criticalAbscissa, map_ofNat],
     golden_exponential_prony_coordinate_conj]
 
 /-- The node radius is the golden exponential of the signed horizontal
@@ -360,7 +359,7 @@ theorem zero_data_continued_euler_trace_principal_part
         fun z => zeroDataEulerPoleWeight Z n / (z - Z.zero n) -
           logDeriv u z := by
   simpa [zeroDataEulerPoleWeight] using
-    (continued_euler_trace_principal_part (Z.zero_multiplicity n))
+    (continued_euler_trace_principal_part (Z.multiplicity_spec n))
 
 /-- One stored Euler pole is mapped to a nonzero golden Prony node, reflection
 acts by inversion, and unit radius is exactly the critical-line condition. -/

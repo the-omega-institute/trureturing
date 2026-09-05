@@ -62,9 +62,7 @@ theorem golden_exponential_prony_coordinate_eq_sampling_atom (z : ℂ) :
   congr 1
   apply Complex.ext
   · simp
-    ring
   · simp
-    ring
 
 @[simp]
 theorem golden_exponential_prony_coordinate_zero :
@@ -126,7 +124,6 @@ theorem golden_exponential_prony_coordinate_norm_exp (z : ℂ) :
   rw [Complex.norm_exp]
   congr 1
   simp
-  ring
 
 /-- The same radius in the canonical golden-ratio normalization. -/
 theorem golden_exponential_prony_coordinate_norm (z : ℂ) :
