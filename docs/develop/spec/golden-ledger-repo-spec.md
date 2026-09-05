@@ -566,6 +566,8 @@ receipts:
 
 `quarantine-atom` 是 `receipts.quarantine` 的唯一 writer。set 只接受键集恰为 `{atom_id,blocker_class,justification,reentry_condition}` 的 strict TOML request,并要求 atom_id 在当前账本恰解析一条 `residual-open` entry、`coverage_gids` 为空、无 `receipts.cover_disposition`、blocker_class 属 `DigestionQuarantine.BlockerClasses` 封闭字母表且两个自由文本 trim 后非空;同值重放成功且 shard 零字节变化,异值默认以 `QUARANTINE_CONFLICT` 拒绝,只有显式 `--replace` 可替换。reentry 也只走同一 verb 的 `--clear <atom_id>` 转移,无 quarantine 时以 `QUARANTINE_ABSENT` 拒绝。每次有效变更只经 `BackfillInventoryWriter` 序列化该 atom shard,写前必须由 `BackfillInventoryLoader` 重载并逐项、逐字节回放一致;直接手改 YAML receipts 的路径自此退役,历史只由 git 保存。
 
+**deposit 在 freeze 后组合 canonical cover(2026-09-05 定)。**`make deposit ATOM_ID=x GID=g` 在 lean-report → header-check → emit → freeze 之后,对同一 `(ATOM_ID, GID)` 立即调用 canonical `cover-atom` 并重新 `emit`;`cover-atom` 仍是 `coverage_gids` 与 Scribe 收据的唯一写者,shell 层永不写边。已冻结与已覆盖均为可重放的跳过(`PLAYBOOK_SKIP … coverage-already-applied`)。若 cover 不能使残余原子进入 deletable `closed`(如多子句守门),冻结的定理保留、CLI 已写入的 `receipts.cover_disposition` 为权威记录,工作流以 `PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=… gid=… reason=…` 非零退出,不得把「已冻结」报成「已消化」。
+
 `digest-status --formalize-candidates` 与 `theory-candidates` 消费同一个 `DigestionCoverDispositionSelector` 判据；未显式重试的 disposition atom 在两者中均优先投影到 `withheld[]`,`withhold_reason="cover-disposition"`,不得把它投影到 candidate 后交回批处理。重试是显式单通道：`--retry-dispositions` 只在 `digest-status --formalize-candidates` 下合法,仅对带 disposition 的 atom 绕过该 withhold,使其重新进入 `candidates`;`theory-candidates` 不接受 retry 参数。residual summary 与 echo shard 默认同样排除 disposition atom。由此,各机 `mk-coverable` / `known-fail` 第五层影子清单在消费者切到 canonical selector 后退役:先确认 selector 输出不再含对应 atom,再删除本机影子数据;不把影子数据回灌成另一真源,也不由本变更跨机修改脚本。
 
 **atom 与理论卷不删、勘误以追加表达,是建设者纪律。**历史与任何删除均由 git 记录可查;不设对应的机器判官(2026-09-02 owner 裁决:「只增不减的账本就是 git 本身,只保证数据当下正确」)。SL-016 仍守派生状态以及 CAS 当前引用与哈希的正确性。
@@ -993,6 +995,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 - v3.0:mathlib 式裁决(import 图即 DAG、PR 即并发、git 即史官、状态即语法)。
 - v2.x:证据等级 E0–E4、SSOT 两层账、证书拆分、Gödel 条款(并入 v3+)。
 - v1:初版雏形。
+- **v7.24**(2026-09-05,总单 #5533 第 5 层配套):§11.21 记 deposit 在 freeze 后组合 canonical cover 的工作流契约与 `PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED` 哨兵;cover-atom 仍是唯一边写者。
 
 **A18.1 结构化真值图导出(v1 未冻约)** `Generated/truth-graph.v1.json` 的唯一方言为 `stratalint.truth-graph.v1` / `schema_version:1`;根节闭集为 `{schema,schema_version,provenance,truth,documents,joins,deferred_layers}`。`truth` 保留 formal truth DAG 的节点、module-import 边、open blocker、状态计数与最长依赖路径 depth。`documents.document_nodes` 以 canonical Blueprint markdown `repo_path` + Scribe `gid` 唯一标识文档,并以 `receipt∈{receipt-free,receipt-bound}` 分类;`documents.describe_nodes` 的闭集字段为 `{repo_path,document_gid,describe_id,kind,lean_declaration_gid,formula_provenance}`,逐个投影本次 `DocumentDefinitions` 的全部 Describe。两种节点集均动态全等,不得硬编码基线数字。`documents.document_edges` 是封闭的分型对象:`dependency[{dependency,dependent}]` 表示承重前置指向依赖者,必须无环;`narrative_reference[{source,target}]` 表示叙事阅读引用,允许有环且**绝不承重**——消费者禁止用它计算拓扑、depth、准入 blocker 或撤销后代,也禁止与 dependency 扁平合并。两类边均只由 `DocumentGraphAssembler` 的已验证产物投影,canonical writer 不枚举仓库、不重算图。
 
