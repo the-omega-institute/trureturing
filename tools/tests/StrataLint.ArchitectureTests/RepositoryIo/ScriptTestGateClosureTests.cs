@@ -18,13 +18,13 @@ public sealed partial class ScriptTestGateClosureTests
     {
         Assert.Equal(
             ScriptTestInputDeriver.RepositoryLayoutAssemblyName,
-            typeof(StrataLint.Tests.TestRepositoryLayout).Assembly.GetName().Name);
+            typeof(StrataLint.TestSupport.TestRepositoryLayout).Assembly.GetName().Name);
         Assert.Equal(
             ScriptTestInputDeriver.RepositoryLayoutTypeName,
-            typeof(StrataLint.Tests.TestRepositoryLayout).Name);
+            typeof(StrataLint.TestSupport.TestRepositoryLayout).Name);
         Assert.Equal(
             ScriptTestInputDeriver.RepositoryRelativePathTypeName,
-            typeof(StrataLint.Tests.RepositoryRelativePath).Name);
+            typeof(StrataLint.TestSupport.RepositoryRelativePath).Name);
         Assert.Equal(
             ScriptTestInputDeriver.ScriptHarnessScratchTypeName,
             typeof(StrataLint.Tests.ScriptHarnessScratch).Name);
