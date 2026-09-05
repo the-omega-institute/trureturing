@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:df346d780cb101df79f298a624953d996698f60429e2446d715b4a202d166081
+  normalized_sha256: sha256:df346d780cb101df79f298a624953d996698f60429e2446d715b4a202d166081
+cas_ref: sha256:df346d780cb101df79f298a624953d996698f60429e2446d715b4a202d166081
+coverage_gids:
+  - gid: D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront.cfDigits_checker_sound
+    target_statement_id: sha256:c072b4054d2383c881c8ba88c9ebcab3251b6fded56be9d2cf12459760c58e36
+receipts:
+  scribe:
+    - gid: D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront.cfDigits_checker_sound
+      definition_sha256: sha256:258e3d02c0710e8df3667fc700739c58e0d2bd5638276d105ccd86aef2343f85
+      emission_sha256: sha256:174cf1022040ac2b068325d9cf1f20ba7e442a25b21f5afa1f09f6d7cbe0d709
+  unresolved_subitems: []
