@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6334527da540a61ff041ae2799420d2f8b1decb9d8f2ac374680b1ceb9b68339
+  normalized_sha256: sha256:6334527da540a61ff041ae2799420d2f8b1decb9d8f2ac374680b1ceb9b68339
+cas_ref: sha256:6334527da540a61ff041ae2799420d2f8b1decb9d8f2ac374680b1ceb9b68339
+coverage_gids:
+  - gid: D5/S1/Phase/LonelyRunnerFourteenOfTwenty.torusDist_nat_ratio_ge_iff_nat_residue_window
+    target_statement_id: sha256:54cbf910e85dab0017005a8e591d4b91ba45a5b9e3f87344a529c5fb4cde9085
+receipts:
+  scribe:
+    - gid: D5/S1/Phase/LonelyRunnerFourteenOfTwenty.torusDist_nat_ratio_ge_iff_nat_residue_window
+      definition_sha256: sha256:8922b793d177db93060fd917df58e1473f8c32036c25e3eb053468e331d2d0d8
+      emission_sha256: sha256:637fd068f45f19806f05b7a21d14edb0516d2fc5d1d53bd58103333d0577dd01
+  unresolved_subitems: []
