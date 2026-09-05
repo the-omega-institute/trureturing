@@ -22,7 +22,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Contains("PLAYBOOK_INVALID", error, StringComparison.Ordinal);
         Assert.Contains(eventPath, error, StringComparison.Ordinal);
         Assert.Contains("is not a v5 Freeze", error, StringComparison.Ordinal);
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.Calls());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.Calls());
         Assert.DoesNotContain("make:preflight", fixture.Calls());
     }
 

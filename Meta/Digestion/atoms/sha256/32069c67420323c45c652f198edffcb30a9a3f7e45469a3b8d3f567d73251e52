@@ -1,0 +1,2 @@
+**候签定理 4.92(无平方因子导数的 Leibniz 律)**〔open;同模块〕。对互素的 A B : ℕ,`squarefreeDeriv (A * B) = A * squarefreeDeriv B + B * squarefreeDeriv A`。
+

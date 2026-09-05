@@ -1,0 +1,22 @@
+## 15.3 结构读出层级
+
+可以把当前项目中的 readouts 排成：
+
+$$
+\begin{aligned}
+\mathcal O_0&=\text{整数 exponent / scalar Euler factor},\\
+\mathcal O_1&=\text{occupation polynomial / hard-core transfer},\\
+\mathcal O_2&=\text{stable shadow / least-index parity},\\
+\mathcal O_3&=\text{successor and arithmetic jump Dirichlet form},\\
+\mathcal O_4&=\text{ordered holonomy / exterior pair energy},\\
+\mathcal O_5&=\text{zero-side off-line odd spectral energy}.
+\end{aligned}
+\tag{A15.6}
+$$
+
+它们不是简单的数值精度递增，而是在逐步恢复不同类型的关系：值、一步记忆、Galois 稳定修正、动态创新、cross-prime 顺序与二体关系，以及 zero orbit 的反对称谱风险。
+
+低信息逃逸的最终对象不应选择其中一个替代其余，而应证明哪些层通过 canonical morphism 可以互相恢复。
+
+---
+

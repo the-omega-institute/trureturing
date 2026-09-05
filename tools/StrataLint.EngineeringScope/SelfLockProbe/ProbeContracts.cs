@@ -117,7 +117,6 @@ internal sealed record NormalizedJudgment(
 }
 
 internal sealed record AuthorizationContract(
-    bool AllowExactRevert,
     bool ChangesGateStatus,
     bool RerunRequiredAfterDevPush,
     IReadOnlyList<string> ConfirmedRedGates,

@@ -63,6 +63,40 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
+    public void DevelopmentSpecDocumentsAreAdmittedByRepositoryPathPolicy()
+    {
+        // Spec drafts have author-chosen names that cannot be enumerated in
+        // registry.yaml governance_documents ahead of time, exactly as theory
+        // volumes and agent reports cannot. Enumerating them there made adding
+        // one document require a harness edit, and that edit could not ship:
+        // the admission-plane gate refuses a PR that touches both the judge
+        // plane (registry.yaml) and the content plane (the document), so the
+        // pair could never land together, while either half alone was rejected
+        // by FILEMAP-REGISTRY-DANGLING or SL-000 respectively.
+        const string value = "docs/develop/spec/synthetic-unregistered-spec.md";
+        var registry = SyntheticRegistry();
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
+    }
+
+    [Fact]
+    public void DevelopmentDirectoriesOutsideSpecAndTheoryAreRefusedByRepositoryPathPolicy()
+    {
+        // Reverse nail: the admitted prefix is docs/develop/spec/, not the
+        // broader docs/develop/. A sibling directory must still be refused,
+        // so widening the prefix by mistake turns this test red.
+        const string value = "docs/develop/scratch/synthetic-note.md";
+        var registry = SyntheticRegistry();
+        var path = RepoPath.CreateKnown(value);
+
+        var issue = RepositoryPathPolicy.Validate(path, registry.Policy);
+
+        Assert.NotNull(issue);
+        Assert.Contains("unknown top-level artifact", issue!.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CodexSkillPackagesAreAdmittedByRepositoryPathPolicy()
     {
         // A Codex skill package is a directory containing SKILL.md, whose file
@@ -210,6 +244,19 @@ public sealed partial class FileMapPolicyTests
             "SyntheticEmitter",
             "run-local",
             "A-SYNTHETIC-RETIRED"));
+
+        Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
+    }
+
+    [Fact]
+    public void EmptyFrozenStatePatternIsAcceptedDuringTheExpandPhase()
+    {
+        var manifest = Parse(Entry(
+            "Golden/Frozen/state/**/*.json",
+            "data",
+            "FrozenStateWriter",
+            "FrozenStateCatalog",
+            "FrozenStateRecordLoader"));
 
         Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
     }
@@ -676,6 +723,7 @@ public sealed partial class FileMapPolicyTests
         [[files]]
         pattern = "{{pattern}}"
         kind = "data"
+        admission_plane = "content"
         produced_by = "none"
         consumed_by = ["reader"]
         verified_by = [{{string.Join(", ", verifiedBy.Select(static name => $"\"{name}\""))}}]
@@ -692,6 +740,7 @@ public sealed partial class FileMapPolicyTests
         [[files]]
         pattern = "{{pattern}}"
         kind = "{{kind}}"
+        admission_plane = "judge"
         produced_by = "{{producedBy}}"
         consumed_by = ["{{consumedBy}}"]
         verified_by = ["{{verifiedBy}}"]
@@ -710,6 +759,7 @@ public sealed partial class FileMapPolicyTests
         [[files]]
         pattern = "{{pattern}}"
         kind = "{{kind}}"
+        admission_plane = "judge"
         produced_by = "{{producedBy}}"
         consumed_by = ["{{consumedBy}}"]
         verified_by = ["{{verifiedBy}}"]

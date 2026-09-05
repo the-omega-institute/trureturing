@@ -584,6 +584,16 @@ public sealed partial class DigestionLedgerTests
             definitionHash,
             ScribeEmissionAttestation.EmissionPath(moduleGid),
             emissionHash);
+        var report = new LeanFileReport(
+            ImmutableArray<string>.Empty,
+            [new LeanDeclaration("probe", "theorem", "True", ImmutableArray<string>.Empty)
+            {
+                NameKey = "ns(n0,5:probe)",
+            }]);
+        var declarationStatementId = Assert.Single(
+            CanonicalStatementWriter.DeclarationStatementIds(
+                RepoPath.CreateKnown(targetPath),
+                report)).StatementId.Value;
         var ledger = Ledger(
             atom,
             DigestionMigrationState.Absorbed,
@@ -591,7 +601,7 @@ public sealed partial class DigestionLedgerTests
             declarationGid,
             new DigestionCoverageEdge(
                 declarationGid,
-                TestDeclarationStatementId),
+                declarationStatementId),
             new DigestionScribeReceipt(declarationGid, definitionHash, emissionHash));
         var snapshotFiles = new List<(string Path, byte[] Bytes)>
         {
@@ -613,7 +623,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             ledger,
             snapshot,
-            AcceptedLean(targetPath),
+            AcceptedLean((targetPath, report)),
             VerifiedScribeEmissions.Create([record], describedDeclarations)).Entries);
     }
 

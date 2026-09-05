@@ -47,6 +47,8 @@ internal interface ICliEnvironment
 
     CommandResult RenderDag(IReadOnlyList<string> arguments);
 
+    CommandResult AlignLedger(IReadOnlyList<string> arguments);
+
     CommandResult AppendLedger(IReadOnlyList<string> arguments);
 
     CommandResult RevokeLedger(IReadOnlyList<string> arguments);
@@ -115,6 +117,8 @@ internal static class CliApplication
                 RenderExplicit(environment.FileMapConform(tail), console),
             ["ingest"] = static (environment, tail, console) =>
                 RenderCommand(environment.Ingest(tail), console),
+            ["ledger-align"] = static (environment, tail, console) =>
+                RenderCommand(environment.AlignLedger(tail), console),
             ["ledger-append"] = static (environment, tail, console) =>
                 RenderCommand(environment.AppendLedger(tail), console),
             ["ledger-revoke"] = static (environment, tail, console) =>

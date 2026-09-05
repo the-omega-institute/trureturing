@@ -1,0 +1,2 @@
+**候签定理 6.35.4(原点反例的形式化)**〔open;A-4;同模块伴随声明〕。`Filter.Tendsto (D5.S3.Axis.AxisPartialSum.axisPartialSum 0 0) Filter.atTop Filter.atTop`,连同等式 `∀ K : ℕ, D5.S3.Axis.AxisPartialSum.axisPartialSum 0 0 K = (Nat.fib (K + 1) : ℝ)`,把 issue #5204 的反例钉进真值 DAG;只钉 x = y = 0 一点。
+

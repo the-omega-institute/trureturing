@@ -352,6 +352,12 @@ internal static class ScriptHarnessScratch
 
     internal static string ReadScratchText(string path) => File.ReadAllText(path);
 
+    internal static string ReadScratchText(TemporaryDirectory root, string relativePath)
+    {
+        var path = Path.Combine(root.Path, relativePath);
+        return File.Exists(path) ? File.ReadAllText(path) : string.Empty;
+    }
+
     internal static byte[] ReadScratchBytes(string path) => File.ReadAllBytes(path);
 
     internal static void WriteScratchText(string path, string content) =>

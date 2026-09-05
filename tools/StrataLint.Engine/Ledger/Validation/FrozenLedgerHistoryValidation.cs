@@ -75,7 +75,7 @@ public static partial class FrozenLedger
                 missing,
                 "Closed modules are missing Freeze events: "
                 + string.Join(", ", missing.Select(static path => path.Value))
-                + "; run ledger-append to append the missing Freeze events.");
+                + "; run ledger-align --add <module> to append the missing Freeze events.");
         }
 
         var outside = actualByPath.Keys.Except(expectedByPath.Keys)
@@ -118,12 +118,12 @@ public static partial class FrozenLedger
             {
                 throw new HistoryFinalStateException(
                     ImmutableArray.Create(material.RepoPath),
-                    $"Active module {material.RepoPath.Value} statement identity changed; append Revoke before rerunning ledger-append.");
+                    $"Active module {material.RepoPath.Value} statement identity changed; append Revoke before rerunning ledger-align.");
             }
 
             throw new HistoryFinalStateException(
                 ImmutableArray.Create(material.RepoPath),
-                $"Active module {material.RepoPath.Value} changed identity; append Revoke before rerunning ledger-append.");
+                $"Active module {material.RepoPath.Value} changed identity; append Revoke before rerunning ledger-align.");
         }
     }
 

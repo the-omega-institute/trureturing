@@ -1,0 +1,26 @@
+\[
+R_q(b)
+=
+\sum_{x:X}(q(x)=b).
+\]
+
+仓库中的 `ConceptFiberDecomposition` 已证明：
+
+\[
+\boxed{
+X
+\simeq
+\sum_{b:B}R_q(b).
+}
+\]
+
+因此任何状态都可写成：
+
+\[
+x
+\longleftrightarrow
+\bigl(q(x),\ \text{位于 }q(x)\text{ 之下的余纤维项}\bigr).
+\]
+
+这给出：
+

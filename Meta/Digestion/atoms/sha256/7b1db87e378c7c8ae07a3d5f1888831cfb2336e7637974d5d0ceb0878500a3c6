@@ -1,0 +1,34 @@
+## 版本 A：有限候选元组的同余闭包
+
+若候选元组大小为：
+
+$$
+k=\varphi H,
+$$
+
+所有非自动的 admissibility observers 都满足：
+
+$$
+p\le k.
+$$
+
+其联合 CRT 模数为：
+
+$$
+W(k)=\prod_{p\le k}p,
+$$
+
+因此：
+
+$$
+\boxed{
+W(k)
+=
+e^{(1+o(1))\varphi H}.
+}
+$$
+
+这一版本成立。
+
+---
+

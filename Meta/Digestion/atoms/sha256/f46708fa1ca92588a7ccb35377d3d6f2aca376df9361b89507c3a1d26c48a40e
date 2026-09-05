@@ -1,0 +1,42 @@
+## 三、黄金历史状态数
+
+长度 \(H\) 的 golden-mean 合法历史数为：
+
+$$
+F_{H+2}
+\sim
+\frac{\varphi^{H+2}}{\sqrt5}.
+$$
+
+若所谓“黄金候选状态”指全部 Fibonacci 合法词，而不是线性的 \(\varphi H\)，则候选数已经是：
+
+$$
+\boxed{
+N_H\asymp\varphi^H.
+}
+$$
+
+若再将 Maynard 的指数候选预算作用于它，就会得到：
+
+$$
+\boxed{
+k
+\sim
+\exp(C\varphi^H),
+}
+$$
+
+这是关于 \(H\) 的双指数尺度，而不是 \(e^{\varphi H}\)。
+
+因此以后必须明确区分：
+
+$$
+\boxed{
+\varphi H
+\quad\text{和}\quad
+\varphi^H.
+}
+$$
+
+---
+

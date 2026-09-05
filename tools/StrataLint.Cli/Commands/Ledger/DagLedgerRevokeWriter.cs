@@ -40,17 +40,25 @@ internal static class DagLedgerRevokeWriter
                 RevocationPlanOutcome.Rejected rejected => throw new FormatException(rejected.Message),
             };
             var affected = plan.AffectedFrozenNodeIds.ToHashSet();
-            var eventFiles = context.BaseView.ActiveByPath.Values
+            var affectedEntries = context.BaseView.ActiveByPath.Values
                 .Where(entry => affected.Contains(entry.Material.FrozenNodeId))
+                .ToImmutableArray();
+            var eventFiles = affectedEntries
                 .Select(entry => context.BaselineFiles.Single(file =>
                     file.Path.Value.EndsWith(
                         entry.EventHash[7..] + ".json",
                         StringComparison.Ordinal)))
                 .ToImmutableArray();
-            DagLedgerAppendWriter.DeleteEventFiles(
+            var removedPaths = eventFiles.Select(static file => file.Path).ToHashSet();
+            FrozenLedgerPublication.PublishSnapshot(
+                repositoryRoot,
                 context.LedgerPath,
-                eventFiles,
-                context.BaselineFiles);
+                context.BaselineFiles.Where(file => !removedPaths.Contains(file.Path)),
+                context.BaselineFiles,
+                [],
+                affectedEntries.Select(static entry => entry.Material.RepoPath),
+                "ledger-revoke");
+
             return new CommandResult(
                 true,
                 $"LEDGER_REVOKE removed_freezes={eventFiles.Length} "

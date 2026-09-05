@@ -1,0 +1,52 @@
+## 30. ADMIT 的 CUT 下近似 `[N/D]`
+
+给定：
+
+\[
+q:X\to B,
+\qquad
+A:X\to\mathsf{Prop},
+\]
+
+定义安全下近似：
+
+\[
+\boxed{
+A_q^\forall(x)
+\iff
+\forall y,\ 
+q(y)=q(x)
+\Rightarrow
+A(y).
+}
+\]
+
+定义宽松上近似：
+
+\[
+\boxed{
+A_q^\exists(x)
+\iff
+\exists y,\ 
+q(y)=q(x)
+\land
+A(y).
+}
+\]
+
+总有：
+
+\[
+\boxed{
+A_q^\forall
+\subseteq
+A
+\subseteq
+A_q^\exists.
+}
+\]
+
+二者都只依赖 CUT 坐标，因此可下降到 \(B\)。
+
+---
+

@@ -20,7 +20,8 @@ internal static partial class RepositoryRules
     private static bool RepositoryScoped(RepositoryFile artifact, RuleApplicabilityContext context) => false;
 
     private static bool HeartsScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        artifact.Path.Value == HeartsPath;
+        artifact.Path.Value == HeartsPath
+        || FrozenStatePath.IsUnderRoot(artifact.Path.Value);
 
     private static bool GeneralSource(RepositoryFile artifact, RuleApplicabilityContext context) =>
         Formal(artifact, context)

@@ -1,0 +1,51 @@
+# 第两千一百三十二部　项目当前已走到第三层之前
+
+项目已经机器证明了有限 Fourier phase 的加法—乘法规律，并证明交换标量乘积只保留频率总和、会遗忘原频率列表的顺序。已经闭合时间方向的 pairwise alternating kernel：
+
+$$
+4\sin^2\left(
+\frac{\Delta t\,\Delta\omega}{2}
+\right).
+$$
+
+则已经机器证明：一个 supplied 非自共轭离线轨道的完整 Weil convolution-square 贡献可精确分成：
+
+$$
+\boxed{
+Q_{\operatorname{orb}(\rho)}
+=
+E_{\mathrm{even}}
+-
+E_{\mathrm{odd}},
+}
+$$
+
+其中：
+
+$$
+E_{\mathrm{even}}\ge0,
+\qquad
+E_{\mathrm{odd}}\ge0.
+$$
+
+而且全部符号风险集中在奇通道。研究路线也已经明确把待证桥写成：
+
+$$
+\boxed{
+\text{prime-side 规范约化交换曲率平方}
+\quad\longleftrightarrow\quad
+\text{zero-side 离线奇谱能量}.
+}
+$$
+
+但同时明确说明尚未证明 prime holonomy 支配离线奇能量，也未证明 RH。式 (2124.3) 正好补上一个缺少的局部原语：
+
+$$
+\boxed{
+\text{prime-side 的时间曲率与法向曲率，
+是同一个复化二槽核的虚、实两部分。}
+}
+$$
+
+---
+

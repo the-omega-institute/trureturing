@@ -1,0 +1,50 @@
+## 1. C-IRPT 的逻辑地位 `[P]`
+
+设底层语言为 \(\mathcal L_0\)，其中已有：
+
+\[
+\mathsf{Type},\qquad
+\mathsf{Prop},\qquad
+\Pi,\qquad
+\Sigma,\qquad
+(=),\qquad
+\text{函数与复合}.
+\]
+
+C-IRPT 语言 \(\mathcal L_{\mathrm{CIRPT}}\) 通过显式定义加入 `CUT`、`FLOW`、`ADMIT`、`ANCHOR` 等术语。若：
+
+\[
+(-)^\flat:
+\mathcal L_{\mathrm{CIRPT}}
+\longrightarrow
+\mathcal L_0
+\]
+
+递归展开全部新增术语，则定义性保守性要求：
+
+\[
+T_{\mathrm{CIRPT}}\vdash\varphi
+\quad\Longrightarrow\quad
+T_0\vdash\varphi
+\]
+
+对旧语言命题 \(\varphi\) 成立。
+
+所以：
+
+\[
+\boxed{
+\text{C-IRPT 的价值不来自增加形而上公理，}
+}
+\]
+
+而来自：
+
+\[
+\boxed{
+\text{把分类、过程、合法性和实际见证的关系变成可审计的类型结构。}
+}
+\]
+
+---
+
