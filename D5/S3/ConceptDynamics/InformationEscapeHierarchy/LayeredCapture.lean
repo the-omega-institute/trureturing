@@ -322,11 +322,11 @@ structure DesignatedRootCatalogSuite where
   CatalogIndex : Type z
   catalogIndexFintype : Fintype CatalogIndex
   catalogIndexDecidableEq : DecidableEq CatalogIndex
-  maximalCatalog : CatalogIndex -> PackedCatalog.{u, v, w}
+  catalogAt : CatalogIndex -> PackedCatalog.{u, v, w}
 
 /-- Every maximal catalog in a designated root has positive unique capture at every member. -/
 def SystemCatalogIrredundant (suite : DesignatedRootCatalogSuite.{u, v, w, z}) : Prop :=
-  ∀ index, CatalogIrredundant (suite.maximalCatalog index).catalog
+  ∀ index, CatalogIrredundant (suite.catalogAt index).catalog
 
 /-- Compatibility name for the same single-root universal catalog verdict. -/
 abbrev SystemWidePositive (suite : DesignatedRootCatalogSuite.{u, v, w, z}) : Prop :=

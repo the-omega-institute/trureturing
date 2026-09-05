@@ -88,57 +88,57 @@ def kernelComparison {arena : Arena.{u}}
     if catalog.KernelRefines right left then .equal else .strictlyFiner
   else if catalog.KernelRefines right left then .strictlyCoarser
   else .incomparable
-noncomputable def refinementWitness? {arena : Arena.{u}}
+noncomputable def refinementWitness {arena : Arena.{u}}
     (catalog : Catalog.{u, v, w} arena) (finer coarser : catalog.Index) :
     Option (arena.State × arena.State) := by
   exact ((Finset.univ : Finset (arena.State × arena.State)).filter fun pair =>
     (catalog.theoremAt finer).primitives.agrees pair.1 pair.2 ∧
       ¬(catalog.theoremAt coarser).primitives.agrees pair.1 pair.2).toList.head?
-theorem refinementWitness?_eq_none_iff {arena : Arena.{u}}
+theorem refinementWitness_eq_none_iff {arena : Arena.{u}}
     (catalog : Catalog.{u, v, w} arena) (finer coarser : catalog.Index) :
-    catalog.refinementWitness? finer coarser = none ↔
+    catalog.refinementWitness finer coarser = none ↔
       catalog.KernelRefines finer coarser := by
-  simp only [refinementWitness?, KernelRefines, List.head?_eq_none_iff,
+  simp only [refinementWitness, KernelRefines, List.head?_eq_none_iff,
     Finset.toList_eq_nil, Finset.filter_eq_empty_iff, Finset.mem_univ, true_implies]
   push Not
   constructor
   · intro h left right agrees; exact h (x := (left, right)) agrees
   · intro h pair agrees; exact h pair.1 pair.2 agrees
-theorem refinementWitness?_eq_some_implies {arena : Arena.{u}}
+theorem refinementWitness_eq_some_implies {arena : Arena.{u}}
     (catalog : Catalog.{u, v, w} arena) (finer coarser : catalog.Index)
     (pair : arena.State × arena.State)
-    (found : catalog.refinementWitness? finer coarser = some pair) :
+    (found : catalog.refinementWitness finer coarser = some pair) :
     (catalog.theoremAt finer).primitives.agrees pair.1 pair.2 ∧
       ¬(catalog.theoremAt coarser).primitives.agrees pair.1 pair.2 := by
-  unfold refinementWitness? at found
+  unfold refinementWitness at found
   obtain ⟨tail, listEq⟩ := List.head?_eq_some_iff.mp found
   have memList : pair ∈ (((Finset.univ : Finset (arena.State × arena.State)).filter fun p =>
       (catalog.theoremAt finer).primitives.agrees p.1 p.2 ∧
         ¬(catalog.theoremAt coarser).primitives.agrees p.1 p.2).toList) := by
     rw [listEq]; exact List.mem_cons_self
   exact (Finset.mem_filter.mp (Finset.mem_toList.mp memList)).2
-theorem refinementWitness?_exists_iff_not_kernelRefines {arena : Arena.{u}}
+theorem refinementWitness_exists_iff_not_kernelRefines {arena : Arena.{u}}
     (catalog : Catalog.{u, v, w} arena) (finer coarser : catalog.Index) :
-    (∃ pair, catalog.refinementWitness? finer coarser = some pair) ↔
+    (∃ pair, catalog.refinementWitness finer coarser = some pair) ↔
       ¬catalog.KernelRefines finer coarser := by
-  rw [← not_congr (catalog.refinementWitness?_eq_none_iff finer coarser)]
-  cases h : catalog.refinementWitness? finer coarser <;> simp [h]
+  rw [← not_congr (catalog.refinementWitness_eq_none_iff finer coarser)]
+  cases h : catalog.refinementWitness finer coarser <;> simp [h]
 theorem kernelComparison_spec {arena : Arena.{u}}
     (catalog : Catalog.{u, v, w} arena) (left right : catalog.Index) :
     (catalog.kernelComparison left right = .equal ↔
       catalog.KernelRefines left right ∧ catalog.KernelRefines right left) ∧
     (catalog.kernelComparison left right = .strictlyFiner ↔
       catalog.KernelRefines left right ∧
-        ∃ pair, catalog.refinementWitness? right left = some pair) ∧
+        ∃ pair, catalog.refinementWitness right left = some pair) ∧
     (catalog.kernelComparison left right = .strictlyCoarser ↔
-      (∃ pair, catalog.refinementWitness? left right = some pair) ∧
+      (∃ pair, catalog.refinementWitness left right = some pair) ∧
         catalog.KernelRefines right left) ∧
     (catalog.kernelComparison left right = .incomparable ↔
-      (∃ pair, catalog.refinementWitness? left right = some pair) ∧
-        ∃ pair, catalog.refinementWitness? right left = some pair) := by
+      (∃ pair, catalog.refinementWitness left right = some pair) ∧
+        ∃ pair, catalog.refinementWitness right left = some pair) := by
   unfold kernelComparison
-  rw [catalog.refinementWitness?_exists_iff_not_kernelRefines left right,
-    catalog.refinementWitness?_exists_iff_not_kernelRefines right left]
+  rw [catalog.refinementWitness_exists_iff_not_kernelRefines left right,
+    catalog.refinementWitness_exists_iff_not_kernelRefines right left]
   by_cases forward : catalog.KernelRefines left right <;>
     by_cases reverse : catalog.KernelRefines right left <;> simp [forward, reverse]
 def captureMultiplicity {arena : Arena.{u}}
