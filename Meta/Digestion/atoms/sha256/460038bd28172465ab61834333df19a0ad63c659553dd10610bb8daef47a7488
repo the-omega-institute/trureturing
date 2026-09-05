@@ -1,0 +1,92 @@
+# 四、关键恒等式：离线方向的全部信息，进入差模态的偶阶筛选
+
+因为 \(A\) 是实整函数：
+
+$$
+|A(t+iy)|^2=A(t+iy)A(t-iy).
+$$
+
+利用两个独立副本：
+
+$$
+\begin{aligned}
+|A(t+iy)|^2
+&=
+\mathbb E\!\left[
+e^{it(X+Y)}e^{-y(X-Y)}
+\right]\\
+&=
+\mathbb E\!\left[
+e^{i\sqrt2tS}e^{-\sqrt2yU}
+\right].
+\end{aligned}
+$$
+
+差模态分布关于 \(u\) 对称，所以：
+
+$$
+\boxed{
+|A(t+iy)|^2
+=
+\mathbb E\!\left[
+\cos(\sqrt2tS)\cosh(\sqrt2yU)
+\right].
+}
+\tag{Q10}
+$$
+
+定义：
+
+$$
+\boxed{
+L_n(t)
+=
+\frac{2^n}{(2n)!}
+\mathbb E\!\left[
+U^{2n}\cos(\sqrt2tS)
+\right].
+}
+\tag{Q11}
+$$
+
+则：
+
+$$
+\boxed{
+|A(t+iy)|^2
+=
+\sum_{n=0}^{\infty}L_n(t)y^{2n}.
+}
+\tag{Q12}
+$$
+
+等价的导数表达为：
+
+$$
+\boxed{
+L_n(t)
+=
+\frac1{(2n)!}
+\sum_{j=0}^{2n}
+(-1)^{n+j}
+\binom{2n}{j}
+A^{(j)}(t)A^{(2n-j)}(t).
+}
+\tag{Q13}
+$$
+
+特别地：
+
+$$
+L_0(t)=A(t)^2,
+$$
+
+$$
+\boxed{
+L_1(t)=A'(t)^2-A(t)A''(t).
+}
+\tag{Q14}
+$$
+
+这些就是经典广义 Laguerre 表达式。它们与正定关联核的关系已有系统研究；本轮将其写成指定量子态的和／差模态读出。
+

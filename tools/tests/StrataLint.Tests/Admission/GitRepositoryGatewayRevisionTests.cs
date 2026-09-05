@@ -111,6 +111,136 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
+    public void PrepareOnDirtyTreeWithoutProtectedBaseUsesHeadAsRevision()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(
+            Path.Combine(repository.Path, "tracked.txt"),
+            "baseline\n",
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
+        var head = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        File.WriteAllText(
+            Path.Combine(repository.Path, "tracked.txt"),
+            "changed\n",
+            new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(repository.Path, "untracked.txt"),
+            "new\n",
+            new UTF8Encoding(false));
+
+        var prepared = new GitRepositoryGateway(repository.Path).Prepare(null);
+
+        Assert.Equal(head, prepared.Revision);
+        Assert.Equal(
+            new[]
+            {
+                ("tracked.txt", RawChangeKind.Modified),
+                ("untracked.txt", RawChangeKind.Added),
+            },
+            prepared.Changes.Entries.Select(static change =>
+                (change.Path.Value, change.Kind)));
+    }
+
+    [Fact]
+    public void PrepareOnCleanTreeWithoutProtectedBaseRequiresProtectedBase()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(
+            Path.Combine(repository.Path, "tracked.txt"),
+            "baseline\n",
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
+
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => new GitRepositoryGateway(repository.Path).Prepare(null));
+
+        Assert.Contains("--protected-base", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PrepareUsesAncestorProtectedBaseForChanges()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(
+            Path.Combine(repository.Path, "tracked.txt"),
+            "baseline\n",
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
+        var baseline = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        File.WriteAllText(
+            Path.Combine(repository.Path, "tracked.txt"),
+            "candidate\n",
+            new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(repository.Path, "added.txt"),
+            "added\n",
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
+
+        var prepared = new GitRepositoryGateway(repository.Path).Prepare(baseline);
+
+        Assert.Equal(baseline, prepared.Revision);
+        Assert.Equal(
+            new[]
+            {
+                ("added.txt", RawChangeKind.Added),
+                ("tracked.txt", RawChangeKind.Modified),
+            },
+            prepared.Changes.Entries.Select(static change =>
+                (change.Path.Value, change.Kind)));
+    }
+
+    [Fact]
+    public void PrepareRejectsProtectedBaseThatIsNotAncestorOfHead()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(
+            Path.Combine(repository.Path, "root.txt"),
+            "root\n",
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "root.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "root");
+        var root = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        File.WriteAllText(
+            Path.Combine(repository.Path, "candidate.txt"),
+            "candidate\n",
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "candidate.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
+        ReviewRegressionTests.RunGit(repository.Path, "branch", "candidate");
+        ReviewRegressionTests.RunGit(repository.Path, "checkout", "-b", "sibling", root);
+        File.WriteAllText(
+            Path.Combine(repository.Path, "sibling.txt"),
+            "sibling\n",
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "sibling.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "sibling");
+        var sibling = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        ReviewRegressionTests.RunGit(repository.Path, "checkout", "candidate");
+
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => new GitRepositoryGateway(repository.Path).Prepare(sibling));
+
+        Assert.Contains(
+            "protected base must be an ancestor of HEAD",
+            exception.Message,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "merge origin/dev into the lane first",
+            exception.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PreparePrefersModifiedOverCopySourceForTheSamePath()
     {
         using var repository = new TemporaryDirectory();
@@ -211,6 +341,21 @@ public sealed class GitRepositoryGatewayRevisionTests
     {
         Assert.Equal(path, entry.Path);
         Assert.Equal(Encoding.UTF8.GetBytes(expected), entry.Bytes);
+    }
+
+    private static void InitializeRepository(string path)
+    {
+        ReviewRegressionTests.RunGit(path, "init");
+        ReviewRegressionTests.RunGit(
+            path,
+            "config",
+            "user.email",
+            "stratalint@example.invalid");
+        ReviewRegressionTests.RunGit(
+            path,
+            "config",
+            "user.name",
+            "StrataLint Tests");
     }
 
     private sealed class RecordingGitProcessRunner : IGitProcessRunner

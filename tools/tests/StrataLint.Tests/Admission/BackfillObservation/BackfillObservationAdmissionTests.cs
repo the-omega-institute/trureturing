@@ -72,7 +72,7 @@ public sealed partial class ProductionEnvironmentTests
         // reconstructing its content address. Capture(...).RelativePath would embed a
         // runtime-computed hash in the path, which ScribeTestMapDeriver cannot resolve
         // statically; that makes the method a conservative unknown and SL-003 blocks any
-        // such method introduced after the fork point. Matching on the store root keeps
+        // such method introduced after the protected baseline. Matching on the store root keeps
         // every path this test touches a string literal.
         foreach (var casPath in fixture.Baseline.Keys
             .Where(static path => path.StartsWith("Meta/Digestion/atoms/sha256/", StringComparison.Ordinal))

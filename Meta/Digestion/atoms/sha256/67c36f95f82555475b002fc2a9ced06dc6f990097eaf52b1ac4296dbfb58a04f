@@ -1,0 +1,45 @@
+## 4.1 最小作用量还满足精确的拼接律
+
+用路径步数 \(\ell\) 记：
+
+$$
+\tau_\ell=p^{-\ell/2},
+\qquad
+v_\ell=\sum_{j=0}^{\ell-1}p^{-j}.
+$$
+
+则：
+
+$$
+\mathcal A_\ell(\xi,\eta)
+=
+\frac{|\eta-\tau_\ell\xi|^2}{v_\ell}.
+$$
+
+两段路径拼接时：
+
+$$
+\boxed{
+\mathcal A_{\ell+m}(\xi,\zeta)
+=
+\min_\eta
+\bigl[
+\mathcal A_\ell(\xi,\eta)
++
+\mathcal A_m(\eta,\zeta)
+\bigr].
+}
+\tag{4.4}
+$$
+
+相应参数满足：
+
+$$
+\boxed{
+\tau_{\ell+m}=\tau_m\tau_\ell,
+\qquad
+v_{\ell+m}=v_m+\tau_m^2v_\ell.
+}
+\tag{4.5}
+$$
+

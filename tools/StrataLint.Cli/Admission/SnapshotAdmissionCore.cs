@@ -16,7 +16,6 @@ internal static class SnapshotAdmissionCore
         RawChangeSet changes,
         BootstrapOutcome bootstrap,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null,
         AdmissionCheckTiming? timing = null)
     {
         var phaseTiming = timing ?? AdmissionCheckTiming.Disabled;
@@ -72,7 +71,6 @@ internal static class SnapshotAdmissionCore
                                 changes,
                                 clear.Capability,
                                 verifiedScribeEmissions,
-                                forkPoint,
                                 MeasureRule,
                                 MeasureApplicability,
                                 MeasureCanonicalization),
@@ -85,7 +83,6 @@ internal static class SnapshotAdmissionCore
                                     changes,
                                     protectedSurfaceVerification.ChangeSet,
                                     verifiedScribeEmissions,
-                                    forkPoint,
                                     MeasureRule,
                                     MeasureApplicability,
                                     MeasureCanonicalization),

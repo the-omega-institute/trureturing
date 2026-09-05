@@ -232,7 +232,6 @@ public sealed class ActiveRuleScopeProbeTests
     {
         fixture.Files[path] = text;
         fixture.Baseline[path] = text;
-        fixture.ForkPoint[path] = text;
     }
 
     private static CompletedRuleSet Execute(

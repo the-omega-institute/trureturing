@@ -256,7 +256,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestAtomizesNewSourceWhileUnrelatedReceiptIntegrityBacklogExistsAtForkPoint()
+    public void IngestAtomizesNewSourceWhileUnrelatedReceiptIntegrityBacklogExistsAtBaseline()
     {
         const string newSourcePath = "docs/develop/theory/INGEST_SCOPE_NEW_SOURCE.md";
         const string newSourceText = "# New source\n\n## Theorem 1.1\n\nClaim.\n";
@@ -307,7 +307,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void AlignRepairsTouchedCoverageTargetWhoseForkPointIdentityIsUnchanged()
+    public void AlignRepairsTouchedCoverageTargetWhoseBaselineIdentityIsUnchanged()
     {
         const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
         const string siblingGid = siblingModuleGid + ".sibling";
