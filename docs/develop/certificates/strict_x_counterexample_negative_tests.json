@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "tests": [
+    {"mutation": "wrong root center", "result": "rejected"},
+    {"mutation": "singular preconditioner", "result": "rejected"},
+    {"mutation": "wrong Hadamard parameter", "result": "rejected"}
+  ],
+  "scope": "Negative tests of the Python exact checker, not Lean admission."
+}
