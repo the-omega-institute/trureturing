@@ -16,6 +16,10 @@ public sealed class EngineeringPathFilterTests
         "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
     private const string TestSupportProject =
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj";
+    private const string CandidateAddedProject =
+        "tools/tests/StrataLint.Added.Tests/StrataLint.Added.Tests.csproj";
+    private const string HeuristicOnlyProject =
+        "tools/tests/StrataLint.Heuristic.Tests/StrataLint.Heuristic.Tests.csproj";
 
     // issue #5516:StrataLint.TestSupport 为 TestScratchFramework 派生 XunitTestFramework
     // 而必须引用 xunit,同时明写 IsTestProject=false。此前 xunit 启发式优先于显式声明,
@@ -39,6 +43,57 @@ public sealed class EngineeringPathFilterTests
 
         Assert.DoesNotContain(TestSupportProject, plan.Projects);
         Assert.Contains(EngineTestsProject, plan.Projects);
+    }
+
+    // `_ => Ambiguous` 这条分支只在 candidate-added 侧可观测:base 侧的 Ambiguous 被当作
+    // 非测试项目静默排除,而 candidate-added 侧 fail-closed 抛 InvalidDataException。
+    // 旧判据把 xunit 启发式放在字面量之前,于是「字面量互相冲突 + 引用 xunit」被判成 Test,
+    // 这条 fail-closed 路径根本到不了 —— 冲突被静默吞掉,项目被当作测试项目收下。
+    [Fact]
+    public void CandidateAddedProjectWithConflictingLiteralsFailsClosed()
+    {
+        var protectedBase = new TestProjectTopologySnapshot(
+        [
+            Project(EngineProject, isTest: false),
+            Project(EngineTestsProject, isTest: true, EngineProject),
+        ]);
+        var candidate = new TestProjectTopologySnapshot(
+        [
+            Project(EngineProject, isTest: false),
+            Project(EngineTestsProject, isTest: true, EngineProject),
+            ConflictingLiteralXunitProject(CandidateAddedProject),
+        ]);
+
+        var error = Assert.Throws<InvalidDataException>(() =>
+            EngineeringTestPlanPolicy.EvaluateOrdinary(
+                ["tools/StrataLint.Engine/Anything.cs"],
+                protectedBase,
+                candidate,
+                full: true));
+
+        Assert.Contains(CandidateAddedProject, error.Message, StringComparison.Ordinal);
+    }
+
+    // 放行侧钉子。显式声明优先之后,`[]`(无 IsTestProject 元素)这条分支仍必须回落到
+    // xunit 启发式。它在旧判据下同样绿 —— 守的不是本次修复,而是防止日后把回落删成
+    // `[] => NonTest`:那会让每一个不写 IsTestProject 的测试项目静默退出计划,
+    // 而「计划变空」在放行侧不产生任何红。
+    [Fact]
+    public void ProjectWithoutLiteralDeclarationIsClassifiedByTheXunitHeuristic()
+    {
+        var topology = new TestProjectTopologySnapshot(
+        [
+            Project(EngineProject, isTest: false),
+            HeuristicOnlyTestProject(HeuristicOnlyProject),
+        ]);
+
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            ["tools/StrataLint.Engine/Anything.cs"],
+            topology,
+            topology,
+            full: true);
+
+        Assert.Contains(HeuristicOnlyProject, plan.Projects);
     }
 
     [Fact]
@@ -155,6 +210,20 @@ public sealed class EngineeringPathFilterTests
             "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup>"
             + "<IsTestProject>false</IsTestProject></PropertyGroup>"
             + "<ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>");
+
+    private static TestProjectTopologyProject ConflictingLiteralXunitProject(string path) =>
+        new(
+            path,
+            "<Project Sdk=\"Microsoft.NET.Sdk\">"
+            + "<PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup>"
+            + "<PropertyGroup><IsTestProject>false</IsTestProject></PropertyGroup>"
+            + "<ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>");
+
+    private static TestProjectTopologyProject HeuristicOnlyTestProject(string path) =>
+        new(
+            path,
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup /><ItemGroup>"
+            + "<PackageReference Include=\"xunit\" /></ItemGroup></Project>");
 
     private static TestProjectTopologyProject Project(
         string path,
