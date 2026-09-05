@@ -92,14 +92,15 @@ internal static class JudgeSurfaceRevisionScanner
     internal static ImmutableArray<string> Scan(string path, string text)
     {
         var messages = ImmutableArray.CreateBuilder<string>();
-        var isWorkflow = path.StartsWith(".github/workflows/", StringComparison.Ordinal)
+        // Any YAML under `.github/**` (workflows and composite actions alike) can carry `run:`
+        // scalars and `ref:` inputs (review round 6: `.github/actions/*/action.yml`).
+        var isWorkflow = path.StartsWith(".github/", StringComparison.Ordinal)
             && (path.EndsWith(".yml", StringComparison.Ordinal)
                 || path.EndsWith(".yaml", StringComparison.Ordinal));
-        var lines = text.ReplaceLineEndings("\n").Split('\n');
-        for (var index = 0; index < lines.Length; index++)
+        foreach (var (lineNumber, line) in LogicalLines(text))
         {
-            var line = lines[index];
-            if (isWorkflow)
+            var index = lineNumber - 1;
+            if (isWorkflow && !line.TrimStart().StartsWith('#'))
             {
                 // Deliberately over-match: this line scanner cannot see YAML structure; a visible Block beats a silent miss.
                 var reference = WorkflowRef.Match(line);
@@ -115,7 +116,17 @@ internal static class JudgeSurfaceRevisionScanner
             // The lexer already dropped comments, quotes and redirections and split command
             // substitutions into commands of their own, so every git invocation on the line —
             // including one nested inside `$(…)` — is judged on its real argument vector.
-            foreach (var command in JudgeSurfaceShellLexer.Commands(line))
+            // In a workflow a single-line `run:` scalar is shell too (review round 5).
+            var shell = isWorkflow ? WorkflowRunScalar(line) : line;
+            var lexed = JudgeSurfaceShellLexer.Commands(shell);
+            if (lexed.Truncated)
+            {
+                messages.Add(
+                    $"line {index + 1}: shell nesting deeper than {JudgeSurfaceShellLexer.MaximumDepth} levels is fail-closed "
+                    + "(SL-030, CLAUDE.md rule 19: base data enters the candidate judge through its snapshot reader)");
+            }
+
+            foreach (var command in lexed.Commands)
             {
                 var reason = JudgeCommand(command, out var verb);
                 if (reason is not null)
@@ -130,15 +141,93 @@ internal static class JudgeSurfaceRevisionScanner
         return messages.ToImmutable();
     }
 
+    // Physical lines joined at a trailing unescaped backslash (`git \` + `show …` is one command);
+    // the logical line keeps the first physical line's number for the diagnostic.
+    private static IEnumerable<(int LineNumber, string Line)> LogicalLines(string text)
+    {
+        var lines = text.ReplaceLineEndings("\n").Split('\n');
+        var index = 0;
+        while (index < lines.Length)
+        {
+            var start = index;
+            var builder = new System.Text.StringBuilder(lines[index]);
+            while (EndsWithContinuation(lines[index]) && index + 1 < lines.Length)
+            {
+                builder.Length -= 1;
+                builder.Append(' ');
+                index++;
+                builder.Append(lines[index]);
+            }
+
+            yield return (start + 1, builder.ToString());
+            index++;
+        }
+    }
+
+    private static bool EndsWithContinuation(string line)
+    {
+        var trailing = 0;
+        for (var index = line.Length - 1; index >= 0 && line[index] == '\\'; index--)
+        {
+            trailing++;
+        }
+
+        return trailing % 2 == 1;
+    }
+
+    private static readonly Regex RunScalar = new(
+        @"^\s*(?:-\s+)?run:\s*(?<shell>.*)$",
+        RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    // `run: <one-line shell>` (or `- run: …`) in a workflow: the scalar after `run:` is shell; a
+    // block indicator (`|`, `>`) has no shell on this line and the block lines that follow are
+    // plain shell already. Other YAML lines are lexed as they are (a leading `- name:` word is not
+    // git and yields nothing).
+    private static string WorkflowRunScalar(string line)
+    {
+        var match = RunScalar.Match(line);
+        if (!match.Success)
+        {
+            return line;
+        }
+
+        var shell = match.Groups["shell"].Value.Trim();
+        if (shell is "|" or "|-" or "|+" or ">" or ">-" or ">+")
+        {
+            return string.Empty;
+        }
+
+        // A YAML flow scalar (`run: "git …"` / `run: 'git …'`) is shell once the YAML quotes are
+        // removed; a double-quoted scalar's `\"` is a literal quote.
+        if (shell.Length >= 2 && shell[0] == '"' && shell[^1] == '"')
+        {
+            return shell[1..^1].Replace("\\\"", "\"", StringComparison.Ordinal);
+        }
+
+        if (shell.Length >= 2 && shell[0] == '\'' && shell[^1] == '\'')
+        {
+            return shell[1..^1];
+        }
+
+        return shell;
+    }
+
     private static string? JudgeCommand(ImmutableArray<string> words, out string verb)
     {
         verb = string.Empty;
-        if (words.Length == 0 || !IsGit(words[0]))
+        // `X=1 git …`, `! git …`: assignment prefixes and negation do not change what runs.
+        var first = 0;
+        while (first < words.Length && (words[first] == "!" || IsAssignmentWord(words[first])))
+        {
+            first++;
+        }
+
+        if (first >= words.Length || !IsGit(words[first]))
         {
             return null;
         }
 
-        var index = 1;
+        var index = first + 1;
         while (index < words.Length && words[index].StartsWith('-'))
         {
             var option = words[index];
@@ -191,9 +280,33 @@ internal static class JudgeSurfaceRevisionScanner
     private static bool IsGit(string word) =>
         word == "git" || word.EndsWith("/git", StringComparison.Ordinal);
 
+    private static bool IsAssignmentWord(string word)
+    {
+        var equals = word.IndexOf('=', StringComparison.Ordinal);
+        if (equals <= 0)
+        {
+            return false;
+        }
+
+        for (var index = 0; index < equals; index++)
+        {
+            var character = word[index];
+            if (!(char.IsAsciiLetterOrDigit(character) || character == '_') || (index == 0 && char.IsAsciiDigit(character)))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     // `git restore [-s <tree>] …`: `--source <tree>`, `--source=<tree>`, `-s <tree>`, `-s<tree>`.
     // Every source must be literal HEAD; a later `--source` overrides an earlier one in git, so any
     // non-HEAD value anywhere is a finding (review round 4: `-sHEAD^1`, `--source=HEAD --source=HEAD^1`).
+    // Combined short options are git's parse-options semantics: `-WsHEAD^1` is `-W` then
+    // `-s HEAD^1` (review round 6). Short flags restore knows; any other short letter fails closed.
+    private static readonly HashSet<char> RestoreShortFlags = ['W', 'S', 'q', 'p', 'm', '2', '3'];
+
     private static string? RestoreSource(string[] tokens)
     {
         for (var index = 0; index < tokens.Length; index++)
@@ -205,7 +318,7 @@ internal static class JudgeSurfaceRevisionScanner
             }
 
             string? source = null;
-            if (token is "--source" or "-s")
+            if (token == "--source")
             {
                 source = index + 1 < tokens.Length ? tokens[++index] : string.Empty;
             }
@@ -213,9 +326,24 @@ internal static class JudgeSurfaceRevisionScanner
             {
                 source = token["--source=".Length..];
             }
-            else if (token.StartsWith("-s", StringComparison.Ordinal) && token.Length > 2)
+            else if (token.Length > 1 && token[0] == '-' && token[1] != '-')
             {
-                source = token[2..];
+                for (var position = 1; position < token.Length; position++)
+                {
+                    var letter = token[position];
+                    if (letter == 's')
+                    {
+                        source = position + 1 < token.Length
+                            ? token[(position + 1)..]
+                            : index + 1 < tokens.Length ? tokens[++index] : string.Empty;
+                        break;
+                    }
+
+                    if (!RestoreShortFlags.Contains(letter))
+                    {
+                        return $"option '-{letter}' is not in the closed option table (fail-closed)";
+                    }
+                }
             }
 
             if (source is not null && source != Head)
@@ -234,7 +362,7 @@ internal static class JudgeSurfaceRevisionScanner
     {
         "--detach", "-d", "--lock", "-f", "--force", "--checkout", "--no-checkout", "--orphan",
         "-q", "--quiet", "--track", "--no-track", "--guess-remote", "--no-guess-remote",
-        "--relative-paths", "--no-relative-paths", "--",
+        "--relative-paths", "--no-relative-paths",
     };
 
     private static readonly HashSet<string> WorktreeAddOptionsWithValue = new(StringComparer.Ordinal)
@@ -253,13 +381,20 @@ internal static class JudgeSurfaceRevisionScanner
         for (var index = 1; index < tokens.Length; index++)
         {
             var token = tokens[index];
+            if (token == "--")
+            {
+                // Git's option terminator: everything after it is positional (`-- -tmp HEAD`).
+                positional.AddRange(tokens[(index + 1)..]);
+                break;
+            }
+
             if (WorktreeAddOptionsWithValue.Contains(token))
             {
                 index++;
                 continue;
             }
 
-            if (WorktreeAddFlags.Contains(token) || token.StartsWith("--reason=", StringComparison.Ordinal))
+            if (WorktreeAddFlags.Contains(token) || HasKnownValuePrefix(token, WorktreeAddOptionsWithValue))
             {
                 continue;
             }
@@ -392,7 +527,11 @@ internal static class JudgeSurfaceRevisionScanner
             var token = tokens[index];
             if (token == "--")
             {
-                break;
+                // `git archive -- <tree-ish>`: the tree-ish may follow the separator.
+                var treeIsh = index + 1 < tokens.Length ? tokens[index + 1] : null;
+                return treeIsh is null
+                    ? "without an explicit HEAD tree-ish is fail-closed"
+                    : treeIsh == Head ? null : $"'{treeIsh}' materializes another revision's tree";
             }
 
             if (ArchiveOptionsWithValue.Contains(token))
@@ -417,10 +556,19 @@ internal static class JudgeSurfaceRevisionScanner
         return "without an explicit HEAD tree-ish is fail-closed";
     }
 
+    // `--opt=value` and the attached short form `-oVALUE` both carry their value in the token.
     private static bool HasKnownValuePrefix(string token, HashSet<string> optionsWithValue)
     {
         var separator = token.IndexOf('=', StringComparison.Ordinal);
-        return separator > 0 && optionsWithValue.Contains(token[..separator]);
+        if (separator > 0 && optionsWithValue.Contains(token[..separator]))
+        {
+            return true;
+        }
+
+        return token.Length > 2
+            && token[0] == '-'
+            && token[1] != '-'
+            && optionsWithValue.Contains(token[..2]);
     }
 
     // `git show`: only a `<rev>:<path>` operand materializes a file; the revision must be literal HEAD.
@@ -429,6 +577,12 @@ internal static class JudgeSurfaceRevisionScanner
     {
         foreach (var token in tokens)
         {
+            if (token == "--")
+            {
+                // Everything after `--` is a path, never a revision (`git show HEAD -- docs:notes`).
+                break;
+            }
+
             if (token.StartsWith('-'))
             {
                 continue;
@@ -453,7 +607,36 @@ internal static class JudgeSurfaceRevisionScanner
     // `git cat-file`: the FIRST mode token decides. Metadata modes (-e/-t/-s) never materialize;
     // --batch* reads objects of unknown provenance; content modes (-p, blob/tree/commit/tag,
     // --textconv, --filters) must name a literal HEAD object.
-    private static string? CatFileOperand(string[] tokens)
+    // cat-file options that take a value; their value must not be mistaken for a mode
+    // (review round 6: `--path -e --filters HEAD^1:p` is a filters read, not an existence check).
+    private static readonly HashSet<string> CatFileOptionsWithValue = new(StringComparer.Ordinal)
+    {
+        "--path", "--batch-command",
+    };
+
+    private static string? CatFileOperand(string[] arguments)
+    {
+        var tokens = new List<string>();
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (CatFileOptionsWithValue.Contains(arguments[index]))
+            {
+                index++;
+                continue;
+            }
+
+            if (HasKnownValuePrefix(arguments[index], CatFileOptionsWithValue))
+            {
+                continue;
+            }
+
+            tokens.Add(arguments[index]);
+        }
+
+        return CatFileMode(tokens.ToArray());
+    }
+
+    private static string? CatFileMode(string[] tokens)
     {
         var modeIndex = Array.FindIndex(tokens, static token => IsCatFileMode(token));
         if (modeIndex < 0)
