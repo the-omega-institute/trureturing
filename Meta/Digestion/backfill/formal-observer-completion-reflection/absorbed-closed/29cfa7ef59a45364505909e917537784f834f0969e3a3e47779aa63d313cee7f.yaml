@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:29cfa7ef59a45364505909e917537784f834f0969e3a3e47779aa63d313cee7f
+  normalized_sha256: sha256:29cfa7ef59a45364505909e917537784f834f0969e3a3e47779aa63d313cee7f
+cas_ref: sha256:29cfa7ef59a45364505909e917537784f834f0969e3a3e47779aa63d313cee7f
+coverage_gids:
+  - gid: D5/S3/Quantum/Tomography/ObserverDiagonalSeparation.empirical_observer_diagonal_separation
+    target_statement_id: sha256:c860b3141afdf4882cc05925ea43431a69059297986bb22468444caaca4709f4
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Tomography/ObserverDiagonalSeparation.empirical_observer_diagonal_separation
+      definition_sha256: sha256:dec5d57c38bac31989185b37b487e5308dbeef9d2dd754739043cec580bea9a4
+      emission_sha256: sha256:ea83b0177d3dc2703f915bd1b02eba08d59bbd1546e9e0d2003eeb64fb633cdf
+  unresolved_subitems: []
