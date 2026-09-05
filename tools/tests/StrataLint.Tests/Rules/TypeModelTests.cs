@@ -209,10 +209,10 @@ public sealed class TypeModelTests
     [InlineData(26, true)]
     [InlineData(27, false)]
     [InlineData(28, true)]
-    [InlineData(29, false)]
+    [InlineData(29, true)]
     [InlineData(30, false)]
     [InlineData(31, false)]
-    public void RuleIdKnownDomainPreservesTheIntentionalGapAndUpperBoundary(
+    public void RuleIdKnownDomainPreservesIntentionalGapsAndUpperBoundary(
         int number,
         bool expected)
     {
