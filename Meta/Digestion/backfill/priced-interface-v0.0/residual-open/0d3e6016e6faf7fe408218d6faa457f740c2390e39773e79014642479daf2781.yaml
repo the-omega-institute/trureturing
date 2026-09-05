@@ -6,6 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Multi-clause guard after clause-level review. Frozen owner `D5/S0/Naming/Conservation/GreenClassNamingConservation.green_class_naming_conservation` carries uniform clause (a), including `stringMeasure O (greenClass S t) = (Fintype.card O)⁻¹ ^ S.card` and positivity, and clause (b), the countable-name conservation statements. Frozen owner `D5/S0/Asymptotics/MetricGeometry/VaryingMarginalGreenClassMeasure.varying_greenClass_measure` carries the varying-marginal product formula `(Measure.infinitePi μ) (greenClass S t) = ∏ i ∈ S, μ i {t i}`; its companion `varying_greenClass_measure_pos_iff` states positivity exactly under `∀ i ∈ S, 0 < μ i {t i}`. The source price tag instead asserts unqualified positivity for a general atomless product, so that uncarried clause is a source defect: positive singleton masses are needed. The mutual-non-derivability clause is also uncarried: theorem 7.4 witness atom `0d79f5b7a64ed6716285934b3bb298113fa4fd7283178f57279659863e593d71` lists witnesses in both directions, but no frozen theorem gives the converse with controlled description price and different Green mass. Child `4d12713a83f800e4021bb4c61e535ef69652d01edc22b4dbce3998223e5821c9` therefore remains quarantined."
+    reentry_condition: "Freeze a public two-direction separation theorem and correct general positivity with the explicit positive-singleton-mass premise, or add source errata removing or correcting the unsupported clauses; then re-cover child `4d12713a83f800e4021bb4c61e535ef69652d01edc22b4dbce3998223e5821c9` first and this parent last."
+    blocker_class: multi-clause-guard
   chain_atoms:
     - c64d57642fab5ea3e2ffe1807542ccebee78da712b8e30c0b9c1818abaaed51d
     - 4d12713a83f800e4021bb4c61e535ef69652d01edc22b4dbce3998223e5821c9
