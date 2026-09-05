@@ -215,6 +215,9 @@ internal static partial class RepositoryRules
         var productionProjects = allProjects
             .Where(static project => project.IsProduction)
             .ToArray();
+        var testProjects = allProjects
+            .Where(static project => project.IsTest)
+            .ToArray();
         var ownedTestProjects = allProjects
             .Where(static project => project.IsOwnedTest)
             .ToArray();
@@ -234,6 +237,9 @@ internal static partial class RepositoryRules
             static project => project.Path,
             StringComparer.Ordinal);
         var ownedTestByPath = ownedTestProjects.ToDictionary(
+            static project => project.Path,
+            StringComparer.Ordinal);
+        var testByPath = testProjects.ToDictionary(
             static project => project.Path,
             StringComparer.Ordinal);
         var participants = new Dictionary<TestProjectTopologyDebt, HashSet<string>>();
@@ -324,9 +330,18 @@ internal static partial class RepositoryRules
                     [test.Path, extra.Path]);
             }
 
+        }
+
+        // 主语与宾语都取全部受管测试项目,不取 ownedTestProjects:横跨型 harness 的豁免
+        // 论证的是拥有关系,与「该不该依赖另一个测试项目」正交(#5419)。**两侧都换** ——
+        // 只扩主语会留下「引用一个横跨型 harness」的同形缺口(当前无人这么写,故缺口空转,
+        // 但它与被扩的那一侧是同一个错误类)。本循环此前嵌在上面的 ownedTestProjects
+        // 循环内部,故必须整体提出来,否则换的只是过滤器而不是主语面。
+        foreach (var test in testProjects)
+        {
             foreach (var reference in test.DirectProjectReferences
-                         .Where(ownedTestByPath.ContainsKey)
-                         .Select(reference => ownedTestByPath[reference])
+                         .Where(testByPath.ContainsKey)
+                         .Select(reference => testByPath[reference])
                          .DistinctBy(static project => project.Path))
             {
                 AddDebt(
@@ -375,6 +390,7 @@ internal static partial class RepositoryRules
             project.Content,
             assemblyName,
             IsProductionProject(path),
+            IsTestProject(path, isXunit),
             IsOwnedTestProject(path, isXunit),
             directReferences);
     }
@@ -387,10 +403,19 @@ internal static partial class RepositoryRules
         && path.EndsWith(".csproj", StringComparison.Ordinal)
         && !string.Equals(path, TestSupportProjectPath, StringComparison.Ordinal);
 
-    private static bool IsOwnedTestProject(string path, bool isXunit) =>
+    // 「是不是受管测试项目」与「是不是拥有某个生产项目」是两个正交的问题,此前由同一个
+    // 谓词回答,于是 CrossCuttingHarnessPaths 对**拥有关系**的豁免被一并施加到
+    // test→test 依赖上,使 ArchitectureTests / ScriptTests 的四条 test→test 边
+    // 结构上不进债账(#5419)。IsOwnedTestProject 由 IsTestProject **收窄**而来,
+    // 而非并列另写一个谓词 —— 这样「旧判 owned 者仍 owned」在结构上成立(保守扩展),
+    // 不依赖测试来保证。
+    private static bool IsTestProject(string path, bool isXunit) =>
         isXunit
         && path.StartsWith("tools/tests/", StringComparison.Ordinal)
-        && path.EndsWith(".csproj", StringComparison.Ordinal)
+        && path.EndsWith(".csproj", StringComparison.Ordinal);
+
+    private static bool IsOwnedTestProject(string path, bool isXunit) =>
+        IsTestProject(path, isXunit)
         && !CrossCuttingHarnessPaths.Contains(path);
 
     private static string ResolveProjectReference(string projectPath, string include)
@@ -422,7 +447,19 @@ internal static partial class RepositoryRules
                 || !string.Equals(before.Content, after.Content, StringComparison.Ordinal))
             .ToHashSet(StringComparer.Ordinal);
 
-        return baseGraph.Participants.Values.Any(paths => paths.Overlaps(changedProjectPaths));
+        // test→test 债的参与者**不**计入路径级触发:该债的性质是一条 ProjectReference 关系,
+        // 而改同一个 csproj 里的 PackageReference 版本或任何无关属性并没有碰那条关系。
+        // 若计入,则「改这五个 csproj 之一」的每个 PR 都必须当场删掉一条 test→test 边 ——
+        // 实测近 7 天这五个文件共被改 28 次(约 4 次/天),而可还的边总共只有 4 条,
+        // 于是第五个这样的 PR 起合法候选集合为空(局部无解态),并诱发三类规避:
+        // 夹带无关还债、复制助手以抢付一条债、或改用 ReferenceOutputAssembly=false 把边藏起来。
+        //
+        // 压力并未放松:新增第五条边仍由 candidateDebt ⊆ baseDebt 当场拒;
+        // 等量换债(删一加一)同样因集合包含而非计数比较被拒;删边仍使债严格收缩。
+        // 一个 csproj 若同时参与某个**拥有关系**债,仍由那条债触发严格减债。
+        return baseGraph.Participants
+            .Where(static entry => entry.Key.Kind != OwnedTestToOwnedTestReference)
+            .Any(entry => entry.Value.Overlaps(changedProjectPaths));
     }
 
     private static bool CreatesMissingOwnedProject(DebtGraph baseGraph, DebtGraph candidateGraph)
@@ -483,6 +520,7 @@ internal static partial class RepositoryRules
         string Content,
         string AssemblyName,
         bool IsProduction,
+        bool IsTest,
         bool IsOwnedTest,
         ImmutableArray<string> DirectProjectReferences);
 
