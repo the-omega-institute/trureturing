@@ -2,7 +2,9 @@
 
 > **统一理论卷规则。** 六维四互无偏基 research lane 的新理论推理统一追加到本文件。Lean 节点继续拥有独立 GID、Scribe 与 Blueprint 投影，不再为每一个局部 obstruction 建立新的 theory 文档。
 >
-> **状态约定。** 本卷明确区分机器已证、直接推导、文献输入、条件归约和开放猜想。任何局部分支证书都不得被表述为六维四 MUB 已经解决。
+> **状态约定。** 本卷区分机器已证、直接推导、文献输入、条件归约和开放猜想。局部分支证书不得被表述为六维四 MUB 已经解决。历史段落中“已写入 Lean”只表示有源码；完整机器状态以绑定具体提交的 admission 为准。
+>
+> **2026-09-05 主线修正。** 第 30 节的列谱定理保留为条件代数结果。将 context affinity 等于一直接升级为逐行 collision 等于 `2/3`，需要额外逐行下界；该逐行下界已有数值反例线索，不得继续作为 strict-X 主桥。第 31 节用三阶酉算子的直接矩阵刚性替代这一依赖。第 33 节修复 dihedral partner 推导中未证明的逐模等范数假设。
 
 ## 0. 开放目标与仓库接口
 
@@ -62,7 +64,7 @@ H_r H_r^\dagger = 6I,
 H\mapsto D_rP_rHP_cD_c.
 ```
 
-多矩阵 compatibility 只允许一个共同 ambient left gauge。独立选择三个 Hadamard 等价类的 canonical representatives 会丢失相对左规范。仓库已经用二维精确反例机器证明 MUB compatibility 不下降到独立 Hadamard classes。
+多矩阵 compatibility 只允许一个共同 ambient left gauge。独立选择三个 Hadamard 等价类的 canonical representatives 会丢失相对左规范。仓库中的二维精确反例记录了 MUB compatibility 不下降到独立 Hadamard classes。
 
 因此 2026 order-six classification 的正确消费者是带显式 lifts 的 atlas compatibility，而不是 class-name triple。
 
@@ -326,7 +328,7 @@ G_{2q}(H)^{\circ3}
 \left(\sum_\pi b_\pi\right)=0.
 ```
 
-第二式推出第一式。第一式一般不推出第二式，因为零的一侧可以随 `pi` 改变。仓库已经用 `Fin 2` 非负反例机器证明这一点。
+第二式推出第一式。第一式一般不推出第二式，因为零的一侧可以随 `pi` 改变。仓库已经写入 `Fin 2` 非负反例。
 
 因此任何依赖 global orientation 的论证都必须额外证明 orientation coherence：
 
@@ -426,7 +428,7 @@ y'=\pm y.
 (u',v',x',y')=(v,u,-x,-y).
 ```
 
-这些 local identities 已写入 Lean。它们将每个 generic mode 的 factor ambiguity 降到一个 involution。
+这些 local identities 已写入 Lean。它们将每个 generic mode 的 factor ambiguity 降到一个 involution。`x` 与 `y` 的符号相互关联，不能把二者独立相乘以推出 labelled fibre degree `4^3=64`。完整 completion fibre 的次数仍需独立消元和 gauge 记账。
 
 ## 10. fixed-edge 方向修正与 canonical sparsity
 
@@ -520,7 +522,7 @@ fixed-edge canonical completion 是 `Z_1(X)^dagger`。pair unextendibility 在 a
 \mathcal F(T)\setminus\mathcal F_{mode-local}(T).
 ```
 
-它由 genuinely mode-mixing solutions 构成。
+它由 genuinely mode-mixing solutions 构成。上述 intrinsic characterization 与完整 basis adapter 仍需在指定规范下独立形式化。
 
 ## 13. 三循环 DFT 的 exact row equations
 
@@ -809,7 +811,7 @@ M_S(C)+M_S(D)\ge4.
 
 其中 `epsilon>0` 由 exact algebraic certificate 验证。
 
-如果只能得到 `alpha>=1`，则继续分类 equality locus，并证明两个 equality completions 不能兼容，也足以闭合。
+如果只能得到 `alpha>=1`，则继续分类 equality locus，并证明两个 equality completions 不能兼容，也足以闭合。第 31 节完成了所需的条件矩阵刚性；第 32 节给出理论上的小幅稳健改进。实际 completion 下界本身仍然未证。
 
 ## 19. 为什么该目标适合 centered-projector SoS
 
@@ -839,19 +841,7 @@ P_i^2=P_i
 \sum_kt_kg_k,
 ```
 
-其中：
-
-```text
-f_j = 0
-```
-
-是 rank-one、basis、MUB 与 Hadamard branch equations，
-
-```text
-g_k >= 0
-```
-
-是 compact parameter-domain constraints。
+其中 `f_j = 0` 是 rank-one、basis、MUB 与 Hadamard branch equations，`g_k >= 0` 是 compact parameter-domain constraints，并且乘子 `t_k` 必须带有非负性证书。
 
 数值 SDP 负责发现 Gram matrix。最终使用 rational reconstruction、algebraic-number reduction 或 interval enclosure，把证书转成 Lean 可检查的 polynomial identity。
 
@@ -883,7 +873,7 @@ a/b=b/c=c/a=t,
 
 结合 2-circulant ratio equation，另一组三个 unit ratios 的和被迫等于 `-3t`。triangle equality 迫使三者均为 `-t`，其乘积为 `-1`，与 cyclic ratio product `1` 矛盾。
 
-所以 generic 2-circulant Hadamard seed 的三个 Fourier modes都非零。该 lemma 可消除 local fibre quadratic 中的 denominator-degenerate cases。
+所以该 2-circulant Hadamard seed 的三个 Fourier modes 都非零。该 lemma 可消除 local fibre quadratic 中的 denominator-degenerate cases。
 
 形式化时先检索项目和 Mathlib 是否已有：
 
@@ -978,7 +968,7 @@ PurityPythagorasDecomposition
 
 ### M07. exceptional/equality locus
 
-只有 M06 无法得到 strict inequality 时才进入 feature kernels、Fourier seams、finite symmetry skeletons 和 exact interval covering。
+只有 M06 无法得到 strict inequality 时才进入 feature kernels、Fourier seams、finite symmetry skeletons 和 exact interval covering。第 31 节的直接矩阵定理替代逐行 collision 驱动的主线。
 
 ## 23. 当前研究边界
 
@@ -1011,16 +1001,16 @@ no-degenerate Fourier-mode lemma
 ### 关键开放命题
 
 ```text
-strict-X completion affinity lower bound alpha > 1
+strict-X completion affinity lower bound at context level
 quartet-specific cubic orientation coherence
 feature-kernel zero-locus on the complete order-six atlas
-exceptional strict-X equality-locus exclusion
+noncanonical strict-X completion exclusion
 global branch aggregation
 ```
 
 ## 24. 主线冻结
 
-下一阶段冻结为：
+历史主线为：
 
 ```text
 fixed strict-X edge
@@ -1031,6 +1021,8 @@ fixed strict-X edge
   -> isolate equality/ramification locus
   -> exact exceptional certificates
 ```
+
+第 31 节后，只需 context-level `alpha>=1` 就可用 order-three rigidity 排除两个 completions。这里仍未证明这个 branch lower bound。
 
 这条路线不要求先解决所有 MUB triplets，也不要求先证明 noncanonical fibre 为空。它把 quartet-specific obstruction 压缩为一个 centered-projector sharp bound，并保留 Hadamard atlas、feature kernels 和 finite symmetry skeleton 作为 branch-complete 后端。
 
@@ -1264,7 +1256,7 @@ scaledRelativeGramDefect_ge_commutatorGap
 \alpha_S(C)+\alpha_S(D)\le2.
 ```
 
-若每个 completion 都满足 `alpha>1`，则 quartet 被排除。
+若每个 completion 都满足 `alpha>1`，则 quartet 被排除；第 31 节处理等号。
 
 第二条针对 relative multiplier：
 
@@ -1304,9 +1296,11 @@ Jacobian nonvanishing certificate
 residual phase equations
 ```
 
-这将大幅减少需要进入完整 real-algebraic elimination 的变量和次数。
+这将减少需要进入完整 real-algebraic elimination 的变量和次数。上述局部完备性和全覆盖当前仍未建立，不能从已有局部裕量直接推出。
 
 ## 29. 更新后的形式化顺序
+
+历史队列：
 
 ```text
 SupportFaceFlatnessDefect
@@ -1334,37 +1328,29 @@ FiniteAtlasPotentialCover
   -> global no-zero theorem
 ```
 
-本轮新增的 `72` 证书只排除 canonical two-mode support face。六维四 MUB 全局结论仍依赖 noncanonical branch、exceptional loci 和 complete atlas cover。
+`72` 证书只排除 canonical two-mode support face。六维四 MUB 全局结论仍依赖 noncanonical branch、exceptional loci 和 complete atlas cover。为避免增加同义包装，当前优先级转向第 31 节的矩阵主定理及第 33 节尚未闭合的 orthogonal-pair 证书。
 
-## 30. affinity equality locus 的列谱排除
+## 30. 饱和列谱排除：保留为条件结果
 
-在 fixed strict-X edge 上，假设 branch lower bound 已经给出每个 completion 的：
+### 输入假设的修正
+
+此前从 context affinity 等于一直接写出逐行 collision 等于 `2/3`，省略了必要的逐行下界。现有 `row_collision_eq_two_thirds_of_affinity_eq_one` 明确要求：
 
 ```math
-\alpha_S(C)\ge1.
+\forall i,\quad\sum_kp_{ik}^2\ge2/3.
 ```
 
-若两个 completions 彼此 MUB，则 symmetry-plane budget 给出：
+没有这条假设，只有总平方和等于 `4`，不能让每行都等于 `2/3`。strict-X 共同无偏向量的数值探测已发现低于 `2/3` 的行，所以不再把此逐行假设作为一般 strict-X 证明目标。
+
+下面的列谱排除本身仍是合法的条件代数命题。
+
+假设 column sums 为 `2`，每个 row collision 等于 `2/3`，并且：
 
 ```math
-\alpha_S(C)+\alpha_S(D)\le2.
-```
-
-所以双方都必须满足 `alpha=1`。现有真源进一步推出每一行的 three-mode collision 都精确为：
-
-```math
-\sum_kp_{ik}^2=\frac23.
-```
-
-projector-plane saturation 需要提供下一条非平凡二次关系：
-
-```math
-\boxed{
 (p_{ik}-p_{jk})(p_{ik}+p_{jk}-1)=0.
-}
 ```
 
-固定一个 mode column `k`，令 `x_i=p_{ik}`。列和由 rank-two mode projector 给出：
+固定一列，写 `x_i=p_ik`，则：
 
 ```math
 \sum_i x_i=2.
@@ -1389,9 +1375,7 @@ projector-plane saturation 需要提供下一条非平凡二次关系：
 相应 column collision 只可能是：
 
 ```math
-\boxed{
-\frac23,\quad\frac78,\quad2.
-}
+\boxed{\frac23,\quad\frac78,\quad2.}
 ```
 
 另一方面，六个 row collisions 的总和为：
@@ -1408,13 +1392,12 @@ projector-plane saturation 需要提供下一条非平凡二次关系：
 \frac{14}{3},\ \frac{39}{8},\ 6.
 ```
 
-其中不含 `4`。因此 equality locus 为空。
+其中不含 `4`。因此这些假设共同定义的 equality locus 为空。
 
 该结论已经集中写入一个公共 Lean 定理：
 
 ```text
 D5/S3/Quantum/Tomography/MUBModeAffinityEqualityObstruction.lean
-
 no_saturated_mode_probability_table
 ```
 
@@ -1431,84 +1414,450 @@ no_saturated_mode_probability_table
 定义 column-spectrum polynomial：
 
 ```math
-q(t)=
-\left(t-\frac23\right)
-\left(t-\frac78\right)
-(t-2).
+q(t)=\left(t-\frac23\right)\left(t-\frac78\right)(t-2).
 ```
 
-对任意实数 `t`，令 `r` 为其到三个根的最小距离，则：
+对任意实数 `t`，令 `r` 为其到三个根的最小距离，则 `r^3 <= |q(t)|`。所以若三个 column collisions 满足 `s_0+s_1+s_2=4`，至少一列满足：
 
 ```math
-r^3\le |q(t)|.
+\boxed{|q(s_k)|\ge\frac1{1728}.}
 ```
 
-所以若三个 column collisions `s_0,s_1,s_2` 满足：
+否则每个 `s_k` 都距离某个允许根小于 `1/12`，三个最近根的和距离 `4` 小于 `1/4`，与离散间隙矛盾。这是条件 equality obstruction 的稳定版本，不能用于补足已撤回的 rowwise lower bound。
 
-```math
-s_0+s_1+s_2=4,
-```
+### projector saturation quadratic 的历史桥
 
-则至少一个 column 必须满足：
-
-```math
-\boxed{
-|q(s_k)|\ge\frac1{1728}.
-}
-```
-
-否则每个 `s_k` 都距离某个允许根小于 `1/12`，三个最近根的和距离 `4` 小于 `1/4`，与上述离散间隙矛盾。
-
-这给出 exact equality obstruction 的稳定版本。未来 interval、SOS 或 algebraic branch certificate 无需首先证明二次关系完全为零。只要能把三个 `q(s_k)` 同时压到 `1/1728` 以下，就已经产生矛盾。
-
-### 剩余的唯一高价值桥
-
-下一项形式化不再增加新的 scalar wrapper。应直接从 projector saturation 推出二次关系。
-
-令 rank-two mode projector 为 `E_k`，并定义：
-
-```math
-X_k=E_k-I/3.
-```
-
-则：
+令 rank-two mode projector 为 `E_k`，并定义 `X_k=E_k-I/3`。则：
 
 ```math
 X_k^2=\frac13X_k+\frac29I.
 ```
 
-当 MUB symmetry budget 取等时，`X_k` 完全落入两个互相正交的 completion context planes 之和，可写为：
+当 MUB symmetry budget 取等时，若几何 adapter 证明 `X_k=A_k+B_k`，其中两项属于两个相互正交的 centered context planes，在第一 completion 的 rank-one projector 上取期望得到：
 
 ```math
-X_k=A_k+B_k.
+a_{ik}^2+\frac16\sum_jb_{jk}^2=\frac13a_{ik}+\frac29.
 ```
 
-在第一 completion 的 rank-one projector `P_i` 上取期望。利用第二 completion 与第一 completion 的 MUB overlap，以及两个 centered coefficient sums 都为零，得到：
+两行相减并代入 `a_ik=p_ik-1/3` 可得上述二次关系。这条桥保留为独立核验；主线由下面不使用逐行 collision 的定理代替。
+
+## 31. 三阶酉算子在互补 context 中不能非平凡分裂
+
+### 完整矩阵陈述
+
+令 `d>0`，`C={P_i}` 和 `D={Q_j}` 是两个 complete orthogonal rank-one contexts，满足：
 
 ```math
-a_{ik}^2+\frac16\sum_jb_{jk}^2
-=\frac13a_{ik}+\frac29.
+\operatorname{Tr}(P_iQ_j)=1/d.
 ```
 
-对 `i` 与 `j` 相减：
+取复系数 `a_i,b_j`，满足 `sum a_i=sum b_j=0`，并令：
 
 ```math
-(a_{ik}-a_{jk})
-\left(a_{ik}+a_{jk}-\frac13\right)=0.
+A=\sum_i a_iP_i,\qquad B=\sum_jb_jQ_j,\qquad S=A+B.
 ```
 
-代入 `a_{ik}=p_{ik}-1/3`，正好得到：
+如果：
 
 ```math
-(p_{ik}-p_{jk})(p_{ik}+p_{jk}-1)=0.
+SS^\dagger=I,\qquad S^3=I,
 ```
 
-因此 strict-X 主线现在只剩两个实质性任务：
+则：
+
+```math
+\boxed{(\forall i,\ a_i=0)\quad\lor\quad(\forall j,\ b_j=0).}
+```
+
+因此 `S` 整体属于其中一个对角代数。结论适用于实际矩阵与实际 rank-one contexts，不把核心矩阵关系隐藏为一个未证明的 scalar hypothesis。
+
+### 二次范数证书
+
+写 normalized trace 为 `tau=Tr/d`，定义：
+
+```math
+\beta=\tau(BB^\dagger),\quad\alpha=1-\beta,\quad\mu=\tau(B^2).
+```
+
+MUB overlap 和两个 zero-sum coefficient 条件使 mixed diagonal expectations 消失。在 `P_i` 上对 `SS^dagger=I` 取期望：
+
+```math
+|a_i|^2+\beta=1.
+```
+
+所以所有 `a_i` 有相同平方模 `alpha`，且 `alpha,beta>=0`。
+
+由三阶关系和 unitarity，`S^2=S^dagger`。再次投影到 `P_i`：
+
+```math
+\boxed{a_i^2+\mu=\overline{a_i}.}
+```
+
+对这个式子取模平方并平均，使用 `sum a_i=0`：
+
+```math
+\begin{aligned}
+\alpha^2
+&=\frac1d\sum_i|\overline{a_i}-\mu|^2\\
+&=\alpha+|\mu|^2-\frac2d\Re\left(\mu\sum_i a_i\right)\\
+&=\alpha+|\mu|^2.
+\end{aligned}
+```
+
+结合 `alpha+beta=1`：
+
+```math
+\boxed{\alpha\beta+|\mu|^2=0.}
+```
+
+两项均非负，所以 `alpha beta=0`。`alpha=0` 强制全部 `a_i=0`；`beta=0` 强制全部 `b_j=0`。
+
+该证明不需要谱分类、三次迹的 Cauchy 估计、逐行碰撞下界或枚举 completion roots。
+
+### 精确有理 Positivstellensatz
+
+写 `mu=u+iv`。令：
+
+```math
+f_1=\alpha+\beta-1,\qquad
+f_2=\alpha^2-\alpha-u^2-v^2,\qquad
+f_3=\alpha-1/2.
+```
+
+系数恒等式为：
+
+```math
+\alpha\beta+u^2+v^2=\alpha f_1-f_2.
+```
+
+balanced split 的直接反证证书为：
+
+```math
+\boxed{
+-1=(2u)^2+(2v)^2+4f_2-4(\alpha-1/2)f_3.
+}
+```
+
+该恒等式已用 Python 标准库 `fractions.Fraction` 对全部单项式系数逐项核对，无浮点输入。证书数据位于：
 
 ```text
-1. 对每个 completion 证明 alpha_S >= 1。
-2. 从 alpha_S(C)+alpha_S(D)=2 的 projector saturation
-   机器推出上述二次关系。
+docs/develop/certificates/order_three_no_split_certificate.json
 ```
 
-完成第二项后，`no_saturated_mode_probability_table` 立即排除 equality。后续不再扩展零元证书、初等碰撞恒等式或同义 frame-potential 包装。
+这是 scalar polynomial identity 的精确审计。它不能取代上面的矩阵到 scalar 归约，也不能代替 Lean elaboration。
+
+### 本轮唯一公共 Lean 主定理
+
+```text
+D5/S3/Quantum/Tomography/OrderThreeComplementaryContextRigidity.lean
+orderThree_complementary_contexts_no_split
+```
+
+直接复用 `RankOneContextCommutator` 中的 `RankOneContext`、`overlap`、rank-one projection laws，以及 Mathlib 的 `Matrix.trace`、有限谱和、complex conjugation。内部计算 lemma 保持 private，没有新建 basis、pinching、unitary 或 affinity carrier。
+
+Scribe 说明位于：
+
+```text
+Blueprint/D5/S3/Quantum/Tomography/OrderThreeComplementaryContextRigidity.scribe.cs
+```
+
+公共 theorem 的假设明确包括两个 context 的正交性、MUB overlap、两个 coefficient sums 为零、矩阵 unitarity 和三阶关系。结论是至少一整组 coefficient 为零。
+
+### 对六维 symmetry budget 的意义
+
+对 `S=E_0+omega E_1+omega^2 E_2` 和两个 MUB contexts，如果几何饱和 adapter 给出：
+
+```math
+S=\mathsf E_C(S)+\mathsf E_D(S),
+```
+
+则本定理推出：
+
+```math
+\boxed{(\alpha_S(C),\alpha_S(D))\in\{(2,0),(0,2)\}.}
+```
+
+特别排除 `(1,1)`。因此实际 branch certificate 若能证明每个 completion 的 context affinity 至少一，就足以排除 quartet。这里不再需要从总 affinity 推出逐行 collision。实际 strict-X 下界本身仍是开放目标。
+
+## 32. 近饱和的定量刚性：理论推导
+
+本节使用 normalized Hilbert-Schmidt norm：
+
+```math
+\|Z\|_2^2=\tau(Z^\dagger Z),\qquad\tau=\operatorname{Tr}/d.
+```
+
+设 `S` 是 trace-zero order-three unitary，`C,D` 为两个互补 contexts。令：
+
+```math
+A=\mathsf E_C(S),\quad B=\mathsf E_D(S),\quad R=S-A-B,
+```
+
+```math
+a=\|A\|_2^2,\quad b=\|B\|_2^2,\quad r=\|R\|_2^2.
+```
+
+正交投影性质给出 `a+b+r=1`。pinching 在 operator norm 下收缩，所以 `||A||op,||B||op<=1`，进而 `||R||op<=3`。
+
+从投影后的 `SS^dagger=I` 得到：
+
+```math
+H:=AA^\dagger-aI
+=rI-\mathsf E_C(BR^\dagger+RB^\dagger+RR^\dagger).
+```
+
+因为 `R` 与两个 context 正交，mixed trace 为零。centered Hilbert-Schmidt contraction 给出：
+
+```math
+\|H\|_2\le2\sqrt r+\|RR^\dagger-rI\|_2\le5\sqrt r.
+```
+
+从 `S^2=S^dagger` 得到：
+
+```math
+A^2+\mu I+F=A^\dagger,\qquad
+\mu=\tau(B^2),\qquad F=\mathsf E_C(BR+RB+R^2),
+```
+
+且 `||F||2<=5 sqrt(r)`。`A` normal，所以：
+
+```math
+\|A^2\|_2^2=a^2+\|H\|_2^2.
+```
+
+zero trace 还给出：
+
+```math
+\|A^\dagger-\mu I\|_2^2=a+|\mu|^2\le a+b^2\le1.
+```
+
+展开平方并用 Cauchy：
+
+```math
+\begin{aligned}
+a(1-a)+|\mu|^2
+&=\|H\|_2^2-\|F\|_2^2
+ +2\Re\langle A^\dagger-\mu I,F\rangle\\
+&\le25r+10\sqrt r.
+\end{aligned}
+```
+
+因此得到可量化的非平衡约束：
+
+```math
+\boxed{a(1-a)\le25r+10\sqrt r.}
+```
+
+六维中 `alpha_S(C)=2a`、`alpha_S(D)=2b`。若两者均至少 `2499/2500`，令 `epsilon=1/2500`，则：
+
+```math
+r\le\epsilon,\qquad
+a(1-a)\ge\frac{1-\epsilon^2}{4},
+```
+
+但：
+
+```math
+25\epsilon+10\sqrt\epsilon=\frac{21}{100}
+<\frac{6249999}{25000000}
+=\frac{1-\epsilon^2}{4}.
+```
+
+产生矛盾。故对于这类 `S,C,D`：
+
+```math
+\boxed{\min\{\alpha_S(C),\alpha_S(D)\}<\frac{2499}{2500}.}
+```
+
+这条定量结果目前是完整的数学推导；未加入本轮 Lean 公共 API。JSON 证书只审计最后的有理数比较，不声称已经核验全部 operator-norm 估计。若将来证明某一 strict-X completion branch 的 context affinity 至少 `2499/2500`，这一稳健版本就足够排除该 branch 中的 MUB pair。当前没有证明该 branch 下界。
+
+## 33. dihedral partner 路线：补齐幅度缺口
+
+### 反酉对称性与有限轨道
+
+标准 2-circulant block mode 有形式：
+
+```math
+T_k=\begin{pmatrix}a_k&b_k\\\overline b_k&-\overline a_k\end{pmatrix},
+\qquad |a_k|^2+|b_k|^2=1,\qquad\det T_k=-1.
+```
+
+定义 `J=[[0,-1],[1,0]]` 和 `Theta(z)_k=J conjugate(z_k)`。直接计算：
+
+```math
+\Theta^2=-I,\qquad\Theta T=-T\Theta.
+```
+
+对 `R(z)_k=omega^k z_k`，还有：
+
+```math
+R^3=I,\qquad\Theta R=R^{-1}\Theta.
+```
+
+在 projective rays 上得到六阶 dihedral action。在原坐标中，`R` 是三循环 permutation，`Theta` 是 conjugation 后接 monomial action，因此共同无偏集合在这些操作下保持。
+
+二维反对称性给出：
+
+```math
+\langle R^a v,R^b\Theta v\rangle=0
+\quad\text{for all }a,b\in\mathbb Z_3.
+```
+
+同一个三循环轨道内部正交，当且仅当三个 mode weights 都为 `1/3`。因此一个 uniform-mode common-unbiased vector 会生成六元正交 orbit basis。
+
+### 前一版未证明的假设
+
+从 `v_k perp w_k` 只能得到：
+
+```math
+w_k=\lambda_kJ\overline{v_k},\qquad\lambda_k\in\mathbb C.
+```
+
+它不能直接推出 `|lambda_k|=1`。本轮曾尝试使用由 mode mass、输入 channel imbalance、输出 channel imbalance 组成的实三阶行列式来控制幅度，但数值样本中该行列式退化。这条额外 generic guard 不再作为有效入口。
+
+### 一个复三阶行列式足以同时处理相位和幅度
+
+设每个 `v_k` 非零，`v,w` 都 normalized 且 coordinate-flat。写 `v_k=(u_k,z_k)`，定义：
+
+```math
+c_k=\overline{u_k}u_{k+1},\qquad
+ d_k=\overline{z_k}z_{k+1},
+```
+
+下标模三。由 length-three constant-modulus Fourier 条件，`sum c_k=sum d_k=0`。
+
+令：
+
+```math
+\Delta(v)=\det\begin{pmatrix}
+c_0&c_1&c_2\\d_0&d_1&d_2\\1&1&1
+\end{pmatrix}.
+```
+
+假设 `Delta(v) != 0`，则前两行独立，它们的共同 kernel 恰为 `span(1,1,1)`。
+
+对逐模正交的 `w_k=lambda_k J conjugate(v_k)`，令：
+
+```math
+r_k=\lambda_k\overline{\lambda_{k+1}}.
+```
+
+`w` 的两条 autocorrelation equations 给出 `sum r_k c_k=sum r_k d_k=0`，故：
+
+```math
+r_0=r_1=r_2=\rho.
+```
+
+必须保留两个分支：
+
+**第一分支：`rho=0`。** 三循环上任意相邻两个 `lambda` 的乘积为零，因此最多一个 `lambda` 非零。由于 `w` normalized，恰好一个非零，`w` 是 mode-local vector。
+
+**第二分支：`rho!=0`。** 三个 `lambda` 都非零，三个相邻模长乘积相等，强制：
+
+```math
+|\lambda_0|=|\lambda_1|=|\lambda_2|.
+```
+
+利用 `||v||=||w||=1`，公共模长为一。于是：
+
+```math
+\rho^3=\prod_k|\lambda_k|^2=1,\qquad
+\lambda_{k+1}=\overline\rho\lambda_k.
+```
+
+所以：
+
+```math
+\boxed{w\sim R^m\Theta v\quad\text{for some }m\in\mathbb Z_3.}
+```
+
+正确的 conditional partner theorem 因而是：
+
+```math
+\boxed{
+\text{modewise orthogonality}+
+\text{coordinate flatness}+\Delta(v)\ne0
+\Longrightarrow
+\text{mode-local partner or dihedral partner}.
+}
+```
+
+这里没有预设逐模范数相同；它在非零乘积分支中由方程推出。该结果仍属于理论推导，尚未新增 Lean 文件。
+
+### 真正缺失的排除证书
+
+尚未证明的是：对于指定 generic strict-X branch，两个共同无偏向量的全局正交是否强制逐模正交。需要发现并精确验证：
+
+```math
+G(\alpha,v,w)^N
+\sum_{k=0}^2|\langle v_k,w_k\rangle|^2
+\in I_{UB}(T;v,w),
+```
+
+或适当的 real-radical / Positivstellensatz 版本。`G` 的每个非零 guard 都必须与实际 branch 对应，并覆盖其补集。不能用“generic”一词跳过 `Delta=0`、零 mode 或 Fourier seams。
+
+此 ideal-membership statement 目前仍是待寻找的证书；本轮没有得到它。也没有证明所有共同无偏向量已被枚举。
+
+## 34. 本轮计算、写回和证明边界
+
+### 可复核的精确结果
+
+`order_three_no_split_certificate.json` 的两个多项式恒等式，已在本地使用有理系数字典进行展开并逐项比较。输出为：
+
+```text
+PASS: nonnegative identity, balanced refutation, robust rational constants
+Lean elaboration: not executed in this runtime
+```
+
+这不是以数值残差替代恒等式。`fractions.Fraction` 没有浮点舍入。但它仅验证列出的 scalar algebra，Lean admission 仍负责完整矩阵 theorem。
+
+本轮 Lean 主文件真实创建于提交：
+
+```text
+65ea169f452a94f2de77d5c4d66c12747939634f
+```
+
+Scribe 说明创建于：
+
+```text
+244ff1274f0e73f42582b2f3b582d10a77bfd56
+```
+
+本地运行环境没有可用的 Lean/lake 或完整 checkout，所以没有执行本地 elaboration、Scribe reconciliation 或完整 import closure。原 PR 仍有 canonical report 失败历史；本轮不把源码提交描述成 kernel 已接受。
+
+### 新执行的一组数值探测
+
+为检验第 33 节的 guards，本轮用固定 seed `502820260905` 生成一个 floating-point 2-circulant Hadamard candidate，进行了 `80` 个 least-squares starts，恢复 `41` 条 distinct candidate rays。应用 projective dihedral symmetry 并去重后得到 `60` 条 rays。
+
+在 inner-product threshold `1e-7` 下，显式检验 bipartiteness 和全部边后，这个已恢复子图由：
+
+```math
+K_6\sqcup9K_{3,3}
+```
+
+组成。最大 coordinate/common-unbiased residual 约 `8.59e-12`；在检测到的正交对上，逐模内积平方和最大约 `1.98e-20`。
+
+这些数值只描述一个样本的已恢复点集合。没有证明：
+
+```text
+该参数点严格避开所有 Fourier seams；
+共同无偏方程恰好只有 60 条 rays；
+阈值下的零内积为精确代数零；
+整个连续 strict-X branch 有相同图；
+所有 noncanonical completions 都被排除。
+```
+
+因此 `K6 + 9 K3,3` 继续作为有针对性的证书发现线索，不作为文献事实或全分支定理。完整输入、seed、求解和图检验代码保留在本轮可下载的研究包中。
+
+### 下一次写入的准入标准
+
+不再新增零元下界的同义版本、逐行 collision 的初等推论或无消费者的证书包装。优先闭合本轮矩阵主定理的 admission；之后只有两类实际进展值得进入主线：
+
+```text
+1. 用现有 pinching/Pythagoras 接口接通真实饱和几何，
+   并对指定 strict-X branch 构造 context-level affinity 下界证书。
+2. 找到并验证全局正交到逐模正交的具体 polynomial certificate，
+   同时处理非零 guards 和 exceptional locus。
+```
+
+三阶刚性已经给出等号障碍，但仍未提供 strict-X completion 下界或 noncanonical orthogonality 分类。六维四 MUB 的全局不存在性仍然开放于本研究线。
