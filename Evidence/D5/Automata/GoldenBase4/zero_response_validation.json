@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "reference_rank": 14,
+  "reference_determinant": -1,
+  "joint_response_ranks_by_horizon": [
+    9,
+    12,
+    13,
+    14
+  ],
+  "inverse_products_checked": 2,
+  "reference_scalar_product_equalities": 392,
+  "small_models": {
+    "models": 1164,
+    "factorization_entries": 122724,
+    "zero_prefix_evaluations": 129696,
+    "gap_evaluations": 9264,
+    "models_with_self_loops": 876,
+    "models_with_unused_slots": 520,
+    "models_with_duplicate_pairs": 260
+  },
+  "rejected_mutations": [
+    "wrong_return",
+    "wrong_probe",
+    "wrong_origin",
+    "wrong_inverse"
+  ],
+  "sources": {
+    "D5/S1/Digit/GoldenBase4IntervalMachine.lean": "d02440b7e57663841f541a3418b780bb950b114fc669beeacdd2cad82b762101",
+    "D5/S0/Certificates/SkeletonSlotZeroResponse.lean": "6b55c1833ba22879dfa41f5cf9dcd29951ffbf66ffad57e0a8d8a01ead544bef",
+    "D5/S1/Digit/GoldenBase4ZeroResponse.lean": "76efea48b3a44f87368afb8e083f6bea50a6fdb654ba04a3e5776a5ee26d2371"
+  },
+  "lean_executed": false,
+  "new_powers_only_state_lower_bound": false,
+  "scope": "Exact shared-zero constraints for every slot candidate; rank 14 only for the fixed labelled reference profile."
+}
