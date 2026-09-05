@@ -135,7 +135,11 @@ internal static partial class RepositoryRules
     }
 
     private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
-        => EvaluateCapacity(context, ScribeTestMapDeriver.DeriveSnapshot);
+        => EvaluateCapacity(
+            context,
+            snapshot => context.TestMapStore is null
+                ? ScribeTestMapDeriver.DeriveSnapshot(snapshot)
+                : context.TestMapStore.GetOrDerive(snapshot, ScribeTestMapDeriver.DeriveSnapshot));
 
     internal static ImmutableArray<RuleFinding> EvaluateCapacity(
         RuleEvaluationContext context,
