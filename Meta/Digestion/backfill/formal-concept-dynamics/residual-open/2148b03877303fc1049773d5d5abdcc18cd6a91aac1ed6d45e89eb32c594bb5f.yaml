@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `- 规范前提；` is a bare bridge label and states no premise, relation, or conclusion that a public theorem can cover. Retrieval receipts: D5 search `normative (premise|assumption)|normativePremise|规范前提` exited 1; the exact nearby separation owner `D5/S3/ConceptDynamics/NormativeStructure/DescriptiveNormativeSeparation.descriptive_structure_does_not_uniquely_determine_norms` names no bridge premise. Pinned Mathlib search for the same vocabulary exited 1. GitHub Lean-code search `normative premise` exited 0 and hit `inventor1975/ZTL` `bridge_delivers`, but that result selects its own Fact/Ought carrier and does not supply a proposition for this fragment. Local construction probe `/private/tmp/w73e33-atom1-probe.lean` exited 1 after the exact separation conclusion closed, at the exact unsolved goal `⊢ normativePremise`; assuming that goal would be hollow."
+    reentry_condition: "Add a canonical normative-bridge relation on the repository DescriptiveStructure and permission-predicate carriers, plus a frozen theorem showing how an explicit bridge premise constrains the permission predicate."
+    blocker_class: multi-clause-guard
