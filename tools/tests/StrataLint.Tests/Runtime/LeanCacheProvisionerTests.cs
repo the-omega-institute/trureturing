@@ -29,7 +29,7 @@ public sealed class LeanCacheProvisionerTests
         // 承重点即活性上限本身。上一版这里断言的是「模块数算出来的派生值」,
         // 而那个派生每次都被 clamp 压回上限 —— 断言恒真,「派生」二字不承重。
         Assert.Equal(
-            TestBudgets.LeanCacheProvisionBudget,
+            PinnedProductionBudgets.LeanCacheProvisionBudget,
             lean);
 
         // 另两者继承它。分叉须走注释所述的收口 + 新案号,不得静默发生。
@@ -50,7 +50,7 @@ public sealed class LeanCacheProvisionerTests
         {
             // 下界..上界之外的值须被 clamp;取一个远超上界的数,三者都应落到上界。
             Environment.SetEnvironmentVariable(BudgetVariable, "99999");
-            var clamped = TestBudgets.LeanCacheProvisionCeiling;
+            var clamped = PinnedProductionBudgets.LeanCacheProvisionCeiling;
             Assert.Equal(clamped, LeanCacheProvisioner.LeanCommandBudget);
             Assert.Equal(clamped, LeanCacheProvisioner.DirectoryCopyBudget);
             Assert.Equal(clamped, LeanCacheProvisioner.DependencyFetchBudget);
@@ -211,7 +211,7 @@ public sealed class LeanCacheProvisionerTests
     {
         WithBudget("invalid", () =>
             Assert.Equal(
-                TestBudgets.LeanCacheProvisionBudget,
+                PinnedProductionBudgets.LeanCacheProvisionBudget,
                 LeanCacheProvisioner.LeanCommandBudget));
     }
 
@@ -484,10 +484,10 @@ public sealed class LeanCacheProvisionerTests
         Assert.Equal(5, cleanupCalls);
         Assert.Equal(
             [
-                TestBudgets.LeanCacheRetryOne,
-                TestBudgets.LeanCacheRetryTwo,
-                TestBudgets.LeanCacheRetryThree,
-                TestBudgets.LeanCacheRetryFour,
+                PinnedProductionBudgets.LeanCacheRetryOne,
+                PinnedProductionBudgets.LeanCacheRetryTwo,
+                PinnedProductionBudgets.LeanCacheRetryThree,
+                PinnedProductionBudgets.LeanCacheRetryFour,
             ],
             waits);
         Assert.Equal(4, waits.Count);

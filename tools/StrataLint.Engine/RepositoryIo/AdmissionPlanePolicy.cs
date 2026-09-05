@@ -30,7 +30,6 @@ internal enum AdmissionPlaneClassification
     Empty,
     JudgeOnly,
     ContentOnly,
-    Bootstrap,
     Mixed,
 }
 
@@ -49,8 +48,7 @@ internal sealed record AdmissionPlaneDecision(
                 "FULL routing requires an admissible admission-plane classification.");
         }
 
-        return Classification is AdmissionPlaneClassification.JudgeOnly
-            or AdmissionPlaneClassification.Bootstrap;
+        return Classification is AdmissionPlaneClassification.JudgeOnly;
     }
 }
 
@@ -59,29 +57,29 @@ internal static class AdmissionPlanePolicy
     internal const string FileMapPath = "Meta/FILEMAP.toml";
     internal const string MixedCode = "ADMISSION-PLANE-MIXED";
 
-    private const string CiPath = ".github/workflows/ci.yml";
-    private static readonly string[] RepairPaths = [CiPath, FileMapPath];
-
     internal static AdmissionPlaneDecision Evaluate(
-        RawRepositorySnapshot protectedBase,
+        RawRepositorySnapshot candidate,
         IReadOnlyList<string> changedPaths)
     {
-        ArgumentNullException.ThrowIfNull(protectedBase);
+        ArgumentNullException.ThrowIfNull(candidate);
         ArgumentNullException.ThrowIfNull(changedPaths);
         if (changedPaths.Count == 0)
         {
             return Admissible(AdmissionPlaneClassification.Empty);
         }
 
-        var fileMap = protectedBase.Entries.FirstOrDefault(
+        var fileMap = candidate.Entries.FirstOrDefault(
             static entry => entry.Path == FileMapPath);
         return fileMap is null
-            ? EvaluateUnavailable(changedPaths)
+            ? Failed(
+                "ADMISSION-PLANE-FILEMAP-UNAVAILABLE",
+                FileMapPath,
+                "FILEMAP is unavailable")
             : Evaluate(fileMap.Bytes.AsSpan(), changedPaths);
     }
 
     internal static AdmissionPlaneDecision Evaluate(
-        ReadOnlySpan<byte> protectedBaseFileMap,
+        ReadOnlySpan<byte> candidateFileMap,
         IReadOnlyList<string> changedPaths)
     {
         ArgumentNullException.ThrowIfNull(changedPaths);
@@ -90,22 +88,19 @@ internal static class AdmissionPlanePolicy
             return Admissible(AdmissionPlaneClassification.Empty);
         }
 
-        var isRepair = IsRepair(changedPaths);
         AdmissionPlaneFileMap manifest;
         try
         {
             manifest = AdmissionPlaneFileMapLoader.Parse(
-                protectedBaseFileMap,
-                $"protected-base:{FileMapPath}");
+                candidateFileMap,
+                FileMapPath);
         }
         catch (FileMapParseException exception)
         {
-            return isRepair
-                ? Admissible(AdmissionPlaneClassification.Bootstrap)
-                : Failed(
-                    "ADMISSION-PLANE-BASE-FILEMAP-INVALID",
-                    FileMapPath,
-                    $"protected-base FILEMAP cannot be parsed: {exception.Message}");
+            return Failed(
+                "ADMISSION-PLANE-FILEMAP-INVALID",
+                FileMapPath,
+                $"FILEMAP cannot be parsed: {exception.Message}");
         }
         catch (FileMapPatternException exception)
         {
@@ -117,7 +112,7 @@ internal static class AdmissionPlanePolicy
         catch (FormatException exception)
         {
             return Failed(
-                "ADMISSION-PLANE-BASE-FILEMAP-INVALID",
+                "ADMISSION-PLANE-FILEMAP-INVALID",
                 FileMapPath,
                 exception.Message);
         }
@@ -132,7 +127,7 @@ internal static class AdmissionPlanePolicy
                 return Failed(
                     "ADMISSION-PLANE-PATH-MATCH-COUNT",
                     path,
-                    "changed path must match exactly one protected-base FILEMAP entry; "
+                    "changed path must match exactly one FILEMAP entry; "
                     + $"path={path} matches={matches.Length}");
             }
 
@@ -143,19 +138,6 @@ internal static class AdmissionPlanePolicy
             else
             {
                 contentPaths.Add(path);
-            }
-        }
-
-        if (isRepair)
-        {
-            var invalid = RepairPaths.FirstOrDefault(path =>
-                manifest.Match(path) is not [{ AdmissionPlane: FileMapAdmissionPlane.Judge }]);
-            if (invalid is not null)
-            {
-                return Failed(
-                    "ADMISSION-PLANE-REPAIR-PATH-NOT-JUDGE",
-                    invalid,
-                    $"reserved repair path must resolve once to judge: {invalid}");
             }
         }
 
@@ -174,17 +156,6 @@ internal static class AdmissionPlanePolicy
                 ? AdmissionPlaneClassification.JudgeOnly
                 : AdmissionPlaneClassification.ContentOnly);
     }
-
-    private static AdmissionPlaneDecision EvaluateUnavailable(IReadOnlyList<string> changedPaths) =>
-        IsRepair(changedPaths)
-            ? Admissible(AdmissionPlaneClassification.Bootstrap)
-            : Failed(
-                "ADMISSION-PLANE-BASE-FILEMAP-UNAVAILABLE",
-                FileMapPath,
-                "protected-base FILEMAP is unavailable outside the repair boundary");
-
-    private static bool IsRepair(IReadOnlyList<string> changedPaths) =>
-        changedPaths.All(path => RepairPaths.Contains(path, StringComparer.Ordinal));
 
     private static AdmissionPlaneDecision Admissible(
         AdmissionPlaneClassification classification) =>

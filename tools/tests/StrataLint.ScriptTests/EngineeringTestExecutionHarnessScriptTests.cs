@@ -29,26 +29,6 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
     }
 
     [Fact]
-    public void FullEnvironmentValueIsForwardedWithoutClassification()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var run = RunHarness(new HarnessScenario(Full: "caller-selected-full-run"));
-
-        Assert.True(run.Process.ExitCode == 0, run.Diagnostics);
-        Assert.Equal("set:caller-selected-full-run\n", run.MakeEnvironment);
-    }
-
-    [Fact]
-    public void AbsentFullEnvironmentRemainsUnsetForMake()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var run = RunHarness(new HarnessScenario());
-
-        Assert.True(run.Process.ExitCode == 0, run.Diagnostics);
-        Assert.Equal("unset\n", run.MakeEnvironment);
-    }
-
-    [Fact]
     public void MissingObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -146,7 +126,6 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             "engineering-test-execution-harness.sh");
         var binDirectory = Path.Combine(temporary.Path, "bin");
         var makeArguments = Path.Combine(temporary.Path, "make-arguments");
-        var makeEnvironment = Path.Combine(temporary.Path, "make-environment");
         ScriptHarnessScratch.EnsureDirectory(candidateRoot);
         ScriptHarnessScratch.EnsureDirectory(toolsDirectory);
         ScriptHarnessScratch.EnsureDirectory(binDirectory);
@@ -160,11 +139,6 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             for argument in "$@"; do
               printf '%s\n' "$argument" >> "$MAKE_ARGUMENTS"
             done
-            if [[ "${FULL+x}" == "x" ]]; then
-              printf 'set:%s\n' "$FULL" > "$MAKE_ENVIRONMENT"
-            else
-              printf '%s\n' 'unset' > "$MAKE_ENVIRONMENT"
-            fi
             exit "${MAKE_EXIT_CODE:?}"
             """);
         var observationLibrary = Path.Combine(
@@ -223,22 +197,16 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             : null;
         var environment = new List<string>
         {
-            "-u", "FULL",
             "-u", "GIT_CONFIG",
             "-u", "GIT_CONFIG_PARAMETERS",
             $"PATH={binDirectory}:{ExecutablePath}",
             $"TMPDIR={temporary.Path}",
             $"MAKE_ARGUMENTS={makeArguments}",
-            $"MAKE_ENVIRONMENT={makeEnvironment}",
             $"MAKE_EXIT_CODE={scenario.MakeExitCode}",
             "GIT_CONFIG_GLOBAL=/dev/null",
             "GIT_CONFIG_SYSTEM=/dev/null",
             "GIT_CONFIG_NOSYSTEM=1",
         };
-        if (scenario.Full is not null)
-        {
-            environment.Add($"FULL={scenario.Full}");
-        }
         environment.AddRange(["/bin/bash", scriptPath, candidateRoot]);
         var process = TestProcessRunner.Run(
             "/usr/bin/env",
@@ -252,8 +220,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             repository,
             head,
             @base,
-            makeArguments,
-            makeEnvironment);
+            makeArguments);
     }
 
     private static void RunGit(string root, params string[] arguments)
@@ -301,7 +268,6 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
 
     private sealed record HarnessScenario(
         int MakeExitCode = 0,
-        string? Full = null,
         ObservationLibraryState ObservationLibraryState = ObservationLibraryState.Available,
         bool HeadHasFirstParent = true);
 
@@ -322,8 +288,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
         string Repository,
         string Head,
         string? Base,
-        string MakeArgumentsPath,
-        string MakeEnvironmentPath) : IDisposable
+        string MakeArgumentsPath) : IDisposable
     {
         internal string Diagnostics => ProcessDiagnostics(Process);
 
@@ -333,9 +298,6 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
 
         internal string[] MakeArguments =>
             ScriptHarnessScratch.ReadRecordedCalls(MakeArgumentsPath);
-
-        internal string MakeEnvironment =>
-            ScriptHarnessScratch.ReadScratchText(Temporary, "make-environment");
 
         public void Dispose() => Temporary.Dispose();
     }

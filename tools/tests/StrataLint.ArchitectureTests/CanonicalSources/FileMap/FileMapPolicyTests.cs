@@ -249,7 +249,7 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void EmptyFrozenStatePatternIsAcceptedDuringTheExpandPhase()
+    public void EmptyFrozenStatePatternIsRejectedLikeAnyOtherCommittedPattern()
     {
         var manifest = Parse(Entry(
             "Golden/Frozen/state/**/*.json",
@@ -258,7 +258,9 @@ public sealed partial class FileMapPolicyTests
             "FrozenStateCatalog",
             "FrozenStateRecordLoader"));
 
-        Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
+        var finding = Assert.Single(FileMapPolicy.InspectPatternPopulation(manifest, []));
+        Assert.Equal("FILEMAP-PATTERN-EMPTY", finding.Code);
+        Assert.Equal("Golden/Frozen/state/**/*.json", finding.Path);
     }
 
     [Fact]

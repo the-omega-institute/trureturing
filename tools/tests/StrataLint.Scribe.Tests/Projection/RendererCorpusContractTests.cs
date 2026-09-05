@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "ac81e0dc33e565c52c9071161ce85666c1775b2f530b98ee74bac82a75e61f68";
+        "684ffe9abd8cdb4da31415a09fe2af382f4e2bd95ca90b5289761b35699f443f";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -451,6 +451,8 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(group, word));
         formulas.Add(new Formula.Subscript(sequence, word));
         formulas.Add(new Formula.LatexGroup([multiplicative]));
+        // 2026-09-05 判词逐字: formula-context:Negate.Operand=precedence:script;produces-script:true
+        formulas.Add(new Formula.Negate(script));
         // 2026-09-02 判词逐字: formula-context:LatexGroup.Items=precedence:logic;
         //   produces-script:false;starts-with-negation:false
         // precedence:logic 只由 Formula.Logic 产生(LatexWriter.WriteLogic 的 LogicPrecedence)。

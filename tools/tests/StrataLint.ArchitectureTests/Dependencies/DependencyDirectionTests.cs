@@ -79,10 +79,11 @@ public sealed class DependencyDirectionTests
     // Keep the name: ScribeUnknownDebtPolicy's identity ratchet makes a rename new debt; the assertion body governs.
     public void EngineeringScopeTestsReferenceOnlyEngineeringScope()
     {
-        Assert.Equal(
-            ["StrataLint.EngineeringScope", "StrataLint.TestSupport"],
-            AssemblyReferencePolicy.ApplicationReferences(
-                typeof(StrataLint.EngineeringScope.Tests.TestProcessRunnerTests).Assembly));
+        // 此处曾有一条产物层(IL)断言,钉 `["StrataLint.EngineeringScope", "StrataLint.TestSupport"]`
+        // —— 它守的是「`Engine` 传递可达却未被使用」。**已由更强的东西取代,不是删除**:
+        // EngineeringScope.Tests 现在声明 <DisableTransitiveProjectReferences>true</…>,
+        // `Engine` 在**编译期**即不可达,用了就编译不过(事前不可能 > 事后检测,第 20 条)。
+        // 这也去掉了该断言唯一需要的那条 test→test ProjectReference。
         Assert.Equal(
             [
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
@@ -131,7 +132,6 @@ public sealed class DependencyDirectionTests
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
                 "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
-                "../StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
                 "../StrataLint.Tests/StrataLint.Tests.csproj",
             ],
             ProjectReferences(XDocument.Load(Path.Combine(

@@ -1,0 +1,2 @@
+**模块 B(生成式实例与闭合,即增订三十四 §三 的 `GermWindow/GermZeroCertificate`)**:61 条模式实例定理(每条 = 模块 A 引理在该模的有理数据上的实例 + `norm_num` 判定假设,bind 形态)、坐标汇总(`sum_re_le_of_bounds`/`sum_im_le_of_bounds`/`norm_le_of_re_im_bounds`)、`g60_center_norm_lt`、`g60_center_deriv_re_gt`、`germLocalFactor_two_has_zero_near_candidate`(义务子句逐字同增订三十四 §三)。**逃逸见证**:61 模有理数据表与两条汇总不等式 ‖g₆₀(c)‖ ≤ 17645257/62500000000000000 ≈ 2.823·10⁻¹⁰ < 4·10⁻¹⁰ 与 Re g₆₀′(c) ≥ 1.877338… > 1.87(探针实测认证余量 1.177·10⁻¹⁰ 与 7.34·10⁻³);最终定理为 L1 `germ_zero_of_center_jet` 对 T1、T2、L2a `g60_curvature_le` 的 bind-only 应用,如实标注。
+

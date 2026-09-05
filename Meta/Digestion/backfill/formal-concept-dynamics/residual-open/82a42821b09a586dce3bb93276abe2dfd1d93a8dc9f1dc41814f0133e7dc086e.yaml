@@ -6,6 +6,17 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/Interventions/AbelianTranslationInteraction.abelian_translation_commutation_and_defect_exclusion
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 6a7e78a166433e76655d15c610dcac11ec362a71323d41a0b93927dacb4d04cd
+      - code: chain-migration-incomplete
+        detail: 91100e95d0b2d596ff0e8f9bcb921b57e673dc747067fb05d9345222c6b581e8
+      - code: chain-migration-incomplete
+        detail: 999114e62b8b885ae8c103a19a311d8cf1c677a7518c48c6d2985e6d42210c3f
   chain_atoms:
     - 2cee374de3c3a8282f016dfa05e9fc8ec993470ed0bc32ae26ec2082bc8ec442
     - 999114e62b8b885ae8c103a19a311d8cf1c677a7518c48c6d2985e6d42210c3f

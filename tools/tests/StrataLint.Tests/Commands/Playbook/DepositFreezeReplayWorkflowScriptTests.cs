@@ -29,12 +29,4 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
-    internal sealed partial class TransactionFixture
-    {
-        internal void WriteActiveFreezeForCurrentModule() => WriteActiveFreeze();
-
-        internal void AddUnrelatedMalformedLedgerShard() => WriteFile(
-            LedgerPath + "/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
-            "{\"event_type\":\"Freeze\",\"payload\":{\"node_path\":\"D5/S4/Unrelated.lean\"\n");
-    }
 }

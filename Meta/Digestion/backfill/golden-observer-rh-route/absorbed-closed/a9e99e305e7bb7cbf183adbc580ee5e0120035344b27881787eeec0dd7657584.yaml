@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a9e99e305e7bb7cbf183adbc580ee5e0120035344b27881787eeec0dd7657584
+  normalized_sha256: sha256:a9e99e305e7bb7cbf183adbc580ee5e0120035344b27881787eeec0dd7657584
+cas_ref: sha256:a9e99e305e7bb7cbf183adbc580ee5e0120035344b27881787eeec0dd7657584
+coverage_gids:
+  - gid: D5/S3/Analytic/GermWindow/GermZeroCertificateJet.g60_curvature_le
+    target_statement_id: sha256:2abe5e04abafc28fabc1ce678ed0da8098e5709c0a9ac68037e526871e5d01f7
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/GermWindow/GermZeroCertificateJet.g60_curvature_le
+      definition_sha256: sha256:e41ea82fd45906819de47ef8159cb6dde7d8a375b6a2b7c1e5f14d60addfefaa
+      emission_sha256: sha256:df200d5893177c42c7faa487c1d0071f0cfae179aac5b81e6f641c7c402ccb63
+  unresolved_subitems: []
