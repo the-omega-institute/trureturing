@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `* 安全拒答。` is an application label rather than a proposition: it names no refusal policy, admitted-state carrier, safety condition, or bridge to nonempty subset refinement. Retrieval receipts: D5 searches `safe refusal|refusal|安全拒答` hit no matching declaration or carrier, while the exact generic refinement owner remains D5/S3/ConceptDynamics/Epistemic/KnowledgeMonotoneRefinement.knowledge_monotone_under_nonempty_refinement; pinned Mathlib searches `safe refusal|refusal|安全拒答` missed; reachable A17 GitHub Lean-code search `\"safe refusal\" language:Lean` exited 0 with no hits. Local construction probe `/private/tmp/w73c38-child-fragments-probe.lean` exited 1 after the exact parent conclusion closed, at the exact unsolved goal `⊢ safeRefusal`; adding that proposition as an assumption would be hollow."
+    reentry_condition: "Add a canonical refusal-policy semantics on information states and a frozen bridge proving that a safe refusal retains a nonempty subset with the same answer image; then instantiate the generic refinement owner through that bridge."
+    blocker_class: multi-clause-guard
