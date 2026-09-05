@@ -1,0 +1,148 @@
+name: RH5065 frozen corrections and form-limit observation
+on:
+  push:
+    branches: [lane/math/rh-canonical-zero-data-nonvacuity-20260903]
+    paths: [.github/workflows/rh5065-frozen-corrections-replay.yml]
+permissions:
+  contents: write
+jobs:
+  freeze-and-observe:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Apply only reviewed exact replacements and freeze the source commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+          root = 'D5/S3/Weil/ZetaBridge/'
+          expected = {
+            root+'CanonicalZeroDataFromRiemannVonMangoldt.lean': '377a13ef81c0b91585c2b0509fd063a22d1307bb',
+            root+'ZeroDataPresentationEquiv.lean': 'da9616e6674180c3d052642a2ba253dbf18b579d',
+            root+'WeilFullGramInertia.lean': 'e7d574e5c3f683282f45eb58507d0eaa79958b9d',
+            'Blueprint/'+root+'WeilFullGramInertia.scribe.cs': 'e38f2aa87171c578cac5e7af0da8b44391f27ee5',
+          }
+          for p, sha in expected.items():
+              actual = subprocess.check_output(['git','rev-parse','HEAD:'+p], text=True).strip()
+              assert actual == sha, (p, actual, sha)
+          def replace(path, old, new):
+              p = Path(path)
+              s = p.read_text()
+              assert s.count(old) == 1, (path, old, s.count(old))
+              p.write_text(s.replace(old, new))
+          replace(root+'CanonicalZeroDataFromRiemannVonMangoldt.lean',
+              '  unfold ZeroConfig.N\n', '  unfold ZeroConfig.N ZeroConfig.window\n')
+          replace(root+'ZeroDataPresentationEquiv.lean',
+              'theorem zeroDataPresentationEquiv_gamma (Z : ZeroData) (n : ℕ) :',
+              "theorem zeroDataPresentationEquiv_gamma (Z Z' : ZeroData) (n : ℕ) :")
+          replace(root+'ZeroDataPresentationEquiv.lean',
+              '#print axioms mirrorIndex_symm\n',
+              '#print axioms mirrorIndex_symm\n#print axioms zeroDataPresentationEquiv_gamma\n')
+          replace(root+'WeilFullGramInertia.lean',
+              'open D5.S3.Weil.ZetaBridge.WeilEvaluationObservableSubspace\n',
+              'open D5.S3.Weil.ZetaBridge.WeilEvaluationObservableSubspace\nopen D5.S3.Weil.ZetaBridge.WeilEvaluationExactObservableRange\nopen D5.S3.Weil.ZetaBridge.FiniteMirrorReducedWeilFactorization\n')
+          theorem = '''/-- The actual complete mixed form is the limit of the finite forms on the
+          exact observable ranges. This makes the finite-to-full dependency explicit. -/
+          theorem reducedMirrorForm_tendsto_fullMixedWeilForm
+              (Z : ZeroData) (g h : WeilTestFunction) :
+              Filter.Tendsto (fun T : ℝ => finiteMirrorReducedForm Z T
+                (finiteWeilReducedEvaluation Z T g) (finiteWeilReducedEvaluation Z T h))
+                Filter.atTop (nhds (fullMixedWeilForm Z g h)) := by
+            rw [fullMixedWeilForm_eq_zeroSum]
+            simpa only [truncatedZeroSum_mixed_eq_reducedMirrorForm] using
+              truncatedZeroSum_tendsto Z (convolve g (involution h))
+                (symmetricConvergent_of_zeroData Z (convolve g (involution h)))
+
+          '''
+          replace(root+'WeilFullGramInertia.lean',
+              '/-- Complex conjugation swaps the two actual tests after mirror reindexing. -/',
+              theorem+'/-- Complex conjugation swaps the two actual tests after mirror reindexing. -/')
+          replace(root+'WeilFullGramInertia.lean',
+              '#print axioms fullMixedWeilForm_conj\n',
+              '#print axioms reducedMirrorForm_tendsto_fullMixedWeilForm\n#print axioms fullMixedWeilForm_conj\n')
+          scribe = '''            Describe.Lean(DescribeId.Create("full-weil-form-finite-observable-limit"),
+                          DeclarationHandle.Create(Prefix + "reducedMirrorForm_tendsto_fullMixedWeilForm"),
+                          H("Full form as the limit of exact finite observable forms"),
+                          StatementSource.FromAuthor(Disp(F.Id("reducedMirrorForm(E_T(g),E_T(h)) tends to W(g,h)"))),
+                          AssessedProvenance.FromRepo(),
+                          Blocks(Paragraph(Text("The mixed finite factorization transports the existing symmetric-cutoff convergence theorem. The exact-range owner is used in this proof, rather than imported only to force a replay."))),
+                          DescribeRole.Theorem),
+          '''
+          replace('Blueprint/'+root+'WeilFullGramInertia.scribe.cs',
+              '            Describe.Lean(DescribeId.Create("full-weil-gram-hermitian"),',
+              scribe+'            Describe.Lean(DescribeId.Create("full-weil-gram-hermitian"),')
+          p = Path('Blueprint/'+root+'WeilFullGramInertia.md')
+          p.write_text(p.read_text()+'\nThe declaration `reducedMirrorForm_tendsto_fullMixedWeilForm` identifies each actual full mixed entry as the symmetric-window limit of the existing reduced mirror forms on the exact finite observable images. It reuses `truncatedZeroSum_tendsto` and the new mixed factorization.\n')
+          p = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md')
+          before = p.read_bytes()
+          marker = '[PR #5065] FINITE_OBSERVABLE_TO_FULL_FORM_LIMIT_AND_REPLAY_CORRECTIONS'
+          assert marker.encode() not in before
+          addition = '''\n\n## [PR #5065] FINITE_OBSERVABLE_TO_FULL_FORM_LIMIT_AND_REPLAY_CORRECTIONS
+
+          [PR #5065] The full-Gram owner now includes `reducedMirrorForm_tendsto_fullMixedWeilForm`: for each actual pair of Weil tests, the multiplicity-weighted reduced mirror forms on growing symmetric windows converge to the actual complete mixed Weil form. The proof uses `truncatedZeroSum_tendsto` from the existing ZeroSum owner and the exact mixed factorization. This is a genuine finite-to-full mathematical dependency on the exact observable range layer.
+
+          [PR #5065] Pinned root observations 33969082693 and 33969495413 both failed. The first exposed obsolete finite-sum syntax and an unclosed mirror inverse simplification. The second verified the repaired mirror inverse with only standard axioms, then exposed a finite-window unfolding mismatch and a accidentally omitted second ZeroData binder introduced during the source repair. This revision explicitly unfolds `ZeroConfig.window` and restores that binder, without changing the intended theorem statements or admitting a placeholder. Compiler error recovery containing `sorryAx` is rejected as validation evidence. The new frozen source revision still requires its own observed successful root replay and independent required checks before any admission claim.
+          '''
+          after = before + addition.encode()
+          assert after[:len(before)] == before
+          p.write_bytes(after)
+          PY
+          git rm .github/workflows/rh5065-frozen-corrections-replay.yml
+          git add D5/S3/Weil/ZetaBridge/CanonicalZeroDataFromRiemannVonMangoldt.lean D5/S3/Weil/ZetaBridge/ZeroDataPresentationEquiv.lean D5/S3/Weil/ZetaBridge/WeilFullGramInertia.lean Blueprint/D5/S3/Weil/ZetaBridge/WeilFullGramInertia.scribe.cs Blueprint/D5/S3/Weil/ZetaBridge/WeilFullGramInertia.md docs/develop/theory/RH_RESEARCH_LANE_THEORY.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m '[D5/S3][RH] correct frozen closure and connect exact finite forms to the full limit'
+          git push origin HEAD:refs/heads/lane/math/rh-canonical-zero-data-nonvacuity-20260903
+          git rev-parse HEAD > frozen-source-sha.txt
+          git show --stat --oneline HEAD > frozen-source-diff.txt
+      - uses: actions/cache/restore@v4
+        with:
+          path: .lake/build
+          key: rh5065-arm-v433-${{ github.sha }}
+          restore-keys: rh5065-arm-v433-
+      - name: Install unchanged pinned Lean
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore pinned dependencies
+        run: |
+          set -o pipefail
+          lake exe cache get 2>&1 | tee dependency-bootstrap.log
+      - name: Observe the frozen source root exactly once
+        id: replay
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          set -o pipefail
+          timeout 1200s lake build D5.S3.Weil.ZetaBridge.WeilFullGramInertia 2>&1 | tee rh5065-root-replay.log
+          code=${PIPESTATUS[0]}
+          printf 'source_sha=%s\nroot=D5.S3.Weil.ZetaBridge.WeilFullGramInertia\nexit_code=%s\n' "$(cat frozen-source-sha.txt)" "$code" > replay-status.txt
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          git diff --exit-code -- D5 Blueprint docs >> replay-status.txt
+          exit "$code"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rh5065-frozen-closure-${{ github.sha }}
+          path: |
+            dependency-bootstrap.log
+            rh5065-root-replay.log
+            replay-status.txt
+            frozen-source-sha.txt
+            frozen-source-diff.txt
+          if-no-files-found: error
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: .lake/build
+          key: rh5065-arm-v433-${{ github.sha }}
+      - name: Preserve actual replay failure
+        if: always()
+        env:
+          EXIT_CODE: ${{ steps.replay.outputs.exit_code }}
+        run: test "$EXIT_CODE" = 0
