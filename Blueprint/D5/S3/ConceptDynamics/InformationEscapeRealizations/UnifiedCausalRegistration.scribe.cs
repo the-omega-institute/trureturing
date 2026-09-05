@@ -9,7 +9,7 @@ internal sealed class UnifiedCausalRegistrationDocument : IScribeDocumentDefinit
         H("Unified Causal Registration"),
         Blocks(
             Paragraph(Text(
-                "The observation-intervention and intervention-counterfactual separation theorems share the canonical unifiedArena under the unifiedCausal catalog identity.")),
+                "The observation-intervention and intervention-counterfactual separation theorems share the canonical unifiedArena under the causal-unified-transitions catalog identity.")),
             Paragraph(Text(
                 "Each occurrence uses its branch-local primitive bundle and faithful realization from UnifiedCausalAlignment. The cumulative three-readout analysis catalog is separate from these two theorem occurrences.")),
             Paragraph(Text(

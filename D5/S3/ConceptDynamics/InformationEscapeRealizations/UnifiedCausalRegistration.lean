@@ -25,14 +25,14 @@ local instance : DecidableEq IC.Model :=
 register_information_theorem observation_strictly_weaker_than_intervention
   in observationInterventionLawArena
   object_arena unifiedArena
-  catalog unifiedCausal
+  catalog «causal-unified-transitions»
   primitives observationInterventionUnifiedRealization.toPrimitiveBundle
   realization observation_intervention_unified_realization
 
 register_information_theorem intervention_strictly_weaker_than_counterfactual
   in interventionCounterfactualLawArena
   object_arena unifiedArena
-  catalog unifiedCausal
+  catalog «causal-unified-transitions»
   primitives interventionCounterfactualUnifiedRealization.toPrimitiveBundle
   realization intervention_counterfactual_unified_realization
 
