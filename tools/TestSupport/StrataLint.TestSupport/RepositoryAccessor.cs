@@ -19,27 +19,6 @@ internal readonly record struct RepositoryRoot
     internal string FullPath { get; }
 }
 
-internal readonly record struct RepositoryRelativePath
-{
-    private RepositoryRelativePath(string value) => Value = value;
-
-    internal string Value { get; }
-
-    internal static RepositoryRelativePath Create(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value)
-            || Path.IsPathRooted(value)
-            || value.Split('/', '\\').Any(static segment => segment is "" or "." or ".."))
-        {
-            throw new ArgumentException("repository path must be a normalized relative path", nameof(value));
-        }
-
-        return new RepositoryRelativePath(value.Replace('\\', '/'));
-    }
-
-    public override string ToString() => Value;
-}
-
 internal sealed class RepositoryAccessor
 {
     private RepositoryAccessor(RepositoryRoot root) => Root = root;
