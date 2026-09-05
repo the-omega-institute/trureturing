@@ -1,0 +1,19 @@
+### 摘要
+
+本增订处理一个**外部文献明文留开**的有限判定问题,并把它化为一个可被内核认证的精确证书。
+
+Erew 与 Goldstein 在《Extremizing Measures of Magic on Pure States by Clifford-stabilizer States》
+(arXiv:2512.19657,v1 2025-12-22,v2 2026-02-26)中,用离散 Wigner 函数刻画奇素数维纯态的 mana,
+并逐一判定若干临界点的局部类型。其中五维(ququint)的一个临界态在该文 Table 2 末行被标为
+「**Undetermined / Critical Point**」;正文在式 (4.55) 之后写道
+「the behavior of the mana for such variations is significantly more involved, and we leave its detailed analysis to the reader」。
+**该方向的局部类型因此在该文中未被判定。**
+
+本增订给出该判定所需的精确结构:零 Wigner 格点集、受约束方向空间的维数、一阶变分的消失,
+以及把二阶判定归约为**三十二个实四维二次型的严格负定**,并说明该归约是**等价**而非仅充分。
+
+**范围墙(先立,后叙)**:本增订**不**声称给出 mana 极值问题的一般解,
+**不**声称判定该文其余维数或其余临界点,**不**声称 Claim C 是原作者逐字陈述的猜想
+——它是本项目对该文所留方向作出的精确表述;
+**不**声称超出所记检索范围之外的全球新颖性。本增订只判定**这一个**显式代数态沿**这一族**受约束方向的局部行为。
+

@@ -70,7 +70,6 @@ public sealed class Sl015AdditionalEdgeScopeTests
     {
         fixture.Files[path] = text;
         fixture.Baseline[path] = text;
-        fixture.ForkPoint[path] = text;
     }
 
     private static void SetDelta(RuleFixture fixture, string path) =>
@@ -79,7 +78,6 @@ public sealed class Sl015AdditionalEdgeScopeTests
     private static void SetDelta(RuleFixture fixture, string path, string baseline, string current)
     {
         fixture.Baseline[path] = baseline;
-        fixture.ForkPoint[path] = baseline;
         fixture.Files[path] = current;
     }
 

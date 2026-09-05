@@ -1,0 +1,32 @@
+### 设定
+
+取 \(\zeta=\exp(2\pi i/5)\),下标一律在 \(\mathbb{Z}/5\mathbb{Z}\) 中。相点算子
+
+$$
+A(q,p)_{x,y}=
+\begin{cases}
+\zeta^{p(x-y)}, & x+y=2q,\\
+0, & \text{否则},
+\end{cases}
+$$
+
+离散 Wigner 函数与 \(L\) 函数
+
+$$
+W_v(q,p)=\frac{1}{5}\operatorname{Re}\bigl(v^{\dagger}A(q,p)v\bigr),
+\qquad
+L(v)=\sum_{q,p}\bigl|W_v(q,p)\bigr|.
+$$
+
+所论临界态为
+
+$$
+\psi=\frac{1}{\sqrt5}\,(1,\;1,\;\zeta^{3},\;1,\;\zeta^{2}).
+$$
+
+记 \(Z_0=\{(q,p):W_\psi(q,p)=0\}\),并记受约束方向的实线性空间
+
+$$
+T=\Bigl\{\varphi\in\mathbb{C}^5:\ \psi^{\dagger}\varphi=0,\ \ \operatorname{Re}\bigl(\psi^{\dagger}A(q,p)\varphi\bigr)=0\ \ \forall (q,p)\in Z_0\Bigr\}.
+$$
+

@@ -464,61 +464,21 @@ internal static class StatementProjector
 
 internal static class StatementProjectionFixtureLoader
 {
-    private static bool TryReadModules(string reportPath, out JsonDocument document)
-    {
-        document = null!;
-        try
-        {
-            var candidate = JsonDocument.Parse(File.ReadAllBytes(reportPath));
-            if (candidate.RootElement.ValueKind != JsonValueKind.Object
-                || !candidate.RootElement.TryGetProperty("modules", out var modules)
-                || modules.ValueKind != JsonValueKind.Array
-                || !candidate.RootElement.TryGetProperty("schema", out var schema)
-                || schema.ValueKind != JsonValueKind.String
-                || schema.GetString() != RawLeanReportArtifact.Schema)
-            {
-                candidate.Dispose();
-                return false;
-            }
-
-            document = candidate;
-            return true;
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
-    }
-
     internal const string ProjectorEpoch = "statement-projector-v1";
     internal sealed record Assessment(ProjectionOutcome Outcome, string DeclarationContentDigest);
     private static readonly AsyncLocal<string?> RepositoryRoot = new();
-    private static readonly Dictionary<string, ImmutableDictionary<string, StatementEntry>> StatementsByRoot =
+    private static readonly Dictionary<string, ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>>> StatementsByRoot =
         new(StringComparer.Ordinal);
     private static readonly ConditionalWeakTable<Formula, LeanDeclarationRef> Derived = new();
 
     internal static Formula FromLean(LeanDeclarationRef declaration)
     {
         ArgumentNullException.ThrowIfNull(declaration);
-        var declarationName = declaration.Value.Replace('/', '.');
-        var statements = StatementsForCurrentRepository();
-        if (!statements.TryGetValue(declarationName, out var entry))
-        {
-            var matches = statements
-                .Where(pair => pair.Key.EndsWith('.' + declaration.DeclarationName, StringComparison.Ordinal))
-                .Select(static pair => pair.Value)
-                .ToArray();
-            if (matches.Length != 1)
-                throw new InvalidOperationException($"Pinned statement-v1 fixture has no unique declaration: {declarationName}");
-            entry = matches[0];
-        }
-        var encoded = entry!.Type;
-
-        var formula = StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type) switch
+        var formula = Assess(declaration).Outcome switch
         {
             ProjectionOutcome.Projected projected => projected.Formula,
             ProjectionOutcome.Unprojectable failed => throw new InvalidOperationException(
-                $"Pinned statement-v1 fixture is unprojectable for {declarationName}: {failed.Reason}"),
+                $"Pinned statement-v1 fixture is unprojectable for {declaration.Value}: {failed.Reason}"),
             _ => throw new InvalidOperationException("Unknown statement projection outcome.")
         };
         Derived.Add(formula, declaration);
@@ -535,27 +495,27 @@ internal static class StatementProjectionFixtureLoader
     internal static Assessment Assess(LeanDeclarationRef declaration)
     {
         ArgumentNullException.ThrowIfNull(declaration);
-        var declarationName = declaration.Value.Replace('/', '.');
         var statements = StatementsForCurrentRepository();
-        if (!statements.TryGetValue(declarationName, out var entry))
+        var matches = statements.TryGetValue(declaration.Reference.Path, out var module)
+            ? module.Where(entry => string.Equals(
+                entry.Name[(entry.Name.LastIndexOf('.') + 1)..], declaration.DeclarationName,
+                StringComparison.Ordinal)).ToArray()
+            : [];
+        if (matches.Length != 1)
         {
-            var matches = statements.Where(pair => pair.Key.EndsWith('.' + declaration.DeclarationName, StringComparison.Ordinal)).ToArray();
-            if (matches.Length != 1)
-            {
-                var missing = "missing:" + declarationName;
-                return new Assessment(
-                    new ProjectionOutcome.Unprojectable(missing),
-                    Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(missing))).ToLowerInvariant());
-            }
-            entry = matches[0].Value;
+            var reason = (matches.Length == 0 ? "missing:" : "ambiguous:") + declaration.Value;
+            return new Assessment(
+                new ProjectionOutcome.Unprojectable(reason),
+                Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(reason))).ToLowerInvariant());
         }
+        var entry = matches[0];
 
         // The projector projects the declaration's *type*. For a theorem the type is the proposition,
         // so projecting it restates nothing the author owns. For a def, an inductive, or a structure the
         // type is only the signature — the defining body never reaches the projector — so a projected
         // statement there would present a signature as if it were the definition. Judge those
         // unprojectable, which leaves the author free to state the definition and records the gap.
-        // The check sits after resolution so the short-name fallback above is covered too.
+        // Kind and statement decoding apply only after selecting one declaration in its owner module.
         if (!string.Equals(entry.Kind, "theorem", StringComparison.Ordinal))
         {
             var reason = "non-propositional-declaration:" + entry.Kind;
@@ -599,7 +559,7 @@ internal static class StatementProjectionFixtureLoader
         }
     }
 
-    private static ImmutableDictionary<string, StatementEntry> StatementsForCurrentRepository()
+    private static ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>> StatementsForCurrentRepository()
     {
         var repositoryRoot = RepositoryRoot.Value ?? FindRepositoryRoot();
         lock (StatementsByRoot)
@@ -614,7 +574,7 @@ internal static class StatementProjectionFixtureLoader
         }
     }
 
-    private static ImmutableDictionary<string, StatementEntry> LoadStatements(string repositoryRoot)
+    internal static ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>> LoadStatements(string repositoryRoot)
     {
         var fixtureDirectory = FixtureDirectory(repositoryRoot);
         var fixtures = new[]
@@ -622,7 +582,7 @@ internal static class StatementProjectionFixtureLoader
             (Name: "statement-projection-pilot-v1.json", Schema: "statement-projection-pilot-fixture-v1"),
             (Name: "statement-projection-expansion-v1.json", Schema: "statement-projection-expansion-fixture-v1")
         };
-        var declarations = ImmutableDictionary.CreateBuilder<string, StatementEntry>(StringComparer.Ordinal);
+        var declarations = new Dictionary<(RepoPath SourcePath, string Name), StatementEntry>();
         foreach (var fixtureSpec in fixtures)
         {
             var path = Path.Combine(fixtureDirectory, fixtureSpec.Name);
@@ -640,52 +600,26 @@ internal static class StatementProjectionFixtureLoader
             {
                 var name = declaration.GetProperty("name").GetString()
                     ?? throw new FormatException($"Projection fixture has a null declaration name: {path}");
+                if (!declaration.TryGetProperty("source_path", out var sourceElement)
+                    || sourceElement.ValueKind != JsonValueKind.String
+                    || !RepoPath.TryCreate(sourceElement.GetString(), out var sourcePath)
+                    || !sourcePath.Value.EndsWith(".lean", StringComparison.Ordinal))
+                    throw new FormatException($"Projection fixture declaration has a missing or invalid source_path: {name}");
                 var statement = declaration.GetProperty("type").GetString()
                     ?? throw new FormatException($"Projection fixture has a null statement-v1 value: {name}");
-                // The kind is load-bearing, not decoration: the engineering CI job runs without a raw
-                // Lean report and decides projectability from this file alone. A pinned entry whose kind
-                // is absent would be judged differently in the two environments, so refuse to load it.
+                // Pins supply the entire projection corpus in every environment; kind is required
+                // because only theorem types can supply a statement presentation.
                 var kind = declaration.TryGetProperty("kind", out var kindElement)
                     ? kindElement.GetString()
                     : throw new FormatException($"Projection fixture declaration has no kind: {name}");
                 if (string.IsNullOrEmpty(kind))
                     throw new FormatException($"Projection fixture declaration has an empty kind: {name}");
-                if (!declarations.TryAdd(name, new StatementEntry(statement, kind)))
-                    throw new FormatException($"Duplicate projection fixture declaration: {name}");
+                if (!declarations.TryAdd((sourcePath, name), new StatementEntry(name, sourcePath, statement, kind)))
+                    throw new FormatException($"Duplicate projection fixture declaration: {name} ({sourcePath.Value})");
             }
         }
-        var reportPath = Path.Combine(repositoryRoot, ".lake", "build", "stratalint", "raw-lean-report.json");
-        // File.Exists is not the same question as "is this a usable report". The engineering CI job
-        // never produces one (that is lean-inspect's job), and tests running in parallel write their
-        // own fixtures under the repository root, so this path can hold a partial or differently
-        // shaped document. Reading it with GetProperty then threw KeyNotFoundException out of a
-        // loader whose whole contract is "use the live report when there is one".
-        if (File.Exists(reportPath) && TryReadModules(reportPath, out var reportDocument))
-        {
-            using var report = reportDocument;
-            var reportDeclarations = report.RootElement.GetProperty("modules").EnumerateArray()
-                .SelectMany(static module => module.GetProperty("declarations").EnumerateArray())
-                .Select(static declaration =>
-                {
-                    var name = declaration.GetProperty("name").GetString()!;
-                    var address = declaration.GetProperty("type_sha256").GetString()
-                        ?? throw new FormatException($"Raw Lean report has a null type address: {name}");
-                    var kind = declaration.TryGetProperty("kind", out var kindElement)
-                        ? kindElement.GetString() ?? "unknown" : "unknown";
-                    return (Name: name, Address: address, Kind: kind);
-                })
-                .ToArray();
-            var loadMaterial = RawLeanReportArtifact.OpenStatementMaterialSource(
-                reportPath,
-                reportDeclarations.Select(static declaration => declaration.Address));
-            foreach (var declaration in reportDeclarations)
-            {
-                declarations[declaration.Name] = new StatementEntry(
-                    declaration.Kind,
-                    () => loadMaterial(declaration.Address));
-            }
-        }
-        return declarations.ToImmutable();
+        return declarations.Values.GroupBy(static entry => entry.SourcePath)
+            .ToImmutableDictionary(static group => group.Key, static group => group.ToImmutableArray());
     }
 
     private static string FindRepositoryRoot()
@@ -703,24 +637,4 @@ internal static class StatementProjectionFixtureLoader
     }
 }
 
-internal sealed class StatementEntry
-{
-    private readonly string? inlineType;
-    private readonly Lazy<string>? material;
-
-    internal StatementEntry(string type, string kind) =>
-        (inlineType, Kind) = (type, kind);
-
-    internal StatementEntry(string kind, Func<string> loadMaterial)
-    {
-        Kind = kind;
-        material = new Lazy<string>(
-            loadMaterial ?? throw new ArgumentNullException(nameof(loadMaterial)),
-            LazyThreadSafetyMode.ExecutionAndPublication);
-    }
-
-    internal string Type => inlineType ?? material?.Value
-        ?? throw new InvalidDataException("Statement projection has no material source.");
-
-    internal string Kind { get; }
-}
+internal sealed record StatementEntry(string Name, RepoPath SourcePath, string Type, string Kind);

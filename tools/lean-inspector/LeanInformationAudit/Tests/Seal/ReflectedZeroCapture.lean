@@ -41,6 +41,10 @@ information_theorem target
   primitives testRealization
   : arena.Law testRealization := by trivial
 
+expect_information_occurrence target
+  in arena
+  from "LeanInformationAudit.Tests.Seal.ReflectedZeroCapture"
+
 /-- error: IE-C007 ZeroUniqueCapture: theorem
 LeanInformationAudit.Tests.Seal.ReflectedZeroCapture.target arena
 LeanInformationAudit.Tests.Seal.ReflectedZeroCapture.arena full 2 without 2 -/

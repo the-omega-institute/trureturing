@@ -1,0 +1,46 @@
+## 5.2 量子态重叠也给出同一个量
+
+定义平方根态：
+
+$$
+|\Psi_S\rangle
+=
+\sum_k\sqrt{\pi_S(k)}\,|k\rangle.
+$$
+
+把它投影到 \(A_n\) 后归一化，得到：
+
+$$
+|\psi_n\rangle
+=
+\frac{\Pi_{A_n}|\Psi_S\rangle}
+{\sqrt{\pi_S(A_n)}}.
+$$
+
+那么：
+
+$$
+\boxed{
+|\langle\Psi_S|\psi_n\rangle|^2
+=
+\pi_S(A_n)
+=
+e^{-\mathcal C_S(n)}.
+}
+\tag{5.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal C_S(n)
+=
+-\ln(\text{平方重叠}).
+}
+$$
+
+这里的 KL 散度是测量分布之间的**经典**相对熵；不能把它直接改称两个不同纯态的量子相对熵。
+
+---
+

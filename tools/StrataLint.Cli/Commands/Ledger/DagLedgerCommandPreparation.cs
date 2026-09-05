@@ -30,37 +30,26 @@ internal static class DagLedgerCommandPreparation
         string repositoryRoot,
         IRepositoryGateway repository,
         string candidateLeanReport,
-        string? changeBase = null,
         ImmutableArray<RepositoryFile> trustedBaselineFiles = default) =>
         Prepare(
             repositoryRoot,
             repository,
             new FileLeanReportSource(candidateLeanReport),
-            changeBase,
             trustedBaselineFiles);
 
     /// Same preparation, with the raw report supplied by the caller rather than read from a path.
     /// Callers that already hold an ILeanReportSource (the CLI environment does) get the
     /// authoritative FrozenLedgerConsistent without a second copy of this assembly line.
-    ///
-    /// changeBase is optional and defaults to null, which preserves the original behaviour byte
-    /// for byte: the change set still comes from repository.ReadCurrentChanges() (uncommitted
-    /// working-tree delta against HEAD). Passing a revision switches the change set to that
-    /// revision's delta against the working tree instead (repository.ReadChanges(changeBase)),
-    /// which is what lets a caller match `make gate BASE=<rev>`'s committed-delta view (issue
-    /// #2474: a change that is already committed reads as empty against ReadCurrentChanges alone).
     internal static DagLedgerCommandContext Prepare(
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        string? changeBase = null,
         ImmutableArray<RepositoryFile> trustedBaselineFiles = default)
     {
         var candidate = PrepareCandidate(
             repositoryRoot,
             repository,
             leanReportSource,
-            changeBase,
             trustedBaselineFiles);
         var baseline = candidate.BaseView.ToWriterBaseline();
         return new DagLedgerCommandContext(
@@ -77,7 +66,6 @@ internal static class DagLedgerCommandPreparation
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        string? changeBase = null,
         ImmutableArray<RepositoryFile> trustedBaselineFiles = default)
     {
         var ledgerPath = Path.Combine(
@@ -93,9 +81,7 @@ internal static class DagLedgerCommandPreparation
         var snapshot = truth.Snapshot;
         var report = truth.Report;
         var lean = truth.Lean;
-        var changes = changeBase is null
-            ? Ask(repository.ReadCurrentChanges)
-            : Ask(() => repository.ReadChanges(changeBase));
+        var changes = Ask(repository.ReadCurrentChanges);
         var catalog = BuildWriterCatalog(
             snapshot,
             lean,
