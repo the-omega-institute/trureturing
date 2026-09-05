@@ -15,6 +15,18 @@ internal static class MsBuildCompileOracle
     private const int MaximumOutputBytes = 32 * 1024 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    internal static bool IsBuildInput(string path)
+    {
+        var separator = path.LastIndexOf('/');
+        var fileName = path[(separator + 1)..];
+        return fileName == "global.json"
+            || fileName.StartsWith("Directory.Build.", StringComparison.Ordinal)
+            || fileName.StartsWith("Directory.Packages.", StringComparison.Ordinal)
+            || fileName.Equals("NuGet.Config", StringComparison.OrdinalIgnoreCase)
+            || fileName.EndsWith(".props", StringComparison.Ordinal)
+            || fileName.EndsWith(".targets", StringComparison.Ordinal);
+    }
+
     internal static MsBuildCompileMap Query(
         string repositoryRoot,
         IEnumerable<string> projectPaths,
