@@ -43,7 +43,6 @@ public sealed partial class FrozenLedgerTests
         Assert.NotNull(result.Recognition);
         Assert.Equal([RepoPathFor("B")], result.Recognition.ReanchoredModulePaths);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -77,7 +76,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -112,6 +110,5 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 }

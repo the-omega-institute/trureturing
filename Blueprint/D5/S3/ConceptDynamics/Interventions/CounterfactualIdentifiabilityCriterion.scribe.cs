@@ -16,6 +16,24 @@ internal sealed class CounterfactualIdentifiabilityCriterionDocument
         H("Counterfactual Identifiability Criterion"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("counterfactual-identifiability-is-fiber-constancy"),
+                DeclarationHandle.Create(
+                    DeclarationPrefix
+                        + "counterfactual_identifiable_iff_constant_on_fiber"),
+                H("Counterfactual identifiability is marginal-fiber constancy"),
+                StatementSource.FromAuthor(GeneralCriterionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let a marginal map send each coupling to its complete family of "
+                            + "single-world data. A target is recoverable from those data "
+                            + "exactly when equal marginal families force equal target values.")),
+                    Paragraph(Text(
+                        "The coupling fiber over a data value is constructed as the preimage "
+                            + "of that value. Thus the equality-kernel condition states "
+                            + "constancy of the target on every coupling fiber."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("single-world-identifiability-is-fiber-constancy"),
                 DeclarationHandle.Create(
                     DeclarationPrefix
@@ -77,6 +95,9 @@ internal sealed class CounterfactualIdentifiabilityCriterionDocument
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);
 
+    private static Formula Typed(Formula value, Formula type) =>
+        Seq(value, Colon, Sp, type);
+
     private static Formula NonemptyInstance(Formula type) =>
         Seq(
             OpenBracket,
@@ -103,6 +124,38 @@ internal sealed class CounterfactualIdentifiabilityCriterionDocument
 
     private static Formula Fiber(Formula data) =>
         Apply(F.Id("couplingFiber"), F.Id("allSingleWorldMarginals"), data);
+
+    private static Formula GeneralCriterionFormula()
+    {
+        Formula coupling = F.Id("Coupling");
+        Formula data = F.Id("Data");
+        Formula value = F.Id("Value");
+        Formula marginals = F.Id("marginals");
+        Formula target = F.Id("Q");
+        Formula factor = F.Id("f");
+        Formula first = F.Id("c");
+        Formula second = F.Id("cPrime");
+        Formula factorization = new Formula.BindMany(
+            FormulaQuantifier.Exists,
+            [Bound("f", Arrow(data, value))],
+            Equal(target, Seq(factor, Sp, Circ, Sp, marginals)));
+        Formula fiberConstancy = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("c", coupling), Bound("cPrime", coupling)],
+            ImpliesFormula(
+                Equal(Apply(marginals, first), Apply(marginals, second)),
+                Equal(Apply(target, first), Apply(target, second))));
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp,
+            Typed(Seq(coupling, Comma, Sp, data, Comma, Sp, value), TypeUniverse()),
+            Comma, Sp, NonemptyInstance(value), Comma, RowBreak, Grp(),
+            Typed(marginals, Arrow(coupling, data)), Comma, Sp,
+            Typed(target, Arrow(coupling, value)), Comma, RowBreak, Grp(),
+            IffFormula(factorization, fiberConstancy), Dot,
+            End, Grp(F.Id("gathered"))));
+    }
 
     private static Formula BooleanCriterionFormula()
     {

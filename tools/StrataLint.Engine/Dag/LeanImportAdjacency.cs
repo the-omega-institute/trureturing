@@ -34,6 +34,28 @@ internal static class LeanImportAdjacency
                 : ImmutableArray<RepoPath>.Empty);
     }
 
+    internal static ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> BuildFromSources(
+        RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+
+        var managedPaths = snapshot.Files.Keys
+            .Where(static path => LeanClosureValidator.IsManagedLean(path.Value))
+            .ToImmutableHashSet();
+        var pathsByModule = managedPaths
+            .ToImmutableDictionary(LeanImportClosure.ModuleName, StringComparer.Ordinal);
+        return managedPaths.ToImmutableDictionary(
+            path => path,
+            path => LeanSourceCatalog.ParseFileImports(snapshot.Files[path])
+                .Select(import => pathsByModule.TryGetValue(import, out var dependency)
+                    ? dependency
+                    : (RepoPath?)null)
+                .Where(static dependency => dependency is not null)
+                .Select(static dependency => dependency!)
+                .OrderBy(static dependency => dependency.Value, StringComparer.Ordinal)
+                .ToImmutableArray());
+    }
+
     /// Enumerates the transitive closure of roots in dependency-first order.
     internal static ImmutableArray<RepoPath> DependenciesFirst(
         IEnumerable<RepoPath> roots,

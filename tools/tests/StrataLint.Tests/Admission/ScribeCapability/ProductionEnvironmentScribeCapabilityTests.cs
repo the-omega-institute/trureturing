@@ -376,8 +376,7 @@ public sealed partial class ProductionEnvironmentTests
                     ? Snapshot(fixture.ForkPoint)
                     : null),
             new FakeLeanReportSource(null),
-            verifier,
-            new NoOpFrozenLedgerAdmissionServices());
+            verifier);
 
         return (
             environment.Check(["--candidate-lean-report", candidateReport]),
@@ -471,24 +470,4 @@ internal sealed class ReportDerivedScribeEmissionVerifier(
 
     private static string AxiomBadge(IEnumerable<string> axioms) =>
         axioms.Any() ? "std3" : "constructive";
-}
-
-internal sealed class NoOpFrozenLedgerAdmissionServices : IFrozenLedgerAdmissionServices
-{
-    public IReadOnlySet<string> LeanReportProducerPaths { get; } =
-        ImmutableHashSet<string>.Empty;
-
-    public FrozenLedgerAdmissionPreparation Prepare(
-        RepositorySnapshot current,
-        RepositorySnapshot protectedBase,
-        RawChangeSet changes) => null!;
-
-    public AdmissionOutcome? Validate(
-        FrozenLedgerAdmissionPreparation preparation,
-        RepositorySnapshot current,
-        AcceptedLeanClosure lean,
-        LeanAxiomReport report,
-        RawChangeSet changes,
-        FrozenRevisionIdentity currentIdentity,
-        AdmissionCheckTiming timing) => null;
 }
