@@ -104,7 +104,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsAnAddedAcceptedEventWithoutAStateFragmentOrSidecarRead()
+    public void CheckAdmitsAnAddedAcceptedEventWithMatchingStatePinWithoutSidecarRead()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -123,9 +123,7 @@ public sealed partial class ProductionEnvironmentTests
         var statePath = FrozenStatePath.FromModulePath(
             Assert.Single(loaded.Events).DescriptorPath).Value;
         fixture.Baseline.Remove(addedEventPath);
-        fixture.Files.Remove(statePath);
-        fixture.Baseline.Remove(statePath);
-        Assert.DoesNotContain(statePath, fixture.Files.Keys);
+        Assert.Contains(statePath, fixture.Files.Keys);
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var gateway = new FakeRepositoryGateway(
