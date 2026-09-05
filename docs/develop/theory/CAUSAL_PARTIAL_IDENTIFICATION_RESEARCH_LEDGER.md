@@ -386,3 +386,109 @@ finite linear-extension swap connectivity
 ```
 
 Continuous copula restrictions remain in the measure-coupling lane, while mediator and multi-component Markovian factorization remain in the polynomial or multilinear lane.
+
+## 17. Four-marginal joint-benefit sharpness, 2026-09-05
+
+The remote audit at commit `41009328ecfb110c8e429522552d5329ec912fb8` found that the fixed-benefit singleton theorem in Section 12 was already present. This continuation reuses that module and its complete model carrier rather than recreating it.
+
+New authored Lean source:
+
+```text
+D5/S3/ConceptDynamics/Causal/PartialIdentification/
+  MarkovianJointBenefitMarginalSharpBounds.lean
+```
+
+Its Scribe source is under the matching `Blueprint` path. Compilation status for this continuation is stated explicitly in Section 19.
+
+Let the four interventional success probabilities be `p10,p11,p20,p21`. Define
+
+```text
+L1 = max(0, p11 - p10), U1 = min(p11, 1 - p10)
+L2 = max(0, p21 - p20), U2 = min(p21, 1 - p20).
+```
+
+Assume `L1 <= U1` and `L2 <= U2`. For independent complete mechanism response laws, the exact rational target range is
+
+```text
+[L1 * L2, U1 * U2] intersect Q.
+```
+
+The main authored theorem is `four_marginal_joint_benefit_sharp_iff`. Its existential witness fixes all four interventional marginals, rather than fixing the two cross-world benefit probabilities as Section 12 does. Each within-mechanism coupling remains free subject to its own marginals.
+
+The arithmetic core `nonnegative_product_interval_iff` constructs rational factors for every rational target `q` in that interval. If `q <= U1 * L2` and `L2 > 0`, choose `(b1,b2) = (q/L2,L2)`. If that edge has `L2 = 0`, the target is zero. Otherwise `U1 > 0` and choose `(b1,b2) = (U1,q/U1)`. This path follows two edges of the parameter rectangle. It does not interpolate joint product distributions and does not rely on square roots or a real intermediate-value theorem.
+
+For each chosen benefit value, `benefitResponseLaw` supplies the existing four-cell attaining response law. Their product realizes the desired simultaneous-benefit target. Necessity reuses `markovian_benefit_target_feasible_iff` through `outcomeLaw_benefit_bounds`.
+
+For four success marginals equal to one half, the resulting interval is `[0,1/4]`, as stated by `balanced_four_marginal_sharp_interval`. This must be distinguished from the singleton `{1/4}` obtained when the two benefit probabilities themselves are both fixed at one half.
+
+## 18. Conditional factorization and the shared-ancestor boundary
+
+New authored Lean source:
+
+```text
+D5/S3/ConceptDynamics/Causal/PartialIdentification/
+  ConditionalMarkovianBenefitBoundary.lean
+```
+
+The phrase "independent outcome mechanisms" in Section 12 means that the evaluated complete response laws actually factorize. Distinct local disturbances or distinct c-components alone do not establish this property for arbitrary evaluated potential outcomes. The response maps can share a random endogenous ancestor. A graph compiler must certify the exogenous dependencies of the queried events after intervention, not merely the local disturbance partition.
+
+The concrete counterexample has three independent exogenous variables: a fair Boolean root `U_C` and two degenerate Boolean local disturbances. Let `C = U_C` and let the two outcome equations be
+
+```text
+Y_i(a,c,u_i) = a AND c.
+```
+
+Both complete response pairs are `(false,C)`, so both benefit indicators equal `C`. Therefore both marginal benefits and their intersection have probability one half. Their marginal product is one quarter. The module gives an explicit product source law, a deterministic shared-root response map, a finite pushforward calculation, and an obstruction to factorizing the resulting response law. No causal graph compiler is claimed by this construction.
+
+The existing `product_pushforward_factorizes` theorem remains valid: it requires componentwise response maps on separate source coordinates, and the shared-root response map does not meet that premise.
+
+For a finite covariate and conditionally product-factorized mechanism laws, `conditional_joint_benefit_eq_weighted_products` states
+
+```text
+J = sum_c w(c) * b1(c) * b2(c).
+```
+
+For two strata with weight `w` on the second stratum, the exact certificate is
+
+```text
+J - ((1-w)*x0+w*x1) * ((1-w)*y0+w*y1)
+  = w*(1-w)*(x1-x0)*(y1-y0).
+```
+
+`binary_mixture_covariance_certificate` is the polynomial identity. With `0 < w < 1`, `binary_mixture_factorizes_iff` states that equality with the product of population means holds exactly when `x1=x0` or `y1=y0`. This criterion is specifically for two positive strata; with more strata, zero covariance may result from cancellation.
+
+Conditional sharp aggregation still requires jointly attainable stratum witnesses, as Section 4 already records. This continuation does not add a rational-to-real bridge to `CovariateSharpAggregation`, nor does it establish a general fixed-noise realization for arbitrary conditional kernel families.
+
+## 19. Intrinsic-information interpretation and continuation verification status
+
+The governing reference read for this continuation is version 4.3 of
+
+```text
+docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
+```
+
+The new `fourMarginalReadout` acts on the existing full `MarkovianJointMechanismModel` carrier. The authored theorem `joint_benefit_strictly_refines_four_marginal_kernel` constructs two models with the same four-marginal readout and joint-benefit values zero and one quarter. Thus the mathematical witness certifies strict refinement of the observation kernel when the joint-benefit query is added. `no_joint_benefit_reconstruction_from_four_marginals` states the corresponding impossibility of a reconstruction function.
+
+This full rational model space is infinite. No uniform finite escape rate, sampled model arena, novelty score, or external Python admission judge is introduced. A two-model strict-refinement witness is not a proof of positive leave-one-out capture against all peers in a designated maximal catalog. The non-reconstruction corollary is not registered as an extra independently informative occurrence.
+
+Still outstanding for the new sources are their kernel-checked primitive realizations, canonical arena occurrence/disposition registration where applicable, designated-root maximal-catalog sealing, and protected build acceptance. The historical workflow name containing "baseline" in Section 15 is an engineering label; it is not an authorization to use historical deltas or scoring in the version 4.3 information theory.
+
+At the time of this writeback:
+
+- Both Lean sources and both authored Scribe documents have been pushed to the existing PR #5029 branch.
+- No Lean compiler or Lake executable was available in the local runtime. No local Lean build, `#print axioms` output, Scribe rendering, or information-theory seal was obtained. The new scripts therefore remain unverified formal proof candidates until a pinned build accepts them.
+- Supplementary exact `fractions.Fraction` regression checks passed 18,225 interval-product cases, 59,049 four-marginal attaining-law cases, 59,049 binary covariance cases, and the explicit shared-root counterexample. These are finite arithmetic checks, not proofs or admission certificates.
+- The initial remote PR snapshot was open, draft, and unmergeable. A passing protected workflow for the new head has not been established. The convenience workflow lookup restricted to `pull_request` cannot adjudicate this repository's `pull_request_target` workflow.
+- No merge, auto-merge, workflow bypass, or modification of protected admission machinery was performed.
+
+The next compiler obligation is now more precise:
+
+```text
+intervened event semantics
+  -> certified exogenous dependency sets
+  -> disjoint independent source blocks, or explicit conditioning context
+  -> componentwise pushforward factorization
+  -> event polynomial and sharp attaining models.
+```
+
+This dependency-locality obligation prevents the shared-ancestor counterexample from being incorrectly admitted as an unconditional product query.
