@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
+using StrataLint.Engine;
 using Tomlyn;
 using Tomlyn.Model;
 
@@ -15,28 +16,11 @@ internal enum FileMapKind
     Ledger,
 }
 
-internal enum FileMapAdmissionPlane
-{
-    Judge,
-    Content,
-}
-
 internal sealed record FileMapResidencePolicy(
     string CaseId,
     string Desired,
     int KnownViolationCount,
     string Status);
-
-internal sealed class FileMapAdmissionPlaneException(
-    string code,
-    string path,
-    string location,
-    string message) : FormatException($"Invalid FILEMAP at {location}: {code}: {message}.")
-{
-    internal string Code { get; } = code;
-
-    internal string Path { get; } = path;
-}
 
 internal sealed record FileMapEntry
 {
@@ -114,7 +98,7 @@ internal sealed class FileMapManifest
 
 internal static class FileMapLoader
 {
-    internal const string RelativePath = "Meta/FILEMAP.toml";
+    internal const string RelativePath = AdmissionPlanePolicy.FileMapPath;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex NamePattern = new(
@@ -138,13 +122,15 @@ internal static class FileMapLoader
     internal static FileMapManifest Parse(ReadOnlySpan<byte> bytes, string location)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(location);
-        if (bytes.IsEmpty
-            || bytes[^1] != (byte)'\n'
-            || bytes.Contains((byte)'\r')
-            || bytes.Length >= 3
-                && bytes[0] == 0xEF
-                && bytes[1] == 0xBB
-                && bytes[2] == 0xBF)
+        if (bytes.Length >= 3
+            && bytes[0] == 0xEF
+            && bytes[1] == 0xBB
+            && bytes[2] == 0xBF)
+        {
+            throw new FileMapParseException(location, "bytes contain a UTF-8 BOM");
+        }
+
+        if (bytes.IsEmpty || bytes[^1] != (byte)'\n' || bytes.Contains((byte)'\r'))
         {
             throw Invalid(location, "bytes must be strict UTF-8 without BOM/CR and end in LF");
         }
@@ -156,7 +142,7 @@ internal static class FileMapLoader
         }
         catch (DecoderFallbackException exception)
         {
-            throw Invalid(location, "bytes are not strict UTF-8", exception);
+            throw new FileMapParseException(location, "bytes are not strict UTF-8", exception);
         }
 
         TomlTable root;
@@ -167,7 +153,7 @@ internal static class FileMapLoader
         }
         catch (TomlException exception)
         {
-            throw Invalid(location, $"invalid TOML: {exception.Message}", exception);
+            throw new FileMapParseException(location, $"invalid TOML: {exception.Message}", exception);
         }
 
         RequireExactKeys(root, location, "files", "residence_policy", "schema_version");
