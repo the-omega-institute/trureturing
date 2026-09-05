@@ -33,7 +33,17 @@ public sealed partial class FormulaCorpusInventoryTests
         Assert.Contains(
             "formula-children:Power(Base=Power,Exponent=Number)",
             vocabulary);
+
     }
+
+    // 闭字母表覆盖:Formula 的每个公开节点类型都必须出现在**完整**固定语料里。
+    // 这条原先与「固定语料是否覆盖真仓库的组合」同处 AssertRendererVocabularyCoverage;
+    // 后者需要真语料,随文档迁出本程序集而失去主体并已退役,而这一条只比固定语料与
+    // 封闭的类型集合,不依赖仓库,故拆出来单独具名保留。
+    [Fact]
+    public void FixedCorpusCoversEveryClosedFormulaNodeType() =>
+        AssertClosedFormulaVocabularyIsCovered(
+            RendererVocabulary(FixedDocumentCorpus(), FixedFormulaCorpus()));
 
     [Fact]
     public void FixedSyntheticCorpusFreezesRendererBehavior()
@@ -89,25 +99,6 @@ public sealed partial class FormulaCorpusInventoryTests
             string.Equals(CanonicalRendererSha256, actual, StringComparison.Ordinal),
             $"Renderer behavior contract changed. expected={CanonicalRendererSha256}; "
                 + $"actual={actual}. If intentional, run `{UpdateCommand}`.");
-    }
-
-    private static void AssertRendererVocabularyCoverage(
-        IReadOnlyCollection<DocumentDefinition> repositoryDefinitions)
-    {
-        var fixedVocabulary = RendererVocabulary(FixedDocumentCorpus(), FixedFormulaCorpus());
-        var repositoryVocabulary = RendererVocabulary(
-            repositoryDefinitions.Select(static definition => definition.Document),
-            []);
-        var uncovered = repositoryVocabulary
-            .Except(fixedVocabulary, StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-        Assert.True(
-            uncovered.Length == 0,
-            "The fixed renderer corpus does not cover repository rendering combinations: "
-                + string.Join(", ", uncovered));
-        AssertClosedFormulaVocabularyIsCovered(fixedVocabulary);
     }
 
     private static IReadOnlyList<ScribeDocument> FixedDocumentCorpus()
@@ -458,7 +449,8 @@ public sealed partial class FormulaCorpusInventoryTests
         // precedence:logic 只由 Formula.Logic 产生(LatexWriter.WriteLogic 的 LogicPrecedence)。
         var logicNode = new Formula.Logic(x, FormulaLogicOperator.And, y);
         formulas.Add(new Formula.LatexGroup([logicNode]));
-        // 仓库实际使用的 Power 子组合,由 AssertRendererVocabularyCoverage 点名要求覆盖。
+        // 仓库实际使用过的 Power 子组合。原由 AssertRendererVocabularyCoverage 点名要求覆盖,
+        // 该 helper 随真语料测试一并退役(文档已迁出本程序集),此处保留为固定语料的样本。
         formulas.Add(new Formula.Power(function, sequence));
         formulas.Add(new Formula.Power(function, x));
         formulas.Add(new Formula.Power(one, one));
