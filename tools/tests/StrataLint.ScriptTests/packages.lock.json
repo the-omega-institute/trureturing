@@ -150,7 +150,8 @@
           "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )",
           "Pidgin": "[3.5.1, )",
           "Tomlyn": "[2.10.1, )",
-          "Trureturing.Truth": "[0.1.0, )"
+          "Trureturing.Truth": "[0.1.0, )",
+          "YamlDotNet": "[16.3.0, )"
         }
       },
       "stratalint.engineeringscope": {

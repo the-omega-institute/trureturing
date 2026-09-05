@@ -228,6 +228,37 @@ public sealed class ActiveRuleScopeProbeTests
             fixture.Build(changes));
     }
 
+    [Fact]
+    [BaseFactScopeProbe(30)]
+    public void Sl030JudgeSurfaceScopesHistoricalScriptAndKeepsDeltaAndImplementationRecheck()
+    {
+        const string historicalPath = "tools/scripts/workflow/historical-gate.sh";
+        const string unrelatedPath = "tools/scripts/workflow/delta-clean.sh";
+        const string violation =
+            "git -C candidate worktree add --detach \"$RUNNER_TEMP/base\" \"$ENGINEERING_BASE\"\n";
+        const string message = "worktree add";
+
+        var unrelated = new RuleFixture();
+        SetHistorical(unrelated, historicalPath, violation);
+        SetHistorical(unrelated, unrelatedPath, "echo baseline\n");
+        unrelated.Files[unrelatedPath] = "echo candidate\n";
+        AssertNoFinding(Execute(unrelated, unrelatedPath), 30, message, historicalPath);
+
+        var changed = new RuleFixture();
+        SetHistorical(changed, historicalPath, violation);
+        AssertFinding(Execute(changed, historicalPath), 30, message, historicalPath);
+
+        var implementation = new RuleFixture();
+        SetHistorical(implementation, historicalPath, violation);
+        AssertFinding(
+            Execute(
+                implementation,
+                "tools/StrataLint.Engine/Rules/Trust/RepositoryRules.JudgeSurface.cs"),
+            30,
+            message,
+            historicalPath);
+    }
+
     private static void SetHistorical(RuleFixture fixture, string path, string text)
     {
         fixture.Files[path] = text;
