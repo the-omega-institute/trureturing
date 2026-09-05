@@ -1,0 +1,11 @@
+- $\chi_5(p)=-1$ 时，Frobenius 交换两条本征线。
+
+换言之：
+
+$$
+\boxed{
+\text{黄金二次特征就是 Frobenius 在二通道谱覆盖上的 Weyl 符号。}
+}
+\tag{B2.8}
+$$
+

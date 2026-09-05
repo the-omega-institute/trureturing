@@ -37,6 +37,43 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
+    public void NestedProjectOutsideTestsIsProductionAndNeedsItsOwnedDual()
+    {
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(ProjectWithDefaultProperties(
+                "tools/Nested/NewProduct/NewProduct.csproj",
+                "NewProduct",
+                xunit: false)));
+
+        Assert.False(result.IsAccepted);
+        Assert.Equal(
+            [Debt("missing-owned-project", "NewProduct", "NewProduct.Tests")],
+            result.IntroducedDebt.ToArray());
+    }
+
+    [Fact]
+    public void NamedTestSupportProjectIsOutsideTheProductionDualAndItsInboundReferences()
+    {
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(
+                Production("NewProduct", "NewProduct"),
+                ProjectWithDefaultProperties(
+                    TestProjectTopologyPolicy.TestSupportProjectPath,
+                    "StrataLint.TestSupport",
+                    xunit: false),
+                OwnedTest(
+                    "NewProduct.Tests",
+                    "NewProduct.Tests",
+                    "../../NewProduct/NewProduct.csproj",
+                    "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj")));
+
+        Assert.True(result.IsAccepted, result.Message);
+        Assert.Empty(result.CandidateDebt);
+    }
+
+    [Fact]
     public void NewProductionAndOwnedXunitPairIsAccepted()
     {
         var result = TestProjectTopologyPolicy.Evaluate(

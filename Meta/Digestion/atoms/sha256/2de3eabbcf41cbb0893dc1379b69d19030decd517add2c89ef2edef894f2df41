@@ -1,0 +1,11 @@
+## 16.2 transfer equimodular confinement 形式
+
+另一种表达是构造 canonical completed prime–Zeckendorf transfer cocycle，其两个主通道具有 Lyapunov exponents
+
+$$
+L_+(s),\qquad L_-(s).
+\tag{A16.3}
+$$
+
+Zeckendorf hard-core 原型说明，有限配分零点发生在两个 transfer channels 等模并满足相位量子化的位置。
+

@@ -10,6 +10,7 @@
     <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Scribe/StrataLint.Scribe.csproj" />
     <ProjectReference Include="../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" />
+    <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
     <ProjectReference Include="../StrataLint.Tests/StrataLint.Tests.csproj" />
     <ProjectReference Include="../StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj" />
     <ProjectReference Include="../StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj" />

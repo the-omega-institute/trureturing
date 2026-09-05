@@ -2023,3 +2023,4721 @@ $$
 $$
 
 本文已经把“那个时刻”的几何、局部分析、序参量、Mahler 自由能、信息逃逸和 prime 关系度量统一为一个纯理论对象；尚未解决、也不得被命名替代的，只剩 prime-side 横向关系能量到 zero-side 离线奇能量的忠实输运。
+
+---
+
+# 增订一　Zeckendorf 能量、黄金传递与 Lee–Yang 横向相变
+
+> 本增订直接续接本卷。以下编号在增订内部独立使用；全部内容仍属于同一个纯理论文件，不另立 SPEC 或实现文档。
+
+## 摘要
+
+本增订研究：为什么 Zeckendorf 表示、黄金比例、PrimeGaps、跳跃能量、Hankel 最小记忆、Lee–Yang 零点与假想的 zeta 离线零点反复出现在同一理论邻域中。
+
+结论不是“黄金比例直接证明 RH”，也不是“把整数写成 Zeckendorf 表示便会改变 zeta”。恰恰相反，首先有一个否定性结论：Zeckendorf 表示对整数指数的编码是无损双射，因此凡是只通过整数指数取值的标量 Euler 配分函数，在 Zeckendorf 重编码下完全不变。Zeckendorf 本身不会制造任何新零点。
+
+它真正增加的是一个此前被标量指数压扁的关系层：
+
+$$
+\boxed{
+\text{整数指数}
+\quad\longmapsto\quad
+\text{唯一的无相邻占据历史}.
+}
+$$
+
+在这一提升中，同一个有限状态空间自然携带五种不能混同的能量：
+
+1. Fibonacci 指数值能量；
+2. 占据数能量；
+3. 黄金共轭稳定影子；
+4. successor／translation 跳跃能量；
+5. prime-frequency 横向关系能量。
+
+第一种能量完整区分状态，却遗忘状态之间的局部关系；第二至第五种能量逐层恢复 hard-core memory、稳定通道、动态转移和 cross-prime 外积结构。项目中已经机器闭合的 `FiniteZeckendorfEulerIdentity`、`GoldenEulerBetaZeckendorf`、`PrimeJumpDecomposition`、`HankelRankMinimality`、`GoldenScalarDihedralBlindness`、`OrderedPrimeHolonomyCasimir` 和 `OffLineOrbitParityDecomposition` 正好落在这条分层链的不同位置。
+
+本增订得到四个新的有限理论核心。
+
+第一，有限 Zeckendorf 指数配分函数严格退化为几何级数，其全部非平凡根位于局部 Euler fugacity 单位圆；而 hard-core 占据配分函数由二阶 transfer matrix 控制，其两个本征通道为
+
+$$
+\lambda_\pm(z)=\frac{1\pm\sqrt{1+4z}}2,
+$$
+
+在 $z=1$ 时恰为
+
+$$
+\lambda_+(1)=\varphi,
+\qquad
+\lambda_-(1)=-\varphi^{-1}.
+$$
+
+因此 $\varphi$ 是最小一位记忆系统的 Perron 增长率，$-\varphi^{-1}$ 是精确性所必需、却在大尺度上指数衰减的稳定影子通道。
+
+第二，项目的黄金指数账户具有一个精确的两级创新场。若 $b(v)$ 表示该账户，则
+
+$$
+\Delta b_v=b(v+1)-b(v)\in\{\varphi^2,\varphi\},
+$$
+
+并且扣除平均漂移 $\sqrt5$ 后，创新只取
+
+$$
+\varphi^{-2},\qquad-\varphi^{-1}.
+$$
+
+它的累积和始终有界，而长期均方能量恰为 $\varphi^{-3}$。这说明黄金稳定通道不是额外随机噪声，而是一条确定性的、零平均、有限预算的校正流。
+
+第三，Zeckendorf 分解把一个 prime-power translation 精确分解成 Fibonacci 尺度 translation 的乘积，并给出跳跃能量的多尺度上界。它把项目已有的 arithmetic jump Laplacian 与黄金 shell 连接起来，但不提供反向 coercivity；不同 shell 仍可能在标量 translation 中发生抵消。
+
+第四，在有限 Zeckendorf 状态与有限 prime cluster 的联合模型中，横向 susceptibility 的二阶系数严格分解为
+
+$$
+\boxed{
+\text{Zeckendorf exponent second moment}
+\times
+\text{prime log-frequency relation energy}.
+}
+$$
+
+若状态均匀分布，前者随黄金深度约按 $\varphi^{2Q}$ 增长；若使用真实单素数 Euler Gibbs 权，前者却保持有限。因此 combinatorial state count 本身不会产生 zeta 相变；真正的全局临界性必须来自 prime–Gamma 完成对跨尺度状态权的重新组织。
+
+最终得到的统一判断是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Zeckendorf}
+&=\text{标量整数指数的无损关系提升},\\
+\varphi
+&=\text{最小 hard-core memory 的扩张通道},\\
+-\varphi^{-1}
+&=\text{被标量大尺度压低的稳定影子},\\
+\text{jump / holonomy / odd energy}
+&=\text{被反射或交换压掉的一阶信息的二阶显影},\\
+\text{假想离线零点}
+&=\text{标量完成为零而关系层仍可能带正横向能量的时刻}.
+\end{aligned}
+}
+$$
+
+最后一行仍是条件性的。要把它提升为 RH 证明，必须构造 canonical prime–Zeckendorf–Gamma transfer，并证明其关系能量无条件支配 zero-side 离线奇能量。本文不把该桥藏入“能量”“黄金”“相变”或“Zeckendorf”这些名称中。
+
+---
+
+# 增订一·0　理论地位与真源边界
+
+本增订是纯数学理论，不是工程规范，也不新增 Lean 声明。
+
+下列事实已经由仓库 Lean 真源承担：
+
+1. `D5/S0/Tower/GoldenNames`：长度 $Q$ 的合法黄金名字与初始 Fibonacci 区间双射，基数为 $F_{Q+2}$，并具有实值注入读出；
+2. `D5/S3/Observer/GoldenCoding/FiniteZeckendorfEulerIdentity`：Zeckendorf Fibonacci 和给出初始整数区间，并把有限 Euler 和精确运输为几何级数；
+3. `D5/S3/Analytic/GoldenEulerBetaZeckendorf`：黄金指数账户的闭式、最小 Zeckendorf 指标奇偶读出和 $\varphi/\varphi^2$ 跳跃律；
+4. `D5/S1/Deficit/ZeckendorfDisplacementReading`：Fibonacci 指标上移之和等于黄金 Beatty 读数；
+5. `D5/S3/Weil/ZetaBridge/PrimeJumpDecomposition`：有限 prime-power 项等于 coherent mass 减去非负 arithmetic jump energy；
+6. `D5/S3/Observer/Hankel/HankelRankMinimality` 与 `HankelMinimalStateDimension`：稳定 Hankel rank 计算可见可达维数，并等于同一行为的最小实现维数；
+7. `D5/S3/Observer/AgencyHolonomy/GoldenScalarDihedralBlindness`：完整标量黄金世界不能恢复有序 prime-word dihedral holonomy；
+8. `D5/S3/Observer/AgencyHolonomy/OrderedPrimeHolonomyCasimir`：一阶有序响应消失，负二阶响应成为平方 winding 的非负加权和；
+9. `D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition`：一个 supplied 离线轨道的 Weil 贡献分解成偶能量减奇能量，且两种能量分别非负。
+
+本增订从这些真源出发作有限代数、组合、谱和能量推导。以下内容明确不作为既有 Lean 定理冒充：
+
+- canonical prime–Zeckendorf–Gamma transfer 已经存在；
+- Zeckendorf 稳定影子已经等于 zeta zero odd channel；
+- prime-side 横向能量已经支配 zero-side 奇能量；
+- 黄金比例已经从 Riemann completed function 中被无条件抽取；
+- RH 已被证明。
+
+---
+
+# 增订一·1　状态、能量、关系与测度必须分开
+
+## 1.1 四元对象
+
+一个有限统计—谱系统不只是一组状态。其完整数据至少应写成
+
+$$
+\boxed{
+\mathfrak S=(\Omega,H,\mathcal R,\mu),
+}
+\tag{A1.1}
+$$
+
+其中：
+
+- $\Omega$ 是微观状态空间；
+- $H:\Omega\to\mathbb R$ 是能量或指数读出；
+- $\mathcal R$ 是状态之间的局部约束、转移、顺序或关系结构；
+- $\mu$ 是状态权或所选 ensemble。
+
+相应配分函数为
+
+$$
+Z_{\mathfrak S}(\beta)
+=
+\sum_{\eta\in\Omega}
+\mu(\eta)e^{-\beta H(\eta)}.
+\tag{A1.2}
+$$
+
+仅知道 $Z_{\mathfrak S}$，一般不能恢复 $\mathcal R$。甚至当 $H$ 对状态是单射时，$Z$ 仍只读取能级及其权重，不读取这些能级是通过何种局部记忆、carry 或 holonomy 连接起来的。
+
+这正是本文所有“看似相关”对象的共同位置：
+
+$$
+\boxed{
+\text{Zeckendorf 给出 }\Omega\text{ 与 }\mathcal R,
+\quad
+\text{Euler 给出 }H\text{ 与 }\mu,
+\quad
+\text{Lee–Yang 读取 }Z\text{ 的复零点},
+\quad
+\text{信息逃逸检测 }\mathfrak S\mapsto Z\text{ 遗忘了什么}.
+}
+\tag{A1.3}
+$$
+
+## 1.2 五类能量
+
+对后文的黄金—素数系统，必须区分：
+
+### （一）指数值能量
+
+$$
+E_Q(\eta)=\sum_k\eta_kF_k.
+\tag{A1.4}
+$$
+
+它回答“这个历史代表哪个整数”。
+
+### （二）占据能量
+
+$$
+N_Q(\eta)=\sum_k\eta_k.
+\tag{A1.5}
+$$
+
+它回答“这个历史使用了多少个 Fibonacci 原子”。
+
+### （三）稳定影子
+
+$$
+S_Q(\eta)=\sum_k\eta_k\psi^k,
+\qquad
+\psi=-\varphi^{-1}.
+\tag{A1.6}
+$$
+
+它记录主 Fibonacci 值读出中被整数投影压掉的 Galois 共轭校正。
+
+### （四）跳跃／carry 能量
+
+$$
+\mathcal D(f)
+=
+\sum_{\eta\to\eta'}
+\left|f(\eta')-f(\eta)\right|^2.
+\tag{A1.7}
+$$
+
+它读取状态之间的变化，而不是单个状态的值。
+
+### （五）横向关系能量
+
+$$
+\mathcal E_{p,q}^{\perp}(\delta)
+=
+\sinh^2\!\left(
+\delta\log\frac qp
+\right).
+\tag{A1.8}
+$$
+
+它读取两个 prime frequencies 在反射横向偏移下是否仍然不可区分。
+
+五者的输出空间、零集和可加性不同，不能以“都是 energy”为理由直接相等或相加。本增订所建立的是它们之间的精确分解、共同二次结构和仍待构造的输运箭头。
+
+---
+
+# 增订一·2　Zeckendorf 是整数指数的无损 hard-core 提升
+
+## 2.1 有限合法词空间
+
+固定 $Q\ge0$，定义
+
+$$
+\Omega_Q
+=
+\left\{
+(\eta_2,\ldots,\eta_{Q+1})\in\{0,1\}^{Q}:
+\eta_k\eta_{k+1}=0
+\right\}.
+\tag{A2.1}
+$$
+
+约束 $\eta_k\eta_{k+1}=0$ 是一步 hard-core memory：一位被占据以后，下一位不得被占据。
+
+定义 Fibonacci 指数能量
+
+$$
+\boxed{
+E_Q(\eta)
+=
+\sum_{k=2}^{Q+1}\eta_kF_k.
+}
+\tag{A2.2}
+$$
+
+记
+
+$$
+M_Q=F_{Q+2}.
+\tag{A2.3}
+$$
+
+### 定理 A2.1　有限 Zeckendorf 能量双射
+
+映射
+
+$$
+E_Q:\Omega_Q\longrightarrow
+\{0,1,\ldots,M_Q-1\}
+\tag{A2.4}
+$$
+
+是双射。
+
+#### 证明
+
+这是仓库 `GoldenNames.goldenNameEquiv` 与 `FiniteZeckendorfEulerIdentity` 的数学内容：合法无相邻 Fibonacci 数位恰好唯一表示初始区间中的每一个整数。
+
+### 推论 A2.2　状态数与黄金熵
+
+$$
+|\Omega_Q|=M_Q=F_{Q+2}.
+\tag{A2.5}
+$$
+
+因此
+
+$$
+\log|\Omega_Q|
+=Q\log\varphi+O(1).
+\tag{A2.6}
+$$
+
+$\log\varphi$ 不是人为插入的常数，而是最小一步记忆二进制系统的状态熵率。
+
+## 2.2 无损与无记忆不是同一件事
+
+因为 $E_Q$ 是双射，所以若 observer 能读取完整整数值 $E_Q(\eta)$，则任意两个不同状态都可区分：
+
+$$
+E_Q(\eta)=E_Q(\xi)
+\Longrightarrow
+\eta=\xi.
+\tag{A2.7}
+$$
+
+所以在微观状态层，Zeckendorf energy 没有信息逃逸。
+
+但双射并不意味着它保存了关系结构。若只保留能量列表
+
+$$
+0,1,\ldots,M_Q-1,
+$$
+
+则“这些整数来自无相邻数位”“successor 如何 carry”“哪些状态共享最小数位奇偶”“状态图的 Hankel rank 为何”等信息全部不在能量列表中。
+
+因此必须区分：
+
+$$
+\boxed{
+\text{状态可识别性}
+\neq
+\text{结构可恢复性}.
+}
+\tag{A2.8}
+$$
+
+---
+
+# 增订一·3　凡经由整数指数因子的标量量都不产生新信息
+
+## 3.1 Factor-through-energy 不变性
+
+### 定理 A3.1　任意指数函数的 Zeckendorf 重标不变
+
+对任意交换加法目标中的函数 $a$，
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_Q}a(E_Q(\eta))
+=
+\sum_{v=0}^{M_Q-1}a(v).
+}
+\tag{A3.1}
+$$
+
+#### 证明
+
+由定理 A2.1 对有限和重标即可。
+
+这条定理比某个特定配分函数更重要。它说明：任何完全因子化为
+
+$$
+\Omega_Q\xrightarrow{E_Q}\{0,\ldots,M_Q-1\}\xrightarrow{a}A
+$$
+
+的读出，都只看见整数能量，不看见 Zeckendorf locality。
+
+## 3.2 有限 Zeckendorf–Euler 多项式
+
+取 $a(v)=x^v$，定义
+
+$$
+Z_Q^{\mathrm{exp}}(x)
+=
+\sum_{\eta\in\Omega_Q}x^{E_Q(\eta)}.
+\tag{A3.2}
+$$
+
+则
+
+$$
+\boxed{
+Z_Q^{\mathrm{exp}}(x)
+=
+1+x+\cdots+x^{M_Q-1}
+=
+\frac{1-x^{M_Q}}{1-x}.
+}
+\tag{A3.3}
+$$
+
+### 定理 A3.2　有限局部 fugacity 圆定位
+
+若 $Q\ge1$，则
+
+$$
+Z_Q^{\mathrm{exp}}(x)=0
+\Longleftrightarrow
+x^{M_Q}=1
+\text{ 且 }x\ne1.
+\tag{A3.4}
+$$
+
+从而全部根满足
+
+$$
+\boxed{|x|=1.}
+\tag{A3.5}
+$$
+
+这是一条真正的有限圆定位定理，但它来自能量双射和几何级数，不是 Riemann Hypothesis。
+
+## 3.3 无限局部 Euler 因子
+
+令 $\Omega_\infty$ 为有限支撑的无限合法 Zeckendorf 数位。Zeckendorf 定理给出
+
+$$
+\Omega_\infty\simeq\mathbb N.
+\tag{A3.6}
+$$
+
+因此当 $|x|<1$ 时，
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_\infty}x^{E(\eta)}
+=
+\sum_{v\ge0}x^v
+=
+\frac1{1-x}.
+}
+\tag{A3.7}
+$$
+
+取 $x=p^{-s}$，在 $\Re s>0$ 的单局部收敛域中，
+
+$$
+\sum_{\eta\in\Omega_\infty}
+p^{-sE(\eta)}
+=
+(1-p^{-s})^{-1}.
+\tag{A3.8}
+$$
+
+### 否定性结论 A3.3　Zeckendorf 重编码不会改变 Euler scalar
+
+Zeckendorf lift 对单个 Euler 因子是无损坐标变化。只要 Hamiltonian 仍然只是 $E(\eta)$ 的函数，它既不改变局部因子，也不改变由这些因子在绝对收敛域内形成的标量乘积。
+
+因此：
+
+$$
+\boxed{
+\text{Zeckendorf 本身不是新 zeta，也不是离线零点的来源。}
+}
+\tag{A3.9}
+$$
+
+新内容只能来自不因子化经过 $E$ 的 readout，例如 occupancy、carry、ordered holonomy、exterior energy 或 Gamma-coupled completion。
+
+---
+
+# 增订一·4　两个“单位圆”必须严格区分
+
+## 4.1 局部 Euler fugacity 圆
+
+在式 (A3.3) 中，变量是
+
+$$
+x=p^{-s}.
+\tag{A4.1}
+$$
+
+所以
+
+$$
+|x|=1
+\Longleftrightarrow
+\Re s=0.
+\tag{A4.2}
+$$
+
+有限几何级数的单位圆根对应局部 Euler 坐标中的虚轴。
+
+## 4.2 completed Cayley–Lee–Yang 圆
+
+对 completed function 的中心变量
+
+$$
+u=s-\frac12,
+$$
+
+取 $a>1/2$，定义
+
+$$
+w=C_a(u)=\frac{a+u}{a-u}.
+\tag{A4.3}
+$$
+
+则
+
+$$
+|w|=1
+\Longleftrightarrow
+\Re s=\frac12.
+\tag{A4.4}
+$$
+
+这是本卷前文使用的 RH 临界圆。
+
+### 定理 A4.1　两圆非同一
+
+局部变量 $x=p^{-s}$ 的圆与 completed Cayley 变量 $w=C_a(s-1/2)$ 的圆不是同一坐标集合：前者对应 $\Re s=0$，后者对应 $\Re s=1/2$。
+
+所以从式 (A3.5) 不能推出 RH。
+
+把两只圆识别起来所需的不是代数换名，而是一个真正承载全部素数、Gamma 因子、函数方程、解析延拓与零点输运的 prime–Gamma completion。
+
+这条非同一性是信息逃逸审计中的硬边界：
+
+$$
+\boxed{
+\text{局部 fugacity circle}
+\not\equiv
+\text{completed critical circle}.
+}
+\tag{A4.5}
+$$
+
+---
+
+# 增订一·5　同一个 Zeckendorf 状态空间的 hard-core 配分函数
+
+## 5.1 占据多项式
+
+定义占据数
+
+$$
+N_Q(\eta)=\sum_{k=2}^{Q+1}\eta_k
+\tag{A5.1}
+$$
+
+以及 hard-core occupation polynomial
+
+$$
+H_Q(z)
+=
+\sum_{\eta\in\Omega_Q}z^{N_Q(\eta)}.
+\tag{A5.2}
+$$
+
+按最高数位是否占据分类，得到
+
+$$
+\boxed{
+H_Q(z)=H_{Q-1}(z)+zH_{Q-2}(z),
+}
+\tag{A5.3}
+$$
+
+初值为
+
+$$
+H_0(z)=1,
+\qquad
+H_1(z)=1+z.
+\tag{A5.4}
+$$
+
+## 5.2 二态 transfer matrix
+
+令
+
+$$
+T(z)=
+\begin{pmatrix}
+1&z\\
+1&0
+\end{pmatrix}.
+\tag{A5.5}
+$$
+
+其特征值为
+
+$$
+\boxed{
+\lambda_\pm(z)
+=
+\frac{1\pm\sqrt{1+4z}}2.
+}
+\tag{A5.6}
+$$
+
+并有闭式
+
+$$
+H_Q(z)
+=
+\frac{
+\lambda_+(z)^{Q+2}-
+\lambda_-(z)^{Q+2}
+}{
+\lambda_+(z)-\lambda_-(z)
+}.
+\tag{A5.7}
+$$
+
+在 $z=1$：
+
+$$
+\boxed{
+\lambda_+(1)=\varphi,
+\qquad
+\lambda_-(1)=1-\varphi=-\varphi^{-1}.
+}
+\tag{A5.8}
+$$
+
+因此
+
+$$
+H_Q(1)=F_{Q+2}
+=
+\frac{\varphi^{Q+2}-(-\varphi^{-1})^{Q+2}}{\sqrt5}.
+\tag{A5.9}
+$$
+
+$\varphi$ 是扩张通道，$-\varphi^{-1}$ 是稳定通道。后者在相对尺度上指数衰减，却承担精确整数值、边界条件和奇偶振荡。
+
+## 5.3 Hankel 最小记忆维数
+
+序列
+
+$$
+a_Q=H_Q(1)=F_{Q+2}
+\tag{A5.10}
+$$
+
+满足二阶递推，故其稳定 Hankel rank 不超过 $2$。另一方面，
+
+$$
+\det
+\begin{pmatrix}
+a_0&a_1\\
+a_1&a_2
+\end{pmatrix}
+=
+\det
+\begin{pmatrix}
+1&2\\
+2&3
+\end{pmatrix}
+=-1\ne0.
+\tag{A5.11}
+$$
+
+所以 Hankel rank 恰为 $2$。
+
+结合仓库的 Hankel 最小实现定理，完整 Fibonacci 计数行为的最小有限状态实现维数正是两维。两维可取为：
+
+- 上一位未占据；
+- 上一位已占据。
+
+于是：
+
+$$
+\boxed{
+\varphi\text{ 不是“神秘常数”，而是最小一步记忆自动机的主本征值。}
+}
+\tag{A5.12}
+$$
+
+同时：
+
+$$
+\boxed{
+-\varphi^{-1}\text{ 是标量大尺度近似最容易遗漏、但精确系统不能删除的第二状态方向。}
+}
+\tag{A5.13}
+$$
+
+## 5.4 hard-core 零点与 equimodular locus
+
+由式 (A5.7)，若 $H_Q(z)=0$ 且 $z\ne-1/4$，则
+
+$$
+\left(
+\frac{\lambda_+(z)}{\lambda_-(z)}
+\right)^{Q+2}=1.
+\tag{A5.14}
+$$
+
+因此必有
+
+$$
+|\lambda_+(z)|=|\lambda_-(z)|.
+\tag{A5.15}
+$$
+
+全部根可写为
+
+$$
+\boxed{
+z_j
+=-\frac1{4\cos^2\!\left(\frac{j\pi}{Q+2}\right)},
+\qquad
+1\le j\le\left\lfloor\frac{Q+1}{2}\right\rfloor.
+}
+\tag{A5.16}
+$$
+
+它们全在负实轴，并在 $Q\to\infty$ 时向边缘
+
+$$
+z_c=-\frac14
+\tag{A5.17}
+$$
+
+聚积。在 $z_c$，两个 transfer eigenvalues 合并。
+
+这给出一个严格的有限 Lee–Yang／Fisher 型原型：
+
+$$
+\boxed{
+\text{零点}
+=
+\text{两个 transfer channels 等模并满足相位量子化}.
+}
+\tag{A5.18}
+$$
+
+它是 Zeckendorf hard-core system 的定理，不是 zeta 的定理。
+
+---
+
+# 增订一·6　二变量 Zeckendorf 配分函数同时保留值与记忆
+
+## 6.1 联合配分函数
+
+定义
+
+$$
+\boxed{
+\mathcal Z_Q(x,z)
+=
+\sum_{\eta\in\Omega_Q}
+ x^{E_Q(\eta)}z^{N_Q(\eta)}.
+}
+\tag{A6.1}
+$$
+
+按最高数位分类得到非齐次 Fibonacci transfer：
+
+$$
+\boxed{
+\mathcal Z_Q(x,z)
+=
+\mathcal Z_{Q-1}(x,z)
++z x^{F_{Q+1}}
+\mathcal Z_{Q-2}(x,z),
+}
+\tag{A6.2}
+$$
+
+其中
+
+$$
+\mathcal Z_0=1,
+\qquad
+\mathcal Z_1=1+zx.
+\tag{A6.3}
+$$
+
+两个截面分别为
+
+$$
+\mathcal Z_Q(x,1)=Z_Q^{\mathrm{exp}}(x),
+\tag{A6.4}
+$$
+
+$$
+\mathcal Z_Q(1,z)=H_Q(z).
+\tag{A6.5}
+$$
+
+因此同一个状态空间在两个 observer 下呈现完全不同的零点几何：
+
+- 指数 observer 看见单位圆几何级数；
+- occupancy observer 看见负实轴 hard-core edge；
+- 联合 observer 看见一个二维复零簇。
+
+这证明“零点属于哪一种相变”不能只由状态空间决定，还取决于选择了哪一个 Hamiltonian 和哪一种 ensemble。
+
+## 6.2 反射完成不等于圆定位
+
+令 $z\in\mathbb R$，定义关于 $x$ 的 reciprocal completion
+
+$$
+\boxed{
+\mathcal C_Q(x,z)
+=
+\mathcal Z_Q(x,z)\,
+ x^{M_Q-1}\mathcal Z_Q(x^{-1},z).
+}
+\tag{A6.6}
+$$
+
+则
+
+$$
+x^{2(M_Q-1)}
+\mathcal C_Q(x^{-1},z)
+=
+\mathcal C_Q(x,z).
+\tag{A6.7}
+$$
+
+所以根自动以 reciprocal pairs 出现。但这不保证每个根在单位圆上。
+
+最小情形 $Q=1$：
+
+$$
+\mathcal Z_1(x,z)=1+zx,
+\tag{A6.8}
+$$
+
+$$
+\mathcal C_1(x,z)
+=(1+zx)(x+z).
+\tag{A6.9}
+$$
+
+其根为
+
+$$
+x_+=-z,
+\qquad
+x_-=-z^{-1}.
+\tag{A6.10}
+$$
+
+若令 $z=e^h>0$，则
+
+$$
+|x_+|=e^h,
+\qquad
+|x_-|=e^{-h}.
+\tag{A6.11}
+$$
+
+在 $h=0$，两根在 $-1$ 合并；在 $h\ne0$，它们同角、互为倒数、离开单位圆。
+
+然而始终有一阶有符号径向荷抵消：
+
+$$
+\log|x_+|+\log|x_-|=0.
+\tag{A6.12}
+$$
+
+而二阶径向能量为
+
+$$
+\boxed{
+(\log|x_+|)^2+(\log|x_-|)^2
+=2h^2.
+}
+\tag{A6.13}
+$$
+
+这个最小模型精确说明：
+
+$$
+\boxed{
+\text{反射函数方程只产生 reciprocal pairing；
+正性或稳定性才负责 circle localization。}
+}
+\tag{A6.14}
+$$
+
+它与 completed zeta 的函数方程／RH 分工同型，但不是二者的数值同一。
+
+---
+
+# 增订一·7　Zeckendorf 的扩张通道与稳定影子
+
+## 7.1 Minkowski 双通道
+
+令
+
+$$
+\psi=1-\varphi=-\varphi^{-1}.
+\tag{A7.1}
+$$
+
+对合法词 $\eta$，定义
+
+$$
+U(\eta)=\sum_k\eta_k\varphi^k,
+\qquad
+S(\eta)=\sum_k\eta_k\psi^k.
+\tag{A7.2}
+$$
+
+由 Binet 公式，
+
+$$
+\boxed{
+E(\eta)
+=
+\frac{U(\eta)-S(\eta)}{\sqrt5}.
+}
+\tag{A7.3}
+$$
+
+若把每个 Fibonacci 指标上移一位，定义
+
+$$
+E^+(\eta)=\sum_k\eta_kF_{k+1},
+\tag{A7.4}
+$$
+
+则
+
+$$
+\boxed{
+E^+(\eta)=\varphi E(\eta)+S(\eta).
+}
+\tag{A7.5}
+$$
+
+仓库的 Zeckendorf displacement reading 正是这一关系的整数闭式版本。
+
+对 canonical Zeckendorf 数位，稳定影子满足统一界
+
+$$
+\boxed{
+-\varphi^{-2}<S(\eta)<\varphi^{-1}.
+}
+\tag{A7.6}
+$$
+
+其符号由最小被占据指标的奇偶控制。
+
+所以：
+
+- $U$ 随深度指数增长；
+- $S$ 始终在固定有界窗内；
+- 但 $S$ 决定上移值落在哪一个相邻整数以及下一次跳跃取哪一支。
+
+这是“稳定通道小但不可删除”的第一个精确实例。
+
+## 7.2 黄金指数账户的两级跳跃
+
+记项目中的黄金指数账户为
+
+$$
+b(v)=\operatorname{o5Beta}(v).
+\tag{A7.7}
+$$
+
+仓库已证闭式
+
+$$
+\boxed{
+ b(v)
+=\left\lfloor\frac{v+1}{\varphi}\right\rfloor
++v\varphi
+=\sqrt5\,v+\varphi^{-1}
+-\operatorname{fract}((v+1)\varphi).
+}
+\tag{A7.8}
+$$
+
+定义增量
+
+$$
+\Delta b_v=b(v+1)-b(v).
+\tag{A7.9}
+$$
+
+则
+
+$$
+\boxed{
+\Delta b_v\in\{\varphi^2,\varphi\}.
+}
+\tag{A7.10}
+$$
+
+具体分支由 $v+1$ 的 canonical Zeckendorf 最小指标奇偶决定。
+
+## 7.3 精确创新场
+
+扣除平均漂移，定义
+
+$$
+\boxed{
+\xi_v=\Delta b_v-\sqrt5.
+}
+\tag{A7.11}
+$$
+
+由
+
+$$
+\varphi^2-\sqrt5=\varphi^{-2},
+\qquad
+\varphi-\sqrt5=-\varphi^{-1},
+\tag{A7.12}
+$$
+
+得到
+
+$$
+\boxed{
+\xi_v\in\{\varphi^{-2},-\varphi^{-1}\}.
+}
+\tag{A7.13}
+$$
+
+### 定理 A7.1　高跳跃的精确计数
+
+令
+
+$$
+A_N=\#\{0\le v<N:\Delta b_v=\varphi^2\}.
+\tag{A7.14}
+$$
+
+则
+
+$$
+\boxed{
+A_N=\left\lfloor\frac{N+1}{\varphi}\right\rfloor.
+}
+\tag{A7.15}
+$$
+
+#### 证明
+
+因为 $b(0)=0$，且每个高跳跃比低跳跃多 $1$，故
+
+$$
+b(N)=N\varphi+A_N.
+$$
+
+与式 (A7.8) 比较即得。
+
+因此高跳跃频率与低跳跃频率分别为
+
+$$
+\lim_{N\to\infty}\frac{A_N}{N}
+=\varphi^{-1},
+\tag{A7.16}
+$$
+
+$$
+\lim_{N\to\infty}\frac{N-A_N}{N}
+=\varphi^{-2}.
+\tag{A7.17}
+$$
+
+### 定理 A7.2　创新累计严格有界
+
+$$
+\boxed{
+\sum_{v=0}^{N-1}\xi_v
+=b(N)-N\sqrt5
+=\varphi^{-1}-\operatorname{fract}((N+1)\varphi).
+}
+\tag{A7.18}
+$$
+
+从而
+
+$$
+-\varphi^{-2}
+<
+\sum_{v=0}^{N-1}\xi_v
+\le
+\varphi^{-1}.
+\tag{A7.19}
+$$
+
+所以创新场的积分不会随时间增长。
+
+### 定理 A7.3　创新均方能量
+
+$$
+\boxed{
+\lim_{N\to\infty}
+\frac1N\sum_{v=0}^{N-1}\xi_v^2
+=\varphi^{-3}.
+}
+\tag{A7.20}
+$$
+
+#### 证明
+
+由两种取值和频率，
+
+$$
+\varphi^{-1}\varphi^{-4}
++\varphi^{-2}\varphi^{-2}
+=
+\varphi^{-5}+\varphi^{-4}
+=\varphi^{-3}.
+$$
+
+这给出一条精确的“漂移—创新”分解：
+
+$$
+\boxed{
+\Delta b_v
+=\sqrt5+\xi_v,
+\qquad
+\text{累计创新有界，均方创新为 }\varphi^{-3}.
+}
+\tag{A7.21}
+$$
+
+它不是热随机过程，而是 balanced Sturmian／Zeckendorf memory 产生的确定性有限预算流。
+
+---
+
+# 增订一·8　arithmetic jump energy 的 Zeckendorf shell 分解
+
+## 8.1 已有 prime jump decomposition
+
+项目已经构造
+
+$$
+\operatorname{PrimeTerm}
+=
+2W_L\|f\|_2^2
+-
+E_{\mathrm{jump},L}(f),
+\tag{A8.1}
+$$
+
+其中
+
+$$
+E_{\mathrm{jump},L}(f)
+=
+\sum_{n\in\mathcal P_L}
+\frac{\Lambda(n)}{\sqrt n}
+\left\|f-\mathsf T_{\log n}f\right\|_2^2
+\ge0.
+\tag{A8.2}
+$$
+
+这里
+
+$$
+(\mathsf T_a f)(y)=f(y-a)
+\tag{A8.3}
+$$
+
+是 unitary translation。
+
+## 8.2 prime power 的 Fibonacci shell factorization
+
+取
+
+$$
+n=p^v,
+\qquad
+v=\sum_{k\in Z(v)}F_k
+\tag{A8.4}
+$$
+
+为 $v$ 的 canonical Zeckendorf 分解。因为 translations 构成交换群，
+
+$$
+\boxed{
+\mathsf T_{v\log p}
+=
+\prod_{k\in Z(v)}
+\mathsf T_{F_k\log p}.
+}
+\tag{A8.5}
+$$
+
+这不是近似，而是精确因子分解。
+
+## 8.3 跳跃能量的多尺度上界
+
+设 $Z(v)=\{k_1,\ldots,k_r\}$。恒等式
+
+$$
+I-U_1\cdots U_r
+=
+\sum_{j=1}^{r}
+U_1\cdots U_{j-1}(I-U_j)
+\tag{A8.6}
+$$
+
+与 unitary invariance 给出
+
+$$
+\left\|
+(I-\mathsf T_{v\log p})f
+\right\|_2
+\le
+\sum_{k\in Z(v)}
+\left\|
+(I-\mathsf T_{F_k\log p})f
+\right\|_2.
+\tag{A8.7}
+$$
+
+再由 Cauchy–Schwarz：
+
+$$
+\boxed{
+\left\|
+(I-\mathsf T_{v\log p})f
+\right\|_2^2
+\le
+r(v)
+\sum_{k\in Z(v)}
+\left\|
+(I-\mathsf T_{F_k\log p})f
+\right\|_2^2,
+}
+\tag{A8.8}
+$$
+
+其中 $r(v)=|Z(v)|$。
+
+因为 Zeckendorf 指标不相邻，
+
+$$
+r(v)=O(\log v).
+\tag{A8.9}
+$$
+
+所以任意 prime-power jump 可以被一个稀疏 Fibonacci shell family 上界。
+
+## 8.4 为什么没有自动反向界
+
+式 (A8.8) 只有一个方向。多个 shell displacement 可能在总 translation 中相互抵消，因此一般不能由
+
+$$
+\|(I-\mathsf T_{v\log p})f\|_2
+$$
+
+恢复所有
+
+$$
+\|(I-\mathsf T_{F_k\log p})f\|_2.
+$$
+
+这又是一次结构信息逃逸：总位移只看见 Fibonacci 原子之和，而 shell energy 读取分解历史。
+
+Zeckendorf normal form 通过“无相邻指标”消除了
+
+$$
+F_k+F_{k+1}=F_{k+2}
+\tag{A8.10}
+$$
+
+造成的局部命名冗余，但标量 translation 仍不保留原子分解。
+
+真正的 reverse coercivity 必须加入至少一种额外结构：shell orthogonality、disjoint frequency support、positive Gram completion、ordered carry cocycle 或 prime–Gamma 全局约束。
+
+---
+
+# 增订一·9　Zeckendorf 与 prime 横向能量的有限联合定理
+
+## 9.1 prime cluster relation energy
+
+固定有限 prime cluster
+
+$$
+\mathcal C=\{p_1,\ldots,p_m\}
+\tag{A9.1}
+$$
+
+和非负 pair weights $W_{ij}$。记
+
+$$
+\Delta\omega_{ij}
+=
+\log p_j-\log p_i.
+\tag{A9.2}
+$$
+
+定义 cluster log-frequency 二阶量
+
+$$
+\boxed{
+\mathcal V_{\mathcal C}
+=
+\sum_{i<j}W_{ij}(\Delta\omega_{ij})^2.
+}
+\tag{A9.3}
+$$
+
+若至少一个不同 prime pair 具有正权重，则
+
+$$
+\mathcal V_{\mathcal C}>0.
+\tag{A9.4}
+$$
+
+## 9.2 Zeckendorf 平均横向能量
+
+定义
+
+$$
+\boxed{
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)
+=
+\frac1{M_Q}
+\sum_{\eta\in\Omega_Q}
+\sum_{i<j}W_{ij}
+\sinh^2\!\left(
+\delta E_Q(\eta)\Delta\omega_{ij}
+\right).
+}
+\tag{A9.5}
+$$
+
+由能量双射，也可写为
+
+$$
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)
+=
+\frac1{M_Q}
+\sum_{v=0}^{M_Q-1}
+\sum_{i<j}W_{ij}
+\sinh^2(\delta v\Delta\omega_{ij}).
+\tag{A9.6}
+$$
+
+### 定理 A9.1　严格正性与唯一零相
+
+若 $Q\ge1$ 且 $\mathcal V_{\mathcal C}>0$，则
+
+$$
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)\ge0,
+\tag{A9.7}
+$$
+
+并且
+
+$$
+\boxed{
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)=0
+\Longleftrightarrow
+\delta=0.
+}
+\tag{A9.8}
+$$
+
+#### 证明
+
+每一项非负。若 $\delta\ne0$，取 $v=1$ 和一个 $W_{ij}>0$、$p_i\ne p_j$ 的 pair，则对应 $\sinh^2$ 严格为正。
+
+### 定理 A9.2　Zeckendorf–prime susceptibility factorization
+
+在 $\delta=0$：
+
+$$
+\boxed{
+\left.
+\frac{d^2}{d\delta^2}
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)
+\right|_{\delta=0}
+=
+\frac{(M_Q-1)(2M_Q-1)}3
+\mathcal V_{\mathcal C}.
+}
+\tag{A9.9}
+$$
+
+#### 证明
+
+因为
+
+$$
+\left.
+\frac{d^2}{d\delta^2}
+\sinh^2(a\delta)
+\right|_{\delta=0}
+=2a^2,
+$$
+
+而
+
+$$
+\frac1{M_Q}
+\sum_{v=0}^{M_Q-1}v^2
+=
+\frac{(M_Q-1)(2M_Q-1)}6.
+$$
+
+故得结论。
+
+### 推论 A9.3　黄金深度放大律
+
+因为 $M_Q=F_{Q+2}\asymp\varphi^Q$，
+
+$$
+\boxed{
+\mathscr E_{Q,\mathcal C}^{\perp\prime\prime}(0)
+\asymp
+\varphi^{2Q}\mathcal V_{\mathcal C}.
+}
+\tag{A9.10}
+$$
+
+所以在均匀有限状态 ensemble 中：Zeckendorf depth 提供指数增长的二阶放大，prime cluster 提供 log-frequency 方向方差，二者在最低阶严格乘法分离。
+
+这就是 Zeckendorf 与 PrimeGaps 在能量层真正相遇的位置。
+
+---
+
+# 增订一·10　Fibonacci–Lorentz shell tower
+
+## 10.1 同一个复参数的圆周与双曲分量
+
+对不同 primes $p,q$，令
+
+$$
+\Delta\omega=\log(q/p),
+\qquad
+z=\delta+i\frac\tau2.
+\tag{A10.1}
+$$
+
+项目已有复交替核给出
+
+$$
+\left|\sinh(z\Delta\omega)\right|^2
+=
+\sinh^2(\delta\Delta\omega)
++
+\sin^2\!\left(\frac\tau2\Delta\omega\right).
+\tag{A10.2}
+$$
+
+在 Fibonacci shell $F_k$ 上定义
+
+$$
+a_k=zF_k\Delta\omega.
+\tag{A10.3}
+$$
+
+由于
+
+$$
+F_{k+1}=F_k+F_{k-1},
+$$
+
+有
+
+$$
+\boxed{
+a_{k+1}=a_k+a_{k-1}.}
+\tag{A10.4}
+$$
+
+若令
+
+$$
+R_k=e^{a_k},
+\tag{A10.5}
+$$
+
+则
+
+$$
+\boxed{R_{k+1}=R_kR_{k-1}.}
+\tag{A10.6}
+$$
+
+这是一条精确的 multiplicative Fibonacci rapidity recurrence。
+
+- 当 $\delta=0$ 时，$|R_k|=1$，得到圆周 phase tower；
+- 当 $\delta\ne0$ 时，$|R_k|=e^{\delta F_k\Delta\omega}$，得到 hyperbolic radial tower。
+
+因此：
+
+$$
+\boxed{
+\text{时间相位与离线横向分裂，是同一 Fibonacci 复 rapidity 的虚部和实部。}
+}
+\tag{A10.7}
+$$
+
+## 10.2 shell 横向能量
+
+定义归一化 shell detector
+
+$$
+\mathcal E_k^{\perp}(\delta;p,q)
+=
+\sinh^2\!\left(
+\delta F_k\log\frac qp
+\right).
+\tag{A10.8}
+$$
+
+其零集为
+
+$$
+\mathcal E_k^{\perp}=0
+\Longleftrightarrow
+\delta=0
+\tag{A10.9}
+$$
+
+只要 $F_k>0$ 且 $p\ne q$。
+
+## 10.3 临界 Zeckendorf 深度
+
+令
+
+$$
+x=|\delta|\left|\log\frac qp\right|.
+\tag{A10.10}
+$$
+
+定义首次达到非微扰尺度的 shell：
+
+$$
+k_*(x)=\min\{k:F_kx\ge1\}.
+\tag{A10.11}
+$$
+
+由 Binet 渐近，
+
+$$
+\boxed{
+ k_*(x)
+=
+\log_\varphi\frac{\sqrt5}{x}+O(1)
+\qquad(x\downarrow0).
+}
+\tag{A10.12}
+$$
+
+相应合法状态数满足
+
+$$
+\boxed{
+M_{k_*}\asymp\frac1x
+=
+\frac1{|\delta|\,|\log(q/p)|}.
+}
+\tag{A10.13}
+$$
+
+而所需信息熵为
+
+$$
+\boxed{
+\log M_{k_*}
+=
+\log\frac1{|\delta|\,|\log(q/p)|}+O(1).
+}
+\tag{A10.14}
+$$
+
+这给出一个精确 observer-resolution law：横向偏移越小，需要越深的黄金 memory；prime log-gap 越小，需要越深的黄金 memory；深度只对分辨率的对数增长，但状态数按其倒数增长。
+
+若 $q=p+g$ 且 $g\ll p$，则
+
+$$
+\log(q/p)=\frac gp+O(g^2/p^2),
+\tag{A10.15}
+$$
+
+所以
+
+$$
+\boxed{
+ k_*
+=
+\log_\varphi\frac{p}{|\delta|g}+O(1).
+}
+\tag{A10.16}
+$$
+
+这正是 short-gap sticky grain 与 Zeckendorf depth 的定量接点。
+
+---
+
+# 增订一·11　均匀状态 ensemble 与真实 Euler Gibbs ensemble 的分叉
+
+式 (A9.10) 容易诱发一个错误结论：因为状态数按 $\varphi^Q$ 增长，横向 susceptibility 按 $\varphi^{2Q}$ 增长，所以黄金递归自动产生相变。
+
+该结论不成立，因为 susceptibility 还依赖状态测度。
+
+## 11.1 均匀 ensemble
+
+在式 (A9.5) 中，每个 exponent $v\in[0,M_Q-1]$ 权重相同，因此
+
+$$
+\mathbb E_Q[v^2]
+=
+\frac{(M_Q-1)(2M_Q-1)}6
+\asymp M_Q^2.
+\tag{A11.1}
+$$
+
+这确实产生黄金深度放大。
+
+## 11.2 单 Euler 因子的 Gibbs ensemble
+
+固定 $0<x<1$，对 $v\ge0$ 使用几何权
+
+$$
+\mu_x(v)=(1-x)x^v.
+\tag{A11.2}
+$$
+
+则
+
+$$
+\mathbb E_x[v^2]
+=
+\boxed{
+\frac{x(1+x)}{(1-x)^2}
+}<\infty.
+\tag{A11.3}
+$$
+
+取 $x=p^{-\sigma}$，对任一固定 prime 和 $\sigma>0$，该二阶矩有限。
+
+所以在真实局部 Euler 权下，增加 Zeckendorf depth 并不会让单个 prime factor 的横向二阶响应发散。
+
+### 定理 A11.1　单局部因子无黄金深度相变
+
+对固定 $p$ 与 $\sigma>0$，Zeckendorf exponent tower 在 Euler Gibbs 权下的二阶 exponent moment 随 $Q\to\infty$ 收敛到式 (A11.3)，不按 $\varphi^{2Q}$ 发散。
+
+因此：
+
+$$
+\boxed{
+\text{组合状态数增长}
+\not\Rightarrow
+\text{Euler 加权能量增长}.
+}
+\tag{A11.4}
+$$
+
+真正的临界现象若存在，必须来自 primes 数量随尺度增长、prime phases 的 collective alignment、Gamma／pole completion、analytic continuation，或 zero-side 与 prime-side 之间的非局部谱输运。
+
+---
+
+# 增订一·12　黄金 renormalization 可以稳定几何，却不能自动稳定质量
+
+## 12.1 log-gap 与 Fibonacci shell 的互补缩放
+
+固定 $P_0>0$ 和 additive gap $g>0$，令
+
+$$
+P_Q=P_0\varphi^Q.
+\tag{A12.1}
+$$
+
+则
+
+$$
+\boxed{
+\lim_{Q\to\infty}
+F_Q\log\left(1+\frac g{P_Q}\right)
+=
+\frac g{\sqrt5P_0}.
+}
+\tag{A12.2}
+$$
+
+#### 证明
+
+使用
+
+$$
+F_Q\varphi^{-Q}\to\frac1{\sqrt5}
+$$
+
+与
+
+$$
+\log(1+g/P_Q)\sim g/P_Q.
+$$
+
+因此若 prime scale 约乘 $\varphi$，同时 Zeckendorf shell 深度增加一层，则
+
+$$
+F_Q\Delta\log p
+$$
+
+可以保持非退化。
+
+于是归一化横向能量具有有限极限：
+
+$$
+\sinh^2\!\left(
+\delta F_Q\log(1+g/P_Q)
+\right)
+\longrightarrow
+\sinh^2\!\left(
+\frac{\delta g}{\sqrt5P_0}
+\right).
+\tag{A12.3}
+$$
+
+这给出一个真正的 golden tangent fixed scale：
+
+$$
+\boxed{
+\text{Fibonacci shell 增长 }\varphi^Q
+\quad\text{抵消}\quad
+\text{固定 additive gap 的 log-frequency 收缩 }\varphi^{-Q}.
+}
+\tag{A12.4}
+$$
+
+## 12.2 但 Euler 质量超指数衰减
+
+若同一个 $F_Q$ 被解释成 prime-power exponent，则对应 scalar Euler weight 包含
+
+$$
+P_Q^{-\sigma F_Q}
+=
+\exp\!\left(-\sigma F_Q\log P_Q\right).
+\tag{A12.5}
+$$
+
+由于
+
+$$
+F_Q\asymp\varphi^Q,
+\qquad
+\log P_Q\asymp Q,
+$$
+
+该权重按
+
+$$
+\exp(-cQ\varphi^Q)
+\tag{A12.6}
+$$
+
+超指数衰减。
+
+所以：
+
+$$
+\boxed{
+\text{归一化几何可以处在 fixed scale，
+实际 Euler mass 却可以趋于零。}
+}
+\tag{A12.7}
+$$
+
+这说明 Zeckendorf–PrimeGap renormalization 目前只建立了几何／observer 分辨结构，尚未建立 zeta 配分权下的非消失贡献。
+
+要形成真正的 multiscale sticky tower，必须另外证明 completion measure 对这些 shell 提供足够质量。该质量不能由状态数或归一化 kernel 自动生成。
+
+---
+
+# 增订一·13　一阶信息消失、二阶能量显影的统一原理
+
+## 13.1 抽象二次显影定理
+
+设 $d$ 是一个在 involution 下变号的缺陷：
+
+$$
+d\longmapsto-d.
+\tag{A13.1}
+$$
+
+若标量 observable $A$ 对该 involution 不变，
+
+$$
+A(d)=A(-d),
+\tag{A13.2}
+$$
+
+且 $A$ 在 $0$ 可微，则
+
+$$
+\boxed{A'(0)=0.}
+\tag{A13.3}
+$$
+
+若 $A$ 解析，则其 Taylor 展开只含偶次项：
+
+$$
+A(d)=A(0)+a_2d^2+a_4d^4+\cdots.
+\tag{A13.4}
+$$
+
+所以被反射压掉的一阶有符号信息，第一种可由 invariant scalar 稳定读取的量通常是平方能量。
+
+## 13.2 项目中的六个实例
+
+1. reciprocal roots：$\log r+\log r^{-1}=0$，但 $(\log r)^2+(\log r^{-1})^2>0$；
+2. ordered holonomy：一阶 observer response 为零，负二阶 response 是平方 winding 的非负加权和；
+3. prime jump：共同 translation 模式被消去以后，剩余量为 $\|f-\mathsf T_af\|_2^2\ge0$；
+4. prime transverse split：$\sinh^2(\delta\Delta\omega)=\delta^2\Delta\omega^2+O(\delta^4)$；
+5. off-line zero odd channel：$E_{\mathrm{odd}}=4m_\rho|A_{\mathrm{odd}}|^2\ge0$；
+6. golden innovation：$\sum\xi_v=O(1)$，而 $N^{-1}\sum\xi_v^2\to\varphi^{-3}>0$。
+
+这六个对象并不相等，但它们共享同一结构法则：
+
+$$
+\boxed{
+\text{有符号／有序／反射信息在一阶 scalar 中冲销，
+在二阶正能量中重新显影。}
+}
+\tag{A13.5}
+$$
+
+这就是 Zeckendorf、jump energy、holonomy Casimir、Lee–Yang radial defect 和 off-line odd energy 真正相关的原因。
+
+---
+
+# 增订一·14　假想离线零点的联合能量图景
+
+设
+
+$$
+\rho_*
+=
+\frac12+\delta_*+it_*,
+\qquad
+\delta_*\ne0
+\tag{A14.1}
+$$
+
+是一个假想离线零点。
+
+本卷前文已经得到：同高度存在反射零点；Cayley 坐标中出现同角 reciprocal radial pair；scalar visible energy 满足 $V(t_*,\delta_*)=0$；若中心非零则发生 $\mathbb Z_2$ reflected phase split；若零点简单则发生二次 gap closing、相位翻转和局部涡旋。
+
+另一方面，对任意不同 primes $p,q$：
+
+$$
+\sinh^2\!\left(
+\delta_*\log\frac qp
+\right)>0.
+\tag{A14.2}
+$$
+
+对任意非平凡有限 Zeckendorf depth 与 prime cluster：
+
+$$
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta_*)>0.
+\tag{A14.3}
+$$
+
+于是形成一个严格的并置事实：
+
+$$
+\boxed{
+\text{zero-side scalar value}=0,
+\qquad
+\text{independently defined finite relation detector}>0.
+}
+\tag{A14.4}
+$$
+
+但“并置”不是“矛盾”。式 (A14.4) 中两边目前没有 canonical identity 或 domination theorem 相连。
+
+因此严谨表述只能是：
+
+$$
+\boxed{
+\text{离线零点是一个 candidate scalar/relation coercivity-gap closing event。}
+}
+\tag{A14.5}
+$$
+
+要把 candidate 变成 theorem，必须证明 relation detector 是 completed explicit formula 中 odd channel 的真实下界或等价范数。
+
+---
+
+# 增订一·15　信息逃逸究竟发生在哪一层
+
+## 15.1 不发生在 Zeckendorf state decode
+
+因为 $E_Q$ 是双射，
+
+$$
+\ker(E_Q)=\Delta_{\Omega_Q}.
+\tag{A15.1}
+$$
+
+所以精确指数能量没有微观状态碰撞。
+
+## 15.2 发生在结构到标量配分的投影
+
+考虑带关系的模型类
+
+$$
+\mathfrak M=(\Omega_Q,E_Q,\mathcal R).
+\tag{A15.2}
+$$
+
+定义 scalar readout
+
+$$
+\Pi_{\mathrm{sc}}(\mathfrak M)
+=
+\sum_{\eta\in\Omega_Q}x^{E_Q(\eta)}.
+\tag{A15.3}
+$$
+
+它与 $\mathcal R$ 无关。于是任意两个不同关系结构 $\mathcal R_1\ne\mathcal R_2$，只要共享同一个能量标号，就满足
+
+$$
+\Pi_{\mathrm{sc}}(\Omega_Q,E_Q,\mathcal R_1)
+=
+\Pi_{\mathrm{sc}}(\Omega_Q,E_Q,\mathcal R_2).
+\tag{A15.4}
+$$
+
+这就是一个非平凡 model-level kernel。
+
+若模型空间只含这两个模型，则 scalar readout 对唯一非对角有序 pair 全部碰撞，信息逃逸率为 $1$。若再加入一个能区分 $\mathcal R_1,\mathcal R_2$ 的 Laplacian、Hankel、carry 或 holonomy readout，联合 kernel 退化为对角线，逃逸率降为 $0$。
+
+因此：
+
+$$
+\boxed{
+\text{Zeckendorf 的信息价值不在重新命名整数，
+而在把被 scalar partition 遗忘的 CUT/FLOW 关系重新对象化。}
+}
+\tag{A15.5}
+$$
+
+## 15.3 结构读出层级
+
+可以把当前项目中的 readouts 排成：
+
+$$
+\begin{aligned}
+\mathcal O_0&=\text{整数 exponent / scalar Euler factor},\\
+\mathcal O_1&=\text{occupation polynomial / hard-core transfer},\\
+\mathcal O_2&=\text{stable shadow / least-index parity},\\
+\mathcal O_3&=\text{successor and arithmetic jump Dirichlet form},\\
+\mathcal O_4&=\text{ordered holonomy / exterior pair energy},\\
+\mathcal O_5&=\text{zero-side off-line odd spectral energy}.
+\end{aligned}
+\tag{A15.6}
+$$
+
+它们不是简单的数值精度递增，而是在逐步恢复不同类型的关系：值、一步记忆、Galois 稳定修正、动态创新、cross-prime 顺序与二体关系，以及 zero orbit 的反对称谱风险。
+
+低信息逃逸的最终对象不应选择其中一个替代其余，而应证明哪些层通过 canonical morphism 可以互相恢复。
+
+---
+
+# 增订一·16　两个等价风格的最终开放桥
+
+## 16.1 能量支配形式
+
+需要构造 canonical 权重和完成映射，使
+
+$$
+\boxed{
+E_{\mathrm{off}}^{\mathrm{odd}}(g)
+\le
+C\Bigl(
+E_{\mathrm{jump}}^{\mathrm{Zeck}}(g)
++
+E_{\mathrm{hol}}^{\mathrm{gold}}(g)
++
+E_{\mathrm{prime}}^{\perp}(g)
+\Bigr)
++\varepsilon(g).
+}
+\tag{A16.1}
+$$
+
+并在受控极限中证明
+
+$$
+\varepsilon(g)\to0.
+\tag{A16.2}
+$$
+
+式 (A16.1) 目前是目标，不是定理。三种 prime-side energy 也不能在未给出共同 Hilbert space 和嵌入以前直接相加；严格版本必须先把它们运输到同一有限 Galerkin 空间。
+
+## 16.2 transfer equimodular confinement 形式
+
+另一种表达是构造 canonical completed prime–Zeckendorf transfer cocycle，其两个主通道具有 Lyapunov exponents
+
+$$
+L_+(s),\qquad L_-(s).
+\tag{A16.3}
+$$
+
+Zeckendorf hard-core 原型说明，有限配分零点发生在两个 transfer channels 等模并满足相位量子化的位置。
+
+### 猜想 A16.1　Arithmetic equimodular confinement
+
+对 canonical completed cocycle，
+
+$$
+\boxed{
+L_+(s)=L_-(s)
+\Longrightarrow
+\Re s=\frac12.
+}
+\tag{A16.4}
+$$
+
+并且 completed determinant 的零点只能出现在该等模集合上。若两部分均建立，则推出 RH。
+
+这条猜想把三种语言统一：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weil 语言}&:\text{odd energy 不产生负性},\\
+\text{Lee–Yang 语言}&:\text{根不离临界圆},\\
+\text{transfer 语言}&:\text{等模集合被限制在反射固定轴}.
+\end{aligned}
+}
+\tag{A16.5}
+$$
+
+## 16.3 为什么 Zeckendorf 是候选而非答案
+
+Zeckendorf 提供了唯一 hard-core normal form、最小二态记忆、扩张／稳定 Galois 通道、稀疏 Fibonacci shell factorization、精确 balanced innovation，以及与 prime log-gap 互补的尺度增长。
+
+但它尚未提供 canonical zeta transfer operator、Gamma completion channel、prime-pair energy 的真实全局权、zero-side odd energy 的无条件支配、极限紧性和测试族分离性。
+
+所以最准确的判断是：
+
+$$
+\boxed{
+\text{Zeckendorf 给出了 RH 相变问题可能需要的最小 memory geometry，
+但没有自动给出该 geometry 在 completed }\Xi\text{ 中的动力学权。}
+}
+\tag{A16.6}
+$$
+
+---
+
+# 增订一·17　黄金隐藏通道临界性
+
+前述结构可压缩为：
+
+$$
+\boxed{
+\begin{array}{ccccc}
+\text{integer exponent}
+&\xrightarrow{\text{Zeckendorf}}
+&\text{hard-core history}
+&\xrightarrow{\text{Galois split}}
+&(\varphi\text{-expanding},\psi\text{-stable})
+\\[2mm]
+&&\downarrow\text{successor / carry}
+&&\downarrow\text{quadratic reveal}
+\\[2mm]
+\text{scalar Euler}
+&\xleftarrow{\text{forget relation}}
+&\text{jump energy}
+&\longrightarrow
+&\text{prime exterior energy}
+\\[2mm]
+&&&&\downarrow\text{missing transport}
+\\[2mm]
+&&&&\text{off-line odd energy}.
+\end{array}
+}
+\tag{A17.1}
+$$
+
+这里最深的结构不是“所有对象数值相等”，而是：标量读出反复删除有符号关系信息；被删除的信息在稳定／反对称通道中保留；对称性使一阶读出归零；第一忠实读出成为正的二阶能量；相变发生在 scalar gap 闭合而二阶 relation mode 仍存活的位置。
+
+据此，可以把假想第一离线高度重新表述为：
+
+$$
+\boxed{
+T_{\mathrm{off}}
+=
+\text{completed scalar channel 首次允许零值，
+同时一个尚未被证明可输运的稳定 relation channel 仍可能携带正能量的高度}.
+}
+\tag{A17.2}
+$$
+
+而 RH 的黄金隐藏通道版本是：
+
+$$
+\boxed{
+\text{completed prime–Gamma dynamics 不允许任何 Zeckendorf／holonomy 稳定影子
+在反射固定轴外与主通道达到可产生零点的等模状态}.
+}
+\tag{A17.3}
+$$
+
+式 (A17.3) 是研究纲领，不是已证等价；其成为严格 RH 等价的前提，是完成第 A16 节的 canonical transfer/determinant 构造。
+
+---
+
+# 增订一·18　结论地位总表
+
+| 结论 | 地位 |
+|---|---|
+| 合法 Zeckendorf words 与 $[0,F_{Q+2})$ 双射 | 仓库机器闭合 |
+| 有限 Zeckendorf exponent partition 是几何级数 | 仓库机器闭合 |
+| 其非平凡根在局部 fugacity 单位圆 | 直接推论 |
+| 该圆等于 RH Cayley 临界圆 | 不成立 |
+| Zeckendorf 重编码改变单 Euler factor | 不成立 |
+| hard-core occupation partition 满足二阶递推 | 纯有限定理 |
+| $z=1$ 的 transfer eigenvalues 为 $\varphi,-\varphi^{-1}$ | 纯有限定理 |
+| hard-core zeros 位于负实轴并趋向 $-1/4$ | 纯有限定理 |
+| Fibonacci count sequence 的最小 realization dimension 为 $2$ | 有限证明 + 仓库 Hankel 定理 |
+| 黄金指数增量取 $\varphi^2$ 或 $\varphi$ | 仓库机器闭合 |
+| 扣除 $\sqrt5$ 后创新均方为 $\varphi^{-3}$ | 本增订直接推论 |
+| prime-power translation 有 Zeckendorf shell 精确因子分解 | 本增订有限定理 |
+| 总 jump energy 自动下界每个 shell energy | 不成立；只有上界 |
+| Zeckendorf–prime susceptibility 二阶乘法分离 | 本增订有限定理 |
+| 均匀状态 susceptibility 按 $\varphi^{2Q}$ 增长 | 本增订直接推论 |
+| 单 Euler Gibbs ensemble 同样发散 | 不成立；二阶矩有限 |
+| Fibonacci shell 可补偿 short log-gap 的几何收缩 | 本增订条件极限定理 |
+| 该补偿自动克服 Euler mass 衰减 | 不成立 |
+| scalar first-order cancellation 与 quadratic energy reveal 是共同机制 | 抽象定理 + 多个仓库实例 |
+| prime transverse energy 已支配 off-line odd energy | 尚未建立 |
+| canonical transfer 的等模集合只在临界线 | 新核心猜想 |
+| 本增订证明 RH | 不成立 |
+
+---
+
+# 增订一·19　最终收束
+
+Zeckendorf、黄金比例、能量、Lee–Yang 和离线零点确实属于同一张结构图，但它们的关系不是：
+
+$$
+\text{出现 }\varphi
+\Longrightarrow
+\mathrm{RH}.
+$$
+
+真正的关系是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Zeckendorf 唯一性}
+&\Longrightarrow
+\text{整数指数可无损提升为 hard-core history},\\
+\text{hard-core history}
+&\Longrightarrow
+\text{最小二态 transfer 与 }(\varphi,-\varphi^{-1})\text{ 双通道},\\
+\text{稳定影子}
+&\Longrightarrow
+\text{有界一阶校正与正二阶创新能量},\\
+\text{prime log-gap}
+&\Longrightarrow
+\text{同一复核中的时间相位与横向 }\sinh^2\text{ 能量},\\
+\text{Zeckendorf depth}\times\text{prime variance}
+&\Longrightarrow
+\text{有限横向 susceptibility},\\
+\text{scalar completion}
+&\Longrightarrow
+\text{这些关系量可能被压缩或冲销},\\
+\text{off-line zero}
+&\Longrightarrow
+\text{若存在，则 scalar zero 与正 relation detector 在同一高度并置}.
+\end{aligned}
+}
+\tag{A19.1}
+$$
+
+最后一步还不是矛盾，因为 canonical transport 尚未建立。
+
+因此本增订的最终命题是：
+
+$$
+\boxed{
+\textbf{RH 的潜在黄金机制，不是 Fibonacci 数值神秘地控制零点，
+而是最小 hard-core memory 的稳定影子能否在 prime–Gamma 完成后
+被一个正二阶能量完全审计。}
+}
+\tag{A19.2}
+$$
+
+若审计完成，则所有反射轴外的 odd relation mode 都必须付出正能量，而 completed scalar zero 无法在该能量仍为正时发生。若审计不能完成，则 Zeckendorf 仍只是一个优美、无损、但与 RH 承重桥分离的坐标系统。
+
+这把下一步研究压缩成唯一问题：
+
+$$
+\boxed{
+\text{能否从 canonical Zeckendorf carry / golden holonomy / prime jump energy
+构造一个由显式公式识别的正算子，
+其零空间恰好等于 critical-line phase，
+其正空间恰好包含全部 off-line odd modes？}
+}
+\tag{A19.3}
+$$
+
+在这条算子桥闭合以前，所有“黄金比例解释 RH”的表述都只能是结构候选；在它闭合以后，Zeckendorf 才会从命名坐标真正升级为 completed zeta 的动力学内核。
+
+---
+
+# 增订二　黄金判别式谱覆盖、Lorentz 二通道与算术等模禁闭
+
+> 本增订继续压缩前两部分的共同结构。以下公式使用 `B` 前缀独立编号。本文仍为纯数学理论：已由仓库 Lean 真源承担的有限结论、本文直接推导的有限结论、条件性 completed 模型与 RH 承重猜想严格分层。
+
+## 摘要
+
+增订一已经表明，Zeckendorf 的意义不在于改变整数指数或 Euler 标量，而在于把整数提升为带一步 hard-core memory 的唯一历史；黄金比例则是该最小二态系统的扩张本征值，负共轭 $-\varphi^{-1}$ 是精确性不可删除的稳定影子。
+
+本增订进一步发现：这些结构并非若干彼此相似的公式，而是同一条二次谱覆盖的不同纤维。
+
+定义加权 hard-core transfer
+
+$$
+T(z)=
+\begin{pmatrix}
+1&z\\
+1&0
+\end{pmatrix}.
+$$
+
+其特征方程为
+
+$$
+\lambda^2-\lambda-z=0,
+$$
+
+判别式为
+
+$$
+D(z)=1+4z.
+$$
+
+于是：
+
+- 热力学边缘 $z=-\tfrac14$ 是 $D(z)=0$ 的解析分歧点；
+- 黄金无权纤维 $z=1$ 给出 $D(1)=5$，本征值恰为 $\varphi$ 与 $-\varphi^{-1}$；
+- 将该纤维模素数约化时，两个通道是否在本地分裂，恰由 $5$ 的二次剩余性控制；
+- 对非分歧素数，Frobenius 对两个通道的作用正是恒等或交换，而项目的模 $5$ 黄金二次特征正记录这一 Weyl 符号；
+- 围绕解析分歧点的 monodromy 与惰性素数的 Frobenius 都执行同一个 deck involution：交换两条谱支。
+
+这给出本轮最重要的精确结论：
+
+$$
+\boxed{
+\text{Zeckendorf 的黄金双通道、模 }5\text{ 的 split/inert 素数、}
+\text{以及 Lee--Yang 等模分支，来自同一二次谱覆盖的解析与算术作用。}
+}
+\tag{B0.1}
+$$
+
+本增订还建立一条此前隐藏的有限恒等式。令 $J_N$ 为长度 $N$、零边界的最近邻平均算子，则
+
+$$
+\boxed{
+\det(I_N+4zJ_N^2)=H_{N-1}(z)^2,
+}
+\tag{B0.2}
+$$
+
+其中 $H_{N-1}$ 是 Zeckendorf hard-core occupation polynomial。项目已经机器证明，参考系交换通道的 entanglement fidelity 正是 $\|J_Nc\|_2^2$，其最优值为
+
+$$
+F_N^*=\cos^2\frac{\pi}{N+1}.
+$$
+
+而当 $N\ge2$ 时，hard-core 配分函数离临界边缘最近的零点精确满足
+
+$$
+\boxed{
+z_{N-1}^{\mathrm{near}}=-\frac1{4F_N^*}.}
+\tag{B0.3}
+$$
+
+因此有限参考系的最优 fidelity tax 与有限配分零点离热力学边缘的距离，是同一条 path spectrum 的两个精确读出，而不是数值巧合。
+
+最后，本增订把 prime-pair 横向能量提升为三种等价的有限局部几何：
+
+$$
+\boxed{
+\text{外积 Gram 能量}
+\quad\Longleftrightarrow\quad
+\text{最小奇异值打开}
+\quad\Longleftrightarrow\quad
+\text{反射通道 fidelity 损失}.
+}
+\tag{B0.4}
+$$
+
+这三者在临界线附近都由 weighted variance of $\log p$ 控制。于是 RH 的承重问题可以进一步收紧为：能否从 completed prime--Zeckendorf--Gamma cocycle 构造一个保持边界横截性、在临界线外具有 dominated splitting、并与 zero-side odd channel 互 intertwine 的正算子。
+
+---
+
+# 增订二·0　理论地位与真源边界
+
+本增订使用下列仓库真源，但不把它们扩大解释为 RH 证明：
+
+1. `GoldenNames` 与 `FiniteZeckendorfEulerIdentity`：Zeckendorf 合法词、Fibonacci 初始区间与有限 Euler 和；
+2. `GoldenEulerBetaZeckendorf`：黄金指数账户与最小指标奇偶控制；
+3. `GoldenCharacterQuotient`：非分歧素数的模 $5$ 二次特征给出 $\{\pm1\}$ 商，乘积等于惰性字母数的奇偶；
+4. `GoldenScalarDihedralBlindness`：完整标量黄金世界不能恢复有序 prime-word dihedral holonomy；
+5. `OrderedPrimeHolonomyCasimir`：一阶有序响应消失，负二阶响应为平方 winding 的非负和；
+6. `ChannelFidelityBridge`：有限 excitation-exchange channel 的 entanglement fidelity 等于最近邻二次型并等于 path averaging 范数平方；
+7. `TopEigenspace`：$J_N^2$ 的顶本征空间由正负边缘 sine modes 配对生成，最优二次值为 $\cos^2(\pi/(N+1))$；
+8. `LocalPositiveSquareCompletion`：正对角完成的 determinant 零点位于负实轴；
+9. `PrimitiveBundle`：有限角色标记原语族的联合不可区分核等于各原语 kernel 的交；
+10. `OffLineOrbitParityDecomposition`：supplied 离线四点轨道的 Weil 贡献等于 even energy 减 odd energy，两者分别非负。
+
+本文新推导的有限恒等式包括：判别式五的谱覆盖解释、Lorentz 共形关系、Frobenius--monodromy 同一 deck action、path-fidelity determinant 恒等式、fidelity tax 与最近零点的精确换算、hard-core 平稳链协方差、prime reflected Gramian 与 fidelity 的精确关系、以及共同 Galerkin 张量微分。
+
+以下命题仍明确保持开放：
+
+- Riemann completed $\Xi$ 已经等于本文某个有限 transfer determinant 的极限；
+- Gamma 因子已经被黄金 hard-core transfer 无条件恢复；
+- 模 $5$ 黄金特征决定全部 zeta zeros；
+- prime reflected fidelity 已经等于 zero-side odd energy；
+- completed cocycle 在临界线外已经证明 dominated splitting；
+- 边界向量对主通道的耦合已经证明不消失；
+- RH 已被证明。
+
+---
+
+# 增订二·1　通用 hard-core transfer 与二次谱覆盖
+
+## B1.1 加权一步记忆系统
+
+令
+
+$$
+T(z)=
+\begin{pmatrix}
+1&z\\
+1&0
+\end{pmatrix},
+\qquad z\in\mathbb C.
+\tag{B1.1}
+$$
+
+若状态向量的两个分量分别表示“末位未占据”和“末位已占据”，则一次长度增长由 $T(z)$ 完成。其特征多项式为
+
+$$
+\boxed{
+\chi_z(\lambda)
+=\det(\lambda I-T(z))
+=\lambda^2-\lambda-z.
+}
+\tag{B1.2}
+$$
+
+定义判别式
+
+$$
+\boxed{D(z)=1+4z.}
+\tag{B1.3}
+$$
+
+在选择平方根以后，两条谱支为
+
+$$
+\boxed{
+\lambda_\pm(z)
+=\frac{1\pm\sqrt{D(z)}}2.
+}
+\tag{B1.4}
+$$
+
+并满足
+
+$$
+\lambda_++\lambda_-=1,
+\qquad
+\lambda_+\lambda_-=-z.
+\tag{B1.5}
+$$
+
+## B1.2 谱曲线
+
+定义二次谱覆盖
+
+$$
+\boxed{
+\Sigma
+=
+\{(z,y)\in\mathbb C^2:y^2=1+4z\}.
+}
+\tag{B1.6}
+$$
+
+在 $\Sigma$ 上，
+
+$$
+\lambda_\pm=\frac{1\pm y}{2}.
+\tag{B1.7}
+$$
+
+覆盖的 deck involution 为
+
+$$
+\boxed{
+\iota(z,y)=(z,-y),
+}
+\tag{B1.8}
+$$
+
+它精确交换
+
+$$
+\lambda_+\longleftrightarrow\lambda_-.
+\tag{B1.9}
+$$
+
+因此“二通道”不是人为把一个标量复制两次，而是单值化平方根所必需的最小谱覆盖。
+
+## B1.3 三个决定性纤维
+
+### 零活动纤维
+
+当 $z=0$：
+
+$$
+D(0)=1,
+\qquad
+(\lambda_+,\lambda_-)=(1,0).
+\tag{B1.10}
+$$
+
+一条通道完全消失，系统退化为无占据背景。
+
+### 分歧纤维
+
+当
+
+$$
+z_c=-\frac14,
+\tag{B1.11}
+$$
+
+有
+
+$$
+D(z_c)=0,
+\qquad
+\lambda_+=\lambda_-=\frac12.
+\tag{B1.12}
+$$
+
+这是二次覆盖的唯一有限分歧点，也是 hard-core 零点的热力学边缘。
+
+### 黄金纤维
+
+当 $z=1$：
+
+$$
+D(1)=5,
+\tag{B1.13}
+$$
+
+从而
+
+$$
+\boxed{
+\lambda_+(1)=\frac{1+\sqrt5}{2}=\varphi,
+\qquad
+\lambda_-(1)=\frac{1-\sqrt5}{2}=-\varphi^{-1}.
+}
+\tag{B1.14}
+$$
+
+因此判别式五不是后来附加给 Fibonacci 递推的神秘常数，而是通用 hard-core 谱覆盖在物理无权活动 $z=1$ 上的纤维值：
+
+$$
+\boxed{5=D(1).}
+\tag{B1.15}
+$$
+
+---
+
+# 增订二·2　解析 monodromy 与算术 Frobenius 是同一通道交换
+
+## B2.1 围绕分歧点的解析 monodromy
+
+令 $z$ 沿一个小闭环绕 $-1/4$ 一周。平方根
+
+$$
+\sqrt{1+4z}
+$$
+
+改变符号，因此解析延拓执行
+
+$$
+\lambda_+\longleftrightarrow\lambda_-.
+\tag{B2.1}
+$$
+
+这正是 deck involution $\iota$。
+
+## B2.2 黄金纤维的模素数约化
+
+在 $z=1$，特征多项式为
+
+$$
+\boxed{
+\chi_1(\lambda)=\lambda^2-\lambda-1,
+}
+\tag{B2.2}
+$$
+
+判别式为 $5$。
+
+令 $p$ 为奇素数且 $p\ne5$。在 $\mathbb F_p$ 上：
+
+- 若 $5$ 是平方，则 $\chi_1$ 分解为两个不同线性因子；
+- 若 $5$ 不是平方，则 $\chi_1$ 在 $\mathbb F_p$ 上不可约，并只在 $\mathbb F_{p^2}$ 上分裂。
+
+因此：
+
+$$
+\boxed{
+\chi_1\text{ 在 }\mathbb F_p\text{ 上分裂}
+\Longleftrightarrow
+\left(\frac5p\right)=+1.
+}
+\tag{B2.3}
+$$
+
+而
+
+$$
+\boxed{
+\chi_1\text{ 在 }\mathbb F_p\text{ 上惰性}
+\Longleftrightarrow
+\left(\frac5p\right)=-1.
+}
+\tag{B2.4}
+$$
+
+由于 $5\equiv1\pmod4$，二次互反律给出
+
+$$
+\boxed{
+\left(\frac5p\right)
+=
+\left(\frac p5\right).
+}
+\tag{B2.5}
+$$
+
+右侧正是项目 `GoldenCharacterQuotient` 使用的黄金二次特征。
+
+## B2.3 Frobenius 的通道作用
+
+在 $\mathbb F_{p^2}$ 中取
+
+$$
+y^2=5.
+$$
+
+Euler 判别给出
+
+$$
+y^p
+=5^{(p-1)/2}y
+=\left(\frac5p\right)y.
+\tag{B2.6}
+$$
+
+故 Frobenius 作用为
+
+$$
+\boxed{
+\operatorname{Frob}_p(y)
+=\chi_5(p)y,
+\qquad
+\chi_5(p)=\left(\frac p5\right).
+}
+\tag{B2.7}
+$$
+
+于是：
+
+- $\chi_5(p)=+1$ 时，Frobenius 固定两条本征线；
+- $\chi_5(p)=-1$ 时，Frobenius 交换两条本征线。
+
+换言之：
+
+$$
+\boxed{
+\text{黄金二次特征就是 Frobenius 在二通道谱覆盖上的 Weyl 符号。}
+}
+\tag{B2.8}
+$$
+
+## B2.4 分歧素数与素数二
+
+当 $p=5$，判别式消失，$\chi_1$ 具有重根；这是算术分歧纤维，而不是 split 或 inert 纤维。
+
+当 $p=2$，
+
+$$
+\chi_1(\lambda)
+\equiv
+\lambda^2+\lambda+1
+\pmod2
+\tag{B2.9}
+$$
+
+在 $\mathbb F_2$ 上不可约，所以素数 $2$ 单独属于惰性类型。该边界必须单列，不能把只对奇素数定义的普通 Legendre 公式未经说明地套到 $2$ 上。
+
+## B2.5 Frobenius--monodromy 同一性
+
+解析侧绕分歧点一次执行
+
+$$
+y\mapsto-y.
+$$
+
+算术侧每个惰性素数的 Frobenius 也执行
+
+$$
+y\mapsto-y.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{解析 monodromy 与惰性 Frobenius 是同一二次谱覆盖的同一个非平凡 deck action。}
+}
+\tag{B2.10}
+$$
+
+这条同一性是严格的有限代数事实。它并不意味着 zeta 的解析延拓由模 $5$ 字符单独决定；它说明项目中的黄金字符、二态 transfer 和分支交换确实共享一个真实的谱几何母体。
+
+---
+
+# 增订二·3　Lorentz 二次型与相型签名
+
+## B3.1 与 transfer 相容的二次型
+
+定义
+
+$$
+\boxed{
+q_z(X,Y)
+=-X^2+XY+zY^2,
+}
+\tag{B3.1}
+$$
+
+其对称矩阵为
+
+$$
+J_z=
+\begin{pmatrix}
+-1&\tfrac12\\
+\tfrac12&z
+\end{pmatrix}.
+\tag{B3.2}
+$$
+
+直接计算得
+
+$$
+\boxed{
+T(z)^\mathsf TJ_zT(z)
+=-zJ_z.
+}
+\tag{B3.3}
+$$
+
+所以 $T(z)$ 不是任意二阶递推矩阵，而是 $q_z$ 的共形 Lorentz 变换；共形因子为 $-z$。
+
+## B3.2 null directions 就是 transfer channels
+
+对斜率向量 $(\lambda,1)$：
+
+$$
+q_z(\lambda,1)
+=-\lambda^2+\lambda+z.
+\tag{B3.4}
+$$
+
+因此
+
+$$
+\boxed{
+q_z(\lambda,1)=0
+\Longleftrightarrow
+\lambda^2-\lambda-z=0.
+}
+\tag{B3.5}
+$$
+
+也就是说，两条 transfer 本征通道正是关系二次型的两条 null directions。
+
+## B3.3 判别式就是 metric determinant
+
+有
+
+$$
+\boxed{
+\det J_z
+=-\frac{1+4z}{4}
+=-\frac{D(z)}4.
+}
+\tag{B3.6}
+$$
+
+所以谱判别式和关系 metric 的非退化判别式完全相同。
+
+对实 $z$：
+
+### 双曲相
+
+若
+
+$$
+z>-\frac14,
+$$
+
+则 $D(z)>0$、$\det J_z<0$，故 $q_z$ 不定并具有两条实 null rays。两条 transfer channels 可在实数上区分。
+
+### 抛物临界相
+
+若
+
+$$
+z=-\frac14,
+$$
+
+则 $J_z$ 退化，两条 null rays 合并。这是 transfer collision 与 metric degeneration 的同一点。
+
+### 椭圆相
+
+若
+
+$$
+z<-\frac14,
+$$
+
+则 $D(z)<0$。此时 $q_z$ 为负定，实 null directions 消失，而两条本征值成为等模复共轭对。
+
+因此：
+
+$$
+\boxed{
+\text{hard-core edge 不只是根的聚点；它是关系 metric 从双曲型经退化转为椭圆型的签名相变。}
+}
+\tag{B3.7}
+$$
+
+## B3.4 黄金 norm form
+
+在 $z=1$，
+
+$$
+q_1(X,Y)=-X^2+XY+Y^2.
+\tag{B3.8}
+$$
+
+令 $K=\mathbb Q(\sqrt5)$，则
+
+$$
+\operatorname{Norm}_{K/\mathbb Q}(X-Y\varphi)
+=X^2-XY-Y^2.
+\tag{B3.9}
+$$
+
+故
+
+$$
+\boxed{
+q_1(X,Y)
+=-\operatorname{Norm}_{K/\mathbb Q}(X-Y\varphi).
+}
+\tag{B3.10}
+$$
+
+黄金 Lorentz metric 正是实二次域 $\mathbb Q(\sqrt5)$ 的 norm form，差一个整体符号和基选择。
+
+---
+
+# 增订二·4　黄金单位、Lorentz boost 与二面体 normalizer
+
+## B4.1 一步 transfer 是 norm $-1$ 单位作用
+
+记
+
+$$
+A=T(1)=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+\tag{B4.1}
+$$
+
+其 determinant 为
+
+$$
+\det A=-1,
+\tag{B4.2}
+$$
+
+且
+
+$$
+A^\mathsf TJ_1A=-J_1.
+\tag{B4.3}
+$$
+
+这对应黄金单位
+
+$$
+\operatorname{Norm}(\varphi)=-1.
+\tag{B4.4}
+$$
+
+所以一次 Fibonacci transfer 是 orientation-reversing 的 Lorentz unit；其平方才进入 proper boost 分量。
+
+## B4.2 两步 transfer 是 proper boost
+
+有
+
+$$
+A^2=
+\begin{pmatrix}
+2&1\\
+1&1
+\end{pmatrix},
+\qquad
+(A^2)^\mathsf TJ_1A^2=J_1.
+\tag{B4.5}
+$$
+
+其本征值为
+
+$$
+\varphi^2,
+\qquad
+\varphi^{-2}.
+\tag{B4.6}
+$$
+
+令标准 boost
+
+$$
+B(u)=
+\begin{pmatrix}
+\cosh u&\sinh u\\
+\sinh u&\cosh u
+\end{pmatrix}.
+\tag{B4.7}
+$$
+
+则 $A^2$ 在一个实正交坐标变换后等价于
+
+$$
+\boxed{B(2\log\varphi).}
+\tag{B4.8}
+$$
+
+因此黄金递推深度的两步增长，是离散 rapidity
+
+$$
+2\log\varphi
+\tag{B4.9}
+$$
+
+的 Lorentz boost。
+
+## B4.3 三种 rapidity 是同型坐标而非相同数值
+
+本理论中出现三类 reciprocal pairs：
+
+1. Cayley 零点对：$e^{\pm\eta_a(t,\delta)}$；
+2. prime reflected pair：$e^{\pm\delta\Delta\omega_{p,q}}$；
+3. golden transfer 两步通道：$e^{\pm2\log\varphi}$。
+
+去掉共同复相位以后，它们都属于同一个 split Cartan 形式
+
+$$
+\operatorname{diag}(e^u,e^{-u}).
+\tag{B4.10}
+$$
+
+所以：
+
+$$
+\boxed{
+\eta_a(t,\delta),
+\quad
+\delta\log(q/p),
+\quad
+2\log\varphi
+}
+\tag{B4.11}
+$$
+
+是同一种 rank-one Lorentz 坐标的三个实例，但没有任何理由把它们数值相等。
+
+## B4.4 Weyl reflection 与有序乘法
+
+令 $W$ 满足
+
+$$
+W^2=I,
+\qquad
+WB(u)W=B(-u).
+\tag{B4.12}
+$$
+
+则 boost torus 与 $W$ 生成无限二面体型 normalizer。
+
+把一个局部因子写成
+
+$$
+g_j=B(u_j)W^{e_j},
+\qquad e_j\in\{0,1\},
+\tag{B4.13}
+$$
+
+并记
+
+$$
+\epsilon_j=(-1)^{e_j}.
+\tag{B4.14}
+$$
+
+则有序乘积的总 rapidity 为
+
+$$
+\boxed{
+U_n
+=u_1+
+\epsilon_1u_2+
+\epsilon_1\epsilon_2u_3+
+\cdots+
+\left(\prod_{j=1}^{n-1}\epsilon_j\right)u_n.
+}
+\tag{B4.15}
+$$
+
+而最终 Weyl parity 仅为
+
+$$
+\epsilon_{\mathrm{tot}}
+=
+\prod_{j=1}^n\epsilon_j.
+\tag{B4.16}
+$$
+
+所以模 $5$ 黄金 character quotient 只记录最终通道交换奇偶；它一般不能恢复有序 rapidity $U_n$。这正解释了为什么 permutation-invariant character 与 ordered dihedral holonomy 必须分层。
+
+## B4.5 标量 trace 的盲性
+
+proper boost 的 trace 为
+
+$$
+\operatorname{tr}B(u)=2\cosh u,
+\tag{B4.17}
+$$
+
+满足
+
+$$
+\operatorname{tr}B(u)
+=
+\operatorname{tr}B(-u).
+\tag{B4.18}
+$$
+
+因此 scalar trace 删除 rapidity 的符号。其一阶导数在 $u=0$ 消失，而二阶导数为正：
+
+$$
+\left.\frac d{du}2\cosh u\right|_{u=0}=0,
+\qquad
+\left.\frac{d^2}{du^2}2\cosh u\right|_{u=0}=2.
+\tag{B4.19}
+$$
+
+这给出 ordered holonomy Casimir、reciprocal radial energy 与 prime transverse energy 的共同 rank-one group 原型。
+
+---
+
+# 增订二·5　hard-core 等模边缘与精确有限尺寸律
+
+## B5.1 occupation polynomial
+
+仍令
+
+$$
+H_Q(z)=H_{Q-1}(z)+zH_{Q-2}(z),
+\quad
+H_0=1,
+\quad
+H_1=1+z.
+\tag{B5.1}
+$$
+
+在 $D(z)\ne0$ 时，
+
+$$
+\boxed{
+H_Q(z)
+=
+\frac{\lambda_+(z)^{Q+2}-\lambda_-(z)^{Q+2}}
+{\lambda_+(z)-\lambda_-(z)}.
+}
+\tag{B5.2}
+$$
+
+## B5.2 完整等模集合
+
+若
+
+$$
+|\lambda_+(z)|=|\lambda_-(z)|,
+\tag{B5.3}
+$$
+
+则由 $\lambda_++\lambda_-=1$ 可知二者必为复共轭，除非和为零；后者与和为 $1$ 矛盾。因此 $z=-\lambda_+\lambda_-$ 必为负实数，并有 $D(z)\le0$。
+
+反之，当 $z\le-1/4$ 为实数时，两根互为复共轭或重合，故等模。
+
+所以：
+
+$$
+\boxed{
+|\lambda_+(z)|=|\lambda_-(z)|
+\Longleftrightarrow
+z\in(-\infty,-1/4].
+}
+\tag{B5.4}
+$$
+
+hard-core 的等模 locus 是一条完整负实割线，而不只是端点。
+
+## B5.3 有限零点量子化
+
+有限零点满足
+
+$$
+\left(\frac{\lambda_+}{\lambda_-}\right)^{Q+2}=1.
+\tag{B5.5}
+$$
+
+从而
+
+$$
+\boxed{
+z_{Q,j}
+=-\frac1{4\cos^2\left(\frac{j\pi}{Q+2}\right)},
+\qquad
+1\le j\le\left\lfloor\frac{Q+1}{2}\right\rfloor.}
+\tag{B5.6}
+$$
+
+所有根位于等模割线上，但不会等于分歧点本身。
+
+## B5.4 分歧点上的有限配分函数不为零
+
+在 $z=-1/4$，两根合并为 $1/2$。取式 (B5.2) 的极限得
+
+$$
+\boxed{
+H_Q(-1/4)
+=\frac{Q+2}{2^{Q+1}}>0.
+}
+\tag{B5.7}
+$$
+
+所以相变边缘不是任一有限体积配分函数的零点；它是零点在 $Q\to\infty$ 时的聚积端点。
+
+## B5.5 最近零点的精确距离
+
+最接近 $-1/4$ 的根为
+
+$$
+z_Q^{\mathrm{near}}
+=-\frac1{4\cos^2(\pi/(Q+2))}.
+\tag{B5.8}
+$$
+
+因此
+
+$$
+\boxed{
+-\frac14-z_Q^{\mathrm{near}}
+=\frac14\tan^2\frac{\pi}{Q+2}.
+}
+\tag{B5.9}
+$$
+
+并有渐近
+
+$$
+\boxed{
+-\frac14-z_Q^{\mathrm{near}}
+\sim
+\frac{\pi^2}{4(Q+2)^2}.}
+\tag{B5.10}
+$$
+
+这是一条精确的 $Q^{-2}$ zero-pinching law。
+
+## B5.6 双曲侧的通道 gap
+
+对 $-1/4<z<0$，两根均为正，定义 modulus gap
+
+$$
+\Gamma(z)
+=
+\log\frac{\lambda_+(z)}{\lambda_-(z)}.
+\tag{B5.11}
+$$
+
+令 $y=\sqrt{1+4z}$，则
+
+$$
+\boxed{
+\Gamma(z)
+=2\operatorname{artanh}y.
+}
+\tag{B5.12}
+$$
+
+当 $z\downarrow-1/4$：
+
+$$
+\boxed{
+\Gamma(z)
+=2\sqrt{1+4z}
++O((1+4z)^{3/2}).}
+\tag{B5.13}
+$$
+
+相应 correlation length
+
+$$
+\ell(z)=\Gamma(z)^{-1}
+\tag{B5.14}
+$$
+
+满足
+
+$$
+\boxed{
+\ell(z)
+\sim
+\frac1{2\sqrt{1+4z}}.}
+\tag{B5.15}
+$$
+
+因此 $Q^{-2}$ zero pinching 与平方根 gap closing 是同一个分歧指数的两个有限尺寸表现。
+
+## B5.7 极限自由能与零点密度
+
+在主通道占优的区域，单位长度自由能为
+
+$$
+f(z)=\log\lambda_+(z).
+\tag{B5.16}
+$$
+
+它在 $z=-1/4$ 具有平方根分支奇点。若以每一长度 $Q$ 归一化零点计数，则极限零点测度支撑于 $(-\infty,-1/4]$；写 $x=-z\ge1/4$，密度为
+
+$$
+\boxed{
+\frac{d\nu}{dx}
+=
+\frac1{2\pi x\sqrt{4x-1}}.
+}
+\tag{B5.17}
+$$
+
+其总质量为 $1/2$，对应 $\deg H_Q/Q\to1/2$。边缘处的反平方根发散正是两通道相位量子化在 thermodynamic limit 中形成的 pinching density。
+
+---
+
+# 增订二·6　path averaging、reference fidelity 与 hard-core determinant 的精确恒等式
+
+## B6.1 path averaging spectrum
+
+令 $J_N$ 为 $\mathbb R^N$ 上的零边界最近邻平均：
+
+$$
+(J_Nc)_j
+=\frac{c_{j-1}+c_{j+1}}2,
+\tag{B6.1}
+$$
+
+其中边界外分量取零。其 sine modes 的本征值为
+
+$$
+\boxed{
+\mu_k
+=\cos\frac{k\pi}{N+1},
+\qquad
+1\le k\le N.}
+\tag{B6.2}
+$$
+
+并且
+
+$$
+\mu_{N+1-k}=-\mu_k.
+\tag{B6.3}
+$$
+
+所以平方以后，正负边缘 mode 成对退化。
+
+## B6.2 determinant square identity
+
+考虑正算子
+
+$$
+K_N=4J_N^2.
+\tag{B6.4}
+$$
+
+其谱为
+
+$$
+4\cos^2\frac{k\pi}{N+1}.
+\tag{B6.5}
+$$
+
+于是
+
+$$
+\det(I_N+zK_N)
+=
+\prod_{k=1}^N
+\left(1+4z\cos^2\frac{k\pi}{N+1}\right).
+\tag{B6.6}
+$$
+
+利用 $k\leftrightarrow N+1-k$ 配对，并注意奇数 $N$ 时中央 mode 的平方本征值为零，得到：
+
+### 定理 B6.1　path--Zeckendorf determinant identity
+
+$$
+\boxed{
+\det(I_N+4zJ_N^2)
+=H_{N-1}(z)^2.}
+\tag{B6.7}
+$$
+
+因此 Zeckendorf hard-core polynomial 是一个有限正 path determinant 的规范谱平方根。
+
+## B6.3 fidelity edge
+
+项目的有限 channel-to-fidelity bridge 给出，对归一化参考向量 $c$：
+
+$$
+F_e(c)=\|J_Nc\|_2^2.
+\tag{B6.8}
+$$
+
+当 $N\ge2$ 时，其最大值为
+
+$$
+\boxed{
+F_N^*
+=\cos^2\frac{\pi}{N+1}.}
+\tag{B6.9}
+$$
+
+该最大值的完整 eigenspace 是由 $k=1$ 与 $k=N$ 两个反射配对 mode 张成的二维空间。
+
+## B6.4 最优 fidelity 与最近配分零点
+
+令 $N\ge2$ 且 $Q=N-1$。由式 (B5.8) 与式 (B6.9)：
+
+$$
+\boxed{
+z_{N-1}^{\mathrm{near}}
+=-\frac1{4F_N^*}.}
+\tag{B6.10}
+$$
+
+定义最优 reference-frame tax
+
+$$
+\tau_N=1-F_N^*.
+\tag{B6.11}
+$$
+
+则最近零点到热力学边缘的距离精确为
+
+$$
+\boxed{
+-\frac14-z_{N-1}^{\mathrm{near}}
+=
+\frac{\tau_N}{4(1-\tau_N)}.}
+\tag{B6.12}
+$$
+
+因为
+
+$$
+\tau_N
+=\sin^2\frac{\pi}{N+1},
+\tag{B6.13}
+$$
+
+所以
+
+$$
+\tau_N
+\sim\frac{\pi^2}{(N+1)^2},
+\tag{B6.14}
+$$
+
+且
+
+$$
+-\frac14-z_{N-1}^{\mathrm{near}}
+\sim\frac{\pi^2}{4(N+1)^2}.
+\tag{B6.15}
+$$
+
+这给出精确字典：
+
+$$
+\boxed{
+\text{有限 reference fidelity 的缺口}
+\quad\longleftrightarrow\quad
+\text{有限 hard-core 零点尚未压到临界边缘的距离}.}
+\tag{B6.16}
+$$
+
+该字典来自同一个 path spectrum，不是把两个独立渐近式强行比较。
+
+## B6.5 与离线 phase bubble 的尺度区别
+
+若一个简单零点附近
+
+$$
+V\asymp r^2,
+\tag{B6.17}
+$$
+
+并把有限参考系 tax $\tau_N$ 用作能量分辨阈值，则可见半径满足
+
+$$
+r_N\asymp\sqrt{\tau_N}\asymp N^{-1}.
+\tag{B6.18}
+$$
+
+而 hard-core fugacity edge 的 zero pinching 是 $N^{-2}$。二者不是冲突：前者是二次能量到坐标距离的开方，后者是二次分支相位量子化后的参数距离。
+
+---
+
+# 增订二·7　正 determinant 完成与根定位
+
+## B7.1 hard-core polynomial 的正谱因子化
+
+由式 (B5.6)，
+
+$$
+\boxed{
+H_Q(z)
+=
+\prod_{j=1}^{\lfloor(Q+1)/2\rfloor}
+\left(
+1+4z\cos^2\frac{j\pi}{Q+2}
+\right).}
+\tag{B7.1}
+$$
+
+定义正对角算子
+
+$$
+\mathsf K_Q
+=
+\operatorname{diag}
+\left(
+4\cos^2\frac{j\pi}{Q+2}
+\right)_j.
+\tag{B7.2}
+$$
+
+则
+
+$$
+\boxed{H_Q(z)=\det(I+z\mathsf K_Q).}
+\tag{B7.3}
+$$
+
+且 $\mathsf K_Q$ 的所有 eigenvalues 严格为正。
+
+因此任何零点必须是某个正 eigenvalue 的负倒数：
+
+$$
+H_Q(z)=0
+\Longrightarrow
+z\in(-\infty,0).
+\tag{B7.4}
+$$
+
+## B7.2 与 LocalPositiveSquareCompletion 的共同机制
+
+项目 `LocalPositiveSquareCompletion` 证明：有限实谱外的 inverse-square weights 形成正对角矩阵，而 $\det(I+wA)$ 的全部零点位于负实轴。
+
+式 (B7.3) 表明 Zeckendorf hard-core roots 由完全同型的有限正 determinant 机制定位。
+
+共同原理为：
+
+$$
+\boxed{
+A>0
+\quad\Longrightarrow\quad
+\det(I+zA)=0
+\Rightarrow z<0.}
+\tag{B7.5}
+$$
+
+但这仍不是 RH，因为 completed Cayley 变量的目标域是单位圆，而这里的变量是 hard-core activity。要获得 RH，需要先构造一个 canonical completed self-adjoint／unitary operator，使其 characteristic variable 与 Cayley $w$ 真正对应。
+
+## B7.3 self-adjoint 到 unitary 的候选路线
+
+若 $H=H^*$，则其 Cayley transform
+
+$$
+U=(H-iI)(H+iI)^{-1}
+\tag{B7.6}
+$$
+
+为 unitary。有限特征多项式
+
+$$
+\det(wI-U)
+\tag{B7.7}
+$$
+
+的根全部位于单位圆。
+
+因此存在另一条严格目标路线：从 prime--Zeckendorf--Gamma 数据构造 self-adjoint $H_T$，证明其 Cayley determinant 在有限窗内收敛到 transformed $\Xi$。困难全部集中在“canonical construction”和“convergence to $\Xi$”，不能由 unitary 这个名称代替。
+
+---
+
+# 增订二·8　黄金 hard-core 平稳链的隐藏能量常数
+
+## B8.1 Perron 归一化 Markov 链
+
+在 $z=1$，取 Perron 右向量 $(\varphi,1)$。对 transfer $A$ 作 Doob--Perron 归一化，得到 Markov 矩阵
+
+$$
+\boxed{
+P=
+\begin{pmatrix}
+\varphi^{-1}&\varphi^{-2}\\
+1&0
+\end{pmatrix}.}
+\tag{B8.1}
+$$
+
+其本征值为
+
+$$
+1,
+\qquad
+-\varphi^{-2}.
+\tag{B8.2}
+$$
+
+第二本征值正是稳定／反交错 memory mode。
+
+## B8.2 平稳占据密度
+
+令状态 $1$ 表示当前位置被占据，则平稳占据概率为
+
+$$
+\boxed{
+\rho
+=\frac1{\varphi+2}.}
+\tag{B8.3}
+$$
+
+其单点方差为
+
+$$
+\boxed{
+\operatorname{Var}(\eta_0)
+=\rho(1-\rho)
+=\frac15.}
+\tag{B8.4}
+$$
+
+## B8.3 精确交错协方差
+
+二态链的非平凡谱只有 $-\varphi^{-2}$，所以
+
+$$
+\boxed{
+\operatorname{Cov}(\eta_0,\eta_n)
+=
+\frac15(-\varphi^{-2})^n.}
+\tag{B8.5}
+$$
+
+这说明 hard-core memory 不是单调衰减，而是带奇偶翻转的指数衰减。
+
+## B8.4 积分 susceptibility
+
+定义双边积分协方差
+
+$$
+\chi_{\rm hc}
+=
+\sum_{n\in\mathbb Z}
+\operatorname{Cov}(\eta_0,\eta_n).
+\tag{B8.6}
+$$
+
+由几何级数：
+
+$$
+\boxed{
+\chi_{\rm hc}
+=
+\frac15
+\frac{1-\varphi^{-2}}{1+\varphi^{-2}}
+=
+\frac1{5\sqrt5}.}
+\tag{B8.7}
+$$
+
+更一般地，若 activity 为 $z>0$，单位长度 pressure 的 log-activity 二阶导数为
+
+$$
+\boxed{
+\chi_{\rm hc}(z)
+=
+\frac{z}{(1+4z)^{3/2}}.}
+\tag{B8.8}
+$$
+
+在 $z=1$ 恰得到 $1/(5\sqrt5)$。
+
+## B8.5 五种黄金尺度不可混同
+
+当前理论中至少出现：
+
+$$
+\begin{aligned}
+&\text{stable/dominant ratio magnitude}:&&\varphi^{-2},\\
+&\text{one-site variance}:&&1/5,\\
+&\text{integrated hard-core susceptibility}:&&1/(5\sqrt5),\\
+&\text{golden innovation mean square}:&&\varphi^{-3},\\
+&\text{two-channel modulus gap}:&&2\log\varphi.
+\end{aligned}
+\tag{B8.9}
+$$
+
+这些常数来自不同 readouts，不能因为都与黄金系统有关就彼此替换。它们分别测量衰减率、局部涨落、累计响应、确定性创新能量和 Lyapunov separation。
+
+---
+
+# 增订二·9　prime reflected Gramian、最小奇异值与 fidelity
+
+## B9.1 反射行向量
+
+固定有限 prime cluster
+
+$$
+\mathcal C=\{p_1,\ldots,p_m\},
+\qquad
+\omega_j=\log p_j,
+\tag{B9.1}
+$$
+
+以及正权 $w_j>0$。定义
+
+$$
+r_+(\delta)_j
+=\sqrt{w_j}e^{\delta\omega_j},
+\qquad
+r_-(\delta)_j
+=\sqrt{w_j}e^{-\delta\omega_j}.
+\tag{B9.2}
+$$
+
+组成矩阵
+
+$$
+A(\delta)=
+\begin{pmatrix}
+r_+(\delta)\\
+r_-(\delta)
+\end{pmatrix}.
+\tag{B9.3}
+$$
+
+令
+
+$$
+G(\delta)=A(\delta)A(\delta)^\mathsf T.
+\tag{B9.4}
+$$
+
+## B9.2 exterior determinant
+
+记
+
+$$
+W=\sum_jw_j.
+\tag{B9.5}
+$$
+
+则
+
+$$
+G(\delta)=
+\begin{pmatrix}
+\sum_jw_je^{2\delta\omega_j}&W\\
+W&\sum_jw_je^{-2\delta\omega_j}
+\end{pmatrix}.
+\tag{B9.6}
+$$
+
+直接展开得到
+
+$$
+\boxed{
+\det G(\delta)
+=4\sum_{i<j}
+w_iw_j
+\sinh^2(\delta(\omega_i-\omega_j)).}
+\tag{B9.7}
+$$
+
+这正是 finite prime exterior energy。
+
+## B9.3 最小奇异值作为观察能隙
+
+在 $\delta=0$：
+
+$$
+G(0)=
+\begin{pmatrix}W&W\\W&W\end{pmatrix},
+\tag{B9.8}
+$$
+
+其 eigenvalues 为
+
+$$
+2W,
+\qquad0.
+\tag{B9.9}
+$$
+
+临界线上的两行完全重合，反对称观察方向不可见。
+
+令
+
+$$
+\nu_j=\frac{w_j}{W},
+\qquad
+\operatorname{Var}_\nu(\omega)
+=
+\sum_j\nu_j(\omega_j-\bar\omega)^2.
+\tag{B9.10}
+$$
+
+则
+
+$$
+\sum_{i<j}w_iw_j(\omega_i-\omega_j)^2
+=W^2\operatorname{Var}_\nu(\omega).
+\tag{B9.11}
+$$
+
+所以 $G$ 的最小 eigenvalue 满足
+
+$$
+\boxed{
+\lambda_{\min}(G(\delta))
+=2W\operatorname{Var}_\nu(\omega)\delta^2
++O(\delta^4).}
+\tag{B9.12}
+$$
+
+即离轴后新出现的第二个可见方向，其 observation gap 以 $\delta^2$ 打开。
+
+## B9.4 反射通道 fidelity
+
+把 $r_\pm$ 归一化，定义 squared fidelity
+
+$$
+\boxed{
+\mathcal F_{\mathcal C}(\delta)
+=
+\frac{W^2}
+{\left(\sum_jw_je^{2\delta\omega_j}\right)
+ \left(\sum_jw_je^{-2\delta\omega_j}\right)}.}
+\tag{B9.13}
+$$
+
+临界线上
+
+$$
+\mathcal F_{\mathcal C}(0)=1.
+\tag{B9.14}
+$$
+
+若 cluster 含不同频率，则 $\delta\ne0$ 时严格小于 $1$。
+
+由式 (B9.6)--(B9.7)，有精确恒等式
+
+$$
+\boxed{
+\frac1{\mathcal F_{\mathcal C}(\delta)}-1
+=
+\frac{4}{W^2}
+\sum_{i<j}w_iw_j
+\sinh^2(\delta(\omega_i-\omega_j)).}
+\tag{B9.15}
+$$
+
+因此 exterior energy 与 fidelity loss 不是仅在二阶近似下相关，而由一个精确单调换算相连。
+
+## B9.5 fidelity 的局部信息度量
+
+取负对数：
+
+$$
+\boxed{
+-\log\mathcal F_{\mathcal C}(\delta)
+=4\operatorname{Var}_\nu(\omega)\delta^2
++O(\delta^4).}
+\tag{B9.16}
+$$
+
+结合式 (B9.12)：
+
+$$
+\boxed{
+-\log\mathcal F_{\mathcal C}(\delta)
+=
+\frac2W\lambda_{\min}(G(\delta))
++O(\delta^4).}
+\tag{B9.17}
+$$
+
+所以临界线附近的三个量具有同一局部二次 metric：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{prime exterior }\sinh^2\text{ energy},\\
+&\text{reflected Gramian 的最小 eigenvalue},\\
+&\text{反射通道的 negative log fidelity}.
+\end{aligned}}
+\tag{B9.18}
+$$
+
+共同系数正是 weighted variance of $\log p$。
+
+## B9.6 short gaps 的 fidelity 解释
+
+若 cluster 位于 $[P,P+D]$ 且 $D\ll P$，则
+
+$$
+\operatorname{Var}(\log p)
+=O(D^2/P^2).
+\tag{B9.19}
+$$
+
+从而固定 $\delta$ 下：
+
+$$
+1-\mathcal F_{\mathcal C}(\delta)
+=O(\delta^2D^2/P^2).
+\tag{B9.20}
+$$
+
+所以 short-gap cluster 是高 fidelity 的反射通道：代数上已经秩二，有限精度下却几乎仍像同一状态。这与 sticky grain 的解释完全一致。
+
+---
+
+# 增订二·10　二通道配分零点的精确平衡定理
+
+## B10.1 一般二通道振幅
+
+考虑
+
+$$
+\boxed{
+Z_N(s)
+=a_+(s)\lambda_+(s)^N
++a_-(s)\lambda_-(s)^N,}
+\tag{B10.1}
+$$
+
+其中在所讨论点两系数与两通道均非零。
+
+若 $Z_N(s)=0$，取模得到：
+
+$$
+|a_+||\lambda_+|^N
+=|a_-||\lambda_-|^N.
+\tag{B10.2}
+$$
+
+因此：
+
+### 定理 B10.1　zero-balance identity
+
+$$
+\boxed{
+N\log\frac{|\lambda_+|}{|\lambda_-|}
+=
+\log\frac{|a_-|}{|a_+|}.}
+\tag{B10.3}
+$$
+
+零点要求 bulk Lyapunov imbalance 恰好由 boundary coefficient imbalance 抵消。
+
+## B10.2 有界边界耦合迫使近等模
+
+若在一个区域中存在
+
+$$
+0<m\le|a_\pm(s)|\le M<\infty,
+\tag{B10.4}
+$$
+
+则任何零点满足
+
+$$
+\boxed{
+\left|
+\log\frac{|\lambda_+|}{|\lambda_-|}
+\right|
+\le
+\frac1N\log\frac Mm.}
+\tag{B10.5}
+$$
+
+所以长度趋于无穷时，零点只能逼近 equimodular locus。
+
+若边界系数恰好等模，
+
+$$
+|a_+|=|a_-|,
+\tag{B10.6}
+$$
+
+则任何零点必须严格满足
+
+$$
+|\lambda_+|=|\lambda_-|.
+\tag{B10.7}
+$$
+
+## B10.3 dominated splitting 排除零点
+
+若紧集 $K$ 上有统一 gap
+
+$$
+\left|
+\log\frac{|\lambda_+|}{|\lambda_-|}
+\right|
+\ge\gamma>0,
+\tag{B10.8}
+$$
+
+而 boundary coefficient ratio 仅次指数增长：
+
+$$
+\sup_{s\in K}
+\frac1N
+\left|
+\log\frac{|a_-|}{|a_+|}
+\right|
+\longrightarrow0,
+\tag{B10.9}
+$$
+
+则充分大 $N$ 时 $K$ 内无零点。
+
+这给出严格的 transfer confinement 机制：
+
+$$
+\boxed{
+\text{bulk dominated splitting}
++
+\text{boundary transversality}
+\Longrightarrow
+\text{zero-free region}.}
+\tag{B10.10}
+$$
+
+## B10.4 边界横截性不能省略
+
+即使 $|\lambda_+|>|\lambda_-|$，若 $a_+$ 恰为零或指数级微小，dominant channel 也可能从 matrix coefficient 中消失。因此仅证明 cocycle 有 Lyapunov gap 不足以排除零点。
+
+必须分开证明：
+
+1. bulk channel gap；
+2. boundary vectors 对 dominant line 的非消失耦合；
+3. coefficient ratio 的次指数控制。
+
+将“canonical boundary”写入结构字段而不证明这三点，会把承重信息从 theorem body 逃逸到命名中。
+
+## B10.5 两种有限尺寸指数
+
+hard-core edge 上，通道相位差在分歧参数附近按平方根变化；相位量子化 $\Delta\theta\asymp N^{-1}$ 因而给出参数距离 $N^{-2}$。
+
+prime reflected channels 的 modulus gap 为
+
+$$
+\Gamma_{p,q}(\delta)
+=2|\delta|\,|\log(q/p)|.
+\tag{B10.11}
+$$
+
+若有限 completed coefficient imbalance 为 $O(1)$，式 (B10.5) 只允许
+
+$$
+|\delta|
+=O\!\left(
+\frac1{N|\log(q/p)|}
+\right).
+\tag{B10.12}
+$$
+
+相应横向能量为
+
+$$
+\sinh^2(\delta\log(q/p))=O(N^{-2}).
+\tag{B10.13}
+$$
+
+所以 $N^{-2}$ 可以来自两种不同机制：分歧相位的平方根量子化，或线性 modulus gap 的二次能量。二者必须通过控制参数和坐标区分。
+
+---
+
+# 增订二·11　transfer 长度与 Fibonacci shell 深度必须分离
+
+当前理论同时使用两个容易混淆的尺度。
+
+## B11.1 transfer length
+
+$$
+N=\text{局部约束链或 cocycle 的因子数}.
+\tag{B11.1}
+$$
+
+它控制：
+
+- 两通道振幅的 $N$ 次幂；
+- 相位量子化间距 $O(N^{-1})$；
+- hard-core edge 的 $O(N^{-2})$ zero pinching；
+- boundary coefficient 相对 bulk gap 的权重。
+
+## B11.2 Fibonacci shell index
+
+$$
+k=\text{Zeckendorf 原子 }F_k\text{ 的指标},
+\tag{B11.2}
+$$
+
+且
+
+$$
+F_k\asymp\varphi^k.
+\tag{B11.3}
+$$
+
+它控制：
+
+- prime rapidity 的放大 $F_k\delta\Delta\omega$；
+- 分辨小 $|\delta\Delta\omega|$ 所需的黄金 memory depth；
+- prime-power exponent 的稀疏 shell factorization。
+
+因此：
+
+$$
+\boxed{N\ne k,
+\qquad
+N\ne F_k.}
+\tag{B11.4}
+$$
+
+把 $N^{-2}$ finite-size law 与 $\varphi^{-2k}$ shell decay 未经映射地识别，会产生错误的尺度结论。只有在另行定义 renormalization relation $N=N(k)$ 后才能比较。
+
+---
+
+# 增订二·12　共同 Galerkin 空间中的 Zeckendorf--prime 微分
+
+## B12.1 两个有限 Hilbert 空间
+
+取有限 exponent 空间
+
+$$
+\mathcal H_Z
+=\ell^2(\{0,\ldots,M_Q-1\},\mu),
+\tag{B12.1}
+$$
+
+其中 $\mu(v)>0$ 且总质量归一化为 $1$。
+
+取有限 prime graph $\mathcal C$ 的 vertex space
+
+$$
+\mathcal H_P=\ell^2(V_{\mathcal C},\nu),
+\tag{B12.2}
+$$
+
+以及 edge space $\mathcal H_E$。
+
+## B12.2 exponent multiplication 与 prime gradient
+
+定义 exponent multiplication operator
+
+$$
+(\mathsf Nf)(v)=vf(v).
+\tag{B12.3}
+$$
+
+对 edge $i<j$，定义 weighted gradient
+
+$$
+(d_{\mathcal C}h)_{ij}
+=\sqrt{W_{ij}}(h_j-h_i).
+\tag{B12.4}
+$$
+
+特别地，对 frequency vector
+
+$$
+\omega_i=\log p_i,
+\tag{B12.5}
+$$
+
+有
+
+$$
+\|d_{\mathcal C}\omega\|^2
+=
+\sum_{i<j}W_{ij}(\log p_j-\log p_i)^2.
+\tag{B12.6}
+$$
+
+## B12.3 张量横向微分
+
+定义
+
+$$
+\boxed{
+D_{Q,\mathcal C}
+=\mathsf N\otimes d_{\mathcal C}:
+\mathcal H_Z\otimes\mathcal H_P
+\longrightarrow
+\mathcal H_Z\otimes\mathcal H_E.}
+\tag{B12.7}
+$$
+
+对常 exponent amplitude $\mathbf1_Z$ 与 frequency vector $\omega$：
+
+$$
+\boxed{
+\|D_{Q,\mathcal C}(\mathbf1_Z\otimes\omega)\|^2
+=
+\mathbb E_\mu[v^2]
+\sum_{i<j}W_{ij}(\Delta\log p_{ij})^2.}
+\tag{B12.8}
+$$
+
+而增订一的横向 susceptibility 满足
+
+$$
+\boxed{
+\left.\frac{d^2}{d\delta^2}
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)
+\right|_{\delta=0}
+=2\|D_{Q,\mathcal C}(\mathbf1_Z\otimes\omega)\|^2.}
+\tag{B12.9}
+$$
+
+这第一次把“Zeckendorf second moment 乘 prime variance”实现为同一有限 Hilbert space 中一个真正 operator norm，而不是两个标量事后相乘。
+
+## B12.4 kernel 分解
+
+在有限维中，
+
+$$
+\ker(\mathsf N\otimes d_{\mathcal C})
+=
+(\ker\mathsf N\otimes\mathcal H_P)
++
+(\mathcal H_Z\otimes\ker d_{\mathcal C}).
+\tag{B12.10}
+$$
+
+若 prime graph 连通，则
+
+$$
+\ker d_{\mathcal C}
+=\operatorname{span}\{\mathbf1_P\}.
+\tag{B12.11}
+$$
+
+而
+
+$$
+\ker\mathsf N
+=\operatorname{span}\{\delta_0\}.
+\tag{B12.12}
+$$
+
+所以 joint transverse energy 看不见且只看不见：
+
+1. exponent 为零的真空状态；
+2. 所有 prime frequencies 同时作共同平移的 coherent mode。
+
+这正是预期的 gauge kernel，而不是任意人为指定的零空间。
+
+## B12.5 Poincare coercivity
+
+在上述 kernel 的正交补上，若
+
+$$
+\lambda_Z^+
+=\min_{v>0}v^2=1
+\tag{B12.13}
+$$
+
+且 $\lambda_P^+>0$ 是 prime graph Laplacian 的第一正 eigenvalue，则
+
+$$
+\boxed{
+\|D_{Q,\mathcal C}F\|^2
+\ge
+\lambda_P^+\|F\|^2}
+\tag{B12.14}
+$$
+
+对所有避开真空与共同 prime mode 的 $F$ 成立，适当理解张量权重。
+
+short-gap sticky clusters 的问题，正是 $\lambda_P^+$ 在跨尺度极限中可能变小；黄金 shell 只能改变 exponent factor，不能自动阻止 prime graph spectral gap collapse。
+
+---
+
+# 增订二·13　从局部能量到 zero-side odd energy 的最小 intertwining 定理
+
+## B13.1 两侧有限空间
+
+设：
+
+- $\mathcal H_{P,L}$ 为尺度 $L$ 的 prime relation Galerkin 空间；
+- $\mathcal H_{Z,L}^{\mathrm{odd}}$ 为对应 zero-orbit odd 空间；
+- $D_{P,L}$ 为 prime/Zeckendorf relation differential；
+- $D_{Z,L}$ 为 zero-side odd differential；
+- $U_L:\mathcal H_{P,L}\to\mathcal H_{Z,L}^{\mathrm{odd}}$ 为候选 explicit-formula analysis map。
+
+## B13.2 intertwining-with-error
+
+假设存在有界算子 $B_L$ 与误差 $R_L$，使
+
+$$
+\boxed{
+D_{Z,L}U_L
+=B_LD_{P,L}+R_L.}
+\tag{B13.1}
+$$
+
+则对任意 $f$：
+
+$$
+\begin{aligned}
+\|D_{Z,L}U_Lf\|^2
+&\le
+\left(\|B_LD_{P,L}f\|+\|R_Lf\|\right)^2\\
+&\le
+2\|B_L\|^2\|D_{P,L}f\|^2
++2\|R_Lf\|^2.
+\end{aligned}
+\tag{B13.2}
+$$
+
+因此：
+
+### 定理 B13.1　有限能量输运准则
+
+$$
+\boxed{
+E_{Z,L}^{\mathrm{odd}}(U_Lf)
+\le
+2\|B_L\|^2E_{P,L}^{\mathrm{rel}}(f)
++2\|R_Lf\|^2.}
+\tag{B13.3}
+$$
+
+这就是此前开放 domination 式的最小 operator-theoretic 来源。
+
+## B13.3 排除离线 mode 还需要什么
+
+式 (B13.3) 本身仍不足以排除离线 mode。还必须有：
+
+1. **覆盖性**：每个候选 zero odd mode 位于 $U_L$ 的像或受其 frame 控制；
+2. **prime reflection flatness**：目标 preimage 上 $E_{P,L}^{\mathrm{rel}}\to0$；
+3. **误差相对 gap 消失**：$\|R_L\|^2=o(\gamma_{Z,L})$；
+4. **zero odd coercivity**：真实离线 mode 满足 $E_{Z,L}^{\mathrm{odd}}\ge\gamma_{Z,L}\|h\|^2$；
+5. **极限紧性**：有限 Galerkin 结论不在 $L\to\infty$ 时失去质量。
+
+缺少任一项，都可能出现能量估计成立但离线 mode 逃到 kernel、像空间之外或极限无穷远的情形。
+
+## B13.4 square-late principle
+
+局部正能量不能在完成以前盲目相加，因为
+
+$$
+\left|\sum_j a_j\right|^2
+\ne
+\sum_j|a_j|^2
+\tag{B13.4}
+$$
+
+且差异正是 cross-phase terms。
+
+因此正确顺序是：
+
+$$
+\boxed{
+\text{先把 amplitude / carry / holonomy 输运到同一空间，
+再取 exterior norm 或 odd square。}}
+\tag{B13.5}
+$$
+
+若过早把每个 local channel 平方，顺序、相位和 destructive interference 会永久丢失。正能量是最终证书，不一定是可直接逐局部组合的原始状态。
+
+---
+
+# 增订二·14　CIRPT 原语分层与联合 kernel
+
+增订一指出，Zeckendorf 的信息价值在关系层。当前项目的 `PrimitiveBundle` 已经把有限原语族的联合观察 kernel 定义为各 atom kernel 的交。因此本理论可以用四类原语重新表达。
+
+## B14.1 ADMIT
+
+Zeckendorf hard-core 条件
+
+$$
+\eta_k\eta_{k+1}=0
+\tag{B14.1}
+$$
+
+决定哪些数位历史合法。它删除局部 carry 冗余。
+
+## B14.2 ANCHOR
+
+整数 exponent
+
+$$
+E_Q(\eta)=\sum_k\eta_kF_k
+\tag{B14.2}
+$$
+
+把合法历史锚定到唯一整数值。它在 state level 是单射，但不保存关系图。
+
+## B14.3 FLOW
+
+successor/carry、prime word 顺序和 transfer cocycle 决定状态如何演化。ordered rapidity $U_n$ 属于 FLOW，而不是最终 character parity。
+
+## B14.4 CUT
+
+反射通道
+
+$$
+\delta\longleftrightarrow-\delta
+\tag{B14.3}
+$$
+
+以及 split/inert Frobenius
+
+$$
+y\longmapsto\pm y
+\tag{B14.4}
+$$
+
+决定二通道如何被固定或交换。
+
+## B14.5 二次 observer
+
+Gram determinant、smallest singular value、negative log fidelity 与 odd energy 读取 CUT/FLOW 差异的平方大小。
+
+四类角色原语自身先形成
+
+$$
+\boxed{
+K_{\rm primitive}
+=K_{\rm ADMIT}
+\cap K_{\rm ANCHOR}
+\cap K_{\rm FLOW}
+\cap K_{\rm CUT}.}
+\tag{B14.5}
+$$
+
+若二次 observer 已由这些原语构造，并且它的 collision relation 被登记为一个 packed observer atom，则记其 kernel 为 $K_{\rm quad}$。它必须按其数学来源归入既有的 `CUT`、`FLOW`、`ADMIT` 或 `ANCHOR` 角色之一；`ENERGY` 不是第五种 CIRPT role。加入该 observer 后的联合观察 kernel 为
+
+$$
+\boxed{
+K_{\rm observed}
+=K_{\rm primitive}\cap K_{\rm quad}.}
+\tag{B14.6}
+$$
+
+只有在证明严格包含
+
+$$
+K_{\rm observed}\subsetneq K_{\rm primitive}
+\tag{B14.7}
+$$
+
+或给出相应 leave-one-out witness 以后，才能声称二次 observer 具有严格正的信息增益。删除一个层通常只保证 kernel 不缩小；是否严格扩大必须单独证明，不能由层名推出。
+
+## B14.6 能量足以定位，但不足以重构顺序
+
+RH 只询问
+
+$$
+|\delta|=0\text{ 还是 }|\delta|>0,
+\tag{B14.8}
+$$
+
+故一个忠实的平方 radial energy 在 zero side 足以作定位证书。
+
+但 prime amplitudes 在到达 zero side 以前会发生有序乘法和相位抵消；仅保留平方能量一般不能重构其 FLOW。因此：
+
+$$
+\boxed{
+\text{定位目标可以只需 magnitude，
+证明该 magnitude 的来源却可能必须保留 orientation 与 order。}}
+\tag{B14.9}
+$$
+
+这解释了为什么 holonomy 和 Casimir 都需要：前者保持组合信息，后者给出最终正证书。
+
+---
+
+# 增订二·15　算术黄金判别式禁闭猜想
+
+## B15.1 completed two-channel cocycle
+
+设存在由 prime、prime powers、Zeckendorf carry 与 Gamma block 规范构造的矩阵 cocycle
+
+$$
+\mathcal M_L(s)
+=G_\Gamma(s;L)
+\prod_{p\le P(L)}^{\longrightarrow}
+G_p(s),
+\tag{B15.1}
+$$
+
+乘积保留规定的有序或可证明的顺序无关结构。
+
+要求每个非分歧 local block 位于黄金 split torus 的 normalizer，并且其 Weyl projection 满足
+
+$$
+\boxed{
+\operatorname{Weyl}(G_p)
+=\chi_5(p).}
+\tag{B15.2}
+$$
+
+这把 `GoldenCharacterQuotient` 从独立二值标签提升为 local channel Frobenius 的投影；但式 (B15.1) 的具体 block 仍待构造。
+
+## B15.2 singular-value Lyapunov gap
+
+定义
+
+$$
+\Gamma_L(s)
+=
+\frac1{N_L}
+\log\frac{\sigma_1(\mathcal M_L(s))}
+{\sigma_2(\mathcal M_L(s))}
+\ge0.
+\tag{B15.3}
+$$
+
+反射对称应给出
+
+$$
+\Gamma_L(1-\bar s)=\Gamma_L(s).
+\tag{B15.4}
+$$
+
+而目标禁闭性质是：对任意避开临界线的紧集 $K$，
+
+$$
+\boxed{
+\liminf_{L\to\infty}
+\inf_{s\in K}
+\Gamma_L(s)>0.}
+\tag{B15.5}
+$$
+
+这就是 completed dominated splitting。
+
+## B15.3 boundary transversality
+
+若 transformed determinant 或 matrix coefficient 写成
+
+$$
+Z_L(s)=
+\langle \ell_L(s),
+\mathcal M_L(s)r_L(s)\rangle,
+\tag{B15.6}
+$$
+
+还必须证明 $\ell_L,r_L$ 对 dominant singular directions 的耦合不以指数速度消失。
+
+可写成：存在次指数 $c_L>0$，使
+
+$$
+|\langle \ell_L,u_{1,L}\rangle|
+\,|\langle v_{1,L},r_L\rangle|
+\ge c_L,
+\qquad
+\frac1{N_L}\log c_L\to0.
+\tag{B15.7}
+$$
+
+## B15.4 completed determinant fidelity
+
+最后需要局部一致收敛
+
+$$
+\boxed{
+Z_L(s)\longrightarrow C(s)\Xi(s),}
+\tag{B15.8}
+$$
+
+其中 $C(s)$ 在临界条带内无零。
+
+只有式 (B15.5)、(B15.7)、(B15.8) 同时成立，二通道 zero-balance theorem 才能排除临界线外零点。
+
+### 猜想 B15.1　Arithmetic golden-discriminant confinement
+
+存在满足上述条件的 canonical completed cocycle，并且其等模集合在极限中被限制为
+
+$$
+\boxed{
+\Gamma(s)=0
+\Longrightarrow
+\Re s=\frac12.}
+\tag{B15.9}
+$$
+
+若再有式 (B15.8)，则 RH 成立。
+
+该猜想比“存在一个 Hilbert--Polya 算子”更具分解性，因为它明确列出：
+
+- local quadratic cover；
+- mod-$5$ Weyl/Frobenius projection；
+- ordered normalizer product；
+- Gamma completion；
+- bulk dominated splitting；
+- boundary transversality；
+- determinant convergence。
+
+任何一个环节都不能由其名称自动提供。
+
+---
+
+# 增订二·16　与离线零点相变的最终接合
+
+设假想离线零点为
+
+$$
+\rho_*
+=\frac12+\delta_*+it_*.
+\tag{B16.1}
+$$
+
+前两部分已经给出：
+
+- 同高度出现 $\pm\delta_*$ 反射零相；
+- Cayley 坐标中出现 $e^{\pm\eta_*}$ reciprocal pair；
+- scalar visible energy 在 $(t_*,\delta_*)$ 闭合；
+- prime pair relation energy对每个不同频率对严格为正；
+- zero orbit 的符号风险集中在 nonnegative odd energy。
+
+本增订增加以下解释。
+
+## B16.1 离线零点是 bulk--boundary 精确平衡事件
+
+任何精确的 two-channel representation 中，一个零点首先满足 zero-balance identity：bulk modulus gap 与 boundary coefficient imbalance 必须精确抵消。对有限 $N$，即使两条边界系数都非零且保持横截，一个有限的 coefficient imbalance 也可以把零点从严格等模集合移动 $O(N^{-1})$；因此不能把每个有限离轴零点直接归结为“bulk gap closing”或“boundary coefficient 等于零”。
+
+真正可用于 completed 极限的结论是：若 $N_L\to\infty$ 时仍有零点停留在一个与等模集合正距离分离的紧集内，那么至少有下列一项失效：
+
+1. bulk singular-value gap 没有保持统一正下界；
+2. boundary coefficient ratio 不是次指数的，或 dominant coupling 以指数速度消失；
+3. two-channel 近似、determinant 表示或 completion error 在该极限中不可忽略。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{persistent off-axis zero}
+\Longrightarrow{}&
+\text{bulk dominated-splitting failure}\\
+&\lor\ \text{boundary subexponentiality/transversality failure}\\
+&\lor\ \text{two-channel completion-error failure}.
+\end{aligned}}
+\tag{B16.2}
+$$
+
+前一理论只讨论了 scalar-to-relation coercivity closing；本式说明 completed transfer 证明必须分别审计 bulk、boundary 与 representation error，不能把三者压成一个未分解的“相变”字段。
+
+## B16.2 离线 radial pair 是 Lorentz boost mode
+
+Cayley pair
+
+$$
+w_*=e^{i\theta_*}e^{\eta_*},
+\qquad
+w_*^\sharp=e^{i\theta_*}e^{-\eta_*}
+\tag{B16.3}
+$$
+
+去掉共同相位后，正是 rapidity $\eta_*$ 的 split-torus pair。其第一反射不变量为
+
+$$
+\sinh^2\eta_*.
+\tag{B16.4}
+$$
+
+prime pair 的对应 invariant 为
+
+$$
+\sinh^2(\delta_*\Delta\log p).
+\tag{B16.5}
+$$
+
+两者属于同一种 Lorentz energy，但仍缺 canonical map 把所有 local rapidities 胶合成 $\eta_*$。
+
+## B16.3 相变不等于通道生成
+
+在固定 $\Xi$ 中，离线零点不是两条通道在物理时间 $t_*$ 被创造；它是 observer slice 首次穿过一个已存在的 radial defect。
+
+在变形族 $\Xi_\lambda$ 中，若 two-channel discriminant 真正穿过零并使等模 locus 改变，才是 root-bifurcation。hard-core $D(z)=0$ 为这种分歧相变提供了最小正规形。
+
+## B16.4 RH 的加强型能量表述
+
+RH 不仅可读为“所有 zero radial energies 为零”，还可提出更强的 completed statement：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{临界线外，completed cocycle 保持正 singular-value gap；}\\
+&\text{boundary vectors 对 dominant channel 保持横截；}\\
+&\text{prime relation differential 的 joint kernel 只含 gauge modes；}\\
+&\text{zero-side odd energy 由该 relation differential 的像控制。}
+\end{aligned}}
+\tag{B16.6}
+$$
+
+若四项成立，则离线 scalar zero 无法通过隐藏 relation mode 或边界失耦产生。
+
+---
+
+# 增订二·17　信息逃逸与不可替代结论表
+
+| 命题 | 地位 |
+|---|---|
+| $T(z)$ 的谱覆盖为 $y^2=1+4z$ | 直接有限代数 |
+| $z=-1/4$ 是解析分歧／metric 退化点 | 直接有限代数 |
+| $z=1$ 的判别式为 $5$，通道为 $\varphi,-\varphi^{-1}$ | 直接有限代数 |
+| 奇素数 $p\ne5$ 的 split/inert 由 $(p/5)$ 控制 | 直接有限域代数 |
+| 惰性 Frobenius 与解析 monodromy 执行同一 deck swap | 直接推论 |
+| 项目 golden character 等于 local channel Weyl sign | 与仓库定义相容的精确识别 |
+| character parity 恢复完整 ordered holonomy | 不成立 |
+| $T(z)^TJ_zT(z)=-zJ_z$ | 直接矩阵恒等式 |
+| hard-core edge 是 Lorentz signature transition | 直接分类推论 |
+| $\det(I+4zJ_N^2)=H_{N-1}(z)^2$ | 本增订有限定理 |
+| 最近 hard-core zero 为 $-1/(4F_N^*)$ | 本增订直接推论 |
+| reference fidelity tax 精确决定 edge zero displacement | 本增订直接推论 |
+| 正 determinant 机制定位 hard-core roots 到负实轴 | 有限谱推论 |
+| 该负实轴定位等于 RH 单位圆定位 | 不成立 |
+| hard-core 协方差为 $\frac15(-\varphi^{-2})^n$ | 本增订有限 Markov 推论 |
+| hard-core susceptibility 为 $1/(5\sqrt5)$ | 本增订直接推论 |
+| exterior energy 与 reflected fidelity 有精确换算 | 本增订有限定理 |
+| exterior energy、最小 singular gap、$-\log$ fidelity 同阶 | 本增订局部定理 |
+| dominated splitting 单独排除 matrix-coefficient zeros | 不成立；还需 boundary transversality |
+| Zeckendorf--prime tangent energy 是张量 differential norm | 本增订有限 operator identity |
+| prime relation differential 已与 zero odd differential intertwine | 尚未建立 |
+| canonical completed golden-discriminant cocycle 已存在 | 尚未建立 |
+| 本增订证明 RH | 不成立 |
+
+---
+
+# 增订二·18　最终收束
+
+本增订将前两部分的“黄金隐藏通道”进一步压缩成一个单一母结构：
+
+$$
+\boxed{
+\Sigma:
+\quad y^2=1+4z.}
+\tag{B18.1}
+$$
+
+在该谱覆盖中：
+
+$$
+\boxed{
+\begin{aligned}
+\text{branch point }D=0
+&\Longleftrightarrow
+\text{两通道碰撞与 hard-core edge},\\
+D(1)=5
+&\Longleftrightarrow
+(\varphi,-\varphi^{-1})\text{ 黄金通道},\\
+\chi_5(p)=+1
+&\Longleftrightarrow
+\text{Frobenius 固定两通道},\\
+\chi_5(p)=-1
+&\Longleftrightarrow
+\text{Frobenius 交换两通道},\\
+q_z\text{ 的签名}
+&\Longleftrightarrow
+\text{双曲、退化、椭圆相型},\\
+|\lambda_+|=|\lambda_-|
+&\Longleftrightarrow
+\text{finite zeros 的必要 bulk 条件},\\
+\sinh^2 u
+&\Longleftrightarrow
+\text{反射隐藏 rapidity 的首个正 invariant}.
+\end{aligned}}
+\tag{B18.2}
+$$
+
+最深的新结论不是“数字 $5$ 神秘地出现在 RH 周围”，而是：
+
+$$
+\boxed{
+\textbf{数字 }5\textbf{ 是最小一步 hard-core transfer 在 }z=1\textbf{ 纤维的谱判别式；}
+}
+\tag{B18.3}
+$$
+
+因此项目中的 Zeckendorf memory、黄金数域、模 $5$ prime character 和 dihedral channel swap 确实拥有一个共同的有限代数来源。
+
+与此同时，path operator 给出第二条精确闭环：
+
+$$
+\boxed{
+\text{reference-frame fidelity spectrum}
+\longleftrightarrow
+\text{positive path determinant}
+\longleftrightarrow
+\text{hard-core zero pinching}.}
+\tag{B18.4}
+$$
+
+prime cluster 则给出第三条精确闭环：
+
+$$
+\boxed{
+\text{log-prime exterior energy}
+\longleftrightarrow
+\text{second singular direction}
+\longleftrightarrow
+\text{reflected-channel fidelity loss}.}
+\tag{B18.5}
+$$
+
+三条闭环仍未自动汇合到 $\Xi$。真正缺少的不是更多相似公式，而是一个保持全部结构的 completed functor：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{prime--Zeckendorf normalizer cocycle}
+&\xrightarrow{\quad U_L\quad}&
+\text{zero-orbit odd space}\\
+D_{P,L}\downarrow&&\downarrow D_{Z,L}\\
+\text{prime relation energy}
+&\xrightarrow{\quad B_L\quad}&
+\text{zero odd energy},
+\end{array}}
+\tag{B18.6}
+$$
+
+满足
+
+$$
+D_{Z,L}U_L=B_LD_{P,L}+R_L,
+\qquad
+\|R_L\|\to0,
+\tag{B18.7}
+$$
+
+并同时保持 bulk dominated splitting、boundary transversality、Gamma completion 与 determinant convergence。
+
+因此本轮把 RH 承重问题收紧为：
+
+$$
+\boxed{
+\textbf{能否构造一个 completed arithmetic two-channel functor，
+使黄金判别式的 local Frobenius/holonomy 数据在极限中形成临界线外的 dominated splitting，
+并使其正 relation energy 忠实覆盖全部 off-line odd modes？}}
+\tag{B18.8}
+$$
+
+若答案为是，则 Lee--Yang 圆定位、Weil odd-energy 正性、transfer equimodular confinement 与 Hilbert--Polya unitary localization 将成为同一结构的四种坐标表达。若答案为否，则已经建立的黄金、Zeckendorf、path fidelity 与 prime-gap 恒等式仍是彼此严格关联的有限理论，但不能被提升为 RH 的动力学解释。

@@ -21,7 +21,7 @@ public sealed class DependencyDirectionTests
     public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynAndTruth()
     {
         Assert.Equal(
-            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Trureturing.Truth"],
+            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Tomlyn", "Trureturing.Truth"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
     }
 
@@ -116,6 +116,29 @@ public sealed class DependencyDirectionTests
             ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.Scribe.Documents", "StrataLint.TestSupport"],
             AssemblyReferencePolicy.ApplicationReferences(
                 System.Reflection.Assembly.Load("StrataLint.Scribe.Documents.Tests")));
+    }
+
+    [Fact]
+    public void ArchitectureTestsReferenceOnlyDeclaredDependencies()
+    {
+        Assert.Equal(
+            [
+                "../../StrataLint.Cli/StrataLint.Cli.csproj",
+                "../../StrataLint.Engine/StrataLint.Engine.csproj",
+                "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+                "../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+                "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
+                "../StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+                "../StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
+                "../StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+                "../StrataLint.Tests/StrataLint.Tests.csproj",
+            ],
+            ProjectReferences(XDocument.Load(Path.Combine(
+                RepositoryLayout.FindRoot(),
+                "tools",
+                "tests",
+                "StrataLint.ArchitectureTests",
+                "StrataLint.ArchitectureTests.csproj"))));
     }
 
     private static string[] ProjectReferences(XDocument project) => project

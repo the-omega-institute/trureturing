@@ -1,0 +1,6 @@
+# 增订一·11　均匀状态 ensemble 与真实 Euler Gibbs ensemble 的分叉
+
+式 (A9.10) 容易诱发一个错误结论：因为状态数按 $\varphi^Q$ 增长，横向 susceptibility 按 $\varphi^{2Q}$ 增长，所以黄金递归自动产生相变。
+
+该结论不成立，因为 susceptibility 还依赖状态测度。
+

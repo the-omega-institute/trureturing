@@ -9185,3 +9185,121 @@ v1.6 冠军二度更正 → v1.7 闭式与模板 → v1.8 幸存全证 → v2.0 
 **候签定理 6.35.4(原点反例的形式化)**〔open;A-4;同模块伴随声明〕。`Filter.Tendsto (D5.S3.Axis.AxisPartialSum.axisPartialSum 0 0) Filter.atTop Filter.atTop`,连同等式 `∀ K : ℕ, D5.S3.Axis.AxisPartialSum.axisPartialSum 0 0 K = (Nat.fib (K + 1) : ℝ)`,把 issue #5204 的反例钉进真值 DAG;只钉 x = y = 0 一点。
 
 **评注 27.792(E-6.35 之可证伪预测与逃逸见证,写在跑之前)**〔remark;第 5⁗ 条〕。6.35.1 的逃逸内容为新的 Zeckendorf 坐标估计 `wordWeight_le_geometric : wordWeight x y n ≤ exp(|y|·B) · exp(−x)^n`,其前置为 `zeckendorf_phi_lower`(Zeckendorf 指数和 ∑ φ^{j_i+1} ≥ n)与 `zeckendorf_psi_abs_upper`(|∑ ψ^{j_i+1}| ≤ B);判形 content,准入依据 escape-witness。6.35.3 先证几何尾界 `|W_K − W| ≤ exp(|y|·B)·exp(−x)^{fib(K+1)}/(1 − exp(−x))`,再以新引理 `goldenRatio_pow_div_le_fib_succ : φ^K/φ ≤ fib(K+1)`(由 φ·fib(K+1) + fib K = φ^{K+1}、fib K ≤ fib(K+1)、φ² = φ + 1 得)换成双指数;判形 content。6.35.2 由 6.35.1 与冻结的 `axis_trace_definitions` 第二合取经部分和收敛到 tsum 得到,6.35.4 由冻结定义的 `Real.exp 0 = 1` 规范化与 `Nat.fib` 无界得到——二者判形以实施后的活路径为准,若仅为绑定即得,如实标 bind-only 伴随声明并记方向边(消费者 → 前置)。若钉版 Mathlib 的 `Nat.zeckendorf` API 写不出指数和下界、或 `fib` 与 φ 幂的比较写不出,对应候签按 open 记,不得以 `sorry` 或公理代替。结算:四条候签由一个实施席同 PR `deposit`(绑 6.35.3)+ `cover`(6.35.1 / 6.35.2 / 6.35.4)落地,三席评审后合入;原子 `033694bc…` 保持 `multi-clause-guard` 隔离,不 cover。
+
+**评注 27.793(开放问题线:Luca–Patel 猜想之模 16 障碍;候签定理 5.91–5.94 立案)**〔remark;开放问题线第二批〕。本评注下四条候签定理与一条勘误正案见下。
+
+**勘误正案 5.90(Luca–Patel 猜想与本案范围)**〔ledger;开放问题线第二批〕。Luca–Patel 猜想:形如 F_n + F_m 的最大完全幂是 3864² = F₃₆ + F₁₂;Vukusic–Ziegler(arXiv:2302.08303)给出只依赖 y 之 Zeckendorf 汉明重量的有效上界,猜想本身仍开放。本案不触碰猜想,只立案一条**无穷的模 16 障碍**:对 (n mod 24, m mod 24) 落在 440 个残类中的每一对,F_n + F_m 永非偶次幂。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro arXiv 检索席(flight `op-r4-gptpro-arxiv`,候选 #4)提出;探针席 codex-cli(flight `op-p10-fib-power`,worktree `trureturing-la118-germ-gab`,base origin/dev `26550a5ba7`,1268s)以 `lake env lean` 整证五条并给出 kernel 读数(`#print axioms` 只含标准三公理,未用 native_decide);本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。
+
+**候签定理 5.91(Fibonacci 模 16 的周期 24)**〔open;落 `D5/S1/Recurrence/FibonacciPowerSumMod16Obstruction`〕。对任意 n : ℕ,`Nat.fib (n + 24) % 16 = Nat.fib n % 16`;从而 `Nat.fib n % 16 = Nat.fib (n % 24) % 16`。
+
+**候签定理 5.92(模 16 的平方残类)**〔open;同模块〕。对任意 y : ℕ,`y ^ 2 % 16 ∈ ({0, 1, 4, 9} : Finset ℕ)`。
+
+**候签定理 5.93(440 个障碍残类)**〔open;同模块〕。令 `E16 : Finset (Fin 24 × Fin 24) := univ.filter (fun (r, s) => (Nat.fib r + Nat.fib s) % 16 ∉ {0, 1, 4, 9})`,则 `E16.card = 440`。
+
+**候签定理 5.94(偶次幂之无穷障碍)**〔open;同模块,本案主定理〕。对任意 n m : ℕ,若 (n mod 24, m mod 24) ∈ E16,则对一切 y a : ℕ、a 为偶数且 2 ≤ a,`y ^ a ≠ Nat.fib n + Nat.fib m`。伴随:`Nat.fib 36 + Nat.fib 12 = 3864 ^ 2`(猜想所称最大值之数值核对)。
+
+**评注 27.794(5.91–5.94 之可证伪预测与逃逸见证,写在跑之前)**〔remark;第 5⁗ 条〕。5.91 的逃逸内容为两条 kernel 计算的初值同余加两步递推归纳(第 5⁗ 条形态 (2):新数值事实由 `decide` 在活路径上产出);5.92 为模 16 归约后的 16 例穷举判定;5.93 为 `decide` 产出的新数值证书 440(本地提升 `maxRecDepth`);5.94 由「偶次幂是平方」的归约把 5.91–5.93 接成障碍——四者皆非冻结定理或 Mathlib 引理的实例化、投影或规范化;判形 content,准入依据 escape-witness;只依赖钉版 Mathlib。落点 `D5/S1/Recurrence/`(直接文件 17/24)。若钉版下 `decide` 无法在合理心跳内完成 440 计数,本候签按 open 记,不得以 `native_decide`(引入 `Lean.ofReduceBool`,本仓准入拒绝)、`sorry` 或公理代替。结算:四条由一个实施席同 PR `deposit`(绑 5.94)+ `cover`(5.91 / 5.92 / 5.93)落地,三席评审后合入;本案不 cover 任何既有原子。
+
+**评注 27.795(开放问题线:Erdős #313 原始伪完全数之端口复合;候签定理 4.91–4.95 立案)**〔remark;开放问题线第三批〕。本评注下一条勘误正案与五条候签定理见下。
+
+**勘误正案 4.90(Erdős #313 与本案范围)**〔ledger;开放问题线第三批〕。Erdős 第 313 号问题:是否有无穷多个 n 满足 1/n + ∑_{p | n} 1/p = 1(无平方因子的原始伪完全数,PPN:2, 6, 42, 1806, 47058, …)?仍开放;Wang(arXiv:2605.21518,Port Fillings for Primary Pseudoperfect Numbers)构造 9、10 个素因子的新例,并只在显式的五分裂假设(Hypothesis 19.2)下证无穷性。本案不触碰无穷性,只立案 PPN 的**局部代数**(端口复合律)与由之而来的继承律。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro arXiv 检索席(flight `op-r4-gptpro-arxiv`,候选 #1)提出;探针席 codex-cli(flight `op-p12-ppn-ports`,worktree `trureturing-op-rev-zeck`,base origin/dev `ab024519cc`)以 `lake env lean` 整证并给出 kernel 读数(`#print axioms` 只含标准三公理,无 native_decide);本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。
+
+**候签定理 4.91(倒数和恒等式与 PPN 的整数形)**〔open;落 `D5/S3/PrimeForms/PrimaryPseudoperfectPorts`〕。令 `squarefreeDeriv n := ∑_{p ∈ n.primeFactors} n / p`,`IsPPN n := Squarefree n ∧ 1 < n ∧ n = 1 + squarefreeDeriv n`。对 n ≠ 0,`1/(n:ℚ) + ∑_{p ∈ n.primeFactors} 1/(p:ℚ) = 1 ↔ n = 1 + squarefreeDeriv n`;从而 `IsPPN n ↔ Squarefree n ∧ 1 < n ∧ (1/(n:ℚ) + ∑_{p | n} 1/(p:ℚ) = 1)`。
+
+**候签定理 4.92(无平方因子导数的 Leibniz 律)**〔open;同模块〕。对互素的 A B : ℕ,`squarefreeDeriv (A * B) = A * squarefreeDeriv B + B * squarefreeDeriv A`。
+
+**候签定理 4.93(端口复合律)**〔open;同模块,本案核心〕。令 `portDelta R c B := c * B − R * squarefreeDeriv B`(ℕ 减法,在本案的使用域内不截断)。对互素的 A B,`portDelta R c (A * B) = portDelta (R * A) (portDelta R c A) B`。
+
+**候签定理 4.94(互素扩张判据)**〔open;同模块〕。若 `IsPPN K`、C 无平方因子、1 < C 且 gcd(K, C) = 1,则 `IsPPN (K * C) ↔ C − K * squarefreeDeriv C = 1`(即 `portDelta K 1 C = 1`)。
+
+**候签定理 4.95(单素与双素继承律及数值链)**〔open;同模块伴随声明〕。(i) 若 `IsPPN K` 且 K + 1 为素数,则 `IsPPN (K * (K + 1))`;(ii) 对不整除 K 的不同素数 p q,`IsPPN (K * p * q) ↔ (p − K) * (q − K) = K^2 + 1`(在 K < p, q 的使用域内以 ℕ 减法陈述,或以 ℤ 陈述);(iii) 数值链 `IsPPN 2`、`IsPPN 6`、`IsPPN 42`、`IsPPN 1806`、`IsPPN 47058`。
+
+**评注 27.796(4.91–4.95 之可证伪预测与逃逸见证,写在跑之前)**〔remark;第 5⁗ 条〕。4.91 的逃逸内容为新恒等式 `n * ∑_{p|n} 1/p = (squarefreeDeriv n : ℚ)`(逐项整除与 `cast_div`);4.92 由素因子集的不交并与商的传输构造(公开结论本身即见证,第 5⁗ 条形态 (2));4.93 在活路径上使用 4.92 与代换律;4.94 在活路径上使用 4.92 与一条新的消去论证;4.95 为 4.93/4.94 的伴随(方向边 4.95 → 4.94 → 4.92,消费者 → 前置),数值链以 `decide`/`norm_num` 判定。判形:4.91/4.92/4.93/4.94 content,4.95 依活路径而定;准入依据 escape-witness;只依赖钉版 Mathlib。落点 `D5/S3/PrimeForms/`(直接文件 12/24)。若钉版下 `Nat.primeFactors_mul` 一类互素引理不足以承载 4.92,本候签按 open 记,不得以 `sorry` 或公理代替。结算:五条由一个实施席同 PR `deposit`(绑 4.93)+ `cover`(4.91 / 4.92 / 4.94 / 4.95)落地,三席评审后合入;本案不 cover 任何既有原子。
+
+**评注 27.797(开放问题线:Lehmer 欧拉函数问题之可见证析取;勘误正案 4.80 与候签定理 4.81–4.89 立案)**〔remark;开放问题线第四批〕。Lehmer(1932)问是否存在合数 n 使 φ(n) ∣ n−1,至今开放。本评注下的勘误正案与九条候签定理不触碰合数存在性,只把「φ(n) ∣ n−1 ⟹ n 为素数或具合数侧结构包」写成可见证的析取(见证 n=2、n=7;n=15 证伪前件),产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro arXiv 检索席(flight `op-r1-gptpro-arxiv`,Lehmer 候选)提出;探针席 codex-cli(flight `op-p14-lehmer-dichotomy`,worktree `trureturing-la120-m3e`,base origin/dev)以 `lake env lean` 整证并给出 kernel 读数(`#print axioms` 只含标准三公理,无 native_decide);本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。
+
+**勘误正案 4.80(Lehmer 欧拉函数问题与本案范围)**〔ledger;开放问题线第四批〕。Lehmer (1932) 问题问是否存在合数 n 使 Nat.totient n ∣ n - 1，至今开放；P7 已证合数候选的结构包，但其候选假设没有已知见证，故不得冻结。本案不触碰合数存在性，只把同一数学改写成可见证的析取：假设 1 < n 且 Nat.totient n ∣ n - 1，结论为 n.Prime，或 n 具有合数侧完整结构包。令 `IsKorselt n := Squarefree n ∧ ∀ p ∈ n.primeFactors, p - 1 ∣ n - 1`；钉版 Mathlib 中 `Nat.IsCarmichael` 与 `Korselt` 均无声明。假设由 n = 2 与 n = 7 的 `by decide` 见证，n = 15 以 `by decide` 证伪其整除条件；Lehmer 合数存在性仍为 open。
+
+**候签定理 4.81(重复素因子进入欧拉函数)**〔open;L-1;落 `D5/S3/Factorization/LehmerTotientDichotomy`〕。对任意 p n : ℕ，若 p.Prime 且 p ^ 2 ∣ n，则 p ∣ Nat.totient n。
+
+**候签定理 4.82(Lehmer 整除条件强制无平方因子)**〔open;L-2;同模块〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 Squarefree n。
+
+**候签定理 4.83(无平方因子数的欧拉函数乘积式)**〔open;L-3;同模块〕。对任意非零 n : ℕ，若 Squarefree n，则 `Nat.totient n = ∏ p ∈ n.primeFactors, (p - 1)`。
+
+**候签定理 4.84(合数分支为奇数)**〔open;L-4;同模块〕。对任意 n : ℕ，若 1 < n、Nat.totient n ∣ n - 1 且 ¬n.Prime，则 Odd n。
+
+**候签定理 4.85(素因子减一乘积整除前驱)**〔open;L-5;同模块〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 `(∏ p ∈ n.primeFactors, (p - 1)) ∣ n - 1`。
+
+**候签定理 4.86(Lehmer 条件到 Korselt 条件之桥)**〔open;L-6;同模块〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 IsKorselt n。
+
+**候签定理 4.87(二幂整除前驱)**〔open;L-7;同模块〕。对任意 n : ℕ，若 1 < n、Nat.totient n ∣ n - 1 且 ¬n.Prime，则 `2 ^ n.primeFactors.card ∣ n - 1`。
+
+**候签定理 4.88(合数分支至少三个不同素因子)**〔open;L-8;同模块,本案定量逃逸〕。对任意 n : ℕ，若 1 < n、Nat.totient n ∣ n - 1 且 ¬n.Prime，则 `3 ≤ n.primeFactors.card`。
+
+**候签定理 4.89(欧拉函数整除前驱之析取结构包)**〔open;L-9;同模块,本案主定理〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 `n.Prime ∨ (Odd n ∧ Squarefree n ∧ IsKorselt n ∧ (∏ p ∈ n.primeFactors, (p - 1)) ∣ n - 1 ∧ 2 ^ n.primeFactors.card ∣ n - 1 ∧ 3 ≤ n.primeFactors.card)`。
+
+**评注 27.802(开放问题线:阶 12 射影平面之循环情形——乘子 2 的有限轨道障碍;候签定理 9.12–9.18 立案)**〔remark;开放问题线第四批〕。阶 12 射影平面是否存在至今开放;其**循环**情形等价于 ℤ/157 中的循环 (157, 13, 1) 差集(Singer),经乘子定理与有限检验已知不存在。本评注下七条候签只立案一条自足的有限轨道障碍:不存在 13 元 D ⊂ ℤ/157 与 g 使 2·D = D + g——由仿射定点共轭、素模非零乘子轨道的自由作用、`orderOf (2 : ZMod 157) = 52` 与基数剩余 {0, 1} 装配;**不**触碰第一乘子定理之桥、Singer 等价与非循环情形(皆记 open),乘子 3(阶 78)只作外部算术核对、未形式化。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r5-gptpro-open-any`,候选 #11;文献 Pott 等 arXiv:math/0304502 之状态描述属检索席自报,未独立核实)提出;探针席 codex-cli(flight `op-p17-cyclic-plane-12`,worktree `trureturing-la108-m1a-v2`,base origin/dev)以 `lake env lean` 整证七条与非空洞见证,`#print axioms` 对全部公开声明为标准三公理之子集;本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`(ArithUnits 桶直接计数文件 12/24,落地后 13/24)。
+
+**候签定理 9.12(仿射乘子关系的定点共轭)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。对交换环 R、有限集 D 与 m,t,c : R，若 m*c=c+t 且 mD=D+t，则 D-c 在乘 m 下不变。
+
+**候签定理 9.13(素模非零乘子轨道整除)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。若 p 为素数、u : (ZMod p)^x 且有限集 S 在乘 u 下不变，则 orderOf(u) 整除 (S.erase 0).card。
+
+**候签定理 9.14(模 157 中 2 的乘法阶)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。`orderOf (2 : ZMod 157) = 52`。
+
+**候签定理 9.15(模 157 倍增不变集的基数剩余)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。若 `S.image (fun x => 2*x)=S`，则 `S.card % 52` 属于 `{0,1}`。
+
+**候签定理 9.16(阶 12 循环射影平面的乘子 2 障碍)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。不存在满足 `D.card=13` 且对某 `g : ZMod 157` 有 `D.image (fun x => 2*x)=D.image (fun x => x+g)` 的 `D : Finset (ZMod 157)`。
+
+**候签定理 9.17(十三元非空洞见证)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。显式集合 `{0,1,...,12} : Finset (ZMod 157)` 的基数为 13，且其倍增像不等于其零平移像。
+
+**候签定理 9.18(模 7 锐性见证)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。`orderOf (2 : ZMod 7)=3`，且 `{1,2,4}` 的基数为 3 并在倍增下不变。
+
+**评注 27.803(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第四批〕。逃逸链皆在活证明路径上:仿射重标(9.12)→ 非零不变子集上 `zpowers u` 的自由作用与轨道商积等价(9.13)→ 阶 52 整除 → 剩余 {0, 1} 二分(9.15)→ 13 之矛盾(9.16);9.14 为 kernel 判定的有界素因子阶计算(2^52 = 1、2^26 ≠ 1、2^4 ≠ 1 mod 157),9.17/9.18 为 kernel 判定的显式有限集见证(内容由计算产出)。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib,不引入冻结 D5 依赖。若钉版 API 下 `MulAction.stabilizer`/轨道商的积等价不能闭合 9.13,本候签按 open 记,不得以 `sorry` 或公理代替;禁 native_decide。结算:七条由一个实施席同 PR `deposit`(绑 9.16)+ `cover`(其余六条)落地,三席评审后合入。
+
+**评注 27.798(开放问题线:Montgomery 对关联猜想之有限确定性外围——Fejér 近碰撞计数;候签定理 24.91–24.95 立案)**〔remark;开放问题线第四批〕。Montgomery(1973)对关联猜想(ζ 零点的归一化间距服从 GUE 对关联 1 − (sin πu/πu)²)至今开放;本评注下五条候签不触碰任何渐近陈述,只把该猜想的显式公式侧所用的 Fejér 核工具立为对**任意有限实族**成立的确定性不等式:Fejér 核的平方表示、能量恒等式、局部显式下界、近碰撞对计数与重数平方账。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro arXiv 检索席(flight `op-r1-gptpro-arxiv`,Montgomery 候选;文献 arXiv:2507.06823 之状态描述属检索席自报,未独立核实)提出;探针席 codex-cli(flight `op-p15-pair-correlation`,worktree `trureturing-la114-m3ac`,base origin/dev)以 `lake env lean` 整证并给出 kernel 读数(`#print axioms` 对十条公开声明均为标准三公理);本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点 `D5/S3/Zeros/Repulsion/FejerNearCollisionBound`(Repulsion 桶现有 1 个直接文件,落地后 2/24);与第二十四章零点账本相邻,GUE 解读见评注 27.10(二),保持语义/渐近。
+
+**候签定理 24.91(有限 Fejér 平方)**〔open;落 `D5/S3/Zeros/Repulsion/FejerNearCollisionBound`〕。令 Fejér 核 `F_M(t) := ∑_{|k|<M} (1 − |k|/M) · cos(k t)`(M ≥ 1,t ∈ ℝ)。则 `F_M(t) = M⁻¹ · ‖∑_{r=0}^{M−1} exp(i r t)‖²`——对 M 归纳,把长度 M 几何和的模平方展开为三角形余弦多项式。
+
+**候签定理 24.92(有限 Fejér 能量恒等式)**〔open;同模块〕。对有限实族 γ : Fin n → ℝ,`∑_{i,j} F_M(γ_i − γ_j) = ∑_{|k|<M} (1 − |k|/M) · ‖∑_i exp(i k γ_i)‖²`——每个余弦对和展开为复指数和的模平方,负模态与正模态模平方相等(带符号的 |k| < M 求和按零、正、负三段拆分后逐段相等)。
+
+**候签定理 24.93(局部显式下界)**〔open;同模块〕。若 M ≥ 1 且 |t| ≤ π/M,则 `F_M(t) ≥ 4M/π²`——由几何和恒等式与 |sin x| ≥ 2|x|/π(|x| ≤ π/2)、|sin y| ≤ |y| 得 ‖∑_r exp(i r t)‖ ≥ 2M/π。
+
+**候签定理 24.94(近碰撞计数)**〔open;同模块〕。对有限实族 γ : Fin n → ℝ 与 M ≥ 1,有序对计数 `#{(i, j) : |γ_i − γ_j| ≤ π/M} ≤ (π²/(4M)) · ∑_{i,j} F_M(γ_i − γ_j)`——在过滤后的近对集合上逐点用 24.93,并用 F_M ≥ 0 控制其余项。
+
+**候签定理 24.95(重数平方账)**〔open;同模块〕。对有限实族 γ : Fin n → ℝ 与 M ≥ 1,`∑_{i,j} F_M(γ_i − γ_j) ≥ M · ∑_{v ∈ im γ} mult_γ(v)²`,其中 mult_γ(v) := #{i : γ_i = v}——等值纤维给出 F_M(0) = M 的有序块,按纤维重排把 ∑_i mult_γ(γ_i) 认同为 ∑_{v} mult_γ(v)²;它把未来任何独立的能量上界转化为重数控制,但本身不蕴含单零点比例的任何渐近陈述。
+
+**评注 27.799(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第四批〕。逃逸内容三处,皆在活证明路径上:①`normSq_exponentialSum`——对 M 归纳产出三角形自相关公式,被 24.91 使用;②24.93 的显式正弦估计链(产出 4M/π²);③24.94 的过滤有序对和之构造与比较。24.92 的有限 Fourier 展开与 24.95 的等值纤维块构造为进一步的内容见证;`fejer_nonnegative`、`fejer_zero`、负模态模平方相等等为伴随声明(bind-only),方向边 24.94 → 24.93 → 24.91,24.95 → `fejer_zero`/`fejer_nonnegative`。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib,不引入冻结 D5 依赖,不触碰 `D5/S3/Weil/**`。若钉版 API 下 |sin x| ≥ 2|x|/π 的 Jordan 不等式不可得且不能在模块内闭合,本候签按 open 记,不得以 `sorry` 或公理代替。结算:五条由一个实施席同 PR `deposit`(绑 24.94)+ `cover`(24.91 / 24.92 / 24.93 / 24.95)落地,三席评审后合入。
+
+**评注 27.800(开放问题线:Barker 猜想之偶长度外围——自相关的模四边界同余与 n ≡ 0 (mod 4) 障碍;候签定理 6.209–6.211 立案)**〔remark;开放问题线第四批〕。Barker 猜想(长度 > 13 的 Barker 序列不存在)在偶长度情形至今开放(奇长度 Turyn–Storer 已决;已知偶长度须 n ≡ 0 (mod 4)、n = 4r² 及巨大下界)。Willms(arXiv:2104.00502,定理 1)证明:偶长 n ≥ 4 的 Barker 序列若满足 C₁ = C₃ = ⋯ = C_{n/2−1},则 n = 4。本评注下三条候签只立案通往该定理路上、对**任意长度**成立的确定性同余与由之而来的经典四整除障碍,不触碰 Willms 定理 1 本身(弱对称与游程结构未形式化,记 open),亦不触碰 n = 4r²。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r5-gptpro-open-any`,候选 #8)提出;探针席 codex-cli(flight `op-p18-barker-odd-correlation`,worktree `trureturing-op-rev-axis`,base origin/dev)核对论文原文定理 1 之陈述,并以 `lake env lean` 整证本节三条及其见证,`#print axioms` 对全部公开声明为标准三公理之子集;本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点 `D5/S1/Words/BarkerEvenLengthModFourObstruction`(Words 桶直接文件 12/24,落地后 13/24)。
+
+**候签定理 6.209(Barker 自相关的二模与四模边界同余)**〔open;落 `D5/S1/Words/BarkerEvenLengthModFourObstruction`〕。设 a : ℕ → ℤ 的前 n 项皆为 ±1,非周期自相关 `C_k := ∑_{i<n−k} a_i · a_{i+k}`。则 (i) 对 k ≤ n,`C_k ≡ n − k [ZMOD 2]`;(ii) 对 2 ≤ n,`C₂ + C_{n−2} ≡ n [ZMOD 4]`——逐项同余 `x·y ≡ x − y + 1 [ZMOD 4]`(x, y ∈ {±1})经步长二望远镜求和得到的边界分解。
+
+**候签定理 6.210(偶长 Barker 序列的四整除障碍)**〔open;同模块主定理〕。若 a 的前 n 项为 Barker 序列(皆为 ±1 且对一切 0 < k < n 有 |C_k| ≤ 1)、n 为偶数且 2 < n,则 `n % 4 = 0`;特别地,`n % 4 = 2` 时不存在长度 n 的 Barker 序列——由 6.209(i) 知偶移位相关为偶数,与 |C_k| ≤ 1 合得 C₂ = C_{n−2} = 0,代入 6.209(ii) 即得。
+
+**候签定理 6.211(Barker 障碍的忠实性与非空见证)**〔open;同模块伴随声明〕。长度 13 序列 `+ + + + + − − + + − + − +` 与长度 4 序列 `+ + + −` 皆为 Barker 序列(全部非平凡相关逐一核验);长度 8 序列 `+ + + + + + − +` 满足 C₁ = C₃ = 3 而非 Barker——Willms 之等相关附加假设在去掉 Barker 界后并不自相矛盾。全部由 kernel 判定(`interval_cases`/`norm_num`),不用 native_decide。
+
+**评注 27.801(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第四批〕。逃逸内容:6.209(ii) 的模四边界分解(`correlation_two_pair_mod_four`,由 `sign_product_mod_four` 与步长二望远镜 `two_step_telescoping` 构造),它是 6.210 活推导路径上的新中间命题,非任何冻结定理或 Mathlib 引理的实例化;6.210 的矛盾装配(`even_shift_correlation_zero` + 该同余)亦为内容;推论「n % 4 = 2 不存在」为伴随声明(bind-only),方向边 `no_even_barker_of_mod_four_eq_two → even_barker_length_mod_four`。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib,不引入冻结 D5 依赖。若钉版 API 下 `Int.ModEq` 的望远镜求和不能闭合,本候签按 open 记,不得以 `sorry` 或公理代替。结算:三条由一个实施席同 PR `deposit`(绑 6.210)+ `cover`(6.209 / 6.211)落地,三席评审后合入;Willms 定理 1 本身另立探针,不在本次结算内。
+
+**评注 27.804(开放问题线:Erdős–Straus 猜想之经典剩余类归约——模 24 覆盖;候签定理 4.96–4.98 立案)**〔remark;开放问题线第四批〕。Erdős–Straus(1948):对每个 n ≥ 2,4/n = 1/x + 1/y + 1/z 有正整数解——至今开放;经典(Mordell 1969;Elsholtz–Tao arXiv:1107.1010 转述)显式恒等式把可能的反例压到模 840 的六个平方剩余类。本评注下三条候签只立案已 kernel 判定的部分:整数式与倒数式等价、伸缩律、模 2/3/4/8 的显式恒等式族,以及由之而来的**模 24 剩余类归约**(n ≥ 2 且 n mod 24 ≠ 1 ⟹ 可解);完整的模 840 分派与模 5/7 恒等式族**未**形式化,记 open;不对六个例外类作任何断言。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r5-gptpro-open-any`,候选 #4)提出;探针席 codex-cli(flight `op-p19-erdos-straus`,worktree `trureturing-op-rev-parity`,base origin/dev)以 `lake env lean` 整证十六条声明,`#print axioms` 均为标准三公理之子集;本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点 `D5/S3/PrimeForms/ErdosStrausResidueReduction`(PrimeForms 桶直接计数文件 13/24,落地后 14/24)。
+
+**候签定理 4.96(Erdős–Straus 整数式、倒数式与伸缩律)**〔open;落 `D5/S3/PrimeForms/ErdosStrausResidueReduction`〕。定义 `ESSolvable n` 为存在正整数 `x,y,z` 满足 `4xyz=n(xy+xz+yz)`；证明其与有理倒数式等价，并证明解在分母正整数倍伸缩下保持。
+
+**候签定理 4.97(Erdős–Straus 的模 2、3、4、8 显式恒等式族)**〔open;同模块〕。以显式正整数见证证明偶数、3 的倍数、`n≡2 (mod 3)`、`n≡3 (mod 4)`、`n≡5 (mod 8)` 可解，并给出 `n=2,5,7` 的核验见证。
+
+**候签定理 4.98(Erdős–Straus 模 24 剩余类归约)**〔open;同模块〕。证明对 `n≥2`，若 `n mod 24 ≠ 1`，则 `ESSolvable n`；同时证明余数 1 不属于本模块使用的五个恒等式族。此结论不声称处理 Mordell 的六个模 840 例外类。
+
+**评注 27.805(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第四批〕。逃逸内容:n = 3k+2、4k+3、8k+5 三族的参数化分母构造及其正性边条件(`ring` 闭合的三次恒等式)、伸缩构造 (x,y,z) ↦ (xm,ym,zm),以及模 24 的有限 Presburger 分派事实 `residue_dispatch_24`(非 1 剩余类必落入 n%2=0 ∨ n%3=0 ∨ n%3=2 ∨ n%4=3 ∨ n%8=5 之一);皆在 4.98 的活推导路径上,无冻结前置;n = 2, 3, 5, 7 的显式见证为计算产出的内容。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib。若钉版 API 下有理—整数等价的分母清除不能闭合,本候签按 open 记,不得以 `sorry` 或公理代替;禁 native_decide。结算:三条由一个实施席同 PR `deposit`(绑 4.98)+ `cover`(4.96 / 4.97)落地,三席评审后合入;模 840 完整分派另立探针。
+
+**评注 27.806(开放问题线:Schur 数的宽十移位模板递推 S(k+2) ≥ 10·S(k) + 2 之构造性提升;候签定理 6.212–6.216 立案)**〔remark;开放问题线第四批〕。Schur 数 S(k)(使 {1..n} 存在无同色 x+y=z 之 k 着色的最大 n):S(1..5) = 1, 4, 13, 44, 160(S(5) = 160 为 Heule 2017 的 SAT 证明),S(6) 及以上至今开放(536 ≤ S(6) ≤ 1836)。Bengone 等(arXiv:2607.15034,2026)以宽 10 的「移位模板」证 S(k+2) ≥ 10·S(k) + 2。本评注下五条候签把该递推立为**任意 k、n** 的构造性着色提升:`HasSchurColoring k n → HasSchurColoring (k+2) (10n+2)`,连同经典三倍提升与有限相容性证书;不触碰 S(6) 的任何具体值。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r5-gptpro-open-any`,候选 #3)提出;探针席 codex-cli(flight `op-p21-schur-template`,worktree `trureturing-op-rev-axis`,base origin/dev)逐字核对论文表 II 模板(F、M=L 两行与尾 Q=(A,B)),以 `lake env lean` 整证十三条声明,`#print axioms` 均为标准三公理之子集;本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点 `D5/S3/Arith/SchurShiftedTemplateLift`(Arith 桶直接文件 14/24,落地后 15/24;探针原议之子桶 AdditiveCombinatorics 不新建,以免无注册的目录出生)。
+
+**候签定理 6.212(Schur 着色与小值忠实性)**〔open;落 `D5/S3/Arith/SchurShiftedTemplateLift`〕。定义 `SchurColoring k n c` 为区间 1 至 n 上不存在同色的 x+y=z，定义 `HasSchurColoring k n := ∃ c, SchurColoring k n c`；则 `HasSchurColoring 1 1`、`HasSchurColoring 2 4`，且 `¬ HasSchurColoring 1 2`。
+
+**候签定理 6.213(Schur 着色的经典三倍提升)**〔open;同模块〕。对任意 k n : ℕ，`HasSchurColoring k n → HasSchurColoring (k+1) (3*n+1)`；构造取左右两份旧着色，中段 n+1 至 2n+1 取新色。
+
+**候签定理 6.214(宽十移位模板的有限相容性证书)**〔open;同模块;本案逃逸〕。对 arXiv:2607.15034 表 II 的逐字模板 F=`B,A,P0,P0,B,A,A,B,P0,P0`、M=L=`P-1,B,P0,P0,B,A,A,B,P0,P0` 与尾 Q=`A,B`，以 kernel `decide` 验证两种新色、旧色移位进位及两枚尾元的全部有限相容表；并证明正整数宽十分块在 x+y=z 下的行进位与列余数分解。
+
+**候签定理 6.215(宽十移位模板提升)**〔open;同模块;本案主定理〕。对任意 k n : ℕ，`HasSchurColoring k n → HasSchurColoring (k+2) (10*n+2)`；6.214 的分块进位与有限相容证书必须位于任意 n 证明的活路径，准入依据为 `escape-witness`。
+
+**候签定理 6.216(Schur 提升的数值忠实性)**〔open;同模块伴随声明〕。由 6.212 与 6.213 得 `HasSchurColoring 3 13`，由 6.212 与 6.215 得 `HasSchurColoring 4 42`；判形 bind-only，方向边 `6.216 → 6.213/6.215 → 6.212`（消费者 → 前置）。
+
+**评注 27.807(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第四批〕。逃逸内容:宽十分块的商余加法律 `block_add_coordinates`(结果行进位 ε 与结果列 (u+v+1) mod 10),与表 II 的四条有限相容性证书(新色对、旧色移位进位、尾 A、尾 B;kernel `decide`)——它们全部位于 6.215 任意 n 证明的活路径上,删任一条即主定理不成;经典提升 6.213 的三段区间构造亦为内容;6.216 为伴随声明(bind-only)。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib,不引入冻结 D5 依赖;禁 native_decide。若钉版 API 下分块商余律不能闭合,本候签按 open 记,不得以 `sorry` 或公理代替。结算:五条由一个实施席同 PR `deposit`(绑 6.215)+ `cover`(6.212 / 6.213 / 6.214 / 6.216)落地,三席评审后合入。

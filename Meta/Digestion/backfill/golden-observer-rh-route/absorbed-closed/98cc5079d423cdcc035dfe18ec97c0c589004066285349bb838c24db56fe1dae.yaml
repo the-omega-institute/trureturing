@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:98cc5079d423cdcc035dfe18ec97c0c589004066285349bb838c24db56fe1dae
+  normalized_sha256: sha256:98cc5079d423cdcc035dfe18ec97c0c589004066285349bb838c24db56fe1dae
+cas_ref: sha256:98cc5079d423cdcc035dfe18ec97c0c589004066285349bb838c24db56fe1dae
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroInfinitude/WindowZero.exists_zero_near_every_large_height
+    target_statement_id: sha256:5d37fd975fc1675a9947ad13df9fe54dae11d413e697dd491f5de0fdb8cf809c
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZeroInfinitude/WindowZero.exists_zero_near_every_large_height
+      definition_sha256: sha256:3b6f605b47b032fd8b4ab2c896d8a8ef4f083d487c2ceb7dfc07445d9f4a0226
+      emission_sha256: sha256:8722aca4f9aba48360d3a691d8443235c6b982126d89aad31843956a8bde7715
+  unresolved_subitems: []
