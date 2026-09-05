@@ -1,0 +1,61 @@
+## 定理 113.2　离开经典扇区的短时界
+
+令：
+
+$$
+Q=I-P,
+\qquad
+\eta=\|QH_GP\|_{\mathrm{op}}.
+$$
+
+则：
+
+$$
+\boxed{
+\|Qe^{-itH_G/\hbar}P\|_{\mathrm{op}}
+\le
+\frac{|t|\eta}{\hbar}.
+}
+\tag{113.2}
+$$
+
+因此，对支持在 \(P\) 内的初态，离开概率不超过：
+
+$$
+\boxed{
+\min\left\{1,\frac{t^2\eta^2}{\hbar^2}\right\}.
+}
+\tag{113.3}
+$$
+
+### 证明
+
+取块对角 Hamiltonian：
+
+$$
+H_{\mathrm{diag}}=PH_GP+QH_GQ.
+$$
+
+它严格保持 \(P\)。差值为：
+
+$$
+H_G-H_{\mathrm{diag}}
+=
+QH_GP+PH_GQ,
+$$
+
+其算子范数等于 \(\eta\)。
+
+由 Duhamel 公式：
+
+$$
+\|e^{-itH_G/\hbar}
+-e^{-itH_{\mathrm{diag}}/\hbar}\|
+\le
+|t|\eta/\hbar.
+$$
+
+左乘 \(Q\)、右乘 \(P\)，得到结论。∎
+
+---
+

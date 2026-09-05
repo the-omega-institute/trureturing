@@ -1,0 +1,20 @@
+## 假设 139.1　微观场方程与共同极限
+
+假设在同一比较框架中，
+
+$$
+\mathscr G[g_\varepsilon]+\Lambda g_\varepsilon
+=
+\kappa_E T_\varepsilon,
+$$
+
+并且
+
+$$
+g_\varepsilon\to g_0,
+\qquad
+T_\varepsilon\rightharpoonup\overline T,
+$$
+
+且定义 136.1 的弱极限存在。
+

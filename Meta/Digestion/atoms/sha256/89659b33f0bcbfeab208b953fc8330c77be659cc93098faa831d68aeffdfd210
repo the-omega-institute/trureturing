@@ -1,0 +1,148 @@
+## 定理 5：稀有分支的精确增长尺度
+
+对上述真实素数实例，
+
+$$
+\boxed{
+\Pr(M_n\ne0)\sim3Kh_n,
+}
+\tag{28}
+$$
+
+$$
+\boxed{
+\mathbb E|M_n|
+\sim8aK\,h_n^{-2},
+}
+\tag{29}
+$$
+
+$$
+\boxed{
+\mathbb EM_n^2
+\sim24a^2K\,h_n^{-5}.
+}
+\tag{30}
+$$
+
+同时，
+
+$$
+\boxed{
+M_n\to0\quad\text{几乎必然},
+\qquad
+\mathbb EM_n=M_0\ne0.
+}
+\tag{31}
+$$
+
+### 证明
+
+由式（24），三个非零位置的概率分别为
+
+$$
+Kh_n+O(h_n^2).
+$$
+
+又因为
+
+$$
+E_h-1\sim h/2,
+\qquad E_h\to1,
+$$
+
+式（27）的三个值分别渐近为
+
+$$
+\frac{2a}{h^3},
+\qquad
+-\frac{4a}{h^3},
+\qquad
+\frac{2a}{h^3}.
+$$
+
+因此，非零概率为 \(3Kh+O(h^2)\)。
+
+绝对值期望的主项为
+
+$$
+Kh\left(\frac{2a+4a+2a}{h^3}\right)
+=
+8aK h^{-2}.
+$$
+
+平方期望的主项为
+
+$$
+Kh\left(\frac{4a^2+16a^2+4a^2}{h^6}\right)
+=
+24a^2K h^{-5}.
+$$
+
+最后，几乎必然最终为零来自定理 4 的推论；均值恒定来自定理 3。证毕。
+
+---
+
+这给出一个完全明确的极限失配：
+
+$$
+\boxed{
+\mathbb E\!\left[\lim_{n\to\infty}M_n\right]
+=0,
+}
+$$
+
+但
+
+$$
+\boxed{
+\lim_{n\to\infty}\mathbb EM_n=M_0\ne0.
+}
+\tag{32}
+$$
+
+不存在矛盾，因为这个鞅不一致可积。事实上，它连
+
+$$
+\sup_n\mathbb E|M_n|<\infty
+$$
+
+都不满足。
+
+一致可积性要求
+
+$$
+\lim_{R\to\infty}
+\sup_n
+\mathbb E\bigl[|M_n|\mathbf1_{\{|M_n|>R\}}\bigr]
+=0.
+$$
+
+它正是保证这种概率收敛可以提升为 \(L^1\) 收敛的关键条件。
+
+**这里概率很小的分支，不是可以删除的分支。**
+
+它们满足
+
+$$
+\boxed{
+\text{概率}\asymp h,
+\qquad
+\text{幅度}\asymp h^{-3},
+}
+$$
+
+所以
+
+$$
+\boxed{
+\text{绝对一阶贡献}\asymp h^{-2},
+\qquad
+\text{二阶贡献}\asymp h^{-5}.
+}
+$$
+
+这不是 RH 的反例，也不是某种物理概率失效。它只是证明：**正权、归一化、逐层均值保持，都不能代替无限完成所需的尾部控制。**
+
+---
+

@@ -1,0 +1,19 @@
+\boxed{
+\Phi_{1:n}(\rho)
+================
+
+\operatorname{Tr}_R
+\left[
+U_n\cdots U_1
+(\rho\otimes\sigma_R)
+U_1^\dagger\cdots U_n^\dagger
+\right].
+}
+\tag{81.1}
+
+$$
+
+另一方面，把每一步单独拿出来、每次重新准备参照态 \(\sigma_R\)，得到
+
+$$
+

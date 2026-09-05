@@ -1,0 +1,38 @@
+# 结论
+
+这一轮得到的核心不是另一个抽象的“正核应当存在”，而是三组可以逐项检验的关系：
+
+$$
+\boxed{
+\text{尺度完成}
+:
+\quad
+\mathcal B_H
+=
+\text{细尺度读数的指定正权平均};
+}
+$$
+
+$$
+\boxed{
+\text{微观结构}
+:
+\quad
+\mathcal B_h
+\longrightarrow
+2\nu_{\mathbb P}''-\nu_{\mathbb P}'
+\quad\text{在分布意义下};
+}
+$$
+
+$$
+\boxed{
+\text{算术证明责任}
+:
+\quad
+\mathcal E_h^{\mathrm{off}}(L)
+=
+-\frac{h^3J_h}{2}L^2+O_h(L).
+}
+$$
+

@@ -1,0 +1,55 @@
+### 证明
+
+由行列式求导：
+
+$$
+\mathcal V_C'
+=
+\operatorname{Tr}(W^{-1}W').
+$$
+
+代入式（J4）：
+
+$$
+\mathcal V_C'
+=
+\operatorname{Tr}(W^{-1}C^*WC)
+-
+\Re\operatorname{Tr}(C^2).
+$$
+
+第一项恰好是：
+
+$$
+\|A_C(r)\|_{\mathrm{HS}}^2.
+$$
+
+而对任意 \(A=H+iY\)，其中 \(H,Y\) 自伴，有：
+
+$$
+\|A\|_{\mathrm{HS}}^2
+-
+\Re\operatorname{Tr}(A^2)
+=
+2\operatorname{Tr}(Y^2).
+$$
+
+再使用相似变换保持 \(\operatorname{Tr}(A^2)=\operatorname{Tr}(C^2)\)，便得到式（J6）。证毕。
+
+所以：
+
+$$
+\boxed{
+\log\det W_C(r)
+=
+2\int_0^r\mathcal E_C(s)\,ds.
+}
+\tag{J7}
+$$
+
+**历史体积为什么增长，不再需要模糊解释：增长率由全部非自伴残差精确决定。**
+
+但体积增长也可能来自坐标中的非正规耦合，不一定来自真正的谱虚部。下一条定理将两者分开。
+
+---
+

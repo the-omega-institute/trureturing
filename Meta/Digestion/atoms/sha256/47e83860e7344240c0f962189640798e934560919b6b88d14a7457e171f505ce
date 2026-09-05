@@ -1,0 +1,66 @@
+## 定理 105.1　共同结构全过程的误差界
+
+设结构初态为固定的 \(\sigma\)，且初始时与钟输入及其外部测试参照独立。
+
+令 \(\mathcal P\) 为完整实际过程的外侧通道，\(\mathcal P_0\) 为对应经典候选，则：
+
+$$
+\boxed{
+\frac12\|\mathcal P-\mathcal P_0\|_\diamond
+\le
+\sum_j
+\frac{|t_j|\|H_j\|_{\mathrm{op}}}{\hbar}\delta_j.
+}
+\tag{105.2}
+$$
+
+### 证明
+
+纯化结构初态为 \(|\Sigma\rangle\)，使：
+
+$$
+\left\|
+(\widehat n_j-n_jI)|\Sigma\rangle
+\right\|
+=
+\delta_j.
+$$
+
+由 Duhamel 公式，对任意钟及其参照的单位输入向量：
+
+$$
+\left\|
+(U_j-U_j^{(0)})
+(|\psi\rangle\otimes|\Sigma\rangle)
+\right\|
+\le
+\frac{|t_j|\|H_j\|}{\hbar}\delta_j.
+$$
+
+对完整乘积采用展开：
+
+$$
+\begin{aligned}
+U_m\cdots U_1-U_m^{(0)}\cdots U_1^{(0)}
+=
+\sum_j
+U_m\cdots U_{j+1}
+(U_j-U_j^{(0)})
+U_{j-1}^{(0)}\cdots U_1^{(0)}.
+\end{aligned}
+$$
+
+每个误差项右侧只有理想前缀，因此结构仍处于原始纯化态；左侧实际后缀是酉算子，不增加向量范数。
+
+应用三角不等式，再取偏迹并对全部附加参照输入取上确界，得到式（105.2）。∎
+
+### 重要区别
+
+本定理没有把单步约化通道相乘。
+
+它比较的是**完整共享结构上的两个联合实现**，所以允许实际过程中产生环境记忆。
+
+这与前文的共享参照反例相容。具有记忆的过程需要使用多时刻的完整实验结构，而不能仅由孤立单步通道决定。([arXiv][2])
+
+---
+

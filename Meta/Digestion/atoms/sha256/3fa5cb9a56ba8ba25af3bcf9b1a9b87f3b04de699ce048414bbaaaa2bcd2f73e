@@ -1,0 +1,38 @@
+# 十一、对项目而言，本轮新增的桥是什么？
+
+本轮按前文固定快照读取了相关声明。
+
+`CompletedZetaMellinReconstruction.lean` 已给出实际 theta 尾项到 completed ζ 的重构，并保留极点补偿和反射关系。它可以为本轮的原始矩来源提供算术锚定。
+
+`FiniteStieltjesOperatorRealization.lean` 则明确要求输入非负节点与非负权重，再构造正 Hankel 矩阵。它没有独立供应实际 ξ 所需的正谱。
+
+本轮走的是另一段连接：
+
+$$
+\boxed{
+\text{实际 theta 原始矩}
+\longrightarrow
+\mathsf B
+\longleftrightarrow
+\mathsf H
+\longleftrightarrow
+\text{有限滤波负证书}.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathsf B_N=T_{F,N}\mathsf H_NT_{F,N}^*
+}
+$$
+
+是精确恒等式，且变换条件数有统一控制。
+
+因此不需要为了使用 \(\mathsf B\)，先假设正谱存在。
+
+本轮也没有修改 GitHub，或把这些新增推导标记成已经 Lean 编译验证的结果。
+
+---
+

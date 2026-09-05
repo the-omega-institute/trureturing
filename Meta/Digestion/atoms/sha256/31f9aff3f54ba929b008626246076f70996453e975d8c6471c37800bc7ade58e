@@ -1,0 +1,53 @@
+### 证明
+
+使用：
+
+$$
+\langle\Omega_d|(A\otimes I)|\Omega_d\rangle
+=
+\frac1d\operatorname{Tr}A.
+$$
+
+于是：
+
+$$
+\begin{aligned}
+\langle\phi_{B^*}|\phi_B\rangle
+&=
+\frac{
+\langle\Omega_d|(B\otimes I)(B\otimes I)|\Omega_d\rangle
+}{
+H_B/d
+}\\
+&=
+\frac{\operatorname{Tr}(B^2)}{H_B}.
+\end{aligned}
+$$
+
+证毕。
+
+准备控制比特与两条分支的相干叠加：
+
+$$
+\frac{
+|0\rangle|\phi_{B^*}\rangle
++
+|1\rangle|\phi_B\rangle
+}{\sqrt2},
+$$
+
+测量控制比特的 \(\sigma_x\)，就读取式（N9）的实部。
+
+对于当前实系数模型：
+
+$$
+\boxed{
+\langle\sigma_x\rangle
+=
+\frac{\mathcal Q_d(f)}{H_B}.
+}
+\tag{N10}
+$$
+
+负值是一个合法的相位相关结果，测量概率仍然非负。
+

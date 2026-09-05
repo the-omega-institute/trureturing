@@ -1,0 +1,60 @@
+**但本轮没有证明这个实际极限为零。** 通用量子谐振子结构对任意有限矩阵都能建立，因此它负责分离和测量障碍，不能独自排除算术障碍。
+
+现在真正集中下来的问题是：
+
+> **能否从实际 theta／质数系数出发，证明这份已经固定的高斯历史，其归一化中心偏移在观察深度增加时趋于零？**
+
+不再需要寻找一个未知的“最高观察者”，也不再需要任意猜测度量。需要的是对**同一份明确历史模型**给出真实的算术估计。只有这一步，才会把量子观察者从忠实表示推进为零点定位证明。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/abs/1902.07321?utm_source=chatgpt.com "Jensen polynomials for the Riemann zeta function and other sequences"
+[3]: https://arxiv.org/abs/0810.5643 "[0810.5643] Pseudo-Hermitian Representation of Quantum Mechanics"
+[4]: https://journals.aps.org/pr/abstract/10.1103/PhysRev.131.2766?utm_source=chatgpt.com "Coherent and Incoherent States of the Radiation Field | Phys. Rev."
+[5]: https://epubs.siam.org/doi/10.1137/S0895479893255184?utm_source=chatgpt.com "A Practical Upper Bound for Departure from Normality | SIAM Journal on Matrix Analysis and Applications"
+[6]: https://dlmf.nist.gov/1.10 "DLMF: §1.10 Functions of a Complex Variable ‣ Topics of Discussion ‣ Chapter 1 Algebraic and Analytic Methods"
+这次可以从上一轮的高斯历史模型中，推出一条**严格的单调律**：
+
+> **增加历史宽度，会持续消除矩阵的“非正规性”，但不会消除真正的非实谱。最后留下的量，恰好是全部谱虚部的平方和。**
+
+这里必须区分两个概念：
+
+$$
+\boxed{
+A^*A=AA^*
+\quad\text{是正规性；}
+\qquad
+A=A^*
+\quad\text{才是自伴性。}
+}
+$$
+
+正规矩阵可以有复本征值。因此，即使一个观察过程最终变得“没有额外耦合冲突”，仍不能据此宣布零点在线。
+
+本轮的核心公式是：
+
+$$
+\boxed{
+\frac{d}{dr}\mathcal E_C(r)
+=
+-\frac14
+\bigl\|[A_C(r),A_C(r)^*]\bigr\|_{\mathrm{HS}}^2
+\le0,
+}
+\tag{J0}
+$$
+
+以及：
+
+$$
+\boxed{
+\lim_{r\to\infty}\mathcal E_C(r)
+=
+\sum_{\lambda\in\operatorname{spec}C}
+(\Im\lambda)^2.
+}
+$$
+
+下面完整定义并证明，再将其送回实际 ξ。这里的 \(r\) 是**高斯历史宽度的平方**，不是物理时间；\(\mathcal E_C\) 是数学上的残差量，不预先称作物理能量。
+
+---
+

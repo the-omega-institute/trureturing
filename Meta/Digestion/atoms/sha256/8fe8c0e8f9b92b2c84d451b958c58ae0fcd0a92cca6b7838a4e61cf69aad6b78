@@ -1,0 +1,65 @@
+## 定理 3.2　合法语言的最大熵率
+
+长度 \(L\) 的合法字串上，任意概率分布的熵不超过：
+
+$$
+\ln G_L.
+$$
+
+并且存在一个平稳合法过程，其熵率为：
+
+$$
+\boxed{\ln\varphi.}
+$$
+
+### 证明
+
+有限集合上，熵不超过集合基数的对数，因此：
+
+$$
+H(B_0,\ldots,B_{L-1})\le\ln G_L.
+$$
+
+上界除以 \(L\) 后趋于 \(\ln\varphi\)。
+
+为证明可达性，取转移矩阵：
+
+$$
+P=
+\begin{pmatrix}
+\varphi^{-1}&\varphi^{-2}\\
+1&0
+\end{pmatrix}.
+$$
+
+该链不允许 \(1\to1\)。令 \(t=\varphi^{-2}\)，其平稳分布为：
+
+$$
+\pi_0=\frac1{1+t},
+\qquad
+\pi_1=\frac{t}{1+t}.
+$$
+
+每一步的条件熵为：
+
+$$
+\begin{aligned}
+h
+&=
+\pi_0
+\left(
+-\varphi^{-1}\ln\varphi^{-1}
+-\varphi^{-2}\ln\varphi^{-2}
+\right)\\
+&=
+\frac{\varphi^{-1}+2\varphi^{-2}}{1+\varphi^{-2}}\ln\varphi\\
+&=\ln\varphi.
+\end{aligned}
+$$
+
+所以熵率达到上界。证毕。
+
+这里最大化的是**合法字串过程的熵率**，不是某个整数的因数熵，也不是 Robin 比值。
+
+---
+

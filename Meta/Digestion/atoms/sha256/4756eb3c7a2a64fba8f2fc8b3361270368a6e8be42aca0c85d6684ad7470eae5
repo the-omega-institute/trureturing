@@ -1,0 +1,39 @@
+## 定理 96.1　系数重建误差
+
+有：
+
+$$
+\boxed{
+|\widehat a-a|\le\epsilon,
+}
+\tag{96.1}
+$$
+
+$$
+\boxed{
+\|\widehat b-b\|_2
+\le
+\frac{\sqrt d\,\epsilon}{2h},
+}
+\tag{96.2}
+$$
+
+$$
+\boxed{
+\|\widehat C-C\|_{\mathrm{op}}
+\le
+\frac{2d\,\epsilon}{h^2}.
+}
+\tag{96.3}
+$$
+
+### 证明
+
+式（93.2）的分子包含两个读数误差，故每个 \(b_i\) 的误差不超过 \(\epsilon/(2h)\)。
+
+式（93.3）、（93.4）的分子误差绝对值均不超过 \(4\epsilon\)，故每个 \(C_{ij}\) 的误差不超过 \(2\epsilon/h^2\)。
+
+再使用向量范数及矩阵行和范数界即可。∎
+
+---
+

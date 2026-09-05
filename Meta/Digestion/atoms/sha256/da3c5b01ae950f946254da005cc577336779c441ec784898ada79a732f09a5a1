@@ -1,0 +1,64 @@
+## 假设 115.1　结构自身演化与有限观察协议
+
+令完整结构 Hamiltonian 为：
+
+$$
+H_G^{(N)}.
+$$
+
+在没有观察者耦合时，结构参考演化为：
+
+$$
+\sigma_N^0(t)
+=
+e^{-itH_G^{(N)}/\hbar}
+\sigma_N(0)
+e^{itH_G^{(N)}/\hbar}.
+$$
+
+定义标量钟律：
+
+$$
+r(t,v)
+=
+\operatorname{Tr}[\sigma_N^0(t)\widehat R_N(v)],
+$$
+
+$$
+n(t,v)=\sqrt{r(t,v)}.
+$$
+
+实际联合 Hamiltonian 为：
+
+$$
+\boxed{
+H_{\mathrm{act}}(t)
+=
+H_O(t)\otimes I
++
+I\otimes H_G^{(N)}
++
+\sum_aF_a(t)\otimes\widehat n_N(v_a(t)).
+}
+\tag{115.1}
+$$
+
+候选经典过程使用：
+
+$$
+\boxed{
+H_{\mathrm{cl}}(t)
+=
+\left[
+H_O(t)+\sum_a n(t,v_a(t))F_a(t)
+\right]\otimes I
++
+I\otimes H_G^{(N)}.
+}
+\tag{115.2}
+$$
+
+初始结构与观察者及其测试参照独立。控制装置的允许范围仍需另外说明；本定理不把时变控制当作无成本操作。
+
+---
+

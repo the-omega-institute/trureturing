@@ -1,0 +1,44 @@
+# 十、实际待证命题现在可以完全写成系数不等式
+
+对每个实际 \(q_d\)，定义：
+
+$$
+A_d=C_{q_d}-\frac{a_1}{d}I,
+$$
+
+$$
+S_d=\operatorname{Tr}(A_d^2)
+=
+-\frac{d-1}{12d}\chi_4.
+$$
+
+再完全按照式（L7）—（L9），从实际系数计算 Schur 读数。
+
+那么：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left[
+S_d\ge0,\quad
+k!\!
+\sum_{\substack{\lambda\vdash k\\\ell(\lambda)\le d}}
+\frac{|s_\lambda[A_d]|^2}{(d)_\lambda}
+\le S_d^k
+\right]
+\quad\forall d\ge2,\ \forall k\ge1.
+}
+\tag{L32}
+$$
+
+这条式子不输入未知零点，也不输入一个已经正的自由算子。
+
+但它仍然需要实际算术证明。
+
+**普通 Fock 空间正性只给出右边为 \(N_d^k\) 的更弱上界；把 \(N_d\) 降到 \(S_d\)，才是承重部分。**
+
+若试图通过“量子投影概率不超过一”来证明式（L32），就会在这个降尺度步骤发生循环。
+
+---
+

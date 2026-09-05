@@ -1,0 +1,47 @@
+# 九、若存在离线零点，这个固定协议会留下一个精确的非零极限
+
+记实际非平凡零点：
+
+$$
+\rho=\frac12+\delta_\rho+i\gamma_\rho,
+\qquad\gamma_\rho>0.
+$$
+
+对应折叠倒数谱点：
+
+$$
+u_\rho=-\frac1{(\delta_\rho+i\gamma_\rho)^2}.
+$$
+
+因此：
+
+$$
+\boxed{
+|\Im u_\rho|
+=
+\frac{2|\delta_\rho|\gamma_\rho}
+{(\delta_\rho^2+\gamma_\rho^2)^2}.
+}
+\tag{I23}
+$$
+
+定义：
+
+$$
+\boxed{
+B_\infty=
+\sup_{\Im\rho>0}
+\frac{2|\delta_\rho|\gamma_\rho}
+{(\delta_\rho^2+\gamma_\rho^2)^2}.
+}
+$$
+
+则：
+
+$$
+\boxed{
+\beta(C_d)\longrightarrow B_\infty.
+}
+\tag{I24}
+$$
+

@@ -1,0 +1,125 @@
+# 十一、全阶极限读取一个明确的实际离线预算
+
+记 \(q_d\) 的根为 \(\theta_{d,j}\)，按重数计：
+
+$$
+\mathcal E_{\mathrm{spec}}(C_d)
+=
+\sum_{j=1}^{d}(\Im\theta_{d,j})^2.
+$$
+
+前文已经建立局部一致收敛：
+
+$$
+P_d\longrightarrow D.
+$$
+
+为了从有限根的局部收敛，转到全部平方和，还需要控制趋零的倒数谱尾。
+
+定义：
+
+$$
+N_d(t)=\#\{j:|\theta_{d,j}|\ge t\}.
+$$
+
+由圆周 Jensen 公式和 \(P_d\) 的正系数：
+
+$$
+N_d(t)\le\frac{\log D(2/t)}{\log2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\sum_{|\theta_{d,j}|\le\varepsilon}
+|\theta_{d,j}|^2
+\le
+\frac2{\log2}
+\int_0^\varepsilon
+t\log D(2/t)\,dt.
+}
+\tag{J29}
+$$
+
+实际 ξ 的增长给出：
+
+$$
+\log D(v)=O(\sqrt v\log v),
+$$
+
+于是右边为：
+
+$$
+O\!\left(\varepsilon^{3/2}\log\frac1\varepsilon\right)
+\longrightarrow0.
+$$
+
+这项尾界不使用 RH。
+
+结合零点的局部稳定性，可以得到全部平方和收敛。解析零点及重数的局部处理必须在不穿过零点的边界上进行。([DLMF][4])
+
+现在写实际非平凡零点：
+
+$$
+\rho=\frac12+\delta_\rho+i\gamma_\rho,
+\qquad\gamma_\rho>0,
+$$
+
+重数为 \(m_\rho\)。
+
+对应倒数折叠谱点：
+
+$$
+u_\rho=-\frac1{(\delta_\rho+i\gamma_\rho)^2}.
+$$
+
+其虚部为：
+
+$$
+\Im u_\rho
+=
+\frac{2\delta_\rho\gamma_\rho}
+{(\delta_\rho^2+\gamma_\rho^2)^2}.
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{d\to\infty}
+\mathcal E_{\mathrm{spec}}(C_d)
+=
+\mathfrak E_\xi,
+}
+\tag{J30}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathfrak E_\xi
+=
+4\sum_{\substack{\rho\ \mathrm{互异}\\\Im\rho>0}}
+\frac{
+m_\rho\delta_\rho^2\gamma_\rho^2
+}{
+(\delta_\rho^2+\gamma_\rho^2)^4
+}.
+}
+\tag{J31}
+$$
+
+每项非负，并且：
+
+$$
+\boxed{
+\mathfrak E_\xi=0\iff\mathrm{RH}.
+}
+$$
+
+这个量不同于此前最大谱虚部，也不同于迹范数缺额；它按照平方累加全部方向，因此保留了重数权重。
+
+---
+

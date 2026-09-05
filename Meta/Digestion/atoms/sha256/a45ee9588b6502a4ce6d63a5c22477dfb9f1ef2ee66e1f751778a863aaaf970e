@@ -1,0 +1,31 @@
+## 定义 123.2　过去域重叠数
+
+对平均区域 \(Q\subseteq\Lambda\)，令
+
+$$
+N_Q=|Q|,
+$$
+
+并定义
+
+$$
+\boxed{
+b_Q(m)
+=
+\max_{x\in Q}
+\#\left\{
+y\in Q:
+\mathsf P_m(x)\cap\mathsf P_m(y)\ne\varnothing
+\right\}.
+}
+\tag{123.2}
+$$
+
+显然
+
+$$
+1\le b_Q(m)\le N_Q.
+$$
+
+---
+

@@ -28,3 +28,9 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 - 产出由选题函数决定:唯一两个真解决出自把判据改为「近期论文明确写出且文献无证明」的那一轮。
 - 13 次重做零数学错误,全是镜像/产地/import;镜像核对先于冻结把重做成本从一次 deposit 降到一次只读席。
 - 负载门的瓶颈是 codex 席位数(本机 ≤ 8 席含其他会话),不是 CPU。
+
+## 2026-09-06 增补
+- `op-resume-seat.sh` 的负载门新增**上游健康**条件:`CODEX_HEALTH_URL`(默认 codex 提供方 `/responses`)返回 502/503/000 时不放行——同日该网关整体 502 使 11 席同时 turn.failed;判死因看 `worker.stdout.log` 尾部,不看退出码。
+- 镜像核对模板第 3 项扩为「公式中每个符号须为绑定变量 / 本模块已镜像的 Lean 公开名 / Mathlib 或原子对象,禁临时缩写」(Skolem #5597 冻结后才被 quality 席抓到 `red` ≠ `reducedState`);第 7 项明确公开 def 也须镜像或 `private`;第 11 项要求 L 平面注带 DOI 或 arXiv;第 12 项 import 最小化(禁 umbrella `import Mathlib`)。
+- 实施基底模板新增:header/helper 以 `tools/scripts/agent/header-check.sh` 工具校验(目录上限已随 #5630 对齐 24);emit 前先 `make lean-report`;Stage B 改镜像后必做渲染检查(`grep -E '&&|\|\||==|!='` 发射 md 为空;`make preflight` 中点名本模块的 `markdown red` 行即停)。
+- 理论卷增订 ingest 走 `op-ingest-new-noalign.sh`(绕开 issue #5606 的 align 重排)。
