@@ -27,7 +27,7 @@ docs/theory(参考输入)──摄入机器──► Lean(唯一真源)◄──
 - **docs/theory = 仅参考输入**:经摄入机器(atomizer+消化账本)消化;Lean/C# 对其零知识零定位(TheoryIsolation 守卫)。**卷与 atoms 不删仍是建设者纪律**:已形式化者不重复形式化,勘误以追加散文与新 atom 表达。**不再有只增不减的机器判官**——owner 2026-09-02 裁决「只增不减的账本就是 git 本身,只保证数据当下正确」;改删历史由 git 查证。**实现层仍无既有 CAS blob 删除面**;失败回滚只删除本次调用新建且尚未入账的 blob。
 
 - **节点** = 命题/工件(closed/open/tail/semantic 四态账目);**边** = 证明依赖。**无环**:证明不循环 → 良基 → 可归纳、可分层。
-- **冻结律(核心)**:节点一旦 **kernel-verified 为真 → 冻结,单调累积,永不解冻**(append-only;SL-008)。图只增不减、不可逆——**这就是"坐标系不动点"(GICT 7.3)的运行形式**:已冻结的真,是变换下不变的标架。
+- **冻结律(核心)**:节点一旦 **kernel-verified 为真 → 冻结,单调累积,永不解冻**(成员身份 = `Golden/Frozen/state/<module>.lean.json` 状态片存在;SL-008 只判成员状态与当前树一致;历史归 git,不再有只增不减的机器判官——owner 2026-09-02)。图只增不减、不可逆——**这就是"坐标系不动点"(GICT 7.3)的运行形式**:已冻结的真,是变换下不变的标架。
 - **两个偏序,禁混用**(多模型设计面板勘正):**图深度 depth(v)** = 最长依赖路径(无前置=0,否则 1+max depth(前置)),是证明拓扑的量,非任意拓扑序号、非入度;**信任地层 τ**(第 21 条)= harness 保护面的信任分层(信任根 τ=0,内容 τ_max),是变更治理的量。二者相关(信任根被最多后代依赖)但不同构,各自机器可算,不得互相冒充。
 - **成本 = 后代子图**:翻一节点须撤其整个后代 → `Cost ∝ |后代子图|`(去重,可审计向量而非单浮点)→ 越核心越贵(第 21 条 `C(τ)=C_leaf·α^(τ_max−τ)` 的图论根)。
 - **保守扩展 = 冻结律的规则层投影**:`H(a)=admit ⟹ H′(a)=admit`,新规则不翻已冻结节点(第 21 条承重梁)。
@@ -149,7 +149,7 @@ Blueprint/D5/<同一 GID 路径>.scribe.cs
   ▼
 Blueprint/D5/<同一 GID 路径>.md              投影·禁手改
   │ make deposit ATOM_ID=x GID=g
-  └─► Golden/Frozen/accepted/<event_hash>.json           冻结事件·append-only
+  └─► Golden/Frozen/state/<GID 路径>.lean.json            冻结成员状态片·`{statement_id}`·当前态
   │ make cover / cover-batch
   ▼
 backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
@@ -157,7 +157,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 **GID 路径在三处逐段同形**(`D5/….lean` ↔ `Blueprint/D5/….scribe.cs` ↔ `Blueprint/D5/….md`),这是第 6 条"地址由算法算出"的落点:三处对不齐即地址错,不是文件少写了一个。
 
 **三类改动形态,面集合封闭;deposit 与 cover 可在同一 PR、同一工作树顺序执行**:
-- **deposit**:`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/accepted/*`。
+- **deposit**:`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/state/**`(accepted 事件目录为 contract 前过渡形态,见 #4687)。
 - **cover**:同一 `atom_id` 的账目条目写入 coverage 边,并由 residual-open 迁入机器派生的目标状态。
 - **ingest**:`docs/develop/theory/**` + `atoms/sha256/*` + `backfill/**/residual-open/*`。
 
@@ -166,7 +166,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 **coverage 边终态 contract(owner 2026-09-03 定)**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;candidate 与 protected-base loader 均只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`align-digestion-status` 从当前 report 与冻结账本直接刷新 target,不保留旧值;任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移现仅作为已完成的历史判例。
 
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
-- **冻结态(真值侧,二值)**:`Golden/Frozen/accepted/` 中存在该 `statement_id` 的 `Freeze` 事件 ⟺ 已冻结,**永不解冻**(第〇节冻结律;SL-008 append-only diff 守卫)。在 commit `572cd43587f120a379cf83871b68c249be36cd5e` 实测 3,013 条,`event_type` 全为 `Freeze`、`schema_version` 全为 5;payload 承重四项(以 writer 为准):`statement_id`(节点身份)、`declaration_statement_ids`、`descriptor_selector`(指回 `.lean` 路径)、`prerequisite_frozen_node_ids`——**末项就是真值 DAG 的边**,不是元数据。
+- **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,**永不解冻**(第〇节冻结律;SL-008 判当前态 C1–C5,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录)。〔以下计数与 payload 描述为 2026-09-02 前事件账本时期的读数,保留为审计记录〕在 commit `572cd43587f120a379cf83871b68c249be36cd5e` 实测 3,013 条,`event_type` 全为 `Freeze`、`schema_version` 全为 5;payload 承重四项(以 writer 为准):`statement_id`(节点身份)、`declaration_statement_ids`、`descriptor_selector`(指回 `.lean` 路径)、`prerequisite_frozen_node_ids`——**末项就是真值 DAG 的边**,不是元数据。
 - **消化态(账目侧,三值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与 coverage 数据齐备)。在 commit `572cd43587f120a379cf83871b68c249be36cd5e` 实测 18,234 / 127 / 1,201,atom CAS 19,581,source 28(27 卷 md + 1 个 `.jsonl` 注册表)。
 - **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids[].gid` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 4 条冒领。
 
@@ -308,7 +308,7 @@ harness 的本质,就是**给各类事定义"这类该怎么处理"**——先�
 开源仓库的约束模型:**约束人与约束 AI 是同一件事**——提交者是谁(维护者/agent/陌生 fork)与准入无关,一切提交经**同一道机械 harness 门**;人审与 AI 审是**质量增益,绝不是准入权威**。
 - **`dev`** = 集成主分支(default);一切实施经 PR 合入 dev。**`main`** = 发布分支;dev 稳定后经 release PR + `tag E<n>`(spec A14)推进,main 即"已发布/可复现"的冻结态。
 - **实施分支**:在独立 worktree(第 16 条),新建分支的 creation grammar 由 `WorktreeCommand` 唯一执行,形如 `<creation-namespace>/<kind>/<任务码>`,其中当前 creation namespace 只取 `WorktreeCommand.CreationNamespace`;精确 kind 词表只在同一 C# 所有者中定义。新建分类与受管生命周期必须分离:前者约束新产出,后者继续识别 `WorktreeCommand.LifecycleNamespaces` 中每个 namespace 的任何非空子路径,避免 creation 词表变化缩窄清理作用域。historical `harness/*` 仅属 lifecycle ownership(可回收),不是可创建 alias;这是前向新建约束,不执行存量分支清理。
-- **合并门(纯机器)**〔勘注 2026-08-13,owner 同日裁决系列的收口〕:PR → dev 须过 **三 required check**:① engineering(build --warnaserror + `make -C tools test` 全量 + selftest 字节比对 + 能力链编译证明);② lean-inspect(post-merge Lean 报告内容寻址生产);③ admission(**候选自带判官**跑 `check --protected-base <dev-parent>`——base 只以受审 merge 对象第一父提交的 SHA 参与 git 对象级 diff,**不 checkout、不编译 base**;`pull_request_target` 仍保证 workflow 文本来自 base 侧)。冻结面(Hearts / `Golden/Frozen/accepted/` append-only / 冻结模块不可变)由 SL-008 diff 守卫机器判;check-time union 级错误由 PR merge-ref CI 检测,M1→M2 残余由 dev push CI 检测 + 清扫(第 20 条形态)。绿=auto-merge 自动合;红=修根因不绕。`enforce_admins` 实测 false(见第〇节勘注)。
+- **合并门(纯机器)**〔勘注 2026-08-13,owner 同日裁决系列的收口〕:PR → dev 须过 **三 required check**:① engineering(build --warnaserror + `make -C tools test` 全量 + selftest 字节比对 + 能力链编译证明);② lean-inspect(post-merge Lean 报告内容寻址生产);③ admission(**候选自带判官**跑 `check --protected-base <dev-parent>`——base 只以受审 merge 对象第一父提交的 SHA 参与 git 对象级 diff,**不 checkout、不编译 base**;`pull_request_target` 仍保证 workflow 文本来自 base 侧)。冻结面(Hearts / `Golden/Frozen/state/` 状态片与当前 report 的 pin 一致 / 冻结模块不可变)由 SL-008 机器判;check-time union 级错误由 PR merge-ref CI 检测,M1→M2 残余由 dev push CI 检测 + 清扫(第 20 条形态)。绿=auto-merge 自动合;红=修根因不绕。`enforce_admins` 实测 false(见第〇节勘注)。
 - **baseline 的 exit 语义分离**:0=内容全验通过;1/2=违规/基础设施,红;3=SL-022 元层变更——标注入账 + 强制 candidate `lake build` 阻断地板(**记录在案的 bootstrap 脚手架**:组件 C 保守扩展门到位后,改 harness 本身也由机器判成本与保守性,此路径关闭)。
 - **`strict` 严禁开启(用户 2026-08-10 τ=0 裁决;此条覆盖同日早先记录)**:`strict`(分支必须跟上 base)**一律不得开启**。理由是它把合并变成**线性**:每个 PR 都要同步 dev head 并重跑一遍完整 CI,而 dev 每小时前进约 16 个提交、CI 一轮约 344s——实测**追平 2.15 次/PR、48% 的 PR 追平 ≥2 次**,数学上追不上。**一致性问题一律用其他方式解决,不得靠 strict。**
   **它原本守的是什么(保留,因为替代机制必须接住它)**:不是"改动会不会冲突",而是**被验过的那棵树就是落地的那棵树**。现三处 CI checkout 已改取 GitHub `refs/pull/N/merge`(`ci.yml:49,314,589`;push 仍回退 `github.sha`),harness 判 `merge(dev_tip, head)` 的并集树;基线从该 merge commit 的第一父提交 `HEAD^1` 机械取得,delta 为 `HEAD^1..HEAD`,即 PR 相对当时 dev 的落地净增量。`GitRepositoryGateway.cs:114-125` 的注释同步记录此契约。此修复**不等于严格同一棵落地树**:若检查 M1 后 dev 在 auto-merge 前推进,GitHub 会重算 merge ref,实际可落 M2;缺口从「head vs merge」缩为「check-time merge M1 vs land-time merge M2」,未消失,不得据此重开 `strict`。

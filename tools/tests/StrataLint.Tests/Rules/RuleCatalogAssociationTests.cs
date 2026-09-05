@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -119,8 +120,16 @@ public sealed class RuleCatalogAssociationTests
         var outcome = catalog.Execute(new RuleFixture().Build());
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome).Capability;
-        Assert.Equal(descriptors.Select(static descriptor => descriptor.Id), completed.ExecutedRules);
-        Assert.Empty(completed.DeferredRules);
+        Assert.Equal(
+            descriptors
+                .Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Active)
+                .Select(static descriptor => descriptor.Id),
+            completed.ExecutedRules);
+        Assert.Equal(
+            descriptors
+                .Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Deferred)
+                .Select(static descriptor => descriptor.Id),
+            completed.DeferredRules.Select(static deferred => deferred.RuleId));
         Assert.Equal(
             new Diagnostic(
                 RuleId.CreateKnown(17),
@@ -130,6 +139,119 @@ public sealed class RuleCatalogAssociationTests
                 uniqueFinding.Path,
                 uniqueFinding.Message),
             Assert.Single(completed.Diagnostics));
+    }
+
+    [Fact]
+    public void MeasureRuleObservesTheDefinedExecutionOrder()
+    {
+        var measured = ImmutableArray.CreateBuilder<RuleId>();
+        var context = new RuleFixture().Build(RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Rules/RepositoryRules.cs"]));
+
+        var outcome = RuleCatalog.Default.Execute(
+            context,
+            (ruleId, _, evaluate) =>
+            {
+                measured.Add(ruleId);
+                return evaluate();
+            });
+
+        Assert.IsType<RuleExecutionOutcome.Completed>(outcome);
+        Assert.Equal(
+            RuleCatalog.ExecutionOrder.Select(static id => id.Value),
+            measured.Select(static id => id.Value));
+    }
+
+    [Fact]
+    public void ExecutionOrderIsAnExactNonDuplicatedPermutationOfActiveRegistrations()
+    {
+        var activeIds = RepositoryRules.CreateRegistrations()
+            .Where(static registration => registration.Descriptor.Lifecycle is RuleLifecycle.Active)
+            .Select(static registration => registration.Descriptor.Id)
+            .ToImmutableArray();
+        var executionOrder = RuleCatalog.ExecutionOrder;
+
+        Assert.DoesNotContain(activeIds.GroupBy(static id => id), static group => group.Count() > 1);
+        Assert.DoesNotContain(executionOrder.GroupBy(static id => id), static group => group.Count() > 1);
+        Assert.Empty(activeIds.Except(executionOrder));
+        Assert.Empty(executionOrder.Except(activeIds));
+    }
+
+    [Fact]
+    public void CanonicalAndPriorityExecutionProduceEquivalentCompletedRuleSets()
+    {
+        var canonicalOrder = RepositoryRules.CreateRegistrations()
+            .Where(static registration => registration.Descriptor.Lifecycle is RuleLifecycle.Active)
+            .Select(static registration => registration.Descriptor.Id)
+            .ToImmutableArray();
+        var priorityOrder = RuleCatalog.ExecutionOrder;
+        Assert.False(
+            canonicalOrder.SequenceEqual(priorityOrder),
+            $"Priority order [{string.Join(',', priorityOrder)}] must differ from canonical order "
+            + $"[{string.Join(',', canonicalOrder)}] for this equivalence test to carry evidence.");
+
+        var observedDiagnostics = false;
+        var observedExecutedInversion = false;
+        foreach (var scenario in new[] { "baseline", "badge", "sorry", "shared-rule-implementation" })
+        {
+            var canonical = ExecuteProductionInFreshWorld(scenario, canonicalOrder).Completed;
+            var priority = ExecuteProductionInFreshWorld(scenario, priorityOrder).Completed;
+
+            AssertEquivalentCompletedRuleSets(canonical, priority);
+            observedDiagnostics |= !canonical.Diagnostics.IsEmpty;
+            observedExecutedInversion |=
+                ContainsPartitionOrderInversion(canonicalOrder, priorityOrder, canonical.ExecutedRules);
+        }
+
+        Assert.True(observedDiagnostics, "The production scenarios must exercise at least one diagnostic.");
+        Assert.True(
+            observedExecutedInversion,
+            "At least one executed partition must contain a canonical-to-priority inversion.");
+    }
+
+    [Fact]
+    public void EquivalenceAssertionRejectsOrderDependentRulesWithFreshState()
+    {
+        var setterId = RuleId.CreateKnown(1);
+        var finderId = RuleId.CreateKnown(2);
+        var remainingIds = Enumerable.Range(1, 23).Except([5, 7, 9, 13, 14])
+            .Append(25).Append(26).Append(28)
+            .Select(RuleId.CreateKnown)
+            .Where(id => id != setterId && id != finderId)
+            .ToImmutableArray();
+        ImmutableArray<RuleId> setterFirstOrder = [setterId, finderId, .. remainingIds];
+        ImmutableArray<RuleId> finderFirstOrder = [finderId, setterId, .. remainingIds];
+        var setterFirst = ExecuteOrderDependentRulesInFreshWorld(setterFirstOrder);
+        var finderFirst = ExecuteOrderDependentRulesInFreshWorld(finderFirstOrder);
+
+        Assert.Empty(setterFirst.Diagnostics);
+        Assert.Single(finderFirst.Diagnostics);
+        var failure = Record.Exception(() => AssertEquivalentCompletedRuleSets(setterFirst, finderFirst));
+        Assert.NotNull(failure);
+        Assert.IsAssignableFrom<Xunit.Sdk.XunitException>(failure);
+    }
+
+    [Fact]
+    public void ExecutionOrderDoesNotChangeCertificateFingerprintOrCatalogRoot()
+    {
+        var canonicalOrder = RepositoryRules.CreateRegistrations()
+            .Where(static registration => registration.Descriptor.Lifecycle is RuleLifecycle.Active)
+            .Select(static registration => registration.Descriptor.Id)
+            .ToImmutableArray();
+        var canonicalRun = ExecuteProductionInFreshWorld("baseline", canonicalOrder);
+        var priorityRun = ExecuteProductionInFreshWorld("baseline", RuleCatalog.ExecutionOrder);
+        var canonical = CanonicalFixedPoint.Create([1, 2, 3], "registry-fixture");
+
+        var canonicalCertificate = AdmissionCertificate.Create(canonical, canonicalRun.Completed);
+        var priorityCertificate = AdmissionCertificate.Create(canonical, priorityRun.Completed);
+
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(canonicalCertificate.Fingerprint),
+            Encoding.UTF8.GetBytes(priorityCertificate.Fingerprint));
+        Assert.Equal(canonicalRun.Catalog.RootSha256, priorityRun.Catalog.RootSha256);
+        Assert.Equal<RuleDescriptor>(
+            canonicalRun.Catalog.Descriptors,
+            priorityRun.Catalog.Descriptors);
     }
 
     [Fact]
@@ -157,7 +279,9 @@ public sealed class RuleCatalogAssociationTests
         Assert.NotNull(skippedProperty);
         var skipped = Assert.IsType<ImmutableArray<RuleId>>(skippedProperty!.GetValue(completed));
         Assert.Equal(
-            registrations.Select(static registration => registration.Descriptor.Id),
+            registrations
+                .Where(static registration => registration.Descriptor.Lifecycle is RuleLifecycle.Active)
+                .Select(static registration => registration.Descriptor.Id),
             skipped);
     }
 
@@ -295,19 +419,109 @@ public sealed class RuleCatalogAssociationTests
             RuleCatalog.Default.RootSha256);
     }
 
+    private static CompletedRuleSet Completed(RuleExecutionOutcome outcome) =>
+        Assert.IsType<RuleExecutionOutcome.Completed>(outcome).Capability;
+
+    private static (RuleCatalog Catalog, CompletedRuleSet Completed) ExecuteProductionInFreshWorld(
+        string scenario,
+        ImmutableArray<RuleId> executionOrder)
+    {
+        var registrations = RepositoryRules.CreateRegistrations();
+        var catalog = RuleCatalog.CreateForTesting(registrations);
+        var fixture = new RuleFixture();
+        RuleEvaluationContext context;
+        if (scenario == "shared-rule-implementation")
+        {
+            context = fixture.Build(RawChangeSet.Create(
+                ["tools/StrataLint.Engine/Rules/RepositoryRules.cs"]));
+        }
+        else
+        {
+            if (scenario != "baseline")
+            {
+                fixture.Apply(scenario);
+            }
+
+            context = fixture.Build();
+        }
+
+        return (catalog, Completed(catalog.ExecuteInOrderForTesting(context, executionOrder)));
+    }
+
+    private static CompletedRuleSet ExecuteOrderDependentRulesInFreshWorld(
+        ImmutableArray<RuleId> executionOrder)
+    {
+        var state = new OrderDependentState();
+        var registrations = Enumerable.Range(1, 23).Except([5])
+            .Append(25).Append(26).Append(28)
+            .Select(number => new RuleRegistration(
+                Descriptor(number, $"descriptor {number}", DisplaySeverity.Error, AdmissionEffect.Block),
+                number switch
+                {
+                    1 => new StateSettingRule(state),
+                    2 => new FindingWhileStateUnsetRule(state),
+                    _ => new FakeRule(static _ => false, []),
+                }))
+            .ToImmutableArray();
+        var catalog = RuleCatalog.CreateForTesting(registrations);
+        var context = new RuleFixture().Build(RawChangeSet.Create(
+            ["tools/StrataLint.Engine/Rules/RepositoryRules.cs"]));
+        return Completed(catalog.ExecuteInOrderForTesting(context, executionOrder));
+    }
+
+    private static void AssertEquivalentCompletedRuleSets(
+        CompletedRuleSet canonical,
+        CompletedRuleSet priority)
+    {
+        Assert.Equal<Diagnostic>(NormalizeDiagnostics(canonical), NormalizeDiagnostics(priority));
+        Assert.Equal(
+            canonical.DeferredRules.Select(static rule =>
+                $"{rule.RuleId.Value}:{rule.CaseId.Value}:{rule.Title}"),
+            priority.DeferredRules.Select(static rule =>
+                $"{rule.RuleId.Value}:{rule.CaseId.Value}:{rule.Title}"));
+        Assert.Equal(
+            canonical.ExecutedRules.Select(static id => id.Value),
+            priority.ExecutedRules.Select(static id => id.Value));
+        Assert.Equal(
+            canonical.SkippedRules.Select(static id => id.Value),
+            priority.SkippedRules.Select(static id => id.Value));
+    }
+
+    private static bool ContainsPartitionOrderInversion(
+        ImmutableArray<RuleId> canonicalOrder,
+        ImmutableArray<RuleId> priorityOrder,
+        ImmutableArray<RuleId> partition)
+    {
+        var partitionIds = partition.ToImmutableHashSet();
+        return !canonicalOrder.Where(partitionIds.Contains)
+            .SequenceEqual(priorityOrder.Where(partitionIds.Contains));
+    }
+
+    private static ImmutableArray<Diagnostic> NormalizeDiagnostics(CompletedRuleSet completed) =>
+        completed.Diagnostics
+            .OrderBy(static diagnostic => diagnostic.RuleId.Value, StringComparer.Ordinal)
+            .ThenBy(static diagnostic => diagnostic.Path, StringComparer.Ordinal)
+            .ThenBy(static diagnostic => diagnostic.Message, StringComparer.Ordinal)
+            .ToImmutableArray();
+
     private static RuleDescriptor Descriptor(
         int number,
         string title,
         DisplaySeverity displaySeverity,
-        AdmissionEffect admissionEffect) =>
-        new(
+        AdmissionEffect admissionEffect)
+    {
+        var deferredCase = number is 7 or 9 or 13 or 14
+            ? CaseId.CreateKnown($"D5-T{number:0000}")
+            : null;
+        return new(
             RuleId.CreateKnown(number),
             title,
             displaySeverity,
             $"category-{number}",
             admissionEffect,
-            RuleLifecycle.Active,
-            null);
+            deferredCase is null ? RuleLifecycle.Active : RuleLifecycle.Deferred,
+            deferredCase);
+    }
 
     private static IRepositoryRule FindingRule(string path, string message) =>
         new FakeRule(static _ => false, [new RuleFinding(path, message)]);
@@ -346,5 +560,31 @@ public sealed class RuleCatalogAssociationTests
             EvaluationCount++;
             return [];
         }
+    }
+
+    private sealed class OrderDependentState
+    {
+        internal bool IsSet { get; set; }
+    }
+
+    private sealed class StateSettingRule(OrderDependentState state) : IRepositoryRule
+    {
+        public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) => true;
+
+        public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+        {
+            state.IsSet = true;
+            return [];
+        }
+    }
+
+    private sealed class FindingWhileStateUnsetRule(OrderDependentState state) : IRepositoryRule
+    {
+        public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) => true;
+
+        public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) =>
+            state.IsSet
+                ? []
+                : [new RuleFinding("synthetic/order-dependent.txt", "state was unset")];
     }
 }

@@ -104,7 +104,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsAnUnrelatedChangeWhenMaterialArchiveIsMissingAndUnused()
+    public void CheckAdmitsAnAddedAcceptedEventWithoutAStateFragmentOrSidecarRead()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -114,15 +114,24 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         AddFrozenLedger(fixture);
+        var addedEventPath = fixture.Files.Keys
+            .First(FrozenLedgerChangeClassifier.IsAcceptedEventPath);
+        var snapshotWithEvent = Decode(Snapshot(fixture.Files));
+        var loaded = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
+            FrozenAcceptedEventLoader.LoadFiles(
+                [snapshotWithEvent.Files[RepoPath.CreateKnown(addedEventPath)]]));
+        var statePath = FrozenStatePath.FromModulePath(
+            Assert.Single(loaded.Events).DescriptorPath).Value;
+        fixture.Baseline.Remove(addedEventPath);
+        fixture.Files.Remove(statePath);
+        fixture.Baseline.Remove(statePath);
+        Assert.DoesNotContain(statePath, fixture.Files.Keys);
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create([RuleFixture.BlueprintPath]),
+            RawChangeSet.CreateWithKinds([(addedEventPath, RawChangeKind.Added)]),
             currentRaw,
             baselineRaw);
-        var ledger = new ProductionFrozenLedgerAdmissionServices(
-            "/repo",
-            ImmutableHashSet<string>.Empty);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
         RawLeanReportArtifact.WriteFile(
             candidateReport,
@@ -133,57 +142,14 @@ public sealed partial class ProductionEnvironmentTests
             "/repo",
             gateway,
             new FakeLeanReportSource(null),
-            scribeEmissionVerifier: null,
-            ledger);
+            scribeEmissionVerifier: null);
 
         var outcome = environment.Check([
             "--candidate-lean-report", candidateReport,
         ]);
 
         Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-        Assert.Equal(0, ledger.BaseViewReadCount);
-        Assert.Equal(0, ledger.DeltaEventLoadCount);
-        Assert.Equal(0, ledger.AdmissionCatalogBuildCount);
-        Assert.Equal(0, ledger.IncrementalValidationCount);
         Assert.Equal(0, gateway.CurrentRevisionResolutionCount);
-    }
-
-    [Fact]
-    public void CheckPerformsScopedLedgerCallsForAManagedLeanDelta()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = TrustedFrozenFixture();
-        var currentRaw = Snapshot(fixture.Files);
-        var baselineRaw = Snapshot(fixture.Baseline);
-        var gateway = new FakeRepositoryGateway(
-            RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
-            currentRaw,
-            baselineRaw);
-        var ledger = new ProductionFrozenLedgerAdmissionServices(
-            "/repo",
-            ImmutableHashSet<string>.Empty);
-        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        RawLeanReportArtifact.WriteFile(
-            candidateReport,
-            Decode(currentRaw),
-            LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            gateway,
-            new FakeLeanReportSource(null),
-            scribeEmissionVerifier: null,
-            ledger);
-
-        var outcome = environment.Check([
-            "--candidate-lean-report", candidateReport,
-        ]);
-
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-        Assert.Equal(1, ledger.BaseViewReadCount);
-        Assert.Equal(0, ledger.DeltaEventLoadCount);
-        Assert.Equal(1, ledger.AdmissionCatalogBuildCount);
-        Assert.Equal(1, ledger.IncrementalValidationCount);
-        Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
     }
 
     // --merge-base was an undocumented legacy alias of --protected-base; the
@@ -303,51 +269,6 @@ public sealed partial class ProductionEnvironmentTests
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("Scribe emission verification failed", failure.Message, StringComparison.Ordinal);
     }
-
-
-    [Fact]
-    public void CheckMapsTruthDagCyclesToSl001BeforeRuleCatalog()
-    {
-        const string loopPath = "D5/S0/Carrier/Loop.lean";
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
-        AddFrozenLedger(fixture);
-        SettleCurrentCoverage(fixture);
-        fixture.Files[loopPath] = "def loop : Nat := 0\n";
-        fixture.Reports[RuleFixture.RingPath] = new LeanFileReport(
-            ImmutableArray.Create("D5.S0.Carrier.Loop"),
-            ImmutableArray<LeanDeclaration>.Empty);
-        fixture.Reports[loopPath] = new LeanFileReport(
-            ImmutableArray.Create("D5.S0.Carrier.Ring"),
-            ImmutableArray<LeanDeclaration>.Empty);
-        var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[]
-            {
-                RuleFixture.SyntheticProtectedPath,
-                RuleFixture.BlueprintPath,
-            }),
-            Snapshot(fixture.Files),
-            Snapshot(fixture.Baseline));
-        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, source);
-
-        var outcome = CheckWithReports(environment, fixture);
-
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var meta = Assert.Single(
-            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(22)));
-        Assert.DoesNotContain(
-            rejected.Diagnostics,
-            item => item.RuleId == RuleId.CreateKnown(1));
-        Assert.NotEmpty(
-            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(8)));
-        Assert.Equal(RuleFixture.SyntheticProtectedPath, meta.Path);
-    }
-
     [Fact]
     public void RouteUsesTheRepositoryRegistryAndEmitsStableJson()
     {

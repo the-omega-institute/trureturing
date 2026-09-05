@@ -20,9 +20,6 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
             currentRaw,
             baselineRaw);
-        var ledger = new ProductionFrozenLedgerAdmissionServices(
-            "/repo",
-            ImmutableHashSet<string>.Empty);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
         File.WriteAllBytes(
             candidateReport,
@@ -39,8 +36,7 @@ public sealed partial class ProductionEnvironmentTests
                 "/repo",
                 gateway,
                 new FakeLeanReportSource(null),
-                scribeEmissionVerifier: null,
-                ledger);
+                scribeEmissionVerifier: null);
 
             outcome = environment.Check([
                 "--candidate-lean-report", candidateReport,
@@ -69,10 +65,6 @@ public sealed partial class ProductionEnvironmentTests
                     "policy-load",
                     "lean-closure",
                     "rule-passes",
-                    "frozen-ledger-prepare",
-                    "frozen-ledger-scope",
-                    "frozen-ledger-catalog",
-                    "frozen-ledger-delta",
                 ],
                 events
                     .Select(static document => document.RootElement.GetProperty("stage").GetString())
