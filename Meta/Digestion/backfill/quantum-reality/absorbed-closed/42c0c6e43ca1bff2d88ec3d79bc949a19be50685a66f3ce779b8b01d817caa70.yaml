@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:42c0c6e43ca1bff2d88ec3d79bc949a19be50685a66f3ce779b8b01d817caa70
+  normalized_sha256: sha256:42c0c6e43ca1bff2d88ec3d79bc949a19be50685a66f3ce779b8b01d817caa70
+cas_ref: sha256:42c0c6e43ca1bff2d88ec3d79bc949a19be50685a66f3ce779b8b01d817caa70
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.universal_replacement_capacity_growth
+    target_statement_id: sha256:67661ff28572e1b1c238a2dcfad8ea1a0b645d9813f37e187204001e6901ac4a
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.universal_replacement_capacity_growth
+      definition_sha256: sha256:2b84588ea8c8d9a0258d6ab1999514d8ade3ccd9c2de4ca18023e5a4d81c1620
+      emission_sha256: sha256:c0382a4f2cf8a58b6dda2642ca36d96724c9b3ce3d0ed088b31cc7129c4fa46f
+  unresolved_subitems: []

@@ -205,7 +205,9 @@ public sealed partial class ProductionEnvironmentTests
                 [])],
             []);
 
-        var json = DigestStatusCommand.RenderJson(evaluation);
+        var json = DigestStatusCommand.RenderJson(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
         var text = DigestStatusCommand.RenderText(evaluation);
 
         using var document = JsonDocument.Parse(json);

@@ -47,6 +47,14 @@ information_theorem zeroTheorem
   primitives zeroRealization
   : zeroArena.Law zeroRealization := by trivial
 
+expect_information_occurrence goodTheorem
+  in goodArena
+  from "LeanInformationAudit.Tests.SealAtomicity"
+
+expect_information_occurrence zeroTheorem
+  in zeroArena
+  from "LeanInformationAudit.Tests.SealAtomicity"
+
 /-- error: IE-C007 ZeroUniqueCapture: theorem
 LeanInformationAudit.Tests.SealAtomicity.zeroTheorem arena
 LeanInformationAudit.Tests.SealAtomicity.zeroArena full 2 without 2 -/

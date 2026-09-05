@@ -1,0 +1,2 @@
+- **9.21(Lee 球 n = 3 格点排除)**:第一档·已知结果的独立内核证明。核对:Gravier–Mollard–Payan 1998(DOI 10.1006/eujc.1998.0211)、Leung–Zhou 2020(DOI 10.1016/j.jcta.2019.105157);实施 FromLiterature;同上,收尾后不再开同类 lane。
+产地(第 9′ 条):skill=consensus-rnd:sshx;各核对由 orchestrator(claude 主循环)执行或转述席位自报(标明处);本评注由 Skolem v2 #5684 第二轮 architecture 席(ChatGPT Pro)按 5⁵ 硬规则②判 reject 而触发。

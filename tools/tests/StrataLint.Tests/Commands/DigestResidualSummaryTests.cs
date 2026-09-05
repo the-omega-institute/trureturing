@@ -22,9 +22,9 @@ public sealed class DigestResidualSummaryTests
             Entry("source-b", "atom-b", ("unresolved-subitem", "b-two")),
         ], []);
 
-        var original = DigestResidualSummary.RenderShards(baseline);
-        var aPaths = ChangedPaths(original, DigestResidualSummary.RenderShards(changedA));
-        var bPaths = ChangedPaths(original, DigestResidualSummary.RenderShards(changedB));
+        var original = RenderShards(baseline);
+        var aPaths = ChangedPaths(original, RenderShards(changedA));
+        var bPaths = ChangedPaths(original, RenderShards(changedB));
 
         Assert.Equal(["Generated/echo-residuals/source-a.md"], aPaths);
         Assert.Equal(["Generated/echo-residuals/source-b.md"], bPaths);
@@ -48,7 +48,7 @@ public sealed class DigestResidualSummaryTests
                 }
             }
         };
-        var shards = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+        var shards = RenderShards(new DigestionLedgerEvaluation([
             quarantined,
             Entry("source-b", "atom-settled", ("other-gap", "ignored")),
         ], []));
@@ -66,10 +66,10 @@ public sealed class DigestResidualSummaryTests
     [Fact]
     public void RenderShardsAddingSourceChangesOnlyItsNewShard()
     {
-        var before = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+        var before = RenderShards(new DigestionLedgerEvaluation([
             Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
         ], []));
-        var after = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+        var after = RenderShards(new DigestionLedgerEvaluation([
             Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
             Entry("source-b", "atom-b", ("unresolved-subitem", "b-one")),
         ], []));
@@ -80,11 +80,11 @@ public sealed class DigestResidualSummaryTests
     [Fact]
     public void RenderShardsRemovingSourcesLastEntryChangesOnlyItsShard()
     {
-        var before = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+        var before = RenderShards(new DigestionLedgerEvaluation([
             Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
             Entry("source-b", "atom-b", ("unresolved-subitem", "b-one")),
         ], []));
-        var after = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+        var after = RenderShards(new DigestionLedgerEvaluation([
             Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
         ], []));
 
@@ -118,7 +118,44 @@ public sealed class DigestResidualSummaryTests
             - unresolved_subitems: 5
             - mother_residual_atom_ids: 3
 
-            ## quarantined residuals
+            ## frontier
+
+            - residual_open: 0
+            - formalization_frontier: 0
+            - quarantined: 0
+            - withheld: 0
+            - chain_child: 0
+            - not_formalizable: 0
+            - formalizable_claim: 0
+
+            Per-source frontier:
+
+            - `source-a`
+              - residual_open: 0
+              - formalization_frontier: 0
+              - quarantined: 0
+              - withheld: 0
+              - chain_child: 0
+              - not_formalizable: 0
+              - formalizable_claim: 0
+            - `source-b`
+              - residual_open: 0
+              - formalization_frontier: 0
+              - quarantined: 0
+              - withheld: 0
+              - chain_child: 0
+              - not_formalizable: 0
+              - formalizable_claim: 0
+            - `spec-v1`
+              - residual_open: 0
+              - formalization_frontier: 0
+              - quarantined: 0
+              - withheld: 0
+              - chain_child: 0
+              - not_formalizable: 0
+              - formalizable_claim: 0
+
+            ### quarantined residuals
 
             - quarantined_subitems: 0
             - mother_quarantined_atom_ids: 0
@@ -166,8 +203,8 @@ public sealed class DigestResidualSummaryTests
             Mother residual atoms: none.
             """ + "\n";
 
-        var forward = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries], []));
-        var reverse = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries.Reverse()], []));
+        var forward = Render(new DigestionLedgerEvaluation([.. entries], []));
+        var reverse = Render(new DigestionLedgerEvaluation([.. entries.Reverse()], []));
 
         Assert.Equal(expected, forward);
         Assert.Equal(expected, reverse);
@@ -182,7 +219,7 @@ public sealed class DigestResidualSummaryTests
             Entry("source-b", "atom-b", ("unresolved-subitem", "source-b-only")),
         };
 
-        var summary = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries], []));
+        var summary = Render(new DigestionLedgerEvaluation([.. entries], []));
 
         Assert.Contains(
             """
@@ -223,4 +260,15 @@ public sealed class DigestResidualSummaryTests
                 gap.Detail,
                 DigestionGapSeverity.NonFatal)).ToImmutableArray());
     }
+
+    private static string Render(DigestionLedgerEvaluation evaluation) =>
+        DigestResidualSummary.Render(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
+
+    private static IReadOnlyDictionary<string, string> RenderShards(
+        DigestionLedgerEvaluation evaluation) =>
+        DigestResidualSummary.RenderShards(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
 }
