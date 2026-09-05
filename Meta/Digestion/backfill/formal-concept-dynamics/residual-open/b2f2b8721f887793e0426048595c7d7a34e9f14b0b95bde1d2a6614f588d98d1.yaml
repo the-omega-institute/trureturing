@@ -7,10 +7,7 @@ receipts:
   scribe: []
   unresolved_subitems:
     - generation-mechanism-invariance-undefined
-  cover_disposition:
-    outcome: partial-closed
-    gids:
-      - D5/S3/ConceptDynamics/Refinement/HumeInductiveCore.hume_inductive_core
-    gaps:
-      - code: unresolved-subitem
-        detail: generation-mechanism-invariance-undefined
+  quarantine:
+    justification: "Chain-child guard: `make show-atom` exited 0 and showed that the text begins with verbatim label `- 生成机制不变性。` and then appends the Hume display `finite past does not imply future law; finite past plus a descent premise implies future prediction`. Exact parent carriers `D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.inductive_sufficiency_criterion` and `D5/S3/ConceptDynamics/Refinement/HumeInductiveCore.hume_inductive_core` carry the factorization criterion and the appended display, but neither public statement defines generation-mechanism invariance or makes it a premise for finite-history descent. Exact D5 theorem-name and Scribe-title searches for mechanism invariance each exited 1; broader `mechanism|生成机制|机制不变` searches each exited 0. Frozen near misses `D5/S3/Observer/ProbabilisticClosure/GraphMechanismLawSeparation.same_graph_supports_distinct_mechanisms` and `D5/S3/ConceptDynamics/Transport/TransportCertificateValidity.TransportAssumption.Holds` state distinct mechanisms on one graph and preservation of a declared selection mechanism in transport, not invariance of a generation mechanism yielding history descent. The parent's pinned-Mathlib receipt found no matching history-descent theorem, and its GitHub Lean-code mechanism-invariance plus finite-history prediction query exited 0 with no exact owner. Exact gap: the source defines no generation-mechanism-invariance predicate, and no public theorem connects it to finite-history descent."
+    reentry_condition: "Define a source-level generation mechanism and its invariance predicate, then freeze a public theorem that uses that predicate to derive finite-history factorization or prediction refinement through the realized history image; retain the existing Hume carrier for the appended display and bind this child only when the label proposition is also public."
+    blocker_class: multi-clause-guard

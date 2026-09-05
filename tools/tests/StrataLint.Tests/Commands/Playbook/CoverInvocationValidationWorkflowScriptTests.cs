@@ -19,32 +19,4 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.False(fixture.LeanReportExists());
     }
 
-    internal sealed partial class TransactionFixture
-    {
-        internal bool LeanReportExists() => File.Exists(
-            Path.Combine(Root, ".lake/build/stratalint/raw-lean-report.json"));
-
-        internal ProcessOutput RunMakeCover(bool includeAtomId) =>
-            TestProcessRunner.Run(
-                "/usr/bin/env",
-                includeAtomId
-                    ?
-                    [
-                        $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
-                        $"PLAYBOOK_TEST_CALLS={callsPath}",
-                        "/usr/bin/make",
-                        "cover",
-                        $"ATOM_ID={AtomId}",
-                    ]
-                    :
-                    [
-                        $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
-                        $"PLAYBOOK_TEST_CALLS={callsPath}",
-                        "/usr/bin/make",
-                        "cover",
-                    ],
-                Root,
-                TestBudgets.ShortProcessHangGuard,
-                128 * 1024);
-    }
 }

@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-clause guard for `* 签名身份；`. The source supplies no signer, signature-verification relation, identity carrier, or relation to its report `R` and true-event readout `O`. D5 search found `ProvenanceAdmissionCountermodel`, whose public carrier has separate source-authentication and signature bits and whose theorem distinguishes admitted from unsigned provenance at equal content; it does not state that signed identity validates `R` against `O`. The pinned Mathlib search for signed/signature/authenticated identity exited 1. GitHub Lean code search for `signed identity` exited 0 with only unrelated algebraic uses and one host-assigned identity value. Local probe `/private/tmp/w73e36-atom1-probe.lean` exited 0 with a signed-identity readout equal to `O` while `R x ≠ O x`, so a bare identity readout does not state the required link."
+    reentry_condition: "Specify typed signer, identity, and signature-verification semantics, then freeze a public theorem relating verified report authorship to agreement between the submitted report and true-event readout."
+    blocker_class: multi-clause-guard

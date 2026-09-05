@@ -237,9 +237,10 @@ internal static partial class DigestionStatusEvaluator
         ImmutableArray<string> observations = default)
     {
         var evaluations = ImmutableArray.CreateBuilder<DigestionEntryEvaluation>(work.Count);
+        var byId = work.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
         foreach (var item in work)
         {
-            CompleteChainGaps(item, work);
+            CompleteChainGaps(item, byId);
             var truth = DeriveTruth(item, snapshot, changes);
             var status = new DigestionStatus(item.Migration, truth);
             if (validateProjectedStatus
@@ -573,9 +574,10 @@ internal static partial class DigestionStatusEvaluator
         }
     }
 
-    private static void CompleteChainGaps(EntryWork item, IReadOnlyList<EntryWork> work)
+    private static void CompleteChainGaps(
+        EntryWork item,
+        IReadOnlyDictionary<string, EntryWork> byId)
     {
-        var byId = work.ToDictionary(static candidate => candidate.Entry.AtomId, StringComparer.Ordinal);
         foreach (var atomId in item.Entry.Receipts.ChainAtoms)
         {
             if (!byId.TryGetValue(atomId, out var dependency)
