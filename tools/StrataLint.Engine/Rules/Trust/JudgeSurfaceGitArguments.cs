@@ -26,8 +26,14 @@ internal static partial class JudgeSurfaceRevisionScanner
 
     private static readonly HashSet<string> RestoreLongOptionsWithValue = new(StringComparer.Ordinal)
     {
-        "--conflict", "--pathspec-from-file", "--recurse-submodules",
+        "--conflict", "--pathspec-from-file",
     };
+
+    // `--[no-]recurse-submodules[=<checkout>]` (restore, checkout, read-tree) takes its value only
+    // attached; the bare word is a flag and must not consume `--source=HEAD^1` behind it (review
+    // round 10: `restore --recurse-submodules --source=HEAD^1 -- p`).
+    private static bool IsRecurseSubmodulesOption(string token) =>
+        token.StartsWith("--recurse-submodules=", StringComparison.Ordinal);
 
     private static string? RestoreSource(string[] tokens)
     {
@@ -56,7 +62,9 @@ internal static partial class JudgeSurfaceRevisionScanner
                     continue;
                 }
 
-                if (!(RestoreLongFlags.Contains(token) || HasKnownValuePrefix(token, RestoreLongOptionsWithValue)))
+                if (!(RestoreLongFlags.Contains(token)
+                    || HasKnownValuePrefix(token, RestoreLongOptionsWithValue)
+                    || IsRecurseSubmodulesOption(token)))
                 {
                     return $"option '{token}' is not in the closed option table (fail-closed)";
                 }
@@ -174,11 +182,9 @@ internal static partial class JudgeSurfaceRevisionScanner
                 continue;
             }
 
-            // `--[no-]recurse-submodules[=<checkout>]` carries its optional value attached, never as
-            // the next word (review round 9: `--recurse-submodules=on-demand HEAD` is a HEAD read).
             if (ReadTreeFlags.Contains(token)
                 || HasKnownValuePrefix(token, ReadTreeOptionsWithValue)
-                || token.StartsWith("--recurse-submodules=", StringComparison.Ordinal))
+                || IsRecurseSubmodulesOption(token))
             {
                 continue;
             }
@@ -230,7 +236,9 @@ internal static partial class JudgeSurfaceRevisionScanner
                 continue;
             }
 
-            if (CheckoutFlags.Contains(token) || HasKnownValuePrefix(token, CheckoutOptionsWithValue))
+            if (CheckoutFlags.Contains(token)
+                || HasKnownValuePrefix(token, CheckoutOptionsWithValue)
+                || IsRecurseSubmodulesOption(token))
             {
                 continue;
             }

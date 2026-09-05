@@ -106,6 +106,10 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("$'\\x67it' show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("$'\\147it' show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git show $'HEAD^1\\x3atools/scripts/workflow/x.sh' > out")]
+    [InlineData("git restore --recurse-submodules --source=HEAD^1 -- tools/scripts/workflow/x.sh")]
+    [InlineData("git restore --no-recurse-submodules -s HEAD^1 tools/scripts/workflow/x.sh")]
+    [InlineData("git checkout --recurse-submodules=on-demand HEAD^1 -- tools/scripts/workflow/x.sh")]
+    [InlineData("\\g\"i\"t show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git restore --stag --source=HEAD^1 -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --sou=HEAD^1 -- tools/scripts/workflow/x.sh")]
     [InlineData("time -p git show HEAD^1:tools/scripts/workflow/x.sh >out")]
@@ -188,6 +192,10 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("{fd}>/tmp/out git show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("$'git' show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("git read-tree --recurse-submodules=on-demand HEAD")]
+    [InlineData("git restore --recurse-submodules --source=HEAD -- tools/scripts/workflow/x.sh")]
+    [InlineData("git restore --recurse-submodules=on-demand --source HEAD tools/scripts/workflow/x.sh")]
+    [InlineData("git checkout --recurse-submodules=on-demand HEAD -- tools/scripts/workflow/x.sh")]
+    [InlineData("g\"\\i\"t show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git read-tree --no-recurse-submodules -u HEAD^{tree}")]
     [InlineData("git restore --staged --source=HEAD -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --conflict=diff3 tools/scripts/workflow/x.sh")]
@@ -258,6 +266,8 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("        \"run\" : \"git show HEAD^1:tools/scripts/workflow/x.sh >out\"")]
     [InlineData("        run : git show HEAD^1:tools/scripts/workflow/x.sh >out")]
     [InlineData("    steps: [{\"run\" : \"git show HEAD^1:tools/scripts/workflow/x.sh\"}]")]
+    [InlineData("        run: !!str\t\"git show HEAD^1:tools/scripts/workflow/x.sh\"")]
+    [InlineData("        run: !custom\t'git show HEAD^1:tools/scripts/workflow/x.sh'")]
     public void WorkflowRunScalarsAreShell(string line)
     {
         var finding = Assert.Single(Evaluate(WorkflowPath, line + "\n"));
@@ -276,6 +286,7 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("        run: \"\\U00110000 git rev-parse HEAD\"")]
     [InlineData("        run: !!str 'git rev-parse HEAD^1'")]
     [InlineData("    steps: [{run: \"echo ready\"}, {run: \"git show HEAD:tools/scripts/workflow/x.sh\"}]")]
+    [InlineData("        run: !!str\t'git rev-parse HEAD^1'")]
     public void WorkflowLinesWithoutAMaterializationAreAllowed(string line)
     {
         Assert.Empty(Evaluate(WorkflowPath, line + "\n"));
@@ -397,6 +408,50 @@ public sealed class JudgeSurfaceRevisionRuleTests
     {
         const string workflow = "      - \"run\" : >\n          git\n          show HEAD^1:tools/scripts/workflow/x.sh >out\n";
         Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void TaggedBaseRefWithATabIsRejected()
+    {
+        const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with:\n      ref: !!str\t\"${{ github.base_ref }}\"\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void TaggedFoldedRunBlockIsOneShellCommand()
+    {
+        const string workflow = "      - run: !!str >\n          git\n          show HEAD^1:tools/scripts/workflow/x.sh\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void TaggedLiteralRunBlockIsPlainShell()
+    {
+        const string workflow = "      - run: !!str |\n          git show HEAD^1:tools/scripts/workflow/x.sh\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void FoldedRunBlockKeepsTheBreakAroundAMoreIndentedLine()
+    {
+        const string workflow = "      - run: >\n          echo ready\n            git show HEAD^1:tools/scripts/workflow/x.sh\n          echo done\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("line 1:", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FoldedRunBlockWithAMoreIndentedHeadReadIsAllowed()
+    {
+        const string workflow = "      - run: >\n          echo ready\n            git show HEAD:tools/scripts/workflow/x.sh\n";
+        Assert.Empty(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void EmptyLineInsideAFoldedRunBlockIsANewline()
+    {
+        // `git show` (HEAD) and a bare `HEAD^1:…` word are two commands, neither a read.
+        const string workflow = "      - run: >\n          git show\n\n          HEAD^1:tools/scripts/workflow/x.sh\n      - run: echo done\n";
+        Assert.Empty(Evaluate(WorkflowPath, workflow));
     }
 
     [Fact]

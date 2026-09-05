@@ -134,6 +134,14 @@ internal static class JudgeSurfaceShellLexer
                     {
                         if (text[index] == '\\' && index + 1 < end)
                         {
+                            // Inside double quotes a backslash escapes only `$`, `` ` ``, `"`, `\`
+                            // and newline; before any other character it stays (`g"\i"t` is `g\it`,
+                            // not git; review round 10).
+                            if (text[index + 1] is not ('$' or '`' or '"' or '\\' or '\n'))
+                            {
+                                word.Append('\\');
+                            }
+
                             word.Append(text[index + 1]);
                             index += 2;
                             continue;

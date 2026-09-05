@@ -51,19 +51,27 @@ internal static partial class JudgeSurfaceRevisionScanner
         var isWorkflow = path.StartsWith(".github/", StringComparison.Ordinal)
             && (path.EndsWith(".yml", StringComparison.Ordinal)
                 || path.EndsWith(".yaml", StringComparison.Ordinal));
-        (int Line, int Indent, string Text)? foldedBlock = null;
+        (int Line, int Indent, int ContentIndent, bool PreviousMoreIndented, string Text)? foldedBlock = null;
         (int Line, string Text)? quotedScalar = null;
         foreach (var (lineNumber, line) in LogicalLines(text))
         {
             var index = lineNumber - 1;
             if (isWorkflow && foldedBlock is not null)
             {
-                // Inside a folded `run: >` block the more-indented lines are one folded scalar: a
-                // git command split across them is one command (review round 7).
+                // Inside a folded `run: >` block the lines fold into one scalar (review round 7),
+                // by YAML's rules: a line break folds to a space, but an empty line is a newline
+                // and the breaks around a MORE-indented line are preserved — both are shell
+                // command separators (review round 10: `echo ready` + `  git show HEAD^1:p`).
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    foldedBlock = foldedBlock.Value with { Text = foldedBlock.Value.Text + "\n" };
+                    continue;
+                }
+
                 if (line.Length > foldedBlock.Value.Indent
                     && string.IsNullOrWhiteSpace(line[..(foldedBlock.Value.Indent + 1)]))
                 {
-                    foldedBlock = foldedBlock.Value with { Text = foldedBlock.Value.Text + " " + line.Trim() };
+                    foldedBlock = FoldBlockLine(foldedBlock.Value, line);
                     continue;
                 }
 
@@ -88,7 +96,7 @@ internal static partial class JudgeSurfaceRevisionScanner
 
             if (isWorkflow && IsFoldedBlockStart(line, out var indent))
             {
-                foldedBlock = (index + 1, indent, string.Empty);
+                foldedBlock = (index + 1, indent, -1, false, string.Empty);
                 continue;
             }
 
@@ -161,9 +169,9 @@ internal static partial class JudgeSurfaceRevisionScanner
     }
 
     // Block scalar indicators may carry an indentation digit and a chomping sign in either order
-    // (`>2`, `>-2`, `|2-`; review round 8).
+    // (`>2`, `>-2`, `|2-`; review round 8) and an explicit tag before them (`!!str >`; round 10).
     private static readonly Regex FoldedBlockStart = new(
-        @"^(?<indent>\s*)(?:-\s+)?[""']?run[""']?\s*:\s*>(?:[-+]?\d?|\d[-+]?)\s*(?:#.*)?$",
+        @"^(?<indent>\s*)(?:-\s+)?[""']?run[""']?\s*:\s*(?:!\S*[ \t]+)?>(?:[-+]?\d?|\d[-+]?)\s*(?:#.*)?$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static readonly Regex BlockIndicator = new(
@@ -171,6 +179,25 @@ internal static partial class JudgeSurfaceRevisionScanner
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static bool IsBlockIndicator(string scalar) => BlockIndicator.IsMatch(scalar);
+
+    private static (int Line, int Indent, int ContentIndent, bool PreviousMoreIndented, string Text) FoldBlockLine(
+        (int Line, int Indent, int ContentIndent, bool PreviousMoreIndented, string Text) block,
+        string line)
+    {
+        var lineIndent = line.Length - line.TrimStart().Length;
+        var trimmed = line.Trim();
+        if (block.ContentIndent < 0)
+        {
+            // The first content line fixes the block's indentation.
+            return block with { ContentIndent = lineIndent, Text = block.Text + trimmed };
+        }
+
+        var moreIndented = lineIndent > block.ContentIndent;
+        var separator = block.Text.EndsWith('\n') ? string.Empty
+            : moreIndented || block.PreviousMoreIndented ? "\n"
+            : " ";
+        return block with { PreviousMoreIndented = moreIndented, Text = block.Text + separator + trimmed };
+    }
 
     private static bool IsFoldedBlockStart(string line, out int indent)
     {
@@ -235,7 +262,7 @@ internal static partial class JudgeSurfaceRevisionScanner
         var match = RunScalar.Match(line);
         if (match.Success)
         {
-            var shell = match.Groups["shell"].Value.Trim();
+            var shell = StripTag(match.Groups["shell"].Value.Trim());
             return IsBlockIndicator(shell) ? Array.Empty<string>() : new[] { DecodeYamlScalar(shell) };
         }
 
@@ -299,6 +326,8 @@ internal static partial class JudgeSurfaceRevisionScanner
     }
 
     // An explicit tag (`!!str "git …"`, `!custom …`) does not change the value that follows.
+    private static readonly char[] TagSeparators = { ' ', '\t' };
+
     private static string StripTag(string scalar)
     {
         if (!scalar.StartsWith('!'))
@@ -306,7 +335,9 @@ internal static partial class JudgeSurfaceRevisionScanner
             return scalar;
         }
 
-        var space = scalar.IndexOf(' ', StringComparison.Ordinal);
+        // The tag ends at YAML separation whitespace — a space or a tab (review round 10:
+        // `!!str<TAB>"git show …"`).
+        var space = scalar.IndexOfAny(TagSeparators);
         return space < 0 ? string.Empty : scalar[(space + 1)..].TrimStart();
     }
 
