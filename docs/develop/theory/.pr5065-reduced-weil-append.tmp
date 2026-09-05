@@ -1,0 +1,410 @@
+
+
+---
+
+## [PR #5065] MIRROR_KREIN_OPERATOR_GEOMETRY
+
+# 无参数 zeta 零点的镜像 Krein 算子几何
+
+**候选 GID：**
+
+```text
+D5/S3/Weil/ZetaBridge/ZeroDataPresentationEquiv
+D5/S3/Midline/Cayley/CanonicalZetaMirrorFundamentalSymmetry
+D5/S3/Midline/Cayley/CanonicalZetaCayleyJUnitary
+D5/S3/Midline/Cayley/FiniteMirrorKreinIndex
+```
+
+本节建立在同一 PR 的无参数对象 `zetaZeroData : ZeroData` 之上。全部陈述在 admission 完成以前属于 Candidate，Lean 声明承担唯一承重角色。
+
+### 1. presentation 选择与 canonical 内容
+
+任意两个 `ZeroData` 值之间存在唯一的零点保持重标号：
+
+\[
+e_{Z,Z'}:\mathbb N\simeq\mathbb N,
+\qquad
+Z'.\operatorname{zero}(e_{Z,Z'}n)=Z.\operatorname{zero}(n).
+\]
+
+该等价同时保持解析重数、谱参数、函数方程反射、复共轭和同高度镜像，并满足恒等、逆与复合律。因此自然数编号仍是 choice-based presentation，零点、重数、对称作用以及沿唯一重标号运输的观察量具有 presentation-independent 内容。
+
+### 2. 同高度镜像与固定点
+
+定义 \(M_Z=C_Z\circ R_Z\)，其中 \(R_Z\) 是函数方程反射，\(C_Z\) 是复共轭。机器节点证明：
+
+\[
+Z.\operatorname{zero}(M_Zn)=1-\overline{Z.\operatorname{zero}(n)},
+\]
+
+\[
+M_Z^2=I,
+\qquad
+m_{M_Zn}=m_n,
+\qquad
+\gamma_{M_Zn}=\overline{\gamma_n},
+\]
+
+以及：
+
+\[
+\boxed{M_Zn=n\iff\operatorname{Re}\rho_n=\frac12.}
+\]
+
+所以临界线是由函数方程与实结构预先确定的 involution 固定集。
+
+### 3. fundamental symmetry 与严格负方向
+
+镜像通过解析重数提升到：
+
+\[
+\mathcal I_Z=\sum_{n:\mathbb N}\operatorname{Fin}(m_n),
+\]
+
+并在 \(\mathcal H_Z=\ell^2(\mathcal I_Z)\) 上给出 involutive linear isometry \(J_Z\)。机器节点证明：
+
+\[
+J_Z^2=I,
+\qquad
+\langle J_Z\psi,\phi\rangle=\langle\psi,J_Z\phi\rangle.
+\]
+
+定义：
+
+\[
+[\psi,\phi]_{J_Z}=\langle\psi,J_Z\phi\rangle.
+\]
+
+每个被镜像移动的坐标 \(v\) 给出奇向量 \(v_-=e_v-J_Ze_v\)，并满足：
+
+\[
+J_Zv_-=-v_-,
+\qquad
+[v_-,v_-]_{J_Z}=-\|v_-\|^2<0.
+\]
+
+### 4. Cayley 算子无条件 J-unitary
+
+对 \(c(\rho)=(\rho-1)/\rho\)，镜像坐标满足：
+
+\[
+c(1-\overline\rho)=\overline{c(\rho)}^{-1}.
+\]
+
+因此 multiplicity-expanded 对角 Cayley 算子 \(U_Z\) 满足：
+
+\[
+\boxed{U_Z^*J_ZU_Z=J_Z.}
+\]
+
+该结论只使用函数方程与复共轭对称，不使用 RH。普通 Hilbert 酉性是更强的临界线条件。
+
+### 5. 有限镜像 Krein 指数
+
+在有限对称谱窗口 \(S_T\) 中，从每个非固定二元镜像轨道选一个代表，并按解析重数展开。定义：
+
+\[
+\kappa_T=\sum_{\substack{n\in S_T\\n<M_Zn}}m_n.
+\]
+
+机器节点证明有限奇坐标空间的基数为 \(\kappa_T\)，其标准负型在每个非零向量上严格为负，并且：
+
+\[
+\boxed{\kappa_T=0\iff\forall n\in S_T,\ \operatorname{Re}\rho_n=\frac12.}
+\]
+
+---
+
+## [PR #5065] MIRROR_KREIN_SECOND_LAYER_CLOSURE
+
+# 换枚举不变性、正交偶奇分解、Krein 逆与真实 Gram 惯性
+
+**候选 GID：**
+
+```text
+D5/S3/Midline/Cayley/ZeroDataHilbertPresentationTransport
+D5/S3/Midline/Cayley/CanonicalZetaMirrorEvenOddDecomposition
+D5/S3/Midline/Cayley/CanonicalZetaCayleyKreinInverse
+D5/S3/Midline/Cayley/FiniteMirrorKreinGramInertia
+```
+
+### 1. 整个 Hilbert 算子系统与 presentation 无关
+
+唯一零点保持重标号提升为 unitary：
+
+\[
+T_{Z,Z'}:\mathcal H_Z\simeq_u\mathcal H_{Z'}.
+\]
+
+它同时满足：
+
+\[
+TJ_Z=J_{Z'}T,
+\qquad
+TU_Z=U_{Z'}T,
+\qquad
+[T\psi,T\phi]_{J_{Z'}}=[\psi,\phi]_{J_Z}.
+\]
+
+因此镜像、Cayley 动力学和不定内积不依赖 choice-based 自然数编号。
+
+### 2. 规范化偶奇投影
+
+定义：
+
+\[
+P_+=\frac{I+J}{2},
+\qquad
+P_-=\frac{I-J}{2}.
+\]
+
+机器节点证明幂等性、互相湮灭、精确重建、\(\pm1\) 镜像本征律和 Hilbert 正交性。Krein 能量精确分解为：
+
+\[
+\boxed{\operatorname{Re}[\psi,\psi]_J=\|P_+\psi\|^2-\|P_-\psi\|^2.}
+\]
+
+所以负扇区是实际 mirror-odd spectral range。
+
+### 3. 显式有界 Krein 逆
+
+镜像互反使倒数 Cayley 系数可以由已有有界系数经镜像置换和共轭获得。由此构造有界双侧逆，并证明：
+
+\[
+\boxed{U^{-1}=JU^*J,}
+\qquad
+UJU^*=J.
+\]
+
+这一步不需要普通酉性或 RH。
+
+### 4. 真实有限奇向量 Gram 惯性
+
+对每个有限镜像轨道代表和每个重数副本，取实际 Hilbert 奇向量 \(v_i^-=e_i-Je_i\)。机器节点计算：
+
+\[
+[v_i^-,v_j^-]_J=-2\delta_{ij}.
+\]
+
+因此实际 Gram 矩阵是 \(G_T^-=-2I\)，并由仓库统一惯性接口证明：
+
+\[
+\boxed{\operatorname{negIndex}(G_T^-)=\kappa_T.}
+\]
+
+该定理确认零点目标几何本身拥有 \(\kappa_T\) 维负空间。它不意味着指定的标量 Weil 观察器能覆盖该完整 multiplicity-expanded 空间。
+
+---
+
+## [PR #5065] REDUCED_WEIL_OBSERVER_AND_MULTI_ORBIT_NEGATIVITY
+
+# 标量偶 Weil 观察器的可达空间、约化因子分解与多轨道负证书
+
+**候选 GID：**
+
+```text
+D5/S3/Weil/ZetaBridge/WeilEvaluationObservableSubspace
+D5/S3/Weil/ZetaBridge/FiniteMirrorReducedWeilFactorization
+D5/S3/Weil/ZetaBridge/FiniteEvenWeilOddInterpolation
+D5/S3/Weil/ZetaBridge/QuantitativeMultiOrbitWeilNegativeCertificate
+```
+
+本增补修正“标量偶 Weil 测试满秩覆盖完整 multiplicity-expanded mirror-odd 空间”的过强目标。真实观察器只访问一个约化空间。所有新陈述在 admission 完成以前属于 Candidate。
+
+### 1. 两个真实秩障碍
+
+对有限窗口 \(I_T\)，标量评价为：
+
+\[
+E_T(g)(n)=\widehat g(\gamma_n),
+\qquad
+\widetilde E_T(g)(n,k)=\widehat g(\gamma_n).
+\]
+
+所以评价在每个解析重数纤维上常值，不能区分同一零点的不同副本。
+
+同时，`WeilTestFunction` 的偶性给出 \(\widehat g(-z)=\widehat g(z)\)，而 \(\gamma_{R(n)}=-\gamma_n\)。因此：
+
+\[
+E_T(g)(R(n))=E_T(g)(n).
+\]
+
+新节点构造显式目标向量并证明：
+
+\[
+m_n\ge2\Longrightarrow\widetilde E_T\text{ 不满射},
+\]
+
+以及窗口中存在移动的反射对时：
+
+\[
+E_T\text{ 不满射到全部 distinct-zero vectors}.
+\]
+
+这说明 ambient Krein 负空间和 observer-reachable 负空间必须分开计算。
+
+### 2. 约化有限镜像形式
+
+定义 `FiniteReflectionEvenVector Z T` 为满足反射偶约束的 distinct-zero 向量。解析重数作为形式中的正权重保留，不再被重复解释为独立标量观察坐标。
+
+对 \(v_g(n)=\widehat g(\gamma_n)\)，定义：
+
+\[
+B_T(v,w)=\sum_{n\in I_T}m_n v(n)\overline{w(M(n))}.
+\]
+
+机器节点证明实际有限卷积平方零点和满足：
+
+\[
+\boxed{\operatorname{truncatedZeroSum}(Z,\operatorname{convolutionSquare}(g),T)=B_T(v_g,v_g).}
+\]
+
+对任意有限选择的非实离线四点轨道块，已有单轨道公式被聚合为：
+
+\[
+\boxed{Q_{\mathrm{block}}=E_{\mathrm{even}}-E_{\mathrm{odd}},\qquad E_{\mathrm{even}},E_{\mathrm{odd}}\ge0.}
+\]
+
+### 3. 约化奇空间上的显式线性插值
+
+`FiniteEvenWeilOrbitFrame` 记录有限个离线非实轨道通道及其两组节点 \(\gamma_i,\overline{\gamma_i}\)，并显式携带仓库有限偶插值定理所需的 sign-separation 条件。
+
+对任意 \(a:\iota\to\mathbb C\)，机器节点构造偶 Weil 测试函数，使：
+
+\[
+\widehat g(\gamma_i)=a_i,
+\qquad
+\widehat g(\overline{\gamma_i})=-a_i.
+\]
+
+约化奇读数：
+
+\[
+O_i(g)=\frac{\widehat g(\gamma_i)-\widehat g(\overline{\gamma_i})}{2}
+\]
+
+于是满足 \(O_i(g)=a_i\)。节点进一步选择坐标测试函数 \(g_i\)，定义显式有限线性合成：
+
+\[
+S(a)=\sum_i a_i g_i,
+\]
+
+并证明：
+
+\[
+\boxed{O_j(S(a))=a_j.}
+\]
+
+因此 \(S\) 是约化奇读数的右逆，并且是单射。
+
+### 4. 可观察奇 Gram 的精确负指数
+
+定义约化奇形式：
+
+\[
+B^-(g,h)=-4\sum_i m_i\overline{O_i(g)}O_i(h).
+\]
+
+坐标插值基满足 \(B^-(g_i,g_j)=-4m_i\delta_{ij}\)。所以真实可观察奇 Gram 为：
+
+\[
+\boxed{G_{\mathrm{obs}}^-=-4\operatorname{diag}(m_i).}
+\]
+
+解析重数严格为正，因此：
+
+\[
+\boxed{\operatorname{negIndex}(G_{\mathrm{obs}}^-)=|\iota|.}
+\]
+
+每个 independently interpolated orbit channel 贡献一个负方向。重数决定权重与稳定裕量，不增加标量观察器维数。
+
+### 5. 整个负子空间的定量稳定性
+
+对一般有限权重 \(w_i\ge m>0\)，定义 \(Q_0(a)=-\sum_iw_i|a_i|^2\)。若完整形式满足：
+
+\[
+Q(a)=Q_0(a)+R(a),
+\]
+
+并且存在统一二次余项界：
+
+\[
+|R(a)|\le\varepsilon\sum_i|a_i|^2\quad\text{对所有 }a,
+\]
+
+且 \(\varepsilon<m\)，则新通用定理证明：
+
+\[
+\boxed{a\ne0\Longrightarrow Q(a)<0.}
+\]
+
+这是整个有限维负子空间的稳定性结论。仅逐基向量控制余项不足，因为交叉项仍可能破坏线性组合上的负定性。
+
+在 Weil 特化中：
+
+\[
+Q_{\mathrm{target}}(a)=-4\sum_i m_i|a_i|^2,
+\]
+
+\[
+Q_{\mathrm{full}}(a)=\operatorname{Re}\operatorname{zeroSum}\left(Z,S(a)*\widetilde{S(a)}\right),
+\]
+
+并精确定义 \(R(a)=Q_{\mathrm{full}}(a)-Q_{\mathrm{target}}(a)\)。`QuantitativeMultiOrbitCertificate` 只要求一个正重数下界 \(m_*\)、统一余项界和 \(\varepsilon<4m_*\)。随后得到：
+
+\[
+\boxed{a\ne0\Longrightarrow Q_{\mathrm{full}}(a)<0,}
+\]
+
+且合成映射 \(S\) 单射。这给出一整个有限维、彼此独立的严格负完整 Weil 测试族。
+
+### 6. 与现有单轨道 separator 的关系
+
+仓库已有 `OffLineNonrealZeroNegativeWeilSquare` 使用 finite even interpolation、closed-strip Fourier–Laplace decay、convolution-power amplification 和 absolute zero summability，将一个指定离线轨道的负贡献压过其余零点尾项。
+
+新多轨道链没有重复该单轨道构造。它抽取了多维推广所需的正确接口：
+
+\[
+\boxed{\text{统一余项的 operator-norm 型二次界}}
+\]
+
+而不是每个坐标单独的标量尾界。
+
+下一解析节点应从已有 Burnol powering 与 closed-strip decay 中构造 `HasUniformMultiOrbitRemainderBound F epsilon`，并证明其 \(\varepsilon\) 可低于 \(4m_*\)。
+
+### 7. 当前严格边界
+
+本轮已经形式化：
+
+1. scalar even Weil evaluation 的 multiplicity-fiber constancy；
+2. functional-equation reflection evenness；
+3. 对 ambient expanded space 和 unrestricted distinct-zero space 的显式非满射证书；
+4. 有限实际卷积平方零点和的约化镜像因子分解；
+5. 有限 orbit block 的 even-minus-odd 聚合；
+6. sign-separated 多轨道约化奇读数的同时插值；
+7. 显式有限线性 right inverse；
+8. 可观察奇 Gram \( -4\operatorname{diag}(m_i) \)；
+9. 其负指数等于独立可观察轨道数；
+10. 统一二次余项小于最小负裕量时，整个有限维负子空间保持严格负定；
+11. 对真实 `zeroSum` 的条件性多轨道负测试族。
+
+本轮没有证明任意未经筛选的有限轨道集合自动满足 frame 的 sign-separation，也没有从 zeta 尾项具体构造 uniform multi-orbit remainder bound。它没有把 observer negative index 与完整 multiplicity-expanded ambient Krein index混同，也没有证明无限维负指数稳定、prime-side coercivity 或 RH。
+
+### 8. 下一承重方向
+
+下一条分析真源应为：
+
+```text
+MultiOrbitBurnolUniformRemainder
+```
+
+目标是从已有 closed-strip decay、convolution power 和绝对零点可和性，给有限 frame 构造共同 peak packet 与共同 exception killer，并证明：
+
+\[
+|R_N(a)|\le\varepsilon_N\|a\|_2^2,
+\qquad
+\varepsilon_N\to0.
+\]
+
+关键义务包括全部选定轨道上的目标读数同时保持、其余有限异常零点同时消去、远端零点统一几何衰减、交叉项按 Gram/operator norm 共同控制，以及常数随 frame 大小与最小节点分离显式记账。
