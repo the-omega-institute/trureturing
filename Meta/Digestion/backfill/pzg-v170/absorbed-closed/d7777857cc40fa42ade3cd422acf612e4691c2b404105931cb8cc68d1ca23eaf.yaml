@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d7777857cc40fa42ade3cd422acf612e4691c2b404105931cb8cc68d1ca23eaf
+  normalized_sha256: sha256:d7777857cc40fa42ade3cd422acf612e4691c2b404105931cb8cc68d1ca23eaf
+cas_ref: sha256:d7777857cc40fa42ade3cd422acf612e4691c2b404105931cb8cc68d1ca23eaf
+coverage_gids:
+  - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.multiplier_two_obstruction
+    target_statement_id: sha256:c259589d543080d6158aa4ef236fc1e57131655f0fe88cf4420cd09a8d826a03
+receipts:
+  scribe:
+    - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.multiplier_two_obstruction
+      definition_sha256: sha256:f48e0a9b2d67cc5aa1447a8a8bc37a30a3f0622abff26b4ec0e83092b87c8858
+      emission_sha256: sha256:9de51ce852bcb80037095ddec815ea68b4b92f42e66ea3e3b68e4b1da575d8aa
+  unresolved_subitems: []
