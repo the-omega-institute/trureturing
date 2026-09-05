@@ -80,6 +80,12 @@ public sealed partial class ProductionEnvironmentTests
                 Assert.Equal("gate_stage_timing", root.GetProperty("event").GetString());
                 Assert.Equal("admission-check", root.GetProperty("scope").GetString());
                 Assert.Equal("passed", root.GetProperty("status").GetString());
+                Assert.True(
+                    root.TryGetProperty("elapsed_seconds", out var elapsed),
+                    "Timing event must include elapsed_seconds.");
+                Assert.Equal(JsonValueKind.Number, elapsed.ValueKind);
+                Assert.True(elapsed.TryGetDouble(out var elapsedSeconds));
+                Assert.True(elapsedSeconds >= 0);
             }
         }
         finally
@@ -104,8 +110,14 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = new RuleFixture();
         fixture.Apply("badge");
         var changes = RawChangeSet.Create([RuleFixture.BlueprintPath]);
-        var expectedExecutedRules = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(changes))).Capability.ExecutedRules;
+        ImmutableArray<RuleId> expectedExecutedRules =
+        [
+            RuleId.CreateKnown(4),
+            RuleId.CreateKnown(6),
+            RuleId.CreateKnown(11),
+            RuleId.CreateKnown(15),
+            RuleId.CreateKnown(25),
+        ];
         var gateway = new FakeRepositoryGateway(
             changes,
             Snapshot(fixture.Files),
@@ -194,6 +206,12 @@ public sealed partial class ProductionEnvironmentTests
             var root = document.RootElement;
             Assert.Equal("gate_stage_timing", root.GetProperty("event").GetString());
             Assert.Equal("admission-check", root.GetProperty("scope").GetString());
+            Assert.True(
+                root.TryGetProperty("elapsed_seconds", out var elapsed),
+                "Timing event must include elapsed_seconds.");
+            Assert.Equal(JsonValueKind.Number, elapsed.ValueKind);
+            Assert.True(elapsed.TryGetDouble(out var elapsedSeconds));
+            Assert.True(elapsedSeconds >= 0);
         }
     }
 
