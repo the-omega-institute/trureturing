@@ -45,6 +45,10 @@ private def fixtureCatalog : Catalog arena.toArena :=
 
 example : fixtureCatalog.uniqueCaptureCount (0 : Fin 1) = 0 := by decide
 
+expect_information_occurrence closedTruthTheorem
+  in arena
+  from "LeanInformationAudit.Tests.CirptClosedTruth"
+
 /-- error: IE-C007 ZeroUniqueCapture: theorem
 LeanInformationAudit.Tests.CirptClosedTruth.closedTruthTheorem arena
 LeanInformationAudit.Tests.CirptClosedTruth.arena full 2 without 2 -/

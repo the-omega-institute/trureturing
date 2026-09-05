@@ -1,0 +1,71 @@
+## 定理 5.1：有限边界代价等于条件化的 KL 散度
+
+令：
+
+$$
+\mu_n=\pi_S(\,\cdot\,\mid A_n).
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal C_S(n)
+=
+-\sum_{p\in S}\ln(1-u_{p,a_p}).
+}
+\tag{5.3}
+$$
+
+则：
+
+$$
+\boxed{
+D_{\mathrm{KL}}(\mu_n\Vert\pi_S)
+=
+\mathcal C_S(n).
+}
+\tag{5.4}
+$$
+
+### 证明
+
+在 \(A_n\) 上：
+
+$$
+\frac{\mu_n(k)}{\pi_S(k)}
+=
+\frac1{\pi_S(A_n)}.
+$$
+
+因此：
+
+$$
+D_{\mathrm{KL}}(\mu_n\Vert\pi_S)
+=
+-\ln\pi_S(A_n),
+$$
+
+再用式（5.2）即可。证毕。
+
+这同时给出：
+
+$$
+\boxed{
+Z(n)
+=
+\left[
+\prod_{p\in S}(1-p^{-1})^{-1}
+\right]e^{-\mathcal C_S(n)}.
+}
+\tag{5.5}
+$$
+
+它把倒数总权重分成：
+
+$$
+\text{无限指数饱和权重}
+\times
+\text{有限边界保留比例}.
+$$
+

@@ -32,6 +32,10 @@ information_theorem constantTheorem
   primitives constantRealization
   : arena.Law constantRealization := by trivial
 
+expect_information_occurrence constantTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealZeroCapture"
+
 /-- error: IE-C007 ZeroUniqueCapture: theorem
 LeanInformationAudit.Tests.SealZeroCapture.constantTheorem arena
 LeanInformationAudit.Tests.SealZeroCapture.arena full 2 without 2 -/

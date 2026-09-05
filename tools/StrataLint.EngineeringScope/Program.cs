@@ -9,9 +9,7 @@ internal static class Program
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     public static int Main(string[] arguments) =>
-        arguments.FirstOrDefault() == "self-lock-probe"
-            ? SelfLockProbeProgram.Run(arguments.Skip(1).ToArray())
-            : Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
+        Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
 
     internal static int Run(
         IReadOnlyList<string> arguments,
@@ -91,14 +89,14 @@ internal static class Program
             return ExecutePlan(options.RepositoryRoot, fullPlan);
         }
 
-        var protectedBaseController = ControllerClosure.Derive(protectedBase);
-        var candidateController = ControllerClosure.Derive(candidate);
+        var protectedBaseEvaluatorPaths = ControllerClosure.Derive(protectedBase);
+        var candidateEvaluatorPaths = ControllerClosure.Derive(candidate);
         var plan = EngineeringTestPlanPolicy.Evaluate(
             changedPaths,
             protectedBase,
             candidate,
-            protectedBaseController.EvaluatorPaths,
-            candidateController.EvaluatorPaths);
+            protectedBaseEvaluatorPaths,
+            candidateEvaluatorPaths);
         return ExecutePlan(options.RepositoryRoot, plan);
     }
 

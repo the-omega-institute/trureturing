@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e852e61312b8f5870e9fd4b1e981bb1146091deb9695bd9b80f2d77271afc3db
+  normalized_sha256: sha256:e852e61312b8f5870e9fd4b1e981bb1146091deb9695bd9b80f2d77271afc3db
+cas_ref: sha256:e852e61312b8f5870e9fd4b1e981bb1146091deb9695bd9b80f2d77271afc3db
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/FiniteInversePoissonCriterion.finite_inverse_poisson_rh_criterion
+    target_statement_id: sha256:80d3c60ae9f00c0986adf55bdd255967a03f51974168c7136beb109cfa27374e
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaLinear/FiniteInversePoissonCriterion.finite_inverse_poisson_rh_criterion
+      definition_sha256: sha256:91a37d4999bfdda7b630ba605ef22169b3ecda4acbecb46b25458b6a7214144c
+      emission_sha256: sha256:78a16583171cb725e2894893e6e8fb8e9fd8255612d142b070f278c42fb4ca0a
+  unresolved_subitems: []

@@ -1,0 +1,34 @@
+### 证明
+
+先分别对两段路径内部取最小，再对共同端点 \(\eta\) 取最小，等价于对整条路径一次取最小。
+
+直接配方也得到：
+
+$$
+\min_\eta
+\left[
+\frac{|\eta-\tau_\ell\xi|^2}{v_\ell}
++
+\frac{|\zeta-\tau_m\eta|^2}{v_m}
+\right]
+=
+\frac{|\zeta-\tau_m\tau_\ell\xi|^2}
+{v_m+\tau_m^2v_\ell}.
+$$
+
+证毕。
+
+这是一条真正的 Bellman 型最优性原理：
+
+$$
+\boxed{
+\text{整体最优}
+=
+\text{局部最优后，再优化连接边界。}
+}
+$$
+
+Zeckendorf 可以把长路径分成规范的 Fibonacci 长度块；式（4.4）保证这种分层拼接不会改变最小作用量。
+
+但规范化本身仍然守恒所表示的指数。仓库中的 `rawValue_normalize` 正是证明这一点，而不是证明算术能量下降。
+

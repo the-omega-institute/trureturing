@@ -27,6 +27,7 @@ public sealed class RuleEngineTests
         { 21, "future" },
         { 25, "blueprint-skeleton" },
         { 26, "legacy-scribe" },
+        { 30, "base-judge" },
     };
 
     public static TheoryData<int, string> AffectedInputs => new()
@@ -39,6 +40,7 @@ public sealed class RuleEngineTests
         { 23, RuleFixture.BlueprintSourcePath },
         { 23, "Directory.Build.props" },
         { 25, RuleFixture.BlueprintPath },
+        { 30, RuleFixture.HarnessGatePath },
     };
 
     public static TheoryData<int, string?> UnaffectedInputs => new()
@@ -63,6 +65,7 @@ public sealed class RuleEngineTests
         { 23, "Chronicle/2026/07/10-old.md" },
         { 25, "Chronicle/2026/07/10-old.md" },
         { 26, "Chronicle/2026/07/10-old.md" },
+        { 30, RuleFixture.BlueprintPath },
     };
 
     [Fact]
@@ -168,9 +171,7 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
         fixture.Files["Library/queries.yaml"] = queries;
         fixture.Baseline["Library/queries.yaml"] = queries;
-        fixture.ForkPoint["Library/queries.yaml"] = queries;
         fixture.Baseline[targetPath] = "# Fixture target\n";
-        fixture.ForkPoint[targetPath] = "# Fixture target\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(fixture.BuildScopeProbe(RawChangeSet.Create([targetPath])))).Capability;
@@ -318,8 +319,8 @@ public sealed class RuleEngineTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.ForkPoint[RuleFixture.FixtureBackfillSourcePath] = RemoveGenreMarkers(
-            fixture.ForkPoint[RuleFixture.FixtureBackfillSourcePath]);
+        fixture.Baseline[RuleFixture.FixtureBackfillSourcePath] = RemoveGenreMarkers(
+            fixture.Baseline[RuleFixture.FixtureBackfillSourcePath]);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
@@ -426,8 +427,8 @@ public sealed class RuleEngineTests
             document,
             context.Current,
             context.Lean,
-            baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
-            baselineSnapshot: context.ForkPoint,
+            baselineDocument: BackfillInventoryLoader.Load(context.Baseline),
+            baselineSnapshot: context.Baseline,
             casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
             changes: changes);
 
@@ -488,7 +489,7 @@ public sealed class RuleEngineTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             var atom = files[RuleFixture.FixtureBackfillAtomPath];
             files.Remove(RuleFixture.FixtureBackfillAtomPath);
@@ -520,8 +521,8 @@ public sealed class RuleEngineTests
             document,
             context.Current,
             context.Lean,
-            baselineDocument: BackfillInventoryLoader.Load(context.ForkPoint),
-            baselineSnapshot: context.ForkPoint,
+            baselineDocument: BackfillInventoryLoader.Load(context.Baseline),
+            baselineSnapshot: context.Baseline,
             casEvaluation: DigestionCasStore.Evaluate(document, context.Current, changes),
             changes: changes);
         return Assert.Single(evaluation.Entries);
@@ -534,7 +535,7 @@ public sealed class RuleEngineTests
         var baselineStatementId = FrozenStatementReceiptTestData.Id('a');
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[targetPath] = fixture.Files[targetPath];
             files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
@@ -546,7 +547,6 @@ public sealed class RuleEngineTests
 
         InstallFrozenStatement(fixture.Files, targetPath, FrozenStatementReceiptTestData.Id('b'));
         InstallFrozenStatement(fixture.Baseline, targetPath, baselineStatementId);
-        InstallFrozenStatement(fixture.ForkPoint, targetPath, baselineStatementId);
         var currentFrozenPaths = fixture.Files.Keys
             .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
                 || FrozenStatePath.IsUnderRoot(path));
@@ -694,7 +694,7 @@ public sealed class RuleEngineTests
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 23).Except([5]).Append(25).Append(26), exercised);
+        Assert.Equal(Enumerable.Range(1, 23).Except([5]).Append(25).Append(26).Append(30), exercised);
     }
 
     [Fact]
