@@ -147,7 +147,9 @@ theorem unrestricted_joint_benefit_target_feasible_iff
     have total_four :
         law.mass (false, false) + law.mass (false, true) +
             law.mass (true, false) + law.mass (true, true) = 1 := by
-      simpa [Fintype.sum_prod_type, Fintype.sum_bool] using law.total
+      have h := law.total
+      simp [Fintype.sum_prod_type, Fintype.sum_bool] at h
+      linarith
     have m00_nonnegative := law.nonnegative (false, false)
     have m01_nonnegative := law.nonnegative (false, true)
     have m10_nonnegative := law.nonnegative (true, false)

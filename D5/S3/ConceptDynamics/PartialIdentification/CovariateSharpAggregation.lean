@@ -9,7 +9,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Nlinarith
+import Mathlib
 import Mathlib.Tactic.Ring
 
 /- Library-search audit trail (2026-09-03):

@@ -28,7 +28,7 @@ structure PartialCausalDiagram (Node : Type*) where
   requiredEdge : Node -> Node -> Prop
   forbiddenEdge : Node -> Node -> Prop
   coherent : forall source target,
-    requiredEdge source target -> not (forbiddenEdge source target)
+    requiredEdge source target -> ¬ (forbiddenEdge source target)
 
 /-- A complete directed edge relation is compatible with every positive and
 negative assertion made by a partial diagram. -/
@@ -39,7 +39,7 @@ def Compatible
   (forall source target,
       diagram.requiredEdge source target -> edge source target) /\
     forall source target,
-      diagram.forbiddenEdge source target -> not (edge source target)
+      diagram.forbiddenEdge source target -> ¬ (edge source target)
 
 /-- `stronger` refines `weaker` when it retains every required and forbidden
 edge assertion of the weaker diagram and may add further assertions. -/

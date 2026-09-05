@@ -26,6 +26,8 @@ import Mathlib.Tactic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+open scoped Classical
+
 namespace D5.S3.ConceptDynamics.PartialIdentification.PartialDiagramEventRowCompilerSoundness
 
 open scoped BigOperators
@@ -615,11 +617,43 @@ theorem joint_event_mass_pushforward
       exogenousEventMass mass completionOf signatureOf event := by
   classical
   unfold jointEventMass jointPushforwardMass exogenousEventMass
+  have push :
+      ∀ atom : Completion × Signature,
+        (if event atom.1 atom.2 = true then
+            ∑ exogenous, if (completionOf exogenous, signatureOf exogenous) = atom
+              then mass exogenous else 0
+          else 0) =
+        ∑ exogenous,
+          if (completionOf exogenous, signatureOf exogenous) = atom then
+            (if event (completionOf exogenous) (signatureOf exogenous) = true then
+              mass exogenous else 0)
+          else 0 := by
+    intro atom
+    by_cases he : event atom.1 atom.2 = true
+    · rw [if_pos he]
+      refine Finset.sum_congr rfl fun exo _ => ?_
+      by_cases hp : (completionOf exo, signatureOf exo) = atom
+      · have h1 : completionOf exo = atom.1 := by rw [← hp]
+        have h2 : signatureOf exo = atom.2 := by rw [← hp]
+        simp [hp, h1, h2, he]
+      · simp [hp]
+    · rw [if_neg he]
+      symm
+      refine Finset.sum_eq_zero fun exo _ => ?_
+      by_cases hp : (completionOf exo, signatureOf exo) = atom
+      · have h1 : completionOf exo = atom.1 := by rw [← hp]
+        have h2 : signatureOf exo = atom.2 := by rw [← hp]
+        simp [hp, h1, h2, he]
+      · simp [hp]
+  simp only [push]
   rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro exogenous _
-  cases h : event (completionOf exogenous) (signatureOf exogenous) <;>
-    simp [h]
+  refine Finset.sum_congr rfl fun exo _ => ?_
+  rw [Finset.sum_eq_single ((completionOf exo, signatureOf exo))]
+  · simp
+  · intro b _ hne
+    simp [Ne.symm hne]
+  · intro h
+    exact absurd (Finset.mem_univ _) h
 
 /-- The joint atom carrier itself is a canonical finite exogenous realization
 of every joint law, preserving all event probabilities definitionally. -/

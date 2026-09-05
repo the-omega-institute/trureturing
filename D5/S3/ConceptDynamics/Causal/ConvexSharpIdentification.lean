@@ -24,7 +24,7 @@ namespace D5.S3.ConceptDynamics.Causal.ConvexSharpIdentification
 
 /-- A scalar partial-identification problem equipped with an abstract convex
 blend operation and an affine scalar query. -/
-structure ConvexIdentificationProblem (Model : Type) where
+structure ConvexIdentificationProblem (Model : Type*) where
   feasible : Model -> Prop
   query : Model -> Real
   blend : Real -> Model -> Model -> Model
@@ -39,20 +39,20 @@ structure ConvexIdentificationProblem (Model : Type) where
         (1 - t) * query left + t * query right
 
 /-- A lower endpoint is valid when every admissible model lies above it. -/
-def IsValidLowerBound {Model : Type}
+def IsValidLowerBound {Model : Type*}
     (problem : ConvexIdentificationProblem Model)
     (lower : Real) : Prop :=
   forall model, problem.feasible model -> lower <= problem.query model
 
 /-- An upper endpoint is valid when every admissible model lies below it. -/
-def IsValidUpperBound {Model : Type}
+def IsValidUpperBound {Model : Type*}
     (problem : ConvexIdentificationProblem Model)
     (upper : Real) : Prop :=
   forall model, problem.feasible model -> problem.query model <= upper
 
 /-- A scalar interval is sharp when its targets are exactly the query values of
 admissible models. -/
-def IsSharpInterval {Model : Type}
+def IsSharpInterval {Model : Type*}
     (problem : ConvexIdentificationProblem Model)
     (lower upper : Real) : Prop :=
   forall target,
@@ -64,7 +64,7 @@ def IsSharpInterval {Model : Type}
 endpoint exact. This theorem isolates the logical role of primal attainment
 from whatever mechanism produced the universal certificate. -/
 theorem exact_lower_endpoint_of_valid_bound_and_witness
-    {Model : Type}
+    {Model : Type*}
     (problem : ConvexIdentificationProblem Model)
     (lower : Real)
     (valid : IsValidLowerBound problem lower)
@@ -78,7 +78,7 @@ theorem exact_lower_endpoint_of_valid_bound_and_witness
 
 /-- The analogous primal-certificate statement for an upper endpoint. -/
 theorem exact_upper_endpoint_of_valid_bound_and_witness
-    {Model : Type}
+    {Model : Type*}
     (problem : ConvexIdentificationProblem Model)
     (upper : Real)
     (valid : IsValidUpperBound problem upper)
@@ -94,7 +94,7 @@ theorem exact_upper_endpoint_of_valid_bound_and_witness
 sharp identified interval. Interior targets are realized by mixing the two
 endpoint models. -/
 theorem sharp_interval_of_valid_bounds_and_endpoint_witnesses
-    {Model : Type}
+    {Model : Type*}
     (problem : ConvexIdentificationProblem Model)
     (lower upper : Real)
     (valid_lower : IsValidLowerBound problem lower)
@@ -137,7 +137,7 @@ theorem sharp_interval_of_valid_bounds_and_endpoint_witnesses
             t_nonnegative t_le_one lower_feasible upper_feasible, ?_⟩
       rw [problem.query_blend, lower_value, upper_value]
       dsimp [t]
-      have denominator_ne : upper - lower != 0 := ne_of_gt denominator_positive
+      have denominator_ne : upper - lower ≠ 0 := ne_of_gt denominator_positive
       field_simp [denominator_ne]
       ring
   · rintro ⟨model, feasible, query_eq⟩
@@ -149,7 +149,7 @@ theorem sharp_interval_of_valid_bounds_and_endpoint_witnesses
 
 /-- A valid lower bound survives restriction to a stronger feasible family. -/
 theorem valid_lower_bound_of_feasible_refinement
-    {Model : Type}
+    {Model : Type*}
     (weaker stronger : ConvexIdentificationProblem Model)
     (same_query : forall model, stronger.query model = weaker.query model)
     (refines : forall model, stronger.feasible model -> weaker.feasible model)
@@ -162,7 +162,7 @@ theorem valid_lower_bound_of_feasible_refinement
 
 /-- A valid upper bound likewise survives feasible-set restriction. -/
 theorem valid_upper_bound_of_feasible_refinement
-    {Model : Type}
+    {Model : Type*}
     (weaker stronger : ConvexIdentificationProblem Model)
     (same_query : forall model, stronger.query model = weaker.query model)
     (refines : forall model, stronger.feasible model -> weaker.feasible model)
@@ -176,7 +176,7 @@ theorem valid_upper_bound_of_feasible_refinement
 /-- Exact endpoint witnesses make the information-order statement quantitative:
 stronger assumptions can only raise the exact lower endpoint. -/
 theorem exact_lower_endpoint_monotone_under_refinement
-    {Model : Type}
+    {Model : Type*}
     (weaker stronger : ConvexIdentificationProblem Model)
     (same_query : forall model, stronger.query model = weaker.query model)
     (refines : forall model, stronger.feasible model -> weaker.feasible model)
@@ -192,7 +192,7 @@ theorem exact_lower_endpoint_monotone_under_refinement
 
 /-- Stronger assumptions can only lower the exact upper endpoint. -/
 theorem exact_upper_endpoint_monotone_under_refinement
-    {Model : Type}
+    {Model : Type*}
     (weaker stronger : ConvexIdentificationProblem Model)
     (same_query : forall model, stronger.query model = weaker.query model)
     (refines : forall model, stronger.feasible model -> weaker.feasible model)

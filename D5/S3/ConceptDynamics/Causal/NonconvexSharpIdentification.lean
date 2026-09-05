@@ -25,24 +25,24 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.Causal.NonconvexSharpIdentification
 
 /-- A scalar partial-identification problem with no convexity assumption. -/
-structure IdentificationProblem (Model : Type) where
+structure IdentificationProblem (Model : Type*) where
   feasible : Model -> Prop
   query : Model -> Real
 
 /-- Every feasible model lies above a valid lower bound. -/
-def IsValidLowerBound {Model : Type}
+def IsValidLowerBound {Model : Type*}
     (problem : IdentificationProblem Model)
     (lower : Real) : Prop :=
   forall model, problem.feasible model -> lower <= problem.query model
 
 /-- Every feasible model lies below a valid upper bound. -/
-def IsValidUpperBound {Model : Type}
+def IsValidUpperBound {Model : Type*}
     (problem : IdentificationProblem Model)
     (upper : Real) : Prop :=
   forall model, problem.feasible model -> problem.query model <= upper
 
 /-- A lower endpoint is exact when it is universally valid and attained. -/
-def IsExactLowerEndpoint {Model : Type}
+def IsExactLowerEndpoint {Model : Type*}
     (problem : IdentificationProblem Model)
     (lower : Real) : Prop :=
   IsValidLowerBound problem lower /\
@@ -50,7 +50,7 @@ def IsExactLowerEndpoint {Model : Type}
       problem.feasible model /\ problem.query model = lower
 
 /-- An upper endpoint is exact when it is universally valid and attained. -/
-def IsExactUpperEndpoint {Model : Type}
+def IsExactUpperEndpoint {Model : Type*}
     (problem : IdentificationProblem Model)
     (upper : Real) : Prop :=
   IsValidUpperBound problem upper /\
@@ -59,7 +59,7 @@ def IsExactUpperEndpoint {Model : Type}
 
 /-- The complete identified range is sharp when its predicate agrees exactly
 with the values achieved by feasible models. This allows disconnected ranges. -/
-def IsSharpRange {Model : Type}
+def IsSharpRange {Model : Type*}
     (problem : IdentificationProblem Model)
     (range : Real -> Prop) : Prop :=
   forall target,
@@ -69,7 +69,7 @@ def IsSharpRange {Model : Type}
 
 /-- A closed interval is sharp when every and only feasible query values lie in
 that interval. No convexity is built into this definition. -/
-def IsSharpInterval {Model : Type}
+def IsSharpInterval {Model : Type*}
     (problem : IdentificationProblem Model)
     (lower upper : Real) : Prop :=
   IsSharpRange problem (fun target => lower <= target /\ target <= upper)
@@ -77,7 +77,7 @@ def IsSharpInterval {Model : Type}
 /-- A universal lower certificate and one attaining model prove an exact lower
 endpoint without any convexity assumption. -/
 theorem exact_lower_endpoint_of_valid_bound_and_witness
-    {Model : Type}
+    {Model : Type*}
     (problem : IdentificationProblem Model)
     (lower : Real)
     (valid : IsValidLowerBound problem lower)
@@ -89,7 +89,7 @@ theorem exact_lower_endpoint_of_valid_bound_and_witness
 
 /-- The analogous endpoint theorem for an upper bound. -/
 theorem exact_upper_endpoint_of_valid_bound_and_witness
-    {Model : Type}
+    {Model : Type*}
     (problem : IdentificationProblem Model)
     (upper : Real)
     (valid : IsValidUpperBound problem upper)
@@ -102,7 +102,7 @@ theorem exact_upper_endpoint_of_valid_bound_and_witness
 /-- A lower bound proved on an outer relaxation remains valid on every inner
 feasible family. -/
 theorem valid_lower_bound_of_outer_relaxation
-    {Model : Type}
+    {Model : Type*}
     (inner outer : IdentificationProblem Model)
     (same_query : forall model, inner.query model = outer.query model)
     (contained : forall model, inner.feasible model -> outer.feasible model)
@@ -116,7 +116,7 @@ theorem valid_lower_bound_of_outer_relaxation
 /-- An upper bound proved on an outer relaxation remains valid on every inner
 feasible family. -/
 theorem valid_upper_bound_of_outer_relaxation
-    {Model : Type}
+    {Model : Type*}
     (inner outer : IdentificationProblem Model)
     (same_query : forall model, inner.query model = outer.query model)
     (contained : forall model, inner.feasible model -> outer.feasible model)
@@ -130,7 +130,7 @@ theorem valid_upper_bound_of_outer_relaxation
 /-- If an inner nonlinear model attains a lower value, every valid lower bound
 of an outer relaxation must lie below it. -/
 theorem outer_lower_bound_below_inner_witness
-    {Model : Type}
+    {Model : Type*}
     (inner outer : IdentificationProblem Model)
     (same_query : forall model, inner.query model = outer.query model)
     (contained : forall model, inner.feasible model -> outer.feasible model)
@@ -147,7 +147,7 @@ theorem outer_lower_bound_below_inner_witness
 /-- If an inner nonlinear model attains an upper value, every valid upper bound
 of an outer relaxation must lie above it. -/
 theorem inner_witness_below_outer_upper_bound
-    {Model : Type}
+    {Model : Type*}
     (inner outer : IdentificationProblem Model)
     (same_query : forall model, inner.query model = outer.query model)
     (contained : forall model, inner.feasible model -> outer.feasible model)
@@ -173,11 +173,11 @@ theorem twoPointProblem_exact_endpoints :
   constructor
   · constructor
     · intro value feasible
-      rcases feasible with rfl | rfl <;> norm_num
+      rcases feasible with rfl | rfl <;> norm_num [twoPointProblem]
     · exact ⟨0, Or.inl rfl, rfl⟩
   · constructor
     · intro value feasible
-      rcases feasible with rfl | rfl <;> norm_num
+      rcases feasible with rfl | rfl <;> norm_num [twoPointProblem]
     · exact ⟨2, Or.inr rfl, rfl⟩
 
 /-- Exact attainment of both endpoints does not imply that the intervening
@@ -189,9 +189,9 @@ theorem endpoint_attainment_without_convexity_does_not_fill_interval :
   rcases realized with ⟨value, feasible, query_eq⟩
   rcases feasible with value_zero | value_two
   · rw [value_zero] at query_eq
-    norm_num at query_eq
+    norm_num [twoPointProblem] at query_eq
   · rw [value_two] at query_eq
-    norm_num at query_eq
+    norm_num [twoPointProblem] at query_eq
 
 #print axioms exact_lower_endpoint_of_valid_bound_and_witness
 #print axioms valid_lower_bound_of_outer_relaxation

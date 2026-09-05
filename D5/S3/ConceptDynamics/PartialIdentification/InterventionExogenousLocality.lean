@@ -122,6 +122,7 @@ private theorem trace_dependency_sound
   induction remaining generalizing state prior with
   | nil =>
       intro v u u' same
+      show result u v = result u' v
       have first : result u = state u := evaluates u
       have second : result u' = state u' := evaluates u'
       rw [first, second]

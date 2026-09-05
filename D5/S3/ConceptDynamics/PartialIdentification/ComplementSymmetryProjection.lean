@@ -26,11 +26,11 @@ namespace D5.S3.ConceptDynamics.PartialIdentification.ComplementSymmetryProjecti
 def complement (theta : Real) : Real := 1 - theta
 
 /-- Equal averaging of a parameter and its complement. -/
-def symmetricAverage (theta : Real) : Real :=
+noncomputable def symmetricAverage (theta : Real) : Real :=
   (theta + complement theta) / 2
 
 /-- The component reversed by the complement involution. -/
-def centeredDefect (theta : Real) : Real :=
+noncomputable def centeredDefect (theta : Real) : Real :=
   theta - 1 / 2
 
 /-- Symmetrization projects every real parameter to the center one half. -/

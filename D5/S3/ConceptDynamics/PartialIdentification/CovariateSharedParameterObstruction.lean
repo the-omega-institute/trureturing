@@ -80,7 +80,7 @@ def localSharpFamily : StratifiedSharpFamily Bool where
     exact local_attainable_iff stratum target
 
 /-- Equal covariate weights. -/
-def halfWeight (_ : Bool) : Real := 1 / 2
+noncomputable def halfWeight (_ : Bool) : Real := 1 / 2
 
 /-- Under independent stratum selection, both strata can simultaneously be
 assigned query value zero. -/
@@ -94,7 +94,7 @@ theorem independently_attainable_zero :
 
 /-- The actual equal-weight query when both strata must use one common
 parameter. -/
-def sharedWeightedQuery (parameter : Real) : Real :=
+noncomputable def sharedWeightedQuery (parameter : Real) : Real :=
   (1 / 2) * localQuery false parameter +
     (1 / 2) * localQuery true parameter
 
@@ -152,7 +152,7 @@ sharpness when the strata share a structural parameter. The independent
 product family attains zero, while the true shared-parameter family cannot. -/
 theorem shared_parameter_invalidates_naive_weighted_sharpness :
     GloballyAttainable localSharpFamily halfWeight 0 /\
-      not (SharedParameterAttainable 0) := by
+      ¬ (SharedParameterAttainable 0) := by
   constructor
   · exact independently_attainable_zero
   · rw [shared_parameter_attainable_iff]

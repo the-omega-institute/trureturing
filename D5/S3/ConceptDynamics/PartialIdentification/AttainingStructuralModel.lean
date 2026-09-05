@@ -101,6 +101,12 @@ theorem canonicalSCM_structuralResponse
       signature.response position := by
   rfl
 
+noncomputable instance canonicalSCMExogenousFintype
+    {n : Nat} {Value : Type u} [Fintype Value]
+    (law : SignatureProbabilityLaw n Value) :
+    Fintype (canonicalSCMOfSignatureLaw law).Exogenous :=
+  inferInstanceAs (Fintype (CanonicalResponseSignature n Value))
+
 /-- Every Boolean counterfactual event has the same probability in the
 canonical attaining SCM as in the original signature-law LP witness. -/
 theorem canonicalSCM_attains_signature_event

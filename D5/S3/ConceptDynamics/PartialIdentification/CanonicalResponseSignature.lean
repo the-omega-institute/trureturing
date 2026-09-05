@@ -40,7 +40,7 @@ theorem node_has_unique_position
     {n : Nat}
     (order : FiniteNodeOrder n)
     (node : Fin n) :
-    exists unique position : Fin n, nodeAt order position = node := by
+    ∃! position : Fin n, nodeAt order position = node := by
   refine ⟨order.symm node, ?_, ?_⟩
   · exact order.apply_symm_apply node
   · intro position position_eq
@@ -73,10 +73,12 @@ def responseTableEquiv
 carrier, suitable for a response-type probability vector. -/
 noncomputable instance canonicalResponseSignatureFintype
     (n : Nat) (Value : Type u) [Fintype Value] :
-    Fintype (CanonicalResponseSignature n Value) :=
-  Fintype.ofEquiv
-    ((position : Fin n) -> (Fin position.1 -> Value) -> Value)
-    (responseTableEquiv n Value).symm
+    Fintype (CanonicalResponseSignature n Value) := by
+  classical
+  exact
+    Fintype.ofEquiv
+      ((position : Fin n) -> (Fin position.1 -> Value) -> Value)
+      (responseTableEquiv n Value).symm
 
 noncomputable instance canonicalResponseSignatureDecidableEq
     (n : Nat) (Value : Type u) :
@@ -119,7 +121,7 @@ theorem signature_event_mass_eq_linearObjective
   unfold signatureEventMass linearObjective
   apply Finset.sum_congr rfl
   intro signature _
-  cases event signature <;> simp [eventCoefficient]
+  rcases h : event signature <;> simp [eventCoefficient, h]
 
 /-- Push an exogenous mass function forward through its deterministic response
 signature. -/

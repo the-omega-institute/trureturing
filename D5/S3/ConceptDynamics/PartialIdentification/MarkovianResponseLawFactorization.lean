@@ -135,7 +135,9 @@ theorem leftResponseMarginal_productResponseLaw
     (left : Left) :
     leftResponseMarginal (productResponseLaw leftLaw rightLaw).mass left =
       leftLaw.mass left := by
-  rw [leftResponseMarginal_productResponseMass, rightLaw.total, mul_one]
+  rw [show (productResponseLaw leftLaw rightLaw).mass =
+        productResponseMass leftLaw.mass rightLaw.mass from rfl,
+    leftResponseMarginal_productResponseMass, rightLaw.total, mul_one]
 
 /-- Marginalizing a product mass on the left multiplies the right coordinate by
 the total left mass. -/
@@ -159,7 +161,9 @@ theorem rightResponseMarginal_productResponseLaw
     (right : Right) :
     rightResponseMarginal (productResponseLaw leftLaw rightLaw).mass right =
       rightLaw.mass right := by
-  rw [rightResponseMarginal_productResponseMass, leftLaw.total, one_mul]
+  rw [show (productResponseLaw leftLaw rightLaw).mass =
+        productResponseMass leftLaw.mass rightLaw.mass from rfl,
+    rightResponseMarginal_productResponseMass, leftLaw.total, one_mul]
 
 /-- Push a normalized finite law through a deterministic response map. -/
 noncomputable def pushforwardResponseLaw

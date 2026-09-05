@@ -57,7 +57,7 @@ multi-step precedence. -/
 structure StrictCausalOrder (Node : Type*) where
   before : Node -> Node -> Prop
   asymmetric : forall {left right},
-    before left right -> not (before right left)
+    before left right -> ¬ before right left
   transitive : forall {left middle right},
     before left middle -> before middle right -> before left right
 

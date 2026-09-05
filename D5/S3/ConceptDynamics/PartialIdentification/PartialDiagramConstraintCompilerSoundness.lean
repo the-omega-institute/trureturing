@@ -26,6 +26,8 @@ import Mathlib.Tactic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+open scoped Classical
+
 namespace D5.S3.ConceptDynamics.PartialIdentification.PartialDiagramConstraintCompilerSoundness
 
 open scoped BigOperators
@@ -101,23 +103,23 @@ noncomputable def diagramRow
   classical
   intro constraint candidate
   cases constraint with
-  | nonnegative protected =>
-      exact if candidate = protected then -1 else 0
+  | nonnegative shielded =>
+      exact if candidate = shielded then -1 else 0
   | totalUpper =>
       exact 1
   | totalLower =>
       exact -1
-  | requiredViolation protected source target =>
-      exact if RequiredViolation diagram semantics protected source target then
-        if candidate = protected then 1 else 0
+  | requiredViolation shielded source target =>
+      exact if RequiredViolation diagram semantics shielded source target then
+        if candidate = shielded then 1 else 0
       else 0
-  | forbiddenViolation protected source target =>
-      exact if ForbiddenViolation diagram semantics protected source target then
-        if candidate = protected then 1 else 0
+  | forbiddenViolation shielded source target =>
+      exact if ForbiddenViolation diagram semantics shielded source target then
+        if candidate = shielded then 1 else 0
       else 0
-  | queryOrderViolation protected =>
-      exact if ¬semantics.queryOrderCompatible protected then
-        if candidate = protected then 1 else 0
+  | queryOrderViolation shielded =>
+      exact if ¬semantics.queryOrderCompatible shielded then
+        if candidate = shielded then 1 else 0
       else 0
 
 /-- Right-hand side of every generated support constraint. -/
@@ -137,10 +139,10 @@ def diagramRhs
     (diagram : PartialCausalDiagram Node)
     (semantics : CompletionSemantics Node Completion)
     (mass : Completion → ℚ)
-    (protected : Completion) :
+    (shielded : Completion) :
     (∑ candidate,
-      diagramRow diagram semantics (.nonnegative protected) candidate *
-        mass candidate) = -mass protected := by
+      diagramRow diagram semantics (.nonnegative shielded) candidate *
+        mass candidate) = -mass shielded := by
   classical
   simp [diagramRow]
 
@@ -190,17 +192,17 @@ def diagramRhs
     (diagram : PartialCausalDiagram Node)
     (semantics : CompletionSemantics Node Completion)
     (mass : Completion → ℚ)
-    (protected : Completion) (source target : Node) :
+    (shielded : Completion) (source target : Node) :
     (∑ candidate,
       diagramRow diagram semantics
-        (.requiredViolation protected source target) candidate *
+        (.requiredViolation shielded source target) candidate *
         mass candidate) =
-      if RequiredViolation diagram semantics protected source target then
-        mass protected
+      if RequiredViolation diagram semantics shielded source target then
+        mass shielded
       else 0 := by
   classical
   by_cases violation :
-      RequiredViolation diagram semantics protected source target
+      RequiredViolation diagram semantics shielded source target
   · simp [diagramRow, violation]
   · simp [diagramRow, violation]
 
@@ -210,17 +212,17 @@ def diagramRhs
     (diagram : PartialCausalDiagram Node)
     (semantics : CompletionSemantics Node Completion)
     (mass : Completion → ℚ)
-    (protected : Completion) (source target : Node) :
+    (shielded : Completion) (source target : Node) :
     (∑ candidate,
       diagramRow diagram semantics
-        (.forbiddenViolation protected source target) candidate *
+        (.forbiddenViolation shielded source target) candidate *
         mass candidate) =
-      if ForbiddenViolation diagram semantics protected source target then
-        mass protected
+      if ForbiddenViolation diagram semantics shielded source target then
+        mass shielded
       else 0 := by
   classical
   by_cases violation :
-      ForbiddenViolation diagram semantics protected source target
+      ForbiddenViolation diagram semantics shielded source target
   · simp [diagramRow, violation]
   · simp [diagramRow, violation]
 
@@ -230,14 +232,14 @@ def diagramRhs
     (diagram : PartialCausalDiagram Node)
     (semantics : CompletionSemantics Node Completion)
     (mass : Completion → ℚ)
-    (protected : Completion) :
+    (shielded : Completion) :
     (∑ candidate,
       diagramRow diagram semantics
-        (.queryOrderViolation protected) candidate * mass candidate) =
-      if ¬semantics.queryOrderCompatible protected then mass protected
+        (.queryOrderViolation shielded) candidate * mass candidate) =
+      if ¬semantics.queryOrderCompatible shielded then mass shielded
       else 0 := by
   classical
-  by_cases violation : ¬semantics.queryOrderCompatible protected
+  by_cases violation : ¬semantics.queryOrderCompatible shielded
   · simp [diagramRow, violation]
   · simp [diagramRow, violation]
 
@@ -389,6 +391,7 @@ theorem feasible_iff_compatible_completion_mixture
             intro admissible
             have edge_present :=
               admissible.1.1 source target violation.1
+            unfold completionRelation at edge_present
             rw [violation.2] at edge_present
             cases edge_present
           have mass_zero := mass_eq_zero_of_not_admissible

@@ -140,7 +140,7 @@ def evaluateOrder
   | node :: remaining, state =>
       evaluateOrder step remaining (step node state)
 
-/-- A commuting pair of neighboring steps may be swapped inside any prefix and
+/-- A commuting pair of neighboring steps may be swapped inside any prefixNodes and
 suffix without changing the final state. -/
 theorem evaluateOrder_adjacent_swap
     {Node State : Type*}
@@ -148,11 +148,11 @@ theorem evaluateOrder_adjacent_swap
     (left right : Node)
     (commutes : forall state,
       step right (step left state) = step left (step right state))
-    (prefix suffix : List Node)
+    (prefixNodes suffix : List Node)
     (state : State) :
-    evaluateOrder step (prefix ++ left :: right :: suffix) state =
-      evaluateOrder step (prefix ++ right :: left :: suffix) state := by
-  induction prefix generalizing state with
+    evaluateOrder step (prefixNodes ++ left :: right :: suffix) state =
+      evaluateOrder step (prefixNodes ++ right :: left :: suffix) state := by
+  induction prefixNodes generalizing state with
   | nil =>
       simp only [List.nil_append, evaluateOrder]
       rw [commutes state]
@@ -169,18 +169,18 @@ theorem parent_local_evaluation_invariant_under_adjacent_swap
     (left_ne_right : left ≠ right)
     (right_not_parent_of_left : right ∉ system.parents left)
     (left_not_parent_of_right : left ∉ system.parents right)
-    (prefix suffix : List Node)
+    (prefixNodes suffix : List Node)
     (state : Node -> X) :
     evaluateOrder (localEvaluateNode system)
-        (prefix ++ left :: right :: suffix) state =
+        (prefixNodes ++ left :: right :: suffix) state =
       evaluateOrder (localEvaluateNode system)
-        (prefix ++ right :: left :: suffix) state := by
+        (prefixNodes ++ right :: left :: suffix) state := by
   exact evaluateOrder_adjacent_swap
     (localEvaluateNode system) left right
     (localEvaluateNode_comm_of_no_direct_edges
       system left right left_ne_right
       right_not_parent_of_left left_not_parent_of_right)
-    prefix suffix state
+    prefixNodes suffix state
 
 /-- Every readout of the final structural state is invariant under the same
 adjacent swap. This is the local query-invariance certificate needed before
@@ -193,19 +193,19 @@ theorem readout_invariant_under_adjacent_swap
     (left_ne_right : left ≠ right)
     (right_not_parent_of_left : right ∉ system.parents left)
     (left_not_parent_of_right : left ∉ system.parents right)
-    (prefix suffix : List Node)
+    (prefixNodes suffix : List Node)
     (state : Node -> X) :
     readout
         (evaluateOrder (localEvaluateNode system)
-          (prefix ++ left :: right :: suffix) state) =
+          (prefixNodes ++ left :: right :: suffix) state) =
       readout
         (evaluateOrder (localEvaluateNode system)
-          (prefix ++ right :: left :: suffix) state) := by
+          (prefixNodes ++ right :: left :: suffix) state) := by
   exact congrArg readout
     (parent_local_evaluation_invariant_under_adjacent_swap
       system left right left_ne_right
       right_not_parent_of_left left_not_parent_of_right
-      prefix suffix state)
+      prefixNodes suffix state)
 
 #print axioms evaluateNode_comm_of_mutual_irrelevance
 #print axioms localEvaluateNode_comm_of_no_direct_edges

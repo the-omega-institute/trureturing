@@ -38,7 +38,9 @@ theorem booleanJointLaw_total_four
         jointLaw.mass (false, true) +
         jointLaw.mass (true, false) +
         jointLaw.mass (true, true) = 1 := by
-  simpa [Fintype.sum_prod_type, Fintype.sum_bool] using jointLaw.total
+  have h := jointLaw.total
+  simp [Fintype.sum_prod_type, Fintype.sum_bool] at h
+  linarith
 
 /-- The first-coordinate marginal of a normalized Boolean joint response law. -/
 def booleanLeftMarginalLaw
@@ -96,7 +98,9 @@ theorem boolean_markovian_iff_determinant_zero
       simp [booleanLeftMarginalLaw, booleanRightMarginalLaw,
         leftResponseMarginal, rightResponseMarginal,
         productResponseMass, Fintype.sum_bool] <;>
-      nlinarith
+      nlinarith [jointLaw.nonnegative (false, false), jointLaw.nonnegative (false, true),
+        jointLaw.nonnegative (true, false), jointLaw.nonnegative (true, true),
+        determinant, total_four]
 
 /-- Signed determinant residual of a Boolean two-component response mass. -/
 def booleanResponseDeterminant

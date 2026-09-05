@@ -149,8 +149,12 @@ theorem signature_event_mass_pushforward
           mass exogenous else 0 := by
           apply Finset.sum_congr rfl
           intro exogenous _
-          by_cases event_holds : event (signatureOf exogenous) <;>
-            simp [event_holds]
+          rw [Finset.sum_eq_single (signatureOf exogenous)]
+          · simp
+          · intro b _ hne
+            simp [Ne.symm hne]
+          · intro h
+            exact absurd (Finset.mem_univ _) h
 
 /-- Every rational primal witness for a finite signature law has a direct
 exogenous realization using the signature carrier itself. For event queries,

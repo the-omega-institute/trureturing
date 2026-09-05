@@ -74,10 +74,10 @@ theorem partial_graph_range_is_completion_union
         (family.sharp completion target).2 bounds,
         rfl⟩
   · rintro ⟨⟨completion, value⟩, attainable, value_eq⟩
-    subst value
+    have hv : value = target := value_eq
     exact
       ⟨completion,
-        (family.sharp completion target).1 attainable⟩
+        (family.sharp completion target).1 (hv ▸ attainable)⟩
 
 /-- A value belongs to the partial-graph range exactly when it belongs to one
 completion-specific interval. -/
@@ -114,7 +114,7 @@ theorem exact_lower_endpoint_of_completion_envelope
   · rcases attained with ⟨completion, endpoint_eq⟩
     refine ⟨(completion, globalLower), ?_, rfl⟩
     apply (family.sharp completion globalLower).2
-    rw [endpoint_eq]
+    rw [← endpoint_eq]
     exact ⟨le_rfl, family.lower_le_upper completion⟩
 
 /-- The dual upper-envelope statement. -/
@@ -135,7 +135,7 @@ theorem exact_upper_endpoint_of_completion_envelope
   · rcases attained with ⟨completion, endpoint_eq⟩
     refine ⟨(completion, globalUpper), ?_, rfl⟩
     apply (family.sharp completion globalUpper).2
-    rw [endpoint_eq]
+    rw [← endpoint_eq]
     exact ⟨family.lower_le_upper completion, le_rfl⟩
 
 /-- Two candidate completions with singleton ranges zero and two. -/
@@ -178,20 +178,21 @@ theorem partial_graph_envelope_need_not_be_sharp_interval :
   constructor
   · exact exact_lower_endpoint_of_completion_envelope
       twoCompletionFamily 0
-      (by intro completion; cases completion <;> norm_num)
+      (by intro completion; cases completion <;> norm_num [twoCompletionFamily])
       ⟨false, by simp [twoCompletionFamily]⟩
   constructor
   · exact exact_upper_endpoint_of_completion_envelope
       twoCompletionFamily 2
-      (by intro completion; cases completion <;> norm_num)
+      (by intro completion; cases completion <;> norm_num [twoCompletionFamily])
       ⟨true, by simp [twoCompletionFamily]⟩
   · intro sharpInterval
     have one_realized :=
       (sharpInterval 1).mp ⟨by norm_num, by norm_num⟩
     rcases one_realized with
       ⟨⟨completion, target⟩, feasible, target_eq⟩
-    subst target
-    cases completion <;> simp [twoCompletionFamily] at feasible
+    have ht : target = 1 := target_eq
+    subst ht
+    cases completion <;> simp [twoCompletionFamily, completionUnionProblem] at feasible
 
 #print axioms partial_graph_range_is_completion_union
 #print axioms exact_lower_endpoint_of_completion_envelope

@@ -7,7 +7,7 @@
 
 import D5.S3.ConceptDynamics.Causal.FiniteEventCouplingSharpBounds
 import D5.S3.ConceptDynamics.Causal.NonconvexSharpIdentification
-import Mathlib.Tactic.Nlinarith
+import Mathlib
 
 /- Library-search audit trail (2026-09-03):
    * `FiniteEventCouplingSharpBounds` characterizes the unrestricted two-event
@@ -68,6 +68,7 @@ theorem independent_joint_event_eq_product
       model.1.rightMarginalEq
     ]
   have determinant := model.2
+  unfold IndependentDeterminant at determinant
   rw [
     neither_event,
     left_off_diagonal,
@@ -160,7 +161,7 @@ theorem independent_joint_event_sharp_singleton_iff
           mass leftMarginal rightMarginal model
 
 /-- Pointwise midpoint of two four-cell laws. -/
-def midpointMass
+noncomputable def midpointMass
     (left right : Bool × Bool -> Real) :
     Bool × Bool -> Real :=
   fun pair => (left pair + right pair) / 2
@@ -181,9 +182,9 @@ theorem independent_event_couplings_not_closed_under_midpoint :
           (eventCoupling 0 0 0)
           (eventCoupling 1 1 1)) := by
   refine ⟨?_, ?_, ?_, ?_⟩
-  · exact eventCoupling_isIndependent 0 0
+  · simpa using eventCoupling_isIndependent 0 0
       (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  · exact eventCoupling_isIndependent 1 1
+  · simpa using eventCoupling_isIndependent 1 1
       (by norm_num) (by norm_num) (by norm_num) (by norm_num)
   · refine
       { nonnegative := ?_

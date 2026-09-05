@@ -30,7 +30,7 @@ open D5.S0.Certificates.RationalFarkas
 def linearObjective
     {Variable : Type*} [Fintype Variable]
     (coefficient point : Variable -> ℚ) : ℚ :=
-  ∑ variable, coefficient variable * point variable
+  ∑ varIdx, coefficient varIdx * point varIdx
 
 /-- A dual certificate for the universal upper bound `c x <= upper` over
 `A x <= b`. The nonnegative row combination represents the objective and its
@@ -44,9 +44,9 @@ structure UpperBoundCertificate
     (upper : ℚ) where
   weight : Constraint -> ℚ
   nonnegative : forall constraint, 0 <= weight constraint
-  representsObjective : forall variable,
-    (∑ constraint, weight constraint * A constraint variable) =
-      coefficient variable
+  representsObjective : forall varIdx,
+    (∑ constraint, weight constraint * A constraint varIdx) =
+      coefficient varIdx
   weightedRhs :
     (∑ constraint, weight constraint * b constraint) <= upper
 
@@ -61,9 +61,9 @@ structure LowerBoundCertificate
     (lower : ℚ) where
   weight : Constraint -> ℚ
   nonnegative : forall constraint, 0 <= weight constraint
-  representsNegativeObjective : forall variable,
-    (∑ constraint, weight constraint * A constraint variable) =
-      -coefficient variable
+  representsNegativeObjective : forall varIdx,
+    (∑ constraint, weight constraint * A constraint varIdx) =
+      -coefficient varIdx
   weightedRhs :
     (∑ constraint, weight constraint * b constraint) <= -lower
 
@@ -124,11 +124,11 @@ theorem weighted_constraint_bound
     (feasible : LinearFeasible A b point) :
     (∑ constraint,
         weight constraint *
-          (∑ variable, A constraint variable * point variable)) <=
+          (∑ varIdx, A constraint varIdx * point varIdx)) <=
       ∑ constraint, weight constraint * b constraint := by
   have weighted (constraint : Constraint) :
       weight constraint *
-          (∑ variable, A constraint variable * point variable) <=
+          (∑ varIdx, A constraint varIdx * point varIdx) <=
         weight constraint * b constraint :=
     mul_le_mul_of_nonneg_left
       (feasible constraint) (weight_nonnegative constraint)
@@ -142,49 +142,49 @@ theorem weighted_constraint_sum_eq_objective
     (A : Constraint -> Variable -> ℚ)
     (coefficient : Variable -> ℚ)
     (weight : Constraint -> ℚ)
-    (represents : forall variable,
-      (∑ constraint, weight constraint * A constraint variable) =
-        coefficient variable)
+    (represents : forall varIdx,
+      (∑ constraint, weight constraint * A constraint varIdx) =
+        coefficient varIdx)
     (point : Variable -> ℚ) :
     (∑ constraint,
         weight constraint *
-          (∑ variable, A constraint variable * point variable)) =
+          (∑ varIdx, A constraint varIdx * point varIdx)) =
       linearObjective coefficient point := by
   calc
     (∑ constraint,
         weight constraint *
-          (∑ variable, A constraint variable * point variable)) =
-        ∑ constraint, ∑ variable,
+          (∑ varIdx, A constraint varIdx * point varIdx)) =
+        ∑ constraint, ∑ varIdx,
           weight constraint *
-            (A constraint variable * point variable) := by
+            (A constraint varIdx * point varIdx) := by
       apply Finset.sum_congr rfl
       intro constraint _
       rw [Finset.mul_sum]
-    _ = ∑ variable, ∑ constraint,
+    _ = ∑ varIdx, ∑ constraint,
           weight constraint *
-            (A constraint variable * point variable) := by
+            (A constraint varIdx * point varIdx) := by
       rw [Finset.sum_comm]
-    _ = ∑ variable,
+    _ = ∑ varIdx,
           (∑ constraint,
-            weight constraint * A constraint variable) *
-              point variable := by
+            weight constraint * A constraint varIdx) *
+              point varIdx := by
       apply Finset.sum_congr rfl
-      intro variable _
+      intro varIdx _
       rw [Finset.sum_mul]
       apply Finset.sum_congr rfl
       intro constraint _
       ring
-    _ = ∑ variable, coefficient variable * point variable := by
+    _ = ∑ varIdx, coefficient varIdx * point varIdx := by
       apply Finset.sum_congr rfl
-      intro variable _
-      rw [represents variable]
+      intro varIdx _
+      rw [represents varIdx]
     _ = linearObjective coefficient point := rfl
 
 /-- Negating every objective coefficient negates its finite evaluation. -/
 theorem linearObjective_neg
     {Variable : Type*} [Fintype Variable]
     (coefficient point : Variable -> ℚ) :
-    linearObjective (fun variable => -coefficient variable) point =
+    linearObjective (fun varIdx => -coefficient varIdx) point =
       -linearObjective coefficient point := by
   simp [linearObjective]
 
@@ -227,7 +227,7 @@ theorem lower_bound_of_certificate
       A b certificate.weight certificate.nonnegative point feasible
   have represented :=
     weighted_constraint_sum_eq_objective
-      A (fun variable => -coefficient variable)
+      A (fun varIdx => -coefficient varIdx)
       certificate.weight certificate.representsNegativeObjective point
   rw [represented, linearObjective_neg] at summed
   have negated :

@@ -71,7 +71,11 @@ theorem markovianBenefitMass_product
         (productResponseMass assignmentLaw.mass outcomeMass) =
       benefitResponseMass outcomeMass := by
   unfold markovianBenefitMass productResponseMass benefitResponseMass
-  rw [Finset.sum_mul, assignmentLaw.total, one_mul]
+  have h :
+      (∑ assignment, assignmentLaw.mass assignment *
+        outcomeMass (false, true)) = outcomeMass (false, true) := by
+    rw [← Finset.sum_mul, assignmentLaw.total, one_mul]
+  simpa using h
 
 /-- Explicit four-cell outcome-response law with nominated control success,
 treated success, and benefit probability. -/
@@ -106,7 +110,7 @@ def benefitResponseLaw
     rcases response with ⟨control, treated⟩
     cases control <;> cases treated <;>
       simp [benefitResponseVector] <;> linarith
-  · simp [benefitResponseVector]
+  · simp [benefitResponseVector, Fintype.sum_prod_type]
 
 @[simp] theorem benefitResponseLaw_controlMarginal
     (controlSuccess treatedSuccess benefit : ℚ)
@@ -180,8 +184,9 @@ theorem markovian_benefit_target_feasible_iff
             model.outcomeLaw.mass (false, true) +
             model.outcomeLaw.mass (true, false) +
             model.outcomeLaw.mass (true, true) = 1 := by
-      simpa [Fintype.sum_prod_type, Fintype.sum_bool] using
-        model.outcomeLaw.total
+      have h := model.outcomeLaw.total
+      simp [Fintype.sum_prod_type, Fintype.sum_bool] at h
+      linarith
     constructor
     · rw [max_le_iff]
       constructor
@@ -240,10 +245,14 @@ theorem response_coordinate_factorization_point_identifies_benefit
   subst outcomeMass
   have control_total :
       controlLaw.mass false + controlLaw.mass true = 1 := by
-    simpa [Fintype.sum_bool] using controlLaw.total
+    have h := controlLaw.total
+    simp [Fintype.sum_bool] at h
+    linarith
   have treated_total :
       treatedLaw.mass false + treatedLaw.mass true = 1 := by
-    simpa [Fintype.sum_bool] using treatedLaw.total
+    have h := treatedLaw.total
+    simp [Fintype.sum_bool] at h
+    linarith
   have control_formula :
       controlSuccessMarginal
           (productResponseMass controlLaw.mass treatedLaw.mass) =
