@@ -150,7 +150,7 @@ theorem frameOddReadout_finiteWeilLinearCombination
   calc
     ((∑ k, a k * fourierLaplace (g k) (Z.gamma (F.index i))) -
         ∑ k, a k * fourierLaplace (g k)
-          (conj (Z.gamma (F.index i))))) / 2 =
+          (conj (Z.gamma (F.index i)))) / 2 =
       ∑ k,
         (a k * fourierLaplace (g k) (Z.gamma (F.index i)) -
           a k * fourierLaplace (g k)
