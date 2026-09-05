@@ -7,4 +7,4 @@
 
 import D5.S3.PrimeGaps.FragmentMeshTruncation
 import D5.S3.Weil.ZetaLinear.ComplexQuadraticRowBound
-import D5.S3.Weil.ZetaLinear.QuadraticObserverPolarization
+import D5.S3.Weil.ZetaLinear.QuadraticProbeIrredundance
