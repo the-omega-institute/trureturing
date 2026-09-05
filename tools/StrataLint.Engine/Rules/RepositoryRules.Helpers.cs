@@ -71,7 +71,8 @@ internal static partial class RepositoryRules
             match.Groups["generality"].Value,
             match.Groups["mirrorB"].Value.Trim(),
             match.Groups["mirrorE"].Value.Trim(),
-            match.Groups["anchors"].Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+            match.Groups["anchors"].Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries),
+            match.Groups["utility"].Success ? match.Groups["utility"].Value : null);
         return true;
     }
 
@@ -174,9 +175,16 @@ internal static partial class RepositoryRules
         string Generality,
         string MirrorB,
         string MirrorE,
-        string[] Anchors)
+        string[] Anchors,
+        string? Utility)
     {
-        internal static HeaderData Empty { get; } = new(string.Empty, string.Empty, string.Empty, string.Empty, Array.Empty<string>());
+        internal static HeaderData Empty { get; } = new(
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            Array.Empty<string>(),
+            null);
     }
 
 }

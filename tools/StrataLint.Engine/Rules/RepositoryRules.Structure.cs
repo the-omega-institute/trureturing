@@ -484,7 +484,8 @@ internal static partial class RepositoryRules
                 {
                     findings.Add(new RuleFinding(
                         path.Value,
-                        "expected the exact six-line header at byte zero"));
+                        "expected the canonical Lean header at byte zero "
+                        + "(six-line legacy header or seven-line header with utility)"));
                 }
 
                 continue;
