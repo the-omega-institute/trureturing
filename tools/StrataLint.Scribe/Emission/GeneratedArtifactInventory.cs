@@ -10,13 +10,20 @@ internal sealed record GeneratedArtifactIdentity(
 
 internal static class GeneratedArtifactInventory
 {
-    internal static ImmutableArray<GeneratedArtifactIdentity> All { get; } = Build();
-
-    private static ImmutableArray<GeneratedArtifactIdentity> Build()
+    internal static ImmutableArray<GeneratedArtifactIdentity> Create(
+        IEnumerable<DocumentDefinition> definitions)
     {
-        var artifacts = DocumentDefinitions.All
-            .Select(static definition => new GeneratedArtifactIdentity(
-                definition.RelativePath.Value,
+        ArgumentNullException.ThrowIfNull(definitions);
+        return Create(definitions.Select(static definition => definition.RelativePath.Value));
+    }
+
+    internal static ImmutableArray<GeneratedArtifactIdentity> Create(
+        IEnumerable<string> documentPaths)
+    {
+        ArgumentNullException.ThrowIfNull(documentPaths);
+        var artifacts = documentPaths
+            .Select(static path => new GeneratedArtifactIdentity(
+                path,
                 nameof(ScribeEmitter)))
             .Concat(
             [
