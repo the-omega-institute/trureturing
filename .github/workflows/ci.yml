@@ -157,8 +157,6 @@ jobs:
         run: dotnet restore candidate/tools/StrataLint.sln --locked-mode
       - name: Run candidate engineering tests with resource observation
         shell: bash
-        env:
-          ENGINEERING_TRX_DIRECTORY: ${{ runner.temp }}/engineering-trx
         run: /bin/bash candidate/tools/scripts/workflow/engineering-test-execution-harness.sh "$GITHUB_WORKSPACE/candidate"
 
       - name: Run candidate selftest twice and compare bytes

@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child `similarity` is a label without a source-defined binary carrier or law. Retrieval receipts: the D5 exact-label query exited 1; the D5 kernel query exited 0 only for the frozen equality, generic branching-relation, and memory-inheritance owners, none of whose public statements defines similarity. The pinned Mathlib exact-label query found only unrelated sequence-bisimilarity comments, and the installed non-Mathlib package query exited 1. A17 GitHub Lean-code label queries exited 0 with no matching similarity-and-branching theorem. Local probe `/private/tmp/w73e34-atom1-probe.lean` finally exited 0 at the generic relation boundary; treating its arbitrary relation binder as similarity would be hollow."
+    reentry_condition: "Define the source similarity relation and freeze a public theorem showing how its permitted branching differs from equality, then cover this child with that named carrier."
+    blocker_class: multi-clause-guard
