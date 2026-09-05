@@ -389,7 +389,6 @@ public sealed partial class FrozenSurfaceRuleTests
             "\nimport D5.S0.Carrier.Ring\nimport Mathlib.Data.Nat.Basic\n\ndef fixtureValue",
             StringComparison.Ordinal);
         fixture.Baseline[dependent] = baselineSource;
-        fixture.ForkPoint[dependent] = baselineSource;
         fixture.Files[FrozenPath] = fixture.Files[FrozenPath].Replace(
             "def goldenRing : Nat := 0",
             "def goldenRing : Int := 0",
@@ -608,7 +607,6 @@ public sealed partial class FrozenSurfaceRuleTests
         if (includeInBaseline)
         {
             fixture.Baseline[statePath] = fixture.Files[statePath];
-            fixture.ForkPoint[statePath] = fixture.Files[statePath];
         }
     }
 
@@ -660,7 +658,6 @@ public sealed partial class FrozenSurfaceRuleTests
         string changedPath)
     {
         fixture.Baseline[changedPath] = "baseline\n";
-        fixture.ForkPoint[changedPath] = "baseline\n";
         fixture.Files[changedPath] = "candidate\n";
         return Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(fixture.Build(

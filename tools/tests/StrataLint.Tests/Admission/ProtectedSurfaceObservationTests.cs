@@ -187,7 +187,6 @@ public sealed class ProtectedSurfaceObservationTests
             RuleFixture.DuplicateStatementType);
         fixture.AddDigestionCoverageTarget();
         fixture.Baseline[protectedPath] = "old owners\n";
-        fixture.ForkPoint[protectedPath] = "old owners\n";
         fixture.Files[protectedPath] = "new owners\n";
         fixture.Files[duplicatePath] += includeCapacityObservation
             ? string.Concat(Enumerable.Repeat(

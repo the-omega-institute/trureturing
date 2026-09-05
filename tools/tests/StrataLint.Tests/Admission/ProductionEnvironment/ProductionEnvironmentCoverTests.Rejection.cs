@@ -156,7 +156,7 @@ public sealed partial class ProductionEnvironmentTests
         };
     }
 
-    private static CoverInputs WithReceiptMismatchAtForkPoint(
+    private static CoverInputs WithReceiptMismatchAtBaseline(
         CoverInputs inputs,
         string mismatchCode,
         bool byteIdenticalBaseline = false)

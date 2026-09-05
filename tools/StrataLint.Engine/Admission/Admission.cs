@@ -230,7 +230,6 @@ public static class AdmissionPipeline
         RawChangeSet changes,
         MetaClear metaClear,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null,
         CanonicalizationMeasure? measureCanonicalization = null)
@@ -242,7 +241,6 @@ public static class AdmissionPipeline
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
             verifiedScribeEmissions,
-            forkPoint,
             measureRule,
             measureApplicability,
             measureCanonicalization);
@@ -255,7 +253,6 @@ public static class AdmissionPipeline
         RawChangeSet changes,
         MetaChangeSet protectedChanges,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        RepositorySnapshot? forkPoint = null,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null,
         CanonicalizationMeasure? measureCanonicalization = null)
@@ -267,7 +264,6 @@ public static class AdmissionPipeline
             changes,
             MetaEvaluationProfile.ForProtectedSurface(protectedChanges),
             verifiedScribeEmissions,
-            forkPoint,
             measureRule,
             measureApplicability,
             measureCanonicalization);
@@ -280,7 +276,6 @@ public static class AdmissionPipeline
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null,
         CanonicalizationMeasure? measureCanonicalization = null)
@@ -292,8 +287,7 @@ public static class AdmissionPipeline
             lean,
             changes,
             metaEvaluation,
-            verifiedScribeEmissions,
-            forkPoint);
+            verifiedScribeEmissions);
         return RuleCatalog.Default.Execute(context, measureRule, measureApplicability) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(
