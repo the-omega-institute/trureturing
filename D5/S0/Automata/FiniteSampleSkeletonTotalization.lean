@@ -260,6 +260,91 @@ theorem exists_total_sample_realization [Fintype Output] [Fintype State]
   intro i
   exact totalize_preserves_eval skeleton seed (code i) (label i) (fits i)
 
+/-- Used signatures with their return coordinate in the ordinary state carrier. -/
+abbrev ReturnPairFiber (skeleton : Skeleton Output State) :=
+  {pair : Output × State //
+    ∃ state, skeleton.oneSignature state = some (pair.1, some pair.2)}
+
+noncomputable instance returnPairFiberFintype [Fintype Output] [Fintype State]
+    (skeleton : Skeleton Output State) : Fintype (ReturnPairFiber skeleton) := by
+  classical
+  exact Fintype.ofFinite _
+
+/-- Totality removes the optional-return wrapper without changing the set of
+used signatures. This is the explicit carrier bridge to M18's output-return pairs. -/
+def totalSignaturePairEquiv (skeleton : Skeleton Output State)
+    (total : IsTotal skeleton) : SignatureFiber skeleton ≃ ReturnPairFiber skeleton where
+  toFun := fun signature =>
+    ⟨(signature.1.1, signature.1.2.getD skeleton.start), by
+      obtain ⟨state, used⟩ := signature.2
+      obtain ⟨output, next, defined⟩ := total.2 state
+      have identified : signature.1 = (output, some next) :=
+        Option.some.inj (used.symm.trans defined)
+      refine ⟨state, ?_⟩
+      simpa only [identified, Option.getD_some] using defined⟩
+  invFun := fun pair => ⟨(pair.1.1, some pair.1.2), pair.2⟩
+  left_inv := by
+    intro signature
+    apply Subtype.ext
+    obtain ⟨state, used⟩ := signature.2
+    obtain ⟨output, next, defined⟩ := total.2 state
+    have identified : signature.1 = (output, some next) :=
+      Option.some.inj (used.symm.trans defined)
+    change (signature.1.1, some (signature.1.2.getD skeleton.start)) = signature.1
+    rw [identified]
+    rfl
+  right_inv := by
+    rintro ⟨⟨output, next⟩, used⟩
+    rfl
+
+/-- Canonical total state cost is precisely the recurrent count plus pair count. -/
+theorem total_canonical_cost_eq_pair_cost [Fintype Output] [Fintype State]
+    (skeleton : Skeleton Output State) (total : IsTotal skeleton) :
+    Fintype.card (CanonicalState skeleton) =
+      Fintype.card State + Fintype.card (ReturnPairFiber skeleton) := by
+  rw [canonical_state_card_eq]
+  rw [Fintype.card_congr (totalSignaturePairEquiv skeleton total)]
+
+/-- Choose a recurrent state that requests a given used signature. -/
+noncomputable def signatureSource (skeleton : Skeleton Output State)
+    (signature : SignatureFiber skeleton) : State :=
+  Classical.choose signature.2
+
+/-- The chosen recurrent source requests the indexed signature. -/
+theorem signatureSource_spec (skeleton : Skeleton Output State)
+    (signature : SignatureFiber skeleton) :
+    skeleton.oneSignature (signatureSource skeleton signature) = some signature.1 :=
+  Classical.choose_spec signature.2
+
+/-- Determinism permits at most one used signature per recurrent source. -/
+theorem signatureSource_injective (skeleton : Skeleton Output State) :
+    Function.Injective (signatureSource skeleton) := by
+  intro left right equal
+  apply Subtype.ext
+  apply Option.some.inj
+  calc
+    some left.1 = skeleton.oneSignature (signatureSource skeleton left) :=
+      (signatureSource_spec skeleton left).symm
+    _ = skeleton.oneSignature (signatureSource skeleton right) :=
+      congrArg skeleton.oneSignature equal
+    _ = some right.1 := signatureSource_spec skeleton right
+
+/-- Used transient signatures are bounded by the recurrent state count. -/
+theorem signature_card_le_recurrent_card [Fintype Output] [Fintype State]
+    (skeleton : Skeleton Output State) :
+    Fintype.card (SignatureFiber skeleton) ≤ Fintype.card State := by
+  exact Fintype.card_le_of_injective (signatureSource skeleton)
+    (signatureSource_injective skeleton)
+
+/-- The canonical typed machine has at most twice the recurrent state count. -/
+theorem canonical_state_card_le_twice [Fintype Output] [Fintype State]
+    (skeleton : Skeleton Output State) :
+    Fintype.card (CanonicalState skeleton) ≤ 2 * Fintype.card State := by
+  rw [canonical_state_card_eq, two_mul]
+  exact Nat.add_le_add_left (signature_card_le_recurrent_card skeleton) _
+
+#print axioms totalSignaturePairEquiv
+#print axioms canonical_state_card_le_twice
 #print axioms totalization_preserves_success_and_cost
 #print axioms exists_total_sample_realization
 #print axioms empty_signature_cost_obstruction
