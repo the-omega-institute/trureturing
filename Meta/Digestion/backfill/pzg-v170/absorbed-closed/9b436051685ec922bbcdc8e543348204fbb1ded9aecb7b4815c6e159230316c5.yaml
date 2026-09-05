@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9b436051685ec922bbcdc8e543348204fbb1ded9aecb7b4815c6e159230316c5
+  normalized_sha256: sha256:9b436051685ec922bbcdc8e543348204fbb1ded9aecb7b4815c6e159230316c5
+cas_ref: sha256:9b436051685ec922bbcdc8e543348204fbb1ded9aecb7b4815c6e159230316c5
+coverage_gids:
+  - gid: D5/S3/Arith/SchurShiftedTemplateLift.shiftedTemplateCompatibilityCertificates
+    target_statement_id: sha256:c11e099343597edb9253f9a218a01c7258a9d690f35d6214dc1a22e6a701f7f1
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/SchurShiftedTemplateLift.shiftedTemplateCompatibilityCertificates
+      definition_sha256: sha256:1614e649e400462d9bc4e077fcac6f6b448ad769cd9081fd71415d17c0d4a9a9
+      emission_sha256: sha256:f1090d137a878fa8416c5f315f73bc6a35ce2d3039826406b097a045c32465be
+  unresolved_subitems: []
