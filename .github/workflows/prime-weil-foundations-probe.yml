@@ -1,71 +1,150 @@
-name: Prime Weil foundations research probe
+name: Append prime Weil theory and retire temporary probe
 on:
   push:
     branches: [work/prime-weil-foundations-probe-20260905]
+    paths: [.github/workflows/prime-weil-foundations-probe.yml]
 permissions:
-  contents: read
+  contents: write
 jobs:
-  sources:
-    if: contains(github.event.head_commit.message, 'context')
+  append:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          ref: work/prime-weil-foundations-probe-20260905
           show-progress: false
-      - name: Collect exact source inputs
+      - name: Append existing theory without changing its previous bytes
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p probe-context/{upstream,repository,mathlib,pr5236,pr5065}
-          git rev-parse HEAD > probe-context/repository-commit.txt
-          git archive HEAD D5 docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md docs/develop/theory/RH_RESEARCH_LANE_THEORY.md tools/lean-inspector tools/StrataLint.Scribe Blueprint lakefile.toml lake-manifest.json lean-toolchain CLAUDE.md | tar -x -C probe-context/repository
-          git fetch --quiet --depth=1 origin ce2ab347bd43f93526330285b0f616954f408af3 7d3232d942115d2e5aba1bc902233305439d79cc
-          git archive ce2ab347bd43f93526330285b0f616954f408af3 D5/S3/PrimeGaps | tar -x -C probe-context/pr5236
-          git archive 7d3232d942115d2e5aba1bc902233305439d79cc D5/S3/Weil | tar -x -C probe-context/pr5065
-          curl --fail --location --retry 3 https://codeload.github.com/openai/PrimeGaps186/tar.gz/61340d0b74163003b32756bb16e91d9209a5e330 | tar -xz --strip-components=1 -C probe-context/upstream
-          curl --fail --location --retry 3 https://codeload.github.com/leanprover-community/mathlib4/tar.gz/refs/tags/v4.33.0 | tar -xz --strip-components=1 -C probe-context/mathlib
-          git hash-object probe-context/upstream/PrimeGaps186.lean
-          test "$(git hash-object probe-context/upstream/PrimeGaps186.lean)" = a8d0b8a138c7309f85e3967b24c3b502be5a3917
-          grep -nE 'finiteFragments|fragmentLaw|finitePoissonLaw|weightedEmpirical' probe-context/upstream/PrimeGaps186.lean > probe-context/upstream-fragment-index.txt
-          cat probe-context/upstream-fragment-index.txt
-          tar --zstd -cf prime-weil-source-context.tar.zst probe-context
-      - uses: actions/upload-artifact@v4
-        with:
-          name: prime-weil-source-context
-          path: prime-weil-source-context.tar.zst
-          retention-days: 3
-  pinned-lean:
-    if: ${{ !contains(github.event.head_commit.message, '[sources-only]') }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          show-progress: false
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.elan
-            .lake
-          key: prime-weil-local-probe-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
-      - name: Install exact toolchain and check committed root
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ ! -x "$HOME/.elan/bin/elan" ]; then
-            curl --fail --location --retry 3 https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
-          fi
-          export PATH="$HOME/.elan/bin:$PATH"
-          lean --version
-          lake exe cache get
-          if [ -f D5/S3/PrimeGaps/PrimeWeilFoundationsRoot.lean ]; then
-            lake build D5.S3.PrimeGaps.PrimeWeilFoundationsRoot 2>&1 | tee prime-weil-build.log
-          fi
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: prime-weil-build-log
-          path: prime-weil-build.log
-          if-no-files-found: ignore
-          retention-days: 3
+          test "$(git branch --show-current)" = work/prime-weil-foundations-probe-20260905
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          target = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md')
+          marker = '## [PR #5562] MULTIPLICITY_WEIGHTED_SCHUR_CONTINUATION'
+          addition = r'''
+
+          ---
+
+          ## [PR #5562] MULTIPLICITY_WEIGHTED_SCHUR_CONTINUATION
+
+          ### 1. 远端事实勘正与本轮交付范围
+
+          2026-09-05 重新读取 GitHub：PR #5562 已存在，open、draft，head 为 `work/prime-weil-foundations-probe-20260905`，本轮起点 `e3370a7b504365075371294cf2e0a2a95cbd1add`。本卷上一节 `[PR #5562] POISSON_FRAGMENT_MESH_AND_QUADRATIC_CERTIFICATES` 已实际存在。此前会话末尾关于“尚未确认创建 PR、尚未追加理论卷”的表述不准确，以远端对象为准。
+
+          已保存的 `244a3c949c4414c3baf1598d7f2189f3fcccf8fe` 编译日志包含 `Build completed successfully (8723 jobs)`，四个数学模块的 19 个主声明打印仅有 `propext`、`Classical.choice`、`Quot.sound`。它是该旧提交的证据，不能用来证明后续新增文件已编译。现有 `QuadraticObserverPolarization` 已有三探针留一见证，后续 `QuadraticProbeIrredundance` 不应另立重复的 probe 定义；本轮将直接复用已有 owner。
+
+          本轮继续遵守 spec v4.3（blob `bba1875f68c733b925582ffc81f1344cfce96931`）的共同对象空间、既有 kernel owner 与局部结果/指定系统 root 分离。以下预条件缩放向量属于数学不等式的证明见证，不是信息逃逸系统的评分权重。它不改变对象 arena、catalog 或 primitive 语义。
+
+          产地：ChatGPT 主循环直接推导和实施，未使用独立模型评审。新增 Lean/Scribe 在本轮是待固定工具链检查的 Candidate。此次文件运输只追加本卷并删除先前临时 probe workflow，不运行编译或更改现有 admission 规则。
+
+          ### 2. 已有统一局部化之后，应保留每个通道的重数
+
+          PR #5065 本轮读取的 head 为 `fd45ade20ab1ab80f0cbeadf34ee93c554ba1ee3`。其现有候选主线构造同一个有限轨道族上的共同 Burnol 包，并使用全体混合项估计实际余项。其数学目标形状为
+
+          $$
+          W(f_{N,a})=-4\sum_i m_i|a_i|^2+R_N(a),
+          \qquad |R_N(a)|\le 4^{-(N+1)}C\sum_i|a_i|^2.
+          $$
+
+          本轮不重新实现 ZeroData、测试函数、卷积或 Burnol 包。应在有限混合矩阵层保留 $m_i$，建立可直接检查的较精细充分条件。设实际余项矩阵 $K$ 的元素范数对称，并取任意正向量 $p_i$。若
+
+          $$
+          \sum_j |K_{ij}|p_j\le \eta m_i p_i\quad(\forall i),
+          $$
+
+          则
+
+          $$
+          \left|\sum_{i,j}a_i\overline{a_j}K_{ij}\right|
+          \le\eta\sum_i m_i|a_i|^2.
+          $$
+
+          证明复用本仓 `LongGapsBetweenPrimes.abs_quadratic_form_le_rows`：在该实数定理中代入 $c_i=|a_i|/p_i$ 与 $L_{ij}=p_ip_j|K_{ij}|$。其右侧为
+
+          $$
+          \sum_i \frac{|a_i|^2}{p_i^2}\,p_i\sum_j |K_{ij}|p_j
+          \le\eta\sum_i m_i|a_i|^2.
+          $$
+
+          左侧先由三角不等式控制完整复二次型，再精确约去正的 $p_i$。全部交叉项仍在式中。取 $p_i=1$ 恢复旧行和条件；任意正 $p$ 给出更大的可认证集合，但不是每个 $p$ 都改善数值。
+
+          ### 3. 收敛级数、几何深度与严格余量
+
+          对实际矩阵级数 $K_{ij}=\sum_n T_{n,ij}$，要求每个 $\sum_n|T_{n,ij}|$ 有限，并对完整 $K$ 验证范数对称。若
+
+          $$
+          \sum_j p_j\sum_n |T_{n,ij}|\le\eta m_i p_i,
+          $$
+
+          则同一个界适用于所有系数 $a$。这里没有交换条件收敛级数，没有假设每个单独的零点混合项都 Hermitian。
+
+          若局部化后的实际矩阵族有
+
+          $$
+          |K^{(N)}_{ij}|\le4^{-(N+1)}B_{ij},
+          \quad B_{ij}=B_{ji}\ge0,
+          \quad\sum_jB_{ij}p_j\le\lambda m_i p_i,
+          $$
+
+          则可使用 $\eta_N=4^{-(N+1)}\lambda$，得到
+
+          $$
+          W(f_{N,a})\le-(4-\eta_N)\sum_i m_i|a_i|^2.
+          $$
+
+          若另有独立扰动 $E(a)$ 满足 $|E(a)|\le\tau\sum_i m_i|a_i|^2$，则
+
+          $$
+          W(f_{N,a})+\Re E(a)
+          \le-(4-\eta_N-\tau)\sum_i m_i|a_i|^2.
+          $$
+
+          因而 $\eta_N+\tau<4$ 是统一严格负性的充分条件。这个扰动界必须独立证明，不能把它当成 prime-side 输入已经解决。严格负性的余量是显式保留的 $4-\eta_N-\tau$，可用于后续截断、插值数值误差或表示运输。
+
+          ### 4. 一个精确反例说明缩放为何有用
+
+          令 $m=(1,9)$，$K$ 的对角元为零、两个非对角元均为 2，目标对角余量取 1。未缩放行和条件要求 $2\le\eta$，因此不能用 $\eta<1$ 认证。取 $p=(3,1)$，则
+
+          $$
+          |K|p=(2,6)=\frac23\operatorname{diag}(1,9)p.
+          $$
+
+          新条件以 $\eta=2/3$ 认证全部复系数向量，余量至少为 $(|a_0|^2+9|a_1|^2)/3$。它仅是精确回归例，不是伪造的 zeta 数据或信息逃逸 arena。
+
+          更一般地，两个通道的非对角幅值为 $r>0$、对角预算为 $d_0,d_1>0$ 时，存在正比率 $t=p_1/p_0$ 同时满足
+
+          $$
+          rt<d_0,\qquad r/t<d_1
+          $$
+
+          当且仅当 $r^2<d_0d_1$。正向将两个不等式相乘；反向在开区间 $(r/d_1,d_0/r)$ 中取 $t$。这说明二维时缩放恢复精确的行列式阈值；本段一般等价目前是理论推导，不冒领为已提交 Lean 定理。
+
+          ### 5. 文献定位与未完成目标
+
+          上述方法属于经典 Schur test / 正对角缩放，而非新发现的泛函分析定理。文献参照：I. Schur, *Bemerkungen zur Theorie der beschränkten Bilinearformen mit unendlich vielen Veränderlichen*, J. reine angew. Math. 140 (1911), 1–28；N. Holighaus and F. Voigtlaender, *Schur-type Banach modules of integral kernels acting on mixed-norm Lebesgue spaces*, arXiv:2006.01083。后者提供现代加权 Schur 语境，本轮不移植其混合范数广义定理。
+
+          本轮的具体增量是复用既有实数行和 owner，给出复混合级数的缩放证书、重数加权严格余量和可核查回归例，并提供配套 Scribe。要成为实际 Weil 局部化常数改进，仍须从 #5065 的实际 mixedSummand 构造 $B$、证明相应对称性、给出真正的 $p$ 与 $\lambda$，再通过实际 full Gram API 消费它们；本分支不把泛型前件当成已解除的 zeta 分析输入。
+
+          原始 physical integral inequalities 独立解除计数仍为 **0/152**。两个 Kloosterman 输入、全局 prime-side positivity、固定支撑窗口的统一局部化及 RH 均未由本轮证明。下一步最有价值的工作是实际通道主要项与余项矩阵的有效估计，而不是重复三探针极化。
+          '''
+          addition = addition.encode('utf-8')
+          before = target.read_bytes()
+          key = marker.encode('utf-8')
+          assert before.count(key) == 0, 'duplicate append marker'
+          after = before + addition
+          target.write_bytes(after)
+          assert target.read_bytes()[:len(before)] == before
+          assert target.read_bytes().count(key) == 1
+          print('previous_bytes', len(before), 'added_bytes', len(addition))
+          print('previous_sha256', hashlib.sha256(before).hexdigest())
+          print('result_sha256', hashlib.sha256(after).hexdigest())
+          Path('.github/workflows/prime-weil-foundations-probe.yml').unlink()
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add docs/develop/theory/RH_RESEARCH_LANE_THEORY.md .github/workflows/prime-weil-foundations-probe.yml
+          git commit -m 'docs: append multiplicity-weighted Schur theory and retire temporary probe'
+          git push origin HEAD:refs/heads/work/prime-weil-foundations-probe-20260905
+          git rev-parse HEAD
