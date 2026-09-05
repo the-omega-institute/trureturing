@@ -13,12 +13,13 @@
 # CapacityPolicyTests.RepositoryHasNoOversizeArtifactOrOverfullDirectory 判红(855 > 800)。
 # 教训与 #3518 同形:凡「deposit 会照做、只有事后 CI 报」的检查,一律前移到这道门。
 #
-# 合规形状(恰 6 行,第 6 行以 ` -/` 收尾):
+# 合规形状(既有 6 行,或带 utility 的 7 行;末行以 ` -/` 收尾):
 #   /- GID: <path>
 #      generality: <G|F|E>
 #      mirror-B: <path|none(...)>
 #      mirror-E: <path|none(...)>
 #      anchors: [...]
+#      utility: <record>          # 可选;在场时只能位于 anchors 与 digest 之间
 #      digest: <一行写完，不得折行> -/
 #
 # 退出码:0 = 全部合规;1 = 有不合规文件(逐条打印)
@@ -70,9 +71,13 @@ __main() {
     # 头部块结束行号(第一个含 ' -/' 的行)
     local endline; endline=$(grep -n -- ' -/' "$f" | head -1 | cut -d: -f1)
     if [ -z "$endline" ]; then echo "  ✗ $f  <- 头部块没有 ' -/' 收尾"; bad=1; continue; fi
-    if [ "$endline" -ne 6 ]; then
-      echo "  ✗ $f  <- 头部 $endline 行（应为 6）；#3518：deposit 会照冻不误，只有 SL-012 报"
+    if [ "$endline" -ne 6 ] && [ "$endline" -ne 7 ]; then
+      echo "  ✗ $f  <- 头部 $endline 行（应为 6，或含 utility 的 7）；#3518：deposit 会照冻不误，只有 SL-012 报"
       sed -n "1,${endline}p" "$f" | sed 's/^/      | /'
+      bad=1; continue
+    fi
+    if [ "$endline" -eq 7 ] && ! sed -n '6p' "$f" | grep -q '^   utility: '; then
+      echo "  ✗ $f  <- 7 行头部的第 6 行必须是 '   utility: '"
       bad=1; continue
     fi
     local keys ok=1 k

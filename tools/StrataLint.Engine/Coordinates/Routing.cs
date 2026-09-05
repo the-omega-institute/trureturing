@@ -336,6 +336,7 @@ public static class RouteEngine
             $"   mirror-B: D5/B/{string.Join('/', gid.Value.Split('/').Skip(1)).Split('.')[0]}",
             "   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)",
             "   anchors: []",
+            "   utility: EDIT-ME",
             "   digest: EDIT-ME -/"),
         "B" or "C" or "L" => ImmutableArray.Create($"<!-- GID: {gid.Value} -->", $"# {syntax.Module}", string.Empty, "EDIT-ME"),
         "E" when syntax.Artifact == "json" => ImmutableArray.Create("{", $"  \"gid\": \"{gid.Value}\",", "  \"result\": \"EDIT-ME\"", "}"),
