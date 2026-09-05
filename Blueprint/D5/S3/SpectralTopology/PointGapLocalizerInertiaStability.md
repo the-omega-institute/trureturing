@@ -56,7 +56,7 @@ The finite localizer signature is evaluated at the contracted scale along the ra
 
 Lean statement: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.localizer_position_perturbation_isHermitian`
 
-*Formalization.* `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.localizer_position_perturbation_isHermitian` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.localizer_position_perturbation_isHermitian` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,7 +68,7 @@ A real scale and Hermitian position observable give a Hermitian position perturb
 
 Lean statement: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_inertia_eq_zero_scale_of_weyl_certificate`
 
-*Formalization.* `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_inertia_eq_zero_scale_of_weyl_certificate` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_inertia_eq_zero_scale_of_weyl_certificate` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,7 +80,7 @@ An admissible scale and localizer Weyl certificate identify finite-scale inertia
 
 Lean statement: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_exact_inertia_of_weyl_certificate`
 
-*Formalization.* `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_exact_inertia_of_weyl_certificate` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_exact_inertia_of_weyl_certificate` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -92,7 +92,7 @@ A point gap upgrades the transported endpoint inertia to exact half-dimensional 
 
 Lean statement: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_signature_eq_zero_of_weyl_certificate`
 
-*Formalization.* `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_signature_eq_zero_of_weyl_certificate` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_signature_eq_zero_of_weyl_certificate` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -104,7 +104,7 @@ The finite localizer signature vanishes under the same quantitative Weyl certifi
 
 Lean statement: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radial_localizer_exact_inertia_of_uniform_weyl_certificate`
 
-*Formalization.* `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radial_localizer_exact_inertia_of_uniform_weyl_certificate` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radial_localizer_exact_inertia_of_uniform_weyl_certificate` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -116,7 +116,7 @@ A uniform radial certificate gives exact inertia at every point of the admissibl
 
 Lean statement: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radial_localizer_signature_eq_zero_of_uniform_weyl_certificate`
 
-*Formalization.* `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radial_localizer_signature_eq_zero_of_uniform_weyl_certificate` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radial_localizer_signature_eq_zero_of_uniform_weyl_certificate` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -126,16 +126,16 @@ A uniform radial certificate makes the finite localizer signature zero throughou
 
 ## References
 
-- Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.localizerPositionPerturbation`
 - Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.HasLocalizerWeylCertificate`
 - Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.HasUniformRadialLocalizerWeylCertificate`
-- Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radialLocalizerSignature`
-- Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.localizer_position_perturbation_isHermitian`
-- Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_inertia_eq_zero_scale_of_weyl_certificate`
 - Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_exact_inertia_of_weyl_certificate`
+- Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_inertia_eq_zero_scale_of_weyl_certificate`
 - Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.finite_localizer_signature_eq_zero_of_weyl_certificate`
+- Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.localizerPositionPerturbation`
+- Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.localizer_position_perturbation_isHermitian`
+- Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radialLocalizerSignature`
 - Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radial_localizer_exact_inertia_of_uniform_weyl_certificate`
 - Truth anchor: `D5/S3/SpectralTopology/PointGapLocalizerInertiaStability.radial_localizer_signature_eq_zero_of_uniform_weyl_certificate`
-- Dependency: [D5/S3/SpectralTopology/PointGapRadialGapPath](PointGapRadialGapPath.md)
 - Dependency: [D5/S3/SpectralTopology/FiniteHermitianInertiaStability](FiniteHermitianInertiaStability.md)
 - Dependency: [D5/S3/SpectralTopology/PointGapExactInertia](PointGapExactInertia.md)
+- Dependency: [D5/S3/SpectralTopology/PointGapRadialGapPath](PointGapRadialGapPath.md)

@@ -56,7 +56,7 @@ The matrix and its negative have no counted eigenvalue in the threshold strip ne
 
 Lean statement: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.posIndex_le_add_of_threshold_gap`
 
-*Formalization.* `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.posIndex_le_add_of_threshold_gap` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.posIndex_le_add_of_threshold_gap` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,7 +68,7 @@ A threshold gap and a reverse perturbation bound prevent the positive index from
 
 Lean statement: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.negIndex_le_add_of_threshold_gap`
 
-*Formalization.* `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.negIndex_le_add_of_threshold_gap` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.negIndex_le_add_of_threshold_gap` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,7 +80,7 @@ A threshold gap for the negated base and a perturbation bound prevent the negati
 
 Lean statement: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.inertia_eq_of_two_sided_weyl_certificate`
 
-*Formalization.* `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.inertia_eq_of_two_sided_weyl_certificate` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.inertia_eq_of_two_sided_weyl_certificate` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -92,7 +92,7 @@ Two-sided Weyl certificates and invertible endpoints force equality of both iner
 
 Lean statement: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.hermitianSignature_add_eq_of_two_sided_weyl_certificate`
 
-*Formalization.* `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.hermitianSignature_add_eq_of_two_sided_weyl_certificate` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.hermitianSignature_add_eq_of_two_sided_weyl_certificate` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -103,13 +103,12 @@ The same certificate preserves the repository's existing Hermitian signature coo
 ## References
 
 - Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.HasEigenvalueRadiusBound`
-- Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.HasTwoSidedEigenvalueRadiusBound`
 - Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.HasPositiveThresholdGap`
+- Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.HasTwoSidedEigenvalueRadiusBound`
 - Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.HasTwoSidedThresholdGap`
-- Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.posIndex_le_add_of_threshold_gap`
-- Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.negIndex_le_add_of_threshold_gap`
-- Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.inertia_eq_of_two_sided_weyl_certificate`
 - Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.hermitianSignature_add_eq_of_two_sided_weyl_certificate`
-- Dependency: [D5/S3/Weil/ZetaLinear/Weyl](../Weil/ZetaLinear/Weyl.md)
-- Dependency: [D5/S3/SpectralTopology/PointGapExactInertia](PointGapExactInertia.md)
+- Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.inertia_eq_of_two_sided_weyl_certificate`
+- Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.negIndex_le_add_of_threshold_gap`
+- Truth anchor: `D5/S3/SpectralTopology/FiniteHermitianInertiaStability.posIndex_le_add_of_threshold_gap`
 - Dependency: [D5/S3/SpectralTopology/FiniteSpectralLocalizer](FiniteSpectralLocalizer.md)
+- Dependency: [D5/S3/SpectralTopology/PointGapExactInertia](PointGapExactInertia.md)
