@@ -112,7 +112,9 @@ internal static class ScribeTestMapDeriver
         }
     }
 
-    private static string SnapshotDerivationKey(RepositorySnapshot snapshot)
+    internal static string SnapshotDerivationKey(
+        RepositorySnapshot snapshot,
+        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         AppendHashString(hash, "snapshot-files");
@@ -125,8 +127,7 @@ internal static class ScribeTestMapDeriver
             AppendHashBytes(hash, file.RawBytes.AsSpan());
         }
 
-        // MSBuild inherits every process environment variable, including its executable,
-        // SDK, NuGet, and temporary-directory selectors.
+        // Parent selectors also affect snapshot materialization and metadata resolution.
         var environment = Environment.GetEnvironmentVariables()
             .Cast<DictionaryEntry>()
             .OrderBy(static entry => (string)entry.Key, StringComparer.Ordinal)
@@ -142,6 +143,8 @@ internal static class ScribeTestMapDeriver
         AppendHashString(hash, Path.GetTempPath());
         AppendHashString(hash, "resolved-user-profile");
         AppendHashString(hash, Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+        AppendHashString(hash, "metadata-digest");
+        AppendHashString(hash, ScribeTestMapStore.ComputeMetadataDigest(snapshot, describeInputPaths));
 
         return Convert.ToHexStringLower(hash.GetHashAndReset());
     }

@@ -98,7 +98,8 @@ public sealed class RuleEngineCapacityDerivationTests
             "test-rid",
             ".NET test framework",
             "/test/dotnet",
-            "10.0.100-test");
+            "10.0.100-test",
+            new string('d', 64));
         var storage = new CapacityMemoryStorage();
         var forkPointDigest = ScribeTestMapStore.ComputeInputDigest(context.ForkPoint);
         storage.Write(
@@ -151,7 +152,7 @@ public sealed class RuleEngineCapacityDerivationTests
         var forkPointMap = ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint);
         Assert.Contains(forkPointMap.Methods, static method =>
             method.Id == "DebtTests.ExistingDebt" && method.UnknownReasons.Count != 0);
-        var environment = new ScribeTestMapEnvironment("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test");
+        var environment = new ScribeTestMapEnvironment("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test", new string('d', 64));
         var storage = new CapacityMemoryStorage();
         var digest = ScribeTestMapStore.ComputeInputDigest(context.ForkPoint);
         storage.Write(digest + ".json", ScribeTestMapEnvelope.Create(digest,

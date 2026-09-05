@@ -9,7 +9,7 @@ namespace StrataLint.Tests;
 public sealed class ScribeTestMapEnvelopeTests
 {
     private static readonly ScribeTestMapEnvironment Environment =
-        new("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test");
+        new("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test", Digest('e'));
 
     [Fact]
     public void RoundTripPreservesEveryFieldAndOrder()

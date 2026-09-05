@@ -8,7 +8,8 @@ internal sealed record ScribeTestMapEnvironment(
     string Rid,
     string Framework,
     string DotnetHost,
-    string DotnetSdkVersion);
+    string DotnetSdkVersion,
+    string EvaluationEnvironmentDigest);
 
 internal sealed record ScribeTestMapProducer(string EngineMvid)
 {
@@ -72,6 +73,7 @@ internal sealed record ScribeTestMapEnvelope(
                 framework = Environment.Framework,
                 dotnet_host = Environment.DotnetHost,
                 dotnet_sdk_version = Environment.DotnetSdkVersion,
+                evaluation_environment_digest = Environment.EvaluationEnvironmentDigest,
             },
             map = new
             {
@@ -139,12 +141,13 @@ internal sealed record ScribeTestMapEnvelope(
             }
 
             var environmentElement = root.GetProperty("environment");
-            RequireFields(environmentElement, "rid", "framework", "dotnet_host", "dotnet_sdk_version");
+            RequireFields(environmentElement, "rid", "framework", "dotnet_host", "dotnet_sdk_version", "evaluation_environment_digest");
             var environment = new ScribeTestMapEnvironment(
                 ReadString(environmentElement, "rid"),
                 ReadString(environmentElement, "framework"),
                 ReadString(environmentElement, "dotnet_host"),
-                ReadString(environmentElement, "dotnet_sdk_version"));
+                ReadString(environmentElement, "dotnet_sdk_version"),
+                ReadString(environmentElement, "evaluation_environment_digest"));
 
             var map = ReadMap(root.GetProperty("map"));
             var canonical = StructuredCanonicalWriter.WriteJson(document.RootElement);

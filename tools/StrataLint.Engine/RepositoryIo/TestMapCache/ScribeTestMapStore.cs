@@ -74,8 +74,8 @@ internal sealed record ScribeTestMapCacheEvent(string InputDigest, string Outcom
 // C1 (1): Length-prefixed projection encoding binds tree-side input bytes: assuming no SHA-256
 // collision, equal digests iff the projection bytes are equal.
 //
-// C1 (2): environment (rid/framework/dotnet_host/dotnet_sdk_version) and metadata_digest bind
-// machine-side inputs: the MSBuild host/version and Roslyn metadata reference/nuspec contents.
+// C1 (2): environment (rid/framework/dotnet_host/dotnet_sdk_version/evaluation_environment_digest)
+// and metadata_digest bind the fixed MSBuild environment and Roslyn reference/nuspec contents.
 // MSBuild can still read outside the projection in a full-tree checkout; that A-layer residual is unclosed.
 //
 // C1 (3): Cache provenance is the same as --judge-dll's judge-binaries cache: only dev push writes
@@ -98,7 +98,17 @@ internal sealed class ScribeTestMapStore(
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(derive);
         var inputDigest = ComputeInputDigest(snapshot);
-        if (TryLoad(snapshot, inputDigest, out var cached))
+        string? metadataDigest = null;
+        try
+        {
+            metadataDigest = ComputeMetadataDigest(snapshot, describeInputPaths);
+        }
+        catch (Exception exception)
+        {
+            Record(inputDigest, "invalid:metadata-read-failed-" + ExceptionReason(exception));
+        }
+
+        if (metadataDigest is not null && TryLoad(inputDigest, metadataDigest, out var cached))
         {
             Record(inputDigest, "hit");
             return cached;
@@ -113,11 +123,18 @@ internal sealed class ScribeTestMapStore(
 
         try
         {
+            if (metadataDigest is null) return map;
+            if (!string.Equals(metadataDigest, ComputeMetadataDigest(snapshot, describeInputPaths), StringComparison.Ordinal))
+            {
+                Record(inputDigest, "store-skipped-metadata-changed");
+                return map;
+            }
+
             storage.Write(
                 FileName(inputDigest),
                 ScribeTestMapEnvelope.Create(
                     inputDigest,
-                    ComputeMetadataDigest(snapshot, describeInputPaths),
+                    metadataDigest,
                     environment,
                     map).Write());
             Record(inputDigest, "stored");
@@ -182,7 +199,7 @@ internal sealed class ScribeTestMapStore(
         return Convert.ToHexStringLower(hash.GetHashAndReset());
     }
 
-    private bool TryLoad(RepositorySnapshot snapshot, string inputDigest, out ScribeTestMap map)
+    private bool TryLoad(string inputDigest, string metadataDigest, out ScribeTestMap map)
     {
         map = null!;
         byte[] bytes;
@@ -250,17 +267,18 @@ internal sealed class ScribeTestMapStore(
             return false;
         }
 
-        try
+        if (!string.Equals(
+                envelope.Environment.EvaluationEnvironmentDigest,
+                environment.EvaluationEnvironmentDigest,
+                StringComparison.Ordinal))
         {
-            if (!string.Equals(envelope.MetadataDigest, ComputeMetadataDigest(snapshot, describeInputPaths), StringComparison.Ordinal))
-            {
-                Record(inputDigest, "invalid:metadata-digest");
-                return false;
-            }
+            Record(inputDigest, "invalid:environment-evaluation-environment-digest");
+            return false;
         }
-        catch (Exception exception)
+
+        if (!string.Equals(envelope.MetadataDigest, metadataDigest, StringComparison.Ordinal))
         {
-            Record(inputDigest, "invalid:metadata-read-failed-" + ExceptionReason(exception));
+            Record(inputDigest, "invalid:metadata-digest");
             return false;
         }
 

@@ -42,20 +42,16 @@ internal static class ScribeMetadataReferenceResolver
         ("xunit.assert", "xunit.assert"),
     ];
 
-    internal static ScribeMetadataReferenceResolution Resolve(ScribeCompilationProject project)
+    internal static ScribeMetadataReferenceResolution Resolve(
+        ScribeCompilationProject project,
+        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null)
     {
-        var paths = PlatformPaths().ToList();
+        var paths = (describeInputPaths ?? DescribeInputPaths)([project])
+            .Where(static path => path.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
+            .ToArray();
         var assemblyNames = paths
             .Select(Path.GetFileNameWithoutExtension)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        var packages = Packages(project, PackageDirectory).ToArray();
-        foreach (var package in packages)
-        {
-            foreach (var path in CompileAssets(package.Id, package.Version, PackageDirectory))
-            {
-                if (assemblyNames.Add(Path.GetFileNameWithoutExtension(path))) paths.Add(path);
-            }
-        }
         ScribeMetadataDegradation? degradation = null;
         if (ScribeProjectCompilationContext.IsXunitProject(project.ProjectContent))
         {
@@ -70,6 +66,8 @@ internal static class ScribeMetadataReferenceResolver
                         $"xUnit compile assets are unavailable for {project.Path}; "
                         + "the project has no locked package graph");
                 }
+                // The locked graph is snapshot data; no second filesystem traversal is needed.
+                var packages = Packages(project, PackageDirectory).ToArray();
                 var absentProviders = missing
                     .Where(metadata => !packages.Any(package => string.Equals(
                         package.Id,
