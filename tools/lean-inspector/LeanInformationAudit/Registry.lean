@@ -107,6 +107,12 @@ def qualifiedNameCollisionError (rootId : Name) (catalogId : CatalogId)
   s!"IE-C025 QualifiedNameCollision root={rootId} catalog={catalogId} \
 generated_name={generatedName} occurrences={jsonStringArray occurrences}"
 
+def qualifiedNameCollisionEntries (entries : Array InformationRegistryEntry)
+    (generatedName : Name) (prospective : InformationRegistryEntry) :
+    Array InformationRegistryEntry :=
+  (entries.filter fun entry =>
+    entry.unitName == generatedName || entry.realizationName == generatedName).push prospective
+
 def rejectKernelAddressSemanticUse (rootId : Name) (catalogId : CatalogId)
     (address consumer : String) : Except String Unit :=
   .error s!"IE-C030 KernelAddressUsedAsSemanticEvidence root={rootId} \

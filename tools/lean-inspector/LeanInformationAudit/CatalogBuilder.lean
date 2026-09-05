@@ -87,16 +87,16 @@ private def distinctNames (names : Array Name) : Array Name :=
 
 def validateMaximalCatalog (rootId arenaName : Name)
     (entries : Array InformationRegistryEntry) : Except String CatalogId := do
-  let catalogIds := distinctNames (entries.map (·.effectiveCatalogId))
-    |>.qsort nameLess
-  if catalogIds.size != 1 then
-    throw s!"IE-C024 SplitCanonicalArenaCatalog root={rootId} arena={arenaName} \
-catalogs={nameArrayJson catalogIds}"
   let maximal := entries.filter fun entry => entry.catalogKind == .canonicalMaximal
   if maximal.isEmpty then
     let occurrences := entries.map (·.theoremName) |>.qsort nameLess
     throw s!"IE-C026 MissingMaximalCatalog root={rootId} arena={arenaName} \
 occurrences={nameArrayJson occurrences}"
+  let catalogIds := distinctNames (entries.map (·.effectiveCatalogId))
+    |>.qsort nameLess
+  if catalogIds.size != 1 then
+    throw s!"IE-C024 SplitCanonicalArenaCatalog root={rootId} arena={arenaName} \
+catalogs={nameArrayJson catalogIds}"
   pure catalogIds[0]!
 
 private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)

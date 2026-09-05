@@ -66,10 +66,9 @@ private def ensureOccurrenceRegisterable (env : Environment) (rootId objectArena
         objectArenaName
         legacyNaming := false
       }
-      let owners := InformationRegistry.entries env |>.filter fun entry =>
-        entry.unitName == generatedName || entry.realizationName == generatedName
       throwError (qualifiedNameCollisionError rootId catalogId generatedName
-        (owners.push prospective))
+        (qualifiedNameCollisionEntries (InformationRegistry.entries env)
+          generatedName prospective))
 
 private def addExpectedOccurrence (theoremId arenaId : TSyntax `ident)
     (registrationModule statementIdentityOverride : String) : CommandElabM Unit := do
