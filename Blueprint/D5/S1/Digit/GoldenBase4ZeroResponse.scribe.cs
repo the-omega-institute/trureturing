@@ -1,0 +1,177 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S1.Digit;
+
+internal sealed class GoldenBase4ZeroResponseDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S1/Digit/GoldenBase4ZeroResponse.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "An exact inverse certifies fourteen independent joint responses of the existing machine, with a fixed-profile scope distinct from powers-only minimality.",
+        H("Golden Base-Four Joint Zero Response Certificate"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-recurrent"),
+                DeclarationHandle.Create(Prefix + "recurrent"),
+                H("Recurrent"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Embedding the previous-zero carrier into the existing full machine."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-transient"),
+                DeclarationHandle.Create(Prefix + "transient"),
+                H("Transient"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Embedding the seven transient slots into the existing full machine."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-zero"),
+                DeclarationHandle.Create(Prefix + "zero"),
+                H("Zero"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The recurrent zero row of the already specified full table."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-select"),
+                DeclarationHandle.Create(Prefix + "select"),
+                H("Select"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Slot requested by each recurrent one edge."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-returnto"),
+                DeclarationHandle.Create(Prefix + "returnTo"),
+                H("Returnto"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Return target of each existing transient slot."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-zero-matches"),
+                DeclarationHandle.Create(Prefix + "zero_matches"),
+                H("Zero matches"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The displayed zero table is exactly the original machine's row."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-select-matches"),
+                DeclarationHandle.Create(Prefix + "select_matches"),
+                H("Select matches"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The selector table agrees with the original machine's one transitions."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-return-matches"),
+                DeclarationHandle.Create(Prefix + "return_matches"),
+                H("Return matches"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The slot returns agree with the original machine's zero transitions."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-skeleton"),
+                DeclarationHandle.Create(Prefix + "skeleton"),
+                H("Skeleton"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Original outputs are reused without a second digit oracle."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-slots"),
+                DeclarationHandle.Create(Prefix + "slots"),
+                H("Slots"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An explicit serialization in the existing slot witness type."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-origin"),
+                DeclarationHandle.Create(Prefix + "origin"),
+                H("Origin"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Row origins: the initial state followed by named transient returns."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-rowdelay"),
+                DeclarationHandle.Create(Prefix + "rowDelay"),
+                H("Rowdelay"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Number of zeroes after the row origin."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-columndelay"),
+                DeclarationHandle.Create(Prefix + "columnDelay"),
+                H("Columndelay"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Column zero depths; only depths zero through three are needed."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-test"),
+                DeclarationHandle.Create(Prefix + "test"),
+                H("Test"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Joint probes distinguish output digits and selected transient slots."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-access-exhausts-recurrent"),
+                DeclarationHandle.Create(Prefix + "access_exhausts_recurrent"),
+                H("Access exhausts recurrent"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every recurrent state has the recorded access by a transient return or start."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-profileminor"),
+                DeclarationHandle.Create(Prefix + "profileMinor"),
+                H("Profileminor"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This matrix is computed from the existing machine, not assumed data."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-profileinverse"),
+                DeclarationHandle.Create(Prefix + "profileInverse"),
+                H("Profileinverse"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An exact integer-valued right inverse; no approximate rank is used."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-profile-inverse-certificate"),
+                DeclarationHandle.Create(Prefix + "profile_inverse_certificate"),
+                H("Profile inverse certificate"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Finite rational calculation certifies the whole matrix product."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-profile-rank-fourteen"),
+                DeclarationHandle.Create(Prefix + "profile_rank_fourteen"),
+                H("Profile rank fourteen"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Fourteen independent responses are forced for this labelled profile."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("goldenbase4zeroresponse-same-profile-recurrent-lower-bound"),
+                DeclarationHandle.Create(Prefix + "same_profile_recurrent_lower_bound"),
+                H("Same profile recurrent lower bound"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Any deterministic slot realization of the same labelled profile requires at least fourteen recurrent states. This premise is stronger than fitting powers."))),
+                DescribeRole.Theorem)),
+        [
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Certificates/SkeletonSlotZeroResponse")),
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Digit/GoldenBase4IntervalMachine"))
+        ]));
+}
