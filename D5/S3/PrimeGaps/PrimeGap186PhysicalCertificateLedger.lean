@@ -10,14 +10,14 @@ import D5.S3.PrimeGaps.PrimeGap186PhysicalSourceGeometry
 
 /-!
 The upstream `physical_integral_bounds` input packages 104 outer inequalities,
-45 inner inequalities, and three scalar cap/trial inequalities.  Treating that
+45 inner inequalities, and three scalar cap/trial inequalities. Treating that
 package as one proposition hides which pieces have actually been replayed in
-Lean.  This file introduces a finite proof ledger in which every cell is an
+Lean. This file introduces a finite proof ledger in which every cell is an
 independent proposition.
 
-No numerical inequality is assumed here.  The point is architectural: a future
-interval/rational certificate may discharge one cell at a time, while the final
-assembly theorem is already kernel checked.
+No numerical inequality is assumed here. Completeness of the combined ledger
+is equivalent to completeness of its three blocks; the individual analytic
+obligations still require separate proofs.
 -/
 
 namespace D5.S3.PrimeGaps.PrimeGap186PhysicalCertificateLedger
@@ -70,7 +70,11 @@ inductive PhysicalScalarObligation
   | trialIHLower
   | trialIHUpper
   | trialJLambdaLower
-  deriving DecidableEq, Fintype
+  deriving DecidableEq
+
+instance : Fintype PhysicalScalarObligation where
+  elems := { .trialIHLower, .trialIHUpper, .trialJLambdaLower }
+  complete := by intro s; cases s <;> simp
 
 /-- Exact index type of the numerical input packaged by the upstream physical-bound axiom. -/
 abbrev PrimeGap186PhysicalObligationIndex : Type :=
@@ -79,7 +83,8 @@ abbrev PrimeGap186PhysicalObligationIndex : Type :=
 /-- The upstream physical package contains exactly 152 independently dischargeable cells. -/
 theorem primeGap186PhysicalObligationIndex_card :
     Fintype.card PrimeGap186PhysicalObligationIndex = 152 := by
-  norm_num [PrimeGap186PhysicalObligationIndex]
+  have hscalar : Fintype.card PhysicalScalarObligation = 3 := by decide
+  norm_num [PrimeGap186PhysicalObligationIndex, hscalar]
 
 /-- Package the three source-level classes of physical inequalities without asserting any of them. -/
 def primeGap186PhysicalLedger
@@ -91,7 +96,7 @@ def primeGap186PhysicalLedger
     ((⟨inner⟩ : FiniteProofLedger (Fin 45)).sum
       (⟨scalar⟩ : FiniteProofLedger PhysicalScalarObligation))
 
-/-- Final assembly theorem for the physical proof ledger.  It exposes all three blocks
+/-- Final assembly theorem for the physical proof ledger. It exposes all three blocks
 separately, so replacing any subset by kernel-checked certificates never requires trusting
 the remaining blocks as one opaque proposition. -/
 theorem primeGap186PhysicalLedger_complete_iff
