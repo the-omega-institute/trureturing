@@ -359,10 +359,8 @@ public sealed class StatementProjectionPilotTests
         using var pilot = LoadPinnedFixture("statement-projection-pilot-v1.json");
         using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
 
-        // The engineering CI job runs without a raw Lean report and decides projectability from
-        // these files alone. If a non-theorem were pinned here it would be judged projectable
-        // without a report and unprojectable with one, so the same tree would emit two different
-        // documents depending on which machine built it.
+        // These pins are the projection corpus in every environment. Their theorem kinds make
+        // their types eligible for statement projection.
         foreach (var declaration in ReadFixtureDeclarations(pilot, expansion))
         {
             Assert.True(

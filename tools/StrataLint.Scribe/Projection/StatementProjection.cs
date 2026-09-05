@@ -607,9 +607,8 @@ internal static class StatementProjectionFixtureLoader
                     throw new FormatException($"Projection fixture declaration has a missing or invalid source_path: {name}");
                 var statement = declaration.GetProperty("type").GetString()
                     ?? throw new FormatException($"Projection fixture has a null statement-v1 value: {name}");
-                // The kind is load-bearing, not decoration: the engineering CI job runs without a raw
-                // Lean report and decides projectability from this file alone. A pinned entry whose kind
-                // is absent would be judged differently in the two environments, so refuse to load it.
+                // Pins supply the entire projection corpus in every environment; kind is required
+                // because only theorem types can supply a statement presentation.
                 var kind = declaration.TryGetProperty("kind", out var kindElement)
                     ? kindElement.GetString()
                     : throw new FormatException($"Projection fixture declaration has no kind: {name}");
