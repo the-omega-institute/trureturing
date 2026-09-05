@@ -10,6 +10,16 @@ public static class ScribeEmitter
 
     internal static string AttestationRelativePath => ScribeEmissionAttestation.RelativePath;
 
+    internal static Func<RepoPath, bool> VerificationInputPredicate(
+        RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var describeInputs = DescribeRepositoryValidator.VerificationInputPredicate(snapshot);
+        return path => DocumentDefinitions.IsVerificationInput(path)
+            || ReceiptFreeDocumentCatalog.IsVerificationInput(path)
+            || describeInputs(path);
+    }
+
     public static int Emit(
         string repositoryRoot,
         bool check,

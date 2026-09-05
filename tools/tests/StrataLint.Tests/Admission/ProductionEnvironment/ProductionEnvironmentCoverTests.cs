@@ -734,7 +734,7 @@ public sealed partial class ProductionEnvironmentTests
         var callback = new Func<string, LeanAxiomReport, VerifiedScribeEmissions>((root, _) =>
         {
             materializedRoot = root;
-            observed = File.ReadAllText(Path.Combine(root, "captured", "probe.txt"), Encoding.UTF8);
+            observed = File.ReadAllText(Path.Combine(root, "D5", "ProjectionFixture.lean"), Encoding.UTF8);
             observedProjectionFixture = File.ReadAllText(
                 Path.Combine(root, "Golden", "Projection", "statement-projection-pilot-v1.json"),
                 Encoding.UTF8);
@@ -770,7 +770,7 @@ public sealed partial class ProductionEnvironmentTests
         }
         var snapshotEntries = new List<RawRepositoryEntry>
         {
-            RawRepositoryEntry.FromText("captured/probe.txt", "captured bytes\n"),
+            RawRepositoryEntry.FromText("D5/ProjectionFixture.lean", "captured bytes\n"),
         };
         snapshotEntries.AddRange(fixtureFiles.Select(static fixture =>
             RawRepositoryEntry.FromText(fixture.Path, fixture.Content)));

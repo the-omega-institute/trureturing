@@ -7,6 +7,16 @@ internal sealed record DescribeRedFinding(string Code, string Path, string Messa
 
 internal static class DescribeRepositoryValidator
 {
+    internal static Func<RepoPath, bool> VerificationInputPredicate(
+        RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var problemInputs = ProblemCandidateCatalog.VerificationInputPredicate(snapshot);
+        return path => LibraryNoteCatalog.IsVerificationInput(path)
+            || problemInputs(path)
+            || IsGidExistenceInput(path.Value);
+    }
+
     internal static ImmutableArray<DescribeRedFinding> Validate(
         string repositoryRoot,
         IEnumerable<ScribeDocument> documents,
@@ -379,4 +389,13 @@ internal static class DescribeRepositoryValidator
         IReadOnlySet<string> generatedPaths) =>
         generatedPaths.Contains(reference.Path.Value)
         || File.Exists(Path.Combine(repositoryRoot, reference.Path.Value));
+
+    private static bool IsGidExistenceInput(string path) =>
+        path.StartsWith("D5/", StringComparison.Ordinal)
+        || path.StartsWith("Blueprint/D5/", StringComparison.Ordinal)
+        || path.StartsWith("Evidence/D5/", StringComparison.Ordinal)
+        || path.StartsWith("Chronicle/", StringComparison.Ordinal)
+        || path.StartsWith("Library/", StringComparison.Ordinal)
+        || path.StartsWith("Papers/recipes/", StringComparison.Ordinal)
+        || path.StartsWith("Papers/frozen/", StringComparison.Ordinal);
 }

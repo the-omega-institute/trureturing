@@ -39,6 +39,8 @@ public sealed record DocumentDefinition
 
 public static class DocumentDefinitions
 {
+    private const string DefinitionRoot = "Blueprint/D5/";
+
     private static readonly Lazy<ImmutableArray<DocumentDefinition>> Definitions = new(
         () => Discover(typeof(DocumentDefinitions).Assembly));
 
@@ -87,6 +89,10 @@ public static class DocumentDefinitions
             .Order(StringComparer.Ordinal)
             .ToArray();
     }
+
+    internal static bool IsVerificationInput(RepoPath path) =>
+        path.Value.StartsWith(DefinitionRoot, StringComparison.Ordinal)
+        && path.Value.EndsWith(".scribe.cs", StringComparison.Ordinal);
 
     private static ImmutableArray<DocumentDefinition> DiscoverCore(Assembly assembly)
     {

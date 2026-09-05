@@ -9,6 +9,12 @@ internal sealed record ReceiptFreeDocumentCensus(
 
 internal static class ReceiptFreeDocumentCatalog
 {
+    internal static bool IsVerificationInput(RepoPath path) =>
+        path.Value == BackfillInventoryLoader.RelativePath
+        || path.Value.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
+        || path.Value.StartsWith("D5/", StringComparison.Ordinal)
+            && path.Value.EndsWith(".lean", StringComparison.Ordinal);
+
     internal static ReceiptFreeDocumentCensus Load(
         string repositoryRoot,
         IEnumerable<ScribeDocument> documents,

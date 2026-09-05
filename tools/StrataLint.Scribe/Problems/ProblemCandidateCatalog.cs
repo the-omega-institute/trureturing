@@ -38,6 +38,8 @@ internal sealed record ProblemCandidateCatalogInspection(
 /// </summary>
 internal sealed class ProblemCandidateCatalog
 {
+    private const string FrozenStateRoot = "Golden/Frozen/state/";
+
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     private static readonly HashSet<string> RequiredKeys =
@@ -124,6 +126,21 @@ internal sealed class ProblemCandidateCatalog
                 .ThenBy(static finding => finding.Message, StringComparer.Ordinal)
                 .ToImmutableArray());
     }
+
+    internal static Func<RepoPath, bool> VerificationInputPredicate(
+        RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var hasProblemDirectory = snapshot.Files.Keys.Any(IsProblemPoolInput);
+        return path => IsProblemPoolInput(path)
+            || hasProblemDirectory
+                && path.Value.StartsWith(FrozenStateRoot, StringComparison.Ordinal);
+    }
+
+    private static bool IsProblemPoolInput(RepoPath path) =>
+        path.Value.StartsWith(
+            ProblemPoolPaths.DirectoryName + "/",
+            StringComparison.Ordinal);
 
     private static ProblemCandidate Parse(string repositoryRoot, string path)
     {
