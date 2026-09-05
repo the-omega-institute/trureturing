@@ -545,7 +545,7 @@ internal sealed partial class TransactionFixture
 {
     internal void ChangeFormalizationToSevenLineWrappedDigest()
     {
-        WriteFile(LeanPath, DepositCoverWorkflowScriptTests.SevenLineWrappedDigest(
+        WriteFile(LeanPath, SevenLineWrappedDigest(
             Gid[..Gid.LastIndexOf('.')],
             "theorem probe : True := by trivial\n"));
         WriteFile(DefinitionPath, "definition deposited\n");
@@ -637,4 +637,17 @@ internal sealed partial class TransactionFixture
     internal void AddUnrelatedMalformedLedgerShard() => WriteFile(
         LedgerPath + "/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
         "{\"event_type\":\"Freeze\",\"payload\":{\"node_path\":\"D5/S4/Unrelated.lean\"\n");
+
+    // 夹具自足:本辅助产的是 Lean 文件内容,属夹具职责。
+    // 它此前住在 DepositCoverWorkflowScriptTests 上,使夹具反向依赖一个测试类 ——
+    // 那样的夹具搬不到任何共享程序集。移到这里后,本类只依赖 Engine/Cli。
+    internal static string SevenLineWrappedDigest(string documentGid, string declaration) =>
+        $"/- GID: {documentGid}\n"
+        + "   generality: G\n"
+        + $"   mirror-B: D5/B/{documentGid[3..]}\n"
+        + "   mirror-E: none(waiver:pure-definition)\n"
+        + "   anchors: []\n"
+        + "   digest: Synthetic deposit workflow digest\n"
+        + "   wraps onto physical line seven. -/\n"
+        + declaration;
 }
