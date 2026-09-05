@@ -35,9 +35,9 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckDoesNotReplayForkOnlyProducerPathBaselineDrift()
+    public void CheckDoesNotReplayBaselineOnlyProducerPathDrift()
     {
-        var (outcome, verifier) = CheckForkPointOnlyReportProducerInputStock(
+        var (outcome, verifier) = CheckBaselineOnlyReportProducerInputStock(
             "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs");
 
         var protectedChange = RequireProtectedSurfaceChange(outcome);
@@ -258,7 +258,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
-        CheckForkPointOnlyReportProducerInputStock(params string[] additionalChanges) =>
+        CheckBaselineOnlyReportProducerInputStock(params string[] additionalChanges) =>
         CheckReportDerivedScribeStockCore(false, false, true, false, additionalChanges);
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)
@@ -269,7 +269,7 @@ public sealed partial class ProductionEnvironmentTests
         CheckReportDerivedScribeStockCore(
             bool reportInputsChanged,
             bool baselineHasScribeGap,
-            bool forkPointOnlyReportProducerInput,
+            bool baselineOnlyReportProducerInput,
             bool producerPathSetDiffers,
             params string[] additionalChanges)
     {
@@ -289,7 +289,6 @@ public sealed partial class ProductionEnvironmentTests
 
         var baselineTarget = fixture.Files[targetPath];
         fixture.Baseline[targetPath] = baselineTarget;
-        fixture.ForkPoint[targetPath] = baselineTarget;
         var baselineDeclaration = new LeanDeclaration(
             "protectedTargetFixture",
             "def",
@@ -313,7 +312,6 @@ public sealed partial class ProductionEnvironmentTests
         if (!reportInputsChanged)
         {
             fixture.Baseline[targetPath] = candidateTarget;
-            fixture.ForkPoint[targetPath] = candidateTarget;
         }
         fixture.BaselineReports[targetPath] = new LeanFileReport(
             [],
@@ -324,20 +322,20 @@ public sealed partial class ProductionEnvironmentTests
 
         var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
         var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[definitionPath] = baselineDefinition;
             files[emissionPath] = baselineEmission;
         }
-        if (forkPointOnlyReportProducerInput)
+        if (baselineOnlyReportProducerInput)
         {
-            fixture.ForkPoint["tools/lean-inspector/fork-only-input.txt"] =
-                "fork-only producer input\n";
+            fixture.Baseline["tools/lean-inspector/baseline-only-input.txt"] =
+                "baseline-only producer input\n";
         }
         if (producerPathSetDiffers)
         {
-            fixture.ForkPoint["notes/fork-producer-set-marker.txt"] =
-                "fork-only producer path-set marker\n";
+            fixture.Baseline["notes/baseline-producer-set-marker.txt"] =
+                "baseline-only producer path-set marker\n";
         }
 
         var definitionSha256 = DigestionFingerprint.Compute(
@@ -345,7 +343,7 @@ public sealed partial class ProductionEnvironmentTests
         var stockEmissionSha256 = baselineHasScribeGap
             ? ReportDerivedScribeEmissionVerifier.EmissionSha256For([])
             : DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(baselineEmission)).RawSha256;
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             AddFrozenTarget(files, targetPath, moduleStatementId);
             InstallLedger(files);
@@ -371,10 +369,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeRepositoryGateway(
                 RawChangeSet.Create(changes),
                 currentRaw,
-                baselineRaw,
-                forkPoint: forkPointOnlyReportProducerInput || producerPathSetDiffers
-                    ? Snapshot(fixture.ForkPoint)
-                    : null),
+                baselineRaw),
             new FakeLeanReportSource(null),
             verifier);
 

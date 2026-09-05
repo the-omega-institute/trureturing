@@ -39,7 +39,7 @@ public sealed class RuleEngineCapacityDerivationTests
     }
 
     [Fact]
-    public void Sl003StartsCurrentAndForkPointDerivationsBeforeEitherCompletes()
+    public void Sl003StartsCurrentAndBaselineDerivationsBeforeEitherCompletes()
     {
         var fixture = new RuleFixture();
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
@@ -52,7 +52,7 @@ public sealed class RuleEngineCapacityDerivationTests
 
         RepositoryRules.EvaluateCapacity(context, snapshot =>
         {
-            var side = ReferenceEquals(snapshot, context.Current) ? "Current" : "ForkPoint";
+            var side = ReferenceEquals(snapshot, context.Current) ? "Current" : "Baseline";
             events.Enqueue(side + ":started");
             if (Interlocked.Increment(ref started) == 2)
             {
@@ -67,7 +67,7 @@ public sealed class RuleEngineCapacityDerivationTests
             if (!bothStarted.Task.Wait(TestBudgets.CapacityDerivationStartHangGuard))
             {
                 throw new SkipException(
-                    "infrastructure-hang-guard expired: SL-003 concurrency gate — ForkPoint derivation never started (serialized regression suspected)");
+                    "infrastructure-hang-guard expired: SL-003 concurrency gate — Baseline derivation never started (serialized regression suspected)");
             }
 
             if (Volatile.Read(ref started) < 2)
@@ -85,11 +85,11 @@ public sealed class RuleEngineCapacityDerivationTests
         Assert.Equal(4, recorded.Length);
         Assert.All(recorded.Take(2), static item => Assert.EndsWith(":started", item));
         Assert.Contains("Current:started", recorded.Take(2));
-        Assert.Contains("ForkPoint:started", recorded.Take(2));
+        Assert.Contains("Baseline:started", recorded.Take(2));
     }
 
     [Fact]
-    public async Task Sl003PassesDerivedMapsToUnknownDebtPolicyInCurrentForkPointOrder()
+    public async Task Sl003PassesDerivedMapsToUnknownDebtPolicyInCurrentBaselineOrder()
     {
         var fixture = new RuleFixture();
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
@@ -104,18 +104,18 @@ public sealed class RuleEngineCapacityDerivationTests
             item.Message.Contains("unknown test method introduced", StringComparison.Ordinal));
         Assert.Equal("tools/tests/Synthetic.Tests/DebtTests.cs", finding.Path);
         Assert.Equal(
-            "conservative unknown test method introduced after fork point: "
+            "conservative unknown test method introduced after protected baseline: "
             + "tools/tests/Synthetic.Tests::DebtTests.CurrentDebt",
             finding.Message);
     }
 
     [Fact]
-    public void Sl003ProductionEntryBindsCurrentAndForkPointSnapshotsToPolicyOrder()
+    public void Sl003ProductionEntryBindsCurrentAndBaselineSnapshotsToPolicyOrder()
     {
         var fixture = new RuleFixture();
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
         var currentMap = UnknownTestMap("CurrentDebt");
-        var forkPointMap = UnknownTestMap("ForkPointDebt");
+        var baselineMap = UnknownTestMap("BaselineDebt");
 
         var findings = RepositoryRules.EvaluateCapacity(context, snapshot =>
         {
@@ -124,73 +124,72 @@ public sealed class RuleEngineCapacityDerivationTests
                 return currentMap;
             }
 
-            Assert.Same(context.ForkPoint, snapshot);
-            return forkPointMap;
+            Assert.Same(context.Baseline, snapshot);
+            return baselineMap;
         });
 
         var finding = Assert.Single(findings, static item =>
             item.Message.Contains("unknown test method introduced", StringComparison.Ordinal));
         Assert.Equal("tools/tests/Synthetic.Tests/DebtTests.cs", finding.Path);
         Assert.Equal(
-            "conservative unknown test method introduced after fork point: "
+            "conservative unknown test method introduced after protected baseline: "
             + "tools/tests/Synthetic.Tests::DebtTests.CurrentDebt",
             finding.Message);
     }
 
     [Fact]
-    public async Task Sl003WaitsForFaultedForkPointBeforeRethrowingCurrentFailure()
+    public async Task Sl003WaitsForFaultedBaselineBeforeRethrowingCurrentFailure()
     {
         var fixture = new RuleFixture();
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
         var currentFailure = new InvalidOperationException("current derivation failed");
-        var forkPointFailure = new InvalidOperationException("fork-point derivation failed");
-        var forkPointDerivation = new TaskCompletionSource<ScribeTestMap>(
+        var baselineFailure = new InvalidOperationException("baseline derivation failed");
+        var baselineDerivation = new TaskCompletionSource<ScribeTestMap>(
             TaskCreationOptions.RunContinuationsAsynchronously);
 
         var evaluation = RepositoryRules.EvaluateCapacityAsync(
             context,
             Task.FromException<ScribeTestMap>(currentFailure),
-            forkPointDerivation.Task);
+            baselineDerivation.Task);
         Assert.False(
             evaluation.IsCompleted,
-            "EvaluateCapacityAsync returned before awaiting ForkPoint");
+            "EvaluateCapacityAsync returned before awaiting Baseline");
 
-        forkPointDerivation.SetException(forkPointFailure);
+        baselineDerivation.SetException(baselineFailure);
         var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() => evaluation);
 
         Assert.Same(currentFailure, thrown);
     }
 
     [Fact]
-    public async Task Sl003DoesNotSwallowForkPointDerivationFailureWhenCurrentSucceeds()
+    public async Task Sl003DoesNotSwallowBaselineDerivationFailureWhenCurrentSucceeds()
     {
         var fixture = new RuleFixture();
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
-        var forkPointFailure = new InvalidOperationException("fork-point derivation failed");
+        var baselineFailure = new InvalidOperationException("baseline derivation failed");
 
         var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() =>
             RepositoryRules.EvaluateCapacityAsync(
                 context,
                 Task.FromResult(EmptyTestMap()),
-                Task.FromException<ScribeTestMap>(forkPointFailure)));
+                Task.FromException<ScribeTestMap>(baselineFailure)));
 
-        Assert.Same(forkPointFailure, thrown);
+        Assert.Same(baselineFailure, thrown);
     }
 
     [Fact]
-    public void Sl003StartsOnlyOneDerivationWhenCurrentAndForkPointAreSameSnapshot()
+    public void Sl003StartsOnlyOneDerivationWhenCurrentAndBaselineAreSameSnapshot()
     {
         var fixture = new RuleFixture();
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
         var sameSnapshotContext = RuleEvaluationContext.Create(
             context.Current,
-            context.Baseline,
+            context.Current,
             context.Policy,
             context.Lean,
             context.Changes,
             context.MetaEvaluation,
-            context.VerifiedScribeEmissions,
-            context.Current);
+            context.VerifiedScribeEmissions);
         var calls = 0;
 
         RepositoryRules.EvaluateCapacity(sameSnapshotContext, _ =>
