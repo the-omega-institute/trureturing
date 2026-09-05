@@ -93,13 +93,13 @@ public sealed class TrustTopologyTests
     }
 
     [Fact]
-    public void BaseJudgeScribeEmissionsInputProducesExactSl022Diagnostic()
+    public void ProtectedScribeEmissionsInputProducesExactSl022Diagnostic()
     {
         AssertExactSl022Diagnostic(ProtectedScribeEmissionsPath);
     }
 
     [Fact]
-    public void BaseJudgeAnchorCatalogInputProducesExactSl022Diagnostic()
+    public void ProtectedAnchorCatalogInputProducesExactSl022Diagnostic()
     {
         AssertExactSl022Diagnostic(ProtectedAnchorCatalogPath);
     }
@@ -107,7 +107,7 @@ public sealed class TrustTopologyTests
     [Theory]
     [MemberData(nameof(ProtectedPaths))]
     [BaseFactScopeProbe(22)]
-    public void Sl022RequiresBaseOwnedVerificationForEveryProtectedSurface(string path)
+    public void Sl022MarksEveryProtectedSurfaceAsVerificationRequired(string path)
     {
         var changes = RawChangeSet.Create(new[] { path });
 
