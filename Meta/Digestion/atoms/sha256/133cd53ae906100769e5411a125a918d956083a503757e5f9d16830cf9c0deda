@@ -1,0 +1,11 @@
+## 待证算术命题 H
+
+对实际 ξ 产生的系数 \(a_k\)，按定义 3、6、7 构造 \(P_d,q_d,G_d\)。要求：
+
+$$
+\boxed{
+\forall d\ge1,\qquad G_d\succeq0.
+}
+\tag{H}
+$$
+

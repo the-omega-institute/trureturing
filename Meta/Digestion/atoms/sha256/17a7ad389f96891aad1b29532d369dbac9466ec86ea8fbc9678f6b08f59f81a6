@@ -1,0 +1,49 @@
+# 十一、正权 Fibonacci 链在新结构中承担什么？
+
+当定理 B3 给出：
+
+$$
+K_d>0,
+$$
+
+就可以把它正交三对角化。
+
+在全部耦合严格正、参考向量为循环向量的情形，得到 Jacobi 矩阵；其正交多项式与三项递推是经典结构。([DLMF][5])
+
+再作 Cholesky 分解：
+
+$$
+K_d=L_dL_d^{\mathsf T},
+$$
+
+其中 \(L_d\) 可以组织成双对角形式，得到正权禁邻链：
+
+$$
+\boxed{
+P_d(v)
+=
+\det(I+vL_d^{\mathsf T}L_d)
+=
+\sum_{\substack{b_j\in\{0,1\}\\b_jb_{j+1}=0}}
+v^{\sum b_j}\prod_jw_j^{b_j}.
+}
+$$
+
+所以，这次的完整连接是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际新增统计 }a_d
+&\longrightarrow q_d(t_i)\\
+&\longrightarrow
+\eta_{d,i}=-\frac{d\,q_d(t_i)}{q_d''(t_i)}\\
+&\xrightarrow{\ \eta_{d,i}\ge0\ }
+\text{自伴扩展矩阵}\\
+&\longrightarrow
+\text{正权 Fibonacci 链}.
+\end{aligned}
+}
+\tag{B24}
+$$
+
