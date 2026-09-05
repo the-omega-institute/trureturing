@@ -10,7 +10,7 @@ internal static class TestRegistry
     // order, and LoadRepository decodes through this encoder.
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static readonly string Canonical = LoadRepository(TestRepositoryLayout.FindRoot());
+    internal static readonly string Canonical = LoadRepository();
 
     internal const string Domains = """
         domains:
@@ -29,16 +29,22 @@ internal static class TestRegistry
         """ + "\n";
 
 
-    private static string LoadRepository(string repositoryRoot)
+    private static string LoadRepository()
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        var path = Path.Combine(repositoryRoot, RelativePath);
-        if (!File.Exists(path))
+        if (!File.Exists(Path.Combine(
+                TestRepositoryLayout.FindRoot(),
+                "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml")))
         {
-            throw new FileNotFoundException($"fixture registry is absent: {RelativePath}", path);
+            throw new FileNotFoundException(
+                $"fixture registry is absent: {RelativePath}",
+                Path.Combine(
+                    TestRepositoryLayout.FindRoot(),
+                    "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"));
         }
 
-        var bytes = File.ReadAllBytes(path);
+        var bytes = File.ReadAllBytes(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"));
         if (bytes.Length == 0
             || bytes[^1] != (byte)'\n'
             || bytes.AsSpan().Contains((byte)'\r')

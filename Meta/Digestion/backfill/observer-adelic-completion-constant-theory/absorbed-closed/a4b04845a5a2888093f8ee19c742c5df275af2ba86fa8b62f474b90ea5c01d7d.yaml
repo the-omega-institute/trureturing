@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a4b04845a5a2888093f8ee19c742c5df275af2ba86fa8b62f474b90ea5c01d7d
+  normalized_sha256: sha256:a4b04845a5a2888093f8ee19c742c5df275af2ba86fa8b62f474b90ea5c01d7d
+cas_ref: sha256:a4b04845a5a2888093f8ee19c742c5df275af2ba86fa8b62f474b90ea5c01d7d
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/PrimeJumpDecomposition.prime_jump_decomposition
+    target_statement_id: sha256:1f563b3d7f440452e470a74be69587bcb82ee82457977bd9b93cf5a171dd6380
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaBridge/PrimeJumpDecomposition.prime_jump_decomposition
+      definition_sha256: sha256:97bf7e78ef104c8385b315dbf53ff47cc47f74e4c47a70845650f13236bcd013
+      emission_sha256: sha256:09ce593de9d6c6104cd8c81aa03dbd484fc9967bfcae211f916593585032e695
+  unresolved_subitems: []

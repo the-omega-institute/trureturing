@@ -1,0 +1,66 @@
+# 第两千零五十九部　理论深度不能用“剩余维数”衡量
+
+因为每个 prime tail 与整体同型，所以：
+
+* 剩余素数仍然无限；
+* 剩余空间维数仍然无限；
+* 剩余条件仍然无限。
+
+如果用这些量衡量进展，每一步都像没有进展。
+
+项目的 residual-progress formalization 正好证明：严格下降的无限维残差链可以在每一层保留完整环境维数；真正下降的是固定目标或测试族在残差空间上的投影范数。
+
+所以理论深度应由类似以下量衡量：
+
+$$
+\boxed{
+\varepsilon_N(\mathcal T)
+=
+\sup_{f\in\mathcal T}
+\|P_{R_N}f\|.
+}
+\tag{2059.1}
+$$
+
+对于 Euler 乘积，在：
+
+$$
+\sigma>1
+$$
+
+可以使用尾自由能：
+
+$$
+\boxed{
+\varepsilon_N(\sigma)
+=
+\sum_{j>N}
+-\log
+\left(
+1-p_j^{-\sigma}
+\right).
+}
+\tag{2059.2}
+$$
+
+它满足：
+
+$$
+\varepsilon_N(\sigma)>0,
+\qquad
+\varepsilon_N(\sigma)\downarrow0.
+$$
+
+虽然每个尾部仍然有无限多个素数。
+
+进入临界带以后，该绝对正尾量不再可直接使用，这正是必须引入：
+
+* 解析延拓；
+* signed counterterm；
+* Weil test；
+* Gram positivity；
+
+的原因。
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:cd53a9d3bb4c104bde5112dc12146764a4bd220fc65c2efae151d0dba733306a
+  normalized_sha256: sha256:cd53a9d3bb4c104bde5112dc12146764a4bd220fc65c2efae151d0dba733306a
+cas_ref: sha256:cd53a9d3bb4c104bde5112dc12146764a4bd220fc65c2efae151d0dba733306a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/TargetRisk/RobustSafetyModelMonotonicity.model_uncertainty_expansion_shrinks_safe_set
+    target_statement_id: sha256:790a606f1fabc2c174f10b0e04bf4d670813e7fdbd4152e29e6a71c46eb4cf1b
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/TargetRisk/RobustSafetyModelMonotonicity.model_uncertainty_expansion_shrinks_safe_set
+      definition_sha256: sha256:8ce8af5f1e61afcf957e003302d093e764b49d45e947cfe665995ba8f08c17c4
+      emission_sha256: sha256:6a16902895464b77747a397ae545c94a496471e231d2570540c38d79cfda7e15
+  unresolved_subitems: []

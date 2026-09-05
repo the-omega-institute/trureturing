@@ -1,0 +1,23 @@
+## B3.2 null directions 就是 transfer channels
+
+对斜率向量 $(\lambda,1)$：
+
+$$
+q_z(\lambda,1)
+=-\lambda^2+\lambda+z.
+\tag{B3.4}
+$$
+
+因此
+
+$$
+\boxed{
+q_z(\lambda,1)=0
+\Longleftrightarrow
+\lambda^2-\lambda-z=0.
+}
+\tag{B3.5}
+$$
+
+也就是说，两条 transfer 本征通道正是关系二次型的两条 null directions。
+

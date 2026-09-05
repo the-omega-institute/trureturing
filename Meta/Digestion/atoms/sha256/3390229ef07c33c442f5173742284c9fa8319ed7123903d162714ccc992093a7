@@ -1,0 +1,111 @@
+# 第一千九百四十四部　Normal-support bifloor RH target
+
+对每个有限窗口，目标是构造两个 canonical 矩阵：
+
+$$
+H_{0,T}
+$$
+
+和：
+
+$$
+H_{1,T}.
+$$
+
+其中 \(H_{0,T}\) 编码正质量，\(H_{1,T}\) 编码 signed-normal 坐标。
+
+定义：
+
+$$
+\boxed{
+\beta_T
+=
+\lambda_{\min}
+\left(
+H_{0,T}^{-1/2}
+H_{1,T}
+H_{0,T}^{-1/2}
+\right).
+}
+\tag{1944.1}
+$$
+
+在有限原子 full-resolution 情形：
+
+$$
+\boxed{
+\beta_T
+=
+-\max_{|\Im\rho|\le T}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{1944.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\beta_T=0
+\qquad
+\forall T.
+}
+\tag{1944.3}
+$$
+
+进一步加入 common-Haar Gram \(B_T\)，定义：
+
+$$
+\boxed{
+\alpha_T
+=
+\lambda_{\min}
+\left(
+B_T^{-1/2}
+H_{0,T}
+B_T^{-1/2}
+\right).
+}
+\tag{1944.4}
+$$
+
+于是：
+
+* \(\alpha_T\) 检验是否有共同正相位核心；
+* \(\beta_T\) 检验该正状态的法向支撑是否临界。
+
+因此新的双 floor 目标为：
+
+$$
+\boxed{
+\alpha_T\ge0,
+\qquad
+\beta_T\ge0
+\quad
+\forall T.
+}
+\tag{1944.5}
+$$
+
+由于 signed-normal 节点本身不大于零，第二个不等式会强迫：
+
+$$
+\beta_T=0.
+$$
+
+这条路线把 RH 转成：
+
+$$
+\boxed{
+\text{正质量实现}
++
+\text{非负法向 localizer}.
+}
+$$
+
+---
+

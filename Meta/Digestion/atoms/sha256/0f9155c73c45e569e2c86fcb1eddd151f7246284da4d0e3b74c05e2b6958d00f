@@ -1,0 +1,20 @@
+* 奇数点构型反射后 gap code 取补。
+
+所以 prime constellation 确实天然具有偶／奇 source sector。
+
+但必须保留层级：
+
+$$
+\boxed{
+\text{prime-factor parity}
+\neq
+\text{constellation-degree parity}
+\neq
+\text{zero-reflection parity}.
+}
+$$
+
+它们需要 Trace–Jet Bridge 才能被证明是同一个全局分级的不同表示。
+
+---
+

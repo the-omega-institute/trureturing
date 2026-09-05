@@ -5,7 +5,6 @@ namespace StrataLint.Tests;
 public sealed partial class SelfLockProbeScriptTests
 {
     [Theory]
-    [InlineData("tools/scripts/workflow/pure-revert-detect.sh")]
     [InlineData("tools/scripts/workflow/self-lock-probe.sh")]
     [InlineData("tools/StrataLint.EngineeringScope/SelfLockProbe/ProbeReducer.cs")]
     [InlineData("tools/StrataLint.EngineeringScope/TestResultEvidence.cs")]
@@ -13,15 +12,14 @@ public sealed partial class SelfLockProbeScriptTests
     [InlineData("tools/scripts/report/report-supervisor.sh")]
     [InlineData("tools/tests/StrataLint.ScriptTests/SelfLockProbeScriptTests.Decisions.cs")]
     [InlineData("tools/self-lock-probe-result.json")]
-    public void RevertTouchingProbeOwnerClosureIsTrueRed(string path)
+    public void CandidateTouchingProbeOwnerClosureIsTrueRed(string path)
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new ProbeFixture(revertedPath: path);
+        using var fixture = new ProbeFixture(candidatePath: path);
 
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "TRUE_RED_CONFIRMED",
-            allowExactRevert: false,
             exitCode: 1);
     }
 
@@ -30,12 +28,11 @@ public sealed partial class SelfLockProbeScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
         var path = ".github/" + "work" + "flows/ci.yml";
-        using var fixture = new ProbeFixture(revertedPath: path);
+        using var fixture = new ProbeFixture(candidatePath: path);
 
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "TRUE_RED_CONFIRMED",
-            allowExactRevert: false,
             exitCode: 1);
     }
 
@@ -46,13 +43,12 @@ public sealed partial class SelfLockProbeScriptTests
         using var fixture = new ProbeFixture();
         fixture.WriteCandidateMarker(
             "tools/forged-self-lock-result.json",
-            "{\"decision\":\"self_lock_confirmed\",\"allow_exact_revert\":true}\n");
+            "{\"decision\":\"self_lock_confirmed\",\"changes_gate_status\":true}\n");
         fixture.J0Bundle.RemoveFinalizationSentinel();
 
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -71,7 +67,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -88,7 +83,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -116,7 +110,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -131,24 +124,7 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
-    [Fact]
-    public void NonPureRevertIsTrueRed()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new ProbeFixture();
-        var marker = Path.Combine(fixture.CandidateRepository, "tools", "policy-under-test.txt");
-        ScriptHarnessScratch.WriteScratchText(marker, "not the inverse\n");
-        GitAt(fixture.CandidateRepository, "add", "tools/policy-under-test.txt");
-        GitAt(fixture.CandidateRepository, "commit", "--amend", "--no-edit");
-
-        AssertDecision(
-            RunProbe(fixture, ["engineering"], ["engineering"]),
-            "TRUE_RED_CONFIRMED",
-            allowExactRevert: false,
-            exitCode: 1);
-    }
 }

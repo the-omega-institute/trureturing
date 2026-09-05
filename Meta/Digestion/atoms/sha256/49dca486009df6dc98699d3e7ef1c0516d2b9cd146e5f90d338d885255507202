@@ -1,0 +1,14 @@
+\[
+\boxed{
+\kappa_{s'}(a,b)
+=
+\kappa_s(a,b)
++
+h(a)+h(b)-h(a+b).
+}
+\]
+
+所以截面 carry 按 coboundary 改变；适当条件下，其等价类而非某一具体坐标表达是稳定对象。
+
+---
+

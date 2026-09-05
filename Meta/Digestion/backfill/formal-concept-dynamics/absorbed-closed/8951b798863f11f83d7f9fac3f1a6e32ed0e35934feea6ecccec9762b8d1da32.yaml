@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:8951b798863f11f83d7f9fac3f1a6e32ed0e35934feea6ecccec9762b8d1da32
 cas_ref: sha256:8951b798863f11f83d7f9fac3f1a6e32ed0e35934feea6ecccec9762b8d1da32
 coverage_gids:
-  - D5/S3/Estimation/DecisionRisk/PosteriorUniversalSufficiency.posterior_universal_sufficiency
+  - gid: D5/S3/Estimation/DecisionRisk/PosteriorUniversalSufficiency.posterior_universal_sufficiency
+    target_statement_id: sha256:63ab55e786eb7d9aa1250018557c869cbd752426b1437c367df29d009db095fd
 receipts:
-  coverage:
-    - gid: D5/S3/Estimation/DecisionRisk/PosteriorUniversalSufficiency.posterior_universal_sufficiency
-      source_sha256: sha256:8951b798863f11f83d7f9fac3f1a6e32ed0e35934feea6ecccec9762b8d1da32
-      target_statement_id: sha256:63ab55e786eb7d9aa1250018557c869cbd752426b1437c367df29d009db095fd
   scribe:
     - gid: D5/S3/Estimation/DecisionRisk/PosteriorUniversalSufficiency.posterior_universal_sufficiency
       definition_sha256: sha256:6c12931cbb038006160268b07cf4faf12f5968916476b90e47623e1b68adaa79

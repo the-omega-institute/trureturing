@@ -38,6 +38,7 @@ internal sealed record DigestionEntryEvaluation(
         + $"{DigestionStatusNames.Migration(DerivedStatus.Migration)}-"
         + $"{DigestionStatusNames.Truth(DerivedStatus.Truth)} "
         + $"deletable={Deletable.ToString().ToLowerInvariant()} "
+        + $"coverage_gids=[{string.Join(',', Entry.CoverageGids)}] "
         + $"gaps={string.Join(',', Gaps.Select(static gap => gap.Code))}";
 }
 

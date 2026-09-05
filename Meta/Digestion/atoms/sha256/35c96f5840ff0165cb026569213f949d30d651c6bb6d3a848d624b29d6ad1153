@@ -1,0 +1,2 @@
+**候签定理 6.215(宽十移位模板提升)**〔open;同模块;本案主定理〕。对任意 k n : ℕ，`HasSchurColoring k n → HasSchurColoring (k+2) (10*n+2)`；6.214 的分块进位与有限相容证书必须位于任意 n 证明的活路径，准入依据为 `escape-witness`。
+

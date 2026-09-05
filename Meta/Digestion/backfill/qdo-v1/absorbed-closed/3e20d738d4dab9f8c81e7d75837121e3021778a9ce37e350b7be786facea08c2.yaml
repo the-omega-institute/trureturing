@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3e20d738d4dab9f8c81e7d75837121e3021778a9ce37e350b7be786facea08c2
+  normalized_sha256: sha256:3e20d738d4dab9f8c81e7d75837121e3021778a9ce37e350b7be786facea08c2
+cas_ref: sha256:3e20d738d4dab9f8c81e7d75837121e3021778a9ce37e350b7be786facea08c2
+coverage_gids:
+  - gid: D5/S3/Observer/Dynamics/SuspensionEventDecomposition.continuous_time_discrete_event_decomposition
+    target_statement_id: sha256:c2ee9249cad03558fdb804f730189c8c970d657f8e4a440fba57b645350b769c
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Dynamics/SuspensionEventDecomposition.continuous_time_discrete_event_decomposition
+      definition_sha256: sha256:d65062330591a2f477b8144190b524a97638a2c2dc07fc4c58b5c584c564ba65
+      emission_sha256: sha256:ec4fb799844b26bb154f43b03677af4eadbfdfa4737d7b323332e04d399a5fad
+  unresolved_subitems: []

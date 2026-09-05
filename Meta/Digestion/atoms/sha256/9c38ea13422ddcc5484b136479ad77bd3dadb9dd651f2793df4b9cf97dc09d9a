@@ -1,0 +1,41 @@
+## 566. 原子基与观察者基
+
+在零点原子基中：
+
+$$
+J e_j=x_je_j.
+$$
+
+每个零点轨道看起来是彼此独立的对角坐标。
+
+但在由矩序列生成的正交多项式基中，\(J\) 变成 Jacobi 链。
+
+只要：
+
+$$
+\alpha_n>0
+\quad\forall n,
+$$
+
+该链图：
+
+$$
+0-1-2-3-\cdots
+$$
+
+是连通的。
+
+不存在某个有限 \(N\)，使前 \(N\) 层与后面的层完全断开。
+
+因此：
+
+$$
+\boxed{
+\text{无限支撑}
+\Longrightarrow
+\text{Jacobi observer graph irreducible}.
+}
+$$
+
+---
+

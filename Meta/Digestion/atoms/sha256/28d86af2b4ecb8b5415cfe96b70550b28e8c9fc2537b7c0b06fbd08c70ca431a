@@ -1,0 +1,12 @@
+## 347. 加法平移无有限 prime support
+
+```lean
+theorem additiveShift_not_finitePrimeSupported
+    (h : ℕ) (hh : 0 < h) :
+    ¬ ∃ S : Finset Nat.Primes,
+      SupportedOnPrimeCoordinates
+        (additiveShift h) S
+```
+
+---
+

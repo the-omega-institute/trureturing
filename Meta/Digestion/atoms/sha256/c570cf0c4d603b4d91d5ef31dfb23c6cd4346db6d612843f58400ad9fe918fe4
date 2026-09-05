@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:→ 由 W-14 与支撑半径存在性;← 对每个 f 取见证的 L,经恒等式第二分量回到 0 ≤ Re zeroSum,再由 W-2。内容在于:给定恒等式,Poincaré 不等式对某一合法半径成立即对一切合法半径成立(素数项 primeTerm 不依赖 L)。探针已整证,标准三公理。支撑半径存在性作为同模块的公开辅助引理 `exists_supportRadius (f : WeilTestFunction) : ∃ L : ℝ, tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L`(dev 上无等价物,检索见产地),不另列义务。

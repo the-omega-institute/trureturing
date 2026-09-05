@@ -1,0 +1,1 @@
+**义务**:公开定理 `rh_iff_explicitFormulaPositivity (Z : ZeroData) (hArch : ∀ g : WeilTestFunction, ArchimedeanConvergent (convolutionSquare g)) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (hArch g)).re`。

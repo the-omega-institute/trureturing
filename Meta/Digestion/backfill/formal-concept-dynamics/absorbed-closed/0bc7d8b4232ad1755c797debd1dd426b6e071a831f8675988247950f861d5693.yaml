@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0bc7d8b4232ad1755c797debd1dd426b6e071a831f8675988247950f861d5693
 cas_ref: sha256:0bc7d8b4232ad1755c797debd1dd426b6e071a831f8675988247950f861d5693
 coverage_gids:
-  - D5/S3/ConceptDynamics/PublicAnnouncement/OriginalStateAnnouncementReachability.true_public_announcement_is_common_knowledge_on_original_states
+  - gid: D5/S3/ConceptDynamics/PublicAnnouncement/OriginalStateAnnouncementReachability.true_public_announcement_is_common_knowledge_on_original_states
+    target_statement_id: sha256:d46dcb7eecc80f6f02a61a61f952c39949cb6132e4ac15e616f004df68b53df1
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/PublicAnnouncement/OriginalStateAnnouncementReachability.true_public_announcement_is_common_knowledge_on_original_states
-      source_sha256: sha256:0bc7d8b4232ad1755c797debd1dd426b6e071a831f8675988247950f861d5693
-      target_statement_id: sha256:d46dcb7eecc80f6f02a61a61f952c39949cb6132e4ac15e616f004df68b53df1
-      statement_id_history:
-        - statement_id: sha256:3470f085e4e4d1a6c500fdcccb3b45453222c01e15d0e9e6f42894598b9557a5
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/PublicAnnouncement/OriginalStateAnnouncementReachability.true_public_announcement_is_common_knowledge_on_original_states
       definition_sha256: sha256:aed95ca488941e865dc6677a91a2d88444611211da1c68eb3b004aa9e85cfe6f

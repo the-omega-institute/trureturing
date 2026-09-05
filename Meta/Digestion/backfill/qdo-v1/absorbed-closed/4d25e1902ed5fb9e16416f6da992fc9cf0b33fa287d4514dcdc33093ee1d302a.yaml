@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:4d25e1902ed5fb9e16416f6da992fc9cf0b33fa287d4514dcdc33093ee1d302a
 cas_ref: sha256:4d25e1902ed5fb9e16416f6da992fc9cf0b33fa287d4514dcdc33093ee1d302a
 coverage_gids:
-  - D5/S3/ObserverMemory/FunctionalGraphs/FiniteFunctionalGraphFittingDecomposition.finite_functional_graph_fitting_decomposition
+  - gid: D5/S3/ObserverMemory/FunctionalGraphs/FiniteFunctionalGraphFittingDecomposition.finite_functional_graph_fitting_decomposition
+    target_statement_id: sha256:710e7039ba3977f1f7c360954011b5f8bb5cddb49f2f45b4ad51b5bd77fd13cc
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/FunctionalGraphs/FiniteFunctionalGraphFittingDecomposition.finite_functional_graph_fitting_decomposition
-      source_sha256: sha256:4d25e1902ed5fb9e16416f6da992fc9cf0b33fa287d4514dcdc33093ee1d302a
-      target_statement_id: sha256:710e7039ba3977f1f7c360954011b5f8bb5cddb49f2f45b4ad51b5bd77fd13cc
-      statement_id_history:
-        - statement_id: sha256:84dff7d571dda8a77e35b1144a3109a6cf6606aca7c9797b34728e56442b2d7c
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/FunctionalGraphs/FiniteFunctionalGraphFittingDecomposition.finite_functional_graph_fitting_decomposition
       definition_sha256: sha256:25322f5a472f378cb7fc877e2330218559d2057d2d3569d6a7a5ff9cda1bfe7b

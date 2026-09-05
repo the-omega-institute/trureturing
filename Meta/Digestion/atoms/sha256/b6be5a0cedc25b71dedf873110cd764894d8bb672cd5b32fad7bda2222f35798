@@ -1,0 +1,39 @@
+## 393. 观察者选择的是哪一张页
+
+对一个离线 mirror pair：
+
+$$
+\rho=
+\frac12+\delta+i\gamma,
+$$
+
+$$
+J\rho=
+\frac12-\delta+i\gamma,
+$$
+
+全局系统只知道无序对：
+
+$$
+\{\rho,J\rho\}.
+$$
+
+一个唯一观察者选择其中一张页，相当于选择：
+
+$$
+\operatorname{sign}(\delta).
+$$
+
+另一位镜像观察者会得到相反符号。
+
+所以：
+
+$$
+\boxed{
+\operatorname{sign}(\delta)
+\text{ 是观察者相对的。}
+}
+$$
+
+---
+

@@ -1,0 +1,43 @@
+## 19. 从配置语言到 ζ 装配
+
+对每个素数 \(p\)，定义：
+
+$$
+A_p(s)
+=
+\mathcal H_\varphi(s\log p).
+$$
+
+所有素数地址共享相同的 local dynamics，只是时间尺度由 \(\log p\) 缩放。
+
+仓库已经证明黄金 germ 的二阶延拓具有：
+
+$$
+\zeta(\varphi^2s)
+\zeta(\varphi^3s)
+\zeta(2\varphi^2s)^{-1}
+G_3(s)
+$$
+
+的结构，其中两个直接 ζ 因子表示 primitive modes，倒数 ζ 因子表示重复占据排斥，\(G_3\) 保存剩余 connected interaction。
+
+因此 Zeckendorf germ 给出一维原型：
+
+$$
+\boxed{
+\text{configuration language}
+\to
+\text{partition function}
+\to
+\log
+\to
+\text{connected modes}
+\to
+\text{Euler global assembly}.
+}
+$$
+
+一般素数构型理论把“数位位置”推广为加法 offsets \(h\)。
+
+---
+

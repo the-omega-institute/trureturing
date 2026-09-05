@@ -1,0 +1,23 @@
+## C11.2 证书边界
+
+式 (C11.2) 是有限参数 witness，但它还不是完全离散的 machine certificate。要验证它，仍需要：
+
+- 对 $G_a$ 在有理点的可认证求值或区间界；
+- 对 radial derivative 的可认证严格负上界；
+- 对 branch、Cayley inverse 与远离 $w=-1$ 的域控制。
+
+所以该定理证明的是：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\text{存在有限有理参数的严格不等式先兆}.
+}
+\tag{C11.3}
+$$
+
+它没有证明该先兆在当前工程中已经可执行枚举。
+
+---
+

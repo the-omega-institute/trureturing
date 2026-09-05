@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:aa017982f5a56dc87f754d99fad80f0ab445247099c22f9a2a50b528e80b1228
+  normalized_sha256: sha256:aa017982f5a56dc87f754d99fad80f0ab445247099c22f9a2a50b528e80b1228
+cas_ref: sha256:aa017982f5a56dc87f754d99fad80f0ab445247099c22f9a2a50b528e80b1228
+coverage_gids:
+  - gid: D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics.projected_dynamics_is_unistochastic
+    target_statement_id: sha256:4b613df85b67ebb165966b29f5f431b65c5588352f5da8183508ee6bd970486a
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics.projected_dynamics_is_unistochastic
+      definition_sha256: sha256:76036ab2af5a79a4ed8e01338e5105b1aa75c15459e6bc0b1883f8762e81b031
+      emission_sha256: sha256:3dc748b0af54eeceda7ee285016a3aac53dbba0b98ba246e096858d97a9d0a9a
+  unresolved_subitems: []

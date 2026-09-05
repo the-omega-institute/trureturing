@@ -1,0 +1,95 @@
+## 摘要
+
+本增订研究：为什么 Zeckendorf 表示、黄金比例、PrimeGaps、跳跃能量、Hankel 最小记忆、Lee–Yang 零点与假想的 zeta 离线零点反复出现在同一理论邻域中。
+
+结论不是“黄金比例直接证明 RH”，也不是“把整数写成 Zeckendorf 表示便会改变 zeta”。恰恰相反，首先有一个否定性结论：Zeckendorf 表示对整数指数的编码是无损双射，因此凡是只通过整数指数取值的标量 Euler 配分函数，在 Zeckendorf 重编码下完全不变。Zeckendorf 本身不会制造任何新零点。
+
+它真正增加的是一个此前被标量指数压扁的关系层：
+
+$$
+\boxed{
+\text{整数指数}
+\quad\longmapsto\quad
+\text{唯一的无相邻占据历史}.
+}
+$$
+
+在这一提升中，同一个有限状态空间自然携带五种不能混同的能量：
+
+1. Fibonacci 指数值能量；
+2. 占据数能量；
+3. 黄金共轭稳定影子；
+4. successor／translation 跳跃能量；
+5. prime-frequency 横向关系能量。
+
+第一种能量完整区分状态，却遗忘状态之间的局部关系；第二至第五种能量逐层恢复 hard-core memory、稳定通道、动态转移和 cross-prime 外积结构。项目中已经机器闭合的 `FiniteZeckendorfEulerIdentity`、`GoldenEulerBetaZeckendorf`、`PrimeJumpDecomposition`、`HankelRankMinimality`、`GoldenScalarDihedralBlindness`、`OrderedPrimeHolonomyCasimir` 和 `OffLineOrbitParityDecomposition` 正好落在这条分层链的不同位置。
+
+本增订得到四个新的有限理论核心。
+
+第一，有限 Zeckendorf 指数配分函数严格退化为几何级数，其全部非平凡根位于局部 Euler fugacity 单位圆；而 hard-core 占据配分函数由二阶 transfer matrix 控制，其两个本征通道为
+
+$$
+\lambda_\pm(z)=\frac{1\pm\sqrt{1+4z}}2,
+$$
+
+在 $z=1$ 时恰为
+
+$$
+\lambda_+(1)=\varphi,
+\qquad
+\lambda_-(1)=-\varphi^{-1}.
+$$
+
+因此 $\varphi$ 是最小一位记忆系统的 Perron 增长率，$-\varphi^{-1}$ 是精确性所必需、却在大尺度上指数衰减的稳定影子通道。
+
+第二，项目的黄金指数账户具有一个精确的两级创新场。若 $b(v)$ 表示该账户，则
+
+$$
+\Delta b_v=b(v+1)-b(v)\in\{\varphi^2,\varphi\},
+$$
+
+并且扣除平均漂移 $\sqrt5$ 后，创新只取
+
+$$
+\varphi^{-2},\qquad-\varphi^{-1}.
+$$
+
+它的累积和始终有界，而长期均方能量恰为 $\varphi^{-3}$。这说明黄金稳定通道不是额外随机噪声，而是一条确定性的、零平均、有限预算的校正流。
+
+第三，Zeckendorf 分解把一个 prime-power translation 精确分解成 Fibonacci 尺度 translation 的乘积，并给出跳跃能量的多尺度上界。它把项目已有的 arithmetic jump Laplacian 与黄金 shell 连接起来，但不提供反向 coercivity；不同 shell 仍可能在标量 translation 中发生抵消。
+
+第四，在有限 Zeckendorf 状态与有限 prime cluster 的联合模型中，横向 susceptibility 的二阶系数严格分解为
+
+$$
+\boxed{
+\text{Zeckendorf exponent second moment}
+\times
+\text{prime log-frequency relation energy}.
+}
+$$
+
+若状态均匀分布，前者随黄金深度约按 $\varphi^{2Q}$ 增长；若使用真实单素数 Euler Gibbs 权，前者却保持有限。因此 combinatorial state count 本身不会产生 zeta 相变；真正的全局临界性必须来自 prime–Gamma 完成对跨尺度状态权的重新组织。
+
+最终得到的统一判断是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Zeckendorf}
+&=\text{标量整数指数的无损关系提升},\\
+\varphi
+&=\text{最小 hard-core memory 的扩张通道},\\
+-\varphi^{-1}
+&=\text{被标量大尺度压低的稳定影子},\\
+\text{jump / holonomy / odd energy}
+&=\text{被反射或交换压掉的一阶信息的二阶显影},\\
+\text{假想离线零点}
+&=\text{标量完成为零而关系层仍可能带正横向能量的时刻}.
+\end{aligned}
+}
+$$
+
+最后一行仍是条件性的。要把它提升为 RH 证明，必须构造 canonical prime–Zeckendorf–Gamma transfer，并证明其关系能量无条件支配 zero-side 离线奇能量。本文不把该桥藏入“能量”“黄金”“相变”或“Zeckendorf”这些名称中。
+
+---
+

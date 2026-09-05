@@ -1,0 +1,17 @@
+## 383. 第一层宇称：Zeckendorf 最小指标
+
+仓库目前已经机器证明，黄金 Euler 指数的下一步跳跃由 Zeckendorf 最小指标奇偶决定：
+
+$$
+\beta(v+1)-\beta(v)
+=
+\begin{cases}
+\varphi^2,&\operatorname{lastIdx}(v+1)\text{ 为偶},\\
+\varphi,&\operatorname{lastIdx}(v+1)\text{ 为奇}.
+\end{cases}
+$$
+
+因此项目已经拥有一层严格的 **index parity**：它决定局部能量步长。
+
+---
+

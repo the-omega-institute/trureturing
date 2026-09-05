@@ -1,0 +1,22 @@
+## B5.3 有限零点量子化
+
+有限零点满足
+
+$$
+\left(\frac{\lambda_+}{\lambda_-}\right)^{Q+2}=1.
+\tag{B5.5}
+$$
+
+从而
+
+$$
+\boxed{
+z_{Q,j}
+=-\frac1{4\cos^2\left(\frac{j\pi}{Q+2}\right)},
+\qquad
+1\le j\le\left\lfloor\frac{Q+1}{2}\right\rfloor.}
+\tag{B5.6}
+$$
+
+所有根位于等模割线上，但不会等于分歧点本身。
+

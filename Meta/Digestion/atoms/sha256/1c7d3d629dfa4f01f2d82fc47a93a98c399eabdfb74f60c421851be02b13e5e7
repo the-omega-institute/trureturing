@@ -1,0 +1,80 @@
+# 第一千九百三十三部　黄金 Pick 单胞是负公共谱底
+
+考虑普适二点矩阵：
+
+$$
+\mathbb F
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+相对于：
+
+$$
+B=I,
+$$
+
+其 signed floor 为：
+
+$$
+\boxed{
+\operatorname{Floor}
+(\mathbb F\mid I)
+=
+\lambda_{\min}(\mathbb F)
+=
+-\varphi^{-1}.
+}
+\tag{1933.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathbb F+\varphi^{-1}I
+=
+\sqrt5\,P_+
+\succeq0.
+}
+\tag{1933.2}
+$$
+
+其中 \(P_+\) 是正黄金本征方向的秩一投影。
+
+这里必须严格说明：仓库的 exact common-spectrum theorem 假设 \(G\) 来自正测度 Gram，因此不能直接应用于不定的 \(\mathbb F\)。
+
+但同一个广义最小本征值函数可以自然延伸到 signed Hermitian 数据。
+
+在这个延伸下：
+
+$$
+\boxed{
+-\varphi^{-1}
+}
+$$
+
+不是一个正 Haar 质量，而是：
+
+$$
+\boxed{
+\text{该关系距离可拥有共同正背景还缺少多少统一谱量。}
+}
+$$
+
+因此黄金负本征值获得了一个更准确的定义：
+
+$$
+\boxed{
+\varphi^{-1}
+=
+\text{规范内部饱和关系的共同背景赤字}.
+}
+\tag{1933.3}
+$$
+
+---
+

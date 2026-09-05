@@ -1,0 +1,42 @@
+## 204. 绝对对象是所有相对 chart 的相容粘合
+
+不是某一个名字给出绝对对象。
+
+而是所有 chart：
+
+$$
+O_\alpha=T_\alpha F
+$$
+
+以及重叠区转换：
+
+$$
+g_{\beta\alpha}
+=
+T_\beta T_\alpha^{-1}
+$$
+
+满足 cocycle 后，共同确定一个全局 section。
+
+所以：
+
+$$
+\boxed{
+\text{绝对}
+=
+\text{全部相对观察的相容类}.
+}
+$$
+
+对 ζ 而言：
+
+* Dirichlet chart；
+* Euler chart；
+* eta chart；
+* theta–Mellin chart；
+* \(q=s(1-s)\) 反射商 chart；
+
+共同粘合为同一个 meromorphic/entire 对象。
+
+---
+

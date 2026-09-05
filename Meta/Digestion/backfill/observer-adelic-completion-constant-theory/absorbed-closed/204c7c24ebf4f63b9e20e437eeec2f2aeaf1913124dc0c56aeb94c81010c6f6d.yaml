@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:204c7c24ebf4f63b9e20e437eeec2f2aeaf1913124dc0c56aeb94c81010c6f6d
+  normalized_sha256: sha256:204c7c24ebf4f63b9e20e437eeec2f2aeaf1913124dc0c56aeb94c81010c6f6d
+cas_ref: sha256:204c7c24ebf4f63b9e20e437eeec2f2aeaf1913124dc0c56aeb94c81010c6f6d
+coverage_gids:
+  - gid: D5/S3/Weil/Budget/CayleyMomentTridiagonalFlow.tridiagonal_moment_flow
+    target_statement_id: sha256:689ed3834d4ff16fc428087ce9bc7fc2ce6d9a9defd36e0c2b0a65d2454aa250
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Budget/CayleyMomentTridiagonalFlow.tridiagonal_moment_flow
+      definition_sha256: sha256:1c35a1c7909f5a2bfc56c02b2150150866ab2ac9e96036effa2264700ce223f4
+      emission_sha256: sha256:794dc598e12d0e528048965c67e69b0ae663b8963ddccbefd9d6d42d9cbfbbab
+  unresolved_subitems: []

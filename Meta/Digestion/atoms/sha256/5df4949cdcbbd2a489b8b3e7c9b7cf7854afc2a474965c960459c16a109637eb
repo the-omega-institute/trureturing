@@ -1,0 +1,42 @@
+## 475. 这不是普通悖论
+
+普通自指悖论常表现为二循环：
+
+$$
+P\leftrightarrow\neg P.
+$$
+
+这里的结构是：
+
+$$
+R_0\supseteq R_1\supseteq R_2\supseteq\cdots.
+$$
+
+它没有自动产生：
+
+$$
+P\land\neg P.
+$$
+
+它是：
+
+$$
+\boxed{
+\omega\text{-filtration}
+}
+$$
+
+而不是二层逻辑矛盾。
+
+真正需要问的是：
+
+$$
+\boxed{
+\bigcap_nR_n
+}
+$$
+
+究竟为空、非空，还是虽为空但没有有效收敛模量。
+
+---
+

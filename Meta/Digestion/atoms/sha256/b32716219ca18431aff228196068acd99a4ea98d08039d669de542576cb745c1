@@ -1,0 +1,42 @@
+## 307. 最低阶约束
+
+立刻得到：
+
+$$
+p_n\ge0,
+$$
+
+$$
+p_n\ge p_{n+1},
+$$
+
+$$
+p_n-2p_{n+1}+p_{n+2}\ge0,
+$$
+
+以及 Hankel 对数凸性：
+
+$$
+\boxed{
+p_{n+1}^2
+\le
+p_np_{n+2}.
+}
+$$
+
+若 RH 为假，则在 canonical-product 前件下，必有某个有限 \(N\) 的某个 principal minor 或 localizing matrix 失败。
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\text{存在有限阶 Casimir 矩阵负证书}.
+}
+$$
+
+不存在的只是其深度的先验上界。
+
+---
+

@@ -1,0 +1,54 @@
+## 545. 反射 Casimir 矩序列
+
+沿用前面的反射商：
+
+$$
+q=s(1-s),
+$$
+
+以及紧化变量：
+
+$$
+x=\frac1{4q}.
+$$
+
+将 completed \(\xi\) 写成：
+
+$$
+\xi(s)=\mathcal X(s(1-s)).
+$$
+
+由 \(\mathcal X\) 的 genus-zero 对数导数，在 \(z=0\) 附近定义：
+
+$$
+-\frac14
+\frac{\mathcal X'(z/4)}
+{\mathcal X(z/4)}
+=
+\sum_{n=0}^{\infty}a_nz^n.
+$$
+
+若 RH 成立，则存在正有限测度：
+
+$$
+\nu
+=
+\sum_jm_jx_j\,\delta_{x_j}
+$$
+
+支撑于：
+
+$$
+[0,1],
+$$
+
+并满足：
+
+$$
+\boxed{
+a_n=\int_0^1x^n\,d\nu(x).
+}
+$$
+
+---
+

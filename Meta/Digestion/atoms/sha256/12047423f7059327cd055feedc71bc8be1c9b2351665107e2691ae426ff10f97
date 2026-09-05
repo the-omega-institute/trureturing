@@ -1,0 +1,53 @@
+## 7.2 对数 Mahler 缺陷
+
+对 monic 多项式，Mahler 测度满足
+
+$$
+\log M(P_{a,T})
+=
+\sum_{\rho\in\mathcal Z_T^+}
+\log^+|w_\rho|.
+\tag{7.4}
+$$
+
+由于根按 $\eta,-\eta$ 成对，
+
+$$
+\boxed{
+\log M(P_{a,T})
+=
+\frac12
+\sum_{\rho\in\mathcal Z_T^+}
+\left|\log|w_\rho|\right|.
+}
+\tag{7.5}
+$$
+
+定义累积 Lee–Yang–Mahler 缺陷自由能
+
+$$
+\boxed{
+\mathcal F_a(T)
+:=
+\log M(P_{a,T}).
+}
+\tag{7.6}
+$$
+
+它满足：
+
+$$
+\mathcal F_a(T)\ge0,
+$$
+
+且
+
+$$
+\boxed{
+\mathcal F_a(T)=0
+\Longleftrightarrow
+0<\Im\rho\le T\text{ 的全部零点均在线}.
+}
+\tag{7.7}
+$$
+

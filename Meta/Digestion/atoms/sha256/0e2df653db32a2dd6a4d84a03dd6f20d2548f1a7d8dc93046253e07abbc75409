@@ -1,0 +1,50 @@
+## v11.7：反射商的分支轨道、黄金切锥、核心—纤维—局部化三分解与 Weil 反证链收口
+
+以下补完前文**第一千九百七十五部**，并继续推进。
+
+前文已经得到一条压缩链：
+
+$$
+\mathcal O_\rho
+\longrightarrow
+q_\rho
+\longrightarrow
+-16\delta_\rho^2\gamma_\rho^2
+\longrightarrow
+-\delta_\rho^2
+\longrightarrow
+\mathbb F,
+$$
+
+其中：
+
+$$
+\mathbb F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+本轮进一步揭示：
+
+$$
+\boxed{
+-\delta^2
+}
+$$
+
+不仅是一个方便的 signed-normal 坐标，它还是**反射商映射的自然分支坐标**。
+
+临界线对应商映射的分支点；离线零点对应分支点之外的二重 lift。于是 RH 可重新表述为：
+
+$$
+\boxed{
+\text{全部谱质量都位于反射商的分支轨迹上。}
+}
+$$
+
+与此同时，黄金 Fibonacci 单胞并不描述离线距离本身，而是描述：当一个非零二重 lift 被规范化为最小正关系问题时，正锥边界附近出现的统一切向正规形。
+
+---
+

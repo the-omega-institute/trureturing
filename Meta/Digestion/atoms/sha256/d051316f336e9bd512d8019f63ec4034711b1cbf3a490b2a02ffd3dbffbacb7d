@@ -1,0 +1,31 @@
+# 第一千九百八十五部　Weil separator 是 localizer 的全纯化替身
+
+signed-normal localizer直接使用：
+
+$$
+-\delta^2.
+$$
+
+但这一量依赖反射与共轭，不能由单变量全纯测试函数逐点表示。
+
+Weil 理论采取另一条路线：
+
+1. 不直接求出所有 \(\delta_\rho^2\)；
+2. 选择一个目标离线轨道；
+3. 对有限邻近谱作精确插值；
+4. 对无限远谱使用卷积幂压低；
+5. 令目标轨道的有符号贡献支配全和。
+
+因此：
+
+$$
+\boxed{
+\text{Weil separator
+是 signed-normal localizer 在允许全纯测试空间中的编译结果。}
+}
+$$
+
+仓库现有定理已经机器闭合其中最难的隔离机制：给定非实离线零点，确实存在 powered even test，使完整 Weil convolution-square 零点和的实部严格为负。
+
+---
+

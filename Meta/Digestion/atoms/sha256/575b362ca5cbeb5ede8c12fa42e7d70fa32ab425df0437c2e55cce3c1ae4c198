@@ -1,0 +1,28 @@
+## C16.3 joint observer depth
+
+所以一个同时在有限高度窗中解除 phase alias、又能分辨给定 transverse scale 的 observer，可取：
+
+$$
+\boxed{
+n_{\rm obs}
+=
+\max\left\{
+n_{\rm phase},
+n_{\perp}
+\right\}.
+}
+\tag{C16.3}
+$$
+
+对假想第一离线零点：
+
+$$
+\rho_*
+=
+\frac12+\delta_*+it_*,
+\tag{C16.4}
+$$
+
+存在有限 $n$，使：
+
+- level $F_n$ 在 $[0,t_*]$ 中对 single-prime phase 无 alias；

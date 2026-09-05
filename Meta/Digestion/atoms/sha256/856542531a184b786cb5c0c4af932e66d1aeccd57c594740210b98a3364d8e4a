@@ -1,0 +1,37 @@
+## C7.3 scalar product 重新制造 alias
+
+若只保留 scalar product：
+
+$$
+p^{-u}q^{-u}
+=
+(pq)^{-u},
+\tag{C7.7}
+$$
+
+则虚部只按周期：
+
+$$
+\frac{2\pi}{\log(pq)}
+\tag{C7.8}
+$$
+
+可见。
+
+所以 labelled pair 是单射，而 commutative product 不是单射。
+
+这是一个最小关系信息逃逸模型：
+
+$$
+\boxed{
+\text{两个 prime labels 已足以恢复 }t,
+\quad
+\text{但把它们乘成一个 scalar 会再次遗失 }t.
+}
+\tag{C7.9}
+$$
+
+prime-pair alternating determinant、ratio、exterior square 或 ordered holonomy 的作用，正是阻止这一横向标签被 scalarization 删除。
+
+---
+

@@ -1,0 +1,13 @@
+## 第三段：合法性 localizer
+
+还需要一个更强观察器判断隐藏纤维能否进入指定正实现：
+
+$$
+\boxed{
+\mathcal L(\text{fibre})\succeq0?
+}
+$$
+
+例如：
+
+* shifted Hankel；

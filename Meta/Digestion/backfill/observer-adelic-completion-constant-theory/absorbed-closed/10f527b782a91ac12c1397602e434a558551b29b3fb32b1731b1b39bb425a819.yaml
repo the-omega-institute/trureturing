@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:10f527b782a91ac12c1397602e434a558551b29b3fb32b1731b1b39bb425a819
+  normalized_sha256: sha256:10f527b782a91ac12c1397602e434a558551b29b3fb32b1731b1b39bb425a819
+cas_ref: sha256:10f527b782a91ac12c1397602e434a558551b29b3fb32b1731b1b39bb425a819
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaObservation/ChristoffelSupportDecay.christoffel_support_decay
+    target_statement_id: sha256:dac2697d6e44afaac47b0dae58f5e278011bbf3334929431ab56db859f358bbb
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/ZetaObservation/ChristoffelSupportDecay.christoffel_support_decay
+      definition_sha256: sha256:7dac98d1a171426cc9c277b53948742a41a3b6c8918d7255f2044ea798cad723
+      emission_sha256: sha256:b72cc389e443e7c585b11687fb79ecf43bdc85ff5cb4666ab35e58706077af13
+  unresolved_subitems: []

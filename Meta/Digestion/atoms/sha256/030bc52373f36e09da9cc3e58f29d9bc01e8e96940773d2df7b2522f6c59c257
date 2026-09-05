@@ -1,0 +1,26 @@
+* 乘法则不再局部。
+
+因此：
+
+$$
+\boxed{
+\text{prime basis}
+\quad\text{与}\quad
+\text{Zeckendorf basis}
+}
+$$
+
+是一对互补坐标系。
+
+这正类似：
+
+$$
+\text{位置基}
+\quad\leftrightarrow\quad
+\text{频率基}.
+$$
+
+没有一个基能同时让乘法和加法都完全对角。
+
+---
+

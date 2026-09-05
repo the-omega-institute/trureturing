@@ -1,0 +1,2 @@
+**候签定理 4.96(Erdős–Straus 整数式、倒数式与伸缩律)**〔open;落 `D5/S3/PrimeForms/ErdosStrausResidueReduction`〕。定义 `ESSolvable n` 为存在正整数 `x,y,z` 满足 `4xyz=n(xy+xz+yz)`；证明其与有理倒数式等价，并证明解在分母正整数倍伸缩下保持。
+

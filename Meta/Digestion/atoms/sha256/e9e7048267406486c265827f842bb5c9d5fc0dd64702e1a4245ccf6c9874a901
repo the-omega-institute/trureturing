@@ -1,0 +1,126 @@
+## 423. 反向证明
+
+假设：
+
+$$
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}.
+$$
+
+每个自然数 \(k\) 要么是：
+
+$$
+k=2r,
+$$
+
+要么是：
+
+$$
+k=2r+1.
+$$
+
+因此：
+
+$$
+D^ka_n\ge0
+\qquad
+\forall n,k.
+$$
+
+这说明 \((a_n)\) 是完全单调序列。
+
+由 Hausdorff 矩定理，存在唯一有限正测度：
+
+$$
+\nu
+$$
+
+支撑于 \([0,1]\)，使：
+
+$$
+a_n=\int_0^1x^n\,d\nu(x).
+$$
+
+于是生成函数满足：
+
+$$
+\sum_{n\ge0}a_nz^n
+=
+\int_0^1
+\frac{d\nu(x)}{1-zx}.
+$$
+
+右侧在：
+
+$$
+\mathbb C\setminus[1,\infty)
+$$
+
+上解析。
+
+但左侧在零点附近又等于：
+
+$$
+-\frac14
+\frac{
+\mathcal X'(z/4)
+}{
+\mathcal X(z/4)
+}.
+$$
+
+这个对数导数的极点恰好位于：
+
+$$
+z=4q_{\mathcal O}.
+$$
+
+因此所有极点都必须满足：
+
+$$
+4q_{\mathcal O}\in[1,\infty),
+$$
+
+即：
+
+$$
+q_{\mathcal O}
+\in
+\left[\frac14,\infty\right).
+$$
+
+解方程：
+
+$$
+s(1-s)=q_{\mathcal O}
+$$
+
+得到：
+
+$$
+s
+=
+\frac12
+\pm
+i\sqrt{q_{\mathcal O}-\frac14}.
+$$
+
+所以全部非平凡零点均满足：
+
+$$
+\Re s=\frac12.
+$$
+
+因此：
+
+$$
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}
+\Longrightarrow
+\mathrm{RH}.
+$$
+
+---
+

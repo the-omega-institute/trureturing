@@ -1,0 +1,33 @@
+## 7.1 正高度截断根族
+
+令 $\mathcal Z_T^+$ 为 $0<\Im\rho\le T$ 的非平凡零点多重集。定义 Cayley 根
+
+$$
+w_\rho=C_a\!\left(\rho-\frac12\right)
+$$
+
+以及有限谱多项式
+
+$$
+\boxed{
+P_{a,T}(w)
+=
+\prod_{\rho\in\mathcal Z_T^+}(w-w_\rho).
+}
+\tag{7.1}
+$$
+
+正高度零点集在
+
+$$
+\rho\longmapsto1-\overline\rho
+$$
+
+下封闭，因此根多重集在
+
+$$
+w\longmapsto\frac1{\overline w}
+$$
+
+下封闭。
+

@@ -1,0 +1,12 @@
+## 1. 精确编码障碍
+
+$$
+\boxed{
+\varphi^{-H}
+\neq
+\prod_p p^{k_p}
+}
+$$
+
+对任意有限整数 prime word 和 \(H\ge1\) 成立。
+

@@ -1,0 +1,90 @@
+# 第一千九百九十部　新的形式化顺序
+
+```text
+D5/S3/Analytic/ReflectedSpectrum/ReflectionQuotientCover/
+  ReflectionNormalCoordinate.lean
+  SignedSquareQuotient.lean
+  SignedSquareFiberAwayFromZero.lean
+  SignedSquareBranchFiberAtZero.lean
+  ReflectionQuotientBranchLocus.lean
+  RHSupportOnReflectionBranchLocusTarget.lean
+
+D5/S3/Analytic/ReflectedSpectrum/ShiftedBranchCrossing/
+  ShiftedRemainingNormalDepth.lean
+  ShiftedSignedSquareCoordinate.lean
+  DefectBranchMergeAtDepth.lean
+  BranchMergeEqualsPersistenceDeath.lean
+  ShiftedActivityDomainBoundary.lean
+
+D5/S3/Analytic/Zeta/OrbitCompressionLadder/
+  FullCenteredReflectionOrbit.lean
+  OrbitSquareQuotient.lean
+  OrbitRealQuadratic.lean
+  OrbitDiscriminantToSignedNormal.lean
+  SignedNormalToNormalizedPickCellTarget.lean
+  OrbitCompressionInformationLedger.lean
+
+D5/S3/Weil/Pick/GoldenTangentCell/
+  UniversalPickCellJordanDecomposition.lean
+  MinimalNegativeDirectionRepair.lean
+  RepairLandsOnPSDConicBoundary.lean
+  PickCellInertiaInvariant.lean
+  PickCellGoldenSpectrumRequiresNormalization.lean
+
+D5/S3/Analytic/ReflectedSpectrum/DefectSeverityCoordinates/
+  GeometricDepthSeverity.lean
+  OrbitSplittingSeverity.lean
+  RelationalSeverity.lean
+  GeometricSeverityCanVanishWhileRelationalTypeFixed.lean
+  DefectMagnitudeTypeSeparation.lean
+
+D5/S3/Observer/CoreBranchFiber/
+  CommonHaarCore.lean
+  PositiveResidualMeasureTarget.lean
+  ResidualBranchLocusMass.lean
+  ResidualOffBranchMass.lean
+  LocalizerKillsBranchLocusAndDetectsRegularFiber.lean
+
+D5/S3/Analytic/ReflectedSpectrum/SupportObserverOptimization/
+  PolynomialLocalizingRayleighQuotient.lean
+  StrongestDegreeBoundedSupportObserver.lean
+  LocalizingGeneralizedEigenvector.lean
+  FiniteSupportLagrangeOptimality.lean
+  CompactSupportEdgeLimit.lean
+
+D5/S3/Analytic/ReflectedSpectrum/BranchLocusDualSignCollapse/
+  SignedSupportGeometricallyNonpositive.lean
+  ArithmeticLocalizerPositiveTarget.lean
+  DualSemidefiniteLocalizerZero.lean
+  ZeroLocalizerForcesBranchLocusSupport.lean
+  BranchLocusSupportImpliesRHTarget.lean
+
+D5/S3/Analytic/Zeta/DecoratedOffLineBarcode/
+  OffLineBar.lean
+  BarPhase.lean
+  BarMultiplicity.lean
+  BarOrbitSplitting.lean
+  BarSignedSupport.lean
+  BarUniversalRelationType.lean
+  EmptyDecoratedBarcodeRHIff.lean
+
+D5/S3/Weil/CanonicalXiNegativeCertificate/
+  ZetaRealCriticalStripNegative.lean
+  NotRHProvidesNonrealRightZero.lean
+  ActualZeroDataInstantiation.lean
+  CanonicalXiWeilDistributionTarget.lean
+  CanonicalZeroSideIdentificationTarget.lean
+  NotRHProducesNegativeCanonicalWeilSquareTarget.lean
+
+D5/S3/Weil/ThreeFloorCoupling/
+  EulerExponentFloor.lean
+  CommonHaarFloor.lean
+  SignedNormalSupportFloor.lean
+  FloorsPairwiseIndependent.lean
+  PrimeGammaResidualMeasureTarget.lean
+  ExponentToSupportPositiveCouplingTarget.lean
+  ThreeFloorCouplingImpliesRHTarget.lean
+```
+
+---
+

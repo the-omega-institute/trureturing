@@ -1,0 +1,6 @@
+## 二　W-20 预登记:Z-free 的素数侧判据(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_primeSidePositivity_of_infinite (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (archimedeanConvergent_of_weilTestFunction (convolutionSquare g))).re`。
+**可证伪预测(写在跑之前)**:同上,经 W-13;标准三公理。探针已整证。
+**边界**:同 §〇。
+

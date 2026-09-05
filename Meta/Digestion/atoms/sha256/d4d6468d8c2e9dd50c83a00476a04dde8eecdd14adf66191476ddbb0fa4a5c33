@@ -1,0 +1,69 @@
+# 第两千一百一十八部　形式化建议
+
+```text
+D5/S3/Analytic/Zeta/XiFourierNormalSplit/
+  RiemannXiPositiveFourierKernel.lean
+  OffLineZeroAsComplexFourierZero.lean
+  ReflectedZeroAsOppositeLaplaceTilt.lean
+  OffLineCosHCosChannel.lean
+  OffLineSinHSinChannel.lean
+  CriticalLineOddChannelVanishes.lean
+
+D5/S3/Analytic/Zeta/ReflectedProfileGram/
+  PositiveEvenKernelMeasure.lean
+  PositiveAndNegativeLaplaceProfiles.lean
+  ReflectedProfileGramMatrix.lean
+  ReflectedProfileEvenOddEigenvalues.lean
+  OddProfileEnergyStrictPositive.lean
+  ProfileGramDeterminantVarianceExpansion.lean
+
+D5/S3/Observer/LogBandwidthNormalResolution/
+  HarmonicPacketProbability.lean
+  LogarithmicPacketCoordinate.lean
+  CriticalNormalScaling.lean
+  ReflectedPacketNormLimits.lean
+  ReflectedPacketOverlapSinhLaw.lean
+  NormalResolutionThreeRegimes.lean
+
+D5/S3/Analytic/Zeta/OffLineNearDoubleShadow/
+  OffLineConjugatePairLocalFactor.lean
+  CriticalLineValleyFactor.lean
+  OffLinePairMidpointValue.lean
+  OffLinePairMidpointDerivative.lean
+  FirstLaguerreMidpointFormula.lean
+  NearLinePairForcesFirstLaguerreViolation.lean
+
+D5/S3/Observer/PrimeFrequencyWindowResolution/
+  PairwiseFrequencyKernel.lean
+  TimeWindowAverageKernel.lean
+  SmallGapUnresolvedAsymptotic.lean
+  LargeGapResolvedAverage.lean
+  LogFrequencyResolutionTime.lean
+  RiemannSiegelFullResolutionScale.lean
+
+D5/S3/Observer/ZetaKakeyaGrains/
+  LogFrequencyGrain.lean
+  TimeScaleUnresolvedCluster.lean
+  FrequencyClusterBranchingTree.lean
+  NonStickyPacketFamily.lean
+  StickyPacketFamily.lean
+  SignedKakeyaCoercivityTarget.lean
+
+D5/S3/Weil/PrimeKakeyaOddDomination/
+  FinitePrimePairCurvatureEnergy.lean
+  FiniteOffLineOddEnergy.lean
+  MultiscalePrimeObserverNetTarget.lean
+  PrimeCurvatureDominatesOffLineOddTarget.lean
+  PrimeCurvatureFlatteningTarget.lean
+  OffLineOddEnergyVanishingImpliesRHTarget.lean
+
+D5/S3/Analytic/Zeta/TransverseConfinement/
+  NormalResolutionParameter.lean
+  OffLineBoostSpread.lean
+  SignedKakeyaBoundImpliesLogConfinement.lean
+  TransverseConfinementDensityTarget.lean
+  AnalyticRigidityUpgradesConfinementTarget.lean
+```
+
+---
+

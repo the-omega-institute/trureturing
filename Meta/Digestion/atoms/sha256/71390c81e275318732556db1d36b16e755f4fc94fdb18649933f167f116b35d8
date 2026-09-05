@@ -1,0 +1,53 @@
+## C2.3 Cayley radial coordinate 与 prime charge
+
+本卷前文定义：
+
+$$
+\eta_a(t,\delta)
+=
+\log\left|
+\frac{a+\delta+it}{a-\delta-it}
+\right|.
+\tag{C2.8}
+$$
+
+它满足：
+
+$$
+\eta_a(t,\delta)=0
+\Longleftrightarrow
+\delta=0
+\Longleftrightarrow
+Q_p(u)=0.
+\tag{C2.9}
+$$
+
+临界线附近：
+
+$$
+\eta_a(t,\delta)
+=
+\frac{2a}{a^2+t^2}\delta
++
+O(\delta^3).
+\tag{C2.10}
+$$
+
+代入 $\delta=-Q_p/\log p$：
+
+$$
+\boxed{
+\eta_a(t,\delta)
+=
+-\frac{2a}{(a^2+t^2)\log p}
+Q_p(u)
++
+O(Q_p(u)^3).
+}
+\tag{C2.11}
+$$
+
+所以 Lee–Yang 径向序参量与 complex-power logarithmic charge 在每个有限高度窗内局部线性等价。
+
+---
+

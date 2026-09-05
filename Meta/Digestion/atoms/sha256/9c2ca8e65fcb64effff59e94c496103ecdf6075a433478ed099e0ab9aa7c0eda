@@ -1,0 +1,26 @@
+### RH 推出两个子命题
+
+若 RH 成立：
+
+$$
+\delta_\rho=0
+\qquad
+\forall\rho.
+$$
+
+因此：
+
+$$
+\Delta_\zeta=\{0\}.
+$$
+
+它显然满足：
+
+$$
+\Delta_\zeta=-\Delta_\zeta,
+$$
+
+并且只含一个值。
+
+---
+

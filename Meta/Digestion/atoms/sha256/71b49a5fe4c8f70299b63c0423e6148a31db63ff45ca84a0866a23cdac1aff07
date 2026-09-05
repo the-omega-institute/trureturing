@@ -1,0 +1,62 @@
+# 第二百四十八部　Kloosterman 输入是角向坐标升维
+
+公开形式化消费两类有限域相位界：
+
+$$
+|\mathrm{Kl}_3(c;p)|\le3,
+$$
+
+以及
+
+$$
+\left|
+\sum_{t\ne0,-1}
+K_2(A/t;p)
+K_2(B/(t+1);p)
+\right|
+\le
+8p\sqrt p.
+$$
+
+这两项在 Lean 中仍是明确命名的输入公理；README 将它们分别对应到 Katz/Deligne 型 rank-three 界和 Fouvry–Kowalski–Michel 的 shifted Kloosterman correlation。
+
+其结构意义非常重要：
+
+$$
+\boxed{
+\text{实数轴上接近的 prime coordinates
+需要在有限域相位空间中获得额外分辨维度。}
+}
+$$
+
+也就是说：
+
+* 单素数密度是零阶信息；
+* 二点平移相关需要角向 phase；
+* 控制角向 off-diagonal 项需要更高 rank 的有限域对象。
+
+因此，你所说的：
+
+> 每一维的坐标系位于下一维
+
+在这份证明中确实有一个具体实现：
+
+$$
+\boxed{
+\text{二点 additive correlation}
+\longrightarrow
+\text{rank-2 / rank-3 phase geometry}.
+}
+$$
+
+但这里“下一维”不是黄金比例本身，而是：
+
+* Kloosterman sheaf rank；
+* 有限域 monodromy；
+* shifted phase correlation；
+* square-root cancellation。
+
+黄金比例更适合组织观察深度和访问顺序；真正提供算术正交性的，是这些相位估计。
+
+---
+

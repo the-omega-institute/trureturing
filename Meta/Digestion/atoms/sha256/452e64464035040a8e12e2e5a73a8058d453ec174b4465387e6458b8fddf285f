@@ -1,0 +1,6 @@
+## 三　W-21 预登记:Z-free 的 ∃-半径形(同模块第三条公开定理)
+
+**义务**:公开定理 `rh_iff_exists_supportRadius_primeArchimedeanPoincare_of_infinite (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ f : WeilTestFunction, ∃ L : ℝ, tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L ∧ (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f`。
+**可证伪预测(写在跑之前)**:同上,经 W-15;标准三公理。探针已整证。
+**边界**:同 §〇。
+

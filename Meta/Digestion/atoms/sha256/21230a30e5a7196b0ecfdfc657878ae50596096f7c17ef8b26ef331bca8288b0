@@ -1,0 +1,57 @@
+# 第一千九百八十七部　三种 floor 的耦合目标
+
+项目目前的三个独立进展轴为：
+
+$$
+\boxed{
+\left(
+\beta_{\mathrm{exp}},
+\alpha_{\mathrm{com}},
+\beta_{\mathrm{supp}}
+\right).
+}
+$$
+
+其中：
+
+* \(\beta_{\mathrm{exp}}\) 控制 Euler germ 余项的解析可和边界；
+* \(\alpha_{\mathrm{com}}\) 控制共同 normalized-Haar 背景；
+* \(\beta_{\mathrm{supp}}\) 控制 signed-normal 支撑边缘。
+
+Golden Euler germ 的最新机器结果将有限修正后的残余权重推到 \(\beta_6\) 以上，并改善了可和区域，但明确不声称 RH 或全局延拓。
+
+Exact common-spectrum floor 已经把 \(\alpha_{\mathrm{com}}\) 精确化为白化 Gram 的最小本征值。
+
+Signed-normal 模块则机器化了正质量与负支撑可以同时存在。
+
+所以真正缺少的是一个耦合定理：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{prime Euler exponent control}\\
+&\quad+\text{Gamma/pole completion}\\
+&\quad+\text{cross-prime positive gluing}\\
+&\Longrightarrow
+\text{canonical signed-normal localizer}\succeq0.
+\end{aligned}
+}
+\tag{1987.1}
+$$
+
+一旦建立，由几何侧：
+
+$$
+H^{(1)}\preceq0
+$$
+
+立即得到：
+
+$$
+H^{(1)}=0.
+$$
+
+因此未来继续提高 \(\beta_{\mathrm{exp}}\) 只有在它开始提供式 (1987.1) 中的 residual measure 或 positive gluing 时，才构成直接 RH 进展。
+
+---
+

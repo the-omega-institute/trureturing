@@ -222,7 +222,7 @@ public sealed partial class MakeWorkflowTests
                 "-c",
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
-                + "HOME=\"$5\" BASE=base PATH=\"$6:/usr/bin:/bin\" "
+                + $"HOME=\"$5\" BASE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
                 + "exec /bin/bash \"$7\"",
                 "preflight-harness-gate-chain",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
@@ -245,13 +245,12 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData(1, 1, true)]
-    [InlineData(2, 2, true)]
-    [InlineData(3, 0, false)]
-    public void PreflightUsesForkPointWhenBaseTipHasAdvancedWithoutMutatingGit(
+    [InlineData(1, 1)]
+    [InlineData(2, 2)]
+    [InlineData(3, 0)]
+    public void PreflightUsesExplicitAncestorVerbatimWithoutMutatingGit(
         int admissionExitCode,
-        int expectedExitCode,
-        bool diverged)
+        int expectedExitCode)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -262,23 +261,21 @@ public sealed partial class MakeWorkflowTests
         var binDirectory = Path.Combine(homeDirectory, ".dotnet");
         var candidateDll = Path.Combine(candidateRoot, "bin", "candidate.dll");
         var gitState = Path.Combine(fixture.Path, "git-state");
-        var baseTipSha = diverged ? GateBaseTipSha : GateForkSha;
         Directory.CreateDirectory(Path.GetDirectoryName(candidateDll)!);
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(candidateDll, string.Empty);
-        var gitStateBefore = Encoding.UTF8.GetBytes(diverged
-            ? $"HEAD {GateCandidateSha} {GateForkSha}\nBASE {baseTipSha} 0000000000000000000000000000000000000003 {GateForkSha}\nrefs {GateCandidateSha} {baseTipSha}\n"
-            : $"HEAD {GateCandidateSha} {baseTipSha}\nrefs {GateCandidateSha} {baseTipSha}\n");
+        var gitStateBefore = Encoding.UTF8.GetBytes(
+            $"HEAD {GateCandidateSha} {GateForkSha}\nrefs {GateCandidateSha} {GateForkSha}\n");
         File.WriteAllBytes(gitState, gitStateBefore);
         WriteHarnessGateChainReportPair(candidateRoot);
 
         WriteHarnessGateChainForkPointGitShim(
             binDirectory,
             candidateRoot,
-            baseTipSha,
+            GateForkSha,
             GateCandidateSha,
             GateForkSha,
-            diverged);
+            diverged: false);
         WriteHarnessGateChainDotnetShim(binDirectory);
         WriteExecutable(
             Path.Combine(binDirectory, "lake"),
@@ -291,7 +288,7 @@ public sealed partial class MakeWorkflowTests
                 "-c",
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
-                + "HOME=\"$5\" BASE=base PATH=\"$6:/usr/bin:/bin\" "
+                + $"HOME=\"$5\" BASE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
                 + "PREFLIGHT_GIT_STATE=\"$7\" PREFLIGHT_EXPECTED_GATE_BASE=\"$8\" exec /bin/bash \"$9\"",
                 "preflight-fork-point",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
@@ -322,17 +319,16 @@ public sealed partial class MakeWorkflowTests
     [InlineData("empty")]
     [InlineData("zero")]
     [InlineData("vacuous")]
-    public void PreflightRejectsInvalidMergeBaseBeforeExpensiveStages(string mergeBaseMode)
+    public void PreflightRejectsLegacyMergeBaseResolutionContract(string mergeBaseMode)
     {
-        if (OperatingSystem.IsWindows()) return;
+        var script = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            PreflightScriptPath));
 
-        var result = RunInvalidMergeBase(PreflightScriptPath, mergeBaseMode);
-        var output = Encoding.UTF8.GetString(result.StandardOutput);
-        var error = Encoding.UTF8.GetString(result.StandardError);
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.DoesNotContain("[preflight] dotnet", output, StringComparison.Ordinal);
-        Assert.Contains(ExpectedMergeBaseDiagnostic(mergeBaseMode), error, StringComparison.Ordinal);
+        Assert.NotEmpty(mergeBaseMode);
+        Assert.DoesNotContain("admission_resolve_base", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("BASE_RESOLUTION_FAILED", script, StringComparison.Ordinal);
+        Assert.Contains("merge-base --is-ancestor \"$BASE\" HEAD", script, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -361,15 +357,24 @@ public sealed partial class MakeWorkflowTests
     [Theory]
     [InlineData(PreflightScriptPath)]
     [InlineData(LocalHarnessGateScriptPath)]
-    public void BaseResolutionFailureDiagnosticsCarryResolvedAndEmptyValues(string scriptPath)
+    public void BaseResolutionFailureDiagnosticsMatchEachEntrypointContract(string scriptPath)
     {
         if (OperatingSystem.IsWindows()) return;
 
         var result = RunInvalidMergeBase(scriptPath, "base-ref-failed");
         var error = Encoding.UTF8.GetString(result.StandardError);
 
-        Assert.Equal(1, result.ExitCode);
-        Assert.Contains(ExpectedMergeBaseDiagnostic("base-ref-failed"), error, StringComparison.Ordinal);
+        if (scriptPath == PreflightScriptPath)
+        {
+            Assert.Equal(2, result.ExitCode);
+            Assert.Contains("PREFLIGHT_BASE_INVALID reason=object-missing", error, StringComparison.Ordinal);
+            Assert.DoesNotContain("BASE_RESOLUTION_FAILED", error, StringComparison.Ordinal);
+        }
+        else
+        {
+            Assert.Equal(1, result.ExitCode);
+            Assert.Contains(ExpectedMergeBaseDiagnostic("base-ref-failed"), error, StringComparison.Ordinal);
+        }
     }
 
     [Theory]
@@ -542,6 +547,7 @@ public sealed partial class MakeWorkflowTests
             case "$*" in
               "rev-parse --show-toplevel") printf '%s\n' '{{candidateRoot}}' ;;
               "rev-parse --verify base^{commit}"|"rev-parse --verify 0000000000000000000000000000000000000001^{commit}") printf '%040d\n' 1 ;;
+              "cat-file -t {{GateForkSha}}") printf 'commit\n' ;;
               "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD"|"rev-parse HEAD") printf '%040d\n' 2 ;;
               "rev-parse HEAD^1") printf '%040d\n' 1 ;;
               "merge-base 0000000000000000000000000000000000000001 0000000000000000000000000000000000000002") printf '%040d\n' 1 ;;
@@ -599,12 +605,14 @@ public sealed partial class MakeWorkflowTests
               "rev-parse --show-toplevel") printf '%s\n' '{{candidateRoot}}' ;;
               "rev-parse --verify base^{commit}") printf '%s\n' '{{baseTipSha}}' ;;
               "rev-parse --verify {{forkSha}}^{commit}") printf '%s\n' '{{forkSha}}' ;;
+              "cat-file -t {{forkSha}}") printf 'commit\n' ;;
               "rev-parse --verify HEAD^{commit}"|"rev-parse --verify HEAD"|"rev-parse HEAD") printf '%s\n' '{{candidateSha}}' ;;
               "rev-parse HEAD^1") printf '%s\n' '{{forkSha}}' ;;
               "merge-base {{baseTipSha}} {{candidateSha}}") printf '%s\n' '{{forkSha}}' ;;
               "merge-base {{forkSha}} {{candidateSha}}") printf '%s\n' '{{forkSha}}' ;;
               "merge-base --is-ancestor {{baseTipSha}} {{candidateSha}}") exit {{(diverged ? 1 : 0)}} ;;
               "merge-base --is-ancestor {{forkSha}} {{candidateSha}}") exit 0 ;;
+              "merge-base --is-ancestor {{forkSha}} HEAD") exit 0 ;;
               "cat-file -e {{forkSha}}^{commit}"|"diff --name-only --no-renames -z {{forkSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
               merge\ *) printf 'mutated\n' > "$PREFLIGHT_GIT_STATE" ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;

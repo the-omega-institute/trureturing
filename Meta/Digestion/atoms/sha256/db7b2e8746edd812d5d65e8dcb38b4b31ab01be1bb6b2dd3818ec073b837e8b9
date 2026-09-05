@@ -1,0 +1,125 @@
+# 第两千一百二十部　PDF 中的真实筛法结构
+
+这份 PDF 的主干是 Maynard 型多维 Selberg sieve。
+
+目标不是直接寻找相邻两个素数，而是：
+
+> 给定 \(m\)，寻找一个有界直径的整数平移集合，使其中至少 \(m\) 个位置同时取素数值。
+
+定义典型的短隙量：
+
+$$
+H_m
+=
+\liminf_{n\to\infty}
+\left(
+p_{n+m}-p_n
+\right),
+$$
+
+具体下标可能因“包含 \(m\) 个还是 \(m+1\) 个素数”的约定差一位。
+
+其证明架构是：
+
+$$
+\boxed{
+\text{选择 }k\text{ 个候选平移}
+\longrightarrow
+\text{排除小素数局部障碍}
+\longrightarrow
+\text{对剩余候选加正筛权}
+\longrightarrow
+\text{证明至少 }m\text{ 个候选成为素数}.
+}
+$$
+
+核心变分增益通常记为：
+
+$$
+M_k.
+$$
+
+筛法给出的阈值具有形式：
+
+$$
+\boxed{
+\frac{\theta}{2}M_k>m,
+}
+\tag{2120.1}
+$$
+
+其中 \(\theta\) 是可使用的素数等差数列分布水平。
+
+在 Bombieri–Vinogradov 的标准水平：
+
+$$
+\theta=\frac12,
+$$
+
+条件成为：
+
+$$
+\boxed{
+M_k>4m.
+}
+\tag{2120.2}
+$$
+
+而 Maynard 变分问题的主要增长是：
+
+$$
+M_k
+=
+\log k
+-
+O(\log\log k).
+$$
+
+所以为保证 \(m\) 个素数，需要：
+
+$$
+\boxed{
+k
+=
+\exp\!\left(
+\frac{2+o(1)}{\theta}m
+\right).
+}
+\tag{2120.3}
+$$
+
+在 \(\theta=\frac12\) 时：
+
+$$
+\boxed{
+k=e^{(4+o(1))m}.
+}
+\tag{2120.4}
+$$
+
+再把 admissible \(k\)-tuple 放进尽可能短的区间，得到经典 Maynard 型尺度：
+
+$$
+\boxed{
+H_m
+\ll
+m^3e^{4m}
+}
+\tag{2120.5}
+$$
+
+或同一指数主阶、略有不同多项式因子的改进版本。PDF 中真正重要的并不是某个有限常数，而是：
+
+$$
+\boxed{
+M_k\sim\log k
+\quad\Longrightarrow\quad
+m\sim\log k
+\quad\Longrightarrow\quad
+k\sim e^{Cm}.
+}
+$$
+
+也就是说，素数观察增益只随候选维数的对数增长，所以强制更多素数幸存，需要指数级候选预算。页文本与定理上下文已经抽取到：
+
+* [论文逐页文本](sandbox:/mnt/data/short_gaps_abridged_cot_extracted.txt)

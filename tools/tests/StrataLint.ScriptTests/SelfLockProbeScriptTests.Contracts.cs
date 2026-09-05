@@ -10,7 +10,6 @@ public sealed partial class SelfLockProbeScriptTests
         ProbeJudgment[] Judgments);
 
     private sealed record ProbeAuthorization(
-        bool AllowExactRevert,
         bool ChangesGateStatus,
         bool RerunRequiredAfterDevPush,
         string[] ConfirmedRedGates);

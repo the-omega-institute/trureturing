@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d599e8afb296e2916f30ba03c89db3ae45edb9791ba86e78bf48a5dc2bda6a0c
+  normalized_sha256: sha256:d599e8afb296e2916f30ba03c89db3ae45edb9791ba86e78bf48a5dc2bda6a0c
+cas_ref: sha256:d599e8afb296e2916f30ba03c89db3ae45edb9791ba86e78bf48a5dc2bda6a0c
+coverage_gids:
+  - gid: D5/S3/Estimation/ErrorExponents/FiniteSuiteOptimalErrorIdentity.finite_suite_optimal_error_eq
+    target_statement_id: sha256:4d6aa9c8474f1151c4ec2ea9dc68c21f2e7ae56eed81a6e368d33d735b3b11db
+receipts:
+  scribe:
+    - gid: D5/S3/Estimation/ErrorExponents/FiniteSuiteOptimalErrorIdentity.finite_suite_optimal_error_eq
+      definition_sha256: sha256:2435e90997eb4ee0daa25166c36a0940dba43e30c3a4b20e7b9cda3f9c806fd8
+      emission_sha256: sha256:ea3120da50104abfe23193a0f89740e4f0436ef7acf06b98b04150c38b57e5c8
+  unresolved_subitems: []

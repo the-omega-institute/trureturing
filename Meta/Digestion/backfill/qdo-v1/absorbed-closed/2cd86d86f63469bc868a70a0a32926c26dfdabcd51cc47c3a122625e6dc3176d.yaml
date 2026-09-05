@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2cd86d86f63469bc868a70a0a32926c26dfdabcd51cc47c3a122625e6dc3176d
+  normalized_sha256: sha256:2cd86d86f63469bc868a70a0a32926c26dfdabcd51cc47c3a122625e6dc3176d
+cas_ref: sha256:2cd86d86f63469bc868a70a0a32926c26dfdabcd51cc47c3a122625e6dc3176d
+coverage_gids:
+  - gid: D5/S3/Quantum/MeasurementGeometry/SingleContextVisibleRemainderDimension.single_context_visible_remainder_dimension
+    target_statement_id: sha256:82fa95e5ac4c229ea3c32261e375accfb968df18258aa4c7d33a75feed4b5108
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/MeasurementGeometry/SingleContextVisibleRemainderDimension.single_context_visible_remainder_dimension
+      definition_sha256: sha256:ce38ae7b2c4467338896594cd9a6b4f78edeaf271d31ae54c5f95bafd8eacd0c
+      emission_sha256: sha256:87de5c1ad739f0a10af0e875affc487fc578e2752b456778fbe0412e6b66112e
+  unresolved_subitems: []

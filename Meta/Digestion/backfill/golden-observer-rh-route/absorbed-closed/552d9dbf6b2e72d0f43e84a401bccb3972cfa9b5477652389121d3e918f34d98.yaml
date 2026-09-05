@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:552d9dbf6b2e72d0f43e84a401bccb3972cfa9b5477652389121d3e918f34d98
+  normalized_sha256: sha256:552d9dbf6b2e72d0f43e84a401bccb3972cfa9b5477652389121d3e918f34d98
+cas_ref: sha256:552d9dbf6b2e72d0f43e84a401bccb3972cfa9b5477652389121d3e918f34d98
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/HeightWindowWeilSquareCriterion.rh_iff_forall_heightWindow
+    target_statement_id: sha256:a06fe52d8a0b82929fc7918a52a272db6dcfad521679bffea3b6a232dece8e79
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Separator/HeightWindowWeilSquareCriterion.rh_iff_forall_heightWindow
+      definition_sha256: sha256:dbbab6f12fe9be79c0315aae553f28b411e92d6ec2df2f6b8afba4a86e9d3480
+      emission_sha256: sha256:ecbceac4c685b6cf107514a0162e997c3709e7e2c832f23ebd6554dcdf91903d
+  unresolved_subitems: []

@@ -1,0 +1,58 @@
+## 375. Liouville supertrace
+
+定义亚纯函数：
+
+$$
+\mathcal L_\lambda(s)
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+$$
+
+在：
+
+$$
+\Re s>\frac12
+$$
+
+内，\(\zeta(2s)\) 位于：
+
+$$
+\Re(2s)>1,
+$$
+
+因此由 Euler product：
+
+$$
+\zeta(2s)\neq0.
+$$
+
+所以在该半平面内：
+
+$$
+\mathcal L_\lambda
+$$
+
+的极点恰好来自 ζ 的零点；ζ 在 \(s=1\) 的极点只会使 \(\mathcal L_\lambda\) 产生零，而不是极点。
+
+因此：
+
+$$
+\boxed{
+\operatorname{ord}_\rho
+\mathcal L_\lambda
+=
+-
+\operatorname{ord}_\rho\zeta
+}
+$$
+
+对所有：
+
+$$
+\frac12<\Re\rho<1
+$$
+
+成立。
+
+---
+

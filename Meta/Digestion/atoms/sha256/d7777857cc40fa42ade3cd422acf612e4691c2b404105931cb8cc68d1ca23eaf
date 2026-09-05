@@ -1,0 +1,2 @@
+**候签定理 9.16(阶 12 循环射影平面的乘子 2 障碍)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。不存在满足 `D.card=13` 且对某 `g : ZMod 157` 有 `D.image (fun x => 2*x)=D.image (fun x => x+g)` 的 `D : Finset (ZMod 157)`。
+

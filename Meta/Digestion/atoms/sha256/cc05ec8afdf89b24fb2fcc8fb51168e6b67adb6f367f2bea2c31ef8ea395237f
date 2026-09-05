@@ -1,0 +1,57 @@
+## 320. 平移算子
+
+定义：
+
+$$
+S_h|n\rangle=|n+h\rangle.
+$$
+
+令 \(\widehat\Lambda\) 为 von Mangoldt 对角算子：
+
+$$
+\widehat\Lambda|n\rangle
+=
+\Lambda(n)|n\rangle.
+$$
+
+则：
+
+$$
+S_h^\ast
+\widehat\Lambda
+S_h|n\rangle
+=
+\Lambda(n+h)|n\rangle.
+$$
+
+所以对构型：
+
+$$
+H=\{h_1,\ldots,h_k\},
+$$
+
+有：
+
+$$
+\boxed{
+\left\langle
+\Psi_\sigma,
+\prod_{h\in H}
+S_h^\ast\widehat\Lambda S_h
+\Psi_\sigma
+\right\rangle
+=
+\frac1{\zeta(\sigma)}
+\sum_{n\ge1}
+\frac{
+\prod_{h\in H}\Lambda(n+h)
+}{
+n^\sigma
+}.
+}
+$$
+
+这就是前面定义的 prime-constellation Gibbs moment。
+
+---
+

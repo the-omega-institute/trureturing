@@ -246,7 +246,7 @@ public sealed class R15ScopeNarrowingTests
                 Encoding.UTF8.GetBytes(fixture.Files["Meta/registry.yaml"]),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(changes, policy))).Capability;
+            RuleCatalog.Default.Execute(fixture.BuildScopeProbe(changes, policy))).Capability;
 
         Assert.Contains(RuleId.CreateKnown(19), completed.ExecutedRules);
         AssertFinding(completed, 19, "unledgered anomaly", artifactPath);
@@ -274,7 +274,7 @@ public sealed class R15ScopeNarrowingTests
 
         var changes = RawChangeSet.Create([RuleFixture.RingPath, helperPath]);
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(changes))).Capability;
+            RuleCatalog.Default.Execute(fixture.BuildScopeProbe(changes))).Capability;
 
         Assert.Contains(RuleId.CreateKnown(19), completed.ExecutedRules);
         AssertFinding(completed, 19, "unledgered anomaly", artifactPath);
@@ -351,7 +351,7 @@ public sealed class R15ScopeNarrowingTests
 
         var changes = RawChangeSet.Create([RuleFixture.RingPath, dependencyPath]);
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(changes))).Capability;
+            RuleCatalog.Default.Execute(fixture.BuildScopeProbe(changes))).Capability;
 
         Assert.Contains(RuleId.CreateKnown(19), completed.ExecutedRules);
         AssertFinding(completed, 19, "unledgered anomaly", artifactPath);
@@ -553,7 +553,8 @@ public sealed class R15ScopeNarrowingTests
 
     private static CompletedRuleSet Execute(RuleFixture fixture, params string[] changedPaths) =>
         Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create(changedPaths)))).Capability;
+            RuleCatalog.Default.Execute(
+                fixture.BuildScopeProbe(RawChangeSet.Create(changedPaths)))).Capability;
 
     private static void AssertFinding(
         CompletedRuleSet completed,

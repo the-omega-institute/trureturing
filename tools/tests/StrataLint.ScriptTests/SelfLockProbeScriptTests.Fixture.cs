@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -26,7 +27,6 @@ public sealed partial class SelfLockProbeScriptTests
     private static void AssertDecision(
         ProcessOutput output,
         string decision,
-        bool allowExactRevert,
         int exitCode)
     {
         Assert.True(output.ExitCode == exitCode, Diagnostics(output));
@@ -34,13 +34,14 @@ public sealed partial class SelfLockProbeScriptTests
         var result = ParseResult(output);
         Assert.Equal(1, result.SchemaVersion);
         Assert.Equal(decision, result.Decision);
-        Assert.Equal(allowExactRevert, result.Authorization.AllowExactRevert);
         Assert.False(result.Authorization.ChangesGateStatus);
         Assert.True(result.Authorization.RerunRequiredAfterDevPush);
     }
 
     private sealed class ProbeFixture : IDisposable
     {
+        private static readonly ConcurrentDictionary<(string Path, bool MergeShapedNoop),
+            Lazy<ProbeTemplate>> Templates = new();
         private static readonly string ProtectionPolicy = """
             internal static class BootstrapProtectionPolicy
             {
@@ -56,66 +57,21 @@ public sealed partial class SelfLockProbeScriptTests
         private readonly TemporaryDirectory temporary = new();
 
         internal ProbeFixture(
-            string revertedPath = "tools/policy-under-test.txt",
+            string candidatePath = "tools/policy-under-test.txt",
             bool mergeShapedNoop = false)
         {
+            var template = Templates.GetOrAdd(
+                (candidatePath, mergeShapedNoop),
+                static key => new Lazy<ProbeTemplate>(
+                    () => new ProbeTemplate(key.Path, key.MergeShapedNoop),
+                    LazyThreadSafetyMode.ExecutionAndPublication)).Value;
+            CopyDirectory(template.Root, temporary.Path);
             CandidateRepository = Path.Combine(temporary.Path, "candidate");
-            ScriptHarnessScratch.EnsureDirectory(CandidateRepository);
-            GitAt(CandidateRepository, "init", "--template=", "-b", "main");
-            ConfigureSyntheticRepository(
-                CandidateRepository,
-                "Self Lock Test",
-                "self-lock@example.invalid");
-            var before = revertedPath == ProtectionPolicyPath
-                ? ProtectionPolicy
-                : "before\n";
-            var after = revertedPath == ProtectionPolicyPath
-                ? ProtectionPolicy + "\n// changed by target merge\n"
-                : "after\n";
-            if (revertedPath != ProtectionPolicyPath)
-            {
-                CommitFile(CandidateRepository, "canonical policy", ProtectionPolicyPath, ProtectionPolicy);
-            }
-            CommitFile(CandidateRepository, "seed", revertedPath, before);
-            TargetBaseSha = GitTextAt(CandidateRepository, "rev-parse", "HEAD");
-
-            GitAt(CandidateRepository, "checkout", "-b", "feature");
-            CommitFile(CandidateRepository, "gate change", revertedPath, after);
-            var feature = GitTextAt(CandidateRepository, "rev-parse", "HEAD");
-            GitAt(CandidateRepository, "checkout", "main");
-            TargetMergeSha = CommitTree(
-                CandidateRepository,
-                feature,
-                [TargetBaseSha, feature],
-                "merge gate change");
-            UpdateMain(CandidateRepository, TargetMergeSha, TargetBaseSha);
-
-            GitAt(CandidateRepository, "checkout", "-b", "candidate");
-            CommitFile(CandidateRepository, "exact inverse", revertedPath, before);
-            var candidate = GitTextAt(CandidateRepository, "rev-parse", "HEAD");
-            GitAt(CandidateRepository, "checkout", "main");
-            var candidateMerge = CommitTree(
-                CandidateRepository,
-                candidate,
-                [TargetMergeSha, candidate],
-                "merge exact inverse");
-            UpdateMain(CandidateRepository, candidateMerge, TargetMergeSha);
-
-            J1Repository = CloneAt("j1");
-            GitAt(J1Repository, "checkout", "--detach", TargetMergeSha);
-            J0Repository = CloneAt("j0");
-            GitAt(J0Repository, "checkout", "--detach", TargetBaseSha);
-            var noopParents = mergeShapedNoop
-                ? new[] { TargetBaseSha, feature }
-                : new[] { TargetBaseSha };
-            var noop = CommitTree(
-                J0Repository,
-                TargetBaseSha,
-                noopParents,
-                "synthetic no-op");
-            GitAt(J0Repository, "checkout", "--detach", noop);
-
-            ControllerDigest = ReadControllerDigest();
+            J1Repository = Path.Combine(temporary.Path, "j1");
+            J0Repository = Path.Combine(temporary.Path, "j0");
+            TargetBaseSha = template.TargetBaseSha;
+            TargetMergeSha = template.TargetMergeSha;
+            ControllerDigest = template.ControllerDigest;
             J1Bundle = new EvidenceBundle(
                 Path.Combine(temporary.Path, "j1-bundle"),
                 J1Repository,
@@ -137,13 +93,6 @@ public sealed partial class SelfLockProbeScriptTests
         internal string TargetBaseSha { get; }
         internal string TargetMergeSha { get; }
 
-        internal string WriteExecutable(string name, string content)
-        {
-            var path = Path.Combine(temporary.Path, name);
-            ScriptHarnessScratch.WriteExecutableStub(path, content);
-            return path;
-        }
-
         internal void WriteCandidateMarker(string relativePath, string content)
         {
             var path = Path.Combine(CandidateRepository, relativePath);
@@ -151,15 +100,106 @@ public sealed partial class SelfLockProbeScriptTests
             ScriptHarnessScratch.WriteScratchText(path, content);
         }
 
-        private string CloneAt(string name)
+        private static string CloneAt(string root, string candidateRepository, string name)
         {
-            var path = Path.Combine(temporary.Path, name);
-            GitAt(temporary.Path, "clone", CandidateRepository, path);
+            var path = Path.Combine(root, name);
+            GitAt(root, "clone", candidateRepository, path);
             ConfigureSyntheticRepository(
                 path,
                 "Self Lock Test",
                 "self-lock@example.invalid");
             return path;
+        }
+
+        private static void CopyDirectory(string sourcePath, string targetPath)
+        {
+            var result = TestProcessRunner.Run(
+                "/bin/cp",
+                ["-R", sourcePath + "/.", targetPath],
+                targetPath,
+                TestBudgets.ScriptProcessHangGuard,
+                64 * 1024);
+            if (result.ExitCode != 0)
+            {
+                throw new InvalidOperationException(Diagnostics(result));
+            }
+        }
+
+        private sealed class ProbeTemplate
+        {
+            private readonly TemporaryDirectory temporary = new();
+
+            internal ProbeTemplate(string candidatePath, bool mergeShapedNoop)
+            {
+                var candidateRepository = Path.Combine(temporary.Path, "candidate");
+                ScriptHarnessScratch.EnsureDirectory(candidateRepository);
+                GitAt(candidateRepository, "init", "--template=", "-b", "main");
+                ConfigureSyntheticRepository(
+                    candidateRepository,
+                    "Self Lock Test",
+                    "self-lock@example.invalid");
+                var before = candidatePath == ProtectionPolicyPath
+                    ? ProtectionPolicy
+                    : "before\n";
+                var after = candidatePath == ProtectionPolicyPath
+                    ? ProtectionPolicy + "\n// changed by target merge\n"
+                    : "after\n";
+                var candidateContent = candidatePath == ProtectionPolicyPath
+                    ? after + "\n// changed by candidate\n"
+                    : "candidate\n";
+                if (candidatePath != ProtectionPolicyPath)
+                {
+                    CommitFile(
+                        candidateRepository,
+                        "canonical policy",
+                        ProtectionPolicyPath,
+                        ProtectionPolicy);
+                }
+                CommitFile(candidateRepository, "seed", candidatePath, before);
+                TargetBaseSha = GitTextAt(candidateRepository, "rev-parse", "HEAD");
+
+                GitAt(candidateRepository, "checkout", "-b", "feature");
+                CommitFile(candidateRepository, "gate change", candidatePath, after);
+                var feature = GitTextAt(candidateRepository, "rev-parse", "HEAD");
+                GitAt(candidateRepository, "checkout", "main");
+                TargetMergeSha = CommitTree(
+                    candidateRepository,
+                    feature,
+                    [TargetBaseSha, feature],
+                    "merge gate change");
+                UpdateMain(candidateRepository, TargetMergeSha, TargetBaseSha);
+
+                GitAt(candidateRepository, "checkout", "-b", "candidate");
+                CommitFile(candidateRepository, "candidate change", candidatePath, candidateContent);
+                var candidate = GitTextAt(candidateRepository, "rev-parse", "HEAD");
+                GitAt(candidateRepository, "checkout", "main");
+                var candidateMerge = CommitTree(
+                    candidateRepository,
+                    candidate,
+                    [TargetMergeSha, candidate],
+                    "merge candidate change");
+                UpdateMain(candidateRepository, candidateMerge, TargetMergeSha);
+
+                var j1Repository = CloneAt(temporary.Path, candidateRepository, "j1");
+                GitAt(j1Repository, "checkout", "--detach", TargetMergeSha);
+                var j0Repository = CloneAt(temporary.Path, candidateRepository, "j0");
+                GitAt(j0Repository, "checkout", "--detach", TargetBaseSha);
+                var noopParents = mergeShapedNoop
+                    ? new[] { TargetBaseSha, feature }
+                    : new[] { TargetBaseSha };
+                var noop = CommitTree(
+                    j0Repository,
+                    TargetBaseSha,
+                    noopParents,
+                    "synthetic no-op");
+                GitAt(j0Repository, "checkout", "--detach", noop);
+                ControllerDigest = ReadControllerDigest();
+            }
+
+            internal string ControllerDigest { get; }
+            internal string Root => temporary.Path;
+            internal string TargetBaseSha { get; }
+            internal string TargetMergeSha { get; }
         }
 
         private static void CommitFile(

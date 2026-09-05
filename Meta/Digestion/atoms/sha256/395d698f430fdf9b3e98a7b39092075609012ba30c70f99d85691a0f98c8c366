@@ -1,0 +1,77 @@
+## 544. 有限自动机中的紧致性
+
+仓库新加入的 typed partial DFAO 框架已经证明：
+
+$$
+\boxed{
+\text{一个全局有界状态模型}
+\Longrightarrow
+\text{它拟合每一个有限前缀}.
+}
+$$
+
+在字母表、输出集、base states 和机器状态数上界全部固定时，候选机器只有有限多个。
+
+令：
+
+$$
+\mathcal M_k
+$$
+
+为所有不超过 \(k\) 状态的机器，并令：
+
+$$
+F_N
+=
+\{M\in\mathcal M_k:
+M\text{ 正确拟合前 }N\text{ 项}\}.
+$$
+
+则：
+
+$$
+F_{N+1}\subseteq F_N.
+$$
+
+若：
+
+$$
+F_N\neq\varnothing
+\qquad
+\forall N,
+$$
+
+由于 \(\mathcal M_k\) 有限：
+
+$$
+\boxed{
+\bigcap_NF_N\neq\varnothing.
+}
+$$
+
+因此在固定状态上界下，实际上有：
+
+$$
+\boxed{
+\text{全局 }k\text{-状态模型存在}
+\iff
+\text{每个有限前缀都有 }k\text{-状态模型}.
+}
+$$
+
+所以自动机领域的真正逃逸不是：
+
+$$
+\text{前缀都可拟合但全局永远不存在},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{拟合第 }N\text{ 个前缀所需的最小状态数 }s(N)\to\infty.
+}
+$$
+
+---
+

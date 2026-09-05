@@ -1,0 +1,24 @@
+## B14.6 能量足以定位，但不足以重构顺序
+
+RH 只询问
+
+$$
+|\delta|=0\text{ 还是 }|\delta|>0,
+\tag{B14.8}
+$$
+
+故一个忠实的平方 radial energy 在 zero side 足以作定位证书。
+
+但 prime amplitudes 在到达 zero side 以前会发生有序乘法和相位抵消；仅保留平方能量一般不能重构其 FLOW。因此：
+
+$$
+\boxed{
+\text{定位目标可以只需 magnitude，
+证明该 magnitude 的来源却可能必须保留 orientation 与 order。}}
+\tag{B14.9}
+$$
+
+这解释了为什么 holonomy 和 Casimir 都需要：前者保持组合信息，后者给出最终正证书。
+
+---
+

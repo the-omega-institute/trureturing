@@ -1,0 +1,13 @@
+\[
+\boxed{
+\operatorname{Blind}(\Gamma,q,T)
+=
+\operatorname{Residual}(q,T)
+\cap
+K_\Gamma.
+}
+\]
+
+若该集合非空，则存在一对状态：
+
+- 当前 CUT 看不见其差异；

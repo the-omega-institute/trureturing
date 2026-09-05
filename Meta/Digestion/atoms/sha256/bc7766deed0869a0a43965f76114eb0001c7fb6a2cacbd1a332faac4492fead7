@@ -1,0 +1,67 @@
+## 547. 无“仅在 \(\omega\) 层失败”定理
+
+由此得到一个极其重要的结论：
+
+$$
+\boxed{
+\text{若每一个有限 Casimir 矩前缀都能由 }[0,1]
+\text{ 上正测度实现，}
+}
+$$
+
+那么：
+
+$$
+\boxed{
+\text{全部无限矩一定能由同一个全局测度实现。}
+}
+$$
+
+因此，在 Casimir–Hausdorff 表示中，不存在这种反例：
+
+$$
+\text{所有标准有限阶条件全部成立，}
+$$
+
+却：
+
+$$
+\text{只在某个无法到达的“最后无穷阶”失败。}
+$$
+
+若 RH 为假，那么在完成 \(\mathcal X\) 对数导数与矩问题的形式化桥以后，必然存在某个有限 \(N\)，使：
+
+$$
+\mathfrak M_N=\varnothing.
+$$
+
+也就是说：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\text{存在有限矩证书}.
+}
+$$
+
+证书深度可能极大，且没有已知统一上界；但它不会只存在于一个超出所有有限阶的幻影层。
+
+这与仓库的 Weil separator 形成两条独立而一致的结论：
+
+$$
+\neg\mathrm{RH}
+\Longrightarrow
+\exists g,\ Q_Z(g)<0,
+$$
+
+以及候选的：
+
+$$
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N,\ \text{某个有限 Casimir 矩阵非正}.
+$$
+
+---
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:a41086b42fc506a5c642c79f7c0469edc3658e584bcd9791dde7186b82d380a7
 cas_ref: sha256:a41086b42fc506a5c642c79f7c0469edc3658e584bcd9791dde7186b82d380a7
 coverage_gids:
-  - D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.second_normalized_factor_deviation_norm_summable_sharp
+  - gid: D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.second_normalized_factor_deviation_norm_summable_sharp
+    target_statement_id: sha256:8b4d93d32ec5101ce6ed7c08ae2d6b54e641ddc4f4e0b6cb74b0c1a4940db34f
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.second_normalized_factor_deviation_norm_summable_sharp
-      source_sha256: sha256:a41086b42fc506a5c642c79f7c0469edc3658e584bcd9791dde7186b82d380a7
-      target_statement_id: sha256:8b4d93d32ec5101ce6ed7c08ae2d6b54e641ddc4f4e0b6cb74b0c1a4940db34f
   scribe:
     - gid: D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.second_normalized_factor_deviation_norm_summable_sharp
       definition_sha256: sha256:f5ae8b781225bef0b0f725e997c4464031a59cb44d9064eee6bca7baa399ac4d

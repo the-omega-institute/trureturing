@@ -1,0 +1,78 @@
+# 第一千九百四十四部　Normal-support bifloor RH target
+
+对每个有限窗口，目标是构造两个 canonical 矩阵：
+
+$$
+H_{0,T}
+$$
+
+和：
+
+$$
+H_{1,T}.
+$$
+
+其中 \(H_{0,T}\) 编码正质量，\(H_{1,T}\) 编码 signed-normal 坐标。
+
+定义：
+
+$$
+\boxed{
+\beta_T
+=
+\lambda_{\min}
+\left(
+H_{0,T}^{-1/2}
+H_{1,T}
+H_{0,T}^{-1/2}
+\right).
+}
+\tag{1944.1}
+$$
+
+在有限原子 full-resolution 情形：
+
+$$
+\boxed{
+\beta_T
+=
+-\max_{|\Im\rho|\le T}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{1944.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\beta_T=0
+\qquad
+\forall T.
+}
+\tag{1944.3}
+$$
+
+进一步加入 common-Haar Gram \(B_T\)，定义：
+
+$$
+\boxed{
+\alpha_T
+=
+\lambda_{\min}
+\left(
+B_T^{-1/2}
+H_{0,T}
+B_T^{-1/2}
+\right).
+}
+\tag{1944.4}
+$$
+
+于是：
+
+* \(\alpha_T\) 检验是否有共同正相位核心；

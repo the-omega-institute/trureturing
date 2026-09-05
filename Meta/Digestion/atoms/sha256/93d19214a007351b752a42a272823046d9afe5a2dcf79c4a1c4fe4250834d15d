@@ -1,0 +1,60 @@
+## 438. 构型角色
+
+此前得到：
+
+$$
+\begin{aligned}
+\text{孪生构型}&:\quad k=2,\text{ 偶};\\
+\text{三元组 chirality}&:\quad k=3,\text{ 奇};\\
+\text{四元组}&:\quad k=4,\text{ 偶}.
+\end{aligned}
+$$
+
+因此 prime-side 也有：
+
+$$
+\boxed{
+\text{全局偶构型 sector}
+\oplus
+\text{观察者奇构型 sector}.
+}
+$$
+
+但目前不能直接声明：
+
+$$
+\mathcal K_{\mathrm E}
+\longleftrightarrow
+\mathrm{E\!-\!RH},
+$$
+
+$$
+\mathcal K_{\mathrm O}
+\longleftrightarrow
+\mathrm{O\!-\!RH}.
+$$
+
+中间仍然缺少 parity-enhanced Trace–Jet Bridge：
+
+$$
+\boxed{
+\mathcal U
+:
+\text{prime source cumulants}
+\longrightarrow
+\text{Casimir difference lattice}.
+}
+$$
+
+理想交换关系应为：
+
+$$
+\mathcal U\circ\Pi_{\mathrm{source}}
+=
+\Pi_{\mathrm{observer}}\circ\mathcal U.
+$$
+
+也就是说，偶构型 jet 必须进入偶 Casimir 通道，奇构型 jet 必须进入奇 Casimir 通道。
+
+---
+

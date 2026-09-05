@@ -1,0 +1,48 @@
+## 366. \(k\) 个素数观察者的宇称
+
+对：
+
+$$
+U_{p_1}\cdots U_{p_k},
+$$
+
+有：
+
+$$
+\boxed{
+\Pi
+U_{p_1}\cdots U_{p_k}
+=
+(-1)^k
+U_{p_1}\cdots U_{p_k}\Pi.
+}
+$$
+
+因此：
+
+$$
+\begin{aligned}
+k=1&:\text{奇};\\
+k=2&:\text{偶};\\
+k=3&:\text{奇};\\
+k=4&:\text{偶}.
+\end{aligned}
+$$
+
+这与此前 prime constellation 的相关阶数角色完全一致：
+
+$$
+\boxed{
+\begin{aligned}
+\text{single marked prime}&:\text{odd};\\
+\text{twin sector}&:\text{even};\\
+\text{triplet sector}&:\text{odd};\\
+\text{quadruplet sector}&:\text{even}.
+\end{aligned}
+}
+$$
+
+但必须注意：这里是“插入次数宇称”，而不是直接证明 prime constellation 的存在。
+
+---
+

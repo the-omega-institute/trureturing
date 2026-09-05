@@ -1,0 +1,38 @@
+## B12.3 张量横向微分
+
+定义
+
+$$
+\boxed{
+D_{Q,\mathcal C}
+=\mathsf N\otimes d_{\mathcal C}:
+\mathcal H_Z\otimes\mathcal H_P
+\longrightarrow
+\mathcal H_Z\otimes\mathcal H_E.}
+\tag{B12.7}
+$$
+
+对常 exponent amplitude $\mathbf1_Z$ 与 frequency vector $\omega$：
+
+$$
+\boxed{
+\|D_{Q,\mathcal C}(\mathbf1_Z\otimes\omega)\|^2
+=
+\mathbb E_\mu[v^2]
+\sum_{i<j}W_{ij}(\Delta\log p_{ij})^2.}
+\tag{B12.8}
+$$
+
+而增订一的横向 susceptibility 满足
+
+$$
+\boxed{
+\left.\frac{d^2}{d\delta^2}
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)
+\right|_{\delta=0}
+=2\|D_{Q,\mathcal C}(\mathbf1_Z\otimes\omega)\|^2.}
+\tag{B12.9}
+$$
+
+这第一次把“Zeckendorf second moment 乘 prime variance”实现为同一有限 Hilbert space 中一个真正 operator norm，而不是两个标量事后相乘。
+

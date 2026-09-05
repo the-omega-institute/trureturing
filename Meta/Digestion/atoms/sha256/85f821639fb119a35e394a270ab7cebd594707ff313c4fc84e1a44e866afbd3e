@@ -1,0 +1,41 @@
+## 10.3 短 gaps 是软模
+
+若 $q=p+g$ 且 $g\ll p$，则
+
+$$
+\log\frac qp
+=
+\frac gp
++O\!\left(\frac{g^2}{p^2}\right),
+$$
+
+从而
+
+$$
+R_{p,q}(\delta)
+=
+\delta^2\frac{g^2}{p^2}
++
+O\!\left(
+\delta^2\frac{g^3}{p^3}
++
+\delta^4\frac{g^4}{p^4}
+\right).
+\tag{10.6}
+$$
+
+所以短 prime gap 不增强单 pair 的离线信号，而是降低其横向刚度并延长相干时间。
+
+其理论身份是：
+
+$$
+\boxed{
+\text{near-degenerate soft relation mode}.
+}
+\tag{10.7}
+$$
+
+单个 soft mode 不是相变。只有跨大量尺度相容嵌套的 soft clusters，才可能使全局最小 coercivity 逼近零。这正是 PrimeGap sticky tower 应承担的理论角色。
+
+---
+

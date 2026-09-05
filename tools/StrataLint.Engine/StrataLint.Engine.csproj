@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
     <PackageReference Include="Markdig" />
     <PackageReference Include="Pidgin" />
+    <PackageReference Include="Tomlyn" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Guid.txt" />

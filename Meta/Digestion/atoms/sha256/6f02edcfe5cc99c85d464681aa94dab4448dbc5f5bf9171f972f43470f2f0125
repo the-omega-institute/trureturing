@@ -1,0 +1,32 @@
+## C4.2 finite-window faithfulness
+
+设观察高度区间 $I$ 的长度为 $T$。若：
+
+$$
+\frac{2\pi L_S}{\log p}>T,
+\tag{C4.4}
+$$
+
+则有限 phase readout 在 $I$ 上单射。
+
+特别地，只取一个 level $m$，只要：
+
+$$
+\boxed{
+m>\frac{T\log p}{2\pi},
+}
+\tag{C4.5}
+$$
+
+level-$m$ phase observer 就足以在长度 $T$ 的任意高度窗中消除时间 alias。
+
+所以：
+
+$$
+\boxed{
+\text{无限 solenoid depth 只对无界高度轴必需；
+每个有限谱窗都只需有限 level。}
+}
+\tag{C4.6}
+$$
+

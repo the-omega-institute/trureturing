@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:eb50b7bc3113d2ca2ec9525147cb0191341df8af3424b3fc74407332b82cb040
 cas_ref: sha256:eb50b7bc3113d2ca2ec9525147cb0191341df8af3424b3fc74407332b82cb040
 coverage_gids:
-  - D5/S3/Analytic/Adelic/JetResolventSemisimplification.jet_resolvent_semisimplification
+  - gid: D5/S3/Analytic/Adelic/JetResolventSemisimplification.jet_resolvent_semisimplification
+    target_statement_id: sha256:3a78041d7d3ea1f37c78da7c1746dcf3b21ea78b551614507fab1b594fac3d89
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Adelic/JetResolventSemisimplification.jet_resolvent_semisimplification
-      source_sha256: sha256:eb50b7bc3113d2ca2ec9525147cb0191341df8af3424b3fc74407332b82cb040
-      target_statement_id: sha256:3a78041d7d3ea1f37c78da7c1746dcf3b21ea78b551614507fab1b594fac3d89
   scribe:
     - gid: D5/S3/Analytic/Adelic/JetResolventSemisimplification.jet_resolvent_semisimplification
       definition_sha256: sha256:6355bf80eee799bc330acd05d300602a37399e35452703ba7e4a9cdede3269d3

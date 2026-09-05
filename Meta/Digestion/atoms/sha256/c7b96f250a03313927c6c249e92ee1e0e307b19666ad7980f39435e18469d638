@@ -1,0 +1,13 @@
+## C17.5 不可互换性
+
+四种修复分别作用于不同 kernel：
+
+- pair observer 不能 grounding common charge；
+- anchor 不能恢复 deep phase；
+- deep phase 不能提供 determinant boundary floor；
+- positive determinant floor 不能重构 prime ordering。
+
+所以最终低逃逸理论必须是它们的 joint kernel，而不是用一个“能量”概念替代全部层。
+
+---
+

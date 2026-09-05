@@ -1,0 +1,26 @@
+## 512. 但积分回去需要常数
+
+从 \(\Delta E\) 恢复 \(E\)，需要给出一个边界值：
+
+$$
+E_0
+$$
+
+或等价的 renormalization constant。
+
+每做一次差分，就会遗忘一个低阶多项式模式。
+
+所以：
+
+$$
+\boxed{
+\text{差分提高收敛性，}
+\qquad
+\text{但同时产生积分常数账本。}
+}
+$$
+
+这正是 completion factor、archimedean ledger 和 normalization 不能被省略的原因。
+
+---
+

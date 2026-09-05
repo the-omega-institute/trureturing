@@ -1,0 +1,5 @@
+# 十二、Parity Weyl Interval 可以负责第二个“定中心”通道
+
+项目的 `ParityWeylInterval` 已经形式化了一个抽象结构：
+
+* 偶通道给参数下界；

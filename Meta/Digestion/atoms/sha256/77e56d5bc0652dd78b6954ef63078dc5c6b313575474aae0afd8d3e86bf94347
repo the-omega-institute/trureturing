@@ -1,0 +1,2 @@
+**候签定理 6.218(六位块矩阵对 dyadic 差值的忠实解释)**〔open;同模块〕。令 `A=T^6`,`ell` 只取余数 7 与 14,并令 `D_k := sum_{0 <= m < 2^(6k)} if 7|m and not 3|m then (-1)^popcount(m) else 0`。则 `7|m and not 3|m` 当且仅当 `m mod 21 in {7,14}`,且 `D_k = ell dot (A^k e_0)`。
+

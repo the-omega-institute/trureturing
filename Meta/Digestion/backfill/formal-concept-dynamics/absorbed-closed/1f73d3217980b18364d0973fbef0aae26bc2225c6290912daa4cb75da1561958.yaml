@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1f73d3217980b18364d0973fbef0aae26bc2225c6290912daa4cb75da1561958
 cas_ref: sha256:1f73d3217980b18364d0973fbef0aae26bc2225c6290912daa4cb75da1561958
 coverage_gids:
-  - D5/S3/ConceptDynamics/Reversibility/OpportunityLossValueReversal.opportunity_loss_can_reverse_waiting_value
+  - gid: D5/S3/ConceptDynamics/Reversibility/OpportunityLossValueReversal.opportunity_loss_can_reverse_waiting_value
+    target_statement_id: sha256:ad549c1be3353d7f69867a4a5114b9d5d28f8be1647d26bd6f6474d039f71569
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Reversibility/OpportunityLossValueReversal.opportunity_loss_can_reverse_waiting_value
-      source_sha256: sha256:1f73d3217980b18364d0973fbef0aae26bc2225c6290912daa4cb75da1561958
-      target_statement_id: sha256:ad549c1be3353d7f69867a4a5114b9d5d28f8be1647d26bd6f6474d039f71569
   scribe:
     - gid: D5/S3/ConceptDynamics/Reversibility/OpportunityLossValueReversal.opportunity_loss_can_reverse_waiting_value
       definition_sha256: sha256:d8a7a7c217db9d5e677222e5eb74eb1d513526e2af0165fa1cc2a6c1b77b8c71

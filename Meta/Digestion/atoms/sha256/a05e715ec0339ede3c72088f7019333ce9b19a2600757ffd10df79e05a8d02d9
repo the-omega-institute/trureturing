@@ -1,0 +1,85 @@
+# 第两千零九十八部　Bohr lift 揭示复平面背后的高维空间
+
+对有限素数集合：
+
+$$
+p_1,\ldots,p_d,
+$$
+
+定义相位：
+
+$$
+z_p(t)=e^{-it\log p}.
+$$
+
+若：
+
+$$
+n=\prod_pp^{v_p(n)},
+$$
+
+则：
+
+$$
+\boxed{
+n^{-it}
+=
+\prod_pz_p(t)^{v_p(n)}.
+}
+\tag{2098.1}
+$$
+
+因此有限 Dirichlet 多项式可以写成：
+
+$$
+\boxed{
+F_{\sigma,N}(z)
+=
+\sum_{n\le N}
+a_nn^{-\sigma}
+z^{\nu(n)},
+\qquad
+z\in\mathbb T^d.
+}
+\tag{2098.2}
+$$
+
+实际的竖直运动只是环面上的一参数轨道：
+
+$$
+\boxed{
+z(t)
+=
+\left(
+e^{-it\log p_1},
+\ldots,
+e^{-it\log p_d}
+\right).
+}
+\tag{2098.3}
+$$
+
+Bohr lift 正是把普通 Dirichlet 级数解释为无限维环面上的 Fourier 分析。([arXiv][6])
+
+由于有限多个 \(\log p\) 有理线性无关，该一参数轨道在相应有限环面中稠密。
+
+所以真正的状态空间不是复平面，而是：
+
+$$
+\boxed{
+\mathbb T^\infty.
+}
+$$
+
+复数：
+
+$$
+\zeta(\sigma+it)
+$$
+
+只是一个标量投影。
+
+项目现有形式化也已经证明 Fourier phase 的加法—乘法律，并证明交换标量相位乘积会忘记频率列表的顺序。
+
+---
+

@@ -1,0 +1,24 @@
+## 一、CRT／primorial 预算
+
+若 cutoff 是：
+
+$$
+k=\varphi H,
+$$
+
+则：
+
+$$
+\boxed{
+W(k)
+=
+\prod_{p\le k}p
+\sim
+e^{\varphi H}.
+}
+$$
+
+这是你的公式最直接成立的地方。
+
+---
+

@@ -1,0 +1,57 @@
+## 319. 素数张量积坐标
+
+令：
+
+$$
+\mathcal H_{\mathrm{arith}}
+=
+\ell^2(\mathbb N_{\ge1}).
+$$
+
+唯一分解给出基的识别：
+
+$$
+|n\rangle
+\longleftrightarrow
+\bigotimes_p
+|v_p(n)\rangle_p.
+$$
+
+对 \(\sigma>1\)，定义 ζ Gibbs 向量：
+
+$$
+|\Psi_\sigma\rangle
+=
+\frac1{\sqrt{\zeta(\sigma)}}
+\sum_{n\ge1}
+n^{-\sigma/2}|n\rangle.
+$$
+
+使用 Euler product：
+
+$$
+\boxed{
+|\Psi_\sigma\rangle
+=
+\bigotimes_p
+\left[
+\sqrt{1-p^{-\sigma}}
+\sum_{k\ge0}
+p^{-\sigma k/2}|k\rangle_p
+\right].
+}
+$$
+
+所以在素数估值基中：
+
+$$
+\boxed{
+|\Psi_\sigma\rangle
+\text{ 是严格 product state}.
+}
+$$
+
+因此 prime correlations 不能被简单归因于 ζ Gibbs state 本身已经量子纠缠。
+
+---
+

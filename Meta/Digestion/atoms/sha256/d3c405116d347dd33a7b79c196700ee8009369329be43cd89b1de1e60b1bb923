@@ -1,0 +1,16 @@
+## 484. 不同 residue 的任意阶局部 cumulant
+
+```lean
+theorem distinctResidue_survival_cumulant
+    (p : Nat.Primes)
+    (r : Fin k → ZMod p)
+    (hr : Function.Injective r)
+    (hk : 2 ≤ k) :
+    jointCumulant
+      (fun i a => if a ≠ r i then 1 else 0)
+      =
+      -((k - 1).factorial : ℝ) / p ^ k
+```
+
+---
+

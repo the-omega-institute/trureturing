@@ -1,0 +1,69 @@
+## C0.1 已闭合真源
+
+本增订使用下列仓库定理作为已闭合输入。
+
+### （一）complex power thread 的荷—相位分解
+
+项目已经机器证明：
+
+$$
+m\log\|z_m\|=Q(z),
+\tag{C0.1}
+$$
+
+并构造等价：
+
+$$
+\boxed{
+\operatorname{ComplexPowerThread}
+\simeq
+\mathbb R\times\mathcal S,
+}
+\tag{C0.2}
+$$
+
+其中 $\mathcal S$ 是项目已有的 universal solenoid。项目还证明：
+
+$$
+Q(z)=0
+\Longleftrightarrow
+\|z_m\|=1\quad\forall m.
+\tag{C0.3}
+$$
+
+该真源明确删除了原来源中未由 power-thread 数据支持的 RH、Gamma、maximal compact、zero-thread 与 trivial-zero 子句。因此本增订也不恢复这些已被审计删除的陈述。
+
+### （二）矩形 Rouché 零点计数
+
+项目已经机器证明：若 $f,g$ 在闭矩形邻域解析，并且边界上
+
+$$
+|f-g|<|g|,
+\tag{C0.4}
+$$
+
+则二者在矩形中的零点数按解析重数相同。严格不等式不可弱化为非严格不等式。
+
+### （三）有理负径向证书
+
+项目已经机器证明：若某个二参数 profile 的 negative-count region 开放，并且 $\neg\mathrm{RH}$ 使该区域非空，则存在正有理半径和有理角参数落在该区域中。
+
+该定理本身不证明区域开放，也不证明 RH 失败产生真实点。本增订只对 Cayley 拉回的局部零点 profile 条件性地补出这两个解析前件。
+
+### （四）exact information escape 与 structural novelty
+
+项目已经机器化：
+
+- finite escape pairs；
+- leave-one-out unique capture pairs；
+- exact escape rate；
+- 结构 kernel 严格缩小；
+- semantic closure；
+- “降低逃逸率”等价于 canonical quotient CUT 的严格 kernel novelty。
+
+所以本增订不把“加入一个 readout 看起来更丰富”当作信息增益。只有给出 kernel 严格缩小或 unique-capture witness，才能声称该 readout 是结构新信息。
+
+### （五）Hankel visible rank
+
+项目已经机器证明，有限维线性系统在足够大 horizon 上的 Hankel rank 等于 reachable dimension 减去 reachable-unobservable dimension。结合项目已有最小实现结果，Hankel rank 是可见行为所需的最小记忆维数，而不是任意 chosen state-space dimension。
+

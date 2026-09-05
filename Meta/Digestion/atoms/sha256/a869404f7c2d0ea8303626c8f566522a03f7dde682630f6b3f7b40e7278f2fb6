@@ -1,0 +1,30 @@
+\[
+\boxed{
+\kappa_s(a,b)
+=
+s(a)+s(b)-s(a+b).
+}
+\]
+
+且：
+
+\[
+q(\kappa_s(a,b))=0.
+\]
+
+它表示显坐标上的组合虽然闭合，但经选定 ANCHOR/section 提升后，在余核中积累了差异。
+
+因此：
+
+\[
+\boxed{
+\begin{aligned}
+\text{横向 carry}
+&=\text{余量逃向显坐标};\\
+\text{纵向 carry}
+&=\text{显坐标组合回落到余量}.
+\end{aligned}}
+\]
+
+---
+

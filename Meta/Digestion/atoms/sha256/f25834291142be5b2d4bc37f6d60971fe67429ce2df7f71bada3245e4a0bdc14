@@ -1,0 +1,22 @@
+### 50.4 零点模式缺陷
+
+设候选还给出谱空间 \(\mathscr H_Z\)、算子 \(C\)，以及非零模式：
+
+$$
+\Psi(\rho)\neq0.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathfrak d_{\mathrm{mode}}(\rho)
+=
+C\Psi(\rho)
+-
+\frac{\rho-1}{\rho}\Psi(\rho).
+}
+$$
+
+---
+

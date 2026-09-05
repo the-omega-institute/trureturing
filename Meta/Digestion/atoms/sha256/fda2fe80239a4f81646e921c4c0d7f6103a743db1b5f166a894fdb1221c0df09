@@ -1,0 +1,23 @@
+## 13.2 项目中的六个实例
+
+1. reciprocal roots：$\log r+\log r^{-1}=0$，但 $(\log r)^2+(\log r^{-1})^2>0$；
+2. ordered holonomy：一阶 observer response 为零，负二阶 response 是平方 winding 的非负加权和；
+3. prime jump：共同 translation 模式被消去以后，剩余量为 $\|f-\mathsf T_af\|_2^2\ge0$；
+4. prime transverse split：$\sinh^2(\delta\Delta\omega)=\delta^2\Delta\omega^2+O(\delta^4)$；
+5. off-line zero odd channel：$E_{\mathrm{odd}}=4m_\rho|A_{\mathrm{odd}}|^2\ge0$；
+6. golden innovation：$\sum\xi_v=O(1)$，而 $N^{-1}\sum\xi_v^2\to\varphi^{-3}>0$。
+
+这六个对象并不相等，但它们共享同一结构法则：
+
+$$
+\boxed{
+\text{有符号／有序／反射信息在一阶 scalar 中冲销，
+在二阶正能量中重新显影。}
+}
+\tag{A13.5}
+$$
+
+这就是 Zeckendorf、jump energy、holonomy Casimir、Lee–Yang radial defect 和 off-line odd energy 真正相关的原因。
+
+---
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:70a647e621e39744b4121aec1e04f052ace83e49db2a9eea8ae6f3ae51fd47f6
 cas_ref: sha256:70a647e621e39744b4121aec1e04f052ace83e49db2a9eea8ae6f3ae51fd47f6
 coverage_gids:
-  - D5/S3/ConceptDynamics/Interpretation/FixedPointMultiplicity.fixed_point_multiplicity_and_actuality_gap
+  - gid: D5/S3/ConceptDynamics/Interpretation/FixedPointMultiplicity.fixed_point_multiplicity_and_actuality_gap
+    target_statement_id: sha256:6c54d28e41b2db4cc30a2261833331b69057143c994e8705dc65f72275a79ee0
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Interpretation/FixedPointMultiplicity.fixed_point_multiplicity_and_actuality_gap
-      source_sha256: sha256:70a647e621e39744b4121aec1e04f052ace83e49db2a9eea8ae6f3ae51fd47f6
-      target_statement_id: sha256:6c54d28e41b2db4cc30a2261833331b69057143c994e8705dc65f72275a79ee0
   scribe:
     - gid: D5/S3/ConceptDynamics/Interpretation/FixedPointMultiplicity.fixed_point_multiplicity_and_actuality_gap
       definition_sha256: sha256:83fa95547e70af001075199fa5c109c25c61ecbc5101c1258700f3da66290591

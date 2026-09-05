@@ -1,0 +1,40 @@
+## 38. 无限窗口缺陷
+
+定义所有有限窗口上的单调极限：
+
+$$
+\boxed{
+\mathcal C_\infty^\perp
+=
+\sup_{T\Subset\mathscr O^{\mathrm{off}}}
+\mathcal C_T^\perp
+\in[0,\infty].
+}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal C_\infty^\perp=0
+\iff
+\delta_o=0
+\quad
+\text{对所有轨道 }o.
+}
+$$
+
+如果把 \(o\) 取为全部非平凡零点反射轨道，则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal C_\infty^\perp=0.
+}
+$$
+
+这是 RH 的正缺陷重述，不是其证明；困难是从素数侧证明该缺陷为零。
+
+---
+

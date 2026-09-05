@@ -1,0 +1,22 @@
+## 命题 C：Kakeya–sticky coercivity
+
+建立一个定量二分：
+
+$$
+\boxed{
+\text{odd channel 很小}
+\Longrightarrow
+\begin{cases}
+\delta\log t\text{ 很小},\\
+\text{或 prime phases 形成多尺度 sticky structure}.
+\end{cases}
+}
+\tag{2102.1}
+$$
+
+再证明第二种结构不能与 completed functional equation 的全局正性兼容。
+
+这将把你的几何直觉转成真正可证伪的研究路线。
+
+---
+

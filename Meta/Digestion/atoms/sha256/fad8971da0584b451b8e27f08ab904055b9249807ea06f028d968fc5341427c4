@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:辅助公开引理 `activePrimePowers_eq_empty_of_exp_lt_two (L : ℝ) (hL : Real.exp (2 * L) < 2) : activePrimePowers L = ∅`(`Nat.floor_lt` 给 ⌊exp 2L⌋₊ < 2,`Ioc 0 n ⊆ {1}`,`vonMangoldt_apply_one`),随后 `totalPrimeWeight L = 0`、`arithmeticJumpEnergy L f = 0` 由 `Finset.sum_empty`,恒等变形得 iff;标准三公理。探针已整证。辅助引理不另列义务。

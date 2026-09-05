@@ -1,0 +1,14 @@
+## 确定性结果二：RH 是 odd zero sector vanishing
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+V_Z^-=\{0\}.
+}
+$$
+
+离线零点每对产生一个奇模式；临界零点只产生偶模式。
+
+---
+

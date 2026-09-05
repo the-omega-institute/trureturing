@@ -1,0 +1,27 @@
+## 52. 正确实现纤维
+
+定义：
+
+$$
+\boxed{
+\mathfrak R_{\mathrm{exact}}^+
+=
+\left\{
+\mathcal R:
+\mathbf D(\mathcal R)=0
+\right\}.
+}
+$$
+
+这只是一个集合定义。
+
+本理论不声明：
+
+$$
+\mathfrak R_{\mathrm{exact}}^+\neq\varnothing.
+$$
+
+它是否非空，是整个理论的中央构造问题。
+
+---
+

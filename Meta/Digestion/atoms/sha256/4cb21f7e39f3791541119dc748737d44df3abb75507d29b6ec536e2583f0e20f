@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,证明为冻结 `weil_explicit_formula Z (convolutionSquare g) (symmetricConvergent_of_zeroData Z (convolutionSquare g)) hArch` 一行;若 `zeroSum` 的 `hZero` 参数为 proof-irrelevant 使两侧按定义相等,则 `rfl`/`exact` 即闭合;标准三公理。

@@ -1,0 +1,13 @@
+- 后者可以因 compact recurrence 反复归零。
+
+这给出一个新的概念压缩：
+
+$$
+\boxed{
+\text{PrimeGaps 的复核是 }
+\mathbb R_{\rm charge}\times\mathcal S_{\rm phase}
+\text{ 上的二槽关系 observer。}
+}
+\tag{C3.6}
+$$
+

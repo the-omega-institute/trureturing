@@ -1,0 +1,33 @@
+\[
+\boxed{
+X_A
+=
+\sum_{x:X}A(x).
+}
+\]
+
+定义 \(A\) 不会自动证明 \(X_A\) 非空。
+
+ADMIT 可以实例化在不同载体上：
+
+\[
+\begin{aligned}
+A_X &: X\to\mathsf{Prop}
+&&\text{合法状态},\\
+A_U &: U\to\mathsf{Prop}
+&&\text{允许行动},\\
+A_{\mathrm{Path}} &: \mathrm{Path}\to\mathsf{Prop}
+&&\text{合法轨迹},\\
+A_{\mathrm{Model}} &: \mathrm{Model}\to\mathsf{Prop}
+&&\text{可接受模型},\\
+A_{\mathrm{Claim}} &: \mathrm{Claim}\to\mathsf{Prop}
+&&\text{可认证主张},\\
+A_{\mathrm{Stage}} &: \mathrm{Stage}\to\mathsf{Prop}
+&&\text{可准入研究阶段}.
+\end{aligned}
+\]
+
+因此规范、范围、合法性、许可和实现条件不需要另设第五种基础角色；它们都是 ADMIT 在不同类型上的实例。
+
+---
+

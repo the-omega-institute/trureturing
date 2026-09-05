@@ -1,0 +1,48 @@
+## 587. 真正无法有限完成的是正证明，不是负见证
+
+$$
+\neg\mathrm{RH}
+$$
+
+只需一个离线零点，或一个负 Weil square，或一个负 Casimir 矩阵。
+
+但：
+
+$$
+\mathrm{RH}
+$$
+
+需要证明所有可能负方向都不存在。
+
+所以其逻辑非对称性是：
+
+$$
+\boxed{
+\text{falsehood}
+=
+\text{finite existential witness};
+}
+$$
+
+$$
+\boxed{
+\text{truth}
+=
+\text{global positive compression}.
+}
+$$
+
+传统 RH 难点不一定是“反例无法出现”。
+
+而更可能是：
+
+$$
+\boxed{
+\text{尚未找到一个从素数侧直接构造的正收缩算子，}
+}
+$$
+
+使所有有限条件成为同一个算子不等式的影子。
+
+---
+

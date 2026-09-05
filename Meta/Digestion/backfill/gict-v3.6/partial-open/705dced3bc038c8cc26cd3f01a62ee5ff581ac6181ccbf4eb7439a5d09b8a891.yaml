@@ -3,8 +3,8 @@ fingerprints:
   normalized_sha256: sha256:705dced3bc038c8cc26cd3f01a62ee5ff581ac6181ccbf4eb7439a5d09b8a891
 cas_ref: sha256:705dced3bc038c8cc26cd3f01a62ee5ff581ac6181ccbf4eb7439a5d09b8a891
 coverage_gids:
-  - D5/X_Frontier/Hearts
+  - gid: D5/X_Frontier/Hearts
+    target_statement_id: null
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []

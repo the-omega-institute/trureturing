@@ -1,0 +1,71 @@
+# 第一千九百四十部　解析完成与正性完成是两个独立轴
+
+Golden Euler germ 推进的是：
+
+$$
+\boxed{
+\text{局部 Euler 余项的最低 exponent floor}.
+}
+$$
+
+Exact common-spectrum floor 检验的是：
+
+$$
+\boxed{
+\text{有限关系 Gram 的最低正背景 floor}.
+}
+$$
+
+Signed-normal localizer 检验的是：
+
+$$
+\boxed{
+\text{谱原子所在的几何 support floor}.
+}
+$$
+
+因此一个完成状态至少需要三个坐标：
+
+$$
+\boxed{
+\mathcal C
+=
+\left(
+\beta_{\mathrm{exp}},
+\alpha_{\mathrm{Haar}},
+\alpha_{\mathrm{supp}}
+\right).
+}
+\tag{1940.1}
+$$
+
+其中：
+
+* \(\beta_{\mathrm{exp}}\) 越大，局部余项越容易在更宽区域可和；
+* \(\alpha_{\mathrm{Haar}}>0\) 表示存在严格公共背景；
+* \(\alpha_{\mathrm{supp}}\ge0\) 表示支撑未离开允许区域。
+
+所以：
+
+$$
+\boxed{
+\text{解析延拓很深}
+\not\Rightarrow
+\text{关系正性成立}.
+}
+$$
+
+同样：
+
+$$
+\boxed{
+\text{局部系数可和}
+\not\Rightarrow
+\text{跨 prime Gram 可以完全正胶合}.
+}
+$$
+
+这解释了为什么 golden germ 的不断推进虽然重要，却不能单独到达 RH。
+
+---
+

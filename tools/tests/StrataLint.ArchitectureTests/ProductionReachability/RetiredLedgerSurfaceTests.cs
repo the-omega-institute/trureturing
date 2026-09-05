@@ -19,7 +19,7 @@ public sealed class RetiredLedgerSurfaceTests(
             [
                 "tools/StrataLint.Cli/StrataLint.Cli.csproj::StrataLint.Cli.Program.Main(string[])",
                 "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj::StrataLint.EngineeringScope.Program.Main(string[])",
-                "tools/StrataLint.Scribe/StrataLint.Scribe.csproj::top-level:tools/StrataLint.Scribe/Program.cs",
+                "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj::StrataLint.Scribe.Documents.Program.Main(string[])",
             ],
             graph.ExecutableEntryPointDescriptions);
     }
@@ -36,8 +36,6 @@ public sealed class RetiredLedgerSurfaceTests(
             StringComparison.Ordinal);
         Assert.Equal(
             [
-                "tools/StrataLint.Engine/Ledger/Admission/FrozenLedgerAdmission.cs",
-                "tools/StrataLint.Engine/Ledger/FrozenLedgerCanonicalWriter.cs",
                 "tools/StrataLint.Engine/Ledger/Validation/FrozenLedgerCandidateValidation.cs",
                 "tools/StrataLint.Engine/Ledger/Validation/FrozenLedgerHistoryValidation.cs",
             ],

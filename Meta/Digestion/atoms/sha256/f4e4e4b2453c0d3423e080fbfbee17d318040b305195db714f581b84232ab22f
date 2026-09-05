@@ -1,0 +1,2 @@
+**候签定理 4.81(重复素因子进入欧拉函数)**〔open;L-1;落 `D5/S3/Factorization/LehmerTotientDichotomy`〕。对任意 p n : ℕ，若 p.Prime 且 p ^ 2 ∣ n，则 p ∣ Nat.totient n。
+

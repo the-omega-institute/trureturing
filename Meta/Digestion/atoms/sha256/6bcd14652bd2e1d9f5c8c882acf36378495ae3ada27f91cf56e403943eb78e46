@@ -1,0 +1,41 @@
+## C3.4 不可错误归一化
+
+canonical charges 满足：
+
+$$
+\frac{Q_p(u)}{\log p}
+=
+-\delta
+\qquad
+\forall p.
+\tag{C3.7}
+$$
+
+因此若错误地定义“归一化一致性能量”：
+
+$$
+\sum_{p<q}
+W_{p,q}
+\left(
+\frac{Q_p}{\log p}
+-
+\frac{Q_q}{\log q}
+\right)^2,
+\tag{C3.8}
+$$
+
+它对所有 $\delta$ 都恒为零，完全删除离线信号。
+
+真正的横向能量必须保留 raw logarithmic weights：
+
+$$
+Q_p-Q_q
+=
+\delta(\log q-\log p).
+\tag{C3.9}
+$$
+
+所以 prime labels 与 $\log p$ 不是可约掉的单位选择，而是横向几何本身。
+
+---
+

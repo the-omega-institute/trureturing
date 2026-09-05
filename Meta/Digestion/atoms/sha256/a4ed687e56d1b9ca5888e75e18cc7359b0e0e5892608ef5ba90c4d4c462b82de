@@ -1,0 +1,26 @@
+## 258. 完整 golden divisor 的三部分
+
+第三阶黄金 germ 的 divisor 至少应区分：
+
+$$
+\boxed{
+D_{\mathrm{full}}
+=
+D_{\mathrm{transported\ zeta}}
++
+D_{\mathrm{structural}}
++
+D_{\mathrm{local\ residual}}.
+}
+$$
+
+其中：
+
+* transported ζ divisor 来自 \(\zeta(\lambda s)\) 的经典零点缩放；
+* structural divisor 来自 reciprocal ζ 在实极点 \(1\) 处形成的简单零；
+* local residual divisor 来自 \(G_3\) 等局部 normalized products 自身的零点。
+
+只有第一部分可能直接继承 classical RH 类型的临界线信息。
+
+---
+

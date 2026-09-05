@@ -1,0 +1,38 @@
+## B10.3 dominated splitting 排除零点
+
+若紧集 $K$ 上有统一 gap
+
+$$
+\left|
+\log\frac{|\lambda_+|}{|\lambda_-|}
+\right|
+\ge\gamma>0,
+\tag{B10.8}
+$$
+
+而 boundary coefficient ratio 仅次指数增长：
+
+$$
+\sup_{s\in K}
+\frac1N
+\left|
+\log\frac{|a_-|}{|a_+|}
+\right|
+\longrightarrow0,
+\tag{B10.9}
+$$
+
+则充分大 $N$ 时 $K$ 内无零点。
+
+这给出严格的 transfer confinement 机制：
+
+$$
+\boxed{
+\text{bulk dominated splitting}
++
+\text{boundary transversality}
+\Longrightarrow
+\text{zero-free region}.}
+\tag{B10.10}
+$$
+

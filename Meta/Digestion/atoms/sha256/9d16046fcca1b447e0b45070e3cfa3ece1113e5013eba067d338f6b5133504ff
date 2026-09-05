@@ -1,0 +1,48 @@
+# 第两千零八十五部　长度变化与旋转其实是同一个复导数的两个正交方向
+
+对每一个模式：
+
+$$
+v_n(\sigma,t)
+=
+(-1)^{n-1}e^{-(\sigma+it)\log n},
+$$
+
+有：
+
+$$
+\boxed{
+\partial_\sigma v_n
+=
+-(\log n)v_n,
+}
+\tag{2085.1}
+$$
+
+$$
+\boxed{
+\partial_t v_n
+=
+-i(\log n)v_n
+=
+i\,\partial_\sigma v_n.
+}
+\tag{2085.2}
+$$
+
+所以：
+
+$$
+\boxed{
+|\partial_\sigma v_n|
+=
+|\partial_tv_n|
+=
+(\log n)n^{-\sigma}.
+}
+\tag{2085.3}
+$$
+
+这意味着：
+
+* 改变实部，沿径向改变线段长度；

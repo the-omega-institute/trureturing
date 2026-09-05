@@ -1,0 +1,70 @@
+# 第一千九百八十四部　双符号夹逼是反射商上的边界塌缩
+
+对 signed-normal 正测度：
+
+$$
+\operatorname{supp}\nu\subseteq[-1/4,0],
+$$
+
+几何自动给出：
+
+$$
+\boxed{
+H^{(1)}\preceq0.
+}
+$$
+
+如果算术侧能够独立给出：
+
+$$
+\boxed{
+H^{(1)}\succeq0,
+}
+$$
+
+则：
+
+$$
+H^{(1)}=0.
+$$
+
+在商空间语言中，这表示：
+
+$$
+\boxed{
+\text{所有正质量既不能进入 }x<0，
+\text{又已知只能位于 }x\le0，
+}
+$$
+
+所以只能集中于分支轨迹：
+
+$$
+x=0.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{RH 是反射商中两种相反序约束的唯一共同固定支撑。}
+}
+\tag{1984.1}
+$$
+
+这就是此前“头吞尾、正反互相夹逼”的严格版本：
+
+$$
+\boxed{
+x\le0
+\quad+\quad
+x\ge0
+\quad\Longrightarrow\quad
+x=0.
+}
+$$
+
+困难不在该逻辑，而在于从 prime–Gamma 数据构造与零点几何完全一致的 canonical signed-normal measure 或 localizer。
+
+---
+

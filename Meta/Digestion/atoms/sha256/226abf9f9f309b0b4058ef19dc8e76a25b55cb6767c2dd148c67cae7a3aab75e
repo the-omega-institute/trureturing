@@ -1,0 +1,2 @@
+**定理 8.7(维数六的三套互不偏基:M(6) ≥ 3 之精确证书)[候签]。**取 `ℂ²` 上的 Z/X/Y 三基(`qubitBases : Fin 3 → Fin 2 → Fin 2 → ℂ`,两两互不偏,交叉重叠模平方 1/2)与定理 8.6 的三套三维基,按定理 8.5 逐指标张量得 `dimensionSixBases : Fin 3 → (Fin 2 × Fin 3) → (Fin 2 × Fin 3) → ℂ`。则 `PairwiseMUB dimensionSixBases`,且显式地:每套 `dimensionSixBases r` 为坐标正交归一基,对 r ≠ s 与一切 i、j,`‖coordinateInner (dimensionSixBases r i) (dimensionSixBases s j)‖ ^ 2 = (1 / 6 : ℝ)`。故复维数六上至少存在三套两两互不偏基,且其向量分量为 ω 的幂与 1/√2、1/√3 之乘积(精确,非数值)。
+

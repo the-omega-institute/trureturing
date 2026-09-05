@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2d3818565ee99bfe5a128eb81c57ad7e6136c3b127ece9529f7c64c5c19cbd35
+  normalized_sha256: sha256:2d3818565ee99bfe5a128eb81c57ad7e6136c3b127ece9529f7c64c5c19cbd35
+cas_ref: sha256:2d3818565ee99bfe5a128eb81c57ad7e6136c3b127ece9529f7c64c5c19cbd35
+coverage_gids:
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/PredictiveRiskOptimizerHierarchy.predictive_risk_optimizer_kernel_hierarchy
+    target_statement_id: sha256:1ba1cc01ea6616c2c47c848e46b4287a4f66f084d4c458cc3e5fa8a6fd3919ba
+receipts:
+  scribe:
+    - gid: D5/S3/Estimation/SequentialDecisionRisk/PredictiveRiskOptimizerHierarchy.predictive_risk_optimizer_kernel_hierarchy
+      definition_sha256: sha256:36ec751da10ce86f123fd93804f8e6453f78b7830110c575614b9782a4f70667
+      emission_sha256: sha256:415812d3cf25d6a740d2eb62a732df09b15de4020f367029c94af7534e17de60
+  unresolved_subitems: []

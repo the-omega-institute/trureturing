@@ -1,0 +1,26 @@
+## 203. \(q\) 是否为实数不是相对的
+
+$$
+\Im q=-2\delta\gamma.
+$$
+
+它是反射商上的不变量。
+
+所以：
+
+$$
+\boxed{
+\text{零点是否离开临界线是外部商空间中仍可检测的绝对事实}.
+}
+$$
+
+这正是为什么：
+
+* scalar completion 可以遗忘内部 memory；
+* projective golden boundary 可以遗忘 rapidity；
+* 但 RH 仍然不是任意观察者可自行决定的命题。
+
+仓库已经分别证明了标量 memory blindness 和黄金射影边界无法恢复 rapidity；这些结果说明观察映射非单射，却没有改变被观察函数自身的 divisor。
+
+---
+

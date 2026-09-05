@@ -1,0 +1,40 @@
+## 87. “道可道，非常道”的 C-IRPT 解释
+
+此处只作结构解释，不声称是文本训诂同一性。
+
+\[
+\boxed{
+\begin{aligned}
+\text{名}
+&=\mathsf{CUT};\\
+\text{名下未尽}
+&=\mathsf{REMAINDER};\\
+\text{变化}
+&=\mathsf{FLOW};\\
+\text{何者被算作合法}
+&=\mathsf{ADMIT};\\
+\text{此刻实际者}
+&=\mathsf{ANCHOR}.
+\end{aligned}}
+\]
+
+“无名”不能被表示为常值 CUT，因为常值 CUT 仍是最粗的名字。
+
+“非常名”可解释为：
+
+\[
+\boxed{
+\text{任何 CUT 都相对于状态域、FLOW、ADMIT 与 ANCHOR。}
+}
+\]
+
+“非常道”可解释为：
+
+\[
+\boxed{
+\text{任何被形式化的阶段仍然只是 C-IRPT 中的一个阶段对象。}
+}
+\]
+
+---
+

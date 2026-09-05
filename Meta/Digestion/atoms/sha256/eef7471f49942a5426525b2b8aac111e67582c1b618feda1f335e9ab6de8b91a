@@ -1,0 +1,38 @@
+## 240. \(q\)-函数的阶降为 \(1/2\)
+
+由于：
+
+$$
+q\sim-s^2
+\quad
+(|s|\to\infty),
+$$
+
+而 \(\xi\) 是 order \(1\) 的整函数，\(\mathcal X\) 在 \(q\)-变量中具有 order \(1/2\) 型增长。
+
+结合经典零点计数，可得到：
+
+$$
+\sum_j\frac{m_j}{|q_j|}<\infty.
+$$
+
+因此 \(\mathcal X\) 具有 genus-zero canonical product：
+
+$$
+\boxed{
+\mathcal X(q)
+=
+\mathcal X(0)
+\prod_j
+\left(
+1-\frac q{q_j}
+\right)^{m_j}.
+}
+$$
+
+这里 \(j\) 枚举反射轨道，而不是单独枚举 \(\rho\) 与 \(1-\rho\)。
+
+这是将整个 mirror pairing 一次性完成掉的最自然 product。
+
+---
+

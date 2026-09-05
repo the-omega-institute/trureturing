@@ -1,0 +1,27 @@
+## B2.5 Frobenius--monodromy 同一性
+
+解析侧绕分歧点一次执行
+
+$$
+y\mapsto-y.
+$$
+
+算术侧每个惰性素数的 Frobenius 也执行
+
+$$
+y\mapsto-y.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{解析 monodromy 与惰性 Frobenius 是同一二次谱覆盖的同一个非平凡 deck action。}
+}
+\tag{B2.10}
+$$
+
+这条同一性是严格的有限代数事实。它并不意味着 zeta 的解析延拓由模 $5$ 字符单独决定；它说明项目中的黄金字符、二态 transfer 和分支交换确实共享一个真实的谱几何母体。
+
+---
+

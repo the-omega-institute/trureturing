@@ -1,0 +1,50 @@
+# 十一、因此真正可能的机制是“超越所有有限阶的分裂”
+
+可以提出一个明确但仍属模型的机制：
+
+1. 每个有限 prime/cumulant 层都保持临界轴对称；
+2. 有限阶展开中的 transverse odd coefficients 全部为零；
+3. 无限 gluing 留下一个 beyond-all-orders residual：
+
+   $$
+   \varepsilon_H
+   =
+   C e^{-H\log\varphi}
+   =
+   C\varphi^{-H};
+   $$
+4. 某个临界二重零点吸收该 residual；
+5. 二重零点分裂为：
+
+   $$
+   \frac12\pm
+   C'
+   \varphi^{-H/2}
+   +i\gamma.
+   $$
+
+这可以称为：
+
+> **Golden Nonperturbative Mirror-Splitting Mechanism**
+> **黄金非微扰镜像分裂机制**
+
+但它必须满足两个严苛前件：
+
+$$
+\boxed{
+\text{存在临界多重零点或零点碰撞}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{存在一个经典有限展开无法捕获的全局 residual}.
+}
+$$
+
+目前没有证据证明经典 \(\xi\) 实际发生了这一机制。
+
+---
+

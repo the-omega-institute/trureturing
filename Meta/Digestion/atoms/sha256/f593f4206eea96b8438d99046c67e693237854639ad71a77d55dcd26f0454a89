@@ -1,0 +1,27 @@
+# 第两千零四部　离线零点增加了第二个观察者宇称
+
+令 centered zero：
+
+$$
+z_\rho
+=
+\delta+i\gamma.
+$$
+
+定义两个 involution：
+
+$$
+T(\delta,\gamma)
+=
+(\delta,-\gamma),
+$$
+
+$$
+N(\delta,\gamma)
+=
+(-\delta,\gamma).
+$$
+
+其中：
+
+* \(T\) 是时间／共轭反转；

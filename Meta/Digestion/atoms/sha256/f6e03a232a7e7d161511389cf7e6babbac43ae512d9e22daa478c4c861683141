@@ -1,0 +1,12 @@
+## 592. 紧 Jacobi 系数衰减
+
+```lean
+theorem compactJacobi_coefficients_tendsto_zero
+    (J : CompactOperator H)
+    (hJacobi : IsJacobiRepresentation J α β) :
+    Tendsto α atTop (nhds 0) ∧
+    Tendsto β atTop (nhds 0)
+```
+
+---
+

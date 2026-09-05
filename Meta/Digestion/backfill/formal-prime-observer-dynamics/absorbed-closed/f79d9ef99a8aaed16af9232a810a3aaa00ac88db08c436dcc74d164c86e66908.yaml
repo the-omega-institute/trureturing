@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f79d9ef99a8aaed16af9232a810a3aaa00ac88db08c436dcc74d164c86e66908
+  normalized_sha256: sha256:f79d9ef99a8aaed16af9232a810a3aaa00ac88db08c436dcc74d164c86e66908
+cas_ref: sha256:f79d9ef99a8aaed16af9232a810a3aaa00ac88db08c436dcc74d164c86e66908
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraRepresentation.observable_event_algebra_representation
+    target_statement_id: sha256:93409f59467017a78bf9c58abd3f07be5bbf2a95b22811eab3dfc3511f873648
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraRepresentation.observable_event_algebra_representation
+      definition_sha256: sha256:d00910d28bc3a6f4bc57b2fd010cf6ffbd5c998981892b9b86535aac4cd29465
+      emission_sha256: sha256:b5b5ff775dc9e9dcdf543286247182fea2facfc8f0c6bb96f4fbadb1b847689c
+  unresolved_subitems: []

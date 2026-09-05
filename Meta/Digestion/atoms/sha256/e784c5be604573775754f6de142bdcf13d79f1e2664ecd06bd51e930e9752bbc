@@ -1,0 +1,22 @@
+## 非 sticky 情形
+
+若 dyadic packets 的相位方向在不同尺度上充分分散，则建立 square-function 下界：
+
+$$
+\boxed{
+\int_I
+\left(
+|E_\delta(t)|^2
++
+|O_\delta(t)|^2
+\right)dt
+\gtrsim
+\sum_k
+\cosh(2\delta k\log2)
+\|G_k\|_{L^2(I)}^2.
+}
+\tag{2100.1}
+$$
+
+这会说明离线 boost 的能量不能被大范围隐藏。
+

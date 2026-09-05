@@ -1,0 +1,30 @@
+## 331. Jacobi response
+
+若这些 moments 满足正性，可构造：
+
+$$
+J_\xi(\mathbf u).
+$$
+
+则：
+
+$$
+\partial_{u_H}J_\xi(0)
+$$
+
+是构型 \(H\) 对零点 Casimir 谱的 operator response。
+
+所以完整 Trace–Jet Bridge 应升级为：
+
+$$
+\boxed{
+\text{prime-constellation cumulant}
+\longleftrightarrow
+\text{Casimir Jacobi response}
+\longleftrightarrow
+\text{zero-orbit branch jet}.
+}
+$$
+
+---
+

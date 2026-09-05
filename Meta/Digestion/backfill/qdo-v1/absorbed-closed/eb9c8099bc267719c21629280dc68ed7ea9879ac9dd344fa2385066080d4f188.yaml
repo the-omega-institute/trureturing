@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:eb9c8099bc267719c21629280dc68ed7ea9879ac9dd344fa2385066080d4f188
 cas_ref: sha256:eb9c8099bc267719c21629280dc68ed7ea9879ac9dd344fa2385066080d4f188
 coverage_gids:
-  - D5/S3/ObserverMemory/Refinement/CanonicalMapIdentityComposition.canonical_map_identity_and_composition
+  - gid: D5/S3/ObserverMemory/Refinement/CanonicalMapIdentityComposition.canonical_map_identity_and_composition
+    target_statement_id: sha256:070bbefdad19da170553829d1d7e5a088b8a5995cd69af4bf1a1e40e882184c0
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Refinement/CanonicalMapIdentityComposition.canonical_map_identity_and_composition
-      source_sha256: sha256:eb9c8099bc267719c21629280dc68ed7ea9879ac9dd344fa2385066080d4f188
-      target_statement_id: sha256:070bbefdad19da170553829d1d7e5a088b8a5995cd69af4bf1a1e40e882184c0
   scribe:
     - gid: D5/S3/ObserverMemory/Refinement/CanonicalMapIdentityComposition.canonical_map_identity_and_composition
       definition_sha256: sha256:9a6b2f78d3def4e5d9e004035ab2771692d0c1425f96483aa121249e03db99f2

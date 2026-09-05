@@ -1,0 +1,1 @@
+**义务**:公开定理 `truncatedWeilSquarePositivity_implies_rh (Z : ZeroData) (hPos : ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re) : RiemannHypothesis`。

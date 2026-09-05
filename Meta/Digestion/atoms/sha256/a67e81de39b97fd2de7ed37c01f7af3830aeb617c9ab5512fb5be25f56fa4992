@@ -1,0 +1,50 @@
+## C1.3 solenoid phase
+
+归一化坐标为：
+
+$$
+\frac{Z_{p,u}(m)}{\|Z_{p,u}(m)\|}
+=
+\exp\!\left(
+-\frac{it\log p}{m}
+\right).
+\tag{C1.7}
+$$
+
+在 additive circle 坐标中定义：
+
+$$
+\boxed{
+\theta_{p,t}(m)
+=
+-\frac{t\log p}{2\pi m}
+\pmod 1.
+}
+\tag{C1.8}
+$$
+
+它满足：
+
+$$
+n\theta_{p,t}(mn)
+=
+\theta_{p,t}(m),
+\tag{C1.9}
+$$
+
+所以确实给出一个 universal-solenoid phase thread。
+
+于是 canonical prime thread 的荷—相位分解是：
+
+$$
+\boxed{
+Z_{p,u}
+\longleftrightarrow
+\left(
+-\delta\log p,\,
+\theta_{p,t}
+\right).
+}
+\tag{C1.10}
+$$
+

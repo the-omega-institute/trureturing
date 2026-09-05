@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:9c10e3bd44c844139b045eff142380c850c5050f47a6dab4d71158bbe04218c2
 cas_ref: sha256:9c10e3bd44c844139b045eff142380c850c5050f47a6dab4d71158bbe04218c2
 coverage_gids:
-  - D5/S3/ConceptDynamics/Communication/PropositionLeakLowerBound.transcript_leaks_at_least_the_proposition
+  - gid: D5/S3/ConceptDynamics/Communication/PropositionLeakLowerBound.transcript_leaks_at_least_the_proposition
+    target_statement_id: sha256:0ffe6fdca6e66994d1c61605d8e629485902e585319821b504fda9a347b6e77e
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Communication/PropositionLeakLowerBound.transcript_leaks_at_least_the_proposition
-      source_sha256: sha256:9c10e3bd44c844139b045eff142380c850c5050f47a6dab4d71158bbe04218c2
-      target_statement_id: sha256:0ffe6fdca6e66994d1c61605d8e629485902e585319821b504fda9a347b6e77e
   scribe:
     - gid: D5/S3/ConceptDynamics/Communication/PropositionLeakLowerBound.transcript_leaks_at_least_the_proposition
       definition_sha256: sha256:4775fcc6eb0c726f6516c7aee07fc9608a2c5993d128f7bb79fdc65b37b13482

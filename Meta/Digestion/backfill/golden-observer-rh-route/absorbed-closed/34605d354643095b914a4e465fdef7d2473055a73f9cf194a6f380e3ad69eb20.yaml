@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:34605d354643095b914a4e465fdef7d2473055a73f9cf194a6f380e3ad69eb20
+  normalized_sha256: sha256:34605d354643095b914a4e465fdef7d2473055a73f9cf194a6f380e3ad69eb20
+cas_ref: sha256:34605d354643095b914a4e465fdef7d2473055a73f9cf194a6f380e3ad69eb20
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroInfinitude/ExplicitFormulaObstruction.carrier_infinite_of_EF_lit
+    target_statement_id: sha256:bffa0b69d66b64894bc2f4c7eb0ccbfcc3ad983ab90014fac0dda09a348715a2
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZeroInfinitude/ExplicitFormulaObstruction.carrier_infinite_of_EF_lit
+      definition_sha256: sha256:1704f4e0a088a25bc0947de468d1391810f520b88319c4accf3f5385f8e6494a
+      emission_sha256: sha256:1306eb3375bb267a04f659c1f968b95b8ec027311cfca331e2e0854acd133ff1
+  unresolved_subitems: []

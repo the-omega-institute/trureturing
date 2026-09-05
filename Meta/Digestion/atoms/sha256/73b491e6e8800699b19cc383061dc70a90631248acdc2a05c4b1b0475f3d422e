@@ -1,0 +1,24 @@
+## 322. 真正的纠缠源
+
+因此 prime tuple 问题中的三层必须分开：
+
+$$
+\boxed{
+\begin{aligned}
+\text{state factorization}
+&:
+\text{素数估值独立};\\
+\text{observable nonlocality}
+&:
+n\mapsto n+h\text{ 改变无限素数坐标};\\
+\text{connected cumulant}
+&:
+\log Z_H\text{ 提取不可因子化联合响应}.
+\end{aligned}
+}
+$$
+
+所谓“素数构型纠缠”，最准确的是后两层，而不是第一层。
+
+---
+

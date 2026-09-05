@@ -1,0 +1,33 @@
+\[
+\operatorname{CarryWitness}(F;q_X,q_Y)
+=
+\sum_{x,y:X}
+(q_Xx=q_Xy)
+\times
+(q_YFx\ne q_YFy).
+\]
+
+在依赖纤维正规形中，它等价于：
+
+\[
+\boxed{
+\sum_{b:B}
+\sum_{r,r':R_{q_X}(b)}
+\bigl(
+\beta_F(b,r)\ne\beta_F(b,r')
+\bigr).
+}
+\]
+
+所以 causal carry 的确切意义是：
+
+\[
+\boxed{
+\text{当前 CUT 所隐藏的余量，经 FLOW 后改变未来可见坐标。}
+}
+\]
+
+这比“相关性”更弱地依赖统计结构，却更强地暴露界面失败。
+
+---
+

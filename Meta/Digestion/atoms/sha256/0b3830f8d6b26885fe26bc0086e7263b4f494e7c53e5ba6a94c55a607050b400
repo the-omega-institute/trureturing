@@ -1,0 +1,20 @@
+### 不可见区
+
+$$
+|\delta|\log p_N\ll1.
+$$
+
+此时：
+
+$$
+p^{-\delta}
+=
+e^{-\delta\log p}
+=
+1-\delta\log p+O((\delta\log p)^2)
+$$
+
+对全部 \(p\le p_N\) 都极接近 \(1\)。
+
+有限观察者认为角色几乎幺正。
+

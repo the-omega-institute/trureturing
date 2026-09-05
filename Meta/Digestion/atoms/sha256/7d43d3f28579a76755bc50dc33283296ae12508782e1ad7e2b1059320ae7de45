@@ -1,0 +1,32 @@
+## 49. Prime-generated 极限系统
+
+定义候选系统：
+
+$$
+\mathcal R
+=
+\left(
+\mathcal H_N,
+A_{0,N},
+(V_{N,h})_h,
+\iota_N
+\right)_{N\ge1},
+$$
+
+其中每个有限阶段都是 prime-generated，且：
+
+$$
+\iota_N:
+\mathcal H_N
+\hookrightarrow
+\mathcal H_{N+1}
+$$
+
+为等距嵌入。
+
+只有在 determinant、算子或 source jets 带有明确局部一致收敛证书时，才把其极限记录进候选对象。
+
+所以极限存在不是公理，而是类型数据的一部分。
+
+---
+

@@ -1,0 +1,2 @@
+**定理 3.4.11(删坐标保持并闭)[候签;伴随声明]**〔open;同模块伴随声明〕。若 `forall A in F, forall B in F, A union B in F`，则 `forall A in G, forall B in G, A union B in G`。预登记具名用途为 `Frankl coordinate-deletion induction interface`，方向边为 `Frankl coordinate-deletion induction interface -> union_closed_after_deletion` 与 `Frankl coordinate-deletion induction interface -> quantitative_and_half_frequency_transport`（消费者 -> 前置）。
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6c2cb253a6d6d3f4537852888b2d3d329338face5b5b1603819452c23710a0a7
+  normalized_sha256: sha256:6c2cb253a6d6d3f4537852888b2d3d329338face5b5b1603819452c23710a0a7
+cas_ref: sha256:6c2cb253a6d6d3f4537852888b2d3d329338face5b5b1603819452c23710a0a7
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometryLaws/EvaluationSupremumMinimality.evaluation_suprema_are_least_dominating
+    target_statement_id: sha256:d789e148e85c1e4617d50aaa8625f3333a9f1cd85e0807d1a65baeddf03a9a99
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometryLaws/EvaluationSupremumMinimality.evaluation_suprema_are_least_dominating
+      definition_sha256: sha256:f8f0ec35151792e4105a72147525d6d51f8db14a140abd6a40cff3cae79a27a9
+      emission_sha256: sha256:53dcf14ddaa33a4343dd843a4016ebfc34e602f3f83f85a76d255c8c07caaedf
+  unresolved_subitems: []

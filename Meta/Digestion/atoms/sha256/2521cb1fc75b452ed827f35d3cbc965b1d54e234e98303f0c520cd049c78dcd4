@@ -1,0 +1,24 @@
+\[
+\boxed{
+\operatorname{Policy}(q,U)
+=
+\{\pi:X\to U:
+\exists\bar\pi:B\to U,\ 
+\pi=\bar\pi\circ q\}.
+}
+\]
+
+项目已证明，CUT 精化只能扩大可实现政策集合。
+
+所以：
+
+\[
+\boxed{
+\text{更细概念增加行动能力，}
+}
+\]
+
+但不自动决定应选择哪个行动。
+
+---
+

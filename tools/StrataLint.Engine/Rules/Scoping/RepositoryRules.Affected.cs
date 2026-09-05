@@ -5,7 +5,8 @@ namespace StrataLint.Engine;
 internal static partial class RepositoryRules
 {
     private static bool LeanReportAffected(RuleEvaluationContext context) =>
-        Changed(context, IsLeanReportInput);
+        Changed(context, static path =>
+            IsManagedLeanPath(path) || IsLeanReportProducerInput(path));
 
     private static bool SorryAffected(RuleEvaluationContext context) =>
         LeanReportAffected(context)
@@ -16,7 +17,8 @@ internal static partial class RepositoryRules
         Changed(context, static path =>
             !IsCapacityExcluded(path)
             || path.EndsWith(".cs", StringComparison.Ordinal)
-            || path.EndsWith(".csproj", StringComparison.Ordinal));
+            || path.EndsWith(".csproj", StringComparison.Ordinal))
+        || Changed(context, ScribeTestMapDeriver.IsDerivationInput);
 
     private static bool MirrorsAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
@@ -24,23 +26,17 @@ internal static partial class RepositoryRules
             || path.StartsWith("Blueprint/", StringComparison.Ordinal)
             || path.StartsWith("Evidence/", StringComparison.Ordinal));
 
-    private static bool ChronicleAffected(RuleEvaluationContext context) =>
-        Changed(context, static path => path.StartsWith("Chronicle/", StringComparison.Ordinal));
-
-    private static bool TheoryVolumeAffected(RuleEvaluationContext context) =>
-        Changed(context, IsTheoryVolumePath);
-
-    private static bool DigestionAtomsAffected(RuleEvaluationContext context) =>
-        Changed(context, static path =>
-            path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal));
-
     private static bool StatusAffected(RuleEvaluationContext context) =>
         Changed(context, IsStatusScope);
 
     private static bool HeartsAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
             path is HeartsPath or HeartsAuthorizationLedger.Path
-            || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
+            || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+            || FrozenStatePath.IsUnderRoot(path)
+            || path.StartsWith("D5/", StringComparison.Ordinal)
+                && path.EndsWith(".lean", StringComparison.Ordinal))
+        || Changed(context, IsLeanReportProducerInput);
 
     private static bool DomainsAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
@@ -115,18 +111,19 @@ internal static partial class RepositoryRules
         || path.StartsWith("D5/", StringComparison.Ordinal)
             && path.EndsWith(".lean", StringComparison.Ordinal);
 
-    private static bool IsLeanReportInput(string path) =>
-        FrozenLedgerDeltaPredicate.IsManagedLeanSource(path)
-        || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path)
-        || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path);
+    internal static bool IsLeanReportProducerInput(string path) =>
+        path.StartsWith("tools/", StringComparison.Ordinal)
+            && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
+        || StrataLintEngineBuildInputs.Contains(path)
+        || path.StartsWith(".github/workflows/", StringComparison.Ordinal)
+        || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path);
 
     internal static bool IsLeanClosureFactAffected(
         RuleEvaluationContext context,
         RepoPath source) =>
         LeanImportClosure.RepositoryPaths(context.Lean.Report, source)
             .Any(path => context.IsBaseFactAffected(path.Value))
-        || context.Changes.Paths.Any(path =>
-            IsLeanReportInput(path.Value) && !IsManagedLeanPath(path.Value));
+        || Changed(context, IsLeanReportProducerInput);
 
     private static bool LiteratureReferenceChanged(RuleEvaluationContext context)
     {

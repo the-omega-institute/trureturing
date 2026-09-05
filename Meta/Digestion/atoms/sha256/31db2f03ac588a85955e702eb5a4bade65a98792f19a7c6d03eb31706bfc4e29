@@ -1,0 +1,34 @@
+## 38. 历史不能总被端点代替 `[L]`
+
+设：
+
+\[
+\operatorname{endpoint}:\mathrm{Path}\to X,
+\]
+
+\[
+\operatorname{evaluation}:\mathrm{Path}\to E.
+\]
+
+若两条路径端点相同但评价不同，则不存在：
+
+\[
+e:X\to E
+\]
+
+使评价只由端点决定。
+
+项目已有机器证明：
+
+\[
+\boxed{
+\text{同一结果、不同历史评价}
+\Rightarrow
+\text{评价不能约化为结果函数}.
+}
+\]
+
+所以路径账本不是冗余 ANCHOR；在历史敏感任务中，它是必要状态。
+
+---
+

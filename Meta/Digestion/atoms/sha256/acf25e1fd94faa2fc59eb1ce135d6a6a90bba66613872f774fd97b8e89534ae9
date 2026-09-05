@@ -1,0 +1,17 @@
+## C17.4 determinant-boundary escape
+
+pointwise positive Schur margin 若没有 uniform lower floor，可能不足以压过 analytic approximation error；高维 determinant 还会把 singular floor 乘成极小量。
+
+修复对象是：
+
+$$
+\boxed{
+\text{Hankel-minimal realization
++
+uniform Schur floor
++
+strict Rouché inequality}.
+}
+\tag{C17.4}
+$$
+

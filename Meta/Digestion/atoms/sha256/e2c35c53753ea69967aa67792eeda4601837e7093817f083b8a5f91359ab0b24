@@ -1,0 +1,50 @@
+## 442. 矩阵增强证书
+
+定义：
+
+$$
+\mathsf C^{(n,k)}_N
+=
+\left[
+D^ka_{n+i+j}
+\right]_{0\le i,j\le N}.
+$$
+
+RH 推出：
+
+$$
+\mathsf C^{(n,k)}_N\succeq0
+$$
+
+对全部 \(n,k,N\) 成立，因为：
+
+$$
+c^\ast
+\mathsf C^{(n,k)}_Nc
+=
+\int_0^1
+x^n(1-x)^k
+\left|
+\sum_{j=0}^Nc_jx^j
+\right|^2
+d\nu(x).
+$$
+
+于是可以分别定义：
+
+$$
+\mathsf E^{(n,r)}_N
+=
+\mathsf C^{(n,2r)}_N,
+$$
+
+$$
+\mathsf O^{(n,r)}_N
+=
+\mathsf C^{(n,2r+1)}_N.
+$$
+
+若某个矩阵出现负特征值，就得到比单个标量差分更强的有限证书。
+
+---
+
