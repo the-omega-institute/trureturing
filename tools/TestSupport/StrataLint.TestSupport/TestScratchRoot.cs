@@ -3,7 +3,7 @@ using System.Text.Json;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace StrataLint.Tests;
+namespace StrataLint.TestSupport;
 
 internal static class TestEnvironmentBridge
 {

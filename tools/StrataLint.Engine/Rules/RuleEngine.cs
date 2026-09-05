@@ -15,7 +15,7 @@ internal static class BaseFactImpact
         bool ruleImplementationChanged,
         string path) =>
         ruleImplementationChanged
-        || changes.Paths.Any(change => string.Equals(change.Value, path, StringComparison.Ordinal));
+        || changes.ContainsPath(path);
 }
 
 public sealed record Diagnostic(
@@ -37,6 +37,11 @@ internal delegate ImmutableArray<RuleFinding> RuleEvaluationMeasure(
     RuleId ruleId,
     AdmissionEffect admissionEffect,
     Func<ImmutableArray<RuleFinding>> evaluate);
+
+internal delegate bool RuleApplicabilityMeasure(Func<bool> isAffectedBy);
+
+internal delegate CanonicalizationOutcome CanonicalizationMeasure(
+    Func<CanonicalizationOutcome> canonicalize);
 
 internal enum FindingEdgeKind
 {
@@ -208,6 +213,10 @@ internal sealed class RuleEvaluationContext
         Policy = policy;
         Lean = lean;
         Changes = changes;
+        BackfillCandidateDeltaSession = new BackfillCandidateDeltaSession(
+            current,
+            baseline,
+            changes);
         RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
@@ -231,6 +240,10 @@ internal sealed class RuleEvaluationContext
     internal AcceptedLeanClosure Lean { get; }
 
     internal RawChangeSet Changes { get; }
+
+    internal BackfillCandidateDeltaSession BackfillCandidateDeltaSession { get; }
+
+    internal int BackfillCandidateDeltaLoadCount => BackfillCandidateDeltaSession.LoadCount;
 
     internal bool RuleImplementationChanged { get; }
 
