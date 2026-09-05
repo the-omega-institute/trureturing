@@ -153,6 +153,14 @@ internal static partial class RepositoryRules
                 DuplicateStatementAdvisory.Evaluate,
                 DuplicateStatementAdvisory.IsAffectedBy),
             AdmissionEffect.Observe),
+        Register(
+            30,
+            "Judge surface reads no other revision",
+            new RepositoryRule(
+                JudgeSurfaceScoped,
+                JudgeSurfaceRevisionMaterialization,
+                JudgeSurfaceAffected),
+            category: "trust"),
     ];
 
     private static RuleRegistration Register(
