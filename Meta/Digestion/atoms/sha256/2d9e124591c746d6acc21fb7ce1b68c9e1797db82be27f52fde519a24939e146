@@ -1,0 +1,46 @@
+# 十三、与项目的准确连接及新的证明目标
+
+本轮读取了仓库快照 `91810b25de…` 的相关声明。
+
+`FiniteStieltjesOperatorRealization.lean` 从已经给定的非负节点、非负权重构造正 Hankel 矩阵与正算子。它明确没有供应实际 ξ 的正谱。
+
+本轮的构造不同：
+
+$$
+\boxed{
+\text{不先给正节点，}
+\quad
+\text{直接由实际累积量构造一个可能不定的自伴算子。}
+}
+$$
+
+`HermitianKernelNegativeSquares.lean` 可以承载其负指数概念；本轮进一步给出了在当前实际谱结构下，负指数与离线轨道数量的对应。
+
+于是，下一项真正的算术目标可以写成：
+
+$$
+\boxed{
+\forall c\in\ell^2,\qquad
+\langle c,\mathsf Kc\rangle\ge0.
+}
+\tag{O32}
+$$
+
+等价地，寻找一个**从实际 theta／质数结构独立构造出来**的算子 \(V\)，证明：
+
+$$
+\boxed{\mathsf K=V^*V.}
+$$
+
+不能先把 \(\mathsf K\) 的负部分删除，再把得到的正算子叫作同一个对象。
+
+反方向则是：从实际系数中找一个有限有理向量 \(c\)，并通过严格误差界证明：
+
+$$
+\boxed{\langle c,\mathsf Kc\rangle<0.}
+$$
+
+这两条任务现在都指向同一个固定算子，不再需要不断更换观察语言。
+
+---
+

@@ -1,0 +1,71 @@
+## 本轮的实质推进
+
+现在有三条明确的结果，而不是三个相似的比喻：
+
+$$
+\boxed{
+\text{实际能量增长指数}=2\Delta_\zeta;
+}
+$$
+
+$$
+\boxed{
+\text{独立随机替代模型的能量}
+\sim\frac12A_hL^2
+\quad\text{几乎必然};
+}
+$$
+
+$$
+\boxed{
+\text{跨尺度观察可几乎处处归零，}
+\quad
+\text{同时保持非零均值并使绝对矩发散}.
+}
+$$
+
+它们分别排除了两种未经证明的跨越：
+
+$$
+\text{“素数大概独立”}
+\Longrightarrow
+\text{“相关抵消应该成立”},
+$$
+
+以及
+
+$$
+\text{“每层都合法且保均值”}
+\Longrightarrow
+\text{“无限完成仍保留同一读出”}.
+$$
+
+**剩下的实际算术目标可以比上一轮写得更弱、也更集中：对一个固定 \(h\)，证明交叉能量具有某个统一的多项式上界，例如式（38）。**
+
+这条上界尚未得到。但一旦从真实素数结构中证明它成立，便不必再单独猜测二次主项如何精确抵消：本轮建立的解析增长约束会迫使那种抵消发生。
+
+[1]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/html/2206.03682v4 "Aspects of the screw function corresponding to the Riemann zeta-function"
+[3]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[4]: https://terrytao.wordpress.com/2015/01/04/254a-supplement-4-probabilistic-models-and-heuristics-for-the-primes-optional/ "254A, Supplement 4: Probabilistic models and heuristics for the primes (optional) | What's new"
+[5]: https://terrytao.wordpress.com/2013/12/11/mertens-theorems/ "Mertens’ theorems | What's new"
+这次可以把上一轮的固定滤波算子，推进到一个更接近实际 theta 核的形式：
+
+> **不再先计算高阶对数导数与累积量，而是把整个判据精确改写成原始矩的二次表达。这个改写保留每个有限层的负方向，并且能够明显改善无限截断的误差控制。**
+
+关键区别是：
+
+$$
+\boxed{
+\text{消去对数导数的极点}
+\quad\neq\quad
+\text{消去零点信息}.
+}
+$$
+
+我们将看到：离线零点即使不再以极点出现，仍会留下一个明确的“零自配对、非零交叉配对”证书。
+
+最后，还能把待证正性写成**同一 theta 态的两个独立副本上的期望不等式**，并提出一个直接作用于 theta 密度的有限阶充分条件。以下继续给出定义与证明，不假设 RH 成立。
+
+---
+

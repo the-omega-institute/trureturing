@@ -1,0 +1,68 @@
+## 定理 126.1　涨落误差与空间平均偏差的联合界
+
+令
+
+$$
+n_0(m,v)=\sqrt{r_{x_0}(m,v)}.
+$$
+
+则
+
+$$
+\boxed{
+\begin{aligned}
+&\left\|
+\bigl(\sqrt{\widehat R_{Q_L}(v)}-n_0(m,v)I\bigr)
+\sigma_m^{1/2}
+\right\|_2\\
+&\quad\le
+\frac1{2n_*}
+\sqrt{
+\Delta_R^2\frac{b_{Q_L}(m)}{N_{Q_L}}
++
+\kappa^2L^2
+}.
+\end{aligned}
+}
+\tag{126.2}
+$$
+
+因此也有较简单的上界：
+
+$$
+\boxed{
+\text{局部钟律误差}
+\le
+\frac{\Delta_R}{2n_*}
+\sqrt{\frac{b_{Q_L}(m)}{N_{Q_L}}}
++
+\frac{\kappa L}{2n_*}.
+}
+\tag{126.3}
+$$
+
+### 证明
+
+记 \(r_Q=\operatorname{Tr}(\sigma_m\widehat R_Q)\)。则
+
+$$
+\operatorname{Tr}
+\left[
+\sigma_m(\widehat R_Q-r_{x_0}I)^2
+\right]
+=
+\operatorname{Var}(\widehat R_Q)
++
+(r_Q-r_{x_0})^2.
+$$
+
+由假设，
+
+$$
+|r_Q-r_{x_0}|\le\kappa L.
+$$
+
+再使用平方根因式分解及定理 124.1，得到式（126.2）；最后用 \(\sqrt{a^2+b^2}\le a+b\)。∎
+
+---
+

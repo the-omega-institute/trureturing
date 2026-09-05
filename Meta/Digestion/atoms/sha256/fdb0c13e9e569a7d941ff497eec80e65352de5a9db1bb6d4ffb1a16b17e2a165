@@ -1,0 +1,69 @@
+# 结论
+
+这一轮得到的核心不是另一个抽象的“正核应当存在”，而是三组可以逐项检验的关系：
+
+$$
+\boxed{
+\text{尺度完成}
+:
+\quad
+\mathcal B_H
+=
+\text{细尺度读数的指定正权平均};
+}
+$$
+
+$$
+\boxed{
+\text{微观结构}
+:
+\quad
+\mathcal B_h
+\longrightarrow
+2\nu_{\mathbb P}''-\nu_{\mathbb P}'
+\quad\text{在分布意义下};
+}
+$$
+
+$$
+\boxed{
+\text{算术证明责任}
+:
+\quad
+\mathcal E_h^{\mathrm{off}}(L)
+=
+-\frac{h^3J_h}{2}L^2+O_h(L).
+}
+$$
+
+**本轮没有证明最后一条对实际素数成立。**但已经算清了它必须抵消什么、抵消到什么精度，以及哪些看似自然的替代目标根本不成立。
+
+因此，接下来真正有价值的推理方向是：**直接研究这个固定局部核下的素数对相关，寻找能够消去已知二次主项的算术恒等式或统一估计。**继续缩小窗口、只看单个素数项，或者只证明尺度映射本身保正，都无法替代这一步。
+
+[1]: https://arxiv.org/html/2206.03682v4 "Aspects of the screw function corresponding to the Riemann zeta-function"
+[2]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[3]: https://terrytao.wordpress.com/2013/12/11/mertens-theorems/ "Mertens’ theorems | What's new"
+[4]: https://arxiv.org/html/math/0412313v1 "Notes on Pair Correlation of Zeros and Prime Numbers"
+[5]: https://arxiv.org/html/2412.15470v1 "Improved estimates for the argument and zero-counting of Riemann zeta-function(With an appendix by Andrew Fiori)"
+这次可以把上一轮的“寻找一个固定负滤波器”，推进成一个**固定的自伴算子问题**：
+
+> **不再为每个可能的离线零点单独设计观察者，而是把全部有限滤波器放进同一个 Hilbert 空间。实际 ξ 的系数直接定义一个迹类自伴算子；寻找负证书，就变成寻找它的负能量方向。**
+
+更进一步，可以证明：
+
+$$
+\boxed{
+\text{这个算子的负特征值个数}
+=
+\text{实际零点的不同离线四元对称轨道数}.
+}
+$$
+
+这里按“不同轨道”计数，零点重数影响权重，但不把同一个轨道重复计成多个独立负方向。
+
+同时，这个无限算子的有限截断具有**无需输入零点位置的几何误差界**。因此，我们得到的不只是存在性说法，而是一套可以逐层寻找、验证和控制误差的构造。
+
+但要先划清边界：**自伴算子可以具有负特征值。构造出它，并没有证明 RH；真正待证的是它相对于固定算术基准是否非负。**
+
+---
+

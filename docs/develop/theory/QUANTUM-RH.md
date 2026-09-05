@@ -13836,3 +13836,5033 @@ $$
 [3]: https://terrytao.wordpress.com/2013/12/11/mertens-theorems/ "Mertens’ theorems | What's new"
 [4]: https://arxiv.org/html/math/0412313v1 "Notes on Pair Correlation of Zeros and Prime Numbers"
 [5]: https://arxiv.org/html/2412.15470v1 "Improved estimates for the argument and zero-counting of Riemann zeta-function(With an appendix by Andrew Fiori)"
+这次可以把上一轮的“寻找一个固定负滤波器”，推进成一个**固定的自伴算子问题**：
+
+> **不再为每个可能的离线零点单独设计观察者，而是把全部有限滤波器放进同一个 Hilbert 空间。实际 ξ 的系数直接定义一个迹类自伴算子；寻找负证书，就变成寻找它的负能量方向。**
+
+更进一步，可以证明：
+
+$$
+\boxed{
+\text{这个算子的负特征值个数}
+=
+\text{实际零点的不同离线四元对称轨道数}.
+}
+$$
+
+这里按“不同轨道”计数，零点重数影响权重，但不把同一个轨道重复计成多个独立负方向。
+
+同时，这个无限算子的有限截断具有**无需输入零点位置的几何误差界**。因此，我们得到的不只是存在性说法，而是一套可以逐层寻找、验证和控制误差的构造。
+
+但要先划清边界：**自伴算子可以具有负特征值。构造出它，并没有证明 RH；真正待证的是它相对于固定算术基准是否非负。**
+
+---
+
+# 一、固定实际读数：仍然不输入未知零点
+
+沿用：
+
+$$
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k,
+$$
+
+其中：
+
+$$
+a_0=1,\qquad a_k>0.
+$$
+
+ξ 始终采用标准 completed 定义，反射折叠通过偶幂级数完成。([DLMF][1])
+
+定义实际累积量：
+
+$$
+\log D(v)
+=
+\sum_{m\ge1}\frac{\chi_{2m}}{(2m)!}v^m,
+$$
+
+以及前文的幂和读数：
+
+$$
+\boxed{
+s_m=
+(-1)^{m+1}\frac{m\chi_{2m}}{(2m)!}.
+}
+\tag{O1}
+$$
+
+因此：
+
+$$
+\frac{D'(v)}{D(v)}
+=
+s_1-s_2v+s_3v^2-\cdots,
+$$
+
+其中：
+
+$$
+s_1=a_1,
+$$
+
+$$
+s_2=-\frac{\chi_4}{12},
+\qquad
+s_3=\frac{\chi_6}{240},
+\qquad
+s_4=-\frac{\chi_8}{10080}.
+$$
+
+上一轮研究的固定滤波器为：
+
+$$
+f(z)=\sum_{j=1}^{N}c_jz^j,
+$$
+
+其带符号读数是：
+
+$$
+\mathcal Q_\infty(f)
+=
+\sum_{i,j=1}^{N}c_ic_js_{i+j}.
+$$
+
+我们已经证明：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal Q_\infty(f)\ge0
+\quad
+\forall f\in\mathbb R[z],\ f(0)=0.
+}
+\tag{O2}
+$$
+
+有限版本的基本原理，就是 Hermite–Sylvester 的实根二次型判据：实根产生平方非负；非实共轭对可以被实系数插值多项式转成严格负贡献。([arXiv][2])
+
+**现在要做的是：把所有这些有限二次型组织成一个真正有界、可截断的算子。**
+
+---
+
+# 二、选择一个不依赖零点的观察尺度
+
+取一个实数 \(r_0>0\)，满足：
+
+$$
+\boxed{D(r_0)<2.}
+\tag{O3}
+$$
+
+这样的 \(r_0\) 总存在，因为 \(D(0)=1\)。
+
+它可以通过实际函数值与严格误差界认证，不需要知道零点的位置。
+
+由于 \(D\) 的系数非负，对 \(|v|\le r_0\)：
+
+$$
+|D(v)-1|
+\le D(r_0)-1<1.
+$$
+
+所以这个圆盘内没有 \(D\) 的零点，并且：
+
+$$
+|D(v)|\ge\kappa_0,
+\qquad
+\kappa_0:=2-D(r_0)>0.
+$$
+
+又有：
+
+$$
+|D'(v)|\le D'(r_0).
+$$
+
+因此：
+
+$$
+\left|\frac{D'(v)}{D(v)}\right|
+\le
+\frac{D'(r_0)}{\kappa_0}.
+$$
+
+由 Cauchy 系数估计：
+
+$$
+\boxed{
+|s_m|
+\le
+\frac{D'(r_0)}{\kappa_0}\,r_0^{-(m-1)}.
+}
+\tag{O4}
+$$
+
+这里使用的是标准解析函数系数界，而不是 RH 前件。([DLMF][3])
+
+定义两个固定常数：
+
+$$
+\boxed{
+\ell=\frac{r_0}{2},
+\qquad
+B_0=\frac{r_0D'(r_0)}{2-D(r_0)}.
+}
+\tag{O5}
+$$
+
+于是：
+
+$$
+\boxed{
+|\ell^m s_m|\le B_0\,2^{-m}.
+}
+\tag{O6}
+$$
+
+这个尺度选择的作用只是让无限矩阵有明确的收敛预算。**它不会改变任何有限二次型是否有负方向。**
+
+---
+
+# 三、构造一个无条件存在的迹类自伴算子
+
+## 定义 O1：算术滤波算子
+
+在固定空间：
+
+$$
+\mathcal H_{\mathrm{filter}}
+=
+\ell^2(\mathbb N_{\ge1})
+$$
+
+上，定义矩阵：
+
+$$
+\boxed{
+\mathsf K_{ij}
+=
+\ell^{i+j}s_{i+j},
+\qquad i,j\ge1.
+}
+\tag{O7}
+$$
+
+它的每个元素都由实际 ξ 的有限阶导数确定。
+
+没有要求节点为实，没有供应正谱，也没有把某个负项改成绝对值。
+
+## 定理 O1：\(\mathsf K\) 是迹类自伴算子
+
+而且：
+
+$$
+\boxed{
+\|\mathsf K\|_1\le B_0.
+}
+\tag{O8}
+$$
+
+### 证明
+
+由式（O6）：
+
+$$
+|\mathsf K_{ij}|
+\le
+B_0\,2^{-(i+j)}.
+$$
+
+将矩阵写成秩一矩阵单位的和：
+
+$$
+\mathsf K
+=
+\sum_{i,j\ge1}
+\mathsf K_{ij}|i\rangle\langle j|.
+$$
+
+每个矩阵单位的迹范数为一，因此：
+
+$$
+\begin{aligned}
+\|\mathsf K\|_1
+&\le
+\sum_{i,j\ge1}|\mathsf K_{ij}|\\
+&\le
+B_0
+\left(\sum_{i\ge1}2^{-i}\right)^2\\
+&=B_0.
+\end{aligned}
+$$
+
+矩阵元素实且对称，所以 \(\mathsf K\) 自伴。证毕。
+
+**这是一项无条件构造。即使 RH 为假，这个算子依然存在、依然自伴、依然迹类。**
+
+矩问题与自伴算子之间的联系本身是经典的；这里使用的是固定实际累积量所产生的、尚未假定非负的算子。([arXiv][4])
+
+---
+
+## 定理 O2：滤波器就是这个空间中的状态
+
+对有限实向量：
+
+$$
+c=(c_1,\ldots,c_N,0,\ldots),
+$$
+
+定义：
+
+$$
+\boxed{
+f_c(z)=\sum_{j=1}^{N}c_j(\ell z)^j.
+}
+\tag{O9}
+$$
+
+那么：
+
+$$
+\boxed{
+\langle c,\mathsf Kc\rangle
+=
+\mathcal Q_\infty(f_c).
+}
+\tag{O10}
+$$
+
+### 证明
+
+逐项展开：
+
+$$
+\langle c,\mathsf Kc\rangle
+=
+\sum_{i,j}c_ic_j\ell^{i+j}s_{i+j},
+$$
+
+正是对应滤波器的二次型。证毕。
+
+因为 \(\ell>0\)，所有常数项为零的有限实多项式都可以这样表示。因此没有通过缩放排除任何有限反例测试。
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathsf K\succeq0.
+}
+\tag{O11}
+$$
+
+**原来“寻找一个多项式负证书”的问题，现在变成一个固定自伴算子的变分问题。**
+
+---
+
+# 四、这个算子是否仍然忠实保存实际 ξ？
+
+需要检查。否则，它可能只是一个新造的判别模型。
+
+答案是：**\(\mathsf K\) 加上已知的 \(a_1\)，足以恢复实际 \(D\)。**
+
+由第一行：
+
+$$
+\mathsf K_{1,m-1}=\ell^m s_m,
+\qquad m\ge2.
+$$
+
+所以在零附近：
+
+$$
+\boxed{
+\log D(v)
+=
+a_1v
++
+\sum_{m\ge2}
+\frac{(-1)^{m+1}}{m\ell^m}
+\mathsf K_{1,m-1}v^m.
+}
+\tag{O12}
+$$
+
+这恢复了实际 \(D\) 的解析函数芽，再由解析延拓唯一性恢复同一个整函数，而不是另选一个有相似统计的函数。([DLMF][3])
+
+这里有一个值得保留的细节：
+
+$$
+D(v)\mapsto e^{\tau v}D(v)
+$$
+
+会改变 \(a_1\)，但不改变 \(\mathsf K\)。
+
+也就是说，\(\mathsf K\) 只保存四阶及以上的不可约关联，自动忽略纯高斯背景。**补上实际 \(a_1\)，才恢复原函数的完整归一化。**
+
+欧拉端点关系：
+
+$$
+\frac{D'(1/4)}{D(1/4)}
+=
+1+\frac{\gamma_{\mathrm E}}2-\frac12\log4\pi
+$$
+
+则继续承担另一项独立的算术校准。
+
+因此，不能只保存 \(\mathsf K\)，任意选择一个 \(a_1\)，再说已经保留原始 ξ。
+
+---
+
+# 五、负能量方向究竟计数什么？可以精确证明
+
+记实际 \(D\) 的互异零点为 \(v\)，并定义倒数谱点：
+
+$$
+u=-1/v.
+$$
+
+它们的集合记为 \(\mathcal U\)，重数记为 \(m(u)\)。
+
+沿用前文已经建立的绝对收敛表示：
+
+$$
+\boxed{
+s_n=\sum_{u\in\mathcal U}m(u)u^n,
+\qquad n\ge2.
+}
+\tag{O13}
+$$
+
+集合 \(\mathcal U\) 关于共轭对称，除零以外没有聚点，并满足：
+
+$$
+\sum_um(u)|u|^2<\infty.
+$$
+
+由于式（O3）的无零圆盘：
+
+$$
+|\ell u|<\frac12.
+$$
+
+定义向量：
+
+$$
+\boxed{
+v(u)=\bigl(\ell u,(\ell u)^2,(\ell u)^3,\ldots\bigr).
+}
+\tag{O14}
+$$
+
+它属于 \(\ell^2\)。
+
+对实谱点 \(u\)，其贡献是：
+
+$$
+m(u)v(u)v(u)^{\mathsf T}\succeq0.
+$$
+
+对一对非实点 \(u,\overline u\)，写：
+
+$$
+v(u)=x(u)+iy(u),
+$$
+
+其中 \(x,y\) 为实向量。两点合起来贡献：
+
+$$
+\boxed{
+2m(u)\bigl[x(u)x(u)^{\mathsf T}
+-y(u)y(u)^{\mathsf T}\bigr].
+}
+\tag{O15}
+$$
+
+**正项与负项都出现在一个普通正 Hilbert 空间里；负的是指定算子的二次型，不是内积本身。**
+
+---
+
+## 定理 O3：负特征值的精确计数
+
+设 \(r_{\mathrm{off}}\) 是 \(\mathcal U\) 中不同非实共轭对的数量，允许为无穷。
+
+则：
+
+$$
+\boxed{
+n_-(\mathsf K)=r_{\mathrm{off}}.
+}
+\tag{O16}
+$$
+
+### 证明：上界
+
+若只有 \(r_{\mathrm{off}}\) 对，则式（O15）中的全部负项构成一个秩至多为 \(r_{\mathrm{off}}\) 的正算子：
+
+$$
+N=\sum_{\Im u>0}2m(u)y(u)y(u)^{\mathsf T}.
+$$
+
+其余部分为正。因此：
+
+$$
+\mathsf K=P-N,
+\qquad P,N\succeq0,
+$$
+
+不可能有超过 \(r_{\mathrm{off}}\) 个独立负方向。
+
+### 证明：下界
+
+任取 \(r\) 对不同的非实点。
+
+沿用上一轮的插值与尾部压制构造，可以为每一对构造一个实多项式 \(f_j\)，使它在目标对上分别取 \(i,-i\)，在其他选定的大谱点上为零，并把趋零谱尾的贡献压得任意小。
+
+于是这 \(r\) 个多项式的联合二次型矩阵可以写成：
+
+$$
+-2\operatorname{diag}(m_1,\ldots,m_r)+E,
+$$
+
+其中 \(\|E\|_{\mathrm{op}}\) 可以小于 \(\min_jm_j\)。
+
+因此它严格负定，给出 \(r\) 个独立负方向。
+
+若非实对无限多，对每个有限 \(r\) 都能这样做，所以负指数为无穷。证毕。
+
+对于实际 ξ，一个非实共轭倒数谱对对应一个离线四元轨道：
+
+$$
+\frac12\pm\delta\pm i\gamma.
+$$
+
+因此，式（O16）给出开头的计数结论。
+
+**重数 \(m\) 改变该方向的权重，但同一个轨道仍然只贡献一个独立负方向。**
+
+这与仓库中“负平方数”的定义一致：不仅要求所有有限采样负指标有上界，还要求某个有限采样能够达到该上界。现有模块已经形式化了这个概念及一个负平方实例，但没有自行证明实际 ξ 的上述计数。
+
+---
+
+# 六、有限截断有一个明确的几何误差界
+
+令 \(\Pi_N\) 投影到前 \(N\) 个滤波系数，定义：
+
+$$
+\mathsf K_N=\Pi_N\mathsf K\Pi_N.
+$$
+
+把它也视为整个 \(\ell^2\) 上、其余部分补零的算子。
+
+## 定理 O4：截断误差
+
+$$
+\boxed{
+\|\mathsf K-\mathsf K_N\|_1
+\le
+B_0\left(2^{1-N}-4^{-N}\right).
+}
+\tag{O17}
+$$
+
+并且：
+
+$$
+\boxed{
+\|\mathsf K-\mathsf K_N\|_{\mathrm{op}}
+\le
+\delta_N
+:=
+\frac{B_0}{3}
+\sqrt{2\,4^{-N}-16^{-N}}.
+}
+\tag{O18}
+$$
+
+### 证明
+
+迹范数估计使用矩阵元绝对值求和：
+
+$$
+\sum_{\substack{i,j\ge1\\i>N\text{ 或 }j>N}}
+B_0\,2^{-(i+j)}
+=
+B_0\left[1-(1-2^{-N})^2\right].
+$$
+
+这就是式（O17）。
+
+对算子范数，使用 Hilbert–Schmidt 范数：
+
+$$
+\begin{aligned}
+\|\mathsf K-\mathsf K_N\|_{\mathrm{op}}^2
+&\le
+\sum_{\substack{i,j\ge1\\i>N\text{ 或 }j>N}}
+B_0^2\,4^{-(i+j)}\\
+&=
+\frac{B_0^2}{9}
+\left(2\,4^{-N}-16^{-N}\right).
+\end{aligned}
+$$
+
+证毕。
+
+**这份误差界不需要找到第一个离线根，也不需要预设全部根在线。**
+
+它只使用实际函数在一个已知无零小圆盘内的解析控制。
+
+---
+
+# 七、寻找滤波器变成一个规范的最小能量问题
+
+定义：
+
+$$
+\lambda_N=\lambda_{\min}(\mathsf K_N|_{\mathbb C^N}).
+$$
+
+那么：
+
+$$
+\boxed{
+\lambda_N
+=
+\min_{\substack{c\in\mathbb R^N\\\|c\|_2=1}}
+\mathcal Q_\infty(f_c).
+}
+\tag{O19}
+$$
+
+因此，最小特征向量直接给出该次数范围内的最优归一化滤波器。
+
+不需要先猜：
+
+$$
+f(z)=z^nL(z)(Az+B).
+$$
+
+那个插值构造证明“反例存在时必有证书”；这里的有限特征值问题则给出“怎样从实际系数寻找证书”。
+
+因为允许的滤波器空间逐层增加：
+
+$$
+\boxed{\lambda_{N+1}\le\lambda_N.}
+$$
+
+并且：
+
+$$
+\boxed{
+\lambda_N\longrightarrow
+\lambda_*:=\inf\operatorname{spec}\mathsf K.
+}
+\tag{O20}
+$$
+
+由于 \(\mathsf K\) 是无限维空间上的紧算子，零必然属于其谱，所以：
+
+$$
+\lambda_*\le0.
+$$
+
+结合式（O18）：
+
+$$
+\boxed{
+\min(0,\lambda_N)-\delta_N
+\le
+\lambda_*
+\le
+\min(0,\lambda_N).
+}
+\tag{O21}
+$$
+
+这给出一套几何收敛的有限逼近。
+
+### 但它不是一个自动终止的 RH 判定程序
+
+如果某个实际有限矩阵被严格认证：
+
+$$
+\lambda_N<0,
+$$
+
+就已经得到反例，不需要再估计无限尾部，因为该有限向量本身就是完整算子的负测试。
+
+如果：
+
+$$
+\lambda_N\ge0,
+$$
+
+则我们只能得到：
+
+$$
+-\delta_N\le\lambda_*\le0.
+$$
+
+即使这个区间非常窄，仍然不能把它自动改成：
+
+$$
+\lambda_*=0.
+$$
+
+**可以不断逼近一个实数，不等于有限步骤就能判定它是否严格等于零。**
+
+---
+
+## 实际低阶核对
+
+作为数值示例，取：
+
+$$
+\ell=\frac12.
+$$
+
+本轮从实际 ξ 的中心导数计算，并使用 60 位与 85 位工作精度交叉核对：
+
+| 滤波最高次数 \(N\) |    \(\lambda_{\min}(\mathsf K_N)\) |
+| -----------: | ---------------------------------: |
+|            1 |  \(9.29314982131742\times10^{-6}\) |
+|            2 | \(6.49079231752434\times10^{-12}\) |
+|            3 | \(1.26276542633316\times10^{-18}\) |
+
+显示位数一致。
+
+**这不是区间认证，也不说明后面一定为正。**
+
+它还提示了一个必要的数值警觉：即使 RH 成立，有限正矩阵的最小特征值也必须趋向零，不能期待一个与次数无关的正间隙。
+
+因此，“最小值越来越接近零”不是离线证据；同样，“它只是一个很小的负浮点数”也不是有效反例。
+
+---
+
+# 八、全部负能量还能组成一个不被维数稀释的总量
+
+定义负部分：
+
+$$
+\mathsf K_-=\frac{|\mathsf K|-\mathsf K}{2},
+$$
+
+以及：
+
+$$
+\boxed{
+\Delta_{\mathrm{obs}}
+=
+\operatorname{Tr}\mathsf K_-\ge0.
+}
+\tag{O22}
+$$
+
+有限层定义：
+
+$$
+\Delta_N
+=
+\operatorname{Tr}(\mathsf K_N)_-.
+$$
+
+则：
+
+$$
+\boxed{
+0\le\Delta_N\le\Delta_{N+1}\le\Delta_{\mathrm{obs}},
+}
+$$
+
+并且：
+
+$$
+\boxed{
+0\le\Delta_{\mathrm{obs}}-\Delta_N
+\le
+B_0(2^{1-N}-4^{-N}).
+}
+\tag{O23}
+$$
+
+证明可以使用变分表达：
+
+$$
+\operatorname{Tr}A_-
+=
+\sup_{0\preceq P\preceq I}
+-\operatorname{Tr}(PA).
+$$
+
+扩大有限子空间不会减少可选测试；迹范数误差则控制最优值的变化。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Delta_{\mathrm{obs}}=0.
+}
+$$
+
+这里的数值大小依赖所选观察尺度 \(\ell\)，但“是否为零”和负方向数不依赖这个正缩放。
+
+**这不是一个任意可调评分：每个尺度都明确对应同一组实际多项式测试，并有精确的读数运输。**
+
+不过，若再除以 \(N\)，由于 \(\Delta_N\le B_0\)，又会无条件得到：
+
+$$
+\Delta_N/N\to0.
+$$
+
+因此当前问题中应保留总负量，而不是用增加的观察维数把它平均掉。
+
+---
+
+# 九、接近临界线的缺陷，为什么可能很难稳定读取？
+
+这里可以证明一条对滤波器本身的限制。
+
+对实系数：
+
+$$
+f_c(z)=\sum_{n\ge1}c_n(\ell z)^n,
+$$
+
+在 \(|\ell z|\le1/2\) 内，由 Cauchy–Schwarz：
+
+$$
+|f_c'(z)|
+\le
+\ell\|c\|_2
+\left(
+\sum_{n\ge1}n^2|\ell z|^{2n-2}
+\right)^{1/2}.
+$$
+
+而：
+
+$$
+\sum_{n\ge1}n^2x^{n-1}
+=
+\frac{1+x}{(1-x)^3}.
+$$
+
+取 \(x=1/4\)：
+
+$$
+\boxed{
+|f_c'(z)|
+\le
+\ell\sqrt{\frac{80}{27}}\|c\|_2.
+}
+\tag{O24}
+$$
+
+现在令：
+
+$$
+u=a+ib,\qquad b\ne0.
+$$
+
+由于 \(f_c(a)\) 为实数，沿竖直线段积分：
+
+$$
+\boxed{
+|\Im f_c(u)|
+\le
+\ell|b|\sqrt{\frac{80}{27}}\|c\|_2.
+}
+\tag{O25}
+$$
+
+因此，若要求：
+
+$$
+f_c(u)=i,
+$$
+
+就必须：
+
+$$
+\boxed{
+\|c\|_2
+\ge
+\frac1{\ell|b|}
+\sqrt{\frac{27}{80}}.
+}
+\tag{O26}
+$$
+
+**当共轭点越来越接近实轴，制造固定相反相位所需的系数范数至少按 \(1/|b|\) 增长。**
+
+增加多项式次数并不能免掉这个下界。
+
+它首先是当前解析滤波规范下的稳定性代价，不是所有量子算法的统一复杂度下界；实际制备还依赖 \(f(C_d)\) 的算子范数、数据访问方式与门实现。
+
+---
+
+## 一个精确的二点模型
+
+只考虑一对谱点：
+
+$$
+u=a+ib,\qquad\overline u=a-ib,
+$$
+
+重数为 \(m\)。
+
+其前两阶滤波矩阵的行列式为：
+
+$$
+\boxed{
+\det\mathsf K^{\mathrm{pair}}_2
+=
+-4m^2\ell^6b^2(a^2+b^2)^2<0.
+}
+\tag{O27}
+$$
+
+因此一对非实点确实产生负方向。
+
+但当 \(b\to0\)，这个负行列式按 \(b^2\) 消失。
+
+在完整实际对象中，还会叠加其他谱点的正贡献，所以不能从式（O27）断言实际第二阶矩阵必定为负；需要前文的滤波隔离，或者在更高阶寻找适当方向。
+
+这同时解释了：
+
+$$
+\boxed{
+\text{负方向一定存在}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{低阶、低精度读数未必容易看见}
+}
+$$
+
+为什么可以同时成立。
+
+---
+
+# 十、负谱总量还受到实际离线位移的平方预算控制
+
+从式（O15）：
+
+$$
+\mathsf K=P-N,
+$$
+
+其中：
+
+$$
+N=
+\sum_{\Im u>0}
+2m(u)y(u)y(u)^{\mathsf T}.
+$$
+
+因此：
+
+$$
+\operatorname{Tr}\mathsf K_-
+\le\operatorname{Tr}N.
+$$
+
+将式（O25）的向量版本用于 \(v(u)\)，得到：
+
+$$
+\|y(u)\|_2^2
+\le
+\frac{80}{27}\ell^2(\Im u)^2.
+$$
+
+所以：
+
+$$
+\boxed{
+\Delta_{\mathrm{obs}}
+\le
+\frac{80}{27}\ell^2
+\sum_{u\in\mathcal U}m(u)(\Im u)^2.
+}
+\tag{O28}
+$$
+
+映回：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+有：
+
+$$
+u=-\frac1{(\delta+i\gamma)^2},
+$$
+
+$$
+\boxed{
+|\Im u|
+=
+\frac{2|\delta|\gamma}{(\delta^2+\gamma^2)^2}.
+}
+\tag{O29}
+$$
+
+这将新算子的负能量预算，接回前文的实际离线位移预算。
+
+但式（O28）是上界，不是一个由已知量得出的零结论。
+
+它说明：**高处、接近临界线的离线模式，可能产生极弱的负能量；不能期待存在一个适用于全部可能反例的统一负间隙。**
+
+这也是为什么“有限检测误差趋零”与“已经证明精确非负”必须分开。
+
+---
+
+# 十一、量子读出可以避免强制除以维数，但不自动给出算法加速
+
+因为：
+
+$$
+\|\mathsf K_N\|_{\mathrm{op}}\le B_0,
+$$
+
+可以在有限滤波寄存器上定义二结果测量：
+
+$$
+\boxed{
+E_\pm^{(N)}
+=
+\frac12\left(I_N\pm\frac{\mathsf K_N}{B_0}\right).
+}
+\tag{O30}
+$$
+
+它们满足：
+
+$$
+E_\pm^{(N)}\succeq0,
+\qquad
+E_+^{(N)}+E_-^{(N)}=I_N.
+$$
+
+对归一化系数态 \(|c\rangle\)：
+
+$$
+\boxed{
+p_+-p_-
+=
+\frac{\langle c,\mathsf K_Nc\rangle}{B_0}.
+}
+\tag{O31}
+$$
+
+所以负证书对应：
+
+$$
+p_->\frac12.
+$$
+
+**这是一个普通合法的量子概率差，不需要负概率。**
+
+这里的归一化 \(B_0\) 与 \(N\) 无关，因此不像均匀最大纠缠输入的某些滤波协议那样，公式上必然出现 \(1/N\)。
+
+但这并不表示免费提高了效率。
+
+要实现这个测量，仍需要构造或访问实际矩阵 \(\mathsf K_N\)，并制备合适的系数态。已有量子矩阵算法的复杂度取决于输入表示、归一化和可实现的编码，不是仅由“数学上存在一个 Hermitian 矩阵”决定。([arXiv][5])
+
+同样，前一轮的后选择协议中，条件信号增强不能脱离成功概率计算总体成本。关于后选择量子计量的已有结果，也明确区分条件性能与全部试验的平均性能。([APS Journals][6])
+
+因此，当前获得的是：
+
+$$
+\boxed{
+\text{一个统一的数学检测算子和可定义的测量},
+}
+$$
+
+不是已经证明了高效的量子 RH 算法。
+
+---
+
+# 十二、为什么不能给算子加一个常数，就宣布没有负能量？
+
+因为：
+
+$$
+\mathsf K+B_0I\succeq0
+$$
+
+无条件成立。
+
+若只要求“存在一个正哈密顿量”，这个平移立刻满足要求，却没有提供任何算术信息。
+
+真正要判断的是：
+
+$$
+\boxed{\mathsf K\succeq0,}
+$$
+
+其中零基准由式（O7）的实际系数固定。
+
+对平移后的系统，相同问题应写成：
+
+$$
+\mathsf K+B_0I\succeq B_0I.
+$$
+
+没有变容易。
+
+**这说明“负能量”在这里是相对于指定算术阈值的负方向，不是关于绝对物理能量的本体判断。**
+
+它也不是 Hilbert–Pólya 原始意义上“以零点高度作为能谱”的算子。这里的能谱读取的是**全部滤波关系的正负性**；非实 ξ 零点被运输成了实的负特征值。
+
+---
+
+# 十三、与项目的准确连接及新的证明目标
+
+本轮读取了仓库快照 `91810b25de…` 的相关声明。
+
+`FiniteStieltjesOperatorRealization.lean` 从已经给定的非负节点、非负权重构造正 Hankel 矩阵与正算子。它明确没有供应实际 ξ 的正谱。
+
+本轮的构造不同：
+
+$$
+\boxed{
+\text{不先给正节点，}
+\quad
+\text{直接由实际累积量构造一个可能不定的自伴算子。}
+}
+$$
+
+`HermitianKernelNegativeSquares.lean` 可以承载其负指数概念；本轮进一步给出了在当前实际谱结构下，负指数与离线轨道数量的对应。
+
+于是，下一项真正的算术目标可以写成：
+
+$$
+\boxed{
+\forall c\in\ell^2,\qquad
+\langle c,\mathsf Kc\rangle\ge0.
+}
+\tag{O32}
+$$
+
+等价地，寻找一个**从实际 theta／质数结构独立构造出来**的算子 \(V\)，证明：
+
+$$
+\boxed{\mathsf K=V^*V.}
+$$
+
+不能先把 \(\mathsf K\) 的负部分删除，再把得到的正算子叫作同一个对象。
+
+反方向则是：从实际系数中找一个有限有理向量 \(c\)，并通过严格误差界证明：
+
+$$
+\boxed{\langle c,\mathsf Kc\rangle<0.}
+$$
+
+这两条任务现在都指向同一个固定算子，不再需要不断更换观察语言。
+
+---
+
+## 收束
+
+这一轮把前文的有限负滤波器统一成了：
+
+$$
+\boxed{
+\mathsf K_{ij}
+=
+\left(\frac{r_0}{2}\right)^{i+j}
+(-1)^{i+j+1}
+\frac{(i+j)\chi_{2i+2j}}{(2i+2j)!}.
+}
+$$
+
+它无条件自伴、迹类，并有明确的截断界：
+
+$$
+\boxed{
+\|\mathsf K-\mathsf K_N\|_{\mathrm{op}}
+\le
+\frac{B_0}{3}
+\sqrt{2\,4^{-N}-16^{-N}}.
+}
+$$
+
+它还满足：
+
+$$
+\boxed{
+\mathrm{RH}\iff\mathsf K\succeq0,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+n_-(\mathsf K)
+=
+\text{不同离线四元对称轨道的数量}.
+}
+$$
+
+因此，“量子观察者”在这里不必是一个不断增加隐藏附件的模型。它可以是一个固定的滤波状态空间：**不同观察者对应不同系数态，所有读数由同一个实际算术算子统一产生。**
+
+但这个构造也明确揭示了代价：接近临界线的相位差需要越来越敏感的滤波；有限正前缀没有统一间隙；精确负性必须连同系数误差认证。
+
+**本轮没有证明实际 \(\mathsf K\) 非负，也没有找到实际负证书。** 已经推进的是：把“怎样寻找观察者”变成一个规范的变分问题，把“无限部分可能遗漏多少”变成几何误差界，并把“负方向到底代表什么”精确对应到实际离线轨道。新增结果仍是纸面推导，没有修改文件或标记为 Lean 已验证。
+
+[1]: https://dlmf.nist.gov/25.4 "https://dlmf.nist.gov/25.4"
+[2]: https://arxiv.org/abs/1911.01745 "https://arxiv.org/abs/1911.01745"
+[3]: https://dlmf.nist.gov/1.10 "https://dlmf.nist.gov/1.10"
+[4]: https://arxiv.org/abs/math-ph/9906008 "https://arxiv.org/abs/math-ph/9906008"
+[5]: https://arxiv.org/abs/1806.01838 "https://arxiv.org/abs/1806.01838"
+[6]: https://journals.aps.org/pra/abstract/10.1103/PhysRevA.89.052117 "https://journals.aps.org/pra/abstract/10.1103/PhysRevA.89.052117"
+继续。这一轮可以证明两个更明确的结论。
+
+**第一，实际素数的滤波总能量，不可能稳定地呈现上一轮“单素数自贡献”给出的 \(L^2\) 渐近规律：RH 成立时它至多为 \(O(L)\)；若 RH 不成立，它会沿某个序列呈指数增长。相反，完全独立的随机替代模型，几乎必然给出 \(L^2\)。**
+
+**第二，前文的正权跨尺度平均，确实能构造一个逐层保持均值的观察过程；但只用真实素数 \(2\)，就能证明：这个过程几乎处处最终读到零，平均值却不趋于零。缺少的条件是“一致可积性”，而不是每一步的概率归一化。**
+
+下面分别证明，并将它们接回当前算术目标。以下是纸面推导，尚未进行 Lean 编译。
+
+# 一、固定局部核：区分时间增长与尺度细化
+
+保留前文定义
+
+$$
+Z(T)=\sum_p\frac{\log p}{\sqrt p}(T-\log p)_+.
+$$
+
+对固定 \(h>0\)，令
+
+$$
+E_h=e^{h/2},
+\qquad
+Q_h(z)=(z-E_h)(z-1)^3,
+$$
+
+$$
+(S_hf)(T)=f(T+h),
+$$
+
+并定义
+
+$$
+\boxed{
+\mathcal D_h(T)=Q_h(S_h)Z(T).
+}
+\tag{1}
+$$
+
+令 \(w_E\) 为支集在 \([0,4]\) 的连续分段线性函数，其五个节点值为
+
+$$
+\bigl(w_E(0),w_E(1),w_E(2),w_E(3),w_E(4)\bigr)
+=
+(0,E,-1-E,1,0).
+$$
+
+定义
+
+$$
+k_h(s)=h\,w_{E_h}(s/h).
+$$
+
+于是
+
+$$
+\boxed{
+\mathcal D_h(T)
+=
+\sum_p\frac{\log p}{\sqrt p}\,
+k_h(\log p-T).
+}
+\tag{2}
+$$
+
+它只读取
+
+$$
+e^T<p\le e^{T+4h}
+$$
+
+中的素数。
+
+再定义固定尺度的累计能量
+
+$$
+\boxed{
+\mathcal E_h(L)
+=
+\int_0^L|\mathcal D_h(T)|^2\,dT,
+}
+\tag{3}
+$$
+
+以及核的平方质量
+
+$$
+\boxed{
+A_h
+=
+\int_{\mathbb R}k_h(s)^2\,ds
+=
+h^3\left(E_h^2+\frac23E_h+1\right)>0.
+}
+\tag{4}
+$$
+
+这里有两个不同极限，后面不能混用：
+
+$$
+\boxed{
+h\text{ 固定， }L\to\infty
+}
+$$
+
+研究越来越大的算术范围；
+
+$$
+\boxed{
+T,H\text{ 固定， }h\downarrow0
+}
+$$
+
+研究同一个有限窗口中的观察细化。
+
+---
+
+# 二、定理一：实际总能量的增长指数恰好是两倍谱偏离幅度
+
+定义
+
+$$
+\Delta_\zeta
+=
+\sup_\rho\left|\Re\rho-\frac12\right|.
+$$
+
+由零点的临界带位置和反射对称性，
+
+$$
+0\le\Delta_\zeta\le\frac12,
+\qquad
+\mathrm{RH}\iff\Delta_\zeta=0.
+$$
+
+这里不要求存在一个达到该上确界的零点。([DLMF][1])
+
+## 定理 1：能量增长指数公式
+
+对每个固定 \(h>0\)，
+
+$$
+\boxed{
+\limsup_{L\to\infty}
+\frac{\log\bigl(1+\mathcal E_h(L)\bigr)}{L}
+=
+2\Delta_\zeta.
+}
+\tag{5}
+$$
+
+而且，当 \(\Delta_\zeta=0\) 时，还有更强结论
+
+$$
+\boxed{
+\mathcal E_h(L)=O_h(L).
+}
+\tag{6}
+$$
+
+## 证明
+
+### 第一步：上界
+
+前文由显式公式与素数幂分离得到
+
+$$
+\mathcal D_h(T)
+=
+-2Q_h(S_h)\mathscr G(T)+o(1),
+$$
+
+其中
+
+$$
+\mathscr G(T)
+=
+\sum_j\frac{1-\cos(T\omega_j)}{\omega_j^2},
+$$
+
+$$
+\rho_j=\frac12+i\omega_j,
+\qquad
+|\Im\omega_j|\le\Delta_\zeta,
+\qquad
+\sum_j|\omega_j|^{-2}<\infty.
+$$
+
+这里使用的是实际零点展开，不把复平方换成模平方。时间函数及其变换关系的解析基础来自 Suzuki 的研究。([arXiv][2])
+
+于是
+
+$$
+|\mathscr G(T)|\le C e^{\Delta_\zeta T}.
+$$
+
+因为 \(Q_h(S_h)\) 只包含有限个固定平移，
+
+$$
+|\mathcal D_h(T)|\le C_h e^{\Delta_\zeta T}.
+$$
+
+因此式（5）的左边不超过 \(2\Delta_\zeta\)。
+
+如果 RH 成立，所有 \(\omega_j\) 为实数，\(\mathscr G\) 一致有界，所以 \(\mathcal D_h\) 有界，得到式（6）。
+
+### 第二步：过小的能量增长会排除相应极点
+
+记
+
+$$
+L_{\mathbb P}(s)=\sum_p\frac{\log p}{p^s}.
+$$
+
+前文已经得到
+
+$$
+\boxed{
+\widehat{\mathcal D_h}(r)
+=
+Q_h(e^{hr})
+\frac{L_{\mathbb P}(1/2+r)}{r^2}
+-
+B_h(r),
+}
+\tag{7}
+$$
+
+其中 \(B_h\) 为整函数。
+
+Euler 乘积给出
+
+$$
+L_{\mathbb P}(s)
+=
+-\frac{\zeta'(s)}{\zeta(s)}
++\frac{\zeta'(2s)}{\zeta(2s)}
+-J_{\mathrm o}(s),
+$$
+
+其中 \(J_{\mathrm o}\) 在 \(\Re s>1/3\) 解析。这是把一次幂、偶数次幂和奇数高次幂分开后的恒等式。([DLMF][3])
+
+因此，若
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad \delta>0,
+$$
+
+则式（7）在
+
+$$
+r_0=\delta+i\gamma
+$$
+
+有不可去极点。因为
+
+$$
+1<|e^{hr_0}|<e^{h/2},
+$$
+
+而 \(Q_h\) 的根只有 \(1\) 与 \(e^{h/2}\)，所以滤波器不能消去该极点。
+
+现在反设式（5）左边严格小于 \(2\Delta_\zeta\)。选择
+
+$$
+\frac12
+\limsup_{L\to\infty}
+\frac{\log(1+\mathcal E_h(L))}{L}
+<
+\alpha<\Delta_\zeta.
+$$
+
+则充分大的 \(L\) 满足
+
+$$
+\mathcal E_h(L)\le C e^{2\alpha L}.
+$$
+
+对任意 \(\sigma>\alpha\)，在整数时间段上使用 Cauchy–Schwarz：
+
+$$
+\begin{aligned}
+\int_n^{n+1}e^{-\sigma T}|\mathcal D_h(T)|\,dT
+&\le
+e^{-\sigma n}
+\left(\int_n^{n+1}|\mathcal D_h(T)|^2\,dT\right)^{1/2}\\
+&\le C_\alpha e^{-(\sigma-\alpha)n}.
+\end{aligned}
+$$
+
+因此 Laplace 变换在 \(\Re r>\alpha\) 内解析。
+
+但由 \(\alpha<\Delta_\zeta\)，存在右侧零点满足 \(\Re\rho-1/2>\alpha\)，其不可去极点位于该区域，矛盾。证毕。
+
+---
+
+## 推论：实际算术没有稳定的“二次能量中间态”
+
+对实际素数，以下渐近式不可能成立：
+
+$$
+\boxed{
+\mathcal E_h(L)\sim cL^2,
+\qquad c>0.
+}
+\tag{8}
+$$
+
+因为它使式（5）左边为零，进而推出 RH；而 RH 又要求 \(\mathcal E_h(L)=O(L)\)，与 \(cL^2\) 矛盾。
+
+所以，对当前特定读出：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\Longrightarrow O(L),\\
+\neg\mathrm{RH}
+&\Longrightarrow
+\text{沿某个序列呈正指数率增长}.
+\end{aligned}
+}
+\tag{9}
+$$
+
+第二行是上极限意义的结论，不是说能量对每个 \(L\) 都具有同一个精确指数渐近式。
+
+---
+
+# 三、定理二：独立随机模型却几乎必然给出 \(L^2\)
+
+现在故意构造另一个对象，用来检验“独立随机性是否足够”。
+
+令
+
+$$
+X_n\sim\operatorname{Bernoulli}\!\left(\frac1{\log n}\right),
+\qquad n\ge3,
+$$
+
+相互独立。
+
+这就是 Cramér 模型的标准独立选择机制。它是替代模型，不是把真实素数宣布为独立随机变量。([What's new][4])
+
+定义
+
+$$
+\mathcal D_h^{\mathrm B}(T)
+=
+\sum_{n\ge3}
+X_n\frac{\log n}{\sqrt n}
+k_h(\log n-T),
+$$
+
+以及
+
+$$
+\mathcal E_h^{\mathrm B}(L)
+=
+\int_0^L|\mathcal D_h^{\mathrm B}(T)|^2\,dT.
+$$
+
+## 定理 2：独立模型的几乎必然能量律
+
+对每个固定 \(h>0\)，
+
+$$
+\boxed{
+\frac{\mathcal E_h^{\mathrm B}(L)}{L^2}
+\longrightarrow
+\frac{A_h}{2}
+\qquad\text{几乎必然}.
+}
+\tag{10}
+$$
+
+## 证明
+
+### 第一步：均值主项被滤波器消去
+
+有
+
+$$
+\mathbb E\mathcal D_h^{\mathrm B}(T)
+=
+\sum_{n\ge3}\frac1{\sqrt n}k_h(\log n-T).
+$$
+
+相应连续积分为
+
+$$
+\begin{aligned}
+\int_0^\infty y^{-1/2}k_h(\log y-T)\,dy
+&=
+e^{T/2}\int_0^{4h}e^{s/2}k_h(s)\,ds\\
+&=0.
+\end{aligned}
+$$
+
+最后一步来自滤波器的零点
+
+$$
+Q_h(e^{h/2})=0.
+$$
+
+对紧支集分段光滑函数作求和—积分比较，得到
+
+$$
+\boxed{
+\mathbb E\mathcal D_h^{\mathrm B}(T)
+=
+O_h(e^{-T/2}).
+}
+\tag{11}
+$$
+
+### 第二步：方差有一个无法被独立性消去的线性项
+
+由独立性，
+
+$$
+\begin{aligned}
+\operatorname{Var}(\mathcal D_h^{\mathrm B}(T))
+&=
+\sum_{n\ge3}
+\frac{\log n-1}{n}
+k_h(\log n-T)^2.
+\end{aligned}
+$$
+
+再次作求和—积分比较：
+
+$$
+\begin{aligned}
+\operatorname{Var}(\mathcal D_h^{\mathrm B}(T))
+&=
+\int_0^{4h}(T+s-1)k_h(s)^2\,ds+o(1)\\
+&=
+A_hT+O_h(1).
+\end{aligned}
+$$
+
+所以
+
+$$
+\boxed{
+\mathbb E\mathcal E_h^{\mathrm B}(L)
+=
+\frac{A_h}{2}L^2+O_h(L).
+}
+\tag{12}
+$$
+
+### 第三步：从期望提升到几乎必然
+
+中心化后，每一项的绝对幅度至多为
+
+$$
+C_h(T+1)e^{-T/2}.
+$$
+
+独立和的四阶矩展开因此给出
+
+$$
+\mathbb E|\mathcal D_h^{\mathrm B}(T)|^4
+=
+O_h((1+T)^2).
+$$
+
+当
+
+$$
+|T-S|>4h
+$$
+
+时，两个读数使用的整数集合不相交，故相互独立。因此能量方差只需要在一个固定宽度的对角带上积分：
+
+$$
+\boxed{
+\operatorname{Var}(\mathcal E_h^{\mathrm B}(L))
+=
+O_h(L^3).
+}
+\tag{13}
+$$
+
+在序列 \(L_j=j^2\) 上，Chebyshev 不等式给出可求和的失败概率：
+
+$$
+\Pr\left(
+\left|
+\frac{\mathcal E_h^{\mathrm B}(L_j)
+-\mathbb E\mathcal E_h^{\mathrm B}(L_j)}
+{L_j^2}
+\right|>\varepsilon
+\right)
+=
+O_{h,\varepsilon}(j^{-2}).
+$$
+
+由 Borel–Cantelli，引理结论沿 \(L_j\) 几乎必然成立。再利用 \(\mathcal E_h^{\mathrm B}(L)\) 单调增加，以及 \(L_{j+1}/L_j\to1\)，推广到全部 \(L\to\infty\)。证毕。
+
+---
+
+## 为什么这不是实际素数的反例？
+
+因为定理 1 的极点约束属于**实际素数的 Euler 乘积与解析延拓**，独立模型并不拥有这套结构。
+
+独立模型可以在素数总量上给出看似合理的误差，却无法自动复现显式公式带来的更细联合约束。Tao 对 Cramér 模型的分析也明确区分了这两种层次。([What's new][4])
+
+甚至，原始交叉项的期望并不是严格为零。直接展开可得
+
+$$
+\boxed{
+\mathbb E\mathcal E_{h,\mathrm{off}}^{\mathrm B}(L)
+=
+-A_hL+O_h(1).
+}
+\tag{14}
+$$
+
+但它只有 \(L\) 级，无法抵消对角项的 \(L^2\) 主项。
+
+因此，上一轮的缺项现在有了一个严格反模型：
+
+$$
+\boxed{
+\text{保持正确的一点密度，并令中心化事件独立，}
+\quad
+\text{仍不足以产生实际算术所要求的能量结构。}
+}
+$$
+
+---
+
+# 四、另一种随机性：跨尺度观察产生一个真正的鞅
+
+下面不再随机生成整数集合。**素数保持为真实素数，随机性只来自选择观察分支。**
+
+保留重标定读出
+
+$$
+c(h)=h^3(e^{h/2}-1),
+\qquad
+\mathcal B_h(T)=\frac{\mathcal D_h(T)}{c(h)}.
+$$
+
+上一轮的二倍尺度恒等式为
+
+$$
+\boxed{
+\mathcal B_{2h}(T)
+=
+\sum_{j=0}^4\pi_h(j)\mathcal B_h(T+jh),
+}
+\tag{15}
+$$
+
+其中
+
+$$
+\boxed{
+(\pi_h(0),\ldots,\pi_h(4))
+=
+\frac{
+(E_h,\ 1+3E_h,\ 3+3E_h,\ 3+E_h,\ 1)
+}{
+8(1+E_h)
+}.
+}
+\tag{16}
+$$
+
+这些概率全部正，和为 \(1\)。
+
+## 定义：随机细化路径
+
+固定 \(H>0\)、起点 \(T\)，令
+
+$$
+h_n=H2^{-n}.
+$$
+
+取相互独立的分支变量 \(J_n\in\{0,1,2,3,4\}\)，满足
+
+$$
+\Pr(J_n=j)=\pi_{h_{n+1}}(j).
+$$
+
+定义
+
+$$
+Y_0=0,
+\qquad
+Y_{n+1}=Y_n+J_nh_{n+1},
+$$
+
+以及
+
+$$
+\boxed{
+M_n=\mathcal B_{h_n}(T+Y_n).
+}
+\tag{17}
+$$
+
+令 \(\mathcal F_n\) 记录前 \(n\) 次分支选择。
+
+## 定理 3：均值保持与精确方差分解
+
+$$
+\boxed{
+\mathbb E[M_{n+1}\mid\mathcal F_n]=M_n.
+}
+\tag{18}
+$$
+
+所以 \((M_n)\) 是鞅，并且
+
+$$
+\boxed{
+\mathbb EM_n=\mathcal B_H(T)
+\qquad\forall n.
+}
+\tag{19}
+$$
+
+定义条件新增方差
+
+$$
+\sigma_n^2
+=
+\mathbb E[(M_{n+1}-M_n)^2\mid\mathcal F_n].
+$$
+
+则对每个有限 \(N\)，
+
+$$
+\boxed{
+\mathbb EM_N^2
+=
+\mathcal B_H(T)^2
++
+\sum_{n=0}^{N-1}\mathbb E\sigma_n^2.
+}
+\tag{20}
+$$
+
+### 证明
+
+式（18）就是在位置 \(T+Y_n\) 使用式（15）。
+
+再由
+
+$$
+\mathbb E[M_{n+1}^2\mid\mathcal F_n]
+=
+M_n^2+\sigma_n^2
+$$
+
+取期望并逐层相加，得到式（20）。证毕。
+
+这是标准鞅的正交增量结构在当前观察系统中的实例。它只保证每个有限层的关系，不能自动允许把 \(N\) 换成无穷。
+
+# 五、随机路径最终落在哪里？可以算出完整分布
+
+## 定理 4：极限观察位置的正密度
+
+几乎必然地，
+
+$$
+Y_n\longrightarrow Y_\infty\in[0,4H].
+$$
+
+而且
+
+$$
+\boxed{
+Y_\infty
+\overset{d}=
+U_1+U_2+U_3+V_H,
+}
+\tag{21}
+$$
+
+其中 \(U_1,U_2,U_3\) 独立且均匀分布于 \([0,H]\)，\(V_H\) 与它们独立，并具有密度
+
+$$
+\boxed{
+r_H(v)
+=
+\frac{e^{-v/2}}{2(1-e^{-H/2})}
+\mathbf1_{[0,H]}(v).
+}
+\tag{22}
+$$
+
+记其卷积密度为 \(\kappa_H\)。则
+
+$$
+\kappa_H(s)>0
+\qquad(0<s<4H).
+$$
+
+### 证明
+
+首先，
+
+$$
+0\le Y_{n+1}-Y_n\le4h_{n+1},
+$$
+
+因此 \(Y_n\) 单调有界，必有极限。
+
+设 \(h=H/M\)，其中 \(M=2^n\)。前文尺度多项式的分解给出 \(Y_n/h\) 的概率生成函数
+
+$$
+\boxed{
+\frac{
+\left(\sum_{j=0}^{M-1}E_h^{M-1-j}z^j\right)
+\left(\sum_{j=0}^{M-1}z^j\right)^3
+}{
+M^3\sum_{j=0}^{M-1}E_h^{M-1-j}
+}.
+}
+\tag{23}
+$$
+
+因此，\(Y_n\) 的分布等于三个独立离散均匀变量，与一个权重正比于
+
+$$
+e^{-jh/2}
+$$
+
+的离散变量之和。
+
+令 \(h\downarrow0\)，前三项趋于 \([0,H]\) 上的均匀分布，第四项趋于式（22）。证毕。
+
+此外，从有限卷积的 Riemann 和可得局部概率估计：
+
+$$
+\boxed{
+\Pr(Y_n=jh_n)
+=
+h_n\kappa_H(jh_n)+O_H(h_n^2),
+}
+\tag{24}
+$$
+
+在 \((0,4H)\) 的任意固定紧子区间上一致成立。
+
+一个直接验证方法是：三个离散均匀变量的卷积系数由截断二次多项式给出，其除以 \(h_n\) 后一致趋于三个连续均匀密度的卷积；再与指数权重作一次 Riemann 求和。
+
+---
+
+## 推论：细化读数几乎必然最终等于零
+
+对每个固定 \(T,H\)，
+
+$$
+\boxed{
+M_n=0
+\quad\text{对几乎每条路径，在充分大的 }n\text{ 后成立}.
+}
+\tag{25}
+$$
+
+### 证明
+
+每一层读取的时间窗口是
+
+$$
+I_n=[T+Y_n,\ T+Y_n+4h_n].
+$$
+
+子窗口包含在父窗口内，且其长度趋于零，交集为单点
+
+$$
+T+Y_\infty.
+$$
+
+初始窗口 \([T,T+4H]\) 内只有有限多个素数事件 \(\log p\)。
+
+由于 \(Y_\infty\) 有连续密度，
+
+$$
+\Pr(T+Y_\infty=\log p)=0
+$$
+
+对其中每个素数都成立。
+
+因此，几乎每条路径的极限点都与这些事件保持正距离。充分细化后，窗口里没有素数，式（2）的读数就是零。证毕。
+
+**但这还不能推出 \(\mathcal B_H(T)=0\)。**
+
+原因将在下面用一个真实素数完整展示。
+
+# 六、只用素数 \(2\)，证明平均值不能与极限交换
+
+取
+
+$$
+H=\frac1{10},
+\qquad
+T=\log2-2H.
+$$
+
+初始算术窗口为
+
+$$
+[2e^{-1/5},\,2e^{1/5}],
+$$
+
+其中只有素数 \(2\)。
+
+记
+
+$$
+a=\frac{\log2}{\sqrt2},
+\qquad
+K=\kappa_H(2H)>0.
+$$
+
+初始读数为
+
+$$
+\boxed{
+M_0
+=
+-\frac{a(1+e^{H/2})}
+{H^2(e^{H/2}-1)}
+\ne0.
+}
+\tag{26}
+$$
+
+现在令 \(h=h_n\)、\(M=H/h=2^n\)。
+
+只有三个细尺度位置产生非零读数：
+
+$$
+Y_n=(2M-1)h,\quad(2M-2)h,\quad(2M-3)h.
+$$
+
+它们对应的读数分别是
+
+$$
+\frac{aE_h}{h^2(E_h-1)},
+\qquad
+-\frac{a(1+E_h)}{h^2(E_h-1)},
+\qquad
+\frac{a}{h^2(E_h-1)}.
+\tag{27}
+$$
+
+## 定理 5：稀有分支的精确增长尺度
+
+对上述真实素数实例，
+
+$$
+\boxed{
+\Pr(M_n\ne0)\sim3Kh_n,
+}
+\tag{28}
+$$
+
+$$
+\boxed{
+\mathbb E|M_n|
+\sim8aK\,h_n^{-2},
+}
+\tag{29}
+$$
+
+$$
+\boxed{
+\mathbb EM_n^2
+\sim24a^2K\,h_n^{-5}.
+}
+\tag{30}
+$$
+
+同时，
+
+$$
+\boxed{
+M_n\to0\quad\text{几乎必然},
+\qquad
+\mathbb EM_n=M_0\ne0.
+}
+\tag{31}
+$$
+
+### 证明
+
+由式（24），三个非零位置的概率分别为
+
+$$
+Kh_n+O(h_n^2).
+$$
+
+又因为
+
+$$
+E_h-1\sim h/2,
+\qquad E_h\to1,
+$$
+
+式（27）的三个值分别渐近为
+
+$$
+\frac{2a}{h^3},
+\qquad
+-\frac{4a}{h^3},
+\qquad
+\frac{2a}{h^3}.
+$$
+
+因此，非零概率为 \(3Kh+O(h^2)\)。
+
+绝对值期望的主项为
+
+$$
+Kh\left(\frac{2a+4a+2a}{h^3}\right)
+=
+8aK h^{-2}.
+$$
+
+平方期望的主项为
+
+$$
+Kh\left(\frac{4a^2+16a^2+4a^2}{h^6}\right)
+=
+24a^2K h^{-5}.
+$$
+
+最后，几乎必然最终为零来自定理 4 的推论；均值恒定来自定理 3。证毕。
+
+---
+
+这给出一个完全明确的极限失配：
+
+$$
+\boxed{
+\mathbb E\!\left[\lim_{n\to\infty}M_n\right]
+=0,
+}
+$$
+
+但
+
+$$
+\boxed{
+\lim_{n\to\infty}\mathbb EM_n=M_0\ne0.
+}
+\tag{32}
+$$
+
+不存在矛盾，因为这个鞅不一致可积。事实上，它连
+
+$$
+\sup_n\mathbb E|M_n|<\infty
+$$
+
+都不满足。
+
+一致可积性要求
+
+$$
+\lim_{R\to\infty}
+\sup_n
+\mathbb E\bigl[|M_n|\mathbf1_{\{|M_n|>R\}}\bigr]
+=0.
+$$
+
+它正是保证这种概率收敛可以提升为 \(L^1\) 收敛的关键条件。
+
+**这里概率很小的分支，不是可以删除的分支。**
+
+它们满足
+
+$$
+\boxed{
+\text{概率}\asymp h,
+\qquad
+\text{幅度}\asymp h^{-3},
+}
+$$
+
+所以
+
+$$
+\boxed{
+\text{绝对一阶贡献}\asymp h^{-2},
+\qquad
+\text{二阶贡献}\asymp h^{-5}.
+}
+$$
+
+这不是 RH 的反例，也不是某种物理概率失效。它只是证明：**正权、归一化、逐层均值保持，都不能代替无限完成所需的尾部控制。**
+
+---
+
+# 七、正概率核与带符号算术核之间，还隔着一个微分算子
+
+定理 4 给出了正密度 \(\kappa_H\)。但实际重标定算术读出不是直接对它求平均。
+
+## 定理 6：正核的导数读出
+
+对 \(0<s<4H\)，并按整体分布意义延拓，
+
+$$
+\boxed{
+\frac{k_H(s)}{c(H)}
+=
+2\kappa_H''(s)+\kappa_H'(s).
+}
+\tag{33}
+$$
+
+因此
+
+$$
+\boxed{
+\mathcal B_H(T)
+=
+\sum_p\frac{\log p}{\sqrt p}
+\left[
+2\kappa_H''(\log p-T)
++\kappa_H'(\log p-T)
+\right].
+}
+\tag{34}
+$$
+
+## 证明
+
+由式（21）—（22），\(\kappa_H\) 的指数变换为
+
+$$
+\begin{aligned}
+\int e^{zs}\kappa_H(s)\,ds
+=
+\left(\frac{e^{Hz}-1}{Hz}\right)^3
+\frac{e^{Hz}-e^{H/2}}
+{2(e^{H/2}-1)(z-\tfrac12)}.
+\end{aligned}
+$$
+
+对紧支集分布，
+
+$$
+\int e^{zs}(2\kappa_H''+\kappa_H')\,ds
+=
+(2z^2-z)\int e^{zs}\kappa_H(s)\,ds.
+$$
+
+整理为
+
+$$
+\frac{Q_H(e^{Hz})}{c(H)z^2}.
+$$
+
+另一方面，由 \(k_H\) 的分段线性定义，
+
+$$
+\int e^{zs}k_H(s)\,ds
+=
+\frac{Q_H(e^{Hz})}{z^2}.
+$$
+
+两边一致，得到式（33）。证毕。
+
+---
+
+所以，共同结构现在是
+
+$$
+\boxed{
+\text{正概率密度 }\kappa_H
+\xrightarrow{\ 2\partial^2+\partial\ }
+\text{带符号算术核}.
+}
+\tag{35}
+$$
+
+**正密度存在，不能推出它的导数读出非负，也不能推出该读出的长期能量已经受到控制。**
+
+这就是当前量子构造中必须保留的另一个接口：从“合法概率核”到“目标算术观测量”，中间还有一个并不保正的运算。
+
+# 八、把真正的算术目标放宽：不必先证明最锋利的抵消式
+
+上一轮把总能量拆为
+
+$$
+\mathcal E_h(L)
+=
+\mathcal E_h^{\mathrm{diag}}(L)
++
+\mathcal E_h^{\mathrm{off}}(L).
+$$
+
+由 Mertens 估计
+
+$$
+\sum_{p\le x}\frac{\log p}{p}
+=
+\log x+O(1)
+$$
+
+及分部求和，已经得到
+
+$$
+\boxed{
+\mathcal E_h^{\mathrm{diag}}(L)
+=
+\frac{A_h}{2}L^2+O_h(L).
+}
+\tag{36}
+$$
+
+所用 Mertens 估计是无条件的。([What's new][5])
+
+在 RH 成立时，必然有
+
+$$
+\mathcal E_h^{\mathrm{off}}(L)
+=
+-\frac{A_h}{2}L^2+O_h(L).
+$$
+
+但本轮的增长指数定理说明：**不一定需要首先直接证明这条最精细的抵消公式。**
+
+## 定理 7：一个更弱的交叉项上界已经足够
+
+如果对某个固定 \(h>0\)、某个有限 \(A\ge0\)，存在 \(C\)，使
+
+$$
+\boxed{
+\mathcal E_h^{\mathrm{off}}(L)
+\le C(1+L)^A
+}
+\tag{37}
+$$
+
+对充分大的 \(L\) 成立，那么 RH 成立。
+
+特别地，下面这个上界已经足够：
+
+$$
+\boxed{
+\mathcal E_h^{\mathrm{off}}(L)\le C_hL^2.
+}
+\tag{38}
+$$
+
+### 证明
+
+由式（36）—（37）及总能量非负，
+
+$$
+0\le\mathcal E_h(L)
+\le C'(1+L)^{\max\{A,2\}}.
+$$
+
+于是
+
+$$
+\limsup_{L\to\infty}
+\frac{\log(1+\mathcal E_h(L))}{L}=0.
+$$
+
+定理 1 给出 \(\Delta_\zeta=0\)，即 RH。
+
+随后 RH 反过来给出
+
+$$
+\mathcal E_h(L)=O_h(L),
+$$
+
+从而自动推出更锋利的
+
+$$
+\mathcal E_h^{\mathrm{off}}(L)
+=
+-\frac{A_h}{2}L^2+O_h(L).
+$$
+
+证毕。
+
+---
+
+因此，证明任务可以分成两阶段：
+
+$$
+\boxed{
+\text{先阻止交叉项出现超多项式的正增长}
+}
+$$
+
+然后借助已经建立的解析结构，得到
+
+$$
+\boxed{
+\text{它必须完成精确的二次主项抵消}.
+}
+$$
+
+这并不意味着式（38）已经容易。它仍然需要对**实际素数对**作带符号的联合估计。
+
+独立随机模型不能代替这一证明：它虽然也有多项式能量，却没有实际 ζ 函数的解析延拓与极点约束，因此不能应用定理 1。
+
+# 九、现在可以明确区分三种“随机／量子结构”
+
+| 结构       | 本轮严格得到的结果                       | 不能替代的部分        |
+| -------- | ------------------------------- | -------------- |
+| 随机生成算术对象 | 独立模型几乎必然产生 \(\frac12A_hL^2\) 能量 | 实际素数的乘法结构与显式公式 |
+| 随机选择观察分支 | 精确鞅、有限层均值保持、正权尺度完成              | 无限细化所需的一致可积性   |
+| 实际素数的谱读出 | 能量指数等于 \(2\Delta_\zeta\)        | 对实际交叉项的统一增长上界  |
+
+用前文的项目语言说，**合法的 FLOW 不会自动生成所需的 ADMIT 证明**：每一步的概率和为 \(1\)，只能证明该步操作合法；不能证明无限极限可交换，也不能证明实际素数对相关符合期望模型。
+
+而 ANCHOR 仍然必须固定为真实素数序列。把它换成独立随机序列，即使许多一点统计相同，也已经换了数学对象。
+
+---
+
+## 本轮的实质推进
+
+现在有三条明确的结果，而不是三个相似的比喻：
+
+$$
+\boxed{
+\text{实际能量增长指数}=2\Delta_\zeta;
+}
+$$
+
+$$
+\boxed{
+\text{独立随机替代模型的能量}
+\sim\frac12A_hL^2
+\quad\text{几乎必然};
+}
+$$
+
+$$
+\boxed{
+\text{跨尺度观察可几乎处处归零，}
+\quad
+\text{同时保持非零均值并使绝对矩发散}.
+}
+$$
+
+它们分别排除了两种未经证明的跨越：
+
+$$
+\text{“素数大概独立”}
+\Longrightarrow
+\text{“相关抵消应该成立”},
+$$
+
+以及
+
+$$
+\text{“每层都合法且保均值”}
+\Longrightarrow
+\text{“无限完成仍保留同一读出”}.
+$$
+
+**剩下的实际算术目标可以比上一轮写得更弱、也更集中：对一个固定 \(h\)，证明交叉能量具有某个统一的多项式上界，例如式（38）。**
+
+这条上界尚未得到。但一旦从真实素数结构中证明它成立，便不必再单独猜测二次主项如何精确抵消：本轮建立的解析增长约束会迫使那种抵消发生。
+
+[1]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/html/2206.03682v4 "Aspects of the screw function corresponding to the Riemann zeta-function"
+[3]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[4]: https://terrytao.wordpress.com/2015/01/04/254a-supplement-4-probabilistic-models-and-heuristics-for-the-primes-optional/ "254A, Supplement 4: Probabilistic models and heuristics for the primes (optional) | What's new"
+[5]: https://terrytao.wordpress.com/2013/12/11/mertens-theorems/ "Mertens’ theorems | What's new"
+这次可以把上一轮的固定滤波算子，推进到一个更接近实际 theta 核的形式：
+
+> **不再先计算高阶对数导数与累积量，而是把整个判据精确改写成原始矩的二次表达。这个改写保留每个有限层的负方向，并且能够明显改善无限截断的误差控制。**
+
+关键区别是：
+
+$$
+\boxed{
+\text{消去对数导数的极点}
+\quad\neq\quad
+\text{消去零点信息}.
+}
+$$
+
+我们将看到：离线零点即使不再以极点出现，仍会留下一个明确的“零自配对、非零交叉配对”证书。
+
+最后，还能把待证正性写成**同一 theta 态的两个独立副本上的期望不等式**，并提出一个直接作用于 theta 密度的有限阶充分条件。以下继续给出定义与证明，不假设 RH 成立。
+
+---
+
+# 一、固定上一轮的算术对象
+
+采用标准 completed 函数：
+
+$$
+\xi(s)=\frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s),
+$$
+
+以及反射折叠：
+
+$$
+\boxed{
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{n\ge0}a_nv^n.
+}
+$$
+
+这里通过偶幂级数定义 \(D\)，没有选择平方根分支；ξ 的归一化与反射关系保持不变。([DLMF][1])
+
+沿用正 theta 概率态：
+
+$$
+d\nu(x)=\frac{\Phi(x)}{\xi(1/2)}\,dx,
+$$
+
+使：
+
+$$
+\int_{\mathbb R}e^{bx}\,d\nu(x)=D(b^2).
+$$
+
+记：
+
+$$
+m_{2n}=\int x^{2n}\,d\nu(x),
+\qquad
+a_n=\frac{m_{2n}}{(2n)!}.
+$$
+
+这种归一化 ξ 的正概率表示，不需要 RH。([arXiv][2])
+
+再定义：
+
+$$
+\log D(v)=\sum_{n\ge1}\frac{\chi_{2n}}{(2n)!}v^n,
+$$
+
+$$
+\boxed{
+s_n=(-1)^{n+1}\frac{n\chi_{2n}}{(2n)!}.
+}
+$$
+
+于是：
+
+$$
+\frac{D'(v)}{D(v)}
+=
+s_1-s_2v+s_3v^2-\cdots.
+$$
+
+选择 \(r_0>0\)，满足：
+
+$$
+D(r_0)<2,
+$$
+
+并固定：
+
+$$
+\ell=\frac{r_0}{2}.
+$$
+
+把上一轮矩阵改为从零编号：
+
+$$
+\boxed{
+\mathsf H_{ij}
+=
+\ell^{i+j+2}s_{i+j+2},
+\qquad i,j\ge0.
+}
+\tag{P1}
+$$
+
+它就是上一轮的 \(\mathsf K\)，仅改变了编号。
+
+前文已经得到的纸面等价是：
+
+$$
+\boxed{
+\mathrm{RH}\iff\mathsf H\succeq0.
+}
+\tag{P2}
+$$
+
+本轮不重复构造未知谱，而是改变这个**已经固定的实际算子**的表达方式。
+
+---
+
+# 二、先排除一种可能的伪进展：缩小观察尺度，会让所有缺陷都变小
+
+若把尺度改为：
+
+$$
+\ell'=q\ell,\qquad0<q<1,
+$$
+
+定义对角算子：
+
+$$
+E_q=\operatorname{diag}(q,q^2,q^3,\ldots).
+$$
+
+直接比较矩阵元：
+
+$$
+\boxed{
+\mathsf H_{\ell'}=E_q\mathsf H_\ell E_q.
+}
+\tag{P3}
+$$
+
+## 定理 P1：有限尺度变化保留负方向，但可以任意压低其数值
+
+对每个 \(q>0\)：
+
+$$
+\boxed{
+n_-(\mathsf H_{q\ell})=n_-(\mathsf H_\ell).
+}
+\tag{P4}
+$$
+
+但：
+
+$$
+\boxed{
+\|\mathsf H_{q\ell}\|_1
+\le q^2\|\mathsf H_\ell\|_1,
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\operatorname{Tr}(\mathsf H_{q\ell})_-
+\le q^2\operatorname{Tr}(\mathsf H_\ell)_-.
+}
+\tag{P5}
+$$
+
+### 证明
+
+每个有限截断中的 \(E_q\) 都可逆，因此有限矩阵的正负惯性不变。
+
+无限算子的任何有限维负子空间，都可以用有限支撑向量充分逼近，并保持严格负定。因此，全部负方向数等于有限截断负指标的上确界，得到式（P4）。
+
+另一方面，\(\|E_q\|=q\)，所以迹范数满足式（P5）的第一项。
+
+写：
+
+$$
+\mathsf H=\mathsf H_+-\mathsf H_-.
+$$
+
+则：
+
+$$
+E_q\mathsf HE_q\ \succeq\ -E_q\mathsf H_-E_q.
+$$
+
+由负部分迹的变分表达：
+
+$$
+\operatorname{Tr}(E_q\mathsf HE_q)_-
+\le
+\operatorname{Tr}(E_q\mathsf H_-E_q)
+\le q^2\operatorname{Tr}\mathsf H_-.
+$$
+
+证毕。
+
+因此：
+
+> **不能一边不断缩小 \(\ell\)，一边把负谱总量趋零解释成 RH 的证据。**
+
+在 \(q\to0\) 时，整个算子都趋于零；即使存在负方向，它也会一起被压小。
+
+这与真正的目标：
+
+$$
+\text{在一份固定、忠实的尺度下证明 }\mathsf H\succeq0
+$$
+
+不同。
+
+---
+
+# 三、去掉对数导数：构造一个没有极点的二变量整核
+
+## 定义 P1：实际整函数 \(F\)
+
+令：
+
+$$
+\boxed{
+F(z)=D(-\ell z)=\sum_{n\ge0}p_nz^n,
+\qquad
+p_n=(-\ell)^na_n.
+}
+\tag{P6}
+$$
+
+因此：
+
+$$
+F(0)=1.
+$$
+
+在零附近：
+
+$$
+\frac{F'(z)}{F(z)}
+=
+-\ell s_1-\sum_{n\ge1}\ell^{n+1}s_{n+1}z^n.
+$$
+
+所以：
+
+$$
+\boxed{
+-\frac{
+F'(z)/F(z)-F'(w)/F(w)
+}{z-w}
+=
+\sum_{i,j\ge0}\mathsf H_{ij}z^iw^j.
+}
+\tag{P7}
+$$
+
+右边是上一轮滤波算子的生成核。
+
+它包含对数导数，因此在 \(F\) 的零点处有极点。现在乘回分母，定义：
+
+$$
+\boxed{
+\mathcal B_F(z,w)
+=
+\frac{
+F(z)F'(w)-F'(z)F(w)
+}{
+z-w
+}.
+}
+\tag{P8}
+$$
+
+分子在 \(z=w\) 时为零，故奇点可去。于是：
+
+$$
+\boxed{
+\mathcal B_F\text{ 是两个变量上的整函数}.
+}
+$$
+
+在对角线上：
+
+$$
+\boxed{
+\mathcal B_F(z,z)=F'(z)^2-F(z)F''(z).
+}
+\tag{P9}
+$$
+
+这类函数—导数差商与实根二次型之间的联系，属于经典 Bézout、Hermite–Sylvester 方法；本轮使用的是实际整函数 \(F\)，不是任意选择的实根多项式。([arXiv][3])
+
+定义其系数矩阵：
+
+$$
+\boxed{
+\mathcal B_F(z,w)
+=
+\sum_{i,j\ge0}\mathsf B_{ij}z^iw^j.
+}
+\tag{P10}
+$$
+
+下面证明：**乘掉这些极点，没有乘掉负证据。**
+
+---
+
+# 四、关键定理：新矩阵与原矩阵逐阶精确合同，而且变换条件数有统一界
+
+## 定义 P2：由实际 \(F\) 决定的三角算子
+
+定义下三角 Toeplitz 矩阵：
+
+$$
+\boxed{
+(T_F)_{ij}
+=
+\begin{cases}
+p_{i-j},&i\ge j,\\
+0,&i<j.
+\end{cases}
+}
+\tag{P11}
+$$
+
+因为 \(p_0=1\)，它的每个有限主块都是单位下三角矩阵。
+
+## 定理 P2：逐阶保真关系
+
+$$
+\boxed{
+\mathsf B=T_F\mathsf H T_F^*.
+}
+\tag{P12}
+$$
+
+而对每个 \(N\)：
+
+$$
+\boxed{
+\mathsf B_N=T_{F,N}\mathsf H_NT_{F,N}^*.
+}
+\tag{P13}
+$$
+
+因此：
+
+$$
+\boxed{
+n_-(\mathsf B_N)=n_-(\mathsf H_N),
+\qquad
+\det\mathsf B_N=\det\mathsf H_N.
+}
+\tag{P14}
+$$
+
+### 证明
+
+由式（P7）、（P8）：
+
+$$
+\mathcal B_F(z,w)
+=
+F(z)F(w)
+\sum_{i,j\ge0}\mathsf H_{ij}z^iw^j.
+$$
+
+比较系数，得到式（P12）。
+
+由于 \(T_F\) 下三角，前 \(N\) 行列只涉及 \(\mathsf H_N\)，没有额外尾项，因此有限式（P13）也精确成立。
+
+有限合同变换保持惯性；再用：
+
+$$
+\det T_{F,N}=1,
+$$
+
+得到行列式相等。证毕。
+
+**这里不是无限极限以后才恢复正负性，而是每一个有限阶数都完全一致。**
+
+---
+
+## 定理 P3：这个转换不会随阶数变得任意病态
+
+记：
+
+$$
+M=D(\ell),
+\qquad
+\kappa=2-D(\ell)>0.
+$$
+
+则：
+
+$$
+\boxed{
+\|T_F\|\le M,
+\qquad
+\|T_F^{-1}\|\le\kappa^{-1}.
+}
+\tag{P15}
+$$
+
+同样的界对每个有限 \(T_{F,N}\) 成立。
+
+### 证明
+
+对 \(|z|\le1\)：
+
+$$
+|F(z)|\le D(\ell)=M,
+$$
+
+并且：
+
+$$
+|F(z)-1|\le D(\ell)-1.
+$$
+
+所以：
+
+$$
+|F(z)|\ge2-D(\ell)=\kappa.
+$$
+
+将系数序列识别为 Hardy 空间中的幂级数，\(T_F\) 就是乘以 \(F\)。乘法算子的范数不超过 \(\sup|F|\)，其逆是乘以 \(1/F\)，得到式（P15）。
+
+有限逆矩阵正是 \(1/F\) 的乘法矩阵的相应主块，因此同样成立。证毕。
+
+于是：
+
+$$
+\boxed{
+\operatorname{cond}(T_{F,N})
+\le
+\frac{D(\ell)}{2-D(\ell)},
+}
+\tag{P16}
+$$
+
+右边与 \(N\) 无关。
+
+这不表示原矩阵本身不病态。它说明的是：
+
+> **从累积量表达改成原始矩表达，不需要付出一个随阶数无界增长的额外变换条件数。**
+
+---
+
+# 五、新矩阵只含原始 theta 矩的二次组合
+
+从式（P8）展开，得到：
+
+$$
+\boxed{
+\begin{aligned}
+\mathsf B_{ij}
+=
+\sum_{k=0}^{j}
+\Big[
+&(j-k+1)p_{i+k+1}p_{j-k+1}\\
+&-(i+k+2)p_{i+k+2}p_{j-k}
+\Big].
+\end{aligned}
+}
+\tag{P17}
+$$
+
+每项都是两个原始系数的乘积。
+
+因此，计算 \(\mathsf B_N\) 只需要：
+
+$$
+a_0,\ldots,a_{2N},
+$$
+
+即：
+
+$$
+m_0,m_2,\ldots,m_{4N}.
+$$
+
+**不必先把这些矩组合成全部高阶累积量，再做一次高阶矩阵运算。**
+
+前两阶明确为：
+
+$$
+\boxed{
+\mathsf B_2=
+\begin{pmatrix}
+\ell^2(a_1^2-2a_2)
+&
+\ell^3(3a_3-a_1a_2)\\[1mm]
+\ell^3(3a_3-a_1a_2)
+&
+\ell^4(2a_2^2-2a_1a_3-4a_4)
+\end{pmatrix}.
+}
+\tag{P18}
+$$
+
+其行列式仍然等于原来的：
+
+$$
+\boxed{
+\det\mathsf B_2
+=
+\ell^6(s_2s_4-s_3^2)
+=
+\frac{\ell^6}{1209600}
+\left(10\chi_4\chi_8-21\chi_6^2\right).
+}
+\tag{P19}
+$$
+
+所以，没有把某一条高阶约束删掉，只是改变了表达。
+
+### 实际数值核对
+
+取 \(\ell=\frac12\)。本轮分别使用 70 位与 90 位工作精度，从实际 ξ 直接计算原始系数，得到：
+
+$$
+\mathsf B_2\approx
+\begin{pmatrix}
+9.29314982131742\times10^{-6}
+&
+-8.93373398959264\times10^{-8}\\
+-8.93373398959264\times10^{-8}
+&
+8.65312685860775\times10^{-10}
+\end{pmatrix}.
+$$
+
+并有：
+
+$$
+\det\mathsf B_2
+\approx6.03201323104834\times10^{-17}>0.
+$$
+
+三角转换的统一条件数上界为：
+
+$$
+\frac{D(1/2)}{2-D(1/2)}
+\approx1.02350255699703.
+$$
+
+两种精度的结果相符，前面三阶矩阵的合同恒等式也作了符号核对。
+
+**这些数值不是区间认证；很小的行列式仍要求严格误差控制。**
+
+---
+
+# 六、消去极点以后，截断误差可以比几何级数更快
+
+上一轮对 \(\mathsf H\) 给出了几何尾界。
+
+新核 \(\mathcal B_F\) 是二变量整函数，因此可以在任意更大的圆盘上使用 Cauchy 估计，而不再受对数导数最近极点的直接限制。
+
+对 \(R>1\)，定义：
+
+$$
+\boxed{
+\mathcal M_R
+=
+\ell^2\left[
+D'(\ell R)^2+
+D(\ell R)D''(\ell R)
+\right].
+}
+\tag{P20}
+$$
+
+## 定理 P4：任意半径的有限截断界
+
+$$
+\boxed{
+\|\mathsf B-\mathsf B_N\|_{\mathrm{op}}
+\le
+\frac{\mathcal M_R}{1-R^{-2}}
+\sqrt{2R^{-2N}-R^{-4N}}.
+}
+\tag{P21}
+$$
+
+这里 \(\mathsf B_N\) 在其余坐标补零。
+
+### 证明
+
+把核写成：
+
+$$
+\mathcal B_F(z,w)
+=
+F'(w)\frac{F(z)-F(w)}{z-w}
+-
+F(w)\frac{F'(z)-F'(w)}{z-w}.
+$$
+
+在 \(|z|,|w|\le R\) 上，线段仍在圆盘内，所以：
+
+$$
+|\mathcal B_F(z,w)|
+\le
+\sup|F'|^2+\sup|F|\sup|F''|.
+$$
+
+由于 \(a_n\ge0\)：
+
+$$
+\sup|F|\le D(\ell R),
+$$
+
+$$
+\sup|F'|\le\ell D'(\ell R),
+\qquad
+\sup|F''|\le\ell^2D''(\ell R).
+$$
+
+故核的模长不超过 \(\mathcal M_R\)。
+
+对两个变量分别使用 Cauchy 系数估计：
+
+$$
+|\mathsf B_{ij}|
+\le\mathcal M_RR^{-(i+j)}.
+$$
+
+将被截去部分的矩阵元平方求和，就得到式（P21）。证毕。这里使用的系数估计与解析延拓原则是标准复分析工具。([DLMF][4])
+
+---
+
+## 推论：存在超几何速度的截断方案
+
+实际 ξ 的定义与 Stirling 展开给出：
+
+$$
+\log D(x)=O(\sqrt x\log x)
+\qquad(x\to+\infty).
+$$
+
+对 \(D'\)、\(D''\) 也得到同类上界。([DLMF][5])
+
+取：
+
+$$
+R_N=\left(\frac{N}{\log N}\right)^2,
+$$
+
+则式（P21）推出：
+
+$$
+\boxed{
+\|\mathsf B-\mathsf B_N\|_{\mathrm{op}}
+\le
+\exp\!\left[
+-2N\log N+
+2N\log\log N+
+O(N)
+\right].
+}
+\tag{P22}
+$$
+
+这里的常数依赖固定的实际 \(D,\ell\)，不依赖未知零点的位置。
+
+这比任意固定比率的几何衰减更快。
+
+**改进的是表示与尾界，不是把负方向人为放大。** 由于合同变换有统一条件数，实际很弱的负方向仍然可能很弱；有限正前缀也仍然不能自动证明无限算子非负。
+
+---
+
+# 七、离线零点没有被消去：它变成一个两读出负证书
+
+定义 Hermitian 核：
+
+$$
+\boxed{
+\mathcal L_F(z,w)=\mathcal B_F(z,\overline w).
+}
+\tag{P23}
+$$
+
+先考虑 \(F\) 的一个简单非实零点：
+
+$$
+F(a)=0,\qquad \Im a\ne0,\qquad F'(a)\ne0.
+$$
+
+因为 \(F\) 的系数实：
+
+$$
+F(\overline a)=0.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal L_F(a,a)=0.
+}
+$$
+
+但与基点 \(0\) 的交叉配对为：
+
+$$
+\boxed{
+\mathcal L_F(a,0)
+=
+-\frac{F'(a)}a\ne0.
+}
+\tag{P24}
+$$
+
+因此，两点矩阵：
+
+$$
+\boxed{
+\begin{pmatrix}
+0&-F'(a)/a\\
+-\overline{F'(a)/a}&\mathcal B_F(0,0)
+\end{pmatrix}
+}
+$$
+
+的行列式为：
+
+$$
+\boxed{
+-\left|\frac{F'(a)}a\right|^2<0.
+}
+\tag{P25}
+$$
+
+**零自配对与非零交叉配对，不可能同时存在于一个正 Gram 核中。**
+
+这就是“乘掉极点但保留反例”的具体机制。
+
+---
+
+## 重根也不会逃过检验
+
+若 \(a\) 是 \(m\) 重非实零点，则：
+
+$$
+F^{(j)}(a)=0\quad(j<m),
+\qquad F^{(m)}(a)\ne0.
+$$
+
+把第一个读出改成：
+
+$$
+\left.\frac{d^{m-1}}{dz^{m-1}}\right|_{z=a},
+$$
+
+第二个仍为在 \(0\) 处取值。
+
+相应的自配对仍为零，而交叉项为：
+
+$$
+\boxed{
+-\frac{F^{(m)}(a)}a\ne0.
+}
+\tag{P26}
+$$
+
+因此仍然有一个严格负的二阶行列式。
+
+这里的“两个读出”包含一个可能的高阶导数读出，并不意味着两次低精度实验就能找出任意离线根。
+
+### 它怎样回到有限系数矩阵？
+
+如果全部 \(\mathsf B_N\succeq0\)，则每个截断核：
+
+$$
+\sum_{i,j<N}\mathsf B_{ij}z^i\overline w^{\,j}
+$$
+
+都是正核。
+
+由于完整核是整函数，这些截断在任意固定紧区域连同有限阶导数一致收敛。其极限及导数读出的 Gram 矩阵也必须非负。
+
+这与式（P25）、（P26）矛盾。
+
+所以：
+
+$$
+\boxed{
+\text{一个非实零点}
+\Longrightarrow
+\text{某个有限 }\mathsf B_N\text{ 已有负方向}.
+}
+$$
+
+这项证明没有用“把非实根移回实轴”的操作，而是保留了它与其他参考点之间无法正实现的关系。
+
+---
+
+# 八、现在把判据直接送回 theta 态的两个副本
+
+这一步使新表达真正接近原始算术核。
+
+定义：
+
+$$
+\boxed{
+\varphi_z(x)
+=
+\sum_{n=0}^{\infty}
+\frac{(-\ell z)^nx^{2n}}{(2n)!}.
+}
+\tag{P27}
+$$
+
+它可以写成 \(\cos(x\sqrt{\ell z})\)，但我们以幂级数为定义，所以没有平方根分支问题。
+
+由原始矩：
+
+$$
+\boxed{
+F(z)=\mathbb E_\nu[\varphi_z(X)].
+}
+\tag{P28}
+$$
+
+取两个独立副本：
+
+$$
+X,Y\sim\nu.
+$$
+
+定义对称的二变量读出：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal V(z,w;X,Y)
+=
+\frac1{2(z-w)}
+\Big[
+&\varphi_z(X)\varphi_w'(Y)
++\varphi_z(Y)\varphi_w'(X)\\
+&-\varphi_z'(X)\varphi_w(Y)
+-\varphi_z'(Y)\varphi_w(X)
+\Big].
+\end{aligned}
+}
+\tag{P29}
+$$
+
+撇号是对生成参数求导，不是对 \(X,Y\) 求导。
+
+分子在 \(z=w\) 时逐点为零，所以该读出也具有可去延拓。
+
+独立性给出：
+
+$$
+\boxed{
+\mathcal B_F(z,w)
+=
+\mathbb E[\mathcal V(z,w;X,Y)].
+}
+\tag{P30}
+$$
+
+将：
+
+$$
+\mathcal V(z,w;X,Y)
+=
+\sum_{i,j\ge0}\mathcal V_{ij}(X,Y)z^iw^j
+$$
+
+展开。每个 \(\mathcal V_{ij}\) 都是一个明确的实多项式。
+
+对有限系数向量 \(c\)，令：
+
+$$
+\boxed{
+\mathcal O_c(X,Y)
+=
+\sum_{i,j<N}c_ic_j\mathcal V_{ij}(X,Y).
+}
+\tag{P31}
+$$
+
+则：
+
+$$
+\boxed{
+c^{\mathsf T}\mathsf B_Nc
+=
+\mathbb E[\mathcal O_c(X,Y)].
+}
+\tag{P32}
+$$
+
+在量子语言中，使用：
+
+$$
+|\psi\rangle\otimes|\psi\rangle,
+\qquad
+\psi(x)=\sqrt{\Phi(x)/\xi(1/2)},
+$$
+
+以及分别作用在两个寄存器上的 \(Q_1,Q_2\)，就得到：
+
+$$
+\boxed{
+c^{\mathsf T}\mathsf B_Nc
+=
+\langle\psi\otimes\psi,
+\mathcal O_c(Q_1,Q_2)
+\psi\otimes\psi\rangle.
+}
+\tag{P33}
+$$
+
+这是同一个实际态的双副本读出。
+
+**它不要求先引入纠缠。** 这里的价值是把高阶对数关系改成原始算术分布的二次表达；同样可以用经典双样本统计理解。
+
+两个副本也不意味着固定成本。随着 \(N\) 增加，读出多项式的次数、系数精度及方差控制仍然增加。
+
+---
+
+# 九、最低阶已经说明：正态不等于这个双副本期望非负
+
+由式（P29）计算常数项：
+
+$$
+\boxed{
+\mathcal V_{00}(X,Y)
+=
+\frac{\ell^2}{24}
+\left(
+6X^2Y^2-X^4-Y^4
+\right).
+}
+\tag{P34}
+$$
+
+所以：
+
+$$
+\mathbb E[\mathcal V_{00}]
+=
+\frac{\ell^2}{12}(3m_2^2-m_4)
+=
+-\frac{\ell^2\chi_4}{12}.
+$$
+
+但在 \(X=0,Y\ne0\) 时：
+
+$$
+\mathcal V_{00}(0,Y)
+=
+-\frac{\ell^2Y^4}{24}<0.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal V_{00}(X,Y)
+}
+$$
+
+并不是一个逐点非负函数。
+
+不能仅凭：
+
+$$
+\Phi(X)\Phi(Y)>0
+$$
+
+就证明其积分非负。
+
+这里真正需要的是：
+
+> **实际 theta 分布在不同尺度之间怎样分配权重，是否足以使这些带符号的双副本关系整体非负。**
+
+这比继续证明“态归一化”“测量概率非负”更接近所缺的算术内容。
+
+对完整问题，待证条件已经可以直接写成：
+
+$$
+\boxed{
+\forall N,\forall c\in\mathbb R^N,\qquad
+\iint
+\mathcal O_c(x,y)
+\frac{\Phi(x)\Phi(y)}{\xi(1/2)^2}\,dx\,dy
+\ge0.
+}
+\tag{P35}
+$$
+
+这里没有未知零点，也没有预先供应一份正谱测度。
+
+---
+
+# 十、一个可以直接研究 theta 密度的充分引理
+
+现在不是继续增加等价表述，而是提出一项直接作用于密度形状的充分条件。
+
+令：
+
+$$
+V(x)=-\log\Phi(x),
+$$
+
+并对 \(x>0\) 定义：
+
+$$
+\boxed{
+R(x)=\frac{V'(x)}x.
+}
+\tag{P36}
+$$
+
+这是一个明确的函数，由实际 theta 核确定。
+
+## 有限形状前件
+
+暂时假设：
+
+$$
+\boxed{
+R(x)\text{ 在 }(0,\infty)\text{ 上单调不减}.
+}
+\tag{S}
+$$
+
+等价地：
+
+$$
+\boxed{
+xV''(x)-V'(x)\ge0.
+}
+$$
+
+这比只说 \(V''(x)\ge0\) 更具体。**本轮没有证明实际 theta 核在整个半轴上满足它，不把数值抽样当作全域证明。**
+
+## 定理 P5：形状前件推出全部标量高斯矩上界
+
+在前件 \((S)\) 下：
+
+$$
+\boxed{
+m_{2n+2}\le(2n+1)m_2m_{2n},
+\qquad n\ge1.
+}
+\tag{P37}
+$$
+
+因此：
+
+$$
+\boxed{
+m_{2n}\le(2n-1)!!\,m_2^n.
+}
+\tag{P38}
+$$
+
+特别地：
+
+$$
+\boxed{\chi_4=m_4-3m_2^2\le0.}
+$$
+
+### 证明
+
+对快速衰减的正偶密度分部积分：
+
+$$
+\mathbb E[X^{2n+1}V'(X)]
+=
+(2n+1)m_{2n}.
+$$
+
+所以：
+
+$$
+\mathbb E[X^{2n+2}R(|X|)]
+=
+(2n+1)m_{2n}.
+$$
+
+另有：
+
+$$
+\mathbb E[X^2R(|X|)]=1.
+$$
+
+在重加权概率：
+
+$$
+d\nu_2(x)=\frac{x^2}{m_2}\,d\nu(x)
+$$
+
+下，\(R(|X|)\) 与 \(|X|^{2n}\) 都是同一个变量 \(|X|\) 的单调函数，因此协方差非负：
+
+$$
+\mathbb E_{\nu_2}[R|X|^{2n}]
+\ge
+\mathbb E_{\nu_2}[R]\,
+\mathbb E_{\nu_2}[|X|^{2n}].
+$$
+
+代入上面的分部积分恒等式：
+
+$$
+\frac{(2n+1)m_{2n}}{m_2}
+\ge
+\frac1{m_2}
+\frac{m_{2n+2}}{m_2}.
+$$
+
+整理即得式（P37），迭代得到式（P38）。证毕。
+
+这条引理把一组矩不等式的证明责任，压到一个实际可写出的微分表达：
+
+$$
+x(-\log\Phi)''-(-\log\Phi)'.
+$$
+
+这比“正 theta 核应该足够”明确得多。
+
+---
+
+## 但全部标量高斯上界，仍然不足以代替矩阵正性
+
+取一个对称三点分布：
+
+$$
+\Pr(X=0)=\frac35,
+\qquad
+\Pr(X=L)=\Pr(X=-L)=\frac15.
+$$
+
+则：
+
+$$
+m_{2n}=\frac25L^{2n}.
+$$
+
+对所有 \(n\)，它都满足：
+
+$$
+m_{2n}\le(2n-1)!!\,m_2^n.
+$$
+
+因为：
+
+$$
+(2n-1)!!\ge3^{n-1},
+\qquad
+3\cdot\frac25>1.
+$$
+
+但其矩生成函数为：
+
+$$
+\mathscr M(b)=\frac35+\frac25\cosh(Lb),
+$$
+
+零点是：
+
+$$
+\boxed{
+b=
+\frac{
+\pm\operatorname{arcosh}(3/2)+i(2k+1)\pi
+}{L},
+}
+\tag{P39}
+$$
+
+具有非零实部。
+
+因此：
+
+$$
+\boxed{
+\text{全部标量矩都不超过高斯基准}
+\quad\not\Rightarrow\quad
+\text{全部零点位于中心线}.
+}
+$$
+
+这不反驳定理 P5。它说明：**该引理即使对实际 theta 核证明成功，也只是低维关系的推进，仍需处理不同阶数之间的共同正性。**
+
+所以，后续不能把标量集中性、对数凹性或单个矩的不等式，直接升级为完整的 \(\mathsf B\succeq0\)。
+
+---
+
+# 十一、对项目而言，本轮新增的桥是什么？
+
+本轮按前文固定快照读取了相关声明。
+
+`CompletedZetaMellinReconstruction.lean` 已给出实际 theta 尾项到 completed ζ 的重构，并保留极点补偿和反射关系。它可以为本轮的原始矩来源提供算术锚定。
+
+`FiniteStieltjesOperatorRealization.lean` 则明确要求输入非负节点与非负权重，再构造正 Hankel 矩阵。它没有独立供应实际 ξ 所需的正谱。
+
+本轮走的是另一段连接：
+
+$$
+\boxed{
+\text{实际 theta 原始矩}
+\longrightarrow
+\mathsf B
+\longleftrightarrow
+\mathsf H
+\longleftrightarrow
+\text{有限滤波负证书}.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathsf B_N=T_{F,N}\mathsf H_NT_{F,N}^*
+}
+$$
+
+是精确恒等式，且变换条件数有统一控制。
+
+因此不需要为了使用 \(\mathsf B\)，先假设正谱存在。
+
+本轮也没有修改 GitHub，或把这些新增推导标记成已经 Lean 编译验证的结果。
+
+---
+
+# 收束
+
+这次真正向前推进的，不是再增加一种量子空间，而是改变了**算术约束的表达层次**。
+
+原来是：
+
+$$
+\boxed{
+\text{高阶累积量}
+\longrightarrow
+\text{可能不定的 Hankel 算子}.
+}
+$$
+
+现在可以精确改写为：
+
+$$
+\boxed{
+\text{原始 theta 矩的二次组合}
+\longrightarrow
+\text{二变量整核}
+\longrightarrow
+\text{同一个负证据}.
+}
+$$
+
+核心恒等式是：
+
+$$
+\boxed{
+\mathcal B_F(z,w)
+=
+\frac{F(z)F'(w)-F'(z)F(w)}{z-w}.
+}
+$$
+
+它去掉了对数导数的极点，却没有删除离线信息。非实零点仍然留下：
+
+$$
+\boxed{
+\text{零自配对}
+\quad+\quad
+\text{非零交叉配对}
+\quad\Longrightarrow\quad
+\text{严格负方向}.
+}
+$$
+
+与此同时，整核结构给出了更快的有限截断界，并把全阶正性写成同一实际 theta 态两个副本上的期望不等式。
+
+**尚未得到的是式（P35）的全体非负证明，也没有找到实际负证书。** 但现在可以更集中地研究真实算术：不是问“量子概率是否为正”，而是问：
+
+> **实际 theta 核的尺度权重、模关系与导数结构，为什么能够——或者不能够——使这些明确带有正负项的双副本关系，在每一阶都共同非负？**
+
+这一步所需要的是原始算术分布的特殊关系，而不是再次调整观察尺度、增加辅助维数，或把本来不定的读出改成一个自动非负的模平方。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/abs/1504.03438 "[1504.03438] A complete Riemann zeta distribution and the Riemann hypothesis"
+[3]: https://arxiv.org/abs/1911.01745?utm_source=chatgpt.com "The Hermite-Sylvester criterion for real-rooted polynomials"
+[4]: https://dlmf.nist.gov/1.10 "DLMF: §1.10 Functions of a Complex Variable ‣ Topics of Discussion ‣ Chapter 1 Algebraic and Analytic Methods"
+[5]: https://dlmf.nist.gov/5.11 "DLMF: §5.11 Asymptotic Expansions ‣ Properties ‣ Chapter 5 Gamma Function"
+继续。这次可以**真正算掉一部分此前尚未分离的相关贡献**，而不只是把它重新命名。
+
+结论是：
+
+> **局部同余条件给出的奇异级数，确实能够消去均方展开中的对数主项；但在倍长区间 \((x,2x]\) 上，消去之后的基准竟然趋于一个严格负常数。**
+>
+> **因此，真实算术相关与局部同余模型之间的余项，不能被当作趋零误差。它必须补回至少**
+>
+> $$
+> \boxed{
+> c_0=\log2\left(\gamma_{\mathrm E}+\log\frac{\pi}{2}\right)
+> \approx0.7131086897.
+> }
+> $$
+
+随后还能证明：只要对这个**已经扣除局部同余贡献的余项**建立一个对数幂上界，就足以推出 RH。
+
+本轮使用的经典输入，是素数定理、ζ 的对数导数，以及 Montgomery–Soundararajan 已证明的奇异级数平均公式；后者不是尚未证明的素数对猜想。下面给出这些输入之间的具体推导，不把它们称作新的经典定理。新增综合证明尚未进行 Lean 编译。([arXiv][1])
+
+# 一、把实际对象固定下来：先不引入随机模型
+
+定义
+
+$$
+\psi(x)=\sum_{n\le x}\Lambda(n),
+$$
+
+以及中心化算术序列
+
+$$
+\boxed{
+a(n)=\Lambda(n)-1.
+}
+\tag{1}
+$$
+
+其中 \(\Lambda(p^k)=\log p\)，其他正整数处为零。
+
+这次显式使用全部素数幂，而不是只用素数。这样可以直接接入 Euler 乘积：
+
+$$
+\boxed{
+\sum_{n\ge1}\frac{\Lambda(n)}{n^s}
+=
+-\frac{\zeta'(s)}{\zeta(s)},
+\qquad \Re s>1.
+}
+\tag{2}
+$$
+
+这是后面把算术增长传回零点位置的解析接口。([DLMF][2])
+
+## 定义 1：倍长区间的精确中心化读出
+
+令
+
+$$
+M(x)=\lfloor2x\rfloor-\lfloor x\rfloor,
+$$
+
+$$
+\boxed{
+Y(x)=\sum_{x<n\le2x}a(n)
+=\psi(2x)-\psi(x)-M(x).
+}
+\tag{3}
+$$
+
+这里必须保留 \(M(x)\)。对非整数 \(x\)，它不一定恰好等于 \(x\)。
+
+不过，
+
+$$
+|M(x)-x|<1.
+\tag{4}
+$$
+
+定义归一化局部均方
+
+$$
+\boxed{
+\mathfrak J(X)
+=
+\int_X^{2X}\frac{Y(x)^2}{x^2}\,dx.
+}
+\tag{5}
+$$
+
+显然
+
+$$
+\mathfrak J(X)\ge0.
+$$
+
+每个固定 \(X\) 的这个量，只使用 \(4X\) 以内的实际 \(\Lambda(n)\)。
+
+---
+
+# 二、把均方精确拆成：自身贡献、同余贡献、真实相关余项
+
+## 定义 2：窗口重叠权重
+
+对正整数 \(n,m\)，令
+
+$$
+\boxed{
+W_X(n,m)
+=
+\int_X^{2X}
+\frac{
+\mathbf1_{\{x<n\le2x\}}
+\mathbf1_{\{x<m\le2x\}}
+}{x^2}\,dx.
+}
+\tag{6}
+$$
+
+它有显式表达。
+
+设
+
+$$
+A=\max\{X,n/2,m/2\},
+\qquad
+B=\min\{2X,n,m\}.
+$$
+
+那么
+
+$$
+\boxed{
+W_X(n,m)=
+\begin{cases}
+\dfrac1A-\dfrac1B,&A<B,\\[2mm]
+0,&A\ge B.
+\end{cases}
+}
+\tag{7}
+$$
+
+因此所有相关求和都是有限的。
+
+## 定义 3：二点奇异级数
+
+对整数 \(d\ge1\)，定义
+
+$$
+\mathfrak S(d)
+=
+\prod_p
+\frac{1-\nu_p(d)/p}{(1-1/p)^2},
+$$
+
+其中
+
+$$
+\nu_p(d)=
+\begin{cases}
+1,&p\mid d,\\
+2,&p\nmid d.
+\end{cases}
+$$
+
+它记录两个位置 \(n,n+d\) 的局部整除障碍。对奇数 \(d\)，因模 \(2\) 障碍而有 \(\mathfrak S(d)=0\)；对偶数 \(d\)，得到通常的素数对奇异级数。中心化二点模型对应的是 \(\mathfrak S(d)-1\)。([arXiv][1])
+
+定义三项：
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{self}}(X)
+=
+\sum_n a(n)^2W_X(n,n),
+}
+\tag{8}
+$$
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{cong}}(X)
+=
+2\sum_{d\ge1}
+(\mathfrak S(d)-1)
+\sum_nW_X(n,n+d),
+}
+\tag{9}
+$$
+
+以及
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak R(X)
+=
+2\sum_{d\ge1}\sum_n
+\Bigl[
+a(n)a(n+d)-(\mathfrak S(d)-1)
+\Bigr]W_X(n,n+d).
+\end{aligned}
+}
+\tag{10}
+$$
+
+这里的 \(\mathfrak R(X)\) 是**实际中心化二点相关，减去局部同余模型后的加权总余项**。
+
+## 定理 1：精确能量分解
+
+$$
+\boxed{
+\mathfrak J(X)
+=
+\mathfrak D_{\mathrm{self}}(X)
++
+\mathfrak D_{\mathrm{cong}}(X)
++
+\mathfrak R(X).
+}
+\tag{11}
+$$
+
+### 证明
+
+把式（3）的平方展开：
+
+$$
+Y(x)^2
+=
+\sum_n a(n)^2\mathbf1_{\{x<n\le2x\}}
++
+2\sum_{d\ge1}\sum_n
+a(n)a(n+d)
+\mathbf1_{\{x<n,n+d\le2x\}}.
+$$
+
+积分后，第二项中加上再减去 \(\mathfrak S(d)-1\)，即得。证毕。
+
+**到这里没有假设任何素数对渐近式。**
+
+\(\mathfrak R(X)\) 不是暂时忽略的误差，而是一个完全确定的有限算术量。
+
+# 三、先算自身贡献：一个明确的 \(\log X\) 主项
+
+## 定理 2：对角项的完整常数阶展开
+
+当 \(X\to\infty\) 时，
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{self}}(X)
+=
+(\log2)\log X
++\frac52(\log2)^2
+-2\log2
++o(1).
+}
+\tag{12}
+$$
+
+### 证明
+
+令
+
+$$
+B(t)=\sum_{n\le t}a(n)^2.
+$$
+
+展开得
+
+$$
+B(t)
+=
+\sum_{n\le t}\Lambda(n)^2
+-2\psi(t)+\lfloor t\rfloor.
+$$
+
+由无条件素数定理及分部求和，
+
+$$
+\sum_{p\le t}(\log p)^2
+=
+t\log t-t+o(t).
+$$
+
+更高素数幂对 \(\sum\Lambda(n)^2\) 的贡献为 \(o(t)\)，于是
+
+$$
+\sum_{n\le t}\Lambda(n)^2
+=
+t\log t-t+o(t).
+$$
+
+再使用 \(\psi(t)=t+o(t)\)，得到
+
+$$
+\boxed{
+B(t)=t\log t-2t+o(t).
+}
+\tag{13}
+$$
+
+所需误差远弱于经典无条件素数定理的已知误差；不使用 RH。([DLMF][3])
+
+由定义，
+
+$$
+\mathfrak D_{\mathrm{self}}(X)
+=
+\int_X^{2X}\frac{B(2x)-B(x)}{x^2}\,dx.
+$$
+
+而
+
+$$
+B(2x)-B(x)
+=
+x\log x+(2\log2-2)x+o(x).
+$$
+
+所以
+
+$$
+\begin{aligned}
+\mathfrak D_{\mathrm{self}}(X)
+&=
+\int_X^{2X}
+\frac{\log x+2\log2-2}{x}\,dx+o(1)\\
+&=
+(\log2)\log X
++\frac52(\log2)^2-2\log2+o(1).
+\end{aligned}
+$$
+
+证毕。
+
+---
+
+这就是单点统计提供的发散部分：
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{self}}(X)\sim(\log2)\log X.
+}
+$$
+
+下一步不能把跨位置贡献设为零。
+
+# 四、局部同余关系，确实能消去这个发散主项
+
+这里使用一条已证明的算术定理。
+
+## 经典输入：奇异级数的三角平均
+
+对整数 \(H\to\infty\)，有
+
+$$
+\boxed{
+2\sum_{d=1}^{H-1}
+(H-d)(\mathfrak S(d)-1)
+=
+-H\log H
++
+A_0H
++
+O_\varepsilon(H^{1/2+\varepsilon}),
+}
+\tag{14}
+$$
+
+其中
+
+$$
+A_0=2-\gamma_{\mathrm E}-\log(2\pi).
+$$
+
+这是 Montgomery–Soundararajan 文中 \(R_2(H)\) 的公式。它计算的是明确 Euler 因子的平均，不要求先证明实际素数对符合 Hardy–Littlewood 预测。([arXiv][1])
+
+## 定理 3：同余项的完整展开
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{cong}}(X)
+=
+-(\log2)\log X
+-\frac12(\log2)^2
++
+A_0\log2
++o(1).
+}
+\tag{15}
+$$
+
+### 证明
+
+固定 \(x\)。区间 \((x,2x]\) 中恰有 \(M(x)\) 个连续整数。
+
+在这些整数中，差为 \(d>0\) 的有序递增对共有
+
+$$
+(M(x)-d)_+
+$$
+
+个。因此
+
+$$
+\sum_nW_X(n,n+d)
+=
+\int_X^{2X}\frac{(M(x)-d)_+}{x^2}\,dx.
+$$
+
+代入式（9）：
+
+$$
+\mathfrak D_{\mathrm{cong}}(X)
+=
+\int_X^{2X}
+\frac{R_2(M(x))}{x^2}\,dx.
+$$
+
+因为 \(M(x)=x+O(1)\)，式（14）给出
+
+$$
+R_2(M(x))
+=
+-x\log x+A_0x
++O_\varepsilon(x^{1/2+\varepsilon}+\log x).
+$$
+
+取 \(0<\varepsilon<1/2\)，积分余项趋于零。
+
+所以
+
+$$
+\begin{aligned}
+\mathfrak D_{\mathrm{cong}}(X)
+&=
+\int_X^{2X}\frac{-\log x+A_0}{x}\,dx+o(1)\\
+&=
+-(\log2)\log X
+-\frac12(\log2)^2
++A_0\log2+o(1).
+\end{aligned}
+$$
+
+证毕。
+
+---
+
+现在，两个发散项真的抵消了：
+
+$$
+\boxed{
++(\log2)\log X
+\quad+\quad
+-(\log2)\log X
+=0.
+}
+$$
+
+**这部分抵消已经有无条件的数学依据。**
+
+但剩下的常数不能忽略。
+
+# 五、主定理：真实相关必须修复一个负的基准能量
+
+## 定理 4：不可删除的正补偿项
+
+定义
+
+$$
+\boxed{
+c_0=\log2\left(\gamma_{\mathrm E}+\log\frac{\pi}{2}\right)>0.
+}
+\tag{16}
+$$
+
+那么
+
+$$
+\boxed{
+\mathfrak J(X)=\mathfrak R(X)-c_0+o(1).
+}
+\tag{17}
+$$
+
+因此，无条件地有
+
+$$
+\boxed{
+\liminf_{X\to\infty}\mathfrak R(X)\ge c_0.
+}
+\tag{18}
+$$
+
+特别是，
+
+$$
+\boxed{
+\mathfrak R(X)=o(1)
+}
+$$
+
+不可能成立。
+
+### 证明
+
+将式（12）与式（15）相加：
+
+$$
+\begin{aligned}
+\mathfrak D_{\mathrm{self}}
++\mathfrak D_{\mathrm{cong}}
+&=
+2(\log2)^2
++(A_0-2)\log2
++o(1)\\
+&=
+-\log2
+\left[
+\gamma_{\mathrm E}+\log(2\pi)-2\log2
+\right]
++o(1)\\
+&=-c_0+o(1).
+\end{aligned}
+$$
+
+再代入精确分解式（11），得到式（17）。
+
+因为 \(\mathfrak J(X)\ge0\)，于是式（18）成立。证毕。
+
+---
+
+这正好回答了此前“局部同余条件是否足以补上相关项”的问题：
+
+$$
+\boxed{
+\text{局部同余模型补上了主阶抵消，}
+}
+$$
+
+但
+
+$$
+\boxed{
+\text{它仍不能单独成为实际的正均方模型。}
+}
+$$
+
+若把 \(\mathfrak R\) 扔掉，模型会给出负的平方平均。
+
+**所以这里缺的不是一个可有可无的小修正，而是维持实际正性所必需的补偿。**
+
+## 有限数据核对
+
+我用实际 \(\Lambda(n)\) 的有限和核对了符号与常数。以下为普通浮点结果，不是区间认证，也不用于证明无限范围结论：
+
+|    \(X\) | 实际 \(\mathfrak J(X)\) | 已知基准 \(\mathfrak D_{\mathrm{self}}+\mathfrak D_{\mathrm{cong}}\) | 实际余项 \(\mathfrak R(X)\) |
+| -------: | --------------------: | ---------------------------------------------------------------: | ----------------------: |
+| \(10^3\) |          \(0.183028\) |                                                    \(-0.760063\) |            \(0.943091\) |
+| \(10^4\) |          \(0.134945\) |                                                    \(-0.727456\) |            \(0.862401\) |
+| \(10^5\) |          \(0.144551\) |                                                    \(-0.717605\) |            \(0.862156\) |
+
+已知基准的理论极限为
+
+$$
+-c_0\approx-0.713109.
+$$
+
+这些有限值不能证明 \(\mathfrak R(X)\) 有界，但与式（17）的分解相符。
+
+# 六、窗口比例不是神秘常数：一般比例也能算出
+
+把区间 \((x,2x]\) 改为
+
+$$
+(x,bx],\qquad b>1,
+$$
+
+并仍在 \(x\in[X,2X]\) 上取归一化均方。
+
+完全相同的计算给出
+
+$$
+\boxed{
+\mathfrak J_b(X)
+=
+\mathfrak R_b(X)+C(b)+o(1),
+}
+\tag{19}
+$$
+
+其中
+
+$$
+\boxed{
+C(b)
+=
+\log2\left[
+b\log b
+-(b-1)\log(b-1)
+-(b-1)(\gamma_{\mathrm E}+\log2\pi)
+\right].
+}
+\tag{20}
+$$
+
+这里 \(C(2)=-c_0\)。
+
+前两个对数项还可以精确写为
+
+$$
+b\log b-(b-1)\log(b-1)
+=
+b\,H(1/b),
+$$
+
+其中
+
+$$
+H(t)=-t\log t-(1-t)\log(1-t).
+$$
+
+因此
+
+$$
+\boxed{
+C(b)
+=
+\log2\left[
+bH(1/b)
+-(b-1)(\gamma_{\mathrm E}+\log2\pi)
+\right].
+}
+\tag{21}
+$$
+
+这个熵函数来自区间比例的代数整理，不代表已经引入了量子热力学假设。
+
+它说明：**改变观察窗口，会改变已知基准的常数项；不能把某个窗口下得到的正负性未经计算搬到另一个窗口。**
+
+# 七、接下来证明：局部读出可以稳定地恢复累计误差
+
+现在把均方与 RH 之间的桥梁独立证明出来，不依赖前面越来越复杂的高阶滤波器。
+
+令
+
+$$
+\ell=\log2,
+$$
+
+$$
+\boxed{
+r(T)=e^{-T/2}\bigl[\psi(e^T)-e^T\bigr],
+}
+\tag{22}
+$$
+
+以及
+
+$$
+\boxed{
+z(T)
+=
+e^{-T/2}
+\bigl[\psi(2e^T)-\psi(e^T)-e^T\bigr].
+}
+\tag{23}
+$$
+
+直接计算得到
+
+$$
+\boxed{
+z(T)=\sqrt2\,r(T+\ell)-r(T).
+}
+\tag{24}
+$$
+
+与前面精确中心化读出之间，只差地板项：
+
+$$
+\left|
+z(T)-e^{-T/2}Y(e^T)
+\right|
+\le e^{-T/2}.
+\tag{25}
+$$
+
+## 定理 5：稳定的尺度逆变换
+
+将函数限制在长度为 \(\ell\) 的区间上，记
+
+$$
+r_j(t)=r(t+j\ell),
+\qquad
+z_j(t)=z(t+j\ell),
+\qquad 0\le t<\ell.
+$$
+
+把它们视为 \(L^2([0,\ell])\) 中的向量。
+
+则
+
+$$
+\boxed{
+r_j
+=
+2^{-j/2}r_0
++
+\sum_{k=0}^{j-1}
+2^{-(j-k)/2}z_k.
+}
+\tag{26}
+$$
+
+并且对每个有限 \(N\)，
+
+$$
+\boxed{
+\left(\sum_{j=0}^{N}\|r_j\|_2^2\right)^{1/2}
+\le
+\sqrt2\,\|r_0\|_2
++
+\frac1{\sqrt2-1}
+\left(\sum_{j=0}^{N-1}\|z_j\|_2^2\right)^{1/2}.
+}
+\tag{27}
+$$
+
+### 证明
+
+由式（24），
+
+$$
+r_{j+1}=2^{-1/2}(r_j+z_j).
+$$
+
+逐次代入即得式（26）。
+
+第一项在尺度方向的平方和满足
+
+$$
+\sum_{j\ge0}2^{-j}=2.
+$$
+
+第二项是一个离散卷积，其核为
+
+$$
+2^{-1/2},2^{-1},2^{-3/2},\ldots,
+$$
+
+绝对和为
+
+$$
+\frac1{\sqrt2-1}.
+$$
+
+对这个卷积使用三角不等式与 \(\ell^1\)-\(\ell^2\) 估计，得到式（27）。证毕。
+
+---
+
+这里和上一轮的微观鞅很不一样。
+
+上一轮的问题是稀有分支的幅度爆炸，不能交换均值与极限；这里的逆变换系数满足
+
+$$
+\boxed{
+\sum_{j\ge1}2^{-j/2}<\infty,
+}
+$$
+
+所以已经有明确的稳定性控制。
+
+**局部区间误差不会在逐层恢复累计误差时，被一个未控制的无限增益放大。**
+
+# 八、主定理：真实相关余项的对数幂上界足以推出 RH
+
+## 定理 6：扣除同余模型后的余项判据
+
+以下命题等价：
+
+$$
+\boxed{\mathrm{RH};}
+$$
+
+$$
+\boxed{
+\exists C,A<\infty,\quad
+\mathfrak J(2^j)\le C(1+j)^A
+\quad\text{对所有充分大的整数 }j;
+}
+\tag{28}
+$$
+
+$$
+\boxed{
+\exists C,A<\infty,\quad
+\mathfrak R(2^j)\le C(1+j)^A
+\quad\text{对所有充分大的整数 }j.
+}
+\tag{29}
+$$
+
+其中可以约定 \(A\ge0\)。
+
+## 证明
+
+### RH 推出局部均方上界
+
+RH 下的经典估计为
+
+$$
+\psi(x)-x=O(\sqrt x\,\log^2x).
+$$
+
+这里使用的是 von Koch–Schoenfeld 型误差控制；相应显式版本也见 Büthe 的研究。([arXiv][4])
+
+所以
+
+$$
+Y(x)=O(\sqrt x\,\log^2x),
+$$
+
+从而
+
+$$
+\mathfrak J(X)=O(\log^4X).
+$$
+
+取 \(X=2^j\)，得到式（28），可取 \(A=4\)。
+
+### 局部均方上界推出累计误差的多项式能量界
+
+由变量代换 \(x=e^T\)，
+
+$$
+\boxed{
+\mathfrak J(2^j)
+=
+\int_{j\ell}^{(j+1)\ell}
+\left[e^{-T/2}Y(e^T)\right]^2dT.
+}
+\tag{30}
+$$
+
+结合式（25），式（28）给出
+
+$$
+\sum_{j=0}^{N-1}\|z_j\|_2^2
+=
+O((1+N)^{A+1}).
+$$
+
+定理 5 因而推出
+
+$$
+\boxed{
+\int_0^L|r(T)|^2\,dT
+=
+O((1+L)^{A+1}).
+}
+\tag{31}
+$$
+
+### 累计误差的能量界排除右侧零点
+
+对每个 \(\sigma>0\)，由 Cauchy–Schwarz 和式（31），
+
+$$
+\int_0^\infty e^{-\sigma T}|r(T)|\,dT<\infty.
+$$
+
+因此，\(r\) 的 Laplace 变换在
+
+$$
+\Re s>0
+$$
+
+内解析。
+
+另一方面，在初始绝对收敛区域 \(\Re s>1/2\)，
+
+$$
+\boxed{
+\begin{aligned}
+\widehat r(s)
+&=
+\int_0^\infty e^{-sT}r(T)\,dT\\
+&=
+-\frac{\zeta'(s+1/2)}
+{(s+1/2)\zeta(s+1/2)}
+-\frac1{s-1/2}.
+\end{aligned}
+}
+\tag{32}
+$$
+
+它由式（2）积分得到。
+
+在 \(s=1/2\) 处，ζ 的极点贡献与第二项抵消。
+
+但若存在非平凡零点
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad \delta>0,
+$$
+
+则右边在
+
+$$
+s=\delta+i\gamma
+$$
+
+有不可去极点，留数为
+
+$$
+-\frac{m_\rho}{\rho}\ne0.
+$$
+
+这与右半平面解析性矛盾。
+
+所以没有右侧离线零点；再由函数方程的反射对称性，得到 RH。([DLMF][5])
+
+最后，式（17）说明式（28）与式（29）等价。证毕。
+
+---
+
+这个结论可以读成：
+
+$$
+\boxed{
+\text{局部同余主项已经算完；}
+}
+$$
+
+$$
+\boxed{
+\text{剩下只需阻止真实相关余项出现幂次于 }X\text{ 的增长。}
+}
+$$
+
+但是“只需”描述的是证明目标，不意味着这个上界已经容易或已经建立。
+
+## 带误差指数的版本
+
+同一个证明还给出：
+
+如果对某个 \(0\le\eta<1\)，
+
+$$
+\boxed{
+\mathfrak R(2^j)
+=
+O\!\left(2^{\eta j}(1+j)^A\right),
+}
+\tag{33}
+$$
+
+那么
+
+$$
+\boxed{
+\left|\Re\rho-\frac12\right|
+\le\frac\eta2.
+}
+\tag{34}
+$$
+
+因为这时式（31）的能量至多按 \(e^{\eta L}\) 乘多项式增长，Laplace 变换在 \(\Re s>\eta/2\) 内解析。
+
+因此，相关余项的增长指数直接对应尚未排除的零点条带。
+
+# 九、为什么“每个素数差都达到平方根误差”仍不能直接填上这一步？
+
+这里可以把另一个缺口算清。
+
+定义每个固定差 \(d\) 的累计相关误差
+
+$$
+\boxed{
+E_d(u;X)
+=
+\sum_{X<n\le u}
+\left[
+a(n)a(n+d)-(\mathfrak S(d)-1)
+\right].
+}
+\tag{35}
+$$
+
+假设我们获得了很强的统一估计
+
+$$
+|E_d(u;X)|
+\le C_\varepsilon X^{1/2+\varepsilon}
+\tag{36}
+$$
+
+对相关范围内全部
+
+$$
+1\le d\le2X,
+\qquad
+X\le u\le4X-d
+$$
+
+成立。
+
+这仍然不能在逐项取绝对值后直接得到式（29）。
+
+## 定理 7：逐差绝对值估计的损失
+
+式（36）通过直接分部求和，只给出
+
+$$
+\boxed{
+\mathfrak R(X)=O_\varepsilon(X^{1/2+\varepsilon}).
+}
+\tag{37}
+$$
+
+### 证明
+
+固定 \(d\)，把
+
+$$
+W_X(n,n+d)
+$$
+
+看作 \(n\) 的权函数。
+
+它的总变差满足
+
+$$
+\operatorname{Var}_nW_X(n,n+d)
+\le\frac1X.
+$$
+
+一种直接证明是：对每个固定 \(x\)，允许的 \(n\) 构成区间 \((x,2x-d]\)，其指示函数总变差为 \(2\)；再积分：
+
+$$
+2\int_X^{2X}\frac{dx}{x^2}=\frac1X.
+$$
+
+因此，由式（36）和分部求和，每个 \(d\) 的加权误差为
+
+$$
+O_\varepsilon(X^{-1/2+\varepsilon}).
+$$
+
+而可能出现的 \(d\) 有 \(O(X)\) 个。
+
+逐项相加得到式（37）。证毕。
+
+---
+
+所以，这条估计链得到的是
+
+$$
+X^{1/2+\varepsilon},
+$$
+
+而我们需要的是
+
+$$
+(\log X)^A.
+$$
+
+还差一次**不同差值 \(d\) 之间的加权误差抵消**。
+
+结合式（34），若式（36）对每个 \(\varepsilon>0\) 成立，这条直接推导可以排除
+
+$$
+\Re\rho>\frac34
+\quad\text{和}\quad
+\Re\rho<\frac14,
+$$
+
+但尚未把零点压到临界线。
+
+这不是证明式（36）在逻辑上不能通过别的方法推出 RH；它证明的是：**逐差估计以后再全部取绝对值，这条路线损失太大。**
+
+## 还有一个必须避免的循环
+
+Montgomery–Soundararajan 的某些强素数元组假设，同时包括一阶条件
+
+$$
+\sum_{n\le X}\Lambda(n)
+=
+X+O_\varepsilon(X^{1/2+\varepsilon}).
+$$
+
+原文明确指出，这个一阶条件本身已经等价于 RH。([arXiv][1])
+
+所以不能使用整套强假设后，再把“推导出 RH”当作完成了新的算术桥梁。
+
+本轮使用的是：
+
+$$
+\boxed{
+\text{无条件奇异级数平均}
++
+\text{显式保留的真实相关余项}.
+}
+$$
+
+没有把一阶 RH 误差界当作无条件输入。
+
+# 十、回到量子核：正性已经有了，缺的是跨尺度的大小控制
+
+本轮还给此前的量子表示一个很直接的实例。
+
+在固定 Hilbert 空间
+
+$$
+\mathcal H=L^2([1,2],du)
+$$
+
+中，定义
+
+$$
+\boxed{
+\Phi_X(u)
+=
+\frac{Y(Xu)}{\sqrt X\,u}.
+}
+\tag{38}
+$$
+
+则
+
+$$
+\|\Phi_X\|^2
+=
+\mathfrak J(X).
+$$
+
+因此秩一算子
+
+$$
+\boxed{
+K_X=|\Phi_X\rangle\langle\Phi_X|
+}
+\tag{39}
+$$
+
+总是半正定，并且
+
+$$
+\boxed{
+\operatorname{Tr}K_X
+=
+\mathfrak J(X)
+=
+\mathfrak R(X)-c_0+o(1).
+}
+\tag{40}
+$$
+
+这给出三个不同层次：
+
+$$
+\boxed{
+K_X\succeq0
+}
+$$
+
+对每个有限 \(X\) 自动成立；
+
+$$
+\boxed{
+\mathfrak R(X)\ge c_0-o(1)
+}
+$$
+
+由这种正性强制得到；
+
+但
+
+$$
+\boxed{
+\operatorname{Tr}K_{2^j}\le C(1+j)^A
+}
+$$
+
+才是足以推出 RH 的跨尺度约束。
+
+**不能把 \(K_X\) 归一化成迹为 \(1\) 的状态后，就宣布最后一个约束已经成立。**
+
+归一化会把这里最重要的绝对大小
+
+$$
+\mathfrak J(X)
+$$
+
+从状态本身中移走；它必须作为独立读数保留。
+
+同样，也不能把“自身贡献加局部同余模型”直接宣布为一个正量子模型，因为我们已经证明：其当前读出的极限为 \(-c_0\)。
+
+---
+
+# 结论：这次对“缺项”的定位比前文更窄了
+
+此前未知的是整个跨素数贡献。
+
+现在已经完成了如下分离：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak D_{\mathrm{self}}(X)
+&=
++(\log2)\log X+\text{明确常数}+o(1),\\
+\mathfrak D_{\mathrm{cong}}(X)
+&=
+-(\log2)\log X+\text{明确常数}+o(1).
+\end{aligned}
+}
+$$
+
+它们的对数主项消去，但常数合计为
+
+$$
+\boxed{
+-\log2\left(\gamma_{\mathrm E}+\log\frac\pi2\right).
+}
+$$
+
+因此，实际余项必须满足一个已经证明的下界：
+
+$$
+\boxed{
+\liminf_{X\to\infty}\mathfrak R(X)
+\ge
+\log2\left(\gamma_{\mathrm E}+\log\frac\pi2\right).
+}
+$$
+
+而尚待完成的是上界：
+
+$$
+\boxed{
+\mathfrak R(2^j)\le C(1+j)^A
+}
+$$
+
+对某个固定有限 \(A\) 和全部充分大的 \(j\) 成立。
+
+**这轮没有证明该上界。已经证明的是：局部同余因素负责了哪一部分抵消、它们还缺多少才能成为正模型，以及剩余相关误差需要被控制到什么增长尺度。**
+
+更具体地，下一项算术工作不是继续增加一个量子假设，而是控制式（10）中**不同位移 \(d\) 的误差怎样共同相加**。单个位移的平方根估计、全部矩阵各自的正性、概率归一化，都不能替代这一层跨位移的联合控制。
+
+[1]: https://arxiv.org/html/math/0409258v1 "https://arxiv.org/html/math/0409258v1"
+[2]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
+[3]: https://dlmf.nist.gov/27.12 "https://dlmf.nist.gov/27.12"
+[4]: https://arxiv.org/html/1410.7015v4 "https://arxiv.org/html/1410.7015v4"
+[5]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
