@@ -1,0 +1,73 @@
+## C10.3 局部正常形
+
+设 $w_*$ 是 $m$ 重零点。局部有：
+
+$$
+G_a(w)
+=
+(w-w_*)^mH(w),
+\qquad
+H(w_*)\ne0.
+\tag{C10.7}
+$$
+
+沿同一径向射线 $q=q_*$：
+
+$$
+\mathscr Q_a(q_*,r)
+=
+|r-r_*|^{2m}|H(re^{iq_*})|^2.
+\tag{C10.8}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathscr R_a(q_*,r)
+=
+\frac{2mr}{r-r_*}
++
+r\partial_r
+\log|H(re^{iq_*})|^2.
+}
+\tag{C10.9}
+$$
+
+当 $r\uparrow r_*$ 且 $r<r_*$ 时，第一项趋向 $-\infty$，第二项保持有界。
+
+### 定理 C10.1　off-circle zero forces a negative radial precursor
+
+存在 $r_0<r_*$，使：
+
+$$
+r_0<r<r_*
+\Longrightarrow
+\mathscr Q_a(q_*,r)>0,
+\qquad
+\mathscr R_a(q_*,r)<0.
+\tag{C10.10}
+$$
+
+由于 $\mathscr Q_a$ 与 $\mathscr R_a$ 在避开零点的局部区域连续，存在一个非空开集：
+
+$$
+\boxed{
+\mathcal N_a
+=
+\left\{
+(q,r):
+r>0,\,
+\mathscr Q_a(q,r)>0,\,
+\mathscr R_a(q,r)<0
+\right\}
+}
+\tag{C10.11}
+$$
+
+包含这些内侧点。
+
+这正好为项目 `RationalNegativeCountCertificate` 的“开放”和“RH 失败时非空”两个前件提供一个具体条件性来源。
+
+---
+

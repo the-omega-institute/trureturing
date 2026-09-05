@@ -1,0 +1,42 @@
+## C10.1 Cayley 拉回
+
+固定 $a>1/2$。令：
+
+$$
+u=C_a^{-1}(w)
+=
+a\frac{w-1}{w+1},
+\tag{C10.1}
+$$
+
+并定义：
+
+$$
+G_a(w)
+=
+\Xi\!\left(
+\frac12+C_a^{-1}(w)
+\right),
+\qquad
+w\ne-1.
+\tag{C10.2}
+$$
+
+若 $\rho_*$ 是离线零点，则其 Cayley 像 $w_*$ 满足：
+
+$$
+G_a(w_*)=0,
+\qquad
+|w_*|\ne1.
+\tag{C10.3}
+$$
+
+利用 reciprocal reflection，可选择圆外伙伴：
+
+$$
+w_*=r_*e^{iq_*},
+\qquad
+r_*>1.
+\tag{C10.4}
+$$
+

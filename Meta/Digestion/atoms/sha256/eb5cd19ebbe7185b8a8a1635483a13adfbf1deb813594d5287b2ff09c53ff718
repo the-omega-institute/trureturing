@@ -1,0 +1,4 @@
+## 第四层：grounded relation coercivity
+
+在 ambient charge/phase Galerkin space 上加入最小 ANCHOR，使 graph differential 没有共同模 escape。
+

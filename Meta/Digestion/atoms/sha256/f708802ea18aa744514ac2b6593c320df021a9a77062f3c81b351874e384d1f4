@@ -1,0 +1,40 @@
+## C12.3 真与假的证书非对称
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists R\in\mathfrak R_{\mathbb Q}^{\rm off},
+\quad
+N_\Xi(R)>0.
+}
+\tag{C12.5}
+$$
+
+RH 失败有一个有限几何窗口 witness。
+
+但 RH 本身是：
+
+$$
+\forall R\in\mathfrak R_{\mathbb Q}^{\rm off},
+\quad
+N_\Xi(R)=0,
+\tag{C12.6}
+$$
+
+仍是一个可数全称命题。
+
+所以“把无限 RH 改成有限问题”的严格版本不是单个有限问题，而是：
+
+$$
+\boxed{
+\text{失败由一个有限窗口见证；
+成立需要一族可数有限窗口证书或一个统一全局 coercivity theorem。}
+}
+\tag{C12.7}
+$$
+
+---
+

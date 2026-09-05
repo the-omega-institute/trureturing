@@ -1,0 +1,13 @@
+## 第一层：canonical prime threads
+
+构造并闭合：
+
+$$
+Z_{p,u}(m)
+=
+e^{-u\log p/m},
+\qquad
+Q_p=-\delta\log p.
+\tag{C19.2}
+$$
+

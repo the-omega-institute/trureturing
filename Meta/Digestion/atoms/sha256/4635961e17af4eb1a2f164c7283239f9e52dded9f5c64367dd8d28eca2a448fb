@@ -1,0 +1,57 @@
+# 增订三·22　最终收束
+
+本增订把项目中此前分散的四种对象接成一条严格链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{complex power thread}
+&\simeq
+\text{logarithmic charge}
+\times
+\text{solenoid phase},\\
+\text{critical line}
+&=
+\text{zero-charge slice},\\
+\text{prime-pair complex kernel}
+&=
+\text{charge-gradient hyperbolic energy}
++
+\text{phase-gradient circular energy},\\
+\text{Zeckendorf depth}
+&=
+\text{finite-height phase de-aliasing resource},\\
+\text{prime width}
+&=
+\text{multiplicatively independent phase de-aliasing resource},\\
+\text{Hankel minimal rank}
+&=
+\text{determinant certificate 的最小记忆维数},\\
+\text{Schur margin}
+&=
+\text{finite transfer 的 singular-value floor},\\
+\text{Rouché strictness}
+&=
+\text{finite certificate 到真实零点计数的 analytic transport}.
+\end{aligned}
+}
+\tag{C22.1}
+$$
+
+所以假想离线零点的最新精确含义是：
+
+$$
+\boxed{
+\textbf{completed analytic transfer 在一个非零 logarithmic-charge 点产生 kernel，
+而任何试图排除它的 finite Schur–Rouché certificate
+必在 charge anchor、phase faithfulness、Schur floor、boundary unit、
+approximation error 或 dimension budget 中至少一处失效。}
+}
+\tag{C22.2}
+$$
+
+这也进一步校正“信息逃逸”的位置。
+
+信息并不从 canonical prime thread 中逃逸：
+
+- charge 在任一 level 可见；

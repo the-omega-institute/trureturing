@@ -1,0 +1,15 @@
+## 第七层：Rouché exhaustion
+
+在所有离轴有理矩形上证明：
+
+$$
+\operatorname{Err}_N(R)
+<
+\operatorname{Floor}_N(R).
+\tag{C19.5}
+$$
+
+这七层中，前四层主要是有限关系几何；第五层是 prime–Gamma analytic heart；第六层是 positive completion heart；第七层是从 finite approximation 到 global zero exclusion 的 limit heart。
+
+---
+

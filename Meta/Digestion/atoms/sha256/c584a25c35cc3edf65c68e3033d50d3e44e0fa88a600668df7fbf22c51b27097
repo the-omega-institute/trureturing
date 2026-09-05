@@ -1,0 +1,29 @@
+## C9.3 structural novelty 等价于严格降率
+
+加入一个新 phase coordinate 后：
+
+- 若它在已有 semantic closure 中，partition 不变，escape rate 不变；
+- 若它分裂至少一个旧 class，则：
+
+$$
+\sum_jn_j(n_j-1)
+$$
+
+严格下降，因而 exact escape rate 严格下降。
+
+结合定理 C6.1：
+
+$$
+\boxed{
+d_S\nmid\frac Nm
+\Longrightarrow
+\pi_m
+\text{ 具有显式 unique-capture pair，并严格降低有限 arena 的逃逸率。}
+}
+\tag{C9.8}
+$$
+
+这把 abstract structural novelty 与 universal-solenoid divisibility geometry 接成一个可计算判据。
+
+---
+
