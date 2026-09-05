@@ -1,11 +1,13 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
+using Trureturing.Truth;
 
 namespace StrataLint.Tests;
 
-public sealed class FrozenSurfaceRuleTests
+public sealed partial class FrozenSurfaceRuleTests
 {
     private const string FrozenPath = RuleFixture.RingPath;
     private const string OtherPath = RuleFixture.BlueprintPath;
@@ -107,6 +109,10 @@ public sealed class FrozenSurfaceRuleTests
         {
             fixture.Files.Remove(eventPath);
         }
+        else
+        {
+            AddState(fixture, FrozenPath, ModuleStatementId(fixture, FrozenPath));
+        }
 
         var evaluation = Evaluate(fixture, (eventPath, kind));
 
@@ -117,6 +123,7 @@ public sealed class FrozenSurfaceRuleTests
     public void Sl008AllowsAddedAcceptedEventFragment()
     {
         var fixture = FrozenFixture(out var eventPath);
+        AddState(fixture, FrozenPath, ModuleStatementId(fixture, FrozenPath));
 
         var evaluation = Evaluate(fixture, (eventPath, RawChangeKind.Added));
 
@@ -127,6 +134,7 @@ public sealed class FrozenSurfaceRuleTests
     public void Sl008IgnoresModifiedNonFrozenModule()
     {
         var fixture = FrozenFixture(out _);
+        AddState(fixture, FrozenPath, ModuleStatementId(fixture, FrozenPath));
 
         var evaluation = Evaluate(fixture, (OtherPath, RawChangeKind.Modified));
 
@@ -213,17 +221,22 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Fact]
-    public void Sl008DoesNotCompareAcceptedFreezePinsWithCurrentState()
+    public void Sl008CatalogExecutesC6ForAddedAcceptedFreezeWithoutFrozenStatePin()
     {
         var fixture = new RuleFixture();
-        var statePin = ModuleStatementId(fixture, FrozenPath);
-        var eventPin = StatementId.Create("sha256:" + new string('e', 64));
-        AddState(fixture, FrozenPath, statePin);
-        _ = AddFreeze(fixture, FrozenPath, eventPin);
+        var eventPath = AddFreeze(fixture, FrozenPath);
 
-        var evaluation = Evaluate(fixture, (FrozenStatePathValue, RawChangeKind.Added));
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(
+                RawChangeSet.CreateWithKinds([(eventPath, RawChangeKind.Added)])))).Capability;
 
-        Assert.Empty(evaluation.Diagnostics);
+        var diagnostic = Assert.Single(completed.Diagnostics, static diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(8));
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(eventPath, diagnostic.Path);
+        Assert.Contains(FrozenPath, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(FrozenStatePathValue, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(RuleId.CreateKnown(8), completed.ExecutedRules);
     }
 
     [Fact]

@@ -1,0 +1,2 @@
+**注 2.2.3(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条〕。拟议逃逸见证为公开有限证书 `zarembaFiveCertificate`:内核 `decide` 新证 `(List.range 1025).all (...) = true`,且该命题位于 `zaremba_five_upto` 的活证明路径上;判形 content,准入依据 escape-witness。若 Q=1024 的内核判定不能完成,只允许降到已实测通过的最大二次幂并如实改号,不得用 `native_decide`、`Lean.ofReduceBool`、`sorry` 或新公理。
+
