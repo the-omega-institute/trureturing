@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Xml.Linq;
 using StrataLint.EngineeringScope;
 using StrataLint.TestSupport;
 using Xunit;
@@ -225,7 +226,24 @@ public sealed class EngineeringScopeProgramTests
                 root => WriteSmokeTest(root, "ExportsEvidence", "Assert.True(true);"));
 
             Assert.True(result.ExitCode == 0, result.Diagnostic);
-            Assert.NotEmpty(Directory.GetFiles(projectDirectory, "*.trx", SearchOption.TopDirectoryOnly));
+            Assert.Contains(
+                $"ENGINEERING_TEST_EXECUTED project={JsonSerializer.Serialize(ProductTestsProject)} "
+                    + "evidence=trx executed=1",
+                result.Output,
+                StringComparison.Ordinal);
+            var trxPath = Assert.Single(
+                Directory.GetFiles(projectDirectory, "*.trx", SearchOption.TopDirectoryOnly));
+            var trx = XDocument.Load(trxPath, LoadOptions.None);
+            var counters = trx.Descendants()
+                .Single(element => element.Name.LocalName == "Counters");
+            Assert.Equal("1", (string?)counters.Attribute("executed"));
+            Assert.Equal("1", (string?)counters.Attribute("passed"));
+            Assert.Equal("0", (string?)counters.Attribute("failed"));
+            Assert.Equal(
+                ["Passed"],
+                trx.Descendants()
+                    .Where(element => element.Name.LocalName == "UnitTestResult")
+                    .Select(element => (string?)element.Attribute("outcome")));
         }
         finally
         {
