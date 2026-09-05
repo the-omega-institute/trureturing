@@ -37,6 +37,29 @@ public sealed class RuleEngineCapacityDerivationTests
         Assert.Equal(2, calls);
     }
 
+    [Fact]
+    public void Sl003ExcludedCapacityPathThatIsDerivationInputStillWakesAndRunsUnknownDebtDerivation()
+    {
+        const string path = "docs/develop/x/packages.lock.json";
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([path]));
+        var registration = Assert.Single(
+            RepositoryRules.CreateRegistrations(),
+            item => item.Descriptor.Id == RuleId.CreateKnown(3));
+        var calls = 0;
+
+        if (registration.Rule.IsAffectedBy(context))
+        {
+            RepositoryRules.EvaluateCapacity(context, _ =>
+            {
+                calls++;
+                return EmptyTestMap();
+            });
+        }
+
+        Assert.Equal(2, calls);
+    }
+
     [Theory]
     [InlineData("D5/S0/Carrier/Generated.cs")]
     [InlineData("tools/Synthetic/Synthetic.csproj")]
