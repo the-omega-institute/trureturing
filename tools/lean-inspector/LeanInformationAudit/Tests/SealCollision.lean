@@ -6,6 +6,16 @@ namespace LeanInformationAudit.Tests.SealCollision
 
 /-! Removing `validatePersistedEntry` makes this exact duplicate diagnostic disappear. -/
 
+expect_information_occurrence
+  _root_.LeanInformationAudit.Tests.SealCollisionFixture.target
+  in _root_.LeanInformationAudit.Tests.SealCollisionFixture.arena
+  from "LeanInformationAudit.Tests.SealCollisionProducerA"
+
+expect_information_occurrence
+  _root_.LeanInformationAudit.Tests.SealCollisionFixture.target
+  in _root_.LeanInformationAudit.Tests.SealCollisionFixture.arena
+  from "LeanInformationAudit.Tests.SealCollisionProducerB"
+
 /-- error: IE-C002 DuplicateRegistration:
 LeanInformationAudit.Tests.SealCollisionFixture.target -/
 #guard_msgs (error) in

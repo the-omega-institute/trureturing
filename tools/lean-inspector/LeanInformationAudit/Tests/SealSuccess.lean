@@ -102,6 +102,22 @@ information_theorem idTheorem
   primitives idRealization
   : t001Arena.Law idRealization := by trivial
 
+expect_information_occurrence fstTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealSuccess"
+
+expect_information_occurrence sndTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealSuccess"
+
+expect_information_occurrence notTheorem
+  in notArena
+  from "LeanInformationAudit.Tests.SealSuccess"
+
+expect_information_occurrence idTheorem
+  in t001Arena
+  from "LeanInformationAudit.Tests.SealSuccess"
+
 #seal_information_theory output "/tmp/lean-information-audit-seal-success.json"
 
 private def artifactAddress (json : Json) : Except String String := do

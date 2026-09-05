@@ -32,6 +32,10 @@ information_theorem degenerateTheorem
   primitives unitRealization
   : arena.Law unitRealization := by trivial
 
+expect_information_occurrence degenerateTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealDegenerate"
+
 /-- error: IE-C004 DegenerateArena:
 LeanInformationAudit.Tests.SealDegenerate.arena -/
 #guard_msgs (error) in
