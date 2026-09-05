@@ -26,7 +26,11 @@ internal static partial class ScriptTestInputDeriver
     // 悬空由 ScriptTestGateClosureTests.JudgeNamedHelperTypesResolveToDeclaredTypes
     // 以 typeof(...) 钉住:这些类型被改名或删除即**编译期**红;仓库根 helper 的程序集
     // 移动也会使具名断言红,不会静默改变 owner identity。
-    internal const string RepositoryLayoutAssemblyName = "StrataLint.Tests";
+    internal const string RepositoryLayoutAssemblyName = "StrataLint.TestSupport";
+    // 程序集名是**有意**的 pin(不是漏改的全限定名):它把「谁是仓库根提供者」限定到
+    // 唯一那个脚手架程序集,使别处同名的 look-alike 类型无法冒充 —— 反面由
+    // ScriptTestGateClosureTests 的 StrataLint.Lookalike 夹具钉住。故脚手架换程序集时
+    // 本常量必须跟着改,而 typeof(...) 断言保证「忘了改」在编译期即红。
     internal const string RepositoryLayoutTypeName = "TestRepositoryLayout";
     internal const string RepositoryRelativePathTypeName = "RepositoryRelativePath";
     internal const string ScriptHarnessScratchTypeName = "ScriptHarnessScratch";
