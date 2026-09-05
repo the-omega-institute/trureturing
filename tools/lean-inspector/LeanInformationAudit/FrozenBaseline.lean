@@ -52,4 +52,3 @@ def frozenInformationRootBaseline : Array SnapshotOccurrence :=
                      registrationModuleName := `D5.S3.ConceptDynamics.InformationEscape.InformationRoot }]
 
 end LeanInformationAudit
-

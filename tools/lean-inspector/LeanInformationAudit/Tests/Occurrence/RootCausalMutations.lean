@@ -36,7 +36,8 @@ private def rejectsCausalMutation (second extra : Bool) (label : String)
       throwError "{label}: wrong failure: {message}"
     unless (SealRecords.forRoot (← getEnv) designatedInformationRootId).isEmpty do
       throwError "{label}: failed seal published records"
-    logInfo s!"{label}: IE-C028 missing={(toJson missing).compress} unexpected={(toJson unexpected).compress}"
+    logInfo s!"{label}: IE-C028 missing={(toJson missing).compress} \
+      unexpected={(toJson unexpected).compress}"
   finally
     setEnv original
 

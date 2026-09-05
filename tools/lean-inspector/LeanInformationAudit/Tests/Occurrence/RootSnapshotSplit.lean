@@ -9,7 +9,8 @@ run_cmd do
   let frozen := expectedOccurrencesForRoot empty frozenInformationRootId
   let designated := expectedOccurrencesForRoot empty designatedInformationRootId
   unless frozen.size == 11 && designated.size == 13 do
-    throwError "ROOT-B-snapshot-split: expected frozen=11 designated=13, got {frozen.size}/{designated.size}"
+    throwError "ROOT-B-snapshot-split: expected frozen=11 designated=13, \
+      got {frozen.size}/{designated.size}"
   unless frozen.all (fun row => row.registrationModuleName == frozenInformationRootId) do
     throwError "ROOT-B-snapshot-split: frozen contributor changed"
   let causal := designated.filter (·.registrationModuleName != frozenInformationRootId)
