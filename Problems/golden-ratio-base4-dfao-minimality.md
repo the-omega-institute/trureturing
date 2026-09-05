@@ -146,3 +146,605 @@ paper already reports severe scaling.
   small DFAO candidates quickly enough for incremental SAT.
 - Whether the fixed base-4 minimality question was resolved after arXiv v1 is
   unverified; novelty of any certificate construction is unassessed.
+
+## 2026-09-05 continuation: contracting error coordinates and transient-state refutation
+
+This section records research derived from PR #5405 at commit
+`a02a13c3e358c262355013e712d42dfe5e0dae6d`. It supersedes the historical
+22-state-only objective and the historical statements about missing source
+infrastructure above. The objective is to determine the actual minimum,
+including the possibility of a smaller machine. The evidence and replay sources
+are in `Evidence/D5/Automata/GoldenBase4/`.
+
+### Current mathematical and verification status
+
+An explicit typed partial machine has 14 previous-zero states and 7
+previous-one states, with every legal transition defined and illegal `11`
+transitions undefined. No rejecting sink is counted. The start consumes leading
+zeros and has output zero. Its exact interval invariant gives the all-integer
+specification
+
+\[
+\Delta_4(q)=\lfloor4q\varphi\rfloor-4\lfloor q\varphi\rfloor
+          =\lfloor4\{q\varphi\}\rfloor.
+\]
+
+In particular, its output on `zeckendorf(4^n)` is the required `D_4(n)`.
+The all-integer task has a 21-state upper construction and 112 same-type
+finite distinguishing witnesses giving a matching typed lower bound. These
+witnesses must not be used unchanged as a lower bound for the powers-only task.
+
+Separately, 28 exact power samples refute the existence of a machine with at
+most three previous-one states, with no restriction on the number of
+previous-zero states. Applied after the existing canonical transient-signature
+quotient, this gives the structural bound `s >= 4`.
+
+The published total-state lower bound 15 is inherited, not re-certified in this
+submission. Under the partial-state convention just specified, the resulting
+research interval is `15 <= m_typed <= 21`. The author's extended manuscript
+reports 22 states and a 14-state UNSAT calculation in Section 6. Its original
+base-four Walnut table has not been compared state by state here. The discrepancy
+must not be attributed to a sink, a paper error, or a new priority claim without
+that comparison.
+
+The derivations and exact executable checks are supplied for scrutiny. No Lean
+elaboration, kernel proof, LRAT verification, or admission of these new numerical
+results is claimed. The Python and C++ programs are separate implementations by
+the same authoring assistant, not independent-author review. No theorem for the
+exact powers-only minimum is supplied.
+
+### Error dynamics and the all-input induction
+
+Let `q=[w]_F` and `v=[w0]_F`, using MSD-first Fibonacci weights `1,2,3,5,...`.
+Set `psi=1-phi` and `e(w)=phi*q-v`. Appending the bit `a` gives
+
+\[
+q'=v+a,\qquad v'=q+v+2a,
+\qquad e(wa)=\psi e(w)-a\psi^2.
+\]
+
+The last identity follows from `phi^2=phi+1`. Since `v` is an integer,
+`{q*phi}={e(w)}`. The error lies in the open typed domains
+
+\[
+I_R=(3-2\varphi,2-\varphi),\qquad
+I_T=(1-\varphi,3-2\varphi).
+\]
+
+For `f_a(x)=psi*x-a*psi^2`, endpoint comparison gives
+`f_0(I_R) subset I_R`, `f_0(I_T) subset I_R`, and `f_1(I_R)=I_T`.
+The initial error is zero. Type `R` means the empty prefix or last bit zero;
+`T` means last bit one. These names specify numeration types and do not assert
+that every `R` state is graph-theoretically recurrent.
+
+The output cuts are `0,1/4` in `R` and `-1/2,-1/4` in `T`. Repeatedly add
+legal preimages of cuts until closed. Represent every endpoint as `(a+b*phi)/4`.
+The inverse maps on coefficient pairs are
+
+\[
+f_0^{-1}(a,b)=(-b,-a-b),\qquad
+f_1^{-1}(a,b)=(4-b,-4-a-b).
+\]
+
+The resulting ordered interior cuts are
+
+```
+R: (4,-3), (1,-1), (6,-4), (3,-2), (0,0), (5,-3),
+   (2,-1), (7,-4), (4,-2), (1,0), (6,-3), (3,-1)
+T: (1,-2), (-2,0), (3,-3), (0,-1), (2,-2), (-1,0)
+```
+
+All true prefix errors lie in `Z[phi]`. Except for zero, at least one coordinate
+of each listed pair is not divisible by four. Irrationality of `phi` makes the
+coefficients in the basis `1,phi` unique, so these 17 artificial cut points
+cannot be reached. Zero receives its own singleton state. The 13 open `R`
+intervals plus this singleton give 14 states; the seven open `T` intervals give
+seven states.
+
+`machine21.tsv` lists every state, output, transition and endpoint. Columns are
+`id type output zero one lower_a lower_b upper_a upper_b singleton`.
+The interval checker verifies all 35 legal transition inclusions and all 21
+constant-output cells using exact algebra. The negative slope reverses the
+endpoint order. The singleton is checked separately. Coverage of all reachable
+errors, transition preservation and the output identity yield correctness by
+induction on input length. Finite numerical regression is supplemental and is
+not the premise of that induction.
+
+### Exact reuse of the first-return skeleton
+
+The existing `Skeleton` definition is reused by the following serialization:
+
+```
+start = 0
+A = [0,9,8,7,7,6,5,5,4,4,3,2,2,1]
+J = [10,9,9,9,10,10,10,11,11,12,12,12,13,13]
+F = [0,3,3,3,3,3,0,0,0,0,0,1,1,1]
+G = [2,3,2,2,2,2,2,2,2,2,1,1,1,1]
+```
+
+Here `zeroStep(q)=some A(q)`, `oneSignature(q)=some(G(q),some J(q))`,
+and `zeroOutput(q)=F(q)`. The seven used `(G,J)` pairs are
+`(1,13),(1,12),(2,12),(2,11),(2,10),(2,9),(3,9)`.
+This supplies the concrete `(r,s)=(14,7)` construction. The JSON and its checker
+verify the correspondence to all 14 rows of the full machine. An actual Lean
+transport theorem for this concrete table remains to be supplied.
+
+All 21 states have access words. A pair search produces a common legal suffix
+for every pair within a numeration type, with distinct oracle outputs. The
+C++ checker independently evaluates those complete words as Fibonacci integers
+and checks the exact floor difference. There are `choose(14,2)+choose(7,2)=112`
+same-type pairs. Their full words involve 39 integers, at most 341, with maximum
+word length 12. For example, `100000` followed by `0` represents 21, which is
+not a power of four. This is why all-integer minimality does not settle the
+sparse-input minimum.
+
+### Gap-state relaxation and the bound s >= 4
+
+Write a nonzero legal word as
+
+\[
+1\,0^{g_1}1\,0^{g_2}1\cdots0^{g_k}1\,0^\ell,
+\qquad g_i\ge1.
+\]
+
+Only samples with `ell=0` or `ell=1` are used. On the previous-one state set
+`T`, define `H_g(t)=delta*(t,0^g1)` and `E(t)=output(delta(t,0))` wherever they
+are defined. Every observed path must succeed. Fill unused partial table entries
+arbitrarily and allow the different `H_g` maps to vary independently. This is a
+relaxation of the actual machine: all real fitted machines induce such tables,
+whereas the tables need not share any real previous-zero realization. A
+refutation of the relaxation therefore excludes every real realization,
+regardless of its previous-zero state count.
+
+The samples `n=0,1,26` end in one and have outputs `2,1,3`. They force at least
+three different `T` states. Under the exactly-three hypothesis, name them by
+outputs `1,2,3`; the first input one reaches the state with output two.
+All selected `ell=1` labels are zero or one. An `E` value of two, three or
+undefined cannot be used by any such observed endpoint, so it may be changed
+to zero without changing the samples. Thus the eight Boolean `E` maps cover
+all possibilities without an additional restriction on fitted machines.
+
+The selected power indices are
+
+```
+0,1,3,4,6,8,10,11,12,16,20,22,26,29,
+31,37,39,40,44,49,51,55,58,65,68,71,76,78
+```
+
+`gap3_core_rows.tsv` contains `n,d,ell,g_1,...,g_k`. The replay program rebuilds
+each complete word, verifies that its integer value is exactly `4^n`, and
+recomputes its label using
+
+\[
+\lfloor q\varphi\rfloor
+=\left\lfloor\frac{q+\lfloor\sqrt{5q^2}\rfloor}{2}\right\rfloor.
+\]
+
+There are 11 gap lengths, 33 three-valued transition entries, and 732 shared
+trie nodes. Each edge enforces `color(child)=H_g(color(parent))`.
+Domain propagation removes unsupported parent and child values. When a parent
+has a unique value, the corresponding transition row is intersected with the
+child domain. Every such narrowing preserves every genuine assignment.
+
+`gap3_refutation.txt` records a complete branch tree for each Boolean `E` map.
+A `B variable mask` node must enumerate every value remaining in that domain.
+An `L` leaf is accepted only after propagation has produced an empty domain.
+The replay reads all eight cases in order and rejects trailing or missing data.
+There are 936 certificate nodes, including 350 branches and 586 contradiction
+leaves. The certificate's Git blob SHA is
+`99744bdab177cdc0f255dc2679df821b64809fd3`.
+
+No ordinary self-loop, unreachable slot or arbitrary first-occurrence ordering
+is forbidden. Neither the replay nor its conclusion imposes a bound on the
+previous-zero state count. The finite evidence excludes at most three
+previous-one states. Applying it to the existing canonical signature machine
+gives `s >= 4`. A Lean proof of the relaxation transport and checker soundness
+is still required for kernel certification. No inclusion-minimality or
+minimum-cardinality claim is made for the 28-sample set.
+
+### What the suffix experiment shows and the next coupled search
+
+For each of the first 79 and the first 200 power samples, the simple
+same-type common-suffix conflict graphs, with the published zero-output anchor,
+have a triangle and a verified three-coloring in each type. Their chromatic
+numbers are therefore `3,3`. This particular pairwise graph abstraction yields
+only six states on these samples. It does not rule out stronger graphs on
+larger samples or different certificates.
+
+The gap refutation uses the additional consistency that the same transition
+entry must be reused on every occurrence. The next search should retain this
+coupling and the signature cost rather than replace the transition system by
+only a pairwise incompatibility graph.
+
+Assuming `r+s <= 20`, `s <= r`, and the derived `s >= 4`, seven capacity
+rectangles cover every candidate:
+
+```
+(10,10), (11,9), (12,8), (13,7), (14,6), (15,5), (16,4).
+```
+
+Indeed `r'=max(r,10)` satisfies `r <= r' <= 16` and `s <= 20-r'`.
+Use the existing capacity padding with unused states allowed. The old
+`(17,3)` branch is excluded by the gap certificate. Similarly, total budget 14
+needs only `(7,7),(8,6),(9,5),(10,4)` under the same structural bound.
+No refutations of these seven budget-20 cases are supplied here. Excluding all
+of them would give the powers-only lower bound 21 after the model-to-encoding
+transport is proved. A smaller satisfying finite-sample machine instead needs
+an all-powers correctness proof or a counterexample search with the exact
+oracle; finite fitting alone is insufficient for an upper-bound claim.
+
+There is a useful correction to the historical evidence paragraph above:
+a finite UNSAT certificate CAN give an infinite-domain lower bound once every
+purported smaller all-powers machine is proved to induce a satisfying assignment
+for those exact finite power samples. An all-powers machine would have to fit
+that subset. The missing requirement is the sound transport and certified
+refutation, not an infinite dictionary. Finite SAT fitting has the opposite
+asymmetry and supplies no all-powers correctness theorem by itself.
+
+### Reproduction and concrete proof frontier
+
+Run `sh Evidence/D5/Automata/GoldenBase4/reproduce.sh`.
+The deposit replay executed 100,000 consecutive integers and 2,000 powers,
+in addition to the exact interval proof checks, the 2,000-power skeleton check,
+the complete gap refutation and five negative tests. All passed. The earlier
+research run used 1,000,000 consecutive integers and 5,000 powers; both ranges
+are reproducible through the environment variables documented in the README.
+Five changed-input tests reject an incorrect transition, an incomplete branch,
+a false contradiction leaf, a truncated proof and an incorrect oracle digit.
+
+The next formal obligations are: the arithmetic prefix-error invariant and its
+finite interval simulation; the concrete table-to-existing-skeleton transport;
+the gap-word transport into the relaxed transition equations; solution
+preservation of propagation and exhaustive branch coverage; and finally the
+sample-to-slot-CNF and certified refutation chain for the remaining budgets.
+These are separate obligations. A source table alone is not a proof of the
+numerical upper bound, and a discovery program returning UNSAT is not a
+kernel-checked lower bound.
+
+Reference: Aaron Barnoff, Curtis Bright and Jeffrey Shallit, *Computing the
+base-b representation of quadratic irrationals using automata*, Theoretical
+Computer Science 1071 (2026), 115843, DOI `10.1016/j.tcs.2026.115843`.
+The author's extended manuscript is `https://cs.curtisbright.com/reports/digits-automata.pdf`;
+Section 6 supplies the reported state-count and sparse-task context.
+
+## 2026-09-05 formal continuation: direct invariant and exact M01 input transport
+
+Two source modules now supply the complete upper-construction argument against
+M01's existing input and digit functions:
+
+- `D5/S1/Digit/GoldenBase4IntervalMachine.lean`;
+- `D5/S1/Digit/GoldenBase4DenseInput.lean`.
+
+Each has a source-bound Scribe companion under `Blueprint/D5/S1/Digit/`.
+The first was committed at `e9307a6d4c6bf064bc74c2cbefd0a996e2214e37`;
+the second at `c54dd3255e4e00a30420ad778be4293cba6d3ef5`.
+This section updates the proof frontier of the preceding research deposit.
+The scripts have not been elaborated by the pinned Lean executable in this
+session. Kernel verification, axiom-closure output and repository admission are
+not asserted. The exact arithmetic checks below are separate executable evidence.
+
+### A smaller correctness argument for the fixed table
+
+The previous derivation described the artificial cuts through irrationality and
+membership in `Z[phi]`. Those facts help explain how the partition was found,
+but are not necessary premises for correctness of this explicit table.
+
+For a word `w`, `fibPair w` is defined using the standard upstream `Nat.fib`
+weights. Its components are the value of `w` and its shifted value. The theorem
+`fibPair_append_digit` derives the update `(q,v) -> (v+a,q+v+2a)`.
+`error_append_digit` then proves the exact affine update
+
+\[
+e(wa)=(1-\varphi)e(w)-a(1-\varphi)^2
+\]
+
+from `Real.goldenRatio_sq`. All machine runs use the existing
+`TypedPartialDFAO` and `runTransition`; no replacement run semantics is introduced.
+
+Let `C_q` be the interval assigned to state `q`, with `C_0={0}`. For every
+noninitial legal transition `q --a--> t`, the finite certificate proves
+
+\[
+t\ne0,\qquad
+\ell_t\le f_a(u_q),\qquad f_a(\ell_q)\le u_t.
+\]
+
+Since the affine slope is negative, these inequalities imply
+`e in C_q -> f_a(e) in C_t`. The two transitions from the singleton are checked
+separately. `initial_cell` starts the induction. Thus every reached error lies
+in its state cell without first proving that a family of cells covers the
+whole real domain, and without an assumption excluding unreachable cut points.
+
+For each state the source supplies an integer strip `m_q` and proves
+
+\[
+m_q+d_q/4\le e<m_q+(d_q+1)/4.
+\]
+
+This identifies both floors and hence the emitted digit. The separate theorem
+`legal_run_exists` shows that every legal base word has a successful machine
+run. This is necessary: correctness conditioned only on successful runs could
+otherwise leave required inputs undefined. Combining these results gives
+`every_legal_word_correct`, for words of arbitrary length.
+
+### Connecting the unchanged canonical input to the invariant
+
+The second module closes the source-level M01 transport obligation rather than
+assuming an encoder-correctness field. It uses the existing `wdigits`,
+`zeckendorfWordLength`, `zeckendorfBit`, and `zeckendorfMSDWord` unchanged.
+
+Upstream `wdigits_isCanonical` gives descending indices separated by at least
+two and bounded below by two. `occupied_index_bounds` places all those indices
+inside the existing dense display. A finite bijection `i -> i+2` identifies the
+selected dense positions with the occupied Fibonacci indices. Together with
+`decode_wdigits`, this yields
+
+\[
+\operatorname{fibPair}(\operatorname{zeckendorfMSDWord}(n))_1=n.
+\]
+
+The guarded induction `separated_bits_run` proves legality of the dense word.
+Entry from the previous-one type requires the next bit to be zero; the proof
+retains that condition rather than resetting the type. It follows that the
+same canonical M01 word has both its exact value and a legal shared-base run.
+
+The endpoint is the following source theorem, with the original M01 functions:
+
+```lean
+theorem twenty_one_state_power_witness :
+    ∃ M : TypedPartialDFAO binaryZeckendorfBase (Fin 4) (Fin 21),
+      (∀ i, M.evalOutput (base4PowerWord i) = some (base4GoldenDigit i)) ∧
+      M.step M.start 0 = some M.start ∧ M.output M.start = 0
+```
+
+The witness is the explicit interval machine. The argument has no finite sample
+extent, no supplied global-correctness hypothesis, and no assumption that a
+chosen input encoder means the desired integer. The original M01 arithmetic
+and dense word are connected by proofs. This supplies a source-level upper
+construction for the concrete task; it does not supply a sparse state lower bound.
+
+### Executed checks on the actual source tables
+
+`check_interval_source.py` parses the finite vector literals in the Lean source
+itself. It reduces algebraic coefficients using `phi^2=phi+1` and uses the exact
+rational bracket `8/5 < phi < 13/8`. It checked all 35 legal transitions, the 66
+noninitial endpoint inequalities, the singleton cases, and all 21 output cells.
+Four mutations of a zero target, a one target, an output and an endpoint were
+rejected. An additional 16,382 finite word-and-appended-bit checks passed for
+the Fibonacci pair recurrence, including noncanonical binary words.
+
+`check_dense_input.py` checked 20,000 consecutive integers and 1,000 power
+inputs, indices 0 through 999. Each case checks the occupied-index bounds,
+separation, range bijection, dense Fibonacci value, legal machine run and exact
+integer-square-root digit oracle. The display of zero is `[0]`, as in M01.
+No floating-point arithmetic is used. These runs do not execute Lean and are
+not substitutes for kernel checking of the universal statements.
+
+The source SHA-256 values for the checked files are:
+
+```
+GoldenBase4IntervalMachine.lean
+6e1de8d37db9ffff38b286079dfcd9a0c4b355a87ceefd164f5b3dafe3d91a55
+GoldenBase4DenseInput.lean
+78c213ad2e9ab3c6709b4c352cb5d8b0d9b61c8c1898534297832a9b7dd8e113
+```
+
+The source-bound interval and dense-input checks can be replayed with:
+
+```sh
+python Evidence/D5/Automata/GoldenBase4/check_interval_source.py \
+  D5/S1/Digit/GoldenBase4IntervalMachine.lean
+python Evidence/D5/Automata/GoldenBase4/check_dense_input.py \
+  D5/S1/Digit/GoldenBase4IntervalMachine.lean
+```
+
+The two Lean files expose 21 public theorem declarations, each with a Scribe
+binding, and the interval Scribe also binds the concrete machine definition.
+No `sorry`, `admit` or newly postulated axiom is used in these new source files.
+
+### The remaining minimum-state question
+
+The exact powers-only minimum is still undetermined. This continuation does
+not increase the published total-state lower bound 15 and does not provide
+refutations for all total budgets through 20. The existing three-transient-state
+refutation and its `s >= 4` consequence still need their Lean checker-soundness
+and transport proofs. They are not asserted to be kernel-certified here.
+
+The author's extended manuscript uses MSD-first inputs and the same zero-based
+digit convention, and reports a 22-state base-four Walnut construction. Its
+original base-four table has not been obtained for a state-by-state comparison.
+The present 21-state upper construction does not identify why that reported
+number differs. A sink explanation, a paper correction and a priority claim
+are not supplied by the construction alone.
+
+After verification of the submitted upper proof, the decisive remaining result
+is either a smaller all-powers-correct machine or complete certified exclusion
+of machines with at most twenty states. The seven budget rectangles recorded
+above remain the relevant coupled lower-bound targets. All-integer distinguishing
+suffixes cannot replace the powers-only sample obligations in those targets.
+
+## 2026-09-06 structural continuation: one zero generator and exact response rank
+
+The target remains the minimum state count on the original power inputs. This
+continuation derives structural constraints on every slot candidate and an exact
+certificate for the already constructed reference machine. It does not increase
+the total-state lower bound 15, prove that the powers-only minimum is 21, or
+resolve the discrepancy with the paper's reported 22-state Walnut object.
+
+### Literature and the precise transfer being used
+
+Barnoff, Bright and Shallit, *Computing the base-b representation of quadratic
+irrationals using automata*, TCS 1071 (2026), 115843, distinguish all-integer
+correctness from correctness only on powers. Their incomplete-data minimization
+problem remains the target; no output on an arbitrary nonpower may be added to
+its lower-bound sample set. DOI: `10.1016/j.tcs.2026.115843`.
+
+Moradi, Rampersad and Shallit, *Complexity of Linear Subsequences of
+Fibonacci-Automatic Sequences*, arXiv:2603.21645v1, 23 March 2026, construct
+Fibonacci automata for arithmetic relations and give polynomial bounds for
+linear subsequences. Their explicit treatment of MSD-first input, leading-zero
+loops and omitted dead states is relevant to matching conventions. Their
+linear-subsequence result does not establish the exponential restriction
+`h(4^n)` or a minimality transfer to that restriction.
+Source: `https://arxiv.org/html/2603.21645v1`.
+
+Lacroce, Balle, Panangaden and Rabusseau, *Optimal approximate minimization of
+one-letter weighted finite automata*, MSCS, online 8 November 2024, volume 2025,
+provides the one-letter Hankel/realization setting. We use only the exact
+factorization principle, not an approximate singular-value bound. Linear rank
+is a necessary deterministic state-capacity constraint; arbitrary low-rank
+completion is not sufficient for a deterministic typed machine.
+DOI: `10.1017/S0960129524000276`.
+
+Dumitru, Yoshinaka and Shinohara, *Learning deterministic finite-state machines
+from the prefixes of a single string is NP-complete*, arXiv:2601.12621v1,
+18 January 2026, explains why a generic prefix-tree presentation does not itself
+make exact identification easy. This result is not a hardness proof for the
+single fixed golden-ratio instance.
+Source: `https://arxiv.org/html/2601.12621v1`.
+
+The repository already has the general linear-system result in
+`D5/S3/Observer/Hankel/HankelRankMinimality.lean` and its reachable-observable
+minimal-realization companion. The new source supplies the deterministic slot
+bridge; it reuses `Skeleton`, `SlotWitness`, upstream iterates, `Matrix.mul`, and
+`Matrix.rank`. It introduces no alternate DFAO, run semantics, or rank definition.
+
+### Every gap length uses the same zero map
+
+For an existing `SlotWitness`, write
+
+\[
+A:R\to R,\qquad B:R\to T,\qquad C:T\to R,
+\]
+
+for `zeroTarget`, `slotOf`, and `returnTarget`. Let `F` be the recurrent digit
+output and `G` the transient digit output. Starting in transient slot `t`, the
+word `0^(k+1)1` selects
+
+\[
+\boxed{H_{k+1}(t)=B(A^k(C(t))).}
+\]
+
+Thus separate gap lengths cannot be chosen independently in a genuine machine.
+The old three-slot refutation allowed such independence as a relaxation, which
+was sound for that exclusion but lost this shared-generator structure.
+
+`evalFrom_zero_prefix` proves the equation for every continuation using the
+existing Option-valued block evaluation. `evalFrom_one_zero_gap` then identifies
+the original evaluation of `10 0^k 1` with
+`G(B(A^k(C(B(q)))))`. The source takes the existing serialization equations as
+its only machine interface. No ordinary self-loop or unused capacity is removed.
+
+### Joint responses factor through the actual recurrent carrier
+
+A probe asks either whether the current output equals a specified digit, or
+whether the next one edge selects a specified transient slot. Its value is the
+rational indicator 0 or 1. The slot probe is latent structural information for
+an unknown candidate; it is not an externally known digit label.
+
+Choose row origins `q_i`, row delays `a_i`, column delays `b_j`, and probes `p_j`.
+The sampled response is
+
+\[
+H_{ij}=p_j(A^{a_i+b_j}(q_i)).
+\]
+
+Define
+
+\[
+L_{iq}=\mathbf1_{A^{a_i}(q_i)=q},
+\qquad U_{qj}=p_j(A^{b_j}(q)).
+\]
+
+The unique intermediate state and the iterate-addition identity give
+
+\[
+\boxed{H=LU,\qquad \operatorname{rank}_{\mathbb Q}H\le |R|.}
+\]
+
+Here `|R|` is the number of recurrent states. The Lean names are
+`response_factorization` and `response_rank_le`. Every square sampled response
+of order greater than the recurrent capacity has determinant zero, proved as
+`response_det_eq_zero`. A right inverse supplies an exact finite rank certificate
+through `capacity_ge_of_right_inverse`. These are algebraic consequences of the
+actual transition system, so they require no additional symmetry-breaking premise.
+
+### A concrete unimodular reference certificate
+
+`GoldenBase4ZeroResponse.lean` reads the outputs of
+`GoldenBase4IntervalMachine.machine` directly. Three finite table equalities
+identify its zero rows, one-edge selectors, and transient returns with the
+existing machine. Its explicit `SlotWitness` has fourteen recurrent positions
+and seven transient slots.
+
+Row access from the start or a named return, followed by a finite zero delay,
+exhausts all fourteen recurrent states. Joint probes at depths zero through
+three contain a 14 by 14 submatrix `profileMinor`. The source supplies an
+integer-valued matrix `profileInverse` and a finite proof body for
+
+\[
+\operatorname{profileMinor}\,\operatorname{profileInverse}=I_{14}.
+\]
+
+This establishes the source theorem `profile_rank_fourteen`. The executable
+checker additionally verifies the reverse product and determinant -1. The ranks
+of the full joint response through one, two, three and four zero-depth levels
+are respectively `9,12,13,14`. These are exact rational ranks.
+
+Consequently, any deterministic slot realization of this same labelled profile
+requires at least fourteen recurrent states. This scope is explicit in
+`same_profile_recurrent_lower_bound`. Slot labels may be renamed consistently,
+but arbitrary powers-correct candidates are not required to have this profile.
+
+### The remaining arithmetic requirement
+
+The reference rank certificate must not be substituted for a powers-only lower
+bound. In particular, copying the reference slot readouts or its unconstrained
+nonpower outputs into an unknown candidate would assume information that the
+original task does not specify.
+
+A valid application to the remaining capacity cases must keep these entries
+as unknowns, impose the exact observed power labels and shared transition
+equations, and prove that every compatible completion violates the relevant
+rank bound or another necessary deterministic constraint. Low rank alone does
+not certify existence of a deterministic machine. The one-hot state and slot
+conditions, type restrictions, common shift action, and signature budget remain
+part of the problem. The current source proves the necessary rank constraints;
+it does not prove that all compatible completions have rank fourteen.
+
+The seven previously recorded budget-20 cases therefore remain unrefuted in
+this continuation. A reference-profile rigidity result is useful for designing
+structural exclusions, but it is stronger data than the powers-only task supplies.
+
+### Executed checks and source status
+
+The two new Lean modules are
+`D5/S0/Certificates/SkeletonSlotZeroResponse.lean` and
+`D5/S1/Digit/GoldenBase4ZeroResponse.lean`. Each has a Scribe companion covering
+all its public declarations. There are fourteen theorem declarations in total.
+No new axioms, `sorry`, or admitted claims are used. The proof scripts have been
+logically reviewed but have not been elaborated or kernel-checked in this
+session; inherited source dependencies are not newly certified here.
+
+The standard-library-only checker reads the original and new Lean table
+literals. It verifies both inverse products, all row accesses, probe metadata,
+and the exact determinant. Across 1,164 small slot tables it checks 122,724
+factorization entries, 129,696 zero-prefix evaluation equations, and 9,264
+gap-evaluation equations. The set includes 876 models with zero self-loops,
+520 with unused slots, and 260 with duplicate output-return pairs. Four altered
+return, probe, origin and inverse cases are rejected. These executed checks do
+not replace the general Lean proof or establish a new powers-only bound.
+
+Reproduce from a checkout with
+
+```sh
+python Evidence/D5/Automata/GoldenBase4/check_zero_response.py .
+```
+
+The exact minor, inverse and measured results are retained in
+`zero_response_minor14.json` and `zero_response_validation.json` in the same
+Evidence directory. The generic Hankel factorization is established mathematics;
+no priority claim is made for it. The contributions here are its source-level
+transport from the existing typed slot semantics, the explicit exact reference
+certificate, and the precise separation between latent completion variables
+and the arithmetic observations allowed by the original open problem.
