@@ -12,6 +12,13 @@
          连返回类型也是,故倒置依赖无法避开 —— 公开成员不能暴露另一程序集的 internal 类型。 -->
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <!-- **字面 `xunit` 是必需的,不能只有 Xunit.SkippableFact。**
+         ScribeProjectCompilation 把「没有字面 Include="xunit" 的项目」判为**生产程序集**;
+         那样一来,每一处「调用本项目的脚手架并传仓库路径」的测试方法都会被
+         ScribeTestSymbolBinder 判为 IndirectViaProductionLoader → unknown。
+         实测:只加 SkippableFact 时全仓 unknown 由 254 涨到 **316**,撞穿 SL-003 的 281 容差
+         (判词见本 PR 首轮 admission)。加上字面 xunit 后 TestSupport 归入测试项目侧。 -->
+    <PackageReference Include="xunit" />
     <PackageReference Include="Xunit.SkippableFact" />
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)../../Architecture/BannedSymbols.Determinism.txt" />
   </ItemGroup>
