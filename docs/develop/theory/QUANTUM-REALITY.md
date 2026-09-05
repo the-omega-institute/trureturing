@@ -7554,3 +7554,1493 @@ $$
 [4]: https://link.springer.com/article/10.12942/lrr-2001-6 "The Thermodynamics of Black Holes | Living Reviews in Relativity | Springer Nature Link"
 [5]: https://arxiv.org/pdf/2209.09980?utm_source=chatgpt.com "arXiv:2209.09980v1 [gr-qc] 20 Sep 2022"
 [6]: https://arxiv.org/abs/gr-qc/0603046?utm_source=chatgpt.com "Quantum information cannot be completely hidden in correlations: implications for the black-hole information paradox"
+# 辐射关联、时间编码与观察者可恢复性
+
+## ——量子观察者—关系时空理论第五十一至第六十节增订
+
+### 摘要
+
+前文已经区分：观察者的历史记忆、黑洞内部的径向时间化，以及霍金辐射的热性。本增订进一步研究一个尚未闭合的问题：
+
+> **某段历史进入一个量子系统以后，怎样从内部关联转化为外部观察者可恢复的记忆？这一过程与热辐射、能量守恒和内部时间结构之间有什么约束？**
+
+本增订以项目已有的接口核、目标残差、精化和动力下降为基础，建立有限维量子过程模型，证明：
+
+$$
+\boxed{
+\text{新增可恢复信息}
+=
+\text{新辐射相对于旧辐射的条件关联增量};
+}
+$$
+
+$$
+\boxed{
+\text{完整外侧恢复}
+\iff
+\text{补侧不再保留原输入的量子信息};
+}
+$$
+
+并给出两项不可能性结论：
+
+**普遍、独立的热替换发射不能同时实现内部状态空间的缩小；有限个辐射片段若各自对全部输入完全不可区分，就不能在严格可加的能量守恒下承载一个非平凡的内部钟 Hamiltonian。**
+
+这些结论均具有明确的适用条件，不直接代替真实黑洞的量子引力动力学。
+
+项目依据固定于本次读取的提交 `d3510a14b83a3e36662b0a5aa305213f57f4afd0`。本次读取的 `PetzRecovery.lean` 与 `ConditionalMutualInformation.lean` 处理的是有限经典概率；下文的量子恢复和量子条件互信息命题应单独形式化，不能直接视为这些已有 Lean 模块的结论。
+
+---
+
+# 51．首先补齐项目中的一个关键类型区别
+
+项目定义目标残差：
+
+$$
+\operatorname{Residual}(q,T)
+=
+\ker q\setminus\ker T,
+$$
+
+并规定两个接口的静态联合：
+
+$$
+(q_1\vee q_2)(x)
+=
+(q_1(x),q_2(x)).
+$$
+
+因此：
+
+$$
+\ker(q_1\vee q_2)
+=
+\ker q_1\cap\ker q_2.
+$$
+
+这些关系是严格的。但应用到量子系统时，必须先说明接口输出究竟包含什么。
+
+## 定义 51.1　边缘接口与联合接口
+
+对联合量子态 \(\rho_{12}\)，定义：
+
+$$
+q_1(\rho)=\operatorname{Tr}_2\rho,
+\qquad
+q_2(\rho)=\operatorname{Tr}_1\rho.
+$$
+
+分别保存两个边缘态的接口为：
+
+$$
+\boxed{
+q_{\mathrm{sep}}(\rho)
+=
+\bigl(q_1(\rho),q_2(\rho)\bigr).
+}
+\tag{51.1}
+$$
+
+保存完整联合态的接口为：
+
+$$
+\boxed{
+q_{\mathrm{joint}}(\rho)=\rho_{12}.
+}
+\tag{51.2}
+$$
+
+这两个接口不是同一个对象。
+
+---
+
+## 定理 51.1　边缘接口的联合一般不等于量子联合接口
+
+一般有严格包含：
+
+$$
+\boxed{
+\ker q_{\mathrm{joint}}
+\subsetneq
+\ker q_{\mathrm{sep}}.
+}
+\tag{51.3}
+$$
+
+### 证明
+
+若联合态相同，其两个边缘态当然相同，因此得到包含关系。
+
+取：
+
+$$
+|\Phi_\pm\rangle
+=
+\frac{|00\rangle\pm|11\rangle}{\sqrt2}.
+$$
+
+两者在每一侧的边缘态都是：
+
+$$
+\frac I2.
+$$
+
+因此：
+
+$$
+q_{\mathrm{sep}}(\Phi_+)
+=
+q_{\mathrm{sep}}(\Phi_-).
+$$
+
+但：
+
+$$
+\langle X\otimes X\rangle_{\Phi_+}=1,
+\qquad
+\langle X\otimes X\rangle_{\Phi_-}=-1.
+$$
+
+联合态可被区分，故包含严格。∎
+
+### 解释
+
+这里并不是说只能用复杂的联合量子门才能看到差别。两侧分别测量 \(X\)，再保存配对结果的相关性，也能区分上述状态。
+
+区别在于：
+
+$$
+\boxed{
+\text{只保存各侧统计}
+\ne
+\text{保存各侧结果之间的关联}.
+}
+$$
+
+因此，对辐射说“每个片段都一样”，不等于对完整辐射说“没有保存任何历史”。
+
+这不是项目联合核公式失效，而是不能把不同的 CUT 当成同一个 CUT。
+
+---
+
+# 52．用一个闭合过程描述内部记忆与辐射增长
+
+## 假设 52.1　有限有效过程
+
+令 \(L\) 为需要追踪的初始量子信息空间：
+
+$$
+\dim\mathcal H_L=d\ge2.
+$$
+
+它可以表示有限组历史的量子编码，也可以表示某个观察者内部钟与记忆的一个有限子空间。
+
+在第 \(n\) 个过程阶段，完整编码为等距映射：
+
+$$
+\boxed{
+V_n:\mathcal H_L
+\longrightarrow
+\mathcal H_{B_n}\otimes\mathcal H_{R^n},
+}
+\tag{52.1}
+$$
+
+其中：
+
+$$
+R^n=r_1r_2\cdots r_n.
+$$
+
+\(R^n\) 是已经向外输出并累计保留的系统；\(B_n\) 包含其余全部未访问自由度，包括必要的辅助记录。
+
+每次新发射由等距映射：
+
+$$
+W_n:B_{n-1}\longrightarrow B_n\otimes r_n
+$$
+
+实现，且不再作用于已经保留的旧辐射：
+
+$$
+V_n=(W_n\otimes I_{R^{n-1}})V_{n-1},
+$$
+
+省略无物理内容的张量因子排序。
+
+此处 \(n\) 是过程阶段，不是黑洞内部面积半径，也不直接等于固有时间。两者的对应必须由前文的钟与因果实现提供。
+
+有限维与张量分割是本节的有效模型条件，不能直接宣称它们已经严格描述了连续量子场及完整引力约束。
+
+---
+
+## 定义 52.1　内外量子接口
+
+定义外侧接口：
+
+$$
+\boxed{
+\mathcal N_n(\rho)
+=
+\operatorname{Tr}_{B_n}
+(V_n\rho V_n^\dagger),
+}
+\tag{52.2}
+$$
+
+以及补侧接口：
+
+$$
+\boxed{
+\mathcal C_n(\rho)
+=
+\operatorname{Tr}_{R^n}
+(V_n\rho V_n^\dagger).
+}
+\tag{52.3}
+$$
+
+它们都是完全正、保迹映射。
+
+---
+
+## 定理 52.1　累计辐射形成物理精化链
+
+有：
+
+$$
+\boxed{
+\mathcal N_{n-1}
+=
+\operatorname{Tr}_{r_n}\circ\mathcal N_n.
+}
+\tag{52.4}
+$$
+
+因此，在累计辐射被完整保留的模型中：
+
+$$
+\boxed{
+\ker\mathcal N_n
+\subseteq
+\ker\mathcal N_{n-1}.
+}
+\tag{52.5}
+$$
+
+### 证明
+
+对 \(B_n,r_n\) 一并取偏迹，等价于在等距映射 \(W_n\) 之前对 \(B_{n-1}\) 取偏迹。
+
+于是得到式（52.4），再由函数复合得到核包含。∎
+
+### 注 52.1
+
+这不保证实际观察者的记忆始终增长。
+
+若外侧观察者又实施压缩、丢弃、测量或遗忘：
+
+$$
+\mathcal D_n:R^n\to M_n,
+$$
+
+实际接口是：
+
+$$
+\mathcal D_n\circ\mathcal N_n.
+$$
+
+它未必构成精化链。
+
+**“辐射已经包含信息”与“某个观察者已经把信息保存成记忆”，是两项不同要求。**
+
+---
+
+# 53．信息输出的正确增量：条件互信息，而不是辐射熵
+
+为检验任意量子输入是否保留，引入与 \(L\) 最大纠缠的参照系统 \(A\)：
+
+$$
+|\Phi_d\rangle_{AL}
+=
+\frac1{\sqrt d}\sum_{j=1}^d|j\rangle_A|j\rangle_L.
+$$
+
+经过 \(V_n\) 后：
+
+$$
+|\Psi_n\rangle_{AB_nR^n}
+=
+(I_A\otimes V_n)|\Phi_d\rangle.
+$$
+
+该态仍为纯态，并且：
+
+$$
+S(A)=\log d.
+$$
+
+所有熵采用自然对数。
+
+## 定义 53.1　外侧信息与补侧关联余量
+
+定义：
+
+$$
+\boxed{
+\mathcal I_n=I(A:R^n),
+}
+\tag{53.1}
+$$
+
+$$
+\boxed{
+\mathcal L_n=I(A:B_n).
+}
+\tag{53.2}
+$$
+
+\(\mathcal L_n\) 是原输入参照仍与补侧保留的关联，不应直接称为“已经永久丢失的信息”。
+
+---
+
+## 定理 53.1　内外关联守恒式
+
+有：
+
+$$
+\boxed{
+\mathcal I_n+\mathcal L_n=2\log d.
+}
+\tag{53.3}
+$$
+
+### 证明
+
+由于 \(AB_nR^n\) 纯：
+
+$$
+S(AR^n)=S(B_n),
+\qquad
+S(AB_n)=S(R^n).
+$$
+
+因此：
+
+$$
+I(A:R^n)=S(A)+S(R^n)-S(B_n),
+$$
+
+$$
+I(A:B_n)=S(A)+S(B_n)-S(R^n).
+$$
+
+相加即得。∎
+
+---
+
+## 定理 53.2　新增辐射的信息增量
+
+令：
+
+$$
+\boxed{
+\mathcal J_n
+=
+I(A:r_n\mid R^{n-1}).
+}
+\tag{53.4}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal I_n-\mathcal I_{n-1}
+=
+\mathcal J_n
+=
+\mathcal L_{n-1}-\mathcal L_n
+\ge0.
+}
+\tag{53.5}
+$$
+
+### 证明
+
+互信息链式法则给出：
+
+$$
+I(A:R^{n-1}r_n)
+=
+I(A:R^{n-1})
++
+I(A:r_n\mid R^{n-1}).
+$$
+
+根据定理 52.1，旧辐射与 \(A\) 的联合边缘态没有改变。
+
+再用量子强次可加性：
+
+$$
+I(A:r_n\mid R^{n-1})\ge0,
+$$
+
+及式（53.3），即得结论。∎
+
+这里使用的是量子强次可加性。其零条件与量子 Markov 恢复结构具有明确联系，不能直接用经典概率模块代替。([arXiv][1])
+
+---
+
+## 定理 53.3　辐射熵增量不等于输入信息增量
+
+有：
+
+$$
+\boxed{
+S(R^n)-S(R^{n-1})
+=
+S(r_n)-I(r_n:R^{n-1}),
+}
+\tag{53.6}
+$$
+
+而：
+
+$$
+\boxed{
+\mathcal J_n
+=
+I(r_n:AR^{n-1})
+-
+I(r_n:R^{n-1}).
+}
+\tag{53.7}
+$$
+
+### 证明
+
+分别展开两侧的熵定义即可。∎
+
+所以：
+
+$$
+\boxed{
+\text{辐射熵上升、下降或保持不变，}
+\quad
+\text{都不能单独决定原输入信息输出了多少。}
+}
+$$
+
+真正需要计算的是：新片段在已有记录的条件下，增加了哪些与原输入有关的可恢复关联。
+
+---
+
+# 54．从“核没有碰撞”提升到真正的量子恢复
+
+## 定义 54.1　完整量子恢复
+
+称阶段 \(n\) 的外侧接口可完整恢复 \(L\)，若存在完全正、保迹映射：
+
+$$
+\mathcal R_n:R^n\to L
+$$
+
+满足：
+
+$$
+\boxed{
+\mathcal R_n\circ\mathcal N_n=\operatorname{id}_L.
+}
+\tag{54.1}
+$$
+
+这是信息论层面的恢复存在性。实际观察者是否能够执行 \(\mathcal R_n\)，还要检查其允许操作、时间、能量和控制精度。
+
+恢复存在性与现实可执行性的区别，在黑洞信息检索模型中尤其重要；例如 Hayden–Preskill 模型明确加入了内部混合与对辐射控制能力的假设。([arXiv][2])
+
+---
+
+## 定理 54.1　完整恢复、补侧替换与参照解耦的等价
+
+下列条件等价：
+
+1. 存在式（54.1）的恢复通道；
+2. 存在固定态 \(\sigma_{B_n}\)，使
+
+   $$
+   \boxed{
+   \mathcal C_n(\rho)=\sigma_{B_n}
+   \qquad\forall\rho;
+   }
+   \tag{54.2}
+   $$
+3. 对最大纠缠测试态，
+
+   $$
+   \boxed{
+   I(A:B_n)=0.
+   }
+   \tag{54.3}
+   $$
+
+### 证明
+
+**\(2\Rightarrow1\)。**
+
+写：
+
+$$
+\sigma_{B_n}
+=
+\sum_a\lambda_a|a\rangle\langle a|,
+\qquad
+\lambda_a>0.
+$$
+
+对输入基底 \(|i\rangle\)，将编码展开为：
+
+$$
+V_n|i\rangle
+=
+\sum_a\sqrt{\lambda_a}\,
+|v_{ia}\rangle_{R^n}|a\rangle_{B_n}.
+$$
+
+条件（54.2）不仅约束对角输入，也通过线性性和极化恒等式约束所有 \(|i\rangle\langle j|\)。因此：
+
+$$
+\langle v_{jb}|v_{ia}\rangle
+=
+\delta_{ij}\delta_{ab}.
+$$
+
+所以可以在 \(R^n\) 的相应支持上定义等距解码：
+
+$$
+|v_{ia}\rangle\longmapsto|i\rangle_L|a\rangle_G.
+$$
+
+对辅助寄存器 \(G\) 取偏迹，并在支持之外任意补成保迹操作，即得到恢复通道。
+
+**\(1\Rightarrow3\)。**
+
+恢复后：
+
+$$
+I(A:L)=2\log d.
+$$
+
+由量子数据处理不等式：
+
+$$
+2\log d
+\le I(A:R^n).
+$$
+
+但定理 53.1 给出：
+
+$$
+I(A:R^n)\le2\log d.
+$$
+
+所以：
+
+$$
+I(A:B_n)=0.
+$$
+
+**\(3\Rightarrow2\)。**
+
+零互信息意味着：
+
+$$
+\rho_{AB_n}
+=
+\frac{I_A}{d}\otimes\sigma_{B_n}.
+$$
+
+这是补通道的归一化 Choi 态。比较其全部矩阵块，得到：
+
+$$
+\mathcal C_n(|i\rangle\langle j|)
+=
+\delta_{ij}\sigma_{B_n}.
+$$
+
+由线性性即得式（54.2）。∎
+
+这是量子纠错中恢复与互补通道信息之间的标准关系；上述证明将其直接写成当前内外接口模型。([arXiv][3])
+
+### 结论
+
+**当外侧已经能够完整恢复任意原输入时，补侧不可能还独立保留另一份完整的同一量子信息。**
+
+可以共享某些经典记录，却不能把任意未知量子态复制成两个彼此独立的完整观察者。
+
+---
+
+# 55．“每一份看起来热”与“每次都产生独立热替换”完全不同
+
+## 定义 55.1　边缘不可区分性
+
+称第 \(j\) 个辐射片段对初始输入边缘不可区分，若：
+
+$$
+\boxed{
+\operatorname{Tr}_{\overline{r_j}}
+(V_n\rho V_n^\dagger)
+=
+\tau_j
+\qquad\forall\rho.
+}
+\tag{55.1}
+$$
+
+\(\tau_j\) 可以是指定 Hamiltonian 下的热态。
+
+该条件只约束单个辐射片段，不约束它与其他片段之间的关联。
+
+---
+
+## 定义 55.2　普遍的单步替换发射
+
+对一步映射：
+
+$$
+W_n:B_{n-1}\to B_n\otimes r_n,
+$$
+
+若：
+
+$$
+\boxed{
+\operatorname{Tr}_{B_n}
+(W_n\sigma W_n^\dagger)
+=
+\tau_n
+\qquad
+\forall\sigma\in\mathcal D(B_{n-1}),
+}
+\tag{55.2}
+$$
+
+则称该步为普遍替换发射。
+
+式（55.2）的量词遍历整个内部输入空间，强于式（55.1）对实际编码输入族的边缘限制。
+
+---
+
+## 定理 55.1　普遍替换发射不增加原输入的外侧信息
+
+在式（55.2）下：
+
+$$
+\boxed{
+\rho_{AR^{n-1}r_n}
+=
+\rho_{AR^{n-1}}\otimes\tau_n.
+}
+\tag{55.3}
+$$
+
+因此：
+
+$$
+\boxed{\mathcal J_n=0.}
+\tag{55.4}
+$$
+
+### 证明
+
+替换通道的线性形式是：
+
+$$
+X\longmapsto\operatorname{Tr}(X)\tau_n.
+$$
+
+对可能与 \(AR^{n-1}\) 纠缠的内部系统应用这一通道，仍然得到式（55.3）。条件互信息随即为零。∎
+
+---
+
+## 定理 55.2　普遍混合替换要求内部容量增加
+
+若式（55.2）成立，则：
+
+$$
+\boxed{
+\dim B_n
+\ge
+\dim B_{n-1}\cdot\operatorname{rank}\tau_n.
+}
+\tag{55.5}
+$$
+
+### 证明
+
+将定理 54.1 中的 Schmidt 展开应用于此次发射，但把 \(r_n\) 视为固定边缘。
+
+若：
+
+$$
+\tau_n=\sum_{a=1}^{r}\lambda_a|a\rangle\langle a|,
+$$
+
+则对 \(B_{n-1}\) 的每个基底输入 \(|i\rangle\)，必须在 \(B_n\) 内出现一组向量 \(|v_{ia}\rangle\)，满足：
+
+$$
+\langle v_{jb}|v_{ia}\rangle
+=
+\delta_{ij}\delta_{ab}.
+$$
+
+共有：
+
+$$
+\dim B_{n-1}\cdot r
+$$
+
+个正交向量，得到结论。∎
+
+### 解释
+
+如果每步都无条件产生一个与全部内部输入无关的混合态，又要求完整过程保持量子信息，那么内侧必须同时容纳：
+
+原输入信息，以及与新混合输出相对应的纯化自由度。
+
+因此：
+
+$$
+\boxed{
+\text{普遍独立的热发射}
++
+\text{整体等距}
++
+\text{内部容量持续缩小}
+}
+$$
+
+不能在这个有限模型中同时成立。
+
+这一点与霍金独立粒子对近似所面临的信息问题方向一致，但不能据此声称已证明所有近似修正都无效。关于小修正的更强结论，依赖具体的误差与纠缠假设。([arXiv][4])
+
+---
+
+# 56．一个明确实例：单份没有信息，两份恢复全部量子记忆
+
+采用已有量子秘密共享中的三份编码。该例不是黑洞动力学，而是用于检验“局部无信息是否排除整体恢复”的精确模型。([arXiv][5])
+
+## 定义 56.1　三 qutrit 编码
+
+所有标签在 \(\mathbb Z_3\) 中计算。定义：
+
+$$
+\boxed{
+V|s\rangle
+=
+\frac1{\sqrt3}
+\sum_{j=0}^2
+|j,j+s,j+2s\rangle,
+\qquad s=0,1,2.
+}
+\tag{56.1}
+$$
+
+---
+
+## 定理 56.1　每一份都与任意输入无关
+
+对任意输入态 \(\rho\) 及任意单份 \(r_i\)：
+
+$$
+\boxed{
+\operatorname{Tr}_{\overline{r_i}}
+(V\rho V^\dagger)=\frac{I_3}{3}.
+}
+\tag{56.2}
+$$
+
+### 证明
+
+对矩阵单位 \(|s\rangle\langle t|\) 展开编码。
+
+以保留第一份为例，偏迹要求：
+
+$$
+j+s=k+t,
+\qquad
+j+2s=k+2t.
+$$
+
+相减得：
+
+$$
+s=t,
+$$
+
+继而 \(j=k\)。
+
+所以：
+
+$$
+\operatorname{Tr}_{23}
+(V|s\rangle\langle t|V^\dagger)
+=
+\delta_{st}\frac{I_3}{3}.
+$$
+
+另外两份同理。∎
+
+---
+
+## 定理 56.2　任意两份足以恢复输入
+
+对第一、二份，定义置换酉：
+
+$$
+\boxed{
+D_{12}|a,b\rangle
+=
+|b-a,\;2b-a\rangle.
+}
+\tag{56.3}
+$$
+
+则：
+
+$$
+\boxed{
+(D_{12}\otimes I)V|\psi\rangle
+=
+|\psi\rangle
+\otimes
+\frac1{\sqrt3}\sum_{r=0}^2|r,r\rangle.
+}
+\tag{56.4}
+$$
+
+### 证明
+
+对编码中的基底项：
+
+$$
+|j,j+s\rangle
+\longmapsto
+|s,j+2s\rangle.
+$$
+
+第三份正好也是 \(j+2s\)。令 \(r=j+2s\)，对 \(j\) 求和，得到式（56.4）。
+
+编码在三份循环置换下保持同样形式，因此任意两份都可以恢复。∎
+
+---
+
+## 推论 56.1　信息输出与熵变化可以发生在不同阶段
+
+以最大纠缠参照 \(A\) 检验编码，并依次释放三份。
+
+则：
+
+| 已收集辐射 | \(S(R^n)/\log3\) | \(I(A:R^n)/\log3\) |
+| ----- | ---------------: | -----------------: |
+| 无     |                0 |                  0 |
+| 第一份   |                1 |                  0 |
+| 前两份   |                2 |                  2 |
+| 全三份   |                1 |                  2 |
+
+第二份到达时：
+
+$$
+\mathcal J_2=2\log3,
+$$
+
+尽管它单独完全不含输入信息。
+
+第三份到达时，辐射熵下降，但：
+
+$$
+\mathcal J_3=0.
+$$
+
+这些等距、单份替换和解码恒等式已作精确矩阵核验；表中的熵也与直接计算一致。
+
+这里最终辐射熵不为零，是因为它仍与测试参照 \(A\) 纠缠，不是因为编码丢失了纯度。
+
+### 物理边界
+
+\(I_3/3\) 是最大混合态，但这个例子没有给出霍金温度、黑洞几何或能量守恒的辐射 Hamiltonian。
+
+它证明的是：
+
+$$
+\boxed{
+\text{完全相同的单份读数}
+\quad
+\text{可以与完整的联合量子恢复相容。}
+}
+$$
+
+接下来，能量和内部时间会进一步限制这种相容性。
+
+---
+
+# 57．非平凡内部时间不能被任意隐藏在完全相同的局部热态中
+
+这是把本轮重新接回“观察者内部时间”的关键步骤。
+
+## 定义 57.1　时间协变的编码
+
+设初始观察者内部 Hamiltonian 为 \(H_L\)，最终辐射的 Hamiltonian 可加：
+
+$$
+H_R=\sum_{j=1}^m h_j.
+$$
+
+若编码满足：
+
+$$
+\boxed{
+H_RV=V(H_L+E_0I),
+}
+\tag{57.1}
+$$
+
+则相应时间演化满足：
+
+$$
+e^{-itH_R/\hbar}V
+=
+Ve^{-it(H_L+E_0I)/\hbar}.
+$$
+
+这表示同一个编码保留内部时钟的时间平移结构。\(E_0\) 是固定能量偏置。
+
+---
+
+## 定理 57.1　严格局部不可区分与非平凡时间协变的不相容性
+
+假设：
+
+$$
+\operatorname{Tr}_{\overline{r_j}}
+(V\rho V^\dagger)
+=
+\tau_j
+\qquad
+\forall\rho,\ \forall j,
+$$
+
+并满足式（57.1）。
+
+则：
+
+$$
+\boxed{
+H_L=\alpha I
+}
+\tag{57.2}
+$$
+
+对某个实数 \(\alpha\) 成立。
+
+### 证明
+
+局部输出与输入无关，意味着：
+
+$$
+\operatorname{Tr}
+\left[
+\rho\,V^\dagger h_jV
+\right]
+=
+\operatorname{Tr}(\tau_jh_j)
+$$
+
+对全部 \(\rho\) 成立。
+
+因此：
+
+$$
+V^\dagger h_jV
+=
+\operatorname{Tr}(\tau_jh_j)I.
+$$
+
+求和：
+
+$$
+V^\dagger H_RV
+=
+\left[
+\sum_j\operatorname{Tr}(\tau_jh_j)
+\right]I.
+$$
+
+再由式（57.1）：
+
+$$
+H_L+E_0I=V^\dagger H_RV.
+$$
+
+故 \(H_L\) 为标量。∎
+
+### 含义
+
+一个非平凡量子钟，需要：
+
+$$
+H_L\ne\alpha I.
+$$
+
+但若全部单份辐射都对任意输入给出同一个固定热态，而总输出能量只是这些单份能量之和，那么它们不能严格协变地携带这个量子钟。
+
+这是连续对称性与精确量子纠错之间已知张力的一个直接特化，与协变量子码的限制相联系。([arXiv][6])
+
+### 不构成矛盾的几种情形
+
+如果只在同一个能量简并子空间中编码，那么 \(H_L\) 在该子空间上本来就是标量，可以隐藏其他量子信息，但该子空间不独自承担非平凡钟演化。
+
+如果总能量含有跨片段相互作用项，或者还有未计入的储能和参照系统，则式（57.1）的可加前提需要修改。
+
+如果局部热性只是近似成立，则应该使用下面的定量版本。
+
+---
+
+## 定理 57.2　近似局部不可区分的能量下界
+
+定义迹距离：
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+$$
+
+假设对全部输入：
+
+$$
+D(\mathcal N_j(\rho),\tau_j)\le\epsilon_j.
+$$
+
+记：
+
+$$
+w_j=\lambda_{\max}(h_j)-\lambda_{\min}(h_j),
+$$
+
+并允许能量实现误差：
+
+$$
+\left\|
+V^\dagger H_RV-(H_L+E_0I)
+\right\|
+\le\delta_E.
+$$
+
+则：
+
+$$
+\boxed{
+\Delta H_L
+\le
+2\delta_E+2\sum_jw_j\epsilon_j,
+}
+\tag{57.3}
+$$
+
+其中：
+
+$$
+\Delta H_L
+=
+\lambda_{\max}(H_L)-\lambda_{\min}(H_L).
+$$
+
+### 证明
+
+取 \(H_L\) 的最大、最小能量本征态 \(\rho_+,\rho_-\)。
+
+由能量误差界：
+
+$$
+\Delta H_L
+\le
+\left|
+\operatorname{Tr}
+H_R
+\bigl(V\rho_+V^\dagger-V\rho_-V^\dagger\bigr)
+\right|
++2\delta_E.
+$$
+
+而对每个 \(j\)：
+
+$$
+D(\mathcal N_j(\rho_+),\mathcal N_j(\rho_-))
+\le2\epsilon_j.
+$$
+
+利用有限谱宽算子的期望差界：
+
+$$
+|\operatorname{Tr}[h_j(\sigma-\rho)]|
+\le
+w_jD(\sigma,\rho),
+$$
+
+求和即得。∎
+
+### 结论
+
+**如果辐射确实携带一个具有非零能量跨度的内部时间结构，那么在上述有限、可加、近似守恒模型中，局部不可区分程度不能任意完美。**
+
+但这不意味着每个单独片段都必须具有很大的非热修正。偏差可以分散在很多片段中，式（57.3）约束的是总预算。
+
+---
+
+# 58．内外可以共享经典记录，但不能各自拥有完整的同一非交换观察者
+
+仅有状态恢复还不够。项目一直强调，观察者还包含读数代数、行动与动态闭合。因此，应当把恢复提升到可观测量层面。
+
+## 定义 58.1　保持编码空间的算子实现
+
+设：
+
+$$
+V:L\to R\otimes B.
+$$
+
+若逻辑算子 \(a\) 存在外侧实现 \(A_R\)，满足：
+
+$$
+\boxed{
+(A_R\otimes I)V=Va,
+}
+\tag{58.1}
+$$
+
+则称 \(a\) 可在外侧保持编码空间地实现。
+
+类似地，若：
+
+$$
+\boxed{
+(I\otimes B_B)V=Vb,
+}
+\tag{58.2}
+$$
+
+则称 \(b\) 可在补侧实现。
+
+这一 Heisenberg 图像与算子代数量子纠错的框架一致。([arXiv][7])
+
+---
+
+## 定理 58.1　分离侧重建的交换性约束
+
+若式（58.1）—（58.2）成立，则：
+
+$$
+\boxed{[a,b]=0.}
+\tag{58.3}
+$$
+
+### 证明
+
+有：
+
+$$
+\begin{aligned}
+Vab
+&=(A_R\otimes I)Vb\\
+&=(A_R\otimes I)(I\otimes B_B)V\\
+&=(I\otimes B_B)(A_R\otimes I)V\\
+&=(I\otimes B_B)Va\\
+&=Vba.
+\end{aligned}
+$$
+
+因 \(V\) 为等距映射，故可消去 \(V\)，得到 \(ab=ba\)。∎
+
+### 推论 58.1
+
+如果同一逻辑代数能在内外两侧各自完整实现，那么该共享代数必须交换。
+
+因此：
+
+$$
+\boxed{
+\text{某些经典记忆可以被内外重复读取；}
+}
+$$
+
+$$
+\boxed{
+\text{同一完整非交换量子观察者不能被复制成两个独立副本。}
+}
+$$
+
+这比“观察者和黑洞内部是同一个东西”更严格：它要求明确说明哪些逻辑量可以在哪一侧实现，以及它们的代数关系。
+
+---
+
+## 定理 58.2　编码重建不等于跨因果边界传信
+
+对任意联合态 \(\rho_{RB}\) 和补侧保迹量子通道 \(\Lambda_B\)：
+
+$$
+\boxed{
+\operatorname{Tr}_B
+\left[
+(\operatorname{id}_R\otimes\Lambda_B)(\rho_{RB})
+\right]
+=
+\rho_R.
+}
+\tag{58.4}
+$$
+
+### 证明
+
+对任意外侧效果 \(E_R\)：
+
+$$
+\begin{aligned}
+&\operatorname{Tr}
+\left[
+(E_R\otimes I)
+(\operatorname{id}\otimes\Lambda_B)(\rho)
+\right]\\
+&\quad=
+\operatorname{Tr}
+\left[
+(E_R\otimes\Lambda_B^*(I))\rho
+\right]\\
+&\quad=
+\operatorname{Tr}
+[(E_R\otimes I)\rho],
+\end{aligned}
+$$
+
+其中使用了 \(\Lambda_B^*(I)=I\)。∎
+
+因此，外侧能够重建一个编码量，并不意味着内侧可以通过任意后来操作即时改变外侧结果。
+
+**“信息在哪里被编码”与“新的干预沿哪里传播”，仍然是两个必须分别定义的问题。**
+
+---
+
+# 59．观察者的内部容量缩小时，哪些结论是强制的？
+
+## 定理 59.1　剩余容量对信息保留的限制
+
+在第 53 节的纯态模型中，设：
+
+$$
+d_{B_n}=\dim B_n.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal I_n
+\ge
+\max\left\{
+0,\,
+2\log d-2\log d_{B_n}
+\right\}.
+}
+\tag{59.1}
+$$
+
+### 证明
+
+互信息满足：
+
+$$
+I(A:B_n)\le2S(B_n)\le2\log d_{B_n}.
+$$
+
+结合：
+
+$$
+\mathcal I_n+I(A:B_n)=2\log d
+$$
+
+即可。∎
+
+### 含义
+
+如果原输入维数为 \(d\)，而剩余系统的可用量子容量已经降到小于 \(d\)，那么在整体等距的前提下，外侧必须已经获得一部分原输入关联。
+
+若剩余系统最终只有一个固定纯态：
+
+$$
+d_{B_n}=1,
+$$
+
+则：
+
+$$
+\mathcal I_n=2\log d,
+$$
+
+并由定理 54.1得到完整恢复。
+
+但是，实际黑洞的：
+
+$$
+\text{面积},
+\quad
+\text{内部体积},
+\quad
+\text{有效状态空间维数},
+\quad
+\text{某个观察者可使用的记忆容量}
+$$
+
+不能不加证明地相互替换。
+
+式（59.1）是信息论定理。把 \(d_{B_n}\) 与某个黑洞面积熵识别，是额外的几何—微观状态桥梁，不应藏进定义。
+
+### 对“吞噬空间形成内部时间”的补充
+
+径向因果结构说明内部观察者的未来如何被约束。
+
+本节说明该观察者还能把多少原始量子区别保留在剩余系统中。
+
+二者不是同一量：
+
+$$
+\boxed{
+\text{拥有更长或更特殊的内部时间方向}
+\not\Rightarrow
+\text{拥有无限的信息储存能力}.
+}
+$$
+
+要把两者联系起来，需要具体的内部动力学、能量、记录载体和可访问代数。
+
+---
+
+# 60．把本轮结果重新组织进项目四角色
+
+本轮没有增加一种新的“信息物质”，而是把已有结构推进到更严格的量子过程层。
+
+| 项目角色       | 本轮的具体实现                                               |
+| ---------- | ----------------------------------------------------- |
+| **CUT**    | 外侧通道 \(\mathcal N_n\)、补侧通道 \(\mathcal C_n\)、边缘接口与联合接口 |
+| **FLOW**   | 等距编码 \(V_n\)、逐步发射 \(W_n\)、保持能量或时间协变的实现                |
+| **ADMIT**  | 完全正与保迹、编码空间保持、可实施解码、能量预算与局域因果条件                       |
+| **ANCHOR** | 实际制备、参照关联、辐射检测与解码结果的见证                                |
+
+由此，项目的“余量”也必须按任务区分：
+
+$$
+\ker q\setminus\ker T
+$$
+
+描述目标区分失败；
+
+$$
+I(A:B_n)
+$$
+
+描述与原量子输入有关的补侧关联；
+
+$$
+I(A:r_n\mid R^{n-1})
+$$
+
+描述新增外侧信息；
+
+而恢复通道：
+
+$$
+\mathcal R_n\mathcal N_n=\operatorname{id}
+$$
+
+描述完整、物理类型正确的恢复。
+
+**这些量相互联系，但没有理由被压成同一个无条件的标量。**
+
+尤其要保留：
+
+$$
+\boxed{
+\text{经典接口的因子化}
+\ne
+\text{量子通道的可恢复性}
+\ne
+\text{现实观察者的可执行解码}.
+}
+$$
+
+项目现有的统一下降判据提供了结构出发点；量子恢复、连续时间协变和辐射动力学仍需相应的独立证明。
+
+---
+
+# 结论：从“吞噬”推进到可恢复的时序关联理论
+
+这一轮最重要的推进，是把前文的三个过程区分得更明确：
+
+$$
+\boxed{
+\text{历史进入内部}
+\longrightarrow
+\text{内部与历史建立关联};
+}
+$$
+
+$$
+\boxed{
+\text{内部产生辐射}
+\longrightarrow
+\text{某些关联进入外侧联合态};
+}
+$$
+
+$$
+\boxed{
+\text{外侧观察者能够解码}
+\longrightarrow
+\text{这些关联成为可用记忆}.
+}
+$$
+
+其中，第二步不由“辐射是热的”保证；第三步也不由“信息在数学上存在”保证。
+
+本轮得到的两个最强约束是：
+
+$$
+\boxed{
+\text{完全独立、对全部内部输入相同的混合发射，}
+\quad
+\text{要求内部保留甚至增加纯化容量。}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{非平凡的内部时间演化，}
+\quad
+\text{不能在严格可加能量守恒下，}
+\quad
+\text{被编码成所有单份都完全不依赖输入的辐射。}
+}
+$$
+
+因此，一个自洽的“量子观察者—黑洞—辐射”理论不能只描述热谱或内部时间。它必须同时说明：
+
+**哪些历史区别被保存，哪些关联真正向外转移，哪些操作能够恢复它们，以及这种转移怎样与能量和因果结构相容。**
+
+**观察者的记忆不是吞下时间的体积；它是可恢复的时序关联。黑洞辐射也不是自动吐出的记忆；它只有在完整过程把原输入区别转移到可访问联合结构，并允许相应恢复时，才承担这一功能。**
+
+[1]: https://arxiv.org/abs/quant-ph/0304007?utm_source=chatgpt.com "Structure of states which satisfy strong subadditivity of quantum entropy with equality"
+[2]: https://arxiv.org/abs/0708.4025?utm_source=chatgpt.com "Black holes as mirrors: quantum information in random subsystems"
+[3]: https://arxiv.org/html/0907.5391v4 "General conditions for approximate quantum error correction and near-optimal recovery channels"
+[4]: https://arxiv.org/abs/0909.1038?utm_source=chatgpt.com "The information paradox: A pedagogical introduction"
+[5]: https://arxiv.org/abs/quant-ph/9901025 "[quant-ph/9901025] How to share a quantum secret"
+[6]: https://arxiv.org/html/1902.07714v1 "Continuous symmetries and approximate quantum error correction"
+[7]: https://arxiv.org/html/0705.1574v1 "Quantum Error Correction of Observables"
