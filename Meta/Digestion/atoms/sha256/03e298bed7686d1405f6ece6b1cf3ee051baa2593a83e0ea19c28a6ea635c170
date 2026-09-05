@@ -1,0 +1,54 @@
+## 定理 13.1　响应矩的正性与可观测维数
+
+有
+
+$$
+\boxed{
+\mathbb H_r\ge0,
+\qquad
+\operatorname{rank}\mathbb H_r
+=
+\dim\mathcal K_r.
+}
+\tag{13.2}
+$$
+
+若
+
+$$
+\mathcal K_r=\mathcal K_{r+1},
+$$
+
+则对全部 \(s\ge0\)，
+
+$$
+\mathcal K_{r+s}=\mathcal K_r.
+$$
+
+### 证明
+
+令
+
+$$
+V_r=
+\begin{pmatrix}
+B&AB&\cdots&A^rB
+\end{pmatrix}.
+$$
+
+由于 \(A=A^{\mathsf T}\)，
+
+$$
+\mathbb H_r=V_r^{\mathsf T}V_r.
+$$
+
+所以它半正定，且其秩等于 \(V_r\) 的列空间维数。
+
+若 \(\mathcal K_r=\mathcal K_{r+1}\)，则
+
+$$
+A\mathcal K_r\subseteq\mathcal K_r.
+$$
+
+之后的所有幂都仍落在该空间内。∎
+

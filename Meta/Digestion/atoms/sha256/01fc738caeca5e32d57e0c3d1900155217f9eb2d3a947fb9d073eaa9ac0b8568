@@ -1,0 +1,96 @@
+## 定理 15.1　动态消去的低频展开及余项界
+
+对实数 \(|\omega|<\omega_H\)，有
+
+$$
+\boxed{
+D_{\mathrm{eff}}(\omega)
+=
+K_{\mathrm{eff}}
+-
+\omega^2M_{\mathrm{eff}}
+-
+R_4(\omega),
+}
+\tag{15.1}
+$$
+
+其中
+
+$$
+K_{\mathrm{eff}}
+=
+K_{VV}-Z^{\mathsf T}Z,
+\tag{15.2}
+$$
+
+$$
+\boxed{
+M_{\mathrm{eff}}
+=
+M_V+Z^{\mathsf T}QZ
+=
+M_V+
+K_{VH}K_{HH}^{-1}
+M_HK_{HH}^{-1}K_{HV},
+}
+\tag{15.3}
+$$
+
+且
+
+$$
+R_4(\omega)
+=
+\omega^4
+Z^{\mathsf T}Q^2(I-\omega^2Q)^{-1}Z
+\ge0.
+\tag{15.4}
+$$
+
+其范数满足
+
+$$
+\boxed{
+\|R_4(\omega)\|
+\le
+\frac{
+\omega^4\|Z\|^2\|Q\|^2
+}{
+1-\omega^2\|Q\|
+}.
+}
+\tag{15.5}
+$$
+
+### 证明
+
+首先，
+
+$$
+K_{VH}(K_{HH}-\omega^2M_H)^{-1}K_{HV}
+=
+Z^{\mathsf T}(I-\omega^2Q)^{-1}Z.
+$$
+
+由精确恒等式
+
+$$
+(I-\omega^2Q)^{-1}
+=
+I+\omega^2Q+
+\omega^4Q^2(I-\omega^2Q)^{-1},
+$$
+
+代入式（14.1）即得式（15.1）—（15.4）。
+
+因为 \(\omega^2\|Q\|<1\)，
+
+$$
+\|(I-\omega^2Q)^{-1}\|
+\le
+\frac1{1-\omega^2\|Q\|},
+$$
+
+从而得到式（15.5）。∎
+

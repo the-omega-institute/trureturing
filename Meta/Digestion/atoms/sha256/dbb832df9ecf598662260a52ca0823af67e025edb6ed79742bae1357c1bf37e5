@@ -1,0 +1,20 @@
+**\(4\Rightarrow1\)。**此时全部分母变成
+
+$$
+\Omega_a^2+s,
+$$
+
+并且
+
+$$
+D_{\mathrm{eff}}
+=
+\Omega_0^2+s
+-
+\sum_a\frac{\lambda_a^2}{\Omega_a^2+s},
+$$
+
+精确地只依赖 \(s\)。∎
+
+---
+
