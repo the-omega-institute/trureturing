@@ -17,6 +17,9 @@ public sealed partial class ScriptTestGateClosureTests
     public void JudgeNamedHelperTypesResolveToDeclaredTypes()
     {
         Assert.Equal(
+            ScriptTestInputDeriver.RepositoryLayoutAssemblyName,
+            typeof(StrataLint.Tests.TestRepositoryLayout).Assembly.GetName().Name);
+        Assert.Equal(
             ScriptTestInputDeriver.RepositoryLayoutTypeName,
             typeof(StrataLint.Tests.TestRepositoryLayout).Name);
         Assert.Equal(
@@ -185,6 +188,103 @@ public sealed partial class ScriptTestGateClosureTests
 
         Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
         Assert.Equal([ScriptTestsProject], plan.Projects.ToArray());
+    }
+
+    [Fact]
+    public void TestSupportRepositoryLayoutFindRootResolvesRepositoryPath()
+    {
+        const string script = "tools/scripts/workflow/test-support-root-probe.sh";
+        var snapshot = ReplaceText(
+            CurrentSnapshot(),
+            "tools/tests/StrataLint.Tests/TestProcessRunner.cs",
+            text => text.Replace(
+                "namespace StrataLint.Tests;",
+                "namespace StrataLint.TestSupport;",
+                StringComparison.Ordinal));
+        snapshot = ReplaceText(
+            snapshot,
+            ScriptTestsSource,
+            text => text.Replace(
+                "using StrataLint.Engine;",
+                "using StrataLint.Engine; using StrataLint.TestSupport;",
+                StringComparison.Ordinal));
+        snapshot = AppendTestMethod(
+            snapshot,
+            $$"""
+
+                [Fact]
+                public void TestSupportRootProbe()
+                {
+                    _ = File.ReadAllText(Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "{{script}}"));
+                }
+            """,
+            (script, "#!/usr/bin/env bash\nexit 0\n"));
+
+        var closure = Derive(snapshot, []);
+
+        Assert.Contains(script, closure.ExactPaths);
+    }
+
+    [Fact]
+    public void InstanceTestRepositoryLayoutFindRootFailsClosedByMethodSymbol()
+    {
+        const string script = "tools/scripts/workflow/instance-root-lookalike.sh";
+        var snapshot = AppendTestMethod(
+            CurrentSnapshot(),
+            $$"""
+
+                [Fact]
+                public void InstanceRootLookalikeProbe()
+                {
+                    _ = File.ReadAllText(Path.Combine(
+                        new StrataLint.Lookalike.TestRepositoryLayout().FindRoot(),
+                        "{{script}}"));
+                }
+            """,
+            ("tools/tests/StrataLint.ScriptTests/LookalikeRepositoryLayout.cs",
+                "namespace StrataLint.Lookalike; public sealed class TestRepositoryLayout "
+                + "{ public string FindRoot() => string.Empty; }\n"),
+            (script, "#!/usr/bin/env bash\nexit 0\n"));
+
+        var error = Assert.ThrowsAny<Exception>(() => Derive(snapshot, []));
+
+        Assert.Contains("InstanceRootLookalikeProbe", Flatten(error), StringComparison.Ordinal);
+        Assert.Contains(
+            "unresolved repository-rooted path expression",
+            Flatten(error),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ForeignAssemblyTestRepositoryLayoutFindRootFailsClosedByOwnerIdentity()
+    {
+        const string script = "tools/scripts/workflow/foreign-root-lookalike.sh";
+        var snapshot = AppendTestMethod(
+            CurrentSnapshot(),
+            $$"""
+
+                [Fact]
+                public void ForeignRootLookalikeProbe()
+                {
+                    _ = File.ReadAllText(Path.Combine(
+                        StrataLint.Lookalike.TestRepositoryLayout.FindRoot(),
+                        "{{script}}"));
+                }
+            """,
+            ("tools/tests/StrataLint.ScriptTests/LookalikeRepositoryLayout.cs",
+                "namespace StrataLint.Lookalike; public static class TestRepositoryLayout "
+                + "{ public static string FindRoot() => string.Empty; }\n"),
+            (script, "#!/usr/bin/env bash\nexit 0\n"));
+
+        var error = Assert.ThrowsAny<Exception>(() => Derive(snapshot, []));
+
+        Assert.Contains("ForeignRootLookalikeProbe", Flatten(error), StringComparison.Ordinal);
+        Assert.Contains(
+            "unresolved repository-rooted path expression",
+            Flatten(error),
+            StringComparison.Ordinal);
     }
 
     [Fact]

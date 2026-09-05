@@ -6,15 +6,16 @@ internal static partial class RepositoryRules
 {
     private static ImmutableArray<RuleFinding> FrozenStates(RuleEvaluationContext context)
     {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        ValidateChangedAcceptedFreezePins(context, findings);
+
         var affected = AffectedFrozenStateFiles(context);
         if (affected.IsEmpty)
         {
-            return [];
+            return findings.ToImmutable();
         }
 
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var states = LeanTruthStates.Resolve(context.Current, context.Lean);
-        var acceptedByPath = AcceptedFreezePins(context, affected, findings);
         foreach (var file in affected)
         {
             var displayPath = "frozen state " + file.Path.Value;
@@ -38,6 +39,8 @@ internal static partial class RepositoryRules
                     exception.InnerException?.Message ?? exception.Message));
                 continue;
             }
+
+            ObservePinChange(context, file, modulePath, record, findings);
 
             if (!context.Current.Files.ContainsKey(modulePath))
             {
@@ -71,50 +74,129 @@ internal static partial class RepositoryRules
                     $"selector {modulePath.Value} pin mismatch: "
                     + $"stored={record.StatementId.Value} actual={actual.Value}"));
             }
-
-            if (acceptedByPath.TryGetValue(modulePath, out var acceptedPins))
-            {
-                foreach (var accepted in acceptedPins.Where(pin => pin != record.StatementId))
-                {
-                    findings.Add(new RuleFinding(
-                        displayPath,
-                        $"selector {modulePath.Value} Freeze/state mismatch: "
-                        + $"accepted={accepted.Value} state={record.StatementId.Value}"));
-                }
-            }
         }
 
         return findings.ToImmutable();
     }
 
+    // Transitional contract: remove this check together with the accepted directory (#4687).
+    // Frozen state remains authoritative; only changed candidate accepted files are read here.
+    private static void ValidateChangedAcceptedFreezePins(
+        RuleEvaluationContext context,
+        ImmutableArray<RuleFinding>.Builder findings)
+    {
+        foreach (var change in context.Changes.Entries
+            .Where(static change =>
+                change.Kind is RawChangeKind.Added or RawChangeKind.Modified
+                && FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value))
+            .OrderBy(static change => change.Path.Value, StringComparer.Ordinal))
+        {
+            if (!context.Current.Files.TryGetValue(change.Path, out var file))
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    "changed accepted event is absent from the candidate snapshot"));
+                continue;
+            }
+
+            var load = FrozenAcceptedEventLoader.LoadFiles([file]);
+            if (load is DagLedgerFilesLoadOutcome.Invalid invalid)
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    $"accepted event could not be loaded: {invalid.Message}"));
+                continue;
+            }
+
+            var accepted = ((DagLedgerFilesLoadOutcome.Loaded)load).Events.Single();
+            if (accepted.EventType != "Freeze")
+            {
+                continue;
+            }
+
+            var modulePath = accepted.DescriptorPath;
+            var statePath = FrozenStatePath.FromModulePath(modulePath);
+            if (!context.Current.Files.TryGetValue(statePath, out var stateFile))
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    $"Freeze event for {modulePath.Value} has no frozen-state pin {statePath.Value}; "
+                    + "run ledger-align --from-accepted (lane tools predate L3b dual-write)"));
+                continue;
+            }
+
+            FrozenStateRecord state;
+            try
+            {
+                state = FrozenStateRecordLoader.Load(stateFile);
+            }
+            catch (FormatException exception)
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    $"Freeze event for {modulePath.Value} has invalid frozen-state pin "
+                    + $"{statePath.Value}: {exception.InnerException?.Message ?? exception.Message}"));
+                continue;
+            }
+
+            var eventPin = StatementId.Create(
+                accepted.Payload.GetProperty("statement_id").GetString()!);
+            if (state.StatementId != eventPin)
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    $"Freeze event pin mismatch: selector={modulePath.Value} "
+                    + $"event pin={eventPin.Value} state pin={state.StatementId.Value}"));
+            }
+        }
+    }
+
     private static ImmutableArray<RepositoryFile> AffectedFrozenStateFiles(
         RuleEvaluationContext context)
     {
-        if (context.RuleImplementationChanged)
+        if (AllFrozenStatesAffected(context))
         {
-            return context.Current.Files.Values
-                .Where(static file => FrozenStatePath.IsUnderRoot(file.Path.Value))
-                .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-                .ToImmutableArray();
+            return AllCurrentFrozenStateFiles(context);
         }
 
         var paths = context.Changes.Paths
             .Where(path => FrozenStatePath.IsUnderRoot(path.Value)
                 && context.Current.Files.ContainsKey(path))
             .ToHashSet();
-        foreach (var modulePath in context.Changes.Paths.Where(
-            FrozenStatePath.IsCanonicalModulePath))
+        var changedModules = context.Changes.Paths
+            .Where(FrozenStatePath.IsCanonicalModulePath)
+            .ToImmutableHashSet();
+        if (!changedModules.IsEmpty)
         {
-            try
+            var currentAdjacency = LeanImportAdjacency.Build(context.Current, context.Lean);
+            // RuleEvaluationContext has no baseline report, only the baseline source snapshot.
+            // CLAUDE.md rule 19 keeps base at SHA/object-diff level without checkout or compilation.
+            var baselineAdjacency = LeanImportAdjacency.BuildFromSources(context.Baseline);
+            var currentDependents = ReverseDependencies(currentAdjacency);
+            var baselineDependents = ReverseDependencies(baselineAdjacency);
+            var affectedModules = changedModules.ToHashSet();
+            var pending = new Queue<RepoPath>(changedModules);
+            while (pending.TryDequeue(out var changed))
+            {
+                foreach (var dependent in DependentsOf(
+                    changed,
+                    currentDependents,
+                    baselineDependents))
+                {
+                    if (affectedModules.Add(dependent))
+                    {
+                        pending.Enqueue(dependent);
+                    }
+                }
+            }
+
+            foreach (var modulePath in affectedModules)
             {
                 var statePath = FrozenStatePath.FromModulePath(modulePath);
                 if (context.Current.Files.ContainsKey(statePath))
                 {
                     paths.Add(statePath);
                 }
-            }
-            catch (ArgumentException)
-            {
             }
         }
 
@@ -124,37 +206,78 @@ internal static partial class RepositoryRules
             .ToImmutableArray();
     }
 
-    private static ImmutableDictionary<RepoPath, ImmutableArray<StatementId>> AcceptedFreezePins(
-        RuleEvaluationContext context,
-        ImmutableArray<RepositoryFile> affected,
-        ImmutableArray<RuleFinding>.Builder findings)
-    {
-        var acceptedFiles = context.Current.Files.Values
-            .Where(static file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
-            .ToImmutableArray();
-        var load = FrozenAcceptedEventLoader.LoadFiles(acceptedFiles);
-        if (load is DagLedgerFilesLoadOutcome.Invalid invalid)
-        {
-            foreach (var file in affected)
-            {
-                findings.Add(new RuleFinding(
-                    "frozen state " + file.Path.Value,
-                    "accepted Freeze events cannot be read for C6: " + invalid.Message));
-            }
+    private static bool AllFrozenStatesAffected(RuleEvaluationContext context) =>
+        context.RuleImplementationChanged
+        || Changed(context, IsLeanReportProducerInput);
 
-            return ImmutableDictionary<RepoPath, ImmutableArray<StatementId>>.Empty;
+    private static ImmutableArray<RepositoryFile> AllCurrentFrozenStateFiles(
+        RuleEvaluationContext context) =>
+        context.Current.Files.Values
+            .Where(static file => FrozenStatePath.IsUnderRoot(file.Path.Value))
+            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+
+    private static ImmutableDictionary<RepoPath, ImmutableHashSet<RepoPath>> ReverseDependencies(
+        IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency)
+    {
+        var result = new Dictionary<RepoPath, HashSet<RepoPath>>();
+        foreach (var (path, dependencies) in adjacency)
+        {
+            foreach (var dependency in dependencies)
+            {
+                if (!result.TryGetValue(dependency, out var dependents))
+                {
+                    dependents = new HashSet<RepoPath>();
+                    result.Add(dependency, dependents);
+                }
+
+                dependents.Add(path);
+            }
         }
 
-        var events = ((DagLedgerFilesLoadOutcome.Loaded)load).Events;
-        return events
-            .Where(static item => item.EventType == "Freeze")
-            .GroupBy(static item => item.DescriptorPath)
-            .ToImmutableDictionary(
-                static group => group.Key,
-                static group => group
-                    .Select(item => StatementId.Create(
-                        item.Payload.GetProperty("statement_id").GetString()
-                        ?? throw new FormatException("Freeze statement_id is null.")))
-                    .ToImmutableArray());
+        return result.ToImmutableDictionary(
+            static item => item.Key,
+            static item => item.Value.ToImmutableHashSet());
+    }
+
+    private static IEnumerable<RepoPath> DependentsOf(
+        RepoPath path,
+        IReadOnlyDictionary<RepoPath, ImmutableHashSet<RepoPath>> current,
+        IReadOnlyDictionary<RepoPath, ImmutableHashSet<RepoPath>> baseline) =>
+        (current.TryGetValue(path, out var currentPaths)
+            ? currentPaths
+            : ImmutableHashSet<RepoPath>.Empty)
+        .Union(baseline.TryGetValue(path, out var baselinePaths)
+            ? baselinePaths
+            : ImmutableHashSet<RepoPath>.Empty);
+
+    private static void ObservePinChange(
+        RuleEvaluationContext context,
+        RepositoryFile currentFile,
+        RepoPath modulePath,
+        FrozenStateRecord currentRecord,
+        ImmutableArray<RuleFinding>.Builder findings)
+    {
+        if (!context.Baseline.Files.TryGetValue(currentFile.Path, out var baselineFile))
+        {
+            return;
+        }
+
+        try
+        {
+            var baselineRecord = FrozenStateRecordLoader.Load(baselineFile);
+            if (baselineRecord.StatementId != currentRecord.StatementId)
+            {
+                findings.Add(new RuleFinding(
+                    "frozen state " + currentFile.Path.Value,
+                    $"FROZEN_PIN_CHANGE selector={modulePath.Value} "
+                    + $"old={baselineRecord.StatementId.Value} new={currentRecord.StatementId.Value}",
+                    AdmissionEffect.Observe));
+            }
+        }
+        catch (FormatException)
+        {
+            // SL-008 judges only the candidate state; an unreadable old record cannot block it.
+        }
     }
 }

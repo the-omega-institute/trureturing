@@ -6,6 +6,13 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Observer/GoldenPrimeCircle/GoldenHawkingTemperatureNormalization.golden_data_does_not_determine_hawking_temperature
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 7b708c04e657422e84d8258f81ba8ba71e1721f3dba9eae42a79493e471f161f
   chain_atoms:
     - 7b708c04e657422e84d8258f81ba8ba71e1721f3dba9eae42a79493e471f161f
     - a3ebf71a3cbe55323633ce64134334e276a6e8e428f4209325f5d32733c6edda
