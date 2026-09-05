@@ -25,6 +25,18 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
             Definition("strict-subsequence", "strictSubsequence",
                 "Strict subsequence",
                 "Deleting classified stutters produces a strict kernel chain while preserving the path endpoints."),
+            Theorem("strict-subsequence-node-zero", "strictSubsequence_node_zero",
+                "Strict subsequences preserve the first node", StrictSubsequenceZero()),
+            Theorem("strict-subsequence-node-last", "strictSubsequence_node_last",
+                "Strict subsequences preserve the terminal node", StrictSubsequenceLast()),
+            Theorem("strict-subsequence-added-membership", "strictSubsequence_added_mem",
+                "Retained labels come from the schedule", StrictSubsequenceAddedMem()),
+            FormulaDescription("schedule-increment-rate", "Schedule increment rate",
+                ScheduleIncrementRate(),
+                "GeneratorSchedule.incrementRate uses the canonical arena escape denominator."),
+            FormulaDescription("strict-chain-increment-rate", "Strict-chain increment rate",
+                StrictChainIncrementRate(),
+                "StrictKernelChain.incrementRate uses the canonical arena escape denominator."),
             Theorem("collapsed-increment-is-empty", "collapsed_increment_eq_empty",
                 "Collapsed increments are empty", CollapsedIncrement()),
             Theorem("chain-increments-pairwise-disjoint", "chain_increment_pairwise_disjoint",
@@ -33,6 +45,8 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
                 "Increment union is terminal escape loss", IncrementUnion()),
             Theorem("chain-count-telescopes", "chain_count_telescopes",
                 "Increment counts telescope", CountTelescopes()),
+            Theorem("chain-rate-telescopes", "chain_rate_telescopes",
+                "Increment rates telescope", RateTelescopes()),
             Theorem("strict-chain-terminal-generated-union",
                 "strict_chain_terminal_eq_generatedKernel_union",
                 "A strict-chain terminal is its generated union", StrictTerminalUnion()),
@@ -64,6 +78,12 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
                 "The certificate follows from classified generator steps and finite escape-set algebra."))),
             DescribeRole.Theorem);
 
+    private static DocumentBlock.Describe FormulaDescription(
+        string id, string title, Formula formula, string paragraph) =>
+        Describe.Remark(
+            DescribeId.Create(id), H(title), Disp(Seq(formula, Dot)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(paragraph))));
+
     private static Formula Call(string name, params Formula[] arguments)
     {
         var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
@@ -89,6 +109,29 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
     private static Formula Last(Formula schedule) => Call("last", schedule);
     private static Formula Escape(Formula node) => Call("escapeAt", node);
 
+    private static Formula StrictSubsequenceZero() => Seq(
+        Node(Call("strictSubsequence", Schedule()), D(0)), Sp, Eq, Sp,
+        Node(Schedule(), D(0)));
+
+    private static Formula StrictSubsequenceLast() => Seq(
+        Node(Call("strictSubsequence", Schedule()),
+            Last(Call("strictSubsequence", Schedule()))), Sp, Eq, Sp,
+        Node(Schedule(), Last(Schedule())));
+
+    private static Formula StrictSubsequenceAddedMem() => Seq(
+        Call("added", Call("strictSubsequence", Schedule()), R()), Sp, InMacro, Sp,
+        Call("image", Call("added", Schedule()), Call("univ")));
+
+    private static Formula ScheduleIncrementRate() => Seq(
+        Call("incrementRate", Schedule(), R()), Sp, Eq, Sp,
+        new Formula.Fraction(Call("incrementCount", Schedule(), R()),
+            Call("escapeDenominator", F.Id("A"))));
+
+    private static Formula StrictChainIncrementRate() => Seq(
+        Call("incrementRate", F.Id("K"), R()), Sp, Eq, Sp,
+        new Formula.Fraction(Call("incrementCount", F.Id("K"), R()),
+            Call("escapeDenominator", F.Id("A"))));
+
     private static Formula CollapsedIncrement() => new Formula.Logic(
         Seq(Node(Schedule(), Call("castSucc", R())), Sp, Eq, Sp,
             Node(Schedule(), Call("succ", R()))),
@@ -111,6 +154,11 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
         Call("card", Escape(Node(Schedule(), Last(Schedule())))),
         Sp, Eq, Sp,
         Call("card", Escape(Node(Schedule(), D(0)))));
+
+    private static Formula RateTelescopes() => Seq(
+        Call("sum", Call("incrementRate", Schedule())), Sp, Plus, Sp,
+        Call("escapeRate", Node(Schedule(), Last(Schedule()))), Sp, Eq, Sp,
+        Call("escapeRate", Node(Schedule(), D(0))));
 
     private static Formula StrictTerminalUnion() => new Formula.Logic(
         Seq(Node(Schedule(), D(0)), Sp, Eq, Sp,
@@ -150,11 +198,8 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
         Formula premises = new Formula.Logic(
             Call("PositiveLength", Schedule()),
             FormulaLogicOperator.And,
-            new Formula.Logic(
-                Seq(Node(Schedule(), Call("penultimate", Schedule())), Sp, Eq, Sp,
-                    Call("generatedKernel", F.Id("C"), Call("without", F.Id("C"), I()))),
-                FormulaLogicOperator.And,
-                Seq(Call("added", Schedule(), Call("last", Schedule())), Sp, Eq, Sp, I())));
+            Seq(Node(Schedule(), Call("penultimate", Schedule())), Sp, Eq, Sp,
+                Call("generatedKernel", F.Id("C"), Call("without", F.Id("C"), I()))));
         return new Formula.Logic(
             premises,
             FormulaLogicOperator.Implies,

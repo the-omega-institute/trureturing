@@ -35,6 +35,11 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
                 "The landed Boolean indistinguishability table descends through the extensional quotient."),
             Theorem("boolean-relation-reflection", "relationB_eq_true_iff",
                 "Boolean relation reflection", BooleanReflection()),
+            FormulaDefinition("generated-kernel-boolean-equality", "nodesEqB",
+                "Boolean node equality", NodeEqualityDefinition(),
+                "The complete finite relation truth tables are compared by an executable fold."),
+            Theorem("boolean-node-equality-reflection", "nodesEqB_eq_true_iff",
+                "Boolean node equality reflection", NodeEqualityReflection()),
             Definition("kernel-refines", "KernelRefines",
                 "Kernel refinement",
                 "A finer node relation is pointwise contained in a coarser node relation."),
@@ -48,6 +53,21 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
                 "An edge captures the source escape pairs absent from its target."),
             Theorem("escape-at-generated-kernel", "escapeAt_generatedKernel_eq_escapePairs",
                 "Node escape agrees with landed escape", EscapeBridge()),
+            FormulaDefinition("generated-kernel-escape-count", "escapeCount",
+                "Node escape count", EscapeCountDefinition(),
+                "The node escape count is the cardinality of its finite escape set."),
+            FormulaDefinition("generated-kernel-escape-rate", "escapeRate",
+                "Node escape rate", EscapeRateDefinition(),
+                "The exact node rate uses the canonical arena escape denominator."),
+            FormulaDefinition("generated-kernel-edge-capture-count", "edgeCaptureCount",
+                "Edge capture count", EdgeCaptureCountDefinition(),
+                "The edge capture count is the cardinality of the removed escape set."),
+            FormulaDefinition("generated-kernel-edge-capture-rate", "edgeCaptureRate",
+                "Edge capture rate", EdgeCaptureRateDefinition(),
+                "The exact edge rate uses the canonical arena escape denominator."),
+            Theorem("generated-kernel-escape-rate-bridge",
+                "escapeRate_generatedKernel_eq_escapeRate",
+                "Node rate agrees with landed catalog rate", EscapeRateBridge()),
             Theorem("generated-kernel-union", "generatedKernel_union",
                 "Generator union computes meet", UnionMeet()),
             Theorem("generated-kernel-finite-lattice", "generatedKernel_finite_lattice",
@@ -78,6 +98,12 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
             Theorem("strict-kernel-iff-nonempty-increment",
                 "strict_kernel_iff_nonempty_increment",
                 "Strict refinement exactly means nonempty capture", StrictNonempty()),
+            Theorem("strict-generator-step-characterization",
+                "strictGeneratorStep_iff_generatorStep_and_nonempty_increment",
+                "Strict generator steps have nonempty increments", StrictStepCharacterization()),
+            Theorem("collapsed-addition-captures-nothing",
+                "collapsedAddition_edgeCapture_eq_empty",
+                "Collapsed additions capture nothing", CollapsedCapture()),
             Theorem("strict-kernel-iff-edge-capture-card-positive",
                 "strict_kernel_iff_edgeCapture_card_pos",
                 "Strict refinement exactly means positive capture count", StrictPositive()))));
@@ -98,6 +124,14 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(
                 "The certificate is proved from the extensional quotient and the landed catalog kernel laws."))),
             DescribeRole.Theorem);
+
+    private static DocumentBlock.Describe FormulaDefinition(
+        string id, string declaration, string title, Formula formula, string paragraph) =>
+        Describe.Lean(
+            DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.FromAuthor(Disp(Seq(formula, Dot))),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(paragraph))),
+            DescribeRole.Definition);
 
     private static Formula Call(string name, params Formula[] arguments)
     {
@@ -133,6 +167,16 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
         Call("relationB", P(), X(), Y()), Sp, Eq, Sp, F.Id("true"), Sp, Iff, Sp,
         Relation(P()));
 
+    private static Formula NodeEqualityDefinition() => Seq(
+        Call("nodesEqB", P(), Q()), Sp, Eq, Sp,
+        Call("all", Call("StatePairs", F.Id("A")),
+            Seq(Call("relationB", P(), X(), Y()), Sp, Eq, Sp,
+                Call("relationB", Q(), X(), Y()))));
+
+    private static Formula NodeEqualityReflection() => Seq(
+        Call("nodesEqB", P(), Q()), Sp, Eq, Sp, F.Id("true"), Sp, Iff, Sp,
+        P(), Sp, Eq, Sp, Q());
+
     private static Formula Extensionality() => new Formula.Logic(
         Seq(Forall, Sp, X(), Comma, Sp, Y(), Comma, Sp,
             Relation(P()), Sp, Iff, Sp, Relation(Q())),
@@ -141,6 +185,27 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
 
     private static Formula EscapeBridge() => Seq(
         Escape(Kernel(S())), Sp, Eq, Sp, Call("escapePairs", C(), S()));
+
+    private static Formula EscapeCountDefinition() => Seq(
+        Call("escapeCount", P()), Sp, Eq, Sp, Call("card", Escape(P())));
+
+    private static Formula EscapeRateDefinition() => Seq(
+        Call("escapeRate", P()), Sp, Eq, Sp,
+        new Formula.Fraction(Call("escapeCount", P()),
+            Call("escapeDenominator", F.Id("A"))));
+
+    private static Formula EdgeCaptureCountDefinition() => Seq(
+        Call("edgeCaptureCount", P(), Q()), Sp, Eq, Sp,
+        Call("card", Capture()));
+
+    private static Formula EdgeCaptureRateDefinition() => Seq(
+        Call("edgeCaptureRate", P(), Q()), Sp, Eq, Sp,
+        new Formula.Fraction(Call("edgeCaptureCount", P(), Q()),
+            Call("escapeDenominator", F.Id("A"))));
+
+    private static Formula EscapeRateBridge() => Seq(
+        Call("escapeRate", Kernel(S())), Sp, Eq, Sp,
+        Call("escapeRate", C(), S()));
 
     private static Formula UnionMeet() => Seq(
         Kernel(Call("union", S(), T())), Sp, Eq, Sp,
@@ -182,6 +247,18 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
         FormulaLogicOperator.Implies,
         Seq(Neg, Refines(P(), Q()), Sp, Iff, Sp,
             Capture(), Sp, Neq, Sp, Call("empty")));
+
+    private static Formula StrictStepCharacterization() => Seq(
+        Call("StrictGeneratorStep", C(), P(), Q(), I()), Sp, Iff, Sp,
+        new Formula.Logic(
+            Call("GeneratorStep", C(), P(), Q(), I()),
+            FormulaLogicOperator.And,
+            Call("Nonempty", Capture())));
+
+    private static Formula CollapsedCapture() => new Formula.Logic(
+        Call("CollapsedAddition", C(), P(), I()),
+        FormulaLogicOperator.Implies,
+        Seq(Call("edgeCapture", P(), P()), Sp, Eq, Sp, Emptyset));
 
     private static Formula StrictPositive() => new Formula.Logic(
         Call("GeneratorStep", C(), P(), Q(), I()),
