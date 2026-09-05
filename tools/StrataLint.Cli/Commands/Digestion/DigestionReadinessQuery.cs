@@ -64,9 +64,7 @@ internal static class DigestionReadinessQuery
             return Record(
                 entry,
                 "quarantined",
-                quarantine.BlockerClass is null
-                    ? ["quarantine"]
-                    : ["quarantine:" + quarantine.BlockerClass]);
+                ["quarantine:" + quarantine.BlockerClass]);
         }
 
         if (DigestionCoverDispositionSelector.Classify(entry, retryDispositions: false)
