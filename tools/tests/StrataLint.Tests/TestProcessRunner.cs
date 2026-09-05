@@ -1,7 +1,7 @@
 using StrataLint.Engine;
 using Xunit;
 
-namespace StrataLint.TestSupport;
+namespace StrataLint.Tests;
 
 internal static class TestProcessRunner
 {

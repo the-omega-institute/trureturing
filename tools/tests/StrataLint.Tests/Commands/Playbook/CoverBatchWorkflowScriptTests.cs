@@ -84,32 +84,4 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Empty(fixture.Status());
     }
 
-    internal sealed partial class TransactionFixture
-    {
-        internal string WriteBatchFile(string contents)
-        {
-            const string path = ".lake/cover-batch.tsv";
-            WriteFile(path, contents);
-            return path;
-        }
-
-        internal ProcessOutput RunBatch(string atomsFile, bool coverDispositionFailure = false) =>
-            TestProcessRunner.Run(
-                "/usr/bin/env",
-                [
-                    $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
-                    $"PLAYBOOK_TEST_CALLS={callsPath}",
-                    "PLAYBOOK_STALE_REPORT=0",
-                    $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
-                    "/bin/bash",
-                    Path.Combine(Root, ScriptPath),
-                    "cover-batch",
-                    "synthetic-base",
-                    atomsFile,
-                ],
-                Root,
-                BoundedProcessRunner.HangDetectionBudget,
-                128 * 1024);
-    }
-
 }

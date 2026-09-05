@@ -65,7 +65,7 @@ public sealed class PlaybookWorkflowScriptTests
 
         if (command is "deposit" or "cover")
         {
-            using var fixture = new DepositCoverWorkflowScriptTests.TransactionFixture();
+            using var fixture = new TransactionFixture();
             fixture.ChangeFormalization();
             if (command == "cover")
             {
