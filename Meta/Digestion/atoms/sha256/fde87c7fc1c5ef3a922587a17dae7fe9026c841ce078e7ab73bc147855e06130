@@ -1,0 +1,35 @@
+# 七、还可以把这条过程改写成一个有界矩阵流，避免直接处理巨大的历史矩阵
+
+直接计算 \(W_C(r)\)，可能遇到很大的指数数值。
+
+但同一过程可以在一个随 \(r\) 变化的酉坐标中写成：
+
+$$
+\boxed{
+\frac{d\mathscr A}{dr}
+=
+[X(\mathscr A),\mathscr A],
+}
+\tag{J18}
+$$
+
+其中：
+
+$$
+\boxed{
+X(\mathscr A)
+=
+\frac12\mathscr A^*\mathscr A
+-\frac14\left((\mathscr A^*)^2+\mathscr A^2\right).
+}
+\tag{J19}
+$$
+
+初值为：
+
+$$
+\mathscr A(0)=C.
+$$
+
+注意 \(X(\mathscr A)\) 是自伴矩阵。
+

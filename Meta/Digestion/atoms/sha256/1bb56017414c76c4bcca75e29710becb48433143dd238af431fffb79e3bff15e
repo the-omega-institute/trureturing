@@ -1,0 +1,44 @@
+### 第一步：上界
+
+前文由显式公式与素数幂分离得到
+
+$$
+\mathcal D_h(T)
+=
+-2Q_h(S_h)\mathscr G(T)+o(1),
+$$
+
+其中
+
+$$
+\mathscr G(T)
+=
+\sum_j\frac{1-\cos(T\omega_j)}{\omega_j^2},
+$$
+
+$$
+\rho_j=\frac12+i\omega_j,
+\qquad
+|\Im\omega_j|\le\Delta_\zeta,
+\qquad
+\sum_j|\omega_j|^{-2}<\infty.
+$$
+
+这里使用的是实际零点展开，不把复平方换成模平方。时间函数及其变换关系的解析基础来自 Suzuki 的研究。([arXiv][2])
+
+于是
+
+$$
+|\mathscr G(T)|\le C e^{\Delta_\zeta T}.
+$$
+
+因为 \(Q_h(S_h)\) 只包含有限个固定平移，
+
+$$
+|\mathcal D_h(T)|\le C_h e^{\Delta_\zeta T}.
+$$
+
+因此式（5）的左边不超过 \(2\Delta_\zeta\)。
+
+如果 RH 成立，所有 \(\omega_j\) 为实数，\(\mathscr G\) 一致有界，所以 \(\mathcal D_h\) 有界，得到式（6）。
+

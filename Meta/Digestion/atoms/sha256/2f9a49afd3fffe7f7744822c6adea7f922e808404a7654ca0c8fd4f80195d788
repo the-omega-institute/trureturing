@@ -1,0 +1,29 @@
+## 定理 P2：逐阶保真关系
+
+$$
+\boxed{
+\mathsf B=T_F\mathsf H T_F^*.
+}
+\tag{P12}
+$$
+
+而对每个 \(N\)：
+
+$$
+\boxed{
+\mathsf B_N=T_{F,N}\mathsf H_NT_{F,N}^*.
+}
+\tag{P13}
+$$
+
+因此：
+
+$$
+\boxed{
+n_-(\mathsf B_N)=n_-(\mathsf H_N),
+\qquad
+\det\mathsf B_N=\det\mathsf H_N.
+}
+\tag{P14}
+$$
+

@@ -1,0 +1,43 @@
+# 八、把真正的算术目标放宽：不必先证明最锋利的抵消式
+
+上一轮把总能量拆为
+
+$$
+\mathcal E_h(L)
+=
+\mathcal E_h^{\mathrm{diag}}(L)
++
+\mathcal E_h^{\mathrm{off}}(L).
+$$
+
+由 Mertens 估计
+
+$$
+\sum_{p\le x}\frac{\log p}{p}
+=
+\log x+O(1)
+$$
+
+及分部求和，已经得到
+
+$$
+\boxed{
+\mathcal E_h^{\mathrm{diag}}(L)
+=
+\frac{A_h}{2}L^2+O_h(L).
+}
+\tag{36}
+$$
+
+所用 Mertens 估计是无条件的。([What's new][5])
+
+在 RH 成立时，必然有
+
+$$
+\mathcal E_h^{\mathrm{off}}(L)
+=
+-\frac{A_h}{2}L^2+O_h(L).
+$$
+
+但本轮的增长指数定理说明：**不一定需要首先直接证明这条最精细的抵消公式。**
+

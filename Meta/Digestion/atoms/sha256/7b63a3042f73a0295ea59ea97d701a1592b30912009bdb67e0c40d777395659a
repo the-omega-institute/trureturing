@@ -1,0 +1,51 @@
+# 七、真正的投影概率读取什么？它首先读取非正规性，而非非实谱
+
+由：
+
+$$
+p_q(r)=e^{-rN_q}\mathcal H_q(r)
+$$
+
+及定理 L4：
+
+$$
+\boxed{
+-\lim_{r\to\infty}
+\frac{\log p_q(r)}r
+=
+N_q-Q_q.
+}
+\tag{L25}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{正投影概率的指数衰减}
+&\longleftrightarrow N_q-Q_q,\\
+\text{归一化历史体积的指数增长}
+&\longleftrightarrow Q_q-S_q.
+\end{aligned}
+}
+$$
+
+前者是非正规性；后者是谱虚部。
+
+例如，若 \(A\) 已经是一个含复对角元的正规矩阵，则：
+
+$$
+N_q=Q_q,
+$$
+
+所以真实投影概率没有严格负的指数衰减率。
+
+但若存在非实谱：
+
+$$
+Q_q-S_q>0,
+$$
+
+历史体积仍然指数增长。
+

@@ -1,0 +1,51 @@
+### 证明
+
+此时：
+
+$$
+\Lambda=\Lambda^*.
+$$
+
+而：
+
+$$
+\operatorname{Tr}\Lambda^2
+-
+\operatorname{Tr}(\Lambda U\Lambda U^*)
+=
+\frac12\|\Lambda-U\Lambda U^*\|_{\mathrm{HS}}^2.
+$$
+
+所以式（K8）变成：
+
+$$
+\boxed{
+\mathcal Z_q(r)
+=
+\int_{U(d)}
+\exp\!\left[
+-\frac r2
+\|\Lambda-U\Lambda U^*\|_{\mathrm{HS}}^2
+\right]dU.
+}
+\tag{K11}
+$$
+
+每个被积函数都在 \((0,1]\) 内，得到上界。
+
+逐阶求导后，每一阶只多出相应非负平方量的幂和符号，得到完全单调性。证毕。
+
+若 \(r>0\) 时等号成立，则：
+
+$$
+\Lambda=U\Lambda U^*
+$$
+
+对所有 \(U\) 成立，故全部根相同。反过来，若：
+
+$$
+q(x)=(x-\lambda)^d,\qquad\lambda\in\mathbb R,
+$$
+
+则 \(\mathcal Z_q(r)=1\)。
+

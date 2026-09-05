@@ -1,0 +1,11 @@
+## 定义 I1：高斯历史 Gramian
+
+$$
+\boxed{
+W_T(C)=
+\int_{\mathbb R}
+g_T(\tau)U(\tau)^*U(\tau)\,d\tau.
+}
+\tag{I3}
+$$
+

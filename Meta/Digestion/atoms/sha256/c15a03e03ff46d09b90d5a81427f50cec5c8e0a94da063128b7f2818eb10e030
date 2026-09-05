@@ -1,0 +1,14 @@
+## 推论 104.1　精确经典子空间在钟交互下自动保持
+
+在上述支持子空间上：
+
+$$
+U_v(t)
+\bigl(|\psi\rangle_C\otimes|\xi\rangle_G\bigr)
+=
+e^{-iH_C\sqrt{r(v)}t/\hbar}|\psi\rangle_C
+\otimes|\xi\rangle_G.
+$$
+
+因此，任意有限次该类钟交互都不会把结构带出这个经典子空间，也不会产生额外的钟—结构纠缠。
+

@@ -1,0 +1,33 @@
+# 三、定理二：独立随机模型却几乎必然给出 \(L^2\)
+
+现在故意构造另一个对象，用来检验“独立随机性是否足够”。
+
+令
+
+$$
+X_n\sim\operatorname{Bernoulli}\!\left(\frac1{\log n}\right),
+\qquad n\ge3,
+$$
+
+相互独立。
+
+这就是 Cramér 模型的标准独立选择机制。它是替代模型，不是把真实素数宣布为独立随机变量。([What's new][4])
+
+定义
+
+$$
+\mathcal D_h^{\mathrm B}(T)
+=
+\sum_{n\ge3}
+X_n\frac{\log n}{\sqrt n}
+k_h(\log n-T),
+$$
+
+以及
+
+$$
+\mathcal E_h^{\mathrm B}(L)
+=
+\int_0^L|\mathcal D_h^{\mathrm B}(T)|^2\,dT.
+$$
+

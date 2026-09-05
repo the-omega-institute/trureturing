@@ -1,0 +1,28 @@
+## 定义 108.1　两只钟与同一个结构比特
+
+令 \(A,B\) 为两只观察者钟，\(G\) 为结构寄存器。
+
+定义局部耦合操作：
+
+$$
+\mathsf U_A
+=
+|0\rangle\langle0|_A\otimes I_G
++
+|1\rangle\langle1|_A\otimes iX_G,
+$$
+
+$$
+\mathsf U_B
+=
+|0\rangle\langle0|_B\otimes I_G
++
+|1\rangle\langle1|_B\otimes iZ_G.
+$$
+
+省略另一个钟上的恒等扩张。
+
+这些操作可以由第 107 节的正钟速 Hamiltonian 在适当持续时间内得到。
+
+---
+

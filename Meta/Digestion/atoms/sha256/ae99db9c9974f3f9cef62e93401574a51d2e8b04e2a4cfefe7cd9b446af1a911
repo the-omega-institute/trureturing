@@ -1,0 +1,58 @@
+## 固定一个无需选择的历史尺度
+
+取：
+
+$$
+r_d=d^4,
+$$
+
+即仍使用上一轮的历史宽度 \(T_d=d^2\)。
+
+定理 J4 给出：
+
+$$
+0\le
+\mathcal E_{C_d}(d^4)
+-
+\mathcal E_{\mathrm{spec}}(C_d)
+<
+\frac1{4d^2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\lim_{d\to\infty}\mathcal E_{C_d}(d^4)
+=
+\mathfrak E_\xi.
+}
+\tag{J32}
+$$
+
+等价地：
+
+$$
+\boxed{
+\lim_{d\to\infty}
+\frac1{2d^4}
+\log
+\frac{
+\det W_{C_d}(2d^4)
+}{
+\det W_{C_d}(d^4)
+}
+=
+\mathfrak E_\xi.
+}
+\tag{J33}
+$$
+
+这次得到的是一个由实际有限系数与明确矩阵操作组成的标量极限。
+
+**但尚未证明这个极限为零。**
+
+经典 Jensen 判据只负责把它与 RH 连接，不会替我们估计这个实际序列。([arXiv][5])
+
+---
+

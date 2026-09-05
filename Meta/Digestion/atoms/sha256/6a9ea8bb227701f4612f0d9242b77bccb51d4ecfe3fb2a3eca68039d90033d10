@@ -1,0 +1,103 @@
+# 六、实际极限读数只使用有限个累积量
+
+定义实际累积量：
+
+$$
+\log D(v)
+=
+\sum_{m\ge1}
+\frac{\chi_{2m}}{(2m)!}v^m.
+$$
+
+再定义：
+
+$$
+\boxed{
+s_m=
+(-1)^{m+1}\frac{m\chi_{2m}}{(2m)!}.
+}
+\tag{N16}
+$$
+
+另一方面，若：
+
+$$
+s_{d,m}=\operatorname{Tr}(C_d^m),
+$$
+
+则有限乘积给出：
+
+$$
+\log P_d(v)
+=
+\sum_{m\ge1}
+\frac{(-1)^{m+1}}m\,s_{d,m}v^m
+$$
+
+在零附近成立。
+
+因为 \(P_d\to D\) 局部一致，得到：
+
+$$
+s_{d,m}\longrightarrow s_m
+$$
+
+对每个固定 \(m\) 成立。
+
+对：
+
+$$
+f(x)=\sum_{i=1}^{k}c_ix^i,
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal Q_\infty(f)
+=
+\sum_{i,j=1}^{k}c_ic_j\,s_{i+j}.
+}
+\tag{N17}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal Q_d(f)\longrightarrow\mathcal Q_\infty(f).
+}
+\tag{N18}
+$$
+
+这项极限读数只依赖：
+
+$$
+\chi_4,\chi_6,\ldots,\chi_{4k}.
+$$
+
+不需要观察完全部零点。
+
+例如，对：
+
+$$
+f(x)=c_1x+c_2x^2,
+$$
+
+有：
+
+$$
+\mathcal Q_\infty(f)
+=
+\begin{pmatrix}c_1&c_2\end{pmatrix}
+\begin{pmatrix}
+-\chi_4/12&\chi_6/240\\
+\chi_6/240&-\chi_8/10080
+\end{pmatrix}
+\begin{pmatrix}c_1\\c_2\end{pmatrix}.
+$$
+
+这正是前文出现过的回返矩阵。**本轮要补上的，是它如何形成一个不会随维数消失的固定证书。**
+
+---
+

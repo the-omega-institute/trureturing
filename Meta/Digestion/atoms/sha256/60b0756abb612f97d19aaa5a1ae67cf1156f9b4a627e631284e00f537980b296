@@ -1,0 +1,31 @@
+## 定理 1：精确能量分解
+
+$$
+\boxed{
+\mathfrak J(X)
+=
+\mathfrak D_{\mathrm{self}}(X)
++
+\mathfrak D_{\mathrm{cong}}(X)
++
+\mathfrak R(X).
+}
+\tag{11}
+$$
+
+### 证明
+
+把式（3）的平方展开：
+
+$$
+Y(x)^2
+=
+\sum_n a(n)^2\mathbf1_{\{x<n\le2x\}}
++
+2\sum_{d\ge1}\sum_n
+a(n)a(n+d)
+\mathbf1_{\{x<n,n+d\le2x\}}.
+$$
+
+积分后，第二项中加上再减去 \(\mathfrak S(d)-1\)，即得。证毕。
+

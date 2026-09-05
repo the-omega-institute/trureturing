@@ -1,0 +1,37 @@
+**本轮没有证明它等于零，也没有找到实际的正下界。** 已经完成的是：证明一个固定的高斯历史过程会消除什么、绝不会消除什么，并提供了无需预先求根的有限检测条件和等价的有界矩阵流。
+
+因此，下一项真正有价值的算术结果，不应只是“找到更多守恒或下降规律”，而必须说明：
+
+> **为什么实际 theta／质数关系，能够排除正规化以后仍然存在的非实谱分量。**
+
+只有这一步，才会把量子观察者从一个忠实检测结构，推进成真正的零点定位证明。
+
+[1]: https://epubs.siam.org/doi/10.1137/S0895479893255184?utm_source=chatgpt.com "A Practical Upper Bound for Departure from Normality | SIAM Journal on Matrix Analysis and Applications"
+[2]: https://www.sciencedirect.com/science/article/pii/002437959190021N?utm_source=chatgpt.com "Dynamical systems that sort lists, diagonalize matrices, and solve linear programming problems - ScienceDirect"
+[3]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[4]: https://dlmf.nist.gov/1.10 "DLMF: §1.10 Functions of a Complex Variable ‣ Topics of Discussion ‣ Chapter 1 Algebraic and Analytic Methods"
+[5]: https://arxiv.org/abs/1902.07321 "[1902.07321] Jensen polynomials for the Riemann zeta function and other sequences"
+这次可以把上一轮的“高斯历史体积”，进一步变成一个**有明确基准上限的有限判据**。
+
+关键变化是：
+
+> **不必同时读取全部状态坐标。对实际伴随矩阵，只保留一个标量读出，再保留它的完整历史，就已经能够区分全部有限状态。这个历史的行列式，具有一个由反对称结构确定的自然归一化。**
+
+在这个归一化下，可以证明：
+
+$$
+\boxed{
+\text{有限多项式全部实根}
+\iff
+\text{归一化历史体积在所有宽度下都不超过 }1.
+}
+$$
+
+更进一步，对实际 ξ 的 Jensen 系列，**只需要在每一阶的一个指定宽度 \(r=d^4\) 上控制这个上界，就足以推出 RH**。
+
+这里会出现费米式反对称、Vandermonde 因子和酉矩阵积分。但必须明确：这些通用结构提供的是精确判据，**尚未替实际算术证明上界成立**。
+
+下面继续给出定义与证明。
+
+---
+

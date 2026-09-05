@@ -1,0 +1,25 @@
+## 推论 75.1　有限支持下的精确恢复障碍
+
+对任何非零标签差，
+
+$$
+\boxed{
+\sup_\rho
+D\bigl(\mathcal R\Lambda_c(\rho),\rho\bigr)
+\ge
+\frac12
+\left[
+1-
+\cos\left(
+\frac{\pi}{\lfloor N/|\ell|\rfloor+2}
+\right)
+\right]
+>0.
+}
+\tag{75.3}
+$$
+
+这里针对的是定义 74.1—74.2 的具体通道及任意 CPTP 恢复，不禁止通过不受该通道影响的简并子空间传输其他量子信息。
+
+---
+

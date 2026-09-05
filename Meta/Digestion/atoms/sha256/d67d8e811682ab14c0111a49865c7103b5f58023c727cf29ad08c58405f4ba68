@@ -1,0 +1,88 @@
+# 六、一个同时包含两种缺陷的精确模型
+
+取：
+
+$$
+\boxed{
+C=(\alpha+i\beta)I+
+\begin{pmatrix}
+0&g\\
+0&0
+\end{pmatrix},
+\qquad g\ge0.
+}
+$$
+
+其中：
+
+* \(g\) 描述 Jordan 型非正规耦合；
+* \(\beta\) 描述真实谱虚部。
+
+令：
+
+$$
+m=2\beta r.
+$$
+
+直接完成高斯积分：
+
+$$
+\boxed{
+W_C(r)
+=
+e^{2\beta^2r}
+\begin{pmatrix}
+1&-igm\\
+igm&1+g^2(r+m^2)
+\end{pmatrix}.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\det W_C(r)
+=
+e^{4\beta^2r}(1+g^2r).
+}
+\tag{J16}
+$$
+
+由定理 J2：
+
+$$
+\boxed{
+\mathcal E_C(r)
+=
+2\beta^2+
+\frac{g^2}{2(1+g^2r)}.
+}
+\tag{J17}
+$$
+
+这里两项的作用完全分开：
+
+$$
+\frac{g^2}{2(1+g^2r)}
+\longrightarrow0
+$$
+
+是有限表示中的非正规部分；
+
+$$
+2\beta^2
+$$
+
+则不随历史宽度消失。
+
+对数体积也分成：
+
+$$
+\boxed{
+\log\det W_C(r)
+=
+4\beta^2r+\log(1+g^2r).
+}
+$$
+

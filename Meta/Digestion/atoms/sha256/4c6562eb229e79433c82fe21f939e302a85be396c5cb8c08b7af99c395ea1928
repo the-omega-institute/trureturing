@@ -1,0 +1,90 @@
+## 定理 127.1　有限深度局域实现的误差下界
+
+对全部输入都工作的局域实现，其最坏输出迹距离误差至少为
+
+$$
+\boxed{
+\varepsilon_{\mathrm{impl}}
+\ge
+\frac12
+\left|
+\sin\left[
+\frac\alpha2
+\left(
+\sqrt{1+\frac{k}{|Q|}}-1
+\right)
+\right]
+\right|.
+}
+\tag{127.2}
+$$
+
+只要右侧非零，就不存在该深度下的精确实现。
+
+### 证明
+
+取两种结构输入：
+
+第一种在 \(Q\) 上全部为 \(|0\rangle\)。
+
+第二种仅在 \(Q\setminus Z\) 上为 \(|1\rangle\)，其余与第一种相同。
+
+二者在观察者的全部输入因果域 \(Z\) 上完全相同。因此，由定理 122.1，任意深度 \(m\) 的局域实现必须给出相同观察者输出。
+
+但对探针初态 \(|+\rangle\)，目标操作分别产生相位
+
+$$
+\alpha,\qquad
+\alpha\sqrt{1+k/|Q|}.
+$$
+
+两个目标纯态的迹距离为
+
+$$
+D_{\mathrm{target}}
+=
+\left|
+\sin\left[
+\frac\alpha2
+\left(
+\sqrt{1+\frac{k}{|Q|}}-1
+\right)
+\right]
+\right|.
+$$
+
+同一个实际输出不能同时以小于 \(D_{\mathrm{target}}/2\) 的误差逼近两个目标态。由三角不等式得到式（127.2）。∎
+
+### 结论
+
+$$
+\boxed{
+\text{集体算子在数学上定义良好}
+\not\Rightarrow
+\text{点状观察者能在任意短时间内调用它}.
+}
+$$
+
+若平均区域半径为 \(L\)，要让任意远端输入都可能影响中心输出，至少需要相应的因果深度。
+
+可以使用分布式观察者、提前建立的记录、并行局部测量或明确的汇总网络，但这些都是额外物理资源，不能从“宏观极限”一词中自动获得。
+
+因此，第 125 节的完整误差账本应写为
+
+$$
+\boxed{
+\varepsilon_{\mathrm{total}}
+\le
+\varepsilon_{\mathrm{impl}}
++
+\varepsilon_{\mathrm{classical}}
++
+\varepsilon_{\mathrm{readout}}.
+}
+\tag{127.3}
+$$
+
+其中每一项对应不同的证明任务。
+
+---
+

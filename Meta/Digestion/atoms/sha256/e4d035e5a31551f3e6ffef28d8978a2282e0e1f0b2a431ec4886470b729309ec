@@ -1,0 +1,63 @@
+## 定义 3：二点奇异级数
+
+对整数 \(d\ge1\)，定义
+
+$$
+\mathfrak S(d)
+=
+\prod_p
+\frac{1-\nu_p(d)/p}{(1-1/p)^2},
+$$
+
+其中
+
+$$
+\nu_p(d)=
+\begin{cases}
+1,&p\mid d,\\
+2,&p\nmid d.
+\end{cases}
+$$
+
+它记录两个位置 \(n,n+d\) 的局部整除障碍。对奇数 \(d\)，因模 \(2\) 障碍而有 \(\mathfrak S(d)=0\)；对偶数 \(d\)，得到通常的素数对奇异级数。中心化二点模型对应的是 \(\mathfrak S(d)-1\)。([arXiv][1])
+
+定义三项：
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{self}}(X)
+=
+\sum_n a(n)^2W_X(n,n),
+}
+\tag{8}
+$$
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{cong}}(X)
+=
+2\sum_{d\ge1}
+(\mathfrak S(d)-1)
+\sum_nW_X(n,n+d),
+}
+\tag{9}
+$$
+
+以及
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak R(X)
+=
+2\sum_{d\ge1}\sum_n
+\Bigl[
+a(n)a(n+d)-(\mathfrak S(d)-1)
+\Bigr]W_X(n,n+d).
+\end{aligned}
+}
+\tag{10}
+$$
+
+这里的 \(\mathfrak R(X)\) 是**实际中心化二点相关，减去局部同余模型后的加权总余项**。
+

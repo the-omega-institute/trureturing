@@ -1,0 +1,17 @@
+### 证明：上界
+
+若只有 \(r_{\mathrm{off}}\) 对，则式（O15）中的全部负项构成一个秩至多为 \(r_{\mathrm{off}}\) 的正算子：
+
+$$
+N=\sum_{\Im u>0}2m(u)y(u)y(u)^{\mathsf T}.
+$$
+
+其余部分为正。因此：
+
+$$
+\mathsf K=P-N,
+\qquad P,N\succeq0,
+$$
+
+不可能有超过 \(r_{\mathrm{off}}\) 个独立负方向。
+

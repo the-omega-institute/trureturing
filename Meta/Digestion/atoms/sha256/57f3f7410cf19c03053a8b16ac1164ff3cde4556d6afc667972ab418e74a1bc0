@@ -1,0 +1,62 @@
+* 不存在未记录的直接 \(A\)—\(B\) 量子作用或预共享量子资源。
+
+则最终两钟态必可分，不能得到式（108.4）。
+
+### 证明
+
+一般初态可写为：
+
+$$
+\sum_\lambda p_\lambda
+\rho_A^\lambda\otimes\rho_B^\lambda
+\otimes|\lambda\rangle\langle\lambda|.
+$$
+
+一次局部钟—经典标签操作，只会更新某一侧的条件态与经典概率，并可能增加新标签。它仍保持关于 \(A|B\) 的凸乘积形式。
+
+对步骤数归纳，最终对经典媒介求和后仍可分。∎
+
+在明确的局域介导前提下，以两探针纠缠检验媒介非经典性，是既有研究路线。这里直接给出了有限维的可计算实例；不能省略局域性、初始资源和竞争相互作用等条件。([arXiv][5])
+
+### 稳健见证
+
+定义：
+
+$$
+\mathcal W_{\mathrm{ent}}
+=
+\frac12I-|G\rangle\langle G|.
+$$
+
+对任意可分态：
+
+$$
+\operatorname{Tr}(\rho_{\mathrm{sep}}\mathcal W_{\mathrm{ent}})\ge0.
+$$
+
+若实际输出满足：
+
+$$
+D(\rho_{\mathrm{out}},|G\rangle\langle G|)\le\eta<\frac12,
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Tr}(\rho_{\mathrm{out}}\mathcal W_{\mathrm{ent}})
+\le-\frac12+\eta<0.
+}
+\tag{108.5}
+$$
+
+证明使用 \(|G\rangle\) 的最大乘积态重叠平方为 \(1/2\)，以及迹距离对效果概率差的界。
+
+### 物理边界
+
+这一电路证明媒介作用的非经典性，不证明该媒介就是引力或时空。
+
+它也没有仅凭门序列证明某个指定总 Hamiltonian 的严格能量守恒。若要实现完整能量闭合，还必须把脉冲控制器、储能系统与参照时钟纳入。
+
+---
+

@@ -1,0 +1,65 @@
+# 五、负能量方向究竟计数什么？可以精确证明
+
+记实际 \(D\) 的互异零点为 \(v\)，并定义倒数谱点：
+
+$$
+u=-1/v.
+$$
+
+它们的集合记为 \(\mathcal U\)，重数记为 \(m(u)\)。
+
+沿用前文已经建立的绝对收敛表示：
+
+$$
+\boxed{
+s_n=\sum_{u\in\mathcal U}m(u)u^n,
+\qquad n\ge2.
+}
+\tag{O13}
+$$
+
+集合 \(\mathcal U\) 关于共轭对称，除零以外没有聚点，并满足：
+
+$$
+\sum_um(u)|u|^2<\infty.
+$$
+
+由于式（O3）的无零圆盘：
+
+$$
+|\ell u|<\frac12.
+$$
+
+定义向量：
+
+$$
+\boxed{
+v(u)=\bigl(\ell u,(\ell u)^2,(\ell u)^3,\ldots\bigr).
+}
+\tag{O14}
+$$
+
+它属于 \(\ell^2\)。
+
+对实谱点 \(u\)，其贡献是：
+
+$$
+m(u)v(u)v(u)^{\mathsf T}\succeq0.
+$$
+
+对一对非实点 \(u,\overline u\)，写：
+
+$$
+v(u)=x(u)+iy(u),
+$$
+
+其中 \(x,y\) 为实向量。两点合起来贡献：
+
+$$
+\boxed{
+2m(u)\bigl[x(u)x(u)^{\mathsf T}
+-y(u)y(u)^{\mathsf T}\bigr].
+}
+\tag{O15}
+$$
+

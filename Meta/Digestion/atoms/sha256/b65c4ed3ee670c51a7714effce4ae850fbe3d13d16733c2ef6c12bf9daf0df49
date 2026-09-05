@@ -1,0 +1,74 @@
+## 定理 76.2　相位完全闭合仍可能有不可逆损耗
+
+若一条闭路满足
+
+$$
+\sum_{e\in P}\theta_e=0\pmod{2\pi},
+$$
+
+令
+
+$$
+v_P=\prod_{e\in P}v_e.
+$$
+
+则
+
+$$
+\boxed{
+\frac12
+\|\mathcal C_P-\operatorname{id}\|_\diamond
+=
+\frac{1-v_P}{2}.
+}
+\tag{76.2}
+$$
+
+### 证明
+
+零相位的通道可以写成
+
+$$
+\mathcal C_P
+=
+\frac{1+v_P}{2}\operatorname{id}
++
+\frac{1-v_P}{2}\mathcal Z,
+$$
+
+其中
+
+$$
+\mathcal Z(\rho)=Z\rho Z.
+$$
+
+因此 diamond 距离不超过 \((1-v_P)/2\)。
+
+对输入 \(|+\rangle\)，输出与原态的迹距离正好等于 \((1-v_P)/2\)，达到该界。∎
+
+### 例
+
+三条边都取
+
+$$
+z_e=\frac23.
+$$
+
+闭路相位严格为零，但
+
+$$
+v_P=\frac8{27},
+$$
+
+所以
+
+$$
+\boxed{
+\frac12
+\|\mathcal C_P-\operatorname{id}\|_\diamond
+=
+\frac{19}{54}.
+}
+\tag{76.3}
+$$
+

@@ -1,0 +1,32 @@
+## 定理 J5：该流全局存在、保谱，并与高斯历史等价
+
+对每个有限 \(r\)：
+
+$$
+\boxed{
+\det(zI-\mathscr A(r))=\det(zI-C),
+}
+\tag{J20}
+$$
+
+并且：
+
+$$
+\boxed{
+\frac d{dr}\|\mathscr A(r)\|_{\mathrm{HS}}^2
+=
+-\frac12
+\|[\mathscr A(r),\mathscr A(r)^*]\|_{\mathrm{HS}}^2.
+}
+\tag{J21}
+$$
+
+所以：
+
+$$
+\|\mathscr A(r)\|_{\mathrm{HS}}
+\le\|C\|_{\mathrm{HS}}.
+$$
+
+它与 \(A_C(r)\) 在每个 \(r\) 上酉等价。
+

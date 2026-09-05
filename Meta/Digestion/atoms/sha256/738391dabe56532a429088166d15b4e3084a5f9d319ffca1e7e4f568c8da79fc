@@ -1,0 +1,22 @@
+### 证明：下界
+
+若：
+
+$$
+A_Tv=\lambda v,\qquad\|v\|=1,
+$$
+
+则：
+
+$$
+v^*\frac{A_T-A_T^*}{2i}v=\Im\lambda.
+$$
+
+所以：
+
+$$
+\sigma_T(C)\ge|\Im\lambda|.
+$$
+
+对全部本征值取最大值得到下界。
+

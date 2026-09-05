@@ -1,0 +1,107 @@
+# 一、固定局部核：区分时间增长与尺度细化
+
+保留前文定义
+
+$$
+Z(T)=\sum_p\frac{\log p}{\sqrt p}(T-\log p)_+.
+$$
+
+对固定 \(h>0\)，令
+
+$$
+E_h=e^{h/2},
+\qquad
+Q_h(z)=(z-E_h)(z-1)^3,
+$$
+
+$$
+(S_hf)(T)=f(T+h),
+$$
+
+并定义
+
+$$
+\boxed{
+\mathcal D_h(T)=Q_h(S_h)Z(T).
+}
+\tag{1}
+$$
+
+令 \(w_E\) 为支集在 \([0,4]\) 的连续分段线性函数，其五个节点值为
+
+$$
+\bigl(w_E(0),w_E(1),w_E(2),w_E(3),w_E(4)\bigr)
+=
+(0,E,-1-E,1,0).
+$$
+
+定义
+
+$$
+k_h(s)=h\,w_{E_h}(s/h).
+$$
+
+于是
+
+$$
+\boxed{
+\mathcal D_h(T)
+=
+\sum_p\frac{\log p}{\sqrt p}\,
+k_h(\log p-T).
+}
+\tag{2}
+$$
+
+它只读取
+
+$$
+e^T<p\le e^{T+4h}
+$$
+
+中的素数。
+
+再定义固定尺度的累计能量
+
+$$
+\boxed{
+\mathcal E_h(L)
+=
+\int_0^L|\mathcal D_h(T)|^2\,dT,
+}
+\tag{3}
+$$
+
+以及核的平方质量
+
+$$
+\boxed{
+A_h
+=
+\int_{\mathbb R}k_h(s)^2\,ds
+=
+h^3\left(E_h^2+\frac23E_h+1\right)>0.
+}
+\tag{4}
+$$
+
+这里有两个不同极限，后面不能混用：
+
+$$
+\boxed{
+h\text{ 固定， }L\to\infty
+}
+$$
+
+研究越来越大的算术范围；
+
+$$
+\boxed{
+T,H\text{ 固定， }h\downarrow0
+}
+$$
+
+研究同一个有限窗口中的观察细化。
+
+---
+

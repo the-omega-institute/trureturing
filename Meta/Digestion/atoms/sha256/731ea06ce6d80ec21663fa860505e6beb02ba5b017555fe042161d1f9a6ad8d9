@@ -1,0 +1,41 @@
+## 假设 106.1　可交换的结构系数
+
+假设：
+
+$$
+\widehat A,\quad
+\widehat B_i,\quad
+\widehat C_{ij}
+$$
+
+全部两两可交换。
+
+则存在共同谱投影 \(P_\lambda\)，使：
+
+$$
+\widehat R(v)
+=
+\sum_\lambda r_\lambda(v)P_\lambda,
+$$
+
+其中：
+
+$$
+r_\lambda(v)
+=
+a_\lambda+2b_\lambda^{\mathsf T}v-v^{\mathsf T}C_\lambda v.
+$$
+
+由前述正性条件，每个 \(\lambda\) 都对应一个洛伦兹候选：
+
+$$
+g_\lambda
+=
+\begin{pmatrix}
+-a_\lambda&-b_\lambda^{\mathsf T}\\
+-b_\lambda&C_\lambda
+\end{pmatrix}.
+$$
+
+---
+

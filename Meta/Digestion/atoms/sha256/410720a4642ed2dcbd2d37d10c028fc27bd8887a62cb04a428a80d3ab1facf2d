@@ -1,0 +1,69 @@
+# 八、全部负能量还能组成一个不被维数稀释的总量
+
+定义负部分：
+
+$$
+\mathsf K_-=\frac{|\mathsf K|-\mathsf K}{2},
+$$
+
+以及：
+
+$$
+\boxed{
+\Delta_{\mathrm{obs}}
+=
+\operatorname{Tr}\mathsf K_-\ge0.
+}
+\tag{O22}
+$$
+
+有限层定义：
+
+$$
+\Delta_N
+=
+\operatorname{Tr}(\mathsf K_N)_-.
+$$
+
+则：
+
+$$
+\boxed{
+0\le\Delta_N\le\Delta_{N+1}\le\Delta_{\mathrm{obs}},
+}
+$$
+
+并且：
+
+$$
+\boxed{
+0\le\Delta_{\mathrm{obs}}-\Delta_N
+\le
+B_0(2^{1-N}-4^{-N}).
+}
+\tag{O23}
+$$
+
+证明可以使用变分表达：
+
+$$
+\operatorname{Tr}A_-
+=
+\sup_{0\preceq P\preceq I}
+-\operatorname{Tr}(PA).
+$$
+
+扩大有限子空间不会减少可选测试；迹范数误差则控制最优值的变化。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Delta_{\mathrm{obs}}=0.
+}
+$$
+
+这里的数值大小依赖所选观察尺度 \(\ell\)，但“是否为零”和负方向数不依赖这个正缩放。
+

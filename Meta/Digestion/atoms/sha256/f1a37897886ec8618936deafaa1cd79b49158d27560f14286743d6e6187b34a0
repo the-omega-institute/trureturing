@@ -1,0 +1,206 @@
+\boxed{
+|(H-I)\rho^{1/2}|_2^2
+=====================
+
+2\bigl(1-\operatorname{Re}\gamma\bigr).
+}
+\tag{85.4}
+
+$$
+
+### 证明
+
+使用
+
+$$
+
+H^\dagger H=I,\qquad \operatorname{Tr}\rho=1
+
+$$
+
+及迹的循环性。
+
+例如，
+
+$$
+
+\begin{aligned}
+&\operatorname{Tr}
+\left[
+\rho(H-\gamma I)^\dagger(H-\gamma I)
+\right]\
+&=1-\gamma\overline\gamma
+-\overline\gamma\gamma+|\gamma|^2\
+&=1-|\gamma|^2.
+\end{aligned}
+
+$$
+
+第二式同理。∎
+
+---
+
+## 推论 85.1　可见度一不等于闭路恒等
+
+若
+
+$$
+
+|\gamma|=1,
+
+$$
+
+只能推出
+
+$$
+
+H=\gamma I
+
+$$
+
+在 \(\rho\) 的支持上成立。
+
+例如
+
+$$
+
+H=-I
+
+$$
+
+具有完整可见度，却给出相位 \(\pi\)。
+
+如果 \(\rho\) 不满秩，即使 \(\gamma=1\)，也不能确定 \(H\) 在支持之外的作用。
+
+因此，**只看干涉条纹是否清晰，不能认证闭路恒等；还要测量相位，并控制测试态覆盖的空间。**
+
+---
+
+## 定理 85.2　满秩测试态给出算子级稳定性界
+
+若
+
+$$
+
+\rho\ge\mu I,\qquad \mu>0,
+
+$$
+
+则
+
+$$
+
+\boxed{
+|H-I|_{\mathrm{op}}
+\le
+\sqrt{
+\frac{2(1-\operatorname{Re}\gamma)}{\mu}
+}.
+}
+\tag{85.5}
+
+$$
+
+特别地，
+
+$$
+
+\boxed{
+\gamma=1\iff H=I.
+}
+\tag{85.6}
+
+$$
+
+### 证明
+
+由 \(\rho\ge\mu I\)，
+
+$$
+
+\begin{aligned}
+\mu|H-I|_2^2
+&\le
+\operatorname{Tr}
+\left[
+\rho(H-I)^\dagger(H-I)
+\right]\
+&=2(1-\operatorname{Re}\gamma).
+\end{aligned}
+
+$$
+
+再使用
+
+$$
+
+|H-I|_{\mathrm{op}}\le|H-I|_2.
+
+$$
+
+∎
+
+这使一个实验平均值与完整算子性质之间出现了明确桥梁。
+
+代价也十分清楚：当 \(\mu\) 很小时，认证变得不稳定。若使用
+
+$$
+
+\rho=I/d,
+
+$$
+
+则 \(\mu=1/d\)，误差界显式依赖被认证空间的维数。
+
+---
+
+# 86．有限闭路读数如何控制任意有限路径？
+
+## 假设 86.1　基本闭路的误差证书
+
+对第 84 节的每个非树边闭路，假设已经得到
+
+$$
+
+|H_e-I|_{\mathrm{op}}\le\epsilon_e.
+
+$$
+
+树边的相应误差取零。反向边使用真正的逆算子，故误差相同。
+
+---
+
+## 定理 86.1　路径误差的可组合上界
+
+对任意从 \(a\) 到 \(b\) 的路径 \(P\)，有
+
+$$
+
+\boxed{
+|U_P-G_bG_a^{-1}|*{\mathrm{op}}
+\le
+\sum*{e\in P}\epsilon_e,
+}
+\tag{86.1}
+
+$$
+
+其中重复经过的边按次数计入。
+
+### 证明
+
+在树参照中，每条边变为
+
+$$
+
+\widetilde U_e=G_{\mathrm{target}(e)}^{-1}
+U_eG_{\mathrm{source}(e)}.
+
+$$
+
+树边为恒等，其他边为 \(H_e\) 或 \(H_e^{-1}\)。
+
+对酉算子乘积使用望远镜展开：
+
+$$
+
