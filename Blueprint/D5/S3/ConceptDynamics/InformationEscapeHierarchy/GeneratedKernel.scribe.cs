@@ -13,6 +13,7 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
         "Extensional catalog kernels form a finite bounded lattice inside the generated closure.",
         H("Generated-Kernel Lattice"),
         Blocks(
+            // GeneratedKernel.ext has no mirror node: the projection loader resolves handles by exact GID or a globally unique short name and ".ext" is neither (issue #5612).
             Definition("generated-kernel-relation", "generatedKernelRelation",
                 "Generated kernel relation",
                 "The landed selected-catalog indistinguishability relation is packaged with its existing equivalence and decision proofs."),
@@ -43,8 +44,6 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
             Definition("kernel-refines", "KernelRefines",
                 "Kernel refinement",
                 "A finer node relation is pointwise contained in a coarser node relation."),
-            TheoremLean("generated-kernel-extensionality", "ext",
-                "Generated-kernel extensionality"),
             Definition("escape-at-node", "escapeAt",
                 "Escape at a node",
                 "Escape is the finite set of off-diagonal pairs still related by the node kernel."),
@@ -121,15 +120,6 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(Seq(formula, Dot))),
             AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(
-                "The certificate is proved from the extensional quotient and the landed catalog kernel laws."))),
-            DescribeRole.Theorem);
-
-    private static DocumentBlock.Describe TheoremLean(
-        string id, string declaration, string title) =>
-        Describe.Lean(
-            DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(
                 "The certificate is proved from the extensional quotient and the landed catalog kernel laws."))),
             DescribeRole.Theorem);
