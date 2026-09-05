@@ -1,0 +1,18 @@
+## 定义 56.1　三 qutrit 编码
+
+所有标签在 \(\mathbb Z_3\) 中计算。定义：
+
+$$
+\boxed{
+V|s\rangle
+=
+\frac1{\sqrt3}
+\sum_{j=0}^2
+|j,j+s,j+2s\rangle,
+\qquad s=0,1,2.
+}
+\tag{56.1}
+$$
+
+---
+

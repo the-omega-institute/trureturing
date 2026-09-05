@@ -1,0 +1,51 @@
+## 定义 E1：锚定回返函数
+
+定义：
+
+$$
+\boxed{
+\mathfrak T(z)
+=
+\frac{\mathfrak S(z)+\Delta}{z+4}.
+}
+\tag{E5}
+$$
+
+由于式（E4），分子在 \(z=-4\) 为零，因此这里是可去奇点，不是真实极点。
+
+在无穷远展开：
+
+$$
+\mathfrak T(z)
+=
+\sum_{n\ge0}\frac{\ell_n}{z^{n+1}}.
+$$
+
+比较：
+
+$$
+(z+4)\mathfrak T(z)=\mathfrak S(z)+\Delta,
+$$
+
+得到：
+
+$$
+\boxed{
+\ell_0=\Delta,
+\qquad
+\ell_{n+1}=M_n-4\ell_n.
+}
+\tag{E6}
+$$
+
+所以：
+
+$$
+\begin{aligned}
+\ell_0&=\Delta,\\
+\ell_1&=M_0-4\Delta,\\
+\ell_2&=M_1-4M_0+16\Delta,\\
+\ell_3&=M_2-4M_1+16M_0-64\Delta.
+\end{aligned}
+$$
+

@@ -1,0 +1,30 @@
+## 定义 52.1　内外量子接口
+
+定义外侧接口：
+
+$$
+\boxed{
+\mathcal N_n(\rho)
+=
+\operatorname{Tr}_{B_n}
+(V_n\rho V_n^\dagger),
+}
+\tag{52.2}
+$$
+
+以及补侧接口：
+
+$$
+\boxed{
+\mathcal C_n(\rho)
+=
+\operatorname{Tr}_{R^n}
+(V_n\rho V_n^\dagger).
+}
+\tag{52.3}
+$$
+
+它们都是完全正、保迹映射。
+
+---
+

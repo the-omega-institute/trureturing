@@ -1,0 +1,39 @@
+# 十、把当前真正待证的内容写成一套固定矩阵条件
+
+锚定矩序列 \(\ell_n\) 已经由实际累积量和欧拉常数无条件定义：
+
+$$
+\ell_0=a_1-c,
+\qquad
+\ell_{n+1}=M_n-4\ell_n.
+$$
+
+构造：
+
+$$
+\boxed{
+\mathsf A_N=(\ell_{i+j})_{0\le i,j\le N},
+}
+$$
+
+$$
+\boxed{
+\mathsf A_N^{(1)}=(\ell_{i+j+1})_{0\le i,j\le N}.
+}
+\tag{E31}
+$$
+
+对于这些**固定的实际数值**，有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathsf A_N\succeq0
+\ \text{且}\
+\mathsf A_N^{(1)}\succeq0
+\quad\forall N.
+}
+\tag{E32}
+$$
+
