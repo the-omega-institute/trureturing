@@ -76,7 +76,7 @@ def prepareMatrices (catalog enum : Expr) (members : Array Name) (certPrefix : N
       refinement := refinement.push {
         finer := members[i]!, coarser := members[j]!, comparison := comparisonLabel,
         proofName, counterexample }
-      if i ≤ j then
+      if i == j || members[i]!.toString < members[j]!.toString then
         let expression ← mkAppM ``Catalog.pairwiseCaptureOverlapCount #[catalog, left, right]
         let (count, certificate) ← ProjectionProof.count
           (certPrefix.str s!"overlap_{i}_{j}") expression

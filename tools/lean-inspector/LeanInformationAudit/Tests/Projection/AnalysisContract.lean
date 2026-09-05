@@ -20,4 +20,21 @@ run_cmd do
     for name in declaration.getNames do
       elabCommand (← `(command| #print axioms $(mkIdent name)))
 
+run_cmd do
+  let (analysis, declarations) ← liftTermElabM do
+    let members := #[``cId, ``bSnd, ``aFst]
+    let vector ← ProjectionProof.vector (← members.mapM fun name => do
+      mkConstWithFreshMVarLevels name)
+    let value ← mkAppM
+      ``D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector #[vector]
+    let enum ← ProjectionProof.enumeration (← mkConstWithFreshMVarLevels ``arena) ``arena
+    (prepareAnalysisProjection value enum members `ReverseAnalysisContract).run #[]
+  unless analysis.overlap.size == 6 && analysis.overlap.all (fun row =>
+      row.left == row.right || row.left.toString < row.right.toString) do
+    throwError "overlap triangle must follow canonical Name order"
+  for declaration in declarations do
+    liftCoreM <| addDecl declaration
+    for name in declaration.getNames do
+      elabCommand (← `(command| #print axioms $(mkIdent name)))
+
 end LeanInformationAudit.Tests.Projection
