@@ -107,6 +107,10 @@ public sealed class FrozenSurfaceRuleTests
         {
             fixture.Files.Remove(eventPath);
         }
+        else
+        {
+            AddState(fixture, FrozenPath, ModuleStatementId(fixture, FrozenPath));
+        }
 
         var evaluation = Evaluate(fixture, (eventPath, kind));
 
@@ -117,6 +121,7 @@ public sealed class FrozenSurfaceRuleTests
     public void Sl008AllowsAddedAcceptedEventFragment()
     {
         var fixture = FrozenFixture(out var eventPath);
+        AddState(fixture, FrozenPath, ModuleStatementId(fixture, FrozenPath));
 
         var evaluation = Evaluate(fixture, (eventPath, RawChangeKind.Added));
 
@@ -213,17 +218,114 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Fact]
-    public void Sl008DoesNotCompareAcceptedFreezePinsWithCurrentState()
+    public void Sl008C6aBlocksAddedFreezeWithoutFrozenStatePin()
     {
         var fixture = new RuleFixture();
-        var statePin = ModuleStatementId(fixture, FrozenPath);
-        var eventPin = StatementId.Create("sha256:" + new string('e', 64));
-        AddState(fixture, FrozenPath, statePin);
-        _ = AddFreeze(fixture, FrozenPath, eventPin);
+        var eventPath = AddFreeze(fixture, FrozenPath);
 
-        var evaluation = Evaluate(fixture, (FrozenStatePathValue, RawChangeKind.Added));
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (eventPath, RawChangeKind.Added)).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(eventPath, diagnostic.Path);
+        Assert.Contains(FrozenPath, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(FrozenStatePathValue, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("run ledger-align --from-accepted", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl008C6AllowsAddedFreezeWithMatchingFrozenStatePin()
+    {
+        var fixture = new RuleFixture();
+        var pin = ModuleStatementId(fixture, FrozenPath);
+        var eventPath = AddFreeze(fixture, FrozenPath, pin);
+        AddState(fixture, FrozenPath, pin);
+
+        var evaluation = Evaluate(fixture, (eventPath, RawChangeKind.Added));
 
         Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl008C6bBlocksAddedFreezeWithMismatchedFrozenStatePin()
+    {
+        var fixture = new RuleFixture();
+        var eventPin = ModuleStatementId(fixture, FrozenPath);
+        var statePin = StatementId.Create("sha256:" + new string('e', 64));
+        Assert.NotEqual(eventPin, statePin);
+        var eventPath = AddFreeze(fixture, FrozenPath, eventPin);
+        AddState(fixture, FrozenPath, statePin);
+
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (eventPath, RawChangeKind.Added)).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(eventPath, diagnostic.Path);
+        Assert.Contains($"selector={FrozenPath}", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains($"event pin={eventPin.Value}", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains($"state pin={statePin.Value}", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl008C6IgnoresAddedRevokeWithoutFrozenStatePin()
+    {
+        var fixture = new RuleFixture();
+        var eventPath = AddNonFreezeAcceptedEvent(fixture, "Revoke", 'c');
+
+        var evaluation = Evaluate(fixture, (eventPath, RawChangeKind.Added));
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl008C6IgnoresUnchangedAcceptedFreezeWithoutFrozenStatePin()
+    {
+        var fixture = new RuleFixture();
+        var eventPath = AddFreeze(fixture, FrozenPath);
+        fixture.Baseline[eventPath] = fixture.Files[eventPath];
+        fixture.ForkPoint[eventPath] = fixture.Files[eventPath];
+
+        var evaluation = Evaluate(fixture);
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl008C6FailsClosedForMalformedAddedAcceptedEvent()
+    {
+        var fixture = new RuleFixture();
+        var eventPath = FrozenLedgerChangeClassifier.AcceptedPath(
+            "sha256:" + new string('d', 64));
+        fixture.Files[eventPath] = "{}\n";
+
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (eventPath, RawChangeKind.Added)).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(eventPath, diagnostic.Path);
+        Assert.Contains(
+            "content-addressed event envelope has unknown, missing, or duplicate fields.",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl008CatalogExecutesC6ForAddedAcceptedFreezeWithoutFrozenStatePin()
+    {
+        var fixture = new RuleFixture();
+        var eventPath = AddFreeze(fixture, FrozenPath);
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(
+                RawChangeSet.CreateWithKinds([(eventPath, RawChangeKind.Added)])))).Capability;
+
+        var diagnostic = Assert.Single(completed.Diagnostics, static diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(8));
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(eventPath, diagnostic.Path);
+        Assert.Contains(FrozenPath, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(FrozenStatePathValue, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(RuleId.CreateKnown(8), completed.ExecutedRules);
     }
 
     [Fact]
@@ -561,6 +663,19 @@ public sealed class FrozenSurfaceRuleTests
         var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
         var eventPath = FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash);
         fixture.Files[eventPath] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+        return eventPath;
+    }
+
+    private static string AddNonFreezeAcceptedEvent(
+        RuleFixture fixture,
+        string eventType,
+        char hashDigit)
+    {
+        var eventHash = "sha256:" + new string(hashDigit, 64);
+        var eventPath = FrozenLedgerChangeClassifier.AcceptedPath(eventHash);
+        fixture.Files[eventPath] =
+            $"{{\"event_hash\":\"{eventHash}\",\"event_type\":\"{eventType}\","
+            + "\"payload\":{},\"schema_version\":5}\n";
         return eventPath;
     }
 
