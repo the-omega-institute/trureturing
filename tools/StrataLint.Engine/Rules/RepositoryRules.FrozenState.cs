@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.Json;
 
 namespace StrataLint.Engine;
 
@@ -6,13 +7,15 @@ internal static partial class RepositoryRules
 {
     private static ImmutableArray<RuleFinding> FrozenStates(RuleEvaluationContext context)
     {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        ValidateChangedAcceptedFreezePins(context, findings);
+
         var affected = AffectedFrozenStateFiles(context);
         if (affected.IsEmpty)
         {
-            return [];
+            return findings.ToImmutable();
         }
 
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var states = LeanTruthStates.Resolve(context.Current, context.Lean);
         foreach (var file in affected)
         {
@@ -75,6 +78,108 @@ internal static partial class RepositoryRules
         }
 
         return findings.ToImmutable();
+    }
+
+    // Transitional contract: remove this check together with the accepted directory (#4687).
+    // Frozen state remains authoritative; only changed candidate accepted files are read here.
+    private static void ValidateChangedAcceptedFreezePins(
+        RuleEvaluationContext context,
+        ImmutableArray<RuleFinding>.Builder findings)
+    {
+        foreach (var change in context.Changes.Entries
+            .Where(static change =>
+                change.Kind is RawChangeKind.Added or RawChangeKind.Modified
+                && FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value))
+            .OrderBy(static change => change.Path.Value, StringComparer.Ordinal))
+        {
+            if (!context.Current.Files.TryGetValue(change.Path, out var file))
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    "changed accepted event is absent from the candidate snapshot"));
+                continue;
+            }
+
+            if (TryReadAcceptedEventType(file, out var eventType)
+                && eventType != "Freeze")
+            {
+                continue;
+            }
+
+            var load = FrozenAcceptedEventLoader.LoadFiles([file]);
+            if (load is DagLedgerFilesLoadOutcome.Invalid invalid)
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    $"accepted event could not be loaded: {invalid.Message}"));
+                continue;
+            }
+
+            var accepted = ((DagLedgerFilesLoadOutcome.Loaded)load).Events.Single();
+            if (accepted.EventType != "Freeze")
+            {
+                continue;
+            }
+
+            var modulePath = accepted.DescriptorPath;
+            var statePath = FrozenStatePath.FromModulePath(modulePath);
+            if (!context.Current.Files.TryGetValue(statePath, out var stateFile))
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    $"Freeze event for {modulePath.Value} has no frozen-state pin {statePath.Value}; "
+                    + "run ledger-align --from-accepted (lane tools predate L3b dual-write)"));
+                continue;
+            }
+
+            FrozenStateRecord state;
+            try
+            {
+                state = FrozenStateRecordLoader.Load(stateFile);
+            }
+            catch (FormatException exception)
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    $"Freeze event for {modulePath.Value} has invalid frozen-state pin "
+                    + $"{statePath.Value}: {exception.InnerException?.Message ?? exception.Message}"));
+                continue;
+            }
+
+            var eventPin = StatementId.Create(
+                accepted.Payload.GetProperty("statement_id").GetString()!);
+            if (state.StatementId != eventPin)
+            {
+                findings.Add(new RuleFinding(
+                    change.Path.Value,
+                    $"Freeze event pin mismatch: selector={modulePath.Value} "
+                    + $"event pin={eventPin.Value} state pin={state.StatementId.Value}"));
+            }
+        }
+    }
+
+    private static bool TryReadAcceptedEventType(
+        RepositoryFile file,
+        out string eventType)
+    {
+        eventType = string.Empty;
+        try
+        {
+            using var document = JsonDocument.Parse(file.RawBytes.AsSpan().ToArray());
+            if (document.RootElement.ValueKind is JsonValueKind.Object
+                && document.RootElement.TryGetProperty("event_type", out var eventTypeValue)
+                && eventTypeValue.ValueKind is JsonValueKind.String
+                && eventTypeValue.GetString() is { } value)
+            {
+                eventType = value;
+                return true;
+            }
+        }
+        catch (JsonException)
+        {
+        }
+
+        return false;
     }
 
     private static ImmutableArray<RepositoryFile> AffectedFrozenStateFiles(
