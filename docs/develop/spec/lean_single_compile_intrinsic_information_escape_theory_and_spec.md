@@ -3,7 +3,7 @@
 ## 纯数学理论与工程实现规范
 
 **文档状态：** 规范性草案（Normative Draft）  
-**版本：** 4.1 — Single-Compilation / C-IRPT Primitive-Complete / Arena-Invariant / No-Baseline / No-Scoring  
+**版本：** 4.2 — Single-Compilation / C-IRPT Primitive-Complete / Arena-Invariant / No-Baseline / No-Scoring / Shared-Arena / Layered-Capture / Analysis-v3
 **适用对象：** `the-omega-institute/trureturing` 中由 Lean 4 定义、证明、登记和编译的数学定理族  
 **核心约束：** 一次 `lake build` 完成 C-IRPT primitive 正规化、定理枚举、联合 kernel 构造、信息逃逸计算、伴随命题证明、失败判定与只读产物发射。
 
@@ -13,11 +13,18 @@
 
 本规范定义一个完全位于 Lean 4 内部的数学系统。系统的输入不是论文、自然语言标签、人工评分或历史版本差分，而是同一次编译中已经 elaborated 的 Lean 定理对象及其数学概念读出。
 
-设当前完整定理族为
+v4.2 把“当前完整定理族”精确化为 sealing root $R$ 与 canonical object
+`Arena` declaration $A$ 下的单个最大 catalog：
 
 $$
-\mathcal T=\{\tau_i\}_{i\in I}.
+\mathcal T_{R,A}=\{\tau_o\}_{o\in I_{R,A}}.
 $$
+
+这里的成员是登记 occurrence，而不是裸 theorem 名。所有未显式写出上标、下标的
+$I,K,E,U,\delta,D_A$ 都是固定同一个 $(R,A)$ 后的简写；不同 arena 之间不存在
+默认标量。v4.2 同时给出共享 arena 上的 exclusive-capture vector、overlap、kernel
+refinement、multiplicity spectrum、role histogram 与 ordered layered capture。新产物使用
+additive schema v3；已落地 schema v2 产物及其十一项 singleton 计数的语义不变。
 
 每个定理对象包含：
 
@@ -128,15 +135,19 @@ $$
 
 其中 $g_i:G_i(\mathcal T)$ 由同一次 Lean 编译对当前完整定理族精确计算并由 kernel 检查。
 
-整个准入条件只有一个：
+指定系统 root $R_\star$ 的整个准入条件只有一个：
 
 $$
 \boxed{
-\forall i\in I,\quad \delta_i(\mathcal T)>0
+\forall A\in\operatorname{Arenas}(R_\star),\
+\forall o\in I_{R_\star,A},\quad
+\delta^{R_\star}_{A,o}(\mathcal T_{R_\star,A})>0
 }
 $$
 
-即当前定理族必须是一个语义不可约的概念族：删除任意一个定理，信息逃逸率都严格上升。
+即指定 root 中每个 canonical maximal catalog 都必须是语义不可约的概念族：删除任意
+一个 occurrence，信息逃逸率都严格上升。辅助 root 与 analysis view 可以给出局部分析，
+但既不能证明系统准入，也不能豁免指定 root 中的零成员。
 
 本规范明确取消以下对象：
 
@@ -180,15 +191,17 @@ $$
 
 ### 1.2 定理索引族
 
-固定有限索引类型：
+固定 sealing root $R$ 与 canonical object `Arena` declaration $A$。其有限 occurrence
+索引类型为：
 
 $$
-I:\mathrm{Type},
-\qquad
-|I|<\infty.
+I_{R,A}:\mathrm{Type},
+\qquad |I_{R,A}|<\infty.
 $$
 
-$I$ 中每个元素对应当前完整编译中的一个被登记数学定理对象。
+$I_{R,A}$ 中每个元素对应 $R$ 所在模块本地 elaboration 中、显式归属于 $A$ 的一个
+被登记 theorem occurrence。同一个 theorem declaration 可以在不同 root 或 catalog 中
+出现，但每次都必须有分别命名、由 kernel 检查的 realization。
 
 ### 1.3 异构定理读出
 
@@ -243,6 +256,36 @@ weight = 37
 ```
 
 系统只接受 Lean 项与 Lean 证明。
+
+### 1.5 Canonical arena、occurrence 与最大 catalog
+
+`Arena` 是被研究数学对象的 canonical typed declaration；`PrimitiveLawArena` 只是定理
+law 的 presentation。分组键是 canonical `Arena` declaration，不是恰好相同的 carrier
+type，不是 namespace，也不是 `PrimitiveLawArena` 名称。若声称两个表示是同一对象，
+必须给出 `CIRPT-IE-022` 所要求的 `Equiv` 与 kernel transport；carrier coincidence、等势
+或相同 kernel address 都不够。
+
+一个登记 occurrence 记为：
+
+$$
+o=(R,A,C,i,\operatorname{theoremName},\operatorname{unit},\Pi,K,
+\operatorname{realization}).
+$$
+
+其唯一键为：
+
+$$
+(\operatorname{root\_id},\operatorname{catalog\_id},
+\operatorname{theoremName}).
+$$
+
+该键在一次 root elaboration 中恰出现一次。一个 theorem 若进入多个 catalogs 或 roots，
+每个 occurrence 都有独立的 catalog-qualified unit、realization 与 companion names。
+
+对每个 $(R,A)$，定义 $C_{R,A}$ 为包含 $R$ 中所有归属于 $A$ 的 occurrence 的唯一
+**canonical maximal catalog**。同 arena 的 sub-catalog 只可声明为 `analysis_view`，不得
+替代 $C_{R,A}$，不得用于证明 positivity。用 namespace、另一个 root、wrapper、克隆
+arena 或“在别处为正”拆开本应同组的 peers，均不改变这一义务。
 
 ---
 
@@ -482,6 +525,27 @@ $$
 
 ## 5. 单次编译中的留一反事实
 
+**v4.2 作用域约定。** 本节 5.1--5.6 中沿用的 $I,K,E,U,\delta$ 是固定 sealing
+root $R$ 与 canonical object arena $A$ 后的简写，规范全名如下：
+
+$$
+I=I_{R,A},\quad
+K_S=K^R_{A,S},\quad
+E_S=E^R_{A,S}=K^R_{A,S}\cap D_A,
+\quad D_A=A.\mathrm{State}^2\setminus\Delta_A,
+$$
+
+$$
+U_i=U^R_{A,i}
+=D_A\cap\bigl(K^R_{A,I_{R,A}\setminus\{i\}}\setminus K_{A,i}\bigr),
+\qquad
+\delta_i=\delta^R_{A,i}=|U^R_{A,i}|/|D_A|.
+$$
+
+这里的“完整族”只指 $R$ 所在模块本地 elaboration 的、归属于 $A$ 的所有 theorem
+occurrences 所成的 canonical maximal catalog $C_{R,A}$。imported `.olean` 中的登记
+不会自动进入该集合；analysis sub-catalog 也不能替代它或用于证明 positivity。
+
 ### 5.1 完整族
 
 当前编译完成后，完整被分析定理族是：
@@ -616,6 +680,141 @@ $$
 U_i\neq\varnothing.
 $$
 
+### 5.7 共享 arena 分析量
+
+以下量全部只在同一个 $(R,A)$ 内定义。令 occurrence $i$ 的 capture set 为：
+
+$$
+\operatorname{Cap}^R_{A,i}=D_A\setminus K_{A,i}.
+$$
+
+则 peer-relative exclusive capture 也可写为：
+
+$$
+U^R_{A,i}
+=\operatorname{Cap}^R_{A,i}\setminus
+\bigcup_{j\neq i}\operatorname{Cap}^R_{A,j}.
+$$
+
+exclusive-capture vector 与 exact gain vector 分别为：
+
+$$
+u^R_A=(|U^R_{A,i}|)_{i\in I_{R,A}},
+\qquad
+g^R_A=(|U^R_{A,i}|/|D_A|)_{i\in I_{R,A}}.
+$$
+
+两 occurrence 的 pairwise capture overlap 为：
+
+$$
+O^R_{A,ij}=\operatorname{Cap}^R_{A,i}\cap
+\operatorname{Cap}^R_{A,j},
+\quad
+o^R_{A,ij}=|O^R_{A,ij}|,
+\quad
+\omega^R_{A,ij}=o^R_{A,ij}/|D_A|.
+$$
+
+该矩阵对称，且 $O_{ii}=\operatorname{Cap}_i$。overlap 只描述共同捕获，单独不构成
+冗余判词。
+
+定义 kernel refinement：
+
+$$
+\operatorname{KernelRefines}_{R,A}(i,j)
+:\Longleftrightarrow K_{A,i}\subseteq K_{A,j}.
+$$
+
+即 $i$ 至少与 $j$ 一样细。它是 preorder；互相 refinement 等价于 kernel equality。
+有向矩阵中的每一 pair 必须 proof-backed 地分类为 `equal`、`strictly_finer`、
+`strictly_coarser` 或 `incomparable`。若 peer $j\neq i$ 满足
+$\operatorname{KernelRefines}(j,i)$，则 $U^R_{A,i}=\varnothing$。特别地，refinement
+成立时 $O_{ij}$ 等于较粗 readout 的 capture set。
+
+所有 rate 都以同一个 $|D_A|$ 为分母并使用 exact rational。非等价 arena 的数值只可
+分栏报告，不得求和、平均或排序；经 `CIRPT-IE-022` 证明的 arena transport 才允许声明
+这些数值保持不变。
+
+### 5.8 捕获重数谱
+
+对 $p\in D_A$ 定义其被 theorem occurrences 捕获的重数：
+
+$$
+m^R_A(p)=|\{i\in I_{R,A}\mid p\in\operatorname{Cap}^R_{A,i}\}|.
+$$
+
+capture-multiplicity spectrum 为：
+
+$$
+h^R_A(k)=|\{p\in D_A\mid m^R_A(p)=k\}|,
+\qquad 0\le k\le |I_{R,A}|.
+$$
+
+它满足：
+
+$$
+\sum_k h^R_A(k)=|D_A|,
+\qquad
+h^R_A(0)=|E^R_A|,
+\qquad
+h^R_A(1)=\sum_i|U^R_{A,i}|,
+$$
+
+$$
+\sum_k k\,h^R_A(k)=\sum_i|\operatorname{Cap}^R_{A,i}|,
+$$
+
+以及 second-moment identity：
+
+$$
+\sum_{i<j}|O^R_{A,ij}|
+=
+\sum_k\binom{k}{2}h^R_A(k).
+$$
+
+$h(k\ge2)$ 描述多重捕获 pair，不单独判定 theorem 冗余。
+
+### 5.9 有序分层捕获
+
+平坦 catalog 的 $U_i$ 回答“相对于所有 peers，谁是唯一 owner”；它不回答一条
+逐层增强的观测链中“每一层新增多少”。后者必须由一个携带 inclusion proofs 的有序
+kernel chain 给出。
+
+设：
+
+$$
+K_\ell\subseteq\cdots\subseteq K_1\subseteq K_0.
+$$
+
+定义 ordered layered capture：
+
+$$
+L_0=D_A\setminus K_0,
+\qquad
+L_r=D_A\cap(K_{r-1}\setminus K_r)\quad(1\le r\le\ell),
+$$
+
+及 finest unresolved set：
+
+$$
+R_\ell=D_A\cap K_\ell=K_\ell\setminus\Delta_A.
+$$
+
+$L_0,\ldots,L_\ell$ 两两不交并分割 $D_A\setminus K_\ell$；再加 $R_\ell$ 后分割
+整个 $D_A$。对 $r>0$：
+
+$$
+L_r\neq\varnothing
+\Longleftrightarrow
+K_r\subsetneq K_{r-1}.
+$$
+
+因此“观测 $\subsetneq$ 干预 $\subsetneq$ 反事实各自拥有多少”在本规范中指 ordered
+layered counts $(|L_0|,\ldots,|L_\ell|)$，不是把累计 readouts 放进平坦共享 catalog 后的
+leave-one-out counts。若平坦 catalog 同时含 $K_j\subsetneq K_i$，则较粗成员 $i$ 的
+$U_i$ 为零；对 $K_{cf}\subsetneq K_{int}\subsetneq K_{obs}$，必有
+$U_{obs}=U_{int}=\varnothing$，而 $U_{cf}=D_A\cap(K_{int}\setminus K_{cf})$。
+
 ---
 
 ## 6. 结构版本：不依赖有限计数
@@ -714,6 +913,9 @@ $$
 
 ## 8. 定理族不可约性
 
+本节中的 $\mathcal T$、$I$ 与 $\delta_i$ 均指固定 $(R,A)$ 的 canonical maximal
+catalog $C_{R,A}$；不可约性是 catalog-relative，而不是 theorem declaration 的全局属性。
+
 ### 8.1 定义
 
 定义当前完整定理族语义不可约：
@@ -766,19 +968,59 @@ $$
 
 ### 8.5 系统总准入定理
 
-一次编译成功的数学条件就是：
+固定 catalog 的数学条件是：
 
 $$
 \boxed{
-\operatorname{Irredundant}(\mathcal T)
+\operatorname{CatalogIrredundant}(C_{R,A})
 }
 $$
 
 系统不比较哪个定理“更漂亮”，也不规定增益必须大于某个人工阈值。严格正值已经是无任意参数的平凡／非平凡分界。
 
+### 8.6 冗余索引与系统全正
+
+定义完整零成员集合与 catalog 冗余判词：
+
+$$
+Z_{R,A}=\{i\in I_{R,A}\mid U^R_{A,i}=\varnothing\},
+$$
+
+$$
+\operatorname{CatalogRedundant}(C_{R,A})
+:\Longleftrightarrow Z_{R,A}\neq\varnothing.
+$$
+
+在有限非空 catalog 上：
+
+$$
+\operatorname{CatalogIrredundant}(C_{R,A})
+\Longleftrightarrow Z_{R,A}=\varnothing
+\Longleftrightarrow
+\neg\operatorname{CatalogRedundant}(C_{R,A}).
+$$
+
+v4.2 指定恰好一个 canonical system root $R_\star$。定义：
+
+$$
+\operatorname{SystemCatalogIrredundant}(R_\star)
+:\Longleftrightarrow
+\bigwedge_{A\in\operatorname{Arenas}(R_\star)}
+\operatorname{CatalogIrredundant}(C_{R_\star,A}).
+$$
+
+只有这个 universal conjunction 控制系统准入。辅助 root（例如 `CausalHierarchyRoot`）
+是有边界的分析：它既不能证明指定 root 全正，也不能为指定 root 中的零 occurrence
+提供 exemption。analysis view 可以取得完整的 negative verdict certificate，但不能
+discharge positivity。
+
 ---
 
 ## 9. 平凡与冗余的纯数学定义
+
+本节每个“平凡”“冗余”“可恢复”判词均相对于 occurrence 所在的 $(R,A,C_{R,A})$。
+同一个 theorem declaration 在另一个 root 或 catalog 中是另一个 occurrence，必须重新
+结算；“在某处为正”不蕴含当前 occurrence 为正。
 
 ### 9.1 平凡定理对象
 
@@ -874,9 +1116,17 @@ $$
 
 系统不会替人选择哪一种不可约基；它只拒绝同一编译中同时保留一个过完备族。
 
+更一般地，只要同一 catalog 中存在 $j\neq i$ 且 $K_{A,j}\subseteq K_{A,i}$，较细的
+$j$ 已捕获 $i$ 能捕获的全部 pair，故 $U^R_{A,i}=\varnothing$。这包括但不限于同核
+重述与 product 包装。
+
 ---
 
 ## 10. 重复、替代与基选择
+
+以下结论全部是 catalog occurrence-relative；系统不把跨 root、跨 catalog 的 theorem
+名称相同或不同当作替代证据。只有同一 canonical arena 内的 kernels，或经
+`CIRPT-IE-022` 证明 transport 后的 kernels，才进入语义比较。
 
 ### 10.1 重复双方同时为零
 
@@ -1175,6 +1425,10 @@ $$
 
 编译应失败，直到当前定理族重新成为不可约基。
 
+特别地，若新 peer 的 kernel 严格细化旧 occurrence 的 kernel，则旧 occurrence 的
+leave-one-out capture 必为零。严格 refinement chain 的每个相邻增量可以非空，同时
+它的累计粗层在 flat catalog 中为零；两种量不得混称。
+
 ---
 
 ## 15. 系统自应用
@@ -1200,6 +1454,11 @@ if theorem.namespace == ResearchAudit then accept
 ```
 
 系统核心 authored theorem 与普通 authored theorem 使用同一个 registry 和同一个 `LowersEscape` 定义。
+
+no-exemption 同时覆盖 namespace、auxiliary root、alternate catalog、cloned/wrapper
+arena 与 positive-elsewhere。任何一项都不得用来避开同一 canonical arena 的 maximal
+peer grouping；一个 theorem 若有多个 designated occurrences，必须在每个 occurrence
+所在的 maximal catalog 中分别为正。
 
 ### 15.3 最终编译命令不是数学 theorem
 
@@ -1419,6 +1678,134 @@ $$
 
 $$
 \forall i,\ \widehat P_i.
+$$
+
+### IE-024　`uniqueCapturePairs_pairwise_disjoint`
+
+同一 $(R,A)$ 中 $i\neq j$ 时：
+
+$$
+U^R_{A,i}\cap U^R_{A,j}=\varnothing.
+$$
+
+### IE-025　`sum_uniqueCaptureCount_le_capturedCount`
+
+$$
+\sum_{i\in I_{R,A}}|U^R_{A,i}|
+\le |D_A\setminus E^R_A|.
+$$
+
+### IE-026　`pairwiseCaptureOverlap_comm`
+
+$$
+O^R_{A,ij}=O^R_{A,ji},
+\qquad
+O^R_{A,ii}=\operatorname{Cap}^R_{A,i}.
+$$
+
+### IE-027　`kernelRefines_preorder`
+
+`KernelRefines` 自反且传递；按 kernel equality 取商后为 partial order。并且：
+
+$$
+K_{A,i}\subseteq K_{A,j}
+\Longleftrightarrow
+\operatorname{Cap}^R_{A,j}\subseteq\operatorname{Cap}^R_{A,i}.
+$$
+
+### IE-028　`kernelRefines_implies_zero_uniqueCapture`
+
+若 $i\neq j$ 且 $K_{A,i}\subseteq K_{A,j}$，则：
+
+$$
+U^R_{A,j}=\varnothing,
+\qquad |U^R_{A,j}|=0.
+$$
+
+### IE-029　`catalogRedundant_iff_exists_zero`
+
+有限非空 catalog 上：
+
+$$
+\operatorname{CatalogRedundant}(C_{R,A})
+\Longleftrightarrow
+\exists i,\ |U^R_{A,i}|=0
+\Longleftrightarrow
+\neg\operatorname{CatalogIrredundant}(C_{R,A}).
+$$
+
+### IE-030　`captureSpectrum_sum_eq_denominator`
+
+$$
+\sum_k h^R_A(k)=|D_A|.
+$$
+
+### IE-031　`captureSpectrum_zero_eq_fullEscape`
+
+$$
+h^R_A(0)=|E^R_A|.
+$$
+
+### IE-032　`captureSpectrum_one_eq_sum_unique`
+
+$$
+h^R_A(1)=\sum_i|U^R_{A,i}|.
+$$
+
+### IE-033　`captureSpectrum_incidence_double_count`
+
+$$
+\sum_k k\,h^R_A(k)=\sum_i|\operatorname{Cap}^R_{A,i}|.
+$$
+
+### IE-034　`pairwiseOverlap_spectrum_double_count`
+
+$$
+\sum_{i<j}|O^R_{A,ij}|=
+\sum_k\binom{k}{2}h^R_A(k).
+$$
+
+### IE-035　`catalogRoleHistogram_sum`
+
+若 $H^R_{A,i}(s)$ 是 occurrence $i$ 在非零四位 role signature $s$ 上的 unique-capture
+histogram，且 $H^R_A(s)=\sum_iH^R_{A,i}(s)$，则：
+
+$$
+\sum_sH^R_A(s)=\sum_i|U^R_{A,i}|=h^R_A(1).
+$$
+
+### IE-036　`layeredCapture_partition`
+
+对任何 certified chain $K_\ell\subseteq\cdots\subseteq K_0$：
+
+$$
+D_A=L_0\;\dot\cup\cdots\dot\cup\;L_\ell\;\dot\cup\;R_\ell.
+$$
+
+### IE-037　`strictRefinement_iff_layeredCapture_nonempty`
+
+对 $1\le r\le\ell$：
+
+$$
+K_r\subsetneq K_{r-1}
+\Longleftrightarrow
+L_r\neq\varnothing.
+$$
+
+### IE-038　`cumulativeChain_coarser_uniqueCapture_zero`
+
+若 flat catalog 中有 $i\neq j$ 且 $K_j\subseteq K_i$，则 $U_i=\varnothing$。因此
+strict cumulative chain 不蕴含每个 flat member 的 leave-one-out capture 为正。
+
+### IE-039　`systemWidePositive_iff_all_catalogs`
+
+对显式指定的 system root $R_\star$：
+
+$$
+\operatorname{SystemCatalogIrredundant}(R_\star)
+\Longleftrightarrow
+\forall A\in\operatorname{Arenas}(R_\star),\
+\operatorname{CatalogIrredundant}(C_{R_\star,A}).
 $$
 
 ---
@@ -5878,4 +6265,3 @@ $$
 9. 不等价 arena 不被强行聚合；
 10. 闭 theorem 的常值真值不会被冒充为对象信息；
 11. 全流程仍在一次 Lean 编译内完成。
-
