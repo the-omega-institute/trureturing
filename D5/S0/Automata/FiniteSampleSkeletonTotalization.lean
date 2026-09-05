@@ -343,6 +343,205 @@ theorem canonical_state_card_le_twice [Fintype Output] [Fintype State]
   rw [canonical_state_card_eq, two_mul]
   exact Nat.add_le_add_left (signature_card_le_recurrent_card skeleton) _
 
+section CapacityPadding
+
+universe w
+
+/- Continuation pre-registered in PR #5405, comment 5548870074 (2026-09-05).
+   Library search `Skeleton padding` found no default-branch implementation.
+   Escape witnesses: evaluation induction and the used-signature bijection.
+   Consumer: M19.3 weighted fixed-capacity refutation encoding.
+   Padding permits unreachable allocated states; it does not justify a SAT
+   encoding that requires every allocated state to be reachable. -/
+
+/-- Added recurrent states emulate the original start state. -/
+def paddingCollapse (skeleton : Skeleton Output State) (Extra : Type w) :
+    Sum State Extra → State
+  | .inl state => state
+  | .inr _ => skeleton.start
+
+/-- Embed optional return targets in the original summand. -/
+def paddingSignature (Extra : Type w) (signature : Output × Option State) :
+    Output × Option (Sum State Extra) :=
+  (signature.1, signature.2.map Sum.inl)
+
+/-- Extra capacity is represented by copies of start-state behavior.
+All defined transition targets lie in the original summand. -/
+def padSkeleton (skeleton : Skeleton Output State) (Extra : Type w) :
+    Skeleton Output (Sum State Extra) where
+  start := .inl skeleton.start
+  zeroStep := fun state =>
+    (skeleton.zeroStep (paddingCollapse skeleton Extra state)).map Sum.inl
+  oneSignature := fun state =>
+    (skeleton.oneSignature (paddingCollapse skeleton Extra state)).map
+      (paddingSignature Extra)
+  zeroOutput := fun state => skeleton.zeroOutput (paddingCollapse skeleton Extra state)
+
+/-- Padding preserves complete Option-valued evaluation from every state.
+In particular, previously undefined evaluations remain undefined. -/
+theorem eval_padSkeleton (skeleton : Skeleton Output State) (Extra : Type w)
+    (state : Sum State Extra) (blocks : List ReturnBlock) (terminal : TerminalChannel) :
+    (padSkeleton skeleton Extra).evalFrom state blocks terminal =
+      skeleton.evalFrom (paddingCollapse skeleton Extra state) blocks terminal := by
+  induction blocks generalizing state with
+  | nil =>
+      cases terminal with
+      | recurrent => rfl
+      | transient =>
+          cases hs : skeleton.oneSignature (paddingCollapse skeleton Extra state) <;>
+            simp [Skeleton.evalFrom, padSkeleton, paddingSignature, hs]
+  | cons block blocks ih =>
+      cases block with
+      | zero =>
+          cases hs : skeleton.zeroStep (paddingCollapse skeleton Extra state) with
+          | none => simp [Skeleton.evalFrom, padSkeleton, hs]
+          | some next =>
+              simpa [Skeleton.evalFrom, padSkeleton, hs, paddingCollapse]
+                using ih (Sum.inl next)
+      | oneZero =>
+          cases hs : skeleton.oneSignature (paddingCollapse skeleton Extra state) with
+          | none => simp [Skeleton.evalFrom, padSkeleton, hs]
+          | some signature =>
+              cases hr : signature.2 with
+              | none => simp [Skeleton.evalFrom, padSkeleton, paddingSignature, hs, hr]
+              | some next =>
+                  simpa [Skeleton.evalFrom, padSkeleton, paddingSignature, hs, hr,
+                    paddingCollapse] using ih (Sum.inl next)
+
+/-- Start-state evaluation is unchanged by padding. -/
+theorem eval_padSkeleton_start (skeleton : Skeleton Output State) (Extra : Type w)
+    (code : BlockCode) :
+    (padSkeleton skeleton Extra).eval code = skeleton.eval code := by
+  exact eval_padSkeleton skeleton Extra (.inl skeleton.start) code.blocks code.terminal
+
+/-- Embedding a return target cannot identify distinct signatures. -/
+theorem paddingSignature_injective (Extra : Type w) :
+    Function.Injective (paddingSignature (Output := Output) (State := State) Extra) := by
+  rintro ⟨leftOutput, leftReturn⟩ ⟨rightOutput, rightReturn⟩ equal
+  cases leftReturn <;> cases rightReturn <;>
+    simpa [paddingSignature] using equal
+
+/-- Each originally used signature is still requested after padding. -/
+def paddingSignatureMap (skeleton : Skeleton Output State) (Extra : Type w)
+    (signature : SignatureFiber skeleton) : SignatureFiber (padSkeleton skeleton Extra) :=
+  ⟨paddingSignature Extra signature.1, by
+    obtain ⟨state, used⟩ := signature.2
+    refine ⟨Sum.inl state, ?_⟩
+    change (skeleton.oneSignature state).map (paddingSignature Extra) =
+      some (paddingSignature Extra signature.1)
+    rw [used]
+    rfl⟩
+
+/-- No two old signatures are merged by capacity padding. -/
+theorem paddingSignatureMap_injective (skeleton : Skeleton Output State) (Extra : Type w) :
+    Function.Injective (paddingSignatureMap skeleton Extra) := by
+  intro left right equal
+  apply Subtype.ext
+  exact paddingSignature_injective Extra (congrArg Subtype.val equal)
+
+/-- Every padded signature comes from an original recurrent source.
+The extra states only repeat the start state's request, including when absent. -/
+theorem paddingSignatureMap_surjective (skeleton : Skeleton Output State) (Extra : Type w) :
+    Function.Surjective (paddingSignatureMap skeleton Extra) := by
+  intro signature
+  obtain ⟨state, used⟩ := signature.2
+  have mapped : (skeleton.oneSignature (paddingCollapse skeleton Extra state)).map
+      (paddingSignature Extra) = some signature.1 := used
+  obtain ⟨original, oldUsed, equal⟩ := Option.map_eq_some_iff.mp mapped
+  refine ⟨⟨original, ⟨paddingCollapse skeleton Extra state, oldUsed⟩⟩, ?_⟩
+  apply Subtype.ext
+  exact equal
+
+/-- Extra recurrent capacity preserves the exact number of used signatures.
+No nonempty-signature assumption is needed for padding. -/
+theorem pad_signature_card_eq [Fintype Output] [Fintype State]
+    (skeleton : Skeleton Output State) (Extra : Type w) [Fintype Extra] :
+    Fintype.card (SignatureFiber (padSkeleton skeleton Extra)) =
+      Fintype.card (SignatureFiber skeleton) := by
+  apply Nat.le_antisymm
+  · exact Fintype.card_le_of_surjective (paddingSignatureMap skeleton Extra)
+      (paddingSignatureMap_surjective skeleton Extra)
+  · exact Fintype.card_le_of_injective (paddingSignatureMap skeleton Extra)
+      (paddingSignatureMap_injective skeleton Extra)
+
+/-- Totality survives padding because each extra state emulates a total state. -/
+theorem pad_isTotal (skeleton : Skeleton Output State) (Extra : Type w)
+    (total : IsTotal skeleton) : IsTotal (padSkeleton skeleton Extra) := by
+  constructor
+  · intro state
+    obtain ⟨next, defined⟩ := total.1 (paddingCollapse skeleton Extra state)
+    refine ⟨Sum.inl next, ?_⟩
+    change (skeleton.zeroStep (paddingCollapse skeleton Extra state)).map Sum.inl = _
+    rw [defined]
+    rfl
+  · intro state
+    obtain ⟨output, next, defined⟩ := total.2 (paddingCollapse skeleton Extra state)
+    refine ⟨output, Sum.inl next, ?_⟩
+    change (skeleton.oneSignature (paddingCollapse skeleton Extra state)).map
+      (paddingSignature Extra) = _
+    rw [defined]
+    rfl
+
+/-- An existing start-zero-loop remains a loop at the embedded start. -/
+theorem pad_preserves_zero_loop (skeleton : Skeleton Output State) (Extra : Type w)
+    (zeroLoop : skeleton.zeroStep skeleton.start = some skeleton.start) :
+    (padSkeleton skeleton Extra).zeroStep (padSkeleton skeleton Extra).start =
+      some (padSkeleton skeleton Extra).start := by
+  change (skeleton.zeroStep skeleton.start).map Sum.inl = some (Sum.inl skeleton.start)
+  rw [zeroLoop]
+  rfl
+
+/-- The start output, including a supplied zero anchor, is unchanged. -/
+@[simp] theorem pad_start_output (skeleton : Skeleton Output State) (Extra : Type w) :
+    (padSkeleton skeleton Extra).zeroOutput (padSkeleton skeleton Extra).start =
+      skeleton.zeroOutput skeleton.start := rfl
+
+/-- The only additional canonical cost is the explicitly allocated recurrent capacity. -/
+theorem pad_canonical_state_card [Fintype Output] [Fintype State]
+    (skeleton : Skeleton Output State) (Extra : Type w) [Fintype Extra] :
+    Fintype.card (CanonicalState (padSkeleton skeleton Extra)) =
+      Fintype.card (CanonicalState skeleton) + Fintype.card Extra := by
+  rw [canonical_state_card_eq, canonical_state_card_eq, pad_signature_card_eq,
+    Fintype.card_sum]
+  omega
+
+/-- Any larger recurrent capacity can represent the same partial behavior with
+exactly the same signature count. This does not require all capacity states to be reachable. -/
+theorem exists_fixed_capacity_padding [Fintype Output] [Fintype State]
+    (skeleton : Skeleton Output State) (capacity : ℕ)
+    (enough : Fintype.card State ≤ capacity) :
+    ∃ padded : Skeleton Output (Sum State (Fin (capacity - Fintype.card State))),
+      (∀ code, padded.eval code = skeleton.eval code) ∧
+      Fintype.card (Sum State (Fin (capacity - Fintype.card State))) = capacity ∧
+      Fintype.card (SignatureFiber padded) = Fintype.card (SignatureFiber skeleton) ∧
+      (IsTotal skeleton → IsTotal padded) := by
+  refine ⟨padSkeleton skeleton (Fin (capacity - Fintype.card State)), ?_, ?_, ?_, ?_⟩
+  · exact eval_padSkeleton_start skeleton _
+  · simp only [Fintype.card_sum, Fintype.card_fin]
+    omega
+  · exact pad_signature_card_eq skeleton _
+  · exact pad_isTotal skeleton _
+
+/-- Arithmetic companion for the capacity consumer. The hypothesis `3 ≤ signatures`
+must be proved from the chosen sample; it is not established by this theorem. -/
+theorem budget_fourteen_capacity_cover (recurrent signatures : ℕ)
+    (budget : recurrent + signatures ≤ 14)
+    (sourceBound : signatures ≤ recurrent) (observedLower : 3 ≤ signatures) :
+    (recurrent ≤ 7 ∧ signatures ≤ 7) ∨
+    (recurrent = 8 ∧ signatures ≤ 6) ∨
+    (recurrent = 9 ∧ signatures ≤ 5) ∨
+    (recurrent = 10 ∧ signatures ≤ 4) ∨
+    (recurrent = 11 ∧ signatures ≤ 3) := by
+  omega
+
+#print axioms eval_padSkeleton
+#print axioms paddingSignatureMap_surjective
+#print axioms pad_signature_card_eq
+#print axioms exists_fixed_capacity_padding
+#print axioms budget_fourteen_capacity_cover
+
+end CapacityPadding
+
 #print axioms totalSignaturePairEquiv
 #print axioms canonical_state_card_le_twice
 #print axioms totalization_preserves_success_and_cost
