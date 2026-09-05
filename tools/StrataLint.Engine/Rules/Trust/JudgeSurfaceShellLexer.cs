@@ -38,19 +38,20 @@ internal static class JudgeSurfaceShellLexer
         return new Result(commands.ToImmutable(), truncated);
     }
 
-    private static void Lex(
+    private static int Lex(
         string text,
         int start,
         int end,
         int depth,
         int lineOffset,
         ImmutableArray<LexedCommand>.Builder commands,
-        ref bool truncated)
+        ref bool truncated,
+        bool stopAtClosingParenthesis = false)
     {
         if (depth > MaximumDepth)
         {
             truncated = true;
-            return;
+            return end;
         }
 
         var words = new List<string>();
@@ -69,6 +70,7 @@ internal static class JudgeSurfaceShellLexer
         var redirectionOperatorLength = 0;
         // Index of the first character of the current command, for its line number.
         var commandStart = -1;
+        var parenthesisDepth = 0;
 
         void EndWord()
         {
@@ -252,14 +254,14 @@ internal static class JudgeSurfaceShellLexer
                     index = LexBacktickSubstitution(text, index, end, depth, lineOffset, commands, word, ref truncated);
                     continue;
 
-                case '#' when IsCommentStart(character, inWord):
+                case '#' when !inWord:
                     // A comment runs to the end of its line only; the lines after it (a decoded
                     // YAML `\n`, a folded block) are still shell (review round 11).
                     EndCommand();
                     index = text.IndexOf('\n', index, end - index);
                     if (index < 0)
                     {
-                        return;
+                        return end;
                     }
 
                     continue;
@@ -312,6 +314,19 @@ internal static class JudgeSurfaceShellLexer
                 case ')':
                     // Unquoted subshell boundaries: `( git show … )` runs git show.
                     EndCommand();
+                    if (character == '(')
+                    {
+                        parenthesisDepth++;
+                    }
+                    else if (parenthesisDepth > 0)
+                    {
+                        parenthesisDepth--;
+                    }
+                    else if (stopAtClosingParenthesis)
+                    {
+                        return index;
+                    }
+
                     index++;
                     continue;
 
@@ -354,16 +369,13 @@ internal static class JudgeSurfaceShellLexer
         }
 
         EndCommand();
+        return end;
     }
 
     private static bool IsWordBoundary(string text, int index, int end) =>
         index >= end || text[index] is ' ' or '\t' or '\n' or '\r' or ';' or '&' or '|' or ')' or '(';
 
-    private static bool IsCommentStart(char character, bool inWord) => character == '#' && !inWord;
-
-    // `$(` … `)` with the closing parenthesis found by the same comment/quote state as command
-    // lexing: parentheses in quotes or word-initial comments do not count, backslash escapes the
-    // next character, and nested `$(` or bare `(` raise the depth.
+    // Lex owns both the body and its boundary, including quotes, comments and nested words.
     private static int LexDollarSubstitution(
         string text,
         int index,
@@ -374,75 +386,8 @@ internal static class JudgeSurfaceShellLexer
         StringBuilder word,
         ref bool truncated)
     {
-        var cursor = index + 2;
-        var nesting = 1;
-        var inSingle = false;
-        var inDouble = false;
-        var inWord = false;
-        while (cursor < end)
-        {
-            var character = text[cursor];
-            if (character == '\\' && !inSingle)
-            {
-                inWord |= cursor + 1 >= end || text[cursor + 1] != '\n';
-                cursor += 2;
-                continue;
-            }
-
-            if (inSingle)
-            {
-                inSingle = character != '\'';
-            }
-            else if (inDouble)
-            {
-                inDouble = character != '"';
-            }
-            else if (IsCommentStart(character, inWord))
-            {
-                cursor = text.IndexOf('\n', cursor, end - cursor);
-                if (cursor < 0)
-                {
-                    cursor = end;
-                    break;
-                }
-
-                inWord = false;
-            }
-            else if (character == '\'')
-            {
-                inSingle = true;
-                inWord = true;
-            }
-            else if (character == '"')
-            {
-                inDouble = true;
-                inWord = true;
-            }
-            else if (character == '(')
-            {
-                nesting++;
-                inWord = false;
-            }
-            else if (character == ')')
-            {
-                nesting--;
-                if (nesting == 0)
-                {
-                    break;
-                }
-
-                inWord = false;
-            }
-            else
-            {
-                inWord = character is not (' ' or '\t' or '\n' or '\r' or ';' or '&' or '|');
-            }
-
-            cursor++;
-        }
-
-        var close = cursor < end ? cursor : end;
-        Lex(text, index + 2, close, depth + 1, lineOffset, commands, ref truncated);
+        var close = Lex(text, index + 2, end, depth + 1, lineOffset, commands, ref truncated,
+            stopAtClosingParenthesis: true);
         word.Append(SubstitutionPlaceholder);
         return close + 1;
     }
@@ -527,13 +472,35 @@ internal static class JudgeSurfaceShellLexer
                 return index + 2 + digits;
             }
         }
-        else if (escape == 'c' && index + 2 < end)
+        else if (escape == 'c')
         {
+            // A trailing `\c` has no operand inside the segment; never consume its closing quote.
+            if (index + 2 >= end || text[index + 2] == '\'')
+            {
+                return index + 2;
+            }
+
+            var operand = text[index + 2];
+            if (!char.IsAscii(operand))
+            {
+                // Bash masks one input byte, leaving the rest of the UTF-8 code point in the word.
+                Rune.DecodeFromUtf16(text.AsSpan(index + 2, end - index - 2), out var rune, out var consumed);
+                Span<byte> bytes = stackalloc byte[4];
+                var length = rune.EncodeToUtf8(bytes);
+                nul = AppendByte(word, bytes[0] & 0x1F);
+                for (var offset = 1; offset < length; offset++)
+                {
+                    AppendByte(word, bytes[offset]);
+                }
+
+                return index + 2 + consumed;
+            }
+
             // Bash's quote parser makes the escaped backslash pair the operand of `\c\\`; consume
             // both before looking for the closing quote. Bash 3.2 and 5 differ only in whether an
             // extra backslash byte survives, not in where the word ends.
-            var operand = text[index + 2];
-            nul = AppendByte(word, char.ToUpperInvariant(operand) & 0x1F);
+            var upper = operand is >= 'a' and <= 'z' ? operand - 'a' + 'A' : operand;
+            nul = AppendByte(word, upper & 0x1F);
             return operand == '\\' && index + 3 < end ? index + 4 : index + 3;
         }
         else if (escape is >= '0' and <= '7')

@@ -288,6 +288,43 @@ public sealed class JudgeSurfaceRevisionRuleTests
         Assert.Empty(Evaluate(ScriptPath, line + "\n"));
     }
 
+    [Theory]
+    // An operand-less `\c` leaves the quote intact (bash 3.2 keeps a literal backslash).
+    [InlineData(": $'\\c'; git show HEAD^1:p")]
+    [InlineData("x=$'\\c'; git show HEAD^1:p")]
+    // A substitution is word content: a glued `#` is data; a separated `#` is a comment.
+    [InlineData("x=\"$(printf %s $(printf x)#)\"; git show HEAD^1:p")]
+    [InlineData("x=\"$(printf %s <(printf x)#)\"; git show HEAD^1:p")]
+    [InlineData("x=\"$( $(printf x) # )\ngit show HEAD^1:p\n)\"")]
+    [InlineData("x=\"$(printf $'\\')'; git show HEAD^1:p)\"")]
+    [InlineData("x=\"$( (printf x); git show HEAD^1:p)\"")]
+    // Bash >= 4 semantics: word-initial `#` immediately after `$(` is a comment;
+    // bash 3.2 closes early. Keep the fail-closed contract for the CI shell.
+    [InlineData("x=\"$(# )\ngit show HEAD^1:p\n)\"")]
+    public void RepairedShellBoundariesRejectOtherRevision(string script)
+    {
+        Assert.Single(Evaluate(ScriptPath, script + "\n"));
+    }
+
+    [Theory]
+    [InlineData(": $'\\c'; git show HEAD:p")]
+    [InlineData("x=\"$(printf %s $(printf x)#)\"; git show HEAD:p")]
+    [InlineData("x=\"$(printf %s <(printf x)#)\"; git show HEAD:p")]
+    [InlineData("x=\"$( $(printf x) # )\ngit show HEAD:p\n)\"")]
+    [InlineData("x=\"$(printf $'\\')'; git show HEAD:p)\"")]
+    [InlineData("x=\"$(printf $'\\')')\"; git show HEAD:p")]
+    [InlineData("x=\"$( (printf x); git show HEAD:p)\"")]
+    [InlineData("x=\"$(# )\ngit show HEAD:p\n)\"")]
+    // Bash masks the first UTF-8 byte: git + 03 a0 + tail is not the command git.
+    [InlineData("$'\\147it\\c\u00e0tail' show HEAD^1:p")]
+    // These git-shaped strings stay inside the enclosing double-quoted assignment.
+    [InlineData("x=\"$(echo $(printf x)# ) git show HEAD^1:p\"")]
+    [InlineData("x=\"$(echo <(printf x)# ) git show HEAD^1:p\"")]
+    public void RepairedShellBoundariesAllowHeadAndNonCommands(string script)
+    {
+        Assert.Empty(Evaluate(ScriptPath, script + "\n"));
+    }
+
     [Fact]
     public void EveryOffendingLineIsReportedWithItsLineNumber()
     {

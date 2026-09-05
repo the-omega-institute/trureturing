@@ -14,7 +14,7 @@ set -euo pipefail
 root=$(cd "${1:?usage: sl030-real-surface.sh <tree-root>}" && pwd)
 # The CLI's output directory carries the Engine together with every dependency it loads
 # (YamlDotNet, Tomlyn, …); Assembly.LoadFrom resolves siblings from there.
-dll=$(ls "$root"/tools/StrataLint.Cli/bin/Release/net*/StrataLint.Engine.dll 2>/dev/null | head -1)
+dll=$(ls "$root"/tools/StrataLint.Cli/bin/Release/net*/StrataLint.Engine.dll 2>/dev/null | head -1 || true)
 [ -n "$dll" ] || { echo "sl030-real-surface: no built StrataLint.Engine.dll under the CLI output of $root (run make -C tools dotnet)" >&2; exit 64; }
 
 probe=$(mktemp -d "${TMPDIR:-/tmp}/sl030-probe.XXXXXX")
