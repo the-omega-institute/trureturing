@@ -101,8 +101,7 @@ public sealed partial class FormalizeCandidatesTests
                 readinessJson.RootElement.GetProperty("entries").EnumerateArray())
             .GetProperty("action")
             .GetString();
-        var readinessTreatsKindAsFormalizable = readinessAction is not (
-            "needs-routing" or "not-formalizable");
+        var readinessTreatsKindAsFormalizable = readinessAction != "not-formalizable";
 
         Assert.Equal(expectedFormalizable, candidateExists);
         Assert.Equal(expectedFormalizable, readinessTreatsKindAsFormalizable);
