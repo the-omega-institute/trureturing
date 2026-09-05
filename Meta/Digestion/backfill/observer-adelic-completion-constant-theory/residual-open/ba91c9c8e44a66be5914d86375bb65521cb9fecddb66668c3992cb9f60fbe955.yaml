@@ -6,6 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-atom multi-clause guard for Theorem 145.1 after the frozen-carrier audit. The redeposited GID D5/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization.golden_transfer_fourfold_characterization publicly carries the (145.5) identities `phi - 1 = phi^-1`, uniqueness of the positive fixed point `x_* = phi^-1`, and `|psi_1'(x_*)| = phi^-2`. It also carries `exp(-ell) = phi^-4` only as an analytic constant identity and four scalar candidate-radius iff characterizations: real-radius IsLUB, fixed point, derivative magnitude, and exponential scale are each equivalent to `r = phi`. The source meaning of `最大全纯域` remains uncarried: it concerns a family of complex disks preserved by all inverse branches, while the public theorem states only an IsLUB fact for the real-radius set `{r | 1 <= r and r < 2 and 1 / (2 - r) < 1 + r}` and has no complex-disk carrier, holomorphy predicate, all-branch quantifier, preservation predicate, or public bridge from that semantic condition to the scalar set. The `最短闭测地线` semantics of (145.6) and the `最短闭轨道` list item also remain uncarried because there is no typed hyperbolic-element or closed-geodesic carrier, translation-length map on such a carrier, or public bridge from the analytic constant identity to a closed orbit. Consequently, `四个独立条件唯一选出` is carried only in this four-scalar-iff reading, not in the source reading that includes maximal holomorphic-domain and shortest-orbit semantics."
+    reentry_condition: Freeze a source-faithful complex-disk holomorphic-domain carrier with all-inverse-branch preservation bridged publicly to the real-radius set, and a typed closed-geodesic carrier with its translation-length and universal minimality result; then re-cover the parent atom.
+    blocker_class: multi-clause-guard
   chain_atoms:
     - 6b1c040394c522eb22662ac74b98062ffa7d7268f336f1c4c53748a2b3c5a87c
     - 6baa2ab8c0970617d6c3cd90fee74a0ea729116d95f60bd0248e9335001dca5e
