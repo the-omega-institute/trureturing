@@ -1,0 +1,35 @@
+## 157. 对角化逃逸的严格谱版本
+
+对每个固定 \(m\)：
+
+$$
+\frac{|\lambda(2\pi/m)|}{\varphi}<1.
+$$
+
+但：
+
+$$
+\lim_{m\to\infty}
+\frac{|\lambda(2\pi/m)|}{\varphi}
+=
+1.
+$$
+
+因此：
+
+$$
+\boxed{
+\sup_{\substack{m\ge2\\1\le j<m}}
+\rho\left(
+\varphi^{-1}M(\omega_m^j)
+\right)
+=
+1,
+}
+$$
+
+虽然没有任何固定非平凡角色真正达到 \(1\)。
+
+这意味着：
+
+* 每一个固定名字最终重完；

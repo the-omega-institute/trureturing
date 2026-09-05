@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:31e68c2d397428512ba7cbc1bccfd86d6421a3ad0efb35df3387172d7adccf1e
+  normalized_sha256: sha256:31e68c2d397428512ba7cbc1bccfd86d6421a3ad0efb35df3387172d7adccf1e
+cas_ref: sha256:31e68c2d397428512ba7cbc1bccfd86d6421a3ad0efb35df3387172d7adccf1e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Algebra/DualityInsufficiency.duality_insufficiency
+    target_statement_id: sha256:7bc290fe9ddafe2506608d667c164347803c3015989e446d8537a1da736c1e74
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Algebra/DualityInsufficiency.duality_insufficiency
+      definition_sha256: sha256:3eca31febda1e1d9ab12d217f97121e1541b2b5bf8f4b5e805460738b28a6791
+      emission_sha256: sha256:1b71cb344a35e29df9f9564041717883db1e162354cfe32e3904d167a30fb5a5
+  unresolved_subitems: []

@@ -1,0 +1,24 @@
+## 445. 极限残余
+
+若观察层越来越细：
+
+$$
+\lambda\le\mu
+\Longrightarrow
+\mathcal E_\mu\subseteq\mathcal E_\lambda,
+$$
+
+则极限残余是：
+
+$$
+\boxed{
+\mathcal E_\infty
+=
+\bigcap_\lambda\mathcal E_\lambda.
+}
+$$
+
+仓库刚刚机器验证了闭子空间版本：若观察空间在极限阶段是全部前驱观察空间的闭线性上确界，那么极限残余恰等于全部前驱残余的交。
+
+这产生三个完全不同的状态。
+

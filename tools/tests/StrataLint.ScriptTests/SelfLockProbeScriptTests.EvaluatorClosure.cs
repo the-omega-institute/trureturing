@@ -20,7 +20,6 @@ public sealed partial class SelfLockProbeScriptTests
         {
             ["Directory.Build.props"] = "<Project />\n",
             ["Directory.Packages.props"] = "<Project />\n",
-            ["tools/scripts/workflow/pure-revert-detect.sh"] = "exit 0\n",
             ["tools/scripts/workflow/self-lock-probe.sh"] = "exit 0\n",
             ["tools/scripts/report/report-supervisor.sh"] = "exit 0\n",
             ["tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"] =

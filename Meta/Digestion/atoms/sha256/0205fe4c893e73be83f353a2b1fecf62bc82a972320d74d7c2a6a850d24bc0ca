@@ -1,0 +1,11 @@
+## 274. 强完成但非统一完成
+
+```lean
+theorem coordinate_projection_strong_not_operatorNorm :
+    Tendsto projection Filter.atTop
+      (strongOperatorTopology.nhds 1) ∧
+    ∀ n, ‖1 - projection n‖ = 1
+```
+
+---
+

@@ -60,7 +60,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(0, fixture.FreezeCount());
         Assert.Equal(blueprintBefore, fixture.BlueprintState());
         Assert.DoesNotContain("make:emit", fixture.CallKinds());
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
     [Fact]
@@ -69,7 +69,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.ChangeFormalizationToSevenLineWrappedDigest();
-        fixture.WriteActiveFreezeForCurrentModule();
+        fixture.WriteActiveFreeze();
         var commitsBefore = fixture.CommitCount();
         var blueprintBefore = fixture.BlueprintState();
         var ledgerBefore = fixture.LedgerState();
@@ -88,14 +88,14 @@ public sealed partial class DepositCoverWorkflowScriptTests
             ["make:lean-report", "dotnet:deposit-header-check"],
             fixture.CallKinds());
         Assert.DoesNotContain("make:emit", fixture.CallKinds());
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
     [Fact]
     public void DepositHeaderCommandUsesRegisteredSl012ForSevenLineWrappedDigest()
     {
         var fixture = new RuleFixture();
-        fixture.Files[RuleFixture.RingPath] = SevenLineWrappedDigest(
+        fixture.Files[RuleFixture.RingPath] = TransactionFixture.SevenLineWrappedDigest(
             "D5/S0/Carrier/Ring",
             "def goldenRing : Nat := 0\n");
         var current = RawRepositorySnapshot.Create(
@@ -121,46 +121,4 @@ public sealed partial class DepositCoverWorkflowScriptTests
             console.Output);
         Assert.Empty(console.Error);
     }
-
-    internal sealed partial class TransactionFixture
-    {
-        internal void ChangeFormalizationToSevenLineWrappedDigest()
-        {
-            WriteFile(LeanPath, SevenLineWrappedDigest(
-                Gid[..Gid.LastIndexOf('.')],
-                "theorem probe : True := by trivial\n"));
-            WriteFile(DefinitionPath, "definition deposited\n");
-        }
-
-        internal string[] BlueprintState()
-        {
-            var directory = Path.Combine(Root, "Blueprint");
-            return Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
-                .Order(StringComparer.Ordinal)
-                .Select(path => Path.GetRelativePath(Root, path) + "\n" + File.ReadAllText(path))
-                .ToArray();
-        }
-
-        internal static string ExactSixLineLean(string gid, string declaration)
-        {
-            var documentGid = gid[..gid.LastIndexOf('.')];
-            return $"/- GID: {documentGid}\n"
-                + "   generality: G\n"
-                + $"   mirror-B: D5/B/{documentGid[3..]}\n"
-                + "   mirror-E: none(waiver:pure-definition)\n"
-                + "   anchors: []\n"
-                + "   digest: Synthetic deposit workflow fixture. -/\n"
-                + declaration;
-        }
-    }
-
-    private static string SevenLineWrappedDigest(string documentGid, string declaration) =>
-        $"/- GID: {documentGid}\n"
-        + "   generality: G\n"
-        + $"   mirror-B: D5/B/{documentGid[3..]}\n"
-        + "   mirror-E: none(waiver:pure-definition)\n"
-        + "   anchors: []\n"
-        + "   digest: Synthetic deposit workflow digest\n"
-        + "   wraps onto physical line seven. -/\n"
-        + declaration;
 }

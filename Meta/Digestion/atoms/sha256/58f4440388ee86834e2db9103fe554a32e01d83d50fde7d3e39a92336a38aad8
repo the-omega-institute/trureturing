@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,⟹ 对任意 Z 用 W-2 的 ⟹;⟸ 由 `nonempty_zeroData_iff_infinite.mpr hInf` 取一个 Z,再用 W-2 的 ⟸;标准三公理。若 M1-a 的陈述不是 `Nonempty ZeroData ↔ {rho | IsNontrivialZero rho}.Infinite`(与 `ZeroDataNonemptyIffInfinite.lean:237` 字面矛盾),则本条为假。

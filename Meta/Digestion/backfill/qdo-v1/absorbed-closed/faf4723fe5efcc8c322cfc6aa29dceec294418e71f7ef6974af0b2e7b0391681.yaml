@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:faf4723fe5efcc8c322cfc6aa29dceec294418e71f7ef6974af0b2e7b0391681
+  normalized_sha256: sha256:faf4723fe5efcc8c322cfc6aa29dceec294418e71f7ef6974af0b2e7b0391681
+cas_ref: sha256:faf4723fe5efcc8c322cfc6aa29dceec294418e71f7ef6974af0b2e7b0391681
+coverage_gids:
+  - gid: D5/S3/Quantum/PredictionDepth/CenteredEffectStabilityDepthBound.centered_effect_stability_depth_bound
+    target_statement_id: sha256:ea8c44d97667cb0b4fed6363b3f11064e35e3d62b09e7fa55886e952a51dffb0
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/PredictionDepth/CenteredEffectStabilityDepthBound.centered_effect_stability_depth_bound
+      definition_sha256: sha256:9ff03370da7600a2f34ad70ff785f9d8458175ef3eba2166a2f00dc0021fd42b
+      emission_sha256: sha256:16cbb04abc0c1b265061d46ff813df46db3e7b959fc885bcbdfe080e6a692db8
+  unresolved_subitems: []

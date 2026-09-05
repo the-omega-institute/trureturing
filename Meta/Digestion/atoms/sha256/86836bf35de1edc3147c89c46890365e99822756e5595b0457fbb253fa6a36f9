@@ -1,0 +1,32 @@
+## 74. 争论分类 `[P]`
+
+\[
+\boxed{
+\begin{aligned}
+\text{事实争论}
+&=\text{同模型、同 CUT、同 ANCHOR 下取值不同};\\
+\text{概念争论}
+&=\text{使用不同 CUT};\\
+\text{因果争论}
+&=\text{使用不同 FLOW 或干预结构};\\
+\text{本体争论}
+&=\text{使用不同状态类型或 ADMIT};\\
+\text{视角争论}
+&=\text{使用不同 ANCHOR 或观察者 CUT};\\
+\text{规范争论}
+&=\text{使用不同 ADMIT doctrine 或价值序};\\
+\text{语义含混}
+&=\text{无 transport 地切换 CUT};\\
+\text{范畴错误}
+&=\text{直接比较不同类型上的谓词};\\
+\text{实现争论}
+&=\text{形式模型是否有现实 ANCHOR};\\
+\text{历史解释争论}
+&=\text{数学结构与文本 ANCHOR 的对应不同}.
+\end{aligned}}
+\]
+
+这不是取消哲学争论，而是先判断争论究竟发生在哪一轴。
+
+---
+

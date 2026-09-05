@@ -1,0 +1,12 @@
+## No-go 4　标量 dressing 不能移动零点
+
+$$
+\xi(s)e^{K(s)}
+$$
+
+与 \(\xi(s)\) 具有相同零点除子。
+
+真正的零点动力学必须进入 operator determinant 或非单位 source deformation。
+
+---
+

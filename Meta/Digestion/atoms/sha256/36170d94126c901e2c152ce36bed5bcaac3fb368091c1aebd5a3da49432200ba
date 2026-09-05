@@ -1,0 +1,55 @@
+## 296. 反射商整函数
+
+令：
+
+$$
+\Xi(z)
+=
+\xi\left(\frac12+z\right).
+$$
+
+因为：
+
+$$
+\Xi(-z)=\Xi(z),
+$$
+
+存在唯一整函数 \(\mathcal X\)，使：
+
+$$
+\boxed{
+\xi(s)
+=
+\mathcal X\bigl(s(1-s)\bigr).
+}
+$$
+
+记 \(\mathcal X\) 的零点为：
+
+$$
+q_j,
+$$
+
+每个 \(q_j\) 对应一个函数方程反射轨道：
+
+$$
+\{\rho,1-\rho\}.
+$$
+
+利用经典零点计数，\(q_j\) 的指数收敛足以给出 genus-zero 乘积：
+
+$$
+\boxed{
+\frac{\mathcal X(q)}{\mathcal X(0)}
+=
+\prod_j
+\left(
+1-\frac q{q_j}
+\right)^{m_j}.
+}
+$$
+
+仓库尚未闭合这条完整 q-plane canonical-product owner；以下结论应把它作为明确前件，而不是新公理。
+
+---
+

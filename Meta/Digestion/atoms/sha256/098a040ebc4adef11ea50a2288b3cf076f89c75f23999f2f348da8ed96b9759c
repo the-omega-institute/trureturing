@@ -1,0 +1,31 @@
+## B4.5 标量 trace 的盲性
+
+proper boost 的 trace 为
+
+$$
+\operatorname{tr}B(u)=2\cosh u,
+\tag{B4.17}
+$$
+
+满足
+
+$$
+\operatorname{tr}B(u)
+=
+\operatorname{tr}B(-u).
+\tag{B4.18}
+$$
+
+因此 scalar trace 删除 rapidity 的符号。其一阶导数在 $u=0$ 消失，而二阶导数为正：
+
+$$
+\left.\frac d{du}2\cosh u\right|_{u=0}=0,
+\qquad
+\left.\frac{d^2}{du^2}2\cosh u\right|_{u=0}=2.
+\tag{B4.19}
+$$
+
+这给出 ordered holonomy Casimir、reciprocal radial energy 与 prime transverse energy 的共同 rank-one group 原型。
+
+---
+

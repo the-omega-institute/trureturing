@@ -1,0 +1,14 @@
+## No-go 6　Zeckendorf 编码不是生成原因
+
+Zeckendorf thread 可以规范编码：
+
+$$
+|\delta|,\quad|\gamma|,\quad m_\rho,
+$$
+
+但外禀编码本身不能解释零点为何存在，也不能证明 RH。
+
+只有在对象的生成律本身来自黄金 hard-core substitution 时，Zeckendorf 才具有内禀动力学意义。
+
+---
+

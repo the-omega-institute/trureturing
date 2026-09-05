@@ -1,0 +1,12 @@
+## 591. 创新永不为零
+
+```lean
+theorem momentInnovation_pos
+    (μ : Measure ℝ)
+    [IsFiniteMeasure μ]
+    (hSupport : Set.Infinite μ.support) :
+    0 < momentInnovation μ N
+```
+
+---
+

@@ -1,0 +1,18 @@
+## 路线一：Weil 反证编译
+
+这一方向现在已经非常接近正式闭合：
+
+$$
+\text{nonreal off-line zero}
+\Longrightarrow
+\text{negative full Weil square}
+$$
+
+已机器证明。
+
+剩余首先是补齐 canonical completed-\(\xi\) distribution 与实轴非零公共桥。
+
+它适合构造有限反证书。
+
+---
+

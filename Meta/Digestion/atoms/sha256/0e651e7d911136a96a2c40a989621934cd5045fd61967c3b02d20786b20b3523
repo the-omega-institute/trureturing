@@ -1,0 +1,19 @@
+### 合法 counterterm 负号
+
+它用于：
+
+* 消去低阶 exact mode；
+* inclusion–exclusion；
+* 提高 residual exponent floor；
+* 使余项进入可和区域。
+
+其合法性由：
+
+$$
+\boxed{
+\text{最小化以后 residual 支撑仍位于允许区域}
+}
+$$
+
+保证。
+

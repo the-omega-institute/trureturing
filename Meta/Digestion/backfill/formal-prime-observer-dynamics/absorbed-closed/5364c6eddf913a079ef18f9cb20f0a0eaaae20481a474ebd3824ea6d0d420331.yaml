@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5364c6eddf913a079ef18f9cb20f0a0eaaae20481a474ebd3824ea6d0d420331
+  normalized_sha256: sha256:5364c6eddf913a079ef18f9cb20f0a0eaaae20481a474ebd3824ea6d0d420331
+cas_ref: sha256:5364c6eddf913a079ef18f9cb20f0a0eaaae20481a474ebd3824ea6d0d420331
+coverage_gids:
+  - gid: D5/S3/Observer/ArithmeticTomography/SmallPrimeChannelOptimality.small_prime_channel_optimality
+    target_statement_id: sha256:665b42a7d778f3ab0e8380683dd08a3e3ec3209dda2e7a2fe6359442631a2f83
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/ArithmeticTomography/SmallPrimeChannelOptimality.small_prime_channel_optimality
+      definition_sha256: sha256:9f64745cdb568acdcfc645fa4276c8653b606f1346bd46409a7794e953d67f6e
+      emission_sha256: sha256:73dabbf92489f2815e033d6dd3a9f3dbeda4c2bcd7e2a99fe0ab9ab30f2b9824
+  unresolved_subitems: []

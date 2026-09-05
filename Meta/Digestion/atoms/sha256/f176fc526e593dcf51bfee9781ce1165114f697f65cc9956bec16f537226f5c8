@@ -1,0 +1,61 @@
+# 第一千九百三十七部　Solenoid：所有有限名字共享一个精确投影
+
+设：
+
+$$
+\theta=(\theta_m)_{m\ge1}
+$$
+
+是 universal solenoid 点。
+
+仓库最新机器证明：
+
+$$
+\boxed{
+m\theta_m
+=
+\pi(\theta)
+\qquad
+\forall m\ge1.
+}
+\tag{1937.1}
+$$
+
+若：
+
+$$
+\pi(\theta)=0,
+$$
+
+则：
+
+$$
+\boxed{
+m\theta_m=0.
+}
+\tag{1937.2}
+$$
+
+也就是说，每一个第 \(m\) 层坐标都是 \(m\)-torsion。
+
+这给命名理论一个非常精确的模型：
+
+$$
+\boxed{
+\text{每个有限坐标经自己的尺度归一化，
+都得到同一个可见投影。}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\theta_m
+}
+$$
+
+本身并不决定整个兼容族 \(\theta\)。
+
+---
+

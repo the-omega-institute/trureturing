@@ -1,0 +1,44 @@
+## 1979.1 原始深度与切向类型
+
+$$
+-\delta^2
+$$
+
+回答：
+
+> 离正因果支撑边界有多远？
+
+而：
+
+$$
+\mathbb F
+$$
+
+回答：
+
+> 该非零偏离归一化以后属于什么最小关系类型？
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\delta^2
+&=\text{raw magnitude};\\
+\operatorname{inertia}(\mathbb F)
+&=\text{coordinate-free defect type};\\
+\{\varphi,-\varphi^{-1}\}
+&=\text{canonically whitened normal-form spectrum}.
+\end{aligned}
+}
+\tag{1979.3}
+$$
+
+普通合同变换只保持 inertia，不保持普通本征值。
+
+只有在 Pick 归一化或固定参考白化下，黄金谱才具有规范数值意义。
+
+仓库最新的 exact common-spectrum floor 定理恰好提供了这种参考结构：在其有理 Gram 场景中，最大共同 normalized-Haar 成分等于不同白化坐标中的同一个最小本征值。
+
+---
+

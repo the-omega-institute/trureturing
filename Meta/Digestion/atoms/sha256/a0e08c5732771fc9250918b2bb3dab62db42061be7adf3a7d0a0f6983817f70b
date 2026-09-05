@@ -1,0 +1,80 @@
+## 450. 有限 Casimir jet 非识别定理
+
+设：
+
+$$
+\mathcal X(q)
+$$
+
+是一个满足实共轭对称的整函数，且：
+
+$$
+\mathcal X(0)\neq0.
+$$
+
+定义其对数导数：
+
+$$
+-\frac{\mathcal X'(q)}{\mathcal X(q)}
+=
+\sum_{n\ge0}a_nq^n.
+$$
+
+给定任意有限观察深度 \(N\)，选择整数 \(M\)，使：
+
+$$
+2M-1>N,
+$$
+
+再定义：
+
+$$
+\boxed{
+\widetilde{\mathcal X}(q)
+=
+\mathcal X(q)
+\left[
+1+\left(\frac qR\right)^{2M}
+\right],
+}
+$$
+
+其中 \(R>0\)。
+
+则：
+
+$$
+-\frac{\widetilde{\mathcal X}'}
+{\widetilde{\mathcal X}}
+=
+-\frac{\mathcal X'}{\mathcal X}
+-
+\frac{
+2Mq^{2M-1}
+}{
+R^{2M}+q^{2M}
+}.
+$$
+
+第二项从：
+
+$$
+q^{2M-1}
+$$
+
+才开始出现。
+
+所以：
+
+$$
+\boxed{
+\widetilde a_n=a_n
+\qquad
+0\le n\le N.
+}
+$$
+
+因此所有只依赖前 \(N\) 个 Casimir jets 的 E-RH/O-RH 有限测试，都无法区分 \(\mathcal X\) 和 \(\widetilde{\mathcal X}\)。
+
+---
+

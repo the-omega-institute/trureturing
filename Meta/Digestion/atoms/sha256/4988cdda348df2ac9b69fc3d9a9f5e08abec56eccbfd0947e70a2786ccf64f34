@@ -1,0 +1,80 @@
+## 定理 1.1　无限源理想不可有限生成
+
+$$
+\boxed{
+\mathfrak m
+\text{ 不是有限生成理想。}
+}
+$$
+
+### 证明
+
+假设：
+
+$$
+\mathfrak m=(f_1,\ldots,f_r).
+$$
+
+每个 \(f_j\) 只使用有限多个变量。所有 \(f_j\) 涉及的变量并集仍是有限集 \(F\subset\mathbb Z\)。
+
+选择：
+
+$$
+h\notin F.
+$$
+
+定义代数映射：
+
+$$
+\pi_h:
+\mathcal R_\infty
+\longrightarrow
+\mathbb C[\epsilon]/(\epsilon^2),
+$$
+
+令：
+
+$$
+\pi_h(\varepsilon_h)=\epsilon,
+\qquad
+\pi_h(\varepsilon_j)=0
+\quad(j\neq h).
+$$
+
+因为 \(f_1,\ldots,f_r\) 均不含 \(\varepsilon_h\)，且常数项为零，所以：
+
+$$
+\pi_h(f_j)=0.
+$$
+
+如果 \(\varepsilon_h\) 属于它们生成的理想，就应有：
+
+$$
+\pi_h(\varepsilon_h)=0.
+$$
+
+但：
+
+$$
+\pi_h(\varepsilon_h)=\epsilon\neq0.
+$$
+
+矛盾。证毕。
+
+---
+
+这严格表达了你的直觉：
+
+$$
+\boxed{
+\text{在静态“一个偏移一个名字”的语言中，
+永远可以加入一个此前没被任何有限定义使用的新名字。}
+}
+$$
+
+所以条件塔在静态代数意义下是非 Noetherian 的：不存在有限个源变量能够生成所有偏移条件。
+
+ZCOCT 当前已经把每个有限构型的 moment、connected cumulant 和平方零源代数组织成相容的有限塔；新的问题正是如何把这座静态无限塔提升成统一生成对象。
+
+---
+

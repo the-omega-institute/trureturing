@@ -20,6 +20,38 @@ internal static class EngineeringTestPlanPolicy
 
     internal static EngineeringTestPlan Evaluate(
         IReadOnlyList<string> changedPaths,
+        RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate,
+        IReadOnlyCollection<string> protectedBaseControllerInputs,
+        IReadOnlyCollection<string> candidateControllerInputs,
+        bool full = false)
+    {
+        ArgumentNullException.ThrowIfNull(protectedBase);
+        ArgumentNullException.ThrowIfNull(candidate);
+        ArgumentNullException.ThrowIfNull(protectedBaseControllerInputs);
+        ArgumentNullException.ThrowIfNull(candidateControllerInputs);
+
+        var plan = EvaluateOrdinary(
+            changedPaths,
+            RepositoryRules.ReadSnapshotProjects(protectedBase),
+            RepositoryRules.ReadSnapshotProjects(candidate),
+            full);
+        if (full) return plan;
+
+        var protectedClosure = ScriptTestGateClosurePolicy.Derive(
+            protectedBase,
+            protectedBaseControllerInputs);
+        var candidateClosure = ScriptTestGateClosurePolicy.Derive(
+            candidate,
+            candidateControllerInputs);
+        return ApplyScriptTestGate(
+            plan,
+            plan.ChangedPaths.Any(path => protectedClosure.Covers(path)
+                || candidateClosure.Covers(path)));
+    }
+
+    internal static EngineeringTestPlan EvaluateOrdinary(
+        IReadOnlyList<string> changedPaths,
         TestProjectTopologySnapshot protectedBase,
         TestProjectTopologySnapshot candidate,
         bool full = false)
@@ -109,6 +141,37 @@ internal static class EngineeringTestPlanPolicy
                 $"selected {selected.Length} protected-base reverse-dependent or candidate-added test projects");
     }
 
+    private static EngineeringTestPlan ApplyScriptTestGate(
+        EngineeringTestPlan plan,
+        bool include)
+    {
+        var projects = plan.Projects.ToHashSet(StringComparer.Ordinal);
+        if (include)
+        {
+            projects.Add(ScriptTestGateClosurePolicy.ProjectPath);
+            var includedProjects = projects.Order(StringComparer.Ordinal).ToImmutableArray();
+            return plan with
+            {
+                Kind = plan.Kind == EngineeringTestPlanKind.Full
+                    ? EngineeringTestPlanKind.Full
+                    : EngineeringTestPlanKind.Selected,
+                Projects = includedProjects,
+                Reason = plan.Reason + "; ScriptTests gate included by derived closure intersection",
+            };
+        }
+
+        projects.Remove(ScriptTestGateClosurePolicy.ProjectPath);
+        var selected = projects.Order(StringComparer.Ordinal).ToImmutableArray();
+        return plan with
+        {
+            Kind = selected.Length == 0
+                ? EngineeringTestPlanKind.None
+                : EngineeringTestPlanKind.Selected,
+            Projects = selected,
+            Reason = plan.Reason + "; ScriptTests gate excluded because the candidate delta misses the derived closure",
+        };
+    }
+
     private static ProjectNode? FindOwner(IEnumerable<ProjectNode> projects, string changedPath) =>
         projects
             .Where(project => changedPath == project.Path
@@ -151,11 +214,16 @@ internal static class EngineeringTestPlanPolicy
             .Select(static element => element.Value.Trim())
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToArray();
-        var classification = ScribeProjectCompilationContext.IsXunitProject(project.Content)
-            ? ProjectClassification.Test
-            : classifications switch
+        // 显式 `IsTestProject` 声明优先于 xunit 启发式。倒过来会把「引用 xunit 但明确
+        // 声明自己不是测试项目」的支持库判成测试项目,于是 `dotnet test` 对它不产 TRX,
+        // 门以 ENGINEERING_TEST_EVIDENCE_FAILED 判红 —— 见 issue #5516,判例是
+        // StrataLint.TestSupport(它为 TestScratchFramework 派生 XunitTestFramework 而必须
+        // 引用 xunit,同时明写 IsTestProject=false)。启发式只在【无】显式声明时回落使用。
+        var classification = classifications switch
             {
-                [] => ProjectClassification.NonTest,
+                [] => ScribeProjectCompilationContext.IsXunitProject(project.Content)
+                    ? ProjectClassification.Test
+                    : ProjectClassification.NonTest,
                 [var value] when string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) =>
                     ProjectClassification.Test,
                 [var value] when string.Equals(value, "false", StringComparison.OrdinalIgnoreCase) =>

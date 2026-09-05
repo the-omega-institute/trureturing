@@ -1,0 +1,20 @@
+\[
+\Omega_{ij}^{\mathsf{ADMIT}}
+=
+A_{ij}
+\triangle
+A_{ji},
+\]
+
+以及 ANCHOR、FLOW、ledger 的差异。
+
+因此：
+
+\[
+\boxed{
+\text{缺陷是当前不相容，曲率是修复顺序的不交换。}
+}
+\]
+
+---
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:3d725ee3007a7dcd5d0d8f83a614032646a124bef4b97e6a0f0217523abd21c0
 cas_ref: sha256:3d725ee3007a7dcd5d0d8f83a614032646a124bef4b97e6a0f0217523abd21c0
 coverage_gids:
-  - D5/S3/Observer/Prediction/CanonicalSignatureCompletion.canonical_signature_labels_stable_depth_and_completion
+  - gid: D5/S3/Observer/Prediction/CanonicalSignatureCompletion.canonical_signature_labels_stable_depth_and_completion
+    target_statement_id: sha256:b6e9910fe64cab1c97d16ef2aa86bb405cbd9380a16cdb6b5a542111270d79e4
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Prediction/CanonicalSignatureCompletion.canonical_signature_labels_stable_depth_and_completion
-      source_sha256: sha256:3d725ee3007a7dcd5d0d8f83a614032646a124bef4b97e6a0f0217523abd21c0
-      target_statement_id: sha256:b6e9910fe64cab1c97d16ef2aa86bb405cbd9380a16cdb6b5a542111270d79e4
   scribe:
     - gid: D5/S3/Observer/Prediction/CanonicalSignatureCompletion.canonical_signature_labels_stable_depth_and_completion
       definition_sha256: sha256:e267c0b4c581fd552a83bcb218964bdf506f0e7b4aff00aa3b48335ebf886cde

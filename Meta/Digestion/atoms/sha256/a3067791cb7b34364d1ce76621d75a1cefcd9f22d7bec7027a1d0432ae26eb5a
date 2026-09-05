@@ -1,0 +1,44 @@
+### Arithmetic factorization
+
+先独立地从：
+
+* primes；
+* \(\Lambda(n)\)；
+* archimedean kernel；
+* explicit formula；
+* prime-constellation local covariance；
+
+构造：
+
+$$
+T_{\mathrm{arith}},
+$$
+
+再证明：
+
+$$
+\boxed{
+Q_Z(g)
+=
+\|T_{\mathrm{arith}}g\|^2.
+}
+$$
+
+只有第二种才是非循环的 RH 路线。
+
+因此真正的目标不能只写：
+
+$$
+\exists T,\ Q=T^\ast T.
+$$
+
+而必须写：
+
+$$
+\boxed{
+\text{\(T\) 在不消费 RH 的定义与性质下由素数侧显式构造。}
+}
+$$
+
+---
+

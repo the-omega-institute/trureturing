@@ -1,0 +1,35 @@
+## B3.1 与 transfer 相容的二次型
+
+定义
+
+$$
+\boxed{
+q_z(X,Y)
+=-X^2+XY+zY^2,
+}
+\tag{B3.1}
+$$
+
+其对称矩阵为
+
+$$
+J_z=
+\begin{pmatrix}
+-1&\tfrac12\\
+\tfrac12&z
+\end{pmatrix}.
+\tag{B3.2}
+$$
+
+直接计算得
+
+$$
+\boxed{
+T(z)^\mathsf TJ_zT(z)
+=-zJ_z.
+}
+\tag{B3.3}
+$$
+
+所以 $T(z)$ 不是任意二阶递推矩阵，而是 $q_z$ 的共形 Lorentz 变换；共形因子为 $-z$。
+

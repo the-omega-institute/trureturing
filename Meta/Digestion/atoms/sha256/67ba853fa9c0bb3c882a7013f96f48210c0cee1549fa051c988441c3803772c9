@@ -1,0 +1,2 @@
+**候签定理 6.211(Barker 障碍的忠实性与非空见证)**〔open;同模块伴随声明〕。长度 13 序列 `+ + + + + − − + + − + − +` 与长度 4 序列 `+ + + −` 皆为 Barker 序列(全部非平凡相关逐一核验);长度 8 序列 `+ + + + + + − +` 满足 C₁ = C₃ = 3 而非 Barker——Willms 之等相关附加假设在去掉 Barker 界后并不自相矛盾。全部由 kernel 判定(`interval_cases`/`norm_num`),不用 native_decide。
+

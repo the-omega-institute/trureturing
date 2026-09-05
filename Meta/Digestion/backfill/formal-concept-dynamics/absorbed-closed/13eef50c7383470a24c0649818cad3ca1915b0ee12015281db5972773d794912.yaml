@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:13eef50c7383470a24c0649818cad3ca1915b0ee12015281db5972773d794912
+  normalized_sha256: sha256:13eef50c7383470a24c0649818cad3ca1915b0ee12015281db5972773d794912
+cas_ref: sha256:13eef50c7383470a24c0649818cad3ca1915b0ee12015281db5972773d794912
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Interventions/AbelianTranslationInteraction.abelian_translation_commutation_and_defect_exclusion
+    target_statement_id: sha256:86cb30cd48cdd26b4decf98dd505a089235c45b75a8eceb98dec3a4fd2896742
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Interventions/AbelianTranslationInteraction.abelian_translation_commutation_and_defect_exclusion
+      definition_sha256: sha256:ef5f1b33fffcbc1ec59bc08a42db30beca26dfe4ca708f72f56a97920e58b05b
+      emission_sha256: sha256:608bd35485b7cb51a9f492af0900a875c758020db7827cb8231113ff1bed27f7
+  unresolved_subitems: []

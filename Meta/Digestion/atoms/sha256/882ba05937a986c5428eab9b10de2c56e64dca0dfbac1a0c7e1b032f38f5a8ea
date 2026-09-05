@@ -1,0 +1,32 @@
+## 198. 第四层：Paley–Wiener 变换不可独立赋值
+
+仓库现在已经证明：若某个非实离线轨道上的 Fourier–Laplace 值被规定为：
+
+$$
+1,\quad-1,
+$$
+
+则该轨道贡献精确为：
+
+$$
+-4m_\rho.
+$$
+
+实轴离线轨道则只能给出非负 norm-square，并且无法实现同一反相位赋值。
+
+这关闭了单轨道的 odd signature。
+
+但全局问题要求同一个 entire transform 同时控制所有零点。
+
+因此真正的全局纠缠量是评价 Gram 算子：
+
+$$
+G_{\rho\rho'}
+=
+\langle k_{\rho'},k_\rho\rangle.
+$$
+
+若它不能按任何非平凡零点分区块对角化，则零点系统在 transform 意义下不可分。
+
+---
+

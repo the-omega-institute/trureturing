@@ -1,0 +1,101 @@
+## 372. 概率意义下的全局中和
+
+对实数：
+
+$$
+\sigma>1,
+$$
+
+用 ζ Gibbs 概率：
+
+$$
+\mathbb P_\sigma(N=n)
+=
+\frac{n^{-\sigma}}{\zeta(\sigma)}.
+$$
+
+则宇称期望为：
+
+$$
+\boxed{
+\mathbb E_\sigma[\lambda(N)]
+=
+\frac{\zeta(2\sigma)}
+{\zeta(\sigma)^2}.
+}
+$$
+
+Euler 分解给出：
+
+$$
+\boxed{
+\mathbb E_\sigma[\lambda(N)]
+=
+\prod_p
+\frac{1-p^{-\sigma}}
+{1+p^{-\sigma}}.
+}
+$$
+
+因此：
+
+$$
+\mathbb P_\sigma(\Omega\text{ even})
+=
+\frac12
+\left(
+1+
+\frac{\zeta(2\sigma)}
+{\zeta(\sigma)^2}
+\right),
+$$
+
+$$
+\mathbb P_\sigma(\Omega\text{ odd})
+=
+\frac12
+\left(
+1-
+\frac{\zeta(2\sigma)}
+{\zeta(\sigma)^2}
+\right).
+$$
+
+当：
+
+$$
+\sigma\to\infty,
+$$
+
+状态 \(n=1\) 主导，所以偶 sector 概率趋于 \(1\)。
+
+当：
+
+$$
+\sigma\downarrow1,
+$$
+
+有：
+
+$$
+\frac{\zeta(2\sigma)}
+{\zeta(\sigma)^2}
+\to0,
+$$
+
+因此：
+
+$$
+\boxed{
+\mathbb P_{\mathrm e}
+\to\frac12,
+\qquad
+\mathbb P_{\mathrm o}
+\to\frac12.
+}
+$$
+
+全局无限状态不是纯偶，而是宇称中和。
+
+---
+

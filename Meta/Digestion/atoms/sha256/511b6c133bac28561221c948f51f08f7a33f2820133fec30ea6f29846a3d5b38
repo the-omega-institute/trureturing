@@ -1,0 +1,50 @@
+## 224. 为什么 \(2\) 和 \(5\) 同时出现
+
+乘以理性整数 \(2\) 时，数域范数乘以：
+
+$$
+N(2)=2^2=4.
+$$
+
+所以 doubled occupancy 自动从单位壳：
+
+$$
+\pm1
+$$
+
+移动到：
+
+$$
+\pm4.
+$$
+
+另一方面，黄金数域判别式是 \(5\)，而混合 connected mode：
+
+$$
+2\varphi^2+\varphi^3
+$$
+
+恰好具有范数：
+
+$$
+5.
+$$
+
+因此第三阶分解中的结构不是随意系数组合，而可以解释为：
+
+$$
+\boxed{
+\text{primitive unit modes}
+\longrightarrow
+\text{double-occupancy exclusion}
+\longrightarrow
+\text{discriminant-5 connected repair}.
+}
+$$
+
+仓库现已严格证明，两个 doubled reciprocal factors 的实结构点确实是简单零点。
+
+这使“结构零来自排斥”第一次不再只是解释，而有了真实 divisor 支点。
+
+---
+

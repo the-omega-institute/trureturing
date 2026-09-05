@@ -1,0 +1,52 @@
+## 327. 零点对称 groupoid
+
+定义 groupoid：
+
+* 对象：非平凡零点；
+* 箭头：由 \(C,R,J\) 生成的对称作用。
+
+每个对象 \(\rho\) 的 isotropy group 为：
+
+$$
+\operatorname{Iso}(\rho)
+=
+\{g:g\rho=\rho\}.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+J\in\operatorname{Iso}(\rho)
+\quad
+\forall\rho.
+}
+$$
+
+这比 coarse quotient 更完整：
+
+* quotient 记录“哪些点被识别”；
+* groupoid 还记录“为什么被识别”和“稳定子何时增大”。
+
+所以“绝对对象”不应只是：
+
+$$
+q=s(1-s),
+$$
+
+还应包括：
+
+$$
+\boxed{
+\text{orbit}
++
+\text{isotropy}
++
+\text{monodromy}.
+}
+$$
+
+---
+

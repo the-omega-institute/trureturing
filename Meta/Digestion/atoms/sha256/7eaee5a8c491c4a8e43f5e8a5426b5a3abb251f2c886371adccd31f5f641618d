@@ -1,0 +1,43 @@
+## 177. 模 \(m\) residue charts
+
+定义：
+
+$$
+Z_{m,a}(s)
+=
+\sum_{\substack{n\ge1\\n\equiv a\pmod m}}
+n^{-s}.
+$$
+
+将 residue charts 作离散傅立叶变换：
+
+$$
+D_{m,r}(s)
+=
+\sum_{a\bmod m}
+e^{2\pi ira/m}Z_{m,a}(s).
+$$
+
+于是：
+
+$$
+\boxed{
+D_{m,r}(s)
+=
+\sum_{n\ge1}
+e^{2\pi irn/m}n^{-s}.
+}
+$$
+
+反变换为：
+
+$$
+Z_{m,a}(s)
+=
+\frac1m
+\sum_{r\bmod m}
+e^{-2\pi ira/m}D_{m,r}(s).
+$$
+
+---
+

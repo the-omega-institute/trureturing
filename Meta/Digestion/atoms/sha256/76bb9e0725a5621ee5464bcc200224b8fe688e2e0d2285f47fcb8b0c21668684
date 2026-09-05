@@ -1,0 +1,24 @@
+* 箭头：由 \(C,R,J\) 生成的对称作用。
+
+每个对象 \(\rho\) 的 isotropy group 为：
+
+$$
+\operatorname{Iso}(\rho)
+=
+\{g:g\rho=\rho\}.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+J\in\operatorname{Iso}(\rho)
+\quad
+\forall\rho.
+}
+$$
+
+这比 coarse quotient 更完整：
+

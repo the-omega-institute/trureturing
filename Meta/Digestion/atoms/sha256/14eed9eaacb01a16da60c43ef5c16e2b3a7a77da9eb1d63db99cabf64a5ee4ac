@@ -1,0 +1,30 @@
+# 14. zero-side 奇通道与相变字典
+
+对一个 supplied 离线四点轨道，现有 zero-side 理论把卷积平方贡献分解为
+
+$$
+\boxed{
+Q_{\operatorname{orb}(\rho)}(g)
+=
+E_\rho^{\mathrm{even}}(g)
+-
+E_\rho^{\mathrm{odd}}(g),
+}
+\tag{14.1}
+$$
+
+其中
+
+$$
+E_\rho^{\mathrm{even}}(g)\ge0,
+\qquad
+E_\rho^{\mathrm{odd}}(g)\ge0.
+\tag{14.2}
+$$
+
+离线轨道的全部符号风险集中于 odd channel。
+
+本理论给出下列精确字典：
+
+| Lee–Yang／横向几何 | zero-side | prime relation side |
+|---|---|---|

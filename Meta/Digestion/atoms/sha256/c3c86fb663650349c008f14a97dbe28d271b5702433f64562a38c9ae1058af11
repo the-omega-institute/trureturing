@@ -1,0 +1,19 @@
+### 推论 A9.3　黄金深度放大律
+
+因为 $M_Q=F_{Q+2}\asymp\varphi^Q$，
+
+$$
+\boxed{
+\mathscr E_{Q,\mathcal C}^{\perp\prime\prime}(0)
+\asymp
+\varphi^{2Q}\mathcal V_{\mathcal C}.
+}
+\tag{A9.10}
+$$
+
+所以在均匀有限状态 ensemble 中：Zeckendorf depth 提供指数增长的二阶放大，prime cluster 提供 log-frequency 方向方差，二者在最低阶严格乘法分离。
+
+这就是 Zeckendorf 与 PrimeGaps 在能量层真正相遇的位置。
+
+---
+

@@ -1,0 +1,13 @@
+## 统一尾紧性
+
+$$
+\boxed{
+\lim_{P\to\infty}
+\sup_r
+\sum_{p>P}|R_r(p)|
+=
+0.
+}
+\tag{2060.2}
+$$
+

@@ -1,0 +1,28 @@
+## 54. 该定理的意义
+
+这一定理没有把 RH 当成公理。
+
+它把 RH 证明任务拆成彼此独立的构造义务：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{从素数构型构造 determinant};\\
+&\text{证明无源 determinant 等于 }\xi;\\
+&\text{证明 source jets 等于构型 cumulants};\\
+&\text{证明反射协变};\\
+&\text{证明正 Hilbert 几何};\\
+&\text{证明零点确实给出 Cayley 谱模式};\\
+&\text{证明没有隐藏盲区}.
+\end{aligned}
+}
+$$
+
+若直接由零点定义 \(C\)，则模式条件容易，但正性没有独立来源。
+
+若直接定义 \(C\) 为酉算子，则正性容易，但没有理由使其谱等于 \((\rho-1)/\rho\)。
+
+真正的任务是从同一个 prime-generated 对象同时得到两者。
+
+---
+

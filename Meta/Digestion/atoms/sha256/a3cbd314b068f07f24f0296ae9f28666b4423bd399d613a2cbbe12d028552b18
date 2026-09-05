@@ -1,0 +1,21 @@
+## 51. 完整缺陷账本
+
+定义：
+
+$$
+\boxed{
+\mathbf D(\mathcal R)
+=
+\left(
+\mathfrak d_0,
+(\mathfrak d_A^{\mathrm{jet}})_A,
+\mathfrak d_J,
+(\mathfrak d_{\mathrm{mode}}(\rho))_\rho,
+\mathfrak d_{\mathrm{unit}},
+\mathscr B_C
+\right).
+}
+$$
+
+---
+

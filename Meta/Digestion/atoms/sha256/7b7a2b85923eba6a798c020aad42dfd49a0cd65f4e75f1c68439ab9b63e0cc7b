@@ -1,0 +1,6 @@
+## 一　W-5 预登记:截断正性 ⟹ RH(`TruncatedWeilSquarePositivityCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `truncatedWeilSquarePositivity_implies_rh (Z : ZeroData) (hPos : ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re) : RiemannHypothesis`。
+**可证伪预测(写在跑之前)**:若正确,证明为:G-g-3 化归到右半带零点 ρ;`zero_exhaustive` 取 n;取 T := spectralRadius (Z.zero n),由 `Z.mem_symmetricIndices` 得 n ∈ Z.symmetricIndices T(≤ 自反);`hOff` 由 1/2 < Re ρ;M3-e′ 给 g 与实部 < 0,与 `hPos T g` 矛盾;标准三公理。若 `mem_symmetricIndices` 的右侧不是 `spectralRadius (Z.zero n) ≤ T` 型(与 `ZeroSum.lean:145–147` 字面不合)则按冻结字面调整证明而非改陈述。
+**边界**:见 §〇。
+

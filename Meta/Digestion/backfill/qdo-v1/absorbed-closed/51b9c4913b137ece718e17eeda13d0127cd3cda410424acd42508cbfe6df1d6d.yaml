@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:51b9c4913b137ece718e17eeda13d0127cd3cda410424acd42508cbfe6df1d6d
+  normalized_sha256: sha256:51b9c4913b137ece718e17eeda13d0127cd3cda410424acd42508cbfe6df1d6d
+cas_ref: sha256:51b9c4913b137ece718e17eeda13d0127cd3cda410424acd42508cbfe6df1d6d
+coverage_gids:
+  - gid: D5/S3/Observer/Tomography/OneStepSchurGain.one_step_schur_gain
+    target_statement_id: sha256:46e0a15262da1600ae0d5ed688a18e07fd378eecfcdbe9e9591b23816dc5c551
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Tomography/OneStepSchurGain.one_step_schur_gain
+      definition_sha256: sha256:3949b813ab0e73d191f75b6b801b9108bd8f5f5b847f3cf70bcebcfe20c1f2c7
+      emission_sha256: sha256:b74143f37783304831669cdc882ad3602cd21ceffa2b9ba42cd2b67ce023597b
+  unresolved_subitems: []

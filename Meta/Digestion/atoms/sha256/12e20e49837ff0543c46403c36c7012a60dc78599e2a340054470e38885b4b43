@@ -1,0 +1,17 @@
+### 定理 A9.2　Zeckendorf–prime susceptibility factorization
+
+在 $\delta=0$：
+
+$$
+\boxed{
+\left.
+\frac{d^2}{d\delta^2}
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)
+\right|_{\delta=0}
+=
+\frac{(M_Q-1)(2M_Q-1)}3
+\mathcal V_{\mathcal C}.
+}
+\tag{A9.9}
+$$
+

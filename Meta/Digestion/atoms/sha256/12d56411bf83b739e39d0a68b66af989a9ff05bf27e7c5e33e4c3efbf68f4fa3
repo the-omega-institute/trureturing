@@ -1,0 +1,64 @@
+## 553. 区间奇通道权重
+
+在 Casimir 紧化中，最自然的奇通道权重不是单独的：
+
+$$
+1-x,
+$$
+
+而是：
+
+$$
+\boxed{
+\omega_-(x)=x(1-x).
+}
+$$
+
+它满足：
+
+$$
+\omega_-(x)>0
+\quad
+\text{当 }0<x<1,
+$$
+
+$$
+\omega_-(x)=0
+\quad
+\text{当 }x=0,1,
+$$
+
+$$
+\omega_-(x)<0
+\quad
+\text{当 }x<0\text{ 或 }x>1.
+$$
+
+所以：
+
+$$
+\boxed{
++1\text{ 型}
+=
+\text{RH-compatible interior};
+}
+$$
+
+$$
+\boxed{
+0\text{ 型}
+=
+\text{两条完成边界};
+}
+$$
+
+$$
+\boxed{
+-1\text{ 型}
+=
+\text{边界外奇通道}.
+}
+$$
+
+---
+

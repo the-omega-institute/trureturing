@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:edc9c5c986ab2d60583bf430cb2aac8339ae90fabf246f0ce61ace45d8ec133c
+  normalized_sha256: sha256:edc9c5c986ab2d60583bf430cb2aac8339ae90fabf246f0ce61ace45d8ec133c
+cas_ref: sha256:edc9c5c986ab2d60583bf430cb2aac8339ae90fabf246f0ce61ace45d8ec133c
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/InverseLimitMorphisms/IndependentDescentCriterion.inverse_limit_descent_and_independent_converse
+    target_statement_id: sha256:28bf770d45e83df072c108d3485f4b4c46d40ddada5796225144222954cf4518
+receipts:
+  scribe:
+    - gid: D5/S3/ObserverMemory/InverseLimitMorphisms/IndependentDescentCriterion.inverse_limit_descent_and_independent_converse
+      definition_sha256: sha256:9495e49c65f3cedbdf68ac81c5498709b0b078f12bcb18ecaa507950884c411c
+      emission_sha256: sha256:a669dd0d9c98d3acf15788725bca7f7185de78af67f45373791a5b1b2da30755
+  unresolved_subitems: []

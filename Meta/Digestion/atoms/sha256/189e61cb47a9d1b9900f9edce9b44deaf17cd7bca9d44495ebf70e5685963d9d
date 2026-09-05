@@ -1,0 +1,53 @@
+## 179. 任意周期名字都分成平均与破缺
+
+设 \(c_n\) 是周期 \(m\) 的序列，平均值为：
+
+$$
+\bar c
+=
+\frac1m
+\sum_{r=0}^{m-1}c_r.
+$$
+
+写成：
+
+$$
+c_n=\bar c+c_n^\circ,
+$$
+
+其中：
+
+$$
+\sum_{r=0}^{m-1}c_r^\circ=0.
+$$
+
+则：
+
+$$
+\boxed{
+\sum_{n\ge1}\frac{c_n}{n^s}
+=
+\bar c\,\zeta(s)
++
+\sum_{n\ge1}\frac{c_n^\circ}{n^s}.
+}
+$$
+
+第一项是完成／零模。
+
+第二项是破缺／非零模，并在更大的半平面内收敛。
+
+因此“所有名字”的普遍结构为：
+
+$$
+\boxed{
+\text{name}
+=
+\text{mean completion}
++
+\text{oscillatory defect}.
+}
+$$
+
+---
+

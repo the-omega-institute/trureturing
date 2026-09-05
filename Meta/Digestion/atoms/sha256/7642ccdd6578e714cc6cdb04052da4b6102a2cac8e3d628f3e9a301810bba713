@@ -1,0 +1,24 @@
+## 34. GHZ 镜像纯化
+
+定义：
+
+$$
+\boxed{
+|\Omega_T^+\rangle
+=
+\frac{
+|\boldsymbol{+}\rangle
++
+|\boldsymbol{-}\rangle
+}{\sqrt2}.
+}
+$$
+
+在方向基上测量时，它给出经典对角状态：
+
+$$
+\mu_T^{\mathrm{diag}}.
+$$
+
+---
+

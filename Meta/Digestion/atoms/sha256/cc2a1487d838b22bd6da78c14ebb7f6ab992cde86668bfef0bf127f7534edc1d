@@ -1,0 +1,23 @@
+## 36. 横向 Casimir
+
+对有限窗口 \(T\)，定义：
+
+$$
+\boxed{
+\mathcal C_T^\perp
+=
+\sum_{o\in T}
+m_ow_o\delta_o^2,
+}
+$$
+
+其中：
+
+$$
+m_o>0,
+\qquad
+w_o>0.
+$$
+
+---
+

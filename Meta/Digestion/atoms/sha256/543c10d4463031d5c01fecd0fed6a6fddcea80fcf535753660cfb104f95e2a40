@@ -1,0 +1,44 @@
+## 定理 15.1　线程单射
+
+映射：
+
+$$
+x
+\longmapsto
+\bigl(\mathsf Z_N(x)\bigr)_{N\ge0}
+$$
+
+在 \(\mathbb R_{\ge0}\) 上单射。
+
+若 \(x,y\) 的全部线程相同，则：
+
+$$
+q_N(x)=q_N(y)
+\quad
+\forall N.
+$$
+
+于是：
+
+$$
+|x-y|<2\varphi^{-N}
+\quad
+\forall N,
+$$
+
+故 \(x=y\)。
+
+因此：
+
+$$
+\boxed{
+\text{实数}
+=
+\text{一条无限黄金分辨率 Zeckendorf completion thread}.
+}
+$$
+
+这不是声称一般实数拥有有限 Zeckendorf 表示。
+
+---
+

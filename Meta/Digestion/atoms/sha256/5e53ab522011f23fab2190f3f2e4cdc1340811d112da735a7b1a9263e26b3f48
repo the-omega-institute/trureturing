@@ -1,0 +1,104 @@
+# 第一千九百九十九部　奇观察通道就是公共谱底
+
+取实数：
+
+$$
+\sigma>1.
+$$
+
+此时：
+
+$$
+0<p^{-\sigma}<1,
+$$
+
+所以每个 \(T_p(\sigma)\) 正定。
+
+对有限素数集 \(S\)，squarefree 传输矩阵：
+
+$$
+T_S(\sigma)
+=
+\prod_{p\in S}T_p(\sigma)
+$$
+
+具有本征值：
+
+$$
+\Lambda_+(S,\sigma)
+=
+\prod_{p\in S}(1+p^{-\sigma}),
+$$
+
+$$
+\Lambda_-(S,\sigma)
+=
+\prod_{p\in S}(1-p^{-\sigma}).
+$$
+
+且：
+
+$$
+\Lambda_-<\Lambda_+.
+$$
+
+因此相对于单位参考背景：
+
+$$
+\boxed{
+\sup\{
+\alpha:
+T_S-\alpha I\succeq0
+\}
+=
+\Lambda_-.
+}
+\tag{1999.1}
+$$
+
+即：
+
+$$
+\boxed{
+\text{唯一奇观察通道}
+=
+\text{全局二态系统的精确公共谱底}.
+}
+$$
+
+在 squarefree 模型中：
+
+$$
+\boxed{
+\Lambda_-
+=
+\frac1{\zeta_S(\sigma)}.
+}
+\tag{1999.2}
+$$
+
+在全指数模型中：
+
+$$
+\boxed{
+\widetilde\Lambda_-
+=
+\frac{\zeta_S(2\sigma)}
+{\zeta_S(\sigma)}.
+}
+\tag{1999.3}
+$$
+
+项目最新的 exact common-spectrum floor 定理，已经在更一般的有理特征 Gram 场景中机器证明：最大共同 normalized-Haar 成分正是白化后的最小本征值，并且在两个合同坐标中取同一个值。
+
+所以这一素数宇称二态模型与项目当前的公共谱底语言完全相容：
+
+$$
+\boxed{
+\text{全局偶方向是 Perron 顶部；
+唯一奇观察方向是 common floor。}
+}
+$$
+
+---
+

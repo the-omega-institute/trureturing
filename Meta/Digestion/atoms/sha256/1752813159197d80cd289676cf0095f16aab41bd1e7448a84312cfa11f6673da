@@ -1,0 +1,2 @@
+**候签定理 5.91(Fibonacci 模 16 的周期 24)**〔open;落 `D5/S1/Recurrence/FibonacciPowerSumMod16Obstruction`〕。对任意 n : ℕ,`Nat.fib (n + 24) % 16 = Nat.fib n % 16`;从而 `Nat.fib n % 16 = Nat.fib (n % 24) % 16`。
+

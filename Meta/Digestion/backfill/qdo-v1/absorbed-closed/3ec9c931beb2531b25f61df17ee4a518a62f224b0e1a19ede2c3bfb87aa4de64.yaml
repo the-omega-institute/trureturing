@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3ec9c931beb2531b25f61df17ee4a518a62f224b0e1a19ede2c3bfb87aa4de64
+  normalized_sha256: sha256:3ec9c931beb2531b25f61df17ee4a518a62f224b0e1a19ede2c3bfb87aa4de64
+cas_ref: sha256:3ec9c931beb2531b25f61df17ee4a518a62f224b0e1a19ede2c3bfb87aa4de64
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.causal_state_factorization
+    target_statement_id: sha256:a53b69057ed5e20a064e6c89da7e23bd6e7b2a670b25e89ad4fb614bd8be69d7
+receipts:
+  scribe:
+    - gid: D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.causal_state_factorization
+      definition_sha256: sha256:bda48326e12519e773dea42b4f02e7ce31a20d4decb8fb9c4f71d25a1e8e58ac
+      emission_sha256: sha256:4a3596572b4d3f6eb1b7301a63e1599bb0d2c8d59e0f06ab8c496d5a0c3f4ce5
+  unresolved_subitems: []

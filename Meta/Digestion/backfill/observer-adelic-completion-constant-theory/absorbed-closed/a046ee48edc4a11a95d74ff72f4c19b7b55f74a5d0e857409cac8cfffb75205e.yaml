@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a046ee48edc4a11a95d74ff72f4c19b7b55f74a5d0e857409cac8cfffb75205e
+  normalized_sha256: sha256:a046ee48edc4a11a95d74ff72f4c19b7b55f74a5d0e857409cac8cfffb75205e
+cas_ref: sha256:a046ee48edc4a11a95d74ff72f4c19b7b55f74a5d0e857409cac8cfffb75205e
+coverage_gids:
+  - gid: D5/S3/Observer/Naturality/ObservedBreakDecomposition.observed_break_decomposition
+    target_statement_id: sha256:2c1a4e004c5f24c0e971e4dd2fa3a0d830d5df21193053d2a700165bb4d88b01
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Naturality/ObservedBreakDecomposition.observed_break_decomposition
+      definition_sha256: sha256:4e17cf65a85da4d861eebc5ef7f4206f9f1e950a148883389b941d707febe8fa
+      emission_sha256: sha256:ac42962a00bf9d406a747ee44bcb910607151c984a2693088c907a8287ab4d25
+  unresolved_subitems: []

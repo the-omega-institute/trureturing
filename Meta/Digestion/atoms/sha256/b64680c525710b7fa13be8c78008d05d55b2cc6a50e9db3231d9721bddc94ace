@@ -1,0 +1,30 @@
+## 232. 暂态对角逃逸
+
+满足：
+
+$$
+R_n\neq0
+\qquad
+\forall n,
+$$
+
+但：
+
+$$
+\boxed{
+\bigcap_nR_n=\{0\}.
+}
+$$
+
+每个有限观察者都遗漏某些信息，但没有一个固定非零信息能够逃过全部层级。
+
+这就是：
+
+$$
+\boxed{
+\text{finite blindness without intrinsic blindness}.
+}
+$$
+
+---
+

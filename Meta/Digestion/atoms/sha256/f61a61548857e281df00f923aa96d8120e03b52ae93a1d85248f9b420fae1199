@@ -1,0 +1,56 @@
+## 365. 素数占据空间
+
+取基：
+
+$$
+|n\rangle,
+\qquad
+n\ge1.
+$$
+
+定义数算子：
+
+$$
+\mathcal N|n\rangle
+=
+\Omega(n)|n\rangle,
+$$
+
+以及宇称：
+
+$$
+\Pi=(-1)^{\mathcal N}.
+$$
+
+于是：
+
+$$
+\Pi|n\rangle
+=
+\lambda(n)|n\rangle.
+$$
+
+对每个素数 \(p\)，定义乘法生成算子：
+
+$$
+U_p|n\rangle=|pn\rangle.
+$$
+
+因为：
+
+$$
+\Omega(pn)=\Omega(n)+1,
+$$
+
+有：
+
+$$
+\boxed{
+\Pi U_p=-U_p\Pi.
+}
+$$
+
+所以单个素数插入是奇算子。
+
+---
+

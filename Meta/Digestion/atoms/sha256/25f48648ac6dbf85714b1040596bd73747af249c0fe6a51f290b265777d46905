@@ -1,0 +1,23 @@
+## 3.2 累积最大位移
+
+对 $T\ge0$，定义
+
+$$
+\boxed{
+M(T)
+=
+\max\left(
+\left\{
+|\delta|:
+0<t\le T,
+\ X(t,\delta)=0,
+\ 0<|\delta|<\frac12
+\right\}
+\cup\{0\}
+\right).
+}
+\tag{3.3}
+$$
+
+有界矩形中的零点局部有限，所以最大值存在。
+

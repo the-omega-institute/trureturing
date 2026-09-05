@@ -1,0 +1,60 @@
+## 3. 理论总图
+
+算术侧：
+
+$$
+\boxed{
+H
+\longrightarrow
+R_p(H)
+\longrightarrow
+\mathcal M_H
+\longrightarrow
+\mathcal K_H
+\longrightarrow
+\text{cyclic source traces}.
+}
+$$
+
+零点侧：
+
+$$
+\boxed{
+\rho
+\longrightarrow
+(\delta_\rho,\gamma_\rho,m_\rho)
+\longrightarrow
+G_\zeta\text{-orbit}
+\longrightarrow
+\text{global reflection state}
+\longrightarrow
+\text{transverse positive defect}.
+}
+$$
+
+开放桥：
+
+$$
+\boxed{
+\text{prime-generated operator determinant}
+\longrightarrow
+\text{source jets}
+\longrightarrow
+\text{zero responses}
+\longrightarrow
+\text{positive monodromy}.
+}
+$$
+
+最终：
+
+$$
+\boxed{
+\text{positive exact realization}
+\Longrightarrow
+\mathrm{RH}.
+}
+$$
+
+---
+

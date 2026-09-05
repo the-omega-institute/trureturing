@@ -1,0 +1,136 @@
+# 增订三·22　最终收束
+
+本增订把项目中此前分散的四种对象接成一条严格链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{complex power thread}
+&\simeq
+\text{logarithmic charge}
+\times
+\text{solenoid phase},\\
+\text{critical line}
+&=
+\text{zero-charge slice},\\
+\text{prime-pair complex kernel}
+&=
+\text{charge-gradient hyperbolic energy}
++
+\text{phase-gradient circular energy},\\
+\text{Zeckendorf depth}
+&=
+\text{finite-height phase de-aliasing resource},\\
+\text{prime width}
+&=
+\text{multiplicatively independent phase de-aliasing resource},\\
+\text{Hankel minimal rank}
+&=
+\text{determinant certificate 的最小记忆维数},\\
+\text{Schur margin}
+&=
+\text{finite transfer 的 singular-value floor},\\
+\text{Rouché strictness}
+&=
+\text{finite certificate 到真实零点计数的 analytic transport}.
+\end{aligned}
+}
+\tag{C22.1}
+$$
+
+所以假想离线零点的最新精确含义是：
+
+$$
+\boxed{
+\textbf{completed analytic transfer 在一个非零 logarithmic-charge 点产生 kernel，
+而任何试图排除它的 finite Schur–Rouché certificate
+必在 charge anchor、phase faithfulness、Schur floor、boundary unit、
+approximation error 或 dimension budget 中至少一处失效。}
+}
+\tag{C22.2}
+$$
+
+这也进一步校正“信息逃逸”的位置。
+
+信息并不从 canonical prime thread 中逃逸：
+
+- charge 在任一 level 可见；
+- phase 可由完整 root tower 或两个 labelled primes 恢复。
+
+信息真正逃逸于：
+
+$$
+\boxed{
+\text{labelled thread family}
+\longrightarrow
+\text{commutative scalar completion}
+}
+\tag{C22.3}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{finite positive operator}
+\longrightarrow
+\text{没有统一 boundary floor 的无限极限}.
+}
+\tag{C22.4}
+$$
+
+因此下一承重点不应继续增加新的“黄金能量”名称，而应建立以下两个 canonical 对象：
+
+$$
+\boxed{
+T_N(s)
+=
+\text{保留 prime labels、power-thread charge、solenoid phase、
+Zeckendorf carry 与 Gamma anchor 的 holomorphic finite transfer},
+}
+\tag{C22.5}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathfrak C_N(R)
+=
+\frac{
+\operatorname{Err}_N(R)
+}{
+u_N(R)\mu_N(R)^{d_N/2}
+}.
+}
+\tag{C22.6}
+$$
+
+其中 $\mathfrak C_N(R)$ 是 dimension-aware Rouché certificate ratio。
+
+最终目标可写成：
+
+$$
+\boxed{
+\forall R\in\mathfrak R_{\mathbb Q}^{\rm off},
+\quad
+\exists N,
+\quad
+\mathfrak C_N(R)<1.
+}
+\tag{C22.7}
+$$
+
+一旦式 (C22.7) 由 canonical prime–Gamma construction 无条件建立，定理 C18.1 便推出 RH。
+
+所以本轮最深的一句话是：
+
+$$
+\boxed{
+\textbf{RH 可以被重写为：completed prime-thread system 的所有非零 charge 窗口，
+都能被某个 Hankel-minimal、Schur-coercive、Rouché-stable 的有限 observer certificate 排除。}
+}
+\tag{C22.8}
+$$
+
+它仍不是证明，但已把“离线相变不可能发生”压缩成一个可数、有限窗口化、带精确误差—维数预算的单一证书纲领。

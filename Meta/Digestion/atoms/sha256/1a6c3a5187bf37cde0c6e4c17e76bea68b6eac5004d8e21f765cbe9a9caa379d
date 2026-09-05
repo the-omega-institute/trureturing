@@ -1,0 +1,20 @@
+## 23. 群作用闭环
+
+generic 零点满足：
+
+$$
+\rho
+\xrightarrow{J}
+J\rho
+\xrightarrow{C}
+CJ\rho
+\xrightarrow{J}
+JCJ\rho
+\xrightarrow{C}
+\rho.
+$$
+
+这是 Klein 四群 Cayley 图中的四边闭环。
+
+---
+

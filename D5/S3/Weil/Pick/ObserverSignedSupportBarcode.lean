@@ -3,20 +3,27 @@
    mirror-B: D5/B/S3/Weil/Pick/ObserverSignedSupportBarcode
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Observer-dependent signed support is negative exactly on the reflected orbit interval, and positive masses preserve the finite count. -/
+   digest: Identify observer-dependent negative signed support with open orbit intervals and count the resulting negative localized weights under positive masses. -/
 
+import D5.S3.Weil.Pick.LocalizedStieltjesNevanlinnaKernel
 import Mathlib.Tactic
 
 /-!
 # Observer-dependent signed-support barcode
 
 For an orbit with transverse displacement `delta` and height `gamma`, the
-observer at parameter `time` sees `(time - gamma)^2 - delta^2`. This support
-coordinate is negative exactly on the open interval centered at `gamma` with
-radius `|delta|`. Positive atomic mass preserves the sign test.
+observer at time `t` sees the signed support
 
-This node counts diagonal localizing weights. It does not by itself identify
-the count with the negative index of a sampled Gram matrix.
+`(t - gamma)^2 - delta^2`.
+
+It is negative exactly on the open interval centered at `gamma` with radius
+`|delta|`. With positive atomic mass, multiplication by the mass preserves this
+sign test. On a finite orbit family, the number of negative localized weights
+therefore equals the number of active barcode intervals.
+
+This module counts diagonal localizing weights. It does not identify that count
+with the negative index of a sampled Gram matrix; such an equality additionally
+needs a full-rank congruence certificate.
 -/
 
 set_option autoImplicit false
@@ -39,18 +46,22 @@ def observerSignedSupport (delta gamma time : ℝ) : ℝ :=
 def orbitActiveAt (delta gamma time : ℝ) : Prop :=
   |time - gamma| < |delta|
 
+instance (delta gamma time : ℝ) :
+    Decidable (orbitActiveAt delta gamma time) :=
+  inferInstanceAs (Decidable (|time - gamma| < |delta|))
+
 /-- The first localized diagonal weight: positive mass times signed support. -/
 def observerLocalizedWeight
     (mass delta gamma time : ℝ) : ℝ :=
   mass * observerSignedSupport delta gamma time
 
-/-- Number of active orbit intervals at one observation parameter. -/
+/-- Number of active orbit intervals at one observation time. -/
 def activeOrbitCount
     (delta gamma : Orbit → ℝ) (time : ℝ) : ℕ :=
   ((Finset.univ : Finset Orbit).filter
     (fun a => orbitActiveAt (delta a) (gamma a) time)).card
 
-/-- Number of strictly negative localized atomic weights. -/
+/-- Number of strictly negative localized atomic weights at one observation time. -/
 def negativeLocalizedWeightCount
     (mass delta gamma : Orbit → ℝ) (time : ℝ) : ℕ :=
   ((Finset.univ : Finset Orbit).filter
@@ -94,8 +105,8 @@ theorem observer_localized_weight_neg_iff_active
     exact mul_neg_of_pos_of_neg hmass
       ((observer_signed_support_neg_iff_active delta gamma time).2 hactive)
 
-/-- For positive masses, negative localized weights and active barcode
-intervals have exactly the same finite cardinality. -/
+/-- For positive masses, negative localized weights and active barcode intervals
+have exactly the same finite cardinality. -/
 theorem negative_localized_weight_count_eq_active_orbit_count
     (mass delta gamma : Orbit → ℝ) (time : ℝ)
     (hmass : ∀ a, 0 < mass a) :

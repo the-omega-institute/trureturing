@@ -1,0 +1,1 @@
+**义务**:公开定理 `heightWindow_rh_iff_truncatedWeilSquarePositivity (Z : ZeroData) (T : ℝ) : (∀ n ∈ Z.symmetricIndices T, (Z.zero n).re = criticalAbscissa) ↔ ∀ g : WeilTestFunction, 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。

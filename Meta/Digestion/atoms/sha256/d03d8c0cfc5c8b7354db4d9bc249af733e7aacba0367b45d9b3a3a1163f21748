@@ -1,0 +1,44 @@
+# 十二、临界线迫使我们使用相对 chaos，而不是绝对 chaos
+
+项目已经证明：
+
+$$
+\sum_pp^{-s}<\infty
+\iff
+s>1,
+$$
+
+所以：
+
+$$
+\sum_p\frac1p=\infty.
+$$
+
+它也证明，对于振幅 \(p^{-\alpha}\)，平方能量：
+
+$$
+\sum_pp^{-2\alpha}
+$$
+
+在且仅在：
+
+$$
+\alpha>\frac12
+$$
+
+时收敛，而 \(\alpha=\frac12\) 本身仍发散。
+
+所以临界线上的朴素向量：
+
+$$
+\left(p^{-1/2}\right)_p
+$$
+
+不属于普通 \(\ell^2(\mathbb P)\)。
+
+这意味着不能直接把所有 prime amplitudes 当作独立正交坐标。
+
+必须先商掉共同的 coherent 背景。
+
+---
+

@@ -1,0 +1,2 @@
+**定理 8.3(Hesse SIC 证书,d = 3)[候签]。**令 ω = exp(2πi/3),取 ℂ³ 中九个向量 (0, 1, −ω^k)/√2、(−ω^k, 0, 1)/√2、(1, −ω^k, 0)/√2(k = 0, 1, 2)。则 (i) 每个向量的范数平方为 1;(ii) 任意两个不同向量的内积模平方为 1/4 = 1/(d+1);(iii) 九个秩一投影之和 ∑_r v_r v_r† = 3·I₃。故 E_r := (1/3) v_r v_r† 构成 ℂ³ 上的 SIC-POVM(定义 8.1 在 d = 3 的精确实例)。落点 `D5/S3/QuantumContext/HesseSicCertificate`(该桶已有 `ZaunerSymplecticMatrix`、`CompleteBasisReconstruction`;直接文件 12/24);向量以 `Fin 9 → (Fin 3 → ℂ)` 显式给出,内积与投影和以钉版 Mathlib 的 `inner`、`Matrix.vecMulVec`、`star` 表达。
+

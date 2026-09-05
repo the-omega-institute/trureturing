@@ -1,0 +1,17 @@
+## 1.2 横向谱切片
+
+对 $t,\delta\in\mathbb R$，定义
+
+$$
+\boxed{
+X(t,\delta)
+:=
+\Xi\!\left(\frac12+\delta+it\right)
+=F(\delta+it).
+}
+\tag{1.4}
+$$
+
+这里：
+
+- $t$ 是沿临界线方向的谱高度；

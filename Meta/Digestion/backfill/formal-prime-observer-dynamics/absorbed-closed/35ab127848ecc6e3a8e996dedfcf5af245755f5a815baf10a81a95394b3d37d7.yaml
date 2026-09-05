@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:35ab127848ecc6e3a8e996dedfcf5af245755f5a815baf10a81a95394b3d37d7
+  normalized_sha256: sha256:35ab127848ecc6e3a8e996dedfcf5af245755f5a815baf10a81a95394b3d37d7
+cas_ref: sha256:35ab127848ecc6e3a8e996dedfcf5af245755f5a815baf10a81a95394b3d37d7
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Transportability/ModelClassTransportabilityCriterion.model_class_transportability_criterion
+    target_statement_id: sha256:0e9ea7643e262a9d79c643e1191725ebd7a548d4cca4c89f0809a7345c14aeed
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Transportability/ModelClassTransportabilityCriterion.model_class_transportability_criterion
+      definition_sha256: sha256:3272ec4faadcff292ca392171165ce062fe503bd61b0e7aeed1c2ba8ca14c04c
+      emission_sha256: sha256:456abcfffa15076be2828752d16d1f548669b2a844cc5a7bd0228e4ae57be360
+  unresolved_subitems: []

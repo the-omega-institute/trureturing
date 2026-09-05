@@ -1,0 +1,2 @@
+**候签定理 4.99(十进制宽数的零三数位分类)**〔open;落 `D5/S1/Digit/DigitProductSlices`〕。令 `digitProduct N := (Nat.digits 10 N).prod`、`AllDigitsIn236 N := ∀ d ∈ Nat.digits 10 N, d ∈ ({2,3,6} : Finset ℕ)`、`countThree N := (Nat.digits 10 N).count 3`。对任意正整数 `N`，若 `AllDigitsIn236 N` 且 `countThree N = 0`，则 `digitProduct N ∣ N ↔ N = 2 ∨ N = 6`。
+

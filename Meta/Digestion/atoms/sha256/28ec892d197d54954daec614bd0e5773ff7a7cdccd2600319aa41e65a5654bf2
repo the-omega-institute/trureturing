@@ -1,0 +1,72 @@
+## 301. 解析 resolvent
+
+有：
+
+$$
+\boxed{
+B(t)
+=
+\left\langle
+\Omega,
+(I-tJ_\xi)^{-1}\Omega
+\right\rangle.
+}
+$$
+
+结合：
+
+$$
+B(t)
+=
+-\frac14
+\frac{
+\mathcal X'(t/4)
+}{
+\mathcal X(t/4)
+},
+$$
+
+得到：
+
+$$
+\boxed{
+-\frac14
+\frac{
+\mathcal X'(t/4)
+}{
+\mathcal X(t/4)
+}
+=
+\left\langle
+\Omega,
+(I-tJ_\xi)^{-1}\Omega
+\right\rangle.
+}
+$$
+
+再积分：
+
+$$
+\boxed{
+\frac{
+\mathcal X(t/4)
+}{
+\mathcal X(0)
+}
+=
+\exp
+\left(
+-\int_0^t
+\left\langle
+\Omega,
+(I-uJ_\xi)^{-1}\Omega
+\right\rangle
+du
+\right).
+}
+$$
+
+因此，\(J_\xi\) 的一个标量 resolvent matrix element 已经完整决定 \(\mathcal X\)。
+
+---
+

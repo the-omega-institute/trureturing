@@ -1,0 +1,33 @@
+## 172. 周期的周期：primitive orbit
+
+若 \(P_n\) 表示长度恰为 \(n\) 的 primitive 周期轨道数，则：
+
+$$
+N_n
+=
+\sum_{d\mid n}dP_d.
+$$
+
+Möbius 反演给出：
+
+$$
+\boxed{
+P_n
+=
+\frac1n
+\sum_{d\mid n}
+\mu(d)N_{n/d}.
+}
+$$
+
+所以所谓“周期的周期”，严格对象不是继续命名一个更大周期，而是：
+
+$$
+\boxed{
+\text{把全部 fixed cycles 分解成 primitive cycles 及其重复}.
+}
+$$
+
+这与：
+
+* Euler product 中素数和素数幂；

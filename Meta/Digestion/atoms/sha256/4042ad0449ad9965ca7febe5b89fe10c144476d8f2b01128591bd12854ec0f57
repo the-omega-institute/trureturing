@@ -1,0 +1,36 @@
+## 定理 9.1　算术正性
+
+$$
+\boxed{
+\omega_\sigma(\overline FF)\ge0.
+}
+$$
+
+因为：
+
+$$
+\omega_\sigma(\overline FF)
+=
+\frac1{\zeta(\sigma)}
+\sum_{n\ge1}
+\frac{|F(n)|^2}{n^\sigma}.
+$$
+
+因此定义半范数：
+
+$$
+\|F\|_\sigma^2
+=
+\omega_\sigma(\overline FF).
+$$
+
+将零半范数观察量商掉并完成，得到算术 Hilbert 空间：
+
+$$
+\mathscr H_{\mathrm A,\sigma}.
+$$
+
+该正性由整数权重直接产生，不依赖 RH，也不依赖 Weil 正性。
+
+---
+

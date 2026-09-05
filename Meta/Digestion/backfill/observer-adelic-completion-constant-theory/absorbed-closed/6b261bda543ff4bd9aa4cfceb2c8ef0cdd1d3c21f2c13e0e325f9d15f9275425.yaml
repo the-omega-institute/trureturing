@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6b261bda543ff4bd9aa4cfceb2c8ef0cdd1d3c21f2c13e0e325f9d15f9275425
 cas_ref: sha256:6b261bda543ff4bd9aa4cfceb2c8ef0cdd1d3c21f2c13e0e325f9d15f9275425
 coverage_gids:
-  - D5/S3/Weil/Budget/ProjectivePrimalConvergence.projective_primal_convergence
+  - gid: D5/S3/Weil/Budget/ProjectivePrimalConvergence.projective_primal_convergence
+    target_statement_id: sha256:4057799de88541a7c36301fd6336dff735c33386b52398ae10c0435b85d58719
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Budget/ProjectivePrimalConvergence.projective_primal_convergence
-      source_sha256: sha256:6b261bda543ff4bd9aa4cfceb2c8ef0cdd1d3c21f2c13e0e325f9d15f9275425
-      target_statement_id: sha256:4057799de88541a7c36301fd6336dff735c33386b52398ae10c0435b85d58719
   scribe:
     - gid: D5/S3/Weil/Budget/ProjectivePrimalConvergence.projective_primal_convergence
       definition_sha256: sha256:7c4149d9b934171ba0b77c1df9f7318e4019ee20bf132d97971e6817be2a1498

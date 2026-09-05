@@ -1,0 +1,45 @@
+## 1.1 四元对象
+
+一个有限统计—谱系统不只是一组状态。其完整数据至少应写成
+
+$$
+\boxed{
+\mathfrak S=(\Omega,H,\mathcal R,\mu),
+}
+\tag{A1.1}
+$$
+
+其中：
+
+- $\Omega$ 是微观状态空间；
+- $H:\Omega\to\mathbb R$ 是能量或指数读出；
+- $\mathcal R$ 是状态之间的局部约束、转移、顺序或关系结构；
+- $\mu$ 是状态权或所选 ensemble。
+
+相应配分函数为
+
+$$
+Z_{\mathfrak S}(\beta)
+=
+\sum_{\eta\in\Omega}
+\mu(\eta)e^{-\beta H(\eta)}.
+\tag{A1.2}
+$$
+
+仅知道 $Z_{\mathfrak S}$，一般不能恢复 $\mathcal R$。甚至当 $H$ 对状态是单射时，$Z$ 仍只读取能级及其权重，不读取这些能级是通过何种局部记忆、carry 或 holonomy 连接起来的。
+
+这正是本文所有“看似相关”对象的共同位置：
+
+$$
+\boxed{
+\text{Zeckendorf 给出 }\Omega\text{ 与 }\mathcal R,
+\quad
+\text{Euler 给出 }H\text{ 与 }\mu,
+\quad
+\text{Lee–Yang 读取 }Z\text{ 的复零点},
+\quad
+\text{信息逃逸检测 }\mathfrak S\mapsto Z\text{ 遗忘了什么}.
+}
+\tag{A1.3}
+$$
+

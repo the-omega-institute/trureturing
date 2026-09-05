@@ -1,0 +1,20 @@
+\[
+\boxed{
+\operatorname{AdmissibleAnchor}(q,A,b)
+=
+\sum_{a:R_q(b)}A(\pi_Xa).
+}
+\]
+
+ANCHOR 的**类型**可以由 CUT 和 ADMIT 定义；但该类型中的一个**具体项**不能由定义凭空产生。
+
+所以 ANCHOR 的地位是：
+
+\[
+\boxed{
+\text{语法上是依赖见证，语义上是不可由结构自动替代的实际数据。}
+}
+\]
+
+---
+

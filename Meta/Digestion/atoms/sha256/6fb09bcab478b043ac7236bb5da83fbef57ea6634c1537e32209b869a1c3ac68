@@ -1,0 +1,28 @@
+#### 证明
+
+由两种取值和频率，
+
+$$
+\varphi^{-1}\varphi^{-4}
++\varphi^{-2}\varphi^{-2}
+=
+\varphi^{-5}+\varphi^{-4}
+=\varphi^{-3}.
+$$
+
+这给出一条精确的“漂移—创新”分解：
+
+$$
+\boxed{
+\Delta b_v
+=\sqrt5+\xi_v,
+\qquad
+\text{累计创新有界，均方创新为 }\varphi^{-3}.
+}
+\tag{A7.21}
+$$
+
+它不是热随机过程，而是 balanced Sturmian／Zeckendorf memory 产生的确定性有限预算流。
+
+---
+

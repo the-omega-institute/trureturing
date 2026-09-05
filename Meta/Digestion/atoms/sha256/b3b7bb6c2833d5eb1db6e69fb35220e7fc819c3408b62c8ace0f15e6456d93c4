@@ -1,0 +1,21 @@
+### 50.3 反射缺陷
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak d_J
+(\mathcal R;s,\varepsilon)
+={}&
+\Delta_{H^\vee}
+\left(
+1-\overline s;
+\overline{\varepsilon}^{\,\vee}
+\right)\\
+&-
+\overline{\Delta_H(s;\varepsilon)}.
+\end{aligned}
+}
+$$
+
+---
+

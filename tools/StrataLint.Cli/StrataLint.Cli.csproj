@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../StrataLint.Scribe/StrataLint.Scribe.csproj" />
+    <ProjectReference Include="../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <PackageReference Include="Tomlyn" />
     <PackageReference Include="YamlDotNet" />

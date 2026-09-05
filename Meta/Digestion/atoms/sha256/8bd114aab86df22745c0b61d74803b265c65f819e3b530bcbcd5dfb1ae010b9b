@@ -1,0 +1,26 @@
+\[
+\ker(q\vee r)
+=
+\ker q\cap\ker r.
+\]
+
+共同粗化则对应：
+
+\[
+\operatorname{EqCl}(\ker q\cup\ker r).
+\]
+
+所以：
+
+\[
+\boxed{
+\begin{aligned}
+\text{概念联合}
+&=\text{同时保留两者区别};\\
+\text{概念共同粗化}
+&=\text{遗忘二者不能共同维持的区别}.
+\end{aligned}}
+\]
+
+---
+

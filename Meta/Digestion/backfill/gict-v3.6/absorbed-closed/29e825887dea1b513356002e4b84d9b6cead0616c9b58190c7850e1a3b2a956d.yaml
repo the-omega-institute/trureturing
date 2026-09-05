@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:29e825887dea1b513356002e4b84d9b6cead0616c9b58190c7850e1a3b2a956d
+  normalized_sha256: sha256:29e825887dea1b513356002e4b84d9b6cead0616c9b58190c7850e1a3b2a956d
+cas_ref: sha256:29e825887dea1b513356002e4b84d9b6cead0616c9b58190c7850e1a3b2a956d
+coverage_gids:
+  - gid: D5/S3/Quantum/Sharpness/MaximalSpectralSharpness.maximal_spectral_sharpness
+    target_statement_id: sha256:9fe0c8cc21847b5b810f8a7f8c17de14c9358a8c0b2d8b54ec79b2eb72cfc766
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Sharpness/MaximalSpectralSharpness.maximal_spectral_sharpness
+      definition_sha256: sha256:050556f275d8dedaebc9843faa2d76499b79467bc5c3b44d9107d301d6a48e89
+      emission_sha256: sha256:3f792a259481e2c7be02cae5162f7011d1ec485dd3adad88997aa89f49c53ff8
+  unresolved_subitems: []

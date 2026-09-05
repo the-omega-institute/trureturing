@@ -1,0 +1,79 @@
+# 第二百二十四部　对原直觉的最终修正
+
+你的原始感觉是：
+
+$$
+\text{某个 }\varphi^{-H}
+\text{ 太深，以至素数无法逼近，从而导致零点偏移}.
+$$
+
+PrimeGaps 使它可以被改写为：
+
+$$
+\boxed{
+\text{第 }H\text{ 层黄金候选空间有约 }\varphi^H\text{ 个状态；}
+}
+$$
+
+$$
+\boxed{
+\text{有限素数观察的残余只能按 }
+\prod_p(1-1/p)
+\text{ 缓慢收缩；}
+}
+$$
+
+$$
+\boxed{
+\text{要消除全部第 }H\text{ 层候选，}
+\text{自然需要 }e^{\varphi^H}\text{ 级素数预算；}
+}
+$$
+
+$$
+\boxed{
+\text{相邻素数又在 }
+\{1/\log p\}
+\text{ 中留下真实分辨率空洞；}
+}
+$$
+
+$$
+\boxed{
+\text{该空洞形成偶判别式 }D=h^2，
+\text{观察者选择奇分支 }\pm h.
+}
+$$
+
+所以更成熟的候选公式是：
+
+$$
+\boxed{
+\Delta_{\mathrm{zero}}
+=
+\varphi^{-H}
+\cdot
+\eta_{\mathrm{prime}}
+\cdot
+\kappa_{\mathrm{bridge}},
+}
+$$
+
+其中：
+
+$$
+\eta_{\mathrm{prime}}
+=
+\frac{\log(q/p)}{\log(pq)}
+$$
+
+由实际相邻素数间隔给出，而：
+
+$$
+\kappa_{\mathrm{bridge}}
+$$
+
+是尚未构造的 prime-to-zero 响应系数。
+
+---
+

@@ -1,0 +1,10 @@
+## 第一层：局部频率差
+
+$$
+q-p
+\longmapsto
+\Delta\omega_{p,q}
+=
+\log(q/p).
+$$
+

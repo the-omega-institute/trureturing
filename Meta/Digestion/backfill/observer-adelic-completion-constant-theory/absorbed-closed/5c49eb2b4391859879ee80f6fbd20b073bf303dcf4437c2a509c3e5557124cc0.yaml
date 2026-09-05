@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5c49eb2b4391859879ee80f6fbd20b073bf303dcf4437c2a509c3e5557124cc0
+  normalized_sha256: sha256:5c49eb2b4391859879ee80f6fbd20b073bf303dcf4437c2a509c3e5557124cc0
+cas_ref: sha256:5c49eb2b4391859879ee80f6fbd20b073bf303dcf4437c2a509c3e5557124cc0
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/FiniteObservabilityEnergyBalance.finite_observability_energy_balance
+    target_statement_id: sha256:dd0bfa6a600badb34af3b8d2b38860e5a9e6a736976582a5891c3ebf69ed4bff
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Linear/FiniteObservabilityEnergyBalance.finite_observability_energy_balance
+      definition_sha256: sha256:3e08f30ed33380fa43c46aecd7a8326a34ad9a0dca8eb242093848415ec4d9f4
+      emission_sha256: sha256:ea3dacd3dea1bf822cf1cfbd5d13d25aa42e5dfcc9658d52e59c2dfc77bbfad0
+  unresolved_subitems: []

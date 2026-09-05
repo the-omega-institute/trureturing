@@ -1,0 +1,102 @@
+## 625. 从 \(q-p\) 到黄金分裂率
+
+令：
+
+$$
+G=q-p.
+$$
+
+则：
+
+$$
+\eta_{p,q}
+=
+\frac{
+\log(1+G/p)
+}{
+\log(pq)
+}.
+$$
+
+若 \(q\le X\)，则：
+
+$$
+p\le X,
+\qquad
+\log(pq)\le2\log X,
+$$
+
+并且：
+
+$$
+\frac Gp\ge\frac GX.
+$$
+
+因此：
+
+$$
+\eta_{p,q}
+\ge
+\frac{
+\log(1+G/X)
+}{
+2\log X
+}.
+$$
+
+又因为：
+
+$$
+0\le\frac GX\le1,
+$$
+
+有：
+
+$$
+\log(1+G/X)
+\ge
+\frac G{2X}.
+$$
+
+所以：
+
+$$
+\boxed{
+\eta_{p,q}
+\ge
+\frac G{4X\log X}.
+}
+$$
+
+代入仓库的长间隔下界：
+
+$$
+G
+\ge
+c\log X\,
+\frac{
+(\log_2X)^2\log_4X
+}{
+(\log_3X)^2
+},
+$$
+
+得到：
+
+$$
+\boxed{
+\eta_{p,q}
+\ge
+c_1
+\frac{
+(\log_2X)^2\log_4X
+}{
+X(\log_3X)^2
+}.
+}
+$$
+
+其中 \(\log_j\) 表示 \(j\) 重自然对数。
+
+---
+

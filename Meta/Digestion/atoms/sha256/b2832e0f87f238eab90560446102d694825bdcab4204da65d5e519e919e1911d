@@ -1,0 +1,68 @@
+## 163. 奇步反相关，偶步重完相关
+
+矩阵 \(P\) 的本征值为：
+
+$$
+1,
+\qquad
+-\varphi^{-2}.
+$$
+
+两状态空间的均值零函数空间是一维的。因此对任意：
+
+$$
+\mathbb E_\pi[f]=0,
+$$
+
+都有精确相关公式：
+
+$$
+\boxed{
+\operatorname{Cov}
+\bigl(
+f(X_0),f(X_n)
+\bigr)
+=
+(-\varphi^{-2})^n
+\operatorname{Var}_\pi(f).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+n\text{ 为奇数}
+\Longrightarrow
+\text{反相关},
+}
+$$
+
+$$
+\boxed{
+n\text{ 为偶数}
+\Longrightarrow
+\text{正相关},
+}
+$$
+
+且幅值按：
+
+$$
+\varphi^{-2n}
+$$
+
+衰减。
+
+这就是一个概率论版本的：
+
+$$
+\boxed{
+\text{odd break}
+\longrightarrow
+\text{even recompletion}.
+}
+$$
+
+---
+

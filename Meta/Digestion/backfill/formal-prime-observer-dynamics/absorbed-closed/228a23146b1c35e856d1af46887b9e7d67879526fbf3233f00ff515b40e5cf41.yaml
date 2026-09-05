@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:228a23146b1c35e856d1af46887b9e7d67879526fbf3233f00ff515b40e5cf41
+  normalized_sha256: sha256:228a23146b1c35e856d1af46887b9e7d67879526fbf3233f00ff515b40e5cf41
+cas_ref: sha256:228a23146b1c35e856d1af46887b9e7d67879526fbf3233f00ff515b40e5cf41
+coverage_gids:
+  - gid: D5/S3/Arith/Coding/UniqueDecodingRadius.unique_decoding_radius
+    target_statement_id: sha256:444afce67549f53aafe4303b1f85f4fffaa4d48a95dafd6f093b298c97dea3d4
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/Coding/UniqueDecodingRadius.unique_decoding_radius
+      definition_sha256: sha256:7a750ae501af30836dc5b6de20d866020340c3794370236148f9b49707bc12a3
+      emission_sha256: sha256:e4b401e44e1ac0b2975bd55ea06ec7d5f21a6f87e25cf8930e39fea1d394b00b
+  unresolved_subitems: []

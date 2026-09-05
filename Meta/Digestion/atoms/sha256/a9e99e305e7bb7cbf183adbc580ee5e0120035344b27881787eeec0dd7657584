@@ -1,0 +1,1 @@
+**义务**:公开定理 `g60_curvature_le : ∀ s ∈ Q, ‖deriv (deriv (g 60)) s‖ ≤ 400`(经中间公开定理 `g60_curvature_le_118 : ∀ s ∈ Q, ‖deriv (deriv (g 60)) s‖ ≤ 118`),`log_two_binary_60 : |Real.log 2 - r| ≤ 1 / 2 ^ 60`(r 为模块内公开的有理常数,由 60 项级数 `Real.abs_log_sub_add_sum_range_le` 包络得出),以及前缀定理 `g1_deriv_re_gt_one : 1 < (deriv (g 1) c).re`。

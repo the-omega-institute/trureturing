@@ -1,0 +1,33 @@
+## 5.2 双 phase bubble
+
+反射零点产生两个同时居中的 near-zero bubble：
+
+$$
+(\delta,t)
+\approx
+(\delta_*,t_*),
+\qquad
+(-\delta_*,t_*).
+$$
+
+当 $r_\varepsilon<|\delta_*|/2$ 时，两个 bubble 互不相交，也不接触中心轴。有限观察者看到的过程是：
+
+$$
+\boxed{
+\text{出现}
+\longrightarrow
+\text{扩张}
+\longrightarrow
+\text{在 }t_*\text{ 达最大}
+\longrightarrow
+\text{收缩}
+\longrightarrow
+\text{消失}.
+}
+\tag{5.7}
+$$
+
+因此“瞬时”与“有限持续时间”并不矛盾：前者属于精确零点几何，后者属于有限分辨率观察。
+
+---
+

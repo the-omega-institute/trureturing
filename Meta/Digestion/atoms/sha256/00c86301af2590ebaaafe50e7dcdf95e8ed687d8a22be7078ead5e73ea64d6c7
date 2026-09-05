@@ -1,0 +1,86 @@
+# 十五、多条无限轴必须使用联合极限，而不是依次极限
+
+令有限预算为：
+
+$$
+\alpha=(P,K,T,N,R),
+$$
+
+分别表示：
+
+$$
+\begin{aligned}
+P&=\text{prime-address 范围};\\
+K&=\text{constellation 阶数};\\
+T&=\text{zero height};\\
+N&=\text{test depth};\\
+R&=\text{completion/renormalization 深度}.
+\end{aligned}
+$$
+
+这些预算组成一个有向集：
+
+$$
+\alpha\preceq\beta
+$$
+
+当每一个坐标都不减。
+
+真正需要的不是依次证明：
+
+$$
+P\to\infty,
+\quad
+K\to\infty,
+\quad
+T\to\infty,
+\quad\ldots
+$$
+
+而是证明联合尾界：
+
+$$
+\boxed{
+\forall\varepsilon>0,\
+\exists\alpha_0,\
+\forall\beta\succeq\alpha_0,\
+\sup_{\|g\|_{\mathrm{form}}\le1}
+|Q_\beta(g)-Q(g)|
+<\varepsilon.
+}
+$$
+
+这表示无论以后怎样共同增加：
+
+* 素数范围；
+* 构型阶数；
+* 零点高度；
+* 测试复杂度；
+* 完成深度；
+
+误差都不会重新长出来。
+
+如果只证明每一种固定极限顺序，例如：
+
+$$
+\lim_P\lim_KQ_{P,K},
+$$
+
+却没有联合估计，那么对角路径：
+
+$$
+P=P_n,\qquad K=K_n
+$$
+
+仍可能持续抓住新的余量。
+
+因此：
+
+$$
+\boxed{
+\text{RH 需要的是 cofinal uniformity，而不是若干个迭代极限。}
+}
+$$
+
+---
+

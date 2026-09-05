@@ -1,0 +1,15 @@
+## 483. 新素数估值不可由有限旧坐标恢复
+
+```lean
+theorem freshPrimeValuation_not_factor
+    (S : Finset Nat.Primes)
+    (q : Nat.Primes)
+    (hq : q ∉ S) :
+    ¬ ∃ f,
+      ∀ n,
+        padicValNat q n =
+          f (fun p : S => padicValNat p n)
+```
+
+---
+

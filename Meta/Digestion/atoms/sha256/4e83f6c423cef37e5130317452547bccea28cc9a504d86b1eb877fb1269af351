@@ -1,0 +1,11 @@
+## 252. 两个独立观察深度
+
+Hausdorff 约束由两个独立整数标记：
+
+$$
+(n,k).
+$$
+
+其中：
+
+* \(n\) 控制 inverse-Casimir moment depth；

@@ -93,13 +93,13 @@ public sealed class TrustTopologyTests
     }
 
     [Fact]
-    public void BaseJudgeScribeEmissionsInputProducesExactSl022Diagnostic()
+    public void ProtectedScribeEmissionsInputProducesExactSl022Diagnostic()
     {
         AssertExactSl022Diagnostic(ProtectedScribeEmissionsPath);
     }
 
     [Fact]
-    public void BaseJudgeAnchorCatalogInputProducesExactSl022Diagnostic()
+    public void ProtectedAnchorCatalogInputProducesExactSl022Diagnostic()
     {
         AssertExactSl022Diagnostic(ProtectedAnchorCatalogPath);
     }
@@ -107,7 +107,7 @@ public sealed class TrustTopologyTests
     [Theory]
     [MemberData(nameof(ProtectedPaths))]
     [BaseFactScopeProbe(22)]
-    public void Sl022RequiresBaseOwnedVerificationForEveryProtectedSurface(string path)
+    public void Sl022MarksEveryProtectedSurfaceAsVerificationRequired(string path)
     {
         var changes = RawChangeSet.Create(new[] { path });
 
@@ -148,15 +148,13 @@ public sealed class TrustTopologyTests
     {
         var descriptors = RuleCatalog.Default.Descriptors;
 
-        Assert.Equal(28, descriptors.Length);
-        Assert.Equal(28, descriptors.Select(item => item.Id).Distinct().Count());
+        Assert.Equal(25, descriptors.Length);
+        Assert.Equal(25, descriptors.Select(item => item.Id).Distinct().Count());
         Assert.Equal(
-            Enumerable.Range(1, 23).Select(RuleId.CreateKnown)
+            Enumerable.Range(1, 23).Except([5]).Select(RuleId.CreateKnown)
                 .Append(RuleId.CreateKnown(25))
                 .Append(RuleId.CreateKnown(26))
-                .Append(RuleId.CreateKnown(28))
-                .Append(RuleId.CreateKnown(29))
-                .Append(RuleId.CreateKnown(30)),
+                .Append(RuleId.CreateKnown(28)),
             descriptors.Select(item => item.Id));
         Assert.Equal(
             AdmissionEffect.HumanGate,

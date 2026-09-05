@@ -1,0 +1,54 @@
+## 8.3 跳跃能量的多尺度上界
+
+设 $Z(v)=\{k_1,\ldots,k_r\}$。恒等式
+
+$$
+I-U_1\cdots U_r
+=
+\sum_{j=1}^{r}
+U_1\cdots U_{j-1}(I-U_j)
+\tag{A8.6}
+$$
+
+与 unitary invariance 给出
+
+$$
+\left\|
+(I-\mathsf T_{v\log p})f
+\right\|_2
+\le
+\sum_{k\in Z(v)}
+\left\|
+(I-\mathsf T_{F_k\log p})f
+\right\|_2.
+\tag{A8.7}
+$$
+
+再由 Cauchy–Schwarz：
+
+$$
+\boxed{
+\left\|
+(I-\mathsf T_{v\log p})f
+\right\|_2^2
+\le
+r(v)
+\sum_{k\in Z(v)}
+\left\|
+(I-\mathsf T_{F_k\log p})f
+\right\|_2^2,
+}
+\tag{A8.8}
+$$
+
+其中 $r(v)=|Z(v)|$。
+
+因为 Zeckendorf 指标不相邻，
+
+$$
+r(v)=O(\log v).
+\tag{A8.9}
+$$
+
+所以任意 prime-power jump 可以被一个稀疏 Fibonacci shell family 上界。
+

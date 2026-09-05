@@ -3,14 +3,13 @@ fingerprints:
   normalized_sha256: sha256:4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed
 cas_ref: sha256:4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed
 coverage_gids:
-  - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
-  - D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
-  - D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+  - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
+    target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
+  - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+    target_statement_id: sha256:54194a5ed453f9739fa911583246728277b4fa9d97b031a0c37dbfb7e7d82e0d
+  - gid: D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+    target_statement_id: sha256:269d9f52fed5f629c115ae717c4da2a08b5f80667c87db54c02a74acda647ac1
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
-      source_sha256: sha256:4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed
-      target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
   scribe:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94

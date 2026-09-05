@@ -1,0 +1,84 @@
+# 九、无限构型可以用 chaos 分解重新组织
+
+为了理解“每层都有一个约不掉项，但总系统仍可能闭合”，可以先看一个理想化 Boolean 模型。
+
+设：
+
+$$
+X_j\in\{-1,+1\}
+$$
+
+是独立平衡变量。
+
+对有限集合 \(S\)，定义 Walsh character：
+
+$$
+\chi_S(X)
+=
+\prod_{j\in S}X_j.
+$$
+
+这些 character 正交：
+
+$$
+\mathbb E[\chi_S\chi_T]
+=
+\mathbf 1_{S=T}.
+$$
+
+任何平方可积函数可写成：
+
+$$
+\boxed{
+f
+=
+\sum_{S\Subset\mathbb N}
+\widehat f(S)\chi_S,
+}
+$$
+
+且：
+
+$$
+\boxed{
+\|f\|_2^2
+=
+\sum_S|\widehat f(S)|^2.
+}
+$$
+
+将：
+
+$$
+|S|=k
+$$
+
+的部分称为第 \(k\) 阶 chaos：
+
+$$
+f_k
+=
+\sum_{|S|=k}
+\widehat f(S)\chi_S.
+$$
+
+则：
+
+$$
+\|f\|^2
+=
+\sum_{k\ge0}\|f_k\|^2.
+$$
+
+这给出一个精确答案：
+
+$$
+\boxed{
+\text{每一阶都可以有非零新信息，}
+\quad
+\text{但所有阶在正交平方和中共同闭合。}
+}
+$$
+
+---
+

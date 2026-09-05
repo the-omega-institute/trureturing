@@ -1,0 +1,55 @@
+# 第二百五十一部　短间隔与 RH 是上下谱边缘的对偶
+
+短间隔筛法的抽象目标是找到 trial \(F\)，使一个 prime-response Rayleigh quotient 超过存在阈值：
+
+$$
+\frac{
+\langle F,A_{\mathrm{short}}F\rangle
+}{
+\langle F,F\rangle
+}
+>
+\Theta.
+$$
+
+它证明：
+
+$$
+\boxed{
+\lambda_{\max}(A_{\mathrm{short}})>\Theta,
+}
+$$
+
+从而迫使某个整数平移包含至少两个素数。
+
+RH 的 Weil 形式则要求：
+
+$$
+Q(g)\ge0
+\qquad
+\forall g,
+$$
+
+即：
+
+$$
+\boxed{
+\lambda_{\min}(A_{\mathrm{Weil}})\ge0.
+}
+$$
+
+所以两者构成一个真正的谱边缘对偶：
+
+$$
+\boxed{
+\begin{aligned}
+\text{short gaps}
+&:\text{上谱边缘越过存在阈值};\\
+\text{RH}
+&:\text{下谱边缘不得穿过零阈值}.
+\end{aligned}
+}
+$$
+
+这也解释了两类整数 collapse：
+

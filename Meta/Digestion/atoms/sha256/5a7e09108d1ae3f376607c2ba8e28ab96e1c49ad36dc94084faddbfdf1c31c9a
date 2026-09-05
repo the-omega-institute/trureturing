@@ -1,0 +1,22 @@
+\[
+\boxed{
+\Sigma
+=
+(X,U,I,B,q,F,A,a,\Gamma,\mathcal Q,L).
+}
+\]
+
+其中：
+
+- \(q\) 是 CUT 族；
+- \(F\) 是 FLOW 族；
+- \(A\) 是 ADMIT；
+- \(a\) 是 ANCHOR；
+- \(\Gamma\) 是当前定义语言；
+- \(\mathcal Q\) 是问题域；
+- \(L\) 是来源、证明和历史账本。
+
+前四者是 C-IRPT 基础角色；后三者是组织结构。
+
+---
+

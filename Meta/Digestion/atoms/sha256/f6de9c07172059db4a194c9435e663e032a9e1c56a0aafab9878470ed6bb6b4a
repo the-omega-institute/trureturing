@@ -1,0 +1,8 @@
+## 532. 新坐标不可由旧坐标恢复
+
+$$
+d_k\notin\operatorname{Cl}(\Gamma_{<k}).
+$$
+
+这是 primitive information growth。
+

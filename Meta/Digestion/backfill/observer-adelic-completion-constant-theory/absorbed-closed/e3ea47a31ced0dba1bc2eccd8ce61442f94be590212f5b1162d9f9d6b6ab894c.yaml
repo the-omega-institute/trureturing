@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e3ea47a31ced0dba1bc2eccd8ce61442f94be590212f5b1162d9f9d6b6ab894c
+  normalized_sha256: sha256:e3ea47a31ced0dba1bc2eccd8ce61442f94be590212f5b1162d9f9d6b6ab894c
+cas_ref: sha256:e3ea47a31ced0dba1bc2eccd8ce61442f94be590212f5b1162d9f9d6b6ab894c
+coverage_gids:
+  - gid: D5/S3/Constants/Moments/LeadingSpectralMomentRecovery.leading_spectral_moment_recovery
+    target_statement_id: sha256:365108ea0758100050ad05872dbfc43ce8025e43c6236f077afd6420872fd01f
+receipts:
+  scribe:
+    - gid: D5/S3/Constants/Moments/LeadingSpectralMomentRecovery.leading_spectral_moment_recovery
+      definition_sha256: sha256:9f2dbc6e54558585cba698114887b01a35bc4c08f4673afe7872dd45c62e4212
+      emission_sha256: sha256:d25708a9c89e992b0976c2dea71527285c405ca480f0826f33b8cce1c18f5f57
+  unresolved_subitems: []

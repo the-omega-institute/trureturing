@@ -1,0 +1,63 @@
+# 第两千一百三十九部　与 Kakeya 的最终接合
+
+短素数簇在 log-frequency 空间中形成一个窄 grain：
+
+$$
+\Delta\omega
+\lesssim
+\frac DP.
+$$
+
+在观察窗口 \(\tau\) 下，只有满足：
+
+$$
+\tau\Delta\omega\gtrsim1
+$$
+
+的方向才能被分开。
+
+因此 grain 的自然分辨时间为：
+
+$$
+\boxed{
+\tau_{\mathcal C}
+\asymp
+\frac PD.
+}
+\tag{2139.1}
+$$
+
+这正是一个 Kakeya 式细管宽度—观察尺度对偶：
+
+$$
+\boxed{
+\text{log-frequency width}
+\times
+\text{time resolution}
+\asymp1.
+}
+$$
+
+但要产生真正的离线零点，需要这些 grains：
+
+1. 在许多 prime scales \(P\) 上出现；
+2. 在同一个 \(t\) 下保持相位协调；
+3. 同时补偿 \(e^{\pm\delta\log P}\) 的跨尺度倾斜；
+4. 通过 Gamma 与函数方程完成后仍不破坏正性。
+
+所以真正对象不是单层 PrimeGap，而是：
+
+$$
+\boxed{
+\textbf{PrimeGap sticky tower}.
+}
+$$
+
+Short-gaps 定理给出单层高重数 grain 的存在与成本。
+
+Kakeya 型工具可能控制 grains 能否跨尺度持续粘滞。
+
+Pick／Weil／Nevanlinna 正性则负责把“极少或受限”升级为“一个都没有”。
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:55e6c3e5c790ab6935932a82e9ad75fd842b9662eec30041f4a3a148852d8fad
+  normalized_sha256: sha256:55e6c3e5c790ab6935932a82e9ad75fd842b9662eec30041f4a3a148852d8fad
+cas_ref: sha256:55e6c3e5c790ab6935932a82e9ad75fd842b9662eec30041f4a3a148852d8fad
+coverage_gids:
+  - gid: D5/S3/Weil/Budget/EvenChannelGhostNoGo.even_channel_ghost_no_go
+    target_statement_id: sha256:77ca5a8540d9be3d1cd5200e7c1f69be0cdc0806f17ef6f3c9985756b9417005
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Budget/EvenChannelGhostNoGo.even_channel_ghost_no_go
+      definition_sha256: sha256:a70bc281d734846f9c1246c467bde278cd6959f9645082a86eed19593e3cb6bc
+      emission_sha256: sha256:476ef5f18641bb76cb6083e69b66886c5c6d5934848777634d3a762dfbf9f6e3
+  unresolved_subitems: []

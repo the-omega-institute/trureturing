@@ -1,0 +1,53 @@
+## C13.3 locally uniform convergence 的固定窗口稳定性
+
+假设：
+
+$$
+D_N\longrightarrow\Xi
+\tag{C13.9}
+$$
+
+在 compact sets 上局部一致收敛。
+
+若 $\partial R$ 无 $\Xi$ 零点，则：
+
+$$
+m_R
+=
+\inf_{\partial R}|\Xi|>0.
+\tag{C13.10}
+$$
+
+对充分大 $N$：
+
+$$
+\sup_{\partial R}|D_N-\Xi|<\frac{m_R}{3}.
+\tag{C13.11}
+$$
+
+于是：
+
+$$
+|D_N|
+\ge
+|\Xi|-|D_N-\Xi|
+>
+\frac{2m_R}{3},
+\tag{C13.12}
+$$
+
+所以：
+
+$$
+|D_N-\Xi|<|D_N|
+\tag{C13.13}
+$$
+
+并得到 zero-count stability。
+
+因此每个固定有理矩形的零点计数最终稳定。
+
+但 $N$ 可以依赖 $R$；局部一致收敛本身不提供一个覆盖全部高度的统一有限 $N$。
+
+---
+

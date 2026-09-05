@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:ab17ddfa54a2379783ff73571d2c72d6b156e351dfa1939d343358b9cbaa6193
 cas_ref: sha256:ab17ddfa54a2379783ff73571d2c72d6b156e351dfa1939d343358b9cbaa6193
 coverage_gids:
-  - D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.deficiency_risk_bound
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.deficiency_risk_bound
+    target_statement_id: sha256:dd23c8bcbd039d6a5aca055ba4e8c9b9c0d7398d41f2ddfb80ef9cea1ca2c746
 receipts:
-  coverage:
-    - gid: D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.deficiency_risk_bound
-      source_sha256: sha256:ab17ddfa54a2379783ff73571d2c72d6b156e351dfa1939d343358b9cbaa6193
-      target_statement_id: sha256:dd23c8bcbd039d6a5aca055ba4e8c9b9c0d7398d41f2ddfb80ef9cea1ca2c746
   scribe:
     - gid: D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.deficiency_risk_bound
       definition_sha256: sha256:71ac7cfbb62263326af3c2525965120fdecff989d9727fc4e781df6e86eb6ae8

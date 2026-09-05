@@ -1,0 +1,19 @@
+## 344. Hausdorff–RH 判据
+
+```lean
+theorem rh_iff_casimirPowerTrace_completelyMonotone :
+    RiemannHypothesis ↔
+      ∀ n ≥ 1, ∀ k,
+        0 ≤ (-1 : ℝ) ^ k *
+          forwardDifference k casimirPowerTrace n
+```
+
+其依赖必须显式列出：
+
+* \(\xi\) 反射商 entire；
+* genus-zero product；
+* Hausdorff moment theorem；
+* Stieltjes transform uniqueness。
+
+---
+

@@ -1,0 +1,64 @@
+## 168. 镜像实数的 carry 反码
+
+若：
+
+$$
+u_N(x)\neq0,
+$$
+
+则：
+
+$$
+\boxed{
+a_N(-x)
+=
+-a_N(x)-1,
+}
+$$
+
+并且：
+
+$$
+\boxed{
+u_N(-x)
+=
+1-u_N(x).
+}
+$$
+
+在非边界情形：
+
+$$
+u_N+u_{N+1}\neq1,
+$$
+
+进一步有：
+
+$$
+\boxed{
+c_N(-x)
+=
+1-c_N(x).
+}
+$$
+
+所以正负镜像不是“使用完全不同的 Zeckendorf 信息”，而是：
+
+$$
+\boxed{
+\text{同一个黄金 torus 轨道的互补 partition itinerary}.
+}
+$$
+
+这比直接把规范 Zeckendorf 数位逐位取反更准确，因为它保留了 carry 规范。
+
+对于离线零点对：
+
+$$
++\delta,\quad-\delta,
+$$
+
+其 transverse carry histories 在 generic 层级上构成严格反码。
+
+---
+

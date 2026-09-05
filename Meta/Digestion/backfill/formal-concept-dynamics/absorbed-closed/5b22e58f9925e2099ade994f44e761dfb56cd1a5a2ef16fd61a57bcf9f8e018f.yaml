@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:5b22e58f9925e2099ade994f44e761dfb56cd1a5a2ef16fd61a57bcf9f8e018f
 cas_ref: sha256:5b22e58f9925e2099ade994f44e761dfb56cd1a5a2ef16fd61a57bcf9f8e018f
 coverage_gids:
-  - D5/S3/ConceptDynamics/Identity/MemoryInheritanceNotIdentity.branching_memory_is_not_equality
+  - gid: D5/S3/ConceptDynamics/Identity/MemoryInheritanceNotIdentity.branching_memory_is_not_equality
+    target_statement_id: sha256:4aaa7909f3bd8d78ac9cbe8973c966811e2f8038df4759dbba2bce7518adf053
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Identity/MemoryInheritanceNotIdentity.branching_memory_is_not_equality
-      source_sha256: sha256:5b22e58f9925e2099ade994f44e761dfb56cd1a5a2ef16fd61a57bcf9f8e018f
-      target_statement_id: sha256:4aaa7909f3bd8d78ac9cbe8973c966811e2f8038df4759dbba2bce7518adf053
   scribe:
     - gid: D5/S3/ConceptDynamics/Identity/MemoryInheritanceNotIdentity.branching_memory_is_not_equality
       definition_sha256: sha256:37cb46eb15f36779f27178624c0bebd9ab59b6c3c247aeed0a056cd801755624

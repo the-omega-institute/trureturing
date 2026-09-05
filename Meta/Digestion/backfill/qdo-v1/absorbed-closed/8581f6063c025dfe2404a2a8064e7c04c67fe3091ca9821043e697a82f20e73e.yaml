@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8581f6063c025dfe2404a2a8064e7c04c67fe3091ca9821043e697a82f20e73e
+  normalized_sha256: sha256:8581f6063c025dfe2404a2a8064e7c04c67fe3091ca9821043e697a82f20e73e
+cas_ref: sha256:8581f6063c025dfe2404a2a8064e7c04c67fe3091ca9821043e697a82f20e73e
+coverage_gids:
+  - gid: D5/S1/Dynamics/PeriodicOrbits/BooleanReversal.boolean_reversal_has_minimal_period_two
+    target_statement_id: sha256:efdb8129760567a8c0fe5b3a86e9ba001e53f23da1b28fdcf60869f2d650a55f
+receipts:
+  scribe:
+    - gid: D5/S1/Dynamics/PeriodicOrbits/BooleanReversal.boolean_reversal_has_minimal_period_two
+      definition_sha256: sha256:0b0452d8b345297e34c29fba6b8c6724c2eb6c833857fa5ee7ee0f676b64f9bf
+      emission_sha256: sha256:fb3b54eece43198b7ed30b5f99cda9580da6254d383904585c22f03a54751128
+  unresolved_subitems: []

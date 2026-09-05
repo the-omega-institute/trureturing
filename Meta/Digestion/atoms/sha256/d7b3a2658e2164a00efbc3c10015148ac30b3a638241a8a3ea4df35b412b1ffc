@@ -1,0 +1,34 @@
+## 468. 无限 Möbius 深度
+
+定义第 \(k\) 层 primitive residual：
+
+$$
+\mathfrak P_k
+=
+\frac{
+\text{order }\le k\text{ information}
+}{
+\text{由 order }<k\text{ 可生成的信息}
+}.
+$$
+
+若：
+
+$$
+\mathfrak P_k\neq0
+$$
+
+对无穷多个 \(k\) 成立，则系统没有有限 arity closure。
+
+这可以称为：
+
+$$
+\boxed{
+\text{infinite Möbius depth}.
+}
+$$
+
+局部素数筛模型已经严格具有无限 Möbius 深度。
+
+---
+

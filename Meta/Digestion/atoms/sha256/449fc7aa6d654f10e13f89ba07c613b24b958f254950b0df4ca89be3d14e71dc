@@ -1,0 +1,66 @@
+## 159. 名称是否永久分歧，由外围谱决定
+
+在 primitive 前件下，等号：
+
+$$
+\rho(A_\chi)=\lambda_0
+$$
+
+只有在标签相位为一个 coboundary 时才可能发生，即存在：
+
+$$
+u_i\in S^1,
+\qquad
+\zeta_\chi\in S^1
+$$
+
+使每条允许边满足：
+
+$$
+\boxed{
+\chi(\ell(i\to j))
+=
+\zeta_\chi
+u_i^{-1}u_j.
+}
+$$
+
+此时：
+
+$$
+A_\chi
+=
+\zeta_\chi
+D^{-1}AD.
+$$
+
+所以非平凡名字与主完成通道拥有同样增长率，分歧永久存在。
+
+若不存在这种 coboundary：
+
+$$
+\boxed{
+\rho(A_\chi)<\lambda_0,
+}
+$$
+
+名称信息只作为次级振荡存在，并在相对尺度下消失。
+
+因此：
+
+$$
+\boxed{
+\text{不是每一个“名”都永久造成分歧；}
+}
+$$
+
+真正的永久分歧源是：
+
+$$
+\boxed{
+\text{nontrivial peripheral character}.
+}
+$$
+
+---
+

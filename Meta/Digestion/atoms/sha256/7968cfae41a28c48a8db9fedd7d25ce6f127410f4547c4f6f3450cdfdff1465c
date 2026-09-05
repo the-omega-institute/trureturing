@@ -1,0 +1,57 @@
+## 387. 二点 Walsh 完整分解
+
+记：
+
+$$
+\lambda_1=\lambda(n),
+\qquad
+\lambda_2=\lambda(n+2).
+$$
+
+“两个坐标均为奇”这一宇称事件的 indicator 是：
+
+$$
+\boxed{
+\mathbf1_{\lambda_1=-1,\lambda_2=-1}
+=
+\frac14
+(1-\lambda_1-\lambda_2+\lambda_1\lambda_2).
+}
+$$
+
+这里需要四个 Walsh sector：
+
+$$
+1,
+\quad
+\lambda_1,
+\quad
+\lambda_2,
+\quad
+\lambda_1\lambda_2.
+$$
+
+仅仅掌握全局偶项：
+
+$$
+\lambda_1\lambda_2
+$$
+
+不能恢复两个独立奇观察者：
+
+$$
+\lambda_1,\quad\lambda_2.
+$$
+
+这正好对应你的直觉：
+
+$$
+\boxed{
+\text{global pair is even，}
+\quad
+\text{but each unique slot is odd}.
+}
+$$
+
+---
+

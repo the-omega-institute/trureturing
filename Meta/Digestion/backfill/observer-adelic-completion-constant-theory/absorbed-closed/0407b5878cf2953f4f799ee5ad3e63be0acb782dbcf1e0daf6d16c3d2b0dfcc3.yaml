@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0407b5878cf2953f4f799ee5ad3e63be0acb782dbcf1e0daf6d16c3d2b0dfcc3
+  normalized_sha256: sha256:0407b5878cf2953f4f799ee5ad3e63be0acb782dbcf1e0daf6d16c3d2b0dfcc3
+cas_ref: sha256:0407b5878cf2953f4f799ee5ad3e63be0acb782dbcf1e0daf6d16c3d2b0dfcc3
+coverage_gids:
+  - gid: D5/S3/Analytic/Characterizations/ShiftedHerglotzCriterion.shifted_herglotz_criterion
+    target_statement_id: sha256:0e760d3904790fd74d7f961800a7552ec81aefbc4a54a4f0a58abc650dc8cc4a
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Characterizations/ShiftedHerglotzCriterion.shifted_herglotz_criterion
+      definition_sha256: sha256:540ed6874d0a976134bdaad8d7ec13bb12856afb44d45edb7fcd8ec22cf4346e
+      emission_sha256: sha256:4c0b8bb205988aa54cb4a93e93d621d687df63555824cd31870a62322eba14a4
+  unresolved_subitems: []

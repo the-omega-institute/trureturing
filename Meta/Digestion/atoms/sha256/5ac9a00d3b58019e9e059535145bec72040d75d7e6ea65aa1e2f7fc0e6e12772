@@ -1,0 +1,10 @@
+## 205. \(\xi\) 的反射商下降
+
+```lean
+theorem xi_factors_through_reflectionCasimir :
+    ∃! Xq : EntireFunction ℂ,
+      ∀ s : ℂ, completedXi s = Xq (s * (1 - s))
+```
+
+---
+

@@ -1,0 +1,8 @@
+## 3. Golden evidence ladder
+
+每增加一个 Zeckendorf 分辨率层，在线假设相对平滑离线假设的空结果 Bayes 因子渐近乘以
+
+$$
+\varphi.
+$$
+

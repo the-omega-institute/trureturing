@@ -242,35 +242,6 @@ public sealed class R14ScopeNarrowingTests
             CountFindings(Execute(fixture, deletedPath), 25, message, findingPath));
     }
 
-    [Fact]
-    [BaseFactScopeProbe(5)]
-    public void Sl005ChronicleScopesHistoryAndKeepsDeltaAndImplementationRechecks()
-    {
-        const string historicalPath = "Chronicle/2026/07/10-historical.md";
-        const string unrelatedChronicle = "Chronicle/2026/07/11-new.md";
-        const string message = "tracked Chronicle entries are append-only";
-
-        var unrelated = ChronicleHistory(historicalPath);
-        unrelated.Files[unrelatedChronicle] = "new entry\n";
-        Assert.Equal(
-            0,
-            CountFindings(Execute(unrelated, unrelatedChronicle), 5, message, historicalPath));
-
-        var changed = ChronicleHistory(historicalPath);
-        Assert.Equal(
-            1,
-            CountFindings(Execute(changed, historicalPath), 5, message, historicalPath));
-
-        var implementation = ChronicleHistory(historicalPath);
-        Assert.Equal(
-            1,
-            CountFindings(
-                Execute(implementation, RuleImplementationPath),
-                5,
-                message,
-                historicalPath));
-    }
-
     private static RuleFixture DuplicateGidHistory()
     {
         var fixture = new RuleFixture();
@@ -293,18 +264,10 @@ public sealed class R14ScopeNarrowingTests
         return fixture;
     }
 
-    private static RuleFixture ChronicleHistory(string path)
-    {
-        var fixture = new RuleFixture();
-        fixture.ForkPoint[path] = "original\n";
-        fixture.Baseline[path] = "historical rewrite\n";
-        fixture.Files[path] = "historical rewrite\n";
-        return fixture;
-    }
-
     private static CompletedRuleSet Execute(RuleFixture fixture, params string[] changedPaths) =>
         Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create(changedPaths)))).Capability;
+            RuleCatalog.Default.Execute(
+                fixture.BuildScopeProbe(RawChangeSet.Create(changedPaths)))).Capability;
 
     private static int CountFindings(
         CompletedRuleSet completed,

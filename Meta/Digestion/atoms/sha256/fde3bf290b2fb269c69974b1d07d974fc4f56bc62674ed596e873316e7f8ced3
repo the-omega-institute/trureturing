@@ -1,0 +1,13 @@
+## 9.2 法向关系能量
+
+定义
+
+$$
+\boxed{
+R_{p,q}(\delta)
+:=
+\sinh^2\!\left(\delta\log\frac qp\right).
+}
+\tag{9.3}
+$$
+

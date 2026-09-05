@@ -1,0 +1,28 @@
+### 猜想 A16.1　Arithmetic equimodular confinement
+
+对 canonical completed cocycle，
+
+$$
+\boxed{
+L_+(s)=L_-(s)
+\Longrightarrow
+\Re s=\frac12.
+}
+\tag{A16.4}
+$$
+
+并且 completed determinant 的零点只能出现在该等模集合上。若两部分均建立，则推出 RH。
+
+这条猜想把三种语言统一：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Weil 语言}&:\text{odd energy 不产生负性},\\
+\text{Lee–Yang 语言}&:\text{根不离临界圆},\\
+\text{transfer 语言}&:\text{等模集合被限制在反射固定轴}.
+\end{aligned}
+}
+\tag{A16.5}
+$$
+

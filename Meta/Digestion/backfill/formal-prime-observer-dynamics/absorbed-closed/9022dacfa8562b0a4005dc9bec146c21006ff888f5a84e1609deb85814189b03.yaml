@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9022dacfa8562b0a4005dc9bec146c21006ff888f5a84e1609deb85814189b03
+  normalized_sha256: sha256:9022dacfa8562b0a4005dc9bec146c21006ff888f5a84e1609deb85814189b03
+cas_ref: sha256:9022dacfa8562b0a4005dc9bec146c21006ff888f5a84e1609deb85814189b03
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/PosteriorInformationGainIncrease.actual_posterior_information_gain_can_increase
+    target_statement_id: sha256:f503a0bbd0f7896356bb4c4f2a8d39ce4674797b4ba34f0ee9b100d2a717673d
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Experiment/PosteriorInformationGainIncrease.actual_posterior_information_gain_can_increase
+      definition_sha256: sha256:42a69ae31e0619343974ca133ae05c78a057eaede3c5996aef2a461ab83ae8b7
+      emission_sha256: sha256:4b301b199377937f892627baf09b3a40cfdf5cefdf099a20a0801f6901e067c7
+  unresolved_subitems: []

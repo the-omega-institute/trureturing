@@ -1,0 +1,107 @@
+# 十五、全部素数构型为何可能正好用于构造这个基态
+
+单个素数幂跳跃只给出网络的边。
+
+而一个正基态必须同时兼容所有闭合路径：
+
+$$
+x
+\to
+x+a_1
+\to
+x+a_1+a_2
+\to\cdots
+\to x.
+$$
+
+闭合路径的权重展开必然产生多点乘积：
+
+$$
+\Lambda(n+h_1)
+\Lambda(n+h_2)
+\cdots
+\Lambda(n+h_k).
+$$
+
+所以：
+
+$$
+\boxed{
+\text{全部素数构型不是为了再次寻找零点，}
+}
+$$
+
+而可能是为了确保：
+
+$$
+\boxed{
+\text{正基态在所有闭合算术回路上相容。}
+}
+$$
+
+矩生成元
+
+$$
+\mathcal M_H
+$$
+
+保存全部闭合路径权重。
+
+其对数
+
+$$
+\mathcal K_H=\log\mathcal M_H
+$$
+
+删除可分解路径，只保留 primitive connected loops。
+
+另一方面：
+
+$$
+-\log\det(I-U)
+=
+\sum_{n\ge1}
+\frac1n\operatorname{Tr}(U^n)
+$$
+
+同样只通过闭合算子路径读取谱。
+
+所以整个理论出现“双对数闭合”：
+
+$$
+\boxed{
+\begin{aligned}
+\log\mathbb E(e^{\text{source}})
+&=
+\text{connected arithmetic loops};\\
+-\log\det(I-\text{transfer})
+&=
+\text{primitive spectral loops}.
+\end{aligned}
+}
+$$
+
+Trace–Jet Bridge 真正应该完成的是：
+
+$$
+\boxed{
+\text{connected prime-constellation loops}
+\longleftrightarrow
+\text{primitive positive jump loops}.
+}
+$$
+
+一旦两边由同一个正详细平衡网络生成，Ouroboros 不再只是比喻：
+
+$$
+\text{Arithmetic}
+\to
+\text{closed loops}
+\to
+\text{spectrum}
+\to
+\text{Arithmetic}.
+$$
+
+---
+

@@ -1,0 +1,18 @@
+## 210. 固定名字完成、全名字不一致完成
+
+```lean
+theorem fixed_modulus_digitCount_equidistribution ...
+```
+
+以及：
+
+```lean
+theorem no_uniform_nontrivial_character_gap :
+    (∀ χ ≠ 1, spectralRadius (twistedTransfer χ) < phi) ∧
+    sup {spectralRadius (twistedTransfer χ) | χ ≠ 1} = phi
+```
+
+这会成为对角逃逸最重要的有限维模型。
+
+---
+

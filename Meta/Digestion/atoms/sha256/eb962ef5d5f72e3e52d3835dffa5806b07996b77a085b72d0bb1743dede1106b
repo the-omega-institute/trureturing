@@ -1,0 +1,53 @@
+## 32. 全部轨道 cumulant
+
+其生成函数为：
+
+$$
+\mathcal Z_T(\mathbf u)
+=
+\mathbb E
+\exp
+\left(
+\sum_{o\in T}u_oX_o
+\right)
+=
+\cosh
+\left(
+\sum_{o\in T}u_o\delta_o
+\right).
+$$
+
+connected 生成元为：
+
+$$
+\boxed{
+\mathcal K_T(\mathbf u)
+=
+\log\cosh
+\left(
+\sum_{o\in T}u_o\delta_o
+\right).
+}
+$$
+
+于是：
+
+* 所有总阶数为奇数的 cumulant 为零；
+* 所有偶阶 cumulant 一般非零；
+* 偶阶 cumulant tensor 具有形式：
+
+$$
+\boxed{
+\boldsymbol\kappa_{2r}
+=
+c_{2r}
+\boldsymbol\delta^{\otimes2r},
+}
+$$
+
+其中 \(c_{2r}\) 是 Rademacher 变量的第 \(2r\) 阶 cumulant。
+
+因此该全局横向状态的 connected 结构虽然跨越全部轨道，却是对称秩一。
+
+---
+

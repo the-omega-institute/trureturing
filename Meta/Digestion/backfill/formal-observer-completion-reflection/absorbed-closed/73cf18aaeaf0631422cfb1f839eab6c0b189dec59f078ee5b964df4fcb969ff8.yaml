@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:73cf18aaeaf0631422cfb1f839eab6c0b189dec59f078ee5b964df4fcb969ff8
+  normalized_sha256: sha256:73cf18aaeaf0631422cfb1f839eab6c0b189dec59f078ee5b964df4fcb969ff8
+cas_ref: sha256:73cf18aaeaf0631422cfb1f839eab6c0b189dec59f078ee5b964df4fcb969ff8
+coverage_gids:
+  - gid: D5/S3/Observer/ArithmeticTomography/FinitePrimePrecisionWindowError.finite_prime_precision_window_error
+    target_statement_id: sha256:9d48048b61a8a688926f7b5337f8b374e1b29f0214779e891ddd6e9b11066eb8
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/ArithmeticTomography/FinitePrimePrecisionWindowError.finite_prime_precision_window_error
+      definition_sha256: sha256:ea05e92769ff491cee8c3b6adc01c284b1389c64f437e4d0437fdfb1e9f9a7d9
+      emission_sha256: sha256:be9ad98eb2107a8eaf02ce5cac88211ba01e872cbeb16461ceecde0891a0f511
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+\[
+\widehat X_{\mathrm{form}}
+=
+\varprojlim_iX_i.
+\]
+
+然后定义实现谓词：
+
+\[
+\operatorname{Realizable}:
+\widehat X_{\mathrm{form}}
+\to\mathsf{Prop}.
+\]
+
+实现完成为：
+

@@ -1,0 +1,75 @@
+## 299. 反向也成立
+
+定义：
+
+$$
+a_n=p_{n+1},
+\qquad
+n\ge0.
+$$
+
+若：
+
+$$
+(-1)^k\Delta^ka_n\ge0
+\quad
+\forall n,k,
+$$
+
+Hausdorff 矩定理给出一个正测度 \(\nu\) 支撑于 \([0,1]\)，使：
+
+$$
+a_n
+=
+\int_0^1x^n\,d\nu(x).
+$$
+
+定义生成函数：
+
+$$
+B(t)
+=
+\sum_{n\ge0}a_nt^n.
+$$
+
+一方面：
+
+$$
+B(t)
+=
+\int_0^1
+\frac{d\nu(x)}{1-tx},
+$$
+
+所以它在：
+
+$$
+\mathbb C\setminus[1,\infty)
+$$
+
+解析。
+
+另一方面，由 \(\mathcal X\)：
+
+$$
+\boxed{
+B(t)
+=
+-\frac14
+\frac{
+\mathcal X'(t/4)
+}{
+\mathcal X(t/4)
+}.
+}
+$$
+
+右侧的极点恰位于：
+
+$$
+t=4q_j.
+$$
+
+若存在：
+
+* 非实 \(q_j\)；

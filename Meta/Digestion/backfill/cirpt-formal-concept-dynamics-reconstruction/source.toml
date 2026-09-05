@@ -1,0 +1,5 @@
+source_id = "cirpt-formal-concept-dynamics-reconstruction"
+path = "docs/develop/theory/CIRPT_FORMAL_CONCEPT_DYNAMICS_RECONSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

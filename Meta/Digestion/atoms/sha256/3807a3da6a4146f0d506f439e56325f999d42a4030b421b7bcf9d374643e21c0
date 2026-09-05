@@ -1,0 +1,14 @@
+## 538. 共尾交不变
+
+```lean
+theorem iInter_eq_iInter_cofinal
+    {I J : Type*} [Preorder I]
+    (R : I → Set X)
+    (mono : Antitone R)
+    (embed : J → I)
+    (cofinal : ∀ i, ∃ j, i ≤ embed j) :
+    (⋂ i, R i) = ⋂ j, R (embed j)
+```
+
+---
+

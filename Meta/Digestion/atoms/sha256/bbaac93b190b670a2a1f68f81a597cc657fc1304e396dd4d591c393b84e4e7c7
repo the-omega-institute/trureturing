@@ -1,0 +1,38 @@
+## 585. 正确的部分
+
+是的：
+
+$$
+\boxed{
+\text{任意固定有限观察复杂度，都可能被更高层数据绕过。}
+}
+$$
+
+而且 prime constellation 系统具有两个严格的非终止源：
+
+$$
+\boxed{
+\text{新素数地址不断出现；}
+}
+$$
+
+$$
+\boxed{
+\text{新相关 arity 不断出现。}
+}
+$$
+
+Casimir–Jacobi 系统也具有：
+
+$$
+\boxed{
+\alpha_n>0
+\quad
+\forall n,
+}
+$$
+
+所以不会在有限深度截断。
+
+---
+

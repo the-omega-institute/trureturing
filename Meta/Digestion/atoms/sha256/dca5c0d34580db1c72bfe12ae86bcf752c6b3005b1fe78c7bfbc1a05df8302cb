@@ -1,0 +1,36 @@
+## 21. 零点轨道
+
+对：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+有：
+
+$$
+\begin{aligned}
+C\rho&=\frac12+\delta-i\gamma,\\
+R\rho&=\frac12-\delta-i\gamma,\\
+J\rho&=\frac12-\delta+i\gamma.
+\end{aligned}
+$$
+
+generic 离线非实零点形成四点轨道：
+
+$$
+\boxed{
+\left\{
+\frac12\pm\delta\pm i\gamma
+\right\}.
+}
+$$
+
+临界线上的非实零点只形成上下两个点，因为：
+
+$$
+J\rho=\rho.
+$$
+
+---
+

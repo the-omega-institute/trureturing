@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0a5a895612bc4fee7e069d5d07daf5ebd298e9df1111a5bd930ceb34135cf3a5
+  normalized_sha256: sha256:0a5a895612bc4fee7e069d5d07daf5ebd298e9df1111a5bd930ceb34135cf3a5
+cas_ref: sha256:0a5a895612bc4fee7e069d5d07daf5ebd298e9df1111a5bd930ceb34135cf3a5
+coverage_gids:
+  - gid: D5/S3/Weil/CayleyLaguerre/LaguerreChebyshevDuality.laguerre_chebyshev_duality
+    target_statement_id: sha256:5ae918e6e814c9095e71aeef5fd1d96784f74a7915d38c7d184d3bb50cb557ab
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/CayleyLaguerre/LaguerreChebyshevDuality.laguerre_chebyshev_duality
+      definition_sha256: sha256:3cd21f563bfcf50d60eb6f76be9f185b5f22f4efc2ce2a1818b09964605c1179
+      emission_sha256: sha256:e169e38c231e60b1c8b5877317f9bc1a880149e86d7c8bb3c3cfb155e25d6481
+  unresolved_subitems: []

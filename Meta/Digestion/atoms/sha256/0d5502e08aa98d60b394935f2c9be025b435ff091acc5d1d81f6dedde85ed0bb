@@ -1,0 +1,42 @@
+## 154. 数位个数模 \(m\)
+
+定义：
+
+$$
+C_{n,r}^{(m)}
+=
+\#\left\{
+w\in\mathcal W_n:
+|w|_1\equiv r\pmod m
+\right\}.
+$$
+
+令：
+
+$$
+\omega_m=e^{2\pi i/m}.
+$$
+
+根单位滤子给出：
+
+$$
+\boxed{
+C_{n,r}^{(m)}
+=
+\frac1m
+\sum_{j=0}^{m-1}
+\omega_m^{-rj}
+P_n(\omega_m^j).
+}
+$$
+
+所以每一个有限名字：
+
+$$
+|w|_1\bmod m
+$$
+
+都分解为 \(m\) 个角色通道。
+
+---
+

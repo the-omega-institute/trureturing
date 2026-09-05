@@ -1,0 +1,27 @@
+### 永久残余
+
+$$
+\mathcal E_\infty\neq\varnothing.
+$$
+
+存在真正不可由整个观察族区分的目标差异。
+
+因此：
+
+$$
+\boxed{
+\forall\lambda,\ 
+\mathcal E_\lambda\neq\varnothing
+}
+$$
+
+并不能推出：
+
+$$
+\boxed{
+\mathcal E_\infty\neq\varnothing.
+}
+$$
+
+---
+

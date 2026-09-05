@@ -1,0 +1,60 @@
+## 630. 条件性 Weierstrass 桥
+
+假设某个保持 completed reflection 的函数族，在临界二重零点：
+
+$$
+s_0=\frac12+i\gamma_0
+$$
+
+附近具有局部形式：
+
+$$
+F(s)
+=
+U(s)
+\left[
+(s-s_0)^2
+-
+\kappa D_{p,q}
++
+O(D_{p,q}^{3/2})
+\right],
+$$
+
+其中：
+
+$$
+U(s_0)\neq0,
+\qquad
+\kappa\neq0.
+$$
+
+那么零点分支满足：
+
+$$
+\boxed{
+s_\pm
+=
+s_0
+\pm
+\sqrt{\kappa}\,h_{p,q}
++
+O(h_{p,q}^2).
+}
+$$
+
+若 \(\kappa>0\) 为实数，便得到横向镜像对：
+
+$$
+\boxed{
+\frac12
+\pm
+\sqrt{\kappa}\,h_{p,q}
++
+i\gamma_0.
+}
+$$
+
+这里：
+
+* \(D_{p,q}=h_{p,q}^2\) 是全局偶信息；

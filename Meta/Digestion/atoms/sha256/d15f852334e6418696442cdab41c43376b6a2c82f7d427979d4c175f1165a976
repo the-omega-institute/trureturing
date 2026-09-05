@@ -1,0 +1,4 @@
+## 〇　为什么是这一节
+
+separator 阶梯到 M3-f-6 为止说的是:**任一**离线非平凡零点都给出一个偶测试函数 g,使 Weil 平方零和 `zeroSum Z (g⋆g)` 的实部为负。取逆否:若对一切 g 该实部非负(本仓 O-6 的形式化陈述),则 `ZeroData` 里没有离线零点;而 `ZeroData` 的 `zero_exhaustive` 保证每个非平凡零点都被枚举,G-g-3 又把「右半带无零点」升为完整 `RiemannHypothesis`。反向由 R-F 给出。于是在**给定一个 `ZeroData`** 的前提下,本仓的 Weil 平方正性陈述与 Mathlib 的 `RiemannHypothesis` 等价。**诚实边界**:①`ZeroData` 的存在性未证(它要求 ζ 非平凡零点的一个可数枚举带重数、反射与共轭对称、局部有限——与 M1-b「零点无穷」同层,本仓 `ZeroSum.lean` 明写 "No inhabitant is asserted");②等价的右侧是**本仓定义**的 `zeroSum`/`convolutionSquare`/`WeilTestFunction` 上的正性,不冒充文献中 Weil 显式公式判据的字面形式;③本节**不构成 RH 的证明**,它把 RH 与一个可对每个 g 独立检验的不等式族捆在一起——那族不等式本身与 RH 同难。
+

@@ -1,0 +1,64 @@
+## 437. 有限 source 阶的真正奇偶
+
+对构型源生成元：
+
+$$
+\mathcal K(\mathbf u)
+=
+\log\mathcal M(\mathbf u),
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal K_{\mathrm E}(\mathbf u)
+=
+\frac{
+\mathcal K(\mathbf u)+
+\mathcal K(-\mathbf u)
+}{2},
+}
+$$
+
+$$
+\boxed{
+\mathcal K_{\mathrm O}(\mathbf u)
+=
+\frac{
+\mathcal K(\mathbf u)-
+\mathcal K(-\mathbf u)
+}{2}.
+}
+$$
+
+则：
+
+$$
+\mathcal K_{\mathrm E}
+$$
+
+只包含偶阶 connected cumulants，而：
+
+$$
+\mathcal K_{\mathrm O}
+$$
+
+只包含奇阶 connected cumulants。
+
+并且：
+
+$$
+\boxed{
+\mathcal K
+=
+\mathcal K_{\mathrm E}
++
+\mathcal K_{\mathrm O}.
+}
+$$
+
+这里的奇偶完全有定义，因为每个构型只包含有限多个 source insertions。
+
+---
+

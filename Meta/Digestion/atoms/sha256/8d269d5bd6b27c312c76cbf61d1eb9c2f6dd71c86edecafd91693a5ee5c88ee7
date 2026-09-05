@@ -1,0 +1,55 @@
+## 定理 8.1　载体—衰减阈值
+
+设 \(A\subseteq\mathbb N\) 的计数函数满足：
+
+$$
+N_A(x)
+\le
+C\frac{x^\delta}{(\log x)^\beta}
+$$
+
+对充分大的 \(x\) 成立。
+
+则：
+
+$$
+\sum_{n\in A}n^{-q}
+$$
+
+在以下情形收敛：
+
+$$
+q>\delta,
+$$
+
+或者：
+
+$$
+q=\delta,\qquad \beta>1.
+$$
+
+### 证明
+
+部分求和给出：
+
+$$
+\sum_{\substack{n\le X\\n\in A}}n^{-q}
+=
+N_A(X)X^{-q}
++
+q\int_1^X
+N_A(t)t^{-q-1}\,dt.
+$$
+
+代入计数上界后，积分由：
+
+$$
+\int^\infty
+\frac{t^{\delta-q-1}}
+{(\log t)^\beta}\,dt
+$$
+
+控制。结论立即得到。
+
+---
+

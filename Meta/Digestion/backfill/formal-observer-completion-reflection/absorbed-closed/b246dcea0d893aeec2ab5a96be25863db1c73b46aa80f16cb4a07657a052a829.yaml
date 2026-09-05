@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b246dcea0d893aeec2ab5a96be25863db1c73b46aa80f16cb4a07657a052a829
 cas_ref: sha256:b246dcea0d893aeec2ab5a96be25863db1c73b46aa80f16cb4a07657a052a829
 coverage_gids:
-  - D5/S3/Observer/ProtocolEvaluation/FiniteProtocolCompression.finite_protocol_subfamily_card_le_quotient_card_sub_one
+  - gid: D5/S3/Observer/ProtocolEvaluation/FiniteProtocolCompression.finite_protocol_subfamily_card_le_quotient_card_sub_one
+    target_statement_id: sha256:62ce1d3d437ca3f744e03823a4819cdc563581cbdd3d687a52d42361b51f88f1
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/ProtocolEvaluation/FiniteProtocolCompression.finite_protocol_subfamily_card_le_quotient_card_sub_one
-      source_sha256: sha256:b246dcea0d893aeec2ab5a96be25863db1c73b46aa80f16cb4a07657a052a829
-      target_statement_id: sha256:62ce1d3d437ca3f744e03823a4819cdc563581cbdd3d687a52d42361b51f88f1
   scribe:
     - gid: D5/S3/Observer/ProtocolEvaluation/FiniteProtocolCompression.finite_protocol_subfamily_card_le_quotient_card_sub_one
       definition_sha256: sha256:89c06d0906c5db2982fd804bb359d5383d07b22bfb88b1e2358afefc2eb83e77

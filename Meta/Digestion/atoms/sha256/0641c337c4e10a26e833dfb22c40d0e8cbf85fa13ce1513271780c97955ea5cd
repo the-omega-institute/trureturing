@@ -1,0 +1,14 @@
+## 613.3 dyadic Lucas 层的新素数支持
+
+```lean
+theorem gcd_lucas_dyadic_layers_dvd_two
+    (H : ℕ) (hH : 0 < H)
+    {i j : ℕ} (hij : i < j) :
+    Nat.gcd
+      (lucas (2 ^ i * H))
+      (lucas (2 ^ j * H))
+      ∣ 2
+```
+
+---
+

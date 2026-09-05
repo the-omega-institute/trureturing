@@ -4,6 +4,7 @@ internal sealed record CurrentEdgeValidation(
     bool IsResolved,
     bool IsClosed,
     RepositoryFile? Target,
+    string? TargetStatementId,
     TruthState State,
     string? Code,
     string Detail,
@@ -20,12 +21,14 @@ internal static class CurrentEdgeValidator
         string gidText,
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        IReadOnlyDictionary<RepoPath, TruthState> truthStates)
+        IReadOnlyDictionary<RepoPath, TruthState> truthStates,
+        FrozenStatementIndex frozenStatements)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(gidText);
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(report);
         ArgumentNullException.ThrowIfNull(truthStates);
+        ArgumentNullException.ThrowIfNull(frozenStatements);
 
         if (!Gid.TryParse(gidText, out var gid)
             || !snapshot.TryGetFile(gid.Path.Value, out var target))
@@ -36,23 +39,23 @@ internal static class CurrentEdgeValidator
                 $"current edge GID {gidText} does not resolve to a current repository target");
         }
 
-        if (gid.ToTarget() is Target.Formal { Declaration: { } declaration } formal)
+        if (!frozenStatements.TryResolve(
+                gid,
+                out var statementId,
+                out var resolutionError,
+                out var resolutionFailure))
         {
-            var matches = report.Files.TryGetValue(formal.Path, out var module)
-                && string.IsNullOrEmpty(module.Error)
-                    ? module.Declarations.Count(candidate =>
-                        string.Equals(candidate.Name, declaration, StringComparison.Ordinal)
-                        || candidate.Name.EndsWith("." + declaration, StringComparison.Ordinal))
-                    : 0;
-            if (matches != 1)
-            {
-                return Rejected(
-                    matches == 0
-                        ? "target-declaration-missing"
-                        : "target-declaration-ambiguous",
-                    gidText,
-                    $"current edge GID {gidText} resolves to {matches} report declarations");
-            }
+            return Rejected(
+                resolutionFailure switch
+                {
+                    FrozenStatementResolutionFailure.MissingDeclaration =>
+                        "target-declaration-missing",
+                    FrozenStatementResolutionFailure.AmbiguousDeclaration =>
+                        "target-declaration-ambiguous",
+                    _ => "target-statement-unresolved",
+                },
+                gidText,
+                $"current edge GID {gidText} has no unique active frozen statement: {resolutionError}");
         }
 
         var state = truthStates.TryGetValue(target.Path, out var resolvedState)
@@ -64,6 +67,7 @@ internal static class CurrentEdgeValidator
             IsResolved: true,
             IsClosed: isClosed,
             target,
+            statementId!.Value,
             state,
             code,
             gidText,
@@ -80,6 +84,7 @@ internal static class CurrentEdgeValidator
             IsResolved: false,
             IsClosed: false,
             Target: null,
+            TargetStatementId: null,
             TruthState.Semantic,
             code,
             detail,

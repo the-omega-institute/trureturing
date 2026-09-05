@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5bab8f0210b8db8416c2ce2e8193587de49e032670bfd81aca90566a1b1347a7
+  normalized_sha256: sha256:5bab8f0210b8db8416c2ce2e8193587de49e032670bfd81aca90566a1b1347a7
+cas_ref: sha256:5bab8f0210b8db8416c2ce2e8193587de49e032670bfd81aca90566a1b1347a7
+coverage_gids:
+  - gid: D5/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold.weak_prime_signal_completion_dichotomy
+    target_statement_id: sha256:2481cacfa2e628464ea065f11c8be7dc634faca5c2b39cd31ba925dd013bf250
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold.weak_prime_signal_completion_dichotomy
+      definition_sha256: sha256:2dd7e85c0ce928fd03d5aa276b00f710be1a7cb7b43e8711df36cf2745e3cdc6
+      emission_sha256: sha256:a4a4b8cd262125ff1162eb9087faf4c5e844f52c139b85084fca3ebe51538343
+  unresolved_subitems: []

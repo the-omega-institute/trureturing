@@ -77,7 +77,7 @@ internal static class SelfLockProbeProgram
             result = (new ProbeResultContract(
                 1,
                 "PROBE_INDETERMINATE",
-                new AuthorizationContract(false, false, true, [], string.Empty, string.Empty),
+                new AuthorizationContract(false, true, [], string.Empty, string.Empty),
                 ["probe_input_invalid:" + exception.GetType().Name],
                 []), 2);
         }
@@ -124,7 +124,6 @@ internal sealed record PublishOptions(
 
 internal sealed record ProbeOptions(
     string ControllerRoot,
-    string PureRevertScript,
     string CandidateRepository,
     string J1Repository,
     string J1Bundle,
@@ -136,7 +135,6 @@ internal sealed record ProbeOptions(
     private static readonly string[] ScalarNames =
     [
         "--controller-root",
-        "--pure-revert-script",
         "--candidate-repository",
         "--j1-repository",
         "--j1-bundle",
@@ -187,7 +185,6 @@ internal sealed record ProbeOptions(
         }
         return new ProbeOptions(
             Path.GetFullPath(scalars["--controller-root"]),
-            Path.GetFullPath(scalars["--pure-revert-script"]),
             Path.GetFullPath(scalars["--candidate-repository"]),
             Path.GetFullPath(scalars["--j1-repository"]),
             Path.GetFullPath(scalars["--j1-bundle"]),

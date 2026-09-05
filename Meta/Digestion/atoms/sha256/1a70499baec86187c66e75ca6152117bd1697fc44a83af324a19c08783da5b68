@@ -1,0 +1,26 @@
+## 57. 全构型分析算子
+
+定义：
+
+$$
+\boxed{
+(\mathcal Td)_A
+=
+\sum_o q_A(o)d_o.
+}
+$$
+
+这里 \(A\) 遍历全部有限规范化构型。
+
+定义盲核：
+
+$$
+\boxed{
+\mathscr N_{\mathrm{blind}}
+=
+\ker\mathcal T.
+}
+$$
+
+---
+

@@ -1,0 +1,18 @@
+## 539. 固定有限机器的前缀紧致性
+
+```lean
+theorem bounded_global_model_iff_all_prefix_models
+    [Fintype Alphabet]
+    [Fintype Output]
+    [Fintype BaseState]
+    (problem : SparseProblem Alphabet Output BaseState)
+    (bound : ℕ) :
+    HasGlobalModelAtMost problem bound ↔
+      ∀ extent,
+        HasPrefixModelAtMost problem extent bound
+```
+
+需要对状态命名规范化并证明候选机器类型有限。
+
+---
+

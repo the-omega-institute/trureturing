@@ -1,0 +1,56 @@
+## 定理 34.1　任意非平凡切分上的纠缠
+
+若：
+
+$$
+T=A\sqcup B,
+\qquad
+A,B\neq\varnothing,
+$$
+
+则：
+
+$$
+|\Omega_T^+\rangle
+=
+\frac{
+|\boldsymbol{+}\rangle_A
+|\boldsymbol{+}\rangle_B
++
+|\boldsymbol{-}\rangle_A
+|\boldsymbol{-}\rangle_B
+}{\sqrt2}.
+$$
+
+其 Schmidt rank 为 \(2\)。
+
+因此约化密度矩阵具有两个相同非零特征值：
+
+$$
+\frac12,\qquad\frac12.
+$$
+
+纠缠熵为：
+
+$$
+\boxed{
+S_A=\log2.
+}
+$$
+
+所以这不是许多 Bell 对的乘积，而是一个真正的 multipartite GHZ 型全局态。
+
+但是：
+
+$$
+\boxed{
+|\Omega_T^+\rangle
+}
+$$
+
+是对全局对角反射状态的一个明确量子提升，并不是经典 ζ 自动提供的物理量子态。
+
+项目已有 Bell 态形式化说明，完全相同的局部边缘读数可以对应彼此正交的不同全局纯态；这正是本理论区分局部零点分布和完整全局状态的数学原型。
+
+---
+

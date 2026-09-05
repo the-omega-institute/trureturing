@@ -1,0 +1,43 @@
+* 差分阶数不超过 \(r\) 的 Casimir 条件。
+
+定义该观察层的目标残余：
+
+$$
+\boxed{
+\mathcal E_\lambda
+=
+\left\{
+(F,G):
+O_\lambda(F)=O_\lambda(G),
+\quad
+\tau(F)\neq\tau(G)
+\right\}.
+}
+$$
+
+这就是：
+
+> 当前观察者认为两个系统相同，但 RH 目标必须区分的状态对。
+
+仓库现有的证明拓扑理论已经定义了同一形式：
+
+$$
+\mathcal E(q;T)
+=
+\ker q\setminus\ker T,
+$$
+
+并证明加入新读数 \(d\) 后：
+
+$$
+\boxed{
+\mathcal E(q\vee d;T)
+=
+\mathcal E(q;T)\cap\ker d.
+}
+$$
+
+也就是说，新条件不会凭空创造旧残余，只能切掉它能够识别的部分。
+
+---
+

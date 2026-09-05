@@ -45,15 +45,14 @@ public sealed partial class ProductionEnvironmentTests
                     Entries = source.Entries.Select(entry => entry.AtomId == siblingAtomId
                         ? entry with
                         {
+                            Coverage =
+                            [
+                                new DigestionCoverageEdge(
+                                    siblingGid,
+                                    targetStatementId),
+                            ],
                             Receipts = entry.Receipts with
                             {
-                                Coverage =
-                                [
-                                    new DigestionCoverageReceipt(
-                                        siblingGid,
-                                        entry.Fingerprints.RawSha256,
-                                        targetStatementId),
-                                ],
                                 Scribe =
                                 [
                                     new DigestionScribeReceipt(

@@ -1,0 +1,73 @@
+# 第一千九百八十部　离线缺陷的四坐标分解
+
+对一个右侧上半零点，可以定义：
+
+$$
+\boxed{
+\mathfrak d_\rho
+=
+\left(
+\gamma_\rho,\,
+\delta_\rho,\,
+m_\rho,\,
+[\mathbb F]
+\right).
+}
+\tag{1980.1}
+$$
+
+四个分量具有不同含义：
+
+$$
+\gamma_\rho
+=
+\text{边界位置／相位频率},
+$$
+
+$$
+\delta_\rho
+=
+\text{持久寿命／法向深度},
+$$
+
+$$
+m_\rho
+=
+\text{Riesz 质量／通量荷／重数},
+$$
+
+$$
+[\mathbb F]
+=
+\text{一负平方关系类型}.
+$$
+
+还可以加入归一化轨道分裂：
+
+$$
+\chi_\rho
+=
+\frac{
+4\delta_\rho^2\gamma_\rho^2
+}{
+(\delta_\rho^2+\gamma_\rho^2)^2
+}.
+$$
+
+于是：
+
+$$
+\boxed{
+\widetilde{\mathfrak d}_\rho
+=
+\left(
+\gamma_\rho,\delta_\rho,m_\rho,
+\chi_\rho,[\mathbb F]
+\right).
+}
+\tag{1980.2}
+$$
+
+这些分量互不决定：
+
+* 相同深度可以有不同高度；

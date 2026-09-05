@@ -1,0 +1,32 @@
+## 275. Reflection-Casimir Hausdorff criterion
+
+先定义：
+
+```lean
+def casimirMoment (n : ℕ) : ℝ := ...
+def normalizedCasimirMoment (n : ℕ) :=
+  casimirMoment n / 4 ^ n
+```
+
+最终目标：
+
+```lean
+theorem rh_iff_casimir_moments_completelyMonotone :
+    RiemannHypothesis ↔
+      ∀ n k,
+        0 ≤ (-1 : ℝ) ^ k *
+          iteratedForwardDifference
+            normalizedCasimirMoment k n
+```
+
+该命题应进入 frontier，直到：
+
+* \(\xi\) 的 \(q\)-factorization；
+* genus-zero product；
+* Hausdorff moment uniqueness；
+* meromorphic pole recovery；
+
+全部形式化闭合。
+
+---
+

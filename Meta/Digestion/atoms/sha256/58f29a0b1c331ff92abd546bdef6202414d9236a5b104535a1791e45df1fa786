@@ -1,0 +1,85 @@
+# 第两千一百一十五部　真正承重的 Prime–Kakeya–Weil 桥
+
+需要构造有限正算子：
+
+$$
+\mathcal V^{\mathrm{prime}}_{L,N,H}
+$$
+
+来汇总 prime-frequency pairwise separation：
+
+$$
+\sum_{p,q}
+w_{pq}
+\left|
+e^{it_1\log p}e^{it_2\log q}
+-
+e^{it_1\log q}e^{it_2\log p}
+\right|^2.
+$$
+
+同时构造有限离线奇算子：
+
+$$
+\mathcal O^{\mathrm{off}}_{T,N}.
+$$
+
+核心目标应是某种支配：
+
+$$
+\boxed{
+P_N
+\mathcal O^{\mathrm{off}}_{T,N}
+P_N
+\preceq
+C_{L,N,T}
+\mathcal V^{\mathrm{prime}}_{L,N,H}
++
+\varepsilon_{L,N,T,H}I.
+}
+\tag{2115.1}
+$$
+
+随后需要两个极限性质：
+
+$$
+\boxed{
+\mathcal V^{\mathrm{prime}}_{L,N,H}
+\longrightarrow0
+}
+$$
+
+在合法完成／平坦化极限中成立，以及：
+
+$$
+\boxed{
+\varepsilon_{L,N,T,H}
+\longrightarrow0.
+}
+$$
+
+那么：
+
+$$
+\mathcal O^{\mathrm{off}}=0,
+$$
+
+离线法向奇通道消失。
+
+这里最难的不是每个频率对能否被分辨。
+
+项目已经证明可以。
+
+最难的是：
+
+$$
+\boxed{
+\text{能否用一个有限多尺度观察协议，
+同时捕获所有可能承载离线奇能量的频率簇。}
+}
+$$
+
+这正是 Kakeya 式 branching／anti-clustering 可能发挥作用的地方。
+
+---
+

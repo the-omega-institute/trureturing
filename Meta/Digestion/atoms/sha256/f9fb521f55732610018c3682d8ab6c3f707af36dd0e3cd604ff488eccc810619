@@ -1,0 +1,13 @@
+## 343. Casimir power trace
+
+```lean
+def casimirPowerTrace (n : ℕ) : ℝ :=
+  -((iteratedDeriv n
+      (fun q => Real.log ‖reflectionXi q‖) 0) /
+    (4 ^ n * (n - 1).factorial))
+```
+
+实际 Lean 中应绕开零点附近的实对数，用 complex logarithmic derivative或 power-series coefficient定义。
+
+---
+

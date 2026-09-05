@@ -1,0 +1,10 @@
+## 209. Zeckendorf parity 六周期
+
+```lean
+theorem signedLegalWordCount_period_six :
+    ∀ n, signedLegalWordCount (n + 6) =
+      signedLegalWordCount n
+```
+
+---
+

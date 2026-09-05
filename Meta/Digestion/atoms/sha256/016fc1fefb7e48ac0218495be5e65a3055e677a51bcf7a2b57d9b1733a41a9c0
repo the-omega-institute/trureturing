@@ -1,0 +1,20 @@
+## 定理 31.1　准入下降判据 `[D]`
+
+以下等价：
+
+1. 存在 \(\overline A:B\to\mathsf{Prop}\)，使：
+
+   \[
+   A(x)\leftrightarrow\overline A(q(x));
+   \]
+
+2. \(A\) 在每个 CUT 纤维上保持不变；
+3. \(\partial_qA=\varnothing\)；
+4. \(A=A_q^\forall=A_q^\exists\)。
+
+若边界非空，则任何只读取 \(q(x)\) 的确定性准入规则，都必须在某个状态上分类错误。
+
+这与项目的 mixed-fiber decision impossibility 属于同一个下降障碍。
+
+---
+

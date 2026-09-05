@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:31ab4caf862bd618f34823ee41712bf53666877adf2288dc32c3e01854350fef
+  normalized_sha256: sha256:31ab4caf862bd618f34823ee41712bf53666877adf2288dc32c3e01854350fef
+cas_ref: sha256:31ab4caf862bd618f34823ee41712bf53666877adf2288dc32c3e01854350fef
+coverage_gids:
+  - gid: D5/S0/Asymptotics/EscapeProbability/CompletelyRecessiveSelectionOrder.completely_recessive_selection_order
+    target_statement_id: sha256:f8768c0c4a6bc9572a2c6d51f9c0d5f0baeb28ed5eff0318c562a96070e09ee5
+receipts:
+  scribe:
+    - gid: D5/S0/Asymptotics/EscapeProbability/CompletelyRecessiveSelectionOrder.completely_recessive_selection_order
+      definition_sha256: sha256:b5481b71e13d71fbd8ab4d729f2b33f7a62e196004bee16fd917dc3514c0fd90
+      emission_sha256: sha256:fb258ccdde612040fa77222f5503cd55fa16fc6760968f5bd95f712d29d92ab5
+  unresolved_subitems: []

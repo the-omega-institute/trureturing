@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:7d9464fa0a12df0e59035a14d7a9288be02959c629a77cacc144df40a7cd4112
 cas_ref: sha256:7d9464fa0a12df0e59035a14d7a9288be02959c629a77cacc144df40a7cd4112
 coverage_gids:
-  - D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.schur_complement_associativity
+  - gid: D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.schur_complement_associativity
+    target_statement_id: sha256:67a8097be9167f022a4c3c5411c764f075d678ad63999dd16c7d3bd3e33e6249
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.schur_complement_associativity
-      source_sha256: sha256:7d9464fa0a12df0e59035a14d7a9288be02959c629a77cacc144df40a7cd4112
-      target_statement_id: sha256:67a8097be9167f022a4c3c5411c764f075d678ad63999dd16c7d3bd3e33e6249
   scribe:
     - gid: D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.schur_complement_associativity
       definition_sha256: sha256:3b7c433e77d7e8f4b70110261b2d6bfd9e64552e8423982c868459823c5de19b

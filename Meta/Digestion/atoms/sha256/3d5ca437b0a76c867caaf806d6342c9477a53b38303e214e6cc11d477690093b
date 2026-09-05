@@ -1,0 +1,22 @@
+## 44. 最自然但无效的标量尝试
+
+设：
+
+$$
+\mathcal K_H(s;\varepsilon)
+$$
+
+是构型 connected 生成元。
+
+最直接的尝试是定义：
+
+$$
+\widetilde\Xi_H(s;\varepsilon)
+=
+\xi(s)
+\exp
+\mathcal K_H(s;\varepsilon).
+$$
+
+---
+

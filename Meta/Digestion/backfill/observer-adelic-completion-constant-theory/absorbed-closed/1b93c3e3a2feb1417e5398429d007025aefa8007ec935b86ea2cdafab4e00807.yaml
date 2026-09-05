@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1b93c3e3a2feb1417e5398429d007025aefa8007ec935b86ea2cdafab4e00807
+  normalized_sha256: sha256:1b93c3e3a2feb1417e5398429d007025aefa8007ec935b86ea2cdafab4e00807
+cas_ref: sha256:1b93c3e3a2feb1417e5398429d007025aefa8007ec935b86ea2cdafab4e00807
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/LocalEulerFrameHistoryNonreconstruction.local_euler_determinants_do_not_reconstruct_frame_history
+    target_statement_id: sha256:1908ae742f1cbf13b767ecdb4acebfbf4c64ca88164ee158e486fee393976509
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/AgencyHolonomy/LocalEulerFrameHistoryNonreconstruction.local_euler_determinants_do_not_reconstruct_frame_history
+      definition_sha256: sha256:dbcda5a905ac9ec2c7d1bab727a9ec9e7d4d4215e41a4b4413b7cfc1c4a38c68
+      emission_sha256: sha256:b0d2c4fe2a216360fcc2e1438a264f5ef917b238a98d1985fec018a926bd5195
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:69124dbbaf4e1fcab24e65e8f345d1e4db2ed249499fe338bd37a719221728d6
+  normalized_sha256: sha256:69124dbbaf4e1fcab24e65e8f345d1e4db2ed249499fe338bd37a719221728d6
+cas_ref: sha256:69124dbbaf4e1fcab24e65e8f345d1e4db2ed249499fe338bd37a719221728d6
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/SafeComplementFiniteIndex.safe_complement_gap
+    target_statement_id: sha256:dd1f6ef96cda89557b51f6efcf935c4d1329a3931136e87bd081ffd42b69fd34
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaBridge/SafeComplementFiniteIndex.safe_complement_gap
+      definition_sha256: sha256:49ee981ae73b70b30b05dba97e31fb84cd309ddb7ac56d663007093f0e32b60f
+      emission_sha256: sha256:41ef64b477fe1b0ad6bc3212014675e8b584372a80308a01d1bb12193f320c97
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b49ade6ac49750a1df6a4546e045949f1a1aeee0bd6d9ddf3f917a9b8b346296
+  normalized_sha256: sha256:b49ade6ac49750a1df6a4546e045949f1a1aeee0bd6d9ddf3f917a9b8b346296
+cas_ref: sha256:b49ade6ac49750a1df6a4546e045949f1a1aeee0bd6d9ddf3f917a9b8b346296
+coverage_gids:
+  - gid: D5/S3/Entropy/Observation/BudgetEfficiencyAssembly.budget_efficiency_assembly
+    target_statement_id: sha256:087254f393a99b22f70babc6e1bbc80363f3f174593905c2ba99907683b99640
+receipts:
+  scribe:
+    - gid: D5/S3/Entropy/Observation/BudgetEfficiencyAssembly.budget_efficiency_assembly
+      definition_sha256: sha256:f0a2c564907e12d26293ca9400e0b6a59d0f087623689d7429e3d57d39eec70a
+      emission_sha256: sha256:0daf46ecb0937f513a3f2499ab9905b13d974485fac5e637130832399fe1547c
+  unresolved_subitems: []

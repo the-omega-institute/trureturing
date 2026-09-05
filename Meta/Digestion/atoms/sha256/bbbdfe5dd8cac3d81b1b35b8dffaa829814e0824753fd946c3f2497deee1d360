@@ -1,0 +1,97 @@
+# 第两千零九十部　函数方程提供一个全局 counter-boost
+
+近似函数方程给出：
+
+$$
+\zeta(s)
+\approx
+\sum_{n\le x}n^{-s}
++
+\chi(s)
+\sum_{n\le y}n^{s-1},
+\qquad
+2\pi xy=t.
+$$
+
+取：
+
+$$
+x\approx y\approx N
+=
+\sqrt{\frac{t}{2\pi}}.
+$$
+
+令：
+
+$$
+\sigma=\frac12+\delta.
+$$
+
+第一 packet 的第 \(n\) 项长度是：
+
+$$
+n^{-1/2-\delta}.
+$$
+
+第二 packet 经 \(\chi(s)\) 加权后的长度近似为：
+
+$$
+|\chi(s)|n^{-1/2+\delta}.
+$$
+
+由 Gamma 因子的 Stirling 渐近：
+
+$$
+|\chi(\sigma+it)|
+\asymp
+\left(
+\frac{t}{2\pi}
+\right)^{1/2-\sigma}
+=
+N^{-2\delta}.
+$$
+
+因此两 packet 的长度比近似为：
+
+$$
+\boxed{
+\frac{
+|\chi(s)|n^{-1/2+\delta}
+}{
+n^{-1/2-\delta}
+}
+\asymp
+\left(
+\frac nN
+\right)^{2\delta}.
+}
+\tag{2090.1}
+$$
+
+在驻相尺度：
+
+$$
+n=N
+$$
+
+上，两边重新平衡。
+
+但离开 \(N\) 后，失衡按：
+
+$$
+e^{2\delta\log(n/N)}
+$$
+
+增长。
+
+所以函数方程不是把所有长短差异消除，而是：
+
+$$
+\boxed{
+\text{只在中心 saddle scale 上精确 counter-balance；
+其余尺度仍保留一个双曲倾斜。}
+}
+$$
+
+---
+

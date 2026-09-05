@@ -1,0 +1,52 @@
+# 第六十五部　建议新增的形式化模块
+
+```text
+D5/S3/Analytic/Zeta/ReflectionQuotient/
+  ReflectionCasimirCoordinate.lean
+  XiDescendsToCasimirPlane.lean
+  CasimirZeroRayCriterion.lean
+  LogDerivativeOddEvenFactorization.lean
+  ZeroQuartetCasimirDiscriminant.lean
+
+D5/S3/ObserverOrigin/GoldenSelfCoordinate/
+  ReciprocalUnitMöbiusMap.lean
+  GoldenCrossRatioLinearization.lean
+  FibonacciProjectiveInfinity.lean
+  GoldenBreakRecompletionSemiconjugacy.lean
+
+D5/S1/Words/ZeckendorfTwist/
+  LegalWordWeightPolynomial.lean
+  ParityTwistPeriodSix.lean
+  ResidueClassEquidistribution.lean
+  NonuniformCharacterSpectralGap.lean
+
+D5/S3/ObserverOrigin/GoldenMarkov/
+  FibonacciDoobTransform.lean
+  GoldenStationaryMeasure.lean
+  OddLagNegativeEvenLagPositive.lean
+  GoldenEntropyRate.lean
+
+D5/S1/Depth/GoldenCarryDynamics/
+  GoldenFloorCarryRecurrence.lean
+  FibonacciTorusItinerary.lean
+  MirrorCarryComplement.lean
+  FiniteZeroWindowCarryDefect.lean
+
+D5/S3/Dynamics/GoldenTorusZeta/
+  FibonacciTorusFixedPointCount.lean
+  FibonacciArtinMazurZeta.lean
+  PrimitiveGoldenOrbitCount.lean
+
+D5/S3/PrimeForms/GoldenEuler/
+  CharacterCompanionLift.lean
+  OrderedCharacterCompanionHolonomy.lean
+  TwinCharacterOrderSeparation.lean
+
+D5/S3/Zeros/Moments/
+  TransverseHankelRank.lean
+  FiniteDepthMomentRecurrence.lean
+  CasimirStieltjesNecessaryCondition.lean
+```
+
+---
+

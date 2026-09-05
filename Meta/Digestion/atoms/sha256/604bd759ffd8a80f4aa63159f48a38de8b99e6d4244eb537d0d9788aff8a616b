@@ -1,0 +1,30 @@
+## B6.1 path averaging spectrum
+
+令 $J_N$ 为 $\mathbb R^N$ 上的零边界最近邻平均：
+
+$$
+(J_Nc)_j
+=\frac{c_{j-1}+c_{j+1}}2,
+\tag{B6.1}
+$$
+
+其中边界外分量取零。其 sine modes 的本征值为
+
+$$
+\boxed{
+\mu_k
+=\cos\frac{k\pi}{N+1},
+\qquad
+1\le k\le N.}
+\tag{B6.2}
+$$
+
+并且
+
+$$
+\mu_{N+1-k}=-\mu_k.
+\tag{B6.3}
+$$
+
+所以平方以后，正负边缘 mode 成对退化。
+

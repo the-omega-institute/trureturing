@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0ce12998115c32f28554c237d2069fedfacc3b25a71ba1023ef0d276fafd2ef5
+  normalized_sha256: sha256:0ce12998115c32f28554c237d2069fedfacc3b25a71ba1023ef0d276fafd2ef5
+cas_ref: sha256:0ce12998115c32f28554c237d2069fedfacc3b25a71ba1023ef0d276fafd2ef5
+coverage_gids:
+  - gid: D5/S3/Quantum/MultifactorCorrelationSectorDecomposition.multifactor_correlation_sector_decomposition
+    target_statement_id: sha256:1593796cd2ca918d3a50f7025767a48f79ca4f5c83f5825e49adaee190e2a9bf
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/MultifactorCorrelationSectorDecomposition.multifactor_correlation_sector_decomposition
+      definition_sha256: sha256:ea1b9f34b239ab41074d93bfa207abf7e1011894487c716c0e4a97d877977ef4
+      emission_sha256: sha256:a06ab7ceb117b6ab9fd97c2ef56ebc1238bf170fa5a0c7394903ba4582999c7f
+  unresolved_subitems: []

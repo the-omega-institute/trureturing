@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:27912858a51ab892eca67c8463f51e49567f86dfe40e1f35c72669b084f70026
 cas_ref: sha256:27912858a51ab892eca67c8463f51e49567f86dfe40e1f35c72669b084f70026
 coverage_gids:
-  - D5/S3/Observer/Prediction/FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound
+  - gid: D5/S3/Observer/Prediction/FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound
+    target_statement_id: sha256:e59fcbaffb5fe63cd1d070de5aaae743c66a67808d4844ede06656ab01c42e8c
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Prediction/FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound
-      source_sha256: sha256:27912858a51ab892eca67c8463f51e49567f86dfe40e1f35c72669b084f70026
-      target_statement_id: sha256:e59fcbaffb5fe63cd1d070de5aaae743c66a67808d4844ede06656ab01c42e8c
-      statement_id_history:
-        - statement_id: sha256:ac6d0cef7ee9ecdd75aa35dc77ff59ca9b9f11798e02703bc815c097498b0333
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/Prediction/FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound
       definition_sha256: sha256:2f6225bec36cdc526dc77a27e8b55c618718fa679178a9ccd4c5344e4ed674af

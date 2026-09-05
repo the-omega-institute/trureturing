@@ -1,0 +1,48 @@
+# 第两千一百零一部　“旋转加速逃逸”的最终校准
+
+你的图像可以被改写成下面这条严格链：
+
+$$
+\boxed{
+\begin{aligned}
+t\text{ 增大}
+&\Longrightarrow
+\text{驻相尺度 }N\sim\sqrt t\text{ 增大};\\
+&\Longrightarrow
+\text{可用 prime/composite 频率带宽增大};\\
+&\Longrightarrow
+\text{不同 }\log n\text{ 模式发生更复杂相位剪切};\\
+\delta\neq0
+&\Longrightarrow
+\text{这些模式同时承受 }\delta\log n\text{ 的双曲长度倾斜};\\
+\text{离线零点}
+&\Longrightarrow
+\text{相位剪切必须同时关闭偶、奇两个通道}.
+\end{aligned}
+}
+\tag{2101.1}
+$$
+
+因此所谓“起飞”并不是：
+
+$$
+\boxed{
+\text{旋转速度大于某个简单数值，离心力战胜束缚力。}
+}
+$$
+
+更准确的是：
+
+$$
+\boxed{
+\text{随着有效频谱扩大，
+一个固定法向偏移产生越来越大的多尺度 boost；
+若相位几何无法提供相应的跨尺度 sticky 补偿，
+离线闭合就不可能发生。}
+}
+$$
+
+这是一条可以数学化的稳定性问题。
+
+---
+
