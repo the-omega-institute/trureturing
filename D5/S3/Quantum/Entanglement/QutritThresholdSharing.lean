@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/QutritThresholdSharing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: kind=certified-instance; basis=terminal=atom:64a4fb196ca2599c9415622a45672e701fd23262b2d3eef4903247347cb3dd17
    digest: Three qutrit shares hide every input singly and reconstruct it in pairs. -/
 
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence

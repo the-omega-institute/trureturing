@@ -21,14 +21,15 @@ internal static class ConeAtomizer
     internal static AtomizedTheoryDocument Atomize(
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules rules) =>
-        Atomize(bytes, rules, contentKinds: null);
+        AtomizeWithContentKinds(bytes, rules, contentKinds: null);
 
     internal static System.Collections.Immutable.ImmutableDictionary<string, string> ResolveContentKinds(
         ReadOnlyMemory<byte> bytes,
         TheoryAtomizerRules rules) =>
-        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+        AtomizerRegistry.CaptureContentKinds(kinds =>
+            AtomizeWithContentKinds(bytes.Span, rules, kinds));
 
-    private static AtomizedTheoryDocument Atomize(
+    internal static AtomizedTheoryDocument AtomizeWithContentKinds(
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules rules,
         IDictionary<string, string>? contentKinds)
@@ -71,7 +72,7 @@ internal static class ConeAtomizer
             if (mapping is null)
             {
                 unregistered.Add(genre);
-                return genre;
+                return DigestionContentDisposition.Unregistered(genre);
             }
 
             var templates = mapping.Value.Split('|');

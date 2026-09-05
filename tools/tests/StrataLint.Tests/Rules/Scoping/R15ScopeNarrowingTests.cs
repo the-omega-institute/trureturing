@@ -229,12 +229,10 @@ public sealed class R15ScopeNarrowingTests
         const string anomaly = "{\"anomaly\":\"fixture drift\",\"case_id\":\"D5-T0098\"}\n";
         var fixture = new RuleFixture();
         fixture.Baseline[RuleFixture.RingPath] += task;
-        fixture.ForkPoint[RuleFixture.RingPath] += task;
         fixture.Files[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath]
             .Replace("Nat := 0", "Nat := 1", StringComparison.Ordinal);
         fixture.Files[artifactPath] = anomaly;
         fixture.Baseline[artifactPath] = anomaly;
-        fixture.ForkPoint[artifactPath] = anomaly;
         fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical.Replace(
             "      - \"legacy\"\n",
             "      - \"legacy\"\n      - \"spec\"\n",
@@ -262,15 +260,12 @@ public sealed class R15ScopeNarrowingTests
         const string helperSource = "namespace StrataLint.Engine;\n";
         var fixture = new RuleFixture();
         fixture.Baseline[RuleFixture.RingPath] += task;
-        fixture.ForkPoint[RuleFixture.RingPath] += task;
         fixture.Files[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath]
             .Replace("Nat := 0", "Nat := 1", StringComparison.Ordinal);
         fixture.Files[artifactPath] = anomaly;
         fixture.Baseline[artifactPath] = anomaly;
-        fixture.ForkPoint[artifactPath] = anomaly;
         fixture.Files[helperPath] = helperSource.Replace(";", "; ", StringComparison.Ordinal);
         fixture.Baseline[helperPath] = helperSource;
-        fixture.ForkPoint[helperPath] = helperSource;
 
         var changes = RawChangeSet.Create([RuleFixture.RingPath, helperPath]);
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
@@ -289,15 +284,12 @@ public sealed class R15ScopeNarrowingTests
         const string anomaly = "{\"anomaly\":\"fixture drift\",\"case_id\":\"D5-T0099\"}\n";
         var fixture = new RuleFixture();
         fixture.Baseline[RuleFixture.RingPath] += task;
-        fixture.ForkPoint[RuleFixture.RingPath] += task;
         fixture.Files[rootPath] = task;
         fixture.Baseline[rootPath] = "import D5\n";
-        fixture.ForkPoint[rootPath] = "import D5\n";
         fixture.Reports[rootPath] = new LeanFileReport([], []);
         fixture.BaselineReports[rootPath] = new LeanFileReport([], []);
         fixture.Files[artifactPath] = anomaly;
         fixture.Baseline[artifactPath] = anomaly;
-        fixture.ForkPoint[artifactPath] = anomaly;
 
         var completed = Execute(fixture, RuleFixture.RingPath, rootPath);
 
@@ -315,15 +307,12 @@ public sealed class R15ScopeNarrowingTests
         const string scribeSource = "namespace Trureturing.Blueprint;\n";
         var fixture = new RuleFixture();
         fixture.Baseline[RuleFixture.RingPath] += task;
-        fixture.ForkPoint[RuleFixture.RingPath] += task;
         fixture.Files[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath]
             .Replace("Nat := 0", "Nat := 1", StringComparison.Ordinal);
         fixture.Files[artifactPath] = anomaly;
         fixture.Baseline[artifactPath] = anomaly;
-        fixture.ForkPoint[artifactPath] = anomaly;
         fixture.Files[scribePath] = scribeSource.Replace(";", "; ", StringComparison.Ordinal);
         fixture.Baseline[scribePath] = scribeSource;
-        fixture.ForkPoint[scribePath] = scribeSource;
 
         var completed = Execute(fixture, RuleFixture.RingPath, scribePath);
 
@@ -342,12 +331,10 @@ public sealed class R15ScopeNarrowingTests
         const string anomaly = "anomaly: fixture drift\ncase_id: D5-T0098\n";
         var fixture = new RuleFixture();
         fixture.Baseline[RuleFixture.RingPath] += task;
-        fixture.ForkPoint[RuleFixture.RingPath] += task;
         fixture.Files[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath]
             .Replace("Nat := 0", "Nat := 1", StringComparison.Ordinal);
         fixture.Files[artifactPath] = anomaly;
         fixture.Baseline[artifactPath] = anomaly;
-        fixture.ForkPoint[artifactPath] = anomaly;
 
         var changes = RawChangeSet.Create([RuleFixture.RingPath, dependencyPath]);
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
@@ -510,7 +497,6 @@ public sealed class R15ScopeNarrowingTests
     {
         const string task = "/-- TASK D5-T0099\n    historical task. -/\n";
         fixture.Baseline[RuleFixture.ValuesBindingPath] += task;
-        fixture.ForkPoint[RuleFixture.ValuesBindingPath] += task;
     }
 
     private static RuleFixture AxiomHistory(string? dependencyPath = null)
@@ -540,7 +526,6 @@ public sealed class R15ScopeNarrowingTests
         foreach (var (path, text) in fixture.Files)
         {
             fixture.Baseline.TryAdd(path, text);
-            fixture.ForkPoint.TryAdd(path, text);
         }
     }
 
@@ -548,7 +533,6 @@ public sealed class R15ScopeNarrowingTests
     {
         fixture.Files[path] = text;
         fixture.Baseline[path] = text;
-        fixture.ForkPoint[path] = text;
     }
 
     private static CompletedRuleSet Execute(RuleFixture fixture, params string[] changedPaths) =>

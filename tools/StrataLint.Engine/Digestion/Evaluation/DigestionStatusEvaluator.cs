@@ -92,7 +92,8 @@ internal static partial class DigestionStatusEvaluator
         RawChangeSet? casChanges = null,
         Func<string, bool>? isBaseFactAffected = null,
         RawChangeSet? projectedStatusChanges = null,
-        IReadOnlyDictionary<RepoPath, TruthState>? truthStates = null)
+        IReadOnlyDictionary<RepoPath, TruthState>? truthStates = null,
+        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -127,7 +128,8 @@ internal static partial class DigestionStatusEvaluator
             baselineSnapshot: baselineSnapshot,
             casEvaluation: casEvaluation,
             changes: changes,
-            casChanges: casChanges);
+            casChanges: casChanges,
+            contentKindAtomizerResolver: contentKindAtomizerResolver);
         findings.AddRange(alignment.Findings);
         var baselineEntries = (baselineDocument?.RequireDigestionEntries()
                 ?? ImmutableArray<DigestionLedgerEntry>.Empty)
@@ -190,7 +192,8 @@ internal static partial class DigestionStatusEvaluator
             findings,
             validateProjectedStatus,
             changes,
-            observations);
+            observations,
+            alignment.ContentKindObservations);
     }
 
     private static void RequireDecompositionBeforeNewAbsorption(
@@ -234,7 +237,8 @@ internal static partial class DigestionStatusEvaluator
         RawChangeSet? changes,
         // 非阻断的观察项(「已入库、尚未消化」)。两条评估路径共用本方法,
         // 只有 admission 路径会传入;projection 路径不产观察项。
-        ImmutableArray<string> observations = default)
+        ImmutableArray<string> observations = default,
+        ImmutableArray<DigestionContentKindObservation> contentKindObservations = default)
     {
         var evaluations = ImmutableArray.CreateBuilder<DigestionEntryEvaluation>(work.Count);
         var byId = work.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
@@ -273,7 +277,8 @@ internal static partial class DigestionStatusEvaluator
         return new DigestionLedgerEvaluation(
             evaluations.MoveToImmutable(),
             findings.Order(StringComparer.Ordinal).ToImmutableArray(),
-            observations.IsDefault ? [] : observations);
+            observations.IsDefault ? [] : observations,
+            contentKindObservations.IsDefault ? [] : contentKindObservations);
     }
 
     private static EntryWork Inspect(

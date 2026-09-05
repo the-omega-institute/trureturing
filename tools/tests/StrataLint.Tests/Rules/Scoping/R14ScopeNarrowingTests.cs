@@ -134,7 +134,6 @@ public sealed class R14ScopeNarrowingTests
 
         var changed = new RuleFixture();
         changed.Baseline[path] = Header("D5/B/S0/Carrier/AnchorProbe");
-        changed.ForkPoint[path] = changed.Baseline[path];
         changed.Files[path] = Header("D5/B/S0/Carrier/AnchorProbe", "https://invalid");
         Assert.Equal(1, CountFindings(Execute(changed, path), 15, message));
 
@@ -175,7 +174,8 @@ public sealed class R14ScopeNarrowingTests
     public void Sl012LeanHeaderScopesHistoryAndKeepsDeltaAndImplementationRechecks()
     {
         const string malformed = "def goldenRing : Nat := 0\n";
-        const string message = "expected the exact six-line header at byte zero";
+        const string message = "expected the canonical Lean header at byte zero "
+            + "(six-line legacy header or seven-line header with utility)";
 
         var unrelated = new RuleFixture();
         SetHistorical(unrelated, RuleFixture.RingPath, malformed);
@@ -283,13 +283,11 @@ public sealed class R14ScopeNarrowingTests
     {
         fixture.Files[path] = text;
         fixture.Baseline[path] = text;
-        fixture.ForkPoint[path] = text;
     }
 
     private static void SetDelta(RuleFixture fixture, string path, string baseline, string current)
     {
         fixture.Baseline[path] = baseline;
-        fixture.ForkPoint[path] = baseline;
         fixture.Files[path] = current;
     }
 

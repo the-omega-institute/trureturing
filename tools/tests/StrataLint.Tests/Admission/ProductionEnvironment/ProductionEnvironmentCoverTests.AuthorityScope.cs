@@ -48,7 +48,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void CoverAtomAlwaysValidatesCurrentCoverageButScopesForkPointScribeBacklog(
+    public void CoverAtomAlwaysValidatesCurrentCoverageButScopesBaselineScribeBacklog(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
@@ -56,7 +56,7 @@ public sealed partial class ProductionEnvironmentTests
             OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
         });
-        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
+        var inputs = DirectoryInputs(WithReceiptMismatchAtBaseline(
             materialized,
             mismatchCode,
             byteIdenticalBaseline: true));

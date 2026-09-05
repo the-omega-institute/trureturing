@@ -88,6 +88,10 @@ example : SystemCharacterization ↔
 example : systemReadout false = 0 := by decide
 example : systemReadout true = 2 := by decide
 
+expect_information_occurrence systemTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealSystemTheorem"
+
 #seal_information_theory
 
 #check systemTheorem.__lowers_escape
