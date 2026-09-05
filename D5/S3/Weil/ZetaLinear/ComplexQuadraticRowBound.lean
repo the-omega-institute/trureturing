@@ -13,9 +13,10 @@ import D5.S3.PrimeGaps.GreedyResidues
 Library-first owner: `LongGapsBetweenPrimes.abs_quadratic_form_le_rows`.
 The new theorem applies that result to coefficient norms and entry norms.
 It therefore does not introduce a second real Schur-inequality proof.
-The series theorem requires actual summability and actual row estimates. It
-is a consumer for the zeta mixed sums; it does not assert such estimates or
-claim that any zeta instance has passed the repository's admission gates.
+The series theorem requires actual absolute summability and actual row estimates.
+Conditional convergence alone cannot justify a bound by the sum of entry norms.
+This is a consumer for zeta mixed sums; it does not assert their analytic bounds
+or claim that any zeta instance has passed the repository's admission gates.
 -/
 
 set_option autoImplicit false
@@ -70,7 +71,7 @@ the series of norms into a uniform bound for every coefficient vector. -/
 theorem norm_series_quadratic_le_weighted_energy
     (a : ι → ℂ) (term : ℕ → ι → ι → ℂ)
     (weight : ι → ℝ) (eta : ℝ)
-    (hsum : ∀ i j, Summable (fun n => term n i j))
+    (hsum : ∀ i j, Summable (fun n => ‖term n i j‖))
     (hsym : ∀ i j, ‖∑' n, term n i j‖ = ‖∑' n, term n j i‖)
     (hrow : ∀ i, (∑ j, ∑' n, ‖term n i j‖) ≤ eta * weight i) :
     ‖∑ i, ∑ j, (a i * conj (a j)) * (∑' n, term n i j)‖ ≤
@@ -78,7 +79,7 @@ theorem norm_series_quadratic_le_weighted_energy
   apply norm_complex_quadratic_le_weighted_energy a
     (fun i j => ∑' n, term n i j) weight eta hsym
   intro i
-  exact (Finset.sum_le_sum fun j _ => norm_tsum_le_tsum_norm (hsum i j).norm).trans
+  exact (Finset.sum_le_sum fun j _ => norm_tsum_le_tsum_norm (hsum i j)).trans
     (hrow i)
 
 /-- A positive weighted energy detects every nonzero coefficient vector. -/
