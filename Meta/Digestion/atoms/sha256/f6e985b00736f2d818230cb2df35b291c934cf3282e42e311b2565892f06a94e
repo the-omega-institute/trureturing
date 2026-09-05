@@ -1,0 +1,44 @@
+## 定理 154.1　碰撞熵产生律
+
+有：
+
+$$
+\boxed{
+\frac{d\mathscr H}{dt}
+=
+-\gamma\int
+(f_+-f_-)\log\frac{f_+}{f_-}\,dx
+\le0.
+}
+\tag{154.2}
+$$
+
+### 证明
+
+输运项积分后成为消失的边界项。
+
+碰撞部分为：
+
+$$
+\begin{aligned}
+&\gamma(f_--f_+)
+\left(\log\frac{f_+}{f_*}+1\right)\\
+&\quad+
+\gamma(f_+-f_-)
+\left(\log\frac{f_-}{f_*}+1\right),
+\end{aligned}
+$$
+
+化简即得式（154.2）。
+
+由于对数单调：
+
+$$
+(a-b)(\log a-\log b)\ge0
+\qquad(a,b>0),
+$$
+
+故导数非正。∎
+
+---
+

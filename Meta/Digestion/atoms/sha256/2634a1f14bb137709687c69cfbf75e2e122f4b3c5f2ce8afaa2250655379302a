@@ -1,0 +1,36 @@
+## 2.3 作用量与配分函数之间还有一个方向性区别
+
+对内部复变量进行 Gaussian 积分：
+
+$$
+\boxed{
+\int_{\mathbb C^a}
+e^{-\mathcal A_{p,a}[x]}
+\prod_{j=1}^{a}\frac{d^2x_j}{\pi}
+=
+\frac{
+e^{-\mathcal A_{\mathrm{eff}}(\xi,\eta)}
+}{
+Z_{p,a}
+}.
+}
+\tag{2.5}
+$$
+
+证明是移到唯一最小者，再对正定二次型积分；结果为：
+
+$$
+(\det T_{p,a})^{-1}
+e^{-\mathcal A_{\mathrm{eff}}}.
+$$
+
+所以这里：
+
+$$
+\boxed{
+\text{算术配分函数}=Z_{p,a},
+\qquad
+\text{Gaussian 波动因子}=Z_{p,a}^{-1}.
+}
+$$
+

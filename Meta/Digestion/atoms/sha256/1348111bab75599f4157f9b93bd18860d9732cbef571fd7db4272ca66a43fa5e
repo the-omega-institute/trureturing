@@ -1,0 +1,6 @@
+**尚未完成的是证明实际素数恰好以受控方式实现这些模态，而不是这些模态是否能够被构造出来。**本轮把这个区别变成了可以计算的阈值：逐项 \(o(1)\) 不够，窗口尺度上的联合误差才是决定性对象。
+
+[1]: https://arxiv.org/html/math/0409258v1 "Primes in short intervals"
+[2]: https://arxiv.org/html/2008.06140v1 "The mean square of the error term in the prime number theorem"
+[3]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[4]: https://dlmf.nist.gov/27.10 "DLMF: §27.10 Periodic Number-Theoretic Functions ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
