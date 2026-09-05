@@ -1,0 +1,52 @@
+{
+  "schema": "mub6-x-quarter-independent-replay-v1",
+  "date": "2026-09-05",
+  "source_commit": "9a4e23bc20eecfe1b0cfa07efa455bdc9f93c297",
+  "source_git_blobs": {
+    "scripts/check_x_seed_boxes.py": "ae8c7325c7256d30f5ddf1eb7a0a6dd2beceb917",
+    "docs/develop/certificates/x_quarter_seed/root_boxes.json": "ecd0499c1bedd9f24343b2458fb45f147a471077"
+  },
+  "command": "python3 scripts/check_x_seed_boxes.py docs/develop/certificates/x_quarter_seed/root_boxes.json --report /tmp/x_quarter_seed_report.json",
+  "exit_code": 0,
+  "acceptance_arithmetic": "120-bit outward-rounded integer dyadic intervals and fractions.Fraction; no floating-point acceptance",
+  "parameter_rectangle": {
+    "real": ["4294967295/17179869184", "4294967297/17179869184"],
+    "imag": ["4294967295/17179869184", "4294967297/17179869184"],
+    "centre": "(1+i)/4",
+    "half_width_each_real_coordinate": "1/17179869184",
+    "scope": "All interval tests are uniform over this entire closed rectangle."
+  },
+  "local_root_certificates": {
+    "physical_projective_roots": 60,
+    "distinct_nonsingular_complex_roots": 252,
+    "nonphysical_complex_roots": 192,
+    "physical_contraction_upper": "4510385767362226999852313108096461/664613997892457936451903530140172288",
+    "minimum_physical_inclusion_margin": "4808270793826647774659714446053/1329227995784915872903807060280344576",
+    "complex_contraction_upper": "342581835114145675191809529587867621/664613997892457936451903530140172288",
+    "minimum_nonphysical_squared_modulus_gap": "1228252614198208639917781591783214303/1329227995784915872903807060280344576"
+  },
+  "pair_certificates": {
+    "unordered_pairs": 1770,
+    "strictly_nonorthogonal_pairs": 1674,
+    "exact_symmetry_proved_orthogonal_pairs": 96,
+    "minimum_nonedge_normalized_squared_inner_product": "46393315668929324179788870522839/23926103924128485712268527085046202368",
+    "graph": "K6 disjoint union nine K3,3",
+    "unique_six_clique": [48, 49, 56, 57, 58, 59],
+    "zero_acceptance": "Every orthogonality edge is justified by skew antiunitary symmetry or separated order-three eigenvalues plus certified root-box identification, never merely by a small residual."
+  },
+  "global_root_coverage": {
+    "projective_model": "Ten bilinear equations in P5 x P5 become a linear section of its Segre embedding.",
+    "degree": 252,
+    "degree_formula": "binomial(10,5)",
+    "argument": "Successive hyperplane intersections do not increase the sum of degrees of reduced irreducible components: contained components retain their degree, and proper cuts have total degree at most the original degree. The 252 certified nonsingular isolated points already exhaust the bound. No further point, component at infinity, or positive-dimensional component can remain.",
+    "extra_obligation": "The contraction theorem, exact X-seed identities, symmetry identities, and projective component-degree theorem are mathematical inputs to this computational certificate; they are not yet jointly Lean-kernel verified."
+  },
+  "consequence_with_stated_mathematical_inputs": "For every parameter in the stated rectangle the pair (I,H(alpha)/sqrt(6)) has exactly one third orthonormal basis up to phases and ordering. It has no two distinct compatible completions and cannot extend to four MUBs. All orthogonal pairs of common-unbiased rays on this rectangle are modewise orthogonal; its unique completion is mode-local and has symmetry affinity 2.",
+  "boundaries": {
+    "whole_X_family_excluded": false,
+    "strict_X_seam_nonmembership_proved": false,
+    "global_four_MUB_problem_solved": false,
+    "Lean_kernel_acceptance_claimed": false,
+    "README_at_source_commit": "Historical README described only the earlier 60-local-root stage; this audit records the stronger actual checker/data at the pinned commit."
+  }
+}
