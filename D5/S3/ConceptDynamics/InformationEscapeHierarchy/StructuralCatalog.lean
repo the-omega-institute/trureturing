@@ -243,6 +243,26 @@ theorem uniqueCapture_witness_of_toStructuralCatalog_certificate
     · exact certificate.without_agrees candidate same primitive
   exact ⟨distinct, withoutAgreement, indexSeparation⟩
 
+/-- Embedded structural certificates are equivalent to positive finite unique
+capture, with the same pair transported in both directions. -/
+theorem toStructuralCatalog_exists_certificate_iff_uniqueCaptureCount_pos
+    {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    (index : catalog.Index) :
+    Nonempty (StructuralStrictnessCertificate catalog.toStructuralCatalog index) ↔
+      0 < catalog.uniqueCaptureCount index := by
+  constructor
+  · rintro ⟨certificate⟩
+    rcases catalog.uniqueCapture_witness_of_toStructuralCatalog_certificate
+      index certificate with ⟨distinct, otherAgreement, indexSeparation⟩
+    exact (catalog.uniqueCaptureCount_pos_iff_witness index).2
+      ⟨certificate.left, certificate.right, distinct,
+        otherAgreement, indexSeparation⟩
+  · intro positive
+    rcases (catalog.uniqueCaptureCount_pos_iff_witness index).1 positive with
+      ⟨left, right, distinct, otherAgreement, indexSeparation⟩
+    exact ⟨catalog.toStructuralCatalog_certificate_of_uniqueCapture_witness
+      index left right distinct otherAgreement indexSeparation⟩
+
 /-- The universal structural verdict of an embedded finite catalog agrees
 with the landed finite Set-level structural verdict. -/
 theorem toStructuralCatalog_structurallyLowersEscape_iff
