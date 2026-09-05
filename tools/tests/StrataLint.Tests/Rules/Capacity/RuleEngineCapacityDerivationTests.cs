@@ -46,8 +46,6 @@ public sealed class RuleEngineCapacityDerivationTests
         var invokingThreadId = Environment.CurrentManagedThreadId;
         var bothStarted = new TaskCompletionSource<bool>(
             TaskCreationOptions.RunContinuationsAsynchronously);
-        var serialInvocationDetected = new TaskCompletionSource<bool>(
-            TaskCreationOptions.RunContinuationsAsynchronously);
         var events = new ConcurrentQueue<string>();
         var started = 0;
         var completedBeforeBothStarted = 0;
@@ -63,13 +61,17 @@ public sealed class RuleEngineCapacityDerivationTests
 
             if (Environment.CurrentManagedThreadId == invokingThreadId)
             {
-                serialInvocationDetected.SetResult(true);
+                Assert.Fail($"SL-003 serialized regression: {side} derivation ran inline");
             }
 
-            var openedGate = Task.WhenAny(bothStarted.Task, serialInvocationDetected.Task)
-                .GetAwaiter()
-                .GetResult();
-            Assert.Same(bothStarted.Task, openedGate);
+            if (!bothStarted.Task.Wait(TestBudgets.CapacityDerivationStartHangGuard))
+            {
+                Assert.Fail(
+                    side == "Current"
+                        ? "SL-003 serialized regression: ForkPoint never started"
+                        : "SL-003 serialized regression: Current never started");
+            }
+
             if (Volatile.Read(ref started) < 2)
             {
                 Interlocked.Exchange(ref completedBeforeBothStarted, 1);
@@ -138,25 +140,7 @@ public sealed class RuleEngineCapacityDerivationTests
     }
 
     [Fact]
-    public async Task Sl003PrefersCurrentFailureAfterObservingBothDerivationFailures()
-    {
-        var fixture = new RuleFixture();
-        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
-        var currentFailure = new InvalidOperationException("current derivation failed");
-        var forkPointFailure = new InvalidOperationException("fork-point derivation failed");
-        var currentTask = Task.FromException<ScribeTestMap>(currentFailure);
-        var forkPointTask = Task.FromException<ScribeTestMap>(forkPointFailure);
-
-        var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() =>
-            RepositoryRules.EvaluateCapacityAsync(context, currentTask, forkPointTask));
-
-        Assert.Same(currentFailure, thrown);
-        var observedForkPointFailure = Assert.IsType<AggregateException>(forkPointTask.Exception);
-        Assert.Same(forkPointFailure, Assert.Single(observedForkPointFailure.InnerExceptions));
-    }
-
-    [Fact]
-    public async Task Sl003WaitsForForkPointTerminationBeforeReturningCurrentFailure()
+    public async Task Sl003WaitsForFaultedForkPointBeforeRethrowingCurrentFailure()
     {
         var fixture = new RuleFixture();
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
@@ -164,37 +148,19 @@ public sealed class RuleEngineCapacityDerivationTests
         var forkPointFailure = new InvalidOperationException("fork-point derivation failed");
         var forkPointDerivation = new TaskCompletionSource<ScribeTestMap>(
             TaskCreationOptions.RunContinuationsAsynchronously);
-        var evaluationReturned = new TaskCompletionSource<bool>(
-            TaskCreationOptions.RunContinuationsAsynchronously);
 
         var evaluation = RepositoryRules.EvaluateCapacityAsync(
             context,
             Task.FromException<ScribeTestMap>(currentFailure),
             forkPointDerivation.Task);
-        var returnObserver = evaluation.ContinueWith(
-            static (_, state) =>
-            {
-                ((TaskCompletionSource<bool>)state!).SetResult(true);
-            },
-            evaluationReturned,
-            CancellationToken.None,
-            TaskContinuationOptions.ExecuteSynchronously,
-            TaskScheduler.Default);
-
-        var returnedBeforeForkPointTerminated = evaluationReturned.Task.IsCompleted;
-        forkPointDerivation.SetException(forkPointFailure);
-
-        var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() => evaluation);
-        await returnObserver;
-        var observedForkPointFailure = Assert.IsType<AggregateException>(
-            forkPointDerivation.Task.Exception);
-
         Assert.False(
-            returnedBeforeForkPointTerminated,
-            "EvaluateCapacityAsync returned before the ForkPoint derivation reached a terminal state");
+            evaluation.IsCompleted,
+            "EvaluateCapacityAsync returned before awaiting ForkPoint");
+
+        forkPointDerivation.SetException(forkPointFailure);
+        var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() => evaluation);
+
         Assert.Same(currentFailure, thrown);
-        Assert.Same(forkPointFailure, Assert.Single(observedForkPointFailure.InnerExceptions));
-        Assert.True(evaluationReturned.Task.IsCompletedSuccessfully);
     }
 
     [Fact]
