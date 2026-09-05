@@ -111,6 +111,58 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
+    public void PrepareOnDirtyTreeWithoutProtectedBaseUsesHeadAsRevision()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(
+            Path.Combine(repository.Path, "tracked.txt"),
+            "baseline\n",
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
+        var head = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        File.WriteAllText(
+            Path.Combine(repository.Path, "tracked.txt"),
+            "changed\n",
+            new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(repository.Path, "untracked.txt"),
+            "new\n",
+            new UTF8Encoding(false));
+
+        var prepared = new GitRepositoryGateway(repository.Path).Prepare(null);
+
+        Assert.Equal(head, prepared.Revision);
+        Assert.Equal(
+            new[]
+            {
+                ("tracked.txt", RawChangeKind.Modified),
+                ("untracked.txt", RawChangeKind.Added),
+            },
+            prepared.Changes.Entries.Select(static change =>
+                (change.Path.Value, change.Kind)));
+    }
+
+    [Fact]
+    public void PrepareOnCleanTreeWithoutProtectedBaseRequiresProtectedBase()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(
+            Path.Combine(repository.Path, "tracked.txt"),
+            "baseline\n",
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", "tracked.txt");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
+
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => new GitRepositoryGateway(repository.Path).Prepare(null));
+
+        Assert.Contains("--protected-base", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PrepareUsesAncestorProtectedBaseForChanges()
     {
         using var repository = new TemporaryDirectory();

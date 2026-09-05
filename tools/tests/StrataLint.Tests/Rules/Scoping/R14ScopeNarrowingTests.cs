@@ -134,7 +134,6 @@ public sealed class R14ScopeNarrowingTests
 
         var changed = new RuleFixture();
         changed.Baseline[path] = Header("D5/B/S0/Carrier/AnchorProbe");
-        changed.Baseline[path] = changed.Baseline[path];
         changed.Files[path] = Header("D5/B/S0/Carrier/AnchorProbe", "https://invalid");
         Assert.Equal(1, CountFindings(Execute(changed, path), 15, message));
 

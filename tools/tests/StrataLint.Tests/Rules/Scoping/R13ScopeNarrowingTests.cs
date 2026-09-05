@@ -191,7 +191,6 @@ public sealed class R13ScopeNarrowingTests
         var fixture = new RuleFixture();
         const string task = "D5-T0099";
         fixture.Baseline[RuleFixture.RingPath] += $"/-- TASK {task}\n    historical task. -/\n";
-        fixture.Baseline[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath];
         fixture.Files[OldMalformedJson] = $"{{\"anomaly\":\"open\",\"case_id\":\"{task}\"}}\n";
         fixture.Baseline[OldMalformedJson] = fixture.Files[OldMalformedJson];
 

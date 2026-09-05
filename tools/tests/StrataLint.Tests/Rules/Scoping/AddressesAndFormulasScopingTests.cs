@@ -25,7 +25,6 @@ public sealed class AddressesAndFormulasScopingTests
 
         var changed = new RuleFixture();
         changed.Baseline[FormulaPath] = "{\"formula\":\"5\",\"refs\":{}}\n";
-        changed.Baseline[FormulaPath] = changed.Baseline[FormulaPath];
         changed.Files[FormulaPath] = "{\"formula\":\"sqrt@5\",\"refs\":{}}\n";
         Assert.Contains(Execute(changed, FormulaPath).Diagnostics, diagnostic =>
             diagnostic.RuleId == RuleId.CreateKnown(15)
@@ -46,7 +45,6 @@ public sealed class AddressesAndFormulasScopingTests
     {
         var fixture = new RuleFixture();
         fixture.Baseline[FormulaPath] = "{\"formula\":\"5\",\"refs\":{}}\n";
-        fixture.Baseline[FormulaPath] = fixture.Baseline[FormulaPath];
         fixture.Files[FormulaPath] = "{\"formula\":\"sqrt@5\",\"refs\":{}}\n";
 
         var completed = Execute(fixture, FormulaPath);
