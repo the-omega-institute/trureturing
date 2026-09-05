@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1cce20a82e766d077460e0411e468991044ea6cb055cb5c2d29e092f6833da08
 cas_ref: sha256:1cce20a82e766d077460e0411e468991044ea6cb055cb5c2d29e092f6833da08
 coverage_gids:
-  - D5/S3/ConceptDynamics/SufficiencyQuotient/MinimalPredictionBeliefState.minimal_prediction_belief_state
+  - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/MinimalPredictionBeliefState.minimal_prediction_belief_state
+    target_statement_id: sha256:cc6fb2848b792b5bad8842f53fdb2832896ffacfe9b5380df20f2a413f960018
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/MinimalPredictionBeliefState.minimal_prediction_belief_state
-      source_sha256: sha256:1cce20a82e766d077460e0411e468991044ea6cb055cb5c2d29e092f6833da08
-      target_statement_id: sha256:cc6fb2848b792b5bad8842f53fdb2832896ffacfe9b5380df20f2a413f960018
   scribe:
     - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/MinimalPredictionBeliefState.minimal_prediction_belief_state
       definition_sha256: sha256:544f907bfcbef2c1cb677b349fed897401f79e06608bdf7fece2b745021a92a4

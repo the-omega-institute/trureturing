@@ -1,0 +1,51 @@
+## B9.3 最小奇异值作为观察能隙
+
+在 $\delta=0$：
+
+$$
+G(0)=
+\begin{pmatrix}W&W\\W&W\end{pmatrix},
+\tag{B9.8}
+$$
+
+其 eigenvalues 为
+
+$$
+2W,
+\qquad0.
+\tag{B9.9}
+$$
+
+临界线上的两行完全重合，反对称观察方向不可见。
+
+令
+
+$$
+\nu_j=\frac{w_j}{W},
+\qquad
+\operatorname{Var}_\nu(\omega)
+=
+\sum_j\nu_j(\omega_j-\bar\omega)^2.
+\tag{B9.10}
+$$
+
+则
+
+$$
+\sum_{i<j}w_iw_j(\omega_i-\omega_j)^2
+=W^2\operatorname{Var}_\nu(\omega).
+\tag{B9.11}
+$$
+
+所以 $G$ 的最小 eigenvalue 满足
+
+$$
+\boxed{
+\lambda_{\min}(G(\delta))
+=2W\operatorname{Var}_\nu(\omega)\delta^2
++O(\delta^4).}
+\tag{B9.12}
+$$
+
+即离轴后新出现的第二个可见方向，其 observation gap 以 $\delta^2$ 打开。
+

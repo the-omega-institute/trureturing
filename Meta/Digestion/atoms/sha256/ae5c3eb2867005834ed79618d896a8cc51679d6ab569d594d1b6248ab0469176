@@ -1,0 +1,11 @@
+## B14.2 ANCHOR
+
+整数 exponent
+
+$$
+E_Q(\eta)=\sum_k\eta_kF_k
+\tag{B14.2}
+$$
+
+把合法历史锚定到唯一整数值。它在 state level 是单射，但不保存关系图。
+

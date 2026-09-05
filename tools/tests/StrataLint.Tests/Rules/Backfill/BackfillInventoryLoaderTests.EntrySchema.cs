@@ -5,31 +5,110 @@ namespace StrataLint.Tests;
 public sealed partial class BackfillInventoryLoaderTests
 {
     [Fact]
-    public void BaselineDirectoryAtomAllowsUnknownHistoricalKeyButStillRequiresCurrentFields()
+    public void DirectoryAtomAcceptsCanonicalCoverageEdgesAndDerivesCoverageGids()
     {
-        var currentAtomId = FixtureAtomId("theorem/delta");
-        var source = Source("delta-v0.1", "docs/delta.md", "none") with
+        const string gid = "D5/S0/Carrier/Probe.probe";
+        var atom = CanonicalCoverageAtom($$"""
+            coverage_gids:
+              - gid: {{gid}}
+                target_statement_id: null
+            """);
+
+        var entry = Assert.Single(BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            atom)).RequireDigestionEntries());
+
+        Assert.Equal([gid], entry.CoverageGids.ToArray());
+        var edge = Assert.Single(entry.Coverage);
+        Assert.Equal(gid, edge.Gid);
+        Assert.Null(edge.TargetStatementId);
+    }
+
+    [Theory]
+    [InlineData("coverage-key", false)]
+    [InlineData("receipts-coverage", false)]
+    [InlineData("receipts-coverage", true)]
+    [InlineData("source-sha", false)]
+    [InlineData("statement-history", false)]
+    [InlineData("recorded-at", false)]
+    [InlineData("recorded-at", true)]
+    public void DirectoryAtomRejectsEachRetiredCoverageField(string retiredField, bool baseline)
+    {
+        var sourceKey = "source_" + "sha256";
+        var historyKey = "statement_id_" + "history";
+        const string retiredRelationshipKey = "coverage";
+        var recordedKey = "recorded_at_" + "utc";
+        var coverage = retiredField switch
         {
-            Text = Source("delta-v0.1", "docs/delta.md", "none").Text
-                + "acknowledged_stale = [\"legacy-delta\"]\n",
+            "source-sha" => $$"""
+                coverage_gids:
+                  - gid: D5/S0/Carrier/Probe.probe
+                    target_statement_id: null
+                    {{sourceKey}}: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                """,
+            "statement-history" => $$"""
+                coverage_gids:
+                  - gid: D5/S0/Carrier/Probe.probe
+                    target_statement_id: null
+                    {{historyKey}}: []
+                """,
+            "receipts-coverage" or "recorded-at" => """
+                coverage_gids:
+                  - gid: D5/S0/Carrier/Probe.probe
+                    target_statement_id: null
+                """,
+            _ => "coverage_gids: []",
         };
+        var atom = CanonicalCoverageAtom(coverage);
+        atom = retiredField switch
+        {
+            "coverage-key" => (atom.Path, atom.Text.Replace(
+                "coverage_gids: []\n",
+                $"coverage_gids: []\n{retiredRelationshipKey}: []\n",
+                StringComparison.Ordinal)),
+            "receipts-coverage" => (atom.Path, atom.Text.Replace(
+                "receipts:\n",
+                "receipts:\n  coverage: []\n",
+                StringComparison.Ordinal)),
+            "recorded-at" => (atom.Path, atom.Text.Replace(
+                "  unresolved_subitems: []\n",
+                "  unresolved_subitems: []\n"
+                + "  cover_disposition:\n"
+                + "    outcome: partial-open\n"
+                + "    gids:\n"
+                + "      - D5/S0/Carrier/Probe.probe\n"
+                + "    gaps: []\n"
+                + $"    {recordedKey}: 2026-09-03T00:00:00.0000000+00:00\n",
+                StringComparison.Ordinal)),
+            _ => atom,
+        };
+
+        var snapshot = Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            atom);
+        var exception = Assert.Throws<FormatException>(() =>
+            baseline
+                ? BackfillInventoryLoader.LoadBaseline(snapshot)
+                : BackfillInventoryLoader.Load(snapshot));
+
+        var expectedMessage = retiredField switch
+        {
+            "receipts-coverage" => "receipts keys are not canonical",
+            "recorded-at" => "cover_disposition keys are not canonical",
+            "source-sha" or "statement-history" => "coverage edge keys are not canonical",
+            _ => "source delta-v0.1 entry keys are not canonical",
+        };
+        Assert.Contains(expectedMessage, exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void BaselineCanonicalSchemaRejectsRetiredCoverageKey()
+    {
         var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
-        var legacyAtomPath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/legacy-delta.yaml";
-        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
-            source,
-            (legacyAtomPath, atom.Text + "ast_path: theorem/delta\n")));
-
-        Assert.Equal(currentAtomId, Assert.Single(document.RequireDigestionEntries()).AtomId);
-        Assert.Equal([currentAtomId], Assert.Single(document.RequireDigestionSources()).AcknowledgedStale.ToArray());
-
-        var missingRequiredField = atom.Text.Replace(
-            "coverage_gids: []\n",
-            string.Empty,
-            StringComparison.Ordinal);
         var exception = Assert.Throws<FormatException>(() =>
             BackfillInventoryLoader.LoadBaseline(Snapshot(
-                source,
-                (atom.Path, missingRequiredField))));
+                Source("delta-v0.1", "docs/delta.md", "none"),
+                (atom.Path, atom.Text + "coverage: []\n"))));
 
         Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
     }
@@ -77,5 +156,20 @@ public sealed partial class BackfillInventoryLoaderTests
             (atom.Path, written)));
         Assert.Equal("source's theorem: missing", Assert.Single(roundTripped.RequireDigestionEntries())
             .Receipts.Quarantine?.Justification);
+    }
+
+    private static (string Path, string Text) CanonicalCoverageAtom(string coverage)
+    {
+        var fingerprint = "sha256:" + FixtureAtomId("theorem/canonical-coverage");
+        return ($"{BackfillInventoryLoader.RootPath}delta-v0.1/partial-open/{fingerprint["sha256:".Length..]}.yaml", $$"""
+            fingerprints:
+              raw_sha256: {{fingerprint}}
+              normalized_sha256: {{fingerprint}}
+            cas_ref: {{fingerprint}}
+            {{coverage}}
+            receipts:
+              scribe: []
+              unresolved_subitems: []
+            """ + "\n");
     }
 }

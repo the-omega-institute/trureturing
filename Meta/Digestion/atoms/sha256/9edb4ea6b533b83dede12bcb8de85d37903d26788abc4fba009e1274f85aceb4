@@ -1,0 +1,34 @@
+## 199. 第五层：branch monodromy
+
+在 source-deformed family 中，多重零点附近的平方根分支会交换零点 identities。
+
+仓库的 jet pencil 已经严格显示：determinant 只读出：
+
+$$
+(s-\rho)^m,
+$$
+
+而完整 resolvent 才保存 nilpotent jet chain。
+
+所以：
+
+$$
+\boxed{
+\text{scalar determinant}
+=
+\text{完成后的无标号谱},
+}
+$$
+
+$$
+\boxed{
+\text{resolvent/monodromy}
+=
+\text{内部 branch memory}.
+}
+$$
+
+若所有零点 branch 的 monodromy 图连通，才能说所有零点在 branch 动力学意义下属于同一个整体。
+
+---
+

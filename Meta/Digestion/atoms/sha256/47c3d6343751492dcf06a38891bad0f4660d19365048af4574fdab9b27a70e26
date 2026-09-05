@@ -1,0 +1,8 @@
+- “降低逃逸率”等价于 canonical quotient CUT 的严格 kernel novelty。
+
+所以本增订不把“加入一个 readout 看起来更丰富”当作信息增益。只有给出 kernel 严格缩小或 unique-capture witness，才能声称该 readout 是结构新信息。
+
+### （五）Hankel visible rank
+
+项目已经机器证明，有限维线性系统在足够大 horizon 上的 Hankel rank 等于 reachable dimension 减去 reachable-unobservable dimension。结合项目已有最小实现结果，Hankel rank 是可见行为所需的最小记忆维数，而不是任意 chosen state-space dimension。
+

@@ -1,0 +1,29 @@
+## 24. 定义创造 `[P/L]`
+
+项目 DECT 将四角色用于定义创造：
+
+\[
+\begin{aligned}
+\mathsf{CUT}
+&=\text{候选定义切割当前纤维};\\
+\mathsf{FLOW}
+&=\text{残差和定义沿动力学、尺度、推理传播};\\
+\mathsf{ADMIT}
+&=\text{目标无关、自然、稳定、低成本、可认证约束};\\
+\mathsf{ANCHOR}
+&=\text{具体反例、构造、解析估计或形式证书}.
+\end{aligned}
+\]
+
+生产性定义要求：
+
+\[
+\exists(x,y)\in\operatorname{Blind}(\Gamma,q,T),
+\quad
+d(x)\ne d(y).
+\]
+
+它不仅是新字符串，而且切开了当前目标相关盲核。
+
+因此：
+

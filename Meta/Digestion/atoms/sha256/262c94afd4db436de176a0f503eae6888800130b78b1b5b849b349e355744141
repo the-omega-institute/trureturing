@@ -1,0 +1,48 @@
+\[
+\boxed{
+\mathbb D(\Sigma)
+=
+\begin{pmatrix}
+0 & D_{\mathsf{CF}} & D_{\mathsf{CA}} & D_{\mathsf{CH}}\\
+ & 0 & D_{\mathsf{FA}} & D_{\mathsf{FH}}\\
+ &   & 0 & D_{\mathsf{AH}}\\
+ &   &   & 0
+\end{pmatrix}.
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+D_{\mathsf{CF}}
+&=
+D_{\mathsf F}(F;q_X,q_Y)
+&&\text{CUT–FLOW carry};\\
+D_{\mathsf{CA}}
+&=
+D_{\mathsf A}(q,A)
+&&\text{CUT 不能执行 ADMIT};\\
+D_{\mathsf{CH}}
+&=
+D_{\mathsf H}(q,a)
+&&\text{CUT 不能唯一识别 ANCHOR};\\
+D_{\mathsf{FA}}
+&=
+\{x:A_Xx\land\neg A_Y(Fx)\}
+&&\text{FLOW 泄漏出合法域};\\
+D_{\mathsf{FH}}
+&=
+\text{可见端点相同但路径／隐藏状态不同}
+&&\text{FLOW–ANCHOR 历史差};\\
+D_{\mathsf{AH}}
+&=
+\text{更新 ADMIT 后既有 ANCHOR 失去准入}
+&&\text{准入—实际不相容}.
+\end{aligned}
+\]
+
+该矩阵描述兼容障碍，还不是严格意义的动态曲率。
+
+---
+

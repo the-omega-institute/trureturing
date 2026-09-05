@@ -1,0 +1,52 @@
+# 第两千一百一十四部　项目中的两端已经出现
+
+项目目前已经机器证明了两个恰好位于这条桥两端的结构。
+
+第一，任意两个不同频率的二阶交替核强度为：
+
+$$
+4\sin^2
+\left(
+\frac{\Delta t\,\Delta\omega}{2}
+\right),
+$$
+
+所以每个频率对都有明确的最大分离时钟，但不存在由该定理自动给出的全局公共时钟。
+
+第二，一个非自共轭离线零点轨道的完整 Weil convolution-square 贡献精确分裂为：
+
+$$
+\boxed{
+Q_{\operatorname{orb}(\rho)}
+=
+E_{\mathrm{even}}
+-
+E_{\mathrm{odd}},
+}
+\tag{2114.1}
+$$
+
+其中：
+
+$$
+E_{\mathrm{even}}\ge0,
+\qquad
+E_{\mathrm{odd}}\ge0.
+$$
+
+所有符号风险都集中在法向奇能量中。该结论仍以给定离线零点数据为条件，尚未建立 prime-side realization。
+
+这与本轮 Fourier 核中的：
+
+$$
+\cosh(\delta u)
+\quad\text{和}\quad
+\sinh(\delta u)
+$$
+
+分解完全同型。
+
+但目前只能说**结构平行**，还不能说两者已经被同一个算子正式识别。
+
+---
+

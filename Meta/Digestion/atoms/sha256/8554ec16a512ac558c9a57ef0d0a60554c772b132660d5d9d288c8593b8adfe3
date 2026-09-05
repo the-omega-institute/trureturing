@@ -1,0 +1,11 @@
+- 当 $\delta\ne0$ 时，$|R_k|=e^{\delta F_k\Delta\omega}$，得到 hyperbolic radial tower。
+
+因此：
+
+$$
+\boxed{
+\text{时间相位与离线横向分裂，是同一 Fibonacci 复 rapidity 的虚部和实部。}
+}
+\tag{A10.7}
+$$
+

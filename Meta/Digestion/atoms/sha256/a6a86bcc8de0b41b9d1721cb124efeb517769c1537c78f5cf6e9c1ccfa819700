@@ -1,0 +1,36 @@
+## 231. 有限残余与极限残余
+
+设：
+
+$$
+V_1\subseteq V_2\subseteq\cdots
+$$
+
+是一列观察子空间，并令：
+
+$$
+R_n=V_n^\perp.
+$$
+
+仓库已经证明，在闭包极限：
+
+$$
+V_\infty
+=
+\overline{\bigcup_nV_n}
+$$
+
+处：
+
+$$
+\boxed{
+R_\infty
+=
+\bigcap_nR_n.
+}
+$$
+
+这允许严格区分三种信息逃逸。
+
+---
+

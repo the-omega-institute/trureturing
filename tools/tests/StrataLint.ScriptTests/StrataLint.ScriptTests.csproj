@@ -8,10 +8,15 @@
   <ItemGroup>
     <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <!-- TransactionFixture 执行真 CLI(PLAYBOOK_REAL_CLI),需要 StrataLint apphost
+         与测试程序集同目录。此前靠 ProjectReference→StrataLint.Tests 传递取得;
+         该 test→test 边删除后必须直接声明。这是**生产**引用,不是拓扑债。 -->
+    <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
+    <ProjectReference Include="../../StrataLint.Scribe/StrataLint.Scribe.csproj" />
     <!-- 脚手架(TemporaryDirectory / TestProcessRunner / ScriptHarnessScratch 等)单一归属于
          StrataLint.Tests。ScriptTests 已具名进 CrossCuttingHarnessPaths,不在 ownedTestProjects
          里,故 OwnedTestToOwnedTestReference 的 foreach 主语不含它 —— 该引用不记拓扑债。 -->
-    <ProjectReference Include="../StrataLint.Tests/StrataLint.Tests.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="Xunit.SkippableFact" />
@@ -19,5 +24,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <None Include="../../scripts/workflow/engineering-test-execution-harness.sh"
+          Link="engineering-test-execution-harness.sh"
+          CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

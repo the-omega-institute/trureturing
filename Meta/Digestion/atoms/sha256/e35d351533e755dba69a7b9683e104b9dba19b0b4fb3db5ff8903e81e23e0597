@@ -1,0 +1,12 @@
+## 已构造的全局反射模型
+
+$$
+\boxed{
+\text{all }+\delta
+\quad\longleftrightarrow\quad
+\text{all }-\delta,
+}
+$$
+
+其经典状态具有跨全部轨道的 connected correlations，其量子纯化是 multipartite GHZ state。
+

@@ -1,0 +1,47 @@
+## 14. Hardy–Littlewood 边界的 connected 形式
+
+若对每个非空 \(A\subseteq H\) 都有：
+
+$$
+\sum_{n\le X}
+\prod_{h\in A}\Lambda(n+h)
+=
+\mathfrak S(A)X+o(X),
+$$
+
+则：
+
+$$
+\lim_{\sigma\downarrow1}M_A(\sigma)
+=
+\mathfrak S(A).
+$$
+
+进而：
+
+$$
+\boxed{
+\lim_{\sigma\downarrow1}
+\kappa_A(\sigma)
+=
+\mathfrak S_{\mathrm{conn}}(A),
+}
+$$
+
+其中：
+
+$$
+\mathfrak S_{\mathrm{conn}}(A)
+=
+\sum_{\pi\in\Pi(A)}
+(-1)^{|\pi|-1}
+(|\pi|-1)!
+\prod_{B\in\pi}\mathfrak S(B).
+$$
+
+这是条件定理，不把 prime \(k\)-tuple conjecture 偷入定义。
+
+当前仓库中的 ZCOCT 已把平方零源代数、构型矩生成元、connected 对数及分拆 Möbius 反演组织成相关完备化 ζ 的核心。
+
+---
+

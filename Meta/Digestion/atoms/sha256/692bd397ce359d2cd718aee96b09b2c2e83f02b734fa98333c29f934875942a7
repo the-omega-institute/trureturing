@@ -1,0 +1,26 @@
+## B5.2 完整等模集合
+
+若
+
+$$
+|\lambda_+(z)|=|\lambda_-(z)|,
+\tag{B5.3}
+$$
+
+则由 $\lambda_++\lambda_-=1$ 可知二者必为复共轭，除非和为零；后者与和为 $1$ 矛盾。因此 $z=-\lambda_+\lambda_-$ 必为负实数，并有 $D(z)\le0$。
+
+反之，当 $z\le-1/4$ 为实数时，两根互为复共轭或重合，故等模。
+
+所以：
+
+$$
+\boxed{
+|\lambda_+(z)|=|\lambda_-(z)|
+\Longleftrightarrow
+z\in(-\infty,-1/4].
+}
+\tag{B5.4}
+$$
+
+hard-core 的等模 locus 是一条完整负实割线，而不只是端点。
+

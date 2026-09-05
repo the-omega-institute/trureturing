@@ -1,0 +1,41 @@
+# 第两千零七部　当前项目中这条链已经闭合到哪里
+
+项目最新已经机器证明了三个重要端点。
+
+第一，正质量的 signed-normal atom 即使 ordinary Hankel 始终正半定，只要法向分裂非零，其 shifted support localizer 就产生严格负证书。也就是说，项目已经严格区分了“质量为正”和“支撑位于合法一侧”。
+
+第二，给定一个非实离线零点，项目已经构造出 powered even separator，使完整 Weil convolution-square 零点和具有严格负实部；有限异常点由插值杀死，无限尾部由卷积幂几何压低。
+
+第三，项目最新的 exact common-spectrum floor 把最大共同 normalized-Haar 成分精确识别为白化 Gram 的最小本征值。
+
+因此，新的素数宇称结构可以准确插在两端之间：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{prime parity transfer}
+&
+\xrightarrow{\text{common floor}}
+&
+\text{Möbius／Liouville observer}
+\\[2mm]
+\downarrow{\scriptstyle\text{Prime–Gamma completion}}
+&&
+\downarrow{\scriptstyle\text{zero-side identification}}
+\\[2mm]
+\text{signed-normal spectrum}
+&
+\xrightarrow{\text{support localizer}}
+&
+\text{negative Weil square}.
+\end{array}
+}
+\tag{2007.1}
+$$
+
+真正未闭合的是左侧纵向箭头和 canonical identification。
+
+最新仓库审计也明确保留了这些缺口：actual completed-\(\xi\) 的 canonical Weil distribution、枚举无关 zero-side pairing、实轴非零公共桥以及完整 prime-power identification 尚未全部接通，因此更强的 RH 等价原子仍被隔离，而没有被误记为完成。
+
+---
+

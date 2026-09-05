@@ -1,0 +1,6 @@
+## 一　W-16 预登记:无条件显式公式(`UnconditionalExplicitFormula`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `explicitFormula_unconditional (Z : ZeroData) (g : WeilTestFunction) : zeroSum Z g (symmetricConvergent_of_zeroData Z g) = poleTerm g - primeTerm g + archimedeanTerm g (archimedeanConvergent_of_weilTestFunction g)`。
+**可证伪预测(写在跑之前)**:冻结 `weil_explicit_formula Z g (symmetricConvergent_of_zeroData Z g) (archimedeanConvergent_of_weilTestFunction g)` 一行;标准三公理。探针已整证。
+**边界**:对一切 `g : WeilTestFunction`,不限卷积平方。
+

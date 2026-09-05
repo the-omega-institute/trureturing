@@ -1,0 +1,10 @@
+### Fibonacci
+
+$$
+c_{\mathrm{state}}=2,
+\qquad
+c_{\mathrm{arity}}=1,
+$$
+
+具有固定有限递推。
+

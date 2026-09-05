@@ -1,0 +1,29 @@
+## 定义闭合的 Zeckendorf 构型—零点轨道累积量与正实现理论
+
+**Definition-Closed Zeckendorf–Constellation–Orbit–Cumulant Positive Realization Theory**
+
+以下不再把此前的 ASOPC、ZCOCT、D-ZCOCT、Ouroboros 正完成等名称并列，而将全部内容压缩成一个单一理论。
+
+当前仓库中的 ZCOCT 已经建立了四个基本方向：加法素数构型是联合相关，非平凡零点组成 Klein 四群轨道，实坐标通过无限 Zeckendorf 分辨率线程编码，构型阶数、零点重数和横向可见阶数应分成 \((k,m,2r)\) 三条独立轴；其最终开放接口是相关完备化 \(\xi\) 与 Trace–Jet Bridge。
+
+本重整版增加并统一了：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{全部素数构型的逆极限源状态};\\
+&\text{所有离线轨道共同取反的全局状态模型};\\
+&\text{经典结构纠缠与 GHZ 量子提升};\\
+&\text{不可抵消横向正缺陷};\\
+&\text{标量相关完成不移动零点的 no-go};\\
+&\text{非交换 determinant 的循环 Trace–Jet 机制};\\
+&\text{零缺陷正实现纤维};\\
+&\text{该纤维非空推出 RH 的主定理}.
+\end{aligned}
+}
+$$
+
+本理论**不设置存在公理**。任何尚未构造的全局对象，都只被定义为某个候选空间中的元素；理论的开放问题是相应零缺陷集合是否非空。
+
+---
+

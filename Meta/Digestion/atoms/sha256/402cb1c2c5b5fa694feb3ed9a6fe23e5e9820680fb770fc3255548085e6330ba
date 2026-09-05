@@ -1,0 +1,19 @@
+## 524. 固定 \(k\) 并不是无限灾难
+
+对每个固定构型阶 \(k\)：
+
+* admissibility 的完整阻塞只需检查 \(p\le k\)；
+* 大素数尾从 \(p^{-2}\) 开始；
+* normalized local product 绝对收敛；
+* 每个固定素数的全部相关由有限 residue variable 生成。
+
+所以：
+
+$$
+\boxed{
+\text{固定 }k\text{ 的局部结构本身是可压缩的。}
+}
+$$
+
+---
+

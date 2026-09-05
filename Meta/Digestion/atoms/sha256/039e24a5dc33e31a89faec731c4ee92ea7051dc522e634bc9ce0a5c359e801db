@@ -1,0 +1,24 @@
+## 540. 大素数构型尾展开
+
+```lean
+theorem constellation_localFactor_expansion
+    (H : PrimeConstellation)
+    (p : Nat.Primes)
+    (hp : H.diameter < p) :
+    localFactor p H =
+      1 -
+        H.card * (H.card - 1) /
+          (2 * p ^ 2) +
+        localRemainder p H
+```
+
+并证明：
+
+$$
+|\operatorname{localRemainder}|
+\le
+C_Hp^{-3}.
+$$
+
+---
+

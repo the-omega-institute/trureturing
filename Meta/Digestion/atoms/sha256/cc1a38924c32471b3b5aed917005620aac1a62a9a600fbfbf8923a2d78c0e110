@@ -1,0 +1,41 @@
+# 最终凝聚
+
+这一轮最深的结果可以压缩成三个公式。
+
+第一：
+
+$$
+\boxed{
+R(\rho)=C(\rho)
+\iff
+|u(\rho)|=1
+\iff
+\Re\rho=\frac12.
+}
+$$
+
+RH 是解析对偶与复现实在零点谱上的融合。
+
+第二：
+
+$$
+\boxed{
+G_x
+\sim
+\operatorname{diag}
+\left(
+2x,\,
+2(1-x)
+\right).
+}
+$$
+
+其中：
+
+$$
+x=\frac1{4\rho(1-\rho)}.
+$$
+
+所以：
+
+* even completion weight 是 \(2x\)；

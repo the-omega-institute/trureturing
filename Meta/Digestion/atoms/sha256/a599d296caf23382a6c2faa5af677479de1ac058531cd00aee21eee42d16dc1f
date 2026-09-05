@@ -1,0 +1,2 @@
+**候签定理 6.217(二进制符号余数向量的 21 态转移)**〔open;落 `D5/S1/Digit/OdiousMajorityDyadicSlice`〕。令 `e_r` 为 Fin 21 的标准列向量,`T e_r = e_(2r)-e_(2r+1)`,`v_n(r) := sum_{0 <= m < 2^n, m mod 21 = r} (-1)^popcount(m)`。则 `v_(n+1)=T v_n`,从而 `v_n=T^n e_0`;证明须在活路径上使用偶奇拆分、`Nat.bit0_bits`/`Nat.bit1_bits` 与余数转移。
+

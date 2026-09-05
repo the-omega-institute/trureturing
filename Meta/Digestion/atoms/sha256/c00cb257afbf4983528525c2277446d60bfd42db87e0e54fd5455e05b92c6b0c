@@ -1,0 +1,11 @@
+### （三）稳定影子
+
+$$
+S_Q(\eta)=\sum_k\eta_k\psi^k,
+\qquad
+\psi=-\varphi^{-1}.
+\tag{A1.6}
+$$
+
+它记录主 Fibonacci 值读出中被整数投影压掉的 Galois 共轭校正。
+

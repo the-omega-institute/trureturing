@@ -1,0 +1,40 @@
+## 27. Möbius 带和 Klein 瓶的严格边界
+
+函数方程只直接给出反射：
+
+$$
+\delta\mapsto-\delta.
+$$
+
+它尚未自动给出某个自然高度周期 \(L\)。
+
+只有在存在参数回路并有胶合：
+
+$$
+(\gamma,\delta)
+\sim
+(\gamma+L,-\delta)
+$$
+
+时，才能得到 Möbius monodromy。
+
+如果再有第二个独立周期方向及反向胶合，才得到 Klein bottle 型商。
+
+因此：
+
+$$
+\boxed{
+\text{Klein 四群轨道是严格存在的};
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{内禀 Klein bottle 拓扑需要额外 monodromy 证书}.
+}
+$$
+
+---
+

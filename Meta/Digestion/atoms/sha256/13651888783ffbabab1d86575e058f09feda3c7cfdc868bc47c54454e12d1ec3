@@ -1,0 +1,63 @@
+## 1976.1 RH 的分支轨迹表述
+
+给每一个反射轨道赋予正权重，并将它推送到 signed-normal 商空间：
+
+$$
+\rho
+\longmapsto
+x_\rho
+=
+-
+\left(
+\Re\rho-\frac12
+\right)^2.
+$$
+
+那么：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+x_\rho=0
+\quad
+\text{对每个非平凡零点成立}.
+}
+$$
+
+即：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部谱原子均位于反射商的分支轨迹 } \{0\}.
+}
+\tag{1976.4}
+$$
+
+离线零点则位于：
+
+$$
+x_\rho<0,
+$$
+
+其同一个商名字之下仍存在两个不同 lift：
+
+$$
++\delta_\rho,
+\qquad
+-\delta_\rho.
+$$
+
+这给“completed scalar 遗忘方向”一个精确几何模型：
+
+$$
+\boxed{
+\text{scalar completion 活在商空间；
+causal orientation 活在覆盖页上。}
+}
+$$
+
+---
+

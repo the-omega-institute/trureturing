@@ -1,0 +1,80 @@
+# 一、零点没有被探测器推走，被推走的是“反例分布”
+
+设横向偏离为
+
+$$
+\delta=\Re\rho-\frac12.
+$$
+
+第 \(N\) 层观察只能分辨尺度
+
+$$
+\varepsilon_N=\varphi^{-N}.
+$$
+
+若这一层没有发现离线偏离，真正得到的是
+
+$$
+|\delta|<\varepsilon_N,
+$$
+
+不是
+
+$$
+\delta=0.
+$$
+
+定义第 \(N\) 层盲纤维：
+
+$$
+B_N=(-\varepsilon_N,\varepsilon_N).
+$$
+
+则
+
+$$
+B_0\supset B_1\supset B_2\supset\cdots,
+\qquad
+\bigcap_{N\ge0}B_N=\{0\}.
+$$
+
+所以每次探测实际上完成：
+
+$$
+\boxed{
+\text{排除外层}
+\quad+\quad
+\text{把仍可能存在的反例压入内层}.
+}
+$$
+
+这会产生一种“零点被推得更贴近临界线”的感觉。但真实逻辑是：
+
+$$
+\forall N\ \exists\delta_N\in B_N\setminus\{0\},
+$$
+
+其中每层都可以选择一个新的反例 \(\delta_N\)。
+
+这不等于存在一颗固定零点在运动：
+
+$$
+\exists\delta\neq0\ \forall N,\quad \delta\in B_N.
+$$
+
+后者不可能，因为所有 \(B_N\) 的交只有零。
+
+因此必须严格区分：
+
+$$
+\boxed{
+\text{adversarial counterexample retreat}
+\neq
+\text{physical zero motion}.
+}
+$$
+
+前者是量词随观察深度变化；后者需要一个真正的动力学族。
+
+---
+

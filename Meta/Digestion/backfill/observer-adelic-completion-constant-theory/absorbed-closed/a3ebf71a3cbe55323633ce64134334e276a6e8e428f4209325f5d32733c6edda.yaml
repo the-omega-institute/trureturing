@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a3ebf71a3cbe55323633ce64134334e276a6e8e428f4209325f5d32733c6edda
+  normalized_sha256: sha256:a3ebf71a3cbe55323633ce64134334e276a6e8e428f4209325f5d32733c6edda
+cas_ref: sha256:a3ebf71a3cbe55323633ce64134334e276a6e8e428f4209325f5d32733c6edda
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenPrimeCircle/GoldenHawkingTemperatureNormalization.golden_data_does_not_determine_hawking_temperature
+    target_statement_id: sha256:35ffcf7cfbd797aed4c34cd1133a7a25899421ada53b5617da60e453e9f0a3f0
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/GoldenPrimeCircle/GoldenHawkingTemperatureNormalization.golden_data_does_not_determine_hawking_temperature
+      definition_sha256: sha256:556ac9b8012e2edba8a2bb75691d8f8bb14cfa87546b50d4a53aaf5fda2d446c
+      emission_sha256: sha256:04f1d7001d1d671061ce7ca2f49df152e891c3a7178349b4373e7233243bead3
+  unresolved_subitems: []

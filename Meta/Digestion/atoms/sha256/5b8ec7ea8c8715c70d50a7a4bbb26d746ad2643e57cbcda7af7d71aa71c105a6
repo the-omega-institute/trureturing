@@ -1,0 +1,101 @@
+## 单观察者 RH
+
+$$
+\boxed{
+\text{所有零点给出同一个横向观察读数}.
+}
+$$
+
+它表达相对相干或唯一观察起源。
+
+二者合起来：
+
+$$
+\delta=-\delta.
+$$
+
+所以：
+
+$$
+\delta=0.
+$$
+
+最终：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\mathrm{Global\ Evenness}
+\land
+\mathrm{Observer\ Uniqueness}.
+}
+$$
+
+或者用正能量语言：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{zero center bias}
+\land
+\text{zero relative variance}.
+}
+$$
+
+或者用 gauge 语言：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{flat connection}
+\land
+\text{self-dual gauge fixing}.
+}
+$$
+
+或者用项目当前的 prime–zero 语言：
+
+$$
+\boxed{
+\begin{aligned}
+\text{prime swap curvature}\to0
+&\Longrightarrow
+\text{所有局部观察起源一致};\\
+\text{relative faithful bridge}
+&\Longrightarrow
+\text{所有零点实部一致};\\
+\text{global }J\text{-symmetry}
+&\Longrightarrow
+a=1-a;\\
+&\Longrightarrow a=\frac12.
+\end{aligned}
+}
+$$
+
+所以这次拆分真正带来的简化是：
+
+$$
+\boxed{
+\text{不再要求 prime side 直接解释为什么是 }1/2.
+}
+$$
+
+prime side 只需证明：
+
+$$
+\boxed{
+\text{所有零点在横向方向没有相对分歧。}
+}
+$$
+
+至于唯一共同位置为什么恰好是 \(1/2\)，全局函数方程已经回答了：
+
+$$
+\boxed{
+\text{一个唯一的观察读数若必须与自己的取反同时存在，
+它只能等于零。}
+}
+$$

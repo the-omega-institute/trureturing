@@ -1,0 +1,87 @@
+## 183. 四元轨道多项式
+
+令中心坐标：
+
+$$
+z=s-\frac12.
+$$
+
+一个 generic 四元轨道的 centered roots 为：
+
+$$
+\pm\delta\pm i\gamma.
+$$
+
+其轨道多项式为：
+
+$$
+\begin{aligned}
+P_{\delta,\gamma}(z)
+&=
+\bigl((z-\delta)^2+\gamma^2\bigr)
+\bigl((z+\delta)^2+\gamma^2\bigr)\\
+&=
+\boxed{
+z^4
++
+2(\gamma^2-\delta^2)z^2
++
+(\delta^2+\gamma^2)^2.
+}
+\end{aligned}
+$$
+
+所以完整对称的 scalar polynomial 虽然丢失：
+
+$$
+\operatorname{sign}\delta,
+\qquad
+\operatorname{sign}\gamma,
+$$
+
+却保留：
+
+$$
+\delta^2,\qquad\gamma^2.
+$$
+
+事实上由两个系数可以恢复：
+
+$$
+\delta^2
+=
+\frac12
+\left(
+\sqrt b-\frac a2
+\right),
+$$
+
+$$
+\gamma^2
+=
+\frac12
+\left(
+\sqrt b+\frac a2
+\right),
+$$
+
+其中：
+
+$$
+a=2(\gamma^2-\delta^2),
+\qquad
+b=(\delta^2+\gamma^2)^2.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{对称 quotient 并没有抹掉离线幅值；}
+}
+$$
+
+它只抹掉了内部页标签。
+
+---
+

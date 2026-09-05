@@ -1,0 +1,19 @@
+## B7.2 与 LocalPositiveSquareCompletion 的共同机制
+
+项目 `LocalPositiveSquareCompletion` 证明：有限实谱外的 inverse-square weights 形成正对角矩阵，而 $\det(I+wA)$ 的全部零点位于负实轴。
+
+式 (B7.3) 表明 Zeckendorf hard-core roots 由完全同型的有限正 determinant 机制定位。
+
+共同原理为：
+
+$$
+\boxed{
+A>0
+\quad\Longrightarrow\quad
+\det(I+zA)=0
+\Rightarrow z<0.}
+\tag{B7.5}
+$$
+
+但这仍不是 RH，因为 completed Cayley 变量的目标域是单位圆，而这里的变量是 hard-core activity。要获得 RH，需要先构造一个 canonical completed self-adjoint／unitary operator，使其 characteristic variable 与 Cayley $w$ 真正对应。
+

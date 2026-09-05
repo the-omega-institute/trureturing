@@ -1,0 +1,1 @@
+**逃逸见证(探针已证,写在实施之前)**:`archimedean_lower_bound` 这条量化不等式——非冻结输入为「非负平移波包在 [T−δ,T+δ] 上 ≥ 1/4 的质量下界、μ+1 > 0 丢弃余集、μ 在 Ici 0 单调」的合成;`mu_tendsto_atTop` 由 `mu_stirling` 得。

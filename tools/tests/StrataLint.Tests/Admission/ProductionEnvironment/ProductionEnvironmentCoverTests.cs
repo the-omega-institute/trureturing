@@ -210,7 +210,7 @@ public sealed partial class ProductionEnvironmentTests
         var entry = Assert.Single(
             inputs.Document.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
-        var oldCoverage = Assert.Single(entry.Receipts.Coverage);
+        var oldCoverage = Assert.Single(entry.Coverage);
         var source = Assert.Single(inputs.Document.RequireDigestionSources());
         var driftedDocument = inputs.Document.WithDigestionSources(
         [
@@ -219,16 +219,13 @@ public sealed partial class ProductionEnvironmentTests
                 Entries = source.Entries.Select(candidate => candidate.AtomId == entry.AtomId
                     ? candidate with
                     {
-                        Receipts = candidate.Receipts with
-                        {
-                            Coverage =
-                            [
-                                oldCoverage with
-                                {
-                                    TargetStatementId = "sha256:" + new string('c', 64),
-                                },
-                            ],
-                        },
+                        Coverage =
+                        [
+                            oldCoverage with
+                            {
+                                TargetStatementId = "sha256:" + new string('c', 64),
+                            },
+                        ],
                     }
                     : candidate).ToImmutableArray(),
             },
@@ -247,12 +244,12 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.Equal(2, exitCode);
         Assert.Equal(string.Empty, console.Output);
-        Assert.Contains("coverage-receipt-mismatch", console.Error, StringComparison.Ordinal);
+        Assert.Contains("coverage-target-mismatch", console.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Theory]
-    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
     public void DigestStatusRejectsEachReceiptIntegrityMismatchIndependently(string mismatchCode)
@@ -268,19 +265,16 @@ public sealed partial class ProductionEnvironmentTests
         var alignedFiles = FilesWithLedgerFromRoot(inputs.Files, temporary.Path);
         var verification = inputs.VerifiedEmissions
             ?? throw new InvalidOperationException("cover fixture omitted Scribe verification");
-        if (mismatchCode == "coverage-receipt-mismatch")
+        if (mismatchCode == "coverage-target-mismatch")
         {
             var driftedDocument = MapOnlyEntry(
                 BackfillInventoryLoader.LoadRoot(temporary.Path),
                 entry => entry with
                 {
-                    Receipts = entry.Receipts with
+                    Coverage = entry.Coverage.Select(receipt => receipt with
                     {
-                        Coverage = entry.Receipts.Coverage.Select(receipt => receipt with
-                        {
-                            TargetStatementId = "sha256:" + new string('c', 64),
-                        }).ToImmutableArray(),
-                    },
+                        TargetStatementId = "sha256:" + new string('c', 64),
+                    }).ToImmutableArray(),
                 });
             DirectoryLedgerTestSupport.ReplaceWithProjection(alignedFiles, driftedDocument);
         }
@@ -319,7 +313,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
         foreach (var otherCode in new[]
                  {
-                     "coverage-receipt-mismatch",
+                     "coverage-target-mismatch",
                      "scribe-definition-mismatch",
                      "scribe-emission-mismatch",
                  }.Where(code => code != mismatchCode))
@@ -403,7 +397,7 @@ public sealed partial class ProductionEnvironmentTests
             BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
-        Assert.Single(entry.Receipts.Coverage);
+        Assert.Single(entry.Coverage);
         Assert.Single(entry.Receipts.Scribe);
         Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
@@ -439,10 +433,10 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Theory]
-    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void CoverAtomIgnoresUnrelatedReceiptIntegrityMismatchOutsideAtomDelta(string mismatchCode)
+    public void CoverAtomAlwaysValidatesCurrentCoverageButScopesScribeBacklog(string mismatchCode)
     {
         const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
         const string siblingGid = siblingModuleGid + ".sibling";
@@ -457,7 +451,7 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(
             temporary.Path,
             inputs,
@@ -466,15 +460,24 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
-        Assert.True(
-            result.Success,
-            $"unrelated-receipt-drift-must-not-block-cover ({mismatchCode}): {result.Error}");
-        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-        Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        if (mismatchCode == "coverage-target-mismatch")
+        {
+            Assert.False(result.Success);
+            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        }
+        else
+        {
+            Assert.True(
+                result.Success,
+                $"unrelated-scribe-drift-must-not-block-cover ({mismatchCode}): {result.Error}");
+            Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        }
     }
 
     [Theory]
-    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
     public void AlignScribeReceiptRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(
@@ -499,7 +502,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Theory]
-    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
     public void AlignScribeReceiptRejectsTargetRepairWhenUnrelatedBacklogExistsAtForkPoint(
@@ -609,17 +612,16 @@ public sealed partial class ProductionEnvironmentTests
                     Entries = source.Entries.Select(entry => entry.AtomId == siblingAtomId
                         ? entry with
                         {
+                            Coverage =
+                            [
+                                new DigestionCoverageEdge(
+                                    siblingGid,
+                                    mismatchCode == "coverage-target-mismatch"
+                                        ? mismatchStatementId
+                                        : targetStatementId),
+                            ],
                             Receipts = entry.Receipts with
                             {
-                                Coverage =
-                                [
-                                    new DigestionCoverageReceipt(
-                                        siblingGid,
-                                        entry.Fingerprints.RawSha256,
-                                        mismatchCode == "coverage-receipt-mismatch"
-                                            ? mismatchStatementId
-                                            : targetStatementId),
-                                ],
                                 Scribe =
                                 [
                                     new DigestionScribeReceipt(
@@ -683,19 +685,13 @@ public sealed partial class ProductionEnvironmentTests
                     Entries = source.Entries.Select(entry => entry.AtomId == siblingAtomId
                         ? entry with
                         {
+                            Coverage =
+                            [
+                                new DigestionCoverageEdge(inputs.Gid, targetStatementId),
+                                new DigestionCoverageEdge(inputs.Gid, targetStatementId),
+                            ],
                             Receipts = entry.Receipts with
                             {
-                                Coverage =
-                                [
-                                    new DigestionCoverageReceipt(
-                                        inputs.Gid,
-                                        entry.Fingerprints.RawSha256,
-                                        targetStatementId),
-                                    new DigestionCoverageReceipt(
-                                        inputs.Gid,
-                                        entry.Fingerprints.RawSha256,
-                                        targetStatementId),
-                                ],
                                 Scribe =
                                 [
                                     new DigestionScribeReceipt(

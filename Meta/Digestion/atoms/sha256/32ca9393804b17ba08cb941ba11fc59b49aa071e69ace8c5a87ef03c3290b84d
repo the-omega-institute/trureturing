@@ -1,0 +1,20 @@
+## 80. 反射不是第五原语
+
+令 \(\mathrm{Stage}\) 为阶段类型。
+
+则反射只是：
+
+\[
+\boxed{
+\mathsf{Reflect}:
+\mathrm{Stage}
+\to
+\mathrm{Stage}.
+}
+\]
+
+它是以阶段为状态类型的 FLOW。
+
+同样可在阶段空间上定义：
+
+- Meta-CUT：阶段分类；

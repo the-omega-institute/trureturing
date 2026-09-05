@@ -1,0 +1,56 @@
+## 507. 壳层奇偶角色
+
+对壳序列 \(E_j(0)\)，定义：
+
+$$
+E_+
+=
+\sum_jE_j(0),
+$$
+
+以及：
+
+$$
+E_-
+=
+\sum_j(-1)^jE_j(0).
+$$
+
+因为：
+
+$$
+E_j(0)\sim\frac1j,
+$$
+
+平凡角色通道：
+
+$$
+E_+
+$$
+
+对数发散。
+
+而奇角色的主项：
+
+$$
+\sum_j\frac{(-1)^j}{j}
+$$
+
+条件收敛；结合标准素数定理误差，壳层 odd scalar channel 可以获得收敛重整化。
+
+所以：
+
+$$
+\boxed{
+\text{global zero-frequency shell channel diverges；}
+}
+$$
+
+$$
+\boxed{
+\text{nontrivial parity character channel can converge.}
+}
+$$
+
+---
+

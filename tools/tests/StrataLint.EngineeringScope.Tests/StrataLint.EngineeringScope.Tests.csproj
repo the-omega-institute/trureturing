@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <!-- 本项目**只**应看见它的对偶生产项目与共享脚手架。此前这一点由
+         ArchitectureTests 的 EngineeringScopeTestsReferenceOnlyEngineeringScope 以**运行期**
+         反射断言(读 IL 引用集)守护,代价是一条 test→test ProjectReference。
+         关掉传递引用后,Engine 在编译期就不可达 —— **由编译器保证,强于测试断言**,
+         那条断言与那条边随之可删(#5419)。 -->
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <RootNamespace>StrataLint.EngineeringScope.Tests</RootNamespace>

@@ -1,0 +1,16 @@
+## 272. 有限占据 pole–zero 对
+
+```lean
+theorem bounded_occupancy_euler_factor
+    (E : ℝ) (m : ℕ) :
+    ∏' p : Nat.Primes,
+      ∑ j ∈ Finset.range m,
+        (p : ℂ) ^ (-(j : ℂ) * E * s) =
+      riemannZeta (E * s) /
+        riemannZeta ((m : ℝ) * E * s)
+```
+
+先在绝对收敛区证明，再分离 meromorphic continuation。
+
+---
+

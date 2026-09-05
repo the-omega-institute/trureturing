@@ -1,0 +1,6 @@
+## 三　Z-3 预登记:有限侧控制(同模块第二组公开定理)
+
+**义务**:公开定理 `primeTerm_cosineModulation_bounded : ∃ B : ℝ, ∀ T : ℝ, ‖∑' n : ℕ, ((ArithmeticFunction.vonMangoldt n / Real.sqrt n : ℝ) : ℂ) * (cosineModulation packetSquare T (Real.log n) + cosineModulation packetSquare T (-Real.log n))‖ ≤ B`;`paperFT_cosineModulation_tendsto_zero (z : ℂ) (hz : |z.im| ≤ 1) : Tendsto (fun T => Zeta23.paperFT (cosineModulation packetSquare T) z) atTop (nhds 0)`;`finiteCarrier_zeroSide_tendsto_zero (Z : Zeta23.EF.ZeroConfig) (hZ : Z.carrier.Finite) : Tendsto (fun T => ∑' ρ : Z.carrier, (Z.mult ρ : ℂ) * Zeta23.paperFT (cosineModulation packetSquare T) (Zeta23.gammaOf ρ)) atTop (nhds 0)`。
+**拟议逃逸见证**:T-无关的素数界(由固定支撑 + 有限和)与「闭带 O(1/(1+Re²)) 衰减经平移 z±T 传递到固定点的极限」——后者是非冻结的分析步骤。
+**边界**:只对有限载体断言零点侧趋零;对无限载体不作断言。
+

@@ -1,0 +1,114 @@
+# 增订二·18　最终收束
+
+本增订将前两部分的“黄金隐藏通道”进一步压缩成一个单一母结构：
+
+$$
+\boxed{
+\Sigma:
+\quad y^2=1+4z.}
+\tag{B18.1}
+$$
+
+在该谱覆盖中：
+
+$$
+\boxed{
+\begin{aligned}
+\text{branch point }D=0
+&\Longleftrightarrow
+\text{两通道碰撞与 hard-core edge},\\
+D(1)=5
+&\Longleftrightarrow
+(\varphi,-\varphi^{-1})\text{ 黄金通道},\\
+\chi_5(p)=+1
+&\Longleftrightarrow
+\text{Frobenius 固定两通道},\\
+\chi_5(p)=-1
+&\Longleftrightarrow
+\text{Frobenius 交换两通道},\\
+q_z\text{ 的签名}
+&\Longleftrightarrow
+\text{双曲、退化、椭圆相型},\\
+|\lambda_+|=|\lambda_-|
+&\Longleftrightarrow
+\text{finite zeros 的必要 bulk 条件},\\
+\sinh^2 u
+&\Longleftrightarrow
+\text{反射隐藏 rapidity 的首个正 invariant}.
+\end{aligned}}
+\tag{B18.2}
+$$
+
+最深的新结论不是“数字 $5$ 神秘地出现在 RH 周围”，而是：
+
+$$
+\boxed{
+\textbf{数字 }5\textbf{ 是最小一步 hard-core transfer 在 }z=1\textbf{ 纤维的谱判别式；}
+}
+\tag{B18.3}
+$$
+
+因此项目中的 Zeckendorf memory、黄金数域、模 $5$ prime character 和 dihedral channel swap 确实拥有一个共同的有限代数来源。
+
+与此同时，path operator 给出第二条精确闭环：
+
+$$
+\boxed{
+\text{reference-frame fidelity spectrum}
+\longleftrightarrow
+\text{positive path determinant}
+\longleftrightarrow
+\text{hard-core zero pinching}.}
+\tag{B18.4}
+$$
+
+prime cluster 则给出第三条精确闭环：
+
+$$
+\boxed{
+\text{log-prime exterior energy}
+\longleftrightarrow
+\text{second singular direction}
+\longleftrightarrow
+\text{reflected-channel fidelity loss}.}
+\tag{B18.5}
+$$
+
+三条闭环仍未自动汇合到 $\Xi$。真正缺少的不是更多相似公式，而是一个保持全部结构的 completed functor：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{prime--Zeckendorf normalizer cocycle}
+&\xrightarrow{\quad U_L\quad}&
+\text{zero-orbit odd space}\\
+D_{P,L}\downarrow&&\downarrow D_{Z,L}\\
+\text{prime relation energy}
+&\xrightarrow{\quad B_L\quad}&
+\text{zero odd energy},
+\end{array}}
+\tag{B18.6}
+$$
+
+满足
+
+$$
+D_{Z,L}U_L=B_LD_{P,L}+R_L,
+\qquad
+\|R_L\|\to0,
+\tag{B18.7}
+$$
+
+并同时保持 bulk dominated splitting、boundary transversality、Gamma completion 与 determinant convergence。
+
+因此本轮把 RH 承重问题收紧为：
+
+$$
+\boxed{
+\textbf{能否构造一个 completed arithmetic two-channel functor，
+使黄金判别式的 local Frobenius/holonomy 数据在极限中形成临界线外的 dominated splitting，
+并使其正 relation energy 忠实覆盖全部 off-line odd modes？}}
+\tag{B18.8}
+$$
+
+若答案为是，则 Lee--Yang 圆定位、Weil odd-energy 正性、transfer equimodular confinement 与 Hilbert--Polya unitary localization 将成为同一结构的四种坐标表达。若答案为否，则已经建立的黄金、Zeckendorf、path fidelity 与 prime-gap 恒等式仍是彼此严格关联的有限理论，但不能被提升为 RH 的动力学解释。

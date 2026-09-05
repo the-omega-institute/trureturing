@@ -20,9 +20,6 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
             currentRaw,
             baselineRaw);
-        var ledger = new ProductionFrozenLedgerAdmissionServices(
-            "/repo",
-            ImmutableHashSet<string>.Empty);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
         File.WriteAllBytes(
             candidateReport,
@@ -40,7 +37,7 @@ public sealed partial class ProductionEnvironmentTests
                 gateway,
                 new FakeLeanReportSource(null),
                 scribeEmissionVerifier: null,
-                ledger);
+                new DeterministicTimeProvider());
 
             outcome = environment.Check([
                 "--candidate-lean-report", candidateReport,
@@ -62,27 +59,33 @@ public sealed partial class ProductionEnvironmentTests
             Assert.Equal(
                 [
                     "repository-prepare",
+                    "repository-read",
+                    "admission-plane",
                     "snapshot-load",
                     "lean-report-load",
                     "scribe-verify",
                     "policy-load",
                     "lean-closure",
+                    "rule-applicability",
+                    "canonicalization",
                     "rule-passes",
-                    "frozen-ledger-prepare",
-                    "frozen-ledger-scope",
-                    "frozen-ledger-catalog",
-                    "frozen-ledger-delta",
                 ],
-                events
-                    .Select(static document => document.RootElement.GetProperty("stage").GetString())
-                    .Where(static stage => !stage!.StartsWith("rule-sl-", StringComparison.Ordinal)));
+                NonRuleStages(events));
+            Assert.Equal(
+                NonRuleStages(events).Length,
+                NonRuleStages(events).Distinct(StringComparer.Ordinal).Count());
             foreach (var document in events)
             {
                 var root = document.RootElement;
                 Assert.Equal("gate_stage_timing", root.GetProperty("event").GetString());
                 Assert.Equal("admission-check", root.GetProperty("scope").GetString());
                 Assert.Equal("passed", root.GetProperty("status").GetString());
-                Assert.True(root.GetProperty("elapsed_seconds").GetDouble() >= 0);
+                Assert.True(
+                    root.TryGetProperty("elapsed_seconds", out var elapsed),
+                    "Timing event must include elapsed_seconds.");
+                Assert.Equal(JsonValueKind.Number, elapsed.ValueKind);
+                Assert.True(elapsed.TryGetDouble(out var elapsedSeconds));
+                Assert.True(elapsedSeconds >= 0);
             }
         }
         finally
@@ -94,6 +97,12 @@ public sealed partial class ProductionEnvironmentTests
         }
     }
 
+    private static string[] NonRuleStages(IEnumerable<JsonDocument> events) =>
+        events
+            .Select(static document => document.RootElement.GetProperty("stage").GetString()!)
+            .Where(static stage => !stage!.StartsWith("rule-sl-", StringComparison.Ordinal))
+            .ToArray();
+
     [Fact]
     public void CheckWritesOneFailedTimingEventPerExecutedRuleForRejectingRule()
     {
@@ -101,8 +110,14 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = new RuleFixture();
         fixture.Apply("badge");
         var changes = RawChangeSet.Create([RuleFixture.BlueprintPath]);
-        var expectedExecutedRules = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(changes))).Capability.ExecutedRules;
+        ImmutableArray<RuleId> expectedExecutedRules =
+        [
+            RuleId.CreateKnown(4),
+            RuleId.CreateKnown(6),
+            RuleId.CreateKnown(11),
+            RuleId.CreateKnown(15),
+            RuleId.CreateKnown(25),
+        ];
         var gateway = new FakeRepositoryGateway(
             changes,
             Snapshot(fixture.Files),
@@ -122,7 +137,9 @@ public sealed partial class ProductionEnvironmentTests
             var environment = new ProductionCliEnvironment(
                 "/repo",
                 gateway,
-                new FakeLeanReportSource(null));
+                new FakeLeanReportSource(null),
+                scribeEmissionVerifier: null,
+                new DeterministicTimeProvider());
 
             outcome = environment.Check([
                 "--candidate-lean-report", candidateReport,
@@ -146,6 +163,15 @@ public sealed partial class ProductionEnvironmentTests
                 static document => document.RootElement.GetProperty("stage").GetString()
                     == "rule-sl-006");
             Assert.Equal("failed", rejectedRuleEvent.RootElement.GetProperty("status").GetString());
+            var rulePassesEvent = Assert.Single(
+                events,
+                static document => document.RootElement.GetProperty("stage").GetString()
+                    == "rule-passes");
+            Assert.Equal("failed", rulePassesEvent.RootElement.GetProperty("status").GetString());
+            Assert.DoesNotContain(
+                events,
+                static document => document.RootElement.GetProperty("stage").GetString()
+                    == "canonicalization");
         }
         finally
         {
@@ -180,8 +206,22 @@ public sealed partial class ProductionEnvironmentTests
             var root = document.RootElement;
             Assert.Equal("gate_stage_timing", root.GetProperty("event").GetString());
             Assert.Equal("admission-check", root.GetProperty("scope").GetString());
-            Assert.True(root.GetProperty("elapsed_seconds").GetDouble() >= 0);
+            Assert.True(
+                root.TryGetProperty("elapsed_seconds", out var elapsed),
+                "Timing event must include elapsed_seconds.");
+            Assert.Equal(JsonValueKind.Number, elapsed.ValueKind);
+            Assert.True(elapsed.TryGetDouble(out var elapsedSeconds));
+            Assert.True(elapsedSeconds >= 0);
         }
+    }
+
+    private sealed class DeterministicTimeProvider : TimeProvider
+    {
+        private long timestamp;
+
+        public override long TimestampFrequency => 1;
+
+        public override long GetTimestamp() => timestamp++;
     }
 }
 

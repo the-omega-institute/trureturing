@@ -1,0 +1,30 @@
+## C7.2 深度—宽度对偶
+
+于是有两种完全不同的 phase 完备方式：
+
+$$
+\boxed{
+\begin{aligned}
+\text{one prime + all power levels}
+&\Longrightarrow
+\text{phase faithful},\\
+\text{two distinct labelled primes + level one}
+&\Longrightarrow
+\text{phase faithful}.
+\end{aligned}
+}
+\tag{C7.5}
+$$
+
+前者使用 vertical root depth，后者使用 horizontal prime width。
+
+这说明：
+
+$$
+\boxed{
+\text{Zeckendorf/power depth 与 prime-pair relation width
+是两种可互补的 observer resource。}
+}
+\tag{C7.6}
+$$
+

@@ -1,0 +1,10 @@
+## B13.1 两侧有限空间
+
+设：
+
+- $\mathcal H_{P,L}$ 为尺度 $L$ 的 prime relation Galerkin 空间；
+- $\mathcal H_{Z,L}^{\mathrm{odd}}$ 为对应 zero-orbit odd 空间；
+- $D_{P,L}$ 为 prime/Zeckendorf relation differential；
+- $D_{Z,L}$ 为 zero-side odd differential；
+- $U_L:\mathcal H_{P,L}\to\mathcal H_{Z,L}^{\mathrm{odd}}$ 为候选 explicit-formula analysis map。
+

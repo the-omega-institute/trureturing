@@ -1,0 +1,51 @@
+## 192. 新的 companion lift
+
+定义：
+
+$$
+\boxed{
+K_p
+=
+\mathcal C(\chi_5(p))
+=
+\begin{pmatrix}
+1&-\chi_5(p)\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+于是：
+
+$$
+\det K_p=\chi_5(p).
+$$
+
+三个局部相变成：
+
+$$
+\chi_5(p)=-1
+\Longrightarrow
+K_p=F
+$$
+
+——黄金双曲相；
+
+$$
+\chi_5(p)=0
+\Longrightarrow
+K_p\text{ 秩坍缩};
+$$
+
+$$
+\chi_5(p)=+1
+\Longrightarrow
+K_p^6=I
+$$
+
+——临界六周期相。
+
+这不是仓库当前 `goldenLocalBranchOperator` 的重命名，而是一个新的 trace-one companion lift。
+
+---
+

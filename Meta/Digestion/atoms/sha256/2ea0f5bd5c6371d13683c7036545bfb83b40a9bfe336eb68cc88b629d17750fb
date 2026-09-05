@@ -1,0 +1,61 @@
+## 286. 第一个结构零
+
+仓库已经证明第三阶 golden germ 在：
+
+$$
+z_2=\frac1{2\varphi^2}
+$$
+
+具有一个真正的简单结构零，而不是 totalized reciprocal 的假零。
+
+对此点：
+
+$$
+q_2
+=
+z_2(1-z_2)
+=
+\frac1{4\varphi}.
+$$
+
+因此：
+
+$$
+\boxed{
+x_2
+=
+\frac1{4q_2}
+=
+\varphi.
+}
+$$
+
+Cayley 坐标为：
+
+$$
+u_2
+=
+1-\frac1{z_2}
+=
+1-2\varphi^2
+=
+-\varphi^3.
+$$
+
+其 reciprocal partner 为：
+
+$$
+-\varphi^{-3}.
+$$
+
+所以第一个结构零不是 unitary mode，而是精确的黄金双曲模：
+
+$$
+\boxed{
+u_2\in
+\{-\varphi^3,-\varphi^{-3}\}.
+}
+$$
+
+---
+

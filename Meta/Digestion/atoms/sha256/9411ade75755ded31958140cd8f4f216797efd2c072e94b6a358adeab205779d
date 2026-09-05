@@ -1,0 +1,26 @@
+## 329. Weil–Casimir congruence conjecture
+
+真正深的桥应是存在某个变换：
+
+$$
+\mathcal U:
+\mathcal H_{\mathrm{Weil}}
+\longrightarrow
+\mathcal H_{\mathrm{Casimir}}
+$$
+
+使：
+
+$$
+\boxed{
+Q_{\mathrm{Weil}}
+=
+\mathcal U^\ast
+Q_{\mathrm{Casimir}}
+\mathcal U.
+}
+$$
+
+有限截断版本应把：
+
+* Paley–Wiener evaluation Gram；

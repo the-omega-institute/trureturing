@@ -46,6 +46,9 @@ internal static class FrozenStatementReceiptTestData
                     statement_id = module.StatementId,
                 }));
             AddEvent(files, freeze);
+            files[FrozenStatePath.FromModulePath(RepoPath.CreateKnown(module.Path)).Value] =
+                Encoding.UTF8.GetString(
+                    FrozenStateRecord.Encode(StatementId.Create(module.StatementId)).AsSpan());
         }
     }
 
@@ -69,7 +72,7 @@ internal static class FrozenStatementReceiptTestData
             throw new InvalidOperationException($"invalid fixture GID: {gidText}");
         }
 
-        if (!FrozenStatementIndex.Load(snapshot).TryResolve(
+        if (!Index(snapshot).TryResolve(
                 gid,
                 out var statementId,
                 out var message))
@@ -78,6 +81,30 @@ internal static class FrozenStatementReceiptTestData
         }
 
         return statementId!.Value;
+    }
+
+    internal static FrozenStatementIndex Index(RepositorySnapshot snapshot)
+    {
+        var reports = FrozenLedgerBaseViewReader.Read(snapshot).ActiveByPath
+            .ToDictionary(
+                static item => item.Key.Value,
+                static item => new LeanFileReport(
+                    [],
+                    item.Value.Material.DeclarationStatementIds.Select(static declaration =>
+                        new LeanDeclaration(
+                            declaration.DeclarationNameKey,
+                            declaration.Kind,
+                            declaration.StatementId.Value,
+                            declaration.StatementId.Value,
+                            [],
+                            static () => "True")
+                        {
+                            NameKey = declaration.DeclarationNameKey,
+                        }).ToImmutableArray()),
+                StringComparer.Ordinal);
+        return FrozenStatementIndex.Create(
+            FrozenStateCatalog.Load(snapshot),
+            LeanAxiomReport.Create(reports));
     }
 
     private static void AddEvent(

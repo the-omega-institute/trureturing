@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d28d3908e0a5667c5b33b8b8fa35913f7aef0766b571ef629ec055e7bd90d8d4
+  normalized_sha256: sha256:d28d3908e0a5667c5b33b8b8fa35913f7aef0766b571ef629ec055e7bd90d8d4
+cas_ref: sha256:d28d3908e0a5667c5b33b8b8fa35913f7aef0766b571ef629ec055e7bd90d8d4
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaGamma/HyperbolicBudgetTube.riemann_budget_tube
+    target_statement_id: sha256:97af00963a7bd2df62fe57c5d2930013998ac4b2a059456a3414fae728b7d35f
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaGamma/HyperbolicBudgetTube.riemann_budget_tube
+      definition_sha256: sha256:cf64f49db1b2f6da9a3c1391c0a8186d627149f191a8ad147ba0a84589cd7428
+      emission_sha256: sha256:ef5209cd68810fd83ff2fd151edcfe2ad96e729f65f03161061384e729918614
+  unresolved_subitems: []

@@ -1,0 +1,18 @@
+* 控制角向 off-diagonal 项需要更高 rank 的有限域对象。
+
+因此，你所说的：
+
+> 每一维的坐标系位于下一维
+
+在这份证明中确实有一个具体实现：
+
+$$
+\boxed{
+\text{二点 additive correlation}
+\longrightarrow
+\text{rank-2 / rank-3 phase geometry}.
+}
+$$
+
+但这里“下一维”不是黄金比例本身，而是：
+

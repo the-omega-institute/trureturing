@@ -114,7 +114,8 @@ public sealed class CliOutcomeTests
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(Admitted());
         var bootstrap = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[] { path })));
-        var descriptor = RuleCatalog.Default.Descriptors[21];
+        var descriptor = RuleCatalog.Default.Descriptors.Single(item =>
+            item.Id == RuleId.CreateKnown(22));
         return new AdmissionOutcome.ProtectedSurfaceChange(
             admitted.Certificate,
             bootstrap.ChangeSet,
@@ -155,7 +156,8 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? echoVerify = null,
     ExplicitCommandResult? fileMapConform = null,
     CommandResult? cleanLanes = null,
-    ExplicitCommandResult? capacityAudit = null) : ICliEnvironment
+    ExplicitCommandResult? capacityAudit = null,
+    Func<IReadOnlyList<string>, CommandResult>? alignLedger = null) : ICliEnvironment
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
 
@@ -188,6 +190,9 @@ internal sealed class StubCliEnvironment(
     public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "deposit header check is not configured in this fixture");
 
+    public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) =>
+        new(2, string.Empty, "ledger frozen is not configured in this fixture");
+
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ingest is not configured in this fixture");
 
@@ -208,6 +213,10 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult RenderDag(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "dag rendering is not configured in this fixture");
+
+    public CommandResult AlignLedger(IReadOnlyList<string> arguments) =>
+        alignLedger?.Invoke(arguments)
+            ?? new(false, string.Empty, "ledger align is not configured in this fixture");
 
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger append is not configured in this fixture");

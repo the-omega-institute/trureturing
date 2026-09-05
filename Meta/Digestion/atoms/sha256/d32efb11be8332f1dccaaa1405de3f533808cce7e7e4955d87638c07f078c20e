@@ -1,0 +1,29 @@
+## C6.2 信息逃逸解释
+
+项目的 structural novelty 语言因而给出：
+
+$$
+\boxed{
+d_S\nmid\frac Nm
+\Longleftrightarrow
+\pi_m
+\text{ 对 finite level catalog 具有严格 kernel novelty。}
+}
+\tag{C6.13}
+$$
+
+这比“更深 level 一定更有信息”精确得多。
+
+一个 numerically 更大的 level 可能已经在旧 coordinates 的 semantic closure 中；一个较小但 divisibility-independent 的 level 也可能提供 unique capture。
+
+因此 solenoid phase 的信息层级不是线性深度序，而是：
+
+$$
+\boxed{
+\text{由 divisibility lattice、gcd 与 lcm 控制的部分序。}
+}
+\tag{C6.14}
+$$
+
+---
+

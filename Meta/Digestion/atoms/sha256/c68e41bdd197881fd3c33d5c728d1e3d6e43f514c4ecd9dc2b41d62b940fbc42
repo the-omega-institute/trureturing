@@ -1,0 +1,17 @@
+## B11.2 Fibonacci shell index
+
+$$
+k=\text{Zeckendorf 原子 }F_k\text{ 的指标},
+\tag{B11.2}
+$$
+
+且
+
+$$
+F_k\asymp\varphi^k.
+\tag{B11.3}
+$$
+
+它控制：
+
+- prime rapidity 的放大 $F_k\delta\Delta\omega$；

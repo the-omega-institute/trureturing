@@ -1,0 +1,29 @@
+## 227. 黄金尺度相位
+
+对 \(s>0\)，定义：
+
+$$
+\theta_\varphi(s)
+=
+\log_\varphi\frac1s
+\pmod1.
+$$
+
+若进行黄金缩放：
+
+$$
+s\longmapsto\frac s\varphi,
+$$
+
+则：
+
+$$
+\theta_\varphi\left(\frac s\varphi\right)
+=
+\theta_\varphi(s).
+$$
+
+所以 \(\theta_\varphi\) 把所有只差一个黄金尺度的点识别为同一相位。
+
+---
+

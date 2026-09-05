@@ -1,0 +1,73 @@
+# 第一千九百七十九部　黄金单胞是正锥边界的规范切向正规形
+
+离线深度：
+
+$$
+\delta^2
+$$
+
+趋于零时，signed-normal 缺陷也趋于零。
+
+但将该离线点送入规范 Schur 图表后：
+
+$$
+f(0)=0,
+\qquad
+f(a)=1,
+\qquad
+|a|<1,
+$$
+
+二点 Pick 矩阵始终为：
+
+$$
+\mathbb F
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+它具有分解：
+
+$$
+\boxed{
+\mathbb F
+=
+\varphi P_+
+-
+\varphi^{-1}P_-.
+}
+\tag{1979.1}
+$$
+
+加入最小方向修复：
+
+$$
+\varphi^{-1}P_-
+$$
+
+以后：
+
+$$
+\boxed{
+\mathbb F+\varphi^{-1}P_-
+=
+\varphi P_+,
+}
+\tag{1979.2}
+$$
+
+右侧恰好是 rank-one PSD 边界点。
+
+因此可以把 \(\mathbb F\) 理解为：
+
+$$
+\boxed{
+\text{正 Gram 锥边界附近，一个一负平方缺陷的规范切向单胞。}
+}
+$$
+
+---
+

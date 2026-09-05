@@ -1,0 +1,50 @@
+## 569. 加入构型平移以后成为双重非有限生成
+
+再加入 offsets：
+
+$$
+X_{p,h},
+\qquad
+p\in\mathbb P,\ h\in\mathbb Z,
+$$
+
+得到：
+
+$$
+\mathcal A_{\mathrm{const}}
+=
+\mathbb Q[X_{p,h}:p,h].
+$$
+
+它同时在两个方向增长：
+
+$$
+p\to\infty,
+\qquad
+|H|\to\infty.
+$$
+
+因此自然形成双过滤：
+
+$$
+\mathcal A_{P,k}
+\subseteq
+\mathcal A_{P',k'}
+\qquad
+(P\le P',\ k\le k').
+$$
+
+每个有限阶段是 Noether 的。
+
+整个直接极限不是。
+
+所以素数构型系统的正确描述是：
+
+$$
+\boxed{
+\text{locally Noetherian，globally non-Noetherian}.
+}
+$$
+
+---
+

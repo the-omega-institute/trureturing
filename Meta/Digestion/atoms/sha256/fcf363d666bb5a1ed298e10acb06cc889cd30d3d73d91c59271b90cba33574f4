@@ -1,0 +1,2 @@
+**候签定理 4.87(二幂整除前驱)**〔open;L-7;同模块〕。对任意 n : ℕ，若 1 < n、Nat.totient n ∣ n - 1 且 ¬n.Prime，则 `2 ^ n.primeFactors.card ∣ n - 1`。
+

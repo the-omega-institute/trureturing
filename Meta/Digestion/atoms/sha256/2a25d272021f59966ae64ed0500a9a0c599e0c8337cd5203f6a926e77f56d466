@@ -1,0 +1,46 @@
+## 201. Quotient-Hankel 条件
+
+RH 推出：
+
+$$
+\boxed{
+H_r^{(0)}
+=
+(m_{i+j})_{1\le i,j\le r}
+\succeq0,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+H_r^{(1)}
+=
+(m_{i+j+1})_{0\le i,j<r}
+\succeq0.
+}
+$$
+
+这是因为 \((m_k)\) 来自正实轴上的原子测度。
+
+离线零点会使 \(q_n\) 形成非实共轭对，moment 仍为实数，但不再自动具有 Stieltjes 正性。
+
+因此可以提出：
+
+$$
+\boxed{
+\text{Reflection-Quotient Stieltjes Criterion}.
+}
+$$
+
+其反向仍需额外证明：
+
+* moment problem 的确定性；
+* moments 与 \(\mathfrak X\) canonical product 的完整一致；
+* 不存在非实零点通过相消伪造全部 Hankel 正性。
+
+这是一条新的 frontier，不是已完成 RH 判据。
+
+---
+

@@ -1,0 +1,32 @@
+### 定理 7.1　Vieta 径向荷恒为零
+
+对每个反射根对
+
+$$
+w=re^{i\theta},
+\qquad
+w^\sharp=r^{-1}e^{i\theta},
+$$
+
+有
+
+$$
+|ww^\sharp|=1,
+\qquad
+\log|w|+\log|w^\sharp|=0.
+\tag{7.2}
+$$
+
+因此整个反射完备截断满足
+
+$$
+\boxed{
+\sum_{\rho\in\mathcal Z_T^+}\log|w_\rho|=0.
+}
+\tag{7.3}
+$$
+
+等价地，首项系数与常数项的模长比不能检测 reciprocal 离圆分裂。
+
+这是一条决定性的信息逃逸定理：反射对称强迫一阶有符号径向荷完全冲销，即使每个单根都已经离开单位圆。
+

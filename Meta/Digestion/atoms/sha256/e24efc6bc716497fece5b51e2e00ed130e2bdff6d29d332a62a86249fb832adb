@@ -1,0 +1,25 @@
+## B5.1 occupation polynomial
+
+仍令
+
+$$
+H_Q(z)=H_{Q-1}(z)+zH_{Q-2}(z),
+\quad
+H_0=1,
+\quad
+H_1=1+z.
+\tag{B5.1}
+$$
+
+在 $D(z)\ne0$ 时，
+
+$$
+\boxed{
+H_Q(z)
+=
+\frac{\lambda_+(z)^{Q+2}-\lambda_-(z)^{Q+2}}
+{\lambda_+(z)-\lambda_-(z)}.
+}
+\tag{B5.2}
+$$
+

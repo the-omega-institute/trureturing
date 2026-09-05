@@ -1,0 +1,15 @@
+## 485. 有限相关阶不决定下一阶
+
+```lean
+theorem properMarginals_do_not_determine_topParity
+    (d : ℕ) (hd : 1 < d) :
+    ∃ μplus μminus,
+      (∀ A : Finset (Fin d),
+        A.card < d →
+        moment μplus A = moment μminus A) ∧
+      moment μplus Finset.univ = 1 ∧
+      moment μminus Finset.univ = -1
+```
+
+---
+

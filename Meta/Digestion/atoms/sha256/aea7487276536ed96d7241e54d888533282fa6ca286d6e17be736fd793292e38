@@ -1,0 +1,43 @@
+## 519. 极限后的正则性层
+
+即使：
+
+$$
+R_\lambda=0,
+$$
+
+仍可能没有稳定恢复。
+
+还必须检查：
+
+* 投影是否按算子范数收敛；
+* Gram 矩阵是否有统一下界；
+* 二次型是否 closable；
+* 代表测度是否 tight；
+* determinant 是否 trace-norm 收敛；
+* 解析函数是否在紧集上一致收敛。
+
+这些不是某一个有限阶段的普通条件。
+
+它们是对整个塔的条件：
+
+$$
+\boxed{
+\text{conditions on the family of conditions}.
+}
+$$
+
+所以你感受到的“周期的周期”“条件仍可继续分”在这里确实成立：
+
+$$
+\boxed{
+\text{局部层级}
+\to
+\omega\text{ 极限}
+\to
+\omega+1\text{ 的统一正则性}.
+}
+$$
+
+---
+

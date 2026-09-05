@@ -1,0 +1,46 @@
+# 第一百八十六部　建议新增的形式化模块
+
+```text
+D5/S3/Observer/RecursiveDomain/
+  ObserverPresentation.lean
+  CofinalResidualIntersection.lean
+  WeakAndCoerciveCofinality.lean
+  SuccessorLimitRegularity.lean
+  DiagonalEscapeWithoutPersistentResidual.lean
+
+D5/S3/Observer/CompressionRank/
+  FiniteStateCompression.lean
+  AnalyticGeneratorCompression.lean
+  OperatorPositivityCompression.lean
+  PrimitiveResidualSpectrum.lean
+
+D5/S0/Automata/
+  FiniteMachinePrefixCompactness.lean
+  BoundedModelIffAllPrefixes.lean
+  PrefixStateComplexity.lean
+
+D5/S3/PrimeConstellation/Tails/
+  LargePrimeUniversalLocalFactor.lean
+  FixedArityTailSummability.lean
+  PrimeArityDiagonalBound.lean
+
+D5/S3/Analytic/PrimeShells/
+  GoldenPrimeShellEnergy.lean
+  CriticalShellMarginality.lean
+  ShellDifferenceSummability.lean
+  ShellCharacterRegularization.lean
+
+D5/S3/Weil/Operator/
+  WeilSquareHermitianForm.lean
+  WeilFormFiniteCompression.lean
+  WeilNegativeIndex.lean
+  PrimeToWeilPositiveFactorization.lean
+
+D5/X_Frontier/RecursiveRH/
+  RHCompressionSpectrum.lean
+  PrimeCumulantNontruncation.lean
+  UniformPositivityCompressor.lean
+```
+
+---
+

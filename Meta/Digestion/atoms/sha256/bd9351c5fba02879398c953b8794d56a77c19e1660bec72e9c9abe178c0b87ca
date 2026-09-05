@@ -1,0 +1,30 @@
+## C3.1 charge gradient
+
+对不同素数 $p,q$：
+
+$$
+Q_p(u)-Q_q(u)
+=
+-\delta\log p+\delta\log q
+=
+\delta\log\frac qp.
+\tag{C3.1}
+$$
+
+因此本卷已有横向关系能量可重写为：
+
+$$
+\boxed{
+\sinh^2\!\left(
+\delta\log\frac qp
+\right)
+=
+\sinh^2\!\left(
+Q_p(u)-Q_q(u)
+\right).
+}
+\tag{C3.2}
+$$
+
+它不是一个附加比喻，而是 complex-power thread 的 real-charge gradient energy。
+

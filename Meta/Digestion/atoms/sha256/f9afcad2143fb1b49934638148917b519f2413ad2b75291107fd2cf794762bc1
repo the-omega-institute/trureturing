@@ -1,0 +1,47 @@
+## 1982.1 localizer 不问纤维是否存在，而问它在哪里
+
+定义：
+
+$$
+\mathcal L_{\nu_*}(p)
+=
+\int x|p(x)|^2\,d\nu_*(x).
+$$
+
+临界部分：
+
+$$
+c_0\delta_0
+$$
+
+对该 localizer 的贡献恒为零。
+
+所有负值都来自：
+
+$$
+\nu_{\mathrm{reg}}.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal L_{\nu_*}\equiv0
+\iff
+\nu_{\mathrm{reg}}=0.
+}
+\tag{1982.3}
+$$
+
+也就是说，localizer 不反对隐藏纤维本身。
+
+它只判定：
+
+$$
+\boxed{
+\text{隐藏纤维是否离开了允许的分支轨迹。}
+}
+$$
+
+---
+

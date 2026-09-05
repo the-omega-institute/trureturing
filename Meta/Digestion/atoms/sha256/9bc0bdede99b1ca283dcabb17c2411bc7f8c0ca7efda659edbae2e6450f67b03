@@ -1,0 +1,39 @@
+## 259. Coherent Casimir divisor
+
+因此应先定义：
+
+$$
+\boxed{
+D_{\mathrm{coh}}
+=
+D_{\mathrm{full}}
+-
+D_{\mathrm{structural}}
+-
+D_{\mathrm{finite\ address}}.
+}
+$$
+
+然后再将 \(D_{\mathrm{coh}}\) 映入：
+
+$$
+q=s(1-s),
+\qquad
+y=\frac1{4q}.
+$$
+
+正确的 RH detector 应要求：
+
+$$
+\operatorname{Supp}
+D_{\mathrm{coh}}
+\subseteq
+[0,1]
+$$
+
+而不是要求 golden germ 的完整 divisor 位于该区间。
+
+最新两个简单结构零的闭合，实际上进一步证明了这种取商不是可选修饰，而是必需步骤。
+
+---
+

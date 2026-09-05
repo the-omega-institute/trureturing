@@ -1,0 +1,58 @@
+# 十四、素数构型的点数奇偶确实也是一个真实结构
+
+对有限素数构型：
+
+$$
+H=\{h_1,\ldots,h_k\},
+$$
+
+定义联合素因子奇偶：
+
+$$
+\Gamma_H(n)
+=
+(-1)^{
+\sum_{h\in H}\Omega(n+h)
+}.
+$$
+
+如果：
+
+$$
+n+h
+$$
+
+对所有 \(h\in H\) 都是素数，那么每项：
+
+$$
+\Omega(n+h)=1.
+$$
+
+所以：
+
+$$
+\boxed{
+\Gamma_H(n)=(-1)^k.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+k\text{ 为偶数}
+&\Rightarrow
+\text{真正的 prime tuple 位于偶扇区};\\
+k\text{ 为奇数}
+&\Rightarrow
+\text{真正的 prime tuple 位于奇扇区}.
+\end{aligned}}
+$$
+
+这严格实现了你的：
+
+> 素数是偶数个的情况与素数是奇数个的情况。
+
+---
+

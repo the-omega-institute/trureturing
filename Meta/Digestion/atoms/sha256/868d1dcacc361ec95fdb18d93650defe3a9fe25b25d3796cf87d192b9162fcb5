@@ -1,0 +1,68 @@
+## 135. 临界线在 \(q\)-平面中的像
+
+令：
+
+$$
+s=\frac12+\delta+i\gamma.
+$$
+
+则：
+
+$$
+\begin{aligned}
+q
+&=
+s(1-s)\\
+&=
+\frac14+\gamma^2-\delta^2-2i\delta\gamma.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\Re q
+=
+\frac14+\gamma^2-\delta^2,
+}
+$$
+
+$$
+\boxed{
+\Im q
+=
+-2\delta\gamma.
+}
+$$
+
+对非实零点 \(\gamma\neq0\)，有：
+
+$$
+\Im q=0
+\iff
+\delta=0.
+$$
+
+而当 \(\delta=0\) 时：
+
+$$
+q=\frac14+\gamma^2\in\left[\frac14,\infty\right).
+$$
+
+所以 RH 可以精确改写为：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个非平凡零点的 }q=\rho(1-\rho)
+\text{ 都位于实射线 }
+\left[\frac14,\infty\right).
+}
+$$
+
+这不是坐标依赖的近似，而是函数方程自身产生的反射商。
+
+---
+

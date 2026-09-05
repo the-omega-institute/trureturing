@@ -15,7 +15,7 @@ internal static class BaseFactImpact
         bool ruleImplementationChanged,
         string path) =>
         ruleImplementationChanged
-        || changes.Paths.Any(change => string.Equals(change.Value, path, StringComparison.Ordinal));
+        || changes.ContainsPath(path);
 }
 
 public sealed record Diagnostic(
@@ -37,6 +37,11 @@ internal delegate ImmutableArray<RuleFinding> RuleEvaluationMeasure(
     RuleId ruleId,
     AdmissionEffect admissionEffect,
     Func<ImmutableArray<RuleFinding>> evaluate);
+
+internal delegate bool RuleApplicabilityMeasure(Func<bool> isAffectedBy);
+
+internal delegate CanonicalizationOutcome CanonicalizationMeasure(
+    Func<CanonicalizationOutcome> canonicalize);
 
 internal enum FindingEdgeKind
 {
@@ -208,6 +213,10 @@ internal sealed class RuleEvaluationContext
         Policy = policy;
         Lean = lean;
         Changes = changes;
+        BackfillCandidateDeltaSession = new BackfillCandidateDeltaSession(
+            current,
+            baseline,
+            changes);
         RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
@@ -219,8 +228,8 @@ internal sealed class RuleEvaluationContext
 
     // 「旧侧」有两个语义,不可共用一棵树:
     //   Baseline  —— 候选在扩展哪个**受保护状态**(= protected base);保守比较用它。
-    //   ForkPoint —— 候选**自己出发的那一点**(= merge-base);append-only 保留性检查用它,
-    //                问的是「候选有没有删掉它出发时就有的东西」。
+    //   ForkPoint —— 候选**自己出发的那一点**(= merge-base);冻结、容量与任务检查用它,
+    //                问的是「候选出发时的结构和冻结状态是什么」。
     // 用 Baseline 回答第二个问题,会把 dev 在候选分叉之后追加的条目读成候选的删除
     // (PR #1150 实测:`Golden/Frozen/accepted/` 的 4 个证书;近 60 次合并中 63% 会追加)。
     // 默认等于 Baseline —— 那正是引入本字段之前的行为,故对既有调用点零语义变化。
@@ -231,6 +240,10 @@ internal sealed class RuleEvaluationContext
     internal AcceptedLeanClosure Lean { get; }
 
     internal RawChangeSet Changes { get; }
+
+    internal BackfillCandidateDeltaSession BackfillCandidateDeltaSession { get; }
+
+    internal int BackfillCandidateDeltaLoadCount => BackfillCandidateDeltaSession.LoadCount;
 
     internal bool RuleImplementationChanged { get; }
 

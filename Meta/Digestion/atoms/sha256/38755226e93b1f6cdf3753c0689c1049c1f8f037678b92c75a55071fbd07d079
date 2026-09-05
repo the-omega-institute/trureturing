@@ -1,0 +1,58 @@
+# 增订一·17　黄金隐藏通道临界性
+
+前述结构可压缩为：
+
+$$
+\boxed{
+\begin{array}{ccccc}
+\text{integer exponent}
+&\xrightarrow{\text{Zeckendorf}}
+&\text{hard-core history}
+&\xrightarrow{\text{Galois split}}
+&(\varphi\text{-expanding},\psi\text{-stable})
+\\[2mm]
+&&\downarrow\text{successor / carry}
+&&\downarrow\text{quadratic reveal}
+\\[2mm]
+\text{scalar Euler}
+&\xleftarrow{\text{forget relation}}
+&\text{jump energy}
+&\longrightarrow
+&\text{prime exterior energy}
+\\[2mm]
+&&&&\downarrow\text{missing transport}
+\\[2mm]
+&&&&\text{off-line odd energy}.
+\end{array}
+}
+\tag{A17.1}
+$$
+
+这里最深的结构不是“所有对象数值相等”，而是：标量读出反复删除有符号关系信息；被删除的信息在稳定／反对称通道中保留；对称性使一阶读出归零；第一忠实读出成为正的二阶能量；相变发生在 scalar gap 闭合而二阶 relation mode 仍存活的位置。
+
+据此，可以把假想第一离线高度重新表述为：
+
+$$
+\boxed{
+T_{\mathrm{off}}
+=
+\text{completed scalar channel 首次允许零值，
+同时一个尚未被证明可输运的稳定 relation channel 仍可能携带正能量的高度}.
+}
+\tag{A17.2}
+$$
+
+而 RH 的黄金隐藏通道版本是：
+
+$$
+\boxed{
+\text{completed prime–Gamma dynamics 不允许任何 Zeckendorf／holonomy 稳定影子
+在反射固定轴外与主通道达到可产生零点的等模状态}.
+}
+\tag{A17.3}
+$$
+
+式 (A17.3) 是研究纲领，不是已证等价；其成为严格 RH 等价的前提，是完成第 A16 节的 canonical transfer/determinant 构造。
+
+---
+

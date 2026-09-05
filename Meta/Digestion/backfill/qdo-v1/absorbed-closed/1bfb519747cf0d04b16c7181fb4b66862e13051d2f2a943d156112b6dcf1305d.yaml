@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1bfb519747cf0d04b16c7181fb4b66862e13051d2f2a943d156112b6dcf1305d
 cas_ref: sha256:1bfb519747cf0d04b16c7181fb4b66862e13051d2f2a943d156112b6dcf1305d
 coverage_gids:
-  - D5/S3/Observer/Approximation/ReadoutUpdateCommutatorFactorization.readout_update_commutator_factorization
+  - gid: D5/S3/Observer/Approximation/ReadoutUpdateCommutatorFactorization.readout_update_commutator_factorization
+    target_statement_id: sha256:5c082b623fb541f4c3b1504e31b460dd8130ea76b45ea938596cbf98e0113f5b
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Approximation/ReadoutUpdateCommutatorFactorization.readout_update_commutator_factorization
-      source_sha256: sha256:1bfb519747cf0d04b16c7181fb4b66862e13051d2f2a943d156112b6dcf1305d
-      target_statement_id: sha256:5c082b623fb541f4c3b1504e31b460dd8130ea76b45ea938596cbf98e0113f5b
   scribe:
     - gid: D5/S3/Observer/Approximation/ReadoutUpdateCommutatorFactorization.readout_update_commutator_factorization
       definition_sha256: sha256:44af627e827f075f9b6eaa089b85e0bc261d9520d19f028ca301a69c14840fa5

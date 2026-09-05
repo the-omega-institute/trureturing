@@ -1,0 +1,83 @@
+# 第两千一百二十九部　素数簇的横向分裂方差
+
+除去共同权重后，定义：
+
+$$
+\boxed{
+\mathfrak S_{\mathcal C}(\delta)
+=
+\sum_{i<j}
+\sinh^2
+\left(
+\delta
+\left(
+\log p_j-\log p_i
+\right)
+\right).
+}
+\tag{2129.1}
+$$
+
+由：
+
+$$
+\sinh^2x\ge x^2,
+$$
+
+有：
+
+$$
+\boxed{
+\mathfrak S_{\mathcal C}(\delta)
+\ge
+\delta^2
+\sum_{i<j}
+\left(
+\log p_j-\log p_i
+\right)^2.
+}
+\tag{2129.2}
+$$
+
+又有恒等式：
+
+$$
+\boxed{
+\sum_{i<j}
+(x_i-x_j)^2
+=
+m\sum_{i=1}^{m}
+(x_i-\bar x)^2.
+}
+\tag{2129.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak S_{\mathcal C}(\delta)
+\ge
+\delta^2m
+\sum_{i=1}^{m}
+\left(
+\log p_i-\overline{\log p}
+\right)^2.
+}
+\tag{2129.4}
+$$
+
+所以 PrimeGaps 的横向几何不是只由最小 gap 决定，而是由整个簇的：
+
+$$
+\boxed{
+\operatorname{Var}_{\mathcal C}(\log p)
+}
+$$
+
+决定。
+
+这就是“方差会变大”在素数簇中的严格版本。
+
+---
+

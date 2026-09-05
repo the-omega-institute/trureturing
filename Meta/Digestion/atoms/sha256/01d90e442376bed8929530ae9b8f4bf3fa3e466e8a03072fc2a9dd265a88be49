@@ -1,0 +1,17 @@
+## 486. RH 观察塔三分
+
+```lean
+def FiniteClosure := ∃ n, residual n = ⊥
+
+def LimitOnlyClosure :=
+  (∀ n, residual n ≠ ⊥) ∧
+  iInf residual = ⊥
+
+def PersistentResidual :=
+  iInf residual ≠ ⊥
+```
+
+并证明三者的互斥关系。
+
+---
+

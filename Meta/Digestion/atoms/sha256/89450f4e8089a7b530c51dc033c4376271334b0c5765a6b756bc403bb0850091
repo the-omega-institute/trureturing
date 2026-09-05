@@ -1,0 +1,36 @@
+## 定理 31.1　全局平衡
+
+令：
+
+$$
+X_o(s)=s_o\delta_o.
+$$
+
+则：
+
+$$
+\mathbb E_{\mu_T^{\mathrm{diag}}}[X_o]=0.
+$$
+
+而对于不同轨道 \(o\neq o'\)：
+
+$$
+\boxed{
+\operatorname{Cov}(X_o,X_{o'})
+=
+\delta_o\delta_{o'}.
+}
+$$
+
+只要：
+
+$$
+\delta_o\delta_{o'}\neq0,
+$$
+
+该状态就不是乘积状态。
+
+因此整个状态可以在每个单轨道边缘上完全平衡，却在全局保存最大方向相关。
+
+---
+

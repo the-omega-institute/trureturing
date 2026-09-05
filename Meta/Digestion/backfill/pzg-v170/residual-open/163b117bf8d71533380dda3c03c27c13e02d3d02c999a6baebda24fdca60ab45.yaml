@@ -4,7 +4,6 @@ fingerprints:
 cas_ref: sha256:163b117bf8d71533380dda3c03c27c13e02d3d02c999a6baebda24fdca60ab45
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems:
     - o9-limit-transition-kernelization

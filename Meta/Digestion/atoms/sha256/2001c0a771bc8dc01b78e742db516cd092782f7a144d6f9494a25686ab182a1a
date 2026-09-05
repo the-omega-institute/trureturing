@@ -1,0 +1,17 @@
+## 212. companion holonomy 恢复词序
+
+```lean
+theorem twin_character_companion_order_separates :
+    companion 1 * companion (-1) ≠
+      companion (-1) * companion 1
+```
+
+同时：
+
+```lean
+theorem companionWord_det_eq_holFive :
+    Matrix.det (companionWord w) = holFive w
+```
+
+---
+

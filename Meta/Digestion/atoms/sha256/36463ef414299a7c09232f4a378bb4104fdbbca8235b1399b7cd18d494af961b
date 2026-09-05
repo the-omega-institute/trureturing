@@ -1,0 +1,55 @@
+## 9.1 复化二槽核
+
+令两个不同素数频率为
+
+$$
+\omega_p=\log p,
+\qquad
+\omega_q=\log q,
+$$
+
+并取反射观察点
+
+$$
+s_1=\sigma+\delta+it_1,
+\qquad
+s_2=\sigma-\delta+it_2.
+$$
+
+定义交替二槽核
+
+$$
+\boxed{
+\mathcal K_{p,q}
+=
+p^{-s_1}q^{-s_2}
+-
+q^{-s_1}p^{-s_2}.
+}
+\tag{9.1}
+$$
+
+记
+
+$$
+\tau=t_1-t_2,
+\qquad
+\Delta_{p,q}=\log\frac qp.
+$$
+
+则有精确恒等式
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sinh^2(\delta\Delta_{p,q})
++
+\sin^2\!\left(\frac{\tau\Delta_{p,q}}2\right).
+}
+\tag{9.2}
+$$
+
+圆周方向的时间分辨与双曲方向的横向分裂，是同一个复关系核的两个正交分量。
+

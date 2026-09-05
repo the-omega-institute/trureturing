@@ -57,7 +57,10 @@ public sealed partial class DigestionLedgerTests
                     DigestionTruthState.Closed,
                     [gid],
                     parentReceipts,
-                    sourceId: AtomizerRegistry.GictId),
+                    sourceId: AtomizerRegistry.GictId) with
+                {
+                    Coverage = [new DigestionCoverageEdge(gid, TestModuleStatementId)],
+                },
                 DigestionTestSupport.Entry(
                     childAtom,
                     childId,
@@ -66,7 +69,10 @@ public sealed partial class DigestionLedgerTests
                     DigestionTruthState.Closed,
                     [gid],
                     childReceipts,
-                    sourceId: AtomizerRegistry.GictId),
+                    sourceId: AtomizerRegistry.GictId) with
+                {
+                    Coverage = [new DigestionCoverageEdge(gid, TestModuleStatementId)],
+                },
             ],
             sourceId: AtomizerRegistry.GictId);
         var candidateSource = Assert.Single(baseline.RequireDigestionSources());
@@ -199,7 +205,7 @@ public sealed partial class DigestionLedgerTests
 
         Assert.Contains(
             Assert.Single(evaluation.Entries).Gaps,
-            gap => gap.Code == "coverage-receipt-mismatch");
+            gap => gap.Code == "coverage-target-mismatch");
     }
 
     private static DigestionLedgerEvaluation EvaluateCompleteWitness(
@@ -222,9 +228,8 @@ public sealed partial class DigestionLedgerTests
             DigestionMigrationState.Partial,
             DigestionTruthState.Closed,
             gid,
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 gid,
-                atom.Fingerprints.RawSha256,
                 coverageStatementId ?? TestModuleStatementId),
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             atomizer: AtomizerRegistry.NoAtomizerId);
@@ -233,9 +238,8 @@ public sealed partial class DigestionLedgerTests
             candidateMigration,
             DigestionTruthState.Closed,
             gid,
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 gid,
-                atom.Fingerprints.RawSha256,
                 coverageStatementId ?? TestModuleStatementId),
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             atomizer: AtomizerRegistry.NoAtomizerId);
@@ -287,7 +291,6 @@ public sealed partial class DigestionLedgerTests
         string gid,
         string definitionHash,
         string emissionHash) => new(
-        [new DigestionCoverageReceipt(gid, atom.Fingerprints.RawSha256, TestModuleStatementId)],
         [new DigestionScribeReceipt(gid, definitionHash, emissionHash)],
         [],
         [],

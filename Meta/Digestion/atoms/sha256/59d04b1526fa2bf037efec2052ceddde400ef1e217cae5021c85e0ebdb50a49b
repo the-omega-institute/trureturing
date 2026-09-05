@@ -1,0 +1,46 @@
+## 185. 真正的 branch locus
+
+映射：
+
+$$
+\delta\longmapsto u=\delta^2
+$$
+
+是：
+
+$$
+\delta\sim-\delta
+$$
+
+的商。
+
+外部观察者看到 \(u\)，内部观察者看到 \(\pm\sqrt u\)。
+
+在 \(u=0\)：
+
+$$
++\sqrt u
+\quad\text{与}\quad
+-\sqrt u
+$$
+
+融合。
+
+绕复 \(u\)-平面原点一圈：
+
+$$
+\sqrt u\longmapsto-\sqrt u.
+$$
+
+所以 mirror pair 的最小拓扑不是先验 Klein bottle，而是：
+
+$$
+\boxed{
+\text{平方根二重覆盖及其 branch monodromy}.
+}
+$$
+
+Möbius 型行为来自该二重覆盖沿参数环的非平凡 monodromy。
+
+---
+

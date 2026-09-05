@@ -1,0 +1,6 @@
+- positive determinant floor 不能重构 prime ordering。
+
+所以最终低逃逸理论必须是它们的 joint kernel，而不是用一个“能量”概念替代全部层。
+
+---
+

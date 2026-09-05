@@ -1,0 +1,88 @@
+## 摘要
+
+增订一已经表明，Zeckendorf 的意义不在于改变整数指数或 Euler 标量，而在于把整数提升为带一步 hard-core memory 的唯一历史；黄金比例则是该最小二态系统的扩张本征值，负共轭 $-\varphi^{-1}$ 是精确性不可删除的稳定影子。
+
+本增订进一步发现：这些结构并非若干彼此相似的公式，而是同一条二次谱覆盖的不同纤维。
+
+定义加权 hard-core transfer
+
+$$
+T(z)=
+\begin{pmatrix}
+1&z\\
+1&0
+\end{pmatrix}.
+$$
+
+其特征方程为
+
+$$
+\lambda^2-\lambda-z=0,
+$$
+
+判别式为
+
+$$
+D(z)=1+4z.
+$$
+
+于是：
+
+- 热力学边缘 $z=-\tfrac14$ 是 $D(z)=0$ 的解析分歧点；
+- 黄金无权纤维 $z=1$ 给出 $D(1)=5$，本征值恰为 $\varphi$ 与 $-\varphi^{-1}$；
+- 将该纤维模素数约化时，两个通道是否在本地分裂，恰由 $5$ 的二次剩余性控制；
+- 对非分歧素数，Frobenius 对两个通道的作用正是恒等或交换，而项目的模 $5$ 黄金二次特征正记录这一 Weyl 符号；
+- 围绕解析分歧点的 monodromy 与惰性素数的 Frobenius 都执行同一个 deck involution：交换两条谱支。
+
+这给出本轮最重要的精确结论：
+
+$$
+\boxed{
+\text{Zeckendorf 的黄金双通道、模 }5\text{ 的 split/inert 素数、}
+\text{以及 Lee--Yang 等模分支，来自同一二次谱覆盖的解析与算术作用。}
+}
+\tag{B0.1}
+$$
+
+本增订还建立一条此前隐藏的有限恒等式。令 $J_N$ 为长度 $N$、零边界的最近邻平均算子，则
+
+$$
+\boxed{
+\det(I_N+4zJ_N^2)=H_{N-1}(z)^2,
+}
+\tag{B0.2}
+$$
+
+其中 $H_{N-1}$ 是 Zeckendorf hard-core occupation polynomial。项目已经机器证明，参考系交换通道的 entanglement fidelity 正是 $\|J_Nc\|_2^2$，其最优值为
+
+$$
+F_N^*=\cos^2\frac{\pi}{N+1}.
+$$
+
+而当 $N\ge2$ 时，hard-core 配分函数离临界边缘最近的零点精确满足
+
+$$
+\boxed{
+z_{N-1}^{\mathrm{near}}=-\frac1{4F_N^*}.}
+\tag{B0.3}
+$$
+
+因此有限参考系的最优 fidelity tax 与有限配分零点离热力学边缘的距离，是同一条 path spectrum 的两个精确读出，而不是数值巧合。
+
+最后，本增订把 prime-pair 横向能量提升为三种等价的有限局部几何：
+
+$$
+\boxed{
+\text{外积 Gram 能量}
+\quad\Longleftrightarrow\quad
+\text{最小奇异值打开}
+\quad\Longleftrightarrow\quad
+\text{反射通道 fidelity 损失}.
+}
+\tag{B0.4}
+$$
+
+这三者在临界线附近都由 weighted variance of $\log p$ 控制。于是 RH 的承重问题可以进一步收紧为：能否从 completed prime--Zeckendorf--Gamma cocycle 构造一个保持边界横截性、在临界线外具有 dominated splitting、并与 zero-side odd channel 互 intertwine 的正算子。
+
+---
+

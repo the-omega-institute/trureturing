@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ab61e1eea6f59f2c605a3941967e877f98c2d6cc1e3fbfb75ba88ba8770cadf8
+  normalized_sha256: sha256:ab61e1eea6f59f2c605a3941967e877f98c2d6cc1e3fbfb75ba88ba8770cadf8
+cas_ref: sha256:ab61e1eea6f59f2c605a3941967e877f98c2d6cc1e3fbfb75ba88ba8770cadf8
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/RestrictedScalarFreeMinkowskiLattice.restricted_scalar_free_minkowski_completion
+    target_statement_id: sha256:6b607aa09324f9f9fb08be74e6c7fb726d818abe1c69802cf075df7507a68608
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/Lattices/RestrictedScalarFreeMinkowskiLattice.restricted_scalar_free_minkowski_completion
+      definition_sha256: sha256:9f3e274dfdfcdcb29ea5370891431450bdbb277bb40cd382a02db017da048091
+      emission_sha256: sha256:11c7554ecacfa2b379f318c7d20802dbffbcac925ffb3e731f9abf6976a00b02
+  unresolved_subitems: []

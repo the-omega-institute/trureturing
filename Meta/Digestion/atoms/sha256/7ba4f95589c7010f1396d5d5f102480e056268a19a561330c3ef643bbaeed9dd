@@ -1,0 +1,27 @@
+## 12.1 固定高度 coercivity
+
+在避开中心的闭环带
+
+$$
+A_{\varepsilon,\eta}
+=
+\left\{
+\delta:
+\varepsilon\le|\delta|\le\frac12-\eta
+\right\},
+$$
+
+其中 $\varepsilon,\eta>0$ 且该集合非空，定义
+
+$$
+\boxed{
+\mathfrak c_{\mathcal C}(t;\varepsilon,\eta)
+=
+\min_{\delta\in A_{\varepsilon,\eta}}
+\frac{V(t,\delta)}{R_{\mathcal C}(\delta)}.
+}
+\tag{12.1}
+$$
+
+分母在该环带上严格为正。
+

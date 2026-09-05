@@ -1,0 +1,36 @@
+## B12.4 kernel 分解
+
+在有限维中，
+
+$$
+\ker(\mathsf N\otimes d_{\mathcal C})
+=
+(\ker\mathsf N\otimes\mathcal H_P)
++
+(\mathcal H_Z\otimes\ker d_{\mathcal C}).
+\tag{B12.10}
+$$
+
+若 prime graph 连通，则
+
+$$
+\ker d_{\mathcal C}
+=\operatorname{span}\{\mathbf1_P\}.
+\tag{B12.11}
+$$
+
+而
+
+$$
+\ker\mathsf N
+=\operatorname{span}\{\delta_0\}.
+\tag{B12.12}
+$$
+
+所以 joint transverse energy 看不见且只看不见：
+
+1. exponent 为零的真空状态；
+2. 所有 prime frequencies 同时作共同平移的 coherent mode。
+
+这正是预期的 gauge kernel，而不是任意人为指定的零空间。
+

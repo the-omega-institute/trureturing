@@ -20,6 +20,20 @@ public sealed partial class FileMapPolicyTests
             static finding => finding.Code == "FILEMAP-DIRECTORY-KIND"));
     }
 
+    [Theory]
+    [InlineData("data", false)]
+    [InlineData("ledger", true)]
+    public void FrozenStateDirectoryRequiresDataEntries(string kind, bool hasFinding)
+    {
+        const string path = "Golden/Frozen/state/D5/S0/Carrier/Ring.lean.json";
+        var manifest = Parse(Entry(path, kind, "FrozenStateWriter", "FrozenStateCatalog", "SL-008"));
+
+        var findings = FileMapPolicy.InspectDirectoryKinds(manifest, [path]);
+
+        Assert.Equal(hasFinding, findings.Any(
+            static finding => finding.Code == "FILEMAP-DIRECTORY-KIND"));
+    }
+
     [Fact]
     public void ExactProtectedResidenceCountIsAccepted()
     {

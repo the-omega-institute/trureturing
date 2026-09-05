@@ -1,0 +1,37 @@
+## 262. Source-deformed Casimir determinant
+
+引入构型源变量：
+
+$$
+\mathbf u=(u_h)_{h\in H}.
+$$
+
+目标对象应是：
+
+$$
+\boxed{
+\mathcal X_H(q;\mathbf u)
+=
+\det
+\left(
+I-qK_H(\mathbf u)
+\right).
+}
+$$
+
+并满足：
+
+$$
+\mathcal X_H(q;0)=\mathcal X(q).
+$$
+
+对数导数：
+
+$$
+\log\mathcal X_H
+$$
+
+的 mixed source derivatives 应给出 prime-constellation connected cumulants。
+
+---
+

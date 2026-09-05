@@ -1,0 +1,20 @@
+# 增订二·16　与离线零点相变的最终接合
+
+设假想离线零点为
+
+$$
+\rho_*
+=\frac12+\delta_*+it_*.
+\tag{B16.1}
+$$
+
+前两部分已经给出：
+
+- 同高度出现 $\pm\delta_*$ 反射零相；
+- Cayley 坐标中出现 $e^{\pm\eta_*}$ reciprocal pair；
+- scalar visible energy 在 $(t_*,\delta_*)$ 闭合；
+- prime pair relation energy对每个不同频率对严格为正；
+- zero orbit 的符号风险集中在 nonnegative odd energy。
+
+本增订增加以下解释。
+

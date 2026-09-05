@@ -3,43 +3,62 @@ set -euo pipefail
 
 if [[ "$#" -ne 1 || -z "$1" ]]; then
   printf '%s\n' \
-    'usage: engineering-test-execution-harness.sh <base-harness-root>' >&2
+    'usage: engineering-test-execution-harness.sh <candidate-root>' >&2
   exit 2
 fi
 
-base_harness_root="$1"
-: "${GITHUB_WORKSPACE:?}"
-: "${ENGINEERING_HEAD:?}"
-: "${ENGINEERING_BASE:?}"
+candidate_root="$1"
+if ! candidate_root="$(cd "$candidate_root" && pwd -P)"; then
+  printf 'ENGINEERING_TEST_EXECUTION_FAILED reason=candidate-root-unavailable path=%s\n' \
+    "$1" >&2
+  exit 2
+fi
+if ! git -C "$candidate_root" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  printf 'ENGINEERING_TEST_EXECUTION_FAILED reason=candidate-root-not-git path=%s\n' \
+    "$candidate_root" >&2
+  exit 2
+fi
+
+head_sha="$(git -C "$candidate_root" rev-parse HEAD)"
+base_sha="$(git -C "$candidate_root" rev-parse HEAD^1)"
 
 run_engineering_tests() {
-  make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE"
+  make \
+    --no-print-directory \
+    -C "$candidate_root/tools" \
+    engineering-tests \
+    "REPOSITORY=$candidate_root" \
+    "HEAD=$head_sha" \
+    "BASE=$base_sha"
 }
 
-observation_bootstrap="$base_harness_root/tools/scripts/lib/resource-observation-bootstrap.sh"
-observation_bootstrap_reason=""
-observation_bootstrap_status=0
-if [[ ! -e "$observation_bootstrap" ]]; then
-  observation_bootstrap_reason=bootstrap-missing
-elif [[ ! -f "$observation_bootstrap" ]]; then
-  observation_bootstrap_reason=bootstrap-not-regular
-elif [[ ! -r "$observation_bootstrap" ]]; then
-  observation_bootstrap_reason=bootstrap-unreadable
-elif ! bash -n "$observation_bootstrap" >/dev/null 2>&1; then
-  observation_bootstrap_reason=bootstrap-syntax-error
-else
-  unset -f resource_observation_run_with_base_library 2>/dev/null || true
-  source "$observation_bootstrap" || observation_bootstrap_status=$?
-  if [[ "$observation_bootstrap_status" -ne 0 ]]; then
-    observation_bootstrap_reason=bootstrap-source-nonzero
-  elif ! declare -F resource_observation_run_with_base_library >/dev/null; then
-    observation_bootstrap_reason=bootstrap-entrypoint-missing
-  fi
-fi
-if [[ -n "$observation_bootstrap_reason" ]]; then
+observation_library="$candidate_root/tools/scripts/lib/resource-observation-lib.sh"
+observation_unavailable() {
+  local reason="$1"
+  local source_status="${2:-0}"
   printf 'RESOURCE_OBSERVATION_LOADER status=UNAVAILABLE reason=%s exit=%s path=%s\n' \
-    "$observation_bootstrap_reason" "$observation_bootstrap_status" "$observation_bootstrap"
+    "$reason" "$source_status" "$observation_library"
   run_engineering_tests
+}
+
+if [[ ! -e "$observation_library" ]]; then
+  observation_unavailable missing
+elif [[ ! -f "$observation_library" ]]; then
+  observation_unavailable not-regular
+elif [[ ! -r "$observation_library" ]]; then
+  observation_unavailable unreadable
+elif ! bash -n "$observation_library" >/dev/null 2>&1; then
+  observation_unavailable syntax-error
 else
-  resource_observation_run_with_base_library "$base_harness_root" run_engineering_tests
+  unset -f resource_observe_run_periodic 2>/dev/null || true
+  observation_source_status=0
+  source "$observation_library" || observation_source_status=$?
+  if [[ "$observation_source_status" -ne 0 ]]; then
+    unset -f resource_observe_run_periodic 2>/dev/null || true
+    observation_unavailable source-nonzero "$observation_source_status"
+  elif ! declare -F resource_observe_run_periodic >/dev/null; then
+    observation_unavailable entrypoint-missing
+  else
+    resource_observe_run_periodic run_engineering_tests
+  fi
 fi

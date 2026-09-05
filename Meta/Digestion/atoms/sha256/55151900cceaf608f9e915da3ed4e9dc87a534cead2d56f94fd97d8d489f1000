@@ -1,0 +1,60 @@
+## 214. 跳跃奇偶变量
+
+定义：
+
+$$
+\varepsilon_v
+=
+\begin{cases}
+1,
+&
+\operatorname{lastIdx}(v+1)\text{ 为偶数},\\
+0,
+&
+\operatorname{lastIdx}(v+1)\text{ 为奇数}.
+\end{cases}
+$$
+
+由于：
+
+$$
+\varphi^2=\varphi+1,
+$$
+
+仓库已经证明的跳跃公式可统一写成：
+
+$$
+\boxed{
+\beta(v+1)-\beta(v)
+=
+\varphi+\varepsilon_v.
+}
+$$
+
+所以：
+
+* \(\varepsilon_v=0\)：短跳 \(\varphi\)；
+* \(\varepsilon_v=1\)：长跳 \(\varphi^2\)。
+
+但 \(\varepsilon_v\) 并不按：
+
+$$
+0,1,0,1,\ldots
+$$
+
+普通交替。
+
+由 Beatty 闭式：
+
+$$
+\varepsilon_v
+=
+\left\lfloor\frac{v+2}{\varphi}\right\rfloor
+-
+\left\lfloor\frac{v+1}{\varphi}\right\rfloor.
+$$
+
+它是一个由无理旋转产生的二值机械词。
+
+---
+

@@ -1,0 +1,56 @@
+## 157. 对角化逃逸的严格谱版本
+
+对每个固定 \(m\)：
+
+$$
+\frac{|\lambda(2\pi/m)|}{\varphi}<1.
+$$
+
+但：
+
+$$
+\lim_{m\to\infty}
+\frac{|\lambda(2\pi/m)|}{\varphi}
+=
+1.
+$$
+
+因此：
+
+$$
+\boxed{
+\sup_{\substack{m\ge2\\1\le j<m}}
+\rho\left(
+\varphi^{-1}M(\omega_m^j)
+\right)
+=
+1,
+}
+$$
+
+虽然没有任何固定非平凡角色真正达到 \(1\)。
+
+这意味着：
+
+* 每一个固定名字最终重完；
+* 但不存在对所有名字统一有效的重完速率；
+* 在观察时间 \(n\) 增长时，可以同时选择复杂度 \(m\gg\sqrt n\)，使该名字仍未被洗平。
+
+这正是：
+
+$$
+\boxed{
+\text{pointwise completion}
+\quad\text{but not uniform completion}.
+}
+$$
+
+在所有非平凡角色的直和上，\(1\) 不是实际本征值，却属于 approximate point spectrum。
+
+这就是“对角化能够无限逃逸信息”的一个非常精确的模型：
+
+> 每一个固定观察者都看见完成；
+> 但观察者复杂度也随时间增长时，总能找到几乎不衰减的新通道。
+
+---
+

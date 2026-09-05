@@ -1,0 +1,81 @@
+## 381. Cyclotomic recompletion theorem
+
+利用：
+
+$$
+\prod_{j=0}^{m-1}
+(1-\omega_m^jx)
+=
+1-x^m,
+$$
+
+逐素数相乘得到：
+
+$$
+\begin{aligned}
+\prod_{j=0}^{m-1}
+\mathcal Z_j^{(m)}(s)
+&=
+\prod_p
+\prod_{j=0}^{m-1}
+(1-\omega_m^jp^{-s})^{-1}\\
+&=
+\prod_p
+(1-p^{-ms})^{-1}\\
+&=
+\boxed{
+\zeta(ms).
+}
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{一个分类的全部角色观察者相乘，}
+\text{重完为更深尺度的全局 ζ。}
+}
+$$
+
+当：
+
+$$
+m=2
+$$
+
+时：
+
+$$
+\mathcal Z_0^{(2)}(s)=\zeta(s),
+$$
+
+$$
+\mathcal Z_1^{(2)}(s)
+=
+\frac{\zeta(2s)}{\zeta(s)},
+$$
+
+并且：
+
+$$
+\mathcal Z_0^{(2)}
+\mathcal Z_1^{(2)}
+=
+\zeta(2s).
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{global even chart}
+\times
+\text{unique odd chart}
+=
+\text{doubled global completion}.
+}
+$$
+
+---
+

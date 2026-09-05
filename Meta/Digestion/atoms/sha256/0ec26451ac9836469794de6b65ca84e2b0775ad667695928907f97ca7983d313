@@ -1,0 +1,18 @@
+### Cayley 局部度量
+
+$$
+G_x
+\sim
+\operatorname{diag}
+\bigl(
+2x,\,
+2(1-x)
+\bigr).
+$$
+
+其正性等价于：
+
+$$
+x\in[0,1].
+$$
+

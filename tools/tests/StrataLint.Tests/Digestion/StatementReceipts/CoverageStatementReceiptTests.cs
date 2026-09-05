@@ -10,18 +10,110 @@ public sealed class CoverageStatementReceiptTests
     private const string ModuleGid = "D5/S0/Carrier/StatementReceipt";
     private const string ModulePath = ModuleGid + ".lean";
     private const string DeclarationGid = ModuleGid + ".target";
+    // Derived once by independently canonicalizing the declaration-statement-v1 material:
+    // ModulePath, ns(n0,6:target), theorem, and True.
+    private const string ExpectedDeclarationStatementPin =
+        "sha256:3550644baaf9611be033c032903cdd16576de334d42f76ee9a3d673ad7e336f0";
 
     [Fact]
-    public void RepositoryCoverageReceiptsBindActiveFrozenStatements()
+    public void ModuleGidResolutionTracksFrozenStatePin()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var raw = GitRepositorySnapshotReader.ReadCurrent(root);
+        var firstPin = FrozenStatementReceiptTestData.Id('1');
+        var secondPin = FrozenStatementReceiptTestData.Id('2');
+        Assert.True(Gid.TryParse(ModuleGid, out var gid));
+        var report = LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
+
+        var first = FrozenStatementIndex.Create(
+            FrozenStateCatalog.Load(StateSnapshot(firstPin)),
+            report);
+        var second = FrozenStatementIndex.Create(
+            FrozenStateCatalog.Load(StateSnapshot(secondPin)),
+            report);
+
+        Assert.True(first.TryResolve(gid, out var firstStatement, out var firstMessage), firstMessage);
+        Assert.True(second.TryResolve(gid, out var secondStatement, out var secondMessage), secondMessage);
+        Assert.Equal(firstPin, firstStatement!.Value);
+        Assert.Equal(secondPin, secondStatement!.Value);
+    }
+
+    [Fact]
+    public void DeclarationGidResolutionComesFromCurrentReportAndMissingDeclarationIsUnresolved()
+    {
+        var declaration = new LeanDeclaration(
+            "D5.S0.Carrier.StatementReceipt.target",
+            "theorem",
+            "True",
+            ImmutableArray<string>.Empty)
+        {
+            NameKey = "ns(n0,6:target)",
+        };
+        var fileReport = new LeanFileReport([], [declaration]);
+        var report = LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            {
+                [ModulePath] = fileReport,
+            });
+        var state = FrozenStateCatalog.Load(StateSnapshot(FrozenStatementReceiptTestData.Id('1')));
+        Assert.True(Gid.TryParse(DeclarationGid, out var gid));
+
+        var present = FrozenStatementIndex.Create(state, report);
+        var missing = FrozenStatementIndex.Create(
+            state,
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)));
+
+        Assert.True(present.TryResolve(gid, out var statementId, out var message), message);
+        Assert.Equal(ExpectedDeclarationStatementPin, statementId!.Value);
+        Assert.False(missing.TryResolve(gid, out var missingStatementId, out var missingMessage));
+        Assert.Null(missingStatementId);
+        Assert.Contains("0 current report declarations", missingMessage, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RepositoryCoverageEdgesMatchResolvableFrozenStatementsOrCarryNull()
+    {
+        const string unresolvedGid = "D5/S0/Carrier/Missing.target";
+        var targetStatementId = FrozenStatementReceiptTestData.Id('6');
+        var fingerprints = new DigestionFingerprints(
+            "sha256:" + new string('a', 64),
+            "sha256:" + new string('b', 64));
+        var entry = new DigestionLedgerEntry(
+            "source",
+            "docs/source.md",
+            AtomizerRegistry.NoAtomizerId,
+            new string('a', 64),
+            fingerprints,
+            [
+                new DigestionCoverageEdge(DeclarationGid, targetStatementId),
+                new DigestionCoverageEdge(unresolvedGid, null),
+            ],
+            new DigestionReceipts([], [], [], null),
+            new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
+            fingerprints.RawSha256);
+        var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
+        var source = Assert.Single(document.RequireDigestionSources());
+        var files = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [$"{BackfillInventoryLoader.RootPath}source/source.toml"] = Encoding.UTF8.GetString(
+                BackfillInventoryWriter.WriteSourceMetadata(source).AsSpan()),
+            [$"{BackfillInventoryLoader.RootPath}source/partial-closed/{entry.AtomId}.yaml"] =
+                Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(entry).AsSpan()),
+            [ModulePath] = TargetSource("by trivial"),
+        };
+        FrozenStatementReceiptTestData.AddLedger(
+            files,
+            new FrozenStatementReceiptTestData.Module(
+                ModulePath,
+                FrozenStatementReceiptTestData.Id('2'),
+                [new FrozenStatementReceiptTestData.Declaration("target", targetStatementId)]));
+        var raw = RawRepositorySnapshot.Create(files.Select(static item =>
+            RawRepositoryEntry.FromText(item.Key, item.Value)));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(raw)).Snapshot;
-        var frozenStatements = FrozenStatementIndex.Load(snapshot);
+        var frozenStatements = FrozenStatementReceiptTestData.Index(snapshot);
         var mismatches = BackfillInventoryLoader.Load(snapshot)
             .RequireDigestionEntries()
-            .SelectMany(static entry => entry.Receipts.Coverage.Select(receipt =>
+            .SelectMany(static entry => entry.Coverage.Select(receipt =>
                 (entry.AtomId, Receipt: receipt)))
             .Select(item =>
             {
@@ -30,9 +122,12 @@ public sealed class CoverageStatementReceiptTests
                     return $"{item.AtomId}:{item.Receipt.Gid}:invalid-gid";
                 }
 
-                if (!frozenStatements.TryResolve(gid, out var statementId, out var message))
+                if (!frozenStatements.TryResolve(gid, out var statementId, out _))
                 {
-                    return $"{item.AtomId}:{item.Receipt.Gid}:{message}";
+                    return item.Receipt.TargetStatementId is null
+                        ? null
+                        : $"{item.AtomId}:{item.Receipt.Gid}:unresolved target must be null:"
+                            + item.Receipt.TargetStatementId;
                 }
 
                 return item.Receipt.TargetStatementId == statementId!.Value
@@ -65,7 +160,7 @@ public sealed class CoverageStatementReceiptTests
 
         Assert.DoesNotContain(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
@@ -86,7 +181,41 @@ public sealed class CoverageStatementReceiptTests
 
         Assert.Contains(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
+    }
+
+    [Fact]
+    public void NullTargetForResolvableFrozenStatementDerivesPartialOpenWithoutIntegrityMismatch()
+    {
+        var targetSource = TargetSource("by trivial");
+        var evaluation = Evaluate(
+            DeclarationGid,
+            receiptStatementId: null,
+            FrozenStatementReceiptTestData.Id('3'),
+            FrozenStatementReceiptTestData.Id('2'),
+            targetSource);
+        var status = Assert.Single(evaluation.Entries);
+
+        Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
+        Assert.DoesNotContain(
+            status.Gaps,
+            static gap => gap.Code == "coverage-target-mismatch");
+    }
+
+    [Fact]
+    public void Sl016NullTargetForResolvableFrozenStatementKeepsTruthOpen()
+    {
+        var evaluation = Evaluate(
+            DeclarationGid,
+            receiptStatementId: null,
+            FrozenStatementReceiptTestData.Id('3'),
+            FrozenStatementReceiptTestData.Id('2'),
+            TargetSource("by trivial"));
+
+        Assert.Equal(
+            DigestionTruthState.Open,
+            Assert.Single(evaluation.Entries).DerivedStatus.Truth);
     }
 
     [Fact]
@@ -104,7 +233,7 @@ public sealed class CoverageStatementReceiptTests
 
         Assert.DoesNotContain(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
@@ -121,7 +250,7 @@ public sealed class CoverageStatementReceiptTests
 
         Assert.Contains(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
         Assert.Contains(
             evaluation.Findings,
             static finding => finding.Contains(
@@ -153,14 +282,14 @@ public sealed class CoverageStatementReceiptTests
             (item.Key, Encoding.UTF8.GetBytes(item.Value))).ToArray());
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementIndex.Load(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
             gid,
             out var statementId,
             out var message);
 
         Assert.False(resolved);
         Assert.Null(statementId);
-        Assert.Contains("resolves to 2 frozen declarations", message, StringComparison.Ordinal);
+        Assert.Contains("resolves to 2 current report declarations", message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -175,14 +304,14 @@ public sealed class CoverageStatementReceiptTests
                     FrozenStatementReceiptTestData.Id('9'))])));
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementIndex.Load(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
             gid,
             out var statementId,
             out var message);
 
         Assert.False(resolved);
         Assert.Null(statementId);
-        Assert.Contains("host module is not active", message, StringComparison.Ordinal);
+        Assert.Contains("host module is not a member of frozen state", message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -198,7 +327,7 @@ public sealed class CoverageStatementReceiptTests
                     EncodedNameKey: "ns(ns(n0,4:1bad),6:target)")])));
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementIndex.Load(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
             gid,
             out var statementId,
             out var message);
@@ -226,7 +355,7 @@ public sealed class CoverageStatementReceiptTests
                 ])));
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementIndex.Load(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
             gid,
             out var statementId,
             out var message);
@@ -255,7 +384,7 @@ public sealed class CoverageStatementReceiptTests
                 ])));
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementIndex.Load(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
             gid,
             out var statementId,
             out var message);
@@ -266,7 +395,7 @@ public sealed class CoverageStatementReceiptTests
 
     internal static DigestionLedgerEvaluation Evaluate(
         string gid,
-        string receiptStatementId,
+        string? receiptStatementId,
         string targetStatementId,
         string moduleStatementId,
         string targetSource,
@@ -279,9 +408,8 @@ public sealed class CoverageStatementReceiptTests
             ImmutableArray.CreateRange(sourceBytes),
             DigestionFingerprint.Compute(sourceBytes),
             []);
-        var receipt = new DigestionCoverageReceipt(
+        var receipt = new DigestionCoverageEdge(
             gid,
-            atom.Fingerprints.RawSha256,
             receiptStatementId);
         var entry = Entry(
             atom,
@@ -289,8 +417,11 @@ public sealed class CoverageStatementReceiptTests
             AtomizerRegistry.NoAtomizerId,
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
-            [gid],
-            new DigestionReceipts([receipt], [], [], [], null));
+            [],
+            new DigestionReceipts([], [], [], null)) with
+        {
+            Coverage = [receipt],
+        };
         var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
@@ -309,7 +440,11 @@ public sealed class CoverageStatementReceiptTests
             (item.Key, Encoding.UTF8.GetBytes(item.Value))).ToArray());
         var report = new LeanFileReport(
             [],
-            [new LeanDeclaration("target", "theorem", "True", [])]);
+            [new LeanDeclaration("target", "theorem", "True", [])
+            {
+                NameKey = "ns(n0,6:target)",
+                PrecomputedStatementId = targetStatementId,
+            }]);
 
         return DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.ChangedSet,
@@ -318,6 +453,14 @@ public sealed class CoverageStatementReceiptTests
             AcceptedLean((ModulePath, report)),
             baselineDocument: document,
             changes: RawChangeSet.Create([changedPath ?? ModulePath]));
+    }
+
+    private static RepositorySnapshot StateSnapshot(string statementId)
+    {
+        var statePath = FrozenStatePath.FromModulePath(RepoPath.CreateKnown(ModulePath)).Value;
+        return Snapshot(
+            (ModulePath, Encoding.UTF8.GetBytes(TargetSource("by trivial"))),
+            (statePath, FrozenStateRecord.Encode(StatementId.Create(statementId)).ToArray()));
     }
 
     private static string TargetSource(string targetProof) => $$"""

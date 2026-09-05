@@ -1,0 +1,38 @@
+### 定理 1.1　同高度反射共轭律
+
+对任意 $t,\delta\in\mathbb R$，
+
+$$
+\boxed{
+X(t,-\delta)=\overline{X(t,\delta)}.
+}
+\tag{1.6}
+$$
+
+从而
+
+$$
+\boxed{
+V(t,-\delta)=V(t,\delta).
+}
+\tag{1.7}
+$$
+
+#### 证明
+
+由实结构，
+
+$$
+\overline{F(\delta+it)}=F(\delta-it).
+$$
+
+再由偶对称，
+
+$$
+F(\delta-it)=F(-\delta+it).
+$$
+
+故得式 (1.6)，取模平方即得式 (1.7)。
+
+---
+

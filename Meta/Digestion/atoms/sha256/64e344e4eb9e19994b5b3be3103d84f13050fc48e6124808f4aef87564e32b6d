@@ -1,0 +1,95 @@
+## 284. 奇偶基中的精确对角化
+
+取：
+
+$$
+e_+
+=
+\frac1{\sqrt2}
+\begin{pmatrix}
+1\\1
+\end{pmatrix},
+\qquad
+e_-
+=
+\frac1{\sqrt2}
+\begin{pmatrix}
+1\\-1
+\end{pmatrix}.
+$$
+
+则：
+
+$$
+G_xe_+=2x\,e_+,
+$$
+
+$$
+G_xe_-=2(1-x)e_-.
+$$
+
+因此：
+
+$$
+\boxed{
+G_x
+\sim
+\begin{pmatrix}
+2x&0\\
+0&2(1-x)
+\end{pmatrix}_{(+,-)}.
+}
+$$
+
+这里：
+
+$$
+\boxed{
+2x=\text{even completion weight},
+}
+$$
+
+$$
+\boxed{
+2(1-x)=\text{odd recompletion weight}.
+}
+$$
+
+所以：
+
+$$
+G_x\succeq0
+\iff
+0\le x\le1.
+$$
+
+更严格地：
+
+$$
+G_x\succ0
+\iff
+0<x<1.
+$$
+
+这给出一个精确的“偶完成、奇破缺”谱判据：
+
+* \(x<0\)：even channel 已经为负；
+* \(0<x<1\)：两通道均正；
+* \(x>1\)：odd channel 为负；
+* \(x\notin\mathbb R\)：不存在这一实 Hermitian 完成。
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个经典零点轨道的 }G_{x_\rho}
+\text{ 都是正定的}.
+}
+$$
+
+从零点定义这些块仍属于等价重述；真正的证明必须从素数侧构造其全局正度量。
+
+---
+

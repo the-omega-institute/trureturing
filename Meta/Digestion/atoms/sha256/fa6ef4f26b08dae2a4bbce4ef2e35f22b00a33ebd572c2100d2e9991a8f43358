@@ -1,0 +1,51 @@
+## 39. Zeckendorf 有限深度 Casimir
+
+定义：
+
+$$
+\delta_{o,N}^{\varphi}
+=
+\frac{
+q_N(\delta_o)
+}{\varphi^N}.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal C_{T,N}^{\varphi}
+=
+\sum_{o\in T}
+m_ow_o
+\left(
+\delta_{o,N}^{\varphi}
+\right)^2.
+}
+$$
+
+对有限 \(T\)：
+
+$$
+\lim_{N\to\infty}
+\mathcal C_{T,N}^{\varphi}
+=
+\mathcal C_T^\perp.
+$$
+
+若存在某个：
+
+$$
+\delta_o>0,
+$$
+
+则对充分大的有限 \(N\)：
+
+$$
+\mathcal C_{T,N}^{\varphi}>0.
+$$
+
+所以 Zeckendorf thread 不只是编码，还给出有限观察深度的正缺陷逼近。
+
+---
+

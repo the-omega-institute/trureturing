@@ -1,0 +1,55 @@
+## 8.1 在线相与离线相单元
+
+固定辐角 $\theta$ 与 $r>1$。考虑两个二根状态：
+
+$$
+A_\theta
+=
+\{e^{i\theta},e^{i\theta}\},
+\tag{8.1}
+$$
+
+$$
+B_{r,\theta}
+=
+\{re^{i\theta},r^{-1}e^{i\theta}\}.
+\tag{8.2}
+$$
+
+$A_\theta$ 是单位圆上的双根相，$B_{r,\theta}$ 是同角 reciprocal 离圆相。
+
+定义一阶乘积读出
+
+$$
+c_{\mathrm{prod}}(\{w_1,w_2\})=w_1w_2,
+\tag{8.3}
+$$
+
+以及径向关系读出
+
+$$
+c_{\mathrm{rad}}(\{w_1,w_2\})
+=
+(\log|w_1|)^2+(\log|w_2|)^2.
+\tag{8.4}
+$$
+
+则
+
+$$
+c_{\mathrm{prod}}(A_\theta)
+=
+c_{\mathrm{prod}}(B_{r,\theta})
+=e^{2i\theta},
+\tag{8.5}
+$$
+
+而
+
+$$
+c_{\mathrm{rad}}(A_\theta)=0,
+\qquad
+c_{\mathrm{rad}}(B_{r,\theta})=2(\log r)^2>0.
+\tag{8.6}
+$$
+

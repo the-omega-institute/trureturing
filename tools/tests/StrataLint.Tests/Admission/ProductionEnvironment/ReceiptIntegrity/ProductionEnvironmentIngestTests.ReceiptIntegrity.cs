@@ -8,12 +8,9 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void IngestRejectsInputReceiptIntegrityFailureBeforeProjectingStatuses()
+    public void IngestAlignsInputCoverageBeforeProjectingStatuses()
     {
-        AssertIngestReceiptIntegrityGate(
-            "derived",
-            "var derived = DigestionStatusEvaluator.Evaluate(",
-            "var statusByAtomId = derived.Entries.ToDictionary(");
+        AssertCoverageAlignmentPrecedesStatusProjection();
         using var temporary = new TemporaryDirectory();
         var environment = ReceiptIntegrityStatusProjectionEnvironment(
             temporary.Path,
@@ -21,15 +18,11 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
-        Assert.False(result.Success);
-        Assert.StartsWith(
-            "INGEST_INVALID digest status is invalid:",
-            result.Error,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "coverage-receipt-mismatch",
-            result.Error,
-            StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
+        var edge = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path)
+            .RequireDigestionEntries()
+            .SelectMany(static entry => entry.Coverage));
+        Assert.Null(edge.TargetStatementId);
     }
 
     [Fact]
@@ -64,6 +57,26 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(following > gate, $"Receipt-integrity gate for {evaluation} moved past its write boundary");
     }
 
+    private static void AssertCoverageAlignmentPrecedesStatusProjection()
+    {
+        var source = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools",
+            "StrataLint.Cli",
+            "Commands",
+            "Digestion",
+            "IngestCommand.cs"));
+        var align = source.IndexOf(
+            "plannedDocument = DigestionCoverageTargetAligner.Align(",
+            StringComparison.Ordinal);
+        var projection = source.IndexOf(
+            "var derived = DigestionStatusEvaluator.Evaluate(",
+            StringComparison.Ordinal);
+
+        Assert.True(align >= 0, "Missing current coverage target alignment");
+        Assert.True(projection > align, "Coverage target alignment moved after status projection");
+    }
+
     private static ProductionCliEnvironment ReceiptIntegrityStatusProjectionEnvironment(
         string repositoryRoot,
         bool includeInputMismatch)
@@ -88,22 +101,16 @@ public sealed partial class ProductionEnvironmentTests
             stableGeneration,
             stableGenerationId,
             atomizerId,
-            coverageGids: includeInputMismatch ? [coverageGid] : [],
-            receipts: includeInputMismatch
-                ? new DigestionReceipts(
-                    [
-                        new DigestionCoverageReceipt(
-                            coverageGid,
-                            stableGeneration.Fingerprints.RawSha256,
-                            "sha256:" + new string('c', 64)),
-                    ],
-                    [],
-                    [],
-                    [],
-                    null)
-                : null,
+            coverageGids: [],
             sourceId: "fixture-source",
-            sourcePath: RuleFixture.FixtureDigestionSourcePath);
+            sourcePath: RuleFixture.FixtureDigestionSourcePath) with
+        {
+            Coverage = includeInputMismatch
+                ? [new DigestionCoverageEdge(
+                    coverageGid,
+                    "sha256:" + new string('c', 64))]
+                : [],
+        };
         var document = DigestionTestSupport.Document(
             atomizerId,
             [

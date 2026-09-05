@@ -1,0 +1,14 @@
+## 60. Symmetric off-line phase
+
+存在：
+
+$$
+\delta_\rho\neq0,
+$$
+
+但零点集合仍然在 \(G_\zeta\) 下闭合。
+
+这表示 RH 为假，却没有破坏函数方程对称。
+
+---
+

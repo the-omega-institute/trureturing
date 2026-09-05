@@ -1,0 +1,12 @@
+## 595. Prime coordinate ring 非 Noether
+
+```lean
+theorem infinitePrimePolynomialRing_not_noetherian :
+    ¬ IsNoetherianRing
+      (MvPolynomial Nat.Primes ℚ)
+```
+
+可以通过严格上升的坐标理想链证明。
+
+---
+

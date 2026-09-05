@@ -1,0 +1,17 @@
+## 340. 奇偶不变度量
+
+```lean
+theorem cayley_parity_metric
+    (x : ℝ) :
+    Matrix.transpose (cayleyTransfer x) *
+        cayleyParityMetric x *
+        cayleyTransfer x =
+      cayleyParityMetric x ∧
+    parityEigenvalues (cayleyParityMetric x) =
+      (2 * x, 2 * (1 - x)) ∧
+    PositiveDefinite (cayleyParityMetric x) ↔
+      0 < x ∧ x < 1
+```
+
+---
+

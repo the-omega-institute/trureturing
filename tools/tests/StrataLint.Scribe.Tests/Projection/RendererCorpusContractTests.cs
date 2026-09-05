@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "b7daa5c27ba3986fc3db108dba1237eea346349f1befa7a50e43290e0754c2bd";
+        "684ffe9abd8cdb4da31415a09fe2af382f4e2bd95ca90b5289761b35699f443f";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -436,6 +436,23 @@ public sealed partial class FormulaCorpusInventoryTests
         var applyNode = new Formula.Apply(subscript, [x]);
         formulas.Add(new Formula.Power(applyNode, word));
         formulas.Add(new Formula.Subscript(macroPhi, word));
+        // 2026-09-04 判词逐字（一次补齐四项，逐条补已吃过五轮 CI 试错）：
+        //   Power(Base=Binary,Exponent=LatexMacro) / Power(Base=LatexDigits,Exponent=Binary)
+        //   Power(Base=Power,Exponent=LatexWord)   / Subscript(Base=LatexMacro,Index=Subscript)
+        formulas.Add(new Formula.Power(additive, macroPhi));
+        formulas.Add(new Formula.Power(digits, additive));
+        formulas.Add(new Formula.Power(new Formula.Power(x, one), word));
+        formulas.Add(new Formula.Subscript(macroPhi, subscript));
+        // 2026-09-04 第二批判词（四项，一次补齐）：
+        //   Power(Base=LatexGroup,Exponent=LatexSequence) / Power(Base=LatexGroup,Exponent=LatexWord)
+        //   Subscript(Base=LatexSequence,Index=LatexWord)
+        //   LatexGroup.Items=precedence:multiplicative
+        formulas.Add(new Formula.Power(group, sequence));
+        formulas.Add(new Formula.Power(group, word));
+        formulas.Add(new Formula.Subscript(sequence, word));
+        formulas.Add(new Formula.LatexGroup([multiplicative]));
+        // 2026-09-05 判词逐字: formula-context:Negate.Operand=precedence:script;produces-script:true
+        formulas.Add(new Formula.Negate(script));
         // 2026-09-02 判词逐字: formula-context:LatexGroup.Items=precedence:logic;
         //   produces-script:false;starts-with-negation:false
         // precedence:logic 只由 Formula.Logic 产生(LatexWriter.WriteLogic 的 LogicPrecedence)。

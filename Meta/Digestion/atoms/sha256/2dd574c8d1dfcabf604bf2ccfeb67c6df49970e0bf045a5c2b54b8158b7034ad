@@ -1,0 +1,2 @@
+**候签定理 24.91(有限 Fejér 平方)**〔open;落 `D5/S3/Zeros/Repulsion/FejerNearCollisionBound`〕。令 Fejér 核 `F_M(t) := ∑_{|k|<M} (1 − |k|/M) · cos(k t)`(M ≥ 1,t ∈ ℝ)。则 `F_M(t) = M⁻¹ · ‖∑_{r=0}^{M−1} exp(i r t)‖²`——对 M 归纳,把长度 M 几何和的模平方展开为三角形余弦多项式。
+

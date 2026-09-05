@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c8b01b99c4f6f2dd7f8aca1e5105faeeec6c04a8bf2bea1857e47f2337fff2ad
+  normalized_sha256: sha256:c8b01b99c4f6f2dd7f8aca1e5105faeeec6c04a8bf2bea1857e47f2337fff2ad
+cas_ref: sha256:c8b01b99c4f6f2dd7f8aca1e5105faeeec6c04a8bf2bea1857e47f2337fff2ad
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/FiniteSubspaceComplementAbsorption.finite_subspace_complement_absorption
+    target_statement_id: sha256:7c67e6152238fb2e84418b3fe9fa6f59c6c3161ea1e94574dc635001eb80a8db
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Completion/FiniteSubspaceComplementAbsorption.finite_subspace_complement_absorption
+      definition_sha256: sha256:6e2e53442ed41e81fb8539b82b78f09467d073392b9ceb2f425db8513979beff
+      emission_sha256: sha256:245d070116ac0194b19dc6185526cdda1f811f45580c4ac1c25a0408cb71fe2c
+  unresolved_subitems: []

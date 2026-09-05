@@ -1,0 +1,27 @@
+## 89. 仓库角色对应
+
+\[
+\begin{aligned}
+\mathsf{CUT}
+&=\text{statement identity、GID、目标陈述与分类接口};\\
+\mathsf{FLOW}
+&=\text{formalize、deposit、dependency、freeze、retract、migrate};\\
+\mathsf{ADMIT}
+&=\text{elaboration、依赖闭包、治理 gate 与冻结准入};\\
+\mathsf{ANCHOR}
+&=\text{proof term、反例、收据、commit 与实际仓库状态}.
+\end{aligned}
+\]
+
+`residual-open` 是尚未闭合的目标余量。
+
+`coverage edge` 不是笼统“存在证明”，而是：
+
+\[
+\boxed{
+\text{哪个正式声明覆盖哪个精确目标陈述}.
+}
+\]
+
+---
+

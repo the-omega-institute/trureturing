@@ -1,0 +1,72 @@
+## 632. 径向与角向是两个不同问题
+
+一个零点候选对素数 \(p\) 产生角色：
+
+$$
+\chi_{\delta,\gamma}(p)
+=
+e^{-\delta\log p}
+e^{-i\gamma\log p}.
+$$
+
+其中：
+
+$$
+\delta
+$$
+
+控制径向幅值，
+
+$$
+\gamma
+$$
+
+控制角向相位。
+
+PrimeGaps 控制的是：
+
+$$
+\boxed{
+\log p\text{ 轴上的采样空洞}.
+}
+$$
+
+仓库另有两个严格结果：
+
+1. 不同素数的对数不存在非平凡有限整数线性关系；
+2. 任意有限素数相位向量存在任意晚的近相干回归时间。
+
+所以项目已经分别拥有：
+
+$$
+\boxed{
+\text{radial gap geometry}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{finite angular recurrence}.
+}
+$$
+
+但尚没有一个定理把二者同步为：
+
+$$
+\boxed{
+\text{同一组素数既处在长间隔关键尺度，}
+\quad
+\text{又实现产生 determinant cancellation 的相位模式}.
+}
+$$
+
+这应当定义为新的开放桥：
+
+> **Prime-Gap Phase Synchronization**
+
+其目标不是让全部相位返回 \(1\)，而是实现某个指定的反相位或 connected cancellation pattern。
+
+---
+

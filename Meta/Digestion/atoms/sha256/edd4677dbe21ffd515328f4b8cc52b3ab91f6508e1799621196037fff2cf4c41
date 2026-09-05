@@ -1,0 +1,1 @@
+**义务**:公开定理 `g60_center_deriv_re_gt : 187 / 100 < (deriv (g 60) c).re`、`g60_center_norm_lt : ‖g 60 c‖ < 4 / 10 ^ 10`,与最终 `germLocalFactor_two_has_zero_near_candidate : ∃ z ∈ Metric.ball c (1 / 10 ^ 8), germLocalFactor z 2 = 0`(经 `germ_zero_of_center_jet`)。证书由入仓生成器(`tools/scripts/agent/germ_jet_certificate.py`,器律⑨)产出、kernel 检查。

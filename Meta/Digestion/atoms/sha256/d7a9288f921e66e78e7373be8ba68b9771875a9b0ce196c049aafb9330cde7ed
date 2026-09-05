@@ -1,0 +1,48 @@
+## 469. 可以列完，但不能走完
+
+所有有限素数构型：
+
+$$
+H\subset\mathbb Z,
+\qquad
+|H|<\infty
+$$
+
+构成可数集合。
+
+所有自然数阶的 Li、Casimir 或 cumulant 条件也是可数的。
+
+所以这些条件不是不可枚举的。
+
+可以排列为：
+
+$$
+C_1,C_2,C_3,\ldots.
+$$
+
+问题在于：
+
+$$
+\boxed{
+\text{没有最后一个有限条件。}
+}
+$$
+
+而且目前没有已知 \(N\)，使：
+
+$$
+C_1\land\cdots\land C_N
+\Longrightarrow
+\forall n\,C_n.
+$$
+
+所以不是 cardinality obstruction，而是：
+
+$$
+\boxed{
+\text{no finite cofinal certificate}.
+}
+$$
+
+---
+

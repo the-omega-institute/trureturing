@@ -1,0 +1,26 @@
+# 十九、建议的新增形式化模块
+
+```text
+D5/S3/PrimeConstellation/InfiniteSourceNonNoetherian.lean
+D5/S3/PrimeConstellation/ShiftDifferenceGeneration.lean
+D5/S3/PrimeConstellation/ConstellationChaosFiltration.lean
+D5/S3/PrimeConstellation/OrthogonalChaosEnergy.lean
+
+D5/S3/Observer/Tail/FiniteEditOrbitDense.lean
+D5/S3/Observer/Tail/TailInvariantNowhereContinuous.lean
+D5/S3/Observer/Completion/CompactAntiDiagonalization.lean
+
+D5/S3/Analytic/PrimeParity/InfiniteParityStabilization.lean
+D5/S3/Analytic/PrimeParity/ZetaGibbsParityBalance.lean
+
+D5/X_Frontier/ConstellationZero/
+  EquivariantRHObstructionIdeal.lean
+  CompactPrimeWeilSquareRoot.lean
+  UniformPositiveInnovationExpansion.lean
+  CarrierFaithfulTraceJetRealization.lean
+```
+
+其中前面的非有限生成、无限奇偶、稠密有限编辑轨道和紧致反对角定理，都是独立于 RH 的有限数学结论。
+
+---
+

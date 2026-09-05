@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:936217ca57376f3ba3e87a41b6792a32e03cb0dedb67060ed1c587205e2d9c82
 cas_ref: sha256:936217ca57376f3ba3e87a41b6792a32e03cb0dedb67060ed1c587205e2d9c82
 coverage_gids:
-  - D5/S3/ConceptDynamics/ObservationOrder/MutualNondisturbanceOrderIndependence.mutual_nondisturbance_order_independence
+  - gid: D5/S3/ConceptDynamics/ObservationOrder/MutualNondisturbanceOrderIndependence.mutual_nondisturbance_order_independence
+    target_statement_id: sha256:785757e61e36a735166ae0fb7037278416e2af51ced48a28fa9596588665be13
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ObservationOrder/MutualNondisturbanceOrderIndependence.mutual_nondisturbance_order_independence
-      source_sha256: sha256:936217ca57376f3ba3e87a41b6792a32e03cb0dedb67060ed1c587205e2d9c82
-      target_statement_id: sha256:785757e61e36a735166ae0fb7037278416e2af51ced48a28fa9596588665be13
   scribe:
     - gid: D5/S3/ConceptDynamics/ObservationOrder/MutualNondisturbanceOrderIndependence.mutual_nondisturbance_order_independence
       definition_sha256: sha256:554ec0332621106fb739ca65ec443205d8f479a48bd469b8815194aad1ffc45c

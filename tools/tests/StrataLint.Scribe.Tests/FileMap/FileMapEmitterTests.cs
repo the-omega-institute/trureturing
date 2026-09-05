@@ -19,6 +19,7 @@ public sealed class FileMapEmitterTests
             [[files]]
             pattern = "Blueprint/**/*.md"
             kind = "generated"
+            admission_plane = "content"
             produced_by = "ScribeEmitter"
             consumed_by = ["ScribeEmitter", "reader"]
             verified_by = ["ScribeEmitter"]
@@ -28,6 +29,7 @@ public sealed class FileMapEmitterTests
             [[files]]
             pattern = "D5/**/*.lean"
             kind = "truth"
+            admission_plane = "content"
             produced_by = "none"
             consumed_by = ["Lean"]
             verified_by = ["lean-build"]
@@ -37,6 +39,7 @@ public sealed class FileMapEmitterTests
             [[files]]
             pattern = "tools/FixtureData/*.toml"
             kind = "data"
+            admission_plane = "judge"
             produced_by = "none"
             consumed_by = ["TomlGoldenLoader"]
             verified_by = ["TomlGoldenLoader"]

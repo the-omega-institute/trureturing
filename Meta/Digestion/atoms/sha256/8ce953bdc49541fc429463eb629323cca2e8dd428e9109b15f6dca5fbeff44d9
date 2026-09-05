@@ -1,0 +1,10 @@
+## 2. 构型阶数奇偶
+
+$$
+p_H
+=
+|H|\bmod2.
+$$
+
+它区分偶点和奇点 prime constellations。
+

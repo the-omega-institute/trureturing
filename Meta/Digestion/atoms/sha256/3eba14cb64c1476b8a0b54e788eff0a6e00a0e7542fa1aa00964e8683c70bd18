@@ -1,0 +1,14 @@
+## 33. FLOW 对 ADMIT 的稳定性
+
+给定：
+
+\[
+F:X\to Y,
+\qquad
+A_X:X\to\mathsf{Prop},
+\qquad
+A_Y:Y\to\mathsf{Prop},
+\]
+
+定义合法性泄漏：
+

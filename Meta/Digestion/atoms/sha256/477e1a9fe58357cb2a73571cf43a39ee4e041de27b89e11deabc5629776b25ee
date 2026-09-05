@@ -1,0 +1,65 @@
+## 451. 但新函数必然拥有离射线零点
+
+附加因子的零点为：
+
+$$
+q_j
+=
+R
+\exp
+\left(
+\frac{(2j+1)\pi i}{2M}
+\right),
+\qquad
+j=0,\ldots,2M-1.
+$$
+
+这些零点全部不是实数。
+
+令：
+
+$$
+\widetilde\xi(s)
+=
+\widetilde{\mathcal X}\bigl(s(1-s)\bigr).
+$$
+
+则：
+
+$$
+\widetilde\xi(1-s)=\widetilde\xi(s),
+$$
+
+并保持复共轭对称。
+
+但它的新 \(q_j\) 非实，因此其提升零点不能全部满足：
+
+$$
+\Re s=\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{任意有限个 reflection-Casimir jets，
+都不能在所有反射对称整函数中刻画 RH。}
+}
+$$
+
+这就是一个严格的 finite-jet diagonal escape theorem。
+
+它不说明经典 \(\xi\) 可以被任意修改；修改后的函数通常丢失经典 Euler、Gamma 和显式公式结构。
+
+它说明的是：
+
+$$
+\boxed{
+\text{只使用有限局部 jet，永远不够。}
+}
+$$
+
+真正的 RH 证明必须使用经典 \(\xi\) 的全局算术结构。
+
+---
+

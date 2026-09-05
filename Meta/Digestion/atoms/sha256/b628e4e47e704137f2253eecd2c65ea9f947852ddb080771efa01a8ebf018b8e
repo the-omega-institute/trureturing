@@ -1,0 +1,25 @@
+## B8.1 Perron 归一化 Markov 链
+
+在 $z=1$，取 Perron 右向量 $(\varphi,1)$。对 transfer $A$ 作 Doob--Perron 归一化，得到 Markov 矩阵
+
+$$
+\boxed{
+P=
+\begin{pmatrix}
+\varphi^{-1}&\varphi^{-2}\\
+1&0
+\end{pmatrix}.}
+\tag{B8.1}
+$$
+
+其本征值为
+
+$$
+1,
+\qquad
+-\varphi^{-2}.
+\tag{B8.2}
+$$
+
+第二本征值正是稳定／反交错 memory mode。
+

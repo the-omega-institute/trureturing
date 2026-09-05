@@ -1,0 +1,9 @@
+### 需要新接口 `[N]`
+
+15. `CIRPTSystem`
+16. `FourRoleDefectVector`
+17. `PairwiseCompatibilityMatrix`
+18. `CIRPTStageMorphism`
+19. `HonestExtension`
+20. `ProductiveExtension`
+

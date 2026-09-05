@@ -1,0 +1,71 @@
+# 第两千零五十四部　有限窗口全部正确，并不证明无限命题
+
+将非平凡零点按高度排列：
+
+$$
+\rho_1,\rho_2,\rho_3,\ldots
+$$
+
+定义：
+
+$$
+b_N
+=
+\begin{cases}
+1,&\Re\rho_j=\frac12\quad(1\le j\le N),\\
+0,&\text{否则}.
+\end{cases}
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+b_N=1
+\quad
+\forall N.
+}
+\tag{2054.1}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathbf1_{\mathrm{RH}}
+=
+\inf_{N\ge1}b_N.
+}
+\tag{2054.2}
+$$
+
+如果 RH 为假，一个离线零点就在某个有限序号出现：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N:b_N=0.
+}
+$$
+
+所以否定具有有限见证。
+
+但若已经验证：
+
+$$
+b_1=\cdots=b_N=1,
+$$
+
+仍无法仅凭这些检查推出：
+
+$$
+b_{N+1}=1.
+$$
+
+项目的有限 prime-time tomography 已经形式化了完全相同的逻辑边界：在有限状态空间中，完整可分离性一定有有限观察窗口；而在无限状态空间中，全部观察共同可以分离状态，却可能没有任何有限窗口足够。
+
+---
+

@@ -1,0 +1,14 @@
+\[
+\boxed{
+\exists\overline F:B\to C,
+\quad
+q_Y\circ F
+=
+\overline F\circ q_X.
+}
+\]
+
+项目已证明，精确下降排除 carry。
+
+---
+

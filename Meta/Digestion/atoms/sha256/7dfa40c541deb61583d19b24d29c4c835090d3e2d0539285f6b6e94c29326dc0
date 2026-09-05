@@ -1,0 +1,75 @@
+## 462. 完全相同的低阶读数，相反的最高阶真值
+
+令：
+
+$$
+d=k+1.
+$$
+
+在：
+
+$$
+\{-1,+1\}^d
+$$
+
+上定义两个概率分布：
+
+$$
+\mu_d^\pm(x)
+=
+2^{-(d-1)}
+\mathbf1_{\prod_{i=1}^dx_i=\pm1}.
+$$
+
+对任意真子集：
+
+$$
+A\subsetneq\{1,\ldots,d\},
+$$
+
+都有：
+
+$$
+\mathbb E_{\mu_d^+}
+\prod_{i\in A}X_i
+=
+\mathbb E_{\mu_d^-}
+\prod_{i\in A}X_i
+=
+0.
+$$
+
+所以两个分布的所有 \(k\) 阶及以下边缘完全相同。
+
+但最高阶满足：
+
+$$
+\boxed{
+\mathbb E_{\mu_d^+}
+\prod_{i=1}^dX_i
+=
++1,
+}
+$$
+
+$$
+\boxed{
+\mathbb E_{\mu_d^-}
+\prod_{i=1}^dX_i
+=
+-1.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{全部 proper marginals 都不能决定 global parity bit}.
+}
+$$
+
+这就是一个任意深度版本的“悖论式”结构。
+
+---
+

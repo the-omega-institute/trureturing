@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:3c37556c903167beeddb4c8f93be3d2ff225ae3a3ecb79aee1fa5769e6fa1205
+  normalized_sha256: sha256:3c37556c903167beeddb4c8f93be3d2ff225ae3a3ecb79aee1fa5769e6fa1205
+cas_ref: sha256:3c37556c903167beeddb4c8f93be3d2ff225ae3a3ecb79aee1fa5769e6fa1205
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Missing prerequisite after retrieval. D5 searches `log.*det|det.*log|cyclic.*trace|permut.*trace|nilpotent.*coeff|source.*jet` found `D5/S3/Analytic/Adelic/JetResolventSemisimplification.lean` (a special nilpotent pencil and first logarithmic derivative) and `D5/S3/Divergence/LogDerivTrace.lean` (a positive-matrix directional identity), but no all-degree determinant-series coefficient theorem or multivariate squarefree source-jet owner. Pinned Mathlib searches `charpolyRev|logOf|deriv_log|trace.*pow|Newton.*ident|MvPowerSeries.*log` found `Matrix.charpolyRev`, `Matrix.coeff_charpolyRev_eq_neg_trace`, `PowerSeries.logOf`, `PowerSeries.deriv_log`, and symmetric-polynomial Newton identities, but no theorem proving `coeff k (-logOf (charpolyRev M)) = trace (M^k) / k` for arbitrary k and no multivariate determinant-log coefficient bridge. Reachable GitHub Lean code searches `logOf charpolyRev`, `log det trace`, `logdet trace`, and `trace (M ^` found only Mathlib mirrors, `motanova84/Riemann-adelic` defining log determinant from the trace series itself (disallowed definitional substitution), and `rwst/lean-code` defining a trace-power generating series, with no exact determinant theorem or A17-admissible dependency. Local probe `/private/tmp/w73c26-logdet-probe.lean` (log `/private/tmp/w73c26-atom1-probe.log`) handled k=0, then exited 1 at the exact positive-degree goal `-(PowerSeries.coeff k) (subst (charpolyRev M - 1) (log C)) = trace (M^k) / (k:C)`; without this bridge, introducing the requested source jet would either assume the conclusion or define negative log determinant as its target trace sum."
+    reentry_condition: "Provide a frozen D5 or pinned-library theorem proving the all-degree formal identity `coeff k (-PowerSeries.logOf (Matrix.charpolyRev M)) = Matrix.trace (M^k) / k` on finite complex matrices, together with a canonical multivariate square-zero coefficient or polarization bridge identifying the squarefree coefficient of the actual determinant logarithm; then derive the permutation trace sum without defining either side from the goal."
+    blocker_class: missing-prerequisite

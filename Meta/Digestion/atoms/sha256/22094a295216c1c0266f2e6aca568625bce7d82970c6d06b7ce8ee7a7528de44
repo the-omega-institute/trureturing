@@ -1,0 +1,67 @@
+# 增订三·20　建议形式化节点
+
+以下是本增订自然产生的节点名称。它们是理论分解，不表示已经创建文件。
+
+```text
+D5/S3/Observer/PrimePowerThread/
+  CenteredPrimePowerThread.lean
+  PrimeThreadCompatibility.lean
+  PrimeThreadLogarithmicCharge.lean
+  PrimeThreadSolenoidPhase.lean
+  ReflectedPrimeThreadInverseConjugate.lean
+  CriticalLineIffZeroPrimeCharge.lean
+
+D5/S3/Observer/PrimeThreadRelation/
+  PrimePairChargeGradient.lean
+  PrimePairKernelChargePhaseIdentity.lean
+  RawChargeWeightCannotNormalizeAway.lean
+  TwoPrimeLevelOneEmbedding.lean
+  ScalarPrimeProductPhaseAliasing.lean
+
+D5/S3/Observer/SolenoidInformationEscape/
+  FiniteLevelAliasingPeriod.lean
+  FiniteWindowSingleLevelFaithfulness.lean
+  FullThreadPhaseFaithfulness.lean
+  FiniteLevelSemanticClosureCriterion.lean
+  LevelObserverUniqueCaptureWitness.lean
+  SolenoidLevelStructuralNovelty.lean
+
+D5/S3/Observer/ChargeGraph/
+  NonlinearChargeGraphEnergy.lean
+  ChargeGraphConstantKernel.lean
+  PhysicalPrimeChargeRayFaithful.lean
+  GroundedChargeLaplacian.lean
+  GroundedChargeCoercivity.lean
+  PrimeGammaCommonChargeAnchorTarget.lean
+
+D5/S3/Zeros/CayleyRadialCertificate/
+  CayleyPulledBackZeroProfile.lean
+  OffCircleZeroRadialLogDerivative.lean
+  OffCircleZeroNegativeRegionOpen.lean
+  OffLineZeroRationalRadialPrecursor.lean
+
+D5/S3/Weil/ZetaAnalytic/RationalRectangleCertificate/
+  OffAxisRationalRectangleBasis.lean
+  RhIffAllRationalRectangleCountsZero.lean
+  LocallyUniformZeroCountStability.lean
+  RoucheZeroFreeApproximantCertificate.lean
+
+D5/S3/Weil/ZetaLinear/SchurRoucheBridge/
+  BlockEnergyTriangularFactorization.lean
+  SchurMarginSingularValueFloor.lean
+  SingularValueDeterminantFloor.lean
+  SchurMarginRoucheBoundaryFloor.lean
+  DeterminantDimensionTax.lean
+  HankelMinimalCertificateDimensionTarget.lean
+
+D5/S3/Weil/PrimeGammaCertificate/
+  CanonicalPrimeZeckendorfGammaTransferTarget.lean
+  TransferDeterminantXiUnitTarget.lean
+  LocallyUniformTransferApproximationTarget.lean
+  RationalRectangleCertificateExhaustionTarget.lean
+  RationalCertificateStackImpliesRhTarget.lean
+```
+
+其中以下节点可以纯有限地闭合：
+
+- prime thread compatibility；

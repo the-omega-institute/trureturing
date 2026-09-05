@@ -1,0 +1,26 @@
+## 82. 生产性扩张
+
+扩张 \(\Sigma\to\Sigma'\) 是生产性的，当存在新问题：
+
+\[
+P'\in\mathcal Q'
+\]
+
+使：
+
+\[
+P'\in\operatorname{Answerable}(\Sigma')
+\]
+
+但：
+
+\[
+P'
+\notin
+p^*\operatorname{Answerable}(\Sigma).
+\]
+
+所以新增文件、术语或类型并不自动构成生产性反射；必须出现严格新问题能力。
+
+---
+

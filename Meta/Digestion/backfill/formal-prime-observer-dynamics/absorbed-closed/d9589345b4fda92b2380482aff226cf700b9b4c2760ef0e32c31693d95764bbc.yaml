@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:d9589345b4fda92b2380482aff226cf700b9b4c2760ef0e32c31693d95764bbc
 cas_ref: sha256:d9589345b4fda92b2380482aff226cf700b9b4c2760ef0e32c31693d95764bbc
 coverage_gids:
-  - D5/S3/ConceptDynamics/ResidueCoding/ArbitraryCoordinateErasureCriterion.arbitrary_coordinate_erasure_criterion
+  - gid: D5/S3/ConceptDynamics/ResidueCoding/ArbitraryCoordinateErasureCriterion.arbitrary_coordinate_erasure_criterion
+    target_statement_id: sha256:f855dfe8ac630b6713f984ba19690c28d221e380dd90ebe0ba4d9a981e9f9733
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ResidueCoding/ArbitraryCoordinateErasureCriterion.arbitrary_coordinate_erasure_criterion
-      source_sha256: sha256:d9589345b4fda92b2380482aff226cf700b9b4c2760ef0e32c31693d95764bbc
-      target_statement_id: sha256:f855dfe8ac630b6713f984ba19690c28d221e380dd90ebe0ba4d9a981e9f9733
   scribe:
     - gid: D5/S3/ConceptDynamics/ResidueCoding/ArbitraryCoordinateErasureCriterion.arbitrary_coordinate_erasure_criterion
       definition_sha256: sha256:4178ae9aca3cb93c7b3ae71ae04ee9eb4f22572d7c903c5d216492c2d402a16e

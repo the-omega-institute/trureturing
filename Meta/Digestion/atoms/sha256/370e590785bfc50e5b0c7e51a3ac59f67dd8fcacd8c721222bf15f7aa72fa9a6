@@ -1,0 +1,39 @@
+## 241. 零点商算子
+
+在以 \(q\)-零点为基的 Hilbert 空间上定义：
+
+$$
+Qe_j=q_je_j.
+$$
+
+因为：
+
+$$
+\sum_j\frac{m_j}{|q_j|}<\infty,
+$$
+
+所以：
+
+$$
+K=Q^{-1}
+$$
+
+为 trace-class。
+
+于是：
+
+$$
+\boxed{
+\frac{\mathcal X(q)}
+{\mathcal X(0)}
+=
+\det(I-qK).
+}
+$$
+
+这是一个真正的 Fredholm determinant 表达。
+
+若 \(Q\) 是直接由零点定义的，这一表达本身仍是谱数据的重新包装；其价值在于明确了下一步真正应构造的对象。
+
+---
+

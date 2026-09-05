@@ -1,0 +1,11 @@
+## 15.1 不发生在 Zeckendorf state decode
+
+因为 $E_Q$ 是双射，
+
+$$
+\ker(E_Q)=\Delta_{\Omega_Q}.
+\tag{A15.1}
+$$
+
+所以精确指数能量没有微观状态碰撞。
+

@@ -1,0 +1,19 @@
+## B16.4 RH 的加强型能量表述
+
+RH 不仅可读为“所有 zero radial energies 为零”，还可提出更强的 completed statement：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{临界线外，completed cocycle 保持正 singular-value gap；}\\
+&\text{boundary vectors 对 dominant channel 保持横截；}\\
+&\text{prime relation differential 的 joint kernel 只含 gauge modes；}\\
+&\text{zero-side odd energy 由该 relation differential 的像控制。}
+\end{aligned}}
+\tag{B16.6}
+$$
+
+若四项成立，则离线 scalar zero 无法通过隐藏 relation mode 或边界失耦产生。
+
+---
+

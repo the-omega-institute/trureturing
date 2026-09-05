@@ -1,0 +1,66 @@
+## 7.1 Minkowski 双通道
+
+令
+
+$$
+\psi=1-\varphi=-\varphi^{-1}.
+\tag{A7.1}
+$$
+
+对合法词 $\eta$，定义
+
+$$
+U(\eta)=\sum_k\eta_k\varphi^k,
+\qquad
+S(\eta)=\sum_k\eta_k\psi^k.
+\tag{A7.2}
+$$
+
+由 Binet 公式，
+
+$$
+\boxed{
+E(\eta)
+=
+\frac{U(\eta)-S(\eta)}{\sqrt5}.
+}
+\tag{A7.3}
+$$
+
+若把每个 Fibonacci 指标上移一位，定义
+
+$$
+E^+(\eta)=\sum_k\eta_kF_{k+1},
+\tag{A7.4}
+$$
+
+则
+
+$$
+\boxed{
+E^+(\eta)=\varphi E(\eta)+S(\eta).
+}
+\tag{A7.5}
+$$
+
+仓库的 Zeckendorf displacement reading 正是这一关系的整数闭式版本。
+
+对 canonical Zeckendorf 数位，稳定影子满足统一界
+
+$$
+\boxed{
+-\varphi^{-2}<S(\eta)<\varphi^{-1}.
+}
+\tag{A7.6}
+$$
+
+其符号由最小被占据指标的奇偶控制。
+
+所以：
+
+- $U$ 随深度指数增长；
+- $S$ 始终在固定有界窗内；
+- 但 $S$ 决定上移值落在哪一个相邻整数以及下一次跳跃取哪一支。
+
+这是“稳定通道小但不可删除”的第一个精确实例。
+

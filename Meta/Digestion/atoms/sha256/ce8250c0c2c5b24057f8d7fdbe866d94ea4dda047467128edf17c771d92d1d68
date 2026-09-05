@@ -1,0 +1,41 @@
+## 目标一：Prime-parity common-floor formalization
+
+对有限素数集 \(S\)，机器证明：
+
+$$
+T_S^{\mathrm{sf}}
+=
+\prod_{p\in S}
+\begin{pmatrix}
+1&p^{-s}\\
+p^{-s}&1
+\end{pmatrix},
+$$
+
+并证明在实数 \(\sigma>1\)：
+
+$$
+\boxed{
+\lambda_{\min}
+(T_S^{\mathrm{sf}})
+=
+\prod_{p\in S}(1-p^{-\sigma})
+=
+\frac1{\zeta_S(\sigma)}.
+}
+$$
+
+全指数版本则证明：
+
+$$
+\boxed{
+\lambda_{\min}
+(T_S^{\mathrm{full}})
+=
+\frac{\zeta_S(2\sigma)}
+{\zeta_S(\sigma)}.
+}
+$$
+
+---
+

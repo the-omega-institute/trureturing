@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:bdeaff4af43f382f07b9b59625a12de12d95960d2380825edf2e971564eebee8
+  normalized_sha256: sha256:bdeaff4af43f382f07b9b59625a12de12d95960d2380825edf2e971564eebee8
+cas_ref: sha256:bdeaff4af43f382f07b9b59625a12de12d95960d2380825edf2e971564eebee8
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/StrategyProfileQuotientMinimality.strategy_sufficient_self_universal_minimality
+    target_statement_id: sha256:788a1a080cf0677f353219a9f89bb2a91a6b349d7a3b22357417ccefd2525739
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/StrategyProfileQuotientMinimality.strategy_sufficient_self_universal_minimality
+      definition_sha256: sha256:930a0a866962834d3ac28cbcaf2b0fc32305428be0c82a222ea4935a224b3615
+      emission_sha256: sha256:6b58630e1032c27978058ba417dfe194feb8454182e8d43088fff3544fe0ff44
+  unresolved_subitems: []

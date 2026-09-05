@@ -1,0 +1,48 @@
+# 第一百一十三部　新的形式化落点
+
+建议不要新增与既有 Li 规划平行的目录，而是合并为下面的主链：
+
+```text
+D5/S3/Analytic/LiCayley/
+  RealityDualityCoincidence.lean
+  ZeroCayleyOrbit.lean
+  CayleyRapidity.lean
+  SquareFoldToCayleyContraction.lean
+  CayleyInvariantParityMetric.lean
+
+D5/S3/Weil/ZetaBridge/
+  OffLineOrbitKreinDecomposition.lean
+  PaleyWienerOddReachability.lean
+  OddResidualCompletionTower.lean
+
+D5/S3/Analytic/ReflectionCasimir/
+  XiReflectionQuotient.lean
+  ReflectionCasimirPowerTrace.lean
+  CasimirHausdorffMoments.lean
+  CasimirHausdorffRHCriterion.lean
+  CasimirMomentGNS.lean
+  CasimirJacobiContraction.lean
+
+D5/S3/Analytic/LiHausdorff/
+  LiCasimirChebyshevTransform.lean
+  InverseLiCasimirTransform.lean
+  LiCasimirNormFormula.lean
+
+D5/S3/Analytic/Isolation/
+  StructuralZeroCayleyClassification.lean
+  StructuralDivisorHausdorffObstruction.lean
+
+D5/S3/PrimeConstellation/Operator/
+  ZetaGibbsProductVector.lean
+  AdditiveShiftInfinitePrimeSupport.lean
+  ConstellationMomentOperator.lean
+  ConstellationCasimirResponse.lean
+
+D5/X_Frontier/WeilCasimir/
+  WeilCasimirCongruence.lean
+  PrimeConstructedCasimirJacobi.lean
+  GlobalOddOrbitReachability.lean
+```
+
+---
+

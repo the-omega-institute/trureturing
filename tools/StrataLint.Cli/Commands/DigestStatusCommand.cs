@@ -289,7 +289,7 @@ internal static class DigestStatusCommand
 
     internal static string RenderDetail(string detail) => JsonSerializer.Serialize(detail, JsonOptions);
 
-    private static string RenderJson(DigestionLedgerEvaluation evaluation)
+    internal static string RenderJson(DigestionLedgerEvaluation evaluation)
     {
         var material = new
         {
@@ -303,6 +303,7 @@ internal static class DigestStatusCommand
                 {
                     source_id = item.Entry.SourceId,
                     atom_id = item.Entry.AtomId,
+                    coverage_gids = item.Entry.CoverageGids,
                     alignment = DigestionReceiptAlignmentNames.Render(item.Alignment),
                     migration = DigestionStatusNames.Migration(item.DerivedStatus.Migration),
                     truth = DigestionStatusNames.Truth(item.DerivedStatus.Truth),
@@ -327,6 +328,7 @@ internal static class DigestStatusCommand
             {
                 source_id = item.SourceId,
                 atom_id = item.AtomId,
+                coverage_gids = item.CoverageGids,
                 action = item.Action,
                 ordered_blockers = item.OrderedBlockers,
                 unknown_predicates = item.UnknownPredicates,

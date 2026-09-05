@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2edcbd414388c1861dd6b5ec29c6123f3f7fb58d0eaab2a4fea58e856e4a9c2e
+  normalized_sha256: sha256:2edcbd414388c1861dd6b5ec29c6123f3f7fb58d0eaab2a4fea58e856e4a9c2e
+cas_ref: sha256:2edcbd414388c1861dd6b5ec29c6123f3f7fb58d0eaab2a4fea58e856e4a9c2e
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/LiCaratheodoryIdentity.li_caratheodory_identity
+    target_statement_id: sha256:6d2f09474b610801c0526d7012015ae2973f4ba5c43479ce5a1e7a70f46a60ac
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/LiCaratheodoryIdentity.li_caratheodory_identity
+      definition_sha256: sha256:eafe1b0d9521874a79556414fe44647ab4ef9690b94769e787f64a0e6ba14be3
+      emission_sha256: sha256:e9c02473d11dad1eb59cb2a52c3bb792b026ba550f35f8ace41e199388662bb5
+  unresolved_subitems: []

@@ -1,0 +1,8 @@
+## 〇　为什么是这一节
+
+增订二十六(W-13)把 RH 写成「素数侧表达式 pole − prime + arch 对一切卷积平方非负」。mstudio3 驱动者已冻结的能量恒等式把同一个零点侧形式**逐项实化**:极点项 = 2·|∫ e^{x/2} f|²(秩一边界读数),素数项 = 2·totalPrimeWeight(L)·‖f‖² − arithmeticJumpEnergy(L, f)(有限素数幂平移能量),阿基米德项 = archimedeanJumpEnergy(f) − archimedeanConstant·‖f‖²(连续跳跃能量),其中 L 为任一包含 tsupport f 的支撑半径。合成后,RH 等价于**素数–阿基米德 Poincaré 不等式**:
+
+$$(2\,\mathrm{totalPrimeWeight}(L) - \mathrm{archimedeanConstant})\,\|f\|_2^2 \;\le\; 2\Big|\int e^{x/2} f\Big|^2 + \mathrm{archimedeanJumpEnergy}(f) + \mathrm{arithmeticJumpEnergy}(L, f)$$
+
+对一切 `f : WeilTestFunction` 与一切支撑半径 L 成立。右端三项皆非负(冻结:`prime_jump_decomposition` 的 `0 ≤ arithmeticJumpEnergy`),左端是「相干素数质量减阿基米德常数」乘 L² 质量——这是本路线第一次把 RH 写成**无零点、无 ζ、只含素数幂权、平移能量与一个 digamma 常数**的实不等式。**诚实边界**:①仍相对于 `ZeroData`(M1-b);②测试函数类为本仓 `WeilTestFunction`(偶、C∞、紧支);③不构成 RH 证明;④能量恒等式属他驱动者的冻结节点,本节只做绑定,不复证。
+

@@ -5,17 +5,23 @@ namespace StrataLint.Tests;
 
 public sealed partial class BackfillInventoryLoaderTests
 {
-    [Fact]
-    public void DirectoryLedgerProjectsCoverageReferences()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentCoverageEdgeLoadsForCandidateAndBaseline(bool baseline)
     {
         var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
         var withCoverage = atom.Text.Replace(
             "coverage_gids: []",
-            "coverage_gids:\n  - D5/X_Frontier/SyntheticSourceTarget",
+            "coverage_gids:\n  - gid: D5/X_Frontier/SyntheticSourceTarget\n"
+                + "    target_statement_id: null",
             StringComparison.Ordinal);
-        var inventory = BackfillInventoryLoader.Load(Snapshot(
+        var snapshot = Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, withCoverage)));
+            (atom.Path, withCoverage));
+        var inventory = baseline
+            ? BackfillInventoryLoader.LoadBaseline(snapshot)
+            : BackfillInventoryLoader.Load(snapshot);
 
         Assert.Equal(
             ["D5/X_Frontier/SyntheticSourceTarget"],
@@ -26,50 +32,87 @@ public sealed partial class BackfillInventoryLoaderTests
     public void LegacyCoverageTargetSha256KeyIsRejected()
     {
         var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
+        var legacy = atom.Text.Replace(
+            "coverage_gids: []",
+            "coverage_gids:\n"
+                + "  - gid: D5/S0/Carrier/Probe.probe\n"
+                + "    target_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, legacy))));
+
+        Assert.Contains("coverage edge keys are not canonical", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void BaselineCoverageProjectionRejectsHistoricalTargetField()
+    {
+        var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
+        var historical = atom.Text.Replace(
+            "coverage_gids: []",
+            "coverage_gids:\n"
+                + "  - gid: D5/S0/Carrier/Probe.probe\n"
+                + "    historical_target_field: not-a-statement-identity",
+            StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadBaseline(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, historical))));
+
+        Assert.Contains("coverage edge keys are not canonical", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void BaselineLegacyCoverageElementFailsClosed()
+    {
+        const string resolvedGid = "D5/S0/Carrier/Probe.resolved";
+        var atom = CanonicalCoverageAtom("coverage_gids: []");
         var legacy = atom.Text
             .Replace(
-                "coverage_gids: []",
-                "coverage_gids:\n  - D5/S0/Carrier/Probe.probe",
-                StringComparison.Ordinal)
+                "coverage_gids: []\n",
+                $"coverage_gids:\n  - {resolvedGid}\n",
+                StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.LoadBaseline(Snapshot(
+                Source("delta-v0.1", "docs/delta.md", "none"),
+                (atom.Path, legacy))));
+
+        Assert.Contains("coverage edge must be a mapping", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CandidateLegacyCoverageElementFailsClosed()
+    {
+        const string resolvedGid = "D5/S0/Carrier/Probe.resolved";
+        var atom = CanonicalCoverageAtom("coverage_gids: []");
+        var legacy = atom.Text
             .Replace(
-                "  coverage: []",
-                "  coverage:\n"
-                + "    - gid: D5/S0/Carrier/Probe.probe\n"
-                + "      source_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000\n"
-                + "      target_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111",
+                "coverage_gids: []\n",
+                $"coverage_gids:\n  - {resolvedGid}\n",
                 StringComparison.Ordinal);
 
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
             (atom.Path, legacy))));
 
-        Assert.Contains("coverage receipt keys are not canonical", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("coverage edge must be a mapping", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void BaselineCoverageProjectionDoesNotInterpretHistoricalTargetField()
+    public void BaselineLegacyCoverageSchemaRejectsAdditionalUnknownEntryKey()
     {
-        var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
-        var historical = atom.Text
-            .Replace(
-                "coverage_gids: []",
-                "coverage_gids:\n  - D5/S0/Carrier/Probe.probe",
-                StringComparison.Ordinal)
-            .Replace(
-                "  coverage: []",
-                "  coverage:\n"
-                + "    - gid: D5/S0/Carrier/Probe.probe\n"
-                + "      source_sha256: not-a-fingerprint\n"
-                + "      historical_target_field: not-a-statement-identity",
-                StringComparison.Ordinal);
+        var atom = CanonicalCoverageAtom("coverage_gids: []");
+        var legacy = atom.Text + "historical_extra: ignored-by-old-reader\n";
 
-        var inventory = BackfillInventoryLoader.LoadBaseline(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, historical)));
-        var entry = Assert.Single(inventory.RequireDigestionEntries());
+        var exception = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.LoadBaseline(Snapshot(
+                Source("delta-v0.1", "docs/delta.md", "none"),
+                (atom.Path, legacy))));
 
-        Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
-        Assert.Empty(entry.Receipts.Coverage);
+        Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
     }
 
     [Fact]
@@ -115,7 +158,7 @@ public sealed partial class BackfillInventoryLoaderTests
             var entry = Assert.Single(entries, entry => entry.AtomId == atomId);
 
             Assert.Empty(entry.CoverageGids);
-            Assert.Empty(entry.Receipts.Coverage);
+            Assert.Empty(entry.Coverage);
             Assert.Empty(entry.Receipts.Scribe);
             Assert.NotEmpty(entry.Receipts.UnresolvedSubitems);
             Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);

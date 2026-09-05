@@ -1,0 +1,24 @@
+## 11.2 单 Euler 因子的 Gibbs ensemble
+
+固定 $0<x<1$，对 $v\ge0$ 使用几何权
+
+$$
+\mu_x(v)=(1-x)x^v.
+\tag{A11.2}
+$$
+
+则
+
+$$
+\mathbb E_x[v^2]
+=
+\boxed{
+\frac{x(1+x)}{(1-x)^2}
+}<\infty.
+\tag{A11.3}
+$$
+
+取 $x=p^{-\sigma}$，对任一固定 prime 和 $\sigma>0$，该二阶矩有限。
+
+所以在真实局部 Euler 权下，增加 Zeckendorf depth 并不会让单个 prime factor 的横向二阶响应发散。
+

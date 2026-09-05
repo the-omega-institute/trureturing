@@ -1,0 +1,2 @@
+**候签定理 4.84(合数分支为奇数)**〔open;L-4;同模块〕。对任意 n : ℕ，若 1 < n、Nat.totient n ∣ n - 1 且 ¬n.Prime，则 Odd n。
+

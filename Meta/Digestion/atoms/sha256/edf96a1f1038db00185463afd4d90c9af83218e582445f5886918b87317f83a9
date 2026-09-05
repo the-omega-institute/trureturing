@@ -1,0 +1,13 @@
+## 413. 分圆重完
+
+```lean
+theorem cyclotomic_observer_norm
+    (m : ℕ) (hm : 0 < m)
+    {s : ℂ} (hs : 1 < s.re) :
+    ∏ j : Fin m,
+      omegaFactorSeries m j s =
+        riemannZeta (m * s)
+```
+
+---
+

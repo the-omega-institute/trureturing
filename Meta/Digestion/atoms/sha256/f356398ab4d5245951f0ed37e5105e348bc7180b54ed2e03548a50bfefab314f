@@ -1,0 +1,19 @@
+## B8.5 五种黄金尺度不可混同
+
+当前理论中至少出现：
+
+$$
+\begin{aligned}
+&\text{stable/dominant ratio magnitude}:&&\varphi^{-2},\\
+&\text{one-site variance}:&&1/5,\\
+&\text{integrated hard-core susceptibility}:&&1/(5\sqrt5),\\
+&\text{golden innovation mean square}:&&\varphi^{-3},\\
+&\text{two-channel modulus gap}:&&2\log\varphi.
+\end{aligned}
+\tag{B8.9}
+$$
+
+这些常数来自不同 readouts，不能因为都与黄金系统有关就彼此替换。它们分别测量衰减率、局部涨落、累计响应、确定性创新能量和 Lyapunov separation。
+
+---
+

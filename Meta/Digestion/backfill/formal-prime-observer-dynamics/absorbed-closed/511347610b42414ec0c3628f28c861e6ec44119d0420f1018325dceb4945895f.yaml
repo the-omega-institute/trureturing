@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:511347610b42414ec0c3628f28c861e6ec44119d0420f1018325dceb4945895f
 cas_ref: sha256:511347610b42414ec0c3628f28c861e6ec44119d0420f1018325dceb4945895f
 coverage_gids:
-  - D5/S3/Resource/SubmodularGreedyApproximation.cardinality_greedy_one_sub_inv_exp_guarantee
+  - gid: D5/S3/Resource/SubmodularGreedyApproximation.cardinality_greedy_one_sub_inv_exp_guarantee
+    target_statement_id: sha256:29a148d8ec234b3ee58583594e4ded62d15a18d98135dcc404c2d9afb4698392
 receipts:
-  coverage:
-    - gid: D5/S3/Resource/SubmodularGreedyApproximation.cardinality_greedy_one_sub_inv_exp_guarantee
-      source_sha256: sha256:511347610b42414ec0c3628f28c861e6ec44119d0420f1018325dceb4945895f
-      target_statement_id: sha256:29a148d8ec234b3ee58583594e4ded62d15a18d98135dcc404c2d9afb4698392
   scribe:
     - gid: D5/S3/Resource/SubmodularGreedyApproximation.cardinality_greedy_one_sub_inv_exp_guarantee
       definition_sha256: sha256:36419ff9b9cc24a669d10c5b8ef8bb733c8d1dc075272ab0e4918fbad2f1206a

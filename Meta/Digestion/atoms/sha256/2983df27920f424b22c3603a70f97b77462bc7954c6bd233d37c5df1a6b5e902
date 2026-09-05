@@ -1,0 +1,39 @@
+## 499. 全阶 cumulant 的单一生成函数
+
+对有限构型 \(H\)：
+
+$$
+K_{p,H}(\mathbf t)
+=
+\log
+\mathbb E
+\exp
+\left(
+\sum_{h\in H}t_hX_h
+\right).
+$$
+
+一个函数 \(K_{p,H}\) 同时生成全部局部 connected cumulants：
+
+$$
+\partial_{t_{h_1}}\cdots
+\partial_{t_{h_d}}
+K_{p,H}(0).
+$$
+
+当对应 forbidden residues 互不相同时：
+
+$$
+\boxed{
+\kappa_p(h_1,\ldots,h_d)
+=
+-\frac{(d-1)!}{p^d}.
+}
+$$
+
+所以局部确实在每一阶出现新的非零 connected 项。
+
+但这些项不是彼此毫无关系的“新宇宙”，而是同一个有限局部 partition function 的 Taylor 系数。
+
+---
+

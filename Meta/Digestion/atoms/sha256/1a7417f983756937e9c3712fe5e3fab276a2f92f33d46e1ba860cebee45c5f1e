@@ -1,0 +1,50 @@
+## 镜像零点对应 reciprocal-adjoint 角色
+
+同高度镜像为：
+
+$$
+J\rho
+=
+1-\overline\rho
+=
+\frac12-\delta+i\gamma.
+$$
+
+于是：
+
+$$
+\chi_{J\rho}(p)
+=
+p^\delta e^{-i\gamma\log p}.
+$$
+
+而：
+
+$$
+\boxed{
+\chi_{J\rho}(p)
+=
+\frac1{\overline{\chi_\rho(p)}}.
+}
+$$
+
+所以离线零点对在每个素数坐标上形成：
+
+$$
+e^{-\delta\log p},
+\qquad
+e^{+\delta\log p}
+$$
+
+这一对 reciprocal singular values。
+
+这正是此前“反码”的连续版本：
+
+$$
+\boxed{
+\text{相位相同，横向 rapidity 相反。}
+}
+$$
+
+---
+

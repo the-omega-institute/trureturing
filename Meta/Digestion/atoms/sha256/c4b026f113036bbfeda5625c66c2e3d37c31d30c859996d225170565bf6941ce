@@ -1,0 +1,31 @@
+## 164. 信息率正好是 \(\log\varphi\)
+
+该 Markov 链的熵率为：
+
+$$
+\begin{aligned}
+h
+&=
+-\sum_i\pi_i\sum_jP_{ij}\log P_{ij}\\
+&=
+\log\varphi.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\log\varphi
+=
+\text{合法 Zeckendorf 语言的单位深度信息增长率}.
+}
+$$
+
+这给黄金比例一个不依赖美学的含义：
+
+> \(\varphi\) 控制状态数增长；
+> \(-\varphi^{-2}\) 控制隐藏奇通道的记忆衰减。
+
+---
+

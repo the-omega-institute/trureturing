@@ -1,0 +1,24 @@
+## 26. 算术—谱往返闭环
+
+第四种闭环是尚待构造的：
+
+$$
+\text{Arithmetic}
+\longrightarrow
+\text{Spectrum}
+\longrightarrow
+\text{Arithmetic}.
+$$
+
+它要求不仅恢复普通 ζ，还要恢复全部：
+
+$$
+\kappa_A,
+\qquad
+A\Subset\mathbb Z.
+$$
+
+如果只恢复单体 ζ，却遗忘高阶构型，则返回对象只是原算术本体的投影。
+
+---
+

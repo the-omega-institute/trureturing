@@ -1,0 +1,48 @@
+## 434. 两个 RH 重组为完整观察流
+
+有：
+
+$$
+\boxed{
+\mathcal C_n(t)+\mathcal S_n(t)
+=
+\int_0^1
+x^ne^{t(1-x)}\,d\nu(x),
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal C_n(t)-\mathcal S_n(t)
+=
+\int_0^1
+x^ne^{-t(1-x)}\,d\nu(x).
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{even completion}
++
+\text{odd observer current}
+=
+\text{完整有向 semigroup}.
+}
+$$
+
+这给“两种 RH 拼成传统 RH”一个动力学版本：
+
+$$
+\boxed{
+\cosh+\sinh=e^{+},
+\qquad
+\cosh-\sinh=e^{-}.
+}
+$$
+
+---
+

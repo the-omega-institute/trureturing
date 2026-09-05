@@ -47,7 +47,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             output,
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
         var judgment = Assert.Single(
             ParseResult(output).Judgments,
@@ -86,7 +85,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             output,
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
         var judgment = Assert.Single(
             ParseResult(output).Judgments,
@@ -107,7 +105,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -125,7 +122,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -151,7 +147,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -175,7 +170,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -189,7 +183,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -209,7 +202,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             output,
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
         Assert.Contains(
             ParseResult(output).Judgments,
@@ -227,39 +219,7 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
-    [Fact]
-    public void MalformedPureRevertConclusionIsIndeterminate()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new ProbeFixture();
-        var classifier = fixture.WriteExecutable(
-            "malformed-classifier.sh",
-            "printf '%s\\n' 'PURE_REVERT_TRUE malformed'\nexit 0");
-
-        AssertDecision(
-            RunControllerWithClassifier(fixture, classifier),
-            "PROBE_INDETERMINATE",
-            allowExactRevert: false,
-            exitCode: 2);
-    }
-
-    [Fact]
-    public void MalformedNegativePureRevertConclusionIsIndeterminate()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new ProbeFixture();
-        var classifier = fixture.WriteExecutable(
-            "malformed-negative-classifier.sh",
-            "printf '%s\\n' 'NOT_A_PURE_REVERT_CONCLUSION' >&2\nexit 5");
-
-        AssertDecision(
-            RunControllerWithClassifier(fixture, classifier),
-            "PROBE_INDETERMINATE",
-            allowExactRevert: false,
-            exitCode: 2);
-    }
 }

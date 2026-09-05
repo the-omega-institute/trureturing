@@ -1,0 +1,48 @@
+## 292. 局部 Krein 平面并不自动全局可控
+
+对有限零点窗 \(\mathscr O_T\)，定义：
+
+$$
+\mathscr K_T
+=
+\bigoplus_{\rho\in\mathscr O_T}
+\left(
+\mathbb C e_\rho^+
+\oplus
+\mathbb C e_\rho^-
+\right).
+$$
+
+赋予不定型：
+
+$$
+[v,v]_{\mathscr K_T}
+=
+\sum_{\rho}
+m_\rho
+\left(
+|v_\rho^+|^2-|v_\rho^-|^2
+\right).
+$$
+
+测试函数不是独立选择每个 \(v_\rho^\pm\)，而是通过一个共同的 entire Fourier–Laplace transform 产生：
+
+$$
+E_R:
+PW_R
+\longrightarrow
+\mathscr K_T.
+$$
+
+所以真正的 Weil 形式是一个 pullback：
+
+$$
+\boxed{
+Q_R(g)
+=
+[E_Rg,E_Rg]_{\mathscr K_T}.
+}
+$$
+
+---
+

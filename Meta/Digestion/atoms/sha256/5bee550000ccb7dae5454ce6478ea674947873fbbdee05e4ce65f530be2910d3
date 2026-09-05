@@ -1,0 +1,26 @@
+## 路线二：signed-normal support floor
+
+构造 canonical normal moment pencil：
+
+$$
+(H_1,H_0),
+$$
+
+并从 prime–Gamma 数据证明：
+
+$$
+H_1\succeq0.
+$$
+
+由于零点侧的 signed-normal 支撑本来满足：
+
+$$
+x=-\delta^2\le0,
+$$
+
+这会强迫全部支撑位于 \(0\)。
+
+它是最直接的几何路线。
+
+---
+

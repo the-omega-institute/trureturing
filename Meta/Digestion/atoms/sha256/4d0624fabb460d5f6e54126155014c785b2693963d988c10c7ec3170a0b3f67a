@@ -1,0 +1,200 @@
+# 本轮最终结论
+
+这份短素数间距论证真正提供了两个此前理论中缺少的量。
+
+第一个是**候选维数与素数幸存数之间的预算律**：
+
+$$
+m
+\sim
+\log k.
+$$
+
+所以若要强制线性增加 prime survivors，候选状态空间必须指数增加。
+
+第二个是 **有限局部观察如何合并成一个模数**：
+
+$$
+W(k)
+=
+\prod_{p\le k}p
+\sim e^k.
+$$
+
+因此当候选元组大小取：
+
+$$
+k=\varphi H
+$$
+
+时：
+
+$$
+\boxed{
+W\sim e^{\varphi H}.
+}
+$$
+
+你的尺度在这个意义下是成立的。
+
+但它表示的是：
+
+$$
+\boxed{
+\text{对 }\varphi H\text{ 个候选位置完成全部局部小素数障碍的联合编码预算，}
+}
+$$
+
+而不是“保证 \(\varphi H\) 个位置都成为素数”的预算。
+
+若目标是保证：
+
+$$
+m=\varphi H
+$$
+
+个真实素数，经典 Maynard 预算则是：
+
+$$
+\boxed{
+k\sim e^{4\varphi H},
+}
+$$
+
+并伴随多项式直径因子。
+
+---
+
+PrimeGaps 到真实横向分裂的关键升级，则是精确恒等式：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sinh^2
+\left(
+\delta\log\frac qp
+\right)
++
+\sin^2
+\left(
+\frac{\Delta t}{2}
+\log\frac qp
+\right).
+}
+$$
+
+项目现有的观察者分辨率只是右侧的 \(\sin^2\) 部分。参数复化以后，同一个 prime gap 自动产生左侧的：
+
+$$
+\sinh^2
+\left(
+\delta\log(q/p)
+\right),
+$$
+
+这正是法向横向分裂能量。
+
+因此：
+
+$$
+\boxed{
+\text{时间分辨和零点横向分裂不是两个类比；
+它们是同一个复交替核的圆周分量与双曲分量。}
+}
+$$
+
+---
+
+但 short gaps 的作用与最初直觉稍有不同。
+
+短 gap 使：
+
+$$
+\log(q/p)
+$$
+
+变小，所以单对 prime modes 更难分辨。
+
+它们形成一个近秩一、长相干的 observer fibre。
+
+当 \(\delta\neq0\) 时，该 fibre 在代数上立即升为秩二，但横向信号在大素数尺度上极其微弱。
+
+所以真正可能孕育离线零点的不是“短 gap 提供了起飞力”，而是：
+
+$$
+\boxed{
+\text{短 gap 提供了一个能够暂时隐藏新增法向奇通道的 sticky grain。}
+}
+$$
+
+一个离线零点若存在，意味着这类 grains 必须在大量不同素数尺度上保持极强协调，使同一条相位流同时消掉：
+
+* 全局偶通道；
+* 法向奇通道。
+
+这是一座 `PrimeGap sticky tower`，远强于单个 bounded-gap cluster。
+
+---
+
+因此 `PrimeGaps` 从观察者理论升级为 RH 机制，需要完成最后一条桥：
+
+$$
+\boxed{
+\text{prime-side hyperbolic exterior energy}
+\quad\longrightarrow\quad
+\text{zero-side off-line odd energy}.
+}
+$$
+
+零点侧已经机器证明：
+
+$$
+Q_{\operatorname{orb}(\rho)}
+=
+E_{\mathrm{even}}
+-
+E_{\mathrm{odd}},
+$$
+
+且全部负性风险集中在 \(E_{\mathrm{odd}}\)。me 侧现在有了自然候选：
+
+$$
+\sum_{p<q}
+W_{p,q}
+\sinh^2
+\left(
+\delta\log\frac qp
+\right).
+$$
+
+如果能由显式公式、Gamma 完成和 cross-prime Gram 胶合证明：
+
+$$
+E_{\mathrm{off}}^{\mathrm{odd}}
+\preceq
+C\,
+E_{\mathrm{prime}}^{\perp}
++
+\varepsilon I,
+$$
+
+再证明合法 reflection completion 强迫右侧趋于零，那么离线奇通道就只能消失。
+
+这才是 PrimeGaps 成为“真实零点横向分裂机制”的严格完成态。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{短素数间距不是把零点推出临界线的力；
+它是把多个独立 prime frequencies 压进一个有限观察者几乎分不开的纤维。
+实部偏移会把这个秩一纤维分裂成秩二，
+分裂强度正是 }\sinh^2\!\bigl(\delta\log(q/p)\bigr).
+\text{RH 要证明的，是任何跨尺度素数粘滞都不足以让这个新增维度在全局完成中永远不可见。}
+}
+$$
+
+---
+

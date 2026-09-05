@@ -1,0 +1,16 @@
+## 3.1 第一离线高度的存在
+
+定义正高度离线零点集
+
+$$
+\mathcal Z_{\mathrm{off}}^+
+=
+\left\{
+(t,\delta):
+ t>0,
+\ 0<|\delta|<\frac12,
+\ X(t,\delta)=0
+\right\}.
+\tag{3.1}
+$$
+

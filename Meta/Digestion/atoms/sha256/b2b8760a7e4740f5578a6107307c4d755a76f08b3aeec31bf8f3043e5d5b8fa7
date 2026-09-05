@@ -1,0 +1,9 @@
+## A Conservative Reconstruction of Formal Concept Dynamics from CUT, FLOW, ADMIT, and ANCHOR
+
+**作者：** Auric / The Omega Institute  
+**重构版本：** v5.0  
+**日期：** 2026-09-04  
+**文件地位：** 项目既有理论与 Lean 定理之上的统一重构稿；本文中的新增综合命题在获得独立 Lean proof term、依赖闭包、admission 与冻结收据之前，不标记为 `Closed`。
+
+---
+

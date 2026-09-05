@@ -1,0 +1,15 @@
+## 481. 有限 jet 无法刻画 RH 型定位
+
+```lean
+theorem finite_logJet_cannot_characterize_rayZeros
+    (X : EntireFunction ℂ)
+    (hreal : ConjugationCovariant X)
+    (N : ℕ) :
+    ∃ X' : EntireFunction ℂ,
+      sameLogDerivativeJets X X' N ∧
+      ConjugationCovariant X' ∧
+      HasNonrealZero X'
+```
+
+---
+

@@ -1,0 +1,68 @@
+## 6. 局部联合相关
+
+令 \(a\) 在 \(\mathbb Z/p\mathbb Z\) 上均匀分布，定义：
+
+$$
+X_{p,h}(a)
+=
+\mathbf 1_{p\nmid a+h}.
+$$
+
+则：
+
+$$
+\Pr
+\left(
+X_{p,h}=1\ \forall h\in H
+\right)
+=
+1-\frac{\nu_p(H)}p.
+$$
+
+单点边缘为：
+
+$$
+\Pr(X_{p,h}=1)=1-\frac1p.
+$$
+
+定义局部相关比：
+
+$$
+\boxed{
+L_p(H)
+=
+\frac{1-\nu_p(H)/p}
+{(1-1/p)^{|H|}}.
+}
+$$
+
+它表示“所有位置同时避开 \(p\)”的真实概率，相对于把各位置错误地视为独立时的修正。
+
+于是 Hardy–Littlewood 奇异级数写成：
+
+$$
+\boxed{
+\mathfrak S(H)
+=
+\prod_pL_p(H).
+}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{不同素数模数之间近似 Euler 分解，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{同一个模 }p\text{ 内，不同加法位置存在联合排斥。}
+}
+$$
+
+---
+

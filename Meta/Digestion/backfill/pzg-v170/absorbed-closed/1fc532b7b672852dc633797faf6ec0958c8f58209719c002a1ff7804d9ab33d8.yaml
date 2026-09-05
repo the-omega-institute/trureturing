@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1fc532b7b672852dc633797faf6ec0958c8f58209719c002a1ff7804d9ab33d8
+  normalized_sha256: sha256:1fc532b7b672852dc633797faf6ec0958c8f58209719c002a1ff7804d9ab33d8
+cas_ref: sha256:1fc532b7b672852dc633797faf6ec0958c8f58209719c002a1ff7804d9ab33d8
+coverage_gids:
+  - gid: D5/S3/Analytic/EulerGerm/GoldenGermProductAbscissa.golden_germ_product_abscissa
+    target_statement_id: sha256:e532be76dd51d6a8b84ba0d863627aec7f1ecf0709d15534cc49141f6c12aadc
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/EulerGerm/GoldenGermProductAbscissa.golden_germ_product_abscissa
+      definition_sha256: sha256:b8ba633674aba57685d8bdce4696b477596d4591accbf4e9c4f4310e5478426f
+      emission_sha256: sha256:d4d6c8b828952c0fd776d9800188b2abbe8ba3a710e7420da4ad97b345dbf217
+  unresolved_subitems: []

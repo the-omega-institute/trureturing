@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:292f9eeaee0fd5e84b8847041d7b6809b1d22397c8a5ad919f0562a9f8df21f1
+  normalized_sha256: sha256:292f9eeaee0fd5e84b8847041d7b6809b1d22397c8a5ad919f0562a9f8df21f1
+cas_ref: sha256:292f9eeaee0fd5e84b8847041d7b6809b1d22397c8a5ad919f0562a9f8df21f1
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/ObserverCapacityConservation.observer_capacity_conservation
+    target_statement_id: sha256:1e519af0eeaeedb8d048bfea62103426dfb5fa94848d3194cc518ff471ddd0a6
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Measurement/ObserverCapacityConservation.observer_capacity_conservation
+      definition_sha256: sha256:c057be39b2043dab0762200bf22dc06380e82e852e7f9d4ae4610c6405337b5e
+      emission_sha256: sha256:267bf252e35d9521615c18dcc34848771fe2a309448c18d34b90c062fdd1672f
+  unresolved_subitems: []

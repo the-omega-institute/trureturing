@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:7aad1aad58fa2e3fe1880df21d0dc955844be963910217e35e7c4c375aa6f491
+  normalized_sha256: sha256:7aad1aad58fa2e3fe1880df21d0dc955844be963910217e35e7c4c375aa6f491
+cas_ref: sha256:7aad1aad58fa2e3fe1880df21d0dc955844be963910217e35e7c4c375aa6f491
+coverage_gids:
+  - gid: D5/S3/Axis/AxisConvergence.axisPartialSum_zero_zero_package
+    target_statement_id: sha256:4ecad9853673e157f3e360569f32f14fcc3515ef8a929aefe74f1ebb3018e83b
+receipts:
+  scribe:
+    - gid: D5/S3/Axis/AxisConvergence.axisPartialSum_zero_zero_package
+      definition_sha256: sha256:6755d10caeae40da54ec83c14d75b88e6c125c01db6ca67ca3b7549d5abfcf93
+      emission_sha256: sha256:ed6371f80ac40a33ca648348d661fb3c3617360d54d48e1d8814acad351b554b
+  unresolved_subitems: []

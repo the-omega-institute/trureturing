@@ -1,0 +1,62 @@
+## 452. 有限高度同样不能决定
+
+给定任意高度 \(T\)，选择：
+
+$$
+\gamma>T,
+\qquad
+\delta\neq0.
+$$
+
+构造四元轨道多项式：
+
+$$
+P_{\delta,\gamma}(s)
+=
+\prod_{\epsilon,\eta\in\{\pm1\}}
+\left[
+s-
+\left(
+\frac12+\epsilon\delta+i\eta\gamma
+\right)
+\right].
+$$
+
+它满足：
+
+$$
+P_{\delta,\gamma}(1-s)
+=
+P_{\delta,\gamma}(s),
+$$
+
+以及共轭对称。
+
+于是：
+
+$$
+\widetilde\xi_T(s)
+=
+\xi(s)P_{\delta,\gamma}(s)
+$$
+
+保留 \(\xi\) 原有全部零点，同时在高度 \(>T\) 加入离线四元组。
+
+因此：
+
+$$
+\boxed{
+\text{任何有限高度零点核验都不能仅凭自身推出 RH。}
+}
+$$
+
+反例可以不断向更高高度移动：
+
+$$
+\gamma_T\to\infty.
+$$
+
+这就是 height-diagonal escape。
+
+---
+

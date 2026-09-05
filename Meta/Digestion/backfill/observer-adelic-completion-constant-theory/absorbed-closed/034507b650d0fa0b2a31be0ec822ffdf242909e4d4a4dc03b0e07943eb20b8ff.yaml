@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:034507b650d0fa0b2a31be0ec822ffdf242909e4d4a4dc03b0e07943eb20b8ff
+  normalized_sha256: sha256:034507b650d0fa0b2a31be0ec822ffdf242909e4d4a4dc03b0e07943eb20b8ff
+cas_ref: sha256:034507b650d0fa0b2a31be0ec822ffdf242909e4d4a4dc03b0e07943eb20b8ff
+coverage_gids:
+  - gid: D5/S3/Factorization/Icosahedral/ExteriorSquareCoordinates.coordinateExteriorSquare_apply
+    target_statement_id: sha256:9f72404842f73e63ff231e3522799e7cd35feab6fd84c326272513a80a518510
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/Icosahedral/ExteriorSquareCoordinates.coordinateExteriorSquare_apply
+      definition_sha256: sha256:c952e82fd1f30ce3ee7967c94c533da071119f806962a05740515ce3c7e68d3a
+      emission_sha256: sha256:04de1e9828c9371f2b7d748b358a637b1b6ac528aff0f885113aecf3eef4fd90
+  unresolved_subitems: []

@@ -1,0 +1,32 @@
+## 13.1 抽象二次显影定理
+
+设 $d$ 是一个在 involution 下变号的缺陷：
+
+$$
+d\longmapsto-d.
+\tag{A13.1}
+$$
+
+若标量 observable $A$ 对该 involution 不变，
+
+$$
+A(d)=A(-d),
+\tag{A13.2}
+$$
+
+且 $A$ 在 $0$ 可微，则
+
+$$
+\boxed{A'(0)=0.}
+\tag{A13.3}
+$$
+
+若 $A$ 解析，则其 Taylor 展开只含偶次项：
+
+$$
+A(d)=A(0)+a_2d^2+a_4d^4+\cdots.
+\tag{A13.4}
+$$
+
+所以被反射压掉的一阶有符号信息，第一种可由 invariant scalar 稳定读取的量通常是平方能量。
+

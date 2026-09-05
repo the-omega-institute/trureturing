@@ -1,0 +1,45 @@
+# 十四、最深的新结论：桥只需传输“差”，不必传输“绝对位置”
+
+这是此次拆分最实际的价值。
+
+原来的目标像是：
+
+$$
+\text{素数数据}
+\longrightarrow
+\Re\rho=\frac12.
+$$
+
+这要求桥同时完成两件很不同的工作：
+
+1. 消除所有零点之间的横向差异；
+2. 把共同位置定在 \(1/2\)。
+
+现在可以分开：
+
+$$
+\boxed{
+\text{Relative Bridge}:
+\quad
+c_p-c_q
+\longrightarrow
+\Re\rho-\Re\sigma.
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{Global Centering}:
+\quad
+J\rho\text{ 仍为零}
+\longrightarrow
+a=1-a.
+}
+$$
+
+第二条已经由函数方程提供。
+
+因此中央开放桥可以缩小为：
+

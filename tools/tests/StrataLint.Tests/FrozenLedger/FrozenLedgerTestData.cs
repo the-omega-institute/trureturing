@@ -297,7 +297,12 @@ internal static class FrozenLedgerTestData
         IEnumerable<RepositoryFile> events)
     {
         Directory.CreateDirectory(directory);
-        DagLedgerAppendWriter.WriteEventFiles(directory, events);
+        foreach (var item in events)
+        {
+            File.WriteAllBytes(
+                Path.Combine(directory, Path.GetFileName(item.Path.Value)),
+                item.RawBytes.AsSpan().ToArray());
+        }
     }
 
     internal static byte[] ReadLedgerDirectory(string directory) =>

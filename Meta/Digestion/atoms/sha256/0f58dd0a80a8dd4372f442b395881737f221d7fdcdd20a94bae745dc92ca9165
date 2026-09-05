@@ -1,0 +1,41 @@
+## 6.2 同角 reciprocal split
+
+同高度反射伙伴对应
+
+$$
+u^\sharp=-\overline u=-\delta+it.
+$$
+
+直接计算得
+
+$$
+\boxed{
+C_a(u^\sharp)
+=
+\frac1{\overline{C_a(u)}}.
+}
+\tag{6.4}
+$$
+
+若
+
+$$
+C_a(u)=re^{i\theta},
+$$
+
+则
+
+$$
+C_a(u^\sharp)=r^{-1}e^{i\theta}.
+\tag{6.5}
+$$
+
+因此离线零点对在 Cayley 平面中：
+
+- 辐角完全相同；
+- 一个在单位圆外；
+- 一个在单位圆内；
+- 两个半径互为倒数。
+
+这使“同一个时刻发生径向相分裂”成为精确几何事实，而不是类比。
+

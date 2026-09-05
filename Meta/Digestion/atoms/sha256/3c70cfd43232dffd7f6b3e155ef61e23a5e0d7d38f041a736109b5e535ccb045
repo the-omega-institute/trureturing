@@ -1,0 +1,33 @@
+# 一、为什么不加限制时，根本没有“最难逼近的数”
+
+令：
+
+$$
+\Gamma_{\mathbb P}
+=
+\left\{
+\sum_p k_p\log p:
+k_p\in\mathbb Z,\ 
+\operatorname{supp}k\text{ 有限}
+\right\}.
+$$
+
+那么：
+
+$$
+\Gamma_{\mathbb P}
+=
+\log\mathbb Q_{>0}.
+$$
+
+逼近一个正实数 \(x\)，等价于逼近：
+
+$$
+\tau=\log x
+$$
+
+到这个素数对数群。
+
+但若不限制：
+
+* 使用多少个素数；

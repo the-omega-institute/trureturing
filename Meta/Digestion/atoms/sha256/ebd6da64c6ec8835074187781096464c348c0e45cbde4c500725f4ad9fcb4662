@@ -1,0 +1,40 @@
+## 定理 12.1　分拆格 Möbius 反演
+
+$$
+\boxed{
+\kappa_A
+=
+\sum_{\pi\in\Pi(A)}
+(-1)^{|\pi|-1}
+(|\pi|-1)!
+\prod_{B\in\pi}M_B.
+}
+$$
+
+反向：
+
+$$
+\boxed{
+M_A
+=
+\sum_{\pi\in\Pi(A)}
+\prod_{B\in\pi}\kappa_B.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal M=\exp\mathcal K,
+\qquad
+\mathcal K=\log\mathcal M
+}
+$$
+
+形成一个严格的组合衔尾蛇闭环。
+
+这里的 Möbius 是分拆格上的 Möbius inversion，而不是拓扑上的 Möbius 带。
+
+---
+

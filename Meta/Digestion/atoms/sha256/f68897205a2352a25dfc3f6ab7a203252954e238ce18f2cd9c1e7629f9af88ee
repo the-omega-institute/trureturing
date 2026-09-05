@@ -1,0 +1,10 @@
+### Tautological factorization
+
+先假定 \(Q\ge0\)，再作 GNS：
+
+$$
+T_Qg=[g].
+$$
+
+这没有证明 RH。
+

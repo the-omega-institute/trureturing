@@ -1,0 +1,9 @@
+## 62. Globally connected phase
+
+不同零点轨道之间存在跨任意大窗口的非零 connected cumulants。
+
+这才对应“所有零点共同结构纠缠”。
+
+该性质与 RH 逻辑独立：
+
+* RH 成立时仍可有纵向全局 connected state；

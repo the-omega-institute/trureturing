@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:25222f9d8baf59b6b8966570d9a0e8073ec7de99c8bb7e6863dba1204b476aba
+  normalized_sha256: sha256:25222f9d8baf59b6b8966570d9a0e8073ec7de99c8bb7e6863dba1204b476aba
+cas_ref: sha256:25222f9d8baf59b6b8966570d9a0e8073ec7de99c8bb7e6863dba1204b476aba
+coverage_gids:
+  - gid: D5/S3/PrimeForms/PellFamilies/IntegralGeneralLinearLocalPeriodicity.integral_general_linear_update_is_prime_power_pure_periodic
+    target_statement_id: sha256:f7792f94937c500327d90c60990a7f83ad2e9d0efe30736b6f40b22e9027d4dc
+receipts:
+  scribe:
+    - gid: D5/S3/PrimeForms/PellFamilies/IntegralGeneralLinearLocalPeriodicity.integral_general_linear_update_is_prime_power_pure_periodic
+      definition_sha256: sha256:c2ffa95c9ad119ffc036ca419df684d84225e3b25ebb47f6892025864905cb93
+      emission_sha256: sha256:eac62094d1da19b538e12bd2f465a5db6d21f4d0a053877e74f9a8bd87a01591
+  unresolved_subitems: []

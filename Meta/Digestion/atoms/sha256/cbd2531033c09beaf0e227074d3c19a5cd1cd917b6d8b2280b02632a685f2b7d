@@ -1,0 +1,58 @@
+# 第二十部　与 Weil 正性的统一
+
+经典 Weil 路线要求：
+
+$$
+Q_W(f)\ge0
+$$
+
+对全部合法测试函数成立。
+
+本理论并不替代 Weil 正性，而是试图解释它应当从哪里生成。
+
+理想关系是：
+
+$$
+\boxed{
+Q_W(f)
+=
+\|\mathcal Af\|_{\mathrm A}^2
+}
+$$
+
+其中 \(\mathcal A\) 由 prime-generated 算术空间独立构造。
+
+当前项目已经拥有三个关键有限正性组件。
+
+第一，固定尺度 Weil 零点型已经被重写为 rank-one pole energy 加 prime–Archimedean Fourier multiplier 型，但全局无条件正性尚未由该恒等式自动得到。
+
+第二，prime term 已被写成 coherent mass 减去一个非负 arithmetic jump energy，而且该能量是显式算术 Laplacian 的二次型。
+
+第三，有序素数 holonomy 的一阶响应消失，负二阶响应变成所有重复 winding 平方的非负加权和。
+
+这些结果表明项目已经拥有：
+
+$$
+\boxed{
+\text{有限尺度正能量块}.
+}
+$$
+
+但还缺：
+
+$$
+\boxed{
+\text{全部尺度相容极限}
++
+\text{form-core 完备性}
++
+\text{跨壳层耦合控制}
++
+\text{最终余空间无盲区}.
+}
+$$
+
+D-ZCOCT 的 exact positive realization fiber 正是这些缺口的统一容器。
+
+---
+

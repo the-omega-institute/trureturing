@@ -1,0 +1,71 @@
+## 10.1 同一个复参数的圆周与双曲分量
+
+对不同 primes $p,q$，令
+
+$$
+\Delta\omega=\log(q/p),
+\qquad
+z=\delta+i\frac\tau2.
+\tag{A10.1}
+$$
+
+项目已有复交替核给出
+
+$$
+\left|\sinh(z\Delta\omega)\right|^2
+=
+\sinh^2(\delta\Delta\omega)
++
+\sin^2\!\left(\frac\tau2\Delta\omega\right).
+\tag{A10.2}
+$$
+
+在 Fibonacci shell $F_k$ 上定义
+
+$$
+a_k=zF_k\Delta\omega.
+\tag{A10.3}
+$$
+
+由于
+
+$$
+F_{k+1}=F_k+F_{k-1},
+$$
+
+有
+
+$$
+\boxed{
+a_{k+1}=a_k+a_{k-1}.}
+\tag{A10.4}
+$$
+
+若令
+
+$$
+R_k=e^{a_k},
+\tag{A10.5}
+$$
+
+则
+
+$$
+\boxed{R_{k+1}=R_kR_{k-1}.}
+\tag{A10.6}
+$$
+
+这是一条精确的 multiplicative Fibonacci rapidity recurrence。
+
+- 当 $\delta=0$ 时，$|R_k|=1$，得到圆周 phase tower；
+- 当 $\delta\ne0$ 时，$|R_k|=e^{\delta F_k\Delta\omega}$，得到 hyperbolic radial tower。
+
+因此：
+
+$$
+\boxed{
+\text{时间相位与离线横向分裂，是同一 Fibonacci 复 rapidity 的虚部和实部。}
+}
+\tag{A10.7}
+$$
+

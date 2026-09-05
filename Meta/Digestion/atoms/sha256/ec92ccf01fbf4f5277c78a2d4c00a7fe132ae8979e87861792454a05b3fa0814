@@ -1,0 +1,51 @@
+# 四、黄金偏移的双对数分辨率定律
+
+令：
+
+$$
+\boxed{
+\delta_H=\varphi^{-H}.
+}
+$$
+
+定义它的黄金深度：
+
+$$
+\boxed{
+H_\varphi(\delta)
+=
+-\log_\varphi|\delta|.
+}
+$$
+
+再定义第 \(N\) 个素数观察者的黄金深度：
+
+$$
+\boxed{
+B_\varphi(N)
+=
+\log_\varphi\log p_N.
+}
+$$
+
+于是：
+
+$$
+\begin{aligned}
+U_N(\delta_H)
+&=
+\varphi^{-H}\log p_N\\
+&=
+\varphi^{-H}
+\varphi^{B_\varphi(N)}\\
+&=
+\boxed{
+\varphi^{B_\varphi(N)-H}.
+}
+\end{aligned}
+$$
+
+因此得到一个极其清楚的三相定律。
+
+---
+

@@ -1,0 +1,24 @@
+## C8.3 ambient charge space 仍有共同模
+
+若为了 Schur elimination 把 charge 扩张到一般 ambient state space，则 constant charge mode 不再被 edge energy 看见。
+
+因此必须区分：
+
+$$
+\boxed{
+\text{restricted physical charge ray 上的 faithful detection}
+}
+\tag{C8.8}
+$$
+
+与：
+
+$$
+\boxed{
+\text{ambient charge Hilbert space 上的 full coercivity}.
+}
+\tag{C8.9}
+$$
+
+前者不需要额外 anchor；后者必须控制共同模。
+

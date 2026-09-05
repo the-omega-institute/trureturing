@@ -1,0 +1,66 @@
+## 321. \(S_h\) 不具有有限素数支撑
+
+假设 \(S_h\) 只作用于有限素数集合 \(P_0\)。
+
+取一个：
+
+$$
+q\notin P_0,
+\qquad
+q>h
+$$
+
+的素数，并令：
+
+$$
+n=q-h.
+$$
+
+则：
+
+$$
+q\nmid n,
+$$
+
+但：
+
+$$
+n+h=q,
+$$
+
+所以 \(q\)-估值由：
+
+$$
+0
+$$
+
+变为：
+
+$$
+1.
+$$
+
+因此 \(S_h\) 必须改变 \(P_0\) 外的坐标，矛盾。
+
+所以：
+
+$$
+\boxed{
+\text{任何非零加法平移在 prime tensor basis 中都具有无限素数支撑}.
+}
+$$
+
+这精确解释了：
+
+$$
+\boxed{
+\text{Euler product state 可分，}
+\qquad
+\text{additive-shift observables 非局部}.
+}
+$$
+
+素数构型的 connected correlations 来自非局部观察代数，而不是来自乘法基中的 product state。
+
+---
+

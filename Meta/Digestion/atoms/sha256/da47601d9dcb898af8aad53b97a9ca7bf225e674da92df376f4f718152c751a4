@@ -1,0 +1,11 @@
+## 410. prime creation 反交换
+
+```lean
+theorem primeCreation_anticommutes_parity
+    (p : Nat.Primes) :
+    parityOperator * primeCreation p =
+      -primeCreation p * parityOperator
+```
+
+---
+

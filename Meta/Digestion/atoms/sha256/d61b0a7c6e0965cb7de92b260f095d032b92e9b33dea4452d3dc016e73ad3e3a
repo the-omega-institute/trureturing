@@ -1,0 +1,33 @@
+# 第一千九百三十一部　公共谱底与支撑底是同一个序结构
+
+给定 Hermitian 矩阵 \(A\) 和正定矩阵 \(B\)，定义：
+
+$$
+\boxed{
+\operatorname{Floor}(A\mid B)
+=
+\sup
+\left\{
+\alpha\in\mathbb R:
+A-\alpha B\succeq0
+\right\}.
+}
+\tag{1931.1}
+$$
+
+标准广义本征值计算给出：
+
+$$
+\boxed{
+\operatorname{Floor}(A\mid B)
+=
+\lambda_{\min}
+\left(
+B^{-1/2}AB^{-1/2}
+\right).
+}
+\tag{1931.2}
+$$
+
+现在有两种完全不同、但形式相同的应用。
+

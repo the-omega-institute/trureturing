@@ -1,0 +1,11 @@
+## 208. \(-1,0,+1\) 三相
+
+```lean
+theorem companion_trichotomy :
+    spectrum (companion (-1)) = {phi, goldenConj} ∧
+    spectrum (companion 0) = {0, 1} ∧
+    (companion 1) ^ 6 = 1
+```
+
+---
+

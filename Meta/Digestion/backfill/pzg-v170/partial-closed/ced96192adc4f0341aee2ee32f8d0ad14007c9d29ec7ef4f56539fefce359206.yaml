@@ -3,13 +3,11 @@ fingerprints:
   normalized_sha256: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
 cas_ref: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
 coverage_gids:
-  - D5/S3/Analytic/Dilation/MellinDilationFlow.mellin_eq_fourier_on_dilation_flow
-  - D5/S3/Weil/CriticalLine.unitarity_line_iff
+  - gid: D5/S3/Analytic/Dilation/MellinDilationFlow.mellin_eq_fourier_on_dilation_flow
+    target_statement_id: sha256:8fee9bf866f54dd33caaa9309ccf8ef26b518c679d30de8579399aaac21a849f
+  - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
+    target_statement_id: sha256:0915061fdce78dc64a2a0c1db7dc5ec24ddb614cfd7dece77507d444d05f7b6f
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
-      source_sha256: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
-      target_statement_id: sha256:0915061fdce78dc64a2a0c1db7dc5ec24ddb614cfd7dece77507d444d05f7b6f
   scribe:
     - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
       definition_sha256: sha256:268a66fbf2c27762c3b2f461b61e5eed199b91174f0caa6af19e27380105ca3e

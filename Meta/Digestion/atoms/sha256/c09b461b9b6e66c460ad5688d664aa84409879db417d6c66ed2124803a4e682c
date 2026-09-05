@@ -1,0 +1,29 @@
+* 两个接近采样点只产生一阶 divided-difference jet。
+
+所以之前的 jet 分级应进一步扩充为：
+
+$$
+\boxed{
+\operatorname{grade}
+=
+(k_{\mathrm{candidate}},
+k_{\mathrm{active}},
+k_{\mathrm{source}},
+r_{\mathrm{geometric}},
+m_{\mathrm{zero}},
+2r_{\mathrm{mirror}}).
+}
+$$
+
+对该成果：
+
+$$
+\boxed{
+(40,2,2,1,\ast,\ast).
+}
+$$
+
+四十维 trial 并没有直接产生三十九阶微分信息。
+
+---
+

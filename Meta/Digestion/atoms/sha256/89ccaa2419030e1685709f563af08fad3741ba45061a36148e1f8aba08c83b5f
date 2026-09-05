@@ -1,0 +1,60 @@
+## 156. 但是所有名字联合起来没有统一谱隙
+
+令：
+
+$$
+y=e^{i\theta}
+$$
+
+并取靠近 \(\varphi\) 的本征值分支：
+
+$$
+\lambda(\theta)
+=
+\frac{1+\sqrt{1+4e^{i\theta}}}{2}.
+$$
+
+在 \(\theta=0\) 附近，Taylor 展开给出：
+
+$$
+\boxed{
+\log|\lambda(\theta)|
+=
+\log\varphi
+-
+\frac{\sqrt5}{50}\theta^2
++
+O(\theta^4).
+}
+$$
+
+若：
+
+$$
+\theta=\frac{2\pi}{m},
+$$
+
+则：
+
+$$
+\left(
+\frac{|\lambda(2\pi/m)|}{\varphi}
+\right)^n
+\approx
+\exp
+\left(
+-\frac{2\pi^2\sqrt5}{25}
+\frac{n}{m^2}
+\right).
+$$
+
+因此第 \(m\) 层名字的重完时间尺度约为：
+
+$$
+\boxed{
+n_{\mathrm{mix}}\asymp m^2.
+}
+$$
+
+---
+

@@ -1,0 +1,43 @@
+## 12. Connected 生成元
+
+定义：
+
+$$
+\boxed{
+\mathcal K_H(\sigma)
+=
+\log\mathcal M_H(\sigma)
+=
+\sum_{\varnothing\neq A\subseteq H}
+\kappa_A(\sigma)\varepsilon_A.
+}
+$$
+
+则：
+
+$$
+\boxed{
+\kappa_A(\sigma)
+=
+\left.
+\frac{\partial^{|A|}}
+{\prod_{h\in A}\partial\varepsilon_h}
+\log\mathcal M_H(\sigma)
+\right|_{\varepsilon=0}.
+}
+$$
+
+所以：
+
+$$
+\begin{aligned}
+|A|=2&:\text{二点 connected sector};\\
+|A|=3&:\text{三点 connected sector};\\
+|A|=4&:\text{四点 connected sector}.
+\end{aligned}
+$$
+
+孪生素数构型不是原始二点矩本身，而是扣除单点基线后的二点 connected 读数。
+
+---
+

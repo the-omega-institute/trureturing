@@ -1,0 +1,38 @@
+## 1977.1 黑洞视界与分支点
+
+此前的 Poisson 聚焦律表明：
+
+$$
+q\uparrow\delta_\rho
+$$
+
+时，边界脉冲宽度趋于零、峰值趋于无穷、总质量保持 \(m_\rho\)。
+
+现在可以进一步说：
+
+$$
+\boxed{
+\text{视界聚焦与覆盖分支合并是同一 crossing 的两种读法。}
+}
+$$
+
+在径向商图表中，它是：
+
+$$
+\pm h\longrightarrow0.
+$$
+
+在边界图表中，它是：
+
+$$
+P_h(x+\gamma)
+\rightharpoonup
+\delta_{-\gamma}.
+$$
+
+在持久图表中，它是 bar 的死亡时间。
+
+在 Hardy 图表中，它是 inner channel 穿越观察边界。
+
+---
+
