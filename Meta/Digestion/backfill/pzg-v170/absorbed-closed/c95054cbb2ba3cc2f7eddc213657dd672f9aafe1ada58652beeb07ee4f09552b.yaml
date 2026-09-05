@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c95054cbb2ba3cc2f7eddc213657dd672f9aafe1ada58652beeb07ee4f09552b
+  normalized_sha256: sha256:c95054cbb2ba3cc2f7eddc213657dd672f9aafe1ada58652beeb07ee4f09552b
+cas_ref: sha256:c95054cbb2ba3cc2f7eddc213657dd672f9aafe1ada58652beeb07ee4f09552b
+coverage_gids:
+  - gid: D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_odd
+    target_statement_id: sha256:989a81bd90ad4e1d2bad802d6a0d985c2422e1ddf15d181bbfb2bdb840426eb3
+receipts:
+  scribe:
+    - gid: D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_odd
+      definition_sha256: sha256:69861e609dee3ab76b94f6611549b3805446128dcba43a2ba76593c80e954656
+      emission_sha256: sha256:b9ab9bb30ad2486ceb131861d113d63847ccad1f5e0f283610528d0502fc872c
+  unresolved_subitems: []
