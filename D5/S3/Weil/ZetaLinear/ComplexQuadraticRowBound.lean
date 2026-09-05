@@ -83,7 +83,7 @@ theorem norm_series_quadratic_le_weighted_energy
     (hrow i)
 
 /-- A positive weighted energy detects every nonzero coefficient vector. -/
-private theorem weighted_energy_pos
+theorem weighted_energy_pos
     (weight : ι → ℝ) (hweight : ∀ i, 0 < weight i)
     (a : ι → ℂ) (ha : a ≠ 0) :
     0 < ∑ i, weight i * ‖a i‖ ^ 2 := by
