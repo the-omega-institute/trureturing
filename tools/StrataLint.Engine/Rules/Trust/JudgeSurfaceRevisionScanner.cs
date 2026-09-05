@@ -7,8 +7,10 @@ internal static partial class JudgeSurfaceRevisionScanner
 {
     private const string Head = "HEAD";
 
+    // YAML allows separation whitespace between a (quoted) key and its colon (`"ref" : …`;
+    // review round 9), so every key regex accepts `\s*` before the colon.
     private static readonly Regex WorkflowRef = new(
-        @"[""']?\bref[""']?:\s*(?<value>[^,}\n]+)",
+        @"[""']?\bref[""']?\s*:\s*(?<value>[^,}\n]+)",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static readonly Regex BaseRefIndicator = new(
@@ -50,6 +52,7 @@ internal static partial class JudgeSurfaceRevisionScanner
             && (path.EndsWith(".yml", StringComparison.Ordinal)
                 || path.EndsWith(".yaml", StringComparison.Ordinal));
         (int Line, int Indent, string Text)? foldedBlock = null;
+        (int Line, string Text)? quotedScalar = null;
         foreach (var (lineNumber, line) in LogicalLines(text))
         {
             var index = lineNumber - 1;
@@ -68,6 +71,21 @@ internal static partial class JudgeSurfaceRevisionScanner
                 foldedBlock = null;
             }
 
+            if (isWorkflow && quotedScalar is not null)
+            {
+                // A quoted `run:` scalar continues until its closing quote; YAML folds each line
+                // break to one space (an empty line to a newline), so the git command split across
+                // the lines is one command (review round 9: `run: "git show` + `  HEAD^1:p"`).
+                quotedScalar = (quotedScalar.Value.Line, FoldQuotedContinuation(quotedScalar.Value.Text, line));
+                if (IsClosedQuotedScalar(quotedScalar.Value.Text))
+                {
+                    messages.AddRange(JudgeShell(quotedScalar.Value.Line, DecodeYamlScalar(quotedScalar.Value.Text)));
+                    quotedScalar = null;
+                }
+
+                continue;
+            }
+
             if (isWorkflow && IsFoldedBlockStart(line, out var indent))
             {
                 foldedBlock = (index + 1, indent, string.Empty);
@@ -77,27 +95,46 @@ internal static partial class JudgeSurfaceRevisionScanner
             if (isWorkflow && !line.TrimStart().StartsWith('#'))
             {
                 // Deliberately over-match: this line scanner cannot see YAML structure; a visible Block beats a silent miss.
-                var reference = WorkflowRef.Match(line);
-                if (reference.Success && BaseRefIndicator.IsMatch(DecodeYamlScalar(reference.Groups["value"].Value.Trim())))
+                // Every `ref:` on the line is judged (two checkout steps in one flow sequence are
+                // two inputs; review round 9).
+                foreach (Match reference in WorkflowRef.Matches(line))
                 {
-                    messages.Add(
-                        $"line {index + 1}: a `ref:` naming the protected base "
-                        + $"'{reference.Groups["value"].Value.Trim()}' is not allowed on the judge surface "
-                        + "(SL-030, CLAUDE.md rule 19: base data enters the candidate judge through its snapshot reader)");
+                    if (BaseRefIndicator.IsMatch(DecodeYamlScalar(reference.Groups["value"].Value.Trim())))
+                    {
+                        messages.Add(
+                            $"line {index + 1}: a `ref:` naming the protected base "
+                            + $"'{reference.Groups["value"].Value.Trim()}' is not allowed on the judge surface "
+                            + "(SL-030, CLAUDE.md rule 19: base data enters the candidate judge through its snapshot reader)");
+                    }
                 }
             }
 
             // The lexer already dropped comments, quotes and redirections and split command
             // substitutions into commands of their own, so every git invocation on the line —
             // including one nested inside `$(…)` — is judged on its real argument vector.
-            // In a workflow a single-line `run:` scalar is shell too (review round 5).
-            var shell = isWorkflow ? WorkflowRunScalar(line) : line;
-            messages.AddRange(JudgeShell(index + 1, shell));
+            // In a workflow a single-line `run:` scalar is shell too (review round 5), and a flow
+            // sequence may carry several steps on one line — each is judged on its own.
+            if (isWorkflow && TryStartQuotedScalar(line, out var quoted))
+            {
+                quotedScalar = (index + 1, quoted);
+                continue;
+            }
+
+            foreach (var shell in isWorkflow ? WorkflowRunScalars(line) : new[] { line })
+            {
+                messages.AddRange(JudgeShell(index + 1, shell));
+            }
         }
 
         if (foldedBlock is not null)
         {
             messages.AddRange(JudgeShell(foldedBlock.Value.Line, foldedBlock.Value.Text));
+        }
+
+        if (quotedScalar is not null)
+        {
+            // An unterminated quoted scalar at the end of the file is judged as it stands (fail-closed).
+            messages.AddRange(JudgeShell(quotedScalar.Value.Line, DecodeYamlScalar(quotedScalar.Value.Text)));
         }
 
         return messages.ToImmutable();
@@ -126,7 +163,7 @@ internal static partial class JudgeSurfaceRevisionScanner
     // Block scalar indicators may carry an indentation digit and a chomping sign in either order
     // (`>2`, `>-2`, `|2-`; review round 8).
     private static readonly Regex FoldedBlockStart = new(
-        @"^(?<indent>\s*)(?:-\s+)?[""']?run[""']?:\s*>(?:[-+]?\d?|\d[-+]?)\s*(?:#.*)?$",
+        @"^(?<indent>\s*)(?:-\s+)?[""']?run[""']?\s*:\s*>(?:[-+]?\d?|\d[-+]?)\s*(?:#.*)?$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static readonly Regex BlockIndicator = new(
@@ -180,33 +217,97 @@ internal static partial class JudgeSurfaceRevisionScanner
     // Line-anchored `run:` (block mapping) or a `run:` inside a flow mapping `{ …, run: … }`
     // (review round 8: `steps: [{run: "git show …"}]`); a flow value ends at `,` or `}` unless quoted.
     private static readonly Regex RunScalar = new(
-        @"^\s*(?:-\s+)?[""']?run[""']?:\s*(?<shell>.*)$",
+        @"^\s*(?:-\s+)?[""']?run[""']?\s*:\s*(?<shell>.*)$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static readonly Regex FlowRunScalar = new(
-        @"[{,]\s*[""']?run[""']?:\s*(?<shell>""(?:[^""\\]|\\.)*""|'(?:[^']|'')*'|[^,}]*)",
+        @"[{,]\s*[""']?run[""']?\s*:\s*(?<shell>""(?:[^""\\]|\\.)*""|'(?:[^']|'')*'|[^,}]*)",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     // `run: <one-line shell>` (or `- run: …`) in a workflow: the scalar after `run:` is shell; a
     // block indicator (`|`, `>`) has no shell on this line and the block lines that follow are
-    // plain shell already. Other YAML lines are lexed as they are (a leading `- name:` word is not
-    // git and yields nothing).
-    private static string WorkflowRunScalar(string line)
+    // plain shell already. Every `run:` inside flow mappings on the line is a step of its own and
+    // is judged separately, so an unterminated quote in one step cannot swallow the next (review
+    // round 9: `steps: [{run: "echo ready"}, {run: "git show HEAD^1:p"}]`). Other YAML lines are
+    // lexed as they are (a leading `- name:` word is not git and yields nothing).
+    private static IEnumerable<string> WorkflowRunScalars(string line)
     {
         var match = RunScalar.Match(line);
-        if (!match.Success)
+        if (match.Success)
         {
-            var flow = FlowRunScalar.Match(line);
-            return flow.Success ? DecodeYamlScalar(flow.Groups["shell"].Value.Trim()) : line;
+            var shell = match.Groups["shell"].Value.Trim();
+            return IsBlockIndicator(shell) ? Array.Empty<string>() : new[] { DecodeYamlScalar(shell) };
         }
 
-        var shell = match.Groups["shell"].Value.Trim();
-        if (IsBlockIndicator(shell))
+        var flows = FlowRunScalar.Matches(line);
+        return flows.Count == 0
+            ? new[] { line }
+            : flows.Select(flow => DecodeYamlScalar(flow.Groups["shell"].Value.Trim())).ToArray();
+    }
+
+    // A block-mapping `run:` whose quoted scalar does not close on its line starts a multi-line
+    // scalar; an explicit tag before the quote is dropped (`run: !!str "git` + `show …"`).
+    private static bool TryStartQuotedScalar(string line, out string scalar)
+    {
+        var match = RunScalar.Match(line);
+        scalar = match.Success ? StripTag(match.Groups["shell"].Value.Trim()) : string.Empty;
+        return scalar.Length > 0 && scalar[0] is '"' or '\'' && !IsClosedQuotedScalar(scalar);
+    }
+
+    private static string FoldQuotedContinuation(string text, string line)
+    {
+        var trimmed = line.Trim();
+        return trimmed.Length == 0 ? text + "\n" : text + " " + trimmed;
+    }
+
+    private static bool IsClosedQuotedScalar(string scalar)
+    {
+        if (scalar[0] == '"')
         {
-            return string.Empty;
+            for (var index = 1; index < scalar.Length; index++)
+            {
+                if (scalar[index] == '\\')
+                {
+                    index++;
+                    continue;
+                }
+
+                if (scalar[index] == '"')
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
-        return DecodeYamlScalar(shell);
+        for (var index = 1; index < scalar.Length; index++)
+        {
+            if (scalar[index] == '\'')
+            {
+                if (index + 1 < scalar.Length && scalar[index + 1] == '\'')
+                {
+                    index++;
+                    continue;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // An explicit tag (`!!str "git …"`, `!custom …`) does not change the value that follows.
+    private static string StripTag(string scalar)
+    {
+        if (!scalar.StartsWith('!'))
+        {
+            return scalar;
+        }
+
+        var space = scalar.IndexOf(' ', StringComparison.Ordinal);
+        return space < 0 ? string.Empty : scalar[(space + 1)..].TrimStart();
     }
 
     // A YAML flow scalar (`"…"` / `'…'`) decoded the way YAML does, up to its closing quote;
@@ -218,13 +319,7 @@ internal static partial class JudgeSurfaceRevisionScanner
     // of throwing. Single-quoted `''` is one quote. Unquoted scalars are returned as they are.
     private static string DecodeYamlScalar(string scalar)
     {
-        // An explicit tag (`!!str "git …"`, `!custom …`) does not change the value that follows.
-        if (scalar.StartsWith('!'))
-        {
-            var space = scalar.IndexOf(' ', StringComparison.Ordinal);
-            scalar = space < 0 ? string.Empty : scalar[(space + 1)..].TrimStart();
-        }
-
+        scalar = StripTag(scalar);
         if (scalar.Length >= 2 && scalar[0] == '"')
         {
             var value = new System.Text.StringBuilder();

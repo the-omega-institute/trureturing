@@ -56,6 +56,10 @@ internal static class JudgeSurfaceShellLexer
         // Set when any quoted or escaped text entered the current word: a quoted `'2'` before `>`
         // is a path, not a descriptor (review round 7: `-d '2'>out HEAD^1`).
         var wordHasQuotedContent = false;
+        // Length of the operator prefix of a redirection word (`2>`, `{fd}>`, `>>`, `>&`, `>|`);
+        // anything appended after it — quoted, escaped or plain — is the glued target, so the
+        // quoted `>` in `>'>'` is a file name and cannot re-open the operator (review round 9).
+        var redirectionOperatorLength = 0;
 
         void EndWord()
         {
@@ -66,18 +70,22 @@ internal static class JudgeSurfaceShellLexer
 
             var value = word.ToString();
             var redirection = wordIsRedirection;
+            var hasGluedTarget = word.Length > redirectionOperatorLength;
             word.Clear();
             inWord = false;
             wordIsRedirection = false;
             wordHasQuotedContent = false;
+            redirectionOperatorLength = 0;
             if (pendingRedirectionTarget)
             {
                 pendingRedirectionTarget = false;
                 return;
             }
 
-            if (redirection && IsRedirectionOperator(value, out var hasGluedTarget))
+            if (redirection)
             {
+                // `2>&1`, `>&2`, `>out`, `>'>'`: the target is glued to the operator; a bare
+                // operator takes the next word as its target.
                 pendingRedirectionTarget = !hasGluedTarget;
                 return;
             }
@@ -178,8 +186,7 @@ internal static class JudgeSurfaceShellLexer
                     {
                         if (text[index] == '\\' && index + 1 < end)
                         {
-                            word.Append(text[index + 1] switch { 'n' => '\n', 't' => '\t', 'r' => '\r', var other => other });
-                            index += 2;
+                            index = AppendAnsiCEscape(text, index, end, word);
                             continue;
                         }
 
@@ -200,9 +207,10 @@ internal static class JudgeSurfaceShellLexer
                     EndCommand();
                     return;
 
-                case '&' when inWord && word.Length > 0 && word[^1] is '>' or '<':
-                    // `2>&1`, `>&2`: the descriptor duplication belongs to the redirection word.
+                case '&' when inWord && wordIsRedirection && word.Length == redirectionOperatorLength && word[^1] is '>' or '<':
+                    // `2>&1`, `>&2`: the descriptor duplication belongs to the redirection operator.
                     word.Append('&');
+                    redirectionOperatorLength = word.Length;
                     index++;
                     continue;
 
@@ -211,6 +219,7 @@ internal static class JudgeSurfaceShellLexer
                     word.Append('&');
                     inWord = true;
                     wordIsRedirection = true;
+                    redirectionOperatorLength = word.Length;
                     index++;
                     continue;
 
@@ -226,8 +235,11 @@ internal static class JudgeSurfaceShellLexer
                 case '>':
                 case '<':
                     // Shell splits `HEAD>out` into `HEAD` and `>out`; only a descriptor prefix
-                    // (`2>`, `&>`) or a repeated operator (`>>`) stays glued to the operator.
-                    if (inWord && !(wordIsRedirection || (IsAllDigits(word) && !wordHasQuotedContent)))
+                    // (`2>`, `{fd}>`, `&>`) or a repeated operator (`>>`) stays glued to the
+                    // operator; a redirection that already has its target (`>out>x`) is complete.
+                    if (inWord
+                        && !((wordIsRedirection && word.Length == redirectionOperatorLength)
+                            || (!wordHasQuotedContent && (IsAllDigits(word) || IsDescriptorVariable(word)))))
                     {
                         EndWord();
                     }
@@ -235,6 +247,7 @@ internal static class JudgeSurfaceShellLexer
                     word.Append(character);
                     inWord = true;
                     wordIsRedirection = true;
+                    redirectionOperatorLength = word.Length;
                     index++;
                     continue;
 
@@ -253,9 +266,10 @@ internal static class JudgeSurfaceShellLexer
                     index++;
                     continue;
 
-                case '|' when inWord && wordIsRedirection && word.Length > 0 && word[^1] == '>':
+                case '|' when inWord && wordIsRedirection && word.Length == redirectionOperatorLength && word[^1] == '>':
                     // `>|file` (clobber) is one redirection operator, not a pipe (review round 8).
                     word.Append('|');
+                    redirectionOperatorLength = word.Length;
                     index++;
                     continue;
 
@@ -389,33 +403,70 @@ internal static class JudgeSurfaceShellLexer
         return true;
     }
 
-    private static bool IsRedirectionOperator(string value, out bool hasGluedTarget)
+    // Bash allocates a descriptor into a variable with `{name}>file` / `{name}<file`; the braces
+    // word is the descriptor prefix of that redirection, not a command word (review round 9:
+    // `{fd}>/tmp/out git show HEAD^1:p` runs git).
+    private static bool IsDescriptorVariable(StringBuilder word)
     {
-        hasGluedTarget = false;
-        var index = 0;
-        while (index < value.Length && char.IsAsciiDigit(value[index]))
-        {
-            index++;
-        }
-
-        if (index < value.Length && value[index] == '&' && index + 1 < value.Length
-            && value[index + 1] is '>' or '<')
-        {
-            index++;
-        }
-
-        if (index >= value.Length || value[index] is not ('>' or '<'))
+        if (word.Length < 3 || word[0] != '{' || word[^1] != '}' || !(char.IsAsciiLetter(word[1]) || word[1] == '_'))
         {
             return false;
         }
 
-        while (index < value.Length && value[index] is '>' or '<' or '&' or '|')
+        for (var index = 2; index < word.Length - 1; index++)
         {
-            index++;
+            if (!(char.IsAsciiLetterOrDigit(word[index]) || word[index] == '_'))
+            {
+                return false;
+            }
         }
 
-        // `2>&1`, `>&2`, `>out`: the target is glued to the operator.
-        hasGluedTarget = index < value.Length;
         return true;
+    }
+
+    // `$'…'` escapes as Bash decodes them: `\xHH` (one or two hex digits), `\NNN` (one to three
+    // octal digits), the C escapes and `\\` / `\'` / `\"`; `$'\x67it'` is `git` (review round 9).
+    private static int AppendAnsiCEscape(string text, int index, int end, StringBuilder word)
+    {
+        var escape = text[index + 1];
+        if (escape == 'x')
+        {
+            var digits = 0;
+            while (digits < 2 && index + 2 + digits < end && char.IsAsciiHexDigit(text[index + 2 + digits]))
+            {
+                digits++;
+            }
+
+            if (digits > 0)
+            {
+                word.Append((char)Convert.ToInt32(text.Substring(index + 2, digits), 16));
+                return index + 2 + digits;
+            }
+        }
+        else if (escape is >= '0' and <= '7')
+        {
+            var digits = 1;
+            while (digits < 3 && index + 1 + digits < end && text[index + 1 + digits] is >= '0' and <= '7')
+            {
+                digits++;
+            }
+
+            word.Append((char)Convert.ToInt32(text.Substring(index + 1, digits), 8));
+            return index + 1 + digits;
+        }
+
+        word.Append(escape switch
+        {
+            'n' => '\n',
+            't' => '\t',
+            'r' => '\r',
+            'a' => '\a',
+            'b' => '\b',
+            'e' or 'E' => '\u001b',
+            'f' => '\f',
+            'v' => '\v',
+            var other => other,
+        });
+        return index + 2;
     }
 }

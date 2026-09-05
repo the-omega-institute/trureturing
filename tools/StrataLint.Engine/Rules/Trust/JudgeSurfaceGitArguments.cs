@@ -174,7 +174,11 @@ internal static partial class JudgeSurfaceRevisionScanner
                 continue;
             }
 
-            if (ReadTreeFlags.Contains(token) || HasKnownValuePrefix(token, ReadTreeOptionsWithValue))
+            // `--[no-]recurse-submodules[=<checkout>]` carries its optional value attached, never as
+            // the next word (review round 9: `--recurse-submodules=on-demand HEAD` is a HEAD read).
+            if (ReadTreeFlags.Contains(token)
+                || HasKnownValuePrefix(token, ReadTreeOptionsWithValue)
+                || token.StartsWith("--recurse-submodules=", StringComparison.Ordinal))
             {
                 continue;
             }
