@@ -88,14 +88,16 @@ internal static class JudgeSurfaceRevisionScanner
                 continue;
             }
 
+            // Deliberately scan after '#': quoted text can hide a command, so trailing comments stay fail-closed.
             if (isWorkflow)
             {
+                // Deliberately over-match: this line scanner cannot see YAML structure; a visible Block beats a silent miss.
                 var reference = WorkflowRef.Match(line);
                 if (reference.Success && BaseRefIndicator.IsMatch(reference.Groups["value"].Value))
                 {
                     messages.Add(
-                        $"line {index + 1}: actions/checkout ref '{reference.Groups["value"].Value.Trim()}' "
-                        + "targets the protected base; the judge surface checks out only the checked object "
+                        $"line {index + 1}: a `ref:` naming the protected base "
+                        + $"'{reference.Groups["value"].Value.Trim()}' is not allowed on the judge surface "
                         + "(SL-030, CLAUDE.md rule 19: base data enters the candidate judge through its snapshot reader)");
                 }
             }
@@ -123,11 +125,9 @@ internal static class JudgeSurfaceRevisionScanner
             .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
         return verb switch
         {
-            "worktree" => tokens.Length > 0 && tokens[0] == "add"
-                ? "add materializes another revision's tree"
-                : null,
-            "read-tree" => "materializes a tree into the index",
-            "checkout-index" => "materializes index contents",
+            "worktree" => WorktreeAddRevision(tokens),
+            "read-tree" => ReadTreeOperands(tokens),
+            "checkout-index" => "materializes index contents whose provenance is not a revision (fail-closed)",
             "restore" => RestoreSource(tokens),
             "checkout" => CheckoutRevision(tokens),
             "archive" => ArchiveRevision(tokens),
@@ -156,6 +156,65 @@ internal static class JudgeSurfaceRevisionScanner
         }
 
         return null;
+    }
+
+    private static string? WorktreeAddRevision(string[] tokens)
+    {
+        if (tokens.Length == 0 || tokens[0] != "add")
+        {
+            return null;
+        }
+
+        var positional = new List<string>();
+        for (var index = 1; index < tokens.Length; index++)
+        {
+            var token = tokens[index];
+            if (token is "-b" or "-B")
+            {
+                index++;
+                continue;
+            }
+
+            if (token is "--detach" or "--lock" or "-f" or "--force" or "--no-checkout" or "--orphan")
+            {
+                continue;
+            }
+
+            if (token == "--")
+            {
+                continue;
+            }
+
+            positional.Add(token);
+        }
+
+        if (positional.Count < 2 || positional[1] == Head)
+        {
+            return null;
+        }
+
+        return $"add commit-ish '{positional[1]}' materializes another revision's tree";
+    }
+
+    private static string? ReadTreeOperands(string[] tokens)
+    {
+        var foundTree = false;
+        foreach (var token in tokens)
+        {
+            if (token is "-u" or "-m" or "--reset" or "--empty" or "-i" or "--"
+                || token.StartsWith("--prefix=", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            foundTree = true;
+            if (token != Head && token != "HEAD^{tree}")
+            {
+                return $"tree-ish '{token}' materializes another revision into the index";
+            }
+        }
+
+        return foundTree ? null : "without a tree-ish is fail-closed";
     }
 
     private static string? CheckoutRevision(string[] tokens)
@@ -244,11 +303,58 @@ internal static class JudgeSurfaceRevisionScanner
             return "--batch reads objects of unknown provenance (fail-closed)";
         }
 
-        if (tokens.Contains("blob", StringComparer.Ordinal))
+        if (tokens.Any(static token => token is "-e" or "-t" or "-s"))
         {
-            return "blob materializes an object of unknown provenance (fail-closed)";
+            return null;
         }
 
-        return RevisionPathOperand(tokens);
+        var modeIndex = Array.FindIndex(
+            tokens,
+            static token => token is "-p" or "blob" or "tree" or "commit" or "tag");
+        if (modeIndex < 0)
+        {
+            return null;
+        }
+
+        var foundOperand = false;
+        for (var index = 0; index < tokens.Length; index++)
+        {
+            var token = tokens[index];
+            if (index == modeIndex || token.StartsWith('-'))
+            {
+                continue;
+            }
+
+            if (IsShellRedirection(token))
+            {
+                break;
+            }
+
+            foundOperand = true;
+            if (!IsLiteralHeadObject(token))
+            {
+                return $"operand '{token}' materializes an object of another revision";
+            }
+        }
+
+        return foundOperand ? null : $"content mode '{tokens[modeIndex]}' without an operand is fail-closed";
+    }
+
+    private static bool IsLiteralHeadObject(string operand) =>
+        operand == Head
+        || (operand.StartsWith("HEAD:", StringComparison.Ordinal) && operand.Length > "HEAD:".Length)
+        || (operand.StartsWith("HEAD^{", StringComparison.Ordinal)
+            && operand.EndsWith('}')
+            && operand.Length > "HEAD^{}".Length);
+
+    private static bool IsShellRedirection(string token)
+    {
+        var index = 0;
+        while (index < token.Length && char.IsAsciiDigit(token[index]))
+        {
+            index++;
+        }
+
+        return index < token.Length && token[index] is '<' or '>';
     }
 }

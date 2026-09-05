@@ -28,14 +28,23 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git show origin/dev:Meta/FILEMAP.toml > policy.toml")]
     [InlineData("git show 3a2a11e34b:tools/x.sh | bash")]
     [InlineData("git cat-file -p \"$BASE:$path\" > \"$path\"")]
+    [InlineData("git cat-file -p \"$oid\" > out")]
+    [InlineData("git cat-file -p HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git cat-file blob \"$oid\" > script.sh")]
+    [InlineData("git cat-file tree \"$tree\"")]
     [InlineData("git cat-file --batch < requests")]
+    [InlineData("git cat-file --batch-check < in")]
     [InlineData("git -C \"$ROOT\" archive --format=tar \"$base_sha\" | tar -xf - -C \"$BASE_TREE\"")]
     [InlineData("git archive HEAD^1 | tar -x")]
+    [InlineData("git archive -o base.tar HEAD^1")]
+    [InlineData("git worktree add --detach /tmp/h \"$ENGINEERING_BASE\"")]
+    [InlineData("git worktree add /tmp/h origin/dev")]
     [InlineData("git checkout HEAD^1 -- tools/scripts/workflow/gate.sh")]
     [InlineData("git checkout \"$DEV_BASELINE_SHA\"")]
+    [InlineData("git checkout -B lane/x origin/dev")]
     [InlineData("git restore --source=origin/dev tools/scripts/workflow/gate.sh")]
     [InlineData("git read-tree -u HEAD^1")]
+    [InlineData("git read-tree -u \"$BASE\"")]
     [InlineData("git checkout-index -a --prefix=base/")]
     public void MaterializingAnotherRevisionIsRejected(string line)
     {
@@ -48,11 +57,23 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("commit_epoch=\"$(git show -s --format=%ct HEAD)\"")]
     [InlineData("source_tree=\"$(git cat-file -p HEAD | sed -n 's/^tree //p')\"")]
     [InlineData("git cat-file -e \"$sha^{commit}\"")]
+    [InlineData("git cat-file -e \"${BASE}:${MODULE_PATH}\"")]
+    [InlineData("git cat-file -t \"$oid\"")]
+    [InlineData("git cat-file -s \"$oid\"")]
+    [InlineData("git cat-file blob HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git cat-file -p HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git cat-file -p HEAD^{tree}")]
     [InlineData("git archive --format=tar HEAD -- tools docs | tar -x")]
     [InlineData("git checkout -- tools/scripts/workflow/gate.sh")]
     [InlineData("git checkout -b lane/x")]
     [InlineData("git restore tools/scripts/workflow/gate.sh")]
     [InlineData("git restore --source=HEAD tools/scripts/workflow/gate.sh")]
+    [InlineData("git restore -s HEAD tools/scripts/workflow/gate.sh")]
+    [InlineData("git worktree add --detach /tmp/h HEAD")]
+    [InlineData("git worktree add -b lane/x /tmp/h")]
+    [InlineData("git worktree add /tmp/h")]
+    [InlineData("git read-tree HEAD")]
+    [InlineData("git read-tree -m HEAD^{tree}")]
     [InlineData("base_sha=\"$(git -C candidate rev-parse HEAD^1)\"")]
     [InlineData("workflow_address=\"$(git -C candidate rev-parse \"${workflow_ref}:.github/workflows/ci.yml\")\"")]
     [InlineData("git diff --name-only -z --no-renames HEAD^1 HEAD")]
@@ -75,11 +96,35 @@ public sealed class JudgeSurfaceRevisionRuleTests
     }
 
     [Fact]
+    public void GitInvocationAfterTrailingCommentMarkerIsReportedFailClosed()
+    {
+        var finding = Assert.Single(
+            Evaluate(ScriptPath, "echo ok # git show HEAD^1:tools/scripts/workflow/x.sh\n"));
+        Assert.Contains("line 1", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CrLfTerminatedWorktreeAddIsRejected()
+    {
+        var finding = Assert.Single(Evaluate(ScriptPath, "git worktree add /tmp/h \"$BASE\"\r\n"));
+        Assert.Contains("$BASE", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CheckingOutTheBaseRefInAWorkflowIsRejected()
     {
         const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with:\n      ref: ${{ github.event.pull_request.base.sha }}\n";
         var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
         Assert.Equal(WorkflowPath, finding.Path);
+    }
+
+    [Fact]
+    public void InlineWorkflowBaseRefIsRejected()
+    {
+        const string workflow = "steps:\n  - with: { ref: ${{ github.base_ref }} }\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Equal(WorkflowPath, finding.Path);
+        Assert.Contains("a `ref:` naming the protected base", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
