@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:39266e5ca98059a731ed592ec73e2bbfeecd9980d612d38a9eb293aaf65cdd84
+  normalized_sha256: sha256:39266e5ca98059a731ed592ec73e2bbfeecd9980d612d38a9eb293aaf65cdd84
+cas_ref: sha256:39266e5ca98059a731ed592ec73e2bbfeecd9980d612d38a9eb293aaf65cdd84
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Whole-atom multi-clause guard after review pass 1. CARRIED: regime 1, `一个系统可以运行无限久而当前接口始终闭合`, is faithfully stated by the first existential of frozen `D5/S3/ObserverMemory/PredictionCertificates/ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth`: the source is existential and requires no nontrivial state carrier, so `Unit`, `forall n : Nat, (tau^[n]) () = ()`, and `completionDepth tau q = 0` provide that regime. UNCARRIED: the named least kernel-stabilization depth and the pair-specific hidden distinction. `ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth` is a near-miss for two exact gaps: (a) `completionDepth` is the supremum of arbitrary `Classical.choose` separating times, so it is a sufficient horizon rather than the least stabilization depth `m*`; (b) its public second existential states only `tau .zero = .one` and the global bound `2 <= completionDepth tau q`, which ranges over all state pairs. The fact that the specific `zero`/`one` pair agrees earlier and separates later appears only inside the proof at lines 77-103, not in a public conjunct. Therefore clauses 1-2 and the hidden-pair part of regime 2 remain open, and the carried existential regime cannot close the whole atom."
+    reentry_condition: "Freeze a public two-regime theorem on a least kernel-stabilization-depth carrier, stating both an all-clock-time depth-zero system and a one-step update whose specific hidden state pair agrees at shorter horizons, separates at a later horizon, and forces least depth at least two; then bind this atom to that public statement."
+    blocker_class: multi-clause-guard
