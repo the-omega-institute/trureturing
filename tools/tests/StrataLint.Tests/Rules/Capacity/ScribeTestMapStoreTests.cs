@@ -10,7 +10,113 @@ namespace StrataLint.Tests;
 public sealed class ScribeTestMapStoreTests
 {
     private static readonly ScribeTestMapEnvironment TestEnvironment =
-        new("test-rid", ".NET test framework", "10.0.100-test");
+        new("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test");
+
+    [Fact]
+    public void DescribeEnvironmentProbesResolvedDotnetHost()
+    {
+        var hosts = new List<string>();
+        var environment = MsBuildCompileOracle.DescribeEnvironment(
+            () => "/selected/dotnet",
+            host =>
+            {
+                hosts.Add(host);
+                return new ProcessOutput(0, " 10.0.100-test\n"u8.ToArray(), []);
+            });
+
+        Assert.Equal(["/selected/dotnet"], hosts);
+        Assert.Equal("/selected/dotnet", environment.DotnetHost);
+        Assert.Equal("10.0.100-test", environment.DotnetSdkVersion);
+        Assert.Equal(System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier, environment.Rid);
+        Assert.Equal(System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription, environment.Framework);
+        Assert.Equal(MsBuildCompileOracle.ResolveDotnetExecutable(),
+            MsBuildCompileOracle.DescribeEnvironment().DotnetHost);
+    }
+
+    [Theory]
+    [InlineData(1, "version")]
+    [InlineData(0, " \n")]
+    public void DescribeEnvironmentRejectsFailedOrEmptyVersionProbe(int exitCode, string version)
+    {
+        Assert.Throws<InvalidOperationException>(() => MsBuildCompileOracle.DescribeEnvironment(
+            () => "/selected/dotnet",
+            _ => new ProcessOutput(exitCode, Encoding.UTF8.GetBytes(version), [])));
+    }
+
+    [Theory]
+    [InlineData("asset.dll")]
+    [InlineData("package.nuspec")]
+    public void MetadataDigestChangesWhenAReferencedFileChanges(string name)
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, name);
+        var snapshot = Snapshot(
+            ("src/Test.csproj", "<Project />"),
+            ("src/packages.lock.json", "{\"dependencies\":{}}"));
+        IReadOnlyList<string> Inputs(IEnumerable<ScribeCompilationProject> projects)
+        {
+            var project = Assert.Single(projects);
+            Assert.Equal("src/Test.csproj", project.Path);
+            Assert.Equal("<Project />", project.ProjectContent);
+            Assert.Equal("{\"dependencies\":{}}", project.PackageLockContent);
+            return [path];
+        }
+        TemporaryFileSystem.File.WriteAllText(path, "before");
+        var before = ScribeTestMapStore.ComputeMetadataDigest(snapshot, Inputs);
+        var storage = new MemoryStorage();
+        var store = new ScribeTestMapStore(storage, TestEnvironment, Inputs);
+        store.GetOrDerive(snapshot, _ => Map("cached"));
+        TemporaryFileSystem.File.WriteAllText(path, "after");
+
+        Assert.NotEqual(before, ScribeTestMapStore.ComputeMetadataDigest(snapshot, Inputs));
+        var calls = 0;
+        var changedStore = new ScribeTestMapStore(storage, TestEnvironment, Inputs);
+        var result = changedStore.GetOrDerive(snapshot, _ =>
+        {
+            calls++;
+            return Map("changed");
+        });
+
+        Assert.Equal(1, calls);
+        Assert.Equal("changed", Assert.Single(result.Methods).Id);
+        Assert.Contains(changedStore.Events, static item => item.Outcome == "invalid:metadata-digest");
+        var hit = new ScribeTestMapStore(storage, TestEnvironment, Inputs).GetOrDerive(
+            snapshot, _ => throw new InvalidOperationException("updated metadata must hit"));
+        Assert.Equal("changed", Assert.Single(hit.Methods).Id);
+        TemporaryFileSystem.File.Delete(path);
+        Assert.NotEqual(before, ScribeTestMapStore.ComputeMetadataDigest(snapshot, Inputs));
+    }
+
+    [Fact]
+    public void DescribeInputPathsIsSortedAndDeduplicated()
+    {
+        using var temporary = new TemporaryDirectory();
+        string PackageDirectory(string id, string version) => Path.Combine(temporary.Path, id, version);
+        var first = PackageDirectory("first", "1.0.0");
+        var second = PackageDirectory("second", "2.0.0");
+        var firstAsset = Path.Combine(first, "ref", "net10.0", "First.dll");
+        var secondAsset = Path.Combine(second, "lib", "net10.0", "Second.dll");
+        var firstNuspec = Path.Combine(first, "first.nuspec");
+        var secondNuspec = Path.Combine(second, "second.nuspec");
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(firstAsset)!);
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(secondAsset)!);
+        TemporaryFileSystem.File.WriteAllText(firstAsset, "first assembly");
+        TemporaryFileSystem.File.WriteAllText(secondAsset, "second assembly");
+        TemporaryFileSystem.File.WriteAllText(firstNuspec,
+            "<package><metadata><dependencies><dependency id=\"second\" version=\"2.0.0\" /></dependencies></metadata></package>");
+        TemporaryFileSystem.File.WriteAllText(secondNuspec, "<package />");
+        var project = new ScribeCompilationProject("Test.csproj",
+            "<Project><ItemGroup><PackageReference Include=\"first\" Version=\"1.0.0\" /></ItemGroup></Project>",
+            "", [], [], null);
+
+        var paths = ScribeMetadataReferenceResolver.DescribeInputPaths([project, project], PackageDirectory);
+
+        Assert.Equal(paths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal), paths);
+        Assert.All(paths, static path => Assert.True(Path.IsPathFullyQualified(path)));
+        Assert.Contains(typeof(object).Assembly.Location, paths);
+        Assert.Equal(new[] { firstAsset, secondAsset, firstNuspec, secondNuspec }.Order(StringComparer.Ordinal),
+            paths.Where(path => path.StartsWith(temporary.Path, StringComparison.Ordinal)));
+    }
 
     [Fact]
     public void InputDigestIgnoresNonDerivationInputs()
@@ -66,6 +172,7 @@ public sealed class ScribeTestMapStoreTests
         var storage = new MemoryStorage();
         storage.Seed(digest + ".json", ScribeTestMapEnvelope.Create(
             digest,
+            ScribeTestMapStore.ComputeMetadataDigest(snapshot),
             TestEnvironment,
             Map("cached")).Write());
         var store = new ScribeTestMapStore(storage, TestEnvironment);
@@ -103,6 +210,8 @@ public sealed class ScribeTestMapStoreTests
     [InlineData("rid", "environment-rid")]
     [InlineData("framework", "environment-framework")]
     [InlineData("dotnet-sdk-version", "environment-dotnet-sdk-version")]
+    [InlineData("dotnet_host", "environment-dotnet-host")]
+    [InlineData("metadata-digest", "metadata-digest")]
     [InlineData("digest", "input-digest")]
     [InlineData("corrupt-json", "invalid-json")]
     [InlineData("missing-field", "field")]
@@ -111,7 +220,8 @@ public sealed class ScribeTestMapStoreTests
         var snapshot = Snapshot(("src/Test.cs", "class Test {}"));
         var digest = ScribeTestMapStore.ComputeInputDigest(snapshot);
         var storage = new MemoryStorage();
-        storage.Seed(digest + ".json", InvalidBytes(mutation, digest));
+        storage.Seed(digest + ".json", InvalidBytes(mutation, digest,
+            ScribeTestMapStore.ComputeMetadataDigest(snapshot)));
         var store = new ScribeTestMapStore(storage, TestEnvironment);
         var calls = 0;
 
@@ -167,31 +277,24 @@ public sealed class ScribeTestMapStoreTests
     [Fact]
     public void DirectoryStorageWritesAtomicallyAndCreatesRoot()
     {
-        var parent = Directory.CreateTempSubdirectory("stratalint-test-map-storage").FullName;
-        var root = Path.Combine(parent, "cache");
+        using var root = new TemporaryDirectory();
+        var cacheRoot = Path.Combine(root.Path, "cache");
         var first = Encoding.UTF8.GetBytes(new string('a', 8_193));
         var second = Encoding.UTF8.GetBytes(new string('b', 12_289));
-        try
-        {
-            var storage = new DirectoryScribeTestMapStorage(root);
+        var storage = new DirectoryScribeTestMapStorage(cacheRoot);
 
-            Parallel.Invoke(
-                () => storage.Write("entry.json", first),
-                () => storage.Write("entry.json", second));
+        Parallel.Invoke(
+            () => storage.Write("entry.json", first),
+            () => storage.Write("entry.json", second));
 
-            var bytes = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, "entry.json"));
-            Assert.True(bytes.SequenceEqual(first) || bytes.SequenceEqual(second));
-            Assert.DoesNotContain(
-                Directory.EnumerateFiles(root),
-                static path => path.EndsWith(".tmp", StringComparison.Ordinal));
-        }
-        finally
-        {
-            Directory.Delete(parent, recursive: true);
-        }
+        var bytes = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(cacheRoot, "entry.json"));
+        Assert.True(bytes.SequenceEqual(first) || bytes.SequenceEqual(second));
+        Assert.DoesNotContain(
+            TemporaryFileSystem.Directory.EnumerateFiles(root),
+            static path => path.EndsWith(".tmp", StringComparison.Ordinal));
     }
 
-    private static byte[] InvalidBytes(string mutation, string digest)
+    private static byte[] InvalidBytes(string mutation, string digest, string metadataDigest)
     {
         if (mutation == "corrupt-json")
         {
@@ -200,13 +303,15 @@ public sealed class ScribeTestMapStoreTests
 
         var envelopeDigest = mutation == "digest" ? new string('f', 64) : digest;
         var root = Assert.IsType<JsonObject>(JsonNode.Parse(Encoding.UTF8.GetString(
-            ScribeTestMapEnvelope.Create(envelopeDigest, TestEnvironment, Map("cached")).Write())));
+            ScribeTestMapEnvelope.Create(envelopeDigest, metadataDigest, TestEnvironment, Map("cached")).Write())));
         switch (mutation)
         {
             case "producer": root["producer"]!["engine_mvid"] = new string('0', 32); break;
             case "rid": root["environment"]!["rid"] = "other-rid"; break;
             case "framework": root["environment"]!["framework"] = "other-framework"; break;
             case "dotnet-sdk-version": root["environment"]!["dotnet_sdk_version"] = "other-sdk"; break;
+            case "dotnet_host": root["environment"]!["dotnet_host"] = "/other/dotnet"; break;
+            case "metadata-digest": root["metadata_digest"] = new string('e', 64); break;
             case "digest": break;
             case "missing-field": root["map"]!.AsObject().Remove("methods"); break;
             default: throw new ArgumentOutOfRangeException(nameof(mutation));
@@ -266,9 +371,22 @@ public sealed class ScribeTestMapStoreTests
 
     private static class TemporaryFileSystem
     {
+        internal static class Directory
+        {
+            internal static void CreateDirectory(string path) => System.IO.Directory.CreateDirectory(path);
+
+            internal static IEnumerable<string> EnumerateFiles(TemporaryDirectory root) =>
+                System.IO.Directory.EnumerateFiles(root.Path, "*", SearchOption.AllDirectories);
+        }
+
         internal static class File
         {
-            internal static byte[] ReadAllBytes(string path) => System.IO.File.ReadAllBytes(path);
+            internal static void WriteAllText(string path, string text) => System.IO.File.WriteAllText(path, text);
+
+            internal static void Delete(string path) => System.IO.File.Delete(path);
+
+            internal static byte[] ReadAllBytes(string path) =>
+                StrataLint.TestSupport.TemporaryFileSystem.File.ReadAllBytes(path);
         }
     }
 }

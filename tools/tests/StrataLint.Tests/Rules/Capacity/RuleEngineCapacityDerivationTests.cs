@@ -91,13 +91,13 @@ public sealed class RuleEngineCapacityDerivationTests
     [Fact]
     public void Sl003UsesTestMapStoreForBothSidesWhenPresent()
     {
-        var fixture = new RuleFixture();
-        fixture.Files[RuleFixture.BlueprintSourcePath] += "// current-only change\n";
-        var changes = RawChangeSet.Create([RuleFixture.BlueprintSourcePath]);
+        var fixture = FixtureWithUnknownDebt();
+        var changes = RawChangeSet.Create([DebtSourcePath]);
         var context = fixture.Build(changes);
         var environment = new ScribeTestMapEnvironment(
             "test-rid",
             ".NET test framework",
+            "/test/dotnet",
             "10.0.100-test");
         var storage = new CapacityMemoryStorage();
         var forkPointDigest = ScribeTestMapStore.ComputeInputDigest(context.ForkPoint);
@@ -105,6 +105,7 @@ public sealed class RuleEngineCapacityDerivationTests
             forkPointDigest + ".json",
             ScribeTestMapEnvelope.Create(
                 forkPointDigest,
+                ScribeTestMapStore.ComputeMetadataDigest(context.ForkPoint),
                 environment,
                 ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint)).Write());
         var store = new ScribeTestMapStore(storage, environment);
@@ -125,7 +126,9 @@ public sealed class RuleEngineCapacityDerivationTests
         var expected = rule.Evaluate(context);
         var actual = rule.Evaluate(cachedContext);
 
-        Assert.Equal(expected, actual);
+        Assert.Equal(expected.ToArray(), actual.ToArray());
+        Assert.Contains(actual, static finding => finding.Effect == AdmissionEffect.Block
+            && finding.Message.Contains("DebtTests.CurrentDebt", StringComparison.Ordinal));
         var currentDigest = ScribeTestMapStore.ComputeInputDigest(context.Current);
         Assert.NotEqual(forkPointDigest, currentDigest);
         Assert.Equal(
@@ -138,6 +141,39 @@ public sealed class RuleEngineCapacityDerivationTests
             store.Events
                 .Where(item => item.InputDigest == currentDigest)
                 .Select(static item => item.Outcome));
+    }
+
+    [Fact]
+    public void Sl003DerivesOnlyCurrentOnceWhenForkPointHitsStore()
+    {
+        var fixture = FixtureWithUnknownDebt();
+        var context = fixture.Build(RawChangeSet.Create([DebtSourcePath]));
+        var forkPointMap = ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint);
+        Assert.Contains(forkPointMap.Methods, static method =>
+            method.Id == "DebtTests.ExistingDebt" && method.UnknownReasons.Count != 0);
+        var environment = new ScribeTestMapEnvironment("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test");
+        var storage = new CapacityMemoryStorage();
+        var digest = ScribeTestMapStore.ComputeInputDigest(context.ForkPoint);
+        storage.Write(digest + ".json", ScribeTestMapEnvelope.Create(digest,
+            ScribeTestMapStore.ComputeMetadataDigest(context.ForkPoint), environment, forkPointMap).Write());
+        var store = new ScribeTestMapStore(storage, environment);
+        var cachedContext = RuleEvaluationContext.Create(
+            context.Current, context.Baseline, context.Policy, context.Lean, context.Changes,
+            context.MetaEvaluation, context.VerifiedScribeEmissions, context.ForkPoint, store);
+        var calls = new ConcurrentQueue<RepositorySnapshot>();
+
+        var expected = RepositoryRules.EvaluateCapacity(context, ScribeTestMapDeriver.DeriveSnapshot);
+        var actual = RepositoryRules.EvaluateCapacity(cachedContext, snapshot =>
+        {
+            calls.Enqueue(snapshot);
+            return ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+        });
+
+        Assert.Same(context.Current, Assert.Single(calls));
+        Assert.Equal(expected.ToArray(), actual.ToArray());
+        Assert.Contains(actual, static finding => finding.Effect == AdmissionEffect.Block
+            && finding.Message.Contains("DebtTests.CurrentDebt", StringComparison.Ordinal));
+        Assert.Contains(store.Events, item => item.InputDigest == digest && item.Outcome == "hit");
     }
 
     [Fact]
@@ -306,6 +342,41 @@ public sealed class RuleEngineCapacityDerivationTests
     public void ScribeDerivationInputExcludesUnrelatedContent(string path)
     {
         Assert.False(ScribeTestMapDeriver.IsDerivationInput(path));
+    }
+
+    private const string DebtSourcePath = "tools/tests/Synthetic.Tests/DebtTests.cs";
+
+    private static RuleFixture FixtureWithUnknownDebt()
+    {
+        var fixture = new RuleFixture();
+        const string projectPath = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
+        const string project = """
+            <Project Sdk="Microsoft.NET.Sdk">
+              <PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup>
+              <ItemGroup><PackageReference Include="xunit" Version="2.9.3" /></ItemGroup>
+            </Project>
+            """;
+        const string source = """
+            using System.IO;
+            using Xunit;
+            public partial class DebtTests
+            {
+                [Fact] public void ExistingDebt() { var p = "example"; File.ReadAllText(p); }
+            }
+            """;
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[projectPath] = project;
+            files[DebtSourcePath] = source;
+        }
+        fixture.Files[DebtSourcePath] = source + """
+
+            public partial class DebtTests
+            {
+                [Fact] public void CurrentDebt() { var p = "current"; File.ReadAllText(p); }
+            }
+            """;
+        return fixture;
     }
 
     private static ScribeTestMap EmptyTestMap() => new([], [], [], [], []);

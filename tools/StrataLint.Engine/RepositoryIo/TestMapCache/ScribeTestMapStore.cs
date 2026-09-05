@@ -71,13 +71,24 @@ internal sealed class DirectoryScribeTestMapStorage(string root) : IScribeTestMa
 
 internal sealed record ScribeTestMapCacheEvent(string InputDigest, string Outcome);
 
+// C1 (1): Length-prefixed projection encoding binds tree-side input bytes: assuming no SHA-256
+// collision, equal digests iff the projection bytes are equal.
+//
+// C1 (2): environment (rid/framework/dotnet_host/dotnet_sdk_version) and metadata_digest bind
+// machine-side inputs: the MSBuild host/version and Roslyn metadata reference/nuspec contents.
+// MSBuild can still read outside the projection in a full-tree checkout; that A-layer residual is unclosed.
+//
+// C1 (3): Cache provenance is the same as --judge-dll's judge-binaries cache: only dev push writes
+// the base scope; PRs read it. Cache tampering has zero recorded incidents (CLAUDE.md 20''); no Engine MAC.
 internal sealed class ScribeTestMapStore(
     IScribeTestMapStorage storage,
-    ScribeTestMapEnvironment environment)
+    ScribeTestMapEnvironment environment,
+    Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null)
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private readonly ConcurrentQueue<ScribeTestMapCacheEvent> events = new();
 
+    // Events are observational; ordering between Current and ForkPoint is not a contract.
     internal IReadOnlyList<ScribeTestMapCacheEvent> Events => events.ToArray();
 
     internal ScribeTestMap GetOrDerive(
@@ -87,7 +98,7 @@ internal sealed class ScribeTestMapStore(
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(derive);
         var inputDigest = ComputeInputDigest(snapshot);
-        if (TryLoad(inputDigest, out var cached))
+        if (TryLoad(snapshot, inputDigest, out var cached))
         {
             Record(inputDigest, "hit");
             return cached;
@@ -104,7 +115,11 @@ internal sealed class ScribeTestMapStore(
         {
             storage.Write(
                 FileName(inputDigest),
-                ScribeTestMapEnvelope.Create(inputDigest, environment, map).Write());
+                ScribeTestMapEnvelope.Create(
+                    inputDigest,
+                    ComputeMetadataDigest(snapshot, describeInputPaths),
+                    environment,
+                    map).Write());
             Record(inputDigest, "stored");
         }
         catch (Exception exception)
@@ -131,11 +146,43 @@ internal sealed class ScribeTestMapStore(
             AppendHashBytes(hash, file.RawBytes.AsSpan());
         }
 
-        // 投影摘要相等 ⟺ 两树之间无派生输入变更,这正是 EvaluateCapacity 现有 guard(A 层)跳过派生所依赖的同一不变量;本层不放宽也不收紧它。
         return Convert.ToHexStringLower(hash.GetHashAndReset());
     }
 
-    private bool TryLoad(string inputDigest, out ScribeTestMap map)
+    internal static string ComputeMetadataDigest(
+        RepositorySnapshot snapshot,
+        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var projects = snapshot.Files.Values
+            .Where(static file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
+            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
+            .Select(file =>
+            {
+                var path = file.Path.Value;
+                var lockPath = path[..(path.LastIndexOf('/') + 1)] + "packages.lock.json";
+                return new ScribeCompilationProject(path, file.Text, "", [], [],
+                    snapshot.Files.GetValueOrDefault(RepoPath.CreateKnown(lockPath))?.Text);
+            });
+        var paths = (describeInputPaths ?? ScribeMetadataReferenceResolver.DescribeInputPaths)(projects);
+        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        AppendHashString(hash, "test-map-metadata-v1");
+        AppendHashInt32(hash, paths.Count);
+        foreach (var path in paths)
+        {
+            AppendHashString(hash, path);
+            var exists = File.Exists(path);
+            AppendHashString(hash, exists ? "present" : "absent");
+            if (exists)
+            {
+                AppendHashBytes(hash, SHA256.HashData(File.ReadAllBytes(path)));
+            }
+        }
+
+        return Convert.ToHexStringLower(hash.GetHashAndReset());
+    }
+
+    private bool TryLoad(RepositorySnapshot snapshot, string inputDigest, out ScribeTestMap map)
     {
         map = null!;
         byte[] bytes;
@@ -188,12 +235,32 @@ internal sealed class ScribeTestMapStore(
             return false;
         }
 
+        if (!string.Equals(envelope.Environment.DotnetHost, environment.DotnetHost, StringComparison.Ordinal))
+        {
+            Record(inputDigest, "invalid:environment-dotnet-host");
+            return false;
+        }
+
         if (!string.Equals(
                 envelope.Environment.DotnetSdkVersion,
                 environment.DotnetSdkVersion,
                 StringComparison.Ordinal))
         {
             Record(inputDigest, "invalid:environment-dotnet-sdk-version");
+            return false;
+        }
+
+        try
+        {
+            if (!string.Equals(envelope.MetadataDigest, ComputeMetadataDigest(snapshot, describeInputPaths), StringComparison.Ordinal))
+            {
+                Record(inputDigest, "invalid:metadata-digest");
+                return false;
+            }
+        }
+        catch (Exception exception)
+        {
+            Record(inputDigest, "invalid:metadata-read-failed-" + ExceptionReason(exception));
             return false;
         }
 

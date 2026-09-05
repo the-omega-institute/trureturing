@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 
@@ -14,6 +15,38 @@ internal static class MsBuildCompileOracle
 {
     private const int MaximumOutputBytes = 32 * 1024 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+
+    internal static ScribeTestMapEnvironment DescribeEnvironment() =>
+        DescribeEnvironment(ResolveDotnetExecutable, static host => BoundedProcessRunner.Run(
+            host,
+            ["--version"],
+            Directory.GetCurrentDirectory(),
+            BoundedProcessRunner.HangDetectionBudget,
+            maximumOutputBytes: 4096));
+
+    internal static ScribeTestMapEnvironment DescribeEnvironment(
+        Func<string> resolveHost,
+        Func<string, ProcessOutput> probeVersion)
+    {
+        var host = resolveHost();
+        var output = probeVersion(host);
+        if (output.ExitCode != 0)
+        {
+            throw new InvalidOperationException("dotnet-version-exit-" + output.ExitCode);
+        }
+
+        var version = StrictUtf8.GetString(output.StandardOutput).Trim();
+        if (version.Length == 0)
+        {
+            throw new InvalidOperationException("dotnet-version-empty");
+        }
+
+        return new ScribeTestMapEnvironment(
+            RuntimeInformation.RuntimeIdentifier,
+            RuntimeInformation.FrameworkDescription,
+            host,
+            version);
+    }
 
     internal static bool IsBuildInput(string path)
     {
@@ -211,7 +244,7 @@ internal static class MsBuildCompileOracle
         return Path.TrimEndingDirectorySeparator(current);
     }
 
-    private static string ResolveDotnetExecutable()
+    internal static string ResolveDotnetExecutable()
     {
         if (Environment.GetEnvironmentVariable("DOTNET_HOST_PATH") is { Length: > 0 } host
             && File.Exists(host))

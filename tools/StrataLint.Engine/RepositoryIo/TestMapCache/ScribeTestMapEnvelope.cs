@@ -7,10 +7,13 @@ namespace StrataLint.Engine;
 internal sealed record ScribeTestMapEnvironment(
     string Rid,
     string Framework,
+    string DotnetHost,
     string DotnetSdkVersion);
 
 internal sealed record ScribeTestMapProducer(string EngineMvid)
 {
+    // Equal MVIDs for identical source under deterministic builds are a build artifact property.
+    // CI must measure this; source inspection alone does not establish reproducibility.
     internal static ScribeTestMapProducer Current { get; } = new(
         typeof(ScribeTestMapDeriver).Assembly.ManifestModule.ModuleVersionId.ToString("N"));
 }
@@ -18,6 +21,7 @@ internal sealed record ScribeTestMapProducer(string EngineMvid)
 internal sealed record ScribeTestMapEnvelope(
     int SchemaVersion,
     string InputDigest,
+    string MetadataDigest,
     ScribeTestMapProducer Producer,
     ScribeTestMapEnvironment Environment,
     ScribeTestMap Map)
@@ -26,6 +30,7 @@ internal sealed record ScribeTestMapEnvelope(
 
     internal static ScribeTestMapEnvelope Create(
         string inputDigest,
+        string metadataDigest,
         ScribeTestMapEnvironment environment,
         ScribeTestMap map)
     {
@@ -36,9 +41,15 @@ internal sealed record ScribeTestMapEnvelope(
             throw new ArgumentException("Test-map input digest must be lowercase SHA-256 hex.", nameof(inputDigest));
         }
 
+        if (!IsDigest(metadataDigest))
+        {
+            throw new ArgumentException("Test-map metadata digest must be lowercase SHA-256 hex.", nameof(metadataDigest));
+        }
+
         return new ScribeTestMapEnvelope(
             1,
             inputDigest,
+            metadataDigest,
             ScribeTestMapProducer.Current,
             environment,
             map);
@@ -50,6 +61,7 @@ internal sealed record ScribeTestMapEnvelope(
         {
             schema_version = SchemaVersion,
             input_digest = InputDigest,
+            metadata_digest = MetadataDigest,
             producer = new
             {
                 engine_mvid = Producer.EngineMvid,
@@ -58,6 +70,7 @@ internal sealed record ScribeTestMapEnvelope(
             {
                 rid = Environment.Rid,
                 framework = Environment.Framework,
+                dotnet_host = Environment.DotnetHost,
                 dotnet_sdk_version = Environment.DotnetSdkVersion,
             },
             map = new
@@ -96,7 +109,7 @@ internal sealed record ScribeTestMapEnvelope(
             var text = StrictUtf8.GetString(bytes);
             using var document = JsonDocument.Parse(text);
             var root = document.RootElement;
-            RequireFields(root, "schema_version", "input_digest", "producer", "environment", "map");
+            RequireFields(root, "schema_version", "input_digest", "metadata_digest", "producer", "environment", "map");
 
             var schemaVersion = ReadInt32(root, "schema_version");
             if (schemaVersion != 1)
@@ -110,6 +123,12 @@ internal sealed record ScribeTestMapEnvelope(
                 throw new EnvelopeReadException("input-digest");
             }
 
+            var metadataDigest = ReadString(root, "metadata_digest");
+            if (!IsDigest(metadataDigest))
+            {
+                throw new EnvelopeReadException("metadata-digest");
+            }
+
             var producerElement = root.GetProperty("producer");
             RequireFields(producerElement, "engine_mvid");
             var producer = new ScribeTestMapProducer(ReadString(producerElement, "engine_mvid"));
@@ -120,10 +139,11 @@ internal sealed record ScribeTestMapEnvelope(
             }
 
             var environmentElement = root.GetProperty("environment");
-            RequireFields(environmentElement, "rid", "framework", "dotnet_sdk_version");
+            RequireFields(environmentElement, "rid", "framework", "dotnet_host", "dotnet_sdk_version");
             var environment = new ScribeTestMapEnvironment(
                 ReadString(environmentElement, "rid"),
                 ReadString(environmentElement, "framework"),
+                ReadString(environmentElement, "dotnet_host"),
                 ReadString(environmentElement, "dotnet_sdk_version"));
 
             var map = ReadMap(root.GetProperty("map"));
@@ -136,6 +156,7 @@ internal sealed record ScribeTestMapEnvelope(
             envelope = new ScribeTestMapEnvelope(
                 schemaVersion,
                 inputDigest,
+                metadataDigest,
                 producer,
                 environment,
                 map);

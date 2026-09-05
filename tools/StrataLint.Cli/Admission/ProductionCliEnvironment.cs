@@ -728,6 +728,10 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                     candidateLeanReport = arguments[index + 1];
                     break;
                 case 2:
+                    if (string.IsNullOrWhiteSpace(arguments[index + 1]))
+                    {
+                        throw CheckUsage();
+                    }
                     testMapCacheRoot = arguments[index + 1];
                     break;
             }

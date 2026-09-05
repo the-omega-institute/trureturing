@@ -16,6 +16,26 @@ internal sealed record ScribeMetadataReferenceResolution(
 
 internal static class ScribeMetadataReferenceResolver
 {
+    internal static IReadOnlyList<string> DescribeInputPaths(
+        IEnumerable<ScribeCompilationProject> projects) => DescribeInputPaths(projects, PackageDirectory);
+
+    internal static IReadOnlyList<string> DescribeInputPaths(
+        IEnumerable<ScribeCompilationProject> projects,
+        Func<string, string, string> packageDirectory)
+    {
+        var paths = new HashSet<string>(PlatformPaths(), StringComparer.Ordinal);
+        foreach (var project in projects)
+        {
+            foreach (var package in Packages(project, packageDirectory, path => paths.Add(path)))
+            {
+                paths.UnionWith(CompileAssets(package.Id, package.Version, packageDirectory));
+            }
+        }
+
+        return paths.Select(Path.GetFullPath).Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal).ToArray();
+    }
+
     private static readonly (string Assembly, string Provider)[] RequiredXunitMetadata =
     [
         ("xunit.core", "xunit.extensibility.core"),
@@ -28,10 +48,10 @@ internal static class ScribeMetadataReferenceResolver
         var assemblyNames = paths
             .Select(Path.GetFileNameWithoutExtension)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        var packages = Packages(project).ToArray();
+        var packages = Packages(project, PackageDirectory).ToArray();
         foreach (var package in packages)
         {
-            foreach (var path in CompileAssets(package.Id, package.Version))
+            foreach (var path in CompileAssets(package.Id, package.Version, PackageDirectory))
             {
                 if (assemblyNames.Add(Path.GetFileNameWithoutExtension(path))) paths.Add(path);
             }
@@ -79,7 +99,10 @@ internal static class ScribeMetadataReferenceResolver
     internal static IEnumerable<MetadataReference> PlatformReferences() =>
         PlatformPaths().Select(static path => MetadataReference.CreateFromFile(path));
 
-    private static IEnumerable<(string Id, string Version)> Packages(ScribeCompilationProject project)
+    private static IEnumerable<(string Id, string Version)> Packages(
+        ScribeCompilationProject project,
+        Func<string, string, string> packageDirectory,
+        Action<string>? describeRead = null)
     {
         if (project.PackageLockContent is { Length: > 0 } packageLock)
         {
@@ -115,7 +138,7 @@ internal static class ScribeMetadataReferenceResolver
         {
             if (package.Id.Length == 0 || package.Version.Length == 0 || !visited.Add(package.Id)) continue;
             yield return package;
-            foreach (var dependency in PackageDependencies(package.Id, package.Version))
+            foreach (var dependency in PackageDependencies(package.Id, package.Version, packageDirectory, describeRead))
             {
                 pending.Enqueue(dependency);
             }
@@ -124,13 +147,16 @@ internal static class ScribeMetadataReferenceResolver
 
     private static IEnumerable<(string Id, string Version)> PackageDependencies(
         string id,
-        string version)
+        string version,
+        Func<string, string, string> packageDirectory,
+        Action<string>? describeRead)
     {
-        var directory = PackageDirectory(id, version);
+        var directory = packageDirectory(id, version);
         var nuspec = Directory.Exists(directory)
             ? Directory.EnumerateFiles(directory, "*.nuspec", SearchOption.TopDirectoryOnly).FirstOrDefault()
             : null;
         if (nuspec is null) yield break;
+        describeRead?.Invoke(nuspec);
         var document = XDocument.Load(nuspec, LoadOptions.None);
         foreach (var dependency in document.Descendants()
                      .Where(static element => element.Name.LocalName == "dependency"))
@@ -144,9 +170,12 @@ internal static class ScribeMetadataReferenceResolver
         }
     }
 
-    private static IEnumerable<string> CompileAssets(string id, string version)
+    private static IEnumerable<string> CompileAssets(
+        string id,
+        string version,
+        Func<string, string, string> packageDirectory)
     {
-        var package = PackageDirectory(id, version);
+        var package = packageDirectory(id, version);
         if (!Directory.Exists(package)) yield break;
         var directory = new[] { "ref", "lib" }
             .Select(root => Path.Combine(package, root))

@@ -9,12 +9,12 @@ namespace StrataLint.Tests;
 public sealed class ScribeTestMapEnvelopeTests
 {
     private static readonly ScribeTestMapEnvironment Environment =
-        new("test-rid", ".NET test framework", "10.0.100-test");
+        new("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test");
 
     [Fact]
     public void RoundTripPreservesEveryFieldAndOrder()
     {
-        var original = ScribeTestMapEnvelope.Create(Digest('a'), Environment, CompleteMap());
+        var original = ScribeTestMapEnvelope.Create(Digest('a'), Digest('d'), Environment, CompleteMap());
 
         var accepted = ScribeTestMapEnvelope.TryRead(
             original.Write(),
@@ -25,6 +25,7 @@ public sealed class ScribeTestMapEnvelopeTests
         Assert.NotNull(decoded);
         Assert.Equal(1, decoded.SchemaVersion);
         Assert.Equal(original.InputDigest, decoded.InputDigest);
+        Assert.Equal(original.MetadataDigest, decoded.MetadataDigest);
         Assert.Equal(original.Producer, decoded.Producer);
         Assert.Equal(Environment, decoded.Environment);
         Assert.Equal(
@@ -49,6 +50,7 @@ public sealed class ScribeTestMapEnvelopeTests
     {
         var bytes = ScribeTestMapEnvelope.Create(
             Digest('b'),
+            Digest('d'),
             Environment,
             CompleteMap()).Write();
         using var document = JsonDocument.Parse(bytes);
@@ -114,7 +116,7 @@ public sealed class ScribeTestMapEnvelopeTests
     }
 
     private static byte[] ValidBytes() =>
-        ScribeTestMapEnvelope.Create(Digest('c'), Environment, CompleteMap()).Write();
+        ScribeTestMapEnvelope.Create(Digest('c'), Digest('d'), Environment, CompleteMap()).Write();
 
     private static byte[] Rewrite(byte[] bytes, Action<JsonObject> rewrite)
     {
