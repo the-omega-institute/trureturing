@@ -1,0 +1,17 @@
+## 定理 2：实际 ξ 的有限实根判据
+
+以下三个命题等价：
+
+$$
+\begin{aligned}
+\text{①}\;&\mathrm{RH};\\
+\text{②}\;&\forall d\ge1,\ P_d\text{ 的全部零点为负实数};\\
+\text{③}\;&\text{存在无界次数列 }d_j,\ 
+P_{d_j}\text{ 的全部零点为负实数}.
+\end{aligned}
+$$
+
+这是经典 Jensen–Pólya 判据在当前归一化下的形式。相关的一般理论及实际 ξ 的 Jensen 多项式研究已有成熟文献。([arXiv][3])
+
+### 证明
+

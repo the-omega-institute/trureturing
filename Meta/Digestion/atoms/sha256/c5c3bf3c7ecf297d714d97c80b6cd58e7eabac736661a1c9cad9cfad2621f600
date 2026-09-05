@@ -1,0 +1,39 @@
+## 定义 7：不需要根的 Newton 读数
+
+设 \(C_q\) 是多项式 \(q\) 的伴随矩阵。定义：
+
+$$
+\boxed{
+s_n=\frac1d\operatorname{Tr}(C_q^n),
+\qquad s_0=1.
+}
+\tag{14}
+$$
+
+这些数可直接由 \(c_1,\ldots,c_d\) 通过 Newton 恒等式计算。
+
+例如：
+
+$$
+s_1=\frac{c_1}{d},
+$$
+
+$$
+s_2=\frac{c_1^2-2c_2}{d},
+$$
+
+$$
+s_3=\frac{c_1^3-3c_1c_2+3c_3}{d},
+$$
+
+不存在的系数按零处理。
+
+定义 Hermite 矩阵：
+
+$$
+\boxed{
+G_d=(s_{i+j})_{0\le i,j<d}.
+}
+\tag{15}
+$$
+

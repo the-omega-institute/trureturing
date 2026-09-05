@@ -1,0 +1,29 @@
+## 定义 18.1　线性结构耦合钟
+
+取有限维钟 Hamiltonian \(H_C\)，选定接口方向 \(v\in\mathbb R^m\)，定义
+
+$$
+Y=v^{\mathsf T}\boldsymbol y.
+$$
+
+完整 Hamiltonian 为
+
+$$
+\boxed{
+H_{\mathrm{tot}}
+=
+H_C+H_{\mathrm G}+H_CY.
+}
+\tag{18.1}
+$$
+
+初态为
+
+$$
+\rho_C\otimes\rho_\beta.
+$$
+
+这是新的明确制备条件，不等于钟已处于每个条件位移基态组成的平衡子空间。
+
+---
+

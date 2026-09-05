@@ -1,0 +1,52 @@
+## 定理 1：有限观察的紧集误差界
+
+对每个 \(R>0\)：
+
+$$
+\boxed{
+\sup_{|v|\le R}|D(v)-P_d(v)|
+\le
+\frac{R^2D''(R)}{2d}.
+}
+\tag{8}
+$$
+
+### 证明
+
+\(\omega_{d,k}\) 是 \(k\) 个有标签对象独立进入 \(d\) 个槽位时，没有碰撞的概率。
+
+两两碰撞的并集估计给出：
+
+$$
+1-\omega_{d,k}
+\le
+\frac{k(k-1)}{2d}.
+$$
+
+对 \(k>d\) 这个不等式仍然成立。
+
+因为 \(a_k\ge0\)：
+
+$$
+\begin{aligned}
+|D(v)-P_d(v)|
+&\le
+\sum_{k\ge0}(1-\omega_{d,k})a_kR^k\\
+&\le
+\frac1{2d}
+\sum_{k\ge0}k(k-1)a_kR^k\\
+&=
+\frac{R^2D''(R)}{2d}.
+\end{aligned}
+$$
+
+证毕。
+
+因此：
+
+$$
+\boxed{P_d\longrightarrow D\quad\text{在每个紧集上一致收敛}.}
+$$
+
+---
+
