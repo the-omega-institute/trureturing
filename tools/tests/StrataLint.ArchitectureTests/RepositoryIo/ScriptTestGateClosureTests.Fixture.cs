@@ -87,9 +87,14 @@ public sealed partial class ScriptTestGateClosureTests
         + "<PackageReference Include=\"xunit\" Version=\"2.9.3\" />"
         + "</ItemGroup></Project>\n";
 
+    // 合成脚手架程序集的名字必须与判官 pin 的那个一致:
+    // ScriptTestInputDeriver.IsRepositoryRootProvider 以 ContainingAssembly.Name
+    // 为合取项之一,而脚手架已迁至 StrataLint.TestSupport。
+    // 命名空间仍是 StrataLint.Tests —— 这不是疏漏:判官钉的是**程序集**不是命名空间,
+    // 本夹具因此同时充当那条区分的活证据(真实树上二者也确实不一致)。
     private static string TestSupportProjectText() =>
         "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup>"
-        + "<IsTestProject>true</IsTestProject><AssemblyName>StrataLint.Tests</AssemblyName>"
+        + "<IsTestProject>true</IsTestProject><AssemblyName>StrataLint.TestSupport</AssemblyName>"
         + "</PropertyGroup><ItemGroup>"
         + "<PackageReference Include=\"xunit\" Version=\"2.9.3\" />"
         + "</ItemGroup></Project>\n";

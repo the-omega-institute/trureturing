@@ -2671,3 +2671,29 @@ W-13、W-14、W-15 的右端**不含 `Z`**:素数侧表达式与 Poincaré 不�
 L2a 一席位轮(codex-cli,独立 worktree,`GermWindow/`;同 PR deposit(绑 L2a atom)+ cover;三席评审),须在第一层 la165 合入后开工。L2b 一席位轮(新桶 `Analytic/Certified/`,可与 L2a 并行;同 PR deposit + cover)。L2c 在 L2a、L2b 合入后开工,探针先行(预算 2 小时)。
 
 后续增订继续严格追加于本节之后。
+
+# 增订三十五　G-c 第一层逃逸见证的 v2 重预登记与两处勘误(增订三十三 §一)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;起因为 PR #5385 的评审三席中两席独立 reject——architecture(GPT PRO nyxid `company-chatgpt-pro`,`rev5385-arch-a1`)与 quality(codex,`rev5385-quality`)——同一依据:落地证明 `germ_zero_of_center_jet` 只调用一次 `rouche_exists_zero_rectangle_of_unique_simple`(A₀ → F 直接比较),而增订三十三「逃逸见证」段预登记的是「两次 Rouché 组装」(A₀ → g₆₀ → F)。orchestrator(claude 主循环)亲验:①`D5/S3/Analytic/GermWindow/GermZeroCertificateReduction.lean:667-699` 确为一次调用;②**实施前探针**(codex,`probe-gc-layer1`,证明文件 `gc-layer1-Probe.lean`,sha256 `48a980d771e1c3d9fa8c86f342acf38057438e0ae037aa7ac1bc81be671d1230`,写于 2026-09-05T04:14:39+0800,早于实施席派发)的最终定理**同样只调用一次**(该文件唯一的最终 `obtain … := rouche_exists_zero_rectangle_of_unique_simple`),实施与探针一致。故「两次」不是实施席的替换,而是 orchestrator 依面板路线散文转写增订三十三时对探针机制的**误述**。散文由 orchestrator 撰写。判决日:2026-09-05。lane issue:#4589。
+
+## 〇　为什么要重预登记而不是改正文
+
+第 5⁗ 条:「探针或实施后观测到的见证若与拟议不同,须以新版本重新预登记,不得事后改标。」卷为 append-only(第 7′ 条),增订三十三的文字不改;本节以 v2 形式重登记观测到的见证,并列出旧结算中哪些仍立、哪些作废(第 5″ 条追加目标不改旧结算)。
+
+## 一　G-c-L1 逃逸见证 v2(观测形,已由探针与实施两次独立实现)
+
+**义务子句不变**:增订三十三 §一 的条件命题 `germ_zero_of_center_jet`(‖g₆₀(c)‖ < 4·10⁻¹⁰、Re g₆₀′(c) > 1.87、Q 上 ‖g₆₀″‖ ≤ 400 ⇒ 10⁻⁸ 球内存在 F 的零点)逐字保持,其 atom 与覆盖边不变。
+
+**逃逸见证 v2**:仿射 A₀(s) = g₆₀(c) + g₆₀′(c)(s − c) 在 Q 内恰一个单零点(根位移 < 4·10⁻¹⁰/1.87 < h);边界上把**截断 Taylor 余项** ‖g₆₀ − A₀‖ ≤ 4·10⁻¹⁴ 与**局部因子尾项** ‖F − g₆₀‖ < 5.8·10⁻¹⁰ **合并为一条估计** ‖F − A₀‖ ≤ 4·10⁻¹⁴ + 5.8·10⁻¹⁰,与仿射边界下界 1.87h − 4·10⁻¹⁰ = 8.95·10⁻⁹ 比较后,**一次** Rouché 直接把零点数 1 从 A₀ 传到 F。非冻结前置的实例化:根位移估计、合并边界估计与 Rouché 组装均在活路径上。
+
+**旧结算清单**:①条件归约为真(kernel 已证,PR #5385)——仍立;②「两次 Rouché」作为机制描述——作废,由本节 v2 取代;③增订三十三的成本估计与第二层预登记——不受影响。
+
+## 二　勘误二:Taylor 余项常数
+
+增订三十三 §一 写「Taylor 余项 ‖g₆₀ − A₀‖ ≤ 400·2h² = 2·10⁻¹⁴」;公开伴随定理 `truncation_taylor_remainder_of_curv` 证的是 ≤ 4·10⁻¹⁴(方形对角线上 ‖s − c‖² ≤ 2h² 与积分路径估计的常数 2 合并)。两者都远小于边界余量 8.95·10⁻⁹,结论不受影响;以 4·10⁻¹⁴ 为准。
+
+## 三　诚实边界
+
+本节不新增数学命题、不改任何冻结节点;它只把「预测写在实施之前」这条纪律的一次失误(散文误述探针机制)按 5⁗ 的规定形式入账。第二层 L2a/L2b/L2c(增订三十四)的预登记见证是否会遇到同样的转写误差,由其实施时同样对照探针文件核对。
+
+后续增订继续严格追加于本节之后。

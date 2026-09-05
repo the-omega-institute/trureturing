@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Xml.Linq;
 using StrataLint.EngineeringScope;
 using StrataLint.TestSupport;
 using Xunit;
@@ -19,6 +20,8 @@ public sealed class EngineeringScopeProgramTests
         "tools/tests/NewProduct.Tests/NewProduct.Tests.csproj";
     private const string ScriptTestsProject =
         "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
+    private const string ProductFeature = "tools/Product/Feature.cs";
+    private const string FileMapPath = "Meta/FILEMAP.toml";
 
     [Fact]
     public void CandidateNewTestProjectIsSelectedOnItsIntroducingChange()
@@ -102,6 +105,82 @@ public sealed class EngineeringScopeProgramTests
     }
 
     [Fact]
+    public void JudgePlaneChangeForcesFullEngineeringScope()
+    {
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, ProductFeature, "internal sealed class Feature { }\n");
+                WriteAdmissionPlaneFileMap(root, (ProductFeature, "judge"));
+            },
+            root => WriteFile(root, ProductFeature, "internal sealed class Feature { public int Value => 1; }\n"));
+
+        Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Equal([ProductTestsProject, ScriptTestsProject], result.SelectedProjects);
+        Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ClassificationUsesProtectedBaseFileMapForFullRouting()
+    {
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, ProductFeature, "internal sealed class Feature { }\n");
+                WriteAdmissionPlaneFileMap(
+                    root,
+                    (FileMapPath, "judge"),
+                    (ProductFeature, "judge"));
+            },
+            root =>
+            {
+                WriteFile(root, ProductFeature, "internal sealed class Feature { public int Value => 1; }\n");
+                WriteAdmissionPlaneFileMap(
+                    root,
+                    (FileMapPath, "content"),
+                    (ProductFeature, "content"));
+            });
+
+        Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Equal([ProductTestsProject, ScriptTestsProject], result.SelectedProjects);
+        Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FileMapRepairBootstrapForcesFullEngineeringScope()
+    {
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                TemporaryFileSystem.File.Delete(Path.Combine(root, FileMapPath));
+            },
+            root => WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge")));
+
+        Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Equal([ProductTestsProject, ScriptTestsProject], result.SelectedProjects);
+        Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ContentPlaneChangeKeepsIncrementalEngineeringScope()
+    {
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, ProductFeature, "internal sealed class Feature { }\n");
+            },
+            root => WriteFile(root, ProductFeature, "internal sealed class Feature { public int Value => 1; }\n"));
+
+        Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Equal([ProductTestsProject], result.SelectedProjects);
+        Assert.Contains("ENGINEERING_TEST_PLAN state=selected", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void MissingBuildOutputRetriesOnce() =>
         AssertRunTestsScenario(
             "RunsAfterFallback", "Assert.True(true);", prebuild: false, expectedExitCode: 0, expectedRetryCount: 1);
@@ -115,6 +194,19 @@ public sealed class EngineeringScopeProgramTests
     public void RealTestFailureDoesNotRetry() =>
         AssertRunTestsScenario(
             "Fails", "Assert.True(false, \"intentional\");", prebuild: true, expectedExitCode: 1, expectedRetryCount: 0);
+
+    [Fact]
+    public void CandidateTestInvocationUsesMinimalVerbosity()
+    {
+        var arguments = Program.BuildTestArguments(
+            ProductTestsProject,
+            noBuild: true,
+            resultsDirectory: "/tmp/engineering-results");
+
+        var verbosityIndex = Array.IndexOf(arguments.ToArray(), "--verbosity");
+        Assert.True(verbosityIndex >= 0, $"arguments=[{string.Join(", ", arguments)}]");
+        Assert.Equal("minimal", arguments[verbosityIndex + 1]);
+    }
 
     [Fact]
     public void ConfiguredEvidenceDirectoryRetainsTrxAfterExecution()
@@ -134,7 +226,24 @@ public sealed class EngineeringScopeProgramTests
                 root => WriteSmokeTest(root, "ExportsEvidence", "Assert.True(true);"));
 
             Assert.True(result.ExitCode == 0, result.Diagnostic);
-            Assert.NotEmpty(Directory.GetFiles(projectDirectory, "*.trx", SearchOption.TopDirectoryOnly));
+            Assert.Contains(
+                $"ENGINEERING_TEST_EXECUTED project={JsonSerializer.Serialize(ProductTestsProject)} "
+                    + "evidence=trx executed=1",
+                result.Output,
+                StringComparison.Ordinal);
+            var trxPath = Assert.Single(
+                Directory.GetFiles(projectDirectory, "*.trx", SearchOption.TopDirectoryOnly));
+            var trx = XDocument.Load(trxPath, LoadOptions.None);
+            var counters = trx.Descendants()
+                .Single(element => element.Name.LocalName == "Counters");
+            Assert.Equal("1", (string?)counters.Attribute("executed"));
+            Assert.Equal("1", (string?)counters.Attribute("passed"));
+            Assert.Equal("0", (string?)counters.Attribute("failed"));
+            Assert.Equal(
+                ["Passed"],
+                trx.Descendants()
+                    .Where(element => element.Name.LocalName == "UnitTestResult")
+                    .Select(element => (string?)element.Attribute("outcome")));
         }
         finally
         {
@@ -305,6 +414,7 @@ public sealed class EngineeringScopeProgramTests
 
     private static void WriteGateInfrastructure(string root)
     {
+        WriteAdmissionPlaneFileMap(root, ("**", "content"));
         WriteProject(root, ScriptTestsProject, isTest: true);
         WriteFile(
             root,
@@ -330,6 +440,17 @@ public sealed class EngineeringScopeProgramTests
         WriteFile(root, "tools/scripts/workflow/self-lock-probe.sh", "exit 0\n");
         WriteFile(root, "tools/scripts/report/report-supervisor.sh", "exit 0\n");
     }
+
+    private static void WriteAdmissionPlaneFileMap(
+        string root,
+        params (string Pattern, string Plane)[] entries) =>
+        WriteFile(
+            root,
+            FileMapPath,
+            string.Join(
+                "\n",
+                entries.Select(entry =>
+                    $"[[files]]\npattern = \"{entry.Pattern}\"\nadmission_plane = \"{entry.Plane}\"\n")));
 
     private static void WriteFile(string root, string path, string content)
     {

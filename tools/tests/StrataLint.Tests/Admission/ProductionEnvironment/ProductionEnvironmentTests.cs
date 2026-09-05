@@ -104,7 +104,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsAnAddedAcceptedEventWithoutAStateFragmentOrSidecarRead()
+    public void CheckAdmitsAnAddedAcceptedEventWithMatchingStatePinWithoutSidecarRead()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -123,9 +123,7 @@ public sealed partial class ProductionEnvironmentTests
         var statePath = FrozenStatePath.FromModulePath(
             Assert.Single(loaded.Events).DescriptorPath).Value;
         fixture.Baseline.Remove(addedEventPath);
-        fixture.Files.Remove(statePath);
-        fixture.Baseline.Remove(statePath);
-        Assert.DoesNotContain(statePath, fixture.Files.Keys);
+        Assert.Contains(statePath, fixture.Files.Keys);
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var gateway = new FakeRepositoryGateway(
@@ -312,12 +310,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(first.Output, second.Output);
         Assert.Contains("SELFTEST PASS", first.Output, StringComparison.Ordinal);
     }
-
-    private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
-        RawRepositorySnapshot.Create(files.Select(pair => new RawRepositoryEntry(
-            pair.Key,
-            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(pair.Value)),
-            FrozenLedgerTestData.GitBlobOid(pair.Value))));
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;

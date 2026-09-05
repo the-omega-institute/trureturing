@@ -13,6 +13,7 @@
          StrataLint.Tests。ScriptTests 已具名进 CrossCuttingHarnessPaths,不在 ownedTestProjects
          里,故 OwnedTestToOwnedTestReference 的 foreach 主语不含它 —— 该引用不记拓扑债。 -->
     <ProjectReference Include="../StrataLint.Tests/StrataLint.Tests.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="Xunit.SkippableFact" />
@@ -20,9 +21,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <None Include="../../scripts/workflow/admission-plane-classify.py"
-          Link="admission-plane-classify.py"
-          CopyToOutputDirectory="PreserveNewest" />
     <None Include="../../scripts/workflow/engineering-test-execution-harness.sh"
           Link="engineering-test-execution-harness.sh"
           CopyToOutputDirectory="PreserveNewest" />

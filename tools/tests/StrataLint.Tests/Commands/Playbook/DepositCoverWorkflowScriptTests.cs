@@ -27,7 +27,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:lean-report",
                 "dotnet:deposit-header-check",
                 "make:emit",
+                "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
+                "dotnet:ledger-frozen",
             ],
             fixture.CallKinds());
     }
@@ -60,6 +62,20 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
         Assert.Equal(1, fixture.FreezeCount());
+    }
+
+    [Fact]
+    public void DepositPropagatesLedgerFrozenInfrastructureFailure()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.FailFrozenQuery();
+
+        var result = fixture.Run("deposit");
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("LEDGER_FROZEN_INVALID", Encoding.UTF8.GetString(result.StandardError));
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
     [Fact]
@@ -165,7 +181,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 Path.Combine(Root, "Makefile"));
             WriteFile(
                 ".gitignore",
-                ".lake/\n.report-source\nbin/\ncalls\nfreeze-probes\nfail-ledger-once\n");
+                ".lake/\n.report-source\nbin/\ncalls\nfreeze-probes\nfail-ledger-once\n.ledger-frozen-status\n");
             WriteFile(LeanPath, ExactSixLineLean(Gid, "theorem probe : True := by trivial\n"));
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");
@@ -220,6 +236,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         internal void FailAfterNextFreeze() => WriteFile("fail-ledger-once", "1\n");
 
+        internal void FailFrozenQuery() => WriteFile(".ledger-frozen-status", "2\n");
+
         internal void WriteRevokedSnapshot()
         {
             WriteLedger(Array.Empty<string>());
@@ -243,6 +261,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 schema_version = 5,
             });
             WriteLedger(freeze);
+            WriteFile(".ledger-frozen-status", "0\n");
         }
 
         internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());

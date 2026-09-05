@@ -14,6 +14,7 @@ public sealed partial class ProductionEnvironmentTests
         using var candidate = new TemporaryDirectory();
         using var reports = new TemporaryDirectory();
         var fixture = new RuleFixture();
+        InstallDefaultAdmissionPlaneFileMap(fixture);
 
         // A —— 候选与 dev 的共同祖先。
         InitializeRepository(candidate.Path);
@@ -90,6 +91,7 @@ public sealed partial class ProductionEnvironmentTests
         using var candidate = new TemporaryDirectory();
         using var reports = new TemporaryDirectory();
         var fixture = new RuleFixture();
+        InstallDefaultAdmissionPlaneFileMap(fixture);
         var candidateFreeze = FreezeEvent(fixture, RuleFixture.RingPath);
         var devFreeze = FreezeEvent(fixture, RuleFixture.ValuesBindingPath);
 
@@ -103,6 +105,7 @@ public sealed partial class ProductionEnvironmentTests
         ReviewRegressionTests.RunGit(candidate.Path, "checkout", "-b", "candidate");
         fixture.Files[RuleFixture.BlueprintPath] += "\n";
         fixture.Files[candidateFreeze.Path] = candidateFreeze.Text;
+        fixture.Files[candidateFreeze.StatePath] = candidateFreeze.StateText;
         WriteFiles(candidate.Path, fixture.Files);
         ReviewRegressionTests.RunGit(candidate.Path, "add", ".");
         ReviewRegressionTests.RunGit(candidate.Path, "commit", "-m", "candidate ordinary change");
@@ -112,6 +115,7 @@ public sealed partial class ProductionEnvironmentTests
         var protectedFiles = new Dictionary<string, string>(fixture.Baseline, StringComparer.Ordinal)
         {
             [devFreeze.Path] = devFreeze.Text,
+            [devFreeze.StatePath] = devFreeze.StateText,
         };
         WriteFiles(candidate.Path, protectedFiles);
         ReviewRegressionTests.RunGit(candidate.Path, "add", ".");
@@ -146,7 +150,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Empty(frozenBlame);
     }
 
-    private static (string Path, string Text) FreezeEvent(
+    private static (string Path, string Text, string StatePath, string StateText) FreezeEvent(
         RuleFixture fixture,
         string descriptorSelector)
     {
@@ -168,7 +172,9 @@ public sealed partial class ProductionEnvironmentTests
         var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
         return (
             FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash),
-            Encoding.UTF8.GetString(encoded.Bytes.AsSpan()));
+            Encoding.UTF8.GetString(encoded.Bytes.AsSpan()),
+            FrozenStatePath.FromModulePath(path).Value,
+            Encoding.UTF8.GetString(FrozenStateRecord.Encode(material.StatementId).AsSpan()));
     }
 
     private static void InitializeRepository(string root)
