@@ -43,6 +43,11 @@ internal sealed record DigestionSourceClausePlan(
 
 internal sealed record DigestionIngestFallback(string SourceId, string Reason);
 
+internal sealed record DigestionContentKindObservation(
+    string SourceId,
+    string AtomId,
+    string? ContentKind);
+
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
@@ -54,7 +59,8 @@ internal sealed record DigestionLedgerAlignment(
     ImmutableHashSet<string> VerifiedClausePlanParents,
     ImmutableArray<DigestionIngestFallback> Fallbacks,
     ImmutableArray<string> ActualStale,
-    ImmutableArray<string> Findings)
+    ImmutableArray<string> Findings,
+    ImmutableArray<DigestionContentKindObservation> ContentKindObservations = default)
 {
     internal DigestionReceiptAlignment AlignmentFor(string atomId) =>
         EntryAlignments.TryGetValue(atomId, out var alignment)
@@ -78,10 +84,16 @@ internal static partial class DigestionLedgerAligner
         RepositorySnapshot? baselineSnapshot = null,
         DigestionCasEvaluation? casEvaluation = null,
         RawChangeSet? changes = null,
-        RawChangeSet? casChanges = null)
+        RawChangeSet? casChanges = null,
+        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
+        if (atomizerResolver is null && contentKindAtomizerResolver is null)
+        {
+            contentKindAtomizerResolver = static id =>
+                AtomizerRegistry.Require(id).AtomizeWithContentKinds;
+        }
         atomizerResolver ??= static id => AtomizerRegistry.Require(id).Atomize;
 
         var findings = ImmutableArray.CreateBuilder<string>();
@@ -133,6 +145,7 @@ internal static partial class DigestionLedgerAligner
         var clausePlanChainParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var verifiedClausePlanMembers = new HashSet<string>(StringComparer.Ordinal);
+        var contentKindObservations = ImmutableArray.CreateBuilder<DigestionContentKindObservation>();
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var suggestedAtomIds = sources
             .SelectMany(static source => source.Entries)
@@ -253,27 +266,21 @@ internal static partial class DigestionLedgerAligner
             baselineSources.TryGetValue(source.SourceId, out var baselineSource);
             var contentWideReplacementObligations =
                 contentWideReplacementObligationsBySource.GetValueOrDefault(source.SourceId) ?? [];
-            var admissionGenreFinding = AdmissionGenreFinding(
-                mode,
-                snapshot,
-                baselineSnapshot,
-                source,
-                baselineSource,
-                registeredAtomizer,
-                atomizerRules,
-                atomizerResolver);
-            if (admissionGenreFinding is not null)
-            {
-                findings.Add(admissionGenreFinding);
-            }
-
-            if (mode == DigestionAlignmentMode.Admission
+            var validateGenreProjection = mode == DigestionAlignmentMode.Admission
+                && !AtomizerDecisionClosureEqualBaseline(
+                    snapshot,
+                    baselineSnapshot,
+                    source,
+                    baselineSource);
+            var canSkipAfterGenreProjection = mode == DigestionAlignmentMode.Admission
                 && !source.Entries.IsEmpty
                 && source.Entries.All(entry =>
                     cas.ValidAtomIds.Contains(entry.AtomId)
                     && inheritedEntries.Contains(CanonicalEntry(source, entry)))
                 && contentWideReplacementObligations.Length == 0
-                && !InheritedClauseChainRequiresReplay(source, changes))
+                && !InheritedSourceRequiresReplay(source, changes);
+
+            if (canSkipAfterGenreProjection && !validateGenreProjection)
             {
                 continue;
             }
@@ -281,11 +288,27 @@ internal static partial class DigestionLedgerAligner
             if (!registeredAtomizer)
             {
                 genreRegistryChecks[source.SourceId] = GenreRegistryCheck.NoGenreRegistry;
+                if (validateGenreProjection
+                    && source.Atomizer == AtomizerRegistry.NoAtomizerId
+                    && !GenreRegistryChecksEqual(
+                        source.GenreRegistryCheck,
+                        GenreRegistryCheck.NoGenreRegistry))
+                {
+                    findings.Add(GenreRegistryProjectionFinding(
+                        source,
+                        source.GenreRegistryCheck,
+                        GenreRegistryCheck.NoGenreRegistry));
+                }
                 continue;
             }
 
             if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
             {
+                if (canSkipAfterGenreProjection)
+                {
+                    continue;
+                }
+
                 findings.Add($"source path is dangling: {source.SourcePath}");
                 continue;
             }
@@ -296,9 +319,15 @@ internal static partial class DigestionLedgerAligner
             }
 
             AtomizedTheoryDocument atomized;
+            var atomizedContentKinds = new Dictionary<string, string>(StringComparer.Ordinal);
             try
             {
-                atomized = atomizerResolver(source.Atomizer)(sourceFile.RawBytes.AsSpan(), atomizerRules);
+                atomized = contentKindAtomizerResolver is null
+                    ? atomizerResolver(source.Atomizer)(sourceFile.RawBytes.AsSpan(), atomizerRules)
+                    : contentKindAtomizerResolver(source.Atomizer)(
+                        sourceFile.RawBytes.AsSpan(),
+                        atomizerRules,
+                        atomizedContentKinds);
             }
             catch (Exception exception) when (
                 exception is TheorySourceFormatException or DecoderFallbackException)
@@ -350,6 +379,22 @@ internal static partial class DigestionLedgerAligner
             }
 
             genreRegistryChecks[source.SourceId] = atomized.GenreRegistryCheck;
+            if (validateGenreProjection
+                && !GenreRegistryChecksEqual(
+                    source.GenreRegistryCheck,
+                    atomized.GenreRegistryCheck))
+            {
+                findings.Add(GenreRegistryProjectionFinding(
+                    source,
+                    source.GenreRegistryCheck,
+                    atomized.GenreRegistryCheck));
+            }
+
+            if (canSkipAfterGenreProjection)
+            {
+                continue;
+            }
+
             if (atomized.Claims.IsEmpty)
             {
                 const string reason = "atomizer recognition is incomplete or empty";
@@ -446,12 +491,24 @@ internal static partial class DigestionLedgerAligner
 
             foreach (var atom in claims)
             {
+                atomizedContentKinds.TryGetValue(atom.Fingerprints.RawSha256, out var contentKind);
                 var matchingEntries = source.Entries.Where(entry =>
                         cas.ValidAtomIds.Contains(entry.AtomId)
                         && FingerprintsMatch(entry.Fingerprints, atom.Fingerprints))
                     .ToArray();
+                if (matchingEntries.Length == 0)
+                {
+                    contentKindObservations.Add(new DigestionContentKindObservation(
+                        source.SourceId,
+                        atom.Fingerprints.RawSha256["sha256:".Length..],
+                        contentKind));
+                }
                 foreach (var entry in matchingEntries)
                 {
+                    contentKindObservations.Add(new DigestionContentKindObservation(
+                        source.SourceId,
+                        entry.AtomId,
+                        contentKind));
                     matchedAtoms[entry.AtomId] = atom;
                     alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
                 }
@@ -515,15 +572,15 @@ internal static partial class DigestionLedgerAligner
             verifiedClausePlanParents.ToImmutable(),
             fallbacks.ToImmutable(),
             actualStale.Order(StringComparer.Ordinal).ToImmutableArray(),
-            findings.Order(StringComparer.Ordinal).ToImmutableArray());
+            findings.Order(StringComparer.Ordinal).ToImmutableArray(),
+            contentKindObservations.ToImmutable());
     }
 
-    private static bool InheritedClauseChainRequiresReplay(
+    private static bool InheritedSourceRequiresReplay(
         DigestionLedgerSource source,
         RawChangeSet? changes)
     {
-        if (changes is null
-            || !source.Entries.Any(static entry => !entry.Receipts.ChainAtoms.IsEmpty))
+        if (changes is null)
         {
             return false;
         }

@@ -144,8 +144,12 @@ public sealed partial class DigestionQuarantineTests
                 DigestionGapSeverity.NonFatal)]);
         var evaluation = new DigestionLedgerEvaluation([evaluated], []);
 
-        var summary = DigestResidualSummary.Render(evaluation);
-        var shard = Assert.Single(DigestResidualSummary.RenderShards(evaluation)).Value;
+        var summary = DigestResidualSummary.Render(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
+        var shard = Assert.Single(DigestResidualSummary.RenderShards(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation))).Value;
 
         Assert.DoesNotContain(entry.AtomId, summary, StringComparison.Ordinal);
         Assert.DoesNotContain(entry.AtomId, shard, StringComparison.Ordinal);
