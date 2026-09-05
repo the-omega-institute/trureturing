@@ -1,5 +1,6 @@
 import LeanInformationAudit.AnalysisDisposition
 import LeanInformationAudit.Sha256
+import LeanInformationAudit.DispositionEvidence
 
 namespace LeanInformationAudit
 
@@ -196,6 +197,113 @@ def artifact (report : FrozenReport) (inventory : DispositionInventory) : Except
     ("head_sha", toJson report.headSha), ("report_sha256", toJson report.reportSha256),
     ("theorem_count", toJson report.theorems.size), ("counts", toJson counts),
     ("rows", Json.arr <| inventory.sortedEntries.map dispositionRowJson)]
+
+/-- Independently checks an output projection against its input inventory. -/
+def checkArtifact (report : FrozenReport) (inventory : DispositionInventory)
+    (candidate : Json) : Except String Unit := do
+  let expected ← artifact report inventory
+  for field in ["schema", "head_sha", "report_sha256", "theorem_count", "counts", "rows"] do
+    let expectedValue ← expected.getObjVal? field
+    let actual ← candidate.getObjVal? field
+    unless expectedValue.compress == actual.compress do
+      throw <| censusError report.headSha field expectedValue.compress actual.compress
+
+open Meta Elab Command
+
+private def keyExpr (key : StatementKey) : Expr :=
+  mkApp2 (mkConst ``StatementKey.mk) (toExpr key.theoremName) (toExpr key.statementId)
+
+private def rowExpr (entry : Sigma fun key : StatementKey => AnalysisDisposition key) : MetaM Expr := do
+  let key := keyExpr entry.1
+  let (constructor, payload) ← match entry.2 with
+    | .finiteOccurrence value => do
+      let payload ← mkAppOptM ``FiniteOccurrenceDisposition.mk #[some key,
+        some (toExpr value.canonicalArena), some (toExpr value.registration),
+        some (toExpr value.realization), some (toExpr value.nondegeneracyCertificate),
+        some (toExpr value.stateEnumerationCertificate)]
+      pure (``AnalysisDisposition.finiteOccurrence, payload)
+    | .structuralOccurrence value => do
+      let payload ← mkAppOptM ``StructuralOccurrenceDisposition.mk #[some key,
+        some (toExpr value.canonicalArena), some (toExpr value.registration),
+        some (toExpr value.realization), some (toExpr value.strictnessCertificate),
+        some (toExpr value.witnessCertificate)]
+      pure (``AnalysisDisposition.structuralOccurrence, payload)
+    | .boundedFiniteTruncation value => do
+      let certification := match value.certification with
+        | .reportOnly => mkConst ``TruncationCertification.reportOnly
+        | .transferred name => mkApp (mkConst ``TruncationCertification.transferred) (toExpr name)
+      let payload ← mkAppOptM ``BoundedFiniteTruncationDisposition.mk #[some key,
+        some (toExpr value.truncationFamily), some (toExpr value.bound),
+        some (toExpr value.comparisonStatement), some certification]
+      pure (``AnalysisDisposition.boundedFiniteTruncation, payload)
+    | .unreachable value => do
+      let reason := mkConst <| match value.reason with
+        | .noCanonicalObjectCarrier => ``UnreachableReason.noCanonicalObjectCarrier
+        | .noFinitePrimitiveBundle => ``UnreachableReason.noFinitePrimitiveBundle
+        | .noFaithfulPrimitiveRealization => ``UnreachableReason.noFaithfulPrimitiveRealization
+      let payload ← mkAppOptM ``UnreachableDisposition.mk #[some key,
+        some reason, some (toExpr value.evidence)]
+      pure (``AnalysisDisposition.unreachable, payload)
+  let disposition ← mkAppOptM constructor #[some key, some payload]
+  let motive := mkLambda `key .default (mkConst ``StatementKey)
+    (mkApp (mkConst ``AnalysisDisposition) (.bvar 0))
+  mkAppOptM ``Sigma.mk #[some (mkConst ``StatementKey), some motive, some key, some disposition]
+
+/-- Reifies the actual inventory and asks Lean's kernel to verify ExactlyCovers.
+No native evaluation result is used as a proof. -/
+def coverageProof (report : FrozenReport) (inventory : DispositionInventory) : MetaM Expr := do
+  let motive := mkLambda `key .default (mkConst ``StatementKey)
+    (mkApp (mkConst ``AnalysisDisposition) (.bvar 0))
+  let rowType := mkApp2 (mkConst ``Sigma [.zero, .zero]) (mkConst ``StatementKey) motive
+  let entries ← mkArrayLit rowType (← inventory.entries.toList.mapM rowExpr)
+  let inventoryExpr := mkApp2 (mkConst ``DispositionInventory.mk) (toExpr inventory.headSha) entries
+  let keys ← mkListLit (mkConst ``StatementKey) (report.theorems.toList.map keyExpr)
+  let frozen ← mkAppM ``List.toFinset #[keys]
+  let proposition ← mkAppM ``DispositionInventory.ExactlyCovers
+    #[inventoryExpr, toExpr report.headSha, frozen]
+  let proof ← mkDecideProof proposition
+  checkWithKernel proof
+  return proof
+
+private def readUtf8 (path : String) : IO String := do
+  let bytes ← IO.FS.readBinFile path
+  match String.fromUTF8? bytes with
+  | some text => return text
+  | none => throw <| IO.userError s!"invalid UTF-8: {path}"
+
+/-- Report-only command. It stages a coverage theorem only after checking the
+full inventory and its semantic evidence. Optional JSON is output, never seal input.
+Input: frozen report envelope plus the JSON encoding of DispositionInventory. -/
+elab "#disposition_census" &"root" root:ident &"report" reportPath:str
+    &"head" head:str &"report_sha256" reportSha:str &"inventory" inventoryPath:str
+    &"certificate" certificate:ident " output " outputPath:str : command => do
+  let reportBytes ← readUtf8 reportPath.getString
+  let inventoryBytes ← readUtf8 inventoryPath.getString
+  let report ← ofExcept <| parseReport head.getString reportSha.getString reportBytes
+  let inventory ← ofExcept <| (Json.parse inventoryBytes).bind parseInventory
+  ofExcept <| checkCoverage report.headSha report.theorems inventory
+  let certificateName := (← getCurrNamespace) ++ certificate.getId
+  if (← getEnv).contains certificateName then
+    throwError "disposition census certificate already exists: {certificateName}"
+  let proof ← liftTermElabM do
+    validateEvidence root.getId inventory
+    coverageProof report inventory
+  let proofType ← liftTermElabM <| inferType proof
+  let projection ← ofExcept <| artifact report inventory
+  ofExcept <| checkArtifact report inventory projection
+  let declaration := Declaration.thmDecl {
+    name := certificateName
+    levelParams := []
+    type := proofType
+    value := proof
+  }
+  let options ← getOptions
+  let stagedEnv ← match (← getEnv).addDeclCore (Core.getMaxHeartbeats options).toUSize
+      (maxRecDepth.get options).toUSize declaration none true with
+    | .ok env => pure env
+    | .error error => throwError "{error.toMessageData options}"
+  IO.FS.writeFile outputPath.getString (projection.pretty ++ "\n")
+  setEnv stagedEnv
 
 end DispositionCensus
 
