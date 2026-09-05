@@ -1,0 +1,41 @@
+name: One-shot explicit Weil frame binder
+on:
+  push:
+    branches:
+      - lane/math/rh-canonical-zero-data-nonvacuity-20260903
+    paths:
+      - .github/workflows/one-shot-weil-explicit-frame.yml
+permissions:
+  contents: write
+jobs:
+  reconcile:
+    if: github.repository == 'the-omega-institute/trureturing' && github.ref == 'refs/heads/lane/math/rh-canonical-zero-data-nonvacuity-20260903'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - name: Retain the frame premise in the public theorem type
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('D5/S3/Weil/ZetaBridge/MultiOrbitBurnolUniformRemainder.lean')
+          text = p.read_text()
+          old = 'theorem finite_multiOrbit_full_weil_negative_family :'
+          new = 'theorem finite_multiOrbit_full_weil_negative_family\n    (F : FiniteEvenWeilOrbitFrame Z ι) :'
+          assert text.count(old) == 1, 'The inspected declaration must occur exactly once'
+          p.write_text(text.replace(old, new))
+          Path('.github/workflows/one-shot-weil-explicit-frame.yml').unlink()
+          PY
+          branch='lane/math/rh-canonical-zero-data-nonvacuity-20260903'
+          git fetch origin "$branch"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse FETCH_HEAD)" || { echo 'Concurrent branch update; refusing overwrite'; exit 1; }
+          git add D5/S3/Weil/ZetaBridge/MultiOrbitBurnolUniformRemainder.lean .github/workflows/one-shot-weil-explicit-frame.yml
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'formalize: explicitly bind the finite off-line frame in the full-family theorem'
+          git push origin "HEAD:refs/heads/$branch"
