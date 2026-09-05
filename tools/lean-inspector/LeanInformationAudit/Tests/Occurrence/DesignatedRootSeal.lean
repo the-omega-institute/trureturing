@@ -25,7 +25,7 @@ run_cmd do
     let causalArena :=
       `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena
     unless causal.size == 2 && causal.all (fun row =>
-        row.catalogId == `unifiedCausal && row.objectArenaName == causalArena) do
+        row.catalogId == `«causal-unified-transitions» && row.objectArenaName == causalArena) do
       throwError "ROOT-B-designated-seal: causal contributor/catalog identity mismatch"
     unless SealRecords.systemCatalogIrredundant env designatedInformationRootId do
       throwError "ROOT-B-designated-seal: system_catalog_irredundant lacks staged proofs"

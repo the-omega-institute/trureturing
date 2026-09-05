@@ -21,7 +21,7 @@ theorem extraCausalTheorem :
 /-- Simulate the content lane's registration module without adding D5 source. -/
 def registerCausalFixture (second : Bool := true) (extra : Bool := false) :
     CommandElabM Unit := do
-  let catalogId := mkIdent `unifiedCausal
+  let catalogId := mkIdent `«causal-unified-transitions»
   let originalModule := (← getEnv).header.mainModule
   modifyEnv (·.setMainModule
     `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration)
