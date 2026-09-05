@@ -6,7 +6,13 @@
     <AssemblyName>StrataLint.TestSupport</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <!-- TestProcessRunner 把 BoundedProcessRunner 的 TimeoutException 归类为
+         infrastructure-hang-guard 跳过(见 CLAUDE.md 测试判词一节)。它依赖的三个 Engine 类型
+         BoundedProcessRunner / ProcessOutput / InfrastructureHangGuard **全是 internal**,
+         连返回类型也是,故倒置依赖无法避开 —— 公开成员不能暴露另一程序集的 internal 类型。 -->
+    <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <PackageReference Include="Xunit.SkippableFact" />
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)../../Architecture/BannedSymbols.Determinism.txt" />
   </ItemGroup>
 </Project>

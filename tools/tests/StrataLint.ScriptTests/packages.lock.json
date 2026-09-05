@@ -179,7 +179,11 @@
         }
       },
       "stratalint.testsupport": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "Xunit.SkippableFact": "[1.5.85, )"
+        }
       },
       "trureturing.truth": {
         "type": "Project"
