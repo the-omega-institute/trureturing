@@ -110,6 +110,8 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
+    [CompileTimeInputUniverse("tools/tests/StrataLint.Scribe.Documents.Tests/", ".cs")]
+    [CompileTimeInputUniverse("tools/tests/StrataLint.Scribe.Documents.Tests/", ".csproj")]
     public void ScribeDocumentsTestsReferenceOnlyDocumentsEngineScribeAndTestSupport()
     {
         Assert.Equal(

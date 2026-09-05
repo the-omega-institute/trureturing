@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -24,6 +25,7 @@ internal static class ScribeTestMethodOwnershipPolicy
     private static readonly OpCode[] SingleByteOpCodes = BuildSingleByteOpCodes();
     private static readonly OpCode[] MultiByteOpCodes = BuildMultiByteOpCodes();
 
+    [CompileTimeInputUniverse("tools/tests/", ".cs")]
     internal static ScribeTestMethodOwnershipReading Inspect(
         Assembly testAssembly,
         Assembly documentsAssembly,
@@ -64,6 +66,7 @@ internal static class ScribeTestMethodOwnershipPolicy
             violations);
     }
 
+    [CompileTimeInputUniverse("tools/tests/", ".cs")]
     internal static IReadOnlyList<ScribeTestMethodOwnershipViolation> ProjectViolations(
         Assembly testAssembly,
         IReadOnlyDictionary<MethodInfo, bool> touchesDocuments,
@@ -129,6 +132,7 @@ internal static class ScribeTestMethodOwnershipPolicy
         }
     }
 
+    [CompileTimeInputUniverse("tools/tests/", ".cs")]
     private static void EnqueueStateMachine(
         MethodBase method,
         Assembly testAssembly,
@@ -156,6 +160,7 @@ internal static class ScribeTestMethodOwnershipPolicy
         pending.Enqueue(moveNext);
     }
 
+    [CompileTimeInputUniverse("tools/tests/", ".cs")]
     private static IEnumerable<MemberInfo> ReadMetadataReferences(MethodBase method)
     {
         var body = method.GetMethodBody();
@@ -244,10 +249,12 @@ internal static class ScribeTestMethodOwnershipPolicy
         _ => reference.Module.Assembly,
     };
 
+    [CompileTimeInputUniverse("tools/tests/", ".cs")]
     private static bool IsXunitTestMethod(MethodInfo method) => method
         .GetCustomAttributes(inherit: true)
         .Any(static attribute => attribute is FactAttribute or TheoryAttribute);
 
+    [CompileTimeInputUniverse("tools/tests/", ".cs")]
     private static Type[] GetLoadableTypes(Assembly assembly)
     {
         try
@@ -341,6 +348,7 @@ internal static class ScribeTestMethodOwnershipPolicy
         return result;
     }
 
+    [CompileTimeInputUniverse("tools/tests/", ".cs")]
     private static IEnumerable<OpCode> AllOpCodes() => typeof(OpCodes)
         .GetFields(BindingFlags.Public | BindingFlags.Static)
         .Where(static field => field.FieldType == typeof(OpCode))

@@ -129,32 +129,7 @@ public sealed class EmissionTests
         {
             var report = LeanReportFixture.ForDocuments(
                 DocumentAssembly.Definitions.Select(static definition => definition.Document));
-            foreach (var definition in DocumentAssembly.Definitions)
-            {
-                var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
-                var destination = Path.Combine(root, relativeSource);
-                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
-                // so fixture copies must resolve through the runtime repository root.
-                RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation).CopyTo(
-                    RepositoryRelativePath.Create(relativeSource), destination);
-            }
-            var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
-            foreach (var source in repository.EnumerateFiles(
-                         RepositoryRelativePath.Create("D5"), "*.lean"))
-            {
-                var destination = Path.Combine(root, source.Value);
-                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                repository.CopyTo(source, destination);
-            }
-            CopyRepositoryLibrary(root);
-
-            Assert.Equal(0, ScribeEmitter.Emit(DocumentAssembly.Value,
-                root,
-                check: false,
-                TextWriter.Null,
-                TextWriter.Null,
-                report));
+            PrepareEmittedRepository(root, report);
             var initialVerification = ScribeEmitter.Verify(DocumentAssembly.Value, root, TextWriter.Null, report);
             Assert.NotNull(initialVerification);
             Assert.True(initialVerification.ReferencesDeclaration(
@@ -473,14 +448,22 @@ public sealed class EmissionTests
         CopyProjectionFixtures(root);
         if (definitions is null)
         {
+            var sourceBytes = RepositoryAccessor
+                .EnumerateDeclared(repository.Root.FullPath, "Blueprint")
+                .Where(static source => source.RelativePath.EndsWith(".scribe.cs", StringComparison.Ordinal))
+                .Select(static source => (
+                    source.RelativePath,
+                    Bytes: File.ReadAllBytes(source.FullPath)))
+                .ToDictionary(
+                    static source => source.RelativePath,
+                    static source => source.Bytes,
+                    StringComparer.Ordinal);
             foreach (var definition in DocumentAssembly.Definitions)
             {
                 var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
                 var destination = Path.Combine(root, relativeSource);
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
-                // so fixture copies must resolve through the runtime repository root.
-                repository.CopyTo(RepositoryRelativePath.Create(relativeSource), destination);
+                TemporaryFileSystem.File.WriteAllBytes(destination, sourceBytes[relativeSource]);
             }
         }
         else
@@ -491,12 +474,17 @@ public sealed class EmissionTests
             }
         }
 
-        foreach (var source in repository.EnumerateFiles(
-                     RepositoryRelativePath.Create("D5"), "*.lean"))
+        var leanSources = RepositoryAccessor
+            .EnumerateDeclared(repository.Root.FullPath, "D5")
+            .Where(static source => source.RelativePath.EndsWith(".lean", StringComparison.Ordinal))
+            .Select(static source => (
+                source.RelativePath,
+                Bytes: File.ReadAllBytes(source.FullPath)));
+        foreach (var source in leanSources)
         {
-            var destination = Path.Combine(root, source.Value);
+            var destination = Path.Combine(root, source.RelativePath);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            repository.CopyTo(source, destination);
+            TemporaryFileSystem.File.WriteAllBytes(destination, source.Bytes);
         }
 
         CopyRepositoryLibrary(root, includeBackfill: definitions is null);
@@ -567,22 +555,30 @@ public sealed class EmissionTests
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         if (includeBackfill)
         {
-            var ledgerSources = repository.EnumerateFiles(
-                RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*");
+            var ledgerSources = RepositoryAccessor
+                .EnumerateDeclared(repository.Root.FullPath, "Meta/Digestion/backfill")
+                .Select(static source => (
+                    source.RelativePath,
+                    Bytes: File.ReadAllBytes(source.FullPath)));
             foreach (var source in ledgerSources)
             {
-                var destination = Path.Combine(destinationRoot, source.Value);
+                var destination = Path.Combine(destinationRoot, source.RelativePath);
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                repository.CopyTo(source, destination);
+                TemporaryFileSystem.File.WriteAllBytes(destination, source.Bytes);
             }
         }
 
-        foreach (var source in repository.EnumerateFiles(
-                     RepositoryRelativePath.Create("Library"), "*.md"))
+        var librarySources = RepositoryAccessor
+            .EnumerateDeclared(repository.Root.FullPath, "Library")
+            .Where(static source => source.RelativePath.EndsWith(".md", StringComparison.Ordinal))
+            .Select(static source => (
+                source.RelativePath,
+                Bytes: File.ReadAllBytes(source.FullPath)));
+        foreach (var source in librarySources)
         {
-            var destination = Path.Combine(destinationRoot, source.Value);
+            var destination = Path.Combine(destinationRoot, source.RelativePath);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            repository.CopyTo(source, destination);
+            TemporaryFileSystem.File.WriteAllBytes(destination, source.Bytes);
         }
     }
 
@@ -591,31 +587,35 @@ public sealed class EmissionTests
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         var destinationDirectory = Path.Combine(destinationRoot, "Golden", "Projection");
         TemporaryFileSystem.Directory.CreateDirectory(destinationDirectory);
-        foreach (var source in repository.EnumerateFiles(
-                     RepositoryRelativePath.Create("Golden/Projection"), "*.json"))
-        {
-            repository.CopyTo(
-                source,
-                Path.Combine(destinationDirectory, Path.GetFileName(source.Value)),
-                overwrite: true);
-        }
+        repository.CopyTo(
+            RepositoryRelativePath.Create("Golden/Projection/statement-projection-expansion-v1.json"),
+            Path.Combine(destinationDirectory, "statement-projection-expansion-v1.json"),
+            overwrite: true);
+        repository.CopyTo(
+            RepositoryRelativePath.Create("Golden/Projection/statement-projection-pilot-v1.json"),
+            Path.Combine(destinationDirectory, "statement-projection-pilot-v1.json"),
+            overwrite: true);
 
         // The projection loader reads this report when it exists, on top of the pinned
         // Golden/Projection fixtures. Copy it so a local run sees the same inputs as the
         // repository, but do not require it: the engineering CI job builds no Lean report, and a
         // synthetic repository must be constructible without one.
         const string rawReport = ".lake/build/stratalint/raw-lean-report.json";
-        var rawReportPath = RepositoryRelativePath.Create(rawReport);
-        if (repository.FileExists(rawReportPath))
+        if (repository.FileExists(RepositoryRelativePath.Create(
+                ".lake/build/stratalint/raw-lean-report.json")))
         {
             var reportDestination = Path.Combine(destinationRoot, rawReport);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(reportDestination)!);
-            repository.CopyTo(rawReportPath, reportDestination, overwrite: true);
-            var materialArchive = RepositoryRelativePath.Create(rawReport + ".materials.zip");
-            if (repository.FileExists(materialArchive))
+            repository.CopyTo(
+                RepositoryRelativePath.Create(".lake/build/stratalint/raw-lean-report.json"),
+                reportDestination,
+                overwrite: true);
+            if (repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json.materials.zip")))
             {
                 repository.CopyTo(
-                    materialArchive,
+                    RepositoryRelativePath.Create(
+                        ".lake/build/stratalint/raw-lean-report.json.materials.zip"),
                     reportDestination + ".materials.zip",
                     overwrite: true);
             }

@@ -1,4 +1,5 @@
 using System.Reflection;
+using StrataLint.Engine;
 using StrataLint.Scribe.Documents;
 
 namespace StrataLint.ArchitectureTests;
@@ -11,6 +12,7 @@ public sealed class ScribeTestMethodOwnershipTests
         "StrataLint.Scribe.Tests.DocumentDiscoveryTests.EmptyProjectionAssertionPreservesTheCompleteRepairMessage";
 
     [Fact]
+    [CompileTimeInputUniverse("tools/tests/", ".cs")]
     public void EveryScribeTestMethodBelongsToItsSymbolLevelProductionOwner()
     {
         var documentsAssembly = typeof(DocumentAssembly).Assembly;
@@ -44,8 +46,8 @@ public sealed class ScribeTestMethodOwnershipTests
     {
         var fixtureAssembly = typeof(OwnershipPolicyFixture).Assembly;
         var documentsAssembly = typeof(DocumentAssembly).Assembly;
-        var touching = GetFixtureMethod(nameof(OwnershipPolicyFixture.TouchesDocuments));
-        var notTouching = GetFixtureMethod(nameof(OwnershipPolicyFixture.DoesNotTouchDocuments));
+        var touching = ((Func<Type>)OwnershipPolicyFixture.TouchesDocuments).Method;
+        var notTouching = ((Func<int>)OwnershipPolicyFixture.DoesNotTouchDocuments).Method;
 
         Assert.True(ScribeTestMethodOwnershipPolicy.TouchesAssemblyThroughSameAssemblyCallClosure(
             touching,
@@ -74,11 +76,6 @@ public sealed class ScribeTestMethodOwnershipTests
         Assert.Equal(nameof(OwnershipPolicyFixture.DoesNotTouchDocuments), Assert.Single(mustTouchViolations).TestMethod);
         Assert.Equal(nameof(OwnershipPolicyFixture.TouchesDocuments), Assert.Single(mustNotTouchViolations).TestMethod);
     }
-
-    private static MethodInfo GetFixtureMethod(string name) => typeof(OwnershipPolicyFixture).GetMethod(
-        name,
-        BindingFlags.Public | BindingFlags.Static)
-        ?? throw new InvalidOperationException($"Missing ownership policy fixture method {name}.");
 
     private static string Format(
         IEnumerable<ScribeTestMethodOwnershipReading> readings,

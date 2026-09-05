@@ -47,9 +47,9 @@ internal sealed class RepositoryAccessor
     internal RepositoryRoot Root { get; }
 
     internal static RepositoryAccessor Discover(RepositoryRootCriterion criterion) =>
-        Discover(AppContext.BaseDirectory, criterion);
+        DiscoverFromDirectory(AppContext.BaseDirectory, criterion);
 
-    internal static RepositoryAccessor Discover(
+    internal static RepositoryAccessor DiscoverFromDirectory(
         string startDirectory,
         RepositoryRootCriterion criterion)
     {
@@ -65,6 +65,15 @@ internal sealed class RepositoryAccessor
 
         throw CreateFailure(criterion);
     }
+
+    internal static IReadOnlyList<(string RelativePath, string FullPath)> EnumerateDeclared(
+        string repositoryRoot,
+        string declaredPrefix) => StrataLint.Engine.GitIndexRepositoryFiles
+        .Enumerate(repositoryRoot)
+        .Where(file => file.RelativePath.StartsWith(
+            declaredPrefix + "/",
+            StringComparison.Ordinal))
+        .ToArray();
 
     internal string ReadAllText(RepositoryRelativePath path) =>
         File.ReadAllText(Resolve(path));

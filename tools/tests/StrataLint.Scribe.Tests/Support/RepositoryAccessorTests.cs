@@ -24,7 +24,7 @@ public sealed class RepositoryAccessorTests
 
         try
         {
-            var repository = RepositoryAccessor.Discover(
+            var repository = RepositoryAccessor.DiscoverFromDirectory(
                 nested.FullName,
                 RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
 
@@ -43,10 +43,10 @@ public sealed class RepositoryAccessorTests
 
         try
         {
-            Assert.Throws<InvalidOperationException>(() => RepositoryAccessor.Discover(
+            Assert.Throws<InvalidOperationException>(() => RepositoryAccessor.DiscoverFromDirectory(
                 root.FullName,
                 RepositoryRootCriterion.LakefileInvalidOperation));
-            Assert.Throws<DirectoryNotFoundException>(() => RepositoryAccessor.Discover(
+            Assert.Throws<DirectoryNotFoundException>(() => RepositoryAccessor.DiscoverFromDirectory(
                 root.FullName,
                 RepositoryRootCriterion.ClaudeDirectoryNotFound));
         }
@@ -67,7 +67,7 @@ public sealed class RepositoryAccessorTests
 
         try
         {
-            var repository = RepositoryAccessor.Discover(
+            var repository = RepositoryAccessor.DiscoverFromDirectory(
                 nested.FullName,
                 RepositoryRootCriterion.ClaudeDirectoryNotFound);
             var paths = repository.EnumerateFiles(

@@ -133,6 +133,7 @@ internal static class RendererCorpusFixture
                 commentary)));
         return [source, target];
 
+        [CompileTimeInputUniverse("tools/StrataLint.Scribe/", ".cs")]
         static DocumentBlock.Describe SyntheticLeanDescribe(
             string id,
             DescribeKind kind,
@@ -488,6 +489,7 @@ internal static class RendererCorpusFixture
         }
     }
 
+    [CompileTimeInputUniverse("tools/StrataLint.Scribe/", ".cs")]
     internal static void VisitFormula(Formula formula, ISet<string> vocabulary)
     {
         var type = formula.GetType();
@@ -566,6 +568,7 @@ internal static class RendererCorpusFixture
         _ => false,
     };
 
+    [CompileTimeInputUniverse("tools/StrataLint.Scribe/", ".cs")]
     internal static void AssertClosedFormulaVocabularyIsCovered(IReadOnlySet<string> vocabulary)
     {
         var missingTypes = typeof(Formula)

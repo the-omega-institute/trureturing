@@ -8,12 +8,30 @@ public static class TemporaryFileSystem
     public static class File
     {
         public static bool Exists(string path) => System.IO.File.Exists(EnsureTemporaryPath(path));
-        public static string ReadAllText(string path) =>
-            System.IO.File.ReadAllText(EnsureTemporaryPath(path));
-        public static string ReadAllText(string path, Encoding encoding) =>
-            System.IO.File.ReadAllText(EnsureTemporaryPath(path), encoding);
-        public static byte[] ReadAllBytes(string path) =>
-            System.IO.File.ReadAllBytes(EnsureTemporaryPath(path));
+        public static string ReadAllText(string path)
+        {
+            using var reader = System.IO.File.OpenText(EnsureTemporaryPath(path));
+            return reader.ReadToEnd();
+        }
+
+        public static string ReadAllText(string path, Encoding encoding)
+        {
+            using var source = System.IO.File.OpenRead(EnsureTemporaryPath(path));
+            using var reader = new StreamReader(
+                source,
+                encoding,
+                detectEncodingFromByteOrderMarks: true);
+            return reader.ReadToEnd();
+        }
+
+        public static byte[] ReadAllBytes(string path)
+        {
+            using var source = System.IO.File.OpenRead(EnsureTemporaryPath(path));
+            using var destination = new MemoryStream();
+            source.CopyTo(destination);
+            return destination.ToArray();
+        }
+
         public static void WriteAllText(string path, string contents) =>
             System.IO.File.WriteAllText(EnsureTemporaryPath(path), contents);
         public static void WriteAllText(string path, string contents, Encoding encoding) =>

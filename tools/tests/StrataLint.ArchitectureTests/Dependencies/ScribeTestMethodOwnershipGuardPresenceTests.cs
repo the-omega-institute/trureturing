@@ -1,10 +1,12 @@
 using System.Reflection;
+using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
 
 public sealed class ScribeTestMethodOwnershipGuardPresenceTests
 {
     [Fact]
+    [CompileTimeInputUniverse("tools/tests/StrataLint.ArchitectureTests/", ".cs")]
     public void SymbolLevelOwnershipRuleIsPresentAndExecutable()
     {
         const string typeName =

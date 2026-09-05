@@ -52,19 +52,24 @@ public sealed class DocumentDiscoveryTests
         var repository = RepositoryAccessor.Discover(
             RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
         var definitions = DocumentAssembly.Definitions;
-        var sources = repository.EnumerateFiles(
-            RepositoryRelativePath.Create("Blueprint"),
-            "*.scribe.cs");
+        var sources = RepositoryAccessor
+            .EnumerateDeclared(repository.Root.FullPath, "Blueprint")
+            .Where(static file => file.RelativePath.EndsWith(".scribe.cs", StringComparison.Ordinal));
         Assert.Empty(DocumentDefinitions.CheckRepositorySourceBijection(
-            sources.Select(static path => path.Value),
+            sources.Select(static file => file.RelativePath),
             definitions));
         AssertNoMarkdownProjectionBijectionFindings(MarkdownProjectionBijectionFindings(
             definitions.Select(static definition => definition.RelativePath.Value),
-            repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.md")
-                .Select(static path => path.Value)));
+            RepositoryAccessor.EnumerateDeclared(repository.Root.FullPath, "Blueprint")
+                .Where(static file => file.RelativePath.EndsWith(".md", StringComparison.Ordinal))
+                .Select(static file => file.RelativePath)));
 
-        var emitterSource = repository.ReadAllText(RepositoryRelativePath.Create(
-            "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs"));
+        var emitterSource = File.ReadAllText(Path.Combine(
+            repository.Root.FullPath,
+            "tools",
+            "StrataLint.Scribe",
+            "Emission",
+            "ScribeEmitter.cs"));
 
         var emitVerified = MethodBody(
             emitterSource,
@@ -97,7 +102,7 @@ public sealed class DocumentDiscoveryTests
             CanonicalMarkdownWriter.Write(
                 definition.Document,
                 DeclarationCatalog.Create(report),
-                RepositoryCitations()).AsSpan());
+                new Dictionary<string, LiteratureCitation>()).AsSpan());
 
         Assert.Contains(
             "\\operatorname{Z}\\left(89\\right) + \\operatorname{Z}\\left(34\\right) = \\operatorname{Z}\\left(123\\right) = 1010000000_{W}",
@@ -461,9 +466,6 @@ public sealed class DocumentDiscoveryTests
             DocumentFactAssertions.Declaration(node, LeanDeclarationKind.Theorem);
         }
     }
-
-    private static IReadOnlyDictionary<string, LiteratureCitation> RepositoryCitations() =>
-        LibraryNoteCatalog.Load(RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath).Citations;
 
     private static IEnumerable<DocumentBlock> Descendants(BlockSequence content)
     {

@@ -19,15 +19,14 @@ internal static class DescribeReportRepositoryFixture
             RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         var projectionDirectory = Path.Combine(root, "Golden", "Projection");
         TemporaryFileSystem.Directory.CreateDirectory(projectionDirectory);
-        foreach (var source in repository.EnumerateFiles(
-                     RepositoryRelativePath.Create("Golden/Projection"),
-                     "*.json"))
-        {
-            repository.CopyTo(
-                source,
-                Path.Combine(projectionDirectory, Path.GetFileName(source.Value)),
-                overwrite: true);
-        }
+        repository.CopyTo(
+            RepositoryRelativePath.Create("Golden/Projection/statement-projection-expansion-v1.json"),
+            Path.Combine(projectionDirectory, "statement-projection-expansion-v1.json"),
+            overwrite: true);
+        repository.CopyTo(
+            RepositoryRelativePath.Create("Golden/Projection/statement-projection-pilot-v1.json"),
+            Path.Combine(projectionDirectory, "statement-projection-pilot-v1.json"),
+            overwrite: true);
         TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "global.json"), "{}\n", new UTF8Encoding(false, true));
         TemporaryFileSystem.File.WriteAllText(
             formalPath,

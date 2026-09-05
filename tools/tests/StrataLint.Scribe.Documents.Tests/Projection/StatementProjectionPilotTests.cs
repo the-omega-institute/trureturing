@@ -5,12 +5,22 @@ public sealed class StatementProjectionPilotTests
     [Fact]
     public void DocumentDefinitionsLoadFromExplicitRepositoryRoot()
     {
-        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
-        var definitions = DocumentDefinitions.Discover(
-            DocumentAssembly.Value,
-            repositoryRoot);
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
+        var repositoryRoot = TemporaryFileSystem.Directory.CreateTempSubdirectory(
+            "stratalint-scribe-explicit-root-");
+        try
+        {
+            CopyPinnedProjectionFixtures(repository, repositoryRoot);
+            var definitions = DocumentDefinitions.Discover(
+                DocumentAssembly.Value,
+                repositoryRoot.FullName);
 
-        Assert.NotEmpty(definitions);
+            Assert.NotEmpty(definitions);
+        }
+        finally
+        {
+            repositoryRoot.Delete(recursive: true);
+        }
     }
 
     [Fact]
@@ -19,20 +29,9 @@ public sealed class StatementProjectionPilotTests
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
         var repositoryRoot = TemporaryFileSystem.Directory.CreateTempSubdirectory(
             "stratalint-scribe-pinned-");
-        var projectionRoot = TemporaryFileSystem.Directory.CreateDirectory(
-            Path.Combine(repositoryRoot.FullName, "Golden", "Projection"));
         try
         {
-            foreach (var name in new[]
-                     {
-                         "statement-projection-pilot-v1.json",
-                         "statement-projection-expansion-v1.json",
-                     })
-            {
-                repository.CopyTo(
-                    RepositoryRelativePath.Create($"Golden/Projection/{name}"),
-                    Path.Combine(projectionRoot.FullName, name));
-            }
+            CopyPinnedProjectionFixtures(repository, repositoryRoot);
 
             var definitions = DocumentDefinitions.Discover(
                 DocumentAssembly.Value,
@@ -45,6 +44,20 @@ public sealed class StatementProjectionPilotTests
         {
             repositoryRoot.Delete(recursive: true);
         }
+    }
+
+    private static void CopyPinnedProjectionFixtures(
+        RepositoryAccessor repository,
+        DirectoryInfo repositoryRoot)
+    {
+        var projectionRoot = TemporaryFileSystem.Directory.CreateDirectory(
+            Path.Combine(repositoryRoot.FullName, "Golden", "Projection"));
+        repository.CopyTo(
+            RepositoryRelativePath.Create("Golden/Projection/statement-projection-expansion-v1.json"),
+            Path.Combine(projectionRoot.FullName, "statement-projection-expansion-v1.json"));
+        repository.CopyTo(
+            RepositoryRelativePath.Create("Golden/Projection/statement-projection-pilot-v1.json"),
+            Path.Combine(projectionRoot.FullName, "statement-projection-pilot-v1.json"));
     }
 
     [Fact]
