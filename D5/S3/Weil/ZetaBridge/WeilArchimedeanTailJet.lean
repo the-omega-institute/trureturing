@@ -16,7 +16,7 @@ import Mathlib.Tactic.Ring
 # A finite boundary-moment jet for the arithmetic Gamma tail
 
 The frequency density is the even-sector Cauchy density in Theorem 3.2 of
-A. Groskin, arXiv:2607.02828v3. Its Archimedean factor is exactly the existing
+A. Groskin, arXiv:2607.02828. Its Archimedean factor is exactly the existing
 `Zeta23.EF.gammaBracket`, not a surrogate symbol. The finite matrix has support
 length `L`, prime cutoff `exp L`, and frequency spacing `2*pi/L`.
 
