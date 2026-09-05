@@ -14,6 +14,7 @@ public sealed partial class ProductionEnvironmentTests
         using var candidate = new TemporaryDirectory();
         using var reports = new TemporaryDirectory();
         var fixture = new RuleFixture();
+        InstallDefaultAdmissionPlaneFileMap(fixture);
 
         // A —— 候选与 dev 的共同祖先。
         InitializeRepository(candidate.Path);
@@ -90,6 +91,7 @@ public sealed partial class ProductionEnvironmentTests
         using var candidate = new TemporaryDirectory();
         using var reports = new TemporaryDirectory();
         var fixture = new RuleFixture();
+        InstallDefaultAdmissionPlaneFileMap(fixture);
         var candidateFreeze = FreezeEvent(fixture, RuleFixture.RingPath);
         var devFreeze = FreezeEvent(fixture, RuleFixture.ValuesBindingPath);
 

@@ -311,12 +311,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("SELFTEST PASS", first.Output, StringComparison.Ordinal);
     }
 
-    private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
-        RawRepositorySnapshot.Create(files.Select(pair => new RawRepositoryEntry(
-            pair.Key,
-            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(pair.Value)),
-            FrozenLedgerTestData.GitBlobOid(pair.Value))));
-
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
 

@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text.Json;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
@@ -104,7 +105,7 @@ internal interface ILeanReportSource
     LeanAxiomReport Load(RepositorySnapshot snapshot);
 }
 
-internal sealed class ProductionCliEnvironment : ICliEnvironment
+internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 {
     private static readonly JsonSerializerOptions RouteJsonOptions = new()
     {
@@ -202,12 +203,34 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                     "check requires --candidate-lean-report FILE");
             }
 
+            var currentRaw = repository.ReadCurrent();
+            var baselineRaw = repository.ReadRevision(prepared.Revision);
+            var admissionPlaneEvaluation = timing.Measure(
+                "admission-plane",
+                () =>
+                {
+                    var outcome = EvaluateAdmissionPlane(
+                        baselineRaw,
+                        prepared.Changes,
+                        out var usedBootstrap);
+                    return (Outcome: outcome, UsedBootstrap: usedBootstrap);
+                },
+                static result => result.Outcome is not null);
+            var admissionPlane = admissionPlaneEvaluation.Outcome;
+            var admissionPlaneBootstrap = admissionPlaneEvaluation.UsedBootstrap;
+            if (admissionPlane is not null)
+            {
+                return admissionPlane;
+            }
+
             var snapshots = timing.Measure(
                 "snapshot-load",
                 () =>
                 {
-                    var current = Decode(repository.ReadCurrent());
-                    var baseline = Decode(repository.ReadRevision(prepared.Revision));
+                    var current = Decode(currentRaw);
+                    var baseline = Decode(admissionPlaneBootstrap
+                        ? WithoutFileMap(baselineRaw)
+                        : baselineRaw);
                     // Fork-point consumers compare repository structure and ledger bytes, not Lean facts.
                     var forkPoint = string.Equals(
                         prepared.ChangeBase,
