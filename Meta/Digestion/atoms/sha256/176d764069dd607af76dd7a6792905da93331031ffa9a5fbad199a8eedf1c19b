@@ -1,0 +1,22 @@
+## 定义 122.1　有限时刻的观察接口
+
+观察者在输出区域 \(X\) 读取状态：
+
+$$
+q_X(\rho)=\operatorname{Tr}_{\Lambda\setminus X}\rho.
+$$
+
+令
+
+$$
+Z=B_{mr_0}(X).
+$$
+
+输入接口为
+
+$$
+q_Z(\rho)=\operatorname{Tr}_{\Lambda\setminus Z}\rho.
+$$
+
+---
+

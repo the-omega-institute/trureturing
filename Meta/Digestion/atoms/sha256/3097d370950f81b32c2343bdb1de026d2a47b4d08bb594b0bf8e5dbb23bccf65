@@ -1,0 +1,97 @@
+## 定理 138.1　共同宏观极限
+
+定义
+
+$$
+\omega=\frac{\Omega}{\sqrt2},
+\qquad
+b_0(u)=\cos(\omega u).
+$$
+
+则在上述共同紧区间内，
+
+$$
+\boxed{
+b_\varepsilon\to b_0
+\quad\text{以 }C^1\text{ 范数收敛，误差为 }O(\varepsilon).
+}
+\tag{138.1}
+$$
+
+因此
+
+$$
+\boxed{
+g_\varepsilon\to g_0
+}
+$$
+
+一致收敛，其中
+
+$$
+\boxed{
+ds_0^2
+=
+-2\,du\,dv
++
+\cos^2\!\left(\frac{\Omega u}{\sqrt2}\right)
+(dx^2+dy^2).
+}
+\tag{138.2}
+$$
+
+### 证明
+
+使用
+
+$$
+\cos^2(u/\varepsilon)
+=
+\frac12+\frac12\cos(2u/\varepsilon).
+$$
+
+令 \(d_\varepsilon=b_\varepsilon-b_0\)，则
+
+$$
+d_\varepsilon''+\omega^2d_\varepsilon
+=
+-\frac{\Omega^2}{2}
+\cos(2u/\varepsilon)b_\varepsilon,
+$$
+
+初值为零。
+
+于是
+
+$$
+d_\varepsilon(u)
+=
+-\frac{\Omega^2}{2\omega}
+\int_0^u
+\sin\bigl(\omega(u-s)\bigr)
+b_\varepsilon(s)\cos(2s/\varepsilon)\,ds.
+$$
+
+定理 137.1 给出 \(b_\varepsilon\) 一致有界；原方程还给出
+
+$$
+|b_\varepsilon'(u)|\le\Omega^2L.
+$$
+
+对振荡积分分部积分：
+
+$$
+\int_0^uf(s)\cos(2s/\varepsilon)\,ds
+=
+\frac{\varepsilon}{2}f(u)\sin(2u/\varepsilon)
+-
+\frac{\varepsilon}{2}
+\int_0^uf'(s)\sin(2s/\varepsilon)\,ds.
+$$
+
+应用于 \(d_\varepsilon\) 及其一阶导数的积分表示，得到一致的 \(O(\varepsilon)\) 界。
+
+又因 \(p_\varepsilon=O(\varepsilon)\)，故度量系数一致收敛。∎
+
+---
+

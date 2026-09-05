@@ -1,0 +1,27 @@
+## 定义 132.2　导数权重
+
+对多重指标 \(\alpha\)，其中 \(|\alpha|\le2\)，定义
+
+$$
+\boxed{
+w_j^{(\alpha)}
+=
+\frac{\alpha!}{Nh^{|\alpha|}}
+e_\alpha^{\mathsf T}G_h^{-1}v(z_j).
+}
+\tag{132.3}
+$$
+
+导数估计器为
+
+$$
+\boxed{
+\widehat{\partial^\alpha f}(p)
+=
+\sum_jw_j^{(\alpha)}Y_j.
+}
+\tag{132.4}
+$$
+
+---
+

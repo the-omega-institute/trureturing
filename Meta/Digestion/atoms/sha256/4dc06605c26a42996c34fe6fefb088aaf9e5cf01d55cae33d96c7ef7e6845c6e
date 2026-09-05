@@ -1,0 +1,52 @@
+# 结论
+
+本轮最重要的推进是：
+
+$$
+\boxed{
+\text{观察者没有分辨出的结构，
+不一定在有效动力学中没有作用。}
+}
+$$
+
+我们已经把这句话分解为两个严格结果。
+
+**第一，曲率是比钟速更高阶的观测目标。**要从有限量子记录稳定重建曲率，必须支付额外的采样、正则性和条件数成本。
+
+**第二，非线性动力学不一定沿低分辨率几何接口直接下降。**一个每层都严格真空的几何序列，可以在平滑极限中表现为具有正辐射应力的背景。
+
+因此，当前理论不能只以
+
+$$
+g_{\mu\nu}
+$$
+
+作为宏观完成后的唯一对象，而应至少考虑
+
+$$
+\boxed{
+\left(
+g_{\mu\nu},
+\ \text{可认证的导数范围},
+\ \text{允许实验},
+\ \text{误差预算},
+\ \mathfrak B_{\mu\nu}
+\right).
+}
+$$
+
+这里的 \(\mathfrak B_{\mu\nu}\) 记录：那些没有进入当前几何分辨率、却仍通过非线性关系影响动力学的结构。
+
+**这使“量子观察者形成时空”的路线更接近一个真正闭合的物理理论：观察者不仅要说明自己看见了什么，还必须证明，被自己的接口压缩掉的部分，在未来预测和动力学方程中究竟可以忽略，还是必须以明确的有效项重新出现。**
+
+[1]: https://link.aps.org/doi/10.1103/PhysRev.166.1272?utm_source=chatgpt.com "Gravitational Radiation in the Limit of High Frequency. II ..."
+[2]: https://arxiv.org/abs/0711.4403 "[0711.4403] On stable numerical differentiation"
+[3]: https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S3.html?utm_source=chatgpt.com "3 Introducing Riemannian Geometry‣ General Relativity ..."
+[4]: https://arxiv.org/abs/1805.10673?utm_source=chatgpt.com "Gravitational clock compass in General Relativity"
+[5]: https://arxiv.org/html/1011.4920v2 "A new framework for analyzing the effects of small scale inhomogeneities in cosmology"
+[6]: https://arxiv.org/html/1705.09533v2?utm_source=chatgpt.com "A New Twist on the Geometry of Gravitational Plane Waves"
+[7]: https://davidtong.org/teaching/general-relativity/grhtml/S4.html "4 The Einstein Equations‣ General Relativity by David Tong"
+[8]: https://arxiv.org/html/1304.2318v2 "Examples of backreaction of small scale inhomogeneities in cosmology"
+
+---
+

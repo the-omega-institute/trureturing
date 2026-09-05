@@ -1,0 +1,35 @@
+### 证明
+
+由式（O6）：
+
+$$
+|\mathsf K_{ij}|
+\le
+B_0\,2^{-(i+j)}.
+$$
+
+将矩阵写成秩一矩阵单位的和：
+
+$$
+\mathsf K
+=
+\sum_{i,j\ge1}
+\mathsf K_{ij}|i\rangle\langle j|.
+$$
+
+每个矩阵单位的迹范数为一，因此：
+
+$$
+\begin{aligned}
+\|\mathsf K\|_1
+&\le
+\sum_{i,j\ge1}|\mathsf K_{ij}|\\
+&\le
+B_0
+\left(\sum_{i\ge1}2^{-i}\right)^2\\
+&=B_0.
+\end{aligned}
+$$
+
+矩阵元素实且对称，所以 \(\mathsf K\) 自伴。证毕。
+

@@ -9,16 +9,10 @@
 # 详见 tools/scripts/worktree/lean-cache-publish.sh 头部的勘误段。
 #
 # 为什么是独立文件而不是 ci.yml 里的一个 job：
-# 【2026-08-21 实测勘正】本 workflow 原本设计为「不新增构建」：读取 admission 流水线
-# 刚写进 Actions cache 的两级缓存，直接打包发布。**该前提已被实测推翻** ——
-# `workflow_run` 触发的运行**读不到 `push` 事件写入的 cache**：前缀逐字符匹配、
-# cache 就在 `refs/heads/dev`（dev 即 default branch）、写入早于读取一小时以上，
-# 三次运行一致报 `Cache not found`（32453224135 / 32457210655 / 32461241477）。
-# GitHub 文档称 workflow_run 可读 default branch 作用域的 cache，与实测不符；此处以实测为准。
-#
-# 故改为：cache 命中就用（快速路径，若日后作用域问题消失即自动生效），
-# **未命中则自己构建** —— `lake exe cache get` 取 mathlib 走外部 CDN，不受 Actions cache
-# 作用域限制。代价是这个 job 会花十几分钟自行构建；它不在任何 required check 内，慢不阻塞任何人。
+# project build 层只走 Releases：本 workflow 先取同 config 的上一份 Release 作增量种子，
+# 再用 `lake build` 校准到本次 schedule 对应的 dev commit，最后发布新的内容地址。
+# Release 不存在或不可用时，`lake exe cache get` 加冷构建仍能建立第一份归档。
+# 它不读写 Actions project-build cache，避免每个 sources 地址占一份约 1.8 GB 的仓库缓存。
 #
 #   1. `lean-report-input.sh:135-140` 把 ci.yml 中 `lean-inspect:` 到 `baseline-admission:`
 #      的**切片文本**折进 Lean 报告的输入闭包，并解析其中的脚本引用。发布脚本若出现在那段里，
@@ -36,8 +30,8 @@ name: Lean build cache publication
 #   这同时解掉两个此前无解的读数：
 #     ① 触发间隔 5–11 分钟（dev 约 16 提交/小时）< 单次 run 60 分钟 ⇒ 追不平，且会
 #        持续堆积 6–12 个并发 run 挤占 runner 额度；定时后二者都不复存在。
-#     ② `workflow_run` 读不到 `push` 写的 cache（见文件头实测）；`schedule` 跑在
-#        默认分支上，作用域**可能**正常 —— 未测，改完看首个 run 的 cache-hit 即知。
+#     ② project build 层不再随每次 dev push 写入 Actions cache；schedule 是 Release
+#        build 层的唯一 writer，消费者也只从该层读取。
 #   `0 */6 * * *` 曾是 policy-override（非派生值），案号 #2634，退出条件为
 #   「命中率实测数据齐备后重定」。**该条件已于 2026-08-23 履行，#2634 已 CLOSED。**
 #   重定的依据不再是「本次裁决」，而是这组实测：在一棵 `.lake` 完全不存在的冷 lane 上
@@ -122,29 +116,20 @@ jobs:
     #     评审席指出后恢复。〕
     if: github.ref == 'refs/heads/dev'
     # 定时触发下没有 `github.event.workflow_run` 上下文；留着该条件会让 job 永远被跳过。
-    # 「不给失败的推送留缓存」由内容地址本身保证：地址取自这一刻 dev 的实际输入，
-    # 发布的产物与该地址绑定，消费侧按地址取，取不到就本地补 —— 不存在“发布了坏缓存”。
+    # 「不给失败的推送留缓存」由内容地址本身保证：地址取自这一刻 dev 的实际输入；
+    # 消费侧只取同 config 的 exact/prefix Release，再由 Lake 按 trace 补齐差量。
     runs-on: ubuntu-24.04-arm
     # 【超时形态：2026-08-21 读实际日志后勘正】
     #   此前两个 run 的 `conclusion: cancelled` 被我误读为「并发组取消」，据此连打三四个
     #   补丁改 `concurrency`，取消照旧。真因是**这个数字**：GitHub 对 `timeout-minutes`
     #   到点的 conclusion 就是 `cancelled`，与并发取消在该字段上无法区分。
-    #   读数：32479993734 跑 45分19秒、32480023451 跑 45分17秒，两者都被杀在同一步
-    #   `Build when no cache layer was available`；从零 `lake build` 实测 40 分钟以上，
-    #   加 checkout/toolchain/address/cache-restore 的前置开销即越过 45 分。
+    #   读数：32479993734 跑 45分19秒、32480023451 跑 45分17秒，两者都被杀在构建步骤；
+    #   从零 `lake build` 实测 40 分钟以上，加 checkout/toolchain/address/cache-restore
+    #   的前置开销即越过 45 分。
     #   取 120：为上述自建实测留约 3 倍余量（GitHub 该字段上限 360）。
-    #   这是**为取得第一份端到端读数**而放宽，不是终态：真正的修法是让上游 job 把已构建
-    #   的产物交给本 workflow（artifact 跨 run 可读），从而根本不必自建。
+    #   Release miss 时仍需容纳冷构建，故保留该余量。
     timeout-minutes: 120
-    # 【为什么检出到 `candidate/` 这个看似多余的子目录】
-    #   `actions/cache` 的缓存标识是 **(key, version)**，version 由 `path` 派生。
-    #   写入侧（admission）必须把候选检出在 `candidate/`（它要同时持有 base 与 candidate
-    #   两棵树），故它存的是 `candidate/.lake/build`；本 workflow 原先在仓根检出、
-    #   读 `.lake/build` —— **key 一字不差，version 不同，两者根本不是同一个 entry**。
-    #   实测佐证：restore-keys 前缀 fallback 也未命中，排除了「只是 sources 漂移」；
-    #   `gh cache list` 显示 entry 确实存在（1424 MiB，refs/heads/dev，每几分钟一份）。
-    #   方向是单向的：admission 无法搬到仓根，只能由本 workflow 对齐它，
-    #   且 path 列表必须**逐字节相同**（含 `~/.cache/mathlib` 一项）。
+    # 检出到 `candidate/`，与消费侧传给发布脚本的 repository 根及归档内部布局一致。
     steps:
       - name: Check out the commit that was published
         id: checkout-publish
@@ -205,8 +190,7 @@ jobs:
           echo "config_sha256=${config_sha256}" >> "$GITHUB_OUTPUT"
           echo "sources_sha256=${sources_sha256}" >> "$GITHUB_OUTPUT"
 
-      # 复用 admission 流水线刚写进去的两级缓存。命中即无需重建；未命中说明这个地址
-      # 还没有构建产物，此时无可发布，下一步安静记录而不失败。
+      # 依赖层只按 config 寻址，跨 sources 稳定复用；project build 层不再进入 Actions cache。
       - name: Restore the Lean dependency layer
         uses: actions/cache/restore@v4
         with:
@@ -219,65 +203,43 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
 
-      - name: Restore the Lean build layer
-        id: build
-        uses: actions/cache/restore@v4
-        with:
-          path: candidate/.lake/build
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}
-          # ci.yml 的对应步骤带同样的前缀回退：config 未变时，同一 config 下的任一 build 层
-          # 都是可用的增量起点。首个真实运行漏了这两行，于是 exact key 未命中即判无可发布。
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-
-
-      # 缓存未命中时自己构建。`lake exe cache get` 取 mathlib 的 olean 走外部 CDN，
-      # 与 Actions cache 的作用域无关，所以这条路在 workflow_run 下也走得通。
-      - name: Build when no cache layer was available
-        id: selfbuild
-        if: steps.build.outputs.cache-hit != 'true' && steps.build.outputs.cache-matched-key == ''
+      # Release 是 project build 层唯一的远端来源。取不到时记为 cold；下一步仍会从
+      # mathlib cache / 源码构建，因而首份 Release 不依赖预先存在的 Release。
+      - name: Seed from the prior Lean release build layer
+        id: release-seed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
-        working-directory: candidate
         run: |
           set -euo pipefail
-          lake exe cache get || printf '%s\n' "mathlib cache get returned nonzero; lake build will fill the gaps"
-          lake build
-          printf 'olean=%s\n' "$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
-          echo "built=true" >> "$GITHUB_OUTPUT"
+          publisher="$GITHUB_WORKSPACE/candidate/tools/scripts/worktree/lean-cache-publish.sh"
+          test -x "${publisher}"
+          if PATH="$HOME/.elan/bin:$PATH" "${publisher}" fetch --repository "$GITHUB_WORKSPACE/candidate"; then
+            echo "hit=true" >> "$GITHUB_OUTPUT"
+          else
+            printf '%s\n' "no usable prior Release; build will start from the dependency layer"
+            echo "hit=false" >> "$GITHUB_OUTPUT"
+          fi
 
-      # 前缀回退可能取到**同一 config 但不同 sources** 的 build 层。直接发布会把内容不符的
-      # 归档挂到当前内容地址下 —— 那是这条链路最危险的失败模式，因为消费者按地址取，
-      # 拿到的字节却不是那个地址该有的。
-      #
-      # 故发布前用 lake 自己判：把归档喂给 `lake build`，**零编译**才说明它与当前源码相符。
-      # 判据只认 `Built`/`Building`/`Compiling` 计数为 0；有任何一项非零即内容不符，不发布。
-      #
-      # 这一步**只守缓存恢复那条路径**：自建路径刚构建完，零编译是恒真的，
-      # 拿恒真的量当判据等于没判（本仓「恒值判据」之诫），故自建时跳过它、直接发布。
-      - name: Verify the restored build matches this commit
-        id: verify
-        if: steps.build.outputs.cache-hit == 'true' || steps.build.outputs.cache-matched-key != ''
+      # 即使 Release 精确命中也运行 Lake 自己的有效性检查；前缀命中时它补齐差量。
+      # `compiled_targets` 是新鲜度读数，不是门槛。`lake build` 成功后才允许发布。
+      - name: Build and verify the current Lean project layer
+        id: build
         shell: bash
+        working-directory: candidate
         env:
           BUILD_LOG: ${{ runner.temp }}/verify-build.txt
-        working-directory: candidate
         run: |
           set -euo pipefail
+          if [[ "${{ steps.release-seed.outputs.hit }}" != "true" ]]; then
+            lake exe cache get || printf '%s\n' "mathlib cache get returned nonzero; lake build will fill the gaps"
+          fi
           lake build 2>&1 | tee "${BUILD_LOG}"
           compiled="$(grep -cE '(Built|Building|Compiling) ' "${BUILD_LOG}" || true)"
-          # 这个计数是**读数,不是门槛**。缓存多半由 restore-keys 前缀命中，
-          # 恢复到的是一份稍旧的构建；`lake build` 随后补齐差量，补完的
-          # `.lake/build` 就是本 commit 的正确产物 —— 这正是「缓存不必很热，
-          # 本地会补」的形态（owner 2026-08-21 定），不是失败。
-          # 旧判据要求 compiled 恰为 0 才发布，等于只接受精确命中；实测因此
-          # 在一次**成功命中且 verify 通过**的 run 里（32505529419，2 分钟跑完）
-          # 仍走了「无产物可发布」分支，仓库继续保持零 release。
-          # 现判据：`lake build` 成功即产物可信。它失败则本步骤在上一行即以
-          # 非零退出（set -o pipefail），matches 不被写出，发布自然跳过。
           printf 'compiled_targets=%s\n' "${compiled}"
-          echo "matches=true" >> "$GITHUB_OUTPUT"
+          printf 'olean=%s\n' "$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
 
       - name: Publish the build cache under its content address
-        if: steps.verify.outputs.matches == 'true' || steps.selfbuild.outputs.built == 'true'
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -295,18 +257,4 @@ jobs:
             echo '```'
             cat "${PUBLISH_LOG}"
             echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Record that no build artifacts were available to publish
-        if: steps.verify.outputs.matches != 'true' && steps.selfbuild.outputs.built != 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-          {
-            echo '## Lean build cache: no archive for this address'
-            echo
-            echo 'The build layer for this exact content address is absent from the cache,'
-            echo 'so this run has nothing to republish. Consumers resolve their cache from'
-            echo 'a donor worktree or a local build, as they do for any address that has'
-            echo 'not been published.'
           } >> "$GITHUB_STEP_SUMMARY"
