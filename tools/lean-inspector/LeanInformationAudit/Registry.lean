@@ -244,7 +244,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
         return .error (statementMismatchError entry.theoremName)
     else if realizationHead == some legacyPrimitiveRealizationName then
       match env.find? entry.realizationName with
-      | some (.thmInfo _) | some (.defnInfo _) =>
+      | some (.thmInfo _) =>
         let legacyArgs := realizationType.getAppArgs
         unless legacyArgs.size == 3 do
           return .error (statementMismatchError entry.theoremName)

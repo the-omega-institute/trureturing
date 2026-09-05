@@ -267,8 +267,8 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     liftCoreM <| realizeGlobalConstNoOverloadWithInfo realizationId
   catch _ =>
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
-  match (← getEnv).find? suppliedRealizationName with
-  | some (.thmInfo _) => pure ()
+  let suppliedRealizationInfo <- match (← getEnv).find? suppliedRealizationName with
+  | some (.thmInfo info) => pure info
   | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let rootId := (← getEnv).header.mainModule
   let unitName := catalogQualifiedName rootId objectArenaName catalogId theoremName
@@ -295,8 +295,14 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   unless validLegacy do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   checkRealizationBundle theoremName lawArenaName legacyArgs[2]! primitiveTerm
+  let realizationLevels := suppliedRealizationInfo.levelParams.map Level.param
+  liftCoreM <| addAndCompile <| .thmDecl {
+    name := realizationName
+    levelParams := suppliedRealizationInfo.levelParams
+    type := suppliedRealizationInfo.type
+    value := mkConst suppliedRealizationName realizationLevels
+  }
   let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
-  elabCommand (← `(command| def $qualifiedRealizationId := $realizationId))
   let unitId := absoluteIdentFrom theoremId unitName
   let unitType <- `(term|
     D5.S3.ConceptDynamics.InformationEscape.TheoremUnit $objectArenaId:ident)
