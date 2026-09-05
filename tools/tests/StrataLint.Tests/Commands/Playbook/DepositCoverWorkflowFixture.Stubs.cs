@@ -104,6 +104,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   echo 'LEDGER_FROZEN_INVALID synthetic target transport mismatch' >&2
                   exit 96
                 fi
+                if [[ ${PLAYBOOK_USE_CANONICAL_FROZEN_QUERY:-0} == 1 ]]; then
+                  exec "$PLAYBOOK_REAL_CLI" "${parts[@]}"
+                fi
                 status=1
                 [[ ! -f .ledger-frozen-status ]] || status=$(<.ledger-frozen-status)
                 [[ $status != 2 ]] || echo 'LEDGER_FROZEN_INVALID synthetic failure' >&2
@@ -226,7 +229,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
             bool coverDispositionFailure = false,
             TimeSpan? timeout = null,
             string? baseRevision = null,
-            bool rejectDepositHeader = false) =>
+            bool rejectDepositHeader = false,
+            bool useCanonicalFrozenQuery = false) =>
             TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
@@ -237,6 +241,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
                     $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                     $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
+                    $"PLAYBOOK_USE_CANONICAL_FROZEN_QUERY={(useCanonicalFrozenQuery ? "1" : "0")}",
+                    $"PLAYBOOK_REAL_CLI={Path.Combine(Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!, "StrataLint")}",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     command,
