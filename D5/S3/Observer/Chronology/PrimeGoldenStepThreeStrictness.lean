@@ -85,10 +85,14 @@ theorem sextupled_degree_three_e12_e21_difference :
       sextupledCubicWitnessMatrix := by
   rw [sextupled_degree_three_abba_sub_baab,
     cubic_chronology_defect_e12_e21]
+  have hsix (matrix : IntegerMatrix2) :
+      (6 : IntegerMatrix2) * matrix =
+        matrix + matrix + matrix + matrix + matrix + matrix := by
+    noncomm_ring
+  rw [hsix]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [cubicWitnessMatrix, sextupledCubicWitnessMatrix,
-      Matrix.mul_apply, Fin.sum_univ_two]
+    norm_num [cubicWitnessMatrix, sextupledCubicWitnessMatrix]
 
 /-- The explicit degree-three difference is nonzero. -/
 theorem sextupled_cubic_witness_matrix_ne_zero :
