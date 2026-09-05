@@ -1,0 +1,10 @@
+\[
+\boxed{
+\operatorname{Leak}(F;A_X,A_Y)
+=
+\{x:A_X(x)\land\neg A_Y(Fx)\}.
+}
+\]
+
+定义合法性生成：
+

@@ -1,0 +1,21 @@
+### 定理 A3.2　有限局部 fugacity 圆定位
+
+若 $Q\ge1$，则
+
+$$
+Z_Q^{\mathrm{exp}}(x)=0
+\Longleftrightarrow
+x^{M_Q}=1
+\text{ 且 }x\ne1.
+\tag{A3.4}
+$$
+
+从而全部根满足
+
+$$
+\boxed{|x|=1.}
+\tag{A3.5}
+$$
+
+这是一条真正的有限圆定位定理，但它来自能量双射和几何级数，不是 Riemann Hypothesis。
+

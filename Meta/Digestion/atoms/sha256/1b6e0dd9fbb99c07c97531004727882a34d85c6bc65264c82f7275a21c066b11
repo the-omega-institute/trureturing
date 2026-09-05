@@ -1,0 +1,37 @@
+## 18.2 忠实输运猜想
+
+真正的承重命题应具有形式
+
+$$
+\boxed{
+E_{\mathrm{off}}^{\mathrm{odd}}(g)
+\le
+C\,
+\mathcal E_{\mathrm{prime}}^\perp(\delta;g)
++
+\varepsilon(g),
+}
+\tag{18.2}
+$$
+
+并在 canonical completion 极限中满足
+
+$$
+\varepsilon(g)\to0.
+$$
+
+还需独立证明 completed reflection-flatness 强迫
+
+$$
+\mathcal E_{\mathrm{prime}}^\perp\to0.
+\tag{18.3}
+$$
+
+再加测试族对每个离线轨道的分离性，才可能推出
+
+$$
+E_{\mathrm{off}}^{\mathrm{odd}}=0
+$$
+
+并最终排除离线零点。
+

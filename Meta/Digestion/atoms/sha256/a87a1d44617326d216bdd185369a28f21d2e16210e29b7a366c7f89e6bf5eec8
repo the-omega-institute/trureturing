@@ -1,0 +1,24 @@
+## 10.2 shell 横向能量
+
+定义归一化 shell detector
+
+$$
+\mathcal E_k^{\perp}(\delta;p,q)
+=
+\sinh^2\!\left(
+\delta F_k\log\frac qp
+\right).
+\tag{A10.8}
+$$
+
+其零集为
+
+$$
+\mathcal E_k^{\perp}=0
+\Longleftrightarrow
+\delta=0
+\tag{A10.9}
+$$
+
+只要 $F_k>0$ 且 $p\ne q$。
+

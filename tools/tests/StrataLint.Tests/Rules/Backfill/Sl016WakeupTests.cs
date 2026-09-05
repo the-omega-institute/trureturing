@@ -63,8 +63,18 @@ public sealed class Sl016WakeupTests
             FrozenModule(targetGid, FrozenStatementReceiptTestData.Id('a')),
             FrozenModule("D5/S0/Carrier/Unrelated", FrozenStatementReceiptTestData.Id('c')));
         var context = fixture.Build(RawChangeSet.Create(FrozenLedgerDelta(fixture)));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            context.Lean.Report,
+            document,
+            context.Changes);
 
-        Assert.False(BackfillInventoryRule.IsAffectedBy(context));
+        Assert.False(impact.HasAffectedEdges);
     }
 
     [Fact]
@@ -119,6 +129,7 @@ public sealed class Sl016WakeupTests
         var impact = BackfillDeltaImpactResolver.Resolve(
             context.Current,
             context.Baseline,
+            context.Lean.Report,
             document,
             context.Changes);
         var entry = Assert.Single(document.RequireDigestionEntries());
@@ -147,6 +158,7 @@ public sealed class Sl016WakeupTests
         var impact = BackfillDeltaImpactResolver.Resolve(
             context.Current,
             context.Baseline,
+            context.Lean.Report,
             document,
             context.Changes);
 
@@ -159,7 +171,7 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
-    public void ReferencedLeanTargetValueChangeEntersAuthorityAndReceiptScopes()
+    public void LeanHeaderChangeWithStableTargetValueDoesNotWakeReferencedEdge()
     {
         const string targetGid = "D5/S0/Carrier/BackfillTarget";
         var targetPath = targetGid + ".lean";
@@ -175,14 +187,183 @@ public sealed class Sl016WakeupTests
         var impact = BackfillDeltaImpactResolver.Resolve(
             context.Current,
             context.Baseline,
+            context.Lean.Report,
             document,
             context.Changes);
         var entry = Assert.Single(document.RequireDigestionEntries());
 
-        Assert.True(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
-        Assert.Contains(
-            impact.ReceiptVerificationChanges.Paths,
-            path => path.Value == targetPath);
+        Assert.False(impact.HasAffectedEdges);
+        Assert.False(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
+    }
+
+    [Fact]
+    public void ReportFreeIngestDoesNotComparePersistedTargetAgainstMissingReport()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        var context = fixture.Build(RawChangeSet.Create(["README.md"]));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            report: null,
+            document,
+            context.Changes);
+
+        Assert.False(impact.HasAffectedEdges);
+        Assert.False(DigestionCasStore.EntryChanged(
+            Assert.Single(document.RequireDigestionEntries()),
+            impact.EvaluationChanges));
+    }
+
+    [Fact]
+    public void ReportFreeFrozenModuleStatementIdChangeWakesReferencedEdge()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        InstallFrozenModulesInto(
+            fixture.Files,
+            FrozenModule(targetGid, FrozenStatementReceiptTestData.Id('b')));
+        var context = fixture.Build(RawChangeSet.Create(FrozenLedgerDelta(fixture)));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            report: null,
+            document,
+            context.Changes);
+
+        Assert.True(impact.HasAffectedEdges);
+        Assert.Contains(impact.EvaluationChanges.Paths, path => path.Value == AtomPath);
+    }
+
+    [Fact]
+    public void UnrelatedD5ModuleDoesNotDeriveCoverageTargetValue()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        var context = fixture.Build(RawChangeSet.Create(["D5/S3/Probe/Unrelated.lean"]));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+        var derivations = 0;
+
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            context.Lean.Report,
+            document,
+            context.Changes,
+            _ => derivations++);
+
+        Assert.Equal(0, derivations);
+        Assert.False(impact.HasAffectedEdges);
+    }
+
+    [Fact]
+    public void ChangedHostModuleDerivesOnlyReverseIndexedCoverageTarget()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        const string otherGid = "D5/S0/Carrier/UnrelatedTarget";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[AtomPath] = files[AtomPath].Replace(
+                "receipts:\n",
+                $"  - gid: {otherGid}\n"
+                    + $"    target_statement_id: {FrozenStatementReceiptTestData.Id('c')}\n"
+                    + "receipts:\n",
+                StringComparison.Ordinal);
+            InstallFrozenModulesInto(
+                files,
+                FrozenModule(targetGid, FrozenStatementReceiptTestData.Id('a')),
+                FrozenModule(otherGid, FrozenStatementReceiptTestData.Id('c')));
+        }
+        var context = fixture.Build(RawChangeSet.Create([targetGid + ".lean"]));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+        var derivedGids = new List<string>();
+
+        _ = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            context.Lean.Report,
+            document,
+            context.Changes,
+            derivedGids.Add);
+
+        Assert.Equal([targetGid], derivedGids);
+    }
+
+    [Fact]
+    public void EntryLocalChangeDoesNotDeriveSharedCoverageGidOrWakePeer()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        var otherFingerprint = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes("shared coverage peer\n"));
+        var otherAtomPath = BackfillInventoryLoader.RootPath
+            + "delta-v0.1/partial-open/"
+            + otherFingerprint.RawSha256["sha256:".Length..]
+            + ".yaml";
+        var otherCasPath = DigestionCasStore.RootPath
+            + otherFingerprint.RawSha256["sha256:".Length..];
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[otherAtomPath] = files[AtomPath]
+                .Replace(
+                    RuleFixture.FixtureCasReference,
+                    otherFingerprint.RawSha256,
+                    StringComparison.Ordinal)
+                .Replace(
+                    "target_statement_id: " + FrozenStatementReceiptTestData.Id('a'),
+                    "target_statement_id: " + FrozenStatementReceiptTestData.Id('c'),
+                    StringComparison.Ordinal);
+            files[otherCasPath] = "shared coverage peer\n";
+        }
+        fixture.Files[AtomPath] = fixture.Files[AtomPath].Replace(
+            "unresolved_subitems: []",
+            "unresolved_subitems:\n    - entry-local-change",
+            StringComparison.Ordinal);
+        var context = fixture.Build(RawChangeSet.Create([AtomPath]));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+        var derivations = 0;
+
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            context.Lean.Report,
+            document,
+            context.Changes,
+            _ => derivations++);
+
+        Assert.Equal(0, derivations);
+        Assert.Contains(impact.EvaluationChanges.Paths, path => path.Value == AtomPath);
+        Assert.DoesNotContain(impact.EvaluationChanges.Paths, path => path.Value == otherAtomPath);
     }
 
     [Fact]
@@ -538,12 +719,19 @@ public sealed class Sl016WakeupTests
     private static string[] FrozenLedgerDelta(RuleFixture fixture)
     {
         var current = fixture.Files.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
+            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+                || FrozenStatePath.IsUnderRoot(path));
         var baseline = fixture.Baseline.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
+            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+                || FrozenStatePath.IsUnderRoot(path));
         var delta = current
             .Except(baseline, StringComparer.Ordinal)
             .Concat(baseline.Except(current, StringComparer.Ordinal))
+            .Concat(current.Intersect(baseline, StringComparer.Ordinal).Where(path =>
+                !string.Equals(
+                    fixture.Files[path],
+                    fixture.Baseline[path],
+                    StringComparison.Ordinal)))
             .ToArray();
         Assert.NotEmpty(delta);
         return delta;

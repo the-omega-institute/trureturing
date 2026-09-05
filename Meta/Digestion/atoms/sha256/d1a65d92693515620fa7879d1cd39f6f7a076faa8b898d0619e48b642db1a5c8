@@ -1,0 +1,50 @@
+* 沿实部 \(\delta=\sigma-\frac12\) 的长度分裂。
+
+所以 `PrimeGaps` 的真正升级对象不是普通 gap \(q-p\)，而是：
+
+$$
+\boxed{
+\Delta\log p=\log(q/p).
+}
+$$
+
+而你提出的：
+
+$$
+\boxed{
+\varphi H\text{ 个有限候选状态}
+\quad\leadsto\quad
+e^{\varphi H}\text{ 的预算}
+}
+$$
+
+在一种非常具体的解释下确实成立：
+
+$$
+\boxed{
+W(k)=\prod_{p\le k}p
+=
+\exp\!\bigl((1+o(1))k\bigr).
+}
+$$
+
+若候选元组大小取：
+
+$$
+k=\varphi H,
+$$
+
+则：
+
+$$
+\boxed{
+W(k)
+=
+\exp\!\bigl((1+o(1))\varphi H\bigr).
+}
+$$
+
+但这里 \(W\) 是把所有 \(p\le k\) 的局部同余观察合并成一个 CRT 模数的 **primorial 预算**，不是 Maynard 筛法保证 \(\varphi H\) 个素数幸存所需的完整预算。后者还要再经过一个指数放大。
+
+---
+

@@ -1,0 +1,59 @@
+# 第二百五十二部　短间隔没有给出零点分裂因果链
+
+必须明确排除一条诱人的错误推理：
+
+$$
+q-p\le186
+\Longrightarrow
+\text{prime frequencies 接近}
+\Longrightarrow
+\text{ζ 零点离线}.
+$$
+
+这个推理不成立。
+
+短间隔只证明：
+
+$$
+\log(q/p)\to0,
+$$
+
+以及由此产生的 observer ill-conditioning。
+
+要真正得到零点横向分裂，仍需构造一个不循环的映射：
+
+$$
+\boxed{
+\mathcal U:
+\text{prime pair odd jets}
+\longrightarrow
+\text{completed }\xi\text{ 的 transverse discriminant}.
+}
+$$
+
+并证明局部 Weierstrass 因子出现：
+
+$$
+(s-s_0)^2-D_{\mathrm{arith}}.
+$$
+
+同时，由仓库此前的固定轴结果，保持 completed reflection 对称的简单零点不能直接横向漂移；真实分裂必须经过多重零点判别式或来自无穷远的分支进入。
+
+所以短间隔目前能支撑的是：
+
+$$
+\boxed{
+\text{偏移的可观测性理论},
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{偏移的存在定理}.
+}
+$$
+
+---
+

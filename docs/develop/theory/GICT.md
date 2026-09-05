@@ -1334,3 +1334,37 @@ $$H(t_i)=\tfrac14\arctan\tfrac{a-d}{2b}$$
 **三档同步**:[价界] v2.7(注记 3.5′ + §11.14,薄注);INTERFACE_PAPER 开放问题 8.9(候审,另块);OQ 以指针接口,不增块。
 
 **收束五判**:一物(本条)✓;一算(无新数;判据引 [价界] 在册证书)✓;二检(P3 半驳如实)✓;三检(SvN/GvH/IW/Varičak/Fock/Penrose 线/Zurek 七锚)✓;四检(四墙 + 被推翻方式)✓;五检(三档同步指针齐)✓。
+
+## 附录 E 增订六十七(v3.92 候审):有界余项之显式转移函数——Hecke–Ostrowski 上同调恒等式(定理 3.4.1–3.4.3 候签;开放问题线第一批)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 文献检索席(flight `op-r1-gptpro-search`,候选 #7「Hecke–Ostrowski bounded-remainder interval with an explicit transfer function」,folklore-unformalized;文献 arXiv:1404.0165、GAFA 2015 doi:10.1007/s00039-015-0313-z、arXiv:1602.00529)提出;探针席 codex-cli(flight `op-p8-hecke-ostrowski`,worktree `trureturing-op-probe-g`,base origin/dev `0e0e991da4`,1104s)以 `lake env lean` 整证三条并给出 kernel 读数(`#print axioms` 全为标准三公理);本节候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点:卷 III §III.2 定理 3.4「DK 给有界余项」之显式机制;卷 VIII 开放清单第 5 项「方向律之 Ostrowski 全理论」之构造方向子义务。
+
+**定理 3.4.1(Hecke–Ostrowski 上同调恒等式)**〔候签;open;落 `D5/S1/Phase/HeckeOstrowskiCoboundary`〕。对任意实数 α、自然数 q 与实数 x,令转移函数 `transferFunction α q x := ∑_{j<q} Int.fract (x − (j+1)·α)`,则 `(if Int.fract x < Int.fract (q·α) then 1 else 0) − Int.fract (q·α) = transferFunction α q x − transferFunction α q (x + α)`——区间 [0, {qα}) 之指示函数减其长度,是转移函数在旋转 x ↦ x + α 下的上边缘(coboundary);不需要 α 无理。
+
+**推论 3.4.2(偏差的望远镜和)**〔候签;open;同模块伴随声明〕。对任意实数 α、自然数 q、N 与实数 x,`∑_{n<N} ((if Int.fract (x + n·α) < Int.fract (q·α) then 1 else 0) − Int.fract (q·α)) = transferFunction α q x − transferFunction α q (x + N·α)`。
+
+**推论 3.4.3(一致有界余项)**〔候签;open;同模块伴随声明〕。对任意实数 α、自然数 q ≥ 1、N 与实数 x,`|∑_{n<N} ((if Int.fract (x + n·α) < Int.fract (q·α) then 1 else 0) − Int.fract (q·α))| < q`——长度为 {qα} 的区间是旋转 α 的有界余项集,余项界为 q,对一切 x 与 N 一致。
+
+**注 3.4.4(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条〕。定理 3.4.1 的逃逸内容为新的分数部分两分支等式 `fract_sub_eq_ite : Int.fract (x − t) = if Int.fract x < Int.fract t then Int.fract x + 1 − Int.fract t else Int.fract x − Int.fract t`(在 `Int.fract_eq_iff` 两分支各构造整数),它位于活证明路径上,不是冻结定理或 Mathlib 引理的实例化;判形 content,准入依据 escape-witness。推论 3.4.2 由 3.4.1 逐项求和望远镜得到,推论 3.4.3 由 3.4.2 与 0 ≤ transferFunction < q 得到——二者为伴随声明,方向边 3.4.3 → 3.4.2 → 3.4.1(消费者 → 前置)。只依赖钉版 Mathlib,不引入冻结 D5 依赖;落点 `D5/S1/Phase/`(直接文件 12/24)。若钉版 API 下 `Int.fract_eq_iff` 的两分支整数构造写不出,本候签按 open 记,不得以 `sorry` 或公理代替。结算:三条由一个实施席同 PR `deposit`(绑 3.4.1)+ `cover`(3.4.2 / 3.4.3)落地,三席评审后合入。
+
+## 附录 E 增订六十八(v3.93 候审):孤独跑者猜想的有限证书——二十速度中任意十四人之 1/15 安全时刻(定理 3.4.5–3.4.7 候签;开放问题线第四批)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro arXiv 检索席(flight `op-r1-gptpro-arxiv`,Lonely Runner 候选;猜想对 n ≥ 8 名跑者开放)提出;探针席 codex-cli(flight `op-p13-lonely-runner`,worktree `trureturing-op-probe-i`,base origin/dev)以 `lake env lean` 整证并给出 kernel 读数(`#print axioms` 对全部 17 条打印声明均为标准三公理;无 native_decide、无 `Lean.ofReduceBool`);本节候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点:卷 III §III.2 旋转 x ↦ x + α 与分数部分的动力学(与增订六十七 Hecke–Ostrowski 同一机制面);猜想本身(任意 n 名跑者、任意速度)保持 open,本节只立案一个可 kernel 判定的有限证书。
+
+**定理 3.4.5(有理时刻的环面距离与模窗口)**〔候签;open;落 `D5/S1/Phase/LonelyRunnerFourteenOfTwenty`〕。令环面距离 `torusDist x := min (Int.fract x) (1 − Int.fract x)`(x : ℚ)。对任意自然数 s、a、d 且 0 < d,`(1 : ℚ)/15 ≤ torusDist (s · (a/d)) ↔ d ≤ 15 · ((s·a) % d) ∧ 15 · ((s·a) % d) ≤ 14 · d`——有理时刻 a/d 处速度 s 的跑者离原点至少 1/15,当且仅当整数余数 (s·a) mod d 落在闭窗口 [d/15, 14d/15]。
+
+**定理 3.4.6(十五张安全掩码的反射覆盖证书)**〔候签;open;同模块伴随声明〕。令速度全集 `speedUniverse := Finset.Icc 1 20`,时刻 t 的安全掩码 `safeMask t := speedUniverse.filter (fun s => 1/15 ≤ torusDist (s·t))`,证书 `certificate : List (ℚ × Finset ℕ)` 为十五对(时刻,掩码):`1/11, 1/12, 1/13, 1/14, 1/15` 各去掉速度 11、12、13、14、15;`1/22, 11/23, 6/25, 8/25, 5/26, 4/29, 5/29, 11/29` 各去掉速度 1、2、4、3、5、7、6、8;`1/9` 去掉 {9, 18};`1/10` 去掉 {10, 20}。则(i)对证书中每一对 (t, M),`safeMask t = M`(十五条 kernel 判定的精确等式);(ii)令残余速度集 `residualSpeeds := {9, 10, 16, 17, 18, 19, 20}`,其每个六元子集都包含 {9, 18} 或 {10, 20}(`Finset.powersetCard 6 residualSpeeds ⊆ residualCoveredSixSubsets`,七例 kernel 判定);(iii)从而对任意 S ⊆ speedUniverse 且 S.card = 14,存在证书中一对 (t, M) 使 S ⊆ M。
+
+**定理 3.4.7(二十速度中任意十四人的孤独时刻)**〔候签;open;同模块主定理〕。对任意 S ⊆ speedUniverse 且 S.card = 14,存在 t ∈ [0, 1](t : ℚ),使得对一切 s ∈ S,`(1 : ℚ)/15 ≤ torusDist (s · t)`——即孤独跑者猜想(n = 14,界 1/(n+1))对速度取自 {1, …, 20} 的全部 C(20,14) = 38760 个十四元速度集成立,且时刻可取为有理数。
+
+**注 3.4.8(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条〕。逃逸内容三处,皆在活证明路径上:①定理 3.4.5 的有理—模窗口桥(由 `Int.fract_div_natCast_eq_div_natCast_mod` 与 d 的正性把 1/15 界改写为整数不等式);②经此桥反射的十五条精确掩码等式(`reflected_mask_certificate`);③七例残余覆盖证书(`reflected_cover_certificate`,kernel `decide`,探针实测 elaboration 0.049s、kernel 0.022s)。主定理 3.4.7 经 `certificate_covers_fourteen`(补集—基数提升:十四元集若漏掉某单一速度即被前十三张掩码覆盖,否则其六元补集落在残余集内而含 {9,18} 或 {10,20})与 `safeMask_sound` 传递地使用三者,无死依赖、非结论复述;判形 content,准入依据 escape-witness。对 38760 个子集直接 `decide` 在探针中 279s 未完(exit 130),**不得**改用 `native_decide`;正解即上述补集归约。只依赖钉版 Mathlib,不引入冻结 D5 依赖;落点 `D5/S1/Phase/`(探针实测直接文件 13/24,落地后 14/24)。若钉版 API 下 `Int.fract_div_natCast_eq_div_natCast_mod` 不可用或十五条掩码等式 kernel 判定超时,本候签按 open 记,不得以 `sorry`、公理或 `Lean.ofReduceBool` 代替。结算:三条由一个实施席同 PR `deposit`(绑 3.4.7)+ `cover`(3.4.5 / 3.4.6)落地,三席评审后合入。
+
+## 附录 E 增订六十九(v3.94 候审):Zaremba 猜想在锐常数 5 下的 1024 有限前沿——可靠的 Euclid 连分数检查器与内核判定的见证表(定理 2.2.1–2.2.2 候签;开放问题线第四批)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r5-gptpro-open-any`,候选 #9;Bourgain–Kontorovich、Huang、Kan 与 arXiv:2605.02518 之状态描述属检索席自报,未独立核实)提出;探针席 codex-cli(flight `op-p20-zaremba`,worktree `trureturing-la118-germ-gab`,base origin/dev)以 `lake env lean` 整证(exit 0,wall 85s;其中 `decide` 13.4s、类型检查 20.0s)并给出 kernel 读数(`#print axioms` 对全部公开声明为标准三公理之子集,无 native_decide);本节候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点:卷 II §II.2 不动点的分类学(连分数轨道之有界部分商);Zaremba 猜想本身(任意 q、常数 5)保持 open,q > 1024 不作断言;与 Mathlib `GenContFract.of` 的数字列桥接未证,记 open。
+
+**定理 2.2.1(Euclid 连分数检查器的可靠性)**〔候签;open;落 `D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront`〕。定义燃料化 Euclid 商列 `cfDigitsAux` 与 `cfDigits a q := cfDigitsAux (q+1) a q`,并定义 `ZarembaWitness A a q := Nat.Coprime a q ∧ 0<a ∧ a<q ∧ ∀ d∈cfDigits a q, d≤A` 及独立布尔检查器 `zarembaCheck`;证明每一步取商 `a/q`、以严格较小的余数 `a%q<q` 递归,且 `zarembaCheck A a q=true → ZarembaWitness A a q`。
+
+**定理 2.2.2(Zaremba 常数 5 的 1024 有限前沿)**〔候签;open;落 `D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront`〕。嵌入仓外计算的 1025 项见证表并由 Lean 内核 `decide` 验证其每一行;证明 `∀ q:ℕ, 2≤q → q≤1024 → ∃ a, ZarembaWitness 5 a q`。伴随忠实性证书为 `ZarembaWitness 5 1 2`、`q=54` 的最小见证 `a=17` 及 `cfDigits 17 54=[0,3,5,1,2]`,并以 `cfDigits 1 6=[0,6]` 与检查器拒绝 `1/6` 钉住上界确有约束力。
+
+**注 2.2.3(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条〕。拟议逃逸见证为公开有限证书 `zarembaFiveCertificate`:内核 `decide` 新证 `(List.range 1025).all (...) = true`,且该命题位于 `zaremba_five_upto` 的活证明路径上;判形 content,准入依据 escape-witness。若 Q=1024 的内核判定不能完成,只允许降到已实测通过的最大二次幂并如实改号,不得用 `native_decide`、`Lean.ofReduceBool`、`sorry` 或新公理。

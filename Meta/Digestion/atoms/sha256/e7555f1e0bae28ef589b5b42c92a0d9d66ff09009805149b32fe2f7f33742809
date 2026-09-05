@@ -1,0 +1,59 @@
+# 增订一·14　假想离线零点的联合能量图景
+
+设
+
+$$
+\rho_*
+=
+\frac12+\delta_*+it_*,
+\qquad
+\delta_*\ne0
+\tag{A14.1}
+$$
+
+是一个假想离线零点。
+
+本卷前文已经得到：同高度存在反射零点；Cayley 坐标中出现同角 reciprocal radial pair；scalar visible energy 满足 $V(t_*,\delta_*)=0$；若中心非零则发生 $\mathbb Z_2$ reflected phase split；若零点简单则发生二次 gap closing、相位翻转和局部涡旋。
+
+另一方面，对任意不同 primes $p,q$：
+
+$$
+\sinh^2\!\left(
+\delta_*\log\frac qp
+\right)>0.
+\tag{A14.2}
+$$
+
+对任意非平凡有限 Zeckendorf depth 与 prime cluster：
+
+$$
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta_*)>0.
+\tag{A14.3}
+$$
+
+于是形成一个严格的并置事实：
+
+$$
+\boxed{
+\text{zero-side scalar value}=0,
+\qquad
+\text{independently defined finite relation detector}>0.
+}
+\tag{A14.4}
+$$
+
+但“并置”不是“矛盾”。式 (A14.4) 中两边目前没有 canonical identity 或 domination theorem 相连。
+
+因此严谨表述只能是：
+
+$$
+\boxed{
+\text{离线零点是一个 candidate scalar/relation coercivity-gap closing event。}
+}
+\tag{A14.5}
+$$
+
+要把 candidate 变成 theorem，必须证明 relation detector 是 completed explicit formula 中 odd channel 的真实下界或等价范数。
+
+---
+

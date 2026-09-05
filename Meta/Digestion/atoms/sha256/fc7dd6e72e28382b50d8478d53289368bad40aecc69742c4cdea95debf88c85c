@@ -1,0 +1,21 @@
+\[
+\boxed{
+\operatorname{Core}_F(T)
+=
+\bigcap_{w\in U^*}
+\ker(T\circ F_w).
+}
+\]
+
+即：
+
+\[
+x\sim_{\operatorname{Core}_F(T)}y
+\iff
+\forall w,\quad
+T(F_wx)=T(F_wy).
+\]
+
+它是所有：
+
+- 对 FLOW 稳定；

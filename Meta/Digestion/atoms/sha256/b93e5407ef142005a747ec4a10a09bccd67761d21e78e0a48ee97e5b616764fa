@@ -1,0 +1,34 @@
+## 2.1 有限合法词空间
+
+固定 $Q\ge0$，定义
+
+$$
+\Omega_Q
+=
+\left\{
+(\eta_2,\ldots,\eta_{Q+1})\in\{0,1\}^{Q}:
+\eta_k\eta_{k+1}=0
+\right\}.
+\tag{A2.1}
+$$
+
+约束 $\eta_k\eta_{k+1}=0$ 是一步 hard-core memory：一位被占据以后，下一位不得被占据。
+
+定义 Fibonacci 指数能量
+
+$$
+\boxed{
+E_Q(\eta)
+=
+\sum_{k=2}^{Q+1}\eta_kF_k.
+}
+\tag{A2.2}
+$$
+
+记
+
+$$
+M_Q=F_{Q+2}.
+\tag{A2.3}
+$$
+

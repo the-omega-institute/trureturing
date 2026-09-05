@@ -1,0 +1,41 @@
+## 定理 4.1　四角色非互相决定 `[D]`
+
+在有限 Boolean 模型上可以构造：
+
+1. 相同 FLOW、ADMIT、ANCHOR，但 CUT 不同；
+2. 相同 CUT、ADMIT、ANCHOR，但 FLOW 不同；
+3. 相同 CUT、FLOW、ANCHOR，但 ADMIT 不同且均接纳锚点；
+4. 相同 CUT、FLOW、ADMIT，但 ANCHOR 不同。
+
+例如取 \(X=\mathbf2\)：
+
+\[
+q_1=\operatorname{id},
+\qquad
+q_2=\mathrm{const};
+\]
+
+\[
+F_1=\operatorname{id},
+\qquad
+F_2=\neg;
+\]
+
+\[
+A_1(x)=\top,
+\qquad
+A_2(x)\equiv(x=\mathsf{false});
+\]
+
+\[
+a_1=\mathsf{false},
+\qquad
+a_2=\mathsf{true}.
+\]
+
+所以四角色是模型语义上的独立坐标。
+
+仓库中的 `ObserverConceptReadoutCorrespondence` 进一步机器证明：仅保存联合读数的 kernel quotient，会遗忘 admissibility、anchor，以及读数族如何分解为坐标；并给出同核而准入不同、同核而锚点不同、读数族不同而联合核相同的反模型。
+
+---
+
