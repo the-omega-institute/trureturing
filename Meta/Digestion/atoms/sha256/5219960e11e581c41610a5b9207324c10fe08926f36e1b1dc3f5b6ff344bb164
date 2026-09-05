@@ -1,0 +1,28 @@
+## 定理 6：扣除同余模型后的余项判据
+
+以下命题等价：
+
+$$
+\boxed{\mathrm{RH};}
+$$
+
+$$
+\boxed{
+\exists C,A<\infty,\quad
+\mathfrak J(2^j)\le C(1+j)^A
+\quad\text{对所有充分大的整数 }j;
+}
+\tag{28}
+$$
+
+$$
+\boxed{
+\exists C,A<\infty,\quad
+\mathfrak R(2^j)\le C(1+j)^A
+\quad\text{对所有充分大的整数 }j.
+}
+\tag{29}
+$$
+
+其中可以约定 \(A\ge0\)。
+

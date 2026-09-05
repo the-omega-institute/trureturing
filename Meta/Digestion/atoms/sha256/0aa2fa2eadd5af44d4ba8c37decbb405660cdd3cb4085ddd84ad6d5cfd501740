@@ -1,0 +1,23 @@
+### 正向证明
+
+RH 给出正测度：
+
+$$
+d\nu(u)=\frac{d\omega(u)}{4+u},
+\qquad u\ge0.
+$$
+
+于是：
+
+$$
+x^{\mathsf T}\mathsf A_Nx
+=
+\int p(u)^2\,d\nu(u)\ge0,
+$$
+
+$$
+x^{\mathsf T}\mathsf A_N^{(1)}x
+=
+\int u\,p(u)^2\,d\nu(u)\ge0.
+$$
+

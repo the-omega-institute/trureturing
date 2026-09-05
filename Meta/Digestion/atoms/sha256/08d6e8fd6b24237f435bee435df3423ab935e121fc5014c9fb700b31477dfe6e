@@ -1,0 +1,55 @@
+## 定义 137.1　平面波度量族
+
+取常数 \(\Omega>0\)，定义
+
+$$
+p_\varepsilon(u)
+=
+\varepsilon\Omega\sin(u/\varepsilon).
+$$
+
+令 \(b_\varepsilon\) 是初值问题的解：
+
+$$
+\boxed{
+b_\varepsilon''(u)
++
+\Omega^2\cos^2(u/\varepsilon)b_\varepsilon(u)=0,
+}
+\tag{137.1}
+$$
+
+$$
+b_\varepsilon(0)=1,
+\qquad
+b_\varepsilon'(0)=0.
+$$
+
+在
+
+$$
+|u|\le L<\frac{\pi}{2\Omega}
+$$
+
+内，定义
+
+$$
+\boxed{
+ds_\varepsilon^2
+=
+-2\,du\,dv
++
+b_\varepsilon(u)^2
+\left[
+e^{2p_\varepsilon(u)}dx^2
++
+e^{-2p_\varepsilon(u)}dy^2
+\right].
+}
+\tag{137.2}
+$$
+
+这是平面波的 Rosen 型坐标形式。此类坐标必须限制在尚未发生标架退化的区域；不能把其坐标焦散当作无条件的物理奇点。([arXiv][6])
+
+---
+

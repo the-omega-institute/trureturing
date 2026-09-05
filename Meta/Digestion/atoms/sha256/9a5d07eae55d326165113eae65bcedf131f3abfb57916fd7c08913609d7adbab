@@ -1,0 +1,25 @@
+## 定理 O4：截断误差
+
+$$
+\boxed{
+\|\mathsf K-\mathsf K_N\|_1
+\le
+B_0\left(2^{1-N}-4^{-N}\right).
+}
+\tag{O17}
+$$
+
+并且：
+
+$$
+\boxed{
+\|\mathsf K-\mathsf K_N\|_{\mathrm{op}}
+\le
+\delta_N
+:=
+\frac{B_0}{3}
+\sqrt{2\,4^{-N}-16^{-N}}.
+}
+\tag{O18}
+$$
+

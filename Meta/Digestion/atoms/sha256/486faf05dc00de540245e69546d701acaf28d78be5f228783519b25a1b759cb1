@@ -1,0 +1,51 @@
+### 证明
+
+把酉群积分写在中心化对角谱上。由：
+
+$$
+\left|
+\operatorname{Tr}(\Lambda^*U\Lambda U^*)
+\right|
+\le Q_q,
+$$
+
+得到：
+
+$$
+\mathcal H_q(r)\le e^{rQ_q}.
+$$
+
+另一方面，前文历史矩阵满足：
+
+$$
+\frac d{dr}\log\det G_q(r)
+=
+2\left\|
+\frac{
+G_q(r)^{1/2}C_qG_q(r)^{-1/2}
+-
+G_q(r)^{-1/2}C_q^*G_q(r)^{1/2}
+}{2i}
+\right\|_{\mathrm{HS}}^2.
+$$
+
+右边不小于：
+
+$$
+2\sum_j(\Im\lambda_j)^2.
+$$
+
+积分后，再扣除历史体积基准的 \(\frac{d(d-1)}2\log r\)，得到：
+
+$$
+\log\mathcal Z_q(r)
+\ge
+2r\sum_j(\Im\lambda_j)^2
+-
+\frac{d(d-1)}2\log r
++
+O_q(1).
+$$
+
+与上界合并即得。重根情形也适用，因为这里没有除以根间距。证毕。
+

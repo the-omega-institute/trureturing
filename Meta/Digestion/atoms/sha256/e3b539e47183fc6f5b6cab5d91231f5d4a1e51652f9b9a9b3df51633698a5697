@@ -1,0 +1,88 @@
+## 定理 117.1　长程相关可以阻止方差衰减
+
+取：
+
+$$
+\widehat n_N
+=
+I+\alpha\overline Z_N,
+\qquad
+\overline Z_N=\frac1N\sum_jZ_j,
+\qquad
+0<\alpha<1.
+$$
+
+比较两个结构态：
+
+$$
+\sigma_{\mathrm{ind}}
+=
+\left(\frac I2\right)^{\otimes N},
+$$
+
+以及：
+
+$$
+|\mathrm{GHZ}_N\rangle
+=
+\frac{|0\rangle^{\otimes N}+|1\rangle^{\otimes N}}{\sqrt2}.
+$$
+
+它们的每个单元边缘态都为 \(I/2\)，但：
+
+$$
+\boxed{
+\operatorname{Var}_{\sigma_{\mathrm{ind}}}(\widehat n_N)
+=
+\frac{\alpha^2}{N},
+}
+\tag{117.1}
+$$
+
+$$
+\boxed{
+\operatorname{Var}_{\mathrm{GHZ}_N}(\widehat n_N)
+=
+\alpha^2.
+}
+\tag{117.2}
+$$
+
+### 证明
+
+独立态中，\(\langle Z_iZ_j\rangle=0\) 对 \(i\ne j\) 成立，因此：
+
+$$
+\langle\overline Z_N^2\rangle=\frac1N.
+$$
+
+GHZ 态中，对全部 \(i,j\)：
+
+$$
+\langle Z_iZ_j\rangle=1,
+$$
+
+故 \(\langle\overline Z_N^2\rangle=1\)。两态均满足 \(\langle\overline Z_N\rangle=0\)。∎
+
+因此：
+
+$$
+\boxed{
+\text{结构单元很多}
+\not\Rightarrow
+\text{读数自动集中}.
+}
+$$
+
+真正需要的是关联求和得到控制。
+
+将 GHZ 态退相干为：
+
+$$
+\frac12|0\cdots0\rangle\langle0\cdots0|
++
+\frac12|1\cdots1\rangle\langle1\cdots1|
+$$
+
+不会改变式（117.2）。这时量子分支间相干消失了，但仍然存在两个不同的经典钟速分支。
+

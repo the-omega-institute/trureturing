@@ -1,0 +1,29 @@
+## 4.1 一个明确的对数上界
+
+对有理数 \(x>1\)，令：
+
+$$
+z=\frac{x-1}{x+1}\in(0,1).
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal L_k(x)
+=
+2\sum_{j=0}^{k-1}\frac{z^{2j+1}}{2j+1}
++
+\frac{2z^{2k+1}}{(2k+1)(1-z^2)}.
+}
+\tag{7}
+$$
+
+这是有理数，并且：
+
+$$
+\ln x<\mathcal L_k(x),
+\qquad
+\mathcal L_k(x)\longrightarrow\ln x.
+$$
+

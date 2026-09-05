@@ -1,0 +1,18 @@
+## 110.2　本轮核验与源码
+
+本轮已作精确符号核验的内容包括：
+
+算子二次函数的十方向插值；有限反例中的正平方根；顺序干涉公式；完整八维媒介闭路；两钟输出态的纠缠。
+
+[精确算例核验脚本](sandbox:/mnt/data/observer_formalization/check_process_metric_classicality.py)
+
+[核验结果](sandbox:/mnt/data/observer_formalization/process_metric_checks.json)
+
+另给出一个只使用有限布尔基底与符号位的 Lean 候选文件，保存受控 \(X,Z\) 闭路产生受控相位、同时保持媒介标签的证明结构：
+
+[ObserverControlledCommutator.lean](sandbox:/mnt/data/observer_formalization/ObserverControlledCommutator.lean)
+
+**该 Lean 文件尚未编译。**它只覆盖有限带符号基底上的组合恒等式，没有把复线性扩张、密度矩阵、纠缠见证和全过程误差界冒充为已经机器证明的内容。
+
+---
+

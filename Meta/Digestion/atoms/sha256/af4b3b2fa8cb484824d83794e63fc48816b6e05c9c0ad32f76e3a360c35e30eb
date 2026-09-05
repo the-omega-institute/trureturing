@@ -1,0 +1,24 @@
+## 定理 D3：共同正回返表示
+
+对实际 \(D\)，以下等价：
+
+$$
+\boxed{
+\mathrm{RH}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\mathfrak S(z)
+=
+\int_{[0,\infty)}
+\frac{d\omega(u)}{z-u},
+}
+\tag{D21}
+$$
+
+其中 \(\omega\) 是一份有限正测度；该表示在非实域成立。
+

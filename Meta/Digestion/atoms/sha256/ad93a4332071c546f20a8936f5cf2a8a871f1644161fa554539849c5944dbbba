@@ -1,0 +1,13 @@
+## 定理 C4：每个有限 Jensen 层也只发生平移
+
+用 \(D_\tau\) 的实际系数构造 \(q_d^{(\tau)}\)，则：
+
+$$
+\boxed{
+q_d^{(\tau)}(x)
+=
+q_d\!\left(x-\frac{\tau}{2d}\right).
+}
+\tag{C29}
+$$
+

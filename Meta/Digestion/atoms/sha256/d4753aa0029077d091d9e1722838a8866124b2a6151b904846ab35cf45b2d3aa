@@ -1,0 +1,29 @@
+## 定义 44.1　单模式对的纯化态
+
+对 \(\omega>0\)，令
+
+$$
+q_\omega=e^{-2\pi\omega/\lambda},
+\qquad 0<q_\omega<1.
+$$
+
+定义
+
+$$
+\boxed{
+|\Psi_\omega\rangle
+=
+\sqrt{1-q_\omega}
+\sum_{n=0}^{\infty}
+q_\omega^{n/2}
+|n\rangle_R|n\rangle_B.
+}
+\tag{44.1}
+$$
+
+\(R\) 表示外侧模式，\(B\) 表示在该分解中未被外侧访问的伙伴模式。
+
+这是玻色两模式压缩态的标准形式。它是理想霍金模式关联的一种实现；真实四维传播还包含灰体散射和更完整的模式结构。([arXiv][5])
+
+---
+

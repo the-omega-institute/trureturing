@@ -1,0 +1,87 @@
+## 定理 115.1　宏观经典化的全过程误差界
+
+假设沿参考结构演化，式（114.6）以 \(\Gamma(t,v)\) 成立。
+
+设 \(\mathcal P_N\) 与 \(\mathcal P_{\mathrm{cl}}\) 分别为实际与候选过程的观察者输出通道，则：
+
+$$
+\boxed{
+\frac12
+\|\mathcal P_N-\mathcal P_{\mathrm{cl}}\|_\diamond
+\le
+\frac1{2\hbar n_*\sqrt N}
+\int_0^T
+\sum_a
+\|F_a(t)\|
+\sqrt{\Gamma(t,v_a(t))}
+\,dt.
+}
+\tag{115.3}
+$$
+
+### 证明
+
+纯化初始结构态。候选演化中，结构与观察者保持乘积，其结构部分正是 \(\sigma_N^0(t)\) 的纯化。
+
+Duhamel 公式给出：
+
+$$
+U_{\mathrm{act}}(T)-U_{\mathrm{cl}}(T)
+=
+-\frac i\hbar
+\int_0^T
+U_{\mathrm{act}}(T,t)
+\bigl(H_{\mathrm{act}}(t)-H_{\mathrm{cl}}(t)\bigr)
+U_{\mathrm{cl}}(t)\,dt.
+$$
+
+对每个积分项，左侧实际后缀酉演化不增加范数；右侧候选前缀的结构态已知。
+
+使用定理 114.2：
+
+$$
+\left\|
+(\widehat n_N-n)\bigl(\sigma_N^0(t)\bigr)^{1/2}
+\right\|_2
+\le
+\frac{\sqrt{\Gamma(t,v)}}{2n_*\sqrt N}.
+$$
+
+再对观察者输入及任意附加测试参照取上确界，得到式（115.3）。∎
+
+### 两项关键结论
+
+第一，本证明**没有假设实际环境在每一步重新初始化**。实际过程中的关联与反作用都保留在 \(U_{\mathrm{act}}\) 中。
+
+第二，若：
+
+$$
+\Gamma(t,v)\le\Gamma_*,
+$$
+
+并定义无量纲实验预算：
+
+$$
+\mathcal B(T)
+=
+\frac1\hbar
+\int_0^T\sum_a\|F_a(t)\|\,dt,
+$$
+
+则：
+
+$$
+\boxed{
+\frac12
+\|\mathcal P_N-\mathcal P_{\mathrm{cl}}\|_\diamond
+\le
+\frac{\sqrt{\Gamma_*}}{2n_*}
+\frac{\mathcal B(T)}{\sqrt N}.
+}
+\tag{115.4}
+$$
+
+因此，固定预算的观察者可以看到趋于确定的经典钟律，尽管每个有限 \(N\) 的完整模型仍然量子化。
+
+---
+

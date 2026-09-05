@@ -1,0 +1,16 @@
+## 定义 12.1　连续最优值
+
+对 \(T>0\)，定义：
+
+$$
+\Phi(T)
+=
+\max
+\left\{
+\sum_pf_p(x_p):
+x_p\ge0,\ 
+\sum_px_p\ln p\le T,\ 
+x\text{ 有限支撑}
+\right\}.
+$$
+

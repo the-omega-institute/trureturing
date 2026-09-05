@@ -1,0 +1,51 @@
+### 第三步：从期望提升到几乎必然
+
+中心化后，每一项的绝对幅度至多为
+
+$$
+C_h(T+1)e^{-T/2}.
+$$
+
+独立和的四阶矩展开因此给出
+
+$$
+\mathbb E|\mathcal D_h^{\mathrm B}(T)|^4
+=
+O_h((1+T)^2).
+$$
+
+当
+
+$$
+|T-S|>4h
+$$
+
+时，两个读数使用的整数集合不相交，故相互独立。因此能量方差只需要在一个固定宽度的对角带上积分：
+
+$$
+\boxed{
+\operatorname{Var}(\mathcal E_h^{\mathrm B}(L))
+=
+O_h(L^3).
+}
+\tag{13}
+$$
+
+在序列 \(L_j=j^2\) 上，Chebyshev 不等式给出可求和的失败概率：
+
+$$
+\Pr\left(
+\left|
+\frac{\mathcal E_h^{\mathrm B}(L_j)
+-\mathbb E\mathcal E_h^{\mathrm B}(L_j)}
+{L_j^2}
+\right|>\varepsilon
+\right)
+=
+O_{h,\varepsilon}(j^{-2}).
+$$
+
+由 Borel–Cantelli，引理结论沿 \(L_j\) 几乎必然成立。再利用 \(\mathcal E_h^{\mathrm B}(L)\) 单调增加，以及 \(L_{j+1}/L_j\to1\)，推广到全部 \(L\to\infty\)。证毕。
+
+---
+

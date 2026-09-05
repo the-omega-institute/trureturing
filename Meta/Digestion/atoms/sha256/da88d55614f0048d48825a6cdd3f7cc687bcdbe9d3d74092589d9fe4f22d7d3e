@@ -1,0 +1,59 @@
+## 收束
+
+这次把前文推进成了一个更精确的层次：
+
+$$
+\boxed{
+\text{实际高阶统计}
+\longrightarrow
+\text{回返 Bézout 矩阵}
+\longrightarrow
+\text{正耦合是否可能}
+\longrightarrow
+\text{有限零点定位}.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+n_-(B_d)
+=
+\text{第 }d\text{ 个实际 Jensen 多项式的非实共轭根对数}.
+}
+$$
+
+因此，负方向不再只是某种抽象“不协调”，而有明确的有限谱含义。
+
+另一方面：
+
+$$
+\boxed{
+\text{独立高斯噪声}
+\longrightarrow
+\chi_2\text{ 改变、谱整体平移},
+}
+$$
+
+但：
+
+$$
+\boxed{
+\chi_4,\chi_6,\ldots
+\text{ 不变，候选耦合符号不变}.
+}
+$$
+
+这使你的“经典统计与不可约关系”的区分获得了一个严格版本：
+
+> **普通背景波动可以被增加、平滑和重标定；决定正实现能否存在的高阶关系，却不能靠这些操作修复。**
+
+欧拉常数负责校准实际对象的端点响应；Fibonacci 链负责把已经证明的正耦合实现为局部结构；量子观察者负责读取对应振幅。**真正还需要算术来承担的，是这些高阶关系为什么在每一个有限层都不要求负的耦合平方。**
+
+[1]: https://dlmf.nist.gov/25.4 "https://dlmf.nist.gov/25.4"
+[2]: https://arxiv.org/abs/1902.07321 "https://arxiv.org/abs/1902.07321"
+[3]: https://arxiv.org/abs/1207.2434 "https://arxiv.org/abs/1207.2434"
+[4]: https://arxiv.org/abs/1911.01745 "https://arxiv.org/abs/1911.01745"
+[5]: https://arxiv.org/abs/2405.18940 "https://arxiv.org/abs/2405.18940"
+[6]: https://dlmf.nist.gov/25.2 "https://dlmf.nist.gov/25.2"

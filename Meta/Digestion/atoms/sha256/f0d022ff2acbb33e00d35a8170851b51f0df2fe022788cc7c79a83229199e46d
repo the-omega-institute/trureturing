@@ -1,0 +1,14 @@
+## 定理 2：独立模型的几乎必然能量律
+
+对每个固定 \(h>0\)，
+
+$$
+\boxed{
+\frac{\mathcal E_h^{\mathrm B}(L)}{L^2}
+\longrightarrow
+\frac{A_h}{2}
+\qquad\text{几乎必然}.
+}
+\tag{10}
+$$
+

@@ -1,0 +1,26 @@
+## 定理 J4：残差的精确极限
+
+对所有 \(r>0\)：
+
+$$
+\boxed{
+0\le
+\mathcal E_C(r)-\mathcal E_{\mathrm{spec}}(C)
+\le
+\frac{d(d-1)}{4r}.
+}
+\tag{J11}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal E_C(r)\downarrow
+\mathcal E_{\mathrm{spec}}(C).
+}
+\tag{J12}
+$$
+
+不要求可对角化，不要求简单根。
+

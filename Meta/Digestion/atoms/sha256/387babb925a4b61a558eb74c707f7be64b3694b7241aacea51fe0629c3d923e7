@@ -1,0 +1,88 @@
+# 八、有限观察边界还能形成一个量子态，但它只测量“可消除部分”
+
+由定理 J4 的证明：
+
+$$
+R_r^*R_r
+=
+\frac1rI-[A,A^*].
+$$
+
+取迹：
+
+$$
+\operatorname{Tr}(R_r^*R_r)=\frac dr.
+$$
+
+因此可以定义一份合法的有限密度矩阵：
+
+$$
+\boxed{
+\rho_{\mathrm{edge}}(r)
+=
+\frac rd R_r^*R_r
+=
+\frac Id-\frac rd[A,A^*].
+}
+\tag{J22}
+$$
+
+它为正，且迹为一。
+
+直接计算其纯度：
+
+$$
+\boxed{
+\operatorname{Tr}\rho_{\mathrm{edge}}^2
+=
+\frac1d+
+\frac{r^2}{d^2}\|[A,A^*]\|_{\mathrm{HS}}^2.
+}
+$$
+
+所以下降律还可以写成：
+
+$$
+\boxed{
+\mathcal E_C'(r)
+=
+-\frac{d^2}{4r^2}
+\left(
+\operatorname{Tr}\rho_{\mathrm{edge}}(r)^2-\frac1d
+\right).
+}
+\tag{J23}
+$$
+
+这给前文的“观察剩余”一个更细的分类：
+
+**边界密度矩阵偏离均匀态的程度，控制非正规残差当前消耗得多快；它不控制已经存在的正常复谱是否消失。**
+
+例如，若 \(C\) 已正规但具有非实本征值：
+
+$$
+[A,A^*]=0,
+\qquad
+\rho_{\mathrm{edge}}=\frac Id,
+$$
+
+可同时有：
+
+$$
+\mathcal E_C(r)>0.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{观察边界达到均匀状态}
+\not\Rightarrow
+\text{谱已经为实}.
+}
+$$
+
+这里的 \(\rho_{\mathrm{edge}}\) 是由历史嵌入构造的辅助量子态，不能未经额外物理模型就把它的纯度解释成宇宙熵或实际热力学熵。
+
+---
+

@@ -1,0 +1,21 @@
+\boxed{
+\Gamma_\mu
+==========
+
+e^{-1}(\partial_\mu e+\omega_\mu e).
+}
+\tag{89.4}
+
+$$
+
+则：
+
+- \(g\) 是非退化 Lorentz 型度量；
+- \(\Gamma\) 与 \(g\) 相容；
+- \(\Gamma\) 无挠；
+- 因而 \(\Gamma\) 是 \(g\) 的 Levi–Civita 连接。
+
+其曲率满足
+
+$$
+

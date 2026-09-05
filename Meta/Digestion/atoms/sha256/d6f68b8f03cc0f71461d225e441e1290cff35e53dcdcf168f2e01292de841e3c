@@ -1,0 +1,20 @@
+\boxed{
+\rho_{\mathrm{ctrl}}
+====================
+
+\frac12
+\begin{pmatrix}
+1&\overline\gamma\
+\gamma&1
+\end{pmatrix},
+\qquad
+\gamma=\operatorname{Tr}(\rho H).
+}
+\tag{85.1}
+
+$$
+
+相位为 \(\alpha\) 的分析测量给出
+
+$$
+

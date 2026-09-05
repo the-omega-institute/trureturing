@@ -1,0 +1,68 @@
+## 收束
+
+这次最实质的三个结果是：
+
+$$
+\boxed{
+b_{d,k}
+\le
+\frac{L^{2k}}{d(d+1)\cdots(d+k-1)},
+}
+$$
+
+它给出不依赖 RH 的维数稀释机制；
+
+$$
+\boxed{
+\mathcal H_d(d\vartheta)
+\longrightarrow
+\exp\left[
+\sum_{m\ge2}\frac{|\rho_m|^2}{m}\vartheta^m
+\right],
+}
+$$
+
+它精确描述一段双尺度极限；
+
+以及：
+
+$$
+\boxed{
+\lim_{r\to\infty}\lim_{d\to\infty}
+\frac{\log\mathcal Z_d(r)}r=-S_*,
+\qquad
+\lim_{d\to\infty}\lim_{r\to\infty}
+\frac{\log\mathcal Z_d(r)}r=2\mathfrak E_\xi.
+}
+$$
+
+这两个极限在 \(S_*>0\) 下不同。
+
+所以，“整体”在这里不只是“把所有模式放进一个更大的空间”。还必须规定：
+
+> **模型维数增长时，观察深度怎样增长；群平均怎样变化；哪些有限证据能够被精确取回；以及是否允许交换原本不一致的极限。**
+
+本轮没有证明 RH，也没有得到实际 ξ 的负证书。新增的是一套明确的尺度诊断：**哪些正常现象本来就会自动出现，不能被当作证明；哪些高阶关系才真正承载零点定位。**
+
+这能防止后续研究在“越算越正常”的低分辨率区域里循环，也使下一项真正需要算术承担的估计更加集中。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/abs/1902.07321 "[1902.07321] Jensen polynomials for the Riemann zeta function and other sequences"
+[3]: https://arxiv.org/html/2312.16816v5 "HCIZ integral formula as unitarity of a canonical map between reproducing kernel spaces"
+[4]: https://dlmf.nist.gov/5.11 "DLMF: §5.11 Asymptotic Expansions ‣ Properties ‣ Chapter 5 Gamma Function"
+[5]: https://arxiv.org/abs/math-ph/0402073 "[math-ph/0402073] Integration with respect to the Haar measure on unitary, orthogonal and symplectic group"
+[6]: https://arxiv.org/abs/2411.03117?utm_source=chatgpt.com "Cauchy identities for staircase matrices"
+这次应当换一种观察方式：**不再先把全部模式平均起来，再等待很高阶的统计暴露问题；而是构造一个保留相位符号的多项式滤波器，主动压低无关模式。**
+
+这样可以证明一项比上一轮更有针对性的结论：
+
+> **如果实际 ξ 存在离线零点，那么存在一个固定次数、甚至可以取有理系数的多项式测试，使所有足够高阶的实际 Jensen 模型都给出严格负读数。这个测试不需要随着模型维数继续增加次数。**
+
+这并不与上一轮的“低阶 Haar 平均会自动通过”矛盾。它说明：**盲区属于指定的平均协议，不属于所有可能的观察。**
+
+同时，这个带符号读数可以实现为两种量子条件态之间的干涉振幅。负号不会变成负概率；但选择性观察也不免费——条件信号可能保持清楚，获得该条件分支的概率却可能下降。
+
+下面依次给出有限模型、实际无限对象及量子读出。
+
+---
+

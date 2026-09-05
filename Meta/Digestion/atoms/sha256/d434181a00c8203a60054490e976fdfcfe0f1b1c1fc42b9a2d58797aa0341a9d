@@ -1,0 +1,37 @@
+## 推论：整个历史过程到底消除了多少？
+
+积分式（J8），再用式（J12）：
+
+$$
+\boxed{
+\frac14
+\int_0^\infty
+\|[A_C(r),A_C(r)^*]\|_{\mathrm{HS}}^2\,dr
+=
+\mathcal E_C(0)-\mathcal E_{\mathrm{spec}}(C).
+}
+\tag{J14}
+$$
+
+进一步：
+
+$$
+\boxed{
+\int_0^\infty
+\|[A_C(r),A_C(r)^*]\|_{\mathrm{HS}}^2\,dr
+=
+2\left(
+\|C\|_{\mathrm{HS}}^2-\sum_j|\lambda_j|^2
+\right).
+}
+\tag{J15}
+$$
+
+右边正是非正规性的一种标准总量。
+
+因此：
+
+> **高斯历史过程恰好消耗全部非正规性；它留下的不是一个任意余项，而是相似变换永远不能改变的谱虚部平方和。**
+
+---
+

@@ -1,0 +1,11 @@
+## 定理 I4：固定高斯历史协议的 RH 判据
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+s_d\longrightarrow0.
+}
+\tag{I22}
+$$
+

@@ -1,0 +1,51 @@
+## 证明
+
+由式（21）—（22），\(\kappa_H\) 的指数变换为
+
+$$
+\begin{aligned}
+\int e^{zs}\kappa_H(s)\,ds
+=
+\left(\frac{e^{Hz}-1}{Hz}\right)^3
+\frac{e^{Hz}-e^{H/2}}
+{2(e^{H/2}-1)(z-\tfrac12)}.
+\end{aligned}
+$$
+
+对紧支集分布，
+
+$$
+\int e^{zs}(2\kappa_H''+\kappa_H')\,ds
+=
+(2z^2-z)\int e^{zs}\kappa_H(s)\,ds.
+$$
+
+整理为
+
+$$
+\frac{Q_H(e^{Hz})}{c(H)z^2}.
+$$
+
+另一方面，由 \(k_H\) 的分段线性定义，
+
+$$
+\int e^{zs}k_H(s)\,ds
+=
+\frac{Q_H(e^{Hz})}{z^2}.
+$$
+
+两边一致，得到式（33）。证毕。
+
+---
+
+所以，共同结构现在是
+
+$$
+\boxed{
+\text{正概率密度 }\kappa_H
+\xrightarrow{\ 2\partial^2+\partial\ }
+\text{带符号算术核}.
+}
+\tag{35}
+$$
+
