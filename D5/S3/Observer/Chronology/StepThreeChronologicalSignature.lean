@@ -3,7 +3,7 @@
    mirror-B: none(waiver:new-library-node)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Step-three chronological signatures obey Chen composition, truncate multiplicatively to step two, and realize reverse-and-negate by an explicit antipode. -/
+   digest: Step-three Chen composition, multiplicative truncation, and explicit reversal inverse. -/
 
 import D5.S3.Observer.Chronology.StepTwoChronologicalSignature
 import Mathlib.Tactic
@@ -12,11 +12,9 @@ import Mathlib.Tactic
 # Step-three chronological signatures
 
 A finite event word is recorded through degree three using the denominator-free
-coordinates
+coordinates `(X₁, 2 X₂, 6 X₃)`.
 
-`(X₁, 2 X₂, 6 X₃)`.
-
-Chen composition is therefore
+Chen composition is
 
 `Z₁ = X₁ + Y₁`,
 
@@ -95,8 +93,11 @@ instance [Semiring A] : Monoid (StepThreeSignature A) where
     rcases left with ⟨leftOne, leftTwo, leftThree⟩
     rcases middle with ⟨middleOne, middleTwo, middleThree⟩
     rcases right with ⟨rightOne, rightTwo, rightThree⟩
-    ext <;>
-      simp [compose, mul_add, add_mul, mul_assoc] <;>
+    apply StepThreeSignature.ext
+    · exact add_assoc leftOne middleOne rightOne
+    · dsimp only [compose]
+      noncomm_ring
+    · dsimp only [compose]
       noncomm_ring
 
 @[simp]
