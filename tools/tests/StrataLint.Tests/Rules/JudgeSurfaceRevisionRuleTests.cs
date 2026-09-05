@@ -121,6 +121,10 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git restore --sour HEAD^1 -- p")]
     [InlineData("git restore --no-recurse-submodules --source HEAD^1 p")]
     [InlineData("git worktree add --orphan -b br /tmp/w HEAD^1")]
+    [InlineData("git worktree add --relative-paths /tmp/w HEAD^1")]
+    [InlineData("git show --unified HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git show -U HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git show -X HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git restore --stag --source=HEAD^1 -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --sou=HEAD^1 -- tools/scripts/workflow/x.sh")]
     [InlineData("time -p git show HEAD^1:tools/scripts/workflow/x.sh >out")]
@@ -225,6 +229,10 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git cat-file --no-mailmap -t HEAD^1")]
     [InlineData("git read-tree --index-output=/tmp/i --no-recurse-submodules -m HEAD HEAD^{tree}")]
     [InlineData("git worktree add --no-checkout -B br /tmp/w HEAD")]
+    [InlineData("git worktree add --relative-paths /tmp/w HEAD")]
+    [InlineData("git show --expand-tabs=4 HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git show --expand-tabs -U3 --stat=80 HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git show --grep x --since 2020 --diff-filter A HEAD")]
     [InlineData("git read-tree --no-recurse-submodules -u HEAD^{tree}")]
     [InlineData("git restore --staged --source=HEAD -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --conflict=diff3 tools/scripts/workflow/x.sh")]
@@ -454,6 +462,28 @@ public sealed class JudgeSurfaceRevisionRuleTests
     {
         const string workflow = "      - run: |2-\n          git show HEAD^1:tools/scripts/workflow/x.sh\n";
         Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void BackslashContinuationInsideABlockScalarIsOneCommand()
+    {
+        const string workflow = "      - run: |\n          git \\\n            show HEAD^1:tools/scripts/workflow/x.sh\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void BackslashContinuationInsideADoubleQuotedScalarIsOneCommand()
+    {
+        const string workflow = "      - run: \"git \\\\\\n  show HEAD^1:tools/scripts/workflow/x.sh\"\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void YamlNestingDeeperThanTheBoundIsFailClosed()
+    {
+        var workflow = "deep: " + new string('[', 70) + new string(']', 70) + "\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("nesting", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]

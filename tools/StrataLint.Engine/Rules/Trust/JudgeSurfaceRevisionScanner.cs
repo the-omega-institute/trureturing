@@ -9,6 +9,9 @@ internal static partial class JudgeSurfaceRevisionScanner
 {
     private const string Head = "HEAD";
 
+    // A parseable YAML tree can still be arbitrarily deep; the walk stops here, fail-closed.
+    private const int MaximumYamlDepth = 64;
+
     private const string Suffix =
         " (SL-030, CLAUDE.md rule 19: base data enters the candidate judge through its snapshot reader)";
 
@@ -85,13 +88,19 @@ internal static partial class JudgeSurfaceRevisionScanner
         {
             if (document.RootNode is not null)
             {
-                WalkYaml(document.RootNode, messages, visited);
+                WalkYaml(document.RootNode, messages, visited, 0);
             }
         }
     }
 
-    private static void WalkYaml(YamlNode node, ImmutableArray<string>.Builder messages, HashSet<YamlNode> visited)
+    private static void WalkYaml(YamlNode node, ImmutableArray<string>.Builder messages, HashSet<YamlNode> visited, int depth)
     {
+        if (depth > MaximumYamlDepth)
+        {
+            messages.Add($"line {node.Start.Line}: YAML nesting deeper than {MaximumYamlDepth} levels is fail-closed" + Suffix);
+            return;
+        }
+
         // Aliases resolve to the anchored node itself; visiting it once is enough and keeps a
         // self-referential document finite.
         if (!visited.Add(node))
@@ -132,15 +141,15 @@ internal static partial class JudgeSurfaceRevisionScanner
                         continue;
                     }
 
-                    WalkYaml(key, messages, visited);
-                    WalkYaml(value, messages, visited);
+                    WalkYaml(key, messages, visited, depth + 1);
+                    WalkYaml(value, messages, visited, depth + 1);
                 }
 
                 break;
             case YamlSequenceNode sequence:
                 foreach (var child in sequence.Children)
                 {
-                    WalkYaml(child, messages, visited);
+                    WalkYaml(child, messages, visited, depth + 1);
                 }
 
                 break;

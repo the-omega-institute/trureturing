@@ -22,6 +22,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 TARGET = os.path.join(ROOT, 'tools', 'StrataLint.Engine', 'Rules', 'Trust', 'JudgeSurfaceGitOptionTables.cs')
@@ -30,14 +31,30 @@ SPEC_LONG = re.compile(r'^--(\[no-\])?([A-Za-z0-9][A-Za-z0-9-]*)(.*)$')
 SPEC_SHORT = re.compile(r'^-([A-Za-z0-9])(.*)$')
 
 
-def run(*argv):
-    completed = subprocess.run(argv, capture_output=True, text=True)
+def run(*argv, cwd=None):
+    completed = subprocess.run(argv, capture_output=True, text=True, cwd=cwd or ROOT)
     return completed.stdout + completed.stderr
 
 
-def arity_from_rest(rest):
-    rest = rest.strip()
-    if rest == '':
+def diff_help():
+    """`git diff -h` prints the full parse-options help of the diff options only outside a
+    repository (inside one it prints the short usage), so it runs in a fresh empty directory."""
+    return run('git', 'diff', '-h', cwd=tempfile.mkdtemp(prefix='sl030-git-help-'))
+
+
+# A value placeholder right after the option name: `[=<n>]` (optional, attached), `=<x>`,
+# `=[…]`, `=(…)`, `<x>` (attached), ` <x>`, ` (1|2|3)`, ` [(A|C…)]` (diff-filter's argh has its
+# own brackets), ` blob|tree` (required).
+PLACEHOLDER = re.compile(r'^(\[|=|<| <| \(| \[| blob\|tree)')
+
+
+def arity_from_rest(rest, from_man=False):
+    """parse-options prints a value placeholder right after the option: `--source <tree-ish>`,
+    `--stage (1|2|3|all)`, `--[no-]path blob|tree`, `--decorate[=...]`; anything else after the
+    name (`--relative-paths use relative paths…`) is the description, i.e. the option is a flag.
+    Man pages write `--opt=<x>` for options that take a value (revision options accept it as
+    `--opt <x>` too) and `--opt[=<x>]` for an optional attached value."""
+    if not PLACEHOLDER.match(rest):
         return 'Flag'
     if rest.startswith('['):
         return 'OptionalAttached'
@@ -49,8 +66,15 @@ def parse_help(text, name):
     for line in text.split('\n'):
         if not line.startswith('    -'):
             continue
+        # The description follows two or more spaces — or a single space when a long option
+        # fills the whole option column (`--[no-]relative-paths use relative paths…`).
         spec = re.split(r'\s{2,}', line.strip(), maxsplit=1)[0]
-        parts = [part.strip() for part in spec.split(', ')]
+        parts = []
+        for part in spec.split(', '):
+            if not part.startswith('-'):
+                break
+            glued = re.match(r'^(\S+) (?!<|\(|\[|blob\|tree)', part)
+            parts.append(glued.group(1) if glued else part)
         # `-s, --[no-]source <tree-ish>`: the value placeholder is written once, after the last
         # alias, and applies to every alias on the line.
         last = parts[-1]
@@ -73,6 +97,18 @@ def parse_help(text, name):
     return longs, shorts, numeric
 
 
+def merge_arity(current, new):
+    """`--expand-tabs=<n>, --expand-tabs`: a bare spelling next to a value spelling means the value
+    is optional and attached — the option must never consume the next word."""
+    if current is None:
+        return new
+    if isinstance(current, tuple):
+        current = current[0]
+    if current == new:
+        return new
+    return 'OptionalAttached'
+
+
 def parse_man(text):
     longs, shorts = {}, {}
     lines = text.split('\n')
@@ -92,11 +128,11 @@ def parse_man(text):
                         p = p.split(' ', 1)[0]
                     m = re.match(r'^--([A-Za-z0-9][A-Za-z0-9-]*)(.*)$', p)
                     if m:
-                        longs[m.group(1)] = (arity_from_rest(m.group(2)), False)
+                        longs[m.group(1)] = (merge_arity(longs.get(m.group(1)), arity_from_rest(m.group(2))), False)
                         continue
                     m = re.match(r'^-([A-Za-z0-9])(.*)$', p)
                     if m:
-                        shorts[m.group(1)] = arity_from_rest(m.group(2))
+                        shorts[m.group(1)] = merge_arity(shorts.get(m.group(1)), arity_from_rest(m.group(2)))
         i += 1
     return longs, shorts
 
@@ -134,13 +170,16 @@ def generate():
     # `-<number>, -n <number>, --max-count=<number>` is one header the regex skips (it starts with `-<`).
     longs['max-count'] = ('Required', False)
     shorts['n'] = 'Required'
-    hl, hs, _ = parse_help(run('git', 'show', '-h'), 'show')
-    for k, v in hl.items():
-        longs.setdefault(k, v)
-    for k, v in hs.items():
-        shorts.setdefault(k, v)
+    # parse-options output is authoritative where it exists: `git show -h` (log options) and
+    # `git diff -h` (diff options; `-U, --unified[=<n>]` is optional there, the man page says
+    # `--unified=<n>`); the man page fills in the revision-walking options rev-list prints only
+    # as a summary.
+    for source in (run('git', 'show', '-h'), diff_help()):
+        hl, hs, _ = parse_help(source, 'show')
+        longs.update(hl)
+        shorts.update(hs)
     models.append(emit_model('ShowOptions', longs, shorts, True, True, True,
-                             f'the option headers of `man git-log` (revision and diff options apply to `git show`) and `git show -h` ({version})'))
+                             f'`git show -h`, `git diff -h` and the option headers of `man git-log` ({version})'))
     return ('namespace StrataLint.Engine;\n\n'
             '// Per-verb option models: which git options are flags, which take a required value (as the next\n'
             '// word or attached with `=` / glued to a short option), and which take a value only when attached\n'

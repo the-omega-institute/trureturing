@@ -136,8 +136,14 @@ internal static class JudgeSurfaceShellLexer
                         {
                             // Inside double quotes a backslash escapes only `$`, `` ` ``, `"`, `\`
                             // and newline; before any other character it stays (`g"\i"t` is `g\it`,
-                            // not git; review round 10).
-                            if (text[index + 1] is not ('$' or '`' or '"' or '\\' or '\n'))
+                            // not git; review round 10). Backslash-newline vanishes (round 12).
+                            if (text[index + 1] == '\n')
+                            {
+                                index += 2;
+                                continue;
+                            }
+
+                            if (text[index + 1] is not ('$' or '`' or '"' or '\\'))
                             {
                                 word.Append('\\');
                             }
@@ -166,6 +172,12 @@ internal static class JudgeSurfaceShellLexer
                     index++;
                     continue;
                 }
+
+                case '\\' when index + 1 < end && text[index + 1] == '\n':
+                    // Backslash-newline is removed outright: a line continuation, also inside a
+                    // YAML block scalar handed over whole (review round 12: `git \` + `show …`).
+                    index += 2;
+                    continue;
 
                 case '\\':
                     if (index + 1 < end)
