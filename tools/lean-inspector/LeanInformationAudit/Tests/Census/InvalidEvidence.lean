@@ -85,4 +85,22 @@ run_cmd liftTermElabM do
 
 #print axioms aliasArena
 
+theorem structuralAlias : ∀ n : Nat, n % 2 < 2 := structuralTheorem
+
+/-- error: IE-C036 DispositionIdentityMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.structuralAlias component=theorem_name expected=LeanInformationAudit.Tests.Census.Evidence.structuralTheorem actual=LeanInformationAudit.Tests.Census.Evidence.structuralAlias -/
+#guard_msgs in
+run_cmd liftTermElabM do
+  let key : StatementKey := ⟨``structuralAlias, "alias-id"⟩
+  let rows := inventory.entries.filterMap fun entry => match entry.2 with
+    | .structuralOccurrence value => some ⟨key, AnalysisDisposition.structuralOccurrence {
+        canonicalArena := value.canonicalArena
+        registration := value.registration
+        «realization» := value.realization
+        strictnessCertificate := value.strictnessCertificate
+        witnessCertificate := value.witnessCertificate }⟩
+    | _ => none
+  validateEvidence `LeanInformationAudit.Tests.SealSuccess ⟨"fixture-head", rows⟩
+
+#print axioms structuralAlias
+
 end LeanInformationAudit.Tests.Census.Evidence

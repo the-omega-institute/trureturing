@@ -5,7 +5,8 @@ open Lean.Elab.Command
 
 namespace LeanInformationAudit.Tests.Census.Evidence
 
-theorem duplicateStructuralRegistration : StructuralRegistrationEvidence infiniteArena structuralUnit
+theorem duplicateStructuralRegistration : StructuralRegistrationEvidence ``structuralTheorem
+    infiniteArena structuralUnit
     structuralCatalog () (∀ n : Nat, n % 2 < 2) := structuralRegistration
 
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.structuralTheorem class=structural_occurrence invalid=maximal_catalog_membership -/

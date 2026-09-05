@@ -20,20 +20,18 @@ def inputBytes : String := (Json.mkObj [
 
 run_cmd do
   IO.FS.writeFile "/tmp/lean-information-census-command-report.json" inputBytes
-  IO.FS.writeFile "/tmp/lean-information-census-command-inventory.json"
-    (toJson Evidence.inventory).compress
   let digest := Syntax.mkStrLit ("sha256:" ++ Sha256.hex inputBytes.toUTF8)
   elabCommand (← `(command|
     #disposition_census root LeanInformationAudit.Tests.SealSuccess
       report "/tmp/lean-information-census-command-report.json"
       head "fixture-head" report_sha256 $digest
-      inventory "/tmp/lean-information-census-command-inventory.json"
+      inventory LeanInformationAudit.Tests.Census.Evidence.inventory
       certificate censusCoverage output "/tmp/lean-information-census-command.json"))
   elabCommand (← `(command|
     #disposition_census root LeanInformationAudit.Tests.SealSuccess
       report "/tmp/lean-information-census-command-report.json"
       head "fixture-head" report_sha256 $digest
-      inventory "/tmp/lean-information-census-command-inventory.json"
+      inventory LeanInformationAudit.Tests.Census.Evidence.inventory
       certificate censusCoverageRepeat output "/tmp/lean-information-census-command-repeat.json"))
   unless (← IO.FS.readFile "/tmp/lean-information-census-command.json") ==
       (← IO.FS.readFile "/tmp/lean-information-census-command-repeat.json") do

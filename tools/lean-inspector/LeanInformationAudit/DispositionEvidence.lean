@@ -11,7 +11,7 @@ universe u v w
 
 /-- A concrete declaration of this type registers a structural occurrence.
 The catalog and arena arguments must be canonical declarations. -/
-structure StructuralRegistrationEvidence (arena : StructuralArena.{u})
+structure StructuralRegistrationEvidence (theoremName : Name) (arena : StructuralArena.{u})
     (unit : StructuralTheoremUnit.{u, v} arena)
     (catalogValue : StructuralCatalog.{u, v, w} arena) (index : catalogValue.Index)
     (statement : Prop) : Prop where
@@ -97,7 +97,7 @@ private def validateFinite (root : Name) (key : StatementKey)
 private def structuralRegistrations : MetaM (Array (Name × Expr)) := do
   let mut result := #[]
   for (name, info) in (← getEnv).constants.toList do
-    if info.type.isAppOfArity ``StructuralRegistrationEvidence 5 then
+    if info.type.isAppOfArity ``StructuralRegistrationEvidence 6 then
       result := result.push (name, info.type)
   return result.qsort fun left right => left.1.toString < right.1.toString
 
@@ -106,14 +106,18 @@ private def validateStructural (registrations : Array (Name × Expr)) (key : Sta
   let className := "structural_occurrence"
   let registration ← constant key className "registration" payload.registration
   let registrationType ← inferType registration
-  unless registrationType.isAppOfArity ``StructuralRegistrationEvidence 5 do
+  unless registrationType.isAppOfArity ``StructuralRegistrationEvidence 6 do
     failClass key className "registration"
   let args := registrationType.getAppArgs
-  canonicalArgument key args[0]! payload.canonicalArena
-  unless ← isDefEq args[4]! statement do failClass key className "registration.statement"
-  let unit := args[1]!
-  let catalogValue := args[2]!
-  let index := args[3]!
+  let registeredName : Name ← reduceEval args[0]!
+  unless registeredName == key.theoremName do
+    throwError (identityError key.theoremName "theorem_name" registeredName.toString
+      key.theoremName.toString)
+  canonicalArgument key args[1]! payload.canonicalArena
+  unless ← isDefEq args[5]! statement do failClass key className "registration.statement"
+  let unit := args[2]!
+  let catalogValue := args[3]!
+  let index := args[4]!
   unless catalogValue.isConst do failClass key className "canonical_catalog"
   let _ ← typed key className "realization" payload.realization
     (← mkEq (← mkAppM ``StructuralTheoremUnit.Statement #[unit]) statement)
@@ -131,7 +135,7 @@ arena={payload.canonicalArena} missing={field}"
 arena={payload.canonicalArena} missing={field}"
     checkWithKernel value
   let peers := registrations.filter fun (_, type) =>
-    type.getAppArgs[0]!.isConstOf payload.canonicalArena
+    type.getAppArgs[1]!.isConstOf payload.canonicalArena
   let indexType ← mkAppM ``StructuralCatalog.Index #[catalogValue]
   let indexFintype ← mkAppM ``StructuralCatalog.indexFintype #[catalogValue]
   let cardinality ← mkAppOptM ``Fintype.card #[some indexType, some indexFintype]
@@ -142,9 +146,12 @@ arena={payload.canonicalArena} missing={field}"
     withNewLocalInstances #[inst] 0 do
       for i in [:peers.size] do
         let peerArgs := peers[i]!.2.getAppArgs
-        unless peerArgs[2]! == catalogValue do failClass key className "split_canonical_catalog"
+        unless peerArgs[3]! == catalogValue do failClass key className "split_canonical_catalog"
         for j in [:i] do
-          let distinct := mkNot (← mkEq peerArgs[3]! peers[j]!.2.getAppArgs[3]!)
+          let peerName : Name ← reduceEval peerArgs[0]!
+          let previousName : Name ← reduceEval peers[j]!.2.getAppArgs[0]!
+          if peerName == previousName then failClass key className "duplicate_structural_registration"
+          let distinct := mkNot (← mkEq peerArgs[4]! peers[j]!.2.getAppArgs[4]!)
           try
             checkWithKernel (← mkDecideProof distinct)
           catch _ => failClass key className "duplicate_catalog_index"
@@ -186,7 +193,8 @@ private def validateUnreachable (registrations : Array (Name × Expr))
   if (InformationRegistry.entries (← getEnv)).any (·.theoremName == key.theoremName) then
     failClass key className "registered_realization"
   for (_, type) in registrations do
-    if ← isDefEq type.getAppArgs[4]! statement then
+    let registeredName : Name ← reduceEval type.getAppArgs[0]!
+    if registeredName == key.theoremName then
       failClass key className "registered_structural_realization"
   let candidate ← whnf args[2]!
   match payload.reason with

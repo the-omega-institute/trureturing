@@ -33,7 +33,8 @@ def structuralCatalog : StructuralCatalog infiniteArena where
   indexDecidableEq := inferInstance
   theoremAt := fun _ => structuralUnit
 
-theorem structuralRegistration : StructuralRegistrationEvidence infiniteArena structuralUnit
+theorem structuralRegistration : StructuralRegistrationEvidence ``structuralTheorem
+    infiniteArena structuralUnit
     structuralCatalog () (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
 
 theorem structuralRealization : structuralUnit.Statement = (∀ n : Nat, n % 2 < 2) := rfl

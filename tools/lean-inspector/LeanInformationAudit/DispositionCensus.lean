@@ -319,16 +319,22 @@ private def readUtf8 (path : String) : IO String := do
   | some text => return text
   | none => throw <| IO.userError s!"invalid UTF-8: {path}"
 
-/-- Report-only command. It stages a coverage theorem only after checking the
-full inventory and its semantic evidence. Optional JSON is output, never seal input.
-Input: stratalint.truth-export.v1 plus the JSON encoding of DispositionInventory. -/
+/-- Report-only command. Its only file input is stratalint.truth-export.v1;
+the inventory is a typed declaration in the elaborated environment. It stages
+ExactlyCovers only after checking the full inventory and its semantic evidence.
+The resulting JSON is output, never seal input. -/
 elab "#disposition_census" &"root" root:ident &"report" reportPath:str
-    &"head" head:str &"report_sha256" reportSha:str &"inventory" inventoryPath:str
+    &"head" head:str &"report_sha256" reportSha:str &"inventory" inventoryName:ident
     &"certificate" certificate:ident " output " outputPath:str : command => do
   let reportBytes ← readUtf8 reportPath.getString
-  let inventoryBytes ← readUtf8 inventoryPath.getString
   let report ← ofExcept <| parseReport head.getString reportSha.getString reportBytes
-  let inventory ← ofExcept <| (Json.parse inventoryBytes).bind parseInventory
+  let inventory ← liftTermElabM do
+    let name ← realizeGlobalConstNoOverloadWithInfo inventoryName
+    let value ← mkConstWithFreshMVarLevels name
+    unless ← isDefEq (← inferType value) (mkConst ``DispositionInventory) do
+      throwError "expected a DispositionInventory declaration: {name}"
+    checkWithKernel value
+    unsafe evalExpr DispositionInventory (mkConst ``DispositionInventory) value
   ofExcept <| checkCoverage report.headSha report.theorems inventory
   let certificateName := (← getCurrNamespace) ++ certificate.getId.eraseMacroScopes
   if (← getEnv).contains certificateName then
