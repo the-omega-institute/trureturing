@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:7d8c95c432b82f5ca6e54d02d10b5982ee9f0131273d82ae31633aedb934f2dc
+  normalized_sha256: sha256:7d8c95c432b82f5ca6e54d02d10b5982ee9f0131273d82ae31633aedb934f2dc
+cas_ref: sha256:7d8c95c432b82f5ca6e54d02d10b5982ee9f0131273d82ae31633aedb934f2dc
+coverage_gids:
+  - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_lattice_obstruction
+    target_statement_id: sha256:3a46b28596804ca44b6a053cce2eed1de994a369ebffc408cf990708593b0a13
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_lattice_obstruction
+      definition_sha256: sha256:8f25498fc2e3dde080d433f9da28207d67945b16b929c6c06615984ee2b29ec7
+      emission_sha256: sha256:1898c1db907201879208c0827f5df3124d1796a282ab89e5183bb9bd573395a9
+  unresolved_subitems: []
