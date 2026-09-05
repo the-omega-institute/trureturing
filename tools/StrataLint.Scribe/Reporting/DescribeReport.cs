@@ -75,6 +75,50 @@ internal sealed class DescribeReport
         var material = documents
             .OrderBy(static document => document.Header.Gid.Value, StringComparer.Ordinal)
             .ToImmutableArray();
+        return BuildCore(
+            repositoryRoot,
+            material,
+            leanReport,
+            validateContentGovernance,
+            leanSourcePaths: null,
+            libraryInspection: null);
+    }
+
+    internal static DescribeReport BuildIncremental(
+        string repositoryRoot,
+        IEnumerable<ScribeDocument> documents,
+        IEnumerable<string> changedPaths,
+        LeanAxiomReport? leanReport = null,
+        bool validateContentGovernance = false)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(documents);
+        ArgumentNullException.ThrowIfNull(changedPaths);
+        var universe = documents
+            .OrderBy(static document => document.Header.Gid.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+        // 只有 Lean docstring 观察是可分区的:每条只由单个 Lean 文件的行导出,且从不进
+        // RedFindings。文档集与全部红判词一律走全量 —— Blueprint 定义之间存在普通 C#
+        // 编译期依赖(Documents.csproj 把全部 *.scribe.cs 编入同一程序集,
+        // DocumentDefinitions 标注 CompileTimeInputUniverse),按 changed paths 收窄
+        // 会让受影响但未改动的文档静默通过,与 #4439 同一机制。见 #5634。
+        return BuildCore(
+            repositoryRoot,
+            universe,
+            leanReport,
+            validateContentGovernance,
+            changedPaths.ToImmutableArray(),
+            libraryInspection: null);
+    }
+
+    private static DescribeReport BuildCore(
+        string repositoryRoot,
+        ImmutableArray<ScribeDocument> material,
+        LeanAxiomReport? leanReport,
+        bool validateContentGovernance,
+        IEnumerable<string>? leanSourcePaths,
+        LibraryNoteCatalogInspection? libraryInspection)
+    {
         var nodes = ImmutableArray.CreateBuilder<DescribeNodeRecord>();
         var observations = ImmutableArray.CreateBuilder<DescribeObservation>();
         var formulaContentSlots = 0;
@@ -90,8 +134,8 @@ internal sealed class DescribeReport
                 ref formulaContentSlots);
         }
 
-        observations.AddRange(ObserveLeanDocstrings(repositoryRoot));
-        var libraryInspection = LibraryNoteCatalog.Inspect(repositoryRoot);
+        observations.AddRange(ObserveLeanDocstrings(repositoryRoot, leanSourcePaths));
+        libraryInspection ??= LibraryNoteCatalog.Inspect(repositoryRoot);
         var notes = libraryInspection.Notes;
         observations.AddRange(notes
             .Where(static note => note.Doi is not null)
@@ -279,7 +323,9 @@ internal sealed class DescribeReport
         }
     }
 
-    private static ImmutableArray<DescribeObservation> ObserveLeanDocstrings(string repositoryRoot)
+    private static ImmutableArray<DescribeObservation> ObserveLeanDocstrings(
+        string repositoryRoot,
+        IEnumerable<string>? sourcePaths)
     {
         var root = Path.Combine(repositoryRoot, "D5");
         if (!Directory.Exists(root))
@@ -288,8 +334,14 @@ internal sealed class DescribeReport
         }
 
         var observations = ImmutableArray.CreateBuilder<DescribeObservation>();
-        foreach (var path in Directory.EnumerateFiles(root, "*.lean", SearchOption.AllDirectories)
-                     .Order(StringComparer.Ordinal))
+        var paths = sourcePaths is null
+            ? Directory.EnumerateFiles(root, "*.lean", SearchOption.AllDirectories)
+            : sourcePaths
+                .Where(static path => path.StartsWith("D5/", StringComparison.Ordinal)
+                    && path.EndsWith(".lean", StringComparison.Ordinal))
+                .Select(path => Path.Combine(repositoryRoot, path))
+                .Where(File.Exists);
+        foreach (var path in paths.Order(StringComparer.Ordinal))
         {
             var inDocstring = false;
             var lines = File.ReadAllLines(path);

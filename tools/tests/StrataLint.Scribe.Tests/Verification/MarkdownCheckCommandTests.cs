@@ -3,6 +3,26 @@ namespace StrataLint.Scribe.Tests;
 public sealed class MarkdownCheckCommandTests
 {
     [Fact]
+    public void DescribeCheckRequiresAnIncrementalPathInput()
+    {
+        using var temporary = new TemporaryRoot();
+        var error = new StringWriter();
+
+        var exit = ScribeCli.Run(
+            DocumentlessAssembly.Value,
+            ["describe-report", "--check"],
+            temporary.Path,
+            TextWriter.Null,
+            error);
+
+        Assert.Equal(2, exit);
+        Assert.Contains(
+            "--check --paths-from <file|->",
+            error.ToString(),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ReadsTheNulSeparatedPathsAChangeHandsIt()
     {
         // `git diff -z` writes them this way, and the workflow pipes that verbatim.

@@ -57,6 +57,7 @@ public sealed partial class MakeWorkflowTests
     [InlineData("lake-manifest.json")]
     [InlineData("lakefile.toml")]
     [InlineData("Library/notes/probe.md")]
+    [InlineData("Golden/Frozen/state/D5/Probe.lean.json")]
     [InlineData("Meta/Digestion/backfill/probe.yaml")]
     [InlineData("Problems/probe.md")]
     [UnsupportedOSPlatform("windows")]
@@ -72,7 +73,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             [
-                $"{fixture.ScribeDll} describe-report --check",
+                $"{fixture.ScribeDll} describe-report --check --paths-from -",
             ],
             fixture.Invocations());
     }
@@ -145,7 +146,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             [
-                $"{fixture.ScribeDll} describe-report --check",
+                $"{fixture.ScribeDll} describe-report --check --paths-from -",
                 $"{fixture.ScribeDll} markdown-check --report {fixture.Report} --paths-from -",
             ],
             fixture.Invocations());
@@ -169,7 +170,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             [
                 $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
-                $"{fixture.ScribeDll} describe-report --check",
+                $"{fixture.ScribeDll} describe-report --check --paths-from -",
             ],
             fixture.Invocations());
     }
