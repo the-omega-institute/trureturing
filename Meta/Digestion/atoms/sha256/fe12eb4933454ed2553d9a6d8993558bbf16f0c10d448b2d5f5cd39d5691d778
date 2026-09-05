@@ -1,0 +1,42 @@
+## 定理 58.2　编码重建不等于跨因果边界传信
+
+对任意联合态 \(\rho_{RB}\) 和补侧保迹量子通道 \(\Lambda_B\)：
+
+$$
+\boxed{
+\operatorname{Tr}_B
+\left[
+(\operatorname{id}_R\otimes\Lambda_B)(\rho_{RB})
+\right]
+=
+\rho_R.
+}
+\tag{58.4}
+$$
+
+### 证明
+
+对任意外侧效果 \(E_R\)：
+
+$$
+\begin{aligned}
+&\operatorname{Tr}
+\left[
+(E_R\otimes I)
+(\operatorname{id}\otimes\Lambda_B)(\rho)
+\right]\\
+&\quad=
+\operatorname{Tr}
+\left[
+(E_R\otimes\Lambda_B^*(I))\rho
+\right]\\
+&\quad=
+\operatorname{Tr}
+[(E_R\otimes I)\rho],
+\end{aligned}
+$$
+
+其中使用了 \(\Lambda_B^*(I)=I\)。∎
+
+因此，外侧能够重建一个编码量，并不意味着内侧可以通过任意后来操作即时改变外侧结果。
+

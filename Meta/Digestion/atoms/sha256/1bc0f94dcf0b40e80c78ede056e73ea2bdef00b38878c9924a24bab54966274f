@@ -1,0 +1,77 @@
+## 定理 6.2　逃逸率、纤维大小与条件熵
+
+假设 \(X\) 上使用均匀分布。令：
+
+$$
+k_y=|q^{-1}(y)|.
+$$
+
+则：
+
+$$
+\boxed{
+\varepsilon(q)
+=
+\frac{\sum_yk_y(k_y-1)}{N(N-1)},
+}
+$$
+
+$$
+\boxed{
+H(X\mid q(X))
+=
+\sum_y\frac{k_y}{N}\ln k_y,
+}
+$$
+
+并且：
+
+$$
+\boxed{
+H(X\mid q(X))
+\le
+\ln\bigl(1+(N-1)\varepsilon(q)\bigr).
+}
+\tag{6.2}
+$$
+
+若所有非空纤维大小都等于 \(R\)，则：
+
+$$
+\boxed{
+\varepsilon(q)=\frac{R-1}{N-1},
+\qquad
+H(X\mid q(X))=\ln R,
+}
+$$
+
+且式（6.2）取等号。
+
+### 证明
+
+每个大小为 \(k_y\) 的纤维含有 \(k_y(k_y-1)\) 个不同有序状态对，得到第一式。
+
+给定观察结果后，条件分布在相应纤维上均匀，得到第二式。
+
+再由对数的凹性：
+
+$$
+\begin{aligned}
+H(X\mid q(X))
+&=
+\sum_y\frac{k_y}{N}\ln k_y\\
+&\le
+\ln\left(\sum_y\frac{k_y^2}{N}\right).
+\end{aligned}
+$$
+
+而：
+
+$$
+\frac{\sum_yk_y^2}{N}
+=
+1+(N-1)\varepsilon(q).
+$$
+
+因此得到上界。等大纤维时直接取等。证毕。
+

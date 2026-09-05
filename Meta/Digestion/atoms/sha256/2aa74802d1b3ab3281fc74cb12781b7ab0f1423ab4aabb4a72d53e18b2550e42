@@ -1,0 +1,52 @@
+## 极限不是普通函数，而是分布
+
+定义正原子测度
+
+$$
+\nu_{\mathbb P}
+=
+\sum_p\frac{\log p}{\sqrt p}\delta_{\log p}.
+$$
+
+由于
+
+$$
+Z''=\nu_{\mathbb P},
+$$
+
+而
+
+$$
+\frac{S_h-1}{h}\longrightarrow\partial_T,
+\qquad
+\frac{S_h-e^{h/2}}{e^{h/2}-1}
+\longrightarrow2\partial_T-1,
+$$
+
+所以在分布意义下，
+
+$$
+\boxed{
+\mathcal B_h
+\longrightarrow
+(2\partial_T-1)\partial_T^3Z
+=
+2\nu_{\mathbb P}''-\nu_{\mathbb P}'.
+}
+\tag{16}
+$$
+
+这解释了 \(h^{-3}\) 尖峰的来源：我们正在逼近原子测度的导数，而不是逼近一个处处有界的普通函数。
+
+由此得到一个重要区分：
+
+$$
+\boxed{
+\text{有限尺度完成}
+\neq
+\text{微观极限处处有界}.
+}
+$$
+
+正确的问题应当是：**这些微观正负尖峰经过式（11）的指定平均以后，能否得到受控的固定尺度读数。**
+

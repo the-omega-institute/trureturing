@@ -9,8 +9,8 @@ namespace StrataLint.Tests;
 /// **已分类**的弹出行(2 already-covered / 7 missing-prerequisite / 12 multi-clause-guard),
 /// 那三类即本字段的封闭字母表,取自实测数据而非发明。
 ///
-/// 该字段**可选且加性**:既有条目无它,加载与回写必须保持其字节不变,否则全量账本 churn
-/// 并连带触发 SL-008 材料漂移。三条测试分别钉住三个不重叠的性质。
+/// 该字段是 quarantine receipt 的必填分类:缺失或越出封闭字母表均 fail-closed。
+/// 三条测试分别钉住缺失、已知全集 round-trip 与未知值拒绝。
 ///
 /// 夹具沿用同目录 <c>DigestionQuarantineTests</c> 的 <c>Atom</c> / <c>DirectorySnapshot</c>
 /// 形态(partial class 共享),不另造一套。
@@ -24,18 +24,25 @@ public sealed partial class DigestionQuarantineTests
           blocker_class: already-covered
         """;
 
-    [Fact]
-    public void LoaderAcceptsAndRoundTripsAKnownBlockerClass()
+    [Theory]
+    [InlineData("already-covered")]
+    [InlineData("missing-prerequisite")]
+    [InlineData("multi-clause-guard")]
+    public void LoaderAcceptsAndRoundTripsEachKnownBlockerClass(string blockerClass)
     {
+        var quarantine = ClassifiedQuarantine.Replace(
+            "already-covered",
+            blockerClass,
+            StringComparison.Ordinal);
         var document = BackfillInventoryLoader.Load(
-            DirectorySnapshot(Atom(AtomId, ClassifiedQuarantine)));
+            DirectorySnapshot(Atom(AtomId, quarantine)));
         var entry = Assert.Single(document.RequireDigestionEntries());
 
-        Assert.Equal("already-covered", entry.Receipts.Quarantine!.BlockerClass);
+        Assert.Equal(blockerClass, entry.Receipts.Quarantine!.BlockerClass);
 
         var atomText = Encoding.UTF8.GetString(
             BackfillInventoryWriter.WriteAtom(entry).AsSpan());
-        Assert.Contains("blocker_class: already-covered", atomText, StringComparison.Ordinal);
+        Assert.Contains($"blocker_class: {blockerClass}", atomText, StringComparison.Ordinal);
         Assert.Equal(
             entry,
             Assert.Single(BackfillInventoryLoader.Load(DirectorySnapshot(atomText))
@@ -60,18 +67,19 @@ public sealed partial class DigestionQuarantineTests
         Assert.Contains("already-covered", error.Message, StringComparison.Ordinal);
     }
 
-    // 加性保证:既有条目无该字段,回写**不得**输出它。否则全仓账本一次性 churn,
-    // 并连带触发 SL-008 材料漂移——那比缺少分类严重得多。
     [Fact]
-    public void AQuarantineWithoutABlockerClassIsWrittenBackWithoutTheField()
+    public void LoaderRejectsAQuarantineWithoutABlockerClass()
     {
-        var document = BackfillInventoryLoader.Load(DirectorySnapshot(Atom(AtomId, Quarantine)));
-        var entry = Assert.Single(document.RequireDigestionEntries());
+        const string quarantine = """
+            quarantine:
+              justification: interpretive statement has no machine predicate
+              reentry_condition: typed predicate or frozen witness
+            """;
 
-        Assert.Null(entry.Receipts.Quarantine!.BlockerClass);
+        var error = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.Load(DirectorySnapshot(Atom(AtomId, quarantine)))
+                .RequireDigestionEntries());
 
-        var atomText = Encoding.UTF8.GetString(
-            BackfillInventoryWriter.WriteAtom(entry).AsSpan());
-        Assert.DoesNotContain("blocker_class", atomText, StringComparison.Ordinal);
+        Assert.Contains("blocker_class", error.Message, StringComparison.Ordinal);
     }
 }

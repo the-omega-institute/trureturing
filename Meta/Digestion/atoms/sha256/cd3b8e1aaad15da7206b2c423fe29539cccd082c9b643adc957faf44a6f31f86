@@ -1,0 +1,27 @@
+### 为什么这次可以原样嵌套？
+
+因为：
+
+$$
+J_N
+$$
+
+确实是 \(J_{N+1}\) 的主块。
+
+它们来自同一份矩序列、同一个正交化过程。对每个正定主块作 Cholesky 分解，其已有系数也能保持一致，从而得到可以追加的正权近邻结构。
+
+但这不推翻前文的“不可能原样追加 Jensen 链”定理。
+
+区别是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Jensen 链：}&\quad \operatorname{Tr}K_d=a_1\text{ 每层固定};\\
+\text{当前回返链：}&\quad \|g\|^2=M_0\text{ 固定，但 }\operatorname{Tr}J_N\text{ 不固定}.
+\end{aligned}
+}
+$$
+
+固定的是不同的量，因此允许的跨层结构也不同。
+

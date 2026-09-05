@@ -1,0 +1,46 @@
+## 定义 1：倍长区间的精确中心化读出
+
+令
+
+$$
+M(x)=\lfloor2x\rfloor-\lfloor x\rfloor,
+$$
+
+$$
+\boxed{
+Y(x)=\sum_{x<n\le2x}a(n)
+=\psi(2x)-\psi(x)-M(x).
+}
+\tag{3}
+$$
+
+这里必须保留 \(M(x)\)。对非整数 \(x\)，它不一定恰好等于 \(x\)。
+
+不过，
+
+$$
+|M(x)-x|<1.
+\tag{4}
+$$
+
+定义归一化局部均方
+
+$$
+\boxed{
+\mathfrak J(X)
+=
+\int_X^{2X}\frac{Y(x)^2}{x^2}\,dx.
+}
+\tag{5}
+$$
+
+显然
+
+$$
+\mathfrak J(X)\ge0.
+$$
+
+每个固定 \(X\) 的这个量，只使用 \(4X\) 以内的实际 \(\Lambda(n)\)。
+
+---
+

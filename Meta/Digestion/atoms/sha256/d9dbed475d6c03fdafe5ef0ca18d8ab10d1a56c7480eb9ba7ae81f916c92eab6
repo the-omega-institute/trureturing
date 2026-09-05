@@ -1,0 +1,98 @@
+## 定理 11.1　精确延迟响应
+
+比较相同初态下有无驱动的两种演化，则读数均值之差满足
+
+$$
+\boxed{
+\delta\langle\boldsymbol y(t)\rangle
+=
+-\int_0^t
+\mathcal R(t-s)\boldsymbol f(s)\,ds,
+}
+\tag{11.5}
+$$
+
+其中
+
+$$
+\boxed{
+\mathcal R(t)
+=
+\Theta(t)\,
+B^{\mathsf T}\Omega^{-1}\sin(\Omega t)B.
+}
+\tag{11.6}
+$$
+
+采用变换约定
+
+$$
+\chi(z)
+=
+\int_0^\infty e^{izt}\mathcal R(t)\,dt,
+\qquad
+\operatorname{Im}z>0,
+$$
+
+则
+
+$$
+\boxed{
+\chi(z)
+=
+B^{\mathsf T}(A-z^2I)^{-1}B
+=
+g^2C(K-z^2M)^{-1}C^{\mathsf T}.
+}
+\tag{11.7}
+$$
+
+### 证明
+
+结构方程为
+
+$$
+M\ddot{\boldsymbol x}
++
+K\boldsymbol x
+=
+-gC^{\mathsf T}\boldsymbol f.
+$$
+
+令
+
+$$
+\boldsymbol q=M^{1/2}\boldsymbol x,
+$$
+
+则
+
+$$
+\ddot{\boldsymbol q}+A\boldsymbol q=-B\boldsymbol f.
+$$
+
+有无驱动的差值具有零初值，故由常系数方程的 Duhamel 公式，
+
+$$
+\delta\boldsymbol q(t)
+=
+-\int_0^t
+\Omega^{-1}\sin\bigl(\Omega(t-s)\bigr)
+B\boldsymbol f(s)\,ds.
+$$
+
+再乘以 \(B^{\mathsf T}\)，得到式（11.5）。
+
+对每个正频率 \(\nu\)，有
+
+$$
+\int_0^\infty
+e^{izt}\frac{\sin\nu t}{\nu}\,dt
+=
+\frac1{\nu^2-z^2},
+\qquad
+\operatorname{Im}z>0.
+$$
+
+对 \(A\) 作谱分解即得式（11.7）。∎
+

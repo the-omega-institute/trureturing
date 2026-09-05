@@ -1,0 +1,78 @@
+# 五、关键恒等式：历史体积可以写成酉群上的轨道积分
+
+先假设 \(q\) 的根：
+
+$$
+\lambda_1,\ldots,\lambda_d
+$$
+
+互异。记：
+
+$$
+\Lambda=\operatorname{diag}(\lambda_1,\ldots,\lambda_d).
+$$
+
+相应右本征向量可取：
+
+$$
+v(\lambda_j)=(1,\lambda_j,\ldots,\lambda_j^{d-1})^{\mathsf T}.
+$$
+
+因此，在本征向量矩阵中：
+
+$$
+\ell e^{-itC_q}v(\lambda_j)=e^{-it\lambda_j}.
+$$
+
+高斯积分给出：
+
+$$
+\boxed{
+M_{ij}(r)
+=
+\exp\!\left[
+-\frac r2(\lambda_j-\overline{\lambda_i})^2
+\right].
+}
+$$
+
+若：
+
+$$
+\Delta(\lambda)=\prod_{i<j}(\lambda_j-\lambda_i),
+$$
+
+则：
+
+$$
+\boxed{
+\det G_q(r)
+=
+\frac{\det M(r)}{|\Delta(\lambda)|^2}.
+}
+\tag{K7}
+$$
+
+再使用 Harish-Chandra–Itzykson–Zuber 积分公式，得到：
+
+$$
+\boxed{
+\mathcal Z_q(r)
+=
+e^{-r\Re\operatorname{Tr}\Lambda^2}
+\int_{U(d)}
+e^{r\operatorname{Tr}(\Lambda U\Lambda^*U^*)}\,dU.
+}
+\tag{K8}
+$$
+
+其中 \(dU\) 是归一化 Haar 测度。这一经典酉积分公式连接行列式、Vandermonde 因子、热流与表示论。
+
+虽然推导时先假设根互异，但两边都能连续延伸到重根情形，所以式（K8）也覆盖重根。
+
+必须强调：
+
+**根 \(\lambda_j\) 只用于证明和解释式（K8）；定义及计算 \(\mathcal Z_q\) 并不需要输入这些根。** 它已经由式（K1）、（K3）、（K6）完全确定。
+
+---
+

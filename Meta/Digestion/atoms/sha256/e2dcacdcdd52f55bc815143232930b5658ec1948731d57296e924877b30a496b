@@ -1,0 +1,23 @@
+## 定理 1：能量增长指数公式
+
+对每个固定 \(h>0\)，
+
+$$
+\boxed{
+\limsup_{L\to\infty}
+\frac{\log\bigl(1+\mathcal E_h(L)\bigr)}{L}
+=
+2\Delta_\zeta.
+}
+\tag{5}
+$$
+
+而且，当 \(\Delta_\zeta=0\) 时，还有更强结论
+
+$$
+\boxed{
+\mathcal E_h(L)=O_h(L).
+}
+\tag{6}
+$$
+

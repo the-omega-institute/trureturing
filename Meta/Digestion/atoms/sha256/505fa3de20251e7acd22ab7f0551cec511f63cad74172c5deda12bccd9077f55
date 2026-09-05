@@ -1,0 +1,50 @@
+## 定理 139.1　宏观方程的精确缺项
+
+有
+
+$$
+\boxed{
+\mathscr G[g_0]+\Lambda g_0
+=
+\kappa_E
+\left(
+\overline T+\tau_{\mathrm{eff}}
+\right),
+}
+\tag{139.1}
+$$
+
+其中
+
+$$
+\boxed{
+\tau_{\mathrm{eff}}=\frac{\mathfrak B}{\kappa_E}.
+}
+\tag{139.2}
+$$
+
+### 证明
+
+对微观方程取弱极限：
+
+$$
+\operatorname*{wlim}\mathscr G[g_\varepsilon]
++
+\Lambda g_0
+=
+\kappa_E\overline T.
+$$
+
+用定义
+
+$$
+\mathscr G[g_0]
+=
+\operatorname*{wlim}\mathscr G[g_\varepsilon]
++\mathfrak B
+$$
+
+代入即可。∎
+
+---
+

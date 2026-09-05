@@ -1,0 +1,24 @@
+### 前几阶可以明确写出
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal F_\xi(\vartheta)
+={}&1+\frac{M_0^2}{2}\vartheta^2
++\frac{M_1^2}{3}\vartheta^3\\
+&+\left(
+\frac{M_2^2}{4}+\frac{M_0^4}{8}
+\right)\vartheta^4+\cdots.
+\end{aligned}
+}
+\tag{M14}
+$$
+
+这是一份**成对高阶关联的生成函数**。
+
+它不是新的独立算术对象；全部系数已经由实际 ξ 固定。
+
+也不能因为右边是正平方生成函数，就宣布 RH。这个极限的建立没有要求 \(\rho_m\) 具有正谱矩表示。
+
+---
+

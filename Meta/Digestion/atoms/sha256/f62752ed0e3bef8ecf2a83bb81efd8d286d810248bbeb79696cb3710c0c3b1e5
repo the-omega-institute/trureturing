@@ -1,0 +1,10 @@
+## 定理 K1：这个历史读出是忠实的
+
+$$
+\boxed{
+y_v(t)=0\quad\forall t\in\mathbb R
+\iff
+v=0.
+}
+$$
+

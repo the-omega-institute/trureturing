@@ -1,0 +1,79 @@
+## 定义 L1：全部从系数计算的 Schur 读数
+
+设：
+
+$$
+\det(I-tA)=
+1-e_1t+e_2t^2-\cdots+(-1)^de_dt^d.
+$$
+
+定义完全对称多项式读数 \(h_n\)：
+
+$$
+h_0=1,\qquad h_n=0\quad(n<0),
+$$
+
+$$
+\boxed{
+h_n=
+\sum_{j=1}^{\min(n,d)}
+(-1)^{j+1}e_jh_{n-j}.
+}
+\tag{L7}
+$$
+
+等价地：
+
+$$
+\sum_{n\ge0}h_nt^n=\frac1{\det(I-tA)}.
+$$
+
+对整数分区：
+
+$$
+\lambda=(\lambda_1\ge\cdots\ge\lambda_\ell>0),
+\qquad \ell\le d,
+$$
+
+定义 Schur 读数：
+
+$$
+\boxed{
+s_\lambda[A]
+=
+\det\bigl(h_{\lambda_i-i+j}\bigr)_{1\le i,j\le\ell}.
+}
+\tag{L8}
+$$
+
+再定义正整数：
+
+$$
+\boxed{
+(d)_\lambda
+=
+\prod_{i=1}^{\ell}
+\prod_{j=1}^{\lambda_i}(d+j-i).
+}
+$$
+
+注意，这里的 \((d)_\lambda\) 是分区指标的乘积，不是前文的下降阶乘 \((d)_k\)。
+
+最后定义：
+
+$$
+\boxed{
+b_{q,k}
+=
+\sum_{\substack{\lambda\vdash k\\\ell(\lambda)\le d}}
+\frac{|s_\lambda[A]|^2}{(d)_\lambda}.
+}
+\tag{L9}
+$$
+
+对于实系数 \(q\)，所有 \(s_\lambda[A]\) 都是实数。
+
+**这里没有输入任何根。计算只使用实际多项式系数、有限递推和有限行列式。**
+
+---
+

@@ -1,0 +1,34 @@
+## 定义 N1：带符号的平方读数
+
+对实系数多项式 \(f\)，定义：
+
+$$
+\boxed{
+\mathcal Q_d(f)=\operatorname{Tr}\bigl(f(C_d)^2\bigr).
+}
+\tag{N2}
+$$
+
+它与下式不同：
+
+$$
+\operatorname{Tr}\bigl(f(C_d)^*f(C_d)\bigr)\ge0.
+$$
+
+前者保留了复相位在相乘时产生的符号；后者保留的是模平方。
+
+若 \(q_d\) 的根为 \(\theta_{d,j}\)，按代数重数计，则：
+
+$$
+\boxed{
+\mathcal Q_d(f)
+=
+\sum_j f(\theta_{d,j})^2.
+}
+\tag{N3}
+$$
+
+即使 \(C_d\) 有 Jordan 块，这个等式也成立，因为多项式矩阵的迹只读取其对角本征值。
+
+对于实系数 \(C_d,f\)，这个数为实数。
+

@@ -2728,3 +2728,31 @@ L2a 一席位轮(codex-cli,独立 worktree,`GermWindow/`;同 PR deposit(绑 L2a 
 本节不断言 G-c 为真;两模块合起来若 kernel 通过,证的是 p = 2 局部因子在候选 10⁻⁸ 球内有零点,即增订十「窗口内无消去」为假的 kernel 证实,不涉及 RH 本身。探针的 61 模证书虽已在 kernel 通过,但那是 22k 行的 scratch 单文件;拆分为 A + B 后的形态**尚未整证**,以实施为准。
 
 后续增订继续严格追加于本节之后。
+
+# 增订三十七　G-c 之后:认证零点的素数缩放轨道对黄金窗口的分类(G-h-1 预登记);ζ 分离具名缺口(G-h-2);residual-open 对账勘注
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;思考面板三席并发盲评——escape-design(GPT PRO,`panel-postgc-escape-a1`,propose)/ feasibility-lean(codex,`panel-postgc-feasibility`,revise)/ route-adversary(codex,`panel-postgc-adversary`,revise),只读 dev(两席按 git 对象钉 `origin/dev`;caller 提供的树当时不在 dev,席位自行勘正);元裁判 orchestrator(claude 主循环)。三席一致:G-c 之后**不**单独落地「延拓 germ 有无条件线外窗口零点」这一组合式命题(它是 G-c + G-g-5 + 冻结三阶分解的 bind);**不**为 p = 3 重跑证书(冻结的 `germLocalFactor_prime_scaling` 已把 p = 2 零点输运到每个素数);residual-open 目录(798 条)不是选题队列(含已冻结的 G-g-3、G-g-5、G-g-7/8、Z-7、G-c 的旧 atom)。两席(escape-design、feasibility)独立同选本节 G-h-1;adversary 席主张 ζ 分离为真正 RH 相邻的逃逸,但 cost heavy(钉版 Mathlib 无带余项的 ζ 认证求值器),记为 G-h-2 具名缺口。**逃逸见证按面板提案原文预登记,写在探针之前**(探针 `probe-gh1` 在本节起草的同一轮派出,其结果不回写本节;若观测到的见证不同,按第 5⁗ 条另立 v2)。判决日:2026-09-05。lane issue:#4589。
+
+## 〇　G-c 闭合后的事实与问题本质
+
+G-c(增订三十三…三十六,#5427/#5445/#5465/#5568)在 kernel 中给出 `germLocalFactor_two_has_zero_near_candidate : ∃ z ∈ Metric.ball c (1/10⁸), germLocalFactor z 2 = 0`,c = ⟨0.238153…, 5.256712…⟩。c.re 落在黄金窗口 (1/(2φ³), 1/φ²) = (0.118034, 0.381966) 内且在拉回线 Re s = 1/(2φ²) = 0.190983 **之上**。由 G-g-5(`golden_third_residual_eq_zero_iff_exists_local_factor_zero`,Re s > 1/φ⁵)与冻结三阶分解,延拓 germ 在该球内有一个无条件的线外窗口零点——这正是增订十/十五/十七/二十一把「窗口零点 ⟺ RH」修正为 G-g 形态的原因。**问题本质**:G-c 只给出球内一个存在性点;下一条有 kernel 内容的边,是刻画这个零点沿冻结缩放定理生成的整条素数轨道相对窗口与拉回线的位置,而不是复述零点或复制证书。
+
+## 一　G-h-1 预登记:认证 p = 2 零点的素数缩放轨道对黄金窗口的分类与两素跨线(`D5/S3/Analytic/GermWindow/LocalFactorZeroScalingOrbitWindow`,绑 G-c、`LocalFactorUniversalScaling`、G-g-5)
+
+**义务**:公开定理 `scaled_gc_orbit_window_iff : ∀ z ∈ Metric.ball c (1 / 10 ^ 8), (1 / (2 * Real.goldenRatio ^ 3) < ((Real.log 2 / Real.log 3 : ℝ) * z).re ∧ ((Real.log 2 / Real.log 3 : ℝ) * z).re < 1 / (2 * Real.goldenRatio ^ 2)) ∧ (1 / (2 * Real.goldenRatio ^ 2) < z.re ∧ z.re < 1 / Real.goldenRatio ^ 2) ∧ ∀ p : ℕ, p.Prime → 5 ≤ p → ((Real.log 2 / Real.log p : ℝ) * z).re < 1 / (2 * Real.goldenRatio ^ 3)`(对球内每一点一致成立,不只对 c),以及终端公开定理 `gc_orbit_two_prime_straddle : ∃ z ∈ Metric.ball c (1 / 10 ^ 8), germLocalFactor z 2 = 0 ∧ germLocalFactor ((Real.log 2 / Real.log 3 : ℝ) * z) 3 = 0 ∧ 1 / (2 * Real.goldenRatio ^ 3) < ((Real.log 2 / Real.log 3 : ℝ) * z).re ∧ ((Real.log 2 / Real.log 3 : ℝ) * z).re < 1 / (2 * Real.goldenRatio ^ 2) ∧ 1 / (2 * Real.goldenRatio ^ 2) < z.re ∧ z.re < 1 / Real.goldenRatio ^ 2 ∧ ∀ p : ℕ, p.Prime → 5 ≤ p → ((Real.log 2 / Real.log p : ℝ) * z).re < 1 / (2 * Real.goldenRatio ^ 3)`(p = 2 与 p = 3 的局部因子在窗内各有一个零点,分居拉回线两侧;p ≥ 5 的轨道点落到窗口之下)。缩放点的精确形式以冻结 `germLocalFactor_prime_scaling` 的陈述为准(若其为 `(Real.log p / Real.log 2)⁻¹` 或带 Re 阈值假设,以冻结形改写,不改数学)。
+
+**拟议逃逸见证(面板原文,写在探针之前)**:`scaled_gc_orbit_window_iff` 是活路径上的新一致估计——对球内每点,乘以 log 2/log 3 后仍严格高于窗口下沿并严格低于拉回线,自身严格高于拉回线并低于窗口上沿,而对每个 p ≥ 5 乘以 log 2/log p 后严格低于窗口下沿;其证明须建立 log 2/log 3 与 log 2/log p(p ≥ 5)的新有理包络(钉版 Mathlib `Real.log` 单调性与 `Real.log_two_gt_d9`/`lt_d9`、`Real.goldenRatio` 的有理界),并把球的度量条件化为实部区间。这不是 `germLocalFactor_prime_scaling` 的实例化:缩放定理只输运零点,对轨道点越不越过窗口边界一无所言。**bind-only 部分(如实标注)**:由 G-c 取 z;由缩放定理得 `germLocalFactor (λ_p z) p = 0`;由 G-g-5 与冻结三阶分解得两个延拓 germ 的线外窗口零点——后者只作具名伴随结果落地,不单独立义务。
+
+**可证伪预测(写在跑之前)**:①两条定理在钉版工具链闭合,标准三公理;②所需 log 2/log 3 的有理包络精度 ≤ 10⁻³ 即足(数值:λ₃·c.re = 0.150264,窗口下沿 0.118034,拉回线 0.190983;λ₅·c.re = 0.102566 < 0.118034;球半径 10⁻⁸ 相对余量可忽略);③实施成本 elementary–moderate,一席位轮 ≤ 40 分钟,`make lean` 增量 ≤ 3 分钟;④若冻结缩放定理的陈述需要 Re 阈值而 p ≥ 5 的缩放点不满足(如需 Re > 1/φ⁵ = 0.0902 而 λ_p·c.re 对大 p 趋于 0),则「p ≥ 5 的局部因子零点」子句改为只对满足阈值的 p 断言,并记勘误;⑤若面板对 λ₃ 的估计有误(λ₃·c.re 落在线上或线外),本节作废并按 5⁗ 另立。
+
+**边界**:本节不断言这两个零点不是 ζ 零点(见 G-h-2),不涉及 RH 本身;p ≥ 5 的结论只说其轨道点不在窗内,不说 p ≥ 5 的局部因子在窗内无零点(其它零点可能存在)。
+
+## 二　G-h-2 具名缺口(open,不派实施):ζ 分离——在 φ²·(G-c 球)上一致地 ‖ζ‖ ≥ 1/100
+
+**缺口**:`riemannZeta_phi_sq_germ_ball_norm_ge : ∀ w ∈ Metric.ball c (1 / 10 ^ 8), (1 / 100 : ℝ) ≤ ‖riemannZeta (((Real.goldenRatio ^ 2 : ℝ) : ℂ) * w)‖`(φ²c ≈ 0.623 + 13.76 i;面板席位自报 ‖ζ(φ²c)‖ ≈ 0.287,ASSUMED-UNVERIFIED),从而认证零点的延拓 germ 零点不来自 ζ(φ²·);φ³ 因子在 Re > 1 上由欧拉积非零(廉价)。**阻塞**:钉版 Mathlib 只有一阶 Euler–Maclaurin 表示与 eta 交错级数,无带显式余项、可在 0 < Re s < 1 的复盒上认证的 ζ 求值器;须先建认证求值基础设施(与 L2b 同类,但对象是 ζ 而非有限指数和)。**处置**:先派一席探针评估在钉版工具链内建该求值器的成本与 API,产出 open 读数后再决定是否预登记为义务。
+
+## 三　residual-open 对账勘注(消化账,零 Lean)
+
+面板两席核实:`Meta/Digestion/backfill/golden-observer-rh-route/residual-open/` 现有 798 条,其中含已冻结定理的旧 atom(G-g-3 已由 `ZetaBridge/RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh` 冻结;G-g-5、G-g-7/8、Z-7、G-c 各层亦然)——是卷尾追加重键与旧版 atom 留存的消化滞后,不是数学缺口。选题只以冻结定理名与陈述同一性为准;对账(bind cover)另行走 `make cover`,不占实施席。
+
+后续增订继续严格追加于本节之后。

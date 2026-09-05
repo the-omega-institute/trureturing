@@ -15,6 +15,7 @@ public static class TestBudgets
 {
     public static readonly TimeSpan ZeroDuration = TimeSpan.Zero; // pinned-production-constant: System.TimeSpan.Zero
     public static readonly TimeSpan LocalProcessHangGuard = TimeSpan.FromSeconds(2); // infrastructure-hang-guard: never bears a test verdict
+    public static readonly TimeSpan CapacityDerivationStartHangGuard = TimeSpan.FromSeconds(5); // infrastructure-hang-guard: never bears a test verdict
     public static readonly TimeSpan ShortProcessHangGuard = TimeSpan.FromSeconds(5); // infrastructure-hang-guard: never bears a test verdict
     public static readonly TimeSpan ScriptProcessHangGuard = TimeSpan.FromSeconds(10); // infrastructure-hang-guard: never bears a test verdict
     public static readonly TimeSpan PlaybookProcessHangGuard = TimeSpan.FromSeconds(15); // infrastructure-hang-guard: never bears a test verdict

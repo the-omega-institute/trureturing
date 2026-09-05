@@ -1,0 +1,5 @@
+source_id = "zeckendorf-euler-5040"
+path = "docs/develop/theory/ZECKENDORF_EULER_5040.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

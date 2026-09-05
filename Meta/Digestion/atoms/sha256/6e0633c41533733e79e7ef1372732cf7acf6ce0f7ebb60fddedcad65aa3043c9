@@ -1,0 +1,45 @@
+## 定义 101.1　约化钟过程
+
+初始钟与结构取乘积：
+
+$$
+\rho_C\otimes\sigma.
+$$
+
+定义：
+
+$$
+\Phi_{v,t}(\rho_C)
+=
+\operatorname{Tr}_G
+\left[
+U_v(t)(\rho_C\otimes\sigma)U_v(t)^\dagger
+\right].
+$$
+
+钟的非对角项由以下函数控制：
+
+$$
+\boxed{
+\chi_v(t)
+=
+\operatorname{Tr}
+\left[
+\sigma e^{-i\omega t\widehat n(v)}
+\right].
+}
+\tag{101.3}
+$$
+
+具体而言：
+
+$$
+\bigl(\Phi_{v,t}(\rho_C)\bigr)_{10}
+=
+\chi_v(t)(\rho_C)_{10}.
+$$
+
+这正是项目环境记录结构的一种实现：两个钟分支使结构寄存器产生不同条件演化，其重叠决定钟的约化相干。仓库 `EnvironmentRecords.lean` 已有相应的记录重叠、偏迹与相位阻尼恒等式。
+
+---
+

@@ -1,0 +1,43 @@
+## 推论：线性尺度上的体积确实趋零
+
+在前件 \(S_*>0\) 下，对：
+
+$$
+0<\vartheta<L^{-2},
+$$
+
+有：
+
+$$
+\boxed{
+e^{d\vartheta S_d}\mathcal Z_d(d\vartheta)
+\longrightarrow
+\mathcal F_\xi(\vartheta)>0.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal Z_d(d\vartheta)\longrightarrow0,
+}
+\tag{M15}
+$$
+
+并且：
+
+$$
+\boxed{
+\frac1d\log\mathcal Z_d(d\vartheta)
+\longrightarrow-\vartheta S_*.
+}
+\tag{M16}
+$$
+
+**一个很稳定、很规则的统计极限，已经出现了；但它没有判定 RH。**
+
+这正好解释了为什么“更经典、更统计”可能产生一种表面上的完成：某些全局谱区别没有消失，只是离开了当前缩放窗口。
+
+---
+

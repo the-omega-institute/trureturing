@@ -1,0 +1,85 @@
+## 定理 2：精确跨尺度平均
+
+设
+
+$$
+H=Mh,
+\qquad M\in\mathbb N_{\ge1}.
+$$
+
+则存在完全明确的非负系数
+
+$$
+\pi_{H,h}(j)\ge0,
+\qquad
+\sum_{j=0}^{4M-4}\pi_{H,h}(j)=1,
+$$
+
+使
+
+$$
+\boxed{
+\mathcal B_H(T)
+=
+\sum_{j=0}^{4M-4}
+\pi_{H,h}(j)\mathcal B_h(T+jh).
+}
+\tag{11}
+$$
+
+该恒等式对任意输入函数 \(Z\) 都成立，不依赖 RH。
+
+### 证明
+
+令
+
+$$
+E=e^{h/2}.
+$$
+
+多项式分解给出
+
+$$
+\begin{aligned}
+Q_H(z^M)
+&=(z^M-E^M)(z^M-1)^3\\
+&=Q_h(z)\,R_{M,E}(z),
+\end{aligned}
+$$
+
+其中
+
+$$
+\boxed{
+R_{M,E}(z)
+=
+\left(\sum_{j=0}^{M-1}E^{M-1-j}z^j\right)
+\left(\sum_{j=0}^{M-1}z^j\right)^3.
+}
+\tag{12}
+$$
+
+所有系数非负。
+
+并且
+
+$$
+R_{M,E}(1)
+=
+M^3\frac{E^M-1}{E-1}
+=
+\frac{c(H)}{c(h)}.
+$$
+
+令
+
+$$
+\pi_{H,h}(j)
+=
+\frac{[z^j]R_{M,E}(z)}{R_{M,E}(1)}.
+$$
+
+将 \(z\) 替换为 \(S_h\)，再除以 \(c(H)\)，得到式（11）。证毕。
+
+---
+

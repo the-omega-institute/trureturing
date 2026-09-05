@@ -1,0 +1,9 @@
+**这轮没有证明该上界。已经证明的是：局部同余因素负责了哪一部分抵消、它们还缺多少才能成为正模型，以及剩余相关误差需要被控制到什么增长尺度。**
+
+更具体地，下一项算术工作不是继续增加一个量子假设，而是控制式（10）中**不同位移 \(d\) 的误差怎样共同相加**。单个位移的平方根估计、全部矩阵各自的正性、概率归一化，都不能替代这一层跨位移的联合控制。
+
+[1]: https://arxiv.org/html/math/0409258v1 "https://arxiv.org/html/math/0409258v1"
+[2]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
+[3]: https://dlmf.nist.gov/27.12 "https://dlmf.nist.gov/27.12"
+[4]: https://arxiv.org/html/1410.7015v4 "https://arxiv.org/html/1410.7015v4"
+[5]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"

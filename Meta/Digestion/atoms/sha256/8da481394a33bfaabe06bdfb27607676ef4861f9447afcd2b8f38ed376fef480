@@ -1,0 +1,62 @@
+# 四、历史行列式是一份反对称多历史态的范数
+
+令：
+
+$$
+f_j(t)=\bigl(\ell e^{-itC_q}\bigr)_j.
+$$
+
+由连续版 Cauchy–Binet，即 Andréief 恒等式：
+
+$$
+\boxed{
+\det G_q(r)
+=
+\frac1{d!}
+\int_{\mathbb R^d}
+\left|
+\det\bigl(f_j(t_i)\bigr)_{i,j=1}^{d}
+\right|^2
+\prod_{i=1}^{d}g_r(t_i)\,dt_i.
+}
+\tag{K4}
+$$
+
+该行列式积分恒等式是经典结果，在随机矩阵理论中被广泛使用。([arXiv][2])
+
+定义多历史波函数：
+
+$$
+\boxed{
+\Psi_{q,r}(t_1,\ldots,t_d)
+=
+\frac1{\sqrt{d!}}
+\det\bigl(f_j(t_i)\bigr)
+\prod_i g_r(t_i)^{1/2}.
+}
+$$
+
+那么：
+
+$$
+\|\Psi_{q,r}\|^2=\det G_q(r).
+$$
+
+交换两个历史坐标，波函数变号；两个历史坐标相同，行列式为零。
+
+因此这里出现的是一项真实的反对称结构：
+
+$$
+\boxed{
+t_i=t_j
+\Longrightarrow
+\Psi_{q,r}=0.
+}
+$$
+
+它在数学形式上是 Slater 行列式。但这不意味着已经发现实际 ζ 由某种物理费米粒子构成；当前得到的是一个明确的反对称历史表示。
+
+尤其，\(\Psi_{q,r}\) 尚未归一化，其范数可以大于一。**后面的“上限一”不是直接套用 Born 概率上限。**
+
+---
+

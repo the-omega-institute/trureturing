@@ -1,0 +1,41 @@
+## 定理 108.1　闭合媒介序列实现两钟受控相位
+
+定义：
+
+$$
+\boxed{
+\mathsf W
+=
+\mathsf U_B^\dagger
+\mathsf U_A^\dagger
+\mathsf U_B
+\mathsf U_A.
+}
+\tag{108.1}
+$$
+
+则：
+
+$$
+\boxed{
+\mathsf W=\operatorname{CZ}_{AB}\otimes I_G.
+}
+\tag{108.2}
+$$
+
+### 证明
+
+按两个钟的计算基状态 \(a,b\in\{0,1\}\) 分块。
+
+若至少一个控制位为零，作用相互抵消。
+
+若 \(a=b=1\)，结构上的作用为：
+
+$$
+(iZ)^\dagger(iX)^\dagger(iZ)(iX)=-I.
+$$
+
+因此只有 \(|11\rangle_{AB}\) 分支得到负号，而结构算子最终为恒等。∎
+
+---
+

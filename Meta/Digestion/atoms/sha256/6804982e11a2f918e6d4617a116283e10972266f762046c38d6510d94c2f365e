@@ -1,0 +1,36 @@
+## 推论 10.4　简化的统一斜率证书
+
+对所有 \(R_p>0\) 的方向，定义：
+
+$$
+\kappa_p=
+\frac{f_p(b_p+1)-f_p(b_p)}{\ln p},
+\qquad
+\kappa=\max_p\kappa_p.
+$$
+
+则：
+
+$$
+\boxed{
+\Delta(n)\ge\Delta(m)+(c-\kappa)\ln(n/m).
+}
+\tag{10.3}
+$$
+
+### 证明
+
+由递减增量：
+
+$$
+f_p(b_p+r_p)-f_p(b_p)
+\le
+r_p[f_p(b_p+1)-f_p(b_p)]
+\le
+\kappa r_p\ln p.
+$$
+
+代入式（10.1）。证毕。
+
+---
+

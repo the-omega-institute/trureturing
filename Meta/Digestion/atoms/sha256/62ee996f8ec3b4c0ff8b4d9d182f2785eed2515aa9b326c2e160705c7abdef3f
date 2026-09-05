@@ -1,0 +1,14 @@
+## 定理 L2：投影概率
+
+$$
+\boxed{
+p_q(r)
+:=
+\|\Pi_{\mathrm{inv}}\Omega_{A,r}\|^2
+=
+e^{-rN_q}\mathcal H_q(r)
+\le1.
+}
+\tag{L12}
+$$
+
