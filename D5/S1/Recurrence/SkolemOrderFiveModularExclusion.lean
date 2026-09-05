@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Recurrence/SkolemOrderFiveModularExclusion
    mirror-E: none(waiver:exact-finite-state-arithmetic)
    anchors: []
+   utility: kind=bounded-enumeration; basis=terminal=atom:6d2d16231bf01aa995c79d28ae4e852832fd13dd1025947663e87843bcf84062
    digest: A period-31 parity orbit excludes zeros from 16 residue classes. -/
 
 import Mathlib.Algebra.LinearRecurrence
