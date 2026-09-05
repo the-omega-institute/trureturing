@@ -1,5 +1,7 @@
 import LeanInformationAudit.CatalogBuilder
 import LeanInformationAudit.Sha256
+import D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness
+-- Enumerations is imported only to expose the production `__state_enumeration` witnesses.
 import D5.S3.ConceptDynamics.InformationEscapeCounting.Enumerations
 
 namespace LeanInformationAudit
@@ -80,13 +82,6 @@ private instance : ReduceEval ReflectedFusedSnapshot where
 private def natValue (expr : Expr) : MetaM Nat :=
   reduceEval expr
 
-private def mkDecideProofWith (proposition decidable : Expr) : MetaM Expr := do
-  let decision := mkApp2 (mkConst ``Decidable.decide) proposition decidable
-  let decisionTrue ← mkEq decision (mkConst ``Bool.true)
-  let reflexivity ← mkEqRefl (mkConst ``Bool.true)
-  let reduction := mkExpectedPropHint reflexivity decisionTrue
-  pure <| mkApp3 (mkConst ``of_decide_eq_true) proposition decidable reduction
-
 private def primitiveCount {X : Type u} (bundle : PrimitiveBundle X) : Nat :=
   @Fintype.card bundle.Index bundle.indexFintype
 
@@ -136,7 +131,7 @@ private def signatureLabel (mask : Nat) : String :=
     if signatureBit mask coordinate then '1' else '0'
 
 /-- Keep CIRPT-40(8) as an independent host-side check on all fifteen buckets. -/
-def validateRoleHistogram (theoremName : Name) (uniqueCount : Nat)
+private def validateRoleHistogram (theoremName : Name) (uniqueCount : Nat)
     (roleBins : Array Nat) : Except String Unit := do
   let histogramTotal := roleBins.foldl (init := 0) (· + ·)
   unless histogramTotal == uniqueCount do
