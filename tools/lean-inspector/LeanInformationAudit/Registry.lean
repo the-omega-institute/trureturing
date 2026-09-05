@@ -89,15 +89,20 @@ def InformationRegistryEntry.occurrenceKeyString
 
 def qualifiedNameCollisionError (rootId : Name) (catalogId : CatalogId)
     (generatedName : Name) (entries : Array InformationRegistryEntry) : String :=
-  let occurrences := entries.map (·.occurrenceKeyString) |>.qsort (· < ·)
+  let occurrences := entries.map (·.occurrenceKeyString) |>.toList.eraseDups.toArray
+    |>.qsort (· < ·)
   s!"IE-C025 QualifiedNameCollision root={rootId} catalog={catalogId} \
 generated_name={generatedName} occurrences={jsonStringArray occurrences}"
 
 def qualifiedNameCollisionEntries (entries : Array InformationRegistryEntry)
     (generatedName : Name) (prospective : InformationRegistryEntry) :
     Array InformationRegistryEntry :=
-  (entries.filter fun entry =>
+  let owners := (entries.filter fun entry =>
     entry.unitName == generatedName || entry.realizationName == generatedName).push prospective
+  owners.foldl (init := #[]) (fun result entry =>
+    if result.any (fun owner => owner.occurrenceKey == entry.occurrenceKey) then result
+    else result.push entry)
+    |>.qsort (fun left right => left.occurrenceKeyString < right.occurrenceKeyString)
 
 def rejectKernelAddressSemanticUse (rootId : Name) (catalogId : CatalogId)
     (address consumer : String) : Except String Unit :=

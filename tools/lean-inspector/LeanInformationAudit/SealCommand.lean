@@ -222,8 +222,7 @@ private def prepareRootQualifiedEntries (env : Environment)
   let qualified := entries.map (rootQualifiedEntry rootId compatibilityV2)
   for entry in qualified do
     for generatedName in #[entry.unitName, entry.realizationName] do
-      let owners := qualified.filter fun candidate =>
-        candidate.unitName == generatedName || candidate.realizationName == generatedName
+      let owners := qualifiedNameCollisionEntries (entries ++ qualified) generatedName entry
       let sourceOwner := entries.any fun candidate =>
         (candidate.unitName == generatedName || candidate.realizationName == generatedName) &&
           candidate.occurrenceKey == entry.occurrenceKey
