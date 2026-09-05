@@ -7,8 +7,8 @@
 #
 # Run this after any change to the invocation-discovery or option rules and before pushing:
 # review round 15 found 13 false positives on the real surface that the synthetic matrix could
-# not see (CLAUDE.md 器律⑦′ forbids tests over real workflow content, so this is a scratch probe,
-# not a test). It needs `make -C tools dotnet` to have built the Engine in <tree-root>.
+# not see (CLAUDE.md 器律⑦′ forbids tests over real workflow content, so this is a tracked
+# run-local probe (器律⑨), not a test). It needs `make -C tools dotnet` to have built the Engine.
 set -euo pipefail
 
 root=$(cd "${1:?usage: sl030-real-surface.sh <tree-root>}" && pwd)
@@ -38,8 +38,10 @@ var root = args[1];
 var assembly = Assembly.LoadFrom(dll);
 var scanner = assembly.GetType("StrataLint.Engine.JudgeSurfaceRevisionScanner")
     ?? throw new InvalidOperationException("JudgeSurfaceRevisionScanner not found");
-var isSurface = scanner.GetMethod("IsJudgeSurfacePath", BindingFlags.NonPublic | BindingFlags.Static)!;
-var scan = scanner.GetMethod("Scan", BindingFlags.NonPublic | BindingFlags.Static)!;
+var isSurface = scanner.GetMethod("IsJudgeSurfacePath", BindingFlags.NonPublic | BindingFlags.Static)
+    ?? throw new InvalidOperationException("IsJudgeSurfacePath not found");
+var scan = scanner.GetMethod("Scan", BindingFlags.NonPublic | BindingFlags.Static)
+    ?? throw new InvalidOperationException("Scan not found");
 var files = 0;
 var findings = 0;
 foreach (var path in Console.In.ReadToEnd().Split('\n', StringSplitOptions.RemoveEmptyEntries))

@@ -138,6 +138,9 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git $'show\\400x' HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git $'\\163how\\c@tail' HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("$'\\147it\\c@' show HEAD^1:tools/scripts/workflow/x.sh")]
+    // Bash's quote parser consumes the backslash pair after `\c` before finding the closing quote.
+    [InlineData(": $'\\c\\\\'; git show HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("x=$'\\c\\\\'; git show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git archive --no-remote --remote=/tmp/other HEAD")]
     [InlineData("git $(printf show) HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git \"$(printf show)\" HEAD^1:tools/scripts/workflow/x.sh")]
@@ -261,15 +264,18 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("$'git\\000tail' show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("git $'\\163how\\c@tail' HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("git $'\\cA' show HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData(": $'\\c\\\\'; git show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("git archive --remote=/tmp/other --no-remote HEAD")]
     [InlineData("$GIT show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("\"$(command -v git)\" rev-parse HEAD^1")]
     [InlineData("\"$HOME/.elan/bin/lake\" --version")]
     [InlineData("\"$HOME/.elan/bin/elan\" toolchain install HEAD^1")]
     [InlineData("$X $Y HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("$GIT -C candidate show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("\"$gate\" --candidate x --base y")]
     [InlineData("[[ \"$rc\" -ne 0 && \"$rc\" -ne 3 ]]")]
     [InlineData("\"$tool\" --producer HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("\"$tool\" --producer show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git restore --source=HEAD^1 --source=HEAD -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --source=HEAD^1 --no-source tools/scripts/workflow/x.sh")]
     [InlineData("git read-tree --no-recurse-submodules -u HEAD^{tree}")]
@@ -390,6 +396,32 @@ public sealed class JudgeSurfaceRevisionRuleTests
     public void CommentEndingInABackslashBeforeAHeadReadIsAllowed()
     {
         Assert.Empty(Evaluate(ScriptPath, "# note \\\n" + "git show HEAD:tools/scripts/workflow/x.sh\n"));
+    }
+
+    [Fact]
+    public void CommentedParenthesisInsideDollarSubstitutionDoesNotCloseIt()
+    {
+        const string script = "x=\"$( # )\ngit show HEAD^1:tools/scripts/workflow/x.sh > out\n)\"\n";
+        var finding = Assert.Single(Evaluate(ScriptPath, script));
+        Assert.Contains("line 2:", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CommentedParenthesisInsideYamlDollarSubstitutionDoesNotCloseIt()
+    {
+        const string workflow = "steps:\n  - run: |\n      x=\"$( # )\n      git show HEAD^1:tools/scripts/workflow/x.sh > out\n      )\"\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("line 4:", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("x=\"$( # )\ngit show HEAD:tools/scripts/workflow/x.sh > out\n)\"")]
+    [InlineData("x=\"$(printf '#')\"\ngit show HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("x=\"$(echo a#b)\"; git show HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("x=\"$( # )\necho ok\n)\"; git show HEAD:tools/scripts/workflow/x.sh")]
+    public void DollarSubstitutionCommentCounterpartsAreAllowed(string script)
+    {
+        Assert.Empty(Evaluate(ScriptPath, script + "\n"));
     }
 
     [Fact]
@@ -643,6 +675,15 @@ public sealed class JudgeSurfaceRevisionRuleTests
         const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with:\n      ref: \"${{ github.event.pull_request['base']['sha'] }}\"\n";
         var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
         Assert.Contains("a `ref:` naming the protected base", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void BracketSpelledHeadRefInAWorkflowIsAllowed()
+    {
+        const string bracketHead = "steps:\n  - uses: actions/checkout@v4\n    with:\n      ref: \"${{ github.event.pull_request['head']['sha'] }}\"\n";
+        const string literalHead = "steps:\n  - uses: actions/checkout@v4\n    with:\n      ref: HEAD\n";
+        Assert.Empty(Evaluate(WorkflowPath, bracketHead));
+        Assert.Empty(Evaluate(WorkflowPath, literalHead));
     }
 
     [Fact]

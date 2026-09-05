@@ -252,7 +252,7 @@ internal static class JudgeSurfaceShellLexer
                     index = LexBacktickSubstitution(text, index, end, depth, lineOffset, commands, word, ref truncated);
                     continue;
 
-                case '#' when !inWord:
+                case '#' when IsCommentStart(character, inWord):
                     // A comment runs to the end of its line only; the lines after it (a decoded
                     // YAML `\n`, a folded block) are still shell (review round 11).
                     EndCommand();
@@ -359,9 +359,11 @@ internal static class JudgeSurfaceShellLexer
     private static bool IsWordBoundary(string text, int index, int end) =>
         index >= end || text[index] is ' ' or '\t' or '\n' or '\r' or ';' or '&' or '|' or ')' or '(';
 
-    // `$(` … `)` with the closing parenthesis found by a quote-aware walk: parentheses inside
-    // single or double quotes do not count, backslash escapes the next character, nested `$(`
-    // and bare `(` raise the depth (review round 5: `"$(printf '%s' ')'; git show …)"`).
+    private static bool IsCommentStart(char character, bool inWord) => character == '#' && !inWord;
+
+    // `$(` … `)` with the closing parenthesis found by the same comment/quote state as command
+    // lexing: parentheses in quotes or word-initial comments do not count, backslash escapes the
+    // next character, and nested `$(` or bare `(` raise the depth.
     private static int LexDollarSubstitution(
         string text,
         int index,
@@ -376,11 +378,13 @@ internal static class JudgeSurfaceShellLexer
         var nesting = 1;
         var inSingle = false;
         var inDouble = false;
+        var inWord = false;
         while (cursor < end)
         {
             var character = text[cursor];
             if (character == '\\' && !inSingle)
             {
+                inWord |= cursor + 1 >= end || text[cursor + 1] != '\n';
                 cursor += 2;
                 continue;
             }
@@ -393,17 +397,31 @@ internal static class JudgeSurfaceShellLexer
             {
                 inDouble = character != '"';
             }
+            else if (IsCommentStart(character, inWord))
+            {
+                cursor = text.IndexOf('\n', cursor, end - cursor);
+                if (cursor < 0)
+                {
+                    cursor = end;
+                    break;
+                }
+
+                inWord = false;
+            }
             else if (character == '\'')
             {
                 inSingle = true;
+                inWord = true;
             }
             else if (character == '"')
             {
                 inDouble = true;
+                inWord = true;
             }
             else if (character == '(')
             {
                 nesting++;
+                inWord = false;
             }
             else if (character == ')')
             {
@@ -412,6 +430,12 @@ internal static class JudgeSurfaceShellLexer
                 {
                     break;
                 }
+
+                inWord = false;
+            }
+            else
+            {
+                inWord = character is not (' ' or '\t' or '\n' or '\r' or ';' or '&' or '|');
             }
 
             cursor++;
@@ -505,10 +529,12 @@ internal static class JudgeSurfaceShellLexer
         }
         else if (escape == 'c' && index + 2 < end)
         {
-            // `\cX` is the control character of X (`\c@` is NUL, `\cA` is 1; review round 15:
-            // `$'\163how\c@tail'` is `show`).
-            nul = AppendByte(word, char.ToUpperInvariant(text[index + 2]) & 0x1F);
-            return index + 3;
+            // Bash's quote parser makes the escaped backslash pair the operand of `\c\\`; consume
+            // both before looking for the closing quote. Bash 3.2 and 5 differ only in whether an
+            // extra backslash byte survives, not in where the word ends.
+            var operand = text[index + 2];
+            nul = AppendByte(word, char.ToUpperInvariant(operand) & 0x1F);
+            return operand == '\\' && index + 3 < end ? index + 4 : index + 3;
         }
         else if (escape is >= '0' and <= '7')
         {
