@@ -159,7 +159,7 @@ public sealed class EngineeringPathFilterTests
     }
 
     [Fact]
-    public void SelectedProjectFailureDoesNotRetryTheWholeSolution()
+    public void SelectedProjectInfrastructureFailureDominatesCandidateFailure()
     {
         var plan = new EngineeringTestPlan(
             EngineeringTestPlanKind.Selected,
@@ -171,10 +171,10 @@ public sealed class EngineeringPathFilterTests
         var exitCode = EngineeringTestExecutor.Execute(plan, invocation =>
         {
             lock (calls) calls.Add(invocation.ProjectPath);
-            return invocation.ProjectPath == ScribeTestsProject ? 17 : 23;
+            return invocation.ProjectPath == ScribeTestsProject ? 1 : 2;
         });
 
-        Assert.Equal(17, exitCode);
+        Assert.Equal(2, exitCode);
         Assert.Equal(
             [ArchitectureTestsProject, ScribeTestsProject],
             calls.Order(StringComparer.Ordinal));

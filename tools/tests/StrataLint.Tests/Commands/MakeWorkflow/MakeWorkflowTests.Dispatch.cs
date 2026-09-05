@@ -263,15 +263,29 @@ public sealed partial class MakeWorkflowTests
         var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
         Assert.Contains("REPOSITORY ?= $(HERE)/..", makefile, StringComparison.Ordinal);
         Assert.Equal(
-            "\t@cd \"$(REPOSITORY)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\"",
+            "\t@/bin/bash \"$(HERE)/scripts/engineering-tests.sh\" \"$(REPOSITORY)\" \"$(HEAD)\" \"$(BASE)\"",
             engineeringTestsRecipe);
+        Assert.Equal(
+            "\t@REPOSITORY=\"$(REPOSITORY)\" EVENT=\"$(EVENT)\" /bin/bash \"$(HERE)/scripts/workflow/segment-engineering.sh\"",
+            Recipe(makefile, "engineering"));
+        Assert.Contains("EVENT ?= push", makefile, StringComparison.Ordinal);
+        var engineeringTests = File.ReadAllText(Path.Combine(root, EngineeringTestsScriptPath));
+        Assert.Contains(
+            "cd \"$REPOSITORY\" && dotnet run --project \"$HERE/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$REPOSITORY\" --head \"$HEAD\" --base \"$BASE\"",
+            engineeringTests,
+            StringComparison.Ordinal);
         Assert.Single(
             Regex.Matches(
-                    makefile,
+                    engineeringTests,
                     Regex.Escape(
-                        "dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\""),
+                        "dotnet run --project \"$HERE/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\""),
                     RegexOptions.CultureInvariant)
                 .Cast<Match>());
+        Assert.DoesNotContain(
+            "dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\"",
+            makefile,
+            StringComparison.Ordinal);
+        Assert.True(File.Exists(Path.Combine(root, SegmentEngineeringScriptPath)));
         Assert.Contains("$(HERE)/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(
             "$(HERE)/scripts/update-renderer-contract.sh",

@@ -155,20 +155,24 @@ internal static class Program
                 result = Run(noBuild: false);
                 Console.Error.Write(result.StandardError);
             }
-            if (result.ExitCode != 0) return result.ExitCode;
-
             try
             {
-                var executed = TestResultEvidence.Load(resultsDirectory).Executed;
+                var evidence = TestResultEvidence.Load(resultsDirectory);
                 Console.WriteLine(
                     $"ENGINEERING_TEST_EXECUTED project={JsonSerializer.Serialize(invocation.ProjectPath)} "
-                    + $"evidence=trx executed={executed}");
-                return 0;
+                    + $"evidence=trx executed={evidence.Executed}");
+                WriteExecutedTestIdentities(evidence, Console.Out);
+                return result.ExitCode switch
+                {
+                    0 => 0,
+                    1 => 1,
+                    _ => 2,
+                };
             }
             catch (Exception exception)
             {
                 Console.Error.WriteLine($"ENGINEERING_TEST_EVIDENCE_FAILED {exception.Message}");
-                return 1;
+                return 2;
             }
         }
         finally
@@ -261,7 +265,24 @@ internal static class Program
             standardOutput.WriteLine($"TEST_EVIDENCE_ACCEPTED evidence=trx executed={evidence.Executed}");
         }
 
+        WriteExecutedTestIdentities(evidence, standardOutput);
+
         return 0;
+    }
+
+    private static void WriteExecutedTestIdentities(
+        TestResultEvidence evidence,
+        TextWriter standardOutput)
+    {
+        var identities = evidence.ExecutedTests
+            .Select(static test => $"{test.Assembly}::{test.Id}")
+            .Distinct(StringComparer.Ordinal)
+            .Order(Comparer<string>.Create(static (left, right) =>
+                Encoding.UTF8.GetBytes(left).AsSpan().SequenceCompareTo(
+                    Encoding.UTF8.GetBytes(right))))
+            .ToArray();
+        standardOutput.WriteLine(
+            $"TEST_EVIDENCE_IDENTITIES selected_test_ids={JsonSerializer.Serialize(identities)}");
     }
 
     private static void WritePlan(EngineeringTestPlan plan)
