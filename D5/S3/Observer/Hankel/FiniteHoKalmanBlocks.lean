@@ -7,6 +7,7 @@
 
 import Mathlib.LinearAlgebra.Matrix.Adjugate
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Tactic.Omega
 
 set_option autoImplicit false
@@ -80,20 +81,20 @@ def fittedC (s : Samples F h p m) (q : Pivot h p m r) : Matrix (Fin p) (Fin r) F
   outputBlock s q
 
 /-- Observation rows selected from a reference realization. -/
-def selectedO (A : Matrix (Fin r) (Fin r) F) (C : Matrix (Fin p) (Fin r) F)
-    (q : Pivot h p m r) : Matrix (Fin r) (Fin r) F :=
+def selectedO {d : Nat} (A : Matrix (Fin d) (Fin d) F) (C : Matrix (Fin p) (Fin d) F)
+    (q : Pivot h p m r) : Matrix (Fin r) (Fin d) F :=
   fun i k => (C * A ^ (q.1 i).1.val) (q.1 i).2 k
 
 /-- Reachability columns selected from a reference realization. -/
-def selectedR (A : Matrix (Fin r) (Fin r) F) (B : Matrix (Fin r) (Fin m) F)
-    (q : Pivot h p m r) : Matrix (Fin r) (Fin r) F :=
+def selectedR {d : Nat} (A : Matrix (Fin d) (Fin d) F) (B : Matrix (Fin d) (Fin m) F)
+    (q : Pivot h p m r) : Matrix (Fin d) (Fin r) F :=
   fun k j => (A ^ (q.2 j).1.val * B) k (q.2 j).2
 
 /-- Finite data factorization is derived from the sample semantics. -/
-theorem sample_factorizations
+theorem sample_factorizations {d : Nat}
     (s : Samples F h p m) (q : Pivot h p m r)
-    (A : Matrix (Fin r) (Fin r) F) (B : Matrix (Fin r) (Fin m) F)
-    (C : Matrix (Fin p) (Fin r) F)
+    (A : Matrix (Fin d) (Fin d) F) (B : Matrix (Fin d) (Fin m) F)
+    (C : Matrix (Fin p) (Fin d) F)
     (hs : ∀ k : Fin (2 * h), s k = C * A ^ k.val * B) :
     baseBlock s q = selectedO A C q * selectedR A B q ∧
     shiftBlock s q = selectedO A C q * (A * selectedR A B q) ∧
@@ -173,8 +174,25 @@ theorem finite_samples_exact_recovery
   exact factorized_exact_recovery _ _ _ _ _ _ _ _ _ _ hK hL hV hW
     (adjInverse_mul _ hk) n
 
+/-- A nonsingular finite Hankel minor certifies a lower bound against every
+finite-dimensional realization matching the samples, even with a different state size. -/
+theorem finite_samples_order_lower_bound {d : Nat}
+    (s : Samples F h p m) (q : Pivot h p m r)
+    (A : Matrix (Fin d) (Fin d) F) (B : Matrix (Fin d) (Fin m) F)
+    (C : Matrix (Fin p) (Fin d) F)
+    (hs : ∀ k : Fin (2 * h), s k = C * A ^ k.val * B)
+    (hk : (baseBlock s q).det ≠ 0) : r ≤ d := by
+  have hK := (sample_factorizations s q A B C hs).1
+  calc
+    r = (baseBlock s q).rank := by
+      simpa only [Fintype.card_fin] using (Matrix.rank_of_det_ne_zero hk).symm
+    _ = (selectedO A C q * selectedR A B q).rank := by rw [hK]
+    _ ≤ (selectedO A C q).rank := Matrix.rank_mul_le_left _ _
+    _ ≤ d := Matrix.rank_le_width _
+
 end Field
 
 #print axioms finite_samples_exact_recovery
+#print axioms finite_samples_order_lower_bound
 
 end D5.S3.Observer.Hankel.FiniteHoKalmanBlocks
