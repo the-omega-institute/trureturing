@@ -12,6 +12,7 @@ namespace D5.S3.PrimeGaps.PrimeGap186AdmissibilityCertificate
 
 open D5.S3.PrimeGaps.PrimeGap186FiniteFrontEnd
 open D5.S3.PrimeGaps.PrimeGapAdmissibilityContractBridge
+open D5.S3.PrimeGaps.ShortGapOccupancyBridge
 open D5.S3.Analytic.PrimeProducts.FiniteLocalResidueBlockingCriterion
 
 /-- An explicit omitted residue for each possible prime modulus at most forty.
