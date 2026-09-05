@@ -89,9 +89,13 @@ private theorem positive_index_invariant_of_isUnit_det
         _ = Q := by
           rw [Matrix.mul_nonsing_inv B hB]
           simp
+    have hCast :
+        posIndex (isHermitian_conjTranspose_mul_mul B⁻¹ hPull) =
+          posIndex hQ := by
+      congr 1
     have hBack : posIndex hQ ≤ posIndex hPull := by
-      convert hBackRaw using 1
-      exact hRecover
+      rw [hCast] at hBackRaw
+      exact hBackRaw
     exact hBack
 
 /-- An invertible square congruence preserves negative index exactly. -/

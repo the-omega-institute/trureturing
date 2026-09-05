@@ -158,8 +158,13 @@ private theorem negative_coordinate_pullback
       realDiagonal (negativeMagnitudeWeight weight) := by
   have hNeg :
       -(realDiagonal weight) = realDiagonal (fun i => -weight i) := by
+    unfold realDiagonal
     ext i j
-    simp [realDiagonal]
+    rcases eq_or_ne i j with rfl | h
+    · simp only [Matrix.neg_apply, Matrix.diagonal_apply_eq]
+      push_cast
+      ring
+    · simp [Matrix.diagonal_apply_ne _ h]
   rw [hNeg, (negative_coordinate_projector_isHermitian weight).eq]
   unfold negativeCoordinateProjector realDiagonal negativeMagnitudeWeight
   rw [Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
@@ -172,23 +177,53 @@ private theorem positive_selected_diagonal_rank
     (realDiagonal (positiveSelectedWeight weight)).rank =
       positiveWeightCount weight := by
   classical
-  simp [realDiagonal, positiveSelectedWeight, positiveWeightCount,
+  simp only [realDiagonal, positiveSelectedWeight, positiveWeightCount,
     Matrix.rank_diagonal]
+  rw [Fintype.card_subtype]
+  congr 1
+  ext i
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and, Set.mem_setOf_eq]
+  constructor
+  · intro h
+    by_contra hneg
+    simp [hneg] at h
+  · intro h
+    simp only [if_pos h]
+    exact_mod_cast ne_of_gt h
 
 private theorem negative_magnitude_diagonal_rank
     (weight : ι → ℝ) :
     (realDiagonal (negativeMagnitudeWeight weight)).rank =
       negativeWeightCount weight := by
   classical
-  simp [realDiagonal, negativeMagnitudeWeight, negativeWeightCount,
+  simp only [realDiagonal, negativeMagnitudeWeight, negativeWeightCount,
     Matrix.rank_diagonal]
+  rw [Fintype.card_subtype]
+  congr 1
+  ext i
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and, Set.mem_setOf_eq]
+  constructor
+  · intro h
+    by_contra hneg
+    simp [hneg] at h
+  · intro h
+    simp only [if_pos h]
+    exact_mod_cast neg_ne_zero.mpr (ne_of_lt h)
 
 /-- The rank of a real diagonal matrix is the number of its nonzero weights. -/
 private theorem real_diagonal_rank_eq_nonzero_count
     (weight : ι → ℝ) :
     (realDiagonal weight).rank = nonzeroWeightCount weight := by
   classical
-  simp [realDiagonal, nonzeroWeightCount, Matrix.rank_diagonal]
+  simp only [realDiagonal, nonzeroWeightCount, Matrix.rank_diagonal]
+  rw [Fintype.card_subtype_compl]
+  have hsub :
+      Fintype.card {x // (weight x : ℂ) = 0} =
+        Fintype.card {x // weight x = 0} :=
+    Fintype.card_congr
+      (Equiv.subtypeEquivRight fun x => by
+        exact_mod_cast Iff.rfl)
+  rw [hsub, ← Fintype.card_subtype_compl, Fintype.card_subtype]
 
 /-- Positive and negative coordinates partition the nonzero coordinates. -/
 private theorem positive_add_negative_count_eq_nonzero
@@ -235,7 +270,15 @@ private theorem positive_weight_count_le_posIndex
             (positiveCoordinateProjector weight)
             (real_diagonal_isHermitian weight)) =
         positiveWeightCount weight := by
-    rw [positive_coordinate_pullback]
+    have hCast :
+        posIndex
+            (isHermitian_conjTranspose_mul_mul
+              (positiveCoordinateProjector weight)
+              (real_diagonal_isHermitian weight)) =
+          posIndex (positive_selected_diagonal_posSemidef weight).isHermitian := by
+      congr 1
+      exact positive_coordinate_pullback weight
+    rw [hCast]
     calc
       posIndex (positive_selected_diagonal_posSemidef weight).isHermitian =
           (realDiagonal (positiveSelectedWeight weight)).rank :=
@@ -261,7 +304,15 @@ private theorem negative_weight_count_le_negIndex
             (negativeCoordinateProjector weight)
             (real_diagonal_isHermitian weight).neg) =
         negativeWeightCount weight := by
-    rw [negative_coordinate_pullback]
+    have hCast :
+        posIndex
+            (isHermitian_conjTranspose_mul_mul
+              (negativeCoordinateProjector weight)
+              (real_diagonal_isHermitian weight).neg) =
+          posIndex (negative_magnitude_diagonal_posSemidef weight).isHermitian := by
+      congr 1
+      exact negative_coordinate_pullback weight
+    rw [hCast]
     calc
       posIndex (negative_magnitude_diagonal_posSemidef weight).isHermitian =
           (realDiagonal (negativeMagnitudeWeight weight)).rank :=

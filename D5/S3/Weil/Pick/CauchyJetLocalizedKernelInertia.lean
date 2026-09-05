@@ -224,7 +224,8 @@ private theorem observer_localized_cauchy_jet_negIndex_pos_iff_exists_active {n 
       ∃ a, orbitActiveAt (delta a) (gamma a) time := by
   rw [observer_localized_cauchy_jet_negIndex_eq_activeOrbitCount
     mass delta gamma time hmass hSupport]
-  simp [activeOrbitCount]
+  simp only [activeOrbitCount, Finset.card_pos, Finset.filter_nonempty_iff,
+    Finset.mem_univ, true_and]
 
 /-- Vanishing sampled negative index is equivalent to absence of every active
 reflected-orbit interval. -/

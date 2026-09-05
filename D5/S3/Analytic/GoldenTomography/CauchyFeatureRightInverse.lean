@@ -69,7 +69,7 @@ private theorem reciprocal_cauchy_nodes_injective {n : ℕ}
   apply hSupport
   have hSub : support a - center = support b - center :=
     inv_injective hEqual
-  exact sub_right_injective hSub
+  exact sub_left_injective hSub
 
 /-- Avoiding the center makes every reciprocal node nonzero. -/
 private theorem reciprocal_cauchy_node_ne_zero {n : ℕ}
@@ -84,7 +84,7 @@ private theorem cauchy_jet_feature_matrix_apply {n : ℕ}
     cauchyJetFeatureMatrix support center a k =
       (support a - center)⁻¹ ^ ((k : ℕ) + 1) := by
   simp [cauchyJetFeatureMatrix, reciprocalCauchyNode,
-    Matrix.mul_apply, Matrix.vandermonde, pow_succ']
+    Matrix.diagonal_mul, Matrix.vandermonde, pow_succ']
 
 /-- Distinct supports away from the center make the Cauchy-jet feature matrix
 nonsingular. -/
