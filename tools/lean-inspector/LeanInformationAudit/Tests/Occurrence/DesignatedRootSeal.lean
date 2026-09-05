@@ -8,6 +8,7 @@ set_option maxRecDepth 100000
 run_cmd registerCausalFixture
 
 set_option maxHeartbeats 8000000 in
+-- Construct and kernel-check the complete thirteen-occurrence seal in one command.
 run_cmd do
   let originalModule := (← getEnv).header.mainModule
   modifyEnv (·.setMainModule designatedInformationRootId)
