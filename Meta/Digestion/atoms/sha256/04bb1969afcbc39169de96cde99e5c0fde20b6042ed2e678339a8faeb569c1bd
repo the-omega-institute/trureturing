@@ -1,0 +1,22 @@
+## C15.2 naive state enumeration 的代价
+
+Zeckendorf 深度 $Q$ 的合法历史数为：
+
+$$
+M_Q=F_{Q+2}\asymp\varphi^Q.
+\tag{C15.4}
+$$
+
+若把每个历史当作独立 matrix state，则 generic determinant floor 的维数项可能具有尺度：
+
+$$
+\mu^{M_Q/2}
+=
+\exp\!\left(
+-\Theta(\varphi^Q)
+\right).
+\tag{C15.5}
+$$
+
+相应误差预算关于 $Q$ 指数增长。
+

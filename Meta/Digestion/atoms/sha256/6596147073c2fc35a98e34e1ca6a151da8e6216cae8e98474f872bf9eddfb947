@@ -1,0 +1,16 @@
+## C16.2 transverse budget
+
+由增订一的 Fibonacci–Lorentz scaling，分辨 prime pair $(p,q)$ 上横向位移 $\delta$ 需要：
+
+$$
+n_{\perp}
+=
+\log_\varphi
+\frac1{
+|\delta|\,|\log(q/p)|
+}
++
+O(1).
+\tag{C16.2}
+$$
+

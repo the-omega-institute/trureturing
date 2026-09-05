@@ -1,0 +1,47 @@
+## C15.1 证书精度预算
+
+由式 (C14.20)，所需误差精度至少满足：
+
+$$
+-\log\operatorname{Err}_N(R)
+>
+-\log u_N
++
+\frac{d_N}{2}\log\frac1{\mu_N}.
+\tag{C15.1}
+$$
+
+定义：
+
+$$
+\boxed{
+\mathfrak B_N(R)
+=
+-\log u_N
++
+\frac{d_N}{2}\log\frac1{\mu_N}.
+}
+\tag{C15.2}
+$$
+
+它是由 unit floor、operator gap 与 realization dimension 共同决定的 determinant certificate budget。
+
+即使 $\mu_N$ 保持正，只要：
+
+$$
+0<\mu_N<1
+$$
+
+且 $d_N\to\infty$，determinant floor 仍可能指数趋零。
+
+所以：
+
+$$
+\boxed{
+\text{positive-definite}
+\not\Longrightarrow
+\text{Rouché-certifiable with a useful uniform margin}.
+}
+\tag{C15.3}
+$$
+

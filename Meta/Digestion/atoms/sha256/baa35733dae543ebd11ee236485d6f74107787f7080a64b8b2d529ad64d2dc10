@@ -1,0 +1,71 @@
+- 两个带标签的不同素数在 level one 已足以全局恢复 $t$，因为 $\log p/\log q$ 不可能为有理数。
+
+所以 observer 可以用“沿一个素数向深层取根”换取 phase faithfulness，也可以用“在同一层横向保留两个乘法独立的素数标签”换取 phase faithfulness。标量 Euler 完成之所以危险，不是局部信息不足，而是它把这些标签与关系重新压入交换标量。
+
+第四，对 universal solenoid 的有限 level observer family，可以给出精确的 structural novelty 判据。设 $S$ 是已观察 levels，$m$ 是候选新 level，令
+
+$$
+N=\operatorname{lcm}(S\cup\{m\}),
+\qquad
+d_S=\gcd_{s\in S}\frac Ns.
+$$
+
+则 level-$m$ phase readout 可由 $S$ 中 readouts 恢复，当且仅当
+
+$$
+d_S\mid\frac Nm.
+$$
+
+否则存在一个显式 solenoid phase thread，在全部 $S$-levels 上与零 thread 相同，却在 level $m$ 上不同。由项目的 exact escape/structural novelty 语言，这正是一个 leave-one-out unique-capture witness。
+
+第五，假如存在离线零点，则 Cayley 圆外对应零点的内侧径向邻域必出现严格负的 scale-weighted radial log derivative。该区域自动开放，因此项目的 rational negative-count theorem 的两个抽象前提，在这一具体 profile 上可由离线零点局部解析正常形条件性地提供。于是 RH 失败不仅有一个不可见的复零点，还必有：
+
+$$
+\boxed{
+q,r\in\mathbb Q,\quad
+r>0,\quad
+\mathscr Q(q,r)>0,\quad
+r\partial_r\log\mathscr Q(q,r)<0
+}
+$$
+
+这样的有理径向先兆证书。
+
+第六，Rouché 稳定性把 RH 转化为一族有限有理矩形证书。若 canonical analytic approximant
+
+$$
+D_N(s)=U_N(s)\det T_N(s)
+$$
+
+在某个离轴有理矩形上无零，并满足严格边界误差小于 determinant floor，则 $\Xi$ 在该矩形中也无零。若 Hermitianization
+
+$$
+E_N=T_N^*T_N
+$$
+
+具有正 hidden block 和正 Schur margin，则可以显式推出 singular-value floor、determinant floor 与 Rouché 预算。该预算含有维数因子
+
+$$
+\mu_N^{d_N/2}.
+$$
+
+所以 Zeckendorf/Hankel 的真正证明论价值进一步显现：不是把 $F_{Q+2}$ 个历史全部展开，而是把它们压缩到最小二态 transfer，从而避免 determinant certificate 的维数指数税。
+
+最终，RH 的候选有限证书架构不再是“完整重构全部 solenoid phase”，而是：
+
+$$
+\boxed{
+\text{有限高度窗的 phase faithfulness}
++
+\text{grounded charge coercivity}
++
+\text{Schur determinant floor}
++
+\text{Rouché strict boundary stability}.
+}
+$$
+
+这条架构仍缺 canonical prime–Zeckendorf–Gamma transfer、其与 $\Xi$ 的 locally uniform determinant approximation，以及所有离轴有理矩形上的 uniform certificate。本文只把缺口压缩到这些明确位置。
+
+---
+

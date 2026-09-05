@@ -6,6 +6,13 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/OperationalOntology/DuplicateActionLabelInvariance.duplicate_action_labels_preserve_effective_space
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 1a1144b3f5b897889440bf323acc34c74cee03daa659a119a70fd8965b68d0c4
   chain_atoms:
     - 79ef3a9ad9257d4ef7082a358b46334ff8c5b77fdb914ff52e0f6ddcbf711299
     - 1a1144b3f5b897889440bf323acc34c74cee03daa659a119a70fd8965b68d0c4
