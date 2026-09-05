@@ -30,7 +30,7 @@ public sealed partial class ScriptTestGateClosureTests
             typeof(StrataLint.Tests.ScriptHarnessScratch).Name);
         Assert.Equal(
             ScriptTestInputDeriver.ProcessRunnerTypeName,
-            typeof(StrataLint.Tests.TestProcessRunner).Name);
+            typeof(StrataLint.TestSupport.TestProcessRunner).Name);
     }
 
     private const string ScriptTestsProject =
