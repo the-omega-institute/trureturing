@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using StrataLint.Engine;
 using Trureturing.Truth;
 
@@ -10,17 +9,19 @@ namespace StrataLint.Scribe;
 /// digest bytes are produced by Trureturing.Truth so downstream consumers can verify them.
 public static class SnapshotContentDigest
 {
-    private static readonly ImmutableHashSet<string> GeneratedPaths = GeneratedArtifactInventory.All
-        .Select(static artifact => artifact.Path)
-        .ToImmutableHashSet(StringComparer.Ordinal);
-
-    public static string Compute(RepositorySnapshot snapshot)
+    public static string Compute(
+        RepositorySnapshot snapshot,
+        IEnumerable<string> documentPaths)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentNullException.ThrowIfNull(documentPaths);
+        var generatedPaths = GeneratedArtifactInventory.Create(documentPaths)
+            .Select(static artifact => artifact.Path)
+            .ToHashSet(StringComparer.Ordinal);
         return TruthGraphSnapshotIdentity.Compute(
-            snapshot.Files.Values.Select(static file => new SnapshotDigestEntry(
+            snapshot.Files.Values.Select(file => new SnapshotDigestEntry(
                 file.Path.Value,
                 file.RawBytes.AsMemory(),
-                GeneratedPaths.Contains(file.Path.Value))));
+                generatedPaths.Contains(file.Path.Value))));
     }
 }

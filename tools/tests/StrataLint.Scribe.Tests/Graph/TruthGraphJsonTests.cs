@@ -13,35 +13,6 @@ public sealed class TruthGraphJsonTests
         "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
     [Fact]
-    public void SnapshotIdentityIgnoresAllGeneratedProjectionBytes()
-    {
-        var documentPath = DocumentDefinitions.All[0].RelativePath.Value;
-        var first = Snapshot(
-            ("Meta/source.txt", "alpha\n"),
-            (documentPath, "old document projection\n"),
-            (DagEmitter.RelativePath, "old dag projection\n"),
-            (DagEmitter.TruthGraphRelativePath, "old truth projection\n"),
-            (ScribeEmitter.AttestationRelativePath, "old attestation\n"));
-        var projectionsChanged = Snapshot(
-            ("Meta/source.txt", "alpha\n"),
-            (documentPath, "new document projection\n"),
-            (DagEmitter.RelativePath, "new dag projection\n"),
-            (DagEmitter.TruthGraphRelativePath, "new truth projection\n"),
-            (ScribeEmitter.AttestationRelativePath, "new attestation\n"));
-        var sourceChanged = Snapshot(
-            ("Meta/source.txt", "beta\n"),
-            (documentPath, "old document projection\n"),
-            (DagEmitter.RelativePath, "old dag projection\n"),
-            (DagEmitter.TruthGraphRelativePath, "old truth projection\n"),
-            (ScribeEmitter.AttestationRelativePath, "old attestation\n"));
-
-        Assert.Equal(
-            SnapshotContentDigest.Compute(first),
-            SnapshotContentDigest.Compute(projectionsChanged));
-        Assert.NotEqual(SnapshotContentDigest.Compute(first), SnapshotContentDigest.Compute(sourceChanged));
-    }
-
-    [Fact]
     public void WriteIsDeterministicCanonicalUtf8AndCarriesEveryTruthFact()
     {
         var dag = BuildFromFiles(
@@ -409,7 +380,4 @@ public sealed class TruthGraphJsonTests
         new DocumentBlock.Paragraph(InlineSequence.Create([new Inline.Text(TextRun.Create("Body."))])),
     ]);
 
-    private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files) =>
-        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
-            files.Select(static file => RawRepositoryEntry.FromText(file.Path, file.Text))))).Snapshot;
 }

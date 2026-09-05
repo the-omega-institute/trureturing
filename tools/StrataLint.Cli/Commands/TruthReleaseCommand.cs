@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using StrataLint.Scribe.Documents;
 using Trureturing.Truth;
 
 namespace StrataLint.Cli;
@@ -136,7 +137,7 @@ internal static class TruthReleaseCommand
             .Select(static path => path.Value)
             .ToArray();
         var definitions = DocumentDefinitions
-            .Discover(typeof(DocumentDefinitions).Assembly, materialized.Root)
+            .Discover(DocumentAssembly.Value, materialized.Root)
             .Where(definition => sourcePaths.Contains(
                 ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value),
                 StringComparer.Ordinal))
@@ -170,7 +171,9 @@ internal static class TruthReleaseCommand
                 .Select(static node => node.RepoPath.Value)
                 .ToHashSet(StringComparer.Ordinal));
         var provenance = new TruthGraphProvenance(
-            SnapshotContentDigest.Compute(snapshot),
+            SnapshotContentDigest.Compute(
+                snapshot,
+                definitions.Select(static definition => definition.RelativePath.Value)),
             RawLeanReportArtifact.ContentAddress(rawLeanReportBytes.AsSpan()));
         return TruthGraphJsonWriter.Write(
             TruthGraphModelBuilder.Create(
