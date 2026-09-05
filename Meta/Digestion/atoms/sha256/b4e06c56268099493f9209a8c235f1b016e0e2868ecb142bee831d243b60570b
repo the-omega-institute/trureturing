@@ -1,0 +1,37 @@
+## C1.2 守恒对数荷
+
+由定义：
+
+$$
+\|Z_{p,u}(m)\|
+=
+\exp\!\left(
+-\frac{\delta\log p}{m}
+\right).
+\tag{C1.4}
+$$
+
+因此：
+
+$$
+m\log\|Z_{p,u}(m)\|
+=
+-\delta\log p.
+\tag{C1.5}
+$$
+
+### 定义 C1.2　prime logarithmic charge
+
+$$
+\boxed{
+Q_p(u)
+:=
+Q(Z_{p,u})
+=
+-\delta\log p.
+}
+\tag{C1.6}
+$$
+
+这个量与 power level $m$ 无关，正是项目 charge-conservation theorem 在 canonical prime thread 上的实例。
+

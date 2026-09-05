@@ -6,6 +6,13 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 31a88e88144ca98f2ebd419d99515682a289da0c2c9198120bedab3979b6757d
   chain_atoms:
     - 2a344c3c7577b88eb674c12e7a53cea1c8e4092789408d72f5fb0523334c5e7f
     - 31a88e88144ca98f2ebd419d99515682a289da0c2c9198120bedab3979b6757d

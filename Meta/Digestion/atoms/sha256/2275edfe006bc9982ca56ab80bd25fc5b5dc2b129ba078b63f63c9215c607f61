@@ -1,0 +1,13 @@
+## 第五层：analytic transfer
+
+构造：
+
+$$
+T_N(s),
+\qquad
+D_N(s)=U_N(s)\det T_N(s),
+\tag{C19.4}
+$$
+
+并证明 $D_N\to\Xi$ locally uniformly，带可计算误差。
+

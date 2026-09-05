@@ -1,0 +1,6 @@
+- rational rectangle count equivalence。
+
+所有带 `Target` 的节点都不得通过把结论写入 structure field 来伪闭合。
+
+---
+

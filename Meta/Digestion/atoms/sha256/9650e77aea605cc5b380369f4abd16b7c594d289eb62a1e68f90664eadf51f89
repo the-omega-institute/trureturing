@@ -1,0 +1,62 @@
+## C7.1 两个 labelled primes 在 level one 已全局忠实
+
+取不同素数 $p\ne q$，定义：
+
+$$
+\iota_{p,q}(u)
+=
+\left(
+p^{-u},
+q^{-u}
+\right).
+\tag{C7.1}
+$$
+
+### 定理 C7.1　two-prime level-one embedding
+
+$$
+\boxed{
+\iota_{p,q}(u)=\iota_{p,q}(v)
+\Longrightarrow
+u=v.
+}
+\tag{C7.2}
+$$
+
+#### 证明
+
+取模长，从：
+
+$$
+|p^{-u}|=|p^{-v}|
+$$
+
+得到 $\Re u=\Re v$。
+
+令 $\tau=\Im u-\Im v$。相位相等给出整数 $k,\ell$：
+
+$$
+\tau\log p=2\pi k,
+\qquad
+\tau\log q=2\pi\ell.
+\tag{C7.3}
+$$
+
+若 $\tau\ne0$，则：
+
+$$
+\frac{\log p}{\log q}
+=
+\frac{k}{\ell}
+\in\mathbb Q.
+\tag{C7.4}
+$$
+
+于是存在非零整数关系：
+
+$$
+p^{\ell}=q^{k},
+$$
+
+与不同素数的唯一分解矛盾。故 $\tau=0$。
+

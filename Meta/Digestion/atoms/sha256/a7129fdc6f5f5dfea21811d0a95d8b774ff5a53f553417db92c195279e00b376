@@ -1,0 +1,10 @@
+## 第六层：Hermitian Schur certificate
+
+对：
+
+$$
+E_N=T_N^*T_N
+$$
+
+证明 hidden block、cycle block、charge anchor 与 visible block 的 uniform Schur lower bounds。
+

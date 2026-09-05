@@ -1,0 +1,35 @@
+## C3.3 荷—相位统一式
+
+本卷 prime-pair identity 因而成为：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sinh^2(Q_p-Q_q)
++
+\sin^2(\pi\Phi_{p,q}).
+}
+\tag{C3.5}
+$$
+
+所以：
+
+- $\sinh^2$ 读取 $\mathbb R$-charge difference；
+- $\sin^2$ 读取 circle/solenoid phase difference；
+- 两者来自同一个 complex determinant；
+- 前者在 $\delta\ne0$ 时提供与 phase 无关的正底；
+- 后者可以因 compact recurrence 反复归零。
+
+这给出一个新的概念压缩：
+
+$$
+\boxed{
+\text{PrimeGaps 的复核是 }
+\mathbb R_{\rm charge}\times\mathcal S_{\rm phase}
+\text{ 上的二槽关系 observer。}
+}
+\tag{C3.6}
+$$
+

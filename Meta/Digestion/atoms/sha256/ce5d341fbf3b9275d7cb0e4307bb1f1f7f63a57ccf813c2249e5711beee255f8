@@ -1,0 +1,29 @@
+## C3.2 compact phase gradient
+
+记：
+
+$$
+\tau=t_1-t_2,
+\qquad
+\Phi_{p,q}(\tau)
+=
+\frac{\tau}{2\pi}
+\log\frac qp.
+\tag{C3.3}
+$$
+
+则：
+
+$$
+\sin^2\!\left(
+\frac{\tau}{2}\log\frac qp
+\right)
+=
+\sin^2\!\left(
+\pi\Phi_{p,q}(\tau)
+\right).
+\tag{C3.4}
+$$
+
+$\Phi_{p,q}$ 是两个 labelled prime phase flows 的相对 compact coordinate。
+

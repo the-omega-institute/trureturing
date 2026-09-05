@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-clause guard: frozen owner `D5/S3/ConceptDynamics/OperationalOntology/DuplicateActionLabelInvariance.duplicate_action_labels_preserve_effective_space` carries the mathematical clause that duplicating a complete action profile preserves the effective quotient cardinality; the remaining child text is verbatim `**状态**：quotient／setoid 基础定理。`, which is a source status annotation and supplies no proposition, carrier, binder, or conclusion that Lean can state. Retrieval receipts: D5 search `duplicate.{0,30}action|action.{0,30}duplicate|effective.{0,30}quotient` found that exact owner; pinned Mathlib search found `Fintype.card_congr` and quotient-map support but no theorem target for metadata; the A17 GitHub Lean code search for `duplicate action labels` returned HTTP 401 with curl exit 0, so wait-for-capability; local construction probe `/private/tmp/w73c39-atom1-probe.lean` exited 0 and reconstructs the mathematical clause from the frozen owner, leaving no Lean goal corresponding to the status text."
+    reentry_condition: "Revise the source chain by replacing the status annotation with a mathematical proposition having an explicit carrier and conclusion, or remove the metadata child from the theorem chain; then formalize and cover the resulting proposition."
+    blocker_class: multi-clause-guard

@@ -1,0 +1,17 @@
+## C17.2 common-charge escape
+
+edge differences 看不见：
+
+$$
+q\mapsto q+c\mathbf1.
+$$
+
+修复对象是：
+
+$$
+\boxed{
+\text{one independent charge ANCHOR}.
+}
+\tag{C17.2}
+$$
+
