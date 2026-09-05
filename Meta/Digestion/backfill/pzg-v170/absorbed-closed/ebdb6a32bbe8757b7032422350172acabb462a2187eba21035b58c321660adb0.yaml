@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ebdb6a32bbe8757b7032422350172acabb462a2187eba21035b58c321660adb0
+  normalized_sha256: sha256:ebdb6a32bbe8757b7032422350172acabb462a2187eba21035b58c321660adb0
+cas_ref: sha256:ebdb6a32bbe8757b7032422350172acabb462a2187eba21035b58c321660adb0
+coverage_gids:
+  - gid: D5/S1/Words/BarkerEvenLengthModFourObstruction.even_barker_length_mod_four
+    target_statement_id: sha256:8ff8de44dd85ba35f59c4b4a6306a3877baef1eac64fd235957b11873862c378
+receipts:
+  scribe:
+    - gid: D5/S1/Words/BarkerEvenLengthModFourObstruction.even_barker_length_mod_four
+      definition_sha256: sha256:1e4dca35a812d7ec55b9d527d8e57340ac9a70cc053cf1aba5f3085ca27de27f
+      emission_sha256: sha256:3ff31440481c983c3ce0da3ff76b9a57068218bd945b06d7b3dd8ec067e5b632
+  unresolved_subitems: []
