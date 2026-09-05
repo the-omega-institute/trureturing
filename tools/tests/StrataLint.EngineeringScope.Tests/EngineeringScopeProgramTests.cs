@@ -195,6 +195,19 @@ public sealed class EngineeringScopeProgramTests
             "Fails", "Assert.True(false, \"intentional\");", prebuild: true, expectedExitCode: 1, expectedRetryCount: 0);
 
     [Fact]
+    public void CandidateTestInvocationUsesMinimalVerbosity()
+    {
+        var arguments = Program.BuildTestArguments(
+            ProductTestsProject,
+            noBuild: true,
+            resultsDirectory: "/tmp/engineering-results");
+
+        var verbosityIndex = Array.IndexOf(arguments.ToArray(), "--verbosity");
+        Assert.True(verbosityIndex >= 0, $"arguments=[{string.Join(", ", arguments)}]");
+        Assert.Equal("minimal", arguments[verbosityIndex + 1]);
+    }
+
+    [Fact]
     public void ConfiguredEvidenceDirectoryRetainsTrxAfterExecution()
     {
         var evidence = TemporaryFileSystem.Directory.CreateTempSubdirectory(

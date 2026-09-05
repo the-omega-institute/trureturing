@@ -155,15 +155,13 @@ internal static class Program
                 UseShellExecute = false,
             };
             startInfo.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
-            foreach (var argument in new[] { "test", invocation.ProjectPath, "--configuration", "Release", "--verbosity", "normal" })
+            foreach (var argument in BuildTestArguments(
+                invocation.ProjectPath,
+                noBuild,
+                resultsDirectory))
             {
                 startInfo.ArgumentList.Add(argument);
             }
-            if (noBuild) startInfo.ArgumentList.Add("--no-build");
-            startInfo.ArgumentList.Add("--logger");
-            startInfo.ArgumentList.Add("trx;LogFilePrefix=engineering");
-            startInfo.ArgumentList.Add("--results-directory");
-            startInfo.ArgumentList.Add(resultsDirectory);
 
             using var process = Process.Start(startInfo)
                 ?? throw new InvalidOperationException("could not start dotnet test");
@@ -206,6 +204,28 @@ internal static class Program
         {
             if (!preserveEvidence) Directory.Delete(resultsDirectory, recursive: true);
         }
+    }
+
+    internal static IReadOnlyList<string> BuildTestArguments(
+        string projectPath,
+        bool noBuild,
+        string resultsDirectory)
+    {
+        var arguments = new List<string>
+        {
+            "test",
+            projectPath,
+            "--configuration",
+            "Release",
+            "--verbosity",
+            "normal",
+        };
+        if (noBuild) arguments.Add("--no-build");
+        arguments.Add("--logger");
+        arguments.Add("trx;LogFilePrefix=engineering");
+        arguments.Add("--results-directory");
+        arguments.Add(resultsDirectory);
+        return arguments;
     }
 
     private static bool ReportsMissingBuildOutput(string output) =>
