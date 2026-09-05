@@ -102,7 +102,7 @@ The finest readout uses IC counterfactual tables and the literal OI model identi
 
 **Theorem 1.9 (Observation factors through intervention).**
 
-$$ObsU = compose\left(obsFromInt, IntU\right).$$
+$$ObsU = obsFromInt \circ IntU.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalAlignment.obsU_factorization` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ For each coproduct branch, forgetting intervention data computes exactly the cum
 
 **Theorem 1.10 (Intervention factors through counterfactual).**
 
-$$IntU = compose\left(intFromCf, CfU\right).$$
+$$IntU = intFromCf \circ CfU.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalAlignment.intU_factorization` (`✓ std3`). ∎
 
@@ -126,7 +126,7 @@ Counterfactual collapse on the IC branch and direct restriction on the OI branch
 
 **Theorem 1.11 (Observation captures an explicit pair).**
 
-$$inrX \neq inrDistinct \land ObsU\left(inrX\right) \neq ObsU\left(inrDistinct\right).$$
+$$(Sum.inr(OI.xCausesYModel) : UnifiedBoolSCM) \neq Sum.inr(observationDistinctModel) \land ObsU(Sum.inr(OI.xCausesYModel)) \neq ObsU(Sum.inr(observationDistinctModel)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalAlignment.unified_observation_positive_witness` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ A constant-false OI model is off diagonal from the named X-causes-Y model and ha
 
 **Theorem 1.12 (Intervention strictly refines observation).**
 
-$$factorsKernel\left(IntU, ObsU\right) \land strictWitness\left(OI, IntU, ObsU\right).$$
+$$(\forall M N: UnifiedBoolSCM, IntU(M) = IntU(N) \Rightarrow ObsU(M) = ObsU(N)) \land (ObsU(Sum.inr(OI.xCausesYModel)) = ObsU(Sum.inr(OI.yCausesXModel)) \land IntU(Sum.inr(OI.xCausesYModel)) \neq IntU(Sum.inr(OI.yCausesXModel))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalAlignment.unified_observation_intervention_strict_refinement` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ The factorization implication is paired with the injected opposite-direction OI 
 
 **Theorem 1.13 (Counterfactual strictly refines intervention).**
 
-$$factorsKernel\left(CfU, IntU\right) \land strictWitness\left(IC, CfU, IntU\right).$$
+$$(\forall M N: UnifiedBoolSCM, CfU(M) = CfU(N) \Rightarrow IntU(M) = IntU(N)) \land (IntU(Sum.inl(IC.noEffectModel)) = IntU(Sum.inl(IC.flipEffectModel)) \land CfU(Sum.inl(IC.noEffectModel)) \neq CfU(Sum.inl(IC.flipEffectModel))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalAlignment.unified_intervention_counterfactual_strict_refinement` (`✓ std3`). ∎
 
@@ -186,7 +186,7 @@ The frozen IC law is interpreted only on the left branch of the shared arena.
 
 **Theorem 1.16 (Faithful OI transport).**
 
-$$LegacyPrimitiveRealization\left(observationInterventionLawArena, OIStatement, observationInterventionUnifiedRealization\right).$$
+$$LegacyPrimitiveRealization(observationInterventionLawArena, (\exists M N: OI.Model, OI.Obs(M) = OI.Obs(N) \land OI.Int(M) \neq OI.Int(N)), observationInterventionUnifiedRealization).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalAlignment.observation_intervention_unified_realization` (`✓ std3`). ∎
 
@@ -198,7 +198,7 @@ Forward injection and reverse restriction both use their supplied equality and i
 
 **Theorem 1.17 (Faithful IC transport).**
 
-$$LegacyPrimitiveRealization\left(interventionCounterfactualLawArena, ICStatement, interventionCounterfactualUnifiedRealization\right).$$
+$$LegacyPrimitiveRealization(interventionCounterfactualLawArena, (\exists M N: IC.Model, IC.Int(M) = IC.Int(N) \land IC.CF(M) \neq IC.CF(N)), interventionCounterfactualUnifiedRealization).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalAlignment.intervention_counterfactual_unified_realization` (`✓ std3`). ∎
 

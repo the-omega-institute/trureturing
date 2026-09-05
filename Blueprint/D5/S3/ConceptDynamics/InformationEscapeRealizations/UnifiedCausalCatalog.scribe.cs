@@ -10,11 +10,9 @@ internal sealed class UnifiedCausalCatalogDocument : IScribeDocumentDefinition
         "D5/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalCatalog.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Unified causal catalogs expose cumulative kernels, layered captures, and certified counts.",
+        "Unified causal catalogs expose cumulative kernels and layered captures without census dependencies.",
         H("Unified Causal Catalog"),
         Blocks(
-            Definition("unified-state-enumeration", "unifiedStateEnumeration",
-                "Unified state enumeration", "A duplicate-free list enumerates all sixteen IC and thirty-two OI states."),
             Definition("unified-observation-unit", "unifiedObservationUnit",
                 "Observation analysis unit", "A singleton CUT bundle carries exactly the cumulative observation kernel."),
             Definition("unified-intervention-unit", "unifiedInterventionUnit",
@@ -32,7 +30,7 @@ internal sealed class UnifiedCausalCatalogDocument : IScribeDocumentDefinition
             Node("causal-ie-three", "unified_frozen_transition_catalog_irredundant",
                 "The frozen transition catalog is irredundant",
                 Call("CatalogIrredundant", F.Id("unifiedFrozenTransitionCatalog")),
-                "A fused scan certifies positive unique capture for each of the two frozen theorem occurrences."),
+                "The two named branch-local witnesses each separate one occurrence while remaining invisible to the other."),
             Definition("unified-off-diagonal-pairs", "unifiedOffDiagonalPairs",
                 "Unified off-diagonal pairs", "All ordered pairs of distinct states form the 2,256-pair denominator."),
             Definition("cumulative-observation-escapes", "E_obs",
