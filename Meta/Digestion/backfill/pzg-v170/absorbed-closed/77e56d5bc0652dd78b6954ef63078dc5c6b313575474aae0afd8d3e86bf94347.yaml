@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:77e56d5bc0652dd78b6954ef63078dc5c6b313575474aae0afd8d3e86bf94347
+  normalized_sha256: sha256:77e56d5bc0652dd78b6954ef63078dc5c6b313575474aae0afd8d3e86bf94347
+cas_ref: sha256:77e56d5bc0652dd78b6954ef63078dc5c6b313575474aae0afd8d3e86bf94347
+coverage_gids:
+  - gid: D5/S1/Digit/OdiousMajorityDyadicSlice.eligibility_iff_residue_and_D_eq_transfer
+    target_statement_id: sha256:d85ab6e33cf82e8b1be9f2bd865433b3e97d62457d92ca39eb1c3e8c8a7aede6
+receipts:
+  scribe:
+    - gid: D5/S1/Digit/OdiousMajorityDyadicSlice.eligibility_iff_residue_and_D_eq_transfer
+      definition_sha256: sha256:d658545515056caf2bfe82c9dc27a1c635eb4c3fd4e00f3284f9df31a84100b2
+      emission_sha256: sha256:4b074497ff54a280beea1c74c454f220827c833f5e7b94bccbe082e465eee070
+  unresolved_subitems: []
