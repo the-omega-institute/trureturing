@@ -266,7 +266,7 @@ public sealed partial class MakeWorkflowTests
             "\t@/bin/bash \"$(HERE)/scripts/engineering-tests.sh\" \"$(REPOSITORY)\" \"$(HEAD)\" \"$(BASE)\"",
             engineeringTestsRecipe);
         Assert.Equal(
-            "\t@REPOSITORY=\"$(REPOSITORY)\" EVENT=\"$(EVENT)\" JUDGE_DLL=\"$(JUDGE_DLL)\" JUDGE_SOURCE_ADDRESS=\"$(JUDGE_SOURCE_ADDRESS)\" /bin/bash \"$(HERE)/scripts/workflow/segment-engineering.sh\"",
+            "\t@REPOSITORY=\"$(REPOSITORY)\" EVENT=\"$(EVENT)\" /bin/bash \"$(HERE)/scripts/workflow/segment-engineering.sh\"",
             Recipe(makefile, "engineering"));
         Assert.Contains("EVENT ?= push", makefile, StringComparison.Ordinal);
         var engineeringTests = File.ReadAllText(Path.Combine(root, EngineeringTestsScriptPath));

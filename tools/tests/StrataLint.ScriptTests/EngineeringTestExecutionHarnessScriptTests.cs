@@ -167,9 +167,12 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
     public void EngineeringSegmentKeepsRawClassesWhenMakeFoldsFailuresToTwo()
     {
         if (OperatingSystem.IsWindows()) return;
-        using var candidateDirect = RunSegment(new SegmentScenario(EngineeringExitCode: 1));
+        using var candidateDirect = RunSegment(new SegmentScenario(
+            EngineeringExitCode: 1,
+            EmitEngineeringEvidenceOnFailure: true));
         using var candidateMake = RunSegment(new SegmentScenario(
             EngineeringExitCode: 1,
+            EmitEngineeringEvidenceOnFailure: true,
             InvokeThroughMake: true));
         using var infrastructureDirect = RunSegment(new SegmentScenario(BuildExitCode: 9));
         using var infrastructureMake = RunSegment(new SegmentScenario(
@@ -184,6 +187,16 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
         AssertSentinel(candidateMake, 1, "candidate-check-failed");
         AssertSentinel(infrastructureDirect, 2, "subprocess-infrastructure-failed");
         AssertSentinel(infrastructureMake, 2, "subprocess-infrastructure-failed");
+    }
+
+    [Fact]
+    public void EngineeringSegmentExitOneWithoutTrxIdentityEvidenceIsInfrastructure()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSegment(new SegmentScenario(EngineeringExitCode: 1));
+
+        Assert.Equal(2, run.Process.ExitCode);
+        AssertSentinel(run, 2, "subprocess-infrastructure-failed");
     }
 
     [Fact]
@@ -206,6 +219,70 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
     }
 
     [Fact]
+    public void EngineeringSegmentPlanWithoutIdentityKeepsSelectionNull()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSegment(new SegmentScenario(EmitEngineeringPlanOnly: true));
+
+        Assert.Equal(0, run.Process.ExitCode);
+        using var sentinel = AssertSingleSentinel(run);
+        Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("selected_test_ids").ValueKind);
+    }
+
+    [Fact]
+    public void EngineeringSegmentEncodesIdentityPayloadLargerThanMaxArgStrlen()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSegment(new SegmentScenario(EmitLargeEngineeringEvidence: true));
+
+        Assert.Equal(0, run.Process.ExitCode);
+        Assert.True(run.Process.StandardOutput.Length > 300 * 1024, run.Diagnostics);
+        using var sentinel = AssertSingleSentinel(run);
+        AssertCompleteSentinel(sentinel);
+        var identities = sentinel.RootElement.GetProperty("selected_test_ids").EnumerateArray()
+            .Select(static value => value.GetString()).ToArray();
+        Assert.Equal(5000, identities.Length);
+        Assert.Equal("Owner0000.Tests::Namespace.Class.Method0000_" + new string('x', 48), identities[0]);
+        Assert.Equal("Owner4999.Tests::Namespace.Class.Method4999_" + new string('x', 48), identities[^1]);
+    }
+
+    [Fact]
+    public void EngineeringSegmentMissingEvidenceLibraryStillEmitsCompleteSentinel()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSegment(new SegmentScenario(MissingEvidenceLibrary: true));
+
+        Assert.Equal(2, run.Process.ExitCode);
+        using var sentinel = AssertSingleSentinel(run);
+        AssertCompleteSentinel(sentinel);
+        Assert.Equal("evidence-library-unavailable", sentinel.RootElement.GetProperty("outcome").GetString());
+    }
+
+    [Fact]
+    public void EngineeringSegmentMalformedIdentityStillEmitsCompleteSentinel()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSegment(new SegmentScenario(EmitMalformedEngineeringEvidence: true));
+
+        Assert.Equal(2, run.Process.ExitCode);
+        using var sentinel = AssertSingleSentinel(run);
+        AssertCompleteSentinel(sentinel);
+        Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("selected_test_ids").ValueKind);
+    }
+
+    [Fact]
+    public void EngineeringSegmentRecordCheckEncodingFailureStillEmitsCompleteSentinel()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSegment(new SegmentScenario(RecordCheckEncodingFails: true));
+
+        Assert.Equal(2, run.Process.ExitCode);
+        using var sentinel = AssertSingleSentinel(run);
+        AssertCompleteSentinel(sentinel);
+        Assert.Equal(JsonValueKind.Array, sentinel.RootElement.GetProperty("ordered_check_ids").ValueKind);
+    }
+
+    [Fact]
     public void EngineeringSegmentInvalidEventFailsBeforeEvidenceSelection()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -215,7 +292,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
         using var sentinel = AssertSingleSentinel(run);
         Assert.Equal("invalid\"event\\value", sentinel.RootElement.GetProperty("event").GetString());
         Assert.Equal(2, sentinel.RootElement.GetProperty("raw_rc").GetInt32());
-        Assert.Equal("missing-required-input", sentinel.RootElement.GetProperty("outcome").GetString());
+        Assert.Equal("invalid-event", sentinel.RootElement.GetProperty("outcome").GetString());
         Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("merge_commit").ValueKind);
         Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("selected_test_ids").ValueKind);
     }
@@ -251,29 +328,43 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
     }
 
     [Fact]
-    public void EngineeringSegmentRejectsPrebuiltJudgeOutsideRepository()
+    public void EngineeringSegmentCompileFailProofExitOneInfrastructureIsRawTwo()
     {
         if (OperatingSystem.IsWindows()) return;
-        using var run = RunSegment(new SegmentScenario(PrebuiltJudgeOutsideRepository: true));
+        using var run = RunSegment(new SegmentScenario(CompileFailInfrastructureError: true));
 
         Assert.Equal(2, run.Process.ExitCode);
-        using var sentinel = AssertSingleSentinel(run);
-        Assert.Equal("invalid-path", sentinel.RootElement.GetProperty("outcome").GetString());
-        Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("judge_source_address").ValueKind);
-        Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("selected_test_ids").ValueKind);
+        AssertSentinel(run, 2, "subprocess-infrastructure-failed");
     }
 
     [Fact]
-    public void EngineeringSegmentRejectsPrebuiltJudgeSymlinkEscapingRepository()
+    public void EngineeringSegmentBannedApiProofExitOneInfrastructureIsRawTwo()
     {
         if (OperatingSystem.IsWindows()) return;
-        using var run = RunSegment(new SegmentScenario(PrebuiltJudgeSymlinkOutsideRepository: true));
+        using var run = RunSegment(new SegmentScenario(BannedApiInfrastructureError: true));
 
         Assert.Equal(2, run.Process.ExitCode);
-        using var sentinel = AssertSingleSentinel(run);
-        Assert.Equal("invalid-path", sentinel.RootElement.GetProperty("outcome").GetString());
-        Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("judge_source_address").ValueKind);
-        Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("selected_test_ids").ValueKind);
+        AssertSentinel(run, 2, "subprocess-infrastructure-failed");
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    public void SelftestDotnetExitOneIsInfrastructureForEitherRun(int failingRun)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSelftest(failingRun, mismatch: false);
+
+        Assert.Equal(2, run.Process.ExitCode);
+    }
+
+    [Fact]
+    public void SelftestByteMismatchIsCandidateFailure()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSelftest(failingRun: 0, mismatch: true);
+
+        Assert.Equal(1, run.Process.ExitCode);
     }
 
     private static void AssertSentinel(SegmentRun run, int rawRc, string outcome)
@@ -289,6 +380,16 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
         Assert.True(lines.Length == 1, run.Diagnostics);
         return JsonDocument.Parse(lines[0]);
     }
+
+    private static void AssertCompleteSentinel(JsonDocument sentinel) =>
+        Assert.Equal(
+        [
+            "schema_version", "segment", "event", "merge_commit", "tree", "base",
+            "source_head", "raw_rc", "outcome", "report_input_address", "report_sha256",
+            "judge_source_address", "scribe_source_address", "selected_test_ids",
+            "ordered_check_ids",
+        ],
+            sentinel.RootElement.EnumerateObject().Select(static property => property.Name));
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static SegmentRun RunSegment(SegmentScenario scenario)
@@ -318,6 +419,20 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "Makefile"),
             Path.Combine(toolsDirectory, "Makefile"));
 
+        var evidenceLibrary = Path.Combine(libraryDirectory, "segment-evidence-lib.sh");
+        if (scenario.MissingEvidenceLibrary)
+        {
+            File.Delete(evidenceLibrary);
+            File.CreateSymbolicLink(evidenceLibrary, Path.Combine(temporary.Path, "missing-library.sh"));
+        }
+        else if (scenario.RecordCheckEncodingFails)
+        {
+            File.AppendAllText(
+                evidenceLibrary,
+                "\nsegment_evidence_array_append() { return 2; }\n",
+                Utf8);
+        }
+
         WriteSegmentInputs(repository);
         WriteSegmentStubs(repository, binDirectory);
         RunGit(repository, "init", "--quiet");
@@ -344,30 +459,18 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             $"BUILD_EXIT_CODE={scenario.BuildExitCode}",
             $"ENGINEERING_EXIT_CODE={scenario.EngineeringExitCode}",
             $"EMIT_ENGINEERING_EVIDENCE_ON_FAILURE={(scenario.EmitEngineeringEvidenceOnFailure ? 1 : 0)}",
+            $"EMIT_ENGINEERING_PLAN_ONLY={(scenario.EmitEngineeringPlanOnly ? 1 : 0)}",
+            $"EMIT_MALFORMED_ENGINEERING_EVIDENCE={(scenario.EmitMalformedEngineeringEvidence ? 1 : 0)}",
+            $"EMIT_LARGE_ENGINEERING_EVIDENCE={(scenario.EmitLargeEngineeringEvidence ? 1 : 0)}",
             $"SELFTEST_EXIT_CODE={scenario.SelftestExitCode}",
             $"INCLUDE_CS7036={(scenario.IncludeCs7036 ? 1 : 0)}",
             $"INCLUDE_META_CLEAR={(scenario.IncludeMetaClear ? 1 : 0)}",
+            $"COMPILE_FAIL_INFRASTRUCTURE_ERROR={(scenario.CompileFailInfrastructureError ? 1 : 0)}",
+            $"BANNED_API_INFRASTRUCTURE_ERROR={(scenario.BannedApiInfrastructureError ? 1 : 0)}",
             "GIT_CONFIG_GLOBAL=/dev/null",
             "GIT_CONFIG_SYSTEM=/dev/null",
             "GIT_CONFIG_NOSYSTEM=1",
         };
-        if (scenario.PrebuiltJudgeOutsideRepository
-            || scenario.PrebuiltJudgeSymlinkOutsideRepository)
-        {
-            var outsideJudge = Path.Combine(temporary.Path, "outside", "StrataLint.dll");
-            ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(outsideJudge)!);
-            ScriptHarnessScratch.WriteScratchText(outsideJudge, "not a real assembly\n");
-            var judge = outsideJudge;
-            if (scenario.PrebuiltJudgeSymlinkOutsideRepository)
-            {
-                judge = Path.Combine(repository, "cached", "StrataLint.dll");
-                ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(judge)!);
-                File.CreateSymbolicLink(judge, outsideJudge);
-            }
-            environment.Add($"JUDGE_DLL={judge}");
-            environment.Add($"JUDGE_SOURCE_ADDRESS={new string('a', 64)}");
-        }
-
         if (scenario.InvokeThroughMake)
         {
             environment.AddRange([
@@ -386,7 +489,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             environment,
             repository,
             TestBudgets.ScriptProcessHangGuard,
-            256 * 1024);
+            2 * 1024 * 1024);
         return new SegmentRun(temporary, process);
     }
 
@@ -422,7 +525,16 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
         ScriptHarnessScratch.WriteExecutableStub(
             Path.Combine(repository, "tools/scripts/workflow/engineering-test-execution-harness.sh"),
             """
-            if [[ "${ENGINEERING_EXIT_CODE:?}" -eq 0 || "${EMIT_ENGINEERING_EVIDENCE_ON_FAILURE:?}" -eq 1 ]]; then
+            if [[ "${EMIT_ENGINEERING_PLAN_ONLY:?}" -eq 1 ]]; then
+              printf '%s\n' 'ENGINEERING_TEST_PLAN state=none changed=1 selected=0 reason="fixture"'
+            elif [[ "${EMIT_MALFORMED_ENGINEERING_EVIDENCE:?}" -eq 1 ]]; then
+              printf '%s\n' 'ENGINEERING_TEST_PLAN state=selected changed=1 selected=1 reason="fixture"'
+              printf '%s\n' 'TEST_EVIDENCE_IDENTITIES selected_test_ids=[not-json'
+            elif [[ "${EMIT_LARGE_ENGINEERING_EVIDENCE:?}" -eq 1 ]]; then
+              printf '%s\n' 'ENGINEERING_TEST_PLAN state=selected changed=1 selected=5000 reason="fixture"'
+              /usr/bin/python3 -c 'import json; print("TEST_EVIDENCE_IDENTITIES selected_test_ids=" + json.dumps([f"Owner{i:04d}.Tests::Namespace.Class.Method{i:04d}_" + "x" * 48 for i in range(5000)], separators=(",", ":")))'
+            elif [[ "${ENGINEERING_EXIT_CODE:?}" -eq 0 || "${EMIT_ENGINEERING_EVIDENCE_ON_FAILURE:?}" -eq 1 ]]; then
+              printf '%s\n' 'ENGINEERING_TEST_PLAN state=selected changed=1 selected=2 reason="fixture"'
               printf '%s\n' 'TEST_EVIDENCE_IDENTITIES selected_test_ids=["Zeta.Tests::Class.Path\\Case","Alpha.Tests::Class.Quote\"Case","Alpha.Tests::Class.Quote\"Case"]'
             fi
             exit "${ENGINEERING_EXIT_CODE:?}"
@@ -436,9 +548,17 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
                 ;;
               build)
                 if [[ "$*" == *"BannedApiCompileFailProof.csproj"* ]]; then
+                  if [[ "${BANNED_API_INFRASTRUCTURE_ERROR:?}" -eq 1 ]]; then
+                    printf '%s\n' 'MSBUILD : error MSB1009: Project file does not exist.'
+                    exit 1
+                  fi
                   printf '%s\n' \
                     'BannedApiViolations.cs(2,1): error RS0030: banned' \
                     'BannedApiViolations.cs(3,1): error RS0030: banned'
+                  exit 1
+                fi
+                if [[ "${COMPILE_FAIL_INFRASTRUCTURE_ERROR:?}" -eq 1 ]]; then
+                  printf '%s\n' 'MSBUILD : error MSB1009: Project file does not exist.'
                   exit 1
                 fi
                 if [[ "${INCLUDE_CS7036:?}" -eq 1 ]]; then
@@ -452,6 +572,50 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             esac
             exit 97
             """);
+    }
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static SegmentRun RunSelftest(int failingRun, bool mismatch)
+    {
+        var temporary = new TemporaryDirectory();
+        var repository = Path.Combine(temporary.Path, "candidate");
+        var scripts = Path.Combine(repository, "tools", "scripts");
+        var bin = Path.Combine(temporary.Path, "bin");
+        ScriptHarnessScratch.EnsureDirectory(scripts);
+        ScriptHarnessScratch.EnsureDirectory(bin);
+        ScriptHarnessScratch.EnsureDirectory(
+            Path.Combine(repository, "tools", "StrataLint.Cli"));
+        ScriptHarnessScratch.CopyScriptInto(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "stratalint-selftest.sh"),
+            Path.Combine(scripts, "stratalint-selftest.sh"));
+        ScriptHarnessScratch.WriteScratchText(
+            Path.Combine(repository, "tools", "StrataLint.Cli", "StrataLint.Cli.csproj"),
+            "fixture\n");
+        var calls = Path.Combine(temporary.Path, "dotnet-calls");
+        ScriptHarnessScratch.WriteExecutableStub(
+            Path.Combine(bin, "dotnet"),
+            """
+            calls=0
+            [[ ! -f "${SELFTEST_CALLS:?}" ]] || calls="$(cat "${SELFTEST_CALLS:?}")"
+            calls=$((calls + 1))
+            printf '%s' "$calls" > "${SELFTEST_CALLS:?}"
+            if [[ "$calls" -eq "${SELFTEST_FAILING_RUN:?}" ]]; then exit 1; fi
+            if [[ "${SELFTEST_MISMATCH:?}" -eq 1 ]]; then printf 'run=%s\n' "$calls"; else printf '%s\n' stable; fi
+            """);
+        var process = TestProcessRunner.Run(
+            "/usr/bin/env",
+            [
+                $"PATH={bin}:{ExecutablePath}",
+                $"TMPDIR={temporary.Path}",
+                $"SELFTEST_CALLS={calls}",
+                $"SELFTEST_FAILING_RUN={failingRun}",
+                $"SELFTEST_MISMATCH={(mismatch ? 1 : 0)}",
+                "/bin/bash", Path.Combine(scripts, "stratalint-selftest.sh"),
+            ],
+            repository,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+        return new SegmentRun(temporary, process);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
@@ -618,11 +782,16 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
         int EngineeringExitCode = 0,
         int SelftestExitCode = 0,
         bool EmitEngineeringEvidenceOnFailure = false,
+        bool EmitEngineeringPlanOnly = false,
+        bool EmitMalformedEngineeringEvidence = false,
+        bool EmitLargeEngineeringEvidence = false,
         bool IncludeCs7036 = true,
         bool IncludeMetaClear = true,
         bool InvokeThroughMake = false,
-        bool PrebuiltJudgeOutsideRepository = false,
-        bool PrebuiltJudgeSymlinkOutsideRepository = false);
+        bool MissingEvidenceLibrary = false,
+        bool RecordCheckEncodingFails = false,
+        bool CompileFailInfrastructureError = false,
+        bool BannedApiInfrastructureError = false);
 
     private enum ObservationLibraryState
     {

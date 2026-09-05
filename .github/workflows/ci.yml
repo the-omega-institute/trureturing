@@ -145,8 +145,6 @@ jobs:
         shell: bash
         env:
           EVENT: ${{ github.event_name == 'pull_request_target' && 'PR' || 'push' }}
-          JUDGE_DLL: ${{ steps.judge-cache.outputs.cache-hit == 'true' && format('{0}/candidate/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll', github.workspace) || '' }}
-          JUDGE_SOURCE_ADDRESS: ${{ steps.judge-cache.outputs.cache-hit == 'true' && steps.judge-address.outputs.address || '' }}
         run: make -C candidate/tools engineering
       - name: Signal PR head branch grammar
         if: github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'

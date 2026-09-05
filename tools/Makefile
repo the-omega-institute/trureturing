@@ -21,7 +21,7 @@ test:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln
 
 engineering:
-	@REPOSITORY="$(REPOSITORY)" EVENT="$(EVENT)" JUDGE_DLL="$(JUDGE_DLL)" JUDGE_SOURCE_ADDRESS="$(JUDGE_SOURCE_ADDRESS)" /bin/bash "$(HERE)/scripts/workflow/segment-engineering.sh"
+	@REPOSITORY="$(REPOSITORY)" EVENT="$(EVENT)" /bin/bash "$(HERE)/scripts/workflow/segment-engineering.sh"
 
 engineering-tests:
 	@/bin/bash "$(HERE)/scripts/engineering-tests.sh" "$(REPOSITORY)" "$(HEAD)" "$(BASE)"

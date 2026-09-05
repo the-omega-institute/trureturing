@@ -155,8 +155,6 @@ internal static class Program
                 result = Run(noBuild: false);
                 Console.Error.Write(result.StandardError);
             }
-            if (result.ExitCode != 0) return result.ExitCode;
-
             try
             {
                 var evidence = TestResultEvidence.Load(resultsDirectory);
@@ -164,12 +162,17 @@ internal static class Program
                     $"ENGINEERING_TEST_EXECUTED project={JsonSerializer.Serialize(invocation.ProjectPath)} "
                     + $"evidence=trx executed={evidence.Executed}");
                 WriteExecutedTestIdentities(evidence, Console.Out);
-                return 0;
+                return result.ExitCode switch
+                {
+                    0 => 0,
+                    1 => 1,
+                    _ => 2,
+                };
             }
             catch (Exception exception)
             {
                 Console.Error.WriteLine($"ENGINEERING_TEST_EVIDENCE_FAILED {exception.Message}");
-                return 1;
+                return 2;
             }
         }
         finally
