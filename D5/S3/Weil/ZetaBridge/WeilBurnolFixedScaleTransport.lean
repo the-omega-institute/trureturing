@@ -79,6 +79,7 @@ variable (F : FiniteEvenWeilOrbitFrame Z ι)
 finite-dimensional family with a uniform full negative margin and exact inertia.
 The basis, radius and localization depth are constructed from the given frame. -/
 theorem exists_support_controlled_full_negative_family
+    (F : FiniteEvenWeilOrbitFrame Z ι)
     (delta : ℝ) (hdelta : 0 < delta) (hdelta4 : delta < 4) :
     ∃ L : ℝ, 0 < L ∧ ∃ basis : ι → WeilTestFunction,
       Function.Injective (fun a : ι → ℂ => finiteWeilLinearCombination a basis) ∧
