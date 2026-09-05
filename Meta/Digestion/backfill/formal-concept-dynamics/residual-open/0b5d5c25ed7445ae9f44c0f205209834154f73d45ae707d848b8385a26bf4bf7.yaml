@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "The child text is only `交叉证据`; the surrounding source defines truthful reporting and incentive compatibility but gives no joint evidence carrier, corroboration relation, or theorem relating cross evidence to recovery of the true report. D5 and Blueprint search `cross[- ]evidence|corroborating evidence|交叉证据` exited 1; pinned Mathlib search for truthful reporting and cross evidence exited 1; installed non-Mathlib package search exited 1; A17 is wait-for-capability because its public-source, revision, and license predicates are unavailable. `/private/tmp/w73d37-atom1-probe.lean` exited 0 and checks the frozen countermodel and broad neighboring candidates, but none has a public joint-evidence conclusion. A Lean theorem for the bare label would require inventing the missing carrier."
+    reentry_condition: "Provide a typed joint-evidence carrier, a corroboration or cross-check relation over its components, and a public theorem showing that the relation yields the stated truthful-information consequence."
+    blocker_class: multi-clause-guard
