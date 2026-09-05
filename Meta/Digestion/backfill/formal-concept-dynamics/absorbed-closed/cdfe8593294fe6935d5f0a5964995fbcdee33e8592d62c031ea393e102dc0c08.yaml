@@ -5,9 +5,14 @@ cas_ref: sha256:cdfe8593294fe6935d5f0a5964995fbcdee33e8592d62c031ea393e102dc0c08
 coverage_gids:
   - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictPreferenceReversalValueState.strict_preference_reversal_changes_value_state
     target_statement_id: sha256:ec838c5e46dc2a419784732554c9862eb8bb4518f9913129fd30b61878865d22
+  - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictPreferenceReversalAlternatives.strict_preference_reversal_forces_state_change_or_behavioral_unfaithfulness
+    target_statement_id: sha256:96c50905a7baa58b7aa0f35fa5a4785f616019d712f594f3e82c5f8d514d4235
 receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictPreferenceReversalValueState.strict_preference_reversal_changes_value_state
       definition_sha256: sha256:b55546af9bef069db398d868d2190eebdc69c16428100c6bc1c3f857d068d07f
       emission_sha256: sha256:c33d54204465fdc07ff845baeef8468d9ee025c25045693f731da1aee082dfac
+    - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictPreferenceReversalAlternatives.strict_preference_reversal_forces_state_change_or_behavioral_unfaithfulness
+      definition_sha256: sha256:708844586c0b3eb5869095288567f46b753830829b7c554fb5eddf8060a18665
+      emission_sha256: sha256:9257cb325bffbc18529b94fc5614e89d864b45a2ead36f9e69a378f839ceeb77
   unresolved_subitems: []
