@@ -13,14 +13,15 @@
 
 本规范定义一个完全位于 Lean 4 内部的数学系统。系统的输入不是论文、自然语言标签、人工评分或历史版本差分，而是同一次编译中已经 elaborated 的 Lean 定理对象及其数学概念读出。
 
-v4.2 把“当前完整定理族”精确化为 sealing root $R$ 与 canonical object
+v4.2 把“当前完整定理族”精确化为 sealing root $R$ 的 import closure 与 canonical object
 `Arena` declaration $A$ 下的单个最大 catalog：
 
 $$
 \mathcal T_{R,A}=\{\tau_o\}_{o\in I_{R,A}}.
 $$
 
-这里的成员是登记 occurrence，而不是裸 theorem 名。所有未显式写出上标、下标的
+这里的成员是 $R$ 的 import closure 中持久可见的登记 occurrence，而不是裸 theorem 名。
+occurrence identity 是 `(canonical Arena declaration, theoremName)`。所有未显式写出上标、下标的
 $I,K,E,U,\delta,D_A$ 都是固定同一个 $(R,A)$ 后的简写；不同 arena 之间不存在
 默认标量。v4.2 同时给出共享 arena 上的 exclusive-capture vector、overlap、kernel
 refinement、multiplicity spectrum、role histogram 与 ordered layered capture。新产物使用
@@ -145,7 +146,7 @@ $$
 }
 $$
 
-即指定 root 中每个 canonical maximal catalog 都必须是语义不可约的概念族：删除任意
+即指定 root 的 import closure 中每个 canonical maximal catalog 都必须是语义不可约的概念族：删除任意
 一个 occurrence，信息逃逸率都严格上升。辅助 root 与 analysis view 可以给出局部分析，
 但既不能证明系统准入，也不能豁免指定 root 中的零成员。
 
@@ -199,8 +200,8 @@ I_{R,A}:\mathrm{Type},
 \qquad |I_{R,A}|<\infty.
 $$
 
-$I_{R,A}$ 中每个元素对应 $R$ 所在模块本地 elaboration 中、显式归属于 $A$ 的一个
-被登记 theorem occurrence。同一个 theorem declaration 可以在不同 root 或 catalog 中
+$I_{R,A}$ 中每个元素对应 $R$ 的 import closure 中持久可见、显式归属于 $A$ 的一个
+被登记 theorem occurrence。同一个 theorem declaration 可以在不同 canonical arenas 中
 出现，但每次都必须有分别命名、由 kernel 检查的 realization。
 
 ### 1.3 异构定理读出
@@ -268,24 +269,27 @@ type，不是 namespace，也不是 `PrimitiveLawArena` 名称。若声称两个
 一个登记 occurrence 记为：
 
 $$
-o=(R,A,C,i,\operatorname{theoremName},\operatorname{unit},\Pi,K,
+o=(A,\operatorname{theoremName},\operatorname{unit},\Pi,K,
 \operatorname{realization}).
 $$
 
 其唯一键为：
 
 $$
-(\operatorname{root\_id},\operatorname{catalog\_id},
-\operatorname{theoremName}).
+(\operatorname{canonicalArenaDeclaration},\operatorname{theoremName}).
 $$
 
-该键在一次 root elaboration 中恰出现一次。一个 theorem 若进入多个 catalogs 或 roots，
-每个 occurrence 都有独立的 catalog-qualified unit、realization 与 companion names。
+该键在一个 sealing root 的整个 import closure 中恰出现一次；同一 theorem 在同一 canonical
+arena 的第二次登记是 IE-C002 collision。一个 theorem 只有通过另一个具名、kernel-checked
+realization 登记到不同 canonical arena 时才形成新的合法 occurrence。每个 occurrence 都有
+独立的 catalog-qualified unit、realization 与 companion names，因此同一 theorem 的两个合法
+occurrences 不会产生 generated-name collision；IE-C025 专门保留给 qualified-name collision。
 
-对每个 $(R,A)$，定义 $C_{R,A}$ 为包含 $R$ 中所有归属于 $A$ 的 occurrence 的唯一
+对每个 $(R,A)$，定义 $C_{R,A}$ 为包含 $R$ 的 import closure 中所有归属于 $A$ 的 occurrence 的唯一
 **canonical maximal catalog**。同 arena 的 sub-catalog 只可声明为 `analysis_view`，不得
-替代 $C_{R,A}$，不得用于证明 positivity。用 namespace、另一个 root、wrapper、克隆
-arena 或“在别处为正”拆开本应同组的 peers，均不改变这一义务。
+替代 $C_{R,A}$，不得用于证明 positivity。seal 不得比它的 import closure 少看任何同 arena
+member（工程优化规范 v1 §16）。用 namespace、另一个 auxiliary root、wrapper、克隆 arena
+或“在别处为正”拆开本应同组的 peers，均不改变 designated system root 的义务。
 
 ---
 
@@ -542,10 +546,10 @@ U_i=U^R_{A,i}
 \delta_i=\delta^R_{A,i}=|U^R_{A,i}|/|D_A|.
 $$
 
-这里的“完整族”只指在 sealing root $R$ 模块自身显式登记、归属于 $A$ 的所有 theorem
+这里的“完整族”是 sealing root $R$ 的 import closure 中全部持久可见、归属于 $A$ 的 theorem
 occurrences 所成的 canonical maximal catalog $C_{R,A}$。imported `.olean` 中持久可见的登记
-不是该 seal 的成员；analysis sub-catalog 也不能替代它或用于证明 positivity。此句是 v4.2
-目标契约；已落地 v4.1 registry 的导入行为及第 3 步所需迁移见第 25.2、37、39 节。
+就是该 seal 的成员；analysis sub-catalog 不能替代它或用于证明 positivity。已落地 v4.1
+registry 的导入行为就是 v4.2 contract；相关 seal checks 见第 25.2、37、39 节。
 
 ### 5.1 完整族
 
@@ -555,8 +559,8 @@ $$
 I.
 $$
 
-这里的完整意味着“entries explicitly registered in the root module itself”，不是该模块可见的
-全部 imported entries，也不是历史仓库状态。
+这里的完整意味着 root 的 import closure 中全部持久可见的 registry entries；它不是历史仓库
+状态，也不能仅凭任意局部环境冒充仓库级 registration closure。
 
 ### 5.2 留一族
 
@@ -1057,6 +1061,14 @@ $$
 提供 exemption。analysis view 可以取得完整的 negative verdict certificate，但不能
 discharge positivity。
 
+指定系统 root $R_\star$ 的 import closure 必须包含仓库固定源快照的完整 registration closure；
+其 catalogs 因而在仓库尺度 maximal，项目级 coverage manifest 由该快照的既有枚举器产生，
+且必须与实际 sealed occurrence set 相等（工程优化规范 v1 §9 check 1）。辅助 root 的 catalogs
+只在各自 import closure 内 maximal，artifact 必须写 `seal_scope: import-closure` 并列出导入的
+registration modules，且仍不取得 discharge 或 exemption 权限。辅助 root 若导入冻结的 v4.1
+`InformationRoot`，会继承其十一个 occurrences；这不碰撞，因为 causal occurrences 登记在
+`UnifiedBoolSCM` canonical arena 上。
+
 ---
 
 ## 9. 平凡与冗余的纯数学定义
@@ -1167,9 +1179,9 @@ $j$ 已捕获 $i$ 能捕获的全部 pair，故 $U^R_{A,i}=\varnothing$。这包
 
 ## 10. 重复、替代与基选择
 
-以下结论全部是 catalog occurrence-relative；系统不把跨 root、跨 catalog 的 theorem
-名称相同或不同当作替代证据。只有同一 canonical arena 内的 kernels，或经
-`CIRPT-IE-022` 证明 transport 后的 kernels，才进入语义比较。
+以下结论全部是 maximal-catalog occurrence-relative；不同 canonical arenas 中的 theorem
+名称相同或不同都不直接构成替代证据。只有同一 canonical arena 的 import-closure peers，
+或经 `CIRPT-IE-022` 证明 transport 后的 kernels，才进入语义比较。
 
 ### 10.1 重复双方同时为零
 
@@ -1500,8 +1512,9 @@ if theorem.namespace == ResearchAudit then accept
 
 no-exemption 同时覆盖 namespace、auxiliary root、alternate catalog、cloned/wrapper
 arena 与 positive-elsewhere。任何一项都不得用来避开同一 canonical arena 的 maximal
-peer grouping；一个 theorem 若有多个 designated occurrences，必须在每个 occurrence
-所在的 maximal catalog 中分别为正。
+peer grouping；一个 theorem 只有在不同 canonical arenas 上经独立、kernel-checked
+realizations 才可有多个 designated occurrences，并必须在每个 occurrence 所在的 maximal
+catalog 中分别为正。
 
 ### 15.3 最终编译命令不是数学 theorem
 
@@ -4286,18 +4299,20 @@ InformationEscape finite engine
 8. role signature histogram 总和等于 unique capture count；
 9. 最终 accept/reject 仍只由 `uniqueCaptureCount > 0` 决定；
 10. JSON 只投影结果，不参与任何证明。
-11. 以 canonical object `Arena` declaration 分组，并为每个 $(R,A)$ 构造唯一 maximal catalog；
-12. occurrence key `(root_id, catalog_id, theoremName)` 在 root 内恰出现一次；
-13. 所有 generated companion names 都由 root/catalog/occurrence identity 限定；
+11. 以 canonical object `Arena` declaration 分组，并为每个 $(R,A)$ 构造覆盖 $R$ 的整个 import closure 的唯一 maximal catalog；
+12. occurrence key `(canonicalArenaDeclaration, theoremName)` 在 import closure 内恰出现一次；
+13. 所有 generated companion names 都由 catalog-qualified occurrence identity 限定；
 14. overlap、refinement、spectrum、role totals、verdict 与 layer-chain inclusion/count identity 均有 Lean certificate；
 15. refinement matrix 的 true cell 有 inclusion proof，false cell 有确定性 witness pair；
 16. 在触发 IE-C007 前计算并验证完整 `redundantIndices`，不得 first-zero 短路；
 17. canonical maximal catalog 失败时不写 artifact；显式 `analysis_view` 只有在全部 exact
     negative certificates staged 且 kernel-checked 后才可写 redundant projection；
-18. seal 只消费命令所在模块本地 elaborated registrations；imported `.olean` registrations 不进入 root；
-19. designated root 的 `SystemCatalogIrredundant` 是其全部 maximal catalogs 的 conjunction；
-20. kernel-address coincidence 只进入 diagnostic projection，绝不进入证明、grouping 或 verdict；
-21. 超过第 33 节 ordered-pair budget 的 catalog 必须使用 refl lane 提供的 reflected seal，否则 fail closed。
+18. seal 消费命令所在 root 的 import closure 中全部持久可见 registrations，不得过滤 imported entries；
+19. 当前 seal 的 expected entries 与 actual entries 完全相等；designated root 的 expected set 来自固定源快照与既有枚举器；
+20. 每个 certificate 绑定完整成员集合、确定顺序、arena、primitives 与 elaborated environment，旧快照 certificate 不得复用到新目录；
+21. designated root 的 `SystemCatalogIrredundant` 是其全部仓库尺度 maximal catalogs 的 conjunction；
+22. kernel-address coincidence 只进入 diagnostic projection，绝不进入证明、grouping 或 verdict；
+23. 超过第 33 节 ordered-pair budget 的 catalog 必须使用 refl lane 提供的 reflected seal，否则 fail closed。
 
 ---
 
@@ -4311,7 +4326,8 @@ v3 的规范形状为：
 {
   "schema": "lean-intrinsic-information-escape-v3",
   "root_id": "D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot",
-  "seal_scope": "module-local",
+  "seal_scope": "import-closure",
+  "registration_modules": [],
   "system_catalog_irredundant": true,
   "kernel_address_coincidence_classes": [],
   "catalogs": []
@@ -4328,7 +4344,8 @@ v3 的规范形状为：
 |---|---|---|---|
 | root | `schema` | 固定为 `lean-intrinsic-information-escape-v3` | S |
 | root | `root_id` | canonical sealing-root `Name` | E |
-| root | `seal_scope` | 固定为 `module-local` | S+E |
+| root | `seal_scope` | 固定为 `import-closure` | S+E |
+| root | `registration_modules` | import closure 中贡献 registry entries 的 module `Name` canonical-sorted array | E |
 | root | `system_catalog_irredundant` | designated root 全部 maximal catalogs 的 conjunction | K |
 | root | `kernel_address_coincidence_classes` | diagnostic coincidence-class array | S+D |
 | root | `catalogs` | 该 root 的完整 catalog array | E |
@@ -4339,6 +4356,7 @@ v3 的规范形状为：
 | catalog | `catalog_id` | stable root-scoped identity | E |
 | catalog | `catalog_kind` | `canonical_maximal` 或 `analysis_view` | E |
 | catalog | `object_arena` | grouping 使用的 canonical `Arena` declaration | E |
+| catalog | `proof_method` | 实际使用的 `CertifiedCounts` 计算／证明路线，不得把 fused、partition、direct reduction 或 reflected route 互相伪装 | E+K |
 | catalog | `state_card` | arena state cardinality | R |
 | catalog | `off_diagonal_pair_count` | $B(C)=|D_A|$ | R |
 | catalog | `full_escape_count` | $|E^R_A|$ | R |
@@ -4496,17 +4514,19 @@ legacy theorem 与 primitive bundle 之间没有 Lean realization theorem。
 
 ### IE-C024　SplitCanonicalArenaCatalog
 
-同一 root 内属于同一 canonical object `Arena` 的 occurrences 被 namespace、wrapper、
-cloned arena 或 sub-catalog 拆开，或试图用分析 view 替代 maximal catalog。
+同一 root import closure 内属于同一 canonical object `Arena` 的 occurrences 被 namespace、
+wrapper、cloned arena 或 sub-catalog 拆开，或试图用分析 view 替代 maximal catalog。
 
-### IE-C025　DuplicateCatalogOccurrence
+### IE-C025　QualifiedNameCollision
 
-同一 `(root_id, catalog_id, theoremName)` occurrence key 出现不止一次。
+两个不同的合法 occurrences 导出相同 catalog-qualified unit、realization、certificate 或
+其他 generated companion `Name`。同一 `(canonical arena declaration,theoremName)` 的重复
+登记不使用本码，而统一使用 IE-C002。
 
 ### IE-C026　MissingMaximalCatalog
 
-root 有归属于某 canonical arena 的 occurrence，却没有构造包含全部这些 occurrences 的
-唯一 `canonical_maximal` catalog。
+root import closure 有归属于某 canonical arena 的 occurrence，却没有构造包含全部这些
+occurrences 的唯一 `canonical_maximal` catalog。
 
 ### IE-C027　UncertifiedKernelRefinement
 
@@ -4681,8 +4701,9 @@ primitive normalization、kernel computation、companion theorem construction �
 
 ### AC-CIRPT-012　Scoped maximal catalogs
 
-每个 root-local canonical arena 恰有一个 maximal catalog；occurrence identity 与所有
-companions 都由 root/catalog 限定，analysis view 不承担 positivity。
+每个 root import closure 内的 canonical arena 恰有一个覆盖全部可见 members 的 maximal
+catalog；occurrence identity 为 `(canonical arena declaration, theoremName)`，所有 companions
+均 catalog-qualified，analysis view 不承担 positivity。
 
 ### AC-CIRPT-013　Certified shared analysis
 
@@ -4825,8 +4846,8 @@ lake build D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 8. 为原 theorem 构造增强 conjunction theorem；
 9. 若任一 theorem 增益为零，则当前 compilation 失败；
 10. 若全部通过，则写出只读 JSON／CSV／DOT 报告。
-11. 只枚举 root module 本地 elaborated occurrences，并按 canonical object `Arena` declaration 分组；
-12. 为每个 $(R,A)$ 构造唯一 maximal `Catalog`，同时允许不承担准入的 typed analysis views；
+11. 枚举 root import closure 中全部持久可见 occurrences，并按 canonical object `Arena` declaration 分组；
+12. 为每个 $(R,A)$ 构造覆盖该 import closure 全部同 arena members 的唯一 maximal `Catalog`，同时允许不承担准入的 typed analysis views；
 13. 证明并投影 overlap/refinement matrices、multiplicity spectrum、role totals 与完整 catalog verdict；
 14. 对显式 `LayerChain` 证明相邻 inclusions、ordered increments、partition 与 exact rates；
 15. 在 designated root 中组装全部 maximal catalogs 的 `SystemCatalogIrredundant`；
@@ -4874,6 +4895,14 @@ D5/S3/ConceptDynamics/InformationEscape/
   AugmentedTheorem.lean
   CoreTheorems.lean
 
+D5/S3/ConceptDynamics/InformationEscapeCounting/
+  Fused.lean
+  FusedCorrectness.lean
+  Partition.lean
+  PartitionCorrectness.lean
+  RoleHistogram.lean
+  BlockComposition.lean
+
 tools/lean-inspector/LeanInformationAudit/
   Registry.lean
   Syntax.lean
@@ -4889,8 +4918,8 @@ D5/S3/ConceptDynamics/InformationEscape/SharedInformationRoot.lean
 ```
 
 `D5/S3/ConceptDynamics/InformationEscape/SharedInformationRoot.lean` 是新的 designated
-v4.2 root；它必须在自身模块中显式 re-register 所有 canonical occurrences，并以唯一
-终局命令结束：
+v4.2 root；它必须导入固定仓库快照的完整 registration closure，使其 import closure 与
+既有枚举器产生的项目级 coverage manifest 完全相等，并以唯一终局命令结束：
 
 ```lean
 #seal_information_theory
@@ -5082,9 +5111,12 @@ structure LayerChain (arena : Arena) where
     (kernel r.succ).relation ≤ (kernel r.castSucc).relation
 ```
 
-`maximalCatalog` 的输入恰为一个 root 中 `objectArenaName` 相同的全部 occurrences；不得
-选择子集。occurrence key `(rootId, catalogId, theoremName)` 唯一。同一 theorem 可在多个
-catalogs/roots 中出现，但每次必须有另一个 catalog-qualified unit/realization/certificate。
+`maximalCatalog` 的输入恰为一个 root import closure 中 `objectArenaName` 相同的全部
+occurrences；不得选择子集。occurrence key `(objectArenaName, theoremName)` 在该 import
+closure 内唯一；`rootId` 与 `catalogId` 是 membership/projection context，不参与 occurrence
+identity。同一 theorem 只有在不同 canonical arenas 中才可形成多个 occurrences，
+且每次必须有另一个具名、kernel-checked realization 与 catalog-qualified
+unit/certificate。
 `LayerChain` 是同 arena 的 analysis object，不自动产生 theorem occurrence。
 
 ---
@@ -5563,9 +5595,10 @@ theorem systemWidePositive_iff_systemCatalogIrredundant
 ```
 
 `DesignatedRootCatalogSuite` 的每个 `PackedCatalog` 同时携带 arena 与恰在该 arena 上的
-catalog，且整个有限 family 只属于 `rootId` 这一 designated root。`SystemWidePositive`
+catalog；该有限 family 的 membership 来自 `rootId` 的 import closure，并与固定仓库快照的
+既有枚举器 manifest 完全相等，所以这些 catalogs 在仓库尺度 maximal。`SystemWidePositive`
 只是 `SystemCatalogIrredundant` 的显式同义名；不存在另一个量化 plural roots 的性质。
-不得把未枚举 auxiliary roots 暗中算作系统。negative verdict 必须含完整
+不得把 auxiliary-root analysis 暗中算作系统。negative verdict 必须含完整
 `redundantIndices` 与证明；不能只报告第一个零成员。
 
 ---
@@ -5605,7 +5638,7 @@ private def catalogQualifiedUnitName :
 并把：
 
 ```text
-(rootId, CatalogId, theoremName, catalogQualifiedUnitName,
+(CatalogId, theoremName, catalogQualifiedUnitName,
  PrimitiveLawArenaName, CanonicalArenaName, realizationName)
 ```
 
@@ -5655,27 +5688,30 @@ role_weight
 
 ### 24.4 唯一登记
 
-唯一性按 occurrence，而不是 theorem declaration 全局判断。键：
+唯一性按 occurrence，而不是 theorem declaration 裸名字全局判断。键：
 
 ```text
-(root_id, catalog_id, theoremName)
+(CanonicalArenaName, theoremName)
 ```
 
-在一个 root elaboration 中恰出现一次。每个 occurrence：
+在 sealing root 的整个 import closure 中恰出现一次。每个 occurrence：
 
 - 恰有一个 theorem unit；
 - 恰属于一个 explicit catalog 与一个 canonical object arena；
 - 恰有一个 kernel-checked primitive bundle；
 - 恰有一个 theorem-to-bundle realization path。
 
-同一 theorem declaration 可以在多个 catalogs/roots 中出现，但必须分别命名 unit、
-realization 与 companions，并在每个 maximal catalog 中独立结算。相同 occurrence key 的
-多重登记必须 IE-C025 fail-closed。允许一个 theorem 的 primitive bundle 内含多个角色
-primitive；不允许同一 occurrence 在多个可选 bundle 之间选择。
+同一 theorem declaration 可以通过分别命名、kernel-checked 的 realization 登记到不同
+canonical arenas，并在各自 maximal catalog 中独立结算；同一 canonical arena 上的第二次
+登记与 catalog/root spelling 无关，统一 IE-C002 fail-closed。不同合法 occurrences 的 unit、
+realization 与 companions 必须 catalog-qualified；这些 qualified names 的碰撞由 IE-C025
+fail-closed。允许一个 theorem 的 primitive bundle 内含多个角色 primitive；不允许同一
+occurrence 在多个可选 bundle 之间选择。
 
-同 root、同 canonical arena 的全部 occurrences 必须同时进入一个 maximal catalog。
+同一 root import closure、同 canonical arena 的全部 occurrences 必须同时进入一个 maximal catalog。
 sub-catalog 可额外声明为 `analysis_view`，但不能取代 maximal grouping 或 discharge
-positivity；试图通过 namespace/root/catalog/cloned-arena 拆 peers 触发 IE-C024。
+positivity；试图通过 namespace/catalog/cloned-arena 或 auxiliary-root indirection 拆开
+designated root 中的 peers 触发 IE-C024。
 
 ---
 
@@ -5687,6 +5723,7 @@ positivity；试图通过 namespace/root/catalog/cloned-arena 拆 peers 触发 I
 structure InformationRegistryEntry where
   catalogId : CatalogId
   catalogKind : CatalogKind
+  registrationModuleName : Name
   theoremName : Name
   unitName : Name
   lawArenaName : Name
@@ -5695,8 +5732,9 @@ structure InformationRegistryEntry where
 ```
 
 `rootId` 由执行 `#seal_information_theory` 的当前 module `Name` 给出，不由 entry 自报。
-grouping key 只取 `objectArenaName`；`lawArenaName` 是 `PrimitiveLawArena` presentation，
-不能充当 object identity。
+`registrationModuleName` 由 elaborator 记录，只用于 import-closure provenance、artifact 与
+snapshot coverage check，绝不用于过滤 seal membership。grouping key 只取
+`objectArenaName`；`lawArenaName` 是 `PrimitiveLawArena` presentation，不能充当 object identity。
 
 ### 25.2 持久性
 
@@ -5704,24 +5742,20 @@ grouping key 只取 `objectArenaName`；`lawArenaName` 是 `PrimitiveLawArena` p
 `addImportedFn` 拼接 imported registrations；`CatalogBuilder.lean` 当前消费全部
 `InformationRegistry.entries`。因此 imported entries 对 consumers 可见且会进入 v4.1 seal。
 
-v4.2 的目标 root 语义改为 **module-local seal membership**。landing step 3 必须在不隐藏
-consumer 可见 imported entries 的前提下，以 imported-entry filtering 或显式 root-ownership
-field 实现：
+该已落地行为就是 v4.2 的 **import-closure seal membership** contract：
 
-- 每个 seal 只消费与该命令在同一 root module 中显式 elaborated 的 entries；
-- import 某个已经 sealed 的 `.olean` 仍使 entries 对 registry consumers 可见，但对当前 seal
-  membership 贡献零；
-- 要让 frozen theorem 进入新 root，必须在新 root 用 `register_information_theorem` 显式重新登记；
-- re-registration 产生新 catalog-qualified occurrence 与 realization reference；
-- 跨 root scopes 的相同 theorem/catalog spelling 不是 collision；同一
-  `(root_id,catalog_id,theoremName)` 内重复才触发 IE-C025；
+- 每个 seal 消费其 root import closure 中全部 `InformationRegistry.entries`，不得过滤 imported entries；
+- import 某个已经 sealed 的 `.olean` 会使其 entries 成为当前 seal members；
+- `CatalogBuilder` 按 canonical `objectArenaName` 把全部可见 peers 合为一个 maximal catalog；
+- 同一 `(objectArenaName,theoremName)` 在 import closure 任意位置第二次登记均触发 IE-C002；
+- 同一 theorem 通过独立、kernel-checked realization 登记到不同 canonical arena 是合法的新 occurrence；
+- generated unit、realization 与 companion names 必须 catalog-qualified，qualified-name collision 触发 IE-C025；
 - 无需扫描源文本；
-- 无需 Git 文件列表。
+- 无需从 Git 文件列表推测 Lean 环境成员。
 
-`RegistrationPersistence`、`RegistryConsumer` 与 `SealCollision` 不得静默删除：第 3 步必须
-按上述语义重写 fixtures，使前两者继续证明 imported visibility，而 seal membership 为
-root-local；第三者分别覆盖跨 root 非 collision 与 root/catalog 内 IE-C025。该迁移完成前，
-不得把 v4.2 module-local sealing 冒充为 landed current behavior。
+`RegistrationPersistence`、`RegistryConsumer` 与 `SealCollision` 保持其 landed semantics：
+imported registrations 持久可见并进入 consumer/seal，重复 occurrence collision 继续
+fail-closed；不得将这些 fixtures 改写成 imported-entry filtering 的证明。
 
 ### 25.3 环境真源
 
@@ -5732,6 +5766,11 @@ Environment
 ```
 
 中的已 elaborated declaration 和 registry 构造。
+
+上述环境真源足以决定某个 root 的 import-closure seal，却不足以仅凭局部环境宣称已经覆盖
+仓库全部注册项。designated system root 必须以确定的仓库源快照与既有枚举器生成项目级
+coverage manifest，并验证 expected entries 与实际 sealed entries 完全相等（工程优化规范
+v1 §9）；辅助 root 只声明其 import-closure scoped analysis。
 
 不得从以下内容决定 theorem 集：
 
@@ -5748,17 +5787,19 @@ Environment
 
 - theoremName 存在；
 - theoremName 的 kind 是 theorem；
+- registrationModuleName 是 entry 的实际 elaboration module，且位于当前 root import closure；
 - unitName 存在；
 - unitName 的类型是期望的 `TheoremUnit arena`；
 - unit.proof 的类型与 theoremName 的 type 定义相同或可由 kernel 证明相等；
 - lawArenaName 与 objectArenaName 存在且可关闭实例；
 - `lawArenaName.toArena` definitionally 等于 object arena，或有显式 transport proof；
-- 没有重复 occurrence key；
+- 没有重复 `(objectArenaName,theoremName)` occurrence key；
 - 没有重复 unitName。
 
 还必须检查 `catalogKind`、catalog membership、maximal grouping 与所有 catalog-qualified
-generated names。一个 theoremName 在不同 occurrence keys 中合法，但 unit/realization/
-certificate name 仍不得碰撞。
+generated names。一个 theoremName 在不同 canonical arenas 中合法，但 unit/realization/
+certificate name 仍不得碰撞；certificate 还必须绑定成员集合、顺序、arena、primitives 与
+elaborated environment，且不得复用旧快照 certificate。
 
 ---
 
@@ -5779,10 +5820,11 @@ certificate name 仍不得碰撞。
 
 路径只控制 artifact 写出位置，不影响任何数学判词。
 
-命令的 root identity 是当前 module `Name`，scope 固定为 module-local。仓库 build manifest
-必须 designation 恰好一个 v4.2 canonical system root；该 root 可以仍使用同一个无参数
-命令。辅助 roots 也可 seal，但 artifact 明确标为 scoped analysis，不能代替 designated
-root 的 `SystemCatalogIrredundant`。
+命令的 root identity 是当前 module `Name`，scope 固定为 `import-closure`。仓库 build
+manifest 必须 designation 恰好一个 v4.2 canonical system root；其 import closure 包含固定
+仓库快照的完整 registration closure，因此 catalogs 在仓库尺度 maximal。辅助 roots 也可
+seal，但 artifact 必须标为 scoped analysis，写 `seal_scope: import-closure` 与 imported
+registration modules 列表，且不能代替 designated root 的 `SystemCatalogIrredundant`。
 
 ### 26.2 命令执行顺序
 
@@ -5790,28 +5832,30 @@ root 的 `SystemCatalogIrredundant`。
 
 1. 读取 registry；
 2. 校验 entry；
-3. 只保留当前 root module 本地显式 registrations；
-4. 按 canonical `objectArenaName` 确定性分组；
-5. 校验 occurrence keys 与每个 arena 的唯一 maximal catalog；
-6. 按 `catalogId`，再按 theorem canonical `Name` encoding 排序；
-7. 为每个 maximal catalog 与 declared analysis view 构造有限 index type；
-8. 验证 catalog-qualified generated names 无碰撞；
-9. 构造完整 `Finset.univ`；
-10. 枚举或反射 `offDiagonalPairs`；
-11. 计算完整族 `escapePairs`；
-12. 对每个 index 计算 `without` 与 `uniqueCapturePairs`；
-13. 计算 exclusive vector、overlap/refinement matrices、spectrum 与 role totals；
-14. 对每条 registered `LayerChain` 校验 inclusions 并计算 increments/unresolved；
-15. 计算完整 `redundantIndices` 与 catalog verdict，不得遇首零即停止；
-16. 计算 exact Nat／Rat 数值；
-17. 构造所有 reflected equality、matrix/spectrum/layer identity 与 verdict proofs；
-18. 为正成员从 `0 < uniqueCaptureCount` 构造 proof；
-19. 经 `lowersEscape_iff_uniqueCaptureCount_pos` 得到 `LowersEscape` proof；
-20. 添加 catalog-qualified private 或 namespaced companion theorem；
-21. 为 designated root 组装全部 maximal catalogs 的 `SystemCatalogIrredundant`；
-22. 若任一 maximal member 为零，携完整 structured diagnostics 发出 IE-C007；
-23. 全部 theorem proof 加入 environment 后，写出 schema-v3 只读 artifact；
-24. 命令成功结束。
+3. 枚举 root import closure 中全部持久可见 entries，禁止 imported-entry filtering；
+4. 从固定源快照与既有枚举器取得 designated-root expected entries（辅助 root 则绑定其 imported registration modules），并验证 expected entries = actual entries；
+5. 校验 `(objectArenaName,theoremName)` occurrence keys；
+6. 按 canonical `objectArenaName` 确定性分组，构造覆盖全部同 arena members 的唯一 maximal catalog；
+7. 按 `catalogId`，再按 theorem canonical `Name` encoding 排序；
+8. 为每个 maximal catalog 与 declared analysis view 构造有限 index type；
+9. 验证 catalog-qualified generated names 无碰撞；
+10. 构造完整 `Finset.univ`；
+11. 枚举或反射 `offDiagonalPairs`；
+12. 计算完整族 `escapePairs`；
+13. 对每个 index 计算 `without` 与 `uniqueCapturePairs`；
+14. 计算 exclusive vector、overlap/refinement matrices、spectrum 与 role totals；
+15. 对每条 registered `LayerChain` 校验 inclusions 并计算 increments/unresolved；
+16. 计算完整 `redundantIndices` 与 catalog verdict，不得遇首零即停止；
+17. 计算 exact Nat／Rat 数值；
+18. 构造所有 reflected equality、matrix/spectrum/layer identity 与 verdict proofs；每个 certificate 绑定 member set/order/arena/primitives/environment；
+19. 拒绝把任何旧 snapshot certificate 复用于当前 catalog；
+20. 为正成员从 `0 < uniqueCaptureCount` 构造 proof；
+21. 经 `lowersEscape_iff_uniqueCaptureCount_pos` 得到 `LowersEscape` proof；
+22. 添加 catalog-qualified private 或 namespaced companion theorem；
+23. 为 designated root 组装仓库尺度全部 maximal catalogs 的 `SystemCatalogIrredundant`；
+24. 若任一 maximal member 为零，收集并认证完整 structured negative diagnostics 后发出 IE-C007；
+25. 全部 theorem proof 加入 environment 后，写出 schema-v3 只读 artifact；
+26. 命令成功结束。
 
 原 v4.1 的步骤编号只描述 singleton baseline 实现；v4.2 以上述原子顺序为准。尤其
 positive/negative certificates 必须在任何 artifact write 之前完成。
@@ -5838,14 +5882,14 @@ lake env lean Generated.lean
 - primitive Bool reflection 与结构 kernel 不一致；
 - theorem unit 非闭合；
 - theorem-to-bundle realization 缺失；
-- theorem 语义登记重复；
+- `(objectArenaName,theoremName)` occurrence 登记重复；
 - proof/certificate identity 泄漏进 object primitive bundle；
 - 任一 `uniqueCaptureCount = 0`；
 - role-signature partition 与 unique count 不一致；
 - proof builder 无法构造 kernel 可接受证明；
 - artifact 在数学检查之前被写出；
 - registry 与 environment 不一致。
-- occurrence key 重复或同 arena maximal catalog 缺失；
+- qualified generated name 碰撞或同 arena maximal catalog 缺失；
 - canonical arena 被 namespace/root/catalog/wrapper 拆分；
 - refinement、spectrum、role、verdict 或 layer certificate 不完整；
 - `redundantIndices` 不是完整零集合；
@@ -5864,7 +5908,7 @@ diagnostic projection；它不改变 designated admission。
 
 ```lean
 def catalogQualifiedName
-    (rootId : Name) (catalogId : CatalogId)
+    (rootId objectArenaName : Name) (catalogId : CatalogId)
     (theoremName suffix : Name) : Name :=
   ...
 ```
@@ -5878,11 +5922,11 @@ verdict、analysis 与 enriched companions。不得继续仅向裸 theoremName �
 D5.S3.Domain.SomeResult.main_theorem
 ```
 
-在固定 root/catalog occurrence 中生成逻辑上等价于：
+在固定 root/arena/catalog occurrence 中生成逻辑上等价于：
 
 ```text
-catalogQualifiedName rootId catalogId main_theorem `__lowers_escape
-catalogQualifiedName rootId catalogId main_theorem `__escape_enriched
+catalogQualifiedName rootId objectArenaName catalogId main_theorem `__lowers_escape
+catalogQualifiedName rootId objectArenaName catalogId main_theorem `__escape_enriched
 ```
 
 规范类型：
@@ -5905,7 +5949,7 @@ theorem main_theorem.__lowers_escape :
 - 不参与下一次同编译 catalog 枚举；
 - 可由 inspector 输出为 certificate；
 - 不被计算为新增数学 theorem unit。
-- occurrence certificate 名在不同 catalog/root 中不碰撞；
+- 同一 theorem 在不同 canonical arenas 中形成的合法 occurrences，其 certificate 名不碰撞；
 - artifact 的 `certificate` 与 `catalog_membership` 指向同一 qualified identity。
 
 ---
@@ -5976,7 +6020,7 @@ Meta／IO 层只负责：
 Lean source theorem units
           │
           ▼
-root-module elaboration + module-local registry occurrences
+root import closure + persistent registry occurrences
           │
           ▼
 root identity + canonical object-Arena grouping
@@ -6026,7 +6070,8 @@ read-only JSON / CSV / DOT artifacts
 {
   "schema": "lean-intrinsic-information-escape-v3",
   "root_id": "D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot",
-  "seal_scope": "module-local",
+  "seal_scope": "import-closure",
+  "registration_modules": [],
   "system_catalog_irredundant": true,
   "kernel_address_coincidence_classes": [],
   "catalogs": []
@@ -6056,6 +6101,7 @@ v3 catalog record 必须另含。下列为示意结构,数值由封印实测：
   "catalog_id": "<CatalogId>",
   "catalog_kind": "<CatalogKind>",
   "object_arena": "<ArenaName>",
+  "proof_method": "<actual-CertifiedCounts-route>",
   "state_card": "<Nat>",
   "off_diagonal_pair_count": "<Nat>",
   "full_escape_count": "<Nat>",
@@ -6182,9 +6228,13 @@ minimum_threshold
 
 ### IE-C002　DuplicateRegistration
 
-冻结 v2 compatibility path 中同一 legacy theorem 被重复登记。v4.2 occurrence-aware path 不以
-裸 theorem name 作全局 collision key；同一 `(root_id,catalog_id,theorem_name)` 内的重复统一发
-IE-C025，跨 root scopes 不碰撞。
+冻结 v2 compatibility path 中同一 legacy theorem 被重复登记。v4.2 occurrence-aware path
+以 `(canonical object arena declaration,theoremName)` 为键；该键在 sealing root 的 import
+closure 中出现至少两次时统一发 IE-C002，与 registration module、root 或 catalog spelling
+无关。同一 theorem 通过分别命名、kernel-checked realization 登记到不同 canonical arena
+是不同 occurrence；其 generated qualified names 若碰撞则发 IE-C025。
+IE-C002 diagnostic 必须列出 `object_arena`、`theorem_name`、完整 canonical-sorted
+`registration_modules` 与 `count`，不得只报告最先遇到的一项。
 
 ### IE-C003　ArenaResolutionFailed
 
@@ -6245,9 +6295,9 @@ compact form 输出，缺少任何 required payload key 本身即 IE-C028。
 
 | code | name | exact fail-closed trigger |
 |---|---|---|
-| IE-C024 | `SplitCanonicalArenaCatalog` | 同 root/arena 有多个 maximal catalog，或 view 冒充 maximal |
-| IE-C025 | `DuplicateCatalogOccurrence` | 同一 `(root_id,catalog_id,theorem_name)` 出现至少两次 |
-| IE-C026 | `MissingMaximalCatalog` | arena 有 root-local occurrences，但无恰好覆盖全集的唯一 maximal catalog |
+| IE-C024 | `SplitCanonicalArenaCatalog` | 同一 root import closure/arena 有多个 maximal catalog，或 view 冒充 maximal |
+| IE-C025 | `QualifiedNameCollision` | 不同合法 occurrences 导出相同 catalog-qualified generated `Name` |
+| IE-C026 | `MissingMaximalCatalog` | arena 有 import-closure occurrences，但无恰好覆盖全集的唯一 maximal catalog |
 | IE-C027 | `UncertifiedKernelRefinement` | true cell 缺 inclusion proof，或 false cell 缺 witness pair |
 | IE-C028 | `AnalysisCertificateMismatch` | analysis component 缺项、reflected value 不等或 certificate 不闭合 |
 | IE-C029 | `UnfaithfulCrossArenaRealization` | realization 任一方向不消费 hypothesis，或 injection/restriction equation 缺失 |
@@ -6259,7 +6309,7 @@ compact form 输出，缺少任何 required payload key 本身即 IE-C028。
 | code | exact deterministic message shape |
 |---|---|
 | IE-C024 | `IE-C024 SplitCanonicalArenaCatalog root={root_id} arena={object_arena} catalogs={catalog_ids}` |
-| IE-C025 | `IE-C025 DuplicateCatalogOccurrence root={root_id} catalog={catalog_id} theorem={theorem_name} count={count}` |
+| IE-C025 | `IE-C025 QualifiedNameCollision root={root_id} catalog={catalog_id} generated_name={generated_name} occurrences={occurrence_keys}` |
 | IE-C026 | `IE-C026 MissingMaximalCatalog root={root_id} arena={object_arena} occurrences={occurrence_names}` |
 | IE-C027 | `IE-C027 UncertifiedKernelRefinement root={root_id} catalog={catalog_id} finer={finer} coarser={coarser} missing={missing}` |
 | IE-C028 | `IE-C028 AnalysisCertificateMismatch root={root_id} catalog={catalog_id} component={component} expected={expected} actual={actual}` |
@@ -6272,7 +6322,7 @@ compact form 输出，缺少任何 required payload key 本身即 IE-C028。
 | code | required payload keys |
 |---|---|
 | IE-C024 | `root_id, object_arena, catalog_ids` |
-| IE-C025 | `root_id, catalog_id, theorem_name, count` |
+| IE-C025 | `root_id, catalog_id, generated_name, occurrence_keys` |
 | IE-C026 | `root_id, object_arena, occurrence_names` |
 | IE-C027 | `root_id, catalog_id, finer, coarser, missing` |
 | IE-C028 | `root_id, catalog_id, component, expected, actual` |
@@ -6672,23 +6722,28 @@ analysis view；把三者作为 flat cumulative members 时期望
 $U_0=U_1=\varnothing$，$U_2=D_A\cap(K_1\setminus K_2)$；同一 kernels 的 chain view
 中相邻 $L_1,L_2$ 均非空。该测试防止 flat exclusive 与 ordered layered 混称。
 
-### T-024　one theorem in multiple catalogs
+### T-024　one theorem on multiple canonical arenas
 
-同一 theorem declaration 在两个 roots/catalogs 中通过分别命名的 realizations 登记。
-期望两个 occurrence keys 与 companions 不碰撞，各自 count 只相对于本 catalog peers。
+同一 theorem declaration 通过分别命名、kernel-checked 的 realizations 登记到两个不同
+canonical arenas。期望两个 `(arena,theoremName)` occurrence keys 与 catalog-qualified
+companions 不碰撞，各自 count 只相对于本 arena maximal-catalog peers；若第二次登记到同一
+canonical arena，则稳定发 IE-C002。
 
 ### T-025　same canonical arena split
 
-尝试用 namespace、wrapper、cloned arena 或 singleton analysis views 替代同 root 的一个
-maximal same-arena catalog；期望 IE-C024。
+尝试把同一 root import closure 的 same-arena members 分散到不同 registration modules、
+namespace、wrapper、cloned arena 或 singleton analysis views，以替代唯一 maximal catalog；
+期望 IE-C024。
 
-### T-026　module-local root scope
+### T-026　import-closure root scope
 
 `RegistrationPersistence` 与 `RegistryConsumer` fixture 必须继续证明 imported persistent
-entries 对 environment consumers 可见；同一 imported entries 对当前 seal membership 贡献零，
-直到新 root 显式调用 `register_information_theorem`。`SealCollision` 改为证明跨 root scopes
-的同名 occurrence 不碰撞，而同一 `(root_id,catalog_id,theoremName)` 内重复稳定发 IE-C025。
-undeclared auxiliary root 不改变 designated system verdict。
+entries 对 environment consumers 可见并进入 seal membership。`SealCollision` 保持 landed
+语义：同一 `(canonicalArenaDeclaration,theoremName)` 在 import closure 内重复稳定发
+IE-C002；不同 canonical arenas 上的合法 occurrences 以 catalog-qualified names 区分，若
+qualified name 仍碰撞则发 IE-C025。auxiliary root artifact 固定写
+`seal_scope: import-closure` 与 imported registration modules，且不改变 designated system
+verdict。
 
 ### T-027　refinement matrix
 
@@ -6832,6 +6887,17 @@ $$
 - `.NET` compactor 不得参与；
 - C# duplicate advisory 不再是研究非平凡性的真源。
 
+### 36.5 与工程优化规范 v1 的分工
+
+`trureturing_engineering_optimization_v1.md` §6/§8 的 fused per-pair scan、`CertifiedCounts`
+与 proof sharing 实现本规范 seal 的计算；本文仍唯一负责数学定义与 admission semantics。
+工程规范 §6.4 的 counting modules 落在符合 canonical GID 深度（D5 后 3--4 段）的 sibling
+目录 `D5/S3/ConceptDynamics/InformationEscapeCounting/`，不使用更深的
+`InformationEscape/Counting/`。schema v3 的 `proof_method` 必须报告实际 direct、fused、
+partition 或 reflected certificate route，不得为字节对照伪装成旧方法（工程规范 §8）。
+§19 的 $m\le N-1$ 约束逐 maximal catalog 保持，§20 的分包只能改变实施顺序，不能缩小
+registration closure、排除零增益 theorem 或改变一次编译合同。
+
 ---
 
 ## 37. 迁移规范
@@ -6933,27 +6999,29 @@ $$
 
 这些 schema-v2 数值证明了 realization 与正 capture baseline；它们从未声称共享 peers
 之间不可冗余。v4.2 不修改、重标、覆盖或拿它们冒充 peer-relative count。shared results
-由一个**新** designated system root 重新登记 occurrences，并另写 schema v3。
+由一个**新** designated system root 导入固定仓库快照的完整 registration closure，并另写
+schema v3；已在 imports 中持久可见的 occurrences 不得重新登记。
 
 dependency-correct landing order 固定为：
 
 1. 本 v4.2 spec PR，仅改本文档；
 2. D5 engine analysis modules（deposit）：capture/overlap/refinement/spectrum/layer laws；
-3. judge registry/identity mechanics：occurrence keys、canonical arena grouping、qualified names、
-   structured negative diagnostics，并以 imported-entry filtering 或显式 root-ownership field
-   实现 module-local seal membership；
+3. judge registry/identity mechanics：以 `(canonical arena declaration,theoremName)` 为
+   occurrence key，把 import closure 的全部同 arena members 分入唯一 maximal catalog，使用
+   catalog-qualified companion names，执行工程优化规范 v1 §9 的三项 seal check（expected
+   entries = actual、certificate 绑定 member set/order/arena/primitives/environment、旧快照
+   certificate 不得复用），并产出完整 structured negative diagnostics；禁止过滤 imported entries；
 4. unified causal math modules（deposit）：48-state carrier、readouts、factorizations、strict witnesses 与 faithful realizations；
-5. 新 designated v4.2 system root（deposit）：显式 re-register 全部 occurrences 并登记 causal chain view；
+5. 新 designated v4.2 system root（deposit）：导入完整 registration closure 并登记 causal chain view；
 6. judge schema-v3 analysis projection；
-7. fixtures：shared、overcomplete、root-local、address-only、causal 与 v2 compatibility。
+7. fixtures：shared、overcomplete、import-closure、address-only、causal 与 v2 compatibility。
 
-第 3 步必须先于任何 shared causal re-registration；纯 causal math 可以先 deposit，但不能
+第 3 步必须先于任何 shared causal registration；纯 causal math 可以先 deposit，但不能
 调用尚不存在的 catalog-qualified registry API。refl lane 的 reflected seal 是任何
 $B(C)>65536$ catalog 的前置，不满足时该 catalog 不得在上述顺序中提前落地。
-第 3 步还必须保留 imported registrations 对 environment consumers 的可见性，并 deliberate
-地重写 `RegistrationPersistence`、`RegistryConsumer`、`SealCollision`：consumer visibility
-保留，seal membership 改为 root-local，跨 root duplicates 不碰撞，同一 root/catalog 内
-duplicates 稳定发 IE-C025。
+第 3 步还必须保持 `RegistrationPersistence`、`RegistryConsumer`、`SealCollision` 的 landed
+semantics：imported registrations 对 environment consumers 可见且进入 seal；同一 arena/theorem
+重复发 IE-C002，合法跨 arena occurrences 的 qualified-name collision 发 IE-C025。
 
 ---
 
@@ -7061,13 +7129,15 @@ artifact 可删除、可重建、不可回写判词。
 
 ### AC-011　Occurrence identity
 
-每个 `(root_id, catalog_id, theoremName)` 恰登记一次；跨 catalog/root 重用 theorem 仅经
-分别命名、kernel-checked realization，所有 companions catalog-qualified。
+每个 `(canonical arena declaration,theoremName)` 在 sealing root 的 import closure 中恰登记
+一次；同一 theorem 仅可经分别命名、kernel-checked realization 登记到不同 canonical
+arena，所有 companions catalog-qualified。
 
 ### AC-012　Canonical maximal grouping
 
-designated root 中同一 canonical object `Arena` 的全部 occurrences 进入一个 maximal
-catalog；不存在 namespace/root/catalog/cloned-arena/positive-elsewhere exemption。
+designated root import closure 中同一 canonical object `Arena` 的全部 occurrences 进入一个
+仓库尺度 maximal catalog；不存在 namespace/auxiliary-root/catalog/cloned-arena/
+positive-elsewhere exemption。
 
 ### AC-013　Certified analysis v3
 
@@ -7086,12 +7156,13 @@ redundant analysis view 仅在 negative certificate 完整后可写 diagnostic p
 rates 均被认证，且 flat unique capture 与 ordered layered capture 在 API/artifact/test
 中保持不同名字。
 
-### AC-016　Module-local designated root
+### AC-016　Import-closure designated root
 
-seal 只消费自身模块的 registrations；恰有一个 designated v4.2 system root。imported
-registrations 仍对 environment consumers 可见，但不是当前 seal members。跨 root scopes
-的 duplicates 不碰撞，同一 `(root_id,catalog_id,theoremName)` 内 duplicates 发 IE-C025。
-辅助 roots 既不证明也不豁免 system-wide positivity。
+seal 消费其 root import closure 中全部持久可见 registrations；恰有一个 designated v4.2
+system root，其 import closure 等于固定仓库快照的 registration closure，项目级 coverage
+manifest 由既有枚举器产生并与实际 sealed set 相等。辅助 roots 只分析各自 import closure，
+artifact 写 `seal_scope: import-closure` 与 imported registration modules，且既不证明也不豁免
+system-wide positivity。同一 arena/theorem 重复发 IE-C002，qualified-name collision 发 IE-C025。
 
 ### AC-017　Causal alignment
 
@@ -7113,10 +7184,10 @@ frozen `InformationRoot`、其十一项 singleton counts 与 schema-v2 语义不
 
 完成态必须由第 37 节固定的七步顺序产生：spec → D5 analysis laws → judge registry/identity
 mechanics → unified causal math → designated v4.2 root → schema-v3 projection → fixtures。
-judge 的 occurrence identity、root ownership/filtering 与 structured diagnostics 必须先于任何
-shared causal re-registration。任何 $B(C)>65536$ catalog 必须在其登记或执行前已有 refl-lane
+judge 的 occurrence identity、import-closure grouping、三项 seal checks 与 structured diagnostics
+必须先于任何 shared causal registration。任何 $B(C)>65536$ catalog 必须在其登记或执行前已有 refl-lane
 reflected seal。第 3 步必须先重规格化并通过 `RegistrationPersistence`、`RegistryConsumer`
-与 `SealCollision` 的 imported-visibility/root-local-membership/collision 语义；不得以最终树
+与 `SealCollision` 的 landed imported-visibility/import-closure-membership/collision 语义；不得以最终树
 碰巧满足 AC-011--AC-019 代替这条依赖顺序。
 
 ---
@@ -7763,7 +7834,7 @@ alignment device；二者都不声称 OI 与 IC 是同一个 causal ontology。
 
 ## 44. 唯一数学判词
 
-对当前 module-local root $R$ 与 canonical object arena $A$ 形成的 maximal catalog
+对当前 root $R$ 的 import closure 与 canonical object arena $A$ 形成的 maximal catalog
 $\mathcal T_{R,A}$，每个 occurrence $i$ 的数学判词是：
 
 $$
@@ -7817,7 +7888,7 @@ $$
 ## 46. 唯一实现闭环
 
 ```text
-v4.2 sealing-root-local Lean theorem occurrences and proofs
+v4.2 import-closure-visible Lean theorem occurrences and proofs
         ↓
 C-IRPT primitive normalization
         ↓
@@ -7908,22 +7979,31 @@ $$
 
 v4.2 不推翻第 48 节；它在 v4.1 kernel-residual 内核上作 additive 扩展，并裁定：
 
-1. 分析成员的身份是 root/catalog-qualified occurrence；同一 occurrence key 恰出现一次；
+1. 分析成员的 occurrence identity 是 `(canonical arena declaration,theoremName)`；该键在
+   sealing root 的整个 import closure 中恰出现一次，同一 theorem 在不同 canonical arena
+   经独立 kernel-checked realization 登记时是合法的新 occurrence；
 2. 分组键是 canonical object `Arena` declaration，不是 carrier coincidence、namespace 或 `PrimitiveLawArena`；
-3. 同 root、同 arena 的全部 occurrences 构成唯一 maximal catalog，sub-catalog 只作 analysis view；
-4. v4.1（landed）imports persistent registrations；v4.2 要求 sealing root 只消费在 root module
-   自身 elaborated 的 registrations，landing step 3 必须以 imported-entry filtering 或显式
-   root-ownership field 实现，同时保留 imported entries 对 consumers 的可见性；
-5. 恰有一个 designated v4.2 system root，其 positivity 是全部 maximal catalogs 的 conjunction；
+3. 同一 root import closure、同 arena 的全部 occurrences 构成唯一 maximal catalog，sub-catalog 只作 analysis view；
+4. v4.1（landed）imports persistent registrations；这就是 v4.2 contract：sealing root 消费其
+   import closure 中全部可见 entries，绝不因 extension 未导入或 imported-entry filtering 少看
+   同 arena peers（工程优化规范 v1 §16）；
+5. 恰有一个 designated v4.2 system root，其 import closure 包含固定仓库快照的完整
+   registration closure；项目级 coverage manifest 来自既有枚举器并与实际 sealed set 相等，
+   `SystemCatalogIrredundant` 是该 root 全部仓库尺度 maximal catalogs 的 conjunction；
 6. namespace、root、catalog、cloned arena 与 positive-elsewhere 均不构成 exemption；
 7. flat leave-one-out exclusive capture 与 ordered layered capture 是两个不同量；
 8. nested cumulative flat catalog 的粗成员必为零，严格 chain 的相邻 increments 可同时非空；
-9. overlap/refinement matrices、multiplicity spectrum、role totals、verdict 与 layer chain 都由 Lean theorem 加 reflected equality 认证；
+9. overlap/refinement matrices、multiplicity spectrum、role totals、verdict 与 layer chain 都由 Lean theorem 加 reflected equality 认证；每个 certificate 绑定 member set/order/arena/primitives/environment，旧 snapshot certificate 不得复用；
 10. kernel-address coincidence 仅是 diagnostic digest group，不是 `Equiv`、transport、rate 或 verdict 证据；
 11. 48-state `IC.Model ⊕ OI.Model` 是 causal alignment device，保留两个 frozen theorems 的 faithful realizations 并证明三层 strict chain；
 12. 512-state `OI.Model × IC.Model` 也是 alignment device，仅在 refl lane 满足第 33 节预算后可采用；
 13. 两种 carrier 都不声称两个 frozen SCM encodings 是同一个 causal ontology；
-14. schema v3 只承载新 shared analysis；v2 artifact 与 frozen `InformationRoot` 的十一项 singleton counts 保持原义。
+14. schema v3 只承载新 shared analysis，并以 `proof_method` 如实记录实际 `CertifiedCounts`
+    路线；v2 artifact 与 frozen `InformationRoot` 的十一项 singleton counts 保持原义；
+15. auxiliary root 的 catalogs 仅在自身 import closure 内 maximal，artifact 写
+    `seal_scope: import-closure` 与 imported registration modules，且不能 discharge 或 exempt；
+    导入 v4.1 `InformationRoot` 时自然继承其十一个 occurrences，与 `UnifiedBoolSCM` arena 上的
+    causal occurrences 不碰撞。
 
 最终边界是：只有 designated maximal catalog 的 `CatalogIrredundant` 控制 admission；
 overlap、rate magnitude、role comparison、spectrum、layered counts 与 address coincidence 都
