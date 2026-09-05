@@ -42,6 +42,8 @@ open D5.S3.Weil.TestFunctions
 open D5.S3.Weil.FourierLaplace
 open D5.S3.Weil.ZetaBridge.ConvolutionSquareOrbitBounds
 open D5.S3.Weil.ZetaBridge.WeilEvaluationObservableSubspace
+open D5.S3.Weil.ZetaBridge.WeilEvaluationExactObservableRange
+open D5.S3.Weil.ZetaBridge.FiniteMirrorReducedWeilFactorization
 open D5.S3.Weil.ZetaBridge.ZeroDataPresentationEquiv
 open D5.S3.Weil.ZetaBridge.FiniteMixedWeilMajorant
 open D5.S3.Weil.ZetaBridge.FiniteEvenWeilOddInterpolation
@@ -66,6 +68,18 @@ theorem fullMixedWeilForm_eq_zeroSum (Z : ZeroData) (g h : WeilTestFunction) :
         (symmetricConvergent_of_zeroData Z (convolve g (involution h))) := by
   rw [zeroSum_eq_tsum_of_zeroData]
   rfl
+
+/-- The actual complete mixed form is the limit of the finite forms on the
+exact observable ranges. This makes the finite-to-full dependency explicit. -/
+theorem reducedMirrorForm_tendsto_fullMixedWeilForm
+    (Z : ZeroData) (g h : WeilTestFunction) :
+    Filter.Tendsto (fun T : ℝ => finiteMirrorReducedForm Z T
+      (finiteWeilReducedEvaluation Z T g) (finiteWeilReducedEvaluation Z T h))
+      Filter.atTop (nhds (fullMixedWeilForm Z g h)) := by
+  rw [fullMixedWeilForm_eq_zeroSum]
+  simpa only [truncatedZeroSum_mixed_eq_reducedMirrorForm] using
+    truncatedZeroSum_tendsto Z (convolve g (involution h))
+      (symmetricConvergent_of_zeroData Z (convolve g (involution h)))
 
 /-- Complex conjugation swaps the two actual tests after mirror reindexing. -/
 theorem mixedWeilSummand_conj_mirror (Z : ZeroData)
@@ -196,6 +210,7 @@ theorem exists_actual_full_weil_gram_with_exact_negative_index
   exact ⟨basis, hinj, neg_fullWeilGram_posDef_of_strictNegative Z basis hneg,
     fullWeilGram_negIndex_of_strictNegative Z basis hneg⟩
 
+#print axioms reducedMirrorForm_tendsto_fullMixedWeilForm
 #print axioms fullMixedWeilForm_conj
 #print axioms fullWeilGram_isHermitian
 #print axioms fullWeilGram_quadratic

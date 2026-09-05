@@ -11,6 +11,13 @@ internal sealed class WeilFullGramInertiaDocument : IScribeDocumentDefinition
         "The actual full mixed Weil Gram is Hermitian and represents synthesized full zero sums; a constructed common Burnol family has exact spectral negative index equal to its observable orbit dimension.",
         H("Actual Full Weil Gram Inertia"),
         Blocks(
+            Describe.Lean(DescribeId.Create("full-weil-form-finite-observable-limit"),
+                DeclarationHandle.Create(Prefix + "reducedMirrorForm_tendsto_fullMixedWeilForm"),
+                H("Full form as the limit of exact finite observable forms"),
+                StatementSource.FromAuthor(Disp(F.Id("reducedMirrorForm(E_T(g),E_T(h)) tends to W(g,h)"))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The mixed finite factorization transports the existing symmetric-cutoff convergence theorem. The exact-range owner is used in this proof, rather than imported only to force a replay."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("full-weil-gram-hermitian"),
                 DeclarationHandle.Create(Prefix + "fullWeilGram_isHermitian"),
                 H("Hermitian symmetry by actual zero reindexing"),

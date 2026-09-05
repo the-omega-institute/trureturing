@@ -19,3 +19,5 @@ A valid finite separated nonreal off-line orbit frame remains an input. Empty fr
 Main declarations: fullMixedWeilForm_conj; fullWeilGram_isHermitian; fullWeilGram_quadratic; neg_fullWeilGram_posDef_of_strictNegative; fullWeilGram_negIndex_of_strictNegative; exists_actual_full_weil_gram_with_exact_negative_index.
 
 Library interfaces checked against Mathlib tag v4.33.0: Matrix.PosDef.of_dotProduct_mulVec_pos, Matrix.IsHermitian.im_star_dotProduct_mulVec_self, Complex.pos_iff. The eigenvalue-to-index step directly reuses the repository pattern in FiniteMirrorKreinGramInertia.
+
+The declaration `reducedMirrorForm_tendsto_fullMixedWeilForm` identifies each actual full mixed entry as the symmetric-window limit of the existing reduced mirror forms on the exact finite observable images. It reuses `truncatedZeroSum_tendsto` and the new mixed factorization.

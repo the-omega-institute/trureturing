@@ -66,7 +66,7 @@ theorem dyadic_zero_count_bounded_of_finite_carrier
   let M : ℕ := ∑ rho ∈ hfinite.toFinset, Z.mult rho
   refine ⟨M, ?_⟩
   intro T
-  unfold ZeroConfig.N
+  unfold ZeroConfig.N ZeroConfig.window
   rw [finsum_mem_eq_finite_toFinset_sum _ (Z.finite_window T (2 * T))]
   apply Finset.sum_le_sum_of_subset
   intro rho hrho
