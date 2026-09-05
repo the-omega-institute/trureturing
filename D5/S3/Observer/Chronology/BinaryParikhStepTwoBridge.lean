@@ -22,8 +22,9 @@ triangular, their squares vanish, and every product of three generators is
 zero. The center of doubled Magnus is `2 * pairs - trueCount * falseCount`.
 The mapping remains non-injective on arbitrary binary words.
 
-Classical anchor: A. Atanasiu, C. Atanasiu, I. Petre and A. Salomaa,
-Parikh matrix mappings and scattered subwords, IJFCS 13 (2002), 211-228.
+Classical anchor: A. Mateescu, A. Salomaa, K. Salomaa and S. Yu,
+A sharpening of the Parikh mapping, RAIRO ITA 35(6) (2001), 551-564,
+DOI 10.1051/ita:2001131. Bibliography verified against the Numdam journal record.
 Library search found prime-event Parikh *vectors* and Mathlib's abstract
 Heisenberg Lie algebra, but neither supplies this binary word-to-matrix and
 Chen-coordinate adapter. This is a formal integration, not a novelty claim
