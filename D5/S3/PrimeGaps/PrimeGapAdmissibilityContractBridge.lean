@@ -45,6 +45,7 @@ theorem direct_admissibility_iff_card_lt
     (∃ a : ZMod p, ∀ h ∈ H, (h : ZMod p) ≠ a) ↔
       (directResidueSet H p).card < p := by
   classical
+  letI : NeZero p := ⟨Nat.ne_of_gt hp⟩
   have huniv : (Finset.univ : Finset (ZMod p)).card = p := by simp
   constructor
   · rintro ⟨a, ha⟩
