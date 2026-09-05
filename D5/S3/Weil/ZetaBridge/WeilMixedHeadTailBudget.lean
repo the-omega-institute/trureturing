@@ -6,6 +6,8 @@
    digest: Bound the actual full mixed majorant by finite transform enclosures and a scalar fourth-moment tail, and feed that bound to the executable common-depth theorem. -/
 
 import D5.S3.Weil.ZetaBridge.BurnolRationalDepthBudget
+import D5.S3.Weil.TestFunctions.FourierLaplaceClosedStripDecay
+import Mathlib.Analysis.Complex.ExponentialBounds
 
 /-!
 # Finite head and scalar zero-tail control of the mixed majorant
@@ -29,9 +31,12 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Weil.ZetaBridge.WeilMixedHeadTailBudget
 
+open MeasureTheory
 open D5.S3.Weil.ZeroSum
 open D5.S3.Weil.TestFunctions
 open D5.S3.Weil.FourierLaplace
+open D5.S3.Weil.ZetaBridge.ClassicExplicitFormula
+open D5.S3.Weil.TestFunctions.FourierLaplaceClosedStripDecay
 open D5.S3.Weil.ZetaBridge.FiniteMixedWeilMajorant
 open D5.S3.Weil.ZetaBridge.FiniteEvenWeilOddInterpolation
 open D5.S3.Weil.ZetaBridge.FiniteOrbitBurnolPacket
@@ -156,6 +161,88 @@ theorem fourthMomentSummand_le_inverse_fourth (Z : ZeroData) (n : ℕ)
   rw [← inv_pow, ← div_eq_mul_inv]
   exact div_le_div_of_nonneg_left (Nat.cast_nonneg _) (by positivity) hd
 
+/-- In a radius-one support window the exponential strip cost is bounded by
+three, so the two finite L1 enclosures give a rational decay coefficient. -/
+theorem closedStripJetBudget_le_three_jets
+    (g : WeilTestFunction) (J0 J2 : ℝ)
+    (hs : tsupport (g : ℝ → ℂ) ⊆ Set.Icc (-1) 1)
+    (hJ0 : (∫ x : ℝ, ‖g x‖) ≤ J0)
+    (hJ2 : (∫ x : ℝ, ‖((deriv^[2]) (g : ℝ → ℂ)) x‖) ≤ J2) :
+    closedStripJetBudget g (1 / 2) ≤ 3 * (J0 + J2) := by
+  have hJ : 0 ≤ J0 + J2 := add_nonneg
+    ((integral_nonneg fun x => norm_nonneg (g x)).trans hJ0)
+    ((integral_nonneg fun x => norm_nonneg (((deriv^[2]) (g : ℝ → ℂ)) x)).trans hJ2)
+  have hexp : Real.exp ((1 / 2 : ℝ) * 1) ≤ 3 :=
+    (Real.exp_le_exp.mpr (by norm_num : (1 / 2 : ℝ) * 1 ≤ 1)).trans
+      Real.exp_one_lt_three.le
+  exact (closedStripJetBudget_le_support_jets g 1 (1 / 2) J0 J2
+    (by norm_num) hs hJ0 hJ2).trans (mul_le_mul_of_nonneg_right hexp hJ)
+
+private theorem gamma_in_half_strip (Z : ZeroData) (n : ℕ) :
+    |(Z.gamma n).im| ≤ (1 / 2 : ℝ) := by
+  rw [ZeroData.gamma, ← gammaOf_eq_spectralParameter]
+  exact (Zeta23.WeilEF.abs_gammaOf_im_lt (Z.zero_isNontrivial n).2).le
+
+/-- Both actual zero-node evaluations follow from the same two finite jets. -/
+theorem zero_transform_pair_le_three_jets
+    (Z : ZeroData) (g : WeilTestFunction) (J0 J2 : ℝ)
+    (hs : tsupport (g : ℝ → ℂ) ⊆ Set.Icc (-1) 1)
+    (hJ0 : (∫ x : ℝ, ‖g x‖) ≤ J0)
+    (hJ2 : (∫ x : ℝ, ‖((deriv^[2]) (g : ℝ → ℂ)) x‖) ≤ J2) (n : ℕ) :
+    ‖fourierLaplace g (Z.gamma n)‖ ≤
+        (3 * (J0 + J2)) * inverseQuadraticEnvelope Z n ∧
+      ‖fourierLaplace g (conj (Z.gamma n))‖ ≤
+        (3 * (J0 + J2)) * inverseQuadraticEnvelope Z n := by
+  have hbudget := closedStripJetBudget_le_three_jets g J0 J2 hs hJ0 hJ2
+  have hdecay := (closedStripJetBudget_spec g (1 / 2) (by norm_num)).2
+  have him := gamma_in_half_strip Z n
+  have hbound (w : ℂ) (hw : |w.im| ≤ (1 / 2 : ℝ)) :
+      ‖fourierLaplace g w‖ ≤ (3 * (J0 + J2)) / (1 + w.re ^ 2) :=
+    (hdecay w hw).trans (div_le_div_of_nonneg_right hbudget (by positivity))
+  constructor
+  · simpa only [inverseQuadraticEnvelope, div_eq_mul_inv] using hbound (Z.gamma n) him
+  · have himc : |(conj (Z.gamma n)).im| ≤ (1 / 2 : ℝ) := by simpa using him
+    simpa only [Complex.conj_re, inverseQuadraticEnvelope, div_eq_mul_inv] using
+      hbound (conj (Z.gamma n)) himc
+
+/-- A complete majorant budget from fixed support, two finite L1 enclosures
+per test, and one scalar spectral tail. No transform-decay or C-bound premise
+remains. The scalar tail is the separately identified number-theoretic input. -/
+theorem finiteMixedMajorantTotal_le_unit_support_jets
+    (Z : ZeroData) (g : ι → WeilTestFunction) (E : Finset ℕ)
+    (J0 J2 : ι → ℝ) (Theta : ℝ)
+    (hs : ∀ i, tsupport (g i : ℝ → ℂ) ⊆ Set.Icc (-1) 1)
+    (hJ0 : ∀ i, (∫ x : ℝ, ‖g i x‖) ≤ J0 i)
+    (hJ2 : ∀ i, (∫ x : ℝ, ‖((deriv^[2]) (g i : ℝ → ℂ)) x‖) ≤ J2 i)
+    (hspectral : Summable (fun n : {n : ℕ // n ∉ E} => fourthMomentSummand Z n.1))
+    (htail : (∑' n : {n : ℕ // n ∉ E}, fourthMomentSummand Z n.1) ≤ Theta) :
+    finiteMixedMajorantTotal Z g ≤
+      (∑ i, 3 * (J0 i + J2 i)) ^ 2 *
+        ((∑ n ∈ E, fourthMomentSummand Z n) + Theta) := by
+  let D : ι → ℝ := fun i => 3 * (J0 i + J2 i)
+  let V : ι → ℕ → ℝ := fun i n => D i * inverseQuadraticEnvelope Z n
+  have hb (n : ℕ) (i : ι) :=
+    zero_transform_pair_le_three_jets Z (g i) (J0 i) (J2 i) (hs i) (hJ0 i) (hJ2 i) n
+  have hC := finiteMixedMajorantTotal_le_head_tail Z g E D V V Theta
+    (fun n _ i => (hb n i).1) (fun n _ i => (hb n i).2)
+    (fun n _ i => (hb n i).1) (fun n _ i => (hb n i).2) hspectral htail
+  have hhead : finiteMixedHeadBound Z E V V =
+      (∑ i, D i) ^ 2 * ∑ n ∈ E, fourthMomentSummand Z n := by
+    unfold finiteMixedHeadBound
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro n _
+    dsimp only [V]
+    simp only [← Finset.sum_mul]
+    unfold fourthMomentSummand
+    ring
+  rw [hhead] at hC
+  dsimp only [D] at hC
+  nlinarith [hC]
+
+#print axioms closedStripJetBudget_le_three_jets
+#print axioms zero_transform_pair_le_three_jets
+#print axioms finiteMixedMajorantTotal_le_unit_support_jets
 #print axioms finiteMixedMajorant_head_le
 #print axioms finiteMixedMajorant_pointwise_decay
 #print axioms finiteMixedMajorantTotal_le_head_tail
