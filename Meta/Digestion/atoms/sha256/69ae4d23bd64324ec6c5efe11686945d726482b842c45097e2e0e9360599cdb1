@@ -1,0 +1,27 @@
+## 定理 B5：重标定回返恒等式
+
+定义：
+
+$$
+\boxed{
+\mathcal R_d(v)
+=
+d\,g_d^*(I+vC_d)^{-1}g_d.
+}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal R_d(v)
+=
+\frac1v
+\left[
+a_1-
+\frac{f_d(v)}{1-vf_d(v)/d}
+\right].
+}
+\tag{B21}
+$$
+

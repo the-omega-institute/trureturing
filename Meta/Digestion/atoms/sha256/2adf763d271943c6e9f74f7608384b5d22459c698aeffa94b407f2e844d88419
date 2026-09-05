@@ -1,0 +1,87 @@
+## 定理 4：四种有限性质等价
+
+对上述正系数多项式 \(P\)，以下等价：
+
+$$
+\begin{aligned}
+\text{①}\;&P\text{ 的全部根为负实数，允许重根};\\
+\text{②}\;&G_d\succeq0;\\
+\text{③}\;&\exists K=K^{\mathsf T}>0,\quad P(v)=\det(I+vK);\\
+\text{④}\;&\exists w_1,\ldots,w_{2d-1}\ge0,\quad P=C_w.
+\end{aligned}
+$$
+
+### 证明：①与②
+
+设 \(q\) 的互异根为 \(\lambda_j\)，重数为 \(m_j\)。Newton 恒等式给出：
+
+$$
+s_n=\frac1d\sum_jm_j\lambda_j^n.
+$$
+
+对实多项式 \(p(x)=\sum_{i=0}^{d-1}u_ix^i\)：
+
+$$
+\boxed{
+u^{\mathsf T}G_du
+=
+\frac1d\sum_jm_jp(\lambda_j)^2.
+}
+\tag{16}
+$$
+
+若所有根都实，右边非负。
+
+若存在非实共轭对 \(\lambda,\overline\lambda\)，可以用实系数插值多项式，使：
+
+$$
+p(\lambda)=i,\qquad p(\overline\lambda)=-i,
+$$
+
+并在其余互异根处为零。所需次数小于互异根数，因而小于等于 \(d-1\)。
+
+此时式（16）严格为负，故 \(G_d\) 不正半定。
+
+所以 \(G_d\succeq0\) 当且仅当 \(q\) 全部实根。这是 Hermite–Sylvester 判据的核心证明。([arXiv][5])
+
+又由于 \(P\) 的系数全部为正：
+
+$$
+P(v)>0\qquad(v\ge0).
+$$
+
+因此 \(q\) 没有非正实根。于是 \(q\) 实根等价于全部根为正，也等价于 \(P\) 全部根为负。
+
+### 证明：①与③
+
+若：
+
+$$
+P(v)=\prod_{j=1}^d(1+\theta_jv),
+\qquad\theta_j>0,
+$$
+
+取 \(K=\operatorname{diag}(\theta_1,\ldots,\theta_d)\)。
+
+反向由正矩阵的谱分解立即得到。
+
+这里用根证明了**存在性等价**，还不是后面的免求根构造算法。
+
+### 证明：①推出④
+
+取：
+
+$$
+w_{2j-1}=\theta_j,\qquad w_{2j}=0.
+$$
+
+链断成独立位置，配分函数就是 \(\prod_j(1+\theta_jv)\)。
+
+### 证明：④推出①
+
+直接使用定理 3。证毕。
+
+**因此，“存在正权 Fibonacci 链”不是一个可以免费添加的建模假设；它与该有限多项式的实根性同样有内容。**
+
+---
+

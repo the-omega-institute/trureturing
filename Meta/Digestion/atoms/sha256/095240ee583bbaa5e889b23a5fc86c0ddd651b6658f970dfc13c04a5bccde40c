@@ -1,0 +1,62 @@
+### 证明：第一步，将回返核加回一个正方向
+
+定义完整 Bézout 核：
+
+$$
+\mathcal W_d(x,y)
+=
+\frac{
+q_d(x)r_d(y)-q_d(y)r_d(x)
+}{
+x-y
+}.
+$$
+
+代入：
+
+$$
+q_d(x)=(x-\mu_d)r_d(x)-n_d(x),
+$$
+
+得到：
+
+$$
+\boxed{
+\mathcal W_d(x,y)
+=
+r_d(x)r_d(y)+\mathcal B_d(x,y).
+}
+\tag{C10}
+$$
+
+设：
+
+$$
+r_d(x)=x^{d-1}+\mathbf a^{\mathsf T}\mathbf v_{d-2}(x).
+$$
+
+那么完整核的系数矩阵为：
+
+$$
+W_d=
+\begin{pmatrix}
+B_d+\mathbf a\mathbf a^{\mathsf T}&\mathbf a\\
+\mathbf a^{\mathsf T}&1
+\end{pmatrix}.
+$$
+
+对右下角的 \(1\) 作精确 Schur 消元：
+
+$$
+\boxed{
+W_d\ \text{合同于}\ B_d\oplus[1].
+}
+\tag{C11}
+$$
+
+所以：
+
+$$
+n_-(W_d)=n_-(B_d).
+$$
+
