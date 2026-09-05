@@ -1,5 +1,7 @@
 import D5.S3.ConceptDynamics.InformationEscape.InformationRoot
 
+open Lean
+open LeanInformationAudit
 open D5.S3.ConceptDynamics.Aggregation.AgendaPower
 open D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas
 open D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas
@@ -13,6 +15,15 @@ open D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 namespace LeanInformationAudit.Tests.V2Baseline
 
 set_option maxRecDepth 100000
+
+run_cmd do
+  let records := SealRecords.forRoot (← getEnv) frozenInformationRootId
+  let artifact := serializeV2Artifact records
+  let digest := Sha256.hex artifact.toUTF8
+  -- Produced once from these persisted InformationRoot records with origin/dev's
+  -- byte-identical production serializer; the frozen root itself was not modified.
+  unless digest == "6da462e5cbfa01261eb820dd4c236f647632fd36fe8df9a391ec5ed9800cd16b" do
+    throwError "v2 artifact digest mismatch: {digest}"
 
 example : agendaPowerArena.__information_catalog.uniqueCaptureCount (0 : Fin 1) = 570 := by
   decide
