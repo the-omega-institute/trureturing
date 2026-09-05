@@ -14,6 +14,8 @@ public sealed class EngineeringPathFilterTests
         "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
     private const string ScriptTestsProject =
         "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
+    private const string TestSupportProject =
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj";
 
     [Fact]
     public void ScribeChangeSelectsBaseReverseTestProjectClosure()
@@ -58,6 +60,139 @@ public sealed class EngineeringPathFilterTests
         Assert.Equal(
             [ArchitectureTestsProject, EngineTestsProject, ScribeTestsProject, ScriptTestsProject],
             plan.Projects.ToArray());
+    }
+
+    [Fact]
+    public void LiteralFalseXunitProjectIsExcludedFromFullAndFallbackPlans()
+    {
+        var topology = new TestProjectTopologySnapshot(
+        [
+            ProjectWithClassifications(TestSupportProject, ["false"], referencesXunit: true),
+            ProjectWithClassifications(EngineTestsProject, ["true"], referencesXunit: true),
+        ]);
+
+        var full = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            [],
+            topology,
+            topology,
+            full: true);
+        var fallback = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            ["Meta/Digestion/backfill/source/residual-open/atom.yaml"],
+            topology,
+            topology);
+
+        Assert.Equal(EngineeringTestPlanKind.Full, full.Kind);
+        Assert.Equal(EngineeringTestPlanKind.Full, fallback.Kind);
+        Assert.Equal([EngineTestsProject], full.Projects.ToArray());
+        Assert.Equal([EngineTestsProject], fallback.Projects.ToArray());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void LiteralTrueProjectIsSelectedWithOrWithoutXunit(bool referencesXunit)
+    {
+        var topology = new TestProjectTopologySnapshot(
+        [
+            ProjectWithClassifications(
+                EngineTestsProject,
+                ["true"],
+                referencesXunit),
+        ]);
+
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            [],
+            topology,
+            topology,
+            full: true);
+
+        Assert.Equal([EngineTestsProject], plan.Projects.ToArray());
+    }
+
+    [Fact]
+    public void XunitProjectWithoutLiteralIsSelectedByHeuristic()
+    {
+        var topology = new TestProjectTopologySnapshot(
+        [
+            ProjectWithClassifications(
+                EngineTestsProject,
+                [],
+                referencesXunit: true),
+        ]);
+
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            [],
+            topology,
+            topology,
+            full: true);
+
+        Assert.Equal([EngineTestsProject], plan.Projects.ToArray());
+    }
+
+    [Fact]
+    public void ProjectWithoutLiteralOrXunitIsExcluded()
+    {
+        var topology = new TestProjectTopologySnapshot(
+        [
+            ProjectWithClassifications(
+                EngineProject,
+                [],
+                referencesXunit: false),
+        ]);
+
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            [],
+            topology,
+            topology,
+            full: true);
+
+        Assert.Empty(plan.Projects);
+    }
+
+    [Fact]
+    public void CandidateAddedProjectWithConflictingLiteralsFailsClosed()
+    {
+        var protectedBase = new TestProjectTopologySnapshot([]);
+        var candidate = new TestProjectTopologySnapshot(
+        [
+            ProjectWithClassifications(
+                EngineTestsProject,
+                ["true", "false"],
+                referencesXunit: true),
+        ]);
+
+        var error = Assert.Throws<InvalidDataException>(() =>
+            EngineeringTestPlanPolicy.EvaluateOrdinary(
+                [EngineTestsProject],
+                protectedBase,
+                candidate));
+
+        Assert.Contains(
+            "candidate-added project has no literal IsTestProject classification",
+            error.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RealTestSupportProjectIsAbsentFromEveryProducedPlan()
+    {
+        var topology = RepositoryRules.ReadTrackedProjects(RepositoryLayout.FindRoot());
+        var plans = new[]
+        {
+            EngineeringTestPlanPolicy.EvaluateOrdinary([], topology, topology, full: true),
+            EngineeringTestPlanPolicy.EvaluateOrdinary(
+                ["Meta/Digestion/backfill/source/residual-open/atom.yaml"],
+                topology,
+                topology),
+            EngineeringTestPlanPolicy.EvaluateOrdinary(
+                ["tools/TestSupport/StrataLint.TestSupport/TestProcessRunner.cs"],
+                topology,
+                topology),
+        };
+
+        Assert.All(
+            plans,
+            plan => Assert.DoesNotContain(TestSupportProject, plan.Projects));
     }
 
     [Fact]
@@ -126,6 +261,17 @@ public sealed class EngineeringPathFilterTests
     private static TestProjectTopologyProject Project(
         string path,
         bool isTest,
+        params string[] references) =>
+        ProjectWithClassifications(
+            path,
+            isTest ? ["true"] : [],
+            referencesXunit: false,
+            references);
+
+    private static TestProjectTopologyProject ProjectWithClassifications(
+        string path,
+        IReadOnlyList<string> classifications,
+        bool referencesXunit,
         params string[] references)
     {
         var directory = Path.GetDirectoryName(path)!;
@@ -133,11 +279,16 @@ public sealed class EngineeringPathFilterTests
             "",
             references.Select(reference =>
                 $"<ProjectReference Include=\"{Path.GetRelativePath(directory, reference).Replace('\\', '/')}\" />"));
-        var testProperty = isTest ? "<IsTestProject>true</IsTestProject>" : "";
+        var testProperties = string.Join(
+            "",
+            classifications.Select(value => $"<IsTestProject>{value}</IsTestProject>"));
+        var xunitReference = referencesXunit
+            ? "<PackageReference Include=\"xunit\" />"
+            : "";
         return new TestProjectTopologyProject(
             path,
-            $"<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup>{testProperty}</PropertyGroup>"
-            + $"<ItemGroup>{projectReferences}</ItemGroup></Project>");
+            $"<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup>{testProperties}</PropertyGroup>"
+            + $"<ItemGroup>{projectReferences}{xunitReference}</ItemGroup></Project>");
     }
 
     private static TestProjectTopologyProject ProjectWithCompile(
