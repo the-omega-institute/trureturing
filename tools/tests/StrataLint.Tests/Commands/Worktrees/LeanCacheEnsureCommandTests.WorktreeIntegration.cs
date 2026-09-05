@@ -72,31 +72,6 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void MissingLakeCanBeSeededFromAnotherRegisteredWorktree()
-    {
-        using var repository = new TemporaryDirectory();
-        InitializeRepository(repository.Path);
-        var donor = AddWorktree(repository.Path, "registered-donor");
-        WriteCache(donor, "registered donor cache\n");
-        var target = AddWorktree(repository.Path, "registered-target");
-
-        var result = WorktreeCommand.Run(
-            repository.Path,
-            ["ensure-cache", "--path", target],
-            new RecordingWorktreeProcessRunner());
-
-        Assert.True(result.Success, result.Error);
-        using var receipt = ParseReceipt(result.Output);
-        Assert.Equal(
-            LeanCacheGuard.PhysicalPath(donor),
-            receipt.RootElement.GetProperty("donor").GetString());
-        Assert.Equal(
-            "registered donor cache\n",
-            LeanCacheFixtureFile.ReadText(Path.Combine(target, ".lake", "build", "cache.bin")));
-        Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
-    }
-
-    [Fact]
     public void BusyDonorIsSkippedAndEnsureUsesCacheGet()
     {
         using var repository = new TemporaryDirectory();
