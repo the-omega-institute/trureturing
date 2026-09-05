@@ -6,6 +6,17 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/Epistemic/KnowledgeMonotoneRefinement.knowledge_monotone_under_nonempty_refinement
+    gaps:
+      - code: chain-migration-incomplete
+        detail: ba0f159d17f126095bc1e529f317d5965ad3521aae44c7b4a2c5929346d30dbb
+      - code: chain-migration-incomplete
+        detail: c710bd80c5b59b4b121c0468089b9be5b268283de73da0815824e740eba87b84
+      - code: chain-migration-incomplete
+        detail: e5b4c6356494886b12e774017646f7a6a6eee2d13288d0ecbc00acbf139196ae
   chain_atoms:
     - f26b60e80e1bf573730068b2564956c16f8b63dfa5bdb732ce8e18fbbc0352c9
     - ba0f159d17f126095bc1e529f317d5965ad3521aae44c7b4a2c5929346d30dbb
