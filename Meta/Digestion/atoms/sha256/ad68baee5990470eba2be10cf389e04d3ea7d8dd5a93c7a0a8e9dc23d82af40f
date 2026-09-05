@@ -1,0 +1,48 @@
+## C8.4 grounded Laplacian
+
+定义平均 charge：
+
+$$
+\bar q=\frac1{|V|}\sum_{v\in V}q_v.
+\tag{C8.10}
+$$
+
+对 $\kappa>0$，定义：
+
+$$
+\boxed{
+\mathcal E_{G,\kappa}^{\rm grounded}(q)
+=
+q^TL_Gq
++
+\kappa|V|\,|\bar q|^2.
+}
+\tag{C8.11}
+$$
+
+把：
+
+$$
+q=\bar q\,\mathbf1+q_\perp,
+\qquad
+q_\perp\perp\mathbf1,
+\tag{C8.12}
+$$
+
+并令 $\lambda_2(L_G)>0$ 为第一非零 Laplacian eigenvalue，则：
+
+$$
+\boxed{
+\mathcal E_{G,\kappa}^{\rm grounded}(q)
+\ge
+\min\{\lambda_2(L_G),\kappa\}\|q\|^2.
+}
+\tag{C8.13}
+$$
+
+这给出 full ambient coercivity。
+
+Gamma/pole completion 是否 canonical 地提供式 (C8.11) 中的共同模 anchor，目前仍是开放桥；不能因为 completed function 具有 Gamma factor 就直接认定该项已经存在。
+
+---
+

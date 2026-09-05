@@ -1,0 +1,33 @@
+## C8.2 physical spectral charge ray
+
+对 canonical prime threads：
+
+$$
+q_p=Q_p(u)=-\delta\log p.
+\tag{C8.5}
+$$
+
+令：
+
+$$
+\ell=(\log p)_{p\in V}.
+$$
+
+则：
+
+$$
+q=-\delta\ell.
+\tag{C8.6}
+$$
+
+只要 graph 至少连接两个不同素数，$\ell$ 不是常向量，因此：
+
+$$
+\mathcal E_G^{\rm ch}(-\delta\ell)=0
+\Longleftrightarrow
+\delta=0.
+\tag{C8.7}
+$$
+
+所以在 canonical 一维 spectral manifold 上，pair charge differences 已足以定位临界线。
+

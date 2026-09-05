@@ -1,0 +1,41 @@
+## C2.2 临界线的精确 thread 表述
+
+由项目的 zero-charge/unit-norm theorem：
+
+$$
+Q_p(u)=0
+\Longleftrightarrow
+\|Z_{p,u}(m)\|=1\quad\forall m.
+\tag{C2.5}
+$$
+
+而 $Q_p(u)=-\delta\log p$，故对任意素数 $p$：
+
+$$
+\boxed{
+\Re s=\frac12
+\Longleftrightarrow
+\delta=0
+\Longleftrightarrow
+Q_p(u)=0
+\Longleftrightarrow
+\|Z_{p,u}(m)\|=1\quad\forall m.
+}
+\tag{C2.6}
+$$
+
+所以 RH 的 thread 几何不是：
+
+$$
+\text{all phases are trivial}.
+$$
+
+在线零点一般仍具有非平凡 $t$，所以其 solenoid phase 非平凡。正确命题是：
+
+$$
+\boxed{
+\text{所有零点所对应的 centered prime threads 都落在 zero-charge phase locus。}
+}
+\tag{C2.7}
+$$
+

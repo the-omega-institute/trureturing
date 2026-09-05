@@ -1,0 +1,14 @@
+## C17.3 finite-root-depth escape
+
+有限 solenoid coordinates 看不见某些 deeper root choices。其 novelty 由定理 C6.1 的 divisibility criterion 决定。
+
+修复对象是：
+
+$$
+\boxed{
+\text{structurally novel deeper level
+或 multiplicatively independent prime width}.
+}
+\tag{C17.3}
+$$
+

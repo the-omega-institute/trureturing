@@ -6,6 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain-parent whole-clause guard. The named proposition child `0b8e2434b114f159befd20584ce739dc5ed018f4977caebe4f224d5c80d1f687` and proof-sketch child `fcffbcc2542a077dac385971b910f9e25f687b8574e9e1d67f5f8afb56f121c2` are carried by frozen GID `D5/S3/Observer/VisibleDescent/ThreeRuleActorDecidability.three_rule_actor_decidability`; the remaining reading child `f3edef77256cdd6d3b4c9f6b4cd0d0a01741c5047a8efdf7d060ecff9246c7b4` is guarded because its historical observation, FCD-recognition interpretation, and ethical analogy are absent from that public statement. D5 queries `three rule actor|actor decidability|transition compatibility|recipient wish|silver rule|golden rule` found the cited exact owner and no broader owner. Pinned Mathlib query `FactorsThrough|factorsThrough_iff` found `Mathlib/Logic/Function/Basic.lean:833,882` and no domain-specific statement. Spec A17 third-party route is `wait-for-capability` because installed packages provide generic Lean infrastructure only. Local probe `/private/tmp/w73c40-atom1-probe.lean` exited 0 and confirmed the full mathematical carrier, leaving only the quoted reading assertions uncarried."
+    reentry_condition: "Close the guarded reading child by source errata or by frozen typed statements for each non-mathematical assertion, then cover the parent in ordered chain flow with the existing ThreeRuleActorDecidability GID."
+    blocker_class: multi-clause-guard
   chain_atoms:
     - 0b8e2434b114f159befd20584ce739dc5ed018f4977caebe4f224d5c80d1f687
     - fcffbcc2542a077dac385971b910f9e25f687b8574e9e1d67f5f8afb56f121c2

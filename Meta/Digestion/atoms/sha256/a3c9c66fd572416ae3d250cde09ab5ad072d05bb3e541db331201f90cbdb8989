@@ -1,0 +1,53 @@
+## C8.1 非线性 charge graph energy
+
+取连通有限 prime graph $G=(V,E)$，正边权 $W_e>0$。对任意 real charge vector：
+
+$$
+q=(q_v)_{v\in V},
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal E_G^{\rm ch}(q)
+=
+\sum_{\{i,j\}\in E}
+W_{ij}\sinh^2(q_i-q_j).
+}
+\tag{C8.1}
+$$
+
+则：
+
+$$
+\mathcal E_G^{\rm ch}(q)=0
+\Longleftrightarrow
+q_i=q_j\quad\forall i,j,
+\tag{C8.2}
+$$
+
+即：
+
+$$
+\boxed{
+\ker\mathcal E_G^{\rm ch}
+=
+\operatorname{span}\{\mathbf1\}.
+}
+\tag{C8.3}
+$$
+
+在小 charge 区：
+
+$$
+\mathcal E_G^{\rm ch}(q)
+=
+q^TL_Gq
++
+O(\|B^Tq\|^4),
+\tag{C8.4}
+$$
+
+其中 $L_G$ 是加权 graph Laplacian。
+

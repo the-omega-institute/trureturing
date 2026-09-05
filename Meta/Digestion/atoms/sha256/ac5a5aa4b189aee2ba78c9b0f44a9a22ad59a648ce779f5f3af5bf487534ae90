@@ -1,0 +1,45 @@
+## C5.1 全 level phase faithfulness
+
+### 定理 C5.1　完整 one-prime phase thread 恢复 $t$
+
+若：
+
+$$
+\theta_{p,t}(m)
+=
+\theta_{p,t'}(m)
+\qquad
+\forall m\ge1,
+\tag{C5.1}
+$$
+
+则：
+
+$$
+\boxed{t=t'.}
+\tag{C5.2}
+$$
+
+#### 证明
+
+令：
+
+$$
+x=\frac{(t-t')\log p}{2\pi}.
+$$
+
+前件意味着 $x/m\in\mathbb Z$ 对所有正整数 $m$。取 $m>|x|$，则 $|x/m|<1$。它又是整数，只能为零，所以 $x=0$，继而 $t=t'$。
+
+结合 norm charge：
+
+### 推论 C5.2　一个完整 prime thread 忠实编码 $u$
+
+$$
+\boxed{
+Z_{p,u}=Z_{p,v}
+\Longrightarrow
+u=v.
+}
+\tag{C5.3}
+$$
+

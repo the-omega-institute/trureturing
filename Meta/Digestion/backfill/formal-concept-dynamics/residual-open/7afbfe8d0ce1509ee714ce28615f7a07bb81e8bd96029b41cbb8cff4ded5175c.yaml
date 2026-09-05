@@ -6,6 +6,25 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/NormativeStructure/DescriptiveNormativeSeparation.descriptive_structure_does_not_uniquely_determine_norms
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 0229a0bf84d4d9638d40df0cd1ce373785532cafa326d68ebdaba286dc3de951
+      - code: chain-migration-incomplete
+        detail: 08cb61843189f6639bba479755bd275fa346eb583a142a69f453e3be0fd7b305
+      - code: chain-migration-incomplete
+        detail: 0e7fced13c703a0783e8692e3eefebcf7bedc7a7adba6d273d2ecbdcc5ca9b67
+      - code: chain-migration-incomplete
+        detail: 2148b03877303fc1049773d5d5abdcc18cd6a91aac1ed6d45e89eb32c594bb5f
+      - code: chain-migration-incomplete
+        detail: 4488530c6806e5e79ec58ac494dd6873b5809bacb20e0214db0cb2cf5929c14f
+      - code: chain-migration-incomplete
+        detail: 8ef823acb717d53a4ec565ce788616b89a766dc8f7398601ef59528b536413bd
+      - code: chain-migration-incomplete
+        detail: e1d5cf890d09be0543b660fbbaf970f65d293d0d67c648fc193002614a3f1500
   chain_atoms:
     - 0229a0bf84d4d9638d40df0cd1ce373785532cafa326d68ebdaba286dc3de951
     - 2148b03877303fc1049773d5d5abdcc18cd6a91aac1ed6d45e89eb32c594bb5f

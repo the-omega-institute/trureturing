@@ -1,0 +1,38 @@
+## C2.1 同高度反射
+
+中心化变量的同高度反射为：
+
+$$
+u^\sharp=-\overline u=-\delta+it.
+\tag{C2.1}
+$$
+
+对应 thread 满足：
+
+$$
+\boxed{
+Z_{p,u^\sharp}(m)
+=
+\frac1{\overline{Z_{p,u}(m)}}.
+}
+\tag{C2.2}
+$$
+
+所以：
+
+$$
+Q_p(u^\sharp)=-Q_p(u),
+\tag{C2.3}
+$$
+
+而：
+
+$$
+\theta_{p,t}^{\sharp}(m)
+=
+\theta_{p,t}(m).
+\tag{C2.4}
+$$
+
+反射只翻转非紧 charge，不改变同高度 compact phase。
+

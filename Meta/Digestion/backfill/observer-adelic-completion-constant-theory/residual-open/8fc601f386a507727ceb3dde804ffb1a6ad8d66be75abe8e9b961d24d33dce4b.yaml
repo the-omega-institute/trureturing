@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Multi-clause guard for the trailing child `最短闭轨道；四个独立条件唯一选出。` The redeposited GID D5/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization.golden_transfer_fourfold_characterization carries `四个独立条件唯一选出` only in a scalar reading: for real candidates, the real-radius IsLUB, fixed-point, derivative-magnitude, and exponential-scale conditions are four public iff conjuncts, each equivalent to `r = phi`. This does not carry the source meaning of the first condition, `最大全纯域`, because the public theorem has no complex disks, holomorphy, all-inverse-branch quantifier, preservation predicate, or bridge from that semantic condition to its real-radius scalar proxy. The `最短闭轨道` clause is also uncarried because there is no typed closed-orbit or closed-geodesic carrier, translation-length map, or public geometric minimality result."
+    reentry_condition: Freeze a source-faithful complex-disk holomorphic-domain carrier with all-inverse-branch preservation bridged publicly to the real-radius set, and a typed closed-geodesic carrier with its translation-length and universal minimality result; then re-cover the child atom.
+    blocker_class: multi-clause-guard
