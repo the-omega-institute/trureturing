@@ -1,0 +1,76 @@
+name: RH5065 repaired dependency closure observation
+on:
+  push:
+    branches: [lane/math/rh-canonical-zero-data-nonvacuity-20260903]
+    paths: [.github/workflows/rh5065-repaired-closure-replay.yml]
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/cache@v4
+        with:
+          path: .lake/build
+          key: rh5065-arm-v433-${{ github.sha }}
+          restore-keys: rh5065-arm-v433-
+          save-always: true
+      - name: Install unchanged pinned Lean
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore pinned Mathlib dependencies
+        run: |
+          set -o pipefail
+          lake exe cache get 2>&1 | tee dependency-bootstrap.log
+      - name: Single observation of repaired root
+        id: replay
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          set -o pipefail
+          timeout 1200s lake build D5.S3.Weil.ZetaBridge.WeilFullGramInertia 2>&1 | tee rh5065-root-replay.log
+          code=${PIPESTATUS[0]}
+          printf 'source_sha=%s\nroot=D5.S3.Weil.ZetaBridge.WeilFullGramInertia\nexit_code=%s\n' "$GITHUB_SHA" "$code" > replay-status.txt
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit "$code"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rh5065-repaired-root-${{ github.sha }}
+          path: |
+            dependency-bootstrap.log
+            rh5065-root-replay.log
+            replay-status.txt
+          if-no-files-found: error
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: .lake/build
+          key: rh5065-arm-v433-${{ github.sha }}
+      - name: Preserve actual compiler exit status
+        if: always()
+        env:
+          EXIT_CODE: ${{ steps.replay.outputs.exit_code }}
+        run: test "$EXIT_CODE" = 0
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Remove only this observation runner
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/rh5065-repaired-closure-replay.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m '[D5/S3][RH] remove one-shot repaired-closure runner'
+          git push origin HEAD:refs/heads/lane/math/rh-canonical-zero-data-nonvacuity-20260903
