@@ -54,7 +54,8 @@ internal static class StrataLintEngineBuildInputs
     /// <summary>
     /// The judge-source side of the CI judge content address. Every non-test path under
     /// <c>tools/</c> can change the program that interprets repository facts. Blueprint scribe
-    /// definitions are also judge source because <c>tools/StrataLint.Scribe/StrataLint.Scribe.csproj</c>
+    /// definitions are also judge source because
+    /// <c>tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj</c>
     /// compiles <c>Blueprint/**/*.scribe.cs</c>. Membership is therefore structural rather than a
     /// list of today's transitive helpers.
     /// </summary>

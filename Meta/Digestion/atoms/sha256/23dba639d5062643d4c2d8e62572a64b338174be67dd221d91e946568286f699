@@ -1,0 +1,55 @@
+## 定理 13.2　最小对称实现的唯一性
+
+设两组有限模型 \((A,B)\)、\((\widetilde A,\widetilde B)\) 满足
+
+$$
+B^{\mathsf T}A^kB
+=
+\widetilde B^{\mathsf T}\widetilde A^k\widetilde B
+\qquad
+\forall k\ge0.
+$$
+
+并假设两者均为最小实现：
+
+$$
+\operatorname{span}_{k\ge0}\operatorname{Ran}(A^kB)
+=
+\mathbb R^n,
+$$
+
+另一组同理。
+
+则存在正交同构 \(Q\)，使
+
+$$
+\boxed{
+QA=\widetilde A Q,
+\qquad
+QB=\widetilde B.
+}
+\tag{13.3}
+$$
+
+### 证明
+
+在有限线性组合上定义
+
+$$
+Q\left(\sum_kA^kBv_k\right)
+=
+\sum_k\widetilde A^k\widetilde Bv_k.
+$$
+
+任意两种此类线性组合的内积，均由矩
+
+$$
+B^{\mathsf T}A^{k+\ell}B
+$$
+
+决定。两组矩相同，因此此映射良定义且保持内积。
+
+最小性保证其定义域与像分别为两组完整实现空间，故 \(Q\) 为正交同构。
+
+将每个生成元的幂增加一，得到 \(QA=\widetilde A Q\)；取零次幂得到 \(QB=\widetilde B\)。∎
+

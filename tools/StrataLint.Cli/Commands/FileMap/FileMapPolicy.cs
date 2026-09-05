@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using StrataLint.Scribe.Documents;
 
 namespace StrataLint.Cli;
 
@@ -29,7 +30,7 @@ internal static class FileMapPolicy
     private const string ScribeEmitterPath =
         "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs";
     private const string ScribeProjectPath =
-        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj";
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj";
     private const string SnapshotDecoderPath =
         "tools/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
     private const string StatementProjectionFixtureLoaderPath =
@@ -243,7 +244,10 @@ internal static class FileMapPolicy
             .Concat(InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot))
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
-            .Concat(InspectGeneratedInventory(manifest, paths, GeneratedArtifactInventory.All))
+            .Concat(InspectGeneratedInventory(
+                manifest,
+                paths,
+                GeneratedArtifactInventory.Create(DocumentAssembly.Definitions)))
             .Concat(InspectDeclaredModes(manifest, trackedModes))
             .Concat(InspectDirectoryKinds(manifest, paths))
             .Concat(InspectDependencies(manifest, files))

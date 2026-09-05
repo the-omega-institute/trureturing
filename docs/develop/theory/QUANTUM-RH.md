@@ -1,0 +1,2644 @@
+下面把这条路线整理成一个有明确边界的理论：
+
+> **从实际 ξ 的量子统计出发，先构造有限多项式，再用仅依赖系数的正性检验，决定能否构造一条正权 Fibonacci 禁邻链。链一旦构造成功，其自伴隧穿结构就保证该有限多项式的零点位置。**
+
+这次可以进一步证明两件事：
+
+**第一，固定阶数的链可以通过一个明确算法构造，不必先输入多项式的根。**
+
+**第二，这些链不能通过“保留原链、只添加新的正耦合”逐层生长；实际归一化要求高阶模型重新分配权重。**
+
+以下把经典分析输入、定义、有限条件、定理和证明分别写明。全程不假设 RH 成立。
+
+---
+
+# 一、固定算术对象与已知输入
+
+## 定义 1：实际 ξ 函数
+
+采用标准归一化：
+
+$$
+\xi(s)
+=
+\frac12s(s-1)\pi^{-s/2}
+\Gamma\!\left(\frac s2\right)\zeta(s).
+$$
+
+它是整函数，满足：
+
+$$
+\xi(1-s)=\xi(s).
+$$
+
+其零点恰好是 ζ 的非平凡零点，按重数计。这里使用的是经典 ξ 定义与函数方程。([DLMF][1])
+
+## 已知分析输入 A：正 theta 核表示
+
+沿用前面的正偶核 \(\Phi\)，满足：
+
+$$
+\boxed{
+\xi\!\left(\frac12+b\right)
+=
+\int_{\mathbb R}\Phi(x)e^{bx}\,dx,
+\qquad b\in\mathbb C.
+}
+\tag{1}
+$$
+
+其中：
+
+$$
+\Phi(x)>0,\qquad \Phi(-x)=\Phi(x),
+$$
+
+并且对每个 \(R>0\)：
+
+$$
+\int_{\mathbb R}\Phi(x)e^{R|x|}\,dx<\infty.
+$$
+
+这些是由经典 theta–Mellin 表示得到的性质，不是为证明 RH 临时加入的假设。([DLMF][2])
+
+定义正概率测度：
+
+$$
+d\nu(x)=\frac{\Phi(x)}{\xi(1/2)}\,dx.
+$$
+
+令：
+
+$$
+m_{2k}=\int_{\mathbb R}x^{2k}\,d\nu(x),
+$$
+
+以及：
+
+$$
+\boxed{
+a_k=\frac{m_{2k}}{(2k)!}.
+}
+\tag{2}
+$$
+
+于是：
+
+$$
+a_0=1,\qquad a_k>0.
+$$
+
+## 定义 2：反射折叠函数
+
+定义：
+
+$$
+\boxed{
+D(v)=\sum_{k=0}^{\infty}a_kv^k.
+}
+\tag{3}
+$$
+
+由式（1）：
+
+$$
+\boxed{
+D(b^2)
+=
+\frac{\xi(\frac12+b)}{\xi(\frac12)}.
+}
+\tag{4}
+$$
+
+这个定义通过幂级数完成，不需要选择一个全局平方根分支。
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+D\text{ 的全部零点位于负实轴}.
+}
+\tag{5}
+$$
+
+**证明。** 若 \(D(v)=0\)，取任意满足 \(b^2=v\) 的 \(b\)，则 \(\xi(\frac12+b)=0\)。\(b\) 为纯虚数当且仅当 \(v\) 为非正实数；而 \(D(0)=1\)，所以零点不能是零。反向同理。证毕。
+
+---
+
+# 二、定义有限观察，并证明它没有删掉实际算术矩
+
+## 定义 3：不碰撞权重与有限多项式
+
+对 \(d\ge1\)，定义：
+
+$$
+\omega_{d,k}
+=
+\begin{cases}
+\dfrac{d(d-1)\cdots(d-k+1)}{d^k},
+&0\le k\le d,\\[2mm]
+0,&k>d.
+\end{cases}
+$$
+
+其中 \(\omega_{d,0}=1\)。
+
+定义：
+
+$$
+\boxed{
+P_d(v)=\sum_{k=0}^{d}\omega_{d,k}a_kv^k.
+}
+\tag{6}
+$$
+
+记：
+
+$$
+c_{d,k}=\omega_{d,k}a_k.
+$$
+
+于是：
+
+$$
+c_{d,0}=1,\qquad c_{d,k}>0\quad(1\le k\le d).
+$$
+
+特别地：
+
+$$
+\boxed{
+c_{d,1}=a_1,
+\qquad
+c_{d,2}=\frac{d-1}{d}a_2.
+}
+\tag{7}
+$$
+
+这里的有限化保留了实际的 \(a_k\)，只是按照规定权重组织前 \(d\) 阶关系，并没有把某些整数模式宣布为不存在。
+
+## 定理 1：有限观察的紧集误差界
+
+对每个 \(R>0\)：
+
+$$
+\boxed{
+\sup_{|v|\le R}|D(v)-P_d(v)|
+\le
+\frac{R^2D''(R)}{2d}.
+}
+\tag{8}
+$$
+
+### 证明
+
+\(\omega_{d,k}\) 是 \(k\) 个有标签对象独立进入 \(d\) 个槽位时，没有碰撞的概率。
+
+两两碰撞的并集估计给出：
+
+$$
+1-\omega_{d,k}
+\le
+\frac{k(k-1)}{2d}.
+$$
+
+对 \(k>d\) 这个不等式仍然成立。
+
+因为 \(a_k\ge0\)：
+
+$$
+\begin{aligned}
+|D(v)-P_d(v)|
+&\le
+\sum_{k\ge0}(1-\omega_{d,k})a_kR^k\\
+&\le
+\frac1{2d}
+\sum_{k\ge0}k(k-1)a_kR^k\\
+&=
+\frac{R^2D''(R)}{2d}.
+\end{aligned}
+$$
+
+证毕。
+
+因此：
+
+$$
+\boxed{P_d\longrightarrow D\quad\text{在每个紧集上一致收敛}.}
+$$
+
+---
+
+## 定理 2：实际 ξ 的有限实根判据
+
+以下三个命题等价：
+
+$$
+\begin{aligned}
+\text{①}\;&\mathrm{RH};\\
+\text{②}\;&\forall d\ge1,\ P_d\text{ 的全部零点为负实数};\\
+\text{③}\;&\text{存在无界次数列 }d_j,\ 
+P_{d_j}\text{ 的全部零点为负实数}.
+\end{aligned}
+$$
+
+这是经典 Jensen–Pólya 判据在当前归一化下的形式。相关的一般理论及实际 ξ 的 Jensen 多项式研究已有成熟文献。([arXiv][3])
+
+### 证明
+
+**②推出③**显然。
+
+**③推出①。** 在：
+
+$$
+\Omega=\mathbb C\setminus(-\infty,0]
+$$
+
+中，每个 \(P_{d_j}\) 都没有零点。由定理 1 和解析函数零点的稳定性，极限 \(D\) 要么恒零，要么在 \(\Omega\) 中无零。
+
+但 \(D(0)=1\)，不可能恒零。因此 \(D\) 的零点全部为负实数，由式（5）得到 RH。
+
+**①推出②。** 在 RH 前件下，经典乘积给出：
+
+$$
+D(v)=\prod_j(1+\theta_jv),
+\qquad
+\theta_j>0,
+$$
+
+其中重复因子保留零点重数。
+
+先取有限乘积 \(D_M\)。对只有非正实根的实多项式 \(p\)，算子：
+
+$$
+p\longmapsto p+\theta p',
+\qquad\theta\ge0,
+$$
+
+保持非正实根性。简单根情形由 \(p'\) 与 \(p\) 的交错关系得到；重根情形由连续极限得到。
+
+因此：
+
+$$
+D_M(\partial_x)x^d
+$$
+
+只有非正实根。令 \(M\to\infty\)，得到：
+
+$$
+\sum_{k=0}^d a_k(d)_k x^{d-k}.
+$$
+
+再反转变量并缩放，恰好得到 \(P_d\)。其常数项及最高次项均为正，所以没有零根，全部根为负实数。证毕。
+
+**这一步证明的是等价关系，不是已经证明实际 \(P_d\) 对所有 \(d\) 都实根。**
+
+---
+
+# 三、定义 Fibonacci 链，并证明它为什么能够控制零点
+
+## 定义 4：正权禁邻配分函数
+
+给定 \(2d-1\) 个非负权重：
+
+$$
+w_1,\ldots,w_{2d-1}\ge0,
+$$
+
+定义合法构型：
+
+$$
+\Omega_{2d-1}
+=
+\left\{
+b\in\{0,1\}^{2d-1}:
+b_jb_{j+1}=0
+\right\}.
+$$
+
+构型数量为 \(F_{2d+1}\)。
+
+定义：
+
+$$
+\boxed{
+C_w(v)
+=
+\sum_{b\in\Omega_{2d-1}}
+v^{\sum_jb_j}
+\prod_jw_j^{b_j}.
+}
+\tag{9}
+$$
+
+这里 \(v\) 计数占据数。它不是此前用 \(F_j\) 加权整数数值的那个生成函数，尽管两者使用同一个禁邻构型空间。
+
+## 定义 5：对应的隧穿矩阵
+
+定义下双对角矩阵：
+
+$$
+L_w=
+\begin{pmatrix}
+\sqrt{w_1}&0&0&\cdots\\
+\sqrt{w_2}&\sqrt{w_3}&0&\cdots\\
+0&\sqrt{w_4}&\sqrt{w_5}&\cdots\\
+\vdots&&\ddots&\ddots
+\end{pmatrix}.
+$$
+
+再定义：
+
+$$
+\boxed{
+T_w=
+\begin{pmatrix}
+0&L_w\\
+L_w^{\mathsf T}&0
+\end{pmatrix}.
+}
+\tag{10}
+$$
+
+它是实对称矩阵，重新排列基底以后，就是一条 \(2d\) 位置近邻隧穿链。
+
+## 定理 3：禁邻配分函数的正行列式实现
+
+$$
+\boxed{
+C_w(v)=\det(I_d+vL_w^{\mathsf T}L_w).
+}
+\tag{11}
+$$
+
+因此，\(C_w\) 的全部零点都为负实数。
+
+### 证明
+
+按路径最后一个位置是否占据，配分函数满足：
+
+$$
+C_m(v)=C_{m-1}(v)+w_mvC_{m-2}(v).
+$$
+
+同样按路径末端展开特征行列式，可得：
+
+$$
+\det(\lambda I_{2d}-T_w)
+=
+\lambda^{2d}C_w(-\lambda^{-2}).
+$$
+
+另一方面，由式（10）：
+
+$$
+\det(\lambda I_{2d}-T_w)
+=
+\det(\lambda^2I_d-L_w^{\mathsf T}L_w).
+$$
+
+比较两个多项式恒等式，即得式（11）。
+
+因为：
+
+$$
+L_w^{\mathsf T}L_w\ge0,
+$$
+
+设其非零本征值为 \(\theta_j>0\)，则：
+
+$$
+C_w(v)=\prod_j(1+\theta_jv).
+$$
+
+零点均为 \(-1/\theta_j<0\)。证毕。
+
+这是加权路径匹配多项式实根性的具体证明；更一般的匹配模型零点定位属于 Heilmann–Lieb 理论。([Princeton University][4])
+
+### 量子观察含义
+
+对于 \(r>0\)，可以制备：
+
+$$
+|\Omega_r\rangle
+=
+\frac1{\sqrt{C_w(r)}}
+\sum_{b\in\Omega_{2d-1}}
+r^{|b|/2}
+\prod_jw_j^{b_j/2}|b\rangle.
+$$
+
+令 \(\widehat N|b\rangle=|b||b\rangle\)，则：
+
+$$
+\boxed{
+\langle\Omega_r,e^{i\theta\widehat N}\Omega_r\rangle
+=
+\frac{C_w(re^{i\theta})}{C_w(r)}.
+}
+\tag{12}
+$$
+
+所以，若能证明 \(C_w=P_d\)，这就是一个读出实际 Jensen 多项式的有限量子观察模型。
+
+但应区分两种空间：禁邻构型空间有 \(F_{2d+1}\) 维，单粒子隧穿矩阵 \(T_w\) 有 \(2d\) 维。**配分函数恒等式不等于两个完整物理系统酉等价。**
+
+---
+
+# 四、核心有限定理：正链存在性可以用系数检验
+
+现在解决上一轮留下的问题：**不先求根，怎样判断并构造正链？**
+
+## 定义 6：反转多项式
+
+固定一个 \(d\)，简写：
+
+$$
+P(v)=1+c_1v+\cdots+c_dv^d,
+\qquad c_k>0.
+$$
+
+定义：
+
+$$
+\boxed{
+q(x)=x^dP(-1/x)
+=
+x^d-c_1x^{d-1}+\cdots+(-1)^dc_d.
+}
+\tag{13}
+$$
+
+\(P\) 的负实根，对应 \(q\) 的正实根。
+
+## 定义 7：不需要根的 Newton 读数
+
+设 \(C_q\) 是多项式 \(q\) 的伴随矩阵。定义：
+
+$$
+\boxed{
+s_n=\frac1d\operatorname{Tr}(C_q^n),
+\qquad s_0=1.
+}
+\tag{14}
+$$
+
+这些数可直接由 \(c_1,\ldots,c_d\) 通过 Newton 恒等式计算。
+
+例如：
+
+$$
+s_1=\frac{c_1}{d},
+$$
+
+$$
+s_2=\frac{c_1^2-2c_2}{d},
+$$
+
+$$
+s_3=\frac{c_1^3-3c_1c_2+3c_3}{d},
+$$
+
+不存在的系数按零处理。
+
+定义 Hermite 矩阵：
+
+$$
+\boxed{
+G_d=(s_{i+j})_{0\le i,j<d}.
+}
+\tag{15}
+$$
+
+**这里的 \(s_n\) 不先被定义成某个正测度的矩。它们只是从实际有限多项式系数算出的实数。**
+
+---
+
+## 定理 4：四种有限性质等价
+
+对上述正系数多项式 \(P\)，以下等价：
+
+$$
+\begin{aligned}
+\text{①}\;&P\text{ 的全部根为负实数，允许重根};\\
+\text{②}\;&G_d\succeq0;\\
+\text{③}\;&\exists K=K^{\mathsf T}>0,\quad P(v)=\det(I+vK);\\
+\text{④}\;&\exists w_1,\ldots,w_{2d-1}\ge0,\quad P=C_w.
+\end{aligned}
+$$
+
+### 证明：①与②
+
+设 \(q\) 的互异根为 \(\lambda_j\)，重数为 \(m_j\)。Newton 恒等式给出：
+
+$$
+s_n=\frac1d\sum_jm_j\lambda_j^n.
+$$
+
+对实多项式 \(p(x)=\sum_{i=0}^{d-1}u_ix^i\)：
+
+$$
+\boxed{
+u^{\mathsf T}G_du
+=
+\frac1d\sum_jm_jp(\lambda_j)^2.
+}
+\tag{16}
+$$
+
+若所有根都实，右边非负。
+
+若存在非实共轭对 \(\lambda,\overline\lambda\)，可以用实系数插值多项式，使：
+
+$$
+p(\lambda)=i,\qquad p(\overline\lambda)=-i,
+$$
+
+并在其余互异根处为零。所需次数小于互异根数，因而小于等于 \(d-1\)。
+
+此时式（16）严格为负，故 \(G_d\) 不正半定。
+
+所以 \(G_d\succeq0\) 当且仅当 \(q\) 全部实根。这是 Hermite–Sylvester 判据的核心证明。([arXiv][5])
+
+又由于 \(P\) 的系数全部为正：
+
+$$
+P(v)>0\qquad(v\ge0).
+$$
+
+因此 \(q\) 没有非正实根。于是 \(q\) 实根等价于全部根为正，也等价于 \(P\) 全部根为负。
+
+### 证明：①与③
+
+若：
+
+$$
+P(v)=\prod_{j=1}^d(1+\theta_jv),
+\qquad\theta_j>0,
+$$
+
+取 \(K=\operatorname{diag}(\theta_1,\ldots,\theta_d)\)。
+
+反向由正矩阵的谱分解立即得到。
+
+这里用根证明了**存在性等价**，还不是后面的免求根构造算法。
+
+### 证明：①推出④
+
+取：
+
+$$
+w_{2j-1}=\theta_j,\qquad w_{2j}=0.
+$$
+
+链断成独立位置，配分函数就是 \(\prod_j(1+\theta_jv)\)。
+
+### 证明：④推出①
+
+直接使用定理 3。证毕。
+
+**因此，“存在正权 Fibonacci 链”不是一个可以免费添加的建模假设；它与该有限多项式的实根性同样有内容。**
+
+---
+
+# 五、在严格正性的前件下，链可以直接由系数构造
+
+上面的存在性证明仍然借助根描述。现在给出不把根作为输入的构造。
+
+## 有限前件 \(H_d^{\mathrm{str}}\)
+
+$$
+\boxed{G_d>0.}
+\tag{17}
+$$
+
+这是一项有限、明确、可以检验的条件。它不能未经证明地省略。
+
+## 定理 5：系数驱动的正链构造
+
+在 \(H_d^{\mathrm{str}}\) 下，可以仅由 \(c_1,\ldots,c_d\)，通过有限次四则运算、正平方根与线性方程求解，构造：
+
+$$
+w_1,\ldots,w_{2d-1}>0
+$$
+
+使：
+
+$$
+\boxed{P=C_w.}
+$$
+
+### 证明与构造
+
+定义线性泛函：
+
+$$
+\mathcal L(x^n)=s_n.
+$$
+
+在商空间：
+
+$$
+\mathcal V=\mathbb R[x]/(q)
+$$
+
+上，令：
+
+$$
+\langle f,g\rangle=\mathcal L(fg).
+$$
+
+由于 \(G_d>0\)，这是正内积。
+
+按 \(1,x,\ldots,x^{d-1}\) 的顺序正交化，得到首一正交多项式 \(p_j\)。记：
+
+$$
+h_j=\mathcal L(p_j^2)>0.
+$$
+
+乘以 \(x\) 在该基底中具有三对角形式：
+
+$$
+K=
+\begin{pmatrix}
+\alpha_0&\sqrt{\beta_1}&0&\cdots\\
+\sqrt{\beta_1}&\alpha_1&\sqrt{\beta_2}&\cdots\\
+0&\sqrt{\beta_2}&\alpha_2&\ddots\\
+\vdots&\vdots&\ddots&\ddots
+\end{pmatrix},
+$$
+
+其中：
+
+$$
+\boxed{
+\alpha_j=\frac{\mathcal L(xp_j^2)}{h_j},
+\qquad
+\beta_j=\frac{h_j}{h_{j-1}}>0.
+}
+\tag{18}
+$$
+
+三对角性来自：当 \(i<j-1\) 时，
+
+$$
+\langle xp_j,p_i\rangle
+=
+\langle p_j,xp_i\rangle=0.
+$$
+
+乘法算子的特征多项式就是 \(q\)，而定理 4 保证 \(q\) 的根全部为正，所以：
+
+$$
+K>0.
+$$
+
+这些正交多项式、矩行列式与 Jacobi 矩阵之间的公式是经典的。([DLMF][6])
+
+接着对这个正三对角矩阵作 Cholesky 分解。权重可以递归定义：
+
+$$
+\boxed{w_1=\alpha_0,}
+$$
+
+$$
+\boxed{
+w_{2j}=\frac{\beta_j}{w_{2j-1}},
+\qquad
+w_{2j+1}=\alpha_j-w_{2j},
+\quad1\le j<d.
+}
+\tag{19}
+$$
+
+正定性保证每个 Cholesky 主元严格为正，因此全部权重严格为正。
+
+于是：
+
+$$
+K=L_wL_w^{\mathsf T},
+$$
+
+从而：
+
+$$
+P(v)
+=
+\det(I+vK)
+=
+\det(I+vL_w^{\mathsf T}L_w)
+=
+C_w(v).
+$$
+
+证毕。
+
+### 重根情形不能直接套这套除法
+
+若 \(G_d\succeq0\) 但不严格正定，某些正交化分母会为零。这不一定是 RH 反例，可能只是有限多项式有重根。
+
+此时定理 4 仍成立，但可能需要断开的链、平方自由分解及显式保留重数。不能把退化方向直接删除以后，再声称特征行列式及重数都没有改变。
+
+---
+
+# 六、二阶与三阶可以完全写成量子累积量条件
+
+定义：
+
+$$
+\chi_2=m_2,
+$$
+
+$$
+\chi_4=m_4-3m_2^2,
+$$
+
+$$
+\chi_6=m_6-15m_4m_2+30m_2^3.
+$$
+
+这些是实际 theta 态的二、四、六阶累积量。
+
+## 定理 6：二阶正链的显式公式
+
+有：
+
+$$
+P_2(v)
+=
+1+\frac{m_2}{2}v+\frac{m_4}{48}v^2.
+$$
+
+定义：
+
+$$
+\boxed{
+w_1=\frac{m_2}{4},
+\qquad
+w_2=-\frac{\chi_4}{12m_2},
+\qquad
+w_3=\frac{m_4}{12m_2}.
+}
+\tag{20}
+$$
+
+则恒有：
+
+$$
+P_2(v)=1+(w_1+w_2+w_3)v+w_1w_3v^2.
+$$
+
+而且：
+
+$$
+\boxed{
+w_1,w_2,w_3\ge0
+\iff
+\chi_4\le0.
+}
+\tag{21}
+$$
+
+### 证明
+
+直接计算：
+
+$$
+w_1+w_2+w_3=\frac{m_2}{2},
+$$
+
+$$
+w_1w_3=\frac{m_4}{48}.
+$$
+
+\(m_2,m_4>0\)，所以只有中间权重的符号需要判断。证毕。
+
+**这里，中间耦合的非负性，恰好就是四阶不可约关联的符号。**
+
+---
+
+## 定理 7：三阶实根的精确累积量条件
+
+有：
+
+$$
+P_3(v)
+=
+1+\frac{m_2}{2}v
++\frac{m_4}{36}v^2
++\frac{m_6}{3240}v^3.
+$$
+
+则：
+
+$$
+\boxed{
+P_3\text{ 的全部根为负实数}
+\iff
+100\chi_4^3+3\chi_6^2\le0.
+}
+\tag{22}
+$$
+
+严格不等式对应三个互异负实根。
+
+### 证明
+
+令：
+
+$$
+q_3(x)=x^3P_3(-1/x).
+$$
+
+作中心平移：
+
+$$
+x=y+\frac{\chi_2}{6}.
+$$
+
+直接展开，二次项消失，并得到：
+
+$$
+\boxed{
+q_3\!\left(y+\frac{\chi_2}{6}\right)
+=
+y^3+\frac{\chi_4}{36}y-\frac{\chi_6}{3240}.
+}
+\tag{23}
+$$
+
+若 \(\chi_4>0\)，右边严格递增，只能有一个实根。
+
+若 \(\chi_4=0\)，全部根为实当且仅当 \(\chi_6=0\)。
+
+若 \(\chi_4<0\)，令：
+
+$$
+u=-\chi_4>0,
+\qquad
+r=\sqrt{\frac{u}{108}}.
+$$
+
+两个临界点是 \(-r,r\)。三根全实时，必须且只需：
+
+$$
+f(-r)\ge0,\qquad f(r)\le0.
+$$
+
+这等价于：
+
+$$
+|\chi_6|
+\le
+\frac{10}{\sqrt3}u^{3/2}.
+$$
+
+平方后即：
+
+$$
+3\chi_6^2\le100(-\chi_4)^3.
+$$
+
+最后，\(P_3\) 的系数全部正，排除非负实根，所以其全部实根必为负。证毕。
+
+这也是三阶 Jensen 实根条件的一种累积量写法，不应当作为未经文献比较的独创零点判据。实际 ξ 的低次数 Jensen 双曲性已有研究。([arXiv][7])
+
+---
+
+## 定理 8：三阶模型的免求根正矩阵
+
+假设：
+
+$$
+u=-\chi_4>0,
+\qquad
+3\chi_6^2<100u^3.
+$$
+
+定义：
+
+$$
+\mu=\frac{\chi_2}{6},
+\qquad
+r=\frac{\chi_6}{60u},
+$$
+
+$$
+b_1=\frac{u}{54},
+\qquad
+b_2=\frac{u}{108}-r^2>0.
+$$
+
+构造：
+
+$$
+\boxed{
+K_3=
+\begin{pmatrix}
+\mu&\sqrt{b_1}&0\\
+\sqrt{b_1}&\mu+r&\sqrt{b_2}\\
+0&\sqrt{b_2}&\mu-r
+\end{pmatrix}.
+}
+\tag{24}
+$$
+
+则：
+
+$$
+\boxed{
+K_3>0,
+\qquad
+\det(I+vK_3)=P_3(v).
+}
+$$
+
+### 证明
+
+令 \(J_3=K_3-\mu I\)。直接算得：
+
+$$
+\det(yI-J_3)
+=
+y^3-\frac{u}{36}y-\frac{\chi_6}{3240}.
+$$
+
+这恰好是式（23）。
+
+因此 \(K_3\) 的特征多项式为 \(q_3\)。定理 7 保证其全部本征值为正，所以 \(K_3>0\)，再比较反转多项式得到行列式恒等式。证毕。
+
+五个 Fibonacci 权重为：
+
+$$
+\boxed{
+\begin{aligned}
+w_1&=\mu,\\
+w_2&=\frac{b_1}{w_1},\\
+w_3&=\mu+r-w_2,\\
+w_4&=\frac{b_2}{w_3},\\
+w_5&=\mu-r-w_4.
+\end{aligned}
+}
+\tag{25}
+$$
+
+它们全部严格为正，构造出一条六位置的实对称隧穿链。
+
+**这次不仅给出“存在某个正算子”的名字，而是从实际二、四、六阶统计写出了它的全部矩阵元。**
+
+但这些公式不证明任意高阶都能继续保持正性。
+
+---
+
+# 七、有限层之间存在严格兼容关系：一旦某阶失败，更高阶都不能恢复
+
+## 定理 9：相邻 Jensen 层的微分关系
+
+对 \(d\ge2\)：
+
+$$
+\boxed{
+P_d(v)-\frac vdP_d'(v)
+=
+P_{d-1}\!\left(\frac{d-1}{d}v\right).
+}
+\tag{26}
+$$
+
+### 证明
+
+逐项比较系数：
+
+$$
+\left(1-\frac kd\right)
+\frac{(d)_k}{d^k}
+=
+\frac{(d-1)_k}{d^k}.
+$$
+
+右边也正是：
+
+$$
+\frac{(d-1)_k}{(d-1)^k}
+\left(\frac{d-1}{d}\right)^k.
+$$
+
+证毕。
+
+## 推论：实根性向低阶传递
+
+令：
+
+$$
+q_d(x)=x^dP_d(-1/x),
+\qquad
+\alpha=\frac{d-1}{d}.
+$$
+
+由式（26）：
+
+$$
+\boxed{
+q_d'(x)=d\alpha^{d-1}q_{d-1}(x/\alpha).
+}
+\tag{27}
+$$
+
+如果 \(q_d\) 全部为正实根，Rolle 定理保证 \(q_d'\) 全部为正实根，因此 \(q_{d-1}\) 也是。
+
+于是：
+
+$$
+\boxed{
+P_d\text{ 全负实根}
+\Longrightarrow
+P_{d-1}\text{ 全负实根}.
+}
+\tag{28}
+$$
+
+反过来：
+
+$$
+\boxed{
+某个P_{d_0}\text{ 有非实根}
+\Longrightarrow
+所有d\ge d_0\text{ 的 }P_d\text{ 都有非实根}.
+}
+\tag{29}
+$$
+
+所以，在这条**固定系数起点、增加次数**的塔中，如果 RH 为假，就存在一个最小失败阶，而且失败不会在更高阶重新消失。
+
+这不与“固定次数、平移到足够后面的系数窗口会实根”的已有渐近结果冲突。那是另一条参数方向。([arXiv][7])
+
+---
+
+# 八、一个新的构造障碍：这些正量子模型不能只靠追加来生长
+
+前面的兼容关系，并不意味着矩阵可以直接嵌套。
+
+## 定理 10：固定总迹下的主块嵌套不可能性
+
+假设每个 \(d\) 已经有：
+
+$$
+K_d\ge0,
+\qquad
+\det(I+vK_d)=P_d(v).
+$$
+
+那么，不可能同时要求：
+
+$$
+\boxed{
+K_d\text{ 是 }K_{d+1}\text{ 的原样主块}
+}
+$$
+
+并且每一阶都保持上述精确匹配。
+
+### 证明
+
+比较 \(v\) 的系数：
+
+$$
+\boxed{
+\operatorname{Tr}K_d=c_{d,1}=a_1
+}
+\tag{30}
+$$
+
+对所有 \(d\) 都相同。
+
+若：
+
+$$
+K_{d+1}
+=
+\begin{pmatrix}
+K_d&b\\
+b^*&\eta
+\end{pmatrix},
+$$
+
+则由总迹相同：
+
+$$
+\eta=0.
+$$
+
+正半定矩阵中，一个对角元为零，会迫使对应整行、整列为零。可从每个二阶主子式：
+
+$$
+(K_d)_{ii}\eta-|b_i|^2\ge0
+$$
+
+直接得到 \(b_i=0\)。
+
+所以：
+
+$$
+K_{d+1}=K_d\oplus0.
+$$
+
+于是：
+
+$$
+\det(I+vK_{d+1})=\det(I+vK_d),
+$$
+
+次数不可能由 \(d\) 增加到 \(d+1\)。但 \(P_{d+1}\) 的最高次系数严格为正，矛盾。证毕。
+
+### 在 Fibonacci 链上的版本
+
+因为：
+
+$$
+\operatorname{Tr}(L_wL_w^{\mathsf T})
+=
+\sum_{j=1}^{2d-1}w_j,
+$$
+
+精确匹配要求：
+
+$$
+\boxed{
+\sum_jw_{d,j}=a_1
+\qquad\text{对所有 }d.
+}
+\tag{31}
+$$
+
+因此，若保持所有旧权重不变，新添的非负权重只能全为零，不可能生成更高次数。
+
+**所以，一个成功的逐阶构造必须重新分配已有权重，或使用更复杂的尺度映射，而不能只是不断往尾部添加新的正耦合。**
+
+这也不证明不存在一个最终的迹类算子。它只排除了当前这组**保留全部一阶总量的 Jensen 近似**被当成同一个正算子的原样有限主块。
+
+---
+
+# 九、把全部证明责任集中为一个明确的算术命题
+
+现在可以写出真正尚待完成的命题，而不把它隐藏在“定义”里。
+
+## 待证算术命题 H
+
+对实际 ξ 产生的系数 \(a_k\)，按定义 3、6、7 构造 \(P_d,q_d,G_d\)。要求：
+
+$$
+\boxed{
+\forall d\ge1,\qquad G_d\succeq0.
+}
+\tag{H}
+$$
+
+## 主定理
+
+以下等价：
+
+$$
+\boxed{
+\begin{aligned}
+&\mathrm{RH};\\
+&\forall d,\ G_d\succeq0;\\
+&\forall d,\ \exists w_{d,1},\ldots,w_{d,2d-1}\ge0,
+\quad P_d=C_{w_d};\\
+&\exists d_j\to\infty,\ 
+\exists K_{d_j}\ge0,
+\quad P_{d_j}(v)=\det(I+vK_{d_j}).
+\end{aligned}
+}
+\tag{32}
+$$
+
+### 证明
+
+定理 4 给出每个固定阶上的等价；定理 2 将无界有限层与实际 RH 连接。证毕。
+
+**命题 H 没有在本轮被证明。**
+
+它不能因为被改写成“存在正权链”或“存在正量子模型”，就被当成自然成立的建模假设。普通量子概率正性，不能推出这个由 Newton 变换生成的矩阵正性。
+
+这里的精确进展是：
+
+$$
+\boxed{
+\text{不必先求零点，便能从系数构造检验矩阵；
+若它严格为正，便能构造整条正权链。}
+}
+$$
+
+真正困难仍在于：**实际 theta／质数结构是否能统一证明这些系数矩阵在全部阶数上的正性。**
+
+---
+
+# 十、有限计算怎样成为证明，而不是“看起来正”？
+
+最后补上认证边界。
+
+假设已经通过带尾界的积分与 Newton 递推，得到近似矩阵 \(\widetilde G_d\)，且每个矩阵元的误差不超过 \(\varepsilon\)：
+
+$$
+|(G_d)_{ij}-(\widetilde G_d)_{ij}|\le\varepsilon.
+$$
+
+则：
+
+$$
+\|G_d-\widetilde G_d\|_{\mathrm{op}}\le d\varepsilon.
+$$
+
+因此：
+
+$$
+\boxed{
+\lambda_{\min}(\widetilde G_d)>d\varepsilon
+\Longrightarrow
+G_d>0.
+}
+\tag{33}
+$$
+
+反方向，如果有一个实向量 \(u\) 满足：
+
+$$
+\boxed{
+u^{\mathsf T}\widetilde G_du
++
+\varepsilon\|u\|_1^2<0,
+}
+\tag{34}
+$$
+
+那么：
+
+$$
+u^{\mathsf T}G_du<0.
+$$
+
+由定理 4，这证明实际 \(P_d\) 有非实根；再由定理 2，足以否证 RH。
+
+但如果误差区间跨过零，结果只是未定，不能把“没有认证正性”写成“已经发现负方向”。
+
+此外，矩行列式通常病态。DLMF 在给出递推系数的行列式表达后，也明确提醒其数值条件问题。**有精确公式不等于普通浮点计算就足够可靠。**([DLMF][6])
+
+---
+
+# 十一、与项目的准确连接
+
+本轮沿用上一轮固定的 `08e91c3373…` 快照，核对了两个直接相关模块。
+
+`JensenPolynomialObstruction.lean` 已定义 Jensen 多项式与实根谓词，但将两条 Jensen–Pólya 分析桥作为显式前件。它没有无条件证明实际 ξ 的全阶双曲性。
+
+`FiniteZeckendorfEulerIdentity.lean` 已证明合法 Fibonacci 名字与有限整数区间的双射，以及相应数值生成函数的运输。它不自动包含本轮任意正权禁邻配分函数与 Jacobi 矩阵的构造。
+
+因此，本轮给出的具体接口是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际 theta 矩}
+&\longrightarrow P_d\\
+&\longrightarrow q_d\text{ 的 Newton 读数}\\
+&\longrightarrow G_d\\
+&\xrightarrow{\,G_d>0\,}
+K_d\\
+&\longrightarrow L_d\\
+&\longrightarrow\text{正权 Fibonacci 链与隧穿矩阵}.
+\end{aligned}
+}
+$$
+
+箭头中的条件 \(G_d>0\) 不能删除。
+
+---
+
+# 结论
+
+这次形成了一条可以逐项检查的“定义—前件—定理—证明”链。
+
+最明确的两个低阶条件是：
+
+$$
+\boxed{\chi_4\le0,}
+$$
+
+以及：
+
+$$
+\boxed{3\chi_6^2\le100(-\chi_4)^3.}
+$$
+
+它们分别决定二阶、三阶 Jensen 多项式能否获得相应正表示。严格成立时，四位置和六位置的隧穿链都能直接从累积量构造，而不需要输入根。
+
+更高阶存在同样明确的系数算法，但它是否始终成功，仍然需要证明命题 H。
+
+同时，已经证明了一项会影响整体设计的限制：
+
+$$
+\boxed{
+\text{各阶共享固定总迹}
+\Longrightarrow
+\text{不能只追加新正耦合，必须重新分配关系。}
+}
+$$
+
+因此，你想寻找的“整体量子观察者”，不能只是一个不断增加附件的固定模型。对这条具体路线，它必须是一族**保持实际算术系数、却在观察深度增加时重新组织耦合的有限正实现**。
+
+**找到这种重组的统一算术规律，才可能把 Fibonacci、量子隧穿和 ξ 从精确表示关系，进一步推进为真正的零点定位证明。** 当前已经给出了有限构造与障碍；尚未获得全阶算术正性，也未把这些纸面推导标记为 Lean 已验证的结果。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://dlmf.nist.gov/25.5 "DLMF: §25.5 Integral Representations ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[3]: https://arxiv.org/abs/1902.07321 "[1902.07321] Jensen polynomials for the Riemann zeta function and other sequences"
+[4]: https://collaborate.princeton.edu/en/publications/theory-of-monomer-dimer-systems-2/?utm_source=chatgpt.com "Theory of monomer-dimer systems - Princeton University"
+[5]: https://arxiv.org/abs/1911.01745 "[1911.01745] The Hermite-Sylvester criterion for real-rooted polynomials"
+[6]: https://dlmf.nist.gov/18.2 "DLMF: §18.2 General Orthogonal Polynomials ‣ General Orthogonal Polynomials ‣ Chapter 18 Orthogonal Polynomials"
+[7]: https://arxiv.org/abs/1910.01227?utm_source=chatgpt.com "Jensen Polynomials for the Riemann Xi Function"
+在前文基础上，这次可以补上一个关键结构：
+
+> **不同阶的正权量子链，不必原样嵌套，但可以通过“压缩一个方向，再重新归一化”精确连接。反过来，从低阶增加到高阶时，真正待证明的内容，是新加入的各条耦合是否都能取成非负平方。**
+
+而欧拉–马歇罗尼常数可以进一步进入这套结构：它不仅校准一个端点值，还能校准**被压缩方向的整体回返响应**。
+
+下面继续采用定义、有限假设、定理和证明。**不把“全阶正实现存在”当作假设偷偷加入；只在明确标注的有限层使用正性前件。**
+
+---
+
+# 一、固定前文对象
+
+采用标准 completed 函数：
+
+$$
+\xi(s)=\frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s),
+$$
+
+并定义实际反射折叠函数：
+
+$$
+\boxed{
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k.
+}
+$$
+
+其中：
+
+$$
+a_k=\frac{m_{2k}}{(2k)!}>0,
+\qquad a_0=1,
+$$
+
+\(m_{2k}\) 是前文实际 theta 概率态的偶阶矩。反射折叠通过偶幂级数定义，不需要选取全局平方根分支。标准 ξ 的定义与反射关系见 DLMF。([DLMF][1])
+
+定义：
+
+$$
+\boxed{
+P_d(v)=
+\sum_{k=0}^d\frac{(d)_k}{d^k}a_kv^k,
+}
+\tag{B1}
+$$
+
+以及反转多项式：
+
+$$
+\boxed{
+q_d(x)=x^dP_d(-1/x).
+}
+\tag{B2}
+$$
+
+因此：
+
+$$
+q_d(x)
+=
+x^d-a_1x^{d-1}
++\frac{d-1}{d}a_2x^{d-2}
+-\cdots
++(-1)^d\frac{d!}{d^d}a_d.
+$$
+
+前文已给出：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+P_d\text{ 的根全部为负实数，}\ \forall d.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+q_d\text{ 的根全部为正实数，}\ \forall d.
+}
+\tag{B3}
+$$
+
+这是实际 ξ 的 Jensen–Pólya 判据在当前归一化下的形式。一般判据及现代研究已有文献；本轮研究的是这些有限层之间的具体算子连接。([arXiv][2])
+
+再记：
+
+$$
+\boxed{
+c=\frac{\xi'(1)}{\xi(1)}
+=
+1+\frac{\gamma_{\mathrm E}}2-\frac12\log4\pi,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{D'(1/4)}{D(1/4)}=c.
+}
+\tag{B4}
+$$
+
+必须继续区分：
+
+$$
+a_1\ne c.
+$$
+
+前者是中心展开的第一系数，后者是移到 \(s=1\) 后的响应。
+
+---
+
+# 二、相邻两层的关系：高一层只增加一个新的算术常数
+
+## 定理 B1：精确微分兼容关系
+
+令：
+
+$$
+\alpha_d=\frac{d-1}{d}.
+$$
+
+对 \(d\ge2\)：
+
+$$
+\boxed{
+q_d'(x)
+=
+d\alpha_d^{\,d-1}
+q_{d-1}(x/\alpha_d).
+}
+\tag{B5}
+$$
+
+### 证明
+
+前文已经得到：
+
+$$
+P_d(v)-\frac vdP_d'(v)=P_{d-1}(\alpha_dv).
+$$
+
+对：
+
+$$
+q_d(x)=x^dP_d(-1/x)
+$$
+
+求导：
+
+$$
+q_d'(x)
+=
+dx^{d-1}
+\left[
+P_d(-1/x)+\frac1{dx}P_d'(-1/x)
+\right].
+$$
+
+括号中正是：
+
+$$
+P_{d-1}(-\alpha_d/x).
+$$
+
+于是：
+
+$$
+q_d'(x)
+=
+d\alpha_d^{\,d-1}q_{d-1}(x/\alpha_d).
+$$
+
+证毕。
+
+## 推论 B1.1：高阶延拓是一项带常数的积分问题
+
+定义：
+
+$$
+\boxed{
+R_d(x)
+=
+\int_0^x
+d\alpha_d^{\,d-1}q_{d-1}(u/\alpha_d)\,du.
+}
+$$
+
+那么：
+
+$$
+\boxed{
+q_d(x)=R_d(x)+\beta_d,
+\qquad
+\beta_d=(-1)^d\frac{d!}{d^d}a_d.
+}
+\tag{B6}
+$$
+
+这很重要：
+
+**已知前 \(d-1\) 阶，整个导数 \(q_d'\) 已经确定；新增的实际信息只进入一个积分常数。**
+
+但“只增加一个数”不等于这一步容易。
+
+这个数会同时改变全部极值点的高度，因此可能影响整个多项式的实根结构。
+
+---
+
+# 三、前文不能原样嵌套的问题，现在有一个精确替代
+
+前文证明了：若所有矩阵满足：
+
+$$
+\det(I+vK_d)=P_d(v),
+\qquad K_d\ge0,
+$$
+
+则：
+
+$$
+\operatorname{Tr}K_d=a_1
+$$
+
+对每一层相同。因此，不能保持旧矩阵完全不变，只在外面添加新的正主块。
+
+但下面的连接是可行的。
+
+## 定义 B1：均衡谱参考向量
+
+设 \(K_d\) 是一个 \(d\) 维正矩阵。称单位向量 \(u_d\) 为均衡谱参考向量，如果：
+
+$$
+\boxed{
+\langle u_d,f(K_d)u_d\rangle
+=
+\frac1d\operatorname{Tr}f(K_d)
+}
+\tag{B7}
+$$
+
+对所有多项式 \(f\) 成立。
+
+这种向量总能选出：在任意正交本征基中，让每个坐标的模长都等于 \(1/\sqrt d\) 即可。
+
+这类向量在矩阵理论中称为 *trace vector*；与多项式求导对应的压缩算子，属于已有的 differentiator 理论。下面给出我们需要的有限证明。([数字对象标识符][3])
+
+## 定理 B2：删除一个均衡方向，得到低一阶的缩放模型
+
+假设：
+
+$$
+K_d>0,
+\qquad
+\det(xI-K_d)=q_d(x).
+$$
+
+取均衡谱参考向量 \(u_d\)，令：
+
+$$
+\Pi_d=I-|u_d\rangle\langle u_d|,
+$$
+
+并在 \(u_d^\perp\) 上定义压缩：
+
+$$
+C_d=\Pi_dK_d\Pi_d\big|_{u_d^\perp}.
+$$
+
+则：
+
+$$
+\boxed{
+\det(xI-C_d)=\frac1d q_d'(x).
+}
+\tag{B8}
+$$
+
+所以：
+
+$$
+\boxed{
+K_{d-1}^{\mathrm{new}}
+=
+\frac d{d-1}C_d
+}
+\tag{B9}
+$$
+
+满足：
+
+$$
+\det(xI-K_{d-1}^{\mathrm{new}})
+=
+q_{d-1}(x).
+$$
+
+### 证明
+
+将 \(u_d\) 取为第一个基向量，余下基底张成 \(u_d^\perp\)。余子式公式给出：
+
+$$
+\langle u_d,(xI-K_d)^{-1}u_d\rangle
+=
+\frac{\det(xI-C_d)}{\det(xI-K_d)}.
+$$
+
+另一方面，由均衡性：
+
+$$
+\langle u_d,(xI-K_d)^{-1}u_d\rangle
+=
+\frac1d\operatorname{Tr}(xI-K_d)^{-1}
+=
+\frac{q_d'(x)}{dq_d(x)}.
+$$
+
+相乘得到式（B8）。再使用定理 B1，得到式（B9）。证毕。
+
+因此，正确的跨层结构不是：
+
+$$
+K_d\subset K_{d+1},
+$$
+
+而是：
+
+$$
+\boxed{
+K_d
+\longrightarrow
+\text{删除一个均衡方向}
+\longrightarrow
+\text{乘以 }\frac d{d-1}
+\longrightarrow
+K_{d-1}.
+}
+$$
+
+**前文所说的“需要重新分配关系”，现在有了一个明确的有限算子实现。**
+
+---
+
+# 四、这也是一个真实的量子条件操作，但不能遗漏成功概率
+
+定义密度矩阵：
+
+$$
+\boxed{
+\rho_d=\frac{K_d}{a_1}.
+}
+$$
+
+因为 \(\operatorname{Tr}K_d=a_1\)，所以 \(\operatorname{Tr}\rho_d=1\)。
+
+对两结果投影测量：
+
+$$
+\{\Pi_d,\ I-\Pi_d\},
+$$
+
+保留 \(u_d^\perp\) 的成功概率为：
+
+$$
+\begin{aligned}
+p_d
+&=\operatorname{Tr}(\Pi_d\rho_d)\\
+&=
+1-\frac{\langle u_d,K_du_d\rangle}{a_1}\\
+&=
+1-\frac1d.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{p_d=\frac{d-1}{d}.}
+\tag{B10}
+$$
+
+成功后的条件态：
+
+$$
+\frac{\Pi_d\rho_d\Pi_d}{p_d}
+=
+\frac{K_{d-1}^{\mathrm{new}}}{a_1}.
+$$
+
+所以，**Jensen 层的下降，可以由一次测量后的归一化精确实现。**
+
+但这项固定成功率针对的是指定输入 \(\rho_d=K_d/a_1\)。对任意输入态，成功率未必相同；不能把条件归一化当成一个对全部状态线性的保迹操作。
+
+还有一个全局限制。
+
+若从第 \(D\) 层连续下降到固定第 \(m\) 层，并且每一步都保留对应分支，总成功率为：
+
+$$
+\boxed{
+\prod_{d=m+1}^{D}\frac{d-1}{d}
+=
+\frac mD.
+}
+\tag{B11}
+$$
+
+于是：
+
+$$
+D\to\infty
+\quad\Longrightarrow\quad
+\frac mD\to0.
+$$
+
+**每一步在高维时都“几乎成功”，不等于整条无限压缩过程几乎没有代价。**
+
+这再次说明：观察者模型必须保留分支权重。当前项目对 Kraus 分支权重与 Born 概率的形式化，正是在维护这种区别。
+
+---
+
+# 五、真正的难点在反方向：怎样从低阶增加一个正量子模式？
+
+下降可以精确完成，但它不能自动逆转。
+
+现在研究：
+
+$$
+q_{d-1}\longrightarrow q_d.
+$$
+
+## 有限假设 B
+
+暂设 \(q_{d-1}\) 有 \(d-1\) 个互异正实根：
+
+$$
+\lambda_1<\cdots<\lambda_{d-1}.
+$$
+
+定义：
+
+$$
+t_i=\alpha_d\lambda_i.
+$$
+
+由定理 B1：
+
+$$
+q_d'(t_i)=0.
+$$
+
+也就是说，**低一阶的正谱，确定了高一阶全部临界点的位置。**
+
+## 定义 B2：新增通道的候选耦合平方
+
+定义：
+
+$$
+\boxed{
+\eta_{d,i}
+=
+-\frac{d\,q_d(t_i)}{q_d''(t_i)},
+\qquad 1\le i\le d-1.
+}
+\tag{B12}
+$$
+
+因为临界点互异，分母非零。
+
+这里先称它为“候选耦合平方”。只有证明它非负以后，才允许把它写成真实 Hermitian 耦合的模平方。
+
+## 定理 B3：一步正延拓的精确判据
+
+在上述有限假设下：
+
+$$
+\boxed{
+q_d\text{ 全部为正实根}
+\iff
+\eta_{d,i}\ge0
+\quad\forall i.
+}
+\tag{B13}
+$$
+
+而当这些数非负时，可以构造：
+
+$$
+\boxed{
+K_d=
+\begin{pmatrix}
+a_1/d&\sqrt{\eta_{d,1}}&\cdots&\sqrt{\eta_{d,d-1}}\\
+\sqrt{\eta_{d,1}}&t_1&&0\\
+\vdots&&\ddots&\\
+\sqrt{\eta_{d,d-1}}&0&&t_{d-1}
+\end{pmatrix}>0,
+}
+\tag{B14}
+$$
+
+使：
+
+$$
+\det(xI-K_d)=q_d(x).
+$$
+
+### 证明
+
+记：
+
+$$
+q_C(x)=\frac1d q_d'(x)=\prod_i(x-t_i).
+$$
+
+对 \(q_d/q_C\) 作部分分式分解。
+
+其多项式部分由最高两阶系数决定，为：
+
+$$
+x-\frac{a_1}{d}.
+$$
+
+在 \(t_i\) 的留数是：
+
+$$
+\frac{q_d(t_i)}{q_C'(t_i)}
+=
+\frac{d\,q_d(t_i)}{q_d''(t_i)}
+=
+-\eta_{d,i}.
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{q_d(x)}{q_C(x)}
+=
+x-\frac{a_1}{d}
+-
+\sum_{i=1}^{d-1}\frac{\eta_{d,i}}{x-t_i}.
+}
+\tag{B15}
+$$
+
+若所有 \(\eta_{d,i}\ge0\)，右边正是式（B14）的 Schur 补，所以该矩阵的特征多项式为 \(q_d\)。
+
+它是实对称矩阵，因此根全部为实。
+
+又因为：
+
+$$
+q_d(-y)=(-1)^d
+\sum_{k=0}^d
+\frac{(d)_k}{d^k}a_ky^{d-k}
+\ne0
+\qquad(y\ge0),
+$$
+
+它没有非正实根。因此所有根为正。
+
+反过来，若 \(q_d\) 全部为正实根，导数根与原根交错。局部极大值必须非负，局部极小值必须非正，因而：
+
+$$
+-\frac{q_d(t_i)}{q_d''(t_i)}\ge0.
+$$
+
+证毕。
+
+**这一步把一个 \(d\times d\) 的正实现问题，压缩成 \(d-1\) 条明确的标量符号条件。**
+
+但这些条件仍然包含实际新增系数 \(a_d\)，不能省略。
+
+---
+
+# 六、“能否完成下一层”现在是一个明确的区间问题
+
+由式（B6）：
+
+$$
+q_d(t_i)=R_d(t_i)+\beta_d.
+$$
+
+其中 \(R_d\) 完全由旧系数决定。
+
+在局部极大点，要求：
+
+$$
+R_d(t_i)+\beta_d\ge0.
+$$
+
+在局部极小点，要求：
+
+$$
+R_d(t_i)+\beta_d\le0.
+$$
+
+定义：
+
+$$
+L_d=
+\max_{q_d''(t_i)<0}\{-R_d(t_i)\},
+$$
+
+$$
+U_d=
+\min_{q_d''(t_i)>0}\{-R_d(t_i)\}.
+$$
+
+若某一类极值点不存在，对应端点按无穷处理。于是：
+
+$$
+\boxed{
+q_d\text{ 全部正实根}
+\iff
+\beta_d\in[L_d,U_d].
+}
+\tag{B16}
+$$
+
+而实际积分常数固定为：
+
+$$
+\boxed{
+\beta_d=(-1)^d\frac{d!}{d^d}a_d.
+}
+$$
+
+这就是这一层真正的“可容纳区间”。
+
+它不是空间里摆不下更多点，而是：
+
+> **同一个新增算术数，必须同时使全部极大值不落到零以下、全部极小值不升到零以上。**
+
+### 可容纳区间并不由低阶正性自动保证
+
+以下是一个有限系数反例，不是实际 ξ 数据。
+
+取：
+
+$$
+a_1=\frac{80}{3},
+\qquad
+a_2=\frac{872}{3},
+\qquad
+a_3=960.
+$$
+
+则：
+
+$$
+q_3(x)
+=
+\left(x-\frac43\right)(x-12)
+\left(x-\frac{40}{3}\right)
+$$
+
+全部为正实根。
+
+下一层必为：
+
+$$
+q_4(x)
+=
+x^4-\frac{80}{3}x^3+218x^2-360x+\frac3{32}a_4.
+$$
+
+其导数为：
+
+$$
+q_4'(x)=4(x-1)(x-9)(x-10).
+$$
+
+\(x=10\) 是局部极小点，但：
+
+$$
+\boxed{
+q_4(10)=\frac{4600}{3}+\frac3{32}a_4>0
+}
+$$
+
+对任何 \(a_4>0\) 都成立。
+
+因此：
+
+$$
+\boxed{
+q_3\text{ 全正实根，}
+\quad
+\text{却不存在任何正 }a_4
+\text{ 使 }q_4\text{ 全实根。}
+}
+\tag{B17}
+$$
+
+所以，**“前一层已经完成”不意味着“总能添加一个新的正模式”。**
+
+实际 theta 系数可能拥有排除这类失败的特殊约束；那正是需要证明的算术内容。
+
+---
+
+# 七、新耦合的总量，只由四阶累积量决定
+
+下面得到一条有用、但不足以单独决定成功的恒等式。
+
+定义：
+
+$$
+S=a_1^2-2a_2.
+$$
+
+由于：
+
+$$
+a_1=\frac{m_2}{2},
+\qquad
+a_2=\frac{m_4}{24},
+$$
+
+以及：
+
+$$
+\chi_4=m_4-3m_2^2,
+$$
+
+所以：
+
+$$
+\boxed{S=-\frac{\chi_4}{12}.}
+$$
+
+## 定理 B4：新增耦合总预算
+
+在定理 B3 的设置下：
+
+$$
+\boxed{
+\sum_{i=1}^{d-1}\eta_{d,i}
+=
+\frac{d-1}{d^2}
+\left(a_1^2-2a_2\right)
+=
+-\frac{d-1}{12d^2}\chi_4.
+}
+\tag{B18}
+$$
+
+### 证明
+
+当正实现存在时，写：
+
+$$
+K_d=
+\begin{pmatrix}
+a_1/d&g_d^*\\
+g_d&C_d
+\end{pmatrix},
+$$
+
+其中：
+
+$$
+\|g_d\|^2=\sum_i\eta_{d,i}.
+$$
+
+均衡谱参考向量满足：
+
+$$
+\langle u_d,K_d^2u_d\rangle
+=
+\frac1d\operatorname{Tr}K_d^2.
+$$
+
+而由 \(P_d\) 的二阶系数：
+
+$$
+\operatorname{Tr}K_d^2
+=
+a_1^2-2\frac{d-1}{d}a_2.
+$$
+
+因此：
+
+$$
+\begin{aligned}
+\|g_d\|^2
+&=
+\frac1d\operatorname{Tr}K_d^2
+-\left(\frac{a_1}{d}\right)^2\\
+&=
+\frac{d-1}{d^2}(a_1^2-2a_2).
+\end{aligned}
+$$
+
+证毕。
+
+对候选 \(\eta_{d,i}\) 尚未证明非负的情况，同一恒等式也可直接由式（B15）在无穷远处比较 \(1/x\) 系数得到。
+
+**因此，全部候选耦合的和可以正确、非负，但其中某一项仍然可能为负。**
+
+这正好解释了为什么一个总能量预算不能替代局部实现条件。
+
+### 三阶的例子更直观
+
+令：
+
+$$
+u=-\chi_4>0,
+\qquad
+r=\sqrt{\frac{u}{108}}.
+$$
+
+三阶有两个候选耦合：
+
+$$
+\boxed{
+\eta_{3,\pm}
+=
+r^2\pm\frac{\chi_6}{6480r}.
+}
+\tag{B19}
+$$
+
+它们的和固定：
+
+$$
+\eta_{3,+}+\eta_{3,-}=\frac u{54}.
+$$
+
+但两者同时非负，才等价于：
+
+$$
+\boxed{
+3\chi_6^2\le100u^3.
+}
+$$
+
+所以六阶累积量的作用，不是改变总耦合量，而是决定**同一份总预算在两个通道之间怎样分配**。
+
+对实际 ξ，本轮计算得到：
+
+$$
+\eta_{3,-}\approx1.50284905528\times10^{-6},
+$$
+
+$$
+\eta_{3,+}\approx6.75772856367\times10^{-6}.
+$$
+
+两者均为正。这里是高精度数值核对，不是区间认证，也不证明更高阶全部成功。
+
+---
+
+# 八、负候选耦合意味着什么：不能把它改成绝对值后继续宣布成功
+
+若某个：
+
+$$
+\eta_{d,i}<0,
+$$
+
+那么它不能作为普通 Hermitian 耦合的：
+
+$$
+|g_i|^2.
+$$
+
+但仍可以构造一个非对称实矩阵：上行放 \(\sqrt{|\eta_{d,i}|}\)，下行放：
+
+$$
+\operatorname{sgn}(\eta_{d,i})
+\sqrt{|\eta_{d,i}|}.
+$$
+
+它们的乘积仍然是 \(\eta_{d,i}\)，所以式（B15）的实际有理函数仍被保留。
+
+这种表示通常需要不定配对，而不再是普通正度量下的同一个自伴实现。
+
+这里有两个不同选择：
+
+$$
+\boxed{
+\text{保留实际符号，承认正实现失败}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{把负数改成绝对值，得到另一个正模型}.
+}
+$$
+
+后者可以作为新模型研究，但它改变了原来的 \(q_d\)。
+
+**这正是你之前担心的“偶完成是否把奇投没”的一个可审计位置：不是数学不能容纳负通道，而是我们是否未经证明地把它正化了。**
+
+对于有重复临界点的退化情况，应使用有理函数版本：检查
+
+$$
+q_d/q_C
+$$
+
+是否只有简单实极点，并且所有留数非正。若出现高阶极点，就不能由上述单方向 Hermitian 延拓实现。若可去，则保留相应重数，而不是直接删掉该模式。
+
+因此，分母 \(q_d''(t_i)=0\) 只表示需要退化版本，**不能直接作为 RH 反例。**
+
+---
+
+# 九、欧拉常数现在进入了被压缩方向的“回返响应”
+
+定义：
+
+$$
+f_d(v)=\frac{P_d'(v)}{P_d(v)},
+\qquad v>0.
+$$
+
+在正实现存在的有限层：
+
+$$
+f_d(v)
+=
+\operatorname{Tr}
+\left[K_d(I+vK_d)^{-1}\right].
+$$
+
+由均衡谱参考向量：
+
+$$
+\begin{aligned}
+\langle u_d,(I+vK_d)^{-1}u_d\rangle
+&=
+\frac1d\operatorname{Tr}(I+vK_d)^{-1}\\
+&=
+1-\frac{vf_d(v)}d.
+\end{aligned}
+$$
+
+另一方面，对分块矩阵作 Schur 消元：
+
+$$
+\boxed{
+\langle u_d,(I+vK_d)^{-1}u_d\rangle
+=
+\frac1{
+1+\frac{va_1}{d}
+-v^2g_d^*(I+vC_d)^{-1}g_d
+}.
+}
+\tag{B20}
+$$
+
+第二项：
+
+$$
+g_d^*(I+vC_d)^{-1}g_d
+$$
+
+正是从被压缩方向进入其余模式、再返回的响应。
+
+项目的 `SchurComplementAssociativity.lean` 已经证明给定逆算子前件时，逐步消元和一次消元相同；这里给出的是该结构在实际 Jensen 层上的一种具体应用。
+
+## 定理 B5：重标定回返恒等式
+
+定义：
+
+$$
+\boxed{
+\mathcal R_d(v)
+=
+d\,g_d^*(I+vC_d)^{-1}g_d.
+}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal R_d(v)
+=
+\frac1v
+\left[
+a_1-
+\frac{f_d(v)}{1-vf_d(v)/d}
+\right].
+}
+\tag{B21}
+$$
+
+### 证明
+
+将式（B20）与：
+
+$$
+1-\frac{vf_d(v)}d
+$$
+
+相等，取倒数并整理即可。证毕。
+
+右边完全由实际有限多项式定义。即使尚未构造出正实现，它也仍然是一个可以计算的代数量；**只是此时不能预先赋予它“正回返能量”的解释。**
+
+---
+
+## 推论 B5.1：欧拉差额等于回返响应的极限
+
+前文已经证明：
+
+$$
+P_d\to D,\qquad P_d'\to D'
+$$
+
+在紧集上一致成立。
+
+因此，对固定 \(v>0\)：
+
+$$
+\boxed{
+\mathcal R_d(v)
+\longrightarrow
+\frac1v
+\left[
+a_1-\frac{D'(v)}{D(v)}
+\right],
+}
+\tag{B22}
+$$
+
+其中左边先按式（B21）的代数表达理解；当存在正实现时，它同时具有回返解释。
+
+取：
+
+$$
+v=\frac14,
+$$
+
+由式（B4）：
+
+$$
+\boxed{
+\lim_{d\to\infty}\mathcal R_d(1/4)
+=
+4(a_1-c).
+}
+\tag{B23}
+$$
+
+即：
+
+$$
+\boxed{
+\lim_{d\to\infty}\mathcal R_d(1/4)
+=
+4a_1-4-2\gamma_{\mathrm E}+2\log4\pi.
+}
+$$
+
+欧拉常数在这里并非一个可调参数。其端点值由 ζ 的 Laurent 有限部分与 Gamma 补偿共同固定。([DLMF][4])
+
+数值为：
+
+$$
+4(a_1-c)
+\approx
+3.71365971917\times10^{-5}.
+$$
+
+**这比“欧拉常数校准一个输出”更深入了一步：在正实现中，它校准了跨尺度压缩后必须保留的整体回返。**
+
+但依然不能倒过来说：总回返值正确，就证明每个 \(\eta_{d,i}\ge0\)。
+
+---
+
+# 十、这里还有一个尺度现象：单个被删方向越来越弱，整体校准却不消失
+
+由前面的公式：
+
+$$
+\langle u_d,K_du_d\rangle=\frac{a_1}{d}\to0,
+$$
+
+而：
+
+$$
+\|g_d\|^2
+=
+\frac{d-1}{d^2}
+\left(-\frac{\chi_4}{12}\right)
+\to0.
+$$
+
+所以，当 \(d\) 增加时：
+
+**被删方向的平均谱值趋零，与其他模式的总耦合也趋零。**
+
+但乘以正确的尺度因子 \(d\) 后：
+
+$$
+d\|g_d\|^2\to-\frac{\chi_4}{12},
+$$
+
+并且：
+
+$$
+d\,g_d^*(I+C_d/4)^{-1}g_d
+\to4(a_1-c).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{单个方向越来越弱}
+\quad\not\Rightarrow\quad
+\text{它在尺度关系中可以任意省略}.
+}
+$$
+
+这里没有诉诸“永远存在一个最高观察者”。
+
+实际存在的是：**每次改变观察维度，都要保留相应归一化与回返的缩放规律。**
+
+---
+
+# 十一、正权 Fibonacci 链在新结构中承担什么？
+
+当定理 B3 给出：
+
+$$
+K_d>0,
+$$
+
+就可以把它正交三对角化。
+
+在全部耦合严格正、参考向量为循环向量的情形，得到 Jacobi 矩阵；其正交多项式与三项递推是经典结构。([DLMF][5])
+
+再作 Cholesky 分解：
+
+$$
+K_d=L_dL_d^{\mathsf T},
+$$
+
+其中 \(L_d\) 可以组织成双对角形式，得到正权禁邻链：
+
+$$
+\boxed{
+P_d(v)
+=
+\det(I+vL_d^{\mathsf T}L_d)
+=
+\sum_{\substack{b_j\in\{0,1\}\\b_jb_{j+1}=0}}
+v^{\sum b_j}\prod_jw_j^{b_j}.
+}
+$$
+
+所以，这次的完整连接是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际新增统计 }a_d
+&\longrightarrow q_d(t_i)\\
+&\longrightarrow
+\eta_{d,i}=-\frac{d\,q_d(t_i)}{q_d''(t_i)}\\
+&\xrightarrow{\ \eta_{d,i}\ge0\ }
+\text{自伴扩展矩阵}\\
+&\longrightarrow
+\text{正权 Fibonacci 链}.
+\end{aligned}
+}
+\tag{B24}
+$$
+
+**真正承重的箭头，现在集中在每个候选耦合的符号，而不是 Fibonacci 计数本身。**
+
+如果出现零耦合，链可能断开；这需要保留重数与分块，而不能把断开直接解释成理论失败。
+
+---
+
+# 十二、接下来究竟要证明哪条算术命题？
+
+实际新增系数为：
+
+$$
+\boxed{
+a_d=
+\frac1{(2d)!\,\xi(1/2)}
+\int_{\mathbb R}x^{2d}\Phi(x)\,dx.
+}
+$$
+
+因此一步正延拓要求：
+
+$$
+\boxed{
+-\frac d{q_d''(t_i)}
+\left[
+R_d(t_i)
++
+(-1)^d
+\frac{d!}{d^d(2d)!\xi(1/2)}
+\int_{\mathbb R}x^{2d}\Phi(x)\,dx
+\right]
+\ge0
+}
+\tag{B25}
+$$
+
+对所有对应临界点成立。
+
+这里没有未知的自由参数：
+
+* \(R_d\) 来自此前实际系数；
+* \(t_i\) 来自此前有限多项式；
+* 新增积分来自同一实际 theta 核。
+
+如果我们能够用实际 theta 的模关系、质数尺度恒等式或某种新的正积分表示，统一证明这些不等式，就能逐层构造正实现。
+
+**但本轮没有证明式（B25）对所有阶数成立。**
+
+它比“存在某个正量子结构”更具体，也比“每一项能量非负”更难：它比较的是同一个高阶积分与多个由低阶关系产生的阈值。
+
+当前项目的 `JensenPolynomialObstruction.lean` 仍将实际 Jensen 塔与 RH 之间的分析桥列为显式前件；它并未提供这组全阶符号控制。
+
+---
+
+## 收束
+
+这次补上的核心可以概括为三个定理层次。
+
+**跨层下降是明确的：**
+
+$$
+\boxed{
+K_{d-1}
+\sim
+\frac d{d-1}
+\Pi_dK_d\Pi_d\big|_{u_d^\perp}.
+}
+$$
+
+**反向增加一层的障碍是明确的：**
+
+$$
+\boxed{
+\eta_{d,i}
+=
+-\frac{d\,q_d(t_i)}{q_d''(t_i)}
+\ge0.
+}
+$$
+
+**欧拉常数固定的整体回返也是明确的：**
+
+$$
+\boxed{
+\lim_{d\to\infty}
+d\,g_d^*(I+C_d/4)^{-1}g_d
+=
+4\left[
+a_1-1-\frac{\gamma_{\mathrm E}}2+\frac12\log4\pi
+\right],
+}
+$$
+
+其中正回返解释需要相应正实现，代数极限则由实际系数定义。
+
+因此，前文“总量闭合却可能仍有局部缺陷”的问题，现在有了精确版本：
+
+> **四阶累积量决定新增耦合的总量；更高阶统计决定这份总量在各个通道之间如何分配；欧拉常数约束这些通道的整体回返。真正的 RH 条件，是每一层的分配都不能要求负的耦合平方。**
+
+这既没有把难点藏进量子模型的定义，也没有把“整体”降格成一个平均数。它把下一项需要攻克的算术内容，集中到了**实际高阶矩为何始终落在正确的延拓区间内**。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/abs/1902.07321 "[1902.07321] Jensen polynomials for the Riemann zeta function and other sequences"
+[3]: https://doi.org/10.1016%2FS0022-247X%2803%2900465-7?utm_source=chatgpt.com "Differentiators and the geometry of polynomials - ScienceDirect"
+[4]: https://dlmf.nist.gov/25.2 "DLMF: §25.2 Definition and Expansions ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[5]: https://dlmf.nist.gov/18.2 "DLMF: §18.2 General Orthogonal Polynomials ‣ General Orthogonal Polynomials ‣ Chapter 18 Orthogonal Polynomials"

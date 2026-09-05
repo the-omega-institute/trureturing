@@ -1,0 +1,64 @@
+## 定理 35.2　近边界的径向几何具有 Rindler 形式
+
+定义外部静态切片上的径向固有距离
+
+$$
+\ell(r)
+=
+\int_{r_h}^r\frac{ds}{\sqrt{f(s)}}.
+$$
+
+则在边界附近，
+
+$$
+\ell
+\sim
+\sqrt{\frac{2c^2(r-r_h)}{\kappa}},
+$$
+
+以及
+
+$$
+\boxed{
+\sqrt f\sim\frac{\kappa\ell}{c^2}.
+}
+\tag{35.4}
+$$
+
+因此径向度量的领先阶为
+
+$$
+\boxed{
+ds_{\mathrm{rad}}^2
+=
+-\left(\frac{\kappa\ell}{c}\right)^2dt^2+d\ell^2.
+}
+\tag{35.5}
+$$
+
+### 证明
+
+使用
+
+$$
+f(r)
+=
+\frac{2\kappa}{c^2}(r-r_h)
++
+O((r-r_h)^2)
+$$
+
+计算积分并反解即可。∎
+
+式（35.5）正是 Rindler 型径向结构。适当坐标变换
+
+$$
+cT_M=\ell\sinh(\kappa t/c),
+$$
+
+$$
+X_M=\ell\cosh(\kappa t/c)
+$$
+
+把该径向部分写成平直形式。
+

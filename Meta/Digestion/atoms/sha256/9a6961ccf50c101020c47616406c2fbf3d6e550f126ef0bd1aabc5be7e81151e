@@ -1,0 +1,30 @@
+## 定义 22.1　二阶几何残差
+
+定义
+
+$$
+h^{ij}
+=
+\frac1r\operatorname{Tr}
+\left(
+M^{-1/2}S^{ij}M^{-1/2}
+\right),
+$$
+
+以及
+
+$$
+\boxed{
+\mathcal E^{ij}
+=
+M^{-1/2}S^{ij}M^{-1/2}
+-
+h^{ij}I.
+}
+\tag{22.1}
+$$
+
+\(\mathcal E^{ij}\) 表示内部传播模相对于平均二次型的差别。
+
+---
+
