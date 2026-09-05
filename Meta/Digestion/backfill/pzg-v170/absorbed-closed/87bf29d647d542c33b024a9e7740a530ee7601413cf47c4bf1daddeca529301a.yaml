@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:87bf29d647d542c33b024a9e7740a530ee7601413cf47c4bf1daddeca529301a
+  normalized_sha256: sha256:87bf29d647d542c33b024a9e7740a530ee7601413cf47c4bf1daddeca529301a
+cas_ref: sha256:87bf29d647d542c33b024a9e7740a530ee7601413cf47c4bf1daddeca529301a
+coverage_gids:
+  - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.card_of_invariant_under_mul_two
+    target_statement_id: sha256:359f15539d9363ed5e4335ad14637fba10f5850effb9d59de17b0ccbda2a96b1
+receipts:
+  scribe:
+    - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.card_of_invariant_under_mul_two
+      definition_sha256: sha256:d09bfff0bec1696953538f7eca19c253399b30e178990a2c0bced7b60ce6bdf8
+      emission_sha256: sha256:de1de3bd9d055182cda85bb496c72649c7aeea2e85a33d1be85747c857c6b7e8
+  unresolved_subitems: []

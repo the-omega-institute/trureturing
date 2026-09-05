@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5cc10e05ecc540f4c9f751ecf7e2586b20d21922a4c0938cbc744f9e45998206
+  normalized_sha256: sha256:5cc10e05ecc540f4c9f751ecf7e2586b20d21922a4c0938cbc744f9e45998206
+cas_ref: sha256:5cc10e05ecc540f4c9f751ecf7e2586b20d21922a4c0938cbc744f9e45998206
+coverage_gids:
+  - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.orderOf_dvd_card_erase_zero_of_image_mul_eq
+    target_statement_id: sha256:1476aab2efd97c0308d063f1f621cfd7e2bbe9c0136d41c9172ce53b66ec2616
+receipts:
+  scribe:
+    - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.orderOf_dvd_card_erase_zero_of_image_mul_eq
+      definition_sha256: sha256:d09bfff0bec1696953538f7eca19c253399b30e178990a2c0bced7b60ce6bdf8
+      emission_sha256: sha256:de1de3bd9d055182cda85bb496c72649c7aeea2e85a33d1be85747c857c6b7e8
+  unresolved_subitems: []
