@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `* 衡平原则；` remains uncarried after broad synonym and nearby-family review. Frozen near miss D5/S3/ConceptDynamics/MoralLuck/MaximalControlCompatibleEvaluation defines `fairEvaluation` as the quotient by evaluation/control equality and proves it is their greatest common coarsening (D5/S3/ConceptDynamics/MoralLuck/MaximalControlCompatibleEvaluation.lean:43; theorem at :96); it does not expose an equity principle as an input to, or selection rule for, deterministic adjudication. Frozen near miss D5/S3/ConceptDynamics/InstitutionalCapture/ProceduralJusticeNotOutcomeCorrect defines procedural completeness as factorization through joined public facts and rules and proves a defective join forces outcome error (D5/S3/ConceptDynamics/InstitutionalCapture/ProceduralJusticeNotOutcomeCorrect.lean:37; theorem at :50); it distinguishes procedural sufficiency from correctness but does not state an equitable doctrine or deterministic equity choice. Neither public statement supplies the child label's adjudicative role."
+    reentry_condition: "Freeze a theorem whose public statement types an equity principle as an input or selection rule in deterministic adjudication and states its role in resolving the parent atom's nonunique public-law outcome."
+    blocker_class: multi-clause-guard
