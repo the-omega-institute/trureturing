@@ -41,7 +41,7 @@ The first layer proves:
 1. exact rational primal-dual certificates for finite linear objectives;
 2. a generic convex sharp-interval theorem;
 3. an explicit four-cell Frechet coupling with an exact feasible-target theorem;
-4. a disagreement-cap tightening with replayable slack identities;
+4. a disagreement-cap tightening with replayableable slack identities;
 5. a ternary-treatment, ternary-outcome response-type instance;
 6. a nonconvex identification core;
 7. a polynomial cross-world independence example with a sharp singleton query and a globally nonconvex independence family.
@@ -492,3 +492,144 @@ intervened event semantics
 ```
 
 This dependency-locality obligation prevents the shared-ancestor counterexample from being incorrectly admitted as an unconditional product query.
+
+## 20. Intervention-specific exogenous locality, 2026-09-05
+
+`InterventionExogenousLocality.lean` supplies the dependency-locality interface identified in Section 19. It reuses the existing parent-indexed `ParentOrderedStructuralEvaluationSemantics.StructuralModel`, its `EvaluationWitness`, and its unique evaluation theorem. The equation input has type `model.parents v -> Value`, so the parent boundary is enforced by the source type itself. The module introduces no competing structural evaluator.
+
+Let a complete exogenous assignment be `u : Source -> Noise`. For each node `v`, declare a finite set `N(v)` of direct exogenous coordinates. `ExogenousLocality` requires that, for every fixed parent assignment, the equation satisfies Mathlib's existing `DependsOn` predicate on `N(v)`. Agreement of two sources on those coordinates therefore forces equal equation values when parent values agree.
+
+The compiled transfer at an evaluation step is
+
+```text
+D'(v) = empty                              if v is intervened
+D'(v) = N(v) union union_{p in parents(v)} D(p) otherwise
+D'(w) = D(w)                               for w != v.
+```
+
+Every initial node support is the full source set. This accounts for arbitrary source dependence in `model.initial`; soundness does not assume a constant or source-independent initialization. The transfer follows the same finite list as the canonical evaluation trace.
+
+The main statement `evaluatedResponse_dependsOn` says that the evaluated intervention response at `v` depends only on `compiledSupport model direct intervention v`. Its proof is a trace induction. Agreement on a nonintervened node's compiled union yields agreement of the direct source coordinates and all parent values. Locality then gives agreement of the equation output. A constant intervention gives agreement immediately, and all untouched coordinates retain their prior locality certificates.
+
+The support compiler also proves `compiledSupport_antitone_intervention`:
+
+```text
+I subset J  ->  compiledSupport(J,v) subset compiledSupport(I,v).
+```
+
+This theorem applies to constant interventions whose assigned values do not depend on `u`. Source-dependent policies would need an additional support contribution for their assignment functions.
+
+For a finite family of counterfactual queries, `counterfactualReadout` evaluates every queried world at the same original exogenous assignment. `counterfactualSupport` unions the relevant intervention-specific supports. `counterfactualReadout_dependsOn` and `counterfactualEvent_factorsThrough` certify locality of the full vector and of every Boolean event applied to that vector. The formal query family is unnested and uses fixed intervention assignments. It does not create fresh independent disturbances for different worlds.
+
+The compiled sets are conservative dependency bounds. Their disjointness is useful evidence for separation; their overlap alone does not establish that the evaluated events are probabilistically dependent.
+
+All fourteen public definitions and theorems have matching declaration handles in `Blueprint/D5/S3/ConceptDynamics/Causal/PartialIdentification/InterventionExogenousLocality.scribe.cs`.
+
+## 21. From source separation to counterfactual product laws
+
+`SeparatedCounterfactualSourceFactorization.lean` joins the locality compiler to the existing finite product-pushforward library.
+
+Suppose two readouts `F` and `G` depend on finite source sets `S` and `T`, with `S` disjoint from `T`. The formal probability premise supplies independent normalized rational laws on the entire `S` block and its complement:
+
+```text
+mu = mu_S x mu_complement.
+```
+
+Dependence inside either block remains unrestricted. The source split uses Mathlib's standard equivalence
+
+```text
+(Source -> Noise)
+  equivalent to
+({i // i in S} -> Noise) x ({i // i not in S} -> Noise).
+```
+
+It covers every full source assignment. Coordinates unused by either readout remain in the complement block; they are not removed by selecting a smaller test carrier.
+
+`DependsOn` supplies reduced maps through the corresponding coordinate restrictions. Disjointness places the right readout entirely inside the complement block. Under the standard equivalence, the original full-source maps are therefore coordinatewise maps. Reusing `independent_exogenous_components_induce_markovian_response_law` yields `separated_readouts_factorize`.
+
+The associated cell formula is
+
+```text
+P(F = f, G = g) = P(F = f) * P(G = g),
+```
+
+where both factors are the actual marginals of the generated response law. `separated_readouts_cell_eq_product` states this equality for every pair of response values. For Boolean benefit readouts, its `(true,true)` cell gives simultaneous benefit.
+
+The end-to-end statement `compiled_counterfactual_events_factorize` combines:
+
+```text
+parent-indexed structural evaluation
+  + direct exogenous locality
+  + finite counterfactual support compilation
+  + disjoint compiled supports
+  + an independent S/complement source law
+  -> a product-factorized Boolean counterfactual event law.
+```
+
+The independence premise is explicit. This module does not yet derive the S/complement law from a separately represented family of elementary independent disturbance laws. It also does not assert that c-component labels alone establish independence of arbitrary evaluated potential outcomes.
+
+The structural distinction agrees with the quasi-Markovian formulation in Arroyo et al., arXiv:2509.03548, Section 2: local mechanisms still read endogenous parents, while exogenous laws have their own factorization. General counterfactual identification remains a broader problem, as in Shpitser and Pearl, *What Counterfactuals Can Be Tested*, UAI 2007, arXiv:1206.5294. The present source-separation certificate supplies a sufficient condition; no completeness claim for a counterfactual identification algorithm is made.
+
+All four public declarations have matching handles in `Blueprint/D5/S3/ConceptDynamics/Causal/PartialIdentification/SeparatedCounterfactualSourceFactorization.scribe.cs`.
+
+## 22. A shared-root intervention cut and its limits
+
+The closed support calculation `fork_support_cut_certificate` uses four nodes:
+
+```text
+0 = C, 1 = A, 2 = first outcome, 3 = second outcome
+parents(0) = parents(1) = empty
+parents(2) = parents(3) = {0,1}
+N(v) = {v}
+order = [0,1,2,3].
+```
+
+The exact compiled supports are
+
+```text
+under do(A = a):
+  D(first outcome)  = {U_C, U_first}
+  D(second outcome) = {U_C, U_second}
+
+under do(C = c, A = a):
+  D(first outcome)  = {U_first}
+  D(second outcome) = {U_second}.
+```
+
+The support calculation is independent of the fixed assigned values. Consequently, taking the union across treatment values preserves these sets for complete treatment-response pairs and their benefit events. The shared-root example in Section 18 fails the disjoint-support premise under treatment-only intervention. Fixing the common root removes that shared coordinate and makes the source-separation route available under an appropriate independent block law.
+
+Three distinctions matter for interpretation.
+
+First, shrinking dependency supports concerns the source coordinates a query may read. Adding an intervention generally changes the estimand. No ordering of the old and new probabilities, or nesting of their identified intervals, follows from support antitonicity alone.
+
+Second, `do(C=c)` and conditioning on an endogenous event `C=c` require different arguments. Conditioning can change dependence between residual source blocks. The new modules prove the constant-intervention route and do not infer general conditional independence from it.
+
+Third, the interval in Section 17 is sharp over a family allowing all compatible complete within-mechanism response laws. A fixed set of structural equations can restrict that family further. The new source-separation theorem establishes factorization for a given structural model, while transferring the full sharp interval to a more restricted structural family still requires attaining models inside that family.
+
+## 23. Query-preserving kernels and the next mathematical interface
+
+For a fixed structural model, let `r_S` restrict a full exogenous assignment to the compiled source set of a query `Q`. `counterfactualEvent_factorsThrough` gives
+
+```text
+Q = reduced_Q composed with r_S
+ker(r_S) subset ker(Q).
+```
+
+Thus all distinctions relevant to the query survive source restriction. This is a semantic kernel-descent statement on the original source-assignment carrier, using the existing Mathlib `FactorsThrough` interface.
+
+The carrier here differs from the space of entire probability models used by `fourMarginalReadout` in Section 19. Source restriction studies evaluation inside a fixed model; the earlier nonidentifiability witness compares different models with the same data. Their kernels are not interchangeable and no scalar information measure is transported between these carriers. The standard partition equivalence recoordinates the full source space, and the probability-cell corollary does not assert an extra independent information occurrence. No maximal-catalog irredundancy or information-escape score is claimed by these local semantic results.
+
+The mathematical chain now has authored Lean and Scribe sources through
+
+```text
+intervened structural trace
+  -> conservative exogenous dependency support
+  -> query-preserving source restriction
+  -> certified disjoint support
+  -> coordinatewise evaluation of independent source blocks
+  -> exact counterfactual product law.
+```
+
+The proof scripts have undergone logical review and exact finite regression checks; kernel compilation has not been performed in this round. The regression cases exercise response constancy on support fibers, support monotonicity under nested interventions, and joint-cell factorization with arbitrary within-block dependence. They are supplementary checks rather than substitutes for the general Lean statements.
+
+The next mathematical interface is to group a finite family of elementary independent disturbance laws into the S/complement law used above, preserving the full assignment carrier and its pushforward. This would remove the remaining manually supplied block-law premise for a canonical finite Markovian source representation. Conditional fixed-noise realization and simultaneous attainment across strata remain separate obligations, as recorded in Sections 4 and 18.
