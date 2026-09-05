@@ -193,7 +193,8 @@ private theorem exists_common_nonvanishing_even_seed (S : Finset Complex) :
   rw [mem_preimage, mem_ball, hvanish, dist_zero_left, norm_one] at himage
   exact lt_irrefl (1 : Real) himage
 
-private noncomputable def evenPolynomialDifferential
+/-- The existing even polynomial differential realization, exposed for quantitative reuse. -/
+noncomputable def evenPolynomialDifferential
     (P : Complex[X]) (psi : WeilTestFunction) : WeilTestFunction where
   toFun x := ∑ k ∈ P.support,
     P.coeff k * (-Complex.I) ^ (2 * k) * ((deriv^[2 * k]) psi) x
@@ -224,7 +225,8 @@ private noncomputable def evenPolynomialDifferential
     intro k _
     rw [iterate_deriv_even k psi psi.even]
 
-private theorem fourierLaplace_evenPolynomialDifferential
+/-- Its exact transform multiplier is the polynomial evaluated on the squared node. -/
+theorem fourierLaplace_evenPolynomialDifferential
     (P : Complex[X]) (psi : WeilTestFunction) (z : Complex) :
     fourierLaplace (evenPolynomialDifferential P psi) z =
       P.eval (z ^ 2) * fourierLaplace psi z := by
@@ -320,7 +322,8 @@ theorem even_weilTestFunction_finite_interpolation
   dsimp only [target]
   exact div_mul_cancel₀ (a z) (hpsiNonzero z)
 
-private theorem evenPolynomialDifferential_tsupport
+/-- Polynomial differentiation preserves the seed's topological support. -/
+theorem evenPolynomialDifferential_tsupport
     (P : ℂ[X]) (psi : WeilTestFunction) :
     tsupport (evenPolynomialDifferential P psi : ℝ → ℂ) ⊆ tsupport (psi : ℝ → ℂ) := by
   have hsupport (q : ℕ) :
