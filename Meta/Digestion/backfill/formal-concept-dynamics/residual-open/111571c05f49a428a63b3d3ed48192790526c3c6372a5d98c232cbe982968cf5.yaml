@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-clause guard for `* 外部感知；`. The source supplies no external-observation carrier, validation operator, or relation to its report `R` and true-event readout `O`. D5 search for external sensing, external observation, sensors, and report/ledger bridges found `SensorFamilyExtensionStrictRefinement` and `InjectiveSensorFamilyFaithfulness`; their public statements prove sensor-family refinement and joint injectivity, not validation of `R` against `O`. The pinned Mathlib search for external sensing/perception/observation/evidence exited 1. GitHub Lean code search for `external sensing` exited 0 with no hits. Local probe `/private/tmp/w73e36-atom1-probe.lean` exited 0 with an external sensor equal to `O` while `R x ≠ O x`, so a bare sensor does not state this remedy's verification role."
+    reentry_condition: "Specify a typed external-observation carrier and validation rule, then freeze a public theorem connecting that rule to agreement between the submitted report and true-event readout."
+    blocker_class: multi-clause-guard

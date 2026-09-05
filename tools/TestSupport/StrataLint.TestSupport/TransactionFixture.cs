@@ -2,16 +2,20 @@ using StrataLint.Engine;
 using System.Text;
 using System.Text.Json;
 
-namespace StrataLint.Tests;
+namespace StrataLint.TestSupport;
 
-// 本类此前作为**嵌套 partial 类**散布在 DepositCoverWorkflowScriptTests 的 7 个文件片段中,
-// 却被 5 处 StrataLint.Tests 内部用例与 1 处 ScriptTests 共同消费 ——
-// 「共享夹具寄居在某个测试类内部」。提升为顶层类,使 ScriptTests 不必再引用
-// StrataLint.Tests 的测试**类型**(#5419 的 D 2→1 前置)。
+// playbook-workflows.sh 的脚本 harness:建临时仓、铺桩、执行脚本、收集调用记录。
+// 被 StrataLint.Tests 的 7 个测试文件与 StrataLint.ScriptTests 的 1 个共同消费,
+// 故它是**共享测试脚手架**,归宿是本程序集(非测试程序集),不是任一测试程序集内部。
 //
-// **纯搬迁**:可见性、成员、行为逐字不变。唯一风险是搬漏,
-// 而嵌套改顶层会让任何未更新的引用在**编译期** CS0246 —— 编译器是这一层的判官。
-
+// 迁到这里之前经三层改造,每层都是搬迁的前置条件:
+//   #5509 由散在某测试类里的嵌套 partial 提升为顶层类(嵌套类不能单独搬家)
+//   #5530 SevenLineWrappedDigest 归入本类(反向依赖测试类的夹具搬不过来)
+//   #5532 去掉对 StrataLint.Cli 的编译期依赖(否则本程序集要引用 Cli,
+//         而那会改变每个引用本程序集的测试项目的传递可达集)
+//
+// 保持 internal:Run 返回 Engine 的 internal 类型 ProcessOutput,
+// 与 TestProcessRunner 同理,由本程序集的 AssemblyInfo 具名授权三个消费方。
 internal sealed partial class TransactionFixture : IDisposable
 {
     internal const string AtomId = "atom-1";
