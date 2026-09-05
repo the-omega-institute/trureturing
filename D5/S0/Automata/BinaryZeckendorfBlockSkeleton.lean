@@ -150,6 +150,11 @@ abbrev ZeroFiber := {state : State // machine.stateType state = .previousZero}
 /-- The fiber above the previous-one base state. -/
 abbrev OneFiber := {state : State // machine.stateType state = .previousOne}
 
+noncomputable instance zeroFiberFintype [Fintype State] :
+    Fintype (ZeroFiber machine) := by
+  classical
+  exact Fintype.ofFinite _
+
 /-- Output evaluation from a specified state. -/
 def evalFromState (state : State) (word : List (Fin 2)) : Option Output :=
   (machine.runFrom state word).map machine.output
@@ -229,7 +234,19 @@ theorem same_oneSignature_evalFromState
 /-- Missing signatures correspond exactly to missing one transitions. -/
 theorem zeroOneSignature_eq_none_iff (state : ZeroFiber machine) :
     zeroOneSignature machine state = none ↔ machine.step state.1 1 = none := by
-  simp [zeroOneSignature, oneSuccessor]
+  change (oneSuccessor machine state).map (oneSignature machine) = none ↔ _
+  constructor
+  · intro h
+    cases hs : oneSuccessor machine state with
+    | none =>
+        simpa only [hs, Option.map_none] using (oneSuccessor_map_val machine state).symm
+    | some successor => simp only [hs, Option.map_some, reduceCtorEq] at h
+  · intro h
+    have hs : oneSuccessor machine state = none := by
+      unfold oneSuccessor
+      exact (Option.attachWith_eq_none_iff _).mpr h
+    rw [hs]
+    rfl
 
 /-- A requested signature is witnessed by an actual transient successor. -/
 theorem zeroOneSignature_eq_some_iff (state : ZeroFiber machine)
@@ -238,12 +255,18 @@ theorem zeroOneSignature_eq_some_iff (state : ZeroFiber machine)
       ∃ successor : OneFiber machine,
         machine.step state.1 1 = some successor.1 ∧
           oneSignature machine successor = signature := by
-  simp only [zeroOneSignature, Option.map_eq_some_iff]
   constructor
+  · intro h
+    change (oneSuccessor machine state).map (oneSignature machine) = some signature at h
+    obtain ⟨successor, hs, hv⟩ := Option.map_eq_some_iff.mp h
+    refine ⟨successor, ?_, hv⟩
+    simpa only [hs, Option.map_some] using (oneSuccessor_map_val machine state).symm
   · rintro ⟨successor, hs, hv⟩
-    exact ⟨successor, (Option.attachWith_eq_some_iff _).mp hs, hv⟩
-  · rintro ⟨successor, hs, hv⟩
-    exact ⟨successor, (Option.attachWith_eq_some_iff _).mpr hs, hv⟩
+    change (oneSuccessor machine state).map (oneSignature machine) = some signature
+    apply Option.map_eq_some_iff.mpr
+    refine ⟨successor, ?_, hv⟩
+    unfold oneSuccessor
+    exact (Option.attachWith_eq_some_iff _).mpr hs
 
 end Machine
 
@@ -592,10 +615,14 @@ theorem canonicalToOriginal_injective : Function.Injective (canonicalToOriginal 
   · exact congrArg Sum.inl (Subtype.ext h)
   · change l.1 = (signatureRepresentative machine r).1 at h
     have ht := congrArg machine.stateType h
+    change machine.stateType l.1 =
+      machine.stateType (signatureRepresentative machine r).1 at ht
     rw [l.2, (signatureRepresentative machine r).2] at ht
     cases ht
   · change (signatureRepresentative machine l).1 = r.1 at h
     have ht := congrArg machine.stateType h
+    change machine.stateType (signatureRepresentative machine l).1 =
+      machine.stateType r.1 at ht
     rw [(signatureRepresentative machine l).2, r.2] at ht
     cases ht
   · exact congrArg Sum.inr
