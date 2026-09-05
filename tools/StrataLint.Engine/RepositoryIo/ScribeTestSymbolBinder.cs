@@ -161,6 +161,7 @@ internal static class ScribeTestSymbolBinder
                 callable,
                 symbol,
                 callable.SemanticModel,
+                semanticModels,
                 callablesBySymbol,
                 productionAssemblies);
         }
@@ -229,6 +230,7 @@ internal static class ScribeTestSymbolBinder
         ScribeBoundCallable callable,
         IMethodSymbol symbol,
         SemanticModel model,
+        ScribeSemanticModelProvider semanticModels,
         ScribeCallableIndex callablesBySymbol,
         IReadOnlySet<string>? productionAssemblies)
     {
@@ -245,70 +247,103 @@ internal static class ScribeTestSymbolBinder
             }
         }
 
+        var visitedFields = new HashSet<ISymbol>(SymbolEqualityComparer.Default);
         foreach (var node in callable.InspectionNodes)
         {
-            switch (node)
-            {
-                case InvocationExpressionSyntax invocation:
-                    if (model.GetOperation(invocation) is INameOfOperation) break;
-                    BindMethodNode(
-                        invocation,
+            BindNode(
+                node,
+                callable,
+                model,
+                semanticModels,
+                callablesBySymbol,
+                productionAssemblies,
+                detectProductionRepositoryRead,
+                visitedFields);
+        }
+    }
+
+    private static void BindNode(
+        SyntaxNode node,
+        ScribeBoundCallable callable,
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels,
+        ScribeCallableIndex callablesBySymbol,
+        IReadOnlySet<string>? productionAssemblies,
+        bool detectProductionRepositoryRead,
+        HashSet<ISymbol> visitedFields)
+    {
+        switch (node)
+        {
+            case InvocationExpressionSyntax invocation:
+                if (model.GetOperation(invocation) is INameOfOperation) break;
+                BindMethodNode(
+                    invocation,
+                    callable,
+                    model,
+                    callablesBySymbol,
+                    productionAssemblies,
+                    detectProductionRepositoryRead,
+                    failWhenUnresolved: true);
+                break;
+            case ObjectCreationExpressionSyntax or ImplicitObjectCreationExpressionSyntax
+                or ConstructorInitializerSyntax or AttributeSyntax:
+                BindMethodNode(
+                    node,
+                    callable,
+                    model,
+                    callablesBySymbol,
+                    productionAssemblies,
+                    detectProductionRepositoryRead,
+                    failWhenUnresolved: node is not AttributeSyntax attribute
+                        || IsTestAttribute(attribute, model));
+                break;
+            case MemberAccessExpressionSyntax member when member.Parent is not InvocationExpressionSyntax:
+                if (IsInsideNameof(member, model))
+                {
+                    MarkCompileTimeInputUniverseMention(member, callable, model);
+                }
+                else
+                {
+                    BindMemberNode(
+                        member,
                         callable,
                         model,
+                        semanticModels,
                         callablesBySymbol,
                         productionAssemblies,
-                        detectProductionRepositoryRead,
-                        failWhenUnresolved: true);
-                    break;
-                case ObjectCreationExpressionSyntax or ImplicitObjectCreationExpressionSyntax
-                    or ConstructorInitializerSyntax or AttributeSyntax:
-                    BindMethodNode(
-                        node,
+                        visitedFields);
+                }
+                break;
+            case IdentifierNameSyntax identifier when identifier.Parent is not InvocationExpressionSyntax:
+                if (IsInsideNameof(identifier, model))
+                {
+                    MarkCompileTimeInputUniverseMention(identifier, callable, model);
+                }
+                else
+                {
+                    BindMemberNode(
+                        identifier,
                         callable,
                         model,
+                        semanticModels,
                         callablesBySymbol,
                         productionAssemblies,
-                        detectProductionRepositoryRead,
-                        failWhenUnresolved: node is not AttributeSyntax attribute
-                            || IsTestAttribute(attribute, model));
-                    break;
-                case MemberAccessExpressionSyntax member when member.Parent is not InvocationExpressionSyntax:
-                    if (IsInsideNameof(member, model))
-                    {
-                        MarkCompileTimeInputUniverseMention(member, callable, model);
-                    }
-                    else
-                    {
-                        BindMemberNode(
-                            member,
-                            callable,
-                            model,
-                            callablesBySymbol,
-                            productionAssemblies);
-                    }
-                    break;
-                case IdentifierNameSyntax identifier when identifier.Parent is not InvocationExpressionSyntax:
-                    if (IsInsideNameof(identifier, model))
-                    {
-                        MarkCompileTimeInputUniverseMention(identifier, callable, model);
-                    }
-                    else
-                    {
-                        BindMemberNode(
-                            identifier,
-                            callable,
-                            model,
-                            callablesBySymbol,
-                            productionAssemblies);
-                    }
-                    break;
-                case TypeOfExpressionSyntax typeOf:
-                    MarkCompileTimeInputUniverseMention(typeOf.Type, callable, model);
-                    break;
-                case ElementAccessExpressionSyntax element:
-                    BindMemberNode(element, callable, model, callablesBySymbol, productionAssemblies);
-                    break;
-            }
+                        visitedFields);
+                }
+                break;
+            case TypeOfExpressionSyntax typeOf:
+                MarkCompileTimeInputUniverseMention(typeOf.Type, callable, model);
+                break;
+            case ElementAccessExpressionSyntax element:
+                BindMemberNode(
+                    element,
+                    callable,
+                    model,
+                    semanticModels,
+                    callablesBySymbol,
+                    productionAssemblies,
+                    visitedFields);
+                break;
         }
     }
 
@@ -390,8 +425,10 @@ internal static class ScribeTestSymbolBinder
         SyntaxNode node,
         ScribeBoundCallable caller,
         SemanticModel model,
+        ScribeSemanticModelProvider semanticModels,
         ScribeCallableIndex callablesBySymbol,
-        IReadOnlySet<string>? productionAssemblies)
+        IReadOnlySet<string>? productionAssemblies,
+        HashSet<ISymbol> visitedFields)
     {
         switch (model.GetSymbolInfo(node).Symbol)
         {
@@ -408,6 +445,36 @@ internal static class ScribeTestSymbolBinder
                 }
                 AddAccessor(property.GetMethod, caller.Targets, callablesBySymbol);
                 AddAccessor(property.SetMethod, caller.Targets, callablesBySymbol);
+                break;
+            case IFieldSymbol field:
+                AddCompileTimeInputUniverses(field, caller.CompileTimeInputUniverses);
+                if (field.IsStatic
+                    && productionAssemblies?.Contains(field.ContainingAssembly.Name) == true)
+                {
+                    AddStaticConstructors(field.ContainingType, caller.Targets, callablesBySymbol);
+                }
+                if (!visitedFields.Add(field)) break;
+                foreach (var initializer in FieldInitializers(field))
+                {
+                    var initializerModel = semanticModels.ModelFor(initializer, model);
+                    if (initializerModel is null)
+                    {
+                        caller.BindingUnknownReasons.Add(TestMapUnknownReason.MetadataUnavailable);
+                        continue;
+                    }
+                    foreach (var initializerNode in initializer.DescendantNodesAndSelf())
+                    {
+                        BindNode(
+                            initializerNode,
+                            caller,
+                            initializerModel,
+                            semanticModels,
+                            callablesBySymbol,
+                            productionAssemblies,
+                            !caller.IsProductionSource,
+                            visitedFields);
+                    }
+                }
                 break;
             case IEventSymbol @event:
                 AddAccessor(@event.AddMethod, caller.Targets, callablesBySymbol);
