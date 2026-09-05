@@ -150,6 +150,45 @@ public sealed class DigestionFrontierViewsAndCorpusTests
     }
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MalformedStatusMarkerPrecedesChainChildInEveryRetryMode(bool retryDispositions)
+    {
+        var marker = DigestionAtomStatusMarker.Parse(
+            Encoding.UTF8.GetBytes("**定理 1.1**〔closed"));
+        var fixture = DigestionFrontierFixture.Create(
+            retryDispositions,
+            chainChildStatusMarker: marker);
+
+        var projected = fixture.Projection.Entries.Single(
+            item => item.Entry.AtomId == DigestionFrontierFixture.ChainChildId);
+
+        Assert.True(projected.IsChainChild);
+        Assert.Equal(DigestionFrontierDisposition.Withheld, projected.PrimaryDisposition);
+        Assert.Equal("malformed-status-marker", projected.PrimaryDetail);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MalformedStatusMarkerPrecedesNotFormalizableKindInEveryRetryMode(
+        bool retryDispositions)
+    {
+        var marker = DigestionAtomStatusMarker.Parse(
+            Encoding.UTF8.GetBytes("**定义 1.1**〔closed"));
+        var fixture = DigestionFrontierFixture.Create(
+            retryDispositions,
+            structuralStatusMarker: marker);
+
+        var projected = fixture.Projection.Entries.Single(
+            item => item.Entry.AtomId == DigestionFrontierFixture.StructuralId);
+
+        Assert.Equal(DigestionContentRole.NotFormalizable, projected.ContentRole);
+        Assert.Equal(DigestionFrontierDisposition.Withheld, projected.PrimaryDisposition);
+        Assert.Equal("malformed-status-marker", projected.PrimaryDetail);
+    }
+
+    [Theory]
     [InlineData(false, 2, 2)]
     [InlineData(true, 3, 1)]
     public void RetryCoverDispositionUsesTheSameFrontierAsCandidates(
@@ -177,6 +216,44 @@ public sealed class DigestionFrontierViewsAndCorpusTests
         Assert.Equal(
             retryDispositions,
             candidateIds.Contains(DigestionFrontierFixture.CoverWithheldId, StringComparer.Ordinal));
+    }
+
+    [Fact]
+    public void FormalizeCandidatesRejectUnknownDisposition()
+    {
+        var fixture = DigestionFrontierFixture.Create();
+        var entry = fixture.Projection.Entries[0] with
+        {
+            PrimaryDisposition = (DigestionFrontierDisposition)99,
+        };
+
+        var error = Assert.Throws<InvalidOperationException>(() =>
+            DigestFormalizeCandidates.Project(entry, fixture.Snapshot));
+
+        Assert.Equal("unsupported disposition 99", error.Message);
+    }
+
+    [Fact]
+    public void ReadinessRejectsUnknownDisposition()
+    {
+        var entry = DigestionFrontierFixture.Create().Projection.Entries[0] with
+        {
+            PrimaryDisposition = (DigestionFrontierDisposition)99,
+        };
+
+        var error = Assert.Throws<InvalidOperationException>(() =>
+            DigestionReadinessQuery.ClassifyEntry(entry));
+
+        Assert.Equal("unsupported disposition 99", error.Message);
+    }
+
+    [Fact]
+    public void ResidualSummaryRejectsUnknownDisposition()
+    {
+        var error = Assert.Throws<InvalidOperationException>(() =>
+            DigestResidualSummary.ClassifyDisposition((DigestionFrontierDisposition)99));
+
+        Assert.Equal("unsupported disposition 99", error.Message);
     }
 
     private static JsonDocument RenderCandidates(

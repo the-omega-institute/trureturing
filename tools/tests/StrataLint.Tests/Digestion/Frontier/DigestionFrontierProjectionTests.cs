@@ -52,4 +52,28 @@ public sealed class DigestionFrontierProjectionTests
             projection.FormalizationFrontier,
             static item => item.Entry.AtomId == DigestionFrontierFixture.ChainParentId);
     }
+
+    [Fact]
+    public void CountsRejectUnknownDisposition()
+    {
+        var entry = DigestionFrontierFixture.Create().Projection.Entries[0] with
+        {
+            PrimaryDisposition = (DigestionFrontierDisposition)99,
+        };
+
+        var error = Assert.Throws<InvalidOperationException>(() =>
+            DigestionFrontierCounts.From([entry]));
+
+        Assert.Equal("unsupported disposition 99", error.Message);
+    }
+
+    [Fact]
+    public void FormalizationFrontierFilterRejectsUnknownDisposition()
+    {
+        var error = Assert.Throws<InvalidOperationException>(() =>
+            DigestionFrontierProjection.IsFormalizationFrontierDisposition(
+                (DigestionFrontierDisposition)99));
+
+        Assert.Equal("unsupported disposition 99", error.Message);
+    }
 }

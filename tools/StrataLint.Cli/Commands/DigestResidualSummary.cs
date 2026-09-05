@@ -111,8 +111,8 @@ internal static class DigestResidualSummary
             .OrderBy(static residue => residue.Name, StringComparer.Ordinal)
             .ToArray();
         var quarantined = frontier.Entries
-            .Where(static item =>
-                item.PrimaryDisposition == DigestionFrontierDisposition.Quarantined)
+            .Where(static item => ClassifyDisposition(item.PrimaryDisposition)
+                == ResidualDisposition.Quarantined)
             .Select(static item => new QuarantinedResiduals(
                 item.Entry.SourceId,
                 item.Entry.AtomId,
@@ -218,10 +218,28 @@ internal static class DigestResidualSummary
 
     private static ImmutableHashSet<string> ExcludedAtomIds(
         DigestionFrontierProjection frontier) => frontier.Entries
-        .Where(static entry => entry.PrimaryDisposition is
-            DigestionFrontierDisposition.Quarantined or DigestionFrontierDisposition.Withheld)
+        .Where(static entry => ClassifyDisposition(entry.PrimaryDisposition) is
+            ResidualDisposition.Quarantined or ResidualDisposition.Withheld)
         .Select(static entry => entry.Entry.AtomId)
         .ToImmutableHashSet(StringComparer.Ordinal);
+
+    internal static ResidualDisposition ClassifyDisposition(
+        DigestionFrontierDisposition disposition) => disposition switch
+    {
+        DigestionFrontierDisposition.Quarantined => ResidualDisposition.Quarantined,
+        DigestionFrontierDisposition.Withheld => ResidualDisposition.Withheld,
+        DigestionFrontierDisposition.ChainChild => ResidualDisposition.Included,
+        DigestionFrontierDisposition.NotFormalizable => ResidualDisposition.Included,
+        DigestionFrontierDisposition.FormalizableClaim => ResidualDisposition.Included,
+        _ => throw DigestionFrontierDispositionPolicy.Unsupported(disposition),
+    };
+
+    internal enum ResidualDisposition
+    {
+        Included,
+        Quarantined,
+        Withheld,
+    }
 
     private static void RenderFrontier(
         StringWriter writer,

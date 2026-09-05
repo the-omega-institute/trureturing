@@ -50,46 +50,23 @@ internal static class DigestFormalizeCandidates
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
     }
 
-    private static FormalizeProjection? Project(
+    internal static FormalizeProjection? Project(
+        DigestionFrontierEntry frontier,
+        RepositorySnapshot snapshot) => frontier.PrimaryDisposition switch
+    {
+        DigestionFrontierDisposition.Quarantined => ProjectQuarantined(frontier),
+        DigestionFrontierDisposition.Withheld => ProjectWithheld(frontier),
+        DigestionFrontierDisposition.ChainChild => null,
+        DigestionFrontierDisposition.NotFormalizable => null,
+        DigestionFrontierDisposition.FormalizableClaim => ProjectFormalizable(frontier, snapshot),
+        _ => throw DigestionFrontierDispositionPolicy.Unsupported(frontier.PrimaryDisposition),
+    };
+
+    private static FormalizeProjection ProjectFormalizable(
         DigestionFrontierEntry frontier,
         RepositorySnapshot snapshot)
     {
         var entry = frontier.Entry;
-        if (frontier.PrimaryDisposition == DigestionFrontierDisposition.Quarantined)
-        {
-            var quarantine = entry.Receipts.Quarantine!;
-            return new FormalizeProjection(
-                entry.SourceId,
-                entry.AtomId,
-                null,
-                new QuarantinedFormalizeCandidate(
-                    entry.SourceId,
-                    entry.AtomId,
-                    quarantine.Justification,
-                    quarantine.ReentryCondition,
-                    quarantine.BlockerClass),
-                null);
-        }
-
-        if (frontier.PrimaryDisposition == DigestionFrontierDisposition.Withheld)
-        {
-            return new FormalizeProjection(
-                entry.SourceId,
-                entry.AtomId,
-                null,
-                null,
-                new WithheldFormalizeCandidate(
-                    entry.AtomId,
-                    frontier.PrimaryDetail,
-                    frontier.StatusQualifier));
-        }
-
-        if (frontier.PrimaryDisposition is
-            DigestionFrontierDisposition.ChainChild or DigestionFrontierDisposition.NotFormalizable)
-        {
-            return null;
-        }
-
         var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
         if (!snapshot.TryGetFile(casPath, out var atom))
         {
@@ -122,7 +99,38 @@ internal static class DigestFormalizeCandidates
             null);
     }
 
-    private sealed record FormalizeCandidate(
+    private static FormalizeProjection ProjectQuarantined(DigestionFrontierEntry frontier)
+    {
+        var entry = frontier.Entry;
+        var quarantine = entry.Receipts.Quarantine!;
+        return new FormalizeProjection(
+            entry.SourceId,
+            entry.AtomId,
+            null,
+            new QuarantinedFormalizeCandidate(
+                entry.SourceId,
+                entry.AtomId,
+                quarantine.Justification,
+                quarantine.ReentryCondition,
+                quarantine.BlockerClass),
+            null);
+    }
+
+    private static FormalizeProjection ProjectWithheld(DigestionFrontierEntry frontier)
+    {
+        var entry = frontier.Entry;
+        return new FormalizeProjection(
+            entry.SourceId,
+            entry.AtomId,
+            null,
+            null,
+            new WithheldFormalizeCandidate(
+                entry.AtomId,
+                frontier.PrimaryDetail,
+                frontier.StatusQualifier));
+    }
+
+    internal sealed record FormalizeCandidate(
         string SourceId,
         string AtomId,
         string Kind,
@@ -130,19 +138,19 @@ internal static class DigestFormalizeCandidates
         string RawSha256,
         string AtomText);
 
-    private sealed record WithheldFormalizeCandidate(
+    internal sealed record WithheldFormalizeCandidate(
         string AtomId,
         string WithholdReason,
         string? StatusQualifier);
 
-    private sealed record QuarantinedFormalizeCandidate(
+    internal sealed record QuarantinedFormalizeCandidate(
         string SourceId,
         string AtomId,
         string Justification,
         string ReentryCondition,
         string? BlockerClass);
 
-    private sealed record FormalizeProjection(
+    internal sealed record FormalizeProjection(
         string SourceId,
         string AtomId,
         FormalizeCandidate? Candidate,

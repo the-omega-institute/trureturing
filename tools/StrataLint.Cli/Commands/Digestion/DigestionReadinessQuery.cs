@@ -38,40 +38,33 @@ internal static class DigestionReadinessQuery
             .ToImmutableArray();
     }
 
-    private static DigestionReadinessRecord ClassifyEntry(
-        DigestionFrontierEntry frontier)
+    internal static DigestionReadinessRecord ClassifyEntry(
+        DigestionFrontierEntry frontier) => frontier.PrimaryDisposition switch
     {
-        var entry = frontier.Entry;
-        if (frontier.PrimaryDisposition == DigestionFrontierDisposition.Quarantined)
-        {
-            return Record(
-                entry,
+        DigestionFrontierDisposition.Quarantined => Record(
+                frontier.Entry,
                 "quarantined",
                 frontier.PrimaryDetail == "untyped"
                     ? ["quarantine"]
-                    : ["quarantine:" + frontier.PrimaryDetail]);
-        }
-
-        if (frontier.PrimaryDisposition == DigestionFrontierDisposition.Withheld)
-        {
-            return frontier.PrimaryDetail == "acknowledged-stale"
-                ? Record(entry, "refresh-stale", [frontier.PrimaryDetail])
-                : Record(entry, "withheld", [frontier.PrimaryDetail]);
-        }
-
-        if (frontier.PrimaryDisposition == DigestionFrontierDisposition.ChainChild)
-        {
-            return Record(entry, "chain-child", frontier.ParentAtomIds);
-        }
-
-        if (frontier.PrimaryDisposition == DigestionFrontierDisposition.NotFormalizable)
-        {
-            return Record(
-                entry,
+                    : ["quarantine:" + frontier.PrimaryDetail]),
+        DigestionFrontierDisposition.Withheld =>
+            frontier.PrimaryDetail == "acknowledged-stale"
+                ? Record(frontier.Entry, "refresh-stale", [frontier.PrimaryDetail])
+                : Record(frontier.Entry, "withheld", [frontier.PrimaryDetail]),
+        DigestionFrontierDisposition.ChainChild =>
+            Record(frontier.Entry, "chain-child", frontier.ParentAtomIds),
+        DigestionFrontierDisposition.NotFormalizable => Record(
+                frontier.Entry,
                 "not-formalizable",
-                ["non-assertion-ast-kind:" + frontier.KindLabel]);
-        }
+                ["non-assertion-ast-kind:" + frontier.KindLabel]),
+        DigestionFrontierDisposition.FormalizableClaim => ClassifyFormalizable(frontier),
+        _ => throw DigestionFrontierDispositionPolicy.Unsupported(frontier.PrimaryDisposition),
+    };
 
+    private static DigestionReadinessRecord ClassifyFormalizable(
+        DigestionFrontierEntry frontier)
+    {
+        var entry = frontier.Entry;
         var openChildren = entry.Receipts.ChainAtoms
             .Where(atomId => frontier.Evaluation.Gaps.Any(gap =>
                 string.Equals(gap.Code, "chain-migration-incomplete", StringComparison.Ordinal)

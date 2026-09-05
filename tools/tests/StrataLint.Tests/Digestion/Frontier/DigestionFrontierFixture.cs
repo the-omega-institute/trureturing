@@ -23,7 +23,9 @@ internal sealed record DigestionFrontierFixture(
     internal static DigestionFrontierFixture Create(
         bool retryDispositions = false,
         string coverKind = "definition",
-        DigestionAtomStatusMarker? claimStatusMarker = null)
+        DigestionAtomStatusMarker? claimStatusMarker = null,
+        DigestionAtomStatusMarker? chainChildStatusMarker = null,
+        DigestionAtomStatusMarker? structuralStatusMarker = null)
     {
         var quarantined = Entry(
             "source-a",
@@ -42,7 +44,11 @@ internal sealed record DigestionFrontierFixture(
                 ["D5/S0/Carrier/Probe.probe"],
                 [new DigestionDispositionGap("unresolved-subitem", "remaining")]));
         var stale = Entry("source-a", StaleId, "theorem");
-        var chainChild = Entry("source-b", ChainChildId, "theorem");
+        var chainChild = Entry(
+            "source-b",
+            ChainChildId,
+            "theorem",
+            statusMarker: chainChildStatusMarker);
         var chainParent = Entry(
             "source-b",
             ChainParentId,
@@ -56,7 +62,11 @@ internal sealed record DigestionFrontierFixture(
                     DigestionGapSeverity.NonFatal),
             ]);
         var structuralChainChild = Entry("source-b", StructuralChainChildId, "definition");
-        var structural = Entry("source-b", StructuralId, "definition");
+        var structural = Entry(
+            "source-b",
+            StructuralId,
+            "definition",
+            statusMarker: structuralStatusMarker);
         var claim = Entry("source-b", ClaimId, "lemma", statusMarker: claimStatusMarker);
         var entries = new[]
         {

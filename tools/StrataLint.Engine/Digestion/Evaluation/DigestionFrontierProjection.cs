@@ -11,6 +11,13 @@ internal enum DigestionFrontierDisposition
     FormalizableClaim,
 }
 
+internal static class DigestionFrontierDispositionPolicy
+{
+    internal static InvalidOperationException Unsupported(
+        DigestionFrontierDisposition disposition) =>
+        new($"unsupported disposition {disposition}");
+}
+
 internal sealed record DigestionFrontierEntry(
     DigestionEntryEvaluation Evaluation,
     DigestionFrontierDisposition PrimaryDisposition,
@@ -32,8 +39,7 @@ internal sealed record DigestionFrontierEntry(
         DigestionFrontierDisposition.ChainChild => "chain-child",
         DigestionFrontierDisposition.NotFormalizable => "not-formalizable",
         DigestionFrontierDisposition.FormalizableClaim => "formalizable-claim",
-        _ => throw new InvalidOperationException(
-            $"unsupported digestion frontier disposition: {PrimaryDisposition}"),
+        _ => throw DigestionFrontierDispositionPolicy.Unsupported(PrimaryDisposition),
     };
 }
 
@@ -51,17 +57,41 @@ internal sealed record DigestionFrontierCounts(
 
     internal static DigestionFrontierCounts From(IEnumerable<DigestionFrontierEntry> entries)
     {
-        var counts = entries
-            .GroupBy(static entry => entry.PrimaryDisposition)
-            .ToDictionary(static group => group.Key, static group => group.Count());
-        int Count(DigestionFrontierDisposition disposition) =>
-            counts.GetValueOrDefault(disposition);
+        var counts = (Quarantined: 0, Withheld: 0, ChainChild: 0, NotFormalizable: 0, FormalizableClaim: 0);
+        foreach (var entry in entries)
+        {
+            counts = entry.PrimaryDisposition switch
+            {
+                DigestionFrontierDisposition.Quarantined => counts with
+                {
+                    Quarantined = counts.Quarantined + 1,
+                },
+                DigestionFrontierDisposition.Withheld => counts with
+                {
+                    Withheld = counts.Withheld + 1,
+                },
+                DigestionFrontierDisposition.ChainChild => counts with
+                {
+                    ChainChild = counts.ChainChild + 1,
+                },
+                DigestionFrontierDisposition.NotFormalizable => counts with
+                {
+                    NotFormalizable = counts.NotFormalizable + 1,
+                },
+                DigestionFrontierDisposition.FormalizableClaim => counts with
+                {
+                    FormalizableClaim = counts.FormalizableClaim + 1,
+                },
+                _ => throw DigestionFrontierDispositionPolicy.Unsupported(entry.PrimaryDisposition),
+            };
+        }
+
         return new DigestionFrontierCounts(
-            Count(DigestionFrontierDisposition.Quarantined),
-            Count(DigestionFrontierDisposition.Withheld),
-            Count(DigestionFrontierDisposition.ChainChild),
-            Count(DigestionFrontierDisposition.NotFormalizable),
-            Count(DigestionFrontierDisposition.FormalizableClaim));
+            counts.Quarantined,
+            counts.Withheld,
+            counts.ChainChild,
+            counts.NotFormalizable,
+            counts.FormalizableClaim);
     }
 }
 
@@ -79,8 +109,8 @@ internal sealed class DigestionFrontierProjection
         PerSource = perSource;
         Total = DigestionFrontierCounts.From(entries);
         FormalizationFrontier = entries
-            .Where(static entry =>
-                entry.PrimaryDisposition == DigestionFrontierDisposition.FormalizableClaim)
+            .Where(static entry => IsFormalizationFrontierDisposition(
+                entry.PrimaryDisposition))
             .ToImmutableArray();
     }
 
@@ -88,6 +118,17 @@ internal sealed class DigestionFrontierProjection
     internal ImmutableArray<DigestionFrontierEntry> FormalizationFrontier { get; }
     internal ImmutableArray<DigestionFrontierSourceCounts> PerSource { get; }
     internal DigestionFrontierCounts Total { get; }
+
+    internal static bool IsFormalizationFrontierDisposition(
+        DigestionFrontierDisposition disposition) => disposition switch
+    {
+        DigestionFrontierDisposition.Quarantined => false,
+        DigestionFrontierDisposition.Withheld => false,
+        DigestionFrontierDisposition.ChainChild => false,
+        DigestionFrontierDisposition.NotFormalizable => false,
+        DigestionFrontierDisposition.FormalizableClaim => true,
+        _ => throw DigestionFrontierDispositionPolicy.Unsupported(disposition),
+    };
 
     internal static DigestionFrontierProjection Create(
         BackfillInventoryDocument ledger,
@@ -175,48 +216,48 @@ internal sealed class DigestionFrontierProjection
             disposition = DigestionFrontierDisposition.Quarantined;
             detail = quarantine.BlockerClass ?? "untyped";
         }
-        else if (withholdCoverDisposition || isAcknowledgedStale)
-        {
-            disposition = DigestionFrontierDisposition.Withheld;
-            detail = withholdCoverDisposition
-                ? DigestionCoverDispositionSelector.WithholdReason
-                : "acknowledged-stale";
-        }
-        else if (isChainChild)
-        {
-            disposition = DigestionFrontierDisposition.ChainChild;
-            detail = "chain-child";
-        }
-        else if (content.Role == DigestionContentRole.NotFormalizable)
-        {
-            disposition = DigestionFrontierDisposition.NotFormalizable;
-            detail = content.KindLabel;
-        }
-        else if (evaluation.Atom?.StatusMarker is not { } status)
-        {
-            throw new FormatException($"entry {entry.AtomId} has no canonical atom alignment");
-        }
-        else if (status.Kind == DigestionAtomStatusMarkerKind.Malformed)
-        {
-            disposition = DigestionFrontierDisposition.Withheld;
-            detail = "malformed-status-marker";
-            statusQualifier = status.Qualifier;
-        }
-        else if (status is
-            {
-                Kind: DigestionAtomStatusMarkerKind.Valid,
-                Status: "closed",
-                Qualifier.Length: > 0,
-            })
-        {
-            disposition = DigestionFrontierDisposition.Withheld;
-            detail = "qualified-closed-status";
-            statusQualifier = status.Qualifier;
-        }
         else
         {
-            disposition = DigestionFrontierDisposition.FormalizableClaim;
-            detail = "formalizable-claim";
+            var status = evaluation.Atom?.StatusMarker;
+            var withholding = withholdCoverDisposition
+                ? (Reason: DigestionCoverDispositionSelector.WithholdReason, Qualifier: (string?)null)
+                : isAcknowledgedStale
+                    ? (Reason: "acknowledged-stale", Qualifier: (string?)null)
+                    : status?.Kind == DigestionAtomStatusMarkerKind.Malformed
+                        ? (Reason: "malformed-status-marker", Qualifier: status.Qualifier)
+                    : status is
+                        {
+                            Kind: DigestionAtomStatusMarkerKind.Valid,
+                            Status: "closed",
+                            Qualifier.Length: > 0,
+                        }
+                            ? (Reason: "qualified-closed-status", Qualifier: status.Qualifier)
+                            : (Reason: (string?)null, Qualifier: (string?)null);
+            if (withholding.Reason is not null)
+            {
+                disposition = DigestionFrontierDisposition.Withheld;
+                detail = withholding.Reason;
+                statusQualifier = withholding.Qualifier;
+            }
+            else if (isChainChild)
+            {
+                disposition = DigestionFrontierDisposition.ChainChild;
+                detail = "chain-child";
+            }
+            else if (content.Role == DigestionContentRole.NotFormalizable)
+            {
+                disposition = DigestionFrontierDisposition.NotFormalizable;
+                detail = content.KindLabel;
+            }
+            else if (status is null)
+            {
+                throw new FormatException($"entry {entry.AtomId} has no canonical atom alignment");
+            }
+            else
+            {
+                disposition = DigestionFrontierDisposition.FormalizableClaim;
+                detail = "formalizable-claim";
+            }
         }
 
         return new DigestionFrontierEntry(
