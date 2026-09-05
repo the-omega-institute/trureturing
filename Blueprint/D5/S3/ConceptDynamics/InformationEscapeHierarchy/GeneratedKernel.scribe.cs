@@ -181,7 +181,7 @@ internal sealed class GeneratedKernelDocument : IScribeDocumentDefinition
         Call("GeneratorStep", C(), P(), Q(), I()),
         FormulaLogicOperator.Implies,
         Seq(Neg, Refines(P(), Q()), Sp, Iff, Sp,
-            Capture(), Sp, Ne, Sp, Call("empty")));
+            Capture(), Sp, Neq, Sp, Call("empty")));
 
     private static Formula StrictPositive() => new Formula.Logic(
         Call("GeneratorStep", C(), P(), Q(), I()),

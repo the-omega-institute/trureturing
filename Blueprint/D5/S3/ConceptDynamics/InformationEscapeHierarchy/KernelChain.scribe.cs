@@ -22,21 +22,9 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
             Definition("strict-kernel-chain", "StrictKernelChain",
                 "Strict kernel chain",
                 "A stutter-free path retains a strict generator-step certificate at every adjacency."),
-            Definition("strict-subsequence", "GeneratorSchedule.strictSubsequence",
+            Definition("strict-subsequence", "strictSubsequence",
                 "Strict subsequence",
                 "Deleting classified stutters produces a strict kernel chain while preserving the path endpoints."),
-            Definition("schedule-increment", "GeneratorSchedule.increment",
-                "Schedule increment",
-                "The increment at a schedule position is the escape set removed by that edge."),
-            Definition("schedule-increment-count", "GeneratorSchedule.incrementCount",
-                "Schedule increment count",
-                "The increment count is the finite cardinality of a schedule increment."),
-            Definition("strict-chain-increment", "StrictKernelChain.increment",
-                "Strict-chain increment",
-                "The increment at a strict-chain position is the escape set removed by that edge."),
-            Definition("strict-chain-increment-count", "StrictKernelChain.incrementCount",
-                "Strict-chain increment count",
-                "The increment count is the finite cardinality of a strict-chain increment."),
             Theorem("collapsed-increment-is-empty", "collapsed_increment_eq_empty",
                 "Collapsed increments are empty", CollapsedIncrement()),
             Theorem("chain-increments-pairwise-disjoint", "chain_increment_pairwise_disjoint",
@@ -45,8 +33,14 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
                 "Increment union is terminal escape loss", IncrementUnion()),
             Theorem("chain-count-telescopes", "chain_count_telescopes",
                 "Increment counts telescope", CountTelescopes()),
+            Theorem("strict-chain-terminal-generated-union",
+                "strict_chain_terminal_eq_generatedKernel_union",
+                "A strict-chain terminal is its generated union", StrictTerminalUnion()),
             Theorem("terminal-order-independent", "terminal_order_independent",
-                "Full-schedule terminals are order independent", TerminalIndependent()),
+                "Strict-chain terminals are order independent", TerminalIndependent()),
+            Theorem("full-schedule-terminal-order-independent",
+                "full_schedule_terminal_order_independent",
+                "Full-schedule terminals are order independent", FullTerminalIndependent()),
             Theorem("schedule-terminal-is-full-kernel",
                 "schedule_terminal_eq_generatedKernel_full",
                 "A full schedule ends at the full kernel", TerminalFull()),
@@ -103,7 +97,7 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
 
     private static Formula PairwiseDisjoint() => Seq(
         Forall, Sp, R(), Comma, Sp, S(), Comma, Sp,
-        R(), Sp, Ne, Sp, S(), Sp, Implies, Sp,
+        R(), Sp, Neq, Sp, S(), Sp, Implies, Sp,
         Call("Disjoint", Increment(Schedule(), R()), Increment(Schedule(), S())));
 
     private static Formula IncrementUnion() => Seq(
@@ -116,9 +110,34 @@ internal sealed class KernelChainDocument : IScribeDocumentDefinition
         Call("sum", Call("incrementCount", Schedule())), Sp, Plus, Sp,
         Call("card", Escape(Node(Schedule(), Last(Schedule())))),
         Sp, Eq, Sp,
-        Call("card", Escape(Node(Schedule(), D(0))));
+        Call("card", Escape(Node(Schedule(), D(0)))));
 
-    private static Formula TerminalIndependent() => Seq(
+    private static Formula StrictTerminalUnion() => new Formula.Logic(
+        Seq(Node(Schedule(), D(0)), Sp, Eq, Sp,
+            Call("generatedKernel", F.Id("C"), F.Id("T"))),
+        FormulaLogicOperator.Implies,
+        Seq(Node(Schedule(), Last(Schedule())), Sp, Eq, Sp,
+            Call("generatedKernel", F.Id("C"),
+                Call("union", F.Id("T"), Call("image", Call("added", Schedule()))))));
+
+    private static Formula TerminalIndependent()
+    {
+        Formula sameStart = new Formula.Logic(
+            Seq(Node(First(), D(0)), Sp, Eq, Sp,
+                Call("generatedKernel", F.Id("C"), F.Id("T"))),
+            FormulaLogicOperator.And,
+            Seq(Node(Second(), D(0)), Sp, Eq, Sp,
+                Call("generatedKernel", F.Id("C"), F.Id("T"))));
+        Formula sameGenerators = Seq(
+            Call("image", Call("added", First())), Sp, Eq, Sp,
+            Call("image", Call("added", Second())));
+        return new Formula.Logic(
+            new Formula.Logic(sameStart, FormulaLogicOperator.And, sameGenerators),
+            FormulaLogicOperator.Implies,
+            FullTerminalIndependent());
+    }
+
+    private static Formula FullTerminalIndependent() => Seq(
         Node(First(), Last(First())), Sp, Eq, Sp,
         Node(Second(), Last(Second())));
 
