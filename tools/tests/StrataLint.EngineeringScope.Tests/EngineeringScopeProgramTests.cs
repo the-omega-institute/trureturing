@@ -122,42 +122,43 @@ public sealed class EngineeringScopeProgramTests
     }
 
     [Fact]
-    public void ClassificationUsesProtectedBaseFileMapForFullRouting()
+    public void ClassificationUsesCandidateFileMapForFullRouting()
     {
         var result = RunBoundary(
             root =>
             {
                 WriteProductProjects(root);
-                WriteFile(root, ProductFeature, "internal sealed class Feature { }\n");
-                WriteAdmissionPlaneFileMap(
-                    root,
-                    (FileMapPath, "judge"),
-                    (ProductFeature, "judge"));
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "content"));
             },
-            root =>
-            {
-                WriteFile(root, ProductFeature, "internal sealed class Feature { public int Value => 1; }\n");
-                WriteAdmissionPlaneFileMap(
-                    root,
-                    (FileMapPath, "content"),
-                    (ProductFeature, "content"));
-            });
+            root => WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge")));
 
         Assert.True(result.ExitCode == 0, result.Diagnostic);
         Assert.Equal([ProductTestsProject, ScriptTestsProject], result.SelectedProjects);
         Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            "candidate admission plane judgeonly requires full engineering",
+            result.Output,
+            StringComparison.Ordinal);
     }
 
     [Fact]
-    public void FileMapRepairBootstrapForcesFullEngineeringScope()
+    public void CandidateFileMapEntryAndNewJudgeFamilyInSameDeltaForceFullEngineeringScope()
     {
+        const string newJudgePath = "tools/new-lib/Program.cs";
         var result = RunBoundary(
             root =>
             {
                 WriteProductProjects(root);
-                TemporaryFileSystem.File.Delete(Path.Combine(root, FileMapPath));
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"));
             },
-            root => WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge")));
+            root =>
+            {
+                WriteFile(root, newJudgePath, "internal sealed class Program { }\n");
+                WriteAdmissionPlaneFileMap(
+                    root,
+                    (FileMapPath, "judge"),
+                    ("tools/new-lib/**", "judge"));
+            });
 
         Assert.True(result.ExitCode == 0, result.Diagnostic);
         Assert.Equal([ProductTestsProject, ScriptTestsProject], result.SelectedProjects);

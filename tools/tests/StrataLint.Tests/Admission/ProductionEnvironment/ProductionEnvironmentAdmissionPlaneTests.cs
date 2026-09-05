@@ -28,8 +28,6 @@ public sealed partial class ProductionEnvironmentTests
         runtime_disposition = "committed-source"
         """ + "\n";
 
-    private static string CiPath => ".github/" + "work" + "flows/ci.yml";
-
     [Fact]
     public void MixedJudgeAndContentDeltaIsRejectedByCandidateCheck()
     {
@@ -62,35 +60,58 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CandidateRelabelOfBaseContentPatternDoesNotChangeClassification()
+    public void CandidateFileMapEntryAndNewJudgeFileInSameDeltaAreAdmissibleAndJudgeOnly()
     {
+        const string newPath = "tools/new-lib/Program.cs";
         var fixture = TrustedFrozenFixture();
-        InstallAdmissionPlaneFileMap(fixture);
-        fixture.Files[FileMapPath] = fixture.Files[FileMapPath].Replace(
-            "pattern = \"Blueprint/**/*.md\"\nkind = \"program\"\nadmission_plane = \"content\"",
-            "pattern = \"Blueprint/**/*.md\"\nkind = \"program\"\nadmission_plane = \"judge\"",
-            StringComparison.Ordinal);
+        InstallCandidateFileMapDelta(fixture, newPath, includeNewPath: true);
+        var changes = RawChangeSet.Create([FileMapPath, newPath]);
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
-                RawChangeSet.Create(
-                [
-                    FileMapPath,
-                    RuleFixture.BlueprintPath,
-                ]),
+                changes,
                 Snapshot(fixture.Files),
                 Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(null));
 
+        var decision = AdmissionPlanePolicy.Evaluate(
+            Snapshot(fixture.Files),
+            [FileMapPath, newPath]);
         var outcome = CheckWithReports(environment, fixture);
 
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        Assert.True(decision.IsAdmissible);
+        Assert.Equal(AdmissionPlaneClassification.JudgeOnly, decision.Classification);
+        Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+    }
+
+    [Fact]
+    public void CandidateFileMapWithoutNewJudgeEntryFailsClosedForSameDelta()
+    {
+        const string newPath = "tools/new-lib/Program.cs";
+        var fixture = TrustedFrozenFixture();
+        InstallCandidateFileMapDelta(fixture, newPath, includeNewPath: false);
+        var changes = RawChangeSet.Create([FileMapPath, newPath]);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                changes,
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null));
+
+        var decision = AdmissionPlanePolicy.Evaluate(
+            Snapshot(fixture.Files),
+            [FileMapPath, newPath]);
+        var outcome = CheckWithReports(environment, fixture);
+
+        Assert.False(decision.IsAdmissible);
+        Assert.Equal("ADMISSION-PLANE-PATH-MATCH-COUNT", decision.Code);
+        Assert.Equal(newPath, decision.Path);
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
         Assert.Contains(
-            rejected.Diagnostics,
-            static diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block
-                && diagnostic.Message.Contains(
-                    "ADMISSION-PLANE-MIXED",
-                    StringComparison.Ordinal));
+            $"changed path must match exactly one FILEMAP entry; path={newPath} matches=0",
+            failure.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -202,19 +223,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void FileMapRepairBootstrapRemainsNarrow()
-    {
-        var outcome = EvaluateAdmissionPlane(
-            Manifest((CiPath, "judge"), (FileMapPath, "judge")),
-            out var usedBootstrap,
-            CiPath,
-            FileMapPath);
-
-        Assert.Null(outcome);
-        Assert.False(usedBootstrap);
-    }
-
-    [Fact]
     public void UnmatchedPathFailsClosed()
     {
         var outcome = EvaluateAdmissionPlane(
@@ -276,7 +284,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void BaseFileMapUnavailableFailsClosedOutsideRepair()
+    public void CandidateFileMapUnavailableFailsClosed()
     {
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
             AdmissionPlaneSnapshot(null),
@@ -284,12 +292,13 @@ public sealed partial class ProductionEnvironmentTests
             out var usedBootstrap);
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains("protected-base FILEMAP is unavailable", failure.Message, StringComparison.Ordinal);
+        Assert.Contains("FILEMAP is unavailable", failure.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("protected-base", failure.Message, StringComparison.Ordinal);
         Assert.False(usedBootstrap);
     }
 
     [Fact]
-    public void BaseFileMapUnparseableFailsClosedOutsideRepair()
+    public void CandidateFileMapUnparseableFailsClosed()
     {
         var outcome = EvaluateAdmissionPlane(
             "files = [\n",
@@ -297,29 +306,8 @@ public sealed partial class ProductionEnvironmentTests
             "docs/change.md");
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains("protected-base FILEMAP cannot be parsed", failure.Message, StringComparison.Ordinal);
-        Assert.False(usedBootstrap);
-    }
-
-    [Fact]
-    public void RepairWithClassifiableLegacySchemaUsesProtectedBasePolicy()
-    {
-        var legacy = $"""
-            schema_version = 1
-            legacy_metadata = "ignored by admission-plane classification"
-
-            [[files]]
-            pattern = "{CiPath}"
-            admission_plane = "judge"
-
-            [[files]]
-            pattern = "{FileMapPath}"
-            admission_plane = "judge"
-            """;
-
-        var outcome = EvaluateAdmissionPlane(legacy, out var usedBootstrap, FileMapPath);
-
-        Assert.Null(outcome);
+        Assert.Contains("FILEMAP cannot be parsed", failure.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("protected-base", failure.Message, StringComparison.Ordinal);
         Assert.False(usedBootstrap);
     }
 
@@ -350,92 +338,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(usedBootstrap);
     }
 
-    [Fact]
-    public void ReservedRepairPathNotOnJudgePlaneFailsClosed()
-    {
-        var outcome = EvaluateAdmissionPlane(
-            Manifest((CiPath, "judge"), (FileMapPath, "content")),
-            out _,
-            FileMapPath);
-
-        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains(
-            $"reserved repair path must resolve once to judge: {FileMapPath}",
-            failure.Message,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void MissingReservedRepairPathFailsClosed()
-    {
-        var outcome = EvaluateAdmissionPlane(
-            Manifest((FileMapPath, "judge")),
-            out _,
-            FileMapPath);
-
-        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains(
-            $"reserved repair path must resolve once to judge: {CiPath}",
-            failure.Message,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void RepairWithUnavailableBaseFileMapUsesBootstrap()
-    {
-        var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            AdmissionPlaneSnapshot(null),
-            RawChangeSet.Create([FileMapPath]),
-            out var usedBootstrap);
-
-        Assert.Null(outcome);
-        Assert.True(usedBootstrap);
-    }
-
-    [Fact]
-    public void RepairWithMalformedBaseFileMapUsesBootstrap()
-    {
-        var outcome = EvaluateAdmissionPlane(
-            "files = [\n",
-            out var usedBootstrap,
-            FileMapPath);
-
-        Assert.Null(outcome);
-        Assert.True(usedBootstrap);
-    }
-
-    [Fact]
-    public void MalformedBaseFileMapDoesNotBootstrapWhenRepairDeltaContainsNonReservedPath()
-    {
-        var outcome = EvaluateAdmissionPlane(
-            "files = [\n",
-            out var usedBootstrap,
-            FileMapPath,
-            "docs/change.md");
-
-        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains("protected-base FILEMAP cannot be parsed", failure.Message, StringComparison.Ordinal);
-        Assert.False(usedBootstrap);
-    }
-
-    [Fact]
-    public void RepairWithInvalidUtf8BaseFileMapCompletesCandidateCheck()
-    {
-        var fixture = TrustedFrozenFixture();
-        InstallRepairAdmissionPlaneFileMap(fixture);
-        var baseline = ReplaceFileMapBytes(Snapshot(fixture.Baseline), [0xff, (byte)'\n']);
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.Create([FileMapPath]),
-                Snapshot(fixture.Files),
-                baseline),
-            new FakeLeanReportSource(null));
-
-        var outcome = CheckWithReports(environment, fixture);
-
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-    }
 
     private static AdmissionOutcome? EvaluateAdmissionPlane(
         string manifest,
@@ -451,14 +353,6 @@ public sealed partial class ProductionEnvironmentTests
             ? []
             : [new RawRepositoryEntry(FileMapPath, ImmutableArray.CreateRange(fileMapBytes))]);
 
-    private static RawRepositorySnapshot ReplaceFileMapBytes(
-        RawRepositorySnapshot snapshot,
-        byte[] bytes) =>
-        RawRepositorySnapshot.Create(
-            snapshot.Entries
-                .Where(static entry => entry.Path != FileMapPath)
-                .Append(new RawRepositoryEntry(FileMapPath, ImmutableArray.CreateRange(bytes))));
-
     private static void InstallAdmissionPlaneFileMap(RuleFixture fixture)
     {
         var manifest = Manifest(
@@ -469,11 +363,27 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[FileMapPath] = manifest;
     }
 
-    private static void InstallRepairAdmissionPlaneFileMap(RuleFixture fixture)
+    private static void InstallCandidateFileMapDelta(
+        RuleFixture fixture,
+        string newPath,
+        bool includeNewPath)
     {
-        var manifest = Manifest((CiPath, "judge"), (FileMapPath, "judge"));
-        fixture.Files[FileMapPath] = manifest;
-        fixture.Baseline[FileMapPath] = manifest;
+        var baselinePaths = fixture.Baseline.Keys
+            .Append(FileMapPath)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        fixture.Baseline[FileMapPath] = Manifest(baselinePaths
+            .Select(static path => (
+                path,
+                Plane: (string?)(path == FileMapPath ? "judge" : "content")))
+            .ToArray());
+        fixture.Files[newPath] = "internal sealed class Program { }\n";
+        fixture.Files[FileMapPath] = Manifest(baselinePaths
+            .Concat(includeNewPath ? [newPath] : [])
+            .Select(path => (
+                path,
+                Plane: (string?)(path is FileMapPath || path == newPath ? "judge" : "content")))
+            .ToArray());
     }
 
     internal static void InstallDefaultAdmissionPlaneFileMap(RuleFixture fixture)
