@@ -1,0 +1,69 @@
+# 十、误差如何进入？实际验证仍然必须使用严格区间
+
+假设已经计算出：
+
+$$
+\widetilde s_2,\ldots,\widetilde s_{2k},
+$$
+
+并认证：
+
+$$
+|s_j-\widetilde s_j|\le\varepsilon_j.
+$$
+
+对给定：
+
+$$
+f(x)=\sum_{i=1}^{k}c_ix^i,
+$$
+
+有：
+
+$$
+\boxed{
+\left|
+\mathcal Q_\infty(f)
+-
+\sum_{i,j=1}^{k}c_ic_j\widetilde s_{i+j}
+\right|
+\le
+\sum_{i,j=1}^{k}|c_ic_j|\varepsilon_{i+j}.
+}
+\tag{N31}
+$$
+
+所以，只要：
+
+$$
+\boxed{
+\sum_{i,j}c_ic_j\widetilde s_{i+j}
++
+\sum_{i,j}|c_ic_j|\varepsilon_{i+j}
+<0,
+}
+\tag{N32}
+$$
+
+就得到严格的实际负证书。
+
+这是一项有限不等式，不需要实验读取无限历史。
+
+但必须防止两种误用。
+
+**第一，不能只测条件分支。**
+式（N10）的负号可以由相位读出，但整体数值必须连同 \(p_{\mathrm{succ}}\) 和归一化一起记录。
+
+**第二，不能将坐标良好程度与谱证据混同。**
+\(\operatorname{Tr}f(C)^2\) 在相似变换下不变，但：
+
+$$
+\operatorname{Tr}f(C)^*f(C)
+$$
+
+通常改变。因此数学证书可以相同，实际制备成功率却相差很大。
+
+这正是“算术证明存在”与“高效量子实现存在”的区别。
+
+---
+

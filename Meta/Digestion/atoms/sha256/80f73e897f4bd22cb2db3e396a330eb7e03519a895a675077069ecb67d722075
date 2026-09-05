@@ -1,0 +1,54 @@
+## 命题 96.1　缩小采样方向并非无条件提高精度
+
+若真实 \(r\) 只满足三阶导数界
+
+$$
+\|D^3r\|\le B
+$$
+
+而不要求严格二次，则对原点局部 Hessian
+
+$$
+C_0=-\frac12\operatorname{Hess}r(0)
+$$
+
+有一个保守估计：
+
+$$
+\boxed{
+\|\widehat C-C_0\|_{\mathrm{op}}
+\le
+d\left(
+\frac{2\epsilon}{h^2}+Bh
+\right).
+}
+\tag{96.7}
+$$
+
+### 证明
+
+沿每个采样方向使用二阶 Taylor 展开，余项满足
+
+$$
+|R(v)|\le\frac B6\|v\|^3.
+$$
+
+代入式（93.3）、（93.4），每个 Hessian 系数的截断误差可界为 \(Bh\)，再加上读数误差项，最后使用矩阵行和界。∎
+
+因此，一边有：
+
+$$
+h\downarrow\quad\Rightarrow\quad\text{截断误差减小},
+$$
+
+另一边有：
+
+$$
+h\downarrow\quad\Rightarrow\quad
+\text{固定读数噪声被 }h^{-2}\text{ 放大}.
+$$
+
+这与项目对精确闭合、条件良好的闭合和物理可实现闭合的区分相对应。
+
+---
+

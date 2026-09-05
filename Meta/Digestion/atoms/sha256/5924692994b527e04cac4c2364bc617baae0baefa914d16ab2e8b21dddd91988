@@ -1,0 +1,21 @@
+### 它比上一轮具体在哪里？
+
+上一轮的待证形式是：
+
+$$
+\exists W_d>0,\qquad \sigma(C_d,W_d)\to0.
+$$
+
+现在变成：
+
+$$
+\boxed{
+W_d=
+\int_{\mathbb R}
+\frac{e^{-\tau^2/(2d^4)}}{\sqrt{2\pi}d^2}
+e^{i\tau C_d^*}e^{-i\tau C_d}\,d\tau,
+}
+$$
+
+然后只剩下一个指定数列的极限。
+

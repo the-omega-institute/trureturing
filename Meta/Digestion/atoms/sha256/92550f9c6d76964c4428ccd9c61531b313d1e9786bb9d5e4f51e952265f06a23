@@ -1,0 +1,65 @@
+### 证明
+
+正交投影满足：
+
+$$
+\|\Pi\Omega\|^2=\langle\Omega,\Pi\Omega\rangle.
+$$
+
+相干态重叠给出：
+
+$$
+\langle\Omega_{A,r},
+\Gamma(\operatorname{Ad}_U)\Omega_{A,r}\rangle
+=
+e^{-rN_q}
+e^{r\operatorname{Tr}(A^*UAU^*)}.
+$$
+
+积分即得。证毕。
+
+结合式（L6）：
+
+$$
+\boxed{
+\mathcal Z_q(r)
+=
+e^{r(N_q-S_q)}p_q(r).
+}
+\tag{L13}
+$$
+
+而：
+
+$$
+N_q-S_q
+=
+2\left\|
+\frac{A-A^*}{2i}
+\right\|_{\mathrm{HS}}^2
+\ge0.
+$$
+
+因此：
+
+**量子力学只自动保证 \(p_q(r)\le1\)，并不自动保证 \(\mathcal Z_q(r)\le1\)。**
+
+要得到历史体积上限，实际需要：
+
+$$
+\boxed{
+p_q(r)\le e^{-r(N_q-S_q)}.
+}
+\tag{L14}
+$$
+
+这是一个更强的抑制要求。
+
+如果先把 \(A\) 当成自伴算子，就有 \(N_q=S_q\)，于是式（L14）退化成普通概率上限。
+
+**但对实际伴随矩阵，不能未经证明就作这个替换。**
+
+这就是前文“是否把离线投没”问题的一个精确答案：危险并不在投影概率为正，而在把两种不同的归一化当成同一个量。
+
+---
+

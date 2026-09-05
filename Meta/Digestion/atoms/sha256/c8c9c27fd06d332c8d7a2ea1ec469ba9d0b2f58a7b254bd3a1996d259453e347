@@ -1,0 +1,26 @@
+## 局部核的精确形式
+
+令 \(w_E\) 在区间外为零，在相邻整数之间线性，并满足
+
+$$
+\boxed{
+\bigl(w_E(0),w_E(1),w_E(2),w_E(3),w_E(4)\bigr)
+=
+(0,E,-1-E,1,0).
+}
+\tag{3}
+$$
+
+则
+
+$$
+\boxed{
+\mathcal D_h(T)
+=
+h\sum_{e^T<p\le e^{T+4h}}
+\frac{\log p}{\sqrt p}
+w_{E_h}\!\left(\frac{\log p-T}{h}\right).
+}
+\tag{4}
+$$
+

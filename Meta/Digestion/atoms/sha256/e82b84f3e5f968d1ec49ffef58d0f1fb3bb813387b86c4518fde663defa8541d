@@ -1,0 +1,92 @@
+## 收束
+
+这一轮补出了三项具体结果。
+
+欧拉校准误差具有精确的谱含义：
+
+$$
+\boxed{
+\widetilde\Delta-\Delta=\varepsilon
+\quad\Longrightarrow\quad
+\widetilde{\mathfrak T}-\mathfrak T
+=
+\frac{\varepsilon}{z+4}.
+}
+$$
+
+端点相容性可以逐层检验，并有误差控制：
+
+$$
+\boxed{
+L_N\le a_1-c\le U_N,
+\qquad
+U_N-L_N
+\le
+\left(1+\frac R4\right)\Delta
+\left(\frac R{R+4}\right)^{2N},
+}
+$$
+
+其中不等式的正谱解释保留明确前件。
+
+真正嵌套的回返链可以构造，但它的有效节点还必须接受：
+
+$$
+\boxed{
+\frac{\text{谱原子权重}}{(\text{谱位置})^2}
+\in\mathbb Z_{\ge1}
+}
+$$
+
+这一实际整函数重数检查，才能被解释成 ξ 的真实零点。
+
+**所以，现在需要算术承担的，不只是“某个有限矩阵看起来正”，而是：全部高阶矩是否共同产生一份支持正确、锚定正确，并与实际整函数解析结构一致的正谱表示。**
+
+本轮给出了新的校准缺陷公式、单调区间、可嵌套近似及重数障碍；没有获得实际全阶正性证明，也没有找到实际离线负证书。有限数据的三层核对已经可以执行，但不能把它们在无限层上的成立预先写进模型定义。
+
+[1]: https://dlmf.nist.gov/25.4 "https://dlmf.nist.gov/25.4"
+[2]: https://dlmf.nist.gov/25.2 "https://dlmf.nist.gov/25.2"
+[3]: https://dlmf.nist.gov/18.2 "https://dlmf.nist.gov/18.2"
+[4]: https://dlmf.nist.gov/3.5 "https://dlmf.nist.gov/3.5"
+[5]: https://arxiv.org/abs/math-ph/9906008 "https://arxiv.org/abs/math-ph/9906008"
+这次可以把上一轮的“寻找合适观察度量”，推进成一个**无需优化度量、无需预先求根的明确构造**。
+
+核心定理是：
+
+> **给任意有限系数矩阵加上一份高斯历史寄存器，就能构造固定的正度量。在这份度量中测得的非自伴残差，会以明确误差逼近真实谱的最大虚部。这个结论允许重根，也允许 Jordan 块。**
+
+具体地，若矩阵维数为 \(d\)，历史宽度为 \(T\)，则：
+
+$$
+\boxed{
+\beta(C)
+\le
+\sigma_T(C)
+\le
+\beta(C)+\frac{\sqrt{d(d-1)}}{2T},
+}
+\tag{I0}
+$$
+
+其中：
+
+$$
+\beta(C)=\max_{\lambda\in\operatorname{spec}C}|\Im\lambda|.
+$$
+
+这意味着，有限观察残差中可以明确分开：
+
+$$
+\boxed{
+\text{真实非实谱}
+\quad+\quad
+\text{有限历史宽度造成的额外误差}.
+}
+$$
+
+更值得注意的是，证明会经过一个真正的量子谐振子结构；其中存在一个**任何有限维观察空间都无法消除的升降算子边界项**。但我们也能证明：这个普遍的边界项本身并不意味着离线零点。
+
+下面完整展开。一般的相干态、矩阵度量与 Schur 分解理论是经典工具；以下给出当前构造的具体推导，不把它宣称为未经文献比对的首创。
+
+---
+

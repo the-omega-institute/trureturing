@@ -1,0 +1,57 @@
+## 对上一节模型，条件信号恒为 \(-1\)，成功率却是 \(2/N\)
+
+取一个正规表示：
+
+$$
+\widehat C_N
+=
+[-2]\oplus
+\begin{pmatrix}
+1&-1\\
+1&1
+\end{pmatrix}
+\oplus0_{N-3}.
+$$
+
+对式（N6）的 \(f\)：
+
+$$
+B
+=
+0\oplus
+\begin{pmatrix}
+0&-1\\
+1&0
+\end{pmatrix}
+\oplus0.
+$$
+
+于是：
+
+$$
+B^2=-P,
+\qquad
+B^*B=P,
+$$
+
+其中 \(P\) 是选中那两个方向的正交投影。
+
+因此：
+
+$$
+\mathcal Q_N(f)=-2,
+\qquad H_B=2,
+\qquad\alpha=1,
+$$
+
+得到：
+
+$$
+\boxed{
+\langle\sigma_x\rangle=-1,
+\qquad
+p_{\mathrm{succ}}=\frac2N.
+}
+\tag{N13}
+$$
+

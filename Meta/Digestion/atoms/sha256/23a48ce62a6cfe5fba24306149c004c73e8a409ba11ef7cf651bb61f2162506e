@@ -1,0 +1,68 @@
+## 定理 5.3　有限自由能变分公式
+
+对因数集合上的任意概率分布 \(\nu\)：
+
+$$
+\boxed{
+H(\nu)-s\,\mathbb E_\nu[\ln d]
+\le
+\ln Z_n(s),
+}
+\tag{5.3}
+$$
+
+等号成立当且仅当：
+
+$$
+\nu=\mu_{n,s}.
+$$
+
+### 证明
+
+展开相对熵：
+
+$$
+\begin{aligned}
+\operatorname{KL}(\nu\Vert\mu_{n,s})
+&=
+\sum_d\nu(d)\ln\frac{\nu(d)}{\mu_{n,s}(d)}\\
+&=
+-H(\nu)+s\mathbb E_\nu[\ln d]+\ln Z_n(s).
+\end{aligned}
+$$
+
+相对熵非负，且仅在分布相同时为零，因此结论成立。证毕。
+
+令：
+
+$$
+W_n(s)=\ln Z_n(s).
+$$
+
+有限求和可以直接求导：
+
+$$
+W_n'(s)=-\mathbb E_{\mu_{n,s}}\ln d,
+$$
+
+$$
+W_n''(s)=\operatorname{Var}_{\mu_{n,s}}(\ln d).
+$$
+
+因而：
+
+$$
+\boxed{
+\frac{d}{ds}H(\mu_{n,s})
+=
+-s\,\operatorname{Var}_{\mu_{n,s}}(\ln d).
+}
+\tag{5.4}
+$$
+
+特别地，在 \(s\ge0\) 上，熵随 \(s\) 非增。
+
+这是一种离散状态集合上的连续权重变化，不意味着有限系统发生了奇异相变。
+
+---
+

@@ -1,0 +1,54 @@
+## 定义 114.1　宏观平方钟速
+
+取 \(N\) 个结构单元：
+
+$$
+\mathcal H_G^{(N)}
+=
+\mathcal H_{\mathrm{cell}}^{\otimes N}.
+$$
+
+单元上的算子值平方钟律为：
+
+$$
+\widehat R(v)
+=
+\widehat A
++
+2\sum_i v_i\widehat B_i
+-
+\sum_{i,j}v_iv_j\widehat C_{ij}.
+$$
+
+在固定方向域中要求：
+
+$$
+\boxed{
+\widehat R(v)\ge n_*^2I,
+\qquad n_*>0.
+}
+\tag{114.1}
+$$
+
+定义：
+
+$$
+\boxed{
+\widehat R_N(v)
+=
+\frac1N\sum_{j=1}^N\widehat R(v)^{(j)},
+}
+\tag{114.2}
+$$
+
+$$
+\boxed{
+\widehat n_N(v)=\widehat R_N(v)^{1/2}.
+}
+\tag{114.3}
+$$
+
+**平方响应作为宏观可加量，是这里明确选择的耦合结构。**它不等于直接平均各单元的钟速；第 119 节将证明两者可能产生不同几何。
+
+---
+

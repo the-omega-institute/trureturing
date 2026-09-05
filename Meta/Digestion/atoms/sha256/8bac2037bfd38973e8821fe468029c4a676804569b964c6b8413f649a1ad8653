@@ -1,0 +1,66 @@
+# 十二、哪些“观察自由”已经被消去，哪些仍然是真正的算术任务？
+
+本轮的对象已经全部固定：
+
+$$
+q_d
+\longrightarrow
+C_{q_d}
+\longrightarrow
+\ell=(1,0,\ldots,0)
+\longrightarrow
+G_{q_d}(r)
+\longrightarrow
+\mathcal Z_{q_d}(r).
+$$
+
+因此，不能再通过任意换参考态、改变读出或重新调归一化，让阈值一自动成立。
+
+而且，这个标量历史并没有遗漏有限模式：定理 K1 已经证明其可观测性。
+
+但仍需区分：
+
+$$
+\boxed{
+\text{没有遗漏模式}
+\quad\neq\quad
+\text{这些模式都满足实谱约束}.
+}
+$$
+
+本轮读到的项目模块也保留了这项边界。
+
+`ObservabilityGramianKernelEnergy.lean` 处理的是历史核与不可见状态的关系；`DiscountedObservabilityGramianEquation.lean` 处理的是在明确收敛前件下的 Gramian 方程。它们都没有自动提供当前实际历史行列式的上界。
+
+现在真正需要新增的算术结论，可以写成：
+
+$$
+\boxed{
+\det\!\left[
+\int_{\mathbb R}
+\frac{e^{-t^2/(2d^4)}}{\sqrt{2\pi}\,d^2}
+e^{itC_{q_d}^*}\ell^*\ell e^{-itC_{q_d}}
+\,dt
+\right]
+\le
+\frac{d^{\,2d(d-1)}}{\prod_{k=0}^{d-1}k!}
+}
+\tag{K24}
+$$
+
+对无界的一列实际次数 \(d\) 成立。
+
+右边来自：
+
+$$
+(d^4)^{d(d-1)/2}=d^{2d(d-1)}.
+$$
+
+所有矩阵系数由实际 theta 统计固定。
+
+这项不等式尚未证明。它的意义在于：
+
+> **现在需要控制的不是一个任意猜测的量子对象，而是一份无根输入、读出忠实、归一化固定的反对称历史体积。**
+
+---
+

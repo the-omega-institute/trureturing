@@ -1,0 +1,22 @@
+## 定理 L3：逐阶系数判据
+
+对于实系数首一多项式 \(q\)，以下等价：
+
+$$
+\boxed{
+q\text{ 全部实根}
+}
+$$
+
+与：
+
+$$
+\boxed{
+S_q\ge0,
+\qquad
+b_{q,k}\le\frac{S_q^k}{k!}
+\quad\forall k\ge1.
+}
+\tag{L16}
+$$
+

@@ -1,0 +1,47 @@
+# 十二、这与项目现有观察者模块怎样接起来？
+
+本轮继续读取前文固定快照中的两个模块。
+
+`DiscountedObservabilityGramianPositivity.lean` 构造离散折扣历史平方和，并在：
+
+$$
+\sqrt\beta\,\|T\|<1
+$$
+
+这一明确前件下证明收敛与非负。
+
+`DiscountedObservabilityGramianEquation.lean` 证明其 Lyapunov 方程：
+
+$$
+W=C_{\mathrm{obs}}^*C_{\mathrm{obs}}+\beta T^*WT.
+$$
+
+它并未因此断言原传播具有实谱。
+
+本轮补出的另一条纸面路线是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际伴随矩阵 }C_d
+&\longrightarrow
+\text{始终收敛的高斯历史 }W_T\\
+&\longrightarrow
+\text{谐振子不变子空间}\\
+&\longrightarrow
+[A_T,A_T^*]\preceq T^{-2}I\\
+&\longrightarrow
+\beta(C_d)\le\sigma_T(C_d)
+\le\beta(C_d)+O(d/T).
+\end{aligned}
+}
+$$
+
+相比普通折扣求和，高斯权重不需要先证明传播衰减；它对任意有限 \(C_d\) 都可定义。
+
+但它也不会通过归一化把非实谱消掉：真实虚部会留下式（I17）的历史中心位移。
+
+这些新增推导尚未成为仓库里已编译的 Lean 结果。
+
+---
+

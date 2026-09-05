@@ -1,0 +1,40 @@
+## 100.2　本轮的可检查文件
+
+我将第 93 节的十读数反演和单射性写成了一个独立 Lean 候选文件：
+
+[ObserverClockTomography.lean](sandbox:/mnt/data/observer_formalization/ObserverClockTomography.lean)
+
+它只处理：
+
+$$
+\boxed{
+\text{二次钟律系数}
+\longleftrightarrow
+\text{十个精确读数}.
+}
+$$
+
+不把量子可实现性、正定性、平滑几何或物理场方程放进已经证明的范围。
+
+**该文件尚未运行 Lean 编译，不标记为内核已验证。**
+
+另外，精确符号核验已经确认：
+
+* 十读数反演公式；
+* 四维读数设计矩阵的行列式为
+
+  $$
+  -512h^{15},
+  $$
+
+  因而 \(h\ne0\) 时可逆；
+* 一个非平凡例子的洛伦兹合同分解；
+* 第 98 节的曲率反例；
+* 第 99 节的双分支钟相干恒等式。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_clock_metric_tomography.py)
+
+符号核验不是一般 Lean 证明，也不认证所选模型符合现实。
+
+---
+

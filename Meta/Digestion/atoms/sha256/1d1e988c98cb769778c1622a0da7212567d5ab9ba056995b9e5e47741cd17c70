@@ -1,0 +1,62 @@
+# 六、精确缺项：单素数自贡献是 \(L^2\)，跨素数项必须消去它
+
+定义单个素数的局部响应
+
+$$
+k_h(s)=h\,w_{E_h}(s/h),
+$$
+
+于是
+
+$$
+\mathcal D_h(T)
+=
+\sum_p a_pk_h(\log p-T),
+\qquad
+a_p=\frac{\log p}{\sqrt p}.
+$$
+
+能量精确展开为
+
+$$
+\mathcal E_h(L)
+=
+\mathcal E_h^{\mathrm{diag}}(L)
++
+\mathcal E_h^{\mathrm{off}}(L),
+\tag{21}
+$$
+
+其中
+
+$$
+\mathcal E_h^{\mathrm{diag}}(L)
+=
+\sum_pa_p^2
+\int_0^Lk_h(\log p-T)^2\,dT,
+$$
+
+$$
+\boxed{
+\mathcal E_h^{\mathrm{off}}(L)
+=
+\sum_{p\ne q}a_pa_q
+\int_0^L
+k_h(\log p-T)k_h(\log q-T)\,dT.
+}
+\tag{22}
+$$
+
+这些都是有限和。
+
+因为核的支集长度为 \(4h\)，跨素数项只有在
+
+$$
+\boxed{
+|\log p-\log q|\le4h
+}
+\tag{23}
+$$
+
+时才可能非零。也就是只涉及固定比例范围内的素数对。
+

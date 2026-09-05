@@ -1,0 +1,60 @@
+## 历史积分误差也可以显式控制
+
+令 \(M=\|C\|\)，只积分 \(|\tau|\le L\)。那么：
+
+$$
+\boxed{
+\|W_T-W_{T,L}\|
+\le
+e^{2M^2T^2}
+\operatorname{erfc}
+\left(
+\frac{L-2MT^2}{\sqrt2T}
+\right).
+}
+\tag{I30}
+$$
+
+这是对：
+
+$$
+g_T(\tau)e^{2M|\tau|}
+$$
+
+完成平方后得到的尾界。
+
+它是可计算的，但可能很保守；不能把它的存在当成所有参数下都容易计算。
+
+若已经有：
+
+$$
+\|\widetilde W-W_T\|\le\varepsilon,
+\qquad
+\mu=\lambda_{\min}(\widetilde W)>\varepsilon,
+$$
+
+设：
+
+$$
+r=\varepsilon/\mu<1,
+$$
+
+并暂时把 \(C\) 视为精确，则广义 Rayleigh 商给出：
+
+$$
+\boxed{
+\max\left(0,\frac{\widetilde\sigma-Mr}{1+r}\right)
+\le
+\sigma_T(C)
+\le
+\frac{\widetilde\sigma+Mr}{1-r}.
+}
+\tag{I31}
+$$
+
+实际系数的区间误差还必须另外并入。
+
+因此，真正用于式（I27）的必须是**认证下界**，不是屏幕上一个很小或很大的浮点数。
+
+---
+

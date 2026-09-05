@@ -1,0 +1,38 @@
+## 定义 120.2　宏观近似证书
+
+一份宏观近似证书包含：
+
+$$
+\widehat R_N(v)\ge n_*^2I,
+$$
+
+明确的结构参考演化 \(\sigma_N^0(t)\)，以及：
+
+$$
+\sum_{i,j}
+|\operatorname{Cov}(\widehat R^{(i)},\widehat R^{(j)})|
+\le N\Gamma(t,v).
+$$
+
+再给出有限实验预算：
+
+$$
+\mathcal B(T)
+=
+\frac1\hbar\int_0^T\sum_a\|F_a(t)\|\,dt,
+$$
+
+并证明过程距离：
+
+$$
+\boxed{
+\frac12\|\mathcal P_N-\mathcal P_{\mathrm{cl}}\|_\diamond
+\le\varepsilon_N.
+}
+\tag{120.1}
+$$
+
+只有当候选钟律还满足前文的二次性、Lorentz 符号、跨观察者拼接与共同信号条件时，才能进一步称为物理时空的有效实现。
+
+---
+

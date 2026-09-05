@@ -1,0 +1,24 @@
+### 证明
+
+由式（I9），历史子空间对 \(\mathcal A_T\) 不变。于是：
+
+$$
+E_T^*\mathcal A_T^*\mathcal A_TE_T=A_T^*A_T.
+$$
+
+使用交换关系：
+
+$$
+E_T^*\mathcal A_T\mathcal A_T^*E_T
+=
+A_T^*A_T+\frac1{T^2}I.
+$$
+
+又有：
+
+$$
+E_T^*\mathcal A_TP_T\mathcal A_T^*E_T=A_TA_T^*.
+$$
+
+相减即得式（I10）。取迹并使用有限矩阵交换子的迹为零，得到式（I12）。证毕。
+

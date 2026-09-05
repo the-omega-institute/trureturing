@@ -1,0 +1,47 @@
+## 定义 74.1　有限系数与相干核
+
+取复数序列 \(c_n\)，在整数区间外补零，并满足
+
+$$
+c_n=0\quad(n\notin\{0,\ldots,N\}),
+$$
+
+$$
+\sum_n|c_n|^2=1.
+$$
+
+定义
+
+$$
+\boxed{
+\gamma_\ell
+=
+\sum_n c_{n+\ell}\overline{c_n}.
+}
+\tag{74.1}
+$$
+
+系统基底 \(|i\rangle\) 具有整数标签 \(q_i\)。
+
+选取足够大的有限整数区间，使以下全部向量都有定义：
+
+$$
+|e_i\rangle
+=
+\sum_m c_{m+q_i}|m\rangle.
+$$
+
+于是
+
+$$
+\langle e_i|e_i\rangle=1,
+$$
+
+并且
+
+$$
+\langle e_j|e_i\rangle=\gamma_{q_i-q_j}.
+$$
+
+---
+
