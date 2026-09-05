@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
-   digest: Bound changes of the actual fragment mass mesh cell by a proved small-fragment tail and an explicit boundary-strip probability. -/
+   digest: Bound fragment cell changes by small-mass tails and boundary strips. -/
 
 import D5.S3.PrimeGaps.FragmentLaw
 
@@ -59,10 +59,10 @@ theorem deletedFragmentMass_tail (zeta epsilon delta : ℝ)
       {c : FiniteMeasure ℝ | ENNReal.ofReal delta ≤
         (c : Measure ℝ) (Set.Ioc (0 : ℝ) epsilon)} := by
     ext c
+    change (delta ≤ (c (Set.Ioc (0 : ℝ) epsilon) : ℝ)) ↔
+      ENNReal.ofReal delta ≤ (c : Measure ℝ) (Set.Ioc (0 : ℝ) epsilon)
     rw [← FiniteMeasure.ennreal_coeFn_eq_coeFn_toMeasure]
-    change (delta ≤ (c (Set.Ioc (0 : ℝ) epsilon) : ℝ)) ↔ _
-    rw [← ENNReal.ofReal_coe_nnreal]
-    exact (ENNReal.ofReal_le_ofReal_iff (c _).coe_nonneg).symm
+    exact ENNReal.ofReal_le_coe.symm
   rw [hsets]
   exact fragmentLaw_small_seed_tail zeta epsilon delta hzeta hepsilon hdelta
 
@@ -78,11 +78,10 @@ theorem floor_mesh_crossing_alternative
   have hmono : ⌊x / h⌋₊ ≤ ⌊(x + d) / h⌋₊ :=
     Nat.floor_mono (div_le_div_of_nonneg_right (by linarith) hh.le)
   have hnat : ⌊x / h⌋₊ + 1 ≤ ⌊(x + d) / h⌋₊ := by omega
-  have hlow : ((⌊x / h⌋₊ : ℝ) + 1) ≤ (x + d) / h := by
-    have hcast : ((⌊x / h⌋₊ + 1 : ℕ) : ℝ) ≤
-        (⌊(x + d) / h⌋₊ : ℝ) := by exact_mod_cast hnat
-    exact (by simpa only [Nat.cast_add, Nat.cast_one] using hcast).trans
-      (Nat.floor_le (div_nonneg (add_nonneg hx hd) hh.le))
+  have hcast : (⌊x / h⌋₊ : ℝ) + 1 ≤ (⌊(x + d) / h⌋₊ : ℝ) := by
+    exact_mod_cast hnat
+  have hlow : (⌊x / h⌋₊ : ℝ) + 1 ≤ (x + d) / h :=
+    hcast.trans (Nat.floor_le (div_nonneg (add_nonneg hx hd) hh.le))
   have hmul := (le_div_iff₀ hh).mp hlow
   have hsmall : d < delta := lt_of_not_ge hlarge
   linarith
@@ -109,10 +108,16 @@ theorem fragment_mesh_change_probability
         ((⌊((retainedFragments epsilon c).mass : ℝ) / h⌋₊ : ℝ) + 1) * h - delta ≤
           ((retainedFragments epsilon c).mass : ℝ)} := by
     intro c hc
+    change ⌊(c.mass : ℝ) / h⌋₊ ≠
+      ⌊((retainedFragments epsilon c).mass : ℝ) / h⌋₊ at hc
+    change delta ≤ deletedFragmentMass epsilon c ∨
+      ((⌊((retainedFragments epsilon c).mass : ℝ) / h⌋₊ : ℝ) + 1) * h - delta ≤
+        ((retainedFragments epsilon c).mass : ℝ)
     apply floor_mesh_crossing_alternative
       ((retainedFragments epsilon c).mass : ℝ) (deletedFragmentMass epsilon c)
       h delta (NNReal.coe_nonneg _) (NNReal.coe_nonneg _) hh
-    simpa only [retained_deleted_mass] using hc
+    rw [retained_deleted_mass]
+    exact hc
   calc
     _ ≤ fragmentLaw zeta
         ({c : FiniteMeasure ℝ | delta ≤ deletedFragmentMass epsilon c} ∪
@@ -123,8 +128,8 @@ theorem fragment_mesh_change_probability
         fragmentLaw zeta {c : FiniteMeasure ℝ |
           ((⌊((retainedFragments epsilon c).mass : ℝ) / h⌋₊ : ℝ) + 1) * h - delta ≤
             ((retainedFragments epsilon c).mass : ℝ)} := measure_union_le _ _
-    _ ≤ _ := add_le_add_right
-      (deletedFragmentMass_tail zeta epsilon delta hzeta hepsilon hdelta) _
+    _ ≤ _ := add_le_add
+      (deletedFragmentMass_tail zeta epsilon delta hzeta hepsilon hdelta) le_rfl
 
 #print axioms retained_deleted_mass
 #print axioms deletedFragmentMass_tail
