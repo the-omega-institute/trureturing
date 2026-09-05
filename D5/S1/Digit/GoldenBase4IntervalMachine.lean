@@ -7,6 +7,7 @@
 
 import D5.S0.Automata.TypedPartialDFAOOverBase
 import Mathlib.NumberTheory.Real.GoldenRatio
+import Mathlib.Data.Fin.VecNotation
 import Mathlib.Algebra.Order.Floor.Ring
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
@@ -42,14 +43,14 @@ theorem fibPair_append_digit (w : List (Fin 2)) (a : Fin 2) :
       ((fibPair w).2 + a.val,
        (fibPair w).1 + (fibPair w).2 + 2 * a.val) := by
   induction w with
-  | nil => simp [fibPair, Nat.fib]
+  | nil => simp [fibPair, Nat.fib, Nat.mul_comm]
   | cons d w ih =>
       simp only [List.cons_append, fibPair, List.length_append,
         List.length_singleton, List.length_cons, ih]
       have hf : Nat.fib (w.length + 1 + 3) =
           Nat.fib (w.length + 2) + Nat.fib (w.length + 3) := by
         simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
-          Nat.fib_add_two (w.length + 2)
+          Nat.fib_add_two (n := w.length + 2)
       rw [hf]
       apply Prod.ext <;> simp only [Prod.fst, Prod.snd] <;> ring
 
@@ -195,7 +196,9 @@ theorem cell_floor_values {q : Fin 21} {e : Real} (he : Cell q e) :
     ⌊e⌋ = strip q ∧ ⌊4 * e⌋ = 4 * strip q + ((output q).val : Int) := by
   obtain ⟨hlo, hhi⟩ := cell_output_strip he
   have hd0 : (0 : Real) ≤ (output q).val := Nat.cast_nonneg _
-  have hd4 : ((output q).val : Real) < 4 := by exact_mod_cast (output q).isLt
+  have hd3 : ((output q).val : Real) ≤ 3 := by
+    have h : (output q).val ≤ 3 := Nat.le_of_lt_succ (output q).isLt
+    exact_mod_cast h
   constructor
   · apply Int.floor_eq_iff.mpr
     constructor <;> linarith
@@ -210,7 +213,9 @@ theorem cell_digit (q : Fin 21) (v z : Nat)
       ((output q).val : Int) := by
   obtain ⟨hl, hu⟩ := cell_output_strip he
   have hd0 : (0 : Real) ≤ (output q).val := Nat.cast_nonneg _
-  have hd4 : ((output q).val : Real) < 4 := by exact_mod_cast (output q).isLt
+  have hd3 : ((output q).val : Real) ≤ 3 := by
+    have h : (output q).val ≤ 3 := Nat.le_of_lt_succ (output q).isLt
+    exact_mod_cast h
   have f1 : ⌊Real.goldenRatio * v⌋ = (z : Int) + strip q := by
     apply Int.floor_eq_iff.mpr
     push_cast
