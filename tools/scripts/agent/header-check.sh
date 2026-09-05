@@ -80,7 +80,7 @@ __main() {
       grep -q "^   $k:" "$f" || { echo "  ✗ $f  <- 头部缺键 '$k:'"; ok=0; }
     done
     [ "$ok" = 1 ] || { bad=1; continue; }
-    # ---- SL-003 容量(2026-08-28 扩条):行数硬线 800、目录文件数准入 12 ----
+    # ---- SL-003 容量(2026-08-28 扩条;2026-09-06 目录上限随 RepositoryRules.Structure.cs DirectoryFileLimit 改为 24):行数硬线 800、目录文件数准入 24 ----
     # 2026-08-28 二次勘正:此处原为 `wc -l` + `>= 800`,**两个方向都错**。
     #   ① 真判据是 `lineCount > ArtifactHardLineLimit`(`CapacityPolicy.cs:50`),
     #      即 **800 行合法、801 才红**;`>=` 会误拦合法文件(与我在目录上限犯的 off-by-one 同形)。
@@ -109,11 +109,11 @@ print(len(t.split(chr(10)))-(1 if t.endswith(chr(10)) else 0))" "$f")
     fi
     dn=$(ls -1 "$dir"/*.lean 2>/dev/null | wc -l | tr -d ' ')
     # SL-003 真规则(2026-08-28 查 RepositoryRules.Structure.cs:73,236 实证):
-    #   `DirectoryFileLimit = 12`,违规判据是 **Count > 12**;准入通过条件是 `projectedOccupancy <= 12`。
-    #   **12 个文件是合法的,13 个才红。** 我此前按记忆写成 `>= 12`,多拦一格 ——
+    #   `DirectoryFileLimit = 24`(`tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`),违规判据是 **Count > 24**;准入通过条件是 `projectedOccupancy <= 24`。
+    #   **24 个文件是合法的,25 个才红。**(2026-09-06 勘正:此前硬编码 12,与引擎脱节,把第 13 个文件误拦——Herzog lane 实测。) 我此前按记忆写成 `>= 12`,多拦一格 ——
     #   典型的「据记忆写判据而不读真规则」,与今晚反复抓的形状同源。
-    if [ "$dn" -gt 12 ]; then
-      echo "  ✗ $f  <- 目录 $dir 有 $dn 个 .lean，超 SL-003 上限 12(>12 才违规)"
+    if [ "$dn" -gt 24 ]; then
+      echo "  ✗ $f  <- 目录 $dir 有 $dn 个 .lean，超 SL-003 上限 24(>24 才违规)"
       bad=1; continue
     fi
     # ---- SL-010 地层(2026-08-28;13:05 按源码勘正)----

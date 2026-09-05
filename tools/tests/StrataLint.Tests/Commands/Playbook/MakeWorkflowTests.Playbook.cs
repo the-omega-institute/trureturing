@@ -26,6 +26,10 @@ public sealed partial class MakeWorkflowTests
                 makefile,
                 StringComparison.Ordinal);
         }
+        Assert.Contains(
+            "Build, emit, and freeze a theorem, then cover the anchor atom in the working tree",
+            makefile,
+            StringComparison.Ordinal);
 
         Assert.Contains("make cover-batch ATOMS=", makefile, StringComparison.Ordinal);
         Assert.Contains(
