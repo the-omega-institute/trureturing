@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c70d633a7e2abe95313ad2eef7af0c4805ccd7ee0000914c47f9eb1ffe458929
+  normalized_sha256: sha256:c70d633a7e2abe95313ad2eef7af0c4805ccd7ee0000914c47f9eb1ffe458929
+cas_ref: sha256:c70d633a7e2abe95313ad2eef7af0c4805ccd7ee0000914c47f9eb1ffe458929
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Dialectics/OneStepClosureFivefoldEquivalence.one_step_closure_fivefold_equivalence
+    target_statement_id: sha256:35d73cc3fd462604a89c2c856f0b6ef635fe682ef5ebb049f23cdac6bc8906f3
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Dialectics/OneStepClosureFivefoldEquivalence.one_step_closure_fivefold_equivalence
+      definition_sha256: sha256:795e2c36e634faacc35573c14d2a5f4297f7286484bdd4fb11a35c6cd3a16e6b
+      emission_sha256: sha256:ae2c9ff16bfc06b9145daa38e473fdbc14d5378b22010281f2c8cad1e8dd1939
+  unresolved_subitems: []
