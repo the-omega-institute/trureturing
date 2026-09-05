@@ -4,8 +4,8 @@ export LC_ALL=C
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 tools_dir="$(cd "$script_dir/.." && pwd -P)"
-project="$tools_dir/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj"
-contract="$tools_dir/tests/StrataLint.Scribe.Tests/Projection/RendererCorpusContractTests.cs"
+project="$tools_dir/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj"
+contract="$tools_dir/tests/StrataLint.Scribe.Documents.Tests/Projection/RendererCorpusContractTests.cs"
 test_name='FullyQualifiedName=StrataLint.Scribe.Tests.FormulaCorpusInventoryTests.FixedSyntheticCorpusFreezesRendererBehavior'
 log="$(mktemp "${TMPDIR:-/tmp}/renderer-contract.XXXXXX")"
 trap 'rm -f "$log"' EXIT

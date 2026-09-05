@@ -207,7 +207,7 @@ public sealed partial class MakeWorkflowTests
             binDirectory = Path.Combine(temporary.Path, "bin");
             log = Path.Combine(temporary.Path, "scribe.log");
             Report = Path.Combine(temporary.Path, "report.json");
-            ScribeDll = Path.Combine(temporary.Path, "StrataLint.Scribe.dll");
+            ScribeDll = Path.Combine(temporary.Path, "StrataLint.Scribe.Documents.dll");
             script = Path.Combine(
                 Repository,
                 "tools",

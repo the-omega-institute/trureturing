@@ -58,6 +58,12 @@
           "Trureturing.Truth": "[0.1.0, )"
         }
       },
+      "stratalint.scribe.documents": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Scribe": "[1.0.0, )"
+        }
+      },
       "trureturing.truth": {
         "type": "Project"
       },

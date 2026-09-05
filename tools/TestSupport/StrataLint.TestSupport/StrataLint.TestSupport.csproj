@@ -6,7 +6,10 @@
     <AssemblyName>StrataLint.TestSupport</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../../StrataLint.Scribe/StrataLint.Scribe.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <PackageReference Include="xunit" />
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)../../Architecture/BannedSymbols.Determinism.txt" />
   </ItemGroup>
 </Project>

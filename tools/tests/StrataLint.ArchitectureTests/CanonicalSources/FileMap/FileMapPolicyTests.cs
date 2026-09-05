@@ -2,6 +2,7 @@ using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using StrataLint.Scribe.Documents;
 using StrataLint.Tests;
 
 namespace StrataLint.ArchitectureTests;
@@ -19,7 +20,8 @@ public sealed partial class FileMapPolicyTests
             StringComparer.Ordinal);
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
-        var artifacts = GeneratedArtifactInventory.All
+        var inventory = GeneratedArtifactInventory.Create(DocumentAssembly.Definitions);
+        var artifacts = inventory
             .Where(artifact => expectedPaths.Contains(artifact.Path))
             .ToArray();
 
@@ -42,7 +44,7 @@ public sealed partial class FileMapPolicyTests
             entry.ConsumedBy.ToArray());
         Assert.Equal(["ScribeEmitter"], entry.VerifiedBy.ToArray());
         Assert.Contains(
-            GeneratedArtifactInventory.All,
+            inventory,
             artifact => entry.Matches(artifact.Path));
         Assert.DoesNotContain(
             FileMapPolicy.InspectRepository(root),

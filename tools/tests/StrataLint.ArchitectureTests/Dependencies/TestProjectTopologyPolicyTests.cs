@@ -79,6 +79,85 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
+    public void ScribeDocumentsCannotBorrowScribeTestsAsItsOwner()
+    {
+        var scribe = Production("StrataLint.Scribe", "StrataLint.Scribe");
+        var documents = Production(
+            "StrataLint.Scribe.Documents",
+            "StrataLint.Scribe.Documents");
+        var tests = OwnedTest(
+            "StrataLint.Scribe.Tests",
+            "StrataLint.Scribe.Tests",
+            "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
+            "../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj");
+
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(scribe, documents, tests));
+
+        Assert.False(result.IsAccepted);
+        Assert.Contains(
+            Debt(
+                "missing-owned-project",
+                "StrataLint.Scribe.Documents",
+                "StrataLint.Scribe.Documents.Tests"),
+            result.IntroducedDebt);
+        Assert.Contains(
+            Debt(
+                "extra-production-reference",
+                "StrataLint.Scribe.Tests",
+                "StrataLint.Scribe.Documents"),
+            result.IntroducedDebt);
+    }
+
+    [Fact]
+    public void ScribeAndDocumentsEachHaveTheirOwnTestProject()
+    {
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(
+                Production("StrataLint.Scribe", "StrataLint.Scribe"),
+                Production(
+                    "StrataLint.Scribe.Documents",
+                    "StrataLint.Scribe.Documents"),
+                OwnedTest(
+                    "StrataLint.Scribe.Tests",
+                    "StrataLint.Scribe.Tests",
+                    "../../StrataLint.Scribe/StrataLint.Scribe.csproj"),
+                OwnedTest(
+                    "StrataLint.Scribe.Documents.Tests",
+                    "StrataLint.Scribe.Documents.Tests",
+                    "../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj")));
+
+        Assert.True(result.IsAccepted, result.Message);
+        Assert.Empty(result.CandidateDebt);
+    }
+
+    [Fact]
+    public void ScribeDocumentsWithoutItsOwnedTestProjectIsRejected()
+    {
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(
+                Production("StrataLint.Scribe", "StrataLint.Scribe"),
+                Production(
+                    "StrataLint.Scribe.Documents",
+                    "StrataLint.Scribe.Documents"),
+                OwnedTest(
+                    "StrataLint.Scribe.Tests",
+                    "StrataLint.Scribe.Tests",
+                    "../../StrataLint.Scribe/StrataLint.Scribe.csproj")));
+
+        Assert.False(result.IsAccepted);
+        Assert.Contains(
+            Debt(
+                "missing-owned-project",
+                "StrataLint.Scribe.Documents",
+                "StrataLint.Scribe.Documents.Tests"),
+            result.IntroducedDebt);
+    }
+
+    [Fact]
     public void EqualSizedDebtSwapIsRejectedBySetContainment()
     {
         var (protectedBase, candidate) = EqualSizedDebtSwap();

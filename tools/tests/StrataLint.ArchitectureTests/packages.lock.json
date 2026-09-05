@@ -149,6 +149,7 @@
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.Scribe": "[1.0.0, )",
+          "StrataLint.Scribe.Documents": "[1.0.0, )",
           "Tomlyn": "[2.10.1, )",
           "YamlDotNet": "[16.3.0, )"
         }
@@ -188,6 +189,21 @@
           "Trureturing.Truth": "[0.1.0, )"
         }
       },
+      "stratalint.scribe.documents": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Scribe": "[1.0.0, )"
+        }
+      },
+      "stratalint.scribe.documents.tests": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.NET.Test.Sdk": "[18.0.1, )",
+          "StrataLint.Scribe.Documents": "[1.0.0, )",
+          "StrataLint.TestSupport": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
       "stratalint.scribe.tests": {
         "type": "Project",
         "dependencies": {
@@ -207,7 +223,12 @@
         }
       },
       "stratalint.testsupport": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.Scribe": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
       },
       "trureturing.truth": {
         "type": "Project"

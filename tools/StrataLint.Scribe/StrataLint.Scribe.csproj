@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>StrataLint.Scribe</RootNamespace>
     <AssemblyName>StrataLint.Scribe</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../../Blueprint/**/*.scribe.cs" LinkBase="Definitions" />
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../Trureturing.Truth/Trureturing.Truth.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />

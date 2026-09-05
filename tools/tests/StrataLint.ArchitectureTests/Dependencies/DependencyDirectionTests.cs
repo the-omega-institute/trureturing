@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using StrataLint.Scribe.Documents;
 using System.Xml.Linq;
 
 namespace StrataLint.ArchitectureTests;
@@ -25,10 +26,10 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet()
+    public void CliReferencesExactlyDocumentsEngineScribeTomlynTruthAndYamlDotNet()
     {
         Assert.Equal(
-            ["StrataLint.Engine", "StrataLint.Scribe", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
+            ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.Scribe.Documents", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
     }
 
@@ -44,6 +45,17 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["Jint", "QuestPDF", "StrataLint.Engine", "Tomlyn", "Trureturing.Truth"],
+            AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
+    }
+
+    [Fact]
+    public void DocumentsReferencesScribeAndScribeDoesNotReferenceDocuments()
+    {
+        Assert.Contains(
+            "StrataLint.Scribe",
+            AssemblyReferencePolicy.NonPlatformReferences(DocumentAssembly.Value));
+        Assert.DoesNotContain(
+            "StrataLint.Scribe.Documents",
             AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
     }
 
@@ -95,6 +107,15 @@ public sealed class DependencyDirectionTests
             ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.TestSupport"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Scribe.Tests.DocumentAstTests).Assembly));
+    }
+
+    [Fact]
+    public void ScribeDocumentsTestsReferenceOnlyDocumentsEngineScribeAndTestSupport()
+    {
+        Assert.Equal(
+            ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.Scribe.Documents", "StrataLint.TestSupport"],
+            AssemblyReferencePolicy.ApplicationReferences(
+                System.Reflection.Assembly.Load("StrataLint.Scribe.Documents.Tests")));
     }
 
     private static string[] ProjectReferences(XDocument project) => project
