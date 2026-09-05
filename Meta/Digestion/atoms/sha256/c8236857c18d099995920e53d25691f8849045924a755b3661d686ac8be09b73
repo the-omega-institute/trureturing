@@ -1,0 +1,42 @@
+### 完全分离区
+
+$$
+|\delta|\log t\longrightarrow\infty.
+$$
+
+则：
+
+$$
+\frac{|a|}{\sinh|a|}
+\sim
+2|a|e^{-|a|}
+\longrightarrow0.
+$$
+
+两套反射长度剖面趋近正交。
+
+所以：
+
+$$
+\boxed{
+\frac1{\log t}
+}
+$$
+
+是一个自然的**观察分辨尺度**。
+
+但它不是已经证明的零点束缚尺度。
+
+目前不能由此推出：
+
+$$
+\left|
+\Re\rho-\frac12
+\right|
+\lesssim\frac1{\log|\Im\rho|}.
+$$
+
+它只说明：若偏移大于该尺度，反射两侧在有效 packet 中已经成为明显不同的两个长度方向。
+
+---
+

@@ -1,0 +1,15 @@
+## 613.5 Lucas–Puiseux 黄金逼近
+
+```lean
+theorem lucas_root_approximates_golden_shift
+    (H m : ℕ) (hH : 0 < H)
+    (hm : 0 < m) (hmeven : Even m) :
+    let delta := Real.goldenRatio ^ (-(H : ℤ))
+    let root := (1 / lucas (m * H)) ^ (1 / (m : ℝ))
+    0 < delta - root ∧
+    delta - root <
+      delta ^ (2 * m + 1) / m
+```
+
+---
+

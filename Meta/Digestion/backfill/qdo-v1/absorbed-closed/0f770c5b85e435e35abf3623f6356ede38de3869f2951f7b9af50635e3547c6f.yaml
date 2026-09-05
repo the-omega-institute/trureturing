@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0f770c5b85e435e35abf3623f6356ede38de3869f2951f7b9af50635e3547c6f
 cas_ref: sha256:0f770c5b85e435e35abf3623f6356ede38de3869f2951f7b9af50635e3547c6f
 coverage_gids:
-  - D5/S3/ContinuousObservables/AsymmetricPermutationDistances.asymmetric_permutation_observer_distances
+  - gid: D5/S3/ContinuousObservables/AsymmetricPermutationDistances.asymmetric_permutation_observer_distances
+    target_statement_id: sha256:3c61dc59188de76346fd875e5b277b51fb6557e298d1b3c83446470161648d64
 receipts:
-  coverage:
-    - gid: D5/S3/ContinuousObservables/AsymmetricPermutationDistances.asymmetric_permutation_observer_distances
-      source_sha256: sha256:0f770c5b85e435e35abf3623f6356ede38de3869f2951f7b9af50635e3547c6f
-      target_statement_id: sha256:3c61dc59188de76346fd875e5b277b51fb6557e298d1b3c83446470161648d64
-      statement_id_history:
-        - statement_id: sha256:ca00bf1a77682c5585108ef9d29da6a24cdd2fca104513dcdc18a8d06318bd31
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ContinuousObservables/AsymmetricPermutationDistances.asymmetric_permutation_observer_distances
       definition_sha256: sha256:9a7535eb3cae17b77418153f5eb21f5715226eb1f11e31f1ed715df510034cb7

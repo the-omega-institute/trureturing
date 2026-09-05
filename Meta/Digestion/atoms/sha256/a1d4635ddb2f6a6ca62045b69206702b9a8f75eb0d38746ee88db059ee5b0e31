@@ -1,0 +1,43 @@
+# 六、继续到第四层：八阶累积量必须进入一个明确区间
+
+前文已经处理二阶、三阶。这次继续一层。
+
+由矩与累积量关系：
+
+$$
+\begin{aligned}
+m_2&=\chi_2,\\
+m_4&=\chi_4+3\chi_2^2,\\
+m_6&=\chi_6+15\chi_4\chi_2+15\chi_2^3,\\
+m_8&=\chi_8+28\chi_6\chi_2+35\chi_4^2
++210\chi_4\chi_2^2+105\chi_2^4.
+\end{aligned}
+$$
+
+代入实际 \(q_4\)，再中心化：
+
+$$
+\boxed{
+\widehat q_4(y)
+:=
+q_4\!\left(y+\frac{\chi_2}{8}\right)
+=
+y^4+py^2+qy+r,
+}
+\tag{C20}
+$$
+
+其中：
+
+$$
+\boxed{
+p=\frac{\chi_4}{32},
+\qquad
+q=-\frac{\chi_6}{1920},
+\qquad
+r=\frac{\chi_4^2}{12288}
++\frac{\chi_8}{430080}.
+}
+\tag{C21}
+$$
+

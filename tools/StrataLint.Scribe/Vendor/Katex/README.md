@@ -29,6 +29,6 @@ previous one accepted, and those documents are not in the diff that raises it:
 
 ```sh
 find Blueprint -name '*.md' -print0 |
-  dotnet run --project tools/StrataLint.Scribe --configuration Release -- \
+  dotnet run --project tools/StrataLint.Scribe.Documents --configuration Release -- \
     markdown-check --report .lake/build/stratalint/raw-lean-report.json --paths-from -
 ```

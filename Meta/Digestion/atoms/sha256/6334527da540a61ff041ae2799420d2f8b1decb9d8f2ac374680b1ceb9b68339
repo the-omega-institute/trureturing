@@ -1,0 +1,2 @@
+**定理 3.4.5(有理时刻的环面距离与模窗口)**〔候签;open;落 `D5/S1/Phase/LonelyRunnerFourteenOfTwenty`〕。令环面距离 `torusDist x := min (Int.fract x) (1 − Int.fract x)`(x : ℚ)。对任意自然数 s、a、d 且 0 < d,`(1 : ℚ)/15 ≤ torusDist (s · (a/d)) ↔ d ≤ 15 · ((s·a) % d) ∧ 15 · ((s·a) % d) ≤ 14 · d`——有理时刻 a/d 处速度 s 的跑者离原点至少 1/15,当且仅当整数余数 (s·a) mod d 落在闭窗口 [d/15, 14d/15]。
+

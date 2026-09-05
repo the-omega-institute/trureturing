@@ -1,0 +1,24 @@
+### 定理 A7.2　创新累计严格有界
+
+$$
+\boxed{
+\sum_{v=0}^{N-1}\xi_v
+=b(N)-N\sqrt5
+=\varphi^{-1}-\operatorname{fract}((N+1)\varphi).
+}
+\tag{A7.18}
+$$
+
+从而
+
+$$
+-\varphi^{-2}
+<
+\sum_{v=0}^{N-1}\xi_v
+\le
+\varphi^{-1}.
+\tag{A7.19}
+$$
+
+所以创新场的积分不会随时间增长。
+

@@ -1,0 +1,18 @@
+## 6. 已有 Lean `ObserverStructure` `[L]`
+
+仓库已有：
+
+```lean
+structure ObserverStructure
+    (X : Type u) (Index : Type v)
+    (Value : Index → Type w) where
+  readout : ∀ index, X → Value index
+  admissible : (∀ index, Value index) → Prop
+  anchor : X
+  anchorAdmissible :
+    admissible (jointReadout readout anchor)
+```
+
+它已直接承载：
+
+- 一族 CUT；

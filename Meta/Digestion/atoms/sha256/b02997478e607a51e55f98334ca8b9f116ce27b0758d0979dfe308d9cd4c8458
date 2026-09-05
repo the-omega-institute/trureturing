@@ -1,0 +1,84 @@
+## 603.1 素数指数宇称就是平方根障碍
+
+若：
+
+$$
+D\in\mathbb Q_{>0},
+$$
+
+写成：
+
+$$
+D=\prod_pp^{k_p}.
+$$
+
+则：
+
+$$
+\sqrt D
+=
+\prod_pp^{k_p/2}.
+$$
+
+因此：
+
+$$
+\sqrt D\in\mathbb Q
+\iff
+k_p\equiv0\pmod2
+\quad
+\forall p.
+$$
+
+定义平方类码：
+
+$$
+\boxed{
+\operatorname{SqCode}(D)
+=
+(k_p\bmod2)_p
+\in
+\bigoplus_p\mathbb F_2.
+}
+$$
+
+那么：
+
+$$
+\boxed{
+\operatorname{SqCode}(D)=0
+\iff
+\text{两条根仍位于有理素数格}.
+}
+$$
+
+若该码非零，则：
+
+$$
+\pm\sqrt D
+$$
+
+离开整数 prime-exponent lattice，进入半整数格：
+
+$$
+\frac12\mathbb Z^{(\mathbb P)}.
+$$
+
+所以“偶完成、奇破缺”在这里变成：
+
+$$
+\boxed{
+\text{偶数素数指数可以配成平方；}
+}
+$$
+
+$$
+\boxed{
+\text{奇数指数作为 squarefree residual 阻止单根留在原数域。}
+}
+$$
+
+这比“黄金数太难逼近”更接近真正的代数障碍。
+
+---
+

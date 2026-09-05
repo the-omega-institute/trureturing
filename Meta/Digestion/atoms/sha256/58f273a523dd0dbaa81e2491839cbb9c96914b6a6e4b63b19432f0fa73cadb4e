@@ -1,0 +1,2 @@
+**候签定理 6.35.1(窗口内词权可求和)**〔open;A-1;落 `D5/S3/Axis/AxisConvergence`〕。对任意 x y : ℝ 与 0 < x,`Summable (D5.S3.Axis.AxisPartialSum.wordWeight x y)`——只绑定冻结定义 `wordWeight`(`D5/S3/Axis/AxisPartialSum`),y 任意实数,不断言 x ≤ 0 的必要性。
+

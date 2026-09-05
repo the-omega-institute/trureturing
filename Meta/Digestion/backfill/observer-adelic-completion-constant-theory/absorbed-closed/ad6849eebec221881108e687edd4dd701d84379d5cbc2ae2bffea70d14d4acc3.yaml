@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:ad6849eebec221881108e687edd4dd701d84379d5cbc2ae2bffea70d14d4acc3
 cas_ref: sha256:ad6849eebec221881108e687edd4dd701d84379d5cbc2ae2bffea70d14d4acc3
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.white_to_haar_identity
+  - gid: D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.white_to_haar_identity
+    target_statement_id: sha256:be1f2b7324dd090647fd3f168db4fa8059907c92df9587f55b7f3f6b84de416d
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.white_to_haar_identity
-      source_sha256: sha256:ad6849eebec221881108e687edd4dd701d84379d5cbc2ae2bffea70d14d4acc3
-      target_statement_id: sha256:be1f2b7324dd090647fd3f168db4fa8059907c92df9587f55b7f3f6b84de416d
   scribe:
     - gid: D5/S3/Weil/TestFunctions/WhiteToHaarIdentity.white_to_haar_identity
       definition_sha256: sha256:33a4c8fcb6ecc10f75fd34bc28a2099505f525cdb927e3d2a110c168d0f6654f

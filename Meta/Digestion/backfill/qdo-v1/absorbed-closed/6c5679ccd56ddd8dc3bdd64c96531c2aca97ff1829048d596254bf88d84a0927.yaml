@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6c5679ccd56ddd8dc3bdd64c96531c2aca97ff1829048d596254bf88d84a0927
+  normalized_sha256: sha256:6c5679ccd56ddd8dc3bdd64c96531c2aca97ff1829048d596254bf88d84a0927
+cas_ref: sha256:6c5679ccd56ddd8dc3bdd64c96531c2aca97ff1829048d596254bf88d84a0927
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/PredictionClosureDynamicalRepair.prediction_closure_minimal_dynamical_repair
+    target_statement_id: sha256:2d222a6eb56048f42647f41410d4c34ff03cc3b332dfd5723b02091fe5105e7a
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Dynamics/PredictionClosureDynamicalRepair.prediction_closure_minimal_dynamical_repair
+      definition_sha256: sha256:61c6867d9e3511c072c7f9917ca0b0536af1ae34117a29ab99fc0f1deb89a32d
+      emission_sha256: sha256:c73fee124cf718b78aba20da720eb99d4b947c328f016704960df15d9a09a7fc
+  unresolved_subitems: []

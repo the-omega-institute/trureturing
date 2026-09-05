@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:77e8e32d86aae3d634c749333888481f3b4162f0d86aa3d8594ecae37d563616
 cas_ref: sha256:77e8e32d86aae3d634c749333888481f3b4162f0d86aa3d8594ecae37d563616
 coverage_gids:
-  - D5/S3/ConceptDynamics/DefinitionEscapeLaws/SemanticClosureZeroGainCriterion.semantic_closure_zero_gain_criterion
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/SemanticClosureZeroGainCriterion.semantic_closure_zero_gain_criterion
+    target_statement_id: sha256:6f2573e12aeaee475ace7e3307159c2a5c49b4b273c515fede13deac7100ac0a
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/SemanticClosureZeroGainCriterion.semantic_closure_zero_gain_criterion
-      source_sha256: sha256:77e8e32d86aae3d634c749333888481f3b4162f0d86aa3d8594ecae37d563616
-      target_statement_id: sha256:6f2573e12aeaee475ace7e3307159c2a5c49b4b273c515fede13deac7100ac0a
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/SemanticClosureZeroGainCriterion.semantic_closure_zero_gain_criterion
       definition_sha256: sha256:61bed793d2171ad84467461aacd0acc2298cf033085470b5f7661a1afe292460

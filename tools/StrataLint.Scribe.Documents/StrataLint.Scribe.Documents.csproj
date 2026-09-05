@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>StrataLint.Scribe.Documents</RootNamespace>
+    <AssemblyName>StrataLint.Scribe.Documents</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Blueprint/**/*.scribe.cs" LinkBase="Definitions" />
+    <ProjectReference Include="../StrataLint.Scribe/StrataLint.Scribe.csproj" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Guid.txt" />
+  </ItemGroup>
+</Project>

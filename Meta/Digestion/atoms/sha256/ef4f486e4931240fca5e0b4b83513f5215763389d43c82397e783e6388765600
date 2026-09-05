@@ -1,0 +1,37 @@
+## B9.4 反射通道 fidelity
+
+把 $r_\pm$ 归一化，定义 squared fidelity
+
+$$
+\boxed{
+\mathcal F_{\mathcal C}(\delta)
+=
+\frac{W^2}
+{\left(\sum_jw_je^{2\delta\omega_j}\right)
+ \left(\sum_jw_je^{-2\delta\omega_j}\right)}.}
+\tag{B9.13}
+$$
+
+临界线上
+
+$$
+\mathcal F_{\mathcal C}(0)=1.
+\tag{B9.14}
+$$
+
+若 cluster 含不同频率，则 $\delta\ne0$ 时严格小于 $1$。
+
+由式 (B9.6)--(B9.7)，有精确恒等式
+
+$$
+\boxed{
+\frac1{\mathcal F_{\mathcal C}(\delta)}-1
+=
+\frac{4}{W^2}
+\sum_{i<j}w_iw_j
+\sinh^2(\delta(\omega_i-\omega_j)).}
+\tag{B9.15}
+$$
+
+因此 exterior energy 与 fidelity loss 不是仅在二阶近似下相关，而由一个精确单调换算相连。
+

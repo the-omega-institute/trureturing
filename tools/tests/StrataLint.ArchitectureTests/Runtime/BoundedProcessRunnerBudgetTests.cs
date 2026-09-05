@@ -28,12 +28,17 @@ public sealed class BoundedProcessRunnerBudgetTests
     [Fact]
     public void TestScratchWallClockBridgeHasOneExactLocationPerCapability()
     {
-        const string bridgePath = "tools/tests/StrataLint.Tests/TestScratchRoot.cs";
+        // TestScratchRoot.cs 随 L3c 迁入 StrataLint.TestSupport(#5419)。
+        // **扫描面必须同时覆盖 tools/tests/ 与 tools/TestSupport/** —— 只改 bridgePath
+        // 而不扩扫描面,该文件就落在扫描面之外,「全仓只有这一处可用挂钟」这条不变量
+        // 会在新位置上静默失效(第 20 条:不得降级检测)。
+        const string bridgePath = "tools/TestSupport/StrataLint.TestSupport/TestScratchRoot.cs";
         var repositoryRoot = RepositoryLayout.FindRoot();
         var systemUtcNow = string.Concat("TimeProvider.System", ".GetUtcNow()");
         var retryWait = string.Concat("retryPause", ".Wait(25)");
         var sources = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(static file => file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
+            .Where(static file => (file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
+                    || file.RelativePath.StartsWith("tools/TestSupport/", StringComparison.Ordinal))
                 && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             .Select(file => (
                 file.RelativePath,

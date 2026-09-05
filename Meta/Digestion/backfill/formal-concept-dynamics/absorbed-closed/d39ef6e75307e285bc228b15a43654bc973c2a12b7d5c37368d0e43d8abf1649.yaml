@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:d39ef6e75307e285bc228b15a43654bc973c2a12b7d5c37368d0e43d8abf1649
 cas_ref: sha256:d39ef6e75307e285bc228b15a43654bc973c2a12b7d5c37368d0e43d8abf1649
 coverage_gids:
-  - D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient
+  - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient
+    target_statement_id: sha256:2ac8d147c44eb4223931da46da7ce0d0742f8bb0dc6b9769c23491ba1dfacb4b
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient
-      source_sha256: sha256:d39ef6e75307e285bc228b15a43654bc973c2a12b7d5c37368d0e43d8abf1649
-      target_statement_id: sha256:2ac8d147c44eb4223931da46da7ce0d0742f8bb0dc6b9769c23491ba1dfacb4b
   scribe:
     - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient
       definition_sha256: sha256:d9996e4e8f1a40bc8a41ffc004047441609645772b9a4c95cf1f50c345daebc3

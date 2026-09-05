@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.Json;
 
 namespace Trureturing.Truth;
 
@@ -236,9 +237,22 @@ public static class YamlSubsetParser
         {
             return integer;
         }
-        if (value.Length >= 2
-            && value[0] == value[^1]
-            && value[0] is '\'' or '"') return value[1..^1];
+        if (value.Length >= 2 && value[0] == value[^1] && value[0] == '"')
+        {
+            try
+            {
+                return JsonSerializer.Deserialize<string>(value)
+                    ?? throw new FormatException("double-quoted YAML scalar decoded to null");
+            }
+            catch (JsonException)
+            {
+                return value[1..^1];
+            }
+        }
+        if (value.Length >= 2 && value[0] == value[^1] && value[0] == '\'')
+        {
+            return value[1..^1];
+        }
         return value;
     }
 

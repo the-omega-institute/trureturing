@@ -1,0 +1,59 @@
+## 对称双零点分裂
+
+最重要的是：
+
+$$
+m=2.
+$$
+
+局部模型：
+
+$$
+F_\varepsilon(z)
+=
+a z^2-\varepsilon b.
+$$
+
+其零点为：
+
+$$
+z_\pm
+\sim
+\pm
+\sqrt{\frac{\varepsilon b}{a}}.
+$$
+
+若：
+
+$$
+\varepsilon=\varphi^{-H},
+$$
+
+则：
+
+$$
+\boxed{
+\delta
+\asymp
+\varphi^{-H/2}.
+}
+$$
+
+所以一个深度为 \(H\) 的 all-prime residual，可以在二重零点判别式处产生深度约为：
+
+$$
+\frac H2
+$$
+
+的横向镜像对。
+
+这与此前的 jet 理论完全吻合：
+
+$$
+\boxed{
+\text{首次非零微分阶数决定 residual 如何转化成几何偏移。}
+}
+$$
+
+---
+

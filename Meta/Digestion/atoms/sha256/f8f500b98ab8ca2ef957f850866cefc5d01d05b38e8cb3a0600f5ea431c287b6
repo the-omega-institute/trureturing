@@ -1,0 +1,22 @@
+## C1.4 局部信息完整性
+
+对固定素数 $p$：
+
+- 任一单个 level 的 norm 已经恢复 $\delta$：
+
+$$
+\boxed{
+\delta
+=
+-\frac{m\log\|Z_{p,u}(m)\|}{\log p};
+}
+\tag{C1.11}
+$$
+
+- 全部 phase levels 恢复 $t$，见增订三·5；
+- 所以完整的一个 prime thread 已经忠实编码中心化谱参数 $u$。
+
+因此 zeta 困难不来自单个 prime thread 缺少 $\delta$ 或 $t$；困难来自 scalar multiplication、symmetrization、completion 与 analytic continuation 如何压缩这些局部关系数据。
+
+---
+

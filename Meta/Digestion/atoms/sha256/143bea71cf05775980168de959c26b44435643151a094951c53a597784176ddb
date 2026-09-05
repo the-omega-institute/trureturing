@@ -1,0 +1,13 @@
+### 定理 A3.1　任意指数函数的 Zeckendorf 重标不变
+
+对任意交换加法目标中的函数 $a$，
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_Q}a(E_Q(\eta))
+=
+\sum_{v=0}^{M_Q-1}a(v).
+}
+\tag{A3.1}
+$$
+

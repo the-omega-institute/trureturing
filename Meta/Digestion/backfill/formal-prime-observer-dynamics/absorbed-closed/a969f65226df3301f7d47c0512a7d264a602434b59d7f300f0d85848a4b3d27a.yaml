@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a969f65226df3301f7d47c0512a7d264a602434b59d7f300f0d85848a4b3d27a
+  normalized_sha256: sha256:a969f65226df3301f7d47c0512a7d264a602434b59d7f300f0d85848a4b3d27a
+cas_ref: sha256:a969f65226df3301f7d47c0512a7d264a602434b59d7f300f0d85848a4b3d27a
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GaloisFusion.joint_restriction_lands_in_fiber_product
+    target_statement_id: sha256:f433ec3dfc625c71b9a6ad8c7686e5b81a0b93f435d321da7a2745b6edf43bb4
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/Galois/GaloisFusion.joint_restriction_lands_in_fiber_product
+      definition_sha256: sha256:1d9b5a1a3d629378009a6477dfe57dfaeb9512b9e67f59ae6a7272a0c02403b0
+      emission_sha256: sha256:b1e3e70c7a705e969113cb0e2c429df432c3e36faab14e7574edbd045f799d4f
+  unresolved_subitems: []

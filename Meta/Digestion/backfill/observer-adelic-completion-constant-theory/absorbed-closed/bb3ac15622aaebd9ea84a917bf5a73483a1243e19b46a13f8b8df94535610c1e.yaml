@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:bb3ac15622aaebd9ea84a917bf5a73483a1243e19b46a13f8b8df94535610c1e
+  normalized_sha256: sha256:bb3ac15622aaebd9ea84a917bf5a73483a1243e19b46a13f8b8df94535610c1e
+cas_ref: sha256:bb3ac15622aaebd9ea84a917bf5a73483a1243e19b46a13f8b8df94535610c1e
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaGamma/ArchimedeanObserverProductPositive.archimedean_observer_product_positive
+    target_statement_id: sha256:6c138a47366b534cf17e8836e54f89ecc3bbff58c6542baa59429d9524c9672c
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaGamma/ArchimedeanObserverProductPositive.archimedean_observer_product_positive
+      definition_sha256: sha256:d11a14bf3a64db831cc85d1382c65f27534a010e358f32a60698d09b577714ea
+      emission_sha256: sha256:fbae056b8eda97e8ac667f1a8c011f209e3aa44e96931468852efe2da8f6e792
+  unresolved_subitems: []

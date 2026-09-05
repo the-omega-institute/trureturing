@@ -1,0 +1,19 @@
+## C3.3 荷—相位统一式
+
+本卷 prime-pair identity 因而成为：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sinh^2(Q_p-Q_q)
++
+\sin^2(\pi\Phi_{p,q}).
+}
+\tag{C3.5}
+$$
+
+所以：
+
+- $\sinh^2$ 读取 $\mathbb R$-charge difference；

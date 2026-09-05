@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e82d52944194c992e064080e0ab7326a53d979cf77a9720f0addf2a06b25a2a3
+  normalized_sha256: sha256:e82d52944194c992e064080e0ab7326a53d979cf77a9720f0addf2a06b25a2a3
+cas_ref: sha256:e82d52944194c992e064080e0ab7326a53d979cf77a9720f0addf2a06b25a2a3
+coverage_gids:
+  - gid: D5/S3/Analytic/Adelic/RelativeCurvatureSupportCriterion.relative_curvature_support_criterion
+    target_statement_id: sha256:71a965e4f985ba5f2e63d40482c8e593916cd1054e110e4344a24487a0da7fb6
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Adelic/RelativeCurvatureSupportCriterion.relative_curvature_support_criterion
+      definition_sha256: sha256:d1f8ffa4050cd7e2c3b2d9f1818aed17db0e53a27c3a1e795699aae4a0edea71
+      emission_sha256: sha256:405b2547c9206cdec985443e3c9e63be70ab7c976570fae818fd186262e5f767
+  unresolved_subitems: []

@@ -1,0 +1,45 @@
+## B7.1 hard-core polynomial 的正谱因子化
+
+由式 (B5.6)，
+
+$$
+\boxed{
+H_Q(z)
+=
+\prod_{j=1}^{\lfloor(Q+1)/2\rfloor}
+\left(
+1+4z\cos^2\frac{j\pi}{Q+2}
+\right).}
+\tag{B7.1}
+$$
+
+定义正对角算子
+
+$$
+\mathsf K_Q
+=
+\operatorname{diag}
+\left(
+4\cos^2\frac{j\pi}{Q+2}
+\right)_j.
+\tag{B7.2}
+$$
+
+则
+
+$$
+\boxed{H_Q(z)=\det(I+z\mathsf K_Q).}
+\tag{B7.3}
+$$
+
+且 $\mathsf K_Q$ 的所有 eigenvalues 严格为正。
+
+因此任何零点必须是某个正 eigenvalue 的负倒数：
+
+$$
+H_Q(z)=0
+\Longrightarrow
+z\in(-\infty,0).
+\tag{B7.4}
+$$
+

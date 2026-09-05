@@ -1,0 +1,76 @@
+# 第两千零九部　建议形式化顺序
+
+```text
+D5/S3/Arithmetic/PrimeParity/
+  InfinitePrimeCardinalityHasNoParity.lean
+  FinitePrimeSubsetParity.lean
+  EvenOddPrimeSubsetPartition.lean
+  UniquePermutationInvariantParityCharacter.lean
+
+D5/S3/Arithmetic/MobiusObserver/
+  SquarefreePrimeOccupation.lean
+  SquarefreeEvenSector.lean
+  SquarefreeOddSector.lean
+  SquarefreeSectorSumEulerProduct.lean
+  SquarefreeSectorDifferenceMobius.lean
+  MobiusIsUniqueDirichletInverse.lean
+
+D5/S3/Arithmetic/LiouvilleObserver/
+  TotalPrimeMultiplicityParity.lean
+  LiouvilleEvenSector.lean
+  LiouvilleOddSector.lean
+  LiouvilleSectorSumZeta.lean
+  LiouvilleSectorDifferenceZetaRatio.lean
+
+D5/S3/Observer/PrimeParityTransfer/
+  PrimeParitySwap.lean
+  SquarefreeParityTransferMatrix.lean
+  FullMultiplicityParityTransferMatrix.lean
+  GlobalEvenEigenchannel.lean
+  UniqueOddEigenchannel.lean
+  PrimeParityTransferCommonFloor.lean
+
+D5/S3/Observer/ParityPolarization/
+  SquarefreeTraceSupertrace.lean
+  FullTraceSupertrace.lean
+  ParityPolarizationNamingInvariant.lean
+  ParityPolarizationEulerProduct.lean
+  ParityPolarizationHolomorphicIffRH.lean
+
+D5/S3/Analytic/Zeta/ParitySectorPoleCancellation/
+  RightOffLineZeroNumeratorNonzero.lean
+  LiouvilleObserverPoleAtOffLineZero.lean
+  EvenOddSectorOppositePrincipalParts.lean
+  GlobalZeroObserverBlowup.lean
+
+D5/S3/Analytic/Zeta/ZeroOrbitParityRank/
+  ZeroTimeInvolution.lean
+  ZeroNormalInvolution.lean
+  GenericOffLineKleinFourOrbit.lean
+  CriticalLineNormalParityCollapse.lean
+  RHUniqueNontrivialObserverParity.lean
+
+D5/S3/CompletionDynamics/ParityAlternatingLimitNoGo/
+  AlternatingParityApproximant.lean
+  EvenSubsequenceLimitEven.lean
+  OddSubsequenceLimitOdd.lean
+  CommonNonzeroLimitImpossible.lean
+  GradedCompletionAvoidsParityContradiction.lean
+
+D5/S3/Weil/PrimeZeroParityIntertwiner/
+  ArithmeticParityGrading.lean
+  ZeroNormalParityGrading.lean
+  PrimeGammaGradingPreservingTarget.lean
+  NoNewParityCompletionTarget.lean
+  NoNewParityCompletionImpliesRHTarget.lean
+
+D5/S3/Weil/PrimeParityToSignedNormal/
+  PrimeParityCommonFloor.lean
+  CanonicalXiParityObserverTarget.lean
+  ParityObserverToNormalMomentTarget.lean
+  PositiveParityIntertwinerImpliesLocalizerPSD.lean
+  ParityNormalDualSignCollapseImpliesRH.lean
+```
+
+---
+

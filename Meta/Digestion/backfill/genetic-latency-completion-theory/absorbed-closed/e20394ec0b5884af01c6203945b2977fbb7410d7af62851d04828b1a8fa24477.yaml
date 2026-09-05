@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:e20394ec0b5884af01c6203945b2977fbb7410d7af62851d04828b1a8fa24477
 cas_ref: sha256:e20394ec0b5884af01c6203945b2977fbb7410d7af62851d04828b1a8fa24477
 coverage_gids:
-  - D5/S3/Observer/Budget/FiniteFutureSplitBudget.finite_future_split_budget
+  - gid: D5/S3/Observer/Budget/FiniteFutureSplitBudget.finite_future_split_budget
+    target_statement_id: sha256:7b67336887fa862155ff7a24df0db4a4a58ed704ee23b19bbdf455a566a9fc39
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Budget/FiniteFutureSplitBudget.finite_future_split_budget
-      source_sha256: sha256:e20394ec0b5884af01c6203945b2977fbb7410d7af62851d04828b1a8fa24477
-      target_statement_id: sha256:7b67336887fa862155ff7a24df0db4a4a58ed704ee23b19bbdf455a566a9fc39
   scribe:
     - gid: D5/S3/Observer/Budget/FiniteFutureSplitBudget.finite_future_split_budget
       definition_sha256: sha256:c5c97275212bb5c931fdc10be405d6613641d42060ea6c9db3121a1bbd562039

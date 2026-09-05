@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0c59db6bbe2828fd307175148ebc1a6b78159c603725bddd48726b6a7be1b5fa
 cas_ref: sha256:0c59db6bbe2828fd307175148ebc1a6b78159c603725bddd48726b6a7be1b5fa
 coverage_gids:
-  - D5/S3/Observer/BlockStructure/CommonSpectrumMasterFeasibility.common_spectrum_master_feasibility
+  - gid: D5/S3/Observer/BlockStructure/CommonSpectrumMasterFeasibility.common_spectrum_master_feasibility
+    target_statement_id: sha256:ee4d4042424d2881a1c1c6e3139e17ae751928de3b3bb52186eaad062d46a205
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/BlockStructure/CommonSpectrumMasterFeasibility.common_spectrum_master_feasibility
-      source_sha256: sha256:0c59db6bbe2828fd307175148ebc1a6b78159c603725bddd48726b6a7be1b5fa
-      target_statement_id: sha256:ee4d4042424d2881a1c1c6e3139e17ae751928de3b3bb52186eaad062d46a205
   scribe:
     - gid: D5/S3/Observer/BlockStructure/CommonSpectrumMasterFeasibility.common_spectrum_master_feasibility
       definition_sha256: sha256:6db52312503d0168ee216ca2ed37590169d52cabf219c817855dd8a2fcae0b4d

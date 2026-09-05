@@ -1,0 +1,55 @@
+## C1.1 定义
+
+固定素数 $p$，令
+
+$$
+u=\delta+it\in\mathbb C.
+\tag{C1.1}
+$$
+
+对每个正整数 $m$，定义：
+
+$$
+\boxed{
+Z_{p,u}(m)
+=
+\exp\!\left(
+-\frac{u\log p}{m}
+\right).
+}
+\tag{C1.2}
+$$
+
+所有坐标均非零。
+
+### 定理 C1.1　power-thread compatibility
+
+对任意正整数 $m,n$：
+
+$$
+\boxed{
+Z_{p,u}(mn)^n
+=
+Z_{p,u}(m).
+}
+\tag{C1.3}
+$$
+
+#### 证明
+
+直接计算：
+
+$$
+Z_{p,u}(mn)^n
+=
+\exp\!\left(
+-\frac{nu\log p}{mn}
+\right)
+=
+\exp\!\left(
+-\frac{u\log p}{m}
+\right).
+$$
+
+所以 $Z_{p,u}$ 是项目 `ComplexPowerThread` 的一个 canonical 元素。
+

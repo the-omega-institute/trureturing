@@ -1,0 +1,6 @@
+## 三　G-c-L2c 预登记:生成式 jet 证书与 G-c 闭合(`GermWindow/GermZeroCertificate`,绑 L1、L2a、L2b)
+
+**义务**:公开定理 `g60_center_deriv_re_gt : 187 / 100 < (deriv (g 60) c).re`、`g60_center_norm_lt : ‖g 60 c‖ < 4 / 10 ^ 10`,与最终 `germLocalFactor_two_has_zero_near_candidate : ∃ z ∈ Metric.ball c (1 / 10 ^ 8), germLocalFactor z 2 = 0`(经 `germ_zero_of_center_jet`)。证书由入仓生成器(`tools/scripts/agent/germ_jet_certificate.py`,器律⑨)产出、kernel 检查。
+**可证伪预测(写在跑之前)**:每模约 30 条不等式、61 模共约 1800 条,阐释约 15 分钟(`ASSUMED-UNVERIFIED`);若 T1 的每模误差预算 2·10⁻¹² 需要的阶数使阐释超 1 小时,则改分两模块落地或提高截断 V 并重新预登记;若任一生成证书 kernel 拒绝,登记具名缺口 `open`,不得放宽阈值。
+**边界**:同 §〇 ③。
+

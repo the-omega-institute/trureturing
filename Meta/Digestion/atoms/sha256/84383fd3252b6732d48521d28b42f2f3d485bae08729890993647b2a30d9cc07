@@ -1,0 +1,43 @@
+\[
+\boxed{
+\mathfrak M_{\mathrm{raw}}
+=
+(X,\operatorname{Adm},a,U,F,O,\mathcal C).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+X&:\mathsf{Type}
+&&\text{状态或世界类型},\\
+\operatorname{Adm}&:X\to\mathsf{Prop}
+&&\text{准入谓词},\\
+a&:\sum_{x:X}\operatorname{Adm}(x)
+&&\text{实际锚点},\\
+U&:\mathsf{Type}
+&&\text{行动／过程索引},\\
+F&:U\to X\to X
+&&\text{过程族},\\
+O&:\mathsf{Type}
+&&\text{观察者类型},\\
+\mathcal C&:O\to\operatorname{Concept}(X)
+&&\text{观察者概念族}.
+\end{aligned}
+\]
+
+这已经包含四角色：
+
+\[
+\mathcal C=\mathsf{CUT},
+\quad
+F=\mathsf{FLOW},
+\quad
+\operatorname{Adm}=\mathsf{ADMIT},
+\quad
+a=\mathsf{ANCHOR}.
+\]
+
+---
+

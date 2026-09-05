@@ -136,7 +136,8 @@ public sealed class AdmissionTests
                 Encoding.UTF8.GetBytes(TestRegistry.Domains)));
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
             RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
-        var descriptor = RuleCatalog.Default.Descriptors[6];
+        var descriptor = RuleCatalog.Default.Descriptors.Single(item =>
+            item.Id == RuleId.CreateKnown(7));
         var completed = CompletedRuleSet.Create(
             ImmutableArray.Create(new Diagnostic(
                 descriptor.Id,
@@ -177,7 +178,8 @@ public sealed class AdmissionTests
             {
                 RuleFixture.SyntheticProtectedPath,
             })));
-        var trustGate = RuleCatalog.Default.Descriptors[6];
+        var trustGate = RuleCatalog.Default.Descriptors.Single(item =>
+            item.Id == RuleId.CreateKnown(7));
         var sl022 = Assert.Single(BootstrapGate.CreateSl022Diagnostics(verification.ChangeSet));
         Assert.Equal(
             "protected-surface change detected (SL-022)",

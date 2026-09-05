@@ -1,0 +1,43 @@
+## 真实反作用
+
+必须另行定义变形族
+
+$$
+\Delta(s,\lambda),
+$$
+
+其中 \(\lambda\) 是探测器耦合或反馈强度。
+
+若
+
+$$
+\Delta(\rho(\lambda),\lambda)=0
+$$
+
+且零点为单零点，则
+
+$$
+\boxed{
+\frac{d\rho}{d\lambda}
+=
+-
+\frac{
+\partial_\lambda\Delta
+}{
+\partial_s\Delta
+}.
+}
+$$
+
+只有在这一层，探测器才真的移动零点。
+
+但此时证明的是耦合系统
+
+$$
+\Delta(s,\lambda)
+$$
+
+的性质，不再自动是原始经典 \(\xi\) 的性质。
+
+---
+

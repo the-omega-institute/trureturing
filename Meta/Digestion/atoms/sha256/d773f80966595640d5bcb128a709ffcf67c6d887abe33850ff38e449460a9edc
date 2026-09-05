@@ -1,0 +1,14 @@
+### 信息修复
+
+不改变 \(A\)，而精化 CUT：
+
+\[
+q\longmapsto q\vee d
+\]
+
+直到准入边界消失。
+
+选择哪条道路不是 CUT/FLOW 的纯描述定理，而属于 ADMIT doctrine 与成本结构。
+
+---
+

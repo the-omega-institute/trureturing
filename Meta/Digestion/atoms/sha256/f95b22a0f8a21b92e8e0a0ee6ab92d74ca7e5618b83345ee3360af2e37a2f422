@@ -1,0 +1,62 @@
+## 493. Fibonacci 为什么真正闭合
+
+Fibonacci 满足：
+
+$$
+\begin{pmatrix}
+F_{n+1}\\
+F_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\begin{pmatrix}
+F_n\\
+F_{n-1}
+\end{pmatrix}.
+$$
+
+无限序列被二维状态完全闭合。
+
+所以 Fibonacci 的无限不是“逐项检查”：
+
+$$
+F_0,F_1,F_2,\ldots
+$$
+
+而是：
+
+$$
+\boxed{
+\text{一次验证递推算子，覆盖全部层级。}
+}
+$$
+
+若要让 RH 的奇偶拆分真正发挥类似作用，就需要找到一个 RH 重整化律：
+
+$$
+\boxed{
+\mathscr C_{2n}
+=
+\mathcal R_0(\mathscr C_n),
+\qquad
+\mathscr C_{2n+1}
+=
+\mathcal R_1(\mathscr C_n),
+}
+$$
+
+其中 \(\mathscr C_n\) 可以是：
+
+* Casimir moments；
+* Weil 矩阵；
+* prime-constellation cumulants；
+* Jacobi coefficients；
+* 或 operator blocks。
+
+目前我们还没有这样的有限维闭合律。
+
+---
+

@@ -3,7 +3,7 @@ using TestProjectTopologyPolicy = StrataLint.Engine.RepositoryRules;
 
 namespace StrataLint.ArchitectureTests;
 
-public sealed class TestProjectTopologyPolicyTests
+public sealed partial class TestProjectTopologyPolicyTests
 {
     private const string CanonicalHarnessPath =
         "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
@@ -34,6 +34,43 @@ public sealed class TestProjectTopologyPolicyTests
         Assert.Equal(
             [Debt("missing-owned-project", "NewProduct", "NewProduct.Tests")],
             result.IntroducedDebt.ToArray());
+    }
+
+    [Fact]
+    public void NestedProjectOutsideTestsIsProductionAndNeedsItsOwnedDual()
+    {
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(ProjectWithDefaultProperties(
+                "tools/Nested/NewProduct/NewProduct.csproj",
+                "NewProduct",
+                xunit: false)));
+
+        Assert.False(result.IsAccepted);
+        Assert.Equal(
+            [Debt("missing-owned-project", "NewProduct", "NewProduct.Tests")],
+            result.IntroducedDebt.ToArray());
+    }
+
+    [Fact]
+    public void NamedTestSupportProjectIsOutsideTheProductionDualAndItsInboundReferences()
+    {
+        var result = TestProjectTopologyPolicy.Evaluate(
+            Snapshot(),
+            Snapshot(
+                Production("NewProduct", "NewProduct"),
+                ProjectWithDefaultProperties(
+                    TestProjectTopologyPolicy.TestSupportProjectPath,
+                    "StrataLint.TestSupport",
+                    xunit: false),
+                OwnedTest(
+                    "NewProduct.Tests",
+                    "NewProduct.Tests",
+                    "../../NewProduct/NewProduct.csproj",
+                    "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj")));
+
+        Assert.True(result.IsAccepted, result.Message);
+        Assert.Empty(result.CandidateDebt);
     }
 
     [Fact]

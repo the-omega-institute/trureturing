@@ -1,0 +1,57 @@
+## 597.1 Lucas 素数影渐近饱和该下界
+
+取：
+
+$$
+q=L_H,\qquad a=1.
+$$
+
+有精确恒等式：
+
+$$
+\boxed{
+\sqrt5F_HL_H^2
+\left|
+\varphi^{-H}-\frac1{L_H}
+\right|
+=
+1-\varphi^{-4H}.
+}
+$$
+
+证明：
+
+$$
+\begin{aligned}
+\sqrt5F_HL_H^2
+\left|
+x_H-\frac1{L_H}
+\right|
+&=
+\sqrt5F_HL_Hx_H^2\\
+&=
+(\varphi^H-\psi^H)
+(\varphi^H+\psi^H)
+\varphi^{-2H}\\
+&=
+1-\varphi^{-4H}.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\sqrt5F_HL_H^2
+\left|
+\varphi^{-H}-\frac1{L_H}
+\right|
+\longrightarrow1.
+}
+$$
+
+所以 \(1/L_H\) 在正确的移动高度尺度上，几乎饱和了该二次无理数的逼近下界。
+
+这不与“\(\varphi\) 最难逼近”矛盾，因为：
+
+* 经典坏逼近固定一个目标，让 \(q\to\infty\)；

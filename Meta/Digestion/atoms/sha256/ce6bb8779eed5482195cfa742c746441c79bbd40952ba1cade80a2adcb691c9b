@@ -1,0 +1,56 @@
+### 正向证明
+
+在 RH 前件下：
+
+$$
+D(v)=
+\prod_{\gamma>0}
+\left(1+\frac v{\gamma^2}\right)^{m_\gamma}.
+$$
+
+这里对互异正高度求和，重数由 \(m_\gamma\) 保留。
+
+令：
+
+$$
+\theta_\gamma=\gamma^{-2}.
+$$
+
+那么：
+
+$$
+a_1=\sum_{\gamma>0}m_\gamma\theta_\gamma,
+$$
+
+并且：
+
+$$
+\begin{aligned}
+\mathfrak S(z)
+&=
+\sum_{\gamma>0}
+m_\gamma
+\left[
+\frac{\theta_\gamma}{1-\theta_\gamma/z}
+-\theta_\gamma
+\right]\\
+&=
+\sum_{\gamma>0}
+\frac{m_\gamma\theta_\gamma^2}{z-\theta_\gamma}.
+\end{aligned}
+$$
+
+因此取：
+
+$$
+\boxed{
+\omega
+=
+\sum_{\gamma>0}
+m_\gamma\theta_\gamma^2\,\delta_{\theta_\gamma}.
+}
+\tag{D22}
+$$
+
+其总质量有限，得到式（D21）。
+

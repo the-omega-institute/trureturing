@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:35f94438be480b80f8bdfde74aa6290966f1dbafcc048910e1447c72fd7b2d6d
 cas_ref: sha256:35f94438be480b80f8bdfde74aa6290966f1dbafcc048910e1447c72fd7b2d6d
 coverage_gids:
-  - D5/S3/Weil/Budget/FiniteMomentInfeasibilityCertificate.finite_moment_infeasibility_certificate
+  - gid: D5/S3/Weil/Budget/FiniteMomentInfeasibilityCertificate.finite_moment_infeasibility_certificate
+    target_statement_id: sha256:043a5808c1e140902f274913f0fb5297423b7fb64e343b25f0e26a97273953a1
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Budget/FiniteMomentInfeasibilityCertificate.finite_moment_infeasibility_certificate
-      source_sha256: sha256:35f94438be480b80f8bdfde74aa6290966f1dbafcc048910e1447c72fd7b2d6d
-      target_statement_id: sha256:043a5808c1e140902f274913f0fb5297423b7fb64e343b25f0e26a97273953a1
   scribe:
     - gid: D5/S3/Weil/Budget/FiniteMomentInfeasibilityCertificate.finite_moment_infeasibility_certificate
       definition_sha256: sha256:0fc09b6920484ea59c89dc6af25b2300d1806639923df9717dbc84f59f78e35b

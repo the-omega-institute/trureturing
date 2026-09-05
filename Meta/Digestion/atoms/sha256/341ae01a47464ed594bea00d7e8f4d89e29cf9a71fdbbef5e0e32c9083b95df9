@@ -1,0 +1,2 @@
+**候签定理 6.35.3(双指数尾界)**〔open;A-3;同模块,本案定量核心〕。对任意 x y : ℝ、0 < x 与 K : ℕ,`|D5.S3.Axis.AxisPartialSum.axisPartialSum x y K − ∑' n, D5.S3.Axis.AxisPartialSum.wordWeight x y n| ≤ (Real.exp (|y| * (|goldenConj| / (1 − |goldenConj|))) / (1 − Real.exp (−x))) * Real.exp (−(x / goldenRatio) * goldenRatio ^ K)`,即源句「收敛双指数」的精确形:c(x, y) = x/φ,C(x, y) = exp(|y|·B)/(1 − exp(−x)),B = |ψ|/(1 − |ψ|);常数不追求最优。
+

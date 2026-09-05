@@ -1,0 +1,58 @@
+# 三、一个精确的诊断：欧拉校准错一点，等价于多出一个负谱点原子
+
+这一步不需要先假设正性。
+
+假设在计算或建模中使用了：
+
+$$
+\widetilde\Delta=\Delta+\varepsilon,
+$$
+
+但仍然保留原来的实际 \(\mathfrak S\)。
+
+那么：
+
+$$
+\widetilde{\mathfrak T}(z)
+=
+\frac{\mathfrak S(z)+\widetilde\Delta}{z+4}
+=
+\mathfrak T(z)+\frac{\varepsilon}{z+4}.
+$$
+
+所以：
+
+$$
+\boxed{
+\widetilde\ell_n
+=
+\ell_n+\varepsilon(-4)^n.
+}
+\tag{E9}
+$$
+
+在测度语言中，这正好等价于：
+
+$$
+\boxed{
+d\widetilde\nu(u)
+=
+\frac{d\omega(u)}{4+u}
++
+\varepsilon\,\delta_{-4}.
+}
+\tag{E10}
+$$
+
+**校准误差变成了一个位于 \(u=-4\) 的形式谱原子。**
+
+这里的 \(-4\) 不是神秘常数，也不是发现了一个实际负能量粒子。它来自我们选定的基点：
+
+$$
+v=\frac14
+\quad\longleftrightarrow\quad
+z=-\frac1v=-4.
+$$
+
+换一个基点，这个位置也会相应改变。
+

@@ -1,0 +1,6 @@
+- 锚点准入证明。
+
+所以不应再平行定义新的 `Concept`、`Observer`、`jointReadout` 或 `AnchorStructure`。
+
+---
+

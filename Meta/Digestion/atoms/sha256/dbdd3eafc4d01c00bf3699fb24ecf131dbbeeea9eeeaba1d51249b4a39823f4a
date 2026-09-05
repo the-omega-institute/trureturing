@@ -1,0 +1,28 @@
+# 613. 当前最值得追加到仓库的定理
+
+```text
+D5/S1/Depth/GoldenInversePowerHurwitz.lean
+D5/S1/Scale/LucasPrimeShadow.lean
+D5/S1/Scale/DyadicLucasPrimeNovelty.lean
+
+D5/S3/Weil/PrimeAddress/
+  PrimeCharacterCriticalDiscontinuity.lean
+  ScalarVsCharacterApproximation.lean
+  GoldenShiftPrimeResolution.lean
+
+D5/S3/Zeros/Branch/
+  PrimeSquareClassMirrorLift.lean
+  LucasPuiseuxTransduction.lean
+  DyadicRootCircleCompletion.lean
+  CriticalCharacterSuperselection.lean
+
+D5/X_Frontier/PrimeZeroSplit/
+  PrimeGeneratedDiscriminant.lean
+  GoldenMirrorSplittingRealization.lean
+  ZeroSquareClassEntanglement.lean
+```
+
+其中最先可闭合的是以下五条。
+
+---
+

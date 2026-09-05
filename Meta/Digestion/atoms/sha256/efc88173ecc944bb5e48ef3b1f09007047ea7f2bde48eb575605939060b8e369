@@ -1,0 +1,23 @@
+## C18.2 failure taxonomy
+
+反过来，若存在离线零点，则包含它的某个有理矩形必使 certificate stack 的至少一层失败：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{不存在 canonical finite transfer；或}\\
+&\det T_N\text{ 与 }\Xi\text{ 的 unit relation 不忠实；或}\\
+&\text{hidden block 失去正 gap；或}\\
+&\text{Schur margin 在矩形内闭合；或}\\
+&\text{unit amplitude 消失；或}\\
+&\text{approximation error 不足以跨过 determinant floor；或}\\
+&\text{dimension growth 使 floor 比误差更快坍缩。}
+\end{aligned}
+}
+\tag{C18.8}
+$$
+
+这把“离线相变原因”从单一比喻改写成一组互斥程度未定、但逐项可验证的 failure modes。
+
+---
+

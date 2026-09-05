@@ -1,0 +1,92 @@
+## 418. 观察者差分
+
+定义向前移位：
+
+$$
+(Sa)_n=a_{n+1},
+$$
+
+以及朝向“更深矩阶”的差分：
+
+$$
+\boxed{
+D=I-S.
+}
+$$
+
+于是：
+
+$$
+(Da)_n=a_n-a_{n+1}.
+$$
+
+一般地：
+
+$$
+\boxed{
+D^ka_n
+=
+\sum_{j=0}^{k}
+(-1)^j
+\binom{k}{j}
+a_{n+j}.
+}
+$$
+
+定义二维 Casimir 观察量：
+
+$$
+\boxed{
+C_{n,k}=D^ka_n.
+}
+$$
+
+若 RH 成立，则：
+
+$$
+\begin{aligned}
+C_{n,k}
+&=
+\int_0^1
+x^n(1-x)^k\,d\nu(x)\\
+&=
+\sum_{\mathcal O}
+m_{\mathcal O}
+x_{\mathcal O}^{\,n+1}
+(1-x_{\mathcal O})^k.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+C_{n,k}\ge0
+\qquad
+\forall n,k\ge0.
+}
+$$
+
+这里出现两个独立观察轴：
+
+$$
+n=\text{全局 Casimir 频谱深度},
+$$
+
+$$
+k=\text{观察者边界差分深度}.
+$$
+
+传统 RH 被转换成整张二维非负格：
+
+$$
+\boxed{
+\mathbb N^2
+\ni(n,k)
+\longmapsto
+C_{n,k}\ge0.
+}
+$$
+
+---
+

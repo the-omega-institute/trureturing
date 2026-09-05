@@ -1,0 +1,51 @@
+## 577. Weil–Hausdorff Cone Bridge
+
+真正值得构造的新桥不是另一个 RH 等价条件，而是一个变换：
+
+$$
+\Phi:
+\mathcal W
+\longrightarrow
+\mathbb C[x]\oplus\mathbb C[x]
+$$
+
+满足：
+
+$$
+\boxed{
+L_Z(g*\widetilde g)
+=
+L_{\mathcal X}
+\left(
+|A_g|^2+
+x(1-x)|B_g|^2
+\right).
+}
+$$
+
+并且希望：
+
+$$
+\overline{
+\Phi(\mathcal C_W)
+}
+=
+\overline{\mathcal C_H}
+$$
+
+或至少两者生成相同的对偶正性条件。
+
+Cayley–Szegő 折叠：
+
+$$
+u
+\mapsto
+x=\frac{2-u-u^{-1}}4
+$$
+
+正是该桥最自然的候选坐标。
+
+若这条桥闭合，仓库已经完成的 Weil separator 与未来的 Casimir 有限矩证书将成为同一个负方向的两套坐标。
+
+---
+

@@ -1,0 +1,20 @@
+* Zeckendorf 邻接合法状态。
+
+因此是有限状态 transducer。
+
+对有限素数集合 \(S\)，把这些自动机取直积，得到有限的 constellation sieve observer。
+
+当 \(S\) 增大到全部素数时，得到 inverse-limit/profinite observer。
+
+这正是：
+
+$$
+\boxed{
+\text{有限观察可计算，}
+\qquad
+\text{无限完成没有统一有限状态数}.
+}
+$$
+
+---
+

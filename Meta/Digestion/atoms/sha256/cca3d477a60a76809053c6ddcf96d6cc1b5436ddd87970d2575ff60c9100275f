@@ -1,0 +1,18 @@
+### 定理 A7.1　高跳跃的精确计数
+
+令
+
+$$
+A_N=\#\{0\le v<N:\Delta b_v=\varphi^2\}.
+\tag{A7.14}
+$$
+
+则
+
+$$
+\boxed{
+A_N=\left\lfloor\frac{N+1}{\varphi}\right\rfloor.
+}
+\tag{A7.15}
+$$
+

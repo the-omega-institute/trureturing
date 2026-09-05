@@ -1,0 +1,6 @@
+## 四　Z-4 预登记:阿基米德项发散(`ZeroInfinitude/ArchimedeanDivergence`,抽象 H 形,不绑 Z-1,可与 Z-1 并行)
+
+**义务**:对 `H : ℝ → ℝ` 与 `packet H T r := (H (r + T) + H (r - T)) / 2`,在假设 `Integrable H`、`∀ r, 0 ≤ H r`、`∃ δ > 0, ∀ t, |t| ≤ δ → 1/2 ≤ H t`、`∃ K ≥ 0, ∀ x, |H x| ≤ K / (1 + x ^ 2)` 下,公开定理 `archimedean_lower_bound`(δ ≤ T 时 `δ / 2 * (Zeta23.mu (T - δ) + 1) - ∫ r, H r ≤ ∫ r, packet H T r * Zeta23.mu r`)、`archimedean_divergence_of_decay : Tendsto (fun T => ∫ r, packet H T r * Zeta23.mu r) atTop atTop`,以及复形 `archimedean_divergence_complex_of_decay : Tendsto (fun T => (∫ r, (packet H T r : ℂ) * (Zeta23.mu r : ℂ)).re) atTop atTop`;伴随:`mu_add_one_pos`、`mu_tendsto_atTop`、`packet_weighted_integrable_of_decay`。
+**逃逸见证(探针已证,写在实施之前)**:`archimedean_lower_bound` 这条量化不等式——非冻结输入为「非负平移波包在 [T−δ,T+δ] 上 ≥ 1/4 的质量下界、μ+1 > 0 丢弃余集、μ 在 Ici 0 单调」的合成;`mu_tendsto_atTop` 由 `mu_stirling` 得。
+**边界**:抽象 H;与具体波包的对接在 Z-5。可积性用 |H| ≤ K/(1+x²)(由冻结闭带衰减供给)。
+

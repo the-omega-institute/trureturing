@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:65b8afcf899fc03da85083f7a637e7c93e05a762c17f0e9251dd9304ec33bd68
+  normalized_sha256: sha256:65b8afcf899fc03da85083f7a637e7c93e05a762c17f0e9251dd9304ec33bd68
+cas_ref: sha256:65b8afcf899fc03da85083f7a637e7c93e05a762c17f0e9251dd9304ec33bd68
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/CoherentReversal/PhaseRecordRecoveryCriterion.phase_record_recovery_criterion
+    target_statement_id: sha256:087fb161a861ad9a16e9319c4b227e71d345de3cdc3629ee7a98444440061019
+receipts:
+  scribe:
+    - gid: D5/S3/ObserverMemory/CoherentReversal/PhaseRecordRecoveryCriterion.phase_record_recovery_criterion
+      definition_sha256: sha256:b0fbac948edf799654594af073b8c1c04f072d4075d1ce0977147097fca0cae4
+      emission_sha256: sha256:6bc0d8b709f0a9488029cc370a24615f603c0ed378b4ac989a435fea75fd0142
+  unresolved_subitems: []

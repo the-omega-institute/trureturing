@@ -10,7 +10,7 @@ public sealed class FormalizationWorkflowInstructionTests
             "CLAUDE.md"));
 
         Assert.DoesNotContain("未提交 blob", instructions, StringComparison.Ordinal);
-        Assert.Contains("repository.ReadCurrentChanges()", instructions, StringComparison.Ordinal);
+        Assert.Contains("repository.ReadCurrent()", instructions, StringComparison.Ordinal);
         Assert.Contains("只改工作树、不自动提交", instructions, StringComparison.Ordinal);
     }
 

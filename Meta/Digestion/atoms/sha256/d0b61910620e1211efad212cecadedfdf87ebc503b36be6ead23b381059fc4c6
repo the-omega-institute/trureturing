@@ -1,0 +1,14 @@
+* 一阶导数通道 \(-s\)。
+
+这给出了一个相当严格的“坐标轴融合”：
+
+$$
+\boxed{
+\text{两个渐近重合的 prime coordinates}
+\longrightarrow
+\text{一个 value–jet frame}.
+}
+$$
+
+---
+

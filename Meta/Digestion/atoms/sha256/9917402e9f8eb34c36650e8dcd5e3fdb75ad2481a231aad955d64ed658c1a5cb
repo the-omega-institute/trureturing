@@ -1,0 +1,77 @@
+## 332. 反射角色选择律
+
+在临界线：
+
+$$
+s=\frac12+i\gamma.
+$$
+
+小变动：
+
+$$
+\dot s=\dot\delta+i\dot\gamma
+$$
+
+给出：
+
+$$
+\dot q
+=
+(1-2s)\dot s
+=
+2\gamma\dot\gamma
+-
+2i\gamma\dot\delta.
+$$
+
+所以：
+
+$$
+\boxed{
+\Re\dot q
+=
+2\gamma\dot\gamma,
+}
+$$
+
+$$
+\boxed{
+\Im\dot q
+=
+-2\gamma\dot\delta.
+}
+$$
+
+因此：
+
+* mirror-even source 主要沿 \(q\)-实轴改变高度；
+* mirror-odd source 可以沿 \(q\)-虚方向激活 transverse displacement。
+
+这与此前构型表示类型完全一致：
+
+$$
+\boxed{
+\begin{aligned}
+\text{twin}
+&:\text{二阶 mirror-even};\\
+\text{triplet chirality}
+&:\text{三阶 mirror-odd};\\
+\text{quadruplet}
+&:\text{四阶 mirror-even}.
+\end{aligned}
+}
+$$
+
+所以新的精确预测是：
+
+$$
+\boxed{
+\text{三元组镜像差}
+\text{ 是最低阶可能产生线性 transverse Casimir response 的构型源}.
+}
+$$
+
+它不是说三元组会制造经典离线零点，而是给出 source-deformed family 中的反射选择律。
+
+---
+

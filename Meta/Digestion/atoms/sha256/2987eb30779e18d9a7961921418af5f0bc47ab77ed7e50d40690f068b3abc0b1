@@ -1,0 +1,107 @@
+# 一、固定对象：仍然研究实际 ξ，不重新挑选有利模型
+
+采用标准归一化：
+
+$$
+\xi(s)=
+\frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s),
+\qquad
+\xi(s)=\xi(1-s).
+$$
+
+定义：
+
+$$
+\mathscr M(b)
+=
+\frac{\xi(\frac12+b)}{\xi(\frac12)}.
+$$
+
+这个函数具有前文使用的正 theta 概率表示：
+
+$$
+\mathscr M(b)=\int_{\mathbb R}e^{bx}\,d\nu(x),
+$$
+
+其中 \(\nu\) 是固定的正偶概率测度。归一化 ξ 的这种概率表示不需要 RH。([DLMF][1])
+
+令：
+
+$$
+m_{2k}=\int x^{2k}\,d\nu(x),
+\qquad
+a_k=\frac{m_{2k}}{(2k)!}.
+$$
+
+于是：
+
+$$
+D(v)=\sum_{k\ge0}a_kv^k,
+\qquad
+D(b^2)=\mathscr M(b),
+$$
+
+并且：
+
+$$
+a_0=1,\qquad a_k>0.
+$$
+
+沿用有限多项式：
+
+$$
+P_d(v)=
+\sum_{k=0}^d\frac{(d)_k}{d^k}a_kv^k,
+$$
+
+以及：
+
+$$
+\boxed{
+q_d(x)=x^dP_d(-1/x).
+}
+\tag{C1}
+$$
+
+因此：
+
+$$
+q_d(x)
+=
+x^d-a_1x^{d-1}
++\frac{d-1}{d}a_2x^{d-2}
+-\cdots
++(-1)^d\frac{d!}{d^d}a_d.
+$$
+
+前文的 Jensen 判据给出：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+q_d\text{ 的全部根为正实数，}\quad\forall d\ge1.
+}
+\tag{C2}
+$$
+
+经典 Jensen–Pólya 理论提供这一分析桥；有限次数的双曲性研究已有大量结果，不能把低阶核对等同于全阶证明。([arXiv][2])
+
+由于 \(a_k>0\)，还有一个方便的事实：
+
+$$
+q_d(-x)\ne0\qquad(x\ge0).
+$$
+
+所以，对实际 \(q_d\) 而言：
+
+$$
+\boxed{
+\text{全部根为实数}
+\iff
+\text{全部根为正实数}.
+}
+$$
+
+---
+

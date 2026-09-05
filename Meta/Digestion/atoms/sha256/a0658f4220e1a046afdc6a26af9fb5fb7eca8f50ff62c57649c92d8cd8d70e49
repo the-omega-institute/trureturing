@@ -1,0 +1,33 @@
+## B10.5 两种有限尺寸指数
+
+hard-core edge 上，通道相位差在分歧参数附近按平方根变化；相位量子化 $\Delta\theta\asymp N^{-1}$ 因而给出参数距离 $N^{-2}$。
+
+prime reflected channels 的 modulus gap 为
+
+$$
+\Gamma_{p,q}(\delta)
+=2|\delta|\,|\log(q/p)|.
+\tag{B10.11}
+$$
+
+若有限 completed coefficient imbalance 为 $O(1)$，式 (B10.5) 只允许
+
+$$
+|\delta|
+=O\!\left(
+\frac1{N|\log(q/p)|}
+\right).
+\tag{B10.12}
+$$
+
+相应横向能量为
+
+$$
+\sinh^2(\delta\log(q/p))=O(N^{-2}).
+\tag{B10.13}
+$$
+
+所以 $N^{-2}$ 可以来自两种不同机制：分歧相位的平方根量子化，或线性 modulus gap 的二次能量。二者必须通过控制参数和坐标区分。
+
+---
+

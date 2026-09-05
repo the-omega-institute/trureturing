@@ -1,0 +1,65 @@
+## 定理 22.2　可逆场表示变换不消除几何失配
+
+令
+
+$$
+\Psi=R\widetilde\Psi,
+\qquad R\in\operatorname{GL}(r,\mathbb R).
+$$
+
+则
+
+$$
+\widetilde M=R^{\mathsf T}MR,
+\qquad
+\widetilde S^{ij}=R^{\mathsf T}S^{ij}R.
+$$
+
+在质量归一化后，存在同一个正交矩阵 \(O\)，使
+
+$$
+\widetilde A^{ij}=O^{\mathsf T}A^{ij}O.
+$$
+
+因此
+
+$$
+\boxed{
+\mathcal E^{ij}=0\ \forall i,j
+}
+$$
+
+是表示不变量。
+
+### 证明
+
+取
+
+$$
+O=M^{1/2}R\widetilde M^{-1/2}.
+$$
+
+则
+
+$$
+O^{\mathsf T}O
+=
+\widetilde M^{-1/2}R^{\mathsf T}MR\widetilde M^{-1/2}
+=
+I.
+$$
+
+又有
+
+$$
+\widetilde M^{-1/2}
+\widetilde S^{ij}
+\widetilde M^{-1/2}
+=
+O^{\mathsf T}A^{ij}O.
+$$
+
+正交共轭保持迹、谱及是否为恒等算子倍数，故结论成立。∎
+
+---
+

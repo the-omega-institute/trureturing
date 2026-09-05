@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:5b58056e6a08af759e21683928583c927c1e920aa3f655a2a6f990a01393034c
 cas_ref: sha256:5b58056e6a08af759e21683928583c927c1e920aa3f655a2a6f990a01393034c
 coverage_gids:
-  - D5/S3/Observer/LinearMemory/DualGramVisibleRanges.dual_gram_visible_ranges
+  - gid: D5/S3/Observer/LinearMemory/DualGramVisibleRanges.dual_gram_visible_ranges
+    target_statement_id: sha256:60578eb7016aa0607cf96750ca7e4b14b7d03ce6896abb158f2fed692e23c2cf
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/LinearMemory/DualGramVisibleRanges.dual_gram_visible_ranges
-      source_sha256: sha256:5b58056e6a08af759e21683928583c927c1e920aa3f655a2a6f990a01393034c
-      target_statement_id: sha256:60578eb7016aa0607cf96750ca7e4b14b7d03ce6896abb158f2fed692e23c2cf
-      statement_id_history:
-        - statement_id: sha256:391393aa7087d7d5f3b234fed82f004e66005ea674c9c4ede407652ca0799957
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/LinearMemory/DualGramVisibleRanges.dual_gram_visible_ranges
       definition_sha256: sha256:c79360848737ddbf0f16ac61bf8c62d41b963d575b0699d37407b767d6c47d7a

@@ -1,0 +1,27 @@
+## C12.2 RH 的 rational rectangle 等价
+
+记 $N_\Xi(R)$ 为 $\Xi$ 在 $R$ 内按解析重数的零点数，边界零点通过选择更小矩形避开。
+
+### 定理 C12.1　countable off-axis zero-count criterion
+
+$$
+\boxed{
+\mathrm{RH}
+\Longleftrightarrow
+N_\Xi(R)=0
+\quad
+\forall R\in\mathfrak R_{\mathbb Q}^{\rm off}.
+}
+\tag{C12.4}
+$$
+
+#### 证明
+
+若 RH 成立，离轴矩形中显然没有零点。
+
+反之，若存在离线零点 $\rho_*$，由零点离散性与 $\rho_*$ 到临界线的正距离，可以选择一个足够小的开邻域，只包含有限零点且边界无零。再由有理数稠密性，在该邻域中选择一个有理矩形包含 $\rho_*$、边界不经过零点且仍完全离轴，于是：
+
+$$
+N_\Xi(R)>0.
+$$
+

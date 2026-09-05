@@ -1,0 +1,17 @@
+## 594. Szegő 奇偶折叠
+
+```lean
+theorem inversionInvariant_circle_energy_split
+    (μ : Measure Circle)
+    (hInv : Measure.map Circle.inv μ = μ)
+    (f : LaurentPolynomial ℂ) :
+    ∫ u, ‖f u‖ ^ 2 ∂μ =
+      ∫ x, ‖evenFold f x‖ ^ 2 ∂pushforward μ +
+      4 * ∫ x,
+        x * (1 - x) *
+          ‖oddFold f x‖ ^ 2
+        ∂pushforward μ
+```
+
+---
+

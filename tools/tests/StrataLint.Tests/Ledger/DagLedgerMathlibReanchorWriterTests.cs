@@ -46,7 +46,47 @@ public sealed class DagLedgerMathlibReanchorWriterTests
     }
 
     [Fact]
-    public void CanonicalProducerReanchorsCoverageReceiptsWithTheFrozenReplacement()
+    public void CanonicalProducerReanchorsExistingStateFragmentWithReplacementEvent()
+    {
+        using var fixture = CreateFixture(
+            ModuleASource,
+            ModuleASource,
+            candidateAStatement: "compiler-reanchored True");
+        var modulePath = RepoPathFor("A");
+        var basePin = StatementId.Create(LoadEvents(fixture.BaseEvents)
+            .Single(item => item.DescriptorPath == modulePath)
+            .Payload.GetProperty("statement_id").GetString()!);
+        var candidatePin = StatementId.Create(LoadEvents(fixture.CandidateEvents)
+            .Single(item => item.DescriptorPath == modulePath)
+            .Payload.GetProperty("statement_id").GetString()!);
+        Assert.NotEqual(basePin, candidatePin);
+        Assert.True(FrozenStateWriter.Write(fixture.RepositoryRoot, modulePath, basePin));
+
+        var result = DagLedgerMathlibReanchorWriter.Reanchor(
+            fixture.RepositoryRoot,
+            fixture.Repository,
+            fixture.ReportSource,
+            ["--base", BaseRevision]);
+
+        Assert.True(result.Success, result.Error);
+        var replacement = Assert.Single(
+            LoadEvents(DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath)),
+            item => item.DescriptorPath == modulePath);
+        var statePath = FrozenStatePath.FromModulePath(modulePath);
+        var stateBytes = File.ReadAllBytes(Path.Combine(
+            fixture.RepositoryRoot,
+            statePath.Value.Replace('/', Path.DirectorySeparatorChar)));
+        var state = FrozenStateRecordLoader.Load(new RepositoryFile(
+            statePath,
+            ImmutableArray.CreateRange(stateBytes),
+            Encoding.UTF8.GetString(stateBytes)));
+        Assert.Equal(candidatePin.Value, replacement.Payload.GetProperty("statement_id").GetString());
+        Assert.Equal(candidatePin, state.StatementId);
+        Assert.Equal(replacement.Payload.GetProperty("statement_id").GetString(), state.StatementId.Value);
+    }
+
+    [Fact]
+    public void FrozenProducerLeavesDigestionCoverageForItsOwnAligner()
     {
         using var fixture = CreateFixture(
             ModuleASource,
@@ -63,15 +103,15 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         Assert.True(result.Success, result.Error);
         var receipt = Assert.Single(Assert.Single(
             BackfillInventoryLoader.LoadRoot(fixture.RepositoryRoot)
-                .RequireDigestionEntries()).Receipts.Coverage);
+                .RequireDigestionEntries()).Coverage);
         Assert.Equal(
             BuildCatalogWithEnvironment(
-                CandidateToolchain,
+                BaseToolchain,
                 "[package]\nname = \"fixture\"\n",
-                Manifest('b'),
-                GitOid('e'),
-                GitOid('f'),
-                [ModuleWithReport("A", ModuleASource, "compiler-reanchored True"),
+                Manifest('a'),
+                GitOid('c'),
+                GitOid('d'),
+                [ModuleWithReport("A", ModuleASource, "True"),
                     ModuleWithReport("B", ModuleBSource, "True")])
                 .ByPath[RepoPathFor("A")].StatementId.Value,
             receipt.TargetStatementId);
@@ -311,9 +351,8 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             DigestionFingerprint.Compute(bytes),
             []);
         var gid = "D5/S0/Carrier/A";
-        var receipt = new DigestionCoverageReceipt(
+        var receipt = new DigestionCoverageEdge(
             gid,
-            atom.Fingerprints.RawSha256,
             targetStatementId);
         var entry = Entry(
             atom,
@@ -321,8 +360,11 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             AtomizerRegistry.NoAtomizerId,
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
-            [gid],
-            new DigestionReceipts([receipt], [], [], [], null));
+            [],
+            new DigestionReceipts([], [], [], null)) with
+        {
+            Coverage = [receipt],
+        };
         return Document(AtomizerRegistry.NoAtomizerId, [entry]);
     }
 

@@ -1,0 +1,2 @@
+**候签定理 4.86(Lehmer 条件到 Korselt 条件之桥)**〔open;L-6;同模块〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 IsKorselt n。
+

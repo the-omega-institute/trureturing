@@ -1,0 +1,44 @@
+## 6.1 临界线到单位圆
+
+固定
+
+$$
+a>\frac12,
+$$
+
+定义 Cayley 坐标
+
+$$
+\boxed{
+w=C_a(u)=\frac{a+u}{a-u},
+\qquad
+u=s-\frac12.
+}
+\tag{6.1}
+$$
+
+若 $u=\delta+it$，则
+
+$$
+\boxed{
+|w|^2
+=
+\frac{(a+\delta)^2+t^2}
+     {(a-\delta)^2+t^2}.
+}
+\tag{6.2}
+$$
+
+故
+
+$$
+\boxed{
+\delta=0
+\Longleftrightarrow
+|w|=1.
+}
+\tag{6.3}
+$$
+
+临界线被精确送到 Lee–Yang 单位圆。
+

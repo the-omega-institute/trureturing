@@ -1,0 +1,44 @@
+## 281. 递推矩阵
+
+定义：
+
+$$
+\boxed{
+M(q)
+=
+\begin{pmatrix}
+2-\frac1q&-1\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+其行列式为：
+
+$$
+\det M(q)=1,
+$$
+
+特征多项式为：
+
+$$
+\lambda^2-
+\left(2-\frac1q\right)\lambda
++1.
+$$
+
+所以本征值正是：
+
+$$
+\boxed{
+u,\quad u^{-1}.
+}
+$$
+
+也就是说：
+
+> \(q=s(1-s)\) 是外部 Casimir；
+> \(M(q)\) 是恢复内部 reciprocal pages 的最小二维动力学。
+
+---
+

@@ -1,0 +1,40 @@
+## 7.2 黄金指数账户的两级跳跃
+
+记项目中的黄金指数账户为
+
+$$
+b(v)=\operatorname{o5Beta}(v).
+\tag{A7.7}
+$$
+
+仓库已证闭式
+
+$$
+\boxed{
+ b(v)
+=\left\lfloor\frac{v+1}{\varphi}\right\rfloor
++v\varphi
+=\sqrt5\,v+\varphi^{-1}
+-\operatorname{fract}((v+1)\varphi).
+}
+\tag{A7.8}
+$$
+
+定义增量
+
+$$
+\Delta b_v=b(v+1)-b(v).
+\tag{A7.9}
+$$
+
+则
+
+$$
+\boxed{
+\Delta b_v\in\{\varphi^2,\varphi\}.
+}
+\tag{A7.10}
+$$
+
+具体分支由 $v+1$ 的 canonical Zeckendorf 最小指标奇偶决定。
+

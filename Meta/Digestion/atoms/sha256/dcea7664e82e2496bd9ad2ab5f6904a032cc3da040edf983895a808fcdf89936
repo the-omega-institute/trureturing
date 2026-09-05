@@ -1,0 +1,50 @@
+## B5.6 双曲侧的通道 gap
+
+对 $-1/4<z<0$，两根均为正，定义 modulus gap
+
+$$
+\Gamma(z)
+=
+\log\frac{\lambda_+(z)}{\lambda_-(z)}.
+\tag{B5.11}
+$$
+
+令 $y=\sqrt{1+4z}$，则
+
+$$
+\boxed{
+\Gamma(z)
+=2\operatorname{artanh}y.
+}
+\tag{B5.12}
+$$
+
+当 $z\downarrow-1/4$：
+
+$$
+\boxed{
+\Gamma(z)
+=2\sqrt{1+4z}
++O((1+4z)^{3/2}).}
+\tag{B5.13}
+$$
+
+相应 correlation length
+
+$$
+\ell(z)=\Gamma(z)^{-1}
+\tag{B5.14}
+$$
+
+满足
+
+$$
+\boxed{
+\ell(z)
+\sim
+\frac1{2\sqrt{1+4z}}.}
+\tag{B5.15}
+$$
+
+因此 $Q^{-2}$ zero pinching 与平方根 gap closing 是同一个分歧指数的两个有限尺寸表现。
+

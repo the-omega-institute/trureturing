@@ -1,0 +1,18 @@
+# 第一百六十五部　这一理论对 RH 难点的最终诊断
+
+现在可以给出一个比“因为它涉及无穷”更准确的公式：
+
+$$
+\boxed{
+\operatorname{HardCore}(\mathrm{RH})
+=
+\text{infinite primitive rank}
++
+\text{noncompact escape}
++
+\text{absence of a uniform positivity compressor}.
+}
+$$
+
+其中：
+

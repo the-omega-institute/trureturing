@@ -1,0 +1,17 @@
+## 541. 临界黄金壳边际性
+
+```lean
+theorem golden_prime_shell_energy_asymptotic :
+    Tendsto
+      (fun k =>
+        k *
+          ∑ p in goldenPrimeShell k,
+            (1 : ℝ) / p)
+      atTop
+      (nhds 1)
+```
+
+该定理需要消费明确的 PNT/Mertens 输入，不应当从初等内核中无前件生成。
+
+---
+

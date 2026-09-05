@@ -1,0 +1,6 @@
+## 一　Z-6 预登记:固定宽度窗零点(`ZeroInfinitude/WindowZero`,同桶第四个模块)
+
+**义务**:公开定理 `exists_zero_near_every_large_height : ∃ R T₀ : ℝ, 0 < R ∧ ∀ T : ℝ, T₀ ≤ T → ∃ ρ ∈ Zeta23.zetaZeroConfig.carrier, |ρ.im - T| ≤ R`,连同公开的中间定理 `literatureRHS_re_lower_log : ∃ c M T₁ : ℝ, 0 < c ∧ ∀ T ≥ T₁, c * Real.log (T + 3) - M ≤ (Zeta23.EF.literatureRHS (cosineModulation packetSquare T : ℝ → ℂ)).re` 与 `exists_radius_shifted_inv_sq_tsum`(对每个 ε > 0 存在 R ≥ 2,使在 R-间隙下按重数加权的平移逆平方 tsum ≤ 4A₀(ε·log(|T|+3) + W))。
+**逃逸见证(探针已证,写在实施之前)**:尾项估计 `exists_radius_shifted_inv_sq_tsum`(把载体上的 tsum 按单位窗分组、逐窗用冻结局部计数、再用整数核 Σ 1/(1+n²) 的 Cauchy 尾)与 ε = c/(8KA₀) 的配平——两者都不由冻结前置经实例化得到;`literatureRHS_re_lower_log` 是右端的对数下界,比增订三十的定性发散更强。
+**边界**:同 §〇;`Zeta23.zetaZeroConfig.carrier` 经增订三十的 `zetaZeroConfig_carrier_identification` 即 `{ρ | IsNontrivialZero ρ}`,可作伴随推论,不另列义务。
+

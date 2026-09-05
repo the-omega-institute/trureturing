@@ -259,7 +259,7 @@ internal static class DigestionIngestor
                         .Where(entry => entry.Fingerprints.RawSha256
                             == item.Atom.Fingerprints.RawSha256)
                         .ToArray();
-                    var inheritedCoverage = ImmutableArray<string>.Empty;
+                    var inheritedCoverage = ImmutableArray<DigestionCoverageEdge>.Empty;
                     var inheritedUnresolvedSubitems = priorGenerations
                         .SelectMany(static entry => entry.Receipts.UnresolvedSubitems)
                         .Distinct(StringComparer.Ordinal)
@@ -277,8 +277,8 @@ internal static class DigestionIngestor
                         source.Atomizer,
                         item.SuggestedAtomId,
                         item.Atom.Fingerprints,
-                        CoverageGids: inheritedCoverage,
-                        new DigestionReceipts([], [], inheritedUnresolvedSubitems, [], null),
+                        Coverage: inheritedCoverage,
+                        new DigestionReceipts([], inheritedUnresolvedSubitems, [], null),
                         item.ProjectedStatus,
                         CasRef: captured.Reference));
                     residualOpenAdded++;
@@ -329,8 +329,8 @@ internal static class DigestionIngestor
                                 source.Atomizer,
                                 childId,
                                 child.Fingerprints,
-                                CoverageGids: [],
-                                new DigestionReceipts([], [], [], [], null),
+                                Coverage: [],
+                                new DigestionReceipts([], [], [], null),
                                 new DigestionStatus(
                                     DigestionMigrationState.Residual,
                                     DigestionTruthState.Open),
@@ -460,8 +460,8 @@ internal static class DigestionIngestor
                 throw new FormatException($"atom {atomId} has conflicting statuses");
             }
 
-            var coverage = MergeCoverageReceipts(atomId, members.SelectMany(
-                static item => item.Entry.Receipts.Coverage));
+            var coverage = MergeCoverageEdges(atomId, members.SelectMany(
+                static item => item.Entry.Coverage));
             var scribe = MergeScribeReceipts(atomId, members.SelectMany(
                 static item => item.Entry.Receipts.Scribe));
             var chainCandidates = members
@@ -485,12 +485,7 @@ internal static class DigestionIngestor
             var disposition = SingleCoverDisposition(
                 atomId,
                 members.Select(static item => item.Entry.Receipts.CoverDisposition));
-            var coverageGids = members
-                .SelectMany(static item => item.Entry.CoverageGids)
-                .Distinct(StringComparer.Ordinal)
-                .Order(StringComparer.Ordinal)
-                .ToImmutableArray();
-            if (!coverageGids.IsEmpty && (quarantine is not null || disposition is not null))
+            if (!coverage.IsEmpty && (quarantine is not null || disposition is not null))
             {
                 throw new FormatException(
                     $"atom {atomId} merged coverage conflicts with quarantine or disposition");
@@ -502,9 +497,8 @@ internal static class DigestionIngestor
                 owner.Source.Atomizer,
                 atomId,
                 new DigestionFingerprints(group.Key, normalizedFingerprints[0]),
-                coverageGids,
+                coverage,
                 new DigestionReceipts(
-                    coverage,
                     scribe,
                     members.SelectMany(static item => item.Entry.Receipts.UnresolvedSubitems)
                         .Distinct(StringComparer.Ordinal)
@@ -531,10 +525,10 @@ internal static class DigestionIngestor
         }).ToImmutableArray());
     }
 
-    private static ImmutableArray<DigestionCoverageReceipt> MergeCoverageReceipts(
+    private static ImmutableArray<DigestionCoverageEdge> MergeCoverageEdges(
         string atomId,
-        IEnumerable<DigestionCoverageReceipt> receipts) =>
-        receipts.GroupBy(static receipt => receipt.Gid, StringComparer.Ordinal)
+        IEnumerable<DigestionCoverageEdge> edges) =>
+        edges.GroupBy(static edge => edge.Gid, StringComparer.Ordinal)
             .OrderBy(static group => group.Key, StringComparer.Ordinal)
             .Select(group =>
             {
@@ -542,7 +536,7 @@ internal static class DigestionIngestor
                 return values.Length == 1
                     ? values[0]
                     : throw new FormatException(
-                        $"atom {atomId} has conflicting coverage receipts for {group.Key}");
+                        $"atom {atomId} has conflicting coverage edges for {group.Key}");
             })
             .ToImmutableArray();
 
@@ -589,7 +583,6 @@ internal static class DigestionIngestor
         var first = present[0];
         if (present.Skip(1).Any(value =>
                 value.Outcome != first.Outcome
-                || value.RecordedAtUtc != first.RecordedAtUtc
                 || !value.Gids.SequenceEqual(first.Gids, StringComparer.Ordinal)
                 || !value.Gaps.SequenceEqual(first.Gaps)))
         {

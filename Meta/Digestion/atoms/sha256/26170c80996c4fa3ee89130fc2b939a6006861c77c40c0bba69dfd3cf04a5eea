@@ -1,0 +1,17 @@
+## 590. 无有限递推
+
+```lean
+theorem infiniteSupport_moments_no_finite_recurrence
+    (μ : Measure ℝ)
+    [IsFiniteMeasure μ]
+    (hSupport : Set.Infinite μ.support) :
+    ¬ ∃ d coefficients,
+      ∀ n,
+        moment μ (n + d) =
+          ∑ j : Fin d,
+            coefficients j *
+              moment μ (n + j)
+```
+
+---
+

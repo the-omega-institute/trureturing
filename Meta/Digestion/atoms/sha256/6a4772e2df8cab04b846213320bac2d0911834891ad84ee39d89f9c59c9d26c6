@@ -1,0 +1,24 @@
+# 十五、项目里已经出现了极具体的构型奇偶规律
+
+在只使用 \(2/4\) 间隔、并满足模 \(3\) admissibility 的稠密构型中，项目已经机器证明：
+
+$$
+\boxed{
+\text{构型点数为偶数}
+\Rightarrow
+\text{镜像后的 gap code 不变},
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{构型点数为奇数}
+\Rightarrow
+\text{镜像后的 gap code 取补}.
+}
+$$
+
+具体表现为：
+

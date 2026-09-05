@@ -27,7 +27,6 @@ public sealed partial class SelfLockProbeScriptTests
     private static void AssertDecision(
         ProcessOutput output,
         string decision,
-        bool allowExactRevert,
         int exitCode)
     {
         Assert.True(output.ExitCode == exitCode, Diagnostics(output));
@@ -35,7 +34,6 @@ public sealed partial class SelfLockProbeScriptTests
         var result = ParseResult(output);
         Assert.Equal(1, result.SchemaVersion);
         Assert.Equal(decision, result.Decision);
-        Assert.Equal(allowExactRevert, result.Authorization.AllowExactRevert);
         Assert.False(result.Authorization.ChangesGateStatus);
         Assert.True(result.Authorization.RerunRequiredAfterDevPush);
     }
@@ -59,11 +57,11 @@ public sealed partial class SelfLockProbeScriptTests
         private readonly TemporaryDirectory temporary = new();
 
         internal ProbeFixture(
-            string revertedPath = "tools/policy-under-test.txt",
+            string candidatePath = "tools/policy-under-test.txt",
             bool mergeShapedNoop = false)
         {
             var template = Templates.GetOrAdd(
-                (revertedPath, mergeShapedNoop),
+                (candidatePath, mergeShapedNoop),
                 static key => new Lazy<ProbeTemplate>(
                     () => new ProbeTemplate(key.Path, key.MergeShapedNoop),
                     LazyThreadSafetyMode.ExecutionAndPublication)).Value;
@@ -94,13 +92,6 @@ public sealed partial class SelfLockProbeScriptTests
         internal string J1Repository { get; }
         internal string TargetBaseSha { get; }
         internal string TargetMergeSha { get; }
-
-        internal string WriteExecutable(string name, string content)
-        {
-            var path = Path.Combine(temporary.Path, name);
-            ScriptHarnessScratch.WriteExecutableStub(path, content);
-            return path;
-        }
 
         internal void WriteCandidateMarker(string relativePath, string content)
         {
@@ -138,7 +129,7 @@ public sealed partial class SelfLockProbeScriptTests
         {
             private readonly TemporaryDirectory temporary = new();
 
-            internal ProbeTemplate(string revertedPath, bool mergeShapedNoop)
+            internal ProbeTemplate(string candidatePath, bool mergeShapedNoop)
             {
                 var candidateRepository = Path.Combine(temporary.Path, "candidate");
                 ScriptHarnessScratch.EnsureDirectory(candidateRepository);
@@ -147,13 +138,16 @@ public sealed partial class SelfLockProbeScriptTests
                     candidateRepository,
                     "Self Lock Test",
                     "self-lock@example.invalid");
-                var before = revertedPath == ProtectionPolicyPath
+                var before = candidatePath == ProtectionPolicyPath
                     ? ProtectionPolicy
                     : "before\n";
-                var after = revertedPath == ProtectionPolicyPath
+                var after = candidatePath == ProtectionPolicyPath
                     ? ProtectionPolicy + "\n// changed by target merge\n"
                     : "after\n";
-                if (revertedPath != ProtectionPolicyPath)
+                var candidateContent = candidatePath == ProtectionPolicyPath
+                    ? after + "\n// changed by candidate\n"
+                    : "candidate\n";
+                if (candidatePath != ProtectionPolicyPath)
                 {
                     CommitFile(
                         candidateRepository,
@@ -161,11 +155,11 @@ public sealed partial class SelfLockProbeScriptTests
                         ProtectionPolicyPath,
                         ProtectionPolicy);
                 }
-                CommitFile(candidateRepository, "seed", revertedPath, before);
+                CommitFile(candidateRepository, "seed", candidatePath, before);
                 TargetBaseSha = GitTextAt(candidateRepository, "rev-parse", "HEAD");
 
                 GitAt(candidateRepository, "checkout", "-b", "feature");
-                CommitFile(candidateRepository, "gate change", revertedPath, after);
+                CommitFile(candidateRepository, "gate change", candidatePath, after);
                 var feature = GitTextAt(candidateRepository, "rev-parse", "HEAD");
                 GitAt(candidateRepository, "checkout", "main");
                 TargetMergeSha = CommitTree(
@@ -176,14 +170,14 @@ public sealed partial class SelfLockProbeScriptTests
                 UpdateMain(candidateRepository, TargetMergeSha, TargetBaseSha);
 
                 GitAt(candidateRepository, "checkout", "-b", "candidate");
-                CommitFile(candidateRepository, "exact inverse", revertedPath, before);
+                CommitFile(candidateRepository, "candidate change", candidatePath, candidateContent);
                 var candidate = GitTextAt(candidateRepository, "rev-parse", "HEAD");
                 GitAt(candidateRepository, "checkout", "main");
                 var candidateMerge = CommitTree(
                     candidateRepository,
                     candidate,
                     [TargetMergeSha, candidate],
-                    "merge exact inverse");
+                    "merge candidate change");
                 UpdateMain(candidateRepository, candidateMerge, TargetMergeSha);
 
                 var j1Repository = CloneAt(temporary.Path, candidateRepository, "j1");

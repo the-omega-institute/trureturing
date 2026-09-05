@@ -1,0 +1,54 @@
+## 601.1 极限与全素数求和不交换
+
+令：
+
+$$
+\varepsilon_M=r_M-\delta\to0
+$$
+
+且每个 \(\varepsilon_M\neq0\)。
+
+对每个固定素数 \(p\)：
+
+$$
+\frac{
+|p^{-\varepsilon_M}-1|^2
+}{p}
+\longrightarrow0.
+$$
+
+因此：
+
+$$
+\sum_p
+\lim_{M\to\infty}
+\frac{
+|p^{-\varepsilon_M}-1|^2
+}{p}
+=0.
+$$
+
+但是对每个固定 \(M\)：
+
+$$
+\sum_p
+\frac{
+|p^{-\varepsilon_M}-1|^2
+}{p}
+=
+\infty.
+$$
+
+所以：
+
+$$
+\boxed{
+\sum_p\lim_M
+\neq
+\lim_M\sum_p.
+}
+$$
+
+这就是一个完全严格的全素数对角逃逸：
+
+* 每个有限素数坐标都完成；

@@ -1,0 +1,69 @@
+# 十六、定义黄金素数分辨率函数
+
+可以把这套理论浓缩为两个函数。
+
+对偏移：
+
+$$
+\boxed{
+\operatorname{Depth}_\varphi(\delta)
+=
+-\log_\varphi|\delta|.
+}
+$$
+
+对第 \(N\) 个素数：
+
+$$
+\boxed{
+\operatorname{Resolution}_\varphi(N)
+=
+\log_\varphi\log p_N.
+}
+$$
+
+定义可见指数：
+
+$$
+\boxed{
+\mathcal V_N(\delta)
+=
+\operatorname{Resolution}_\varphi(N)
+-
+\operatorname{Depth}_\varphi(\delta).
+}
+$$
+
+则：
+
+$$
+|\delta|\log p_N
+=
+\varphi^{\mathcal V_N(\delta)}.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal V_N(\delta)\ll0
+&\Rightarrow
+\text{不可见};\\
+\mathcal V_N(\delta)\approx0
+&\Rightarrow
+\text{临界分辨};\\
+\mathcal V_N(\delta)\gg0
+&\Rightarrow
+\text{可见}.
+\end{aligned}
+}
+$$
+
+这可以称为：
+
+> **Golden Prime-Resolution Law**
+> **黄金素数分辨率定律**
+
+---
+

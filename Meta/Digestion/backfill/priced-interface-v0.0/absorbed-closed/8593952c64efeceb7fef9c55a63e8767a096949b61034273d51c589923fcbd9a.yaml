@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8593952c64efeceb7fef9c55a63e8767a096949b61034273d51c589923fcbd9a
+  normalized_sha256: sha256:8593952c64efeceb7fef9c55a63e8767a096949b61034273d51c589923fcbd9a
+cas_ref: sha256:8593952c64efeceb7fef9c55a63e8767a096949b61034273d51c589923fcbd9a
+coverage_gids:
+  - gid: D5/S0/Asymptotics/SkewedEscapeMass.escape_mass_eq_one_sub_fixed_mass
+    target_statement_id: sha256:5c421bf6c8bad42a0e07692edeb23ed864d7332c1470dca963b73f3edf33bf2c
+receipts:
+  scribe:
+    - gid: D5/S0/Asymptotics/SkewedEscapeMass.escape_mass_eq_one_sub_fixed_mass
+      definition_sha256: sha256:ef80d75b998bf8cee628760c6e87fc6f4a9204252733b454b92ca7562dac9971
+      emission_sha256: sha256:9b1562f63e6f65acc9f6bf1efcd0e213b481d499c67681cfd05eace03e9ac752
+  unresolved_subitems: []
+  chain_atoms:
+    - eca5a58db45d0b0d4b47d3dbb749bae833ee910244a2d8122fd0c0e81bac580e
+    - 108281e479ddfcd9c56cf7d8c1f99b2f716ae9e24151f332024b2ee648796cb7

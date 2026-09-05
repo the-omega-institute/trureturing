@@ -4,12 +4,10 @@ fingerprints:
 cas_ref: sha256:a4ad3be9f17a8d2f387354e41fd2b7cb2f0236a04486f448eaf5a7c94768ecf5
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-09-02T05:11:21.9679840+00:00
     gids:
       - D5/S1/Recurrence/BivariateWordSeries.bookkeeping_series_self_functional_equation
     gaps:

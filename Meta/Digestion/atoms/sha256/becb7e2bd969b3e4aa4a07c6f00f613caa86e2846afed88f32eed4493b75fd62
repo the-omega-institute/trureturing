@@ -1,0 +1,56 @@
+## 548. 有限矩锥分离
+
+令：
+
+$$
+\mathbf a_N=(a_0,\ldots,a_N).
+$$
+
+所有 \([0,1]\) 正测度的前 \(N\) 个矩构成一个闭凸锥：
+
+$$
+\mathcal H_N.
+$$
+
+若：
+
+$$
+\mathbf a_N\notin\mathcal H_N,
+$$
+
+有限维凸分离定理给出一个多项式：
+
+$$
+P(x)=c_0+c_1x+\cdots+c_Nx^N
+$$
+
+满足：
+
+$$
+P(x)\ge0
+\qquad
+\forall x\in[0,1],
+$$
+
+但：
+
+$$
+\boxed{
+L_{\mathbf a}(P)
+=
+\sum_{n=0}^Nc_na_n<0.
+}
+$$
+
+所以一个 RH 反例可以被压缩成：
+
+$$
+\boxed{
+\text{一个在 }[0,1]\text{ 上处处非负的有限多项式，}
+}
+$$
+
+其 Casimir 谱读数却为负。
+
+---
+

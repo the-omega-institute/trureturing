@@ -1,0 +1,1 @@
+**义务**:公开定理 `explicitFormula_unconditional (Z : ZeroData) (g : WeilTestFunction) : zeroSum Z g (symmetricConvergent_of_zeroData Z g) = poleTerm g - primeTerm g + archimedeanTerm g (archimedeanConvergent_of_weilTestFunction g)`。

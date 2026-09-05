@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1110acbf431ed3515a5273e5ea136ba7db16222313d37b2a17cee3a6afc9836a
 cas_ref: sha256:1110acbf431ed3515a5273e5ea136ba7db16222313d37b2a17cee3a6afc9836a
 coverage_gids:
-  - D5/S3/ConceptDynamics/Reversibility/WaitingCostValueReversal.positive_waiting_cost_can_reverse_value
+  - gid: D5/S3/ConceptDynamics/Reversibility/WaitingCostValueReversal.positive_waiting_cost_can_reverse_value
+    target_statement_id: sha256:18958752ecf4df655035c06e0d555eb1e759303ae80f45ab9b97eeabfd874ef0
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Reversibility/WaitingCostValueReversal.positive_waiting_cost_can_reverse_value
-      source_sha256: sha256:1110acbf431ed3515a5273e5ea136ba7db16222313d37b2a17cee3a6afc9836a
-      target_statement_id: sha256:18958752ecf4df655035c06e0d555eb1e759303ae80f45ab9b97eeabfd874ef0
   scribe:
     - gid: D5/S3/ConceptDynamics/Reversibility/WaitingCostValueReversal.positive_waiting_cost_can_reverse_value
       definition_sha256: sha256:c18d2d05be93b1e1aab3ce27e50b1de3f00dbcff9e6844bf1748fec217b932d7

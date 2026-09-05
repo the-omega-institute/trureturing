@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0f82986e05badaa6e73ba595e13ba597a8e5653674f85de939a210d78e8a1255
 cas_ref: sha256:0f82986e05badaa6e73ba595e13ba597a8e5653674f85de939a210d78e8a1255
 coverage_gids:
-  - D5/S3/Weil/Separator/OffLineZeroNegativeWeilSquare.offLineZero_yields_negative_weil_square
+  - gid: D5/S3/Weil/Separator/OffLineZeroNegativeWeilSquare.offLineZero_yields_negative_weil_square
+    target_statement_id: sha256:d15a1dda2b5ea459aaefd84758e884c8ed0eca6a9d635b46ca3da9d00180d455
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Separator/OffLineZeroNegativeWeilSquare.offLineZero_yields_negative_weil_square
-      source_sha256: sha256:0f82986e05badaa6e73ba595e13ba597a8e5653674f85de939a210d78e8a1255
-      target_statement_id: sha256:d15a1dda2b5ea459aaefd84758e884c8ed0eca6a9d635b46ca3da9d00180d455
   scribe:
     - gid: D5/S3/Weil/Separator/OffLineZeroNegativeWeilSquare.offLineZero_yields_negative_weil_square
       definition_sha256: sha256:96009f9d2389b1d2d1c571dfb4382a81c251c9dbcff6a98c2201e89f118cbbfc

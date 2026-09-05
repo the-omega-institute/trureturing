@@ -1,0 +1,90 @@
+## 6.2 反射完成不等于圆定位
+
+令 $z\in\mathbb R$，定义关于 $x$ 的 reciprocal completion
+
+$$
+\boxed{
+\mathcal C_Q(x,z)
+=
+\mathcal Z_Q(x,z)\,
+ x^{M_Q-1}\mathcal Z_Q(x^{-1},z).
+}
+\tag{A6.6}
+$$
+
+则
+
+$$
+x^{2(M_Q-1)}
+\mathcal C_Q(x^{-1},z)
+=
+\mathcal C_Q(x,z).
+\tag{A6.7}
+$$
+
+所以根自动以 reciprocal pairs 出现。但这不保证每个根在单位圆上。
+
+最小情形 $Q=1$：
+
+$$
+\mathcal Z_1(x,z)=1+zx,
+\tag{A6.8}
+$$
+
+$$
+\mathcal C_1(x,z)
+=(1+zx)(x+z).
+\tag{A6.9}
+$$
+
+其根为
+
+$$
+x_+=-z,
+\qquad
+x_-=-z^{-1}.
+\tag{A6.10}
+$$
+
+若令 $z=e^h>0$，则
+
+$$
+|x_+|=e^h,
+\qquad
+|x_-|=e^{-h}.
+\tag{A6.11}
+$$
+
+在 $h=0$，两根在 $-1$ 合并；在 $h\ne0$，它们同角、互为倒数、离开单位圆。
+
+然而始终有一阶有符号径向荷抵消：
+
+$$
+\log|x_+|+\log|x_-|=0.
+\tag{A6.12}
+$$
+
+而二阶径向能量为
+
+$$
+\boxed{
+(\log|x_+|)^2+(\log|x_-|)^2
+=2h^2.
+}
+\tag{A6.13}
+$$
+
+这个最小模型精确说明：
+
+$$
+\boxed{
+\text{反射函数方程只产生 reciprocal pairing；
+正性或稳定性才负责 circle localization。}
+}
+\tag{A6.14}
+$$
+
+它与 completed zeta 的函数方程／RH 分工同型，但不是二者的数值同一。
+
+---
+

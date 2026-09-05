@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6da080a67df3ffbb7ef86be07c9fff838b663fcb04f8b4d6034727c952232c27
 cas_ref: sha256:6da080a67df3ffbb7ef86be07c9fff838b663fcb04f8b4d6034727c952232c27
 coverage_gids:
-  - D5/S3/ConceptDynamics/Experiment/FiniteInterventionExtraction.finite_intervention_extraction
+  - gid: D5/S3/ConceptDynamics/Experiment/FiniteInterventionExtraction.finite_intervention_extraction
+    target_statement_id: sha256:4ae74b87386e32e101bc751d2ab2a73711a2888ac7e85ac05a0a80d973352ae1
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Experiment/FiniteInterventionExtraction.finite_intervention_extraction
-      source_sha256: sha256:6da080a67df3ffbb7ef86be07c9fff838b663fcb04f8b4d6034727c952232c27
-      target_statement_id: sha256:4ae74b87386e32e101bc751d2ab2a73711a2888ac7e85ac05a0a80d973352ae1
   scribe:
     - gid: D5/S3/ConceptDynamics/Experiment/FiniteInterventionExtraction.finite_intervention_extraction
       definition_sha256: sha256:68fa062e07277abbd67c48e32eaf5d29bbb7a545ae19853286caf9ae23b1e016

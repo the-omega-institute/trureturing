@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:cfa0e946a9d3c56f82398dc6e0780a9ea3770618f9c7d0d110d30a4abf7de07d
+  normalized_sha256: sha256:cfa0e946a9d3c56f82398dc6e0780a9ea3770618f9c7d0d110d30a4abf7de07d
+cas_ref: sha256:cfa0e946a9d3c56f82398dc6e0780a9ea3770618f9c7d0d110d30a4abf7de07d
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Knowledge/StrongestPostconditionAdjunction.sp_wp_adjunction
+    target_statement_id: sha256:867d7a8174e6e4651eda99d16f31b6b2b7ece699a186161d2393bda035dcd1ee
+receipts:
+  scribe:
+    - gid: D5/S3/ObserverMemory/Knowledge/StrongestPostconditionAdjunction.sp_wp_adjunction
+      definition_sha256: sha256:ce99e84fa9a18630152afffe55e5e931e6aeaca2ae16774190127a591719fd95
+      emission_sha256: sha256:51b2fcfe47908b8d70565cfe16023db821a59ad8cacaa774b8e22e82fdfba590
+  unresolved_subitems: []

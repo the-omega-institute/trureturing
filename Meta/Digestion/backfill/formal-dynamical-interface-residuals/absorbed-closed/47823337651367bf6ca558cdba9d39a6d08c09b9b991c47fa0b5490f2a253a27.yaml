@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
 cas_ref: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
 coverage_gids:
-  - D5/S3/Observer/BlockStructure/ProjectionCommutatorCrossBlockCriterion.projection_commutator_cross_blocks
+  - gid: D5/S3/Observer/BlockStructure/ProjectionCommutatorCrossBlockCriterion.projection_commutator_cross_blocks
+    target_statement_id: sha256:db139326a5732205e3b3d3cf375d5ab1555b3efdb45972a4223d0c6ac8d42b67
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/BlockStructure/ProjectionCommutatorCrossBlockCriterion.projection_commutator_cross_blocks
-      source_sha256: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
-      target_statement_id: sha256:db139326a5732205e3b3d3cf375d5ab1555b3efdb45972a4223d0c6ac8d42b67
-      statement_id_history:
-        - statement_id: sha256:e14417d0252846920966337a7c870b8c623ab4162a09c0f20c111314290c8461
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/BlockStructure/ProjectionCommutatorCrossBlockCriterion.projection_commutator_cross_blocks
       definition_sha256: sha256:5acc4905d4faef3ca056da3e003d875c692b4224fc1045ca1d3222762eeb438b

@@ -1,0 +1,40 @@
+## C13.1 边界误差与 determinant floor
+
+对 $R\in\mathfrak R_{\mathbb Q}^{\rm off}$，设 $D_N$ 在 $R$ 的邻域解析。定义：
+
+$$
+\operatorname{Err}_N(R)
+=
+\sup_{s\in\partial R}
+|\Xi(s)-D_N(s)|,
+\tag{C13.1}
+$$
+
+$$
+\operatorname{Floor}_N(R)
+=
+\inf_{s\in\partial R}
+|D_N(s)|.
+\tag{C13.2}
+$$
+
+若：
+
+$$
+\boxed{
+\operatorname{Err}_N(R)
+<
+\operatorname{Floor}_N(R),
+}
+\tag{C13.3}
+$$
+
+则项目的 Rouché theorem 给出：
+
+$$
+\boxed{
+N_\Xi(R)=N_{D_N}(R).
+}
+\tag{C13.4}
+$$
+

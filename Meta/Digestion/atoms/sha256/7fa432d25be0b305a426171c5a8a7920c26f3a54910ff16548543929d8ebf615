@@ -1,0 +1,12 @@
+## 273. 极限残余三分
+
+```lean
+theorem finite_residuals_nonzero_but_limit_zero :
+    (∀ n, residual n ≠ ⊥) ∧
+    iInf residual = ⊥
+```
+
+以 \(\ell^2\) tail spaces 作为具体 witness。
+
+---
+

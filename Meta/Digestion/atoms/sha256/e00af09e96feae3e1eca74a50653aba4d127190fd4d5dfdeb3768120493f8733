@@ -1,0 +1,31 @@
+## 目标三：No-new-parity Prime–Zero Intertwiner
+
+构造一个 grading-preserving 完成映射：
+
+$$
+\boxed{
+\mathcal U:
+\mathcal H_{\mathrm{prime}}
+\longrightarrow
+\mathcal H_{\mathrm{zero}},
+}
+$$
+
+满足：
+
+$$
+\boxed{
+\mathcal U\Gamma_{\mathrm{arith}}
+=
+\Gamma_{\mathrm{zero}}
+\mathcal U.
+}
+\tag{2008.1}
+$$
+
+并证明 zero-side 除时间宇称外不存在第二个独立 normal grading。
+
+这将把“观察者唯一性”变成一个真正的 RH 证明原则。
+
+---
+

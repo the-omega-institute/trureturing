@@ -11,7 +11,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "SELF_LOCK_CONFIRMED",
-            allowExactRevert: true,
             exitCode: 0);
     }
 
@@ -26,7 +25,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "SELF_LOCK_CONFIRMED",
-            allowExactRevert: true,
             exitCode: 0);
     }
 
@@ -39,7 +37,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], []),
             "TRUE_RED_CONFIRMED",
-            allowExactRevert: false,
             exitCode: 1);
     }
 
@@ -63,7 +60,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], []),
             "TRUE_RED_CONFIRMED",
-            allowExactRevert: false,
             exitCode: 1);
     }
 
@@ -82,7 +78,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "TRUE_RED_CONFIRMED",
-            allowExactRevert: false,
             exitCode: 1);
     }
 
@@ -101,7 +96,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "TRUE_RED_CONFIRMED",
-            allowExactRevert: false,
             exitCode: 1);
     }
 
@@ -119,7 +113,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "TRUE_RED_CONFIRMED",
-            allowExactRevert: false,
             exitCode: 1);
     }
 
@@ -146,7 +139,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "TRUE_RED_CONFIRMED",
-            allowExactRevert: false,
             exitCode: 1);
     }
 
@@ -159,7 +151,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering", "lean"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -172,7 +163,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering", "admission"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -188,7 +178,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             output,
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
         Assert.DoesNotContain("SELF_LOCK_CONFIRMED", ParseResult(output).Decision, StringComparison.Ordinal);
     }

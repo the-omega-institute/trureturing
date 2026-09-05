@@ -1,0 +1,11 @@
+## B14.1 ADMIT
+
+Zeckendorf hard-core 条件
+
+$$
+\eta_k\eta_{k+1}=0
+\tag{B14.1}
+$$
+
+决定哪些数位历史合法。它删除局部 carry 冗余。
+

@@ -1,0 +1,6 @@
+## B16.3 相变不等于通道生成
+
+在固定 $\Xi$ 中，离线零点不是两条通道在物理时间 $t_*$ 被创造；它是 observer slice 首次穿过一个已存在的 radial defect。
+
+在变形族 $\Xi_\lambda$ 中，若 two-channel discriminant 真正穿过零并使等模 locus 改变，才是 root-bifurcation。hard-core $D(z)=0$ 为这种分歧相变提供了最小正规形。
+

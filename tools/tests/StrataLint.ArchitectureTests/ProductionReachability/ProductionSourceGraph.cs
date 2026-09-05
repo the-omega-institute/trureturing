@@ -51,8 +51,22 @@ internal sealed class ProductionSourceGraph
             .Where(file => !IsScribeSource(file.RelativePath)
                 || file.Text.Contains(HistoricalFreezeMatcherName, StringComparison.Ordinal))
             .ToArray();
-        var sources = selectedFiles
-            .Select(file => (
+
+        return FromSources(
+            selectedFiles.Select(static file => (file.RelativePath, file.Text)),
+            projects);
+    }
+
+    internal static ProductionSourceGraph FromSources(
+        IEnumerable<(string RelativePath, string Text)> sourceFiles) =>
+        FromSources(sourceFiles, []);
+
+    private static ProductionSourceGraph FromSources(
+        IEnumerable<(string RelativePath, string Text)> sourceFiles,
+        IReadOnlyList<ProductionProject> projects)
+    {
+        var sources = sourceFiles
+            .Select(static file => (
                 file.RelativePath,
                 Tree: CSharpSyntaxTree.ParseText(
                     file.Text,
@@ -155,9 +169,10 @@ internal sealed class ProductionSourceGraph
         foreach (var tree in paths.Keys)
         {
             var model = compilation.GetSemanticModel(tree);
-            foreach (var invocation in tree.GetRoot().DescendantNodes().OfType<InvocationExpressionSyntax>())
+            foreach (var reference in tree.GetRoot().DescendantNodes().Where(static node =>
+                node is IdentifierNameSyntax or MemberAccessExpressionSyntax))
             {
-                if (BoundMethods(model, invocation).Any(method =>
+                if (BoundMethods(model, reference).Any(method =>
                     SymbolEqualityComparer.Default.Equals(Normalize(method), target)))
                 {
                     result.Add(paths[tree]);

@@ -1,0 +1,12 @@
+## 7. Spectral Gibbs-filter identity
+
+卷积幂后的非目标权重为
+
+$$
+e^{-NE_j},
+\qquad
+E_j=-2\log r_j.
+$$
+
+卷积次数是数学逆温度。
+

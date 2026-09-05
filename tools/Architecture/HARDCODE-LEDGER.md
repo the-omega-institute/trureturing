@@ -29,7 +29,7 @@ right source.
 from this audit, not substitutes for the named predicate. The matrix includes checks
 that directly compare a consumer field/literal/configuration with an authority, or
 reject a hand-produced projection. Orthogonal SL rules for imports, proof closure,
-capacity, append-only history, protected semantics, anomaly balance, axioms, future
+capacity, protected semantics, anomaly balance, axioms, future
 theories, and bootstrap admission are outside this anti-hard-code inventory.
 
 | Check | Machine criterion and scope | Red fixture evidence | Covered family |
@@ -468,7 +468,7 @@ free-form theory volume.
 - The initial writer created CAS files before the final BACKFILL write but did not undo
   them when that write failed. Because current snapshots include untracked files, the
   leftovers became unrecoverable orphans on retry. The writer now rolls back only paths
-  newly created by that invocation; existing append-only blobs are never deleted. The
+  newly created by that invocation; existing blobs are never deleted by rollback. The
   final ledger is flushed to a same-directory temporary file and atomically replaced, so
   an I/O failure before commit cannot expose partial `cas_ref`s.
 

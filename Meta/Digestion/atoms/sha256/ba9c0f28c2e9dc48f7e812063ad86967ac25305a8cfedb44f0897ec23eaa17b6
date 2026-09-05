@@ -1,0 +1,2 @@
+**候签定理 4.88(合数分支至少三个不同素因子)**〔open;L-8;同模块,本案定量逃逸〕。对任意 n : ℕ，若 1 < n、Nat.totient n ∣ n - 1 且 ¬n.Prime，则 `3 ≤ n.primeFactors.card`。
+

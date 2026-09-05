@@ -1,0 +1,22 @@
+## 260. Tautological Casimir operator
+
+从已知 \(q_j\) 定义：
+
+$$
+Qe_j=q_je_j
+$$
+
+可以立即得到：
+
+$$
+\mathcal X(q)
+=
+\mathcal X(0)\det(I-qQ^{-1}).
+$$
+
+但这只是把零点重新放入对角算子。
+
+它没有解释零点为什么如此。
+
+---
+

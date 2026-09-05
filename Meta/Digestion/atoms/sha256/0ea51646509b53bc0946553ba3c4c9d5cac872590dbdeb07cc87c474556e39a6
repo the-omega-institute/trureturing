@@ -1,0 +1,38 @@
+## 367. 算术 Hamiltonian
+
+定义：
+
+$$
+H|n\rangle
+=
+(\log n)|n\rangle.
+$$
+
+当：
+
+$$
+\Re s>1
+$$
+
+时：
+
+$$
+e^{-sH}
+$$
+
+为迹类，并且：
+
+$$
+\boxed{
+\operatorname{Tr}(e^{-sH})
+=
+\sum_{n\ge1}n^{-s}
+=
+\zeta(s).
+}
+$$
+
+这是全局未标记 trace。
+
+---
+

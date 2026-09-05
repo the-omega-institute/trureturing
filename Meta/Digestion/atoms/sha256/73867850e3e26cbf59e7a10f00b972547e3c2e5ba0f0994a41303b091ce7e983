@@ -1,0 +1,11 @@
+## 338. 对偶—现实等价
+
+```lean
+theorem zero_on_critical_iff_duality_eq_reality
+    (rho : ℂ) :
+    rho.re = 1 / 2 ↔
+      1 - rho = conj rho
+```
+
+---
+

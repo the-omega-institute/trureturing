@@ -1,0 +1,66 @@
+## 命题 29.1　弱场钟速与传播速度的联合检验
+
+在局部各向同性、静态弱场实现中，设
+
+$$
+ds^2
+=
+-N(x)^2c_{\mathrm{ref}}^2dt^2
++
+A(x)^2d\mathbf x^2.
+$$
+
+令
+
+$$
+N=1+u+O(u^2),
+$$
+
+$$
+A=1-\gamma u+O(u^2).
+$$
+
+则静止钟满足
+
+$$
+\frac{d\tau}{dt}=N,
+$$
+
+而局部坐标信号速度满足
+
+$$
+\boxed{
+\frac{c_{\mathrm{coord}}^2}{c_{\mathrm{ref}}^2}
+=
+1+2(1+\gamma)u+O(u^2).
+}
+\tag{29.2}
+$$
+
+因此
+
+$$
+\boxed{
+\gamma
+=
+\frac12
+\left.
+\frac{d(c_{\mathrm{coord}}^2/c_{\mathrm{ref}}^2)}{du}
+\right|_{u=0}
+-1.
+}
+\tag{29.3}
+$$
+
+### 证明
+
+令 \(ds^2=0\)，得到
+
+$$
+c_{\mathrm{coord}}^2
+=
+c_{\mathrm{ref}}^2\frac{N^2}{A^2}.
+$$
+
+对 \(u\) 展开即可。∎
+

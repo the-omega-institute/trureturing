@@ -1,0 +1,13 @@
+## 474. 三值有限观察语义
+
+对每个有限观察层 \(\lambda\)，定义：
+
+$$
+v_\lambda(\mathrm{RH})
+\in
+\{\mathrm{true},\mathrm{false},\mathrm{unknown}\}.
+$$
+
+其中：
+
+* `false`：已认证一个真实离线零点；

@@ -1,0 +1,40 @@
+## 假设 17.1　明确的平衡态
+
+在固定源分支平移后，结构系统制备为
+
+$$
+\rho_\beta
+=
+\frac{e^{-\beta H_{\mathrm G}}}
+{\operatorname{Tr}e^{-\beta H_{\mathrm G}}},
+\qquad
+\beta>0.
+$$
+
+零温情形取 \(\beta\to\infty\)。
+
+本节不适用于任意非平衡态、任意压缩态，或未经条件化的源能量叠加。
+
+定义对称关联矩阵
+
+$$
+C_\beta(t)_{ij}
+=
+\frac12
+\operatorname{Tr}
+\left[
+\rho_\beta\{y_i(t),y_j(0)\}
+\right].
+$$
+
+其双边谱为
+
+$$
+S_\beta(\omega)
+=
+\int_{-\infty}^{\infty}
+e^{i\omega t}C_\beta(t)\,dt.
+$$
+
+---
+

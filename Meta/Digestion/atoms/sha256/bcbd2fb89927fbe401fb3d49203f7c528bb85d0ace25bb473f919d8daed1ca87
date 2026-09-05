@@ -1,0 +1,78 @@
+## 222. Universal transfer operator
+
+对 \(\Re z>0\)，定义加权旋转算子：
+
+$$
+(\mathcal L_zf)(x)
+=
+e^{-zr(x)}
+f\left(x+\frac1\varphi\right).
+$$
+
+由于：
+
+$$
+r(x)\ge\varphi,
+$$
+
+有：
+
+$$
+\|\mathcal L_z\|
+\le
+e^{-\varphi\Re z}
+<1.
+$$
+
+所以：
+
+$$
+(I-\mathcal L_z)^{-1}
+=
+\sum_{N\ge0}\mathcal L_z^N.
+$$
+
+而：
+
+$$
+\mathcal L_z^N\mathbf1(x_0)
+=
+e^{-z\beta(N)}.
+$$
+
+因此 universal golden local function：
+
+$$
+\mathcal H_\varphi(z)
+=
+\sum_{N\ge0}e^{-z\beta(N)}
+$$
+
+满足：
+
+$$
+\boxed{
+\mathcal H_\varphi(z)
+=
+\left[
+(I-\mathcal L_z)^{-1}\mathbf1
+\right](x_0).
+}
+$$
+
+这给出了一个此前缺失的 operator realization：
+
+> 黄金 local factor 是加权无理旋转 resolvent 的一个矩阵元。
+
+对素数 \(p\)：
+
+$$
+A_p(s)
+=
+\mathcal H_\varphi(s\log p).
+$$
+
+因此所有素数 local factors 都是同一个 transfer operator family 在不同素数时间尺度上的读数。
+
+---
+

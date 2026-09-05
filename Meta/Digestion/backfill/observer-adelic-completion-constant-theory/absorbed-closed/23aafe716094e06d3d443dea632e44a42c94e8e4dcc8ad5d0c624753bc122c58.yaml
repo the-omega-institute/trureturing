@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:23aafe716094e06d3d443dea632e44a42c94e8e4dcc8ad5d0c624753bc122c58
 cas_ref: sha256:23aafe716094e06d3d443dea632e44a42c94e8e4dcc8ad5d0c624753bc122c58
 coverage_gids:
-  - D5/S3/Analytic/Adelic/ModFiveObserverDiagonalization.mod_five_observer_diagonalization
+  - gid: D5/S3/Analytic/Adelic/ModFiveObserverDiagonalization.mod_five_observer_diagonalization
+    target_statement_id: sha256:6ab2611edf0ca256ac02d91668f9768f0390f2c0a412e8ed9dbd6409766c4be0
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Adelic/ModFiveObserverDiagonalization.mod_five_observer_diagonalization
-      source_sha256: sha256:23aafe716094e06d3d443dea632e44a42c94e8e4dcc8ad5d0c624753bc122c58
-      target_statement_id: sha256:6ab2611edf0ca256ac02d91668f9768f0390f2c0a412e8ed9dbd6409766c4be0
   scribe:
     - gid: D5/S3/Analytic/Adelic/ModFiveObserverDiagonalization.mod_five_observer_diagonalization
       definition_sha256: sha256:4e089bc8cefdb40f48150bd710e99f9c26617efcecd01d1d33306b541831c540

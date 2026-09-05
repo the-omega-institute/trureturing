@@ -1,0 +1,76 @@
+## 616. 仓库中的弱 Mertens 控制
+
+`EulerProducts.lean` 还证明了有限 Euler 乘积的弱 Mertens 下界：
+
+$$
+\log N
+\le
+\prod_{p\le N}
+\left(1-\frac1p\right)^{-1}.
+$$
+
+因此，当 \(N>1\) 时：
+
+$$
+\boxed{
+\prod_{p\le N}
+\left(1-\frac1p\right)
+\le
+\frac1{\log N}.
+}
+$$
+
+和贪心不等式合并：
+
+$$
+\boxed{
+\#\operatorname{Surv}(S,N)
+\le
+\frac{|S|}{\log N}.
+}
+$$
+
+这是一条非常强的确定性结论。
+
+一旦：
+
+$$
+\log N>|S|,
+$$
+
+便有：
+
+$$
+\#\operatorname{Surv}(S,N)<1.
+$$
+
+但左侧是自然数，因此：
+
+$$
+\boxed{
+\#\operatorname{Surv}(S,N)=0.
+}
+$$
+
+注意这里真正完成 collapse 的，不是 Euler 乘积变成零。对任意有限 \(N\)，乘积仍为正。
+
+完成发生在：
+
+$$
+\boxed{
+\text{连续上界穿过整数阈值 }1.
+}
+$$
+
+这是 `PrimeGaps` 中一个非常值得迁移到 RH 的证明机制：
+
+$$
+\boxed{
+0\le\text{量子化缺陷}<1
+\Longrightarrow
+\text{缺陷}=0.
+}
+$$
+
+---
+

@@ -1,0 +1,39 @@
+## 83. 局部终局—全局无终局
+
+对固定：
+
+\[
+(X,F,T,A,a),
+\]
+
+可以存在最小充分动态 CUT：
+
+\[
+\operatorname{Core}_F(T).
+\]
+
+所以固定任务可真正闭合。
+
+但反射可以改变：
+
+\[
+X,\quad F,\quad T,\quad A,\quad a,\quad\mathcal Q.
+\]
+
+因此旧任务终点不一定是新任务终点。
+
+最强的开放反射模式是：
+
+\[
+\boxed{
+\forall\Sigma,\quad
+\exists\Sigma^+\succ\Sigma,
+}
+\]
+
+其中 \(\succ\) 表示诚实且生产性的扩张。
+
+它推出无最大阶段，但该模式不是由四角色无条件推出的定理。
+
+---
+

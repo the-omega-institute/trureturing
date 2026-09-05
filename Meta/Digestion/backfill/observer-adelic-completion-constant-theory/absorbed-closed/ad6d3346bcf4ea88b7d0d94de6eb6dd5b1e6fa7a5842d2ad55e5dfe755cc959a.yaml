@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ad6d3346bcf4ea88b7d0d94de6eb6dd5b1e6fa7a5842d2ad55e5dfe755cc959a
+  normalized_sha256: sha256:ad6d3346bcf4ea88b7d0d94de6eb6dd5b1e6fa7a5842d2ad55e5dfe755cc959a
+cas_ref: sha256:ad6d3346bcf4ea88b7d0d94de6eb6dd5b1e6fa7a5842d2ad55e5dfe755cc959a
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaGamma/RenormalizedWeilMultiplier.renormalized_weil_multiplier
+    target_statement_id: sha256:454cd6e50abd7ca04781a8410f11745fef2be9d8f2855e2a59bc41dc372090b2
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaGamma/RenormalizedWeilMultiplier.renormalized_weil_multiplier
+      definition_sha256: sha256:9fb245aeaad4376be215763373a8868620481a6924471334e54f27d6040179f2
+      emission_sha256: sha256:933d91a11a46ad3ed55d9fac05ac9b5c26add18c79e2be3761e25387498faa55
+  unresolved_subitems: []

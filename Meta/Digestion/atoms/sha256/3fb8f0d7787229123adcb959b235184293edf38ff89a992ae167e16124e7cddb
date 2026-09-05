@@ -1,0 +1,29 @@
+\[
+A_X^{J}(x)
+=
+A_B(J(x)).
+\]
+
+一个任意状态级 ADMIT \(A_X\) 能够由当前 CUT 执行，当且仅当存在：
+
+\[
+\overline A:
+\left(\prod_iB_i\right)\to\mathsf{Prop}
+\]
+
+使：
+
+\[
+\boxed{
+A_X
+\;\Longleftrightarrow\;
+\overline A\circ J.
+}
+\]
+
+若不存在这种下降，则当前管理员只能看到相同坐标，却必须对同一纤维中的状态作不同准入判断。
+
+这不是纯规范分歧，而是**行政界面不充分**。
+
+---
+

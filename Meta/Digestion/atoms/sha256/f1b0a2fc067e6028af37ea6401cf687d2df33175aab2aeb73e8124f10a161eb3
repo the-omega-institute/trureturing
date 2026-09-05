@@ -1,0 +1,7 @@
+# 第二百零三部　Golden germ 进一步证明必须先区分局部与全局
+
+仓库现在还证明了一个重要的条件分类：
+
+在 RH 前提下，第三阶 golden continued germ 在 pulled-back critical line 上的零点来自：
+
+* \(\zeta(\varphi^2s)\) 的 pullback 零点；

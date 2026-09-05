@@ -1,0 +1,33 @@
+### 为什么说它去掉了高斯背景？
+
+如果给原概率变量加入独立方差为 \(\tau\) 的高斯变量，则：
+
+$$
+D(v)\longmapsto D_\tau(v)=e^{\tau v/2}D(v).
+$$
+
+于是：
+
+$$
+\frac{D_\tau'}{D_\tau}
+=
+\frac{\tau}{2}+\frac{D'}D,
+\qquad
+a_1\longmapsto a_1+\frac{\tau}{2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak S_\tau(z)=\mathfrak S(z).
+}
+\tag{D20}
+$$
+
+**整体方差可以增加，但这份回返函数完全不变。**
+
+因此，它没有把普通高斯背景与决定零点形状的高阶关联混在一起。
+
+---
+

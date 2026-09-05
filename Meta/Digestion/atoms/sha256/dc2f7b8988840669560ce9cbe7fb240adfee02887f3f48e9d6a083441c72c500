@@ -1,0 +1,57 @@
+## 572. 对 \(k\) 不一致
+
+但是：
+
+$$
+\sup_k\frac{k^2}{P}
+$$
+
+不会随 \(P\to\infty\) 而趋零。
+
+沿对角路径：
+
+$$
+k\asymp\sqrt P,
+$$
+
+误差界保持常数量级。
+
+若：
+
+$$
+k\gg\sqrt P,
+$$
+
+固定 \(P\) 的局部截断完全不能控制高阶构型。
+
+因此：
+
+$$
+\boxed{
+\forall k,\quad
+\lim_{P\to\infty}\operatorname{Err}(P,k)=0,
+}
+$$
+
+但：
+
+$$
+\boxed{
+\lim_{P\to\infty}
+\sup_k\operatorname{Err}(P,k)
+\neq0.
+}
+$$
+
+这就是一个精确的非均匀极限：
+
+$$
+\boxed{
+\text{pointwise prime completion}
+\neq
+\text{uniform arity completion}.
+}
+$$
+
+---
+

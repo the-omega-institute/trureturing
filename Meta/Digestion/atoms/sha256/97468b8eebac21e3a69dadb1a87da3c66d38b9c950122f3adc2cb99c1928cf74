@@ -1,0 +1,20 @@
+# 增订二·0　理论地位与真源边界
+
+本增订使用下列仓库真源，但不把它们扩大解释为 RH 证明：
+
+1. `GoldenNames` 与 `FiniteZeckendorfEulerIdentity`：Zeckendorf 合法词、Fibonacci 初始区间与有限 Euler 和；
+2. `GoldenEulerBetaZeckendorf`：黄金指数账户与最小指标奇偶控制；
+3. `GoldenCharacterQuotient`：非分歧素数的模 $5$ 二次特征给出 $\{\pm1\}$ 商，乘积等于惰性字母数的奇偶；
+4. `GoldenScalarDihedralBlindness`：完整标量黄金世界不能恢复有序 prime-word dihedral holonomy；
+5. `OrderedPrimeHolonomyCasimir`：一阶有序响应消失，负二阶响应为平方 winding 的非负和；
+6. `ChannelFidelityBridge`：有限 excitation-exchange channel 的 entanglement fidelity 等于最近邻二次型并等于 path averaging 范数平方；
+7. `TopEigenspace`：$J_N^2$ 的顶本征空间由正负边缘 sine modes 配对生成，最优二次值为 $\cos^2(\pi/(N+1))$；
+8. `LocalPositiveSquareCompletion`：正对角完成的 determinant 零点位于负实轴；
+9. `PrimitiveBundle`：有限角色标记原语族的联合不可区分核等于各原语 kernel 的交；
+10. `OffLineOrbitParityDecomposition`：supplied 离线四点轨道的 Weil 贡献等于 even energy 减 odd energy，两者分别非负。
+
+本文新推导的有限恒等式包括：判别式五的谱覆盖解释、Lorentz 共形关系、Frobenius--monodromy 同一 deck action、path-fidelity determinant 恒等式、fidelity tax 与最近零点的精确换算、hard-core 平稳链协方差、prime reflected Gramian 与 fidelity 的精确关系、以及共同 Galerkin 张量微分。
+
+以下命题仍明确保持开放：
+
+- Riemann completed $\Xi$ 已经等于本文某个有限 transfer determinant 的极限；

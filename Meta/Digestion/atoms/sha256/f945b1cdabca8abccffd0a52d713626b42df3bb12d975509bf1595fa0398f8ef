@@ -1,0 +1,54 @@
+* 平移坐标后区间本身保持不变。
+
+在当前理论中，可以把共同横向原点记为 \(R\)。
+
+相对相干只证明：
+
+$$
+\delta_\rho=R
+\qquad
+\forall\rho.
+$$
+
+然后偶、奇两端可以给出：
+
+$$
+R\ge0,
+$$
+
+以及：
+
+$$
+R\le0.
+$$
+
+于是：
+
+$$
+R=0.
+$$
+
+因此可以有两种定中心路线。
+
+第一种，直接消费函数方程：
+
+$$
+R=-R
+\Longrightarrow
+R=0.
+$$
+
+第二种，消费 parity interval collapse：
+
+$$
+R\in[0,0]
+\Longrightarrow
+R=0.
+$$
+
+前者对经典 ζ 已经足够。
+
+后者可能更适合从 prime-side positive completion 独立生成中心。
+
+---
+

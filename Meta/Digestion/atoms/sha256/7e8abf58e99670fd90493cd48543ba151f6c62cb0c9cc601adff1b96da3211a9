@@ -1,0 +1,18 @@
+\[
+   q_Y\circ F
+   =
+   \overline F\circ q_X;
+   \]
+
+2. \(\beta_F(b,r)\) 对源余量 \(r\) 不敏感：
+
+   \[
+   \forall b,r,r',
+   \quad
+   \beta_F(b,r)=\beta_F(b,r');
+   \]
+
+3. 同一个源 CUT 纤维不会被 FLOW 映入多个目标 CUT 纤维。
+
+在精确下降时：
+

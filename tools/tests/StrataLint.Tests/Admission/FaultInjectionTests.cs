@@ -8,12 +8,51 @@ namespace StrataLint.Tests;
 public sealed class FaultInjectionTests
 {
     [Fact]
+    public void ProductionRegistrationTableContainsEveryExpectedRuleExactlyOnce()
+    {
+        var expected = Enumerable.Range(1, 23).Except([5])
+            .Append(25).Append(26).Append(28)
+            .Select(RuleId.CreateKnown)
+            .ToImmutableArray();
+        var actual = RepositoryRules.CreateRegistrations()
+            .Select(static registration => registration.Descriptor.Id)
+            .ToImmutableArray();
+        var actualSet = actual.ToImmutableHashSet();
+        var expectedSet = expected.ToImmutableHashSet();
+        var missing = expected.Where(id => !actualSet.Contains(id));
+        var duplicated = actual.GroupBy(static id => id)
+            .Where(static group => group.Count() > 1)
+            .Select(static group => group.Key);
+        var unexpected = actual.Where(id => !expectedSet.Contains(id)).Distinct();
+        var failureReason =
+            $"missing=[{string.Join(',', missing)}] "
+            + $"duplicated=[{string.Join(',', duplicated)}] "
+            + $"unexpected=[{string.Join(',', unexpected)}]";
+
+        Assert.Equal("missing=[] duplicated=[] unexpected=[]", failureReason);
+    }
+
+    [Fact]
     public void MissingCatalogEntryCannotProduceCompletedRuleSet()
     {
         var catalog = RuleCatalog.CreateForTesting(
             RuleCatalog.Default.Descriptors[..^1]
                 .Select(static descriptor => new RuleRegistration(descriptor, new NoOpRule()))
                 .ToImmutableArray());
+
+        var outcome = catalog.Execute(new RuleFixture().Build());
+
+        Assert.IsType<RuleExecutionOutcome.InfrastructureFailure>(outcome);
+    }
+
+    [Fact]
+    public void DuplicateCatalogEntryCannotProduceCompletedRuleSet()
+    {
+        var registrations = RuleCatalog.Default.Descriptors
+            .Select(static descriptor => new RuleRegistration(descriptor, new NoOpRule()))
+            .Append(new RuleRegistration(RuleCatalog.Default.Descriptors[0], new NoOpRule()))
+            .ToImmutableArray();
+        var catalog = RuleCatalog.CreateForTesting(registrations);
 
         var outcome = catalog.Execute(new RuleFixture().Build());
 

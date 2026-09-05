@@ -1,0 +1,54 @@
+## 492. 奇偶拆分本身只是重新编号
+
+对于一个无限条件：
+
+$$
+\forall n,\quad P(n),
+$$
+
+写成：
+
+$$
+\left[
+\forall r,\ P(2r)
+\right]
+\land
+\left[
+\forall r,\ P(2r+1)
+\right]
+$$
+
+当然完全等价。
+
+但这一步没有减少条件数量。
+
+同样：
+
+$$
+\mathrm{RH}
+\iff
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}
+$$
+
+是一个有意义的表示分解，但如果没有进一步关系，它仍然是两条无限命题。
+
+真正的递归压缩必须具有：
+
+$$
+\boxed{
+P(2r)\Leftarrow F_{\mathrm E}(P(r)),
+}
+$$
+
+$$
+\boxed{
+P(2r+1)\Leftarrow F_{\mathrm O}(P(r)),
+}
+$$
+
+并且 \(F_{\mathrm E},F_{\mathrm O}\) 让复杂度严格下降，或使残余按统一比例收缩。
+
+---
+

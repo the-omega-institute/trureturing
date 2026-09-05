@@ -1,0 +1,104 @@
+# 第二百四十七部　为什么 \(186\) 仍不能指定孪生通道
+
+显式四十元组的直径是 \(186\)，把 \(\mathrm{DHL}[40,2]\) 应用于它，得到 consecutive-prime gap liminf 不超过 \(186\)。
+
+但四十点共有：
+
+$$
+\binom{40}{2}=780
+$$
+
+个 pair channels。
+
+定义：
+
+$$
+C_{ij}
+=
+\text{第 }i,j\text{ 两个位置同时为素数的渐近质量},
+$$
+
+再按差值聚合：
+
+$$
+C_d
+=
+\sum_{\substack{i<j\\h_j-h_i=d}}C_{ij}.
+$$
+
+总二体质量为：
+
+$$
+C_{\mathrm{tot}}
+=
+\sum_dC_d.
+$$
+
+短间隔论证最终只需要：
+
+$$
+C_{\mathrm{tot}}>0.
+$$
+
+这推出：
+
+$$
+\exists d\le186,\quad C_d>0.
+$$
+
+但孪生素数需要：
+
+$$
+\boxed{
+C_2>0.
+}
+$$
+
+定义 gap-channel Fourier polynomial：
+
+$$
+\widehat C(\theta)
+=
+\sum_dC_de^{id\theta}.
+$$
+
+那么：
+
+$$
+C_{\mathrm{tot}}
+=
+\widehat C(0),
+$$
+
+而：
+
+$$
+C_2
+=
+\frac1{2\pi}
+\int_0^{2\pi}
+\widehat C(\theta)e^{-2i\theta}\,d\theta.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{短间隔只要求零角频率为正；}
+}
+$$
+
+$$
+\boxed{
+\text{孪生素数要求恢复指定的第二 Fourier coefficient。}
+}
+$$
+
+这就是一个严格的 channel-localization gap。
+
+它也解释了为什么“全体素数的信息都在 ζ 中”不等于“可以容易读取 \(d=2\)”：
+
+> 信息是否存在，与是否有一个稳定的系数抽取器，是两个不同问题。
+
+---
+

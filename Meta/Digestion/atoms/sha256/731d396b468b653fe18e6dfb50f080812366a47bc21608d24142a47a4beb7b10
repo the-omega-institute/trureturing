@@ -1,0 +1,56 @@
+* \(N\) 是法向／临界线反转。
+
+若：
+
+$$
+\delta\neq0,
+\qquad
+\gamma\neq0,
+$$
+
+一个零点轨道包含：
+
+$$
+(\delta,\gamma),
+(\delta,-\gamma),
+(-\delta,\gamma),
+(-\delta,-\gamma).
+$$
+
+它携带两个独立 parity bits：
+
+$$
+\boxed{
+\mathbb Z_2^{\mathrm{time}}
+\times
+\mathbb Z_2^{\mathrm{normal}}.
+}
+$$
+
+而在 RH 临界线上：
+
+$$
+\delta=0,
+$$
+
+法向两页合并，只剩：
+
+$$
+(0,\gamma),
+(0,-\gamma).
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每一个零点轨道的 normal parity 都塌缩，
+只保留 time parity}.
+}
+\tag{2004.1}
+$$
+
+---
+

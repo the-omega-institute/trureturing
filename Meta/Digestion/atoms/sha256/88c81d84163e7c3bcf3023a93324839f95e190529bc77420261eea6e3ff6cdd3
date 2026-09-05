@@ -1,0 +1,15 @@
+\[
+\boxed{
+D_{\mathsf F}(F;q_X,q_Y)
+=
+\{(x,y):
+q_X(x)=q_X(y)
+\land
+q_Y(Fx)\ne q_Y(Fy)\}.
+}
+\]
+
+这就是 causal carry。
+
+---
+

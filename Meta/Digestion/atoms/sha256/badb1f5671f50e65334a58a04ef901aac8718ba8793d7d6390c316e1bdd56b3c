@@ -1,0 +1,11 @@
+## C16.1 phase budget
+
+由式 (C4.8)，覆盖高度窗 $|t|\le T$ 的 single-prime Fibonacci phase depth 为：
+
+$$
+n_{\rm phase}
+=
+\log_\varphi(T\log p)+O(1).
+\tag{C16.1}
+$$
+

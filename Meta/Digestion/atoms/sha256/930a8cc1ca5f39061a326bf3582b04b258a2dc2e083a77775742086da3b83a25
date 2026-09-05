@@ -1,0 +1,90 @@
+# 一、固定对象：从实际高阶关联出发，不供应未知零点
+
+沿用：
+
+$$
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k,
+$$
+
+以及实际累积量：
+
+$$
+\log D(v)
+=
+\sum_{k\ge1}\frac{\chi_{2k}}{(2k)!}v^k.
+$$
+
+特别地：
+
+$$
+a_1=\frac{\chi_2}{2}.
+$$
+
+这里 ξ 始终是标准 completed 函数，不因后面的表示改变而重新定义。([DLMF][1])
+
+定义上一轮得到的回返函数：
+
+$$
+\boxed{
+\mathfrak S(z)
+=
+\frac{D'(-1/z)}{D(-1/z)}-a_1.
+}
+\tag{E1}
+$$
+
+它在无穷远附近有展开：
+
+$$
+\boxed{
+\mathfrak S(z)=
+\sum_{n\ge0}\frac{M_n}{z^{n+1}},
+}
+$$
+
+其中：
+
+$$
+\boxed{
+M_n=
+(-1)^{n+1}
+\frac{(n+2)\chi_{2n+4}}{(2n+4)!}.
+}
+\tag{E2}
+$$
+
+例如：
+
+$$
+M_0=-\frac{\chi_4}{12},
+\qquad
+M_1=\frac{\chi_6}{240},
+\qquad
+M_2=-\frac{\chi_8}{10080}.
+$$
+
+再定义：
+
+$$
+c=
+1+\frac{\gamma_{\mathrm E}}2-\frac12\log4\pi
+=
+\frac{D'(1/4)}{D(1/4)},
+$$
+
+$$
+\boxed{\Delta=a_1-c.}
+\tag{E3}
+$$
+
+所以：
+
+$$
+\boxed{\mathfrak S(-4)=-\Delta.}
+\tag{E4}
+$$
+
+欧拉常数在这里来自实际 ζ 的 Laurent 有限部分及 Gamma 补偿，不能为了让后面的矩阵变正而调整。([DLMF][2])
+

@@ -48,7 +48,7 @@ internal static partial class CoverAtomCommand
                     string.Equals(gid, pair.Gid, StringComparison.Ordinal)) != 1)
             {
                 throw new InvalidOperationException(
-                    $"align GID {pair.Gid} must occur exactly once in atom {pair.AtomId} coverage_gids");
+                    $"align GID {pair.Gid} must occur exactly once in atom {pair.AtomId} coverage edges");
             }
 
             var receiptMatches = target.Receipts.Scribe

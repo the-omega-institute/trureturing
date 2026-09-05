@@ -1,0 +1,6 @@
+## 二　W-13 预登记:无条件素数侧判据(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_primeSidePositivity (Z : ZeroData) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (archimedeanConvergent_of_weilTestFunction (convolutionSquare g))).re`。
+**可证伪预测(写在跑之前)**:由 W-10(`rh_iff_explicitFormulaPositivity Z (fun g => archimedeanConvergent_of_weilTestFunction (convolutionSquare g))`)一行得到;`archimedeanTerm` 对其可积性证明参数 proof-irrelevant。
+**边界**:同 §〇。
+

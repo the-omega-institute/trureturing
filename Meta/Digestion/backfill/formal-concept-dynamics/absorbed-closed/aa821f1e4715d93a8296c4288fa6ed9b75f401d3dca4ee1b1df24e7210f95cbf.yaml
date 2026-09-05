@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:aa821f1e4715d93a8296c4288fa6ed9b75f401d3dca4ee1b1df24e7210f95cbf
+  normalized_sha256: sha256:aa821f1e4715d93a8296c4288fa6ed9b75f401d3dca4ee1b1df24e7210f95cbf
+cas_ref: sha256:aa821f1e4715d93a8296c4288fa6ed9b75f401d3dca4ee1b1df24e7210f95cbf
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Communication/TruthfulnessSufficiencyIndependence.truthfulness_sufficiency_independence
+    target_statement_id: sha256:5ce7a8a061e548d14a516171ebf8ea1e15680ad653a1f68f7a4394f07a7354a4
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Communication/TruthfulnessSufficiencyIndependence.truthfulness_sufficiency_independence
+      definition_sha256: sha256:1eb11f36563144df7c434f25e1ad7aa192468201d119bfc0b9746e8e87a2c4c5
+      emission_sha256: sha256:19f6afb08fa303e7f0e2faf019ed8ab5e9a11efd0c0ccfbb511124fad081307d
+  unresolved_subitems: []
+  chain_atoms:
+    - d852956c26e1f805dbc99bd766c2a8697388bcaabe8146642f4adb00f303734c
+    - fed18860b779db0ece034c454cbffa45777c69f6c70eaa6bf7dddf06adc4643d
+    - c5e94a0e42b2d55184caa27ccbb4bd8576500d51212be5516ba4267924643b54
+    - 5951a481ac486277c86567c7da034ef353973eac37e8155f75752c7b4ecac36c

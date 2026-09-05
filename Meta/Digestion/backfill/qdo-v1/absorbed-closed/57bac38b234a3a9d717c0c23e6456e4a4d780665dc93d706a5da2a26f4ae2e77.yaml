@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:57bac38b234a3a9d717c0c23e6456e4a4d780665dc93d706a5da2a26f4ae2e77
 cas_ref: sha256:57bac38b234a3a9d717c0c23e6456e4a4d780665dc93d706a5da2a26f4ae2e77
 coverage_gids:
-  - D5/S3/ObserverMemory/PredictionCertificates/ShortestDistanceSemantics.shortest_distance_exact_semantics
+  - gid: D5/S3/ObserverMemory/PredictionCertificates/ShortestDistanceSemantics.shortest_distance_exact_semantics
+    target_statement_id: sha256:39621413db78b3e24dd6713bc6faabdaa3b2923e24a4ea2ca90db9bc8575437a
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/PredictionCertificates/ShortestDistanceSemantics.shortest_distance_exact_semantics
-      source_sha256: sha256:57bac38b234a3a9d717c0c23e6456e4a4d780665dc93d706a5da2a26f4ae2e77
-      target_statement_id: sha256:39621413db78b3e24dd6713bc6faabdaa3b2923e24a4ea2ca90db9bc8575437a
   scribe:
     - gid: D5/S3/ObserverMemory/PredictionCertificates/ShortestDistanceSemantics.shortest_distance_exact_semantics
       definition_sha256: sha256:7fade95d96745092b6a2935c20cf72135919bdc438b9e1e88fbec994011d2f0c

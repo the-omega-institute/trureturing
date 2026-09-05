@@ -105,6 +105,25 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
+    public void Sl003DoesNotTreatTwentyFiveFrozenStateFragmentsAsASplittableModules()
+    {
+        var fixture = new RuleFixture();
+        const string directory = "Golden/Frozen/state/D5/S3/Analytic/EulerGerm";
+        for (var index = 0; index < 25; index++)
+        {
+            var path = $"{directory}/Module{index:00}.lean.json";
+            fixture.Files[path] = $"{{\"statement_id\":\"sha256:{index:x64}\"}}\n";
+            fixture.Changes.Add(path);
+        }
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == directory);
+    }
+
+    [Fact]
     public void Sl003RefusesNetGrowthOfAnOverfullBucket()
     {
         var fixture = OverfullBucket(forkPointCount: (L - 1), currentCount: (L + 1));
@@ -400,7 +419,10 @@ public sealed class RuleEngineCapacityTests
             static item => item.Message.Contains("unknown test method", StringComparison.Ordinal));
 
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("DebtTests.Debt280", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Equal(
+            "SL-003 tools/tests/Synthetic.Tests/DebtTests.cs: conservative unknown test method "
+            + "introduced after fork point: tools/tests/Synthetic.Tests::DebtTests.Debt280",
+            diagnostic.Render());
     }
 
     [Fact]
@@ -525,6 +547,8 @@ public sealed class RuleEngineCapacityTests
             AddUnknownDebtPartition(fixture.ForkPoint, partition, methods);
         }
 
+        fixture.Changes.Clear();
+        fixture.Changes.Add($"tools/tests/{current[0].Partition}/DebtTests.cs");
         return fixture;
     }
 

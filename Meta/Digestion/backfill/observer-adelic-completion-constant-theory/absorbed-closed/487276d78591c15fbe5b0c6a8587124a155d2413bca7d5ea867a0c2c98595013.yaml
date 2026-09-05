@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:487276d78591c15fbe5b0c6a8587124a155d2413bca7d5ea867a0c2c98595013
 cas_ref: sha256:487276d78591c15fbe5b0c6a8587124a155d2413bca7d5ea867a0c2c98595013
 coverage_gids:
-  - D5/S3/Analytic/Characterizations/VisibleGaussianMass.visible_gaussian_mass
+  - gid: D5/S3/Analytic/Characterizations/VisibleGaussianMass.visible_gaussian_mass
+    target_statement_id: sha256:93dc47b705594805d383de52304a069458bcc087b3ac87fe1f5375f261cf0454
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Characterizations/VisibleGaussianMass.visible_gaussian_mass
-      source_sha256: sha256:487276d78591c15fbe5b0c6a8587124a155d2413bca7d5ea867a0c2c98595013
-      target_statement_id: sha256:93dc47b705594805d383de52304a069458bcc087b3ac87fe1f5375f261cf0454
   scribe:
     - gid: D5/S3/Analytic/Characterizations/VisibleGaussianMass.visible_gaussian_mass
       definition_sha256: sha256:6b12e964c8f9d1ee4f1c41769f6f95e045a61a1becf6c94104a43447e52737cf

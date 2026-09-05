@@ -1,0 +1,37 @@
+## 443. 最先可以闭合的纯逻辑定理
+
+```lean
+def GlobalEvenRH (a : ℕ → ℝ) : Prop :=
+  ∀ n r, 0 ≤ iterDifference (2 * r) a n
+
+def PointedOddRH (a : ℕ → ℝ) : Prop :=
+  ∀ n r, 0 ≤ iterDifference (2 * r + 1) a n
+
+theorem completelyMonotone_iff_even_and_odd
+    (a : ℕ → ℝ) :
+    (∀ n k, 0 ≤ iterDifference k a n) ↔
+      GlobalEvenRH a ∧ PointedOddRH a
+```
+
+这个定理只需要自然数奇偶分解，不涉及 RH，可以立即进入内核。
+
+随后再接：
+
+```lean
+theorem rh_iff_globalEven_and_pointedOdd :
+    RiemannHypothesis ↔
+      GlobalEvenRH casimirMoment ∧
+      PointedOddRH casimirMoment
+```
+
+它的真正依赖是：
+
+```text
+XiReflectionQuotient
+ReflectionQuotientLogDerivative
+HausdorffMomentCriterion
+LogDerivativePoleRecovery
+```
+
+---
+

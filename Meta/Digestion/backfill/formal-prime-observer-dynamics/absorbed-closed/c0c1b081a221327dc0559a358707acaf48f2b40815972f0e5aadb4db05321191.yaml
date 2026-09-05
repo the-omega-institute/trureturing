@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:c0c1b081a221327dc0559a358707acaf48f2b40815972f0e5aadb4db05321191
 cas_ref: sha256:c0c1b081a221327dc0559a358707acaf48f2b40815972f0e5aadb4db05321191
 coverage_gids:
-  - D5/S3/ConceptDynamics/SufficiencyQuotient/TaskIdentityGlobalIdentityCriterion.task_identity_global_identity_criterion
+  - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/TaskIdentityGlobalIdentityCriterion.task_identity_global_identity_criterion
+    target_statement_id: sha256:b50a2eb76a5d626f47f531f3f3a7cdb723c7aef159d48a62b67eedfd513e4e88
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/TaskIdentityGlobalIdentityCriterion.task_identity_global_identity_criterion
-      source_sha256: sha256:c0c1b081a221327dc0559a358707acaf48f2b40815972f0e5aadb4db05321191
-      target_statement_id: sha256:b50a2eb76a5d626f47f531f3f3a7cdb723c7aef159d48a62b67eedfd513e4e88
   scribe:
     - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/TaskIdentityGlobalIdentityCriterion.task_identity_global_identity_criterion
       definition_sha256: sha256:a1ead45c3412f4e9b48d72e4d1935842f71644243ccd443313ce91f9ea225b34

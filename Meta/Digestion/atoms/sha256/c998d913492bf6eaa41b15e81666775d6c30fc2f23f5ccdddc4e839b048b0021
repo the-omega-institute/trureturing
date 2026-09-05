@@ -1,0 +1,43 @@
+## 633. PrimeGaps 的完成机制
+
+其基本结构是：
+
+$$
+\#\operatorname{Surv}
+\le
+|S|
+\prod_{p\le N}
+\left(1-\frac1p\right).
+$$
+
+右侧永远不会在有限 \(N\) 精确等于零。
+
+但只要：
+
+$$
+|S|
+\prod_{p\le N}
+\left(1-\frac1p\right)
+<1,
+$$
+
+便因为左侧是整数而得到：
+
+$$
+\#\operatorname{Surv}=0.
+$$
+
+所以真正的 collapse 机制是：
+
+$$
+\boxed{
+\text{连续衰减}
++
+\text{离散量子化}
+\Longrightarrow
+\text{有限阶段精确归零}.
+}
+$$
+
+---
+

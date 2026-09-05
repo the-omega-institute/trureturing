@@ -13,7 +13,6 @@ public sealed class RuleEngineTests
         { 2, "sorry" },
         { 3, "file-capacity" },
         { 4, "mirror" },
-        { 5, "chronicle" },
         { 6, "badge" },
         { 8, "heart" },
         { 10, "generality" },
@@ -48,7 +47,6 @@ public sealed class RuleEngineTests
         { 2, RuleFixture.BlueprintPath },
         { 3, RuleFixture.BlueprintPath },
         { 4, "Chronicle/2026/07/10-old.md" },
-        { 5, RuleFixture.BlueprintPath },
         { 6, "tools/README.md" },
         { 8, RuleFixture.BlueprintPath },
         { 10, RuleFixture.BlueprintPath },
@@ -85,7 +83,7 @@ public sealed class RuleEngineTests
         Assert.Equal(RuleFixture.FixtureCasReference, entry.Fingerprints.RawSha256);
         Assert.Equal(RuleFixture.FixtureCasReference, entry.CasRef);
         Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+        Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
     }
 
     [Theory]
@@ -356,8 +354,9 @@ public sealed class RuleEngineTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                    + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
@@ -383,8 +382,9 @@ public sealed class RuleEngineTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                    + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
@@ -434,7 +434,7 @@ public sealed class RuleEngineTests
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
         Assert.Contains(
             Assert.Single(evaluation.Entries).Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
@@ -464,9 +464,8 @@ public sealed class RuleEngineTests
     [Fact]
     public void Sl016DerivedStatusIsTheSameWhetherOrNotFrozenStatementDriftIsInTheCandidateDelta()
     {
-        // Skipping historical receipt replay must reuse the base verdict rather than turn a
-        // partial entry into absorbed. The stale receipt itself is reported only when its
-        // authority input is in the candidate delta.
+        // Current edges are validated regardless of whether the frozen drift itself is in
+        // the candidate delta, so both projections must report the same stale target.
         const string coverageGid = "D5/S0/Carrier/BackfillTarget";
         var (fixture, frozenChanges) = FrozenStatementDriftFixture();
 
@@ -478,8 +477,8 @@ public sealed class RuleEngineTests
             RawChangeSet.Create(["notes/unrelated.txt"]));
 
         Assert.Contains(touched.Gaps, gap =>
-            gap.Code == "coverage-receipt-mismatch" && gap.Detail == coverageGid);
-        Assert.DoesNotContain(untouched.Gaps, static gap => gap.Code == "coverage-receipt-mismatch");
+            gap.Code == "coverage-target-mismatch" && gap.Detail == coverageGid);
+        Assert.Contains(untouched.Gaps, static gap => gap.Code == "coverage-target-mismatch");
         Assert.Equal(DigestionMigrationState.Partial, untouched.DerivedStatus.Migration);
         Assert.Equal(touched.DerivedStatus, untouched.DerivedStatus);
     }
@@ -540,24 +539,28 @@ public sealed class RuleEngineTests
             files[targetPath] = fixture.Files[targetPath];
             files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
                 .Replace(
-                    "coverage: []",
-                    "coverage:\n"
-                    + $"    - gid: {coverageGid}\n"
-                    + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-                    + $"      target_statement_id: {baselineStatementId}",
+                    "target_statement_id: null",
+                    $"target_statement_id: {baselineStatementId}",
                     StringComparison.Ordinal);
         }
 
         InstallFrozenStatement(fixture.Files, targetPath, FrozenStatementReceiptTestData.Id('b'));
         InstallFrozenStatement(fixture.Baseline, targetPath, baselineStatementId);
         InstallFrozenStatement(fixture.ForkPoint, targetPath, baselineStatementId);
-        var currentEvents = fixture.Files.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
-        var baselineEvents = fixture.Baseline.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
-        var frozenChanges = currentEvents
-            .Except(baselineEvents, StringComparer.Ordinal)
-            .Concat(baselineEvents.Except(currentEvents, StringComparer.Ordinal))
+        var currentFrozenPaths = fixture.Files.Keys
+            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+                || FrozenStatePath.IsUnderRoot(path));
+        var baselineFrozenPaths = fixture.Baseline.Keys
+            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+                || FrozenStatePath.IsUnderRoot(path));
+        var frozenChanges = currentFrozenPaths
+            .Except(baselineFrozenPaths, StringComparer.Ordinal)
+            .Concat(baselineFrozenPaths.Except(currentFrozenPaths, StringComparer.Ordinal))
+            .Concat(currentFrozenPaths.Intersect(baselineFrozenPaths, StringComparer.Ordinal).Where(path =>
+                !string.Equals(
+                    fixture.Files[path],
+                    fixture.Baseline[path],
+                    StringComparison.Ordinal)))
             .ToArray();
         Assert.NotEmpty(frozenChanges);
         return (fixture, frozenChanges);
@@ -691,7 +694,7 @@ public sealed class RuleEngineTests
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 23).Append(25).Append(26), exercised);
+        Assert.Equal(Enumerable.Range(1, 23).Except([5]).Append(25).Append(26), exercised);
     }
 
     [Fact]

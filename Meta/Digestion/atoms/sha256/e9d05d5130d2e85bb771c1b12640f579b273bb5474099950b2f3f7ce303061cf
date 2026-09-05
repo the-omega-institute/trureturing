@@ -1,0 +1,97 @@
+## 3.1 构型观察空间
+
+在 \(\sigma>1\) 的 ζ-Gibbs 状态下，定义：
+
+$$
+\langle F,G\rangle_\sigma
+=
+\omega_\sigma(\overline FG).
+$$
+
+令：
+
+$$
+\mathscr V_k
+=
+\overline{
+\operatorname{span}
+\left\{
+\prod_{h\in H}\Lambda(N+h):
+|H|\le k
+\right\}
+}.
+$$
+
+显然：
+
+$$
+\mathscr V_0
+\subseteq
+\mathscr V_1
+\subseteq
+\mathscr V_2
+\subseteq\cdots.
+$$
+
+令 \(P_k\) 为到 \(\mathscr V_k\) 的正交投影。
+
+定义第 \(k\) 层创新：
+
+$$
+\boxed{
+D_kF
+=
+(P_k-P_{k-1})F.
+}
+$$
+
+因为这些空间嵌套，所以不同层创新彼此正交：
+
+$$
+\langle D_jF,D_kF\rangle=0
+\qquad
+(j\neq k).
+$$
+
+于是：
+
+$$
+\boxed{
+\|P_KF\|^2
+=
+\|P_0F\|^2
++
+\sum_{k=1}^{K}
+\|D_kF\|^2.
+}
+$$
+
+如果所有有限构型空间的并在目标空间中稠密，则：
+
+$$
+\boxed{
+\|F\|^2
+=
+\|P_0F\|^2
++
+\sum_{k\ge1}
+\|D_kF\|^2.
+}
+$$
+
+这里：
+
+$$
+\boxed{
+\|D_kF\|^2
+}
+$$
+
+才是第 \(k\) 层真正无法由低阶线性预测所消除的正信息。
+
+它永远非负。
+
+不同阶之间不能互相抵消。
+
+---
+

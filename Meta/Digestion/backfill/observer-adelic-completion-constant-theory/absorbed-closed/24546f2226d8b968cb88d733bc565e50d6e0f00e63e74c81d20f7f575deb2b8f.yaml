@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:24546f2226d8b968cb88d733bc565e50d6e0f00e63e74c81d20f7f575deb2b8f
 cas_ref: sha256:24546f2226d8b968cb88d733bc565e50d6e0f00e63e74c81d20f7f575deb2b8f
 coverage_gids:
-  - D5/S3/CompletionDynamics/ObserverJet/CompletedScalarOddCoupling.completed_scalar_has_no_linear_odd_coupling
+  - gid: D5/S3/CompletionDynamics/ObserverJet/CompletedScalarOddCoupling.completed_scalar_has_no_linear_odd_coupling
+    target_statement_id: sha256:cd93e3755e8c9e13fc79cf9fc89bd7a9923c9e6603c313a74dec57e58c36e90f
 receipts:
-  coverage:
-    - gid: D5/S3/CompletionDynamics/ObserverJet/CompletedScalarOddCoupling.completed_scalar_has_no_linear_odd_coupling
-      source_sha256: sha256:24546f2226d8b968cb88d733bc565e50d6e0f00e63e74c81d20f7f575deb2b8f
-      target_statement_id: sha256:cd93e3755e8c9e13fc79cf9fc89bd7a9923c9e6603c313a74dec57e58c36e90f
   scribe:
     - gid: D5/S3/CompletionDynamics/ObserverJet/CompletedScalarOddCoupling.completed_scalar_has_no_linear_odd_coupling
       definition_sha256: sha256:b4f98d3290c2eaade8323298faec9287dc14f264fc055f6d54c5b3537c072304

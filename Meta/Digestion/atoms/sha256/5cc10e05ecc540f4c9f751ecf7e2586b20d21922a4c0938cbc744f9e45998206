@@ -1,0 +1,2 @@
+**候签定理 9.13(素模非零乘子轨道整除)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。若 p 为素数、u : (ZMod p)^x 且有限集 S 在乘 u 下不变，则 orderOf(u) 整除 (S.erase 0).card。
+

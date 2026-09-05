@@ -59,7 +59,6 @@ internal static partial class RepositoryRules
         Register(2, "Sorry closure", new RepositoryRule(ManagedLean, Sorry, SorryAffected)),
         Register(3, "Capacity pressure", new RepositoryRule(CapacityScoped, Capacity, CapacityAffected)),
         Register(4, "Mirror completeness", new RepositoryRule(Formal, Mirrors, MirrorsAffected)),
-        Register(5, "Chronicle append only", new RepositoryRule(ChronicleScoped, Chronicle, ChronicleAffected)),
         Register(6, "Generated status", new RepositoryRule(StatusScoped, Badges, StatusAffected)),
         Register(
             7,
@@ -154,14 +153,6 @@ internal static partial class RepositoryRules
                 DuplicateStatementAdvisory.Evaluate,
                 DuplicateStatementAdvisory.IsAffectedBy),
             AdmissionEffect.Observe),
-        Register(
-            29,
-            "Theory volume append only",
-            new RepositoryRule(TheoryVolumeScoped, TheoryAppendOnly, TheoryVolumeAffected)),
-        Register(
-            30,
-            "Digestion atoms append only",
-            new RepositoryRule(BackfillScoped, DigestionAtomsAppendOnly, DigestionAtomsAffected)),
     ];
 
     private static RuleRegistration Register(

@@ -1,0 +1,4 @@
+## 二　Z-2:余弦调制(同模块伴随声明,不列义务)
+
+`cosineModulation (q : WeilTestFunction) (T : ℝ) : WeilTestFunction`(值 cos(Tx)·q(x))与 `paperFT_cosineModulation : paperFT (cosineModulation q T) z = (paperFT q (z+T) + paperFT q (z−T))/2`。判形预期 bind-only(积分线性 + 余弦指数恒等式),作为 Z-1/Z-3 内容模块的具名伴随结果落地,不单独预登记。
+

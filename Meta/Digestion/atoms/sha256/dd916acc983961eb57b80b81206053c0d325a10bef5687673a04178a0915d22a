@@ -1,0 +1,2 @@
+**候签定理 4.104(两奇素数支撑之未覆盖密度)**〔open;落 `D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity`(Congruence 17/24);文献归属:∑1/d ≥ 1 必要条件属 Erdős 覆盖系经典论述,实施席须检索该两素数排除是否被显式陈述——若是则 `FromLiterature` 并附 L 平面注,否则 `FromRepo` 且 Describe 以文献注引 Hough–Nielsen 2019、BBMST 2022 为语境〕。设 p ≠ q 为奇素数,A B : ℕ,L = p^A · q^B。对任意有限集 D ⊆ ℕ(模数两两不同),若每个 d ∈ D 满足 1 < d 且 d ∣ L,任取余数 a : ℕ → ℕ,则 `L ≤ 8 * #{x : Fin L | ∀ d ∈ D, x.val % d ≠ a d % d}`;因而这些同余类不能覆盖 Fin L(伴随推论,bind-only,方向边 推论 → 4.104)。
+

@@ -1,0 +1,32 @@
+# 第两千零四十九部　Fibonacci 是自治递归，素数是非自治驱动
+
+Fibonacci 递归可写成：
+
+$$
+\boxed{
+\begin{pmatrix}
+F_{n+1}\\
+F_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\begin{pmatrix}
+F_n\\
+F_{n-1}
+\end{pmatrix}.
+}
+\tag{2049.1}
+$$
+
+同一个固定矩阵 \(A\) 控制全部层级：
+
+$$
+v_{n+1}=Av_n.
+$$
+
+未来全部包含在：
+
+* 初态 \(v_0\)；

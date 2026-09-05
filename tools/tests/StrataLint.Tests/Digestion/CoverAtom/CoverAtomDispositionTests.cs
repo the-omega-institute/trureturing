@@ -28,9 +28,8 @@ public sealed partial class CoverAtomTests
         var gap = Assert.Single(disposition.Gaps);
         Assert.Equal("unresolved-subitem", gap.Code);
         Assert.Equal("remaining theorem clause", gap.Detail);
-        Assert.Equal(CoverWorld.RecordedAtUtc, disposition.RecordedAtUtc);
         Assert.Empty(entry.CoverageGids);
-        Assert.Empty(entry.Receipts.Coverage);
+        Assert.Empty(entry.Coverage);
         Assert.Empty(entry.Receipts.Scribe);
         Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
@@ -71,9 +70,8 @@ public sealed partial class CoverAtomTests
         var gap = Assert.Single(replacement.Gaps);
         Assert.Equal("unresolved-subitem", gap.Code);
         Assert.Equal("new failed retry", gap.Detail);
-        Assert.Equal(CoverWorld.RecordedAtUtc, replacement.RecordedAtUtc);
         Assert.Empty(entry.CoverageGids);
-        Assert.Empty(entry.Receipts.Coverage);
+        Assert.Empty(entry.Coverage);
         Assert.Empty(entry.Receipts.Scribe);
     }
 
@@ -85,8 +83,7 @@ public sealed partial class CoverAtomTests
             [gid],
             [new DigestionDispositionGap(
                 "unresolved-subitem",
-                "prior failed attempt")],
-            new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration));
+                "prior failed attempt")]);
 
     private static CoverExecution ExecuteWithPriorDisposition(
         CoverSpec spec,

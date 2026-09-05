@@ -1,0 +1,32 @@
+## B2.3 Frobenius 的通道作用
+
+在 $\mathbb F_{p^2}$ 中取
+
+$$
+y^2=5.
+$$
+
+Euler 判别给出
+
+$$
+y^p
+=5^{(p-1)/2}y
+=\left(\frac5p\right)y.
+\tag{B2.6}
+$$
+
+故 Frobenius 作用为
+
+$$
+\boxed{
+\operatorname{Frob}_p(y)
+=\chi_5(p)y,
+\qquad
+\chi_5(p)=\left(\frac p5\right).
+}
+\tag{B2.7}
+$$
+
+于是：
+
+- $\chi_5(p)=+1$ 时，Frobenius 固定两条本征线；

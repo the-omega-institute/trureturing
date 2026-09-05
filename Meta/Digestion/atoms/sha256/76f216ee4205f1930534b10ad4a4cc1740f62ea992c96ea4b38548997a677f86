@@ -1,0 +1,54 @@
+## 294. Odd residual tower
+
+令：
+
+$$
+V_R
+=
+\overline{E_R(PW_R)}
+\subseteq
+\mathscr K_T,
+$$
+
+并令纯 odd 子空间为：
+
+$$
+\mathscr K_T^-.
+$$
+
+定义在支撑预算 \(R\) 下无法触及的 odd residual：
+
+$$
+\boxed{
+\mathcal R_R^-
+=
+\mathscr K_T^-
+\cap
+V_R^\perp.
+}
+$$
+
+当 \(R\) 增大时，\(V_R\) 增大，所以：
+
+$$
+\mathcal R_{R_2}^-
+\subseteq
+\mathcal R_{R_1}^-
+\qquad
+(R_1<R_2).
+$$
+
+仓库已经证明，一般闭子空间完成塔在极限阶段的残余等于全部前驱残余之交。
+
+因此：
+
+$$
+\boxed{
+\mathcal R_\infty^-
+=
+\bigcap_R\mathcal R_R^-.
+}
+$$
+
+---
+

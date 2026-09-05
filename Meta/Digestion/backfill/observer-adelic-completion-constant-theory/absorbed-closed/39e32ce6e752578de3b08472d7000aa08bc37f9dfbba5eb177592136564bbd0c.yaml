@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:39e32ce6e752578de3b08472d7000aa08bc37f9dfbba5eb177592136564bbd0c
 cas_ref: sha256:39e32ce6e752578de3b08472d7000aa08bc37f9dfbba5eb177592136564bbd0c
 coverage_gids:
-  - D5/S3/Analytic/Adelic/ZeroCompletionVelocity.zero_completion_velocity
+  - gid: D5/S3/Analytic/Adelic/ZeroCompletionVelocity.zero_completion_velocity
+    target_statement_id: sha256:eb7a23ba259690c6c206e20b6f7c9201f27eb83343a8787a7ce90ae14b02fdea
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Adelic/ZeroCompletionVelocity.zero_completion_velocity
-      source_sha256: sha256:39e32ce6e752578de3b08472d7000aa08bc37f9dfbba5eb177592136564bbd0c
-      target_statement_id: sha256:eb7a23ba259690c6c206e20b6f7c9201f27eb83343a8787a7ce90ae14b02fdea
   scribe:
     - gid: D5/S3/Analytic/Adelic/ZeroCompletionVelocity.zero_completion_velocity
       definition_sha256: sha256:937e023b20fe09874361435e3b0511a814f5e3aefecc5cb8d2a9306b8d042720

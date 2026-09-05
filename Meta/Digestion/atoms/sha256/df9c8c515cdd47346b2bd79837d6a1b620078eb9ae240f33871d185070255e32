@@ -1,0 +1,33 @@
+## 390. 有限 Euler product
+
+令：
+
+$$
+\zeta_N(s)
+=
+\prod_{j=1}^{N}
+(1-p_j^{-s})^{-1}.
+$$
+
+有限层确实可以讨论：
+
+$$
+N\text{ 为偶}
+\quad\text{或}\quad
+N\text{ 为奇}.
+$$
+
+在：
+
+$$
+\Re s>1
+$$
+
+中：
+
+$$
+\zeta_N(s)\to\zeta(s).
+$$
+
+---
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:12eb7e048bdcd0efa2b0db412e3d93511596db484cc0cfcaba7bfb89d2de7f74
 cas_ref: sha256:12eb7e048bdcd0efa2b0db412e3d93511596db484cc0cfcaba7bfb89d2de7f74
 coverage_gids:
-  - D5/S3/Analytic/Adelic/ToroidalJetDepth.toroidal_jet_depth_eq_vanishing_order
+  - gid: D5/S3/Analytic/Adelic/ToroidalJetDepth.toroidal_jet_depth_eq_vanishing_order
+    target_statement_id: sha256:2908a74b294c581112dd8b98bde0367a09d6b52681a7b8bbff852a8154cb6b27
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Adelic/ToroidalJetDepth.toroidal_jet_depth_eq_vanishing_order
-      source_sha256: sha256:12eb7e048bdcd0efa2b0db412e3d93511596db484cc0cfcaba7bfb89d2de7f74
-      target_statement_id: sha256:2908a74b294c581112dd8b98bde0367a09d6b52681a7b8bbff852a8154cb6b27
   scribe:
     - gid: D5/S3/Analytic/Adelic/ToroidalJetDepth.toroidal_jet_depth_eq_vanishing_order
       definition_sha256: sha256:2837ae120c0f58499fed58372a9d139e60146521102bca7de89c8cce758925c7

@@ -1,0 +1,52 @@
+## 5.3 Hankel 最小记忆维数
+
+序列
+
+$$
+a_Q=H_Q(1)=F_{Q+2}
+\tag{A5.10}
+$$
+
+满足二阶递推，故其稳定 Hankel rank 不超过 $2$。另一方面，
+
+$$
+\det
+\begin{pmatrix}
+a_0&a_1\\
+a_1&a_2
+\end{pmatrix}
+=
+\det
+\begin{pmatrix}
+1&2\\
+2&3
+\end{pmatrix}
+=-1\ne0.
+\tag{A5.11}
+$$
+
+所以 Hankel rank 恰为 $2$。
+
+结合仓库的 Hankel 最小实现定理，完整 Fibonacci 计数行为的最小有限状态实现维数正是两维。两维可取为：
+
+- 上一位未占据；
+- 上一位已占据。
+
+于是：
+
+$$
+\boxed{
+\varphi\text{ 不是“神秘常数”，而是最小一步记忆自动机的主本征值。}
+}
+\tag{A5.12}
+$$
+
+同时：
+
+$$
+\boxed{
+-\varphi^{-1}\text{ 是标量大尺度近似最容易遗漏、但精确系统不能删除的第二状态方向。}
+}
+\tag{A5.13}
+$$
+

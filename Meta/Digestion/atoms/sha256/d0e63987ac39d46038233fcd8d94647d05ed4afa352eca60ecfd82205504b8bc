@@ -1,0 +1,52 @@
+# 八、有限链的节点不是实际零点：整函数还要求“重数为整数”
+
+设有限回返函数的谱分解为：
+
+$$
+\boxed{
+\mathfrak S_N(z)
+=
+\sum_{j=1}^N\frac{w_{N,j}}{z-u_{N,j}},
+\qquad
+w_{N,j}>0,\quad u_{N,j}>0.
+}
+\tag{E26}
+$$
+
+它已经是一个非常好的正谱模型，并精确匹配前 \(2N\) 个矩。
+
+但现在尝试从它反向重建一个函数：
+
+$$
+\frac{\mathcal D_N'(v)}{\mathcal D_N(v)}
+=
+a_1+\mathfrak S_N(-1/v),
+\qquad
+\mathcal D_N(0)=1.
+$$
+
+直接积分：
+
+$$
+\boxed{
+\mathcal D_N(v)
+=
+\exp\left[
+\left(a_1-\sum_j\frac{w_{N,j}}{u_{N,j}}\right)v
+\right]
+\prod_{j=1}^N
+(1+u_{N,j}v)^{w_{N,j}/u_{N,j}^2}.
+}
+\tag{E27}
+$$
+
+这一般只是零点附近之外某个选定区域中的解析分支。
+
+如果：
+
+$$
+\frac{w_{N,j}}{u_{N,j}^2}\notin\mathbb Z_{\ge0},
+$$
+
+那么绕 \(v=-1/u_{N,j}\) 一圈，函数会获得非平凡单值化因子，不能成为一份全局单值整函数。
+

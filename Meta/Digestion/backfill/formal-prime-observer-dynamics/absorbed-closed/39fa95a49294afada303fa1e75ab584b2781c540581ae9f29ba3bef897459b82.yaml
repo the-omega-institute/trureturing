@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:39fa95a49294afada303fa1e75ab584b2781c540581ae9f29ba3bef897459b82
 cas_ref: sha256:39fa95a49294afada303fa1e75ab584b2781c540581ae9f29ba3bef897459b82
 coverage_gids:
-  - D5/S3/Quantum/FixedAlgebra/PrimeDiagonalSaturation.prime_diagonal_saturation
+  - gid: D5/S3/Quantum/FixedAlgebra/PrimeDiagonalSaturation.prime_diagonal_saturation
+    target_statement_id: sha256:554e9dd3e49491e49937a83eb8458eac5c29447bc673acac2776f3d9b2129b60
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/FixedAlgebra/PrimeDiagonalSaturation.prime_diagonal_saturation
-      source_sha256: sha256:39fa95a49294afada303fa1e75ab584b2781c540581ae9f29ba3bef897459b82
-      target_statement_id: sha256:554e9dd3e49491e49937a83eb8458eac5c29447bc673acac2776f3d9b2129b60
   scribe:
     - gid: D5/S3/Quantum/FixedAlgebra/PrimeDiagonalSaturation.prime_diagonal_saturation
       definition_sha256: sha256:cbd46941ca85a9d0cb2c66f5841ec25f87a9c1daa917fe013b25e3f08e09351c

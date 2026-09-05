@@ -1,0 +1,27 @@
+## B16.2 离线 radial pair 是 Lorentz boost mode
+
+Cayley pair
+
+$$
+w_*=e^{i\theta_*}e^{\eta_*},
+\qquad
+w_*^\sharp=e^{i\theta_*}e^{-\eta_*}
+\tag{B16.3}
+$$
+
+去掉共同相位后，正是 rapidity $\eta_*$ 的 split-torus pair。其第一反射不变量为
+
+$$
+\sinh^2\eta_*.
+\tag{B16.4}
+$$
+
+prime pair 的对应 invariant 为
+
+$$
+\sinh^2(\delta_*\Delta\log p).
+\tag{B16.5}
+$$
+
+两者属于同一种 Lorentz energy，但仍缺 canonical map 把所有 local rapidities 胶合成 $\eta_*$。
+

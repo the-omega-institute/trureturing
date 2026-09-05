@@ -1,0 +1,45 @@
+## 二、Maynard 候选维数预算
+
+若希望真正保证：
+
+$$
+m=\varphi H
+$$
+
+个素数幸存，则需要：
+
+$$
+\boxed{
+k
+\approx
+\exp\!\left(
+\frac{2\varphi}{\theta}H
+\right).
+}
+\tag{2123.1}
+$$
+
+在标准 \(\theta=\frac12\) 下：
+
+$$
+\boxed{
+k\approx e^{4\varphi H}.
+}
+\tag{2123.2}
+$$
+
+而最终短区间直径约为：
+
+$$
+\boxed{
+D_H
+\lesssim
+\operatorname{poly}(H)e^{4\varphi H}.
+}
+\tag{2123.3}
+$$
+
+所以若 \(\varphi H\) 表示“希望得到的素数数目”，预算不是 \(e^{\varphi H}\)，而是经典归一化下的 \(e^{4\varphi H}\)。
+
+---
+

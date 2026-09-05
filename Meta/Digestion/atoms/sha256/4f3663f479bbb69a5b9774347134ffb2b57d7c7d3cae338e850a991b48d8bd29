@@ -1,0 +1,29 @@
+## 457. 乘法无限是可分解的
+
+虽然每个新素数加入独立坐标，但唯一分解使乘法结构具有：
+
+$$
+\mathbb N_{\ge1}
+\cong
+\bigoplus_p\mathbb N.
+$$
+
+因此 ζ 可以写成：
+
+$$
+\zeta(s)
+=
+\prod_p
+\sum_{k\ge0}p^{-ks}.
+$$
+
+这是一个无限系统，却具有完全局部因子化：
+
+$$
+\boxed{
+\text{multiplicative infinity is factorized}.
+}
+$$
+
+---
+

@@ -1,0 +1,2 @@
+**候签定理 6.35.2(部分和收敛到 tsum)**〔open;A-2;同模块〕。对任意 x y : ℝ 与 0 < x,`Filter.Tendsto (D5.S3.Axis.AxisPartialSum.axisPartialSum x y) Filter.atTop (nhds (∑' n, D5.S3.Axis.AxisPartialSum.wordWeight x y n))`,即「W(x, y) = lim W_K」在窗口内的精确形;极限值只以 `∑'` 表达,不引入第二个「逐轴因子」定义。
+

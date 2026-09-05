@@ -1,0 +1,30 @@
+## 518. Limit stage
+
+在极限序数 \(\lambda\)：
+
+$$
+V_\lambda
+=
+\overline{
+\bigcup_{\alpha<\lambda}V_\alpha
+}.
+$$
+
+残余为：
+
+$$
+R_\lambda=V_\lambda^\perp.
+$$
+
+仓库已经证明，这个极限残余恰好是所有前驱残余的交：
+
+$$
+\boxed{
+R_\lambda
+=
+\bigcap_{\alpha<\lambda}R_\alpha.
+}
+$$
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8221d453d609ea17b7adad0a04124eca6dd9f577989a272c0a8931365e7b8aeb
+  normalized_sha256: sha256:8221d453d609ea17b7adad0a04124eca6dd9f577989a272c0a8931365e7b8aeb
+cas_ref: sha256:8221d453d609ea17b7adad0a04124eca6dd9f577989a272c0a8931365e7b8aeb
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroInfinitude/CosinePacket.packetTransform_ge_half_near_zero
+    target_statement_id: sha256:7ad6efac536aea338eac28babbea73b37d7848942375d61e1a14995f267a1946
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZeroInfinitude/CosinePacket.packetTransform_ge_half_near_zero
+      definition_sha256: sha256:c6926481c606e73cf09c14d372b66230f8b482af79fbb5f5030c34c7a3ca9607
+      emission_sha256: sha256:a807b6f0fac73d7eda0ef5795874de2615bcf21957cbaa24c523a68472bee685
+  unresolved_subitems: []

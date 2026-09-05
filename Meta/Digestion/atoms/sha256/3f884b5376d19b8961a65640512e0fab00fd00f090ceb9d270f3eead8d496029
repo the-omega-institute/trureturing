@@ -1,0 +1,15 @@
+\[
+\boxed{
+D_{\mathsf A}(q,A)
+=
+\{(x,y):
+q(x)=q(y)
+\land
+\neg(A(x)\leftrightarrow A(y))\}.
+}
+\]
+
+它等价于准入边界存在混合纤维。
+
+---
+

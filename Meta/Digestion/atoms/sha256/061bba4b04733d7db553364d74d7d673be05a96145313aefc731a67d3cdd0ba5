@@ -1,0 +1,1 @@
+**义务**:公开定理 `rh_iff_forall_zeroData_weilSquarePositivity (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ Z : ZeroData, ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re`。

@@ -1,0 +1,55 @@
+## 253. 黄金共尾路径
+
+使用前面的：
+
+$$
+L_N
+=
+\left\lfloor
+\frac{N+1}{\varphi}
+\right\rfloor,
+$$
+
+$$
+S_N=N-L_N,
+$$
+
+定义第 \(N\) 个观察矩形：
+
+$$
+\boxed{
+\mathcal R_N
+=
+\{
+(n,k):
+0\le n\le L_N,\,
+0\le k\le S_N
+\}.
+}
+$$
+
+因为：
+
+$$
+L_N\to\infty,
+\qquad
+S_N\to\infty,
+$$
+
+所以：
+
+$$
+\bigcup_N\mathcal R_N
+=
+\mathbb N^2.
+$$
+
+每一步，只有一个边界坐标增加：
+
+* Zeckendorf 最小指标为偶：增加 \(L_N\)；
+* 为奇：增加 \(S_N\)。
+
+于是最新仓库中的 β parity theorem，给出一个天然的二维 RH 约束调度器。
+
+---
+

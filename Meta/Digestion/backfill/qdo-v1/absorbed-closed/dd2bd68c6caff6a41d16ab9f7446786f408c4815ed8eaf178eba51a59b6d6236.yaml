@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:dd2bd68c6caff6a41d16ab9f7446786f408c4815ed8eaf178eba51a59b6d6236
 cas_ref: sha256:dd2bd68c6caff6a41d16ab9f7446786f408c4815ed8eaf178eba51a59b6d6236
 coverage_gids:
-  - D5/S3/QuantumStates/DynamicsResidualQuotientUnique.dynamics_residual_invariant_and_unique_quotient
+  - gid: D5/S3/QuantumStates/DynamicsResidualQuotientUnique.dynamics_residual_invariant_and_unique_quotient
+    target_statement_id: sha256:35e42c53a9e835b0e9d4e023c3eb43aa45a656314f744263bd4d25bda4d6e474
 receipts:
-  coverage:
-    - gid: D5/S3/QuantumStates/DynamicsResidualQuotientUnique.dynamics_residual_invariant_and_unique_quotient
-      source_sha256: sha256:dd2bd68c6caff6a41d16ab9f7446786f408c4815ed8eaf178eba51a59b6d6236
-      target_statement_id: sha256:35e42c53a9e835b0e9d4e023c3eb43aa45a656314f744263bd4d25bda4d6e474
   scribe:
     - gid: D5/S3/QuantumStates/DynamicsResidualQuotientUnique.dynamics_residual_invariant_and_unique_quotient
       definition_sha256: sha256:a50303d5cbe8197af0c25250ae6ef5e707f47e1d06cda01c491b351661c10dd0
