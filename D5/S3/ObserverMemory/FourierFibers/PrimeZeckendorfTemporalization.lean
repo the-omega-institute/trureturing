@@ -3,7 +3,7 @@
    mirror-B: none(waiver:new-cross-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Positive heat time preserves first-mode prime identity, while wrapped phase time has arbitrarily late finite-channel recurrence. -/
+   digest: Heat time preserves prime identity; phase time admits finite-channel recurrence. -/
 
 import D5.S3.Analytic.EulerGerm.PrimeZeckendorfFrequencyRigidity
 import D5.S3.Weil.PrimeAddress.FinitePrimePhaseRecurrence
@@ -82,13 +82,17 @@ theorem finite_first_excited_phase_recurrence
           ξ * Real.log (prime : ℕ) := by
       rw [first_excited_prime_frequency]
       field_simp [ne_of_gt hscale]
-    have hclosePrime := hclose prime hprime
-    rw [← hargument] at hclosePrime
-    simpa [firstExcitedPhaseMultiplier] using hclosePrime
+    have hargumentC :
+        (↑(ξ / Real.goldenRatio ^ 2) : ℂ) * ↑(goldenSpectrum (prime, 0)) =
+          (ξ : ℂ) * ↑(Real.log (prime : ℕ)) := by
+      simpa only [Complex.ofReal_mul] using
+        congrArg (fun value : ℝ => (value : ℂ)) hargument
+    unfold firstExcitedPhaseMultiplier
+    rw [hargumentC]
+    exact hclose prime hprime
 
-/-- A positive heat observer and a wrapped phase observer therefore have
-opposite finite-channel behavior: the first is pointwise prime-faithful, while
-the second admits arbitrarily late near-coherence. -/
+/-- Positive heat is prime-faithful, while the wrapped phase vector admits
+arbitrarily late near-coherence on every finite collection of channels. -/
 theorem heat_phase_temporalization_dichotomy
     (heatTime : ℝ) (hheatTime : 0 < heatTime)
     (primes : Finset Nat.Primes) {ε : ℝ} (hε : 0 < ε)
