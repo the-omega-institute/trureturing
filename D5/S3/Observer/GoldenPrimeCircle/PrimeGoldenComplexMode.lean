@@ -40,7 +40,9 @@ theorem first_golden_complex_mode_euler
         ((time * goldenSpectrum (prime, 0) : ℝ) : ℂ) * Complex.I := by
     ring
   rw [← Complex.ofReal_mul, hcommute]
-  simp [Complex.exp_ofReal_mul_I]
+  exact congrArg
+    (fun z : ℂ => (Real.exp (-sigma * goldenSpectrum (prime, 0)) : ℂ) * z)
+    (Complex.exp_ofReal_mul_I (time * goldenSpectrum (prime, 0)))
 
 /-- The modulus forgets phase and retains exactly the heat amplitude. -/
 @[simp] theorem first_golden_complex_mode_norm
