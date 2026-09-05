@@ -58,7 +58,6 @@ public sealed class R13ScopeNarrowingTests
         var fixture = new RuleFixture();
         fixture.Files[formulaPath] = "{\"formula\":\"sqrt@5\",\"refs\":{}}\n";
         fixture.Baseline[formulaPath] = fixture.Files[formulaPath];
-        fixture.ForkPoint[formulaPath] = fixture.Files[formulaPath];
 
         var result = Execute(
             fixture,
@@ -77,7 +76,6 @@ public sealed class R13ScopeNarrowingTests
         var fixture = new RuleFixture();
         fixture.Files[RuleFixture.BlueprintPath] = fixture.Files[RuleFixture.RingPath];
         fixture.Baseline[RuleFixture.BlueprintPath] = fixture.Files[RuleFixture.RingPath];
-        fixture.ForkPoint[RuleFixture.BlueprintPath] = fixture.Files[RuleFixture.RingPath];
 
         var result = Execute(fixture, UnrelatedDelta);
 
@@ -193,10 +191,9 @@ public sealed class R13ScopeNarrowingTests
         var fixture = new RuleFixture();
         const string task = "D5-T0099";
         fixture.Baseline[RuleFixture.RingPath] += $"/-- TASK {task}\n    historical task. -/\n";
-        fixture.ForkPoint[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath];
+        fixture.Baseline[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath];
         fixture.Files[OldMalformedJson] = $"{{\"anomaly\":\"open\",\"case_id\":\"{task}\"}}\n";
         fixture.Baseline[OldMalformedJson] = fixture.Files[OldMalformedJson];
-        fixture.ForkPoint[OldMalformedJson] = fixture.Files[OldMalformedJson];
 
         var result = Execute(fixture, RuleFixture.RingPath);
 
@@ -215,7 +212,6 @@ public sealed class R13ScopeNarrowingTests
         fixture.Files[RuleFixture.RingPath] += "\n-- theorem-only candidate delta\n";
         fixture.Files[OldMalformedJson] = $"{{\"anomaly\":\"open\",\"case_id\":\"{task}\"}}\n";
         fixture.Baseline[OldMalformedJson] = fixture.Files[OldMalformedJson];
-        fixture.ForkPoint[OldMalformedJson] = fixture.Files[OldMalformedJson];
 
         var result = Execute(fixture, RuleFixture.RingPath);
 
@@ -233,7 +229,6 @@ public sealed class R13ScopeNarrowingTests
         var malformed = HeartsAuthorizationLedger.Header + "not a ledger row\n";
         fixture.Files[HeartsAuthorizationLedger.Path] = malformed;
         fixture.Baseline[HeartsAuthorizationLedger.Path] = malformed;
-        fixture.ForkPoint[HeartsAuthorizationLedger.Path] = malformed;
 
         var result = Execute(
             fixture,
@@ -253,7 +248,6 @@ public sealed class R13ScopeNarrowingTests
             .Replace("D5/S0/Carrier/Ring", "D5/S0/Carrier/Ring@", StringComparison.Ordinal);
         fixture.Files[RuleFixture.RingPath] = invalid;
         fixture.Baseline[RuleFixture.RingPath] = invalid;
-        fixture.ForkPoint[RuleFixture.RingPath] = invalid;
         return fixture;
     }
 
@@ -262,7 +256,6 @@ public sealed class R13ScopeNarrowingTests
         var fixture = new RuleFixture();
         fixture.Files[OldInvalidPath] = "legacy\n";
         fixture.Baseline[OldInvalidPath] = fixture.Files[OldInvalidPath];
-        fixture.ForkPoint[OldInvalidPath] = fixture.Files[OldInvalidPath];
         return fixture;
     }
 
@@ -271,7 +264,6 @@ public sealed class R13ScopeNarrowingTests
         var fixture = new RuleFixture();
         fixture.Files[OldMalformedJson] = "{\"anomaly\":\n";
         fixture.Baseline[OldMalformedJson] = fixture.Files[OldMalformedJson];
-        fixture.ForkPoint[OldMalformedJson] = fixture.Files[OldMalformedJson];
         return fixture;
     }
 
@@ -279,7 +271,6 @@ public sealed class R13ScopeNarrowingTests
     {
         fixture.Files.Remove(RuleFixture.BlueprintPath);
         fixture.Baseline.Remove(RuleFixture.BlueprintPath);
-        fixture.ForkPoint.Remove(RuleFixture.BlueprintPath);
     }
 
     private static CompletedRuleSet Execute(RuleFixture fixture, string changedPath) =>

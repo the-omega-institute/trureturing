@@ -16,7 +16,6 @@ internal sealed class FakeRepositoryGateway(
     RawRepositorySnapshot? baseline,
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
     Func<string, RawChangeSet>? changesForBase = null,
-    RawRepositorySnapshot? forkPoint = null,
     Func<RawRepositorySnapshot>? currentReader = null)
     : IRepositoryGateway
 {
@@ -35,7 +34,7 @@ internal sealed class FakeRepositoryGateway(
 
     public PreparedRepository Prepare(string? protectedBase) => new(
         "baseline",
-        forkPoint is null ? "baseline" : "fork",
+        "baseline",
         changes);
 
     public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
@@ -68,22 +67,16 @@ internal sealed class FakeRepositoryGateway(
     {
         ReadCount++;
         ReadRevisionCalls.Add(revision);
-        if (string.Equals(revision, "fork", StringComparison.Ordinal))
-        {
-            return WithAtomizerData(
-                forkPoint ?? throw new InvalidOperationException("fork snapshot should not be read"));
-        }
-
         return WithAtomizerData(
             baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }
 
     public RawChangeSet ReadCurrentChanges() => changes;
 
-    public RawChangeSet ReadChanges(string changeBase)
+    public RawChangeSet ReadChanges(string revision)
     {
-        ReadChangesCalls.Add(changeBase);
-        return changesForBase?.Invoke(changeBase) ?? changes;
+        ReadChangesCalls.Add(revision);
+        return changesForBase?.Invoke(revision) ?? changes;
     }
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>
