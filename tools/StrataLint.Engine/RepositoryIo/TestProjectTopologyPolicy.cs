@@ -215,6 +215,9 @@ internal static partial class RepositoryRules
         var productionProjects = allProjects
             .Where(static project => project.IsProduction)
             .ToArray();
+        var testProjects = allProjects
+            .Where(static project => project.IsTest)
+            .ToArray();
         var ownedTestProjects = allProjects
             .Where(static project => project.IsOwnedTest)
             .ToArray();
@@ -234,6 +237,9 @@ internal static partial class RepositoryRules
             static project => project.Path,
             StringComparer.Ordinal);
         var ownedTestByPath = ownedTestProjects.ToDictionary(
+            static project => project.Path,
+            StringComparer.Ordinal);
+        var testByPath = testProjects.ToDictionary(
             static project => project.Path,
             StringComparer.Ordinal);
         var participants = new Dictionary<TestProjectTopologyDebt, HashSet<string>>();
@@ -324,9 +330,18 @@ internal static partial class RepositoryRules
                     [test.Path, extra.Path]);
             }
 
+        }
+
+        // 主语与宾语都取全部受管测试项目,不取 ownedTestProjects:横跨型 harness 的豁免
+        // 论证的是拥有关系,与「该不该依赖另一个测试项目」正交(#5419)。**两侧都换** ——
+        // 只扩主语会留下「引用一个横跨型 harness」的同形缺口(当前无人这么写,故缺口空转,
+        // 但它与被扩的那一侧是同一个错误类)。本循环此前嵌在上面的 ownedTestProjects
+        // 循环内部,故必须整体提出来,否则换的只是过滤器而不是主语面。
+        foreach (var test in testProjects)
+        {
             foreach (var reference in test.DirectProjectReferences
-                         .Where(ownedTestByPath.ContainsKey)
-                         .Select(reference => ownedTestByPath[reference])
+                         .Where(testByPath.ContainsKey)
+                         .Select(reference => testByPath[reference])
                          .DistinctBy(static project => project.Path))
             {
                 AddDebt(
@@ -375,6 +390,7 @@ internal static partial class RepositoryRules
             project.Content,
             assemblyName,
             IsProductionProject(path),
+            IsTestProject(path, isXunit),
             IsOwnedTestProject(path, isXunit),
             directReferences);
     }
@@ -387,10 +403,19 @@ internal static partial class RepositoryRules
         && path.EndsWith(".csproj", StringComparison.Ordinal)
         && !string.Equals(path, TestSupportProjectPath, StringComparison.Ordinal);
 
-    private static bool IsOwnedTestProject(string path, bool isXunit) =>
+    // 「是不是受管测试项目」与「是不是拥有某个生产项目」是两个正交的问题,此前由同一个
+    // 谓词回答,于是 CrossCuttingHarnessPaths 对**拥有关系**的豁免被一并施加到
+    // test→test 依赖上,使 ArchitectureTests / ScriptTests 的四条 test→test 边
+    // 结构上不进债账(#5419)。IsOwnedTestProject 由 IsTestProject **收窄**而来,
+    // 而非并列另写一个谓词 —— 这样「旧判 owned 者仍 owned」在结构上成立(保守扩展),
+    // 不依赖测试来保证。
+    private static bool IsTestProject(string path, bool isXunit) =>
         isXunit
         && path.StartsWith("tools/tests/", StringComparison.Ordinal)
-        && path.EndsWith(".csproj", StringComparison.Ordinal)
+        && path.EndsWith(".csproj", StringComparison.Ordinal);
+
+    private static bool IsOwnedTestProject(string path, bool isXunit) =>
+        IsTestProject(path, isXunit)
         && !CrossCuttingHarnessPaths.Contains(path);
 
     private static string ResolveProjectReference(string projectPath, string include)
@@ -483,6 +508,7 @@ internal static partial class RepositoryRules
         string Content,
         string AssemblyName,
         bool IsProduction,
+        bool IsTest,
         bool IsOwnedTest,
         ImmutableArray<string> DirectProjectReferences);
 
