@@ -6,7 +6,7 @@ The fused catalog census agrees with every frozen reference field.
 
 **Theorem 1.1 (Saturated pair classification).**
 
-$$\operatorname{pairScan}(C, E, x, y) = none \Leftrightarrow \operatorname{indistinguishable}(C, \operatorname{fullIndexSet}(C), x, y)$$
+$$\left(\operatorname{pairScan}(C, E, x, y) = none \Leftrightarrow \operatorname{indistinguishable}(C, \operatorname{fullIndexSet}(C), x, y)\right) \land (\forall i, m, \operatorname{pairScan}(C, E, x, y) = \operatorname{one}(i, m) \Leftrightarrow \left(m = \operatorname{selectedMask}(\operatorname{primitives}(\operatorname{theoremAt}(C, i)), x, y) \land \left(\operatorname{indistinguishable}(C, \operatorname{without}(C, i), x, y) \land \left(\neg \operatorname{agrees}(\operatorname{primitives}(\operatorname{theoremAt}(C, i)), x, y)\right)\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.fusedPairClassification` (`✓ std3`). ∎
 

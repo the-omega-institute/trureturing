@@ -40,15 +40,31 @@ internal sealed class FusedCorrectnessDocument : IScribeDocumentDefinition
     private static readonly Formula E = F.Id("E");
     private static readonly Formula I = F.Id("i");
     private static readonly Formula L = F.Id("x");
+    private static readonly Formula M = F.Id("m");
     private static readonly Formula R = F.Id("y");
     private static readonly Formula S = F.Id("S");
 
     private static Formula Counts() => Call("fusedCounts", C, S, E);
 
-    private static Formula PairClassification() => Seq(
-        Eq(Call("pairScan", C, E, L, R), F.Id("none")), Sp,
-        Leftrightarrow, Sp,
-        Call("indistinguishable", C, Call("fullIndexSet", C), L, R));
+    private static Formula PairClassification()
+    {
+        var scan = Call("pairScan", C, E, L, R);
+        var primitives = Call("primitives", Call("theoremAt", C, I));
+        var full = Iff(
+            Eq(scan, F.Id("none")),
+            Call("indistinguishable", C, Call("fullIndexSet", C), L, R));
+        var singleton = Iff(
+            Eq(scan, Call("one", I, M)),
+            And(
+                Eq(M, Call("selectedMask", primitives, L, R)),
+                And(
+                    Call("indistinguishable", C, Call("without", C, I), L, R),
+                    new Formula.Not(Call("agrees", primitives, L, R)))));
+
+        return And(
+            full,
+            Seq(Open, Forall, Sp, I, Comma, Sp, M, Comma, Sp, singleton, Close));
+    }
 
     private static Formula FullCorrect() => Eq(
         Call("full", Counts()), Call("escapeNumerator", C, Call("fullIndexSet", C)));
@@ -101,4 +117,10 @@ internal sealed class FusedCorrectnessDocument : IScribeDocumentDefinition
 
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+
+    private static Formula Iff(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Iff, right);
+
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
 }
