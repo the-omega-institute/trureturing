@@ -20,4 +20,4 @@ using Xunit;
 // 这条勘正有实际后果:框架类型**可以**迁往别处(如 StrataLint.TestSupport),
 // 只需同步更新此实参 —— 而我先前写的「不得随任何被引用的类型迁走」会让读者以为不行,
 // 从而误判共享脚手架的可迁移面(见 #5419 的 L3)。
-[assembly: TestFramework("StrataLint.Tests.TestScratchFramework", "StrataLint.Tests")]
+[assembly: TestFramework("StrataLint.TestSupport.TestScratchFramework", "StrataLint.TestSupport")]
