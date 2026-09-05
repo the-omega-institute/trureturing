@@ -125,8 +125,8 @@ theorem finite_crt_gluing {ι : Type*} [Fintype ι] (m : ι → ℕ) (a : ι →
     let e := ZMod.prodEquivPi m hcop
     refine ⟨e.symm (fun i => (a i : ZMod (m i))), ?_, ?_⟩
     · intro i
-      simpa only [e, ZMod.prodEquivPi_apply] using
-        congrFun (e.apply_symm_apply (fun i => (a i : ZMod (m i)))) i
+      exact (ZMod.prodEquivPi_apply m hcop _ i).symm.trans
+        (congrFun (e.apply_symm_apply (fun i => (a i : ZMod (m i)))) i)
     · intro z hz
       apply e.injective
       rw [e.apply_symm_apply]
