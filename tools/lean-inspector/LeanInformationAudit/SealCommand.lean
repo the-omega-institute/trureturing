@@ -25,7 +25,7 @@ private def theoremJson (denominator : Nat) (record : SealTheoremRecord) : Json 
         (entry.1, toJson entry.2)),
     ("gain_rate", rateJson record.uniqueCaptureCount denominator),
     ("lowers_escape", true),
-    ("certificate", record.theoremName.str "__lowers_escape" |>.toString),
+    ("certificate", record.certificateName.toString),
     ("proof_method", record.proofMethod)
   ]
 
