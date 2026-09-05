@@ -16753,3 +16753,1519 @@ $$
 
 [1]: https://arxiv.org/html/quant-ph/0702243v3 "https://arxiv.org/html/quant-ph/0702243v3"
 [2]: https://link.springer.com/article/10.1007/BF01257415 "https://link.springer.com/article/10.1007/BF01257415"
+# 因果粗粒化与局域时空的有效窗口
+
+## ——量子观察者—关系时空理论第一百二十一至第一百三十节增订
+
+### 摘要
+
+上一轮建立了宏观经典钟律的误差界，但其中有两个条件尚需进一步展开：
+
+第一，结构单元之间的关联为何保持可控？
+
+第二，一个局域观察者怎样实际取得宏观平均，而不偷偷使用瞬时、非局域的操作？
+
+本增订从**有限深度局域量子电路**出发，证明因果支持、关联增长、局部平均涨落和观察者读取范围之间的关系。随后导出：
+
+$$
+\boxed{
+\text{经典钟律误差}
+\lesssim
+\text{实验预算}
+\left[
+\left(\frac{\text{关联影响尺度}}{\text{平均尺度}}\right)^{D/2}
++
+\frac{\text{平均尺度}}{\text{背景变化尺度}}
+\right].
+}
+$$
+
+该式表明：平均区域不能过小，也不能任意大。过小不能充分压低涨落；过大会混合不同位置的几何响应。
+
+同时，本文证明两个限制：
+
+$$
+\boxed{
+\text{局域观察者不能瞬时读取任意远处的宏观平均};
+}
+$$
+
+$$
+\boxed{
+\text{钟过程一致接近}
+\not\Rightarrow
+\text{曲率一致接近}.
+}
+$$
+
+局域动力学限制关联传播，是 Lieb–Robinson 理论及其相关研究的既有内容。以下先在完全有限的电路模型中给出直接证明，再说明连续时间推广所需的条件。([arXiv][1])
+
+---
+
+# 121．从交互规则定义因果支持，而不是先假定连续时空
+
+## 定义 121.1　有限局域结构
+
+设有限连通图为
+
+$$
+G=(\Lambda,E),
+$$
+
+其图距离为 \(d_G\)。每个节点 \(x\) 带有有限维 Hilbert 空间：
+
+$$
+\mathcal H_x.
+$$
+
+完整结构空间为
+
+$$
+\mathcal H_\Lambda
+=
+\bigotimes_{x\in\Lambda}\mathcal H_x.
+$$
+
+记 \(\mathcal A_X\) 为仅作用于节点集合 \(X\subseteq\Lambda\) 的算子代数。
+
+这里的图首先表示**允许直接交互的关系**。图距离尚不是米制空间距离；后者需要实际钟与信号标定。
+
+---
+
+## 定义 121.2　局域电路层
+
+第 \(j\) 层酉操作为
+
+$$
+U_j=\prod_\alpha U_{j,\alpha},
+$$
+
+其中，同一层中不同门的支持互不相交，并满足
+
+$$
+\operatorname{diam}_G(\operatorname{supp}U_{j,\alpha})
+\le r_0.
+$$
+
+经过 \(m\) 层后的完整操作为
+
+$$
+\mathcal U_m=U_m\cdots U_1.
+$$
+
+所有经典控制信号若参与反馈，也必须包含在相应局域寄存器与门中。不能额外允许瞬时传遍全图的经典通信。
+
+---
+
+## 定理 121.1　有限电路的严格因果支持
+
+若
+
+$$
+O_X\in\mathcal A_X,
+$$
+
+则
+
+$$
+\boxed{
+\mathcal U_m^\dagger O_X\mathcal U_m
+\in
+\mathcal A_{B_{mr_0}(X)},
+}
+\tag{121.1}
+$$
+
+其中
+
+$$
+B_r(X)=\{y:d_G(y,X)\le r\}.
+$$
+
+### 证明
+
+一层中，与 \(O_X\) 支持不相交的门与它可交换，在共轭作用中相消。
+
+只有与当前支持相交的门可能扩大支持。每个门的直径至多为 \(r_0\)，因此一次共轭最多把支持扩大到其 \(r_0\)-邻域。
+
+对层数归纳，即得式（121.1）。∎
+
+### 解释
+
+这个模型中的因果范围是由操作语法证明出来的：
+
+$$
+\boxed{
+\text{有限门支持}
++
+\text{有限组合深度}
+\longrightarrow
+\text{有限影响域}.
+}
+$$
+
+它还不是已经恢复的完整相对论时空，但已经给出时空重建不能违反的底层传播约束。
+
+---
+
+# 122．因果支持直接产生项目中的精确下降
+
+## 定义 122.1　有限时刻的观察接口
+
+观察者在输出区域 \(X\) 读取状态：
+
+$$
+q_X(\rho)=\operatorname{Tr}_{\Lambda\setminus X}\rho.
+$$
+
+令
+
+$$
+Z=B_{mr_0}(X).
+$$
+
+输入接口为
+
+$$
+q_Z(\rho)=\operatorname{Tr}_{\Lambda\setminus Z}\rho.
+$$
+
+---
+
+## 定理 122.1　有限因果域足以决定输出
+
+存在完全正、保迹映射
+
+$$
+\overline\Phi_{X,m}:\mathcal D(\mathcal H_Z)
+\to\mathcal D(\mathcal H_X),
+$$
+
+使对全部联合初态——包括具有初始纠缠的状态——成立：
+
+$$
+\boxed{
+q_X(\mathcal U_m\rho\mathcal U_m^\dagger)
+=
+\overline\Phi_{X,m}(q_Z(\rho)).
+}
+\tag{122.1}
+$$
+
+### 证明
+
+对输出区域任意效果 \(E_X\)，定理 121.1 保证
+
+$$
+\mathcal U_m^\dagger(E_X\otimes I)\mathcal U_m
+$$
+
+只支持于 \(Z\)。
+
+因此其期望只依赖输入约化态 \(q_Z(\rho)\)。
+
+为显式构造通道，任选一个固定的外部辅助态 \(\tau_{\Lambda\setminus Z}\)，定义
+
+$$
+\overline\Phi_{X,m}(\sigma)
+=
+q_X\!\left(
+\mathcal U_m
+(\sigma\otimes\tau)
+\mathcal U_m^\dagger
+\right).
+$$
+
+该映射完全正、保迹。由于所有输出效果的拉回都只支持于 \(Z\)，它与原联合态的外部部分及关联无关，故得到式（122.1）。∎
+
+这里的固定辅助态只用于构造下降映射，不表示真实过程每一步都重新初始化环境。
+
+---
+
+## 推论 122.1　有限因果不可见性
+
+若两种初态满足
+
+$$
+q_Z(\rho)=q_Z(\sigma),
+$$
+
+则
+
+$$
+q_X(\mathcal U_m\rho\mathcal U_m^\dagger)
+=
+q_X(\mathcal U_m\sigma\mathcal U_m^\dagger).
+$$
+
+这正是项目 `ExactDescentNoCarry.lean` 所处理的交换方块：一旦下降等式成立，同一输入纤维中的两个状态不能在目标读数上分离。
+
+### 与视界的区别
+
+这里证明的是：
+
+$$
+\text{在指定有限深度内不可见}.
+$$
+
+它不等于：
+
+$$
+\text{在全部未来永远不可见}.
+$$
+
+随着 \(m\) 增长，因果域可以扩大。要讨论永久不可见性，需要对所有未来实验取交；项目的全部未来核与最大不变隐藏子空间正是处理这种更强目标。
+
+因此，有限观察窗口外的节点不能仅凭“暂时不可见”被称为黑洞内部。
+
+---
+
+# 123．从局域动力学证明关联增长界
+
+上一轮把协方差求和界作为假设。本节在一类明确初态下推导它。
+
+## 假设 123.1　初始乘积结构
+
+设
+
+$$
+\sigma_0=\bigotimes_{x\in\Lambda}\sigma_x,
+$$
+
+并令
+
+$$
+\sigma_m=\mathcal U_m\sigma_0\mathcal U_m^\dagger.
+$$
+
+对每个节点给定 Hermitian 读数 \(R_x\)，其谱满足共同界：
+
+$$
+r_-I\le R_x\le r_+I,
+\qquad
+0<r_-<r_+.
+$$
+
+记
+
+$$
+\Delta_R=\frac{r_+-r_-}{2}.
+$$
+
+---
+
+## 定义 123.1　实际过去影响域
+
+沿具体电路逆向追踪输出节点 \(x\)，得到一个初始节点集合：
+
+$$
+\mathsf P_m(x).
+$$
+
+它满足
+
+$$
+\mathcal U_m^\dagger R_x\mathcal U_m
+\in\mathcal A_{\mathsf P_m(x)},
+$$
+
+以及
+
+$$
+\mathsf P_m(x)\subseteq B_{mr_0}(x).
+$$
+
+它可以由有限门支持的并集递归计算，不必通过模拟全部量子态求出。
+
+---
+
+## 定理 123.1　不相交过去域不产生连通关联
+
+若
+
+$$
+\mathsf P_m(x)\cap\mathsf P_m(y)=\varnothing,
+$$
+
+则
+
+$$
+\boxed{
+\operatorname{Cov}_{\sigma_m}(R_x,R_y)=0.
+}
+\tag{123.1}
+$$
+
+特别地，若
+
+$$
+d_G(x,y)>2mr_0,
+$$
+
+则该协方差为零。
+
+### 证明
+
+把两个读数拉回初始时刻：
+
+$$
+\widetilde R_x=\mathcal U_m^\dagger R_x\mathcal U_m,
+\qquad
+\widetilde R_y=\mathcal U_m^\dagger R_y\mathcal U_m.
+$$
+
+它们支持于不相交的初始节点集合。
+
+由于 \(\sigma_0\) 为乘积态，
+
+$$
+\operatorname{Tr}(\sigma_0\widetilde R_x\widetilde R_y)
+=
+\operatorname{Tr}(\sigma_0\widetilde R_x)
+\operatorname{Tr}(\sigma_0\widetilde R_y).
+$$
+
+故协方差为零。
+
+距离条件保证两个半径 \(mr_0\) 的球不相交。∎
+
+这是一种严格电路版本的关联传播限制。连续时间局域 Hamiltonian 中，相应结论通常具有指数衰减尾部，而不是严格截断。([arXiv][1])
+
+---
+
+## 定义 123.2　过去域重叠数
+
+对平均区域 \(Q\subseteq\Lambda\)，令
+
+$$
+N_Q=|Q|,
+$$
+
+并定义
+
+$$
+\boxed{
+b_Q(m)
+=
+\max_{x\in Q}
+\#\left\{
+y\in Q:
+\mathsf P_m(x)\cap\mathsf P_m(y)\ne\varnothing
+\right\}.
+}
+\tag{123.2}
+$$
+
+显然
+
+$$
+1\le b_Q(m)\le N_Q.
+$$
+
+---
+
+## 定理 123.2　动态协方差求和界
+
+有
+
+$$
+\boxed{
+\sum_{x,y\in Q}
+\left|
+\operatorname{Cov}_{\sigma_m}(R_x,R_y)
+\right|
+\le
+N_Q\,b_Q(m)\,\Delta_R^2.
+}
+\tag{123.3}
+$$
+
+### 证明
+
+谱区间界给出
+
+$$
+\operatorname{Var}_{\sigma_m}(R_x)\le\Delta_R^2.
+$$
+
+由状态上的 Cauchy–Schwarz 不等式，
+
+$$
+|\operatorname{Cov}(R_x,R_y)|
+\le
+\sqrt{\operatorname{Var}(R_x)\operatorname{Var}(R_y)}
+\le\Delta_R^2.
+$$
+
+对每个 \(x\)，定理 123.1 保证至多 \(b_Q(m)\) 个 \(y\) 可能贡献非零项。求和即得。∎
+
+### 一个直接推论
+
+如果想从乘积态制备两处相距 \(L\)、且连通关联非零的记录，则必须有
+
+$$
+m\ge\frac{L}{2r_0}.
+$$
+
+因此，上一轮的长程相关反例并不能在任意短的局域演化中无条件产生。这类关联制备时间下界也是局域量子动力学研究的重要结论。([arXiv][1])
+
+---
+
+# 124．局部宏观钟律的经典化误差
+
+## 定义 124.1　区域平均与有效钟速
+
+定义
+
+$$
+\widehat R_Q
+=
+\frac1{N_Q}\sum_{x\in Q}R_x,
+$$
+
+$$
+\widehat n_Q=\sqrt{\widehat R_Q},
+$$
+
+以及参考均值
+
+$$
+r_Q(m)=\operatorname{Tr}(\sigma_m\widehat R_Q),
+\qquad
+n_Q(m)=\sqrt{r_Q(m)}.
+$$
+
+令
+
+$$
+n_*=\sqrt{r_-}.
+$$
+
+由于每个 \(R_x\ge r_-I\)，有
+
+$$
+\widehat n_Q\ge n_*I,
+\qquad
+n_Q(m)\ge n_*.
+$$
+
+---
+
+## 定理 124.1　局域动力学控制宏观钟速残差
+
+有
+
+$$
+\boxed{
+\operatorname{Var}_{\sigma_m}(\widehat R_Q)
+\le
+\Delta_R^2\frac{b_Q(m)}{N_Q},
+}
+\tag{124.1}
+$$
+
+以及
+
+$$
+\boxed{
+\left\|
+(\widehat n_Q-n_Q(m)I)\sigma_m^{1/2}
+\right\|_2
+\le
+\frac{\Delta_R}{2n_*}
+\sqrt{\frac{b_Q(m)}{N_Q}}.
+}
+\tag{124.2}
+$$
+
+### 证明
+
+展开平均算子的方差，并应用定理 123.2，得到式（124.1）。
+
+再使用
+
+$$
+\widehat n_Q-n_QI
+=
+(\widehat n_Q+n_QI)^{-1}
+(\widehat R_Q-r_QI).
+$$
+
+逆算子范数不超过 \(1/(2n_*)\)，故
+
+$$
+\left\|
+(\widehat n_Q-n_QI)\sigma_m^{1/2}
+\right\|_2
+\le
+\frac{\sqrt{\operatorname{Var}(\widehat R_Q)}}{2n_*}.
+$$
+
+代入式（124.1）。∎
+
+---
+
+## 定义 124.2　由因果证书给出的有效样本数
+
+定义
+
+$$
+\boxed{
+N_{\mathrm{eff}}(Q,m)
+=
+\frac{N_Q}{b_Q(m)}.
+}
+\tag{124.3}
+$$
+
+则
+
+$$
+\boxed{
+\text{钟速残差}
+\le
+\frac{\Delta_R}{2n_*\sqrt{N_{\mathrm{eff}}}}.
+}
+\tag{124.4}
+$$
+
+这是由当前界定义的保守有效样本数，不是宣称每个影响域实际上都达到最大关联。
+
+**宏观经典性由近乎独立的影响域数量控制，而不只是由总节点数控制。**
+
+---
+
+## 定理 124.2　一次局部快照的统计证书
+
+同一时刻，不同节点的 \(R_x\) 可分别测量。把测得的本征值平均，记为 \(\widehat r_{\mathrm{sample}}\)，则
+
+$$
+\mathbb E[\widehat r_{\mathrm{sample}}]=r_Q(m),
+$$
+
+且
+
+$$
+\boxed{
+\Pr\!\left(
+|\widehat r_{\mathrm{sample}}-r_Q(m)|\ge\varepsilon
+\right)
+\le
+\frac{
+\Delta_R^2b_Q(m)
+}{
+N_Q\varepsilon^2
+}.
+}
+\tag{124.5}
+$$
+
+### 证明
+
+这些局部读数彼此可交换，所以它们的联合测量给出一个经典联合分布。平均结果的方差等于 \(\widehat R_Q\) 的量子方差。
+
+应用式（124.1）及 Chebyshev 不等式。∎
+
+这提供了一个实际统计读取方式，但结果还要通过合法通信汇总。测量也可能改变后续结构态，不能把一次快照的统计定理当成无扰、永久读取能力。
+
+---
+
+# 125．全过程经典化的保证时间窗
+
+## 假设 125.1　明确的钟询问协议
+
+在结构的局域更新之间，插入钟询问：
+
+$$
+V_j
+=
+e^{-i\theta_jK_j\otimes\widehat n_{Q_j}},
+$$
+
+其中 \(K_j\) 是无量纲 Hermitian 控制算子。
+
+候选经典询问为
+
+$$
+V_j^{\mathrm{cl}}
+=
+e^{-i\theta_jn_{Q_j}(m_j)K_j}\otimes I.
+$$
+
+\(m_j\) 表示候选过程中，该次询问之前已执行的结构层数。
+
+这里的 \(\widehat n_{Q_j}\) 是指定的集体作用目标。它能否在有限局域电路中按所需深度实现，要由第 127 节单独检查，不能被算子定义自动保证。
+
+---
+
+## 定理 125.1　共享结构全过程的误差界
+
+设结构初态为假设 123.1 的乘积态，初始时与观察者及其测试参照独立。
+
+则实际目标过程与经典候选过程的输出通道满足
+
+$$
+\boxed{
+\frac12
+\|\mathcal P-\mathcal P_{\mathrm{cl}}\|_\diamond
+\le
+\frac{\Delta_R}{2n_*}
+\sum_j
+|\theta_j|\,\|K_j\|
+\sqrt{\frac{b_{Q_j}(m_j)}{N_{Q_j}}}.
+}
+\tag{125.1}
+$$
+
+### 证明
+
+对实际与理想联合酉乘积作望远镜展开。
+
+每个差项的右侧只包含候选前缀，因此结构态为已知的自由局域演化态 \(\sigma_{m_j}\)；左侧实际后缀酉演化不增加范数。
+
+对单个询问，Duhamel 公式给出
+
+$$
+\|(V_j-V_j^{\mathrm{cl}})
+(\psi\otimes\Sigma_{m_j})\|
+\le
+|\theta_j|\|K_j\|
+\|(\widehat n_{Q_j}-n_{Q_j}I)\sigma_{m_j}^{1/2}\|_2,
+$$
+
+其中 \(\Sigma_{m_j}\) 为结构态纯化。
+
+应用定理 124.1，对全部观察者输入及附加测试参照取上确界，即得。∎
+
+这个证明不需要把实际结构在每一步重置。其组合方式与项目已有的 Duhamel 缺陷传播恒等式相容。
+
+---
+
+## 推论 125.1　多项式增长图上的充分时间窗
+
+假设图球满足
+
+$$
+|B_r(x)|\le c_+(1+r)^D.
+$$
+
+这里 \(D\) 是图体积增长指数，尚未自动等同于现实空间维数。
+
+若所有平均区域大小为 \(N\)，前 \(m\) 次询问均满足
+
+$$
+m_j\le m,
+\qquad
+|\theta_j|\|K_j\|\le a,
+$$
+
+则
+
+$$
+\boxed{
+\frac12
+\|\mathcal P-\mathcal P_{\mathrm{cl}}\|_\diamond
+\le
+\frac{a\Delta_R\sqrt{c_+}}{2n_*}
+\frac{m(1+2r_0m)^{D/2}}{\sqrt N}.
+}
+\tag{125.2}
+$$
+
+因此，在这些一致条件下，
+
+$$
+\boxed{
+m=o\!\left(N^{1/(D+2)}\right)
+}
+\tag{125.3}
+$$
+
+是保证误差趋零的一个充分尺度。
+
+这不是经典描述的最晚失效时刻。界变松不代表实际关联已经达到上界；特殊动力学可以在更长时间内保持小涨落。
+
+---
+
+# 126．平均区域不能无限缩小，也不能无限扩大
+
+上一节只控制涨落。现在加入背景钟律的空间变化。
+
+## 假设 126.1　局部非均匀响应
+
+取中心节点 \(x_0\)，平均区域为
+
+$$
+Q_L=B_L(x_0).
+$$
+
+定义单点均值
+
+$$
+r_x(m,v)=\operatorname{Tr}[\sigma_mR_x(v)].
+$$
+
+假设在所研究区域和方向上，
+
+$$
+\boxed{
+|r_x(m,v)-r_{x_0}(m,v)|
+\le
+\kappa\,d_G(x,x_0).
+}
+\tag{126.1}
+$$
+
+\(\kappa\) 是当前标定下的空间变化上界，不是表面引力。
+
+---
+
+## 定理 126.1　涨落误差与空间平均偏差的联合界
+
+令
+
+$$
+n_0(m,v)=\sqrt{r_{x_0}(m,v)}.
+$$
+
+则
+
+$$
+\boxed{
+\begin{aligned}
+&\left\|
+\bigl(\sqrt{\widehat R_{Q_L}(v)}-n_0(m,v)I\bigr)
+\sigma_m^{1/2}
+\right\|_2\\
+&\quad\le
+\frac1{2n_*}
+\sqrt{
+\Delta_R^2\frac{b_{Q_L}(m)}{N_{Q_L}}
++
+\kappa^2L^2
+}.
+\end{aligned}
+}
+\tag{126.2}
+$$
+
+因此也有较简单的上界：
+
+$$
+\boxed{
+\text{局部钟律误差}
+\le
+\frac{\Delta_R}{2n_*}
+\sqrt{\frac{b_{Q_L}(m)}{N_{Q_L}}}
++
+\frac{\kappa L}{2n_*}.
+}
+\tag{126.3}
+$$
+
+### 证明
+
+记 \(r_Q=\operatorname{Tr}(\sigma_m\widehat R_Q)\)。则
+
+$$
+\operatorname{Tr}
+\left[
+\sigma_m(\widehat R_Q-r_{x_0}I)^2
+\right]
+=
+\operatorname{Var}(\widehat R_Q)
++
+(r_Q-r_{x_0})^2.
+$$
+
+由假设，
+
+$$
+|r_Q-r_{x_0}|\le\kappa L.
+$$
+
+再使用平方根因式分解及定理 124.1，得到式（126.2）；最后用 \(\sqrt{a^2+b^2}\le a+b\)。∎
+
+---
+
+## 定理 126.2　最优粗粒化尺度
+
+进一步假设，在指定尺度范围内，
+
+$$
+N_{Q_L}\ge c_-L^D,
+$$
+
+并记
+
+$$
+\xi_m=1+2r_0m.
+$$
+
+则式（126.3）具有形式
+
+$$
+E(L)\le A_mL^{-D/2}+BL,
+\tag{126.4}
+$$
+
+其中
+
+$$
+A_m=
+\frac{\Delta_R}{2n_*}
+\sqrt{\frac{c_+}{c_-}}\,
+\xi_m^{D/2},
+\qquad
+B=\frac{\kappa}{2n_*}.
+$$
+
+若 \(A_m,B>0\)，连续尺度上的最优点为
+
+$$
+\boxed{
+L_*=
+\left(\frac{DA_m}{2B}\right)^{2/(D+2)}.
+}
+\tag{126.5}
+$$
+
+最小上界为
+
+$$
+\boxed{
+E_*
+=
+\frac{D+2}{2}
+A_m^{2/(D+2)}
+\left(\frac{2B}{D}\right)^{D/(D+2)}.
+}
+\tag{126.6}
+$$
+
+### 证明
+
+对 \(A_mL^{-D/2}+BL\) 求导，解驻点方程。二阶导数为正，故为唯一极小点。∎
+
+图半径为整数时，可以选择相邻整数；实际最优点还必须处于所假设的尺度范围内。
+
+定义背景变化尺度
+
+$$
+L_{\mathrm{geom}}=\frac{\Delta_R}{\kappa},
+$$
+
+则忽略已经明确给出的常数后，
+
+$$
+\boxed{
+L_*
+\sim
+\xi_m^{D/(D+2)}
+L_{\mathrm{geom}}^{2/(D+2)},
+}
+\tag{126.7}
+$$
+
+以及
+
+$$
+\boxed{
+E_*
+\sim
+\frac{\Delta_R}{n_*}
+\left(
+\frac{\xi_m}{L_{\mathrm{geom}}}
+\right)^{D/(D+2)}.
+}
+\tag{126.8}
+$$
+
+### 核心解释
+
+一个良好的局部经典描述通常需要尺度分离：
+
+$$
+\boxed{
+\xi_m\ll L\ll L_{\mathrm{geom}}.
+}
+\tag{126.9}
+$$
+
+左侧要求平均区域包含许多近乎独立的影响域。
+
+右侧要求平均区域内的背景仍然足够相似。
+
+**经典时空不是“平均得越多越好”，而是存在一个同时压低涨落与非均匀偏差的有效窗口。**
+
+这仍然是误差证书的最优尺度，不是已经推导出的普遍最小长度。
+
+---
+
+# 127．宏观平均不能作为瞬时的局域操作
+
+现在补上集体算子的物理可实现性。
+
+## 假设 127.1　局域读取装置
+
+观察者的最终输出寄存器位于节点 \(o\)。整个实现使用第 121 节的局域门，深度为 \(m\)。
+
+记其输入因果域为
+
+$$
+Z=B_{mr_0}(o).
+$$
+
+取一个平均区域 \(Q\)，其中有
+
+$$
+k=|Q\setminus Z|>0
+$$
+
+个节点位于该因果域之外。
+
+每个结构节点是量子比特，定义
+
+$$
+R_x=I+|1\rangle\langle1|_x.
+$$
+
+希望实现的目标是让观察者探针经历
+
+$$
+\boxed{
+U_{\mathrm{target}}
+=
+\exp\left[
+-i\alpha\,|1\rangle\langle1|_O
+\otimes\sqrt{\frac1{|Q|}\sum_{x\in Q}R_x}
+\right].
+}
+\tag{127.1}
+$$
+
+---
+
+## 定理 127.1　有限深度局域实现的误差下界
+
+对全部输入都工作的局域实现，其最坏输出迹距离误差至少为
+
+$$
+\boxed{
+\varepsilon_{\mathrm{impl}}
+\ge
+\frac12
+\left|
+\sin\left[
+\frac\alpha2
+\left(
+\sqrt{1+\frac{k}{|Q|}}-1
+\right)
+\right]
+\right|.
+}
+\tag{127.2}
+$$
+
+只要右侧非零，就不存在该深度下的精确实现。
+
+### 证明
+
+取两种结构输入：
+
+第一种在 \(Q\) 上全部为 \(|0\rangle\)。
+
+第二种仅在 \(Q\setminus Z\) 上为 \(|1\rangle\)，其余与第一种相同。
+
+二者在观察者的全部输入因果域 \(Z\) 上完全相同。因此，由定理 122.1，任意深度 \(m\) 的局域实现必须给出相同观察者输出。
+
+但对探针初态 \(|+\rangle\)，目标操作分别产生相位
+
+$$
+\alpha,\qquad
+\alpha\sqrt{1+k/|Q|}.
+$$
+
+两个目标纯态的迹距离为
+
+$$
+D_{\mathrm{target}}
+=
+\left|
+\sin\left[
+\frac\alpha2
+\left(
+\sqrt{1+\frac{k}{|Q|}}-1
+\right)
+\right]
+\right|.
+$$
+
+同一个实际输出不能同时以小于 \(D_{\mathrm{target}}/2\) 的误差逼近两个目标态。由三角不等式得到式（127.2）。∎
+
+### 结论
+
+$$
+\boxed{
+\text{集体算子在数学上定义良好}
+\not\Rightarrow
+\text{点状观察者能在任意短时间内调用它}.
+}
+$$
+
+若平均区域半径为 \(L\)，要让任意远端输入都可能影响中心输出，至少需要相应的因果深度。
+
+可以使用分布式观察者、提前建立的记录、并行局部测量或明确的汇总网络，但这些都是额外物理资源，不能从“宏观极限”一词中自动获得。
+
+因此，第 125 节的完整误差账本应写为
+
+$$
+\boxed{
+\varepsilon_{\mathrm{total}}
+\le
+\varepsilon_{\mathrm{impl}}
++
+\varepsilon_{\mathrm{classical}}
++
+\varepsilon_{\mathrm{readout}}.
+}
+\tag{127.3}
+$$
+
+其中每一项对应不同的证明任务。
+
+---
+
+# 128．连续时间推广：严格因果域变成可控的近局域尾部
+
+有限电路给出严格支持。对连续时间的局域 Hamiltonian，
+
+$$
+H=\sum_Zh_Z,
+$$
+
+一般不能直接声称有限时间内远处作用严格为零。
+
+在有限程或适当快速衰减的相互作用条件下，可以使用 Lieb–Robinson 型近局域估计。局部观测量的近似支持与传播界已有系统框架。([arXiv][2])
+
+## 假设 128.1　已认证的近局域估计
+
+对单点算子 \(A_x\)，假设存在支持于 \(B_\ell(x)\) 的近似算子 \(A_x^{(\ell)}(t)\)，满足
+
+$$
+\|A_x^{(\ell)}(t)\|\le\|A_x\|,
+$$
+
+以及
+
+$$
+\boxed{
+\|\alpha_t(A_x)-A_x^{(\ell)}(t)\|
+\le
+C_0\|A_x\|e^{-\mu(\ell-v_{\mathrm{LR}}|t|)}.
+}
+\tag{128.1}
+$$
+
+其中
+
+$$
+\alpha_t(A)=e^{itH/\hbar}Ae^{-itH/\hbar}.
+$$
+
+式（128.1）在形式化中应作为已经证明或明确导入的定理，而不能只在文中标注“由局域性显然”。
+
+---
+
+## 定理 128.1　连续时间的关联体积界
+
+设初态仍为乘积态，图球具有
+
+$$
+|B_r(x)|\le c_+(1+r)^D,
+$$
+
+且局部读数具有第 123 节的谱界。
+
+则存在仅依赖于上述局域常数与图增长常数的 \(C_1\)，使
+
+$$
+\boxed{
+\sum_{y\in Q}
+|\operatorname{Cov}_{\sigma(t)}(R_x,R_y)|
+\le
+C_1\Delta_R^2(1+v_{\mathrm{LR}}|t|)^D.
+}
+\tag{128.2}
+$$
+
+因此
+
+$$
+\boxed{
+\operatorname{Var}_{\sigma(t)}(\widehat R_Q)
+\le
+\frac{
+C_1\Delta_R^2(1+v_{\mathrm{LR}}|t|)^D
+}{
+|Q|
+}.
+}
+\tag{128.3}
+$$
+
+### 证明概要
+
+先把 \(R_x,R_y\) 减去共同谱区间中点，使其范数不超过 \(\Delta_R\)，而协方差不变。
+
+当 \(x,y\) 相距 \(L\) 时，选取
+
+$$
+\ell<\frac L2.
+$$
+
+两近似算子支持不相交，其在初始乘积态中的协方差为零。
+
+实际协方差与近似协方差之差，可由式（128.1）及三角不等式控制。因此得到形如
+
+$$
+|\operatorname{Cov}(R_x,R_y)|
+\le
+\Delta_R^2
+\min\left\{
+1,\,
+C_2e^{-\mu'(L-2v_{\mathrm{LR}}|t|)}
+\right\}.
+$$
+
+在近区使用图球体积界，在远区按距离壳层求和。指数衰减压过多项式增长，得到式（128.2）。
+
+再对 \(x\in Q\) 求和并除以 \(|Q|^2\)，得到式（128.3）。∎
+
+### 限定
+
+\(v_{\mathrm{LR}}\) 是由所选相互作用得到的传播上界，不是已经识别为现实光速的普适常数。
+
+而且，误差界中的关联尺度增长只是最坏情形控制，并不证明实际关联必然按同样速度增长。
+
+---
+
+# 129．从钟过程收敛到曲率收敛，还缺少正则性
+
+上一轮已经区分单点度量与曲率。本轮可以给出一个更强的反例：
+
+> **即使一个完整区域内的钟读数一致接近，曲率仍可能发散。**
+
+曲率依赖度量的导数，而不只是度量值；Levi–Civita 连接及曲率的这种微分结构是标准几何定义的一部分。([David Tong][3])
+
+## 定义 129.1　一族相同光锥的度量
+
+在固定无量纲局部坐标中，取
+
+$$
+\eta=-dt^2+dx^2,
+$$
+
+以及
+
+$$
+\boxed{
+g_\epsilon=e^{2s_\epsilon(x)}\eta,
+\qquad
+s_\epsilon(x)=\epsilon^2\cos(x/\epsilon^2),
+\quad 0<\epsilon\le1.
+}
+\tag{129.1}
+$$
+
+---
+
+## 定理 129.1　钟律一致接近不保证曲率有界
+
+有：
+
+$$
+\boxed{
+g_\epsilon\longrightarrow\eta
+\quad\text{一致收敛}.
+}
+\tag{129.2}
+$$
+
+所有 \(g_\epsilon\) 都具有与 \(\eta\) 相同的 null 方向。
+
+对固定受控轨迹、\(|v|\le v_{\max}<1\)，其钟速满足
+
+$$
+n_\epsilon(x,v)
+=
+e^{s_\epsilon(x)}\sqrt{1-v^2},
+$$
+
+所以
+
+$$
+\boxed{
+|n_\epsilon-n_0|
+\le e^{\epsilon^2}-1
+=
+O(\epsilon^2)
+}
+\tag{129.3}
+$$
+
+一致成立。
+
+但是，采用前文曲率符号约定，
+
+$$
+\boxed{
+\operatorname{Scal}(g_\epsilon)\big|_{x=0}
+=
+\frac{2e^{-2\epsilon^2}}{\epsilon^2}
+\longrightarrow+\infty.
+}
+\tag{129.4}
+$$
+
+### 证明
+
+因为 \(|s_\epsilon|\le\epsilon^2\)，度量系数一致趋于 \(\eta\)，钟速估计也直接成立。
+
+正共形因子不改变 null 方向。
+
+二维静态共形度量的标量曲率为
+
+$$
+\operatorname{Scal}(g)
+=
+-2e^{-2s(x)}s''(x).
+$$
+
+而
+
+$$
+s_\epsilon''(x)
+=
+-\epsilon^{-2}\cos(x/\epsilon^2).
+$$
+
+在 \(x=0\) 代入即得。∎
+
+### 操作性含义
+
+对只读取受控轨迹上内部相位、且总作用预算固定的钟实验，式（129.3）给出趋零的过程误差。
+
+但这不包括潮汐测量、自由轨迹偏离、保持轨迹所需的力，或其他对导数敏感的协议。
+
+因此：
+
+$$
+\boxed{
+\text{某个实验族上的操作接近}
+\not\Rightarrow
+\text{全部几何目标同时接近}.
+}
+$$
+
+---
+
+## 定理 129.2　曲率收敛的一个充分条件
+
+在共同坐标域上，若
+
+$$
+g_n\to g
+$$
+
+以 \(C^2\) 范数一致收敛，并且度量及其逆保持一致有界、非退化，则
+
+$$
+\boxed{
+R(g_n)\to R(g)
+}
+\tag{129.5}
+$$
+
+在相应张量分量上以 \(C^0\) 范数一致收敛。
+
+### 证明
+
+连接系数由 \(g^{-1}\partial g\) 构成；曲率由其一阶导数和连接二次项构成。
+
+在一致非退化性下，矩阵求逆连续。因而 \(g_n,\partial g_n,\partial^2g_n\) 的一致收敛，逐项推出连接及曲率表达式收敛。∎
+
+### 结论
+
+从宏观量子钟律走向引力方程，必须保留至少三类目标：
+
+$$
+\boxed{
+\text{度量值的控制},
+\qquad
+\text{一阶输运的控制},
+\qquad
+\text{二阶曲率的控制}.
+}
+$$
+
+不能只证明一个平均钟通道趋于经典，就宣布几何动力学已经完整收敛。
+
+---
+
+# 130．局域时空有效性的完整条件
+
+## 定理 130.1　局域宏观钟律的条件性有效窗口
+
+在第 121—126 节的有限模型中，假设：
+
+* 初始结构为乘积态，或具有另行认证的关联界；
+* 实际动力学具有给定的局域支持证书；
+* 平方钟速算子具有一致正下界；
+* 平均区域的节点数与图球体积满足指定增长条件；
+* 区域内平均钟律的空间变化受 \(\kappa\) 控制；
+* 实际集体作用与最终读取具有独立的实现误差证书。
+
+则指定有限实验的误差可由以下三部分控制：
+
+$$
+\boxed{
+\begin{aligned}
+\varepsilon_{\mathrm{total}}
+\ \le\;&
+\varepsilon_{\mathrm{impl}}
++\varepsilon_{\mathrm{readout}}\\
+&+
+\mathcal B\,
+\frac1{2n_*}
+\left[
+\Delta_R
+\sqrt{\frac{c_+}{c_-}}
+\left(\frac{\xi}{L}\right)^{D/2}
++\kappa L
+\right],
+\end{aligned}
+}
+\tag{130.1}
+$$
+
+其中 \(\mathcal B\) 是相应无量纲作用预算，\(\xi\) 是由实际动力学证书控制的关联影响尺度。
+
+### 证明
+
+由定理 126.1 得到每次局部钟律残差；采用定理 125.1 的联合过程望远镜展开，将残差乘以相应作用预算求和。
+
+再用通道距离三角不等式加入物理实现与最终读取误差。∎
+
+### 该定理没有省略的物理任务
+
+它证明的是：在这些条件下，完整过程可以被某个局部经典钟律逼近。
+
+要把这个钟律识别为现实的时空，还必须继续满足此前已经列出的：
+
+$$
+\text{平方钟速的二次结构与 Lorentz 符号},
+$$
+
+$$
+\text{跨观察者标定的一致性},
+$$
+
+$$
+\text{共同信号传播},
+$$
+
+$$
+\text{足够的空间正则性与反作用条件}.
+$$
+
+---
+
+## 与项目形式化的直接衔接
+
+本次读取固定于提交：
+
+```text
+907430bb0f8ca2f94d1c0cb47ace034e388af9ca
+```
+
+本轮最适合形式化的证明依赖不是一个庞大的总定理，而是以下有限链：
+
+| 结构     | 需要保存的证明           |
+| ------ | ----------------- |
+| 局域电路   | 每个门的支持、同层不相交与支持扩张 |
+| 有限因果接口 | 输出读数沿输入过去域精确下降    |
+| 关联传播   | 乘积初态在不相交过去域上的因子化  |
+| 宏观读数   | 协方差计数、方差界与平方根残差   |
+| 过程近似   | 共享结构下的联合酉误差组合     |
+| 物理读取   | 因果域之外输入的不可区分见证    |
+| 几何提升   | 二次钟律、正则性与导数误差     |
+
+其中，第二项直接连接项目的 `exact_descent_has_no_carry`；最后的误差组合继续使用项目所强调的精确、条件良好与可实现三层区分。
+
+本轮没有执行 Lean 编译。已核对的有限算例包括四量子比特局域电路中逐步增长的平均读数方差、粗粒化最优点以及式（129.4）的曲率表达式；这些核验不替代一般形式化证明。
+
+---
+
+# 结论
+
+这一轮把上一轮的宏观经典化条件向前推进了三步。
+
+**第一，关联界不再只能作为输入。**在局域电路与初始乘积条件下，它可以从有限因果支持直接证明：
+
+$$
+\boxed{
+\text{局域交互}
+\longrightarrow
+\text{过去域重叠}
+\longrightarrow
+\text{协方差增长界}.
+}
+$$
+
+**第二，经典描述出现于一个尺度窗口，而不是无限平均。**
+
+$$
+\boxed{
+\text{关联影响尺度}
+\ll
+\text{平均尺度}
+\ll
+\text{背景变化尺度}.
+}
+$$
+
+**第三，得到这个平均本身也必须满足因果与资源限制。**一个局域观察者不能因为数学上写出了 \(\widehat R_Q\)，就被赋予对整个区域的瞬时访问。
+
+最后，曲率反例说明：即使经典钟过程已经得到很好的近似，通向引力仍需额外的导数控制。
+
+因此，当前理论可以进一步收紧为：
+
+> **物理时空不是一个对量子世界任意平均后得到的背景，而是局域交互、关联传播、有限观察资源和空间正则性共同允许的一种尺度相关描述。**
+
+其核心对象不再只是
+
+$$
+g_{\mu\nu}(x),
+$$
+
+而是一个带证书的实现：
+
+$$
+\boxed{
+\left(
+g_{\mu\nu},
+\ \text{适用区域},
+\ \text{适用时间},
+\ \text{允许实验},
+\ \text{误差界},
+\ \text{导数控制}
+\right).
+}
+$$
+
+**只有这些内容共同成立，“由量子观察者导出时空”才不仅是构造出一个形式正确的度量，而是证明一个有限观察者确实能够在自己的因果与资源范围内，稳定地使用这张时空。**
+
+[1]: https://arxiv.org/html/quant-ph/0603121v1 "Lieb-Robinson bounds and the generation of correlationsand topological quantum order"
+[2]: https://arxiv.org/abs/1810.02428 "[1810.02428] Quasi-Locality Bounds for Quantum Lattice Systems. Part I. Lieb-Robinson Bounds, Quasi-Local Maps, and Spectral Flow Automorphisms"
+[3]: https://davidtong.org/teaching/general-relativity/grhtml/S3.html "3 Introducing Riemannian Geometry‣ General Relativity by David Tong"
