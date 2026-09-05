@@ -148,8 +148,18 @@ theorem finite_localizer_inertia_eq_zero_scale_of_weyl_certificate
       (finite_spectral_localizer_zero_scale_isHermitian X H x z)
       (localizer_position_perturbation_isHermitian X kappa x hX)
       hZeroUnit hAddUnit hCertificate.1 hCertificate.2
-  rw [hDecomposition] at hCounts
-  simpa only using hCounts
+  have hCastPos :
+      posIndex ((finite_spectral_localizer_zero_scale_isHermitian X H x z).add
+          (localizer_position_perturbation_isHermitian X kappa x hX)) =
+        posIndex (finite_spectral_localizer_isHermitian X H kappa x z hX) := by
+    congr 1
+  have hCastNeg :
+      negIndex ((finite_spectral_localizer_zero_scale_isHermitian X H x z).add
+          (localizer_position_perturbation_isHermitian X kappa x hX)) =
+        negIndex (finite_spectral_localizer_isHermitian X H kappa x z hX) := by
+    congr 1
+  rw [hCastPos, hCastNeg] at hCounts
+  exact hCounts
 
 /-- Under a point gap, an admissible scale and a localizer Weyl certificate
 give exact half-dimensional inertia at finite scale. -/

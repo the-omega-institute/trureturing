@@ -102,8 +102,13 @@ theorem posIndex_le_add_of_threshold_gap
     weyl_posIndexAbove_le (hA.add hE) hE.neg hBound
   have hMatrix : (A + E) + (-E) = A := by
     abel
-  rw [hMatrix] at hWeyl
-  simpa only [HasPositiveThresholdGap, hGap] using hWeyl
+  have hCast :
+      posIndexAbove ((hA.add hE).add hE.neg) theta = posIndexAbove hA theta := by
+    congr 1
+  rw [hCast] at hWeyl
+  have hGap' : posIndexAbove hA theta = posIndex hA := hGap
+  rw [hGap'] at hWeyl
+  exact hWeyl
 
 /-- A threshold gap for `-A`, together with a radius bound for `E`, prevents
 the negative index from decreasing. -/
@@ -118,9 +123,14 @@ theorem negIndex_le_add_of_threshold_gap
     weyl_posIndexAbove_le (hA.add hE).neg hE hBound
   have hMatrix : -(A + E) + E = -A := by
     abel
-  rw [hMatrix] at hWeyl
+  have hCast :
+      posIndexAbove ((hA.add hE).neg.add hE) theta = posIndexAbove hA.neg theta := by
+    congr 1
+  rw [hCast] at hWeyl
   have hPositive : posIndex hA.neg ≤ posIndex (hA.add hE).neg := by
-    simpa only [HasPositiveThresholdGap, hGap] using hWeyl
+    have hGap' : posIndexAbove hA.neg theta = posIndex hA.neg := hGap
+    rw [hGap'] at hWeyl
+    exact hWeyl
   calc
     negIndex hA = posIndex hA.neg :=
       (posIndex_neg_eq_negIndex hA).symm
