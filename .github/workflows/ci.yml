@@ -208,10 +208,10 @@ jobs:
           mkdir -p .judge-binaries/cli .judge-binaries/scribe
           dotnet publish candidate/tools/StrataLint.Cli/StrataLint.Cli.csproj \
             --configuration Release --output .judge-binaries/cli
-          dotnet publish candidate/tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
+          dotnet publish candidate/tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj \
             --configuration Release --output .judge-binaries/scribe
           test -s .judge-binaries/cli/StrataLint.dll
-          test -s .judge-binaries/scribe/StrataLint.Scribe.dll
+          test -s .judge-binaries/scribe/StrataLint.Scribe.Documents.dll
       - name: Save judge binaries and candidate build outputs by content address (dev push only)
         if: steps.build-candidate.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
@@ -403,7 +403,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .judge-binaries/scribe
-          dotnet build candidate/tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
+          dotnet build candidate/tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj \
             --configuration Release \
             --output .judge-binaries/scribe
       - name: Restore candidate Lean dependency artifacts
@@ -463,7 +463,7 @@ jobs:
         run: |
           set -euo pipefail
           report="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
-          scribe="$GITHUB_WORKSPACE/.judge-binaries/scribe/StrataLint.Scribe.dll"
+          scribe="$GITHUB_WORKSPACE/.judge-binaries/scribe/StrataLint.Scribe.Documents.dll"
           test -s "$report"
           test -s "$scribe"
           base="${{ steps.base.outputs.sha }}"
