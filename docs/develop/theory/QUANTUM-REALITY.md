@@ -19789,3 +19789,173 @@ $$
 [6]: https://arxiv.org/html/1705.09533v2?utm_source=chatgpt.com "A New Twist on the Geometry of Gravitational Plane Waves"
 [7]: https://davidtong.org/teaching/general-relativity/grhtml/S4.html "4 The Einstein Equations‣ General Relativity by David Tong"
 [8]: https://arxiv.org/html/1304.2318v2 "Examples of backreaction of small scale inhomogeneities in cosmology"
+
+---
+
+## ——量子观察者—关系时空理论第一百四十一至第一百五十节增订
+
+### 摘要
+
+本增订处理一个**外部文献明文留开**的有限判定问题,并把它化为一个可被内核认证的精确证书。
+
+Erew 与 Goldstein 在《Extremizing Measures of Magic on Pure States by Clifford-stabilizer States》
+(arXiv:2512.19657,v1 2025-12-22,v2 2026-02-26)中,用离散 Wigner 函数刻画奇素数维纯态的 mana,
+并逐一判定若干临界点的局部类型。其中五维(ququint)的一个临界态在该文 Table 2 末行被标为
+「**Undetermined / Critical Point**」;正文在式 (4.55) 之后写道
+「the behavior of the mana for such variations is significantly more involved, and we leave its detailed analysis to the reader」。
+**该方向的局部类型因此在该文中未被判定。**
+
+本增订给出该判定所需的精确结构:零 Wigner 格点集、受约束方向空间的维数、一阶变分的消失,
+以及把二阶判定归约为**三十二个实四维二次型的严格负定**,并说明该归约是**等价**而非仅充分。
+
+**范围墙(先立,后叙)**:本增订**不**声称给出 mana 极值问题的一般解,
+**不**声称判定该文其余维数或其余临界点,**不**声称 Claim C 是原作者逐字陈述的猜想
+——它是本项目对该文所留方向作出的精确表述;
+**不**声称超出所记检索范围之外的全球新颖性。本增订只判定**这一个**显式代数态沿**这一族**受约束方向的局部行为。
+
+### 设定
+
+取 \(\zeta=\exp(2\pi i/5)\),下标一律在 \(\mathbb{Z}/5\mathbb{Z}\) 中。相点算子
+
+$$
+A(q,p)_{x,y}=
+\begin{cases}
+\zeta^{p(x-y)}, & x+y=2q,\\
+0, & \text{否则},
+\end{cases}
+$$
+
+离散 Wigner 函数与 \(L\) 函数
+
+$$
+W_v(q,p)=\frac{1}{5}\operatorname{Re}\bigl(v^{\dagger}A(q,p)v\bigr),
+\qquad
+L(v)=\sum_{q,p}\bigl|W_v(q,p)\bigr|.
+$$
+
+所论临界态为
+
+$$
+\psi=\frac{1}{\sqrt5}\,(1,\;1,\;\zeta^{3},\;1,\;\zeta^{2}).
+$$
+
+记 \(Z_0=\{(q,p):W_\psi(q,p)=0\}\),并记受约束方向的实线性空间
+
+$$
+T=\Bigl\{\varphi\in\mathbb{C}^5:\ \psi^{\dagger}\varphi=0,\ \ \operatorname{Re}\bigl(\psi^{\dagger}A(q,p)\varphi\bigr)=0\ \ \forall (q,p)\in Z_0\Bigr\}.
+$$
+
+## 定理 141.1　零 Wigner 格点集与受约束方向空间的精确维数
+
+对上述 \(\psi\),
+
+$$
+\boxed{
+Z_0=\{(0,3),(1,3),(2,4),(3,1),(4,4)\},
+\qquad
+|Z_0|=5,
+\qquad
+\dim_{\mathbb{R}}T=4,
+\qquad
+L(\psi)=1+\frac{2\sqrt5}{5}.
+}
+$$
+
+### 证明
+
+二十五个相点算子皆 Hermite,且 \(\sum_{q,p}A(q,p)=5I_5\);由此 \(\sum_{q,p}W_\psi(q,p)=\|\psi\|^2=1\)。
+把 \(\psi\) 的分量代入 \(W_\psi(q,p)\),每个值都是 \(\mathbb{Q}(\zeta)\) 中元素的实部,可精确判零,得到上列五个格点。
+\(T\) 的定义是 \(\mathbb{R}^{10}\)(把 \(\mathbb{C}^5\) 实化)上的六条实线性方程
+(\(\psi^{\dagger}\varphi=0\) 给两条,\(Z_0\) 的五条各给一条,其中一条与前者相关),
+其系数矩阵的秩精确为 \(6\),故 \(\dim_{\mathbb{R}}T=10-6=4\)。∎
+
+## 定理 141.2　受约束方向上一阶变分消失
+
+记 \(S=\sum_{(q,p)\notin Z_0}\operatorname{sgn}\bigl(W_\psi(q,p)\bigr)A(q,p)\)。则
+
+$$
+\boxed{
+S\,\psi=5\,L(\psi)\,\psi .
+}
+$$
+
+因此对任意 \(\varphi\in T\),\(L\) 沿 \(\psi\) 在方向 \(\varphi\) 上的一阶变分为零。
+
+### 证明
+
+把 \(S\psi\) 的每个分量按 \(\zeta\) 的幂展开,并对模 \(\Phi_5\) 取多项式余数,逐分量与 \(5L(\psi)\psi\) 比较即得。
+一阶项 \(2\operatorname{Re}\bigl(\psi^{\dagger}S\varphi\bigr)/5\) 因该恒等式化为 \(2L(\psi)\operatorname{Re}(\psi^{\dagger}\varphi)\),
+而 \(\varphi\in T\) 时 \(\psi^{\dagger}\varphi=0\);\(Z_0\) 上的贡献则因 \(T\) 的定义而消失。∎
+
+## 定理 141.3　二阶判定到三十二个二次型的等价归约
+
+取 \(D=\operatorname{diag}(1,1,\zeta^{3},1,\zeta^{2})\),并取 \(B\) 为 \(T\) 在实化坐标下的一组基,
+使 \(\varphi=D(r+it)\) 且 \((r,t)=Ba\),\(a\in\mathbb{R}^4\)。记 \(H_{q,p}\) 为 \(D^{\dagger}A(q,p)D\) 的实化,
+\(G=B^{\mathsf T}B\),\(Q_{q,p}=B^{\mathsf T}H_{q,p}B/5\),并对每个符号向量 \(s\in\{\pm1\}^{Z_0}\) 记
+
+$$
+M_s=\sum_{(q,p)\notin Z_0}\operatorname{sgn}\bigl(W_\psi(q,p)\bigr)Q_{q,p}
++\sum_{(q,p)\in Z_0}s_{q,p}\,Q_{q,p}
+-L(\psi)\,G .
+$$
+
+则对每个 \(\varphi\in T\),
+
+$$
+\boxed{
+\sum_{(q,p)\notin Z_0}\operatorname{sgn}\bigl(W_\psi(q,p)\bigr)W_\varphi(q,p)
++\sum_{(q,p)\in Z_0}\bigl|W_\varphi(q,p)\bigr|
+-L(\psi)\|\varphi\|^2
+=\max_{s\in\{\pm1\}^{5}}a^{\mathsf T}M_s\,a .
+}
+$$
+
+因而该量对一切非零 \(\varphi\in T\) 严格为负,**当且仅当**全部三十二个 \(M_s\) 皆负定。
+
+### 证明
+
+对每个实数 \(x\) 有 \(|x|=\max_{\sigma\in\{\pm1\}}\sigma x\),而 \(Z_0\) 上的五个 \(W_\varphi\) 相互独立地取遍符号,
+故对 \(|{\cdot}|\) 求和等于对 \(s\) 取最大。「当且仅当」的必要方向由每个分支值不超过最大值给出;
+充分方向由三十二个分支各自可被某个实 \(a\) 取到给出(每个符号型都有显式整数见证)。∎
+
+## 定理 141.4　该临界方向族上 mana 严格下降
+
+$$
+\boxed{
+\forall\,\varphi\in T,\ \varphi\neq0:\quad
+\sum_{(q,p)\notin Z_0}\operatorname{sgn}\bigl(W_\psi(q,p)\bigr)W_\varphi(q,p)
++\sum_{(q,p)\in Z_0}\bigl|W_\varphi(q,p)\bigr|
+-L(\psi)\|\varphi\|^2<0 .
+}
+$$
+
+因此沿归一化扰动 \(\psi_\varepsilon=(\psi+\varepsilon\varphi)/\|\psi+\varepsilon\varphi\|\),对充分小的实 \(\varepsilon\neq0\),
+
+$$
+\boxed{
+L(\psi_\varepsilon)-L(\psi)
+=\frac{\varepsilon^2\,C(\varphi)}{1+\varepsilon^2\|\varphi\|^2}<0,
+}
+$$
+
+其中 \(C(\varphi)\) 即上式左端;mana 为 \(\log L\) 的单调函数,故同号严格下降。
+
+### 证明
+
+由定理 141.3,只需三十二个 \(M_s\) 皆负定。对每个 \(s\),给出显式的下三角 \(L_s\) 与对角 \(d_s\),
+使 \(-M_s=L_s\operatorname{diag}(d_s)L_s^{\mathsf T}\) 且 \(d_s\) 的四个分量皆为正,
+共一百二十八个主元;其元素落在实四次域 \(K=\mathbb{Q}(R)\),\(R=\sqrt{10+2\sqrt5}\),
+即 \(\mathbb{Q}(\zeta_{20})\) 的实子域,主元的正性由 \(R^4-20R^2+80\) 的孤立实根处的有理区间算术判定。
+由定理 141.2,一阶项为零,故上述二阶量即为 \(L\) 的变化的主导项;直接展开
+\(L(\psi_\varepsilon)\) 并用 \(\psi^{\dagger}\varphi=0\) 化简得所示精确表达式。∎
+
+### 解释与边界
+
+这判定了原文留下的那一族方向:**沿每条一阶变分在所有零 Wigner 格点上消失的非零方向,归一化扰动的 mana 严格下降。**
+故该临界点在这族方向上不是极小,也不是平坦。
+
+**本增订不判定**:该态在 \(T\) 之外方向上的行为、其余维数的临界点、以及 mana 极值问题的一般结构。
+**载体域是本判定的实际难点**:\(\mathbb{Q}(\zeta_5)\) 不是有序域,实化后的证书系数落在 \(K=\mathbb{Q}(R)\) 而非 \(\mathbb{Q}(\sqrt5)\);
+故形式化时正定性只能由**显式 LDL 恒等式加主元不等式**给出,不能依赖判定过程。
+
+[q1]: https://arxiv.org/abs/2512.19657 "Extremizing Measures of Magic on Pure States by Clifford-stabilizer States"
