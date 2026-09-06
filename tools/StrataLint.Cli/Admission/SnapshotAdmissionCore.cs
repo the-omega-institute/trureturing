@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
@@ -27,6 +28,8 @@ internal static class SnapshotAdmissionCore
             {
                 return Failure(bootstrapFailure.Message);
             }
+
+            ProblemCandidateCatalog.RequireDoiForChangedDossiers(current, baseline);
 
             var sl022Diagnostics = bootstrap is
                 BootstrapOutcome.ProtectedSurfaceVerificationRequired bootstrapVerification

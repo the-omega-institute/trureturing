@@ -401,8 +401,8 @@ internal static class DescribeRepositoryValidator
 
     /// <summary>
     /// Binds a problem candidate to its literature note. The note owns the paper's
-    /// identity, so the candidate's <c>arxiv_id</c> is not a second source of truth:
-    /// it must reproduce the arXiv DOI the note already carries, and a candidate
+    /// identity, so the candidate's <c>doi</c> must reproduce the note's DOI byte
+    /// for byte, and a candidate
     /// whose bibkey names no note is a dangling reference rather than a stylistic slip.
     /// </summary>
     private static void ValidateProblemSource(
@@ -419,14 +419,18 @@ internal static class DescribeRepositoryValidator
             return;
         }
 
-        var expected = "10.48550/arXiv." + candidate.ArxivId;
+        var expected = candidate.Doi.Value;
+        // Preserve the old form's comparison only until the J2b contract.
+        var comparison = candidate.ArxivId is null
+            ? StringComparison.Ordinal
+            : StringComparison.OrdinalIgnoreCase;
         if (note.Doi is null
-            || !string.Equals(note.Doi.Value, expected, StringComparison.OrdinalIgnoreCase))
+            || !string.Equals(note.Doi.Value, expected, comparison))
         {
             findings.Add(new DescribeRedFinding(
                 "problem-source-mismatch",
                 candidate.RelativePath,
-                $"arxiv_id {candidate.ArxivId} expects DOI {expected} in "
+                $"problem expects DOI {expected} in "
                 + $"{note.RelativePath}, which carries {note.Doi?.Value ?? "no DOI"}"));
         }
     }

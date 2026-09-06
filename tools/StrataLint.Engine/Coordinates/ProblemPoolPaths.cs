@@ -21,9 +21,9 @@ internal static class ProblemPoolPaths
         RegexOptions.CultureInvariant);
 
     /// <summary>
-    /// One problem is one file directly under <c>Problems/</c>. Nested directories and
-    /// non-Markdown payloads are rejected here so that the pool cannot grow a private
-    /// sub-namespace, and any aggregate index would still have to parse as a candidate.
+    /// Dossiers have flat Markdown addresses under <c>Problems/</c>. This predicate
+    /// checks paths only, not their content or proposition atomicity. A separate
+    /// explicit-anchor content contract remains pending.
     /// </summary>
     internal static bool IsCanonicalPath(string path) => CanonicalPath.IsMatch(path);
 

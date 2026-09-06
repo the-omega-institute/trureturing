@@ -2,7 +2,7 @@ using System.Text;
 
 namespace StrataLint.Scribe.Tests;
 
-public sealed class ProblemCandidateTests
+public sealed partial class ProblemCandidateTests
 {
     [Fact]
     public void CatalogParsesCanonicalFrontMatterAndSections()

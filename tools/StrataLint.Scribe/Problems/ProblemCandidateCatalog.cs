@@ -16,7 +16,8 @@ internal enum ProblemTriage
 internal sealed record ProblemCandidate(
     string Slug,
     BibKey BibKey,
-    string ArxivId,
+    Doi Doi,
+    string? ArxivId,
     ProblemTriage Triage,
     ImmutableArray<GidRef> MotivationGids,
     string RelativePath);
@@ -32,9 +33,9 @@ internal sealed record ProblemCandidateCatalogInspection(
 
 /// <summary>
 /// Loads the literature-sourced open problem pool defined by spec 11.20.3. Every
-/// tracked file under <c>Problems/</c> must be one candidate dossier; a file that
-/// is not one — an index, a summary, any aggregate — fails to parse and is
-/// reported, which is how the one-problem-one-file partition is enforced.
+/// Markdown dossier has closed metadata and nonempty required sections. These
+/// structural checks do not establish proposition atomicity; a machine-checked
+/// explicit-anchor identity contract remains pending.
 /// </summary>
 internal sealed class ProblemCandidateCatalog
 {
@@ -44,10 +45,16 @@ internal sealed class ProblemCandidateCatalog
     [
         "slug",
         "bibkey",
-        "arxiv_id",
+        "doi",
         "triage",
         "motivation_gids",
     ];
+
+    // J2a expansion only. C1a migrates the dossiers; J2b must remove this key set,
+    // ArxivIdPattern, and the legacy branch after that content-only migration.
+    private static readonly HashSet<string> LegacyRequiredKeys =
+        RequiredKeys.Where(static key => key != "doi")
+            .Append("arxiv_id").ToHashSet(StringComparer.Ordinal);
 
     // The section set is closed and mirrors the six Theorist charter outputs
     // (motivation, exact statement, falsifier, evidence, source search, triage)
@@ -75,6 +82,33 @@ internal sealed class ProblemCandidateCatalog
         Candidates = candidates;
 
     internal ImmutableArray<ProblemCandidate> Candidates { get; }
+
+    internal static void RequireDoiForChangedDossiers(
+        RepositorySnapshot current,
+        RepositorySnapshot protectedBase)
+    {
+        ArgumentNullException.ThrowIfNull(current);
+        ArgumentNullException.ThrowIfNull(protectedBase);
+        foreach (var file in current.Files.Values
+                     .Where(static file => ProblemPoolPaths.IsCanonicalPath(file.Path.Value))
+                     .OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
+        {
+            // Compare bytes at the same address, not a caller's change hint or
+            // a list of old slugs. Renames and prose-only edits must migrate too.
+            if (protectedBase.TryGetFile(file.Path.Value, out var previous)
+                && file.RawBytes.AsSpan().SequenceEqual(previous.RawBytes.AsSpan()))
+            {
+                continue;
+            }
+
+            if (ParseText(file.Path.Value, file.Text).ArxivId is not null)
+            {
+                throw new FormatException(
+                    $"problem-doi-required {file.Path.Value}: added or modified dossiers "
+                    + "must use doi instead of arxiv_id (J2a migration)");
+            }
+        }
+    }
 
     internal static ProblemCandidateCatalog Load(string repositoryRoot)
     {
@@ -137,7 +171,11 @@ internal sealed class ProblemCandidateCatalog
             throw new FormatException("problem candidate must be strict UTF-8.", exception);
         }
 
-        var relativePath = RelativePath(repositoryRoot, path);
+        return ParseText(RelativePath(repositoryRoot, path), text);
+    }
+
+    private static ProblemCandidate ParseText(string relativePath, string text)
+    {
         if (text.StartsWith('﻿') || text.Contains('\r'))
         {
             throw new FormatException($"{relativePath} must be UTF-8 without BOM or CR characters");
@@ -157,7 +195,9 @@ internal sealed class ProblemCandidateCatalog
         }
 
         var metadata = (Dictionary<string, object?>)YamlSubsetParser.Parse(text[opening.Length..end]);
-        if (!metadata.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(RequiredKeys))
+        var keys = metadata.Keys.ToHashSet(StringComparer.Ordinal);
+        var isLegacy = keys.SetEquals(LegacyRequiredKeys);
+        if (!isLegacy && !keys.SetEquals(RequiredKeys))
         {
             throw new FormatException($"{relativePath} has missing or unknown metadata fields");
         }
@@ -168,17 +208,25 @@ internal sealed class ProblemCandidateCatalog
             throw new FormatException($"{relativePath} has a noncanonical slug");
         }
 
-        if (!string.Equals(slug, Path.GetFileNameWithoutExtension(path), StringComparison.Ordinal))
+        if (!string.Equals(slug, Path.GetFileNameWithoutExtension(relativePath), StringComparison.Ordinal))
         {
             throw new FormatException($"{relativePath} slug disagrees with its path");
         }
 
         var bibKey = BibKey.TryCreate(RequiredLine(metadata, "bibkey", relativePath))
             ?? throw new FormatException($"{relativePath} has a noncanonical bibkey");
-        var arxivId = RequiredLine(metadata, "arxiv_id", relativePath);
-        if (!ArxivIdPattern.IsMatch(arxivId))
+        var arxivId = isLegacy ? RequiredLine(metadata, "arxiv_id", relativePath) : null;
+        if (arxivId is not null && !ArxivIdPattern.IsMatch(arxivId))
         {
             throw new FormatException($"{relativePath} has a noncanonical arxiv_id");
+        }
+
+        var source = arxivId is null
+            ? RequiredLine(metadata, "doi", relativePath)
+            : "10.48550/arXiv." + arxivId;
+        if (!Doi.TryCreate(source, out var doi))
+        {
+            throw new FormatException($"{relativePath} has a malformed doi");
         }
 
         var triage = RequiredLine(metadata, "triage", relativePath) switch
@@ -209,7 +257,7 @@ internal sealed class ProblemCandidateCatalog
         }
 
         ValidateSections(text[(end + closing.Length)..], relativePath);
-        return new ProblemCandidate(slug, bibKey, arxivId, triage, motivation, relativePath);
+        return new ProblemCandidate(slug, bibKey, doi, arxivId, triage, motivation, relativePath);
     }
 
     private static void ValidateSections(string body, string relativePath)
