@@ -82,6 +82,28 @@ internal static partial class IngestCommand
         }
     }
 
+    private static void RequireUnclaimedAtomIds(
+        string repositoryRoot,
+        ImmutableHashSet<string> addedAtomIds)
+    {
+        if (addedAtomIds.IsEmpty) return;
+        var ledgerRoot = Path.Combine(repositoryRoot, BackfillInventoryLoader.RootPath);
+        if (!Directory.Exists(ledgerRoot)) return;
+
+        foreach (var path in Directory.EnumerateFiles(ledgerRoot, "*.yaml", SearchOption.AllDirectories)
+                     .Order(StringComparer.Ordinal))
+        {
+            var relative = Path.GetRelativePath(repositoryRoot, path).Replace(Path.DirectorySeparatorChar, '/');
+            var atomId = Path.GetFileNameWithoutExtension(path);
+            if (BackfillInventoryLoader.IsCanonicalPath(relative) && addedAtomIds.Contains(atomId))
+            {
+                var sourceId = Path.GetFileName(Path.GetDirectoryName(Path.GetDirectoryName(path)));
+                throw new InvalidOperationException(
+                    $"atom id {atomId} already registered by {sourceId} since planning");
+            }
+        }
+    }
+
     internal static void RequireAppendOnlyWriteSet(
         RawRepositorySnapshot currentRaw,
         BackfillInventoryDocument currentDocument,

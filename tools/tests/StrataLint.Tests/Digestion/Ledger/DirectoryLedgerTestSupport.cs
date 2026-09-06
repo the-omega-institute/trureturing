@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 
@@ -145,6 +146,13 @@ internal static class DirectoryLedgerTestSupport
                 + "\n"));
     }
 
+    internal static RawRepositorySnapshot ReadRepository(TemporaryDirectory repository) =>
+        RawRepositorySnapshot.Create(Directory.EnumerateFiles(repository.Path, "*", SearchOption.AllDirectories)
+            .Select(path => new RawRepositoryEntry(
+                Path.GetRelativePath(repository.Path, path).Replace(Path.DirectorySeparatorChar, '/'),
+                ImmutableArray.CreateRange(File.ReadAllBytes(path)))));
+
+    // Forms input for a subsequent fake gateway call, never a disk preservation oracle.
     internal static Dictionary<string, string> OverlayRepositoryFiles(
         TemporaryDirectory repository,
         IReadOnlyDictionary<string, string> files)

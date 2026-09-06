@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -157,9 +156,7 @@ public sealed partial class IngestRobustTests
 
     private static void WriteFixture(TemporaryDirectory temporary, RuleFixture fixture)
     {
-        DirectoryLedgerTestSupport.Write(temporary.Path, fixture.Files);
-        foreach (var (path, text) in fixture.Files.Where(static item =>
-                     DigestionCasStore.IsCanonicalPath(item.Key)))
+        foreach (var (path, text) in fixture.Files)
         {
             var fullPath = Path.Combine(temporary.Path, path);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
@@ -167,29 +164,15 @@ public sealed partial class IngestRobustTests
         }
     }
 
-    private static IReadOnlyDictionary<string, ImmutableArray<byte>> ExistingLedgerFiles(
-        IReadOnlyDictionary<string, string> files) =>
-        files
-            .Where(static item => BackfillInventoryLoader.IsCanonicalPath(item.Key))
-            .ToDictionary(
-                static item => item.Key,
-                static item => ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(item.Value)),
-                StringComparer.Ordinal);
-
     private static void AssertExistingLedgerFilesUnchanged(
-        IReadOnlyDictionary<string, ImmutableArray<byte>> before,
+        RawRepositorySnapshot before,
         RawRepositorySnapshot after)
     {
         var afterByPath = after.Entries.ToDictionary(static item => item.Path, StringComparer.Ordinal);
-        foreach (var (path, bytes) in before)
+        foreach (var old in before.Entries)
         {
-            Assert.True(afterByPath.TryGetValue(path, out var entry), $"existing path removed: {path}");
-            Assert.Equal(bytes.ToArray(), entry.Bytes.ToArray());
+            Assert.True(afterByPath.TryGetValue(old.Path, out var entry), $"existing path removed: {old.Path}");
+            Assert.Equal(old.Bytes.ToArray(), entry.Bytes.ToArray());
         }
     }
-
-    private static RawRepositorySnapshot Overlay(
-        TemporaryDirectory temporary,
-        RuleFixture fixture) =>
-        Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files));
 }

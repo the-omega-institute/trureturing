@@ -23,14 +23,14 @@ public sealed partial class IngestScopeTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline }) AddCas(files, reused);
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
-        var before = Raw(fixture.Files);
+        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
         var result = Environment(fixture, temporary).Ingest(Arguments("beta"));
         Assert.True(result.Success, result.Error);
-        var after = Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files));
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
+        Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
         var updates = IngestCommand.LedgerUpdates(before, after);
         Assert.Equal(2, updates.Length);
         Assert.All(updates, static item => Assert.StartsWith(SourcePrefix("beta"), item.Path, StringComparison.Ordinal));
-        Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
         var entries = BackfillInventoryLoader.Load(Decode(after)).RequireDigestionEntries();
         var parent = entries.Single(entry => entry.AtomId == betaAtom.Fingerprints.RawSha256[7..]);
         Assert.Contains(sharedEntry.AtomId, parent.Receipts.ChainAtoms);

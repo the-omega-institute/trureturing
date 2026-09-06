@@ -8,6 +8,48 @@ namespace StrataLint.Tests;
 public sealed partial class IngestScopeTests
 {
     [Theory]
+    [InlineData("beta")]
+    [InlineData("alpha")]
+    [InlineData("all")]
+    public void IngestScope_ConflictMarkerPrepassRespectsSelectedSource_ProductionPath(string selector)
+    {
+        var fixture = Fixture();
+        fixture.Files[AlphaPath] += "<<<<<<< HEAD\nconflicted text\n=======\nother text\n>>>>>>> incoming\n";
+        fixture.Files[BetaPath] += Addition;
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
+        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
+
+        var result = Environment(fixture, temporary).Ingest(
+            selector == "all" ? Arguments() : Arguments(selector));
+
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
+        if (selector == "beta")
+        {
+            Assert.True(result.Success, result.Error);
+            Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
+            var beforePaths = before.Entries.Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+            Assert.Equal(Image(before), Image(RawRepositorySnapshot.Create(
+                after.Entries.Where(entry => beforePaths.Contains(entry.Path)))));
+            var addedId = Atom(Addition).Fingerprints.RawSha256["sha256:".Length..];
+            Assert.Equal(new[]
+            {
+                DigestionCasStore.RootPath + addedId,
+                SourcePrefix("beta") + "residual-open/" + addedId + ".yaml",
+            }.Order(StringComparer.Ordinal), after.Entries
+                .Where(entry => !beforePaths.Contains(entry.Path)).Select(static entry => entry.Path)
+                .Order(StringComparer.Ordinal));
+        }
+        else
+        {
+            Assert.False(result.Success);
+            Assert.Contains("INGEST-CONFLICT-MARKER-001", result.Error, StringComparison.Ordinal);
+            Assert.Contains(AlphaPath + ":5", result.Error, StringComparison.Ordinal);
+            Assert.Equal(Image(before), Image(after));
+        }
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void Ingest_UnselectedSourceAtomizerNeverCalledInAnyPass(bool contentKinds)
@@ -93,9 +135,9 @@ public sealed partial class IngestScopeTests
         AddCas(fixture.Files, opaque);
         AddCas(fixture.Baseline, opaque);
         fixture.Files[BetaPath] += Addition;
-        var before = Raw(fixture.Files);
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
+        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
 
         var result = Environment(
             fixture,
@@ -103,7 +145,7 @@ public sealed partial class IngestScopeTests
             RawChangeSet.Create([AlphaPath, BetaPath])).Ingest(Arguments("beta"));
 
         Assert.True(result.Success, result.Error);
-        var after = Overlay(temporary, fixture);
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
         Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
     }
 
@@ -117,9 +159,9 @@ public sealed partial class IngestScopeTests
             alpha,
             Source("beta", BetaPath, betaText, populated: false));
         var fixture = RobustFixture(document, document, alphaText, betaText);
-        var before = Raw(fixture.Files);
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
+        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
 
         var result = Environment(
             fixture,
@@ -127,7 +169,7 @@ public sealed partial class IngestScopeTests
             RawChangeSet.Create([AlphaPath, BetaPath])).Ingest(Arguments("beta"));
 
         Assert.True(result.Success, result.Error);
-        var after = Overlay(temporary, fixture);
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
         Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
         var sources = BackfillInventoryLoader.Load(Decode(after)).RequireDigestionSources();
         var afterAlpha = sources.Single(static source => source.SourceId == "alpha");

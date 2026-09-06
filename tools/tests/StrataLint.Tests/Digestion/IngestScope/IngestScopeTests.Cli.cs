@@ -17,12 +17,12 @@ public sealed partial class IngestScopeTests
         fixture.Files[BetaPath] += Addition;
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
-        var before = Raw(fixture.Files);
+        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
         var console = new BufferedConsole();
         var exit = CliApplication.Run(["ingest", .. Arguments(selectors)], Environment(fixture, temporary), console);
 
         Assert.True(exit == 0, console.Error);
-        var after = Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files));
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
         Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
         Assert.Equal(2, BackfillInventoryLoader.Load(Decode(after)).RequireDigestionSources()
             .Single(static source => source.SourceId == "beta").Entries.Length);
@@ -98,7 +98,7 @@ public sealed partial class IngestScopeTests
         WriteFixture(temporary, fixture);
         var result = Environment(fixture, temporary).Ingest(Arguments(named, named));
         Assert.True(result.Success, result.Error);
-        var after = Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files));
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
         var sources = BackfillInventoryLoader.Load(Decode(after)).RequireDigestionSources();
         Assert.Equal(["alpha", "beta", "new-volume"], sources.Select(static source => source.SourceId).Order().ToArray());
         Assert.Single(sources.Single(static source => source.SourceId == "new-volume").Entries);
@@ -184,20 +184,22 @@ public sealed partial class IngestScopeTests
 
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
+        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
         var result = Environment(fixture, temporary).Ingest(Arguments("beta"));
         Assert.True(result.Success, result.Error);
-        var after = Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files));
-        Assert.Equal(Image(Raw(fixture.Files), SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
+        Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
 
         foreach (var args in new[] { Arguments("alpha"), Arguments() })
         {
             using var preserved = new TemporaryDirectory();
             WriteFixture(preserved, fixture);
+            var beforePreserved = DirectoryLedgerTestSupport.ReadRepository(preserved);
             var accepted = Environment(fixture, preserved).Ingest(args);
             Assert.True(accepted.Success, accepted.Error);
-            var preservedRaw = Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(preserved, fixture.Files));
+            var preservedRaw = DirectoryLedgerTestSupport.ReadRepository(preserved);
             Assert.Equal(
-                Image(Raw(fixture.Files), SourcePrefix("alpha")),
+                Image(beforePreserved, SourcePrefix("alpha")),
                 Image(preservedRaw, SourcePrefix("alpha")));
         }
     }

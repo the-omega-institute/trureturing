@@ -89,8 +89,7 @@ public sealed partial class IngestScopeTests
 
     private static void WriteFixture(TemporaryDirectory temporary, RuleFixture fixture)
     {
-        DirectoryLedgerTestSupport.Write(temporary.Path, fixture.Files);
-        foreach (var (path, text) in fixture.Files.Where(static item => DigestionCasStore.IsCanonicalPath(item.Key)))
+        foreach (var (path, text) in fixture.Files)
         {
             var fullPath = Path.Combine(temporary.Path, path);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
@@ -144,8 +143,4 @@ public sealed partial class IngestScopeTests
         DigestionLedgerSource beta) =>
         BackfillInventoryDocument.Create([alpha, beta], []);
 
-    private static RawRepositorySnapshot Overlay(
-        TemporaryDirectory temporary,
-        RuleFixture fixture) =>
-        Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files));
 }

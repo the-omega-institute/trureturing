@@ -45,13 +45,13 @@ public sealed partial class IngestRobustTests
         fixture.Files[AlphaPath] += Addition;
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
-        var before = Raw(fixture.Files);
+        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
 
         var result = Environment(fixture, temporary).Ingest(
             sourceScoped ? Arguments("alpha") : Arguments());
 
         Assert.True(result.Success, result.Error);
-        var after = Overlay(temporary, fixture);
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
         foreach (var oldFile in before.Entries)
             Assert.Equal(oldFile.Bytes.ToArray(), after.Entries.Single(item => item.Path == oldFile.Path).Bytes.ToArray());
         var added = BackfillInventoryLoader.Load(Decode(after)).RequireDigestionEntries()

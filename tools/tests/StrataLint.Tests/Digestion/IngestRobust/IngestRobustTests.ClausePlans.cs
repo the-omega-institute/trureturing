@@ -50,7 +50,7 @@ public sealed partial class IngestRobustTests
             RawChangeSet.Create([AlphaPath, BetaPath])).Ingest(Arguments());
 
         Assert.True(result.Success, result.Error);
-        var document = BackfillInventoryLoader.Load(Decode(Overlay(temporary, fixture)));
+        var document = BackfillInventoryLoader.Load(Decode(DirectoryLedgerTestSupport.ReadRepository(temporary)));
         var alpha = document.RequireDigestionSources().Single(static source => source.SourceId == "alpha");
         var beta = document.RequireDigestionSources().Single(static source => source.SourceId == "beta");
         var parentId = parent.Fingerprints.RawSha256["sha256:".Length..];
@@ -82,10 +82,10 @@ public sealed partial class IngestRobustTests
             temporary,
             RawChangeSet.Create([AlphaPath])).Ingest(Arguments("alpha"));
         Assert.True(first.Success, first.Error);
-        var afterFirst = DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files);
+        var beforeSecond = DirectoryLedgerTestSupport.ReadRepository(temporary);
         fixture.Files.Clear();
-        foreach (var item in afterFirst) fixture.Files.Add(item.Key, item.Value);
-        var beforeSecond = ExistingLedgerFiles(fixture.Files);
+        foreach (var item in beforeSecond.Entries)
+            fixture.Files.Add(item.Path, System.Text.Encoding.UTF8.GetString(item.Bytes.AsSpan()));
 
         var second = Environment(
             fixture,
@@ -93,7 +93,7 @@ public sealed partial class IngestRobustTests
             RawChangeSet.Create([BetaPath])).Ingest(Arguments("beta"));
 
         Assert.True(second.Success, second.Error);
-        var afterSecond = Overlay(temporary, fixture);
+        var afterSecond = DirectoryLedgerTestSupport.ReadRepository(temporary);
         AssertExistingLedgerFilesUnchanged(beforeSecond, afterSecond);
         var document = BackfillInventoryLoader.Load(Decode(afterSecond));
         var alpha = document.RequireDigestionSources().Single(static source => source.SourceId == "alpha");

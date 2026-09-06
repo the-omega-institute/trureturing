@@ -8,6 +8,67 @@ namespace StrataLint.Tests;
 public sealed partial class IngestRobustTests
 {
     [Theory]
+    [InlineData("deleted")]
+    [InlineData("bytes")]
+    public void Ingest_RepositorySnapshotReflectsLivePathsAndRawBytes(string fault)
+    {
+        var document = Ledger();
+        var fixture = Fixture(document);
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
+        var path = AtomPath(document.RequireDigestionSources()[0].Entries[0]);
+        byte[] bytes = [0xff, 0xfe, 0x00, 0x61, 0x80];
+        if (fault == "deleted") File.Delete(Path.Combine(temporary.Path, path));
+        else File.WriteAllBytes(Path.Combine(temporary.Path, path), bytes);
+
+        var snapshot = DirectoryLedgerTestSupport.ReadRepository(temporary);
+
+        if (fault == "deleted") Assert.DoesNotContain(snapshot.Entries, entry => entry.Path == path);
+        else Assert.Equal(bytes, Assert.Single(snapshot.Entries, entry => entry.Path == path).Bytes.ToArray());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Ingest_ConcurrentCrossSourceSameAtomIsNotDuplicated_AllAndSource(bool sourceScoped)
+    {
+        var fixture = Fixture();
+        fixture.Files[AlphaPath] += Addition;
+        fixture.Files[BetaPath] += Addition;
+        var atomId = Atom(Addition).Fingerprints.RawSha256["sha256:".Length..];
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
+        string? afterWinner = null;
+        var dependencies = new ReportFreeIngestDependencies(BeforeValidation: plan =>
+        {
+            Assert.Contains(atomId, plan.AddedAtomIds);
+            var winner = Environment(fixture, temporary).Ingest(Arguments("beta"));
+            Assert.True(winner.Success, winner.Error);
+            var entry = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path)
+                .RequireDigestionEntries(), entry => entry.AtomId == atomId);
+            Assert.Equal("beta", entry.SourceId);
+            afterWinner = DirectoryLedgerTestSupport.RepositoryImage(temporary);
+            return plan;
+        });
+
+        var result = Environment(fixture, temporary, dependencies: dependencies).Ingest(
+            sourceScoped ? Arguments("alpha") : Arguments());
+
+        Assert.False(result.Success);
+        Assert.Contains($"atom id {atomId} already registered by beta since planning", result.Error,
+            StringComparison.Ordinal);
+        Assert.NotNull(afterWinner);
+        Assert.Equal(afterWinner, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        var paths = Directory.EnumerateFiles(
+            Path.Combine(temporary.Path, BackfillInventoryLoader.RootPath),
+            atomId + ".yaml", SearchOption.AllDirectories).ToArray();
+        Assert.Equal(Path.Combine(temporary.Path, SourcePrefix("beta"), "residual-open", atomId + ".yaml"),
+            Assert.Single(paths));
+        Assert.Equal(Atom(Addition).RawBytes.ToArray(),
+            File.ReadAllBytes(Path.Combine(temporary.Path, DigestionCasStore.RootPath, atomId)));
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void Ingest_SelectedMalformedSourceFailsEvenWhenOtherSourceOwnsContentHash(bool includeGamma)
@@ -78,16 +139,17 @@ public sealed partial class IngestRobustTests
     {
         var fixture = Fixture();
         fixture.Files[BetaPath] += Addition;
-        var beforeLedger = ExistingLedgerFiles(fixture.Files);
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
+        var beforeLedger = DirectoryLedgerTestSupport.ReadRepository(temporary);
 
-        var result = Environment(fixture, temporary).Ingest(Arguments());
+        var result = Environment(fixture, temporary).Ingest(Arguments("beta"));
 
         Assert.True(result.Success, result.Error);
-        var after = Overlay(temporary, fixture);
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
         AssertExistingLedgerFilesUnchanged(beforeLedger, after);
-        var added = after.Entries.Where(item => !fixture.Files.ContainsKey(item.Path)).ToArray();
+        var beforePaths = beforeLedger.Entries.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
+        var added = after.Entries.Where(item => !beforePaths.Contains(item.Path)).ToArray();
         Assert.NotEmpty(added);
         Assert.All(added, static item => Assert.True(
             DigestionCasStore.IsCanonicalPath(item.Path)

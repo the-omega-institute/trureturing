@@ -7,7 +7,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class LedgerWriterProductionPathTests
+public sealed partial class LedgerWriterProductionPathTests
 {
     private const string AlphaGid = "D5/S0/Carrier/Alpha.alpha";
     private const string ZetaGid = "D5/S0/Carrier/Zeta.zeta";
@@ -104,27 +104,11 @@ public sealed class LedgerWriterProductionPathTests
         string atomId,
         string gid)
     {
-        using var cancellation = new CancellationTokenSource(TestBudgets.PlaybookProcessHangGuard);
-        var connection = listener.AcceptTcpClientAsync(cancellation.Token).AsTask();
-        var process = Task.Run(() => fixture.Run("deposit", gid: gid, atomId: atomId));
-        if (await Task.WhenAny(connection, process) == process)
+        using var cancellation = new CancellationTokenSource();
+        var process = Task.Run(() => fixture.Run("deposit", gid: gid, atomId: atomId,
+            timeout: TestBudgets.PlaybookProcessHangGuard));
+        var result = await ExchangeDelegatedCover(listener, process, cancellation, arguments =>
         {
-            cancellation.Cancel();
-            try { using var unused = await connection; }
-            catch (OperationCanceledException) { }
-            var failed = await process;
-            Assert.Fail("deposit exited without delegating cover-atom: "
-                + Encoding.UTF8.GetString(failed.StandardError));
-        }
-
-        using (var client = await connection)
-        {
-            var stream = client.GetStream();
-            using var reader = new StreamReader(stream, leaveOpen: true);
-            using var writer = new StreamWriter(stream, new UTF8Encoding(false), leaveOpen: true) { AutoFlush = true };
-            var arguments = new List<string>();
-            while (await reader.ReadLineAsync(cancellation.Token) is { Length: > 0 } argument)
-                arguments.Add(argument);
             var current = world.Files.Where(static pair => !BackfillInventoryLoader.IsCanonicalPath(pair.Key))
                 .ToDictionary(StringComparer.Ordinal);
             foreach (var path in Directory.EnumerateFiles(
@@ -138,10 +122,8 @@ public sealed class LedgerWriterProductionPathTests
                 CoverWorld.TimeProvider);
             var console = new BufferedConsole();
             var status = CliApplication.Run(arguments, environment, console);
-            await writer.WriteLineAsync(status.ToString(System.Globalization.CultureInfo.InvariantCulture));
-            await writer.WriteAsync(console.Output + console.Error);
-        }
-        var result = await process;
+            return (status, console.Output + console.Error);
+        });
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Contains($"COVER atom_id={atomId} gid={gid} ledger_changed=true",
             Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);

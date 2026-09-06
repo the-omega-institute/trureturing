@@ -144,6 +144,7 @@ internal static partial class IngestCommand
             .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item.Token, StringComparer.Ordinal)
             .ToImmutableArray();
+        RequireUnclaimedAtomIds(repositoryRoot, plan.AddedAtomIds);
         var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
         try
         {
