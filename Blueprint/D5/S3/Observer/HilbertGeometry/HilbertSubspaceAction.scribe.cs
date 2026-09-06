@@ -13,11 +13,17 @@ internal sealed class HilbertSubspaceActionDocument : IScribeDocumentDefinition
         H("Hilbert Subspace Action"),
         Blocks(
             Paragraph(Text(
-                "Let K be RCLike and H an arbitrary complete inner product space over K. "
+                "In all six statements, u and v are independent arbitrary universe levels; "
+                + "Type with subscript u or v denotes Lean's Type u or Type v. Quantify "
+                + "universally over K : Type u and H : Type v with RCLike K, "
+                + "NormedAddCommGroup H, and InnerProductSpace K H. The definitions "
+                + "quadraticAction and AdmissiblePath require only these classes; affinePath "
+                + "and all three theorems also require CompleteSpace H. "
                 + "Time, scalar multiplication along paths, and derivatives use the real scalar "
                 + "structure obtained by restriction of scalars. Thus real and complex Hilbert "
-                + "spaces are included, without separability or dimension assumptions. Let M "
-                + "be an actual closed linear subspace and x a target vector. Write P for its "
+                + "spaces are included, without separability or dimension assumptions. Where "
+                + "used, M ranges over actual closed linear subspaces of H over K, x over H, "
+                + "f over all paths from Real to H, and t over Real. Write P for M's "
                 + "orthogonal starProjection, r = x - P x, and mu for Lebesgue measure restricted "
                 + "to Ioc(0,1). The half-open and closed interval integrals coincide because "
                 + "endpoints have measure zero. The notation S denotes quadraticAction, A "
@@ -144,7 +150,8 @@ internal sealed class HilbertSubspaceActionDocument : IScribeDocumentDefinition
         RowBreak, Grp(), conclusion));
 
     private static Formula WithSpace(Formula conclusion) => Disp(Seq(
-        Forall, Sp, F.Id("K"), Comma, Sp, F.Id("H"), Colon, Sp, F.Id("Type"), Comma, Sp,
+        Forall, Sp, F.Id("K"), Colon, Sp, Operatorname, Grp(F.Id("Type")), Underscore, Grp(F.Id("u")), Comma, Sp,
+        Forall, Sp, F.Id("H"), Colon, Sp, Operatorname, Grp(F.Id("Type")), Underscore, Grp(F.Id("v")), Comma, Sp,
         OpenBracket, Call("RCLike", F.Id("K")), CloseBracket, Comma, Sp,
         OpenBracket, Call("NormedAddCommGroup", F.Id("H")), CloseBracket, Comma, Sp,
         OpenBracket, Call("InnerProductSpace", F.Id("K"), F.Id("H")), CloseBracket, Comma, Sp,
