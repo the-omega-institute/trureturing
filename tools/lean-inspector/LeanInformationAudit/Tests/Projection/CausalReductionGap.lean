@@ -6,7 +6,7 @@ open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment
 open D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalCatalog
 
-namespace LeanInformationAudit.Tests.Projection.Causal
+namespace LeanInformationAudit.Tests.Projection.CausalGap
 
 abbrev catalog : Catalog unifiedArena := Catalog.ofVector
   ![unifiedCounterfactualUnit, unifiedInterventionUnit, unifiedObservationUnit]
@@ -34,4 +34,4 @@ run_cmd do
 #print axioms catalog
 #print axioms projectionRefinesB_eq_true_iff
 
-end LeanInformationAudit.Tests.Projection.Causal
+end LeanInformationAudit.Tests.Projection.CausalGap
