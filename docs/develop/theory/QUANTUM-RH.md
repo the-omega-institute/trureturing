@@ -36166,3 +36166,203 @@ $$
 [5]: https://arxiv.org/abs/1010.0546 "https://arxiv.org/abs/1010.0546"
 [6]: https://dlmf.nist.gov/25.2 "https://dlmf.nist.gov/25.2"
 [7]: https://arxiv.org/abs/1109.4020 "https://arxiv.org/abs/1109.4020"
+
+---
+
+## ——量子—黎曼判据卷:二次矩形卷积的保正实根分类(定理 G1–G4)增订
+
+### 摘要
+
+本增订**证明 Gribinski 猜想在 `m=2` 处成立**,并**给出该猜想参数范围的锐性**——后者原文未曾断言。
+
+J. Campbell、R. Morales、D. Perales 在《Even Hypergeometric Polynomials and Finite Free Commutators》
+(arXiv:2502.00254v2,v1 2025-02-01,v2 2025-12-21)的 Definition 3.10 中,
+对 \(m\in\mathbb N\) 与 \(\alpha\in\mathbb R\setminus\{-1,\dots,-m\}\) 定义**广义矩形卷积**
+\(p\boxplus_m^{\alpha}q\),其系数为
+
+$$
+\mathsf e_k\bigl(p\boxplus_m^{\alpha}q\bigr)
+=\frac{(m)_{\bar k}}{(m+\alpha)_{\bar k}}
+\sum_{i+j=k}\frac{\mathsf e_i(p)}{(m)_{\bar i}(m+\alpha)_{\bar i}}\cdot
+\frac{\mathsf e_j(q)}{(m)_{\bar j}(m+\alpha)_{\bar j}} .
+$$
+
+紧随其后该文写道:
+
+> We should also mention that **Gribinski [12] conjectured** that the generalized rectangular convolution
+> preserves positive real roots.
+> **Conjecture 3.13.** Given \(\alpha>-1\), if \(p,q\in\mathcal P_m(\mathbb R_{\ge0})\),
+> then \(p\boxplus_m^{\alpha}q\in\mathcal P_m(\mathbb R_{\ge0})\).
+> **At the time of writing, the conjecture is only known to hold when \(\alpha\) is a non-negative integer.**
+
+本增订在 \(m=2\) 处对**一切**满足 \(\alpha>-1\) 的实数 \(\alpha\) 证明该猜想,
+并证明在该文自己的定义域 \(\mathbb R\setminus\{-1,-2\}\) 上,\(\alpha>-1\) 是**充要**的。
+
+### 范围墙(先立,后叙)
+
+- 只处理 \(m=2\)。**不**声称一般 \(m\);**不**声称对 \(\mathcal P_m(\mathbb R)\)(允许负根)的任何结论。
+- \(\alpha=-1\) 与 \(\alpha=-2\) 在 Definition 3.10 的**定义域之外**(\(m=2\) 时 \((m+\alpha)_{\bar2}\) 含因子 \(0\)),
+  故本增订的陈述一律限于 \(\alpha\in\mathbb R\setminus\{-1,-2\}\),**结论是 \(\alpha>-1\) 而非 \(\alpha\ge-1\)**。
+- 该文自陈该猜想「只在 \(\alpha\) 为非负整数时已知」;本增订相对**该文所述的知识状态**是新的,
+  **不**声称超出所记检索范围之外的全球新颖性(未核 Gribinski 报告全文,亦未取得
+  R. Morales 2026 年博士论文全文,见末节)。
+- 本增订**不**使用、也**不**推出黎曼假设。
+
+### 设定
+
+对 \(m=2\) 与 \(\alpha\in\mathbb R\setminus\{-1,-2\}\) 记
+
+$$
+\kappa(\alpha)=\frac{\alpha+1}{2(\alpha+2)} .
+$$
+
+\(\mathcal P_2(\mathbb R_{\ge0})\) 即形如 \((X-a)(X-b)\)、\(a,b\ge0\) 的首一实二次式。
+
+## 定理 G1　二次矩形卷积的显式系数
+
+设 \(\alpha\in\mathbb R\setminus\{-1,-2\}\),\(a,b,c,d\in\mathbb R\),
+\(p=(X-a)(X-b)\),\(q=(X-c)(X-d)\)。则
+
+$$
+\boxed{
+p\boxplus_2^{\alpha}q
+=X^2-(a+b+c+d)\,X+\bigl[\,ab+cd+\kappa(\alpha)(a+b)(c+d)\,\bigr].
+}
+$$
+
+### 证明
+
+由 Definition 3.10,\(m=2\) 时 \((2)_{\bar0}=1,(2)_{\bar1}=2,(2)_{\bar2}=2\),
+\((2+\alpha)_{\bar0}=1,(2+\alpha)_{\bar1}=2+\alpha,(2+\alpha)_{\bar2}=(2+\alpha)(1+\alpha)\)。
+\(\mathsf e_0=1\),\(\mathsf e_1(p)=a+b\),\(\mathsf e_2(p)=ab\),\(q\) 同理。逐项代入:
+\(k=1\) 给出 \(2(2+\alpha)\bigl[\tfrac{c+d}{2(2+\alpha)}+\tfrac{a+b}{2(2+\alpha)}\bigr]=a+b+c+d\);
+\(k=2\) 给出
+\(2(2+\alpha)(1+\alpha)\bigl[\tfrac{cd}{2(2+\alpha)(1+\alpha)}+\tfrac{(a+b)(c+d)}{4(2+\alpha)^2}
++\tfrac{ab}{2(2+\alpha)(1+\alpha)}\bigr]=ab+cd+\tfrac{1+\alpha}{2(2+\alpha)}(a+b)(c+d)\)。∎
+
+## 定理 G2　判别式的下界及其取等情形
+
+记 \(P=a+b\),\(Q=c+d\),并记 \(D\) 为定理 G1 所得二次式的判别式。则对一切 \(a,b,c,d\ge0\),
+
+$$
+\boxed{
+D=(P+Q)^2-4ab-4cd-4\kappa(\alpha)PQ\;\ge\;2PQ\bigl(1-2\kappa(\alpha)\bigr),
+}
+$$
+
+且当 \(a=b\) 且 \(c=d\) 时取等。
+
+### 证明
+
+由算术—几何均值,\(ab\le P^2/4\) 与 \(cd\le Q^2/4\),二者在 \(a=b\)、\(c=d\) 时分别取等。代入得
+
+$$
+D\ \ge\ (P+Q)^2-P^2-Q^2-4\kappa PQ=2PQ-4\kappa PQ=2PQ(1-2\kappa).\qquad\blacksquare
+$$
+
+## 定理 G3　Gribinski 猜想在 \(m=2\) 处成立
+
+设 \(\alpha>-1\)。则对一切 \(p,q\in\mathcal P_2(\mathbb R_{\ge0})\),有
+\(p\boxplus_2^{\alpha}q\in\mathcal P_2(\mathbb R_{\ge0})\)。等价地,
+
+$$
+\boxed{
+\forall\,\alpha>-1,\ \forall\,a,b,c,d\ge0,\quad
+\exists\,r,s\ge0:\ p\boxplus_2^{\alpha}q=(X-r)(X-s).
+}
+$$
+
+### 证明
+
+\(\alpha>-1\) 蕴含 \(\alpha+2>1>0\) 与 \(\alpha+1>0\),故 \(\kappa(\alpha)>0\);
+又 \(\alpha+1<\alpha+2\) 且 \(\alpha+2>0\) 给出 \(\kappa(\alpha)<\tfrac12\)。
+一个首一实二次式的两根皆为实且非负,当且仅当其判别式非负、根之和非负、根之积非负。
+- **和** \(=P+Q\ge0\);
+- **积** \(=ab+cd+\kappa PQ\ge0\),因三项皆非负(用到 \(\kappa>0\));
+- **判别式**:由定理 G2 与 \(\kappa<\tfrac12\) 得 \(D\ge2PQ(1-2\kappa)\ge0\)。∎
+
+## 定理 G4　参数范围 \(\alpha>-1\) 是锐的
+
+对一切 \(\alpha\in\mathbb R\setminus\{-1,-2\}\) 且 \(\alpha<-1\),存在 \(a,b,c,d\ge0\) 使
+\(p\boxplus_2^{\alpha}q\notin\mathcal P_2(\mathbb R_{\ge0})\)。具体地,**两族显式反例,缺一不可**:
+
+$$
+\boxed{
+\begin{aligned}
+-2<\alpha<-1:&\quad (a,b,c,d)=(1,0,1,0)\ \Longrightarrow\ \text{根之积}=\kappa(\alpha)<0;\\
+\alpha<-2:&\quad (a,b,c,d)=(1,1,1,1)\ \Longrightarrow\ D=8\bigl(1-2\kappa(\alpha)\bigr)<0 .
+\end{aligned}
+}
+$$
+
+因此,在 Definition 3.10 的定义域 \(\mathbb R\setminus\{-1,-2\}\) 上,
+
+$$
+\boxed{
+\bigl[\forall\,p,q\in\mathcal P_2(\mathbb R_{\ge0}):\ p\boxplus_2^{\alpha}q\in\mathcal P_2(\mathbb R_{\ge0})\bigr]
+\iff \alpha>-1 .
+}
+$$
+
+### 证明
+
+**第一族**:\(-2<\alpha<-1\) 时 \(\alpha+2>0\) 而 \(\alpha+1<0\),故 \(\kappa(\alpha)<0\)。
+取 \((a,b,c,d)=(1,0,1,0)\),则 \(ab=cd=0\)、\(P=Q=1\),由定理 G1 根之积为 \(\kappa(\alpha)<0\);
+两根之积为负蕴含两根为异号实数,故不属于 \(\mathcal P_2(\mathbb R_{\ge0})\)。
+
+**第二族**:\(\alpha<-2\) 时 \(\alpha+1<-1<0\) 与 \(\alpha+2<0\) 同号相除给出 \(\kappa(\alpha)>0\);
+且 \(\kappa(\alpha)\le\tfrac12\) 将化为 \(\alpha+1\ge\alpha+2\)(不等号因 \(\alpha+2<0\) 而反向),即 \(0\ge1\),矛盾,
+故 \(\kappa(\alpha)>\tfrac12\)。取 \((a,b,c,d)=(1,1,1,1)\),则 \(P=Q=2\)、\(ab=cd=1\),
+由定理 G2 的取等情形 \(D=2PQ(1-2\kappa)=8(1-2\kappa)<0\),故无实根。
+
+**两族互不覆盖**:第一族在 \(\alpha<-2\) 时给出 \(\kappa>0\),根之积为正,不构成反例;
+第二族在 \(-2<\alpha<-1\) 时 \(\kappa<0<\tfrac12\),判别式非负,亦不构成反例。
+故两族各自只覆盖 \(\alpha<-1\) 的一半。
+
+**充要性**:充分性即定理 G3,必要性即上述两族。∎
+
+### 解释与边界
+
+猜想的门槛落在 \(\alpha=-1\),根源在**根之积**而非判别式:
+\(\kappa(\alpha)\) 恰在 \(\alpha=-1\) 处变号,而根之积中的交叉项 \(\kappa PQ\) 是唯一可能为负的一项。
+判别式一侧的门槛在 \(\alpha=-2\),但那处已被 Definition 3.10 的定义域排除,
+故**在定义域内,判别式条件从不构成约束**——这正是 \(m=2\) 情形可以完全解出的原因。
+
+**不得外推**:\(m\ge3\) 时根之积不再是唯一的耦合项,且实根条件不再化为「判别式 + 和 + 积」三条,
+上述论证**不适用**。本增订对 \(m\ge3\) **无任何断言**。
+
+### 拟议逃逸见证(第 5⁴ 条,写在实施之前,不得事后追认)
+
+- **定理 G2 的判别式下界与取等情形**:`ab ≤ P²/4` 与 `cd ≤ Q²/4` 两次代入所得的
+  \(D\ge2PQ(1-2\kappa)\),以及 \(a=b,\ c=d\) 处取等。它不由任何已冻结前置经实例化、投影或规范化得到,
+  且处在定理 G3 与 G4 的**活推导路径**上——去掉它,G3 的判别式一条无从判定,G4 第二族的反例值无从计算。
+- **阈值恒等式** \(\kappa(\alpha)<\tfrac12\iff\alpha+1<\alpha+2\)(在 \(\alpha+2>0\) 上),
+  与其在 \(\alpha+2<0\) 上的反向形态 \(\kappa(\alpha)>\tfrac12\)。
+- **两族反例的互不覆盖性**:各自只在 \(\alpha<-1\) 的一半上成立,故必须同时给出。
+
+`computational_content.kind = none`:四条皆为对参数 \(\alpha\) 与 \(a,b,c,d\) 的一般定理;
+G4 的两族反例是该一般定理的**显式见证**,不是有限枚举、检查器、数值归约或已认证实例。
+准入依据 `escape-witness`。
+
+### 档位与文献核对(第 5⁵ 条)
+
+- **档位:第一档**——arXiv:2502.00254v2 明写的具名猜想(Gribinski,经该文转述为 Conjecture 3.13),
+  且该文自陈「only known to hold when \(\alpha\) is a non-negative integer」。
+- **核对结果**:核对了 arXiv:2502.00254 的 abs 页(v1 2025-02-01、v2 2025-12-21,作者 Campbell / Morales / Perales)
+  与正文 HTML 的 Definition 3.10、Conjecture 3.13、Conjecture 5.3 段落;
+  Definition 3.10 的系数式经**逐项代入 \(m=2\) 独立复算**,与本增订的 \(\kappa(\alpha)\) 一致(非转述)。
+  **该文未给出 \(m=2\) 的证明,亦未提出锐性方向。**
+- **未核**:Gribinski 的原始报告(该文引作 [12])全文;R. Morales 2026 年博士论文
+  《Free Probability Tools in the Study of Zeros of Polynomials》全文(获取失败)。
+  故**不**声称全球首次,只声称相对该文所述知识状态为新。
+- **仓内查重**:在 dev `adf62f2e8c` 上
+  `git grep -iE 'rectangularConvolution|rectangular_convolution|finiteFree|finite_free|freeCommutator' -- 'D5/**/*.lean'`
+  **零命中**;`polyaFrequency` 的唯一命中在 `D5/S3/Zeros/ObserverCriteria/OneObserverTotalPositivityCriterion.lean`
+  的**检索留痕注释**里,其公开定理讲的是另一命题。本仓无既有形式化。
+
+### 与本卷的接口
+
+本卷线 B 的入口是「仅依赖系数的正性检验与有限多项式实根判据」。
+广义矩形卷积是一个**只由初等对称函数系数定义**的算子,而 \(m=2\) 的保正实根性恰好化为
+「判别式 + 和 + 积」三条系数条件;定理 G3–G4 给出的是该入口上一个**完整且锐**的参数分类。
+它**不是** \(\xi\) 多项式,**不**推出 RH,也**不**改变本卷任何既有结论。
