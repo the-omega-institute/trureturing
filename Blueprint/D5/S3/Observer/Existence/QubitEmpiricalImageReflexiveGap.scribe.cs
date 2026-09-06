@@ -20,7 +20,7 @@ internal sealed class QubitEmpiricalImageReflexiveGapDocument : IScribeDocumentD
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "There is a three-context rank-one qubit observer whose readout R is "
+                        "In the displayed statement, ofMatrixInv denotes the Lean conversion CStarMatrix.ofMatrix.symm, which reads a density state's underlying matrix as a C*-matrix; R is the context readout. There is a three-context rank-one qubit observer whose readout R is "
                             + "injective on the full density-state subtype.")),
                     Paragraph(Text(
                         "For that same R, pullback from Boolean predicates on its realized range "
@@ -42,7 +42,7 @@ internal sealed class QubitEmpiricalImageReflexiveGapDocument : IScribeDocumentD
     {
         Formula context = F.Id("C");
         Formula state = F.Id("rho");
-        Formula readout = F.Id("R_C");
+        Formula readout = F.Id("R");
         Formula catalog = F.Id("catalog");
         Formula fin2 = Call("Fin", F.D(2));
         Formula fin3 = Call("Fin", F.D(3));
@@ -52,7 +52,7 @@ internal sealed class QubitEmpiricalImageReflexiveGapDocument : IScribeDocumentD
         Formula predicate = Arrow(range, F.Id("Bool"));
         Formula catalogType = Arrow(density, predicate);
         Formula readoutBody = Call("contextReadout", context,
-            Call("CStarMatrix.ofMatrix.symm", Call("value", state)));
+            Call("ofMatrixInv", Call("value", state)));
 
         return F.Disp(F.Seq(
             F.Exists, F.Sp, context, F.Colon, F.Sp, contextType, F.Comma,
