@@ -1,0 +1,14 @@
+### 3.3 Sensitivity or cross-world restrictions
+
+A condition such as
+
+\[
+P(A\neq B)\le \kappa
+\]
+
+may restrict the unknown dependence between potential outcomes while not being identified from their marginals. Such a condition must be represented as an additional assumption or sensitivity parameter.
+
+This distinction prevents a common logical error: treating a cross-world dependence restriction as though it were observed data.
+
+The correct pipeline is therefore
+

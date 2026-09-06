@@ -1,0 +1,47 @@
+## 21. From source separation to counterfactual product laws
+
+`SeparatedCounterfactualSourceFactorization.lean` joins the locality compiler to the existing finite product-pushforward library.
+
+Suppose two readouts `F` and `G` depend on finite source sets `S` and `T`, with `S` disjoint from `T`. The formal probability premise supplies independent normalized rational laws on the entire `S` block and its complement:
+
+```text
+mu = mu_S x mu_complement.
+```
+
+Dependence inside either block remains unrestricted. The source split uses Mathlib's standard equivalence
+
+```text
+(Source -> Noise)
+  equivalent to
+({i // i in S} -> Noise) x ({i // i not in S} -> Noise).
+```
+
+It covers every full source assignment. Coordinates unused by either readout remain in the complement block; they are not removed by selecting a smaller test carrier.
+
+`DependsOn` supplies reduced maps through the corresponding coordinate restrictions. Disjointness places the right readout entirely inside the complement block. Under the standard equivalence, the original full-source maps are therefore coordinatewise maps. Reusing `independent_exogenous_components_induce_markovian_response_law` yields `separated_readouts_factorize`.
+
+The associated cell formula is
+
+```text
+P(F = f, G = g) = P(F = f) * P(G = g),
+```
+
+where both factors are the actual marginals of the generated response law. `separated_readouts_cell_eq_product` states this equality for every pair of response values. For Boolean benefit readouts, its `(true,true)` cell gives simultaneous benefit.
+
+The end-to-end statement `compiled_counterfactual_events_factorize` combines:
+
+```text
+parent-indexed structural evaluation
+  + direct exogenous locality
+  + finite counterfactual support compilation
+  + disjoint compiled supports
+  + an independent S/complement source law
+  -> a product-factorized Boolean counterfactual event law.
+```
+
+The independence premise is explicit. This module does not yet derive the S/complement law from a separately represented family of elementary independent disturbance laws. It also does not assert that c-component labels alone establish independence of arbitrary evaluated potential outcomes.
+
+The structural distinction agrees with the quasi-Markovian formulation in Arroyo et al., arXiv:2509.03548, Section 2: local mechanisms still read endogenous parents, while exogenous laws have their own factorization. General counterfactual identification remains a broader problem, as in Shpitser and Pearl, *What Counterfactuals Can Be Tested*, UAI 2007, arXiv:1206.5294. The present source-separation certificate supplies a sufficient condition; no completeness claim for a counterfactual identification algorithm is made.
+
+All four public declarations have matching handles in `Blueprint/D5/S3/ConceptDynamics/Causal/PartialIdentification/SeparatedCounterfactualSourceFactorization.scribe.cs`.
+

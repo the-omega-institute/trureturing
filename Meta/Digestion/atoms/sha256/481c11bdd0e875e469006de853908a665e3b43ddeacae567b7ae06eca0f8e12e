@@ -1,0 +1,4 @@
+- estimated constraints introduce statistical uncertainty distinct from identification uncertainty.
+
+The formal program should preserve these boundaries rather than hide them behind a single optimization interface.
+

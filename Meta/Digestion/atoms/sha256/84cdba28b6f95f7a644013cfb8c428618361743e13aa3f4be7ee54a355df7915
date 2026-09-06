@@ -1,0 +1,16 @@
+### Layer A. Convex partial identification
+
+```text
+FeasibleModel
+Query
+ValidLowerBound
+ValidUpperBound
+LowerWitness
+UpperWitness
+ConvexFeasible
+AffineQuery
+SharpIdentifiedInterval
+```
+
+This layer does not know anything about causality or LPs.
+

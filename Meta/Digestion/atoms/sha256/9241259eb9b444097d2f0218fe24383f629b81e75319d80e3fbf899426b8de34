@@ -1,0 +1,10 @@
+### 4.1 Valid lower and upper bounds
+
+`L` and `U` are valid when
+
+\[
+\forall \pi\in\mathcal F,
+\qquad
+L\le Q(\pi)\le U.
+\]
+

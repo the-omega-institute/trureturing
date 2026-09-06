@@ -1,0 +1,44 @@
+## 29. Sharp covariate joint benefit in one fixed-noise model
+
+`FixedNoiseCovariateBenefitSharpBounds.lean` combines simultaneous table realization with the existing four-marginal sharpness theorem. The deterministic treatment equation is
+
+```text
+Y_i(a,c,W_i) = first coordinate of W_i(c)  if a=false,
+Y_i(a,c,W_i) = second coordinate of W_i(c) if a=true.
+```
+
+`fixedNoiseOutcome_response` identifies the complete treatment response with W_i(c). Both treatment interventions use the same table disturbance. `fixedNoiseStratumModel` records the actual row marginals of an arbitrary fixed table model, and `HasConditionalFourMarginals` fixes their four intervention-success kernels p10(c), p11(c), p20(c), p21(c).
+
+Define
+
+```text
+L_i(c) = max(0, p_i1(c) - p_i0(c)),
+U_i(c) = min(p_i1(c), 1 - p_i0(c)),
+l(c) = L_1(c)*L_2(c), u(c) = U_1(c)*U_2(c),
+L = sum_c weight(c)*l(c), U = sum_c weight(c)*u(c).
+```
+
+For compatible local marginals, the main theorem `fixedNoise_covariate_joint_benefit_sharp_iff` states
+
+```text
+L <= target <= U
+iff
+there exists one FixedNoisePairModel with all four prescribed kernels
+and actual population simultaneous-benefit probability target.
+```
+
+All quantities and attaining laws are rational. The identified set is `[L,U] intersect Q`. `fixedNoiseJointBenefit` is defined by summing the relevant cells of the actual common-source pushforward, rather than by stipulating a weighted objective. `fixedNoiseJointBenefit_eq_weighted` derives the weighted product formula from that law.
+
+Necessity covers every admitted table law, including correlated rows. Its row marginals satisfy the existing local joint-benefit interval. Nonnegative covariate weights preserve these bounds under summation.
+
+For sufficiency, if L=U, select every lower endpoint. Otherwise set
+
+```text
+t = (target-L)/(U-L),
+q_c = l(c) + t*(u(c)-l(c)).
+```
+
+Then 0<=t<=1, each q_c belongs to its local sharp interval, and the weighted sum of the q_c equals target. The existing local theorem constructs two response laws attaining q_c with the specified four marginals. `fixedNoiseStrata_simultaneously_realized` assembles all those laws into one pair of full-table disturbances.
+
+Only the scalar target values are interpolated. The construction does not mix two product distributions, which could break mechanism independence. A private rational specialization of the weighted interpolation argument avoids converting real witnesses back into rational source laws. The former joint-selection premise has now been discharged for this explicit fixed-noise model family.
+

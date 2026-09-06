@@ -1,0 +1,34 @@
+## 19. Intrinsic-information interpretation and continuation verification status
+
+The governing reference read for this continuation is version 4.3 of
+
+```text
+docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
+```
+
+The new `fourMarginalReadout` acts on the existing full `MarkovianJointMechanismModel` carrier. The authored theorem `joint_benefit_strictly_refines_four_marginal_kernel` constructs two models with the same four-marginal readout and joint-benefit values zero and one quarter. Thus the mathematical witness certifies strict refinement of the observation kernel when the joint-benefit query is added. `no_joint_benefit_reconstruction_from_four_marginals` states the corresponding impossibility of a reconstruction function.
+
+This full rational model space is infinite. No uniform finite escape rate, sampled model arena, novelty score, or external Python admission judge is introduced. A two-model strict-refinement witness is not a proof of positive leave-one-out capture against all peers in a designated maximal catalog. The non-reconstruction corollary is not registered as an extra independently informative occurrence.
+
+Still outstanding for the new sources are their kernel-checked primitive realizations, canonical arena occurrence/disposition registration where applicable, designated-root maximal-catalog sealing, and protected build acceptance. The historical workflow name containing "baseline" in Section 15 is an engineering label; it is not an authorization to use historical deltas or scoring in the version 4.3 information theory.
+
+At the time of this writeback:
+
+- Both Lean sources and both authored Scribe documents have been pushed to the existing PR #5029 branch.
+- No Lean compiler or Lake executable was available in the local runtime. No local Lean build, `#print axioms` output, Scribe rendering, or information-theory seal was obtained. The new scripts therefore remain unverified formal proof candidates until a pinned build accepts them.
+- Supplementary exact `fractions.Fraction` regression checks passed 18,225 interval-product cases, 59,049 four-marginal attaining-law cases, 59,049 binary covariance cases, and the explicit shared-root counterexample. These are finite arithmetic checks, not proofs or admission certificates.
+- The initial remote PR snapshot was open, draft, and unmergeable. A passing protected workflow for the new head has not been established. The convenience workflow lookup restricted to `pull_request` cannot adjudicate this repository's `pull_request_target` workflow.
+- No merge, auto-merge, workflow bypass, or modification of protected admission machinery was performed.
+
+The next compiler obligation is now more precise:
+
+```text
+intervened event semantics
+  -> certified exogenous dependency sets
+  -> disjoint independent source blocks, or explicit conditioning context
+  -> componentwise pushforward factorization
+  -> event polynomial and sharp attaining models.
+```
+
+This dependency-locality obligation prevents the shared-ancestor counterexample from being incorrectly admitted as an unconditional product query.
+
