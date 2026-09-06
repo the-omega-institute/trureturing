@@ -1,0 +1,65 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates;
+
+internal sealed class RationalMomentQueryEnvelopeDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S0/Certificates/RationalMomentQueryEnvelope.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A pointwise residual enclosure transfers a fixed moment compression to an entire certified query family. A zero weighted square residual implies exact reconstruction; cancellation of a signed mean does not.",
+        H("Certified omitted-query residual envelopes"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("query-envelope"),
+                DeclarationHandle.Create(Prefix + "QueryEnvelope"), H("Data-only affine residual envelope"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Contains the affine predictor coefficients and rational lower and upper residual bounds."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("query-residual"),
+                DeclarationHandle.Create(Prefix + "queryResidual"), H("Actual coefficient residual"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Subtracts the affine predictor from the actual query coefficient at each atom before averaging."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("predicted-mean"),
+                DeclarationHandle.Create(Prefix + "predictedMean"), H("Center determined by retained moments"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The center uses the retained feature means. It does not insert the unknown omitted-query expectation."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("valid-query-envelope"),
+                DeclarationHandle.Create(Prefix + "ValidQueryEnvelope"), H("All-active-atom residual bounds"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Requires the interval at each original nonzero atom, including atoms receiving larger mass after compression."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("check-query-envelope"),
+                DeclarationHandle.Create(Prefix + "checkQueryEnvelope"), H("Exact finite envelope checker"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Decides the rational support-local inequalities. No numerical tolerance or estimated mean replaces them."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("envelope-reflection"),
+                DeclarationHandle.Create(Prefix + "checkQueryEnvelope_eq_true_iff"), H("Reflect envelope acceptance"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Acceptance is equivalent to the coefficient inequalities needed in the expectation argument."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("query-interval"),
+                DeclarationHandle.Create(Prefix + "query_interval_of_envelope"), H("Enclose the true expectation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Nonnegative normalized weights transfer residual bounds to an interval around the retained-moment predictor."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("both-enclosures"),
+                DeclarationHandle.Create(Prefix + "checked_query_enclosures"), H("One interval for both laws"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Support containment and moment preservation put the original and compressed query values inside the same rational interval."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("query-error"),
+                DeclarationHandle.Create(Prefix + "checked_query_error_bound"), H("Residual oscillation bounds query drift"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The absolute change is bounded by upper minus lower. A symmetric residual bound epsilon yields two epsilon."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("uniform-query-family"),
+                DeclarationHandle.Create(Prefix + "checked_uniform_query_family"), H("Keep one compression for the whole family"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The compressed law and trace are fixed before the parameter is quantified. Each family envelope is checked on the same original support."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("zero-energy-iff"),
+                DeclarationHandle.Create(Prefix + "residual_energy_zero_iff"), H("Zero quadratic residual detects pointwise equality"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For nonnegative weights, zero weighted residual square is equivalent to residual zero at every active atom."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("zero-energy-exactness"),
+                DeclarationHandle.Create(Prefix + "checked_query_exact_of_zero_residual_energy"), H("Upgrade zero residual energy to exact query preservation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An exact zero energy gives a zero-width envelope and therefore preserves the query through every accepted compression of the specified features."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("signed-cancellation"),
+                DeclarationHandle.Create(Prefix + "signed_residual_cancellation_counterexample"), H("Expose a missed probability query"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A valid mean-preserving compression changes an omitted event from two thirds to zero despite its centered signed residual having zero original mean. The residual energy is two ninths."))), DescribeRole.Theorem))));
+}
