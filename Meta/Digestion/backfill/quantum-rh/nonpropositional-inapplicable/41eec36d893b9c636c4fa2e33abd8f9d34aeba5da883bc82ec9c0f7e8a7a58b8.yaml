@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:41eec36d893b9c636c4fa2e33abd8f9d34aeba5da883bc82ec9c0f7e8a7a58b8
+  normalized_sha256: sha256:41eec36d893b9c636c4fa2e33abd8f9d34aeba5da883bc82ec9c0f7e8a7a58b8
+cas_ref: sha256:41eec36d893b9c636c4fa2e33abd8f9d34aeba5da883bc82ec9c0f7e8a7a58b8
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Scope commentary separating the preceding h-to-zero moving-window spike calculation from a fixed-h RH criterion; it states how to read atom b745358303e7d849ef95eec3511630d81d525fa44d0bbb646c9070bcefaa111a rather than a new mathematical claim.
+    previous_atom_id: b745358303e7d849ef95eec3511630d81d525fa44d0bbb646c9070bcefaa111a
+    next_atom_id: 2aa74802d1b3ab3281fc74cb12781b7ab0f1423ab4aabb4a72d53e18b2550e42
