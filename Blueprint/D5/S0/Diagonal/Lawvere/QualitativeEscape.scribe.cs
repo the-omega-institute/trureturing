@@ -12,10 +12,22 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
     {
         var f = Id("f");
         var g = Id("g");
+        var a = Id("a");
         var y = Id("y");
         var address = Id("A");
         var alphabet = Id("Y");
-        var type = F.Seq(F.Operatorname, F.Grp(Id("Type")));
+        var type = new Formula.NamedConstant(FormulaIdentifier.Create("Type"));
+        var boolean = new Formula.NamedConstant(FormulaIdentifier.Create("Bool"));
+        var unit = new Formula.NamedConstant(FormulaIdentifier.Create("Unit"));
+        var listingType = new Formula.TypeArrow(
+            address, new Formula.TypeArrow(address, alphabet));
+        Formula.BoundVariable[] parameters =
+        [
+            new(FormulaIdentifier.Create("A"), new Formula.Subscript(type, Id("u"))),
+            new(FormulaIdentifier.Create("Y"), new Formula.Subscript(type, Id("v"))),
+            new(FormulaIdentifier.Create("f"), new Formula.TypeArrow(alphabet, alphabet)),
+            new(FormulaIdentifier.Create("g"), listingType),
+        ];
 
         var fixedPointFree = new Formula.BindMany(
             FormulaQuantifier.ForAll,
@@ -26,24 +38,49 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
 
         var lawvereCore = new Formula.Logic(
             fixedPointFree, FormulaLogicOperator.Implies, escaped);
-        var lawvere = F.Seq(
-            F.Forall, F.Sp, address, F.Comma, F.Sp, alphabet, F.Colon, F.Sp, type,
-            F.Comma, F.Sp,
-            f, F.Colon, F.Sp, new Formula.TypeArrow(alphabet, alphabet), F.Comma, F.Sp,
-            g, F.Colon, F.Sp,
-            new Formula.TypeArrow(address, new Formula.TypeArrow(address, alphabet)),
-            F.Comma, F.Sp,
-            lawvereCore);
+        var lawvere = new Formula.BindMany(
+            FormulaQuantifier.ForAll, [.. parameters], lawvereCore);
 
         var captured = new Formula.BindMany(
             FormulaQuantifier.Exists,
             [
-                new Formula.BoundVariable(FormulaIdentifier.Create("f"), Id("Y0")),
-                new Formula.BoundVariable(FormulaIdentifier.Create("g"), Id("L0")),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("p"), new Formula.TypeArrow(boolean, boolean)),
+                new Formula.BoundVariable(
+                    FormulaIdentifier.Create("q"),
+                    new Formula.TypeArrow(unit, new Formula.TypeArrow(unit, boolean))),
             ],
-            new Formula.Not(escaped));
+            new Formula.Not(Call("IsEscaped", Id("p"), Id("q"))));
 
-        var package = new Formula.Logic(lawvereCore, FormulaLogicOperator.And, captured);
+        var negation = F.Seq(
+            F.Open, Id("b"), F.Colon, F.Sp, boolean, F.Close, F.Sp,
+            F.Mapsto, F.Sp, F.Bang, Id("b"));
+        var constantTrue = F.Seq(
+            F.Open, Id("x"), F.Colon, F.Sp, unit, F.Close, F.Sp, F.Mapsto, F.Sp,
+            F.Open, Id("z"), F.Colon, F.Sp, unit, F.Close, F.Sp, F.Mapsto, F.Sp,
+            new Formula.NamedConstant(FormulaIdentifier.Create("true")));
+        var escapedWitness = Call("IsEscaped", negation, constantTrue);
+
+        var pointwiseDiagonal = new Formula.Bind(
+            FormulaQuantifier.ForAll, FormulaIdentifier.Create("a"), address,
+            Equal(Call("diagonal", f, g, a), Call("f", Call("g", a, a))));
+        var escapeIffOutsideRange = new Formula.Logic(
+            escaped, FormulaLogicOperator.Iff,
+            new Formula.Not(F.Seq(
+                F.Open,
+                new Formula.Relation(
+                    Call("diagonal", f, g), FormulaRelationOperator.MemberOf, Call("range", g)),
+                F.Close)));
+        var everyListingEscapes = new Formula.Logic(
+            fixedPointFree, FormulaLogicOperator.Implies,
+            new Formula.Bind(
+                FormulaQuantifier.ForAll, FormulaIdentifier.Create("h"), listingType,
+                Call("IsEscaped", f, Id("h"))));
+        var package = new Formula.BindMany(
+            FormulaQuantifier.ForAll, [.. parameters],
+            new Formula.Logic(pointwiseDiagonal, FormulaLogicOperator.And,
+                new Formula.Logic(escapeIffOutsideRange, FormulaLogicOperator.And,
+                    new Formula.Logic(everyListingEscapes, FormulaLogicOperator.And, captured))));
 
         const string declarationPrefix = "D5/S0/Diagonal/Lawvere/QualitativeEscape.";
 
@@ -68,6 +105,17 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
                         + "twist fixes every point, and the constant listing at a single "
                         + "address is then captured rather than escaped, so the implication "
                         + "cannot be strengthened by dropping its premise.")),
+                Paragraph(Text(
+                    "The universe levels u and v are arbitrary and independent. In the "
+                        + "quantifiers below, membership in a type denotes a Lean typed binder; "
+                        + "arrows denote full function spaces. Application is curried: g(a, b) "
+                        + "means g a b, and diagonal(f, g, a) means diagonal f g a. The notation "
+                        + "range(g) denotes Set.range g, a set of functions from A to Y. "
+                        + "Bool is Lean's two-value type with values true and false; Unit is "
+                        + "Lean's one-value type with value (). In the explicit witness, ! is "
+                        + "Boolean negation (Bool.not), and true is the Bool value, not the "
+                        + "proposition True. The existential variables p and q name the Bool "
+                        + "twist and Unit listing independently of the outer f and g.")),
                 Describe.Lean(
                     DescribeId.Create("a-fixed-point-free-twist-escapes-every-listing"),
                     DeclarationHandle.Create(declarationPrefix + "escaped_of_fixedPointFree"),
@@ -88,8 +136,8 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(FormulaDsl.Disp(captured)),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
-                        "The identity twist on the two-symbol alphabet together with the "
-                            + "constant listing at a one-point address set is captured, which "
+                        "The witnesses are p = id on Bool and q = fun _ _ => true on Unit. "
+                            + "This listing is captured, which "
                             + "shows the fixed-point-free premise carries weight."))),
                     DescribeRole.Lemma),
                 Describe.Lean(
@@ -97,7 +145,7 @@ internal sealed class QualitativeEscapeDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create(
                         declarationPrefix + "not_escaped_isEscaped_witness"),
                     H("Escape is attained on a two-symbol alphabet"),
-                    StatementSource.FromAuthor(FormulaDsl.Disp(escaped)),
+                    StatementSource.FromAuthor(FormulaDsl.Disp(escapedWitness)),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The negation twist has no fixed point, so the constant listing on a "

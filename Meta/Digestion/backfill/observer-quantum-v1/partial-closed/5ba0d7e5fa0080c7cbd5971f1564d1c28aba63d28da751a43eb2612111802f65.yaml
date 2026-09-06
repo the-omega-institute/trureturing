@@ -39,22 +39,22 @@ receipts:
       emission_sha256: sha256:4264bcc7f16a40dbb87cba45f65fe484c41e65ea8d98c0f3f55f6b11dd8424ee
     - gid: D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero
       definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
-      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
     - gid: D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
       definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
-      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
     - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le
       definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
-      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
     - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
       definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
-      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
     - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul
       definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
-      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
     - gid: D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant
       definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
-      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
   unresolved_subitems:
     - LP-eight-pair-certificate
     - rieffel-metric-bundle-over-torus
