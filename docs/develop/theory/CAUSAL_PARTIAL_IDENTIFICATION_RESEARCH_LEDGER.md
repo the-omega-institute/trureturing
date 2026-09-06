@@ -678,7 +678,7 @@ F(u) = reduced_F(u restricted to S).
 F_*(mu) = reduced_F_*(mu_S).
 ```
 
-After regrouping, the complementary product law sums to one. `independentSource_restriction_marginal` identifies `mu_S` with the actual restriction marginal. `independentSource_readout_law_invariant` further proves that two elementary law families agreeing on S give the same complete readout distribution, irrespective of changes outside S. The readout and structural equations are fixed in this statement.
+`independentSource_restriction_marginal` identifies `mu_S` with the actual restriction marginal. `independentSource_readout_law_invariant` further proves that two elementary law families agreeing on S give the same complete readout distribution, irrespective of changes outside S. The readout and structural equations are fixed in this statement.
 
 This distributional invariance does not authorize deletion of statistical constraints involving other sources. Consider independent Bernoulli variables with parameters x and z, a target x, and supplied joint-event probability c. The data impose x*z = c. For nonnegative rational c, `joint_event_constraint_projection_iff` states the exact parameter projection:
 
@@ -1532,3 +1532,156 @@ The reproducible Fraction diagnostic uses seed 20260906. It passed 3,721 Boolean
 For those 120 certified problems, each allowed atom was duplicated four times and its weight divided equally among its copies. The resulting larger contact laws were separately compressed using only their original feature coordinates. All 120 resulting pairs retained certificate validity, individual query values and the optimum, with 834 checked elimination steps and the d+1 bound on each endpoint. Eight malformed certificates, targeting probability validity, moment feasibility, global bounds, contacts and slope direction, were rejected. These implementations are independent Python mirrors, not code extracted from Lean.
 
 The formalized certificate language now has a substantive consumer with an explicit certificate for every nonnegative Boolean tolerance pair. The remaining general existence theorem should consume a compatible port or upstream integration of the identified Dvorak--Kolmogorov strong-duality owner, with exact maps between its standard LP coefficients and this lane's original feature/query arrays. Joint colored replay is the next source-local compression target. Statistical confidence statements would additionally require a simultaneous data-error event and an explicit conversion between individual confidence radii and pairwise moment tolerances; none is supplied by a deterministic residual certificate alone.
+
+## 66. Research target: exact tractable mediator bounds, 2026-09-06
+
+The continuation compared recent work across authors, including loning's #5326 and #5867, AlyciaBHZ's #5405 and #5800, and the quadratic-conjecture work in #5859. The relevant criterion is preservation of the actual object in the published question. #5326 keeps the missing determinant-preservation bridge explicit; #5405 separates errors on arbitrary legal words from errors on the powers-only language; #5800 supplies a rational-to-real linear-image backend without claiming solver completeness. #5859 directly compares its full parameter statement with the cited conjecture. These are methodological comparisons; none of their mathematical conclusions is imported into mediation.
+
+The selected scientific target is the tractability question stated in Xie and Li, *Bounding Probabilities of Causation with Partial Causal Diagrams*, arXiv:2602.14503v1, Conclusion: simpler mediator representations, alternative parameterizations yielding equivalent linear constraints, and certified bounds. Arroyo et al., arXiv:2509.03548v1, Conclusion, also identifies multiple-intervention extensions and scalable graph-based algorithms as future work. General finite causal bounds already have multilinear-program formulations; their basic existence or computability is not claimed to be an unsolved problem here.
+
+This increment establishes an exact finite transportation representation for one nonconvex two-mechanism subclass. It is a concrete algorithmic reduction tied to the mediator question, rather than another generic support bound. A general theorem for arbitrary partial diagrams, latent mediator-outcome confounding or extra response restrictions is not established. Targeted literature searches do not establish priority for the reduction or its Wasserstein interpretation, so no first-discovery claim is made.
+
+Dawid, Humphreys and Musio, *Bounding Causes of Effects With Mediators*, Sociological Methods & Research 53(1):28-56 (2024; online 2022), explicitly studies complete mediation chains and excludes a direct treatment-to-outcome path. Their result is relevant prior art, with a different structural restriction. The new model below permits that direct path and retains independent mediator and outcome disturbances. It does not claim to subsume their results after merely setting equal success probabilities in the two treatment rows.
+
+## 67. The actual partial-mediation model and authoritative inputs
+
+Let treatment A and outcome Y be Boolean, and M range over any nonempty finite set of m mediator values. The structural equations are
+
+```text
+M = f_M(A,U_M),
+Y = f_Y(A,M,U_Y),
+U_M independent of U_Y.
+```
+
+The complete mediator disturbance carries (M_0,M_1) with law pi. The complete outcome disturbance carries the table (Y_(a,m))_(a,m) with law nu. The actual source law is pi x nu; every counterfactual world reads the same pair and the same outcome table. An independent treatment-assignment disturbance can be adjoined without changing these intervention responses.
+
+The inputs are alpha(m)=P(M_0=m), beta(n)=P(M_1=n), and r_a(m)=P(Y_(a,m)=1), all rational. These are intervention kernels in the formal statement. In the no-confounding graph and positive parent cells they agree with the corresponding observed conditionals, but the source does not prove that statistical identification bridge or infer null-cell kernels from data. No independence among entries inside either disturbance is required.
+
+The target is population benefit P(Y_(0,M_0)=0,Y_(1,M_1)=1). In `PartialMediatorTransportReduction.lean`, `partialMediatorResponseLaw` is the actual pushforward of the existing `productResponseLaw`, and `partialMediatorBenefit_actual_response` binds its objective to the pre-existing `benefitResponseMass`. `HasMediatorMarginals` fixes every row and column of the same pi. This prevents independently maximizing mediator cells that cannot coexist in one coupling.
+
+## 68. The simultaneous-attainment theorem
+
+For every pair (m,n), the conditional outcome benefit cell is bounded by
+
+```text
+cL(m,n) = max(0, r_1(n)-r_0(m)),
+cU(m,n) = min(1-r_0(m), r_1(n)).
+```
+
+Individual Frechet bounds would not suffice for sharpness if their attaining laws conflicted across pairs. `SharedThresholdResponseCoupling.lean` closes this obligation on the complete outcome-table carrier.
+
+Choose one uniform disturbance U. For the lower witness use
+
+```text
+Y_(0,m) = 1[U < r_0(m)],
+Y_(1,n) = 1[U < r_1(n)].
+```
+
+Its benefit event is r_0(m)<=U<r_1(n), with probability cL(m,n), for every pair simultaneously. For the upper witness use
+
+```text
+Y_(0,m) = 1[U >= 1-r_0(m)],
+Y_(1,n) = 1[U < r_1(n)].
+```
+
+The favourable control-failure and treated-success events are nested prefixes, giving cU(m,n) simultaneously. These two within-mechanism couplings are witness choices, not assumptions on all admissible models.
+
+The Lean source first proves exact prefix and intersection counting on Fin N. A private common-denominator argument represents every finite rational success kernel as integer counts divided by one positive N, so no equal-denominator premise is imposed on the final theorem. `simultaneous_frechet_outcome_laws` chooses the two normalized outcome laws before quantifying over all mediator pairs. `simultaneous_transport_endpoint_mechanisms` then shows that those same two laws attain the lower and upper linear costs for every complete mediator coupling pi.
+
+## 69. Exact nonlinear-to-linear target equivalence
+
+For any actual independent-mechanism model,
+
+```text
+J(pi,nu) = sum_(m,n) pi(m,n) * P_nu(Y_(0,m)=0,Y_(1,n)=1).
+```
+
+This identity follows from the original product source law. The simultaneous witnesses give, for each fixed pi, the exact rational image
+
+```text
+[ sum pi*cL, sum pi*cU ] intersect Q.
+```
+
+Every intermediate target is attained by mixing the lower and upper outcome-table laws while leaving pi fixed. This is a mixture inside one disturbance. The resulting source law remains the product of the mediator law and the new outcome law. A convex mixture of two different product laws is not used.
+
+The principal source endpoint is `partial_mediator_target_iff_transport`. It states, for every rational target q,
+
+```text
+exists pi,nu:
+  pi has marginals alpha,beta,
+  nu has the full prescribed success kernel r,
+  J(pi,nu)=q
+iff
+exists pi:
+  pi has marginals alpha,beta,
+  sum pi*cL <= q <= sum pi*cU.
+```
+
+The right side contains only m^2 coupling masses, nonnegative normalization, row and column equalities, and two linear target inequalities. It contains no outcome-law search and no optimizer-existence assumption. Thus the complete query image, not merely a relaxation or one coordinatewise stationary value, is represented by a finite linear program.
+
+At the mathematical optimization level the sharp endpoints are
+
+```text
+L = min_{pi in Pi(alpha,beta)} sum pi*cL,
+U = max_{pi in Pi(alpha,beta)} sum pi*cU.
+```
+
+Finite transportation polytopes are nonempty and their rational linear optima are attained. The source theorem `transport_endpoints_are_causal_sharp` explicitly transports any certified pair of such endpoint plans and valid LP bounds back to attaining causal mechanisms; it does not postulate general strong duality. The all-target iff already eliminates the nonlinear outcome search independently of that endpoint interface. Convexity of the right-side linear feasible region also fills the interval between the endpoint values.
+
+## 70. Conditional-success geometry and one-dimensional transport
+
+The source also proves the two exact cost identities
+
+```text
+2*cL(m,n) = r_1(n)-r_0(m) + abs(r_1(n)-r_0(m)),
+2*cU(m,n) = 1-r_0(m)+r_1(n) - abs(1-r_0(m)-r_1(n)),
+```
+
+and their expectations under every complete mediator law, including the normalization term in the second identity. Once alpha and beta are fixed, the success means p0=sum alpha*r_0 and p1=sum beta*r_1 do not depend on the coupling.
+
+At paper level, let R0 have the discrete law of r_0(M_0) under alpha and let R1 have that of r_1(M_1) under beta. Then
+
+```text
+L = (p1-p0 + W1(Law(R0),Law(R1))) / 2,
+U = (1-p0+p1 - W1(Law(1-R0),Law(R1))) / 2.
+```
+
+Here W1 is the minimum absolute-distance transport cost between finite real-line distributions. Couplings between repeated risk values lift to mediator couplings by distributing mass within each risk level in proportion to its original alpha or beta weights. Conversely every mediator coupling pushes forward to a risk coupling. Thus aggregating identical success values preserves these two costs exactly.
+
+Sorting the success values and matching their cumulative masses gives attaining plans. The exchange inequality for x<=x' and y<=y', `abs(x-y)+abs(x'-y')<=abs(x-y')+abs(x'-y)`, explains optimality. The upper calculation sorts 1-r_0 against r_1, not r_0 against r_1. Each greedy plan has at most 2m-1 nonzero cells after zero weights are removed. Sorting takes O(m log m) comparisons; rational bit complexity is not asserted. The formalized endpoint is the finite cost identity and exact target reduction. General correctness of a sorting implementation and a measure-theoretic Wasserstein API bridge have not yet been added to Lean.
+
+The cut-point implementation of the outcome witnesses uses at most 2m+1 distinct complete outcome tables. This avoids enumerating the 2^(2m) canonical outcome tables. That support count is proved by the paper construction and checked in the executable diagnostic; the current Lean witness uses a finite common-denominator carrier and does not expose this support-size bound as a theorem.
+
+## 71. Strict tightening and the structural boundary
+
+A synthetic instance has alpha=beta=(1/2,1/2), r_0=(1/10,9/10), and r_1=(1/2,1/2). Both aggregate outcome success probabilities are 1/2. Without the mediator mechanism the Frechet benefit interval is [0,1/2]. The exact transport interval is [1/5,3/10]. All supplied outcome probabilities are strictly between zero and one.
+
+With outcome-table strings ordered as (Y_(0,0),Y_(0,1),Y_(1,0),Y_(1,1)), the lower witness has masses
+
+```text
+1111:1/10, 0111:2/5, 0100:2/5, 0000:1/10,
+```
+
+and the upper witness has masses
+
+```text
+0011:1/10, 0111:2/5, 0100:2/5, 1100:1/10.
+```
+
+Their products with respectively diagonal and anti-diagonal mediator couplings of weights (1/2,1/2) attain 1/5 and 3/10. Every indicated mediator and outcome row is checked directly. This is a mathematical validation example, not a real-data application, measured treatment effect or empirical performance claim.
+
+The direct treatment-to-outcome path matters for attainability. In complete mediation one requires the same Y_m in both worlds. Merely setting r_0(m)=r_1(m) does not enforce the almost-sure equality of those two response coordinates. The upper threshold witness generally violates that extra equality. For three mediator values with success 1/2 and a fixed directed-cycle coupling pi(m,m+1)=1/3, each separate upper cell bound is 1/2, but any Boolean response assignment has at most one favourable 0-to-1 edge around the cycle. The actual upper query value is 1/3, attained by mixing an assignment and its complement. Thus the simultaneous upper claim cannot be imported into that exclusion-restricted class.
+
+More generally, on paper, with fixed mediator coupling pi and complete-mediation success probabilities all 1/2, define Cut_pi(y)=sum pi(i,j)*1[y_i!=y_j]. Every admitted outcome law satisfies `2*J=E[Cut_pi(Y)]`, since the expected signed differences Y_j-Y_i vanish. Conversely mixing any assignment y and its complement with equal weights preserves all success marginals and has J=Cut_pi(y)/2. Therefore that fixed-coupling optimization equals half the maximum weighted cut. This exact reduction explains why extending the same easy simultaneous-attainment argument is obstructed. The maximum-cut reduction has not been formalized in Lean in this increment, and no complexity classification for the full unknown-coupling problem is inferred from it.
+
+## 72. Executed evidence and remaining research obligations
+
+The increment adds two Lean truth sources and their two Scribe counterparts, with 24 named public declarations. The main iff is a full finite-rational statement on the original independent source semantics. Source and mathematical review were performed, including readback of the import paths. No Lean/Lake or dotnet executable is available in this runtime, so elaboration, kernel execution, axiom reports and Scribe rendering have not been obtained. No new axiom or proof placeholder was introduced; that alone is not kernel verification.
+
+The independent `verify_transport.py` diagnostic, seed 20260906, was executed after the final test additions. Across mediator sizes 1,2,3,5,8,16,32 it checked 168 shared-threshold constructions, 33,192 outcome-pair cells, 168 transportation endpoint dual certificates, 168 actual product-source endpoint values, and 420 rational interior targets. Another 128 target-feasibility LPs were reconstructed exactly and used to build one fixed-coupling outcome mixture for each target, following the main Lean iff. Three null-stratum cases check zero mediator probabilities without division by those masses.
+
+For binary mediators, 48 independent full-outcome-table LP comparisons optimized over all 16 canonical outcome tables at the two extreme mediator couplings. Their extrema matched the transport reduction. Every numerical LP call only proposes primal or dual data; reconstructed Fraction values must pass exact nonnegativity, row/column constraints, dual inequalities and matching objectives. There is no floating tolerance in acceptance. The weighted-cut identity was additionally checked on 744 finite assignments, and the complete-mediation three-cycle obstruction was checked exactly.
+
+Among the 84 randomized rational diagnostic instances, 62 narrowed at least one aggregate Frechet endpoint, and 48 improved the clipped sum of separate mediator-cell maxima. These are properties of that seeded test suite, not population frequencies or scientific effect estimates. At m=32, the canonical outcome carrier has 2^64 tables while the transport problem has 1024 variables; the diagnostic never enumerates that outcome carrier. No wall-clock superiority claim or comparison against a full contemporary causal solver benchmark is made.
+
+The next research obligations are tied to the same scientific target: formalize the finite sorting/dual certificate connection and the success-value quotient; determine exactly which added mediator or outcome restrictions preserve the transport reduction; and compare the resulting sharp algorithm against published mediator-bound implementations on matched assumptions. The general multi-component column-generation extension remains unresolved by this subclass result. The known complete-mediation and canonical-domain-reduction literature must be compared before claiming mathematical priority or a new general causal identification frontier.
