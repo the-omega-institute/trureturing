@@ -24,6 +24,8 @@ owns the elementary independent-sampling envelope
 Taking `epsilon = 1 - sqrt (1-delta^2)` produces a positive rate whenever the
 robust margin is strictly positive. This yields both an exponential risk bound
 and a direct sufficient real-valued shot-count threshold for a target risk.
+The preceding representation bridge means the same operational optimum also
+controls every recursive iid decision event after exact reindexing.
 
 No asymptotic approximation, Chernoff optimization, concentration inequality,
 or integer rounding convention is introduced here.
