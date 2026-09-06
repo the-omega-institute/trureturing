@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Positive Jacobi matrices admit positive Cholesky weights with the prescribed recurrence. -/
+   digest: Positive Jacobi matrices admit positive recursive Cholesky weights. -/
 
 import D5.S3.Constants.NewtonHankelRealRootCriterion
 import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
@@ -23,12 +23,14 @@ import Mathlib.Tactic
       LDL.lowerInv_triangular, Matrix.blockTriangular_inv_of_blockTriangular,
       Matrix.IsHermitian.posDef_iff_eigenvalues_pos, and Matrix.det_one_add_mul_comm.
       These primitives are reused. No tridiagonal Cholesky weight theorem was found.
-   3. GitHub repository searches through NyxID's cma-trigger-github-observer-staging for
+   3. This continuation repeated GitHub repository searches through NyxID's
+      cma-trigger-github-observer-staging for
       `cholesky lean` and `Jacobi Lean4` found tripp-smith/gecp-kernel-structure.
       Its complete tree at 6f7c0ba9d0230ca1c3c957737ef1ed65008aecfb and the source
-      PositiveDefinite/PivotedCholesky.lean were read: it compares pivot-selection traces
+      GECPKernelStructure/PositiveDefinite/PivotedCholesky.lean were read:
+      it compares pivot-selection traces
       and assumes each positive pivot, so does not supply the required recurrence positivity.
-      GitHub code search through api-github returned HTTP 400 (failed credential);
+      GitHub code search through the observer returned HTTP 401 (authentication required);
       exhaustive online code search is ASSUMED-UNVERIFIED. No exact third-party hit was found
       in the successfully searched scope.
    4. The lower-factor sparsity induction and its positive weight construction are local.
@@ -62,7 +64,7 @@ private theorem exists_lower_cholesky {d : Nat} {K : Matrix (Fin d) (Fin d) Real
   have hLower : L.IsLowerTriangular :=
     (Matrix.blockTriangular_inv_of_blockTriangular hU).mul (Matrix.blockTriangular_diagonal _)
   have hRR : R * R.transpose = LDL.diag hK := by
-    simp only [R, transpose_diagonal, diagonal_mul_diagonal, LDL.diag]
+    simp only [R, diagonal_transpose, diagonal_mul_diagonal, LDL.diag]
     congr 1
     funext i
     exact Real.mul_self_sqrt (hp i).le
@@ -98,7 +100,6 @@ private theorem cholesky_bidiagonal_of_tridiagonal {d : Nat}
       have hentry : K i j = L i j * L j j := by
         rw [hfactor, Matrix.mul_apply]
         apply Finset.sum_eq_single j
-        · rfl
         · intro k _ hkj
           rcases lt_or_gt_of_ne hkj with hlt | hgt
           · have hik : k.1 + 1 < i.1 := by omega
