@@ -52,7 +52,7 @@ internal sealed class QubitEmpiricalImageReflexiveGapDocument : IScribeDocumentD
         Formula predicate = Arrow(range, F.Id("Bool"));
         Formula catalogType = Arrow(density, predicate);
         Formula readoutBody = Call("contextReadout", context,
-            Call("CStarMatrix.toMatrix", Call("value", state)));
+            Call("CStarMatrix.ofMatrix.symm", Call("value", state)));
 
         return F.Disp(F.Seq(
             F.Exists, F.Sp, context, F.Colon, F.Sp, contextType, F.Comma,
