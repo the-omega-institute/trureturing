@@ -74,6 +74,32 @@ private theorem eval_map_conj (p : Complex[X]) (z : Complex) :
         _ = conj ((p + q).eval (conj z)) := by rw [eval_add]
   | monomial n a => simp [eval_monomial]
 
+private def conjugatePairValues (z w : Complex) : Complex :=
+  if w = z then Complex.I else if w = conj z then -Complex.I else 0
+
+private theorem conjugatePairValues_conj {z w : Complex} (hz : conj z ≠ z) :
+    conj (conjugatePairValues z (conj w)) = conjugatePairValues z w := by
+  by_cases hwz : w = z
+  · subst w
+    simp [conjugatePairValues, hz, Ne.symm hz]
+  by_cases hwcz : w = conj z
+  · subst w
+    simp [conjugatePairValues, hz, Ne.symm hz]
+  have hcwz : conj w ≠ z := by
+    intro h
+    apply hwcz
+    calc
+      w = conj (conj w) := by simp
+      _ = conj z := congrArg conj h
+  have hcwcz : conj w ≠ conj z := by
+    intro h
+    apply hwz
+    calc
+      w = conj (conj w) := by simp
+      _ = conj (conj z) := congrArg conj h
+      _ = z := by simp
+  simp [conjugatePairValues, hwz, hwcz, hcwz, hcwcz]
+
 private theorem newtonHankel_isHermitian {d : Nat} (roots : Fin d -> Complex) :
     (newtonHankel roots).IsHermitian := by
   rw [Matrix.isHermitian_iff_isSymm]
