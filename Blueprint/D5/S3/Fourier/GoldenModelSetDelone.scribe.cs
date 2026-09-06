@@ -18,7 +18,7 @@ internal sealed class GoldenModelSetDeloneDocument : IScribeDocumentDefinition
                 H("Internal displacement bounds force physical separation"),
                 StatementSource.FromAuthor(Disp(Seq(
                     F.Id("u"), Comma, F.Id("v"), InMacro, Sp, Call("GoldenInt"), Comma, Sp,
-                    F.Id("u"), Neq, F.Id("v"), Comma, Sp,
+                    F.Id("u"), Neq, Sp, F.Id("v"), Comma, Sp,
                     F.Id("B"), InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
                     Call("abs", Seq(Call("internal", F.Id("u")), Minus,
                         Call("internal", F.Id("v")))), Le, Sp, F.Id("B"), Sp, Rightarrow, Sp,
