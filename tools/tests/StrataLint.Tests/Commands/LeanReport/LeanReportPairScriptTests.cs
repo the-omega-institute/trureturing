@@ -8,6 +8,7 @@ namespace StrataLint.Tests;
 public sealed class LeanReportPairScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
+    private const string PairScriptPath = "tools/scripts/lean-report-pair.sh";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/Trureturing.Truth/StructuredCanonicalWriter.cs";
     private const string ScribeProgramPath = "tools/StrataLint.Scribe/ScribeProgram.cs";
@@ -15,6 +16,8 @@ public sealed class LeanReportPairScriptTests
         '/', "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
     private static readonly string EngineProjectPath = string.Join(
         '/', "tools", "StrataLint.Engine", "StrataLint.Engine.csproj");
+    private static readonly string TruthProjectPath = string.Join(
+        '/', "tools", "Trureturing.Truth", "Trureturing.Truth.csproj");
     [Fact]
     public void SingleProductionWritesOneVerifiedCandidateBundle()
     {
@@ -76,6 +79,50 @@ public sealed class LeanReportPairScriptTests
 
         Assert.Equal(73, result.ExitCode);
         Assert.Equal(["absent"], fixture.CacheEnsureLakeStates);
+        Assert.Equal(0, fixture.ProducerInvocationCount);
+        Assert.False(fixture.CandidateLakeExists);
+    }
+
+    [Fact]
+    public void FailedFingerprintStopsBeforeCacheEnsureOrProducer()
+    {
+        using var fixture = new LeanReportPairFixture();
+        fixture.BreakProducerClosureEvaluation();
+
+        var result = fixture.Run();
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("producer closure is unavailable", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Empty(fixture.CacheEnsureLakeStates);
+        Assert.Equal(0, fixture.ProducerInvocationCount);
+        Assert.False(fixture.CandidateLakeExists);
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("extra")]
+    [InlineData("non-hex")]
+    [InlineData("multiline")]
+    public void MalformedAddressStopsBeforeCacheEnsureOrProducer(string malformed)
+    {
+        using var fixture = new LeanReportPairFixture();
+        var digest = new string('a', 64);
+        fixture.StubAddress(malformed switch
+        {
+            "missing" => $"{digest}  {digest} {digest}",
+            "extra" => string.Join(' ', Enumerable.Repeat(digest, 5)),
+            "non-hex" => $"{digest} {digest} {new string('z', 64)} {digest}",
+            "multiline" => string.Join(' ', Enumerable.Repeat(digest, 4)) + "\nextra",
+            _ => throw new InvalidOperationException(malformed),
+        });
+
+        var result = fixture.Run();
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("malformed", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Empty(fixture.CacheEnsureLakeStates);
         Assert.Equal(0, fixture.ProducerInvocationCount);
         Assert.False(fixture.CandidateLakeExists);
     }
@@ -172,6 +219,8 @@ public sealed class LeanReportPairScriptTests
         private readonly string candidateReport;
         private readonly string cacheEnsureLog;
         private readonly string canonicalCandidateRoot;
+        private string script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
+        private string addressOutput = "";
 
         internal LeanReportPairFixture()
         {
@@ -239,7 +288,6 @@ public sealed class LeanReportPairScriptTests
             int cacheEnsureExitCode = 0,
             bool signalPairAfterReceipt = false)
         {
-            var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
             return TestProcessRunner.Run(
                 "env",
                 [
@@ -247,6 +295,7 @@ public sealed class LeanReportPairScriptTests
                     $"STUB_LEAN_CACHE_ENSURE_LOG={cacheEnsureLog}",
                     $"STUB_LEAN_CACHE_ENSURE_EXIT_CODE={cacheEnsureExitCode}",
                     $"STUB_LEAN_CACHE_ENSURE_SIGNAL_PARENT={(signalPairAfterReceipt ? 1 : 0)}",
+                    $"STUB_ADDRESS={addressOutput}",
                     "bash",
                     script,
                     "--producer", producer,
@@ -260,6 +309,36 @@ public sealed class LeanReportPairScriptTests
         }
 
         internal void DeleteCacheEnsure() => File.Delete(CacheEnsurePath);
+
+        internal void BreakProducerClosureEvaluation() =>
+            File.AppendAllText(Path.Combine(candidateRoot, CliProjectPath), "<");
+
+        internal void StubAddress(string output)
+        {
+            addressOutput = output;
+            var scripts = Path.Combine(temporary.Path, "driver");
+            Directory.CreateDirectory(Path.Combine(scripts, "report"));
+            var copy = Path.Combine(scripts, "lean-report-pair.sh");
+            File.Copy(script, copy);
+            File.WriteAllText(
+                Path.Combine(scripts, "report", "lean-report-bundle-lib.sh"),
+                TestRepositoryLayout.ReadAllText(
+                    RepositoryRelativePath.Create("tools/scripts/report/lean-report-bundle-lib.sh")),
+                new UTF8Encoding(false));
+            script = copy;
+            foreach (var (name, contents) in new[]
+            {
+                ("lean-report-input.sh", "#!/usr/bin/env bash\nprintf '%s\\n' \"$STUB_ADDRESS\"\n"),
+                ("report-supervisor.sh", "#!/usr/bin/env bash\nexit 99\n"),
+            })
+            {
+                var path = Path.Combine(scripts, "report", name);
+                File.WriteAllText(path, contents, new UTF8Encoding(false));
+                var chmod = TestProcessRunner.Run("chmod", ["+x", path], temporary.Path,
+                    BoundedProcessRunner.HangDetectionBudget, 4096);
+                Assert.Equal(0, chmod.ExitCode);
+            }
+        }
 
         internal void AppendProducerComment() =>
             File.AppendAllText(producer, "\n# producer mutation\n", new UTF8Encoding(false));
@@ -311,26 +390,43 @@ public sealed class LeanReportPairScriptTests
                 "def residentFixture : True := by trivial\n",
                 new UTF8Encoding(false));
             WriteProducerInput(root, InputHelperPath);
+            WriteProducerInput(root, PairScriptPath);
             WriteProducerInput(root, RawReportPath);
             WriteProducerInput(root, CanonicalWriterPath);
             WriteProducerInput(root, ScribeProgramPath);
             WriteProducerInput(root, CliProjectPath);
             WriteProducerInput(root, EngineProjectPath);
+            WriteProducerInput(root, TruthProjectPath);
+            WriteProducerInput(root, "tools/StrataLint.Cli/FixtureProbe.cs");
             WriteProducerInput(root, "Directory.Build.props");
+            WriteProducerInput(root, ".github/workflows/ci.yml", MinimalWorkflow);
             Directory.CreateDirectory(Path.Combine(root, "tools", "scripts", "worktree"));
+            LeanReportProducerFixture.SeedReachableScripts(root);
         }
 
-        private static void WriteProducerInput(string root, string relative)
+        private static void WriteProducerInput(
+            string root,
+            string relative,
+            string? explicitContents = null)
         {
             var path = Path.Combine(root, relative.Replace('/', Path.DirectorySeparatorChar));
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            var contents = relative.EndsWith(".csproj", StringComparison.Ordinal)
-                ? "<Project Sdk=\"Microsoft.NET.Sdk\" />\n"
-                : relative.EndsWith(".props", StringComparison.Ordinal)
-                    ? "<Project />\n"
-                    : "fixture\n";
+            var contents = explicitContents
+                ?? (relative.EndsWith(".csproj", StringComparison.Ordinal)
+                    ? "<Project Sdk=\"Microsoft.NET.Sdk\" />\n"
+                    : relative.EndsWith(".props", StringComparison.Ordinal)
+                        ? "<Project />\n"
+                        : "fixture\n");
             File.WriteAllText(path, contents, new UTF8Encoding(false));
         }
+
+        private const string MinimalWorkflow = """
+            jobs:
+              lean-inspect:
+                steps: []
+              baseline-admission:
+                steps: []
+            """;
 
 
         private const string FakeCacheEnsure = """

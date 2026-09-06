@@ -19,7 +19,7 @@ public sealed class LeanReportCacheTests
         using var world = new CacheWorld();
 
         var first = world.RunPair();
-        Assert.Equal(0, first.ExitCode);
+        Assert.True(first.ExitCode == 0, Encoding.UTF8.GetString(first.StandardError));
         Assert.Equal(1, world.ProducerRunCount);
         Assert.Equal(1, world.SlotAcquireCount);
         Assert.True(File.Exists(world.Output));
@@ -379,6 +379,20 @@ public sealed class LeanReportCacheTests
             File.WriteAllText(Path.Combine(Repo, "lakefile.toml"), "name = \"stub\"\n");
             File.WriteAllText(Path.Combine(Repo, "D5", "Sample.lean"), "-- d5 stub\n");
             File.WriteAllText(Path.Combine(inspectorDir, "Inspector.lean"), "-- inspector stub\n");
+            WriteRepositoryFile(".github/workflows/ci.yml", MinimalWorkflow);
+            WriteRepositoryFile(
+                "tools/scripts/workflow/scribe-content-checks.sh",
+                "#!/usr/bin/env bash\n");
+            WriteRepositoryFile(
+                "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+                "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+            WriteRepositoryFile("tools/StrataLint.Cli/FixtureProbe.cs", "// fixture\n");
+            WriteRepositoryFile(
+                "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+                "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+            WriteRepositoryFile(
+                "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+                "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
 
             Producer = Path.Combine(inspectorDir, "inspect.sh");
             WriteExecutable(Producer, StubProducer);
@@ -414,6 +428,7 @@ public sealed class LeanReportCacheTests
             }
             MakeExecutable(PairScript);
             MakeExecutable(Path.Combine(reportDir, "lean-report-input.sh"));
+            LeanReportProducerFixture.SeedReachableScripts(Repo);
         }
 
         internal string Repo { get; }
@@ -596,6 +611,22 @@ public sealed class LeanReportCacheTests
                     | UnixFileMode.GroupRead | UnixFileMode.GroupExecute
                     | UnixFileMode.OtherRead | UnixFileMode.OtherExecute);
         }
+
+        private void WriteRepositoryFile(string relative, string content)
+        {
+            var path = Path.Combine(Repo, relative.Replace('/', Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, content, new UTF8Encoding(false));
+        }
+
+
+        private const string MinimalWorkflow = """
+            jobs:
+              lean-inspect:
+                steps: []
+              baseline-admission:
+                steps: []
+            """;
 
 
         private const string StubCacheEnsure = """

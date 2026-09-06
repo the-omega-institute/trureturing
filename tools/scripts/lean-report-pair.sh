@@ -90,7 +90,10 @@ fingerprint() {
 
   local repository_address resident_sha256 sources_sha256 config_sha256 address_output
   address_output="$("$INPUT_HELPER" address --repository "$root" --producer "$PRODUCER" --inspector "$INSPECTOR")" || return 2
-  read -r repository_address resident_sha256 sources_sha256 config_sha256 <<< "$address_output"
+  local address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
+  [[ "$address_output" =~ $address_pattern ]] \
+    || { echo "lean-report-pair: repository input address is malformed" >&2; return 2; }
+  IFS=' ' read -r repository_address resident_sha256 sources_sha256 config_sha256 <<< "$address_output"
   local producer_sha256="$resident_sha256"
 
   {
@@ -99,9 +102,11 @@ fingerprint() {
     printf 'repository_inspector_sha256=%s\n' "$resident_sha256"
     printf 'lean_sources_sha256=%s\n' "$sources_sha256"
     printf 'lean_config_sha256=%s\n' "$config_sha256"
-  } > "$preimage"
+  } > "$preimage" || return 2
+  local input_sha256
+  input_sha256="$(hash_file "$preimage")" || return 2
   printf '%s %s %s %s %s %s\n' \
-    "$(hash_file "$preimage")" \
+    "$input_sha256" \
     "$producer_sha256" \
     "$resident_sha256" \
     "$sources_sha256" \
@@ -426,8 +431,12 @@ emit_provenance_receipt() {
     "${output}.provenance.json"
 }
 
-read -r candidate_address candidate_producer candidate_resident candidate_sources candidate_config candidate_repository \
-  <<< "$(fingerprint "$CANDIDATE_ROOT")"
+candidate_fingerprint="$(fingerprint "$CANDIDATE_ROOT")" || exit 2
+fingerprint_pattern='^([0-9a-f]{64} ){5}[0-9a-f]{64}$'
+[[ "$candidate_fingerprint" =~ $fingerprint_pattern ]] \
+  || { echo "lean-report-pair: candidate fingerprint is malformed" >&2; exit 2; }
+IFS=' ' read -r candidate_address candidate_producer candidate_resident candidate_sources candidate_config candidate_repository \
+  <<< "$candidate_fingerprint"
 printf 'LEAN_REPORT_INPUT side=candidate content_address=sha256:%s producer_sha256=%s repository_inspector_sha256=%s lean_sources_sha256=%s lean_config_sha256=%s\n' \
   "$candidate_address" "$candidate_producer" "$candidate_resident" "$candidate_sources" "$candidate_config"
 
