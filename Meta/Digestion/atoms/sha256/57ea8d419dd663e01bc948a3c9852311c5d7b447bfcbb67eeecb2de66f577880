@@ -1,0 +1,31 @@
+## 定理 5.1：黄金二阶矩阵判据
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathsf M_{j,L}\succeq0
+\qquad\forall j,L\in\mathbb N.
+}
+\tag{21}
+$$
+
+### 证明
+
+矩阵正半定等价于：
+
+$$
+|F(\ln x_{j,L})|\le C_\gamma.
+$$
+
+若 RH 成立，主定理 4.1 保证所有这些不等式。
+
+反过来，若所有采样点都满足该界，由稠密性与连续性：
+
+$$
+|F(\ln x)|\le C_\gamma
+\qquad\forall x\ge1.
+$$
+
+再应用主定理 4.1，得到 RH。证毕。
+

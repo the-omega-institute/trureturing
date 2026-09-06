@@ -1,0 +1,3 @@
+- **仓内查重**:`git grep -iE 'pochhammer|fallingFactorial|realRootedness|LaguerrePolya|brenti|wagner' -- 'D5/**/*.lean'`
+  仅命中 \(\texttt{D5/S3/Weil/CayleyLaguerre/ChebyshevHypergeometricExpansion.lean}\)(与本题无关),本仓无既有形式化。
+

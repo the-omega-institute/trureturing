@@ -1,0 +1,21 @@
+# 四、核心渐近定理：差模态向外移动，和模态同时变窄
+
+定义两个局部尺度：
+
+$$
+\boxed{
+\varepsilon_n
+=
+\frac{w_n}{\sqrt{8n(w_n+1)}},
+}
+$$
+
+$$
+\boxed{
+\sigma_n
+=
+\sqrt{\frac{w_n}{4n}}.
+}
+\tag{R14}
+$$
+

@@ -1,0 +1,41 @@
+## 保留位移记录以后，则可以精确撤销
+
+在 \(L^2(\mathbb R)\) 上，令：
+
+$$
+(T_e\psi)(x)=\psi(x+e).
+$$
+
+这是酉平移。
+
+定义随机平移信道：
+
+$$
+\boxed{
+\mathcal C_\lambda(\rho)
+=
+\int_0^\infty
+\lambda e^{-\lambda e}
+T_e\rho T_e^*\,de.
+}
+\tag{T19}
+$$
+
+它完全正且保迹，并满足：
+
+$$
+\operatorname{Tr}
+\bigl(\mathcal C_\lambda(\rho)e^{itQ}\bigr)
+=
+\frac{\lambda}{\lambda+it}
+\operatorname{Tr}(\rho e^{itQ}).
+$$
+
+若环境同时保存 \(e\)，就可以按记录施加反向平移，恢复原态；若只需要恢复相位平均，也可以在每条记录上补偿 \(e^{ite}\)。
+
+**丢掉记录后的边缘态，与保留记录的完整系统，不具有同样的可逆性。**
+
+这里不需要假设一个“上帝观察者”，只需要明确：哪一个环境寄存器保存了哪项随机选择。
+
+---
+

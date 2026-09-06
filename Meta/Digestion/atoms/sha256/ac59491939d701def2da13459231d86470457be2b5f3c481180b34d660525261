@@ -1,0 +1,28 @@
+# 一、把边界衰减变成离散边际谱
+
+沿用：
+
+$$
+n=\prod_pp^{a_p},
+\qquad
+E(n)=\ln n,
+$$
+
+$$
+Z(n)=\frac{\sigma(n)}n,
+\qquad
+W(n)=\ln Z(n).
+$$
+
+对一个素数方向定义：
+
+$$
+f_p(a)=\ln\left(1+p^{-1}+\cdots+p^{-a}\right).
+$$
+
+于是：
+
+$$
+W(n)=\sum_pf_p(a_p).
+$$
+

@@ -1,0 +1,10 @@
+## 定理 V1　二次形变像的显式系数
+
+对一切 \(a>0\) 与 \(t\in\mathbb{R}\),
+
+$$
+\boxed{
+\mathcal L_a\bigl((X+t)^2\bigr)=a(a+1)X^2+a(1+2t)X+t^2 .
+}
+$$
+

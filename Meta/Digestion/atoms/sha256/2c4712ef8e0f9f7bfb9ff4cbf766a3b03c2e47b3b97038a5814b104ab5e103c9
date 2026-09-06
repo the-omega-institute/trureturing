@@ -1,0 +1,32 @@
+## 定义 162.1　两探针交换模型
+
+取两个量子比特：
+
+$$
+h_A=\epsilon_A|1\rangle\langle1|,
+\qquad
+h_B=\epsilon_B|1\rangle\langle1|,
+$$
+
+其中 \(\epsilon_A,\epsilon_B>0\)。
+
+定义交换生成元
+
+$$
+L
+=
+|10\rangle\langle01|
++
+|01\rangle\langle10|,
+$$
+
+以及接触操作
+
+$$
+U_\theta=e^{-i\theta L}.
+$$
+
+它只在单激发子空间中混合两个状态，保持 \(|00\rangle,|11\rangle\) 不变。
+
+---
+

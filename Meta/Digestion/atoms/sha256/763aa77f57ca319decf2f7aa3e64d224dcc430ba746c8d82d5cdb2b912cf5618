@@ -1,0 +1,63 @@
+## 收束
+
+这次得到的最具体连接是：
+
+$$
+\boxed{
+Y_\sigma-\operatorname{Exp}(\sigma-1)
+\overset d=
+\frac12\log\frac{\mathsf G_\sigma}{\pi}
+-\log N_\sigma,
+\qquad\sigma>1.
+}
+$$
+
+左边是实际 ξ 观察变量与一个独立无记忆位移；右边是连续 Gamma 尺度与素数对数模式。
+
+它说明，**极点补偿可以具有精确的随机位移解释**。但去掉位移并不是自动保正的逆操作：要么保留记录并撤销，要么使用一个需要审计的微分反演。
+
+在双副本上，同一补偿变成：
+
+$$
+\boxed{
+\mathcal W
+=
+\pi^2[(\partial_x+1)^2+4t^2]\mathcal J.
+}
+$$
+
+于是，上一轮的 Bessel 导数可以被完整地转移到尺度权重，得到式（T37），同时明确保留零阶边界项。
+
+**本轮尚未证明全部 (M_n(t)\ge0，也没有找到实际负证书。** 已经完成的是将“Gamma—质数—Markov 位移—theta 完成—Bessel 相消”接成一条精确关系，并指出哪些逆操作、边界项与归一化不能省略。
+
+接下来真正有证明价值的，不是继续增加合法量子模块，而是控制这个固定组合的符号：**在已知随机位移和极点模式被正确剥离以后，实际素数相位与 Bessel 尺度响应，为什么仍能——或不能——满足每一个规定的全尺度非负条件。**
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://dlmf.nist.gov/20.7 "DLMF: §20.7 Identities ‣ Properties ‣ Chapter 20 Theta Functions"
+[3]: https://dlmf.nist.gov/5.2 "DLMF: §5.2 Definitions ‣ Properties ‣ Chapter 5 Gamma Function"
+[4]: https://doi.org/10.1016/j.spl.2023.109889?utm_source=chatgpt.com "On infinitely divisible distributions related to the Riemann hypothesis - ScienceDirect"
+[5]: https://arxiv.org/abs/1504.03438?utm_source=chatgpt.com "A complete Riemann zeta distribution and the Riemann hypothesis"
+[6]: https://dlmf.nist.gov/25.2 "DLMF: §25.2 Definition and Expansions ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[7]: https://dlmf.nist.gov/10.32 "DLMF: §10.32 Integral Representations ‣ Modified Bessel Functions ‣ Chapter 10 Bessel Functions"
+[8]: https://dlmf.nist.gov/10.25 "DLMF: §10.25 Definitions ‣ Modified Bessel Functions ‣ Chapter 10 Bessel Functions"
+[9]: https://arxiv.org/abs/1309.0055?utm_source=chatgpt.com "Fourier transforms of positive definite kernels and the Riemann $ξ$-Function"
+继续。这次可以把上一轮的“存在某个统一常数”推进成一个**明确常数、明确符号、明确余量**的结论：
+
+> **在 RH 成立的条件下，三角加权读出的全部零点振荡，绝对值不超过约 \(0.426931\)；而去掉素数平方所产生的确定性偏移约为 \(0.504906\)。后者严格大于前者。**
+>
+> 因而，纯素数版本不只是有界，而是最终严格为负，并且与零之间保留一个可以计算的间隔。
+
+与此同时，还能精确指出一项不能无条件省略的量：
+
+$$
+\boxed{
+\text{零点的正范数总量}
+=
+\text{欧拉常数校准值}
++
+\text{离线偏移的非负平方修正}.
+}
+$$
+
+下面证明这些结论，并说明它们如何构成有限检验证书。以下为经典解析输入上的纸面推导，尚未进行 Lean 编译，也不将条件结论当作已经完成的实际 RH 证明。
+

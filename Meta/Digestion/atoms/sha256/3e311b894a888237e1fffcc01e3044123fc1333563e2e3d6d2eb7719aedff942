@@ -1,0 +1,29 @@
+## 定义 198.1　分支模型的实现残差
+
+令
+
+$$
+J(t):\mathbb C^4\to\mathcal H_{\mathrm{phys}}
+$$
+
+为等距嵌入，表示四个逻辑分支如何由实际波包、内部态和控制器实现。
+
+设实际 Hamiltonian 为 \(H_{\mathrm{phys}}(t)\)，理想分支 Hamiltonian 为 \(H_{\mathrm{eff}}(t)\)。
+
+定义
+
+$$
+\boxed{
+\mathcal R(t)
+=
+H_{\mathrm{phys}}(t)J(t)
+-i\hbar\dot J(t)
+-J(t)H_{\mathrm{eff}}(t).
+}
+\tag{198.1}
+$$
+
+其中 \(-i\hbar\dot J\) 不能省略：分支波包或参照本身随时间变化，也会贡献动力学。
+
+---
+

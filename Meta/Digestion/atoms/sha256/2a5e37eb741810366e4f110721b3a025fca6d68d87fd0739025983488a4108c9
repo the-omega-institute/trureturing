@@ -1,0 +1,47 @@
+# 一、先把连续观察精确离散化
+
+固定整数 \(X\ge2\)，令
+
+$$
+\mathcal V_X
+=
+\mathbb C^{\{X+1,\ldots,4X\}}.
+$$
+
+暂时取任意向量 \(v\in\mathcal V_X\)，不要预先固定为素数数据。
+
+定义滑动窗口读出
+
+$$
+Y_v(x)=\sum_{x<n\le2x}v_n,
+\qquad X\le x\le2X,
+$$
+
+以及观察二次型
+
+$$
+\boxed{
+\mathfrak J_X(v)
+=
+\int_X^{2X}\frac{|Y_v(x)|^2}{x^2}\,dx.
+}
+\tag{1}
+$$
+
+实际算术锚仍为
+
+$$
+f_n=\Lambda(n)-1.
+$$
+
+于是
+
+$$
+Y_f(x)
+=
+\psi(2x)-\psi(x)
+-\bigl(\lfloor2x\rfloor-\lfloor x\rfloor\bigr),
+$$
+
+而前文的 \(\mathfrak J(X)\) 就是 \(\mathfrak J_X(f)\)。
+

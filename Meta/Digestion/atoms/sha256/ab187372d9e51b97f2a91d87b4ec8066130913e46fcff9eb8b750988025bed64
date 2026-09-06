@@ -1,0 +1,5 @@
+### 猜想 37.39（off-critical character exclusion）
+
+RH defect atlas 可能允许一个全局正状态 section，但不允许任何满足：
+
+- 非零离线复平面坐标；

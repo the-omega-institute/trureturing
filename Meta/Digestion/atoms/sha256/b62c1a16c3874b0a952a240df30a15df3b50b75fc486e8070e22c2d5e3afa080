@@ -1,0 +1,30 @@
+## 收束
+
+这次得到的最具体连接是：
+
+$$
+\boxed{
+Y_\sigma-\operatorname{Exp}(\sigma-1)
+\overset d=
+\frac12\log\frac{\mathsf G_\sigma}{\pi}
+-\log N_\sigma,
+\qquad\sigma>1.
+}
+$$
+
+左边是实际 ξ 观察变量与一个独立无记忆位移；右边是连续 Gamma 尺度与素数对数模式。
+
+它说明，**极点补偿可以具有精确的随机位移解释**。但去掉位移并不是自动保正的逆操作：要么保留记录并撤销，要么使用一个需要审计的微分反演。
+
+在双副本上，同一补偿变成：
+
+$$
+\boxed{
+\mathcal W
+=
+\pi^2[(\partial_x+1)^2+4t^2]\mathcal J.
+}
+$$
+
+于是，上一轮的 Bessel 导数可以被完整地转移到尺度权重，得到式（T37），同时明确保留零阶边界项。
+

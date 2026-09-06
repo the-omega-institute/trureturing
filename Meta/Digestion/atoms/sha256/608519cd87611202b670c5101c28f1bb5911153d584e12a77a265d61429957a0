@@ -1,0 +1,76 @@
+## 主定理 4.1：素数幂单边判据
+
+对任意固定 \(X_0\ge2\)，以下命题等价：
+
+$$
+\mathrm{RH};
+$$
+
+$$
+\boxed{
+Y(m)\ge0
+\qquad
+\forall m\in\mathscr Q,\ m>X_0;
+}
+\tag{14}
+$$
+
+$$
+\boxed{
+\exists M<\infty,\qquad
+F(\ln m)\ge-M
+\quad
+\forall m\in\mathscr Q,\ m>X_0.
+}
+\tag{15}
+$$
+
+### 证明
+
+RH 成立时，\(F(t)\ge-C_\gamma\)，所以式（14）成立。
+
+若式（14）成立，定理 3.3 保证从第一个大于 \(X_0\) 的素数幂起，所有连续 \(x\) 都满足 \(F(\ln x)\ge-C_\gamma\)。剩下的初始紧区间有有限下界，所以定理 2.1 推出 RH。
+
+对式（15），将：
+
+$$
+Y_M(x)=H(x)+M\sqrt x
+$$
+
+作为余量。可以增大 \(M\) 使其非负；它在 \(x\ge2\) 的事件间仍严格凹。同样的端点论证给出连续下界，再由定理 2.1 得 RH。证毕。
+
+因此，可以取：
+
+$$
+X_0=5040.
+$$
+
+得到：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Y(p^k)\ge0
+\qquad
+\forall p^k>5040.
+}
+\tag{16}
+$$
+
+展开后，这是一个只有有限素数幂求和的不等式：
+
+$$
+\boxed{
+\begin{aligned}
+\sum_{r\le m}\Lambda(r)\left(\frac mr-1\right)
+\ge{}&
+m(\ln m-\gamma-1)+\ln(2\pi)\\
+&-mR_0(m)-C_\gamma\sqrt m,
+\end{aligned}
+}
+\tag{17}
+$$
+
+只需对素数幂 \(m>5040\) 检查。
+

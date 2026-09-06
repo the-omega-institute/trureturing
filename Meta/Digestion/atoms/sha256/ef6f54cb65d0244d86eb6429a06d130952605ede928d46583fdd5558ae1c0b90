@@ -1,0 +1,10 @@
+## 定理 R4：相邻态严格正交
+
+$$
+\boxed{
+\langle\chi_n,\chi_{n+1}\rangle=0
+\qquad\forall n.
+}
+\tag{R26}
+$$
+

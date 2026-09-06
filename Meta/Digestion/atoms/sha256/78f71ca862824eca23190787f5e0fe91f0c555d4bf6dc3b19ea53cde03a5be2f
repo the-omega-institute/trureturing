@@ -1,0 +1,9 @@
+### 本轮核验
+
+已作精确符号核验的内容包括：
+
+三能级单份被动例子；两份系统的 \(11\epsilon/100\) 能量降低；\(27\) 维能量守恒实现；不同静止能量的正交路径输出；自由能的一阶、二阶导数；平衡参数 Fisher 信息；质量平均产生的 \(9/8\) 伪差异。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_passivity_mass_completion.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/passivity_mass_completion_checks.json)
+

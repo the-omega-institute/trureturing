@@ -1,0 +1,36 @@
+# 八、这种越来越规则的读出，并非没有能量代价
+
+现在给筛选态配上一份固定的正动力学诊断，而不是让每一阶都自行重定义基态。
+
+令：
+
+$$
+D_S=\frac{\partial}{\partial s}
+-\frac{\partial}{\partial s}\log\chi,
+$$
+
+$$
+D_U=\frac{\partial}{\partial u}
+-\frac{\partial}{\partial u}\log\chi.
+$$
+
+通过相应非负二次型定义：
+
+$$
+\boxed{
+K_0
+=
+E_*\left(D_S^*D_S+D_U^*D_U\right),
+\qquad E_*>0.
+}
+\tag{R29}
+$$
+
+它是由原始两副本态固定的正算子，满足：
+
+$$
+K_0\chi=0.
+$$
+
+这种由正基态进行一阶因子分解的构造是标准方法。这里 \(E_*\) 是选择的能量单位，不是从 ζ 自动推导出的物理常数。([arXiv][5])
+
