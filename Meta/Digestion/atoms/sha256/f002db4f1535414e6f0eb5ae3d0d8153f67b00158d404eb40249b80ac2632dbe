@@ -1,0 +1,79 @@
+## 定理314.1　离散优化临界对应一串靠近实轴的复价格零点
+
+有：
+
+$$
+\boxed{
+Q_\tau(\lambda)=0
+\iff
+\lambda
+=
+\lambda_c+
+\frac{i(2k+1)\pi\tau}{\Delta E},
+\qquad k\in\mathbb Z.
+}
+\tag{314.2}
+$$
+
+而在实临界点：
+
+$$
+\boxed{
+\left.
+\frac{d^2}{d\lambda^2}
+\bigl[\tau\ln Q_\tau(\lambda)\bigr]
+\right|_{\lambda_c}
+=
+\frac{(\Delta E)^2}{4\tau}.
+}
+\tag{314.3}
+$$
+
+### 证明
+
+因：
+
+$$
+F_\lambda(m)-F_\lambda(n)
+=
+-\Delta E(\lambda-\lambda_c),
+$$
+
+提取非零因子后，零点条件为：
+
+$$
+1+e^{-\Delta E(\lambda-\lambda_c)/\tau}=0.
+$$
+
+得到式（314.2）。二阶导数直接计算。∎
+
+对5040的两个边界：
+
+$$
+2520\leftrightarrow5040:
+\qquad \Delta E=\ln2;
+$$
+
+$$
+5040\leftrightarrow55440:
+\qquad \Delta E=\ln11.
+$$
+
+因此，相同 \(\tau\) 下，两处复零点离实轴的尺度不同。
+
+$$
+\boxed{
+\text{整数层跳变}
+\longrightarrow
+\text{平滑模型的尖锐响应}
+\longrightarrow
+\text{逼近实轴的复价格零点}.
+}
+$$
+
+这是一个真正的新观察角度。
+
+但这些零点属于 \(Q_\tau(\lambda)\)，**不是 ζ 的零点**；\(\lambda\)、\(\tau\) 与复变量 \(s\) 不能混用。
+
+---
+

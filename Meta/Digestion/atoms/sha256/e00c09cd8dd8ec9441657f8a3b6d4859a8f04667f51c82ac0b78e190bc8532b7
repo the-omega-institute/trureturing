@@ -1,0 +1,39 @@
+# 344．最少要补回多少内部自由度，可以从响应中精确读出
+
+设内部谱分解为
+
+$$
+H_H=\sum_\lambda\lambda P_\lambda.
+$$
+
+定义非负谱权重
+
+$$
+\boxed{
+R_\lambda=VP_\lambda V^\dagger\succeq0.
+}
+\tag{344.1}
+$$
+
+于是
+
+$$
+\boxed{
+\Sigma(z)=\sum_\lambda\frac{R_\lambda}{z-\lambda},
+}
+\tag{344.2}
+$$
+
+$$
+\boxed{
+\mathcal K(t)
+=
+\sum_\lambda e^{-i\lambda t/\hbar}R_\lambda.
+}
+\tag{344.3}
+$$
+
+注意：一个内部本征值若满足 \(R_\lambda=0\)，它就没有进入当前边界响应。
+
+---
+

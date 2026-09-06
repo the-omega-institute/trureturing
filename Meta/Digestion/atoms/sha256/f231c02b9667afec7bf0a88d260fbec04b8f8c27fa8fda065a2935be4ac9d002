@@ -1,0 +1,35 @@
+# 九、5040与RH之间，真正还需要哪座桥？
+
+定义：
+
+$$
+\boxed{
+\Delta(n)
+=
+\gamma+\ln\ln\ln n
+-\ln\frac{\sigma(n)}n.
+}
+$$
+
+Robin 定理指出：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Delta(n)>0
+\quad\forall n>5040.
+}
+$$
+
+Gronwall 定理同时给出：
+
+$$
+\liminf_{n\to\infty}\Delta(n)=0.
+$$
+
+因此，即使RH成立，也没有一个统一的正安全余量可以让任意粗糙近似都自动足够。([arXiv][3])
+
+我们目前解释了：
+
+* 哪个目标使5040成为最优配置；

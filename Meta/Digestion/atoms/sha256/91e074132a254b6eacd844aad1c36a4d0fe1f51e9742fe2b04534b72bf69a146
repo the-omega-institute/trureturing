@@ -1,0 +1,50 @@
+# 本轮核验与结论
+
+本轮完成了：
+
+* 59项精确整数比较，认证五个有理价格下的全局极大丰配置；
+* \(\eta(2,5)\) 与 \(\eta(3,3)\) 的严格分离区间；
+* \(720720\) 两方向单元的凹性下界；
+* 两个内部角超过端点最低余量的严格 \(0.0008\) 附加界；
+* 四个角的 Robin 余量独立区间核验。
+
+[下载精确有理数证书、程序与推导说明](sandbox:/mnt/data/critical_wall_geometry_certificates.zip)
+
+一般结构定理的证明在正文；程序认证的是明确列出的有限实例。六指数定理与 Gelfond–Schneider 定理是引用的经典输入，本轮没有修改仓库，也没有声称新增结果已经通过 Lean 内核。
+
+**这次最值得保留的认识是：离散临界几何并不是任意形状都能出现。**
+
+$$
+\boxed{
+\text{整数倍率限制临界价格；}
+}
+$$
+
+$$
+\boxed{
+\text{超越性限制临界面能怎样相交；}
+}
+$$
+
+$$
+\boxed{
+\text{预算凹性限制临界面内部能有多危险。}
+}
+$$
+
+因此，信息逃逸不一定要靠无限增加坐标来修复。对于难以区分的临界方向，有时更强的方法是：
+
+$$
+\boxed{
+\text{不强行区分它们，}
+\quad
+\text{而是证明它们全部可能的组合都不能越界。}
+}
+$$
+
+这使5040之后的研究从“继续寻找新的边界现象”，进一步转向了**建立对边界交叉、近碰撞和未知次序都稳健的证明几何**。
+
+[1]: https://arxiv.org/html/math/0008177v2 "1Introduction"
+[2]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"
+[3]: https://people.maths.ox.ac.uk/pila/Nex.pdf "https://people.maths.ox.ac.uk/pila/Nex.pdf"
+[4]: https://www.renyi.hu/~p_erdos/1944-03.pdf "https://www.renyi.hu/~p_erdos/1944-03.pdf"

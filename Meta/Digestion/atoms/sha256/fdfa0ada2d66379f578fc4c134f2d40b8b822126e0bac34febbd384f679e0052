@@ -1,0 +1,23 @@
+**这条证书不需要先证明所有阈值的精确顺序，也不要求它们完全相等。**
+
+若保留：
+
+$$
+\kappa=\min_{x\in[E,E+U]}[-h''(x)]>0,
+$$
+
+还可以把下界加强为：
+
+$$
+\boxed{
+\begin{aligned}
+\Delta\left(B\prod_{i\in S}p_i\right)
+\ge{}&
+\left(1-\frac sU\right)\Delta(B)
++\frac sU\Delta(B_{\mathrm{top}})\\
+&+\frac\kappa2s(U-s)-\Xi.
+\end{aligned}
+}
+\tag{25}
+$$
+

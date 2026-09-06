@@ -1,0 +1,53 @@
+## 收束
+
+你的判断中可以进一步强化的部分是：
+
+> **光滑不意味着缺少临界信息。临界信息可能隐藏在“取极值、取对数、改变归一化、比较量子态、选择最近解析障碍”这些操作之后。**
+
+这次得到的两条新主线是：
+
+$$
+\boxed{
+\mathscr Z_T(\lambda)
+=
+\sum_{n\ge1}
+\left(\frac{\sigma(n)}n\right)^{1/T}
+n^{-\lambda/T},
+}
+$$
+
+它一端连接 5040 的离散优化，另一端有：
+
+$$
+\boxed{
+\mathscr Z_1(\lambda)=\zeta(\lambda)\zeta(\lambda+1)
+}
+$$
+
+这样的精确 ζ 切片；
+
+以及：
+
+$$
+\boxed{
+R(b)^2-b^2
+=
+\min_\rho
+\left[
+\delta_\rho^2+\gamma_\rho^2-2\delta_\rho b
+\right],
+}
+$$
+
+它把实际 ξ 的高阶响应转成一份有折点、有活动区域、有可恢复斜率的几何。
+
+其中：
+
+$$
+\boxed{
+\delta_*=\lim_{b\to\infty}[b-R(b)]
+}
+$$
+
+直接读取最大全局离线位移。
+

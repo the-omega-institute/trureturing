@@ -1,0 +1,58 @@
+## 可以得到一个精确的 RH 等价，但它仍然保留原来的难点
+
+在初始域 \(\Re s>1\)，定义：
+
+$$
+\boxed{
+\mathcal K(s)
+=
+\mathcal H(s)+V(s)\log(s-1).
+}
+\tag{33}
+$$
+
+于是：
+
+$$
+\mathcal K(s)
+=
+D(s)+V(s)\log\!\bigl((s-1)\zeta(s)\bigr).
+$$
+
+利用 ζ 的反射对称和标准零点区域：([DLMF][4])
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K
+\text{ 可以单值全纯地延拓到 }
+\Re s>\frac12.
+}
+\tag{34}
+$$
+
+正向是因为 RH 使 \((s-1)\zeta(s)\) 在该单连通半平面内无零，因而存在全纯对数。
+
+反向则由式（32）：若右半临界带内存在零点，历史切面就保留不可消去的绕行差。
+
+**这不是通过重新表示就解决了 RH。真正待证的全局解析控制，仍然存在。**
+
+但现在已经完成了一条有实质内容的桥：
+
+$$
+\boxed{
+\text{离散历史奇偶}
+\longrightarrow
+\text{平方／素数平方结构}
+\longrightarrow
+P(s)
+\longrightarrow
+\log\zeta(s)
+\longrightarrow
+\text{真实零点的绕行信息}.
+}
+$$
+
+---
+

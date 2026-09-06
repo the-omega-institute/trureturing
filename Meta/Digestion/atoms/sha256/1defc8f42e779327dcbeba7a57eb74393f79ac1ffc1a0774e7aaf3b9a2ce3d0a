@@ -1,0 +1,29 @@
+# 十一、相位边界还能将“连续数据”转成严格整数
+
+令：
+
+$$
+u(b,t)=\log|\mathcal A(b,t)|.
+$$
+
+这里使用 \((b,t)\) 复参数平面上的普通 Laplace 算子：
+
+$$
+\Delta=\partial_b^2+\partial_t^2,
+$$
+
+不是上节量子流形的曲率算子。
+
+在分布意义下：
+
+$$
+\boxed{
+\Delta u
+=
+2\pi\sum_\rho m_\rho
+\delta_{(\delta_\rho,\gamma_\rho)}
+-v(b).
+}
+\tag{39}
+$$
+

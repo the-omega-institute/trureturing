@@ -1,0 +1,4 @@
+**没有认证成功，只表示当前误差预算不足；不等于已经发现负性。**
+
+本轮的精确有理反例、80／110 位数值复核与逐层残差计算，可由[核验脚本](sandbox:/mnt/data/discrete_critical_geometry_verify.py)复现；数据见[核验记录](sandbox:/mnt/data/discrete_critical_geometry_verify.json)。其中 ξ 系数部分明确标记为数值核对，不是区间认证。
+

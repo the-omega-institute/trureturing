@@ -1,0 +1,53 @@
+fingerprints:
+  raw_sha256: sha256:25c14375b4c12441b7539787d82bb2b5e3e0f287ce428ae75b97d6a485ef95ce
+  normalized_sha256: sha256:25c14375b4c12441b7539787d82bb2b5e3e0f287ce428ae75b97d6a485ef95ce
+cas_ref: sha256:25c14375b4c12441b7539787d82bb2b5e3e0f287ce428ae75b97d6a485ef95ce
+coverage_gids:
+  - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.conjecture21
+    target_statement_id: sha256:b61e797285e2a8ebb9cf21df0fa5fbe75f7390927b41ef26a2b1f87bcd514c16
+  - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.d
+    target_statement_id: sha256:69e3d6bc332027cf4fbd673862a0018d7308c54df9af6a53c88c4a139b3bb396
+  - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.d_eq_floor_real_sqrt
+    target_statement_id: sha256:dbca5adc61f0a3dae845124c47a1edd94ef04c607eb83fcf89a37c06da8eabdd
+  - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.blockStart
+    target_statement_id: sha256:3b598d5016c5a27603368b73a471b5f990b5fce600eef5ea0e0ad02499eed93f
+  - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.witness_bounds
+    target_statement_id: sha256:49123c3191a70fbe1820b65aac3cf50e9c9e83e996fc1fb5f2a3574d98c9cc17
+  - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.block_point
+    target_statement_id: sha256:5b9b7538596cf3c5c032daadc95097271f1ab09df2c8c18babbc1bcfbac88497
+  - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.zero_block
+    target_statement_id: sha256:a87254ae71d7e61257e2d8a710a972466bd9198e551ce37266beccb9954afe7d
+  - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.common_index_label_recovery
+    target_statement_id: sha256:33d1ab25825f5c63a7e8fd7428b1b2acf4ff83450015166950da4b77b7f095c3
+  - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.blocks_disjoint
+    target_statement_id: sha256:86a2318fa0271e63ae7b787c9d4bd3d9a15dd478cede532b91fb3512271e0488
+receipts:
+  scribe:
+    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.conjecture21
+      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
+      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
+    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.d
+      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
+      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
+    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.d_eq_floor_real_sqrt
+      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
+      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
+    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.blockStart
+      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
+      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
+    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.witness_bounds
+      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
+      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
+    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.block_point
+      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
+      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
+    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.zero_block
+      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
+      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
+    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.common_index_label_recovery
+      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
+      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
+    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.blocks_disjoint
+      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
+      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
+  unresolved_subitems: []

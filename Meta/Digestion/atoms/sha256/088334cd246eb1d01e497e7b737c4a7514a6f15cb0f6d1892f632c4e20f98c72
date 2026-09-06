@@ -1,0 +1,52 @@
+## 算子表达：两种观察恰好反对易
+
+定义历史奇偶算子：
+
+$$
+\Pi_A|\gamma\rangle=(-1)^{A(\gamma)}|\gamma\rangle.
+$$
+
+则：
+
+$$
+\boxed{
+\mathsf S\Pi_A=-\Pi_A\mathsf S.
+}
+\tag{14}
+$$
+
+若密度矩阵满足：
+
+$$
+\mathsf S\rho\mathsf S=\rho,
+$$
+
+便有：
+
+$$
+\operatorname{Tr}(\rho\Pi_A)
+=
+-\operatorname{Tr}(\rho\Pi_A)=0.
+$$
+
+这是一项严格的对称性选择规则。
+
+而且可以定量容忍误差：
+
+$$
+\boxed{
+|\operatorname{Tr}(\rho\Pi_A)|
+\le
+\frac12\|\rho-\mathsf S\rho\mathsf S\|_1.
+}
+\tag{15}
+$$
+
+所以，如果交换对称性只被轻微破坏，奇偶信号也只能轻微偏离零。
+
+**这比“所有零点都很脆弱”更准确：零点是否稳健，取决于允许哪类扰动。**
+
+\(\pi\) 零点对保持上述交换对称的扰动稳定；\(\pi/4\) 零点还需要更强的插入位置均匀性。
+
+---
+

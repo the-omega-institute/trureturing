@@ -1,0 +1,6 @@
+* 前四个尺度的总损失宽度严格区间。
+
+[下载精确核验程序、结果与一般推导说明](sandbox:/mnt/data/weighted_critical_geometry_certificates.zip)
+
+一般渐近定理使用了素数定理；有限程序不替代其证明。新增结果尚未写入仓库或交由 Lean 内核验证，也没有证明 RH。
+

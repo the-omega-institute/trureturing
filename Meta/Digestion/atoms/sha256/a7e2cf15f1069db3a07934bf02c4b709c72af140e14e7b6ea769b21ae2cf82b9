@@ -1,0 +1,87 @@
+## 定理4.1：整个高维区块的目标厚度趋于零
+
+对固定 \(\varepsilon\in(0,1)\)：
+
+$$
+\boxed{
+C(T,\varepsilon)
+\sim
+\frac{A(\varepsilon)}{\ln T},
+}
+\tag{12}
+$$
+
+其中：
+
+$$
+\boxed{
+A(\varepsilon)
+=
+\frac{2\varepsilon^2}{1-\varepsilon^2}
++\ln(1-\varepsilon^2)>0.
+}
+\tag{13}
+$$
+
+### 证明
+
+令 \(p=Ty\)。在相关固定比例区间中：
+
+$$
+T\left[
+\ln\left(1+\frac1p\right)
+-\lambda_T\ln p
+\right]
+\longrightarrow
+\frac1y-1
+$$
+
+一致成立。
+
+再由素数定理对应的加权求和极限：
+
+$$
+(\ln T)C(T,\varepsilon)
+\longrightarrow
+\int_{1/(1+\varepsilon)}^{1/(1-\varepsilon)}
+\left|\frac1y-1\right|dy.
+$$
+
+在 \(y=1\) 处分开积分，得到：
+
+$$
+\frac1{1+\varepsilon}
++\frac1{1-\varepsilon}
+-2+\ln(1-\varepsilon^2),
+$$
+
+即式（13）。证毕。
+
+当 \(\varepsilon\) 很小时：
+
+$$
+A(\varepsilon)
+=
+\varepsilon^2+\frac32\varepsilon^4+O(\varepsilon^6).
+$$
+
+但要特别保留量词：**上述渐近定理是在 \(\varepsilon\) 固定、\(T\to\infty\) 时证明的。不能直接把任意缩小的 \(\varepsilon(T)\) 代进去，宣称已经取得均匀误差界。**
+
+---
+
+综合定理3.1与4.1：
+
+$$
+\boxed{
+\begin{aligned}
+\text{状态数量}
+&=
+\exp\!\left(\Theta_\varepsilon(T/\ln T)\right),\\
+\text{相对最优值的最大差距}
+&=
+\Theta_\varepsilon(1/\ln T)\longrightarrow0.
+\end{aligned}
+}
+\tag{14}
+$$
+

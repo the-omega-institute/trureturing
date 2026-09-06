@@ -1,0 +1,28 @@
+## 熵缺额也精确分成三层
+
+令 \(Z_2,Z_3,Z_5,Z_7\) 表示四条轴上的完整合法状态。对给定七个均值的最大熵补全 \(\rho_*^{\mathrm{all}}\)，有：
+
+$$
+\boxed{
+\begin{aligned}
+D(\rho\|\rho_*^{\mathrm{all}})
+={}&
+\underbrace{S(\operatorname{diag}\rho)-S(\rho)}_{\text{量子相干}}\\
+&+
+\underbrace{
+\sum_{\mathfrak p}H(Z_{\mathfrak p})
+-H(Z_2,Z_3,Z_5,Z_7)
+}_{\text{素数轴之间的经典关联}}\\
+&+
+\underbrace{I(N_0:N_2\mid N_1)}_{\text{第一条轴内部的隐藏关联}}.
+\end{aligned}
+}
+\tag{268.3}
+$$
+
+证明是连续应用第265节的分解和联合熵链式恒等式。
+
+因此，四个素数并不自动意味着四个物理方向。**素数标签数、Hilbert 空间维数、统计流形维数和物理时空维数，是不同的量。**
+
+---
+

@@ -1,0 +1,17 @@
+## 定理三：联合极限具有一条明确的过渡曲线
+
+$$
+\boxed{
+\mathcal F_G(r)\longrightarrow\frac{2\kappa}{c_0},
+}
+$$
+
+$$
+\boxed{
+\mathcal S_G(r)
+\longrightarrow
+\frac{2\kappa-c_0}{2\kappa+c_0}.
+}
+\tag{37}
+$$
+

@@ -1,0 +1,24 @@
+# 278．素数能量是另一层结构：程序等价不保证物理能量等价
+
+给指数状态定义：
+
+$$
+\boxed{
+\mathcal E(a)=E_*\sum_pa_p\ln p
+=
+E_*\ln\operatorname{Enc}(a).
+}
+\tag{278.1}
+$$
+
+则执行分数 \(u_i/v_i\) 时：
+
+$$
+\boxed{
+\Delta\mathcal E
+=
+E_*\ln\frac{u_i}{v_i}.
+}
+\tag{278.2}
+$$
+

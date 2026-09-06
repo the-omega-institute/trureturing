@@ -1,0 +1,25 @@
+# 二、“第 \(r\) 阶”有一个真实的约束解释：\(r\) 个因数共享同一个整数
+
+展开：
+
+$$
+a(n)^r
+=
+\sum_{\substack{d_1\mid n,\ldots,d_r\mid n}}
+\frac1{d_1\cdots d_r}.
+$$
+
+因此：
+
+$$
+\boxed{
+F_r(s)
+=
+\sum_{\substack{n\ge1\\d_1\mid n,\ldots,d_r\mid n}}
+\frac1{n^s d_1\cdots d_r}.
+}
+\tag{4}
+$$
+
+这里不是 \(r\) 个完全独立的整数系统。
+

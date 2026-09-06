@@ -1,0 +1,44 @@
+# 六、真正的离散临界公式：零点重数等于一次模数进位
+
+式（10）还给出一个比 5040 更一般的定理。
+
+由：
+
+$$
+[n]_q
+=
+\prod_{\substack{d\mid n\\d>1}}\Phi_d(q),
+$$
+
+得到：
+
+$$
+\boxed{
+Q_{\mathbf a}(q)
+=
+\prod_{d=2}^{L}\Phi_d(q)^{c_d(\mathbf a)},
+}
+\tag{13}
+$$
+
+其中：
+
+$$
+\boxed{
+c_d(\mathbf a)
+=
+\left\lfloor\frac Ld\right\rfloor
+-
+\sum_i\left\lfloor\frac{a_i}{d}\right\rfloor
+=
+\left\lfloor
+\frac{\sum_i(a_i\bmod d)}d
+\right\rfloor.
+}
+\tag{14}
+$$
+
+最后一个表达式是非负整数。
+
+因此：
+

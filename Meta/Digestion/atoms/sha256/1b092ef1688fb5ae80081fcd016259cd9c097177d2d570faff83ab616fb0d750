@@ -1,0 +1,46 @@
+# 四、5040 的优化意义已经有项目中的明确 Lean 定理
+
+本轮读取的快照 `cdf5cd4f…` 中，`GoldenResourceOptimalInteger.lean` 已经给出：
+
+$$
+\boxed{
+5040
+=
+\underset{n\ge1}{\operatorname{argmax}}
+\left[
+\log\!\left(\sum_{d\mid n}\frac1d\right)
+-\frac1{25}\log n
+\right],
+}
+\tag{3}
+$$
+
+并证明最大值唯一。它的前件不是“假设 RH”，而只是 \(n\ge1\)。
+
+定义：
+
+$$
+E(n)=\log n,
+$$
+
+$$
+W(n)=\log\frac{\sigma(n)}n,
+$$
+
+$$
+\boxed{
+J_\lambda(n)=W(n)-\lambda E(n).
+}
+\tag{4}
+$$
+
+\(E(n)\) 是对数规模，与整数编码长度相关；\(W(n)\) 是因数权重收益。若另赋物理能量单位 \(E_*\)，可以写成 \(E_*\log n\)，但这个单位并不是由算术自动确定的。
+
+最大化 \(J_\lambda\)，等价于最大化：
+
+$$
+\frac{\sigma(n)}{n^{1+\lambda}}.
+$$
+
+这属于经典极大丰富数的优化结构，而不是仅为 5040 临时制造的目标。([arXiv][5])
+
