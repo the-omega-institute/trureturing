@@ -343,8 +343,62 @@ theorem newtonHankel_posSemidef_iff_roots_real {d : Nat}
       exact sq_nonneg (vectorPolynomialValue coefficients (roots j)).re
     · positivity
 
+/-- For a positive-coefficient polynomial `P`, an enumeration (with
+multiplicity) of the roots of `q(x) = x^d P(-1/x)` has a positive semidefinite
+Newton--Hankel matrix exactly when every root of `P` is a negative real
+number. -/
+theorem negative_real_roots_iff_newtonHankel_posSemidef {d : Nat}
+    (P : Real[X]) (roots : Fin d → Complex)
+    (hP : HasPositiveCoefficientsOfDegree P d)
+    (hroots : EnumeratesReversedRoots P roots)
+    (hconj : ∀ w, w ∈ Finset.univ.image roots ↔
+      conj w ∈ Finset.univ.image roots) :
+    HasOnlyNegativeRealRoots P ↔
+      Matrix.PosSemidef (newtonHankel roots) := by
+  rw [newtonHankel_posSemidef_iff_roots_real roots hconj]
+  constructor
+  · intro hnegative j
+    have hProot :
+        (P.map Complex.ofRealHom).IsRoot (-(roots j)⁻¹) :=
+      (hroots.2 (-(roots j)⁻¹)).mpr ⟨j, rfl⟩
+    rcases hnegative (-(roots j)⁻¹) hProot with ⟨r, hrneg, hr⟩
+    refine ⟨-r⁻¹, ?_⟩
+    calc
+      roots j = -(-(roots j)⁻¹)⁻¹ := by simp [hroots.1 j]
+      _ = -((r : Complex)⁻¹) := by rw [hr]
+      _ = ((-r⁻¹ : Real) : Complex) := by norm_cast
+  · intro hreal z hz
+    rcases (hroots.2 z).mp hz with ⟨j, hj⟩
+    rcases hreal j with ⟨r, hr⟩
+    have hrne : r ≠ 0 := by
+      intro hrzero
+      apply hroots.1 j
+      rw [hr, hrzero]
+      norm_num
+    have hrpos : 0 < r := by
+      rcases lt_or_gt_of_ne hrne with hrneg | hrpos
+      · exfalso
+        let x : Real := -r⁻¹
+        have hxpos : 0 < x := neg_pos.mpr (inv_neg''.mpr hrneg)
+        have hPcomplex : (P.map Complex.ofRealHom).IsRoot (x : Complex) := by
+          have h := (hroots.2 (-(roots j)⁻¹)).mpr ⟨j, rfl⟩
+          convert h using 1
+          simp [x, hr]
+        have hPreal : P.IsRoot x :=
+          (Polynomial.isRoot_map_iff Complex.ofReal_injective).mp hPcomplex
+        have hPpos := eval_pos_of_positive_coefficients hP (le_of_lt hxpos)
+        rw [hPreal.eq_zero] at hPpos
+        exact (lt_irrefl 0) hPpos
+      · exact hrpos
+    refine ⟨-r⁻¹, neg_lt_zero.mpr (inv_pos.mpr hrpos), ?_⟩
+    calc
+      z = -(roots j)⁻¹ := hj
+      _ = -((r : Complex)⁻¹) := by rw [hr]
+      _ = ((-r⁻¹ : Real) : Complex) := by norm_cast
+
 #print axioms companion_trace_hankel_quadratic_identity
 #print axioms companion_trace_hankel_hermite_sylvester_bridge
 #print axioms newtonHankel_posSemidef_iff_roots_real
+#print axioms negative_real_roots_iff_newtonHankel_posSemidef
 
 end D5.S3.Constants.NewtonHankelRealRootCriterion
