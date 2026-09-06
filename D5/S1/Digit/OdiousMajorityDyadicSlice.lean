@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Digit/OdiousMajorityDyadicSlice
    mirror-E: none(waiver:exact-finite-state-arithmetic)
    anchors: []
+   utility: none
    digest: A 21-state transfer certificate proves odious majority on every six-bit dyadic slice. -/
 
 import Mathlib
