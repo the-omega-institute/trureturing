@@ -1301,3 +1301,74 @@ No new axiom, admitted proof, sorry, or native_decide is authored. Logical
 review and exact executable checking are distinct from unperformed Lean
 elaboration, kernel acceptance, and transitive axiom-closure inspection.
 No new numerical minimum or first-priority claim is made.
+
+## 2026-09-07 channel retraction and the unchanged numerical frontier
+
+`D5/S0/Certificates/SkeletonChannelRetraction.lean` supplies a complete output-
+normalization reduction for the existing partial Skeleton semantics. Its paired
+Scribe covers all fifteen public declarations. The source commit is
+`65add728b8ac43e4033006195c3a2231b8a02ce2`.
+
+For arbitrary output maps f and g, preserve the start, zero edges and every
+return target, replace recurrent outputs F by f composed with F, and replace
+one signatures (d,next) by (g(d),next). Induction on the existing return blocks
+proves exact evaluation transport:
+
+\[
+\operatorname{eval}_{K'}(w,c)
+=\operatorname{Option.map}(h_c)(\operatorname{eval}_K(w,c)),
+\quad h_R=f,\quad h_T=g.
+\]
+
+This includes failed partial runs. Each old used signature maps to a new used
+signature, and every new signature is in that image. The resulting surjection
+proves that the existing canonical state cost cannot increase. No injectivity
+of f or g, no totality, and no reachability premise is needed.
+
+For the radix-four sample problem take f(2)=0 and f(d)=d otherwise; take g(0)=1
+and g(d)=d otherwise. Suppose the actual recurrent-channel sample labels avoid
+two, and the transient-channel sample labels avoid zero. Those hypotheses concern
+the authoritative observations, not the unknown candidate's unobserved outputs.
+The retraction fixes every observed label. It also preserves the initial zero
+output and initial zero self-loop. Therefore `normalized_sample_feasibility_iff`
+proves that existence at the same canonical budget is equivalent to existence
+with the reduced ranges
+
+\[
+F(R)\subseteq\{0,1,3\},\qquad G(T)\subseteq\{1,2,3\}.
+\]
+
+The equivalence does not claim that every original candidate already satisfies
+those restrictions. It constructs a replacement candidate without increasing
+cost. Different states with the same normalized outputs remain distinct unless
+an independently justified signature quotient is applied. No ordinary self-loop
+is forbidden and no missing edge is inserted.
+
+The standard-library check exhausts all partial skeleton tables with one or two
+recurrent states and four-valued outputs: 24,408 models, 1,462,320 evaluation
+identities, including 773,372 undefined evaluations. Canonical cost strictly
+decreases in 864 tested models. A changed-return mutation is rejected. Results
+and source hashes are in `channel_retraction_validation.json`; run
+
+```sh
+python Evidence/D5/Automata/GoldenBase4/check_channel_retraction.py
+```
+
+The generic source has nine theorem proof bodies, with no new axiom or missing
+proof placeholder. Logical review and finite exhaustive testing are completed;
+Lean elaboration and kernel checking have not been executed. No formal numerical
+DFAO lower bound follows from these tests alone.
+
+The current search also tried rollback trace merging and shared macro-transition
+encodings on true power samples. The tested budget-15 cases did not produce a
+complete refutation. In particular, no lower bound sixteen or transient bound
+six is asserted. The existing total-bound targets (10,5), (9,6), (8,7) remain.
+The output normalization is a proved search reduction; a timeout remains an
+unresolved computation, irrespective of the number of constraints examined.
+
+The literature connection is the exact incomplete-data identification problem,
+with sample compression preserving complete candidate semantics. The relevant
+SETTA2025/2026 decomposition work and ALENEX2026 ZykovColor references are recorded
+in the preceding appendix. Neither a compressed representative nor a normalized
+output is licensed to carry a reference-state identity that the power samples
+do not determine. The original power-only minimum remains the research target.
