@@ -8,24 +8,23 @@ internal sealed class GoldenFiniteShotVisibilityDocument : IScribeDocumentDefini
         "D5/S3/Quantum/WeylChronology/GoldenFiniteShotVisibility.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Ramsey contrast maps the golden chronology fringe into the existing symmetric Bernoulli and finite-estimation truth sources.",
+        "Ramsey contrast maps golden chronology into the existing symmetric Bernoulli and finite-estimation truth sources.",
         H("Golden Chronology with Visibility and Finite Shots"),
         Blocks(
             Paragraph(Text(
                 "This module is an adapter over existing repository owners. It reuses the "
                     + "canonical positive and negative Bool bias laws, their exact total "
                     + "variation and Bhattacharyya formulas, iidPower, the finite-repetition "
-                    + "law-kernel theorem, and the Bhattacharyya testing floor. It introduces "
-                    + "no parallel probability or divergence definition.")),
+                    + "law-kernel theorem, and the finite-suite optimal-error squeeze. It "
+                    + "introduces no parallel probability, divergence, or product-law primitive.")),
             Paragraph(Text(
                 "The physical model is the standard contrast-damped Ramsey fringe. A contrast "
                     + "V multiplies the sine signal produced by the already-defined chronology "
                     + "phase. Rapid exchange cooling with trapped ions, Nature Communications "
                     + "15 (2024), reports Ramsey fringes fit by a sinusoid about one half, a "
                     + "96 percent contrast, and binomial state-population confidence intervals. "
-                    + "Ramsey contrast decay is also a standard decoherence observable across "
-                    + "interferometric platforms. These references motivate the observation "
-                    + "model and do not claim experimental realization of the golden sequence.")),
+                    + "These references motivate the observation model and do not claim "
+                    + "experimental realization of the golden sequence.")),
             Paragraph(Text(
                 "The adjacent open draft PR #4504 contains a finite Fourier-Magnus matrix "
                     + "commutator and free-Lie interpretation. It is deliberately not copied "
@@ -62,6 +61,22 @@ internal sealed class GoldenFiniteShotVisibilityDocument : IScribeDocumentDefini
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "One Ramsey shot is represented by positiveBiasLaw at the chronology bias. No new two-point probability primitive is declared."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("reversal-affinity"),
+                DeclarationHandle.Create(Prefix + "reversalAffinity"),
+                H("One-shot reversal affinity coordinate"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The physical affinity coordinate is sqrt of one minus the squared visible signal. The theorem below identifies it with the repository's Bhattacharyya affinity."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("repeated-reversal-optimal-error"),
+                DeclarationHandle.Create(Prefix + "repeatedReversalOptimalError"),
+                H("Operational repeated reversal risk"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The repeated experiment uses the existing Fin-N finite-suite encoding and its existing equal-prior optimal error. This does not introduce a third repetition representation."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("visible-fringe-affine-ideal"),
@@ -125,7 +140,7 @@ internal sealed class GoldenFiniteShotVisibilityDocument : IScribeDocumentDefini
                 H("Exact reversal affinity"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For contrast strictly below one, the Bhattacharyya affinity is sqrt(1-signal squared), obtained by direct specialization of the frozen symmetric-Bernoulli closed form."))),
+                    "For contrast strictly below one, the Bhattacharyya affinity equals reversalAffinity, obtained by direct specialization of the frozen symmetric-Bernoulli closed form."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-shot-error-floor"),
@@ -133,7 +148,7 @@ internal sealed class GoldenFiniteShotVisibilityDocument : IScribeDocumentDefini
                 H("Necessary finite-shot testing floor"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Every decision event on N independent Bool outcomes has total two-hypothesis error at least (1-signal squared)^N divided by two. This is a universal lower bound, not a proposed classifier."))),
+                    "Every decision event on N independent outcomes in the recursive iidPower encoding has total two-hypothesis error at least (1-signal squared)^N divided by two. This is a universal lower bound, not a proposed classifier."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sample-complexity-product"),
@@ -143,10 +158,30 @@ internal sealed class GoldenFiniteShotVisibilityDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text(
                     "If a test reaches total error eps, then (1-signal squared)^N is at most 2 eps. The result is inherited from the repository's Bhattacharyya sample-complexity owner."))),
                 DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("optimal-error-squeeze"),
+                DeclarationHandle.Create(Prefix + "repeated_reversal_optimal_error_squeeze"),
+                H("Operational optimal finite-shot squeeze"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For N identical finite-suite coordinates, the existing optimal equal-prior Bayes risk lies between (1-sqrt(1-rho^(2N)))/2 and rho^N/2, where rho is the exact one-shot reversal affinity.")),
+                    Paragraph(Text(
+                        "The proof reduces the existing finite-suite Bhattacharyya budget to -N log rho and then consumes the generic optimal-error squeeze. It does not claim an identity between the repository's recursive IidSpace and Fin-N function encodings."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("target-error-affinity-power"),
+                DeclarationHandle.Create(Prefix + "repeated_reversal_target_error_of_affinity_power"),
+                H("Sufficient affinity-power target"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If rho^N is at most twice a target equal-prior risk, the existing optimal finite-suite decision reaches that target. This supplies a sufficient side to complement the arbitrary-test necessary condition."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The result separates deterministic identifiability from statistical "
                     + "certainty. Positive finite repetition preserves the same equality "
-                    + "kernel, while its affinity changes with the shot count. Residual "
-                    + "displacement, contrast uncertainty, offsets, correlated drift, and "
-                    + "constructive upper bounds remain explicit next obligations."))))));
+                    + "kernel, while its affinity and operational risk change with shot "
+                    + "count. Residual displacement, contrast uncertainty, offsets, "
+                    + "correlated drift, and a generic equivalence of the two frozen finite "
+                    + "product encodings remain explicit next obligations."))))));
 }
