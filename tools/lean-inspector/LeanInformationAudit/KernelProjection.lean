@@ -1,5 +1,6 @@
 import LeanInformationAudit.AnalysisProjection
 import LeanInformationAudit.ProjectionValidation
+import LeanInformationAudit.ProjectionReflection
 
 namespace LeanInformationAudit
 
@@ -90,11 +91,12 @@ private def materialize (catalog : Expr) (members : Array Name) (certPrefix : Na
   pure (kernels.qsort fun a b => a.kernelName.toString < b.kernelName.toString)
 
 private def prepareEdges (catalog : Expr) (members : Array Name) (certPrefix : Name)
-    (kernels : Array MaterializedKernel) :
+    (kernels : Array MaterializedKernel) (reflected : ProjectionProof.CheckedRefinement) :
     ProjectionM (Array ProjectionEdge × Array CollapsedAddition) := do
   let mut edges := #[]
   let mut collapsed := #[]
-  for source in kernels do
+  for sourceIndex in [:kernels.size] do
+    let source := kernels[sourceIndex]!
     for i in [:members.size] do
       let added ← ProjectionProof.fin i members.size
       let selection ← ProjectionProof.selection members.size
@@ -116,7 +118,15 @@ private def prepareEdges (catalog : Expr) (members : Array Name) (certPrefix : N
         collapsed := collapsed.push {
           atNode := source.row.key, theoremName := members[i]!, equalityCertificate }
       else
-        let strict ← mkDecideProof (← mkLT target.node source.node)
+        let targetIndex ← ProjectionProof.fin j kernels.size
+        let sourceIndex ← ProjectionProof.fin sourceIndex kernels.size
+        let forward ← mkDecideProof (← mkEq
+          (mkApp2 reflected.table targetIndex sourceIndex) (mkConst ``Bool.true))
+        let reverse ← mkDecideProof (← mkEq
+          (mkApp2 reflected.table sourceIndex targetIndex) (mkConst ``Bool.false))
+        let strict ← mkAppM ``reflectedStrict_sound
+          #[reflected.nodes, reflected.table, reflected.checked, targetIndex, sourceIndex,
+            forward, reverse]
         let test ← mkAppM ``projectionCover #[catalog, source.selection, target.node]
         let isCover ← ProjectionProof.truth test
         let equivalence ← mkAppM ``projection_cover_iff #[catalog, source.selection, target.node]
@@ -125,9 +135,12 @@ private def prepareEdges (catalog : Expr) (members : Array Name) (certPrefix : N
         else
           mkAppM ``Iff.mp #[← mkAppM ``not_congr #[equivalence],
             ← mkDecideProof (← mkAppM ``Not #[test])]
-        let capture ← mkAppM ``Catalog.GeneratedKernel.edgeCaptureCount #[source.node, target.node]
-        let captureCount : Nat ← reduceEval capture
-        let countProof ← mkDecideProof (← mkEq capture (mkNatLit captureCount))
+        let captureCount := source.row.escapeCount - target.row.escapeCount
+        let reduction ← mkAppM ``projectionEdgeCount_eq
+          #[source.node, target.node, ← mkAppM ``le_of_lt #[strict]]
+        let reduced := (← inferType reduction).eq?.get!.2.2
+        let countProof ← mkAppM ``Eq.trans
+          #[reduction, ← mkDecideProof (← mkEq reduced (mkNatLit captureCount))]
         let certificate ← ProjectionProof.proof (certPrefix.str suffix)
           (← ProjectionProof.conjunction #[step, targetEquality, strict, coverProof, countProof])
         edges := edges.push {
@@ -162,8 +175,11 @@ private def prepareSchedule (catalog : Expr) (members : Array Name) (certPrefix 
       let expression ← mkAppM ``GeneratorSchedule.incrementCount
         #[schedule, ← ProjectionProof.fin (i - 1) order.size]
       let (count, _) ← ProjectionProof.count (certPrefix.str s!"increment_{i - 1}") expression
-      partitionProofs := partitionProofs.push
-        (← mkDecideProof (← mkEq expression (mkNatLit count)))
+      let reduced ← mkAppM ``projectionIncrementCount_eq
+        #[schedule, ← ProjectionProof.fin (i - 1) order.size]
+      let value := (← inferType reduced).eq?.get!.2.2
+      partitionProofs := partitionProofs.push (← mkAppM ``Eq.trans
+        #[reduced, ← mkDecideProof (← mkEq value (mkNatLit count))])
       increments := increments.push count
       if source == target then
         stepClasses := stepClasses.push "collapsed"
@@ -199,6 +215,8 @@ def prepareKernelProjection (catalog arena : Expr) (members : Array Name)
     ProjectionM (KernelProjectionRecord × AnalysisProjectionRecord × Array LayerChainRow) :=
     withTransparency .all do
   let size := members.size
+  let (catalog, readoutEquality) ← ProjectionProof.reflectCatalog catalog size
+  let readoutCertificate ← ProjectionProof.proof (certPrefix.str "readout_reflection") readoutEquality
   let full := Array.range size
   let canonicalOrder := full.qsort fun i j => members[i]!.toString < members[j]!.toString
   let schedules := if request.schedules.isEmpty then #[ ("canonical", canonicalOrder) ]
@@ -222,7 +240,9 @@ chain={chainId} layer=0 reason=not-a-complete-ordering"
 node=request reason=invalid-generator-index"
   let enum ← ProjectionProof.enumeration arena arenaName
   let kernels ← materialize catalog members certPrefix required
-  let (edges, collapsedAdditions) ← prepareEdges catalog members certPrefix kernels
+  let reflected ← ProjectionProof.reflectRefinement
+    (← ProjectionProof.vector (kernels.map (·.node))) (certPrefix.str "refinement")
+  let (edges, collapsedAdditions) ← prepareEdges catalog members certPrefix kernels reflected
   let analysis ← prepareAnalysisProjection catalog enum members (certPrefix.str "analysis")
   let selections ← ProjectionProof.vector (kernels.map (·.selection))
   let mut completenessCertificates := #[]
@@ -235,19 +255,16 @@ node=request reason=invalid-generator-index"
     prepareMatrices nodeCatalog enum (kernels.map (·.kernelName)) (certPrefix.str "nodes")
   let mut leaveOneOut := #[]
   let mut redundantIndices := #[]
-  let bottom ← generated catalog size full
   for i in [:size] do
     let index ← ProjectionProof.fin i size
     let without ← mkAppM ``Catalog.without #[catalog, index]
     let withoutNode ← mkAppM ``Catalog.generatedKernel #[catalog, without]
     let node := kernels[← kernelIndex kernels withoutNode]!
-    let capture ← mkAppM ``Catalog.GeneratedKernel.edgeCapture #[node.node, bottom]
-    let unique ← mkAppM ``Catalog.uniqueCapturePairs #[catalog, index]
-    let equality ← ProjectionProof.arenaDecideProof arena (← mkEq capture unique)
+    let relationProof ← mkDecideProof (← mkEq withoutNode node.node)
+    let equality ← mkAppM ``projectionLeaveOneOut_eq #[catalog, index, node.node, relationProof]
     let countExpr ← mkAppM ``Catalog.uniqueCaptureCount #[catalog, index]
     let uniqueCaptureCount : Nat ← reduceEval countExpr
     let countProof ← mkDecideProof (← mkEq countExpr (mkNatLit uniqueCaptureCount))
-    let relationProof ← mkDecideProof (← mkEq withoutNode node.node)
     let certificate ← ProjectionProof.proof (certPrefix.str s!"leave_one_out_{i}")
       (← ProjectionProof.conjunction #[relationProof, equality, countProof])
     leaveOneOut := leaveOneOut.push {
@@ -274,7 +291,9 @@ node=request reason=invalid-generator-index"
     multiplicitySpectrum := analysis.spectrum, redundantIndices, verdict, denominator,
     certificates := analysis.certificates ++
       nodeCertificates.map (fun (key, name) => ("node_" ++ key, name)) ++ completenessCertificates ++
-      #[("denominator", denominatorCertificate), ("verdict", verdictCertificate)] }
+      #[("denominator", denominatorCertificate), ("verdict", verdictCertificate),
+        ("readout_reflection", readoutCertificate),
+        ("reflected_refinement", reflected.certificate)] }
   match projection.validateReferences rootId catalogId with
   | .error message => throwError message
   | .ok () => pure ()

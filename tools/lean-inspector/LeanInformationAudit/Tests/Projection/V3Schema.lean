@@ -125,3 +125,29 @@ run_cmd do
     serializeV3Artifact `Root #[catalogRecord] ``Nat.zero_lt_one
 
 end LeanInformationAudit.Tests.Projection.V3Schema
+
+namespace LeanInformationAudit.Tests.Projection.V3RedundantSystem
+
+open D5.S3.ConceptDynamics.InformationEscape
+
+private abbrev emptyUnit : TheoremUnit (Arena.ofFintype Bool) := {
+  primitives := {
+    Index := Fin 0
+    indexFintype := inferInstance
+    indexDecidableEq := inferInstance
+    atom := Fin.elim0 }
+  Statement := True
+  proof := True.intro }
+private def family : Fin 1 → PackedCatalog :=
+  ![⟨Arena.ofFintype Bool, Catalog.ofVector ![emptyUnit]⟩]
+private theorem redundant : ¬SystemCatalogIrredundant (projectionSuite `Root family) := by
+  decide
+
+/-- error: IE-C028 AnalysisCertificateMismatch root=Root catalog=system component=catalogs expected="nonempty" actual=0 -/
+#guard_msgs in
+run_cmd do
+  let _ ← Lean.Elab.Command.liftTermElabM <| serializeV3Artifact `Root #[] ``redundant
+
+#print axioms redundant
+
+end LeanInformationAudit.Tests.Projection.V3RedundantSystem

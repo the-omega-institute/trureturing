@@ -101,7 +101,7 @@ Serialize classes in first-representative order as
 `class_count;class_1_ordinals;...`, then SHA-256 those ASCII bytes. The address is
 an output-only projection and is never read as seal decision input.
 -/
-private unsafe def primitiveKernelAddress {X : Type u} (stateFintype : Fintype X)
+unsafe def primitiveKernelAddress {X : Type u} (stateFintype : Fintype X)
     (bundle : PrimitiveBundle X) : String := by
   letI := stateFintype
   let states := (unsafe stateFintype.elems.val.unquot).toArray

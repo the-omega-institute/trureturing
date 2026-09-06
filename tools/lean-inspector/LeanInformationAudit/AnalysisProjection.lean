@@ -151,8 +151,13 @@ def prepareLayerProjection (schedule : Expr) (chainId : String) (certPrefix : Na
     let index ← ProjectionProof.fin i (length + 1)
     let kernel ← mkAppM ``LayerChain.kernel #[chain, index]
     kernels := kernels.push (← ProjectionProof.value (certPrefix.str s!"kernel_{i}") kernel)
-    let expression ← mkAppM ``LayerChain.layeredCaptureCount #[chain, index]
-    let (count, certificate) ← ProjectionProof.count (certPrefix.str s!"layer_{i}") expression
+    let (count, certificate) ← if i == 0 then do
+        let evidence ← mkAppM ``projectionInitialLayerCount_eq #[schedule]
+        pure (0, ← ProjectionProof.proof (certPrefix.str s!"layer_{i}") evidence)
+      else do
+        let position ← ProjectionProof.fin (i - 1) length
+        let expression ← mkAppM ``GeneratorSchedule.incrementCount #[schedule, position]
+        ProjectionProof.count (certPrefix.str s!"layer_{i}") expression
     layers := layers.push { count, certificate }
     if i < length then
       let inclusion ← mkAppM ``LayerChain.refines

@@ -1,4 +1,4 @@
-import LeanInformationAudit.ProjectionKernel
+import LeanInformationAudit.ProjectionCounts
 import LeanInformationAudit.ProjectionSchema
 import LeanInformationAudit.CatalogBuilder
 
@@ -52,8 +52,25 @@ def decide (name : Name) (proposition : Expr) : ProjectionM Name := do
   proof name (← mkDecideProof proposition)
 
 def count (name : Name) (expression : Expr) : ProjectionM (Nat × Name) := do
-  let number : Nat ← withTransparency .all <| reduceEval expression
-  let certificate ← decide name (← mkEq expression (mkNatLit number))
+  let args := expression.getAppArgs
+  let reduction ← if expression.isAppOf ``Catalog.pairwiseCaptureOverlapCount then
+      some <$> mkAppM ``projectionOverlapCount_eq (args.extract (args.size - 3) args.size)
+    else if expression.isAppOf ``Catalog.captureSpectrum then
+      some <$> mkAppM ``projectionSpectrum_eq (args.extract (args.size - 2) args.size)
+    else if expression.isAppOf ``GeneratorSchedule.incrementCount then do
+      let equality ← mkAppM ``projectionIncrementCount_eq
+        (args.extract (args.size - 2) args.size)
+      some <$> mkAppM ``Eq.symm #[equality]
+    else pure none
+  let computed ← match reduction with
+    | some equality => pure (← inferType equality).eq?.get!.2.1
+    | none => pure expression
+  let number : Nat ← withTransparency .all <| reduceEval computed
+  let numeric ← mkDecideProof (← mkEq computed (mkNatLit number))
+  let evidence ← match reduction with
+    | some equality => mkAppM ``Eq.trans #[← mkAppM ``Eq.symm #[equality], numeric]
+    | none => pure numeric
+  let certificate ← proof name evidence
   pure (number, certificate)
 
 def conjunction (proofs : Array Expr) : MetaM Expr := do

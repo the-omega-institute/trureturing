@@ -258,12 +258,15 @@ def serializeV3Artifact (rootId : Name) (records : Array V3CatalogRecord)
   let some (.thmInfo certificate) := env.find? systemCertificate
     | throwError "IE-C028 AnalysisCertificateMismatch root={rootId} catalog=system \
 component=system-certificate expected=Lean-theorem actual={systemCertificate}"
-  unless certificate.type.isAppOf ``SystemCatalogIrredundant do
+  let positive := certificate.type.isAppOf ``SystemCatalogIrredundant
+  let proposition := if positive then certificate.type else
+    if certificate.type.isAppOf ``Not then certificate.type.appArg! else certificate.type
+  unless proposition.isAppOf ``SystemCatalogIrredundant do
     mismatch rootId `system "system-certificate-type" (toJson "SystemCatalogIrredundant")
       (toJson systemCertificate.toString)
   if records.isEmpty then
     mismatch rootId `system "catalogs" (toJson "nonempty") (toJson (0 : Nat))
-  let suite := certificate.type.appArg!
+  let suite := proposition.appArg!
   unless ← isDefEq (← mkAppM ``DesignatedRootCatalogSuite.rootId #[suite]) (toExpr rootId) do
     mismatch rootId `system "system-root" (toJson rootId.toString) (toJson systemCertificate.toString)
   let indexType ← mkAppM ``DesignatedRootCatalogSuite.CatalogIndex #[suite]
@@ -289,7 +292,7 @@ component=system-certificate expected=Lean-theorem actual={systemCertificate}"
     ("root_id", toJson rootId.toString),
     ("seal_scope", toJson "import-closure"),
     ("registration_modules", namesJson modules),
-    ("system_catalog_irredundant", toJson true),
+    ("system_catalog_irredundant", toJson positive),
     ("kernel_address_coincidence_classes", coincidenceClassesJson records),
     ("catalogs", Json.arr <| records.map v3CatalogJson)]
   return artifact.pretty

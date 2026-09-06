@@ -11,9 +11,8 @@ namespace LeanInformationAudit.Tests.Projection.Causal
 abbrev catalog : Catalog unifiedArena := Catalog.ofVector
   ![unifiedCounterfactualUnit, unifiedInterventionUnit, unifiedObservationUnit]
 
-/- The landed sum-valued readout deciders contain proposition transports that do not
-reduce in the kernel. This is a rejection reproducer, not the required positive causal
-projection fixture. No v3 output is written for this unsupported computation. -/
+/- The direct route still cannot reduce the frozen sum-valued readout decisions.
+The positive CausalProjection fixture exercises the certified reflection bridge. -/
 /--
 error: reduceEval: failed to evaluate argument
   Decidable.rec (fun h ↦ (fun x ↦ false) h) (fun h ↦ (fun x ↦ true) h)
@@ -24,12 +23,13 @@ error: reduceEval: failed to evaluate argument
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 16000000 in
 run_cmd do
-  let _ ← liftTermElabM do
-    (prepareKernelProjection (← mkConstWithFreshMVarLevels ``catalog)
-      (← mkConstWithFreshMVarLevels ``unifiedArena)
-      #[``unifiedCounterfactualUnit, ``unifiedInterventionUnit, ``unifiedObservationUnit]
-      `Causal ``catalog ``unifiedArena `CausalProjection {
-        schedules := #[("obs-int-cf", #[2, 1, 0])] }).run #[]
+  let _ ← liftTermElabM <| withTransparency .all do
+    let original ← mkConstWithFreshMVarLevels ``catalog
+    let first ← mkAppM ``Catalog.generatedKernel
+      #[original, ← ProjectionProof.selection 3 #[1, 2]]
+    let second ← mkAppM ``Catalog.generatedKernel
+      #[original, ← ProjectionProof.selection 3 #[0]]
+    ProjectionProof.truth (← mkLE first second)
 
 #print axioms catalog
 #print axioms projectionRefinesB_eq_true_iff
