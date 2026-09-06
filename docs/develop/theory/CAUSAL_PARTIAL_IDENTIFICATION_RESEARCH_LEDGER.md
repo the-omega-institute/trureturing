@@ -1202,3 +1202,87 @@ The independent Python regression uses seed 20260906. It passed 1,252 omitted-ce
 Bayer and Teichmann, *The proof of Tchakaloff's Theorem*, arXiv:math/0502473, places positive finite moment representation in its classical cubature context. Zhang, Tian, and Bareinboim, ICML 2022, PMLR 162:26548-26558, establishes canonical finite causal representations and polynomial counterfactual optimization. Arroyo et al., arXiv:2509.03548, exploits quasi-Markovian component structure and fixed-component linear slices, including a column-generation route. The present work uses these established representation principles; it makes no novelty or priority claim for Caratheodory, inverse-CDF coupling, or the support lemma.
 
 The concrete repository additions are original-carrier three-cell reconstruction, sparse attainment of the existing covariate benefit interval within independent mechanisms, and a two-component exact moment-preserving sparsification theorem. None of these bounds is a DFAO state bound. The law space carrying the moment readout, the table atom space, and the computational states of the Zeckendorf oracle remain different typed objects. No finite information-escape score or maximal-catalog irredundancy assertion is inferred from their cardinalities.
+
+## 47. Data-only rational elimination certificates, 2026-09-06
+
+`D5/S0/Certificates/RationalMomentElimination.lean` turns the identity in Section 45 into a finite exact certificate consumer. The raw carrier is `Fin n`, the retained feature array has type `Fin n -> Fin d -> Q`, and the proposed `EliminationStep` contains only a rational direction z and a pivot index p. The payload contains no proof fields. Feature moments reuse the existing `linearObjective`.
+
+`checkStep` decides seven finite conditions: nonnegative current weights; positive pivot weight; positive pivot direction; zero direction at every zero-weight atom; zero total direction; zero direction for each retained moment; and the cross-multiplied ratio inequalities
+
+```text
+weight(p)*z(i) <= weight(i)*z(p) whenever z(i)>0.
+```
+
+The validator does not divide by unverified denominators. Once accepted, it performs
+
+```text
+theta = weight(p)/z(p),
+weight'(i) = weight(i) - theta*z(i).
+```
+
+`validStep_nonnegative`, `validStep_total`, and `validStep_moment` prove nonnegative output, exact mass conservation, and exact preservation of all nominated linear moments. `validStep_pivot_zero` proves cancellation of the positive pivot. `validStep_zero_stays_zero` prohibits reactivation of any zero atom. Together these imply the strict support theorem `validStep_support`: support is contained in the old support and its cardinality strictly decreases. Ratio ties may remove several atoms in one step.
+
+`validStep_maximal_rate` proves that no larger move along the same oriented direction keeps every weight nonnegative, because its pivot would become negative. This is maximality along one feasible direction; it is not objective optimality or minimum-support optimality.
+
+The inactive-coordinate condition matters independently of moment preservation. On atoms 0,1,2, the law `(1/2,0,1/2)` and direction `(1,-2,1)` would move to `(0,1,0)`, preserving total mass and mean while introducing the previously absent atom 1. The checker rejects this move. As a result, arbitrary hard support admissibility inherited from the initial law survives replay without needing a separate linear feature for every excluded atom.
+
+## 48. Exact trace replay and a finite descent bound
+
+`D5/S0/Certificates/RationalMomentReplay.lean` defines `replaySteps` by structural recursion on a finite list of proposed elimination steps. Every step is checked against the current weight vector. Failure returns `none`; success computes the exact rational update and checks the remaining trace. The recursion terminates on every finite input, including invalid traces.
+
+`replaySteps_sound` proves the stronger quantitative invariant
+
+```text
+trace_length + final_support_size <= initial_support_size,
+```
+
+together with nonnegativity, conserved mass, equality of all retained moments, and support containment. A normalized vector cannot have empty support, so every successful trace from N active atoms has length at most N-1. This bounds accepted elimination steps, not rational arithmetic bit complexity or the runtime of an external search procedure.
+
+`checkCompression` first checks normalization and nonnegative input, then replays the trace and requires the final support count to be at most d+1. It recomputes the output; a producer-supplied terminal vector is not trusted. `checkCompression_sound` certifies all these properties for any accepted output. `checkCompression_preserves_support_predicate` additionally transports every predicate holding on all initially active atoms, even if that predicate is not decidable or expressible as one of the retained moments.
+
+Two closed examples are included as ordinary `decide` proof scripts: an accepted mean-preserving compression from the uniform law on 0,1,2 to the middle atom, and rejection of the zero-atom revival above. These Lean computations have not been executed in the current runtime.
+
+## 49. Completeness of the certificate language
+
+`CertifiedSparseCausalWitness.lean` separates a valid certificate language from a verified discovery algorithm. `exists_supported_moment_replacement` first restricts the existing rational Caratheodory construction to the original positive-support subtype. Its small latent law is pushed back to the same `Fin n` carrier. The result has at most d+1 active atoms, the same feature moments, and support contained in the original support.
+
+This yields the stronger existence theorem `exists_accepted_moment_certificate`: every finite rational probability law has an accepted certificate, and existentially zero or one step suffices. An already small law uses an empty trace. Otherwise let v be the support-contained small replacement and define
+
+```text
+z = weight - v.
+```
+
+Both laws have equal totals and feature moments, so z has zero total and zero feature moments. Some initially positive pivot p has v(p)=0, since the replacement has strictly fewer active atoms. Therefore z(p)=weight(p)>0 and the pivot ratio is exactly one. For every z(i)>0, nonnegativity of v gives z(i)<=weight(i), which proves the cross-multiplied ratio condition. Zero initial coordinates also have v(i)=0. The checked update is exactly v.
+
+Thus the data-only checker is not limited to a few hand-selected examples. Every required rational moment point admits a certificate in its language. The existence proof uses classical selection through the previously established Caratheodory theorem; it does not discover v in one arithmetic step. A Gaussian-elimination producer can still provide a longer trace with small local dependencies, while a solver that has already found v can provide the single difference direction.
+
+## 50. Preserve the original causal LP and reuse its dual witness
+
+The `rowQueryArray` adapter places the original scalar query at coordinate zero and the original m data rows at the successor coordinates. No coefficients are changed, and probability normalization remains a separate checker condition.
+
+`checked_causal_problem_witness` packages an accepted result as the existing `FiniteResponseLaw` on the original carrier. It proves
+
+```text
+support(result) subset support(original),
+support_size(result) <= m+2,
+LinearFeasible A b result,
+linearObjective query result = linearObjective query original.
+```
+
+The bound follows from retaining m+1 moment coordinates. Additional linear equalities or inequalities are preserved when their coefficients are among the retained rows, and any condition determined by the preserved moment vector remains true. Other nonlinear restrictions are not inferred automatically.
+
+`checked_lower_endpoint_witness` combines the checked sparse primal law with an unchanged `LowerBoundCertificate`, using the existing `exact_lower_bound_of_certificate_and_witness`. The resulting exact lower endpoint and sparse attaining witness belong to the same original inequality system. The corresponding upper-bound interface already exists in `LinearObjectiveDual`; a separate checked upper-endpoint wrapper has not been added here.
+
+For Markovian product families, apply the checker to a single current component using the fixed-component features from Section 43, recompute the features for the next component, and retain the product representation. The present new bridge formally covers one finite linear problem. An end-to-end executable multi-component replay driver remains to be implemented; a direct joint-law compression must not be treated as preserving independence.
+
+## 51. Exact validation, remaining algorithms, and literature placement
+
+The three new Lean modules have matching Scribe sources covering 27 named public declarations. The S0 validators and replay functions are written entirely with computable finite rational operations; classical choices are confined to S3 existence proofs. No new proof placeholders or axioms were introduced. Logical review and an independent exact-rational Python regression were performed. No Lean compiler or Lake executable was available, so elaboration, actual kernel execution of the closed examples, Scribe emission, and executed axiom-closure checks remain unverified in this session.
+
+The Python producer uses rational Gaussian elimination to propose null directions and exact ratio minimization to propose pivots. A separate checker mirrors the finite acceptance conditions. With seed 20260906, it passed 192 trace cases, 192 zero-or-one-step certificate constructions, 480 preserved moment-coordinate checks, 1,187 checked elimination steps, and nine causal row/query cases. Six malformed step cases and four invalid compression cases were rejected. The exported example reduces eight active atoms to three in five checked steps and also has a one-step difference certificate. Python is not extracted Lean and supplies no proof-kernel evidence.
+
+Piazzon, Sommariva, and Vianello, *Caratheodory-Tchakaloff Subsampling*, arXiv:1611.02065, studies compression of discrete measures and numerical construction through linear or quadratic programming. That established representation principle supplies context, not a novelty claim. The contribution to this repository is a data-only exact certificate format, proved support-monotone replay invariants, certificate existence over the same rational source semantics, and transport to the existing primal-dual causal certificates.
+
+The next computational obligation is verified direction discovery, including row-operation invariants, a nonzero null-vector witness when active augmented columns are dependent, and the connection from verified Gaussian elimination to the existing checker. The direct sorted cumulative-table algorithm from Section 45 and rank-adaptive terminal certificates also remain separate targets. The current checker enforces the ambient d+1 bound; it does not compute a minimal support or an affine rank certificate.
+
+All moment comparisons here occur on a fixed finite coefficient array and its original probability-law carrier. The integer N in the descent bound counts active probability atoms. It is unrelated to DFAO computational-state counts, and no information-escape score or maximal-catalog admission statement is asserted by the new certificate theorems.
