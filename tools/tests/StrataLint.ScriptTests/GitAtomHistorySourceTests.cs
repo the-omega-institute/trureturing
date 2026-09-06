@@ -30,7 +30,36 @@ public sealed class GitAtomHistorySourceTests
     }
 
     [Fact]
-    public void FixtureWritesStayInsideTemporaryRoot() => AssertInheritedConfigurationIsolation();
+    public void FixtureWritesStayInsideTemporaryRoot()
+    {
+        AssertConfigurationSourceIsolation();
+        AssertInheritedConfigurationIsolation();
+    }
+
+    private static void AssertConfigurationSourceIsolation()
+    {
+        using var outside = new TemporaryDirectory();
+        var system = Path.Combine(outside.Path, "system.gitconfig");
+        File.WriteAllText(system, "[fixture]\n\tsystemSource = outside\n");
+        using var fixture = new AtomHistoryRepository();
+
+        // Supply a disposable would-be system source even on hosts without /etc/gitconfig.
+        var unisolated = fixture.ConfigurationOrigins(start =>
+        {
+            start.Environment.Remove("GIT_CONFIG_NOSYSTEM");
+            start.Environment.Remove("GIT_CONFIG_SYSTEM");
+            start.Environment.Add("GIT_CONFIG_SYSTEM", system);
+        });
+        Assert.Contains(system, unisolated);
+
+        var isolated = fixture.ConfigurationOrigins(start =>
+            start.Environment.TryAdd("GIT_CONFIG_SYSTEM", system));
+        Assert.All(isolated, origin => Assert.StartsWith(
+            fixture.Temporary.Path + Path.DirectorySeparatorChar, origin, StringComparison.Ordinal));
+        Assert.Contains(Path.Combine(fixture.Temporary.Path, "gitconfig"), isolated);
+        Assert.Contains(Path.Combine(fixture.Root, ".git", "config"), isolated);
+        fixture.AssertLocationChecksRejectInvalidCheckouts();
+    }
 
     [Theory]
     [InlineData("default")]
@@ -145,7 +174,8 @@ public sealed class GitAtomHistorySourceTests
         if (shallow)
         {
             checkout = Path.Combine(fixture.Temporary.Path, "shallow-clone");
-            fixture.Git("clone", "--depth=1", "--no-local", fixture.Root, checkout);
+            fixture.CloneShallow(checkout);
+            fixture.AssertCloneTemplateIsolation();
         }
 
         if (linked)
@@ -174,6 +204,9 @@ public sealed class GitAtomHistorySourceTests
         internal TemporaryDirectory Temporary { get; }
         internal string Root { get; }
         internal string Home { get; }
+        private string GlobalConfig { get; }
+        private string XdgConfigHome { get; }
+        private string EmptyTemplate { get; }
         internal string RootAtomId { get; }
         internal string SideAtomId { get; }
 
@@ -184,10 +217,14 @@ public sealed class GitAtomHistorySourceTests
             Temporary = new TemporaryDirectory();
             Root = Path.Combine(Temporary.Path, "repository");
             Home = Path.Combine(Temporary.Path, "home");
+            GlobalConfig = Path.Combine(Temporary.Path, "gitconfig");
+            XdgConfigHome = Path.Combine(Temporary.Path, "xdg");
+            EmptyTemplate = Path.Combine(Temporary.Path, "empty-template");
             Directory.CreateDirectory(Home);
+            Directory.CreateDirectory(XdgConfigHome);
             Directory.CreateDirectory(Root);
-            var template = Path.Combine(Temporary.Path, "empty-template");
-            Directory.CreateDirectory(template);
+            Directory.CreateDirectory(EmptyTemplate);
+            File.WriteAllText(GlobalConfig, "[fixture]\n\tglobalSource = owned\n");
             // An empty repository skeleton makes the first Git call a location check,
             // before init or any other Git command can write fixture state.
             Directory.CreateDirectory(Path.Combine(Root, ".git", "objects"));
@@ -195,7 +232,8 @@ public sealed class GitAtomHistorySourceTests
             File.WriteAllText(Path.Combine(Root, ".git", "HEAD"), "ref: refs/heads/main\n");
             Assert.Equal(Path.Combine(Root, ".git"),
                 Path.GetFullPath(Git("rev-parse", "--git-dir").Trim(), Root));
-            Git("init", $"--template={template}", "--initial-branch=main");
+            Git("init", $"--template={EmptyTemplate}", "--initial-branch=main");
+            AssertRepositoryLocation(Root);
             Configure("user.name", "Atom History Fixture");
             Configure("user.email", "atom-history@example.invalid");
             RootAtomId = WriteAtom("root claim\n");
@@ -259,6 +297,77 @@ public sealed class GitAtomHistorySourceTests
         internal string GitAt(string checkout, params string[] arguments) =>
             Run(arguments, checkout);
 
+        internal string[] ConfigurationOrigins(Action<ProcessStartInfo> mutateStart)
+        {
+            var fields = Run(["config", "--show-origin", "--name-only", "--null", "--list"],
+                Root, mutateStart: mutateStart).Split('\0');
+            Assert.Equal(string.Empty, fields[^1]);
+            Assert.Equal(0, (fields.Length - 1) % 2);
+            var origins = new List<string>();
+            for (var index = 0; index < fields.Length - 1; index += 2)
+            {
+                var origin = fields[index];
+                if (origin == "command line:") continue;
+                Assert.StartsWith("file:", origin, StringComparison.Ordinal);
+                origins.Add(Path.GetFullPath(origin["file:".Length..], Root));
+            }
+            return origins.ToArray();
+        }
+
+        internal void CloneShallow(string checkout, Action<ProcessStartInfo>? mutateStart = null)
+        {
+            Run(["clone", $"--template={EmptyTemplate}", "--depth=1", "--no-local", Root, checkout],
+                Root, mutateStart: mutateStart);
+            AssertRepositoryLocation(checkout);
+        }
+
+        private void AssertRepositoryLocation(string checkout)
+        {
+            Assert.Equal(checkout, GitAt(checkout, "rev-parse", "--show-toplevel").Trim());
+            Assert.Equal(string.Empty,
+                Run(["config", "--get", "core.worktree"], checkout, expectedExitCode: 1));
+        }
+
+        internal void AssertLocationChecksRejectInvalidCheckouts()
+        {
+            var nested = Path.Combine(Root, "nested-location");
+            Directory.CreateDirectory(nested);
+            Assert.ThrowsAny<Xunit.Sdk.XunitException>(() => AssertRepositoryLocation(nested));
+            // Even a worktree setting that names the right root must be rejected.
+            Configure("core.worktree", Root);
+            try
+            {
+                Assert.ThrowsAny<Xunit.Sdk.XunitException>(() => AssertRepositoryLocation(Root));
+            }
+            finally
+            {
+                Git("config", "--file", Path.Combine(Root, ".git", "config"), "--unset", "core.worktree");
+            }
+            AssertRepositoryLocation(Root);
+        }
+
+        internal void AssertCloneTemplateIsolation()
+        {
+            using var outside = new TemporaryDirectory();
+            var hooks = Path.Combine(outside.Path, "hooks");
+            Directory.CreateDirectory(hooks);
+            File.WriteAllText(Path.Combine(hooks, "pre-commit"), "outside template marker\n");
+            var control = Path.Combine(Temporary.Path, "template-control");
+            CloneShallow(control, start =>
+            {
+                start.Environment["GIT_TEMPLATE_DIR"] = outside.Path;
+                start.ArgumentList.Remove($"--template={EmptyTemplate}");
+            });
+            Assert.Equal("outside template marker\n",
+                File.ReadAllText(Path.Combine(control, ".git", "hooks", "pre-commit")));
+
+            var isolated = Path.Combine(Temporary.Path, "template-isolated");
+            CloneShallow(isolated, start => start.Environment["GIT_TEMPLATE_DIR"] = outside.Path);
+            Assert.False(Directory.Exists(Path.Combine(isolated, ".git", "hooks")),
+                "Shallow clone consumed template-derived hooks");
+            Assert.False(Directory.Exists(Path.Combine(Temporary.Path, "shallow-clone", ".git", "hooks")));
+        }
+
         private void GitAtDate(string date, params string[] arguments)
         {
             Git(arguments);
@@ -277,7 +386,8 @@ public sealed class GitAtomHistorySourceTests
             Git("update-ref", "HEAD", oid);
         }
 
-        private string Run(string[] arguments, string checkout, string? standardInput = null)
+        private string Run(string[] arguments, string checkout, string? standardInput = null,
+            Action<ProcessStartInfo>? mutateStart = null, int expectedExitCode = 0)
         {
             var start = new ProcessStartInfo("git")
             {
@@ -289,15 +399,23 @@ public sealed class GitAtomHistorySourceTests
             };
             start.Environment.Clear();
             start.Environment["PATH"] = Environment.GetEnvironmentVariable("PATH");
+            start.Environment["GIT_CONFIG_NOSYSTEM"] = "1";
+            start.Environment["GIT_CONFIG_SYSTEM"] = "/dev/null";
+            start.Environment["GIT_CONFIG_GLOBAL"] = GlobalConfig;
             start.Environment["HOME"] = Home;
+            start.Environment["XDG_CONFIG_HOME"] = XdgConfigHome;
+            start.Environment["GIT_TEMPLATE_DIR"] = EmptyTemplate;
+            start.Environment["GIT_CEILING_DIRECTORIES"] = Temporary.Path;
+            start.Environment["GIT_TERMINAL_PROMPT"] = "0";
             start.Environment["TMPDIR"] = Temporary.Path;
             start.Environment["LC_ALL"] = "C";
             start.Environment["LANG"] = "C";
             foreach (var argument in new[] { "-C", checkout, "-c", "core.hooksPath=/dev/null",
                 "-c", "commit.gpgsign=false", "-c", "gc.auto=0" }.Concat(arguments))
                 start.ArgumentList.Add(argument);
+            mutateStart?.Invoke(start);
             var result = TestProcessRunner.Classify(() => RunProcess(start, standardInput), "git");
-            Assert.True(result.ExitCode == 0, $"git exited {result.ExitCode}: "
+            Assert.True(result.ExitCode == expectedExitCode, $"git exited {result.ExitCode}: "
                 + Encoding.UTF8.GetString(result.StandardOutput)
                 + Encoding.UTF8.GetString(result.StandardError));
             return Encoding.UTF8.GetString(result.StandardOutput);
