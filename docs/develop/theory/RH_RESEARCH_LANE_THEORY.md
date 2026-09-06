@@ -1090,7 +1090,7 @@ R_{r,N,L}\to0
 &\sim \text{分解为频率 }\log p\text{ 的素数通道},
 \\
 \text{颜色间的破缺}
-&\sim \text{提升更新的非交换曲率},
+&\sim \text{提升后的非交换曲率},
 \\
 \text{缺陷能量}
 &\sim \sum_{p,q}\|C_{p,q}\|^2,
@@ -6165,7 +6165,6 @@ c_{\omega,T}E_{\mathrm{hol}}(C)
 \text{admissible Weil test function}
 \longrightarrow
 \texttt{FixedScaleWeilQuadraticForm}.
-}
 \]
 
 下一开放边命名为：
@@ -7240,3 +7239,326 @@ G_{ij}=\langle A_ae_i,A_ae_j\rangle
 剩余承重边是对明确候选认证 (IC6) 中的有限算术块与完整耦合，并让 (IC7) 的全算子残差相对于所得谱间隔足够小。对素数项的粗绝对值处理会放大 N；下一步应保持 prime/pole/boundary 抵消，改进这两个有限矩阵量，而非继续添加抽象 Schur 包装。
 
 未证明无界尺度的最低模态单纯偶性，未证明条件 (C)，未证明真实最低模态 Fourier 变换收敛到 Xi，未证明 RH。本节的投影和 Fourier 估计属于经典工具的具体应用，未作原创优先权声明。
+
+---
+
+## [PR #5602] ARITHMETIC_COUPLING_AND_PRIME3_GROUND_MODE
+
+# 2026-09-06：具体算术耦合与一个含素数窗口的单纯偶最低模态证书
+
+Lean：`D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.lean`。
+Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.scribe.cs`。
+可复验程序：`research/weil_ground_mode/certify_prime3.py`。
+本次实际输出：`research/weil_ground_mode/prime3_certificate.json`。
+
+本节将前面的无限高模态下界接到具体算术耦合，完成一个固定含素数窗口的计算机辅助余维一强制性证明。Lean 保存算术边界符号的绝对收敛、独立统一上界及逐外部模态的耦合余项。完整 Fourier/算子域识别、无限 Gram 尾项求和、区间计算的正确性及变分推论属于以下纸面与计算机辅助证明，尚未组成 Lean 内核定理。Lean 和 Scribe 编译没有在本环境运行。本文不将数值 LDL 的通过等同于 Lean 编译通过。
+
+## 1. 同一 Weil 对象及文献接口
+
+继续使用上一节的 L=2a、正交归一基 e_n 和 Fourier 约定。闭形式为
+
+\[
+q_a(f)=\frac1{2\pi}\int_{\mathbb R}\gamma(t)|\widehat f(t)|^2dt
++2\Re\{\widehat f(i/2)\overline{\widehat f(-i/2)}\}
+-2\sum_{2\le j<e^L}\frac{\Lambda(j)}{\sqrt j}\Re C(f,f)(\log j).
+\]
+
+端点 j=e^L 若为整数，其相关函数值为零。Gamma 乘子仍是既有 gammaBracket，未改变素数、极点或边界归一化。先在紧支撑光滑核心比较 `literatureRHS(weilTest f f)`，随后取同一个闭形式的 Friedrichs 实现。有限基向量的 Fourier 变换为 O(1/|t|)，gamma(t)=O(log(2+|t|))，因此 gamma*hat(e_n) 属于 L2；有限素数平移和两个极点项有界。对应的压回窗口表示向量证明 e_n 属于该算子域。这里不要求 e_n 属于 A_a 的平方定义域。
+
+Connes–Consani–Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1，Lemma 2.3、Proposition 3.2 和 Section 4 给出本节使用的 Fourier 矩阵计算。Suzuki, arXiv:2606.09096v1，Theorem 1.1 及形式域分析提供闭形式实现与紧 resolvent 的接口。Groskin, arXiv:2607.02828v1 已有有限矩阵的 cutoff-free 组装和区间 LDL 方法。本节保留该文献背景，新增任务是认证全部无限耦合后的余维一估计。
+
+另检索到 Kim 等人的 arXiv:2607.24830，研究 Suzuki 算子的数值实现和第一个素数阈值。本节不把有限特征值数值稳定当作全空间证明，也不提出首创优先权声明。Connes–van Suijlekom 的实零点结论仍须承接它规定的分布、核心和算子条件；本文没有仅由自伴性直接推出实零点。
+
+## 2. 具体算术边界符号与除差矩阵
+
+以下令 c>=2 为整数，L=log c，omega_n=2*pi*n/L，beta_r=2r+1/2。定义
+
+\[
+\begin{aligned}
+s_c(n)={}&-\frac{2\omega_n(\cosh(L/2)-1)}{\omega_n^2+1/4}\\
+&-\sum_{r\ge0}\frac{\omega_n(1-e^{-\beta_rL})}{\beta_r^2+\omega_n^2}
+-\sum_{2\le j<c}\frac{\Lambda(j)}{\sqrt j}\sin(\omega_n\log j).
+\end{aligned}
+\tag{AC1}
+\]
+
+这是一个由实际算术数据独立构造的实奇序列。它不使用未知最低特征函数或零点位置。设 K(t)=e^{-t/2}/(1-e^{-2t})。对 n!=m，相关函数偶化为
+
+\[
+C(e_n,e_m)(t)+C(e_n,e_m)(-t)
+=\frac{\sin(\omega_nt)-\sin(\omega_mt)}{\pi(m-n)},\qquad 0\le t\le L.
+\]
+
+将其代入完整 Weil 形式，使用 K(t)=sum_r exp(-beta_r*t)，以及 exp(i*omega_n*L)=1，得到
+
+\[
+\boxed{A_{nm}=\frac{s_c(n)-s_c(m)}{\pi(m-n)},\qquad n\ne m.}
+\tag{AC2}
+\]
+
+这一步保留 prime、pole 和 Gamma 的完整耦合。Gamma 逐项积分可由 |sin(omega*t)|<=|omega|*t 和 sum beta_r^-2<infinity 正当化。
+
+对角元同样有精确公式。记 z_n=1/4+i*omega_n/2，psi_1 为 trigamma：
+
+\[
+\begin{aligned}
+A_{nn}={}&\gamma(\omega_n)+\frac{\Re\psi_1(z_n)}{2L}
+-\frac2L\sum_{r\ge0}e^{-\beta_rL}\Re(\beta_r-i\omega_n)^{-2}\\
+&+\frac{4(\cosh(L/2)-1)}L\Re(1/2+i\omega_n)^{-2}\\
+&-2\sum_{2\le j<c}\frac{\Lambda(j)}{\sqrt j}
+\left(1-\frac{\log j}L\right)\cos(\omega_n\log j).
+\end{aligned}
+\tag{AC3}
+\]
+
+例如 Gamma 项可先写成
+
+\[
+\gamma(\omega_n)+\frac2L\int_0^LtK(t)\cos(\omega_nt)dt
++2\int_L^\infty K(t)\cos(\omega_nt)dt.
+\]
+
+延长第一个积分到正半轴后，剩余尾项是 -(2/L)*integral_L^infinity (t-L)K(t)cos(omega_n*t)dt，给出 (AC3)。因此对角公式中的 trigamma 系数和指数尾项符号都有直接检查。
+
+## 3. 已提交 Lean：算术符号有独立统一界
+
+令
+
+\[
+B_c=2\cosh(L/2)+\sum_{0\le j<c}\left|\Lambda(j)/\sqrt j\right|.
+\]
+
+则
+
+\[
+\boxed{|s_c(n)|\le B_c\quad(n\in\mathbb Z).}
+\tag{AC4}
+\]
+
+Gamma 部分的证明没有假设这个上界。令 w>=0，d_j=w+2j+1/2，有
+
+\[
+\frac w{(2j+5/2)^2+w^2}
+\le w\left(d_j^{-1}-(d_j+2)^{-1}\right).
+\]
+
+分母交叉相乘后，差由 (w-2j-3/2)^2 和非负余项控制。对所有有限部分和望远镜求和，再加第零项 w/(1/4+w^2)<=1，得到
+
+\[
+\sum_{r\ge0}\frac w{(2r+1/2)^2+w^2}\le2.
+\]
+
+这也给出绝对收敛。因 0<=1-exp(-beta_r*L)<=1，(AC1) 的 Gamma 级数被同一正级数支配。极点的绝对值最多为 2(cosh(L/2)-1)，有限素数项的绝对值最多为权重绝对值和。三者相加得到 (AC4)。
+
+Lean 主声明 `arithmetic_boundary_symbol_bound` 同时保存实际 Gamma 级数的绝对收敛与 (AC4)。没有以 RH、Gamma 尾项正性、谱间隔或一个待证明的算子范数作为输入。
+
+## 4. 已提交 Lean：保留两个边界矩的耦合余项
+
+对支撑于 |n|<=N 的任意有限复向量 v，记
+
+\[
+a_0(v)=\sum v_n,\qquad b_0(v)=\sum s_c(n)v_n,
+\qquad d_m(v)=\sum_{|n|\le N}A_{nm}v_n.
+\]
+
+每个 |m|>N 都满足
+
+\[
+\boxed{
+d_m(v)=\frac{b_0(v)-s_c(m)a_0(v)}{\pi m}+R_m(v),
+\quad
+|R_m(v)|\le\frac{2B_cN}{\pi|m|(|m|-N)}\sum|v_n|.
+}
+\tag{AC5}
+\]
+
+其承重恒等式是
+
+\[
+\frac{s_n-s_m}{\pi(m-n)}-\frac{s_n-s_m}{\pi m}
+=\frac{(s_n-s_m)n}{\pi m(m-n)}.
+\]
+
+Lean 主声明 `arithmetic_coupling_first_jet_error` 对任意有限整数索引集和复系数证明该误差。内部半径 N 可以是任意非负实数，外部没有有限上截止。两个边界矩没有被强行置零。
+
+对整数 M>N，将 (AC5) 平方求和，保留边界矩，得到纸面结论
+
+\[
+\boxed{
+\sum_{|m|>M}|d_m(v)|^2
+\le\frac8{\pi^2M}\left(|b_0(v)|^2+B_c^2|a_0(v)|^2\right)
++\epsilon_{N,M}\|v\|^2,
+}
+\tag{AC6}
+\]
+
+\[
+\boxed{
+\epsilon_{N,M}=\frac{16B_c^2N^2(2N+1)}{\pi^2(1-N/M)^2M^3}.
+}
+\]
+
+这里分别使用 |x+y|^2<=2|x|^2+2|y|^2、sum_{m>M}m^-2<=1/M，以及 sum_{m>M}m^-4<=M^-2*sum m^-2<=M^-3。没有使用更小的 1/(3M^3) 常数。有限 Cauchy–Schwarz 给出 (sum|v_n|)^2<=(2N+1)||v||^2。
+
+因此，全部无限耦合的剩余 Gram 块有一个显式正的秩至多二修正和一个三次衰减的标量余量。它有参数 c,N,M，可以用于无界尺度族；本节并未证明所得全尺度有限矩阵均满足所需强制性。
+
+## 5. c=3 的无限高模态块可在 N=64 处认证
+
+取
+
+\[
+c=3,\quad L=\log3,\quad a=L/2,\quad N=64.
+\]
+
+只有素数 2 在内部真正起作用。令 h=log2，则 L<2h。压回 I 的平移 U_h 与 U_h^* 的输出支撑互不相交，输入所覆盖的两段也互不相交。因此
+
+\[
+\|(U_h+U_h^*)f\|^2=\|U_hf\|^2+\|U_h^*f\|^2\le\|f\|^2.
+\]
+
+所以实际素数项的下界改进为 -(log2/sqrt2)||f||^2。这里没有将有限素数矩阵的特征值当作整个平移算子的界。
+
+令 eps=4/(3*pi^2)、R=pi*N/(4*a)。利用上一节无限 Fourier 补空间的低频质量界，全部高模态满足
+
+\[
+q_a(y)\ge\beta\|y\|^2,\qquad
+\beta=(1-\mathrm{eps})\gamma(R)+\mathrm{eps}\gamma(0)
+-\frac{\log2}{\sqrt2}-2(\sinh a-a).
+\]
+
+Gamma 的独立下界通过正级数构造：
+
+\[
+\gamma(0)=-\gamma_E-\pi/2-3\log2-\log\pi,
+\]
+
+\[
+\gamma(R)\ge\gamma(0)+\sum_{j=0}^{511}
+\frac{(R/2)^2}{(j+1/4)((j+1/4)^2+(R/2)^2)}.
+\]
+
+省略项全部非负。区间程序验证该下界给出的 beta>1.04126>1，同时 B_3<3。因此后续只使用精确保守常数 beta=1、B=3。与上一节 N=1024 的粗实例相比，这里真正利用了首个素数平移的支撑结构。
+
+## 6. 实际运行的有限算术与无限耦合证书
+
+固定 M=32768、tau=1/1000000。文件中的 CANDIDATE 是一个已固定、非零、偶的 129 维 dyadic 向量 v，分母为 2^40，索引按 -64,...,64 排列。令 k=v/||v||。候选由一次有限矩阵探索得到后被写成整数常量；认证程序不会调用特征向量求解器，也不会用未知真实最低模态替换候选。
+
+程序以区间运算计算 (AC2)–(AC3)，并验证
+
+\[
+\mu=\langle k,A_ak\rangle
+\in[5.6090783527\ldots,5.6090823856\ldots]\,10^{-8}
+<10^{-7}.
+\tag{AC7}
+\]
+
+上式的小数仅供显示；实际检查比较的是完整区间和精确有理阈值。程序还计算全部 64<|m|<=32768 的耦合行。每项区间被量化为分母 2^40 的 dyadic 数，逐项验证误差小于 2^-38。设量化矩阵为 C_q，其 Gram 矩阵 G_q=C_q^*C_q 以整数分块乘法精确求和，检查每一步均不会溢出。
+
+设 e^2=2(M-N)(2N+1)*2^-76。精确有理数检查给出 ||C_q||_F<4，以及
+
+\[
+64e^2<(10^{-7}-e^2)^2,\quad e^2<10^{-7}.
+\]
+
+因此量化造成的 Gram 算子误差小于 eta=10^-7。全部 |m|>M 的尾部由 (AC6) 覆盖，其标量余项小于 1/4000000。令 s=(s_3(n))_{|n|<=64}、one=(1,...,1)，定义
+
+\[
+\overline G=G_q+\frac8{\pi^2M}(ss^*+9\,\mathrm{one}\,\mathrm{one}^*)
++\left(\frac1{10^7}+\frac1{4000000}\right)I.
+\]
+
+则完整耦合 C_N=Q_NA_a|_{P_NH} 满足 C_N^*C_N<=overline(G)。这里始终使用有界有限域映射 C_N 的 Gram，不要求 A_a^2 的定义域。
+
+最终认证的矩阵为
+
+\[
+\boxed{
+H=A_N-\tau I-\frac{\overline G}{1-\tau}+vv^*\succ0.
+}
+\tag{AC8}
+\]
+
+反射对称在精确算术上成立，G_q 的反射对称也由整数检查确认。程序在 e_0,e_j+e_-j 的 65 维偶块和 e_j-e_-j 的 64 维奇块分别作区间 LDL。两个块的全部主元严格为正；最小主元下端点的显示值分别约为 0.2649730942 和 0.03969194858。这些是 LDL 主元，不是矩阵特征值下界。
+
+## 7. 区间与特殊函数误差的验证边界
+
+有限矩阵及常数使用 mpmath.iv 的 45 位区间运算。大批耦合行只用 IEEE binary64 的基本四则运算，每一步用 nextafter 向外舍入。sin 与 arctan 使用明确区间多项式及余项，未假设系统 libm 的超越函数正确舍入。
+
+arctan 约化后 |x|<0.501，保留 36 个奇次项，余量用 0.501^73/73<10^-23 控制。sin 约化后 |x|<3.15，保留至 49 次，余量用 3.15^50/50!<10^-38 控制。这些比较使用精确有理数核验。约化整数只用于选取等价公式，最终区间范围检查承担有效性。
+
+digamma 和 trigamma 用 z->z+16 的精确递推以及至 B_20 的 Euler–Maclaurin 展开。对 Re Z=65/4，周期 Bernoulli 积分余项给出
+
+\[
+|R_\psi(Z)|\le\frac{|B_{20}|}{20(65/4)^{20}}<2\,10^{-23},
+\qquad
+|R_{\psi_1}(Z)|\le\frac{|B_{20}|}{(65/4)^{21}}.
+\]
+
+这些界来自 Hurwitz zeta 的 Euler–Maclaurin 余项在 s=1 的有限部分及其 z 导数；|periodic B_20|<=|B_20|，积分绝对值由实部控制。可对照 DLMF 25.11(iii)、5.11。c=3 时指数尾项按 9^-r 衰减，保留 32 项后显式控制省略部分。
+
+大 Gram 的哈希是
+
+`6f93db1396440d4cd436594dce755d341f135ce554adf89c001474a384655473`。
+
+实际运行环境是 Python 3.13.5、NumPy 2.3.5、mpmath 1.3.0、SymPy 1.14.0。JSON 记录运行源文件 SHA-256、固定候选、预算和全部通过状态。可用 `python research/weil_ground_mode/certify_prime3.py` 复验；程序禁止 Python 的 -O 模式，以免跳过断言。
+
+该证书依赖所列区间实现、IEEE 基本运算、整数运算和解释器。它尚未被 Lean 内核重放。本节不宣称区间软件已形式化，也没有运行 GitHub CI。
+
+## 8. 从具体证书得到全形式域上的余维一强制性
+
+对任意 f 属于 Dom(q_a) 且 f 与 k 正交，分解 f=x+y，其中 x=P_Nf、y=Q_Nf，则 x 与 v 正交。(AC8) 给出
+
+\[
+q_a(x)-\tau\|x\|^2\ge\frac{\|C_Nx\|^2}{1-\tau}.
+\]
+
+上一节已证明 q_a(y)>=||y||^2。因 x 属于算子域，完整混合配对是 <A_ax,y>，故配方得到
+
+\[
+\begin{aligned}
+q_a(f)-\tau\|f\|^2
+&\ge\frac{\|C_Nx\|^2}{1-\tau}+2\Re\langle C_Nx,y\rangle
++(1-\tau)\|y\|^2\\
+&=(1-\tau)\left\|y+\frac{C_Nx}{1-\tau}\right\|^2\ge0.
+\end{aligned}
+\]
+
+因此本轮纸面与区间认证共同给出固定尺度结论
+
+\[
+\boxed{
+a=\tfrac12\log3,\quad f\perp k
+\quad\Longrightarrow\quad
+q_a(f)\ge10^{-6}\|f\|^2
+\quad(f\in\operatorname{Dom}(q_a)).
+}
+\tag{AC9}
+\]
+
+结合 mu<10^-7，可取 delta=tau-mu>9*10^-7。紧 resolvent 与变分原理于是给出
+
+\[
+\lambda_0\le\mu<10^{-7},\qquad
+\lambda_1\ge10^{-6},\qquad
+\lambda_1-\lambda_0>9\,10^{-7}.
+\]
+
+最低特征值因此单纯、孤立。算子保反射，候选 k 为偶；若该唯一最低模态为奇，则它属于 k 的正交补，违背上述严格能量分离。因此最低模态为偶函数。这是完整算子的固定窗口结论，已经计入所有无限耦合方向。
+
+## 9. 当前完成范围与剩余研究
+
+本节在 c=3 处将单纯性、偶性和隔离从假设推进为纸面与计算机辅助证明。Lean 真源只覆盖 (AC4) 和 (AC5) 对应的实际算术收敛及余项，不包括 (AC9) 的完整内核验证。
+
+本候选是独立固定的有限 Fourier 函数，尚未被识别为文献的 prolate 候选。没有证明它与真实最低模态的残差/间隔比达到条带极限所需尺度，也没有证明上述强制性沿 c->infinity 成立。完整最低特征值的非负性亦未由本证书推出，因为它只给出 lambda_0 的上界及其余方向的下界。
+
+后续应利用 (AC1)–(AC6) 的参数化结构，保持算术抵消，推进无界尺度族与实际全算子残差；同时将 Fourier 识别、闭形式接口和区间有理证书接成可内核重放的证明。当前没有证明条件 (C)、真实最低模态 Fourier 变换的 Xi 极限或 RH。
+
+参考：
+
+- https://arxiv.org/html/2511.22755v1
+- https://arxiv.org/html/2511.23257v1
+- https://arxiv.org/html/2606.09096v1
+- https://arxiv.org/html/2607.02828v1
+- https://arxiv.org/abs/2607.24830
+- https://dlmf.nist.gov/25.11
+- https://dlmf.nist.gov/5.11
