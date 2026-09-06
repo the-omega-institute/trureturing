@@ -1,0 +1,29 @@
+## 与项目结构的对应
+
+本次按提交
+
+```text
+c2154d8cb54ad225b09f77ad29ba09cfd1c002b7
+```
+
+核对了相关定义。
+
+当前可以把模型组织为：
+
+$$
+\boxed{
+\mathfrak O
+=
+\left(
+\text{量子传播网络},
+\text{观察者钟与记忆},
+\Gamma_B,
+\mathcal S,
+\text{实际仪器},
+\text{资源与误差证书}
+\right).
+}
+$$
+
+其中：
+

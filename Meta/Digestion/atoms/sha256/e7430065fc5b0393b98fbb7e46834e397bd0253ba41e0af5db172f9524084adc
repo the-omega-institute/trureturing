@@ -1,0 +1,29 @@
+## 定义 222.1　具有有限记录强度的刷新
+
+取系统量子比特 \(S\) 和记录寄存器 \(M\)。
+
+假设记录交互实现
+
+$$
+|0\rangle|m_{\mathrm{ready}}\rangle
+\longmapsto
+|0\rangle|m_0\rangle,
+$$
+
+$$
+|1\rangle|m_{\mathrm{ready}}\rangle
+\longmapsto
+|1\rangle|m_1\rangle,
+$$
+
+其中两个记录态归一化。为简化本轮模型，设
+
+$$
+\langle m_1|m_0\rangle=\eta,
+\qquad 0\le\eta\le1.
+$$
+
+\(\eta\) 越小，记录越能区分两个分支。
+
+---
+

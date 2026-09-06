@@ -1,0 +1,52 @@
+## 定理 213.1　行动集合扩大可以严格扩大预测所需状态
+
+若只允许 \(U_z\)，则
+
+$$
+\boxed{
+\mathcal S_\Gamma=\operatorname{span}\{I,Z\}.
+}
+\tag{213.1}
+$$
+
+若同时允许 \(U_x,U_z\)，则
+
+$$
+\boxed{
+\mathcal S_0
+\subsetneq
+\mathcal S_1
+\subsetneq
+\mathcal S_2
+=
+\operatorname{Herm}(2),
+}
+\tag{213.2}
+$$
+
+其维数依次为
+
+$$
+\boxed{2,\ 3,\ 4.}
+$$
+
+### 证明
+
+直接计算：
+
+$$
+U_z^\dagger ZU_z=Z,
+$$
+
+$$
+U_x^\dagger ZU_x=Y,
+$$
+
+$$
+U_z^\dagger YU_z=X.
+$$
+
+因此，只保留 \(Z\) 旋转时不产生新效果；加入 \(X\) 旋转后先需要 \(Y\)，再需要 \(X\)。∎
+
+---
+

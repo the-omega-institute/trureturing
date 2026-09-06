@@ -1,0 +1,33 @@
+## 定义 225.1　有限强度刷新模型
+
+取
+
+$$
+H=\frac{\hbar\Omega}{2}X.
+$$
+
+每个时间间隔 \(\delta\)，先自由演化，再实施 \(\mathcal D_\eta\)。
+
+对 Bloch 分量 \(y,z\)，一步更新为
+
+$$
+\boxed{
+\begin{pmatrix}
+y'\\z'
+\end{pmatrix}
+=
+\begin{pmatrix}
+\eta\cos(\Omega\delta)&-\eta\sin(\Omega\delta)\\
+\sin(\Omega\delta)&\cos(\Omega\delta)
+\end{pmatrix}
+\begin{pmatrix}
+y\\z
+\end{pmatrix}.
+}
+\tag{225.1}
+$$
+
+直接用 Pauli 矩阵共轭和式（222.1）即可证明。
+
+---
+
