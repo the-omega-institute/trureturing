@@ -1,0 +1,10 @@
+## 7. Conditional extension invariance
+
+`AdjacentIncomparableSwapInvariance` proves that adjacent parent-independent structural updates commute.
+
+`SwapClosureExtensionInvariance` propagates one local swap through a finite certified swap chain. `SwapInvariantEventMass` then transports pointwise structural equality to equality of finite event masses and linear event queries.
+
+`ExtensionInvariantQueryBound` gives the LP-level interface. A signature equivalence preserving every constraint row, right-hand side, and query event preserves the entire attainable query set.
+
+A remaining combinatorial obligation is to construct a certified adjacent-incomparable swap path between arbitrary finite linear extensions of the same partial order. A remaining compiler obligation is to show that each concrete row and query event is equivariant under those swaps.
+

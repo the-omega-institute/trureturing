@@ -1,0 +1,12 @@
+## 30. Scope, shared covariates, and cross-stratum restrictions
+
+The covariate in this model is an independent root whose value is shared by both outcome equations. Arbitrary conditioning on a mediator, collider, or variable affected by treatment is not justified by this construction. An embedding of these particular equations into the parent-ordered graph evaluator has not been added here; the common-source distributions, table equations, and response-pair identities are explicit in the new modules.
+
+For zero-weight strata, the four marginal values are prescribed kernels, not conditional probabilities learned from an event of probability zero. Their compatibility is assumed, and they do not contribute to the population endpoints.
+
+No restrictions linking different rows of the same table are supplied beyond being a valid full-table law. Rank preservation, cross-covariate monotonicity, a fixed small disturbance support, and extra statistical constraints may restrict the jointly attainable row family. In those cases the newly constructed product-row witness may be inadmissible. The shared-parameter obstruction from Section 4 and the data-projection obligation from Section 25 remain applicable.
+
+A shared covariate can induce population dependence even when both table disturbances are independent. For example, with two equally weighted strata, let both mechanisms never benefit in the first stratum and always benefit in the second. The local intervals are {0} and {1}. The new formula gives the sharp population singleton {1/2}, whereas the product of population marginal benefits is 1/4. This is consistent with the earlier binary-mixture covariance certificate.
+
+If all four success kernels equal 1/2 in every stratum, all local joint-benefit intervals are [0,1/4]. Normalized weights give the same population interval [0,1/4]. These examples illustrate distinct patterns of conditional heterogeneity; the theorem does not replace a weighted product by a product of averages.
+

@@ -1,0 +1,30 @@
+## 24. Elementary independent source grouping, 2026-09-06
+
+The source-grouping obligation in Section 23 is addressed by `FiniteIndependentSourceGrouping.lean`. The current module location is `D5/S3/ConceptDynamics/PartialIdentification/`, following the repository's relocation of the partial-identification lane. The authored Scribe source follows the same path under `Blueprint`.
+
+Each elementary disturbance has a finite carrier `Noise i` and a normalized nonnegative rational law `mu_i`. The carriers may differ between source indices. Define one full law before choosing any partition:
+
+```text
+State = (i : Source) -> Noise i
+mu(u) = product_i mu_i(u_i).
+```
+
+`independentSourceLaw` constructs this law. Normalization reuses the pinned Mathlib identity `Fintype.prod_sum`:
+
+```text
+sum_u product_i mu_i(u_i) = product_i sum_a mu_i(a) = 1.
+```
+
+For any finite source set `S`, the standard `Equiv.piEquivPiSubtypeProd` splits the full assignment into its restriction to `S` and to its complement. `independentSource_mass_split` reuses `Fintype.prod_subtype_mul_prod_subtype` to prove the pointwise mass identity. `independentSource_split_law` then identifies the actual block distribution:
+
+```text
+split_*(mu) = mu_S x mu_complement,
+mu_S(s) = product_{i in S} mu_i(s_i).
+```
+
+Both block laws come from the same elementary law family. Their independence is derived for the original product law; it is not a replacement assumption about an unrelated block model. Empty blocks carry the unit law on the unique empty assignment. Zero-probability assignments remain part of the full carrier, and no positivity or division is needed for regrouping.
+
+`independentSource_pushforward_regroup` proves equality of every finite readout distribution before and after this change of coordinates. It reindexes the full source sum through the standard equivalence and applies the pointwise mass identity. Thus it also covers joint readouts that do not factorize.
+
+The elementary premise is mutual independence, represented by the full product law. Pairwise independence is insufficient for arbitrary block grouping. For example, fair independent bits A and B together with C = A XOR B have pairwise-independent coordinates, while the readouts A XOR B and C coincide and are nonconstant. Each independent index may itself encode an entire multivariate response type; no independence of coordinates inside that type is imposed.
+

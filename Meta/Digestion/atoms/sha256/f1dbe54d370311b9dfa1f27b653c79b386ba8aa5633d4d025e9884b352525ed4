@@ -1,0 +1,12 @@
+### 3.1 Data-identified constraints
+
+Observed and interventional distributions usually become affine marginal equations. For example,
+
+\[
+P(Y_a=y)=\sum_{r:\,Y_a(r)=y}\pi_r.
+\]
+
+When the right-hand side probability is known, this is a linear equality in `\pi`.
+
+These constraints are justified by the observation or intervention regime plus whatever identification assumptions are needed to connect that regime to the counterfactual marginal.
+

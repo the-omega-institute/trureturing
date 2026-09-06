@@ -1,0 +1,12 @@
+## 84. Exact flow certificates and full-master stopping
+
+`D5/S0/Certificates/RationalSTCutCertificate.lean` stores rational internal flows, source-incident flows, sink-incident flows and a proposed Boolean cut. The checker verifies every nonnegative capacity bound, flow conservation at every mediator vertex, and equality of flow and cut value. The payload contains no proof-valued fields or trusted solver-success flag.
+
+`flow_cut_accounting` telescopes the actual conservation equations over an arbitrary cut. `flowValue_le_every_cut` then bounds every cut from below. `checkSTCutCertificate_sound` combines that universal inequality with the supplied equality to prove an attained global minimum. This certificate check examines polynomially many rational entries of the network, rather than enumerating all Boolean cuts. No verified max-flow discovery algorithm or arithmetic bit-complexity theorem is included.
+
+`BipartiteMediatorPricing.lean` checks the coloring and flow certificate on the capacities computed from the original coupling and current multipliers. Its `checked_pricing_isGreatest` returns the flipped cut and the exact global pricing value `(K-flowValue)/2`. `checked_no_improving_column_iff` proves that every original column has pricing score at most the normalization multiplier tau exactly when this certified value is at most tau.
+
+The source also derives `completeMediatorBenefit_eq_pricing_expectation` from the original causal expectation identities. If all columns satisfy `P(y)<=tau`, every outcome law with the original prescribed means r_i satisfies `J<=tau+sum_i lambda_i*r_i`. A feasible restricted-master candidate with equality therefore attains the upper endpoint of the full canonical outcome-law problem. `checked_restricted_master_isGreatest` proves precisely that statement. It does not replace the full marginal contract by a constraint only on generated columns.
+
+The Lean endpoint establishes the implication from accepted arithmetic certificates and a genuine feasible law to global optimality. Max-flow and LP proposal generation are implemented separately in the diagnostic. Their returned flags are not acceptance evidence.
+

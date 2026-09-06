@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1b04a6014128c285df6af19d95033f54e7d4e86a898e9e08d6170a0d331ed015
+  normalized_sha256: sha256:1b04a6014128c285df6af19d95033f54e7d4e86a898e9e08d6170a0d331ed015
+cas_ref: sha256:1b04a6014128c285df6af19d95033f54e7d4e86a898e9e08d6170a0d331ed015
+coverage_gids:
+  - gid: D5/S3/Observer/Hilbert/NymanBeurlingFiniteGramDistance.nyman_beurling_finite_gram_distance
+    target_statement_id: sha256:a0750112514da31c4319030b7959ed9266e0ea83eef4892dbb9302d90516cff1
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Hilbert/NymanBeurlingFiniteGramDistance.nyman_beurling_finite_gram_distance
+      definition_sha256: sha256:d258200c221aeea4f0e3d0f2cc9b16b9b277cc74b568361b0b52f957402f5620
+      emission_sha256: sha256:11cf284b902bf5ed17db3acc153c18320f479f10b7cf76d59de99eebd2d91613
+  unresolved_subitems: []

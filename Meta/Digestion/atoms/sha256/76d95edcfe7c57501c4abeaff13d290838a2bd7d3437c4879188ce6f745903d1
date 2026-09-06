@@ -1,0 +1,14 @@
+## 13. Semantic boundary: mixture versus one global graph
+
+The support and event-row compilers have latent-completion mixture semantics. Different units may receive mass from different admissible completions.
+
+That object must be distinguished from epistemic uncertainty about one fixed complete graph. For one global unknown graph, the correct range is:
+
+```text
+union over admissible completions of completion-specific identified ranges.
+```
+
+Convexifying that union silently changes the causal model by introducing a latent graph index. Future compilers must expose this choice in their type and certificate payload.
+
+A similar warning applies to Markovian response laws. Mixing two product-factorized laws can create dependence between components. A latent mixture index must therefore be represented explicitly and cannot be silently absorbed into a claim of exogenous independence.
+
