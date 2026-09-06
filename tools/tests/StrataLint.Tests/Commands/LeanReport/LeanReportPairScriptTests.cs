@@ -8,6 +8,7 @@ namespace StrataLint.Tests;
 public sealed class LeanReportPairScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
+    private const string PairScriptPath = "tools/scripts/lean-report-pair.sh";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/Trureturing.Truth/StructuredCanonicalWriter.cs";
     private const string ScribeProgramPath = "tools/StrataLint.Scribe/ScribeProgram.cs";
@@ -15,6 +16,8 @@ public sealed class LeanReportPairScriptTests
         '/', "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
     private static readonly string EngineProjectPath = string.Join(
         '/', "tools", "StrataLint.Engine", "StrataLint.Engine.csproj");
+    private static readonly string TruthProjectPath = string.Join(
+        '/', "tools", "Trureturing.Truth", "Trureturing.Truth.csproj");
     [Fact]
     public void SingleProductionWritesOneVerifiedCandidateBundle()
     {
@@ -311,26 +314,42 @@ public sealed class LeanReportPairScriptTests
                 "def residentFixture : True := by trivial\n",
                 new UTF8Encoding(false));
             WriteProducerInput(root, InputHelperPath);
+            WriteProducerInput(root, PairScriptPath);
             WriteProducerInput(root, RawReportPath);
             WriteProducerInput(root, CanonicalWriterPath);
             WriteProducerInput(root, ScribeProgramPath);
             WriteProducerInput(root, CliProjectPath);
             WriteProducerInput(root, EngineProjectPath);
+            WriteProducerInput(root, TruthProjectPath);
+            WriteProducerInput(root, "tools/StrataLint.Cli/FixtureProbe.cs");
             WriteProducerInput(root, "Directory.Build.props");
+            WriteProducerInput(root, ".github/workflows/ci.yml", MinimalWorkflow);
             Directory.CreateDirectory(Path.Combine(root, "tools", "scripts", "worktree"));
         }
 
-        private static void WriteProducerInput(string root, string relative)
+        private static void WriteProducerInput(
+            string root,
+            string relative,
+            string? explicitContents = null)
         {
             var path = Path.Combine(root, relative.Replace('/', Path.DirectorySeparatorChar));
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            var contents = relative.EndsWith(".csproj", StringComparison.Ordinal)
-                ? "<Project Sdk=\"Microsoft.NET.Sdk\" />\n"
-                : relative.EndsWith(".props", StringComparison.Ordinal)
-                    ? "<Project />\n"
-                    : "fixture\n";
+            var contents = explicitContents
+                ?? (relative.EndsWith(".csproj", StringComparison.Ordinal)
+                    ? "<Project Sdk=\"Microsoft.NET.Sdk\" />\n"
+                    : relative.EndsWith(".props", StringComparison.Ordinal)
+                        ? "<Project />\n"
+                        : "fixture\n");
             File.WriteAllText(path, contents, new UTF8Encoding(false));
         }
+
+        private const string MinimalWorkflow = """
+            jobs:
+              lean-inspect:
+                steps: []
+              baseline-admission:
+                steps: []
+            """;
 
 
         private const string FakeCacheEnsure = """

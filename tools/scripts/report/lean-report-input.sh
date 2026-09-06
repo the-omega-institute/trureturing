@@ -379,10 +379,12 @@ import sys
 
 root = pathlib.Path(sys.argv[1]).resolve()
 scope = sys.argv[2]
+inspector_entrypoint = pathlib.PurePosixPath("tools/lean-inspector/inspect.sh")
+inspector_root = root / "tools" / "lean-inspector"
 if scope == "lean-report":
     entrypoints = (
         pathlib.PurePosixPath(".github/workflows/ci.yml"),
-        pathlib.PurePosixPath("tools/lean-inspector/inspect.sh"),
+        inspector_entrypoint,
         pathlib.PurePosixPath("tools/scripts/lean-report-pair.sh"),
         pathlib.PurePosixPath("tools/scripts/report/lean-report-input.sh"),
     )
@@ -405,6 +407,8 @@ def source_text(relative):
         path.relative_to(root)
     except ValueError as error:
         raise SystemExit(f"lean-report-input: producer script escaped repository: {relative}") from error
+    if relative == inspector_entrypoint and not path.is_file() and not inspector_root.exists():
+        return None
     if not path.is_file():
         raise SystemExit(f"lean-report-input: reachable producer input is absent: {relative}")
     text = path.read_text(encoding="utf-8")
@@ -451,6 +455,8 @@ while pending:
     if source in reachable:
         continue
     text = source_text(source)
+    if text is None:
+        continue
     reachable.add(source)
     for match in reference_pattern.finditer(text):
         if text[max(0, match.start() - 3):match.start()] == "://":
@@ -550,18 +556,12 @@ producer_sha256() {
   : > "${manifest}.unsorted"
   : > "${manifest}.unsorted.requests"
   local producer_paths="$TMP_ROOT/producer-paths"
-  local closure_complete=1
-  if ! complete_producer_paths > "$producer_paths"; then
-    closure_complete=0
-    producer_declared_paths | sort -u > "$producer_paths"
-  fi
+  complete_producer_paths > "$producer_paths" \
+    || { echo "lean-report-input: producer closure is unavailable" >&2; return 2; }
   while IFS= read -r relative; do
     append_producer_manifest_entry "${manifest}.unsorted" "$relative" || return 2
   done < "$producer_paths"
   materialize_manifest "${manifest}.unsorted"
-  if [[ "$closure_complete" == "0" ]]; then
-    printf '%s\n' "unavailable:candidate" >> "${manifest}.unsorted"
-  fi
   sort "${manifest}.unsorted" > "$manifest"
   rm -f -- "${manifest}.unsorted"
   hash_file "$manifest"
@@ -695,7 +695,10 @@ case "$COMMAND" in
       && -z "$extra" ]] \
       || { echo "lean-report-input: production input attestation is malformed or stale; run make lean-report first" >&2; exit 2; }
     declared="${declared#repository_input_sha256=}"
-    read -r address _ <<< "$(repository_address)"
+    producer="${producer#producer_sha256=}"
+    read -r address current_producer _ <<< "$(repository_address)"
+    [[ "$producer" == "$current_producer" ]] \
+      || { echo "lean-report-input: raw Lean report producer is stale for current repository inputs; run make lean-report first" >&2; exit 2; }
     [[ "$declared" == "$address" ]] \
       || { echo "lean-report-input: raw Lean report is stale for current repository inputs; run make lean-report first" >&2; exit 2; }
     ;;

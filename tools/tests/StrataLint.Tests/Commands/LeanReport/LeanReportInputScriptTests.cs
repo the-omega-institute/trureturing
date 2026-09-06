@@ -97,6 +97,69 @@ public sealed class LeanReportInputScriptTests
     }
 
     [Fact]
+    public void CompileClosureFailureCannotProduceCollidingValidAddresses()
+    {
+        using var left = new LeanReportInputFixture();
+        using var right = new LeanReportInputFixture();
+        left.BreakProducerClosureEvaluation();
+        right.BreakProducerClosureEvaluation();
+        right.Append(LeanModelsPath, "// the only repository-content difference\n");
+
+        Assert.Equal(2, left.RunCommand("producer-paths").ExitCode);
+        Assert.Equal(2, right.RunCommand("producer-paths").ExitCode);
+        var leftResult = left.RunCommand("address");
+        var rightResult = right.RunCommand("address");
+
+        if (leftResult.ExitCode == 0 || rightResult.ExitCode == 0)
+        {
+            Assert.Equal(0, leftResult.ExitCode);
+            Assert.Equal(0, rightResult.ExitCode);
+            var leftParts = Fields(leftResult);
+            var rightParts = Fields(rightResult);
+            Assert.True(
+                leftParts[0] != rightParts[0] && leftParts[1] != rightParts[1],
+                "C# source drift produced colliding repository and producer addresses.");
+            return;
+        }
+
+        Assert.Equal(2, leftResult.ExitCode);
+        Assert.Equal(2, rightResult.ExitCode);
+        Assert.Empty(leftResult.StandardOutput);
+        Assert.Empty(rightResult.StandardOutput);
+    }
+
+    [Fact]
+    public void VerifyRejectsAttestedProducerThatDiffersFromCurrentProducer()
+    {
+        using var fixture = new LeanReportInputFixture();
+        Assert.Equal(0, fixture.CaptureProductionInput().ExitCode);
+        fixture.RewriteAttestedProducer(new string('0', 64));
+
+        var result = fixture.Verify();
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(
+            "producer",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void CompleteProducerClosureHasStableAddressAndVerifies()
+    {
+        using var fixture = new LeanReportInputFixture();
+
+        var first = fixture.RunCommand("address");
+        var second = fixture.RunCommand("address");
+
+        Assert.Equal(0, first.ExitCode);
+        Assert.Equal(0, second.ExitCode);
+        Assert.Equal(first.StandardOutput, second.StandardOutput);
+        Assert.Equal(0, fixture.CaptureProductionInput().ExitCode);
+        Assert.Equal(0, fixture.Verify().ExitCode);
+    }
+
+    [Fact]
     public void ProducerPathsDeriveEveryReachableShellDependency()
     {
         using var fixture = new LeanReportInputFixture();
@@ -441,6 +504,18 @@ public sealed class LeanReportInputScriptTests
 
         internal ProcessOutput Verify() => Run("verify");
 
+        internal void BreakProducerClosureEvaluation() =>
+            Append(CliProjectPath, "<");
+
+        internal void RewriteAttestedProducer(string producer)
+        {
+            var path = report + ".input.attestation";
+            var lines = File.ReadAllLines(path, Encoding.UTF8);
+            Assert.Equal(4, lines.Length);
+            lines[2] = $"producer_sha256={producer}";
+            File.WriteAllLines(path, lines, new UTF8Encoding(false));
+        }
+
         internal void Mutate(string mutation)
         {
             var path = mutation switch
@@ -614,4 +689,7 @@ public sealed class LeanReportInputScriptTests
 
     private static string[] Lines(ProcessOutput output) => Encoding.UTF8.GetString(output.StandardOutput)
         .Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+    private static string[] Fields(ProcessOutput output) => Encoding.UTF8.GetString(output.StandardOutput)
+        .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 }

@@ -375,6 +375,9 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(Path.GetDirectoryName(inputPath)!);
         Directory.CreateDirectory(Path.Combine(fixture.Path, "D5"));
         Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Cli"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Engine"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "Trureturing.Truth"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, ".github", "workflows"));
         File.Copy(Path.Combine(root, IngestScriptPath), ingestPath);
         File.Copy(Path.Combine(root, LeanReportInputScriptPath), inputPath);
         File.WriteAllText(Path.Combine(fixture.Path, "Trureturing.lean"), "import D5.Probe\n");
@@ -383,12 +386,40 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(Path.Combine(fixture.Path, "lake-manifest.json"), "{\"version\":\"1.1.0\"}\n");
         File.WriteAllText(Path.Combine(fixture.Path, "lakefile.toml"), "name = \"Fixture\"\n");
         File.WriteAllText(Path.Combine(fixture.Path, "README.md"), "baseline\n");
+        File.WriteAllText(
+            Path.Combine(fixture.Path, ".github", "workflows", "ci.yml"),
+            "jobs:\n  lean-inspect:\n    steps: []\n  baseline-admission:\n    steps: []\n");
+        File.WriteAllText(
+            Path.Combine(fixture.Path, LeanReportPairScriptPath),
+            "#!/usr/bin/env bash\n");
+        var scribeContentChecks = Path.Combine(
+            fixture.Path, "tools", "scripts", "workflow", "scribe-content-checks.sh");
+        Directory.CreateDirectory(Path.GetDirectoryName(scribeContentChecks)!);
+        File.WriteAllText(scribeContentChecks, "#!/usr/bin/env bash\n");
+        foreach (var project in new[]
+        {
+            "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+            "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+            "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+        })
+        {
+            File.WriteAllText(
+                Path.Combine(fixture.Path, project),
+                "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+        }
+        File.WriteAllText(
+            Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "FixtureProbe.cs"),
+            "// fixture\n");
         var dotnetPath = Path.Combine(binDirectory, "dotnet");
         File.WriteAllText(
             dotnetPath,
             """
             #!/usr/bin/env bash
-            if [[ "${1:-}" == "msbuild" ]]; then exit 1; fi
+            if [[ "${1:-}" == "msbuild" ]]; then
+              repository="$(cd "$(dirname "$2")/../.." && pwd -P)"
+              printf '{"Items":{"Compile":[{"FullPath":"%s/tools/StrataLint.Cli/FixtureProbe.cs"}]}}\n' "$repository"
+              exit 0
+            fi
             printf '%s\n' "$*"
             """ + "\n");
         foreach (var executable in new[] { ingestPath, inputPath, dotnetPath })
