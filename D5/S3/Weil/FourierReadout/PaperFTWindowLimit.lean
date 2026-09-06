@@ -50,6 +50,30 @@ theorem paperFT_window_uniform_error
     _ ≤ _ := h
     _ < eps := by simpa only [mul_assoc] using hj
 
+/-- On a fixed finite window, ordinary L2 convergence alone implies uniform
+convergence of the actual Fourier transforms on every closed horizontal
+strip. In particular, no separate frequency-wise or uniform-error premise
+is required for a fixed-window Rayleigh--Ritz approximation. -/
+theorem paperFT_fixed_window_uniform
+    {J : Type*} (l : Filter J) {a : ℝ} (ha : 0 ≤ a)
+    (f : J → WindowL2 a) (g : WindowL2 a) (b : ℝ)
+    (hf : Tendsto f l (𝓝 g)) :
+    TendstoUniformlyOn (fun j z =>
+      Zeta23.paperFT ((Icc (-a) a).indicator (f j : ℝ → ℂ)) z)
+      (fun z => Zeta23.paperFT ((Icc (-a) a).indicator (g : ℝ → ℂ)) z)
+      l {z : ℂ | |z.im| ≤ b} := by
+  have hsmall : Tendsto (fun j =>
+      (Real.sqrt (2 * a) * Real.exp (b * a)) * ‖f j - g‖) l (𝓝 0) := by
+    have h := (hf.sub (tendsto_const_nhds :
+      Tendsto (fun _ : J => g) l (𝓝 g))).norm.const_mul
+        (Real.sqrt (2 * a) * Real.exp (b * a))
+    simpa only [sub_self, norm_zero, mul_zero] using h
+  apply Metric.tendstoUniformlyOn_iff.mpr
+  intro eps heps
+  filter_upwards [(tendsto_order.mp hsmall).2 eps heps] with j hj z hz
+  rw [dist_comm, dist_eq_norm]
+  exact (paperFT_window_sub_le ha (f j) g z hz).trans_lt hj
+
 /-- A squared projective error budget gives the explicit sufficient rate
 ||c_j|| sqrt(2a_j) exp(b*a_j) sqrt(delta_j) -> 0 for actual Fourier integrals. -/
 theorem paperFT_projective_uniform_error
@@ -76,13 +100,15 @@ theorem paperFT_projective_uniform_error
 /-- Actual operator-domain Rayleigh certificates plus the correct scaled
 rate transfer a candidate Fourier limit to the projectively normalized
 actual eigenvectors. Domains and window Hilbert spaces may vary with j.
-The candidate convergence is explicit, so scaling c_j toward zero cannot
-be substituted for a separately prescribed nonzero target limit. -/
+The target K may be any subset of the strip, in particular a compact set
+or contour. Candidate convergence is required only on K. Scaling c_j toward
+zero cannot replace convergence to a separately prescribed nonzero target. -/
 theorem rayleigh_paperFT_uniform_limit
     {J : Type*} (l : Filter J) (a : J → ℝ) (ha : ∀ j, 0 ≤ a j)
     (D : J → Type*) [∀ j, AddCommGroup (D j)] [∀ j, Module ℂ (D j)]
     (ι A : ∀ j, D j →ₗ[ℂ] WindowL2 (a j)) (k u : ∀ j, D j)
     (lower upper threshold lam : J → ℝ) (c : J → ℂ) (b : ℝ) (F : ℂ → ℂ)
+    (K : Set ℂ) (hK : K ⊆ {z : ℂ | |z.im| ≤ b})
     (hsym : ∀ j (x y : D j), ⟪ι j x, A j y⟫_ℂ = ⟪A j x, ι j y⟫_ℂ)
     (hk : ∀ j, ‖ι j (k j)‖ = 1) (hu : ∀ j, ι j (u j) ≠ 0)
     (hAu : ∀ j, A j (u j) = (lam j : ℂ) • ι j (u j))
@@ -96,11 +122,11 @@ theorem rayleigh_paperFT_uniform_limit
         Real.sqrt ((upper j - lower j) / (threshold j - lower j))) l (𝓝 0))
     (hcandidate : TendstoUniformlyOn (fun j z => c j *
       Zeta23.paperFT ((Icc (-a j) (a j)).indicator (ι j (k j) : ℝ → ℂ)) z)
-      F l {z : ℂ | |z.im| ≤ b}) :
+      F l K) :
     TendstoUniformlyOn (fun j z => c j * Zeta23.paperFT
       ((Icc (-a j) (a j)).indicator
         (((⟪ι j (k j), ι j (u j)⟫_ℂ)⁻¹ • ι j (u j)) : ℝ → ℂ)) z)
-      F l {z : ℂ | |z.im| ≤ b} := by
+      F l K := by
   let w : ∀ j, WindowL2 (a j) := fun j =>
     ι j ((⟪ι j (k j), ι j (u j)⟫_ℂ)⁻¹ • u j - k j)
   have he (j : J) : ‖w j‖ ^ 2 ≤ (upper j - lower j) / (threshold j - lower j) := by
@@ -114,7 +140,7 @@ theorem rayleigh_paperFT_uniform_limit
     abel
   have herror := paperFT_projective_uniform_error l a ha (fun j => ι j (k j)) w
     (fun j => (upper j - lower j) / (threshold j - lower j)) c b he hsmall
-  have hlimit := herror.add hcandidate
+  have hlimit := (herror.mono hK).add hcandidate
   simpa only [Pi.add_apply, hsum, mul_sub, sub_add_cancel, zero_add] using hlimit
 
 #print axioms rayleigh_paperFT_uniform_limit
