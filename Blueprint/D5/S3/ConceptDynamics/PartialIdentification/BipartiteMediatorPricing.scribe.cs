@@ -12,7 +12,6 @@ internal sealed class BipartiteMediatorPricingDocument : IScribeDocumentDefiniti
     private static Formula Color => V("color");
     private static Formula Table => V("table");
     private static Formula Mult => V("multiplier");
-    private static Formula Prob => V("probability");
     private static Formula K => V("certificate");
     private static Formula Law => V("law");
     private static Formula Candidate => V("candidate");

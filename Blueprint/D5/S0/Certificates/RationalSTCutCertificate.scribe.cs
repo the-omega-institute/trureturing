@@ -66,8 +66,6 @@ internal sealed class RationalSTCutCertificateDocument : IScribeDocumentDefiniti
     private static Formula P(Formula x) => Seq(Open, x, Close);
     private static Formula B(Formula x, Formula op, Formula y) => Seq(P(x), Sp, op, Sp, P(y));
     private static Formula All(string names, Formula body) => Quantify(Forall, names, body);
-    private static Formula ExistsF(string names, Formula body) => Quantify(Exists, names, body);
-    private static Formula Lam(string names, Formula body) => Quantify(LambdaLower, names, body);
     private static Formula SumF(string index, Formula body) => Seq(F.Sum, Underscore, Grp(V(index)), Sp, P(body));
     private static Formula Quantify(Formula q, string names, Formula body)
     {

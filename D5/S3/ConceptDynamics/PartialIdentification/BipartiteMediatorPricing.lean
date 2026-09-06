@@ -278,14 +278,17 @@ theorem pricing_bound_implies_causal_bound
     (law : FiniteResponseLaw (Mediator → Bool))
     (marginals : ∀ i, linearObjective (fun table => if table i then 1 else 0) law.mass = probability i) :
     completeMediatorBenefit coupling law ≤ bound + ∑ i, multiplier i * probability i := by
-  rw [completeMediatorBenefit_eq_pricing_expectation]
+  rw [completeMediatorBenefit_eq_pricing_expectation (multiplier := multiplier)]
   simp_rw [marginals]
-  apply add_le_add_right
-  calc
-    linearObjective (completeMediatorPricingScore coupling multiplier) law.mass ≤
-        ∑ table, bound * law.mass table :=
-      Finset.sum_le_sum (fun table _ => mul_le_mul_of_nonneg_right (global table) (law.nonnegative table))
-    _ = bound := by rw [← Finset.mul_sum, law.total, mul_one]
+  have key :
+      linearObjective (completeMediatorPricingScore coupling multiplier) law.mass ≤ bound := by
+    calc
+      linearObjective (completeMediatorPricingScore coupling multiplier) law.mass ≤
+          ∑ table, bound * law.mass table :=
+        Finset.sum_le_sum
+          (fun table _ => mul_le_mul_of_nonneg_right (global table) (law.nonnegative table))
+      _ = bound := by rw [← Finset.mul_sum, law.total, mul_one]
+  linarith [key]
 
 /-- A feasible restricted-master law, its exact primal/dual equality, and a
 checked absence of improving columns certify the full canonical sharp upper
