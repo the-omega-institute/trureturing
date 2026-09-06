@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: At a positive common price a positive integer is optimal exactly when its boundary layers straddle the price. -/
+   digest: Global optimality is equivalent to boundary layer thresholds at a fixed positive price. -/
 
 import D5.S3.Arith.GoldenResourceObjectiveFactorization
 
@@ -22,6 +22,9 @@ import D5.S3.Arith.GoldenResourceObjectiveFactorization
    3. Third-party Lean ecosystem search via Tavily/NyxID for Lean theorem prover,
       goldenResourceObjective, goldenLayerMarginal, and colossally abundant local threshold
       optimality returned Lean project/documentation pages, with no matching formal theorem.
+      A second query, colossally abundant Lean formalization, returned ordinary mathematical
+      descriptions (Wikipedia, MathWorld, Math StackExchange) and generic Lean material;
+      no matching Lean theorem was found in these returned results.
    4. The new step constructs a strictly better integer by multiplying by one prime.
 
    Escape-witness preregistration v2, recorded before implementation in the attempt artifact:
@@ -92,6 +95,50 @@ theorem golden_resource_strict_improvement_of_marginal_gt {lambda : ℝ}
   have hpos := mul_pos (sub_pos.mpr hgain) hpLog
   rw [← resource_mul_prime_diff lambda hn hp] at hpos
   exact sub_pos.mp hpos
+
+/-- Boundary layer thresholds at a common positive price characterize global optimality. -/
+theorem golden_resource_optimal_iff_layer_thresholds
+    {lambda : ℝ} (hlambda : 0 < lambda) {n : ℕ} (hn : 1 ≤ n) :
+    IsGoldenResourceOptimal lambda n ↔
+      (∀ p : ℕ, p.Prime → goldenLayerMarginal p (n.factorization p + 1) ≤ lambda) ∧
+      (∀ p : ℕ, p.Prime → p ∣ n → lambda ≤ goldenLayerMarginal p (n.factorization p)) := by
+  constructor
+  · intro hopt
+    constructor
+    · intro p hp
+      by_contra h
+      have hgain := golden_resource_strict_improvement_of_marginal_gt hlambda hn hp
+        (lt_of_not_ge h)
+      exact (not_lt_of_ge (hopt (n * p)
+        (Nat.one_le_iff_ne_zero.mpr (mul_ne_zero (by omega) hp.ne_zero)))) hgain
+    · intro p hp hpn
+      by_contra h
+      have hdiv : 1 ≤ n / p := Nat.div_pos (Nat.le_of_dvd (by omega) hpn) hp.pos
+      have hfact : (n / p).factorization p + 1 = n.factorization p := by
+        have heq := congrArg (fun f : ℕ →₀ ℕ => f p)
+          (Nat.factorization_mul (show n / p ≠ 0 by omega) hp.ne_zero)
+        rw [Nat.div_mul_cancel hpn] at heq
+        simpa [hp.factorization] using heq.symm
+      have hdiff := resource_mul_prime_diff lambda hdiv hp
+      rw [Nat.div_mul_cancel hpn, hfact] at hdiff
+      have hpLog : 0 < Real.log (p : ℝ) := Real.log_pos (by exact_mod_cast hp.one_lt)
+      have hneg := mul_neg_of_neg_of_pos (sub_neg.mpr (lt_of_not_ge h)) hpLog
+      have hcomp := hopt (n / p) hdiv
+      linarith
+  · rintro ⟨hupper, hlower⟩ m hm
+    let s := n.primeFactors ∪ m.primeFactors
+    rw [golden_resource_objective_sum_on lambda hm s subset_union_right,
+      golden_resource_objective_sum_on lambda hn s subset_union_left]
+    apply sum_le_sum
+    intro p hp
+    have hprime : p.Prime := by
+      rcases mem_union.mp hp with hp | hp
+      · exact Nat.prime_of_mem_primeFactors hp
+      · exact Nat.prime_of_mem_primeFactors hp
+    apply golden_prime_local_objective_maximal_of_threshold hprime lambda (hupper p hprime)
+    by_cases hpn : p ∣ n
+    · exact Or.inr (hlower p hprime hpn)
+    · exact Or.inl (Nat.factorization_eq_zero_of_not_dvd hpn)
 
 end
 
