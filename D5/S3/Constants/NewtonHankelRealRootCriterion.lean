@@ -61,6 +61,39 @@ def vectorPolynomialValue {d : Nat} (coefficients : Fin d -> Real)
     (z : Complex) : Complex :=
   ∑ i, (coefficients i : Complex) * z ^ i.1
 
+/-- A degree-`d` real polynomial whose coefficients through degree `d` are
+strictly positive. -/
+def HasPositiveCoefficientsOfDegree (P : Real[X]) (d : Nat) : Prop :=
+  P.natDegree = d ∧ ∀ k ≤ d, 0 < P.coeff k
+
+/-- Every complex root of a real polynomial is a strictly negative real
+number. -/
+def HasOnlyNegativeRealRoots (P : Real[X]) : Prop :=
+  ∀ z : Complex, (P.map Complex.ofRealHom).IsRoot z →
+    ∃ r : Real, r < 0 ∧ z = (r : Complex)
+
+/-- The listed roots are the roots of `q(x) = x^d P(-1/x)`, expressed by
+the equivalent root correspondence between `P` and nonzero roots of `q`.
+Repeated entries retain multiplicity for the Newton moments. -/
+def EnumeratesReversedRoots {d : Nat} (P : Real[X])
+    (roots : Fin d → Complex) : Prop :=
+  (∀ j, roots j ≠ 0) ∧
+    ∀ z : Complex, (P.map Complex.ofRealHom).IsRoot z ↔
+      ∃ j, z = -(roots j)⁻¹
+
+private theorem eval_pos_of_positive_coefficients {P : Real[X]} {d : Nat}
+    (hP : HasPositiveCoefficientsOfDegree P d) {x : Real} (hx : 0 ≤ x) :
+    0 < P.eval x := by
+  rw [Polynomial.eval_eq_sum_range]
+  apply Finset.sum_pos'
+  · intro k hk
+    have hk' : k ≤ d := by
+      rw [← hP.1]
+      exact Nat.le_of_lt_succ (Finset.mem_range.mp hk)
+    exact mul_nonneg (le_of_lt (hP.2 k hk')) (pow_nonneg hx k)
+  · refine ⟨0, by simp, ?_⟩
+    simpa using hP.2 0 (Nat.zero_le d)
+
 private theorem eval_map_conj (p : Complex[X]) (z : Complex) :
     (p.map Complex.conjAe).eval z = conj (p.eval (conj z)) := by
   induction p using Polynomial.induction_on' with
