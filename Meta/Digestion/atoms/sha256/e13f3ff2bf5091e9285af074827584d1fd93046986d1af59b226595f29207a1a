@@ -1,0 +1,61 @@
+# 十、本轮真正补上的内容
+
+上一轮的最终目标是
+
+$$
+|\mathcal T_\Lambda(X)|\le CX^{3/2},
+$$
+
+其中 \(C\) 未指定。
+
+这次得到三个进一步明确的结果。
+
+首先，可以给出一个具体的单侧常数：
+
+$$
+\boxed{
+C_*=
+(5+3\sqrt2)
+\bigl[2+\gamma_{\mathrm E}-\log(4\pi)\bigr].
+}
+$$
+
+并证明
+
+$$
+\mathrm{RH}
+\iff
+\mathcal T_\Lambda(N)\le C_*N^{3/2}
+\quad\text{对全部整数 }N\ge2.
+$$
+
+其次，素数平方修正提供的偏移严格大于这个振荡界，因而
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal T_{\mathbb P}(N)
+\text{ 在全部充分大的整数尺度上非正}.
+}
+$$
+
+最后，还精确补回了把代数谱读数转成正范数时容易遗漏的项：
+
+$$
+\boxed{
+\sum_\rho\frac1{|\rho|^2}
+=
+2+\gamma_{\mathrm E}-\log(4\pi)
++
+\sum_{\text{离线四元组}}
+\frac{8m_\rho\delta^2}
+{
+[\gamma^2+(\frac12+\delta)^2]
+[\gamma^2+(\frac12-\delta)^2]
+}.
+}
+$$
+
+这与项目中区分“实际锚、读出、准入条件”的做法一致：合法的表示不能替代实际对象满足准入条件的证明。本次核对的 `ObserverStructure` 仍明确保留这三类数据，而不是只保留读出商空间。
+

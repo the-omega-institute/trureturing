@@ -21466,3 +21466,4498 @@ $$
 [5]: https://arxiv.org/html/2006.04796v1 "https://arxiv.org/html/2006.04796v1"
 [6]: https://arxiv.org/html/2509.11871 "https://arxiv.org/html/2509.11871"
 [7]: https://arxiv.org/html/1503.05183v1 "https://arxiv.org/html/1503.05183v1"
+# 能量共振、热平衡与共同时间的可检验重建
+
+## ——量子观察者—关系时空理论第一百六十一至第一百七十节增订
+
+### 摘要
+
+上一轮已经从有限量子碰撞导出方向松弛、熵产生和因果输运。本轮补上一条尚未闭合的联系：
+
+> **观察者的内部钟、局部温度与能量交换，何时必须服从同一套时间标定？**
+
+本文先在有限量子模型中证明：如果两处系统的相互作用严格保持共同参照下的能量，那么能够交换的能级必须满足共振条件。对独立制备的局部热态，零热流条件进一步给出
+
+$$
+\boxed{
+\nu_iT_i=\text{共同常数},
+}
+$$
+
+其中 \(\nu_i=d\tau_i/dt\) 是局部钟相对于共同参照的速率。
+
+随后证明三个限制：
+
+**相同局部温度不决定未来热流；多个钟速分支的热态平均，一般不再对应任何单一温度；具有单调稳定泛函的热传导方程，也不自动满足共同因果锥。**
+
+最后，在已重建的洛伦兹几何中证明：有质量平衡分布约束一个真正的 Killing 时间方向，而无质量分布只要求共形 Killing 方向。因此，热平衡也能成为检验“钟、信号与几何是否相容”的独立工具。
+
+Tolman–Ehrenfest 温度关系及其与时间标定的联系是已有结果。本增订的工作是给出适合当前项目的有限量子实现、残差见证和条件性几何连接，不将这一已知关系申报为新发现。([arXiv][1])
+
+---
+
+# 161．先区分局部能量、共同能量与温度
+
+## 假设 161.1　静态的局部钟标定
+
+在一个指定实验窗口内，第 \(i\) 个观察者的内部时间满足
+
+$$
+d\tau_i=\nu_i\,dt,
+\qquad
+\nu_i>0.
+$$
+
+\(\nu_i\) 由前文的钟比较协议给出，不在本节通过温度反向定义。
+
+该观察者携带一个局部探针，其自身时间下的 Hamiltonian 为
+
+$$
+h_i=h_i^\dagger.
+$$
+
+本节增加一个明确的普适耦合条件：
+
+> 同一个 \(\nu_i\) 不仅作用于某一只特殊钟，也作用于参与热交换的探针能量。
+
+于是，探针在共同参照时间下的生成元为
+
+$$
+G_i=\nu_i h_i.
+$$
+
+当相互作用关闭时，联合参照能量为
+
+$$
+\boxed{
+H_0=\sum_iG_i=\sum_i\nu_i h_i.
+}
+\tag{161.1}
+$$
+
+这项普适性是需要检验的物理条件，不能仅由一个钟的标定自动推出。
+
+---
+
+## 定义 161.1　局部 Gibbs 制备
+
+对已独立标定的 \(h_i\)，定义
+
+$$
+\boxed{
+\gamma_i(\beta_i)
+=
+\frac{e^{-\beta_i h_i}}{Z_i(\beta_i)},
+\qquad
+\beta_i=\frac1{k_BT_i}>0.
+}
+\tag{161.2}
+$$
+
+这里：
+
+$$
+\text{局部温度 }T_i
+$$
+
+与
+
+$$
+\text{共同参照下的能量 }G_i
+$$
+
+是不同对象。
+
+定义换算到共同能量标定的逆温度
+
+$$
+\boxed{
+b_i=\frac{\beta_i}{\nu_i}.
+}
+\tag{161.3}
+$$
+
+则
+
+$$
+\gamma_i(\beta_i)
+=
+\frac{e^{-b_iG_i}}{\operatorname{Tr}e^{-b_iG_i}}.
+$$
+
+**后续真正比较的不是孤立的 \(T_i\)，而是能量交换与钟标定共同确定的 \(b_i\)。**
+
+温度、钟和局部谱都必须有各自的制备与测量依据。不能先把任意状态写成 \(e^{-\log\rho}\)，再据此宣布已经建立了物理热平衡。
+
+---
+
+# 162．有限量子交换先要求能量共振
+
+## 定义 162.1　两探针交换模型
+
+取两个量子比特：
+
+$$
+h_A=\epsilon_A|1\rangle\langle1|,
+\qquad
+h_B=\epsilon_B|1\rangle\langle1|,
+$$
+
+其中 \(\epsilon_A,\epsilon_B>0\)。
+
+定义交换生成元
+
+$$
+L
+=
+|10\rangle\langle01|
++
+|01\rangle\langle10|,
+$$
+
+以及接触操作
+
+$$
+U_\theta=e^{-i\theta L}.
+$$
+
+它只在单激发子空间中混合两个状态，保持 \(|00\rangle,|11\rangle\) 不变。
+
+---
+
+## 定理 162.1　无外部能量补偿的交换共振条件
+
+有
+
+$$
+\boxed{
+[H_0,L]
+=
+(\nu_A\epsilon_A-\nu_B\epsilon_B)
+\left(
+|10\rangle\langle01|
+-
+|01\rangle\langle10|
+\right).
+}
+\tag{162.1}
+$$
+
+因此，当 \(\sin\theta\ne0\) 时，
+
+$$
+\boxed{
+[H_0,U_\theta]=0
+\iff
+\nu_A\epsilon_A=\nu_B\epsilon_B.
+}
+\tag{162.2}
+$$
+
+### 证明
+
+\(|10\rangle\) 与 \(|01\rangle\) 的共同参照能量分别为
+
+$$
+\nu_A\epsilon_A,
+\qquad
+\nu_B\epsilon_B.
+$$
+
+逐项计算交换子得到式（162.1）。
+
+在单激发子空间内，
+
+$$
+U_\theta=\cos\theta\,I-i\sin\theta\,L.
+$$
+
+当 \(\sin\theta\ne0\) 时，交换子消失等价于两个参照能量相等。∎
+
+### 解释
+
+如果两个探针没有满足共振条件，不能仍然使用同一个交换门并宣称“没有其他能量参与”。
+
+此时需要明确的工作源、储能器或额外媒介。它们必须进入完整账本。
+
+这也是为什么“保持某个 Gibbs 态”比“已经给出能量守恒的物理操作”弱；两种要求在量子理论中并不等价。([arXiv][2])
+
+---
+
+## 定理 162.2　独立热输入的精确能量交换
+
+设初态为
+
+$$
+\gamma_A(\beta_A)\otimes\gamma_B(\beta_B).
+$$
+
+记激发概率
+
+$$
+p_i=\frac1{1+e^{\beta_i\epsilon_i}}.
+$$
+
+则接触后
+
+$$
+\boxed{
+\Delta\langle h_B\rangle
+=
+\epsilon_B\sin^2\theta\,(p_A-p_B),
+}
+\tag{162.3}
+$$
+
+$$
+\boxed{
+\Delta\langle h_A\rangle
+=
+-\epsilon_A\sin^2\theta\,(p_A-p_B).
+}
+\tag{162.4}
+$$
+
+### 证明
+
+初始单激发概率分别为
+
+$$
+P_{10}=p_A(1-p_B),
+\qquad
+P_{01}=(1-p_A)p_B.
+$$
+
+交换门使
+
+$$
+P_{01}'=
+\cos^2\theta\,P_{01}
++
+\sin^2\theta\,P_{10}.
+$$
+
+因此
+
+$$
+P_{01}'-P_{01}
+=
+\sin^2\theta\,(p_A-p_B).
+$$
+
+\(|11\rangle\) 概率不变，故得到式（162.3）；另一侧同理。∎
+
+当共振条件成立，记
+
+$$
+\mathcal E=\nu_A\epsilon_A=\nu_B\epsilon_B,
+$$
+
+则从 \(A\) 向 \(B\) 转移的共同能量为
+
+$$
+\boxed{
+Q_{A\to B}
+=
+\mathcal E\sin^2\theta\,(p_A-p_B).
+}
+\tag{162.5}
+$$
+
+两侧局部能量变化不必数值相反，但共同参照能量严格守恒。
+
+---
+
+# 163．由可实施热接触得到共同温度—时间标定
+
+## 定理 163.1　零热流的钟速判据
+
+在独立 Gibbs 制备、非零交换强度及共振条件下，
+
+$$
+Q_{A\to B}=0
+$$
+
+当且仅当
+
+$$
+\boxed{
+\frac{\beta_A}{\nu_A}
+=
+\frac{\beta_B}{\nu_B}.
+}
+\tag{163.1}
+$$
+
+等价地，
+
+$$
+\boxed{
+\nu_AT_A=\nu_BT_B.
+}
+\tag{163.2}
+$$
+
+### 证明
+
+因为 \(\sin^2\theta>0\)，零热流等价于 \(p_A=p_B\)。
+
+函数 \(x\mapsto(1+e^x)^{-1}\) 严格单调，故
+
+$$
+\beta_A\epsilon_A=\beta_B\epsilon_B.
+$$
+
+再使用
+
+$$
+\nu_A\epsilon_A=\nu_B\epsilon_B=\mathcal E>0,
+$$
+
+得到式（163.1），进而得到式（163.2）。∎
+
+### 一个明确实例
+
+若
+
+$$
+\nu_A=1,
+\qquad
+\nu_B=\frac12,
+$$
+
+选择共振探针
+
+$$
+\epsilon_A=\epsilon,
+\qquad
+\epsilon_B=2\epsilon.
+$$
+
+那么平衡要求
+
+$$
+\boxed{T_B=2T_A.}
+\tag{163.3}
+$$
+
+这不表示任何慢钟都必然更热。它表示：**在所指定的静态能量标定与热接触条件下，平衡局部温度必须这样变化。**
+
+若后续几何重建得到静态度量
+
+$$
+ds^2=-\nu(x)^2c^2dt^2+h_{ab}dx^adx^b,
+$$
+
+式（163.2）便成为标准 Tolman–Ehrenfest 关系
+
+$$
+T(x)\sqrt{-g_{tt}(x)}/c=\text{常数}.
+$$
+
+该关系在引力热平衡研究中已有成熟基础；本节给出的是它的有限量子接触实现。([arXiv][3])
+
+---
+
+## 定理 163.2　连通接触网络的共同平衡
+
+设观察者构成连通图，每条边都具有经过认证的非零共振接触。各边测试使用独立制备的相应局部 Gibbs 态。
+
+若每条边均无净能量交换，则存在共同 \(b>0\)，使
+
+$$
+\boxed{
+\beta_i=b\nu_i
+\qquad\forall i.
+}
+\tag{163.4}
+$$
+
+于是
+
+$$
+\boxed{
+\bigotimes_i\gamma_i(\beta_i)
+=
+\frac{e^{-bH_0}}{\operatorname{Tr}e^{-bH_0}}.
+}
+\tag{163.5}
+$$
+
+### 证明
+
+由定理 163.1，每条边两端的 \(\beta_i/\nu_i\) 相同。连通性使该比值在全部节点相同。
+
+由于不同节点的 \(G_i\) 可交换，指数分解直接给出式（163.5）。∎
+
+### 两个不能省略的边界
+
+**零热流不一定是平衡证据。**若接触关闭、没有共振或相关模式根本不可访问，任意温度也可以没有热流。
+
+**平衡态存在不等于已经证明热化。**任何与 \(H_0\) 可交换的操作都保持其各能量扇区的总概率；有限闭合系统不能因此把任意初态变成同一个固定温度。
+
+热化需要明确的环境、混合性或近似极限。新辅助系统可以预先包含在完整量子模型中，但不能无成本、无限次地重新提供。
+
+---
+
+# 164．局部温度相同，隐藏关联仍可产生相反热流
+
+上一节对初始独立性作了明确要求。现在证明它不是技术装饰。
+
+## 定理 164.1　有初始关联时的能量—信息恒等式
+
+设初态 \(\rho_{AB}\) 的两个边缘分别为
+
+$$
+\rho_A=\gamma_A(\beta_A),
+\qquad
+\rho_B=\gamma_B(\beta_B),
+$$
+
+但不要求联合态为乘积。
+
+对任意联合酉演化，记末态为 \(\rho'_{AB}\)，则
+
+$$
+\boxed{
+\begin{aligned}
+\beta_A\Delta E_A+\beta_B\Delta E_B
+={}&D(\rho_A'\|\gamma_A)
++D(\rho_B'\|\gamma_B)\\
+&+I(A:B)_{\rho'}-I(A:B)_\rho.
+\end{aligned}
+}
+\tag{164.1}
+$$
+
+这里
+
+$$
+D(\rho\|\sigma)
+=
+\operatorname{Tr}\rho(\log\rho-\log\sigma).
+$$
+
+### 证明
+
+由 Gibbs 形式，
+
+$$
+D(\rho_i'\|\gamma_i)
+=
+-S(\rho_i')
++\beta_iE_i'
++\log Z_i.
+$$
+
+又因
+
+$$
+S(\gamma_i)=\beta_iE_i+\log Z_i,
+$$
+
+所以
+
+$$
+D(\rho_i'\|\gamma_i)
+=
+\beta_i\Delta E_i-\Delta S_i.
+$$
+
+两式相加，并用联合酉演化保持总熵：
+
+$$
+\Delta S_A+\Delta S_B=\Delta I(A:B),
+$$
+
+即得结论。∎
+
+若同时保持 \(H_0\)，则
+
+$$
+\boxed{
+(b_B-b_A)Q_{A\to B}
+=
+D(\rho_A'\|\gamma_A)
++D(\rho_B'\|\gamma_B)
++\Delta I(A:B).
+}
+\tag{164.2}
+$$
+
+初始无关联时，右侧非负，从而能量按共同标定下的热力学方向传递。
+
+有初始关联时，\(\Delta I\) 可以为负。关联变化参与能量交换的约束；不能继续只看两个温度。相关量子系统中对热流方向的控制已有实验研究。([Nature][4])
+
+---
+
+## 定理 164.2　相同热边缘的有限 carry 见证
+
+取相同局部探针，激发概率
+
+$$
+p=\frac13,
+$$
+
+并令
+
+$$
+\gamma=\operatorname{diag}\left(\frac23,\frac13\right).
+$$
+
+定义
+
+$$
+\boxed{
+\rho_\pm
+=
+\gamma\otimes\gamma
+\pm
+\frac i9
+\left(
+|10\rangle\langle01|
+-
+|01\rangle\langle10|
+\right).
+}
+\tag{164.3}
+$$
+
+则：
+
+1. \(\rho_\pm\) 均为严格正的密度矩阵；
+2. 两侧边缘均为 \(\gamma\)；
+3. 对同一个 \(U_{\pi/4}\)，末态 \(B\) 的激发概率分别为
+
+   $$
+   \boxed{
+   p_B^{(+)}=\frac49,
+   \qquad
+   p_B^{(-)}=\frac29.
+   }
+   \tag{164.4}
+   $$
+
+### 证明
+
+两个态的本征值均为
+
+$$
+\frac49,\quad\frac13,\quad\frac19,\quad\frac19.
+$$
+
+交叉项对任一侧取偏迹均为零，因此边缘相同。
+
+在单激发子空间中直接实施
+
+$$
+U_{\pi/4}
+=
+\frac1{\sqrt2}(I-iL),
+$$
+
+得到式（164.4）。∎
+
+### 项目解释
+
+若当前 CUT 只保存
+
+$$
+q(\rho_{AB})=(\rho_A,\rho_B),
+$$
+
+它把 \(\rho_+\) 与 \(\rho_-\) 合并；后续能量读数却将二者分开。
+
+因此，这构成项目意义下的明确 carry witness。不能给“局部温度对”直接配置一个覆盖全部相关量子输入的自治热流规则。
+
+---
+
+# 165．热态与时钟是否共享一个生成元，可以直接检验
+
+温度不能只靠一个标签定义。对于多个能级，必须检查全部能级概率及相干结构是否与已标定 Hamiltonian 相容。
+
+## 定义 165.1　热—钟相容性残差
+
+设第 \(i\) 个探针的实际状态满秩：
+
+$$
+\rho_i>0.
+$$
+
+其共同时间生成元 \(G_i\) 已由独立动力学实验确定。
+
+定义对数态算子
+
+$$
+K_i=-\log\rho_i.
+$$
+
+对任意算子 \(A\)，记去迹部分
+
+$$
+A^\circ=A-\frac{\operatorname{Tr}A}{d_i}I.
+$$
+
+定义
+
+$$
+\boxed{
+\mathcal E(b)
+=
+\sum_i
+\|K_i^\circ-bG_i^\circ\|_{\mathrm{HS}}^2.
+}
+\tag{165.1}
+$$
+
+---
+
+## 定理 165.1　共同 Gibbs 标定的有限判据
+
+设至少一个 \(G_i\) 非标量。定义
+
+$$
+\boxed{
+b_*=
+\frac{
+\sum_i\operatorname{Tr}(G_i^\circ K_i^\circ)
+}{
+\sum_i\|G_i^\circ\|_{\mathrm{HS}}^2
+}.
+}
+\tag{165.2}
+$$
+
+则 \(b_*\) 是式（165.1）在实数上的唯一极小点。
+
+若 \(b_*>0\)，则
+
+$$
+\boxed{
+\mathcal E(b_*)=0
+\iff
+\rho_i=
+\frac{e^{-b_*G_i}}{\operatorname{Tr}e^{-b_*G_i}}
+\quad\forall i.
+}
+\tag{165.3}
+$$
+
+### 证明
+
+展开式（165.1），它是严格凸的实二次函数。求导得到式（165.2）。
+
+残差为零等价于
+
+$$
+K_i=b_*G_i+a_iI.
+$$
+
+取指数并使用 \(\operatorname{Tr}\rho_i=1\)，得到式（165.3）。反向直接成立。∎
+
+这项检验不能靠事后重定义 \(G_i\) 来通过。**若动力学生成元和温度生成元都任由我们修改，所谓相容性就失去了可证伪内容。**
+
+---
+
+## 定理 165.2　满秩裕量控制热态反演稳定性
+
+若
+
+$$
+\rho,\sigma\ge mI,
+\qquad m>0,
+$$
+
+则
+
+$$
+\boxed{
+\|\log\rho-\log\sigma\|_{\mathrm{op}}
+\le
+\frac1m\|\rho-\sigma\|_{\mathrm{op}}.
+}
+\tag{165.4}
+$$
+
+### 证明
+
+使用积分表示
+
+$$
+\log\rho-\log\sigma
+=
+\int_0^\infty
+\left[
+(\sigma+tI)^{-1}-(\rho+tI)^{-1}
+\right]dt.
+$$
+
+由预解式恒等式，被积算子范数至多为
+
+$$
+\frac{\|\rho-\sigma\|}{(m+t)^2}.
+$$
+
+积分得到结论。∎
+
+低占据概率可能使精确温度识别非常敏感。这里再次需要区分项目中的精确可识别、条件良好的识别与物理可实现识别。
+
+另外，若探针始终强耦合于环境，其边缘平衡态一般不等于裸 Hamiltonian 的 Gibbs 态。此时应先处理相互作用及有效 Hamiltonian，而不能把式（165.1）的失配立即归咎于几何。([arXiv][5])
+
+---
+
+# 166．多个钟速分支的热态平均，一般不是单一热态
+
+这一结果把本轮重新接回此前的量子结构涨落。
+
+## 定义 166.1　三能级热探针
+
+取
+
+$$
+h=\epsilon\operatorname{diag}(0,1,2),
+\qquad \epsilon>0.
+$$
+
+设结构具有若干钟速分支 \(\nu_a>0\)，权重 \(w_a>0\)，且
+
+$$
+\sum_aw_a=1.
+$$
+
+在每个分支中，探针相对于同一个共同逆温度 \(b>0\) 准备为
+
+$$
+\gamma_a
+=
+\frac{e^{-b\nu_ah}}{Z_a}.
+$$
+
+忽略分支标签后，
+
+$$
+\boxed{
+\overline\rho=\sum_aw_a\gamma_a.
+}
+\tag{166.1}
+$$
+
+该定义明确指定了一种分支条件制备。它不假定任意量子涨落都会自动产生这样的平衡混合。
+
+令
+
+$$
+x_a=e^{-b\nu_a\epsilon},
+\qquad
+A_a=\frac{w_a}{1+x_a+x_a^2}.
+$$
+
+则三能级概率为
+
+$$
+p_k=\sum_aA_ax_a^k,
+\qquad k=0,1,2.
+$$
+
+---
+
+## 定理 166.1　单一温度的正性刚性
+
+有
+
+$$
+\boxed{
+p_0p_2-p_1^2
+=
+\frac12
+\sum_{a,b}A_aA_b(x_a-x_b)^2
+\ge0.
+}
+\tag{166.2}
+$$
+
+等号成立，当且仅当所有实际占据分支的 \(\nu_a\) 相同。
+
+而任何单一温度下的 \(h\)-Gibbs 态都满足
+
+$$
+p_0p_2=p_1^2.
+$$
+
+因此，不同钟速分支的非平凡混合不能精确表示为某个单一温度的同一探针 Gibbs 态。
+
+### 证明
+
+展开：
+
+$$
+\begin{aligned}
+p_0p_2-p_1^2
+&=
+\sum_{a,b}A_aA_b(x_b^2-x_ax_b)\\
+&=
+\frac12\sum_{a,b}A_aA_b(x_a-x_b)^2.
+\end{aligned}
+$$
+
+所有权重为正，故等号要求全部 \(x_a\) 相同。由于 \(b\epsilon>0\)，这等价于全部 \(\nu_a\) 相同。
+
+单一 Gibbs 态的三个概率成等比数列，所以行列式为零。∎
+
+---
+
+## 例 166.1　一个精确可检验的热残差
+
+取两个等权分支，使
+
+$$
+x_1=\frac12,
+\qquad
+x_2=\frac14.
+$$
+
+则
+
+$$
+\boxed{
+(p_0,p_1,p_2)
+=
+\left(
+\frac23,\frac5{21},\frac2{21}
+\right),
+}
+\tag{166.3}
+$$
+
+并且
+
+$$
+\boxed{
+p_0p_2-p_1^2=\frac1{147}>0.
+}
+\tag{166.4}
+$$
+
+两个相邻跃迁给出的概率比为
+
+$$
+\frac{p_0}{p_1}=\frac{14}{5},
+\qquad
+\frac{p_1}{p_2}=\frac52,
+$$
+
+无法由同一个逆温度解释。
+
+### 定量推论
+
+对任意单一 Gibbs 概率向量 \(q\)，
+
+$$
+\boxed{
+D_{\mathrm{TV}}(p,q)
+\ge
+\frac{p_0p_2-p_1^2}{4}.
+}
+\tag{166.5}
+$$
+
+证明只需使用
+
+$$
+|\Delta(p)-\Delta(q)|
+\le4D_{\mathrm{TV}}(p,q),
+\qquad
+\Delta(q)=0.
+$$
+
+本例因此具有下界 \(1/588\)。
+
+**二能级探针通常只能给出一个概率比，容易被某个有效温度拟合；第三个等间隔能级提供了真正的内部一致性检验。**
+
+但这个残差仍不独自证明结构具有量子相干。经典随机钟速、未完成热化或未建模相互作用也可能产生失配；必须用更强协议区分。
+
+---
+
+# 167．热流应响应红移后的温度，而不是任意局部温度梯度
+
+定义
+
+$$
+\boxed{
+\Theta_i=\nu_iT_i.
+}
+\tag{167.1}
+$$
+
+这是第 163 节中在平衡时共同的量。
+
+对一个共振能量 \(\mathcal E\)，激发概率可以写成
+
+$$
+p_i=
+\frac1{1+\exp[\mathcal E/(k_B\Theta_i)]}.
+$$
+
+---
+
+## 定理 167.1　近共同平衡的热流具有正导通系数
+
+在
+
+$$
+\Theta_i=\Theta_0+\delta\Theta_i
+$$
+
+附近，单次接触的共同能量转移满足
+
+$$
+\boxed{
+Q_{i\to j}
+=
+L_{ij}
+(\delta\Theta_i-\delta\Theta_j)
++
+O(\delta\Theta^2),
+}
+\tag{167.2}
+$$
+
+其中
+
+$$
+\boxed{
+L_{ij}
+=
+\frac{\mathcal E^2\sin^2\theta}
+{k_B\Theta_0^2}
+p_0(1-p_0)>0.
+}
+\tag{167.3}
+$$
+
+### 证明
+
+对
+
+$$
+p(\Theta)=\frac1{1+e^{\mathcal E/(k_B\Theta)}}
+$$
+
+求导，得到
+
+$$
+p'(\Theta)
+=
+\frac{\mathcal E}{k_B\Theta^2}p(1-p).
+$$
+
+代入式（162.5）的一阶展开。∎
+
+这给出一个具体方向：近共同平衡时，流动由 \(\Theta_i-\Theta_j\) 驱动，而不是仅由 \(T_i-T_j\) 驱动。
+
+---
+
+## 假设 167.1　局部平衡与因果松弛扩展
+
+为了建立连续宏观方程，另外选择一维静态背景，并令
+
+$$
+\vartheta(x,t)=\nu(x)T(x,t)-\Theta_0.
+$$
+
+取正系数
+
+$$
+\mathcal C(x)>0,\qquad
+\lambda(x)>0,\qquad
+\tau(x)>0,
+$$
+
+并定义
+
+$$
+\boxed{
+\mathcal C\,\partial_t\vartheta+\partial_xJ=0,
+}
+\tag{167.4}
+$$
+
+$$
+\boxed{
+\tau\,\partial_tJ+J
+=
+-\lambda\,\partial_x\vartheta.
+}
+\tag{167.5}
+$$
+
+这里 \(\mathcal C\) 是共同参照能量对 \(\Theta\) 的局部容量系数，\(J\) 是该能量的流量。
+
+式（167.4）—（167.5）是新增的局部平衡与松弛模型，不声称已经由单次碰撞公式无条件推出。相对论热传导中，温度梯度、观察者加速度和松弛项确实需要共同处理。([APS Journals][6])
+
+---
+
+## 定理 167.2　稳定泛函与因果条件相互独立
+
+对适当无通量边界，定义
+
+$$
+\mathcal L
+=
+\frac12\int
+\left[
+\mathcal C\,\vartheta^2
++
+\frac{\tau}{\lambda}J^2
+\right]dx.
+$$
+
+则
+
+$$
+\boxed{
+\frac{d\mathcal L}{dt}
+=
+-\int\frac{J^2}{\lambda}\,dx\le0.
+}
+\tag{167.6}
+$$
+
+其局部特征速度为
+
+$$
+\boxed{
+v_{\mathrm{th}}^2
+=
+\frac{\lambda}{\mathcal C\tau}.
+}
+\tag{167.7}
+$$
+
+### 证明
+
+分别以 \(\vartheta\) 和 \(J/\lambda\) 乘两式，积分。由分部积分，交叉项抵消，得到式（167.6）。
+
+主符号矩阵为
+
+$$
+\begin{pmatrix}
+-\omega\mathcal C&k\\
+k&-\omega\tau/\lambda
+\end{pmatrix}.
+$$
+
+令行列式为零即得式（167.7）。∎
+
+若共同静态度量为
+
+$$
+ds^2=-\nu(x)^2c^2dt^2+a(x)^2dx^2,
+$$
+
+要使热扰动不超出其局部信号锥，至少需要
+
+$$
+\boxed{
+\frac{\lambda}{\mathcal C\tau}
+\le
+\frac{c^2\nu^2}{a^2}.
+}
+\tag{167.8}
+$$
+
+即
+
+$$
+\boxed{
+\tau\ge
+\frac{\lambda a^2}{\mathcal Cc^2\nu^2}.
+}
+\tag{167.9}
+$$
+
+**正导热系数和单调稳定泛函，不会自动保证共同因果性。**
+
+此外，
+
+$$
+\partial_x(\nu T)
+=
+\nu\left(
+\partial_xT+T\partial_x\log\nu
+\right).
+$$
+
+因此零流条件自然包含一个与钟速梯度相关的补偿项。把它删掉，再要求所有非均匀平衡温度都产生热流，会与第 163 节的能量交换定理冲突。
+
+---
+
+# 168．协变平衡对时间方向施加什么约束？
+
+现在进入一个明确的几何检验层。
+
+## 假设 168.1　局部热分布与无源测地输运
+
+采用前文已经重建的洛伦兹几何，暂取 \(c=k_B=1\)。
+
+令 \(u^a\) 是热浴的单位未来四速度，并定义逆温度向量
+
+$$
+\boxed{
+\mathcal B^a=\frac{u^a}{T}.
+}
+\tag{168.1}
+$$
+
+考虑无外场、无化学势梯度的稀薄分布
+
+$$
+\boxed{
+f(x,p)
+=
+\exp\!\left[\alpha+\mathcal B_a(x)p^a\right],
+}
+\tag{168.2}
+$$
+
+其中 \(\alpha\) 为常数，且采用 \((-+++)\) 符号，所以未来动量满足 \(\mathcal B_ap^a<0\)。
+
+假设碰撞项在这个局部平衡形式上消失。要成为完整传播解，还需要满足无碰撞 Liouville 方程。
+
+---
+
+## 定理 168.1　热形分布的传播条件
+
+沿测地流，
+
+$$
+\boxed{
+X_g\log f
+=
+p^ap^b\nabla_{(a}\mathcal B_{b)}.
+}
+\tag{168.3}
+$$
+
+### 证明
+
+对 \(\mathcal B_ap^a\) 求沿轨道导数。动量的协变测地导数为零，因此只剩
+
+$$
+p^ap^b\nabla_a\mathcal B_b.
+$$
+
+对称乘积 \(p^ap^b\) 消去反对称部分。∎
+
+---
+
+## 定理 168.2　有质量与无质量探针施加不同的平衡条件
+
+若式（168.3）对每点的全部允许动量都为零，则：
+
+对某个固定非零质量 \(m>0\) 的全部未来动量，
+
+$$
+\boxed{
+\nabla_{(a}\mathcal B_{b)}=0.
+}
+\tag{168.4}
+$$
+
+对全部未来无质量动量，
+
+$$
+\boxed{
+\nabla_{(a}\mathcal B_{b)}
+=
+\varphi(x)g_{ab}
+}
+\tag{168.5}
+$$
+
+其中 \(\varphi\) 为某个标量函数。
+
+### 证明
+
+记
+
+$$
+S_{ab}=\nabla_{(a}\mathcal B_{b)}.
+$$
+
+在局部正交标架中，无质量动量可写为
+
+$$
+p=E(1,n),\qquad |n|=1.
+$$
+
+条件为
+
+$$
+S_{00}+2S_{0i}n_i+S_{ij}n_in_j=0.
+$$
+
+比较 \(n\) 与 \(-n\)，得到 \(S_{0i}=0\)。继而球面上的二次型必须为常数：
+
+$$
+S_{ij}=-S_{00}\delta_{ij}.
+$$
+
+因此 \(S=\varphi g\)。
+
+对有质量动量，先取静止动量 \(p=(m,0)\)，得到 \(S_{00}=0\)。
+
+再取
+
+$$
+p=(\sqrt{m^2+r^2},rn)
+$$
+
+并比较 \(n,-n\)，得到 \(S_{0i}=0\)。最后得到 \(S_{ij}=0\)。∎
+
+式（168.4）表示 \(\mathcal B\) 为 Killing 向量；式（168.5）表示它只需为共形 Killing 向量。相对论平衡及无质量情形的这种差别已有严格动力学研究。([arXiv][7])
+
+### 对本理论的意义
+
+**只用无质量辐射检验热形传播，约束的主要是共形因果结构。加入有质量钟与物质，会施加更强的尺度和时间对称性约束。**
+
+这与前文“光锥确定共形结构，钟补足尺度”的重建方式相呼应，但两者仍是各自有假设的定理，不能仅凭相似性合并。
+
+---
+
+# 169．静态红移与膨胀冷却，不是同一个“时间吞噬”
+
+## 命题 169.1　静态共同平衡
+
+设
+
+$$
+ds^2=-\nu(x)^2dt^2+h_{ij}(x)dx^idx^j,
+$$
+
+且 \(K=\partial_t\) 为时间方向。
+
+取
+
+$$
+\mathcal B=bK,
+\qquad b>0.
+$$
+
+则
+
+$$
+u=\frac K\nu,
+$$
+
+由式（168.1）得到
+
+$$
+\boxed{
+T(x)=\frac1{b\nu(x)}.
+}
+\tag{169.1}
+$$
+
+因此
+
+$$
+\nu(x)T(x)=\frac1b.
+$$
+
+### 证明
+
+比较
+
+$$
+\frac{u}{T}=bK=b\nu u.
+$$
+
+∎
+
+同一个几何还给出沿 null 测地线守恒的参照能量
+
+$$
+E_K=-K_ap^a,
+$$
+
+而静止观察者读到
+
+$$
+E_{\mathrm{loc}}=-u_ap^a=\frac{E_K}{\nu}.
+$$
+
+于是
+
+$$
+\boxed{
+\nu_AE_A=\nu_BE_B.
+}
+\tag{169.2}
+$$
+
+这与第 162 节的有限共振条件具有同一个形式。
+
+在这里，几何传播与有限能量交换可以被要求彼此相容，而不是分别指定两套无关的“红移”。
+
+---
+
+## 命题 169.2　膨胀中的无质量热形传播
+
+考虑共形平直度量
+
+$$
+ds^2=a(\eta)^2
+\left(-d\eta^2+d\mathbf x^2\right).
+$$
+
+取
+
+$$
+\mathcal B=b\,\partial_\eta.
+$$
+
+则
+
+$$
+\mathcal L_{\mathcal B}g
+=
+2b\frac{a'}a\,g,
+$$
+
+所以 \(\mathcal B\) 为共形 Killing 向量。
+
+共动观察者
+
+$$
+u=a^{-1}\partial_\eta
+$$
+
+读取的温度为
+
+$$
+\boxed{
+T(\eta)=\frac1{ba(\eta)}.
+}
+\tag{169.3}
+$$
+
+该分布可以满足无质量测地输运的平衡形式；若 \(a'\ne0\)，同一个 \(\mathcal B\) 一般不能满足有质量物质所要求的 Killing 条件。
+
+### 证明
+
+对 \(g=a^2\eta_{\mu\nu}\) 作 Lie 导数即可得到第一式。
+
+再比较 \(u/T=b\partial_\eta\)，得到式（169.3）。其余应用定理 168.2。∎
+
+### 三项区分
+
+静态 Tolman 梯度是在共同静态平衡中，不同位置的钟速与温度相互补偿。
+
+膨胀中的无质量冷却，是分布沿动态几何输运时仍保持某种局部热形。
+
+霍金辐射还需要特定量子场态、频率分解与传播映射，不能由上述任一温度缩放式单独推出。
+
+而且，温度梯度也不自动证明曲率非零；加速观察者在平直时空中的平衡描述同样可以具有相应温度梯度。温度关系必须连同热浴四速度一起指定。([APS Journals][8])
+
+---
+
+# 170．热力学重建加入后，理论需要怎样闭合？
+
+本轮得到的主要链条为
+
+$$
+\boxed{
+\text{已标定的量子钟}
+\longrightarrow
+\text{共同时间下的能量生成元}
+\longrightarrow
+\text{可实施的共振交换}.
+}
+$$
+
+再由独立热制备得到
+
+$$
+\boxed{
+\text{零热流}
+\longrightarrow
+\text{共同的 }\beta_i/\nu_i
+\longrightarrow
+\text{跨观察者温度—时间一致性}.
+}
+$$
+
+但每一层都具有可以被反例击中的边界：
+
+$$
+\boxed{
+\text{无热流}
+\not\Rightarrow
+\text{一定已达到热平衡};
+}
+$$
+
+$$
+\boxed{
+\text{局部 Gibbs 边缘}
+\not\Rightarrow
+\text{联合态具有相同的未来热流};
+}
+$$
+
+$$
+\boxed{
+\text{各分支分别为热态}
+\not\Rightarrow
+\text{平均后仍是单一热态};
+}
+$$
+
+$$
+\boxed{
+\text{存在耗散稳定泛函}
+\not\Rightarrow
+\text{传播满足共同光锥}.
+}
+$$
+
+---
+
+## 项目中的形式化落点
+
+本次读取固定于提交
+
+```text
+930d88b42293cc84edd0ba260843c9dbc9d0810a
+```
+
+本轮可以分成以下独立证明义务：
+
+| 项目对象            | 本轮应补入的证明                          |
+| --------------- | --------------------------------- |
+| **FLOW 的物理实现**  | 交换门酉性、共振条件、共同能量守恒                 |
+| **CUT 与 carry** | 相同局部热边缘、不同后续热流的正密度矩阵见证            |
+| **ADMIT**       | 初始独立性、允许接触、局部 Gibbs 谱检验、因果松弛界     |
+| **条件良好的识别**     | 对数态算子的满秩裕量及热—钟残差                  |
+| **几何桥梁**        | 温度向量的 Killing／共形 Killing 条件及共同钟标定 |
+
+仓库的 `GibbsEquality.lean` 已给出有限经典分布中相对熵为零的判据；它不能直接被标记为本文全部量子相对熵命题的现成证明。
+
+`StrongLumpabilityDescent.lean` 可以用于检验指定随机读数是否沿接口下降，但第 164 节说明，若初始相关性没有纳入状态，温度接口一般不满足这一前提。
+
+### 本轮核验
+
+已作精确符号核验的内容包括：
+
+共振交换子的公式、交换门酉性、热输入的能量转移、相同热边缘下的相反能流、三能级混合残差，以及热传导主符号。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_thermal_clock_consistency.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/thermal_clock_consistency_checks.json)
+
+**本轮未运行 Lean 编译。**上述核验支持所列有限恒等式与算例，不替代全部分析定理的机器证明，也不证明这些模型已经唯一对应现实引力。
+
+---
+
+# 结论
+
+这轮最重要的推进，是把时间、温度和能量交换放到了同一个可检验结构中：
+
+$$
+\boxed{
+\text{一只钟怎样积累相位，}
+}
+$$
+
+$$
+\boxed{
+\text{一个探针怎样定义能级与温度，}
+}
+$$
+
+$$
+\boxed{
+\text{两处系统怎样无外部补偿地交换能量，}
+}
+$$
+
+不能分别任意指定。
+
+在静态、独立热制备和共振交换条件下，它们共同要求
+
+$$
+\boxed{
+\nu_iT_i=\text{常数}.
+}
+$$
+
+但真实量子关联又告诉我们：温度不是完整状态，平衡外观不是完整动力学，热态平均也不一定能压缩成单一几何参数。
+
+因此，当前理论的宏观对象应继续包含
+
+$$
+\boxed{
+\text{钟标定}
++
+\text{能量生成元}
++
+\text{热接触实现}
++
+\text{关联状态}
++
+\text{因果输运}
++
+\text{可认证误差}.
+}
+$$
+
+**物理时空并非由“时间本身变成热”而产生。更严格的说法是：有限量子观察者通过相位、能量交换和热统计，对同一套交互结构进行不同的读取；只有这些读取能在共同条件下相互约束、相互验证，时间与几何才成为可信的物理描述。**
+
+[1]: https://arxiv.org/html/1005.2985v5 "Thermal time and Tolman-Ehrenfest effect:“temperature as the speed of time”"
+[2]: https://arxiv.org/abs/1406.3618?utm_source=chatgpt.com "Gibbs-Preserving Maps outperform Thermal Operations in the quantum regime"
+[3]: https://arxiv.org/html/1803.04106v1?utm_source=chatgpt.com "Tolman temperature gradients in a gravitational field"
+[4]: https://www.nature.com/articles/s41467-019-10333-7?utm_source=chatgpt.com "Reversing the direction of heat flow using quantum ..."
+[5]: https://arxiv.org/html/2311.10427v2?utm_source=chatgpt.com "Structure of the Hamiltonian of mean force"
+[6]: https://link.aps.org/doi/10.1103/PhysRevD.105.L081501?utm_source=chatgpt.com "Local temperature in general relativity | Phys. Rev. D"
+[7]: https://arxiv.org/abs/1606.06605?utm_source=chatgpt.com "four-temperature, Killing vectors and Lie derivatives"
+[8]: https://link.aps.org/doi/10.1103/PhysRevD.98.064001?utm_source=chatgpt.com "Tolman-like temperature gradients in stationary spacetimes"
+# 热平衡的组合闭合、静止能量与量子质量一致性
+
+## ——量子观察者—关系时空理论第一百七十一至第一百八十节增订
+
+### 摘要
+
+上一轮建立了钟速、能量交换与局部温度之间的关系，但其中仍有两个不同的缺口：
+
+$$
+\boxed{
+\text{为什么选择 Gibbs 态作为平衡态，而不是其他稳定分布？}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{即使钟频率与热统计已经确定，是否已经确定了观察者的质量与引力响应？}
+}
+$$
+
+本增订分别处理这两个问题。
+
+第一部分从有限量子系统的可提取功出发，证明：**对任意有限份独立制备都保持不可提取功，是比单份稳定更强的要求；在明确的操作类中，它迫使满秩平衡态具有 Gibbs 形式。**
+
+第二部分证明：**内部钟和归一化热态都不能识别 Hamiltonian 的加性标量，但这个被内部接口忽略的部分，在路径比较、位置耦合和质量响应中可能重新变得可见。**
+
+最后，构造一个具有内部量子质量的弱场运动模型，说明惯性质量与引力质量的相等必须是同一个完整动力学中的算子关系，不能通过分别平均两个质量读数来替代。
+
+完全被动性与 Gibbs 平衡的关系，以及内部能量算子在量子等效原理中的作用，均有既有理论基础。下面给出当前模型中的定义、证明及其与项目接口结构的连接，不将这些一般结论宣称为本会话首次发现。([APS Journals][1])
+
+---
+
+# 171．平衡首先应当通过可实施的能量实验定义
+
+## 假设 171.1　有限系统与循环控制
+
+取有限维 Hilbert 空间 \(\mathcal H\)，Hamiltonian 为
+
+$$
+H=H^\dagger,
+$$
+
+状态为
+
+$$
+\rho>0,\qquad \operatorname{Tr}\rho=1.
+$$
+
+本节先采用一个明确的理想化操作类：允许通过循环控制实现任意酉操作 \(U\)，控制开始与结束时，系统 Hamiltonian 都为同一个 \(H\)。
+
+定义从系统中提取的平均功：
+
+$$
+\boxed{
+W_H(\rho,U)
+=
+\operatorname{Tr}(H\rho)
+-
+\operatorname{Tr}(HU\rho U^\dagger).
+}
+\tag{171.1}
+$$
+
+**循环的是控制设定，不要求资源状态 \(\rho\) 在提取后恢复原样。**
+
+如果把系统、控制器、电池和全部记录都要求恢复初态，那么净输出能量当然不能凭空出现。式（171.1）讨论的是系统能量怎样转移给工作装置，而不是一个无源循环。
+
+实际观察者未必能够实现全部酉操作。若操作受局域性、对称性或控制资源限制，则必须改用相应的受限被动性；不同操作类可以产生不同的平衡判据。([arXiv][2])
+
+---
+
+## 定义 171.1　被动态与完全被动态
+
+若对全部允许酉操作，
+
+$$
+W_H(\rho,U)\le0,
+$$
+
+则称 \(\rho\) 对 \(H\) 被动。
+
+对 \(N\) 份独立制备，令
+
+$$
+H^{(N)}
+=
+\sum_{j=1}^N
+I^{\otimes(j-1)}\otimes H\otimes I^{\otimes(N-j)}.
+$$
+
+若对每个有限 \(N\)，\(\rho^{\otimes N}\) 都相对于 \(H^{(N)}\) 被动，则称 \(\rho\) 完全被动。
+
+这里的量词是：
+
+$$
+\boxed{\forall N\in\mathbb N,\quad N<\infty,}
+$$
+
+不是要求某个观察者实际控制一个无限系统。
+
+---
+
+## 定理 171.1　单份被动性的谱判据
+
+\(\rho\) 被动，当且仅当：
+
+$$
+[H,\rho]=0,
+$$
+
+并且可以在共同本征基中排列为
+
+$$
+E_1\le E_2\le\cdots\le E_d,
+$$
+
+$$
+p_1\ge p_2\ge\cdots\ge p_d,
+$$
+
+其中
+
+$$
+H=\sum_iE_i|i\rangle\langle i|,
+\qquad
+\rho=\sum_ip_i|i\rangle\langle i|.
+$$
+
+### 证明
+
+若 \(\rho\) 被动，则 \(U=I\) 是能量函数的极小点。对任意 Hermitian \(A\)，考虑 \(U(t)=e^{-itA}\)，在 \(t=0\) 求导，得到
+
+$$
+\operatorname{Tr}\bigl(A[H,\rho]\bigr)=0.
+$$
+
+因此 \([H,\rho]=0\)。
+
+若存在 \(E_i<E_j\) 但 \(p_i<p_j\)，交换两个本征态会降低平均能量，违反被动性。
+
+反之，对任意酉 \(U\)，输出能量基概率为
+
+$$
+q_i=\sum_j|U_{ij}|^2p_j.
+$$
+
+矩阵 \((|U_{ij}|^2)\) 双随机，因此
+
+$$
+\sum_{i=1}^kq_i\le\sum_{i=1}^kp_i.
+$$
+
+分部求和得到
+
+$$
+\sum_iE_i(q_i-p_i)
+=
+\sum_{k=1}^{d-1}
+(E_{k+1}-E_k)
+\sum_{i=1}^k(p_i-q_i)
+\ge0.
+$$
+
+故不能降低能量。∎
+
+**单份被动性只要求概率按能量单调排列，还没有要求指数型 Gibbs 比例。**
+
+---
+
+# 172．有限份组合稳定性如何迫使 Gibbs 形式？
+
+## 定理 172.1　满秩完全被动态的有限维刻画
+
+设 \(H\) 非标量，且 \(\rho>0\)。则
+
+$$
+\boxed{
+\rho\text{ 完全被动}
+\iff
+\rho=\frac{e^{-\beta H}}{\operatorname{Tr}e^{-\beta H}}
+\quad\text{对某个 }\beta\ge0.
+}
+\tag{172.1}
+$$
+
+\(\beta=0\) 对应最大混合态。有限正温度对应 \(\beta>0\)。
+
+这是完全被动性的标准刻画；以下给出一个适合有限维形式化的证明。([arXiv][3])
+
+### 证明
+
+由定理 171.1，可以在共同本征基中写
+
+$$
+H=\operatorname{diag}(E_1,\ldots,E_d),
+\qquad
+\rho=\operatorname{diag}(p_1,\ldots,p_d),
+$$
+
+并令
+
+$$
+s_i=-\log p_i.
+$$
+
+由于 \(\rho>0\)，全部 \(s_i\) 有限。
+
+考虑任意整数向量
+
+$$
+z\in\mathbb Z^d,\qquad \sum_i z_i=0.
+$$
+
+其正、负部分满足
+
+$$
+\sum_i z_i^+=\sum_i z_i^-=N.
+$$
+
+它们因此分别描述两个 \(N\) 份系统的积基态：一个含 \(z_i^+\) 份能级 \(i\)，另一个含 \(z_i^-\) 份。
+
+两态的能量差为
+
+$$
+E\cdot z,
+$$
+
+概率对数差为
+
+$$
+-s\cdot z.
+$$
+
+若
+
+$$
+E\cdot z>0,
+\qquad
+s\cdot z<0,
+$$
+
+则较高能量的积态反而具有较大概率。交换这两个积态可以提取正功，与完全被动性矛盾。
+
+故对全部上述整数向量：
+
+$$
+E\cdot z>0\Longrightarrow s\cdot z\ge0.
+\tag{172.2}
+$$
+
+令
+
+$$
+V=\left\{x\in\mathbb R^d:\sum_ix_i=0\right\}.
+$$
+
+由有理向量在 \(V\) 中稠密，若某个实向量违反式（172.2），就可以保持两个严格不等式作有理逼近，再乘公共分母得到整数反例。因此：
+
+$$
+E\cdot x>0\Longrightarrow s\cdot x\ge0
+\qquad(x\in V).
+$$
+
+选择 \(u\in V\) 使 \(E\cdot u>0\)。对任意满足 \(E\cdot w=0\) 的 \(w\in V\)，有
+
+$$
+E\cdot(u+tw)>0
+\qquad\forall t\in\mathbb R.
+$$
+
+所以
+
+$$
+s\cdot(u+tw)\ge0
+\qquad\forall t.
+$$
+
+这迫使 \(s\cdot w=0\)。因此 \(s\) 在 \(V\) 上与 \(E\) 成比例：
+
+$$
+s|_V=\beta E|_V,
+\qquad \beta\ge0.
+$$
+
+于是存在常数 \(a\)，使
+
+$$
+s_i=\beta E_i+a.
+$$
+
+从而
+
+$$
+p_i=e^{-a}e^{-\beta E_i},
+$$
+
+归一化后得到 Gibbs 形式。
+
+反向，若 \(\rho=e^{-\beta H}/Z\)，则任意有限份满足
+
+$$
+\rho^{\otimes N}
+=
+\frac{e^{-\beta H^{(N)}}}{Z^N}.
+$$
+
+概率随总能量单调不增，由定理 171.1，它对全部联合酉操作被动。∎
+
+### 结论
+
+Gibbs 形式可以从以下更深一层要求中推出：
+
+$$
+\boxed{
+\text{不仅单个观察者不能提取功，}
+\quad
+\text{任意有限份协作也不能把隐藏的不平衡激活。}
+}
+$$
+
+但这一结论依赖所允许的联合控制类。它不是“只要某个实验没提取出功，就已经证明状态为 Gibbs 态”。
+
+---
+
+# 173．一个有限反例：单份稳定，联合后却能提取功
+
+## 定义 173.1　三能级资源
+
+取
+
+$$
+H=\epsilon\operatorname{diag}(0,2,3),
+\qquad
+\rho=\operatorname{diag}\left(\frac12,\frac25,\frac1{10}\right),
+\qquad \epsilon>0.
+$$
+
+该态的概率随能量下降，因此单份被动。
+
+但两份系统中：
+
+$$
+|1,1\rangle:
+\quad
+E=4\epsilon,\qquad p=\frac4{25},
+$$
+
+$$
+|0,2\rangle:
+\quad
+E=3\epsilon,\qquad p=\frac1{20}.
+$$
+
+---
+
+## 定理 173.1　两份激活的精确功值
+
+交换 \(|1,1\rangle\) 与 \(|0,2\rangle\)，其余基态保持不变，可以提取
+
+$$
+\boxed{
+W=\frac{11}{100}\epsilon>0.
+}
+\tag{173.1}
+$$
+
+### 证明
+
+交换的能量差为 \(\epsilon\)，高能态与低能态概率之差为
+
+$$
+\frac4{25}-\frac1{20}=\frac{11}{100}.
+$$
+
+因此平均能量降低式（173.1）。∎
+
+单份能量为
+
+$$
+\frac{11}{10}\epsilon.
+$$
+
+两份初始能量为 \(11\epsilon/5\)，交换后为 \(209\epsilon/100\)。
+
+**单份没有可提取功，不是一个在任意系统组合下自动保持的性质。**
+
+---
+
+## 有限能量账本
+
+这一例子还可以放入一个明确的三能级能量寄存器 \(B\)：
+
+$$
+H_B=\epsilon\operatorname{diag}(0,1,2),
+$$
+
+初始状态为 \(|1\rangle_B\)。
+
+在总空间中实施以下两个互不相交的交换：
+
+$$
+|1,1;1\rangle\longleftrightarrow|0,2;2\rangle,
+$$
+
+$$
+|0,2;1\rangle\longleftrightarrow|1,1;0\rangle.
+$$
+
+每一对两侧的总能量相同，故该 \(27\) 维置换酉严格保持总能量。
+
+末态能量寄存器概率为
+
+$$
+\boxed{
+\left(\frac1{20},\frac{79}{100},\frac4{25}\right),
+}
+\tag{173.2}
+$$
+
+其平均能量增加 \(11\epsilon/100\)。
+
+这里没有能量凭空产生；源态发生了改变，寄存器也变得混合并与源相关。**该寄存器的平均能量增量不能未经额外分析全部称为可无损利用的确定性功。**
+
+这一区别正适合项目的闭合要求：源、控制、工作记录和恢复成本不能只保留其中一部分。
+
+---
+
+# 174．共同温度—时间关系也可以从组合被动性推出
+
+## 假设 174.1　独立观察者与共同能量
+
+有有限个观察者探针，其局部 Hamiltonian 为非标量 \(h_i\)，钟速为
+
+$$
+d\tau_i=\nu_i\,dt,
+\qquad \nu_i>0.
+$$
+
+共同参照能量为
+
+$$
+H_0=\sum_i\nu_i h_i.
+$$
+
+各探针独立制备：
+
+$$
+\rho_{\mathrm{tot}}=\bigotimes_i\rho_i,
+\qquad \rho_i>0.
+$$
+
+---
+
+## 定理 174.1　整体完全被动性确定共同逆温度
+
+若 \(\rho_{\mathrm{tot}}\) 相对于 \(H_0\) 完全被动，则存在同一个 \(\beta\ge0\)，使
+
+$$
+\boxed{
+\rho_i
+=
+\frac{e^{-\beta\nu_i h_i}}
+{\operatorname{Tr}e^{-\beta\nu_i h_i}}
+\qquad\forall i.
+}
+\tag{174.1}
+$$
+
+反向亦成立。
+
+### 证明
+
+由定理 172.1，
+
+$$
+\rho_{\mathrm{tot}}
+=
+\frac{e^{-\beta H_0}}{\operatorname{Tr}e^{-\beta H_0}}.
+$$
+
+不同节点算子可交换，因此指数与配分函数都分解。对其余节点取偏迹，得到式（174.1）。
+
+反向，式（174.1）的乘积是 \(H_0\) 的 Gibbs 态，由定理 172.1 完全被动。∎
+
+若把局部逆温度记为
+
+$$
+\beta_i=\frac1{k_BT_i},
+$$
+
+则有限正温度下
+
+$$
+\beta_i=\beta\nu_i,
+$$
+
+即
+
+$$
+\boxed{
+\nu_iT_i=\frac1{k_B\beta}.
+}
+\tag{174.2}
+$$
+
+### 与上一轮的区别
+
+上一轮先给定局部 Gibbs 制备，再通过共振热交换推导零热流条件。
+
+本轮使用更强的组合条件，同时约束：
+
+$$
+\boxed{
+\text{平衡态为何为 Gibbs 形式}
++
+\text{各处温度为何使用同一个红移标定}.
+}
+$$
+
+如果总 Hamiltonian 还含有相互作用 \(V\)，则整体平衡态一般是
+
+$$
+\frac{e^{-\beta(H_0+V)}}{Z},
+$$
+
+而不再是上述局部乘积。不能保留相互作用，却继续无条件使用乘积热态定理。
+
+---
+
+# 175．内部钟和热统计看不见完整的静止能量
+
+现在进入通向质量与引力的关键缺口。
+
+## 定义 175.1　具有不同静止基准能量的模型
+
+固定一个非平凡内部 Hamiltonian \(h\)，定义
+
+$$
+\boxed{
+H_e=eI+h,
+}
+\tag{175.1}
+$$
+
+其中 \(e\) 为实数，取值范围使 \(H_e>0\)。
+
+对已经标定的单条历史，设其固有时间为 \(\tau\)。
+
+---
+
+## 定理 175.1　内部接口不能识别 \(e\)
+
+对任意 \(e,e'\)，以下内部读数完全相同。
+
+量子态演化：
+
+$$
+\boxed{
+e^{-iH_e\tau/\hbar}\rho e^{iH_e\tau/\hbar}
+=
+e^{-ih\tau/\hbar}\rho e^{ih\tau/\hbar}.
+}
+\tag{175.2}
+$$
+
+归一化 Gibbs 态：
+
+$$
+\boxed{
+\frac{e^{-\beta H_e}}{\operatorname{Tr}e^{-\beta H_e}}
+=
+\frac{e^{-\beta h}}{\operatorname{Tr}e^{-\beta h}}.
+}
+\tag{175.3}
+$$
+
+循环控制的可提取功：
+
+$$
+\boxed{
+W_{H_e}(\rho,U)=W_h(\rho,U).
+}
+\tag{175.4}
+$$
+
+### 证明
+
+式（175.2）中的 \(e\) 仅产生相消的整体相位。
+
+式（175.3）中的 \(e^{-\beta e}\) 在分子、分母中相消。
+
+式（175.4）中，标量项贡献
+
+$$
+e\operatorname{Tr}\rho-e\operatorname{Tr}(U\rho U^\dagger)=0.
+$$
+
+∎
+
+### 结论
+
+即使一个观察者精确知道：
+
+$$
+\text{全部内部能级差},
+$$
+
+$$
+\text{全部内部相位演化},
+$$
+
+$$
+\text{全部归一化热态},
+$$
+
+也没有因此唯一确定 \(e\)。
+
+所以：
+
+$$
+\boxed{
+\text{内部时间与热力学完全已知}
+\not\Rightarrow
+\text{完整静止能量已经已知}.
+}
+$$
+
+如果质量与完整静止能量有关，这就是必须补足的观察接口，而不是可以用命名忽略的常数。
+
+---
+
+# 176．在内部看不见的标量，可以成为路径间的相对相位
+
+## 假设 176.1　已实现的双路径控制
+
+取两个路径或配置分支 \(L,R\)，其固有时间分别为
+
+$$
+\tau_L,\qquad\tau_R.
+$$
+
+实际联合操作为
+
+$$
+U_e
+=
+|L\rangle\langle L|\otimes e^{-iH_e\tau_L/\hbar}
++
+|R\rangle\langle R|\otimes e^{-iH_e\tau_R/\hbar}.
+\tag{176.1}
+$$
+
+这是一项具体的物理实现假设，不能仅从一个“不计整体相位”的黑箱通道自动构造出来。相干控制对实现信息的依赖，是量子控制理论中的已知限制。([arXiv][4])
+
+---
+
+## 定理 176.1　静止基准能量的关系可见性
+
+初始路径为 \(|+\rangle\)，内部态为 \(\rho\)。定义
+
+$$
+\Delta\tau=\tau_L-\tau_R.
+$$
+
+路径干涉系数为
+
+$$
+\boxed{
+\gamma_e
+=
+e^{-ie\Delta\tau/\hbar}
+\operatorname{Tr}\!\left(
+\rho e^{-ih\Delta\tau/\hbar}
+\right).
+}
+\tag{176.2}
+$$
+
+因此，不同 \(e\) 一般可以由路径干涉区分。
+
+### 证明
+
+计算两个条件演化的相对酉算子：
+
+$$
+e^{iH_e\tau_R/\hbar}e^{-iH_e\tau_L/\hbar}
+=
+e^{-ie\Delta\tau/\hbar}
+e^{-ih\Delta\tau/\hbar}.
+$$
+
+再对内部态取期望即可。∎
+
+---
+
+## 例 176.1　相同内部接口，正交的路径输出
+
+取
+
+$$
+h=\epsilon|1\rangle\langle1|,
+$$
+
+内部初态为 \(|0\rangle\)，并比较
+
+$$
+e_1=\epsilon,\qquad e_2=2\epsilon.
+$$
+
+选择
+
+$$
+\Delta\tau=\frac{\pi\hbar}{\epsilon}.
+$$
+
+则
+
+$$
+\gamma_{e_1}=-1,
+\qquad
+\gamma_{e_2}=1.
+$$
+
+两个路径输出为正交的 \(|-\rangle\) 与 \(|+\rangle\)。
+
+因此，若 CUT 只保存第 175 节的内部通道与热态，它无法决定这个后续路径实验。
+
+这是一个明确的目标残差：
+
+$$
+\boxed{
+q_{\mathrm{internal}}(e_1)=q_{\mathrm{internal}}(e_2),
+\qquad
+T_{\mathrm{path}}(e_1)\ne T_{\mathrm{path}}(e_2).
+}
+\tag{176.3}
+$$
+
+项目的 `exact_descent_has_no_carry` 因而禁止我们在没有补充实现信息时，宣称路径目标已经沿内部接口下降。
+
+### 为什么这不是“绝对整体相位可观测”？
+
+若给**完整联合 Hamiltonian**加上同一个常数 \(aI\)，它仍不可观测。
+
+这里改变的是
+
+$$
+e\bigl(
+\nu_L|L\rangle\langle L|
++
+\nu_R|R\rangle\langle R|
+\bigr)\otimes I,
+$$
+
+当两路径钟速不同，它不是整个联合系统的标量。
+
+另外，若只是把内部能量零点改为 \(h\mapsto h+aI\)，就必须同时令 \(e\mapsto e-a\)，保持完整 \(H_e\) 不变。**真正可检验的是完整耦合，不是任意选择的能量零点。**
+
+---
+
+# 177．共同钟标定如何约束引力响应与相互作用能量？
+
+## 假设 177.1　完整静止能量的共同耦合
+
+令
+
+$$
+H_{\mathrm{rest}}=eI+h>0.
+$$
+
+设已标定钟速为正函数 \(\nu(x)\)，并选择位置相关能量
+
+$$
+\boxed{
+H_{\mathrm{int}}(x)=\nu(x)H_{\mathrm{rest}}.
+}
+\tag{177.1}
+$$
+
+注意：这是比“内部能级差被红移”更强的条件，因为它还规定了标量静止部分怎样耦合。
+
+## 定理 177.1　位置耦合的力算子
+
+与位置参数共轭的力为
+
+$$
+\boxed{
+\widehat F_x
+=
+-\partial_xH_{\mathrm{int}}(x)
+=
+-\nu'(x)H_{\mathrm{rest}}.
+}
+\tag{177.2}
+$$
+
+若采用弱场标定
+
+$$
+\nu(x)=1+\frac{\Phi(x)}{c^2},
+$$
+
+则
+
+$$
+\boxed{
+\widehat F_x
+=
+-\widehat M_g\,\Phi'(x),
+\qquad
+\widehat M_g=\frac{H_{\mathrm{rest}}}{c^2}.
+}
+\tag{177.3}
+$$
+
+### 证明
+
+对式（177.1）求导。若把 \(x\) 提升为位置算子 \(X\)，并引入正则动量 \(P\)，同一结果由 \(\dot P=(i/\hbar)[H,P]\) 得到。∎
+
+这里得到的是当前耦合模型中的**被动引力响应质量**。它尚未证明惯性质量必然相等，也没有证明该系统产生的引力场满足 Einstein 方程。
+
+内部能量、惯性和引力响应必须在算子层面比较，而非只比较几个经典数值。([Nature][5])
+
+---
+
+## 定理 177.2　复合观察者的统一钟律迫使相互作用能量共同缩放
+
+设参考条件下复合系统的 Hamiltonian 为
+
+$$
+H_1=H_A+H_B+V,
+$$
+
+其中 \(V\) 非标量。
+
+考虑候选耦合
+
+$$
+H_\nu
+=
+\nu(H_A+H_B)+f(\nu)V+a(\nu)I.
+$$
+
+若对全部复合系统初态，\(H_\nu\) 的动力学都只是 \(H_1\) 的统一时间缩放，则
+
+$$
+\boxed{f(\nu)=\nu.}
+\tag{177.4}
+$$
+
+### 证明
+
+对全部密度矩阵具有相同共轭演化，要求生成元之差为标量：
+
+$$
+H_\nu-\nu H_1=bI.
+$$
+
+所以
+
+$$
+[f(\nu)-\nu]V+[a(\nu)-b]I=0.
+$$
+
+由于 \(V\) 非标量，只能有 \(f(\nu)=\nu\)。∎
+
+这说明：如果一个绑定系统整体也被允许作为观察者或钟，那么“只让各部分自由能量红移，却让绑定能量不红移”一般不相容。
+
+但结论仍然依赖“复合系统也满足统一钟律”的全称条件。不能只验证某一个跃迁后，就认为全部相互作用都已被证明普适。
+
+---
+
+# 178．平衡热统计、力响应与可识别性由同一个能谱约束
+
+## 定义 178.1　共同逆温度下的平衡族
+
+固定 \(\beta>0\)，令
+
+$$
+\rho_\nu
+=
+\frac{e^{-\beta\nu H_{\mathrm{rest}}}}
+{Z(\nu)},
+$$
+
+并定义自由能
+
+$$
+\boxed{
+\mathcal F(\nu)
+=
+-\frac1\beta\log Z(\nu).
+}
+\tag{178.1}
+$$
+
+这里 \(\nu\) 是跨不同已平衡制备条件比较的参数。
+
+---
+
+## 定理 178.1　自由能—涨落恒等式
+
+有
+
+$$
+\boxed{
+\mathcal F'(\nu)
+=
+\langle H_{\mathrm{rest}}\rangle_\nu,
+}
+\tag{178.2}
+$$
+
+$$
+\boxed{
+\mathcal F''(\nu)
+=
+-\beta\operatorname{Var}_{\rho_\nu}(H_{\mathrm{rest}})
+\le0.
+}
+\tag{178.3}
+$$
+
+因此，平衡平均力为
+
+$$
+\boxed{
+\overline F_x
+=
+-\nu'(x)\langle H_{\mathrm{rest}}\rangle_\nu.
+}
+\tag{178.4}
+$$
+
+### 证明
+
+在 \(H_{\mathrm{rest}}\) 的本征基中，
+
+$$
+Z'(\nu)
+=
+-\beta Z(\nu)\langle H_{\mathrm{rest}}\rangle_\nu.
+$$
+
+对 \(\log Z\) 求导得到式（178.2）。
+
+再对平均能量求导，得到负的 \(\beta\) 倍方差，故式（178.3）成立。式（178.4）由力算子取期望得到。∎
+
+若 \(\nu=\nu(x)\)，则
+
+$$
+\boxed{
+\frac{d^2\mathcal F}{dx^2}
+=
+\langle H_{\mathrm{rest}}\rangle_\nu\,\nu''
+-
+\beta\operatorname{Var}(H_{\mathrm{rest}})(\nu')^2.
+}
+\tag{178.5}
+$$
+
+因此，局部力响应同时依赖平均能量与能量涨落，不能仅由一个“温度值”决定。
+
+---
+
+## 定理 178.2　热态参数信息与力响应的联系
+
+关于参数 \(\nu\)，该 Gibbs 族的量子 Fisher 信息为
+
+$$
+\boxed{
+J_\nu
+=
+\beta^2\operatorname{Var}_{\rho_\nu}(H_{\mathrm{rest}})
+=
+-\beta\mathcal F''(\nu).
+}
+\tag{178.6}
+$$
+
+### 证明
+
+全部 \(\rho_\nu\) 在同一能量基底中对角。其概率满足
+
+$$
+\partial_\nu\log p_i
+=
+-\beta(E_i-\langle E\rangle_\nu).
+$$
+
+因此经典 Fisher 信息为 \(\beta^2\operatorname{Var}(E)\)。能量测量达到该可交换态族的量子 Fisher 信息。∎
+
+这种 Gibbs 参数估计与 Hamiltonian 不确定性的联系，是量子热计量中的标准结构。这里因为参数只缩放同一个 Hamiltonian，结果恰好化为普通方差；非交换参数模型需要更一般的公式。([APS Journals][6])
+
+### 两个不同的“时间信息”
+
+尽管 \(J_\nu\) 可以非零，固定 \(\nu\) 后，
+
+$$
+e^{-it\nu H_{\mathrm{rest}}/\hbar}
+\rho_\nu
+e^{it\nu H_{\mathrm{rest}}/\hbar}
+=
+\rho_\nu.
+$$
+
+所以该孤立 Gibbs 态本身不通过状态变化记录经过了多少时间。
+
+$$
+\boxed{
+\text{不同平衡制备能区分钟速参数}
+\ne
+\text{同一个平衡态本身会持续走时}.
+}
+$$
+
+实际钟还需要相干、非平衡准备或与其他系统的关系读数。时间相位资源与工作资源不能被当成同一个量。([APS Journals][7])
+
+此外，式（178.4）是平衡或准静态的平均力。若结构尚未来得及重新平衡，不能直接把 \(\mathcal F\) 当成完整动力 Hamiltonian；记忆、耗散及热交换仍须保留。
+
+---
+
+# 179．惯性与引力相等，必须在同一个量子运动方程中成立
+
+## 假设 179.1　具有内部质量算子的弱场运动
+
+内部空间有限维，位置空间取 \(L^2(\mathbb R)\)。
+
+给定两正定内部算子
+
+$$
+M_I>0,\qquad M_G>0,
+$$
+
+分别表示惯性质量和引力响应质量。再给定内部静止能量 \(E_R\)。
+
+本节先要求它们两两可交换。
+
+选择有效 Hamiltonian
+
+$$
+\boxed{
+H
+=
+E_R+\frac{P^2}{2M_I}+M_G\Phi(X).
+}
+\tag{179.1}
+$$
+
+取光滑、有界的弱势 \(\Phi\)，并在相应共同算子核心上计算。该模型是明确的非相对论弱场实现，不作为完整引力理论。
+
+---
+
+## 定理 179.1　加速度的算子形式
+
+有
+
+$$
+\boxed{
+\dot X=M_I^{-1}P,
+}
+\tag{179.2}
+$$
+
+$$
+\boxed{
+\dot P=-M_G\Phi'(X),
+}
+\tag{179.3}
+$$
+
+从而
+
+$$
+\boxed{
+\ddot X=-M_I^{-1}M_G\Phi'(X).
+}
+\tag{179.4}
+$$
+
+### 证明
+
+使用 \([X,P]=i\hbar I\)，并注意所有内部算子与 \(X,P\) 可交换。
+
+两两可交换假设还给出 \([M_I,H]=0\)，因此对式（179.2）求时间导数得到式（179.4）。∎
+
+---
+
+## 定理 179.2　普适加速度对内部质量的判据
+
+若 \(\Phi'\) 不恒为零，则对全部允许内部态与位置测试态具有
+
+$$
+\langle\ddot X\rangle=-\langle\Phi'(X)\rangle
+$$
+
+的充要条件是
+
+$$
+\boxed{M_G=M_I.}
+\tag{179.5}
+$$
+
+### 证明
+
+充分性直接来自式（179.4）。
+
+反之，选择一个使 \(\langle\Phi'(X)\rangle\ne0\) 的位置测试态。对任意内部态 \(\sigma\)，要求
+
+$$
+\operatorname{Tr}(\sigma M_I^{-1}M_G)=1.
+$$
+
+这对全部 \(\sigma\) 成立，只能有
+
+$$
+M_I^{-1}M_G=I.
+$$
+
+∎
+
+这只是加速度算子形式的普适性，不意味着任意不同质量量子态都具有相同的完整位置分布。量子扩散、初态、路径干涉和相位仍可能依赖质量。([arXiv][8])
+
+---
+
+## 一条充分的能量—质量连接
+
+如果已经独立建立：
+
+$$
+M=\frac{H_{\mathrm{rest}}}{c^2},
+$$
+
+并采用相对论正能量关系
+
+$$
+H_{\mathrm{rel}}(P)
+=
+\sqrt{c^2P^2+c^4M^2},
+$$
+
+那么在有限动量窗口 \(|P|\ll m_{\min}c\) 中，
+
+$$
+H_{\mathrm{rel}}
+=
+Mc^2+\frac{P^2}{2M}
++
+O\!\left(\frac{P^4}{m_{\min}^3c^2}\right).
+$$
+
+再结合第 177 节对完整静止能量的弱场耦合，就在领先阶得到
+
+$$
+M_I=M_G=M.
+$$
+
+**这里需要两个物理桥梁同时成立：相对论惯性关系，以及完整静止能量的普适位置耦合。**
+
+热平衡定理本身没有替我们证明它们。量子等效原理正是要求比较这些内部能量算子，而不是仅比较其平均值。([arXiv][9])
+
+---
+
+## 定理 179.3　分别平均质量与逆质量可以制造虚假的等效原理失配
+
+即使完整模型严格满足
+
+$$
+M_I=M_G=M,
+$$
+
+若把有效 Hamiltonian 错误地替换为
+
+$$
+H_{\mathrm{naive}}
+=
+\text{常数}
++\frac12\langle M^{-1}\rangle P^2
++\langle M\rangle\Phi(X),
+$$
+
+它会预测
+
+$$
+\ddot X_{\mathrm{naive}}
+=
+-\langle M^{-1}\rangle\langle M\rangle\Phi'(X).
+$$
+
+而完整模型给出
+
+$$
+\boxed{\ddot X=-\Phi'(X).}
+\tag{179.6}
+$$
+
+对等权混合的两个质量 \(m,2m\)，
+
+$$
+\boxed{
+\langle M^{-1}\rangle\langle M\rangle=\frac98.
+}
+\tag{179.7}
+$$
+
+### 证明
+
+完整模型中是算子乘积
+
+$$
+M^{-1}M=I,
+$$
+
+而不是两个独立平均值的乘积。
+
+等权混合时，
+
+$$
+\langle M\rangle=\frac32m,
+\qquad
+\langle M^{-1}\rangle=\frac3{4m},
+$$
+
+相乘得到 \(9/8\)。∎
+
+### 解释
+
+引力作用会建立质量与动量之间的关联。真实速度读取
+
+$$
+\langle M^{-1}P\rangle,
+$$
+
+不能始终用
+
+$$
+\langle M^{-1}\rangle\langle P\rangle
+$$
+
+替代。
+
+因此，一个粗粒化模型显示“质量不同导致不同加速度”，不一定意味着底层理论违反等效原理；也可能只是它删除了动力学必需的关联。
+
+这与本会话反复出现的同一问题一致：
+
+$$
+\boxed{
+\text{先平均，再计算动力学}
+\quad\text{不一定等于}\quad
+\text{先计算动力学，再读取平均}.
+}
+$$
+
+---
+
+# 180．本轮建立的闭合链与形式化边界
+
+本轮把上一轮的热—钟相容性推进成三条可以分别检查的链。
+
+## 第一条：平衡态的组合闭合
+
+$$
+\boxed{
+\text{循环功的操作定义}
+\longrightarrow
+\text{单份被动性}
+\longrightarrow
+\text{任意有限份的完全被动性}
+\longrightarrow
+\text{Gibbs 形式}.
+}
+$$
+
+这使 Gibbs 态不再仅作为一个方便选择的分布进入理论，但代价是必须明确操作类和多份独立制备条件。
+
+## 第二条：从内部时间到完整静止能量
+
+$$
+\boxed{
+\text{内部钟与热接口}
+\longrightarrow
+H_{\mathrm{rest}}\bmod\mathbb RI,
+}
+$$
+
+而不是自动得到完整 \(H_{\mathrm{rest}}\)。
+
+路径比较与位置耦合可以进一步读取该接口遗漏的部分：
+
+$$
+\boxed{
+\text{相干路径实现}
++
+\text{共同钟标定}
+\longrightarrow
+\text{相对静止相位与力响应}.
+}
+$$
+
+## 第三条：从能量到普适运动
+
+$$
+\boxed{
+\text{同一个静止能量算子}
++
+\text{相对论惯性关系}
++
+\text{普适弱场耦合}
+\longrightarrow
+M_I=M_G.
+}
+$$
+
+它不是从温度一个量直接推出来的，也不能由分别拟合两个平均质量来替代。
+
+---
+
+## 与项目的具体对应
+
+本轮按提交
+
+```text
+37bc70552f22891fea4c4d9d2edbae4dbc86fe68
+```
+
+核对了相关结构。
+
+`GibbsEquality.lean` 提供有限经典相对熵等号条件；它可以支撑已对角化概率层的部分证明，但不能直接宣称已经覆盖本文的完全被动性和量子质量命题。
+
+`ExactDescentNoCarry.lean` 则直接对应第 176 节：内部接口合并了两个静止能量模型，但扩大后的路径实验重新区分它们。因此，必须补充接口，而不是声称原来的下降证明仍然成立。
+
+| 项目角色         | 本轮的明确对象                              |
+| ------------ | ------------------------------------ |
+| **CUT**      | 内部钟通道、归一化热态、循环功、路径相位、受力读数            |
+| **FLOW**     | 单份与多份循环控制、具体路径控制、内部—运动联合演化           |
+| **ADMIT**    | 满秩、允许操作类、能量账本、共振、弱场与动量窗口             |
+| **ANCHOR**   | 实际功记录、能级标定、路径相位和加速度实验                |
+| **Residual** | 单份被动性遗漏的组合资源；内部接口遗漏的静止能量；平均质量遗漏的动力关联 |
+
+### 本轮核验
+
+已作精确符号核验的内容包括：
+
+三能级单份被动例子；两份系统的 \(11\epsilon/100\) 能量降低；\(27\) 维能量守恒实现；不同静止能量的正交路径输出；自由能的一阶、二阶导数；平衡参数 Fisher 信息；质量平均产生的 \(9/8\) 伪差异。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_passivity_mass_completion.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/passivity_mass_completion_checks.json)
+
+**本轮没有运行 Lean 编译。**上述有限核验不替代一般定理的机器证明，也不验证附加的物理耦合假设就是现实规律。
+
+---
+
+# 结论
+
+本轮最重要的结果，是把三个容易混同的问题分开：
+
+$$
+\boxed{
+\text{这个状态是不是可组合的热平衡？}
+}
+$$
+
+$$
+\boxed{
+\text{观察者的内部时间读取了完整能量的哪一部分？}
+}
+$$
+
+$$
+\boxed{
+\text{这份能量怎样同时进入惯性、引力与路径相位？}
+}
+$$
+
+我们证明了：
+
+**热平衡的完整组合条件可以迫使 Gibbs 形式，但不会自动确定全部静止能量。**
+
+**内部不可见的能量标量，在更大的相干控制与位置耦合实验中可以成为可见区别；因此内部观察接口并不是对所有物理过程都充分。**
+
+**惯性与引力相等必须来自同一个完整动力学中的算子一致性。把不同物理角色分别平均，再把结果拼起来，可能制造并不存在的违反。**
+
+因此，量子观察者理论当前更完整的对象应当是
+
+$$
+\boxed{
+\text{内部钟}
++
+\text{平衡与非平衡资源}
++
+\text{完整静止能量}
++
+\text{相干路径实现}
++
+\text{内部—运动关联}.
+}
+$$
+
+**观察者不仅通过时间读数认识世界；它自身也是携带静止能量、能够交换功、产生反冲并进入相干路径的物理系统。只有把这些角色放在同一个可形式化的实现中，时间、温度、质量与几何才不会成为彼此独立、事后拼接的解释。**
+
+[1]: https://link.aps.org/doi/10.1103/PhysRevE.91.052133?utm_source=chatgpt.com "Passivity, complete passivity, and virtual temperatures"
+[2]: https://arxiv.org/abs/2103.06060?utm_source=chatgpt.com "Characterizing symmetry-protected thermal equilibrium by work extraction"
+[3]: https://arxiv.org/html/1412.5485v2 "A short note on passivity, complete passivity and virtual temperatures"
+[4]: https://arxiv.org/abs/1309.7976?utm_source=chatgpt.com "Quantum circuits cannot control unknown operations"
+[5]: https://www.nature.com/articles/s41567-018-0197-6 "Quantum formulation of the Einstein equivalence principle | Nature Physics"
+[6]: https://link.aps.org/doi/10.1103/PhysRevLett.133.040802 "Estimation of Hamiltonian Parameters from Thermal States | Phys. Rev. Lett."
+[7]: https://link.aps.org/doi/10.1103/PhysRevLett.129.190502?utm_source=chatgpt.com "Operational Interpretation of Quantum Fisher Information in ..."
+[8]: https://arxiv.org/abs/1707.04526?utm_source=chatgpt.com "Equivalence Principle for Quantum Systems: Dephasing and Phase Shift of Free-Falling Particles"
+[9]: https://arxiv.org/abs/1502.00971?utm_source=chatgpt.com "Quantum formulation of the Einstein Equivalence Principle"
+# 量子质量的不相容性、自由落体参照与潮汐余量
+
+## ——量子观察者—关系时空理论第一百八十一至第一百九十节增订
+
+### 摘要
+
+上一轮把静止能量、惯性质量和引力响应放进同一个模型，但推导加速度时使用了一个重要假设：这些内部算子彼此可交换。
+
+本增订首先移除这一假设，证明：
+
+$$
+\boxed{
+\text{对所有内部状态成立的普适加速度}
+\iff
+M_G=M_I,\quad [H_{\mathrm{rest}},M_I]=0
+}
+$$
+
+其中等价关系限定于下文定义的弱场有效 Hamiltonian。它比“几个质量平均值相同”更强，但仍弱于完整的 Einstein 等效原理。
+
+随后，将自由落体参照变换直接构造为作用于**运动与内部量子态**的联合酉映射。对于相容的质量算子，均匀引力项可以被精确转移到参照运动中；一般势场则留下
+
+$$
+\boxed{
+\mathcal R_q(y)
+=
+\Phi(q+y)-\Phi(q)-y\Phi'(q).
+}
+$$
+
+这一余项从空间二阶变化开始，决定局部自由落体描述的偏差。
+
+最后，把参照者本身也作为量子物体，得到两观察者之间的关系方程：
+
+$$
+\boxed{
+\ddot Y
+=
+-\Phi'(X_A+Y)+\Phi'(X_A).
+}
+$$
+
+它把“观察者作为描述中心”进一步落实为：**共同加速度可以从相对机械读数中消去，而空间变化不均匀所产生的潮汐作用仍然存在。**
+
+内部质量算子的等效原理、量子参考系和质量相关相位均有既有研究基础。本文给出当前模型中的具体证明与适用范围，不将这些一般方向宣称为新发现。([arXiv][1])
+
+---
+
+# 181．不再预设三个质量角色可以同时经典化
+
+## 定义 181.1　内部结构与运动空间
+
+设观察者的内部空间为有限维空间
+
+$$
+\mathcal H_{\mathrm{int}}=\mathbb C^d,
+$$
+
+运动空间为
+
+$$
+\mathcal H_{\mathrm{mot}}=L^2(\mathbb R).
+$$
+
+完整空间为
+
+$$
+\mathcal H
+=
+\mathcal H_{\mathrm{int}}\otimes L^2(\mathbb R).
+$$
+
+给定三个内部算子：
+
+$$
+H_{\mathrm{rest}}=H_{\mathrm{rest}}^\dagger,
+$$
+
+$$
+M_I=M_I^\dagger>0,
+\qquad
+M_G=M_G^\dagger>0.
+$$
+
+分别表示静止能量、惯性质量和引力响应质量。
+
+**本节不假设它们两两可交换。**
+
+为简化记号，令
+
+$$
+A=M_I^{-1},
+\qquad
+B=M_G,
+\qquad
+E=H_{\mathrm{rest}}.
+$$
+
+位置与动量为
+
+$$
+(X\psi)(x)=x\psi(x),
+\qquad
+P=-i\hbar\partial_x.
+$$
+
+内部算子与 \(X,P\) 可交换，但内部算子之间未必可交换。
+
+---
+
+## 假设 181.1　弱场有效 Hamiltonian
+
+先取光滑有界势
+
+$$
+\Phi\in C_b^\infty(\mathbb R),
+$$
+
+并定义
+
+$$
+\boxed{
+H_\Phi
+=
+E+\frac12AP^2+B\Phi(X).
+}
+\tag{181.1}
+$$
+
+\(\Phi\) 的量纲是单位质量的势能。
+
+这是一项明确的模型选择：保留内部量子能量结构，但采用弱场、低速形式的质心动力学。它不包含完整相对论引力的所有修正。
+
+复合量子系统中，静止能量如何进入质心运动和外场耦合，确实需要从完整模型中检查，不能只把三个参数赋予相同名字。([arXiv][2])
+
+---
+
+## 定理 181.1　模型具有自伴且有下界的实现
+
+式（181.1）在
+
+$$
+\mathcal D
+=
+\mathbb C^d\otimes H^2(\mathbb R)
+$$
+
+上具有自伴实现，且
+
+$$
+\boxed{
+H_\Phi
+\ge
+\left[
+\lambda_{\min}(E)
+-\|B\|\,\|\Phi\|_\infty
+\right]I.
+}
+\tag{181.2}
+$$
+
+### 证明
+
+\(A>0\) 为有限维算子，可以在其本征基中将
+
+$$
+\frac12AP^2
+$$
+
+分解为有限个正系数的自由 Schrödinger 算子，因而自伴且非负。
+
+\(E+B\Phi(X)\) 为有界自伴扰动，所以保持自伴性。下界直接来自动能非负性与
+
+$$
+B\Phi(X)\ge-\|B\|\,\|\Phi\|_\infty I.
+$$
+
+∎
+
+后续对易计算首先在共同不变的测试函数核心
+
+$$
+\mathbb C^d\otimes\mathscr S(\mathbb R)
+$$
+
+上进行。这样，算子域不是被隐去的前提。
+
+---
+
+# 182．非交换内部质量会产生哪些额外加速度？
+
+定义反对易子
+
+$$
+\{C,D\}=CD+DC.
+$$
+
+## 定理 182.1　速度、动量变化与完整加速度
+
+在上述共同核心上，
+
+$$
+\boxed{
+\dot X=AP,
+}
+\tag{182.1}
+$$
+
+$$
+\boxed{
+\dot P=-B\Phi'(X).
+}
+\tag{182.2}
+$$
+
+但加速度一般不是简单的 \(-AB\Phi'(X)\)，而是
+
+$$
+\boxed{
+\begin{aligned}
+\ddot X
+={}&
+\frac{i}{\hbar}[E,A]P\\
+&+
+\frac{i}{2\hbar}[B,A]\{\Phi(X),P\}\\
+&-
+\frac12\{A,B\}\Phi'(X).
+\end{aligned}
+}
+\tag{182.3}
+$$
+
+### 证明
+
+首先，
+
+$$
+\dot X=\frac{i}{\hbar}[H_\Phi,X]=AP,
+$$
+
+以及
+
+$$
+\dot P=\frac{i}{\hbar}[H_\Phi,P]=-B\Phi'(X).
+$$
+
+因此
+
+$$
+\begin{aligned}
+\ddot X
+&=
+\frac{i}{\hbar}[H_\Phi,AP]\\
+&=
+\frac{i}{\hbar}[E,A]P
++
+\frac{i}{\hbar}[B,A]\Phi(X)P
+-
+AB\Phi'(X).
+\end{aligned}
+$$
+
+再使用
+
+$$
+\Phi P
+=
+\frac12\{\Phi,P\}
++\frac{i\hbar}{2}\Phi',
+$$
+
+得到式（182.3）。∎
+
+### 三个不同的结构
+
+式（182.3）区分了：
+
+$$
+\boxed{
+[E,M_I^{-1}]
+:
+\text{内部演化与惯性响应的不相容};
+}
+$$
+
+$$
+\boxed{
+[M_G,M_I^{-1}]
+:
+\text{引力响应与惯性响应的不相容};
+}
+$$
+
+$$
+\boxed{
+\frac12\{M_I^{-1},M_G\}
+:
+\text{直接的力—加速度转换}.
+}
+$$
+
+因此，先对 \(M_I,M_G\) 分别取平均，再计算它们的比值，通常无法恢复完整加速度。
+
+项目已经有有限维投影概率由 Hamiltonian 交换子控制的具体证明。本节沿同一原理计算运动读数，但位置—动量涉及无界算子，所以不能把已有有限矩阵定理直接当作本节的机器证明。
+
+---
+
+# 183．普适自由落体可以反过来约束内部算子
+
+## 定义 183.1　全状态加速度一致性
+
+固定一个非恒定的
+
+$$
+\Phi\in C_b^\infty(\mathbb R).
+$$
+
+若在共同测试函数核心上有
+
+$$
+\boxed{
+\ddot X=-\Phi'(X)I_{\mathrm{int}},
+}
+\tag{183.1}
+$$
+
+则称该模型满足全状态加速度一致性。
+
+这要求同一个加速度算子关系对全部内部态与运动态成立，而不仅是在若干能量本征态上的平均值成立。
+
+---
+
+## 定理 183.1　全状态加速度一致性的充要条件
+
+在模型（181.1）中，
+
+$$
+\boxed{
+\ddot X=-\Phi'(X)I
+\iff
+M_G=M_I
+\quad\text{且}\quad
+[E,M_I]=0.
+}
+\tag{183.2}
+$$
+
+### 证明
+
+由定理 182.1 的未对称化形式，
+
+$$
+\boxed{
+\ddot X+\Phi'(X)I
+=
+\frac{i}{\hbar}
+\bigl([E,A]+[B,A]\Phi(X)\bigr)P
++
+(I-AB)\Phi'(X).
+}
+\tag{183.3}
+$$
+
+若它对全部紧支撑光滑测试函数为零，则这个一阶矩阵微分算子的系数必须逐点为零。
+
+这一点可通过在任意位置独立指定测试函数的值与一阶导数证明。因此
+
+$$
+[E,A]+[B,A]\Phi(x)=0
+\qquad\forall x.
+$$
+
+因为 \(\Phi\) 非恒定，选择两个势值不同的位置相减，得到
+
+$$
+[B,A]=0,
+$$
+
+再得到
+
+$$
+[E,A]=0.
+$$
+
+剩余条件为
+
+$$
+(I-AB)\Phi'(x)=0.
+$$
+
+非恒定光滑函数的导数不恒为零，所以
+
+$$
+AB=I.
+$$
+
+由于 \(A=M_I^{-1}\)，得到 \(B=M_I\)。而
+
+$$
+[E,A]=0\iff[E,M_I]=0.
+$$
+
+反向，将这两个条件代入式（182.3），立即得到式（183.1）。∎
+
+### 这比什么更强，又比什么更弱？
+
+它比
+
+$$
+\langle M_G\rangle=\langle M_I\rangle
+$$
+
+更强。
+
+但它尚未要求
+
+$$
+\boxed{
+E=c^2M_I+\text{标量}.
+}
+$$
+
+所以它还不是完整的量子 Einstein 等效原理，只是该有效 Hamiltonian 中的全状态自由落体判据。
+
+例如，
+
+$$
+M_G=M_I=mI
+$$
+
+时，任意内部 \(E\) 都与质量可交换，满足本定理；但这些内部能量差是否同时贡献惯性和重量，仍需额外实验与模型条件。量子等效原理正是要进一步比较静止、惯性和引力内部能量的算子结构。([arXiv][1])
+
+---
+
+# 184．只测经典能级，可能漏掉量子自由落体差别
+
+## 例 184.1　相同内部能级概率，不同初始加速度
+
+取
+
+$$
+M_I=mI,
+$$
+
+$$
+M_G=m(I+\eta\sigma_x),
+\qquad 0<\eta<1,
+$$
+
+以及
+
+$$
+E=E_0I+\Delta\sigma_z,
+\qquad E_0>|\Delta|.
+$$
+
+惯性质量为标量，因此
+
+$$
+\boxed{
+\ddot X
+=
+-(I+\eta\sigma_x)\Phi'(X).
+}
+\tag{184.1}
+$$
+
+取两种内部态
+
+$$
+|\pm x\rangle
+=
+\frac{|0\rangle\pm|1\rangle}{\sqrt2}.
+$$
+
+它们在静止能量本征基中的概率都是
+
+$$
+\left(\frac12,\frac12\right),
+$$
+
+内部平均能量也相同。
+
+对同一个初始运动态 \(\psi\)，记
+
+$$
+g_\psi=\langle\psi|\Phi'(X)|\psi\rangle.
+$$
+
+则初始加速度为
+
+$$
+\boxed{
+\langle\ddot X\rangle_{\pm x}
+=
+-(1\pm\eta)g_\psi.
+}
+\tag{184.2}
+$$
+
+当 \(\eta=1/3\) 时，分别是标准值的
+
+$$
+\boxed{\frac43,\qquad\frac23.}
+$$
+
+相比之下，单独准备 \(\sigma_z\) 的两个本征态，两者的平均加速度都为 \(-g_\psi\)。
+
+**因此，仅检验静止能量本征态，可以漏掉只在相干制备中显现的差别。**
+
+这类“经典等效原理测试不能自动覆盖量子叠加测试”的区分，是量子等效原理研究的重要内容。([arXiv][3])
+
+### 项目中的 carry 见证
+
+若当前接口只保留内部能级概率和同一个运动初态，则它合并 \(|+x\rangle\) 与 \(|-x\rangle\)。
+
+下一时刻的运动响应却能区分二者。因此：
+
+$$
+\boxed{
+q_{\mathrm{energy}}(\rho_+)=q_{\mathrm{energy}}(\rho_-),
+\qquad
+T_{\mathrm{acc}}(\rho_+)\ne T_{\mathrm{acc}}(\rho_-).
+}
+\tag{184.3}
+$$
+
+这正是需要补充观察接口、而不能继续宣称精确下降的情况。
+
+---
+
+## 例 184.2　两个质量相等，仍不足以保证全部动力学相容
+
+取
+
+$$
+M_G=M_I
+=
+m\begin{pmatrix}
+1&0\\
+0&2
+\end{pmatrix},
+$$
+
+以及
+
+$$
+E=E_0I+\Delta\sigma_x.
+$$
+
+则
+
+$$
+\boxed{
+\ddot X
+=
+-\Phi'(X)I
++
+\frac{\Delta}{2m\hbar}\sigma_yP.
+}
+\tag{184.4}
+$$
+
+这第二项来自
+
+$$
+[E,M_I^{-1}]\ne0.
+$$
+
+即使没有外力，动量仍可守恒，而速度
+
+$$
+\dot X=M_I^{-1}P
+$$
+
+可以因为内部惯性结构的演化而改变。
+
+这不是矛盾，而是说明：**“动量守恒”“质量算子相等”“速度变化普适”是不同命题。**
+
+---
+
+# 185．相容质量允许把自由落体写成联合酉变换
+
+从本节开始，施加已经被上一节明确识别的条件：
+
+$$
+M_G=M_I=M>0,
+\qquad
+[E,M]=0.
+$$
+
+于是
+
+$$
+\boxed{
+H_\Phi
+=
+E+\frac{P^2}{2M}+M\Phi(X).
+}
+\tag{185.1}
+$$
+
+这里的 \(M\) 仍然可以是非标量算子，内部态仍然允许质量—能量分支的相干叠加。
+
+---
+
+## 定义 185.1　沿参照轨迹的变换
+
+选择一条经典标定轨迹 \(q(t)\)，满足
+
+$$
+\ddot q(t)=-\Phi'(q(t)).
+$$
+
+定义
+
+$$
+\dot s(t)
+=
+\frac12\dot q(t)^2-\Phi(q(t)).
+$$
+
+令
+
+$$
+\boxed{
+\psi(x,t)
+=
+\exp\left\{
+\frac{iM}{\hbar}
+\left[
+\dot q(t)(x-q(t))+s(t)
+\right]
+\right\}
+\chi(x-q(t),t).
+}
+\tag{185.2}
+$$
+
+对每个固定 \(t\)，它是平移与质量条件相位的乘积，因此为酉映射。
+
+这不是把内部质量先测成某个数。可以在 \(M\) 的各谱分支上同时实施同一个算子公式。
+
+---
+
+## 定理 185.1　自由落体参照中的精确余项
+
+令
+
+$$
+y=x-q(t).
+$$
+
+则 \(\psi\) 满足式（185.1）的 Schrödinger 方程，当且仅当 \(\chi\) 满足
+
+$$
+\boxed{
+i\hbar\partial_t\chi
+=
+\left[
+E+\frac{P_y^2}{2M}
++
+M\mathcal R_q(t,Y)
+\right]\chi,
+}
+\tag{185.3}
+$$
+
+其中
+
+$$
+\boxed{
+\mathcal R_q(t,y)
+=
+\Phi(q(t)+y)
+-\Phi(q(t))
+-y\Phi'(q(t)).
+}
+\tag{185.4}
+$$
+
+### 证明
+
+将式（185.2）代入 Schrödinger 方程。
+
+空间导数产生动量平移
+
+$$
+P\longmapsto P_y+M\dot q.
+$$
+
+时间导数中的平移项消去动能展开的交叉项。剩余势为
+
+$$
+M\left[
+\Phi(q+y)+\ddot q\,y+\dot s-\frac12\dot q^2
+\right].
+$$
+
+使用 \(q,s\) 的定义，得到式（185.4）。
+
+由于 \([E,M]=0\)，相位变换不会额外旋转 \(E\)。∎
+
+---
+
+## 推论 185.1　均匀场可以被精确消去
+
+对于
+
+$$
+\Phi(x)=g_0x,
+$$
+
+取
+
+$$
+q(t)=-\frac12g_0t^2,
+$$
+
+则
+
+$$
+\mathcal R_q=0,
+$$
+
+并有
+
+$$
+\boxed{
+\psi(x,t)
+=
+e^{-iM(g_0tx+g_0^2t^3/6)/\hbar}
+\chi\left(x+\frac12g_0t^2,t\right).
+}
+\tag{185.5}
+$$
+
+因此均匀场中的过程，与自由过程通过一个明确的联合酉变换关联。
+
+质量算子与加速参考系之间的这种关系有既有研究；允许质量叠加，并不要求把量子力学或等效原理立即判定为互相冲突。([arXiv][4])
+
+### 两项边界
+
+第一，均匀势 \(g_0x\) 在整条实线上无下界。本节将它作为局部均匀场的理想模型，不把它当成具有全局有限热平衡的封闭宇宙。
+
+第二，被动更换描述时，状态和测量效果都要变换：
+
+$$
+\rho'=S_q^\dagger\rho S_q,
+\qquad
+E'=S_q^\dagger E S_q.
+$$
+
+只变换状态、不变换测量，比较的就不是同一个实验。量子参考系理论特别需要保留这一点。([arXiv][5])
+
+---
+
+# 186．参照者本身量子化：均匀引力只作用于共同运动
+
+上一节使用了一条已标定轨迹。现在让“参照者”也成为具有位置、动量和内部质量的量子系统。
+
+## 假设 186.1　两个量子观察者
+
+取两个系统 \(A,B\)，各自满足
+
+$$
+M_i>0,
+\qquad
+[E_i,M_i]=0.
+$$
+
+它们在本节没有直接相互作用，共同处于均匀势 \(\Phi(x)=g_0x\) 中：
+
+$$
+H
+=
+E_A+E_B
++
+\frac{P_A^2}{2M_A}
++
+\frac{P_B^2}{2M_B}
++
+g_0(M_AX_A+M_BX_B).
+$$
+
+不同系统上的内部算子可交换。
+
+定义
+
+$$
+M_{\mathrm{tot}}=M_A+M_B,
+\qquad
+\mu=M_AM_BM_{\mathrm{tot}}^{-1},
+$$
+
+以及
+
+$$
+\boxed{
+Q=\frac{M_AX_A+M_BX_B}{M_{\mathrm{tot}}},
+\qquad
+Y=X_B-X_A,
+}
+\tag{186.1}
+$$
+
+$$
+\boxed{
+P_{\mathrm{tot}}=P_A+P_B,
+\qquad
+p=\frac{M_AP_B-M_BP_A}{M_{\mathrm{tot}}}.
+}
+\tag{186.2}
+$$
+
+---
+
+## 定理 186.1　量子质量下的共同—相对分解
+
+这些算子满足
+
+$$
+[Q,P_{\mathrm{tot}}]=i\hbar I,
+\qquad
+[Y,p]=i\hbar I,
+$$
+
+并且两组正则变量的交叉对易子为零。
+
+Hamiltonian 精确分解为
+
+$$
+\boxed{
+H
+=
+E_A+E_B
++
+\frac{P_{\mathrm{tot}}^2}{2M_{\mathrm{tot}}}
++
+g_0M_{\mathrm{tot}}Q
++
+\frac{p^2}{2\mu}.
+}
+\tag{186.3}
+$$
+
+### 证明
+
+由于质量算子相互可交换，并与运动算子可交换，可以直接使用正则对易关系计算。
+
+动能恒等式为
+
+$$
+\frac{P_A^2}{2M_A}+\frac{P_B^2}{2M_B}
+=
+\frac{P_{\mathrm{tot}}^2}{2M_{\mathrm{tot}}}
++
+\frac{p^2}{2\mu}.
+$$
+
+势能由 \(Q\) 的定义直接给出。
+
+这些等式也可以在联合质量谱的每个分支上验证，再拼接为完整算子恒等式。∎
+
+---
+
+## 推论 186.1　均匀场不改变相对机械动力学
+
+有
+
+$$
+\boxed{
+\dot Y=\mu^{-1}p,
+\qquad
+\ddot Y=0.
+}
+\tag{186.4}
+$$
+
+对由 \(Y,p\) 和可交换质量算子生成的相对机械读数，其演化不依赖 \(g_0\)。
+
+### 证明
+
+共同运动部分与这些相对变量可交换。相对 Hamiltonian 仅为
+
+$$
+H_{\mathrm{rel}}=\frac{p^2}{2\mu}.
+$$
+
+∎
+
+**这是一项真正以量子观察者为中心的结论：不必先把参照者的位置或质量设为无限精确的经典参数，均匀共同加速度仍可从相对机械描述中消去。**
+
+但 \(\mu\) 仍是内部算子，因此相对波包的展宽、相位和与内部自由度的关联仍可能依赖质量。
+
+$$
+\boxed{
+\text{相对加速度相同}
+\not\Rightarrow
+\text{全部量子概率分布相同}.
+}
+$$
+
+有限质量参照的反冲与关系描述，正是量子参考系研究所必须保留的物理内容。([arXiv][5])
+
+---
+
+# 187．真正不能被共同自由落体消掉的是潮汐变化
+
+现在允许一般光滑势 \(\Phi\)。
+
+## 定理 187.1　两个量子观察者的相对加速度
+
+在质量相容条件下，
+
+$$
+\boxed{
+\ddot Y
+=
+-\Phi'(X_B)+\Phi'(X_A).
+}
+\tag{187.1}
+$$
+
+由于 \(X_A\) 与 \(Y=X_B-X_A\) 可交换，也可以写成
+
+$$
+\boxed{
+\ddot Y
+=
+-Y\int_0^1
+\Phi''(X_A+sY)\,ds.
+}
+\tag{187.2}
+$$
+
+### 证明
+
+分别对两个系统应用 \(\ddot X_i=-\Phi'(X_i)\)，相减得到式（187.1）。
+
+对两个可交换位置算子使用标量积分恒等式
+
+$$
+\Phi'(x+y)-\Phi'(x)
+=
+y\int_0^1\Phi''(x+sy)\,ds,
+$$
+
+即可得到式（187.2）。∎
+
+---
+
+## 推论 187.1　相对机械实验的仿射势不变性
+
+把势替换为
+
+$$
+\widetilde\Phi(x)=\Phi(x)+ax+b,
+$$
+
+不会改变式（187.1）的相对加速度。
+
+反之，如果对全部位置配置都有
+
+$$
+\Phi'(x_B)-\Phi'(x_A)=0,
+$$
+
+则 \(\Phi\) 必为仿射函数。
+
+### 证明
+
+附加线性项在两次求导读数之差中相消。
+
+反向条件要求 \(\Phi'\) 在所有位置取同一个值。∎
+
+这给观察接口一个准确的核：
+
+> **在当前相对机械实验类中，势的共同常数部分和共同线性部分被合并；空间二阶变化一般不会被合并。**
+
+但对有外部支撑的钟、不同路径相位或其他实验，这个接口可能不再充分。不能把相对加速度接口的不可见性推广为全部物理过程的不可见性。
+
+---
+
+## 定理 187.2　二次势给出精确的量子潮汐模型
+
+取
+
+$$
+\Phi(x)=g_0x+\frac{\kappa}{2}x^2,
+\qquad \kappa\ge0.
+$$
+
+则
+
+$$
+\boxed{
+\ddot Y=-\kappa Y.
+}
+\tag{187.3}
+$$
+
+并且联合 Hamiltonian 的势能精确分解为
+
+$$
+\boxed{
+\begin{aligned}
+M_A\Phi(X_A)+M_B\Phi(X_B)
+={}&
+M_{\mathrm{tot}}
+\left(g_0Q+\frac{\kappa}{2}Q^2\right)\\
+&+\frac{\kappa\mu}{2}Y^2.
+\end{aligned}
+}
+\tag{187.4}
+$$
+
+所以相对 Hamiltonian 为
+
+$$
+\boxed{
+H_{\mathrm{rel}}
+=
+\frac{p^2}{2\mu}+\frac{\kappa\mu}{2}Y^2.
+}
+\tag{187.5}
+$$
+
+### 证明
+
+使用
+
+$$
+X_A=Q-\frac{M_B}{M_{\mathrm{tot}}}Y,
+\qquad
+X_B=Q+\frac{M_A}{M_{\mathrm{tot}}}Y
+$$
+
+展开。交叉项相消，得到式（187.4），再计算 Heisenberg 方程。∎
+
+相对振荡频率 \(\sqrt\kappa\) 不依赖内部质量，但位置分布和零点展宽仍可以依赖约化质量 \(\mu\)。
+
+在已经建立的弱场度量实现中，\(\Phi''\) 对应相应的潮汐曲率分量。这个几何识别来自测地偏离关系，不是把任意内部算子交换子直接命名为曲率。([David Tong][6])
+
+---
+
+# 188．平直的操作闭路也能留下内部时间相位
+
+前文已经强调：闭路状态不返回，不自动证明时空弯曲。量子质量给出另一个重要实例。
+
+## 定义 188.1　平移与质量相关 boost
+
+固定一个正质量算子 \(M\)，定义
+
+$$
+T(d)=e^{-idP/\hbar},
+$$
+
+$$
+B(v)=e^{ivMX/\hbar}.
+$$
+
+其中 \(d\) 是平移距离，\(v\) 是 boost 参数。
+
+它们作用于同一个运动—内部空间。
+
+---
+
+## 定理 188.1　平直平移—boost 闭路的精确相位
+
+有
+
+$$
+\boxed{
+B(v)T(d)B(-v)T(-d)
+=
+e^{ivdM/\hbar}.
+}
+\tag{188.1}
+$$
+
+### 证明
+
+在每个质量本征分支上，对任意测试函数 \(\psi(x)\)，
+
+$$
+(T(d)\psi)(x)=\psi(x-d),
+$$
+
+$$
+(B(v)\psi)(x)=e^{ivMx/\hbar}\psi(x).
+$$
+
+依次作用四个算子，位置平移全部相消，剩余因子为
+
+$$
+e^{ivMx/\hbar}e^{-ivM(x-d)/\hbar}
+=
+e^{ivdM/\hbar}.
+$$
+
+各质量分支共同给出算子恒等式。∎
+
+---
+
+## 推论 188.1　质量中的内部能量可以把闭路相位转化为内部时钟变换
+
+若进一步有
+
+$$
+M=m_0I+\frac{H_C}{c^2},
+$$
+
+则
+
+$$
+\boxed{
+e^{ivdM/\hbar}
+=
+e^{im_0vd/\hbar}
+e^{iH_Cvd/(\hbar c^2)}.
+}
+\tag{188.2}
+$$
+
+后一因子等价于内部钟参数变化
+
+$$
+\boxed{
+\Delta\tau=-\frac{vd}{c^2}
+}
+\tag{188.3}
+$$
+
+的酉作用，符号由闭路顺序决定。
+
+### 解释
+
+对于固定数值质量，式（188.1）只是整体相位。
+
+对于具有内部能量结构的质量算子，它可以成为内部态之间的相对相位。
+
+但它并不需要非零时空曲率：这个代数关系在平直运动学中已经存在。质量相关的 Galilei 扩张相位及其与内部时间的联系已有相应研究。([arXiv][7])
+
+还必须区分：
+
+* 若只是被动地变换描述，测量和参照也要共同变换，不能凭坐标循环制造物理变化。
+* 若实际执行平移、加速和返回操作，那么控制器、能量交换及两条操作历史都必须进入完整实验。
+
+式（188.3）描述相对酉参数，不表示让观察者沿自己的未来世界线倒着经历固有时间。
+
+因此：
+
+$$
+\boxed{
+\text{内部时间相位}
+\not\Rightarrow
+\text{曲率};
+}
+$$
+
+真正的曲率识别必须排除这类运动学与参照实现贡献。
+
+---
+
+# 189．局部自由落体近似可以获得显式误差证书
+
+第 185 节已经得到精确余项
+
+$$
+\mathcal R_q(t,y)
+=
+\Phi(q+y)-\Phi(q)-y\Phi'(q).
+$$
+
+现在把“局部近似自由”量化。
+
+## 定理 189.1　潮汐余项的空间二阶界
+
+若在所需区域内
+
+$$
+|\Phi''(x)|\le K_\Phi,
+$$
+
+则
+
+$$
+\boxed{
+\mathcal R_q(t,y)
+=
+y^2\int_0^1(1-s)\Phi''(q(t)+sy)\,ds,
+}
+\tag{189.1}
+$$
+
+并且
+
+$$
+\boxed{
+|\mathcal R_q(t,y)|
+\le\frac{K_\Phi}{2}y^2.
+}
+\tag{189.2}
+$$
+
+### 证明
+
+对 \(\Phi(q+y)\) 使用带积分余项的一阶 Taylor 公式。∎
+
+这表明，在自由落体参照中，控制近似的不是势本身有多大，而是它在所用区域内的二阶变化。
+
+当然，若要把本模型当作现实的弱场近似，低速、弱场和控制范围仍必须满足先前假设。
+
+---
+
+## 定理 189.2　有限量子实验的局部自由落体误差
+
+在自由落体参照中比较
+
+$$
+H_{\mathrm{tid}}(t)
+=
+E+\frac{P_Y^2}{2M}+M\mathcal R_q(t,Y)
+$$
+
+与
+
+$$
+H_{\mathrm{free}}
+=
+E+\frac{P_Y^2}{2M}.
+$$
+
+令
+
+$$
+m_{\max}=\|M\|.
+$$
+
+对同一个初态，设自由参考演化具有有限四阶位置矩。则
+
+$$
+\boxed{
+D\bigl(\rho_{\mathrm{tid}}(T),\rho_{\mathrm{free}}(T)\bigr)
+\le
+\frac{m_{\max}}{2\hbar}
+\int_0^T
+K_\Phi(t)
+\sqrt{\operatorname{Tr}[\rho_{\mathrm{free}}(t)Y^4]}
+\,dt.
+}
+\tag{189.3}
+$$
+
+若
+
+$$
+\sqrt{\operatorname{Tr}[\rho_{\mathrm{free}}(t)Y^4]}
+\le L^2,
+\qquad K_\Phi(t)\le K_*,
+$$
+
+则
+
+$$
+\boxed{
+D\bigl(\rho_{\mathrm{tid}}(T),\rho_{\mathrm{free}}(T)\bigr)
+\le
+\frac{m_{\max}K_*L^2T}{2\hbar}.
+}
+\tag{189.4}
+$$
+
+必要时将上界截断到一。
+
+### 证明
+
+先纯化初态。由 Duhamel 公式，
+
+$$
+\begin{aligned}
+&(U_{\mathrm{tid}}(T)-U_{\mathrm{free}}(T))|\Psi_0\rangle\\
+&=
+-\frac{i}{\hbar}\int_0^T
+U_{\mathrm{tid}}(T,t)
+M\mathcal R_q(t,Y)
+U_{\mathrm{free}}(t)|\Psi_0\rangle\,dt.
+\end{aligned}
+$$
+
+左侧实际后缀酉演化不增加范数。使用式（189.2），有
+
+$$
+\|M\mathcal R_q\Psi_{\mathrm{free}}\|
+\le
+\frac{m_{\max}K_\Phi}{2}
+\|Y^2\Psi_{\mathrm{free}}\|.
+$$
+
+积分后，再使用纯态迹距离不超过相应向量距离及偏迹收缩性，得到结论。∎
+
+### 这是什么性质的证书？
+
+它是对满足位置矩预算的输入族给出的过程误差界，不是对任意无限扩展波包的无条件 diamond 范数界。
+
+因此，局部等效性具有明确窗口：
+
+$$
+\boxed{
+\frac{m_{\max}K_*L^2T}{\hbar}\ll1.
+}
+\tag{189.5}
+$$
+
+同一个区域，对短时间、窄波包的观察者可能足够接近自由过程；对更宽或更长相干时间的实验，潮汐余项可能变得可见。
+
+---
+
+## 与内部钟的进一步连接
+
+若
+
+$$
+M=m_0I+\frac{H_C}{c^2},
+$$
+
+则潮汐项包含
+
+$$
+\boxed{
+H_{\mathrm{tidal,clock}}
+=
+\frac{H_C}{c^2}\mathcal R_q(t,Y).
+}
+\tag{189.6}
+$$
+
+在适当的路径控制与其他相位校准条件下，两条路径的内部相位差包含
+
+$$
+\boxed{
+\Delta\varphi_{\mathrm{tidal}}
+=
+-\frac{\Delta E}{\hbar c^2}
+\int
+\left[
+\mathcal R_q(t,y_1(t))
+-
+\mathcal R_q(t,y_2(t))
+\right]dt.
+}
+\tag{189.7}
+$$
+
+这只是潮汐势对钟相位的贡献；不同路径的动能相位、控制力和读出装置仍须一并处理。
+
+在已有弱场洛伦兹实现中，相对加速度和这种局部时间差可以共同约束曲率，而不必先把内部能量相位等同于几何本身。([David Tong][6])
+
+---
+
+# 190．形式化时必须保留的三个层级
+
+本轮可以整理成一条更强的证明链：
+
+$$
+\boxed{
+\text{内部能量与质量算子}
+\longrightarrow
+\text{完整加速度}
+\longrightarrow
+\text{普适性约束}.
+}
+$$
+
+条件满足以后：
+
+$$
+\boxed{
+\text{联合自由落体变换}
+\longrightarrow
+\text{相对机械描述}
+\longrightarrow
+\text{不可消去的潮汐余项}.
+}
+$$
+
+最后：
+
+$$
+\boxed{
+\text{潮汐余项}
++
+\text{实验尺度与状态矩预算}
+\longrightarrow
+\text{局部几何近似误差}.
+}
+$$
+
+## 190.1　有限内部矩阵与连续运动不能混成同一种证明
+
+内部的 \(E,M_I,M_G\) 都可以使用有限矩阵形式化。
+
+但位置与动量不能被有限矩阵精确实现为
+
+$$
+[X,P]=i\hbar I.
+$$
+
+### 命题 190.1
+
+不存在非零有限维空间上的矩阵 \(X,P\)，满足上述关系。
+
+### 证明
+
+取迹：
+
+$$
+\operatorname{Tr}[X,P]=0,
+$$
+
+而
+
+$$
+\operatorname{Tr}(i\hbar I)=i\hbar d\ne0.
+$$
+
+矛盾。∎
+
+因此，严格形式化应当区分：
+
+**有限代数层**：内部质量、交换子、状态正性与有限读数反例。
+
+**运动分析层**：Schwartz 核、微分算子、自伴实现、酉变换与 Duhamel 界。
+
+**几何识别层**：把 \(\Phi''\) 与已重建度量的潮汐曲率联系，保留弱场与共同标定条件。
+
+不能用一个截断位置矩阵在数值上“近似满足”正则对易关系，就把后续所有恒等式标记为精确证明。
+
+---
+
+## 190.2　与项目当前结构的对应
+
+本次读取固定于提交
+
+```text
+2f482cc73003d7a23940a9af1e0494bb1f230171
+```
+
+其中：
+
+`ProjectionProbabilityFlow.lean` 已提供有限量子态中，投影概率变化由 Hamiltonian 交换子迹控制的证明。
+
+`ExactDescentNoCarry.lean` 则提供精确下降排除 carry 的结构性定理。第 184 节的相干质量实例说明，若只保留能级概率，就无法为后续运动目标填写这样的下降证明。
+
+| 项目角色         | 本轮具体对象                        |
+| ------------ | ----------------------------- |
+| **CUT**      | 内部能级概率、加速度、相对位置、路径相位          |
+| **FLOW**     | 完整矩阵值 Hamiltonian、量子质量条件的参照变换 |
+| **ADMIT**    | 正质量、自伴域、普适加速度条件、弱场与位置矩预算      |
+| **Residual** | 内部交换子项、隐藏相干质量、自由落体后的潮汐余项      |
+| **ANCHOR**   | 相干态制备、相对运动记录、闭路干涉与局部误差证书      |
+
+这里的“潮汐余项”与一般信息残差不是同一类型。它们之间的联系，是前者通过实际演化改变后续读数，从而构成后者的具体物理见证。
+
+---
+
+## 190.3　本轮核验
+
+已作精确符号检查的内容包括：
+
+非交换质量的完整加速度公式；相同能级概率对应的 \(4/3\)、\(2/3\) 加速度因子；均匀场自由落体变换；双量子观察者的共同—相对动能分解；二次势的潮汐分解；平移—boost 闭路相位。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_quantum_freefall_tidal.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/quantum_freefall_tidal_checks.json)
+
+这些检查使用有限内部矩阵与符号微分算子，没有把精确正则对易关系替换成有限矩阵近似。
+
+**本轮未进行 Lean 编译。**符号核验支持所列恒等式和实例，不替代一般分析定理的机器证明，也不认证模型中的物理假设已经符合现实。
+
+---
+
+# 结论
+
+本轮最重要的推进，是把“观察者是中心”从一种描述立场，转化成三项具有不同强度的数学命题。
+
+**第一，观察者内部结构必须与其运动角色相容。**
+
+$$
+\boxed{
+M_G=M_I,
+\qquad
+[H_{\mathrm{rest}},M_I]=0
+}
+$$
+
+在本模型中，恰好保证全状态的普适加速度。仅比较平均质量，无法完成这一检验。
+
+**第二，观察者自身可以是量子的，而共同自由落体仍然可以被消去。**
+
+参照者不必具有无限大的经典质量；使用两个量子物体的相对位置、相对动量和约化质量，均匀共同加速度依然从相对机械动力学中消失。
+
+**第三，真正保留下来的几何内容从空间不均匀性开始。**
+
+$$
+\boxed{
+\ddot Y
+=
+-Y\int_0^1\Phi''(X_A+sY)\,ds.
+}
+$$
+
+它说明局部观察者不是直接“看到一份绝对引力”，而是通过不同位置之间不可由共同自由落体消去的关系，读取潮汐结构。
+
+因此，当前理论可以进一步收紧为：
+
+> **先检验观察者内部能量、惯性与引力响应是否相容；再把共同参照运动从关系读数中分离；最后由剩余的、具有误差证书的跨位置响应重建几何。**
+
+这条路线没有把所有相位都叫作时间、把所有交换子都叫作曲率，也没有把任意参考系变换都叫作物理作用。
+
+**物理时空在这里逐渐成为：量子观察者能够共同消去什么，以及在合法参照变换之后仍然无法消去什么，由这两类结构共同确定的关系对象。**
+
+[1]: https://arxiv.org/abs/1502.00971?utm_source=chatgpt.com "Quantum formulation of the Einstein Equivalence Principle"
+[2]: https://arxiv.org/html/1808.05831v2?utm_source=chatgpt.com "Gravitational mass of composite systems"
+[3]: https://arxiv.org/html/2112.03303v4 "Quantum generalisation of Einstein’s Equivalence Principle can be verified with entangled clocks as quantum reference frames"
+[4]: https://arxiv.org/html/1302.5596v1 "1Introduction"
+[5]: https://arxiv.org/html/1712.07207v2 "Quantum mechanics and the covariance of physical laws in quantum reference frames"
+[6]: https://davidtong.org/teaching/general-relativity/grhtml/S3.html "3 Introducing Riemannian Geometry‣ General Relativity by David Tong"
+[7]: https://arxiv.org/html/1906.03725v1 "Puzzling out the mass-superselection rule"

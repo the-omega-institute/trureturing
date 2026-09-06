@@ -1,0 +1,12 @@
+### 引理：非负 Laplace 变换的实轴奇点
+
+设 \(h(t)\ge0\)，其 Laplace 变换：
+
+$$
+L_h(z)=\int_0^\infty h(t)e^{-zt}\,dt
+$$
+
+具有有限收敛横坐标 \(\sigma_c\)。则 \(L_h\) 不能在实点 \(z=\sigma_c\) 附近全纯延拓。
+
+这是 Landau 非负性原理的 Laplace 版本；相应 Dirichlet 级数版本及其收敛横坐标结论在解析数论中广泛使用。([arXiv][3])
+

@@ -1,0 +1,42 @@
+# 七、重新接回 \(5040\) 压力：为什么确定修正有希望压过振荡？
+
+为了精确连接 \(I_\psi(T)\)，对每个非平凡零点定义：
+
+$$
+\boxed{
+K_\rho(T)
+=
+\frac1\rho
+\int_T^\infty
+v^\rho
+\frac{\ln v+1}{v^2(\ln v)^2}\,dv.
+}
+\tag{24}
+$$
+
+它还可以写成：
+
+$$
+\boxed{
+K_\rho(T)
+=
+\int_0^\infty
+\frac{
+(1+u)T^{\rho-1-u}
+}{
+\rho(1+u-\rho)
+}\,du.
+}
+\tag{25}
+$$
+
+这是使用：
+
+$$
+\frac1{\ln v}+\frac1{(\ln v)^2}
+=
+\int_0^\infty(1+u)v^{-u}\,du
+$$
+
+得到的。
+

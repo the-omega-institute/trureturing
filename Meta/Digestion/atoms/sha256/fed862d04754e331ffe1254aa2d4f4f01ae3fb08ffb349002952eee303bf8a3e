@@ -1,0 +1,26 @@
+## 定理 S1：原来的 \(R_n(t)\) 是这些局部读数的特定加权平均
+
+对上一轮的：
+
+$$
+R_n(t)
+=
+\frac{\mathbb E[U^{2n}\cos(\sqrt2tS)]}
+{\mathbb E[U^{2n}]},
+$$
+
+有：
+
+$$
+\boxed{
+R_n(t)
+=
+\frac{
+\displaystyle\int_0^\infty x^{2n}\mathcal W(x,t)\,dx
+}{
+\displaystyle\int_0^\infty x^{2n}\mathcal W(x,0)\,dx
+}.
+}
+\tag{S4}
+$$
+

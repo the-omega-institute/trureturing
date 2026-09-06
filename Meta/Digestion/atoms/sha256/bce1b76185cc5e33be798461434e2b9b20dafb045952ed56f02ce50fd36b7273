@@ -1,0 +1,89 @@
+# 三、质数部分是一套真正的 Markov 跳跃结构
+
+由 Euler 乘积，\(N_\sigma\) 可以写成：
+
+$$
+N_\sigma=\prod_p p^{V_p},
+$$
+
+其中各 \(V_p\) 独立，且：
+
+$$
+\Pr(V_p=j)=(1-p^{-\sigma})p^{-j\sigma},
+\qquad j\ge0.
+$$
+
+于是：
+
+$$
+-\log N_\sigma=-\sum_pV_p\log p.
+$$
+
+更直接地：
+
+$$
+\boxed{
+\log\frac{\zeta(\sigma+it)}{\zeta(\sigma)}
+=
+\sum_p\sum_{m\ge1}
+\frac{p^{-m\sigma}}m
+\left(e^{-itm\log p}-1\right).
+}
+\tag{T11}
+$$
+
+这是一个复合 Poisson 分布的特征指数。它对应的跳跃位置为：
+
+$$
+-m\log p,
+$$
+
+跳跃强度为：
+
+$$
+\frac{p^{-m\sigma}}m.
+$$
+
+ζ 分布的这一无限可分／复合 Poisson 表示是已有经典结果。([数字对象标识符][4])
+
+因此，可以定义 Markov 生成元：
+
+$$
+\boxed{
+(\mathcal L_\sigma f)(x)
+=
+\sum_p\sum_{m\ge1}
+\frac{p^{-m\sigma}}m
+\bigl[f(x-m\log p)-f(x)\bigr].
+}
+\tag{T12}
+$$
+
+其总跳跃强度为：
+
+$$
+\boxed{
+\Lambda_\sigma
+=
+\sum_{p,m}\frac{p^{-m\sigma}}m
+=
+\log\zeta(\sigma)<\infty.
+}
+$$
+
+这是一项明确的概率动力学。若将平移提升成 Hilbert 空间上的酉平移，再对跳跃记录平均，也能得到随机酉量子信道。
+
+**但它的合法范围目前是 \(\sigma>1\)。**
+
+当 \(\sigma\downarrow1\) 时：
+
+$$
+\Lambda_\sigma\to\infty.
+$$
+
+不能把式（T12）直接延续到临界带，再说同一套独立素数跳跃模型仍然自动成立。
+
+这正是需要保留的收敛边界。
+
+---
+

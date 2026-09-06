@@ -1,0 +1,13 @@
+## 定理 R5：筛选能量的精确公式
+
+对 \(n\ge1\)：
+
+$$
+\boxed{
+\langle\chi_n,K_0\chi_n\rangle
+=
+E_*n^2\frac{Z_{n-1}}{Z_n}.
+}
+\tag{R30}
+$$
+

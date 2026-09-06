@@ -1,0 +1,28 @@
+## 定理 T3：Gamma—整数分解
+
+令两个随机变量独立：
+
+$$
+\mathsf G_\sigma
+\sim
+\operatorname{Gamma}\!\left(1+\frac{\sigma}{2},1\right),
+$$
+
+$$
+\Pr(N_\sigma=n)=\frac{n^{-\sigma}}{\zeta(\sigma)}.
+$$
+
+那么：
+
+$$
+\boxed{
+X_\sigma
+\overset{d}=
+\frac12\log\frac{\mathsf G_\sigma}{\pi}
+-\log N_\sigma,
+}
+\tag{T10}
+$$
+
+其中 \(X_\sigma\) 的密度正是 \(r_\sigma\)。
+

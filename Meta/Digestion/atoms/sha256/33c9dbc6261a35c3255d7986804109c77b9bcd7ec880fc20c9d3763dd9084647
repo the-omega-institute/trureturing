@@ -1,0 +1,59 @@
+## 定理 162.1　无外部能量补偿的交换共振条件
+
+有
+
+$$
+\boxed{
+[H_0,L]
+=
+(\nu_A\epsilon_A-\nu_B\epsilon_B)
+\left(
+|10\rangle\langle01|
+-
+|01\rangle\langle10|
+\right).
+}
+\tag{162.1}
+$$
+
+因此，当 \(\sin\theta\ne0\) 时，
+
+$$
+\boxed{
+[H_0,U_\theta]=0
+\iff
+\nu_A\epsilon_A=\nu_B\epsilon_B.
+}
+\tag{162.2}
+$$
+
+### 证明
+
+\(|10\rangle\) 与 \(|01\rangle\) 的共同参照能量分别为
+
+$$
+\nu_A\epsilon_A,
+\qquad
+\nu_B\epsilon_B.
+$$
+
+逐项计算交换子得到式（162.1）。
+
+在单激发子空间内，
+
+$$
+U_\theta=\cos\theta\,I-i\sin\theta\,L.
+$$
+
+当 \(\sin\theta\ne0\) 时，交换子消失等价于两个参照能量相等。∎
+
+### 解释
+
+如果两个探针没有满足共振条件，不能仍然使用同一个交换门并宣称“没有其他能量参与”。
+
+此时需要明确的工作源、储能器或额外媒介。它们必须进入完整账本。
+
+这也是为什么“保持某个 Gibbs 态”比“已经给出能量守恒的物理操作”弱；两种要求在量子理论中并不等价。([arXiv][2])
+
+---
+

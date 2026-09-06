@@ -1,0 +1,25 @@
+## 定理 T4：指数位移分解
+
+令：
+
+$$
+\lambda=\sigma-1>0,
+$$
+
+并取独立随机变量：
+
+$$
+Y_\sigma\sim p_\sigma,
+\qquad
+E_\lambda\sim\operatorname{Exp}(\lambda).
+$$
+
+那么：
+
+$$
+\boxed{
+X_\sigma\overset d=Y_\sigma-E_\lambda.
+}
+\tag{T15}
+$$
+

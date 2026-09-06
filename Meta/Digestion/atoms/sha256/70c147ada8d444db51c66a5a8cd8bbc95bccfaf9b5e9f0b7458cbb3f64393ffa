@@ -1,0 +1,81 @@
+## 定理 164.2　相同热边缘的有限 carry 见证
+
+取相同局部探针，激发概率
+
+$$
+p=\frac13,
+$$
+
+并令
+
+$$
+\gamma=\operatorname{diag}\left(\frac23,\frac13\right).
+$$
+
+定义
+
+$$
+\boxed{
+\rho_\pm
+=
+\gamma\otimes\gamma
+\pm
+\frac i9
+\left(
+|10\rangle\langle01|
+-
+|01\rangle\langle10|
+\right).
+}
+\tag{164.3}
+$$
+
+则：
+
+1. \(\rho_\pm\) 均为严格正的密度矩阵；
+2. 两侧边缘均为 \(\gamma\)；
+3. 对同一个 \(U_{\pi/4}\)，末态 \(B\) 的激发概率分别为
+
+   $$
+   \boxed{
+   p_B^{(+)}=\frac49,
+   \qquad
+   p_B^{(-)}=\frac29.
+   }
+   \tag{164.4}
+   $$
+
+### 证明
+
+两个态的本征值均为
+
+$$
+\frac49,\quad\frac13,\quad\frac19,\quad\frac19.
+$$
+
+交叉项对任一侧取偏迹均为零，因此边缘相同。
+
+在单激发子空间中直接实施
+
+$$
+U_{\pi/4}
+=
+\frac1{\sqrt2}(I-iL),
+$$
+
+得到式（164.4）。∎
+
+### 项目解释
+
+若当前 CUT 只保存
+
+$$
+q(\rho_{AB})=(\rho_A,\rho_B),
+$$
+
+它把 \(\rho_+\) 与 \(\rho_-\) 合并；后续能量读数却将二者分开。
+
+因此，这构成项目意义下的明确 carry witness。不能给“局部温度对”直接配置一个覆盖全部相关量子输入的自治热流规则。
+
+---
+

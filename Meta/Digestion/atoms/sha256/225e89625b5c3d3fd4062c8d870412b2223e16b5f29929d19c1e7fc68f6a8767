@@ -1,0 +1,103 @@
+## 定理 189.2　有限量子实验的局部自由落体误差
+
+在自由落体参照中比较
+
+$$
+H_{\mathrm{tid}}(t)
+=
+E+\frac{P_Y^2}{2M}+M\mathcal R_q(t,Y)
+$$
+
+与
+
+$$
+H_{\mathrm{free}}
+=
+E+\frac{P_Y^2}{2M}.
+$$
+
+令
+
+$$
+m_{\max}=\|M\|.
+$$
+
+对同一个初态，设自由参考演化具有有限四阶位置矩。则
+
+$$
+\boxed{
+D\bigl(\rho_{\mathrm{tid}}(T),\rho_{\mathrm{free}}(T)\bigr)
+\le
+\frac{m_{\max}}{2\hbar}
+\int_0^T
+K_\Phi(t)
+\sqrt{\operatorname{Tr}[\rho_{\mathrm{free}}(t)Y^4]}
+\,dt.
+}
+\tag{189.3}
+$$
+
+若
+
+$$
+\sqrt{\operatorname{Tr}[\rho_{\mathrm{free}}(t)Y^4]}
+\le L^2,
+\qquad K_\Phi(t)\le K_*,
+$$
+
+则
+
+$$
+\boxed{
+D\bigl(\rho_{\mathrm{tid}}(T),\rho_{\mathrm{free}}(T)\bigr)
+\le
+\frac{m_{\max}K_*L^2T}{2\hbar}.
+}
+\tag{189.4}
+$$
+
+必要时将上界截断到一。
+
+### 证明
+
+先纯化初态。由 Duhamel 公式，
+
+$$
+\begin{aligned}
+&(U_{\mathrm{tid}}(T)-U_{\mathrm{free}}(T))|\Psi_0\rangle\\
+&=
+-\frac{i}{\hbar}\int_0^T
+U_{\mathrm{tid}}(T,t)
+M\mathcal R_q(t,Y)
+U_{\mathrm{free}}(t)|\Psi_0\rangle\,dt.
+\end{aligned}
+$$
+
+左侧实际后缀酉演化不增加范数。使用式（189.2），有
+
+$$
+\|M\mathcal R_q\Psi_{\mathrm{free}}\|
+\le
+\frac{m_{\max}K_\Phi}{2}
+\|Y^2\Psi_{\mathrm{free}}\|.
+$$
+
+积分后，再使用纯态迹距离不超过相应向量距离及偏迹收缩性，得到结论。∎
+
+### 这是什么性质的证书？
+
+它是对满足位置矩预算的输入族给出的过程误差界，不是对任意无限扩展波包的无条件 diamond 范数界。
+
+因此，局部等效性具有明确窗口：
+
+$$
+\boxed{
+\frac{m_{\max}K_*L^2T}{\hbar}\ll1.
+}
+\tag{189.5}
+$$
+
+同一个区域，对短时间、窄波包的观察者可能足够接近自由过程；对更宽或更长相干时间的实验，潮汐余项可能变得可见。
+
+---
+

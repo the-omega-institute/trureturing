@@ -1,0 +1,64 @@
+# 十、这轮对共同量子核的实际推进
+
+现在有三种不同强度的观察结构。
+
+**完整有限窗口观察：**
+
+$$
+|\Phi_X\rangle
+=
+D_X^{1/2}R_Xf,
+\qquad
+\|\Phi_X\|^2=\mathfrak J(X).
+$$
+
+其最小线性实现维数为 \(2X\)。
+
+**频率观察：**
+
+$$
+y=\sum_{r=0}^{2X-1}\eta_r(X)\phi_r.
+$$
+
+其中
+
+$$
+\boxed{
+\frac1{X^2}
+\sum_{r\ge\sqrt{X\log X}}|\eta_r(X)|^2=O(1)
+}
+$$
+
+已经无条件成立。
+
+**平均模态观察：**
+
+$$
+\boxed{
+\mathfrak m(X)=\frac{\eta_0(X)}{\sqrt2X}.
+}
+$$
+
+若使用未归一化状态
+
+$$
+|\chi_X\rangle=\frac1X\sum_jy_j|j\rangle,
+$$
+
+那么零频投影的权重为
+
+$$
+\boxed{
+\langle\chi_X|
+|\phi_0\rangle\langle\phi_0|
+|\chi_X\rangle
+=
+2|\mathfrak m(X)|^2.
+}
+\tag{46}
+$$
+
+这里必须保留“未归一化”。如果先把 \(|\chi_X\rangle\) 归一化，概率自然不超过 \(1\)，但其原始范数就被移出了状态；那不会自动证明式（35）。
+
+---
+

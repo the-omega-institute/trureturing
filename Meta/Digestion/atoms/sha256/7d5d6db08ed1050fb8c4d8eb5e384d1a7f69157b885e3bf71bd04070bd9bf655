@@ -1,0 +1,31 @@
+**平均模态观察：**
+
+$$
+\boxed{
+\mathfrak m(X)=\frac{\eta_0(X)}{\sqrt2X}.
+}
+$$
+
+若使用未归一化状态
+
+$$
+|\chi_X\rangle=\frac1X\sum_jy_j|j\rangle,
+$$
+
+那么零频投影的权重为
+
+$$
+\boxed{
+\langle\chi_X|
+|\phi_0\rangle\langle\phi_0|
+|\chi_X\rangle
+=
+2|\mathfrak m(X)|^2.
+}
+\tag{46}
+$$
+
+这里必须保留“未归一化”。如果先把 \(|\chi_X\rangle\) 归一化，概率自然不超过 \(1\)，但其原始范数就被移出了状态；那不会自动证明式（35）。
+
+---
+

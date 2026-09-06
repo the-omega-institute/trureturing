@@ -1,0 +1,77 @@
+# 结论
+
+本轮真正补上的第一条等号是：
+
+$$
+\boxed{
+\Lambda(n)-1
+=
+\text{由有限 Möbius 系数确定的有理相位叠加}.
+}
+$$
+
+因此，有限尺度上不必再猜测“同余模态能否表示实际素数”：可以精确表示。
+
+但随后证明了一个重要限制：
+
+$$
+\boxed{
+\text{精确表示}
+\not\Rightarrow
+\text{可以删除表示中的相干交叉项}.
+}
+$$
+
+事实上，同一个实际算术对象具有明确的冗余方向 \(g\)：
+
+$$
+Ag=0.
+$$
+
+沿着这个方向改变表示，会使去相干能量任意增大，却不改变任何真实算术读数。
+
+同时，实际有限系数在 \(q\asymp X\) 的区域产生了可计算的连续量子核：
+
+$$
+\boxed{
+\Gamma_\tau(s,t)
+=
+\frac6{\pi^2}
+\int_{\mathcal B}
+[\tau+\log(8|\xi|)]^2
+e^{2\pi i(s-t)\xi}\,d\xi.
+}
+$$
+
+它仍然具有非零的常数级联合贡献，但这个贡献依赖表示参数，不能直接等同于实际余项中所需的补偿。
+
+**因此，剩余算术任务已经从“寻找一个正核”进一步收紧为：**
+
+$$
+\boxed{
+b_{8X}(0)^*
+\Omega_{X,8X}
+b_{8X}(0)
+=O(1).
+}
+$$
+
+本轮没有证明这个全尺度上界；已经证明的是如何精确固定其中的实际振幅、如何识别表示冗余，以及为什么不相容的去相干操作会改变问题。
+
+后续真正有价值的估计，应当作用于式（36）的**观察半范数**或式（39）的**相干误差**。它们对表示冗余不敏感，并且一旦得到统一控制，就能通过已经建立的均方—解析桥返回实际零点问题。
+
+[1]: https://arxiv.org/html/1612.03136v1 "Finite Ramanujan expansions and shifted convolution sums of arithmetical functions"
+[2]: https://dlmf.nist.gov/27.5?utm_source=chatgpt.com "27.5 Inversion Formulas ‣ Multiplicative Number Theory ‣ ..."
+[3]: https://dlmf.nist.gov/27.6 "DLMF: §27.6 Divisor Sums ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[4]: https://arxiv.org/html/2008.06140v1 "The mean square of the error term in the prime number theorem"
+[5]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+继续。这一轮可以把前文的观察结构进一步压缩，并证明三个具体结论：
+
+**第一，前文的算术观察矩阵虽然作用在 \(3X\) 个整数坐标上，但其秩恰好只有 \(2X\)。除了模态表示的冗余，还存在一个可以完整写出的 \(X\) 维观察盲区。**
+
+**第二，在这 \(2X\) 个有效读出中，绝大多数高频模态的总能量已经能无条件控制；尚未受控的部分可以限制到前 \(O(\sqrt{X\log X})\) 个低频模态。**
+
+**第三，如果沿全部整数尺度读取，那么其中一个固定的平均模态就足以保留 RH 的判定信息。它对应一个明确的三角加权素数幂和。**
+
+下面给出证明。有限线性代数部分直接推导；解析部分使用经典素数定理、ζ 的对数导数和 RH 下的均方估计。这些综合推导尚未进行 Lean 编译。
+
