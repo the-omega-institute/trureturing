@@ -1,0 +1,103 @@
+{
+  "scale": "a=log(3)/2",
+  "N": 64,
+  "M": 32768,
+  "candidate_source": "certify_prime3_refined.CANDIDATE, unchanged",
+  "source_sha256": "d6c150268b3f041701a40b804499218bd164555dede6d9c2bd30e7a10a195a99",
+  "base_source_sha256": "8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0",
+  "ordinary_gram_sha256": "7f4e1049624807432efe96a68fe63babbc1c3bd37f2d40600a4cddadbddb85a9",
+  "shells": [
+    {
+      "first": 65,
+      "last": 128,
+      "energy_lower": "1879483/524288",
+      "resolvent_weight_upper": "8192000000/29366823571",
+      "odd_energy_lower": "1592211/1048576",
+      "odd_resolvent_weight_upper": "16384000000/24878100267"
+    },
+    {
+      "first": 129,
+      "last": 256,
+      "energy_lower": "4480485/1048576",
+      "resolvent_weight_upper": "16384000000/70007381517",
+      "odd_energy_lower": "2310931/1048576",
+      "odd_resolvent_weight_upper": "16384000000/36108100267"
+    },
+    {
+      "first": 257,
+      "last": 512,
+      "energy_lower": "2602323/524288",
+      "resolvent_weight_upper": "8192000000/40661198571",
+      "odd_energy_lower": "758419/262144",
+      "odd_resolvent_weight_upper": "4096000000/11850247723"
+    },
+    {
+      "first": 513,
+      "last": 1024,
+      "energy_lower": "5930133/1048576",
+      "resolvent_weight_upper": "16384000000/92658131517",
+      "odd_energy_lower": "939613/262144",
+      "odd_resolvent_weight_upper": "4096000000/14681403973"
+    },
+    {
+      "first": 1025,
+      "last": 2048,
+      "energy_lower": "6656285/1048576",
+      "resolvent_weight_upper": "16384000000/104004256517",
+      "odd_energy_lower": "4484247/1048576",
+      "odd_resolvent_weight_upper": "16384000000/70066162767"
+    },
+    {
+      "first": 2049,
+      "last": 4096,
+      "energy_lower": "3691385/524288",
+      "resolvent_weight_upper": "8192000000/57677792321",
+      "odd_energy_lower": "5210553/1048576",
+      "odd_resolvent_weight_upper": "16384000000/81414694017"
+    },
+    {
+      "first": 4097,
+      "last": 8192,
+      "energy_lower": "8109421/1048576",
+      "resolvent_weight_upper": "16384000000/126709506517",
+      "odd_energy_lower": "2968557/524288",
+      "odd_resolvent_weight_upper": "8192000000/46383604821"
+    },
+    {
+      "first": 8193,
+      "last": 16384,
+      "energy_lower": "8836155/1048576",
+      "resolvent_weight_upper": "16384000000/138064725267",
+      "odd_energy_lower": "1665951/262144",
+      "odd_resolvent_weight_upper": "4096000000/26030435223"
+    },
+    {
+      "first": 16385,
+      "last": 32768,
+      "energy_lower": "9562931/1048576",
+      "resolvent_weight_upper": "16384000000/149420600267",
+      "odd_energy_lower": "7390557/1048576",
+      "odd_resolvent_weight_upper": "16384000000/115477256517"
+    }
+  ],
+  "far_energy_lower": "160777/16384",
+  "weighted_gram_error_upper": "4/152587890625",
+  "odd_weighted_gram_error_upper": "8/152587890625",
+  "odd_far_energy_lower": "8117343/1048576",
+  "weighted_error_energy": "12491631453185819637511344712927671804131934263921738028038252936738495613122368702090592319433515625/30561133438797017535535505378800690190417075626450640325891321095903817727749396999026397161786177142797415192828498149376",
+  "unweighted_second_jet_tail_upper": "9/10000000000000",
+  "candidate_rayleigh_interval": "[0.0000000560907835275850890874743114995237658309895045623690485910183, 0.0000000560908238555741257344559807084299824772009075978314287922534]",
+  "ground_lower": "2252813807/40960000000000000",
+  "candidate_upper": "560909/10000000000000",
+  "orthogonal_threshold": "3/250000",
+  "projective_distance_sq_upper": "44669457/489267186193",
+  "projective_distance_upper": "1/100",
+  "pivot_displays": {
+    "even_lower": 0.003202644247409436,
+    "even_complement": 0.26802217563245934,
+    "odd_complement": 0.040988013296152585
+  },
+  "status": "directed intervals and exact rational/integer checks passed",
+  "formal_scope": "Not a Lean run. Operator identification and the Neumann Gamma mixture and all-parity logarithmic bound are paper bridges; the Lean companion proves the Green-kernel completion and finite-mixture positivity.",
+  "search_scope": "Failed LDL attempts imply no spectral upper bound; the reported lower bound is separately rechecked."
+}

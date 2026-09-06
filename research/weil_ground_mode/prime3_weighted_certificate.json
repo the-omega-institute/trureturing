@@ -1,0 +1,96 @@
+{
+  "scale": "a=log(3)/2",
+  "N": 64,
+  "M": 32768,
+  "candidate": "unchanged 129-entry dyadic vector in certify_prime3_refined.py",
+  "source_sha256": "df01474b5e110852391efd47264b5390acf9505129a97e4c3d7121338b6a071a",
+  "arithmetic_dependency_sha256": "8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0",
+  "unweighted_gram_sha256": "7f4e1049624807432efe96a68fe63babbc1c3bd37f2d40600a4cddadbddb85a9",
+  "logarithmic_lower_constant_display": "[1.51845189863606464915177408798355332299353284065194181844421, 1.5184518986360646491517740879835533229935328406519418187093]",
+  "exact_error_energy": "2249064940320895/664613997892457936451903530140172288",
+  "unweighted_gram_error_budget": "1/10000000000",
+  "second_jet_unweighted_scalar_tail_budget": "9/10000000000000",
+  "shells": [
+    {
+      "first": 65,
+      "last": 129,
+      "energy_lower": "3/2",
+      "gram_sha256": "54297191e3aa0280e9df7258157337222b7a2aa8ee2302e3e400e68300a58152"
+    },
+    {
+      "first": 130,
+      "last": 259,
+      "energy_lower": "2",
+      "gram_sha256": "284fc30152bacef252b1b80d17a0b4ab35e41e775c7d145b4289ad5b24c84bca"
+    },
+    {
+      "first": 260,
+      "last": 519,
+      "energy_lower": "5/2",
+      "gram_sha256": "24ec950850a2165091442026a50affb603c998731e99e4bb39bce8e1d7c7eaa3"
+    },
+    {
+      "first": 520,
+      "last": 1039,
+      "energy_lower": "3",
+      "gram_sha256": "ad4b8558b0e9edebf78896cf4f322dd9a09d739ad9fa2809982608b1f495977d"
+    },
+    {
+      "first": 1040,
+      "last": 2079,
+      "energy_lower": "7/2",
+      "gram_sha256": "975eb5eedea4bb9fc84f688675d2668cb860b9d246f718841d94a144397a24da"
+    },
+    {
+      "first": 2080,
+      "last": 4159,
+      "energy_lower": "4",
+      "gram_sha256": "0500dadff33d3ef5d5a5abcb67a9763c88f4fcf17b316a4083a4ab692a5b6e57"
+    },
+    {
+      "first": 4160,
+      "last": 8319,
+      "energy_lower": "9/2",
+      "gram_sha256": "f916d5a76da7597120862bdf378b40279c6a0c6db0a52d0613db94f57ab1293d"
+    },
+    {
+      "first": 8320,
+      "last": 16639,
+      "energy_lower": "5",
+      "gram_sha256": "45b46fb6f4e8a07f503fedf5cdeac44ef54dc3f467cac53dc1cc8f11d433f358"
+    },
+    {
+      "first": 16640,
+      "last": 32768,
+      "energy_lower": "11/2",
+      "gram_sha256": "e1a148c9f45b6aa7228a46c011415088d671739f8b91f4d251dea53868d71b7e"
+    }
+  ],
+  "infinite_remainder_energy_lower": "11/2",
+  "candidate_rayleigh_interval": "[0.0000000560907835275850890874743114995237658309895045623690485910183, 0.0000000560908238555741257344559807084299824772009075978314287922534]",
+  "ground_lower": "107/2000000000",
+  "candidate_upper": "560909/10000000000000",
+  "orthogonal_threshold": "3/250000",
+  "gap_lower": "119439091/10000000000000",
+  "projective_distance_sq_upper": "25909/119465000",
+  "projective_distance_upper": "59/4000",
+  "full_lower_ldl_pivots_display": {
+    "even": 0.003184197796950842,
+    "odd": 0.04135998712360938
+  },
+  "complement_ldl_pivots_display": {
+    "even": 0.26687125826877145,
+    "odd": 0.04088207221668656
+  },
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "elapsed_seconds": 9.483205795288086,
+  "status": "directed interval and exact integer checks passed; not a Lean run",
+  "paper_bridges": [
+    "actual Fourier/domain identification",
+    "integer discrete-Hilbert norm <= pi",
+    "actual Gamma diagonal and high-frequency symbol bounds",
+    "full logarithmic high-mode form bound and weighted Schur completion",
+    "infinite second-jet square summation"
+  ]
+}

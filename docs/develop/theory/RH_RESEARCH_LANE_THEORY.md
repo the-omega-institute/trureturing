@@ -1090,7 +1090,7 @@ R_{r,N,L}\to0
 &\sim \text{分解为频率 }\log p\text{ 的素数通道},
 \\
 \text{颜色间的破缺}
-&\sim \text{提升更新的非交换曲率},
+&\sim \text{提升后的非交换曲率},
 \\
 \text{缺陷能量}
 &\sim \sum_{p,q}\|C_{p,q}\|^2,
@@ -1384,7 +1384,7 @@ R_\varphi(s)=1.
 
 下列内容保留为后续形式化目标：
 
-1. 在绝对收敛半平面中建立有限或无限黄金壳测度的 Fourier 系数与 `-L'/L` 垂直采样之间的定理；
+1. 在绝对收敛半平面中建立有限或无限黄金壳测度的 Fourier 系数与 `-L'/L` 竖直采样之间的定理；
 2. 形式化 `L(1,chi_5)=2 log(phi)/sqrt(5)`，并连接黄金 Möbius Lyapunov 指数；
 3. 将 explicit formula 实现为 prime-shell test space 与 zero-spectrum distribution 之间的连续线性泛函恒等式；
 4. 构造足够完备的 golden Weil frame，并证明其正性是否等价于完整 Weil criterion；
@@ -2218,8 +2218,7 @@ Lean 证明
 \le
 M^2
 \left(
-2\|a-1\|\varepsilon
-+2\varepsilon^2
+2\|a-1\|\varepsilon+2\varepsilon^2
 \right)^2
 }
 \]
@@ -5159,7 +5158,7 @@ K_{\delta,\gamma}(t)
 \[
 O_\delta(t)
 =
-\frac{e^{\delta t}-e^{-\delta t}}{2}.
+\frac{e^{\delta t}-e^{-\delta t}}2.
 \]
 
 ### 6.3 负平方是稳定化债务
@@ -6165,7 +6164,6 @@ c_{\omega,T}E_{\mathrm{hol}}(C)
 \text{admissible Weil test function}
 \longrightarrow
 \texttt{FixedScaleWeilQuadraticForm}.
-}
 \]
 
 下一开放边命名为：
@@ -6397,3 +6395,2765 @@ RH
 \rightarrow
 \texttt{OfflineZeroPickIndexLowerBound}.
 }
+\]
+
+---
+
+## [PR #5602] WEIL_GROUND_MODE_SHIFT_BARRIER
+
+# Weil 最低模态路线中的内部平移障碍与算术边界项
+
+对应真源：`D5/S3/Weil/ZetaBridge/WeilGroundModeShiftBarrier.lean`。
+配套 Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilGroundModeShiftBarrier.scribe.cs`。
+
+本节补入前一轮已提交 Lean 的理论推导。有限平移恒等式、紧支撑非消失性和平方残差下界已有 Lean 证明脚本，尚未经本环境编译。尺度族推论及算术边界展开是纸面推导。没有证明完整算术强制性、最低模态单纯偶性或 RH。
+
+## 1. 同一算术对象与平移探针
+
+令
+
+\[
+C(f,g)(s)=\int_{\mathbb R}f(x)\overline{g(x-s)}\,dx,
+\qquad W(f,g)=\operatorname{literatureRHS}(C(f,g)).
+\]
+
+直接使用 `Zeta23.EF.weilTest` 与 `Zeta23.EF.literatureRHS`，保留实际 von Mangoldt 素数幂系数、两个极点项和 `gammaBracket`。这里的原始相关函数载体允许一般复值函数。已有 `WeilTestFunction` 的偶性约束不能代替完整奇偶空间上的最低模态论证。
+
+Fourier 约定为 `hat f(z)=integral f(x)*exp(i*z*x) dx`。固定 `t>0`，定义
+
+\[
+S_tf(x)=f(x-t)+f(x+t),\qquad B=S_t-\alpha I.
+\]
+
+对归一化候选 `k`，取实数 `alpha=<S_t k,k>`，则 `|alpha|<=2` 且 `Bk` 与 `k` 正交。相关函数满足精确恒等式
+
+\[
+C(Bf,g)=C(f,Bg),\qquad C(Bk,Bk)=C(k,B^2k).
+\]
+
+这些等式在作用整个 `literatureRHS` 之前成立，因此不会丢掉 prime、pole 和 Gamma 项之间的抵消。
+
+## 2. 已提交的方向性残差障碍
+
+当 `Bk` 和 `B^2k` 都是同一窗口算子的合法测试函数时，令
+
+\[
+\mu=\langle k,A_ak\rangle,\qquad R=(A_a-\mu)k,\qquad r=\|R\|_2.
+\]
+
+则
+
+\[
+q_a(Bk)-\mu\|Bk\|_2^2=\Re\langle R,B^2k\rangle.
+\]
+
+结合该方向的强制性与残差配对上界，Lean 证明脚本给出
+
+\[
+\boxed{\delta^2\|Bk\|_2^2\le3(2+\alpha^2)r^2.}
+\]
+
+它没有证明算术强制性本身。利用 `|alpha|<=2`，可读出
+
+\[
+\boxed{r/\delta\ge\|Bk\|_2/\sqrt{18}.}
+\]
+
+## 3. 固定内缩候选的尺度族障碍
+
+设归一化候选满足
+
+\[
+\operatorname{supp}k_a\subset[-a+2t,a-2t],
+\qquad k_a\longrightarrow k_\infty\ne0\text{ in }L^2(\mathbb R),
+\]
+
+其中 `t>0` 固定。内缩余量使一次、两次平移仍为原窗口合法测试函数。此时
+
+\[
+B_ak_a\longrightarrow(S_t-\alpha_\infty)k_\infty.
+\]
+
+右侧非零，因为 Fourier 乘子 `2*cos(t*xi)-alpha_infty` 的零集离散，非零 L2 函数不可能完全支撑于该零测集。因此，若余维一强制性成立，必有
+
+\[
+\boxed{\liminf_{a\to\infty}r_a/\delta_a>0.}
+\]
+
+这个障碍已经存在于偶子空间内部，因为对称平移保持偶性。
+
+## 4. 对明确 Xi 核截断的应用
+
+令
+
+\[
+\Phi(x)=\sum_{n=1}^\infty
+\left(4\pi^2n^4e^{9x/2}-6\pi n^2e^{5x/2}\right)
+\exp(-\pi n^2e^{2x}).
+\]
+
+此 theta 核为偶函数，满足上述 Fourier 约定下的 `hat Phi=Xi`，并具有双指数衰减。取具有固定内缩余量的偶光滑截断 `chi_a`，令
+
+\[
+k_a=\chi_a\Phi/\|\chi_a\Phi\|_2,
+\qquad c_a=\|\chi_a\Phi\|_2.
+\]
+
+双指数衰减给出 `c_a*hat k_a=hat(chi_a*Phi)` 在复平面紧集上一致收敛到 Xi，并且 `c_a` 趋向非零常数。另一方面，第 3 节说明：若强制性成立，
+
+\[
+|c_a|\sqrt{2a}e^{ba}r_a/\delta_a\longrightarrow0
+\]
+
+甚至在 `b=0` 也不成立。因此固定内缩的 Xi 核截断不能同时实现该强制性与此充分收敛条件。本推导不排除触及边界的 prolate 候选，也不排除直接控制 Fourier 观察误差的较弱机制。
+
+## 5. 保留边界后的精确缺陷
+
+令 `P` 为窗口正交截断，`Q=I-P`，`Pk=k`，并记
+
+\[
+v=PBk,\quad h=QBk,\quad w=PBv,\quad e=QBv.
+\]
+
+在混合 Weil 配对合法的条件下，相关函数转移给出
+
+\[
+W(v,v)+W(h,v)=W(k,w)+W(k,e).
+\]
+
+由此
+
+\[
+q_a(v)-\mu\|v\|_2^2
+=\Re\langle R,w\rangle+\mathcal B_a(k,t),
+\]
+
+\[
+\mathcal B_a(k,t)=\Re\{W(k,e)-W(h,v)\}.
+\]
+
+因为 `v` 与 `k` 正交且 `||w||<=4||v||`，强制性要求
+
+\[
+\boxed{\mathcal B_a(k,t)\ge\delta\|v\|_2^2-4r\|v\|_2.}
+\]
+
+中心化系数 `alpha` 在这个边界泛函中抵消。因此该量由明确候选、窗口与平移步长独立决定。边界贡献需要支撑所需谱分离，不能仅以边界 L2 质量小为由忽略。
+
+## 6. 有限素数幂表达与 Abel 变换
+
+设
+
+\[
+d=C(k,e)-C(h,v),\qquad H(s)=\Re(d(s)+d(-s)),\qquad M=2a+t.
+\]
+
+对紧支撑、有限分段光滑的候选，相关函数具有所需正则性。窗口内外正交性及支撑端点给出 `H(0)=H(M)=0`。定义
+
+\[
+\mathfrak D_M(H)=
+\sum_{2\le n\le e^M}\frac{\Lambda(n)}{\sqrt n}H(\log n)
+-\int_0^Me^{s/2}H(s)\,ds.
+\]
+
+保留极点与连续主项的抵消，得到
+
+\[
+\boxed{
+\mathcal B_a(k,t)=-\mathfrak D_M(H)
+-\int_0^M\frac{e^{-5s/2}}{1-e^{-2s}}H(s)\,ds.
+}
+\]
+
+令 `Psi(x)=sum_{n<=x} Lambda(n)`，`E(x)=Psi(x)-x+1`。Abel 分部积分给出
+
+\[
+\mathfrak D_M(H)=-\int_0^ME(e^s)e^{-s/2}
+\left(H'(s)-\tfrac12H(s)\right)ds.
+\]
+
+因此明确候选必须通过的必要检验是
+
+\[
+\begin{aligned}
+&\int_0^ME(e^s)e^{-s/2}\left(H'(s)-\tfrac12H(s)\right)ds\\
+&\quad-\int_0^M\frac{e^{-5s/2}}{1-e^{-2s}}H(s)\,ds
+\ge\delta\|v\|_2^2-4r\|v\|_2.
+\end{aligned}
+\]
+
+该候选下界仍未证明，也不足以单独替代所有正交方向上的强制性。分段光滑定义域延拓、上述边界展开与 Abel 变换尚未全部形式化。
+
+---
+
+## [PR #5602] CANONICAL_GAMMA_TAIL_BOUNDARY_MOMENTS
+
+# 2026-09-05：保留边界矩的 Gamma 尾项压缩与最低模态误差预算
+
+对应 Lean：`D5/S3/Weil/ZetaBridge/WeilArchimedeanTailJet.lean`。
+配套 Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilArchimedeanTailJet.scribe.cs`。
+
+本增补接续内部平移障碍。目标是保留实际候选的边界行为，并量化有限计算省略的 Gamma 尾项。下面第 3 节的逐频率密度误差已有 Lean 证明脚本；脚本经过数学和源码审查，尚未在本环境编译。Fourier 识别、积分预算、正投影修正、奇扇区推广和残差推论是本轮纸面推导。有限频带上的全方向估计与整个窗口 Hilbert 空间上的余维一强制性必须分别证明。
+
+## 1. 文献接口与本轮选择
+
+Connes、Consani、Moscovici 的 *Zeta Spectral Triples*，arXiv:2511.22755v1，第 7 节尤其 Lemma 7.3，已经证明其明确 prolate 模型在相应归一化下具有条带内的 Xi 极限；第 8 节继续要求真实最低模态的单纯偶性及与模型之间足够精确的逼近。该模型极限不能替代真实最低模态识别。
+
+Connes、van Suijlekom 的 *Quadratic Forms, Real Zeros and Echoes of the Spectral Action*，arXiv:2511.23257v1，提供规定分布与定义域条件下的实零点机制。Suzuki 的 *Weil's quadratic form via the screw function*，arXiv:2606.09096v1，给出实际 Weil 算子与 Friedrichs 扩张的另一种描述。使用这些结果需要保持同一算术形式及其定义域，不能将某个微分表达式的最小域直接等同于完成后的算子域。
+
+Groskin 的 *A finite Guinand–Weil dictionary and archimedean tail order for the truncated Weil quadratic form*，arXiv:2607.02828v1，Theorem 3.2 给出有限 Galerkin Gamma 尾项的精确 Cauchy Gram 密度，Lemma 3.1 给出大频率 Gamma 包络。该文已经提供 cutoff-free 组装和区间 LDL 分解。因此本轮不宣称首次消除 Gamma 截断，也不宣称优于其现有算法。本轮从该具体核继续推导保留边界矩的有限秩修正及显式误差预算。投影与几何级数工具本身是经典工具；未作原创优先权声明。
+
+参考地址：
+
+- https://arxiv.org/html/2511.22755v1
+- https://arxiv.org/html/2511.23257v1
+- https://arxiv.org/html/2606.09096v1
+- https://arxiv.org/html/2607.02828
+
+## 2. 归一化与具体 Gamma 尾项
+
+令窗口为 `[-L/2,L/2]`，`L=2a=log c>0`，有限素数幂 cutoff 为 `c=exp L`。定义
+
+\[
+\rho=\frac{2\pi}{L},\qquad b=\rho N,
+\qquad \gamma(t)=\Re\psi_\Gamma(1/4+it/2)-\log\pi.
+\]
+
+这里 `gamma` 直接是仓库已有 `Zeta23.EF.gammaBracket`。Fourier 仍取
+
+\[
+\widehat f(t)=\int_{\mathbb R}f(x)e^{itx}\,dx.
+\]
+
+在零延拓的偶子空间上，取正交归一基
+
+\[
+\varphi_0=L^{-1/2}\mathbf1_I,\qquad
+\varphi_k=(-1)^k\sqrt{2/L}\cos(\rho kx)\mathbf1_I\quad(k\ge1),
+\qquad I=[-L/2,L/2].
+\]
+
+相位 `(-1)^k` 是坐标约定的一部分。删掉它会改变后面的 Cauchy 响应。令 `sigma_0=1`，`sigma_k=sqrt(2)` 对 `k>0`，并设
+
+\[
+f_v=\sum_{k=0}^Nv_k\varphi_k,\qquad
+R_v(t)=\sum_{k=0}^N\frac{\sigma_kv_k}{1-(\rho k/t)^2}.
+\]
+
+逐项积分给出，对 `t>b`，
+
+\[
+\widehat f_v(t)=\frac2{\sqrt L}\frac{\sin(Lt/2)}tR_v(t).
+\]
+
+于是从 `|t|>T` 省略的真实 Gamma 能量矩阵为
+
+\[
+\boxed{v^*E_Tv=\int_T^\infty w_L(t)|R_v(t)|^2\,dt,}
+\]
+
+其中
+
+\[
+\boxed{w_L(t)=\frac{2\rho}{\pi^2}\gamma(t)\frac{\sin^2(Lt/2)}{t^2}.}
+\]
+
+这个公式也由上述 Cauchy Gram 密度经过等距偶嵌入得到。此处只处理 Gamma 积分尾项，prime 与 pole 块保持完整。真实 Weil 形式的其他部分没有被改成正核。
+
+## 3. 已提交的逐频率全方向误差
+
+固定任意自然数 `m`，允许 `m=0`。定义有限矩
+
+\[
+M_{2j}(v)=\sum_{k=0}^N\sigma_k(\rho k)^{2j}v_k,
+\qquad
+P_{m,v}(t)=\sum_{j=0}^{m-1}t^{-2j}M_{2j}(v).
+\]
+
+这些矩直接记录有限三角候选的边界偶阶导数：
+
+\[
+f_v^{(2j)}(L/2)=(-1)^jL^{-1/2}M_{2j}(v).
+\]
+
+保留矩允许候选具有非零边界值及导数。没有要求候选属于 moment-neutral 子空间。
+
+设
+
+\[
+q(t)=(b/t)^2<1.
+\]
+
+精确有限几何余项为
+
+\[
+R_v(t)-P_{m,v}(t)
+=\sum_{k=0}^N\sigma_kv_k
+\frac{(\rho k/t)^{2m}}{1-(\rho k/t)^2}.
+\]
+
+因为
+
+\[
+\left(\sum_k\sigma_k|v_k|\right)^2
+\le(2N+1)\sum_k|v_k|^2,
+\]
+
+有
+
+\[
+|R_v|,|P_{m,v}|
+\le\frac{\sqrt{2N+1}}{1-q(t)}\|v\|_2,
+\]
+
+\[
+|R_v-P_{m,v}|
+\le\frac{\sqrt{2N+1}\,q(t)^m}{1-q(t)}\|v\|_2.
+\]
+
+相乘得到
+
+\[
+\boxed{
+\bigl||R_v(t)|^2-|P_{m,v}(t)|^2\bigr|
+\le\frac{2(2N+1)q(t)^m}{(1-q(t))^2}\|v\|_2^2.
+}
+\]
+
+Lean 主声明 `even_archimedean_tail_density_jet_error` 证明将两边乘以 `|w_L(t)|` 后的精确密度不等式。量词覆盖任意 `N,m`、`L>0`、`t>rho*N` 和任意复系数向量。`N=0`、`m=0` 均包含在陈述内。该定理不假设 Gamma 的符号。
+
+即使在 `w_L>=0` 的区域，两个 Gram 密度之差也不必正半定。因此该直接 Taylor jet 只提供双边误差，不能直接声称一个有序的正修正。
+
+## 4. 直接 jet 的积分误差
+
+以下使用外部 Lemma 3.1 的独立输入
+
+\[
+0<\gamma(t)\le\log t-\frac85\qquad(t\ge7).
+\]
+
+本轮没有重新运行该文用于检查 `gamma(7)>0` 的 Arb 区间程序，也没有把该输入写成新公理。它不属于本轮 Lean 主声明的前提或结论。
+
+取 `T>=7`、`T>b`，记 `theta=b/T<1`。定义
+
+\[
+v^*E_T^{[m]}v=\int_T^\infty w_L(t)|P_{m,v}(t)|^2\,dt.
+\]
+
+逐频率界和
+
+\[
+\int_T^\infty t^{-p-2}\left(\log t-\frac85\right)dt
+=T^{-p-1}\left(\frac{\log T-8/5}{p+1}+\frac1{(p+1)^2}\right)
+\]
+
+给出纸面结论
+
+\[
+\boxed{
+\|E_T-E_T^{[m]}\|\le\varepsilon_m,
+}
+\]
+
+\[
+\varepsilon_m=
+\frac{4\rho(2N+1)}{\pi^2}
+\frac{\theta^{2m}}{(1-\theta^2)^2T}
+\left(\frac{\log T-8/5}{2m+1}+\frac1{(2m+1)^2}\right).
+\]
+
+积分式与算子范数运输尚未写入本轮 Lean。
+
+## 5. 正交投影给出有序的有限秩修正
+
+为获得正半定余量，在加权 Hilbert 空间
+
+\[
+\mathcal H_T=L^2((T,\infty),w_L(t)dt)
+\]
+
+中定义
+
+\[
+h_k(t)=\frac{\sigma_k}{1-(\rho k/t)^2},
+\qquad Vv=\sum_kv_kh_k.
+\]
+
+此时 `E_T=V^*V`。令 `Pi_m` 是到
+
+\[
+\operatorname{span}\{1,t^{-2},\ldots,t^{-2(m-1)}\}
+\]
+
+的正交投影，并定义
+
+\[
+\boxed{E^{\mathrm{opt}}_{T,m}=V^*\Pi_mV.}
+\]
+
+这个修正由 Gamma 核、有限带宽和明确矩空间独立构造，不使用未知最低模态。其矩阵可直接写为
+
+\[
+E^{\mathrm{opt}}_{T,m}=C^*M^{-1}C,
+\]
+
+\[
+M_{ij}=\int_T^\infty w_L(t)t^{-2(i+j)}dt,
+\qquad C_{ik}=\int_T^\infty w_L(t)t^{-2i}h_k(t)dt.
+\]
+
+对 `m>0`，`M` 正定：非零的 `t^{-2}` 多项式不可能在一个区间上恒零，而权密度在离散的正弦零点以外严格为正。对 `m=0` 直接令修正为零，无须求逆。
+
+投影的最小二乘性质给出
+
+\[
+\|(1-\Pi_m)Vv\|_{\mathcal H_T}^2
+\le\|R_v-P_{m,v}\|_{\mathcal H_T}^2.
+\]
+
+结合精确几何余项，得到本轮较强的纸面定理：
+
+\[
+\boxed{
+0\preceq E_T-E^{\mathrm{opt}}_{T,m}
+=V^*(1-\Pi_m)V\preceq\kappa_mI,
+\qquad \operatorname{rank}E^{\mathrm{opt}}_{T,m}\le m,
+}
+\]
+
+其中
+
+\[
+\boxed{
+\kappa_m=
+\frac{2\rho(2N+1)}{\pi^2}
+\frac{\theta^{4m}}{(1-\theta^2)^2T}
+\left(\frac{\log T-8/5}{4m+1}+\frac1{(4m+1)^2}\right).
+}
+\]
+
+证明中先平方余项，使幂次从 `theta^(2m)` 改善到 `theta^(4m)`，再使用 `sin^2<=1` 和 Gamma 包络积分。正余量来自正交投影恒等式，绝不能从直接 Taylor Gram 近似擅自推断。
+
+该定理是本轮纸面证明，尚未经 Lean 验证。实际数值实现还需对 `M`、`C` 的积分以及线性求解做区间控制。使用缩放基 `(T/t)^(2j)` 可以避免部分幂次尺度问题，但它不自动提供良好的矩矩阵条件数。
+
+## 6. 奇扇区的相邻纸面结论
+
+奇基可取 `(-1)^k*sqrt(2/L)*sin(rho*k*x)`，`1<=k<=N`。忽略共同的单位复相位后，其 Fourier 响应为
+
+\[
+R^-_v(t)=\sum_{k=1}^N\sqrt2v_k
+\frac{\rho k/t}{1-(\rho k/t)^2}.
+\]
+
+将矩空间改为
+
+\[
+\operatorname{span}\{t^{-1},t^{-3},\ldots,t^{-(2m-1)}\}
+\]
+
+并重复平方余项证明，得到
+
+\[
+0\preceq E^-_T-E^{-,\mathrm{opt}}_{T,m}\preceq\kappa^-_mI,
+\]
+
+\[
+\kappa^-_m=
+\frac{2\rho(2N)}{\pi^2}
+\frac{\theta^{4m+2}}{(1-\theta^2)^2T}
+\left(\frac{\log T-8/5}{4m+3}+\frac1{(4m+3)^2}\right).
+\]
+
+`N=0` 时奇子空间为零空间。这个相邻结论尚未形式化。它提供奇偶两侧一致的尾项处理方式，没有证明最低模态位于偶扇区。
+
+## 7. 对候选残差和谱分离的用途
+
+这一节仍固定同一个有限 Galerkin 子空间。记
+
+\[
+Q_\infty^N=\widetilde Q^N+S,
+\qquad \widetilde Q^N=Q_T^N+E^{\mathrm{opt}}_{T,m},
+\qquad 0\preceq S\preceq\kappa_m I.
+\]
+
+对归一化明确候选 `k`，令
+
+\[
+\widetilde\mu=\langle k,\widetilde Q^Nk\rangle,
+\quad\eta=\langle k,Sk\rangle\in[0,\kappa_m],
+\quad\mu=\widetilde\mu+\eta.
+\]
+
+若修正矩阵已在 `k` 的正交补上具有间隔 `tilde_delta>kappa_m`，则完整 Gamma 尾项加入后，仍可取
+
+\[
+\delta\ge\widetilde\delta-\kappa_m>0.
+\]
+
+对残差，有更精确的中心化控制：由 `S^2<=kappa_m*S`，
+
+\[
+\|(S-\eta I)k\|^2
+=\langle k,S^2k\rangle-\eta^2
+\le\kappa_m\eta-\eta^2\le\kappa_m^2/4.
+\]
+
+因此
+
+\[
+\boxed{
+r\le\widetilde r+\kappa_m/2,
+\qquad
+\frac r\delta\le
+\frac{\widetilde r+\kappa_m/2}{\widetilde\delta-\kappa_m}.
+}
+\]
+
+这里的 `r` 是完整 Gamma 积分下有限矩阵的残差。整个 Hilbert 空间上的残差还包括 Galerkin 正交补中的分量，整个空间的强制性也需要该正交补的独立下界与块间耦合控制。二者不能由以上有限矩阵估计省略。
+
+## 8. 参数族与诊断量
+
+若 `theta<=theta_0<1`，则
+
+\[
+\kappa_m\le A(L,N,T,\theta_0)\theta_0^{4m},
+\]
+
+\[
+A=\frac{2\rho(2N+1)}{\pi^2}
+\frac{\log T-8/5+1}{(1-\theta_0^2)^2T}.
+\]
+
+所以当 `0<theta_0<1` 时，选取
+
+\[
+m\ge\frac{\max\{0,\log(A/\epsilon)\}}{4\log(1/\theta_0)}
+\]
+
+足以使这个尾项预算不超过给定 `epsilon>0`。此处每个尺度的 `L,N,T` 仍显式保留，没有偷换为一个固定窗口定理。
+
+在文献使用的 `c=100,N=200,T=800` 参数处，代入本轮公式得到
+
+\[
+\theta\approx0.34109408846,
+\qquad \kappa_{32}\approx1.13078458\times10^{-62}.
+\]
+
+该数只是解析预算的高精度数值评价。没有实际组装 `Eopt`、没有认证 `M` 的条件数、没有得到新的最低特征值区间。75 组覆盖零阶、零带宽、复系数和接近带边的随机诊断均满足推导不等式；这些测试也不替代形式证明或区间证书。
+
+## 9. 仍需消除的数学假设
+
+本轮将具体 Gamma 尾项误差变成一个可按精度选择的有限矩预算。完整研究目标仍要求：
+
+1. 对明确算术候选证明有限修正矩阵中的正交补下界，并控制 prime、pole 与边界贡献之间的抵消。
+2. 对 Galerkin 子空间以外的全部方向给出强制性和耦合估计，将矩阵结论提升到同一 Friedrichs Weil 算子。
+3. 沿无界尺度序列联合控制实际候选残差与谱间隔，使误差足以承受复频率权重，并接到文献已有 prolate 模型的 Xi 极限。
+
+其中第 1、2 项仍然是算术承重问题。本轮没有证明新的全空间尺度实例，没有获得无界尺度的单纯偶性，也没有证明真实最低模态变换收敛到 Xi。
+
+---
+
+## [PR #5602] INFINITE_WEIL_COMPLEMENT_COERCIVITY
+
+# 2026-09-06：无限 Galerkin 补空间的显式算术下界
+
+对应 Lean：`D5/S3/Weil/ZetaBridge/WeilInfiniteComplementLeakage.lean`。
+配套 Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilInfiniteComplementLeakage.scribe.cs`。
+
+本节处理此前尚未控制的全部高模态方向。这里的截断参数 N 删除的是空间 Fourier 基的低阶模式；上一节的 T 截断的是组装 Gamma 积分时的连续频率变量。两种尾项不同，上一节的有限矩阵精度不能消除本节的无限维义务。
+
+本节的无限 Cauchy 级数低频质量界已有 Lean 证明脚本。级数绝对收敛、连续性和积分可积性包含在证明内。真实 Fourier 展开识别、完整 Weil 补空间下界、含素数尺度实例和 Schur 运输是以下纸面证明，尚未全部连接成 Lean 中的算子定理。Lean 与 Scribe 编译未在本环境运行。
+
+## 1. 文献接口与保留的对象
+
+Connes–Consani–Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1，第 7 节和 Lemma 7.3 已给出明确 prolate 模型的 Xi 极限，第 8 节保留真实最低模态识别与单纯偶性。Connes–van Suijlekom, arXiv:2511.23257v1，提供精确分布与算子定义域条件下的实零点定理。
+
+Suzuki, *Weil's quadratic form via the screw function*, arXiv:2606.09096v1，Theorem 1.1 识别同一 Weil 形式的 Friedrichs 实现，并建立相关对数型形式域的紧嵌入。因此本节不将紧 resolvent 或抽象高谱发散登记为新发现。Groskin, *A finite Guinand–Weil dictionary and archimedean tail order for the truncated Weil quadratic form*, arXiv:2607.02828v1，Theorem 3.2 处理有限 Galerkin Gamma 尾项。本节使用同一 Fourier 约定，但补空间没有有限上截止。
+
+仓库中直接可复用的 Gamma 真源为 `Zeta23.MuFields.mu_monotoneOn`、`mu_zero_le`、`neg_one_lt_mu_zero` 和 `Zeta23.mu_even`。本文 gamma=2*pi*mu，即既有 `Zeta23.EF.gammaBracket`。平移项和极点项仍来自 `literatureRHS(weilTest f f)`。未通过零点位置、RH 或目标正性构造输入。
+
+参考：
+
+- https://arxiv.org/html/2511.22755v1
+- https://arxiv.org/html/2511.23257v1
+- https://arxiv.org/html/2606.09096v1
+- https://arxiv.org/html/2607.02828v1
+
+本节矩阵元采用内积对第二变量线性的约定；相关函数与 Fourier 约定保持不变。
+
+## 2. 全部无限 Fourier 尾部的低频泄漏界
+
+固定 L=2a>0，I=[-L/2,L/2]，rho=2*pi/L。使用零延拓的正交归一基
+
+\[
+e_n(x)=(-1)^nL^{-1/2}e^{i\rho n x}\mathbf1_I(x),\qquad n\in\mathbb Z.
+\]
+
+令 P_N 是到 |n|<=N 的正交投影，N>=1。对任意 g 属于 P_N 的正交补，记其两侧系数为 u_j 和 v_j，对应 n=N+j+1 及 n=-(N+j+1)。Parseval 给出
+
+\[
+A=\sum_{j\ge0}|u_j|^2+\sum_{j\ge0}|v_j|^2=\|g\|_2^2.
+\]
+
+定义
+
+\[
+C(d,u)=\sum_{j\ge0}\frac{u_j}{d+j+1}.
+\]
+
+对 d>0，有逐项可求和的正上界
+
+\[
+\sum_{j=0}^{M-1}(d+j+1)^{-2}
+\le d^{-1}-(d+M)^{-1}\le d^{-1}.
+\]
+
+由此和 Cauchy–Schwarz 得到绝对收敛，以及
+
+\[
+|C(d,u)|^2\le d^{-1}\sum_{j\ge0}|u_j|^2.
+\]
+
+在 |s|<=N/4 上，N+s 和 N-s 均至少为 3N/4。因此
+
+\[
+|C(N+s,u)-C(N-s,v)|^2\le\frac8{3N}A.
+\]
+
+对有限 Fourier 和逐项积分，再取 L2 极限，得到
+
+\[
+\boxed{
+|\widehat g(\rho s)|^2
+=\frac L{\pi^2}\sin^2(\pi s)
+|C(N+s,u)-C(N-s,v)|^2.
+}
+\]
+
+极限交换无需边界正则性：支撑固定在 I 时，L2 收敛蕴含 L1 收敛，且 Fourier 变换在实轴上以 sqrt(L) 倍的 L2 误差一致收敛。右侧 Cauchy 级数在该紧带上一致绝对收敛，故与同一 Fourier 极限一致。一般 L2 向量不必具有端点值。
+
+使用 sin^2<=1 并积分，得到
+
+\[
+\boxed{
+\frac1{2\pi}\int_{|t|\le R_N}|\widehat g(t)|^2dt
+\le\epsilon_*\|g\|_2^2,
+\quad R_N=\frac{\pi N}{2L},
+\quad\epsilon_*=\frac4{3\pi^2}<\frac17.
+}
+\tag{IC1}
+\]
+
+Lean 主声明 `infinite_complement_low_frequency_mass` 证明 dimensionless 密度在 [-N/4,N/4] 上可积及其归一化积分界。输入是两条任意平方可和复序列，没有有限上截止、偶性、实值性、边界消失或谱间隔前提。Fourier 基展开与 Parseval 的上述识别仍为纸面桥，未冒充已形式化。
+
+## 3. 对实际 Gamma、素数幂和极点的完整下界
+
+记
+
+\[
+\gamma(t)=\Re\psi_\Gamma(1/4+it/2)-\log\pi.
+\]
+
+它在 |t| 上递增，且 gamma(t)>=gamma(0)>-2*pi。对完整 Friedrichs 形式域中的 g，式 (IC1) 和 Plancherel 给出
+
+\[
+q_\Gamma(g)\ge
+\big[(1-\epsilon_*)\gamma(R_N)+\epsilon_*\gamma(0)\big]\|g\|_2^2.
+\]
+
+设
+
+\[
+P_a=2\sum_{2\le n\le e^{2a}}\frac{\Lambda(n)}{\sqrt n}.
+\]
+
+实际相关函数满足 |C(g,g)(s)|<=||g||_2^2，故素数项至少为 -P_a||g||_2^2。两个极点在完整奇偶空间上的精确贡献为
+
+\[
+2|\langle g,\cosh(x/2)\rangle|^2
+-2|\langle g,\sinh(x/2)\rangle|^2.
+\]
+
+由于
+
+\[
+\int_{-a}^a\sinh^2(x/2)dx=\sinh a-a,
+\]
+
+极点项至少为 -2(sinh(a)-a)||g||_2^2。于是得到纸面定理：
+
+\[
+\boxed{
+q_a(g)\ge\beta_{a,N}\|g\|_2^2
+\quad\text{对所有 }g\in\operatorname{Dom}(q_a)\cap P_N^\perp,
+}
+\tag{IC2}
+\]
+
+\[
+\boxed{
+\beta_{a,N}=(1-\epsilon_*)\gamma\!\left(\frac{\pi N}{4a}\right)
++\epsilon_*\gamma(0)-P_a-2(\sinh a-a).
+}
+\]
+
+量词覆盖无限补空间中的所有允许向量。Gamma 形式积分在其形式域中有定义；有限素数平移及极点项是 L2 上的有界形式。因此同一不等式适用于该 Friedrichs 实现，不额外假定每个向量在算子域中。对偶向量，极点的负 sinh 通道为零，可删除最后一项。
+
+这个下界不假定补空间非负。所有常数由 a、N、Gamma 和不超过 e^(2a) 的素数幂独立给出。
+
+## 4. 一个完全显式的模态截止族
+
+以下初等 Gamma 下界避免在本节另用未经运行的区间 digamma 计算。令 z=alpha+ib，alpha,b>0，并设
+
+\[
+f(x)=\frac{x+\alpha}{(x+\alpha)^2+b^2}.
+\]
+
+实 digamma 部分分式级数及 H_M-log M 的极限给出
+
+\[
+\Re\psi_\Gamma(z)=\lim_{M\to\infty}
+\left(\log M-\sum_{n=0}^{M-1}f(n)\right).
+\]
+
+每个单位区间上用导数积分控制左 Riemann 和误差，有
+
+\[
+\left|\sum_{n=0}^{M-1}f(n)-\int_0^Mf(x)dx\right|
+\le\int_0^M|f'(x)|dx\le\frac1b.
+\]
+
+最后一个不等式来自 f 最多先增后减且最大值不超过 1/(2b)。其总变差在 alpha<=b 时等于 1/b-f(0)，在 alpha>b 时等于 f(0)，均不超过 1/b。计算积分并取极限，得到
+
+\[
+\Re\psi_\Gamma(\alpha+ib)\ge\log|\alpha+ib|-1/b\ge\log b-1/b.
+\]
+
+故对 t>0，
+
+\[
+\boxed{\gamma(t)\ge\log\frac t{2\pi}-\frac2t.}
+\tag{IC3}
+\]
+
+本节的 Riemann 和、总变差及 digamma 极限论证是纸面证明，尚未写入 Lean。
+
+令 D_a=2(sinh(a)-a)。对任意实阈值 tau，选自然数 N 满足
+
+\[
+N>\max\left\{1,\frac{8a}{\pi},
+8a\exp\left(1+\frac{\tau+P_a+D_a+2\pi\epsilon_*}{1-\epsilon_*}\right)\right\}.
+\tag{IC4}
+\]
+
+将 (IC3) 代入 (IC2)，直接得到 beta(a,N)>tau。因此每个尺度均有明确有限 cutoff，使其无限补空间高于指定阈值；也可沿任何无界尺度序列使用这一公式。固定 a 时 beta(a,N) 趋向正无穷。
+
+代价必须保留：这里对素数项用了绝对值和，未利用算术抵消。该阈值可能非常大，不能据此声称已经获得可实际组装的低维全空间证书。
+
+## 5. 含实际素数平移的具体尺度
+
+取
+
+\[
+a=\tfrac12\log3,\qquad N=1024.
+\]
+
+素数 2 的平移距离 log2 严格小于窗口直径 log3，因此该窗口确实包含非零素数项。边界处 n=3 的相关函数贡献为零；下面仍把它计入 P_a，保持保守上界。
+
+用 exp 的正项有限 Taylor 和可验证 log2<7/10、log3<11/10，并有 sqrt2>7/5、sqrt3>17/10。因而
+
+\[
+P_a<2\left(\tfrac12+\tfrac{11}{17}\right)=\frac{39}{17}.
+\]
+
+a<11/20，且 sinh 的正项级数给出
+
+\[
+2(\sinh a-a)
+\le\frac{(11/20)^3}{3(1-(11/20)^2/20)}<\frac3{50}.
+\]
+
+pi>31/10 给出 epsilon_*<1/7。pi<22/7 给出 gamma(0)>-44/7。R_N>1024，而
+
+\[
+\gamma(1024)\ge\log(512/\pi)-1/512>4.
+\]
+
+最后一个严格界可由 e<3、sqrt3<7/4 核验：exp(9/2)<81*7/4<512/(22/7)，故 log(512/pi)>9/2。
+
+于是
+
+\[
+\boxed{
+\beta_{\log3/2,1024}>
+\frac{24}{7}-\frac{44}{49}-\frac{39}{17}-\frac3{50}
+=\frac{7351}{41650}>\frac16.
+}
+\tag{IC5}
+\]
+
+这给出含素数项窗口的整个无限高模态补空间严格正下界。没有据此断言整个 q_a>=1/6，也没有断言前 2049 个 Fourier 模态中的最低特征值单纯。该尺度结果的数学证明为本节的解析及有理数估计，不是浮点特征值实验，也尚未获得完整 Lean 算子证明。
+
+## 6. 剩余有限问题必须保留完整耦合
+
+若某个明确候选 k 已位于 P_NH 中，令 E=P_NH intersect k-perp，Q_N=I-P_N。对 tau=mu+delta<beta(a,N)，完整 (A) 的一个充分条件是
+
+\[
+\boxed{
+\left.P_N(A_a-\tau)P_N\right|_E
+-\frac1{\beta_{a,N}-\tau}
+\left.P_NA_aQ_NA_aP_N\right|_E\succeq0.
+}
+\tag{IC6}
+\]
+
+证明是将 f=x+y 分解到 E 和 Q_NH，使用 (IC2) 后配方。只有 beta 由本节独立下界控制；上述有限矩阵不等式尚未对实际候选证明。不能把它当作已成立输入来宣布 (A) 完成。
+
+对算子域中的有限基底，耦合 Gram 可由完整算子图像计算：
+
+\[
+G_{ij}=\langle A_ae_i,A_ae_j\rangle
+-\sum_{|n|\le N}\langle A_ae_i,e_n\rangle
+\langle e_n,A_ae_j\rangle.
+\]
+
+零延拓 Fourier 基属于本算子的形式域和算子域：其 Fourier 变换 O(1/|t|)，Gamma 乘子为 O(log(2+|t|))，故 Gamma 乘子作用后仍在 L2；有限平移与极点项有界。对应 Friedrichs 形式配对的表示向量是压回窗口后的这些完整算子项。该定义域识别仍是纸面桥。
+
+同样，对有限候选，实际算子残差满足
+
+\[
+\boxed{
+\|(A_a-\mu)k\|_2^2
+=\|P_N(A_a-\mu)k\|_2^2+\|Q_NA_ak\|_2^2.
+}
+\tag{IC7}
+\]
+
+第二项不会因为有限矩阵的 Gamma 积分算得很准而消失。候选来自 prolate 模型时，还需把原模型与所选有限 Fourier 近似的误差计入，而非假设原模型已经属于 P_NH。
+
+## 7. 本节消除的假设和下一承重边
+
+纸面上，补空间的下界与某个阈值以上的 cutoff 存在性已被显式 (IC2)–(IC4) 替代，并有 (IC5) 的含素数实例。Lean 保存的是支撑此结论的无限序列低频质量估计，含绝对收敛与可积性；真实 Fourier/L2 接口、完整算术形式和阈值例证尚未全部形式化。
+
+剩余承重边是对明确候选认证 (IC6) 中的有限算术块与完整耦合，并让 (IC7) 的全算子残差相对于所得谱间隔足够小。对素数项的粗绝对值处理会放大 N；下一步应保持 prime/pole/boundary 抵消，改进这两个有限矩阵量，而非继续添加抽象 Schur 包装。
+
+未证明无界尺度的最低模态单纯偶性，未证明条件 (C)，未证明真实最低模态 Fourier 变换收敛到 Xi，未证明 RH。本节的投影和 Fourier 估计属于经典工具的具体应用，未作原创优先权声明。
+
+---
+
+## [PR #5602] ARITHMETIC_COUPLING_AND_PRIME3_GROUND_MODE
+
+# 2026-09-06：具体算术耦合与一个含素数窗口的单纯偶最低模态证书
+
+Lean：`D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.lean`。
+Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.scribe.cs`。
+可复验程序：`research/weil_ground_mode/certify_prime3.py`。
+本次实际输出：`research/weil_ground_mode/prime3_certificate.json`。
+
+本节将前面的无限高模态下界接到具体算术耦合，完成一个固定含素数窗口的计算机辅助余维一强制性证明。Lean 保存算术边界符号的绝对收敛、独立统一上界及逐外部模态的耦合余项。完整 Fourier/算子域识别、无限 Gram 尾项求和、区间计算的正确性及变分推论属于以下纸面与计算机辅助证明，尚未组成 Lean 内核定理。Lean 和 Scribe 编译没有在本环境运行。本文不将数值 LDL 的通过等同于 Lean 编译通过。
+
+## 1. 同一 Weil 对象及文献接口
+
+继续使用上一节的 L=2a、正交归一基 e_n 和 Fourier 约定。闭形式为
+
+\[
+q_a(f)=\frac1{2\pi}\int_{\mathbb R}\gamma(t)|\widehat f(t)|^2dt
++2\Re\{\widehat f(i/2)\overline{\widehat f(-i/2)}\}
+-2\sum_{2\le j<e^L}\frac{\Lambda(j)}{\sqrt j}\Re C(f,f)(\log j).
+\]
+
+端点 j=e^L 若为整数，其相关函数值为零。Gamma 乘子仍是既有 gammaBracket，未改变素数、极点或边界归一化。先在紧支撑光滑核心比较 `literatureRHS(weilTest f f)`，随后取同一个闭形式的 Friedrichs 实现。有限基向量的 Fourier 变换为 O(1/|t|)，gamma(t)=O(log(2+|t|))，因此 gamma*hat(e_n) 属于 L2；有限素数平移和两个极点项有界。对应的压回窗口表示向量证明 e_n 属于该算子域。这里不要求 e_n 属于 A_a 的平方定义域。
+
+Connes–Consani–Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1，Lemma 2.3、Proposition 3.2 和 Section 4 给出本节使用的 Fourier 矩阵计算。Suzuki, arXiv:2606.09096v1，Theorem 1.1 及形式域分析提供闭形式实现与紧 resolvent 的接口。Groskin, arXiv:2607.02828v1 已有有限矩阵的 cutoff-free 组装和区间 LDL 方法。本节保留该文献背景，新增任务是认证全部无限耦合后的余维一估计。
+
+另检索到 Kim 等人的 arXiv:2607.24830，研究 Suzuki 算子的数值实现和第一个素数阈值。本节不把有限特征值数值稳定当作全空间证明，也不提出首创优先权声明。Connes–van Suijlekom 的实零点结论仍须承接它规定的分布、核心和算子条件；本文没有仅由自伴性直接推出实零点。
+
+## 2. 具体算术边界符号与除差矩阵
+
+以下令 c>=2 为整数，L=log c，omega_n=2*pi*n/L，beta_r=2r+1/2。定义
+
+\[
+\begin{aligned}
+s_c(n)={}&-\frac{2\omega_n(\cosh(L/2)-1)}{\omega_n^2+1/4}\\
+&-\sum_{r\ge0}\frac{\omega_n(1-e^{-\beta_rL})}{\beta_r^2+\omega_n^2}
+-\sum_{2\le j<c}\frac{\Lambda(j)}{\sqrt j}\sin(\omega_n\log j).
+\end{aligned}
+\tag{AC1}
+\]
+
+这是一个由实际算术数据独立构造的实奇序列。它不使用未知最低特征函数或零点位置。设 K(t)=e^{-t/2}/(1-e^{-2t})。对 n!=m，相关函数偶化为
+
+\[
+C(e_n,e_m)(t)+C(e_n,e_m)(-t)
+=\frac{\sin(\omega_nt)-\sin(\omega_mt)}{\pi(m-n)},\qquad 0\le t\le L.
+\]
+
+将其代入完整 Weil 形式，使用 K(t)=sum_r exp(-beta_r*t)，以及 exp(i*omega_n*L)=1，得到
+
+\[
+\boxed{A_{nm}=\frac{s_c(n)-s_c(m)}{\pi(m-n)},\qquad n\ne m.}
+\tag{AC2}
+\]
+
+这一步保留 prime、pole 和 Gamma 的完整耦合。Gamma 逐项积分可由 |sin(omega*t)|<=|omega|*t 和 sum beta_r^-2<infinity 正当化。
+
+对角元同样有精确公式。记 z_n=1/4+i*omega_n/2，psi_1 为 trigamma：
+
+\[
+\begin{aligned}
+A_{nn}={}&\gamma(\omega_n)+\frac{\Re\psi_1(z_n)}{2L}
+-\frac2L\sum_{r\ge0}e^{-\beta_rL}\Re(\beta_r-i\omega_n)^{-2}\\
+&+\frac{4(\cosh(L/2)-1)}L\Re(1/2+i\omega_n)^{-2}\\
+&-2\sum_{2\le j<c}\frac{\Lambda(j)}{\sqrt j}
+\left(1-\frac{\log j}L\right)\cos(\omega_n\log j).
+\end{aligned}
+\tag{AC3}
+\]
+
+例如 Gamma 项可先写成
+
+\[
+\gamma(\omega_n)+\frac2L\int_0^LtK(t)\cos(\omega_nt)dt
++2\int_L^\infty K(t)\cos(\omega_nt)dt.
+\]
+
+延长第一个积分到正半轴后，剩余尾项是 -(2/L)*integral_L^infinity (t-L)K(t)cos(omega_n*t)dt，给出 (AC3)。因此对角公式中的 trigamma 系数和指数尾项符号都有直接检查。
+
+## 3. 已提交 Lean：算术符号有独立统一界
+
+令
+
+\[
+B_c=2\cosh(L/2)+\sum_{0\le j<c}\left|\Lambda(j)/\sqrt j\right|.
+\]
+
+则
+
+\[
+\boxed{|s_c(n)|\le B_c\quad(n\in\mathbb Z).}
+\tag{AC4}
+\]
+
+Gamma 部分的证明没有假设这个上界。令 w>=0，d_j=w+2j+1/2，有
+
+\[
+\frac w{(2j+5/2)^2+w^2}
+\le w\left(d_j^{-1}-(d_j+2)^{-1}\right).
+\]
+
+分母交叉相乘后，差由 (w-2j-3/2)^2 和非负余项控制。对所有有限部分和望远镜求和，再加第零项 w/(1/4+w^2)<=1，得到
+
+\[
+\sum_{r\ge0}\frac w{(2r+1/2)^2+w^2}\le2.
+\]
+
+这也给出绝对收敛。因 0<=1-exp(-beta_r*L)<=1，(AC1) 的 Gamma 级数被同一正级数支配。极点的绝对值最多为 2(cosh(L/2)-1)，有限素数项的绝对值最多为权重绝对值和。三者相加得到 (AC4)。
+
+Lean 主声明 `arithmetic_boundary_symbol_bound` 同时保存实际 Gamma 级数的绝对收敛与 (AC4)。没有以 RH、Gamma 尾项正性、谱间隔或一个待证明的算子范数作为输入。
+
+## 4. 已提交 Lean：保留两个边界矩的耦合余项
+
+对支撑于 |n|<=N 的任意有限复向量 v，记
+
+\[
+a_0(v)=\sum v_n,\qquad b_0(v)=\sum s_c(n)v_n,
+\qquad d_m(v)=\sum_{|n|\le N}A_{nm}v_n.
+\]
+
+每个 |m|>N 都满足
+
+\[
+\boxed{
+d_m(v)=\frac{b_0(v)-s_c(m)a_0(v)}{\pi m}+R_m(v),
+\quad
+|R_m(v)|\le\frac{2B_cN}{\pi|m|(|m|-N)}\sum|v_n|.
+}
+\tag{AC5}
+\]
+
+其承重恒等式是
+
+\[
+\frac{s_n-s_m}{\pi(m-n)}-\frac{s_n-s_m}{\pi m}
+=\frac{(s_n-s_m)n}{\pi m(m-n)}.
+\]
+
+Lean 主声明 `arithmetic_coupling_first_jet_error` 对任意有限整数索引集和复系数证明该误差。内部半径 N 可以是任意非负实数，外部没有有限上截止。两个边界矩没有被强行置零。
+
+对整数 M>N，将 (AC5) 平方求和，保留边界矩，得到纸面结论
+
+\[
+\boxed{
+\sum_{|m|>M}|d_m(v)|^2
+\le\frac8{\pi^2M}\left(|b_0(v)|^2+B_c^2|a_0(v)|^2\right)
++\epsilon_{N,M}\|v\|^2,
+}
+\tag{AC6}
+\]
+
+\[
+\boxed{
+\epsilon_{N,M}=\frac{16B_c^2N^2(2N+1)}{\pi^2(1-N/M)^2M^3}.
+}
+\]
+
+这里分别使用 |x+y|^2<=2|x|^2+2|y|^2、sum_{m>M}m^-2<=1/M，以及 sum_{m>M}m^-4<=M^-2*sum m^-2<=M^-3。没有使用更小的 1/(3M^3) 常数。有限 Cauchy–Schwarz 给出 (sum|v_n|)^2<=(2N+1)||v||^2。
+
+因此，全部无限耦合的剩余 Gram 块有一个显式正的秩至多二修正和一个三次衰减的标量余量。它有参数 c,N,M，可以用于无界尺度族；本节并未证明所得全尺度有限矩阵均满足所需强制性。
+
+## 5. c=3 的无限高模态块可在 N=64 处认证
+
+取
+
+\[
+c=3,\quad L=\log3,\quad a=L/2,\quad N=64.
+\]
+
+只有素数 2 在内部真正起作用。令 h=log2，则 L<2h。压回 I 的平移 U_h 与 U_h^* 的输出支撑互不相交，输入所覆盖的两段也互不相交。因此
+
+\[
+\|(U_h+U_h^*)f\|^2=\|U_hf\|^2+\|U_h^*f\|^2\le\|f\|^2.
+\]
+
+所以实际素数项的下界改进为 -(log2/sqrt2)||f||^2。这里没有将有限素数矩阵的特征值当作整个平移算子的界。
+
+令 eps=4/(3*pi^2)、R=pi*N/(4*a)。利用上一节无限 Fourier 补空间的低频质量界，全部高模态满足
+
+\[
+q_a(y)\ge\beta\|y\|^2,\qquad
+\beta=(1-\mathrm{eps})\gamma(R)+\mathrm{eps}\gamma(0)
+-\frac{\log2}{\sqrt2}-2(\sinh a-a).
+\]
+
+Gamma 的独立下界通过正级数构造：
+
+\[
+\gamma(0)=-\gamma_E-\pi/2-3\log2-\log\pi,
+\]
+
+\[
+\gamma(R)\ge\gamma(0)+\sum_{j=0}^{511}
+\frac{(R/2)^2}{(j+1/4)((j+1/4)^2+(R/2)^2)}.
+\]
+
+省略项全部非负。区间程序验证该下界给出的 beta>1.04126>1，同时 B_3<3。因此后续只使用精确保守常数 beta=1、B=3。与上一节 N=1024 的粗实例相比，这里真正利用了首个素数平移的支撑结构。
+
+## 6. 实际运行的有限算术与无限耦合证书
+
+固定 M=32768、tau=1/1000000。文件中的 CANDIDATE 是一个已固定、非零、偶的 129 维 dyadic 向量 v，分母为 2^40，索引按 -64,...,64 排列。令 k=v/||v||。候选由一次有限矩阵探索得到后被写成整数常量；认证程序不会调用特征向量求解器，也不会用未知真实最低模态替换候选。
+
+程序以区间运算计算 (AC2)–(AC3)，并验证
+
+\[
+\mu=\langle k,A_ak\rangle
+\in[5.6090783527\ldots,5.6090823856\ldots]\,10^{-8}
+<10^{-7}.
+\tag{AC7}
+\]
+
+上式的小数仅供显示；实际检查比较的是完整区间和精确有理阈值。程序还计算全部 64<|m|<=32768 的耦合行。每项区间被量化为分母 2^40 的 dyadic 数，逐项验证误差小于 2^-38。设量化矩阵为 C_q，其 Gram 矩阵 G_q=C_q^*C_q 以整数分块乘法精确求和，检查每一步均不会溢出。
+
+设 e^2=2(M-N)(2N+1)*2^-76。精确有理数检查给出 ||C_q||_F<4，以及
+
+\[
+64e^2<(10^{-7}-e^2)^2,\quad e^2<10^{-7}.
+\]
+
+因此量化造成的 Gram 算子误差小于 eta=10^-7。全部 |m|>M 的尾部由 (AC6) 覆盖，其标量余项小于 1/4000000。令 s=(s_3(n))_{|n|<=64}、one=(1,...,1)，定义
+
+\[
+\overline G=G_q+\frac8{\pi^2M}(ss^*+9\,\mathrm{one}\,\mathrm{one}^*)
++\left(\frac1{10^7}+\frac1{4000000}\right)I.
+\]
+
+则完整耦合 C_N=Q_NA_a|_{P_NH} 满足 C_N^*C_N<=overline(G)。这里始终使用有界有限域映射 C_N 的 Gram，不要求 A_a^2 的定义域。
+
+最终认证的矩阵为
+
+\[
+\boxed{
+H=A_N-\tau I-\frac{\overline G}{1-\tau}+vv^*\succ0.
+}
+\tag{AC8}
+\]
+
+反射对称在精确算术上成立，G_q 的反射对称也由整数检查确认。程序在 e_0,e_j+e_-j 的 65 维偶块和 e_j-e_-j 的 64 维奇块分别作区间 LDL。两个块的全部主元严格为正；最小主元下端点的显示值分别约为 0.2649730942 和 0.03969194858。这些是 LDL 主元，不是矩阵特征值下界。
+
+## 7. 区间与特殊函数误差的验证边界
+
+有限矩阵及常数使用 mpmath.iv 的 45 位区间运算。大批耦合行只用 IEEE binary64 的基本四则运算，每一步用 nextafter 向外舍入。sin 与 arctan 使用明确区间多项式及余项，未假设系统 libm 的超越函数正确舍入。
+
+arctan 约化后 |x|<0.501，保留 36 个奇次项，余量用 0.501^73/73<10^-23 控制。sin 约化后 |x|<3.15，保留至 49 次，余量用 3.15^50/50!<10^-38 控制。这些比较使用精确有理数核验。约化整数只用于选取等价公式，最终区间范围检查承担有效性。
+
+digamma 和 trigamma 用 z->z+16 的精确递推以及至 B_20 的 Euler–Maclaurin 展开。对 Re Z=65/4，周期 Bernoulli 积分余项给出
+
+\[
+|R_\psi(Z)|\le\frac{|B_{20}|}{20(65/4)^{20}}<2\,10^{-23},
+\qquad
+|R_{\psi_1}(Z)|\le\frac{|B_{20}|}{(65/4)^{21}}.
+\]
+
+这些界来自 Hurwitz zeta 的 Euler–Maclaurin 余项在 s=1 的有限部分及其 z 导数；|periodic B_20|<=|B_20|，积分绝对值由实部控制。可对照 DLMF 25.11(iii)、5.11。c=3 时指数尾项按 9^-r 衰减，保留 32 项后显式控制省略部分。
+
+大 Gram 的哈希是
+
+`6f93db1396440d4cd436594dce755d341f135ce554adf89c001474a384655473`。
+
+实际运行环境是 Python 3.13.5、NumPy 2.3.5、mpmath 1.3.0、SymPy 1.14.0。JSON 记录运行源文件 SHA-256、固定候选、预算和全部通过状态。可用 `python research/weil_ground_mode/certify_prime3.py` 复验；程序禁止 Python 的 -O 模式，以免跳过断言。
+
+该证书依赖所列区间实现、IEEE 基本运算、整数运算和解释器。它尚未被 Lean 内核重放。本节不宣称区间软件已形式化，也没有运行 GitHub CI。
+
+## 8. 从具体证书得到全形式域上的余维一强制性
+
+对任意 f 属于 Dom(q_a) 且 f 与 k 正交，分解 f=x+y，其中 x=P_Nf、y=Q_Nf，则 x 与 v 正交。(AC8) 给出
+
+\[
+q_a(x)-\tau\|x\|^2\ge\frac{\|C_Nx\|^2}{1-\tau}.
+\]
+
+上一节已证明 q_a(y)>=||y||^2。因 x 属于算子域，完整混合配对是 <A_ax,y>，故配方得到
+
+\[
+\begin{aligned}
+q_a(f)-\tau\|f\|^2
+&\ge\frac{\|C_Nx\|^2}{1-\tau}+2\Re\langle C_Nx,y\rangle
++(1-\tau)\|y\|^2\\
+&=(1-\tau)\left\|y+\frac{C_Nx}{1-\tau}\right\|^2\ge0.
+\end{aligned}
+\]
+
+因此本轮纸面与区间认证共同给出固定尺度结论
+
+\[
+\boxed{
+a=\tfrac12\log3,\quad f\perp k
+\quad\Longrightarrow\quad
+q_a(f)\ge10^{-6}\|f\|^2
+\quad(f\in\operatorname{Dom}(q_a)).
+}
+\tag{AC9}
+\]
+
+结合 mu<10^-7，可取 delta=tau-mu>9*10^-7。紧 resolvent 与变分原理于是给出
+
+\[
+\lambda_0\le\mu<10^{-7},\qquad
+\lambda_1\ge10^{-6},\qquad
+\lambda_1-\lambda_0>9\,10^{-7}.
+\]
+
+最低特征值因此单纯、孤立。算子保反射，候选 k 为偶；若该唯一最低模态为奇，则它属于 k 的正交补，违背上述严格能量分离。因此最低模态为偶函数。这是完整算子的固定窗口结论，已经计入所有无限耦合方向。
+
+## 9. 当前完成范围与剩余研究
+
+本节在 c=3 处将单纯性、偶性和隔离从假设推进为纸面与计算机辅助证明。Lean 真源只覆盖 (AC4) 和 (AC5) 对应的实际算术收敛及余项，不包括 (AC9) 的完整内核验证。
+
+本候选是独立固定的有限 Fourier 函数，尚未被识别为文献的 prolate 候选。没有证明它与真实最低模态的残差/间隔比达到条带极限所需尺度，也没有证明上述强制性沿 c->infinity 成立。完整最低特征值的非负性亦未由本证书推出，因为它只给出 lambda_0 的上界及其余方向的下界。
+
+后续应利用 (AC1)–(AC6) 的参数化结构，保持算术抵消，推进无界尺度族与实际全算子残差；同时将 Fourier 识别、闭形式接口和区间有理证书接成可内核重放的证明。当前没有证明条件 (C)、真实最低模态 Fourier 变换的 Xi 极限或 RH。
+
+参考：
+
+- https://arxiv.org/html/2511.22755v1
+- https://arxiv.org/html/2511.23257v1
+- https://arxiv.org/html/2606.09096v1
+- https://arxiv.org/html/2607.02828v1
+- https://arxiv.org/abs/2607.24830
+- https://dlmf.nist.gov/25.11
+- https://dlmf.nist.gov/5.11
+
+---
+
+## [PR #5602] SECOND_JET_RAYLEIGH_ENCLOSURE_AND_REAL_ZEROS
+
+# 2026-09-06：完整正下包络、射影模态误差与固定窗口的实零点极限
+
+本节补齐上一轮 `WeilRayleighEnclosureModeCapture` 与 `WeilArithmeticCouplingSecondJet` 的理论说明，并记录本轮 `WeilArithmeticCouplingParityGram`、`certify_prime3_refined.py` 和实际输出 `prime3_refined_certificate.json`。三个 Lean owner 均有对应 Scribe。Lean elaboration、`#print axioms` 和 Scribe compiler 未在本环境执行；下面明确区分源码中的证明脚本、纸面推导和已执行的区间计算。
+
+## 1. 三个认证数取代未量化的近基态断言
+
+固定同一闭 Weil 形式及其自伴实现 A。设归一化候选 k 属于算子域，真实归一化最低模态 u 满足 Au=lambda*u。记 mu=q(k)。已证的变分关系为 lambda<=mu。若实际算术证书给出
+
+\[
+ell\le\lambda\le\mu\le U<T,\qquad
+f\perp k\Longrightarrow q(f)\ge T\|f\|^2,
+\tag{RE1}
+\]
+
+则可以直接用能量包络捕获最低模态。这里 ell 是完整算子的下界，不能用有限 Ritz 最低值充当 ell；T 的量词覆盖全部形式域中的正交方向。
+
+令 alpha=<k,u>、v=u-alpha*k，内积对第二变量线性。由对称性及特征方程，
+
+\[
+\langle v,Ak\rangle=\overline\alpha(\lambda-\mu),\qquad
+q(v)=\lambda\|v\|^2+|\alpha|^2(\mu-\lambda).
+\tag{RE2}
+\]
+
+因 v 与 k 正交，得到
+
+\[
+(T-\lambda)\|v\|^2\le|\alpha|^2(\mu-\lambda).
+\tag{RE3}
+\]
+
+此前 Lean owner `WeilRayleighEnclosureModeCapture` 在实不变线性算子域 D 上，以嵌入 iota:D->H 和作用 A:D->H 证明了较松的
+
+\[
+(T-U)\|v\|^2\le U-ell.
+\]
+
+该表示允许非有界算子；没有把真实 Weil 算子替换为处处有定义的有限矩阵。到实际复 Hilbert 空间的实不变域识别另需承接。本节的复数版 (RE2) 及以下射影加强为纸面证明。
+
+若 alpha=0，则 v=u，(RE3) 与 T>lambda、||u||=1 矛盾。所以 alpha 非零。保留 (RE3) 中的重叠因子可直接得到
+
+\[
+\boxed{
+\left\|\frac{u}{\alpha}-k\right\|^2
+\le\frac{\mu-\lambda}{T-\lambda}
+\le\frac{U-ell}{T-ell}<1.
+}
+\tag{RE4}
+\]
+
+第二个不等式先使用 mu<=U，再使用 x->(U-x)/(T-x) 在 x<T 上递减及 ell<=lambda。最后一个严格不等式直接来自 U<T。因此无需额外假设前一轮松预算 R=(U-ell)/(T-U)<1，也无需再将其放大为 R/(1-R)。归一化的改变只有非零标量，不改变 Fourier 变换的零点。
+
+若某个独立模型族 k_a 已有 c_a*hat(k_a)->Xi 的条带紧集一致极限，则 (RE4) 与固定支撑 Fourier 估计给出新的充分条件
+
+\[
+\boxed{
+|c_a|\sqrt{2a}\,e^{ba}
+\sqrt{\frac{U_a-ell_a}{T_a-ell_a}}\longrightarrow0
+\qquad(0\le b<1/2).
+}
+\tag{RE5}
+\]
+
+本节没有证明这条无界尺度极限。还需证明所选有限候选与文献 prolate 模型之间的相容性。
+
+修正此前会话中的过强判断：换成 Rayleigh 包络并不证明已经绕过固定内缩平移障碍。它改变了可认证的误差量；该误差量能否在所需候选尺度族上衰减，仍是数学任务。尤其不能将另一个已知 Xi 极限的模型和本次有限候选默认为同一对象。
+
+## 2. 已提交的二阶算术 jet 与实际反射奇性
+
+沿用本卷 (AC1) 的真实算术符号 s_c(n)，以及
+
+\[
+A_{nm}=\frac{s_c(n)-s_c(m)}{\pi(m-n)}\quad(n\ne m),\qquad |s_c(n)|\le B_c.
+\]
+
+从
+
+\[
+\frac1{m-n}=\frac1m+\frac n{m^2}+\frac{n^2}{m^2(m-n)}
+\]
+
+得到已有 `WeilArithmeticCouplingSecondJet` 主定理：对任意复系数及 |m|>N，
+
+\[
+|d_m(v)-J_m(v)|\le
+\frac{2B_cN^2}{\pi|m|^2(|m|-N)}\sum_{|n|\le N}|v_n|,
+\tag{PJ1}
+\]
+
+其中
+
+\[
+J_m(v)=\frac{B_0-s_c(m)A_0}{\pi m}
++\frac{B_1-s_c(m)A_1}{\pi m^2},
+\]
+
+\[
+A_0=\sum v_n,\quad B_0=\sum s_c(n)v_n,\quad
+A_1=\sum nv_n,\quad B_1=\sum n s_c(n)v_n.
+\]
+
+没有将任何边界矩设为零。新增 `WeilArithmeticCouplingParityGram.arithmetic_boundary_symbol_neg` 从实际 pole、Gamma 级数和有限 von Mangoldt 正弦项逐项推出
+
+\[
+s_c(-m)=-s_c(m).
+\tag{PJ2}
+\]
+
+在 c>=2 的算术范围，Gamma 级数的绝对收敛已由前置真源独立证明。
+
+令
+
+\[
+X_m=-s_c(m)A_0+B_1/m,\qquad Y_m=B_0-s_c(m)A_1/m.
+\]
+
+则 J_m=(X_m+Y_m)/(pi*m)、J_-m=(X_m-Y_m)/(pi*m)。新增 Lean 主定理 `arithmetic_second_jet_pair_energy` 对任意复向量证明
+
+\[
+\boxed{
+|J_m|^2+|J_{-m}|^2
+=\frac2{\pi^2m^2}(|X_m|^2+|Y_m|^2).
+}
+\tag{PJ3}
+\]
+
+这是复内积空间 parallelogram identity 在既有真实算术 jet 上的应用。系数无需为偶或实，有限索引集无需反射闭合。
+
+## 3. 两个正的矩 Gram 块及完整无限尾
+
+(PJ3) 对正整数 m>M 求和，将 jet 能量分成两个 2x2 正半定矩块。对 (A0,B1) 的块为
+
+\[
+\frac2{\pi^2}\sum_{m>M}
+\begin{pmatrix}
+s_m^2/m^2&-s_m/m^3\\
+-s_m/m^3&1/m^4
+\end{pmatrix},
+\]
+
+对 (B0,A1) 的块为
+
+\[
+\frac2{\pi^2}\sum_{m>M}
+\begin{pmatrix}
+1/m^2&-s_m/m^3\\
+-s_m/m^3&s_m^2/m^4
+\end{pmatrix}.
+\]
+
+每项是一个实行向量的 Gram，因而正性不依赖符号猜测。|s_m|<=B 保证各项绝对可和。这里保留的交叉矩 sum s_m/m^3 可以在后续获得更锋利的证书。本次计算使用下述更保守且独立的四矩上界，并未声称实际计算了这两个精确无限块。
+
+利用 |x+y|^2<=2|x|^2+2|y|^2、(PJ1)、(PJ3)、有限 Cauchy-Schwarz 和
+
+\[
+\sum_{m>M}m^{-2}\le M^{-1},\quad
+\sum_{m>M}m^{-4}\le M^{-3},\quad
+\sum_{m>M}m^{-6}\le M^{-5},
+\]
+
+得到纸面定理
+
+\[
+\boxed{
+\begin{aligned}
+\sum_{|m|>M}|d_m(v)|^2\le{}&
+\frac8{\pi^2}\left[
+\frac{B^2|A_0|^2+|B_0|^2}{M}
++\frac{B^2|A_1|^2+|B_1|^2}{M^3}\right]\\
+&+\epsilon^{(2)}_{N,M}\|v\|^2,
+\end{aligned}
+}
+\tag{PJ4}
+\]
+
+\[
+\boxed{
+\epsilon^{(2)}_{N,M}=
+\frac{16B^2N^4(2N+1)}{\pi^2(1-N/M)^2M^5}.
+}
+\tag{PJ5}
+\]
+
+具体地，两个余项的平方和不超过
+8*B^2*N^4*(sum|v_n|)^2/[pi^2*(1-N/M)^2*m^6]；再由 actual=jet+remainder 的二倍平方界得到 (PJ5) 中的 16。上述支配同时证明 square summability。完整无限求和仍是纸面桥，不能把 Lean 的逐模态等式标成整个 Gram 尾已内核验证。
+
+## 4. 实际执行的 c=3 精化证书
+
+保持 a=log3/2、N=64、M=32768 及前一节的同一 129 维 dyadic 偶候选 v，令 k=v/||v||。本轮不使用 zeta 零点或真实最低特征向量作为输入，认证程序中也没有特征向量求解器。
+
+高模态正下界继续由实际 Gamma 正级数、prime-2 压缩平移的支撑几何及极点负通道给出。区间程序重新验证
+
+\[
+beta>1.04126433194457,\qquad B_3<3,
+\]
+
+因此在完整无限空间 Q_NH 上仍保守使用 q(y)>=||y||^2。数字 beta 只是显示，程序比较的是区间与精确常数 1。
+
+本次不再把所有耦合条目误差统一替换为同一个最坏上界。正外部行的近似条目量化为 2^-44 的整数倍；每项的向外舍入误差半径再向上量化为 2^-60 的整数倍。令整数半径为 r_mn，则完整正负耦合误差满足
+
+\[
+\|E\|_F^2\le e^2=2\sum_{m,n}r_{mn}^2\,2^{-120}.
+\]
+
+求和采用整数运算，并在运算前核验 int64 不溢出。反射将负模态 Gram 精确识别为正模态 Gram 的逆序共轭。完整 Gram G_q 使用分块整数乘积精确构造。实际运行得到
+
+\[
+e^2=\frac{2249064940320895}
+{664613997892457936451903530140172288}.
+\]
+
+设 eta=10^-10。程序以精确有理数验证
+
+\[
+e^2<eta,\qquad4\operatorname{tr}(G_q)e^2<(eta-e^2)^2.
+\]
+
+由 ||C_q||<=||C_q||_F 得到
+
+\[
+\|C^*C-G_q\|\le2\sqrt{\operatorname{tr}(G_q)}\sqrt{e^2}+e^2<eta.
+\]
+
+这把旧的 10^-7 Gram 量化预算压到 10^-10，且没有假定 BLAS 浮点矩阵乘积精确。
+
+(PJ5) 在相同参数上的解析余项小于 9*10^-13。写 s=(s_3(n))、t=(n)、b=(n*s_3(n))、one=(1)，完整耦合 Gram 的认证上界为
+
+\[
+\overline G=G_q+
+\frac8{\pi^2}\left[
+\frac{ss^*+9\,one\,one^*}{M}
++\frac{bb^*+9tt^*}{M^3}\right]
++(10^{-10}+9\cdot10^{-13})I.
+\tag{PC1}
+\]
+
+每个矩阵条目仍按实际 s 值取区间。PC1 控制的是 C_N^*C_N，其中 C_N=Q_NA|P_NH；没有对 A^2 的定义域作假设。
+
+## 5. 完整算子首次在本 PR 得到双边正包络
+
+定义精确有理常数
+
+\[
+ell=\frac{103}{2000000000},\qquad
+U=\frac{560909}{10000000000000},\qquad
+T=\frac1{200000}.
+\tag{PC2}
+\]
+
+同一算术矩阵、同一完整耦合上界及同一固定候选通过了两个区间 LDL 检验：
+
+\[
+\boxed{A_N-ell I-\frac{\overline G}{1-ell}\succ0,}
+\qquad
+\boxed{A_N-TI-\frac{\overline G}{1-T}+vv^*\succ0.}
+\tag{PC3}
+\]
+
+两者分别在 e0、ej+e-j 的偶块和 ej-e-j 的奇块上作非正交基的精确合同变换。最小 LDL 主元下端点的显示值分别为
+
+| 检验 | 偶块 | 奇块 |
+|---|---:|---:|
+| 完整下界 | 0.0031531449201242043 | 0.03974454928419704 |
+| 候选正交补 | 0.2649527465156704 | 0.03954403713951146 |
+
+这些主元用于证明矩阵正定，不能当作矩阵的最小特征值界。
+
+候选 Rayleigh 商仍由实际完整算术矩阵算出，其区间为
+
+\[
+mu\in[5.6090783527585\ldots,5.6090823855575\ldots]\cdot10^{-8}<U.
+\]
+
+对任意形式域向量 f=x+y，x=P_Nf、y=Q_Nf，使用 q(y)>=||y||^2，并对每个 shift=ell,T 配方。第一个矩阵检验给出所有 f 上的完整下界；第二个检验在 f 与 k 正交时消去 vv^* 项。由此得到
+
+\[
+\boxed{q(f)\ge ell\|f\|^2\quad\text{对全部 }f\in\operatorname{Dom}(q),}
+\]
+
+\[
+\boxed{f\perp k\Longrightarrow q(f)\ge T\|f\|^2.}
+\tag{PC4}
+\]
+
+这是纸面算子识别、无限尾估计和已执行区间证书共同给出的固定尺度结果。PC4 尚未成为 Lean 中完整算子定理。
+
+紧 resolvent 和 min-max 原理于是给出
+
+\[
+5.15\cdot10^{-8}\le\lambda_0<5.60909\cdot10^{-8},
+\qquad\lambda_1\ge5\cdot10^{-6},
+\]
+
+\[
+\lambda_1-\lambda_0>4.943909\cdot10^{-6}.
+\tag{PC5}
+\]
+
+唯一最低模态为偶：若其反射本征值为 -1，则该模态与偶候选 k 正交，与 lambda0<T 矛盾。实际算子还保复共轭，所以该单纯最低线可选取实偶归一化代表。
+
+由 (RE4) 得到本次真正的模态捕获数字
+
+\[
+\boxed{
+\left\|u/\langle k,u\rangle-k\right\|^2
+\le\frac{U-ell}{T-ell}
+=\frac{15303}{16495000}
+<\left(\frac{61}{2000}\right)^2.
+}
+\tag{PC6}
+\]
+
+因而射影重归一化后的真实最低模态与明确候选的 L2 距离严格小于 0.0305。
+
+## 6. 实际运行与可信计算边界
+
+完整可复验源为 `research/weil_ground_mode/certify_prime3_refined.py`，SHA-256：
+
+`8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0`。
+
+实际输出为 `research/weil_ground_mode/prime3_refined_certificate.json`，其中记录精确 Gram SHA-256：
+
+`7f4e1049624807432efe96a68fe63babbc1c3bd37f2d40600a4cddadbddb85a9`。
+
+运行使用 Python 3.13.5、NumPy 2.3.5、mpmath 1.3.0、SymPy 1.14.0。有限矩阵采用 55 位区间；向量化耦合使用每步 nextafter 向外舍入的 binary64 基本运算。正弦、反正切、digamma、trigamma 和指数尾项保留前一节已经说明的独立余项。量化、整数 Gram 及半径平方和均有运算前的精确溢出检查。认证以全部区间严格比较通过为准，JSON 中的十进制主元仅作显示。
+
+程序已实际运行；没有把数值探索当成认证。该计算依赖所列区间实现、IEEE 基本运算、整数实现与 Python 解释器；这些实现未被 Lean 形式化。新 Lean 文件中没有 sorry、admit 或新公理声明，但 #print axioms 未执行，不能据此称整条证明链已内核闭合。
+
+## 7. 固定窗口的真实最低模态 Fourier 变换只有实零点
+
+本节补上一条纸面文献桥，使固定窗口结论真正到达实零点对象。它不直接把自伴性代入 Connes-van Suijlekom 的 Theorem 6.1。该定理的精确陈述要求规定的分布二次型及三角多项式域上的本质自伴性。以下使用他们的有限维 Theorem 5.6，并显式通过同一 Weil 形式的 form core 取极限。
+
+令 P_JH 为 |n|<=J 的完整奇偶 Fourier 空间，J>=64，A_J 为真实 q 在其上的矩阵。由 PC4，任意 J>=64 都有
+
+\[
+\lambda_{0,J}\le mu<T,\qquad\lambda_{1,J}\ge T.
+\]
+
+因此其最低特征值单纯，且由同一偶候选排除奇性。矩阵
+
+\[
+Q_J=A_J-\lambda_{0,J}I
+\]
+
+正半定并有一维偶核。其对角值为偶序列，非对角值精确为
+
+\[
+(Q_J)_{nm}=\frac{b_n-b_m}{n-m},\qquad b_n=-s_c(n)/\pi,
+\quad b_{-n}=-b_n.
+\]
+
+这正是 Connes-van Suijlekom (11) 的矩阵类；减去实标量对角不改变该结构。Theorem 5.6(ii) 应用于这个实际矩阵，给出对应三角函数的 Fourier 变换只有实零点。其 [0,1] 坐标经 y=x/L+1/2 变为本卷的 e_n=(-1)^n*L^-1/2*exp(2*pi*i*n*x/L)；平移只乘无零点指数，实尺度变换及 Fourier 正负号变换保持实零点性。
+
+实际 Weil 形式的三角多项式 form-core 性由 Connes-Consani, Spectral triples and zeta-cycles, arXiv:2106.01715v1, Lemma 2.2 及 Proposition 2.3 给出；Suzuki, arXiv:2606.09096v1, Lemma 3.1 的证明及 Section 3.2 明确复述并用于同一个 Q_W^a。故 Rayleigh-Ritz 最低值满足
+
+\[
+\lambda_{0,J}\downarrow\lambda_0.
+\]
+
+设 u_J 为相位与 u 对齐的归一化有限最低模态，分解 u_J=alpha_J*u+w_J，w_J 与 u 正交。完整算子谱间隔给出
+
+\[
+\|w_J\|^2\le
+\frac{\lambda_{0,J}-\lambda_0}{T-\lambda_0}\longrightarrow0,
+\]
+
+从而 u_J->u in L2。同一固定支撑 [-a,a] 上，
+
+\[
+\sup_{z\in K}|\widehat u_J(z)-\widehat u(z)|
+\le\sqrt{2a}\,e^{a\sup_K|\Im z|}\|u_J-u\|_2\longrightarrow0
+\]
+
+对每个复紧集 K 成立。u 非零，Fourier 唯一性保证 hat(u) 非恒零。分别在上、下半平面应用 Hurwitz，得到
+
+\[
+\boxed{\widehat u(z)=0\Longrightarrow z\in\mathbb R
+\quad\text{在本次 }a=\tfrac12\log3\text{ 的固定窗口}.}
+\tag{RZ1}
+\]
+
+这里的无限极限是 J->infinity 且 a 固定；它没有证明 a->infinity 时 hat(u_a) 的归一化极限是 Xi。RZ1 是文献有限维定理、既有 form-core 性与本次完整算术证书的纸面推论，尚未接成 Lean 的解析零点定理。
+
+## 8. 文献比较与下一条真正承重的误差
+
+Connes-Consani-Moscovici, arXiv:2511.22755v1, Lemma 7.3 已给出明确 prolate 模型 k_lambda 的 Xi 极限。其 Section 8 仍要求实际最低模态的简单偶性及足够精确的模型逼近。本节在一个固定含素数窗口给出后验模态估计，不宣称证明该模型的无界尺度识别。
+
+另检索并读取了 Marcus Chuk, arXiv:2608.24827 的原始摘要。摘要报告半宽 0.8 窗口上的全空间正性和 simple-even 最低模态；这比本节 log3/2 约 0.5493 的窗口更大。因此本轮成果的价值是与仓库真实符号和可复验后验误差的接合，不是刷新最大正性窗口。该摘要所述 Landau-Widom 曲线拟合不能当作已证尺度渐近律；本轮未取得该预印本全文并逐项复核其证明。
+
+当前新的研究重点是误差分层。量化误差和未计算尾项已能任意指定预算；但在固定 P_N 和固定候选下，完整耦合导致的能量下降不会随算术精度提高自动消失。必须区分
+
+\[
+\text{数值/尾项包络宽度},\quad
+\text{保守 Schur 估计的松弛},\quad
+\text{候选与真实最低线的固有偏差}.
+\]
+
+下一步应让高模态按其实际能量进入候选适配的 Schur/Feshbach 下包络，或者构造带外部修正的明确候选，并证明其与 prolate 模型的对应。继续只提高 scalar jet 阶数不保证 (RE5)。最终承重任务仍是：沿明确 a_n->infinity 的序列，独立推出 (RE1) 和 (RE5)，并识别同一 k_a 的 Xi 极限。
+
+参考：
+
+- Connes, Consani, Moscovici, Zeta Spectral Triples, arXiv:2511.22755v1, Sections 3, 4, 7, 8.
+- Connes, van Suijlekom, Quadratic Forms, Real Zeros and Echoes of the Spectral Action, arXiv:2511.23257v1, (11), Theorems 5.6 and 6.1. The matrix and theorem pages were inspected as PDF images.
+- Suzuki, Weil's quadratic form via the screw function, arXiv:2606.09096v1, Lemma 3.1 and Sections 3.2, 4.1.
+- Connes, Consani, Spectral triples and zeta-cycles, Enseign. Math. 69 (2023), 93-148; arXiv:2106.01715v1, Lemma 2.2 and Proposition 2.3. The arXiv text and the publisher bibliographic record were checked.
+- Marcus Chuk, Weil positivity in compact windows: certified two-sided bounds and a Landau-Widom decay law, arXiv:2608.24827, original abstract only in this round.
+
+---
+
+## [PR #5602] NEUMANN_COMPLETION_CANONICAL_MODEL_AND_FOURIER_OBSERVATION
+
+# 2026-09-06: arithmetic high-mode weights, a finite prolate candidate family, and complex observation error
+
+This append supplies the previously unwritten theory for
+`WeilArchimedeanHighModeBounds` and `WeilNeumannGammaBoundary`, records the
+replayed combined certificate, and explains the new
+`WeilEvenFourierObservationTail` Lean/Scribe pair. It keeps the same
+`literatureRHS(weilTest f f)`, `gammaBracket`, operator realization, and
+Fourier convention. The results below distinguish mathematical proofs,
+executed interval computations, and Lean proof scripts. No Lean elaboration,
+Scribe compilation, or `#print axioms` execution was performed in this round.
+
+## 1. Cross-PR inputs and the actual open problem
+
+The research target remains the two missing steps in Connes-Consani-Moscovici
+(CCM), *Zeta Spectral Triples*, arXiv:2511.22755v1, Section 8: simple-even
+lowest modes of the actual Weil operator and sufficiently accurate
+approximation by their explicit prolate model along unbounded scales.
+A fixed-window certificate does not close either unbounded-scale assertion.
+
+The following actual sources were read, including both authors' work:
+
+* loning, PR #5326, head `3beb435bf9ca8aa35aa6079ea4033a9c2e6c9007`,
+  `RH_OFFLINE_ZERO_LEE_YANG_INSTANTANEOUS_PHASE_TRANSITION_THEORY.md`,
+  Sections C14-C15: a Schur floor incurs a dimension-dependent determinant
+  floor. Its canonical determinant identity and boundary approximation
+  remain independent obligations. This motivates controlling the scalar
+  Fourier output directly rather than introducing another determinant.
+* AlyciaBHZ, PR #5580, head `e1699ed18ff0e8145870c2d44374193d83766851`,
+  `OrderedStableBalancedTruncation.lean`: stability and an output error
+  bound concern the same constructed reduced system. Its discrete Stein
+  hypotheses are not hypotheses of the unbounded Weil operator; no direct
+  application of that theorem is asserted here.
+* AlyciaBHZ, PR #5562, branch `work/prime-weil-foundations-probe-20260905`,
+  `ScaledComplexQuadraticRowBound.lean`, blob
+  `1b94a72bebdf5128d020fe755b285099a35b70a1`: complex coefficients, individual
+  energy weights, and absolute series budgets are already supported.
+  Its scaled-row assumptions are not automatically true for our arithmetic
+  matrix. No duplicate general row-bound owner is added.
+
+Suzuki, arXiv:2606.09096v1, already studies the same closed Weil realization,
+small-window ground modes, and an inverse Neumann Laplacian in Section 8.2.
+His inverse on mean-zero functions differs from the massive resolvent
+comparison below. Neumann ideas, Hilbert inequalities, projection estimates,
+and Schur/Feshbach methods are classical. No priority claim is made for them.
+
+## 2. Restore the all-parity logarithmic comparison
+
+Let L=2a>0, omega_n=2*pi*n/L, b_j=2j+1/2. Extract the Gamma part of the
+existing arithmetic boundary symbol:
+
+\[
+g_L(n)=\sum_{j\ge0}\frac{\omega_n(1-e^{-b_jL})}{b_j^2+\omega_n^2}.
+\]
+
+For w>0 the positive telescoping inequality
+
+\[
+\frac{w}{(2j+5/2)^2+w^2}
+\le w\left(\frac1{w+2j+1/2}-\frac1{w+2j+5/2}\right)
+\]
+
+and the zeroth term give an absolutely convergent majorant with sum at most
+1+1/w. The actual symbol therefore satisfies
+
+\[
+|g_L(n)|\le1+\frac{L}{2\pi|n|}\qquad(n\ne0).
+\tag{CO1}
+\]
+
+The same-source Fourier diagonal is
+
+\[
+d_n^\Gamma=\gamma(\omega_n)+\frac2L\sum_{j\ge0}
+(1-e^{-b_jL})\frac{b_j^2-\omega_n^2}{(b_j^2+\omega_n^2)^2}.
+\]
+
+The absolute correction series is bounded by the preceding majorant divided
+by |omega_n|, because |b_j^2-omega_n^2|<=b_j^2+omega_n^2. Thus
+
+\[
+|d_n^\Gamma-\gamma(\omega_n)|
+\le\frac1{\pi|n|}+\frac{L}{2\pi^2n^2}.
+\tag{CO2}
+\]
+
+The existing `arithmetic_archimedean_high_mode_bounds` proof script proves
+(CO1) for the actual extracted symbol, absolute summability of the correction,
+and its bound. Identification of the series with the actual diagonal is the
+Fourier calculation already recorded in (AC3), using the trigamma series.
+
+On l2(Z), H_nm=1/(m-n) for m!=n and H_nn=0 has norm at most pi.
+Indeed its circle Fourier multiplier is, up to the sign convention,
+i*(pi-theta) on 0<theta<2*pi. Its coefficients follow by integration by parts;
+Parseval proves the bound on finite sequences and then by density on l2.
+Every coordinate compression has the same bound. On |n|>=n0>=1 the complete
+Gamma off-diagonal block is [D_{-g},H]/pi, so (CO1) bounds its norm by
+2+L/(pi*n0), including all cross-shell couplings.
+
+Use the previously proved gamma(t)>=log(t/(2*pi))-2/t for t>0. Let P_L be
+an independently justified norm budget for the actual finite prime block,
+and D_L=2*(sinh(L/2)-L/2) its actual pole negative-channel budget. Then
+
+\[
+q_a(y)\ge\sum_{|n|\ge n_0}d_o(L,n;n_0)|y_n|^2,
+\tag{CO3}
+\]
+
+\[
+d_o(L,n;n_0)=\log\frac{|n|}{L}-2-
+\frac{2L+1}{\pi n_0}-\frac{L}{2\pi^2n_0^2}-P_L-D_L.
+\]
+
+This is a simultaneous lower form, first proved on finite Fourier vectors.
+For extension to the whole high form domain, subtract the finite low
+projection from a trigonometric form-core approximation. That projection
+is form-norm continuous since its finitely many basis vectors are in the
+operator domain. Add a constant to make the displayed diagonal weights
+nonnegative and use lower semicontinuity of the weighted coefficient sum.
+This also proves finiteness of that sum for a vector in the original form
+domain. The actual form core is the one of Connes-Consani,
+arXiv:2106.01715v1, Lemma 2.2 and Proposition 2.3. The Hilbert, Fourier and
+form-domain bridges here remain paper proofs, not declarations of CO1's owner.
+
+For c=3, L=log3 and n0=65, use P_L=log2/sqrt2. The compressed prime-2
+translations have disjoint input and output segments since L<2log2; hence
+the norm of their sum is at most one. At n0, (CO3) gives a constant greater
+than 1.5184518986360646, verified by directed interval arithmetic. It grows
+as log(|n|/65). This supplies the previous logarithmic-weighted certificate
+and the odd-sector weights in the combined certificate below.
+
+## 3. Restore the exact Neumann Gamma completion
+
+Set I=[-a,a]. For b>0 define independently the compressed free resolvent
+and the Neumann resolvent of -d^2/dx^2+b^2 by their Green kernels:
+
+\[
+R_b^F(x,y)=\frac{e^{-b|x-y|}}{2b},\qquad
+R_b^N(x,y)=
+\frac{\cosh(b(\min(x,y)+a))\cosh(b(a-\max(x,y)))}{b\sinh(2ba)}.
+\]
+
+The latter has zero endpoint derivative and a derivative jump -1 at x=y.
+A direct hyperbolic calculation, separately for x<=y and y<=x, gives
+
+\[
+2b(R_b^N-R_b^F)(x,y)=
+\frac{2\cosh(bx)\cosh(by)}{e^{bL}-1}
++\frac{2\sinh(bx)\sinh(by)}{e^{bL}+1}.
+\tag{CO4}
+\]
+
+Its integrated quadratic form is the sum of the corresponding two positive
+squares of boundary moments. Every kernel is bounded on the fixed compact
+square and L2(I) is included in L1(I); thus the complex-valued integrated
+identity follows from Fubini, not from an assumed sign of the Weil form.
+
+The digamma partial-fraction formula gives
+
+\[
+\gamma(t)-\gamma(0)=\sum_{r\ge0}\frac{2t^2}{b_r(b_r^2+t^2)},
+\qquad b_r=2r+\tfrac12.
+\tag{CO5}
+\]
+
+Each summand corresponds to (2/b_r)I-2b_r R^F_{b_r}. Replace the free
+resolvent by the Neumann one and use (CO4). With the orthonormal Neumann
+basis nu_0=L^(-1/2) and
+nu_j=sqrt(2/L)*cos(pi*j*(x+a)/L), j>=1, one obtains
+
+\[
+\begin{aligned}
+q_\Gamma(f)={}&\sum_{j\ge0}\gamma(\pi j/L)|\langle\nu_j,f\rangle|^2\\
+&+2\sum_{r\ge0}\left[
+\frac{|\langle\cosh(b_r\,\cdot),f\rangle|^2}{e^{b_rL}-1}
++\frac{|\langle\sinh(b_r\,\cdot),f\rangle|^2}{e^{b_rL}+1}\right].
+\end{aligned}
+\tag{CO6}
+\]
+
+To justify every infinite expression, first subtract gamma(0)*||f||^2.
+All resolvent increments, Neumann frequency increments, and boundary
+squares are then nonnegative. Prove the finite-mixture identity and use
+Tonelli and monotone convergence. This is an equality of extended forms;
+on the actual Gamma form domain the terms on the right are finite.
+The original Weil realization is unchanged. Neumann conditions belong to
+a comparison operator, not to a replacement for the original domain.
+
+On the even sector use the canonical phase-adjusted cosine basis
+phi_n=(-1)^n*sigma_n*cos(2*pi*n*x/L)/sqrt(L), with sigma_0=1 and
+sigma_n=sqrt2 for n>=1. Write omega_n=2*pi*n/L and
+M_b(v)=sum sigma_n*v_n/(b^2+omega_n^2). Direct integration gives
+
+\[
+\langle\cosh(b\,\cdot),f\rangle
+=\frac{2b\sinh(bL/2)}{\sqrt L}M_b(v).
+\]
+
+Combining the b_0=1/2 boundary square with the actual even pole contribution
+2*|<cosh(x/2),f>|^2 yields
+
+\[
+q_{\Gamma+\mathrm{pole}}(f)=\sum_{n\ge0}\gamma(\omega_n)|v_n|^2
++\frac2L\sum_{r\ge0}b_r^2\eta_r(L)|M_{b_r}(v)|^2,
+\tag{CO7}
+\]
+
+where eta_0=e^(L/2)-1 and eta_r=1-e^(-b_r L) for r>=1. All eta_r are
+positive. Consequently the whole even high form has the lower weight
+
+\[
+d_e(L,n)=\gamma(2\pi n/L)-P_L
+\ge\log(n/L)-\frac{L}{\pi n}-P_L.
+\tag{CO8}
+\]
+
+At c=3 and n>=65 this is greater than 7/2. For example use log3<11/10,
+pi>3, log2/sqrt2<1/2 and log(65/log3)>401/100. The last comparison follows
+from e<11/4, e^(1/100)<100/99 and (11/4)^4*(100/99)<650/11. Then
+401/100-11/1950-1/2>7/2. These are direct rational comparisons.
+The old `WeilNeumannGammaBoundary` scripts prove (CO4), its finite real
+quadratic identity and finite canonical-mixture positivity. The complex
+L2, infinite-mixture and operator-domain consequences are the paper proof
+above. The even weight (CO8) is not assigned to the odd Fourier sector.
+
+## 4. Replayed combined certificate with all exterior modes retained
+
+The actual checker is
+`research/weil_ground_mode/certify_prime3_neumann_weighted.py`, SHA-256
+`d6c150268b3f041701a40b804499218bd164555dede6d9c2bd30e7a10a195a99`.
+It verifies the pinned dependency `certify_prime3_refined.py` before import;
+its SHA-256 remains
+`8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0`.
+
+Keep the same 129-entry dyadic even candidate, N=64, M=32768, 44-bit
+coefficient quantization and 60-bit directed error radii. The even block
+uses (CO8); the odd block uses (CO3). For each shell a rational lower
+energy is selected and verified strictly below its directed analytic
+interval. All resolvent weights use T=3/250000. They therefore also bound
+the correction at every shift ell<=T. The exact shell Gram and weighted
+radius energies are accumulated with checked integer/rational arithmetic.
+For each sector, if t is the weighted squared Frobenius norm of the
+quantized matrix and e its weighted error energy, the checks
+
+\[
+e<\eta,\qquad4te<(\eta-e)^2
+\]
+
+prove a Gram norm error below eta. This follows by applying the ordinary
+Gram perturbation identity to W^(1/2)C; it does not multiply an unweighted
+matrix inequality by a noncommuting weight. The entire |m|>M tail uses
+the prior second-jet four-moment positive majorant, with scalar budget
+9e-13, divided by the relevant energy denominator at M+1.
+
+The weighted Gram error budgets are 4/152587890625 (even) and
+8/152587890625 (odd). The sum of the integer shell Grams has exactly the
+previous hash `7f4e1049624807432efe96a68fe63babbc1c3bd37f2d40600a4cddadbddb85a9`.
+No zero data or eigensolver is used. All final positive LDL tests were
+executed; the entire final output was reproduced exactly in a second run.
+A failed intermediate LDL search is not evidence of a negative eigenvalue.
+
+Let k be this fixed candidate normalized in L2. The final rational bounds are
+
+\[
+\ell=\frac{2252813807}{40960000000000000},\quad
+U=\frac{560909}{10000000000000},\quad T=\frac3{250000}.
+\tag{CO9}
+\]
+
+The even full-lower test, even k-orthogonal test, and odd test are strictly
+positive. Their displayed minimum LDL pivots are respectively
+0.003202644247409436, 0.26802217563245934, and 0.040988013296152585.
+These pivots prove positivity, not eigenvalue lower bounds. Weighted square
+completion on the entire form domain gives
+
+\[
+q(f)\ge\ell\|f\|^2,\qquad f\perp k\Longrightarrow q(f)\ge T\|f\|^2.
+\]
+
+The odd lower bound T also exceeds ell, so the full lower bound covers both
+parities. The actual Rayleigh interval is below U. Compact resolvent and
+min-max give a simple isolated even lowest line, with
+
+\[
+5.50003370849609375\cdot10^{-8}\le\lambda_0<5.60909\cdot10^{-8},
+\quad\lambda_1\ge1.2\cdot10^{-5}.
+\]
+
+The existing projective argument (RE4) consequently gives
+
+\[
+\left\|u/\langle k,u\rangle-k\right\|^2
+\le\frac{44669457}{489267186193}<\frac1{10000}.
+\tag{CO10}
+\]
+
+This improves the earlier 0.01475 bound to 0.01 for the same candidate and
+window. The preceding Neumann-only replay had threshold 1/200000 and bound
+0.02; it did not improve 0.01475. The successful improvement uses different
+justified weights in the two parity sectors. The full operator theorem
+remains a paper/computer-assisted result, not a Lean kernel-certified result.
+
+## 5. The new Lean estimate controls the actual complex Fourier observable
+
+For n>0 direct integration in the same basis gives
+
+\[
+\widehat\phi_n(z)=
+\frac{2\sqrt{2/L}\,z\sin(Lz/2)}{z^2-(2\pi n/L)^2}.
+\tag{CO11}
+\]
+
+The paired positive and negative modes cancel the leading inverse-frequency
+term. Let y=sum_{n>N}v_n phi_n be any even L2 tail, N>=1. If L*|z|<=pi*N,
+put w=L*z/(2*pi); then |n^2-w^2|>=3*n^2/4. The identity
+
+\[
+\frac1{3x^3}-\frac1{3(x+1)^3}-\frac1{(x+1)^4}
+=\frac{6x^2+4x+1}{3x^3(x+1)^4}\ge0
+\]
+
+proves sum_{n>N}n^(-4)<=1/(3N^3), including convergence. Young's inequality
+and this positive majorant prove absolute convergence of the Cauchy series
+for every square-summable complex v. Finite Cauchy-Schwarz followed by its
+sum limit proves
+
+\[
+\boxed{|\widehat y(z)|^2\le
+\frac{8L^3}{27\pi^4N^3}|z\sin(Lz/2)|^2\|y\|_2^2.}
+\tag{CO12}
+\]
+
+`WeilEvenFourierObservationTail.even_exterior_fourier_observation_bound`
+proves absolute convergence and the precise normalized coefficient-series
+inequality. There is no upper exterior cutoff or assumed boundary
+cancellation. To identify that response with the actual L2 Fourier tail,
+use Parseval and convergence of the finite cosine sums in L2(I), hence L1(I).
+Their transforms converge at each complex z by Cauchy-Schwarz on the fixed
+window. Equation (CO11) identifies the finite sums, and the proved absolute
+series convergence identifies their limit. This last Fourier-space bridge
+is a paper proof rather than a second hidden Lean assumption.
+
+On |z|<=R, |Im z|<=b, use |sin(Lz/2)|<=exp(bL/2) to obtain
+
+\[
+|\widehat y(z)|\le\sqrt{\frac8{27\pi^4}}L^{3/2}R e^{ba}N^{-3/2}\|y\|_2.
+\tag{CO13}
+\]
+
+When a certified high energy is at least beta*||y||^2, the squared
+observation budget is divided by beta. This controls the entire exterior
+observation. It does not assert that the low component of a ground-mode
+error is small, or that exp(ba) has disappeared.
+
+## 6. Fix the Mellin normalization before identifying Xi
+
+Use the exact standard definition Xi(z)=xi(1/2+iz),
+xi(s)=s*(s-1)*pi^(-s/2)*Gamma(s/2)*zeta(s)/2, and dx=du/u.
+CCM (7.1)-(7.2) write
+
+\[
+h(u)=\frac\pi2u^2(2\pi u^2-3)e^{-\pi u^2},\qquad
+\mathcal E h(u)=u^{1/2}\sum_{m\ge1}h(mu).
+\]
+
+For our chosen Haar and Fourier normalization, the exact scalar is checked
+by a Mellin calculation, not inferred from a zero plot:
+
+\[
+\int_0^\infty h(t)t^{s-1}dt
+=\frac{s(s-1)}8\pi^{-s/2}\Gamma(s/2).
+\tag{CO14}
+\]
+
+For Re s>1 the absolute sum-integral interchange gives
+
+\[
+\int_0^\infty\mathcal E h(u)u^{s-1/2}\frac{du}{u}=\xi(s)/4.
+\]
+
+The written h is self-Fourier, has h(0)=0 and integral zero. Poisson
+summation gives E h(u)=E h(1/u), and its Gaussian tail gives entire Mellin
+continuation. Hence the inverse Fourier kernel for our Xi is
+
+\[
+\Phi(x)=4\mathcal E h(e^x),\qquad\widehat\Phi=\Xi.
+\tag{CO15}
+\]
+
+This agrees with the theta kernel already written in this volume. The
+factor 4 corrects a scalar mismatch when importing the literal h in CCM;
+it does not alter zeros or invalidate a statement made only up to a scalar.
+A numerical check at z=0 gave the ratio 1/4 for the unscaled transform;
+that check is a diagnostic, while (CO14) supplies the proof.
+
+## 7. An explicit finite dyadic prolate family with the correct strip limit
+
+This construction is separate from the fixed 129-entry certificate vector.
+Take lambda=e^a along the integers lambda>=2, so the arithmetic cutoff
+c=lambda^2 is integral and tends to infinity. Use the canonical spheroidal
+functions ps_n^0(x/lambda;(2*pi*lambda^2)^2) in the convention of CCM (7.10).
+The explicit normalizations
+
+\[
+h_{0,\lambda}=2^{-1/2}\lambda^{-1/2}\operatorname{ps}_0^0,
+\qquad h_{4,\lambda}=3\,2^{-1/2}\lambda^{-1/2}\operatorname{ps}_4^0
+\]
+
+have the Hermite limits in CCM (7.11)-(7.12). Set I_j(lambda)=integral of
+h_{j,lambda} over [-lambda,lambda] and
+
+\[
+h_\lambda=\frac{\sqrt3}{2^{11/4}}
+\left(h_{4,\lambda}-\frac{I_4(\lambda)}{I_0(\lambda)}h_{0,\lambda}\right).
+\tag{CO16}
+\]
+
+The first prolate mode has positive integral, so the denominator is nonzero.
+CCM Lemma 7.2 and its Fourier-eigenvalue argument give
+I_j(lambda)=h_j(0)+O(lambda^-2). Thus (CO16) has integral zero and
+sup_{[-lambda,lambda]}|h_lambda-h|<=C*lambda^-2 for a fixed finite C at
+large lambda. This is the published prolate approximation input, not a
+new Lean theorem and not a statement about the unknown Weil ground mode.
+
+Define, with zero extension outside [-a,a],
+
+\[
+p_a(x)=4e^{x/2}\sum_{1\le m\le\lambda e^{-x}}h_\lambda(me^x),
+\qquad p_a^+(x)=\frac{p_a(x)+p_a(-x)}2.
+\tag{CO17}
+\]
+
+There are at most lambda^2 summands. Evenization is explicit: finite prolate
+Fourier eigenvalues need not coincide, so reciprocal symmetry of this
+finite model is not assumed.
+
+Retain the omitted Gaussian terms when comparing (CO17) with (CO15).
+For u in [lambda^-1,lambda], monotonicity of t^4*exp(-pi*t^2) on t>=1 and
+integration by parts give
+
+\[
+|\mathcal E h_\lambda(u)-\mathcal E h(u)|
+\le u^{-1/2}\bigl(C/\lambda+R_H(\lambda)\bigr),
+\]
+
+\[
+R_H(\lambda)=\pi^2e^{-\pi\lambda^2}
+\left(\lambda^5+\frac{\lambda^3}{2\pi}
++\frac{3\lambda}{4\pi^2}+\frac3{8\pi^3\lambda}\right).
+\tag{CO18}
+\]
+
+For some explicit finite D, R_H(lambda)<=D/lambda for lambda>=1; each
+polynomial-Gaussian factor has a bounded maximum. Consequently
+|p_a(x)-Phi(x)|<=4(C+D)e^-a*e^(-x/2) inside the window. Its squared L2
+error is at most 16(C+D)^2*e^-a. The exterior Phi tail is double-exponential.
+In particular ||p_a^+|| is bounded by a constant B independent of large a.
+For every b<1/2, weighted integration of the same bound gives
+
+\[
+\sup_{|\Im z|\le b}|\widehat{p_a^+}(z)-\Xi(z)|
+\le C_b e^{-(1/2-b)a}.
+\tag{CO19}
+\]
+
+The integrals on the negative and positive half-windows are respectively
+(e^((1/2+b)a)-1)/(1/2+b) and (1-e^(-(1/2-b)a))/(1/2-b), multiplied by
+4(C+D)e^-a. Evenization averages the bounds at z and -z. These formulas
+justify the claimed strip rate without discarding a nonzero Gaussian tail.
+
+Now project onto the actual canonical even Fourier space P_N. Its
+coefficients are explicit finite integrals:
+
+\[
+b_{a,j}=4\sum_{m=1}^{\lambda^2}
+\int_{-a}^{\log(\lambda/m)}e^{x/2}h_\lambda(me^x)\phi_j(x)\,dx.
+\tag{CO20}
+\]
+
+Because phi_j is even these also equal the coefficients of p_a^+.
+Set d_{a,j}=2^-p*floor(2^p*b_{a,j}+1/2), and define the finite dyadic model
+p_tilde_a=sum_{j=0}^N d_{a,j} phi_j. Rounding gives an L2 error at most
+sqrt(N+1)*2^-p. Applying (CO13) to the entire projection tail gives, on
+|z|<=R and |Im z|<=b with LR<=pi*N,
+
+\[
+\begin{aligned}
+|\widehat{\widetilde p_a}(z)-\Xi(z)|\le{}&
+C_b e^{-(1/2-b)a}
++\sqrt{\frac8{27\pi^4}}L^{3/2}R e^{ba}N^{-3/2}B\\
+&+\sqrt{L(N+1)}e^{ba}2^{-p}.
+\end{aligned}
+\tag{CO21}
+\]
+
+For example the explicit choices
+
+\[
+N_a=\lceil(a+1)e^{a/3}\rceil,\qquad
+p_a^{\rm bits}=\left\lceil\frac{2a/3+2\log(a+1)}{\log2}\right\rceil
+\tag{CO22}
+\]
+
+give, on every compact substrip rectangle,
+
+\[
+\boxed{\sup_{|z|\le R,|\Im z|\le b}
+|\widehat{\widetilde p_a}(z)-\Xi(z)|
+\le C_{R,b}e^{-(1/2-b)a}.}
+\tag{CO23}
+\]
+
+Indeed N_a+1<=3(a+1)e^(a/3) for a>=log2. The projection term then has the
+same exponential rate, and the rounding term is at most sqrt6 times that
+rate. The pole-free band condition holds eventually for each fixed R.
+Xi(0)>0, also seen from the positive Phi on x>=0, shows p_tilde_a is nonzero
+eventually. With c_a=||p_tilde_a|| and k_a=p_tilde_a/c_a, (CO23) proves
+c_a*hat(k_a)->Xi for this specified family.
+
+(CO22) is a resolution sufficient for the function limit, not a sufficient
+resolution for the arithmetic spectral certificate. One may choose any
+larger N and choose p so that
+sqrt(L*(N+1))*2^-p<=exp(-a/2); then the same rate is retained. Resolving an
+exponentially small arithmetic gap may require vastly more precision.
+No executable certified evaluator for all the prolate integrals in (CO20)
+is asserted here. Their definition and analytic approximation are explicit;
+their interval implementation remains a separate numerical obligation.
+The old certified k at c=3 is not identified with (CO20).
+
+## 8. A directional Schur estimate for the same Fourier observable
+
+The following paper estimate specifies what the remaining arithmetic work
+must control. It is not an assertion that its certificates hold at every
+scale. Suppose the actual same candidate has been certified to satisfy
+ell<=lambda<=mu<=U<T, q(f)>=T||f||^2 on k-perp, and the simple even ground
+mode u has norm one. Set alpha=<k,u> and w=u/alpha-k. The earlier projective
+argument proves alpha!=0, w perpendicular to k, and
+
+\[
+q(w)-\lambda\|w\|^2=\mu-\lambda,\quad
+\|w\|^2\le\frac{\mu-\lambda}{T-\lambda}<1.
+\]
+
+It follows, retaining the actual energy instead of just the gap, that
+
+\[
+q(w)-\ell\|w\|^2\le U-\ell.
+\tag{CO24}
+\]
+
+Assume k lies in P_NH. Put x=P_Nw, y=Q_Nw, C=Q_N A|P_NH, and let
+D=diag(d_e(L,n)-ell), n>N, have a strictly positive lower bound. Suppose
+an actual complete coupling majorant Gbar>=C^*D^-1 C has been certified,
+and the finite matrix
+
+\[
+H=A_N-\ell I-\overline G+\rho kk^*,\qquad\rho>0,
+\]
+
+is positive definite. Since x is perpendicular to k, weighted completion
+and (CO24) give
+
+\[
+\langle x,Hx\rangle+
+\|D^{1/2}y+D^{-1/2}Cx\|^2\le U-\ell.
+\tag{CO25}
+\]
+
+On the even space the actual complex Fourier functional has representer
+g_z(t)=cos(conj(z)*t), since the inner product is linear in the second
+argument. Let g_P and g_Q be its two components and set
+
+\[
+h_z=P_{k^\perp}(g_P-C^*D^{-1}g_Q),\qquad
+\mathcal D_a(z)=\langle h_z,H^{-1}h_z\rangle
++\langle g_Q,D^{-1}g_Q\rangle.
+\tag{CO26}
+\]
+
+Writing the Fourier output in the two coordinates of (CO25) and applying
+Cauchy-Schwarz in their direct-sum energy norm proves
+
+\[
+\boxed{|\widehat w(z)|^2\le(U-\ell)\mathcal D_a(z).}
+\tag{CO27}
+\]
+
+All high pairings are legitimate: the original form domain is included
+in the D form domain, C has finite domain and l2 images, and D^-1 is
+bounded. The second term of (CO26) has the explicit N^-3 observation
+bound (CO12), divided by the lower bound of D. The first term is a
+finite inverse quadratic form with an arithmetic high-mode correction.
+That correction still requires an interval evaluation and an infinite-tail
+bound; it is not assigned a numerical value in this round.
+
+For the family (CO20), a sufficient remaining arithmetic target is
+
+\[
+c_a^2(U_a-\ell_a)\sup_{z\in K}\mathcal D_a(z)\longrightarrow0
+\tag{CO28}
+\]
+
+for every compact K in |Im z|<1/2, together with the actual full-space
+coercivity certificates used in (CO24)-(CO25). This is a directly observed
+error budget, not a determinant floor raised to the realization dimension.
+It can be used with the repository's rectangle Rouche machinery when
+strict boundary lower bounds and errors are actually available. No such
+all-rectangle certificate or ground-family limit is claimed here.
+
+## 9. What has and has not been removed from the problem
+
+The executed fixed-window estimate has genuinely improved. On paper, the
+actual high-mode weights have an independent arithmetic proof, and an
+explicit finite dyadic prolate family now has a calibrated Xi limit with
+quantified projection and rounding errors. The new Lean increment proves
+the infinite complex observation-tail bound with absolute convergence.
+
+The first open research obligation is still to certify the *same* family
+(CO20) against the actual Weil operator along an unbounded scale sequence,
+and make (CO28), or the earlier weighted projective bound, tend to zero.
+No finite matrix positivity assumption has been promoted to an arithmetic
+theorem without its certificate. Neither the Neumann comparison nor the
+new observable estimate is claimed to evade the earlier shift barrier.
+The remaining low-mode error, prime cancellations, and prolate integral
+certification require further work. No RH proof, universal simple-even
+family theorem, or end-to-end Lean real-zero limit is asserted.
+
+References used for this append:
+
+* Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1,
+  (7.1)-(7.12), Lemmas 7.2-7.3 and Section 8. The literal normalization was
+  independently checked by (CO14), and the omitted Gaussian tail is retained.
+* Suzuki, *Weil's quadratic form via the screw function*, arXiv:2606.09096v1,
+  Theorems 1.1-1.4 and Section 8.2. Results stated under RH are not used.
+* Connes, Consani, *Spectral triples and zeta-cycles*, arXiv:2106.01715v1,
+  Lemma 2.2 and Proposition 2.3, for the actual form core.
+* Dusson, Sigal, Stamm, *Analysis of the Feshbach-Schur method for the Fourier
+  spectral discretizations of Schrodinger operators*, arXiv:2008.10871v2.
+  The elimination principle is classical; its Schrodinger regularity
+  assumptions are not silently imported into the Weil problem.
+* DLMF 5.7.6, digamma partial fractions, and the Gamma integral and recurrence,
+  for the elementary resolvent and Mellin computations.
+
+
+---
+
+## [PR #5602] CERTIFIED_PROLATE_MODEL_AND_POLYNOMIAL_MELLIN_DICTIONARY
+
+# 2026-09-06：真实 prolate 模型的可认证构造及其与算术最低模态的首次本线定量对接
+
+本节的“首次”仅指本 PR 的交付顺序，不是数学优先权声明。此前已认证的 129 维 dyadic 候选记为 k。它与文献 prolate 模型是不同对象。本节给出后者的独立谱认证、有限多项式 Fourier 端点公式以及实际的 L2 比较，避免在这两个对象之间省略识别误差。
+
+新增 Lean owner 为 `D5/S3/Weil/ZetaBridge/WeilPolynomialMellinWindow.lean`，有同名 Scribe。实际执行源为 `research/weil_ground_mode/certify_prime3_prolate_model.py`，输入 `prime3_prolate_proposal.json`，输出 `prime3_prolate_model_certificate.json`。Lean 保存实际 `Zeta23.paperFT` 的多项式算术窗口公式与可积性；prolate 自伴实现、无限 Legendre 尾、谱投影运输及完整数值结论仍属于下面的纸面与区间证明。Lean/Scribe 编译及传递公理审查未运行。
+
+## 1. 开放问题与跨作者取阅
+
+Connes、Consani、Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1，(7.5)-(7.6)、Lemma 7.3 和 Section 8，把真实最低 Weil 模态与明确 prolate 候选的足够精确比较列为剩余障碍。该文的模型极限不证明真实算术模态的极限。本节只处理一个含素数窗口的同模型校准，并提供任意有限尺度可复用的评价方法。
+
+本轮读取 loning 的 #5296 的实际理论正文 B10.3-B10.4、B13.4：谱分离与边界读出非消失需要分别证明；所有振幅必须在同一空间组合后再平方。因此这里保持真实 Mellin 合成的全部混合项，在真实函数空间中算范数，不把独立矩阵的相似特征值当作模型识别。
+
+同时检查了 AlyciaBHZ 的 #5882、#5895 最新 PR 说明，它们已在实现复数射影误差和 Rouché/readout 证书，故本节不再新建相同抽象定理。#5602 在 `6e95a93cffddabd62c06ebc1e50f57d6913c3c03` 已有 Neumann 比较、同一候选的 <0.01 射影包络和有限 dyadic prolate 族的纸面定义。本节消除的是“prolate 数据尚无严格可执行评价”的具体缺口。没有将那些未运行的 Lean 文件标作已冻结事实。
+
+## 2. 固定文献中的实际 prolate 对象
+
+令 lambda>1，c=lambda^2，a=log(lambda)。在 x=lambda*t 坐标下，文献的
+
+\[
+PW_\lambda=-\partial_x((\lambda^2-x^2)\partial_x)+(2\pi\lambda x)^2
+\]
+
+变为 [-1,1] 上的正规 prolate 实现
+
+\[
+J_q=-\partial_t((1-t^2)\partial_t)+q^2t^2,
+\qquad q=2\pi c.
+\tag{PM1}
+\]
+
+使用偶 Legendre 正交归一基
+
+\[
+e_r(t)=\sqrt{(4r+1)/2}\,P_{2r}(t),\qquad r\ge0.
+\]
+
+未扰动实现定义为此正交基上的自伴对角算子，特征值 (2r)(2r+1)，其多项式核心在图范数中稠密。q^2*t^2 是有界非负乘法算子，因此在同一个算子域上得到自伴 J_q，有限 Legendre 和保持为核心；resolvent 紧性也被有界扰动保留。这选定的是端点正规、无对数奇分支的 Legendre/prolate 实现。可以从 Legendre 方程与分部积分识别其微分形式，或直接由上述对角实现定义后加入实际乘法势。DLMF 30.2、30.3、30.8 给出相应正规 spheroidal 函数及三项递推。DLMF 的特征值参数与这里可能相差 q^2；特征函数不变，数值证书始终使用 (PM1)。
+
+令
+
+\[
+\alpha_j=\frac{j+1}{\sqrt{(2j+1)(2j+3)}},\qquad\alpha_{-1}=0.
+\]
+
+由 t*P_j 的标准三项递推直接得到实际无限三对角矩阵
+
+\[
+A_{rr}=2r(2r+1)+q^2(\alpha_{2r}^2+\alpha_{2r-1}^2),\qquad
+A_{r,r+1}=q^2\alpha_{2r}\alpha_{2r+1}.
+\tag{PM2}
+\]
+
+本节需要偶谱中编号 0 和 2 的正规特征函数 psi_0、psi_4，它们分别对应文献的 h_(0,lambda)、h_(4,lambda)。选择单位 L2 范数并使零阶 Legendre 系数为正。定义
+
+\[
+H(t)=\psi_4(t)-\frac{(\psi_4)_0}{(\psi_0)_0}\psi_0(t),
+\qquad h_\lambda(x)=H(x/\lambda).
+\tag{PM3}
+\]
+
+因为 integral(e_0)=sqrt(2)，而其他 e_r 的积分为零，(PM3) 严格满足零积分。其直线是 span{h_(0,lambda),h_(4,lambda)} 中唯一的零积分直线。任何对两个非零模式的独立重归一化都会给出同一条直线。本文比较的是之后的单位函数，因此省略的整体非零系数不会改变比较对象；最终 Xi 极限的尺度系数仍须用此前已经校准的文献归一化，不能任意缩小。
+
+## 3. 有限提案如何认证整个无限 prolate 谱
+
+保留 r=0,...,K-1。遗漏空间的最小未扰动 Legendre 能量是
+
+\[
+H_K=2K(2K+1).
+\]
+
+非负势给出整个遗漏形式块 Q_K J_q Q_K >=H_K I。由于 (PM2) 三对角，跨低高空间仅有一条非零耦合，系数
+
+\[
+b_K=q^2\alpha_{2K-2}\alpha_{2K-1}.
+\]
+
+对 s<H_K，真实 Schur 形式介于两个实际有限矩阵之间：
+
+\[
+A_K-sI-\frac{b_K^2}{H_K-s}e_{K-1}e_{K-1}^*
+\preceq S(s)\preceq A_K-sI.
+\tag{PM4}
+\]
+
+这里两个端点矩阵都明确计算，并用区间 LDL 的符号统计其负惯性。当两者非奇异且负指标相同，单调性和上下夹逼保证 S(s) 非奇异且具有同一负指标，因而认证实际 J_q 在 s 以下的全部特征值数量。不能只用有限 A_K 的 Sturm 计数代替这个双端点检查。
+
+本次 c=3、K=32、H_K=4160。提案来自一次不受信任的高精度有限 eigsy 计算，之后每个坐标和中心都固定为分母 2^250 的有理数。独立 verifier 不调用 eigensolver。它在两个中心 mu_j 的 mu_j-1、mu_j+1 处检查 (PM4) 的两个惯性：
+
+\[
+\begin{array}{c|c|c}
+\text{目标偶谱编号}&\text{mu-1 两端点计数}&\text{mu+1 两端点计数}\\
+0&(0,0)&(1,1)\\
+2&(2,2)&(3,3)
+\end{array}
+\]
+
+显示用中心约为 18.088872829041046 和 158.048541836992256。实际比较使用完整 dyadic 中心与定向区间，非显示小数。
+
+对归一化的有限提案 v，完整无限算子残差为
+
+\[
+r^2=\|(A_K-\mu)v\|^2+b_K^2|v_{K-1}|^2.
+\tag{PM5}
+\]
+
+最后一项严格保留。两次认证的残差平方上端点分别小于 1.384e-61 与 1.861e-55。除目标简单特征值以外，全部谱与 mu 的距离至少为 1；谱定理因此给出正交投影误差 <=r，选择真实单位特征函数的符号后有
+
+\[
+\|\psi_j-v_j\|\le\sqrt2r_j<10^{-25},\qquad j=0,4.
+\tag{PM6}
+\]
+
+残差本身不足以识别第几条谱线；编号来自前面完整空间的惯性计数。正的零阶系数及 (PM6) 又固定了符号，并认证 (psi_0)_0 非零。
+
+## 4. 同一零积分模型的误差运输
+
+记 r=v_(4,0)/v_(0,0)，d=v_(0,0)>epsilon_0。若 (PM6) 的误差为 epsilon_j，则
+
+\[
+\left|\frac{(\psi_4)_0}{(\psi_0)_0}-r\right|
+\le\Delta_r:=\frac{\epsilon_4+|r|\epsilon_0}{d-\epsilon_0}.
+\]
+
+故实际零积分组合与有限组合之差满足
+
+\[
+\|H-(v_4-rv_0)\|\le
+\epsilon_4+(|r|+\Delta_r)\epsilon_0+\Delta_r.
+\tag{PM7}
+\]
+
+不需要给积分误差、比值或基函数逼近设置未检查的输入字段。
+
+对 h 支撑于 [-lambda,lambda]，定义实际算术窗口
+
+\[
+p_h(x)=4e^{x/2}\sum_{1\le m\le\lambda e^{-x}}h(me^x),
+\qquad -a\le x\le a,
+\]
+
+并在窗口外置零。最后明确偶化 p_h^+(x)=(p_h(x)+p_h(-x))/2。有限 prolate 模式的 Fourier 特征值一般不同，不能预先假定未偶化的 p_h 已严格为偶。
+
+单个 m 的误差用 t=m*exp(x) 代换，有
+
+\[
+\int_{-a}^{a-\log m} e^x|\delta h(me^x)|^2dx
+=\frac1m\int_{m/\lambda}^{\lambda}|\delta h(t)|^2dt.
+\]
+
+所以对 c=lambda^2 为整数的任何有限尺度，
+
+\[
+\boxed{\|p_h^+-p_{\widetilde h}^+\|_2
+\le4\sqrt\lambda\left(\sum_{m=1}^{c}m^{-1/2}\right)
+\|H-\widetilde H\|_{L^2[-1,1]}.}
+\tag{PM8}
+\]
+
+此处 h(x)=H(x/lambda)，因此 sqrt(lambda) 的缩放因子被保留。偶化是正交投影，范数不增。若 rhs=e<n=||p_tilde^+||，则真实模型非零，且
+
+\[
+\left\|\frac{p_h^+}{\|p_h^+\|}-
+\frac{p_{\widetilde h}^+}{\|p_{\widetilde h}^+\|}\right\|
+\le\frac{2e}{n}.
+\tag{PM9}
+\]
+
+证明直接使用反三角不等式，分母 n 独立认证为正。误差链 (PM4)-(PM9) 对参数化有限尺度有效；本次程序只实例化 c=3，没有暗示已逐尺度认证全部 c。
+
+## 5. 多项式算术窗口的完整有限 Fourier 公式
+
+由 Legendre 提案可精确构造偶多项式
+
+\[
+\widetilde h(t)=\sum_{r=0}^{d-1}A_rt^{2r}.
+\]
+
+定义 s=1/2+iz、t_r=s+2r。每个算术单项的 Fourier 积分为
+
+\[
+4A_rm^{2r}\int_{-a}^{a-\log m}e^{t_rx}dx
+=4A_rm^{2r}\frac{e^{t_r(a-\log m)}-e^{-at_r}}{t_r}.
+\tag{PM10}
+\]
+
+对 Im(z)<1/2，Re(t_r)>0，所有分母均非零。有限求和给出
+
+\[
+\boxed{\widehat p(z)=4\sum_{m=1}^{M}\sum_{r<d}
+A_rm^{2r}\frac{e^{t_r(a-\log m)}-e^{-at_r}}{t_r}.}
+\tag{PM11}
+\]
+
+条件是全部包含的 m 满足 log(m)<=2a。主 Lean 声明 `polynomial_mellin_window_paperFT` 使用原始 `Zeta23.paperFT` 证明 (PM11)。`polynomial_mellin_fourier_integrable` 对全部复 z 先证明实际 integrand 可积；`mellin_monomial_polynomial_value` 证明指数坐标确实等于 exp(x/2)*(m*exp(x))^(2r)。这些结论无需任何未知谱、零点、积分精度或 Fourier 识别假设。
+
+合并 m 项，还可把纸面公式写成一个有限 Dirichlet 字典：
+
+\[
+\widehat p(z)=4\sum_{r<d} A_r
+\frac{e^{at_r}D_M(s)-e^{-at_r}S_M(2r)}{t_r},
+\quad D_M(s)=\sum_{m=1}^Mm^{-s},\quad S_M(2r)=\sum_{m=1}^Mm^{2r}.
+\tag{PM12}
+\]
+
+式 (PM12) 未另设 Lean 公共包装；实际 verifier 使用等价的 (PM11)。它不调用 zeta 值。表观 t_r=0 奇点可去；Lean 定理在所需半平面内直接排除了分母为零，不依赖 totalized division。
+
+## 6. 保留完整混合项的函数范数与实际校准
+
+在 c=3 处，m=3 只贡献一个端点，Lebesgue 积分为零。令 b=a-log2<0。实际 p_tilde^+ 的解析表达只在 -a、b、-b、a 处切换。每段是有限个 exp(plus-or-minus(2r+1/2)*x) 的线性组合。
+
+平方后先合并所有指数及其完整系数，包括全部交叉项；对每个精确有理指数 t 使用
+
+\[
+\int_l^r e^{tx}dx=(e^{tr}-e^{tl})/t\quad(t\ne0),\qquad
+\int_l^r1\,dx=r-l.
+\]
+
+这给出 ||p_tilde^+|| 的定向区间，无求积误差。固定候选 k 的余弦系数使用已有相位约定；其与 p_tilde^+ 的内积通过 (PM11) 的 65 个实际余弦频率值精确计算。所有有限和先在同一函数中形成，平方时没有舍弃混合项。
+
+本次显示值为
+
+\[
+\|p_{\widetilde h}^+\|=2.90193861714445\ldots,
+\qquad
+\left\langle k,\frac{p_{\widetilde h}^+}{\|p_{\widetilde h}^+\|}\right\rangle
+=-0.999999377793547947\ldots.
+\]
+
+这里的原始范数采用 (PM3) 的整体标度，不是此前文献校准常数下的范数。单位直线与该常数无关。实符号对齐后的多项式模型距离平方为
+
+\[
+2-2|\langle k,p_{\widetilde h}^+/\|p_{\widetilde h}^+\|\rangle|
+\in[1.24441290410519742709\ldots,1.24441290410519742710\ldots]10^{-6}
+< (112/100000)^2.
+\]
+
+(PM9) 的真实 prolate/多项式模型误差小于 3.376e-24。因此对真正的偶化 prolate 模型，执行器证明
+
+\[
+\boxed{\inf_{\sigma\in\{-1,1\}}
+\left\|k-\sigma\frac{p_{h_\lambda}^+}{\|p_{h_\lambda}^+\|}\right\|
+<\frac{113}{100000}=0.00113,
+\qquad \lambda=\sqrt3.}
+\tag{PM13}
+\]
+
+结合本卷已有、记录在组合 Neumann-even/log-weighted-odd 证书中的实际 Weil 结论 ||u/<k,u>-k||<1/100，三角不等式给出
+
+\[
+\boxed{\inf_{\sigma\in\{-1,1\}}
+\left\|\frac{u}{\langle k,u\rangle}-
+\sigma\frac{p_{h_\lambda}^+}{\|p_{h_\lambda}^+\|}\right\|
+<\frac{1113}{100000}=0.01113.}
+\tag{PM14}
+\]
+
+新程序独立运行的是 (PM13)；(PM14) 继承此前真实 Weil 形式及无限耦合证书的纸面/区间范围。这里未重新运行整个 Weil LDL 程序，也未把其域接口变为 Lean 公理。
+
+## 7. 实际验证、研究价值和剩余承重问题
+
+在 110 位和 130 位定向区间精度分别运行同一 verifier，全部八组有限惯性端点检查、两个含完整无限尾的残差检验、分母正性、函数范数和有理误差门均通过。提案生成可使用任意不受信任的数值方法；证书只依赖固定 dyadic 数据、标准区间四则/exp/log/sqrt 和明确的纸面算子界。它依赖 mpmath.iv、Python 与整数实现的正确性，未被 Lean 内核重放。
+
+最终 verifier SHA-256：`42dceb5c81f9aabdc12b51a99d29f0929d81e712f815b49b13bbf9bb5ec56039`。
+提案 SHA-256：`242c9897bbd247ef0485039e6dcde819a351c5900ceac52fecc420934c1896db`。
+固定 Weil 候选依赖 SHA-256：`8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0`。
+
+本轮提供了实际文献模型的严格可执行评价，以及它与已认证算术候选的一条具体误差桥。此前任意 dyadic 候选与 prolate 模型的对应尚未量化；(PM13) 在一个含素数尺度消除了这一缺口。它没有证明该距离为零，也没有把这个固定小数外推成尺度衰减律。
+
+研究主体接下来应对同一 p_(h_lambda)^+ 或其带认证误差的有限多项式版本，计算实际 Weil 形式、完整候选正交补以及目标 Fourier 灵敏度。需要沿明确 lambda_n->infinity 的序列证明真实 ground/model 差的条带紧集一致预算消失，而不能仅凭已知 prolate/Xi 模型极限完成拼接。所有整体归一化因子、偶化、低频候选误差、算术 Schur 松弛和高频尾都必须保持对应。Legendre/Galerkin/Schur/区间工具本身是经典方法，本节不作首次发现声明。
+
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, (7.5)-(7.12), Lemma 7.3, Section 8. https://arxiv.org/html/2511.22755v1
+- NIST DLMF 30.2, 30.3 and 30.8, regular spheroidal differential equation, eigenvalues and Ferrers/Legendre expansions. https://dlmf.nist.gov/30.2 ; https://dlmf.nist.gov/30.3 ; https://dlmf.nist.gov/30.8
+- Mathlib pinned commit `db584cd6d46c92f209a44c0f1c829460d327499d`, `integral_exp_mul_complex` and interval integrability; existing repository `Zeta23.paperFT`.
+- loning #5296, theory source at `9adc8b7e64469344089ce298cb3ab3478aebb21c`, B10.3-B10.4 and B13.4; AlyciaBHZ #5882 and #5895, PR-level scope audit for existing projective/readout formalizations.
+
+
+---
+
+## [PR #5602] PRIME_MELLIN_INTERTWINING_AND_PARITY_RESIDUAL
+
+# 2026-09-06：真实素数作用的全尺度对数约化与偶化修正的定量保存
+
+Lean：`D5/S3/Weil/ZetaBridge/WeilMellinPrimeIntertwining.lean`。
+Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilMellinPrimeIntertwining.scribe.cs`。
+独立执行源：`research/weil_ground_mode/certify_prime3_mellin_parity.py`。
+精确回归：`research/weil_ground_mode/test_mellin_prime_intertwining.py`。
+
+本节不继续提高固定窗口的最低特征值精度，而是消除明确模型上的一个实际算术作用计算：带原始 Lambda(n)/sqrt(n) 系数的整个单向素数幂平移，可以精确化为对数 seed 的 Mellin 合成。随后把这一结果运输到实际偶化模型，保留其完整奇部分修正。主恒等式对任意窗口尺度成立，未使用未知最低模态、谱间隔或 RH。其算术核心是已有的经典除数恒等式，不作数学首创声明。
+
+## 1. 文献和当前库中的承重位置
+
+Connes 的 2026 年综述 *The Riemann Hypothesis: Past, Present and a Letter Through Time*, arXiv:2602.04022，Sections 6.4-6.6，仍明确区分 prolate 模型的 Xi 极限与真实最低 Weil 模态的充分精确逼近。其 Section 6.4 解释 E 映射、Poisson 关系和近 radical 的来源。这与 Connes-Consani-Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1，Section 8 的两个缺口一致。因此本节研究实际算术作用与 E 的相容性，未将两种算子的自伴性或相似谱图当作模型识别。
+
+本轮读取 loning 的 #5326 实际正文 C13.1-C13.3：固定矩形零点计数需要真实的边界逼近误差与非零下界，局部收敛不能由单个有限深度覆盖所有高度。还读取 AlyciaBHZ 的 #5895 新真源 `NormalizedReadoutDisk.lean`，固定在 `04eaf09b47c39f7688a8df498c4fe30e0663dcbd`：它已保留归一化分子、分母共享误差的协方差。因此本节不重复编写射影、误差球或 Rouché 包装，而补入这些消费者之前的实际 prime/model 算术。
+
+Mathlib 固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d` 已有 `ArithmeticFunction.vonMangoldt_sum`。新证明直接复用它，并复用 `WeilPolynomialMellinWindow.mellin_monomial_polynomial_value` 证明与原多项式模型的逐点一致性。
+
+## 2. 同一窗口、原始系数与明确模型
+
+令 a>=0、lambda=exp(a)，取自然数 M>=exp(2a)。通常采用整数 c=lambda^2=M。设 h: R->C 在 t>lambda 时为零。定义
+
+\[
+E_{a,M}h(x)=1_{[-a,a]}(x)\,4e^{x/2}
+\sum_{m=1}^{M}h(me^x).
+\tag{MP1}
+\]
+
+h 的上部支撑使所有不满足 me^x<=lambda 的项自动为零。任意更大的 M 给出同一个窗口模型。定义原始单向 prime block
+
+\[
+B_+f(x)=1_{[-a,a]}(x)
+\sum_{n=1}^{M}\frac{\Lambda(n)}{\sqrt n}f(x+\log n).
+\tag{MP2}
+\]
+
+对窗口内零延拓的函数，B_- = B_+^* 是反向平移，S=B_++B_- 是无符号素数块；实际 Weil 算子中的素数贡献是 -S。Lambda(1)=0，所以 n=1 不增加项。对窗口支撑的输入，n>exp(2a) 的平移为零；等于 exp(2a) 的项至多改变端点，L2 算子不变。这一支撑结论不用于任意未截断的输入函数。
+
+为使反射逐点成立，这里使用闭区间。原 `polynomialMellinWindow` 使用左开右闭区间。新 Lean `polynomial_window_agreement` 对截断偶多项式 seed 证明两者在 x!=-a 处逐点相等，因此代表同一个 L2 函数。它不引入第二套 Fourier 定义。一般超额 M 的旧端点求积公式仍须先删除空支撑项；当 M=exp(2a) 为整数时，旧公式的全部 cutoff 条件直接满足。
+
+## 3. 全尺度精确素数作用
+
+新主声明 `prime_forward_mellin_identity` 证明
+
+\[
+\boxed{B_+E_{a,M}h=E_{a,M}((\log t)h)-X E_{a,M}h,\qquad Xf(x)=xf(x).}
+\tag{MP3}
+\]
+
+该恒等式在全部实 x 上逐点成立。Lean 陈述甚至允许 a 为任意实数；负半宽时压缩区间为空。研究应用取 a>0。
+
+证明先处理 x 在窗口内。正整数 n 的平移不会越过左端点；越过右端点时，seed 支撑使原始有限和为零。精确半密度抵消为
+
+\[
+\frac{\Lambda(n)}{\sqrt n}\,4e^{(x+\log n)/2}
+=4e^{x/2}\Lambda(n).
+\]
+
+于是左侧等于
+
+\[
+4e^{x/2}\sum_{n,m=1}^{M}\Lambda(n)h(nme^x).
+\]
+
+若 nm>M，则 M>=exp(2a)、x>=-a 给出 nme^x>exp(a)，该项确实为零。按 k=nm 重新分组，得到
+
+\[
+4e^{x/2}\sum_{k=1}^{M}
+\left(\sum_{n\mid k}\Lambda(n)\right)h(ke^x)
+=4e^{x/2}\sum_{k=1}^{M}\log k\,h(ke^x).
+\]
+
+最后使用 log(k exp(x))=log(k)+x 得到 (MP3)。窗口外两端因同一压缩均为零。所有求和有限，复振幅保持到最后；没有对素数项先取绝对值，也没有遗漏 p^j、j>1 的素数幂。
+
+该结果是原始 prime action 的计算恒等式，不是 prime positivity，也没有证明完整 Weil 形式小。其作用是使后续 Gamma/pole 抵消面对一个明确的 log-seed，而非一个待估计的重复素数双重求和。
+
+## 4. 偶化以后的完整修正
+
+记 Rf(x)=f(-x)、P_+=(I+R)/2、P_-=(I-R)/2，并设
+
+\[
+p=E_{a,M}h,\quad e=P_+p,\quad r=P_-p,\quad g=E_{a,M}((\log t)h).
+\]
+
+有限 prolate 模式的压缩 Fourier 特征值不必相同，所以一般 r!=0。源文件独立定义两个方向的素数平移，并证明
+
+\[
+\boxed{S e=(I+R)g-2Xr-(I+R)B_+r.}
+\tag{MP4}
+\]
+
+这是 `prime_even_mellin_identity`。推导使用 R B_+ R=B_-、e=p-r 及 e 的偶性：
+
+\[
+S e=(I+R)B_+e=(I+R)(g-Xp-B_+r),
+\]
+
+而 (I+R)Xp=2Xr。最后一等式中的 x 因子随反射变号，不能漏掉。
+
+定义完整偶化修正
+
+\[
+\mathcal C_h=2Xr+(I+R)B_+r.
+\tag{MP5}
+\]
+
+在 L2([-a,a]) 上，每个压缩平移范数不超过一。若 V_a 是 B_+ 的独立范数上界，例如有限绝对权重和，则
+
+\[
+\boxed{\|\mathcal C_h\|_2\le2(a+V_a)\|r\|_2.}
+\tag{MP6}
+\]
+
+这是 (MP4) 的纸面 L2 推论；本次 Lean 保存的是完整逐点恒等式。对实际 prolate seed 或有限多项式 seed，有限合成在窗口内分段光滑且有界，所以全部配对合法。更一般地，正半轴上的 L2 seed 也可由 t=m exp(x) 的变换逐项证明合成可积。
+
+实际素数二次型因此满足
+
+\[
+\boxed{
+q_{\rm prime}(e)
+=-2\Re\langle e,g\rangle
++2\Re\langle e,Xr+B_+r\rangle.
+}
+\tag{MP7}
+\]
+
+当 e 非零时，省略奇部分造成的归一化能量误差最多为 2(a+V_a)||r||/||e||。这一上界不保证误差相对于真实最低能量或最低谱间隔足够小。
+
+## 5. 真正 prolate 模型上的已执行检验
+
+本次保留同一个 lambda=sqrt(3) 的零积分 prolate 直线，沿用前节 (PM1)-(PM9)，没有重新定义候选或调用未知 Weil ground vector。新 verifier 在载入前校验原 prolate verifier、其 dyadic proposal 和原算术源的 SHA-256，并实际重放整个 prolate 认证，包括遗漏 Legendre 块的惯性夹逼及完整残差。单位模式误差仍严格小于 10^-25。
+
+由有限 Legendre 模型形成的 p_tilde 在 -a、b=a-log2、-b、a 上分段。每段 e_tilde 和 r_tilde 是有限个 exp(plus-or-minus(2j+1/2)x) 的和。g_tilde 的每项还带 x+log(m)。程序完整展开混合项后，使用 exp(tx) 和 x exp(tx) 的端点原函数计算范数、内积，没有数值求积。实际 prime energy 另从原平移积分
+
+\[
+-\frac{2\log2}{\sqrt2}\int_{-a}^{a-\log2}
+\widetilde e(x)\widetilde e(x+\log2)\,dx
+\]
+
+独立算出，而非先设定为 (MP7) 的右侧。
+
+从有限多项式回到真正 prolate 函数时，也控制了 log-seed 误差。全部被使用的 seed 参数 t 都在 [lambda^-1,lambda]，因此 |log(t)|<=a。若 prolate seed 在 [-1,1] 上的误差为 delta_H，令
+
+\[
+C=4\sqrt\lambda\sum_{m=1}^{3}m^{-1/2},\qquad \epsilon=C\delta_H.
+\]
+
+则 ||p-p_tilde||<=epsilon，||g-g_tilde||<=a epsilon，偶、奇投影各自也满足相同的 epsilon 预算。这个步骤只作用于有界的实际 prime/log-seed 配对，不把 L2 误差当作完整无界 Gamma 形式的误差。
+
+令 n=||e_tilde||，并用 Q>=||g_tilde||，V=log2/sqrt2。程序选用独立的 Q=a C(1+|ratio|)。设
+
+\[
+Z=-\langle e,S e\rangle+2\Re\langle e,g\rangle,
+\qquad\widetilde Z=-\langle\widetilde e,S\widetilde e\rangle
++2\Re\langle\widetilde e,\widetilde g\rangle.
+\]
+
+使用 ||S||<=2V，得到
+
+\[
+|Z-\widetilde Z|\le
+[2V(2n+\epsilon)+2(an+Q+a\epsilon)]\epsilon=:\Delta_Z.
+\]
+
+且 |Z_tilde|<=2Vn^2+2nQ、| ||e||^2-n^2 |<=(2n+epsilon)epsilon。验证 n>epsilon 后，归一化误差预算为
+
+\[
+\boxed{
+\left|\frac Z{\|e\|^2}-\frac{\widetilde Z}{n^2}\right|
+\le\frac{\Delta_Z}{(n-\epsilon)^2}
++\frac{(2Vn^2+2nQ)(2n+\epsilon)\epsilon}{n^2(n-\epsilon)^2}.
+}
+\tag{MP8}
+\]
+
+实际算出的 (MP8) 上界小于 4.495e-23。它保留归一化分母变化，未把历史 norm JSON 当作新计算输入。
+
+## 6. 认证的有理结论与能量尺度
+
+对真正的 prolate 模型，定向区间验证给出
+
+\[
+\boxed{\frac{76}{10^6}<\frac{\|r\|_2}{\|e\|_2}<\frac{77}{10^6}.}
+\tag{MP9}
+\]
+
+因此未偶化的算术模型确实具有非零奇部分。对实际归一化素数能量，
+
+\[
+\boxed{-\frac{18173952}{10^9}
+<\frac{q_{\rm prime}(e)}{\|e\|^2}
+<-\frac{18173950}{10^9}.}
+\tag{MP10}
+\]
+
+更重要的是，对省略奇修正的实际能量差，有
+
+\[
+\boxed{-\frac{44}{10^8}
+<\frac{q_{\rm prime}(e)+2\Re\langle e,g\rangle}{\|e\|^2}
+<-\frac{43}{10^8}.}
+\tag{MP11}
+\]
+
+显示用的多项式值约为 -4.3582252062e-7。前面的误差预算已经将该区间运输到真正 prolate 模型。其绝对值严格大于 7U，其中 U=560909/10^13 是此前真实 Weil 最低值的上界。这个比较仅说明该模型修正在现有研究所需的能量尺度上不能忽略；它没有给出模型完整 Rayleigh 商或新的最低特征值区间。
+
+同时 (MP6) 给出可实际使用的算子作用预算
+
+\[
+\boxed{\|\mathcal C_h\|_2/\|e\|_2<159/10^6.}
+\tag{MP12}
+\]
+
+(MP11) 是有符号实际配对的认证；(MP12) 是较粗的范数上界。两者不可互换。保留修正后，后续可以继续利用它与 Gamma/pole 项的抵消。
+
+## 7. 形式化范围与复验
+
+`prime_forward_mellin_identity` 对任意尺度、任意复 seed、完整有限 cutoff 和所有实 x 给出 (MP3) 的证明脚本。`prime_even_mellin_identity` 保存完整 (MP4)。`polynomial_window_agreement` 接回既有多项式模型。独立新定义只描述这次需要的实际 E 和平移作用；既有 von Mangoldt、Fourier 与 Weil 对象保持不变。
+
+`test_mellin_prime_intertwining.py` 实际执行 258 组精确函数回归，每组同时检查两个恒等式。乘法坐标、支撑测试都用有理数；对数用素因子指数向量表示，系数是精确复有理根式，不使用浮点容差。测试覆盖整数及非整数 lambda、额外无效 cutoff、窗口内外和端点。错误半密度、删除高阶素数幂、删除奇修正和不足 cutoff 四个指定变体均有实际失败见证。这些回归是开发检查，不能替代 Lean 内核证明。
+
+新定向区间 verifier 在 110 位和 130 位分别实际运行通过。没有运行 GitHub CI、Lean elaboration、Scribe emission 或传递公理报告。定向区间证书依赖 mpmath.iv、Python 和前节说明的 prolate 算子识别及谱估计。没有将它标为完整内核结果。
+
+新 verifier SHA-256：`16e0de27325376e8c7627297d406bc4720b3708f5826c8f7cd7096e6c9d59961`。
+精确回归源 SHA-256：`7101362a568224039fe339838d7a355c54beffba923ab7745d46652bc1919ade`。
+原 prolate verifier SHA-256：`42dceb5c81f9aabdc12b51a99d29f0929d81e712f815b49b13bbf9bb5ec56039`。
+
+## 8. 下一条实际残差等式及剩余开放问题
+
+对当前分段光滑的实际模型，每个固定尺度有有限个断点，零延拓 Fourier 变换为 O(1/|t|)。Gamma 乘子为 O(log(2+|t|))，所以其乘积属于 L2。加上有限有界素数与 pole 项，可用同一 Friedrichs 配对识别其算子域。这是纸面定义域论证，未包含在本次 Lean 声明中。
+
+于是对明确 e=P_+E h 和任意实 mu，完整残差可准确写成
+
+\[
+\boxed{
+(A_a-\mu)e
+=A_\Gamma e+A_{\rm pole}e-(I+R)E((\log t)h)
++\mathcal C_h-\mu e.
+}
+\tag{MP13}
+\]
+
+本节已把原始素数作用从该等式中的未知算术双重和，约化为显式 log-seed 与完全保留的奇修正。真正需要继续攻克的是 (MP13) 中 Gamma/pole/log-seed 的相消，以及其同候选正交补之间的定量关系。经典的全局 E-radical 或 Poisson 说法有自身的 Schwartz、零值、零积分与边界条件，不能直接作用于截断 prolate 函数并删除这些修正。
+
+(MP3)-(MP4) 已具有参数族形式，(MP9)-(MP12) 目前只在 lambda=sqrt(3) 兑现数值认证。尚未证明无界尺度上的 small residual/gap、simple-even ground family 或真实 ground Fourier 的 Xi 极限。此次结果不会自动绕过前面的固定内缩平移障碍，也不表示素数范数预算本身已统一有界。
+
+参考：
+
+- A. Connes, *The Riemann Hypothesis: Past, Present and a Letter Through Time*, arXiv:2602.04022, Sections 6.4-6.6. https://arxiv.org/html/2602.04022
+- A. Connes, C. Consani, H. Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Lemma 7.3 and Section 8. https://arxiv.org/html/2511.22755v1
+- Mathlib `ArithmeticFunction.vonMangoldt_sum`, pinned `db584cd6d46c92f209a44c0f1c829460d327499d`, `Mathlib/NumberTheory/ArithmeticFunction/VonMangoldt.lean`.
+- loning #5326, `3beb435bf9ca8aa35aa6079ea4033a9c2e6c9007`, actual theory C13; AlyciaBHZ #5895, `04eaf09b47c39f7688a8df498c4fe30e0663dcbd`, actual `NormalizedReadoutDisk.lean`.
