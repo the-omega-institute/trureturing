@@ -93,7 +93,9 @@ internal static partial class DigestionStatusEvaluator
         Func<string, bool>? isBaseFactAffected = null,
         RawChangeSet? projectedStatusChanges = null,
         IReadOnlyDictionary<RepoPath, TruthState>? truthStates = null,
-        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null)
+        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null,
+        RawChangeSet? receiptGateChanges = null,
+        Func<string, bool>? isReceiptGateBaseFactAffected = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -152,6 +154,14 @@ internal static partial class DigestionStatusEvaluator
             projectedStatusChanges ?? changes,
             alignment,
             isBaseFactAffected);
+        var receiptGateAffectedAtomIds = receiptGateChanges is null
+            ? statusAuthorityChangedAtomIds
+            : ResolveStatusAuthorityChangedAtomIds(
+                entries,
+                baselineEntries.Keys.ToHashSet(StringComparer.Ordinal),
+                receiptGateChanges,
+                alignment,
+                isReceiptGateBaseFactAffected);
         var work = entries.Select(entry =>
         {
             var baselineMigration = baselineEntries.TryGetValue(entry.AtomId, out var baselineEntry)
@@ -174,7 +184,7 @@ internal static partial class DigestionStatusEvaluator
                 findings);
         }).ToArray();
         RequireScribeReceiptsForCoverageDelta(
-            work, statusAuthorityChangedAtomIds, baselineEntries, baselineDocument is not null, findings);
+            work, receiptGateAffectedAtomIds, baselineEntries, baselineDocument is not null, findings);
         DeriveMigration(work);
         RequireDecompositionBeforeNewAbsorption(
             work,

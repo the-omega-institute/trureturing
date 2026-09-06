@@ -17,7 +17,7 @@ internal partial record ReceiptApplicability
         NotApplicableNonFormal => "scribe-not-applicable:non-formal",
         NotApplicableMirrorWaiver => "scribe-not-applicable:mirror-waiver",
         PendingTarget => "scribe-pending-target",
-        Failure => "scribe-applicability-invalid",
+        Failure => null,
         _ => throw new InvalidOperationException("Unknown receipt applicability."),
     };
 

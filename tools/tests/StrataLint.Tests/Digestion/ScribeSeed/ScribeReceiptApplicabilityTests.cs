@@ -80,6 +80,39 @@ public sealed class ScribeReceiptApplicabilityTests
         Assert.Contains(evaluation.ReceiptIntegrityGaps, item => item.Gap.Code == $"scribe-{corrupt}-mismatch");
     }
 
+    [Theory]
+    [InlineData("definition", "scribe-definition-mismatch")]
+    [InlineData("emission", "scribe-emission-mismatch")]
+    [InlineData("verifier", "scribe-emission-unverified")]
+    [InlineData("reference", "scribe-declaration-reference-missing")]
+    public void WaivedPresentReceiptWithUnavailableAuthorityIsBlocking(
+        string unavailableAuthority,
+        string expectedCode)
+    {
+        var fixture = ReceiptApplicabilityFixture.Create(waived: true);
+        ReceiptApplicabilityFixture.Receipts(fixture, 1);
+        if (unavailableAuthority == "definition")
+            fixture.Files.Remove(ScribeEmissionAttestation.DefinitionPath(ScribeSeedFixture.ModuleGid));
+        if (unavailableAuthority == "emission")
+            fixture.Verified = VerifiedScribeEmissions.Empty;
+        if (unavailableAuthority == "reference")
+        {
+            Assert.True(fixture.Verified.TryGet(ScribeSeedFixture.ModuleGid, out var record));
+            fixture.Verified = VerifiedScribeEmissions.Create([record]);
+        }
+
+        var evaluation = ReceiptApplicabilityFixture.Evaluate(
+            fixture,
+            verifierAvailable: unavailableAuthority != "verifier");
+
+        Assert.True(evaluation.HasReceiptIntegrityFailure);
+        Assert.Contains(evaluation.ReceiptIntegrityGaps, item => item.Gap.Code == expectedCode);
+        var entry = Assert.Single(evaluation.Entries);
+        Assert.DoesNotContain(entry.Gaps, gap => gap.Code is
+            "scribe-definition-missing" or "scribe-emission-missing");
+        Assert.Equal(DigestionMigrationState.Partial, entry.DerivedStatus.Migration);
+    }
+
     [Fact]
     public void WaivedTargetWithoutBlueprintHasNoReceiptObligationAndPreservesStatus()
     {
@@ -135,8 +168,7 @@ public sealed class ScribeReceiptApplicabilityTests
         var evaluation = ReceiptApplicabilityFixture.Evaluate(fixture);
 
         Assert.Contains(evaluation.Findings, message => message.Contains("scribe-applicability-invalid", StringComparison.Ordinal));
-        Assert.DoesNotContain(Assert.Single(evaluation.Entries).ReceiptObservations, gap =>
-            gap.Code.StartsWith("scribe-not-applicable", StringComparison.Ordinal) || gap.Code == "scribe-pending-target");
+        Assert.Empty(Assert.Single(evaluation.Entries).ReceiptObservations);
     }
 
     [Fact]
@@ -238,13 +270,16 @@ internal static class ReceiptApplicabilityFixture
         });
     }
 
-    internal static DigestionLedgerEvaluation Evaluate(ScribeSeedFixture fixture, RawChangeSet? changes = null)
+    internal static DigestionLedgerEvaluation Evaluate(
+        ScribeSeedFixture fixture,
+        RawChangeSet? changes = null,
+        bool verifierAvailable = true)
     {
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(fixture.Raw(fixture.Document))).Snapshot;
         var baseline = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(fixture.Raw(fixture.Baseline))).Snapshot;
         var lean = AcceptedLeanClosure.Create(fixture.Inputs.Report);
         return DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.ChangedSet, fixture.Document, snapshot, lean,
-            fixture.Verified, fixture.Baseline, validateProjectedStatus: false, baselineSnapshot: baseline,
+            verifierAvailable ? fixture.Verified : null, fixture.Baseline, validateProjectedStatus: false, baselineSnapshot: baseline,
             changes: changes ?? RawChangeSet.Create([ScribeSeedFixture.EntryPath(fixture.First)]));
     }
 }

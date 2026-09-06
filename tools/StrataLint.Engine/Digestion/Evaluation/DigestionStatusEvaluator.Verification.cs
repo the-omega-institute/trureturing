@@ -89,14 +89,26 @@ internal static partial class DigestionStatusEvaluator
             var hasReceipt = receipts.TryGetValue(gid, out var receipt);
             // Receipt completeness still feeds migration. Applicability changes diagnostics
             // and the admission obligation only, leaving that derivation unchanged.
-            void ObserveMissing(string code)
+            void RecordUnavailable(string missingCode, string? integrityCode = null)
             {
-                if (required || hasReceipt)
-                    gaps.Add(new DigestionGap(code, gid, DigestionGapSeverity.NonFatal));
+                if (hasReceipt)
+                {
+                    gaps.Add(new DigestionGap(
+                        integrityCode ?? missingCode,
+                        gid,
+                        DigestionGapSeverity.ReceiptIntegrityFailure));
+                }
+                else if (required)
+                {
+                    gaps.Add(new DigestionGap(
+                        missingCode,
+                        gid,
+                        DigestionGapSeverity.NonFatal));
+                }
             }
             if (!hasReceipt)
             {
-                if (required) ObserveMissing("scribe-receipt-missing");
+                if (required) RecordUnavailable("scribe-receipt-missing");
                 complete = false;
             }
 
@@ -113,12 +125,12 @@ internal static partial class DigestionStatusEvaluator
             ScribeEmissionRecord? verified = null;
             if (verifiedEmissions is null)
             {
-                ObserveMissing("scribe-emission-unverified");
+                RecordUnavailable("scribe-emission-unverified");
                 complete = false;
             }
             else if (!verifiedEmissions.TryGet(documentGid, out var verifiedRecord))
             {
-                ObserveMissing("scribe-emission-missing");
+                RecordUnavailable("scribe-emission-missing", "scribe-emission-mismatch");
                 complete = false;
             }
             else
@@ -130,13 +142,13 @@ internal static partial class DigestionStatusEvaluator
                 && verifiedEmissions is not null
                 && !verifiedEmissions.ReferencesDeclaration(gid))
             {
-                ObserveMissing("scribe-declaration-reference-missing");
+                RecordUnavailable("scribe-declaration-reference-missing");
                 complete = false;
             }
 
             if (!snapshot.TryGetFile(definitionPath, out var definition))
             {
-                ObserveMissing("scribe-definition-missing");
+                RecordUnavailable("scribe-definition-missing", "scribe-definition-mismatch");
                 complete = false;
             }
             // Binds scribe.definition_sha256 to both the definition bytes and verified Scribe

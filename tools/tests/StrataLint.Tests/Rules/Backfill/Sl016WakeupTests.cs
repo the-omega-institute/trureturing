@@ -169,15 +169,44 @@ public sealed class Sl016WakeupTests
             StringComparison.Ordinal));
     }
 
-    [Fact]
-    public void LeanHeaderChangeWithStableTargetValueDoesNotWakeReferencedEdge()
+    [Theory]
+    [InlineData("invalid-header")]
+    [InlineData("pending-state")]
+    public void LeanApplicabilityChangeWithStableTargetValueWakesAndJudgesReferencedEdge(
+        string scenario)
     {
         const string targetGid = "D5/S0/Carrier/BackfillTarget";
         var targetPath = targetGid + ".lean";
         var fixture = CoverageReceiptFixture(
             targetGid,
             FrozenStatementReceiptTestData.Id('a'));
-        fixture.Files[targetPath] += "\n-- candidate value change\n";
+        if (scenario == "invalid-header")
+        {
+            fixture.Files[targetPath] = fixture.Files[targetPath].Replace(
+                "none(waiver:test-fixture)",
+                "none(waiver: )",
+                StringComparison.Ordinal);
+        }
+        else
+        {
+            var closedAtomPath = AtomPath.Replace(
+                "partial-open",
+                "partial-closed",
+                StringComparison.Ordinal);
+            foreach (var files in new[] { fixture.Files, fixture.Baseline })
+            {
+                files[closedAtomPath] = files[AtomPath];
+                files.Remove(AtomPath);
+            }
+            fixture.Files[targetPath] += "\n-- candidate proof authority changed\n";
+            fixture.Reports[targetPath] = new LeanFileReport(
+                [],
+                [new LeanDeclaration(
+                    "protectedTargetFixture",
+                    "def",
+                    "Unit",
+                    ["fixture.nonstandard"])]);
+        }
         var context = fixture.Build(RawChangeSet.Create([targetPath]));
         var document = BackfillInventoryLoader.LoadCandidateDelta(
             context.Current,
@@ -191,8 +220,16 @@ public sealed class Sl016WakeupTests
             context.Changes);
         var entry = Assert.Single(document.RequireDigestionEntries());
 
-        Assert.False(impact.HasAffectedEdges);
-        Assert.False(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
+        Assert.True(impact.HasAffectedEdges);
+        Assert.True(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
+        if (scenario == "invalid-header")
+        {
+            Assert.Contains(
+                BackfillInventoryRule.EvaluateCandidateDelta(context),
+                static finding => finding.Message.Contains(
+                    "scribe-applicability-invalid",
+                    StringComparison.Ordinal));
+        }
     }
 
     [Fact]

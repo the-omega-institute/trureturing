@@ -118,6 +118,27 @@ public sealed partial class ProductionEnvironmentTests
           unresolved_subitems: []
         """;
 
+    private static VerifiedScribeEmissions VerifiedFixtureScribeEmissions(
+        RuleFixture fixture,
+        string coverageGid,
+        params string[] declarationReferences)
+    {
+        var documentGid = ScribeEmissionAttestation.DocumentGid(coverageGid);
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+        return VerifiedScribeEmissions.Create(
+        [
+            new ScribeEmissionRecord(
+                documentGid,
+                definitionPath,
+                DigestionFingerprint.Compute(
+                    Encoding.UTF8.GetBytes(fixture.Files[definitionPath])).RawSha256,
+                emissionPath,
+                DigestionFingerprint.Compute(
+                    Encoding.UTF8.GetBytes(fixture.Files[emissionPath])).RawSha256),
+        ], declarationReferences);
+    }
+
     private static void WriteDirectoryLedger(
         string repositoryRoot,
         IReadOnlyDictionary<string, string> files)

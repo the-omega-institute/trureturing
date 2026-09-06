@@ -1,3 +1,4 @@
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -53,5 +54,25 @@ public sealed class ScribeReceiptScopeTests
 
         Assert.False(Assert.Single(evaluation.Entries).StatusAuthorityChanged);
         Assert.DoesNotContain(evaluation.Findings, message => message.Contains("coverage-scribe-receipt-required", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void DigestStatusImplementationChangeDoesNotExpandReceiptGateToPopulation()
+    {
+        var fixture = ReceiptApplicabilityFixture.Create();
+        var result = DigestStatusCommand.Run(
+            fixture.Gateway(RawChangeSet.Create([
+                "tools/StrataLint.Engine/Rules/RuleEngine.cs"])),
+            new FakeLeanReportSource(fixture.Inputs.Report),
+            new FakeScribeEmissionVerifier(fixture.Verified),
+            ["--base", "baseline"],
+            FakeAtomHistorySource.ForEntries([]),
+            new DigestAgeClock());
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain(
+            "coverage-scribe-receipt-required",
+            result.Output,
+            StringComparison.Ordinal);
     }
 }

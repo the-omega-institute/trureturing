@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class DigestStatusCommand
+internal static partial class DigestStatusCommand
 {
     private const string ImplementationPath = "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs";
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -112,6 +112,12 @@ internal static class DigestStatusCommand
                 baselineSnapshot = Decode(repository.ReadRevision(options.BaselineRevision));
                 baselineDocument = BackfillInventoryLoader.LoadBaseline(baselineSnapshot);
             }
+            var receiptGateScope = ResolveReceiptGateScope(
+                snapshot,
+                baselineSnapshot,
+                leanReport,
+                document,
+                changes);
 
             var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
             bool IsBaseFactAffected(string path) =>
@@ -132,7 +138,9 @@ internal static class DigestStatusCommand
                 casEvaluation: casEvaluation,
                 changes: changes,
                 isBaseFactAffected: IsBaseFactAffected,
-                projectedStatusChanges: changes);
+                projectedStatusChanges: changes,
+                receiptGateChanges: receiptGateScope.Changes,
+                isReceiptGateBaseFactAffected: receiptGateScope.IsBaseFactAffected);
             if (evaluation.HasReceiptIntegrityFailure)
             {
                 return InvalidEvaluation(evaluation);
@@ -199,6 +207,12 @@ internal static class DigestStatusCommand
             BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
         var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
         var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
+        var receiptGateScope = ResolveReceiptGateScope(
+            snapshot,
+            baseline,
+            leanReport,
+            document,
+            changes);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             scope,
             document,
@@ -214,7 +228,9 @@ internal static class DigestStatusCommand
                 IsBaseFactAffected),
             changes: changes,
             isBaseFactAffected: IsBaseFactAffected,
-            projectedStatusChanges: changes);
+            projectedStatusChanges: changes,
+            receiptGateChanges: receiptGateScope.Changes,
+            isReceiptGateBaseFactAffected: receiptGateScope.IsBaseFactAffected);
         if (evaluation.HasReceiptIntegrityFailure)
         {
             throw new InvalidOperationException(InvalidEvaluation(evaluation).Error.TrimEnd());

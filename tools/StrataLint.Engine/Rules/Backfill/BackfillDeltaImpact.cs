@@ -29,12 +29,17 @@ internal static class BackfillDeltaImpactResolver
         var changedPaths = repositoryChanges.Paths
             .Select(static path => path.Value)
             .ToHashSet(StringComparer.Ordinal);
+        var currentTruthStates = report is null
+            ? null
+            : new Lazy<IReadOnlyDictionary<RepoPath, TruthState>>(() =>
+                LeanTruthStates.Resolve(current, AcceptedLeanClosure.Create(report)));
         var affectedEntryPaths = document.RequireDigestionEntries()
             .Where(entry => DirectDependencyValueChanged(
                 entry,
                 current,
                 baseline,
-                changedPaths))
+                changedPaths,
+                currentTruthStates))
             .Select(EntryPath)
             .ToHashSet(StringComparer.Ordinal);
 
@@ -83,7 +88,8 @@ internal static class BackfillDeltaImpactResolver
         DigestionLedgerEntry entry,
         RepositorySnapshot current,
         RepositorySnapshot baseline,
-        IReadOnlySet<string> changedPaths)
+        IReadOnlySet<string> changedPaths,
+        Lazy<IReadOnlyDictionary<RepoPath, TruthState>>? currentTruthStates)
     {
         if (EntryPathIsInDelta(entry, changedPaths)
             || FileValueChanged(
@@ -107,23 +113,97 @@ internal static class BackfillDeltaImpactResolver
 
         foreach (var gid in entry.CoverageGids)
         {
-            var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
-            if (FileValueChanged(
-                    ScribeEmissionAttestation.DefinitionPath(documentGid),
+            if (CoverageDependencyValueChanged(
+                    gid,
+                    entry.ProjectedStatus.Truth,
                     current,
                     baseline,
-                    changedPaths)
-                || FileValueChanged(
-                    ScribeEmissionAttestation.EmissionPath(documentGid),
-                    current,
-                    baseline,
-                    changedPaths))
+                    changedPaths,
+                    currentTruthStates))
             {
                 return true;
             }
         }
 
         return false;
+    }
+
+    private static bool CoverageDependencyValueChanged(
+        string gidText,
+        DigestionTruthState baselineTruth,
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        IReadOnlySet<string> changedPaths,
+        Lazy<IReadOnlyDictionary<RepoPath, TruthState>>? currentTruthStates)
+    {
+        var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
+        if (FileValueChanged(
+                ScribeEmissionAttestation.DefinitionPath(documentGid),
+                current,
+                baseline,
+                changedPaths)
+            || FileValueChanged(
+                ScribeEmissionAttestation.EmissionPath(documentGid),
+                current,
+                baseline,
+                changedPaths))
+        {
+            return true;
+        }
+
+        if (!Gid.TryParse(gidText, out var gid)
+            || gid.ToTarget() is not Target.Formal formal)
+        {
+            return false;
+        }
+
+        if (FormalHeaderApplicabilityValueChanged(
+                formal.Path.Value,
+                current,
+                baseline,
+                changedPaths))
+        {
+            return true;
+        }
+
+        return changedPaths.Contains(formal.Path.Value)
+            && baselineTruth == DigestionTruthState.Closed
+            && currentTruthStates is not null
+            && (!currentTruthStates.Value.TryGetValue(formal.Path, out var currentTruth)
+                || currentTruth != TruthState.Closed);
+    }
+
+    private static bool FormalHeaderApplicabilityValueChanged(
+        string path,
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        IReadOnlySet<string> changedPaths)
+    {
+        if (!changedPaths.Contains(path))
+        {
+            return false;
+        }
+
+        var currentExists = current.TryGetFile(path, out var currentFile);
+        var baselineExists = baseline.TryGetFile(path, out var baselineFile);
+        if (currentExists != baselineExists)
+        {
+            return true;
+        }
+
+        if (!currentExists)
+        {
+            return false;
+        }
+
+        var currentParsed = RepositoryRules.TryHeader(currentFile!.Text, out var currentHeader);
+        var baselineParsed = RepositoryRules.TryHeader(baselineFile!.Text, out var baselineHeader);
+        return currentParsed != baselineParsed
+            || currentParsed
+            && !string.Equals(
+                currentHeader.MirrorB,
+                baselineHeader.MirrorB,
+                StringComparison.Ordinal);
     }
 
     internal static bool HasPotentialStatementDependants(

@@ -165,6 +165,7 @@ public sealed partial class ProductionEnvironmentTests
         }
 
         WriteDirectoryLedger(repositoryRoot, fixture.Files);
+        var verified = VerifiedFixtureScribeEmissions(fixture, coverageGid);
         return new ProductionCliEnvironment(
             repositoryRoot,
             new FakeRepositoryGateway(
@@ -172,6 +173,6 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files),
                 Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+            new FakeScribeEmissionVerifier(verified));
     }
 }
