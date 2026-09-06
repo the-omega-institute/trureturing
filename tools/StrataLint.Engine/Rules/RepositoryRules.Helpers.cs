@@ -106,27 +106,41 @@ internal static partial class RepositoryRules
         RepositorySnapshot snapshot,
         ImmutableArray<RuleFinding>.Builder findings)
     {
-        if (value.StartsWith("none(waiver:", StringComparison.Ordinal) && value.EndsWith(')'))
+        if (!TryMirror(value, prefix, out var gid, out var error))
         {
-            if (string.IsNullOrWhiteSpace(value["none(waiver:".Length..^1]))
-            {
-                findings.Add(new RuleFinding(source, $"{label} waiver has no reason"));
-            }
-
+            findings.Add(new RuleFinding(source, $"{label} {error}"));
             return;
         }
 
-        if (!value.StartsWith(prefix, StringComparison.Ordinal) || !Gid.TryParse(value, out var gid))
-        {
-            findings.Add(new RuleFinding(source, $"{label} must be a full GID or explicit waiver"));
-            return;
-        }
-
-        if (!snapshot.TryGetFile(gid.Path.Value, out _))
+        if (gid is not null && !snapshot.TryGetFile(gid.Path.Value, out _))
         {
             var kind = label == "mirror-E" ? "evidence mirror" : "mirror";
             findings.Add(new RuleFinding(source, $"missing {kind} {gid.Path.Value}"));
         }
+    }
+
+    internal static bool TryMirror(string value, string prefix, out Gid? gid, out string error)
+    {
+        gid = null;
+        error = string.Empty;
+        if (value.StartsWith("none(waiver:", StringComparison.Ordinal) && value.EndsWith(')'))
+        {
+            if (string.IsNullOrWhiteSpace(value["none(waiver:".Length..^1]))
+            {
+                error = "waiver has no reason";
+                return false;
+            }
+
+            return true;
+        }
+
+        if (!value.StartsWith(prefix, StringComparison.Ordinal) || !Gid.TryParse(value, out gid))
+        {
+            error = "must be a full GID or explicit waiver";
+            return false;
+        }
+
+        return true;
     }
 
     private static HashSet<string> ImportClosure(

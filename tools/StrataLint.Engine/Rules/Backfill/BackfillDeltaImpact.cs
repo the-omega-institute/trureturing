@@ -2,7 +2,6 @@ namespace StrataLint.Engine;
 
 internal sealed record BackfillDeltaImpact(
     RawChangeSet EvaluationChanges,
-    RawChangeSet ReceiptVerificationChanges,
     bool HasAffectedEdges);
 
 internal static class BackfillDeltaImpactResolver
@@ -38,8 +37,9 @@ internal static class BackfillDeltaImpactResolver
             .Select(EntryPath)
             .ToHashSet(StringComparer.Ordinal);
 
-        AddCurrentResolutionDependants(
+        AddCurrentEdgeDependants(
             current,
+            baseline,
             report,
             document,
             repositoryChanges,
@@ -62,19 +62,8 @@ internal static class BackfillDeltaImpactResolver
                 new RawChange(RepoPath.CreateKnown(path), RawChangeKind.Modified));
         }
 
-        var receiptVerificationEntries = evaluationEntries
-            .ToDictionary(static entry => entry.Key, static entry => entry.Value, StringComparer.Ordinal);
-        foreach (var change in repositoryChanges.Entries.Where(static change =>
-                     change.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
-                     && change.Path.Value.EndsWith(".lean", StringComparison.Ordinal)))
-        {
-            receiptVerificationEntries.TryAdd(change.Path.Value, change);
-        }
-
         return new BackfillDeltaImpact(
             RawChangeSet.CreateWithKinds(evaluationEntries.Values.Select(static change =>
-                (change.Path.Value, change.Kind))),
-            RawChangeSet.CreateWithKinds(receiptVerificationEntries.Values.Select(static change =>
                 (change.Path.Value, change.Kind))),
             affectedEntryPaths.Count > 0);
     }
@@ -107,14 +96,8 @@ internal static class BackfillDeltaImpactResolver
 
         foreach (var gid in entry.CoverageGids)
         {
-            var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
-            if (FileValueChanged(
-                    ScribeEmissionAttestation.DefinitionPath(documentGid),
-                    current,
-                    baseline,
-                    changedPaths)
-                || FileValueChanged(
-                    ScribeEmissionAttestation.EmissionPath(documentGid),
+            if (CoverageDependencyValueChanged(
+                    gid,
                     current,
                     baseline,
                     changedPaths))
@@ -124,6 +107,78 @@ internal static class BackfillDeltaImpactResolver
         }
 
         return false;
+    }
+
+    private static bool CoverageDependencyValueChanged(
+        string gidText,
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        IReadOnlySet<string> changedPaths)
+    {
+        var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
+        if (FileValueChanged(
+                ScribeEmissionAttestation.DefinitionPath(documentGid),
+                current,
+                baseline,
+                changedPaths)
+            || FileValueChanged(
+                ScribeEmissionAttestation.EmissionPath(documentGid),
+                current,
+                baseline,
+                changedPaths))
+        {
+            return true;
+        }
+
+        if (!Gid.TryParse(gidText, out var gid)
+            || gid.ToTarget() is not Target.Formal formal)
+        {
+            return false;
+        }
+
+        if (FormalHeaderApplicabilityValueChanged(
+                formal.Path.Value,
+                current,
+                baseline,
+                changedPaths))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool FormalHeaderApplicabilityValueChanged(
+        string path,
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        IReadOnlySet<string> changedPaths)
+    {
+        if (!changedPaths.Contains(path))
+        {
+            return false;
+        }
+
+        var currentExists = current.TryGetFile(path, out var currentFile);
+        var baselineExists = baseline.TryGetFile(path, out var baselineFile);
+        if (currentExists != baselineExists)
+        {
+            return true;
+        }
+
+        if (!currentExists)
+        {
+            return false;
+        }
+
+        var currentParsed = RepositoryRules.TryHeader(currentFile!.Text, out var currentHeader);
+        var baselineParsed = RepositoryRules.TryHeader(baselineFile!.Text, out var baselineHeader);
+        return currentParsed != baselineParsed
+            || currentParsed
+            && !string.Equals(
+                currentHeader.MirrorB,
+                baselineHeader.MirrorB,
+                StringComparison.Ordinal);
     }
 
     internal static bool HasPotentialStatementDependants(
@@ -142,8 +197,9 @@ internal static class BackfillDeltaImpactResolver
             changedModules.Contains(dependencies[0].HostModule));
     }
 
-    private static void AddCurrentResolutionDependants(
+    private static void AddCurrentEdgeDependants(
         RepositorySnapshot current,
+        RepositorySnapshot baseline,
         LeanAxiomReport? report,
         BackfillInventoryDocument document,
         RawChangeSet repositoryChanges,
@@ -161,19 +217,30 @@ internal static class BackfillDeltaImpactResolver
         }
 
         FrozenStateCatalog frozenState;
+        FrozenStateCatalog baselineFrozenState;
         FrozenStatementIndex? currentStatements;
+        IReadOnlyDictionary<RepoPath, TruthState>? currentTruthStates;
         try
         {
             frozenState = FrozenStateCatalog.Load(current);
+            baselineFrozenState = FrozenStateCatalog.Load(baseline);
             currentStatements = report is null
                 ? null
                 : FrozenStatementIndex.Create(frozenState, report);
+            currentTruthStates = report is null
+                ? null
+                : LeanTruthStates.Resolve(current, AcceptedLeanClosure.Create(report));
         }
         catch (Exception exception) when (
             exception is FormatException or InvalidOperationException)
         {
-            // Frozen-state shape and the Lean report have their own admission owners. An
-            // invalid authority has no comparable statement value for SL-016 to propagate.
+            // Keep the candidate edges in scope so their applicability classifier reports
+            // the unreadable authority instead of turning a classifier failure into no judgment.
+            foreach (var dependency in candidates.SelectMany(static item => item.Value))
+            {
+                affectedEntryPaths.Add(dependency.EntryPath);
+            }
+
             return;
         }
 
@@ -181,40 +248,47 @@ internal static class BackfillDeltaImpactResolver
         {
             var gid = dependencies[0].Gid;
             string? currentResolution;
-            if (gid.ToTarget() is Target.Formal { Declaration: null } formal)
+            CurrentEdgeValidation? currentEdge = null;
+            if (currentStatements is not null)
+            {
+                currentEdge = CurrentEdgeValidator.Validate(
+                    gidText,
+                    current,
+                    report!,
+                    currentTruthStates!,
+                    currentStatements);
+                currentResolution = currentEdge.TargetStatementId;
+            }
+            else if (gid.ToTarget() is Target.Formal { Declaration: null } formal)
             {
                 currentResolution = frozenState.Records.TryGetValue(formal.Path, out var frozen)
                     ? frozen.StatementId.Value
                     : null;
             }
-            else if (currentStatements is null)
+            else
             {
                 // Declaration statement identity is report-derived. A report-free caller has no
                 // current declaration value to compare, so absence must not mean unresolved.
                 continue;
             }
-            else
-            {
-                currentResolution = currentStatements.TryResolve(
-                    gid,
-                    out var statementId,
-                    out _)
-                        ? statementId!.Value
-                        : null;
-            }
 
             statementResolutionObserved?.Invoke(gidText);
             foreach (var dependency in dependencies)
             {
-                if (string.Equals(
+                var resolutionChanged = !string.Equals(
                         dependency.TargetStatementId,
                         currentResolution,
-                        StringComparison.Ordinal))
-                {
-                    continue;
-                }
+                        StringComparison.Ordinal);
+                var baselineWasClosedAndResolved = dependency.TargetStatementId is not null
+                    && baselineFrozenState.Records.ContainsKey(dependency.HostModule);
+                var currentIsClosedAndResolved = currentEdge is { IsResolved: true, IsClosed: true };
 
-                affectedEntryPaths.Add(dependency.EntryPath);
+                if (resolutionChanged
+                    || (currentEdge is not null
+                        && baselineWasClosedAndResolved != currentIsClosedAndResolved))
+                {
+                    affectedEntryPaths.Add(dependency.EntryPath);
+                }
             }
         }
     }

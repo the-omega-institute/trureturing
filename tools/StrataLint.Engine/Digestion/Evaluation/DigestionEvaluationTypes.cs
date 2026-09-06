@@ -24,6 +24,8 @@ internal sealed record DigestionEntryEvaluation(
 {
     internal bool StatusAuthorityChanged { get; init; }
 
+    internal ImmutableArray<DigestionGap> ReceiptObservations { get; init; } = [];
+
     internal DigestionEntryEvaluation(
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
@@ -41,7 +43,9 @@ internal sealed record DigestionEntryEvaluation(
         + $"{DigestionStatusNames.Truth(DerivedStatus.Truth)} "
         + $"deletable={Deletable.ToString().ToLowerInvariant()} "
         + $"coverage_gids=[{string.Join(',', Entry.CoverageGids)}] "
-        + $"gaps={string.Join(',', Gaps.Select(static gap => gap.Code))}";
+        + $"gaps={string.Join(',', Gaps.Select(static gap => gap.Code))}"
+        + (ReceiptObservations.IsEmpty ? string.Empty
+            : $" observations={string.Join(',', ReceiptObservations.Select(static item => item.Code))}");
 }
 
 internal sealed record DigestionLedgerEvaluation(

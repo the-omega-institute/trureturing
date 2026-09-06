@@ -138,8 +138,31 @@ internal static class AlignScribeReceiptCommand
             return new SeedPlan(pair, entry, SeedEligibility.AmbiguousEdge, "SEED_RECEIPT_PRESENT");
 
         var edge = CurrentEdgeValidator.Validate(pair.Gid, current, report, states, frozen);
-        if (!edge.IsClosed)
-            return new SeedPlan(pair, entry, SeedEligibility.AmbiguousEdge, "SEED_EDGE_NOT_CLOSED: " + edge.Diagnostic);
+        var applicability = ReceiptApplicability.Classify(ParseGid(pair.Gid), edge, current, report, frozen);
+        switch (applicability)
+        {
+            case ReceiptApplicability.Failure failure:
+                throw new InvalidOperationException(
+                    "scribe-applicability-invalid: " + failure.Message);
+            case ReceiptApplicability.NotApplicableMirrorWaiver:
+                return new SeedPlan(
+                    pair,
+                    entry,
+                    SeedEligibility.NotApplicable,
+                    "SEED_MIRROR_WAIVER");
+            case ReceiptApplicability.PendingTarget:
+            case ReceiptApplicability.NotApplicableNonFormal:
+                return new SeedPlan(
+                    pair,
+                    entry,
+                    SeedEligibility.AmbiguousEdge,
+                    "SEED_EDGE_NOT_CLOSED: " + edge.Diagnostic);
+            case ReceiptApplicability.Required:
+                break;
+            default:
+                throw new InvalidOperationException("unknown receipt applicability");
+        }
+
         if (edges[0].TargetStatementId != edge.TargetStatementId)
             return new SeedPlan(pair, entry, SeedEligibility.AmbiguousEdge, "SEED_TARGET_MISMATCH");
         var documentGid = ScribeEmissionAttestation.DocumentGid(pair.Gid);
@@ -252,10 +275,11 @@ internal static class AlignScribeReceiptCommand
         SeedEligibility.MissingEmission => "missing-emission",
         SeedEligibility.MissingDeclarationReference => "missing-declaration-reference",
         SeedEligibility.AmbiguousEdge => "ambiguous-edge",
+        SeedEligibility.NotApplicable => "not-applicable",
         _ => throw new ArgumentOutOfRangeException(nameof(eligibility)),
     };
 
-    private enum SeedEligibility { Eligible, MissingDefinition, MissingEmission, MissingDeclarationReference, AmbiguousEdge }
+    private enum SeedEligibility { Eligible, MissingDefinition, MissingEmission, MissingDeclarationReference, AmbiguousEdge, NotApplicable }
     private sealed record SeedPair(string AtomId, string Gid);
     private sealed record SeedOptions(ImmutableArray<SeedPair> Pairs, string BaseRevision, bool DryRun);
     private sealed record SeedPlan(SeedPair Pair, DigestionLedgerEntry? Entry, SeedEligibility Eligibility, string Reason);

@@ -103,7 +103,6 @@ internal static class DigestStatusCommand
 
             var leanReport = leanReportSource.Load(snapshot);
             var lean = ValidateLean(snapshot, leanReport);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(snapshot, leanReport, changes);
             var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
             BackfillInventoryDocument? baselineDocument = null;
             RepositorySnapshot? baselineSnapshot = null;
@@ -112,14 +111,25 @@ internal static class DigestStatusCommand
                 baselineSnapshot = Decode(repository.ReadRevision(options.BaselineRevision));
                 baselineDocument = BackfillInventoryLoader.LoadBaseline(baselineSnapshot);
             }
+            var receiptGateScope = ResolveReceiptGateScope(
+                snapshot,
+                baselineSnapshot,
+                leanReport,
+                document,
+                changes);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
+                snapshot,
+                leanReport,
+                receiptGateScope.Changes);
 
             var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
             bool IsBaseFactAffected(string path) =>
                 BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
+            var casChanges = DigestionEvaluationScopes.ResolveChanges(scope, changes);
             var casEvaluation = DigestionCasStore.Evaluate(
                 document,
                 snapshot,
-                DigestionEvaluationScopes.ResolveChanges(scope, changes),
+                casChanges,
                 IsBaseFactAffected);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 scope,
@@ -130,9 +140,12 @@ internal static class DigestStatusCommand
                 baselineDocument,
                 baselineSnapshot: baselineSnapshot,
                 casEvaluation: casEvaluation,
-                changes: changes,
+                changes: receiptGateScope.Changes,
+                casChanges: casChanges,
                 isBaseFactAffected: IsBaseFactAffected,
-                projectedStatusChanges: changes);
+                projectedStatusChanges: changes,
+                receiptGateChanges: receiptGateScope.Changes,
+                isReceiptGateBaseFactAffected: receiptGateScope.IsBaseFactAffected);
             if (evaluation.HasReceiptIntegrityFailure)
             {
                 return InvalidEvaluation(evaluation);
@@ -199,22 +212,32 @@ internal static class DigestStatusCommand
             BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
         var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
         var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
+        var receiptGateScope = ResolveReceiptGateScope(
+            snapshot,
+            baseline,
+            leanReport,
+            document,
+            changes);
+        var casChanges = DigestionEvaluationScopes.ResolveChanges(scope, changes);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             scope,
             document,
             snapshot,
             ValidateLean(snapshot, leanReport),
-            scribeEmissionVerifier.Verify(snapshot, leanReport, changes),
+            scribeEmissionVerifier.Verify(snapshot, leanReport, receiptGateScope.Changes),
             BackfillInventoryLoader.LoadBaseline(baseline),
             baselineSnapshot: baseline,
             casEvaluation: DigestionCasStore.Evaluate(
                 document,
                 snapshot,
-                DigestionEvaluationScopes.ResolveChanges(scope, changes),
+                casChanges,
                 IsBaseFactAffected),
-            changes: changes,
+            changes: receiptGateScope.Changes,
+            casChanges: casChanges,
             isBaseFactAffected: IsBaseFactAffected,
-            projectedStatusChanges: changes);
+            projectedStatusChanges: changes,
+            receiptGateChanges: receiptGateScope.Changes,
+            isReceiptGateBaseFactAffected: receiptGateScope.IsBaseFactAffected);
         if (evaluation.HasReceiptIntegrityFailure)
         {
             throw new InvalidOperationException(InvalidEvaluation(evaluation).Error.TrimEnd());
@@ -308,6 +331,8 @@ internal static class DigestStatusCommand
                 writer.WriteLine(
                     $"GAP atom={entry.Entry.AtomId} code={gap.Code} detail={RenderDetail(gap.Detail)}");
             }
+            foreach (var observation in entry.ReceiptObservations)
+                writer.WriteLine($"OBSERVATION atom={entry.Entry.AtomId} code={observation.Code} detail={RenderDetail(observation.Detail)}");
         }
 
         return writer.ToString();
@@ -370,6 +395,11 @@ internal static class DigestStatusCommand
                         code = gap.Code,
                         detail = gap.Detail,
                     }),
+                    receipt_observations = item.ReceiptObservations.Select(static observation => new
+                    {
+                        code = observation.Code,
+                        detail = observation.Detail,
+                    }),
                 }),
         };
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
@@ -414,6 +444,31 @@ internal static class DigestStatusCommand
                 $"GAP atom={entry.Entry.AtomId} code={gap.Code} "
                 + $"detail={JsonSerializer.Serialize(gap.Detail)}\n")));
         return new CommandResult(false, string.Empty, error);
+    }
+
+    private sealed record ReceiptGateScope(
+        RawChangeSet Changes,
+        Func<string, bool> IsBaseFactAffected);
+
+    private static ReceiptGateScope ResolveReceiptGateScope(
+        RepositorySnapshot current,
+        RepositorySnapshot? baseline,
+        LeanAxiomReport report,
+        BackfillInventoryDocument document,
+        RawChangeSet repositoryChanges)
+    {
+        var changes = baseline is null
+            ? repositoryChanges
+            : BackfillDeltaImpactResolver.Resolve(
+                current,
+                baseline,
+                report,
+                document,
+                repositoryChanges).EvaluationChanges;
+        var affectedPaths = changes.Paths
+            .Select(static path => path.Value)
+            .ToHashSet(StringComparer.Ordinal);
+        return new ReceiptGateScope(changes, affectedPaths.Contains);
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>

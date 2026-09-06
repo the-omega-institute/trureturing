@@ -54,7 +54,7 @@ internal static partial class IngestCommand
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
                 fixedPointSnapshot,
                 report,
-                deltaImpact.ReceiptVerificationChanges);
+                deltaImpact.EvaluationChanges);
             DigestionEvaluationScope evaluationScope;
             RawChangeSet evaluationChanges;
             RawChangeSet receiptVerificationChanges;
@@ -68,7 +68,7 @@ internal static partial class IngestCommand
                 }
 
                 evaluationChanges = deltaImpact.EvaluationChanges;
-                receiptVerificationChanges = deltaImpact.ReceiptVerificationChanges;
+                receiptVerificationChanges = evaluationChanges;
                 evaluationScope = DigestionEvaluationScopes.ForChanges(
                     fixedPointChanges,
                     ImplementationPath);
@@ -253,7 +253,6 @@ internal static partial class IngestCommand
             plannedDocument,
             plannedChanges,
             plannedDeltaImpact.EvaluationChanges,
-            plannedDeltaImpact.ReceiptVerificationChanges,
             plannedCasChanges,
             plannedScope,
             RenderCrossVolumeClearanceGaps(plan.Document, baselineDocument),

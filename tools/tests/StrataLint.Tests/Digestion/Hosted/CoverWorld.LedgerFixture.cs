@@ -89,9 +89,12 @@ internal static partial class CoverWorld
 
     private static IEnumerable<string> MaterializeVerifiedGids(CoverSpec spec) =>
         (spec.Declaration is null ? [] : new[] { spec.Gid })
+            .Concat(spec.ReportDeclarations.Select(declaration =>
+                spec.ModuleGid + "." + ShortName(declaration)))
             .Concat(spec.SecondaryTarget is { } secondary
                 ? [secondary.ModuleGid + "." + secondary.Declaration]
-                : []);
+                : [])
+            .Distinct(StringComparer.Ordinal);
 
     private static BackfillInventoryDocument BuildLedger(
         CoverSpec spec,

@@ -94,6 +94,7 @@ public sealed partial class ProductionEnvironmentTests
             + $"\n      emission_sha256: {emissionHash}", StringComparison.Ordinal);
         fixture.Files[oldPath] = atomText;
         fixture.Baseline[oldPath] = atomText;
+        var verified = VerifiedFixtureScribeEmissions(fixture, coverageGid);
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
         var environment = new ProductionCliEnvironment(
@@ -103,12 +104,12 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files),
                 Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+            new FakeScribeEmissionVerifier(verified));
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
-        var newPath = DirectoryAtomPath(AtomId(atom), "partial-closed");
+        var newPath = DirectoryAtomPath(AtomId(atom), "absorbed-closed");
         Assert.False(File.Exists(Path.Combine(
             temporary.Path,
             oldPath.Replace('/', Path.DirectorySeparatorChar))));
@@ -118,7 +119,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(File.Exists(outputPath));
         var entry = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path)
             .RequireDigestionEntries());
-        Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
+        Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
         Assert.Equal([coverageGid], entry.CoverageGids.ToArray());
         Assert.Equal(
@@ -143,7 +144,7 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(alignedFiles),
                 Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+            new FakeScribeEmissionVerifier(verified));
 
         var second = secondEnvironment.AlignDigestionStatus(["--base", "baseline"]);
 

@@ -6,7 +6,7 @@ namespace StrataLint.Tests;
 
 // SL-016 的唤醒路径。独立成文件而非并入 RuleEngineTests:后者已达 SL-003 硬线 800 行,
 // 按 CLAUDE.md 第 8 条「桶满则裂、只裂不迁」,新条目入新桶,既有条目原地不动。
-public sealed class Sl016WakeupTests
+public sealed partial class Sl016WakeupTests
 {
     private const string AtomPath =
         "Meta/Digestion/backfill/delta-v0.1/partial-open/"
@@ -167,32 +167,6 @@ public sealed class Sl016WakeupTests
         Assert.Contains(evaluation.Diagnostics, static finding => finding.Message.Contains(
             "scribe-emission-mismatch",
             StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void LeanHeaderChangeWithStableTargetValueDoesNotWakeReferencedEdge()
-    {
-        const string targetGid = "D5/S0/Carrier/BackfillTarget";
-        var targetPath = targetGid + ".lean";
-        var fixture = CoverageReceiptFixture(
-            targetGid,
-            FrozenStatementReceiptTestData.Id('a'));
-        fixture.Files[targetPath] += "\n-- candidate value change\n";
-        var context = fixture.Build(RawChangeSet.Create([targetPath]));
-        var document = BackfillInventoryLoader.LoadCandidateDelta(
-            context.Current,
-            context.Baseline,
-            context.Changes);
-        var impact = BackfillDeltaImpactResolver.Resolve(
-            context.Current,
-            context.Baseline,
-            context.Lean.Report,
-            document,
-            context.Changes);
-        var entry = Assert.Single(document.RequireDigestionEntries());
-
-        Assert.False(impact.HasAffectedEdges);
-        Assert.False(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
     }
 
     [Fact]
@@ -483,6 +457,7 @@ public sealed class Sl016WakeupTests
     [Theory]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
+    [InlineData("scribe-declaration-reference-missing")]
     public void ChangedEdgeScribeReceiptIntegrityGapIsBlockingAtSl016Admission(
         string mismatchCode)
     {
@@ -499,6 +474,7 @@ public sealed class Sl016WakeupTests
     [Theory]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
+    [InlineData("scribe-declaration-reference-missing")]
     public void RuleImplementationChangeDoesNotRepublishHistoricalScribeGap(
         string mismatchCode)
     {
@@ -540,8 +516,11 @@ public sealed class Sl016WakeupTests
             bool candidateScribeInputsChanged = false,
             bool candidateScribeEmissionOnly = false)
     {
-        const string coverageGid = "D5/S0/Carrier/BackfillTarget";
-        const string targetPath = coverageGid + ".lean";
+        const string documentGid = "D5/S0/Carrier/BackfillTarget";
+        var coverageGid = mismatchCode == "scribe-declaration-reference-missing"
+            ? documentGid + ".protectedTargetFixture"
+            : documentGid;
+        const string targetPath = documentGid + ".lean";
         const string baselineDefinition = "fixture Scribe definition\n";
         const string baselineEmission = "# Fixture Scribe emission\n";
         var candidateDefinition = candidateScribeInputsChanged && !candidateScribeEmissionOnly
@@ -553,10 +532,17 @@ public sealed class Sl016WakeupTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.UseValidDirectoryBackfill();
-        InstallFrozenModules(fixture, coverageGid);
+        InstallFrozenModules(fixture, documentGid);
+        if (coverageGid != documentGid)
+        {
+            fixture.Reports[targetPath] = new LeanFileReport(
+                [],
+                [new LeanDeclaration("protectedTargetFixture", "def", "Unit", [])
+                    { NameKey = "ns(n0,22:protectedTargetFixture)" }]);
+        }
 
-        var definitionPath = ScribeEmissionAttestation.DefinitionPath(coverageGid);
-        var emissionPath = ScribeEmissionAttestation.EmissionPath(coverageGid);
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
         var baselineDefinitionSha256 = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes(baselineDefinition)).RawSha256;
         var baselineEmissionSha256 = DigestionFingerprint.Compute(
@@ -565,9 +551,11 @@ public sealed class Sl016WakeupTests
             Encoding.UTF8.GetBytes(candidateDefinition)).RawSha256;
         var candidateEmissionSha256 = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes(candidateEmission)).RawSha256;
-        var targetStatementId = FrozenStatementReceiptTestData.Resolve(
-            fixture.Files,
-            coverageGid);
+        var targetStatementId = coverageGid == documentGid
+            ? FrozenStatementReceiptTestData.Resolve(fixture.Files, coverageGid)
+            : Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+                RepoPath.CreateKnown(targetPath),
+                fixture.Reports[targetPath])).StatementId.Value;
         var mismatchSha256 = "sha256:" + new string('0', 64);
         foreach (var files in new[] { fixture.Baseline })
         {
@@ -595,7 +583,7 @@ public sealed class Sl016WakeupTests
         var verifiedScribeEmissions = VerifiedScribeEmissions.Create(
         [
             new ScribeEmissionRecord(
-                coverageGid,
+                documentGid,
                 definitionPath,
                 candidateDefinitionSha256,
                 emissionPath,
@@ -624,18 +612,10 @@ public sealed class Sl016WakeupTests
         var context = fixture.Build(
             RawChangeSet.Create(changedPaths),
             verifiedScribeEmissions: verifiedScribeEmissions);
-        var diagnostics = BackfillInventoryRule.EvaluateCandidateDelta(context)
-            .Select(static finding => new Diagnostic(
-                RuleId.CreateKnown(16),
-                "Digestion ledger",
-                DisplaySeverity.Error,
-                finding.Effect ?? AdmissionEffect.Block,
-                finding.Path,
-                finding.Message))
-            .ToImmutableArray();
-        return (
-            context,
-            new SingleRuleEvaluation(diagnostics, DeferredCase: null));
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(context)).Capability;
+        return (context, new SingleRuleEvaluation(completed.Diagnostics
+            .Where(static item => item.RuleId == RuleId.CreateKnown(16)).ToImmutableArray(), null));
     }
 
     private static string AddReceipts(string atom, string receiptProjection) => atom.Replace(
