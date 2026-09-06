@@ -1,0 +1,23 @@
+{
+  "exact_checks": {
+    "gaussian_cases": 1200,
+    "attaining_witnesses": 1336,
+    "rejected_queries": 1187,
+    "sharp_boundary_cases": 120,
+    "degenerate_cases": 3,
+    "conjugation_mutations_detected": 2491,
+    "covariance_sign_mutations_detected": 2521
+  },
+  "interval_replay_precisions": [
+    50,
+    90
+  ],
+  "negative_tests_rejected": [
+    "changed-candidate",
+    "changed-energy-premise",
+    "insufficient-precision"
+  ],
+  "kernel_checked": false,
+  "upstream_spectral_verifier_replayed": false,
+  "review": "single-author development checks; no independent model review"
+}
