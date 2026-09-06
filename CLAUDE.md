@@ -159,7 +159,7 @@ import 只许向下;**投影不当骨骼**——文档、书、论文都是图�
 docs/develop/theory/**                       参考输入·当前正确,历史归 git,程序对其零知识
   │ make ingest
   ├─► Meta/Digestion/atoms/sha256/<atom_id>              atom CAS blob·一经产出不可变
-  └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·三态见下
+  └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·四态见下
   │ 形式化(先库后证,第 11 条)——链上唯一一环不由 make 产出
   ▼
 D5/<GID 路径>.lean                           数学唯一真源

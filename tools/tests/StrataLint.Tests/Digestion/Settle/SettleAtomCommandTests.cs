@@ -17,8 +17,11 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     [InlineData("QUARANTINE_PRESENT")]
     [InlineData("COVER_DISPOSITION_PRESENT")]
     [InlineData("UNRESOLVED_SUBITEMS_PRESENT")]
-    [InlineData("CHAIN_OPEN")]
-    [InlineData("CONTEXT_MISMATCH")]
+    [InlineData("CHAIN_PARENT")]
+    [InlineData("CONTEXT_MISMATCH", "previous")]
+    [InlineData("CONTEXT_MISMATCH", "next")]
+    [InlineData("CONTEXT_MISMATCH", "previous-boundary")]
+    [InlineData("CONTEXT_MISMATCH", "next-boundary")]
     [InlineData("ATOMIZER_NONE")]
     [InlineData("SOURCE_MISSING")]
     [InlineData("OCCURRENCE_MISSING")]
@@ -28,7 +31,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     [InlineData("REQUEST_TOML_INVALID")]
     [InlineData("REQUEST_ENCODING_INVALID")]
     [InlineData("NONPROPOSITIONAL_ABSENT")]
-    public void SettleRejectsWrongStateConflictsAndNonAdjacentContextWithoutWrites(string code)
+    public void SettleRejectsWrongStateConflictsAndNonAdjacentContextWithoutWrites(string code, string side = "previous")
     {
         var fixture = AtomContextFixture.Create();
         var target = fixture.Ledger.RequireDigestionEntries().Single(entry =>
@@ -41,7 +44,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
             "QUARANTINE_PRESENT" => target with { Receipts = target.Receipts with { Quarantine = new("blocked", "supply witness", "missing-prerequisite") } },
             "COVER_DISPOSITION_PRESENT" => target with { Receipts = target.Receipts with { CoverDisposition = new(new(DigestionMigrationState.Partial, DigestionTruthState.Closed), ["D5/S0/Carrier/Probe"], []) } },
             "UNRESOLVED_SUBITEMS_PRESENT" => target with { Receipts = target.Receipts with { UnresolvedSubitems = ["live obligation"] } },
-            "CHAIN_OPEN" => target with { Receipts = target.Receipts with { ChainAtoms = [new string('f', 64)] } },
+            "CHAIN_PARENT" => target with { Receipts = target.Receipts with { ChainAtoms = [new string('f', 64)] } },
             "ATOMIZER_NONE" => target with { Atomizer = AtomizerRegistry.NoAtomizerId },
             _ => target,
         };
@@ -59,8 +62,13 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         request = code switch
         {
             "ATOM_ABSENT" => request.Replace(target.AtomId, new string('f', 64), StringComparison.Ordinal),
-            "CONTEXT_MISMATCH" => request.Replace(DigestionAtomContextProjection.Resolve(fixture.Snapshot(), fixture.Ledger, target.AtomId).Previous!.Value.AtomId,
-                    "source-boundary", StringComparison.Ordinal),
+            "CONTEXT_MISMATCH" => request.Replace(
+                $"{(side.StartsWith("previous", StringComparison.Ordinal) ? "previous" : "next")}_atom_id = '"
+                    + (side.StartsWith("previous", StringComparison.Ordinal)
+                        ? AtomContextFixture.Id(fixture.Atomized.Claims[0]) : AtomContextFixture.Id(fixture.Atomized.Claims[2])) + "'",
+                $"{(side.StartsWith("previous", StringComparison.Ordinal) ? "previous" : "next")}_atom_id = '"
+                    + (side.EndsWith("boundary", StringComparison.Ordinal) ? "source-boundary" : new string('f', 64)) + "'",
+                StringComparison.Ordinal),
             "REQUEST_KEYS_INVALID" => request + "extra = 'value'\n",
             "REQUEST_VALUE_BLANK" => request.Replace(Reason, "   ", StringComparison.Ordinal),
             "REQUEST_TOML_INVALID" => "atom_id = [\n",
@@ -80,6 +88,47 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         Assert.StartsWith("SETTLE_INVALID " + code, result.Error, StringComparison.Ordinal);
         Assert.Equal(before, Image(temporary.Path));
         Assert.Equal(0, applyCalls);
+    }
+
+    [Theory]
+    [InlineData("open", false, false)]
+    [InlineData("absorbed", false, false)]
+    [InlineData("nonpropositional", false, false)]
+    [InlineData("nonpropositional", false, true)]
+    [InlineData("nonpropositional", true, false)]
+    public void SettleRejectsChainParentsBeforeContextLookupWithoutWrites(string childState, bool clear, bool sourceMissing)
+    {
+        var fixture = AtomContextFixture.Create(AtomContextFixture.ListClaims);
+        var id = AtomContextFixture.Id(fixture.Atomized.Claims[1]);
+        var request = Request(fixture, id);
+        fixture = AtomContextFixture.Create(AtomContextFixture.ListClaims, true);
+        var parent = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
+        fixture = fixture.WithEntries(fixture.Ledger.RequireDigestionEntries().Select(entry =>
+        {
+            if (clear && entry == parent) return Settled(entry);
+            if (!parent.Receipts.ChainAtoms.Contains(entry.AtomId, StringComparer.Ordinal)) return entry;
+            return childState switch
+            {
+                "nonpropositional" => Settled(entry),
+                "absorbed" => entry with
+                {
+                    Coverage = [new("D5/S0/Carrier/Probe", null)],
+                    ProjectedStatus = new(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
+                },
+                _ => entry,
+            };
+        }));
+        var raw = fixture.RawSnapshot(!sourceMissing);
+        using var temporary = new TemporaryDirectory();
+        WriteFiles(temporary.Path, raw);
+        var before = Image(temporary.Path);
+        var applyCalls = 0;
+        var result = Run(temporary.Path, raw, request, clear ? ["--clear", id, "--base", "baseline"] : null,
+            apply: (_, _, _) => applyCalls++);
+        Assert.False(result.Success);
+        Assert.Equal($"SETTLE_INVALID CHAIN_PARENT atom_id={id}\n", result.Error);
+        Assert.Equal(0, applyCalls);
+        Assert.Equal(before, Image(temporary.Path));
     }
 
     [Theory]
@@ -110,7 +159,11 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         Assert.Equal(1, applyCalls);
         Assert.Equal(!ioError, result.Success);
         if (!ioError) output.WriteLine(result.Output.TrimEnd());
-        if (ioError) Assert.Equal(before, Image(temporary.Path));
+        if (ioError)
+        {
+            Assert.Equal("SETTLE_INVALID INFRASTRUCTURE simulated write error after rename\n", result.Error);
+            Assert.Equal(before, Image(temporary.Path));
+        }
         else
         {
             Assert.False(File.Exists(Path.Combine(temporary.Path, PathFor(target))));
@@ -121,6 +174,54 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
             var replay = Run(temporary.Path, after, Request(fixture, id));
             Assert.StartsWith("SETTLE_INVALID NOT_RESIDUAL_OPEN", replay.Error, StringComparison.Ordinal);
         }
+    }
+
+    [Fact]
+    public void SettleReportsConcurrentLedgerChangeWithoutOverwritingBytes()
+    {
+        var fixture = AtomContextFixture.Create();
+        var id = AtomContextFixture.Id(fixture.Atomized.Claims[1]);
+        var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
+        var raw = fixture.RawSnapshot();
+        using var temporary = new TemporaryDirectory();
+        WriteFiles(temporary.Path, raw);
+        File.AppendAllText(Path.Combine(temporary.Path, PathFor(target)), "\n", Encoding.UTF8);
+        var before = Image(temporary.Path);
+        var applyCalls = 0;
+        var commitCalls = 0;
+        var result = Run(temporary.Path, raw, Request(fixture, id), apply: (root, current, updates) =>
+        {
+            applyCalls++;
+            IngestCommand.ApplyLedgerUpdatesAtomically(root, current, updates, (pending, destination) =>
+            {
+                commitCalls++;
+                File.Move(pending, destination, true);
+            });
+        });
+        Assert.False(result.Success);
+        Assert.StartsWith("SETTLE_INVALID INFRASTRUCTURE ledger changed under us ", result.Error, StringComparison.Ordinal);
+        Assert.Equal(1, applyCalls);
+        Assert.Equal(0, commitCalls);
+        Assert.Equal(before, Image(temporary.Path));
+    }
+
+    [Fact]
+    public void SettleReportsMalformedLedgerWithoutWrites()
+    {
+        var fixture = AtomContextFixture.Create();
+        var id = AtomContextFixture.Id(fixture.Atomized.Claims[1]);
+        var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
+        var raw = RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Select(entry =>
+            entry.Path == PathFor(target) ? RawRepositoryEntry.FromText(entry.Path, "receipts: []\n") : entry));
+        using var temporary = new TemporaryDirectory();
+        WriteFiles(temporary.Path, raw);
+        var before = Image(temporary.Path);
+        var applyCalls = 0;
+        var result = Run(temporary.Path, raw, Request(fixture, id), apply: (_, _, _) => applyCalls++);
+        Assert.False(result.Success);
+        Assert.StartsWith("SETTLE_INVALID INFRASTRUCTURE ", result.Error, StringComparison.Ordinal);
+        Assert.Equal(0, applyCalls);
+        Assert.Equal(before, Image(temporary.Path));
     }
 
     [Fact]
@@ -210,20 +311,41 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     }
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void SettleAlignRequiredIsPrintedOnlyForCoveredAncestors(bool covered)
+    [InlineData(false, false, false)]
+    [InlineData(true, false, false)]
+    [InlineData(false, true, false)]
+    [InlineData(true, true, false)]
+    [InlineData(false, false, true)]
+    [InlineData(true, false, true)]
+    [InlineData(false, true, true)]
+    [InlineData(true, true, true)]
+    public void SettleAlignRequiredIsPrintedOnlyForCoveredAncestors(bool covered, bool clear, bool transitive)
     {
         var fixture = AtomContextFixture.Create(AtomContextFixture.ListClaims, true);
         var parent = fixture.Ledger.RequireDigestionEntries().Single(entry => !entry.Receipts.ChainAtoms.IsEmpty);
         var id = parent.Receipts.ChainAtoms[1];
-        fixture = fixture.WithEntries(fixture.Ledger.RequireDigestionEntries().Select(entry =>
-            entry == parent && covered ? entry with { Coverage = [new("D5/S0/Carrier/Probe", null)] } : entry));
+        var ancestor = AtomContextFixture.Create("## Ancestor\n\nAncestor.\n").Ledger.RequireDigestionEntries().Single();
+        ancestor = ancestor with { Receipts = ancestor.Receipts with { ChainAtoms = [parent.AtomId] } };
+        var coveredId = transitive ? ancestor.AtomId : parent.AtomId;
+        var entries = fixture.Ledger.RequireDigestionEntries().AsEnumerable();
+        if (transitive) entries = entries.Append(ancestor);
+        fixture = fixture.WithEntries(entries.Select(entry =>
+        {
+            if (clear && parent.Receipts.ChainAtoms.Contains(entry.AtomId, StringComparer.Ordinal)) entry = Settled(entry);
+            return entry.AtomId == coveredId && covered ? entry with
+            {
+                Coverage = [new("D5/S0/Carrier/Probe", null)],
+                ProjectedStatus = clear ? new(DigestionMigrationState.Absorbed, DigestionTruthState.Closed) : entry.ProjectedStatus,
+            } : entry;
+        }));
         using var temporary = new TemporaryDirectory();
         WriteFiles(temporary.Path, fixture.RawSnapshot());
-        var result = Run(temporary.Path, fixture.RawSnapshot(), Request(fixture, id));
+        var result = Run(temporary.Path, fixture.RawSnapshot(), Request(fixture, id),
+            clear ? ["--clear", id, "--base", "baseline"] : null);
         Assert.True(result.Success, result.Error);
-        Assert.Equal(covered, result.Output.Contains("SETTLE_ALIGN_REQUIRED ancestors=" + parent.AtomId, StringComparison.Ordinal));
+        var lines = result.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        Assert.Equal(covered ? 2 : 1, lines.Length);
+        if (covered) Assert.Equal("SETTLE_ALIGN_REQUIRED ancestors=" + coveredId, lines[1]);
     }
 
     [Fact]

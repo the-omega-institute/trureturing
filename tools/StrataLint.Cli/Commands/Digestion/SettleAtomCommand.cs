@@ -36,6 +36,8 @@ internal static class SettleAtomCommand
             var snapshot = Decode(current);
             var document = BackfillInventoryLoader.Load(snapshot);
             var target = LocateTarget(document, atomId);
+            if (!target.Receipts.ChainAtoms.IsEmpty)
+                throw Invalid("CHAIN_PARENT", $"atom_id={atomId}");
             DigestionLedgerEntry updated;
             if (request is null)
             {
@@ -49,7 +51,7 @@ internal static class SettleAtomCommand
             }
             else
             {
-                RequireWritable(target, document);
+                RequireWritable(target);
                 var context = DigestionAtomContextProjection.Resolve(snapshot, document, atomId);
                 if (context.Previous?.AtomId != request.PreviousAtomId || context.Next?.AtomId != request.NextAtomId)
                     throw Invalid("CONTEXT_MISMATCH", $"atom_id={atomId}");
@@ -62,24 +64,25 @@ internal static class SettleAtomCommand
             var path = Write(root, current, target, updated, writeAtom, applyUpdates);
             var sentinel = request is null ? "SETTLE_CLEARED" : "SETTLED_NONPROPOSITIONAL";
             var output = $"{sentinel} atom_id={atomId} path={path}\n";
-            if (request is not null)
-            {
-                var ancestors = CoveredAncestors(document, atomId);
-                if (ancestors.Length > 0) output += "SETTLE_ALIGN_REQUIRED ancestors=" + string.Join(',', ancestors) + "\n";
-            }
+            var ancestors = CoveredAncestors(document, atomId);
+            if (ancestors.Length > 0) output += "SETTLE_ALIGN_REQUIRED ancestors=" + string.Join(',', ancestors) + "\n";
             return new CommandResult(true, output, string.Empty);
         }
         catch (DigestionAtomContextException error)
         {
             return new CommandResult(false, string.Empty, $"SETTLE_INVALID {error.Code} {error.Message}\n");
         }
+        catch (SettleAtomException error)
+        {
+            return new CommandResult(false, string.Empty, $"SETTLE_INVALID {error.Code} {error.Message}\n");
+        }
         catch (Exception error) when (error is not OutOfMemoryException)
         {
-            return new CommandResult(false, string.Empty, $"SETTLE_INVALID {error.Message}\n");
+            return new CommandResult(false, string.Empty, $"SETTLE_INVALID INFRASTRUCTURE {error.Message}\n");
         }
     }
 
-    private static void RequireWritable(DigestionLedgerEntry entry, BackfillInventoryDocument document)
+    private static void RequireWritable(DigestionLedgerEntry entry)
     {
         if (entry.Receipts.Nonpropositional is not null
             || entry.ProjectedStatus != new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open))
@@ -88,14 +91,6 @@ internal static class SettleAtomCommand
         if (entry.Receipts.Quarantine is not null) throw Invalid("QUARANTINE_PRESENT", $"atom_id={entry.AtomId}");
         if (entry.Receipts.CoverDisposition is not null) throw Invalid("COVER_DISPOSITION_PRESENT", $"atom_id={entry.AtomId}");
         if (!entry.Receipts.UnresolvedSubitems.IsEmpty) throw Invalid("UNRESOLVED_SUBITEMS_PRESENT", $"atom_id={entry.AtomId}");
-        var entries = document.RequireDigestionEntries();
-        foreach (var child in entry.Receipts.ChainAtoms)
-        {
-            var matches = entries.Where(candidate => candidate.AtomId == child).ToArray();
-            if (matches.Length != 1 || matches[0].ProjectedStatus.Migration is not
-                (DigestionMigrationState.Absorbed or DigestionMigrationState.Nonpropositional))
-                throw Invalid("CHAIN_OPEN", $"atom_id={entry.AtomId} child={child}");
-        }
     }
 
     private static string Write(string root, RawRepositorySnapshot current, DigestionLedgerEntry original,
@@ -209,7 +204,12 @@ internal static class SettleAtomCommand
         SnapshotDecodeOutcome.InfrastructureFailure error => throw new FormatException(error.Message),
     };
 
-    private static InvalidOperationException Invalid(string code, string detail) => new(code + " " + detail);
+    private static SettleAtomException Invalid(string code, string detail) => new(code, detail);
+
+    private sealed class SettleAtomException(string code, string detail) : Exception(detail)
+    {
+        internal string Code { get; } = code;
+    }
 
     private static SettleOptions ParseArguments(IReadOnlyList<string> arguments)
     {
