@@ -90,7 +90,7 @@ internal sealed class RestrictedContextMinimalityDocument : IScribeDocumentDefin
             context, F.Colon, F.Sp, ContextType(n), F.Comma, F.Sp,
             subset, F.Colon, F.Sp, Call("Finset", Fin(F.Seq(n, F.Plus, F.D(2)))), F.Comma,
             F.RowBreak, F.Grp(), matrix, F.Colon, F.Sp, MatrixType(n), F.Comma, F.Sp,
-            ell, F.InMacro, subset, F.Comma, F.Sp, j, F.InMacro, Fin(F.Seq(n, F.Plus, F.D(1))),
+            ell, F.InMacro, F.Sp, subset, F.Comma, F.Sp, j, F.InMacro, F.Sp, Fin(F.Seq(n, F.Plus, F.D(1))),
             F.Comma, F.RowBreak, F.Grp(),
             Call("restrictedContextReadout", context, subset, matrix, ell, j),
             F.Sp, F.Eq, F.Sp,
@@ -130,7 +130,7 @@ internal sealed class RestrictedContextMinimalityDocument : IScribeDocumentDefin
         return F.Disp(F.Seq(
             F.Forall, F.Sp, CommonPremises(n, context), F.Comma, F.Sp,
             subset, F.Colon, F.Sp, Call("Finset", Fin(F.Seq(n, F.Plus, F.D(2)))), F.Comma,
-            F.Sp, ell, F.InMacro, Fin(F.Seq(n, F.Plus, F.D(2))), F.Comma, F.Sp,
+            F.Sp, ell, F.InMacro, F.Sp, Fin(F.Seq(n, F.Plus, F.D(2))), F.Comma, F.Sp,
             ell, F.Sp, F.Neg, F.Sp, F.InMacro, F.Sp, subset,
             F.Sp, F.Rightarrow, F.RowBreak, F.Grp(),
             p0, F.Sp, F.Neq, F.Sp, p1, F.Sp, F.Land, F.Sp,
