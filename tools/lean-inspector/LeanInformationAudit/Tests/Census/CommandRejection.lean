@@ -36,6 +36,22 @@ def expectAcceptedCensus (root inventoryName certificate : Name)
     let counts ← ofExcept <| projection.getObjVal? "counts"
     unless (← ofExcept <| counts.getObjValAs? Nat "structural_occurrence") == structuralCount do
       throwError "unexpected structural count: {counts.compress}"
+    let sources ← ofExcept <| projection.getObjValAs? (Array Json) "source_inputs"
+    let env ← getEnv
+    let expectedModules := inventory.entries.toList.filterMap fun row =>
+      if row.2.className == "structural_occurrence" then
+        some (((env.getModuleIdxFor? row.1.theoremName).map
+          (env.header.moduleNames[·.toNat]!)).getD env.header.mainModule).toString
+      else none
+    let modules ← sources.toList.mapM fun (source : Json) =>
+      Lean.ofExcept <| source.getObjValAs? String "module"
+    unless modules == expectedModules.eraseDups.mergeSort (· < ·) do
+      throwError "incorrect structural source input closure"
+    for source in sources do
+      let path ← ofExcept <| source.getObjValAs? String "path"
+      let digest ← ofExcept <| source.getObjValAs? String "sha256"
+      unless digest == "sha256:" ++ Sha256.hex (← IO.FS.readBinFile path) do
+        throwError "incorrect structural source hash"
     liftTermElabM do
       let name := (← getCurrNamespace) ++ certificate
       Lean.Meta.checkWithKernel (← Lean.Meta.mkConstWithFreshMVarLevels name)

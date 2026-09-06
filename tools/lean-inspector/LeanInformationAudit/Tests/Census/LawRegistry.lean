@@ -121,4 +121,51 @@ structural_theorem _root_.LeanInformationAudit.Tests.Census.RegisteredClosedTrut
   in RegisteredClosedTruth.lawArena realization RegisteredClosedTruth.readouts
   nondegeneracy RegisteredClosedTruth.nondegenerate := rfl
 
+/--
+info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.RegisteredClosedTruth.generated class=structural_occurrence invalid=realization.provenance
+---
+info: rejected=true output-absent=true certificate-absent=true
+-/
+#guard_msgs in
+run_cmd do
+  tamper (← `(term| fun entry => { entry with
+    statementExpr := mkApp3 (mkConst ``Eq [.succ .zero]) (mkConst ``Nat)
+      (mkNatLit 5) (mkNatLit 5) }))
+    `defEqRecordType (classError ``RegisteredClosedTruth.generated
+      "structural_occurrence" "realization.provenance")
+
+/--
+info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.RegisteredClosedTruth.generated class=structural_occurrence invalid=realization.canonical_law_arena
+---
+info: rejected=true output-absent=true certificate-absent=true
+-/
+#guard_msgs in
+run_cmd do
+  tamper (← `(term| fun entry => { entry with lawArenaConst := ``lawAlias }))
+    `differentRecordLaw (classError ``RegisteredClosedTruth.generated
+      "structural_occurrence" "realization.canonical_law_arena")
+
+/--
+info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.RegisteredClosedTruth.generated class=structural_occurrence invalid=realization.provenance.syntax
+---
+info: rejected=true output-absent=true certificate-absent=true
+-/
+#guard_msgs in
+run_cmd do
+  tamper (← `(term| fun entry => { entry with registrationModule :=
+    `LeanInformationAudit.Tests.Census.Evidence }))
+    `wrongOwnerInClosure (classError ``RegisteredClosedTruth.generated
+      "structural_occurrence" "realization.provenance.syntax")
+
+/--
+info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.RegisteredClosedTruth.generated class=structural_occurrence invalid=realization.provenance.syntax
+---
+info: rejected=true output-absent=true certificate-absent=true
+-/
+#guard_msgs in
+run_cmd do
+  tamper (← `(term| fun entry => { entry with realizationSyntax := "otherReadouts" }))
+    `differentSourceRealization (classError ``RegisteredClosedTruth.generated
+      "structural_occurrence" "realization.provenance.syntax")
+
 end LeanInformationAudit.Tests.Census.LawRegistry

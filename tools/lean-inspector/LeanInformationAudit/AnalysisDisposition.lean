@@ -188,6 +188,9 @@ def identityError (name : Name) (component expected actual : String) : String :=
   s!"IE-C036 DispositionIdentityMismatch theorem={name} component={component} \
 expected={expected} actual={actual}"
 
+/-- realization.provenance.syntax means the theorem lacks a matching
+structural_theorem introducing command in its owning module's source. It is a
+source provenance contract, excluding source rewrites and changed search paths. -/
 def classError (name : Name) (className invalid : String) : String :=
   s!"IE-C037 DispositionClassMismatch theorem={name} class={className} invalid={invalid}"
 
