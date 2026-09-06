@@ -1,0 +1,73 @@
+fingerprints:
+  raw_sha256: sha256:b7d090810ffe4eeaf08d6f8de3bff663d86d9664e2192a0d0168ec24939d28d3
+  normalized_sha256: sha256:b7d090810ffe4eeaf08d6f8de3bff663d86d9664e2192a0d0168ec24939d28d3
+cas_ref: sha256:b7d090810ffe4eeaf08d6f8de3bff663d86d9664e2192a0d0168ec24939d28d3
+coverage_gids:
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.wt
+    target_statement_id: sha256:97e8780c8f32b7d18f85865017f8f6cd93a28ef09cc8d352835df20fa177420b
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R_coeff_zero
+    target_statement_id: sha256:a125e6b9c907382d3b1213ea5566163b0952cbfcdf89800fb85c3dc340053d8e
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R_degree
+    target_statement_id: sha256:8fe0fba0c9d663218e3608515c9f9658413b0db4b6fa36abe83aa11fe083cf7c
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.T
+    target_statement_id: sha256:81c3bed75aec24c8acbb69b31d3e4bf4965e44b22ceb858f97ed1a16475cc4d0
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.e
+    target_statement_id: sha256:fe48184cc401a0366f00e4dabefd393c1f0ab9c7a910ebc294061152ea40f3e3
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.e_support
+    target_statement_id: sha256:e95eb87d5aede5e3e5e54dbb379e50803f411cdd12413a32238acd7ffcf0a362
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.e_one
+    target_statement_id: sha256:89396dca26346cb75580e16e634e284b3493d2895b603e1320d8187b0b8dc765
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.e_recurrence
+    target_statement_id: sha256:f531f656812c7ed35ce3f361a1b65c0997ae655ca7b1e27ce3a72c81082ce64f
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R_factorization
+    target_statement_id: sha256:fe08a051b5e99e038732ea7176c6a3cf7cc0860ed17a01473b2cd47c320b51d1
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.E
+    target_statement_id: sha256:caa46488cee2fa79bf047fdab8d8a3b0f0d0b91126596f6d3e5ddec3980ab02e
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.E_at_degree
+    target_statement_id: sha256:1748f47bc4f435a98019ec72197d42c0f862888d4d14731b5d3b6c291a733cc6
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.E_after_degree
+    target_statement_id: sha256:f2dfe2f7be08ab574efe285273de7ae6b692fedf8161656aade71bd8310a01b0
+  - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.conjecture9
+    target_statement_id: sha256:4773d0ccd7251165e31fe0e6978a82d76ebf664c620b5b6bf9e6bdb288098788
+receipts:
+  scribe:
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.wt
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R_coeff_zero
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R_degree
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.T
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.e
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.e_support
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.e_one
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.e_recurrence
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R_factorization
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.E
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.E_at_degree
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.E_after_degree
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.conjecture9
+      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
+      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
+  unresolved_subitems: []
