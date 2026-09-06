@@ -12,7 +12,8 @@
      ConvolutionPowerAmplification.fourierLaplace_convolve_complex requires
      smooth WeilTestFunction inputs, excluding uniform interval densities.
    * Pinned Mathlib v4.33.0: `integral_convolution`,
-     `Integrable.integrable_convolution`, `support_convolution_subset`, and
+     `Integrable.integrable_convolution`, `convolution_neg_of_neg_eq`,
+     `support_convolution_subset`, and
      `HasProdUniformlyOn.tendstoUniformlyOn_finsetRange` supply the general
      integration and convergence machinery. `fourier_mul_convolution_eq`
      concerns real frequencies. No `infinite convolution` declaration was
@@ -32,6 +33,7 @@
 import D5.S3.Fourier.InfiniteSincProduct
 import Mathlib.Analysis.Convolution
 import Mathlib.MeasureTheory.Function.LocallyIntegrable
+import Mathlib.MeasureTheory.Measure.Haar.Unique
 
 namespace D5.S3.Fourier.DyadicConvolutionDensity
 
@@ -139,7 +141,66 @@ theorem integral_dyadicPartialConvolution (ell : ℝ) (hell : 0 < ell) (n : ℕ)
         (dyadicPartialConvolution_integrable ell n) (uniformIntervalDensity_integrable _)]
       simp [ih, integral_uniformIntervalDensity (hp (n + 1))]
 
+theorem dyadicPartialConvolution_even (ell : ℝ) (n : ℕ) (x : ℝ) :
+    dyadicPartialConvolution ell n (-x) = dyadicPartialConvolution ell n x := by
+  induction n generalizing x with
+  | zero => exact uniformIntervalDensity_even _ _
+  | succ n ih =>
+      exact convolution_neg_of_neg_eq _ (Eventually.of_forall ih)
+        (Eventually.of_forall (uniformIntervalDensity_even _))
+
+private theorem partial_support (ell : ℝ) (n : ℕ) :
+    Function.support (dyadicPartialConvolution ell n) ⊆
+      Icc (-(∑ j ∈ Finset.range (n + 1), dyadicHalfWidth ell j))
+        (∑ j ∈ Finset.range (n + 1), dyadicHalfWidth ell j) := by
+  have hs (j : ℕ) : Function.support (uniformIntervalDensity (dyadicHalfWidth ell j)) ⊆
+      Icc (-(dyadicHalfWidth ell j)) (dyadicHalfWidth ell j) := by
+    intro x hx
+    by_contra hn
+    exact hx (by simp [uniformIntervalDensity, hn])
+  induction n with
+  | zero => simpa [dyadicPartialConvolution] using hs 0
+  | succ n ih =>
+      intro x hx
+      obtain ⟨u, hu, v, hv, rfl⟩ :=
+        support_convolution_subset (ContinuousLinearMap.mul ℝ ℝ) hx
+      have hu' := ih hu
+      have hv' := hs (n + 1) hv
+      simp only [Finset.sum_range_succ] at hu' ⊢
+      constructor <;> linarith [hu'.1, hu'.2, hv'.1, hv'.2]
+
+/-- Every finite density already has the final support bound. -/
+theorem dyadicPartialConvolution_tsupport (ell : ℝ) (hell : 0 < ell) (n : ℕ) :
+    tsupport (dyadicPartialConvolution ell n) ⊆ Icc (-(ell / 2)) (ell / 2) := by
+  have hs : Summable (dyadicHalfWidth ell) := by
+    refine (summable_geometric_two' (ell / 2)).congr fun j => ?_
+    simp [dyadicHalfWidth, pow_add]
+    ring
+  have hsum : (∑ j ∈ Finset.range (n + 1), dyadicHalfWidth ell j) ≤ ell / 2 := by
+    rw [← (dyadic_uniform_convolution_product_ne_zero_off_real ell hell).2.1]
+    exact hs.sum_le_tsum _ (fun j _ =>
+      ((dyadic_uniform_convolution_product_ne_zero_off_real ell hell).1 j).1.le)
+  apply closure_minimal _ isClosed_Icc
+  intro x hx
+  have hx' := partial_support ell n hx
+  constructor <;> linarith [hx'.1, hx'.2]
+
+/-- The transforms of the actual finite densities tend to the frozen sinc product.
+This does not yet assert convergence of the densities themselves. -/
+theorem dyadic_partial_convolution_fourierLaplace_tendsto
+    (ell : ℝ) (hell : 0 < ell) (z : ℂ) :
+    Tendsto (fun n => densityFourierLaplace (dyadicPartialConvolution ell n) z) atTop
+      (nhds (∏' j, complexSinc ((dyadicHalfWidth ell j : ℝ) * z))) := by
+  have hd := dyadic_uniform_convolution_product_ne_zero_off_real ell hell
+  have hp := (hd.2.2.1 {z} (isCompact_singleton)).hasProd (mem_singleton z)
+  have ht := hp.tendsto_prod_nat.comp (tendsto_add_atTop_nat 1)
+  convert ht using 1
+  funext n
+  rw [dyadic_partial_convolution_fourierLaplace]
+  exact Finset.prod_congr rfl (fun j _ => (hd.1 j).2.2.2.2.2 z)
+
 #print axioms dyadic_partial_convolution_fourierLaplace
+#print axioms dyadic_partial_convolution_fourierLaplace_tendsto
 
 end
 
