@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/RationalAffineMomentCompression
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [D5/S0/Certificates/RationalMomentReplay]
-   utility: kind=checker; basis=consumer=D5/S3/ConceptDynamics/PartialIdentification/RankAdaptiveSparseCausalWitness.checked_affine_causal_witness
+   utility: kind=checker; basis=consumer=D5/S3/ConceptDynamics/CausalMoments/RankAdaptiveSparseCausalWitness.checked_affine_causal_witness
    digest: Exact support-local affine reconstruction lets the existing rational replay preserve a full moment family while checking only selected coordinates and their smaller support budget. -/
 
 import D5.S0.Certificates.RationalMomentReplay

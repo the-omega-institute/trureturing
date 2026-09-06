@@ -36,17 +36,14 @@ open D5.S3.ConceptDynamics.Causal.FiniteLinearCausalIdentification
 open D5.S3.ConceptDynamics.PartialIdentification.PartialGraphInformationOrder
 open D5.S3.ConceptDynamics.PartialIdentification.PartialDiagramConstraintCompilerSoundness
 
-/-- Semantic kind of a finite causal event. This records what the event means,
-independently of the provenance layer that justifies using its probability. -/
+/-- Semantic kind of a finite causal event. This records what the event means, independently of the provenance layer that justifies using its probability. -/
 inductive CausalEventKind where
   | observational
   | interventional
   | counterfactual
   deriving DecidableEq, Repr
 
-/-- Finite event information available to the compiler. `kind` records event
-semantics, while `layer` records whether the numerical constraint is treated as
-data, a structural consequence, or a sensitivity assumption. -/
+/-- Finite event information available to the compiler. `kind` records event semantics, while `layer` records whether the numerical constraint is treated as data, a structural consequence, or a sensitivity assumption. -/
 structure EventObservation
     (Completion Signature Event : Type*) where
   kind : Event -> CausalEventKind
@@ -54,13 +51,11 @@ structure EventObservation
   holds : Event -> Completion -> Signature -> Bool
   target : Event -> ℚ
 
-/-- One atom of the joint response law records both the selected graph
-completion and the deterministic response signature. -/
+/-- One atom of the joint response law records both the selected graph completion and the deterministic response signature. -/
 abbrev CompletionSignatureAtom
     (Completion Signature : Type*) := Completion × Signature
 
-/-- Probability of a Boolean event under a finite joint law on completion and
-response-signature atoms. -/
+/-- Probability of a Boolean event under a finite joint law on completion and response-signature atoms. -/
 def jointEventMass
     {Completion Signature : Type*}
     [Fintype Completion] [Fintype Signature]
@@ -68,9 +63,7 @@ def jointEventMass
     (event : Completion -> Signature -> Bool) : ℚ :=
   ∑ atom, if event atom.1 atom.2 then mass atom else 0
 
-/-- Generated rows. Probability normalization is represented by two rows;
-every inadmissible joint atom receives a zero-support row; and every supplied
-event probability is represented by paired upper and lower rows. -/
+/-- Generated rows. Probability normalization is represented by two rows; every inadmissible joint atom receives a zero-support row; and every supplied event probability is represented by paired upper and lower rows. -/
 inductive EventRowConstraint
     (Node Completion Signature Event : Type*)
   | atomNonnegative (completion : Completion) (signature : Signature)
@@ -142,8 +135,7 @@ def eventRhs
   | .eventUpper event => observation.target event
   | .eventLower event => -observation.target event
 
-/-- Provenance layer of each row. Support and normalization rows are structural;
-event rows retain their explicitly supplied provenance. -/
+/-- Provenance layer of each row. Support and normalization rows are structural; event rows retain their explicitly supplied provenance. -/
 def eventLayer
     {Node Completion Signature Event : Type*}
     (observation : EventObservation Completion Signature Event) :
@@ -152,8 +144,7 @@ def eventLayer
   | .eventLower event => observation.layer event
   | _ => .structural
 
-/-- The exact finite causal LP generated from a partial diagram, a finite event
-table, and an arbitrary rational query coefficient. -/
+/-- The exact finite causal LP generated from a partial diagram, a finite event table, and an arbitrary rational query coefficient. -/
 noncomputable def eventConstrainedProblem
     {Node Completion Signature Event : Type*}
     [Fintype Node] [DecidableEq Node]
@@ -332,9 +323,7 @@ noncomputable def eventConstrainedProblem
   cases h : observation.holds event candidate.1 candidate.2 <;>
     simp [eventRow, h]
 
-/-- Intended semantics of the generated program: a normalized nonnegative joint
-law, supported on admissible graph completions, whose supplied event
-probabilities equal their exact rational targets. -/
+/-- Intended semantics of the generated program: a normalized nonnegative joint law, supported on admissible graph completions, whose supplied event probabilities equal their exact rational targets. -/
 structure EventConstrainedCompletionLaw
     {Node Completion Signature Event : Type*}
     [Fintype Completion] [Fintype Signature]
@@ -350,8 +339,7 @@ structure EventConstrainedCompletionLaw
   eventEq : ∀ event,
     jointEventMass mass (observation.holds event) = observation.target event
 
-/-- A joint atom whose completion is inadmissible has zero mass in every
-semantic event-constrained law. -/
+/-- A joint atom whose completion is inadmissible has zero mass in every semantic event-constrained law. -/
 theorem atom_mass_eq_zero_of_not_admissible
     {Node Completion Signature Event : Type*}
     [Fintype Completion] [Fintype Signature]
@@ -368,9 +356,7 @@ theorem atom_mass_eq_zero_of_not_admissible
   by_contra nonzero
   exact not_admissible (law.supportAdmissible atom nonzero)
 
-/-- Exact compiler theorem. Feasibility of the generated rational LP is
-logically equivalent to the intended joint support and event-probability
-semantics. -/
+/-- Exact compiler theorem. Feasibility of the generated rational LP is logically equivalent to the intended joint support and event-probability semantics. -/
 theorem feasible_iff_event_constrained_completion_law
     {Node Completion Signature Event : Type*}
     [Fintype Node] [DecidableEq Node]
@@ -601,8 +587,7 @@ theorem jointPushforwardMass_nonnegative
   · exact mass_nonnegative exogenous
   · exact le_rfl
 
-/-- Evaluating any Boolean causal event after joint pushforward gives exactly
-the event probability evaluated on the original exogenous structural states. -/
+/-- Evaluating any Boolean causal event after joint pushforward gives exactly the event probability evaluated on the original exogenous structural states. -/
 theorem joint_event_mass_pushforward
     {Exogenous Completion Signature : Type*}
     [Fintype Exogenous]
@@ -655,8 +640,7 @@ theorem joint_event_mass_pushforward
   · intro h
     exact absurd (Finset.mem_univ _) h
 
-/-- The joint atom carrier itself is a canonical finite exogenous realization
-of every joint law, preserving all event probabilities definitionally. -/
+/-- The joint atom carrier itself is a canonical finite exogenous realization of every joint law, preserving all event probabilities definitionally. -/
 theorem identity_exogenous_event_mass
     {Completion Signature : Type*}
     [Fintype Completion] [Fintype Signature]
@@ -666,8 +650,7 @@ theorem identity_exogenous_event_mass
       jointEventMass mass event := by
   rfl
 
-/-- Every event target enforced by a feasible compiled program is realized by
-the canonical identity exogenous law on completion-signature atoms. -/
+/-- Every event target enforced by a feasible compiled program is realized by the canonical identity exogenous law on completion-signature atoms. -/
 theorem compiled_event_targets_have_identity_realization
     {Node Completion Signature Event : Type*}
     [Fintype Node] [DecidableEq Node]
@@ -691,9 +674,7 @@ theorem compiled_event_targets_have_identity_realization
       diagram completionSemantics observation queryCoefficient mass).mp feasible
   simpa [identity_exogenous_event_mass] using law.eventEq event
 
-/-- Stronger partial-diagram information preserves every event row while
-shrinking the admissible completion support. Hence its compiled feasible set is
-contained in the weaker compiled feasible set. -/
+/-- Stronger partial-diagram information preserves every event row while shrinking the admissible completion support. Hence its compiled feasible set is contained in the weaker compiled feasible set. -/
 theorem feasible_antitone_under_diagram_refinement
     {Node Completion Signature Event : Type*}
     [Fintype Node] [DecidableEq Node]
@@ -731,8 +712,7 @@ theorem feasible_antitone_under_diagram_refinement
         (completionRelation completionSemantics atom.1) admissible.1,
       admissible.2⟩
 
-/-- A lower dual certificate for the weaker partial diagram remains a valid
-bound for every mass feasible under a stronger diagram. -/
+/-- A lower dual certificate for the weaker partial diagram remains a valid bound for every mass feasible under a stronger diagram. -/
 theorem lower_bound_survives_diagram_refinement
     {Node Completion Signature Event : Type*}
     [Fintype Node] [DecidableEq Node]

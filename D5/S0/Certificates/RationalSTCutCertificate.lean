@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/RationalSTCutCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [D5/S0/Certificates/LinearObjectiveDual]
-   utility: kind=checker; basis=consumer=D5/S3/ConceptDynamics/PartialIdentification/BipartiteMediatorPricing.checked_pricing_isGreatest
+   utility: kind=checker; basis=consumer=D5/S3/ConceptDynamics/CausalMoments/BipartiteMediatorPricing.checked_pricing_isGreatest
    digest: Exact rational flow/cut certificates give a global minimum over every Boolean cut without enumerating those cuts or trusting a max-flow producer. -/
 
 import D5.S0.Certificates.LinearObjectiveDual

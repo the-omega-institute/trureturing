@@ -5,7 +5,7 @@
    anchors: []
    digest: Conditional product response laws aggregate to a weighted product query; an exact covariance certificate and independent-noise shared-root witness delimit unconditional benefit factorization. -/
 
-import D5.S3.ConceptDynamics.PartialIdentification.MarkovianJointBenefitMarginalSharpBounds
+import D5.S3.ConceptDynamics.CausalMoments.MarkovianJointBenefitMarginalSharpBounds
 
 /- Library-search audit (2026-09-05): product_pushforward_factorizes requires
    coordinatewise response maps. It does not apply to two maps sharing a random
@@ -25,7 +25,7 @@ open scoped BigOperators
 open D5.S3.ConceptDynamics.PartialIdentification.CanonicalResponseSignature
 open D5.S3.ConceptDynamics.PartialIdentification.MarkovianResponseLawFactorization
 open D5.S3.ConceptDynamics.PartialIdentification.MarkovianBenefitIdentificationBoundary
-open D5.S3.ConceptDynamics.PartialIdentification.MarkovianJointMechanismBenefitSharpBounds
+open D5.S3.ConceptDynamics.CausalMoments.MarkovianJointMechanismBenefitSharpBounds
 
 /-- Joint benefit after averaging independent-mechanism models conditional on
 one finite observed covariate. The model family makes conditional independence

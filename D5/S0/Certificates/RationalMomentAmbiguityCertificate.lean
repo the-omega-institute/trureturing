@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/RationalMomentAmbiguityCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/ConceptDynamics/PartialIdentification/BenefitMarginalToleranceSharp.benefit_marginal_tolerance_sharp
+   utility: kind=checker; basis=consumer=D5/S3/ConceptDynamics/CausalMoments/BenefitMarginalToleranceSharp.benefit_marginal_tolerance_sharp
    digest: Rational contact witnesses certify both maximal query ambiguity and minimal residual budget under componentwise moment tolerances. -/
 
 import D5.S0.Certificates.RationalMomentQueryEnvelope

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/RationalMomentQueryEnvelope
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [D5/S0/Certificates/RationalAffineMomentCompression]
-   utility: kind=checker; basis=consumer=D5/S3/ConceptDynamics/PartialIdentification/RankAdaptiveSparseCausalWitness.checked_compressed_query_decision
+   utility: kind=checker; basis=consumer=D5/S3/ConceptDynamics/CausalMoments/RankAdaptiveSparseCausalWitness.checked_compressed_query_decision
    digest: Pointwise rational affine residual envelopes certify uniform query-error bounds for one checked compression; a zero weighted square residual yields exact reconstruction on its support. -/
 
 import D5.S0.Certificates.RationalAffineMomentCompression
