@@ -268,7 +268,50 @@ theorem companion_trace_hankel_hermite_sylvester_bridge {d : Nat}
     simpa using hlt
   exact div_neg_of_neg_of_pos hsum (by exact_mod_cast hd)
 
+/-- For a conjugation-stable root enumeration carrying multiplicities, the
+Newton--Hankel matrix is positive semidefinite exactly when every root is
+real. -/
+theorem newtonHankel_posSemidef_iff_roots_real {d : Nat}
+    (roots : Fin d → Complex)
+    (hconj : ∀ w, w ∈ Finset.univ.image roots ↔
+      conj w ∈ Finset.univ.image roots) :
+    Matrix.PosSemidef (newtonHankel roots) ↔
+      ∀ j, ∃ r : Real, roots j = (r : Complex) := by
+  constructor
+  · intro hpsd j
+    by_cases hj : conj (roots j) = roots j
+    · rcases Complex.conj_eq_iff_real.mp hj with ⟨r, hr⟩
+      exact ⟨r, hr⟩
+    · exfalso
+      rcases companion_trace_hankel_hermite_sylvester_bridge roots hconj
+          (roots j) (Finset.mem_image_of_mem roots (Finset.mem_univ j)) hj with
+        ⟨coefficients, hneg⟩
+      have hnonneg := hpsd.dotProduct_mulVec_nonneg coefficients
+      simp only [star_trivial] at hnonneg
+      linarith
+  · intro hreal
+    apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+      (newtonHankel_isHermitian roots)
+    intro coefficients
+    simp only [star_trivial]
+    rw [companion_trace_hankel_quadratic_identity]
+    apply div_nonneg
+    · apply Finset.sum_nonneg
+      intro j _
+      rcases hreal j with ⟨r, hr⟩
+      have hvalue :
+          conj (vectorPolynomialValue coefficients (roots j)) =
+            vectorPolynomialValue coefficients (roots j) := by
+        rw [hr]
+        simp [vectorPolynomialValue, map_sum]
+      have hre := Complex.conj_eq_iff_re.mp hvalue
+      rw [← hre]
+      rw [← Complex.ofReal_pow, Complex.ofReal_re]
+      exact sq_nonneg (vectorPolynomialValue coefficients (roots j)).re
+    · positivity
+
 #print axioms companion_trace_hankel_quadratic_identity
 #print axioms companion_trace_hankel_hermite_sylvester_bridge
+#print axioms newtonHankel_posSemidef_iff_roots_real
 
 end D5.S3.Constants.NewtonHankelRealRootCriterion
