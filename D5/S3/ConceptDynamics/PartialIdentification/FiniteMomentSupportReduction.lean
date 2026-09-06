@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/FiniteMomentSupportReduction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Convex.Caratheodory]
-   digest: Every finite rational causal law admits a positive latent realization with support controlled by the number of retained linear moments; adding all LP rows and one query gives a law-specific witness of size at most the row count plus two, with exact feasibility and query preservation. -/
+   digest: Every finite rational causal law admits a positive latent realization with support controlled by the affine rank of retained linear moments; all LP rows plus one query give an exact witness of size at most the row count plus two. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.MarkovianResponseLawFactorization
 import D5.S3.ConceptDynamics.PartialIdentification.QuaternaryResponseTableCoding
@@ -15,21 +15,17 @@ import Mathlib.Data.Fintype.Option
 /- Library and literature-facing audit (2026-09-06):
    * `FiniteResponseLaw`, `LinearFeasible`, and `linearObjective` are reused from
      existing repository owners. No second probability or LP semantics is added.
-   * Pinned Mathlib already supplies finite-dimensional Caratheodory reduction,
-     `AffineIndependent.card_le_finrank_succ`, `Submodule.finrank_le`, and
-     `Module.finrank_pi`. This module transports those facts to finite rational
-     causal response laws and their exact LP row/query functionals.
-   * `ActiveFiniteContactCompletion` already consumes the same Mathlib
-     Caratheodory machinery in the Weil lane under different analytic premises.
-   * The support selected here depends on the particular law and retained moment
-     vector. It is therefore distinct from a single deterministic generator that
-     must cover every unrestricted response table, whose 4^k lower bound is in
-     `StructuredResponseTableSupport`.
-   * Choe, Kwon, Park, and Lee (UAI 2026) reduce canonical counterfactual domains
-     by quotienting states indistinguishable to all LP rows and the objective.
-     The theorem here is complementary: after the relevant linear functionals
-     are fixed, each feasible law/query point has a small positive atomic witness.
-     No algorithmic runtime or novelty claim is made. -/
+   * Pinned Mathlib supplies finite-dimensional Caratheodory reduction,
+     `AffineIndependent.card_le_finrank_succ`, `Submodule.finrank_mono`,
+     `Submodule.finrank_le`, and `Module.finrank_pi`.
+   * The selected support depends on the particular law and retained moment
+     vector. It is distinct from one generator required to cover every
+     unrestricted response table, whose 4^k lower bound is formalized elsewhere.
+   * Choe, Kwon, Park, and Lee (UAI 2026) quotient canonical counterfactual states
+     that are indistinguishable to all LP rows and the objective. Here the same
+     joint feature profile is viewed geometrically: after quotienting duplicate
+     profiles, affine rank controls the number of atoms needed to realize each
+     feasible moment/query point. No algorithmic runtime or novelty claim is made. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -51,6 +47,13 @@ def lawMomentVector
     (law : FiniteResponseLaw Atom)
     (feature : Atom → Feature → ℚ) : Feature → ℚ :=
   ∑ atom, law.mass atom • feature atom
+
+/-- Affine dimension of the global atom-profile family for a retained feature
+map. This detects duplicate profiles and affine dependencies among coordinates. -/
+def profileAffineRank
+    {Atom Feature : Type*} [Fintype Feature]
+    (feature : Atom → Feature → ℚ) : Nat :=
+  Module.finrank ℚ (AffineSubspace.vectorSpan ℚ (Set.range feature))
 
 /-- The retained moment vector is a convex combination of the atom feature
 vectors. This is the exact entry point for Mathlib's Caratheodory theorem. -/
@@ -79,8 +82,8 @@ theorem lawMomentVector_mem_convexHull
   simpa [lawMomentVector] using hmem
 
 /-- A positive atomic realization of the same retained moment vector. Every
-profile comes from an original atom. `card_le` is the ambient Caratheodory
-bound, independent of the original atom-space cardinality. -/
+profile comes from an original atom. The selected profiles are affinely
+independent, exposing both the exact profile-rank bound and its ambient bound. -/
 structure MomentCompression
     {Atom Feature : Type*} [Fintype Atom] [Fintype Feature]
     (law : FiniteResponseLaw Atom)
@@ -92,6 +95,7 @@ structure MomentCompression
   total : ∑ profile ∈ profiles, weight profile = 1
   moment_eq :
     ∑ profile ∈ profiles, weight profile • profile = lawMomentVector law feature
+  independent : AffineIndependent ℚ ((↑) : profiles → (Feature → ℚ))
   card_le : profiles.card ≤ Fintype.card Feature + 1
 
 /-- Every normalized finite rational law has a moment-preserving positive atomic
@@ -139,8 +143,38 @@ theorem exists_momentCompression
     nonnegative := hw_nonnegative
     total := hw_total
     moment_eq := by simpa only [id_eq] using hw_center
+    independent := hind
     card_le := hcard
   }⟩
+
+/-- The selected support is bounded by one plus the affine rank of the complete
+feature-profile family. This can be strictly smaller than the raw feature count
+when rows are redundant or several atoms share the same joint profile. -/
+theorem MomentCompression.card_le_profileAffineRank
+    {Atom Feature : Type*} [Fintype Atom] [Fintype Feature]
+    {law : FiniteResponseLaw Atom} {feature : Atom → Feature → ℚ}
+    (compression : MomentCompression law feature) :
+    Fintype.card compression.profiles ≤ profileAffineRank feature + 1 := by
+  have hsource :
+      Set.range ((↑) : compression.profiles → (Feature → ℚ)) ⊆
+        Set.range feature := by
+    rintro _ ⟨profile, rfl⟩
+    exact compression.source profile.1 profile.2
+  have hmono :
+      AffineSubspace.vectorSpan ℚ
+          (Set.range ((↑) : compression.profiles → (Feature → ℚ))) ≤
+        AffineSubspace.vectorSpan ℚ (Set.range feature) :=
+    AffineSubspace.vectorSpan_mono ℚ hsource
+  calc
+    Fintype.card compression.profiles ≤
+        Module.finrank ℚ
+          (AffineSubspace.vectorSpan ℚ
+            (Set.range ((↑) : compression.profiles → (Feature → ℚ)))) + 1 :=
+      compression.independent.card_le_finrank_succ
+    _ ≤ Module.finrank ℚ
+          (AffineSubspace.vectorSpan ℚ (Set.range feature)) + 1 :=
+      Nat.add_le_add_right (Submodule.finrank_mono hmono) 1
+    _ = profileAffineRank feature + 1 := rfl
 
 /-- Choose one original atom realizing each retained profile. -/
 noncomputable def MomentCompression.sourceAtom
@@ -159,9 +193,7 @@ noncomputable def MomentCompression.sourceAtom
     feature (compression.sourceAtom profile) = profile.1 :=
   Classical.choose_spec (compression.source profile.1 profile.2)
 
-/-- Distinct retained profiles choose distinct original atoms. Hence the latent
-carrier below is an actual sparse subset representation, not a multiset with
-hidden duplicate atoms. -/
+/-- Distinct retained profiles choose distinct original atoms. -/
 theorem MomentCompression.sourceAtom_injective
     {Atom Feature : Type*} [Fintype Atom] [Fintype Feature]
     {law : FiniteResponseLaw Atom} {feature : Atom → Feature → ℚ}
@@ -234,15 +266,51 @@ def linearRowQueryFeature
   | none => objective atom
   | some constraint => A constraint atom
 
-/-- Caratheodory applied to all constraint rows plus one objective needs at most
-`|Constraint| + 2` latent atoms. -/
+/-- Affine profile rank of all LP rows jointly with the objective. -/
+def linearProblemProfileRank
+    {Constraint Atom : Type*} [Fintype Constraint]
+    (A : Constraint → Atom → ℚ) (objective : Atom → ℚ) : Nat :=
+  profileAffineRank (linearRowQueryFeature A objective)
+
+/-- The LP profile rank is at most the ambient number of coordinates, namely the
+row count plus one objective coordinate. -/
+theorem linearProblemProfileRank_le
+    {Constraint Atom : Type*} [Fintype Constraint]
+    (A : Constraint → Atom → ℚ) (objective : Atom → ℚ) :
+    linearProblemProfileRank A objective ≤ Fintype.card Constraint + 1 := by
+  unfold linearProblemProfileRank profileAffineRank
+  calc
+    Module.finrank ℚ
+        (AffineSubspace.vectorSpan ℚ
+          (Set.range (linearRowQueryFeature A objective))) ≤
+      Module.finrank ℚ (Option Constraint → ℚ) :=
+        Submodule.finrank_le _
+    _ = Fintype.card (Option Constraint) := by rw [Module.finrank_pi]
+    _ = Fintype.card Constraint + 1 := Fintype.card_option
+
+/-- The exact rank-aware Caratheodory bound for an LP row/query profile. -/
+theorem MomentCompression.linearRowQuery_profileRank_card_le
+    {Constraint Atom : Type*} [Fintype Constraint] [Fintype Atom]
+    (A : Constraint → Atom → ℚ) (objective : Atom → ℚ)
+    (law : FiniteResponseLaw Atom)
+    (compression : MomentCompression law (linearRowQueryFeature A objective)) :
+    Fintype.card compression.profiles ≤ linearProblemProfileRank A objective + 1 := by
+  simpa [linearProblemProfileRank] using compression.card_le_profileAffineRank
+
+/-- The coarser ambient bound is at most the number of LP rows plus two states. -/
 theorem MomentCompression.linearRowQuery_card_le
     {Constraint Atom : Type*} [Fintype Constraint] [Fintype Atom]
     (A : Constraint → Atom → ℚ) (objective : Atom → ℚ)
     (law : FiniteResponseLaw Atom)
     (compression : MomentCompression law (linearRowQueryFeature A objective)) :
     Fintype.card compression.profiles ≤ Fintype.card Constraint + 2 := by
-  simpa [Fintype.card_option, Nat.add_assoc] using compression.card_le
+  calc
+    Fintype.card compression.profiles ≤
+        linearProblemProfileRank A objective + 1 :=
+      compression.linearRowQuery_profileRank_card_le A objective law
+    _ ≤ (Fintype.card Constraint + 1) + 1 :=
+      Nat.add_le_add_right (linearProblemProfileRank_le A objective) 1
+    _ = Fintype.card Constraint + 2 := by omega
 
 /-- If the original law satisfies a finite rational inequality system, the
 small latent law satisfies the pulled-back system on its chosen original atoms. -/
@@ -280,9 +348,7 @@ theorem MomentCompression.latentLinearObjective_eq
   simpa [linearObjective, linearRowQueryFeature, mul_comm] using hquery
 
 /-- Every feasible value of a finite linear causal problem has an attaining
-latent realization with at most the number of LP rows plus two states. This is
-law-specific, exact, and independent of the cardinality of the original response
-carrier. -/
+latent realization with at most the number of LP rows plus two states. -/
 theorem finite_linear_problem_small_latent_witness
     {Constraint Atom : Type*} [Fintype Constraint] [Fintype Atom]
     (A : Constraint → Atom → ℚ) (b : Constraint → ℚ)
@@ -305,9 +371,7 @@ theorem finite_linear_problem_small_latent_witness
   · exact compression.latentLinearObjective_eq A objective law
 
 /-- For k Boolean response-pair strata, retain all four one-stratum cell
-indicators plus one scalar query. This feature family directly exposes the
-contrast between the raw 4^k atom space and a moment witness whose size grows
-only linearly with k. -/
+indicators plus one scalar query. -/
 def responseTableCellQueryFeature
     {k : Nat}
     (query : (Fin k → Bool × Bool) → ℚ)
@@ -316,10 +380,10 @@ def responseTableCellQueryFeature
   | some cell =>
       if responsePairDigitEquiv (table cell.1) = cell.2 then 1 else 0
 
-/-- Preserving every one-stratum four-cell marginal and one scalar query needs a
-positive atomic profile witness with at most `4*k + 2` states, regardless of the
-raw `4^k` response-table carrier size. The bound is conservative because the
-four cells in each stratum sum to one. -/
+/-- Although the unrestricted table carrier has `4^k` atoms, all one-stratum
+four-cell marginals and one query admit a positive profile witness using at most
+`4*k + 2` atoms. This ambient bound is conservative because each four-cell block
+has affine redundancy. -/
 theorem exists_responseTableCellQueryCompression
     {k : Nat}
     (law : FiniteResponseLaw (Fin k → Bool × Bool))
@@ -364,6 +428,7 @@ theorem MomentCompression.responseTableQueryMoment_eq
     compression.coordinate_eq (none : Option (Fin k × Fin 4))
 
 #print axioms exists_momentCompression
+#print axioms MomentCompression.card_le_profileAffineRank
 #print axioms finite_linear_problem_small_latent_witness
 #print axioms exists_responseTableCellQueryCompression
 
