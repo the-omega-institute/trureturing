@@ -1112,3 +1112,122 @@ The two new Lean modules and their two Scribe mirrors were committed together at
 Three local worker processes ran separate checks concurrently: four exact symbolic identities; all 255 binary words of lengths zero through seven with direct unequal-half wavefunction checks plus 48 Gaussian integral/probability cases; and 1260 binomial parameter/shot cases together with 1000 physical-envelope cases. Maximum action and integral discrepancies were approximately 7.85e-16 and 8.33e-15. The minimum checked statistical slack was approximately 9.37e-23. These are finite self-checks, not independent model reviews or kernel certificates.
 
 No local Lean or lake binary was available. The new sources and their candidate dependencies are not marked kernel-closed or frozen. The full perturbed two-path integrated Born theorem, a complete L2 operator construction, non-Gaussian reference phases, mismatched half-error robustness beyond the exact formula, correlated sampling, and hardware comparisons remain separate obligations. No harness, CI, registry, freeze-state, merge or auto-merge changes are part of this continuation.
+
+## 46. Task-relative compression and three observation levels, 2026-09-06
+
+Different event ledgers can have identical observations. A useful compression question must specify the hidden object, the allowed experiment and the target to recover. For a fixed experiment c, write O_c(h) for its complete outcome law, rather than one sampled outcome. For a deterministic readout the same notation can denote its exact value.
+
+For a target g, an exact decoder on the observation image exists precisely when
+
+```text
+O_c(h) = O_c(h')  implies  g(h) = g(h').
+```
+
+The justification is elementary: a decoder makes g constant on each fiber; conversely, fiber constancy makes the value of the decoder on an attained observation well-defined. This standard factorization criterion is explanatory structure, not a new mathematical result or an additional implementation obligation.
+
+Three levels must be distinguished. Equality of one selected readout can coexist with unequal output states or operators. Equality of the entire completed operator implies equality for every common input and every final measurement of that completed experiment. Equality of a multi-time process under all allowed intermediate interventions is stronger still. The present action-collision theorem reaches the second level; it does not prove the third. Postprocessing equal terminal laws cannot separate them; adding a new intervention changes the observation map.
+
+The established process-tensor framework makes the third level operational: F. A. Pollock, C. Rodriguez-Rosario, T. Frauenheim, M. Paternostro and K. Modi, Non-Markovian quantum processes: Complete framework and efficient characterization, Physical Review A 97, 012127 (2018), DOI `10.1103/PhysRevA.97.012127`. This is background for the distinction, not an imported theorem or a claim that the current word model already represents every open-system process.
+
+For compression, preserving a final displacement may be sufficient for a positioning task and insufficient for diagnosing execution order. Noncommutativity can retain some order information without making a particular finite representation injective on every word language. The legal golden-factor domain in sections 19-20 is essential. No conclusion about all binary histories or their absolute occurrence indices follows from that domain-specific recovery theorem.
+
+## 47. Sharp differential-error ambiguity at an exactly closed endpoint
+
+The missing unequal-half audit from section 45 is now represented by the candidate owner
+
+```text
+D5/S3/Quantum/WeylChronology/ClosedPathChronologyAmbiguity.lean.
+```
+
+It reuses the literal `splitCompensatedWord`, `splitPhase` and integer `magnusCenter`. Set the second error to the negative of the first, v=-u. The net displacement is zero, but the real phase is
+
+```text
+eta = Y*ux-X*uy,
+completed action on f = exp(i*(a*b*m(w)+eta)) * f.
+```
+
+Let D=X^2+Y^2>0 and let the squared norm of each half-error be at most R. The exact Lagrange identity is
+
+```text
+D*(ux^2+uy^2)-eta^2 = (X*ux+Y*uy)^2.
+```
+
+Hence eta^2<=D*R is necessary. It is sufficient because
+
+```text
+u = (eta*Y/D, -eta*X/D)
+```
+
+has the requested phase and squared norm eta^2/D. The source declarations `phase_error_vector_exact` and `bounded_closed_phase_iff` retain the attaining construction and both directions.
+
+For two real phases alpha and beta at the same endpoint, permit a separate admissible error record for each hypothesis. Their acquired real phases can be equal exactly when
+
+```text
+(beta-alpha)^2 <= 4*D*R.
+```
+
+Necessity follows from the two phase budgets. For sufficiency assign phase correction (beta-alpha)/2 to the first record and its negative to the second. `bounded_real_phase_collision_iff` records this sharp unwrapped threshold. With R=epsilon^2 and epsilon>=0, the critical half-error radius is
+
+```text
+epsilon_crit = abs(beta-alpha)/(2*sqrt(D)).
+```
+
+This converse is for unwrapped real phases. Equality modulo 2*pi can create additional operator aliases, so the displayed strict reverse inequality alone is not a global no-alias certificate.
+
+The consumer `same_inventory_bounded_action_collision` proves equality of actual completed actions on every input function. The concrete consumer `distinct_legal_factors_closed_action_collision` uses LSLL and LLSL, the actual factors at starts 0 and 2. Their centers are -1 and +1 and their inventories are (3,1). With a=b=1, use
+
+```text
+u_L=(1/10,-3/10), v_L=-u_L,
+u_R=(-1/10,3/10), v_R=-u_R.
+```
+
+Both records have squared half-error norm 1/10. Their extra phases are +1 and -1, respectively, so both completed actions are exactly the identity. More generally the source gives squared budget a^2/10 for equal nonzero amplitudes a.
+
+This exhibits loss of chronology even with perfect displacement closure and no displacement-induced Gaussian attenuation. It preserves the matching premise of the earlier u=v theorem. It does not impose one shared error record on the two hypotheses and makes no claim about time-resolved measurements, adaptive setting changes, or extra reference controls. Residual-motion and other phase-error mechanisms are already separated in robust-gate literature, for example W. Zhang et al., Robust Molmer-Sorensen Gate Against Symmetric and Asymmetric Errors, arXiv `2501.02847`. The result here is a sharp audit of this specified control model; physical priority is not asserted.
+
+## 48. Unknown nuisance creates an overlap problem, not automatically a quotient
+
+On complete records (h,xi), equality of the fixed observation O_c(h,xi) is an equivalence relation. When only the history h is the target and xi is unknown, associate instead the set of possible laws
+
+```text
+P_c(h) = {O_c(h,xi) : xi is admissible for h}.
+```
+
+Possible confusion of two histories means their sets of possible laws intersect. Such intersection is generally not transitive. The real-phase intervals [-1,1], [1/2,5/2] and [2,4] give an immediate example: neighboring pairs intersect while the first and third are disjoint. Thus a quotient of bare histories by possible confusion would silently identify additional histories. The equivalence kernel belongs to complete records; robust identification belongs to the family of attainable-law sets.
+
+For exact identification of a target g from an exact law, any two histories with different g-values must have disjoint attainable-law sets. Finite-sample uniform guarantees require quantitative separation as well. Disjointness by itself supplies no uniform sample budget when distinct laws can approach each other arbitrarily closely.
+
+If two admissible records induce the same law P, every binary decision event A has equal-prior risk
+
+```text
+(P(A)+P(complement A))/2 = 1/2.
+```
+
+The same statement holds after any fixed number of independent repetitions of that completed experiment. Since a constant decision has equal-prior risk 1/2 for every pair, any binary uncertainty class containing this indistinguishable pair has minimax risk exactly 1/2. This is a paper consequence of the actual-action collision plus ordinary probability; this appendix does not assert that a new operational minimax Lean endpoint has been compiled.
+
+The implication for experimental design is specific: improving terminal shot precision cannot repair these exact collisions. Additional information must constrain the differential calibration or arise from a genuinely different allowed control or intermediate readout. Such operations require an explicit resource account.
+
+## 49. Published open-problem target and what would constitute progress
+
+The physical lane has a concrete external reference: J.-F. Qin and J. Liu, Optimal noisy quantum phase estimation with finite-dimensional states, Physical Review Research 8, 023125, published 5 May 2026, DOI `10.1103/l752-sl6p`; author version arXiv `2604.07828v1`. Section VI explicitly leaves optimal finite-dimensional phase-estimation schemes with detector inefficiency open and proposes joint optimization of the probe and measurement using classical Fisher information. The author-version conclusion and publisher metadata were checked on 6 September 2026. This identifies a published target; it is not an exhaustive claim that no subsequent solution exists.
+
+A precise instance must fix the physical encoding, cutoff, input energy, detector map, allowed receiver class, and local or uniform phase objective. For example, after fixing a linear two-mode encoding, a phase-independent physical loss channel L, a receiver POVM M and a column-stochastic detector response K_eta, the acquired probabilities have the form
+
+```text
+p_y(phi;rho,M) = sum_x K_eta(y|x) Tr(M_x U_phi L(rho) U_phi^*),
+I_C(phi;rho,M) = sum_{y:p_y>0} (partial_phi p_y)^2/p_y.
+```
+
+This is a proposed mathematical specialization, not a result supplied by the cited paper. A local objective fixes a design point phi_0; a uniform objective must separately quantify over a prescribed interval or prior. A measurement that knows the unknown true phase is not an executable global solution. A general quantum detector channel need not factor into classical postprocessing of a freely chosen ideal POVM, so the detector model and attainable receiver family must be justified rather than hidden in notation.
+
+The research goal is to find a realizable probe/receiver and a global certificate of its performance under the same constraints, ideally matching lower and upper bounds on the optimum. A certified improvement for a previously unresolved, explicitly matched instance would be substantive progress. A numerical local optimum alone is not a global certificate. A general LP certificate backend does not make this joint quantum optimization linear or convex.
+
+The present Weyl ambiguity theorem does not yet close the bridge to that two-mode detector problem. It concerns a one-mode displacement control with a coherent reference and differential compensation errors. The required channel/receiver identification, resource comparison and attainable performance certificate remain open here. The immediate useful role of the obstruction is to reject proposed readouts that lose the signal in their nuisance set before optimization starts.
+
+There is also a basic baseline test: when the complete event word is already known to a classical controller, its count and pair ledger can compute m directly. A scientific measurement task must instead specify what actual execution history is unknown and why the proposed physical observation supplies information unavailable from that known control record. No quantum advantage, experimental realization, or optimal detector scheme is established by the current lane.
+
+## 50. Source reconciliation and current proof status
+
+The sharp ambiguity owner and its source-owned Scribe were genuinely written in source PR #5750 at commit `e6b46a555a2a2fb7452984dbd8edb0a689fc9d69`. The later radius-form module `DifferentialCalibrationObstruction` initially duplicated the same Cauchy, attainment and collision arguments. At source head `7afc0c760f4c8dee4e53318d4c0d03aae991454d` it instead imports the original owner and derives its five existing public interfaces with R=radius^2. These interfaces are bind-only companions; they are not five further scientific results. Each source has a corresponding `.scribe.cs` in `Blueprint/D5/S3/Quantum/WeylChronology/`.
+
+This reconciliation is consistent with the existing intrinsic-information distinction between a new equality kernel and another presentation of the same one. Source existence, mathematical review, finite development checks, kernel acceptance and experimental validation remain different facts. The source and Scribe bytes were read remotely; no successful local Lean/lake compilation, transitive axiom audit or Scribe emission was obtained for this continuation. The new appendix is a theory integration of candidate source results and explicit remaining research obligations, not a declaration of solved published problems or repository admission.
