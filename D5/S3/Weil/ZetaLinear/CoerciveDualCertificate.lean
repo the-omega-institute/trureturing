@@ -46,8 +46,8 @@ variational inequality below only needs its pairings on that complement. -/
 def dualResidual (ι M : D →ₗ[ℂ] H) (k : D) (g : H) (v : D) : H :=
   (g - M v) - ⟪ι k, g - M v⟫_ℂ • ι k
 
-/-- A computable real expression once the trial energy and full residual
-norm have certified bounds. It does not contain an inverse operator. -/
+/-- An explicit expression that can be enclosed from bounds on the trial
+pairing, energy and full residual norm. It contains no inverse operator. -/
 def dualBudget (ι M : D →ₗ[ℂ] H) (k : D) (g : H) (κ : ℝ) (v : D) : ℝ :=
   2 * (⟪g, ι v⟫_ℂ).re - domainEnergy ι M v + ‖dualResidual ι M k g v‖ ^ 2 / κ
 
@@ -155,11 +155,14 @@ The proof of minimality uses the actual trial as a test. Its nonzero image
 is essential; no existence of an exact dual vector is asserted. -/
 theorem exact_dual_budget_optimal (ι M : D →ₗ[ℂ] H) (k : D) (g : H) (κ : ℝ)
     (hκ : 0 < κ)
+    (hsym : ∀ x y : D, ⟪ι x, M y⟫_ℂ = ⟪M x, ι y⟫_ℂ)
     (hcoercive : ∀ f : D, ⟪ι k, ι f⟫_ℂ = 0 →
       κ * ‖ι f‖ ^ 2 ≤ domainEnergy ι M f)
     (v : D) (hv : ⟪ι k, ι v⟫_ℂ = 0) (hne : ι v ≠ 0)
     (hr : dualResidual ι M k g v = 0) :
     dualBudget ι M k g κ v = domainEnergy ι M v ∧
+      (∀ f : D, ⟪ι k, ι f⟫_ℂ = 0 →
+        ‖⟪g, ι f⟫_ℂ‖ ^ 2 ≤ domainEnergy ι M v * domainEnergy ι M f) ∧
       ∀ B : ℝ, (∀ f : D, ⟪ι k, ι f⟫_ℂ = 0 →
         ‖⟪g, ι f⟫_ℂ‖ ^ 2 ≤ B * domainEnergy ι M f) →
         domainEnergy ι M v ≤ B := by
@@ -169,9 +172,12 @@ theorem exact_dual_budget_optimal (ι M : D →ₗ[ℂ] H) (k : D) (g : H) (κ :
   have hre : (⟪g, ι v⟫_ℂ).re = domainEnergy ι M v := by
     rw [heq, domainEnergy]
     exact inner_re_symm (𝕜 := ℂ) _ _
-  constructor
-  · simp [dualBudget, hr, hre]
+  have hvalue : dualBudget ι M k g κ v = domainEnergy ι M v := by
+    simp [dualBudget, hr, hre]
     <;> ring
+  refine ⟨hvalue, ?_, ?_⟩
+  · have hb := (dual_energy_readout ι M k g κ hκ hsym hcoercive v hv).2
+    rwa [hvalue] at hb
   · intro B hB
     have hq : 0 < domainEnergy ι M v :=
       (mul_pos hκ (sq_pos_of_pos (norm_pos_iff.mpr hne))).trans_le (hcoercive v hv)
