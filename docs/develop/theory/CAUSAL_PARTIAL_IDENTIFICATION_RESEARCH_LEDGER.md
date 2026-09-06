@@ -303,7 +303,7 @@ This comparison clarifies where Markovianity has identifying power. Separating a
 
 ## 13. Semantic boundary: mixture versus one global graph
 
-The support and event-row compilers have latent-completion mixture semantics. Different units may receive mass from different admissible completions.
+The support and event-row compilers have latent-completion mixture semantics. Different units may receive mass from different admissible completions of the graph.
 
 That object must be distinguished from epistemic uncertainty about one fixed complete graph. For one global unknown graph, the correct range is:
 
@@ -678,7 +678,7 @@ F(u) = reduced_F(u restricted to S).
 F_*(mu) = reduced_F_*(mu_S).
 ```
 
-`independentSource_restriction_marginal` identifies `mu_S` with the actual restriction marginal. `independentSource_readout_law_invariant` further proves that two elementary law families agreeing on S give the same complete readout distribution, irrespective of changes outside S. The readout and structural equations are fixed in this statement.
+After regrouping, the complementary product law sums to one. `independentSource_restriction_marginal` identifies `mu_S` with the actual restriction marginal. `independentSource_readout_law_invariant` further proves that two elementary law families agreeing on S give the same complete readout distribution, irrespective of changes outside S. The readout and structural equations are fixed in this statement.
 
 This distributional invariance does not authorize deletion of statistical constraints involving other sources. Consider independent Bernoulli variables with parameters x and z, a target x, and supplied joint-event probability c. The data impose x*z = c. For nonnegative rational c, `joint_event_constraint_projection_iff` states the exact parameter projection:
 
@@ -1685,3 +1685,85 @@ For binary mediators, 48 independent full-outcome-table LP comparisons optimized
 Among the 84 randomized rational diagnostic instances, 62 narrowed at least one aggregate Frechet endpoint, and 48 improved the clipped sum of separate mediator-cell maxima. These are properties of that seeded test suite, not population frequencies or scientific effect estimates. At m=32, the canonical outcome carrier has 2^64 tables while the transport problem has 1024 variables; the diagnostic never enumerates that outcome carrier. No wall-clock superiority claim or comparison against a full contemporary causal solver benchmark is made.
 
 The next research obligations are tied to the same scientific target: formalize the finite sorting/dual certificate connection and the success-value quotient; determine exactly which added mediator or outcome restrictions preserve the transport reduction; and compare the resulting sharp algorithm against published mediator-bound implementations on matched assumptions. The general multi-component column-generation extension remains unresolved by this subclass result. The known complete-mediation and canonical-domain-reduction literature must be compared before claiming mathematical priority or a new general causal identification frontier.
+
+## 73. Research target: multi-component sharp optimization, 2026-09-06
+
+A new cross-author audit read the current causal branch at `7dde99995e6c8e4a287c91385b0fd00a54eba15a` and the recent PR descriptions from AlyciaBHZ, loning, and other contributors. The relevant comparison is methodological and scope-specific. The updated #5405 identifies the unresolved power-word/error-language intersection after proving unbounded-weight errors on general legal strings. The #5859 Pochhammer work distinguishes the original paper's endpoint examples from the stronger whole-interval classification and conjecture refutation. Loning's #5326 separates behavioral reduction from the determinant-preservation obligation. These distinctions discourage treating an available local reduction as a solution to a different global question. No mathematical result from those other carriers is imported here.
+
+The external target is the algorithmic extension identified in Arroyo et al., *Multilinear and Linear Programs for Partially Identifiable Queries in Quasi-Markovian Structural Causal Models*, arXiv:2509.03548v1, Sections 5-6. The paper already formulates multi-component queries as multilinear optimization; that formulation is not an unresolved existence theorem. Its column-generation development is presented for one intervened component, and Section 6 explicitly proposes extension to multiple interventions, complexity characterization and graph-decomposition methods. The research objective for this lane is a globally certified, practically useful extension retaining the original independent-component semantics.
+
+Choe, Kwon, Park and Lee, *Canonical Domain Reduction for Partial Counterfactual Identification*, UAI 2026, and the author repository `snu-causality-lab/efficient-canonical-bounding` provide an external LP baseline. The retrieved README identifies the constraint-aware signature quotient, actual retained objective/data rows, canonical enumeration and cached LP solvers. Those reported numerical speedups belong to the authors. This continuation neither reran their benchmarks nor proved that their LP quotient should preserve an additional product constraint outside its stated model.
+
+General Caratheodory compression, coefficient reconstruction and finite certificate checking are useful formal infrastructure. They alone do not establish a new causal identification result or solve the cited open algorithmic extension. This continuation therefore prioritizes a concrete bilinear problem with a complete analytic optimum and attaining original causal models. It supplies an exact test family for future multi-component optimization, not a new general solver or an established publication-priority claim. The prior colored d+2 compression target remains a separate, unfinished implementation obligation.
+
+A late read found concurrent work in PR #5029 at `7bdd689f8098c01661883fe176e423756bb35b3f`: `SharedThresholdResponseCoupling` and `PartialMediatorTransportReduction`. The latter contains `partial_mediator_target_iff_transport`, retaining independent complete mediator and outcome disturbances while eliminating the outcome table from the finite target-feasibility problem. It assumes supplied mediator intervention marginals and the full outcome intervention-success kernel; identification of those inputs from observations needs additional facts. Its authorship is separate from this continuation. The exact common-threshold endpoint construction and the new absolute-distance cost identities make this a particularly relevant algorithmic route. No ownership of these concurrent files is claimed here.
+
+## 74. Exact robustness of two independent benefit mechanisms
+
+`JointBenefitToleranceSharp.lean` reuses `MarkovianJointMechanismModel`, `markovianJointResponseMass`, and `jointMechanismBenefitMass`. Each candidate model has two independent complete Boolean response laws. Coupling between Y0 and Y1 within a mechanism remains arbitrary. The target J is the actual probability that both mechanisms benefit, hence the product of their two benefit probabilities by the existing theorem.
+
+For candidate models H and L, let each mechanism's control and treated success marginals differ by at most eta_i0 and eta_i1. All four tolerances are nonnegative rational numbers. Put
+
+```text
+s1 = eta10+eta11,  s2 = eta20+eta21,
+a = min(1,(1+s1)/2),  b = min(1,(1+s2)/2).
+```
+
+The new sharp modulus is
+
+```text
+max_{H,L satisfying all four marginal tolerances} abs(J(H)-J(L))
+  = max(a,b,1-4*(1-a)*(1-b)).
+```
+
+The main source theorem states both universal validity for the original product models and existence of an attaining pair for every tolerance tuple. It supplies no primal optimizer as an assumption. The formula is a global pairwise modulus over all marginal locations. It does not replace the identified interval at fixed observed marginals, and the tolerances are not automatically confidence radii around a common observation. Shared ancestors or coupled disturbances are not covered solely by calling an SCM Markovian.
+
+The necessary endpoint-sensitive information is stronger than the individual ambiguity bound. If x is one mechanism's benefit in H and u its benefit in L, then
+
+```text
+2*x-2*a <= u,   0<=x,u<=1.
+```
+
+For s1<=1, normalization gives `2*x <= 1+p1(H)-p0(H)`, while `p1(L)-p0(L)<=u`; the two marginal tolerance inequalities give the displayed result. For s1>1, a=1 and nonnegativity makes it immediate. The second mechanism gives `2*y-2*b<=v`.
+
+Consequently the oriented joint difference is bounded by `x*y-u*v`. If x<=a it is at most a; if y<=b it is at most b. In the remaining rectangle x in [a,1], y in [b,1], nonnegativity gives
+
+```text
+x*y-u*v <= g(x,y) = x*y-4*(x-a)*(y-b).
+```
+
+This polynomial is affine in each coordinate separately. Its four rectangle corners are a*b, a, b and `1-4*(1-a)*(1-b)`, with a*b dominated by a and b. The source proves the bound with explicit slice-slope signs, avoiding an assumed vertex theorem or convexification of product laws. Reversing the candidate models gives the absolute-value bound.
+
+## 75. Original response witnesses and the change of maximizing configuration
+
+All three candidate values have actual attaining product models. For value a, use the previous `benefit_marginal_tolerance_sharp` witness in the first mechanism and hold the second mechanism at the same certain-benefit response 01 in both candidates. Value b is symmetric. No conclusion about the first mechanism's query is transferred from a marginal-only abstract variable without a realizing law.
+
+For the third value, both mechanisms of H are the point law on 01. For mechanism i of L, use the following probabilities in response order 00,01,10,11:
+
+```text
+if eta_i0+eta_i1 <= 1:
+  (eta_i1, 1-eta_i0-eta_i1, 0, eta_i0),
+otherwise, with t=min(1,eta_i0):
+  (1-t, 0, 0, t).
+```
+
+These are normalized nonnegative rational laws. Their two marginal discrepancies obey the original individual tolerances, and their benefit probabilities are respectively `2*(1-a)` and `2*(1-b)`. Thus the joint difference is the third candidate. Selecting the greatest of the three explicit constructions proves attainment of the overall formula.
+
+If both mechanisms have the same total tolerance s in [0,1], the value simplifies to
+
+```text
+(1+s)/2       for 0<=s<=1/2,
+2*s-s^2      for 1/2<s<=1.
+```
+
+`equal_total_tolerance_regimes` proves this algebraic classification. The competing values differ by `(s-1)*(s-1/2)`, which explains the change at s=1/2. It is a change of worst-case configuration, not a physical phase transition.
+
+For four individual tolerances equal to 2/5, each total is 4/5. The single-mechanism modulus is 9/10, whereas the joint modulus is 24/25. The high model has certain benefit in both mechanisms; the low model has law `(2/5,1/5,0,2/5)` in each. Every individual marginal discrepancy is 2/5, and J changes from 1 to 1/25. Multiplying the individual moduli would give 81/100 and is invalid as a bound. Taking only their maximum, 9/10, would also fail. At zero tolerances the global joint modulus is 1/2. This is compatible with the earlier [0,1/4] interval when all four marginal locations are fixed at 1/2: the global worst case can choose a different marginal location for the second mechanism.
+
+## 76. Verification status and what would count as scientific completion
+
+The new source has four named public declarations and one corresponding Scribe document. Mathematical review checked the endpoint-sensitive marginal inequality, the bilinear slope identities, all three model constructions, and the equality cases. Lean elaboration, kernel checking, Scribe compilation and an executed axiom report have not been obtained in this environment. The proof source has no new axiom, sorry, admit or native_decide. These source properties do not substitute for kernel acceptance.
+
+The reproducible Python diagnostic uses exact Fraction arithmetic with seed 20260906. It checks 6,561 four-tolerance tuples and all 19,683 proposed product-model pairs against the actual complete response laws, four marginal comparisons and joint benefit cell. It independently enumerates the necessary two-dimensional endpoint polygon and its bilinear vertex maxima for 1,681 total-tolerance pairs. This polygon is used as an outer relaxation; no full projection-sufficiency theorem is inferred from that enumeration. Explicit original-law witnesses attain the same maxima. Further checks cover 5,000 independently sampled original model pairs, 20,000 one-sided endpoint inequalities, 101 equal-total-tolerance cases and four symbolic slice identities. These are reproducibility checks, not an empirical evaluation or code extracted from Lean.
+
+The present result is a fully specified analytic bilinear benchmark family. A generic multiple-component column-generation method, an independent literature-priority determination for this formula, and a performance comparison on the cited authors' problem instances remain uncompleted. A meaningful next algorithmic deliverable must preserve all nominated observational/interventional rows, use actual independent response components, return globally valid lower/upper certificates rather than alternating stationary points, and match attaining models. Tests on a self-chosen duplicate-state example cannot establish that performance or scientific advance. The new closed form is a useful oracle for such tests, but it is not evidence that the general published open algorithmic target is solved.
