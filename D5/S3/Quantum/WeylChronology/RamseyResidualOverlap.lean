@@ -28,6 +28,16 @@ The golden chronology specialization inserts the existing phase
 probability-level closure residual is then used to build an existing
 `RamseyCalibration` record, rather than introducing a second robust-noise model.
 
+The physical interface is aligned with trapped-ion phase-space practice. The
+2019 trapped-ion Fock-state Ramsey experiment explicitly maps an imperfectly
+undone displacement to a residual phase-space displacement detected through
+state overlap. Bowers et al., Phys. Rev. Lett. 137, 080602 (2026), demonstrate
+geometric phase gates designed to remain robust against motional occupation and
+mode-frequency drift. Contemporary Ramsey measurements also model residual
+motional-frequency modulation and contrast loss. These sources motivate the
+residual-overlap interface; they do not constitute an experiment of the golden
+chronology protocol.
+
 This file does not derive `gamma` from the concrete Schrodinger displacement.
 That would require an L2/coherent-state reference and an inner-product theorem,
 which the current continuous Weyl module intentionally does not yet own. It also
@@ -43,6 +53,7 @@ namespace D5.S3.Quantum.WeylChronology.RamseyResidualOverlap
 open D5.S3.Quantum.WeylChronology.RamseyPhaseReadout
 open D5.S3.Quantum.WeylChronology.GoldenFiniteShotVisibility
 open D5.S3.Quantum.WeylChronology.GoldenRobustCalibration
+open D5.S3.Observer.GoldenChronology.GoldenMagnusParityRecovery
 
 noncomputable section
 
@@ -108,8 +119,8 @@ theorem overlap_ramsey_fringe_deviation_le
       overlapRamseyFringe visibility analyzerPhase relativePhase overlap -
           overlapRamseyFringe visibility analyzerPhase relativePhase 1 =
         visibility / 2 * ((overlap - 1) * phase).re := by
-    simp [overlapRamseyFringe, phase, Complex.mul_re, Complex.sub_re]
-    ring
+    simp [overlapRamseyFringe, phase, Complex.mul_re, Complex.sub_re] <;>
+      ring
   rw [hdiff, abs_mul, abs_div]
   norm_num
   have hre := Complex.abs_re_le_norm ((overlap - 1) * phase)
@@ -128,8 +139,9 @@ theorem overlap_chronology_fringe_unit
     (visibility coupling : ℝ) (word : List Bool) :
     overlapChronologyFringe visibility coupling word 1 =
       visibleChronologyFringe visibility coupling word := by
-  rw [overlapChronologyFringe, overlap_ramsey_fringe_unit,
-    plus_probability_formula, Real.cos_sub_pi_div_two]
+  unfold overlapChronologyFringe
+  rw [overlap_ramsey_fringe_unit, plus_probability_formula,
+    Real.cos_sub_pi_div_two]
   simp [visibleChronologyFringe, visibilitySignal]
   ring
 
@@ -160,7 +172,8 @@ theorem overlap_closure_error_le
     (visibility coupling : ℝ) (word : List Bool) (overlap : ℂ) :
     |overlapClosureError visibility coupling word overlap| ≤
       |visibility| / 2 * ‖overlap - 1‖ := by
-  rw [overlapClosureError, ← overlap_chronology_fringe_unit]
+  unfold overlapClosureError
+  rw [← overlap_chronology_fringe_unit]
   exact overlap_ramsey_fringe_deviation_le
     visibility (Real.pi / 2)
     (2 * coupling * (magnusCenter word : ℝ)) overlap
@@ -184,8 +197,8 @@ theorem robust_fringe_overlap_calibration
         (overlapCalibration visibility coupling word overlap) word =
       overlapChronologyFringe visibility coupling word overlap := by
   simp [robustChronologyFringe, overlapCalibration, overlapClosureError,
-    visibleChronologyFringe, visibilitySignal]
-  ring
+    visibleChronologyFringe, visibilitySignal] <;>
+    ring
 
 /-- With nominal parameters equal to the acquisition visibility and coupling,
 the entire existing calibration deviation budget is the derived closure
