@@ -1,0 +1,48 @@
+### 证明
+
+对单位圆上的 \(w\)，
+
+$$
+|1-rw|^2=(1-r)^2+r|1-w|^2.
+$$
+
+而
+
+$$
+|1-w_\rho|^2=|\rho|^{-2}.
+$$
+
+将共轭对配对后，Carathéodory 核的虚部相消，代入即可。证毕。
+
+固定 \(G\)，令 \(r\uparrow1\)。式（32）是有限和，故
+
+$$
+\mathcal F_G(r)\to0,
+\qquad
+\boxed{\mathcal S_G(r)\to-1.}
+\tag{33}
+$$
+
+而对固定 \(r<1\)，随着 \(G\to\infty\)，
+
+$$
+\mathcal S_G(r)\to\mathcal S_\xi(r).
+$$
+
+所以：
+
+$$
+\boxed{
+\lim_{G\to\infty}\lim_{r\uparrow1}\mathcal S_G(r)=-1,
+}
+$$
+
+$$
+\boxed{
+\lim_{r\uparrow1}\lim_{G\to\infty}\mathcal S_G(r)=+1.
+}
+\tag{34}
+$$
+
+---
+

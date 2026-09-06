@@ -86,6 +86,7 @@ internal static partial class ScriptTestInputDeriver
             testProjects);
         var parsed = ScribeTestSymbolBinder.Bind(
             testSources,
+            ScribeBindingStrategy.Eager,
             context.ProductionAssemblies,
             context);
         return Inspect(parsed);
@@ -293,7 +294,7 @@ internal static partial class ScriptTestInputDeriver
                 callable.SemanticModel))
         {
             var operands = IsTestProcessRunner(method) && parameterOrdinal == 1
-                ? StringCollectionOperands(expression, callable.SemanticModel)
+                ? StringCollectionOperands(expression, callable.SemanticModel, callable.SemanticModels)
                 : [expression];
             foreach (var operand in operands)
                 AddResolved(operand, callable, identity, inputs);
@@ -321,7 +322,8 @@ internal static partial class ScriptTestInputDeriver
                 $"unresolved repository working directory ({workingDirectoryExpression.GetType().Name})");
         }
 
-        foreach (var operand in TestProcessRunnerCommandOperands(invocation, callable.SemanticModel))
+        foreach (var operand in TestProcessRunnerCommandOperands(
+                     invocation, callable.SemanticModel, callable.SemanticModels))
         {
             if (ScribePathProvenance.IsNonRepository(
                     operand,
@@ -367,7 +369,8 @@ internal static partial class ScriptTestInputDeriver
 
     private static IEnumerable<ExpressionSyntax> TestProcessRunnerCommandOperands(
         IInvocationOperation invocation,
-        SemanticModel model)
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels)
     {
         foreach (var argument in invocation.Arguments.Where(static argument =>
                      argument.Parameter?.Ordinal is 0 or 1))
@@ -378,7 +381,7 @@ internal static partial class ScriptTestInputDeriver
                 yield return expression;
                 continue;
             }
-            foreach (var operand in StringCollectionOperands(expression, model))
+            foreach (var operand in StringCollectionOperands(expression, model, semanticModels))
                 yield return operand;
         }
     }
@@ -517,7 +520,8 @@ internal static partial class ScriptTestInputDeriver
                 callable.SemanticModel)
                 && ScribeTestSymbolBinder.IsRepositoryRootExpression(
                     expression,
-                    callable.SemanticModel);
+                    callable.SemanticModel,
+                    callable.SemanticModels);
     }
 
     private static bool CanCarryRepositoryRootEvidence(

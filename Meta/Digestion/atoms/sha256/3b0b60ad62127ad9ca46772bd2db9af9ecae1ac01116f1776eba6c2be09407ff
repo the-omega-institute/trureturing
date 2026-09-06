@@ -1,0 +1,38 @@
+### 证明：RH 推出收缩
+
+在 RH 下，
+
+$$
+w_\rho=1-\frac1\rho
+$$
+
+位于单位圆，且
+
+$$
+r_n=
+\frac1{c_0}
+\sum_\rho\frac{w_\rho^n}{|\rho|^2}.
+$$
+
+因此
+
+$$
+\mathcal F_\xi(z)
+=
+\frac1{c_0}
+\sum_\rho
+\frac1{|\rho|^2}
+\frac{1+zw_\rho}{1-zw_\rho}.
+$$
+
+每一项满足
+
+$$
+\Re\frac{1+zw}{1-zw}
+=
+\frac{1-|z|^2}{|1-zw|^2}>0
+\qquad(|w|=1).
+$$
+
+所以 \(\Re\mathcal F_\xi>0\)。式（12）将右半平面映到单位圆盘，得到式（14）的正方向，再由 Schwarz 引理得到式（15）。
+

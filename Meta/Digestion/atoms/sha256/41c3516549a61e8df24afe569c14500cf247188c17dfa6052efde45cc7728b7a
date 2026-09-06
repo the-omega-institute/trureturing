@@ -1,0 +1,83 @@
+# 九、真实 ζ 的零点没有被删掉：它们成为这个历史切面的对数分支
+
+Euler 乘积给出：
+
+$$
+\log\zeta(s)
+=
+\sum_{\ell\ge1}\frac{P(\ell s)}{\ell},
+\qquad \Re s>1.
+$$
+
+Möbius 反演得到：
+
+$$
+\boxed{
+P(s)=
+\sum_{\ell\ge1}\frac{\mu(\ell)}{\ell}
+\log\zeta(\ell s).
+}
+\tag{30}
+$$
+
+这是从 Euler 乘积到素数 ζ 的经典反演机制。([DLMF][3])
+
+写成：
+
+$$
+P(s)=\log\zeta(s)+R(s),
+$$
+
+其中：
+
+$$
+R(s)=
+\sum_{\ell\ge2}
+\frac{\mu(\ell)}{\ell}\log\zeta(\ell s).
+$$
+
+当 \(\Re s>1/2\) 时，对全部 \(\ell\ge2\)：
+
+$$
+\Re(\ell s)>1.
+$$
+
+因此可以使用 Euler 级数指定的全纯对数，且上式局部一致收敛。故 \(R\) 在整个：
+
+$$
+\Re s>\frac12
+$$
+
+全纯。
+
+令：
+
+$$
+D(s)=U(s)+W(s)+V(s)R(s).
+$$
+
+得到：
+
+$$
+\boxed{
+\mathcal H(s)
+=
+D(s)+V(s)\log\zeta(s),
+}
+\tag{31}
+$$
+
+其中：
+
+$$
+\boxed{
+D,V\text{ 在 }\Re s>\frac12\text{ 全纯}.
+}
+$$
+
+式（31）先在 \(\Re s>1\) 成立，再沿避开 ζ 零点和极点的路径作解析延拓。
+
+**不能把它误说成原 Dirichlet 级数已经在整个半平面内收敛。**
+
+---
+
