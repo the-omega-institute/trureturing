@@ -18,7 +18,7 @@ open Matrix
 open D5.S3.Observer.Hankel.PositiveGramianBalancing
 open D5.S3.Observer.Hankel.ExactGramianSeries
 open D5.S3.Observer.Hankel.BalancedSteinEnergy
-open D5.S3.Observer.Hankel/BalancedTruncationTail
+open D5.S3.Observer.Hankel.BalancedTruncationTail
 open D5.S3.Observer.Hankel.BalancedRealizationTransport
 open D5.S3.Observer.Hankel.InfiniteHankelGramian
 open D5.S3.Observer.Hankel.BalancedHankelSchmidt
