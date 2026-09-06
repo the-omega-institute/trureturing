@@ -1,0 +1,24 @@
+{
+  "exact_checks": {
+    "full_rank_cases": 797,
+    "energy_decompositions": 797,
+    "scaled_equations": 2391,
+    "orthogonal_witnesses": 797,
+    "rank_deficient_rejections": 2,
+    "symmetry_normalizations": 100,
+    "structured_complex_separations": 50
+  },
+  "directed_interval_replays": [
+    50,
+    90
+  ],
+  "bad_inputs_rejected": [
+    "candidate-mutation",
+    "energy-mutation",
+    "precision"
+  ],
+  "upstream_spectral_verifier_executed": false,
+  "lean_kernel_executed": false,
+  "input_scope": "The mathematical candidate literal and four energy fields; not full upstream-file attestation",
+  "review_scope": "Single-author exact and interval development checks, no independent proof reviewer"
+}
