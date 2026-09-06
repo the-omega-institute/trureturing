@@ -1,0 +1,1 @@
+{"status":"PASS","exact_power_rows":144,"maximum_index":249,"gap_letters":19,"trie_nodes":13831,"transition_variables":76,"output_cases":48,"certificate_nodes":1272968,"branch_nodes":420692,"contradiction_leaves":852276,"domain_updates":2942575010,"maximum_depth":21,"seconds":226.116,"solver_used":false,"lean_executed":false,"recurrent_capacity_restricted":false}
