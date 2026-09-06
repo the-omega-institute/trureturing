@@ -1,0 +1,72 @@
+# 结论
+
+这次真正把“其他切面”推进成了四条可计算的连接：
+
+$$
+\boxed{
+\text{换指标分组}
+\longrightarrow
+\text{新的秩与奇异值边界};
+}
+$$
+
+$$
+\boxed{
+\text{压缩时间链}
+\longrightarrow
+\frac{\|y-\mathcal Ux\|^2}{\tau_{\mathrm{tot}}};
+}
+$$
+
+$$
+\boxed{
+\text{消去内部事件}
+\longrightarrow
+S(0),\ M_{\mathrm{eff}},\ S(z);
+}
+$$
+
+$$
+\boxed{
+\text{ξ 历史态换到数据侧}
+\longrightarrow
+\text{同一非零谱与新的有效维数约束}.
+}
+$$
+
+其中最值得继续保留的两个认识是：
+
+**第一，时间并不只能表现为一个外部序号。压缩以后，它可以变成边界耦合的倒数、历史范数的权重或频率依赖。**
+
+**第二，切面中的临界不一定代表整体发生灾变。它可能是这个切面失去可逆性、内部模式变得难以消去，或者原来隐藏的相关被重新暴露出来。**
+
+对实际 ξ 而言，本轮的新结论仍带有清楚前件：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+\operatorname{rank}T_N=N+1,
+\qquad
+d_{\mathrm{eff}}(N)\le28.754858\ldots
+}
+$$
+
+它说明同一整体可以同时具有无限增长的精确秩与有限的主要权重尺度，但不反过来证明 RH。
+
+因此，接下来的核心算术责任不是寻找一个“看起来最平坦、最正、最容易算”的切面，而是证明：
+
+$$
+\boxed{
+\text{换到那个切面以后，实际失败模式没有被删除，
+时间与相关的代价也没有被归一化掉。}
+}
+$$
+
+只有满足这条条件，多切面分析才是在揭示同一个离散时空整体，而不是每次换到一个更容易成立、却已经不同的问题。
+
+[1]: https://arxiv.org/html/2201.07768v3 "https://arxiv.org/html/2201.07768v3"
+[2]: https://arxiv.org/html/1102.2950v1 "https://arxiv.org/html/1102.2950v1"
+[3]: https://arxiv.org/html/2301.05779v2 "https://arxiv.org/html/2301.05779v2"
+[4]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+[5]: https://arxiv.org/html/2412.15470v1 "https://arxiv.org/html/2412.15470v1"

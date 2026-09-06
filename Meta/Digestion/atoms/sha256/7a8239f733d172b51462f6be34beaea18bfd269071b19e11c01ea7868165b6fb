@@ -1,0 +1,45 @@
+## 离线位移与时间相位分辨，具有同一个局部压缩因子
+
+令
+
+$$
+\rho_0=\frac12+i\gamma,
+\qquad
+w(\rho)=1-\frac1\rho.
+$$
+
+直接求导：
+
+$$
+\boxed{
+\left.
+\frac{d}{d\rho}\log w(\rho)
+\right|_{\rho=\rho_0}
+=
+-\frac1{\gamma^2+1/4}.
+}
+\tag{36}
+$$
+
+所以，对小扰动
+
+$$
+\delta\rho=\delta\beta+i\,\delta\gamma,
+$$
+
+有
+
+$$
+\boxed{
+\delta\log w
+=
+-\frac{\delta\beta+i\delta\gamma}{\gamma^2+1/4}
++
+O_\gamma(|\delta\rho|^2).
+}
+\tag{37}
+$$
+
+其中：
+
+* \(\delta\beta\) 改变单位圆的径向幅度；

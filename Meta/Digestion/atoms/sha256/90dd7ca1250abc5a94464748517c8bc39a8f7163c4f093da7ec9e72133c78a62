@@ -1,0 +1,68 @@
+# 十二、把空间、时间和顺序切面接回同一份 ζ 表示
+
+最后构造一份保留这三种信息、并且能恢复原 ζ 的母函数。
+
+对每个正整数 \(n\)，令：
+
+$$
+\mathbf a(n)=(v_p(n))_p,
+$$
+
+$$
+L(n)=\Omega(n)=\sum_pv_p(n),
+$$
+
+$$
+h(n)=Q_{\mathbf a(n)}(1).
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal Z(s,z,q)
+=
+\sum_{n\ge1}
+n^{-s}z^{\Omega(n)}
+\frac{Q_{\mathbf a(n)}(q)}{h(n)}.
+}
+\tag{35}
+$$
+
+其中 \(n=1\) 的因子按 1 定义。
+
+等价地：
+
+$$
+\mathcal Z(s,z,q)
+=
+\sum_{n\ge1}
+\frac{n^{-s}}{h(n)}
+\sum_{\gamma\in\Gamma_{\mathbf a(n)}}
+z^{|\gamma|}q^{A(\gamma)}.
+$$
+
+这里除以 \(h(n)\) 很重要：它保证每个终点总权重不因历史数不同而被重复放大。
+
+当：
+
+$$
+\Re s>1,\qquad |z|\le1,\qquad |q|\le1,
+$$
+
+有：
+
+$$
+\left|
+\frac{Q_{\mathbf a(n)}(q)}{h(n)}
+\right|\le1.
+$$
+
+因此：
+
+$$
+|\mathcal Z(s,z,q)|\le\zeta(\Re s),
+$$
+
+级数绝对收敛。
+

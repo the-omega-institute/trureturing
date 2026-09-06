@@ -1,0 +1,98 @@
+## 定理7.1：加权区块分解
+
+$$
+\boxed{
+\begin{aligned}
+\Delta\left(B\prod_{i\in S}p_i\right)
+={}&
+\left(1-\frac sU\right)\Delta(B)
++\frac sU\Delta(B_{\mathrm{top}})\\
+&+\left[
+h(E+s)-\left(1-\frac sU\right)h(E)
+-\frac sU h(E+U)
+\right]\\
+&-\sum_{i\in S}d_i,
+\end{aligned}
+}
+\tag{22}
+$$
+
+其中 \(E=\ln B\)。
+
+### 证明
+
+不同素数方向的 \(W\) 增量为：
+
+$$
+W\left(B\prod_{i\in S}p_i\right)-W(B)
+=
+\sum_{i\in S}u_i\eta_i.
+$$
+
+将它分成：
+
+$$
+s\bar\eta+\sum_{i\in S}d_i,
+$$
+
+再与两端的线性插值比较，即得。证毕。
+
+由于 \(h\) 凹，中括号非负。
+
+又因为所有 \(d_i\) 的总和为零：
+
+$$
+\sum_{i\in S}d_i
+\le
+\sum_{d_i>0}d_i
+=
+\frac12\sum_i|d_i|
+=\Xi.
+$$
+
+得到：
+
+$$
+\boxed{
+\Delta\left(B\prod_{i\in S}p_i\right)
+\ge
+\min\{\Delta(B),\Delta(B_{\mathrm{top}})\}-\Xi.
+}
+\tag{23}
+$$
+
+因此，只需：
+
+$$
+\boxed{
+\Xi<
+\min\{\Delta(B),\Delta(B_{\mathrm{top}})\},
+}
+\tag{24}
+$$
+
+便可以认证整个区块。
+
+**这条证书不需要先证明所有阈值的精确顺序，也不要求它们完全相等。**
+
+若保留：
+
+$$
+\kappa=\min_{x\in[E,E+U]}[-h''(x)]>0,
+$$
+
+还可以把下界加强为：
+
+$$
+\boxed{
+\begin{aligned}
+\Delta\left(B\prod_{i\in S}p_i\right)
+\ge{}&
+\left(1-\frac sU\right)\Delta(B)
++\frac sU\Delta(B_{\mathrm{top}})\\
+&+\frac\kappa2s(U-s)-\Xi.
+\end{aligned}
+}
+\tag{25}
+$$
+
