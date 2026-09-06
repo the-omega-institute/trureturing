@@ -60,7 +60,6 @@ def responseTableCodeEquiv (k : Nat) :
 theorem responseTable_card_eq_four_pow (k : Nat) :
     Fintype.card (Fin k → Bool × Bool) = 4 ^ k := by
   simp only [Fintype.card_fun, Fintype.card_fin, Fintype.card_prod, Fintype.card_bool]
-  norm_num
 
 /-- Every table code lies below the exact quaternary capacity boundary. -/
 theorem responseTableCode_lt_capacity {k : Nat} (table : Fin k → Bool × Bool) :
