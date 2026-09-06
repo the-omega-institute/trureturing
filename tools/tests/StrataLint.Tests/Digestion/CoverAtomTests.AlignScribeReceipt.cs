@@ -52,14 +52,17 @@ public sealed partial class CoverAtomTests
         DirectoryLedgerTestSupport.ReplaceWithProjection(currentFiles, document);
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.Image(
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
 
         var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.False(result.Success);
         Assert.Contains("must have exactly one Scribe receipt", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.Equal(
+            before,
+            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 
     [Fact]
@@ -93,7 +96,8 @@ public sealed partial class CoverAtomTests
         DirectoryLedgerTestSupport.ReplaceWithProjection(currentFiles, document);
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.Image(
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
 
         var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles).AlignScribeReceipt(
             ["--atom-id", CoverWorld.DefaultAtomId, "--gid", invalidGid, "--base", "baseline"]);
@@ -103,7 +107,9 @@ public sealed partial class CoverAtomTests
             $"align GID must select a Lean declaration: {invalidGid}",
             result.Error,
             StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.Equal(
+            before,
+            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 
     [Fact]
@@ -157,14 +163,17 @@ public sealed partial class CoverAtomTests
         using (var temporary = new TemporaryDirectory())
         {
             DirectoryLedgerTestSupport.Write(temporary.Path, invalidFiles);
-            var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+            var before = DirectoryLedgerTestSupport.Image(
+                BackfillInventoryLoader.LoadRoot(temporary.Path));
 
             var result = CoverWorld.Environment(temporary.Path, inputs, invalidFiles)
                 .AlignScribeReceipt(arguments);
 
             Assert.False(result.Success);
             Assert.Contains("must have exactly one Scribe receipt", result.Error, StringComparison.Ordinal);
-            Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+            Assert.Equal(
+                before,
+                DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
         }
     }
 
