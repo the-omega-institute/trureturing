@@ -3,7 +3,7 @@ name: admission
 
 on:
   push:
-    branches: [dev, integration-ci-pfci-tests]
+    branches: [dev]
   pull_request_target:
     branches: [dev, 'integration-**']
     types: [opened, synchronize, reopened]
