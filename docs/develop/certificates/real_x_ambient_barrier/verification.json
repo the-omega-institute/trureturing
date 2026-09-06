@@ -1,0 +1,50 @@
+{
+  "schema": "mub-ambient-approximate-gap-delivery-replay-v1",
+  "replayed_on": "2026-09-06",
+  "status": "PASS",
+  "claim_level": "computational proof under the documented analytic interpretation; not Lean-kernel-certified",
+  "all_32_charts": true,
+  "covered_object": "entire seed residual sublevel, not a sampled root list",
+  "nodes": 5990990,
+  "pending": 0,
+  "unresolved": 0,
+  "chart_node_counts_in_order_0_through_31": [280091,123872,121343,148747,196240,200562,179045,305574,131654,101106,179121,290487,135898,165781,116362,272603,152563,182277,108182,303214,140606,102033,186112,279984,179954,212655,193658,299500,279624,140322,173545,108275],
+  "all_chart_statuses": "SUBLEVEL_COVERED",
+  "epsilon_bits": 18,
+  "guard_radius_bits": 14,
+  "dyadic_bits": 40,
+  "graph": {
+    "tubes": 60,
+    "forbidden_pairs": 1656,
+    "same_tube_overlap_strict_lower": "99/100",
+    "forbidden_pair_overlap_strict_lower": "1/100000000",
+    "canonical_vertices": [30,31,44,45,58,59],
+    "noncanonical_supergraph_bipartite": true,
+    "root_existence_or_uniqueness_used_by_graph_consumer": false
+  },
+  "rational_bounds": {
+    "seed_sublevel": "1/262144",
+    "column_l1_matrix_radius": "3/8388608",
+    "entrywise_max_radius_guaranteed": "1/16777216",
+    "per_entry_approximate_residual": "1/524288",
+    "seed_residual_upper_at_nearby_approximate_root": "260046857/70368744177664",
+    "two_completion_energy_lower_bound": "1/274877906944"
+  },
+  "reused_concurrent_cpp_blob": "aadd53bfcd9a32af059026dd1ebc999580bdf522",
+  "reused_concurrent_commit": "648fc84fc92b66b952ba6e1c03d9b339c8ad3de8",
+  "hashes": {
+    "extension": "f13f90b984b23e39b352a360d3675ffd80c52d086ef5fd51ad43023d0803f3bf",
+    "core": "dc71bf13400feffc555040172682ad40d6ab378f2466b80da19237ea1f01b531",
+    "driver": "99e89088ad44baf56a982d405ca6112b40b72f89dea3ac3427f530025c0fe015",
+    "fraction_interval_kernel": "3a23425baf48f1fe78c3932b1dd0b11593686c494ea53372d653f9a929c26c85",
+    "parameter_generator": "2dc6cd18ece495e699c1cdaed6a487ef3c4384c42890e01dcb2051ca276f2de2",
+    "original_driver": "2d32ea37ecc27a24365c6961624eeec0e7472c5aa42155e0c77d07fccd62cccb",
+    "certificate": "cb3a8cbcec587eeaea748c879b1333e06d09685e4b85a7c7755353a75931b153",
+    "centers": "86543588ac1be4032fc4a16231bb0cbae77b0d5078a114b8397050bc24fb7155"
+  },
+  "full_per_chart_reports": "Emitted by the driver on each replay; this file is their compact projection.",
+  "no_exact_root_count_asserted": true,
+  "no_fixed_family_or_target_Jacobian_regularity_assumed": true,
+  "lean_kernel_verified": false,
+  "intrinsic_information_admission": "not executed"
+}

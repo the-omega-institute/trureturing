@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "tests": [
+    {"case":"shifted_tube_center","status":"REJECTED","scope":"coverage preflight, not geometry alone","reason":"FAIL CLOSED: root inclusion failed"},
+    {"case":"duplicate_label","status":"REJECTED","reason":"duplicate or invalid tube label"},
+    {"case":"truncated_tube_list","status":"REJECTED","reason":"bad tube list"},
+    {"case":"forbidden_type_allowed_edge","status":"REJECTED","reason":"supergraph admits a forbidden type of edge"},
+    {"case":"real_orthogonality_claimed_as_nonedge","status":"REJECTED","reason":"uncertified nonedge: 30,31"},
+    {"case":"excessive_ambient_radius","status":"REJECTED","reason":"seed residual budget exceeded"},
+    {"case":"node_cap_one","status":"REJECTED","pending":2,"visited":1},
+    {"case":"chart_outside_complete_atlas","status":"REJECTED"},
+    {"case":"invalid_run_removes_stale_success","status":"REJECTED","reason":"invalid resource limit"},
+    {"case":"python_optimization_disables_interval_assertions","status":"REJECTED","scope":"reused kernel import guard","reason":"Run this checker without Python -O: assertions are mandatory."}
+  ],
+  "count": 10,
+  "lean_kernel_verified": false,
+  "scope": "adversarial tests, not a proof of verifier soundness"
+}

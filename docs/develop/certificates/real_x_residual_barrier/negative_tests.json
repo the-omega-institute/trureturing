@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "cases": [
+    {"case":"one_node_budget_is_incomplete","rejected":true,"exit_code":2},
+    {"case":"invalid_chart_rejected","rejected":true,"exit_code":1},
+    {"case":"truncated_guard_catalogue","rejected":true,"exit_code":1},
+    {"case":"duplicate_guard_label","rejected":true,"exit_code":1},
+    {"case":"wrong_guard_center","rejected":true,"exit_code":1},
+    {"case":"truncated_ambient_matrix","rejected":true,"exit_code":1},
+    {"case":"true_edge_reclassified_as_nonedge","rejected":true},
+    {"case":"uninflated_root_image_is_unsound_for_sublevel","exact_affine_witness_checked":true,"scope":"Analytic formula regression; not a universal implementation proof."},
+    {"case":"unsupported_transfer_radius","rejected":true}
+  ],
+  "lean_kernel_verified":false,
+  "scope":"Rejection tests and exact finite algebra checks, not kernel admission."
+}

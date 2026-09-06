@@ -1,0 +1,39 @@
+{
+  "schema": "mub-robust-candidate-gap-constants-v1",
+  "status": "PASS",
+  "scope": "local ambient guards, graph inequalities, and rational constants checked; full sublevel cover is a separate premise",
+  "entry_radius": "1/16777216",
+  "base_sublevel": "1/262144",
+  "candidate_residual_tolerance": "1/524288",
+  "preconditioner_bound": "6",
+  "guard_contraction_bound": "1/2",
+  "actual_local": {"guards": 60, "scale": 1099511627776, "max_q": 384555794353, "max_C": 5541775159296},
+  "root_ket_distance_bound": "3/65536",
+  "internal_overlap_tolerance": "1/200000",
+  "nonedge_amplitude_lower": "1/10000",
+  "candidate_merit_lower_bound": "1/274877906944",
+  "candidate_merit_exponent": 38,
+  "candidate_domain": "two six-tuples of normalized vectors with exactly equal coordinate moduli 1/sqrt(6)",
+  "tests": {
+    "approximate_root_enters_base_sublevel": true,
+    "small_residual_amplitude_bound": true,
+    "nonedges_stay_nonorthogonal": true,
+    "same_label_not_internal_orthogonal": true,
+    "shared_label_overlap_large": true,
+    "potential_controls_internal_tolerance": true,
+    "cross_target_conflicts_with_shared_label": true
+  },
+  "certified_nonedges": 1656,
+  "negative_test_large_tolerance_rejected": true,
+  "global_sublevel_replayed_here": false,
+  "lean_kernel_verified": false,
+  "hashes": {
+    "driver": "31b07bfc79563ab49caf8df9687ecdd49c5f29a6d1c6f4521c245a86a6588949",
+    "root_core": "dc71bf13400feffc555040172682ad40d6ab378f2466b80da19237ea1f01b531",
+    "centers": "86543588ac1be4032fc4a16231bb0cbae77b0d5078a114b8397050bc24fb7155",
+    "graph_input": "cb3a8cbcec587eeaea748c879b1333e06d09685e4b85a7c7755353a75931b153",
+    "ambient_bounds": "d36b95fc503b9e63c9b8bd2bc8dbbba39b7e86c28d6cb659d5195a279c2cc76c",
+    "root_enclosures": "8a0072edb1fd428521cd6334c4bb6ac08752df9f19479c022514a9b8ba9d658b"
+  },
+  "report_projection": "Exact threshold retained; lengthy raw minimum is in the replay output."
+}

@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "claim_level": "computational proof subject to the documented analytic interpretation",
+  "parameter_center": ["-1/5", "0"],
+  "parameter_radius": "1/4294967296",
+  "all_32_compact_charts_covered": true,
+  "global_root_count": 60,
+  "at_most_one_complete_basis_up_to_phase_and_permutation": true,
+  "no_four_MUB_with_this_fixed_edge_on_patch": true,
+  "all_actual_completion_affinities": "2",
+  "graph": {
+    "distinct_rays": 60,
+    "pair_tests": 1770,
+    "certified_nonedges": 1656,
+    "nonedge_squared_modulus_lower_bound": "1/100000000",
+    "canonical_vertices": [30,31,44,45,58,59],
+    "canonical_shift_fixed": true,
+    "noncanonical_supergraph_bipartite": true,
+    "all_six_cliques_contained_in_canonical_set": true
+  },
+  "lean_kernel_verified": false,
+  "intrinsic_information_admission": "not executed; no score or gain asserted",
+  "hashes": {
+    "driver": "2d32ea37ecc27a24365c6961624eeec0e7472c5aa42155e0c77d07fccd62cccb",
+    "core": "dc71bf13400feffc555040172682ad40d6ab378f2466b80da19237ea1f01b531",
+    "existing_interval_kernel": "3a23425baf48f1fe78c3932b1dd0b11593686c494ea53372d653f9a929c26c85",
+    "existing_parameter_generator": "2dc6cd18ece495e699c1cdaed6a487ef3c4384c42890e01dcb2051ca276f2de2",
+    "input": "cb3a8cbcec587eeaea748c879b1333e06d09685e4b85a7c7755353a75931b153",
+    "centers": "86543588ac1be4032fc4a16231bb0cbae77b0d5078a114b8397050bc24fb7155",
+    "parameter_bounds": "726ae6047cbbdc7b6c9fb45e86eeafb1bc82b6c28fe763486c0173a449fae46f",
+    "root_enclosures": "83b0000b51e05cdafd45f5686f544dfef227dd5b7c3f245dfe0f43bd7d916552"
+  },
+  "coverage": {"charts":32,"nodes":5990624,"pending":0,"unresolved":0,"known_root_leaf_count":81},
+  "fourier_separation_witness_count": 30,
+  "arithmetic_audit": {
+    "status":"PASS","randomized_interval_cases":12000,"explicit_failure_cases":5,
+    "rejected_cases":1200,"oracle":"fractions.Fraction exact endpoint containment",
+    "undefined_behavior_sanitizer":"enabled; no diagnostic",
+    "cpp_source_sha256":"dc71bf13400feffc555040172682ad40d6ab378f2466b80da19237ea1f01b531",
+    "seed":50282026090540,
+    "scope":"Tests, not a formal universal proof of the C++ interval implementation."
+  },
+  "sanitized_cover_charts":[0,31],
+  "source_status":"Lean source written; no local lean/lake executable, no kernel acceptance claimed"
+}

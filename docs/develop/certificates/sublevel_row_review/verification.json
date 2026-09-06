@@ -1,0 +1,36 @@
+{
+  "schema": "mub-scalar-row-sublevel-review-v1",
+  "status": "PASS",
+  "base": "exact H0 over Q(i,sqrt(21))",
+  "eta": "1/262144",
+  "guard_halfwidth": "1/4096",
+  "charts": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+  "complete_global_replay": true,
+  "nodes": {"original": 5990945, "scalar_rows": 5990945},
+  "pending": 0,
+  "unresolved": 0,
+  "max_guard_contraction": "192243327877/549755813888",
+  "inflation_test": {
+    "status": "PASS",
+    "example": "f(x)=x, C=1, m=0, x=eta",
+    "eta": "1/262144",
+    "root_only_image_rejects_valid_sublevel_point": true,
+    "inflated_image_contains_it": true
+  },
+  "negative_tests": [
+    {"test": "budget", "rejected": true, "exit_code": 2},
+    {"test": "bad_eta", "rejected": true, "exit_code": 1}
+  ],
+  "shared_components": ["outward dyadic arithmetic", "residual and Jacobian expressions", "preconditioner proposals", "phase charts", "branch traversal", "root proposals"],
+  "independent_component": "symmetric rowwise mean-value enclosure replacing interval centered form",
+  "new_ambient_region_claimed": false,
+  "lean_elaboration_executed": false,
+  "lean_kernel_verified": false,
+  "hashes": {
+    "audit_driver": "c7e2e6457f50c90cc56e2c5e73ef67080c3e92490ae7d3d822709fe22338b677",
+    "source": "f13f90b984b23e39b352a360d3675ffd80c52d086ef5fd51ad43023d0803f3bf",
+    "generated": "2763270f5a2ca2d76d583f6b9cfdc1c9cad2526c700d15057a5aa0b0ce323a1e",
+    "centers": "86543588ac1be4032fc4a16231bb0cbae77b0d5078a114b8397050bc24fb7155",
+    "shared_core": "dc71bf13400feffc555040172682ad40d6ab378f2466b80da19237ea1f01b531"
+  }
+}
