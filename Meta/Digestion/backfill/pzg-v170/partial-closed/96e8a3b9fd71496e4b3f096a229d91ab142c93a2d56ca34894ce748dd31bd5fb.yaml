@@ -12,7 +12,19 @@ coverage_gids:
   - gid: D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
     target_statement_id: sha256:b969234b2c95a486e0f6869810c37f2027feafa3cfc5c4f176b30701c181d425
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S1/Phase/Interference/DominantPartialQuotientGap.dominant_partial_quotient_gap
+      definition_sha256: sha256:458f92c5eb0103290a5a02dff35bedaa940f636c5c8cc8619effafc422a74cff
+      emission_sha256: sha256:f52d85994cc3fe805b9436919788ad0e61ec7df5a8d5129ee9818221d927c52a
+    - gid: D5/S1/Phase/PythagoreanInputValidator.accepts_iff
+      definition_sha256: sha256:aecdd5ad8c316ba8dc17d3bdf7c77d71005439deb46b0b4d04cba9a89ea9919b
+      emission_sha256: sha256:15e59c33a115aacaaf4396f51df7749309b5b2e1f0352ca29bf1caa8a669efe5
+    - gid: D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
+      definition_sha256: sha256:a7ca8e2a2c75ae1074aa5e1530cfe26a1b56693665912d613fb037ebeec78868
+      emission_sha256: sha256:e8693837172147465ee8dd7f6464add3fa0a692771d5274aa3a36ff6e697a495
+    - gid: D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
+      definition_sha256: sha256:a7ca8e2a2c75ae1074aa5e1530cfe26a1b56693665912d613fb037ebeec78868
+      emission_sha256: sha256:e8693837172147465ee8dd7f6464add3fa0a692771d5274aa3a36ff6e697a495
   unresolved_subitems:
     - cosecant-peak-equation-from-pin-data
     - dominant-partial-quotient-identification

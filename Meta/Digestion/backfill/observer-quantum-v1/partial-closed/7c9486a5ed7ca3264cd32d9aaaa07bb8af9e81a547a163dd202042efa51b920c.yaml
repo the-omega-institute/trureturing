@@ -18,7 +18,25 @@ coverage_gids:
   - gid: D5/S3/Quantum/ObserverCommutator.observer_read_update_commutator_formula
     target_statement_id: sha256:6f0180e088e545c318d5f80e305aed87dce27ae6b325b11e43f59cd885cb0d16
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Observer/HiddenFlow/ContinuousRigidity.continuous_hidden_flow_eq_zero
+      definition_sha256: sha256:fc06ccb0efececab89ea3cee17965188f72a3315cc992a20f7adff1f350b8b85
+      emission_sha256: sha256:e536820e2a14ab58e5b733b113aede1b88c6c7d75d9527b9d7fe37169d4c2b8f
+    - gid: D5/S3/Observer/HiddenFlow/DiscreteRigidity.discrete_hidden_jump_is_nonzero_and_has_no_continuous_real_extension
+      definition_sha256: sha256:75d81c622a0dde069bafd564bdb0e100d7ee3ecd93c20b451a4ae3020dc0e00a
+      emission_sha256: sha256:ebaed39df9daf339703c0ff11d00656cf79ce54a78987d08db5cbc23fe78642d
+    - gid: D5/S3/Observer/HiddenFlow/DiscreteRigidity.nonzero_integer_action_has_no_continuous_real_extension
+      definition_sha256: sha256:75d81c622a0dde069bafd564bdb0e100d7ee3ecd93c20b451a4ae3020dc0e00a
+      emission_sha256: sha256:ebaed39df9daf339703c0ff11d00656cf79ce54a78987d08db5cbc23fe78642d
+    - gid: D5/S3/Quantum/Algebra/CovariantCommutator.covariant_commutator_formula
+      definition_sha256: sha256:823330c39d0581941cc03b1552a08d6153b8aede38fc91dea13113466bf700e7
+      emission_sha256: sha256:79d10609b3b811ba1988c87dea75848e668bf5a46e574235fc081079f3621f1f
+    - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
+      definition_sha256: sha256:ec78d1416cffba742135813cc7b648a9445bd22380fa8199c0a4f65d1b6093d1
+      emission_sha256: sha256:74281e36256f36ea955e8c4037401a9bec97cf2e7328aa744b56d8c6e333cadb
+    - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
+      definition_sha256: sha256:ec78d1416cffba742135813cc7b648a9445bd22380fa8199c0a4f65d1b6093d1
+      emission_sha256: sha256:74281e36256f36ea955e8c4037401a9bec97cf2e7328aa744b56d8c6e333cadb
   unresolved_subitems:
     - integer-action-selected-by-observer-premise
     - observer-read-write-forces-structure

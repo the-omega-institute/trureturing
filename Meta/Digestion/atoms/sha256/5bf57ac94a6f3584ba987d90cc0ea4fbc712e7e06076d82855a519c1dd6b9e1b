@@ -1,0 +1,2 @@
+- **6.225(Bosma–Bruin–Fokkink–Grube–Reuijl–Tromp,J. Integer Sequences 28 (2025) 25.3.8;arXiv:2503.04122)**:该文 p.18 猜想 17(arXiv 版猜想 6)原文:「Let d ≥ 2. For every g ≥ d+1 the greedy 3-sumfree sequence S_{1,g,g+d} is characterized as follows: z ∈ S_{1,g,g+d} ⟺ z ∈ {1, g, 2g+d−1, 2g+d} or (z ≥ g+d and z mod (5g+2d) ∈ {g+d−2, …, 2g+d−2})」;贪心 3-和自由序列定义:递增正整数列,前三项给定,其后每项为大于前项且不等于三个**不同**前项之和的最小整数。核对(2026-09-06):Shtrezi(arXiv:2606.17447)只证猜想 16(S_{1,g,g+1}),猜想 17 未见证明。**档位:第一档**。
+

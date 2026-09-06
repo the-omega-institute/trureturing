@@ -24,7 +24,37 @@ coverage_gids:
   - gid: D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant
     target_statement_id: sha256:4b8ea362b2298d5fced83b73a2a7f27a5c06448a2c0f39e09fbb4edaa7f9dfb9
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometry/OrbitConnesDistance.orbit_connes_distance_eq
+      definition_sha256: sha256:1f0bb31b8fce1253184ff89ef1a63a6d7d93521301c18b49af38b728a3932bce
+      emission_sha256: sha256:8438e7d788c5e6ea3022183dba7f6994a41796ae3f44c611b50548265ccaad11
+    - gid: D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.hiddenTranslation_visible_phase_witness
+      definition_sha256: sha256:0697e0f67cad65cc49a3012ef456405dfd9ecd0a72f78e7afc03d4ebbe62b928
+      emission_sha256: sha256:0bfe36b3494eaf790d29113f643f865b8683565aa4057ec1dbdf91e0c0c637fe
+    - gid: D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.visible_phase_separation_distance_eq_top
+      definition_sha256: sha256:0697e0f67cad65cc49a3012ef456405dfd9ecd0a72f78e7afc03d4ebbe62b928
+      emission_sha256: sha256:0bfe36b3494eaf790d29113f643f865b8683565aa4057ec1dbdf91e0c0c637fe
+    - gid: D5/S3/Observer/MetricGeometry/WindowObserverDistance.window_observer_distance_eq_cycle_distance
+      definition_sha256: sha256:c263b8baa740f50980bca98d97e867aa8817b25a6ab3d3fc31a5ec62aa1c7f50
+      emission_sha256: sha256:4264bcc7f16a40dbb87cba45f65fe484c41e65ea8d98c0f3f55f6b11dd8424ee
+    - gid: D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+    - gid: D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+    - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+    - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+    - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
+    - gid: D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:faacbb7d3e436c39381dc1c0cba53bee93ea08a4227181fff233a364d0edcfc9
   unresolved_subitems:
     - LP-eight-pair-certificate
     - rieffel-metric-bundle-over-torus
