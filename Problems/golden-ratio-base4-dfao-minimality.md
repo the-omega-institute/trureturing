@@ -748,3 +748,217 @@ no priority claim is made for it. The contributions here are its source-level
 transport from the existing typed slot semantics, the explicit exact reference
 certificate, and the precise separation between latent completion variables
 and the arithmetic observations allowed by the original open problem.
+
+## 2026-09-06 arithmetic continuation: prefix exposure and unbounded error weight
+
+This continuation studies the original powers-only problem through the regular
+language on which a candidate differs from the exact reference machine. It adds
+one structural obstruction, not a new numerical powers-only state lower bound.
+The proof source is `D5/S1/Digit/GoldenBase4UnboundedError.lean`, with its paired
+Scribe, committed at `139babbef0500e7a50c646872b76314fbc771f3c`.
+
+### Current arithmetic literature and its exact scope
+
+Chang and Miller, *Benford's Law under Zeckendorf Expansion*, Fibonacci Quarterly
+63(2), 304-335, published online 14 August 2025, DOI
+`10.1080/00150517.2024.2413585`, arXiv:2309.00090, Theorems 1.5 and 3.8, give
+positive limiting frequencies for every admissible leading block in powers.
+Applying the latter theorem to `4^(a+mn)` also gives this assertion on each fixed
+arithmetic progression of exponents. The irrationality needed is elementary:
+`4^q=phi^p`, for positive integers p,q, would give `16^q=(-1)^p` after taking the
+quadratic field norm, a contradiction. These are prefix statements, not a
+claim that powers meet every nonempty regular language.
+
+Bugeaud, *On the Zeckendorf representation of smooth numbers*, Moscow Math. J.
+21(1), 31-42 (2021), DOI `10.17323/1609-4514-2021-21-1-31-42`,
+arXiv:1909.03863, Theorem 1.4, proves that integral S-units of sufficiently large
+size have more than `(1-epsilon) log log N / log log log N` nonzero Zeckendorf
+digits. The threshold is effectively computable. In particular, for each fixed
+K, only finitely many `4^n` have at most K nonzero digits. No explicit threshold
+for an arbitrary K is computed in this continuation.
+
+Earp-Lynch, Earp-Lynch, Kihel and Tiebekabe, *Powers as Fibonacci Sums*,
+Quaestiones Mathematicae 48(4), 597-609 (2025), DOI
+`10.2989/16073606.2024.2411461`, was first published online on 16 October 2024.
+Its arXiv:2608.04445v1 version was submitted on 5 August 2026 and records minor
+corrections and improved computation code. Thus the 2026 posting is an updated
+version of an earlier journal article. Theorem 1.1 and Table 4 completely list
+the powers of two having exactly six nonzero Zeckendorf digits. Their exponents
+are `9,11,12,14,17,28`. Restricting to even exponents yields the corollary
+
+\[
+\#_1 Z(4^n)=6\quad\Longleftrightarrow\quad n\in\{6,7,14\}.
+\]
+
+The article combines explicit logarithmic-form estimates and Baker-Davenport
+reduction; its six-term binary case reduces the largest Fibonacci index from
+an initial bound `5.5*10^94` to at most 51. The three relevant table rows were
+recomputed here with exact integer arithmetic. The authors' complete reduction
+and code were not rerun, and their completeness theorem has not been imported
+as a Lean axiom. No complete classification for all weights at most six is
+claimed on the basis of Table 4 alone.
+
+Dekking, *The structure of Zeckendorf expansions*, Integers 21, A6 (2021),
+arXiv:2006.06970, gives generalized Beatty descriptions for integers with fixed
+terminal blocks. This is the complementary suffix arithmetic. Substituting
+`4^n` into such a description leaves a Diophantine condition; the result does
+not itself determine powers in arbitrary finite-state product languages.
+
+Holzer and Maletti, *An n log n algorithm for hyper-minimizing a (minimized)
+deterministic automaton*, TCS 411, 3404-3413 (2010), DOI
+`10.1016/j.tcs.2010.05.029`, studies compression permitting finitely many errors.
+Its DFA acceptance setting is not silently identified with this typed DFAO
+problem. It motivates checking whether finite-error compression could help.
+The stronger bounded-nonzero-digit obstruction below answers that question for
+the present reference function and the start-zero-loop convention.
+
+### What prefix density forces in the original candidate class
+
+Here is a human-level consequence of the cited prefix theorem. Let M be any
+machine correct on all original power inputs and satisfying the initial zero
+self-loop. Every valid finite Zeckendorf word is a prefix of a power word after
+possibly adding leading zeroes. Hence every such word must have a defined run
+in M. If q is reached by a valid word w and a is a legal next symbol, then wa
+is also such a prefix. Its transition in M must therefore be defined.
+
+Thus a correct candidate is total on legal transitions of its reachable part.
+Deleting an edge on the grounds that a valid prefix might never occur in a
+power is unsound. This argument does not prescribe the output at the endpoint
+of w when w is not itself a power. The full-word output is observed only after
+the remaining suffix has been read. The density-to-totality argument is not
+claimed as a kernel-checked analytic theorem in the new module.
+
+### Why bounded-weight disagreement was a plausible route
+
+For a candidate M, let E_M be the set of valid words on which its output differs
+from the exact all-integer reference output, with an undefined run counted as a
+failure. This language is regular by the finite product construction. Exact
+powers-only correctness is equivalent to
+
+\[
+E_M\cap\{Z(4^n):n\ge0\}=\varnothing.
+\]
+
+If E_M had a bounded number of ones, Bugeaud's theorem would reduce its power
+intersection to finitely many effectively bounded cases. Specific low-weight
+classes can use the newer explicit Fibonacci-sum classifications. This was a
+concrete route to an infinite correctness certificate, rather than mere testing.
+The next theorem proves that it cannot produce a machine below 21 states under
+the stated anchor. A polynomial-growth regular language need not have bounded
+one-count, so those notions must not be interchanged.
+
+### New structural obstruction: all smaller anchored machines have heavy errors
+
+Let A denote the existing 21-state reference table and let wt(w) count ones.
+For every finite typed partial candidate M with its initial zero self-loop,
+
+\[
+|Q_M|<21\quad\Longrightarrow\quad
+\forall K\ \exists w:\quad w\text{ is legal},\quad
+\operatorname{wt}(w)>K,\quad M(w)\ne\Delta_4([w]_F).
+\]
+
+The word in this statement is not required to represent a power of four.
+Undefined candidate output also counts as disagreement. The proof uses the
+actual reference table, its existing arithmetic theorem, and finite diagnostic
+suffixes. It assumes no number-theoretic density or sparsity theorem.
+
+In the reference machine, reading `1` reaches state 18 and `00001` is a loop
+at that state containing exactly one one. Therefore
+
+\[
+p_K=1(00001)^K
+\]
+
+reaches state 18 and has K+1 ones. Twenty fixed access tails from state 18 reach
+all states 1 through 20. Appending them to p_K yields high-weight access to every
+noninitial reference state. Thirteen diagnostic suffixes separate every pair
+of distinct states of the same type; all 112 such pairs were checked. States
+of different types cannot represent the same candidate state after successful
+runs of the same input types.
+
+Suppose M agreed on every legal word of weight greater than K. Two high-weight
+access words reaching the same candidate state must reach the same reference
+state: otherwise a common legal diagnostic suffix forces different outputs,
+while their candidate continuations remain identical. Appending a suffix never
+reduces the number of ones. Thus the twenty reference core states force twenty
+different candidate states.
+
+None of these twenty candidate states can be M's start state. If a core access
+word reached the start, appending zero would leave M there. In the reference,
+zero moves every noninitial state to a different state. Applying the preceding
+collision argument to the access word and to that word followed by zero gives
+a contradiction. Consequently the twenty states and the start are distinct.
+The proof explicitly constructs an injection from `Option (Fin 20)` into Q_M.
+
+The contrapositive yields unbounded error weight. This excludes finite-error
+compression and, more strongly, compression where all errors have bounded
+nonzero-digit count. It does not exclude a smaller machine whose unbounded-
+weight error language nevertheless avoids every power of four.
+
+### Source and arithmetic validation
+
+The public endpoints are `high_weight_collision`,
+`bounded_error_weight_requires_twenty_one`,
+`small_machine_unbounded_error_weight`, and
+`small_machine_unbounded_arithmetic_errors`. The last uses the existing
+`successful_run_digit` to identify the disputed output with the true floor
+difference. All four have source-bound Scribe entries. No new axioms or missing
+proof placeholders were introduced. Pinned Lean elaboration and kernel checking
+were not executed; inherited source proofs are not newly certified here.
+
+The standard-library checker reads the actual reference and new Lean literals.
+It verifies the twenty access tails, twenty nonfixed zero steps, the pumping
+cycle, and the 112 same-type separations. For thresholds 0,1,6,14,64 it performs
+1,255 exact arithmetic checks on pumped accesses and diagnostic suffixes.
+Three modified cycle/access/separator certificates are rejected.
+
+A separate bounded scan of power indices 0 through 999 checks exact digits and
+finds all twenty noninitial states as terminal states by index 62. Their first
+indices, ordered by reference state 1 through 20, are
+
+```
+56,19,5,2,17,27,28,57,21,4,62,20,15,11,1,45,3,0,12,26.
+```
+
+This also prevents shrinking the reference by an ordinary type- and transition-
+preserving quotient that remains correct on those powers and has zero initial
+output. Every reference state's output is then fixed by a power observation or
+the initial anchor, and the diagnostic suffixes force the quotient to be
+injective. This is a finite-certificate mathematical corollary, not a newly
+kernel-checked theorem or a restriction on arbitrary redesigned candidates.
+
+The scan sees exactly-six-weight powers only at 6,7,14. Its finite extent is
+not used as evidence that there are no later instances; that assertion comes
+from the cited paper's completeness theorem. The validation JSON records this
+distinction explicitly.
+
+Reproduce with
+
+```sh
+python Evidence/D5/Automata/GoldenBase4/check_unbounded_error.py \
+  D5/S1/Digit/GoldenBase4IntervalMachine.lean \
+  D5/S1/Digit/GoldenBase4UnboundedError.lean
+```
+
+The checked source SHA-256 is
+`13faec22a8bacd5c8749315fede85466ef26c1c05188214e34cdbe5b37c7332a`.
+The reference SHA-256 remains
+`d02440b7e57663841f541a3418b780bb950b114fc669beeacdd2cad82b762101`.
+Results are retained in `unbounded_error_validation.json`.
+
+### Remaining exact target
+
+For a smaller candidate, the necessary error language now has unbounded one-
+count, cannot contain a whole valid prefix cone of failures, and must avoid all
+power words. The whole-prefix restriction follows from prefix density and
+global correctness. These necessary properties do not imply a contradiction:
+prefix density alone is weaker than hitting every regular set. The missing
+step is a statement about the arithmetic intersection for error languages
+arising from the bounded candidate/reference product, or an explicit smaller
+machine together with a different infinite correctness certificate.
+
+No 20-state exclusion, improved numerical powers-only lower bound, or resolution
+of the original Walnut 21/22 comparison is claimed. The new obstruction removes
+specific tempting compression routes; it does not rename the all-integer
+problem as the original sparse-input problem.
