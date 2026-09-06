@@ -37,6 +37,9 @@ receipts:
     - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
       definition_sha256: sha256:ec78d1416cffba742135813cc7b648a9445bd22380fa8199c0a4f65d1b6093d1
       emission_sha256: sha256:74281e36256f36ea955e8c4037401a9bec97cf2e7328aa744b56d8c6e333cadb
+    - gid: D5/S3/Quantum/ObserverCommutator.observer_read_update_commutator_formula
+      definition_sha256: sha256:2728af41fbba963bea26085f085cb4e60bcfc966d8519d8194e1743cafe5eb99
+      emission_sha256: sha256:5ce6b549c88ef8dac3450b431f8e275d05c1c0a60b4fd0c6aa04fc83058b54fe
   unresolved_subitems:
     - integer-action-selected-by-observer-premise
     - observer-read-write-forces-structure
