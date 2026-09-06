@@ -1,0 +1,49 @@
+{
+  "schema": "mub-ambient-residual-barrier-v1",
+  "status": "PASS",
+  "claim_level": "computational exclusion, subject to the documented analytic interpretation",
+  "base_matrix": "H0 over Q(i,sqrt(21)); see README and exact symbolic audit",
+  "ambient_complex_entry_radius": "1/16777216",
+  "ambient_constraint": "H is an order-six complex Hadamard and max_ij norm(H_ij-H0_ij) <= radius",
+  "base_residual_sublevel": "1/262144",
+  "guard_halfwidth": "1/4096",
+  "root_transfer_bound": "125829129/70368744177664",
+  "root_transfer_margin": "142606327/70368744177664",
+  "all_32_charts_covered": true,
+  "coverage_total": {"nodes": 5990945, "pending": 0, "unresolved": 0},
+  "local_guard_audit": {
+    "status": "LOCAL_GUARDS_VERIFIED", "guards": 60, "guard_radius_bits": 12,
+    "max_guard_contraction_dyadic": 384555794353,
+    "dyadic_bits": 40, "lean_kernel_verified": false
+  },
+  "graph": {
+    "distinct_rays": 60, "pair_tests": 1770, "certified_nonedges": 1656,
+    "nonedge_squared_modulus_lower_bound": "1/100000000",
+    "canonical_vertices": [30,31,44,45,58,59],
+    "noncanonical_supergraph_bipartite": true,
+    "no_cross_edges": true,
+    "canonical_shift_fixed": "not asserted for arbitrary matrix perturbations",
+    "graph_equality": false
+  },
+  "conclusions": {
+    "all_actual_common_unbiased_rays_covered": true,
+    "at_most_one_completion_up_to_phases_and_permutation": true,
+    "no_quartet_containing_the_fixed_edge": true,
+    "affinity_equals_two": "not asserted",
+    "full_X_family_excluded": false,
+    "global_dimension_six_conjecture_solved": false
+  },
+  "lean_kernel_verified": false,
+  "intrinsic_information_admission": "not executed; no finite Arena or positive gain asserted",
+  "hashes": {
+    "driver": "64f6670d1f4e7711748f16303a0db682b5c5151c4f01c956a861a3f5c4a6ac3a",
+    "sublevel_core": "f13f90b984b23e39b352a360d3675ffd80c52d086ef5fd51ad43023d0803f3bf",
+    "reused_cover_core": "dc71bf13400feffc555040172682ad40d6ab378f2466b80da19237ea1f01b531",
+    "reused_Fraction_kernel": "3a23425baf48f1fe78c3932b1dd0b11593686c494ea53372d653f9a929c26c85",
+    "proposal_input": "cb3a8cbcec587eeaea748c879b1333e06d09685e4b85a7c7755353a75931b153",
+    "centers": "86543588ac1be4032fc4a16231bb0cbae77b0d5078a114b8397050bc24fb7155",
+    "ambient_bounds": "d36b95fc503b9e63c9b8bd2bc8dbbba39b7e86c28d6cb659d5195a279c2cc76c",
+    "local_enclosures": "8a0072edb1fd428521cd6334c4bb6ac08752df9f19479c022514a9b8ba9d658b"
+  },
+  "coverage_chart_nodes": [280084,123870,121341,148747,196239,200562,179044,305571,131654,101106,179120,290484,135898,165779,116362,272601,152563,182276,108182,303210,140606,102033,186112,279982,179953,212654,193658,299496,279617,140321,173545,108275]
+}
