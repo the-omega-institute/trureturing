@@ -130,4 +130,65 @@ theorem no_mutually_unbiased_completions_of_complete_root_supergraph
 
 #print axioms no_mutually_unbiased_completions_of_complete_root_supergraph
 
+
+/-- Quantitative tube variant: a tube may be empty or contain several roots.
+If two points in one tube have overlap at least mu, different tube labels with
+small overlap satisfy the canonical-block/bipartite supergraph, and each of
+two six-frames has within-frame overlaps below eta <= mu, some cross-frame
+overlap is at least mu. Root existence and uniqueness are unnecessary.
+
+This strengthens the exact catalogue consumer above without replacing it.
+The matrices may be actual context projectors or normalized outer products of
+approximate frames. All geometric inequalities remain explicit proof inputs. -/
+theorem six_frames_have_large_cross_overlap_of_root_tube_cover
+    {κ : Type*} [DecidableEq κ]
+    (tube : κ → Set (Matrix (Fin 6) (Fin 6) ℂ))
+    (canonical : Finset κ) (hcard : canonical.card = 6) (color : κ → Bool)
+    (η μ : ℝ) (hημ : η ≤ μ)
+    (hSame : ∀ k P ∈ tube k, ∀ Q ∈ tube k, μ ≤ (trace (P * Q)).re)
+    (hGraph : ∀ k l, k ≠ l → ∀ P ∈ tube k, ∀ Q ∈ tube l,
+      (trace (P * Q)).re < η →
+      (k ∈ canonical ∧ l ∈ canonical) ∨
+      (k ∉ canonical ∧ l ∉ canonical ∧ color k ≠ color l))
+    (C D : Fin 6 → Matrix (Fin 6) (Fin 6) ℂ)
+    (hCoverC : ∀ i, ∃ k, C i ∈ tube k)
+    (hCoverD : ∀ i, ∃ k, D i ∈ tube k)
+    (hSmallC : ∀ i j, i ≠ j → (trace (C i * C j)).re < η)
+    (hSmallD : ∀ i j, i ≠ j → (trace (D i * D j)).re < η) :
+    ∃ i j, μ ≤ (trace (C i * D j)).re := by
+  classical
+  choose c hc using hCoverC
+  choose d hd using hCoverD
+  have hInjective (V : Fin 6 → Matrix (Fin 6) (Fin 6) ℂ)
+      (v : Fin 6 → κ) (hv : ∀ i, V i ∈ tube (v i))
+      (hSmall : ∀ i j, i ≠ j → (trace (V i * V j)).re < η) :
+      Function.Injective v := by
+    intro i j hij
+    by_contra hne
+    have hmem : V j ∈ tube (v i) := by rw [hij]; exact hv j
+    have hlo := hSame (v i) (V i) (hv i) (V j) hmem
+    have hhi := hSmall i j hne
+    exact (not_lt_of_ge (le_trans hημ hlo)) hhi
+  have hci := hInjective C c hc hSmallC
+  have hdi := hInjective D d hd hSmallD
+  have hCImage : Finset.univ.image c = canonical := by
+    apply clique_image_eq_canonical canonical hcard color c hci
+    intro i j hij
+    exact hGraph (c i) (c j) (hci.ne hij) (C i) (hc i) (C j) (hc j)
+      (hSmallC i j hij)
+  have hDImage : Finset.univ.image d = canonical := by
+    apply clique_image_eq_canonical canonical hcard color d hdi
+    intro i j hij
+    exact hGraph (d i) (d j) (hdi.ne hij) (D i) (hd i) (D j) (hd j)
+      (hSmallD i j hij)
+  have hmem : d 0 ∈ Finset.univ.image c := by
+    rw [hCImage, ← hDImage]
+    exact Finset.mem_image.mpr ⟨0, Finset.mem_univ _, rfl⟩
+  obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hmem
+  refine ⟨i, 0, hSame (c i) (C i) (hc i) (D 0) ?_⟩
+  rw [hi]
+  exact hd 0
+
+#print axioms six_frames_have_large_cross_overlap_of_root_tube_cover
+
 end D5.S3.Quantum.Tomography.CompleteRootSupergraphExclusion

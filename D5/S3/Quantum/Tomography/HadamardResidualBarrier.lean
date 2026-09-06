@@ -7,6 +7,7 @@
 
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -94,5 +95,76 @@ theorem common_unbiased_root_has_small_base_residual
   nlinarith
 
 #print axioms common_unbiased_root_has_small_base_residual
+
+/- Approximate-root extension: added in the current continuation,
+   reusing this existing matrix-residual owner. -/
+private theorem squared_modulus_residual_transfer
+    (z w : ℂ) (ρ τ : ℝ) (hρ : 0 ≤ ρ) (hτ : τ ≤ 1 / 4)
+    (hclose : ‖z - w‖ ≤ ρ) (hw : |Complex.normSq w - 6| ≤ τ) :
+    |Complex.normSq z - 6| ≤ τ + ρ * (5 + ρ) := by
+  have hwUpper : ‖w‖ ^ 2 ≤ 25 / 4 := by
+    rw [← Complex.normSq_eq_norm_sq]
+    have ht := (abs_le.mp hw).2
+    linarith
+  have hwNorm : ‖w‖ ≤ 5 / 2 := by nlinarith [norm_nonneg w]
+  have hdiff : |‖z‖ - ‖w‖| ≤ ρ :=
+    le_trans (abs_norm_sub_norm_le z w) hclose
+  have hsum : ‖z‖ + ‖w‖ ≤ 5 + ρ := by
+    have ht := (abs_le.mp hdiff).2
+    linarith
+  have hsumNonneg : 0 ≤ ‖z‖ + ‖w‖ := add_nonneg (norm_nonneg z) (norm_nonneg w)
+  have hsq : |Complex.normSq z - Complex.normSq w| ≤ ρ * (5 + ρ) := by
+    calc
+      |Complex.normSq z - Complex.normSq w| =
+          |‖z‖ - ‖w‖| * (‖z‖ + ‖w‖) := by
+        rw [Complex.normSq_eq_norm_sq, Complex.normSq_eq_norm_sq]
+        rw [show ‖z‖ ^ 2 - ‖w‖ ^ 2 = (‖z‖ - ‖w‖) * (‖z‖ + ‖w‖) by ring]
+        rw [abs_mul, abs_of_nonneg hsumNonneg]
+      _ ≤ ρ * (5 + ρ) := mul_le_mul hdiff hsum hsumNonneg hρ
+  calc
+    |Complex.normSq z - 6| =
+        |(Complex.normSq z - Complex.normSq w) + (Complex.normSq w - 6)| := by
+      congr 1
+      ring
+    _ ≤ |Complex.normSq z - Complex.normSq w| + |Complex.normSq w - 6| :=
+      abs_add_le _ _
+    _ ≤ ρ * (5 + ρ) + τ := add_le_add hsq hw
+    _ = τ + ρ * (5 + ρ) := by ring
+
+/-- If a unit-entry vector is approximately unbiased to H and each column
+of H0-H has l1 norm at most rho, its seed squared-modulus residual is bounded
+by tau + rho(5+rho). Only tau <= 1/4 is used; no matrix-family membership,
+root enumeration, invertible Jacobian, or root-existence assumption occurs.
+At tau=0 this applies to every actual common-unbiased vector of any nearby
+six-dimensional complex Hadamard matrix. -/
+theorem common_unbiased_residual_transfers_under_column_perturbation
+    (H₀ H : Matrix (Fin 6) (Fin 6) ℂ) (u : Fin 6 → ℂ)
+    (ρ τ : ℝ) (hρ : 0 ≤ ρ) (hτ : τ ≤ 1 / 4)
+    (hu : ∀ i, ‖u i‖ = 1)
+    (hcolumn : ∀ j, ∑ i, ‖H₀ i j - H i j‖ ≤ ρ)
+    (hresidual : ∀ j, |Complex.normSq ((Hᴴ *ᵥ u) j) - 6| ≤ τ) :
+    ∀ j, |Complex.normSq ((H₀ᴴ *ᵥ u) j) - 6| ≤ τ + ρ * (5 + ρ) := by
+  intro j
+  have hclose : ‖(H₀ᴴ *ᵥ u) j - (Hᴴ *ᵥ u) j‖ ≤ ρ := by
+    have hExpand : (H₀ᴴ *ᵥ u) j - (Hᴴ *ᵥ u) j =
+        ∑ i, star (H₀ i j - H i j) * u i := by
+      simp only [Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply]
+      rw [← Finset.sum_sub_distrib]
+      apply Finset.sum_congr rfl
+      intro i _
+      rw [star_sub, sub_mul]
+    rw [hExpand]
+    calc
+      ‖∑ i, star (H₀ i j - H i j) * u i‖ ≤
+          ∑ i, ‖star (H₀ i j - H i j) * u i‖ := norm_sum_le _ _
+      _ = ∑ i, ‖H₀ i j - H i j‖ := by
+        apply Finset.sum_congr rfl
+        intro i _
+        rw [norm_mul, norm_star, hu i, mul_one]
+      _ ≤ ρ := hcolumn j
+  exact squared_modulus_residual_transfer _ _ ρ τ hρ hτ hclose (hresidual j)
+
+#print axioms common_unbiased_residual_transfers_under_column_perturbation
+
 
 end D5.S3.Quantum.Tomography.HadamardResidualBarrier
