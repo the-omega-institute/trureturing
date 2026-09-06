@@ -166,6 +166,7 @@ theorem residual_energy_zero_iff {n : Nat} (weight residual : Fin n → ℚ)
     unfold linearObjective
     apply Finset.sum_eq_zero
     intro i _
+    dsimp only
     by_cases zero : weight i = 0
     · simp only [zero, mul_zero]
     · rw [vanishes i zero, zero_pow (by decide : 2 ≠ 0), zero_mul]
