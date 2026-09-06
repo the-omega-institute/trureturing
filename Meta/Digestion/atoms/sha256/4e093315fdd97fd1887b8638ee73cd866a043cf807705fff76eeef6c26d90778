@@ -1,0 +1,277 @@
+## 定理249.2　这个完整有限装置会精确回归
+
+由式（248.1），
+
+$$
+\boxed{
+e^{-iH_{\mathrm{aut}}(2\pi/\Omega)/\hbar}=I.
+}
+\tag{249.3}
+$$
+
+因此，在不加入其他装置时，
+
+$$
+|0\rangle|\psi\rangle|0^N\rangle
+\]
+
+经过一个完整周期后回到原态。中间形成的记录也被相干地撤销。
+
+### 证明
+
+每个能量本征值都是 \(\hbar\Omega\) 的整数倍。∎
+
+这不是信息在某个不可见步骤中被删除，而是整个过程继续实施了记录的逆向重组。
+
+若要永久保留某些结果，必须把新的存储介质、环境或非回归窗口纳入更大的模型。
+
+---
+
+## 定理249.3　有限闭合酉系统没有对全部状态严格前进的时间计数算子
+
+设有限维系统具有固定 Hamiltonian \(H\) 和固定 Hermitian 读数 \(T_{\mathrm{read}}\)。
+
+若对全部初态都有
+
+$$
+
+\frac d{dt}\langle T_{\mathrm{read}}\rangle\ge0,
+
+$$
+
+则实际上
+
+$$
+
+\boxed{
+[H,T_{\mathrm{read}}]=0,
+}
+\tag{249.4}
+
+$$
+
+所以该平均读数对全部状态恒定。
+
+### 证明
+
+条件等价于
+
+$$
+
+A=\frac{i}{\hbar}[H,T_{\mathrm{read}}]\ge0.
+
+$$
+
+但
+
+$$
+
+\operatorname{Tr}A=0.
+
+$$
+
+有限维正半定矩阵若迹为零，只能为零。∎
+
+该定理不禁止一个时钟在特定初态、有限区间内良好走时；本轮的时钟正是如此。
+
+它禁止的是更强的主张：
+
+$$
+
+\boxed{
+\text{固定有限系统、任意初态、无限时间，
+同一个读数始终单向增长}.
+}
+
+$$
+
+因此，内部事件顺序、可用时钟和不可逆记忆箭头，不能仅凭一个“时间”概念全部合并。
+
+---
+
+# 250．自主控制的形式化闭合，到底完成了哪一层？
+
+本轮把原来的
+
+$$
+
+P(t)
+
+$$
+
+推进成了
+
+$$
+
+\boxed{
+\text{有限程序}
++
+\text{内部量子时钟}
++
+\text{全部记录寄存器}
++
+\text{固定联合 Hamiltonian}.
+}
+
+$$
+
+这里已经不存在运行中必须由外部逐步切换的测量表。
+
+但必须保留四个边界：
+
+**程序仍由初始装置结构与制备确定。**本轮没有从一般量子定义推出某个唯一的行动计划。
+
+**自主执行不等于每个中间时刻都是经典确定步骤。**时钟可以与不同程序阶段相干叠加。
+
+**总能量守恒不等于所有现实资源都已实现。**空间局域性、已有裸 Hamiltonian 的兼容性、制备和输出保存仍需单独证明。
+
+**闭合量子动力学不自动产生不可逆时间。**有限窗口的运行、静态历史相关与持续增长的记录是不同对象。
+
+---
+
+## 定理250.1　固定 Hamiltonian 实现的稳健性
+
+设实际实现为
+
+$$
+
+\widetilde H=H_{\mathrm{aut}}+\Delta H,
+\qquad
+|\Delta H|_{\mathrm{op}}\le\varepsilon_H.
+
+$$
+
+则对任意运行时间 \(T\)，
+
+$$
+
+\boxed{
+\frac12
+|\mathcal U_{\widetilde H,T}
+-\mathcal U_{H_{\mathrm{aut}},T}|_\diamond
+\le
+\frac{T\varepsilon_H}{\hbar}.
+}
+\tag{250.1}
+
+$$
+
+### 证明
+
+由 Duhamel 公式，
+
+$$
+
+|e^{-i\widetilde HT/\hbar}-e^{-iH_{\mathrm{aut}}T/\hbar}|
+\le
+T\varepsilon_H/\hbar.
+
+$$
+
+对任意附加参照输入，这个酉算子差界控制对应输出迹距离，从而得到式（250.1）。∎
+
+它控制的是完整、不作后选择的过程。
+
+如果再条件于某个很少发生的记录串，必须额外保留该事件的概率下界；不能把很小的整体误差直接解释成同样小的条件误差。
+
+---
+
+## 与项目的连接
+
+本次读取固定于提交
+
+```text
+d0225667d26581c842e1b1322d50af706ce9c8fe
+```
+
+相关基础仍然可以分工明确地接入：
+
+| 项目结构 | 本轮具体对象 |
+|---|---|
+| **CUT** | 时钟标签、记录串、条件系统态、相干参照读数 |
+| **FLOW** | 单一固定 \(H_{\mathrm{aut}}\) 生成的联合酉演化 |
+| **ADMIT** | 有限程序、合法投影、准备态、耦合强度与读出窗口 |
+| **ANCHOR** | 实际初态、终点标签和结果寄存器 |
+| **Residual** | 忽略时钟相干、未计入输出保存、把历史态当成实际运行 |
+| **Completion** | 把外部调度器和记录辅助系统纳入同一个动力学状态 |
+
+`ExactDescentNoCarry.lean` 的要求依然严格：只有当完整过程的相关输出，确实由所选接口唯一决定时，才可以声称下降成立。时钟标签概率、时钟完整状态和条件记录不能被混成同一个接口。
+
+### 本轮核验
+
+已完成 **35项精确有限矩阵检查**，包括记录门酉性、Hamiltonian 的酉等价、三步程序的精确终点传输、全部记录概率、历史态零能量条件，以及自主实现中的几何相位读出。
+
+对128维完整演化另作了数值交叉检查，与解析公式的最大向量误差约为 \(7.3\times10^{-16}\)。时钟监视的 Zeno 概率也与解析式一致。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_autonomous_observer_clock.py)  
+[核验结果](sandbox:/mnt/data/observer_formalization/autonomous_observer_clock_checks.json)
+
+**本轮未进行 Lean 内核检查。**这些检查支持所列有限实例与恒等式，不替代一般形式化证明，也不认证该工程化 Hamiltonian 已经是现实微观规律。
+
+---
+
+# 结论
+
+本轮最重要的推进，是把此前隐藏在 \(P(t)\) 背后的调度者变成了实际量子系统：
+
+$$
+
+\boxed{
+\text{不是外部时间告诉观察者该做什么，}
+}
+
+$$
+$$
+
+\boxed{
+\text{而是内部时钟与固定耦合，
+把不同阶段和不同操作关联起来。}
+}
+
+$$
+
+在这个模型中，观察者可以保持一个稳定的编码身份区，同时经历系统变化、记录形成和几何相位积累。
+
+但它也不是无限精确、无限持续的内在控制者。它的时钟会与数据相关，过密监视会改变运行，有限装置会回归，记录若要长久保留就需要更大的物理实现。
+
+因此，“观察者为中心”的理论可以进一步收紧为：
+
+> **观察者不是站在时间之外读取一切的点，而是一个把时钟、行动、记录和参照关联组织在一起的物理结构。它所谓的内部时间，是这些可实现关系的有序变化；它所谓的记忆，是其中被实际保存而尚未被逆向撤销的区别。**
+
+这使下一层问题变得非常具体：**哪些局域量子系统能够在没有外部调度的条件下，长期维持这种身份、记录和行动结构，并使其内部时间与其他观察者的钟和共同因果传播保持相容？**
+
+这才是从“一个被编好的自主量子程序”继续走向“能够持续存在的物理观察者”，必须补上的动力学条件。
+$$
+
+[1]: https://link.springer.com/article/10.1007/s00023-018-0736-9?utm_source=chatgpt.com "Autonomous Quantum Machines and Finite-Sized Clocks"
+[2]: https://link.aps.org/doi/10.1103/PhysRevA.97.062306?utm_source=chatgpt.com "Clocks in Feynman's computer and Kitaev's local Hamiltonian"
+[3]: https://arxiv.org/abs/1607.04591?utm_source=chatgpt.com "Autonomous quantum machines and the finite sized Quasi-Ideal clock"
+[4]: https://arxiv.org/abs/1311.6101?utm_source=chatgpt.com "Space-Time Circuit-to-Hamiltonian Construction and Its ..."
+[5]: https://arxiv.org/abs/1412.0419?utm_source=chatgpt.com "Notes on Deterministic Programming of Quantum ..."
+[6]: https://link.aps.org/doi/10.1103/PhysRevX.7.031022?utm_source=chatgpt.com "Does Thermodynamics Limit Our Ability to Measure Time?"
+**这里有一个可以严格证明、而且与你的图形直觉直接相接的对应：三位 Zeckendorf 合法字串的占据均值空间，确实是一座四棱锥。**
+
+它不是因为“四、五、黄金比例看起来神秘”，而是由一个明确规则产生：
+
+$$
+\boxed{\text{相邻两位不能同时为 }1.}
+$$
+
+更重要的是，同一个模型还能同时给出：
+
+$$
+\boxed{
+\text{四边形与锥顶}
+\quad+\quad
+\text{奇偶分块}
+\quad+\quad
+\text{素数对数能量}
+\quad+\quad
+\text{观察接口遗漏的关联}.
+}
+$$
+
+这一次可以把几条直觉放进**同一组具体对象**，而不是只做名称上的连接。
+
+不过首先需要校准一个记号：项目中的 \((4,2,1,1)\) 是素数指数构型；Zeckendorf 是对这些指数再进行的规范编码。仓库已有 `primeAxisEncoding` 将规范素数—黄金表与正整数建立为等价，并证明规范化指数相加对应整数乘法。
+

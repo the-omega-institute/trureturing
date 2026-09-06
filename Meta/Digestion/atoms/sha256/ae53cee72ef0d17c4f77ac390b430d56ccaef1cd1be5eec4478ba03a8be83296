@@ -1,0 +1,79 @@
+# 三、打破一点对称性，可以让奇偶模式显现，但会产生弱耦合问题
+
+还有另一种修复方式：不增加传感器，而改变顶点对底面的耦合。
+
+设底面边权为 \(b>0\)。令顶点到四个底角的权重交替为：
+
+$$
+g+\varepsilon,\quad
+g-\varepsilon,\quad
+g+\varepsilon,\quad
+g-\varepsilon,
+$$
+
+其中：
+
+$$
+g>0,\qquad |\varepsilon|<g.
+$$
+
+在 \((b\text{ 模式},a,\chi)\) 三维子空间中，矩阵为：
+
+$$
+\boxed{
+A_\varepsilon^{(3)}
+=
+\begin{pmatrix}
+2b&2g&0\\
+2g&0&2\varepsilon\\
+0&2\varepsilon&-2b
+\end{pmatrix}.
+}
+\tag{5}
+$$
+
+这里用“\(b\) 模式”表示底面平均方向，与边权 \(b\) 的记号位置区分。
+
+顶点读出为：
+
+$$
+C=(0,1,0).
+$$
+
+计算三步观察矩阵：
+
+$$
+\mathcal O=
+\begin{pmatrix}
+C\\
+CA_\varepsilon^{(3)}\\
+C(A_\varepsilon^{(3)})^2
+\end{pmatrix},
+$$
+
+得到：
+
+$$
+\boxed{
+\det\mathcal O=16bg\varepsilon.
+}
+\tag{6}
+$$
+
+因此，只要：
+
+$$
+\varepsilon\ne0,
+$$
+
+这个三维部分就全部可见。
+
+但两个零特征值方向 \(u,v\) 仍然不可见。所以：
+
+$$
+\boxed{
+\text{可见维数由 }2\text{ 增加到 }3，
+\quad\text{不是直接增加到 }5.
+}
+$$
+

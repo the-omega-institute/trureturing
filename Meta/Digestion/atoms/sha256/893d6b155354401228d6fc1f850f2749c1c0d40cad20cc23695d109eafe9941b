@@ -1,0 +1,37 @@
+## 定义255.1　素数—Fibonacci 位置能量
+
+在规范编码上赋予：
+
+$$
+\boxed{
+\varepsilon_{p,j}=E_*G_j\ln p.
+}
+\tag{255.3}
+$$
+
+则：
+
+$$
+\boxed{
+H_{\mathrm{arith}}|b\rangle
+=
+E_*\sum_{p,j}b_{p,j}G_j\ln p\,|b\rangle
+=
+E_*\ln n(b)\,|b\rangle.
+}
+\tag{255.4}
+$$
+
+对于三位素数轴 \(p\)，五个合法状态的能量恰为：
+
+$$
+\boxed{
+0,\ E_*\ln p,\ 2E_*\ln p,\ 3E_*\ln p,\ 4E_*\ln p.
+}
+\tag{255.5}
+$$
+
+现在，四棱锥、规范字串和素数能量已经位于同一个有限模型中。
+
+---
+

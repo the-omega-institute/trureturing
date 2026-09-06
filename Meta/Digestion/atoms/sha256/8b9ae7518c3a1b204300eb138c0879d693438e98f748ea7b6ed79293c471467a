@@ -1,0 +1,38 @@
+## 定义246.1　有限历史态
+
+定义
+
+$$
+\boxed{
+|\eta_\chi\rangle
+=
+\frac1{\sqrt{N+1}}
+\sum_{j=0}^N|j\rangle G_j|\chi\rangle.
+}
+\tag{246.1}
+$$
+
+再定义边约束算子
+
+$$
+A_j
+=
+\langle j|\otimes I
+-
+\langle j-1|\otimes V_j,
+$$
+
+以及一个**不同于 \(H_{\mathrm{aut}}\)** 的 Hamiltonian：
+
+$$
+\boxed{
+H_{\mathrm{hist}}
+=
+\frac{\Delta}{2}\sum_{j=1}^NA_j^\dagger A_j,
+\qquad \Delta>0.
+}
+\tag{246.2}
+$$
+
+---
+

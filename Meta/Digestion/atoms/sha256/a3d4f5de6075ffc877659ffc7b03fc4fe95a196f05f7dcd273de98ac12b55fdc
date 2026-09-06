@@ -1,0 +1,55 @@
+## 与上一轮几何相位的连接
+
+取三步路径
+
+$$
+|0\rangle\to|x+\rangle\to|y+\rangle\to|0\rangle.
+$$
+
+全部成功振幅仍然是
+
+$$
+\boxed{
+z=\frac{1-i}{4}.
+}
+\tag{244.5}
+$$
+
+加入一只相干参照比特，让其一条分支执行程序、另一条分支不执行，则在全部记录为零的条件下，参照态正比于
+
+$$
+|0\rangle+z|1\rangle.
+$$
+
+对应成功概率与 \(Y=+1\) 条件概率分别为
+
+$$
+\boxed{
+p_{\mathrm{success}}=\frac9{16},
+\qquad
+p(Y=+1\mid\mathrm{success})=\frac5{18}.
+}
+\tag{244.6}
+$$
+
+现在这整个实验可以由
+
+$$
+4_{\mathrm{clock}}
+\times2_{\mathrm{reference}}
+\times2_{\mathrm{system}}
+\times8_{\mathrm{records}}
+=
+\boxed{128}
+$$
+
+维空间上的一个固定 Hamiltonian 完成。
+
+这一步真正增加的是：
+
+> **上一轮需要外部逐次安排的几何投影实验，现在具有一个有限自主的联合实现。**
+
+但这里证明的是终点联合记录统计的一致性，不是声称任意中途时刻都与原来外部定时的连续 \(P(t)\) 过程相同。
+
+---
+
