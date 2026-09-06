@@ -1,0 +1,18 @@
+### 本轮核验
+
+完成了 **64项命名检查**，涵盖符号矩阵恒等式、精确有理散射概率、441个有限因果矩形、离散边界计数及曲率交比。
+
+其中包括：
+
+$$
+|t_1|^2=\frac9{25},\qquad
+|t_2|^2=\frac{81}{1681},\qquad
+|t_3|^2=\frac{729}{133225},
+$$
+
+以及同一局部时序更新的完整酉性。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_spacetime_slices.py) · [核验结果](sandbox:/mnt/data/observer_formalization/spacetime_slices_checks.json)
+
+另给出一个包含区间计数、零坐标恒等式、流量代数和概率平衡等基础命题的 [Lean候选源码](sandbox:/mnt/data/observer_formalization/SpacetimeSliceCore.lean)。
+

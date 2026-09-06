@@ -1,0 +1,84 @@
+## 定理3.1：任意时间切面的精确分解
+
+在第 \(t\) 步切开历史，得到：
+
+$$
+\boxed{
+|\Psi_a\rangle
+=
+\sum_{\substack{0\le b\le a\\|b|=t}}
+\sqrt{p_t(b)}
+\,|D_b^{(t)}\rangle
+\otimes
+|D_{a-b}^{(L-t)}\rangle,
+}
+\tag{7}
+$$
+
+其中：
+
+$$
+\boxed{
+p_t(b)
+=
+\frac{
+\prod_i\binom{a_i}{b_i}
+}{
+\binom Lt
+}.
+}
+\tag{8}
+$$
+
+\(|D_b^{(t)}\rangle\) 是具有计数 \(b\) 的全部过去字串的归一化叠加，右侧同理。
+
+### 证明
+
+计数为 \(b\) 的过去共有：
+
+$$
+M(b)=\frac{t!}{\prod_i b_i!}
+$$
+
+种。
+
+相应未来共有：
+
+$$
+M(a-b)=\frac{(L-t)!}{\prod_i(a_i-b_i)!}
+$$
+
+种。
+
+二者任意拼接都得到合法完整历史，因此该块占据的概率为：
+
+$$
+\frac{M(b)M(a-b)}{M(a)}
+=
+\frac{\prod_i\binom{a_i}{b_i}}{\binom Lt}.
+$$
+
+不同 \(b\) 对应的过去字串集合不相交，未来集合也不相交，所以两边都是正交族。式（7）就是 Schmidt 分解。证毕。
+
+所有 \(p_t(b)>0\)，所以：
+
+$$
+\boxed{
+\operatorname{SchmidtRank}_t(\Psi_a)=r_t(a).
+}
+\tag{9}
+$$
+
+对5040：
+
+$$
+\boxed{
+\max_t\operatorname{SchmidtRank}_t(\Psi_a)=12.
+}
+\tag{10}
+$$
+
+这意味着：**若沿八个时间槽进行精确的矩阵乘积表示或顺序纯态制备，跨切面的内部维数至少为12，而且12足够。** 最小键维数等于各切面 Schmidt 秩的最大值，是标准矩阵乘积态结论。([APS Journals][2])
+
+这里的12不是此前“精确预测四素数乘法未来的线性实现维数16”。两者研究的输入、输出与允许表示不同，不能混用。
+

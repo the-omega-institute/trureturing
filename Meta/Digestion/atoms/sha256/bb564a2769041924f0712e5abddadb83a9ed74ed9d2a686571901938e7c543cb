@@ -1,0 +1,102 @@
+### 证明
+
+选择达到 \(R_0\) 的右侧零点
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad \delta>0,\quad\gamma\ne0,
+$$
+
+并令
+
+$$
+z_0=1-\frac1\rho.
+$$
+
+设其重数为 \(m_\rho\)。在 \(z_0\) 附近，
+
+$$
+\boxed{
+\mathcal F_\xi(z)
+=
+\frac{2A_\rho}{1-z/z_0}+O(1),
+}
+\tag{30}
+$$
+
+其中
+
+$$
+\boxed{
+A_\rho=
+\frac{m_\rho}{C\,\rho(1-\rho)}.
+}
+\tag{31}
+$$
+
+由于
+
+$$
+\Im[\rho(1-\rho)]
+=
+-2\delta\gamma\ne0,
+$$
+
+\(A_\rho\) 不是实数。
+
+写
+
+$$
+A_\rho=A+iB,\qquad B\ne0.
+$$
+
+取实数 \(k\)，使
+
+$$
+A-kB<0,
+$$
+
+再令
+
+$$
+z=z_0(1-\varepsilon+ik\varepsilon).
+$$
+
+当 \(\varepsilon>0\) 足够小时，
+
+$$
+|z|<|z_0|=R_0.
+$$
+
+而主部的实部为
+
+$$
+\Re\frac{2A_\rho}{\varepsilon(1-ik)}
+=
+\frac{2(A-kB)}
+{\varepsilon(1+k^2)}
+\longrightarrow-\infty.
+$$
+
+所以在到达最近极点之前，就已经有点满足
+
+$$
+\Re\mathcal F_\xi(z)<0.
+$$
+
+这样的圆周数据不可能生成全部半正定 Toeplitz 矩阵。因此 \(a_*<R_0\)。证毕。
+
+---
+
+这揭示了一种新的临界位置：
+
+$$
+\boxed{
+\text{实际函数仍然完全解析，
+但它已不再能被解释为正谱响应。}
+}
+\tag{32}
+$$
+
+因此，寻找边界时，不应该只寻找函数值发散或极点。**“能否属于同一个正实现”可能更早失效。**
+

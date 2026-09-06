@@ -1,0 +1,29 @@
+## 定义343.1　自伴联合 Hamiltonian
+
+取
+
+$$
+\boxed{
+H=
+\begin{pmatrix}
+H_V&V\\
+V^\dagger&H_H
+\end{pmatrix},
+\qquad
+H_V=H_V^\dagger,\quad H_H=H_H^\dagger.
+}
+\tag{343.1}
+$$
+
+这里 \(V\) 的单位是能量。
+
+完整 Schrödinger 方程为
+
+$$
+i\hbar\dot x=H_Vx+Vy,
+$$
+
+$$
+i\hbar\dot y=V^\dagger x+H_Hy.
+$$
+

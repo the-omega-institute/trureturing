@@ -1,0 +1,61 @@
+## 定理344.2　同一个维数可以由有限矩矩阵恢复
+
+定义谱矩
+
+$$
+\mu_k=VH_H^kV^\dagger,
+$$
+
+以及块 Hankel 矩阵
+
+$$
+\boxed{
+\mathscr H_m=(\mu_{i+j})_{i,j=0}^{m}.
+}
+\tag{344.5}
+$$
+
+则
+
+$$
+\boxed{
+\mathscr H_m=W_m^\dagger W_m,
+\qquad
+W_m=(V^\dagger,H_HV^\dagger,\ldots,H_H^mV^\dagger).
+}
+\tag{344.6}
+$$
+
+当 \(m\) 足够大时，
+
+$$
+\boxed{
+\operatorname{rank}\mathscr H_m=d_{\min}.
+}
+\tag{344.7}
+$$
+
+### 证明
+
+Gram 恒等式直接展开得到。
+
+这些列生成
+
+$$
+\mathcal K_H
+=
+\operatorname{span}\{H_H^jV^\dagger x:j\ge0\}.
+$$
+
+用有限谱上的插值多项式可以分别提取每个 \(P_\lambda V^\dagger x\)，所以
+
+$$
+\dim\mathcal K_H
+=
+\sum_\lambda\operatorname{rank}R_\lambda.
+$$
+
+有限维 Cayley–Hamilton 定理保证列空间在有限阶稳定。∎
+
+仓库的 `memory_dimension_formula` 已证明：线性预测中的记忆维数，等于全部未来可观察方向的维数减去当前读数秩。上面的谱秩公式，为这一抽象差值提供了一个具体可计算的实现。
+
