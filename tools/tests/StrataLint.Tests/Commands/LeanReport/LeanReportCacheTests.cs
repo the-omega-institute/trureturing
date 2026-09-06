@@ -399,6 +399,9 @@ public sealed class LeanReportCacheTests
             File.Copy(
                 Path.Combine(repositoryRoot, "tools", "scripts", "report", "lean-report-input.sh"),
                 Path.Combine(reportDir, "lean-report-input.sh"));
+            File.Copy(
+                Path.Combine(repositoryRoot, "tools", "scripts", "report", "lean-report-bundle-lib.sh"),
+                Path.Combine(reportDir, "lean-report-bundle-lib.sh"));
             foreach (var relative in new[]
             {
                 RawReportPath,
@@ -623,7 +626,12 @@ public sealed class LeanReportCacheTests
             [[ -n "$output" ]] || { echo "stub-producer: no --output" >&2; exit 2; }
             mkdir -p "$(dirname "$output")"
             printf '%s\n' "$STUB_REPORT_CONTENT" > "$output"
-            printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.materials.zip"
+            python3 - "${output}.materials.zip" "$STUB_REPORT_CONTENT" <<'PY'
+            import sys
+            import zipfile
+            with zipfile.ZipFile(sys.argv[1], "w") as archive:
+                archive.writestr("fixture.txt", sys.argv[2] + "\n")
+            PY
             if command -v sha256sum >/dev/null 2>&1; then
               h="$(sha256sum "$output" | awk '{print $1}')"
             elif command -v openssl >/dev/null 2>&1; then

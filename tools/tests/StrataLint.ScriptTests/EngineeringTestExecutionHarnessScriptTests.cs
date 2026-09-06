@@ -1,15 +1,16 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class EngineeringTestExecutionHarnessScriptTests
+public sealed partial class EngineeringTestExecutionHarnessScriptTests
 {
     private const string ExecutablePath = "/usr/bin:/bin:/usr/sbin:/sbin";
     private static readonly UTF8Encoding Utf8 = new(false);
 
     [Fact]
-    public void CanonicalMakeInvocationPassesEngineeringTargetAndRepositoryRevisions()
+    public void CanonicalEngineeringScriptReceivesRepositoryRevisionsDirectly()
     {
         if (OperatingSystem.IsWindows()) return;
         using var run = RunHarness(new HarnessScenario());
@@ -17,88 +18,84 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
         Assert.True(run.Process.ExitCode == 0, run.Diagnostics);
         Assert.Equal(
         [
-            "--no-print-directory",
-            "-C",
-            Path.Combine(run.Repository, "tools"),
-            "engineering-tests",
-            $"REPOSITORY={run.Repository}",
-            $"HEAD={run.Head}",
-            $"BASE={run.Base}",
+            run.Repository,
+            run.Head,
+            run.Base!,
         ],
-            run.MakeArguments);
+            run.EngineeringArguments);
     }
 
     [Fact]
-    public void MissingObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    public void MissingObservationLibraryEmitsUnavailableAndPreservesEngineeringExitCode()
     {
         if (OperatingSystem.IsWindows()) return;
-        AssertUnavailableAndPreservesMakeExitCodes(
+        AssertUnavailableAndPreservesEngineeringExitCodes(
             ObservationLibraryState.Missing,
             "missing");
     }
 
     [Fact]
-    public void NotRegularObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    public void NotRegularObservationLibraryEmitsUnavailableAndPreservesEngineeringExitCode()
     {
         if (OperatingSystem.IsWindows()) return;
-        AssertUnavailableAndPreservesMakeExitCodes(
+        AssertUnavailableAndPreservesEngineeringExitCodes(
             ObservationLibraryState.NotRegular,
             "not-regular");
     }
 
     [Fact]
-    public void UnreadableObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    public void UnreadableObservationLibraryEmitsUnavailableAndPreservesEngineeringExitCode()
     {
         if (OperatingSystem.IsWindows()) return;
-        AssertUnavailableAndPreservesMakeExitCodes(
+        AssertUnavailableAndPreservesEngineeringExitCodes(
             ObservationLibraryState.Unreadable,
             "unreadable");
     }
 
     [Fact]
-    public void SyntaxInvalidObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    public void SyntaxInvalidObservationLibraryEmitsUnavailableAndPreservesEngineeringExitCode()
     {
         if (OperatingSystem.IsWindows()) return;
-        AssertUnavailableAndPreservesMakeExitCodes(
+        AssertUnavailableAndPreservesEngineeringExitCodes(
             ObservationLibraryState.SyntaxInvalid,
             "syntax-error");
     }
 
     [Fact]
-    public void SourceNonzeroObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    public void SourceNonzeroObservationLibraryEmitsUnavailableAndPreservesEngineeringExitCode()
     {
         if (OperatingSystem.IsWindows()) return;
-        AssertUnavailableAndPreservesMakeExitCodes(
+        AssertUnavailableAndPreservesEngineeringExitCodes(
             ObservationLibraryState.SourceNonzero,
             "source-nonzero");
     }
 
     [Fact]
-    public void EntrypointMissingObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    public void EntrypointMissingObservationLibraryEmitsUnavailableAndPreservesEngineeringExitCode()
     {
         if (OperatingSystem.IsWindows()) return;
-        AssertUnavailableAndPreservesMakeExitCodes(
+        AssertUnavailableAndPreservesEngineeringExitCodes(
             ObservationLibraryState.EntrypointMissing,
             "entrypoint-missing");
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void AssertUnavailableAndPreservesMakeExitCodes(
+    private static void AssertUnavailableAndPreservesEngineeringExitCodes(
         ObservationLibraryState observationLibraryState,
         string expectedReason)
     {
-        foreach (var makeExitCode in new[] { 7, 0 })
+        foreach (var engineeringExitCode in new[] { 7, 0 })
         {
             using var run = RunHarness(new HarnessScenario(
-                MakeExitCode: makeExitCode,
+                EngineeringExitCode: engineeringExitCode,
                 ObservationLibraryState: observationLibraryState));
 
-            Assert.True(run.Process.ExitCode == makeExitCode, run.Diagnostics);
+            Assert.True(run.Process.ExitCode == engineeringExitCode, run.Diagnostics);
             Assert.Contains(
                 $"RESOURCE_OBSERVATION_LOADER status=UNAVAILABLE reason={expectedReason}",
                 run.StandardOutput,
                 StringComparison.Ordinal);
-            Assert.Single(run.MakeArguments, "engineering-tests");
+            Assert.Equal(3, run.EngineeringArguments.Length);
         }
     }
 
@@ -110,7 +107,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
 
         Assert.Equal(128, run.Process.ExitCode);
         Assert.Contains("HEAD^1", run.StandardError, StringComparison.Ordinal);
-        Assert.Empty(run.MakeArguments);
+        Assert.Empty(run.EngineeringArguments);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
@@ -125,7 +122,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             "workflow",
             "engineering-test-execution-harness.sh");
         var binDirectory = Path.Combine(temporary.Path, "bin");
-        var makeArguments = Path.Combine(temporary.Path, "make-arguments");
+        var engineeringArguments = Path.Combine(temporary.Path, "engineering-arguments");
         ScriptHarnessScratch.EnsureDirectory(candidateRoot);
         ScriptHarnessScratch.EnsureDirectory(toolsDirectory);
         ScriptHarnessScratch.EnsureDirectory(binDirectory);
@@ -133,13 +130,13 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             Path.Combine(AppContext.BaseDirectory, "engineering-test-execution-harness.sh"),
             scriptPath);
         ScriptHarnessScratch.WriteExecutableStub(
-            Path.Combine(binDirectory, "make"),
+            Path.Combine(toolsDirectory, "scripts", "engineering-tests.sh"),
             """
-            : > "${MAKE_ARGUMENTS:?}"
+            : > "${ENGINEERING_ARGUMENTS:?}"
             for argument in "$@"; do
-              printf '%s\n' "$argument" >> "$MAKE_ARGUMENTS"
+              printf '%s\n' "$argument" >> "$ENGINEERING_ARGUMENTS"
             done
-            exit "${MAKE_EXIT_CODE:?}"
+            exit "${ENGINEERING_EXIT_CODE:?}"
             """);
         var observationLibrary = Path.Combine(
             toolsDirectory,
@@ -201,8 +198,8 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             "-u", "GIT_CONFIG_PARAMETERS",
             $"PATH={binDirectory}:{ExecutablePath}",
             $"TMPDIR={temporary.Path}",
-            $"MAKE_ARGUMENTS={makeArguments}",
-            $"MAKE_EXIT_CODE={scenario.MakeExitCode}",
+            $"ENGINEERING_ARGUMENTS={engineeringArguments}",
+            $"ENGINEERING_EXIT_CODE={scenario.EngineeringExitCode}",
             "GIT_CONFIG_GLOBAL=/dev/null",
             "GIT_CONFIG_SYSTEM=/dev/null",
             "GIT_CONFIG_NOSYSTEM=1",
@@ -220,7 +217,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             repository,
             head,
             @base,
-            makeArguments);
+            engineeringArguments);
     }
 
     private static void RunGit(string root, params string[] arguments)
@@ -267,7 +264,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
         + "\nstderr:\n" + Utf8.GetString(process.StandardError);
 
     private sealed record HarnessScenario(
-        int MakeExitCode = 0,
+        int EngineeringExitCode = 0,
         ObservationLibraryState ObservationLibraryState = ObservationLibraryState.Available,
         bool HeadHasFirstParent = true);
 
@@ -288,7 +285,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
         string Repository,
         string Head,
         string? Base,
-        string MakeArgumentsPath) : IDisposable
+        string EngineeringArgumentsPath) : IDisposable
     {
         internal string Diagnostics => ProcessDiagnostics(Process);
 
@@ -296,9 +293,10 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
 
         internal string StandardError => Utf8.GetString(Process.StandardError);
 
-        internal string[] MakeArguments =>
-            ScriptHarnessScratch.ReadRecordedCalls(MakeArgumentsPath);
+        internal string[] EngineeringArguments =>
+            ScriptHarnessScratch.ReadRecordedCalls(EngineeringArgumentsPath);
 
         public void Dispose() => Temporary.Dispose();
     }
+
 }

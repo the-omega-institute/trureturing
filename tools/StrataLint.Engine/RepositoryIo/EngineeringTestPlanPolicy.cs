@@ -306,6 +306,7 @@ internal static class EngineeringTestExecutor
             exitCodes[projectIndex] = run(
                 new EngineeringTestInvocation(plan.Projects[projectIndex])));
 
-        return exitCodes.FirstOrDefault(static exitCode => exitCode != 0);
+        if (exitCodes.Any(static exitCode => exitCode is not 0 and not 1)) return 2;
+        return exitCodes.Any(static exitCode => exitCode == 1) ? 1 : 0;
     }
 }

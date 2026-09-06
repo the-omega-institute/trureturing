@@ -10,6 +10,7 @@ CANDIDATE_OUTPUT=""
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
 INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
+BUNDLE_VALIDATOR="$SCRIPT_DIR/report/lean-report-bundle-lib.sh"
 # Opt-in host/UID-scoped content-addressed report cache. Local entry points use
 # the persistent host cache; CI may supply a runner-temporary root containing an
 # attested stale dev report for the producer's existing delta path.
@@ -37,6 +38,12 @@ done
   || { echo "lean-report-pair: report supervisor is absent" >&2; exit 2; }
 [[ -x "$INPUT_HELPER" ]] \
   || { echo "lean-report-pair: report input helper is absent" >&2; exit 2; }
+[[ -f "$BUNDLE_VALIDATOR" && -r "$BUNDLE_VALIDATOR" ]] \
+  || { echo "lean-report-pair: report bundle validator is absent" >&2; exit 2; }
+# shellcheck source=/dev/null
+source "$BUNDLE_VALIDATOR"
+declare -F lean_report_bundle_validate >/dev/null \
+  || { echo "lean-report-pair: report bundle validator entrypoint is absent" >&2; exit 2; }
 
 PRODUCER="$(cd "$(dirname "$PRODUCER")" && pwd -P)/$(basename "$PRODUCER")"
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
@@ -167,43 +174,7 @@ cache_root_trusted() {
 cache_evict() {
   local address="$1"
   [[ -n "$CACHE_ROOT" && "$address" =~ ^[0-9a-f]{64}$ ]] || return 0
-  rm -rf -- "$CACHE_ROOT/$address" 2>/dev/null || true
-}
-
-cache_provenance_matches() {
-  local provenance="$1"
-  local address="$2"
-  local report_sha256="$3"
-  python3 - "$provenance" "$address" "$report_sha256" \
-    "${candidate_producer:-}" "${candidate_resident:-}" \
-    "${candidate_sources:-}" "${candidate_config:-}" <<'PY'
-import json
-import pathlib
-import sys
-
-path, address, report_sha, producer, resident, sources, config = sys.argv[1:]
-try:
-    value = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
-except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
-    raise SystemExit(1)
-expected_keys = {
-    "schema", "side", "mode", "source_side", "input_address",
-    "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256",
-    "lean_config_sha256", "report_sha256",
-}
-if (set(value) != expected_keys
-        or value.get("schema") != "stratalint-lean-report-provenance-v1"
-        or value.get("side") != "candidate"
-        or value.get("source_side") != "candidate"
-        or value.get("mode") not in ("produced", "cached")
-        or value.get("input_address") != "sha256:" + address
-        or value.get("producer_sha256") != producer
-        or value.get("repository_inspector_sha256") != resident
-        or value.get("lean_sources_sha256") != sources
-        or value.get("lean_config_sha256") != config
-        or value.get("report_sha256") != report_sha):
-    raise SystemExit(1)
-PY
+  rm -rf -- "${CACHE_ROOT:?}/$address" 2>/dev/null || true
 }
 
 # Serve the complete bundle at $output from the cache entry for
@@ -226,12 +197,12 @@ cache_try_restore() {
     && -s "${report}.materials.zip" \
     && ! -e "${report}.logs" && ! -L "${report}.logs" ]] \
     || { cache_evict "$address"; return 1; }
-  local declared="" declared_name=""
-  read -r declared declared_name < "${report}.sha256" || true
-  [[ "$declared" =~ ^[0-9a-f]{64}$ \
-    && "$declared_name" == "raw-lean-report.json" \
-    && "$(awk 'END {print NR}' "${report}.sha256")" == "1" ]] \
-    || { cache_evict "$address"; return 1; }
+  if ! lean_report_bundle_validate \
+    "$report" "$candidate_repository" "$candidate_producer" \
+    "$candidate_resident" "$candidate_sources" "$candidate_config" >/dev/null; then
+    cache_evict "$address"
+    return 1
+  fi
   rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
     "${output}.input.attestation" "${output}.materials.zip"
   mkdir -p "$(dirname "$output")"
@@ -245,28 +216,11 @@ cache_try_restore() {
   fi
   local actual
   actual="$(hash_file "$output")"
-  if [[ "$actual" != "$declared" ]]; then
-    cache_evict "$address"
-    rm -rf -- "$output" "${output}.provenance.json" \
-      "${output}.input.attestation" "${output}.materials.zip"
-    return 1
-  fi
-  # Validate the stored provenance before treating an exact-address hit as
-  # authoritative.  prepare_bundle rewrites the staged provenance later, so
-  # this check must happen here or a damaged cache sidecar could be masked.
-  if ! cache_provenance_matches "${output}.provenance.json" "$address" "$actual"; then
-    cache_evict "$address"
-    rm -rf -- "$output" "${output}.sha256" \
-      "${output}.input.attestation" "${output}.provenance.json" \
-      "${output}.materials.zip"
-    return 1
-  fi
   # Re-stamp the sidecar for this output's basename so it is self-consistent.
   write_sidecar "$output" "$actual"
-  # Re-derive the repository address from the CURRENT tree and confirm it matches
-  # the stored attestation; rejects any key skew or collision. Fail-closed.
-  if ! "$INPUT_HELPER" verify --repository "$root" --report "$output" \
-    --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null 2>&1; then
+  if ! lean_report_bundle_validate \
+    "$output" "$candidate_repository" "$candidate_producer" \
+    "$candidate_resident" "$candidate_sources" "$candidate_config" >/dev/null; then
     cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
       "${output}.input.attestation" "${output}.materials.zip"
@@ -390,9 +344,6 @@ verify_bundle() {
   local config_sha256="$8"
   local repository_sha256="$9"
   local report_sha256="${10}"
-  local expected_provenance="$TMP_ROOT/expected.provenance.json"
-  local expected_attestation="$TMP_ROOT/expected.input.attestation"
-
   if [[ "$mode" == "produced" ]]; then
     [[ -d "${output}.logs" && -n "$(find "${output}.logs" -type f -print -quit)" ]] \
       || { echo "lean-report-pair: producer left no log sidecar: $output" >&2; return 2; }
@@ -400,25 +351,10 @@ verify_bundle() {
     [[ ! -e "${output}.logs" && ! -L "${output}.logs" ]] \
       || { echo "lean-report-pair: cached bundle contains producer logs: $output" >&2; return 2; }
   fi
-  [[ -s "${output}.materials.zip" ]] \
-    || { echo "lean-report-pair: producer left no material archive: $output" >&2; return 2; }
-  "$INPUT_HELPER" verify --repository "$root" --report "$output" \
-    --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null
-
-  printf '{"schema":"stratalint-lean-report-provenance-v1","side":"candidate","mode":"%s","source_side":"candidate","input_address":"sha256:%s","producer_sha256":"%s","repository_inspector_sha256":"%s","lean_sources_sha256":"%s","lean_config_sha256":"%s","report_sha256":"%s"}\n' \
-    "$mode" "$input_address" "$producer_sha256" \
-    "$resident_sha256" "$sources_sha256" "$config_sha256" "$report_sha256" \
-    > "$expected_provenance"
-  cmp -s "$expected_provenance" "${output}.provenance.json" \
-    || { echo "lean-report-pair: provenance sidecar mismatch: $output" >&2; return 2; }
-  {
-    printf '%s\n' "schema=stratalint-lean-report-input-attestation-v1"
-    printf 'repository_input_sha256=%s\n' "$repository_sha256"
-    printf 'producer_sha256=%s\n' "$producer_sha256"
-    printf 'report_sha256=%s\n' "$report_sha256"
-  } > "$expected_attestation"
-  cmp -s "$expected_attestation" "${output}.input.attestation" \
-    || { echo "lean-report-pair: input attestation mismatch: $output" >&2; return 2; }
+  lean_report_bundle_validate \
+    "$output" "$repository_sha256" "$producer_sha256" "$resident_sha256" \
+    "$sources_sha256" "$config_sha256" "$mode" >/dev/null \
+    || { echo "lean-report-pair: canonical bundle validation failed: $output" >&2; return 2; }
 }
 
 create_staging_output() {
