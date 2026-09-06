@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2406c3118f31b417ad3e46d85d8548bb722a0870d2743972ae1d1a5af29edb48
+  normalized_sha256: sha256:2406c3118f31b417ad3e46d85d8548bb722a0870d2743972ae1d1a5af29edb48
+cas_ref: sha256:2406c3118f31b417ad3e46d85d8548bb722a0870d2743972ae1d1a5af29edb48
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/GoldenJonesMatching.golden_jones_matching
+    target_statement_id: sha256:c82f4df253043588383a651bdf6a22725da73fb9c822ffc7f6b658135809f73f
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/GoldenCoding/GoldenJonesMatching.golden_jones_matching
+      definition_sha256: sha256:9c5d67dc3b9c1aa3c2a6e685b0ffa35f059012bc3c9081d70990f6b16ef441ec
+      emission_sha256: sha256:fa7de1f69b35a35f30aa4b91001ddb8458102a050900e8c223c0c386a73fd028
+  unresolved_subitems: []
