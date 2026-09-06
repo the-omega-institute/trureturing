@@ -1,0 +1,54 @@
+## 1. 固定 Weil 二次型
+
+对光滑紧支集函数 \(f\)，定义
+
+$$
+\widetilde f(x)=\overline{f(-x)},
+$$
+
+以及
+
+$$
+\boxed{
+Q_W(f)=W(f*\widetilde f),
+}
+\tag{12}
+$$
+
+其中 \(W\) 是实际 ζ 函数确定的 Weil 分布。
+
+经典 Weil 判据为
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Q_W(f)\ge0
+\quad
+\forall f\in C_c^\infty(\mathbb R).
+}
+\tag{13}
+$$
+
+在未证明正性以前，应该称它为 Hermitian 二次型，而不是预先称作 Hilbert 内积。([arXiv][4])
+
+令反射算子
+
+$$
+(Rf)(x)=f(-x).
+$$
+
+Weil 分布的反射对称性给出
+
+$$
+Q_W(Rf,Rg)=Q_W(f,g).
+$$
+
+定义
+
+$$
+f_+=\frac{f+Rf}{2},
+\qquad
+f_-=\frac{f-Rf}{2}.
+$$
+

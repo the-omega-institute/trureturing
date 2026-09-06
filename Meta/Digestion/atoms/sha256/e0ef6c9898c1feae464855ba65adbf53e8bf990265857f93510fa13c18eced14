@@ -1,0 +1,42 @@
+# 八、把拼接问题落回实际 ξ：一个固定的跨切片核
+
+现在选择真正与零点定位有关的交叉关系，而不是任意的量子内积。
+
+定义：
+
+$$
+\boxed{
+\mathcal K_A(z,w)
+=
+\frac{
+A(z)\overline{A'(w)}
+-
+A'(z)\overline{A(w)}
+}{
+z-\overline w
+}.
+}
+\tag{U15}
+$$
+
+分母为零处按解析可去延拓定义。
+
+这是前文整 Bézout 核在未折叠谱坐标中的对应物。它是 Hermitian 核：
+
+$$
+\mathcal K_A(w,z)=\overline{\mathcal K_A(z,w)}.
+$$
+
+在实轴对角线上：
+
+$$
+\boxed{
+\mathcal K_A(t,t)
+=
+A'(t)^2-A(t)A''(t)=L_1(t).
+}
+\tag{U16}
+$$
+
+因此，过去我们分析的第一条 Laguerre 不等式，只是这份双变量核的**对角切片**。
+

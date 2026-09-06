@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b7d2d39202b652d67539a0c417a6ad7182000fbdeba696cc0ae97d305794060b
+  normalized_sha256: sha256:b7d2d39202b652d67539a0c417a6ad7182000fbdeba696cc0ae97d305794060b
+cas_ref: sha256:b7d2d39202b652d67539a0c417a6ad7182000fbdeba696cc0ae97d305794060b
+coverage_gids:
+  - gid: D5/S0/Asymptotics/EscapeProbability/DiploidDominanceSelectionOrder.diploid_dominance_selection_order
+    target_statement_id: sha256:8a8c92c90f1aeacac5a840642a73b61f09d4a6edb9b8d784bec827137e7ae740
+receipts:
+  scribe:
+    - gid: D5/S0/Asymptotics/EscapeProbability/DiploidDominanceSelectionOrder.diploid_dominance_selection_order
+      definition_sha256: sha256:91e5bf71bf6279bf027997b37bc24302f35811a3eb87eedacf36b9381eb63032
+      emission_sha256: sha256:68626df1d5471be3ce52c5e87a173569f288ad5a6f13ca6c9605a2a3349f2e87
+  unresolved_subitems: []

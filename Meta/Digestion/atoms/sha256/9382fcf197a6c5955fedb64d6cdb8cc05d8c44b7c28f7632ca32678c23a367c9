@@ -1,0 +1,100 @@
+# 八、整个波都存在，为什么仍然会有信息逃逸？
+
+考虑最简单的 ζ 波：
+
+$$
+\boxed{
+|\Omega_\sigma(t)\rangle
+=
+\frac1{\sqrt{\zeta(\sigma)}}
+\sum_{n\ge1}
+n^{-\sigma/2}e^{-it\ln n}|n\rangle,
+\qquad\sigma>1.
+}
+\tag{24}
+$$
+
+它的相关函数为：
+
+$$
+\boxed{
+\langle\Omega_\sigma(0)\mid\Omega_\sigma(t)\rangle
+=
+\frac{\zeta(\sigma+it)}{\zeta(\sigma)}.
+}
+\tag{25}
+$$
+
+这是一个无条件成立的正定相关函数，因为它来自实际的单位向量与酉演化。所用 ζ 级数与 Euler 乘积在 \(\sigma>1\) 收敛。([DLMF][3])
+
+但这种收敛域内的正实现，不会自动延伸为临界线上的正实现。
+
+令 \(P_{\le N}\) 为只观察前 \(N\) 个整数的投影。那么：
+
+$$
+\boxed{
+\|P_{\le N}\Omega_\sigma\|^2
+=
+\frac{\sum_{n\le N}n^{-\sigma}}{\zeta(\sigma)}
+\longrightarrow0
+\qquad(\sigma\downarrow1).
+}
+\tag{26}
+$$
+
+分子对固定 \(N\) 有有限极限，而：
+
+$$
+\zeta(\sigma)\to\infty.
+$$
+
+与此同时：
+
+$$
+\|\Omega_\sigma\|=1
+$$
+
+始终成立。
+
+所以：
+
+$$
+\boxed{
+\text{整体波的范数没有丢失，}
+\quad
+\text{但任意固定有限观察窗捕获的质量都趋于零。}
+}
+$$
+
+在 Hilbert 空间中，这表现为 \(\Omega_\sigma\) 弱趋于零，却不可能强收敛到零，因为范数始终为 1。
+
+这是一种真正的尺度逃逸，不是因为少写了几个数位。
+
+在我们新的收益波中，相应条件是：
+
+$$
+\beta\lambda>1.
+$$
+
+当为了追踪更大尺度而令：
+
+$$
+\lambda\downarrow0,
+$$
+
+任何固定 \(\beta\) 最终都会失去归一化能力。
+
+因此，不能把：
+
+$$
+\text{每个固定尺度都能构造一个完整波}
+$$
+
+直接当成：
+
+$$
+\text{同一个有限资源表示能统一控制所有尺度}.
+$$
+
+**把时空放进一个波，解决的是表达方式；信息逃逸仍然可能发生在观察窗、极限交换、归一化和目标权重上。**
+

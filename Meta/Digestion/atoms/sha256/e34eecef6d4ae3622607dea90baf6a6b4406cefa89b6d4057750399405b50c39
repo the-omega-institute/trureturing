@@ -1,0 +1,52 @@
+## 定义 212.1　受控效果空间
+
+设初始读数由一组效果算子 \(\mathcal E_0\) 给出：
+
+$$
+0\le E\le I.
+$$
+
+令
+
+$$
+\mathcal S_0
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I\}\cup\mathcal E_0\bigr).
+$$
+
+对每个仪器分支，定义 Heisenberg 对偶：
+
+$$
+\Phi_{a,b}^*(E)
+=
+\sum_\lambda
+K_{a,b,\lambda}^{\dagger}EK_{a,b,\lambda}.
+$$
+
+递归构造：
+
+$$
+\boxed{
+\mathcal S_{n+1}
+=
+\operatorname{span}_{\mathbb R}
+\left(
+\mathcal S_n
+\cup
+\bigcup_{a,b}\Phi_{a,b}^*(\mathcal S_n)
+\right).
+}
+\tag{212.1}
+$$
+
+最后令
+
+$$
+\mathcal S_\Gamma=\bigcup_{n\ge0}\mathcal S_n.
+$$
+
+它不是“已经测量到的所有结果”，而是**预测全部允许协议所需的效果方向**。
+
+---
+

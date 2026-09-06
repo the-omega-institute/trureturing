@@ -1,0 +1,49 @@
+# 六、局部为什么可能拼不起来？真正缺失的是交叉内积和闭环相位
+
+考虑三个候选观察态，设归一化后想要的内积为：
+
+$$
+G=
+\begin{pmatrix}
+1&a&\overline c\\
+\overline a&1&b\\
+c&\overline b&1
+\end{pmatrix}.
+$$
+
+任意两个态可以共同实现，只要求：
+
+$$
+|a|\le1,\qquad |b|\le1,\qquad |c|\le1.
+$$
+
+但三个态共同实现，还要求：
+
+$$
+\boxed{
+\det G
+=
+1-|a|^2-|b|^2-|c|^2+2\Re(abc)
+\ge0.
+}
+\tag{U12}
+$$
+
+这里的：
+
+$$
+\boxed{abc}
+$$
+
+不能由三个模长恢复。
+
+对每个态重新选局部相位：
+
+$$
+|\psi_j\rangle\mapsto e^{i\theta_j}|\psi_j\rangle,
+$$
+
+三个内积分别改变，但乘积 \(abc\) 不变。
+
+它是一个闭环相位量，属于 Bargmann 不变量与几何相位的经典结构。([APS Journals][6])
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:dd26e402b6e38aae2e0a663a7f452909bbda68a39f6c8187e8e60eae0f7bf439
+  normalized_sha256: sha256:dd26e402b6e38aae2e0a663a7f452909bbda68a39f6c8187e8e60eae0f7bf439
+cas_ref: sha256:dd26e402b6e38aae2e0a663a7f452909bbda68a39f6c8187e8e60eae0f7bf439
+coverage_gids:
+  - gid: D5/S0/Computability/TerminalGradeDecomposition.terminal_grade_three_way_decomposition
+    target_statement_id: sha256:71ca019433234d1760c0c4134abcdbf2113ca28b94ea697e8c6f22eb570cde21
+receipts:
+  scribe:
+    - gid: D5/S0/Computability/TerminalGradeDecomposition.terminal_grade_three_way_decomposition
+      definition_sha256: sha256:bcc19840ac08663315a5686b590679ca5e90c49510df0b253fd24be67801abcf
+      emission_sha256: sha256:f1104bbfb1db47ad7bc03470c6d2e4bb56d21caa0aaea992cf2a3344ada49d8a
+  unresolved_subitems: []

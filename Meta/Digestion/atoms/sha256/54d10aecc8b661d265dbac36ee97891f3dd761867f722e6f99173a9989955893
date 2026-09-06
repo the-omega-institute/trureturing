@@ -1,0 +1,45 @@
+# 五、上一轮的未来收益储备，正是这个波的零温极限
+
+固定一个已知整数 \(B\)，令：
+
+$$
+P_B=\sum_{B\mid n}|n\rangle\langle n|.
+$$
+
+它选择全部可由 \(B\) 继续乘法增长得到的终点。
+
+定义：
+
+$$
+\boxed{
+Q_B(\lambda,\beta)
+=
+\|P_B\mathcal W_{\lambda,\beta}\|^2
+=
+\sum_{B\mid n}e^{\beta J_\lambda(n)},
+}
+$$
+
+其中：
+
+$$
+J_\lambda(n)=W(n)-\lambda E(n).
+$$
+
+再定义：
+
+$$
+\Phi_\lambda(B)
+=
+\max_{B\mid n}J_\lambda(n).
+$$
+
+最大值存在，因为：
+
+$$
+J_\lambda(n)
+\le
+\ln(1+\ln n)-\lambda\ln n
+\longrightarrow-\infty.
+$$
+

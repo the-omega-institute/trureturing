@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:59c1a8e2406f66fff9c813fafdaf7cb6e239b7732e03c94660c859794251508c
+  normalized_sha256: sha256:59c1a8e2406f66fff9c813fafdaf7cb6e239b7732e03c94660c859794251508c
+cas_ref: sha256:59c1a8e2406f66fff9c813fafdaf7cb6e239b7732e03c94660c859794251508c
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/QuadraticObservationBound.quadratic_readout_has_collision
+    target_statement_id: sha256:83334fc5588236eb072ca0831054f5bcf2174bf809c275e61b99ce53f5e8ffaf
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/Galois/QuadraticObservationBound.quadratic_readout_has_collision
+      definition_sha256: sha256:70a79f578adccd2deddef102505c9a4b53b22f2db9330ec5eb3f934f8142c387
+      emission_sha256: sha256:6d6e89643e00266695ec3d0a81d417071cf18d79ba28134cff0145e28d50b881
+  unresolved_subitems: []

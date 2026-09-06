@@ -1,0 +1,34 @@
+## 量子钟更新还受到能量条件约束
+
+对于时间无关 Hamiltonian 下的纯态，从当前状态演化到正交状态所需时间满足：
+
+$$
+\boxed{
+\tau_\perp
+\ge
+\max\left\{
+\frac{\pi\hbar}{2\Delta E},
+\frac{\pi\hbar}{2(\langle H\rangle-E_0)}
+\right\}.
+}
+\tag{205.2}
+$$
+
+这里 \(E_0\) 为能量下界。这是 Mandelstam–Tamm 与 Margolus–Levitin 型界；它约束的是物理可区分的状态变化，不是任意软件指令的统一耗时。([arXiv][3])
+
+因此，要把“刷新率”变成一个物理量，必须说明：
+
+$$
+\boxed{
+\text{什么算一次新记录}
++
+\text{需要多大区分度}
++
+\text{使用什么 Hamiltonian 与资源}.
+}
+$$
+
+仅凭“观察者有限”，还不足以给出一个具体的普适刷新频率。
+
+---
+

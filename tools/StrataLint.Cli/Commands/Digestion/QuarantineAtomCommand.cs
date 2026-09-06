@@ -275,6 +275,9 @@ internal static class QuarantineAtomCommand
 
     private static void RequireWritable(DigestionLedgerEntry entry)
     {
+        if (entry.Receipts.Nonpropositional is not null)
+            throw Invalid("NONPROPOSITIONAL_PRESENT", $"atom_id={entry.AtomId}");
+
         if (entry.ProjectedStatus.Migration != DigestionMigrationState.Residual
             || entry.ProjectedStatus.Truth != DigestionTruthState.Open)
         {

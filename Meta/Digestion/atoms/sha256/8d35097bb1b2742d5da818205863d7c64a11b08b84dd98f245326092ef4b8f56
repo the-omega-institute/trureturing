@@ -1,0 +1,61 @@
+## 定理 224.1　子空间内部仍然演化
+
+把
+
+$$
+K_N=
+\left(Pe^{-iHT/(N\hbar)}P\right)^N
+$$
+
+看作作用于 \(P\mathcal H\) 的未归一化“全部测量成功”过程。
+
+则
+
+$$
+\boxed{
+K_N\longrightarrow e^{-i(PHP)T/\hbar}
+}
+\tag{224.1}
+$$
+
+并具有有限维上界
+
+$$
+\boxed{
+\left\|
+K_N-e^{-i(PHP)T/\hbar}
+\right\|
+\le
+\frac{T^2\|H\|^2}{N\hbar^2}.
+}
+\tag{224.2}
+$$
+
+### 证明
+
+在 \(P\mathcal H\) 上，两种单步操作的一阶展开相同：
+
+$$
+Pe^{-iH\delta/\hbar}P
+=
+I_P-\frac{i\delta}{\hbar}PHP+O(\delta^2),
+$$
+
+$$
+e^{-iPHP\delta/\hbar}
+=
+I_P-\frac{i\delta}{\hbar}PHP+O(\delta^2).
+$$
+
+Hermitian 指数的二阶余项分别受
+
+$$
+\frac{\delta^2\|H\|^2}{2\hbar^2}
+$$
+
+控制，故单步差不超过 \(\delta^2\|H\|^2/\hbar^2\)。
+
+两个单步算子均为压缩算子。对 \(N\) 次乘积作望远镜展开，得到式（224.2）。∎
+
+---
+

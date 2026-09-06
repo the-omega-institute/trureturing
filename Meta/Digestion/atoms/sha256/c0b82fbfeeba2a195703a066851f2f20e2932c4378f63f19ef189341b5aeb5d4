@@ -1,0 +1,130 @@
+## 定理 3：固定波包的双片判据
+
+以下命题等价：
+
+$$
+\boxed{\mathrm{RH};}
+$$
+
+$$
+\boxed{
+|B(T)|\le q
+\qquad\forall T\in\mathbb R;
+}
+\tag{19}
+$$
+
+$$
+\boxed{
+\sup_{T\ge0}|B(T)|<\infty;
+}
+\tag{20}
+$$
+
+$$
+\boxed{
+Q_W(f_T^+)\ge0
+\quad\text{且}\quad
+Q_W(f_T^-)\ge0
+\qquad\forall T\ge0.
+}
+\tag{21}
+$$
+
+### 证明：RH 推出全部双片矩阵正性
+
+RH 下，所有 \(\omega\) 都是实数，且 \(\widehat g(\omega)\) 为实数。因此
+
+$$
+a_\omega=m_\omega\widehat g(\omega)^2\ge0.
+$$
+
+于是
+
+$$
+q=B(0)=\sum_\omega a_\omega,
+$$
+
+而
+
+$$
+|B(T)|
+=
+\left|\sum_\omega a_\omega e^{i\omega T}\right|
+\le
+\sum_\omega a_\omega=q.
+$$
+
+得到式（19），其余两个命题随即成立。
+
+### 证明：有界性排除离线模式
+
+对 \(\Re r>1/2\)，逐项积分式（18）：
+
+$$
+\boxed{
+\int_0^\infty e^{-rT}B(T)\,dT
+=
+\sum_{\omega\in\mathcal Z}
+\frac{m_\omega\widehat g(\omega)^2}{r-i\omega}.
+}
+\tag{22}
+$$
+
+右边在避开极点的紧集上局部一致收敛，给出一个亚纯函数。
+
+若存在右侧离线零点
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad\delta>0,
+$$
+
+则对应
+
+$$
+\omega=\gamma-i\delta,
+\qquad
+r_0=i\omega=\delta+i\gamma.
+$$
+
+定理 1 保证
+
+$$
+\widehat g(\omega)\ne0.
+$$
+
+所以式（22）在 \(r_0\) 有不可去极点，留数为
+
+$$
+m_\omega\widehat g(\omega)^2\ne0.
+$$
+
+但若 \(B\) 有界，其 Laplace 变换在整个 \(\Re r>0\) 内解析，矛盾。
+
+因此不存在右侧离线零点。结合反射对称性，得到 RH。证毕。
+
+---
+
+**这不与上一轮“任意两张切片合法，不保证全部切片合法”的反例矛盾。**
+
+一般 Gram 数据没有这里的额外结构：
+
+$$
+\boxed{
+\text{同一个实际 }W
++
+\text{全部平移参数}
++
+\widehat g\text{ 在非实点不消失}.
+}
+$$
+
+我们并没有用一个固定的 \(2\times2\) 矩阵证明全局结论，而是研究同一个矩阵族
+
+$$
+\{G(T):T\ge0\}.
+$$
+
+无限范围仍然保留在 \(T\) 中。
+

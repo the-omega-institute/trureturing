@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c049e38173d5d0c5a3d03ec251e67161f249e9f7dc10e8b1a1fb6d9478a5491e
+  normalized_sha256: sha256:c049e38173d5d0c5a3d03ec251e67161f249e9f7dc10e8b1a1fb6d9478a5491e
+cas_ref: sha256:c049e38173d5d0c5a3d03ec251e67161f249e9f7dc10e8b1a1fb6d9478a5491e
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaEntropyPlane/LocalEvidenceOrderThreshold.firstEventMass
+    target_statement_id: sha256:89ad9b6d5cbd8bd4677408159aa737fa8b0f54a1644c8bd35501df55503f18d0
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/ZetaEntropyPlane/LocalEvidenceOrderThreshold.firstEventMass
+      definition_sha256: sha256:1af7497764c368504d0ee8d7bf30048f264eca09dae9fa441694b492582146fc
+      emission_sha256: sha256:9930548750219bf660c5bcfd81553293f2cb33f5d706f3b99bef7cc72bf7635a
+  unresolved_subitems: []

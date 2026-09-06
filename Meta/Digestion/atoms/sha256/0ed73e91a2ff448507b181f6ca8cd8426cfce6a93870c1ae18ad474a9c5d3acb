@@ -1,0 +1,40 @@
+# 结论
+
+你发现的对应有实质内容：
+
+> **当“刷新”是一次真实的量子交互，它不仅改变观察者掌握的信息，也可能改变后续能够发生的动力学。Zeno 效应正是这种关系的一种明确实现。**
+
+但继续深入以后，比“观察改变波”更重要的是以下三点。
+
+**第一，观察者不必把系统完全冻结，才能保持自身的稳定结构。**它可以保持一个多维身份区域，同时允许区域内的钟、记忆和计算继续演化。
+
+**第二，更多刷新不一定带来更多知识。**在所研究的固定时长测频协议中，稳定性提高与参数信息下降来自同一个测量反作用。
+
+**第三，选择测量结构本身就是一种物理控制。**改变测量所保留的方向，可以抑制跃迁、保留子空间动力学，或者引导状态；但它不能无代价地指定任意结果，也不改变 Born 概率规则。
+
+因此，这条理论现在可以进一步写成：
+
+$$
+\boxed{
+\text{观察者的记录结构}
+\longrightarrow
+\text{实际施加的选择性耦合}
+\longrightarrow
+\text{被保留与被抑制的动力方向}
+\longrightarrow
+\text{新的可达过程与记录统计}.
+}
+$$
+
+**这是一条能够与现实逐项比较的链：不仅问“是否出现 Zeno”，还要问抑制强度、测量强度缩放、记录熵率、参数信息和反 Zeno 边界是否同时由同一个模型给出。**
+
+真正能增强这套理论可信度的，不是继续找到更多相似名称，而是让这些不同实验读数受到同一组定义和定理的共同约束，并明确预测：在哪些条件下它们必须一致，在哪些条件下它们必然失效。
+
+[1]: https://link.aps.org/doi/10.1103/PhysRevA.41.2295 "https://link.aps.org/doi/10.1103/PhysRevA.41.2295"
+[2]: https://arxiv.org/html/1703.08371v2 "https://arxiv.org/html/1703.08371v2"
+[3]: https://link.aps.org/doi/10.1103/PhysRevLett.89.080401 "https://link.aps.org/doi/10.1103/PhysRevLett.89.080401"
+[4]: https://arxiv.org/abs/1402.0111 "https://arxiv.org/abs/1402.0111"
+[5]: https://arxiv.org/abs/1506.08763 "https://arxiv.org/abs/1506.08763"
+[6]: https://link.aps.org/doi/10.1103/PhysRevLett.120.020505 "https://link.aps.org/doi/10.1103/PhysRevLett.120.020505"
+[7]: https://link.aps.org/doi/10.1103/PhysRevLett.87.040402 "https://link.aps.org/doi/10.1103/PhysRevLett.87.040402"
+[8]: https://arxiv.org/abs/1306.4352 "https://arxiv.org/abs/1306.4352"

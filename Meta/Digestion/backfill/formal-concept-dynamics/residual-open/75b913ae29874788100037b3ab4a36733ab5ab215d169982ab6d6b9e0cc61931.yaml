@@ -6,3 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ObserverMemory/Refinement/PredictionCompletion.CompletedState
+    gaps:
+      - code: scribe-declaration-reference-missing
+        detail: D5/S3/ObserverMemory/Refinement/PredictionCompletion.CompletedState

@@ -1,0 +1,25 @@
+## 定理 207.1　零逃逸等价于可见空间的动力闭合
+
+有：
+
+$$
+\boxed{
+\ell_H(\mathcal S)=0
+\iff
+\mathcal L(\mathcal S)\subseteq\mathcal S.
+}
+\tag{207.2}
+$$
+
+此时：
+
+$$
+e^{\tau\mathcal L}\mathcal S\subseteq\mathcal S.
+$$
+
+### 证明
+
+第一项就是定义中的非对角块为零。
+
+有限维中，若 \(\mathcal L\) 保持 \(\mathcal S\)，则其全部幂及指数也保持 \(\mathcal S\)。∎
+
