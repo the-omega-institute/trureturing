@@ -231,7 +231,12 @@ theorem principal_truncation_eigenvalue_lt_one (w : Fin n → ℝ) (hw : ∀ i, 
   have hout0 := complexEnergy_nonneg (fun _ : Fin p => (1 : ℝ))
     (fun _ => by norm_num) ((complexMatrix C).mulVec x)
   change complexEnergy w y + _ ≤ complexEnergy w x at ho
-  have hsq : ‖a‖ ^ 2 ≤ 1 := by nlinarith
+  have hsq : ‖a‖ ^ 2 ≤ 1 := by
+    apply (mul_le_mul_iff_right₀ hepos).mp
+    calc
+      ‖a‖ ^ 2 * complexEnergy w x ≤ complexEnergy w y := hpr
+      _ ≤ complexEnergy w x := (le_add_of_nonneg_right hout0).trans ho
+      _ = 1 * complexEnergy w x := by ring
   have hle : ‖a‖ ≤ 1 := by nlinarith [norm_nonneg a]
   by_contra! hge
   have ha : ‖a‖ = 1 := le_antisymm hle hge
