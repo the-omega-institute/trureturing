@@ -18,12 +18,16 @@ internal static class DigestStatusCommand
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyList<string> arguments)
+        IReadOnlyList<string> arguments,
+        IAtomHistorySource atomHistorySource,
+        TimeProvider ageTimeProvider)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(arguments);
+        ArgumentNullException.ThrowIfNull(atomHistorySource);
+        ArgumentNullException.ThrowIfNull(ageTimeProvider);
         try
         {
             var options = ParseArguments(arguments);
@@ -153,14 +157,22 @@ internal static class DigestStatusCommand
                     string.Empty);
             }
 
+            var age = options.ResidualSummary || options.Json
+                ? DigestAtomAge.Read(evaluation, frontier!, atomHistorySource, ageTimeProvider)
+                : null;
             return new CommandResult(
                 true,
                 options.ResidualSummary
-                    ? DigestResidualSummary.Render(evaluation, frontier!)
+                    ? DigestResidualSummary.Render(evaluation, frontier!) + age!.RenderSummary()
                     : options.Json
-                        ? RenderJson(evaluation, frontier!)
+                        ? RenderJson(evaluation, frontier!, age!)
                         : RenderText(evaluation),
                 string.Empty);
+        }
+        catch (AtomHistoryUnavailableException exception)
+        {
+            return new CommandResult(false, string.Empty,
+                $"DIGEST_AGE_HISTORY_UNAVAILABLE {exception.Message}\n");
         }
         catch (Exception exception) when (
             exception is FormatException
@@ -305,7 +317,8 @@ internal static class DigestStatusCommand
 
     internal static string RenderJson(
         DigestionLedgerEvaluation evaluation,
-        DigestionFrontierProjection frontier)
+        DigestionFrontierProjection frontier,
+        DigestAtomAge age)
     {
         ArgumentNullException.ThrowIfNull(evaluation);
         ArgumentNullException.ThrowIfNull(frontier);
@@ -314,6 +327,7 @@ internal static class DigestStatusCommand
             schema = "stratalint-digest-status-v1",
             entries_total = evaluation.Entries.Length,
             deletable_now = evaluation.DeletableCount,
+            age_histogram = new { total = age.Total, per_source = age.PerSource },
             frontier = new
             {
                 total = FrontierCounts(frontier.Total),
@@ -322,7 +336,7 @@ internal static class DigestStatusCommand
                     source_id = source.SourceId,
                     counts = FrontierCounts(source.Counts),
                 }),
-                entries = frontier.Entries.Select(static entry => new
+                entries = frontier.Entries.Select(entry => new
                 {
                     source_id = entry.Entry.SourceId,
                     atom_id = entry.Entry.AtomId,
@@ -331,12 +345,15 @@ internal static class DigestStatusCommand
                     kind_label = entry.KindLabel,
                     is_chain_child = entry.IsChainChild,
                     parent_atom_ids = entry.ParentAtomIds,
+                    first_seen_date = age.Entries[entry.Entry.AtomId].FirstSeenDate,
+                    age_days = age.Entries[entry.Entry.AtomId].AgeDays,
+                    age_bucket = age.Entries[entry.Entry.AtomId].AgeBucket,
                 }),
             },
             entries = evaluation.Entries
                 .OrderBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
                 .ThenBy(static item => item.Entry.AtomId, StringComparer.Ordinal)
-                .Select(static item => new
+                .Select(item => new
                 {
                     source_id = item.Entry.SourceId,
                     atom_id = item.Entry.AtomId,
@@ -345,6 +362,9 @@ internal static class DigestStatusCommand
                     migration = DigestionStatusNames.Migration(item.DerivedStatus.Migration),
                     truth = DigestionStatusNames.Truth(item.DerivedStatus.Truth),
                     deletable = item.Deletable,
+                    first_seen_date = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.FirstSeenDate,
+                    age_days = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.AgeDays,
+                    age_bucket = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.AgeBucket,
                     gaps = item.Gaps.Select(static gap => new
                     {
                         code = gap.Code,

@@ -56,17 +56,28 @@ internal static class ScribeTestMapDeriver
             || path.EndsWith("packages.lock.json", StringComparison.Ordinal);
     }
 
-    internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot)
+    internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot) =>
+        DeriveSnapshot(snapshot, null);
+
+    internal static ScribeTestMap DeriveSnapshot(
+        RepositorySnapshot snapshot,
+        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths,
+        Func<RepositorySnapshot, ScribeTestMap>? derive = null)
     {
-        var key = SnapshotDerivationKey(snapshot);
+        var metadataDigest = ScribeTestMapStore.ComputeMetadataDigest(snapshot, describeInputPaths);
+        var key = SnapshotDerivationKey(snapshot, metadataDigest);
         var candidate = new Lazy<ScribeTestMap>(
-            () => DeriveSnapshotUncached(snapshot),
+            () => (derive ?? DeriveSnapshotUncached)(snapshot),
             LazyThreadSafetyMode.ExecutionAndPublication);
         var derivation = SnapshotDerivations.GetOrAdd(key, candidate);
         try
         {
             var map = derivation.Value;
             if (map.CompileQueryFindings.Count != 0)
+            {
+                RemoveSnapshotDerivation(key, derivation);
+            }
+            if (!ScribeTestMapStore.MetadataDigestMatches(snapshot, metadataDigest, describeInputPaths))
             {
                 RemoveSnapshotDerivation(key, derivation);
             }
@@ -112,7 +123,12 @@ internal static class ScribeTestMapDeriver
         }
     }
 
-    private static string SnapshotDerivationKey(RepositorySnapshot snapshot)
+    internal static string SnapshotDerivationKey(
+        RepositorySnapshot snapshot,
+        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null) =>
+        SnapshotDerivationKey(snapshot, ScribeTestMapStore.ComputeMetadataDigest(snapshot, describeInputPaths));
+
+    private static string SnapshotDerivationKey(RepositorySnapshot snapshot, string metadataDigest)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         AppendHashString(hash, "snapshot-files");
@@ -125,8 +141,7 @@ internal static class ScribeTestMapDeriver
             AppendHashBytes(hash, file.RawBytes.AsSpan());
         }
 
-        // MSBuild inherits every process environment variable, including its executable,
-        // SDK, NuGet, and temporary-directory selectors.
+        // Parent selectors also affect snapshot materialization and metadata resolution.
         var environment = Environment.GetEnvironmentVariables()
             .Cast<DictionaryEntry>()
             .OrderBy(static entry => (string)entry.Key, StringComparer.Ordinal)
@@ -142,6 +157,8 @@ internal static class ScribeTestMapDeriver
         AppendHashString(hash, Path.GetTempPath());
         AppendHashString(hash, "resolved-user-profile");
         AppendHashString(hash, Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+        AppendHashString(hash, "metadata-digest");
+        AppendHashString(hash, metadataDigest);
 
         return Convert.ToHexStringLower(hash.GetHashAndReset());
     }

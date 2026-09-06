@@ -363,6 +363,63 @@ compliance; they do not judge coverage faithfulness.
   gaps were all `chain-migration-incomplete`, while the draft record was about to label it
   `multi-clause-guard`. Deleting the door's accurate record to install a less accurate one is a
   bookkeeping error; the atom was dropped from the batch instead.
+- **`blocker_class` must match the actual carrying situation, and the boundary is "one *complete*
+  load-bearing clause".** `multi-clause-guard` means some frozen theorem really carries part of the
+  atom; `missing-prerequisite` means nothing in the repository carries any complete clause. Writing
+  the former for a zero-carrier atom claims partial coverage the ledger does not have. **A general
+  contract lemma that keeps every substantive premise in hypothesis position does not carry
+  anything**: landed rejection (2026-09-06, #5739) bound an atom needing certificates for 32 named
+  matrices to `confluent_negative_jet_block`, whose statement assumes `H.PosDef`, `IsUnit L`,
+  `G.IsHermitian` and the factorisation outright. The drafting seat had itself written "carried is a
+  conditional proof step... the concrete target is still not carried" — **its own honest annotation
+  was the evidence that convicted the record**, because line 10 admitted no carrier while line 12
+  said `multi-clause-guard`. Reviewers can read that contradiction mechanically; so can you, before
+  writing it.
+- **A seat refusing to draft is a reading, not lost throughput.** Three drafting rounds produced
+  three different refusal reasons, and each one corrected the layer above it: (1) the brief demanded
+  a sibling comparison that a low-digestion volume cannot supply — my defect, fixed by adding the
+  empty-set form; (2) `NONE_VERIFIED` on five atoms the mining seat had called `partial` — the seat
+  caught a false positive in the upstream triage; (3) two of those five came back with
+  "zero-carrier premise is false" once a wider search found the carrier — the third layer pushed
+  them back up. **Two refusals in opposite directions, both correct.** Always ask a drafting brief
+  to name what it found when it refuses; that name is what routes the atom to the right line.
+- **Check that a recorded collection command actually collects what it claims.** A record's commands
+  are its provenance: a broken one hands the next reader a lying reproduction path. Landed case
+  (2026-09-06, #5731): four records carried `rg -l '^ quarantine:'`, which demands exactly one space
+  before the key while the real `receipts.quarantine` has two — it silently matches nothing, so a
+  reader "confirming" the zero count would confirm a fabrication. The counts themselves were true
+  (independently recomputed with `git show <base>:<file> | grep -q 'quarantine:'`), and a fifth
+  record in the same batch had written the correct `'^[[:space:]]+quarantine:'` — **the same batch
+  disagreed with itself**. Grep the batch for its own commands and run them.
+- **`chain-migration-incomplete` is a bookkeeping blocker, not a mathematical one — never file it as
+  a quarantine class.** The repository has exactly three `blocker_class` values
+  (`multi-clause-guard`, `missing-prerequisite`, `already-covered`); a parent atom whose
+  `chain_atoms` are still open is blocked by *structure*, not by a missing theorem. A drafting seat
+  raised this itself (2026-09-06): "what I verified is an independent
+  `chain-migration-incomplete`, which is not a 'no complete carrier' finding, and I do not route it
+  to the `missing-prerequisite` mathematical line." Written into the next brief, that boundary
+  produced six correct refusals in one batch.
+- **The chain children are unmined work that the selector cannot see.** `prime_pick` ranks parent
+  atoms; `chain_atoms` members never enter a mining round. Following seven chain-blocked parents
+  downward surfaced **19 open child atoms**, none of which carried a chain of its own — so closing
+  that single layer unblocks all seven parents. When a batch stalls on
+  `chain-migration-incomplete`, the children are the next work face, not a dead end.
+- **A record's `justification` is a YAML scalar and the writer will reject shapes that are perfectly
+  good prose.** `BackfillInventoryWriter.Scalar` throws on `" #"` (the YAML inline-comment
+  sequence), on a first character in `-?:!&*#{[`, on CR/LF, and on leading or trailing whitespace —
+  and the failure rejects the entire PR. Landed cases (2026-09-06, eight entries): `#check` (a Lean
+  command), `#{y ∈ Q | …}` (cardinality notation), `open issue #5555`, `PR #4900`, and a
+  `justification` that began with `[1. Evidence and search scope]`. **Every one was correct
+  technical writing**; the defect is invisible at the semantic layer where the author's attention
+  is, so it needs a machine check rather than care. `tools/scripts/agent/digestion/quarantine_lint.sh`
+  now reports the offending character offset and its context.
+- **When you batch-fix ledger text, three things go wrong in order.** All three happened on the same
+  cleanup: (1) a replacement anchored on whitespace-normalised text misses entries stored as
+  single-quoted YAML scalars — anchor on the raw file text instead; (2) a validation written after
+  `git commit` reports *after* the bad content is already pushed — check before writing, not after;
+  (3) testing one branch of a predicate leaves the others open — the `" #"` fix shipped while the
+  `first character is '['` branch, in the very record the previous round had edited, went unnoticed
+  until the next scan.
 - **`NOT_COMPLETE` is a runner-side verdict about artifacts, not a statement about the work.** Before
   concluding a seat failed, read `status.json` for `reason_code` and `carrier_exit`, and size
   `last-message.txt`. `carrier_exit=0` with a 30 KB last message means the seat did the work; the
