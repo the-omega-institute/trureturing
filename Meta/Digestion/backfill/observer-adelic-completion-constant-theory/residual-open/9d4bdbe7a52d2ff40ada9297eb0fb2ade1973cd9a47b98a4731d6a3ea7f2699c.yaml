@@ -7,7 +7,7 @@ receipts:
   scribe: []
   unresolved_subitems: []
   quarantine:
-    justification: "the boxed identity (274.5) and the Möbius half-plane clause are provable on the frozen owner: D5/S3/Weil/TestFunctions/LiCaratheodoryIdentity.li_caratheodory_identity (PR #4925), but the clause \"xi'/xi is the excess connection\" refers to the source's toroidal connection difference A_{P_K} − A_{T_K} = d xi / xi (OACC display 190.2) for which D5 has no carrier; a hosted-extension deposit was withdrawn in PR #4945 after review because that clause was hollow and the normalization clause had been closed definitionally."
+    justification: "the boxed identity (274.5) and the Möbius half-plane clause are provable on the frozen owner: D5/S3/Weil/TestFunctions/LiCaratheodoryIdentity.li_caratheodory_identity (PR ＃4925), but the clause \"xi'/xi is the excess connection\" refers to the source's toroidal connection difference A_{P_K} − A_{T_K} = d xi / xi (OACC display 190.2) for which D5 has no carrier; a hosted-extension deposit was withdrawn in PR ＃4945 after review because that clause was hollow and the normalization clause had been closed definitionally."
     reentry_condition: Freeze a canonical carrier for the toroidal connections A_{P_K} and A_{T_K} of the source with the identification A_{P_K} − A_{T_K} = d xi / xi (OACC 190.2); then re-deposit the withdrawn hosted extension preserved in branch lane/math/w73b21 history (cdbb09c666, 018e71e460) with the excess-connection identification stated and the normalization stated as continuation 0 = 1 proved from the Keiper–Li expansion at z = 0
     blocker_class: missing-prerequisite
   chain_atoms:
