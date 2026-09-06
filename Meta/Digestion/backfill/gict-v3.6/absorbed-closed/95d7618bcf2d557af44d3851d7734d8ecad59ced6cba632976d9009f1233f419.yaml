@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:95d7618bcf2d557af44d3851d7734d8ecad59ced6cba632976d9009f1233f419
+  normalized_sha256: sha256:95d7618bcf2d557af44d3851d7734d8ecad59ced6cba632976d9009f1233f419
+cas_ref: sha256:95d7618bcf2d557af44d3851d7734d8ecad59ced6cba632976d9009f1233f419
+coverage_gids:
+  - gid: D5/S3/Constants/MoranComplexDimensions.moran_complex_dimension
+    target_statement_id: sha256:9400e77008ba0695f06c49db2071d32d6a155216f6df0173c039fe18cc52bee7
+receipts:
+  scribe:
+    - gid: D5/S3/Constants/MoranComplexDimensions.moran_complex_dimension
+      definition_sha256: sha256:50409112960bf19209903ccbe67ab8244b8d1bd645fb539ba3b7022f164bb303
+      emission_sha256: sha256:05029535016686701046f517bd642a842f249200d04167437d13308c200e5bc3
+  unresolved_subitems: []
