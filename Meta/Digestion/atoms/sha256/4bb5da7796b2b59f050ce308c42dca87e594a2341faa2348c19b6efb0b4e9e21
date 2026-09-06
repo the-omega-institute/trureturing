@@ -1,0 +1,1 @@
+- No Lean compiler or Lake executable was available in the local runtime. No local Lean build, `#print axioms` output, Scribe rendering, or information-theory seal was obtained. The new scripts therefore remain unverified formal proof candidates until a pinned build accepts them.

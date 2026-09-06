@@ -1,0 +1,12 @@
+## 定理 G1　二次矩形卷积的显式系数
+
+设 \(\alpha\in\mathbb R\setminus\{-1,-2\}\),\(a,b,c,d\in\mathbb R\),
+\(p=(X-a)(X-b)\),\(q=(X-c)(X-d)\)。则
+
+$$
+\boxed{
+p\boxplus_2^{\alpha}q
+=X^2-(a+b+c+d)\,X+\bigl[\,ab+cd+\kappa(\alpha)(a+b)(c+d)\,\bigr].
+}
+$$
+

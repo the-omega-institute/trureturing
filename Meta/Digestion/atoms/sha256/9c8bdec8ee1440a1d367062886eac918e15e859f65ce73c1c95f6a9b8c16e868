@@ -1,0 +1,21 @@
+## 79. Actual column pricing is a graph objective with vertex fields
+
+The same derivation identifies an algorithmic subproblem, beyond the fair special case. For a deterministic complete-outcome column y, its actual benefit coefficient is
+
+```text
+b_pi(y) = sum_(i,j) pi(i,j)*1[y(i)=0 and y(j)=1].
+```
+
+For arbitrary rational outcome-marginal multipliers lambda_m, `completeMediatorPricingScore` is `b_pi(y)-sum_m lambda_m*y(m)`. The constant normalization multiplier can be subtracted afterward without changing the maximizing assignment. `completeMediatorPricingScore_graph_identity` proves
+
+```text
+2*pricing_pi,lambda(y) = Cut_pi(y)
+  + sum_m (incoming_pi(m)-outgoing_pi(m)-2*lambda_m)*y(m).
+```
+
+Incoming and outgoing weights are the existing right and left mediator marginals. The theorem requires neither fairness nor symmetry nor stationarity. Thus pricing the actual outcome columns at a fixed mediator slice is exactly a weighted-cut objective with explicit vertex linear terms. A solver that optimizes independent pairwise cells omits the shared Boolean assignment constraint and can return the wrong sharp bound.
+
+For fair outcome data, choosing lambda_m=(incoming_pi(m)-outgoing_pi(m))/2 cancels the fields. A certified upper bound C on every cut supplies a dual upper certificate C/2 for the causal objective, and a maximizing assignment supplies the complementary primal law. This is a paper certificate interpretation of the formal identity, not a newly implemented general branch-and-bound or column-generation driver.
+
+The reduction can encode any finite nonnegative weighted undirected graph: give each directed version of an edge {i,j} mass w_ij/(2W), where W is the sum of undirected edge weights and is positive. Then max Cut_pi is MaxCut(w)/W, and the causal optimum is MaxCut(w)/(2W). This polynomial-size encoding explains why a generic exact pricing routine cannot be replaced by independent scalar maximizations. A formal computational-complexity reduction to a Lean NP-completeness framework is not supplied here. No claim is made about the complexity of the larger unknown-pi optimization merely from this fixed-pi result.
+

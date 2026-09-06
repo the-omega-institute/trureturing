@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fb83cbc39f904356e65c0b5b5a4e733d1a5a4b4e56063ba5c906628943a78467
+  normalized_sha256: sha256:fb83cbc39f904356e65c0b5b5a4e733d1a5a4b4e56063ba5c906628943a78467
+cas_ref: sha256:fb83cbc39f904356e65c0b5b5a4e733d1a5a4b4e56063ba5c906628943a78467
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/FunctionalGraphs/ActualTransferJordanChains.information_loss_layers_from_actual_jordan_chains
+    target_statement_id: sha256:d889c103b9e8a0272c5d840f8dfc41ad036797d39db7e200383239d00ecfbb03
+receipts:
+  scribe:
+    - gid: D5/S3/ObserverMemory/FunctionalGraphs/ActualTransferJordanChains.information_loss_layers_from_actual_jordan_chains
+      definition_sha256: sha256:64f614275903106e4a8aed2ca2db9c9e6fa0b257f856d95a621071ca8c05a10c
+      emission_sha256: sha256:28c00d3a01b8739ff2330f65a7d2f6c195977509b63ea1a2bdd15c185035fb5f
+  unresolved_subitems: []

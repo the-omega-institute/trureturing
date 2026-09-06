@@ -1,0 +1,26 @@
+## 33. The four-ary tree interpretation and the distinguished golden path
+
+The unrestricted response tables form a rooted four-ary tree by prefix extension. Level k consists of all k-row tables and has `4^k` nodes. The existing golden base-four digit `base4GoldenDigit k : Fin 4` supplies one branch symbol at depth k.
+
+`goldenResponsePrefix k` decodes the first k golden digits into one distinguished causal-style response table. `goldenResponsePrefix_castSucc` proves prefix consistency:
+
+```text
+goldenResponsePrefix (k+1) restricted to Fin k
+  = goldenResponsePrefix k.
+```
+
+Hence the golden digit sequence selects one nested path through the same four-ary table tree whose full level size is `4^k`. `goldenResponsePrefixCode k` places the chosen node in `Fin (4^k)`.
+
+The combined picture is therefore
+
+```text
+all level-k response prefixes:  A^k, |A|=4, |A^k|=4^k
+capacity input to golden DFAO:  Zeckendorf(4^k)
+returned branch symbol:         d_k in A
+golden prefix recursion:        g_(k+1) extends g_k by d_k.
+```
+
+The last line is a prefix statement about the coordinate family. Mathlib's integer radix equivalence fixes its own least-significant-coordinate convention for `goldenResponsePrefixCode`; no claim about textual big-endian concatenation is needed.
+
+This yields a useful level-size/branch-symbol duality. The automaton is queried at the arithmetic size of the whole unrestricted prefix level and returns the next symbol of one highly structured path through that level hierarchy.
+

@@ -1,0 +1,25 @@
+## 61. Exact contact certificates and the three-part optimality gap
+
+`D5/S0/Certificates/RationalMomentAmbiguityCertificate.lean` introduces a raw payload containing only two rational weight vectors and the existing `QueryEnvelope`. Its finite checker validates normalization, nonnegativity, moment tolerances, the global residual envelope, support contacts, and signed moment alignment.
+
+Write delta_j=E_u[phi_j]-E_v[phi_j]. The new `primal_dual_gap_identity` proves the exact equality
+
+```text
+B_eta - (E_u[q]-E_v[q])
+ = sum_i u_i*(upper-e(i))
+ + sum_i v_i*(e(i)-lower)
+ + sum_j (abs(beta_j)*eta_j-beta_j*delta_j).
+```
+
+Under the checked feasibility conditions all three sums are nonnegative. Therefore a sufficient equality certificate is
+
+```text
+u_i != 0 -> e(i)=upper,
+v_i != 0 -> e(i)=lower,
+beta_j*delta_j = abs(beta_j)*eta_j for every j.
+```
+
+These are coefficient-level conditions checked from the supplied numbers. `contact_gap_eq_budget` uses the displayed identity to prove attainment. `checkContactCertificate_sound` then proves both `IsGreatest` of the actual attainable query-difference set and `IsLeast` of the actual valid residual-budget set, at that same rational value. Any competing affine residual envelope must have budget at least the query difference of the supplied pair. Thus acceptance proves optimality on both sides, rather than merely validating an upper bound.
+
+With eta=0, the signed-alignment condition follows from exact moment matching. Geometrically, the upper-contact profiles and lower-contact profiles must admit convex combinations with the same feature mean. Their intersection is a useful way to search for certificate witnesses. This geometric interpretation is a paper explanation here; the source checks the explicit rational combinations.
+

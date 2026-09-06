@@ -1,0 +1,8 @@
+### 证明
+
+由算术—几何均值,\(ab\le P^2/4\) 与 \(cd\le Q^2/4\),二者在 \(a=b\)、\(c=d\) 时分别取等。代入得
+
+$$
+D\ \ge\ (P+Q)^2-P^2-Q^2-4\kappa PQ=2PQ-4\kappa PQ=2PQ(1-2\kappa).\qquad\blacksquare
+$$
+

@@ -1,0 +1,1 @@
+- Supplementary exact `fractions.Fraction` regression checks passed 18,225 interval-product cases, 59,049 four-marginal attaining-law cases, 59,049 binary covariance cases, and the explicit shared-root counterexample. These are finite arithmetic checks, not proofs or admission certificates.

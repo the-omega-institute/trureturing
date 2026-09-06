@@ -1,0 +1,10 @@
+### 记号(沿用本卷定理 V1–V4 与 `D5/S3/Zeros/PochhammerDeformation/QuadraticInterval.lean`)
+
+固定实数 `a > 0`。`L_a : ℝ[x] → ℝ[x]` 是把 Pochhammer 基映到单项式基的线性算子:
+
+```
+L_a( ∑_{k=0}^n b_k · x(x−1)⋯(x−k+1) / (a)_k )  =  ∑_{k=0}^n b_k · z^k
+```
+
+`U_n = { P ∈ ℝ[x] : deg P = n, 且 L_a(P) 的全部零点为实且落在 [−1,0] }`。
+

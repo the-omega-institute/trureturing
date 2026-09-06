@@ -1,0 +1,32 @@
+## 83. Exact bipartite transformation with every vertex field retained
+
+Let pi be the fixed normalized rational law on complete mediator pairs. The condition `OffDiagonalBipartite` requires one Boolean color map chi such that
+
+```text
+i != j and pi(i,j) != 0 -> chi(i) != chi(j).
+```
+
+This is a property of the off-diagonal cross-world coupling support, not of the causal DAG. Diagonal masses are permitted and do not contribute to the benefit or cut. The two outcome worlds still read the same complete table. There is no fairness, symmetry or stationary-marginal assumption.
+
+Retain the existing pricing score `P(y)=b_pi(y)-sum_i lambda_i*y_i`. Its previously proved identity is `2*P(y)=Cut_pi(y)+sum_i g_i*y_i`, where `g_i=incoming_pi(i)-outgoing_pi(i)-2*lambda_i`. Flip the labels in one color class:
+
+```text
+y_i = z_i       if chi(i)=false,
+y_i = 1-z_i     if chi(i)=true.
+```
+
+`flipTable_involutive` proves that this is a bijection on the entire original response-column carrier. Put `a_i=g_i` on the false class and `a_i=-g_i` on the true class, with nonnegative terminal capacities `s_i=max(0,a_i)` and `t_i=max(0,-a_i)`. Internal directed capacities are `c_ij=pi(i,j)+pi(j,i)`. For a Boolean cut z, true means the source side:
+
+```text
+Cut_c,s,t(z) = sum_i (if z_i then t_i else s_i)
+  + sum_(i,j) 1[z_i=true and z_j=false]*c_ij.
+```
+
+Set `K=sum_(i!=j) pi(i,j)+sum_(chi(i)=true) g_i+sum_i s_i`. The source theorem `pricing_cut_identity` proves on every complete table
+
+```text
+2*P(flip_chi(z)) = K-Cut_c,s,t(z).
+```
+
+All constants and both directions of each mediator pair are retained. A loop does not count in K's first term and cannot cross a cut. Consequently a minimum s-t cut gives an actual globally maximizing response column, not a collection of incompatible pairwise responses.
+

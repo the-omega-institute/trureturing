@@ -1,0 +1,10 @@
+## 31. Literature connection and remaining representation work
+
+The independent-noise representation is a finite rational instance of the functional representation principle. Li and El Gamal, *Strong Functional Representation Lemma and Applications to Coding Theorems*, IEEE Transactions on Information Theory 64(11):6967-6978 (2018), arXiv:1701.02827v4, studies a much stronger representation with information-theoretic guarantees. The present modules do not formalize that stronger bound or claim novelty for the representation principle.
+
+Zhang, Tian, and Bareinboim, *Partial Counterfactual Identification from Observational and Experimental Data*, ICML 2022, PMLR 162:26548-26558, develops canonical finite causal representations for counterfactual bounds. Arroyo et al., arXiv:2509.03548v1, relates quasi-Markovian source factorization to multilinear and linear probability programs. The concrete addition here is an exact common-table witness together with a rational sharp-interval theorem for conditional joint benefit, integrated with the repository's existing response-law and local sharpness results.
+
+The source carrier is the entire table space. For k covariate values and a four-state response pair, one table has 4^k possible rows-of-responses assignments. This finite construction proves existence but does not provide an efficient minimal-support representation. A natural remaining obligation is exact rational support reduction preserving every row marginal and the required query cells, followed by transport of attaining models through that reduction. Cross-stratum restrictions must be retained when defining the constraints to preserve.
+
+The new table model space is not identified with an information-escape arena. The finite regression suite supplies no novelty score, maximal-catalog irredundancy certificate, or proof of root admission. The authored sources contain complete proof scripts and matching Scribe declaration coverage; their Lean kernel compilation has not been performed in this continuation.
+

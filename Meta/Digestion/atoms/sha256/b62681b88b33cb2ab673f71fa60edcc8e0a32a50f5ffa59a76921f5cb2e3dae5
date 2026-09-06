@@ -1,0 +1,16 @@
+## 53. Checked support-local affine coordinate reduction
+
+`D5/S0/Certificates/RationalAffineMomentCompression.lean` upgrades the ambient-coordinate replay using a data-only `AffinePresentation`. For an original feature array phi with d coordinates, the payload selects r original coordinates and supplies offsets a_j and coefficients B_js. It checks the identity
+
+```text
+phi_j(i) = a_j + sum_s B_js * phi_selected(s)(i)
+```
+
+at every atom with nonzero original weight. An averaged identity is insufficient. The check need not cover zero-weight atoms because the existing accepted replay cannot introduce those atoms.
+
+`checkAffineCompression` validates this presentation and invokes the unchanged `checkCompression` on the selected coordinates. `checkAffineCompression_sound` proves normalized nonnegative output, support contained in the original support, support size at most r+1, and equality of every original feature expectation. Thus rows are omitted only after their reconstruction has been checked against actual original coefficients.
+
+The parameter r is the number of selected coordinates. The certificate proves an affine dimension upper bound on the original support, not equality with the minimal affine rank. Repeated or redundant selected coordinates do not invalidate the theorem, but can give a looser budget. Computing a minimal presentation or its independence certificate remains separate from checking a proposed presentation.
+
+The closed example uses features i, 3+2i and 5-i on four atoms. The uniform input is replayed to weights `(1/2,0,0,1/2)`. One selected coordinate preserves all three expectations, with values `(3/2,6,7/2)`, and the output has two atoms. The same principle recovers the fourth response-cell indicator from normalization and three selected cell indicators.
+

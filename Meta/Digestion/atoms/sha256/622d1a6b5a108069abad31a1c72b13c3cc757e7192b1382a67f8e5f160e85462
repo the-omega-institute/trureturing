@@ -1,0 +1,40 @@
+## 69. Exact nonlinear-to-linear target equivalence
+
+For any actual independent-mechanism model,
+
+```text
+J(pi,nu) = sum_(m,n) pi(m,n) * P_nu(Y_(0,m)=0,Y_(1,n)=1).
+```
+
+This identity follows from the original product source law. The simultaneous witnesses give, for each fixed pi, the exact rational image
+
+```text
+[ sum pi*cL, sum pi*cU ] intersect Q.
+```
+
+Every intermediate target is attained by mixing the lower and upper outcome-table laws while leaving pi fixed. This is a mixture inside one disturbance. The resulting source law remains the product of the mediator law and the new outcome law. A convex mixture of two different product laws is not used.
+
+The principal source endpoint is `partial_mediator_target_iff_transport`. It states, for every rational target q,
+
+```text
+exists pi,nu:
+  pi has marginals alpha,beta,
+  nu has the full prescribed success kernel r,
+  J(pi,nu)=q
+iff
+exists pi:
+  pi has marginals alpha,beta,
+  sum pi*cL <= q <= sum pi*cU.
+```
+
+The right side contains only m^2 coupling masses, nonnegative normalization, row and column equalities, and two linear target inequalities. It contains no outcome-law search and no optimizer-existence assumption. Thus the complete query image, not merely a relaxation or one coordinatewise stationary value, is represented by a finite linear program.
+
+At the mathematical optimization level the sharp endpoints are
+
+```text
+L = min_{pi in Pi(alpha,beta)} sum pi*cL,
+U = max_{pi in Pi(alpha,beta)} sum pi*cU.
+```
+
+Finite transportation polytopes are nonempty and their rational linear optima are attained. The source theorem `transport_endpoints_are_causal_sharp` explicitly transports any certified pair of such endpoint plans and valid LP bounds back to attaining causal mechanisms; it does not postulate general strong duality. The all-target iff already eliminates the nonlinear outcome search independently of that endpoint interface. Convexity of the right-side linear feasible region also fills the interval between the endpoint values.
+

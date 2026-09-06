@@ -1,0 +1,28 @@
+## 23. Query-preserving kernels and the next mathematical interface
+
+For a fixed structural model, let `r_S` restrict a full exogenous assignment to the compiled source set of a query `Q`. `counterfactualEvent_factorsThrough` gives
+
+```text
+Q = reduced_Q composed with r_S
+ker(r_S) subset ker(Q).
+```
+
+Thus all distinctions relevant to the query survive source restriction. This is a semantic kernel-descent statement on the original source-assignment carrier, using the existing Mathlib `FactorsThrough` interface.
+
+The carrier here differs from the space of entire probability models used by `fourMarginalReadout` in Section 19. Source restriction studies evaluation inside a fixed model; the earlier nonidentifiability witness compares different models with the same data. Their kernels are not interchangeable and no scalar information measure is transported between these carriers. The standard partition equivalence recoordinates the full source space, and the probability-cell corollary does not assert an extra independent information occurrence. No maximal-catalog irredundancy or information-escape score is claimed by these local semantic results.
+
+The mathematical chain now has authored Lean and Scribe sources through
+
+```text
+intervened structural trace
+  -> conservative exogenous dependency support
+  -> query-preserving source restriction
+  -> certified disjoint support
+  -> coordinatewise evaluation of independent source blocks
+  -> exact counterfactual product law.
+```
+
+The proof scripts have undergone logical review and exact finite regression checks; kernel compilation has not been performed in this round. The regression cases exercise response constancy on support fibers, support monotonicity under nested interventions, and joint-cell factorization with arbitrary within-block dependence. They are supplementary checks rather than substitutes for the general Lean statements.
+
+The next mathematical interface is to group a finite family of elementary independent disturbance laws into the S/complement law used above, preserving the full assignment carrier and its pushforward. This would remove the remaining manually supplied block-law premise for a canonical finite Markovian source representation. Conditional fixed-noise realization and simultaneous attainment across strata remain separate obligations, as recorded in Sections 4 and 18.
+
