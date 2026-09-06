@@ -731,3 +731,100 @@ For the intrinsic-information interpretation, regrouping uses a bijection on the
 The next constructive target is simultaneous fixed-noise realization for a finite covariate C. Given finite conditional response laws q_c, a candidate common disturbance is a full table W = (W_c)_c with product law over the q_c, independent of C, and evaluation W_C. For two mechanisms, use independent full tables W1 and W2 together with the common covariate. This construction preserves arbitrary coupling inside each response pair at a fixed c and offers a route to realizing all strata in one structural model.
 
 The remaining formal obligations are the joint pushforward identity for (C,W_C), its two-mechanism conditional version, and attaining witnesses for the aggregate sharp interval. Product grouping alone does not discharge those obligations. Additional restrictions tying response tables across covariate values must remain explicit when present.
+
+## 28. Simultaneous finite conditional response tables, 2026-09-06
+
+`FiniteConditionalResponseTable.lean` addresses the common-noise realization target in Section 27. For a finite covariate carrier C and finite response carrier R, take a normalized rational kernel q_c on R for each c. A complete table has type C -> R. The previously constructed independentSourceLaw supplies
+
+```text
+nu(w) = product_c q_c(w(c)).
+```
+
+`tableEvaluationLaw_independentSource` proves that evaluating this one table at c has mass q_c. The proof reuses exact source restriction to the singleton {c}, then identifies a singleton-indexed assignment with its response value. `finite_conditional_table_realization` therefore realizes all rows in the same disturbance space.
+
+For two mechanisms, `FixedNoisePairModel` stores laws nu_1 and nu_2 on complete tables. The general model class permits arbitrary dependence between different rows inside each table. Its source law is
+
+```text
+P(U_C=c, W_1=w_1, W_2=w_2) = weight(c) * nu_1(w_1) * nu_2(w_2),
+C = U_C,
+R_1 = W_1(C), R_2 = W_2(C).
+```
+
+Thus the covariate root and both complete mechanism disturbances are mutually independent. `selectedPairLaw` is the actual pushforward of this full source law. For arbitrary table laws, `selectedPairLaw_mass` proves
+
+```text
+P(C=c, R_1=r_1, R_2=r_2)
+  = weight(c) * rowLaw_1(c,r_1) * rowLaw_2(c,r_2).
+```
+
+No conditional-probability division is used. The equality covers null strata; an interpretation as a conditional probability obtained by division requires weight(c) > 0.
+
+`canonicalFixedNoisePair` chooses the product table law for each prescribed row-kernel family. `simultaneous_conditional_product_realization` proves that one such model reproduces every specified conditional product cell simultaneously. Independent rows are a constructive choice of witness. They are not an additional assumption in the model class used for necessity.
+
+If R is Bool x Bool, dependence of the two potential-outcome coordinates inside each row remains unrestricted. Neither table construction nor mechanism independence implies Y_0 independent of Y_1.
+
+## 29. Sharp covariate joint benefit in one fixed-noise model
+
+`FixedNoiseCovariateBenefitSharpBounds.lean` combines simultaneous table realization with the existing four-marginal sharpness theorem. The deterministic treatment equation is
+
+```text
+Y_i(a,c,W_i) = first coordinate of W_i(c)  if a=false,
+Y_i(a,c,W_i) = second coordinate of W_i(c) if a=true.
+```
+
+`fixedNoiseOutcome_response` identifies the complete treatment response with W_i(c). Both treatment interventions use the same table disturbance. `fixedNoiseStratumModel` records the actual row marginals of an arbitrary fixed table model, and `HasConditionalFourMarginals` fixes their four intervention-success kernels p10(c), p11(c), p20(c), p21(c).
+
+Define
+
+```text
+L_i(c) = max(0, p_i1(c) - p_i0(c)),
+U_i(c) = min(p_i1(c), 1 - p_i0(c)),
+l(c) = L_1(c)*L_2(c), u(c) = U_1(c)*U_2(c),
+L = sum_c weight(c)*l(c), U = sum_c weight(c)*u(c).
+```
+
+For compatible local marginals, the main theorem `fixedNoise_covariate_joint_benefit_sharp_iff` states
+
+```text
+L <= target <= U
+iff
+there exists one FixedNoisePairModel with all four prescribed kernels
+and actual population simultaneous-benefit probability target.
+```
+
+All quantities and attaining laws are rational. The identified set is `[L,U] intersect Q`. `fixedNoiseJointBenefit` is defined by summing the relevant cells of the actual common-source pushforward, rather than by stipulating a weighted objective. `fixedNoiseJointBenefit_eq_weighted` derives the weighted product formula from that law.
+
+Necessity covers every admitted table law, including correlated rows. Its row marginals satisfy the existing local joint-benefit interval. Nonnegative covariate weights preserve these bounds under summation.
+
+For sufficiency, if L=U, select every lower endpoint. Otherwise set
+
+```text
+t = (target-L)/(U-L),
+q_c = l(c) + t*(u(c)-l(c)).
+```
+
+Then 0<=t<=1, each q_c belongs to its local sharp interval, and the weighted sum of the q_c equals target. The existing local theorem constructs two response laws attaining q_c with the specified four marginals. `fixedNoiseStrata_simultaneously_realized` assembles all those laws into one pair of full-table disturbances.
+
+Only the scalar target values are interpolated. The construction does not mix two product distributions, which could break mechanism independence. A private rational specialization of the weighted interpolation argument avoids converting real witnesses back into rational source laws. The former joint-selection premise has now been discharged for this explicit fixed-noise model family.
+
+## 30. Scope, shared covariates, and cross-stratum restrictions
+
+The covariate in this model is an independent root whose value is shared by both outcome equations. Arbitrary conditioning on a mediator, collider, or variable affected by treatment is not justified by this construction. An embedding of these particular equations into the parent-ordered graph evaluator has not been added here; the common-source distributions, table equations, and response-pair identities are explicit in the new modules.
+
+For zero-weight strata, the four marginal values are prescribed kernels, not conditional probabilities learned from an event of probability zero. Their compatibility is assumed, and they do not contribute to the population endpoints.
+
+No restrictions linking different rows of the same table are supplied beyond being a valid full-table law. Rank preservation, cross-covariate monotonicity, a fixed small disturbance support, and extra statistical constraints may restrict the jointly attainable row family. In those cases the newly constructed product-row witness may be inadmissible. The shared-parameter obstruction from Section 4 and the data-projection obligation from Section 25 remain applicable.
+
+A shared covariate can induce population dependence even when both table disturbances are independent. For example, with two equally weighted strata, let both mechanisms never benefit in the first stratum and always benefit in the second. The local intervals are {0} and {1}. The new formula gives the sharp population singleton {1/2}, whereas the product of population marginal benefits is 1/4. This is consistent with the earlier binary-mixture covariance certificate.
+
+If all four success kernels equal 1/2 in every stratum, all local joint-benefit intervals are [0,1/4]. Normalized weights give the same population interval [0,1/4]. These examples illustrate distinct patterns of conditional heterogeneity; the theorem does not replace a weighted product by a product of averages.
+
+## 31. Literature connection and remaining representation work
+
+The independent-noise representation is a finite rational instance of the functional representation principle. Li and El Gamal, *Strong Functional Representation Lemma and Applications to Coding Theorems*, IEEE Transactions on Information Theory 64(11):6967-6978 (2018), arXiv:1701.02827v4, studies a much stronger representation with information-theoretic guarantees. The present modules do not formalize that stronger bound or claim novelty for the representation principle.
+
+Zhang, Tian, and Bareinboim, *Partial Counterfactual Identification from Observational and Experimental Data*, ICML 2022, PMLR 162:26548-26558, develops canonical finite causal representations for counterfactual bounds. Arroyo et al., arXiv:2509.03548v1, relates quasi-Markovian source factorization to multilinear and linear probability programs. The concrete addition here is an exact common-table witness together with a rational sharp-interval theorem for conditional joint benefit, integrated with the repository's existing response-law and local sharpness results.
+
+The source carrier is the entire table space. For k covariate values and a four-state response pair, one table has 4^k possible rows-of-responses assignments. This finite construction proves existence but does not provide an efficient minimal-support representation. A natural remaining obligation is exact rational support reduction preserving every row marginal and the required query cells, followed by transport of attaining models through that reduction. Cross-stratum restrictions must be retained when defining the constraints to preserve.
+
+The new table model space is not identified with an information-escape arena. The finite regression suite supplies no novelty score, maximal-catalog irredundancy certificate, or proof of root admission. The authored sources contain complete proof scripts and matching Scribe declaration coverage; their Lean kernel compilation has not been performed in this continuation.
