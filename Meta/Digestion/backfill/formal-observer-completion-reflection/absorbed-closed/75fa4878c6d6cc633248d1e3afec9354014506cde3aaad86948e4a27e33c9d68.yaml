@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:75fa4878c6d6cc633248d1e3afec9354014506cde3aaad86948e4a27e33c9d68
+  normalized_sha256: sha256:75fa4878c6d6cc633248d1e3afec9354014506cde3aaad86948e4a27e33c9d68
+cas_ref: sha256:75fa4878c6d6cc633248d1e3afec9354014506cde3aaad86948e4a27e33c9d68
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting.finite_cover_laws
+    target_statement_id: sha256:3f9d9459eaa39db75ebc7cdc9470943daa65d05a41b76e1ddd133721f289b74b
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscape/FiniteCoverCounting.finite_cover_laws
+      definition_sha256: sha256:41be9b2a6ec4139a7e026a62f86c17d8d5552c1882d6f6c93537d0fb1136999f
+      emission_sha256: sha256:e28c12f65bd73323955d61f9cf773201029227361ab6ca9e1aadbff3751a16f6
+  unresolved_subitems: []

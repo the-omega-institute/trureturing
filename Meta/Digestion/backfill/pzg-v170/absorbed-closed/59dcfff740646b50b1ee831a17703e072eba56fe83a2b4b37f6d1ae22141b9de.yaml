@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:59dcfff740646b50b1ee831a17703e072eba56fe83a2b4b37f6d1ae22141b9de
+  normalized_sha256: sha256:59dcfff740646b50b1ee831a17703e072eba56fe83a2b4b37f6d1ae22141b9de
+cas_ref: sha256:59dcfff740646b50b1ee831a17703e072eba56fe83a2b4b37f6d1ae22141b9de
+coverage_gids:
+  - gid: D5/S1/Deficit/Beatty/FiberCoordinateBeattyForms.fiber_coordinates_eq_displacement_forms
+    target_statement_id: sha256:e5e49b5cdc8bc45ed02ef9b7e1253718bd98abcaa45f49fa05cb5d5e1d8010aa
+receipts:
+  scribe:
+    - gid: D5/S1/Deficit/Beatty/FiberCoordinateBeattyForms.fiber_coordinates_eq_displacement_forms
+      definition_sha256: sha256:7f45b779d5d83167107958ac50c417a56f2ba3d77c282b2aeb63f96ab4e8151b
+      emission_sha256: sha256:d8cff2f0a5a314eb0803223e1aeb8a1c08f4a0f3031afe5ebb7b158d7a862d78
+  unresolved_subitems: []
