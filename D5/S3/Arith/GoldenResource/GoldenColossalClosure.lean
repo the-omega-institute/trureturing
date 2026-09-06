@@ -7,6 +7,7 @@
    digest: The threshold closure divides every colossally abundant multiple of its base. -/
 
 import D5.S3.Arith.GoldenResource.GoldenResourcePriceInterval
+import Mathlib.Order.Interval.Set.Nat
 
 /- Library-search audit trail (2026-09-07):
    1. D5 searches for colossalClosure, goldenPriceThreshold, support_price_le_threshold,
@@ -134,6 +135,171 @@ private theorem layer_gt_of_le_count {lambda : ℝ} (hlambda : 0 < lambda)
   have h := Nat.find_min (layer_cutoff_exists hlambda hp)
     (show a - 1 < Nat.find (layer_cutoff_exists hlambda hp) by omega)
   simpa only [Nat.sub_add_cancel ha] using lt_of_not_ge h
+
+private theorem positive_layers_eq_interval {lambda : ℝ} (hlambda : 0 < lambda)
+    {p : ℕ} (hp : p.Prime) :
+    {a : ℕ | 1 ≤ a ∧ lambda < goldenLayerMarginal p a} =
+      Set.Icc 1 (strictLayerCount lambda p) := by
+  ext a
+  constructor
+  · rintro ⟨ha, hgain⟩
+    refine ⟨ha, ?_⟩
+    by_contra hnot
+    have hle : strictLayerCount lambda p + 1 ≤ a := by omega
+    have hnext := count_next_le hlambda hp
+    rcases eq_or_lt_of_le hle with heq | hlt
+    · rw [heq] at hnext
+      exact (not_lt_of_ge hnext) hgain
+    · exact (not_lt_of_ge
+        ((golden_layer_strict_decrease hp (by omega) hlt).le.trans hnext)) hgain
+  · rintro ⟨ha, hac⟩
+    exact ⟨ha, layer_gt_of_le_count hlambda hp ha hac⟩
+
+/-- The number of positive prime layers strictly more valuable than the base threshold. -/
+def goldenPositiveLayerCount (B p : ℕ) : ℕ :=
+  {a : ℕ | 1 ≤ a ∧ goldenPriceThreshold B < goldenLayerMarginal p a}.ncard
+
+private theorem positive_count_eq {B p : ℕ} (hB : 1 < B) (hp : p.Prime) :
+    goldenPositiveLayerCount B p = strictLayerCount (goldenPriceThreshold B) p := by
+  rw [goldenPositiveLayerCount, positive_layers_eq_interval (threshold_pos hB) hp,
+    Set.ncard_Icc_nat]
+  omega
+
+private def closureExponent (B p : ℕ) : ℕ :=
+  if p.Prime then max (B.factorization p) (strictLayerCount (goldenPriceThreshold B) p) else 0
+
+private theorem closure_exponents_exist {B : ℕ} (hB : 1 < B) :
+    ∃ f : ℕ →₀ ℕ, ∀ p, f p = closureExponent B p := by
+  classical
+  obtain ⟨P, hP⟩ := golden_layer_marginal_lt_of_prime_le (threshold_pos hB)
+  let support := B.primeFactors ∪ Finset.range P
+  have hs : ∀ p, closureExponent B p ≠ 0 → p ∈ support := by
+    intro p hne
+    by_cases hp : p.Prime
+    · by_cases hmem : p ∈ B.primeFactors
+      · exact Finset.mem_union_left _ hmem
+      · apply Finset.mem_union_right
+        apply Finset.mem_range.mpr
+        by_contra hnot
+        have hcount : strictLayerCount (goldenPriceThreshold B) p = 0 :=
+          Nat.eq_zero_of_le_zero (count_le_of_next_le
+            (hP p hp (by omega) 1 (by omega)).le)
+        have hbase : B.factorization p = 0 := by
+          simpa [← Nat.support_factorization, Finsupp.mem_support_iff] using hmem
+        exact hne (by simp [closureExponent, hp, hcount, hbase])
+    · exact (hne (by simp [closureExponent, hp])).elim
+  exact ⟨Finsupp.onFinset support (closureExponent B) hs, fun _ => rfl⟩
+
+private def closureFactors (B : ℕ) : ℕ →₀ ℕ :=
+  if hB : 1 < B then (closure_exponents_exist hB).choose else B.factorization
+
+private theorem factors_apply {B : ℕ} (hB : 1 < B) (p : ℕ) :
+    closureFactors B p = closureExponent B p := by
+  rw [closureFactors, dif_pos hB]
+  exact (closure_exponents_exist hB).choose_spec p
+
+private theorem factors_prime {B : ℕ} (hB : 1 < B) :
+    ∀ p ∈ (closureFactors B).support, p.Prime := by
+  intro p hp
+  by_contra hnot
+  have heq : closureFactors B p = 0 := by
+    rw [factors_apply hB, closureExponent, if_neg hnot]
+  exact (Finsupp.mem_support_iff.mp hp) heq
+
+/-- The finite prime product with exponent max(base exponent, strict-positive layer count).
+For the out-of-source boundary inputs zero and one, the closure is the input itself. -/
+def colossalClosure (B : ℕ) : ℕ :=
+  if 1 < B then (closureFactors B).prod (· ^ ·) else B
+
+private theorem closure_pos {B : ℕ} (hB : 1 < B) : 1 ≤ colossalClosure B := by
+  rw [colossalClosure, if_pos hB]
+  apply Nat.one_le_iff_ne_zero.mpr
+  apply Finsupp.prod_ne_zero_iff.mpr
+  intro p hp
+  exact pow_ne_zero _ (factors_prime hB p hp).ne_zero
+
+private theorem closure_factorization {B : ℕ} (hB : 1 < B) :
+    (colossalClosure B).factorization = closureFactors B := by
+  rw [colossalClosure, if_pos hB]
+  exact Nat.prod_pow_factorization_eq_self (factors_prime hB)
+
+/-- The constructed integer has exactly the exponents in the threshold-count formula. -/
+theorem colossal_closure_factorization {B p : ℕ} (hB : 1 < B) (hp : p.Prime) :
+    (colossalClosure B).factorization p =
+      max (B.factorization p) (goldenPositiveLayerCount B p) := by
+  rw [closure_factorization hB, factors_apply hB, closureExponent, if_pos hp,
+    positive_count_eq hB hp]
+
+/-- The threshold closure retains all factors required by its base. -/
+theorem dvd_colossal_closure {B : ℕ} (hB : 1 < B) : B ∣ colossalClosure B := by
+  rw [colossalClosure, if_pos hB]
+  apply Nat.dvd_prod_pow_of_factorization_le (by omega : B ≠ 0)
+  intro p
+  rw [factors_apply hB, closureExponent]
+  by_cases hp : p.Prime
+  · rw [if_pos hp]
+    exact Nat.le_max_left _ _
+  · simp [hp, Nat.factorization_eq_zero_of_not_prime B hp]
+
+/-- Every colossally abundant multiple of the base contains its threshold closure. -/
+theorem colossal_closure_dvd_of_dvd_colossally_abundant
+    {B N : ℕ} (hB : 1 < B) (hN : IsColossallyAbundant N) (hdvd : B ∣ N) :
+    colossalClosure B ∣ N := by
+  by_cases hzero : N = 0
+  · rw [hzero]
+    exact dvd_zero _
+  have hn : 1 ≤ N := Nat.one_le_iff_ne_zero.mpr hzero
+  obtain ⟨lambda, hlambda, hopt⟩ := hN
+  have hprice := support_price_le_threshold hB hn hdvd ⟨lambda, hlambda, hopt⟩
+    lambda hlambda hopt
+  have hnext := (golden_resource_optimal_iff_layer_thresholds hlambda hn).mp hopt |>.1
+  have hfac := (Nat.factorization_le_iff_dvd (by omega : B ≠ 0) hzero).mpr hdvd
+  rw [colossalClosure, if_pos hB]
+  apply Nat.prod_pow_dvd_of_le_factorization
+  intro p
+  rw [factors_apply hB, closureExponent]
+  by_cases hp : p.Prime
+  · rw [if_pos hp]
+    exact max_le (hfac p) (count_le_of_next_le ((hnext p hp).trans hprice))
+  · simp [hp]
+
+/-- The threshold closure itself is colossally abundant, including at tied layer prices. -/
+theorem colossal_closure_is_colossally_abundant {B : ℕ} (hB : 1 < B) :
+    IsColossallyAbundant (colossalClosure B) := by
+  have hpos := threshold_pos hB
+  refine ⟨goldenPriceThreshold B, hpos,
+    (golden_resource_optimal_iff_layer_thresholds hpos (closure_pos hB)).mpr ⟨?_, ?_⟩⟩
+  · intro p hp
+    rw [closure_factorization hB, factors_apply hB, closureExponent, if_pos hp]
+    have hnext := count_next_le hpos hp
+    rcases eq_or_lt_of_le
+      (Nat.le_max_right (B.factorization p) (strictLayerCount (goldenPriceThreshold B) p))
+      with heq | hlt
+    · simpa only [← heq] using hnext
+    · exact (golden_layer_strict_decrease hp (by omega)
+        (Nat.add_lt_add_right hlt 1)).le.trans hnext
+  · intro p hp hpdvd
+    have hactive : 1 ≤ (colossalClosure B).factorization p := by
+      have hmem := hp.mem_primeFactors hpdvd
+        (Nat.ne_zero_of_lt (closure_pos hB))
+      have hne : (colossalClosure B).factorization p ≠ 0 := by
+        simpa [← Nat.support_factorization, Finsupp.mem_support_iff] using hmem
+      omega
+    rw [closure_factorization hB, factors_apply hB, closureExponent, if_pos hp] at hactive ⊢
+    by_cases hle : strictLayerCount (goldenPriceThreshold B) p ≤ B.factorization p
+    · rw [max_eq_left hle] at hactive ⊢
+      have hbaseDvd : p ∣ B := by
+        apply Nat.dvd_of_mem_primeFactors
+        rw [← Nat.support_factorization, Finsupp.mem_support_iff]
+        omega
+      exact threshold_le_layer hB hp hbaseDvd
+    · have hle' : B.factorization p ≤ strictLayerCount (goldenPriceThreshold B) p := by omega
+      rw [max_eq_right hle'] at hactive ⊢
+      exact (layer_gt_of_le_count hpos hp hactive le_rfl).le
+
+#print axioms support_price_le_threshold
+#print axioms colossal_closure_dvd_of_dvd_colossally_abundant
+#print axioms colossal_closure_is_colossally_abundant
 
 end
 
