@@ -1405,3 +1405,130 @@ An independent Fraction regression with seed 20260906 reused the prior eliminati
 The external representation context remains Piazzon, Sommariva and Vianello, *Caratheodory-Tchakaloff Subsampling*, arXiv:1611.02065, and Zhang, Tian and Bareinboim, *Partial Counterfactual Identification from Observational and Experimental Data*, ICML 2022, PMLR 162:26548-26558. No novelty claim is made for finite moment compression, affine expectation transport, positivity of square residuals, or finite LP duality. The contribution in this lane is their exact integration with support-monotone replay and original causal witness semantics.
 
 The direction-discovery obligation from Section 51 remains open in the authored source. This continuation closes a separate load-bearing interface: a proposed dimension reduction is now checked against actual coefficients before the smaller support budget is used, and additional query families have explicit exactness or error conditions. Further work can connect verified rational elimination to presentation discovery, prove the optimal residual-width duality using the existing certificate framework, and lift the checks into the ordered multi-component replay without weakening independence.
+
+## 59. Fresh source audit and the finite-duality dependency, 2026-09-06
+
+The continuation first reread PR #5029 at `60fbadcbca587ef4becfa3d8c99168812b8eea14`, compared it with the previous `976eef8d23501fb388398c03d141d207eb00096c`, and inspected dev at `d1aef59802e5c5be8302018ef0b2d47f7f87b9d0`. The intervening branch commit changes only the two earlier moment-support Scribe files; those concurrent edits are preserved. The cross-author scan included loning's updated PRs, including #5867, and the recent causal, moment and duality work across authors. No finite LP strong-duality implementation was inferred from an engineering closure argument or from a PR title.
+
+The actual source of `D5/S3/Observer/Budget/ProjectiveStrongDuality.lean` assumes the finite strong-duality premise before transporting an infimum through a projective limit. The actual `LinearObjectiveDual.lean` proves weak duality and exactness given a matching primal witness. Neither provides the missing finite optimizer-existence theorem for Section 57.
+
+A direct external owner was located: Martin Dvorak and Vladimir Kolmogorov, *Duality theory in linear optimization and its extensions: formally verified*, Annals of Formalized Mathematics, published 13 March 2026, DOI `10.46298/afm.14253`, arXiv:2409.08119v3. Its released code is `madvorak/duality` tag `v3.2.0`; `Duality/LinearProgrammingB.lean` contains `StandardLP.strongDuality` and imports the extended LP development. Both that tag and the checked default branch use Lean 4.18.0. This lane uses Lean 4.33.0 and Mathlib `db584cd6d46c92f209a44c0f1c829460d327499d`. No uninstalled import, toolchain change, external axiom or unreviewed compatibility port was introduced.
+
+The approximation/moment-matching duality is an established principle, also explicitly described by Wu and Yang in their work on Chebyshev approximation and estimation of the unseen. Choe, Kwon, Park and Lee, *Canonical Domain Reduction for Partial Counterfactual Identification*, UAI 2026, PMLR 337:1302-1326, emphasizes preserving every objective and constraint functional during canonical reduction. These sources support the choice to verify the actual query coefficients and the whole allowed carrier. They do not supply an attribution of the specific certificate implementation or Boolean tolerance construction below. The present audit does not establish global mathematical novelty.
+
+## 60. A robust ambiguity modulus for approximate moment agreement
+
+Fix a nonempty finite allowed carrier S, rational feature map phi with d coordinates, a rational query q, and nonnegative coordinate tolerances eta. Define the pairwise ambiguity
+
+```text
+Delta_eta(phi,q) = max { abs(E_u[q]-E_v[q]) :
+  u,v in simplex(S), abs(E_u[phi_j]-E_v[phi_j]) <= eta_j for every j }.
+```
+
+The errors compare two models directly. If each model is within epsilon_j of one observed center, triangle inequality only gives eta_j=2*epsilon_j; the common-center restrictions can make the actual range smaller than this global pairwise modulus.
+
+For e(i)=q(i)-alpha-beta.phi(i) in [lower,upper] on every allowed atom, define
+
+```text
+B_eta = upper-lower + sum_j abs(beta_j)*eta_j.
+```
+
+`query_gap_le_residualBudget` reuses the earlier expectation enclosure for each law and proves `abs(E_u[q]-E_v[q]) <= B_eta`. The proof bounds the change of the two affine predictor centers, rather than assuming those centers are still equal. The full-array check is essential: a certificate verified only on the proposed optimizing supports cannot bound other admissible laws.
+
+At paper level, the finite LP dual extends Section 57 to
+
+```text
+Delta_eta(phi,q) = min_beta [osc_S(q-beta.phi) + sum_j abs(beta_j)*eta_j].
+```
+
+Indeed, the primal has two simplex normalizations and the inequalities `-eta <= Phi*u-Phi*v <= eta`. Splitting the dual moment multiplier into its positive and negative parts gives the weighted absolute-value cost. This generic existence-and-equality statement still awaits a compatible connection to the external strong-duality owner. The Lean source below proves an exact certificate theorem and constructs a full parameter family of such certificates; it does not assume generic optimizer existence.
+
+## 61. Exact contact certificates and the three-part optimality gap
+
+`D5/S0/Certificates/RationalMomentAmbiguityCertificate.lean` introduces a raw payload containing only two rational weight vectors and the existing `QueryEnvelope`. Its finite checker validates normalization, nonnegativity, moment tolerances, the global residual envelope, support contacts, and signed moment alignment.
+
+Write delta_j=E_u[phi_j]-E_v[phi_j]. The new `primal_dual_gap_identity` proves the exact equality
+
+```text
+B_eta - (E_u[q]-E_v[q])
+ = sum_i u_i*(upper-e(i))
+ + sum_i v_i*(e(i)-lower)
+ + sum_j (abs(beta_j)*eta_j-beta_j*delta_j).
+```
+
+Under the checked feasibility conditions all three sums are nonnegative. Therefore a sufficient equality certificate is
+
+```text
+u_i != 0 -> e(i)=upper,
+v_i != 0 -> e(i)=lower,
+beta_j*delta_j = abs(beta_j)*eta_j for every j.
+```
+
+These are coefficient-level conditions checked from the supplied numbers. `contact_gap_eq_budget` uses the displayed identity to prove attainment. `checkContactCertificate_sound` then proves both `IsGreatest` of the actual attainable query-difference set and `IsLeast` of the actual valid residual-budget set, at that same rational value. Any competing affine residual envelope must have budget at least the query difference of the supplied pair. Thus acceptance proves optimality on both sides, rather than merely validating an upper bound.
+
+With eta=0, the signed-alignment condition follows from exact moment matching. Geometrically, the upper-contact profiles and lower-contact profiles must admit convex combinations with the same feature mean. Their intersection is a useful way to search for certificate witnesses. This geometric interpretation is a paper explanation here; the source checks the explicit rational combinations.
+
+## 62. A complete Boolean benefit tolerance family
+
+`D5/S3/ConceptDynamics/PartialIdentification/BenefitMarginalToleranceSharp.lean` constructs a certificate for every eta0,eta1 >= 0. It retains the existing `FiniteResponseLaw (Bool x Bool)`, `controlSuccessMarginal`, `treatmentSuccessMarginal`, and `benefitResponseMass`. The Fin 4 array is only their encoding in order 00,01,10,11, with explicit expectation and probability-law transport in the proof.
+
+The main theorem gives the universal bound, an attaining pair of actual response laws, and the least affine residual budget:
+
+```text
+max abs(Benefit(u)-Benefit(v)) = min(1, (1+eta0+eta1)/2),
+```
+
+where the two control marginals differ by at most eta0 and the two treated marginals by at most eta1. There is no fixed marginal location, primal optimizer, numerical threshold table or strong-duality hypothesis in this theorem. Dependence between the two potential outcomes within one outcome mechanism remains unrestricted.
+
+For eta0+eta1 <= 1, put
+
+```text
+t=(1+eta0+eta1)/2,  s=(1+eta0-eta1)/2,
+u=(0,t,1-t,0),     v=(1-s,0,0,s).
+```
+
+Nonnegative tolerances and their sum bound give 0<=t,s<=1. The control discrepancy is -eta0, the treatment discrepancy eta1, and the benefit gap t. The predictor beta=(-1/2,1/2) has residual `(0,1/2,1/2,0)`, so both support contacts and both signed alignments hold. Its budget is exactly t.
+
+For eta0+eta1 > 1, take
+
+```text
+s=min(1,eta0),
+u=(0,1,0,0),  v=(1-s,0,0,s).
+```
+
+The marginal discrepancies are -s and 1-s. The second is at most eta1, including eta0>=1. Choosing beta=0 and residual interval [0,1] gives budget one and both contacts. The source includes the joining boundary in the first branch; both constructions have the same optimum there.
+
+For example, eta0=1/10 and eta1=1/5 give `u=(0,13/20,7/20,0)` and `v=(11/20,0,0,9/20)`, with benefit difference 13/20. At zero tolerances the earlier diagonal/anti-diagonal ambiguity 1/2 is recovered. This global modulus does not replace the narrower Frechet interval at a particular observed pair of marginals.
+
+## 63. Optimal contact supports remove the extra query coordinate
+
+`contact_certificate_preserved_by_compression` connects the new optimality witness to the existing support-monotone replay. Starting from a valid contact certificate, run `checkCompression` separately on its high and low laws, retaining only the d original feature coordinates. The output of each run has at most d+1 active atoms.
+
+Support containment keeps the high output on the old upper-contact set and the low output on the old lower-contact set. Their individually preserved feature means keep both the tolerance inequalities and signed alignment. The resulting pair is therefore another valid contact certificate with the unchanged envelope and exact query gap.
+
+The query is not added as a d+1st feature. On the upper contact support it already equals `alpha+beta.phi+upper`; on the lower contact support it equals `alpha+beta.phi+lower`. This is an exact support-local reconstruction, even when q is not affine on the whole original carrier. The result improves the general row-plus-query replay budget d+2 to d+1 per endpoint after an optimal contact certificate has been established.
+
+The theorem supplies preservation and size bounds for accepted traces. Existing certificate-language completeness can supply traces existentially; it does not turn the current rational Gaussian-elimination producer into a kernel-verified discovery algorithm. Nor does the result claim a pointwise minimum number of atoms.
+
+## 64. Paper continuation: a joint colored replay targets d+2 total atoms
+
+There is a sharper construction that treats the pair jointly. On the disjoint union of the upper and lower contact carriers, give atom (plus,i) mass u_i/2 and atom (minus,i) mass v_i/2. This is one normalized rational law. Retain only the following d+1 coordinates:
+
+```text
+psi(plus,i)  = (1,  phi(i)),
+psi(minus,i) = (0, -phi(i)).
+```
+
+The retained moments are `(1/2, delta/2)`. Apply support-contained moment compression to this single colored law. Its support has at most d+2 atoms. Preservation of the first coordinate gives mass 1/2 on each color. Multiplying the two color restrictions by two recovers two probability laws. Preservation of the signed features gives the same moment difference delta, and support containment retains the two residual contact levels. Consequently their query gap still equals the same optimal budget.
+
+Thus, at paper level, every existing contact certificate has another one with at most d+2 total active atoms across both endpoints. This can be sharper than separately bounding each endpoint by d+1. The argument holds for nonzero tolerances because it preserves the realized signed moment difference, not merely an error bound. The explicit Fin-index packing/unpacking adapter and joint replay theorem have not yet been added to Lean. The new formal source in Section 63 covers the separate two-trace construction only.
+
+## 65. Executed checks, source status and the next dependency boundary
+
+The two new Lean sources contain 601 lines and 22 named public declarations, with two source-owned Scribe counterparts. Every named declaration has a Describe handle; theorem formulas and the two-branch coefficient data are authored in the Scribe sources. There is no Lean, Lake or dotnet executable in this runtime. No new Lean elaboration, executed axiom report, Scribe compilation or canonical emission is claimed. The scripts contain no new axiom declaration, sorry, admit or native_decide. Source/logic review and finite exact regression are distinct from kernel verification.
+
+The reproducible Fraction diagnostic uses seed 20260906. It passed 3,721 Boolean tolerance-grid certificates, including zero, the exact boundary and tolerances above one; 400 general rational three-part gap identities and error bounds; and 120 independent numerical LP proposals reconstructed into rational primal and dual data. Every reconstructed proposal passed the complete exact contact checker without a numerical acceptance tolerance.
+
+For those 120 certified problems, each allowed atom was duplicated four times and its weight divided equally among its copies. The resulting larger contact laws were separately compressed using only their original feature coordinates. All 120 resulting pairs retained certificate validity, individual query values and the optimum, with 834 checked elimination steps and the d+1 bound on each endpoint. Eight malformed certificates, targeting probability validity, moment feasibility, global bounds, contacts and slope direction, were rejected. These implementations are independent Python mirrors, not code extracted from Lean.
+
+The formalized certificate language now has a substantive consumer with an explicit certificate for every nonnegative Boolean tolerance pair. The remaining general existence theorem should consume a compatible port or upstream integration of the identified Dvorak--Kolmogorov strong-duality owner, with exact maps between its standard LP coefficients and this lane's original feature/query arrays. Joint colored replay is the next source-local compression target. Statistical confidence statements would additionally require a simultaneous data-error event and an explicit conversion between individual confidence radii and pairwise moment tolerances; none is supplied by a deterministic residual certificate alone.
