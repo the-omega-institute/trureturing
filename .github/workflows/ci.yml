@@ -618,8 +618,10 @@ jobs:
             candidate/tools/**/bin
             candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
-      # Since 2025-12-08, pull_request_target github.sha is the repository default branch (dev) tip: for dev-base PRs it is the key just saved by dev push.
-      # For integration-** PRs only prefix fallback selects the most recently saved cache; it is not guaranteed to match their base.
+      # Since 2025-12-08, pull_request_target evaluates github.sha as the repository default branch (dev) tip S for every PR regardless of its base.
+      # The primary key K(S) is therefore tried first for all PRs; it hits when a dev push run has already saved K(S)
+      # (a dev push saves only when the entry set changed). restore-keys prefix fallback selects the most recently saved cache otherwise;
+      # for PRs whose base is an integration-** branch the entries may not correspond to that base and then miss at the Engine (fail-closed).
       - name: Restore base-side unknown-debt test maps
         id: test-map-cache
         uses: actions/cache/restore@v4
@@ -667,6 +669,8 @@ jobs:
           # expand 阶段;contract 义务:当 `git branch -r --list 'origin/integration-*'` 中
           # 不再有 base 早于 d4f14b1a4d 的分支时,改回 fail-closed(与 `--candidate-lean-report` 同形);
           # 2025-12-08 起 pull_request_target 取默认分支 workflow,故不存在无窗口。
+          # This is a bounded migration obligation with the stated exit condition;
+          # it must not become a second judge path or a permanent compatibility branch.
           cache_args=()
           if grep -qF -- '--test-map-cache-root' "$gate"; then
             cache_args=(--test-map-cache-root "$GITHUB_WORKSPACE/.stratalint-test-map-cache")
@@ -704,7 +708,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Retention 16: fork-point age of the last 40 dev merges was p50<1h / p90 2h / max 3h
+          # keep the 16 newest by mtime(not LRU): fork-point age of the last 40 dev merges was p50<1h / p90 2h / max 3h
           # (2026-09-06, git merge-base age), and dev merges touching derivation inputs ran at
           # 112 per 24h; 16 entries cover the observed maximum. Policy constant, not a capacity
           # derivation; revisit when either reading moves.
