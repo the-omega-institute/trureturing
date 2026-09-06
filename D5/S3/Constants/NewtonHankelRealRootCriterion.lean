@@ -21,7 +21,10 @@ import Mathlib.Tactic
      searched the same names plus hyperbolicity and real-root variants in all
      pinned `Mathlib/**/*.lean`; this found only the unrelated two-dimensional
      predicate `Matrix.IsHyperbolic`.
-     `Complex.re_sum`, `Lagrange.eval_interpolate_at_node`,
+     The exact primitive search
+     `rg -n "Complex.re_sum" .lake/packages/mathlib/Mathlib -g '*.lean'`
+     found `Complex.re_sum` in `Mathlib/Data/Complex/BigOperators.lean:44`.
+     `Lagrange.eval_interpolate_at_node`,
      `Lagrange.degree_interpolate_lt`, `Polynomial.aeval_conj`, and
      `Matrix.PosSemidef.dotProduct_mulVec_nonneg` are exact primitives used
      below, but no packaged root/Hankel criterion exists.
@@ -57,6 +60,19 @@ def newtonHankel {d : Nat} (roots : Fin d -> Complex) :
 def vectorPolynomialValue {d : Nat} (coefficients : Fin d -> Real)
     (z : Complex) : Complex :=
   ∑ i, (coefficients i : Complex) * z ^ i.1
+
+private theorem eval_map_conj (p : Complex[X]) (z : Complex) :
+    (p.map Complex.conjAe).eval z = conj (p.eval (conj z)) := by
+  induction p using Polynomial.induction_on' with
+  | add p q hp hq =>
+      calc
+        ((p + q).map Complex.conjAe).eval z =
+            (p.map Complex.conjAe).eval z + (q.map Complex.conjAe).eval z := by
+              rw [Polynomial.map_add, eval_add]
+        _ = conj (p.eval (conj z)) + conj (q.eval (conj z)) := by rw [hp, hq]
+        _ = conj (p.eval (conj z) + q.eval (conj z)) := by rw [map_add]
+        _ = conj ((p + q).eval (conj z)) := by rw [eval_add]
+  | monomial n a => simp [eval_monomial]
 
 private theorem newtonHankel_isHermitian {d : Nat} (roots : Fin d -> Complex) :
     (newtonHankel roots).IsHermitian := by
