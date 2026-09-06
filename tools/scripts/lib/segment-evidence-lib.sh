@@ -54,7 +54,7 @@ def string_array(value):
 evidence = {
     "schema_version": schema_version,
     "segment": segment,
-    "event": event,
+    "event": nullable(event),
     "merge_commit": nullable(merge_commit),
     "tree": nullable(tree),
     "base": nullable(base),

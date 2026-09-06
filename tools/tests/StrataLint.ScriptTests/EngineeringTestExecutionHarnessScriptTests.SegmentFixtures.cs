@@ -62,15 +62,34 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
             "candidate change\n");
         RunGit(repository, "add", ".");
         RunGit(repository, "commit", "--quiet", "-m", "candidate");
+        if (scenario.CreateMergeCommit)
+        {
+            var primaryBranch = GitText(repository, "branch", "--show-current");
+            RunGit(repository, "checkout", "--quiet", "-b", "fixture-source", "HEAD^1");
+            ScriptHarnessScratch.WriteScratchText(
+                Path.Combine(repository, "source-change.txt"),
+                "source change\n");
+            RunGit(repository, "add", ".");
+            RunGit(repository, "commit", "--quiet", "-m", "source");
+            RunGit(repository, "checkout", "--quiet", primaryBranch);
+            RunGit(repository, "merge", "--quiet", "--no-ff", "fixture-source", "-m", "merge");
+        }
+
+        var expectedMergeCommit = GitText(repository, "rev-parse", "HEAD");
+        var expectedTree = GitText(repository, "rev-parse", "HEAD^{tree}");
+        var expectedBase = GitText(repository, "rev-parse", "HEAD^1");
+        var expectedSourceHead = scenario.CreateMergeCommit
+            ? GitText(repository, "rev-parse", "HEAD^2")
+            : null;
 
         var environment = new List<string>
         {
             "-u", "GIT_CONFIG",
             "-u", "GIT_CONFIG_PARAMETERS",
+            "-u", "EVENT",
             $"PATH={binDirectory}:{ExecutablePath}",
             $"TMPDIR={temporary.Path}",
             $"REPOSITORY={repository}",
-            $"EVENT={scenario.Event}",
             $"BUILD_EXIT_CODE={scenario.BuildExitCode}",
             $"ENGINEERING_EXIT_CODE={scenario.EngineeringExitCode}",
             $"EMIT_ENGINEERING_EVIDENCE_ON_FAILURE={(scenario.EmitEngineeringEvidenceOnFailure ? 1 : 0)}",
@@ -86,6 +105,10 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
             "GIT_CONFIG_SYSTEM=/dev/null",
             "GIT_CONFIG_NOSYSTEM=1",
         };
+        if (scenario.Event is not null)
+        {
+            environment.Add($"EVENT={scenario.Event}");
+        }
         if (scenario.InvokeThroughMake)
         {
             environment.AddRange([
@@ -105,7 +128,13 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
             repository,
             TestBudgets.ScriptProcessHangGuard,
             2 * 1024 * 1024);
-        return new SegmentRun(temporary, process);
+        return new SegmentRun(
+            temporary,
+            process,
+            expectedMergeCommit,
+            expectedTree,
+            expectedBase,
+            expectedSourceHead);
     }
 
     private static void WriteSegmentInputs(string repository)

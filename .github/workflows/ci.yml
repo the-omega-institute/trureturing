@@ -45,9 +45,6 @@ jobs:
     # 30 分钟给 full scope 留约 50% 余量;同文件的 Lean report job 预算已是 45 分钟。
     timeout-minutes: 30
     steps:
-      - name: Record executing workflow revision
-        shell: bash
-        run: printf 'PFCI_WORKFLOW_SHA %s\n' "${{ github.workflow_sha }}"
       - name: Wait for the GitHub merge ref
         if: github.event_name == 'pull_request_target'
         run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
@@ -169,6 +166,14 @@ jobs:
             --configuration Release --output .judge-binaries/scribe
           test -s .judge-binaries/cli/StrataLint.dll
           test -s .judge-binaries/scribe/StrataLint.Scribe.Documents.dll
+          printf '%s\n%s\n' \
+            'schema=stratalint-dotnet-binary-source-address-v1' \
+            'source_address=${{ steps.judge-address.outputs.address }}' \
+            > .judge-binaries/cli/StrataLint.dll.source-address
+          printf '%s\n%s\n' \
+            'schema=stratalint-dotnet-binary-source-address-v1' \
+            'source_address=${{ steps.judge-address.outputs.address }}' \
+            > .judge-binaries/scribe/StrataLint.Scribe.Documents.dll.source-address
       - name: Save judge binaries and candidate build outputs by content address (dev push only)
         if: steps.engineering.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
@@ -295,6 +300,7 @@ jobs:
           [[ "$sources_sha256" =~ ^[0-9a-f]{64}$ ]]
           [[ "$config_sha256" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
+          echo "producer_sha256=$producer_sha256" >> "$GITHUB_OUTPUT"
           echo "sources_sha256=$sources_sha256" >> "$GITHUB_OUTPUT"
           echo "config_sha256=$config_sha256" >> "$GITHUB_OUTPUT"
           # 报告地址的原像是 producer(MSBuild 求值的 Cli/Engine Compile 集 + 声明的
@@ -322,13 +328,18 @@ jobs:
           source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
-          for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
-            test -s "${source}${suffix}"
-          done
-          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
-          # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
-          "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
+          validator="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-bundle-lib.sh"
+          # shellcheck source=/dev/null
+          source "$validator"
+          # 缓存条目对候选树重验十键 provenance、三类 sidecar 与材料 ZIP;
+          # 任一不符即整体回落,不静默使用。
+          lean_report_bundle_validate \
+            "$source" \
+            '${{ steps.lean-report-input.outputs.address }}' \
+            '${{ steps.lean-report-input.outputs.producer_sha256 }}' \
+            '${{ steps.lean-report-input.outputs.producer_sha256 }}' \
+            '${{ steps.lean-report-input.outputs.sources_sha256 }}' \
+            '${{ steps.lean-report-input.outputs.config_sha256 }}' >/dev/null
           for suffix in '' .input.attestation .provenance.json .materials.zip; do
             cp "${source}${suffix}" "$reports/candidate-lean-report.json${suffix}"
           done
@@ -363,6 +374,11 @@ jobs:
           dotnet build candidate/tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj \
             --configuration Release \
             --output .judge-binaries/scribe
+          test -s .judge-binaries/scribe/StrataLint.Scribe.Documents.dll
+          printf '%s\n%s\n' \
+            'schema=stratalint-dotnet-binary-source-address-v1' \
+            'source_address=${{ steps.judge-address.outputs.address }}' \
+            > .judge-binaries/scribe/StrataLint.Scribe.Documents.dll.source-address
       - name: Restore candidate Lean dependency artifacts
         id: lake-deps-cache
         if: steps.report-reuse.outcome != 'success'
@@ -402,39 +418,19 @@ jobs:
           set -euo pipefail
           printf '%s\n' 'Actions project 层缺席;取 release cache,取回失败即失败,不回落编译'
           PATH="$HOME/.elan/bin:$PATH" candidate/tools/scripts/worktree/lean-cache-publish.sh fetch --repository "$GITHUB_WORKSPACE/candidate"
-      - name: Produce source-bound canonical Lean reports
-        if: steps.report-reuse.outcome != 'success'
-        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+      - name: Run canonical Lean inspection judgment
+        env:
+          EVENT: ${{ github.event_name == 'pull_request_target' && 'PR' || 'push' }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.workspace }}/candidate
+          REPORT: ${{ runner.temp }}/raw-lean-reports/candidate-lean-report.json
+          LEAN_INSPECT_EVIDENCE: ${{ runner.temp }}/raw-lean-reports/lean-inspect-segment-evidence.json
+          REPORT_CACHE_BUNDLE: ${{ github.workspace }}/.canonical-lean-report-cache/raw-lean-report.json
+          REPORT_CACHE_ROOT: ${{ runner.temp }}/canonical-lean-report-delta-cache
+          SCRIBE_DLL: ${{ github.workspace }}/.judge-binaries/scribe/StrataLint.Scribe.Documents.dll
+          SCRIBE_SOURCE_ADDRESS: ${{ steps.judge-address.outputs.address }}
         shell: bash
-        run: |
-          set -euo pipefail
-          export STRATALINT_REPORT_CACHE_ROOT="$("$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-ci-baseline.sh" \
-            --bundle "$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json" --cache-root "$RUNNER_TEMP/canonical-lean-report-delta-cache" || true)"
-          producer="$GITHUB_WORKSPACE/candidate/tools/lean-inspector/inspect.sh"
-          pair_producer="$GITHUB_WORKSPACE/candidate/tools/scripts/lean-report-pair.sh"
-          test -x "$producer"
-          test -f "$GITHUB_WORKSPACE/candidate/tools/lean-inspector/Inspector.lean"
-          test -x "$pair_producer"
-          reports="$RUNNER_TEMP/raw-lean-reports"
-          mkdir -p "$reports"
-          # 只产受审的 post-merge 侧。base 是同一 merge 对象的 dev 第一父提交,
-          # 只参与 admission gate 的 diff 语义,不再为它编译或上传第二份 Lean 报告。
-          "$pair_producer" \
-            --producer "$producer" \
-            --lake-bin "$HOME/.elan/bin/lake" \
-            --candidate-root "$GITHUB_WORKSPACE/candidate" \
-            --candidate-output "$reports/candidate-lean-report.json"
-      - name: Run complete mathematical content checks
-        shell: bash
-        run: |
-          set -euo pipefail
-          report="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
-          scribe="$GITHUB_WORKSPACE/.judge-binaries/scribe/StrataLint.Scribe.Documents.dll"
-          test -s "$report"
-          test -s "$scribe"
-          base="${{ steps.base.outputs.sha }}"
-          /bin/bash "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/scribe-content-checks.sh" \
-            "$report" "$scribe" "$base"
+        run: make -C candidate lean-inspect
       - name: Stage candidate canonical Lean report cache
         shell: bash
         run: |
@@ -598,67 +594,18 @@ jobs:
         with:
           name: raw-lean-reports
           path: ${{ runner.temp }}/raw-lean-reports
-      - name: Verify report content addresses
-        shell: bash
-        working-directory: ${{ runner.temp }}/raw-lean-reports
-        run: |
-          set -euo pipefail
-          sha256sum -c candidate-lean-report.json.sha256
-      - name: Run the harness gate with the candidate's own judge
+      - name: Run canonical admission judgment
         shell: bash
         env:
+          EVENT: ${{ github.event_name == 'pull_request_target' && 'PR' || 'push' }}
+          REPOSITORY: ${{ github.workspace }}/candidate
+          REPORT: ${{ runner.temp }}/raw-lean-reports/candidate-lean-report.json
+          LEAN_INSPECT_EVIDENCE: ${{ runner.temp }}/raw-lean-reports/lean-inspect-segment-evidence.json
+          JUDGE_DLL: ${{ steps.judge-cache.outputs.cache-hit == 'true' && format('{0}/.judge-binaries/cli/StrataLint.dll', github.workspace) || '' }}
+          JUDGE_SOURCE_ADDRESS: ${{ steps.judge-address.outputs.address }}
+          TEST_MAP_CACHE_ROOT: ${{ github.workspace }}/.stratalint-test-map-cache
           STRATALINT_TIMING: ${{ runner.temp }}/gate-timing.jsonl
-        run: |
-          set -euo pipefail
-          # 候选用自己的法官审自己的内容。法官程序在 43% 的合并里与 base 逐字节相同,
-          # 那些情况下用哪个是恒等的;其余情况新规则本就该立即对自己生效。
-          # base 仍然只提供一个 immutable SHA 给 diff 语义,不需要 checkout 或编译 base 代码
-          # —— 而正是那次编译让 dev 一坏就谁都进不来
-          # (2026-08-13 两次:SL-003 锁死七个在飞 PR;法官自检失败后连修它的 PR 也挡在外面)。
-          gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
-          if [[ ! -x "$gate" ]]; then
-            printf '%s\n' "candidate harness gate is absent" >&2
-            exit 1
-          elif ! grep -qF -- '--candidate-lean-report' "$gate"; then
-            printf '%s\n' "candidate gate cannot consume canonical Lean reports" >&2
-            exit 1
-          fi
-          # expand 阶段;contract 义务:当 `git branch -r --list 'origin/integration-*'` 中
-          # 不再有 base 早于 d4f14b1a4d 的分支时,改回 fail-closed(与 `--candidate-lean-report` 同形);
-          # 2025-12-08 起 pull_request_target 取默认分支 workflow,故不存在无窗口。
-          # This is a bounded migration obligation with the stated exit condition;
-          # it must not become a second judge path or a permanent compatibility branch.
-          cache_args=()
-          if grep -qF -- '--test-map-cache-root' "$gate"; then
-            cache_args=(--test-map-cache-root "$GITHUB_WORKSPACE/.stratalint-test-map-cache")
-          else
-            printf '%s\n' "candidate gate predates the test map cache; running without it" >&2
-          fi
-          judge_args=()
-          if [[ "${{ steps.judge-cache.outputs.cache-hit }}" == "true" ]]; then
-            judge="$GITHUB_WORKSPACE/.judge-binaries/cli/StrataLint.dll"
-            test -s "$judge"
-            judge_args=(--judge-dll "$judge")
-          fi
-          set +e
-          "$gate" \
-            --candidate "$GITHUB_WORKSPACE/candidate" \
-            --base "$DEV_BASELINE_SHA" \
-            --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
-            ${cache_args[@]+"${cache_args[@]}"} \
-            "${judge_args[@]}" \
-            2>&1 | tee "$RUNNER_TEMP/gate.log"
-          rc="${PIPESTATUS[0]}"
-          set -e
-          if [[ "$rc" -ne 0 && "$rc" -ne 3 ]]; then
-            echo "::error title=harness gate failed::rc=$rc; complete output was emitted above"
-            printf '%s\n' "### harness gate FAILED rc=$rc" >> "$GITHUB_STEP_SUMMARY"
-            exit "$rc"
-          fi
-          if [[ "$rc" -eq 3 ]]; then
-            printf '%s\n' "### protected-surface change (SL-022); content checks passed" >> "$GITHUB_STEP_SUMMARY"
-          fi
-          exit 0
+        run: make -C candidate admission
       - name: Prune and fingerprint test map cache after the gate (push only)
         id: test-map-after
         if: always() && github.event_name == 'push'

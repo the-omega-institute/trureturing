@@ -26,6 +26,7 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
         Assert.Equal("pfci-segment-evidence-v1", root.GetProperty("schema_version").GetString());
         Assert.Equal("engineering", root.GetProperty("segment").GetString());
         Assert.Equal("push", root.GetProperty("event").GetString());
+        AssertResolvedIdentity(sentinel, run);
         Assert.Equal(0, root.GetProperty("raw_rc").GetInt32());
         Assert.Equal("passed", root.GetProperty("outcome").GetString());
         Assert.Equal(JsonValueKind.Null, root.GetProperty("source_head").ValueKind);
@@ -70,9 +71,12 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
             EngineeringExitCode: 1,
             EmitEngineeringEvidenceOnFailure: true,
             InvokeThroughMake: true));
-        using var infrastructureDirect = RunSegment(new SegmentScenario(BuildExitCode: 9));
+        using var infrastructureDirect = RunSegment(new SegmentScenario(
+            EngineeringExitCode: 9,
+            EmitEngineeringEvidenceOnFailure: true));
         using var infrastructureMake = RunSegment(new SegmentScenario(
-            BuildExitCode: 9,
+            EngineeringExitCode: 9,
+            EmitEngineeringEvidenceOnFailure: true,
             InvokeThroughMake: true));
 
         Assert.Equal(1, candidateDirect.Process.ExitCode);
@@ -151,7 +155,7 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
         Assert.Equal(2, run.Process.ExitCode);
         using var sentinel = AssertSingleSentinel(run);
         AssertCompleteSentinel(sentinel);
-        Assert.Equal("evidence-library-unavailable", sentinel.RootElement.GetProperty("outcome").GetString());
+        Assert.Equal("subprocess-infrastructure-failed", sentinel.RootElement.GetProperty("outcome").GetString());
     }
 
     [Fact]
@@ -176,6 +180,7 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
         using var sentinel = AssertSingleSentinel(run);
         AssertCompleteSentinel(sentinel);
         Assert.Equal(JsonValueKind.Array, sentinel.RootElement.GetProperty("ordered_check_ids").ValueKind);
+        Assert.Equal("subprocess-infrastructure-failed", sentinel.RootElement.GetProperty("outcome").GetString());
     }
 
     [Fact]
@@ -186,11 +191,24 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
 
         Assert.Equal(2, run.Process.ExitCode);
         using var sentinel = AssertSingleSentinel(run);
-        Assert.Equal("invalid\"event\\value", sentinel.RootElement.GetProperty("event").GetString());
+        Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("event").ValueKind);
         Assert.Equal(2, sentinel.RootElement.GetProperty("raw_rc").GetInt32());
-        Assert.Equal("invalid-event", sentinel.RootElement.GetProperty("outcome").GetString());
+        Assert.Equal("missing-required-input", sentinel.RootElement.GetProperty("outcome").GetString());
         Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("merge_commit").ValueKind);
         Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("selected_test_ids").ValueKind);
+    }
+
+    [Fact]
+    public void EngineeringSegmentMissingEventEmitsNullEvent()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSegment(new SegmentScenario(Event: null));
+
+        Assert.Equal(2, run.Process.ExitCode);
+        using var sentinel = AssertSingleSentinel(run);
+        AssertCompleteSentinel(sentinel);
+        Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("event").ValueKind);
+        Assert.Equal("missing-required-input", sentinel.RootElement.GetProperty("outcome").GetString());
     }
 
     [Fact]
@@ -203,11 +221,20 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
         using var sentinel = AssertSingleSentinel(run);
         Assert.Equal("parent-mismatch", sentinel.RootElement.GetProperty("outcome").GetString());
         Assert.Equal(2, sentinel.RootElement.GetProperty("raw_rc").GetInt32());
-        Assert.Matches("^[0-9a-f]{40}$", sentinel.RootElement.GetProperty("merge_commit").GetString());
-        Assert.Matches("^[0-9a-f]{40}$", sentinel.RootElement.GetProperty("tree").GetString());
-        Assert.Matches("^[0-9a-f]{40}$", sentinel.RootElement.GetProperty("base").GetString());
-        Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("source_head").ValueKind);
+        AssertResolvedIdentity(sentinel, run);
         Assert.Equal(JsonValueKind.Null, sentinel.RootElement.GetProperty("selected_test_ids").ValueKind);
+    }
+
+    [Fact]
+    public void EngineeringSegmentPrIdentityMatchesBothFixtureParents()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var run = RunSegment(new SegmentScenario(Event: "PR", CreateMergeCommit: true));
+
+        Assert.Equal(0, run.Process.ExitCode);
+        using var sentinel = AssertSingleSentinel(run);
+        AssertResolvedIdentity(sentinel, run);
+        Assert.Equal("PR", sentinel.RootElement.GetProperty("event").GetString());
     }
 
     [Fact]
@@ -277,7 +304,24 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
         return JsonDocument.Parse(lines[0]);
     }
 
-    private static void AssertCompleteSentinel(JsonDocument sentinel) =>
+    private static void AssertResolvedIdentity(JsonDocument sentinel, SegmentRun run)
+    {
+        var root = sentinel.RootElement;
+        Assert.Equal(run.ExpectedMergeCommit, root.GetProperty("merge_commit").GetString());
+        Assert.Equal(run.ExpectedTree, root.GetProperty("tree").GetString());
+        Assert.Equal(run.ExpectedBase, root.GetProperty("base").GetString());
+        if (run.ExpectedSourceHead is null)
+        {
+            Assert.Equal(JsonValueKind.Null, root.GetProperty("source_head").ValueKind);
+        }
+        else
+        {
+            Assert.Equal(run.ExpectedSourceHead, root.GetProperty("source_head").GetString());
+        }
+    }
+
+    private static void AssertCompleteSentinel(JsonDocument sentinel)
+    {
         Assert.Equal(
         [
             "schema_version", "segment", "event", "merge_commit", "tree", "base",
@@ -286,9 +330,16 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
             "ordered_check_ids",
         ],
             sentinel.RootElement.EnumerateObject().Select(static property => property.Name));
+        var eventValue = sentinel.RootElement.GetProperty("event");
+        Assert.True(
+            eventValue.ValueKind == JsonValueKind.Null
+            || eventValue.ValueKind == JsonValueKind.String
+                && eventValue.GetString() is "PR" or "push",
+            $"unexpected segment event: {eventValue.GetRawText()}");
+    }
 
     private sealed record SegmentScenario(
-        string Event = "push",
+        string? Event = "push",
         int BuildExitCode = 0,
         int EngineeringExitCode = 0,
         int SelftestExitCode = 0,
@@ -302,11 +353,16 @@ public sealed partial class EngineeringTestExecutionHarnessScriptTests
         bool MissingEvidenceLibrary = false,
         bool RecordCheckEncodingFails = false,
         bool CompileFailInfrastructureError = false,
-        bool BannedApiInfrastructureError = false);
+        bool BannedApiInfrastructureError = false,
+        bool CreateMergeCommit = false);
 
     private sealed record SegmentRun(
         TemporaryDirectory Temporary,
-        ProcessOutput Process) : IDisposable
+        ProcessOutput Process,
+        string? ExpectedMergeCommit = null,
+        string? ExpectedTree = null,
+        string? ExpectedBase = null,
+        string? ExpectedSourceHead = null) : IDisposable
     {
         internal string Diagnostics => ProcessDiagnostics(Process);
 

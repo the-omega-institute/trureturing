@@ -356,6 +356,7 @@ producer_declared_paths() {
     tools/lean-inspector/Inspector.lean \
     tools/lean-inspector/delta.py \
     tools/lean-inspector/materials.py \
+    tools/scripts/report/lean-report-bundle-lib.sh \
     tools/scripts/report/lean-report-input.sh \
     tools/scripts/lean-report-pair.sh \
     tools/StrataLint.Engine/packages.lock.json \
@@ -385,6 +386,7 @@ if scope == "lean-report":
         pathlib.PurePosixPath("tools/lean-inspector/inspect.sh"),
         pathlib.PurePosixPath("tools/scripts/lean-report-pair.sh"),
         pathlib.PurePosixPath("tools/scripts/report/lean-report-input.sh"),
+        pathlib.PurePosixPath("tools/scripts/workflow/segment-lean-inspect.sh"),
     )
 elif scope == "scribe-content":
     entrypoints = (

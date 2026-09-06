@@ -638,6 +638,14 @@ public sealed partial class MakeWorkflowTests
 
         foreach (Match match in Regex.Matches(
             shell,
+            @"(?m)^[ \t]*make[ \t]+-C[ \t]+candidate[ \t]+(?<target>lean-inspect|admission)[ \t]*$",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
+        {
+            yield return $"make {match.Groups["target"].Value}";
+        }
+
+        foreach (Match match in Regex.Matches(
+            shell,
             """(?m)^[ \t]*(?:(?:STRATALINT_LEAN_REPORT="\$report"[ \t]+)?dotnet[ \t]+"\$scribe"|run_scribe)[ \t]+(?<arguments>(?:projections|emit|emit-values|describe-report|markdown-check)[^\r\n]*)$""",
             RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
         {

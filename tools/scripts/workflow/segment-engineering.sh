@@ -3,7 +3,8 @@ set -uo pipefail
 
 schema_version=pfci-segment-evidence-v1
 segment=engineering
-event="${EVENT-}"
+event=null
+event_input="${EVENT-}"
 merge_commit=null
 tree=null
 base=null
@@ -54,7 +55,7 @@ ordered = string_array(values[14], [])
 evidence = {
     "schema_version": values[0],
     "segment": values[1],
-    "event": values[2],
+    "event": nullable(values[2]),
     "merge_commit": nullable(values[3]),
     "tree": nullable(values[4]),
     "base": nullable(values[5]),
@@ -96,9 +97,7 @@ emit_evidence() {
   fi
   if [[ "$evidence_status" -ne 0 || -z "$evidence_line" || "$evidence_line" == *$'\n'* ]]; then
     raw_rc=2
-    if [[ "$outcome" != evidence-library-unavailable ]]; then
-      outcome=evidence-encoding-failed
-    fi
+    outcome=subprocess-infrastructure-failed
     evidence_line="$(bootstrap_segment_evidence_emit \
       "$schema_version" "$segment" "$event" "$merge_commit" "$tree" "$base" \
       "$source_head" "$raw_rc" "$outcome" "$report_input_address" \
@@ -106,7 +105,7 @@ emit_evidence() {
       "$selected_test_ids_json" "$ordered_check_ids_json")" || evidence_line=
   fi
   if [[ -z "$evidence_line" || "$evidence_line" == *$'\n'* ]]; then
-    evidence_line='{"schema_version":"pfci-segment-evidence-v1","segment":"engineering","event":null,"merge_commit":null,"tree":null,"base":null,"source_head":null,"raw_rc":2,"outcome":"evidence-encoding-failed","report_input_address":null,"report_sha256":null,"judge_source_address":null,"scribe_source_address":null,"selected_test_ids":null,"ordered_check_ids":[]}'
+    evidence_line='{"schema_version":"pfci-segment-evidence-v1","segment":"engineering","event":null,"merge_commit":null,"tree":null,"base":null,"source_head":null,"raw_rc":2,"outcome":"subprocess-infrastructure-failed","report_input_address":null,"report_sha256":null,"judge_source_address":null,"scribe_source_address":null,"selected_test_ids":null,"ordered_check_ids":[]}'
     raw_rc=2
   fi
   printf '%s\n' "$evidence_line"
@@ -124,7 +123,7 @@ record_check() {
   local updated_checks
   if ! updated_checks="$(segment_evidence_array_append "$ordered_check_ids_json" "$1")"; then
     printf 'SEGMENT_ENGINEERING_EVIDENCE_FAILED operation=record-check check=%s exit=2\n' "$1" >&2
-    finish 2 evidence-encoding-failed
+    finish 2 subprocess-infrastructure-failed
   fi
   ordered_check_ids_json="$updated_checks"
 }
@@ -133,20 +132,20 @@ evidence_library="${BASH_SOURCE[0]%/*}/../lib/segment-evidence-lib.sh"
 if [[ ! -f "$evidence_library" ]]; then
   printf 'SEGMENT_ENGINEERING_INPUT_FAILED field=evidence-library path=%s reason=not-regular\n' \
     "$evidence_library" >&2
-  outcome=evidence-library-unavailable
+  outcome=subprocess-infrastructure-failed
   exit 2
 fi
 if ! source "$evidence_library"; then
   printf 'SEGMENT_ENGINEERING_INPUT_FAILED field=evidence-library path=%s reason=source-failed\n' \
     "$evidence_library" >&2
-  outcome=evidence-library-unavailable
+  outcome=subprocess-infrastructure-failed
   exit 2
 fi
 if ! declare -F segment_evidence_emit >/dev/null \
   || ! declare -F segment_evidence_array_append >/dev/null; then
   printf 'SEGMENT_ENGINEERING_INPUT_FAILED field=evidence-library path=%s reason=entrypoint-missing\n' \
     "$evidence_library" >&2
-  outcome=evidence-library-unavailable
+  outcome=subprocess-infrastructure-failed
   exit 2
 fi
 
@@ -155,14 +154,16 @@ if [[ -z "$repository_input" ]]; then
   printf '%s\n' 'SEGMENT_ENGINEERING_INPUT_FAILED field=REPOSITORY reason=missing' >&2
   finish 2 missing-required-input
 fi
-if [[ -z "$event" ]]; then
+if [[ -z "$event_input" ]]; then
   printf '%s\n' 'SEGMENT_ENGINEERING_INPUT_FAILED field=EVENT reason=missing' >&2
   finish 2 missing-required-input
 fi
-if [[ "$event" != PR && "$event" != push ]]; then
-  printf 'SEGMENT_ENGINEERING_INPUT_FAILED field=EVENT value=%q reason=invalid\n' "$event" >&2
-  finish 2 invalid-event
+if [[ "$event_input" != PR && "$event_input" != push ]]; then
+  printf 'SEGMENT_ENGINEERING_INPUT_FAILED field=EVENT value=%q reason=invalid\n' \
+    "$event_input" >&2
+  finish 2 missing-required-input
 fi
+event="$event_input"
 if ! repository="$(cd "$repository_input" 2>/dev/null && pwd -P)"; then
   printf 'SEGMENT_ENGINEERING_INPUT_FAILED field=REPOSITORY path=%s reason=unavailable\n' \
     "$repository_input" >&2

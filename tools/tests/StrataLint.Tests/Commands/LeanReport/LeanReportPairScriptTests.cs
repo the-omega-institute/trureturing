@@ -368,7 +368,12 @@ public sealed class LeanReportPairScriptTests
             if [[ -f "$count_file" ]]; then read -r count < "$count_file"; fi
             printf '%s\n' "$((count + 1))" > "$count_file"
             mkdir -p "$(dirname "$output")"
-            printf '%s\n' 'stub material archive' > "${output}.materials.zip"
+            python3 - "${output}.materials.zip" <<'PY'
+            import sys
+            import zipfile
+            with zipfile.ZipFile(sys.argv[1], "w") as archive:
+                archive.writestr("fixture.txt", "stub material archive\n")
+            PY
             source_hash="$(openssl dgst -sha256 "$repository/Trureturing.lean" | awk '{print $NF}')"
             printf '{"source_sha256":"%s"}\n' "$source_hash" > "$output"
             report_hash="$(openssl dgst -sha256 "$output" | awk '{print $NF}')"
