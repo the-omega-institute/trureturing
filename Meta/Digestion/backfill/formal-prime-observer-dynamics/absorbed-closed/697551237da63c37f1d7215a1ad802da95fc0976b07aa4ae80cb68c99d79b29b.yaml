@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:697551237da63c37f1d7215a1ad802da95fc0976b07aa4ae80cb68c99d79b29b
+  normalized_sha256: sha256:697551237da63c37f1d7215a1ad802da95fc0976b07aa4ae80cb68c99d79b29b
+cas_ref: sha256:697551237da63c37f1d7215a1ad802da95fc0976b07aa4ae80cb68c99d79b29b
+coverage_gids:
+  - gid: D5/S3/Quantum/CountableSlices/SinglePrimeThermalState.singlePrimeThermalState_tsum_eq_one
+    target_statement_id: sha256:80127060cef98800fb6732daf4281313ca42ac4c2519f3a0265a3d51eb2e9d87
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/CountableSlices/SinglePrimeThermalState.singlePrimeThermalState_tsum_eq_one
+      definition_sha256: sha256:080a03391f06b3e2d54f605507300195e07a5d0733ffdd562832ffb6406bf16a
+      emission_sha256: sha256:136a9f59f4ca8bf3e700aa7a1f3e4b410297ba19a0734433144bb601868868e2
+  unresolved_subitems: []

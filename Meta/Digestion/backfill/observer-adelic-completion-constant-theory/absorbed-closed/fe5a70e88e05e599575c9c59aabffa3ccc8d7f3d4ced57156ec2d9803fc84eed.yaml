@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fe5a70e88e05e599575c9c59aabffa3ccc8d7f3d4ced57156ec2d9803fc84eed
+  normalized_sha256: sha256:fe5a70e88e05e599575c9c59aabffa3ccc8d7f3d4ced57156ec2d9803fc84eed
+cas_ref: sha256:fe5a70e88e05e599575c9c59aabffa3ccc8d7f3d4ced57156ec2d9803fc84eed
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/ChartLayerKernelStability.chart_layer_preserves_escape_dimension
+    target_statement_id: sha256:cb019b21c0f3f06faea5aeabe0d7332d6a95cb3d4f2eab5e55708ffce740dcb2
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/ChartLayerKernelStability.chart_layer_preserves_escape_dimension
+      definition_sha256: sha256:dc79debe7bcaa92d98704940de296921f876428ed83bde90ea12a5055c572ee3
+      emission_sha256: sha256:40b9ba894932604229466631a24f75987d3259ccddeb0e6ae6e0b7f4cbe6f6dc
+  unresolved_subitems: []
