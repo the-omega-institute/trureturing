@@ -11,39 +11,38 @@ import D5.S1.Words.AdmissibleWords.AdmissibleCount
 namespace D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 
 open scoped BigOperators Matrix
+open D5.S1.Words.AdmissibleWords.AdmissibleCount
 
-/-- Binary configurations with no adjacent occupied coordinates. -/
-def legalConfiguration {n : Nat} (b : Fin n → Bool) : Prop :=
-  ∀ (i j : Fin n), i.val + 1 = j.val → b i = false ∨ b j = false
-
-/-- Finite decidability of the exclusion rule. -/
-instance legalConfigurationDecidable {n : Nat} (b : Fin n → Bool) :
-    Decidable (legalConfiguration b) :=
-  inferInstanceAs (Decidable (∀ i j, i.val + 1 = j.val → b i = false ∨ b j = false))
-
-private theorem legal_cons {n : Nat} (a : Bool) (b : Fin (n+1) → Bool) :
-    legalConfiguration (Fin.cons a b) ↔
-      (a = false ∨ b 0 = false) ∧ legalConfiguration b := by
-  constructor
-  · intro h
+/-- The upstream admissibility predicate is exactly exclusion of adjacent occupied coordinates. -/
+theorem adm_iff_no_adjacent_true (n : Nat) (b : Fin n → Bool) :
+    Adm n b ↔ ∀ i j : Fin n, i.val + 1 = j.val → b i = false ∨ b j = false := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [Adm]
+  | one => simp [Adm]
+  | more n _ ih =>
+    rw [Adm, ih]
+    have hfront : (¬ (b 0 ∧ b 1)) ↔ b 0 = false ∨ b 1 = false := by
+      cases b 0 <;> cases b 1 <;> simp
+    rw [hfront]
     constructor
-    · simpa using h 0 1 (by simp)
-    · intro i j hij
-      simpa using h i.succ j.succ (by simpa using hij)
-  · rintro ⟨hfront, htail⟩ i j
-    refine Fin.cases ?_ (fun i => ?_) i
-    · intro hij
-      have : j = 1 := Fin.ext (by simpa using hij.symm)
-      simpa [this] using hfront
-    · intro hij
-      revert hij
-      refine Fin.cases ?_ (fun j => ?_) j
-      · simp
+    · rintro ⟨hfront, htail⟩ i j
+      refine Fin.cases ?_ (fun i => ?_) i
       · intro hij
-        simpa using htail i j (by simpa using hij)
+        have : j = 1 := Fin.ext (by simpa using hij.symm)
+        simpa [this] using hfront
+      · intro hij
+        revert hij
+        refine Fin.cases ?_ (fun j => ?_) j
+        · simp
+        · intro hij
+          simpa [Fin.tail] using htail i j (by simpa using hij)
+    · intro h
+      refine ⟨h 0 1 (by simp), ?_⟩
+      intro i j hij
+      simpa [Fin.tail] using h i.succ j.succ (by simpa using hij)
 
 private def configPartition {R : Type*} [CommSemiring R] {n : Nat} (w : Fin n → R) : R :=
-  ∑ b : Fin n → Bool, if legalConfiguration b then
+  ∑ b : Fin n → Bool, if Adm n b then
     ∏ i, w i ^ (b i).toNat else 0
 
 private theorem sum_bool_vectors {R : Type*} [AddCommMonoid R] {n : Nat}
@@ -53,26 +52,13 @@ private theorem sum_bool_vectors {R : Type*} [AddCommMonoid R] {n : Nat}
   rw [← Equiv.sum_comp (Fin.consEquiv (fun _ : Fin (n+1) => Bool))]
   simp [Fintype.sum_prod_type, Fin.consEquiv, add_comm]
 
-private theorem legal_cons_false {n : Nat} (b : Fin n → Bool) :
-    legalConfiguration (Fin.cons false b) ↔ legalConfiguration b := by
-  constructor
-  · intro h i j hij
-    simpa using h i.succ j.succ (by simpa using hij)
-  · intro h i j
-    refine Fin.cases ?_ (fun i => ?_) i
-    · simp
-    · refine Fin.cases ?_ (fun j => ?_) j
-      · simp
-      · intro hij
-        simpa using h i j (by simpa using hij)
+private theorem adm_true_false {n : Nat} (b : Fin n → Bool) :
+    Adm (n+2) (Fin.cons true (Fin.cons false b)) ↔ Adm n b := by
+  simp [adm_two_iff, Fin.tail_cons, Fin.cons_zero, adm_cons_false]
 
-private theorem legal_true_false {n : Nat} (b : Fin n → Bool) :
-    legalConfiguration (Fin.cons true (Fin.cons false b)) ↔ legalConfiguration b := by
-  simp [legal_cons, legal_cons_false]
-
-private theorem illegal_true_true {n : Nat} (b : Fin n → Bool) :
-    ¬ legalConfiguration (Fin.cons true (Fin.cons true b)) := by
-  simp [legal_cons]
+private theorem inadmissible_true_true {n : Nat} (b : Fin n → Bool) :
+    ¬ Adm (n+2) (Fin.cons true (Fin.cons true b)) := by
+  simp [adm_two_iff, Fin.cons_zero]
 
 private theorem config_partition_recurrence {R : Type*} [CommSemiring R] {n : Nat}
     (w : Fin (n+2) → R) :
@@ -83,14 +69,14 @@ private theorem config_partition_recurrence {R : Type*} [CommSemiring R] {n : Na
   congr 1
   · apply Finset.sum_congr rfl
     intro b _
-    simp [legal_cons_false, Fin.prod_univ_succ]
+    simp [adm_cons_false, Fin.prod_univ_succ]
   · rw [sum_bool_vectors]
-    simp only [legal_true_false, illegal_true_true, ite_false,
+    simp only [adm_true_false, inadmissible_true_true, ite_false,
       Finset.sum_const_zero, add_zero]
     rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro b _
-    by_cases hb : legalConfiguration b
+    by_cases hb : Adm n b
     · simp [hb, Fin.prod_univ_succ]
     · simp [hb]
 
@@ -153,10 +139,10 @@ private theorem path_det_eq_configuration (n : Nat) {R : Type*} [CommRing R]
     (pathMatrix (n+1) a b).det =
       configPartition (fun i : Fin n => -(a i.val * b i.val)) := by
   induction n using Nat.twoStepInduction generalizing a b with
-  | zero => simp [pathMatrix, configPartition, legalConfiguration]
+  | zero => simp [pathMatrix, configPartition, Adm]
   | one =>
     rw [path_det_recurrence]
-    simp [pathMatrix, configPartition, legalConfiguration,
+    simp [pathMatrix, configPartition, Adm,
       sum_bool_vectors, sub_eq_add_neg]
   | more n ih ih1 =>
     rw [path_det_recurrence, config_partition_recurrence, ih1, ih]
@@ -251,14 +237,14 @@ def occupationCount {n : Nat} (b : Fin n → Bool) : Nat := ∑ i, (b i).toNat
 
 /-- The actual configuration sum as a real polynomial, with no square roots in its coefficients. -/
 noncomputable def forbiddenPartition {n : Nat} (w : Fin n → ℝ) : Polynomial ℝ :=
-  ∑ b : {b : Fin n → Bool // legalConfiguration b},
+  ∑ b : {b : Fin n → Bool // Adm n b},
     Polynomial.X ^ occupationCount b.val * Polynomial.C (∏ i, w i ^ (b.val i).toNat)
 
 private theorem forbidden_partition_as_config {n : Nat} (w : Fin n → ℝ) :
     forbiddenPartition w = configPartition (fun i => Polynomial.X * Polynomial.C (w i)) := by
   unfold forbiddenPartition configPartition
   conv_rhs => rw [← Finset.sum_filter,
-    Finset.sum_subtype _ (p := legalConfiguration) (by simp)]
+    Finset.sum_subtype _ (p := Adm n) (by simp)]
   apply Finset.sum_congr rfl
   intro b _
   simp [occupationCount, mul_pow, Finset.prod_mul_distrib, ← Finset.prod_pow_eq_pow_sum,
@@ -380,7 +366,7 @@ private theorem forbidden_partition_roots_negative {d : Nat} (hd : 1 ≤ d)
 
 private theorem partition_eval {n : Nat} (w : Fin n → ℝ) (r : ℝ) :
     (forbiddenPartition w).eval r =
-      ∑ b : {b : Fin n → Bool // legalConfiguration b},
+      ∑ b : {b : Fin n → Bool // Adm n b},
         r ^ occupationCount b.val * ∏ i, w i ^ (b.val i).toNat := by
   simp [forbiddenPartition, Polynomial.eval_finsetSum, Polynomial.eval_prod]
 
@@ -388,9 +374,9 @@ private theorem forbidden_partition_eval_pos {n : Nat} (w : Fin n → ℝ)
     (hw : ∀ i, 0 ≤ w i) (r : ℝ) (hr : 0 < r) :
     0 < (forbiddenPartition w).eval r := by
   rw [partition_eval]
-  let empty : {b : Fin n → Bool // legalConfiguration b} :=
-    ⟨fun _ => false, by simp [legalConfiguration]⟩
-  have hterm : ∀ b : {b : Fin n → Bool // legalConfiguration b},
+  let empty : {b : Fin n → Bool // Adm n b} :=
+    ⟨fun _ => false, by simp [adm_iff_no_adjacent_true]⟩
+  have hterm : ∀ b : {b : Fin n → Bool // Adm n b},
       0 ≤ r ^ occupationCount b.val * ∏ i, w i ^ (b.val i).toNat := by
     intro b
     exact mul_nonneg (pow_nonneg hr.le _) (Finset.prod_nonneg fun i _ => pow_nonneg (hw i) _)
@@ -400,19 +386,19 @@ private theorem forbidden_partition_eval_pos {n : Nat} (w : Fin n → ℝ)
 
 /-- Configuration amplitudes with the exact half-power normalization. -/
 noncomputable def quantumState {n : Nat} (w : Fin n → ℝ) (r : ℝ) :
-    {b : Fin n → Bool // legalConfiguration b} → ℂ := fun b =>
+    {b : Fin n → Bool // Adm n b} → ℂ := fun b =>
   Complex.ofReal ((Real.sqrt ((forbiddenPartition w).eval r))⁻¹ *
     r ^ ((occupationCount b.val : ℝ) / 2) * ∏ i, w i ^ (((b.val i).toNat : ℝ) / 2))
 
 /-- The diagonal occupation-number observable. -/
 noncomputable def numberOperator (n : Nat) :
-    Matrix {b : Fin n → Bool // legalConfiguration b}
-      {b : Fin n → Bool // legalConfiguration b} ℂ :=
+    Matrix {b : Fin n → Bool // Adm n b}
+      {b : Fin n → Bool // Adm n b} ℂ :=
   Matrix.diagonal (fun b => (occupationCount b.val : ℂ))
 
 private theorem quantum_state_basis_sum {n : Nat} (w : Fin n → ℝ) (r : ℝ) :
     quantumState w r = (Complex.ofReal (Real.sqrt ((forbiddenPartition w).eval r)))⁻¹ •
-      ∑ b : {b : Fin n → Bool // legalConfiguration b},
+      ∑ b : {b : Fin n → Bool // Adm n b},
         Complex.ofReal (r ^ ((occupationCount b.val : ℝ) / 2) *
           ∏ i, w i ^ (((b.val i).toNat : ℝ) / 2)) • Pi.single b (1 : ℂ) := by
   ext b
@@ -425,7 +411,7 @@ private theorem half_rpow_sq (x : ℝ) (hx : 0 ≤ x) (k : Nat) :
 
 private theorem state_weight {n : Nat} (w : Fin n → ℝ)
     (hw : ∀ i, 0 ≤ w i) (r : ℝ) (hr : 0 < r)
-    (b : {b : Fin n → Bool // legalConfiguration b}) :
+    (b : {b : Fin n → Bool // Adm n b}) :
     star (quantumState w r b) * quantumState w r b =
       Complex.ofReal ((r ^ occupationCount b.val * ∏ i, w i ^ (b.val i).toNat) /
         (forbiddenPartition w).eval r) := by
@@ -448,7 +434,7 @@ private theorem quantum_state_normalized {n : Nat} (w : Fin n → ℝ)
   simp
 
 private theorem number_phase_action (n : Nat) (theta : ℝ)
-    (v : {b : Fin n → Bool // legalConfiguration b} → ℂ) :
+    (v : {b : Fin n → Bool // Adm n b} → ℂ) :
     (NormedSpace.exp (((theta : ℂ) * Complex.I) • numberOperator n)) *ᵥ v =
       fun b => Complex.exp ((theta : ℂ) * Complex.I) ^ occupationCount b.val * v b := by
   rw [numberOperator, ← Matrix.diagonal_smul, Matrix.exp_diagonal]
@@ -482,29 +468,11 @@ private theorem quantum_partition_readout {n : Nat} (w : Fin n → ℝ)
       simp only [forbiddenPartition]
       ring
 
-private theorem legal_iff_adm (n : Nat) (b : Fin n → Bool) :
-    legalConfiguration b ↔ D5.S1.Words.AdmissibleWords.AdmissibleCount.Adm n b := by
-  induction n using Nat.twoStepInduction with
-  | zero => simp [legalConfiguration, D5.S1.Words.AdmissibleWords.AdmissibleCount.Adm]
-  | one => simp [legalConfiguration, D5.S1.Words.AdmissibleWords.AdmissibleCount.Adm]
-  | more n _ ih =>
-    have hb : legalConfiguration b ↔
-        (b 0 = false ∨ b 1 = false) ∧ legalConfiguration (Fin.tail b) := by
-      conv_lhs => rw [← Fin.cons_self_tail b]
-      simpa [Fin.tail, Fin.succ_zero_eq_one] using legal_cons (b 0) (Fin.tail b)
-    rw [hb, ih, D5.S1.Words.AdmissibleWords.AdmissibleCount.Adm]
-    cases b 0 <;> cases b 1 <;> simp
-
 private theorem configuration_dimension {d : Nat} (hd : 1 ≤ d) :
-    Fintype.card {b : Fin (2*d-1) → Bool // legalConfiguration b} = Nat.fib (2*d+1) := by
-  calc
-    _ = Fintype.card {b : Fin (2*d-1) → Bool //
-        D5.S1.Words.AdmissibleWords.AdmissibleCount.Adm (2*d-1) b} :=
-      Fintype.card_congr (Equiv.subtypeEquivRight (fun b => legal_iff_adm _ b))
-    _ = _ := by
-      rw [D5.S1.Words.AdmissibleWords.AdmissibleCount.admissibleWord_card_eq_fib]
-      congr 1
-      omega
+    Fintype.card {b : Fin (2*d-1) → Bool // Adm (2*d-1) b} = Nat.fib (2*d+1) := by
+  rw [admissibleWord_card_eq_fib]
+  congr 1
+  omega
 
 /-- The self-adjoint bipartite single-particle tunnelling matrix. -/
 noncomputable def tunnellingMatrix {d : Nat} (w : Fin (2*d-1) → ℝ) :
@@ -582,8 +550,9 @@ private theorem tunnelling_partition_characteristic {d : Nat} (hd : 1 ≤ d)
   rw [hm, Matrix.det_smul]
   simp [pow_mul]
 
-private theorem legal_reverse {n : Nat} (b : Fin n → Bool) :
-    legalConfiguration (b ∘ Fin.rev) ↔ legalConfiguration b := by
+private theorem adm_reverse {n : Nat} (b : Fin n → Bool) :
+    Adm n (b ∘ Fin.rev) ↔ Adm n b := by
+  rw [adm_iff_no_adjacent_true, adm_iff_no_adjacent_true]
   constructor
   · intro h i j hij
     have hx := h j.rev i.rev (by simp only [Fin.val_rev]; omega)
@@ -598,9 +567,9 @@ private theorem config_reverse {R : Type*} [CommSemiring R] {n : Nat} (w : Fin n
   conv_rhs => rw [← Equiv.sum_comp (Fin.revPerm.arrowCongr (Equiv.refl Bool))]
   apply Finset.sum_congr rfl
   intro b _
-  change (if legalConfiguration b then ∏ i, w i.rev ^ (b i).toNat else 0) =
-    (if legalConfiguration (b ∘ Fin.rev) then ∏ i, w i ^ (b i.rev).toNat else 0)
-  simp only [legal_reverse]
+  change (if Adm n b then ∏ i, w i.rev ^ (b i).toNat else 0) =
+    (if Adm n (b ∘ Fin.rev) then ∏ i, w i ^ (b i.rev).toNat else 0)
+  simp only [adm_reverse]
   congr 1
   rw [← Equiv.prod_comp Fin.revPerm (fun i => w i ^ (b i.rev).toNat)]
   simp
@@ -654,11 +623,11 @@ theorem forbidden_neighbour_determinant {d : Nat} (hd : 1 ≤ d)
           forbiddenPartition (fun i => u i.castSucc.castSucc)) ∧
     (∀ r : ℝ, quantumState w r =
       (Complex.ofReal (Real.sqrt ((forbiddenPartition w).eval r)))⁻¹ •
-        ∑ b : {b : Fin (2*d-1) → Bool // legalConfiguration b},
+        ∑ b : {b : Fin (2*d-1) → Bool // Adm (2*d-1) b},
           Complex.ofReal (r ^ ((occupationCount b.val : ℝ) / 2) *
             ∏ i, w i ^ (((b.val i).toNat : ℝ) / 2)) • Pi.single b (1 : ℂ)) ∧
     (∀ r : ℝ, 0 < r → dotProduct (star (quantumState w r)) (quantumState w r) = 1) ∧
-    (∀ b : {b : Fin (2*d-1) → Bool // legalConfiguration b},
+    (∀ b : {b : Fin (2*d-1) → Bool // Adm (2*d-1) b},
       numberOperator (2*d-1) *ᵥ Pi.single b (1 : ℂ) =
         (occupationCount b.val : ℂ) • Pi.single b (1 : ℂ)) ∧
     (∀ (r theta : ℝ), 0 < r → dotProduct (star (quantumState w r))
@@ -671,7 +640,7 @@ theorem forbidden_neighbour_determinant {d : Nat} (hd : 1 ≤ d)
         ((NormedSpace.exp (((theta : ℂ) * Complex.I) • numberOperator (2*d-1))) *ᵥ
           quantumState w r) = P.eval₂ Complex.ofRealHom
             ((r : ℂ) * Complex.exp ((theta : ℂ) * Complex.I)) / Complex.ofReal (P.eval r)) ∧
-    (Fintype.card {b : Fin (2*d-1) → Bool // legalConfiguration b} = Nat.fib (2*d+1) ∧
+    (Fintype.card {b : Fin (2*d-1) → Bool // Adm (2*d-1) b} = Nat.fib (2*d+1) ∧
       Fintype.card (Fin d ⊕ Fin d) = 2*d) := by
   refine ⟨forbidden_partition_eq_gram_determinant hd w hw, gramPosSemidef w,
     (gramPosSemidef w).eigenvalues_nonneg, ?_, forbidden_partition_roots_negative hd w hw,
@@ -693,6 +662,7 @@ theorem forbidden_neighbour_determinant {d : Nat} (hd : 1 ≤ d)
     rw [← hP]
     exact quantum_partition_readout w hw r hr theta
 
+#print axioms adm_iff_no_adjacent_true
 #print axioms gramPosSemidef
 #print axioms forbidden_neighbour_determinant
 

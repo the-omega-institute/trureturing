@@ -12,10 +12,11 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
         "Weighted forbidden-neighbour configurations, their Gram determinant, and quantum readout.",
         H("Forbidden Neighbour Determinant"),
         Blocks(
-            Def("legalConfiguration", "legal-configuration", "The exclusion rule", LegalFormula(),
-                "Coordinates are zero-based. A true Boolean means occupied; adjacent coordinates cannot both be occupied."),
-            Def("legalConfigurationDecidable", "legal-configuration-decidable", "Decidable exclusion", DecidableFormula(),
-                "The named instance decides the finite exclusion predicate and supplies the finite configuration subtype."),
+            Describe.Lean(DescribeId.Create("adm-iff-no-adjacent-true"), Handle("adm_iff_no_adjacent_true"),
+                H("Admissibility as exclusion"), StatementSource.FromAuthor(AdmissibilityFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("AdmissibleCount.Adm owns the configuration predicate, with its existing decAdm instance. Coordinates are zero-based; a true Boolean means occupied. This characterization gives the adjacency reading used by reversal and quantum normalization."))),
+                DescribeRole.Theorem),
             Def("occupationCount", "occupation-count", "Occupation number", CountFormula(),
                 "Bool.toNat maps false to zero and true to one."),
             Def("forbiddenPartition", "forbidden-partition", "The configuration polynomial", PartitionFormula(),
@@ -97,7 +98,7 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
     private static Formula Edges(Formula d) => Call("Nat.sub", Twice(d), D(1));
     private static Formula BoolVector(Formula n) => Arrow(Fin(n), Call("Bool"));
     private static Formula Config(Formula n) => Seq(OpenBrace, Sp, F.Id("b"), Colon, Sp, BoolVector(n),
-        Sp, Mid, Sp, Call("legalConfiguration", F.Id("b")), Sp, CloseBrace);
+        Sp, Mid, Sp, Call("AdmissibleCount.Adm", n, F.Id("b")), Sp, CloseBrace);
     private static Formula Weights(Formula n) => Arrow(Fin(n), Real());
     private static Formula Val(Formula value) => Call("val", value);
     private static Formula Lam(string name, Formula domain, Formula body) =>
@@ -133,17 +134,15 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
     private static Formula WithWeights(Formula body) =>
         All("d", Nat(), All("w", Weights(Edges(F.Id("d"))), body));
 
-    private static Formula LegalFormula()
+    private static Formula AdmissibilityFormula()
     {
         Formula n = F.Id("n"), b = F.Id("b"), i = F.Id("i"), j = F.Id("j");
         Formula exclusion = All("i", Fin(n), All("j", Fin(n),
             ImpliesOf(Equal(Add(Val(i), D(1)), Val(j)),
                 Or(Equal(At(b, i), Call("false")), Equal(At(b, j), Call("false"))))));
         return Disp(All("n", Nat(), All("b", BoolVector(n),
-            new Formula.Logic(Call("legalConfiguration", b), FormulaLogicOperator.Iff, exclusion))));
+            new Formula.Logic(Call("AdmissibleCount.Adm", n, b), FormulaLogicOperator.Iff, exclusion))));
     }
-    private static Formula DecidableFormula() => Disp(All("n", Nat(), All("b", BoolVector(F.Id("n")),
-        Call("Decidable", Call("legalConfiguration", F.Id("b"))))));
     private static Formula CountFormula() => Disp(All("n", Nat(), All("b", BoolVector(F.Id("n")),
         Equal(Count(F.Id("b")), SumOver("i", Fin(F.Id("n")), Bit(F.Id("b"), F.Id("i")))))));
     private static Formula PartitionFormula()
@@ -202,9 +201,7 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
         Formula basisExpansion = All("r", Real(), Equal(State(w, r),
             Multiply(Inverse(CastComplex(Call("Real.sqrt", Eval(Partition(w), r)))),
                 SumOver("b", Config(Edges(d)), Multiply(CastComplex(Amplitude(Edges(d), w, r, b)), basis)))));
-        return Disp(new Formula.Aligned([
-            Seq(Forall, Sp, d, Colon, Sp, Nat(), Comma, Sp, w, Colon, Sp, Weights(Edges(d)), Comma),
-            Seq(Parenthesized(And(LeqOf(D(1), d), nonnegative)), Sp, Implies, Sp),
+        Formula[] conclusions = [
             Parenthesized(Equal(Partition(w), Call("Matrix.det", Add(D(1), Multiply(X(), Lift(Gram(w))))))),
             Parenthesized(Call("Matrix.PosSemidef", Gram(w))),
             Parenthesized(All("i", Fin(d), LeqOf(D(0), Eigen(w, i)))),
@@ -229,6 +226,11 @@ internal sealed class ForbiddenNeighbourDeterminantDocument : IScribeDocumentDef
                     Equal(PhaseReadout(d, w, r, theta), PartitionRatio(p, r, theta))))))),
             Parenthesized(And(Equal(Call("Fintype.card", Config(Edges(d))), Call("Nat.fib", Add(Twice(d), D(1)))),
                 Equal(Call("Fintype.card", Call("Sum", Fin(d), Fin(d))), Twice(d))))
+        ];
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, d, Colon, Sp, Nat(), Comma, Sp, w, Colon, Sp, Weights(Edges(d)), Comma),
+            Seq(Parenthesized(And(LeqOf(D(1), d), nonnegative)), Sp, Implies, Sp),
+            .. conclusions.Select((clause, index) => index == 0 ? clause : Seq(Land, Sp, clause))
         ]));
     }
 }
