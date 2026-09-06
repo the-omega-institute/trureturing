@@ -8,7 +8,7 @@
 
 import D5.S3.ConceptDynamics.PartialIdentification.SharedThresholdResponseCoupling
 import D5.S3.ConceptDynamics.PartialIdentification.ProductLawMomentSparsification
-import D5.S3.ConceptDynamics.PartIdentification.MarkovianBenefitIdentificationBoundary
+import D5.S3.ConceptDynamics.PartialIdentification.MarkovianBenefitIdentificationBoundary
 
 /-!
 The model is M=f_M(A,U_M), Y=f_Y(A,M,U_Y), with U_M independent of
