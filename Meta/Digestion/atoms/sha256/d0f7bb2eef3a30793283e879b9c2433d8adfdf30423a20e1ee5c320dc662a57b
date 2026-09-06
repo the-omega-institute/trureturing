@@ -1,0 +1,8 @@
+### 档位与文献核对(第 5⁵ 条)
+
+- **档位:第一档**——arXiv:2502.00254v2 明写的具名猜想(Gribinski,经该文转述为 Conjecture 3.13),
+  且该文自陈「only known to hold when \(\alpha\) is a non-negative integer」。
+- **核对结果**:核对了 arXiv:2502.00254 的 abs 页(v1 2025-02-01、v2 2025-12-21,作者 Campbell / Morales / Perales)
+  与正文 HTML 的 Definition 3.10、Conjecture 3.13、Conjecture 5.3 段落;
+  Definition 3.10 的系数式经**逐项代入 \(m=2\) 独立复算**,与本增订的 \(\kappa(\alpha)\) 一致(非转述)。
+  

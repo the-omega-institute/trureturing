@@ -1,0 +1,5 @@
+## 87. Authored source status
+
+The increment adds two Lean sources and their two source-owned Scribes, with 27 public declaration handles and full formulas. Mathematical and source review, lexical delimiter checks and exact rational diagnostics were performed. There is no Lean, Lake or dotnet executable in the runtime. No Lean elaboration, kernel acceptance, Scribe compilation, transitive axiom report or extracted-code equivalence is claimed. The new sources introduce no sorry, admit, native_decide or axiom declaration; those source checks do not establish kernel acceptance.
+
+The computational evidence uses NetworkX 3.6.1, NumPy 2.3.5, SciPy 1.17.0 and SymPy 1.14.0. Numerical tolerances select candidate solver solutions and proposed tight rows only. Every admitted flow and primal/dual witness passes exact rational equalities and inequalities. The final script SHA-256 is recorded in `pricing_validation.json` with the executed counts. The repository changes are confined to mathematical sources, corresponding Scribes, reproducible research evidence and this existing theory append.

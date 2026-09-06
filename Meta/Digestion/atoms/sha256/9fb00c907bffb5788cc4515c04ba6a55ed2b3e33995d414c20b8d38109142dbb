@@ -1,0 +1,4 @@
+- Continuous outcomes: Chaoge et al., arXiv:2605.01883. Copula restrictions constrain infinite-dimensional counterfactual coupling families.
+
+The repository claim boundary is narrower than these papers. The PR proves reusable logical kernels and finite concrete instances. It does not claim a complete reproduction of any paper's general algorithm or theorem family.
+

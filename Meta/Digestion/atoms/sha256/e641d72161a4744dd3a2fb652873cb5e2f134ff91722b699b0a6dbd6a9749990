@@ -1,0 +1,14 @@
+## 49. Completeness of the certificate language
+
+`CertifiedSparseCausalWitness.lean` separates a valid certificate language from a verified discovery algorithm. `exists_supported_moment_replacement` first restricts the existing rational Caratheodory construction to the original positive-support subtype. Its small latent law is pushed back to the same `Fin n` carrier. The result has at most d+1 active atoms, the same feature moments, and support contained in the original support.
+
+This yields the stronger existence theorem `exists_accepted_moment_certificate`: every finite rational probability law has an accepted certificate, and existentially zero or one step suffices. An already small law uses an empty trace. Otherwise let v be the support-contained small replacement and define
+
+```text
+z = weight - v.
+```
+
+Both laws have equal totals and feature moments, so z has zero total and zero feature moments. Some initially positive pivot p has v(p)=0, since the replacement has strictly fewer active atoms. Therefore z(p)=weight(p)>0 and the pivot ratio is exactly one. For every z(i)>0, nonnegativity of v gives z(i)<=weight(i), which proves the cross-multiplied ratio condition. Zero initial coordinates also have v(i)=0. The checked update is exactly v.
+
+Thus the data-only checker is not limited to a few hand-selected examples. Every required rational moment point admits a certificate in its language. The existence proof uses classical selection through the previously established Caratheodory theorem; it does not discover v in one arithmetic step. A Gaussian-elimination producer can still provide a longer trace with small local dependencies, while a solver that has already found v can provide the single difference direction.
+

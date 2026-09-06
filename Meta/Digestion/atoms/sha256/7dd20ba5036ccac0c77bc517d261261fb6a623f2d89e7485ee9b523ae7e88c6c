@@ -1,0 +1,42 @@
+## 32. Exact quaternary capacity bridge to the golden base-four lane, 2026-09-06
+
+`QuaternaryResponseTableCoding.lean` formalizes the exact part of the numerical coincidence between the causal response-table construction and the golden-ratio base-four DFAO problem.
+
+One Boolean complete response pair has four possibilities:
+
+```text
+(false,false), (false,true), (true,false), (true,true).
+```
+
+`responsePairDigitEquiv` identifies these with the quaternary digits `0,1,2,3`. Coordinatewise application gives
+
+```text
+(Fin k -> Bool x Bool)  equivalent to  (Fin k -> Fin 4).
+```
+
+Mathlib's existing `finFunctionFinEquiv` then gives the explicit finite radix equivalence
+
+```text
+(Fin k -> Bool x Bool)  equivalent to  Fin (4^k).
+```
+
+The theorem `responseTable_card_eq_four_pow` records the corresponding cardinality. Thus the `4^k` in the fixed-noise causal construction is exactly the size of the unrestricted length-k word space over the same four-symbol alphabet that appears as the output alphabet of the golden base-four digit problem.
+
+The number `4^k` is a capacity boundary. Every actual k-row table is coded by an integer strictly smaller than `4^k`, as stated by `responseTableCode_lt_capacity`. It is therefore important not to identify `4^k` with one particular table code.
+
+The existing golden oracle defines
+
+```text
+base4PowerWord k = zeckendorfMSDWord (4^k).
+```
+
+Combining this unchanged definition with the response-table cardinality gives the new theorem
+
+```text
+golden_base4_power_word_is_response_table_capacity:
+  base4PowerWord k
+    = zeckendorfMSDWord (Fintype.card (Fin k -> Bool x Bool)).
+```
+
+This is an exact structural identity. The k-th sparse input of the golden DFAO is the Zeckendorf representation of the cardinality of the unrestricted k-row Boolean response-table carrier.
+

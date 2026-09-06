@@ -1,0 +1,20 @@
+## 12. Mediators
+
+Mediators require more care because different assumptions have different algebraic forms.
+
+Finite mediator response types can still be encoded in a larger response-function carrier. Marginal experimental information about `M_a` or `Y_{a,m}` remains linear in the response-type law.
+
+However, cross-world independence assumptions can impose factorization conditions such as products of probabilities. These are generally polynomial rather than linear constraints. The feasible set may cease to be polyhedral and may even cease to be convex.
+
+Therefore the correct hierarchy is:
+
+```text
+linear mediator information
+    -> polyhedral sharp-bounds lane
+
+nonlinear cross-world factorization
+    -> semialgebraic/nonconvex lane
+```
+
+The second case should not be silently passed to an LP abstraction.
+

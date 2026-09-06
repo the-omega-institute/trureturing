@@ -1,0 +1,26 @@
+## 36. Exact finite moment support reduction, 2026-09-06
+
+`FiniteMomentSupportReduction.lean` discharges the representation target left open in Section 35. The theorem is stated for the repository's existing `FiniteResponseLaw`, `LinearFeasible`, and `linearObjective`; it introduces no second probability or LP semantics.
+
+For a finite atom carrier `A`, a finite feature carrier `J`, and feature map
+
+```text
+phi : A -> (J -> Q),
+```
+
+a normalized nonnegative law `mu` has retained moment vector
+
+```text
+M(mu) = sum_a mu(a) * phi(a).
+```
+
+`lawMomentVector_mem_convexHull` proves that `M(mu)` belongs to the rational convex hull of the atom profiles `phi(a)`. Mathlib's existing Caratheodory construction then supplies an affinely independent finite family of original profiles with nonnegative weights summing to one and exactly the same moment vector. The resulting `MomentCompression` records the selected profiles, source certification, normalized weights, exact moment equality, and affine independence.
+
+The ambient theorem `exists_momentCompression` gives
+
+```text
+selected atoms <= |J| + 1.
+```
+
+This support depends on the particular law and retained moment point. It is therefore a witness reduction for one feasible probability law, rather than a universal generator for all atoms.
+

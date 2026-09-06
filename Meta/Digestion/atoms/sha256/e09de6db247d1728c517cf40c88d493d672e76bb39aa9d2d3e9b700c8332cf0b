@@ -1,0 +1,35 @@
+## 55. Certified residual enclosures for queries outside the retained span
+
+`D5/S0/Certificates/RationalMomentQueryEnvelope.lean` supplies a data-only affine predictor and residual interval for a nominated query q. Write
+
+```text
+e(i) = q(i) - alpha - sum_j beta_j*phi_j(i).
+```
+
+`checkQueryEnvelope` verifies `lower <= e(i) <= upper` at every original active atom. For any accepted compression w -> v, nonnegativity and normalization give the same expectation enclosure for both laws:
+
+```text
+center + lower <= E_w[q], E_v[q] <= center + upper,
+center = alpha + sum_j beta_j*E_w[phi_j].
+```
+
+`checked_query_error_bound` therefore proves
+
+```text
+abs(E_v[q] - E_w[q]) <= upper - lower.
+```
+
+A symmetric pointwise residual bound epsilon gives the general bound 2*epsilon. `checked_uniform_query_family` fixes one compressed law before quantifying over an arbitrary query-family parameter, with a verified support-local envelope for each parameter. This is a deterministic model-approximation guarantee. It is not a sampling confidence statement and does not by itself preserve the exact identified set of an omitted query.
+
+`residual_energy_zero_iff` proves, for nonnegative weights,
+
+```text
+sum_i w(i)*e(i)^2 = 0
+iff
+all active atoms have e(i)=0.
+```
+
+Consequently `checked_query_exact_of_zero_residual_energy` turns an exact zero weighted square residual into exact query preservation. The signed residual has no analogous zero-mean criterion. In the closed counterexample, the uniform law on 0,1,2 is compressed to its middle atom while its mean is retained. The omitted event has coefficients `(1,0,1)` and changes from 2/3 to zero. Subtracting its original mean gives signed residual mean zero but residual square expectation 2/9.
+
+Small positive square error is also insufficient for a uniform claim without additional weight control. The exact diagnostic takes w=(9999/10000,1/10000), q=(0,1), and no retained nonconstant features. A valid support-contained compression can choose the rare second atom with mass one. Its original square residual is 1/10000, while the query changes by 9999/10000. The finite pointwise envelope remains valid. This example is a Python-checked paper boundary, not an additional Lean declaration in this continuation.
+

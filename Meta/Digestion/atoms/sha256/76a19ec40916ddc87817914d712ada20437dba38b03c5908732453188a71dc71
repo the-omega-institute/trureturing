@@ -1,0 +1,8 @@
+## 56. Return to original causal feasibility and endpoint certificates
+
+`RankAdaptiveSparseCausalWitness.lean` consumes `rowQueryArray`, so the reconstructed features are exactly the original LP data rows and target coefficient. `checked_affine_causal_witness` packages the actual checker output as `FiniteResponseLaw` on the original atom carrier, preserving every original `LinearFeasible` constraint and the exact query value with support at most r+1.
+
+`checked_affine_lower_endpoint` reuses the original lower dual certificate with the new sparse primal witness. It does not alter the inequality system or claim that a support-local affine presentation holds outside the original support. The original dual certificate supplies the global bound; the compressed law supplies the attaining point.
+
+For an omitted query, `checked_compressed_query_decision` proves that a compressed value exceeding a threshold by more than the residual width certifies that the original value exceeds the same threshold. This transports a strict decision under a verified error margin, analogous in quantifier structure to the common-envelope reasoning in #5750. No new concentration or physical measurement theorem is asserted.
+

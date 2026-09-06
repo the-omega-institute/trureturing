@@ -1,0 +1,18 @@
+## 1. Purpose
+
+This ledger records the research and formalization work carried by pull request #5029. It separates reusable libraries, concrete causal truth sources, literature-facing interfaces, semantic boundaries, and remaining proof obligations.
+
+The governing proof pipeline is:
+
+```text
+causal and statistical assumptions
+  -> admissible structural response models
+  -> feasible coupling or response-type set
+  -> primal query optimization
+  -> replayable dual validity certificate
+  -> attaining primal witness
+  -> Lean sharpness theorem
+```
+
+For convex finite models, exact endpoint witnesses and affine interpolation fill the complete interval. Polynomial cross-world restrictions, Markovian product families, and unions over graph completions can produce nonconvex or disconnected identified ranges.
+

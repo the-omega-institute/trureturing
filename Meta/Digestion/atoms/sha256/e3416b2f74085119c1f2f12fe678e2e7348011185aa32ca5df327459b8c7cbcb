@@ -1,0 +1,12 @@
+## 54. One compressed law for a whole affine query family
+
+`checkAffineCompression_preserves_affine_family` fixes the accepted compression and then quantifies over all rational offsets and coefficient vectors. For any
+
+```text
+q_theta(i) = alpha_theta + sum_j beta_theta,j * phi_j(i),
+```
+
+the same output law preserves the query expectation. The law and trace are not reselected for each theta. This accommodates families with infinitely many parameter values while keeping a finite spanning feature family.
+
+The source gives this universal statement for affine queries of the retained full feature vector. It does not claim that every later nonlinear statistic, determinant, chronological functional, or intervention query belongs to that span. Additional readouts require a reconstruction or an error certificate. This is the causal counterpart of the preservation boundary identified in loning's theory, with distinct carriers kept explicit.
+
