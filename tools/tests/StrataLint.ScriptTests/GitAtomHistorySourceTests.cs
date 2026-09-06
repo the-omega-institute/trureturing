@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using System.Xml.Linq;
 using StrataLint.Cli;
@@ -9,6 +11,27 @@ namespace StrataLint.Tests;
 
 public sealed class GitAtomHistorySourceTests
 {
+    [Theory]
+    [InlineData("GIT_DIR")]
+    [InlineData("GIT_CONFIG")]
+    [InlineData("GIT_OBJECT_DIRECTORY")]
+    [InlineData("GIT_TEMPLATE_DIR")]
+    [InlineData("GIT_ALTERNATE_OBJECT_DIRECTORIES")]
+    [InlineData("GIT_CEILING_DIRECTORIES")]
+    [InlineData("GIT_NAMESPACE")]
+    [InlineData("GIT_FUTURE_FIXTURE_REDIRECT")]
+    public void FixtureRejectsInheritedGitEnvironment(string variable)
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            using var fixture = new AtomHistoryRepository(["PATH", variable, "HOME"]);
+        });
+        Assert.Contains(variable, exception.Message);
+    }
+
+    [Fact]
+    public void FixtureWritesStayInsideTemporaryRoot() => AssertInheritedConfigurationIsolation();
+
     [Theory]
     [InlineData("default")]
     [InlineData("diff-merges-off")]
@@ -25,7 +48,19 @@ public sealed class GitAtomHistorySourceTests
             return;
         }
 
-        using var fixture = new AtomHistoryRepository();
+        var isolationChild = configuration == "inherited-config-redirections";
+        if (isolationChild)
+        {
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+                AtomHistoryRepository.RejectInheritedGitEnvironment(
+                    Environment.GetEnvironmentVariables().Keys.Cast<string>()));
+            Assert.Contains("GIT_OBJECT_DIRECTORY", exception.Message);
+            Assert.Contains("GIT_TEMPLATE_DIR", exception.Message);
+        }
+
+        // Only this isolated child injects the clean preflight snapshot to exercise the
+        // fixture's whitelist while its actual process environment remains poisoned.
+        using var fixture = new AtomHistoryRepository(isolationChild ? [] : null);
         if (configuration == "inherited-config-redirections")
         {
             Assert.Equal("Atom History Fixture", fixture.Git("config", "--file",
@@ -41,7 +76,18 @@ public sealed class GitAtomHistorySourceTests
         if (configuration is "show-root-false" or "both-disabled" or "first-parent")
             fixture.Configure("log.showRoot", "false");
 
+        if (isolationChild)
+        {
+            foreach (var variable in Environment.GetEnvironmentVariables().Keys.Cast<string>()
+                .Where(variable => variable.StartsWith("GIT_", StringComparison.OrdinalIgnoreCase)).ToArray())
+                Environment.SetEnvironmentVariable(variable, null);
+            Environment.SetEnvironmentVariable("HOME", fixture.Home);
+            Assert.Empty(Directory.CreateDirectory(fixture.Home).EnumerateFileSystemInfos());
+        }
+
         var history = fixture.ReadUnchanged(fixture.Root);
+        if (isolationChild)
+            Assert.Empty(Directory.CreateDirectory(fixture.Home).EnumerateFileSystemInfos());
 
         Assert.False(history.IsShallow);
         Assert.True(history.FirstAdded.TryGetValue(fixture.SideAtomId, out var side), configuration);
@@ -56,13 +102,19 @@ public sealed class GitAtomHistorySourceTests
         var config = Path.Combine(temporary.Path, "redirect.config");
         var global = Path.Combine(temporary.Path, "global.config");
         var system = Path.Combine(temporary.Path, "system.config");
+        var objects = Path.Combine(temporary.Path, "outside-objects");
+        var templates = Path.Combine(temporary.Path, "outside-templates");
+        Directory.CreateDirectory(objects);
+        Directory.CreateDirectory(templates);
         var bytes = Encoding.UTF8.GetBytes("[user]\n\tname = Outside Fixture\n"
             + "\temail = outside@example.invalid\n[fixture]\n\tuntouched = true\n");
         foreach (var path in new[] { config, global, system }) File.WriteAllBytes(path, bytes);
 
         var result = TestProcessRunner.Run("/usr/bin/env",
-            ["-u", "GIT_DIR", "-u", "GIT_COMMON_DIR", "-u", "GIT_WORK_TREE", "-u", "GIT_INDEX_FILE",
+            ["-i", $"PATH={Environment.GetEnvironmentVariable("PATH")}",
+                $"HOME={temporary.Path}", $"TMPDIR={temporary.Path}", "LC_ALL=C", "LANG=C",
                 $"GIT_CONFIG={config}", $"GIT_CONFIG_GLOBAL={global}", $"GIT_CONFIG_SYSTEM={system}",
+                $"GIT_OBJECT_DIRECTORY={objects}", $"GIT_TEMPLATE_DIR={templates}",
                 "GIT_CONFIG_NOSYSTEM=0", "STRATALINT_ATOM_HISTORY_CONFIG_CHILD=1",
                 "dotnet", "vstest", Path.Combine(AppContext.BaseDirectory, "StrataLint.ScriptTests.dll"),
                 "--TestCaseFilter:DisplayName~ReaddedMergeAtomRetainsSideBranchCommitterTimeAcrossGitConfig&DisplayName~inherited-config-redirections",
@@ -70,6 +122,8 @@ public sealed class GitAtomHistorySourceTests
             temporary.Path, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
 
         foreach (var path in new[] { config, global, system }) Assert.Equal(bytes, File.ReadAllBytes(path));
+        Assert.Empty(Directory.CreateDirectory(objects).EnumerateFileSystemInfos());
+        Assert.Empty(Directory.CreateDirectory(templates).EnumerateFileSystemInfos());
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError));
         var report = XDocument.Parse(File.ReadAllText(Path.Combine(temporary.Path, "child.trx")));
@@ -117,21 +171,31 @@ public sealed class GitAtomHistorySourceTests
 
     private sealed class AtomHistoryRepository : IDisposable
     {
-        internal TemporaryDirectory Temporary { get; } = new();
+        internal TemporaryDirectory Temporary { get; }
         internal string Root { get; }
+        internal string Home { get; }
         internal string RootAtomId { get; }
         internal string SideAtomId { get; }
 
-        internal AtomHistoryRepository()
+        internal AtomHistoryRepository(IEnumerable<string>? inheritedVariables = null)
         {
-            foreach (var variable in new[] { "GIT_DIR", "GIT_COMMON_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE" })
-                Assert.True(string.IsNullOrEmpty(Environment.GetEnvironmentVariable(variable)),
-                    $"Synthetic git fixture requires {variable} to be unset");
+            RejectInheritedGitEnvironment(inheritedVariables
+                ?? Environment.GetEnvironmentVariables().Keys.Cast<string>());
+            Temporary = new TemporaryDirectory();
             Root = Path.Combine(Temporary.Path, "repository");
+            Home = Path.Combine(Temporary.Path, "home");
+            Directory.CreateDirectory(Home);
             Directory.CreateDirectory(Root);
-            Git("init", "--initial-branch=main");
+            var template = Path.Combine(Temporary.Path, "empty-template");
+            Directory.CreateDirectory(template);
+            // An empty repository skeleton makes the first Git call a location check,
+            // before init or any other Git command can write fixture state.
+            Directory.CreateDirectory(Path.Combine(Root, ".git", "objects"));
+            Directory.CreateDirectory(Path.Combine(Root, ".git", "refs"));
+            File.WriteAllText(Path.Combine(Root, ".git", "HEAD"), "ref: refs/heads/main\n");
             Assert.Equal(Path.Combine(Root, ".git"),
                 Path.GetFullPath(Git("rev-parse", "--git-dir").Trim(), Root));
+            Git("init", $"--template={template}", "--initial-branch=main");
             Configure("user.name", "Atom History Fixture");
             Configure("user.email", "atom-history@example.invalid");
             RootAtomId = WriteAtom("root claim\n");
@@ -158,6 +222,16 @@ public sealed class GitAtomHistorySourceTests
             Commit("2026-09-03T00:00:00Z", "re-add side atom");
         }
 
+        internal static void RejectInheritedGitEnvironment(IEnumerable<string> variables)
+        {
+            var inherited = variables
+                .Where(variable => variable.StartsWith("GIT_", StringComparison.OrdinalIgnoreCase))
+                .Order(StringComparer.Ordinal).ToArray();
+            if (inherited.Length != 0)
+                throw new InvalidOperationException("Synthetic git fixture requires unset variables: "
+                    + string.Join(", ", inherited));
+        }
+
         internal AtomHistory ReadUnchanged(string checkout)
         {
             var paths = GitAt(checkout, "ls-files", "-z")
@@ -180,30 +254,79 @@ public sealed class GitAtomHistorySourceTests
         internal string Git(params string[] arguments) => GitAt(Root, arguments);
 
         internal void Configure(string key, string value) =>
-            Git("config", "--file", Path.Combine(Root, ".git", "config"), key, value);
+            Git("-c", $"{key}={value}", "config", "--file", Path.Combine(Root, ".git", "config"), key, value);
 
         internal string GitAt(string checkout, params string[] arguments) =>
             Run(arguments, checkout);
 
-        private void GitAtDate(string date, params string[] arguments) => Run(arguments, Root,
-            [$"GIT_AUTHOR_DATE={date}", $"GIT_COMMITTER_DATE={date}"]);
-
-        private static string Run(string[] arguments, string checkout, string[]? environment = null)
+        private void GitAtDate(string date, params string[] arguments)
         {
-            var result = TestProcessRunner.Run("/usr/bin/env",
-                ["-u", "GIT_DIR", "-u", "GIT_COMMON_DIR", "-u", "GIT_WORK_TREE", "-u", "GIT_INDEX_FILE",
-                    "-u", "GIT_CONFIG",
-                    "-u", "GIT_CONFIG_GLOBAL", "-u", "GIT_CONFIG_SYSTEM", "-u", "GIT_CONFIG_NOSYSTEM",
-                    "-u", "GIT_CONFIG_PARAMETERS", "-u", "GIT_CONFIG_COUNT",
-                    "GIT_CONFIG_GLOBAL=/dev/null", "GIT_CONFIG_SYSTEM=/dev/null", "GIT_CONFIG_NOSYSTEM=1",
-                    .. environment ?? [], "git", "-C", checkout,
-                    "-c", "init.templateDir=", "-c", "core.hooksPath=/dev/null",
-                    "-c", "commit.gpgsign=false", "-c", "gc.auto=0", .. arguments], checkout,
-                TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+            Git(arguments);
+            var tree = Git("show", "-s", "--format=%T", "HEAD").Trim();
+            var parents = Git("show", "-s", "--format=%P", "HEAD")
+                .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
+            var message = Git("show", "-s", "--format=%B", "HEAD");
+            var timestamp = DateTimeOffset.Parse(date, CultureInfo.InvariantCulture)
+                .ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture);
+            var identity = $"Atom History Fixture <atom-history@example.invalid> {timestamp} +0000";
+            // Git has no command-line committer-date option. Write a canonical commit
+            // object with explicit dates, retaining the real commit's tree and parents.
+            var commit = $"tree {tree}\n" + string.Concat(parents.Select(parent => $"parent {parent}\n"))
+                + $"author {identity}\ncommitter {identity}\n\n{message}";
+            var oid = Run(["hash-object", "-t", "commit", "-w", "--stdin"], Root, commit).Trim();
+            Git("update-ref", "HEAD", oid);
+        }
+
+        private string Run(string[] arguments, string checkout, string? standardInput = null)
+        {
+            var start = new ProcessStartInfo("git")
+            {
+                WorkingDirectory = checkout,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                RedirectStandardInput = standardInput is not null,
+            };
+            start.Environment.Clear();
+            start.Environment["PATH"] = Environment.GetEnvironmentVariable("PATH");
+            start.Environment["HOME"] = Home;
+            start.Environment["TMPDIR"] = Temporary.Path;
+            start.Environment["LC_ALL"] = "C";
+            start.Environment["LANG"] = "C";
+            foreach (var argument in new[] { "-C", checkout, "-c", "core.hooksPath=/dev/null",
+                "-c", "commit.gpgsign=false", "-c", "gc.auto=0" }.Concat(arguments))
+                start.ArgumentList.Add(argument);
+            var result = TestProcessRunner.Classify(() => RunProcess(start, standardInput), "git");
             Assert.True(result.ExitCode == 0, $"git exited {result.ExitCode}: "
                 + Encoding.UTF8.GetString(result.StandardOutput)
                 + Encoding.UTF8.GetString(result.StandardError));
             return Encoding.UTF8.GetString(result.StandardOutput);
+        }
+
+        private static ProcessOutput RunProcess(ProcessStartInfo start, string? standardInput)
+        {
+            using var process = Process.Start(start)
+                ?? throw new InvalidOperationException("Could not start fixture git");
+            using var cancellation = new CancellationTokenSource(TestBudgets.ScriptProcessHangGuard);
+            try
+            {
+                var output = process.StandardOutput.ReadToEndAsync(cancellation.Token);
+                var error = process.StandardError.ReadToEndAsync(cancellation.Token);
+                if (standardInput is not null)
+                {
+                    process.StandardInput.Write(standardInput);
+                    process.StandardInput.Close();
+                }
+                process.WaitForExitAsync(cancellation.Token).GetAwaiter().GetResult();
+                return new ProcessOutput(process.ExitCode,
+                    Encoding.UTF8.GetBytes(output.GetAwaiter().GetResult()),
+                    Encoding.UTF8.GetBytes(error.GetAwaiter().GetResult()));
+            }
+            catch (OperationCanceledException exception)
+            {
+                process.Kill(entireProcessTree: true);
+                throw new TimeoutException("Fixture git exceeded its infrastructure hang guard", exception);
+            }
         }
 
         private void Commit(string date, string message)
