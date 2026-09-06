@@ -120,6 +120,7 @@ theorem partialMediatorBenefit_transport_bounds
       partialMediatorBenefit coupling outcome ≤
         linearObjective (upperTransportCost probability) coupling.mass := by
   have cell (pair : Mediator × Mediator) := outcomeBenefitCell_bounds outcome pair.1 pair.2
+  change ∀ a m, outcomeSuccess outcome a m = probability (a, m) at kernel
   simp only [kernel] at cell
   rw [partialMediatorBenefit_eq_cells]
   constructor
@@ -146,9 +147,9 @@ theorem simultaneous_transport_endpoint_mechanisms
   intro coupling
   constructor
   · rw [partialMediatorBenefit_eq_cells]
-    simp only [cells_l, lowerTransportCost]
+    simp only [linearObjective, cells_l, lowerTransportCost]
   · rw [partialMediatorBenefit_eq_cells]
-    simp only [cells_u, upperTransportCost]
+    simp only [linearObjective, cells_u, upperTransportCost]
 
 private def mixtureLaw {Atom : Type*} [Fintype Atom]
     (first second : FiniteResponseLaw Atom) (t : ℚ) (ht : 0 ≤ t ∧ t ≤ 1) :
