@@ -1,0 +1,18 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaLinear;
+
+internal sealed class ComplexQuadraticRowBoundDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The existing real row estimate controls complete complex mixed forms, absolutely convergent coefficient series and weighted sign margins.",
+        H("Complex Mixed-Term Row Bounds"), Blocks(
+            Describe.Lean(DescribeId.Create("complete-complex-row-bound"), DeclarationHandle.Create("D5/S3/Weil/ZetaLinear/ComplexQuadraticRowBound.norm_complex_quadratic_le_rows"), H("Control every complex cross term"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The triangle inequality reduces the complex form to coefficient norms and entry norms. The existing real row theorem then supplies the bound, requiring only symmetry of entry norms."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complex-weighted-energy-budget"), DeclarationHandle.Create("D5/S3/Weil/ZetaLinear/ComplexQuadraticRowBound.norm_complex_quadratic_le_weighted_energy"), H("Retain a prescribed weighted energy"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A row budget proportional to each energy weight controls the full form by eta times that weighted energy."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("absolutely-summable-complex-rows"), DeclarationHandle.Create("D5/S3/Weil/ZetaLinear/ComplexQuadraticRowBound.norm_series_quadratic_le_weighted_energy"), H("Matrix coefficients given by infinite series"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Absolute summability justifies bounding each summed entry by its sum of norms. The summed matrix has symmetric entry norms, and its row budget remains an explicit hypothesis."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("positive-weighted-energy-detection"), DeclarationHandle.Create("D5/S3/Weil/ZetaLinear/ComplexQuadraticRowBound.weighted_energy_pos"), H("Positive weights detect nonzero vectors"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A nonzero coefficient vector has a nonzero coordinate. Its positive weighted squared norm gives a strictly positive term in the finite energy sum. The scaled-row module reuses this theorem."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("negative-complex-row-margin"), DeclarationHandle.Create("D5/S3/Weil/ZetaLinear/ComplexQuadraticRowBound.negative_margin_of_complex_rows"), H("Preserve a negative diagonal margin"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A row error budget strictly below the negative diagonal margin yields negativity for every nonzero vector. The conclusion includes all mixed terms."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("positive-complex-row-margin"), DeclarationHandle.Create("D5/S3/Weil/ZetaLinear/ComplexQuadraticRowBound.positive_margin_of_complex_rows"), H("Preserve a positive diagonal margin"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The lower bound on the real part of the complex error preserves positivity when the same row budget is below the positive diagonal margin."))), DescribeRole.Theorem),
+            Paragraph(Text("The only real row-inequality owner is LongGapsBetweenPrimes.abs_quadratic_form_le_rows. Actual zeta matrix bounds and any sieve normalization must be supplied by their own analytic proofs. These generic results do not certify those inputs."))
+        )));
+}
