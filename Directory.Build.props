@@ -9,6 +9,9 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <Deterministic>true</Deterministic>
+    <!-- 判官程序集 MVID 是 test-map 缓存的 producer 身份;SDK 内置的源控查询把 commit sha 写进 InformationalVersion 与 PDB(RSDS),使同源不同提交的 DLL 不同。
+         2026-09-06 同路径实测:关闭后逐字节相同(转录 jp0905c)。harness 不是发布库,不需要 SourceLink。 -->
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
     <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>

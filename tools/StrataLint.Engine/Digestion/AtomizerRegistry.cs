@@ -88,7 +88,10 @@ internal static class AtomizerRegistry
         TheoryAtomizerRules rules)
     {
         var kinds = new Dictionary<string, string>(StringComparer.Ordinal);
-        Require(id).AtomizeWithContentKinds(bytes, rules, kinds);
+        var document = Require(id).AtomizeWithContentKinds(bytes, rules, kinds);
+        if (document.ClausePlans.IsEmpty)
+            InheritClauseContentKinds(kinds, document.Claims.Select(DigestionDecomposition.PlanClauses)
+                .OfType<DigestionClausePlan>());
         return kinds.ToImmutableDictionary(StringComparer.Ordinal);
     }
 
@@ -115,7 +118,8 @@ internal static class AtomizerRegistry
                             id,
                             bytes,
                             rules,
-                            contentKinds))
+                            contentKinds),
+                    EmitsClausePlans: true)
                 : throw Unknown(id);
 
     internal static ImmutableDictionary<string, string> CaptureContentKinds(
@@ -156,9 +160,12 @@ internal static class AtomizerRegistry
             return;
         }
 
-        foreach (var plan in plans)
+        var pending = new Queue<DigestionClausePlan>(plans);
+        var visited = new HashSet<string>(StringComparer.Ordinal);
+        while (pending.TryDequeue(out var plan))
         {
-            if (!kinds.TryGetValue(plan.Parent.Fingerprints.RawSha256, out var kind))
+            if (!visited.Add(plan.Parent.Fingerprints.RawSha256)
+                || !kinds.TryGetValue(plan.Parent.Fingerprints.RawSha256, out var kind))
             {
                 continue;
             }
@@ -166,6 +173,8 @@ internal static class AtomizerRegistry
             foreach (var child in plan.Children)
             {
                 RecordContentKind(kinds, child, kind);
+                if (DigestionDecomposition.PlanClauses(child) is { } nested)
+                    pending.Enqueue(nested);
             }
         }
     }
