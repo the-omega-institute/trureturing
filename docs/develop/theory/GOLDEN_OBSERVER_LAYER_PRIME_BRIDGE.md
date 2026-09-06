@@ -653,3 +653,182 @@ The amplitudes and integral identities are ideal. A single shot is a binary resu
 Three parallel self-check processes validated the cocycle and induction identities symbolically, all 2,047 binary words of lengths 0-10 against direct function-action evaluation, and 262,144 sampled golden windows against the range and kernel predictions. The maximum numerical wavefunction discrepancy was below 3.54e-15. These checks are finite self-checks, not Lean verdicts or independent model reviews.
 
 The implementation was authored and reviewed for mathematical logic by the GPT-6 Pro main session. No local Lean toolchain was available. #5750 and its parent remain candidate sources until actually compiled and admitted; no freeze event or merge has been asserted. The existing theory sections are preserved above, and this appendix does not close the geometric-to-valuation problem.
+
+## 30. Library-first statistical audit, 2026-09-06
+
+The finite-shot continuation first audited the repository and related open drafts before introducing any new probability object. The needed statistical machinery was already present in the same #5750 stack:
+
+```text
+SymmetricBernoulliProbabilityData
+  -> canonical positiveBiasLaw / negativeBiasLaw
+FourLocalEvidenceClosedForms
+  -> exact symmetric TV and Bhattacharyya formulas
+BhattacharyyaExponent
+  -> iid testing floors and sample-complexity products
+FiniteRepetitionLawKernel
+  -> positive finite repetition preserves the one-shot law kernel
+FiniteSuiteErrorSqueeze
+  -> operational finite-suite optimum and affinity-budget squeeze.
+```
+
+Consequently `GoldenFiniteShotVisibility` is a thin physical adapter. It does not define a second Bernoulli family, total variation, Bhattacharyya coefficient, iid product, or Bayes-risk engine. The `FiniteSuiteErrorSqueeze` owner was checked at the actual #5750 head after the write, rather than inferred from a newer `dev` checkout.
+
+The related open draft #4504 was also inspected. It contains a Fourier-Magnus matrix commutator and a free-Lie interpretation of the second-order chronology response. That branch is an adjacent algebraic foundation, not a source to duplicate into the present stochastic-readout stack.
+
+## 31. Visibility is statistical strength with one singular kernel transition
+
+Let the calibrated chronology phase be `2*kappa*m(w)` and define
+
+```text
+s_V(w) = V * sin(2*kappa*m(w)),
+p_V(w) = (1 + s_V(w)) / 2,
+delta_V(w) = s_V(w) / 2.
+```
+
+The one-shot readout law is exactly the repository's existing
+
+```text
+positiveBiasLaw(delta_V(w)).
+```
+
+For `0 <= V <= 1`, the new adapter proves this is valid probability data. The visible fringe is also proved to be the affine contraction
+
+```text
+p_V(w) = (1-V)/2 + V * p_ideal(w).
+```
+
+There are two qualitatively different regimes.
+
+At `V = 0`, every word has exactly the same one-shot law. The observation kernel jumps to the universal relation and all chronology information disappears from this channel.
+
+For `V > 0`, nonzero `kappa`, and the already-proved no-alias calibration, equality of one-shot laws is equivalent to equality of `magnusCenter`. Thus any two strictly positive visibility values induce the same deterministic indistinguishability relation in the ideal model. They change the distance between distinct laws, not which states are equal under the readout.
+
+This matters for intrinsic-information accounting. Positive visibility settings are not separate deterministic CUTs merely because they produce different numerical probabilities. Their equality kernel is the same calibrated Magnus-center kernel. The singular point `V=0` is a genuine kernel collapse.
+
+Experimental Ramsey work supports treating contrast as a measurable physical quantity rather than a symbolic score. For example, trapped-ion Ramsey data in Rapid exchange cooling with trapped ions report a fitted contrast of 96.0(7)% and binomial confidence intervals on state populations. More recent trapped-ion work on motional-frequency noise uses hundreds of shots per Ramsey point and explicitly separates coherent modulation from contrast loss due to heating. These experiments motivate the visibility and sampling interface. They do not validate the golden-word protocol itself.
+
+## 32. Finite repetition changes confidence, not deterministic information
+
+The repository's frozen `FiniteRepetitionLawKernel` theorem becomes directly applicable after the one-shot law has been identified. For every positive finite shot count `N`, the candidate adapter proves
+
+```text
+iidPower(law_V(left), N) = iidPower(law_V(right), N)
+  iff
+magnusCenter(left) = magnusCenter(right),
+```
+
+under positive visibility and the same no-alias premises.
+
+This creates a sharp conceptual separation:
+
+```text
+one-shot kernel       -> what is distinguishable in principle
+N-shot product law    -> how strongly already-distinct states separate statistically.
+```
+
+No finite number of repeated observations can repair a one-shot exact collision. In particular, the odd-length golden collision inherited from the parent module remains a collision under every finite iid repetition. Conversely, when the one-shot laws differ, repetition can amplify statistical evidence without creating a new deterministic coordinate.
+
+Under the v4.3 intrinsic-information specification, an `N`-shot version of the same positive-visibility law should therefore not be counted as a new deterministic kernel refinement merely because its total variation or testing risk changes. Kernel refinement and statistical confidence are different objects.
+
+## 33. Exact one-shot separation and the finite-shot optimal-error squeeze
+
+For a word and its reversal, reversal negates the existing Magnus center. Therefore their visible signals are opposite. The adapter specializes the frozen symmetric-Bernoulli formulas to obtain
+
+```text
+TV(law(w), law(reverse(w))) = |s_V(w)|.
+```
+
+For `0 <= V < 1`, define
+
+```text
+rho(w) = sqrt(1 - s_V(w)^2).
+```
+
+Then the exact one-shot Bhattacharyya affinity is
+
+```text
+Bhattacharyya(law(w), law(reverse(w))) = rho(w).
+```
+
+The recursive `IidSpace` owner gives a universal necessary floor. For every decision event on `N` independent outcomes,
+
+```text
+(1 - s_V(w)^2)^N / 2
+  <= total two-hypothesis error.
+```
+
+Hence total error at most `eps` requires
+
+```text
+(1 - s_V(w)^2)^N <= 2 * eps.
+```
+
+The repository also contains the independent finite-suite encoding `Fin N -> Outcome` and an operational equal-prior optimum. Specializing that existing owner to `N` identical chronology coordinates gives an attainable Bayes risk `e_N^*`. Its affinity budget reduces exactly to
+
+```text
+-N * log(rho).
+```
+
+The resulting explicit squeeze is
+
+```text
+(1 - sqrt(1 - rho^(2*N))) / 2
+  <= e_N^*
+  <= rho^N / 2.
+```
+
+Therefore
+
+```text
+rho^N <= 2 * eps
+```
+
+is a sufficient condition for the existing optimal finite-suite decision to achieve equal-prior risk at most `eps`.
+
+The necessary and sufficient interfaces use two already-frozen product encodings. This batch does not pretend they are definitionally identical. A generic equivalence between recursive `IidSpace` and `Fin N -> Outcome`, together with risk transport through that equivalence, would be a reusable estimation theorem and should be proved at the generic owner level if needed.
+
+The present result already closes an important scientific gap from section 29. The model now distinguishes three layers that had previously been conflated:
+
+```text
+exact identifiability  -> law kernel
+one-shot separation    -> TV / affinity
+finite-shot certainty  -> testing risk and sample-count bounds.
+```
+
+## 34. Relation to the Fourier-Magnus draft
+
+Open draft #4504 supplies a nearby noncommutative statement: two Fourier-phased matrix channels have a commutator proportional to the second-Magnus swap kernel and to the matrix commutator of the channel generators. Equal times or commuting channel generators kill that response.
+
+The current Weyl lane supplies a different representation of the same structural idea. The binary chronology word accumulates a central Weyl phase whose exponent is `a*b*m(w)`, and reversal doubles the relative phase. The finite-shot module then observes that scalar central character through a Ramsey law.
+
+The next algebraic bridge should therefore have the shape
+
+```text
+second-Magnus / free-Lie bracket coordinate
+  -> evaluate in a concrete Weyl representation
+  -> central phase exponent
+  -> Ramsey probability law.
+```
+
+This bridge is not yet claimed. It requires reconciling the two open branches on a common base and proving the representation map, rather than copying declarations from #4504 into #5750. If successful, it would identify the matrix/free-Lie chronology owner and the scalar interferometric owner as two representations of one second-order noncommutative invariant.
+
+## 35. Next experimental boundary: uncertain contrast, offset, and correlated drift
+
+The current visibility model assumes a calibrated contrast `V`, a centered fringe with baseline one half, independent repeated shots, and exact endpoint closure. Real Ramsey measurements can contain phase offsets, slowly drifting detuning, imperfect contrast calibration, and heating-induced loss of coherence. The 2026 trapped-ion motional-frequency study explicitly models coherent sinusoidal frequency modulation together with a heating envelope and reports shot-noise error bars from 500 measurements per point.
+
+The next useful theorem should therefore be robust rather than decorative. A candidate observation model is
+
+```text
+p(w) = c + V * sin(2*kappa*m(w) + theta) / 2,
+```
+
+with certified intervals for `c`, `V`, and `theta`, plus an explicit residual endpoint-displacement error. The research question is then whether two legal golden factors remain uniformly separated over the entire admissible calibration set.
+
+The desired conclusion has two levels:
+
+1. a robust deterministic statement that interval uncertainty does or does not preserve the center kernel on a specified finite golden window;
+2. a finite-shot statistical statement giving a confidence-controlled decision margin after the worst-case contraction of the Bernoulli separation.
+
+The repository already contains binomial KL-Chernoff tails, generic divergence testing bounds, and exact finite-suite optimal-error machinery. Those owners should be consumed before any new concentration inequality is written. The first unresolved task is to identify the smallest generic interval-uncertainty primitive that can express visibility, offset, phase calibration, and residual path closure without turning four physical errors into four ad hoc scores.
+
+The current candidate source for sections 30-35 is #5750 at `047738154d1c31712c397075183b64fbc551df5f`. It remains logically reviewed source without a local Lean compilation verdict. No frozen-state or admission claim is made here.
