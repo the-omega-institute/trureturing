@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:13d668552fc2b1408214bdae8b1b8be92e3290c690b3af4e901c604b56671d36
+  normalized_sha256: sha256:13d668552fc2b1408214bdae8b1b8be92e3290c690b3af4e901c604b56671d36
+cas_ref: sha256:13d668552fc2b1408214bdae8b1b8be92e3290c690b3af4e901c604b56671d36
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/BuchiAgencyKernel.live_agency_buchi_kernel
+    target_statement_id: sha256:24a7ca0353c0f2db4b170454966fb8e24921e958cf068bc393ce3bd85b8472ca
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Control/BuchiAgencyKernel.live_agency_buchi_kernel
+      definition_sha256: sha256:26f6148e81c165ea4cf95931aedca0df5063b327397d2c384dd6dd7a47171a13
+      emission_sha256: sha256:1e8dbb84a96835cbe68dacaf9f8cebff247742c669bef30101271d5aeb804f67
+  unresolved_subitems: []

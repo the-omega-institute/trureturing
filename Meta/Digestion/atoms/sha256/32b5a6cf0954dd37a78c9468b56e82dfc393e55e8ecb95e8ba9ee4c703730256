@@ -1,0 +1,44 @@
+**5040 在这里是一个精确的有限边界减项。**
+
+它既没有被遗忘，也没有被强行解释成所有等价模型都必须出现的物理奇点。
+
+定义：
+
+$$
+E_0=\ln5041,
+\qquad
+h(E)=\gamma+\ln\ln E.
+$$
+
+再定义连续临界预算：
+
+$$
+\boxed{
+\mathcal H(\lambda)
+=
+\max_{E\ge E_0}
+[h(E)-\lambda E].
+}
+\tag{20}
+$$
+
+因为 \(h\) 严格凹，最大者为：
+
+$$
+T_\lambda=\max\{E_0,t_\lambda\},
+$$
+
+其中：
+
+$$
+t_\lambda\ln t_\lambda=\frac1\lambda.
+$$
+
+所以：
+
+$$
+\mathcal H(\lambda)
+=
+\gamma+\ln\ln T_\lambda-\lambda T_\lambda.
+$$
+

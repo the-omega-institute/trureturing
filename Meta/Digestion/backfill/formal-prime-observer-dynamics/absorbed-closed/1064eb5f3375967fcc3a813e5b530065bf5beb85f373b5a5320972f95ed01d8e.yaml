@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1064eb5f3375967fcc3a813e5b530065bf5beb85f373b5a5320972f95ed01d8e
+  normalized_sha256: sha256:1064eb5f3375967fcc3a813e5b530065bf5beb85f373b5a5320972f95ed01d8e
+cas_ref: sha256:1064eb5f3375967fcc3a813e5b530065bf5beb85f373b5a5320972f95ed01d8e
+coverage_gids:
+  - gid: D5/S3/PrimeForms/Splitting/LocalReciprocityMatrix.reciprocity_does_not_identify_reading_directions
+    target_statement_id: sha256:021f4cf7c62f7a029b4106fe690da970970cd46695987b2f7091b833c95e94c2
+receipts:
+  scribe:
+    - gid: D5/S3/PrimeForms/Splitting/LocalReciprocityMatrix.reciprocity_does_not_identify_reading_directions
+      definition_sha256: sha256:53d8cb16a6269e7b79dd7981b6a7601a6da502cff476cb30f67ee5f33cdeb8b8
+      emission_sha256: sha256:ada7147900163054109d4430e29d0b96fe94ac7a9429432d12c3751dfe37cf55
+  unresolved_subitems: []

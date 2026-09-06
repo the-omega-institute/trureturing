@@ -1,0 +1,43 @@
+**本轮未进行 Lean 内核检查。**这些检查支持所列有限实例与恒等式，不替代一般形式化证明，也不认证该工程化 Hamiltonian 已经是现实微观规律。
+
+---
+
+# 结论
+
+本轮最重要的推进，是把此前隐藏在 \(P(t)\) 背后的调度者变成了实际量子系统：
+
+$$
+
+\boxed{
+\text{不是外部时间告诉观察者该做什么，}
+}
+
+$$
+$$
+
+\boxed{
+\text{而是内部时钟与固定耦合，
+把不同阶段和不同操作关联起来。}
+}
+
+$$
+
+在这个模型中，观察者可以保持一个稳定的编码身份区，同时经历系统变化、记录形成和几何相位积累。
+
+但它也不是无限精确、无限持续的内在控制者。它的时钟会与数据相关，过密监视会改变运行，有限装置会回归，记录若要长久保留就需要更大的物理实现。
+
+因此，“观察者为中心”的理论可以进一步收紧为：
+
+> **观察者不是站在时间之外读取一切的点，而是一个把时钟、行动、记录和参照关联组织在一起的物理结构。它所谓的内部时间，是这些可实现关系的有序变化；它所谓的记忆，是其中被实际保存而尚未被逆向撤销的区别。**
+
+这使下一层问题变得非常具体：**哪些局域量子系统能够在没有外部调度的条件下，长期维持这种身份、记录和行动结构，并使其内部时间与其他观察者的钟和共同因果传播保持相容？**
+
+这才是从“一个被编好的自主量子程序”继续走向“能够持续存在的物理观察者”，必须补上的动力学条件。
+$$
+
+[1]: https://link.springer.com/article/10.1007/s00023-018-0736-9?utm_source=chatgpt.com "Autonomous Quantum Machines and Finite-Sized Clocks"
+[2]: https://link.aps.org/doi/10.1103/PhysRevA.97.062306?utm_source=chatgpt.com "Clocks in Feynman's computer and Kitaev's local Hamiltonian"
+[3]: https://arxiv.org/abs/1607.04591?utm_source=chatgpt.com "Autonomous quantum machines and the finite sized Quasi-Ideal clock"
+[4]: https://arxiv.org/abs/1311.6101?utm_source=chatgpt.com "Space-Time Circuit-to-Hamiltonian Construction and Its ..."
+[5]: https://arxiv.org/abs/1412.0419?utm_source=chatgpt.com "Notes on Deterministic Programming of Quantum ..."
+[6]: https://link.aps.org/doi/10.1103/PhysRevX.7.031022?utm_source=chatgpt.com "Does Thermodynamics Limit Our Ability to Measure Time?"

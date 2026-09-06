@@ -1,0 +1,56 @@
+### 证明
+
+$$
+\sum_{n>N}\frac{|\Delta(n)|}{n^2}
+\le
+2\sum_{n>N}\frac{\ln n}{n^2}
+\le
+2\int_N^\infty\frac{\ln x}{x^2}\,dx.
+$$
+
+积分等于 \(2(\ln N+1)/N\)。证毕。
+
+对一个 \(m\times m\) 观察矩阵：
+
+$$
+\boxed{
+\|\mathsf K-\mathsf K_N\|_{\mathrm{op}}
+\le m\varepsilon_N.
+}
+\tag{32}
+$$
+
+所以，若能够严格证明：
+
+$$
+\lambda_{\min}(\mathsf K_N)>m\varepsilon_N,
+$$
+
+就得到完整矩阵正定。
+
+反过来，若：
+
+$$
+\lambda_{\min}(\mathsf K_N)<-m\varepsilon_N,
+$$
+
+就得到完整矩阵存在负方向。
+
+但还有一个结构限制：
+
+$$
+\operatorname{rank}\mathsf K_N\le N-5040.
+$$
+
+如果观察维数：
+
+$$
+m>N-5040,
+$$
+
+有限核必有零方向，不能靠上面这个粗糙的正谱隙判据认证全部正性。
+
+因此，观察层级增加时，算术截断与误差控制必须一起增加。**只增加时间采样点，而不增加相应的算术尾项控制，会重新打开证明裂隙。**
+
+这正是仓库观察者工具可以承接的任务：有限读数决定一个可见子空间，其正交补是遗漏方向。当前读到的 `FutureWordOrthogonalResidual.lean` 已在有限维条件下形式化了这组等价关系；它没有自动给出本轮无限维尾项的统一上界。
+

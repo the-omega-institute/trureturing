@@ -1,0 +1,36 @@
+# 十二、这与仓库现有结构之间，差的是什么？
+
+本轮读取了快照 `84d6fedab…` 中的 `CayleyNevanlinnaKernelEquivalence.lean`。
+
+它已经证明：在分母非零的前件下，Cayley 变换前后的核通过可逆对角合同相连，因此全部有限正半定测试等价。它还明确处理了不能随意删除非零分母前件的问题。
+
+本轮补出的实际连接是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际 }\xi\text{ 在一个实点的导数}
+&\longrightarrow
+\mu,\phi\\
+&\longrightarrow
+\eta,\kappa,\kappa',\ldots\\
+&\longrightarrow
+\alpha_0,\alpha_1,\alpha_2,\ldots\\
+&\xrightarrow{\ |\alpha_j|\le1\ }
+\text{逐层酉散射实现}\\
+&\longrightarrow
+\text{有误差界的整体解析拼接}.
+\end{aligned}
+}
+$$
+
+箭头上的条件不能去掉。
+
+与前文“固定总迹矩阵不能原样追加”的限制也不冲突：这里追加的是**保持已有 Taylor 数据的散射层**，并不是声称每个有限正矩阵都是下一层的同迹主块。
+
+这一构造真正解决了“如何组织局部拼接”的问题：旧参数一旦由实际导数确定，增加新层不需要修改旧参数。
+
+**尚未解决的是：实际算术是否保证每个新参数都落在合法区间。**
+
+---
+

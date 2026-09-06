@@ -1,0 +1,81 @@
+**闭合量子动力学不自动产生不可逆时间。**有限窗口的运行、静态历史相关与持续增长的记录是不同对象。
+
+---
+
+## 定理250.1　固定 Hamiltonian 实现的稳健性
+
+设实际实现为
+
+$$
+
+\widetilde H=H_{\mathrm{aut}}+\Delta H,
+\qquad
+|\Delta H|_{\mathrm{op}}\le\varepsilon_H.
+
+$$
+
+则对任意运行时间 \(T\)，
+
+$$
+
+\boxed{
+\frac12
+|\mathcal U_{\widetilde H,T}
+-\mathcal U_{H_{\mathrm{aut}},T}|_\diamond
+\le
+\frac{T\varepsilon_H}{\hbar}.
+}
+\tag{250.1}
+
+$$
+
+### 证明
+
+由 Duhamel 公式，
+
+$$
+
+|e^{-i\widetilde HT/\hbar}-e^{-iH_{\mathrm{aut}}T/\hbar}|
+\le
+T\varepsilon_H/\hbar.
+
+$$
+
+对任意附加参照输入，这个酉算子差界控制对应输出迹距离，从而得到式（250.1）。∎
+
+它控制的是完整、不作后选择的过程。
+
+如果再条件于某个很少发生的记录串，必须额外保留该事件的概率下界；不能把很小的整体误差直接解释成同样小的条件误差。
+
+---
+
+## 与项目的连接
+
+本次读取固定于提交
+
+```text
+d0225667d26581c842e1b1322d50af706ce9c8fe
+```
+
+相关基础仍然可以分工明确地接入：
+
+| 项目结构 | 本轮具体对象 |
+|---|---|
+| **CUT** | 时钟标签、记录串、条件系统态、相干参照读数 |
+| **FLOW** | 单一固定 \(H_{\mathrm{aut}}\) 生成的联合酉演化 |
+| **ADMIT** | 有限程序、合法投影、准备态、耦合强度与读出窗口 |
+| **ANCHOR** | 实际初态、终点标签和结果寄存器 |
+| **Residual** | 忽略时钟相干、未计入输出保存、把历史态当成实际运行 |
+| **Completion** | 把外部调度器和记录辅助系统纳入同一个动力学状态 |
+
+`ExactDescentNoCarry.lean` 的要求依然严格：只有当完整过程的相关输出，确实由所选接口唯一决定时，才可以声称下降成立。时钟标签概率、时钟完整状态和条件记录不能被混成同一个接口。
+
+### 本轮核验
+
+已完成 **35项精确有限矩阵检查**，包括记录门酉性、Hamiltonian 的酉等价、三步程序的精确终点传输、全部记录概率、历史态零能量条件，以及自主实现中的几何相位读出。
+
+对128维完整演化另作了数值交叉检查，与解析公式的最大向量误差约为 \(7.3\times10^{-16}\)。时钟监视的 Zeno 概率也与解析式一致。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_autonomous_observer_clock.py)  
+[核验结果](sandbox:/mnt/data/observer_formalization/autonomous_observer_clock_checks.json)
+

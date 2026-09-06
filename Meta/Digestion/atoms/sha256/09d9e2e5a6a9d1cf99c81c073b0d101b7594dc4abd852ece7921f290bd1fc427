@@ -1,0 +1,27 @@
+### 反向：简单非实零点
+
+若 \(A(a)=0\)，其中 \(\Im a\ne0\)，且 \(A'(a)\ne0\)，那么：
+
+$$
+\mathcal K_A(a,a)=0,
+$$
+
+但因为 \(A(0)=1,A'(0)=0\)：
+
+$$
+\boxed{
+\mathcal K_A(a,0)=-\frac{A'(a)}a\ne0.
+}
+\tag{U26}
+$$
+
+任何正核都必须满足 Cauchy–Schwarz：
+
+$$
+|\mathcal K_A(a,0)|^2
+\le
+\mathcal K_A(a,a)\mathcal K_A(0,0)=0.
+$$
+
+矛盾。
+

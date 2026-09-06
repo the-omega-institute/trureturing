@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e47e5dda4e01f1962b2e2b2aa391f7f6db75822863702fdc900f405a25d0f835
+  normalized_sha256: sha256:e47e5dda4e01f1962b2e2b2aa391f7f6db75822863702fdc900f405a25d0f835
+cas_ref: sha256:e47e5dda4e01f1962b2e2b2aa391f7f6db75822863702fdc900f405a25d0f835
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/OmnicompleteIndifferentState.OmnicompleteSystem
+    target_statement_id: sha256:57d26dabc398e77e931aa62e9adf3e8b0e8d1cc19a3f0300933bb5d396940673
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Completion/OmnicompleteIndifferentState.OmnicompleteSystem
+      definition_sha256: sha256:843ef616ec2ff5273cf0a7b700a7062e4eb8905a6fa3ef02123002291fc21b88
+      emission_sha256: sha256:3e76b2cbd4054715e3385b7d5ed0c888dcf5f0684f497d4db9f9206429e8d8fc
+  unresolved_subitems: []

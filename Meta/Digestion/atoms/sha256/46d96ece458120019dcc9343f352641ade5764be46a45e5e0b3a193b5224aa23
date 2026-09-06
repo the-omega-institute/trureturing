@@ -1,0 +1,93 @@
+# 一、先把“能量”与“安全余量”分成两个算子
+
+沿用：
+
+$$
+E(n)=\ln n,
+\qquad
+Z(n)=\frac{\sigma(n)}n,
+$$
+
+$$
+\boxed{
+\Delta(n)
+=
+\gamma+\ln\ln E(n)-\ln Z(n),
+\qquad n>5040.
+}
+\tag{1}
+$$
+
+也就是：
+
+$$
+\Delta(n)
+=
+\ln\frac{e^\gamma\ln\ln n}{\sigma(n)/n}.
+$$
+
+我们使用两个经典数论输入：
+
+$$
+\boxed{
+\mathrm{RH}\iff\Delta(n)>0\quad\forall n>5040,
+}
+\tag{2}
+$$
+
+以及无条件的：
+
+$$
+\boxed{
+\liminf_{n\to\infty}\Delta(n)=0.
+}
+\tag{3}
+$$
+
+第一条来自 Robin 定理，第二条来自 Gronwall 的极限上确界公式。([arXiv][1])
+
+还需要一个细节：若 RH 为假，Robin 的加强结果保证有无穷多个**严格越界**，因此确实存在 \(\Delta(n)<0\)，不只是可能发生等号。([arXiv][1])
+
+现在在 Hilbert 空间：
+
+$$
+\mathcal H=\ell^2(\{n:n>5040\})
+$$
+
+上定义两个对角算子：
+
+$$
+\boxed{
+\widehat E|n\rangle=(\ln n)|n\rangle,
+}
+$$
+
+$$
+\boxed{
+\widehat D|n\rangle=\Delta(n)|n\rangle.
+}
+\tag{4}
+$$
+
+它们意义不同：
+
+**\(\widehat E\)** 记录原来的算术规模。
+
+**\(\widehat D\)** 记录相对于 Robin 临界预算的安全余量。
+
+它们都是实对角算子，因此在各自的自然定义域上自伴。但：
+
+$$
+\widehat D=\widehat D^\dagger
+$$
+
+并不意味着：
+
+$$
+\widehat D\ge0.
+$$
+
+后者正是需要证明的算术内容。
+
+**这里没有独立发现一个已经保证正性的物理 Hamiltonian。我们是在把已知算术问题写成一个精确的谱判定问题。**
+

@@ -1,0 +1,49 @@
+# 三、四边形第一次真正出现：它表示两条素数路径相容
+
+在因数空间中，取两个不同素数 \(p,q\)。只要四个状态都在允许窗口内，就有：
+
+$$
+\begin{array}{ccc}
+d & \xrightarrow{\ \times p\ } & pd\\
+{\scriptstyle\times q}\downarrow && \downarrow{\scriptstyle\times q}\\
+qd & \xrightarrow{\ \times p\ } & pqd.
+\end{array}
+\tag{7}
+$$
+
+这不是人为画出来的相似图形，而是：
+
+$$
+\boxed{
+p(qd)=q(pd).
+}
+$$
+
+两条路径的能量增量也相同：
+
+$$
+\boxed{
+\log p+\log q
+=
+\log q+\log p.
+}
+\tag{8}
+$$
+
+因此，四边形可以解释为一个**局部兼容单元**：
+
+> 先沿一个方向更新，再沿另一个方向更新，与交换次序以后到达同一状态。
+
+整个 5040 因数图不是二维四边形，而是四维格点盒：
+
+$$
+\boxed{
+P_5\,\square\,P_3\,\square\,P_2\,\square\,P_2,
+}
+\tag{9}
+$$
+
+这里 \(P_m\) 表示具有 \(m\) 个顶点的路径图。
+
+它有 60 个状态、148 条单步边，以及 135 个这样的基本方形面。四个素数对应四个方向，而不是四个顶点。
+

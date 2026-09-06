@@ -1,0 +1,68 @@
+# 四、上一轮的交叉核，恰好是这份响应的收缩缺额
+
+沿用：
+
+$$
+\mathcal K_A(z,w)
+=
+\frac{
+A(z)\overline{A'(w)}
+-
+A'(z)\overline{A(w)}
+}{
+z-\overline w
+}.
+$$
+
+对上半平面点定义：
+
+$$
+\boxed{
+\mathcal P_h(z,w)
+=
+\frac{
+1-S_h(z)\overline{S_h(w)}
+}{
+-i(z-\overline w)
+}.
+}
+\tag{V9}
+$$
+
+直接代数计算得到：
+
+$$
+\boxed{
+\mathcal P_h(z,w)
+=
+\frac{
+2h\,\mathcal K_A(z,w)
+}{
+E_h(z)\overline{E_h(w)}
+}.
+}
+\tag{V10}
+$$
+
+因此，只要采样点处 \(E_h\ne0\)，两种有限矩阵通过可逆对角合同变换相连：
+
+$$
+\boxed{
+[\mathcal P_h(z_i,z_j)]
+=
+D_h[\mathcal K_A(z_i,z_j)]D_h^*.
+}
+$$
+
+正负惯性完全相同。
+
+这说明前文的“拼接余量”，也可以理解成：
+
+> **不同复频率上的反射读数，能否共同来自一个解析收缩响应。**
+
+它不是在原问题之外再添加一套正性，而是同一个条件的另一种可审计表达。
+
+本轮读取的 `CayleyNevanlinnaKernelEquivalence.lean` 已证明这类核的可逆对角变换关系，并明确要求相关分母非零；它还证明，去掉该前件会破坏等式。该模块没有自动供应实际 ξ 的全局收缩性。
+
+---
+
