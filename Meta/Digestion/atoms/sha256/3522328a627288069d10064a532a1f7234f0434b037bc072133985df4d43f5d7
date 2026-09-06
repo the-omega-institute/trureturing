@@ -1,0 +1,35 @@
+**所以，“几何编程语言”的核心不应只是把数字摆成某种形状，而应是：哪些变化被观察接口保留，哪些变化发生在纤维内部，以及这些变化怎样通过相干、能量和因果允许的控制重新进入实验。**
+
+下一层真正尚缺的物理条件也已经清楚：为什么某个现实系统选择这些耦合幅度与相位、如何局域地实现它们，以及不同观察者怎样把这些内部关系共同识别为同一套钟、距离和传播结构。只有这些条件继续闭合，算术几何才能从一种可执行模型，进一步成为物理时空的候选理论。
+
+[1]: https://projecteuclid.org/journals/annals-of-statistics/volume-26/issue-1/Algebraic-algorithms-for-sampling-from-conditional-distributions/10.1214/aos/1030563990.short?utm_source=chatgpt.com "Algebraic algorithms for sampling from conditional ..."
+[2]: https://arxiv.org/html/quant-ph/9807004v2 "Decoherence Free Subspaces for Quantum Computation"
+[3]: https://arxiv.org/abs/1208.4049 "[1208.4049] Quantum Transport Enhancement by Time-Reversal Symmetry Breaking"
+这一轮可以把“遗漏的高阶奇偶模式”进一步变成**有严格上下界的证明对象**。
+
+最重要的新结论是：
+
+$$
+\boxed{
+\text{Robin 余量的高阶交互，来自同一个正权重尺度模型，}
+\quad
+\text{不是彼此任意、独立的隐藏参数。}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{保留偶数阶交互，得到安全下界；}
+\quad
+\text{保留奇数阶交互，得到上界。}
+}
+$$
+
+而且，当一个局部状态盒子的总对数跨度受到控制时，可以给出一个**不直接依赖素数方向数量的截断误差界**。
+
+这比“必须把所有额外坐标都测出来”更有用：我们可以不恢复所有高阶信息，却严格控制它们改变安全余量的最大能力。
+
+下面给出推导，并在 \(5040\)、\(2,3,5,7\) 上完成一个具体核验。
+

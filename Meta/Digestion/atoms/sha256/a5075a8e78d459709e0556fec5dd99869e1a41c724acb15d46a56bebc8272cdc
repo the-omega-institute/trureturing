@@ -1,0 +1,59 @@
+## 2. 四个素数的独立能量族，反而可以是平坦的
+
+考虑四参数分布
+
+$$
+\boxed{
+P_{\boldsymbol\beta}(\mathbf k)
+=
+\prod_p
+\frac{e^{-\beta_p(\log p)k_p}}
+{Z_p(\beta_p)}.
+}
+\tag{24}
+$$
+
+这里每个素数方向只有一个参数 \(\beta_p\)，不是任意的局部分布。
+
+求导得到得分函数
+
+$$
+\partial_{\beta_p}\log P
+=
+-(\log p)\bigl(k_p-\mathbb E[k_p]\bigr).
+$$
+
+因为各方向独立，
+
+$$
+\boxed{
+ds_F^2
+=
+\sum_p
+(\log p)^2\operatorname{Var}_{\beta_p}(k_p)\,d\beta_p^2.
+}
+\tag{25}
+$$
+
+定义新坐标
+
+$$
+y_p(\beta_p)
+=
+\int^{\beta_p}
+(\log p)\sqrt{\operatorname{Var}_u(k_p)}\,du.
+$$
+
+那么
+
+$$
+\boxed{
+ds_F^2=\sum_pdy_p^2.
+}
+\tag{26}
+$$
+
+所以这一个四参数能量族的内在 Riemann 曲率为零。
+
+这是由式（25）直接得到的结论，不是说所有独立概率模型都平坦。更大的、允许每个局部分布任意变化的八参数族，是另一个几何对象。
+

@@ -1,0 +1,49 @@
+## 定理282.1　纤维移动产生严格的量子守恒量
+
+有：
+
+$$
+\boxed{
+[\widehat Q_\alpha,\mathsf T]=0,
+\qquad
+[\widehat Q_\alpha,H_{\mathrm{mix}}]=0.
+}
+\tag{282.3}
+$$
+
+因此每个
+
+$$
+\mathcal H_y
+=
+\operatorname{span}\{|z\rangle:Az=y\}
+$$
+
+都是不变子空间。
+
+### 证明
+
+当 \(\mathsf T|z\rangle\ne0\) 时，
+
+$$
+A(z+\delta)=Az
+$$
+
+因为 \(A\delta=0\)。因此 \(\widehat Q_\alpha\) 在跃迁前后给出同一个本征值，交换子为零。伴随项同理。∎
+
+这里出现了一项核心连接：
+
+$$
+\boxed{
+\text{观察矩阵的整数核}
+\longrightarrow
+\text{允许的量子跃迁}
+\longrightarrow
+\text{守恒的可见读数}.
+}
+$$
+
+但 \(H_{\mathrm{mix}}\) 同时允许正、反向相干跃迁；它不是原 FRACTRAN 的“首个适用分数”执行器。要忠实实现后者，还需控制寄存器、优先级和可逆历史。
+
+---
+

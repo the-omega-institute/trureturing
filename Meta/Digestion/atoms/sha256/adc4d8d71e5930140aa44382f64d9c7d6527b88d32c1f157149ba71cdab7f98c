@@ -1,0 +1,37 @@
+## 实际例子：5040 的第一次更新
+
+四个指数的黄金编码为：
+
+$$
+\begin{aligned}
+4&\leftrightarrow(1,0,1),\\
+2&\leftrightarrow(0,1),\\
+1&\leftrightarrow(1).
+\end{aligned}
+$$
+
+执行 \(15/2\) 后：
+
+$$
+\begin{aligned}
+4\to3 &: \quad(1,0,1)\to(0,0,1),\\
+2\to3 &: \quad(0,1)\to(0,0,1),\\
+1\to2 &: \quad(1)\to(0,1).
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+((101),(01),(1),(1))
+\longrightarrow
+((001),(001),(01),(1)),
+}
+\tag{19}
+$$
+
+仍按低位到高位排列。
+
+注意，窗口长度已经改变。
+

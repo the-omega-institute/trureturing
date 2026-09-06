@@ -1,0 +1,61 @@
+## 定理 5：一个候选整数的精确成本
+
+$$
+\boxed{
+C(n)
+=
+(6n+2)(n-b_n)
++n+b_n+1
++
+2\sum_{k=b_n}^{n-1}
+\left\lfloor\frac nk\right\rfloor.
+}
+\tag{20}
+$$
+
+### 证明
+
+对于
+
+$$
+k=n-1,\ldots,b_n+1,
+$$
+
+全部走非整除分支；最后 \(k=b_n\) 走整除分支。
+
+将式（17）逐项相加、整理即得。证毕。
+
+因为
+
+$$
+b_n\le n/2,
+$$
+
+而
+
+$$
+\sum_{k=1}^{n-1}\left\lfloor\frac nk\right\rfloor
+=O(n\log n),
+$$
+
+所以
+
+$$
+\boxed{
+C(n)
+=
+6n^2\left(1-\frac1{\ell(n)}\right)
++
+O(n\log n).
+}
+\tag{21}
+$$
+
+特别地，
+
+$$
+C(n)=\Theta(n^2).
+$$
+
+这说明它不是只为素数候选付出大量工作；每个整数候选都需要二次量级的微步。
+

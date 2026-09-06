@@ -1,0 +1,33 @@
+## 几何方格上的能量没有自动曲率
+
+对两个素数方向 \(p,q\)，考虑格点
+
+$$
+\mathbf a,\quad
+\mathbf a+e_p,\quad
+\mathbf a+e_q,\quad
+\mathbf a+e_p+e_q.
+$$
+
+它们对应
+
+$$
+N,\quad pN,\quad qN,\quad pqN.
+$$
+
+有
+
+$$
+\boxed{
+E(\mathbf a+e_p+e_q)
+-E(\mathbf a+e_p)
+-E(\mathbf a+e_q)
++E(\mathbf a)=0.
+}
+\tag{32}
+$$
+
+乘 \(p\) 再乘 \(q\)，与相反顺序得到同一点。
+
+因此，基础乘法格是可交换的。程序中的复杂性来自**守卫、优先级、控制层和观察丢失**，不是因为四个素数的对数自动产生了非零曲率。
+
