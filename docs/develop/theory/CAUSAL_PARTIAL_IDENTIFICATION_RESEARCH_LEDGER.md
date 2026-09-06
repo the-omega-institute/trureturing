@@ -1286,3 +1286,122 @@ Piazzon, Sommariva, and Vianello, *Caratheodory-Tchakaloff Subsampling*, arXiv:1
 The next computational obligation is verified direction discovery, including row-operation invariants, a nonzero null-vector witness when active augmented columns are dependent, and the connection from verified Gaussian elimination to the existing checker. The direct sorted cumulative-table algorithm from Section 45 and rank-adaptive terminal certificates also remain separate targets. The current checker enforces the ambient d+1 bound; it does not compute a minimal support or an affine rank certificate.
 
 All moment comparisons here occur on a fixed finite coefficient array and its original probability-law carrier. The integer N in the descent bound counts active probability atoms. It is unrelated to DFAO computational-state counts, and no information-escape score or maximal-catalog admission statement is asserted by the new certificate theorems.
+
+## 52. Cross-author source audit and the preservation question, 2026-09-06
+
+This continuation examined recent repository work across authors before selecting a mathematical interface. Three source-level connections were retained.
+
+- loning, PR #5326, `RH_OFFLINE_ZERO_LEE_YANG_INSTANTANEOUS_PHASE_TRANSITION_THEORY.md`, pinned at `3beb435bf9ca8aa35aa6079ea4033a9c2e6c9007`: the solenoid/Schur/Rouche appendix explicitly separates Hankel behavioral minimality from determinant preservation. Its proposed low-dimensional transfer still needs a determinant-preserving identification. The reusable lesson here is that preserving nominated observations does not establish preservation of every later invariant.
+- AlyciaBHZ, draft PR #5750, pinned at `dff43c8fe8cf16fa83bfacdda22090fd682acc61`: `SymmetricGaussianCompensation` retains the actual unequal-half phase before specializing, and `BernoulliIntervalThreshold` selects a common test before quantifying over unknown acquisition probabilities. The transferable quantifier pattern is one fixed construction with a guarantee for an entire parameter family.
+- PR #5803, `QuquintCertificateAssembly.lean`, pinned at `dfab12155e5f5d7a8524862a8d1ee0353b0bc6c3`: branch definiteness is connected to the actual matrices by explicit LDL identities. Its coefficient identities are a stronger interface than a numerical proxy. No ququint or spectral claim is imported into the causal lane.
+
+The new modules reuse only the causal lane's current `linearObjective`, support-monotone replay, `FiniteResponseLaw`, and primal-dual interfaces. The cross-author connections motivate the statements and their boundaries; they are not asserted to identify the different mathematical carriers or transfer physical conclusions. Searches for a matching affine presentation/replay or residual-envelope owner in the current lane did not produce a reusable exact owner. This is a scoped audit, not an exhaustive novelty claim.
+
+## 53. Checked support-local affine coordinate reduction
+
+`D5/S0/Certificates/RationalAffineMomentCompression.lean` upgrades the ambient-coordinate replay using a data-only `AffinePresentation`. For an original feature array phi with d coordinates, the payload selects r original coordinates and supplies offsets a_j and coefficients B_js. It checks the identity
+
+```text
+phi_j(i) = a_j + sum_s B_js * phi_selected(s)(i)
+```
+
+at every atom with nonzero original weight. An averaged identity is insufficient. The check need not cover zero-weight atoms because the existing accepted replay cannot introduce those atoms.
+
+`checkAffineCompression` validates this presentation and invokes the unchanged `checkCompression` on the selected coordinates. `checkAffineCompression_sound` proves normalized nonnegative output, support contained in the original support, support size at most r+1, and equality of every original feature expectation. Thus rows are omitted only after their reconstruction has been checked against actual original coefficients.
+
+The parameter r is the number of selected coordinates. The certificate proves an affine dimension upper bound on the original support, not equality with the minimal affine rank. Repeated or redundant selected coordinates do not invalidate the theorem, but can give a looser budget. Computing a minimal presentation or its independence certificate remains separate from checking a proposed presentation.
+
+The closed example uses features i, 3+2i and 5-i on four atoms. The uniform input is replayed to weights `(1/2,0,0,1/2)`. One selected coordinate preserves all three expectations, with values `(3/2,6,7/2)`, and the output has two atoms. The same principle recovers the fourth response-cell indicator from normalization and three selected cell indicators.
+
+## 54. One compressed law for a whole affine query family
+
+`checkAffineCompression_preserves_affine_family` fixes the accepted compression and then quantifies over all rational offsets and coefficient vectors. For any
+
+```text
+q_theta(i) = alpha_theta + sum_j beta_theta,j * phi_j(i),
+```
+
+the same output law preserves the query expectation. The law and trace are not reselected for each theta. This accommodates families with infinitely many parameter values while keeping a finite spanning feature family.
+
+The source gives this universal statement for affine queries of the retained full feature vector. It does not claim that every later nonlinear statistic, determinant, chronological functional, or intervention query belongs to that span. Additional readouts require a reconstruction or an error certificate. This is the causal counterpart of the preservation boundary identified in loning's theory, with distinct carriers kept explicit.
+
+## 55. Certified residual enclosures for queries outside the retained span
+
+`D5/S0/Certificates/RationalMomentQueryEnvelope.lean` supplies a data-only affine predictor and residual interval for a nominated query q. Write
+
+```text
+e(i) = q(i) - alpha - sum_j beta_j*phi_j(i).
+```
+
+`checkQueryEnvelope` verifies `lower <= e(i) <= upper` at every original active atom. For any accepted compression w -> v, nonnegativity and normalization give the same expectation enclosure for both laws:
+
+```text
+center + lower <= E_w[q], E_v[q] <= center + upper,
+center = alpha + sum_j beta_j*E_w[phi_j].
+```
+
+`checked_query_error_bound` therefore proves
+
+```text
+abs(E_v[q] - E_w[q]) <= upper - lower.
+```
+
+A symmetric pointwise residual bound epsilon gives the general bound 2*epsilon. `checked_uniform_query_family` fixes one compressed law before quantifying over an arbitrary query-family parameter, with a verified support-local envelope for each parameter. This is a deterministic model-approximation guarantee. It is not a sampling confidence statement and does not by itself preserve the exact identified set of an omitted query.
+
+`residual_energy_zero_iff` proves, for nonnegative weights,
+
+```text
+sum_i w(i)*e(i)^2 = 0
+iff
+all active atoms have e(i)=0.
+```
+
+Consequently `checked_query_exact_of_zero_residual_energy` turns an exact zero weighted square residual into exact query preservation. The signed residual has no analogous zero-mean criterion. In the closed counterexample, the uniform law on 0,1,2 is compressed to its middle atom while its mean is retained. The omitted event has coefficients `(1,0,1)` and changes from 2/3 to zero. Subtracting its original mean gives signed residual mean zero but residual square expectation 2/9.
+
+Small positive square error is also insufficient for a uniform claim without additional weight control. The exact diagnostic takes w=(9999/10000,1/10000), q=(0,1), and no retained nonconstant features. A valid support-contained compression can choose the rare second atom with mass one. Its original square residual is 1/10000, while the query changes by 9999/10000. The finite pointwise envelope remains valid. This example is a Python-checked paper boundary, not an additional Lean declaration in this continuation.
+
+## 56. Return to original causal feasibility and endpoint certificates
+
+`RankAdaptiveSparseCausalWitness.lean` consumes `rowQueryArray`, so the reconstructed features are exactly the original LP data rows and target coefficient. `checked_affine_causal_witness` packages the actual checker output as `FiniteResponseLaw` on the original atom carrier, preserving every original `LinearFeasible` constraint and the exact query value with support at most r+1.
+
+`checked_affine_lower_endpoint` reuses the original lower dual certificate with the new sparse primal witness. It does not alter the inequality system or claim that a support-local affine presentation holds outside the original support. The original dual certificate supplies the global bound; the compressed law supplies the attaining point.
+
+For an omitted query, `checked_compressed_query_decision` proves that a compressed value exceeding a threshold by more than the residual width certifies that the original value exceeds the same threshold. This transports a strict decision under a verified error margin, analogous in quantifier structure to the common-envelope reasoning in #5750. No new concentration or physical measurement theorem is asserted.
+
+## 57. Paper derivation: optimal residual width equals universal moment ambiguity
+
+This section is a finite linear-programming derivation; the strong-duality equality has not yet been added as a Lean theorem. Fix a nonempty finite allowed carrier S, rational feature columns phi(i), and a rational query q(i). Consider the worst query difference between probability laws on S sharing the same feature moments:
+
+```text
+Delta_S(phi,q) = max { abs(E_u[q]-E_v[q]) : u,v in simplex(S), E_u[phi]=E_v[phi] }.
+```
+
+Swapping u and v shows that the absolute-value maximum equals the maximum of the signed difference. The primal linear program has objective `q.u - q.v`, constraints `1.u=1`, `1.v=1`, `Phi.u-Phi.v=0`, and nonnegative u,v. Its dual minimizes alpha+gamma subject to
+
+```text
+alpha + beta.phi(i) >= q(i),
+gamma - beta.phi(i) >= -q(i)  for every i in S.
+```
+
+For fixed beta, the least alpha is the maximum of q-beta.phi and the least gamma is minus its minimum. Finite LP strong duality therefore gives
+
+```text
+Delta_S(phi,q) = min_beta [ max_i(q(i)-beta.phi(i)) - min_i(q(i)-beta.phi(i)) ]
+              = 2 * min_{alpha,beta} max_i abs(q(i)-alpha-beta.phi(i)).
+```
+
+The primal is nonempty and bounded. Since its data are rational, optimal rational primal and dual witnesses exist, so the same equality applies to rational probability laws. The residual center alpha does not affect oscillation; the centered best uniform approximation splits the optimal width in half.
+
+Thus universal zero ambiguity is equivalent to affine reconstruction on S. This is a statement about all laws on the allowed carrier and their moment fibers. It is distinct from the width for one fixed observed moment vector, which can be smaller, and from preservation by one particular compression map. Nonconvex Markovian restrictions on the probability-law family require their own analysis; the displayed duality uses the full pair of simplices.
+
+For the Boolean benefit query q=1[(Y0,Y1)=(0,1)] and retained features (Y0,Y1), choose beta=(-1/2,1/2). The residual is `(0,1/2,1/2,0)` in the established four-cell ordering, so its oscillation is 1/2. The equal-weight diagonal and anti-diagonal laws have identical marginals (1/2,1/2) and benefit values zero and 1/2. These witnesses match the residual certificate, giving universal ambiguity exactly 1/2. This supplies a consistency bridge to the original benefit nonidentification example without replacing its sharper data-dependent Frechet interval.
+
+## 58. Validation, scope and next source obligations
+
+The three new Lean modules contain 29 named public declarations and have matching Scribe sources. The proof scripts received mathematical and source review. There is no Lean or Lake executable in this runtime; no new elaboration receipt, kernel evaluation of the closed examples, Scribe rendering, or executed axiom report was obtained. The authored source contains no sorry, admit, native_decide, or new axiom declaration. These facts do not replace kernel verification.
+
+An independent Fraction regression with seed 20260906 reused the prior elimination producer and checker mirror. It passed 100 adaptive-coordinate cases, 500 full-feature moment comparisons, 658 elimination steps, 700 common affine-family query checks, 700 residual-envelope and strict-margin checks, and 700 zero-energy exactness cases. It rejected 100 corrupted affine presentations and 700 invalid envelopes. Zero-mass atoms with deliberately invalid reconstruction coefficients were included to test the support-local boundary. The exported diagnostics also verify signed cancellation, the rare-atom small-energy obstruction, and the matching Boolean-benefit ambiguity witnesses.
+
+The external representation context remains Piazzon, Sommariva and Vianello, *Caratheodory-Tchakaloff Subsampling*, arXiv:1611.02065, and Zhang, Tian and Bareinboim, *Partial Counterfactual Identification from Observational and Experimental Data*, ICML 2022, PMLR 162:26548-26558. No novelty claim is made for finite moment compression, affine expectation transport, positivity of square residuals, or finite LP duality. The contribution in this lane is their exact integration with support-monotone replay and original causal witness semantics.
+
+The direction-discovery obligation from Section 51 remains open in the authored source. This continuation closes a separate load-bearing interface: a proposed dimension reduction is now checked against actual coefficients before the smaller support budget is used, and additional query families have explicit exactness or error conditions. Further work can connect verified rational elimination to presentation discovery, prove the optimal residual-width duality using the existing certificate framework, and lift the checks into the ordered multi-component replay without weakening independence.
