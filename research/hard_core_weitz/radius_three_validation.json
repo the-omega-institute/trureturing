@@ -1,0 +1,19 @@
+{
+  "states": 483,
+  "geometric_move_checks": 8694,
+  "integer_row_checks": 3864,
+  "adaptive_reachable": 70,
+  "fixed_SRL_reachable": 75,
+  "depth_regressions": 243,
+  "finite_domain_regressions": 81,
+  "negative_controls": {
+    "missing-state": "row cardinality",
+    "duplicate-mask": "unique masks and initial mask",
+    "wrong-upper-weight": "chosen upper row 0",
+    "wrong-lower-weight": "all-policy lower row 1,0",
+    "erase-adaptation": "chosen upper row 90",
+    "omit-origin-deletion": "missing geometric successor 0,0,0"
+  },
+  "data_sha256": "f2d0df02745c193ee8f95f3348e00b9f301dcbba34837e04d4fb629497d9254d",
+  "lean_compilation": "not executed by this verifier"
+}
