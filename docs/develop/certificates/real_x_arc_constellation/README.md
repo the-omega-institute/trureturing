@@ -113,10 +113,10 @@ and the fixed first coordinate are summed in common directions, including the
 exact rational center-sum direction. Only then is squared modulus bounded.
 No circle critical point, floating-point minimizer, or endpoint guess is trusted.
 
-## Actual executed finite and global checks
+## Executed finite and global checks
 
 At tube radius `1/16`, residual tolerance `1/128` and candidate tolerance
-`tau=1/256`, the final run gives:
+`tau=1/256`, the replay gives:
 
 | Check | Result |
 | --- | ---: |
@@ -126,14 +126,16 @@ At tube radius `1/16`, residual tolerance `1/128` and candidate tolerance
 | All first six-cliques | 2403 |
 | Distinct common-partner sets | 2 |
 | Largest common-partner set | 1 |
-| First cliques with a nonempty partner set | 252 |
+| First cliques with a nonempty partner set | 1029 |
 | Union of possible partner labels | `{5}` |
 | Completed compact Cayley charts | 32 |
 | Global sublevel boxes | 8750929 |
 | Pending / unresolved | 0 / 0 |
 
-The other 2151 first cliques have no partner. These counts concern a conservative
+The other 1374 first cliques have no partner. These counts concern a conservative
 finite relation, not actual completion bases or a complete list of exact roots.
+The executable verifier and committed replay records are the source for these
+counts; the previous prose value 252 was a transcription error.
 
 For every first clique `C`, the entire set `intersection_(c in C) N_B(c)` has
 cardinality at most one. A fourth pair would need two different tube labels,
@@ -154,11 +156,10 @@ be less than `tau`. Their labels would violate the singleton-partner result.
 
 ## Controlled comparison and unsuccessful probes
 
-At the SAME centers, tube radius `1/16` and `tau=1/256`, the original Cartesian
-complex enclosure permits 1136 orthogonality edges and 1468 unbiasedness edges.
-The circular-cap calculation permits 372 and 875, respectively. Of the 1830
-pair bounds, 1771 lower bounds and 1750 upper bounds improve strictly. This is
-an enclosure comparison, not a reduction in the number of actual solutions.
+The comparison must use the SAME centers, tube radius `1/16` and `tau=1/256`.
+Its separately executed report records the Cartesian and circular-cap edge
+counts and the number of improved interval bounds. This measures enclosure
+quality, not the number of actual solutions.
 
 A preliminary anchor mass-conservation filter pruned zero first cliques at the
 tested radii/tolerances. It is not advertised as a successful certificate.
@@ -188,7 +189,7 @@ coverage.
 
 The current run also passed 6000 exact rational arc/projection samples, 600
 whole-overlap samples, twelve corruption rejections and an independent maximal-
-clique enumeration (873 maximal cliques, giving the same 2403 six-cliques).
+clique enumeration (877 maximal cliques, giving the same 2403 six-cliques).
 These are single-author development checks, not independent expert review or
 a universal proof of the implementation.
 
@@ -200,24 +201,33 @@ computer-assisted proof subject to that explicit analytic interpretation.
 
 ## Literature and cross-project connection
 
-- Brierley and Weigert, *Constructing Mutually Unbiased Bases in Dimension Six*,
-  Phys. Rev. A 79, 052316 (2009), arXiv:0901.4051: joint orthogonality of unbiased
-  vectors is a decisive constraint beyond finding individual vectors.
-- Brierley and Weigert, *Maximal sets of mutually unbiased quantum states in
-  dimension six*, Phys. Rev. A 78, 042312 (2008), arXiv:0808.1614: MU
-  constellations are the appropriate partial-basis objects.
-- Bruzda, Goyeneche and Zalewski, *Triplets of mutually unbiased bases and
-  Hadamard matrices*, J. Algebraic Combinatorics 63, 9 (2026), DOI
-  10.1007/s10801-026-01506-x, Conjecture 3: the X-family quartet problem is an
-  explicit research target. This local certificate does not settle that entire
-  conjecture or the full dimension-six problem.
-- Duff and Lee, arXiv:2402.07053, provides certified Krawczyk continuation context.
-  Tracking known roots does not replace our full residual-sublevel coverage.
+- Stephen Brierley and Stefan Weigert, *Constructing Mutually Unbiased Bases
+  in Dimension Six*, Phys. Rev. A 79, 052316 (2009), arXiv:0901.4051:
+  joint orthogonality of unbiased vectors is a decisive constraint beyond
+  finding individual vectors. Locator: https://arxiv.org/abs/0901.4051
+- Stephen Brierley and Stefan Weigert, *Maximal Sets of Mutually Unbiased
+  Quantum States in Dimension Six*, Phys. Rev. A 78, 042312 (2008),
+  arXiv:0808.1614: MU constellations are the appropriate partial-basis objects.
+  Locator: https://arxiv.org/abs/0808.1614
+- Mate Matolcsi, Akos K. Matszangosz, Daniel Varga and Mihaly Weiner,
+  *Triplets of mutually unbiased bases*, J. Algebraic Combinatorics 63,
+  article 26 (2026), published 4 March 2026, DOI 10.1007/s10801-026-01506-x.
+  Conjecture 3 explicitly asks to exclude every member of the Szollosi X
+  family from a MUB quartet. This local certificate does not settle that
+  entire conjecture or the full dimension-six problem.
+  Locator: https://doi.org/10.1007/s10801-026-01506-x
+- Duff and Lee, arXiv:2402.07053, provides certified Krawczyk continuation
+  context. Tracking known roots does not replace full residual-sublevel
+  coverage. Locator: https://arxiv.org/abs/2402.07053
 - The cross-author audit read loning's #5296 emphasis on combining amplitudes
   before taking squares, and #5895's actual normalized-readout disk source,
   where retaining covariance gives a stronger bound than separate errors.
   The present circle-cap algorithm has its own proof; no unproved RH or Weil
   statement is imported into the MUB argument.
+
+Primary publisher/arXiv metadata were checked on 6 September 2026. The initial
+README's attribution of the triplet paper to a different author group, expanded
+title and article number was incorrect and has been replaced here.
 
 No priority claim is made for classical circular-cap duality, interval arithmetic
 or graph clique bounds. The concrete research output is the replayable stronger
