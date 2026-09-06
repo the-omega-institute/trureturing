@@ -19,38 +19,10 @@ internal sealed class FiniteMomentSparseLawDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every rational coefficient on the response carrier, expectation under deterministic pushforward equals expectation of the pulled-back coefficient on the source carrier."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("sparse-law"),
-                DeclarationHandle.Create(Prefix + "MomentCompression.sparseLaw"),
-                H("Push the latent witness back to original atoms"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The compressed latent law is pushed through its selected original source atoms to obtain a normalized law on the unchanged original causal atom carrier."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("sparse-law-linear-objective-eq"),
-                DeclarationHandle.Create(Prefix + "MomentCompression.sparseLaw_linearObjective_eq"),
-                H("Original-carrier expectation equals latent expectation"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Any original atom coefficient evaluated on the sparse pushforward is exactly the corresponding pulled-back latent objective."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("sparse-law-linear-feasible"),
-                DeclarationHandle.Create(Prefix + "MomentCompression.sparseLawLinearFeasible"),
-                H("The unchanged LP remains feasible"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("When the original law satisfies all finite rational inequality rows, the sparse law on the same original atom carrier satisfies the same matrix A and right-hand side b."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("sparse-law-query-eq"),
-                DeclarationHandle.Create(Prefix + "MomentCompression.sparseLawLinearObjective_eq"),
-                H("The unchanged query value is attained"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The sparse original-carrier law attains exactly the same nominated linear objective value as the original feasible law."))),
-                DescribeRole.Theorem),
+            
+            
+            
+            
             Describe.Lean(
                 DescribeId.Create("finite-linear-problem-sparse-original-witness"),
                 DeclarationHandle.Create(Prefix + "finite_linear_problem_sparse_original_witness"),
