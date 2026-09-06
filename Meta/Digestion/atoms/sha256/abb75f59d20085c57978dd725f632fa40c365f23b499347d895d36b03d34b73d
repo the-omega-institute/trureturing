@@ -1,0 +1,36 @@
+## 本轮已经证明与尚未证明的边界
+
+已经证明的是：
+
+$$
+\boxed{
+\operatorname{rank}W_X=2X,
+\qquad
+\dim\ker W_X=X;
+}
+$$
+
+$$
+\boxed{
+\text{高频能量可以无条件截断控制};
+}
+$$
+
+以及
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left|
+\sum_{X<n\le2X}(n-X)\Lambda(n)
++
+\frac12\sum_{2X<n\le4X}(4X-n)\Lambda(n)
+-\frac32X^2
+\right|
+\le CX^{3/2}
+}
+$$
+
+对全部充分大的整数 \(X\) 成立，其中 \(C\) 必须与 \(X\) 无关。
+

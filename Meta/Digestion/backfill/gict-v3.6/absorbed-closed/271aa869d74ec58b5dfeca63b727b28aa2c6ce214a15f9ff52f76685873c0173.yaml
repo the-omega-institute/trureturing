@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:271aa869d74ec58b5dfeca63b727b28aa2c6ce214a15f9ff52f76685873c0173
+  normalized_sha256: sha256:271aa869d74ec58b5dfeca63b727b28aa2c6ce214a15f9ff52f76685873c0173
+cas_ref: sha256:271aa869d74ec58b5dfeca63b727b28aa2c6ce214a15f9ff52f76685873c0173
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/ThinCheckerboardNoThreeInLineSeventeen.thinCheckerboard17_ntil_max_eq_26
+    target_statement_id: sha256:6b14f4410d0e7563dab16d43c27e223f4db8d7de965c563bf981fe88eb63b365
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/Lattices/ThinCheckerboardNoThreeInLineSeventeen.thinCheckerboard17_ntil_max_eq_26
+      definition_sha256: sha256:51009ff52aaa396a03d876a85524c656df6644c8c419d79046fec8363a168be1
+      emission_sha256: sha256:b58469ca37e5f285ca2dac8445de9e1769c7b0d62540f0d747ca0646e97d74c2
+  unresolved_subitems: []

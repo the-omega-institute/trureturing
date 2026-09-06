@@ -1,0 +1,136 @@
+## 定理 6：表示相关的常数级正贡献
+
+存在 \(C_\tau>0\)，使
+
+$$
+\boxed{
+\mathfrak B_\tau(X)\longrightarrow C_\tau,
+}
+\tag{26}
+$$
+
+其中
+
+$$
+\boxed{
+\begin{aligned}
+C_\tau
+=
+\delta_0
+\int_{\mathcal B}
+[\tau+\log(8|\xi|)]^2
+\int_1^2
+\frac{
+\left|\displaystyle\int_u^{2u}e^{2\pi i\xi s}\,ds\right|^2
+}{u^2}\,du\,d\xi.
+\end{aligned}
+}
+\tag{27}
+$$
+
+而且
+
+$$
+\boxed{
+\frac4{\pi^2}M_\tau
+\le C_\tau\le M_\tau.
+}
+\tag{28}
+$$
+
+因此
+
+$$
+\boxed{
+C_\tau\asymp\tau^2
+\qquad(|\tau|\to\infty).
+}
+\tag{29}
+$$
+
+### 证明
+
+作缩放 \(x=Xu\)，使用定理 5 的一致核收敛，双重求和变成 Riemann 积分，即得式（27）。
+
+又因为
+
+$$
+\left|\int_u^{2u}e^{2\pi i\xi s}\,ds\right|
+=
+\frac{|\sin(\pi u\xi)|}{\pi|\xi|},
+$$
+
+在当前范围
+
+$$
+1\le u\le2,\qquad
+1/8\le|\xi|\le1/4
+$$
+
+内，有
+
+$$
+\frac18\le u|\xi|\le\frac12.
+$$
+
+利用
+
+$$
+2y\le\sin(\pi y)\le\pi y
+\qquad(0\le y\le1/2),
+$$
+
+得到
+
+$$
+\frac{4u^2}{\pi^2}
+\le
+\left|\int_u^{2u}e^{2\pi i\xi s}\,ds\right|^2
+\le u^2.
+$$
+
+积分即得式（28）。证毕。
+
+---
+
+现在出现了一个不能忽略的事实：
+
+$$
+\boxed{
+\text{实际 }\mathfrak J(X)\text{ 与 }\tau\text{ 无关},
+}
+$$
+
+但
+
+$$
+\boxed{
+\text{去相干频带的极限 }C_\tau
+\text{ 可以随 }\tau\text{ 任意增大}.
+}
+$$
+
+因此：
+
+> **不能仅因为某个正频带产生了一个常数级贡献，就把它认作前文真实相关余项中“缺失的那一个常数”。**
+
+必须把该频带与其他模态之间的交叉项一并恢复。
+
+具体而言，
+
+$$
+\mathfrak B_\tau(X)
+\le
+\mathfrak J_{\mathrm{dec}}(\tau)
+$$
+
+是正确的，因为它只选择了部分非负模态强度。
+
+但一般没有
+
+$$
+\mathfrak B_\tau(X)\le\mathfrak J(X).
+$$
+
+后者会忽略相消干涉。
+

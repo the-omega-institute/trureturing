@@ -1,0 +1,117 @@
+## 定理 4：频率能量的精确分解与尾界
+
+有
+
+$$
+\boxed{
+\sum_{j=0}^{M-1}|y_j|^2
+=
+\sum_{r=0}^{M-1}|\eta_r(X)|^2,
+}
+\tag{21}
+$$
+
+以及
+
+$$
+\boxed{
+\mathcal G_X
+=
+\sum_{r=0}^{M-1}
+4\sin^2\left(\frac{\pi r}{2M}\right)
+|\eta_r(X)|^2.
+}
+\tag{22}
+$$
+
+因此，对任意 \(1\le R<M\)，
+
+$$
+\boxed{
+\frac1{X^2}
+\sum_{r=R}^{M-1}|\eta_r(X)|^2
+\le
+\frac{\mathcal G_X}{R^2}.
+}
+\tag{23}
+$$
+
+### 证明
+
+式（21）是正交基展开。
+
+对路径图的离散 Laplacian 作直接代入，\(\phi_r\) 的本征值是
+
+$$
+\lambda_r=
+4\sin^2\left(\frac{\pi r}{2M}\right).
+$$
+
+而该 Laplacian 的二次型就是
+
+$$
+\sum_j|y_{j+1}-y_j|^2,
+$$
+
+所以得到式（22）。
+
+最后，由
+
+$$
+\sin t\ge\frac{2t}{\pi},
+\qquad 0\le t\le\frac\pi2,
+$$
+
+以及 \(M=2X\)，有
+
+$$
+\lambda_r
+\ge
+\frac{r^2}{X^2}.
+$$
+
+代入式（22）得到式（23）。证毕。
+
+---
+
+取
+
+$$
+\boxed{
+R_X=\left\lceil\sqrt{X\log X}\right\rceil.
+}
+\tag{24}
+$$
+
+由定理 3，
+
+$$
+\boxed{
+\frac1{X^2}
+\sum_{r=R_X}^{2X-1}|\eta_r(X)|^2
+\le3+o(1).
+}
+\tag{25}
+$$
+
+这是一个无条件结论。
+
+更一般地，若固定 \(\varepsilon>0\)，取
+
+$$
+R=X^{1/2+\varepsilon},
+$$
+
+则
+
+$$
+\boxed{
+\frac1{X^2}
+\sum_{r\ge R}|\eta_r(X)|^2
+=
+O(X^{-2\varepsilon}\log X)
+\longrightarrow0.
+}
+\tag{26}
+$$
+

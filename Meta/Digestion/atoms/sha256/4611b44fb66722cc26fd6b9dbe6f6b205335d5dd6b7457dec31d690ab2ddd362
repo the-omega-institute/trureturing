@@ -1,0 +1,24 @@
+## 假设 174.1　独立观察者与共同能量
+
+有有限个观察者探针，其局部 Hamiltonian 为非标量 \(h_i\)，钟速为
+
+$$
+d\tau_i=\nu_i\,dt,
+\qquad \nu_i>0.
+$$
+
+共同参照能量为
+
+$$
+H_0=\sum_i\nu_i h_i.
+$$
+
+各探针独立制备：
+
+$$
+\rho_{\mathrm{tot}}=\bigotimes_i\rho_i,
+\qquad \rho_i>0.
+$$
+
+---
+

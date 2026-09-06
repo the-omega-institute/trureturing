@@ -1,0 +1,83 @@
+### 第三步：计算这个平均模态的传递函数
+
+令
+
+$$
+\ell=\log2,
+\qquad
+\mathcal M(T)=\widetilde{\mathfrak m}(e^T).
+$$
+
+仍使用
+
+$$
+r(T)=e^{-T/2}(\psi(e^T)-e^T),
+$$
+
+$$
+z(T)=\sqrt2\,r(T+\ell)-r(T).
+$$
+
+变量代换给出
+
+$$
+\boxed{
+\mathcal M(T)
+=
+\int_0^\ell e^{3u/2}z(T+u)\,du.
+}
+\tag{39}
+$$
+
+因此，在初始收敛区域，
+
+$$
+\boxed{
+\widehat{\mathcal M}(s)
+=
+\mathscr H(s)\widehat r(s)+B(s),
+}
+\tag{40}
+$$
+
+其中 \(B\) 是有限起始区间产生的整函数，而
+
+$$
+\boxed{
+\mathscr H(s)
+=
+\frac{
+(2^{s+1/2}-1)(2^{s+3/2}-1)
+}{
+s+3/2
+}.
+}
+\tag{41}
+$$
+
+分母在 \(s=-3/2\) 处的奇点可去。
+
+关键是：
+
+$$
+\boxed{
+\mathscr H(s)\ne0
+\qquad(\Re s>0).
+}
+\tag{42}
+$$
+
+因为两个分子因子的零点分别位于
+
+$$
+\Re s=-\frac12
+$$
+
+与
+
+$$
+\Re s=-\frac32
+$$
+
+上。
+

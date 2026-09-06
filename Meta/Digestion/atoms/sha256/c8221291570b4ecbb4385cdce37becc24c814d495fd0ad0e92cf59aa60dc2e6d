@@ -1,0 +1,57 @@
+## 定理 167.1　近共同平衡的热流具有正导通系数
+
+在
+
+$$
+\Theta_i=\Theta_0+\delta\Theta_i
+$$
+
+附近，单次接触的共同能量转移满足
+
+$$
+\boxed{
+Q_{i\to j}
+=
+L_{ij}
+(\delta\Theta_i-\delta\Theta_j)
++
+O(\delta\Theta^2),
+}
+\tag{167.2}
+$$
+
+其中
+
+$$
+\boxed{
+L_{ij}
+=
+\frac{\mathcal E^2\sin^2\theta}
+{k_B\Theta_0^2}
+p_0(1-p_0)>0.
+}
+\tag{167.3}
+$$
+
+### 证明
+
+对
+
+$$
+p(\Theta)=\frac1{1+e^{\mathcal E/(k_B\Theta)}}
+$$
+
+求导，得到
+
+$$
+p'(\Theta)
+=
+\frac{\mathcal E}{k_B\Theta^2}p(1-p).
+$$
+
+代入式（162.5）的一阶展开。∎
+
+这给出一个具体方向：近共同平衡时，流动由 \(\Theta_i-\Theta_j\) 驱动，而不是仅由 \(T_i-T_j\) 驱动。
+
+---
+

@@ -1,0 +1,77 @@
+## 本轮已经证明与尚未证明的边界
+
+已经证明的是：
+
+$$
+\boxed{
+\operatorname{rank}W_X=2X,
+\qquad
+\dim\ker W_X=X;
+}
+$$
+
+$$
+\boxed{
+\text{高频能量可以无条件截断控制};
+}
+$$
+
+以及
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left|
+\sum_{X<n\le2X}(n-X)\Lambda(n)
++
+\frac12\sum_{2X<n\le4X}(4X-n)\Lambda(n)
+-\frac32X^2
+\right|
+\le CX^{3/2}
+}
+$$
+
+对全部充分大的整数 \(X\) 成立，其中 \(C\) 必须与 \(X\) 无关。
+
+**尚未证明的，就是这个实际三角加权误差的统一上界。**
+
+因此，这轮不只是继续增加模态，而是把对象逐步压缩到了一个具体位置：
+
+$$
+\boxed{
+\text{冗余的相位表示}
+\longrightarrow
+\text{最小窗口读出}
+\longrightarrow
+\text{已控高频＋待控低频}
+\longrightarrow
+\text{跨尺度的单一平均模态}.
+}
+$$
+
+真正需要补上的算术内容，已经不再是“量子核应该正”——这些有限核本来就正——而是：
+
+> **实际素数幂在这个固定三角权重下，为什么能把 \(X^2\) 级主项抵消到 \(X^{3/2}\) 级，并且同一个常数能适用于全部尺度。**
+
+这正是当前观察面上没有被定义、归一化或表示变换替代掉的证明责任。
+
+[1]: https://dlmf.nist.gov/27.2 "DLMF: §27.2 Functions ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[2]: https://dlmf.nist.gov/27.12 "DLMF: §27.12 Asymptotic Formulas: Primes ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[3]: https://arxiv.org/html/2008.06140v1 "The mean square of the error term in the prime number theorem"
+[4]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[5]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+这次可以把上一轮“高斯极限之外怎么办”的问题，推进到一个**保留完整算术结构的精确展开**：
+
+> **固定差模态以后，和模态的干涉读数，可以写成“修正 Bessel 函数 × 除数相位”的收敛级数。除数相位又能精确分解为素数幂上的有限量子通道。**
+
+但在研究这个展开时，还必须处理一个重要区别：
+
+> **实际 theta 结构中的局部负干涉，确实必然存在；它本身却不是 RH 的反例。RH 要求的是一组特定的全尺度积分非负，而不是所有条件观察都非负。**
+
+这使后续研究能够避开一条过强、实际上不可能成立的证明路线。
+
+下面继续给出定义、定理和证明。新展开在这里推导并数值核对，不把它标记为已经完成的 Lean 证明，也不宣称其一般方法具有未经文献比较的原创性。
+
+---
+

@@ -1,0 +1,153 @@
+## 定理 172.1　满秩完全被动态的有限维刻画
+
+设 \(H\) 非标量，且 \(\rho>0\)。则
+
+$$
+\boxed{
+\rho\text{ 完全被动}
+\iff
+\rho=\frac{e^{-\beta H}}{\operatorname{Tr}e^{-\beta H}}
+\quad\text{对某个 }\beta\ge0.
+}
+\tag{172.1}
+$$
+
+\(\beta=0\) 对应最大混合态。有限正温度对应 \(\beta>0\)。
+
+这是完全被动性的标准刻画；以下给出一个适合有限维形式化的证明。([arXiv][3])
+
+### 证明
+
+由定理 171.1，可以在共同本征基中写
+
+$$
+H=\operatorname{diag}(E_1,\ldots,E_d),
+\qquad
+\rho=\operatorname{diag}(p_1,\ldots,p_d),
+$$
+
+并令
+
+$$
+s_i=-\log p_i.
+$$
+
+由于 \(\rho>0\)，全部 \(s_i\) 有限。
+
+考虑任意整数向量
+
+$$
+z\in\mathbb Z^d,\qquad \sum_i z_i=0.
+$$
+
+其正、负部分满足
+
+$$
+\sum_i z_i^+=\sum_i z_i^-=N.
+$$
+
+它们因此分别描述两个 \(N\) 份系统的积基态：一个含 \(z_i^+\) 份能级 \(i\)，另一个含 \(z_i^-\) 份。
+
+两态的能量差为
+
+$$
+E\cdot z,
+$$
+
+概率对数差为
+
+$$
+-s\cdot z.
+$$
+
+若
+
+$$
+E\cdot z>0,
+\qquad
+s\cdot z<0,
+$$
+
+则较高能量的积态反而具有较大概率。交换这两个积态可以提取正功，与完全被动性矛盾。
+
+故对全部上述整数向量：
+
+$$
+E\cdot z>0\Longrightarrow s\cdot z\ge0.
+\tag{172.2}
+$$
+
+令
+
+$$
+V=\left\{x\in\mathbb R^d:\sum_ix_i=0\right\}.
+$$
+
+由有理向量在 \(V\) 中稠密，若某个实向量违反式（172.2），就可以保持两个严格不等式作有理逼近，再乘公共分母得到整数反例。因此：
+
+$$
+E\cdot x>0\Longrightarrow s\cdot x\ge0
+\qquad(x\in V).
+$$
+
+选择 \(u\in V\) 使 \(E\cdot u>0\)。对任意满足 \(E\cdot w=0\) 的 \(w\in V\)，有
+
+$$
+E\cdot(u+tw)>0
+\qquad\forall t\in\mathbb R.
+$$
+
+所以
+
+$$
+s\cdot(u+tw)\ge0
+\qquad\forall t.
+$$
+
+这迫使 \(s\cdot w=0\)。因此 \(s\) 在 \(V\) 上与 \(E\) 成比例：
+
+$$
+s|_V=\beta E|_V,
+\qquad \beta\ge0.
+$$
+
+于是存在常数 \(a\)，使
+
+$$
+s_i=\beta E_i+a.
+$$
+
+从而
+
+$$
+p_i=e^{-a}e^{-\beta E_i},
+$$
+
+归一化后得到 Gibbs 形式。
+
+反向，若 \(\rho=e^{-\beta H}/Z\)，则任意有限份满足
+
+$$
+\rho^{\otimes N}
+=
+\frac{e^{-\beta H^{(N)}}}{Z^N}.
+$$
+
+概率随总能量单调不增，由定理 171.1，它对全部联合酉操作被动。∎
+
+### 结论
+
+Gibbs 形式可以从以下更深一层要求中推出：
+
+$$
+\boxed{
+\text{不仅单个观察者不能提取功，}
+\quad
+\text{任意有限份协作也不能把隐藏的不平衡激活。}
+}
+$$
+
+但这一结论依赖所允许的联合控制类。它不是“只要某个实验没提取出功，就已经证明状态为 Gibbs 态”。
+
+---
+

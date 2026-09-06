@@ -1,0 +1,16 @@
+## 第一条：平衡态的组合闭合
+
+$$
+\boxed{
+\text{循环功的操作定义}
+\longrightarrow
+\text{单份被动性}
+\longrightarrow
+\text{任意有限份的完全被动性}
+\longrightarrow
+\text{Gibbs 形式}.
+}
+$$
+
+这使 Gibbs 态不再仅作为一个方便选择的分布进入理论，但代价是必须明确操作类和多份独立制备条件。
+

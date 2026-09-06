@@ -24,7 +24,37 @@ coverage_gids:
   - gid: D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
     target_statement_id: sha256:87657bf82c7f0b5219b0f6a5c640131cdfe10480d25dde1ea38424c886afc975
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/ContinuousObservables/CentralWinding.central_winding_certificate
+      definition_sha256: sha256:62f405e66c1a8c619ce53f1503cff76fbba45b6227a03993b336e66e9c1640c5
+      emission_sha256: sha256:510180e7ee2bb8aaae97062b5e1edce18bf06cdeb980fa9b133f1ea0ca3b019e
+    - gid: D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
+      definition_sha256: sha256:167d00e5ca95c8394fa20d805a5a582f22d4240acf580c4d479e6a2eeb785f3c
+      emission_sha256: sha256:a69b6b5c22dbc29b44cdbb5be2c0f62b2971261aca65d5b39d0f48259548b1e3
+    - gid: D5/S3/Observer/WindowRegister.clockMatrix_pow_card
+      definition_sha256: sha256:722f20e716ea775a7056756d3d07c792c94f5fec132602dcf273a2c944234318
+      emission_sha256: sha256:955c416d7802dc0e16c6fcec0ffff59eb87cd88cb01a53ed875a6db75383796b
+    - gid: D5/S3/Observer/WindowRegister.shiftMatrix_pow_card
+      definition_sha256: sha256:722f20e716ea775a7056756d3d07c792c94f5fec132602dcf273a2c944234318
+      emission_sha256: sha256:955c416d7802dc0e16c6fcec0ffff59eb87cd88cb01a53ed875a6db75383796b
+    - gid: D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot
+      definition_sha256: sha256:722f20e716ea775a7056756d3d07c792c94f5fec132602dcf273a2c944234318
+      emission_sha256: sha256:955c416d7802dc0e16c6fcec0ffff59eb87cd88cb01a53ed875a6db75383796b
+    - gid: D5/S3/Observer/WindowRegister.window_commutant_eq_scalars
+      definition_sha256: sha256:722f20e716ea775a7056756d3d07c792c94f5fec132602dcf273a2c944234318
+      emission_sha256: sha256:955c416d7802dc0e16c6fcec0ffff59eb87cd88cb01a53ed875a6db75383796b
+    - gid: D5/S3/Observer/WindowRegister.window_unitary
+      definition_sha256: sha256:722f20e716ea775a7056756d3d07c792c94f5fec132602dcf273a2c944234318
+      emission_sha256: sha256:955c416d7802dc0e16c6fcec0ffff59eb87cd88cb01a53ed875a6db75383796b
+    - gid: D5/S3/Observer/WindowRegister.window_weyl
+      definition_sha256: sha256:722f20e716ea775a7056756d3d07c792c94f5fec132602dcf273a2c944234318
+      emission_sha256: sha256:955c416d7802dc0e16c6fcec0ffff59eb87cd88cb01a53ed875a6db75383796b
+    - gid: D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
+      definition_sha256: sha256:9c9753a823987130a66609b110b2346612b000cdbc2fa9a9c760660d27b1238f
+      emission_sha256: sha256:c771ea3a1551edd196edbbb5c2f744c3a87f9f51e895d0416605559dc95607f5
+    - gid: D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
+      definition_sha256: sha256:5bcc4a3774f6b9a9e3c87c351803ad1aca1540deaed3da8be0ead8d688205643
+      emission_sha256: sha256:ce9d7504089ae28da91ea2aacb769b3b8b1a58c0031a8632f87e93cfce8c3672
   unresolved_subitems:
     - noncommutative-algebra-bundle-over-torus
     - universal-c-star-crossed-product-identification

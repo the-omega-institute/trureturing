@@ -1,0 +1,74 @@
+## 定理 5：平均模态的有限算术公式
+
+定义三角加权和
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal T(X)
+={}&
+\sum_{X<n\le2X}(n-X)\Lambda(n)\\
+&+\frac12
+\sum_{2X<n\le4X}(4X-n)\Lambda(n)
+-\frac32X^2.
+\end{aligned}
+}
+\tag{32}
+$$
+
+则对每个整数 \(X\ge2\)，
+
+$$
+\boxed{
+\mathfrak m(X)=\frac{\mathcal T(X)}{X^{3/2}}.
+}
+\tag{33}
+$$
+
+### 证明
+
+首先，对整数 \(X\)，
+
+$$
+\int_X^{2X}
+\bigl(\lfloor2x\rfloor-\lfloor x\rfloor\bigr)\,dx
+=
+\int_X^{2X}x\,dx
+=
+\frac32X^2.
+\tag{34}
+$$
+
+因为在每个 \([k,k+1]\) 上，前半段整数个数为 \(k\)，后半段为 \(k+1\)，平均正好为 \(k+1/2\)。
+
+再交换有限求和和积分。固定整数 \(n\)，其被窗口 \((x,2x]\) 读取的 \(x\) 区间长度为
+
+$$
+\begin{cases}
+n-X,&X<n\le2X,\\
+(4X-n)/2,&2X<n\le4X,\\
+0,&\text{其他}.
+\end{cases}
+$$
+
+因此
+
+$$
+\int_X^{2X}
+[\psi(2x)-\psi(x)]\,dx
+$$
+
+正好等于式（32）的两个加权和。结合式（34）即得。证毕。
+
+---
+
+这里的所有权重都非负，窗口外贡献完全为零。
+
+基准
+
+$$
+\frac32X^2
+$$
+
+也不是拟合值，而是连续密度及整数地板校正共同给出的精确主项。
+

@@ -1,0 +1,116 @@
+## 定理 9.2：临界压力的积分分解
+
+当 \(T\) 足够大，使 \(\lambda(T)<\lambda_c\) 时：
+
+$$
+\boxed{
+\mathcal G(\lambda(T))
+=
+\int_T^\infty
+\left[
+\mathcal E(\lambda(v))-v
+\right]w(v)\,dv.
+}
+\tag{26}
+$$
+
+进一步，令：
+
+$$
+\boxed{
+I_\psi(T)
+=
+\int_T^\infty
+[\psi(v)-v]
+\frac{\ln v+1}{v^2(\ln v)^2}\,dv.
+}
+\tag{27}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal G(\lambda(T))
+=
+I_\psi(T)
++
+\frac{2(\sqrt2-1)}{\sqrt T\,\ln T}
++
+o\!\left(\frac1{\sqrt T\,\ln T}\right).
+}
+\tag{28}
+$$
+
+### 证明
+
+由式（15）：
+
+$$
+\frac{d}{dT}\mathcal G(\lambda(T))
+=
+-\left[\mathcal E(\lambda(T))-T\right]w(T)
+$$
+
+几乎处处成立。
+
+在有限区间积分，再使用引理 9.1 的无穷远边界值，得到式（26）。
+
+把式（24）代入积分。确定修正满足：
+
+$$
+\int_T^\infty
+\sqrt v\,w(v)\,dv
+=
+\frac{2}{\sqrt T\,\ln T}
+\left(1+O\!\left(\frac1{\ln T}\right)\right).
+$$
+
+其余 \(o(\sqrt v)\) 项的积分为：
+
+$$
+o\!\left(\frac1{\sqrt T\,\ln T}\right).
+$$
+
+由此得到式（28）。相应反常积分的收敛可由式（26）与可积的差项得到，也与经典有效素数定理给出的误差估计一致。证毕。
+
+---
+
+**现在，缺少的估计已经非常具体。**
+
+不是再证明单条路径的作用量为正，也不是再证明其衰减指数存在，而是控制：
+
+$$
+\boxed{
+I_\psi(T).
+}
+$$
+
+例如，若能独立证明存在 \(\varepsilon>0\)，使对所有充分大的 \(T\)：
+
+$$
+\boxed{
+I_\psi(T)
+\ge
+-\frac{2(\sqrt2-1)-\varepsilon}
+{\sqrt T\,\ln T},
+}
+\tag{29}
+$$
+
+则由式（28）得到低价格区域中的严格正压力余量。
+
+再结合剩余参数区间的有限证书，就可以完成主定理 4.1 所要求的全称正性。
+
+**式（29）是待证明的充分条件，不是本轮已经完成的结论。**
+
+但它把此前混在一起的结构分开了：
+
+$$
+\boxed{
+\text{局部离散层级自动产生确定的正修正，}
+\quad
+\text{全局素数分布产生可能正负振荡的余项。}
+}
+$$
+

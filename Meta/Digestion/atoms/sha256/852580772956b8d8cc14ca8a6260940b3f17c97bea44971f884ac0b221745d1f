@@ -1,0 +1,26 @@
+# 五、素数平方的偏移，严格压过全部允许的零点振荡
+
+定义归一化素数幂修正
+
+$$
+\boxed{
+P_{\mathrm{pow}}(X)
+=
+\frac1{\sqrt X}
+\sum_{\substack{p^k\\k\ge2}}
+(\log p)\kappa(p^k/X).
+}
+\tag{13}
+$$
+
+于是恒等地有
+
+$$
+\boxed{
+m_{\mathbb P}(X)
+=
+m_\Lambda(X)-P_{\mathrm{pow}}(X).
+}
+\tag{14}
+$$
+

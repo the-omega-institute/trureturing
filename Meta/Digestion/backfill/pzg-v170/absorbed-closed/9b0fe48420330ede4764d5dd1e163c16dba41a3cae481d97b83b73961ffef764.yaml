@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9b0fe48420330ede4764d5dd1e163c16dba41a3cae481d97b83b73961ffef764
+  normalized_sha256: sha256:9b0fe48420330ede4764d5dd1e163c16dba41a3cae481d97b83b73961ffef764
+cas_ref: sha256:9b0fe48420330ede4764d5dd1e163c16dba41a3cae481d97b83b73961ffef764
+coverage_gids:
+  - gid: D5/S3/Weil/ReflectionLedger
+    target_statement_id: sha256:f7f3a823b3af405f57350ce4f5e7408bee50a5a95313132cc7bb8f55c765bc8d
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ReflectionLedger
+      definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
+      emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
+  unresolved_subitems: []

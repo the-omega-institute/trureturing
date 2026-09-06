@@ -46,7 +46,8 @@ public sealed class ScribeCoverageDeltaTests
         var repository = fixture.Gateway(RawChangeSet.Create([ScribeSeedFixture.EntryPath(fixture.First)]));
 
         var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report),
-            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"]);
+            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"],
+            FakeAtomHistorySource.ForPaths(fixture.Files.Keys), new DigestAgeClock());
 
         Assert.False(result.Success);
         Assert.Contains("coverage-scribe-receipt-required", result.Error, StringComparison.Ordinal);
@@ -59,7 +60,8 @@ public sealed class ScribeCoverageDeltaTests
         var repository = fixture.Gateway(RawChangeSet.Create([]));
 
         var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report),
-            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"]);
+            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"],
+            FakeAtomHistorySource.ForPaths(fixture.Files.Keys), new DigestAgeClock());
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(84, result.Output.Split('\n').Count(line =>
@@ -74,7 +76,8 @@ public sealed class ScribeCoverageDeltaTests
         var repository = fixture.Gateway(RawChangeSet.Create([ScribeSeedFixture.EntryPath(fixture.First)]));
 
         var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report),
-            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"]);
+            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"],
+            FakeAtomHistorySource.ForPaths(fixture.Files.Keys), new DigestAgeClock());
 
         Assert.False(result.Success);
         Assert.Contains("coverage-scribe-receipt-required", result.Error, StringComparison.Ordinal);
@@ -89,7 +92,8 @@ public sealed class ScribeCoverageDeltaTests
         var repository = fixture.Gateway(RawChangeSet.Create(["notes/unrelated.txt"]));
 
         var result = DigestStatusCommand.Run(repository, new FakeLeanReportSource(fixture.Inputs.Report),
-            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"]);
+            new FakeScribeEmissionVerifier(fixture.Verified), ["--base", "baseline"],
+            FakeAtomHistorySource.ForPaths(fixture.Files.Keys), new DigestAgeClock());
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(84, result.Output.Split('\n').Count(line =>

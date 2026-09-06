@@ -172,7 +172,8 @@ public sealed partial class ScribeSeedCommandTests
         var baseline = DigestStatusCommand.Run(
             fixture.Gateway(RawChangeSet.Create([ScribeSeedFixture.EntryPath(fixture.First)])),
             new FakeLeanReportSource(fixture.Inputs.Report), new FakeScribeEmissionVerifier(fixture.Verified),
-            ["--base", "baseline"]);
+            ["--base", "baseline"],
+            FakeAtomHistorySource.ForPaths(fixture.Files.Keys), new DigestAgeClock());
         Assert.True(baseline.Success, baseline.Error);
         Assert.Equal(ancestorCount, baseline.Output.Split('\n').Count(line =>
             line.StartsWith("ENTRY ", StringComparison.Ordinal)
@@ -209,7 +210,8 @@ public sealed partial class ScribeSeedCommandTests
                     BackfillInventoryLoader.RootPath + fixture.First.SourceId + "/absorbed-closed/" + id + ".yaml",
                 })), execution.After, execution.Before),
             new FakeLeanReportSource(fixture.Inputs.Report), new FakeScribeEmissionVerifier(fixture.Verified),
-            ["--base", "baseline"]);
+            ["--base", "baseline"],
+            FakeAtomHistorySource.ForPaths(fixture.Files.Keys), new DigestAgeClock());
         Assert.True(validation.Success, validation.Error);
     }
 }
