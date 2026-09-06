@@ -1,0 +1,18 @@
+# 二、从 5040 出发，构造一份真正能接回 ζ 的温度扩展
+
+沿用项目已经固定的目标：
+
+$$
+J_\lambda(n)
+=
+\log\frac{\sigma(n)}n-\lambda\log n.
+$$
+
+本轮核对的 `GoldenResourceOptimalInteger.lean` 保留了这一实际目标、素数层收益的严格递减性，以及价格 \(1/25\) 下 5040 唯一最优的证明结构。它并没有把这一结论宣称为 RH。
+
+记：
+
+$$
+a(n)=\frac{\sigma(n)}n=\sum_{d\mid n}\frac1d.
+$$
+

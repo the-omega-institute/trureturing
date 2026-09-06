@@ -1,0 +1,15 @@
+## 定理：只使用 \(2,3,5,7\)，在 5040 之后不会产生 Robin 反例
+
+$$
+\boxed{
+n=2^a3^b5^c7^d>5040
+\Longrightarrow
+\frac{\sigma(n)}n
+<
+e^{\gamma_{\mathrm E}}\log\log n.
+}
+\tag{17}
+$$
+
+这里允许四个指数任意大，不局限于 \((4,2,1,1)\) 的因数窗口。
+

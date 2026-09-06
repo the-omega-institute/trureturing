@@ -1,0 +1,20 @@
+### 本轮核验
+
+本次项目版本固定为：
+
+```text
+d136c6195898e7837a54b42dd954595070fc3df1
+```
+
+本轮完成了 **53项命名检查**，包括：
+
+* 5040最优区间所需的精确有理幂不等式；
+* \(n\le60000\) 的精确整数目标比较；
+* 总计数 \(K\le14\) 的 **5440条纤维、11628个计数状态**；
+* 奇偶零模、对角能量破坏零模的行列式；
+* 整数步长造成的连通分裂；
+* 有限时钟与几何级数零点的代数关系。
+
+[核验脚本](sandbox:/mnt/data/observer_formalization/check_discrete_criticality.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/discrete_criticality_checks.json)
+

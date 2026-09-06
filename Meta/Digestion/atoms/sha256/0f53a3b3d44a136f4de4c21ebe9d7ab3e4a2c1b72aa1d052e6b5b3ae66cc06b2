@@ -1,0 +1,44 @@
+# 结论
+
+你的整体直觉可以保留为一句更严格的话：
+
+> **观察者看到的世界，可以是一个受因果、资源与记录方式约束的有效结构；它的“平坦”可能表示在当前实验范围内，某些细节尚不足以改变预测，而不是完整世界绝对没有结构。**
+
+但是，真正有价值的研究不是把所有对象都叫作曲率，而是识别：
+
+$$
+\boxed{
+\text{哪些是坐标改变，}
+\quad
+\text{哪些是信息遗漏，}
+\quad
+\text{哪些是真实动力差异。}
+}
+$$
+
+5040在这里提供了一个非常好的有限实验场：
+
+$$
+\boxed{
+\text{价格跨过阈值}
+\longrightarrow
+a_2:3\to4
+\longrightarrow
+101\text{ 进入允许窗口}
+\longrightarrow
+\text{四面体变四棱锥}
+\longrightarrow
+\text{旧占据接口出现关联残差}.
+}
+$$
+
+**这才是目前最具体的“离散临界意义”：不是一个数字突然获得神秘属性，而是一个新合法状态的出现，改变了观察者所需的状态维数、可达关系和预测条件。**
+
+继续走向物理时空，需要证明现实的交互为何选择这些约束与能量，而不是只证明这些算术结构本身可以自洽存在。当前已经找到的，是一条能够逐项验证的路径：**由约束产生状态，由操作产生因果，由观察产生有效几何，再由预测与反作用检验这张几何是否足够。**
+
+[1]: https://davidtong.org/teaching/general-relativity/grhtml/S3.html "https://davidtong.org/teaching/general-relativity/grhtml/S3.html"
+[2]: https://arxiv.org/html/1102.0936v2 "https://arxiv.org/html/1102.0936v2"
+[3]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[4]: https://arxiv.org/html/2008.04787v1 "https://arxiv.org/html/2008.04787v1"
+[5]: https://arxiv.org/abs/1809.10813 "https://arxiv.org/abs/1809.10813"
+[6]: https://arxiv.org/abs/math/0008177 "https://arxiv.org/abs/math/0008177"
