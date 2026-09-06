@@ -21,3 +21,4 @@ using Xunit;
 // 只需同步更新此实参 —— 而我先前写的「不得随任何被引用的类型迁走」会让读者以为不行,
 // 从而误判共享脚手架的可迁移面(见 #5419 的 L3)。
 [assembly: TestFramework("StrataLint.TestSupport.TestScratchFramework", "StrataLint.TestSupport")]
+// test-map cache probe payload 1 (2026-09-06): touches a derivation input so SL-003 derives both sides.
