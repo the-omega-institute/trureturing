@@ -6,6 +6,10 @@ A frozen prefix code admits exactly the extensions certified by its depth-sensit
 
 Residual capacity remembers where frozen words sit in the prefix tree, not only their lengths or total Kraft mass. The first theorem computes that capacity exactly, and the second characterizes every feasible finite request multiset.
 
+In both statements q and n are natural numbers and C is a finite set of lists over Fin q. The request L is a multiset of natural numbers. Compatible(C,w) means that, for every u in C, neither u is a prefix of w nor w is a prefix of u. The finset freeAt(C,n) consists of the length-n vectors whose lists satisfy this condition. The function demand(q,L,n) sums q^(n-l) over all occurrences of l in L with l at most n.
+
+Extends(C,L,xs) means that xs has no duplicate words, C is disjoint from xs.toFinset, the multiset of word lengths in xs equals L, and the union of C with xs.toFinset is prefix-free. The shadow identity has no lower bound on q; only the extension criterion assumes q at least two.
+
 **Theorem 1.1 (Exact residual-capacity shadow identity).**
 
 $$\forall q, n, C, \operatorname{IsPrefixFree}\left(C\right) \Rightarrow \Vert\operatorname{freeAt}\left(C, n\right)\Vert + \sum_{u \in C, \operatorname{length}\left(u\right) \leq n} q^{{n - \operatorname{length}\left(u\right)}} + \Vert\operatorname{longPrefixes}\left(C, n\right)\Vert = q^{n}.$$
