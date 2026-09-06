@@ -53,7 +53,7 @@ internal sealed class GoldenZeckendorfLanguageDocument : IScribeDocumentDefiniti
         F.Forall, F.Sp, F.Id("i"), F.Sp, F.Colon, F.Sp, F.Id("Nat"), F.Comma, F.Sp,
         F.Exists, F.Sp, F.Id("q"), F.Sp, F.Colon, F.Sp,
         F.Id("BinaryZeckendorfState"), F.Comma, F.Sp,
-        Call("evalBase4ProblemBase", Call("base4Problem.input", F.Id("i"))),
+        Call("evalBase4ProblemBase", Call("base4ProblemInput", F.Id("i"))),
         F.Sp, F.Eq, F.Sp, Call("some", F.Id("q"))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
