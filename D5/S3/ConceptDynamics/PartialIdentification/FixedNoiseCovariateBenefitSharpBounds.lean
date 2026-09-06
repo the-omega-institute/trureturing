@@ -75,8 +75,7 @@ theorem fixedNoiseJointBenefit_eq_weighted
   unfold fixedNoiseJointBenefit
   apply Finset.sum_congr rfl
   intro c _
-  rw [selectedPairLaw_mass, markovianJointBenefit_eq_product]
-  rfl
+  rw [selectedPairLaw_mass, markovianJointBenefit_eq_product] <;> rfl
 
 /-- Every family of independent-mechanism stratum response laws has one fixed
 pair of full-table disturbances with exactly those row marginals. -/
