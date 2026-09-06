@@ -152,8 +152,7 @@ theorem selectedPairLaw_mass
     pushforwardSignatureMass
       (productResponseMass model.leftTableLaw.mass model.rightTableLaw.mass)
       (fun tables => (tables.1 c, tables.2 c)) (left, right) = _
-  rw [inner]
-  rfl
+  exact congrArg (fun value : ℚ => weight.mass c * value) inner
 
 /-- A canonical attaining model for two arbitrary conditional response families. -/
 def canonicalFixedNoisePair
