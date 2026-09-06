@@ -10,9 +10,11 @@ The qualitative half of Lawvere's fixed-point theorem is that a twist without a 
 
 The hypothesis is not decorative. On the two-symbol alphabet the identity twist fixes every point, and the constant listing at a single address is then captured rather than escaped, so the implication cannot be strengthened by dropping its premise.
 
+The universe levels u and v are arbitrary and independent. In the quantifiers below, membership in a type denotes a Lean typed binder; arrows denote full function spaces. Application is curried: g(a, b) means g a b, and diagonal(f, g, a) means diagonal f g a. The notation range(g) denotes Set.range g, a set of functions from A to Y. Bool is Lean's two-value type with values true and false; Unit is Lean's one-value type with value (). In the explicit witness, ! is Boolean negation (Bool.not), and true is the Bool value, not the proposition True. The existential variables p and q name the Bool twist and Unit listing independently of the outer f and g.
+
 **Theorem 1.1 (A fixed-point-free twist escapes every listing).**
 
-$$\forall A, Y: \operatorname{\mathit{Type}}, f: Y \to Y, g: A \to \left(A \to Y\right), \left(\forall y \in Y,\; \operatorname{f}\left(y\right) \ne y\right) \Rightarrow \operatorname{IsEscaped}\left(f, g\right)$$
+$$\forall A \in \mathrm{Type}_{u}, Y \in \mathrm{Type}_{v}, f \in Y \to Y, g \in A \to \left(A \to Y\right),\; \left(\forall y \in Y,\; \operatorname{f}\left(y\right) \ne y\right) \Rightarrow \operatorname{IsEscaped}\left(f, g\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Diagonal/Lawvere/QualitativeEscape.escaped_of_fixedPointFree` (`✓ std3`). ∎
 
@@ -24,7 +26,7 @@ Suppose the twisted diagonal lies in the range of the listing, say as the row at
 
 **Lemma 1.2 (A twist with a fixed point captures a listing).**
 
-$$\exists f \in \mathit{Y0}, g \in \mathit{L0},\; \neg \operatorname{IsEscaped}\left(f, g\right)$$
+$$\exists p \in \mathrm{Bool} \to \mathrm{Bool}, q \in \mathrm{Unit} \to \left(\mathrm{Unit} \to \mathrm{Bool}\right),\; \neg \operatorname{IsEscaped}\left(p, q\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Diagonal/Lawvere/QualitativeEscape.exists_captured_listing_of_fixedPoint` (`✓ std3`). ∎
 
@@ -32,11 +34,11 @@ $$\exists f \in \mathit{Y0}, g \in \mathit{L0},\; \neg \operatorname{IsEscaped}\
 
 *Commentary.*
 
-The identity twist on the two-symbol alphabet together with the constant listing at a one-point address set is captured, which shows the fixed-point-free premise carries weight.
+The witnesses are p = id on Bool and q = fun _ _ => true on Unit. This listing is captured, which shows the fixed-point-free premise carries weight.
 
 **Lemma 1.3 (Escape is attained on a two-symbol alphabet).**
 
-$$\operatorname{IsEscaped}\left(f, g\right)$$
+$$\operatorname{IsEscaped}\left((b: \mathrm{Bool}) \mapsto !b, (x: \mathrm{Unit}) \mapsto (z: \mathrm{Unit}) \mapsto \mathrm{true}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Diagonal/Lawvere/QualitativeEscape.not_escaped_isEscaped_witness` (`✓ std3`). ∎
 
@@ -48,7 +50,7 @@ The negation twist has no fixed point, so the constant listing on a one-point ad
 
 **Theorem 1.4 (The self-application fragment packaged).**
 
-$$\left(\left(\forall y \in Y,\; \operatorname{f}\left(y\right) \ne y\right) \Rightarrow \operatorname{IsEscaped}\left(f, g\right)\right) \land \left(\exists f \in \mathit{Y0}, g \in \mathit{L0},\; \neg \operatorname{IsEscaped}\left(f, g\right)\right)$$
+$$\forall A \in \mathrm{Type}_{u}, Y \in \mathrm{Type}_{v}, f \in Y \to Y, g \in A \to \left(A \to Y\right),\; \left(\forall a \in A,\; \operatorname{diagonal}\left(f, g, a\right) = \operatorname{f}\left(\operatorname{g}\left(a, a\right)\right)\right) \land \left(\left(\operatorname{IsEscaped}\left(f, g\right) \Leftrightarrow \left(\neg (\operatorname{diagonal}\left(f, g\right) \in \operatorname{range}\left(g\right))\right)\right) \land \left(\left(\left(\forall y \in Y,\; \operatorname{f}\left(y\right) \ne y\right) \Rightarrow \left(\forall h \in A \to \left(A \to Y\right),\; \operatorname{IsEscaped}\left(f, h\right)\right)\right) \land \left(\exists p \in \mathrm{Bool} \to \mathrm{Bool}, q \in \mathrm{Unit} \to \left(\mathrm{Unit} \to \mathrm{Bool}\right),\; \neg \operatorname{IsEscaped}\left(p, q\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package` (`✓ std3`). ∎
 

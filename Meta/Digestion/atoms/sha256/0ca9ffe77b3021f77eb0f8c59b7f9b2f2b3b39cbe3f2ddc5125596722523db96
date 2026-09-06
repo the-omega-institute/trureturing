@@ -1,0 +1,5 @@
+**第二族**:\(\alpha<-2\) 时 \(\alpha+1<-1<0\) 与 \(\alpha+2<0\) 同号相除给出 \(\kappa(\alpha)>0\);
+且 \(\kappa(\alpha)\le\tfrac12\) 将化为 \(\alpha+1\ge\alpha+2\)(不等号因 \(\alpha+2<0\) 而反向),即 \(0\ge1\),矛盾,
+故 \(\kappa(\alpha)>\tfrac12\)。取 \((a,b,c,d)=(1,1,1,1)\),则 \(P=Q=2\)、\(ab=cd=1\),
+由定理 G2 的取等情形 \(D=2PQ(1-2\kappa)=8(1-2\kappa)<0\),故无实根。
+

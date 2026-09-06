@@ -1,0 +1,8 @@
+## 80. Literature placement and concrete remaining algorithmic work
+
+Arroyo et al., arXiv:2509.03548v1, Section 6, explicitly asks for multiple-intervention extensions, graph-based complexity analysis and decomposition methods. Xie and Li, arXiv:2602.14503v1, Section 6, discusses tractable mediator formulations. The new fixed-coupling result supplies an exact graphical description of one response-compatible pricing problem and an explicit boundary of the prior transport reduction. It does not solve the general multiple-component column-generation problem.
+
+Dawid, Humphreys and Musio, *Bounding Causes of Effects With Mediators*, Sociological Methods & Research 53(1):28-56 (2024; online 3 March 2022), DOI 10.1177/00491241211036161, already provides broad results for chains of binary complete mediators. Their conditional probability-of-causation analysis is not replaced by this arbitrary-finite-state mediator and fixed cross-world-coupling theorem. The current targeted searches do not establish first discovery of the cut connection or an independent publication-level novelty claim.
+
+The next algorithmic target is now concrete: use the displayed pricing identity to produce complete outcome columns and a checked global pricing bound; combine that with a restricted master problem whose original data rows are preserved. Graph decomposition can be investigated on this precise objective. Any proposed speedup must be tested on matched causal assumptions and against actual full canonical problems or published implementations. The present exact finite tests establish consistency of the reduction, not practical superiority.
+

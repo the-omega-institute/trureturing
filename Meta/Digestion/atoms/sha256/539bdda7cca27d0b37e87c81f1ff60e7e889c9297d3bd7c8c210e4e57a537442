@@ -1,0 +1,34 @@
+## 12. Sharp joint benefit across independent mechanisms
+
+`MarkovianJointMechanismBenefitSharpBounds` gives the first concrete query in this lane for which standard Markovian separation between two outcome mechanisms genuinely tightens a probability-of-causation range.
+
+Each mechanism has its own complete response pair
+
+```text
+(Y0_first, Y1_first)
+(Y0_second, Y1_second).
+```
+
+The internal coupling between control and treated potential outcomes remains arbitrary inside each mechanism. Define one Boolean benefit indicator per mechanism by the response cell `(false, true)`.
+
+If the two benefit indicators are allowed an unrestricted coupling with marginal probabilities `b1` and `b2`, simultaneous benefit has the exact identified interval
+
+```text
+[max(0, b1 + b2 - 1), min(b1, b2)].
+```
+
+The module proves necessity from the four cell masses and supplies an explicit normalized coupling for every point in the interval.
+
+A Markovian two-mechanism model instead factorizes the complete first and second mechanism response laws. Deterministic projection to benefit status preserves that factorization. Consequently,
+
+```text
+P(first mechanism benefits and second mechanism benefits)
+  = P(first mechanism benefits) * P(second mechanism benefits).
+```
+
+The resulting identified set is the sharp singleton `{b1 * b2}`. Explicit complete mechanism laws attain the value while retaining arbitrary within-mechanism interpretation outside the nominated benefit cell.
+
+At `b1 = b2 = 1 / 2`, unrestricted coupling gives the full interval `[0, 1 / 2]`. Independent Markovian mechanisms give the singleton `{1 / 4}`. The formal theorem exhibits zero as an unrestricted feasible target and proves one quarter for every Markovian model with the same marginal benefit probabilities.
+
+This comparison clarifies where Markovianity has identifying power. Separating assignment noise from one outcome mechanism leaves the within-mechanism cross-world coupling free. Separating two complete outcome mechanisms constrains queries that jointly cross those mechanisms.
+

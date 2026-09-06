@@ -1,0 +1,5 @@
+## 14. Interfaces to current research
+
+The current literature interface is organized as follows.
+
+- Partial causal diagrams: Xie and Li, arXiv:2602.14503. Structural and auxiliary statistical information is represented as constraints on counterfactual distributions. The event-row compiler formalizes the finite zero-one-row kernel of those statistical constraints, without claiming completeness for the paper's full language.

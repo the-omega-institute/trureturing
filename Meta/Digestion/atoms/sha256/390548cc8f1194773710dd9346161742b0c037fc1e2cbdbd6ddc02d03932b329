@@ -1,0 +1,26 @@
+## 75. Original response witnesses and the change of maximizing configuration
+
+All three candidate values have actual attaining product models. For value a, use the previous `benefit_marginal_tolerance_sharp` witness in the first mechanism and hold the second mechanism at the same certain-benefit response 01 in both candidates. Value b is symmetric. No conclusion about the first mechanism's query is transferred from a marginal-only abstract variable without a realizing law.
+
+For the third value, both mechanisms of H are the point law on 01. For mechanism i of L, use the following probabilities in response order 00,01,10,11:
+
+```text
+if eta_i0+eta_i1 <= 1:
+  (eta_i1, 1-eta_i0-eta_i1, 0, eta_i0),
+otherwise, with t=min(1,eta_i0):
+  (1-t, 0, 0, t).
+```
+
+These are normalized nonnegative rational laws. Their two marginal discrepancies obey the original individual tolerances, and their benefit probabilities are respectively `2*(1-a)` and `2*(1-b)`. Thus the joint difference is the third candidate. Selecting the greatest of the three explicit constructions proves attainment of the overall formula.
+
+If both mechanisms have the same total tolerance s in [0,1], the value simplifies to
+
+```text
+(1+s)/2       for 0<=s<=1/2,
+2*s-s^2      for 1/2<s<=1.
+```
+
+`equal_total_tolerance_regimes` proves this algebraic classification. The competing values differ by `(s-1)*(s-1/2)`, which explains the change at s=1/2. It is a change of worst-case configuration, not a physical phase transition.
+
+For four individual tolerances equal to 2/5, each total is 4/5. The single-mechanism modulus is 9/10, whereas the joint modulus is 24/25. The high model has certain benefit in both mechanisms; the low model has law `(2/5,1/5,0,2/5)` in each. Every individual marginal discrepancy is 2/5, and J changes from 1 to 1/25. Multiplying the individual moduli would give 81/100 and is invalid as a bound. Taking only their maximum, 9/10, would also fail. At zero tolerances the global joint modulus is 1/2. This is compatible with the earlier [0,1/4] interval when all four marginal locations are fixed at 1/2: the global worst case can choose a different marginal location for the second mechanism.
+

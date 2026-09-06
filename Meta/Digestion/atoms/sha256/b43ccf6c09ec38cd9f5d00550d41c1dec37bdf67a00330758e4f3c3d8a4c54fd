@@ -1,0 +1,12 @@
+## 27. Literature interface and conditional realization target
+
+Arroyo et al., *Multilinear and Linear Programs for Partially Identifiable Queries in Quasi-Markovian Structural Causal Models*, arXiv:2509.03548v1, Section 2, explicitly assumes independent exogenous nodes and writes their full mass as a product. Its Sections 3 and 4 use additional causal and data identities to simplify probability programs. The present regrouping and query-elimination theorems certify finite rational probability identities underlying such manipulations. The constraint-projection example explains why readout locality alone cannot replace those additional data arguments.
+
+Zhang, Tian, and Bareinboim, *Partial Counterfactual Identification from Observational and Experimental Data*, arXiv:2110.05690, connects finite canonical structural models to polynomial optimization of counterfactual bounds. The present modules retain the same finite-source perspective while adding exact compatibility between source regrouping, the existing structural evaluator, and query distributions. They do not reproduce a general counterfactual optimizer or finite-domain completeness theorem.
+
+For the intrinsic-information interpretation, regrouping uses a bijection on the complete source carrier. Source elimination is justified by the already established kernel descent together with an exact marginalization theorem. No sampled arena, finite information score, or maximal-catalog irredundancy claim is introduced. Equality of pushforward laws and kernel descent remain separate statements with explicit carriers.
+
+The next constructive target is simultaneous fixed-noise realization for a finite covariate C. Given finite conditional response laws q_c, a candidate common disturbance is a full table W = (W_c)_c with product law over the q_c, independent of C, and evaluation W_C. For two mechanisms, use independent full tables W1 and W2 together with the common covariate. This construction preserves arbitrary coupling inside each response pair at a fixed c and offers a route to realizing all strata in one structural model.
+
+The remaining formal obligations are the joint pushforward identity for (C,W_C), its two-mechanism conditional version, and attaining witnesses for the aggregate sharp interval. Product grouping alone does not discharge those obligations. Additional restrictions tying response tables across covariate values must remain explicit when present.
+

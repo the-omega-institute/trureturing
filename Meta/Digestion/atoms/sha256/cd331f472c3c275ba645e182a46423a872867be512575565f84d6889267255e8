@@ -1,0 +1,51 @@
+## 10. Markovian response-law factorization
+
+`MarkovianResponseLawFactorization` moves the Markov assumption to the level that directly constrains counterfactual couplings.
+
+A normalized local response law is a nonnegative rational mass vector with total mass one. Two independent components combine as
+
+```text
+mu(left, right) = mu_left(left) * mu_right(right).
+```
+
+The module proves nonnegativity, normalization, and recovery of both component marginals. More importantly, it proves the deterministic pushforward identity
+
+```text
+(f x g)_*(mu_left x mu_right)
+  = f_*(mu_left) x g_*(mu_right).
+```
+
+Thus independent finite exogenous components induce a product-factorized response law after componentwise deterministic structural maps. The displayed components can represent individual disturbances in a Markovian SCM or whole confounded blocks in a quasi-Markovian SCM. Dependence inside each block remains unrestricted.
+
+For a Boolean counterfactual event `E(left, right)`, the product-law probability is
+
+```text
+sum_left sum_right
+  1[E(left, right)] * mu_left(left) * mu_right(right).
+```
+
+This is bilinear when both component laws are unknown. After fixing `mu_right`, the exact left coefficient becomes
+
+```text
+c(left) = sum_right 1[E(left, right)] * mu_right(right),
+```
+
+and the event probability is exactly the rational linear objective
+
+```text
+sum_left c(left) * mu_left(left).
+```
+
+The module connects this fixed-component slice directly to `LinearObjectiveDual`. Exact rational lower and upper certificates for the remaining component law replay as valid bounds on the original Markovian counterfactual event probability.
+
+The product-law family is globally nonconvex. Two degenerate independent Boolean response laws have a midpoint supported on the two diagonal response states. That midpoint violates the two-by-two determinant identity and therefore cannot be product-factorized. Exact endpoint witnesses cannot be interpolated inside the Markovian family without an additional inner witness construction.
+
+This formalizes the main optimization boundary reported in recent quasi-Markovian work:
+
+```text
+several unknown component laws -> multilinear program
+all but one component law fixed -> linear program.
+```
+
+The module does not infer confounded components from a graph, compile observational distributions to component-law constraints, or solve the general multilinear optimization problem.
+

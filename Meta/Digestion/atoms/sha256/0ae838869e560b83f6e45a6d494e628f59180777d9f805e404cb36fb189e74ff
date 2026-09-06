@@ -1,0 +1,20 @@
+## 9. Partial causal diagrams and causal orders
+
+The 2026 work on partial causal diagrams shows that incomplete graphical knowledge can still tighten probabilities of causation by translating available causal and statistical knowledge into optimization constraints. The newer causal-order formulation goes further: arbitrary and nested counterfactual queries can induce a partial topological order that is sufficient to construct a query-specific LP, with tightness proved by attaining SCMs.
+
+The conceptual lesson is that graph completion is not the primitive object for partial identification. The primitive object is the set of structural models compatible with the information actually needed by the query.
+
+For formalization this suggests:
+
+```text
+Query
+  -> required counterfactual variables
+  -> query-implied causal order
+  -> admissible local response functions
+  -> finite response-type carrier
+  -> linear observational/interventional constraints
+  -> query LP.
+```
+
+A future compiler should therefore target a constraint system rather than insist on reconstructing a unique full DAG.
+

@@ -1,0 +1,22 @@
+## 8. Empty feasible sets represent falsification, not extreme bounds
+
+If
+
+\[
+\mathcal F=\varnothing,
+\]
+
+the data and assumptions are mutually inconsistent. The correct conclusion is incompatibility of the model specification, not a causal bound.
+
+This is important for machine workflows. A solver should first distinguish:
+
+```text
+feasible
+infeasible
+unbounded/improper query encoding
+```
+
+before interpreting numerical objectives causally.
+
+A formal API should therefore carry feasibility evidence explicitly.
+

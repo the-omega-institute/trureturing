@@ -1,0 +1,20 @@
+## 39. Why this does not contradict the 4^k support lower bound
+
+Sections 34 and 38 concern different quantifiers.
+
+The full-support theorem says that one deterministic latent generator which must cover every positive-mass table of a strictly positive independent-row law needs all `4^k` table atoms. The new Caratheodory theorem says that, once a finite observation/query map is fixed, each particular attainable moment point has some sparse law with the same retained moments and query value.
+
+The sparse support is allowed to depend on the original law and on the retained query. There is no single set of `r+1` atoms asserted to represent every law or every future query. Therefore
+
+```text
+universal atom-by-atom support complexity = 4^k
+```
+
+can coexist with
+
+```text
+law-specific support needed for one finite LP/query profile <= r + 1.
+```
+
+This distinction is important for causal interpretation. The sparse law preserves exactly the finite rows and query supplied to the theorem. A later query outside that feature family may distinguish it from the original law.
+

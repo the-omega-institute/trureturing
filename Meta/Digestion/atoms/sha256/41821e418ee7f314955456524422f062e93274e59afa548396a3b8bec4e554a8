@@ -1,0 +1,12 @@
+## 10. Multivalued treatment and outcome
+
+If treatment takes `k` values and outcome takes `m` values, a naive potential-outcome response type is a function
+
+\[
+r:\{1,\dots,k\}\to\{1,\dots,m\}.
+\]
+
+There are `m^k` such response types before additional structure is used. A joint counterfactual event is simply a subset of this finite carrier, so its probability is linear in the response-type law.
+
+Therefore multivaluedness changes the dimension of the polytope, but not the basic logic:
+

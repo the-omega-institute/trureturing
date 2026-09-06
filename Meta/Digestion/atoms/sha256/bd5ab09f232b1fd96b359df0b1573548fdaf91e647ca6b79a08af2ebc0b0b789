@@ -1,0 +1,26 @@
+## 8. Partial-diagram support compiler
+
+`PartialDiagramConstraintCompilerSoundness` compiles a finite candidate-completion carrier with a directed-edge table and query-order compatibility judgment.
+
+It generates:
+
+```text
+one nonnegativity row per completion
++ upper and lower normalization rows
++ one zero-support row per required-edge violation
++ one zero-support row per forbidden-edge violation
++ one zero-support row per query-order violation.
+```
+
+For a completion mass vector `mu`, the central theorem is:
+
+```text
+mu satisfies every generated rational row
+iff
+mu is normalized, nonnegative, and supported only on admissible completions.
+```
+
+The point-mass theorem proves that a deterministic completion witness is feasible exactly when it is admissible. The nonemptiness theorem proves that the support polytope is inhabited exactly when at least one admissible completion exists.
+
+The refinement theorem reuses partial-graph antitonicity. A mass feasible for a stronger diagram remains feasible for every weaker diagram with the same candidate completions and query-order predicate. Rational lower and upper certificates proved on the weaker feasible family therefore remain valid after adding graph information.
+

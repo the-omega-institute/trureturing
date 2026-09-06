@@ -36,6 +36,7 @@ public sealed class DescribeAstTests
                 AssessedProvenance.FromRepo(),
                 DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Content."))),
                 DescribeRole.Theorem,
+                null,
             ]));
 
         Assert.IsType<ArgumentNullException>(exception.InnerException);
