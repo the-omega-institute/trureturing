@@ -36,10 +36,10 @@ structure UnreachableElaborationEvidence (statement : Prop) where
 
 namespace DispositionCensus
 
--- Registration, canonical law arena, and owning module. This is inspector
--- metadata; the structural mathematical types and section 23.6 API stay intact.
+-- Registration, canonical law arena, nondegeneracy certificate, and owning module.
+-- This inspector metadata leaves the structural types and section 23.6 API intact.
 private initialize structuralLawRegistry :
-    SimplePersistentEnvExtension (Name × Name × Name) (Array (Name × Name × Name)) ←
+    SimplePersistentEnvExtension (Name × Name × Name × Name) (Array (Name × Name × Name × Name)) ←
   registerSimplePersistentEnvExtension {
     addEntryFn := Array.push
     addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
@@ -135,42 +135,52 @@ private def structuralRegistrations (modules : Array Name) : MetaM (Array (Name 
       result := result.push (name, info.type)
   return result.qsort fun left right => left.1.toString < right.1.toString
 
-open Elab Command in
 /-- Bind the semantic law independently of any census payload. Duplicate bindings
-are rejected, including attempts to override an imported registration. -/
-elab "register_structural_law " registrationId:ident " in " lawArenaId:ident : command => do
-  let registrationName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo registrationId
-  let lawArenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo lawArenaId
-  let env ← getEnv
-  if (structuralLawRegistry.getState env).any (·.1 == registrationName) then
-    throwError "structural law already registered: {registrationName}"
-  liftTermElabM do
-    let registration ← mkConstWithFreshMVarLevels registrationName
-    let registrationType ← inferType registration
-    unless registrationType.isAppOfArity ``StructuralRegistrationEvidence 6 do
-      throwError "expected StructuralRegistrationEvidence: {registrationName}"
-    let args := registrationType.getAppArgs
-    let theoremName : Name ← reduceEval args[0]!
-    let key : StatementKey := ⟨theoremName, ""⟩
-    let _ ← constant key "structural_occurrence" "registration" registrationName
-    let lawArena ← constant key "structural_occurrence" "law_registration" lawArenaName
-    let lawType ← inferType lawArena
-    unless args[1]!.isConst && args[3]!.isConst &&
-        lawType.isAppOfArity ``StructuralPrimitiveLawArena 1 do
-      failClass key "structural_occurrence" "law_registration"
-    unless ← isDefEq lawType.getAppArgs[0]! args[1]! do
-      failClass key "structural_occurrence" "law_registration.arena"
-    checkWithKernel registration
-    checkWithKernel lawArena
-  modifyEnv fun current => structuralLawRegistry.addEntry current
-    (registrationName, lawArenaName, env.header.mainModule)
+are rejected, including attempts to override an imported registration. Missing
+nondegeneracy syntax is parsed only to issue the CIRPT-42 / section 31 IE-C037 error. -/
+syntax "register_structural_law " ident " in " ident (" nondegeneracy " ident)? : command
+
+open Elab Command in
+elab_rules : command
+  | `(register_structural_law $registrationId:ident in $lawArenaId:ident
+      $[nondegeneracy $certId:ident]?) => do
+    let registrationName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo registrationId
+    let lawArenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo lawArenaId
+    let env ← getEnv
+    if (structuralLawRegistry.getState env).any (·.1 == registrationName) then
+      throwError "structural law already registered: {registrationName}"
+    let certificateName ← liftTermElabM do
+      let registration ← mkConstWithFreshMVarLevels registrationName
+      let registrationType ← inferType registration
+      unless registrationType.isAppOfArity ``StructuralRegistrationEvidence 6 do
+        throwError "expected StructuralRegistrationEvidence: {registrationName}"
+      let args := registrationType.getAppArgs
+      let theoremName : Name ← reduceEval args[0]!
+      let key : StatementKey := ⟨theoremName, ""⟩
+      let _ ← constant key "structural_occurrence" "registration" registrationName
+      let lawArena ← constant key "structural_occurrence" "law_registration" lawArenaName
+      let lawType ← inferType lawArena
+      unless args[1]!.isConst && args[3]!.isConst &&
+          lawType.isAppOfArity ``StructuralPrimitiveLawArena 1 do
+        failClass key "structural_occurrence" "law_registration"
+      unless ← isDefEq lawType.getAppArgs[0]! args[1]! do
+        failClass key "structural_occurrence" "law_registration.arena"
+      let some certId := certId | failClass key "structural_occurrence" "law.nondegeneracy"
+      let certificateName ← realizeGlobalConstNoOverloadWithInfo certId
+      let _ ← typed key "structural_occurrence" "law.nondegeneracy" certificateName
+        (← mkAppM ``StructuralPrimitiveLawArena.Nondegenerate #[lawArena])
+      checkWithKernel registration
+      checkWithKernel lawArena
+      return certificateName
+    modifyEnv fun current => structuralLawRegistry.addEntry current
+      (registrationName, lawArenaName, certificateName, env.header.mainModule)
 
 private def validateStructuralObjectLaw (modules : Array Name) (key : StatementKey)
     (registrationName : Name) (statement : Expr) (realizationArgs : Array Expr) : MetaM Unit := do
   let className := "structural_occurrence"
   let env ← getEnv
   let bindings := (structuralLawRegistry.getState env).filter fun entry =>
-    entry.1 == registrationName && modules.contains entry.2.2
+    entry.1 == registrationName && modules.contains entry.2.2.2
   unless bindings.size == 1 do failClass key className "realization.law_registration"
   let lawArenaName := bindings[0]!.2.1
   unless inRoot env modules lawArenaName do
@@ -178,6 +188,8 @@ private def validateStructuralObjectLaw (modules : Array Name) (key : StatementK
   unless realizationArgs[1]!.isConstOf lawArenaName do
     failClass key className "realization.canonical_law_arena"
   let lawArena ← constant key className "realization.law_arena" lawArenaName
+  let _ ← typed key className "realization.law_nondegeneracy" bindings[0]!.2.2.1
+    (← mkAppM ``StructuralPrimitiveLawArena.Nondegenerate #[lawArena])
   -- Spec 6.1 / 8.7 / AC-CIRPT-018: reuse Syntax.checkNativeStatement's
   -- isDefEq obligation against the registered law, never an arbitrary Iff.
   let expectedLaw ← mkAppM ``StructuralPrimitiveLawArena.Law

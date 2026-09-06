@@ -25,6 +25,11 @@ def structuralLawArena : StructuralPrimitiveLawArena infiniteArena where
 def structuralReadouts : StructuralPrimitiveRealization infiniteArena structuralLawArena.signature :=
   ⟨fun _ n => n % 2⟩
 
+theorem structuralLawNondegenerate : structuralLawArena.Nondegenerate := by
+  refine ⟨structuralReadouts, ⟨fun _ _ => (2 : Nat)⟩, structuralTheorem, ?_⟩
+  intro holds
+  exact (Nat.lt_irrefl 2) (holds 0)
+
 def structuralUnit : StructuralTheoremUnit infiniteArena where
   PrimitiveIndex := Unit
   primitiveIndexFintype := inferInstance
@@ -45,6 +50,7 @@ theorem structuralRegistration : StructuralRegistrationEvidence ``structuralTheo
     structuralCatalog () (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
 
 register_structural_law structuralRegistration in structuralLawArena
+  nondegeneracy structuralLawNondegenerate
 
 theorem structuralRealization : StructuralLegacyPrimitiveRealization structuralLawArena
     (∀ n : Nat, n % 2 < 2) structuralReadouts := ⟨Iff.rfl⟩
@@ -137,6 +143,7 @@ run_cmd do
 #print axioms finiteNondegenerate
 #print axioms infiniteArena
 #print axioms structuralTheorem
+#print axioms structuralLawNondegenerate
 #print axioms structuralUnit
 #print axioms structuralCatalog
 #print axioms structuralRegistration

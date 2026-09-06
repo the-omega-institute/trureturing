@@ -21,6 +21,12 @@ structure StructuralPrimitiveLawArena (arena : StructuralArena.{u}) where
   signature : StructuralPrimitiveSignature.{v, w}
   Law : StructuralPrimitiveRealization arena signature → Prop
 
+/-- A structural law must hold for one realization and fail for another. -/
+def StructuralPrimitiveLawArena.Nondegenerate {arena : StructuralArena.{u}}
+    (lawArena : StructuralPrimitiveLawArena.{u, v, w} arena) : Prop :=
+  ∃ r₁ r₂ : StructuralPrimitiveRealization arena lawArena.signature,
+    lawArena.Law r₁ ∧ ¬lawArena.Law r₂
+
 def StructuralPrimitiveRealization.toTheoremUnit {arena : StructuralArena.{u}}
     {signature : StructuralPrimitiveSignature.{v, w}}
     (realization : StructuralPrimitiveRealization arena signature)

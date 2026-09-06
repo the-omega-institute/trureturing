@@ -10,6 +10,7 @@ namespace LeanInformationAudit.Tests.Census.LawRegistry
 /-- error: structural law already registered: LeanInformationAudit.Tests.Census.Evidence.structuralRegistration -/
 #guard_msgs in
 register_structural_law Evidence.structuralRegistration in Evidence.structuralLawArena
+  nondegeneracy Evidence.structuralLawNondegenerate
 
 def lawAlias : StructuralPrimitiveLawArena Evidence.infiniteArena := Evidence.structuralLawArena
 

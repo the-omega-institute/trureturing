@@ -28,6 +28,7 @@ theorem firstRegistration : StructuralRegistrationEvidence ``parity arena
     Evidence.structuralUnit firstCatalog 0 (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
 
 register_structural_law firstRegistration in Evidence.structuralLawArena
+  nondegeneracy Evidence.structuralLawNondegenerate
 
 theorem secondRegistration : StructuralRegistrationEvidence ``truth arena
     constantUnit secondCatalog 1 True := ⟨rfl, rfl⟩

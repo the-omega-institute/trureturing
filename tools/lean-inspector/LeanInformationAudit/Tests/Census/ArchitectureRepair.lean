@@ -30,6 +30,7 @@ theorem unrelatedRegistration : StructuralRegistrationEvidence ``closedTruth
     unrelatedArena unrelatedUnit unrelatedCatalog () (2 + 3 = 5) := ⟨rfl, rfl⟩
 
 register_structural_law unrelatedRegistration in Evidence.structuralLawArena
+  nondegeneracy Evidence.structuralLawNondegenerate
 
 theorem unrelatedRealization : unrelatedUnit.Statement = (2 + 3 = 5) := rfl
 
@@ -73,6 +74,7 @@ theorem wrongKernelRegistration : StructuralRegistrationEvidence ``wrongKernelTh
     wrongKernelArena wrongKernelUnit wrongKernelCatalog () (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
 
 register_structural_law wrongKernelRegistration in Evidence.structuralLawArena
+  nondegeneracy Evidence.structuralLawNondegenerate
 
 def wrongKernelWitness : StructuralStrictnessCertificate wrongKernelCatalog () where
   inclusion := by intro _ _ _ candidate ne; exact (ne rfl).elim
@@ -111,6 +113,7 @@ theorem wrongLawRegistration : StructuralRegistrationEvidence ``wrongLawTheorem
     wrongLawArena wrongLawUnit wrongLawCatalog () (2 + 3 = 5) := ⟨rfl, rfl⟩
 
 register_structural_law wrongLawRegistration in Evidence.structuralLawArena
+  nondegeneracy Evidence.structuralLawNondegenerate
 
 def wrongLawWitness : StructuralStrictnessCertificate wrongLawCatalog () where
   inclusion := by intro _ _ _ candidate ne; exact (ne rfl).elim
