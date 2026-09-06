@@ -1,0 +1,8 @@
+**真正新打开的研究方向，不是宣布“5040 背后存在一种未理解的神秘几何”，而是明确地研究：哪些坐标承载数据，哪些坐标承载控制，哪些投影保留未来，哪些投影会把不同程序阶段错误地合并。**
+
+这条路线已经能够同时解释寄存器、几何运动、规范编码与信息逃逸。接下来最关键的数学工作，是把这些对应证明为一个可信的编译与观察理论，再用它承载具体算术不变量——而不是让某一个投影数值代替整个程序及其证明。
+
+[1]: https://gwern.net/doc/cs/computable/1987-conway.pdf "https://gwern.net/doc/cs/computable/1987-conway.pdf"
+[2]: https://arxiv.org/abs/2003.04604 "https://arxiv.org/abs/2003.04604"
+[3]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-p.pdf "https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-p.pdf"
+[4]: https://arxiv.org/abs/1306.3434 "https://arxiv.org/abs/1306.3434"

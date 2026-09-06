@@ -1,0 +1,26 @@
+## 补什么才能修复这一条纤维？
+
+直接计算：
+
+$$
+\mathbb E_0[\chi^2]
+=
+\frac12\cdot\frac23\cdot1\cdot1
+=\frac13.
+$$
+
+所以
+
+$$
+\boxed{
+\mathbb E_\theta[\chi]=\frac{\theta}{3}.
+}
+\tag{20}
+$$
+
+只增加一个联合读出 \(\chi\)，便可恢复
+
+$$
+\theta=3\mathbb E_\theta[\chi].
+$$
+

@@ -1,0 +1,53 @@
+## 2.1 有限窗口中的零点可以完全求解
+
+定义两个有限配分函数：
+
+$$
+\mathcal Q_{4,\beta}(\lambda)
+=
+\sum_{d\mid5040}e^{\beta J_\lambda(d)},
+$$
+
+$$
+\mathcal Q_{5,\beta}(\lambda)
+=
+\sum_{d\mid55440}e^{\beta J_\lambda(d)},
+\qquad\beta>0.
+$$
+
+这里 \(\beta\) 是选择强度，不必先解释成物理温度。
+
+由于每个 \(55440\) 的因数唯一写成：
+
+$$
+d=m\,11^b,
+\qquad m\mid5040,\quad b\in\{0,1\},
+$$
+
+得到：
+
+$$
+\boxed{
+\mathcal Q_{5,\beta}(\lambda)
+=
+\mathcal Q_{4,\beta}(\lambda)
+\left[
+1+e^{\beta\ln11(\lambda_c-\lambda)}
+\right].
+}
+\tag{5}
+$$
+
+因此，新增因子的全部零点为：
+
+$$
+\boxed{
+\lambda_k
+=
+\lambda_c+
+\frac{(2k+1)\pi i}{\beta\ln11},
+\qquad k\in\mathbb Z.
+}
+\tag{6}
+$$
+

@@ -1,0 +1,42 @@
+## 定义291.2　增加第 \(a\) 层的边际阈值
+
+对 \(a\ge1\)，定义
+
+$$
+\boxed{
+m_p(a)
+=
+\frac{
+\ln\!\left[
+\dfrac{1-p^{-(a+1)}}{1-p^{-a}}
+\right]
+}{\ln p}.
+}
+\tag{291.3}
+$$
+
+增加一层的目标变化为
+
+$$
+\boxed{
+F_{\lambda,p}(a)-F_{\lambda,p}(a-1)
+=
+\bigl(m_p(a)-\lambda\bigr)\ln p.
+}
+\tag{291.4}
+$$
+
+所以：
+
+$$
+m_p(a)>\lambda
+\quad\Longrightarrow\quad
+\text{增加该层有利};
+$$
+
+$$
+m_p(a)<\lambda
+\quad\Longrightarrow\quad
+\text{增加该层不利}.
+$$
+

@@ -1,0 +1,16 @@
+# 一、三位 Zeckendorf 合法态，本身就是一个四棱锥
+
+项目使用 Fibonacci 权重：
+
+$$
+G_0=1,\qquad G_1=2,\qquad G_2=3,\ldots
+$$
+
+以及禁邻约束：
+
+$$
+b_jb_{j+1}=0.
+$$
+
+其有限窗口与整数区间之间的双射，已经在 `FiniteZeckendorfEulerIdentity.lean` 中得到形式化；mathlib 也提供 Zeckendorf 唯一表示。 ([Lean社区][1])
+

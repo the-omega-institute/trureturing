@@ -1,0 +1,43 @@
+**如果缩小步长时仍把 \(\mu\) 固定不变，就不是这个固定质量的连续极限。**
+
+对物理波数 \(k\)，有：
+
+$$
+\kappa=ka.
+$$
+
+一步更新为：
+
+$$
+U_\delta(k)
+=
+e^{-i\delta mc_*^2X/\hbar}
+e^{-i\delta c_*kZ}.
+$$
+
+对应候选 Hamiltonian 为：
+
+$$
+\boxed{
+H_D(k)=mc_*^2X+\hbar c_*kZ.
+}
+\tag{324.1}
+$$
+
+在位置表示中：
+
+$$
+\boxed{
+i\hbar\partial_t\psi
+=
+\left(
+-i\hbar c_*Z\partial_x+mc_*^2X
+\right)\psi.
+}
+\tag{324.2}
+$$
+
+这是 \(1+1\) 维自由 Dirac 方程的一种表示。
+
+---
+

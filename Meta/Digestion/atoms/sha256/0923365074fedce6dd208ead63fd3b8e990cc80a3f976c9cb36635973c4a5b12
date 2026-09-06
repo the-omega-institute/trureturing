@@ -1,0 +1,48 @@
+### 证明
+
+两个平方项的加权平均最优点为
+
+$$
+y=
+\frac{\tau_2\mathcal U_1x+\tau_1\mathcal U_2x}
+{\tau_1+\tau_2}.
+$$
+
+代回即得。证毕。
+
+定义两条路径的相对回返算子
+
+$$
+\Omega=\mathcal U_1^*\mathcal U_2.
+$$
+
+则
+
+$$
+\boxed{
+(\tau_1+\tau_2)\min_y\mathcal E
+=
+\|(I-\Omega)x\|^2.
+}
+\tag{14}
+$$
+
+若只有一个标量相位
+
+$$
+\Omega=e^{i\Theta},
+$$
+
+且 \(\|x\|=1\)，就得到
+
+$$
+\boxed{
+\min_y\mathcal E
+=
+\frac{4\sin^2(\Theta/2)}{\tau_1+\tau_2}.
+}
+\tag{15}
+$$
+
+这一次固定的是起点范数，与前文“整条历史总范数为一”的最低本征值归一化不同。
+

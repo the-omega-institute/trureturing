@@ -1,0 +1,70 @@
+## 定理323.1　离散能量—动量关系
+
+记 \(U_\mu(\kappa)\) 的两个本征值为：
+
+$$
+e^{\pm i\theta}.
+$$
+
+则：
+
+$$
+\boxed{
+\cos\theta=\cos\mu\,\cos\kappa.
+}
+\tag{323.1}
+$$
+
+### 证明
+
+直接计算：
+
+$$
+\det U_\mu(\kappa)=1,
+$$
+
+$$
+\operatorname{Tr}U_\mu(\kappa)=2\cos\mu\cos\kappa.
+$$
+
+其特征多项式为：
+
+$$
+z^2-2\cos\mu\cos\kappa\,z+1.
+$$
+
+因此两个酉本征值满足式（323.1）。∎
+
+现在给空间格距与一次更新作物理标定：
+
+$$
+a>0,\qquad \delta>0,
+\qquad c_*=\frac a\delta.
+$$
+
+定义某个选定低频分支上的能量与动量：
+
+$$
+E=\frac{\hbar\theta}{\delta},
+\qquad
+p=\frac{\hbar\kappa}{a}.
+$$
+
+若将耦合角参数化为：
+
+$$
+\mu=\frac{mc_*^2\delta}{\hbar},
+$$
+
+则精确关系变为：
+
+$$
+\boxed{
+\cos\frac{E\delta}{\hbar}
+=
+\cos\frac{mc_*^2\delta}{\hbar}
+\cos\frac{pa}{\hbar}.
+}
+\tag{323.2}
+$$
+

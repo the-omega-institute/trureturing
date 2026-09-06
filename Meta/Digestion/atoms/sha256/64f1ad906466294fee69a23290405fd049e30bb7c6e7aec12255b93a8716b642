@@ -1,0 +1,30 @@
+## 无限时间极限也可以计算
+
+对 \(j\ne k\)，因为 \(w_j\ne w_k\)，
+
+$$
+\frac1{N+1}\sum_{t=0}^N(w_j\overline{w_k})^t\longrightarrow0.
+$$
+
+由可求和权重的支配收敛，
+
+$$
+\boxed{
+\lim_{N\to\infty}\mathcal P_N
+=
+\sum_jp_j^2.
+}
+\tag{36}
+$$
+
+若再额外假设所有非平凡零点简单，\(m_j=1\)，则式（32）的极限取等号：
+
+$$
+\boxed{
+\lim_{N\to\infty}d_{\mathrm{eff}}(N)
+=
+\frac{c_0^2}{2(c_0-c_1)}.
+}
+\tag{37}
+$$
+

@@ -1,0 +1,48 @@
+fingerprints:
+  raw_sha256: sha256:ca21e25c77eb71b34c4aebad6d6d6223dd3a102551b10964da383c64c089ede4
+  normalized_sha256: sha256:ca21e25c77eb71b34c4aebad6d6d6223dd3a102551b10964da383c64c089ede4
+cas_ref: sha256:ca21e25c77eb71b34c4aebad6d6d6223dd3a102551b10964da383c64c089ede4
+coverage_gids:
+  - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_odd_iff_power_two
+    target_statement_id: sha256:c352f9610da02cf047b134d0bff7a926c51cd7e94309a069da387d2afafdb214
+  - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_halving_via_square
+    target_statement_id: sha256:00cd8a2dd9f6ac30a8a1f3963665f82045338a58602d52186f68c5a96e8516af
+  - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.convolution_pairing
+    target_statement_id: sha256:cbd33875d118bc97517ffb5a2744a145bf46d7e61edab71f567ae26059725edb
+  - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_halving
+    target_statement_id: sha256:da815a5814b38a1503783163b448971b718a549c235cfbcea7f71868236edbe0
+  - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_odd_index_zero
+    target_statement_id: sha256:db8edf4037f43b91967e90dc80afba2856972de24a652fb13e07e5daf012fd61
+  - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_one
+    target_statement_id: sha256:1ddad809dd2c3c17b8a3c718af25bdf9e9f0d45a0f32df56a7859edbf9c72641
+  - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_recurrence
+    target_statement_id: sha256:0491b5c7e1a180a2d848b0f74afffc651dd8595d8fa068b36bb945bd53b0f592
+  - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a
+    target_statement_id: sha256:4b7ea11c43358b4f377b08d005d08035aa667153fa62c3570c7d53b93ec89cc0
+receipts:
+  scribe:
+    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_odd_iff_power_two
+      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
+      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
+    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_halving_via_square
+      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
+      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
+    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.convolution_pairing
+      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
+      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
+    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_halving
+      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
+      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
+    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_odd_index_zero
+      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
+      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
+    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_one
+      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
+      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
+    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_recurrence
+      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
+      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
+    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a
+      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
+      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
+  unresolved_subitems: []

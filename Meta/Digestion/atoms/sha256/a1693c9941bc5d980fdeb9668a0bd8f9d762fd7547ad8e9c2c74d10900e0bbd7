@@ -1,0 +1,49 @@
+# 本轮的实际推进
+
+本轮以整数运算完成了：
+
+* \(2\le m\le100,\ 1\le d<m\) 的 **4950组试除参数**；
+* 这些试除过程中的 **2,078,566次寄存器微步**；
+* 其中 **93,464次微步**与独立的整数分数执行器逐步核对；
+* 规范宏状态中的历史不变量检查；
+* 25个素数阶段的精确运行时间公式核验；
+* 到第430步的完整有限前缀，用于配合全局单调性证明5040投影的唯一性。
+
+[下载返回映射推导、精确执行核验程序与结果](sandbox:/mnt/data/primegame_macro_certificates.zip)
+
+有限核验负责具体实例；一般结论来自正文的守恒、循环与归纳证明。它们尚未被转换为 Lean 内核证书。
+
+**这次最有价值的变化，是把“几何程序中的神秘投影”进一步替换成了可解释的语义截面：**
+
+$$
+\boxed{
+(4,2,1,1;29)
+\longmapsto
+\left(
+m=5,\ d=4,\ \text{除数恢复阶段}
+\right).
+}
+$$
+
+由此得到的研究路线也更清楚：
+
+$$
+\boxed{
+\text{精确寄存器状态}
+\longrightarrow
+\text{控制修正的不变量}
+\longrightarrow
+\text{规范返回截面}
+\longrightarrow
+\text{带时间与输出的宏观模型}
+\longrightarrow
+\text{全局正确性}.
+}
+$$
+
+**真正可靠的压缩，不是把更多信息塞进一个更小的符号，而是证明：被省略的细节不会改变未来结果、内部事件及其数学含义。** 这正是几何、编码、因果与信息逃逸能够共同承担证明工作的地方。
+
+[1]: https://gwern.net/doc/cs/computable/1987-conway.pdf "https://gwern.net/doc/cs/computable/1987-conway.pdf"
+[2]: https://dlmf.nist.gov/27.11 "https://dlmf.nist.gov/27.11"
+[3]: https://arxiv.org/abs/2003.04604 "https://arxiv.org/abs/2003.04604"
+[4]: https://arxiv.org/abs/math/0008177 "https://arxiv.org/abs/math/0008177"

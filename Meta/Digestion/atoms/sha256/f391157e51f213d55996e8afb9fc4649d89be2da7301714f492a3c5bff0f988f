@@ -1,0 +1,66 @@
+## 8.1 \(\gamma\) 从哪里进入？
+
+经典约数求和公式是：
+
+$$
+\boxed{
+S(x)=x\ln x+(2\gamma-1)x+O(\sqrt x).
+}
+\tag{21}
+$$
+
+它可以通过双曲线对称拆分和调和数估计得到，且不需要 RH。NIST 明确列出了这一公式。([DLMF][2])
+
+简要地，令 \(r=\lfloor\sqrt x\rfloor\)：
+
+$$
+S(x)
+=
+2\sum_{d\le r}\left\lfloor\frac xd\right\rfloor-r^2.
+$$
+
+用：
+
+$$
+H_r=\ln r+\gamma+O(1/r)
+$$
+
+代入，就得到式（21）。
+
+于是，沿素数 \(p\to\infty\)：
+
+$$
+\boxed{
+L(p)
+=
+6p^2+2p\ln p+(4\gamma-8)p+O(\sqrt p).
+}
+\tag{22}
+$$
+
+这给出一个明确而有限制的联系：
+
+$$
+\boxed{
+\text{PRIMEGAME 的试除循环}
+\longrightarrow
+\text{商的累计次数}
+\longrightarrow
+\text{约数格点计数}
+\longrightarrow
+\gamma.
+}
+$$
+
+但它不能被误读为：
+
+$$
+\gamma\text{ 出现在运行时间中}
+\Longrightarrow
+\text{已经控制了 Robin 的尖锐上界}.
+$$
+
+这里的 \(\gamma\) 来自调和和与约数计数的平均行为；Robin 要求的是另一种对所有整数成立的严格极值不等式。
+
+而且，更换 PRIMEGAME 的实现版本，会改变精确微步计数。式（22）不是素性检验的最优复杂度定理。
+

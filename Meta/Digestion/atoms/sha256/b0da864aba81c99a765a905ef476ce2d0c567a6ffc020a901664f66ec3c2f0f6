@@ -1,0 +1,96 @@
+## 收束
+
+你的判断中可以进一步强化的部分是：
+
+> **光滑不意味着缺少临界信息。临界信息可能隐藏在“取极值、取对数、改变归一化、比较量子态、选择最近解析障碍”这些操作之后。**
+
+这次得到的两条新主线是：
+
+$$
+\boxed{
+\mathscr Z_T(\lambda)
+=
+\sum_{n\ge1}
+\left(\frac{\sigma(n)}n\right)^{1/T}
+n^{-\lambda/T},
+}
+$$
+
+它一端连接 5040 的离散优化，另一端有：
+
+$$
+\boxed{
+\mathscr Z_1(\lambda)=\zeta(\lambda)\zeta(\lambda+1)
+}
+$$
+
+这样的精确 ζ 切片；
+
+以及：
+
+$$
+\boxed{
+R(b)^2-b^2
+=
+\min_\rho
+\left[
+\delta_\rho^2+\gamma_\rho^2-2\delta_\rho b
+\right],
+}
+$$
+
+它把实际 ξ 的高阶响应转成一份有折点、有活动区域、有可恢复斜率的几何。
+
+其中：
+
+$$
+\boxed{
+\delta_*=\lim_{b\to\infty}[b-R(b)]
+}
+$$
+
+直接读取最大全局离线位移。
+
+**本轮没有得到实际 ζ 的离线零点，也没有证明全部零点在线。** 已经完成的是：从同一算术目标构造了温度扩展，证明了具体低温零点的产生机制，并为实际 ξ 建立了另一份能够显露离散边界的距离几何。
+
+所以，后续不应只是寻找更多“看起来尖锐”的图像。更有效的目标是：
+
+> **选择一种能保持实际对象、能把隐藏关系转成可认证边界的观察；然后证明这条边界怎样随参数移动，哪些模式被它暴露，哪些仍被遮住。**
+
+5040 给我们的启发不是“ζ 其实不光滑”，而是：**同一个光滑算术体系，经过忠实但不同的观察，可以显露出完全不同的离散选择、量子正交和解析边界；真正的整体研究，要把这些观察之间的运输关系一并证明。**
+
+[1]: https://dlmf.nist.gov/25.4 "https://dlmf.nist.gov/25.4"
+[2]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
+[3]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[4]: https://dlmf.nist.gov/1.10 "https://dlmf.nist.gov/1.10"
+[5]: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.110.050601 "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.110.050601"
+[6]: https://arxiv.org/abs/1504.03438 "https://arxiv.org/abs/1504.03438"
+[7]: https://arxiv.org/abs/2006.15125 "https://arxiv.org/abs/2006.15125"
+[8]: https://link.springer.com/article/10.1007/BF02193559 "https://link.springer.com/article/10.1007/BF02193559"
+[9]: https://arxiv.org/abs/2104.05638 "https://arxiv.org/abs/2104.05638"
+可以把“离散临界”进一步落实成一个**精确可证明的门槛**：
+
+> **在上轮同一份算术配分函数中，把逆温度取为整数 \(r\)：前三阶 \(r=1,2,3\) 在各自的绝对收敛域内都没有零点；第四阶 \(r=4\) 首次出现零点，而且这个区域内的全部零点，都由素数 \(2\) 的局部通道产生。**
+
+更重要的是，这些零点有一个明确的几何来源：
+
+$$
+\boxed{
+\text{多个因数共享同一个整数上限}
+\longrightarrow
+\text{立方体上的整数约束}
+\longrightarrow
+\text{排列分区与不可忽略的单位台阶}
+\longrightarrow
+\text{非平凡的相消多项式}.
+}
+$$
+
+如果将**同一个约束锥**中的整数求和替换为连续积分，得到的函数反而没有这些零点。
+
+这次我们能够具体回答：**哪些离散边界信息会被连续化遗漏，它们怎样进入解析函数，以及什么时候足以制造精确相消。**
+
+先明确：下面求出的零点属于上轮构造的算术配分函数，**不是已经发现了 ζ 或 ξ 的离线零点**。两者的连接与差别都要保留。
+
+---
+

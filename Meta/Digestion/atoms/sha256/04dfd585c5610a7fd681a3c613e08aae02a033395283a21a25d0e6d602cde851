@@ -1,0 +1,33 @@
+## 定义286.1　有限能量寄存器
+
+取三能级辅助系统：
+
+$$
+H_B=\Delta\operatorname{diag}(0,1,2),
+$$
+
+以及降低算子：
+
+$$
+\mathsf L|m\rangle=
+\begin{cases}
+|m-1\rangle,&m=1,2,\\
+0,&m=0.
+\end{cases}
+$$
+
+定义联合耦合：
+
+$$
+\boxed{
+V
+=
+J\left(
+\mathsf T\otimes\mathsf L
++
+\mathsf T^\dagger\otimes\mathsf L^\dagger
+\right).
+}
+\tag{286.1}
+$$
+

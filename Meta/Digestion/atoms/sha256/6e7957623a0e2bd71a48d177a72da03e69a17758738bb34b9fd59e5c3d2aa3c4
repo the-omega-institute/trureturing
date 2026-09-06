@@ -1,0 +1,27 @@
+## 温度 \(T=1\)
+
+在 \(\Re\lambda>1\)：
+
+$$
+\begin{aligned}
+\mathscr Z_1(\lambda)
+&=
+\sum_{n\ge1}\sum_{d\mid n}\frac1d\,n^{-\lambda}\\
+&=
+\sum_{d,m\ge1}d^{-1}(dm)^{-\lambda}.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathscr Z_1(\lambda)
+=
+\zeta(\lambda)\zeta(\lambda+1).
+}
+\tag{4}
+$$
+
+这是 Dirichlet 级数与因数卷积的标准机制。([DLMF][2])
+

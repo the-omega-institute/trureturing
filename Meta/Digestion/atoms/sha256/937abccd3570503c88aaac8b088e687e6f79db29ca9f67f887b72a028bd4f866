@@ -1,0 +1,16 @@
+## 定理二：边界有效几何由 Schur 补唯一确定
+
+$$
+\boxed{
+\min_y
+\begin{pmatrix}x\\y\end{pmatrix}^{\!*}
+K
+\begin{pmatrix}x\\y\end{pmatrix}
+=
+x^*Sx,
+\qquad
+S=A-BC^{-1}B^*.
+}
+\tag{8}
+$$
+
