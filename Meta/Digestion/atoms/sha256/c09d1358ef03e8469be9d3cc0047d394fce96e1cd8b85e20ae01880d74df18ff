@@ -1,0 +1,11 @@
+### 定义 37.24（状态 section）
+
+局部上下文状态 section 是一族：
+
+\[
+\omega_C:\mathcal C\to\mathbb C
+\]
+
+满足：
+
+- 正性；

@@ -1,0 +1,54 @@
+## 定理 3.2：5040 边界条件下的精确压力公式
+
+定义：
+
+$$
+\mathcal P_{5040}(\lambda)
+=
+\max_{a\in\mathscr A_>}
+\bigl[W(N(a))-\lambda E(N(a))\bigr].
+$$
+
+对初态 \(b\)，记其指数为 \(b_p\)，并定义：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal P_b(\lambda)
+={}&W(N(b))-\lambda E(N(b))\\
+&+\sum_p\sum_{k>b_p}
+(\ln p)(\eta_{p,k}-\lambda)_+.
+\end{aligned}
+}
+\tag{8}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal P_{5040}(\lambda)
+=
+\max_{b\in\mathscr B_{5040}}\mathcal P_b(\lambda).
+}
+\tag{9}
+$$
+
+### 证明
+
+固定初态 \(b\)。其已经存在的指数层必须保留；对于后续层，仍应采用全部具有正增益的层。
+
+相应最优指数为：
+
+$$
+a_p^{(b)}(\lambda)
+=
+\max\{b_p,a_p^0(\lambda)\}.
+$$
+
+由于 \(b_p\) 随素数顺序非增，而引理 1.2 保证 \(a_p^0(\lambda)\) 也非增，逐坐标取最大值后仍然是合法分拆。
+
+所以局部独立优化的结果确实位于允许状态空间中，不存在“放宽后最优解不合法”的问题。
+
+最后使用引理 3.1，对全部初态取最大值。证毕。
+

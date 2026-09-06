@@ -1,0 +1,112 @@
+# 一、固定前文的两副本模型
+
+仍取实际概率密度：
+
+$$
+p(x)=\frac{\Phi(x)}{\xi(1/2)},
+$$
+
+使：
+
+$$
+\boxed{
+A(z)
+=
+\int_{\mathbb R}p(x)e^{izx}\,dx
+=
+\frac{\xi(\frac12+iz)}{\xi(\frac12)}.
+}
+\tag{R1}
+$$
+
+ξ 的归一化与反射关系保持标准约定。([DLMF][1])
+
+取独立副本 \(X,Y\sim p\)，定义：
+
+$$
+S=\frac{X+Y}{\sqrt2},
+\qquad
+U=\frac{X-Y}{\sqrt2}.
+$$
+
+原始两模态波函数为：
+
+$$
+\chi(s,u)
+=
+\sqrt{
+p\!\left(\frac{s+u}{\sqrt2}\right)
+p\!\left(\frac{s-u}{\sqrt2}\right)
+}.
+$$
+
+对 \(n\ge0\)，定义：
+
+$$
+Z_n=\mathbb E[U^{2n}],
+$$
+
+以及归一化筛选态：
+
+$$
+\boxed{
+\chi_n(s,u)=\frac{u^n\chi(s,u)}{\sqrt{Z_n}}.
+}
+\tag{R2}
+$$
+
+对应概率律记为 \(\mathbb P_n\)，期望记为 \(\mathbb E_n\)。它就是：
+
+$$
+d\mathbb P_n
+=
+\frac{U^{2n}}{Z_n}\,d\mathbb P_0.
+$$
+
+读取和模态相位：
+
+$$
+\boxed{
+R_n(t)
+=
+\langle\chi_n,e^{i\sqrt2tS}\chi_n\rangle
+=
+\mathbb E_n[\cos(\sqrt2tS)].
+}
+\tag{R3}
+$$
+
+这里 \(t\) 是相位控制参数，也对应 ξ 的高度坐标，不是另行假定的物理演化时间。
+
+前文已将它接到广义 Laguerre 表达式：
+
+$$
+L_n(t)
+=
+\frac{2^n Z_n}{(2n)!}R_n(t),
+$$
+
+以及：
+
+$$
+|A(t+iy)|^2
+=
+\sum_{n\ge0}L_n(t)y^{2n}.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+R_n(t)\ge0
+\quad\forall n\ge0,\ \forall t\in\mathbb R.
+}
+\tag{R4}
+$$
+
+广义 Laguerre 表达式与两副本关联核的这条联系属于经典理论；这里研究的是指定条件态的尺度行为。([arXiv][2])
+
+---
+

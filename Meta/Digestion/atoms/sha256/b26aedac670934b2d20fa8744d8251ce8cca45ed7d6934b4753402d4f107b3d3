@@ -1,0 +1,44 @@
+## 定义 3.2：单边安全余量
+
+令：
+
+$$
+\boxed{
+Y(x)=H(x)+C_\gamma\sqrt x
+=
+\sqrt x\,[F(\ln x)+C_\gamma].
+}
+\tag{11}
+$$
+
+则：
+
+$$
+Y(x)\ge0
+\iff
+F(\ln x)\ge-C_\gamma.
+$$
+
+在事件间：
+
+$$
+\boxed{
+Y''(x)=-\kappa(x),
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\kappa(x)
+=
+\frac1x-\frac1{x^2(x^2-1)}
++\frac{C_\gamma}{4x^{3/2}}>0
+\qquad(x\ge2).
+}
+\tag{12}
+$$
+
+因此，\(Y\) 在每个相邻素数幂区间内严格凹。
+

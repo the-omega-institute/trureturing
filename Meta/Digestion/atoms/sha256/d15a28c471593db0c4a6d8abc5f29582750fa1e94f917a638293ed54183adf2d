@@ -1,0 +1,35 @@
+# 二、实际局部负干涉必然存在，但这不是 RH 反例
+
+定义辅助纯态：
+
+$$
+\boxed{
+\eta(x)=
+\frac{\Phi(x)}
+{\left(\int_{\mathbb R}\Phi(u)^2\,du\right)^{1/2}}.
+}
+\tag{S7}
+$$
+
+注意：
+
+$$
+\eta\ne\sqrt p.
+$$
+
+它不是前文原始观察态，而是由同一 theta 核构造的另一份明确纯态。
+
+其 Wigner 函数为：
+
+$$
+\boxed{
+W_\eta(x,t)
+=
+\frac{\mathcal W(x,t)}
+{2\pi\int_{\mathbb R}\Phi(u)^2\,du},
+}
+\tag{S8}
+$$
+
+这里利用了 \(\mathcal W\) 对 \(t\) 的偶性，因此 Fourier 符号约定不影响结果。
+

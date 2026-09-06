@@ -1,0 +1,37 @@
+## 定理 4：截断边缘的精确系数
+
+若
+
+$$
+\frac N2<q\le N,
+$$
+
+则
+
+$$
+\boxed{
+\lambda_{q,N}(\tau)
+=
+\frac{\mu(q)}q
+\left(\log\frac Nq+\tau\right).
+}
+\tag{17}
+$$
+
+### 证明
+
+在 \(q\mid d\)、\(d\le N\) 的求和中，唯一可能的 \(d\) 是 \(q\)。代入式（2）即可。证毕。
+
+特别地，当 \(\tau=0\)、\(\mu(q)\ne0\) 时，
+
+$$
+\boxed{
+\frac{\lambda_{q,N}(0)}{\mu(q)/\varphi(q)}
+=
+\frac{\varphi(q)}q\log\frac Nq.
+}
+\tag{18}
+$$
+
+这个比值在整个截断边缘不可能统一接近 \(1\)，并且在 \(q/N\to1\) 时趋零。
+

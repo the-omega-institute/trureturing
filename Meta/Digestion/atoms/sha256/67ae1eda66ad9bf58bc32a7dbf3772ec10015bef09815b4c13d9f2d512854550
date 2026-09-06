@@ -1,0 +1,61 @@
+### 证明：局部二次展开
+
+在式（R12）中代入：
+
+$$
+x=h_n+\varepsilon_n a,
+\qquad
+s=\sigma_n b.
+$$
+
+由：
+
+$$
+e^{2h_n}=\frac{n}{\pi w_n},
+$$
+
+可得主导对数密度在 \((h_n,0)\) 的二阶导数：
+
+$$
+\partial_x^2\log q_n
+=
+-\frac{8n(w_n+1)}{w_n^2}+o(n/w_n),
+$$
+
+$$
+\partial_s^2\log q_n
+=
+-\frac{4n}{w_n}+o(n/w_n),
+$$
+
+以及：
+
+$$
+\partial_x\partial_s\log q_n=0
+\quad(s=0).
+$$
+
+一阶径向项在这个中心处为 \(9+o(1)\)，乘以 \(\varepsilon_n\) 后趋零。
+
+因此，对每个固定紧集：
+
+$$
+\boxed{
+\log
+\frac{
+q_n(h_n+\varepsilon_na,\sigma_nb)
+}{
+q_n(h_n,0)
+}
+\longrightarrow
+-\frac{a^2+b^2}{2}
+}
+\tag{R17}
+$$
+
+一致成立。三阶及更高阶的局部余项趋零，尺度来自：
+
+$$
+\sqrt{\frac{w_n}{n}}\longrightarrow0.
+$$
+

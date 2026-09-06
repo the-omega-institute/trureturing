@@ -1,0 +1,6 @@
+**一层观察者（带记录）。** \(O_1\) 的增广状态为 \((x,\lambda)\in X\times\Lambda_1\)，其中 \(\Lambda_1\) 为 append-only 记录（量子卷 §15.1 双列分家：记录列单调不减）；一步演化为
+\[
+(x,\lambda)\longmapsto\bigl(\widetilde T_1(x,z),\ \lambda\cdot q_1(x)\bigr),
+\]
+其中 \(\lambda\cdot q_1(x)\) 表示追加本步读数，\(\widetilde T_1:X\times Y_2\to X\) 是**受控更新**，其第二变元 \(z\in Y_2\) 为可能来自第二层的输入。
+

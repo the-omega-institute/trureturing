@@ -1,0 +1,82 @@
+## 定理 3：去相干后的强度不是算术不变量
+
+对固定 \(X,N\)，
+
+$$
+\boxed{
+\mathfrak J_{\mathrm{dec}}(\tau)\longrightarrow+\infty
+\qquad(|\tau|\to\infty),
+}
+\tag{15}
+$$
+
+但
+
+$$
+\boxed{
+b(\tau)^*\Omega_{X,N}b(\tau)
+=
+\mathfrak J(X)
+}
+$$
+
+始终不变。
+
+因此
+
+$$
+\boxed{
+\mathfrak J_{\mathrm{cross}}(\tau)
+\longrightarrow-\infty.
+}
+\tag{16}
+$$
+
+### 证明
+
+首先，每个对角元
+
+$$
+(\Omega_{X,N})_{\alpha\alpha}
+=
+\int_X^{2X}
+\frac{
+\left|\sum_{x<n\le2x}e(n\theta_\alpha)\right|^2
+}{x^2}\,dx
+$$
+
+都严格为正。
+
+因为在
+
+$$
+x\in(X,X+\tfrac12)
+$$
+
+与
+
+$$
+x\in(X+\tfrac12,X+1)
+$$
+
+两个区间上，指数和恰好相差一个非零项
+
+$$
+e((2X+1)\theta_\alpha).
+$$
+
+所以它们不可能同时为零。
+
+将式（10）代入式（13），得到关于 \(\tau\) 的二次多项式，其二次项系数为
+
+$$
+\sum_\alpha|g_\alpha|^2
+(\Omega_{X,N})_{\alpha\alpha}>0.
+$$
+
+因此式（15）成立。
+
+而实际读数由 \(Ag=0\) 保持不变，故交叉项必须产生式（16）的抵消。证毕。
+
+---
+

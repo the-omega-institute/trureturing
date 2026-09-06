@@ -1,0 +1,36 @@
+# 五、去掉这个随机位移，不是一个自动合法的正信道逆操作
+
+由式（T9）：
+
+$$
+\boxed{
+B_\sigma(t)
+=
+A_\sigma(t)\frac{\lambda}{\lambda+it}.
+}
+$$
+
+这个因子的模长为：
+
+$$
+\frac{\lambda}{\sqrt{\lambda^2+t^2}}\le1.
+$$
+
+所以随机位移会削弱相干读数。
+
+但它在实 \(t\) 上从不为零，因此：
+
+$$
+\boxed{
+B_\sigma(t)=0
+\iff
+A_\sigma(t)=0
+\qquad(t\in\mathbb R).
+}
+\tag{T17}
+$$
+
+在复参数延拓中，额外产生的是 \(t=i\lambda\) 处的已知极点；那里对应 \(\xi(1)\ne0\)，不是一个被隐藏的非平凡零点。
+
+---
+

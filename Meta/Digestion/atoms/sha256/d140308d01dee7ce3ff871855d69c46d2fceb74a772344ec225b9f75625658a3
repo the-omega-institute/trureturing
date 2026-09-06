@@ -1,0 +1,50 @@
+## 定理 1.1：尾积分的有限算式
+
+对全部 \(T>1\)：
+
+$$
+\boxed{
+I_\psi(T)
+=
+\gamma+\ln\ln T-M_0(T)
++
+\frac{\psi(T)-T}{T\ln T}.
+}
+\tag{3}
+$$
+
+### 证明
+
+令：
+
+$$
+f(v)=\frac1{v\ln v},
+\qquad
+-f'(v)=\frac{\ln v+1}{v^2(\ln v)^2}.
+$$
+
+在有限区间 \([T,Y]\) 上作 Stieltjes 分部积分：
+
+$$
+\begin{aligned}
+\int_T^Y[\psi(v)-v](-f'(v))\,dv
+={}&
+\frac{\psi(T)-T}{T\ln T}
+-\frac{\psi(Y)-Y}{Y\ln Y}\\
+&+M_0(Y)-M_0(T)\\
+&-\ln\ln Y+\ln\ln T.
+\end{aligned}
+$$
+
+由素数定理，第二个边界项趋于零。
+
+另一方面，Mertens 乘积公式给出：
+
+$$
+M_0(Y)-\ln\ln Y\longrightarrow\gamma.
+$$
+
+这里 \(M_0\) 与有限 Euler 乘积的对数只相差超过 \(Y\) 的高次素数幂尾项，其差趋于零。Mertens 公式及这一素数幂展开有经典文献依据。([arXiv][2])
+
+令 \(Y\to\infty\)，得到式（3）。证毕。
+

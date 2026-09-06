@@ -1,0 +1,115 @@
+## 主定理 4.1：5040 条件压力判据
+
+定义：
+
+$$
+\boxed{
+\mathcal G(\lambda)
+=
+\mathcal H(\lambda)-\mathcal P_{5040}(\lambda).
+}
+\tag{12}
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal G(\lambda)>0
+\qquad\forall\lambda>0.
+}
+\tag{13}
+$$
+
+### 证明：RH 推出压力正间隔
+
+固定 \(\lambda>0\)，取实现 \(\mathcal P_{5040}(\lambda)\) 的状态 \(a\)。
+
+最大值确实能取得。例如：
+
+$$
+Z(n)\le H_n\le1+\ln n
+$$
+
+给出：
+
+$$
+W(n)-\lambda E(n)
+\le
+\ln(1+E(n))-\lambda E(n)\to-\infty.
+$$
+
+所以不可能把最大值一直推到无穷远。
+
+若 RH 成立，Robin 判据给出：
+
+$$
+W(N(a))<h(E(N(a))).
+$$
+
+于是：
+
+$$
+\begin{aligned}
+\mathcal P_{5040}(\lambda)
+&=W(N(a))-\lambda E(N(a))\\
+&<h(E(N(a)))-\lambda E(N(a))\\
+&\le\mathcal H(\lambda).
+\end{aligned}
+$$
+
+### 证明：压力正间隔推出 RH
+
+任取 \(a\in\mathscr A_>\)，记：
+
+$$
+E=E(N(a)).
+$$
+
+选择其对应价格：
+
+$$
+\boxed{
+\lambda_a=\frac1{E\ln E}.
+}
+\tag{14}
+$$
+
+此时 \(T_{\lambda_a}=E\)，所以：
+
+$$
+\mathcal H(\lambda_a)=h(E)-\lambda_aE.
+$$
+
+由假设：
+
+$$
+W(N(a))-\lambda_aE
+\le
+\mathcal P_{5040}(\lambda_a)
+<
+\mathcal H(\lambda_a).
+$$
+
+消去线性项：
+
+$$
+W(N(a))<h(E).
+$$
+
+因此所有允许分拆都满足 Robin 不等式，再由最小反例归约得到 RH。证毕。Robin 等价判据与该最小反例归约均有已发表的数学来源。([University of Lethbridge][2])
+
+---
+
+这个结果澄清了“效率最大化”到底应该证明什么：
+
+$$
+\boxed{
+\text{不是证明最优配置存在，}
+\quad
+\text{而是证明最优配置的值始终低于指定标尺。}
+}
+$$
+

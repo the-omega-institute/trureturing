@@ -1,0 +1,26 @@
+**必要性。**
+
+取 \(g\in\ker A\)。则
+
+$$
+\mathcal S(gg^*)=0.
+$$
+
+由式（30），
+
+$$
+0
+=
+\mathcal S(\mathcal E(gg^*))
+=
+\sum_j(AL_jg)(AL_jg)^*.
+$$
+
+右边每项都半正定，因此每一项都必须为零：
+
+$$
+AL_jg=0.
+$$
+
+故 \(L_jg\in\ker A\)。
+

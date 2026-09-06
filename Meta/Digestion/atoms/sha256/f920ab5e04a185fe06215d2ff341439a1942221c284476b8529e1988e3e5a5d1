@@ -1,0 +1,16 @@
+# 二、归一化以后，它同时连接 Gamma 尺度和素数模式
+
+对实数 \(\sigma>1\)，定义：
+
+$$
+\boxed{
+Z_+(\sigma)
+=
+\int_{\mathbb R}
+e^{(\sigma-\frac12)x}g_+(x)\,dx.
+}
+\tag{T6}
+$$
+
+由式（T4），\(\sigma>1\) 正是负半轴可积所需的条件。
+

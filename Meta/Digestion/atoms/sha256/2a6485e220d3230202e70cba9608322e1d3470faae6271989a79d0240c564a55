@@ -1,0 +1,55 @@
+**欧拉常数在这里是离散素数贡献与连续 Gamma 贡献共同留下的有限中心。**
+
+但方差为：
+
+$$
+\boxed{
+\operatorname{Var}(X_\sigma)
+=
+(\log\xi)''(\sigma)
++\frac1{(\sigma-1)^2}.
+}
+\tag{T27}
+$$
+
+即使减去发散均值，分布的宽度仍然发散。
+
+更精确地，当 \(\lambda\downarrow0\)：
+
+$$
+\boxed{
+\lambda X_{1+\lambda}
+\Longrightarrow-\operatorname{Exp}(1).
+}
+\tag{T28}
+$$
+
+因为 \(Y_{1+\lambda}\) 趋于正常的端点 theta 分布，而 \(\lambda E_\lambda\) 恰好服从 \(\operatorname{Exp}(1)\)。
+
+于是：
+
+$$
+\boxed{
+B_{1+\lambda}(\lambda t)
+\longrightarrow
+\frac1{1+it}.
+}
+\tag{T29}
+$$
+
+相反，对固定 \(t\ne0\)：
+
+$$
+B_{1+\lambda}(t)\longrightarrow0,
+$$
+
+但在 \(t=0\) 始终等于一。这个不连续的点态极限不是概率分布的特征函数。
+
+所以：
+
+> **有限部分存在，不等于整份概率态已经在极点处完成了正常极限；恢复一个常数，也不等于恢复全部相位关系。**
+
+本轮以 35 位和 65 位精度核对了两种分解的特征函数，以及有限中心的趋近。数值仅作公式检查，不作为区间证明。
+
+---
+
