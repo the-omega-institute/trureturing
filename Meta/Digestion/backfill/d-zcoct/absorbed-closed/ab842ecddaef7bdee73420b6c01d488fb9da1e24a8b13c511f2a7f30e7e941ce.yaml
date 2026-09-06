@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ab842ecddaef7bdee73420b6c01d488fb9da1e24a8b13c511f2a7f30e7e941ce
+  normalized_sha256: sha256:ab842ecddaef7bdee73420b6c01d488fb9da1e24a8b13c511f2a7f30e7e941ce
+cas_ref: sha256:ab842ecddaef7bdee73420b6c01d488fb9da1e24a8b13c511f2a7f30e7e941ce
+coverage_gids:
+  - gid: D5/S3/Analytic/PrimeProducts/FiniteOffsetSingularSeries.finite_offset_blocking_and_singular_series
+    target_statement_id: sha256:c16de240cdf8d81eb84bc85c3cf2015f5469c3c27ad98d5c915fda73597c1adc
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/PrimeProducts/FiniteOffsetSingularSeries.finite_offset_blocking_and_singular_series
+      definition_sha256: sha256:cdf3fcba90197542be014b4ecb16934e4e4ce001ad51dc5076e78ddba7f59598
+      emission_sha256: sha256:c1be8af641ac4b73005c6f8fd3157d6aa8f5ae73639049c88c80daa7034649dd
+  unresolved_subitems: []
