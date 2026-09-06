@@ -1,0 +1,217 @@
+{
+  "seed": 20260906,
+  "status": "all exact checks passed",
+  "counts": {
+    "pricing_instances": 48,
+    "full_column_price_checks": 3060,
+    "gauge_identities": 3060,
+    "full_master_comparisons": 24,
+    "column_generation_instances": 27,
+    "accepted_pricing_calls": 757,
+    "rejected_mutations": 12
+  },
+  "runs": [
+    {
+      "n": 1,
+      "canonical_columns": 2,
+      "generated_columns": 2,
+      "iterations": 1,
+      "objective": "0"
+    },
+    {
+      "n": 1,
+      "canonical_columns": 2,
+      "generated_columns": 2,
+      "iterations": 1,
+      "objective": "0"
+    },
+    {
+      "n": 1,
+      "canonical_columns": 2,
+      "generated_columns": 2,
+      "iterations": 1,
+      "objective": "0"
+    },
+    {
+      "n": 2,
+      "canonical_columns": 4,
+      "generated_columns": 4,
+      "iterations": 1,
+      "objective": "4/15"
+    },
+    {
+      "n": 2,
+      "canonical_columns": 4,
+      "generated_columns": 4,
+      "iterations": 1,
+      "objective": "17/60"
+    },
+    {
+      "n": 2,
+      "canonical_columns": 4,
+      "generated_columns": 4,
+      "iterations": 1,
+      "objective": "3/40"
+    },
+    {
+      "n": 3,
+      "canonical_columns": 8,
+      "generated_columns": 7,
+      "iterations": 2,
+      "objective": "8/37"
+    },
+    {
+      "n": 3,
+      "canonical_columns": 8,
+      "generated_columns": 7,
+      "iterations": 2,
+      "objective": "37/290"
+    },
+    {
+      "n": 3,
+      "canonical_columns": 8,
+      "generated_columns": 6,
+      "iterations": 1,
+      "objective": "31/132"
+    },
+    {
+      "n": 4,
+      "canonical_columns": 16,
+      "generated_columns": 10,
+      "iterations": 3,
+      "objective": "1/8"
+    },
+    {
+      "n": 4,
+      "canonical_columns": 16,
+      "generated_columns": 8,
+      "iterations": 2,
+      "objective": "119/550"
+    },
+    {
+      "n": 4,
+      "canonical_columns": 16,
+      "generated_columns": 10,
+      "iterations": 3,
+      "objective": "36/125"
+    },
+    {
+      "n": 5,
+      "canonical_columns": 32,
+      "generated_columns": 13,
+      "iterations": 4,
+      "objective": "343/1340"
+    },
+    {
+      "n": 5,
+      "canonical_columns": 32,
+      "generated_columns": 9,
+      "iterations": 1,
+      "objective": "83/245"
+    },
+    {
+      "n": 5,
+      "canonical_columns": 32,
+      "generated_columns": 16,
+      "iterations": 7,
+      "objective": "9/50"
+    },
+    {
+      "n": 6,
+      "canonical_columns": 64,
+      "generated_columns": 15,
+      "iterations": 4,
+      "objective": "417/2000"
+    },
+    {
+      "n": 6,
+      "canonical_columns": 64,
+      "generated_columns": 16,
+      "iterations": 5,
+      "objective": "499/2060"
+    },
+    {
+      "n": 6,
+      "canonical_columns": 64,
+      "generated_columns": 19,
+      "iterations": 9,
+      "objective": "479/1940"
+    },
+    {
+      "n": 7,
+      "canonical_columns": 128,
+      "generated_columns": 17,
+      "iterations": 4,
+      "objective": "361/1280"
+    },
+    {
+      "n": 7,
+      "canonical_columns": 128,
+      "generated_columns": 22,
+      "iterations": 10,
+      "objective": "55/192"
+    },
+    {
+      "n": 7,
+      "canonical_columns": 128,
+      "generated_columns": 22,
+      "iterations": 9,
+      "objective": "753/2420"
+    },
+    {
+      "n": 8,
+      "canonical_columns": 256,
+      "generated_columns": 27,
+      "iterations": 13,
+      "objective": "219/880"
+    },
+    {
+      "n": 8,
+      "canonical_columns": 256,
+      "generated_columns": 24,
+      "iterations": 9,
+      "objective": "947/3520"
+    },
+    {
+      "n": 8,
+      "canonical_columns": 256,
+      "generated_columns": 26,
+      "iterations": 12,
+      "objective": "11/52"
+    },
+    {
+      "n": 12,
+      "canonical_columns": 4096,
+      "generated_columns": 52,
+      "iterations": 32,
+      "objective": "1809/5500"
+    },
+    {
+      "n": 24,
+      "canonical_columns": 16777216,
+      "generated_columns": 131,
+      "iterations": 92,
+      "objective": "1081/3664"
+    },
+    {
+      "n": 48,
+      "canonical_columns": 281474976710656,
+      "generated_columns": 591,
+      "iterations": 527,
+      "objective": "47251/147260"
+    }
+  ],
+  "versions": {
+    "networkx": "3.6.1",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "sympy": "1.14.0"
+  },
+  "script_sha256": "4564f9e4563e242da74d8a597abe46e7f3c88fd86e8f2ccc6a6e5dfa5d4908e8",
+  "scope": "fixed rational mediator coupling; bipartite off-diagonal support; arbitrary outcome marginal rows and multipliers",
+  "lean_compiled": false,
+  "scribe_compiled": false,
+  "solver_sources_extracted_from_lean": false,
+  "published_dataset_benchmark": false,
+  "independent_reviewer": false
+}
