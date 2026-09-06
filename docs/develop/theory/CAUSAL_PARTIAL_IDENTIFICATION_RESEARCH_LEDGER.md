@@ -633,3 +633,101 @@ intervened structural trace
 The proof scripts have undergone logical review and exact finite regression checks; kernel compilation has not been performed in this round. The regression cases exercise response constancy on support fibers, support monotonicity under nested interventions, and joint-cell factorization with arbitrary within-block dependence. They are supplementary checks rather than substitutes for the general Lean statements.
 
 The next mathematical interface is to group a finite family of elementary independent disturbance laws into the S/complement law used above, preserving the full assignment carrier and its pushforward. This would remove the remaining manually supplied block-law premise for a canonical finite Markovian source representation. Conditional fixed-noise realization and simultaneous attainment across strata remain separate obligations, as recorded in Sections 4 and 18.
+
+## 24. Elementary independent source grouping, 2026-09-06
+
+The source-grouping obligation in Section 23 is addressed by `FiniteIndependentSourceGrouping.lean`. The current module location is `D5/S3/ConceptDynamics/PartialIdentification/`, following the repository's relocation of the partial-identification lane. The authored Scribe source follows the same path under `Blueprint`.
+
+Each elementary disturbance has a finite carrier `Noise i` and a normalized nonnegative rational law `mu_i`. The carriers may differ between source indices. Define one full law before choosing any partition:
+
+```text
+State = (i : Source) -> Noise i
+mu(u) = product_i mu_i(u_i).
+```
+
+`independentSourceLaw` constructs this law. Normalization reuses the pinned Mathlib identity `Fintype.prod_sum`:
+
+```text
+sum_u product_i mu_i(u_i) = product_i sum_a mu_i(a) = 1.
+```
+
+For any finite source set `S`, the standard `Equiv.piEquivPiSubtypeProd` splits the full assignment into its restriction to `S` and to its complement. `independentSource_mass_split` reuses `Fintype.prod_subtype_mul_prod_subtype` to prove the pointwise mass identity. `independentSource_split_law` then identifies the actual block distribution:
+
+```text
+split_*(mu) = mu_S x mu_complement,
+mu_S(s) = product_{i in S} mu_i(s_i).
+```
+
+Both block laws come from the same elementary law family. Their independence is derived for the original product law; it is not a replacement assumption about an unrelated block model. Empty blocks carry the unit law on the unique empty assignment. Zero-probability assignments remain part of the full carrier, and no positivity or division is needed for regrouping.
+
+`independentSource_pushforward_regroup` proves equality of every finite readout distribution before and after this change of coordinates. It reindexes the full source sum through the standard equivalence and applies the pointwise mass identity. Thus it also covers joint readouts that do not factorize.
+
+The elementary premise is mutual independence, represented by the full product law. Pairwise independence is insufficient for arbitrary block grouping. For example, fair independent bits A and B together with C = A XOR B have pairwise-independent coordinates, while the readouts A XOR B and C coincide and are nonconstant. Each independent index may itself encode an entire multivariate response type; no independence of coordinates inside that type is imposed.
+
+## 25. Exact query elimination and data-safe parameter projection
+
+Suppose a fixed readout factors through source restriction:
+
+```text
+F(u) = reduced_F(u restricted to S).
+```
+
+`independentSource_pushforward_restrict` proves the exact distributional identity
+
+```text
+F_*(mu) = reduced_F_*(mu_S).
+```
+
+After regrouping, the complementary product law sums to one. `independentSource_restriction_marginal` identifies `mu_S` with the actual restriction marginal. `independentSource_readout_law_invariant` further proves that two elementary law families agreeing on S give the same complete readout distribution, irrespective of changes outside S. The readout and structural equations are fixed in this statement.
+
+This distributional invariance does not authorize deletion of statistical constraints involving other sources. Consider independent Bernoulli variables with parameters x and z, a target x, and supplied joint-event probability c. The data impose x*z = c. For nonnegative rational c, `joint_event_constraint_projection_iff` states the exact parameter projection:
+
+```text
+c <= x <= 1
+iff
+0 <= x <= 1 and there exists 0 <= z <= 1 with x*z = c.
+```
+
+For x > 0 the witness is z = c/x. For x = 0, feasibility forces c = 0 and z = 0 is a witness. Necessity follows from c = x*z <= x. The formal statement is at the probability-parameter level. When 0 <= c <= 1, its attainable target set is `[c,1] intersect Q`; if c > 1, it is empty.
+
+At c = 1/4, a target that does not read the second disturbance is still restricted to `[1/4,1]`. Deleting the joint-event data row would incorrectly expand the range to `[0,1]`. Consequently, exact optimization reduction must use the projection of the complete feasible parameter set:
+
+```text
+full feasible set C
+  -> projected set {theta_S | exists theta_complement, (theta_S,theta_complement) in C}
+  -> reduced query on theta_S.
+```
+
+Elementary independence is a within-model distributional property. It does not imply that the sets of admissible elementary parameters are independently selectable after all observational and interventional constraints are imposed.
+
+## 26. Counterfactual factorization under the original elementary source law
+
+`IndependentSourceCounterfactualFactorization.lean` connects the new source construction to the existing locality compiler and source-separation theorem. Its Scribe source covers all four public bridge theorems.
+
+`independentSource_pair_readout_eq_partitioned` proves that evaluating two original full-source readouts under `independentSourceLaw` gives exactly the existing `partitionedReadoutLaw`, with both block laws derived from the elementary family. `independentSource_separated_readouts_factorize` therefore obtains a product response law from disjoint semantic supports. Its joint-cell corollary uses the actual marginals of the original full-source pushforward.
+
+The end-to-end theorem is `compiled_counterfactual_events_independent_sources`. Its inputs are elementary normalized laws, the existing parent-indexed structural model and topological certificate, direct exogenous locality, two finite counterfactual query families, and disjoint compiled supports. Its conclusion concerns the direct pushforward of the original source law:
+
+```text
+mutually independent elementary disturbances
+  -> derived S/complement source product law
+  -> certified intervention-specific query locality
+  -> source-separated response maps
+  -> product-factorized Boolean counterfactual event law.
+```
+
+No separate block-law witness is supplied by the caller. No new structural evaluator or independent noise copy per counterfactual world is introduced. For two benefit indicators the `(true,true)` cell is the product of their marginal benefit probabilities. The previous block-level theorem remains more general about dependence inside each supplied source block; this continuation supplies its canonical elementary-independent specialization.
+
+These results are sufficient separation statements. Shared ancestors may still make compiled supports overlap, conditioning can change source dependence, and fixed structural equations can restrict the attainable response laws. The earlier obligations concerning same-mechanism coupling and simultaneous sharp attainment remain distinct.
+
+## 27. Literature interface and conditional realization target
+
+Arroyo et al., *Multilinear and Linear Programs for Partially Identifiable Queries in Quasi-Markovian Structural Causal Models*, arXiv:2509.03548v1, Section 2, explicitly assumes independent exogenous nodes and writes their full mass as a product. Its Sections 3 and 4 use additional causal and data identities to simplify probability programs. The present regrouping and query-elimination theorems certify finite rational probability identities underlying such manipulations. The constraint-projection example explains why readout locality alone cannot replace those additional data arguments.
+
+Zhang, Tian, and Bareinboim, *Partial Counterfactual Identification from Observational and Experimental Data*, arXiv:2110.05690, connects finite canonical structural models to polynomial optimization of counterfactual bounds. The present modules retain the same finite-source perspective while adding exact compatibility between source regrouping, the existing structural evaluator, and query distributions. They do not reproduce a general counterfactual optimizer or finite-domain completeness theorem.
+
+For the intrinsic-information interpretation, regrouping uses a bijection on the complete source carrier. Source elimination is justified by the already established kernel descent together with an exact marginalization theorem. No sampled arena, finite information score, or maximal-catalog irredundancy claim is introduced. Equality of pushforward laws and kernel descent remain separate statements with explicit carriers.
+
+The next constructive target is simultaneous fixed-noise realization for a finite covariate C. Given finite conditional response laws q_c, a candidate common disturbance is a full table W = (W_c)_c with product law over the q_c, independent of C, and evaluation W_C. For two mechanisms, use independent full tables W1 and W2 together with the common covariate. This construction preserves arbitrary coupling inside each response pair at a fixed c and offers a route to realizing all strata in one structural model.
+
+The remaining formal obligations are the joint pushforward identity for (C,W_C), its two-mechanism conditional version, and attaining witnesses for the aggregate sharp interval. Product grouping alone does not discharge those obligations. Additional restrictions tying response tables across covariate values must remain explicit when present.
