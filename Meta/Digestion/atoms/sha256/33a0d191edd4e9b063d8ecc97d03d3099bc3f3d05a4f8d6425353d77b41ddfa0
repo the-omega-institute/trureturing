@@ -1,0 +1,32 @@
+## 38. Feasibility and query value survive on the original causal carrier
+
+A small latent witness alone would leave open whether the original causal LP semantics were preserved after reparameterization. `FiniteMomentSparseLaw.lean` closes that gap.
+
+`pushforward_linearObjective` proves for every deterministic map `g : S -> A` and every rational atom coefficient `f` that
+
+```text
+E_{g_* nu}[f] = E_nu[f o g].
+```
+
+A `MomentCompression` therefore pushes its latent law through the selected original atoms to `sparseLaw`, a normalized law on the unchanged original atom carrier.
+
+For the joint LP row/query profile, the source proves
+
+```text
+original law feasible for (A,b)
+  -> sparseLaw feasible for the same (A,b),
+
+linearObjective q sparseLaw
+  = linearObjective q originalLaw.
+```
+
+The endpoint `finite_linear_problem_sparse_original_witness` gives, for every feasible law, a sparse law on the same original response carrier whose generating latent support is at most
+
+```text
+linearProblemProfileRank(A,q) + 1
+```
+
+and which has the identical query value. The coarser endpoint replaces the rank by `number_of_rows + 1`, giving `number_of_rows + 2` atoms.
+
+Consequently, for a finite linear partial-identification problem, every attainable query value has a sparse attaining representative without changing the original feasible family or the query map. This is pointwise preservation of the identified query image. It is stronger than merely constructing an alternative latent parameterization.
+

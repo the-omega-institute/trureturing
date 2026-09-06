@@ -1,0 +1,36 @@
+## 2. Counterfactual semantics as a response-type law
+
+Let `R` be a finite set of deterministic response types. A response type contains enough information to evaluate every counterfactual term relevant to the query. A population is represented by a probability vector
+
+\[
+\pi \in \Delta(R),
+\qquad
+\pi_r \ge 0,
+\qquad
+\sum_{r\in R}\pi_r=1.
+\]
+
+For a discrete structural causal model, `R` may be taken as a set of deterministic structural response functions. A full Cartesian response-type representation can be very large, but causal order and graph structure can factor it into local response functions.
+
+Every event probability whose truth value is determined by a response type is linear in `\pi`. If `g(r)\in\{0,1\}` records whether response type `r` satisfies a counterfactual event, then
+
+\[
+Q(\pi)=\sum_{r\in R} g(r)\pi_r.
+\]
+
+More general finite counterfactual expectations are also linear whenever the response-type value of the estimand is fixed.
+
+This gives the first abstraction:
+
+\[
+\boxed{
+\text{counterfactual semantics}
+\to
+\text{response types}
+\to
+\text{law on response types}
+\to
+\text{linear query}.
+}
+\]
+

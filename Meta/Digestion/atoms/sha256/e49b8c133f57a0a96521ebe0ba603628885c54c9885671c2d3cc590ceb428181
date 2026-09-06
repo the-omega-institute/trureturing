@@ -1,0 +1,38 @@
+## 40. Specialization to k Boolean response-pair strata and next reduction
+
+For the response-table carrier
+
+```text
+Fin k -> Bool x Bool
+```
+
+there are `4^k` possible complete tables. `responseTableCellQueryFeature` retains all four one-stratum response-cell indicators for every stratum together with one scalar query. `exists_responseTableCellQueryCompression` proves a positive atomic witness with
+
+```text
+support <= 4*k + 2,
+```
+
+while `responseTableCellMoment_eq` and `responseTableQueryMoment_eq` prove exact preservation of every retained cell probability and the query.
+
+The displayed `4*k+2` is deliberately conservative. Within each stratum the four cell indicators sum to one, while every admitted law is already normalized. Hence only three independent cell coordinates per stratum are required to reconstruct the fourth. A direct three-cell specialization should therefore target the explicit ambient bound
+
+```text
+3*k + 2.
+```
+
+The rank theorem may reduce the support further when the query or data induce additional affine dependencies. The exact rank, rather than `3*k+1` or `4*k+1`, is the reusable final complexity parameter.
+
+For multilinear Markovian families, the present theorem applies directly to already linearized fixed-component slices. Applying it to the whole nonlinear feasible family would require retaining sufficient polynomial features and proving that the reduced witness still satisfies the structural factorization constraints. A linear moment projection alone does not preserve a nonconvex product-law model class.
+
+The resulting representation hierarchy is now:
+
+```text
+4^k unrestricted response atoms
+  -> quotient exact row/query duplicate profiles
+  -> affine profile rank r
+  -> law-specific Caratheodory witness of size <= r+1
+  -> pushforward to a sparse law on the original response carrier.
+```
+
+This is a lossless reduction for the nominated finite linear identification problem. An automatic or sofic cross-stratum restriction remains a separate scientifically substantive assumption that can shrink the causal model family itself. The next formal target is the explicit `3*k+2` response-marginal specialization and then an executable rational support-reduction certificate that can be replayed alongside the existing primal-dual LP certificates.
+

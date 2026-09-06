@@ -1,0 +1,36 @@
+## 25. Exact query elimination and data-safe parameter projection
+
+Suppose a fixed readout factors through source restriction:
+
+```text
+F(u) = reduced_F(u restricted to S).
+```
+
+`independentSource_pushforward_restrict` proves the exact distributional identity
+
+```text
+F_*(mu) = reduced_F_*(mu_S).
+```
+
+`independentSource_restriction_marginal` identifies `mu_S` with the actual restriction marginal. `independentSource_readout_law_invariant` further proves that two elementary law families agreeing on S give the same complete readout distribution, irrespective of changes outside S. The readout and structural equations are fixed in this statement.
+
+This distributional invariance does not authorize deletion of statistical constraints involving other sources. Consider independent Bernoulli variables with parameters x and z, a target x, and supplied joint-event probability c. The data impose x*z = c. For nonnegative rational c, `joint_event_constraint_projection_iff` states the exact parameter projection:
+
+```text
+c <= x <= 1
+iff
+0 <= x <= 1 and there exists 0 <= z <= 1 with x*z = c.
+```
+
+For x > 0 the witness is z = c/x. For x = 0, feasibility forces c = 0 and z = 0 is a witness. Necessity follows from c = x*z <= x. The formal statement is at the probability-parameter level. When 0 <= c <= 1, its attainable target set is `[c,1] intersect Q`; if c > 1, it is empty.
+
+At c = 1/4, a target that does not read the second disturbance is still restricted to `[1/4,1]`. Deleting the joint-event data row would incorrectly expand the range to `[0,1]`. Consequently, exact optimization reduction must use the projection of the complete feasible parameter set:
+
+```text
+full feasible set C
+  -> projected set {theta_S | exists theta_complement, (theta_S,theta_complement) in C}
+  -> reduced query on theta_S.
+```
+
+Elementary independence is a within-model distributional property. It does not imply that the sets of admissible elementary parameters are independently selectable after all observational and interventional constraints are imposed.
+

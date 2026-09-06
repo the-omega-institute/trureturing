@@ -1,0 +1,24 @@
+## 70. Conditional-success geometry and one-dimensional transport
+
+The source also proves the two exact cost identities
+
+```text
+2*cL(m,n) = r_1(n)-r_0(m) + abs(r_1(n)-r_0(m)),
+2*cU(m,n) = 1-r_0(m)+r_1(n) - abs(1-r_0(m)-r_1(n)),
+```
+
+and their expectations under every complete mediator law, including the normalization term in the second identity. Once alpha and beta are fixed, the success means p0=sum alpha*r_0 and p1=sum beta*r_1 do not depend on the coupling.
+
+At paper level, let R0 have the discrete law of r_0(M_0) under alpha and let R1 have that of r_1(M_1) under beta. Then
+
+```text
+L = (p1-p0 + W1(Law(R0),Law(R1))) / 2,
+U = (1-p0+p1 - W1(Law(1-R0),Law(R1))) / 2.
+```
+
+Here W1 is the minimum absolute-distance transport cost between finite real-line distributions. Couplings between repeated risk values lift to mediator couplings by distributing mass within each risk level in proportion to its original alpha or beta weights. Conversely every mediator coupling pushes forward to a risk coupling. Thus aggregating identical success values preserves these two costs exactly.
+
+Sorting the success values and matching their cumulative masses gives attaining plans. The exchange inequality for x<=x' and y<=y', `abs(x-y)+abs(x'-y')<=abs(x-y')+abs(x'-y)`, explains optimality. The upper calculation sorts 1-r_0 against r_1, not r_0 against r_1. Each greedy plan has at most 2m-1 nonzero cells after zero weights are removed. Sorting takes O(m log m) comparisons; rational bit complexity is not asserted. The formalized endpoint is the finite cost identity and exact target reduction. General correctness of a sorting implementation and a measure-theoretic Wasserstein API bridge have not yet been added to Lean.
+
+The cut-point implementation of the outcome witnesses uses at most 2m+1 distinct complete outcome tables. This avoids enumerating the 2^(2m) canonical outcome tables. That support count is proved by the paper construction and checked in the executable diagnostic; the current Lean witness uses a finite common-denominator carrier and does not expose this support-size bound as a theorem.
+

@@ -1,0 +1,1 @@
+- **4.115(OEIS A026488,Kimberling;2019-10-12 修正,2026-08-06 仍标猜想)**:a(1)=1,a(n) 为大于 a(n−1) 且不等于 a(i)·a(j)−a(k)(1 ≤ i ≤ j ≤ k ≤ n,k=n 时以候选值本身代入)的最小正整数。原文:「Conjecture: This is the increasing sequence of numbers congruent to 1 mod 3, with 3 inserted.」(Irvine:n ≤ 1300 成立)。核对:OEIS 仍标猜想;编号检索未见证明。**档位:第一档**。

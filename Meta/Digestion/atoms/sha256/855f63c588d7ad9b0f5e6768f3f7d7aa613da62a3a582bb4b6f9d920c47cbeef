@@ -1,0 +1,16 @@
+## 2. Reused library layer
+
+The causal lane reuses the following repository truth sources.
+
+- `D5/S0/Certificates/RationalFarkas` checks exact rational infeasibility certificates.
+- `D5/S0/Certificates/LinearObjectiveDual` checks exact rational lower and upper objective certificates and matching primal witnesses.
+- `D5/S3/ConceptDynamics/Causal/ConvexSharpIdentification` separates universal validity, endpoint attainment, convexity, and interval sharpness.
+- `D5/S3/ConceptDynamics/Causal/NonconvexSharpIdentification` separates exact endpoints from full range sharpness and transports valid bounds from outer relaxations.
+- `D5/S3/ConceptDynamics/Causal/FiniteLinearCausalIdentification` packages finite causal LP rows with data, structural, and sensitivity provenance.
+- `D5/S3/ConceptDynamics/Causal/StructuralEvaluationSemantics` supplies the canonical finite order semantics used by causal evaluation.
+- `D5/S3/Entropy/Submodularity/MarkovDataProcessing` supplies finite single-world Markov factorization and mutual-information data processing.
+- `D5/S3/ConceptDynamics/Completion/PositivePriorConditionalIndependence` relates positive-prior kernel descent to conditional independence.
+- `D5/S3/Estimation/DecisionRisk/StochasticDescentEquivalence` identifies quotient-kernel descent, strong lumpability, and observed transition factorization.
+
+The library audit found no pre-existing exact compiler from required edges, forbidden edges, query-order admissibility, and finite causal-event marginals to one joint completion-signature polytope. It also found no cross-world theorem proving that independent exogenous components remain product-factorized after deterministic response pushforward, or that a counterfactual event becomes a certified LP objective after all but one component law are fixed.
+

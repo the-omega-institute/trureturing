@@ -1,0 +1,45 @@
+## 16. Next formal research sequence
+
+The Markovian lane now advances through:
+
+```text
+MarkovianResponseLawFactorization
+  -> MarkovianBenefitIdentificationBoundary
+  -> MarkovianJointMechanismBenefitSharpBounds
+  -> finite component decomposition from a causal graph
+  -> componentwise observational and interventional likelihood rows
+  -> multilinear event polynomial semantics
+  -> fixed-component linear slices
+  -> branch or alternating certificate payloads
+  -> attaining Markovian structural models
+  -> sharp PoC bounds.
+```
+
+The next high-value compiler theorem should derive the independent response components from a finite causal graph or an explicit confounded-component partition. It must prove that every generated event polynomial has one factor per independent component and that fixing all but one component produces exactly the linear slice already accepted by `LinearObjectiveDual`.
+
+A second target is an exact finite certificate for a two-component bilinear problem. Candidate payloads are a finite branch decomposition with one rational dual certificate per branch, or a verified alternating bound whose global validity is discharged by a separate envelope theorem. Local stationary-point evidence alone is insufficient for a sharpness claim.
+
+The partial-diagram lane continues with:
+
+```text
+PartialDiagramEventRowCompilerSoundness
+  -> event-language interpretation against finite SCM evaluation
+  -> observational consistency rows
+  -> intervention consistency rows
+  -> counterfactual conjunction and nesting rows
+  -> rational primal-dual payload
+  -> completion-specific sharp endpoints
+  -> exact interval-union normalization across one-global-graph completions.
+```
+
+The causal-order lane continues in parallel:
+
+```text
+finite linear-extension swap connectivity
+  -> row and query equivariance under one adjacent swap
+  -> extension-independent compiled LP
+  -> permutation transport of primal-dual certificates.
+```
+
+Continuous copula restrictions remain in the measure-coupling lane, while mediator and multi-component Markovian factorization remain in the polynomial or multilinear lane.
+
