@@ -74,15 +74,15 @@ internal sealed class CheckedLinearImageDocument : IScribeDocumentDefinition
 
     private static Formula FiniteTypes() => Seq(
         Forall, Sp, C, Comma, V, Comma, Sp,
-        Call("Fintype", C), Land, Call("Fintype", V), Sp, Rightarrow);
+        Call("Fintype", C), Land, Sp, Call("Fintype", V), Sp, Rightarrow);
 
     private static Formula RationalSystem() => Seq(
-        Forall, Sp, A, Colon, C, To, V, To, Q, Comma, Sp,
-        B, Colon, C, To, Q, Comma);
+        Forall, Sp, A, Colon, C, To, Sp, V, To, Sp, Q, Comma, Sp,
+        B, Colon, C, To, Sp, Q, Comma);
 
     private static Formula ImageFormula() => Disp(new Formula.Aligned([
         Seq(FiniteTypes(), Sp, RationalSystem(), Sp,
-            Objective, Colon, V, To, Q, Comma, Sp,
+            Objective, Colon, V, To, Sp, Q, Comma, Sp,
             P, Colon, Call("RawSharpPayload", C, V), Comma),
         Seq(Call("checkSharp", A, B, Objective, P), Eq, F.Id("true"), Sp, Rightarrow),
         Seq(Call("RealQueryImage", A, B, Objective), Eq,
@@ -95,9 +95,9 @@ internal sealed class CheckedLinearImageDocument : IScribeDocumentDefinition
             Call("LinearOrder", F.Id("K")), Land,
             Call("IsStrictOrderedRing", F.Id("K")), Sp, Rightarrow),
         Seq(FiniteTypes(), Sp, RationalSystem(), Sp,
-            F.Id("y"), Colon, C, To, Q, Comma),
+            F.Id("y"), Colon, C, To, Sp, Q, Comma),
         Seq(Call("checkFarkas", A, B, F.Id("y")), Eq, F.Id("true"), Sp, Rightarrow,
-            Neg, Exists, Sp, F.Id("x"), Colon, V, To, F.Id("K"), Comma, Sp,
+            Neg, Exists, Sp, F.Id("x"), Colon, V, To, Sp, F.Id("K"), Comma, Sp,
             Call("FeasibleK", A, B, F.Id("x")), Dot)
     ]));
 }

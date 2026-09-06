@@ -52,7 +52,7 @@ internal sealed class CheckedLinearImageExamplesDocument : IScribeDocumentDefini
                 H("An accepted Farkas certificate excludes real solutions"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Neg, Exists, Sp, F.Id("x"), Colon,
-                    Call("Fin", F.D(4)), To, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                    Call("Fin", F.D(4)), To, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
                     Call("RealFeasible", F.Id("cappedMatrix"),
                         Call("cappedRhs", Fraction(3, 4), Fraction(1, 4), Fraction(1, 4)),
                         F.Id("x")), Dot))),
