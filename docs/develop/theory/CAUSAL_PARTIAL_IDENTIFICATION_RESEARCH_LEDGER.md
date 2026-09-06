@@ -359,7 +359,7 @@ MarkovianResponseLawFactorization
   -> sharp PoC bounds.
 ```
 
-The next high-value compiler theorem should derive the independent response components from a finite causal graph or an explicit confounded-component partition. It must prove that every generated event polynomial has one factor per independent component and that fixing all but one component produces exactly the linear slice already accepted by `LinearObjectiveDual`.
+The next high-value compiler theorem should derive the independent response components from a finite causal graph or an explicit confounded-component partition. It must prove that every generated event polynomial has one factor per independent component and that fixing all but one component law produces exactly the linear slice already accepted by `LinearObjectiveDual`.
 
 A second target is an exact finite certificate for a two-component bilinear problem. Candidate payloads are a finite branch decomposition with one rational dual certificate per branch, or a verified alternating bound whose global validity is discharged by a separate envelope theorem. Local stationary-point evidence alone is insufficient for a sharpness claim.
 
@@ -1078,3 +1078,127 @@ The resulting representation hierarchy is now:
 ```
 
 This is a lossless reduction for the nominated finite linear identification problem. An automatic or sofic cross-stratum restriction remains a separate scientifically substantive assumption that can shrink the causal model family itself. The next formal target is the explicit `3*k+2` response-marginal specialization and then an executable rational support-reduction certificate that can be replayed alongside the existing primal-dual LP certificates.
+
+## 41. Three-cell reconstruction and actual support bounds, 2026-09-06
+
+`ReducedResponseTableMoments.lean` closes the explicit bound proposed in Section 40. For each Boolean response row, retain the cells with quaternary digits 0, 1, and 2. The omitted digit-3 probability is one minus their sum. `boolean_pair_law_eq_of_first_three` proves equality of the complete normalized response laws from equality of these three cells. The existing `responsePairDigitEquiv` fixes the encoding; no second response alphabet is introduced.
+
+`reducedTableFeature` has exactly `3*k` coordinates for k covariate values. Its moments are the actual cells of `tableEvaluationLaw`. Applying the existing rational moment compression and recovering the omitted cells gives
+
+```text
+exists_three_cell_table_compression:
+  every table law has a replacement with all row laws unchanged
+  and at most 3*k+1 nonzero original-table atoms.
+
+exists_three_cell_query_compression:
+  all row laws and one additional rational table-query expectation
+  are preserved with at most 3*k+2 nonzero original-table atoms.
+```
+
+`finiteLawSupport` counts nonzero masses on the original finite carrier. `momentCompression_sparse_support_card_le` proves that this support lies in the image of the compressed latent carrier. Consequently these are actual support bounds, in addition to the earlier latent-presentation bounds. The bounds also admit the independent trivial cap `4^k`; no claim that `3*k+2` is the exact minimum for every instance is made.
+
+No cross-row coupling is held fixed unless it is represented among the retained query or constraint moments. The replacement law is selected for each original moment vector. A universally fixed small list of table atoms is not obtained.
+
+## 42. Sparse witnesses inside the same fixed-noise Markovian family
+
+`SparseFixedNoiseBenefitRealization.lean` resolves the independence issue that a direct compression of the two-mechanism joint law would leave open. Apply the row-only theorem separately to each complete mechanism table law and then use the unchanged `FixedNoisePairModel` product semantics.
+
+For every original model, `exists_fixedNoise_sparse_equivalent` constructs a replacement such that
+
+```text
+support(left table law) <= 3*k+1,
+support(right table law) <= 3*k+1,
+all left and right response-row laws are equal to the originals,
+selectedPairLaw(replacement).mass = selectedPairLaw(original).mass.
+```
+
+Thus the full distribution of `(C, W1(C), W2(C))` is preserved, not merely its simultaneous-benefit cell. The covariate root and the two complete mechanism disturbances remain independent because the source law is still their product. Cross-row dependence inside an individual table is allowed to change. No independence of Y0 and Y1 inside a response row is introduced.
+
+`fixedNoise_pair_support_card_le` uses the exact Cartesian-product support identity to bound the support of the two table disturbances together by `(3*k+1)^2`. Including the separate covariate root multiplies this bound by its support size, which is at most k.
+
+`fixedNoise_sparse_attainment_iff` proves equality of the unrestricted and support-bounded attainable benefit images for the existing four-conditional-marginal model class. Its composition with the previous sharpness theorem is `fixedNoise_sparse_joint_benefit_sharp_iff`:
+
+```text
+sum_c w(c)*L1(c)*L2(c) <= target <= sum_c w(c)*U1(c)*U2(c)
+iff
+one fixed-noise model attains target with the specified four kernels
+and at most 3*k+1 support points in each independent mechanism.
+```
+
+The interval and estimand are unchanged. Any additional cross-row condition or extra statistical moment must be preserved separately before this result can be used for a more restricted family. In particular, full-table-law equality and preservation of queries that intervene on the covariate in several worlds are not inferred from equality of the selected same-stratum response law.
+
+## 43. Sequential sparsification of arbitrary product-law moments
+
+`ProductLawMomentSparsification.lean` goes beyond the same-stratum example. Let mu and nu be normalized rational laws on finite carriers A and B, and let f_j(a,b), j in J, be any finite family of rational coefficients. The retained vector is
+
+```text
+M_j(mu,nu) = sum_a sum_b mu(a)*nu(b)*f_j(a,b).
+```
+
+Fix nu and form `g_j(a) = sum_b nu(b)*f_j(a,b)`. Compress mu while preserving every g_j expectation. Call the replacement mu'. Then form the second, updated feature family `h_j(b) = sum_a mu'(a)*f_j(a,b)` and compress nu while preserving every h_j expectation. The resulting nu' satisfies
+
+```text
+M_j(mu',nu') = M_j(mu',nu) = M_j(mu,nu)  for every j.
+```
+
+The Lean theorem `productLaw_moment_sparse_replacements` implements these two exact steps and proves that each new factor has support at most `|J|+1`. Both factors stay on their original carriers, and the resulting law remains their product. The argument needs neither convexity of the product family nor independent selectability of factor parameters after data constraints are imposed.
+
+For m supplied linear data rows and one target coefficient, `product_linear_problem_sparse_witness` retains all m+1 values and gives at most m+2 support points in each factor. The original `LinearFeasible` predicate and `linearObjective` are evaluated on the new product law itself. Any equalities or inequalities determined by the preserved moment vector therefore remain valid. Restrictions not determined by that vector still need their own preservation argument.
+
+Recomputing the second feature family matters. For two initially independent fair bits, the equality event has probability 1/2. Holding either original fair factor fixed makes the equality probability insensitive to the other factor, so each factor separately admits replacement by a point mass at zero. Replacing both using those stale slices gives equality probability 1. The ordered construction recomputes the second slice after the first change and excludes this failure.
+
+The same mathematical proof extends by finite induction to s independent components: retain the entire d-dimensional moment vector at each step, fix all other current factors, and replace only the current factor. Each final component needs at most d+1 atoms. This multi-component induction is a paper derivation here; the authored Lean endpoint covers two components. The small-support result is an existence statement and does not make the general multilinear optimization problem convex or polynomial-time solvable.
+
+## 44. When the extra query really costs one dimension
+
+The following exact rank classification is a mathematical derivation, not an additional Lean theorem in this continuation. On the unrestricted table carrier `{0,1,2,3}^k`, let b(t) be the 3k retained cell indicators. The all-3 table maps to zero. Changing only row c to a in {0,1,2} gives the standard basis vector e_(c,a). Therefore the affine rank of the row-profile family is exactly 3k.
+
+For one extra scalar query q, the augmented profile `(b(t),q(t))` has affine rank 3k precisely when
+
+```text
+q(t) = alpha + sum_c beta_c(t(c)), with beta_c(3)=0.
+```
+
+One implication is immediate from the displayed affine representation. For the other, subtract the augmented all-3 profile. The 3k single-row changes are independent. If any table has a query residual not explained by their linear combination, subtracting that combination produces a nonzero vector whose first 3k coordinates vanish. This adds exactly one independent direction. Hence the augmented rank is 3k+1 whenever q has such a residual.
+
+Thus an additive row query needs no new moment coordinate and admits the `3k+1` bound. A genuinely interacting query gives the ambient `3k+2` bound. At k=0 or k=1, every table query is additive in this sense, so an extra dimension cannot occur. Equivalently, a nonzero mixed rectangular difference across two distinct rows certifies an interaction; vanishing of every such difference gives the additive representation by successive row replacement.
+
+These rank bounds are worst-case support guarantees, not pointwise lower bounds. For a finite profile family of affine rank r, the union of convex hulls of all subsets of at most r profiles is contained in a finite union of proper affine subspaces. It cannot cover the relative interior of the full profile polytope. Rational points outside that union exist because all profiles are rational and a rational simplex in the polytope has dense rational barycentric points. Such moment points require r+1 atoms. Special points can require fewer. The exact rank classification and this worst-case lower-bound argument have not yet been implemented as Lean declarations.
+
+## 45. A direct rational construction and a replayable elimination identity
+
+The row-only `3k+1` bound also has a direct construction that avoids enumerating `4^k` table atoms. Given four-cell row laws q_c, form the three internal cumulative sums per row, add 0 and 1, and sort their distinct values
+
+```text
+0 = a_0 < a_1 < ... < a_M = 1.
+```
+
+There are at most 3k internal cut points, so M <= 3k+1. On every interval `[a_j,a_(j+1))`, each row's inverse cumulative distribution is constant. Record the resulting complete table t_j and give it mass `a_(j+1)-a_j`. The masses are nonnegative rational numbers and telescope to one. Summing interval lengths assigned to any row cell recovers exactly q_c. Empty or repeated cumulative intervals cause no problem after distinct cut points are used.
+
+Taking two independent copies of this finite interval-index disturbance realizes the two mechanisms with unchanged row laws. This is a choice of cross-row coupling for a witness, not an assumption imposed on all models. The construction preserves row marginals but need not preserve an arbitrary interacting query. Sorting uses O(k log k) rational comparisons and explicitly listing the at-most-3k+1 tables uses O(k^2) response entries; no rational bit-complexity bound is claimed here.
+
+For a general moment vector, exact support elimination instead starts from a supplied finite law. For supported atom profiles v_i, augment them with the normalization coordinate 1. A rational nonzero dependence z satisfying
+
+```text
+sum_i z_i = 0,
+sum_i z_i*v_i = 0
+```
+
+has both positive and negative coordinates. Define
+
+```text
+theta = min_{z_i>0} weight_i/z_i,
+weight'_i = weight_i - theta*z_i.
+```
+
+Positive-z coordinates remain nonnegative by the ratio minimum; negative-z coordinates increase; at least one positive weight becomes zero. Normalization and all moments are unchanged by the two zero-sum identities. Iterating removes support until the augmented profiles are linearly independent. Every arithmetic operation is rational. This is the certificate identity underlying the regression implementation; a data-only Lean checker and a termination/correctness proof for an executable eliminator remain separate implementation obligations.
+
+## 46. Source status and literature placement
+
+The three new Lean modules have matching Scribe sources covering all 17 explicitly named public declarations. Mathematical self-review and exact rational regression were performed. Lean elaboration, kernel checking, Scribe emission, and executed axiom-closure reports were not obtained in this runtime. Existing declarations used by the new proof scripts retain their own verification status. No new axiom, sorry, admit, or native_decide occurs in the authored source.
+
+The independent Python regression uses seed 20260906. It passed 1,252 omitted-cell identities, 60 table compression cases, 1,190 exact support-elimination steps, 36 sequential product cases with 90 preserved joint coordinates, 384 selected-pair cell comparisons, 12 population-benefit comparisons, and six direct cumulative-table constructions. It also checked the stale-parallel-slice counterexample and exact row/additive/interaction ranks for k=0 through k=4. A ten-stratum cumulative example has 31 table atoms instead of an ambient 1,048,576; two such mechanism laws have support 961. These are finite diagnostics, not universal proof-kernel evidence.
+
+Bayer and Teichmann, *The proof of Tchakaloff's Theorem*, arXiv:math/0502473, places positive finite moment representation in its classical cubature context. Zhang, Tian, and Bareinboim, ICML 2022, PMLR 162:26548-26558, establishes canonical finite causal representations and polynomial counterfactual optimization. Arroyo et al., arXiv:2509.03548, exploits quasi-Markovian component structure and fixed-component linear slices, including a column-generation route. The present work uses these established representation principles; it makes no novelty or priority claim for Caratheodory, inverse-CDF coupling, or the support lemma.
+
+The concrete repository additions are original-carrier three-cell reconstruction, sparse attainment of the existing covariate benefit interval within independent mechanisms, and a two-component exact moment-preserving sparsification theorem. None of these bounds is a DFAO state bound. The law space carrying the moment readout, the table atom space, and the computational states of the Zeckendorf oracle remain different typed objects. No finite information-escape score or maximal-catalog irredundancy assertion is inferred from their cardinalities.
