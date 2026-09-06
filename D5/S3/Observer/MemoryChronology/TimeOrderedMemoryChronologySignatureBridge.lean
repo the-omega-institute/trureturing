@@ -3,6 +3,7 @@
    mirror-B: none(waiver:new-cross-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: The time-ordered matrix logarithm recovers swap curvature and its Hopf reversal. -/
 
 import D5.S3.Observer.AgencyHolonomy.TimeOrderedMemoryMatrixRepresentation
