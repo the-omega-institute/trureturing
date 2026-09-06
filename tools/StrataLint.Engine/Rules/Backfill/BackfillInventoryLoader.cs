@@ -181,11 +181,13 @@ internal sealed partial class BackfillInventoryDocument
         // 只是尚无实例;把「当前没有实例」当成「机制已死」会削掉一条真能力。
         ExactKeys(
             receipts,
-            ["scribe", "unresolved_subitems"],
-            ["chain_atoms", "tail_authorization", "quarantine", "nonpropositional", "cover_disposition"],
+            ["unresolved_subitems"],
+            ["scribe", "chain_atoms", "tail_authorization", "quarantine", "nonpropositional", "cover_disposition"],
             $"entry {atomId} receipts");
         var scribe = ImmutableArray.CreateBuilder<DigestionScribeReceipt>();
-        foreach (var rawScribe in List(receipts, "scribe", $"entry {atomId} scribe receipts must be a list"))
+        foreach (var rawScribe in receipts.ContainsKey("scribe")
+                     ? List(receipts, "scribe", $"entry {atomId} scribe receipts must be a list")
+                     : [])
         {
             var item = Mapping(rawScribe, $"entry {atomId} scribe receipt must be a mapping");
             ExactKeys(item, ["gid", "definition_sha256", "emission_sha256"], $"entry {atomId} scribe receipt");

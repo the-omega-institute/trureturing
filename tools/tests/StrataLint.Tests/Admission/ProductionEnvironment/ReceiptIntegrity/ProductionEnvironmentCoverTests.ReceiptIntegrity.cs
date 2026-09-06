@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CoverAtomRejectsNewScribeEmissionGapWhenBaselineTrackedProjectionIsStale()
+    public void CoverAtomAcceptsScribeByteDriftWhenBaselineTrackedProjectionIsStale()
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
@@ -22,11 +22,9 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
-        Assert.False(
-            result.Success,
-            $"new candidate Scribe gap was admitted: {result.Output}");
-        Assert.Contains("scribe-emission-mismatch", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("scribe-emission-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     private static CoverInputs WithNewScribeEmissionGapHiddenByBaselineProjection(CoverInputs inputs)

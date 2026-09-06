@@ -152,7 +152,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void AlignRemovesMismatchAndDefinitionDriftIsDetectedAgain()
+    public void AlignRemainsAvailableWhileDefinitionByteDriftIsAccepted()
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         var inputs = DirectoryInputs(materialized);
@@ -161,9 +161,9 @@ public sealed partial class ProductionEnvironmentTests
         var initialEnvironment = CoverWorld.Environment(temporary.Path, inputs, inputs.Files);
 
         var before = initialEnvironment.DigestStatus(Array.Empty<string>());
-        Assert.False(before.Success);
-        Assert.Contains("scribe-definition-mismatch", before.Error, StringComparison.Ordinal);
-        Assert.Contains("scribe-emission-mismatch", before.Error, StringComparison.Ordinal);
+        Assert.True(before.Success, before.Error);
+        Assert.DoesNotContain("scribe-definition-mismatch", before.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-emission-mismatch", before.Output, StringComparison.Ordinal);
 
         var aligned = initialEnvironment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
         Assert.True(aligned.Success, aligned.Error);
@@ -196,8 +196,8 @@ public sealed partial class ProductionEnvironmentTests
 
         var drifted = driftEnvironment.DigestStatus(Array.Empty<string>());
 
-        Assert.False(drifted.Success);
-        Assert.Contains("scribe-definition-mismatch", drifted.Error, StringComparison.Ordinal);
+        Assert.True(drifted.Success, drifted.Error);
+        Assert.DoesNotContain("scribe-definition-mismatch", drifted.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -252,7 +252,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void DigestStatusRejectsEachReceiptIntegrityMismatchIndependently(string mismatchCode)
+    public void DigestStatusRejectsCoverageMismatchButAcceptsScribeByteMismatch(string mismatchCode)
     {
         var inputs = DirectoryInputs(CoverWorld.Materialize(CoverWorld.StaleReceiptSpec()));
         using var temporary = new TemporaryDirectory();
@@ -309,8 +309,16 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.DigestStatus(Array.Empty<string>());
 
-        Assert.False(result.Success);
-        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        if (mismatchCode == "coverage-target-mismatch")
+        {
+            Assert.False(result.Success);
+            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        }
+        else
+        {
+            Assert.True(result.Success, result.Error);
+            Assert.DoesNotContain(mismatchCode, result.Output, StringComparison.Ordinal);
+        }
         foreach (var otherCode in new[]
                  {
                      "coverage-target-mismatch",
@@ -323,7 +331,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void AlignFailsClosedWhenTargetScribeMismatchRemainsAfterAlignment()
+    public void AlignAcceptsProducerCapabilityWithoutRecheckingDefinitionBytes()
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         var directoryInputs = DirectoryInputs(inputs);
@@ -346,9 +354,9 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
-        Assert.False(result.Success);
-        Assert.Contains("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
 
         // Extend this already-paid repository-read test: the map budget is structural and must
         // not be raised merely to add another representative of the same Scribe rule.
@@ -419,7 +427,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void AlignScribeReceiptRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(
+    public void AlignScribeReceiptKeepsSiblingStatusAndCoverageGatesWithoutScribeByteChecks(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
@@ -436,7 +444,10 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
-        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+        Assert.Contains(mismatchCode == "coverage-target-mismatch" ? mismatchCode : "handwritten status",
+            result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-emission-mismatch", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
@@ -444,7 +455,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void AlignScribeReceiptRejectsTargetRepairWhenUnrelatedBacklogExistsAtBaseline(
+    public void AlignScribeReceiptKeepsCoverageGateWhileAcceptingScribeByteBacklogAtBaseline(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
@@ -463,9 +474,17 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
-        Assert.False(result.Success);
-        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        if (mismatchCode == "coverage-target-mismatch")
+        {
+            Assert.False(result.Success);
+            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        }
+        else
+        {
+            Assert.True(result.Success, result.Error);
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        }
     }
 
     [Fact]
