@@ -7,7 +7,6 @@
 
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Nlinarith
 import Mathlib.Tactic.Ring
 
 /-!
