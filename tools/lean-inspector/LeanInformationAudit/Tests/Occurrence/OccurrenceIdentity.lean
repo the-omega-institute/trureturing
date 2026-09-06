@@ -83,9 +83,6 @@ expect_information_occurrence sharedTheorem
   from "LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity"
 
 #seal_information_theory
-#export_information_analysis root
-  _root_.LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity
-  output "/tmp/lean-information-audit-occurrence-identity.json"
 
 /-- info: occurrence-qualified staged identities and seal schema passed -/
 #guard_msgs (info) in
@@ -93,8 +90,7 @@ run_cmd do
   let env <- getEnv
   let root := env.header.mainModule
   let theoremName := `LeanInformationAudit.Tests.OccurrenceIdentity.sharedTheorem
-  let contents <- Lean.Elab.Command.liftIO <|
-    IO.FS.readFile "/tmp/lean-information-audit-occurrence-identity.json"
+  let contents := serializeSealArtifact (SealRecords.forRoot env root)
   let json <- match Json.parse contents with
     | .ok value => pure value
     | .error message => throwError message
