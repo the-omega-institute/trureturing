@@ -35,6 +35,7 @@ public sealed class RuleCatalog
         RuleId.CreateKnown(2),
         RuleId.CreateKnown(18),
         RuleId.CreateKnown(12),
+        RuleId.CreateKnown(31),
         RuleId.CreateKnown(26),
         RuleId.CreateKnown(6),
         RuleId.CreateKnown(25),
@@ -156,6 +157,7 @@ public sealed class RuleCatalog
                 .Append(26)
                 .Append(28)
                 .Append(30)
+                .Append(31)
                 .Select(RuleId.CreateKnown)
                 .ToImmutableArray();
             var registeredIds = Descriptors.Select(static item => item.Id).ToImmutableArray();

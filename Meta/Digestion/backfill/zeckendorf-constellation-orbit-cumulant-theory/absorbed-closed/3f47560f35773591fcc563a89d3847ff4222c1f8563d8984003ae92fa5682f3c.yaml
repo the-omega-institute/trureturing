@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3f47560f35773591fcc563a89d3847ff4222c1f8563d8984003ae92fa5682f3c
+  normalized_sha256: sha256:3f47560f35773591fcc563a89d3847ff4222c1f8563d8984003ae92fa5682f3c
+cas_ref: sha256:3f47560f35773591fcc563a89d3847ff4222c1f8563d8984003ae92fa5682f3c
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/TwoFourGapModThreeCurvature.two_four_gap_mod_three_admissible_iff
+    target_statement_id: sha256:49c7cc86590aa2409aa1a0b7d036526394c42fcd84d89754a56823e0b214705c
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/Congruence/TwoFourGapModThreeCurvature.two_four_gap_mod_three_admissible_iff
+      definition_sha256: sha256:7b6fa2ee6f5972bd2a226b960a6fd5b2de83a76a534013dc23d68e2fed6b29bc
+      emission_sha256: sha256:f75746b8937917ad7a5be16721e87ac83a2a5ce8a18964509e5ded7cc316e225
+  unresolved_subitems: []
