@@ -167,10 +167,57 @@ theorem normalized_output_probability (θ a b : ℝ) (word : List Bool) (f : ℝ
   simp_rw [plus_output_intensity]
   rw [integral_const_mul, hnorm, mul_one, plus_probability_formula]
 
+/-- Endpoint compensation depends only on the two letter counts. It can
+therefore be prepared without knowing the order inside the signal history. -/
+def endpointCompensatedWord (a b : ℝ) (word : List Bool) (f : ℝ → ℂ) : ℝ → ℂ :=
+  displacement (-(a * word.count true)) (-(b * word.count false)) (runWord a b word f)
+
+/-- Count-only compensation returns the motional state exactly and retains
+its chronology as a scalar phase. Reading that phase still requires a reference. -/
+theorem endpoint_compensated_word_phase (a b : ℝ) (word : List Bool) (f : ℝ → ℂ) :
+    endpointCompensatedWord a b word f =
+      Complex.exp (((a * b * (magnusCenter word : ℝ) : ℝ) : ℂ) * Complex.I) • f := by
+  unfold endpointCompensatedWord
+  rw [run_word_normal_form, displacement_smul,
+    (displacement_inverse (a * word.count true) (b * word.count false) f).1]
+
+/-- Interfere the count-compensated signal with the unchanged input state.
+Unlike reversal comparison, this reference does not replay the unknown word. -/
+def compensatedPlusOutput (θ a b : ℝ) (word : List Bool) (f : ℝ → ℂ) : ℝ → ℂ :=
+  fun q => (f q + Complex.exp (((-θ : ℝ) : ℂ) * Complex.I) *
+    endpointCompensatedWord a b word f q) / 2
+
+/-- The count-only reference gives phase ab*m, half the reversal-reference phase. -/
+theorem compensated_plus_factorization (θ a b : ℝ) (word : List Bool) (f : ℝ → ℂ) :
+    compensatedPlusOutput θ a b word f =
+      plusAmplitude θ (a * b * (magnusCenter word : ℝ)) • f := by
+  funext q
+  unfold compensatedPlusOutput
+  rw [endpoint_compensated_word_phase]
+  simp only [Pi.smul_apply, smul_eq_mul]
+  rw [← mul_assoc, phase_product]
+  have hangle : -θ + a * b * (magnusCenter word : ℝ) =
+      a * b * (magnusCenter word : ℝ) - θ := by ring
+  rw [hangle]
+  unfold plusAmplitude
+  ring
+
+/-- Normalized input alone supplies the compensated interferometer's output
+probability. No prior normalization of an evolved state is required. -/
+theorem normalized_compensated_probability (θ a b : ℝ) (word : List Bool) (f : ℝ → ℂ)
+    (hnorm : (∫ q : ℝ, Complex.normSq (f q)) = 1) :
+    (∫ q : ℝ, Complex.normSq (compensatedPlusOutput θ a b word f q)) =
+      plusProbability θ (a * b * (magnusCenter word : ℝ)) := by
+  rw [compensated_plus_factorization]
+  simp only [Pi.smul_apply, smul_eq_mul, Complex.normSq_mul]
+  simpa only [integral_const_mul, hnorm, mul_one, plusProbability]
+
 #print axioms run_word_normal_form
 #print axioms word_reverse_relative_phase
 #print axioms word_reverse_intensity_blind
 #print axioms normalized_output_probability
+#print axioms endpoint_compensated_word_phase
+#print axioms normalized_compensated_probability
 
 end
 end D5.S3.Quantum.WeylChronology.GoldenWordInterferometry

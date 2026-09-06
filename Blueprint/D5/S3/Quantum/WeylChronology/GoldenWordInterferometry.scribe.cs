@@ -21,6 +21,16 @@ internal sealed class GoldenWordInterferometryDocument : IScribeDocumentDefiniti
                     Paragraph(Text("Each word has phase ab times its Magnus center. Comparing it with its reverse doubles this phase while keeping the endpoint displacement equal. This is ordinary coherent path comparison, not antiunitary time reversal or an indefinite-causal-order advantage claim."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("count-only-compensated-phase"),
+                DeclarationHandle.Create("D5/S3/Quantum/WeylChronology/GoldenWordInterferometry.endpoint_compensated_word_phase"),
+                H("A count-only reference"),
+                StatementSource.FromAuthor(Compensated()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Endpoint compensation applies D(-ar,-bz) after the signal word. It depends only on the two counts, and returns any input wavefunction with the scalar phase exp(iabm).")),
+                    Paragraph(Text("A coherent unchanged-state reference then gives plus probability (1+cos(abm-theta))/2 for normalized input. This improves the operational requirement: the reference no longer needs to replay the reversed signal word. Coherent controlled execution and repeated preparations are still required."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("word-recombination-fringe"),
                 DeclarationHandle.Create("D5/S3/Quantum/WeylChronology/GoldenWordInterferometry.plus_output_factorization"),
                 H("The observable interference amplitude"),
@@ -48,6 +58,12 @@ internal sealed class GoldenWordInterferometryDocument : IScribeDocumentDefiniti
         Formula a=F.Id("a"), b=F.Id("b"), w=F.Id("w"), f=F.Id("f");
         return Disp(Seq(CommonQuantifiers(a,b,w,f),Call("runWord",a,b,w,f),Eq,
             Phase(Angle(a,b,w)),Cdot,Call("runWord",a,b,Call("reverse",w),f)));
+    }
+    private static Formula Compensated()
+    {
+        Formula a=F.Id("a"), b=F.Id("b"), w=F.Id("w"), f=F.Id("f");
+        return Disp(Seq(CommonQuantifiers(a,b,w,f),Call("endpointCompensatedWord",a,b,w,f),Eq,
+            Phase(Seq(a,Cdot,b,Cdot,Call("magnusCenter",w))),Cdot,f));
     }
     private static Formula Output()
     {

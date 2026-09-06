@@ -32,6 +32,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.WeylChronology.GoldenInterferometricRecovery
 
+open MeasureTheory
 open D5.S1.Words
 open D5.S3.Quantum.WeylChronology.RamseyPhaseReadout
 open D5.S3.Quantum.WeylChronology.GoldenWordInterferometry
@@ -43,6 +44,18 @@ noncomputable section
 /-- The actual sine-analyzer fringe for the word/reversal interferometer. -/
 def chronologyFringe (κ : ℝ) (word : List Bool) : ℝ :=
   plusProbability (Real.pi / 2) (2 * κ * (magnusCenter word : ℝ))
+
+/-- The endpoint-compensated device is the same calibrated fringe with
+coupling ab/2. This connects the recovery theorem to a count-only reference. -/
+theorem compensated_probability_eq_chronology_fringe (a b : ℝ) (word : List Bool)
+    (f : ℝ → ℂ) (hnorm : (∫ q : ℝ, Complex.normSq (f q)) = 1) :
+    (∫ q : ℝ, Complex.normSq
+      (compensatedPlusOutput (Real.pi / 2) a b word f q)) =
+      chronologyFringe (a * b / 2) word := by
+  rw [normalized_compensated_probability (Real.pi / 2) a b word f hnorm]
+  unfold chronologyFringe
+  congr 1
+  ring
 
 /-- The centered pair coordinate cannot exceed all pairs of unlike letters. -/
 theorem center_absolute_bound (word : List Bool) :
@@ -161,6 +174,7 @@ theorem palindrome_fringe_half (κ : ℝ) (word : List Bool)
   rw [chronologyFringe, magnus_center_zero_of_reverse_eq word hpal]
   simp [plus_probability_formula, Real.cos_sub_pi_div_two]
 
+#print axioms compensated_probability_eq_chronology_fringe
 #print axioms center_length_bound
 #print axioms chronology_fringe_kernel
 #print axioms safe_coupling_calibrated
