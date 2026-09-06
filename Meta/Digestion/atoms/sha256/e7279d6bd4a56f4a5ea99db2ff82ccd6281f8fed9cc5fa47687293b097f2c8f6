@@ -1,0 +1,84 @@
+# 收束
+
+这次最重要的推进，不只是又找到一批零点，而是分清了它们的来源：
+
+$$
+\boxed{
+\pi/4\text{ 的零点}
+\quad\text{依赖八个插入位置的均匀性};
+}
+$$
+
+$$
+\boxed{
+\pi\text{ 的零点}
+\quad\text{可由交换 }5,7\text{ 的对称性保护}.
+}
+$$
+
+同样的离散空间和同样的合法步骤，并没有唯一决定历史权重。
+
+而将真正的历史奇偶切面推广到全部整数后，我们得到：
+
+$$
+\boxed{
+\varepsilon(n)\ne0
+\iff
+n=m^2\text{ 或 }n=pm^2,
+}
+$$
+
+再进一步：
+
+$$
+\boxed{
+\mathcal H(s)=D(s)+V(s)\log\zeta(s),
+\qquad
+D,V\text{ 在 }\Re s>\frac12\text{ 全纯}.
+}
+$$
+
+所以，实际 ζ 的零点没有被投影丢掉，而是转化为：
+
+$$
+\boxed{
+\Delta_{\mathrm{loop}}\mathcal H
+=
+2\pi i\,m_\rho V.
+}
+$$
+
+这给“不同切面怎样保持同一个整体”一个更成熟的答案：
+
+> **整体不是所有切面都显示相同现象，而是某个切面里的零点、另一个切面里的对称性、以及解析延拓中的绕行差，能够通过明确恒等式互相运输。**
+
+当前仍未得到实际 ζ 的离线零点，也未证明式（34）的全域延拓。已经完成的是：把离散临界从“有相消”推进到“相消是否受保护”，再把历史奇偶中真正保留的算术内容，送回真实 ζ 的解析结构。
+
+[1]: https://dlmf.nist.gov/26.16 "https://dlmf.nist.gov/26.16"
+[2]: https://link.springer.com/article/10.1007/BF01933420 "https://link.springer.com/article/10.1007/BF01933420"
+[3]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
+[4]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+[5]: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.85.2845 "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.85.2845"
+这次可以把“统一离散时空、再换切面分析”推进到一个更尖锐的结论：
+
+> **空间中占据很小权重的方向，可能在时间中承担不可忽略、甚至无穷大的平均等待成本。**
+
+对前文的实际 ξ 回返模型，还能得到两条明确结果：
+
+$$
+\boxed{
+\mathrm{RH}\Longrightarrow
+\text{在指定的逐步监测协议下，最终返回概率为 }1，
+\text{但平均首次返回步数为 }+\infty.
+}
+$$
+
+以及
+
+$$
+\boxed{
+\text{先截断谱再取无限观察时间，与先恢复全部谱再取极限，
+边界响应分别趋于 }-1\text{ 和 }+1.
+}
+$$
+

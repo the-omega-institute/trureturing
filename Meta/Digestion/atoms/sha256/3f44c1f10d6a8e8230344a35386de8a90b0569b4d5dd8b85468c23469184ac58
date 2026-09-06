@@ -1,0 +1,61 @@
+**这个 60 是该幺正相位模型的平均监测步数，不是 PRIMEGAME 的运行时间，也不是物理秒数。**
+
+于是，前文的空间结构
+
+$$
+\mathbb C^5\otimes\mathbb C^3\otimes\mathbb C^2\otimes\mathbb C^2
+$$
+
+在这项具体观察协议下，变成了一个时间量：
+
+$$
+\boxed{
+\text{可见谱点数}
+=
+\text{循环子空间维数}
+=
+\text{平均首次返回步数}
+=
+\text{边界相位绕数}.
+}
+\tag{20}
+$$
+
+这是空间、时间和拓扑之间的一条严格桥梁，而不是概念直接等同。
+
+## 但权重收缩到一个状态时，会发生不连续
+
+当
+
+$$
+\beta\to+\infty,
+$$
+
+$$
+|\Omega_\beta\rangle\to|1\rangle.
+$$
+
+极限状态是一个本征态，每一步必然返回：
+
+$$
+\mathbb E_{|1\rangle}[\tau]=1.
+$$
+
+然而，对每个有限 \(\beta\)，
+
+$$
+\mathbb E_{\Omega_\beta}[\tau]=60.
+$$
+
+因此
+
+$$
+\boxed{
+\lim_{\beta\to\infty}\mathbb E_{\Omega_\beta}[\tau]
+=60
+\ne
+1=\mathbb E_{\lim\Omega_\beta}[\tau].
+}
+\tag{21}
+$$
+

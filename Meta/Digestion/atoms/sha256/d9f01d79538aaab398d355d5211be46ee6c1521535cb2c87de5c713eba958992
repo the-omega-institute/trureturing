@@ -1,0 +1,20 @@
+**这不是通过重新表示就解决了 RH。真正待证的全局解析控制，仍然存在。**
+
+但现在已经完成了一条有实质内容的桥：
+
+$$
+\boxed{
+\text{离散历史奇偶}
+\longrightarrow
+\text{平方／素数平方结构}
+\longrightarrow
+P(s)
+\longrightarrow
+\log\zeta(s)
+\longrightarrow
+\text{真实零点的绕行信息}.
+}
+$$
+
+---
+

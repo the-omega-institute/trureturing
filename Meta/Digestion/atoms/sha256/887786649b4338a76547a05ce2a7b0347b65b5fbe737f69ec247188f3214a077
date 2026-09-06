@@ -1,0 +1,19 @@
+## 定理二：谱平滑对首次返回概率的作用是精确的指数折扣
+
+$$
+\boxed{
+\mathcal S_a(z)=\mathcal S(az),
+}
+$$
+
+$$
+\boxed{
+\kappa_n^{(a)}=a^n\kappa_n,
+\qquad
+p_n^{(a)}=a^{2n}p_n,
+}
+\tag{10}
+$$
+
+其中 \(p_n=|\kappa_n|^2\)。
+

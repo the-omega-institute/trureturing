@@ -1,0 +1,27 @@
+## 在 5040 的 \(\pi/4\) 零点附近，可以算出局部几何
+
+令：
+
+$$
+\delta=\theta-\frac\pi4.
+$$
+
+本轮精确代数计算得到：
+
+$$
+\boxed{
+|\mathcal A_\kappa(\tfrac\pi4+\delta)|^2
+=
+\left(
+\frac1{2205}+\frac{\sqrt2}{3150}
+\right)
+(\kappa^2+\delta^2)
++
+O((|\kappa|+|\delta|)^3).
+}
+\tag{20}
+$$
+
+所以：
+
+* 沿 \(\kappa=0\) 切面，可以穿过精确零点；

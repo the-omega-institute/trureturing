@@ -1,0 +1,89 @@
+# 二、把隐藏空间消去，得到一条精确的离散记忆方程
+
+将空间分为
+
+$$
+\mathcal H=\mathbb Cv\oplus Q\mathcal H.
+$$
+
+相对于这个分解，写
+
+$$
+\boxed{
+U=
+\begin{pmatrix}
+a&b\\
+c&D
+\end{pmatrix}.
+}
+\tag{5}
+$$
+
+其中 \(a\) 是标量，\(D\) 是隐藏空间内部的压缩演化。
+
+由式（2）直接得到
+
+$$
+\kappa_1=a,
+$$
+
+$$
+\boxed{
+\kappa_n=bD^{n-2}c,\qquad n\ge2.
+}
+\tag{6}
+$$
+
+它的含义很明确：
+
+$$
+\boxed{
+\text{离开可见方向}
+\xrightarrow{c}
+\text{在隐藏空间停留 }n-2\text{ 步}
+\xrightarrow{b}
+\text{返回可见方向}.
+}
+$$
+
+定义生成函数
+
+$$
+\mathcal A(z)=\sum_{n\ge0}r_nz^n,
+$$
+
+$$
+\mathcal S(z)=\sum_{n\ge1}\kappa_nz^n.
+$$
+
+对 \(|z|<1\)，Schur 消元给出
+
+$$
+\boxed{
+\mathcal S(z)
+=
+za+z^2b(I-zD)^{-1}c,
+}
+\tag{7}
+$$
+
+以及
+
+$$
+\boxed{
+\mathcal A(z)=\frac1{1-\mathcal S(z)}.
+}
+\tag{8}
+$$
+
+因此
+
+$$
+\boxed{
+r_n=\sum_{k=1}^{n}\kappa_k r_{n-k}.
+}
+\tag{9}
+$$
+
+这是一条振幅层面的更新公式，不能把 \(\kappa_k\) 先取模平方后再代入。
+

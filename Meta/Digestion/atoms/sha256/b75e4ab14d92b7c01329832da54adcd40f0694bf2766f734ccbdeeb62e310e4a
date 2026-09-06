@@ -1,0 +1,74 @@
+# 十、还有一条量子边界必须保留：干涉为零，不一定代表混合态发生了变化
+
+在纯态模型中：
+
+$$
+|\psi\rangle
+=
+\sum_\gamma\sqrt{\mathbb P(\gamma)}|\gamma\rangle,
+$$
+
+确实有：
+
+$$
+\langle\psi|e^{i\theta\widehat A}|\psi\rangle
+=
+\mathcal A_{\mathbb P}(\theta).
+$$
+
+它为零时，两个纯态正交。
+
+但若改成同样概率的对角混合态：
+
+$$
+\rho_{\mathrm{diag}}
+=
+\sum_\gamma
+\mathbb P(\gamma)|\gamma\rangle\langle\gamma|,
+$$
+
+则：
+
+$$
+e^{i\theta\widehat A}
+\rho_{\mathrm{diag}}
+e^{-i\theta\widehat A}
+=
+\rho_{\mathrm{diag}}.
+$$
+
+混合态完全没有改变。
+
+与此同时：
+
+$$
+\operatorname{Tr}
+\left(\rho_{\mathrm{diag}}e^{i\theta\widehat A}\right)
+=
+\mathcal A_{\mathbb P}(\theta)
+$$
+
+仍然可能为零。
+
+这类迹振幅是合法的混合态干涉读数，但不能直接等同于混合态与自身演化后的保真度；混合态干涉理论明确区分这些对象。([APS Journals][5])
+
+因此：
+
+$$
+\boxed{
+\text{多项式零点}
+,\quad
+\text{干涉可见度为零}
+,\quad
+\text{纯态正交}
+,\quad
+\text{混合态可区分}
+}
+$$
+
+必须分别定义。
+
+项目的 `StaticEffectSequentialSeparation` 已经证明，相同静态效应可以对应不同的后续联合规律。它提醒的也是同一个问题：**只保留最终一项读数，未必保留完整观察协议。**
+
+---
+

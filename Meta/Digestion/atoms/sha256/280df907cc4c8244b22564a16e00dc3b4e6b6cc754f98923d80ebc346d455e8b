@@ -1,0 +1,44 @@
+# 十一、这与项目的下一层建设怎样衔接？
+
+本轮读取的仓库快照 `50720ba` 中，有两个直接相关的基础。
+
+`ItineraryCompletion` 定义了完整未来读数，并证明：在有限状态系统中，存在一个有限前瞻深度，足以决定全部未来读数。其有限状态假设是关键，不能直接扩展成全部整数上的统一有限深度。
+
+`MarkovDataProcessing` 则提供了条件互信息和 Markov 接口的代数关系，可用于表达哪些边界摘要保留预测信息。
+
+现在可以为这些接口提供一组更具体的实例：
+
+$$
+\boxed{
+\text{事件前缀 }b
+\longleftrightarrow
+\text{未来剩余计数 }a-b;
+}
+$$
+
+$$
+\boxed{
+\text{切面遗漏量}
+=
+I(U;V\mid q(b));
+}
+$$
+
+$$
+\boxed{
+\text{精确线性跨切面容量}
+=
+\operatorname{SchmidtRank};
+}
+$$
+
+$$
+\boxed{
+\text{有限安全见证的最小概率}
+\ge
+\binom{L}{\lfloor L/2\rfloor}^{-1}.
+}
+$$
+
+它们分别回答不同问题：
+

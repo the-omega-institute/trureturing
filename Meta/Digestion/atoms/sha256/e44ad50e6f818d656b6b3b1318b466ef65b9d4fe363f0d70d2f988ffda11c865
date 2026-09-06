@@ -1,0 +1,22 @@
+## 定理二：RH 等价于这个实际边界函数的收缩性
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal S_\xi
+\text{ 在单位圆盘内解析，且 }
+|\mathcal S_\xi(z)|\le1.
+}
+\tag{14}
+$$
+
+由于 \(\mathcal S_\xi(0)=0\)，合法时还满足更强的
+
+$$
+\boxed{
+|\mathcal S_\xi(z)|\le|z|.
+}
+\tag{15}
+$$
+
