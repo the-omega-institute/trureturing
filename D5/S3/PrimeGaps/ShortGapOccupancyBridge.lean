@@ -30,8 +30,8 @@ residue class. This is the finite local notion used by admissible prime tuples. 
 theorem localSurvivorCount_pos_iff
     (H : Finset Int) (p : Nat) (hcount : localResidueCount H p ≤ p) :
     0 < localSurvivorCount H p ↔ localResidueCount H p < p := by
-  unfold localSurvivorCount
-  omega
+  simpa only [localSurvivorCount] using
+    (Nat.sub_pos_iff_lt (n := p) (m := localResidueCount H p))
 
 /-- A `k`-point offset set leaves at least `p-k` residue classes available modulo every
 modulus `p`. For `p > k` this gives a strictly positive local survivor budget without any

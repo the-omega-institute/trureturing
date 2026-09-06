@@ -121,18 +121,8 @@ theorem admissible_zero_even (H : Finset Nat) (h0 : 0 ∈ H)
 theorem bounded_nat_finset_lift (H : Finset Nat) (B : Nat)
     (hB : ∀ x ∈ H, x ≤ B) :
     ∃ K : Finset (Fin (B + 1)), K.image Fin.val = H ∧ K.card = H.card := by
-  let K : Finset (Fin (B + 1)) := Finset.univ.filter (fun x => x.val ∈ H)
-  have heq : K.image Fin.val = H := by
-    ext x
-    constructor
-    · intro hx
-      obtain ⟨y, hy, rfl⟩ := Finset.mem_image.mp hx
-      exact (Finset.mem_filter.mp hy).2
-    · intro hx
-      exact Finset.mem_image.mpr ⟨⟨x, by have := hB x hx; omega⟩,
-        Finset.mem_filter.mpr ⟨Finset.mem_univ _, hx⟩, rfl⟩
-  refine ⟨K, heq, ?_⟩
-  rw [← heq, Finset.card_image_of_injective _ Fin.val_injective]
+  let hlt := fun x hx => Nat.lt_succ_of_le (hB x hx)
+  exact ⟨H.attachFin hlt, Finset.image_val_attachFin hlt, Finset.card_attachFin H hlt⟩
 
 /-- Positive-cardinality windows are equivalent to normalized bounded finite sets. -/
 theorem exists_normalized_admissible_window_iff (k B : Nat) (hk : 0 < k) :
