@@ -1384,7 +1384,7 @@ R_\varphi(s)=1.
 
 下列内容保留为后续形式化目标：
 
-1. 在绝对收敛半平面中建立有限或无限黄金壳测度的 Fourier 系数与 `-L'/L` 垂直采样之间的定理；
+1. 在绝对收敛半平面中建立有限或无限黄金壳测度的 Fourier 系数与 `-L'/L` 竖直采样之间的定理；
 2. 形式化 `L(1,chi_5)=2 log(phi)/sqrt(5)`，并连接黄金 Möbius Lyapunov 指数；
 3. 将 explicit formula 实现为 prime-shell test space 与 zero-spectrum distribution 之间的连续线性泛函恒等式；
 4. 构造足够完备的 golden Weil frame，并证明其正性是否等价于完整 Weil criterion；
@@ -2218,8 +2218,7 @@ Lean 证明
 \le
 M^2
 \left(
-2\|a-1\|\varepsilon
-+2\varepsilon^2
+2\|a-1\|\varepsilon+2\varepsilon^2
 \right)^2
 }
 \]
@@ -7562,3 +7561,414 @@ q_a(f)\ge10^{-6}\|f\|^2
 - https://arxiv.org/abs/2607.24830
 - https://dlmf.nist.gov/25.11
 - https://dlmf.nist.gov/5.11
+
+---
+
+## [PR #5602] SECOND_JET_RAYLEIGH_ENCLOSURE_AND_REAL_ZEROS
+
+# 2026-09-06：完整正下包络、射影模态误差与固定窗口的实零点极限
+
+本节补齐上一轮 `WeilRayleighEnclosureModeCapture` 与 `WeilArithmeticCouplingSecondJet` 的理论说明，并记录本轮 `WeilArithmeticCouplingParityGram`、`certify_prime3_refined.py` 和实际输出 `prime3_refined_certificate.json`。三个 Lean owner 均有对应 Scribe。Lean elaboration、`#print axioms` 和 Scribe compiler 未在本环境执行；下面明确区分源码中的证明脚本、纸面推导和已执行的区间计算。
+
+## 1. 三个认证数取代未量化的近基态断言
+
+固定同一闭 Weil 形式及其自伴实现 A。设归一化候选 k 属于算子域，真实归一化最低模态 u 满足 Au=lambda*u。记 mu=q(k)。已证的变分关系为 lambda<=mu。若实际算术证书给出
+
+\[
+ell\le\lambda\le\mu\le U<T,\qquad
+f\perp k\Longrightarrow q(f)\ge T\|f\|^2,
+\tag{RE1}
+\]
+
+则可以直接用能量包络捕获最低模态。这里 ell 是完整算子的下界，不能用有限 Ritz 最低值充当 ell；T 的量词覆盖全部形式域中的正交方向。
+
+令 alpha=<k,u>、v=u-alpha*k，内积对第二变量线性。由对称性及特征方程，
+
+\[
+\langle v,Ak\rangle=\overline\alpha(\lambda-\mu),\qquad
+q(v)=\lambda\|v\|^2+|\alpha|^2(\mu-\lambda).
+\tag{RE2}
+\]
+
+因 v 与 k 正交，得到
+
+\[
+(T-\lambda)\|v\|^2\le|\alpha|^2(\mu-\lambda).
+\tag{RE3}
+\]
+
+此前 Lean owner `WeilRayleighEnclosureModeCapture` 在实不变线性算子域 D 上，以嵌入 iota:D->H 和作用 A:D->H 证明了较松的
+
+\[
+(T-U)\|v\|^2\le U-ell.
+\]
+
+该表示允许非有界算子；没有把真实 Weil 算子替换为处处有定义的有限矩阵。到实际复 Hilbert 空间的实不变域识别另需承接。本节的复数版 (RE2) 及以下射影加强为纸面证明。
+
+若 alpha=0，则 v=u，(RE3) 与 T>lambda、||u||=1 矛盾。所以 alpha 非零。保留 (RE3) 中的重叠因子可直接得到
+
+\[
+\boxed{
+\left\|\frac{u}{\alpha}-k\right\|^2
+\le\frac{\mu-\lambda}{T-\lambda}
+\le\frac{U-ell}{T-ell}<1.
+}
+\tag{RE4}
+\]
+
+第二个不等式先使用 mu<=U，再使用 x->(U-x)/(T-x) 在 x<T 上递减及 ell<=lambda。最后一个严格不等式直接来自 U<T。因此无需额外假设前一轮松预算 R=(U-ell)/(T-U)<1，也无需再将其放大为 R/(1-R)。归一化的改变只有非零标量，不改变 Fourier 变换的零点。
+
+若某个独立模型族 k_a 已有 c_a*hat(k_a)->Xi 的条带紧集一致极限，则 (RE4) 与固定支撑 Fourier 估计给出新的充分条件
+
+\[
+\boxed{
+|c_a|\sqrt{2a}\,e^{ba}
+\sqrt{\frac{U_a-ell_a}{T_a-ell_a}}\longrightarrow0
+\qquad(0\le b<1/2).
+}
+\tag{RE5}
+\]
+
+本节没有证明这条无界尺度极限。还需证明所选有限候选与文献 prolate 模型之间的相容性。
+
+修正此前会话中的过强判断：换成 Rayleigh 包络并不证明已经绕过固定内缩平移障碍。它改变了可认证的误差量；该误差量能否在所需候选尺度族上衰减，仍是数学任务。尤其不能将另一个已知 Xi 极限的模型和本次有限候选默认为同一对象。
+
+## 2. 已提交的二阶算术 jet 与实际反射奇性
+
+沿用本卷 (AC1) 的真实算术符号 s_c(n)，以及
+
+\[
+A_{nm}=\frac{s_c(n)-s_c(m)}{\pi(m-n)}\quad(n\ne m),\qquad |s_c(n)|\le B_c.
+\]
+
+从
+
+\[
+\frac1{m-n}=\frac1m+\frac n{m^2}+\frac{n^2}{m^2(m-n)}
+\]
+
+得到已有 `WeilArithmeticCouplingSecondJet` 主定理：对任意复系数及 |m|>N，
+
+\[
+|d_m(v)-J_m(v)|\le
+\frac{2B_cN^2}{\pi|m|^2(|m|-N)}\sum_{|n|\le N}|v_n|,
+\tag{PJ1}
+\]
+
+其中
+
+\[
+J_m(v)=\frac{B_0-s_c(m)A_0}{\pi m}
++\frac{B_1-s_c(m)A_1}{\pi m^2},
+\]
+
+\[
+A_0=\sum v_n,\quad B_0=\sum s_c(n)v_n,\quad
+A_1=\sum nv_n,\quad B_1=\sum n s_c(n)v_n.
+\]
+
+没有将任何边界矩设为零。新增 `WeilArithmeticCouplingParityGram.arithmetic_boundary_symbol_neg` 从实际 pole、Gamma 级数和有限 von Mangoldt 正弦项逐项推出
+
+\[
+s_c(-m)=-s_c(m).
+\tag{PJ2}
+\]
+
+在 c>=2 的算术范围，Gamma 级数的绝对收敛已由前置真源独立证明。
+
+令
+
+\[
+X_m=-s_c(m)A_0+B_1/m,\qquad Y_m=B_0-s_c(m)A_1/m.
+\]
+
+则 J_m=(X_m+Y_m)/(pi*m)、J_-m=(X_m-Y_m)/(pi*m)。新增 Lean 主定理 `arithmetic_second_jet_pair_energy` 对任意复向量证明
+
+\[
+\boxed{
+|J_m|^2+|J_{-m}|^2
+=\frac2{\pi^2m^2}(|X_m|^2+|Y_m|^2).
+}
+\tag{PJ3}
+\]
+
+这是复内积空间 parallelogram identity 在既有真实算术 jet 上的应用。系数无需为偶或实，有限索引集无需反射闭合。
+
+## 3. 两个正的矩 Gram 块及完整无限尾
+
+(PJ3) 对正整数 m>M 求和，将 jet 能量分成两个 2x2 正半定矩块。对 (A0,B1) 的块为
+
+\[
+\frac2{\pi^2}\sum_{m>M}
+\begin{pmatrix}
+s_m^2/m^2&-s_m/m^3\\
+-s_m/m^3&1/m^4
+\end{pmatrix},
+\]
+
+对 (B0,A1) 的块为
+
+\[
+\frac2{\pi^2}\sum_{m>M}
+\begin{pmatrix}
+1/m^2&-s_m/m^3\\
+-s_m/m^3&s_m^2/m^4
+\end{pmatrix}.
+\]
+
+每项是一个实行向量的 Gram，因而正性不依赖符号猜测。|s_m|<=B 保证各项绝对可和。这里保留的交叉矩 sum s_m/m^3 可以在后续获得更锋利的证书。本次计算使用下述更保守且独立的四矩上界，并未声称实际计算了这两个精确无限块。
+
+利用 |x+y|^2<=2|x|^2+2|y|^2、(PJ1)、(PJ3)、有限 Cauchy-Schwarz 和
+
+\[
+\sum_{m>M}m^{-2}\le M^{-1},\quad
+\sum_{m>M}m^{-4}\le M^{-3},\quad
+\sum_{m>M}m^{-6}\le M^{-5},
+\]
+
+得到纸面定理
+
+\[
+\boxed{
+\begin{aligned}
+\sum_{|m|>M}|d_m(v)|^2\le{}&
+\frac8{\pi^2}\left[
+\frac{B^2|A_0|^2+|B_0|^2}{M}
++\frac{B^2|A_1|^2+|B_1|^2}{M^3}\right]\\
+&+\epsilon^{(2)}_{N,M}\|v\|^2,
+\end{aligned}
+}
+\tag{PJ4}
+\]
+
+\[
+\boxed{
+\epsilon^{(2)}_{N,M}=
+\frac{16B^2N^4(2N+1)}{\pi^2(1-N/M)^2M^5}.
+}
+\tag{PJ5}
+\]
+
+具体地，两个余项的平方和不超过
+8*B^2*N^4*(sum|v_n|)^2/[pi^2*(1-N/M)^2*m^6]；再由 actual=jet+remainder 的二倍平方界得到 (PJ5) 中的 16。上述支配同时证明 square summability。完整无限求和仍是纸面桥，不能把 Lean 的逐模态等式标成整个 Gram 尾已内核验证。
+
+## 4. 实际执行的 c=3 精化证书
+
+保持 a=log3/2、N=64、M=32768 及前一节的同一 129 维 dyadic 偶候选 v，令 k=v/||v||。本轮不使用 zeta 零点或真实最低特征向量作为输入，认证程序中也没有特征向量求解器。
+
+高模态正下界继续由实际 Gamma 正级数、prime-2 压缩平移的支撑几何及极点负通道给出。区间程序重新验证
+
+\[
+beta>1.04126433194457,\qquad B_3<3,
+\]
+
+因此在完整无限空间 Q_NH 上仍保守使用 q(y)>=||y||^2。数字 beta 只是显示，程序比较的是区间与精确常数 1。
+
+本次不再把所有耦合条目误差统一替换为同一个最坏上界。正外部行的近似条目量化为 2^-44 的整数倍；每项的向外舍入误差半径再向上量化为 2^-60 的整数倍。令整数半径为 r_mn，则完整正负耦合误差满足
+
+\[
+\|E\|_F^2\le e^2=2\sum_{m,n}r_{mn}^2\,2^{-120}.
+\]
+
+求和采用整数运算，并在运算前核验 int64 不溢出。反射将负模态 Gram 精确识别为正模态 Gram 的逆序共轭。完整 Gram G_q 使用分块整数乘积精确构造。实际运行得到
+
+\[
+e^2=\frac{2249064940320895}
+{664613997892457936451903530140172288}.
+\]
+
+设 eta=10^-10。程序以精确有理数验证
+
+\[
+e^2<eta,\qquad4\operatorname{tr}(G_q)e^2<(eta-e^2)^2.
+\]
+
+由 ||C_q||<=||C_q||_F 得到
+
+\[
+\|C^*C-G_q\|\le2\sqrt{\operatorname{tr}(G_q)}\sqrt{e^2}+e^2<eta.
+\]
+
+这把旧的 10^-7 Gram 量化预算压到 10^-10，且没有假定 BLAS 浮点矩阵乘积精确。
+
+(PJ5) 在相同参数上的解析余项小于 9*10^-13。写 s=(s_3(n))、t=(n)、b=(n*s_3(n))、one=(1)，完整耦合 Gram 的认证上界为
+
+\[
+\overline G=G_q+
+\frac8{\pi^2}\left[
+\frac{ss^*+9\,one\,one^*}{M}
++\frac{bb^*+9tt^*}{M^3}\right]
++(10^{-10}+9\cdot10^{-13})I.
+\tag{PC1}
+\]
+
+每个矩阵条目仍按实际 s 值取区间。PC1 控制的是 C_N^*C_N，其中 C_N=Q_NA|P_NH；没有对 A^2 的定义域作假设。
+
+## 5. 完整算子首次在本 PR 得到双边正包络
+
+定义精确有理常数
+
+\[
+ell=\frac{103}{2000000000},\qquad
+U=\frac{560909}{10000000000000},\qquad
+T=\frac1{200000}.
+\tag{PC2}
+\]
+
+同一算术矩阵、同一完整耦合上界及同一固定候选通过了两个区间 LDL 检验：
+
+\[
+\boxed{A_N-ell I-\frac{\overline G}{1-ell}\succ0,}
+\qquad
+\boxed{A_N-TI-\frac{\overline G}{1-T}+vv^*\succ0.}
+\tag{PC3}
+\]
+
+两者分别在 e0、ej+e-j 的偶块和 ej-e-j 的奇块上作非正交基的精确合同变换。最小 LDL 主元下端点的显示值分别为
+
+| 检验 | 偶块 | 奇块 |
+|---|---:|---:|
+| 完整下界 | 0.0031531449201242043 | 0.03974454928419704 |
+| 候选正交补 | 0.2649527465156704 | 0.03954403713951146 |
+
+这些主元用于证明矩阵正定，不能当作矩阵的最小特征值界。
+
+候选 Rayleigh 商仍由实际完整算术矩阵算出，其区间为
+
+\[
+mu\in[5.6090783527585\ldots,5.6090823855575\ldots]\cdot10^{-8}<U.
+\]
+
+对任意形式域向量 f=x+y，x=P_Nf、y=Q_Nf，使用 q(y)>=||y||^2，并对每个 shift=ell,T 配方。第一个矩阵检验给出所有 f 上的完整下界；第二个检验在 f 与 k 正交时消去 vv^* 项。由此得到
+
+\[
+\boxed{q(f)\ge ell\|f\|^2\quad\text{对全部 }f\in\operatorname{Dom}(q),}
+\]
+
+\[
+\boxed{f\perp k\Longrightarrow q(f)\ge T\|f\|^2.}
+\tag{PC4}
+\]
+
+这是纸面算子识别、无限尾估计和已执行区间证书共同给出的固定尺度结果。PC4 尚未成为 Lean 中完整算子定理。
+
+紧 resolvent 和 min-max 原理于是给出
+
+\[
+5.15\cdot10^{-8}\le\lambda_0<5.60909\cdot10^{-8},
+\qquad\lambda_1\ge5\cdot10^{-6},
+\]
+
+\[
+\lambda_1-\lambda_0>4.943909\cdot10^{-6}.
+\tag{PC5}
+\]
+
+唯一最低模态为偶：若其反射本征值为 -1，则该模态与偶候选 k 正交，与 lambda0<T 矛盾。实际算子还保复共轭，所以该单纯最低线可选取实偶归一化代表。
+
+由 (RE4) 得到本次真正的模态捕获数字
+
+\[
+\boxed{
+\left\|u/\langle k,u\rangle-k\right\|^2
+\le\frac{U-ell}{T-ell}
+=\frac{15303}{16495000}
+<\left(\frac{61}{2000}\right)^2.
+}
+\tag{PC6}
+\]
+
+因而射影重归一化后的真实最低模态与明确候选的 L2 距离严格小于 0.0305。
+
+## 6. 实际运行与可信计算边界
+
+完整可复验源为 `research/weil_ground_mode/certify_prime3_refined.py`，SHA-256：
+
+`8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0`。
+
+实际输出为 `research/weil_ground_mode/prime3_refined_certificate.json`，其中记录精确 Gram SHA-256：
+
+`7f4e1049624807432efe96a68fe63babbc1c3bd37f2d40600a4cddadbddb85a9`。
+
+运行使用 Python 3.13.5、NumPy 2.3.5、mpmath 1.3.0、SymPy 1.14.0。有限矩阵采用 55 位区间；向量化耦合使用每步 nextafter 向外舍入的 binary64 基本运算。正弦、反正切、digamma、trigamma 和指数尾项保留前一节已经说明的独立余项。量化、整数 Gram 及半径平方和均有运算前的精确溢出检查。认证以全部区间严格比较通过为准，JSON 中的十进制主元仅作显示。
+
+程序已实际运行；没有把数值探索当成认证。该计算依赖所列区间实现、IEEE 基本运算、整数实现与 Python 解释器；这些实现未被 Lean 形式化。新 Lean 文件中没有 sorry、admit 或新公理声明，但 #print axioms 未执行，不能据此称整条证明链已内核闭合。
+
+## 7. 固定窗口的真实最低模态 Fourier 变换只有实零点
+
+本节补上一条纸面文献桥，使固定窗口结论真正到达实零点对象。它不直接把自伴性代入 Connes-van Suijlekom 的 Theorem 6.1。该定理的精确陈述要求规定的分布二次型及三角多项式域上的本质自伴性。以下使用他们的有限维 Theorem 5.6，并显式通过同一 Weil 形式的 form core 取极限。
+
+令 P_JH 为 |n|<=J 的完整奇偶 Fourier 空间，J>=64，A_J 为真实 q 在其上的矩阵。由 PC4，任意 J>=64 都有
+
+\[
+\lambda_{0,J}\le mu<T,\qquad\lambda_{1,J}\ge T.
+\]
+
+因此其最低特征值单纯，且由同一偶候选排除奇性。矩阵
+
+\[
+Q_J=A_J-\lambda_{0,J}I
+\]
+
+正半定并有一维偶核。其对角值为偶序列，非对角值精确为
+
+\[
+(Q_J)_{nm}=\frac{b_n-b_m}{n-m},\qquad b_n=-s_c(n)/\pi,
+\quad b_{-n}=-b_n.
+\]
+
+这正是 Connes-van Suijlekom (11) 的矩阵类；减去实标量对角不改变该结构。Theorem 5.6(ii) 应用于这个实际矩阵，给出对应三角函数的 Fourier 变换只有实零点。其 [0,1] 坐标经 y=x/L+1/2 变为本卷的 e_n=(-1)^n*L^-1/2*exp(2*pi*i*n*x/L)；平移只乘无零点指数，实尺度变换及 Fourier 正负号变换保持实零点性。
+
+实际 Weil 形式的三角多项式 form-core 性由 Connes-Consani, Spectral triples and zeta-cycles, arXiv:2106.01715v1, Lemma 2.2 及 Proposition 2.3 给出；Suzuki, arXiv:2606.09096v1, Lemma 3.1 的证明及 Section 3.2 明确复述并用于同一个 Q_W^a。故 Rayleigh-Ritz 最低值满足
+
+\[
+\lambda_{0,J}\downarrow\lambda_0.
+\]
+
+设 u_J 为相位与 u 对齐的归一化有限最低模态，分解 u_J=alpha_J*u+w_J，w_J 与 u 正交。完整算子谱间隔给出
+
+\[
+\|w_J\|^2\le
+\frac{\lambda_{0,J}-\lambda_0}{T-\lambda_0}\longrightarrow0,
+\]
+
+从而 u_J->u in L2。同一固定支撑 [-a,a] 上，
+
+\[
+\sup_{z\in K}|\widehat u_J(z)-\widehat u(z)|
+\le\sqrt{2a}\,e^{a\sup_K|\Im z|}\|u_J-u\|_2\longrightarrow0
+\]
+
+对每个复紧集 K 成立。u 非零，Fourier 唯一性保证 hat(u) 非恒零。分别在上、下半平面应用 Hurwitz，得到
+
+\[
+\boxed{\widehat u(z)=0\Longrightarrow z\in\mathbb R
+\quad\text{在本次 }a=\tfrac12\log3\text{ 的固定窗口}.}
+\tag{RZ1}
+\]
+
+这里的无限极限是 J->infinity 且 a 固定；它没有证明 a->infinity 时 hat(u_a) 的归一化极限是 Xi。RZ1 是文献有限维定理、既有 form-core 性与本次完整算术证书的纸面推论，尚未接成 Lean 的解析零点定理。
+
+## 8. 文献比较与下一条真正承重的误差
+
+Connes-Consani-Moscovici, arXiv:2511.22755v1, Lemma 7.3 已给出明确 prolate 模型 k_lambda 的 Xi 极限。其 Section 8 仍要求实际最低模态的简单偶性及足够精确的模型逼近。本节在一个固定含素数窗口给出后验模态估计，不宣称证明该模型的无界尺度识别。
+
+另检索并读取了 Marcus Chuk, arXiv:2608.24827 的原始摘要。摘要报告半宽 0.8 窗口上的全空间正性和 simple-even 最低模态；这比本节 log3/2 约 0.5493 的窗口更大。因此本轮成果的价值是与仓库真实符号和可复验后验误差的接合，不是刷新最大正性窗口。该摘要所述 Landau-Widom 曲线拟合不能当作已证尺度渐近律；本轮未取得该预印本全文并逐项复核其证明。
+
+当前新的研究重点是误差分层。量化误差和未计算尾项已能任意指定预算；但在固定 P_N 和固定候选下，完整耦合导致的能量下降不会随算术精度提高自动消失。必须区分
+
+\[
+\text{数值/尾项包络宽度},\quad
+\text{保守 Schur 估计的松弛},\quad
+\text{候选与真实最低线的固有偏差}.
+\]
+
+下一步应让高模态按其实际能量进入候选适配的 Schur/Feshbach 下包络，或者构造带外部修正的明确候选，并证明其与 prolate 模型的对应。继续只提高 scalar jet 阶数不保证 (RE5)。最终承重任务仍是：沿明确 a_n->infinity 的序列，独立推出 (RE1) 和 (RE5)，并识别同一 k_a 的 Xi 极限。
+
+参考：
+
+- Connes, Consani, Moscovici, Zeta Spectral Triples, arXiv:2511.22755v1, Sections 3, 4, 7, 8.
+- Connes, van Suijlekom, Quadratic Forms, Real Zeros and Echoes of the Spectral Action, arXiv:2511.23257v1, (11), Theorems 5.6 and 6.1. The matrix and theorem pages were inspected as PDF images.
+- Suzuki, Weil's quadratic form via the screw function, arXiv:2606.09096v1, Lemma 3.1 and Sections 3.2, 4.1.
+- Connes, Consani, Spectral triples and zeta-cycles, Enseign. Math. 69 (2023), 93-148; arXiv:2106.01715v1, Lemma 2.2 and Proposition 2.3. The arXiv text and the publisher bibliographic record were checked.
+- Marcus Chuk, Weil positivity in compact windows: certified two-sided bounds and a Landau-Widom decay law, arXiv:2608.24827, original abstract only in this round.
