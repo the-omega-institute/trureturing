@@ -39,12 +39,6 @@ def StructuralPrimitiveRealization.toTheoremUnit {arena : StructuralArena.{u}}
   Statement := statement
   proof := proof
 
-/-- The bridge and compiled kernels are checked against the registered unit. -/
-structure StructuralLegacyPrimitiveRealization {arena : StructuralArena.{u}}
-    (lawArena : StructuralPrimitiveLawArena.{u, v, w} arena) (statement : Prop)
-    (realization : StructuralPrimitiveRealization arena lawArena.signature) : Prop where
-  equivalence : statement ↔ lawArena.Law realization
-
 /-- Closed numeric truth has no supplied object-level variation. The validator
 also checks that both sides reduce to numerals and the theorem has this exact type. -/
 structure ClosedNumericalObligation (theoremName : Name) (left right : Nat) : Prop where

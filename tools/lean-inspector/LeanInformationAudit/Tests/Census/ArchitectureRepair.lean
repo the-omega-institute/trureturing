@@ -1,4 +1,4 @@
-import LeanInformationAudit.Tests.Census.Evidence
+import LeanInformationAudit.Tests.Census.CommandRejection
 
 open Lean LeanInformationAudit DispositionCensus
 open Lean.Elab.Command
@@ -29,9 +29,6 @@ def unrelatedCatalog : StructuralCatalog unrelatedArena where
 theorem unrelatedRegistration : StructuralRegistrationEvidence ``closedTruth
     unrelatedArena unrelatedUnit unrelatedCatalog () (2 + 3 = 5) := ⟨rfl, rfl⟩
 
-register_structural_law unrelatedRegistration in Evidence.structuralLawArena
-  nondegeneracy Evidence.structuralLawNondegenerate
-
 theorem unrelatedRealization : unrelatedUnit.Statement = (2 + 3 = 5) := rfl
 
 def unrelatedWitness : StructuralStrictnessCertificate unrelatedCatalog () where
@@ -55,14 +52,27 @@ def unrelatedInventory : DispositionInventory := ⟨"probe-head", #[
     witnessCertificate := ``unrelatedWitness }⟩]⟩
 
 -- ARCH-C01: statement equality cannot certify compiled primitive kernels.
-/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.ArchitectureRepair.closedTruth class=structural_occurrence invalid=realization -/
+/--
+info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.ArchitectureRepair.closedTruth class=structural_occurrence invalid=realization.provenance
+---
+info: rejected=true output-absent=true certificate-absent=true
+-/
 #guard_msgs in
-run_cmd liftTermElabM do
-  validateEvidence (← getEnv).header.mainModule unrelatedInventory
-
-theorem wrongKernelTheorem : ∀ n : Nat, n % 2 < 2 := Evidence.structuralTheorem
+run_cmd do
+  expectRejectedCensus (← getEnv).header.mainModule ``unrelatedInventory
+    `unrelatedCoverage unrelatedInventory
+    (classError ``closedTruth "structural_occurrence" "realization.provenance")
 
 abbrev wrongKernelArena : StructuralArena := ⟨Nat⟩
+
+def wrongKernelLaw : StructuralPrimitiveLawArena wrongKernelArena := Evidence.structuralLawArena
+
+theorem wrongKernelNondegenerate : wrongKernelLaw.Nondegenerate :=
+  Evidence.structuralLawNondegenerate
+
+structural_theorem wrongKernelTheorem in wrongKernelLaw
+  realization Evidence.structuralReadouts nondegeneracy wrongKernelNondegenerate :=
+  fun n => Nat.mod_lt n (by decide)
 
 def wrongKernelUnit : StructuralTheoremUnit wrongKernelArena := {
   unrelatedUnit with Statement := ∀ n : Nat, n % 2 < 2, proof := wrongKernelTheorem }
@@ -72,9 +82,6 @@ def wrongKernelCatalog : StructuralCatalog wrongKernelArena := {
 
 theorem wrongKernelRegistration : StructuralRegistrationEvidence ``wrongKernelTheorem
     wrongKernelArena wrongKernelUnit wrongKernelCatalog () (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
-
-register_structural_law wrongKernelRegistration in Evidence.structuralLawArena
-  nondegeneracy Evidence.structuralLawNondegenerate
 
 def wrongKernelWitness : StructuralStrictnessCertificate wrongKernelCatalog () where
   inclusion := by intro _ _ _ candidate ne; exact (ne rfl).elim
@@ -95,7 +102,7 @@ run_cmd liftTermElabM do
     ⟨⟨``wrongKernelTheorem, "wrong-kernel"⟩, .structuralOccurrence {
       canonicalArena := ``wrongKernelArena
       registration := ``wrongKernelRegistration
-      «realization» := ``Evidence.structuralRealization
+      «realization» := ``wrongKernelTheorem.__structural_realization
       strictnessCertificate := ``wrongKernelStrictness
       witnessCertificate := ``wrongKernelWitness }⟩]⟩
 
@@ -104,16 +111,13 @@ abbrev wrongLawArena : StructuralArena := ⟨Nat⟩
 theorem wrongLawTheorem : 2 + 3 = 5 := closedTruth
 
 def wrongLawUnit : StructuralTheoremUnit wrongLawArena := {
-  Evidence.structuralUnit with Statement := 2 + 3 = 5, proof := wrongLawTheorem }
+  Evidence.structuralTheorem.__structural_unit with Statement := 2 + 3 = 5, proof := wrongLawTheorem }
 
 def wrongLawCatalog : StructuralCatalog wrongLawArena := {
   Evidence.structuralCatalog with theoremAt := fun _ => wrongLawUnit }
 
 theorem wrongLawRegistration : StructuralRegistrationEvidence ``wrongLawTheorem
     wrongLawArena wrongLawUnit wrongLawCatalog () (2 + 3 = 5) := ⟨rfl, rfl⟩
-
-register_structural_law wrongLawRegistration in Evidence.structuralLawArena
-  nondegeneracy Evidence.structuralLawNondegenerate
 
 def wrongLawWitness : StructuralStrictnessCertificate wrongLawCatalog () where
   inclusion := by intro _ _ _ candidate ne; exact (ne rfl).elim
@@ -127,16 +131,24 @@ def wrongLawWitness : StructuralStrictnessCertificate wrongLawCatalog () where
 theorem wrongLawStrictness : wrongLawCatalog.StructurallyLowersEscape () :=
   wrongLawCatalog.structurallyLowersEscape_of_certificate () wrongLawWitness
 
-/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.ArchitectureRepair.wrongLawTheorem class=structural_occurrence invalid=realization.statement -/
-#guard_msgs in
-run_cmd liftTermElabM do
-  validateEvidence (← getEnv).header.mainModule ⟨"probe-head", #[
+def wrongLawInventory : DispositionInventory := ⟨"probe-head", #[
     ⟨⟨``wrongLawTheorem, "wrong-law"⟩, .structuralOccurrence {
       canonicalArena := ``wrongLawArena
       registration := ``wrongLawRegistration
-      «realization» := ``Evidence.structuralRealization
+      «realization» := ``Evidence.structuralTheorem.__structural_realization
       strictnessCertificate := ``wrongLawStrictness
       witnessCertificate := ``wrongLawWitness }⟩]⟩
+
+/--
+info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.ArchitectureRepair.wrongLawTheorem class=structural_occurrence invalid=realization.provenance
+---
+info: rejected=true output-absent=true certificate-absent=true
+-/
+#guard_msgs in
+run_cmd do
+  expectRejectedCensus (← getEnv).header.mainModule ``wrongLawInventory
+    `wrongLawCoverage wrongLawInventory
+    (classError ``wrongLawTheorem "structural_occurrence" "realization.provenance")
 
 -- ARCH-C03: even otherwise valid structural evidence requires a real root.
 /-- error: IE-C044 DispositionCensusMismatch head=fixture-head component=root expected=existing-module actual=NoSuchRoot -/
@@ -146,7 +158,7 @@ run_cmd liftTermElabM do
     entries := Evidence.inventory.entries.filter fun row =>
       row.2.className == "structural_occurrence" }
 
-/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.structuralTheorem class=structural_occurrence invalid=registration.root_membership -/
+/-- error: IE-C044 DispositionCensusMismatch head=fixture-head component=root expected=import-closure-containing:LeanInformationAudit.Tests.Census.Evidence.structuralTheorem actual=LeanInformationAudit.Tests.SealSuccess -/
 #guard_msgs in
 run_cmd liftTermElabM do
   validateEvidence `LeanInformationAudit.Tests.SealSuccess { Evidence.inventory with
@@ -165,7 +177,7 @@ def arbitraryNoBundle : UnreachableElaborationEvidence (∀ n : Nat, n % 2 < 2) 
 def arbitraryNoRealization : UnreachableElaborationEvidence (∀ n : Nat, n % 2 < 2) :=
   { reason := .noFaithfulPrimitiveRealization, candidateArena := some ``unrelatedArena, explanation := "x" }
 
--- ARCH-C02: pin each unsupported reason separately.
+-- ARCH-C02: failures of this candidate presentation, not universal impossibility claims.
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.ArchitectureRepair.unregisteredDynamics class=unreachable invalid=evidence.failed_obligation -/
 #guard_msgs in
 run_cmd liftTermElabM do

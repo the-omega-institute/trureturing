@@ -1,5 +1,5 @@
 import LeanInformationAudit.Tests.Census.UnreachableProofs
-import LeanInformationAudit.Tests.Census.CommandRejection
+import LeanInformationAudit.Tests.Census.RegisteredClosedTruth
 
 open Lean LeanInformationAudit DispositionCensus
 open Lean.Elab.Command
@@ -49,5 +49,37 @@ run_cmd do
       "LeanInformationAudit.Tests.SealSuccess")
 
 #print axioms failedReadout
+
+-- Provenance already supplies a realization before any catalog membership exists.
+structural_theorem generatedWithoutMembership in RegisteredClosedTruth.lawArena
+  realization RegisteredClosedTruth.readouts
+  nondegeneracy RegisteredClosedTruth.nondegenerate := rfl
+
+theorem numericalObligation : ClosedNumericalObligation ``generatedWithoutMembership (2 + 3) 5 :=
+  ⟨generatedWithoutMembership⟩
+
+def noCarrier : UnreachableElaborationEvidence (2 + 3 = 5) where
+  reason := .noCanonicalObjectCarrier
+  candidateArena := none
+  explanation := "Candidate claims no supplied object carrier."
+  failedObligation := some ``numericalObligation
+
+def withoutMembership : DispositionInventory := ⟨"fixture-head", #[
+  ⟨⟨``generatedWithoutMembership, "without-membership-id"⟩,
+    .unreachable ⟨.noCanonicalObjectCarrier, ``noCarrier⟩⟩]⟩
+
+/--
+info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.UnreachableRoot.generatedWithoutMembership class=unreachable invalid=registered_structural_realization
+---
+info: rejected=true output-absent=true certificate-absent=true
+-/
+#guard_msgs in
+run_cmd do
+  expectRejectedCensus (← getEnv).header.mainModule ``withoutMembership
+    `withoutMembershipCoverage withoutMembership
+    (classError ``generatedWithoutMembership "unreachable" "registered_structural_realization")
+
+#print axioms generatedWithoutMembership
+#print axioms numericalObligation
 
 end LeanInformationAudit.Tests.Census.UnreachableRoot

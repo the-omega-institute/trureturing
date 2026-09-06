@@ -8,7 +8,11 @@ namespace LeanInformationAudit.Tests.Census.SplitRootCatalog
 
 abbrev arena : StructuralArena := ⟨Nat⟩
 
-theorem parity : ∀ n : Nat, n % 2 < 2 := Evidence.structuralTheorem
+def lawArena : StructuralPrimitiveLawArena arena := Evidence.structuralLawArena
+theorem nondegenerate : lawArena.Nondegenerate := Evidence.structuralLawNondegenerate
+structural_theorem parity in lawArena
+  realization Evidence.structuralReadouts nondegeneracy nondegenerate :=
+  fun n => Nat.mod_lt n (by decide)
 theorem truth : True := True.intro
 
 def constantUnit : StructuralTheoremUnit arena where
@@ -20,15 +24,12 @@ def constantUnit : StructuralTheoremUnit arena where
 
 abbrev firstCatalog : StructuralCatalog arena :=
   ⟨Fin 2, inferInstance, inferInstance,
-    fun i => if i = 0 then Evidence.structuralUnit else constantUnit⟩
+    fun i => if i = 0 then parity.__structural_unit else constantUnit⟩
 
 abbrev secondCatalog : StructuralCatalog arena := firstCatalog
 
 theorem firstRegistration : StructuralRegistrationEvidence ``parity arena
-    Evidence.structuralUnit firstCatalog 0 (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
-
-register_structural_law firstRegistration in Evidence.structuralLawArena
-  nondegeneracy Evidence.structuralLawNondegenerate
+    parity.__structural_unit firstCatalog 0 (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
 
 theorem secondRegistration : StructuralRegistrationEvidence ``truth arena
     constantUnit secondCatalog 1 True := ⟨rfl, rfl⟩
@@ -58,7 +59,7 @@ run_cmd liftTermElabM do
     ⟨⟨``parity, "parity"⟩, .structuralOccurrence {
       canonicalArena := ``arena
       registration := ``firstRegistration
-      «realization» := ``Evidence.structuralRealization
+      «realization» := ``parity.__structural_realization
       strictnessCertificate := ``strictness
       witnessCertificate := ``witness }⟩]⟩
 

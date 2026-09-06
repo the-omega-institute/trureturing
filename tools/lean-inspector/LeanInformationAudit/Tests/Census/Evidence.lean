@@ -16,8 +16,6 @@ theorem finiteNondegenerate : SealSuccess.t001Arena.toArena.Nondegenerate := by 
 abbrev infiniteArena : StructuralArena where
   State := Nat
 
-theorem structuralTheorem : ∀ n : Nat, n % 2 < 2 := fun n => Nat.mod_lt n (by decide)
-
 def structuralLawArena : StructuralPrimitiveLawArena infiniteArena where
   signature := ⟨Unit, inferInstance, fun _ => Nat⟩
   Law readouts := ∀ n, readouts.readout () n < 2
@@ -26,34 +24,24 @@ def structuralReadouts : StructuralPrimitiveRealization infiniteArena structural
   ⟨fun _ n => n % 2⟩
 
 theorem structuralLawNondegenerate : structuralLawArena.Nondegenerate := by
-  refine ⟨structuralReadouts, ⟨fun _ _ => (2 : Nat)⟩, structuralTheorem, ?_⟩
+  refine ⟨structuralReadouts, ⟨fun _ _ => (2 : Nat)⟩,
+    fun n => Nat.mod_lt n (by decide), ?_⟩
   intro holds
   exact (Nat.lt_irrefl 2) (holds 0)
 
-def structuralUnit : StructuralTheoremUnit infiniteArena where
-  PrimitiveIndex := Unit
-  primitiveIndexFintype := inferInstance
-  primitiveKernel := fun _ => {
-    relation := fun left right => left % 2 = right % 2
-    equivalence := eq_equivalence.comap fun state => state % 2 }
-  Statement := ∀ n : Nat, n % 2 < 2
-  proof := structuralTheorem
+structural_theorem structuralTheorem in structuralLawArena
+  realization structuralReadouts nondegeneracy structuralLawNondegenerate :=
+  fun n => Nat.mod_lt n (by decide)
 
 def structuralCatalog : StructuralCatalog infiniteArena where
   Index := Unit
   indexFintype := inferInstance
   indexDecidableEq := inferInstance
-  theoremAt := fun _ => structuralUnit
+  theoremAt := fun _ => structuralTheorem.__structural_unit
 
 theorem structuralRegistration : StructuralRegistrationEvidence ``structuralTheorem
-    infiniteArena structuralUnit
+    infiniteArena structuralTheorem.__structural_unit
     structuralCatalog () (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
-
-register_structural_law structuralRegistration in structuralLawArena
-  nondegeneracy structuralLawNondegenerate
-
-theorem structuralRealization : StructuralLegacyPrimitiveRealization structuralLawArena
-    (∀ n : Nat, n % 2 < 2) structuralReadouts := ⟨Iff.rfl⟩
 
 def structuralWitness : StructuralStrictnessCertificate structuralCatalog () where
   inclusion := by
@@ -108,7 +96,7 @@ def inventory : DispositionInventory := {
     ⟨⟨``structuralTheorem, "structural-id"⟩, .structuralOccurrence {
       canonicalArena := ``infiniteArena
       registration := ``structuralRegistration
-      «realization» := ``structuralRealization
+      «realization» := ``structuralTheorem.__structural_realization
       strictnessCertificate := ``structuralStrictness
       witnessCertificate := ``structuralWitness }⟩,
     ⟨⟨``boundedTheorem, "bounded-id"⟩, .boundedFiniteTruncation {
@@ -144,10 +132,10 @@ run_cmd do
 #print axioms infiniteArena
 #print axioms structuralTheorem
 #print axioms structuralLawNondegenerate
-#print axioms structuralUnit
+#print axioms structuralTheorem.__structural_unit
 #print axioms structuralCatalog
 #print axioms structuralRegistration
-#print axioms structuralRealization
+#print axioms structuralTheorem.__structural_realization
 #print axioms structuralWitness
 #print axioms structuralStrictness
 #print axioms boundedTheorem

@@ -6,7 +6,7 @@ open Lean.Elab.Command
 namespace LeanInformationAudit.Tests.Census.Evidence
 
 theorem duplicateStructuralRegistration : StructuralRegistrationEvidence ``structuralTheorem
-    infiniteArena structuralUnit
+    infiniteArena structuralTheorem.__structural_unit
     structuralCatalog () (∀ n : Nat, n % 2 < 2) := structuralRegistration
 
 -- An imported root is unaffected by registrations outside its own import closure.

@@ -41,6 +41,10 @@ run_cmd IO.FS.withTempDir fun dir => do
       certificate censusCoverageRepeat output $repeatStx))
   unless (← IO.FS.readFile firstPath) == (← IO.FS.readFile repeatPath) do
     throwError "census output is not byte-identical"
+  let projection ← ofExcept <| Json.parse (← IO.FS.readFile firstPath)
+  let counts ← ofExcept <| projection.getObjVal? "counts"
+  unless (← ofExcept <| counts.getObjValAs? Nat "structural_occurrence") == 1 do
+    throwError "generated parity theorem was not counted"
 
 #print axioms censusCoverage
 #print axioms censusCoverageRepeat

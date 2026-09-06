@@ -8,68 +8,21 @@ namespace LeanInformationAudit.Tests.Census.LawNondegeneracy
 
 theorem fakeCertificate : True := True.intro
 
--- Restore the environment to keep a mutant acceptance from poisoning later guards.
-/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.RegisteredClosedTruth.closedTruth class=structural_occurrence invalid=law.nondegeneracy -/
+/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.LawNondegeneracy.fakeGenerated class=structural_occurrence invalid=law.nondegeneracy -/
 #guard_msgs in
-run_cmd do
-  let env ← getEnv
-  try
-    elabCommand (← `(command|
-      register_structural_law RegisteredClosedTruth.registration in RegisteredClosedTruth.lawArena
-        nondegeneracy fakeCertificate))
-  finally
-    setEnv env
+structural_theorem fakeGenerated in RegisteredClosedTruth.lawArena
+  realization RegisteredClosedTruth.readouts nondegeneracy fakeCertificate := rfl
 
-/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.RegisteredClosedTruth.closedTruth class=structural_occurrence invalid=law.nondegeneracy -/
+/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.LawNondegeneracy.wrongLawGenerated class=structural_occurrence invalid=law.nondegeneracy -/
 #guard_msgs in
-run_cmd do
-  let env ← getEnv
-  try
-    elabCommand (← `(command|
-      register_structural_law RegisteredClosedTruth.registration in RegisteredClosedTruth.lawArena
-        nondegeneracy Evidence.structuralLawNondegenerate))
-  finally
-    setEnv env
+structural_theorem wrongLawGenerated in RegisteredClosedTruth.lawArena
+  realization RegisteredClosedTruth.readouts nondegeneracy Evidence.structuralLawNondegenerate := rfl
 
-/--
-info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.RegisteredClosedTruth.closedTruth class=structural_occurrence invalid=realization.law_registration
----
-info: rejected=true output-absent=true certificate-absent=true
--/
-#guard_msgs in
-run_cmd do
-  expectRejectedCensus (← getEnv).header.mainModule ``RegisteredClosedTruth.inventory
-    `rejectedRegistrationCoverage RegisteredClosedTruth.inventory
-    (classError ``RegisteredClosedTruth.closedTruth "structural_occurrence"
-      "realization.law_registration")
+def numericalLaw : StructuralPrimitiveLawArena RegisteredClosedTruth.arena where
+  signature := ⟨Unit, inferInstance, fun _ => Nat⟩
+  Law _ := 2 + 3 = 5
 
--- Corrupt only inspector metadata, via its resolved private declaration. This
--- exercises persisted-entry validation without exposing a production bypass.
-/--
-info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.RegisteredClosedTruth.closedTruth class=structural_occurrence invalid=realization.law_nondegeneracy
----
-info: rejected=true output-absent=true certificate-absent=true
--/
-#guard_msgs in
-run_cmd do
-  let env ← getEnv
-  let some (registryName, _) := env.constants.toList.find? (fun (name, _) =>
-      privateToUserName? name == some `LeanInformationAudit.DispositionCensus.structuralLawRegistry)
-    | throwError "private structural registry not found"
-  let registryId := mkIdent registryName
-  try
-    elabCommand (← `(command| run_cmd
-      modifyEnv fun current => ($registryId).addEntry current
-        (``RegisteredClosedTruth.registration, ``RegisteredClosedTruth.lawArena,
-          ``fakeCertificate, current.header.mainModule)))
-    expectRejectedCensus (← getEnv).header.mainModule ``RegisteredClosedTruth.inventory
-      `corruptedRegistrationCoverage RegisteredClosedTruth.inventory
-      (classError ``RegisteredClosedTruth.closedTruth "structural_occurrence"
-        "realization.law_nondegeneracy")
-  finally
-    setEnv env
-
-theorem numericalLawDegenerate : ¬RegisteredClosedTruth.lawArena.Nondegenerate := by
+theorem numericalLawDegenerate : ¬numericalLaw.Nondegenerate := by
   rintro ⟨_, _, _, fails⟩
   exact fails RegisteredClosedTruth.closedTruth
 
@@ -80,6 +33,13 @@ def falseLawArena : StructuralPrimitiveLawArena RegisteredClosedTruth.arena wher
 theorem falseLawDegenerate : ¬falseLawArena.Nondegenerate := by
   rintro ⟨_, _, holds, _⟩
   exact holds
+
+-- Failed generation must leave no theorem, realization, or unit behind.
+run_cmd do
+  for name in [`fakeGenerated, `wrongLawGenerated] do
+    let name := (← getCurrNamespace) ++ name
+    for generated in [name, name.str "__structural_realization", name.str "__structural_unit"] do
+      if (← getEnv).contains generated then throwError "failed generation leaked {generated}"
 
 #print axioms fakeCertificate
 #print axioms numericalLawDegenerate

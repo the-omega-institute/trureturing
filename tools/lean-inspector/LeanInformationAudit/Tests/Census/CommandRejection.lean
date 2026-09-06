@@ -6,6 +6,44 @@ open Lean.Elab.Command
 
 namespace LeanInformationAudit.Tests.Census
 
+/-- Exercise successful publication and inspect its count and kernel certificate. -/
+def expectAcceptedCensus (root inventoryName certificate : Name)
+    (inventory : DispositionInventory) (structuralCount : Nat) : CommandElabM Unit :=
+  IO.FS.withTempDir fun dir => do
+    let bytes := (Json.mkObj [
+      ("schema", toJson "stratalint.truth-export"), ("schema_version", toJson (1 : Nat)),
+      ("dialect", toJson "stratalint.truth-export.v1"),
+      ("producer", toJson "TruthExportCommand"), ("source_commit", toJson inventory.headSha),
+      ("nodes", Json.arr #[Json.mkObj [("declarations", Json.arr <|
+        inventory.entries.map fun row => Json.mkObj [
+          ("kind", toJson "theorem"),
+          ("declaration_name_key", toJson (encodeNameKey row.1.theoremName)),
+          ("statement_id", toJson row.1.statementId)])]])]).compress
+    let reportPath := dir / "report.json"
+    let outputPath := dir / "census.json"
+    IO.FS.writeFile reportPath bytes
+    let input := Syntax.mkStrLit reportPath.toString
+    let destination := Syntax.mkStrLit outputPath.toString
+    let head := Syntax.mkStrLit inventory.headSha
+    let digest := Syntax.mkStrLit ("sha256:" ++ Sha256.hex bytes.toUTF8)
+    let rootId := mkIdent root
+    let inventoryId := mkIdent inventoryName
+    let certificateId := mkIdent certificate
+    elabCommand (← `(command|
+      #disposition_census root $rootId report $input head $head report_sha256 $digest
+        inventory $inventoryId certificate $certificateId output $destination))
+    let projection ← ofExcept <| Json.parse (← IO.FS.readFile outputPath)
+    let counts ← ofExcept <| projection.getObjVal? "counts"
+    unless (← ofExcept <| counts.getObjValAs? Nat "structural_occurrence") == structuralCount do
+      throwError "unexpected structural count: {counts.compress}"
+    liftTermElabM do
+      let name := (← getCurrNamespace) ++ certificate
+      Lean.Meta.checkWithKernel (← Lean.Meta.mkConstWithFreshMVarLevels name)
+      unless (← Lean.collectAxioms name).all
+          (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
+        throwError "unexpected coverage axioms"
+    logInfo m!"accepted=true structural={structuralCount} certificate-kernel-checked=true"
+
 /-- Check the public command's diagnostic and both publication boundaries. -/
 def expectRejectedCensus (root inventoryName certificate : Name)
     (inventory : DispositionInventory) (expected : String) : CommandElabM Unit :=

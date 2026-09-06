@@ -9,8 +9,8 @@ open D5.S3.ConceptDynamics.InformationEscape
 
 universe u v w
 
-/-- A concrete declaration of this type registers a structural occurrence.
-The catalog and arena arguments must be canonical declarations. -/
+/-- Catalog membership evidence for a generated structural theorem.
+This type alone never grants structural provenance. -/
 structure StructuralRegistrationEvidence (theoremName : Name) (arena : StructuralArena.{u})
     (unit : StructuralTheoremUnit.{u, v} arena)
     (catalogValue : StructuralCatalog.{u, v, w} arena) (index : catalogValue.Index)
@@ -36,10 +36,23 @@ structure UnreachableElaborationEvidence (statement : Prop) where
 
 namespace DispositionCensus
 
--- Registration, canonical law arena, nondegeneracy certificate, and owning module.
--- This inspector metadata leaves the structural types and section 23.6 API intact.
-private initialize structuralLawRegistry :
-    SimplePersistentEnvExtension (Name × Name × Name × Name) (Array (Name × Name × Name × Name)) ←
+/-- Judge-owned provenance, retained without proposition normalization.
+The section 23.6 payload types remain unchanged. -/
+structure StructuralProvenanceEntry where
+  theoremName : Name
+  lawArenaConst : Name
+  realizationConst : Name
+  unitConst : Name
+  statementExpr : Expr
+  proofExpr : Expr
+  levelParams : List Name
+  certificateName : Name
+  registrationModule : Name
+  canonicalArena : Name
+  deriving Inhabited
+
+private initialize structuralRegistry :
+    SimplePersistentEnvExtension StructuralProvenanceEntry (Array StructuralProvenanceEntry) ←
   registerSimplePersistentEnvExtension {
     addEntryFn := Array.push
     addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
@@ -132,74 +145,151 @@ private def structuralRegistrations (modules : Array Name) : MetaM (Array (Name 
   for (name, info) in (← getEnv).constants.toList do
     if info.type.isAppOfArity ``StructuralRegistrationEvidence 6 &&
         inRoot (← getEnv) modules name then
-      result := result.push (name, info.type)
+      let registration ← mkConstWithFreshMVarLevels name
+      result := result.push (name, ← inferType registration)
   return result.qsort fun left right => left.1.toString < right.1.toString
 
-/-- Bind the semantic law independently of any census payload. Duplicate bindings
-are rejected, including attempts to override an imported registration. Missing
-nondegeneracy syntax is parsed only to issue the CIRPT-42 / section 31 IE-C037 error. -/
-syntax "register_structural_law " ident " in " ident (" nondegeneracy " ident)? : command
+open Elab Command Term
 
-open Elab Command in
-elab_rules : command
-  | `(register_structural_law $registrationId:ident in $lawArenaId:ident
-      $[nondegeneracy $certId:ident]?) => do
-    let registrationName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo registrationId
+/-- Generate the statement, proof declaration and compiled unit as one transaction.
+There is no command that registers a pre-existing theorem. -/
+elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
+    " realization " realizationTerm:term " nondegeneracy " certificateId:ident
+    " := " proofTerm:term : command => do
+  let rawName := theoremId.getId.eraseMacroScopes
+  let currentNamespace ← getCurrNamespace
+  let theoremName := if (`_root_).isPrefixOf rawName then
+      rawName.replacePrefix `_root_ .anonymous else currentNamespace ++ rawName
+  let realizationName := theoremName.str "__structural_realization"
+  let unitName := theoremName.str "__structural_unit"
+  let before ← getEnv
+  for name in [theoremName, realizationName, unitName] do
+    if before.contains name then throwError "structural declaration already exists: {name}"
+  try
     let lawArenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo lawArenaId
-    let env ← getEnv
-    if (structuralLawRegistry.getState env).any (·.1 == registrationName) then
-      throwError "structural law already registered: {registrationName}"
-    let certificateName ← liftTermElabM do
-      let registration ← mkConstWithFreshMVarLevels registrationName
-      let registrationType ← inferType registration
-      unless registrationType.isAppOfArity ``StructuralRegistrationEvidence 6 do
-        throwError "expected StructuralRegistrationEvidence: {registrationName}"
-      let args := registrationType.getAppArgs
-      let theoremName : Name ← reduceEval args[0]!
+    let certificateName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo certificateId
+    let entry ← liftTermElabM do
       let key : StatementKey := ⟨theoremName, ""⟩
-      let _ ← constant key "structural_occurrence" "registration" registrationName
-      let lawArena ← constant key "structural_occurrence" "law_registration" lawArenaName
+      let className := "structural_occurrence"
+      let lawArena ← constant key className "law_registration" lawArenaName
       let lawType ← inferType lawArena
-      unless args[1]!.isConst && args[3]!.isConst &&
-          lawType.isAppOfArity ``StructuralPrimitiveLawArena 1 do
-        failClass key "structural_occurrence" "law_registration"
-      unless ← isDefEq lawType.getAppArgs[0]! args[1]! do
-        failClass key "structural_occurrence" "law_registration.arena"
-      let some certId := certId | failClass key "structural_occurrence" "law.nondegeneracy"
-      let certificateName ← realizeGlobalConstNoOverloadWithInfo certId
-      let _ ← typed key "structural_occurrence" "law.nondegeneracy" certificateName
+      unless lawType.isAppOfArity ``StructuralPrimitiveLawArena 1 &&
+          lawType.getAppArgs[0]!.isConst do
+        failClass key className "law_registration.arena"
+      let arena := lawType.getAppArgs[0]!
+      let canonicalArena := arena.constName!
+      for entry in structuralRegistry.getState before do
+        if entry.canonicalArena == canonicalArena && entry.lawArenaConst != lawArenaName then
+          failClass key className "realization.canonical_law_arena"
+      let _ ← typed key className "law.nondegeneracy" certificateName
         (← mkAppM ``StructuralPrimitiveLawArena.Nondegenerate #[lawArena])
-      checkWithKernel registration
-      checkWithKernel lawArena
-      return certificateName
-    modifyEnv fun current => structuralLawRegistry.addEntry current
-      (registrationName, lawArenaName, certificateName, env.header.mainModule)
+      let signature ← mkAppM ``StructuralPrimitiveLawArena.signature #[lawArena]
+      let realizationType ← mkAppM ``StructuralPrimitiveRealization #[arena, signature]
+      let realized ← elabTermEnsuringType realizationTerm realizationType
+      synthesizeSyntheticMVarsNoPostponing
+      let realizationType ← levelMVarToParam (← instantiateMVars realizationType)
+      let realized ← levelMVarToParam (← instantiateMVars realized)
+      let realizationParams := (collectLevelParams
+        (collectLevelParams {} realizationType) realized).params.toList
+      addAndCompile <| .defnDecl {
+        name := realizationName, levelParams := realizationParams
+        type := realizationType, value := realized, hints := .abbrev, safety := .safe }
+      let realizationConst := Lean.mkConst realizationName (realizationParams.map Lean.Level.param)
+      let lawArena ← instantiateMVars lawArena
+      -- Retain this constructed tree, not a re-elaboration or a normal form.
+      let statement ← mkAppM ``StructuralPrimitiveLawArena.Law #[lawArena, realizationConst]
+      let proof ← elabTermEnsuringType proofTerm statement
+      synthesizeSyntheticMVarsNoPostponing
+      let statement ← levelMVarToParam (← instantiateMVars statement)
+      let proof ← levelMVarToParam (← instantiateMVars proof)
+      let levelParams := (collectLevelParams (collectLevelParams {} statement) proof).params.toList
+      addAndCompile <| .thmDecl {
+        name := theoremName, levelParams, type := statement, value := proof }
+      let theoremConst := Lean.mkConst theoremName (levelParams.map Lean.Level.param)
+      let _ ← constant key className "theorem" theoremName
+      let unit ← mkAppM ``StructuralPrimitiveRealization.toTheoremUnit
+        #[realizationConst, statement, theoremConst]
+      let unitType ← instantiateMVars (← inferType unit)
+      let unit ← instantiateMVars unit
+      let unitParams := (collectLevelParams (collectLevelParams {} unitType) unit).params.toList
+      addAndCompile <| .defnDecl {
+        name := unitName, levelParams := unitParams, type := unitType, value := unit
+        hints := .abbrev, safety := .safe }
+      checkWithKernel theoremConst
+      checkWithKernel (mkConst unitName (unitParams.map Lean.Level.param))
+      return ({
+        theoremName := theoremName
+        lawArenaConst := lawArenaName
+        realizationConst := realizationName
+        unitConst := unitName
+        statementExpr := statement
+        proofExpr := proof
+        levelParams := levelParams
+        certificateName := certificateName
+        registrationModule := before.header.mainModule
+        canonicalArena := canonicalArena } : StructuralProvenanceEntry)
+    modifyEnv fun env => structuralRegistry.addEntry env entry
+  catch error =>
+    setEnv before
+    throw error
 
-private def validateStructuralObjectLaw (modules : Array Name) (key : StatementKey)
-    (registrationName : Name) (statement : Expr) (realizationArgs : Array Expr) : MetaM Unit := do
+private def validateStructuralProvenance (root : Name) (head : String) (modules : Array Name)
+    (key : StatementKey) (payload : StructuralOccurrenceDisposition key) : MetaM Unit := do
   let className := "structural_occurrence"
   let env ← getEnv
-  let bindings := (structuralLawRegistry.getState env).filter fun entry =>
-    entry.1 == registrationName && modules.contains entry.2.2.2
-  unless bindings.size == 1 do failClass key className "realization.law_registration"
-  let lawArenaName := bindings[0]!.2.1
-  unless inRoot env modules lawArenaName do
-    failClass key className "realization.law_arena.root_membership"
-  unless realizationArgs[1]!.isConstOf lawArenaName do
+  let entries := (structuralRegistry.getState env).filter (·.theoremName == key.theoremName)
+  unless entries.size == 1 do failClass key className "realization.provenance"
+  let entry := entries[0]!
+  unless modules.contains entry.registrationModule && inRoot env modules key.theoremName do
+    throwError (censusError head "root" s!"import-closure-containing:{key.theoremName}" root.toString)
+  let info ← getConstInfo key.theoremName
+  unless info.levelParams.length == entry.levelParams.length do
+    failClass key className "realization.provenance"
+  let levels := entry.levelParams.map Level.param
+  let actualType := info.type.instantiateLevelParams info.levelParams levels
+  unless actualType == entry.statementExpr do failClass key className "realization.provenance"
+  let some proof := info.value? (allowOpaque := true)
+    | failClass key className "realization.provenance"
+  unless proof.instantiateLevelParams info.levelParams levels == entry.proofExpr do
+    failClass key className "realization.provenance"
+  let statementArgs := entry.statementExpr.getAppArgs
+  unless entry.statementExpr.isAppOfArity ``StructuralPrimitiveLawArena.Law 3 &&
+      statementArgs[0]!.isConstOf entry.canonicalArena &&
+      statementArgs[1]!.isConstOf entry.lawArenaConst &&
+      statementArgs[2]!.isConstOf entry.realizationConst do
     failClass key className "realization.canonical_law_arena"
-  let lawArena ← constant key className "realization.law_arena" lawArenaName
-  let _ ← typed key className "realization.law_nondegeneracy" bindings[0]!.2.2.1
+  unless payload.realization == entry.realizationConst do
+    failClass key className "realization.provenance"
+  canonicalArgument key (mkConst entry.canonicalArena) payload.canonicalArena
+  for (field, name) in [("realization.law_arena", entry.lawArenaConst),
+      ("realization", entry.realizationConst), ("realization.unit", entry.unitConst),
+      ("realization.law_nondegeneracy", entry.certificateName)] do
+    let value ← constant key className field name
+    unless inRoot env modules name do failClass key className s!"{field}.root_membership"
+    checkWithKernel value
+  let lawArena ← mkConstWithFreshMVarLevels entry.lawArenaConst
+  let lawType ← inferType lawArena
+  unless lawType.isAppOfArity ``StructuralPrimitiveLawArena 1 &&
+      lawType.getAppArgs[0]!.isConstOf entry.canonicalArena do
+    failClass key className "realization.canonical_law_arena"
+  for other in structuralRegistry.getState env do
+    if other.canonicalArena == entry.canonicalArena &&
+        other.lawArenaConst != entry.lawArenaConst then
+      failClass key className "realization.canonical_law_arena"
+  let _ ← typed key className "realization.law_nondegeneracy" entry.certificateName
     (← mkAppM ``StructuralPrimitiveLawArena.Nondegenerate #[lawArena])
-  -- Spec 6.1 / 8.7 / AC-CIRPT-018: reuse Syntax.checkNativeStatement's
-  -- isDefEq obligation against the registered law, never an arbitrary Iff.
-  let expectedLaw ← mkAppM ``StructuralPrimitiveLawArena.Law
-    #[lawArena, realizationArgs[3]!]
-  unless ← isDefEq statement expectedLaw do failClass key className "realization.object_law"
+  let registration ← constant key className "registration" payload.registration
+  let registrationType ← inferType registration
+  unless registrationType.isAppOfArity ``StructuralRegistrationEvidence 6 do
+    failClass key className "registration"
+  unless registrationType.getAppArgs[2]!.isConstOf entry.unitConst do
+    failClass key className "realization.compiled_kernels"
 
-private def validateStructural (modules : Array Name)
+private def validateStructural (root : Name) (head : String) (modules : Array Name)
     (registrations : Array (Name × Expr)) (key : StatementKey)
-    (statement : Expr) (payload : StructuralOccurrenceDisposition key) : MetaM Unit := do
+    (theoremProof statement : Expr) (payload : StructuralOccurrenceDisposition key) : MetaM Unit := do
   let className := "structural_occurrence"
+  validateStructuralProvenance root head modules key payload
   unless inRoot (← getEnv) modules payload.registration do
     failClass key className "registration.root_membership"
   let registration ← constant key className "registration" payload.registration
@@ -223,18 +313,15 @@ private def validateStructural (modules : Array Name)
       ("witness_certificate", payload.witnessCertificate)] do
     if (← getEnv).contains name && !inRoot (← getEnv) modules name then
       failClass key className s!"{field}.root_membership"
-  let realizationProof ← constant key className "realization" payload.realization
-  let realizationType ← inferType realizationProof
-  unless realizationType.isAppOfArity ``StructuralLegacyPrimitiveRealization 4 do
+  let realized ← constant key className "realization" payload.realization
+  let realizationType ← inferType realized
+  unless realizationType.isAppOfArity ``StructuralPrimitiveRealization 2 do
     failClass key className "realization"
-  let realizationArgs := realizationType.getAppArgs
-  unless ← isDefEq realizationArgs[0]! args[1]! do failClass key className "realization.arena"
-  unless ← isDefEq realizationArgs[2]! statement do failClass key className "realization.statement"
-  checkWithKernel realizationProof
-  validateStructuralObjectLaw modules key payload.registration statement realizationArgs
-  let theoremProof ← mkConstWithFreshMVarLevels key.theoremName
+  unless ← isDefEq realizationType.getAppArgs[0]! args[1]! do
+    failClass key className "realization.arena"
+  checkWithKernel realized
   let compiled ← mkAppM ``StructuralPrimitiveRealization.toTheoremUnit
-    #[realizationArgs[3]!, statement, theoremProof]
+    #[realized, statement, theoremProof]
   unless ← isDefEq unit compiled do failClass key className "realization.compiled_kernels"
   let strictness ← mkAppM ``StructuralCatalog.StructurallyLowersEscape #[catalogValue, index]
   let witnessType ← mkAppM ``StructuralStrictnessCertificate #[catalogValue, index]
@@ -261,7 +348,9 @@ arena={payload.canonicalArena} missing={field}"
     withNewLocalInstances #[inst] 0 do
       for i in [:peers.size] do
         let peerArgs := peers[i]!.2.getAppArgs
-        unless peerArgs[3]! == catalogValue do failClass key className "split_canonical_catalog"
+        unless peerArgs[3]!.isConstOf catalogValue.constName! &&
+            (← isDefEq peerArgs[3]! catalogValue) do
+          failClass key className "split_canonical_catalog"
         for j in [:i] do
           let peerName : Name ← reduceEval peerArgs[0]!
           let previousName : Name ← reduceEval peers[j]!.2.getAppArgs[0]!
@@ -289,7 +378,7 @@ private def validateBounded (key : StatementKey) (statement : Expr)
     let _ ← typed key className "transfer_theorem" theoremName (← mkArrow approximation statement)
     pure ()
 
-private def validateUnreachable (registrations : Array (Name × Expr))
+private def validateUnreachable (modules : Array Name) (registrations : Array (Name × Expr))
     (key : StatementKey) (statement : Expr) (payload : UnreachableDisposition key) : MetaM Unit := do
   let className := "unreachable"
   let evidence ← typed key className "evidence" payload.evidence
@@ -343,6 +432,9 @@ private def validateUnreachable (registrations : Array (Name × Expr))
   checkWithKernel obligation
   if (InformationRegistry.entries (← getEnv)).any (·.theoremName == key.theoremName) then
     failClass key className "registered_realization"
+  if (structuralRegistry.getState (← getEnv)).any (fun entry =>
+      entry.theoremName == key.theoremName && modules.contains entry.registrationModule) then
+    failClass key className "registered_structural_realization"
   for (_, type) in registrations do
     let registeredName : Name ← reduceEval type.getAppArgs[0]!
     if registeredName == key.theoremName then
@@ -376,13 +468,14 @@ def validateEvidence (root : Name) (inventory : DispositionInventory) : MetaM Un
     let statement ← inferType theoremExpr
     match entry.2 with
     | .finiteOccurrence payload => validateFinite root key payload
-    | .structuralOccurrence payload => validateStructural modules registrations key statement payload
+    | .structuralOccurrence payload =>
+      validateStructural root inventory.headSha modules registrations key theoremExpr statement payload
     | .boundedFiniteTruncation payload => validateBounded key statement payload
     | .unreachable payload =>
       unless inRoot env modules key.theoremName do
         throwError (censusError inventory.headSha "root"
           s!"import-closure-containing:{key.theoremName}" root.toString)
-      validateUnreachable registrations key statement payload
+      validateUnreachable modules registrations key statement payload
 
 end DispositionCensus
 

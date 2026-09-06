@@ -87,7 +87,7 @@ run_cmd liftTermElabM do
 
 theorem structuralAlias : ∀ n : Nat, n % 2 < 2 := structuralTheorem
 
-/-- error: IE-C036 DispositionIdentityMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.structuralAlias component=theorem_name expected=LeanInformationAudit.Tests.Census.Evidence.structuralTheorem actual=LeanInformationAudit.Tests.Census.Evidence.structuralAlias -/
+/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.structuralAlias class=structural_occurrence invalid=realization.provenance -/
 #guard_msgs in
 run_cmd liftTermElabM do
   let key : StatementKey := ⟨``structuralAlias, "alias-id"⟩
