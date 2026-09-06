@@ -2357,3 +2357,168 @@ V_N+\sum_{k<N}\lVert y_k-y_{r,k}\rVert_2^2
 本节从已给出的正对角 Stein 数据出发。一般稳定最小实现的平衡坐标构造、该对角与真正 Hankel 奇异值的识别、截断后的严格内部稳定性以及时间域诱导范数与频域 \(H^\infty\) 范数的等同，仍是独立的后续证明义务。对任意共同 Stein 上界，不能直接将其对角权重称为精确 Hankel 奇异值。有限噪声 Ho–Kalman 输出满足这些平衡前提，也需要单独建立。
 
 本节形式化的是经典平衡截断误差机制，不声称提出新的数值误差常数。可对照 Sandberg 与 Rantzer 的 *Balanced Truncation of Linear Time-Varying Systems*，IEEE TAC 49(2), 217–229 (2004), DOI `10.1109/TAC.2003.822862`。近期 Anand 与 Sandberg 的 *On Frequency-Weighted Extended Balanced Truncation*，arXiv:2512.02298v1 (2025)，第 2.1 节仍以 Lyapunov 不等式、平衡坐标和两倍尾和组织广义截断；其频率加权和 extended-LMI 算法不属于本节已经证明的范围。
+
+---
+
+# 2026-09-06 增补：实际 Gramian、平衡坐标与无限 Hankel 的完整 Schmidt 分解
+
+本节消除上一增补中“已经给定正对角 Stein 数据”的前提。新增五个候选 Lean 模块为 `PositiveGramianBalancing`、`ExactGramianSeries`、`BalancedRealizationTransport`、`InfiniteHankelGramian` 与 `BalancedHankelSchmidt`，路径均为 `D5/S3/Observer/Hankel/`，各有同名 Scribe。以下证明已写成完整候选源码，尚未执行 Lean 内核与 Scribe 发射检查。
+
+## A. 原系统上的明确假设
+
+取实有限维系统
+\[
+x_{k+1}=Ax_k+Bu_k,\qquad y_k=Cx_k,\qquad x_0=0.
+\]
+本节使用三个直接作用于原矩阵的条件：
+\[
+\sum_{k\ge0}\lVert A^k\rVert_2^2<\infty,
+\qquad
+\bigcap_{k\ge0}\ker(CA^k)=\{0\},
+\qquad
+\bigcap_{k\ge0}\ker(B^T(A^T)^k)=\{0\}.
+\]
+最后一个条件采用对偶观察的明确表述；正文推导不调用尚未提供的跨定义可控性转换。
+
+第一项是幂的平方可和性，不能在源码中无证明地改写为“所有特征值模小于一”。`power_square_summable_of_bound` 已证明：若有 \(\lVert A^k\rVert_2\le Mq^k\)，其中 \(0\le q<1\)，则该条件成立。它允许单步范数不小于一。谱半径条件与这一稳定性输入的正式转换仍可单独补充。
+
+## B. 实际无穷级数产生正定 Gramian
+
+直接构造
+\[
+Q=\sum_{k\ge0}(CA^k)^T(CA^k),
+\qquad
+P=\sum_{k\ge0}(A^kB)(A^kB)^T.
+\]
+范数估计
+\[
+\lVert (CA^k)^T(CA^k)\rVert_2
+\le\lVert C\rVert_2^2\lVert A^k\rVert_2^2
+\]
+给出算子范数收敛；对偶系统给出 \(P\) 的收敛。把连续二次型作用于收敛级数，得到
+\[
+x^TQx=\sum_{k\ge0}\lVert CA^kx\rVert_2^2.
+\]
+非零 \(x\) 至少具有一次非零真实未来读数，因此 \(Q\) 正定；同理 \(P\) 正定。正定性没有被作为输入矩阵的附加公理。
+
+拆分第零项并移动收敛级数，得到精确 Stein 等式
+\[
+A^TQA+C^TC=Q,\qquad APA^T+BB^T=P.
+\]
+进一步，令 \(Q_N=\sum_{k<N}(CA^k)^T(CA^k)\)，则
+\[
+\boxed{Q=Q_N+(A^N)^TQA^N.}
+\]
+`observationGramian_eq_existing` 证明矩阵系列通过 Euclidean 连续线性映射解释后，恰为已有 `DiscountedObservabilityGramianPositivity.discountedObservabilityGramian` 在折扣参数一处的对象。该等同使新矩阵实现与原算子所有者相接。
+
+## C. 从两个正定矩阵真实构造平衡坐标
+
+设 \(L=P^{1/2}\)，通过 Mathlib 的正连续函数演算构造。由 \(L^2=P\) 与 \(\det P>0\) 得 \(L\) 可逆，并证明其正定性。再对正定 Hermitian 矩阵
+\[
+K=LQL
+\]
+使用正交谱分解：
+\[
+K=U\operatorname{diag}(\lambda_i)U^T,
+\qquad \lambda_i>0.
+\]
+令
+\[
+\sigma_i=\sqrt{\lambda_i},\quad D=\operatorname{diag}(\sigma_i),\quad
+T=LUD^{-1/2},\quad S=D^{1/2}U^TL^{-1}.
+\]
+逐一证明
+\[
+ST=TS=I,\qquad SPS^T=D,\qquad T^TQT=D.
+\]
+`coordinates_nonempty` 从 \(P,Q\) 的正定性构造全部见证。`Coordinates` 是该构造的输出证书，主终点没有要求用户提供一个已经满足这些等式的变换。
+
+定义实际平衡实现
+\[
+\bar A=SAT,\qquad \bar B=SB,\qquad \bar C=CT.
+\]
+精确矩阵等式给出共同对角的两个 Stein 等式，再给出上一增补所需的 `BalancedStein`。对实际强迫递推归纳，还证明
+\[
+x_k=T\bar x_k,\qquad y_k=\bar y_k
+\]
+对任意输入与全部时间成立。
+
+乘积 \(PQ\) 一般不对称。源码通过相似变换而非错误的自伴假设处理它：
+\[
+S(PQ)T=D^2,
+\qquad
+\boxed{\chi_{PQ}(z)=\prod_i(z-\sigma_i^2).}
+\]
+重复特征值及其重数保留。该精确数学构造使用谱定理和选择，属于 `noncomputable` 构造，不等同于可执行浮点特征值算法。
+
+## D. 真正的无限 Hankel 算子及其谱识别
+
+令输入与输出信号分别属于 \(\ell_2(\mathbb N,\mathbb R^m)\) 与 \(\ell_2(\mathbb N,\mathbb R^p)\)。直接构造全部未来输出算子
+\[
+(\mathcal Ox)_i=CA^ix.
+\]
+前述真实能量级数证明其值确实属于 \(\ell_2\)。从有限维状态域的线性连续性得到有界算子。对偶系统的未来算子记为 \(\mathcal Z\)，再定义
+\[
+\mathcal R=\mathcal Z^*,\qquad \mathcal H=\mathcal O\mathcal R.
+\]
+证明
+\[
+\mathcal O^*\mathcal O=Q,\qquad \mathcal R\mathcal R^*=P.
+\]
+对年龄为 \(j\) 的单点输入 \(e_jv\)，证明
+\[
+\mathcal R(e_jv)=A^jBv,
+\qquad
+\boxed{(\mathcal H(e_jv))_i=CA^{i+j}Bv.}
+\]
+这里明确固定 \(i+j\) 的 Hankel 索引。Mathlib 的 \(\ell_2\) 单点求和定理与有界线性映射连续性，进一步给出任意完整 \(\ell_2\) 输入的求和语义。
+
+令 \(E=D^{-1/2}\)，构造
+\[
+F=\mathcal OTE,\qquad G=\mathcal ZS^TE.
+\]
+由真实 Gramian 恒等式推导 \(F^*F=G^*G=I\)，因此这两个映射为等距嵌入。直接相乘得
+\[
+\boxed{\mathcal H=FDG^*.}
+\]
+定义 \(\ell_i=Fe_i\)、\(r_i=Ge_i\)。这两族是真实无限信号空间中的正交单位向量，并满足
+\[
+\mathcal Hr_i=\sigma_i\ell_i,\qquad
+\mathcal H^*\ell_i=\sigma_i r_i.
+\]
+对每个 \(u\in\ell_2\)，证明完整分解
+\[
+\boxed{\mathcal Hu=\sum_i\sigma_i\langle r_i,u\rangle\ell_i.}
+\]
+另外证明
+\[
+\mathcal Hu=0\iff\forall i,\ \langle r_i,u\rangle=0.
+\]
+`nonzero_squared_singular_value` 还证明：若非零 \(u\) 满足 \(\mathcal H^*\mathcal Hu=\lambda u\) 且 \(\lambda\ne0\)，则存在 \(i\) 使 \(\lambda=\sigma_i^2\)。因此没有额外的非零奇异方向，重复权重则由对应的正交模态保留重数。
+
+`constructed_hankel_schmidt` 将实际 Gramian、构造坐标、正交性、双向奇异向量方程、全部输入上的展开、核刻画和特征多项式连成一个原系统终点。现有有限维 `hankel_gramian_singular_values` 同时被 `constructed_core_singular_values` 用实际平方根实例化。有限核心与上述无限算子的证明分别保留，没有将有限窗口的奇异值直接认作全局谱。
+
+## E. 原系统直接获得真实奇异权重的降阶界
+
+`constructed_reduction_window_bound` 与 `constructed_reduction_l2_bound` 使用原矩阵及 A 节条件，构造 \(P,Q,T,S\)，证明平衡前提，再复用上一增补的实际前缀截断。
+
+对构造的约化输出 \(y_r\)，得到
+\[
+\lVert y-y_r\rVert_{2,[0,N)}
+\le2\left(\sum_{i\text{ 被删除}}\sigma_i\right)\lVert u\rVert_{2,[0,N)},
+\]
+以及有限能量输入上的
+\[
+\sum_{k\ge0}\lVert y_k-y_{r,k}\rVert_2^2
+\le\left(2\sum_{i\text{ 被删除}}\sigma_i\right)^2
+\sum_{k\ge0}\lVert u_k\rVert_2^2.
+\]
+误差的可求和性也被推出。本节已将权重识别为原系统真实无限 Hankel 的完整正奇异值族；当前输出枚举没有声明递减排序，因此“保留前 r 个”依照构造返回的顺序，不能直接宣传成自动保留最大的 r 个。加入有序重排后才可采用惯常的排序尾和记法。
+
+## F. 验证状态与剩余数学接口
+
+本轮实际执行了独立 Python/Sympy 精确有理数回归与 NumPy/SciPy 数值回归。有限截断的正交性和奇异值检验属于近似检验；精确有理数检查的对象包括 Stein 等式、坐标逆关系、特征多项式、有限余项与 Hankel 核分解。这些检验不代替 Lean 内核验证。
+
+本节尚未证明或执行：从单纯谱半径判据产生幂平方可和证书、有序重排的规范接口、约化系统的严格内部稳定性、时间域诱导范数与频域 \(H^\infty\) 范数的等同，以及对带噪 Ho–Kalman 估计族统一认证这些输入条件。零初态、实矩阵及上述稳定性与双侧读数条件均保留在精确类型中。
+
+平方根平衡方法与 Schmidt 分解属于经典系统理论。本节的工作是构造与连接完整证明项候选，不主张新的数学误差常数或首次形式化优先权。平方根算法可参照 pyMOR 官方 balanced truncation 教程；所复用 Mathlib 矩阵谱定理、正函数演算、Hilbert 和与伴随 API 均按仓库固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d` 审查。
