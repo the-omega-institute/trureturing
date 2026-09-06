@@ -13,6 +13,20 @@ internal sealed record DigestionScribeReceipt(
 
 internal sealed record DigestionExternalReceipt(string Path, string Sha256);
 
+internal sealed record DigestionNonpropositional(
+    string Justification,
+    string? PreviousAtomId,
+    string? NextAtomId)
+{
+    internal bool IsValid => !string.IsNullOrWhiteSpace(Justification)
+        && Justification == Justification.Trim()
+        && (PreviousAtomId is null || IsAtomId(PreviousAtomId))
+        && (NextAtomId is null || IsAtomId(NextAtomId));
+
+    internal static bool IsAtomId(string value) => value.Length == 64
+        && value.All(static character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
+}
+
 internal sealed record DigestionQuarantine(
     string Justification,
     string ReentryCondition,
@@ -37,14 +51,16 @@ internal sealed record DigestionReceipts(
     ImmutableArray<string> ChainAtoms,
     DigestionExternalReceipt? TailAuthorization,
     DigestionQuarantine? Quarantine = null,
-    DigestionCoverDisposition? CoverDisposition = null)
+    DigestionCoverDisposition? CoverDisposition = null,
+    DigestionNonpropositional? Nonpropositional = null)
 {
     internal bool IsEmptyForSourceRevision =>
         Scribe.IsEmpty
         && UnresolvedSubitems.IsEmpty
         && ChainAtoms.IsEmpty
         && TailAuthorization is null
-        && Quarantine is null;
+        && Quarantine is null
+        && Nonpropositional is null;
 
     internal bool IsEmpty =>
         IsEmptyForSourceRevision
@@ -56,6 +72,7 @@ internal enum DigestionMigrationState
     Residual,
     Partial,
     Absorbed,
+    Nonpropositional,
 }
 
 internal enum DigestionTruthState
@@ -63,6 +80,7 @@ internal enum DigestionTruthState
     Closed,
     Tail,
     Open,
+    Inapplicable,
 }
 
 internal sealed record DigestionStatus(

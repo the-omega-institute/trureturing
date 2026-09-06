@@ -17,6 +17,24 @@ namespace StrataLint.Tests;
 // 本测试刻意是纯 in-process 断言(不 spawn 进程),直接落在该全量 tools-test 中。
 public sealed class CliVerbLinkageTests
 {
+    [Fact]
+    public void SettleMakeTargetsLinkToRegisteredVerb()
+    {
+        Assert.Contains("settle-atom", CliApplication.ImplementedCommands);
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Equal(2, Regex.Matches(makefile, @"--\s+settle-atom(?:\s|$)", RegexOptions.CultureInvariant).Count);
+        Assert.Matches(@"(?m)^settle:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --request ", makefile);
+        Assert.Matches(@"(?m)^settle-clear:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --clear ", makefile);
+    }
+
+    [Fact]
+    public void AtomContextMakeTargetLinksToRegisteredVerb()
+    {
+        Assert.Contains("atom-context", CliApplication.ImplementedCommands);
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Matches(@"(?m)^atom-context:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- atom-context --atom-id ", makefile);
+    }
+
     // 提取器至少应认出这么多次调用。低于此,说明提取器自己坏了(路径变了、调用形态变了),
     // 而不是「仓库很干净」——零匹配的 glob 不得静默通过。
     private const int MinimumRecognisedInvocations = 10;

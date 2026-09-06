@@ -310,6 +310,7 @@ public sealed class LedgerAlignWriterTests
         public CommandResult Coverage(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult DigestStatus(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult ShowAtom(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult AtomContext(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) => throw Unsupported();
@@ -320,6 +321,7 @@ public sealed class LedgerAlignWriterTests
         public CommandResult CoverAtom(IReadOnlyList<string> arguments) => throw Unsupported();
 
         public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult SettleAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult Route(IReadOnlyList<string> arguments) => throw Unsupported();
