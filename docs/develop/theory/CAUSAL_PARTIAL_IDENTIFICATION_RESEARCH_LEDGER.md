@@ -1849,3 +1849,100 @@ The new module has 469 Lean lines and 21 named public declarations, with a sourc
 The independent Fraction diagnostic, seed 20260906, was executed on 72 finite instances with mediator sizes one through eight. It checked 4,600 deterministic assignments, 720 general drift identities on actual product-source laws, 648 fair outcome laws, 360 rational interior targets and 72 saturation/two-coloring equivalences. Seventy-two full canonical outcome-table LPs were separately solved as numerical proposals; their weights were reconstructed as rationals and checked exactly for normalization, nonnegativity, every fair marginal and equality with the enumerated maximum-cut endpoint. No floating tolerance was used for acceptance. These are finite diagnostics by the authoring assistant, not an independent review or Lean-extracted program.
 
 The directed cycles of lengths 3,4,5,6,7,8 give exact tested upper values 1/3,1/2,2/5,1/2,3/7,1/2 respectively. Only the three-cycle specialization is a separate named Lean theorem in this source; no general cycle-length formula is claimed as a new Lean declaration. The one-state and loop-containing cases are included in the general test family. The general cutoff-free identified interval and the pricing identity are source-level proof candidates awaiting the pinned compiler.
+
+## 82. Graph-pricing research audit and the selected tractable class, 2026-09-06
+
+This continuation reread the actual `CompleteMediatorCutSharpBounds` pricing and expectation identities at PR #5029 head `cfd17c4ef0225a9568b465df6091660391b707f8`, and the version-4.3 specification at dev `b89d56d0c9a433f9b714821d2bb1779066c59ede`. The new cross-author scan included loning's updated #5867 and AlyciaBHZ's #5882, #5902 and #5602. These PR descriptions reinforce two different validation requirements: two implementations can agree on the same incorrect semantics, and a reduction preserving one quantity may lose the actual goal quantity. They are methodological comparisons; no unrelated physical or arithmetic theorem is imported into mediation.
+
+The external target remains Arroyo et al., arXiv:2509.03548v1, Sections 5-6: extend column generation beyond its single-component setting and exploit graph structure while preserving global validity. Xie and Li, arXiv:2602.14503v1, Conclusion, motivates tractable mediator parameterizations. The current increment solves an exact pricing class at a fixed mediator coupling and connects its certified answer to the full outcome-marginal master problem. It does not optimize the mediator coupling simultaneously with the outcome law.
+
+The graph-cut construction itself is classical. Kolmogorov and Zabih, *What Energy Functions Can Be Minimized via Graph Cuts?*, IEEE TPAMI 26(2):147-159 (2004), characterizes binary graph-representable energies. The author-hosted paper page explicitly points to earlier work by Hammer (1965), Billionnet and Minoux (1985), and Boros and Hammer (2002). No novelty claim is made for gauge flips, submodular binary minimization, max-flow/min-cut, or column-generation stopping. The new source verifies their exact connection to this lane's complete-mediation coefficients and actual causal query.
+
+Choe et al., UAI 2026, PMLR 337:1302-1326, remains a constraint-aware canonical-reduction comparator. No runtime comparison against its published instances is reported here. Searches of the repository and pinned Mathlib for direct maxFlow/minCut and Bellman-pricing owners returned no matching finite flow-certificate implementation in the inspected scope; this is not an exhaustive absence or priority claim.
+
+## 83. Exact bipartite transformation with every vertex field retained
+
+Let pi be the fixed normalized rational law on complete mediator pairs. The condition `OffDiagonalBipartite` requires one Boolean color map chi such that
+
+```text
+i != j and pi(i,j) != 0 -> chi(i) != chi(j).
+```
+
+This is a property of the off-diagonal cross-world coupling support, not of the causal DAG. Diagonal masses are permitted and do not contribute to the benefit or cut. The two outcome worlds still read the same complete table. There is no fairness, symmetry or stationary-marginal assumption.
+
+Retain the existing pricing score `P(y)=b_pi(y)-sum_i lambda_i*y_i`. Its previously proved identity is `2*P(y)=Cut_pi(y)+sum_i g_i*y_i`, where `g_i=incoming_pi(i)-outgoing_pi(i)-2*lambda_i`. Flip the labels in one color class:
+
+```text
+y_i = z_i       if chi(i)=false,
+y_i = 1-z_i     if chi(i)=true.
+```
+
+`flipTable_involutive` proves that this is a bijection on the entire original response-column carrier. Put `a_i=g_i` on the false class and `a_i=-g_i` on the true class, with nonnegative terminal capacities `s_i=max(0,a_i)` and `t_i=max(0,-a_i)`. Internal directed capacities are `c_ij=pi(i,j)+pi(j,i)`. For a Boolean cut z, true means the source side:
+
+```text
+Cut_c,s,t(z) = sum_i (if z_i then t_i else s_i)
+  + sum_(i,j) 1[z_i=true and z_j=false]*c_ij.
+```
+
+Set `K=sum_(i!=j) pi(i,j)+sum_(chi(i)=true) g_i+sum_i s_i`. The source theorem `pricing_cut_identity` proves on every complete table
+
+```text
+2*P(flip_chi(z)) = K-Cut_c,s,t(z).
+```
+
+All constants and both directions of each mediator pair are retained. A loop does not count in K's first term and cannot cross a cut. Consequently a minimum s-t cut gives an actual globally maximizing response column, not a collection of incompatible pairwise responses.
+
+## 84. Exact flow certificates and full-master stopping
+
+`D5/S0/Certificates/RationalSTCutCertificate.lean` stores rational internal flows, source-incident flows, sink-incident flows and a proposed Boolean cut. The checker verifies every nonnegative capacity bound, flow conservation at every mediator vertex, and equality of flow and cut value. The payload contains no proof-valued fields or trusted solver-success flag.
+
+`flow_cut_accounting` telescopes the actual conservation equations over an arbitrary cut. `flowValue_le_every_cut` then bounds every cut from below. `checkSTCutCertificate_sound` combines that universal inequality with the supplied equality to prove an attained global minimum. This certificate check examines polynomially many rational entries of the network, rather than enumerating all Boolean cuts. No verified max-flow discovery algorithm or arithmetic bit-complexity theorem is included.
+
+`BipartiteMediatorPricing.lean` checks the coloring and flow certificate on the capacities computed from the original coupling and current multipliers. Its `checked_pricing_isGreatest` returns the flipped cut and the exact global pricing value `(K-flowValue)/2`. `checked_no_improving_column_iff` proves that every original column has pricing score at most the normalization multiplier tau exactly when this certified value is at most tau.
+
+The source also derives `completeMediatorBenefit_eq_pricing_expectation` from the original causal expectation identities. If all columns satisfy `P(y)<=tau`, every outcome law with the original prescribed means r_i satisfies `J<=tau+sum_i lambda_i*r_i`. A feasible restricted-master candidate with equality therefore attains the upper endpoint of the full canonical outcome-law problem. `checked_restricted_master_isGreatest` proves precisely that statement. It does not replace the full marginal contract by a constraint only on generated columns.
+
+The Lean endpoint establishes the implication from accepted arithmetic certificates and a genuine feasible law to global optimality. Max-flow and LP proposal generation are implemented separately in the diagnostic. Their returned flags are not acceptance evidence.
+
+## 85. Executed exact column generation and independent comparisons
+
+`research/causal_bipartite_pricing/verify_pricing.py` runs an actual restricted-master loop. A shared-threshold family initializes a feasible outcome law with every nominated success mean, including zero and one. Each iteration solves the current finite master, reconstructs rational primal weights and dual multipliers, checks all current constraints and exact primal/dual equality, then solves the transformed pricing network. Network capacities are scaled to integers; the proposed flow and cut are checked again using Fraction arithmetic. Positive reduced cost adds the actual maximizing complete table. A zero pricing gap certifies the full optimum.
+
+The final seed-20260906 run passed 48 arbitrary-multiplier pricing instances and 3,060 comparisons with all Boolean assignments for sizes one through eight. Twenty-four restricted-master solutions were compared with separately enumerated full canonical LPs on the same original coupling and all marginal rows. All matched exactly. There were 27 complete column-generation instances and 757 checked pricing calls inside those runs. Four malformed flow/cut payloads and all eight proposed colorings of a non-bipartite three-cycle were rejected.
+
+The larger dense bipartite examples used arbitrary nonfair rational outcome means and never materialized the canonical column family:
+
+```text
+mediator states | canonical columns | final restricted columns | pricing calls
+12              | 4096              | 52                       | 32
+24              | 16777216          | 131                      | 92
+48              | 281474976710656   | 591                      | 527
+```
+
+The corresponding exact upper values were 1809/5500, 1081/3664 and 47251/147260. Final restricted columns include inactive columns; these counts are not the positive support size of the attaining law. The 24-state data, complete rational primal/dual output and flow certificate are included in the downloadable reproduction package.
+
+An earlier 48-state numerical dual proposal failed exact reconstruction checks on a degenerate dual face. Reconstruction was corrected by solving proposed tight equations exactly and rationalizing only the free coordinates, then rechecking every original restricted inequality and objective equality. The acceptance inequalities were not relaxed. A deliberately changed cut initially remained another genuine minimum; the negative test was corrected to require unequal cut value before expecting rejection. These two failures distinguish numerical candidate production and test design from mathematical certificate acceptance.
+
+These are synthetic matched-assumption correctness tests, not a published dataset benchmark, independent-author review or demonstrated speedup. The 527 pricing calls in the largest instance also caution against inferring a small overall iteration bound from polynomial-time pricing.
+
+## 86. A simpler baseline and the route beyond bipartite support
+
+At paper level the present basic fixed-coupling, marginal-only bipartite class has a direct sharp upper formula:
+
+```text
+U(pi,r)=sum_(i!=j) pi(i,j)*min(1-r_i,r_j).
+```
+
+Choose one uniform threshold and orient its success sets oppositely on the two color classes: `Y_i=1[U<r_i]` on one class and `Y_i=1[U>=1-r_i]` on the other. Every active off-diagonal pair attains its upper Frechet cell simultaneously, in both orientations. Aligned thresholds give the lower formula `sum pi(i,j)*max(0,r_j-r_i)` on every support graph. A finite rational cut-point construction realizes these laws. These are paper derivations and independent analytic checks in this increment, not additional named Lean endpoints.
+
+The direct upper formula matched every executed master instance. Therefore column generation is not claimed to be the best algorithm for this simplest bipartite marginal-only problem. Its value here is an exact global pricing and stopping interface that can be used where a direct endpoint construction no longer solves the master problem. Extra constraints must be included in the pricing score; arbitrary higher-order rows need not preserve graph representability.
+
+One precise paper-level extension is a supplied set K of k mediator vertices whose deletion makes the off-diagonal support bipartite. Enumerate the 2^k assignments on K. For each, edges inside K become constants and edges between K and the remaining vertices become linear fields; the remaining free graph has the min-cut form above. Taking the greatest of the certified branch values produces an exact pricing oracle with exponential dependence on k rather than the total mediator count. Every branch must be covered, and the final witness must be reassembled as one original complete table. This conditioning adapter and its coverage proof have not yet been formalized or benchmarked here.
+
+When pi is unknown, even complete fixed-pi pricing does not supply a global joint bound for the two unknown mechanisms. Preserving the original input constraints across that outer optimization remains the substantive multi-component research target. The current result provides a certified tractable subroutine and an explicit boundary, without claiming the general open extension is solved.
+
+## 87. Authored source status
+
+The increment adds two Lean sources and their two source-owned Scribes, with 27 public declaration handles and full formulas. Mathematical and source review, lexical delimiter checks and exact rational diagnostics were performed. There is no Lean, Lake or dotnet executable in the runtime. No Lean elaboration, kernel acceptance, Scribe compilation, transitive axiom report or extracted-code equivalence is claimed. The new sources introduce no sorry, admit, native_decide or axiom declaration; those source checks do not establish kernel acceptance.
+
+The computational evidence uses NetworkX 3.6.1, NumPy 2.3.5, SciPy 1.17.0 and SymPy 1.14.0. Numerical tolerances select candidate solver solutions and proposed tight rows only. Every admitted flow and primal/dual witness passes exact rational equalities and inequalities. The final script SHA-256 is recorded in `pricing_validation.json` with the executed counts. The repository changes are confined to mathematical sources, corresponding Scribes, reproducible research evidence and this existing theory append.
