@@ -213,7 +213,8 @@ public sealed class ReportDerivedDeclarationTests
         Assert.NotNull(method);
         Assert.Equal(
             [typeof(DescribeId), typeof(DeclarationHandle), typeof(Heading),
-             typeof(StatementSource), typeof(AssessedProvenance), typeof(BlockSequence), typeof(DescribeRole?)],
+             typeof(StatementSource), typeof(AssessedProvenance), typeof(BlockSequence), typeof(DescribeRole?),
+             typeof(OpenProblemResolutionClaim)],
             method!.GetParameters().Select(static parameter => parameter.ParameterType));
         Assert.DoesNotContain(method.GetParameters(), static parameter =>
             parameter.ParameterType == typeof(LeanDeclarationKind)
