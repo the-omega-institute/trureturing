@@ -26,8 +26,8 @@ internal sealed class DyadicTransformDecayDocument : IScribeDocumentDefinition
                             + "frequency. Its frozen identity with the infinite sinc product "
                             + "connects the estimate to that actual density.")),
                     Paragraph(Text(
-                        "At order k, use the decay estimate of order k+2. Outside the "
-                            + "unit interval the weighted norm is bounded by C/|xi|^2; "
+                        "Use the decay estimates of orders k and k+2 to bound the "
+                            + "corresponding weighted norms outside the unit interval; "
                             + "inside, each sinc factor has norm at most one. Together "
                             + "these give a constant multiple of the integrable function "
                             + "1/(1+xi^2). Measurability follows from the finite products "
