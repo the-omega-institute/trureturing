@@ -135,19 +135,23 @@ internal static partial class RepositoryRules
     }
 
     private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
-        => EvaluateCapacity(context, ScribeTestMapDeriver.DeriveSnapshot);
+        => EvaluateCapacity(context, context.DeriveTestMap);
 
     internal static ImmutableArray<RuleFinding> EvaluateCapacity(
         RuleEvaluationContext context,
         Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot)
     {
+        // Wrap both snapshot derivations here so cache outcomes remain observational to capacity findings.
+        ScribeTestMap GetMap(RepositorySnapshot snapshot) => context.TestMapStore is null
+            ? deriveSnapshot(snapshot)
+            : context.TestMapStore.GetOrDerive(snapshot);
         if (context.Changes.Paths.Any(static path =>
                 ScribeTestMapDeriver.IsDerivationInput(path.Value)))
         {
-            var currentDerivation = Task.Run(() => deriveSnapshot(context.Current));
+            var currentDerivation = Task.Run(() => GetMap(context.Current));
             var baselineDerivation = ReferenceEquals(context.Current, context.Baseline)
                 ? currentDerivation
-                : Task.Run(() => deriveSnapshot(context.Baseline));
+                : Task.Run(() => GetMap(context.Baseline));
             return EvaluateCapacityAsync(context, currentDerivation, baselineDerivation)
                 .GetAwaiter()
                 .GetResult();

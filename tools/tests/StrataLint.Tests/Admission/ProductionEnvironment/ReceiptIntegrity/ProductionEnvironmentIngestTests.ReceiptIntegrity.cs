@@ -103,13 +103,24 @@ public sealed partial class ProductionEnvironmentTests
             atomizerId,
             coverageGids: [],
             sourceId: "fixture-source",
-            sourcePath: RuleFixture.FixtureDigestionSourcePath) with
+            sourcePath: RuleFixture.FixtureDigestionSourcePath);
+        stableEntry = stableEntry with
         {
             Coverage = includeInputMismatch
                 ? [new DigestionCoverageEdge(
                     coverageGid,
                     "sha256:" + new string('c', 64))]
                 : [],
+            Receipts = stableEntry.Receipts with
+            {
+                Scribe = includeInputMismatch
+                    ? [new DigestionScribeReceipt(coverageGid,
+                        DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(
+                            fixture.Files[ScribeEmissionAttestation.DefinitionPath(coverageGid)])).RawSha256,
+                        DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(
+                            fixture.Files[ScribeEmissionAttestation.EmissionPath(coverageGid)])).RawSha256)]
+                    : [],
+            },
         };
         var document = DigestionTestSupport.Document(
             atomizerId,
