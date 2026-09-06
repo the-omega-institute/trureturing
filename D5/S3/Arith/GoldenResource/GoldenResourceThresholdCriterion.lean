@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Global optimality is equivalent to boundary layer thresholds at a fixed positive price. -/
+   digest: Positive-price global optimality is equivalent to boundary layer thresholds. -/
 
 import D5.S3.Arith.GoldenResourceObjectiveFactorization
 
@@ -82,7 +82,7 @@ private theorem resource_mul_prime_diff (lambda : ℝ) {n p : ℕ}
   · simpa only [Nat.factorization_mul hn0 hp.ne_zero, Finsupp.add_apply,
       hp.factorization, Finsupp.single_eq_same] using local_step hp lambda (n.factorization p)
   · intro q _ hqp
-    simp [Nat.factorization_mul hn0 hp.ne_zero, hp.factorization, hqp, Ne.symm hqp]
+    simp [Nat.factorization_mul hn0 hp.ne_zero, hp.factorization, hqp]
   · intro h
     exact (h (mem_insert_self _ _)).elim
 
