@@ -1,0 +1,18 @@
+## 100.2　本轮的可检查文件
+
+我将第 93 节的十读数反演和单射性写成了一个独立 Lean 候选文件：
+
+[ObserverClockTomography.lean](sandbox:/mnt/data/observer_formalization/ObserverClockTomography.lean)
+
+它只处理：
+
+$$
+\boxed{
+\text{二次钟律系数}
+\longleftrightarrow
+\text{十个精确读数}.
+}
+$$
+
+不把量子可实现性、正定性、平滑几何或物理场方程放进已经证明的范围。
+

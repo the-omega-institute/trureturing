@@ -1,0 +1,22 @@
+## 定理 I3：高斯历史残差逼近真实谱虚部
+
+记：
+
+$$
+\beta(C)=\max_{\lambda\in\operatorname{spec}C}|\Im\lambda|.
+$$
+
+则：
+
+$$
+\boxed{
+\beta(C)
+\le\sigma_T(C)
+\le
+\beta(C)+\frac{\sqrt{d(d-1)}}{2T}.
+}
+\tag{I13}
+$$
+
+不要求可对角化，不要求简单根，也不要求谱事先为实。
+

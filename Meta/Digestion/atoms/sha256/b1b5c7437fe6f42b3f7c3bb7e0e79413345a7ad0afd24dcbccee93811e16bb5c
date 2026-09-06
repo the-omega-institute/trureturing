@@ -1,0 +1,36 @@
+## 例一：实谱 Jordan 块
+
+取：
+
+$$
+C=
+\begin{pmatrix}
+\lambda&1\\
+0&\lambda
+\end{pmatrix},
+\qquad\lambda\in\mathbb R.
+$$
+
+直接积分：
+
+$$
+\boxed{
+W_T=
+\begin{pmatrix}
+1&0\\
+0&1+T^2
+\end{pmatrix}.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\sigma_T(C)=\frac1{2\sqrt{1+T^2}}\longrightarrow0.
+}
+\tag{I19}
+$$
+
+它不可对角化，任何有限 \(T\) 下的残差都不为零，但其真实谱虚部为零。
+

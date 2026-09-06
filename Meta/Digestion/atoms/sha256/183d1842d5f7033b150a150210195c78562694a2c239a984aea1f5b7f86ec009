@@ -1,0 +1,30 @@
+## 定理 P1：有限尺度变化保留负方向，但可以任意压低其数值
+
+对每个 \(q>0\)：
+
+$$
+\boxed{
+n_-(\mathsf H_{q\ell})=n_-(\mathsf H_\ell).
+}
+\tag{P4}
+$$
+
+但：
+
+$$
+\boxed{
+\|\mathsf H_{q\ell}\|_1
+\le q^2\|\mathsf H_\ell\|_1,
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\operatorname{Tr}(\mathsf H_{q\ell})_-
+\le q^2\operatorname{Tr}(\mathsf H_\ell)_-.
+}
+\tag{P5}
+$$
+

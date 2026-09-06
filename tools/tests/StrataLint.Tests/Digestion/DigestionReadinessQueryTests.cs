@@ -56,22 +56,22 @@ public sealed class DigestionReadinessQueryTests
     }
 
     [Fact]
-    public void UnsupportedAstKindSelectsNeedsRoutingAndIsNotOmitted()
+    public void RegisteredNonAssertionKindSelectsNotFormalizableAndIsNotOmitted()
     {
         var result = Classify([Entry("source", "definition", "definition/6")]);
 
         var record = Assert.Single(result);
         Assert.Equal("definition", record.AtomId);
-        Assert.Equal("needs-routing", record.Action);
+        Assert.Equal("not-formalizable", record.Action);
     }
 
     [Theory]
     [InlineData("row")]
-    [InlineData("v")]
+    [InlineData("unregistered:v")]
     [InlineData("research-queue")]
     [InlineData("metadata")]
     [InlineData("negative-register")]
-    [InlineData("M")]
+    [InlineData("unregistered:M")]
     public void StructuralNonAssertionKindSelectsNotFormalizable(string kind)
     {
         var result = Classify([Entry("source", "not-formalizable-" + kind, kind + "/6")]);
@@ -87,14 +87,6 @@ public sealed class DigestionReadinessQueryTests
         var record = Assert.Single(Classify([Entry("source", "assertion", "theorem/6-assertion")]));
 
         Assert.NotEqual("not-formalizable", record.Action);
-    }
-
-    [Fact]
-    public void NotFormalizableKindAlphabetIsExactlyTheMeasuredStructuralKinds()
-    {
-        Assert.Equal(
-            ["row", "v", "research-queue", "metadata", "negative-register", "M"],
-            DigestionContentKindPolicy.NotFormalizableKinds.ToArray());
     }
 
     [Fact]
@@ -151,14 +143,13 @@ public sealed class DigestionReadinessQueryTests
             quarantine: new DigestionQuarantine("blocked", "re-enter", "missing-prerequisite"));
         var evaluation = Evaluation([deposit, routing, quarantine]);
         var document = Document([deposit, routing, quarantine]);
-        var first = DigestionReadinessQuery.Classify(
+        var projection = DigestionFrontierProjection.Create(
             document,
             evaluation,
-            Kinds([deposit, routing, quarantine]));
-        var second = DigestionReadinessQuery.Classify(
-            document,
-            evaluation,
-            Kinds([deposit, routing, quarantine]));
+            Kinds([deposit, routing, quarantine]),
+            retryDispositions: false);
+        var first = DigestionReadinessQuery.Classify(projection);
+        var second = DigestionReadinessQuery.Classify(projection);
 
         var firstJson = DigestStatusCommand.RenderReadiness(first);
         var secondJson = DigestStatusCommand.RenderReadiness(second);
@@ -235,6 +226,7 @@ public sealed class DigestionReadinessQueryTests
         var result = Classify([withheld, quarantined]);
 
         Assert.Equal("quarantined", result[0].Action);
+        Assert.Equal(["quarantine:missing-prerequisite"], result[0].OrderedBlockers.ToArray());
         Assert.Equal("withheld", result[1].Action);
     }
 
@@ -254,7 +246,7 @@ public sealed class DigestionReadinessQueryTests
             "theorem/6",
             chainAtoms: [child.Entry.AtomId],
             gaps: [new DigestionGap("chain-migration-incomplete", child.Entry.AtomId, DigestionGapSeverity.NonFatal)]);
-        var needsRouting = Entry("s", "g-routing", "definition/7");
+        var definition = Entry("s", "g-definition", "definition/7");
         var notFormalizable = Entry("s", "h-terminal", "row/8");
         var quarantined = Entry(
             "s",
@@ -271,7 +263,7 @@ public sealed class DigestionReadinessQueryTests
                 [new DigestionDispositionGap("unresolved-subitem", "remaining")]));
 
         var result = Classify(
-            [deposit, stale, closeChain, child, needsRouting, notFormalizable, quarantined, withheld],
+            [deposit, stale, closeChain, child, definition, notFormalizable, quarantined, withheld],
             acknowledgedStale: [stale.Entry.AtomId]);
 
         Assert.Equal(
@@ -280,7 +272,7 @@ public sealed class DigestionReadinessQueryTests
                 "withheld",
                 "refresh-stale",
                 "not-formalizable",
-                "needs-routing",
+                "chain-child",
                 "close-chain",
                 "deposit",
             ],
@@ -319,10 +311,11 @@ public sealed class DigestionReadinessQueryTests
         ImmutableArray<DigestionEntryEvaluation> entries,
         ImmutableArray<string> acknowledgedStale = default)
     {
-        return DigestionReadinessQuery.Classify(
+        return DigestionReadinessQuery.Classify(DigestionFrontierProjection.Create(
             Document(entries, acknowledgedStale),
             Evaluation(entries),
-            Kinds(entries));
+            Kinds(entries),
+            retryDispositions: false));
     }
 
     private static DigestionLedgerEvaluation Evaluation(

@@ -1,0 +1,22 @@
+## 定理 K2：实根的历史体积上限
+
+若 \(q\) 的全部根为实数，那么：
+
+$$
+\boxed{
+0<\mathcal Z_q(r)\le1
+\qquad\forall r>0.
+}
+\tag{K9}
+$$
+
+并且它是完全单调函数：
+
+$$
+\boxed{
+(-1)^n\frac{d^n}{dr^n}\mathcal Z_q(r)\ge0
+\qquad(n\ge0).
+}
+\tag{K10}
+$$
+

@@ -1,0 +1,13 @@
+### 本轮核验
+
+已核对有限碰撞的酉性与 Kraus 算子、五节点双方向更新的正性与归一化、同位置不同方向的未来分离、电报方程的特征多项式、二次稳定泛函与熵恒等式。
+
+一个带限 Fourier 模式的数值交叉检查中，实际扩散近似误差约为 \(0.00370\)，小于所证明上界 \(0.01021\)。
+
+[精确算例与数值核验脚本](sandbox:/mnt/data/observer_formalization/check_causal_collision_closure.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/causal_collision_closure_checks.json)
+
+**本轮没有运行 Lean 编译。**符号核验只支持所列有限算例与恒等式，不替代一般证明，也不验证该模型就是现实微观物理。
+
+---
+

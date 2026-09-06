@@ -333,7 +333,7 @@ internal sealed partial class TransactionFixture
               exit 96
             fi
             if [[ ${PLAYBOOK_REJECT_DEPOSIT_HEADER:-0} == 1 ]]; then
-              printf 'SL-012 %s: expected the exact six-line header at byte zero\n' \
+              printf 'SL-012 %s: expected the canonical Lean header at byte zero (six-line legacy header or seven-line header with utility)\n' \
                 "${parts[2]}"
               exit 1
             fi
@@ -401,11 +401,8 @@ internal sealed partial class TransactionFixture
             existing_atom=$(sed -n 's/^atom_id: //p' Meta/BACKFILL.yaml)
             if [[ $existing_atom == "$atom" ]] \
                 && grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
-              [[ $gid == D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition ]] || {
-                echo 'COVER_INVALID hosted cover omitted the selected secondary GID' >&2
-                exit 1
-              }
-              secondary='secondary: true'
+              echo "COVER_INVALID cover atom $atom already has coverage: $gid" >&2
+              exit 1
             fi
             printf 'atom_id: %s\ncoverage: true\naligned: false\n%s\n' \
               "$atom" "$secondary" > Meta/BACKFILL.yaml

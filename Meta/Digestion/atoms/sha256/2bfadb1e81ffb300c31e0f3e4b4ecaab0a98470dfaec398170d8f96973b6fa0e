@@ -1,0 +1,17 @@
+## 定义 1：有限同余核
+
+对 \(Q\ge2\)，定义
+
+$$
+\boxed{
+\mathscr K_Q(n,m)
+=
+\sum_{2\le q\le Q}
+\frac{\mu(q)^2}{\varphi(q)^2}
+c_q(n-m).
+}
+\tag{10}
+$$
+
+这里 \(\mu\) 是 Möbius 函数，\(\varphi\) 是 Euler 函数。
+

@@ -1,0 +1,77 @@
+# 九、不必求矩阵平方根，也能从一个标量比值认证非实谱
+
+由：
+
+$$
+\mathcal V_C'(r)=2\mathcal E_C(r),
+$$
+
+定义两个历史宽度之间的平均增长率：
+
+$$
+\boxed{
+\mathcal R_C(r)
+=
+\frac{
+\log\det W_C(2r)-\log\det W_C(r)
+}{2r}.
+}
+\tag{J24}
+$$
+
+那么：
+
+$$
+\mathcal R_C(r)
+=
+\frac1r\int_r^{2r}\mathcal E_C(s)\,ds.
+$$
+
+使用定理 J4：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{spec}}(C)
+\le
+\mathcal R_C(r)
+\le
+\mathcal E_{\mathrm{spec}}(C)
++
+\frac{d(d-1)\log2}{4r}.
+}
+\tag{J25}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal R_C(r)>
+\frac{d(d-1)\log2}{4r}
+\Longrightarrow
+C\text{ 至少有一个非实本征值}.
+}
+\tag{J26}
+$$
+
+这是一条有限证书。
+
+它读取的不是某个单独本征向量，而是整个历史度量的体积增长。
+
+但要使用式（J26），必须对左边给出**严格下界**。病态矩阵的浮点行列式、对数相减或数值微分，都不能不经误差控制就用来宣布反例。
+
+另外：
+
+$$
+\boxed{
+\frac{\log\det W_C(r)}{2r}
+\longrightarrow
+\mathcal E_{\mathrm{spec}}(C).
+}
+\tag{J27}
+$$
+
+这个“长期斜率”保留所有谱虚部的平方和；它不是把固定缺陷除以不断增长的观察维数。
+
+---
+

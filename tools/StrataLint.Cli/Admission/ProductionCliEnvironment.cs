@@ -5,7 +5,7 @@ using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
-internal sealed record PreparedRepository(string Revision, string ChangeBase, RawChangeSet Changes);
+internal sealed record PreparedRepository(string Revision, RawChangeSet Changes);
 
 internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid, string TreeOid);
 
@@ -189,9 +189,9 @@ internal interface IRepositoryGateway
     RawChangeSet ReadCurrentChanges();
 
     /// Reads the working-tree delta against an explicit revision, in the caller-supplied
-    /// changeBase's own words -- no remote-ref resolution happens here (CLAUDE.md 第Ⅵ节 git
+    /// revision's own words -- no remote-ref resolution happens here (CLAUDE.md 第Ⅵ节 git
     /// reference discipline: only the caller may name a revision; this gateway just diffs it).
-    RawChangeSet ReadChanges(string changeBase);
+    RawChangeSet ReadChanges(string revision);
 
 }
 
@@ -328,14 +328,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 {
                     var current = Decode(currentRaw);
                     var baseline = Decode(baselineRaw);
-                    // Fork-point consumers compare repository structure and ledger bytes, not Lean facts.
-                    var forkPoint = string.Equals(
-                        prepared.ChangeBase,
-                        prepared.Revision,
-                        StringComparison.Ordinal)
-                        ? baseline
-                        : Decode(repository.ReadRevision(prepared.ChangeBase));
-                    return (Current: current, Baseline: baseline, ForkPoint: forkPoint);
+                    return (Current: current, Baseline: baseline);
                 });
             var current = snapshots.Current;
             var baseline = snapshots.Baseline;
@@ -358,7 +351,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
-                snapshots.ForkPoint,
                 timing,
                 testMapStore,
                 DeriveTestMap).Outcome;
@@ -435,7 +427,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         FileMapConformCommand.Run(arguments, repositoryRoot);
 
     public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
-        DepositHeaderCheckCommand.Run(repository, arguments);
+        DepositHeaderCheckCommand.Run(repository, leanReportSource, arguments);
 
     public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) =>
         LedgerFrozenCommand.Run(repositoryRoot, repository, arguments);
@@ -589,7 +581,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
                 || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 25)
+                || RuleCatalog.Default.Descriptors.Length != 27)
             {
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }

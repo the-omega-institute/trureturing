@@ -252,6 +252,151 @@ A landed pull request consisting of one generic one-line `def` plus two `simp`-t
 - **Bind-only modules are thin deposits (escape witness).** Scope: any descriptor path with no active Freeze event on the protected base for which the candidate adds the first Freeze event; classify the COMPLETE declaration set that event records — the `make deposit` anchor GID does not change the classification. For every public theorem, record in the Step 8 report: `proof_shape: content | bind-only`; its DIRECT frozen public dependencies as GID + `statement_id` (pinned-Mathlib declarations are not frozen dependencies, but a conclusion obtained from a Mathlib lemma by direct instantiation is still not a witness); its `escape_witness` — one precisely stated new intermediate proposition whose proving declaration lies in the theorem's elaborated transitive constant-dependency closure, is NOT obtained from those dependencies by instantiation, projection or normalization, is neither definitionally equivalent to nor an alias/restatement of the theorem's conclusion, and lies on a LIVE derivation path to that conclusion (after ζ/β/ι reduction and removal of dead or projection-discarded proof terms; `(And.intro h frozen).2`-style smuggling is not a witness — if the conclusion is reachable by bind-only operations without it, it is not a witness); and `admission_basis`. A witness may take two forms: (1) a distinct intermediate proposition satisfying all four conditions, or (2) the public conclusion itself when it is produced on the live proof path by a named non-bind-only computation or construction (a `decide`/`norm_num` decision of a new numeric fact, an explicit witness construction, a new estimate chain) and the same counterfactual holds (bind-only operations cannot reach the conclusion without it) — do not manufacture an otherwise unneeded intermediate proposition. No witness ⇒ `bind-only`; `escape-witness` may be the admission basis only when at least one public theorem is classified `content` with such a witness. Source-line counts are non-load-bearing readings, never the criterion. A first-freeze module with no admission basis must not be deposited: stop before `make deposit` and report `open` with reason `proof_shape: bind-only`. Each bind-only companion in an admitted module must name its atom/obligation and a directed edge with both endpoints and consumer→prerequisite direction (the companion is a prerequisite of the escape-bearing theorem, or the escape-bearing theorem is a prerequisite of the companion, or a pre-registered named use); unrelated bind-only declarations may not ride along. If the witness observed after the probe differs from the one preregistered, re-preregister a new version; never relabel after the fact. Landed precedent (2026-09-04, itemized): across five RH-route addenda (W-10…W-21, PRs #5177/#5186/#5207/#5219), W-12 (an integrability proof) was the analytic escape; W-18's helper `activePrimePowers_eq_empty_of_exp_lt_two` and the W-14/W-15 companion `exists_supportRadius` were small new lemmas whose sufficiency as witnesses is judged by the four conditions above while the obligations W-14/W-15/W-18 themselves are `bind-only`; W-10/11/13/16/17/19/20/21 were de-hypothesizations, projections, `obtain ⟨Z⟩`-then-one-line or compositions of frozen iffs with no admission basis. The owner judged the sequence 平推 and the fifth same-shape lane was stopped unlanded.
 - **The pull-request body is evidence, not decoration.** Carry the clause-mapping echo, the search trace, and the explicit honest-partial disclosure (what is asserted, what remains open) in the pull-request body. An empty body on a deposit pull request hides exactly the thinness these gates exist to catch.
 
+### Cover and quarantine (digestion-side precedents)
+
+Every entry below names a failure class that actually occurred on 2026-09-05/06, each caught by
+independent review after all three required checks were green. The machine gates judge admission
+compliance; they do not judge coverage faithfulness.
+
+- **A cover door has four preconditions, not three.** Beyond (1) the covering module is frozen,
+  (2) the atom is still under `residual-open`, and (3) the atom is not multi-clause by the purely
+  syntactic test, the covering GID's theorem **must be referenced by its Scribe declaration**:
+  `grep -c "<theorem>" "Blueprint/<module>.scribe.cs"` must be at least 1. A zero there makes the
+  door answer `partial-closed deletable=false gaps=scribe-declaration-reference-missing`. Because
+  `make cover-batch` is strictly sequential and aborts on the first failure, one such pair blocks
+  every later pair in the batch.
+- **A theorem that is strictly weaker than the atom is not a cover.** Check the theorem's every
+  explicit hypothesis against the atom text and find the sentence that supplies it; a hypothesis the
+  atom neither states nor implies makes the bound statement weaker than the source claim. Landed
+  case: an owner requiring `0 < regularizer` was bound to an atom that only gave positive
+  semidefiniteness, and the cover was retracted.
+- **The same owner can be faithful for one atom and unfaithful for another.** The same theorem above
+  is a faithful cover for a different atom whose displayed definition writes `λ > 0` itself. Do not
+  judge by owner; judge by hypothesis set, per atom.
+- **Section narrative is not coverable.** An atom whose main sentences describe *what shape a
+  repository declaration currently has* ("the repo currently packages this fact as such-and-such an
+  existence statement", "its logical shape", "it is not X → Y") is code commentary, not an
+  object-level proposition, and must not be closed by theorem coverage. Landed case: retracted.
+- **Pick the matching theorem, not the module's first one.** A module with several public theorems
+  invites binding the first; verify the bound theorem is the one whose statement matches the atom.
+  Landed case: an atom asserting antitonicity of a test-family supremum was bound to a concrete
+  tail-space existence statement in the same file while the matching antitonicity theorem sat a
+  hundred lines below.
+- **A cover probe must be pre-registered, or it proves nothing.** If a seat searches for a candidate
+  theorem first and then writes the Lean statement, `exact`-closing that statement with that theorem
+  is vacuous. Write the statement from the authoritative atom text **before** searching, record it,
+  and close that statement.
+- **When a partial carrier is all that exists, the outcome is a quarantine record, not a cover and
+  not a deposit.** Write `receipts.quarantine` with `justification`, `reentry_condition`, and
+  `blocker_class: multi-clause-guard`, leaving `coverage_gids` empty. The justification must name
+  which clauses are carried by which part of which frozen owner, which are not and why, the
+  source-versus-owner scope gap, the near misses that were searched and found insufficient, and any
+  sibling atom already covered together with the exact clause-level difference. Ledger surgery is
+  dispatcher-owned; a producing seat drafts the text and never writes it.
+- **Quote a sibling atom, never summarize it.** Exclusive phrasing ("the sibling only asserts X")
+  is refutable by the sibling's own text and is a claim of verification you did not perform. Landed
+  case: a record said a sibling asserted only deletion-range clauses; that sibling's heading was
+  "infinite prime support" and its body concluded `cofinite-stable arithmetic support`. Read the
+  sibling's full CAS text before writing that sentence, and mark any interpretive reading
+  `ASSUMED-UNVERIFIED`.
+- **Verify every record before writing a batch, not a sample.** A batch of eleven records was
+  checked on four; the defective record was outside the sample.
+- **A `lake env lean` shape probe that fails does not mean the repository lacks a carrier.** The
+  probe imports Mathlib only, so a nonzero exit shows just that the written statement does not close
+  by direct pinned-Mathlib composition. It is a necessary condition for non-`bind-only`, never a
+  sufficient reason to dispatch an implementation seat: follow it with a `D5/` semantic search over
+  line-6 digests and concept-crossing conclusion patterns. Landed case: a probe reported a missing
+  connector between two branch criteria while a frozen theorem already stated the atom's branch
+  verbatim; the implementation seat's step-3 library search caught it and returned a bind
+  recommendation with nothing written.
+- **Check whether a quarantine record already exists before writing one.** Several drivers work this
+  repository concurrently; a blind write silently overwrites another driver's record.
+- **The cover door has a fifth precondition: the atom's `chain_atoms` must already be closed.**
+  A ledger entry may carry `receipts.chain_atoms`, a list of child atom ids. While any child is still
+  open, `DigestionReadinessQuery` classifies the parent as `close-chain` and the door answers
+  `partial-closed deletable=false gaps=chain-migration-incomplete`, naming the offending child in
+  `gaps[].detail`. Landed case (2026-09-06): a pair whose four documented preconditions all passed
+  and whose faithfulness was verified clause by clause — the owner's four conjuncts matched the
+  atom's four load-bearing clauses and `fibonacciSubstitution = !![1,1;1,0]` was confirmed identical
+  to the source's `F(x,y)=(x+y,x)` — was still refused, because one of the two children was open.
+  Check `receipts.chain_atoms` before spending a batch slot on a parent atom; close the children first.
+- **A failed `cover-batch` leaves a partial write, and it is not always the same gap.** The batch is
+  strictly sequential and aborts on the first failure, but before aborting it has already written
+  `receipts.cover_disposition` (`outcome`, `gids`, `gaps`) into that entry's YAML. Restore the file
+  byte-for-byte from `HEAD` before running the remaining pairs, or that speculative disposition ships
+  with the PR. Two distinct gap codes have produced this shape so far
+  (`scribe-declaration-reference-missing`, `chain-migration-incomplete`), so do not pattern-match on
+  the code — check the working tree after every non-zero `cover-batch`.
+- **A read-only mining seat still has to publish `result.json` itself; the runner never extracts it.**
+  The worker alone owns `result.json` and `completion.sentinel`; the runner "never creates, repairs,
+  copies, normalizes, touches, or substitutes" them. A brief that only says "print the envelope to
+  stdout" produces seats that finish the work and are still recorded as
+  `status=NOT_COMPLETE reason_code=RESULT_MISSING` with `carrier_exit=0`. Landed case (2026-09-06):
+  four of five mining seats landed in that state; all five had complete envelopes sitting in
+  `last-message.txt`, so nothing was lost, but the batch report read as a 4/5 failure. State the
+  artifact contract in the brief — write `result.json.tmp` then atomically rename, same for the
+  sentinel — and point at the attempt directory the runner appends to the brief rather than a path
+  you compose yourself.
+- **The bind-only test is "after unfolding the new definitions, is a mathematical fact still
+  missing", not "does the concept appear in the frozen prerequisites' text".** The word-level test
+  passes trivially and is worthless: a new module names new objects by construction, so its
+  prerequisites never mention them. Landed retraction (2026-09-06, #5717): a module was declared
+  `content` with an escape witness on the ground that neither frozen prerequisite's statement
+  mentions `Sym2` or the orbit-name map. An independent reviewer produced a four-step bind path
+  reaching the public conclusion without the claimed witness — unfolding `Injective` and the name
+  map, applying pinned Mathlib's `Sym2.eq_iff`, `or_imp`, and ordinary equality rewriting normalized
+  the "new combinatorial bridge" into `forall x, f x = x`; the remaining half-plane merge used
+  `Surjective.forall` plus an already-frozen `im_ne_zero`. Per 5-quadruple-prime a pinned-Mathlib
+  lemma is not a frozen prerequisite, **but a conclusion obtained by instantiating one is equally
+  not a witness**. Both the deposit and its cover were withdrawn.
+- **Post-hoc classification is disclosure, not admission.** The rule scopes by whether the candidate
+  adds the first `Freeze` event for a descriptor, **not by when the file was written**. Replaying
+  source that never landed still proposes a first freeze, so it gets no exemption, and honestly
+  labelling the classification as after-the-fact does not convert it into an admission basis. Same
+  landed case: the PR said plainly "this is post-hoc, I am not claiming pre-registration" and was
+  still rejected, correctly.
+- **Before drafting a quarantine record, check the entry for `cover_disposition`.** The door refuses
+  to let the two coexist (`BackfillInventoryLoader`: `cover_disposition cannot coexist with
+  quarantine`), and more importantly that disposition is usually an accurate record of the real
+  blocker written by the door itself, which may be a *different* `blocker_class` than the one you
+  are about to write. Landed case (2026-09-06): an entry carried a `cover_disposition` whose three
+  gaps were all `chain-migration-incomplete`, while the draft record was about to label it
+  `multi-clause-guard`. Deleting the door's accurate record to install a less accurate one is a
+  bookkeeping error; the atom was dropped from the batch instead.
+- **`blocker_class` must match the actual carrying situation, and the boundary is "one *complete*
+  load-bearing clause".** `multi-clause-guard` means some frozen theorem really carries part of the
+  atom; `missing-prerequisite` means nothing in the repository carries any complete clause. Writing
+  the former for a zero-carrier atom claims partial coverage the ledger does not have. **A general
+  contract lemma that keeps every substantive premise in hypothesis position does not carry
+  anything**: landed rejection (2026-09-06, #5739) bound an atom needing certificates for 32 named
+  matrices to `confluent_negative_jet_block`, whose statement assumes `H.PosDef`, `IsUnit L`,
+  `G.IsHermitian` and the factorisation outright. The drafting seat had itself written "carried is a
+  conditional proof step... the concrete target is still not carried" — **its own honest annotation
+  was the evidence that convicted the record**, because line 10 admitted no carrier while line 12
+  said `multi-clause-guard`. Reviewers can read that contradiction mechanically; so can you, before
+  writing it.
+- **A seat refusing to draft is a reading, not lost throughput.** Three drafting rounds produced
+  three different refusal reasons, and each one corrected the layer above it: (1) the brief demanded
+  a sibling comparison that a low-digestion volume cannot supply — my defect, fixed by adding the
+  empty-set form; (2) `NONE_VERIFIED` on five atoms the mining seat had called `partial` — the seat
+  caught a false positive in the upstream triage; (3) two of those five came back with
+  "zero-carrier premise is false" once a wider search found the carrier — the third layer pushed
+  them back up. **Two refusals in opposite directions, both correct.** Always ask a drafting brief
+  to name what it found when it refuses; that name is what routes the atom to the right line.
+- **Check that a recorded collection command actually collects what it claims.** A record's commands
+  are its provenance: a broken one hands the next reader a lying reproduction path. Landed case
+  (2026-09-06, #5731): four records carried `rg -l '^ quarantine:'`, which demands exactly one space
+  before the key while the real `receipts.quarantine` has two — it silently matches nothing, so a
+  reader "confirming" the zero count would confirm a fabrication. The counts themselves were true
+  (independently recomputed with `git show <base>:<file> | grep -q 'quarantine:'`), and a fifth
+  record in the same batch had written the correct `'^[[:space:]]+quarantine:'` — **the same batch
+  disagreed with itself**. Grep the batch for its own commands and run them.
+- **`NOT_COMPLETE` is a runner-side verdict about artifacts, not a statement about the work.** Before
+  concluding a seat failed, read `status.json` for `reason_code` and `carrier_exit`, and size
+  `last-message.txt`. `carrier_exit=0` with a 30 KB last message means the seat did the work; the
+  envelope is recoverable. This is the codex-log rule (器律⑤) applied to the batch runner: the
+  surface symptom proves only that the observer did not see the result.
+
 ### Moving base (multiple drivers, hourly-advancing dev)
 
 Several machines drive this repository concurrently and `dev` advances roughly hourly; three landed incidents define the discipline:

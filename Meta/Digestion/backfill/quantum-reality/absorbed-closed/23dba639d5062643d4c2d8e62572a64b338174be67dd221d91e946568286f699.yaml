@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:23dba639d5062643d4c2d8e62572a64b338174be67dd221d91e946568286f699
+  normalized_sha256: sha256:23dba639d5062643d4c2d8e62572a64b338174be67dd221d91e946568286f699
+cas_ref: sha256:23dba639d5062643d4c2d8e62572a64b338174be67dd221d91e946568286f699
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurements/MinimalSymmetricRealizationUniqueness.minimal_symmetric_realization_uniqueness
+    target_statement_id: sha256:9b08698a12875d1ab641520af8b0e36924b513ddb04d4f56fcb4d328160a1551
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Measurements/MinimalSymmetricRealizationUniqueness.minimal_symmetric_realization_uniqueness
+      definition_sha256: sha256:dd88a09aaf285ac80af7dab25a35b8184bbe39fa1b8ec75a5dd032119563c370
+      emission_sha256: sha256:87edfeb56088b4381a3f70ab9473790cd9cb46dc32c5df73c9ad06e288d3af49
+  unresolved_subitems: []

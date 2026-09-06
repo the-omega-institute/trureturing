@@ -1,0 +1,90 @@
+## 定理 129.1　钟律一致接近不保证曲率有界
+
+有：
+
+$$
+\boxed{
+g_\epsilon\longrightarrow\eta
+\quad\text{一致收敛}.
+}
+\tag{129.2}
+$$
+
+所有 \(g_\epsilon\) 都具有与 \(\eta\) 相同的 null 方向。
+
+对固定受控轨迹、\(|v|\le v_{\max}<1\)，其钟速满足
+
+$$
+n_\epsilon(x,v)
+=
+e^{s_\epsilon(x)}\sqrt{1-v^2},
+$$
+
+所以
+
+$$
+\boxed{
+|n_\epsilon-n_0|
+\le e^{\epsilon^2}-1
+=
+O(\epsilon^2)
+}
+\tag{129.3}
+$$
+
+一致成立。
+
+但是，采用前文曲率符号约定，
+
+$$
+\boxed{
+\operatorname{Scal}(g_\epsilon)\big|_{x=0}
+=
+\frac{2e^{-2\epsilon^2}}{\epsilon^2}
+\longrightarrow+\infty.
+}
+\tag{129.4}
+$$
+
+### 证明
+
+因为 \(|s_\epsilon|\le\epsilon^2\)，度量系数一致趋于 \(\eta\)，钟速估计也直接成立。
+
+正共形因子不改变 null 方向。
+
+二维静态共形度量的标量曲率为
+
+$$
+\operatorname{Scal}(g)
+=
+-2e^{-2s(x)}s''(x).
+$$
+
+而
+
+$$
+s_\epsilon''(x)
+=
+-\epsilon^{-2}\cos(x/\epsilon^2).
+$$
+
+在 \(x=0\) 代入即得。∎
+
+### 操作性含义
+
+对只读取受控轨迹上内部相位、且总作用预算固定的钟实验，式（129.3）给出趋零的过程误差。
+
+但这不包括潮汐测量、自由轨迹偏离、保持轨迹所需的力，或其他对导数敏感的协议。
+
+因此：
+
+$$
+\boxed{
+\text{某个实验族上的操作接近}
+\not\Rightarrow
+\text{全部几何目标同时接近}.
+}
+$$
+
+---
+

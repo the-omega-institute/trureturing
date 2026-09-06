@@ -1,0 +1,57 @@
+## 定理 73.2　误差沿推理链累加
+
+有
+
+$$
+\boxed{
+\frac12
+\left\|
+Q_n\Phi_n\cdots\Phi_1
+-
+\overline\Phi_n\cdots\overline\Phi_1Q_0
+\right\|_\diamond
+\le
+\sum_{i=1}^n\epsilon_i.
+}
+\tag{73.3}
+$$
+
+### 证明
+
+记
+
+$$
+E_i=Q_i\Phi_i-\overline\Phi_iQ_{i-1}.
+$$
+
+逐项插入并相消：
+
+$$
+\begin{aligned}
+&Q_n\Phi_n\cdots\Phi_1
+-\overline\Phi_n\cdots\overline\Phi_1Q_0\\
+&=
+\sum_{j=1}^n
+\overline\Phi_n\cdots\overline\Phi_{j+1}
+E_j
+\Phi_{j-1}\cdots\Phi_1.
+\end{aligned}
+$$
+
+使用范数三角不等式、次乘性以及每个量子信道的 diamond 范数为一，得到结论。∎
+
+### 条件读数的补充
+
+若最终还要条件于某个事件，而该事件在两个模型中的概率都至少为 \(p_0>0\)，则相应条件概率误差可界为
+
+$$
+\boxed{
+\frac{2}{p_0}\sum_i\epsilon_i,
+}
+\tag{73.4}
+$$
+
+必要时截断到一。
+
+证明使用分子、分母的概率差分别不超过总迹距离，再对归一化比值作估计。
+

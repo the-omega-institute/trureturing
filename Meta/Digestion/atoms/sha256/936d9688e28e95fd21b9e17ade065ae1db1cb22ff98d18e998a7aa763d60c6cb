@@ -1,0 +1,45 @@
+### 证明
+
+把核写成：
+
+$$
+\mathcal B_F(z,w)
+=
+F'(w)\frac{F(z)-F(w)}{z-w}
+-
+F(w)\frac{F'(z)-F'(w)}{z-w}.
+$$
+
+在 \(|z|,|w|\le R\) 上，线段仍在圆盘内，所以：
+
+$$
+|\mathcal B_F(z,w)|
+\le
+\sup|F'|^2+\sup|F|\sup|F''|.
+$$
+
+由于 \(a_n\ge0\)：
+
+$$
+\sup|F|\le D(\ell R),
+$$
+
+$$
+\sup|F'|\le\ell D'(\ell R),
+\qquad
+\sup|F''|\le\ell^2D''(\ell R).
+$$
+
+故核的模长不超过 \(\mathcal M_R\)。
+
+对两个变量分别使用 Cauchy 系数估计：
+
+$$
+|\mathsf B_{ij}|
+\le\mathcal M_RR^{-(i+j)}.
+$$
+
+将被截去部分的矩阵元平方求和，就得到式（P21）。证毕。这里使用的系数估计与解析延拓原则是标准复分析工具。([DLMF][4])
+
+---
+

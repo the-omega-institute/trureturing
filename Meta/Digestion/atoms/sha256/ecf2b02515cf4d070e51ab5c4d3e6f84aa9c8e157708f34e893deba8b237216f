@@ -1,0 +1,44 @@
+### 证明
+
+固定 \(k\)。Schur 多项式是前 \(k\) 个幂和的多项式，而：
+
+$$
+\frac{(d)_\lambda}{d^k}\longrightarrow1
+\qquad(|\lambda|=k).
+$$
+
+因此：
+
+$$
+d^kb_{d,k}
+\longrightarrow
+\sum_{\lambda\vdash k}|s_\lambda(\rho)|^2,
+$$
+
+其中使用的幂和指定为：
+
+$$
+p_1=0,\qquad p_m=\rho_m\quad(m\ge2).
+$$
+
+Schur 的 Cauchy 恒等式给出形式幂级数恒等式：
+
+$$
+\sum_\lambda
+|s_\lambda(\rho)|^2\vartheta^{|\lambda|}
+=
+\exp\left[
+\sum_{m\ge1}\frac{|p_m|^2}{m}\vartheta^m
+\right].
+$$
+
+这个恒等式的经典来源，是矩阵空间对称代数的分解；它不要求这些幂和先来自一个实谱。([arXiv][6])
+
+最后，由定理 M1：
+
+$$
+0\le d^kb_{d,k}\le L^{2k}.
+$$
+
+所以在 \(|\vartheta|L^2<1\) 内，可以逐项取极限，得到式（M12）、（M13）。证毕。
+

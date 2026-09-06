@@ -37,6 +37,10 @@ information_theorem target
   primitives testRealization
   : arena.Law testRealization := by trivial
 
+expect_information_occurrence target
+  in arena
+  from "LeanInformationAudit.Tests.Seal.IllTypedEnumeration"
+
 /-- error: IE-C009 ProofConstructionFailed: LeanInformationAudit.Tests.Seal.IllTypedEnumeration.arena.__state_enumeration
 expected type Arena.StateEnumeration LeanInformationAudit.Tests.Seal.IllTypedEnumeration.arena.toArena -/
 #guard_msgs (error) in

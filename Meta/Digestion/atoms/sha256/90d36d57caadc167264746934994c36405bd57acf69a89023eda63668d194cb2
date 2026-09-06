@@ -1,0 +1,56 @@
+## 定理 7.5　临界极限不交换
+
+取：
+
+$$
+M_k=\prod_{j=1}^kp_j^{G_k-1}.
+$$
+
+则：
+
+$$
+\boxed{
+\lim_{s\downarrow1}\lim_{k\to\infty}
+\frac{Z_{M_k}(s)}{\zeta(s)}
+=1,
+}
+$$
+
+但：
+
+$$
+\boxed{
+\lim_{k\to\infty}\lim_{s\downarrow1}
+\frac{Z_{M_k}(s)}{\zeta(s)}
+=0.
+}
+\tag{7.5}
+$$
+
+### 证明
+
+每个正整数最终都整除 \(M_k\)。因此对固定 \(s>1\)，非负级数单调收敛给出：
+
+$$
+Z_{M_k}(s)\uparrow\zeta(s).
+$$
+
+故第一种次序的内层极限为 1。
+
+对固定 \(k\)，有限和满足：
+
+$$
+Z_{M_k}(s)\to Z_{M_k}(1)<\infty.
+$$
+
+另一方面，积分比较给出：
+
+$$
+\frac1{s-1}
+\le\zeta(s)\le1+\frac1{s-1},
+$$
+
+所以 \(\zeta(s)\to\infty\)。第二种次序的内层极限为零。证毕。
+
+---
+

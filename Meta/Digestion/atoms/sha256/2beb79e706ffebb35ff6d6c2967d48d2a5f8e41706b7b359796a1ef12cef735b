@@ -1,0 +1,26 @@
+## 经典输入：奇异级数的三角平均
+
+对整数 \(H\to\infty\)，有
+
+$$
+\boxed{
+2\sum_{d=1}^{H-1}
+(H-d)(\mathfrak S(d)-1)
+=
+-H\log H
++
+A_0H
++
+O_\varepsilon(H^{1/2+\varepsilon}),
+}
+\tag{14}
+$$
+
+其中
+
+$$
+A_0=2-\gamma_{\mathrm E}-\log(2\pi).
+$$
+
+这是 Montgomery–Soundararajan 文中 \(R_2(H)\) 的公式。它计算的是明确 Euler 因子的平均，不要求先证明实际素数对符合 Hardy–Littlewood 预测。([arXiv][1])
+

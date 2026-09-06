@@ -1,0 +1,22 @@
+**即使所有平均钟速都可以拟合为一张漂亮的时空，量子关联仍然可能证明：这张图只描述平均读数，而不是完整物理过程。**
+
+因此，真正自洽的重建对象应当是：
+
+$$
+\boxed{
+\text{度量}
++
+\text{与度量相容的量子过程}
++
+\text{可控制的误差与遗漏关联}.
+}
+$$
+
+只有当这三部分共同闭合时，时空才不只是一个从数据中拟合出的背景，而是一个受到量子观察者全部相关实验共同约束的物理结构。
+
+[1]: https://link.aps.org/doi/10.1103/PhysRevD.98.024032 "https://link.aps.org/doi/10.1103/PhysRevD.98.024032"
+[2]: https://link.aps.org/doi/10.1103/PhysRevA.97.042322 "https://link.aps.org/doi/10.1103/PhysRevA.97.042322"
+[3]: https://www.nature.com/articles/s41467-020-18264-4 "https://www.nature.com/articles/s41467-020-18264-4"
+[4]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/LinearAlgebra/QuadraticForm/Basic.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/LinearAlgebra/QuadraticForm/Basic.html"
+[5]: https://davidtong.org/teaching/general-relativity/grhtml/S3.html "https://davidtong.org/teaching/general-relativity/grhtml/S3.html"
+[6]: https://arxiv.org/abs/2006.09716 "https://arxiv.org/abs/2006.09716"

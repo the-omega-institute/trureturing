@@ -25,7 +25,6 @@ internal sealed partial class RuleFixture
         var text = HeaderFor(gid, "E") + $"{kind} fixtureStatement : Fixture.Dup := by trivial\n";
         Files[path] = text;
         Baseline[path] = text;
-        ForkPoint[path] = text;
         var declaration = new LeanDeclaration(
             declarationName,
             kind,
@@ -52,7 +51,6 @@ internal sealed partial class RuleFixture
         var text = HeaderFor(gid, "G") + "def duplicateBackfillTargetFixture : Unit := ()\n";
         Files[path] = text;
         Baseline[path] = text;
-        ForkPoint[path] = text;
         Reports[path] = Report();
         BaselineReports[path] = Report();
     }

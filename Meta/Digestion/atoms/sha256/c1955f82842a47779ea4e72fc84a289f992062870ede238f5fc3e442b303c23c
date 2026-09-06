@@ -1,0 +1,65 @@
+## 假设 101.1　有限结构与量子钟
+
+设结构寄存器为有限维 Hilbert 空间：
+
+$$
+\mathcal H_G.
+$$
+
+其固定初态为：
+
+$$
+\sigma\ge0,
+\qquad
+\operatorname{Tr}\sigma=1.
+$$
+
+记支持投影为：
+
+$$
+P=\operatorname{supp}\sigma.
+$$
+
+观察者使用一个两能级钟：
+
+$$
+H_C=\hbar\omega|1\rangle\langle1|,
+\qquad
+\omega>0.
+$$
+
+对已标定的局部控制方向 \(v\)，给定正定算子：
+
+$$
+\widehat n(v)>0.
+$$
+
+选择联合 Hamiltonian：
+
+$$
+\boxed{
+H(v)=H_C\otimes\widehat n(v).
+}
+\tag{101.1}
+$$
+
+因此完整演化为：
+
+$$
+\boxed{
+U_v(t)
+=
+|0\rangle\langle0|\otimes I_G
++
+|1\rangle\langle1|
+\otimes e^{-i\omega t\widehat n(v)}.
+}
+\tag{101.2}
+$$
+
+本节暂不加入独立的结构自由演化。结构寄存器可以在不同钟交互之间保持关联，并不要求每一步重新准备。
+
+时间参数 \(t\) 沿用前文已标定的参照协议；式（101.1）研究的是该协议下的相对钟速，不重新引入一个全知的外部观察者。
+
+---
+

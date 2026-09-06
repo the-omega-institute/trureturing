@@ -1,0 +1,101 @@
+# 一、固定上一轮的算术对象
+
+采用标准 completed 函数：
+
+$$
+\xi(s)=\frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s),
+$$
+
+以及反射折叠：
+
+$$
+\boxed{
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{n\ge0}a_nv^n.
+}
+$$
+
+这里通过偶幂级数定义 \(D\)，没有选择平方根分支；ξ 的归一化与反射关系保持不变。([DLMF][1])
+
+沿用正 theta 概率态：
+
+$$
+d\nu(x)=\frac{\Phi(x)}{\xi(1/2)}\,dx,
+$$
+
+使：
+
+$$
+\int_{\mathbb R}e^{bx}\,d\nu(x)=D(b^2).
+$$
+
+记：
+
+$$
+m_{2n}=\int x^{2n}\,d\nu(x),
+\qquad
+a_n=\frac{m_{2n}}{(2n)!}.
+$$
+
+这种归一化 ξ 的正概率表示，不需要 RH。([arXiv][2])
+
+再定义：
+
+$$
+\log D(v)=\sum_{n\ge1}\frac{\chi_{2n}}{(2n)!}v^n,
+$$
+
+$$
+\boxed{
+s_n=(-1)^{n+1}\frac{n\chi_{2n}}{(2n)!}.
+}
+$$
+
+于是：
+
+$$
+\frac{D'(v)}{D(v)}
+=
+s_1-s_2v+s_3v^2-\cdots.
+$$
+
+选择 \(r_0>0\)，满足：
+
+$$
+D(r_0)<2,
+$$
+
+并固定：
+
+$$
+\ell=\frac{r_0}{2}.
+$$
+
+把上一轮矩阵改为从零编号：
+
+$$
+\boxed{
+\mathsf H_{ij}
+=
+\ell^{i+j+2}s_{i+j+2},
+\qquad i,j\ge0.
+}
+\tag{P1}
+$$
+
+它就是上一轮的 \(\mathsf K\)，仅改变了编号。
+
+前文已经得到的纸面等价是：
+
+$$
+\boxed{
+\mathrm{RH}\iff\mathsf H\succeq0.
+}
+\tag{P2}
+$$
+
+本轮不重复构造未知谱，而是改变这个**已经固定的实际算子**的表达方式。
+
+---
+

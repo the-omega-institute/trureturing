@@ -1,0 +1,28 @@
+## 定理 73.1　实现见证在复合下闭合
+
+若 \(\Phi\) 由 \(K_a\) 实现，\(\Psi\) 由 \(L_b\) 实现，则 \(\Psi\circ\Phi\) 由
+
+$$
+M_{ba}=L_bK_a
+$$
+
+实现。
+
+### 证明
+
+有
+
+$$
+\sum_{a,b}M_{ba}^\dagger M_{ba}
+=
+\sum_aK_a^\dagger
+\left(\sum_bL_b^\dagger L_b\right)
+K_a
+=
+I.
+$$
+
+对任意附加系统，张量后的操作仍以 \(K_a\otimes I\) 为 Kraus 矩阵，保持正性。因此每一步及其复合都完全正、保迹。∎
+
+---
+

@@ -1,0 +1,9 @@
+**理论的实质目标，不是证明所有信息都能由少数符号表达——这一点已有规范双射；而是证明，在全部尺度上，可表达状态的加权总量与观察纤维的最坏影响，始终满足指定的严格预算。**
+
+这个全局任务已经被准确定位为命题 \((G)\)。它不再是未定义的“最高压缩率”或“最大熵”，而是一个具有明确状态空间、观察映射、目标函数、局部证书和完整等价关系的数学问题。
+
+[1]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[2]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
+[3]: https://arxiv.org/html/2002.03361v3 "https://arxiv.org/html/2002.03361v3"
+[4]: https://arxiv.org/html/1211.2147v3 "https://arxiv.org/html/1211.2147v3"
+[5]: https://dlmf.nist.gov/25.2 "https://dlmf.nist.gov/25.2"

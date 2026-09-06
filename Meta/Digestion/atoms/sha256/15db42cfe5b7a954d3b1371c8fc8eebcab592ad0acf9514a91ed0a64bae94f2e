@@ -1,0 +1,23 @@
+# 二、先排除一种可能的伪进展：缩小观察尺度，会让所有缺陷都变小
+
+若把尺度改为：
+
+$$
+\ell'=q\ell,\qquad0<q<1,
+$$
+
+定义对角算子：
+
+$$
+E_q=\operatorname{diag}(q,q^2,q^3,\ldots).
+$$
+
+直接比较矩阵元：
+
+$$
+\boxed{
+\mathsf H_{\ell'}=E_q\mathsf H_\ell E_q.
+}
+\tag{P3}
+$$
+

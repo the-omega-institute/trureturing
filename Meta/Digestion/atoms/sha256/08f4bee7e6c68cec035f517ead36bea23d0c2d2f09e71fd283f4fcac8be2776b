@@ -1,0 +1,48 @@
+## 例二：真正的共轭非实谱
+
+取：
+
+$$
+C=
+\begin{pmatrix}
+\alpha&-\beta\\
+\beta&\alpha
+\end{pmatrix},
+\qquad\beta>0.
+$$
+
+其本征值为 \(\alpha\pm i\beta\)。直接计算：
+
+$$
+\boxed{
+W_T=e^{2\beta^2T^2}I.
+}
+$$
+
+因此度量只是整体缩放，无法改变残差：
+
+$$
+\boxed{
+\sigma_T(C)=\beta
+\quad\forall T>0.
+}
+\tag{I20}
+$$
+
+两者都具有前面的有限观察边界项，但表现不同：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实谱 Jordan 结构}&:\quad \sigma_T\to0,\\
+\text{真实非实谱}&:\quad \sigma_T\ge\beta>0.
+\end{aligned}
+}
+$$
+
+所以：
+
+> **某个有限 \(T\) 下残差非零，还不是离线证据；超过可证明的有限历史误差范围，才开始具有谱意义。**
+
+---
+

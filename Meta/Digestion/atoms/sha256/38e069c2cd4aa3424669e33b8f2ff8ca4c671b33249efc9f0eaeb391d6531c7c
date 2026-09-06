@@ -1,0 +1,74 @@
+### 证明
+
+令：
+
+$$
+F(r)=\operatorname{Tr}(W^{-1}C^*WC)
+=\|A_C(r)\|_{\mathrm{HS}}^2.
+$$
+
+因为：
+
+$$
+\mathcal E_C(r)
+=
+\frac12\left[
+F(r)-\Re\operatorname{Tr}(C^2)
+\right],
+$$
+
+只需求 \(F'\)。
+
+定义：
+
+$$
+B=
+W^{-1/2}W'W^{-1/2}.
+$$
+
+由式（J4）：
+
+$$
+B=A^*A-\frac12\bigl((A^*)^2+A^2\bigr).
+$$
+
+对 \(F\) 求导并利用迹的循环性：
+
+$$
+F'(r)
+=
+\operatorname{Tr}\bigl(B(AA^*-A^*A)\bigr).
+$$
+
+记：
+
+$$
+\mathcal C=AA^*-A^*A.
+$$
+
+有：
+
+$$
+\operatorname{Tr}(\mathcal C A^2)
+=
+\operatorname{Tr}(\mathcal C(A^*)^2)=0,
+$$
+
+以及：
+
+$$
+\operatorname{Tr}(\mathcal C A^*A)
+=
+-\frac12\operatorname{Tr}(\mathcal C^2).
+$$
+
+因此：
+
+$$
+F'(r)=-\frac12\|\mathcal C\|_{\mathrm{HS}}^2.
+$$
+
+再除以二，即得式（J8）。证毕。
+
+---
+

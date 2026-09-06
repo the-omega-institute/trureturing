@@ -1,0 +1,54 @@
+## 定理 123.1　不相交过去域不产生连通关联
+
+若
+
+$$
+\mathsf P_m(x)\cap\mathsf P_m(y)=\varnothing,
+$$
+
+则
+
+$$
+\boxed{
+\operatorname{Cov}_{\sigma_m}(R_x,R_y)=0.
+}
+\tag{123.1}
+$$
+
+特别地，若
+
+$$
+d_G(x,y)>2mr_0,
+$$
+
+则该协方差为零。
+
+### 证明
+
+把两个读数拉回初始时刻：
+
+$$
+\widetilde R_x=\mathcal U_m^\dagger R_x\mathcal U_m,
+\qquad
+\widetilde R_y=\mathcal U_m^\dagger R_y\mathcal U_m.
+$$
+
+它们支持于不相交的初始节点集合。
+
+由于 \(\sigma_0\) 为乘积态，
+
+$$
+\operatorname{Tr}(\sigma_0\widetilde R_x\widetilde R_y)
+=
+\operatorname{Tr}(\sigma_0\widetilde R_x)
+\operatorname{Tr}(\sigma_0\widetilde R_y).
+$$
+
+故协方差为零。
+
+距离条件保证两个半径 \(mr_0\) 的球不相交。∎
+
+这是一种严格电路版本的关联传播限制。连续时间局域 Hamiltonian 中，相应结论通常具有指数衰减尾部，而不是严格截断。([arXiv][1])
+
+---
+

@@ -1,0 +1,40 @@
+## 定义 112.1　经典性缺陷读数
+
+定义线性映射：
+
+$$
+C_\nu:\mathcal H_G\longrightarrow
+\bigoplus_{a=1}^m\mathcal H_G,
+$$
+
+$$
+\boxed{
+C_\nu\psi
+=
+\bigl((\widehat n_a-\nu_aI)\psi\bigr)_a.
+}
+\tag{112.1}
+$$
+
+因此：
+
+$$
+\ker C_\nu=\mathcal E_\nu.
+$$
+
+定义全部未来都不离开经典扇区的初态空间：
+
+$$
+\boxed{
+\mathcal K_\nu
+=
+\bigcap_{k=0}^\infty
+\ker(C_\nu H_G^k).
+}
+\tag{112.2}
+$$
+
+这个定义没有先写“取最大的稳定子空间”，而是从所有未来缺陷读数构造它。
+
+---
+

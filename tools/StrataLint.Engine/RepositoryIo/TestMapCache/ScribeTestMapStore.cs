@@ -91,7 +91,7 @@ internal sealed class ScribeTestMapStore(
         derive ?? ScribeTestMapDeriver.DeriveSnapshot;
     private readonly ConcurrentQueue<ScribeTestMapCacheEvent> events = new();
 
-    // Events are observational; ordering between Current and ForkPoint is not a contract.
+    // Events are observational; ordering between Current and Baseline is not a contract.
     internal IReadOnlyList<ScribeTestMapCacheEvent> Events => events.ToArray();
 
     internal ScribeTestMap GetOrDerive(RepositorySnapshot snapshot)

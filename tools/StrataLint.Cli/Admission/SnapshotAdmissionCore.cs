@@ -16,7 +16,6 @@ internal static class SnapshotAdmissionCore
         RawChangeSet changes,
         BootstrapOutcome bootstrap,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null,
         AdmissionCheckTiming? timing = null,
         ScribeTestMapStore? testMapStore = null,
         Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
@@ -74,7 +73,6 @@ internal static class SnapshotAdmissionCore
                                 changes,
                                 clear.Capability,
                                 verifiedScribeEmissions,
-                                forkPoint,
                                 MeasureRule,
                                 MeasureApplicability,
                                 MeasureCanonicalization,
@@ -89,7 +87,6 @@ internal static class SnapshotAdmissionCore
                                     changes,
                                     protectedSurfaceVerification.ChangeSet,
                                     verifiedScribeEmissions,
-                                    forkPoint,
                                     MeasureRule,
                                     MeasureApplicability,
                                     MeasureCanonicalization,

@@ -1,0 +1,20 @@
+**与能量有什么联系？**
+
+赋予位置能量：
+
+$$
+\boxed{\epsilon_{p,j}=G_j\ln p,}
+$$
+
+就得到：
+
+$$
+\boxed{
+E(I)=\ln d(I),
+\qquad
+\sum_Ie^{-sE(I)}=\sum_{d\mid n}d^{-s}.
+}
+$$
+
+而 Zeckendorf 进位保持这份能量不变，只降低表示的规范化度量。
+

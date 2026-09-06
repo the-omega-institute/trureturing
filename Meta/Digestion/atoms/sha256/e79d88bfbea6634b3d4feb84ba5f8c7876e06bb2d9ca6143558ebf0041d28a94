@@ -1,0 +1,39 @@
+## 命题 131.1　过程误差可以转化为读数偏差
+
+若一个记录的取值满足
+
+$$
+|Y|\le M,
+$$
+
+且实际与理想记录分布的总变差距离至多为 \(\varepsilon\)，则
+
+$$
+\boxed{
+|\mathbb E_{\mathrm{actual}}Y
+-\mathbb E_{\mathrm{ideal}}Y|
+\le2M\varepsilon.
+}
+\tag{131.3}
+$$
+
+### 证明
+
+将两种概率测度之差记为 \(\delta P\)，则
+
+$$
+\left|\int Y\,d\delta P\right|
+\le
+M\int|d\delta P|
+=
+2M\,\operatorname{TV}(P_{\mathrm{actual}},P_{\mathrm{ideal}}).
+$$
+
+∎
+
+因此，前文的过程误差不能在进入几何重建时被丢弃，而应进入 \(\beta\)。
+
+**量子过程近似、统计估计与几何反演，必须沿同一条误差链连接。**
+
+---
+

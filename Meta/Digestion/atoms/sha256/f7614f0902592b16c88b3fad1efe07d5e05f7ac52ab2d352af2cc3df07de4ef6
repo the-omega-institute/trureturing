@@ -1,0 +1,84 @@
+# 八、一个更强的反例：上一轮的完整形状条件，确实仍然不够
+
+上一轮用了离散分布说明“全部标量矩上界不够”。现在可以加强为**正、偶、光滑、超高斯衰减，而且 \(V'(x)/x\) 严格递增**的连续反例。
+
+取：
+
+$$
+c=\frac32,
+$$
+
+并定义：
+
+$$
+\boxed{
+p_\varepsilon(x)
+=
+\frac1{Z_\varepsilon}
+e^{-x^2-\varepsilon x^4}(c+\cosh x),
+\qquad \varepsilon>0.
+}
+\tag{Q25}
+$$
+
+其势满足：
+
+$$
+\frac{V_\varepsilon'(x)}x
+=
+2+4\varepsilon x^2
+-
+\frac{\sinh x}{x(c+\cosh x)}.
+$$
+
+令：
+
+$$
+h(x)=\frac{\sinh x}{x(c+\cosh x)}.
+$$
+
+考察：
+
+$$
+J(x)=
+\sinh x(c+\cosh x)-x(1+c\cosh x).
+$$
+
+有：
+
+$$
+J(0)=0,
+$$
+
+$$
+\boxed{
+J'(x)
+=
+\sinh x\,[2\sinh x-cx]>0
+\qquad(x>0),
+}
+$$
+
+因为 \(c=\frac32<2\) 且 \(\sinh x>x\)。
+
+而 \(h'(x)\) 的分子为 \(-J(x)\)，所以：
+
+$$
+h'(x)<0.
+$$
+
+因此：
+
+$$
+\boxed{
+\left(\frac{V_\varepsilon'(x)}x\right)'
+=
+8\varepsilon x-h'(x)>0.
+}
+\tag{Q26}
+$$
+
+它满足上一轮所要求的完整形状条件，并由定理 Q1 满足全部二次倾斜的相邻矩不等式。
+
+---
+
