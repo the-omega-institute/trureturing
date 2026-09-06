@@ -4,10 +4,10 @@ namespace LeanInformationAudit
 
 -- Produced by SnapshotEnumerator from the identified source snapshot.
 def fixedInformationSourceSnapshot : InformationSourceSnapshot :=
-{ sourceIdentity := "sha256:bf071ac800d370bbe25cf37332438158fee4d4afcca8560ae0a18f2b685f1b27",
-  sourceRevision := "6a48d8d7061636c6b33ba77fb5954d7dc9da8a7d",
-  enumeratorIdentity := "sha256:d6f0424a6571c875ad584b5e70639a7b7b24ab6316b9268914adf20d58a2b51c",
-  moduleCount := 3400,
+{ sourceIdentity := "sha256:05292903d4272d7712fe55b35a6c143c7a1b7701f6675476c245e034377d4304",
+  sourceRevision := "c442912028e6a706eceb688f175c449090bb2837",
+  enumeratorIdentity := "sha256:c668e6b0e8a2b58abe5f30ba730a24a99810806edc6e74f1bca032f8fd36b60d",
+  moduleCount := 3406,
   occurrences := #[{ objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena,
                      theoremName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application,
                      statementIdentity := "sha256:a3a2c21de13a5366dbb0d8ab39bc747e95b22c7cbeecb7ef39d86092b4c70ab0",
@@ -51,6 +51,14 @@ def fixedInformationSourceSnapshot : InformationSourceSnapshot :=
                    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena,
                      theoremName := `D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design,
                      statementIdentity := "sha256:408742a2c71557575944155350def43ed8f9f37ec3a19fe75f721e084dfe939a",
-                     registrationModuleName := `D5.S3.ConceptDynamics.InformationEscape.InformationRoot }] }
+                     registrationModuleName := `D5.S3.ConceptDynamics.InformationEscape.InformationRoot },
+                   { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena,
+                     theoremName := `D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual,
+                     statementIdentity := "sha256:fd8c5bad3c9b38d167e59ff3889f6897c82fdd7070d8feaae13528062ac13140",
+                     registrationModuleName := `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration },
+                   { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena,
+                     theoremName := `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
+                     statementIdentity := "sha256:65c74f1a6b6342639e4c773a4de5bbcd925ebae300eebf640b0cab6f5e4b2984",
+                     registrationModuleName := `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration }] }
 
 end LeanInformationAudit

@@ -1,0 +1,3 @@
+- **6.212–6.216(Schur 宽十移位模板提升)**:第一档·已发表定理的内核化。核对:Bengone 等(arXiv:2607.15034,2026)以宽 10 移位模板证 S(k+2) ≥ 10·S(k) + 2;本组形式化其构造性提升 `HasSchurColoring k n → HasSchurColoring (k+2) (10n+2)`,实施 FromLiterature(Schur 1916 经有 DOI 的二手源归属);Schur 数 S(6) 及以上开放,本组不推进;本 lane 于 5⁵ 落地前派出。
+产地(第 9′ 条):skill=consensus-rnd:sshx 之外的 orchestrator(claude 主循环)自行检索与撰写;触发原因为评注 27.839 漏记上列六组,由 odious v2 #5730 与 Herzog v2 收尾前自查发现。
+
