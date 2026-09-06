@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:01d44b660f6faab5e5ae7e7f71ec70f7338e7595ba8f5b1c080556fda2610561
+  normalized_sha256: sha256:01d44b660f6faab5e5ae7e7f71ec70f7338e7595ba8f5b1c080556fda2610561
+cas_ref: sha256:01d44b660f6faab5e5ae7e7f71ec70f7338e7595ba8f5b1c080556fda2610561
+coverage_gids:
+  - gid: D5/S3/Observer/MeasureSeparation/EpsilonStoppingPairEvidenceCompletion.epsilonStoppingTime
+    target_statement_id: sha256:8df333b05f02fe3c8754eb382a13716d81f39c669f60a49f06ebf895162f3f45
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/MeasureSeparation/EpsilonStoppingPairEvidenceCompletion.epsilonStoppingTime
+      definition_sha256: sha256:51e93f571dbabffa3d18e5e11bf2e5eedf5492468757442185b3c28d5bf39e24
+      emission_sha256: sha256:413d5de19600234329aa906499ac7b6e2ebafe27f690779520a35f9de7c99715
+  unresolved_subitems: []

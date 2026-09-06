@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3b3e9c081bebcc4bed7568427decd41d64802ba7e03c60402e44a5454d643a19
+  normalized_sha256: sha256:3b3e9c081bebcc4bed7568427decd41d64802ba7e03c60402e44a5454d643a19
+cas_ref: sha256:3b3e9c081bebcc4bed7568427decd41d64802ba7e03c60402e44a5454d643a19
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResourceOptimalInteger.golden_resource_unique_optimum
+    target_statement_id: sha256:149b4bf984c5046f8cae1063275f5c9a6640ef07a6ce868a74c506293cc06d7e
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/GoldenResourceOptimalInteger.golden_resource_unique_optimum
+      definition_sha256: sha256:11e520ae1061a372936f8b7b24f50bfbe8403ab16c5feddcc09ab2c15f405032
+      emission_sha256: sha256:a7d53c810016abddbcdb1ceb3debbb32a746df39934ab8f10537d8c8d9cf41fb
+  unresolved_subitems: []

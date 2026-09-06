@@ -6,7 +6,10 @@ coverage_gids:
   - gid: D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical
     target_statement_id: sha256:ff7f0f22bfa2ac210ad0ee6a70117ee76a6b7215281dd44ef79fdf7d69021b7f
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical
+      definition_sha256: sha256:2bbe6ad817ba1e4a0d4be2f155acbffd3b4cd1b9e6a71459269ab78e88497584
+      emission_sha256: sha256:71a26c856233a8a5b0a482f840fdc7b97e7ce7617186973c28ad59ca9270a6cf
   unresolved_subitems: []
   chain_atoms:
     - 464e77d861f641b67f1546367aa5407d7ef549fbbe7d1eab596e0af56249b9fd

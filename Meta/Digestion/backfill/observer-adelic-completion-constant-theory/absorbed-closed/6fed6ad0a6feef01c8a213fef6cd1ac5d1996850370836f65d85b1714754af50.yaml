@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6fed6ad0a6feef01c8a213fef6cd1ac5d1996850370836f65d85b1714754af50
+  normalized_sha256: sha256:6fed6ad0a6feef01c8a213fef6cd1ac5d1996850370836f65d85b1714754af50
+cas_ref: sha256:6fed6ad0a6feef01c8a213fef6cd1ac5d1996850370836f65d85b1714754af50
+coverage_gids:
+  - gid: D5/S3/Weil/Budget/ExplicitHyperbolicDegreeThreshold.explicit_hyperbolic_degree_threshold
+    target_statement_id: sha256:5e65e7a2f6a39b531d2148055d90cf5a903db3e785ddb64ecc5fe997ccedfa66
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Budget/ExplicitHyperbolicDegreeThreshold.explicit_hyperbolic_degree_threshold
+      definition_sha256: sha256:dc20e89a495d765848ab18732c5eec926cddc756320a859c4a3ccfbab45fd440
+      emission_sha256: sha256:a53c36f7698c101a3a4be9ef0fb82d0f46e9c451c6dc1d8631ddee322511ce71
+  unresolved_subitems: []

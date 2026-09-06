@@ -4,7 +4,19 @@
 
 Every continuous solenoid path has a unique base-normalized real lift and a constant hidden offset.
 
-**Definition 1.1 (The visible phase has a canonical representative).**
+**Theorem 1.1 (A prescribed visible representative fixes the streamline).**
+
+$$\pi(\gamma(t0))=\overline{r0} \Rightarrow \exists! (r,k)\in C(\mathbb{R},\mathbb{R})\times\ker(\pi),\ r(t0)=r0 \land \forall t,\ \gamma(t)=realFlow(r(t))+k$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Solenoid/StreamlineDecomposition.existsUnique_streamline` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a continuous solenoid path, fix a time t0 and a real representative r0 of its visible phase at that time. There is a unique pair consisting of a continuous real lift taking value r0 at t0 and a constant hidden kernel element that reconstructs the path. The normalization is part of the hypothesis; the representative need not lie between zero and one.
+
+**Definition 1.2 (The visible phase has a canonical representative).**
 
 $$rep(\gamma)= \operatorname{IcoRep}(\pi(\gamma(0)))\in [0, 1)$$
 
@@ -16,7 +28,7 @@ $$rep(\gamma)= \operatorname{IcoRep}(\pi(\gamma(0)))\in [0, 1)$$
 
 The definition chooses the unique real representative in the half-open interval from zero to one of the path's visible phase at the normalization time. This removes the integer ambiguity in a real lift of the additive circle.
 
-**Theorem 1.2 (Every solenoid path has a unique normalized streamline).**
+**Theorem 1.3 (Every solenoid path has a unique normalized streamline).**
 
 $$\forall \gamma: C(\mathbb{R}, \mathcal S), t0: \mathbb{R},,\ \exists! r, k,\ r(0)= rep(\gamma) \land k\in \ker(\pi) \land \forall t,\ \gamma(t)= realFlow(r(t))+ k.$$
 
@@ -32,7 +44,7 @@ At modulus m, every point of that motion lies in the finite m-torsion subset of 
 
 The pinned library was searched first. AddCircle.isCoveringMap_coe, IsCoveringMap.existsUnique_continuousMap_lifts, AddCircle.finite_torsion, Set.Finite.isDiscrete, and IsPreconnected.constant_of_mapsTo supply the general steps. No library result packages their universal-solenoid assembly.
 
-**Theorem 1.3 (A translated real flow has a nonzero hidden offset).**
+**Theorem 1.4 (A translated real flow has a nonzero hidden offset).**
 
 $$\exists! r, k,\ r(0)= rep(translated) \land \forall t,\ realFlow(t)+ hiddenUnit= realFlow(r(t))+ k \land r(0)\neq r(1) \land k\neq 0.$$
 
@@ -48,5 +60,6 @@ Translate the real-flow path by its time-one value. That value has visible phase
 
 - Truth anchor: `D5/S1/Solenoid/StreamlineDecomposition.baseRepresentative`
 - Truth anchor: `D5/S1/Solenoid/StreamlineDecomposition.existsUnique_normalized_streamline`
+- Truth anchor: `D5/S1/Solenoid/StreamlineDecomposition.existsUnique_streamline`
 - Truth anchor: `D5/S1/Solenoid/StreamlineDecomposition.translated_realFlow_has_nonzero_hidden_offset`
 - Dependency: [D5/S1/Dynamics/UniversalSolenoid](../Dynamics/UniversalSolenoid.md)

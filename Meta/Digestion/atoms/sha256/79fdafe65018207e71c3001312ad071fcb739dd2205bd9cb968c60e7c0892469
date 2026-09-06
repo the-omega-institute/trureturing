@@ -1,0 +1,11 @@
+### 设定
+
+对 \(a>0\) 记 \((a)_k=\prod_{j=0}^{k-1}(a+j)\)。\(\mathcal L_a:\mathbb{R}[X]\to\mathbb{R}[X]\) 是使
+
+$$
+\mathcal L_a\Bigl(a_0+a_1\frac{X}{a}+a_2\frac{X(X-1)}{a(a+1)}+\cdots
++a_n\frac{X(X-1)\cdots(X-n+1)}{(a)_n}\Bigr)=a_0+a_1X+\cdots+a_nX^n
+$$
+
+的线性算子。
+

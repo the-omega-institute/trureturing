@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6a287a485d1859d0decf65d68438fe5d2c9d399d921ed708d84cf0f1c89b4c67
+  normalized_sha256: sha256:6a287a485d1859d0decf65d68438fe5d2c9d399d921ed708d84cf0f1c89b4c67
+cas_ref: sha256:6a287a485d1859d0decf65d68438fe5d2c9d399d921ed708d84cf0f1c89b4c67
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/FinitePrimePowerQuotientCompleteness.finite_prime_power_quotient_completeness_tfae
+    target_statement_id: sha256:269b61c07593a05814a05323bd2986542027fb736ecd983e8f829fb1f70418a0
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/PrimePowers/FinitePrimePowerQuotientCompleteness.finite_prime_power_quotient_completeness_tfae
+      definition_sha256: sha256:abed144e063c84f90db321003ec2f00c32915a5e4782465b00163f7eca2aa6b5
+      emission_sha256: sha256:5c824db8f03cb75e182e66ea93092c80746b9d69674acd398fe3df437abd29fd
+  unresolved_subitems: []

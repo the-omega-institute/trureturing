@@ -12,6 +12,9 @@ receipts:
     - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
       definition_sha256: sha256:7c42f364cffc731328d1c66c59da12ca61ccf5d6797838678b81eda30edf196f
       emission_sha256: sha256:58246a826a1958e8f0839acfd952a24e91ba52d5babac98f92e567a76417226c
+    - gid: D5/S3/Fourier/GaussianThetaTransformation.gaussian_theta_transformation
+      definition_sha256: sha256:68c65cc450fc5063a16816a65a9ba30a7b7e3119c376cd6c1b8dbbb16994eb84
+      emission_sha256: sha256:5464557243921e4f04194062c6c4aafd49ab9c0bc82d99cb9beb6658a2eb90cf
   unresolved_subitems:
     - completed-zeta-parameter-as-history-sampling-bias
     - dirichlet-series-time-foliation-versus-euler-product-space-foliation

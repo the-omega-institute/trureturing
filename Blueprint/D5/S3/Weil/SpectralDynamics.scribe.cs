@@ -14,6 +14,20 @@ internal sealed class SpectralDynamicsDocument : IScribeDocumentDefinition
         H("Spectral Dynamics Toward Weil Positivity"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("each-vertical-phase-has-unit-modulus"),
+                DeclarationHandle.Create("D5/S3/Weil/SpectralDynamics.verticalPhase_norm"),
+                H("Each vertical phase has unit modulus"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Vert, Operatorname, Grp(F.Id("verticalPhase")),
+                    Open, F.Id("t"), Comma, F.Id("a"), Close, Vert, Eq, D(1)))),
+                AssessedProvenance.FromLiterature(HedenmalmHilbert),
+                Blocks(Paragraph(Text(
+                    "For every real time t and prime-axis address a, the vertical phase "
+                        + "has norm one. Its base is the positive integer encoded by a and "
+                        + "its exponent is purely imaginary. This is the coordinate identity "
+                        + "underlying norm preservation of vertical evolution."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("vertical-evolution-is-a-norm-preserving-group"),
                 DeclarationHandle.Create("D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group"),
                 H("Vertical evolution is a norm-preserving group"),

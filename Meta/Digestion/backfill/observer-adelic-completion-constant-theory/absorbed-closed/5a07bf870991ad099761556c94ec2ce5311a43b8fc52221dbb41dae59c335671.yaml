@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5a07bf870991ad099761556c94ec2ce5311a43b8fc52221dbb41dae59c335671
+  normalized_sha256: sha256:5a07bf870991ad099761556c94ec2ce5311a43b8fc52221dbb41dae59c335671
+cas_ref: sha256:5a07bf870991ad099761556c94ec2ce5311a43b8fc52221dbb41dae59c335671
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/FiniteHeightCompletionVariance.finite_height_completion_variance_nonnegative
+    target_statement_id: sha256:a34dd1a412304e58fa57172b07e4bc77131b87050ad2f7dd42f952acdc8e4ddd
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaLinear/FiniteHeightCompletionVariance.finite_height_completion_variance_nonnegative
+      definition_sha256: sha256:bb9ca811a2a38846f9d72cda4ae72e3f1be2c39aafe6d7a2b8c8a5e6a7448060
+      emission_sha256: sha256:e33430c81ddaa29162ca79ec0a5baa1cc7e3c0dc9b30632a8d27477e4687c2b6
+  unresolved_subitems: []
