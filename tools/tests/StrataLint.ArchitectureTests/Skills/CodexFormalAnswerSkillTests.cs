@@ -250,7 +250,7 @@ public sealed partial class CodexFormalAnswerSkillTests
     }
 
     [Fact]
-    public void TemporaryOnlyFormalSuccessIsRejected()
+    public void DeletingASuccessfulSpecializationIsRejected()
     {
         var document = Parse(
             """
@@ -258,14 +258,15 @@ public sealed partial class CodexFormalAnswerSkillTests
 
             1. Build a `premise-map`.
             2. Write a reusable `G` after checking `project-source`, then mark it `tracked-lean`.
-            3. Apply `G` to `P` through `S`.
+            3. Apply `G` to `P` through `S` and classify a successful exact build as `tracked-S`.
 
             ## 6. Persist project source and account for the worktree
 
-            1. `reuse-complete`: cite `project-source`.
-            2. `discard-thin`: delete the successful `run-local` proof.
-            3. `persist-synthesis`: optionally retain `tracked-lean` with `Describe` after `make lean`.
-            4. `open-compile`: record an `open` compiler failure.
+            1. `reuse-complete`: cite `project-source`, delete the successful `S`, and verify with `make lean`.
+            2. `persist-generalization`: retain `G` after `generalization-audit` as `tracked-lean` with `Describe`, delete the successful `S`, and verify with `make lean`.
+            3. `retain-specialization-open`: delete `S` after a failed `generalization-audit` and keep the result `open`.
+            4. `discard-thin`: remove only `failed-or-uncompiled` code and keep the result `open`.
+            5. `open-compile`: record an `open` compiler failure.
             """);
 
         Assert.False(DefinesInferentialCompletionAndProjectPersistence(document));
@@ -456,7 +457,7 @@ public sealed partial class CodexFormalAnswerSkillTests
 
         var completionItems = completionLists[0].OfType<ListItemBlock>().ToArray();
         var persistenceItems = persistenceLists[0].OfType<ListItemBlock>().ToArray();
-        if (completionItems.Length != 3 || persistenceItems.Length != 4)
+        if (completionItems.Length != 3 || persistenceItems.Length != 5)
         {
             return false;
         }
@@ -466,8 +467,9 @@ public sealed partial class CodexFormalAnswerSkillTests
         var specializationCodes = InlineCodeValuesFromBlock(completionItems[2]).ToHashSet(StringComparer.Ordinal);
         var reuseCodes = InlineCodeValuesFromBlock(persistenceItems[0]).ToHashSet(StringComparer.Ordinal);
         var persistenceCodes = InlineCodeValuesFromBlock(persistenceItems[1]).ToHashSet(StringComparer.Ordinal);
-        var thinCodes = InlineCodeValuesFromBlock(persistenceItems[2]).ToHashSet(StringComparer.Ordinal);
-        var blockedCodes = InlineCodeValuesFromBlock(persistenceItems[3]).ToHashSet(StringComparer.Ordinal);
+        var specializationOpenCodes = InlineCodeValuesFromBlock(persistenceItems[2]).ToHashSet(StringComparer.Ordinal);
+        var thinCodes = InlineCodeValuesFromBlock(persistenceItems[3]).ToHashSet(StringComparer.Ordinal);
+        var blockedCodes = InlineCodeValuesFromBlock(persistenceItems[4]).ToHashSet(StringComparer.Ordinal);
         var allCodes = document
             .SelectMany(SelfAndDescendants)
             .SelectMany(InlineCodeValuesFromBlock)
@@ -489,17 +491,27 @@ public sealed partial class CodexFormalAnswerSkillTests
             && specializationCodes.Contains("S")
             && specializationCodes.Contains("G")
             && specializationCodes.Contains("P")
+            && specializationCodes.Contains("tracked-S")
             && reuseCodes.Contains("reuse-complete")
             && reuseCodes.Contains("project-source")
+            && reuseCodes.Contains("S")
+            && reuseCodes.Contains("tracked-S")
+            && reuseCodes.Contains("make lean")
             && persistenceCodes.Contains("persist-generalization")
             && persistenceCodes.Contains("G")
             && persistenceCodes.Contains("generalization-audit")
             && persistenceCodes.Contains("tracked-lean")
+            && persistenceCodes.Contains("S")
+            && persistenceCodes.Contains("tracked-S")
             && persistenceCodes.Contains("Describe")
             && persistenceCodes.Contains("make lean")
+            && specializationOpenCodes.Contains("retain-specialization-open")
+            && specializationOpenCodes.Contains("S")
+            && specializationOpenCodes.Contains("tracked-S")
+            && specializationOpenCodes.Contains("generalization-audit")
+            && specializationOpenCodes.Contains("open")
             && thinCodes.Contains("discard-thin")
-            && thinCodes.Contains("run-local")
-            && thinCodes.Contains("generalization-audit")
+            && thinCodes.Contains("failed-or-uncompiled")
             && thinCodes.Contains("open")
             && blockedCodes.Contains("open-compile")
             && blockedCodes.Contains("open")

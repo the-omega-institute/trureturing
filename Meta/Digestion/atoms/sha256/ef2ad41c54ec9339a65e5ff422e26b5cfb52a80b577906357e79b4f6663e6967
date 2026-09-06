@@ -1,0 +1,30 @@
+## 定义307.1　单素数轴的局部因数状态
+
+对指数上界 \(a\)，允许局部指数
+
+$$
+0,1,\ldots,a,
+$$
+
+并将它们写成 Zeckendorf 字串。
+
+当 \(a=3\) 时：
+
+$$
+0\leftrightarrow000,\quad
+1\leftrightarrow100,\quad
+2\leftrightarrow010,\quad
+3\leftrightarrow001.
+$$
+
+当 \(a=4\) 时，新增：
+
+$$
+\boxed{4=3+1\leftrightarrow101.}
+\tag{307.1}
+$$
+
+这里的新增状态始终满足“不能连续11”。之前没有它，是因为指数资源上界为3，而不是因为它违反规范编码。
+
+---
+

@@ -1,0 +1,60 @@
+# 七、这个隐藏临界，还能用精确的“信息损失公式”测量
+
+在有限指数族中，对数配分函数的一、二阶导数分别给出均值与协方差。这是指数族的标准微分结构。([加州大学伯克利分校统计学系][4])
+
+在当前模型里：
+
+$$
+\frac{\partial}{\partial\lambda}\Phi_j
+=
+-\mathbb E_j[E],
+$$
+
+$$
+\boxed{
+\frac{\partial^2}{\partial\lambda^2}\Phi_j
+=
+\beta\,\operatorname{Var}_j(E).
+}
+\tag{15}
+$$
+
+因此，式（13）的隐藏二阶响应为：
+
+$$
+\boxed{
+\frac{\partial^2}{\partial\lambda^2}
+(\Phi_5-\Phi_4)
+=
+\beta(\ln11)^2r(1-r).
+}
+\tag{16}
+$$
+
+在临界点：
+
+$$
+\lambda=\lambda_-,
+\qquad r=\frac12,
+$$
+
+得到：
+
+$$
+\boxed{
+\frac{\partial^2}{\partial\lambda^2}
+(\Phi_5-\Phi_4)
+=
+\frac{\beta(\ln11)^2}{4}.
+}
+\tag{17}
+$$
+
+它的高度随 \(\beta\) 增长，宽度按 \(1/\beta\) 缩小。零温极限中，这个二阶响应集中成位于 \(\lambda_-\) 的点质量，其总量是：
+
+$$
+\ln11.
+$$
+
+这里的“曲率”是**最优值对价格的二阶响应**，不是时空的 Riemann 曲率。
+

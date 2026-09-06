@@ -1,0 +1,49 @@
+# 七、第三个角度：直接改变 ζ 的零点稳定性
+
+如果希望研究“即使图像光滑，零点约束究竟有多脆弱”，de Bruijn–Newman 变形尤其合适。
+
+采用标准归一化：
+
+$$
+H_0(z)=\frac18\xi\left(\frac12+\frac{iz}{2}\right).
+$$
+
+它具有 Fourier 表达：
+
+$$
+H_0(z)=\int_0^\infty\Phi(u)\cos(zu)\,du,
+$$
+
+其中标准 Riemann 核为：
+
+$$
+\Phi(u)=
+\sum_{n\ge1}
+\left(
+2\pi^2n^4e^{9u}-3\pi n^2e^{5u}
+\right)e^{-\pi n^2e^{4u}}.
+$$
+
+定义：
+
+$$
+\boxed{
+H_\tau(z)
+=
+\int_0^\infty
+e^{\tau u^2}\Phi(u)\cos(zu)\,du.
+}
+\tag{24}
+$$
+
+它满足：
+
+$$
+\boxed{
+\partial_\tau H_\tau=-\partial_z^2H_\tau.
+}
+\tag{25}
+$$
+
+这是数学上的反向热方程。它不是一个已被证明对应真实物理时间的过程。([What's new][6])
+

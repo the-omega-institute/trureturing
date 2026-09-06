@@ -1,0 +1,28 @@
+## 1. 每个终点只计一次
+
+定义：
+
+$$
+\boxed{
+Z_{\mathrm{state}}(s,z)
+=
+\sum_{n\ge1}z^{\Omega(n)}n^{-s}
+=
+\prod_p\frac1{1-zp^{-s}}.
+}
+\tag{16}
+$$
+
+在 \(\Re s>1,\ |z|\le1\) 内可直接使用绝对收敛。
+
+特别地：
+
+$$
+\boxed{
+Z_{\mathrm{state}}(s,1)=\zeta(s).
+}
+\tag{17}
+$$
+
+这由唯一素因数分解和 Euler 乘积给出。([DLMF][3])
+

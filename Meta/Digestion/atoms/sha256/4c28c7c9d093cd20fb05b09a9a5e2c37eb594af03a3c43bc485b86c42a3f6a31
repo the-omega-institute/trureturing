@@ -1,0 +1,75 @@
+# 一、固定同一个算术族，不更换收益或归一化
+
+沿用：
+
+$$
+a(n)=\frac{\sigma(n)}n=\sum_{d\mid n}\frac1d,
+$$
+
+以及资源目标：
+
+$$
+J_\lambda(n)=\log a(n)-\lambda\log n.
+$$
+
+项目在固定快照 `b89d56d0…` 中，已经包含价格 \(\lambda=1/25\) 下 5040 唯一最优的实际证明结构；这个结果针对上述指定目标，不是一般意义上的“5040 最优”。
+
+上轮的温度扩展是：
+
+$$
+\mathscr Z_T(\lambda)
+=
+\sum_{n\ge1}a(n)^{1/T}n^{-\lambda/T}.
+$$
+
+现在取整数逆温度：
+
+$$
+r=\frac1T\in\mathbb N_{\ge1}.
+$$
+
+为了避免把温度与复参数混在一起，定义：
+
+$$
+\boxed{
+F_r(s)=\sum_{n\ge1}\frac{a(n)^r}{n^s}.
+}
+\tag{1}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathscr Z_{1/r}(\lambda)=F_r(r\lambda).
+}
+\tag{2}
+$$
+
+因为：
+
+$$
+1\le a(n)\le1+\log n,
+$$
+
+所以：
+
+$$
+\boxed{
+F_r(s)\text{ 绝对收敛}
+\iff
+\Re s>1.
+}
+\tag{3}
+$$
+
+这相当于原变量中的：
+
+$$
+\Re\lambda>\frac1r=T.
+$$
+
+由于 \(a(n)^r\) 具有乘法性，绝对收敛域内存在 Euler 乘积。这里使用的是标准乘法函数—Euler 乘积对应。([DLMF][1])
+
+---
+

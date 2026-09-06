@@ -1,0 +1,49 @@
+# 结论
+
+这次可以把“离散临界几何约束”归结为三条真正不同的边界。
+
+第一条是**整数可实现边界**：
+
+$$
+\boxed{
+\text{局部不出现 }11
+\quad\text{不一定保证闭环后的全局合法性。}
+}
+$$
+
+第二条是**联合相位的正性边界**：
+
+$$
+\boxed{
+|r_{n+1}-m_n|\le h_n.
+}
+$$
+
+它决定新的切片能否与旧切片来自同一个正 Hilbert 几何。
+
+第三条是**无限阶稳定性边界**：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+h_n>0\ \forall n,
+\qquad
+h_n^{1/n}\to0.
+}
+$$
+
+所以，真正的目标不是把实际数据推离所有边界，而是证明：
+
+> **实际数据可以在无限细、无限接近退化的合法区域里继续前进，却从不穿过正性边界。**
+
+这比“ζ 很光滑，因此整体应该稳定”更严格，也比“数值很接近零，因此一定要相变”更准确。
+
+目前尚未证明的，仍是实际 ξ 系数在全部阶数上满足式（36）。但缺项的位置已经明确：**不是再补一个任意顶点，而是证明下一项实际相关偏离预测中心的幅度，始终不超过此前几何留下的、正在迅速缩小的余量。**
+
+[1]: https://arxiv.org/html/2301.05779v2 "https://arxiv.org/html/2301.05779v2"
+[2]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+[3]: https://dlmf.nist.gov/18.33 "https://dlmf.nist.gov/18.33"
+[4]: https://arxiv.org/html/math/0502485v1 "https://arxiv.org/html/math/0502485v1"
+[5]: https://dlmf.nist.gov/18.2 "https://dlmf.nist.gov/18.2"
+[6]: https://arxiv.org/html/2412.15470v1 "https://arxiv.org/html/2412.15470v1"

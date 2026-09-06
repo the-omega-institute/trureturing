@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:67fa33cbfa23fd70f9ea880078d69409206f37c9119babc6843d99f90bb30582
+  normalized_sha256: sha256:67fa33cbfa23fd70f9ea880078d69409206f37c9119babc6843d99f90bb30582
+cas_ref: sha256:67fa33cbfa23fd70f9ea880078d69409206f37c9119babc6843d99f90bb30582
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A bare determinant list item inside the examples begun in atom 9deb1b53d18e71bf2d39790bf1124f1c303cb2babd2e821ca9ca28ac1999bc01; it supplies only a noun phrase and carries no independent Lean-coverable proposition.
+    previous_atom_id: c8d607bb0fbcfd59479eb65ed51baed875baecda7427cb73e57842e634338278
+    next_atom_id: 7fcc4f707af3cc743cc9096ed403d2f959d21f240df981d11304e930a41236d3

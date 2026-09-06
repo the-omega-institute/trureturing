@@ -1,0 +1,93 @@
+# 结论
+
+这次可以把离散临界分成四种互相连接、但不能混同的边界：
+
+$$
+\boxed{
+R\tau_L\ge L-1
+}
+$$
+
+是**空间信息传播所要求的最低时间**；
+
+$$
+\boxed{
+\operatorname{gap}(H_{\mathrm{prop}})
+=
+2-2\cos\frac{\pi}{T+1}
+}
+$$
+
+是**长历史的传播稳定性边界**；
+
+$$
+\boxed{
+U_{i+1,t}V_{i,t}
+=
+V_{i,t+1}U_{i,t}
+}
+$$
+
+是**空间与时间共同拼接的相容条件**；
+
+$$
+\boxed{
+\sqrt{N(N+2)}
+\gtrsim
+\frac{\gamma^2}{|\Delta\gamma|}
+}
+$$
+
+是**当前 ξ 回返坐标下的时间分辨约束**。
+
+最重要的统一等式则是
+
+$$
+\boxed{
+\rho_{\mathrm{clock}}=\frac{T_N}{N+1}.
+}
+$$
+
+它说明：**此前的几何矩阵，不只是“不同状态排在一起”的静态对象；在共同幺正实现下，它正是整段历史的时间相干状态。**
+
+因此，下一步不能只问“每个离散数据点是否合法”，也不能只问“每次操作是否正确”。必须问：
+
+> **这些数据能否沿允许的步骤形成同一段历史；这段历史在改变切片、合并步骤和增加观察时长之后，是否仍保留相同的因果结果、相位关系与误差保证。**
+
+本轮没有证明实际 ξ 的全阶正性。但已经把尚待控制的内容从“再补一个空间方向”，推进到了更明确的**时空联合约束**：传播范围、时钟成本、环路相容、时间分辨与正性余量，必须在同一个模型里同时成立。
+
+[1]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[2]: https://arxiv.org/abs/1311.6101 "https://arxiv.org/abs/1311.6101"
+[3]: https://arxiv.org/html/1712.07395v2 "https://arxiv.org/html/1712.07395v2"
+[4]: https://arxiv.org/abs/1712.07395 "https://arxiv.org/abs/1712.07395"
+[5]: https://quantum-journal.org/papers/q-2018-09-19-94/ "https://quantum-journal.org/papers/q-2018-09-19-94/"
+[6]: https://arxiv.org/html/2301.05779v2 "https://arxiv.org/html/2301.05779v2"
+[7]: https://arxiv.org/html/math/0502485v1 "https://arxiv.org/html/math/0502485v1"
+**这次可以把“统一离散时空，再从其他切面分析”变成一组明确的数学操作，而不只是更换图像。**
+
+最重要的推进是：
+
+$$
+\boxed{
+\text{整段执行历史压缩到边界后，时间不会自动消失；
+它会进入边界耦合、有效度量和频率响应。}
+}
+$$
+
+同时，还能证明一个看起来反直觉的事实：
+
+$$
+\boxed{
+\text{同一个局部张量，沿时间方向完全可逆，
+换一个切面后却可能只有一维秩。}
+}
+$$
+
+最后，接回实际 ξ 的历史态，会得到一个新的定量结论：
+
+> **在 RH 前件下，历史态的有限阶秩可以不断增长，但按逆纯度定义的有效维数，对全部时间长度都不超过约 \(28.7549\)。**
+
+这说明“增加了多少独立方向”“多少方向占据主要权重”“换切面以后还能否稳定重建”是三种不同的问题。
+
+下面沿用项目已核对的 `b89d56d0c9a4…` 快照。有限维结论给出证明；涉及实际 ξ 正历史态的地方明确保留 RH 前件，新增接口尚未进行 Lean 编译。
+

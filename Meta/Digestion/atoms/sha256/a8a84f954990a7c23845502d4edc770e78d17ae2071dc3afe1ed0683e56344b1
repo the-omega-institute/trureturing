@@ -1,0 +1,25 @@
+# 结论
+
+你的直觉中，这次最值得保留的部分是：
+
+> **四边形与金字塔，可以不是两个任意相似的图形，而是一个“独立组合—互斥占据”规则的两层结构。这个规则同时产生 Fibonacci 合法态、奇偶跃迁和可被素数权重赋能的量子模型。**
+
+最紧凑的对应是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{两端独立选择}
+&&\longrightarrow \text{四边形底面};\\
+&\text{中间占据排斥两端}
+&&\longrightarrow \text{锥顶};\\
+&\text{单位置翻转}
+&&\longrightarrow \text{奇偶谱配对};\\
+&\text{Fibonacci 加权、素数对数计价}
+&&\longrightarrow \text{算术能谱};\\
+&\text{只读取占据均值}
+&&\longrightarrow \text{隐藏关联与预测残差}.
+\end{aligned}
+}
+$$
+

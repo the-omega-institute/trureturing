@@ -1,0 +1,71 @@
+## 本轮核验与结论
+
+本轮重新读取了仓库的素数交换曲率、素数—Zeckendorf 编码和 ζ 共同边界模块，并完成了：
+
+* 12项局部边际阈值的精确整数比较；
+* 60状态与120状态模型的边际分布分解；
+* 12组参数下，隐藏压力项与 Fisher 信息损失公式的80位数值交叉检查；
+* \(-23/2418\) 这一记忆交换残差的有理数核验。
+
+数值交叉检查不是严格区间证明；本轮的一般结论来自正文中的有限求和、条件方差和代数推导，尚未新增 Lean 内核证明。
+
+[下载核验代码、结果与适用范围说明](sandbox:/mnt/data/flatness_5040_checks.zip)
+
+**整体上，我认为你的直觉应当收敛到这样一个更强、更可证的命题：**
+
+$$
+\boxed{
+\text{“平坦”可以是某个观察层上的闭合描述；}
+}
+$$
+
+$$
+\boxed{
+\text{“临界”是被它忽略的方向开始改变目标判断的时刻；}
+}
+$$
+
+$$
+\boxed{
+\text{“升维”应当补入这份缺失的结构，而不是任意增加坐标。}
+}
+$$
+
+对5040，缺失方向首先可以被明确指出为 \(11\) 的第一指数层；对 PRIMEGAME，它可以是控制标签或在途数据；对因果时空，它还可能涉及局部尺度、传播权重与多时刻相关。
+
+**因此，5040的深刻性不在于它已经证明宇宙由四个坐标构成，而在于它提供了一个完整可算的样本：旧坐标全部合法、规范、稳定，甚至全部可见统计都没有变化，但系统已经要求一个新的有效方向。**
+
+这正是离散临界、观察投影、最优性与信息逃逸之间，可以继续发展成严格理论的连接点。
+
+[1]: https://link.springer.com/article/10.1007/s41114-019-0023-1 "https://link.springer.com/article/10.1007/s41114-019-0023-1"
+[2]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[3]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"
+[4]: https://www.stat.berkeley.edu/~wfithian/courses/stat210a/exponential-families.html "https://www.stat.berkeley.edu/~wfithian/courses/stat210a/exponential-families.html"
+**可以继续，而且这次可以找到比“5040附近出现最优状态切换”更具体的新信息：这个切换在复参数平面中会形成一列可精确定位的零点；把有限模型扩成全部正整数以后，这列零点仍然存在，并且能够算出其第一项边界修正。**
+
+另外，还有两种直接针对真实 ζ 零点结构的观察角度：
+
+$$
+\boxed{
+\text{Taylor 系数}
+\longrightarrow
+\text{有限多项式}
+\longrightarrow
+\text{正半定矩阵的边界};
+}
+$$
+
+$$
+\boxed{
+\text{ζ 的热流变形}
+\longrightarrow
+\text{实零点碰撞}
+\longrightarrow
+\text{离开实轴的临界时刻}.
+}
+$$
+
+这三条路线分别揭示**状态竞争边界、有限代数证书边界、零点稳定性边界**。它们可以相互校验，但不能把其中一种模型的零点误认成另一种模型的零点。
+
+下面展开。本轮也核对了仓库的 Jensen 多项式与 Rouché 零点计数模块，并完成了若干严格的有理数计算证书。
+

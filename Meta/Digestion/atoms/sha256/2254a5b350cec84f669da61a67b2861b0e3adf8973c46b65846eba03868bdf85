@@ -1,0 +1,42 @@
+## 内部有效动力学
+
+若保留自然 Hamiltonian \(H(t)\)，相应的移动子空间生成元为
+
+$$
+\boxed{
+H_Z(t)
+=
+P(t)H(t)P(t)
++
+i\hbar[\dot P(t),P(t)].
+}
+\tag{237.5}
+$$
+
+选择局部正交标架
+
+$$
+V(t):\mathbb C^r\to\mathcal H,
+\qquad
+V^\dagger V=I_r,
+\qquad
+VV^\dagger=P,
+$$
+
+则内部坐标 \(c(t)\) 满足
+
+$$
+\boxed{
+i\hbar\dot c
+=
+\left[
+V^\dagger HV-i\hbar V^\dagger\dot V
+\right]c.
+}
+\tag{237.6}
+$$
+
+后一项是移动记录标架引入的连接。它可以是矩阵，不同路径产生的内部变换也可能不交换。
+
+移动 Zeno 子空间与非阿贝尔几何操作之间已有理论联系；相应的几何生成元也出现在自适应 Zeno 与无跃迁控制研究中。([arXiv][1])
+

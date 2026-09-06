@@ -1,0 +1,52 @@
+## 定理319.1　有限正性检验可以携带稳健误差证书
+
+设真实 Hermitian 矩阵为 \(K\)，计算得到 \(\widehat K\)，并有：
+
+$$
+\|K-\widehat K\|_{\mathrm{op}}\le\varepsilon.
+$$
+
+则：
+
+$$
+\boxed{
+\lambda_{\min}(\widehat K)<-\varepsilon
+\Longrightarrow
+K\not\succeq0.
+}
+\tag{319.1}
+$$
+
+反之：
+
+$$
+\boxed{
+\lambda_{\min}(\widehat K)>\varepsilon
+\Longrightarrow
+K\succ0.
+}
+\tag{319.2}
+$$
+
+### 证明
+
+对任意单位向量，二次型误差不超过 \(\varepsilon\)。对最小 Rayleigh 商取界即可。∎
+
+所以每次探测不应只报告一个近零小数，而应报告：
+
+$$
+\boxed{
+\text{最小特征值}
++
+\text{尾部界}
++
+\text{计算误差}
++
+\text{采样域}.
+}
+$$
+
+正结果只认证当前有限配置；负结果在误差足够小时，可以成为真正的反例证书。
+
+---
+

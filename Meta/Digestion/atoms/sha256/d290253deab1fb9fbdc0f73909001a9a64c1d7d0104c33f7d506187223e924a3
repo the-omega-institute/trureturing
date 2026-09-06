@@ -1,0 +1,54 @@
+## 定理 6.1：四方向奇偶项的精确大小
+
+$$
+\boxed{
+\sum_{k\in\{0,1\}^4}
+(-1)^{k_2+k_3+k_5+k_7}F(k)
+=
+\frac1{1058400}.
+}
+\tag{17}
+$$
+
+### 证明
+
+乘积求和可以分离：
+
+$$
+\begin{aligned}
+\sum_k(-1)^{|k|}F(k)
+&=
+\prod_p
+\left[z_p-(z_p+u_p)\right]\\
+&=
+(-1)^4\prod_pu_p\\
+&=
+\frac1{32\cdot27\cdot25\cdot49}.
+\end{aligned}
+$$
+
+而：
+
+$$
+32\cdot27\cdot25\cdot49
+=
+5040\cdot210
+=
+1058400.
+$$
+
+证毕。
+
+对应的归一化 Walsh 系数是：
+
+$$
+\boxed{
+\widehat F(\{2,3,5,7\})
+=
+\frac1{16\cdot1058400}
+=
+\frac1{16934400}.
+}
+\tag{18}
+$$
+

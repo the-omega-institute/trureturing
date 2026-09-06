@@ -1,0 +1,48 @@
+## 定理234.1　失败概率与相位曲率来自同一张量
+
+有
+
+$$
+\boxed{
+1-\operatorname{Tr}[P(\lambda+d\lambda)P(\lambda)]
+=
+G_{ab}\,d\lambda^a d\lambda^b
++
+O(|d\lambda|^3),
+}
+\tag{234.3}
+$$
+
+以及
+
+$$
+\boxed{
+F_{ab}=-2\operatorname{Im}\mathcal Q_{ab}.
+}
+\tag{234.4}
+$$
+
+### 证明
+
+对相邻态的重叠作二阶展开，利用归一化条件消去一阶实部，剩余二阶项正是
+
+$$
+\langle d\psi|(I-P)|d\psi\rangle.
+$$
+
+另一方面，
+
+$$
+\partial_aA_b-\partial_bA_a
+=
+i\left(
+\langle\partial_a\psi|\partial_b\psi\rangle
+-
+\langle\partial_b\psi|\partial_a\psi\rangle
+\right).
+$$
+
+去除 \(P\) 的部分只改变实部，故得到式（234.4）。∎
+
+---
+

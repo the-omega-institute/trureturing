@@ -1,0 +1,24 @@
+# 323．空间与时间进入同一个精确色散曲面
+
+在空间 Fourier 表示中，令无量纲波数为：
+
+$$
+\kappa\in[-\pi,\pi].
+$$
+
+则：
+
+$$
+S(\kappa)=
+\begin{pmatrix}
+e^{-i\kappa}&0\\
+0&e^{i\kappa}
+\end{pmatrix},
+$$
+
+$$
+U_\mu(\kappa)
+=
+e^{-i\mu X}e^{-i\kappa Z}.
+$$
+

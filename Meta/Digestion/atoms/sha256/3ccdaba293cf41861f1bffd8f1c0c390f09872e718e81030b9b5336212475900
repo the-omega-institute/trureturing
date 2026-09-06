@@ -1,0 +1,7 @@
+**29项符号恒等式检查、2项精确秩计算、4项数值交叉检查。**
+
+内容包括奇偶恢复、最大熵条件、Fisher 度量与三类截面曲率、相位闭路、局部翻转破坏条件独立性、能量二阶矩，以及60态模型剩余的51维经典关联空间。
+
+[核验脚本](sandbox:/mnt/data/observer_formalization/check_pyramid_information_geometry.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/pyramid_information_geometry_checks.json)
+
