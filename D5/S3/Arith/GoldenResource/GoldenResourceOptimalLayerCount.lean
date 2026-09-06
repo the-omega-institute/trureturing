@@ -135,8 +135,94 @@ theorem positive_layers_eq_count_interval {lambda : ℝ} (hlambda : 0 < lambda)
   rw [← hmem k, hs]
   simp
 
+private theorem count_eq_zero_of_not_prime (lambda : ℝ) {p : ℕ} (hp : ¬p.Prime) :
+    optimalLayerCount lambda p = 0 := by
+  simp [optimalLayerCount, hp]
+
+private theorem count_layer_active {lambda : ℝ} (hlambda : 0 < lambda)
+    {p : ℕ} (hp : p.Prime) (ha : 1 ≤ optimalLayerCount lambda p) :
+    lambda < goldenLayerMarginal p (optimalLayerCount lambda p) := by
+  have hmem : optimalLayerCount lambda p ∈
+      {k : ℕ | 1 ≤ k ∧ p.Prime ∧ lambda < goldenLayerMarginal p k} := by
+    rw [positive_layers_eq_count_interval hlambda hp]
+    exact ⟨ha, le_rfl⟩
+  exact hmem.2.2
+
+private theorem count_next_layer_le {lambda : ℝ} (hlambda : 0 < lambda)
+    {p : ℕ} (hp : p.Prime) :
+    goldenLayerMarginal p (optimalLayerCount lambda p + 1) ≤ lambda := by
+  apply le_of_not_gt
+  intro hgain
+  have hmem : optimalLayerCount lambda p + 1 ∈
+      {k : ℕ | 1 ≤ k ∧ p.Prime ∧ lambda < goldenLayerMarginal p k} :=
+    ⟨by omega, hp, hgain⟩
+  rw [positive_layers_eq_count_interval hlambda hp] at hmem
+  exact Nat.not_succ_le_self _ hmem.2
+
+/-- Strictly profitable layer counts are realized simultaneously by a positive optimizer
+that divides every positive optimizer, hence has the smallest possible prime exponents. -/
+theorem optimal_layer_count_spec {lambda : ℝ} (hlambda : 0 < lambda) :
+    ∃ n : ℕ, 1 ≤ n ∧
+      (∀ p : ℕ, n.factorization p = optimalLayerCount lambda p) ∧
+      IsGoldenResourceOptimal lambda n ∧
+      ∀ m : ℕ, 1 ≤ m → IsGoldenResourceOptimal lambda m → n ∣ m := by
+  classical
+  let layers := (positive_part_sum_finite_support hlambda).toFinset
+  let support := layers.image Prod.fst
+  have count_support : ∀ p, optimalLayerCount lambda p ≠ 0 → p ∈ support := by
+    intro p ha
+    have hp : p.Prime := by
+      by_contra h
+      exact ha (count_eq_zero_of_not_prime lambda h)
+    have ha1 : 1 ≤ optimalLayerCount lambda p := Nat.one_le_iff_ne_zero.mpr ha
+    have hactive : (p, optimalLayerCount lambda p) ∈ layers := by
+      exact ((positive_part_sum_finite_support hlambda).mem_toFinset).mpr
+        ⟨ha1, hp, count_layer_active hlambda hp ha1⟩
+    exact mem_image.mpr ⟨(p, optimalLayerCount lambda p), hactive, rfl⟩
+  let target : ℕ →₀ ℕ := Finsupp.onFinset support (optimalLayerCount lambda) count_support
+  let n := target.prod (· ^ ·)
+  have target_prime : ∀ p ∈ target.support, p.Prime := by
+    intro p hp
+    have hpSupport : p ∈ support := Finsupp.support_onFinset_subset hp
+    obtain ⟨pk, hpk, rfl⟩ := mem_image.mp hpSupport
+    exact (((positive_part_sum_finite_support hlambda).mem_toFinset).mp hpk).2.1
+  have hfactorization : n.factorization = target :=
+    Nat.prod_pow_factorization_eq_self target_prime
+  have hn0 : n ≠ 0 := by
+    apply Finsupp.prod_ne_zero_iff.mpr
+    intro p hp
+    exact pow_ne_zero _ (target_prime p hp).ne_zero
+  have hn : 1 ≤ n := Nat.one_le_iff_ne_zero.mpr hn0
+  have hcounts (p : ℕ) : n.factorization p = optimalLayerCount lambda p := by
+    rw [hfactorization]
+    rfl
+  refine ⟨n, hn, hcounts, ?_, ?_⟩
+  · apply (golden_resource_optimal_iff_layer_thresholds hlambda hn).mpr
+    constructor
+    · intro p hp
+      rw [hcounts]
+      exact count_next_layer_le hlambda hp
+    · intro p hp hpn
+      have ha : 1 ≤ optimalLayerCount lambda p := by
+        rw [← hcounts]
+        exact hp.factorization_pos_of_dvd hn0 hpn
+      rw [hcounts]
+      exact (count_layer_active hlambda hp ha).le
+  · intro m hm hopt
+    apply (Nat.factorization_le_iff_dvd hn0 (by omega)).mp
+    intro p
+    rw [hcounts]
+    by_cases hp : p.Prime
+    · by_cases ha : optimalLayerCount lambda p = 0
+      · simp [ha]
+      · exact active_le_factorization hlambda hm hopt hp
+          (count_layer_active hlambda hp (Nat.one_le_iff_ne_zero.mpr ha))
+    · rw [count_eq_zero_of_not_prime lambda hp]
+      exact Nat.zero_le _
+
 #print axioms positive_part_sum_finite_support
 #print axioms positive_layers_eq_count_interval
+#print axioms optimal_layer_count_spec
 
 end
 
