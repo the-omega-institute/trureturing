@@ -51,8 +51,15 @@ theorem independentSource_mass_split
         (independentSourceLaw (fun i : {i : Source // i ∈ support} => laws i.1)).mass
         (independentSourceLaw (fun i : {i : Source // i ∉ support} => laws i.1)).mass
         ((Equiv.piEquivPiSubtypeProd (fun i => i ∈ support) Noise) u) := by
-  exact (Fintype.prod_subtype_mul_prod_subtype
-    (fun i => i ∈ support) (fun i => (laws i).mass (u i))).symm
+  classical
+  show (∏ i, (laws i).mass (u i)) =
+      (∏ i : {i : Source // i ∈ support}, (laws i.1).mass (u i.1)) *
+        ∏ i : {i : Source // i ∉ support}, (laws i.1).mass (u i.1)
+  rw [← Finset.prod_subtype support (fun x => Iff.rfl)
+      (fun i => (laws i).mass (u i)),
+    ← Finset.prod_subtype supportᶜ (fun x => Finset.mem_compl)
+      (fun i => (laws i).mass (u i)),
+    Finset.prod_mul_prod_compl]
 
 /-- Every finite readout has the same law before and after regrouping the
 source coordinates. Both sums range over the full source carrier via an equivalence. -/
@@ -68,22 +75,31 @@ theorem independentSource_pushforward_regroup
         (fun z => readout
           ((Equiv.piEquivPiSubtypeProd (fun i => i ∈ support) Noise).symm z)) := by
   classical
-  let split := Equiv.piEquivPiSubtypeProd (fun i => i ∈ support) Noise
-  let left := independentSourceLaw (fun i : {i : Source // i ∈ support} => laws i.1)
-  let right := independentSourceLaw (fun i : {i : Source // i ∉ support} => laws i.1)
-  have at_merge : ∀ z, (independentSourceLaw laws).mass (split.symm z) =
-      productResponseMass left.mass right.mass z := by
+  have at_merge : ∀ z, (independentSourceLaw laws).mass
+      ((Equiv.piEquivPiSubtypeProd (fun i => i ∈ support) Noise).symm z) =
+      productResponseMass
+        (independentSourceLaw (fun i : {i : Source // i ∈ support} => laws i.1)).mass
+        (independentSourceLaw (fun i : {i : Source // i ∉ support} => laws i.1)).mass
+        z := by
     intro z
-    simpa only [Equiv.apply_symm_apply] using
-      independentSource_mass_split laws support (split.symm z)
+    have split_eq := independentSource_mass_split laws support
+      ((Equiv.piEquivPiSubtypeProd (fun i => i ∈ support) Noise).symm z)
+    rwa [Equiv.apply_symm_apply] at split_eq
   funext response
   change (∑ u, if readout u = response then (independentSourceLaw laws).mass u else 0) =
-    ∑ z, if readout (split.symm z) = response then productResponseMass left.mass right.mass z else 0
+    ∑ z, if readout ((Equiv.piEquivPiSubtypeProd (fun i => i ∈ support) Noise).symm z)
+        = response then
+      productResponseMass
+        (independentSourceLaw (fun i : {i : Source // i ∈ support} => laws i.1)).mass
+        (independentSourceLaw (fun i : {i : Source // i ∉ support} => laws i.1)).mass
+        z else 0
   calc
     (∑ u, if readout u = response then (independentSourceLaw laws).mass u else 0) =
-        ∑ z, if readout (split.symm z) = response then
-          (independentSourceLaw laws).mass (split.symm z) else 0 :=
-      (split.symm.sum_comp
+        ∑ z, if readout ((Equiv.piEquivPiSubtypeProd
+            (fun i => i ∈ support) Noise).symm z) = response then
+          (independentSourceLaw laws).mass
+            ((Equiv.piEquivPiSubtypeProd (fun i => i ∈ support) Noise).symm z) else 0 :=
+      ((Equiv.piEquivPiSubtypeProd (fun i => i ∈ support) Noise).symm.sum_comp
         (fun u => if readout u = response then (independentSourceLaw laws).mass u else 0)).symm
     _ = _ := by
       apply Finset.sum_congr rfl
@@ -146,7 +162,7 @@ theorem independentSource_restriction_marginal [∀ i, DecidableEq (Noise i)]
       (independentSourceLaw (fun i : {i : Source // i ∈ support} => laws i.1)).mass := by
   classical
   have restriction := independentSource_pushforward_restrict laws support
-    (fun u => fun i : {i : Source // i ∈ support} => u i.1) id (fun _ => rfl)
+    (fun u => fun i : {i : Source // i ∈ support} => u i.1) (fun x => x) (fun _ => rfl)
   simpa only [pushforwardSignatureMass_id] using restriction
 
 /-- With the readout fixed, changing elementary source laws outside its support
