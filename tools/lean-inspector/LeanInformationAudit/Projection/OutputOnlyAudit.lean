@@ -4,7 +4,7 @@ namespace LeanInformationAudit
 open Lean Lean.Elab.Command
 
 /-!
-T-041 is closed by two commands with disjoint capabilities.
+T-041 is closed by destination-free publication and terminal export commands.
 
 `#seal_information_theory` has no output clause. Its fixed terminal combinator
 discards the command syntax and invokes a `CommandElabM Unit` publication closure.
@@ -12,6 +12,10 @@ The owned-definition audit rejects ambient command-reference access, direct
 runtime input capabilities, and the enumerated Lean-core module loaders before
 that closure runs. The seal may publish declarations and may log, but it cannot
 write an artifact.
+
+`#stage_information_analysis root <id>` receives only a root name and applies the
+same owned-definition audit before publishing analysis for an already-sealed root.
+Its syntax has no artifact selector or destination.
 
 `#export_information_analysis` owns all destination syntax. Its preparation
 closure receives only a root and artifact kinds. The fixed terminal combinator
@@ -28,13 +32,16 @@ and compiler-generated partial bodies are rejected fail-closed.
 -/
 
 inductive ArtifactKind where
-  | v2 | analysis | ascii
+  | seal | analysis | ascii
   deriving BEq, Inhabited, Repr
 
 structure AnalysisExportPlan where
   artifacts : List (ArtifactKind × String)
 
 syntax (name := sealInformationTheoryCmd) "#seal_information_theory" : command
+
+syntax (name := stageInformationAnalysisCmd)
+  "#stage_information_analysis" ident ident : command
 
 syntax (name := exportInformationAnalysisCmd)
   "#export_information_analysis" ident ident (" output " str)?
@@ -47,12 +54,17 @@ def terminalSealCommand (publication : CommandElabM Unit) : CommandElab :=
 private def absoluteName (name : Name) : Name :=
   if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else name
 
-private def exportRoot (stx : Syntax) : Name :=
+private def commandRoot (stx : Syntax) : Name :=
   absoluteName stx[2].getId
+
+/-- Staging receives only the root name, with no artifact or destination syntax. -/
+def terminalInformationAnalysisStageCommand
+    (publication : Name → CommandElabM Unit) : CommandElab :=
+  fun stx => publication (commandRoot stx)
 
 /-- Inspect clause presence only; do not inspect any destination literal. -/
 private def requestedExportArtifacts (stx : Syntax) : List ArtifactKind :=
-  [(.v2, stx[3]), (.analysis, stx[4]), (.ascii, stx[5])].filterMap fun (kind, clause) =>
+  [(.seal, stx[3]), (.analysis, stx[4]), (.ascii, stx[5])].filterMap fun (kind, clause) =>
     if clause.getNumArgs == 0 then none else some kind
 
 /-- The terminal writer has no command state or environment capability. -/
@@ -62,7 +74,7 @@ private def writeAnalysisArtifacts (stx : Syntax) (plan : AnalysisExportPlan) : 
     | return
   for (kind, contents) in plan.artifacts do
     let destination := match kind with
-      | .v2 => outputPath
+      | .seal => outputPath
       | .analysis => analysisPath
       | .ascii => asciiPath
     if let some destination := destination then
@@ -72,7 +84,7 @@ private def writeAnalysisArtifacts (stx : Syntax) (plan : AnalysisExportPlan) : 
 def terminalInformationAnalysisExportCommand
     (preparation : Name → List ArtifactKind → CommandElabM AnalysisExportPlan) :
     CommandElab := fun stx => do
-  let plan ← preparation (exportRoot stx) (requestedExportArtifacts stx)
+  let plan ← preparation (commandRoot stx) (requestedExportArtifacts stx)
   liftIO <| writeAnalysisArtifacts stx plan
 
 /-- Exact seal runtime allowlist, pinned by Noninterference.Contract. -/
@@ -162,7 +174,7 @@ private def exportTerminalShape (value : Expr) : Bool := Id.run do
     (mkConst ``Lean.Elab.Command.instMonadCommandElabM)
   unless body.getArg! 0 == commandMonad && body.getArg! 1 == commandBind do return false
   let preparation := mkApp2 (.bvar 1)
-    (mkApp (mkConst ``exportRoot) (.bvar 0))
+    (mkApp (mkConst ``commandRoot) (.bvar 0))
     (mkApp (mkConst ``requestedExportArtifacts) (.bvar 0))
   unless body.getArg! 4 == preparation do return false
   let .lam _ _ tail _ := body.getArg! 5 | return false
@@ -171,6 +183,13 @@ private def exportTerminalShape (value : Expr) : Bool := Id.run do
 
 private def sealPublicationType : Expr :=
   mkApp (mkConst ``Lean.Elab.Command.CommandElabM) (mkConst ``Unit)
+
+private def stagePublicationType : Expr :=
+  Expr.forallE `_rootId (mkConst ``Name) sealPublicationType .default
+
+private def stageTerminalShape (value : Expr) : Bool := Id.run do
+  let .lam _ _ (.lam _ _ body _) _ := value.consumeMData | return false
+  return body.consumeMData == mkApp (.bvar 1) (mkApp (mkConst ``commandRoot) (.bvar 0))
 
 private def exportPreparationType : Expr :=
   Expr.forallE `_rootId (mkConst ``Name)
@@ -189,6 +208,25 @@ def auditSealOutputOnly (env : Environment) (entry rootId : Name) : Except Strin
   let some publication := commandValue.appArg!.constName? | throw failure
   unless (env.find? publication).any (·.type == sealPublicationType) do
     throw (diagnostic publication "publication-signature" rootId)
+  auditOwnedClosure env publication rootId {
+    runtimeAllowlist := sealIOAllowlist
+    directDenylist := sealSyntaxDenylist
+  }
+
+/-- Verify destination-free staging and audit its publication closure like seal. -/
+def auditInformationAnalysisStage (env : Environment) (entry rootId : Name) :
+    Except String Unit := do
+  let failure := diagnostic entry "staging-order" rootId
+  let some (.defnInfo commandInfo) := env.find? entry | throw failure
+  let some (.defnInfo terminalInfo) :=
+      env.find? ``terminalInformationAnalysisStageCommand | throw failure
+  unless stageTerminalShape terminalInfo.value do throw failure
+  let commandValue := commandInfo.value.consumeMData
+  unless commandValue.isAppOfArity ``terminalInformationAnalysisStageCommand 1 do
+    throw failure
+  let some publication := commandValue.appArg!.constName? | throw failure
+  unless (env.find? publication).any (·.type == stagePublicationType) do
+    throw (diagnostic publication "staging-signature" rootId)
   auditOwnedClosure env publication rootId {
     runtimeAllowlist := sealIOAllowlist
     directDenylist := sealSyntaxDenylist

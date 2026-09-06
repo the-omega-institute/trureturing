@@ -53,11 +53,11 @@ const diagnostic = (consumer, field) =>
   `root=${fixtureRoot} catalog=system`;
 
 if (phase === 'before') {
-  const realSeal = run('two-command-contract-red', leanFile(fixture));
+  const realSeal = run('publication-contract-red', leanFile(fixture));
   const pin = run('type-contract-red', leanFile(contract));
-  results.push({ label: 'two-command-contract-red', fixture_exit: realSeal.status },
+  results.push({ label: 'publication-contract-red', fixture_exit: realSeal.status },
     { label: 'type-contract-red', fixture_exit: pin.status });
-  assert.notEqual(realSeal.status, 0, 'two-command fixture unexpectedly passed before implementation');
+  assert.notEqual(realSeal.status, 0, 'publication fixture unexpectedly passed before implementation');
   assert.notEqual(pin.status, 0, 'type contract unexpectedly passed before implementation');
   fs.writeFileSync(path.join(logDirectory, 'before-mutation-results.json'),
     JSON.stringify(results, null, 2) + '\n');
@@ -99,28 +99,33 @@ const sealCases = [
       '  if again then partialProbe false else pure ()\n\n'],
 ];
 
-const structuralNames = ['pathThreaded', 'allowlistTampered', 'ownedUnsafe', 'exportSetEnv'];
-const available = [...sealCases.map(row => row[0]), ...structuralNames,
-  'unsealedExport', 'positiveControl'];
+const structuralNames = ['pathThreaded', 'allowlistTampered', 'ownedUnsafe', 'exportSetEnv',
+  'stagePathThreaded', 'sealStagesAnalysis'];
+const available = [...sealCases.flatMap(row => [row[0], `stage-${row[0]}`]),
+  ...structuralNames, 'unsealedExport', 'unstagedExport', 'unsealedStage', 'positiveControl'];
 assert(selection.every(label => available.includes(label)), 'unknown mutation selection');
 const selected = label => selection.length === 0 || selection.includes(label);
 
 try {
-  for (const [label, capability, injected, helper = '', consumerOverride] of sealCases) {
+  for (const publication of ['seal', 'stage']) {
+  for (const [caseName, capability, injected, helper = '', consumerOverride] of sealCases) {
+    const label = publication === 'seal' ? caseName : `stage-${caseName}`;
     if (!selected(label)) continue;
+    const entry = publication === 'seal' ? 'prepareSealPublication' :
+      'prepareInformationAnalysisStage';
+    const anchor = publication === 'seal' ? '  let baseEnv ← getEnv\n' :
+      '  let sealedEnv ← getEnv\n';
     const source = originals.get(sealFile);
-    let mutated = changeOnce(source, '  let baseEnv ← getEnv\n',
-      injected + '  let baseEnv ← getEnv\n');
+    let mutated = changeOnce(source, anchor, injected + anchor);
     if (helper) {
-      mutated = changeOnce(mutated, 'def prepareSealPublication',
-        helper + 'def prepareSealPublication');
+      mutated = changeOnce(mutated, `def ${entry}`, helper + `def ${entry}`);
     }
     const consumer = consumerOverride ?? (helper ?
-      `LeanInformationAudit.${label === 'prepublicationRead' ? 'prepublicationRead' :
-        label === 'namespaceProbe' ? 'ForeignPublicationProbe' :
-        label === 'ownedImplementedBy' ? 'overriddenProbe' :
-        label === 'ownedExtern' ? 'externProbe' : 'partialProbe'}` :
-      'LeanInformationAudit.prepareSealPublication');
+      `LeanInformationAudit.${caseName === 'prepublicationRead' ? 'prepublicationRead' :
+        caseName === 'namespaceProbe' ? 'ForeignPublicationProbe' :
+        caseName === 'ownedImplementedBy' ? 'overriddenProbe' :
+        caseName === 'ownedExtern' ? 'externProbe' : 'partialProbe'}` :
+      `LeanInformationAudit.${entry}`);
     const expected = diagnostic(consumer, `capability:${capability}`);
     replace(sealFile, source, mutated);
     try {
@@ -129,15 +134,20 @@ try {
       const output = path.join(logDirectory, `${label}-exports`);
       assert(!fs.existsSync(output), `use a fresh log directory: ${output}`);
       const test = run(label, leanFile(fixture), {
-        IE_EXPECT_SEAL_REJECTION: expected, IE_PROJECTION_OUTPUT_DIR: output,
+        [publication === 'seal' ? 'IE_EXPECT_SEAL_REJECTION' : 'IE_EXPECT_STAGE_REJECTION']:
+          expected,
+        IE_PROJECTION_OUTPUT_DIR: output,
       });
       results.push({ label, capability, expected, build_exit: build.status,
         fixture_exit: test.status, expected_fixture_exit: 0 });
       assert.equal(test.status, 0, test.stdout + test.stderr);
-      assert(test.stdout.includes(`RealSeal seal rejected before publication and writes: ${expected}`));
+      assert(test.stdout.includes(
+        `RealSeal ${publication} rejected before publication and writes: ${expected}`));
+      assert.deepEqual(fs.readdirSync(output), []);
     } finally {
       replace(sealFile, mutated, source);
     }
+  }
   }
 
   const structural = [
@@ -162,6 +172,14 @@ try {
     ['exportSetEnv', sealFile, source => changeOnce(source,
       '  let env ← getEnv\n', '  setEnv (← getEnv)\n  let env ← getEnv\n'),
       diagnostic('LeanInformationAudit.prepareInformationAnalysisExport', 'capability:Lean.setEnv')],
+    ['stagePathThreaded', sealFile, source => changeOnce(source,
+      'def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit',
+      'def prepareInformationAnalysisStage (rootId : Name) ' +
+        '(_path : System.FilePath := "") : CommandElabM Unit'), null],
+    ['sealStagesAnalysis', sealFile, source => changeOnce(source,
+      '    setEnv stagedEnv\n',
+      '    setEnv stagedEnv\n' +
+        '    let _ ← prepareAnalysisProofs baseEnv.header.mainModule proofs.records\n'), null],
   ];
   for (const [label, file, mutate, expected] of structural) {
     if (!selected(label)) continue;
@@ -181,8 +199,10 @@ try {
         expected_fixture_exit: expected ? 0 : 1 });
       assert.equal(test.status, expected ? 0 : 1, test.stdout + test.stderr);
       if (expected) assert(test.stdout.includes(expected));
-      else assert(test.stdout.includes(label === 'pathThreaded' ? 'Type mismatch' :
-        'did not evaluate to `true`'));
+      else assert(test.stdout.includes(label === 'sealStagesAnalysis' ?
+        'seal closure contains analysis staging:' : label.endsWith('PathThreaded') ||
+        label === 'pathThreaded' ? 'Type mismatch' : 'did not evaluate to `true`'));
+      if (expected) assert.deepEqual(fs.readdirSync(output), []);
     } finally {
       replace(file, mutated, source);
     }
@@ -204,8 +224,26 @@ if (selected('unsealedExport')) {
     IE_EXPORT_BEFORE_SEAL: '1', IE_PROJECTION_OUTPUT_DIR: output,
   });
   assert.equal(test.status, 0, test.stdout + test.stderr);
-  assert(test.stdout.includes('RealSeal rejected export before seal: UnsealedAnalysisExport'));
+  assert(test.stdout.includes('RealSeal rejected export before seal: UnstagedAnalysisExport'));
+  assert.deepEqual(fs.readdirSync(output), []);
   results.push({ label: 'unsealedExport', fixture_exit: test.status });
+}
+
+for (const [label, variable, marker] of [
+  ['unstagedExport', 'IE_EXPORT_BEFORE_STAGE',
+    'RealSeal rejected export before stage: UnstagedAnalysisExport'],
+  ['unsealedStage', 'IE_STAGE_BEFORE_SEAL',
+    'RealSeal rejected stage before seal: UnsealedAnalysisStage'],
+]) {
+  if (!selected(label)) continue;
+  const output = path.join(logDirectory, `${label}-exports`);
+  const test = run(label, leanFile(fixture), {
+    [variable]: '1', IE_PROJECTION_OUTPUT_DIR: output,
+  });
+  assert.equal(test.status, 0, test.stdout + test.stderr);
+  assert(test.stdout.includes(marker));
+  assert.deepEqual(fs.readdirSync(output), []);
+  results.push({ label, fixture_exit: test.status });
 }
 
 if (selected('positiveControl')) {
@@ -214,7 +252,7 @@ if (selected('positiveControl')) {
     IE_PROJECTION_OUTPUT_DIR: output,
   });
   assert.equal(positive.status, 0, positive.stdout + positive.stderr);
-  assert(positive.stdout.includes('RealSeal sealed once and exported byte-identical artifacts twice'));
+  assert(positive.stdout.includes('RealSeal staged once and exported byte-identical artifacts twice'));
   const pin = run('positive-contract', leanFile(contract));
   assert.equal(pin.status, 0, pin.stdout + pin.stderr);
   results.push({ label: 'positiveControl', fixture_exit: positive.status,

@@ -113,18 +113,18 @@ run_cmd do
       let counts : SealArenaRecord := {
         catalog := {
           rootId := root, catalogId := ``viewCatalog, catalogKind := .analysisView,
-          arenaName := ``arena, catalogName := ``viewCatalog, compatibilityV2 := false,
+          arenaName := ``arena, catalogName := ``viewCatalog, localSealNames := false,
           units := theorems.map fun row => {
             theoremName := row.theoremName, unitName := row.unitName,
             realizationName := row.realizationName, registrationModuleName := moduleName,
             index := row.index } },
         irredundantCertificateName := verdict.2, proofMethod := "reflected-readout",
         stateCard := 9, offDiagonalPairCount := 72, fullEscapeCount := 0, theorems }
-      let counts ← prepareV3QualifiedCounts counts (← get)
-      pure ({ counts, projection, analysis, layerChains : V3CatalogRecord }, system)
+      let counts ← prepareAnalysisQualifiedCounts counts (← get)
+      pure ({ counts, projection, analysis, layerChains : AnalysisCatalogRecord }, system)
       : ProjectionM _).run #[]
   for declaration in declarations do liftCoreM <| addDecl declaration
-  let json ← liftTermElabM <| serializeV3Artifact root #[record] system
+  let json ← liftTermElabM <| serializeAnalysisArtifact root #[record] system
   let .ok artifact := Json.parse json | throwError "duplicate view JSON"
   let rows := (artifact.getObjValAs? (Array Json) "catalogs").toOption.get!
   unless rows.size == 1 do throwError "duplicate view missing catalog"

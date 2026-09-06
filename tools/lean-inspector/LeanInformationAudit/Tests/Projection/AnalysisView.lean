@@ -82,18 +82,18 @@ run_cmd do
       let counts : SealArenaRecord := {
         catalog := {
           rootId := root, catalogId := ``catalog, catalogKind := .analysisView,
-          arenaName := ``arena, catalogName := ``catalog, compatibilityV2 := false,
+          arenaName := ``arena, catalogName := ``catalog, localSealNames := false,
           units := theorems.map fun row => {
             theoremName := row.theoremName,
             unitName := row.unitName, realizationName := row.realizationName,
             registrationModuleName := root, index := row.index } },
         irredundantCertificateName := verdict.2, proofMethod := "reflected-readout",
         stateCard := 2, offDiagonalPairCount := 2, fullEscapeCount := 0, theorems }
-      let counts ← prepareV3QualifiedCounts counts (← get)
-      pure ({ counts, projection, analysis, layerChains : V3CatalogRecord }, system)
+      let counts ← prepareAnalysisQualifiedCounts counts (← get)
+      pure ({ counts, projection, analysis, layerChains : AnalysisCatalogRecord }, system)
       : ProjectionM _).run #[]
   for declaration in declarations do liftCoreM <| addDecl declaration
-  let json ← liftTermElabM <| serializeV3Artifact root #[record] system
+  let json ← liftTermElabM <| serializeAnalysisArtifact root #[record] system
   let .ok artifact := Json.parse json | throwError "fixture JSON"
   let classes := (artifact.getObjValAs? (Array Json)
     "kernel_address_coincidence_classes").toOption.get!
@@ -114,7 +114,7 @@ run_cmd do
       ("native-route", { record with counts := {
         record.counts with proofMethod := "native_decide" } })] do
     let result ← try
-      let _ ← liftTermElabM <| serializeV3Artifact root #[candidate] system
+      let _ ← liftTermElabM <| serializeAnalysisArtifact root #[candidate] system
       pure "ACCEPTED"
     catch error =>
       let message ← error.toMessageData.toString

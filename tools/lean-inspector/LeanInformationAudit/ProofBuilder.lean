@@ -466,7 +466,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
         #[catalog, index, nondegenerateProof]
       let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
       pure (lowersProof, ← inferType lowersProof)
-    let lowersName := if record.compatibilityV2 then
+    let lowersName := if record.localSealNames then
       theoremName.str "__lowers_escape"
     else
       catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
@@ -483,7 +483,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
     let enrichedType ← mkAppM ``And #[theoremType, lowersType]
     let enrichedProof := mkAppN (mkConst ``And.intro)
       #[theoremType, lowersType, theoremExpr, mkConst lowersName]
-    let enrichedName := if record.compatibilityV2 then
+    let enrichedName := if record.localSealNames then
       theoremName.str "__escape_enriched"
     else
       catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
@@ -509,12 +509,12 @@ full {fullCount} without {withoutCounts[firstZero]!}"
       withoutEscapeCount := withoutCount
       roleSignatureHistogram
       proofMethod := match route with
-        | .decide => if record.compatibilityV2 then "decide" else "direct"
+        | .decide => if record.localSealNames then "decide" else "direct"
         | .reflected _ => "reflected-fused-counts"
     }
   let irredundantProof ← irredundantFromLoweringProofs catalog loweringProofNames
   let irredundantType ← inferType irredundantProof
-  let irredundantName := if record.compatibilityV2 then
+  let irredundantName := if record.localSealNames then
     record.arenaName.str "__catalog_irredundant"
   else
     catalogQualifiedName record.rootId record.arenaName record.catalogId record.arenaName
@@ -526,7 +526,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
     value := irredundantProof
   }
   let method := match route with
-    | .decide => if record.compatibilityV2 then "decide" else "direct"
+    | .decide => if record.localSealNames then "decide" else "direct"
     | .reflected _ => "reflected-fused-counts"
   modifyEnv fun env => countingRouteExt.addEntry env {
     root := record.rootId, catalogId := record.catalogId, catalog, method,

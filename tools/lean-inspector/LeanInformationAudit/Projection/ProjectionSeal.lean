@@ -1,6 +1,6 @@
 import LeanInformationAudit.Projection.KernelProjection
 import LeanInformationAudit.Projection.ProjectionValidation
-import LeanInformationAudit.Projection.V3Artifact
+import LeanInformationAudit.Projection.AnalysisArtifact
 import LeanInformationAudit.Projection.AsciiHierarchy
 
 namespace LeanInformationAudit
@@ -10,20 +10,20 @@ open D5.S3.ConceptDynamics.InformationEscape
 
 structure PreparedAnalysis where
   declarations : Array Declaration
-  records : Array V3CatalogRecord
+  records : Array AnalysisCatalogRecord
   systemCertificate : Name
 
-/-- Internal ceiling needed to stage the designated root's causal projection during seal. -/
-def sealAnalysisMaxHeartbeats : Nat := 8000000000
+/-- Internal ceiling for staging the designated root's causal analysis. -/
+def analysisMaxHeartbeats : Nat := 8000000000
 
-private def withSealAnalysisBudget (action : Lean.Elab.Term.TermElabM α) :
+private def withAnalysisBudget (action : Lean.Elab.Term.TermElabM α) :
     Lean.Elab.Term.TermElabM α :=
   withTheReader Core.Context
     (fun context => { context with
-      maxHeartbeats := max context.maxHeartbeats sealAnalysisMaxHeartbeats }) action
+      maxHeartbeats := max context.maxHeartbeats analysisMaxHeartbeats }) action
 
-/-- V3 has separate qualified companions. Frozen v2 records are never renamed. -/
-def prepareV3QualifiedCounts (counts : SealArenaRecord) (available : Array Declaration) :
+/-- Analysis uses qualified companions while seal records keep their original names. -/
+def prepareAnalysisQualifiedCounts (counts : SealArenaRecord) (available : Array Declaration) :
     ProjectionM SealArenaRecord := do
   let metadata := counts.catalog
   let options ← getOptions
@@ -65,33 +65,35 @@ def prepareV3QualifiedCounts (counts : SealArenaRecord) (available : Array Decla
     registrationModuleName := row.registrationModuleName, index := row.index : CatalogUnitRecord }
   return { counts with
     theorems, irredundantCertificateName,
-    catalog := { metadata with units, compatibilityV2 := false } }
+    catalog := { metadata with units, localSealNames := false } }
 
-/-- Build analysis certificates from the same prepared catalogs as the v2 seal. -/
-def prepareAnalysisProofs (catalogs : Array PreparedCatalog) (proofs : PreparedProofs) :
+/-- Build analysis certificates from catalogs already published by seal. -/
+def prepareAnalysisProofs (root : Name) (sealedRecords : Array SealArenaRecord) :
     CommandElabM PreparedAnalysis := do
-  let root := (← getEnv).header.mainModule
   let mut records := #[]
   let mut packed := #[]
   let mut declarations := #[]
-  for prepared in catalogs, counts in proofs.records do
+  for counts in sealedRecords do
     let ((record, packedCatalog), nextDeclarations) ← liftTermElabM do
-      withSealAnalysisBudget <| (do
-        let counts ← prepareV3QualifiedCounts counts proofs.declarations
-        let record := prepared.record
+      withAnalysisBudget <| (do
+        let counts ← prepareAnalysisQualifiedCounts counts #[]
+        let record := counts.catalog
+        let catalog ← mkConstWithFreshMVarLevels record.catalogName
+        let arena := (← whnf (← inferType catalog)).appArg!
         let certPrefix := catalogQualifiedName root record.arenaName record.catalogId
           record.arenaName "__kernel_projection"
         let (projection, analysis, layerChains) ← prepareKernelProjection
-          prepared.value prepared.arenaValue (counts.theorems.map (·.unitName)) root
+          catalog arena (counts.theorems.map (·.unitName)) root
           record.catalogId record.arenaName certPrefix
-        let packedCatalog ← mkAppM ``PackedCatalog.mk #[prepared.arenaValue, prepared.value]
-        pure ({ counts, projection, analysis, layerChains : V3CatalogRecord }, packedCatalog) :
+        let packedCatalog ← mkAppM ``PackedCatalog.mk #[arena, catalog]
+        pure ({ counts, projection, analysis, layerChains : AnalysisCatalogRecord },
+          packedCatalog) :
           ProjectionM _).run declarations
     records := records.push record
     packed := packed.push packedCatalog
     declarations := nextDeclarations
   let (systemCertificate, finalDeclarations) ← liftTermElabM do
-    withSealAnalysisBudget <| (do
+    withAnalysisBudget <| (do
       let vector ← ProjectionProof.vector packed
       let rootExpr := toExpr root
       let suite ← mkAppM ``projectionSuite #[rootExpr, vector]
@@ -104,7 +106,7 @@ def prepareAnalysisProofs (catalogs : Array PreparedCatalog) (proofs : PreparedP
       pure certificate : ProjectionM _).run declarations
   pure { declarations := finalDeclarations, records, systemCertificate }
 
-def serializeAsciiArtifact (records : Array V3CatalogRecord) : Except String String := do
+def serializeAsciiArtifact (records : Array AnalysisCatalogRecord) : Except String String := do
   let records := records.qsort fun a b =>
     a.counts.catalog.arenaName.toString < b.counts.catalog.arenaName.toString
   let texts ← records.mapM fun record => renderAsciiHierarchy record.counts.catalog.rootId

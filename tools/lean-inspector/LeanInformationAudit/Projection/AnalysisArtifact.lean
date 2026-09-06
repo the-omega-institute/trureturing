@@ -1,7 +1,7 @@
 import LeanInformationAudit.ProofBuilder
 import LeanInformationAudit.Projection.KernelProjection
-import LeanInformationAudit.Projection.V3Inventory
-import LeanInformationAudit.Projection.V3Bindings
+import LeanInformationAudit.Projection.AnalysisInventory
+import LeanInformationAudit.Projection.AnalysisBindings
 
 namespace LeanInformationAudit
 
@@ -9,7 +9,7 @@ open Lean Lean.Meta
 open D5.S3.ConceptDynamics.InformationEscape
 
 /-- The complete CIRPT-41 catalog inventory, assembled only after proof construction. -/
-structure V3CatalogRecord where
+structure AnalysisCatalogRecord where
   counts : SealArenaRecord
   projection : KernelProjectionRecord
   analysis : AnalysisProjectionRecord
@@ -57,8 +57,8 @@ private def equivalenceJson (rows : Array EquivalenceRow) : Json :=
       (b.members[0]?.getD Name.anonymous).toString
   Json.arr (sorted.map EquivalenceRow.toJson)
 
-/-- V3 catalog serialization has its own exact inventory; the v2 writer is untouched. -/
-def v3CatalogJson (record : V3CatalogRecord) : Json :=
+/-- Analysis catalog serialization has its own exact inventory. -/
+def analysisCatalogJson (record : AnalysisCatalogRecord) : Json :=
   let counts := record.counts
   let denominator := counts.offDiagonalPairCount
   let theorems := counts.theorems.qsort fun a b => a.theoremName.toString < b.theoremName.toString
@@ -87,7 +87,7 @@ def v3CatalogJson (record : V3CatalogRecord) : Json :=
     ("kernel_projection", record.projection.toJson),
     ("theorems", Json.arr <| theorems.map (occurrenceJson counts))]
 
-private def coincidenceClassesJson (records : Array V3CatalogRecord) : Json := Id.run do
+private def coincidenceClassesJson (records : Array AnalysisCatalogRecord) : Json := Id.run do
   let occurrences := records.flatMap fun record => record.counts.theorems
   let addresses := occurrences.map (·.primitiveKernelAddress)
     |>.toList.eraseDups.toArray.qsort (· < ·)
@@ -99,7 +99,7 @@ private def coincidenceClassesJson (records : Array V3CatalogRecord) : Json := I
       classes := classes.push <| Json.mkObj [
         ("primitive_kernel_address", toJson address),
         ("occurrences", namesJson members),
-        ("serializer", toJson "primitive-kernel-ordinal-partition-v1"),
+        ("serializer", toJson "primitive-kernel-ordinal-partition"),
         ("diagnostic_only", toJson true)]
   return Json.arr classes
 
@@ -119,7 +119,7 @@ private def requireName (root catalog : Name) (component : String) (name : Name)
     mismatch root catalog component (toJson (if certificate then "Lean-theorem" else
       "Lean-declaration")) (toJson name.toString)
 
-private def validateInventory (root : Name) (record : V3CatalogRecord) : MetaM Unit := do
+private def validateInventory (root : Name) (record : AnalysisCatalogRecord) : MetaM Unit := do
   let counts := record.counts
   let catalog := counts.catalog.catalogId
   let size := counts.theorems.size
@@ -243,7 +243,7 @@ finer={row.finer} coarser={row.coarser} missing={if included then "proof" else "
 
 /-- Check the staged theorem against the actual root and complete `catalogAt` family.
 The certificate remains in Lean: CIRPT-41 permits no extra root certificate field. -/
-def serializeV3Artifact (rootId : Name) (records : Array V3CatalogRecord)
+def serializeAnalysisArtifact (rootId : Name) (records : Array AnalysisCatalogRecord)
     (systemCertificate : Name) : MetaM String := do
   let env ← getEnv
   let some (.thmInfo certificate) := env.find? systemCertificate
@@ -287,7 +287,7 @@ component=system-certificate expected=Lean-theorem actual={systemCertificate}"
       let zeroIndices := record.counts.theorems.filter (·.uniqueCaptureCount == 0) |>.map (·.index)
       throwError "IE-C033 IncompleteRedundantIndexSet key={rootId}/{record.counts.catalog.catalogId} \
 expected=[] certified={(toJson (zeroIndices.qsort (· < ·))).compress} phase=canonical-export"
-    validateV3Bindings rootId actual reflected (← mkAppM ``PackedCatalog.arena #[packed])
+    validateAnalysisBindings rootId actual reflected (← mkAppM ``PackedCatalog.arena #[packed])
       record.counts record.projection
   let records := records.qsort fun a b =>
     a.counts.catalog.arenaName.toString < b.counts.catalog.arenaName.toString ||
@@ -296,14 +296,14 @@ expected=[] certified={(toJson (zeroIndices.qsort (· < ·))).compress} phase=ca
   let modules := sortedNames <| records.flatMap fun record =>
     record.counts.theorems.map (·.registrationModuleName)
   let artifact := Json.mkObj [
-    ("schema", toJson "lean-intrinsic-information-escape-v3"),
+    ("schema", toJson "lean-intrinsic-information-escape-analysis"),
     ("root_id", toJson rootId.toString),
     ("seal_scope", toJson "import-closure"),
     ("registration_modules", namesJson modules),
     ("system_catalog_irredundant", toJson positive),
     ("kernel_address_coincidence_classes", coincidenceClassesJson records),
-    ("catalogs", Json.arr <| records.map v3CatalogJson)]
-  match validateV3Inventory rootId artifact with
+    ("catalogs", Json.arr <| records.map analysisCatalogJson)]
+  match validateAnalysisInventory rootId artifact with
   | .error message => throwError message
   | .ok () => pure ()
   return artifact.pretty

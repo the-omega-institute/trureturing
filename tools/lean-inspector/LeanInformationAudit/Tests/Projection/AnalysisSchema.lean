@@ -1,8 +1,8 @@
-import LeanInformationAudit.Projection.V3Artifact
+import LeanInformationAudit.Projection.AnalysisArtifact
 
 open Lean LeanInformationAudit
 
-namespace LeanInformationAudit.Tests.Projection.V3Schema
+namespace LeanInformationAudit.Tests.Projection.AnalysisSchema
 
 private def theoremRecord : SealTheoremRecord := {
   theoremName := ``True.intro
@@ -20,7 +20,7 @@ private def theoremRecord : SealTheoremRecord := {
   roleSignatureHistogram := #[("1000", 2)]
   proofMethod := "direct" }
 
-private def catalogRecord : V3CatalogRecord := {
+private def catalogRecord : AnalysisCatalogRecord := {
   counts := {
     catalog := {
       rootId := `Root
@@ -29,7 +29,7 @@ private def catalogRecord : V3CatalogRecord := {
       arenaName := `Arena
       catalogName := `Catalog
       units := #[]
-      compatibilityV2 := false }
+      localSealNames := false }
     irredundantCertificateName := ``True.intro
     proofMethod := "direct"
     stateCard := 2
@@ -43,10 +43,10 @@ private def catalogRecord : V3CatalogRecord := {
 private def checkKeys (value : Json) (expected : Array String) : CoreM Unit := do
   let actual := value.getObj?.toOption.get!.toArray.map (·.1) |>.qsort (· < ·)
   unless actual == expected.qsort (· < ·) do
-    throwError "v3 exhaustive key-set mismatch: {actual}"
+    throwError "analysis exhaustive key-set mismatch: {actual}"
 
 run_cmd do
-  let catalog := v3CatalogJson catalogRecord
+  let catalog := analysisCatalogJson catalogRecord
   Lean.Elab.Command.liftCoreM <| checkKeys catalog #["catalog_id", "catalog_kind", "object_arena",
     "proof_method", "state_card", "off_diagonal_pair_count", "full_escape_count",
     "full_escape_rate", "catalog_verdict", "redundant_theorems", "verdict_certificate",
@@ -60,8 +60,8 @@ run_cmd do
     "primitive_count", "primitive_axes", "primitive_kernel_address", "full_escape_count",
     "without_escape_count", "unique_capture_count", "unique_capture_by_role_signature",
     "gain_rate", "lowers_escape", "certificate"]
-  unless catalog.compress == (v3CatalogJson catalogRecord).compress do
-    throwError "v3 catalog serialization is nondeterministic"
+  unless catalog.compress == (analysisCatalogJson catalogRecord).compress do
+    throwError "analysis catalog serialization is nondeterministic"
 
 run_cmd do
   let check (value : Json) (keys : Array String) :=
@@ -115,7 +115,7 @@ run_cmd do
 /-- error: IE-C028 AnalysisCertificateMismatch root=Root catalog=Catalog component=fixture-key-set expected=["count"] actual=["count","extra"] -/
 #guard_msgs in
 run_cmd do
-  match validateV3KeySet `Root `Catalog "fixture" #["count"]
+  match validateAnalysisKeySet `Root `Catalog "fixture" #["count"]
       (Json.mkObj [("count", toJson (1 : Nat)), ("extra", Json.null)]) with
   | .ok () => pure ()
   | .error message => throwError message
@@ -124,11 +124,11 @@ run_cmd do
 #guard_msgs in
 run_cmd do
   let _ ← Lean.Elab.Command.liftTermElabM <|
-    serializeV3Artifact `Root #[catalogRecord] ``Nat.zero_lt_one
+    serializeAnalysisArtifact `Root #[catalogRecord] ``Nat.zero_lt_one
 
-end LeanInformationAudit.Tests.Projection.V3Schema
+end LeanInformationAudit.Tests.Projection.AnalysisSchema
 
-namespace LeanInformationAudit.Tests.Projection.V3RedundantSystem
+namespace LeanInformationAudit.Tests.Projection.AnalysisRedundantSystem
 
 open D5.S3.ConceptDynamics.InformationEscape
 
@@ -148,8 +148,8 @@ private theorem redundant : ¬SystemCatalogIrredundant (projectionSuite `Root fa
 /-- error: IE-C028 AnalysisCertificateMismatch root=Root catalog=system component=catalogs expected="nonempty" actual=0 -/
 #guard_msgs in
 run_cmd do
-  let _ ← Lean.Elab.Command.liftTermElabM <| serializeV3Artifact `Root #[] ``redundant
+  let _ ← Lean.Elab.Command.liftTermElabM <| serializeAnalysisArtifact `Root #[] ``redundant
 
 #print axioms redundant
 
-end LeanInformationAudit.Tests.Projection.V3RedundantSystem
+end LeanInformationAudit.Tests.Projection.AnalysisRedundantSystem

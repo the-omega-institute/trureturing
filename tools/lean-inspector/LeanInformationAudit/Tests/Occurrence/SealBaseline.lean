@@ -12,18 +12,17 @@ open D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction
 open D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause
 open D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 
-namespace LeanInformationAudit.Tests.V2Baseline
+namespace LeanInformationAudit.Tests.SealBaseline
 
 set_option maxRecDepth 100000
 
 run_cmd do
   let records := SealRecords.forRoot (← getEnv) frozenInformationRootId
-  let artifact := serializeV2Artifact records
+  let artifact := serializeSealArtifact records
   let digest := Sha256.hex artifact.toUTF8
-  -- Produced once from these persisted InformationRoot records with origin/dev's
-  -- byte-identical production serializer; the frozen root itself was not modified.
-  unless digest == "6da462e5cbfa01261eb820dd4c236f647632fd36fe8df9a391ec5ed9800cd16b" do
-    throwError "v2 artifact digest mismatch: {digest}"
+  -- Persisted InformationRoot records under the role-named seal schema.
+  unless digest == "5e4660aeaab2f81cb6ba78e20ad5d8423dde2994cd682c8e0d93066435819e37" do
+    throwError "seal artifact digest mismatch: {digest}"
 
 example : agendaPowerArena.__information_catalog.uniqueCaptureCount (0 : Fin 1) = 570 := by
   decide
@@ -68,4 +67,4 @@ example : arena.__information_catalog.uniqueCaptureCount (0 : Fin 1) = 2 := by
 #print axioms agenda_power.__lowers_escape
 #print axioms agendaPowerArena.__catalog_irredundant
 
-end LeanInformationAudit.Tests.V2Baseline
+end LeanInformationAudit.Tests.SealBaseline

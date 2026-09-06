@@ -40,7 +40,7 @@ run_cmd do
   let qualifierOf : Name -> Option String
     | .str (.str _ value) _ => some value
     | _ => none
-  unless schema == "lean-intrinsic-information-escape-v2" &&
+  unless schema == "lean-intrinsic-information-escape-seal" &&
       occurrences.size == 1 && occurrence.rootId == root &&
       occurrence.catalogId == `importedBool &&
       qualifierOf occurrence.unitName == some qualifier &&

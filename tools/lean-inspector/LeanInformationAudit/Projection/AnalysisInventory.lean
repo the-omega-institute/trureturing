@@ -3,7 +3,7 @@ import LeanInformationAudit.Projection.ProjectionSchema
 namespace LeanInformationAudit
 open Lean
 
-def validateV3KeySet (root catalog : Name) (component : String) (expected : Array String)
+def validateAnalysisKeySet (root catalog : Name) (component : String) (expected : Array String)
     (value : Json) : Except String Unit := do
   let expected := expected.qsort (· < ·)
   let actual := match value.getObj? with
@@ -15,8 +15,8 @@ component={component}-key-set expected={(toJson expected).compress} actual={(toJ
 
 /-- CIRPT-41's closed containers, checked on the final JSON value before emission.
 Role signatures and certificate labels are maps; their contents are bound separately. -/
-def validateV3Inventory (root : Name) (artifact : Json) : Except String Unit := do
-  let keys := validateV3KeySet root `system
+def validateAnalysisInventory (root : Name) (artifact : Json) : Except String Unit := do
+  let keys := validateAnalysisKeySet root `system
   let field (value : Json) (key : String) := value.getObjVal? key |>.mapError fun _ =>
     s!"IE-C028 AnalysisCertificateMismatch root={root} catalog=system \
 component={key} expected=field actual=missing"

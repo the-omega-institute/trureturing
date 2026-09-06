@@ -15,6 +15,8 @@ open Lean Lean.Elab.Command LeanInformationAudit
 
 example : CommandElabM Unit := @prepareSealPublication
 
+example : Name -> CommandElabM Unit := @prepareInformationAnalysisStage
+
 example : Name -> List ArtifactKind -> CommandElabM AnalysisExportPlan :=
   @prepareInformationAnalysisExport
 
@@ -31,5 +33,28 @@ example : Name -> List ArtifactKind -> CommandElabM AnalysisExportPlan :=
 #guard exportEnvironmentMutationDenylist.contains ``Lean.Elab.Command.elabCommand
 #guard exportEnvironmentMutationDenylist.contains ``Lean.addAndCompile
 
+-- Read elaborated dependency names so aliases cannot hide analysis work in seal.
+run_cmd do
+  let env ← getEnv
+  let mut pending := #[``prepareSealPublication]
+  let mut visited : Std.HashSet Name := {}
+  let analysisNames := #[`LeanInformationAudit.prepareAnalysisProofs,
+    `LeanInformationAudit.prepareInformationAnalysisStage,
+    `LeanInformationAudit.retainAnalysisState]
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if visited.contains name then continue
+    visited := visited.insert name
+    if analysisNames.contains (privateToUserName name) then
+      throwError "seal closure contains analysis staging: {privateToUserName name}"
+    if let some info := env.find? name then
+      let dependencies := match info with
+        | .defnInfo info => info.value.getUsedConstants
+        | .opaqueInfo info => info.value.getUsedConstants
+        | _ => #[]
+      pending := pending ++ dependencies
+
 #check @prepareSealPublication
+#check @prepareInformationAnalysisStage
 #check @prepareInformationAnalysisExport

@@ -3,11 +3,10 @@ import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
 import LeanInformationAudit.Tests.Projection.FixtureState
 
 /-!
-T-041 production-command fixture. Negative runs select one of three boundaries:
-seal audit rejection, export audit rejection, or export before seal. Every negative
-case requires an exact diagnostic, an unchanged declaration environment, and no
-artifact. The unmodified control seals once and exports twice to distinct paths;
-the two artifact sets must be byte-identical.
+T-041 production-command fixture. Negative runs select publication or export audit
+rejection, export before staging, or staging before seal. Each requires an exact
+diagnostic, unchanged declarations, and absent artifacts. The control seals once,
+stages once, and exports twice to distinct paths with byte-identical results.
 
 Structural boundary: `#seal_information_theory` contains no destination syntax and
 its audited publication closure cannot read the current command reference. The
@@ -50,24 +49,44 @@ private def assertArtifactsAbsent (paths : Array String) : CommandElabM Unit := 
 
 private def exportSyntax (root : Name) (paths : Array String) : CommandElabM Syntax := do
   let rootId := mkIdent (`_root_ ++ root)
-  let v2 := Syntax.mkStrLit paths[0]!
-  let v3 := Syntax.mkStrLit paths[1]!
+  let sealArtifact := Syntax.mkStrLit paths[0]!
+  let analysis := Syntax.mkStrLit paths[1]!
   let ascii := Syntax.mkStrLit paths[2]!
-  `(command| #export_information_analysis root $rootId:ident output $v2:str
-    analysis_output $v3:str ascii_output $ascii:str)
+  `(command| #export_information_analysis root $rootId:ident output $sealArtifact:str
+    analysis_output $analysis:str ascii_output $ascii:str)
+
+private def stageSyntax (root : Name) : CommandElabM Syntax := do
+  let rootId := mkIdent (`_root_ ++ root)
+  `(command| #stage_information_analysis root $rootId:ident)
 
 run_cmd do
   let expectedSeal ← liftIO <| IO.getEnv "IE_EXPECT_SEAL_REJECTION"
+  let expectedStage ← liftIO <| IO.getEnv "IE_EXPECT_STAGE_REJECTION"
   let expectedExport ← liftIO <| IO.getEnv "IE_EXPECT_EXPORT_REJECTION"
   let exportBeforeSeal ← liftIO <| IO.getEnv "IE_EXPORT_BEFORE_SEAL"
-  let firstPaths ← #["real-v2.json", "real-v3.json", "real-ascii.txt"].mapM fixturePath
-  let secondPaths ← #["repeat-v2.json", "repeat-v3.json", "repeat-ascii.txt"].mapM fixturePath
+  let exportBeforeStage ← liftIO <| IO.getEnv "IE_EXPORT_BEFORE_STAGE"
+  let stageBeforeSeal ← liftIO <| IO.getEnv "IE_STAGE_BEFORE_SEAL"
+  let firstPaths ← #["real-seal.json", "real-analysis.json", "real-ascii.txt"].mapM fixturePath
+  let secondPaths ←
+    #["repeat-seal.json", "repeat-analysis.json", "repeat-ascii.txt"].mapM fixturePath
   assertArtifactsAbsent (firstPaths ++ secondPaths)
   let beforeSeal ← getEnv
   let root := beforeSeal.header.mainModule
 
+  if stageBeforeSeal.isSome then
+    let expected := s!"UnsealedAnalysisStage root={root} catalog=system"
+    let errors ← commandErrors (← stageSyntax root)
+    unless errors == #[expected] do
+      throwError "RealSeal expected unsealed stage rejection {expected}; actual={errors}"
+    assertNoNewDeclarations beforeSeal (← getEnv)
+    unless (SealRecords.analysisForRoot? (← getEnv) root).isNone do
+      throwError "RealSeal unsealed stage published records"
+    assertArtifactsAbsent firstPaths
+    logInfo s!"RealSeal rejected stage before seal: {expected}"
+    return
+
   if exportBeforeSeal.isSome then
-    let expected := s!"UnsealedAnalysisExport root={root} catalog=system"
+    let expected := s!"UnstagedAnalysisExport root={root} catalog=system"
     let errors ← commandErrors (← exportSyntax root firstPaths)
     unless errors == #[expected] do
       throwError "RealSeal expected unsealed export rejection {expected}; actual={errors}"
@@ -92,16 +111,48 @@ run_cmd do
       unless sealErrors.isEmpty do throwError "RealSeal seal failed: {sealErrors}"
 
   let sealedEnv ← getEnv
-  unless sealedEnv.contains (root.str "__system_catalog_irredundant") &&
-      SealRecords.systemCatalogIrredundant sealedEnv root do
+  unless SealRecords.systemCatalogIrredundant sealedEnv root do
     throwError "RealSeal seal publication missing"
+  if (SealRecords.analysisForRoot? sealedEnv root).isSome ||
+      sealedEnv.contains (root.str "__system_catalog_irredundant") then
+    throwError "RealSeal seal published analysis staging"
+
+  if exportBeforeStage.isSome then
+    let expected := s!"UnstagedAnalysisExport root={root} catalog=system"
+    let errors ← commandErrors (← exportSyntax root firstPaths)
+    unless errors == #[expected] do
+      throwError "RealSeal expected unstaged export rejection {expected}; actual={errors}"
+    assertNoNewDeclarations sealedEnv (← getEnv)
+    unless (SealRecords.analysisForRoot? (← getEnv) root).isNone do
+      throwError "RealSeal unstaged export published records"
+    assertArtifactsAbsent firstPaths
+    logInfo s!"RealSeal rejected export before stage: {expected}"
+    return
+
+  let stageErrors ← commandErrors (← stageSyntax root)
+  match expectedStage with
+  | some expected =>
+      unless stageErrors == #[expected] do
+        throwError "RealSeal expected stage rejection {expected}; actual={stageErrors}"
+      assertNoNewDeclarations sealedEnv (← getEnv)
+      unless (SealRecords.analysisForRoot? (← getEnv) root).isNone do
+        throwError "RealSeal rejected stage published records"
+      assertArtifactsAbsent firstPaths
+      logInfo s!"RealSeal stage rejected before publication and writes: {expected}"
+      return
+  | none =>
+      unless stageErrors.isEmpty do throwError "RealSeal stage failed: {stageErrors}"
+  let stagedEnv ← getEnv
+  unless stagedEnv.contains (root.str "__system_catalog_irredundant") &&
+      (SealRecords.analysisForRoot? stagedEnv root).isSome do
+    throwError "RealSeal analysis publication missing"
 
   let exportErrors ← commandErrors (← exportSyntax root firstPaths)
   match expectedExport with
   | some expected =>
       unless exportErrors == #[expected] do
         throwError "RealSeal expected export rejection {expected}; actual={exportErrors}"
-      assertNoNewDeclarations sealedEnv (← getEnv)
+      assertNoNewDeclarations stagedEnv (← getEnv)
       assertArtifactsAbsent firstPaths
       logInfo s!"RealSeal export rejected before writes: {expected}"
   | none =>
@@ -115,4 +166,5 @@ run_cmd do
         if firstContents.isEmpty then throwError "RealSeal empty artifact {first}"
         unless firstContents == secondContents do
           throwError "RealSeal nondeterministic export: {first} != {second}"
-      logInfo "RealSeal sealed once and exported byte-identical artifacts twice"
+      assertNoNewDeclarations stagedEnv (← getEnv)
+      logInfo "RealSeal staged once and exported byte-identical artifacts twice"

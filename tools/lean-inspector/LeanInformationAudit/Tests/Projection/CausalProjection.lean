@@ -149,26 +149,26 @@ run_cmd do
         catalog := {
           rootId := `Causal, catalogId := ``catalog, catalogKind := .analysisView,
           arenaName := ``unifiedArena, catalogName := ``catalog,
-          compatibilityV2 := false, units := theorems.map fun row => {
+          localSealNames := false, units := theorems.map fun row => {
             theoremName := row.theoremName, unitName := row.unitName,
             realizationName := row.realizationName, registrationModuleName := moduleName,
             index := row.index } },
         irredundantCertificateName := verdict.2, proofMethod := "reflected-readout",
         stateCard := 48, offDiagonalPairCount := projection.denominator,
         fullEscapeCount := chain.terminalEscapeCount, theorems }
-      let counts ← prepareV3QualifiedCounts counts (← get)
-      pure ({ counts, projection, analysis, layerChains := layers : V3CatalogRecord }, system)
+      let counts ← prepareAnalysisQualifiedCounts counts (← get)
+      pure ({ counts, projection, analysis, layerChains := layers : AnalysisCatalogRecord }, system)
       : ProjectionM _).run #[]
   for declaration in countDeclarations do
     liftCoreM <| addDecl declaration
     for name in declaration.getNames do
       elabCommand (← `(command| #print axioms $(mkIdent name)))
-  let json ← liftTermElabM <| serializeV3Artifact `Causal #[record] system
-  let .ok artifact := Json.parse json | throwError "causal v3 JSON"
+  let json ← liftTermElabM <| serializeAnalysisArtifact `Causal #[record] system
+  let .ok artifact := Json.parse json | throwError "causal analysis JSON"
   unless (artifact.getObjValAs? Bool "system_catalog_irredundant").toOption == some false do
     throwError "causal system verdict"
-  liftIO <| IO.FS.writeFile (← fixturePath "causal-v3.json") json
-  liftIO <| IO.FS.writeFile (← fixturePath "causal-v3.txt") ascii
+  liftIO <| IO.FS.writeFile (← fixturePath "causal-analysis.json") json
+  liftIO <| IO.FS.writeFile (← fixturePath "causal-analysis.txt") ascii
 
 #print axioms catalog
 

@@ -37,7 +37,7 @@ def validateCatalogArena (root catalogId arenaName : Name) (catalog arena : Expr
 
 /-- Bind occurrence identities and numerals to the suite's actual catalog and its
 kernel-certified readout reflection, independently of the output record. -/
-def validateV3Bindings (root : Name) (original reflected arena : Expr)
+def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
     (counts : SealArenaRecord) (projection : KernelProjectionRecord) : MetaM Unit :=
     withTransparency .all do
   let metadata := counts.catalog

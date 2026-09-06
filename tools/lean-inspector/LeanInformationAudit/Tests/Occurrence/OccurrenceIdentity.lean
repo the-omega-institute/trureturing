@@ -87,7 +87,7 @@ expect_information_occurrence sharedTheorem
   _root_.LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity
   output "/tmp/lean-information-audit-occurrence-identity.json"
 
-/-- info: occurrence-qualified staged identities and v2 schema passed -/
+/-- info: occurrence-qualified staged identities and seal schema passed -/
 #guard_msgs (info) in
 run_cmd do
   let env <- getEnv
@@ -111,12 +111,12 @@ run_cmd do
         occurrence.catalogId theoremName primitiveRealizationSuffix &&
       occurrence.certificateName == catalogQualifiedName root occurrence.objectArenaName
         occurrence.catalogId theoremName "__lowers_escape"
-  unless schema == "lean-intrinsic-information-escape-v2" &&
+  unless schema == "lean-intrinsic-information-escape-seal" &&
       occurrences.size == 2 && occurrences.all validOccurrence &&
       occurrences[0]!.unitName != occurrences[1]!.unitName &&
       SealRecords.systemCatalogIrredundant env root do
-    throwError "staged occurrence identities or v2 schema mismatch"
-  logInfo "occurrence-qualified staged identities and v2 schema passed"
+    throwError "staged occurrence identities or seal schema mismatch"
+  logInfo "occurrence-qualified staged identities and seal schema passed"
 
 /-- error: IE-C030 KernelAddressUsedAsSemanticEvidence root=LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity catalog=boolA address=sha256:fixture consumer=arena-grouping -/
 #guard_msgs (error) in

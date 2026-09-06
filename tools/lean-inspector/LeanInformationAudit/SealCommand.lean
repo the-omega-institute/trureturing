@@ -46,13 +46,13 @@ private def arenaJson (record : SealArenaRecord) : Json :=
 
 private def artifactJson (records : Array SealArenaRecord) : Json :=
   Json.mkObj [
-    ("schema", "lean-intrinsic-information-escape-v2"),
+    ("schema", "lean-intrinsic-information-escape-seal"),
     ("catalog_mode", "single-compilation-leave-one-out"),
     ("arenas", Json.arr <| records.map arenaJson)
   ]
 
-/-- Serialize the unchanged schema-v2 artifact projection. -/
-def serializeV2Artifact (records : Array SealArenaRecord) : String :=
+/-- Serialize the catalog and escape-count seal artifact. -/
+def serializeSealArtifact (records : Array SealArenaRecord) : String :=
   (artifactJson records).pretty
 
 /-- Fixture-inspectable identity state retained for the later analysis projection. -/
@@ -67,10 +67,10 @@ structure SealedOccurrenceState where
   registrationModuleName : Name
   deriving Inhabited, Repr
 
-/-- Projection records retained by seal for a later path-bearing export command. -/
-structure SealedAnalysisState where
+/-- Projection records retained by explicit staging for a later export command. -/
+structure StagedAnalysisState where
   rootId : Name
-  records : Array V3CatalogRecord
+  records : Array AnalysisCatalogRecord
   systemCertificate : Name
   declarationNames : Array Name
   deriving Inhabited
@@ -82,8 +82,8 @@ private initialize sealRecordExt :
     addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
   }
 
-private initialize sealedAnalysisExt :
-    SimplePersistentEnvExtension SealedAnalysisState (Array SealedAnalysisState) ←
+private initialize stagedAnalysisExt :
+    SimplePersistentEnvExtension StagedAnalysisState (Array StagedAnalysisState) ←
   registerSimplePersistentEnvExtension {
     addEntryFn := Array.push
     addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
@@ -111,8 +111,8 @@ def occurrencesForRoot (env : Environment) (rootId : Name) :
       registrationModuleName := theoremRecord.registrationModuleName
     }
 
-def analysisForRoot? (env : Environment) (rootId : Name) : Option SealedAnalysisState :=
-  sealedAnalysisExt.getState env |>.find? (·.rootId == rootId)
+def analysisForRoot? (env : Environment) (rootId : Name) : Option StagedAnalysisState :=
+  stagedAnalysisExt.getState env |>.find? (·.rootId == rootId)
 
 /-- A root verdict is true only when every retained record names a staged proof. -/
 def systemCatalogIrredundant (env : Environment) (rootId : Name) : Bool :=
@@ -150,7 +150,7 @@ private def preflightNames (env : Environment) (records : Array SealArenaRecord)
     if env.contains name || seen.contains name then
       match catalogForGeneratedName? records name with
       | some record =>
-          if record.catalog.compatibilityV2 then
+          if record.catalog.localSealNames then
             throwError "IE-C009 ProofConstructionFailed: {name}\ngenerated name collision"
           else
             let entries := InformationRegistry.entries env |>.filter fun entry =>
@@ -226,13 +226,14 @@ def validateRegistrySnapshot (env : Environment) : CommandElabM Unit := do
   unless expectedContributors == actualContributors do
     throwSnapshotMismatch rootId "contributor-modules" expectedContributors actualContributors
 
-private def stageDeclarations (env : Environment) (declarations : Array Declaration) :
+private def stageDeclarations (env : Environment) (declarations : Array Declaration)
+    (minimumHeartbeats : Nat := 0) :
     CommandElabM Environment := do
   let options ← getOptions
   let mut stagedEnv := env
   for declaration in declarations do
     match stagedEnv.addDeclCore
-        (max (Core.getMaxHeartbeats options) sealAnalysisMaxHeartbeats).toUSize
+        (max (Core.getMaxHeartbeats options) minimumHeartbeats).toUSize
         (maxRecDepth.get options).toUSize declaration none true with
     | .ok nextEnv => stagedEnv := nextEnv
     | .error error =>
@@ -240,9 +241,9 @@ private def stageDeclarations (env : Environment) (declarations : Array Declarat
         throwError "IE-C009 ProofConstructionFailed: {name}\n{error.toMessageData options}"
   pure stagedEnv
 
-private def rootQualifiedEntry (rootId : Name) (compatibilityV2 : Bool)
+private def rootQualifiedEntry (rootId : Name) (localSealNames : Bool)
     (entry : InformationRegistryEntry) : InformationRegistryEntry :=
-  if compatibilityV2 then entry else
+  if localSealNames then entry else
     { entry with
       unitName := catalogQualifiedName rootId entry.canonicalObjectArenaName
         entry.effectiveCatalogId entry.theoremName theoremUnitSuffix
@@ -258,9 +259,9 @@ private def prepareRootQualifiedEntries (env : Environment)
     (entries : Array InformationRegistryEntry) :
     CommandElabM (Array (Name × Name) × Array InformationRegistryEntry) := do
   let rootId := env.header.mainModule
-  let compatibilityV2 := entries.all fun entry =>
-    entry.legacyNaming && entry.registrationModuleName == rootId
-  let qualified := entries.map (rootQualifiedEntry rootId compatibilityV2)
+  let localSealNames := entries.all fun entry =>
+    entry.localRegistrationNames && entry.registrationModuleName == rootId
+  let qualified := entries.map (rootQualifiedEntry rootId localSealNames)
   for entry in qualified do
     for generatedName in #[entry.unitName, entry.realizationName] do
       let owners := qualifiedNameCollisionEntries (entries ++ qualified) generatedName entry
@@ -282,12 +283,12 @@ private def retainSealRecords (env : Environment) (records : Array SealArenaReco
     Environment :=
   records.foldl (init := env) fun current record => sealRecordExt.addEntry current record
 
-private def retainAnalysisState (env : Environment) (state : SealedAnalysisState) : Environment :=
-  sealedAnalysisExt.addEntry env state
+private def retainAnalysisState (env : Environment) (state : StagedAnalysisState) : Environment :=
+  stagedAnalysisExt.addEntry env state
 
-/-! The seal validates the registry, prepares both schema-v2 and analysis proof
-declarations, kernel-checks them in a local environment, retains their projection
-records, and publishes once. It has no artifact selector or destination capability. -/
+/-! Seal validates the registry, prepares catalogs and escape-count certificates,
+kernel-checks them locally, and publishes SealRecords. Analysis is staged separately.
+Neither publication command has an artifact selector or destination. -/
 
 def prepareSealPublication : CommandElabM Unit := do
   let baseEnv ← getEnv
@@ -302,39 +303,53 @@ def prepareSealPublication : CommandElabM Unit := do
     let aliasEnv ← getEnv
     let catalogs ← prepareCatalogsFromEntries sourceEntries catalogEntries
     let proofs ← prepareProofs catalogs
-    let analysis ← prepareAnalysisProofs catalogs proofs
-    let declarations := catalogs.map (·.declaration) ++ proofs.declarations ++
-      analysis.declarations
+    let declarations := catalogs.map (·.declaration) ++ proofs.declarations
     preflightNames aliasEnv proofs.records declarations
     let stagedEnv ← stageDeclarations (← getEnv) declarations
     let stagedEnv := retainSealRecords stagedEnv proofs.records
-    let stagedEnv := retainAnalysisState stagedEnv {
-      rootId := baseEnv.header.mainModule
-      records := analysis.records
-      systemCertificate := analysis.systemCertificate
-      declarationNames := declarationNames analysis.declarations |>.toArray
-    }
     proofs.records.forM logSummary
     setEnv stagedEnv
   catch error =>
     setEnv baseEnv
     throw error
 
-/-- Prepare bytes exclusively from records and certificates retained by seal. -/
+/-- Stage analysis for an already-sealed root, publishing only after all checks pass. -/
+def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit := do
+  let sealedEnv ← getEnv
+  unless SealRecords.systemCatalogIrredundant sealedEnv rootId do
+    throwError "UnsealedAnalysisStage root={rootId} catalog=system"
+  if (SealRecords.analysisForRoot? sealedEnv rootId).isSome then
+    throwError "AnalysisAlreadyStaged root={rootId} catalog=system"
+  try
+    let records := SealRecords.forRoot sealedEnv rootId
+    let analysis ← prepareAnalysisProofs rootId records
+    preflightNames sealedEnv records analysis.declarations
+    let stagedEnv ← stageDeclarations (← getEnv) analysis.declarations analysisMaxHeartbeats
+    setEnv <| retainAnalysisState stagedEnv {
+      rootId
+      records := analysis.records
+      systemCertificate := analysis.systemCertificate
+      declarationNames := declarationNames analysis.declarations |>.toArray
+    }
+  catch error =>
+    setEnv sealedEnv
+    throw error
+
+/-- Prepare bytes exclusively from previously staged records and certificates. -/
 def prepareInformationAnalysisExport (rootId : Name) (requested : List ArtifactKind) :
     CommandElabM AnalysisExportPlan := do
   let env ← getEnv
   let some analysis := SealRecords.analysisForRoot? env rootId
-    | throwError "UnsealedAnalysisExport root={rootId} catalog=system"
+    | throwError "UnstagedAnalysisExport root={rootId} catalog=system"
   let records := SealRecords.forRoot env rootId
   unless !records.isEmpty && env.contains analysis.systemCertificate do
-    throwError "UnsealedAnalysisExport root={rootId} catalog=system"
+    throwError "UnstagedAnalysisExport root={rootId} catalog=system"
   let mut artifacts := []
-  if requested.contains .v2 then
-    artifacts := artifacts ++ [(.v2, serializeV2Artifact records)]
+  if requested.contains .seal then
+    artifacts := artifacts ++ [(.seal, serializeSealArtifact records)]
   if requested.contains .analysis then
     let contents ← liftTermElabM do
-      serializeV3Artifact rootId analysis.records analysis.systemCertificate
+      serializeAnalysisArtifact rootId analysis.records analysis.systemCertificate
     artifacts := artifacts ++ [(.analysis, contents)]
   if requested.contains .ascii then
     let contents ← match serializeAsciiArtifact analysis.records with
@@ -356,6 +371,17 @@ private def elabAuditedSeal : CommandElab := fun stx => do
 
 private def elabInformationAnalysisExport : CommandElab :=
   terminalInformationAnalysisExportCommand prepareInformationAnalysisExport
+
+private def elabInformationAnalysisStage : CommandElab :=
+  terminalInformationAnalysisStageCommand prepareInformationAnalysisStage
+
+@[command_elab stageInformationAnalysisCmd]
+private def elabAuditedInformationAnalysisStage : CommandElab := fun stx => do
+  let currentEnv ← getEnv
+  match auditInformationAnalysisStage currentEnv ``elabInformationAnalysisStage
+      currentEnv.header.mainModule with
+  | .error message => throwError message
+  | .ok () => elabInformationAnalysisStage stx
 
 @[command_elab exportInformationAnalysisCmd]
 private def elabAuditedInformationAnalysisExport : CommandElab := fun stx => do

@@ -1,4 +1,4 @@
-import LeanInformationAudit.Tests.Projection.V3Seal
+import LeanInformationAudit.Tests.Projection.AnalysisSeal
 import LeanInformationAudit.Projection.OutputOnlyAudit
 
 open Lean Lean.Elab.Command LeanInformationAudit
@@ -50,6 +50,7 @@ run_cmd do
   match auditSealOutputOnly env entry.1 env.header.mainModule with
   | .ok () => pure ()
   | .error message => throwError message
-  unless env.contains `LeanInformationAudit.Tests.Projection.V3Seal.__system_catalog_irredundant do
+  unless env.contains
+      `LeanInformationAudit.Tests.Projection.AnalysisSeal.__system_catalog_irredundant do
     throwError "seal publication missing"
   logInfo "seal publication has no artifact input"

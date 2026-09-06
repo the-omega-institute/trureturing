@@ -1,4 +1,4 @@
-import LeanInformationAudit.Tests.Projection.V3Seal
+import LeanInformationAudit.Tests.Projection.AnalysisSeal
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 
@@ -6,12 +6,12 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 16000000
 
 /--
-info: layer-definition rejected IE-C042 KernelProjectionCertificateMismatch root=LeanInformationAudit.Tests.Projection.V3Seal catalog=importedBool component=definition:LayerDefinitionBinding.canonical.layers.kernel_1 expected=retained-value actual=different
-node-definition rejected IE-C042 KernelProjectionCertificateMismatch root=LeanInformationAudit.Tests.Projection.V3Seal catalog=importedBool component=definition:NodeDefinitionBinding.K_ expected=retained-value actual=different
+info: layer-definition rejected IE-C042 KernelProjectionCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisSeal catalog=importedBool component=definition:LayerDefinitionBinding.canonical.layers.kernel_1 expected=retained-value actual=different
+node-definition rejected IE-C042 KernelProjectionCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisSeal catalog=importedBool component=definition:NodeDefinitionBinding.K_ expected=retained-value actual=different
 -/
 #guard_msgs in
 run_cmd do
-  let root := `LeanInformationAudit.Tests.Projection.V3Seal
+  let root := `LeanInformationAudit.Tests.Projection.AnalysisSeal
   let some counts := (SealRecords.forRoot (← getEnv) root)[0]?
     | throwError "missing sealed fixture"
   let mut messages := #[]
@@ -34,9 +34,9 @@ run_cmd do
       liftCoreM <| addDecl declaration
     unless ← liftTermElabM <| isDefEq (mkConst source) (mkConst target) do
       throwError "definition mutation did not reach the staged environment"
-    let record : V3CatalogRecord := { counts, projection, analysis, layerChains := layers }
+    let record : AnalysisCatalogRecord := { counts, projection, analysis, layerChains := layers }
     let result ← try
-      let _ ← liftTermElabM <| serializeV3Artifact root #[record]
+      let _ ← liftTermElabM <| serializeAnalysisArtifact root #[record]
         (root.str "__system_catalog_irredundant")
       pure "ACCEPTED"
     catch error => pure ("rejected " ++ (← error.toMessageData.toString))
