@@ -312,7 +312,8 @@ theorem contact_certificate_preserved_by_compression {n d : Nat}
   refine ⟨newValid, hb, lb, ?_⟩
   calc
     _ = residualBudget tolerance certificate.envelope :=
-      contact_gap_eq_budget feature query tolerance _ newValid
+      contact_gap_eq_budget feature query tolerance
+        { certificate with high := high, low := low } newValid
     _ = _ := (contact_gap_eq_budget feature query tolerance certificate valid).symm
 
 #print axioms query_gap_le_residualBudget

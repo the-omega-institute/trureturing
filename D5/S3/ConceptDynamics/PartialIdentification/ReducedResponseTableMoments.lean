@@ -154,7 +154,8 @@ theorem exists_three_cell_query_compression
       (∀ c, (tableEvaluationLaw sparse c).mass = (tableEvaluationLaw law c).mass) ∧
       linearObjective query sparse.mass = linearObjective query law.mass := by
   classical
-  let rows := fun coordinate table => reducedTableFeature table coordinate
+  let rows := fun (coordinate : Covariate × Fin 3)
+      (table : Covariate → Bool × Bool) => reducedTableFeature table coordinate
   obtain ⟨compression⟩ := exists_momentCompression law (linearRowQueryFeature rows query)
   refine ⟨compression.sparseLaw, ?_, ?_, ?_⟩
   · calc
