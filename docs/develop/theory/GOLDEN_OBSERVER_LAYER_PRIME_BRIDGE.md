@@ -986,3 +986,129 @@ Three local worker processes performed complementary self-checks: exact symbolic
 The new sources are logically reviewed candidates. No local Lean compilation receipt was obtained; no admission, freeze, independent AI review or merge is asserted. The companion Gaussian module uses the pinned Mathlib revision `db584cd6d46c92f209a44c0f1c829460d327499d`. Its Gaussian Fourier integral was inspected at that revision.
 
 There is now a concrete normalized-wavefunction-overlap-to-calibration edge. The overlap-sensitive Ramsey formula remains the previously defined readout interface. A standalone formal derivation of the perturbed two-path integrated Born law, including integrability and equal branch normalization, is a distinct remaining obligation; numerical integration alone does not close it. A unified test for unknown calibration sets, a treatment of correlated drift, and any experimental performance claim are also separate obligations. The golden grammar does not generate the laboratory quadrature controls, and this continuation does not close the geometric-to-valuation bridge.
+
+## 42. Matched split compensation removes the endpoint cocycle
+
+The continuation at source commit `dff43c8fe8cf16fa83bfacdda22090fd682acc61` changes the control sequence to address the first-order phase in section 39. It retains the same word action, Weyl convention and chronology coordinate. Write X=a*r(w), Y=b*z(w). Apply one half compensator before the word and another after it:
+
+```text
+D(-X/2+vx,-Y/2+vy) U_w D(-X/2+ux,-Y/2+uy).
+```
+
+The two realized error pairs are initially independent. Direct composition gives residual displacement `(ux+vx,uy+vy)` and total phase `a*b*m(w)+eta_split`, where
+
+```text
+eta_split = (X*(vy-uy)-Y*(vx-ux))/2 + vy*ux-vx*uy.
+```
+
+The candidate `split_compensation_normal_form` retains all terms. Its companion `universal_split_cancellation_iff_matched` proves
+
+```text
+(for every real endpoint X,Y, eta_split=0)
+  iff ux=vx and uy=vy.
+```
+
+This converse concerns zero real cocycle at all endpoints within this two-half architecture. It is not a claim that matching is necessary at one particular endpoint, or that any phase equal to one has zero unwrapped angle.
+
+For matched errors `u=v=(dx/2,dy/2)`, the protocol becomes
+
+```text
+D((-X+dx)/2,(-Y+dy)/2) U_w D((-X+dx)/2,(-Y+dy)/2)
+  = exp(i*a*b*m(w)) D(dx,dy).
+```
+
+The desired chronology phase survives while the nuisance endpoint phase cancels exactly, without a small-error expansion. Residual displacement remains. Matching the realized pre/post errors is a physical control assumption; the formula does not make uncorrelated errors equal, cancel every gate error, or remove the need for known inventory and coherent control. The general unequal-half formula records the failure mode.
+
+The Weyl setting is standard in A. C. Vutha et al., arXiv:1702.01833. Phase-sensitive displacement readout has an experimental precedent in C. Fluehmann and J. P. Home, PRL 125, 043602 (2020), DOI 10.1103/PhysRevLett.125.043602. This particular sequence is derived from those established structures and the repository's actual actions. No priority or hardware-validation claim is made for it.
+
+## 43. A centered Gaussian turns the residual into a quadratic error budget
+
+`SymmetricGaussianCompensation.symmetricGaussianExpectation` is an actual normalized integral of the new pre/word/post action on the existing Gaussian seed. The derived expression is
+
+```text
+expectation = exp(i*a*b*m(w)) * exp(-Q_s(dx,dy)),
+Q_s(dx,dy) = (s*dx^2+dy^2/s)/2, s>0.
+```
+
+There is no compensator-induced phase when the halves match. Using the existing overlap-sensitive sine-analyzer interface gives
+
+```text
+p_sym(w) = (1 + V*exp(-Q_s)*sin(a*b*m(w)))/2.
+```
+
+The probability deviation from the nominal, exactly closed readout is bounded by
+
+```text
+|p_sym(w)-p_ideal(w)| <= |V|*Q_s/2.
+```
+
+Thus the first-order geometric-phase term in the one-sided budget is absent in this architecture. This is an upper-bound improvement under a different control assumption; it is not a universal pointwise dominance claim over every physical error model.
+
+For uncertain but fixed visibility and residual cost satisfying
+
+```text
+0 <= V <= Vmax < 1,
+|V-V0| <= eV,
+Q_s <= Qmax,
+```
+
+`symmetric_uncertainty_budget` derives the common envelope
+
+```text
+|p_sym(w)-p_nominal(V0,w)| <= B,
+B = (eV + Vmax*Qmax)/2.
+```
+
+Within each acquisition, the two half-errors match. Between the two hypotheses the visibility and residual displacement can differ. Independent repeated shots retain fixed acquired parameters. Arbitrary shot-to-shot correlation is outside this statement. The centered Gaussian restriction matters: an unknown displaced reference may carry an additional phase even when the operator cocycle cancels.
+
+## 44. One fixed decision for the whole uncertainty set
+
+The quantifier gap identified in section 37 now has a constructive resolution for separated Bernoulli parameter intervals. The new generic owner `D5/S3/Estimation/ErrorExponents/BernoulliIntervalThreshold.lean` uses the existing Mathlib Binomial count measure and imports `MarginBound.binomial_lower_tail_kl` and `TypicalDensity.binomial_upper_tail_kl`. It does not introduce a new iid carrier or reprove concentration from scratch.
+
+Let `0 < p <= u < t < v <= q < 1`. Before either acquired parameter p or q is known, choose the count decision
+
+```text
+A_N,t = {k : k >= N*t}.
+```
+
+It accepts the second hypothesis on ties. A three-point Bernoulli KL identity bounds the rate for every allowed p by the endpoint u, and the rate for every q by v. The actual two error events of the same test satisfy
+
+```text
+alpha_N <= exp(-N*D(t||u)),
+beta_N  <= exp(-N*D(t||v)).
+```
+
+Consequently the specified equal-prior risk, rather than a separately optimized risk for each pair, obeys
+
+```text
+R_N(A_N,t;p,q) <= exp(-N*K),
+K = min(D(t||u),D(t||v)) > 0.
+```
+
+The event is chosen before the universal quantification over p,q. `exists_one_test_for_all_parameters` and `uniform_target_error_of_log_budget` expose this quantifier order. For eps>0, the common condition `N*K >= log(1/eps)` guarantees the target for that same test throughout the intervals. This is a uniform constructive bound, not a proof that the threshold is exact minimax optimal. General robust minimax hypothesis-testing context is provided by G. Gul and A. M. Zoubir, arXiv:1502.00647; their full theory is not claimed as this special-case construction.
+
+The physical consumer `one_test_for_all_symmetric_acquisitions` supplies the acquired probabilities from the symmetric Gaussian protocol. If
+
+```text
+p0(left)+B <= u < t < v <= p0(right)-B,
+```
+
+one and the same count event has the displayed bound for every fixed visibility and displacement realization in the envelope. No unknown acquired parameter appears in the rule. The count experiment is the existing Binomial measure; this batch does not claim a newly formalized pushforward equivalence from the prior tuple-space model to the count law.
+
+An illustrative model setting uses the legal length-four words LSLL and LLSL, whose centers are -1 and +1, with
+
+```text
+a*b=pi/25, V0=0.9, Vmax=0.91, eV=0.01, Qmax=0.01.
+```
+
+The envelope is B=0.00955, giving approximately u=0.4531500448960631 and v=0.546849955103937. With t=0.5, K is approximately 0.004409220793138463. Taking N=1045 makes the certified bound approximately 0.009975374941127232, below target risk 0.01. These are floating-point model evaluations of a conservative sufficient certificate, not measured data, a formally verified numerical constant, or a minimal-shot claim.
+
+## 45. Intrinsic interpretation, provenance and remaining limits
+
+The new result improves the control architecture and supplies one actual decision across an uncertainty set. It does not count ideal phase, Gaussian attenuation and repeated sampling as several independent deterministic information gains. The observation kernel, nuisance set, control assumptions and statistical risk remain distinct objects under the single-compilation intrinsic-information specification.
+
+The two new Lean modules and their two Scribe mirrors were committed together at `dff43c8fe8cf16fa83bfacdda22090fd682acc61` on #5750, based on `e093071699088b3e97584cfb2b53e56923642eff`. The source diff has 728 additions and zero deletions. All 26 public declarations have source-owned Scribe entries. Existing Gaussian, Weyl, Magnus and binomial-tail owners are consumed without altering their definitions.
+
+Three local worker processes ran separate checks concurrently: four exact symbolic identities; all 255 binary words of lengths zero through seven with direct unequal-half wavefunction checks plus 48 Gaussian integral/probability cases; and 1260 binomial parameter/shot cases together with 1000 physical-envelope cases. Maximum action and integral discrepancies were approximately 7.85e-16 and 8.33e-15. The minimum checked statistical slack was approximately 9.37e-23. These are finite self-checks, not independent model reviews or kernel certificates.
+
+No local Lean or lake binary was available. The new sources and their candidate dependencies are not marked kernel-closed or frozen. The full perturbed two-path integrated Born theorem, a complete L2 operator construction, non-Gaussian reference phases, mismatched half-error robustness beyond the exact formula, correlated sampling, and hardware comparisons remain separate obligations. No harness, CI, registry, freeze-state, merge or auto-merge changes are part of this continuation.
