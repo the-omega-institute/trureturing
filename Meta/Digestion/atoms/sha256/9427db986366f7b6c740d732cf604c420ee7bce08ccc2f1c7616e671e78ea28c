@@ -1,0 +1,59 @@
+## 定义 211.1　量子行动与记录
+
+固定一个有限预测模型：
+
+$$
+\mathcal H,\qquad \dim\mathcal H=d.
+$$
+
+其状态为密度矩阵 \(\rho\)。
+
+一个允许行动 \(a\) 由量子仪器
+
+$$
+\{\Phi_{a,b}\}_b
+$$
+
+给出，其中：
+
+$$
+\Phi_{a,b}(\rho)
+=
+\sum_\lambda
+K_{a,b,\lambda}\rho K_{a,b,\lambda}^{\dagger},
+$$
+
+且
+
+$$
+\boxed{
+\sum_{b,\lambda}
+K_{a,b,\lambda}^{\dagger}K_{a,b,\lambda}=I.
+}
+\tag{211.2}
+$$
+
+结果概率为
+
+$$
+p(b\mid a,\rho)=\operatorname{Tr}\Phi_{a,b}(\rho).
+$$
+
+观察者下一步的行动，可以由已有记录决定：
+
+$$
+a_{j+1}=\pi_j(b_1,\ldots,b_j).
+$$
+
+这里的 \(\pi_j\) 是控制策略，不是额外的超物理选择器。
+
+例如，若记忆标签 \(m\) 正交可读，且每个 \(U_a\) 都有实际实现，那么
+
+$$
+W_\pi
+=
+\sum_m|m\rangle\langle m|\otimes U_{\pi(m)}
+$$
+
+就是一个合法受控酉操作。
+

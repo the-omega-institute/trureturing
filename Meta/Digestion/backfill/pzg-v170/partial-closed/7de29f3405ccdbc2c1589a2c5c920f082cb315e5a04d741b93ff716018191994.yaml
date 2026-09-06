@@ -9,6 +9,9 @@ coverage_gids:
     target_statement_id: sha256:54194a5ed453f9739fa911583246728277b4fa9d97b031a0c37dbfb7e7d82e0d
 receipts:
   scribe:
+    - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+      definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2
+      emission_sha256: sha256:fbf5a8bede17691bfd26b0095a98ae4353665ee67311ceb008e16ec2c410da09
     - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
       definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2
       emission_sha256: sha256:fbf5a8bede17691bfd26b0095a98ae4353665ee67311ceb008e16ec2c410da09

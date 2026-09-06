@@ -1,0 +1,22 @@
+## 定义 129.1　一族相同光锥的度量
+
+在固定无量纲局部坐标中，取
+
+$$
+\eta=-dt^2+dx^2,
+$$
+
+以及
+
+$$
+\boxed{
+g_\epsilon=e^{2s_\epsilon(x)}\eta,
+\qquad
+s_\epsilon(x)=\epsilon^2\cos(x/\epsilon^2),
+\quad 0<\epsilon\le1.
+}
+\tag{129.1}
+$$
+
+---
+

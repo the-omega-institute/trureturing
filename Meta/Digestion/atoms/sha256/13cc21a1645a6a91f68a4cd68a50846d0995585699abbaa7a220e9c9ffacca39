@@ -1,0 +1,77 @@
+# 十一、怎样接到仓库的不变量与观察者工具？
+
+本轮得到的优化对象是：
+
+$$
+\mathcal G(\lambda)
+=
+\mathcal H(\lambda)
+-
+\max_{b\in\mathscr B_{5040}}\mathcal P_b(\lambda).
+$$
+
+在任意固定区间：
+
+$$
+\epsilon\le\lambda\le\Lambda,
+\qquad\epsilon>0,
+$$
+
+只有有限多个边际层可能激活。因此：
+
+$$
+\mathcal P_{5040}(\lambda)
+$$
+
+在该区间是有限分段仿射函数。
+
+在某一段上，若最优整数固定为 \(n\)，则：
+
+$$
+\mathcal G(\lambda)
+=
+\mathcal H(\lambda)-W(n)+\lambda\ln n.
+$$
+
+其导数为：
+
+$$
+\ln n-T_\lambda.
+$$
+
+因此该段的最小值，只需要检查端点与可能位于段内的：
+
+$$
+\lambda=\frac1{\ln n\,\ln\ln n}.
+$$
+
+这给出一个有限区间的证书机制：**确定活跃分支，确定候选极小点，再用严格区间证明其正性。**
+
+真正的无限证明责任集中在：
+
+$$
+\lambda\downarrow0
+\quad\Longleftrightarrow\quad
+T\to\infty.
+$$
+
+仓库的 `InvariantSafety` 已经证明了通用逻辑：初态包含于不变量、不变量在转移下封闭、且不变量蕴含安全，则全部有限执行安全。
+
+这里可以提供给它的目标不变量，不再只是“逃逸率很小”，而应包含：
+
+$$
+\boxed{
+\text{已累计压力的上界}
++
+\text{未展开黄金区块的上界}
++
+\text{未加入素数方向的上界}
+<
+\text{临界压力}.
+}
+$$
+
+其中，前两项可由局部递减收益和式（30）精确处理；第三项需要真正的全局数论控制。
+
+---
+

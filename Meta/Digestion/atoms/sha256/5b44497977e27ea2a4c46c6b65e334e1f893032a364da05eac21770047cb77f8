@@ -1,0 +1,33 @@
+## 5.2 假 RH 情形恰好相反
+
+由定理 3.2：
+
+$$
+\boxed{
+\mu_r(n)
+\longrightarrow
+\begin{cases}
+\displaystyle
+\frac{n^{-2}}{\sum_{m\in\mathcal M_*}m^{-2}},
+&n\in\mathcal M_*,\\[3mm]
+0,&n\notin\mathcal M_*.
+\end{cases}
+}
+\tag{17}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}\text{ 真：}&\quad
+\text{临界质量不被任何有限整数集合捕获};\\
+\mathrm{RH}\text{ 假：}&\quad
+\text{质量集中到有限的最坏反例集合}.
+\end{aligned}
+}
+$$
+
+这是一种精确的整体行为二分，不是由有限数值实验观察出来的猜想。
+

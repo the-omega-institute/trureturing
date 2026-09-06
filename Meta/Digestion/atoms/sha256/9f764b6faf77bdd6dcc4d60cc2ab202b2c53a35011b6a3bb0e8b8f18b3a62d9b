@@ -1,0 +1,18 @@
+### 证明
+
+取迹：
+
+$$
+\operatorname{Tr}[X,P]=0,
+$$
+
+而
+
+$$
+\operatorname{Tr}(i\hbar I)=i\hbar d\ne0.
+$$
+
+矛盾。∎
+
+因此，严格形式化应当区分：
+

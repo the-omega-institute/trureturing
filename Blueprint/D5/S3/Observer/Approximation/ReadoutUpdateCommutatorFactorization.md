@@ -21,3 +21,4 @@ For every proof that I is finite or f belongs to lp infinity, the second conjunc
 ## References
 
 - Truth anchor: `D5/S3/Observer/Approximation/ReadoutUpdateCommutatorFactorization.readout_update_commutator_factorization`
+- Dependency: [D5/S3/Quantum/ObserverCommutator](../../Quantum/ObserverCommutator.md)

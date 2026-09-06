@@ -1,0 +1,53 @@
+# 结论
+
+你的直觉中，这次最值得保留的部分是：
+
+> **四边形与金字塔，可以不是两个任意相似的图形，而是一个“独立组合—互斥占据”规则的两层结构。这个规则同时产生 Fibonacci 合法态、奇偶跃迁和可被素数权重赋能的量子模型。**
+
+最紧凑的对应是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{两端独立选择}
+&&\longrightarrow \text{四边形底面};\\
+&\text{中间占据排斥两端}
+&&\longrightarrow \text{锥顶};\\
+&\text{单位置翻转}
+&&\longrightarrow \text{奇偶谱配对};\\
+&\text{Fibonacci 加权、素数对数计价}
+&&\longrightarrow \text{算术能谱};\\
+&\text{只读取占据均值}
+&&\longrightarrow \text{隐藏关联与预测残差}.
+\end{aligned}
+}
+$$
+
+**但“第五个状态”“第三个均值坐标”“第四个概率自由度”和“物理时空的新维度”，仍然是四种不同类型的对象。**
+
+真正深入的路线，是继续证明它们之间哪些转换保留了动力学和实验结果，哪些转换只是投影、编码或近似。
+
+这样，我们就不是从金字塔外形推测宇宙，而是在构造一个能够明确回答以下问题的模型：
+
+$$
+\boxed{
+\text{哪些合法关系产生了这个几何，}
+\quad
+\text{这个几何隐藏了什么，}
+\quad
+\text{隐藏部分何时重新成为可读的波与能量？}
+}
+$$
+
+[1]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[2]: https://arxiv.org/html/1401.8190v3 "https://arxiv.org/html/1401.8190v3"
+[3]: https://ar5iv.labs.arxiv.org/html/1101.3116 "https://ar5iv.labs.arxiv.org/html/1101.3116"
+[4]: https://arxiv.org/pdf/1806.10933 "https://arxiv.org/pdf/1806.10933"
+**可以继续，而且这轮能把“金字塔—奇偶—素数能量”的联系推进成一个更强的结论：**
+
+> **在上一轮的五个合法状态中，四棱锥的三个占据坐标，恰好遗漏一个经典关联自由度；增加一个奇偶读数，就能把这个自由度完整恢复。**
+
+然后还能进一步证明：对这个四棱锥选择最大熵补全，会得到一张具有明确曲率的统计流形；但这张流形一般不被真实量子动力学保持。**所以，“几何看起来闭合”与“物理预测已经闭合”仍然是两回事。**
+
+下面从项目已有的规范编码和观察接口出发，把这些联系放在同一个模型中。
+

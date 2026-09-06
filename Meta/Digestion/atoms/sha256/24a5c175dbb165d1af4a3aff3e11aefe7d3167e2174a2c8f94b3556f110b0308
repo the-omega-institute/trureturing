@@ -1,0 +1,33 @@
+## 定理 72.1　精确推理链的组合正确性
+
+设推理链 \(P\) 的完整状态映射为 \(F_P\)，读数映射为 \(\overline F_P\)。则
+
+$$
+\boxed{
+q_B\circ F_P
+=
+\overline F_P\circ q_A.
+}
+\tag{72.1}
+$$
+
+### 证明
+
+对推理链结构归纳。
+
+恒等链中，两边都等于 \(q_A\)。
+
+假设第一步为 \(s:\mathfrak A\to\mathfrak C\)，后续链为 \(Q:\mathfrak C\to\mathfrak B\)。则
+
+$$
+\begin{aligned}
+q_BF_QF_s
+&=\overline F_Qq_CF_s\\
+&=\overline F_Q\overline F_sq_A.
+\end{aligned}
+$$
+
+第一步使用归纳假设，第二步使用 \(s\) 自带的交换证明。∎
+
+---
+

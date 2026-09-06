@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:438d595f812c9cdb1889e07bad45039736eaa1bbf876f6a1a3a27a3d756c8814
+  normalized_sha256: sha256:438d595f812c9cdb1889e07bad45039736eaa1bbf876f6a1a3a27a3d756c8814
+cas_ref: sha256:438d595f812c9cdb1889e07bad45039736eaa1bbf876f6a1a3a27a3d756c8814
+coverage_gids:
+  - gid: D5/S1/Eigenstructure/RamifiedConjugateJet.exists_golden_ramified_conjugate_jet
+    target_statement_id: sha256:c119d6ebdb25671f8901c65955ef90763a507f6485e5249be46ba8e4568b53ee
+receipts:
+  scribe:
+    - gid: D5/S1/Eigenstructure/RamifiedConjugateJet.exists_golden_ramified_conjugate_jet
+      definition_sha256: sha256:2b12f5bccb14c154ebceacdc9c5e432f371cec2362d5005b8b0c3354df388faa
+      emission_sha256: sha256:c41e9e6c6166ba67f9c795f1911c5096211d6701fce8bdfa1403ddd3c2f618d6
+  unresolved_subitems: []

@@ -1,0 +1,64 @@
+# 一、先把“临界几何”的空间明确下来
+
+沿用：
+
+$$
+E(n)=\ln n,
+\qquad
+Z(n)=\frac{\sigma(n)}n,
+\qquad
+W(n)=\ln Z(n).
+$$
+
+在资源价格 \(\lambda>0\) 下，考虑：
+
+$$
+\boxed{
+J_\lambda(n)=W(n)-\lambda E(n).
+}
+\tag{1}
+$$
+
+使 \(J_\lambda\) 达到最大值的整数，就是该价格下的极大丰配置。它等价于最大化：
+
+$$
+\frac{\sigma(n)}{n^{1+\lambda}}.
+$$
+
+这是经典极大丰数的参数化定义。([arXiv][2])
+
+对素数 \(p\) 的第 \(k\) 层指数，定义：
+
+$$
+\boxed{
+\eta(p,k)
+=
+\frac{
+\ln\left(1+\dfrac1{p+p^2+\cdots+p^k}\right)
+}{\ln p}.
+}
+\tag{2}
+$$
+
+它是增加这一层的单位规模收益。
+
+于是：
+
+$$
+\eta(p,k)>\lambda
+$$
+
+表示采用这一层有利；
+
+$$
+\eta(p,k)<\lambda
+$$
+
+表示不采用更有利；
+
+$$
+\boxed{\eta(p,k)=\lambda}
+$$
+
+则是一个精确的临界条件。
+

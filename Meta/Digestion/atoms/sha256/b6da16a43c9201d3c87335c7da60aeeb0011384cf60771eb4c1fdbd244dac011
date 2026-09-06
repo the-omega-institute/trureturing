@@ -1,0 +1,67 @@
+## 定理 6：Gamma 拼接误差的统一界
+
+$$
+\boxed{
+|E_\Gamma|
+\le
+C_{\Gamma,2}L_\chi^2\|f\|_2^2,
+}
+\tag{29}
+$$
+
+其中
+
+$$
+\boxed{
+C_{\Gamma,2}
+=
+\int_0^\infty t^2k_\Gamma(t)\,dt
+=
+2\sum_{j=0}^\infty
+\frac1{(2j+\frac12)^3}
+<\infty.
+}
+\tag{30}
+$$
+
+### 证明
+
+将式（28）代入积分即可。最后一个等式来自
+
+$$
+k_\Gamma(t)
+=
+\sum_{j\ge0}e^{-(2j+1/2)t}
+$$
+
+及逐项积分。证毕。
+
+---
+
+所以，Gamma 部分确实满足：
+
+$$
+L_\chi\to0
+\Longrightarrow
+E_\Gamma\to0
+$$
+
+在固定范数下成立。
+
+但对极点项，类似估计会涉及
+
+$$
+\int_0^\infty t^2\cosh(t/2)\,dt,
+$$
+
+它发散。
+
+对素数项，逐项绝对值估计会涉及
+
+$$
+\sum_{n\ge2}
+\frac{\Lambda(n)}{\sqrt n}(\log n)^2,
+$$
+
+也不能提供一个全局有限常数。
+

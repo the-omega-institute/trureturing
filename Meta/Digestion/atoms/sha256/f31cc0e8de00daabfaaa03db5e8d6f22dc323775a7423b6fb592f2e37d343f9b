@@ -1,0 +1,49 @@
+## 定义：实际 Schur 递推
+
+令：
+
+$$
+\alpha_j=g_j(0).
+$$
+
+只要 \(|\alpha_j|<1\)，定义：
+
+$$
+\boxed{
+g_{j+1}(z)
+=
+\frac{g_j(z)-\alpha_j}
+{z\,[1-\overline{\alpha_j}g_j(z)]}.
+}
+\tag{22}
+$$
+
+所有实际系数为实，因此这里的 \(\alpha_j\) 都是实数。
+
+这是经典 Schur 算法；它将解析收缩函数转换成一列逐层的收缩参数，并与保守系统实现相连。([arXiv][3])
+
+前两个参数立即为：
+
+$$
+\boxed{
+\alpha_0=\eta,
+}
+$$
+
+$$
+\boxed{
+\alpha_1=\frac{\kappa}{1-\eta^2}.
+}
+\tag{23}
+$$
+
+因此：
+
+$$
+\boxed{
+|\alpha_1|\le1
+\iff
+|\kappa|\le1-\eta^2.
+}
+$$
+

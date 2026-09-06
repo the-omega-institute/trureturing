@@ -1,0 +1,27 @@
+### 定义 39.3（准入门）
+
+对每个对象类型 \(X\)，给定可容许子对象：
+
+\[
+\boxed{
+\operatorname{Adm}(X)\subseteq X.
+}
+\]
+
+对每个作用 \(F:X\to Y\)，还可以要求：
+
+\[
+F(\operatorname{Adm}(X))
+\subseteq
+\operatorname{Adm}(Y).
+\]
+
+在不同领域：
+
+\[
+\operatorname{Adm}
+\]
+
+分别表现为：
+
+- 环或模的闭合；

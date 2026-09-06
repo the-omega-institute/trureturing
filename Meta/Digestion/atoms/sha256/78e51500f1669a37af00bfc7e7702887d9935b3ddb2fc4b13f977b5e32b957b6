@@ -1,0 +1,31 @@
+### 推论 31.15（时间迭代误差）
+
+若 \(F_m\) 的 Lipschitz 常数不超过 \(L\)，则
+
+\[
+\boxed{
+\partial_m(F^n)(X)
+\le
+\sum_{k=0}^{n-1}
+L^{n-1-k}
+\partial_mF(F^kX).
+}
+\]
+
+若沿轨道单步缺陷均不超过 \(\varepsilon_m\)，则
+
+\[
+\boxed{
+\partial_m(F^n)(X)
+\le
+\begin{cases}
+n\varepsilon_m,&L=1,\\[1mm]
+\dfrac{1-L^n}{1-L}\varepsilon_m,&0\le L<1,\\[3mm]
+\dfrac{L^n-1}{L-1}\varepsilon_m,&L>1.
+\end{cases}
+}
+\]
+
+这把“时间”与“有限坐标自然性”连接起来：
+
+- 收缩动力学会使有限观察误差饱和；

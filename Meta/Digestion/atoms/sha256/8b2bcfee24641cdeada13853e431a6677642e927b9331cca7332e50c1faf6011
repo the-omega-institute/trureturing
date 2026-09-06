@@ -1,0 +1,38 @@
+# 结论
+
+这次真正把“其他切面”推进成了四条可计算的连接：
+
+$$
+\boxed{
+\text{换指标分组}
+\longrightarrow
+\text{新的秩与奇异值边界};
+}
+$$
+
+$$
+\boxed{
+\text{压缩时间链}
+\longrightarrow
+\frac{\|y-\mathcal Ux\|^2}{\tau_{\mathrm{tot}}};
+}
+$$
+
+$$
+\boxed{
+\text{消去内部事件}
+\longrightarrow
+S(0),\ M_{\mathrm{eff}},\ S(z);
+}
+$$
+
+$$
+\boxed{
+\text{ξ 历史态换到数据侧}
+\longrightarrow
+\text{同一非零谱与新的有效维数约束}.
+}
+$$
+
+其中最值得继续保留的两个认识是：
+

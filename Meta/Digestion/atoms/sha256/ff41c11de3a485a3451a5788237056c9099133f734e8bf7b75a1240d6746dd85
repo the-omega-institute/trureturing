@@ -1,0 +1,12 @@
+## 定理四：闭环不相容的精确代价
+
+$$
+\boxed{
+\min_y\mathcal E
+=
+\frac{\|(\mathcal U_1-\mathcal U_2)x\|^2}
+{\tau_1+\tau_2}.
+}
+\tag{13}
+$$
+

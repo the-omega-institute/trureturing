@@ -1,0 +1,29 @@
+# 十一、相位不能随意解释成几何曲率：必须固定它从哪里来
+
+式（8）允许在每条类型 \(i\) 的边上放置局部相位：
+
+$$
+U_i(\mathbf n)
+=
+e^{i\theta\sum_{j>i}n_j}.
+$$
+
+对 \(i<j\)，交换两个相邻操作的次序，有：
+
+$$
+\boxed{
+\frac{
+U_j(\mathbf n)U_i(\mathbf n+\mathbf e_j)
+}{
+U_i(\mathbf n)U_j(\mathbf n+\mathbf e_i)
+}
+=
+e^{i\theta}.
+}
+\tag{34}
+$$
+
+所以，历史面积相位可以写成每个基本方形上相同的离散绕行相位。
+
+但必须强调：
+

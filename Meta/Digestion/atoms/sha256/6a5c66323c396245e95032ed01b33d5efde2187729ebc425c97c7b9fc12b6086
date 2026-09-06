@@ -1,0 +1,25 @@
+# 十一、与项目现有工作的准确连接
+
+本轮重新读取的 `JensenPolynomialObstruction.lean`，仍把实际 Jensen 塔与 RH 的分析桥作为显式前件。它没有无条件提供式（L32）这样的全阶系数估计。
+
+`ObservabilityGramianKernelEnergy.lean` 在其稳定性前件下，证明历史能量为零与所有未来读数为零等价。它负责“是否遗漏状态”，并不自动证明历史体积满足实谱上界。
+
+现在可以明确分成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{可观测性}&:\quad \text{历史有没有遗漏有限模式};\\
+\text{量子合法性}&:\quad p_q(r)\le1;\\
+\text{零点定位}&:\quad
+p_q(r)\le e^{-r(N_q-S_q)}.
+\end{aligned}
+}
+$$
+
+第三项严格强于前两项。
+
+本轮检索没有获得一个已经完成这里“实际 Jensen 系数—Schur 平方上界”的对应 Lean 定理。因此，这些新增推导仍是聊天中的纸面结果，不能标记成仓库已经编译验证的结论。
+
+---
+

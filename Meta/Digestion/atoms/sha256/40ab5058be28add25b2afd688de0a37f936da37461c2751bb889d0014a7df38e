@@ -1,0 +1,28 @@
+### 证明
+
+由 \(S_d\ge S_*/2\) 和定理 M1：
+
+$$
+\log\mathcal Z_d(r)
+\le
+-rS_d-\log(1-rL^2/d).
+$$
+
+当 \(0\le x\le1/2\) 时：
+
+$$
+-\log(1-x)\le2x.
+$$
+
+所以：
+
+$$
+\log\mathcal Z_d(r)
+\le
+-\frac{rS_*}{2}+\frac{2rL^2}{d}
+\le
+-\frac{rS_*}{4}.
+$$
+
+证毕。
+

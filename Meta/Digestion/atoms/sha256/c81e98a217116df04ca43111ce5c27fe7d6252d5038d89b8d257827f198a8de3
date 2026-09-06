@@ -1,0 +1,26 @@
+# 十、怎样把“几何编程语言”变成项目中的真正理论，而不是再添一个比喻？
+
+可以给出一个明确的研究对象：
+
+$$
+\boxed{
+\mathfrak G
+=
+(\mathcal S,\mathcal C,
+\{D_i,\Delta_i\}_{i=1}^m,
+\prec,\mathcal O,\mathcal Z).
+}
+\tag{25}
+$$
+
+其中：
+
+* \(\mathcal S\) 是非负整数计数器空间；
+* \(\mathcal C\) 是有限控制状态；
+* \(D_i,\Delta_i\) 是允许区域与更新向量；
+* \(\prec\) 是指令优先级；
+* \(\mathcal O\) 是输出观察；
+* \(\mathcal Z\) 是黄金规范编码。
+
+这样，四边形与金字塔才各有确定职责：
+

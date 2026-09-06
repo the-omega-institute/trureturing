@@ -1,0 +1,61 @@
+## 定理 7.1：压力的精确谱分解
+
+对 \(T\ge12\)：
+
+$$
+\boxed{
+\Pi(T)
+=
+D_{\mathrm{disc}}(T)
+-\sum_\rho K_\rho(T)
+-\frac{\ln(2\pi)}{T\ln T}
++\varepsilon_{\mathrm{triv}}(T),
+}
+\tag{26}
+$$
+
+其中：
+
+$$
+0\le\varepsilon_{\mathrm{triv}}(T)
+\le
+\frac1{2T(T^2-1)\ln T}.
+\tag{27}
+$$
+
+零点和绝对收敛，并由对称性取实值。
+
+### 证明要点
+
+将经典显式公式代入 \(I_\psi(T)\)。零点部分给出 \(-\sum K_\rho\)，常数项给出：
+
+$$
+-\ln(2\pi)\int_T^\infty
+\frac{\ln v+1}{v^2(\ln v)^2}\,dv
+=
+-\frac{\ln(2\pi)}{T\ln T}.
+$$
+
+平凡零点项为：
+
+$$
+\varepsilon_{\mathrm{triv}}(T)
+=
+-\frac12
+\int_T^\infty
+\ln(1-v^{-2})
+\frac{\ln v+1}{v^2(\ln v)^2}\,dv.
+$$
+
+使用：
+
+$$
+0\le-\ln(1-v^{-2})\le\frac1{v^2-1}
+$$
+
+即得上界。
+
+对大 \(|\tau|\)，式（25）的系数为 \(O_T(|\tau|^{-2})\)，所以积分后的零点级数绝对收敛。最后结合 \(\Pi=I_\psi+D_{\mathrm{disc}}\)。证毕。
+
+---
+

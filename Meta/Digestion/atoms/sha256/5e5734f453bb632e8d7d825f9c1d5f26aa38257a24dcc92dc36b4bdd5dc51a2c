@@ -1,0 +1,37 @@
+## 定理 204.1　守恒结构约束所有允许选择
+
+设一个投影 \(P\) 与全部允许酉控制可交换：
+
+$$
+[U_a,P]=0.
+$$
+
+则任意有限控制序列都保持：
+
+$$
+\boxed{
+\operatorname{Tr}(P\rho_{\mathrm{out}})
+=
+\operatorname{Tr}(P\rho_{\mathrm{in}}).
+}
+\tag{204.3}
+$$
+
+### 证明
+
+每一步有：
+
+$$
+\operatorname{Tr}(PU_a\rho U_a^\dagger)
+=
+\operatorname{Tr}(U_a^\dagger PU_a\rho)
+=
+\operatorname{Tr}(P\rho).
+$$
+
+对步骤数归纳。∎
+
+因此，观察者不能通过“选择某种波”跳出全部允许操作共同保持的约束。
+
+另一方面，“只能从已经列出的世界分支里挑一个”也不完全准确。行动可以改变 Hamiltonian、耦合和干涉，使之后的可达集合改变。未来不一定是一个预先固定、彼此独立的菜单。
+

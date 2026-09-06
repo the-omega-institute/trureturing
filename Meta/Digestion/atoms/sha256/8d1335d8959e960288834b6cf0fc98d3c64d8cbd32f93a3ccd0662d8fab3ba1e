@@ -1,0 +1,54 @@
+# 三、核心定理：一个试除阶段，就是精确计算 \(M\bmod k\)
+
+定义试除入口：
+
+$$
+\boxed{
+\mathsf X(M,k)=\mathsf S(0,0,M,k;13),
+\qquad M,k\ge1.
+}
+\tag{5}
+$$
+
+这时：
+
+$$
+a+c=M,\qquad b+d=k.
+$$
+
+可以把四个计数器解释为：
+
+$$
+\begin{aligned}
+a&=\text{已经处理的单位数},\\
+c&=\text{尚未处理的单位数},\\
+b&=\text{本轮已经走过的循环长度},\\
+d&=\text{本轮剩余的循环长度}.
+\end{aligned}
+$$
+
+式（2）每执行一次，就有：
+
+$$
+a\mapsto a+1,\qquad c\mapsto c-1,
+$$
+
+同时：
+
+$$
+b\mapsto b+1,\qquad d\mapsto d-1.
+$$
+
+当 \(d=0\) 时，程序进入 \(q=11\)，用式（3）把 \(b\) 全部搬回 \(d\)，然后返回 \(q=13\)。
+
+因此：
+
+$$
+\boxed{
+(b,d)=(k,0)
+\longrightarrow
+(0,k).
+}
+\tag{6}
+$$
+

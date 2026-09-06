@@ -1,0 +1,59 @@
+## 定理 111.1　经典扇区持续有效的充要条件
+
+以下条件等价：
+
+1. 对全部 \(t\in\mathbb R\)，
+
+   $$
+   e^{-itH_G/\hbar}\mathcal E_\nu
+   \subseteq\mathcal E_\nu;
+   $$
+2. $$
+   (I-P)H_GP=0;
+   $$
+3. $$
+   \boxed{[H_G,P]=0.}
+   \tag{111.3}
+   $$
+
+这些条件成立时，完整 Hamiltonian 在
+\(\mathcal H_O\otimes\mathcal E_\nu\) 上具有形式：
+
+$$
+\boxed{
+H_{\mathrm{tot}}\big|_{\mathcal E_\nu}
+=
+\left(H_O+\sum_a\nu_aF_a\right)\otimes I
++
+I\otimes H_G\big|_{\mathcal E_\nu}.
+}
+\tag{111.4}
+$$
+
+### 证明
+
+由条件 1 对 \(t=0\) 求导，得到：
+
+$$
+H_G\mathcal E_\nu\subseteq\mathcal E_\nu,
+$$
+
+即条件 2。
+
+由于 \(H_G\) 自伴，
+
+$$
+\bigl((I-P)H_GP\bigr)^\dagger
+=
+PH_G(I-P).
+$$
+
+因此条件 2 同时消去两个非对角块，等价于条件 3。
+
+条件 3 保证 \(P\) 与 \(H_G\) 的指数可交换，从而得到条件 1。
+
+最后，在该子空间上使用
+\(\widehat n_aP=\nu_aP\)，即可得到式（111.4）。∎
+
+### 含义
+

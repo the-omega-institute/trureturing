@@ -1,0 +1,51 @@
+## 3. 量子相位还提供另一类几何
+
+对纯态
+
+$$
+|\psi\rangle
+=
+\sum_i\sqrt{P_i}\,e^{i\phi_i}|i\rangle,
+$$
+
+采用标准 Fubini–Study 归一化，直接计算得到
+
+$$
+\boxed{
+ds_{\mathrm{FS}}^2
+=
+\frac14\sum_i\frac{dP_i^2}{P_i}
++
+\left[
+\sum_iP_i(d\phi_i)^2
+-
+\left(\sum_iP_i\,d\phi_i\right)^2
+\right].
+}
+\tag{27}
+$$
+
+第一项是概率变化，第二项是相对相位变化；整体共同相位被减掉。
+
+量子几何张量的实部与虚部分别组织这种度量和 Berry 曲率，它们不是同一种“曲率”。([arXiv][3])
+
+特别地，如果一直选择正实振幅
+
+$$
+|\psi(P)\rangle=\sum_i\sqrt{P_i}|i\rangle,
+$$
+
+那么
+
+$$
+i\langle\psi,d\psi\rangle=0,
+$$
+
+所以 Berry 曲率为零；但概率空间的 Fisher 球面曲率仍可非零。
+
+$$
+\boxed{
+\text{球面曲率、相位曲率、投影残差，必须分别定义。}
+}
+$$
+

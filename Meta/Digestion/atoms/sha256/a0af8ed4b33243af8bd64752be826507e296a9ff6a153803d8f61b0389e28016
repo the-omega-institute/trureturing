@@ -1,0 +1,65 @@
+## 定义 116.1　单元与内部演化
+
+每个结构单元是量子比特。取：
+
+$$
+\widehat A=3I+X,
+$$
+
+$$
+\widehat C=I+\frac12Z.
+$$
+
+定义一维方向变量 \(|v|\le1\) 下的平方钟律：
+
+$$
+\boxed{
+\widehat R(v)
+=
+\widehat A-v^2\widehat C
+=
+(3-v^2)I+X-\frac{v^2}{2}Z.
+}
+\tag{116.1}
+$$
+
+由于：
+
+$$
+\widehat A\ge2I,
+\qquad
+0<\widehat C\le\frac32I,
+$$
+
+有：
+
+$$
+\boxed{
+\widehat R(v)\ge\frac12I.
+}
+\tag{116.2}
+$$
+
+所以可以取：
+
+$$
+n_*=\frac1{\sqrt2}.
+$$
+
+每个结构单元初始为 \(|0\rangle\)，其 Hamiltonian 取：
+
+$$
+h=\frac{\hbar\Omega}{2}(I+Y),
+\qquad \Omega>0.
+$$
+
+该算子非负；恒等部分只贡献整体相位。完整自由结构演化取：
+
+$$
+H_G^{(N)}=\sum_{j=1}^Nh^{(j)}.
+$$
+
+因此参考结构态在任意时刻都保持乘积形式。
+
+---
+

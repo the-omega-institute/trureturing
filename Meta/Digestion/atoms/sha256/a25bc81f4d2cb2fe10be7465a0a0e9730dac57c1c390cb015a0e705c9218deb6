@@ -1,0 +1,34 @@
+# 七、已知形状条件让全部条件密度都很规则，却仍未决定干涉符号
+
+把差模态迹掉，得到和模态密度：
+
+$$
+\boxed{
+\mu_n(s)
+=
+\frac1{Z_n}
+\int_{\mathbb R}
+u^{2n}
+p\!\left(\frac{s+u}{\sqrt2}\right)
+p\!\left(\frac{s-u}{\sqrt2}\right)\,du.
+}
+\tag{Q20}
+$$
+
+它满足：
+
+$$
+\mu_n(s)>0,\qquad
+\mu_n(-s)=\mu_n(s),\qquad
+\int\mu_n(s)\,ds=1.
+$$
+
+并且：
+
+$$
+\boxed{
+R_n(t)=\int_{\mathbb R}\mu_n(s)\cos(\sqrt2ts)\,ds.
+}
+\tag{Q21}
+$$
+

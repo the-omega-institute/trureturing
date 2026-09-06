@@ -1,0 +1,62 @@
+## 例 196.1　Newton 核的明确结果
+
+对
+
+$$
+V(r)=-\frac{Gm_Am_B}{|r|},
+\qquad r\ne0,
+$$
+
+有
+
+$$
+\boxed{
+\operatorname{Hess}V
+=
+Gm_Am_B
+\left(
+\frac I{|r|^3}
+-
+\frac{3rr^{\mathsf T}}{|r|^5}
+\right).
+}
+\tag{196.4}
+$$
+
+径向本征值为
+
+$$
+-\frac{2Gm_Am_B}{|r|^3},
+$$
+
+两个横向本征值为
+
+$$
+\frac{Gm_Am_B}{|r|^3}.
+$$
+
+对共线、等长位移 \(a=b=h\widehat r\)，且 \(r>h>0\)，精确得到
+
+$$
+\boxed{
+\Xi_{\mathrm{space}}
+=
+-\frac{
+2Gm_Am_BT\,h^2
+}{
+\hbar r(r^2-h^2)
+}.
+}
+\tag{196.5}
+$$
+
+这也说明：只测纠缠量
+
+$$
+|\sin(\Xi/2)|
+$$
+
+会丢失相位符号和周期信息。要重建潮汐矩阵，需要相位可分辨的联合实验，而不仅是判断“有没有纠缠”。
+
+---
+

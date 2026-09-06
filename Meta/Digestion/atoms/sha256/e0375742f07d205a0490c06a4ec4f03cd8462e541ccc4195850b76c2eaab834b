@@ -1,0 +1,39 @@
+## 推论 196.1　均匀项被消去，潮汐项被保留
+
+若
+
+$$
+V(R)\longmapsto V(R)+\lambda\cdot R+\lambda_0,
+$$
+
+则 \(\Xi_{\mathrm{space}}\) 不变。
+
+对固定质量，相对加速度为
+
+$$
+\ddot R=-\mu^{-1}\nabla V(R),
+\qquad
+\mu=\frac{m_Am_B}{m_A+m_B}.
+$$
+
+定义局部相对潮汐矩阵
+
+$$
+\mathcal T_{\mathrm{rel}}
+=
+-\mu^{-1}\operatorname{Hess}V.
+$$
+
+于是小位移下
+
+$$
+\boxed{
+\Xi_{\mathrm{space}}
+=
+-\frac{\mu T}{\hbar}
+a^{\mathsf T}\mathcal T_{\mathrm{rel}}(r)b
++\text{受控余项}.
+}
+\tag{196.3}
+$$
+

@@ -1,0 +1,13 @@
+## 定理一：正配分函数的归一化边界恰好是 \(\lambda=T\)
+
+对实数 \(\lambda\)：
+
+$$
+\boxed{
+\mathscr Z_T(\lambda)<\infty
+\iff
+\lambda>T.
+}
+\tag{2}
+$$
+

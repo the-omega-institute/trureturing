@@ -6,3 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Entropy/Submodularity/MarkovDataProcessing.conditional_mutual_information_eq_zero_iff_conditional_product
+    gaps:
+      - code: scribe-declaration-reference-missing
+        detail: D5/S3/Entropy/Submodularity/MarkovDataProcessing.conditional_mutual_information_eq_zero_iff_conditional_product

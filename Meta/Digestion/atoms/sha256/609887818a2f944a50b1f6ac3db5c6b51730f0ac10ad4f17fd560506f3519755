@@ -1,0 +1,125 @@
+## 主定理 6.1：RH 的全状态波范数判据
+
+以下命题等价：
+
+$$
+\mathrm{RH};
+$$
+
+$$
+\boxed{
+\forall\lambda>0,\qquad
+\lim_{\beta\to\infty}
+\frac1\beta\ln Q_>(\lambda,\beta)
+<
+\mathcal H(\lambda);
+}
+\tag{21}
+$$
+
+$$
+\boxed{
+\forall\lambda>0,\quad
+\exists\beta>\frac1\lambda,\qquad
+Q_>(\lambda,\beta)
+<
+e^{\beta\mathcal H(\lambda)}.
+}
+\tag{22}
+$$
+
+### 证明
+
+定义：
+
+$$
+\mathcal P_>(\lambda)
+=
+\max_{n>5040}[W(n)-\lambda E(n)].
+$$
+
+由定理 5.1：
+
+$$
+\lim_{\beta\to\infty}
+\frac1\beta\ln Q_>
+=
+\mathcal P_>(\lambda).
+$$
+
+Robin 定理给出：
+
+$$
+\mathrm{RH}
+\iff
+W(n)<h(E(n))
+\quad\forall n>5040.
+$$
+
+这是本定理使用的经典数论输入。([arXiv][4])
+
+若 RH 成立，选择取得 \(\mathcal P_>\) 的整数 \(n_\lambda\)，则：
+
+$$
+\begin{aligned}
+\mathcal P_>(\lambda)
+&=W(n_\lambda)-\lambda E(n_\lambda)\\
+&<h(E(n_\lambda))-\lambda E(n_\lambda)\\
+&\le\mathcal H(\lambda).
+\end{aligned}
+$$
+
+反过来，假设对每个 \(\lambda\) 都有严格压力界。任取 \(n>5040\)，选择：
+
+$$
+\lambda=\frac1{E(n)\ln E(n)}.
+$$
+
+此时 \(E(n)\) 恰好实现 \(\mathcal H(\lambda)\)。所以：
+
+$$
+W(n)-\lambda E(n)
+\le\mathcal P_>(\lambda)
+<
+h(E(n))-\lambda E(n).
+$$
+
+消去线性项，得到 Robin 不等式。
+
+最后：
+
+$$
+\frac1\beta\ln Q_>(\lambda,\beta)
+\ge\mathcal P_>(\lambda),
+$$
+
+因为求和至少包含最优项；同时它趋于该最优值。
+
+所以严格的极限界，等价于存在一个足够大的有限 \(\beta\) 满足式（22）。证毕。
+
+---
+
+这是这一轮最核心的结果：
+
+$$
+\boxed{
+\text{RH 可以被表述为一个全算术波的严格范数预算问题。}
+}
+$$
+
+它已经把过去的有限边界、全部允许状态、未来最大收益和连续价格统一放进一个对象。
+
+但有一个绝不能忽略的区别：
+
+$$
+|\widehat{\mathcal W}\rangle
+=
+\frac{|\mathcal W\rangle}{\|\mathcal W\|}
+$$
+
+当然总满足：
+
+$$
+\|\widehat{\mathcal W}\|=1.
+$$
+

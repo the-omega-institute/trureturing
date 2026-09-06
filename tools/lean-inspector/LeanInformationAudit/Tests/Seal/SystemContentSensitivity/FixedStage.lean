@@ -50,6 +50,10 @@ information_theorem systemTheorem
   primitives fixedStageRealization
   : arena.Law fixedStageRealization := by trivial
 
+expect_information_occurrence systemTheorem
+  in arena
+  from "LeanInformationAudit.Tests.Seal.SystemContentSensitivity.FixedStage"
+
 /-- error: IE-C007 ZeroUniqueCapture: theorem
 LeanInformationAudit.Tests.Seal.T013FixedStage.systemTheorem arena
 LeanInformationAudit.Tests.Seal.T013FixedStage.arena full 2 without 2 -/

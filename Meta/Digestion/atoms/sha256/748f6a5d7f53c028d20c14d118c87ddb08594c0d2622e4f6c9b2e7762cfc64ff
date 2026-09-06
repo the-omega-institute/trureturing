@@ -1,0 +1,38 @@
+## 统计距离也在这个边界变得奇异
+
+ζ分布的 Fisher 信息为：
+
+$$
+\boxed{
+\mathcal I(\sigma)
+=
+\frac{d^2}{d\sigma^2}\ln\zeta(\sigma)
+=
+\operatorname{Var}_{\rho_\sigma}(\ln n).
+}
+\tag{313.4}
+$$
+
+由 Laurent 展开：
+
+$$
+\boxed{
+\mathcal I(1+\varepsilon)
+=
+\frac1{\varepsilon^2}+O(1).
+}
+\tag{313.5}
+$$
+
+于是沿这条参数族，到 \(\sigma=1\) 的 Fisher 长度发散：
+
+$$
+\int_1^{\sigma_0}\sqrt{\mathcal I(\sigma)}\,d\sigma=\infty.
+$$
+
+**这是归一化、算子拓扑和统计距离三个角度对同一边界的读取。**
+
+但这一参数族是一维的，不能把距离发散直接称为“一维内禀曲率发散”。
+
+---
+

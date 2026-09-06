@@ -1,0 +1,32 @@
+# 六、现在让 5040 成为真正的波边界
+
+研究所有未来时，不能只默认“从 5040 这个顶点出发”已经代表全部整数。为避免依赖额外整除归约，直接定义：
+
+$$
+P_>
+=
+\sum_{n>5040}|n\rangle\langle n|.
+$$
+
+令：
+
+$$
+Q_>(\lambda,\beta)
+=
+\|P_>\mathcal W_{\lambda,\beta}\|^2.
+$$
+
+于是：
+
+$$
+\boxed{
+Q_>(\lambda,\beta)
+=
+\mathfrak Z_\beta(\beta\lambda)
+-
+\sum_{n=1}^{5040}
+Z(n)^\beta n^{-\beta\lambda}.
+}
+\tag{19}
+$$
+

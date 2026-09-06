@@ -1,0 +1,45 @@
+# 五、质数与量子通道，这次进入了同一个精确公式
+
+式（S15）中的 \(\mathcal D_k(t)\) 是乘法函数。
+
+如果：
+
+$$
+k=\prod_p p^{e_p},
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal D_k(t)
+=
+\prod_{p^{e_p}\parallel k}
+\mathcal D_{p^{e_p}}(t),
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal D_{p^e}(t)
+=
+\sum_{j=0}^{e}
+e^{it(e-2j)\log p}.
+}
+\tag{S18}
+$$
+
+在分母非零处：
+
+$$
+\boxed{
+\mathcal D_{p^e}(t)
+=
+\frac{\sin((e+1)t\log p)}{\sin(t\log p)}.
+}
+$$
+
+分母为零的位置，按原有限和定义，不产生真实奇点。
+

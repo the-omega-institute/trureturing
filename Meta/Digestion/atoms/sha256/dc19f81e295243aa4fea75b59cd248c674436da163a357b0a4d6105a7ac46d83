@@ -1,0 +1,44 @@
+# 十、结合项目：这次应当增加的是“带时间矩的边界完成”
+
+项目已有两条很适合接入的结构：
+
+`SchurComplementAssociativity` 保存消元次序的一致性；`DynamicClosureMinimality` 保存原读出在全部有限操作后的行为，并给出最小闭包性质。
+
+本轮进一步指出，完成接口不能只保存一个静态正核。还应明确保存：
+
+$$
+\boxed{
+\mathcal A(z)=\frac1{1-\mathcal S(z)}
+}
+$$
+
+这一相干重建关系；
+
+$$
+\boxed{
+p_n=s_{n-1}-s_n
+}
+$$
+
+这一监测概率账目；
+
+$$
+\boxed{
+\sum_np_n,\qquad \sum_nnp_n
+}
+$$
+
+这两个不同层次的时间完成量；
+
+以及
+
+$$
+\boxed{
+\epsilon_G/(1-r)
+}
+$$
+
+这样的谱截断—观察时间联合误差。
+
+本轮已做有限核对：两状态模型的概率与平均步数用有理数精确求和；有限幺正模型独立核对了回返递推与生存概率恒等式；ξ 系数和径向响应使用高精度数值复核。代码见[核验脚本](sandbox:/mnt/data/xi_boundary_memory_verify.py)，结果见[核验记录](sandbox:/mnt/data/xi_boundary_memory_verify.json)。其中无限返回结论来自所述定理及其前件，不是由有限运行外推。
+

@@ -1,0 +1,11 @@
+### 本轮实际核验
+
+已完成 **41项有限枚举与精确符号检查**。其中包括总计数不超过8时的825条非空观察纤维、462次合法正向移动，以及三态暗态、精确传播、九维能量守恒和四边形相位相消。
+
+[核验脚本](sandbox:/mnt/data/observer_formalization/check_quantum_fiber_compilation.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/quantum_fiber_compilation_checks.json)
+
+本轮未进行 Lean 内核编译。上述核验不替代一般形式化证明，也不证明所选耦合已被现实物理采用。
+
+---
+

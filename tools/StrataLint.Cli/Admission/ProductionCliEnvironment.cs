@@ -5,13 +5,14 @@ using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
-internal sealed record PreparedRepository(string Revision, string ChangeBase, RawChangeSet Changes);
+internal sealed record PreparedRepository(string Revision, RawChangeSet Changes);
 
 internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid, string TreeOid);
 
 internal sealed record CheckArguments(
     string? ProtectedBase,
-    string? CandidateLeanReport);
+    string? CandidateLeanReport,
+    string? TestMapCacheRoot);
 
 internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabled = true)
 {
@@ -188,9 +189,9 @@ internal interface IRepositoryGateway
     RawChangeSet ReadCurrentChanges();
 
     /// Reads the working-tree delta against an explicit revision, in the caller-supplied
-    /// changeBase's own words -- no remote-ref resolution happens here (CLAUDE.md 第Ⅵ节 git
+    /// revision's own words -- no remote-ref resolution happens here (CLAUDE.md 第Ⅵ节 git
     /// reference discipline: only the caller may name a revision; this gateway just diffs it).
-    RawChangeSet ReadChanges(string changeBase);
+    RawChangeSet ReadChanges(string revision);
 
 }
 
@@ -212,6 +213,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
     private readonly TimeProvider timeProvider;
+    private readonly IAtomHistorySource atomHistorySource;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
@@ -238,13 +240,15 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier? scribeEmissionVerifier)
+        IScribeEmissionVerifier? scribeEmissionVerifier,
+        IAtomHistorySource? atomHistorySource = null)
         : this(
             repositoryRoot,
             repository,
             leanReportSource,
             scribeEmissionVerifier,
-            TimeProvider.System)
+            TimeProvider.System,
+            atomHistorySource)
     {
     }
 
@@ -253,13 +257,15 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
-        TimeProvider timeProvider)
+        TimeProvider timeProvider,
+        IAtomHistorySource? atomHistorySource = null)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
         this.timeProvider = timeProvider;
+        this.atomHistorySource = atomHistorySource ?? new GitAtomHistorySource(this.repositoryRoot);
     }
 
     public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) =>
@@ -268,6 +274,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
     {
         var timing = new AdmissionCheckTiming(timeProvider);
+        ScribeTestMapStore? testMapStore = null;
+        string? cacheSetupOutcome = null;
         try
         {
             var repositoryPhase = timing.Measure(
@@ -296,6 +304,12 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 return new AdmissionOutcome.InfrastructureFailure(
                     "check requires --candidate-lean-report FILE");
             }
+            if (options.TestMapCacheRoot is not null)
+            {
+                testMapStore = TryCreateTestMapStore(
+                    options.TestMapCacheRoot,
+                    out cacheSetupOutcome);
+            }
 
             var rawSnapshots = timing.Measure(
                 "repository-read",
@@ -319,14 +333,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 {
                     var current = Decode(currentRaw);
                     var baseline = Decode(baselineRaw);
-                    // Fork-point consumers compare repository structure and ledger bytes, not Lean facts.
-                    var forkPoint = string.Equals(
-                        prepared.ChangeBase,
-                        prepared.Revision,
-                        StringComparison.Ordinal)
-                        ? baseline
-                        : Decode(repository.ReadRevision(prepared.ChangeBase));
-                    return (Current: current, Baseline: baseline, ForkPoint: forkPoint);
+                    return (Current: current, Baseline: baseline);
                 });
             var current = snapshots.Current;
             var baseline = snapshots.Baseline;
@@ -349,12 +356,27 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
-                snapshots.ForkPoint,
-                timing).Outcome;
+                timing,
+                testMapStore,
+                DeriveTestMap).Outcome;
         }
         catch (Exception exception)
         {
             return new AdmissionOutcome.InfrastructureFailure(exception.Message);
+        }
+        finally
+        {
+            if (cacheSetupOutcome is not null)
+            {
+                WriteTestMapCacheEvent(string.Empty, cacheSetupOutcome);
+            }
+            if (testMapStore is not null)
+            {
+                foreach (var cacheEvent in testMapStore.Events)
+                {
+                    WriteTestMapCacheEvent(cacheEvent.InputDigest, cacheEvent.Outcome);
+                }
+            }
         }
     }
 
@@ -385,10 +407,15 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
-                arguments);
+                arguments,
+                atomHistorySource,
+                timeProvider);
 
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
+
+    public CommandResult AtomContext(IReadOnlyList<string> arguments) =>
+        AtomContextCommand.Run(repository, arguments);
 
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
@@ -401,7 +428,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
-                arguments);
+                arguments,
+                atomHistorySource,
+                timeProvider);
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         GateAuthorityCommand.Run(repositoryRoot, arguments);
@@ -410,7 +439,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         FileMapConformCommand.Run(arguments, repositoryRoot);
 
     public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
-        DepositHeaderCheckCommand.Run(repository, arguments);
+        DepositHeaderCheckCommand.Run(repository, leanReportSource, arguments);
 
     public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) =>
         LedgerFrozenCommand.Run(repositoryRoot, repository, arguments);
@@ -448,6 +477,15 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 timeProvider.GetUtcNow(),
                 arguments);
 
+    public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) =>
+        QuarantineAtomCommand.Run(repositoryRoot, repository, arguments);
+
+    public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
+        SettleAtomCommand.Run(repositoryRoot, repository, arguments);
+
+    public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) =>
+        DecomposeAtomCommand.Run(repositoryRoot, repository, arguments);
+
     public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments)
     {
         if (scribeEmissionVerifier is null)
@@ -460,7 +498,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 
         try
         {
-            return CoverAtomCommand.AlignScribeReceipt(
+            return AlignScribeReceiptCommand.Run(
                 repositoryRoot,
                 repository,
                 leanReportSource,
@@ -561,7 +599,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
                 || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 25)
+                || RuleCatalog.Default.Descriptors.Length != 27)
             {
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }
@@ -677,6 +715,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     {
         string? protectedBase = null;
         string? candidateLeanReport = null;
+        string? testMapCacheRoot = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -688,6 +727,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             {
                 "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
+                "--test-map-cache-root" when testMapCacheRoot is null => 2,
                 _ => throw CheckUsage(),
             };
             switch (target)
@@ -698,15 +738,22 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 case 1:
                     candidateLeanReport = arguments[index + 1];
                     break;
+                case 2:
+                    if (string.IsNullOrWhiteSpace(arguments[index + 1]))
+                    {
+                        throw CheckUsage();
+                    }
+                    testMapCacheRoot = arguments[index + 1];
+                    break;
             }
         }
 
-        return new CheckArguments(protectedBase, candidateLeanReport);
+        return new CheckArguments(protectedBase, candidateLeanReport, testMapCacheRoot);
     }
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "--candidate-lean-report FILE");
+        + "[--test-map-cache-root DIR] --candidate-lean-report FILE");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

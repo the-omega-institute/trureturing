@@ -12,7 +12,8 @@ internal sealed record BackfillInventoryValidationContext(
     RawChangeSet? Changes = null,
     Func<string, bool>? IsBaseFactAffected = null,
     RawChangeSet? CasChanges = null,
-    RawChangeSet? ProjectedStatusChanges = null);
+    RawChangeSet? ProjectedStatusChanges = null,
+    Func<string, TheoryAtomizerWithContentKinds>? ContentKindAtomizerResolver = null);
 
 internal sealed class BackfillCandidateDeltaSession
 {
@@ -87,7 +88,7 @@ internal sealed class BackfillCandidateDeltaSession
             .ToImmutableArray();
 }
 
-internal static class BackfillInventoryRule
+internal static partial class BackfillInventoryRule
 {
     private const string BackfillPath = BackfillInventoryLoader.RelativePath;
 
@@ -180,7 +181,7 @@ internal static class BackfillInventoryRule
         return EvaluateDocument(
             new BackfillInventoryValidationContext(
                 context.Current,
-                context.ForkPoint,
+                context.Baseline,
                 context.Policy,
                 context.Lean,
                 context.VerifiedScribeEmissions,
@@ -501,11 +502,14 @@ internal static class BackfillInventoryRule
                 changes: context.Changes,
                 casChanges: context.CasChanges,
                 isBaseFactAffected: context.IsBaseFactAffected,
-                projectedStatusChanges: context.ProjectedStatusChanges ?? context.Changes);
+                projectedStatusChanges: context.ProjectedStatusChanges ?? context.Changes,
+                contentKindAtomizerResolver: context.ContentKindAtomizerResolver);
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));
             }
+
+            findings.AddRange(ClassifyContentDispositionGaps(evaluation));
 
             findings.AddRange(ClassifyReceiptIntegrityGaps(evaluation));
 

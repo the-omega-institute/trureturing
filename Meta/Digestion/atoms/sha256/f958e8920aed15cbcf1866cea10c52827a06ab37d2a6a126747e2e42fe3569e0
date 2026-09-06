@@ -1,0 +1,84 @@
+# 三、实际 ξ 的这个记忆函数，可以不输入零点而直接写出
+
+沿用此前定义：
+
+$$
+\log\frac{\xi(1/(1-z))}{\xi(1)}
+=
+\sum_{n\ge1}\frac{\ell_n}{n}z^n,
+$$
+
+$$
+c_0=2\ell_1
+=
+2+\gamma_{\mathrm E}-\log(4\pi),
+$$
+
+$$
+c_n=\ell_{n+1}-2\ell_n+\ell_{n-1},
+\qquad
+r_n=\frac{c_n}{c_0}.
+$$
+
+这些是实际 ξ 在 \(s=1\) 附近的系数。Li 系数的零点表达和单位圆映射具有经典依据。([arXiv][2])
+
+定义
+
+$$
+\mathcal F_\xi(z)=1+2\sum_{n\ge1}r_nz^n.
+$$
+
+对生成函数直接求导、整理：
+
+$$
+\boxed{
+\mathcal F_\xi(z)
+=
+\frac2{c_0}
+\frac{\xi'(s)}{\xi(s)},
+\qquad
+s=\frac1{1-z}.
+}
+\tag{11}
+$$
+
+又因为
+
+$$
+\mathcal A_\xi=\frac{\mathcal F_\xi+1}{2},
+$$
+
+所以首次回返的候选生成函数为
+
+$$
+\boxed{
+\mathcal S_\xi(z)
+=
+1-\frac1{\mathcal A_\xi(z)}
+=
+\frac{\mathcal F_\xi(z)-1}{\mathcal F_\xi(z)+1}.
+}
+\tag{12}
+$$
+
+进一步写成
+
+$$
+\boxed{
+\mathcal S_\xi(z)
+=
+\frac{2\xi'(s)-c_0\xi(s)}
+{2\xi'(s)+c_0\xi(s)},
+\qquad s=\frac1{1-z}.
+}
+\tag{13}
+$$
+
+在 \(z=0\) 附近，这一定义无条件成立，并且
+
+$$
+\mathcal S_\xi(0)=0.
+$$
+
+但在尚未建立全局正实现以前，\(\kappa_n\) 只是这个解析芽的系数；不能提前把所有 \(|\kappa_n|^2\) 宣布为一套完整量子概率。
+

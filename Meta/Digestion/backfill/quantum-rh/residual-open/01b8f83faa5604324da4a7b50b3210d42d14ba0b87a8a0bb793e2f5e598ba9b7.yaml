@@ -6,6 +6,13 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Weil/ThirdOrderCumulantMatrix.third_order_cumulant_positive_matrix_reversal
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 3216d4784784c462e895c7f777e05b5188c46c8dfdd7606c62eb48adfe893650
   chain_atoms:
     - 3216d4784784c462e895c7f777e05b5188c46c8dfdd7606c62eb48adfe893650
     - 6a76e8cca3962b9ab9fc57da2e12f54015ac9cb6c20ff2fea8bcf68ea190ed8d

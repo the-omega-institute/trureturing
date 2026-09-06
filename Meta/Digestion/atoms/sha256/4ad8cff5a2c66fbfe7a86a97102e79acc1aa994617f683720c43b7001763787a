@@ -1,0 +1,23 @@
+\boxed{
+P_+(\alpha)
+===========
+
+\frac12
+\left[
+1+\operatorname{Re}(e^{-i\alpha}\gamma)
+\right].
+}
+\tag{85.2}
+
+$$
+
+这类通过混合态酉期望读取干涉相位与可见度的方案具有标准量子干涉实现；把其中的相位进一步称为“几何相位”，仍需控制动力学相位和输运条件。:contentReference[oaicite:4]{index=4}
+
+---
+
+## 定理 85.1　闭路读数的两个精确恒等式
+
+令 Hilbert–Schmidt 范数为 \(\|\cdot\|_2\)，则
+
+$$
+

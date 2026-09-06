@@ -69,7 +69,8 @@ internal static partial class ScriptTestInputDeriver
             default:
                 if (ScribeTestSymbolBinder.IsRepositoryRootExpression(
                         expression,
-                        callable.SemanticModel))
+                        callable.SemanticModel,
+                        callable.SemanticModels))
                 {
                     throw Failure(identity, "unresolved repository-rooted path expression");
                 }
@@ -327,7 +328,8 @@ internal static partial class ScriptTestInputDeriver
 
     private static IEnumerable<ExpressionSyntax> StringCollectionOperands(
         ExpressionSyntax expression,
-        SemanticModel model)
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels)
     {
         if ((model.GetTypeInfo(expression).ConvertedType ?? model.GetTypeInfo(expression).Type)?
             .SpecialType == SpecialType.System_String)
@@ -352,12 +354,12 @@ internal static partial class ScriptTestInputDeriver
         if (elements is not null)
         {
             foreach (var element in elements)
-            foreach (var operand in StringCollectionOperands(element, model))
+            foreach (var operand in StringCollectionOperands(element, model, semanticModels))
                 yield return operand;
             yield break;
         }
 
-        if (ScribeTestSymbolBinder.IsRepositoryRootExpression(expression, model))
+        if (ScribeTestSymbolBinder.IsRepositoryRootExpression(expression, model, semanticModels))
             yield return expression;
     }
 

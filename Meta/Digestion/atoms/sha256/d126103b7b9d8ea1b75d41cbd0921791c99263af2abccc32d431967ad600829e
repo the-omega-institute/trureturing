@@ -1,0 +1,60 @@
+## 定理 8.2：区块证书的组合律
+
+设先经过区块 \(I\)，再经过区块 \(J\)。则：
+
+$$
+L_{IJ}=L_I+L_J,
+$$
+
+$$
+\alpha_{IJ}=\alpha_I+\alpha_J,
+$$
+
+$$
+\beta_{IJ}
+=
+\beta_I+L_J\alpha_I+\beta_J,
+$$
+
+并且：
+
+$$
+\boxed{
+\mathcal B_{IJ}(v)
+=
+\max\left\{
+\mathcal B_I(v),\
+\mathcal B_J(v+\alpha_I)-L_Iv-\beta_I
+\right\}.
+}
+\tag{27}
+$$
+
+### 证明
+
+第一部分安全要求：
+
+$$
+Y\ge\mathcal B_I(v).
+$$
+
+进入第二部分时，状态为：
+
+$$
+Y'=Y+L_Iv+\beta_I,
+\qquad
+v'=v+\alpha_I.
+$$
+
+第二部分安全要求：
+
+$$
+Y+L_Iv+\beta_I
+\ge
+\mathcal B_J(v+\alpha_I).
+$$
+
+将两项条件合并，即得式（27）。末端参数则由直接代入得到。证毕。
+
+这条组合律保留了内部最坏状态，因此是一个真正的安全证书拼接，而不仅是数值路径拼接。
+

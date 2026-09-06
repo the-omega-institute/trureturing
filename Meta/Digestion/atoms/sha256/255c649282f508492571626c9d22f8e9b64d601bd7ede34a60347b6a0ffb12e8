@@ -1,0 +1,37 @@
+### 证明
+
+坐标变换：
+
+$$
+X=x+\frac v2,\qquad Y=\frac v2-x
+$$
+
+的 Jacobian 绝对值为一。
+
+再使用 \(p(Y)=p(x-v/2)\)、\(U^{2n}=2^nx^{2n}\)，将共同的正常数约去，即得。证毕。
+
+此外：
+
+$$
+\boxed{
+\int_{\mathbb R}\mathcal W(x,t)\,dx=\Xi(t)^2\ge0.
+}
+\tag{S5}
+$$
+
+所以 \(n=0\) 的非负性已经自动成立。
+
+前文的广义 Laguerre 判据，可以重新写成：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\int_0^\infty x^{2n}\mathcal W(x,t)\,dx\ge0
+\quad\forall n\ge0,\ t\in\mathbb R.
+}
+\tag{S6}
+$$
+
+这仍然是同一个经典判据，只是把它拆成了局部差坐标读数与整体加权积分。([arXiv][2])
+

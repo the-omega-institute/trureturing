@@ -1,0 +1,96 @@
+## 定理 2：这个高度的倒数，等于隐藏坐标的 Fisher 度量
+
+在固定 \(x,y\)、只改变 \(c\) 时，定义 Fisher 度量系数
+
+$$
+g_{cc}
+=
+\sum_{s,t}
+p_{st}\left(\frac{\partial\log p_{st}}{\partial c}\right)^2.
+$$
+
+则
+
+$$
+\boxed{
+g_{cc}
+=
+\frac1{16}\sum_{s,t}\frac1{p_{st}},
+}
+\tag{6}
+$$
+
+而且
+
+$$
+\boxed{
+h_{\mathrm{lin}}^2
+=
+\frac1{g_{cc}}
+=
+\frac{16}{\displaystyle\sum_{s,t}1/p_{st}}.
+}
+\tag{7}
+$$
+
+Fisher 度量是信息几何中的标准定义；这里要证明的是它与当前 Schur 余量的具体对应。([MDPI][1])
+
+### 证明
+
+由式（2），
+
+$$
+\frac{\partial p_{st}}{\partial c}=\frac{st}{4},
+$$
+
+立即得到式（6）。
+
+再考虑统计量向量
+
+$$
+Z=(S,T,ST)^{\mathsf T}.
+$$
+
+其协方差矩阵为
+
+$$
+\Sigma=
+\begin{pmatrix}
+1-x^2&c-xy&y-xc\\
+c-xy&1-y^2&x-yc\\
+y-xc&x-yc&1-c^2
+\end{pmatrix}.
+\tag{8}
+$$
+
+在这个完整的四状态模型中，三个中心化统计量构成全部零均值函数的基。参数 \((x,y,c)\) 的得分函数与它们互为对偶基，因此 Fisher 矩阵是
+
+$$
+g=\Sigma^{-1}.
+$$
+
+分块逆矩阵公式给出
+
+$$
+g_{cc}=
+\left(d-b^{\mathsf T}A^{-1}b\right)^{-1}.
+$$
+
+结合式（5）即得。证毕。
+
+---
+
+这得到一条很实在的几何关系：
+
+$$
+\boxed{
+\text{联合读出的正交残差}
+\times
+\text{该坐标的信息敏感度}
+=1.
+}
+\tag{9}
+$$
+
+不过，\(h_{\mathrm{lin}}^2\) **不是相关强度 \(c^2\)**。它衡量的是：新增函数 \(ST\) 相对于旧线性函数空间，还剩多少不能表示的部分。
+

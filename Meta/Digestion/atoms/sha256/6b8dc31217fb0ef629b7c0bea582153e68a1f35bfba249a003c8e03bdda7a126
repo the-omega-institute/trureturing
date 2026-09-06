@@ -1,0 +1,45 @@
+## 定义 S2：除数相位
+
+对正整数 \(k\)，定义：
+
+$$
+\boxed{
+\mathcal D_k(t)
+=
+\sum_{ab=k}\left(\frac ba\right)^{it}
+=
+\sum_{a\mid k}
+\cos\!\left(t\log\frac{k}{a^2}\right).
+}
+\tag{S15}
+$$
+
+它是实数，并满足：
+
+$$
+|\mathcal D_k(t)|\le d(k),
+$$
+
+其中 \(d(k)\) 为除数个数。
+
+再定义：
+
+$$
+z_k(x)=2\pi k e^{2x},
+$$
+
+以及：
+
+$$
+\boxed{
+\mathscr B_t(z)
+=
+(z^2+9)K_{it}(z)
++
+6z\,\frac{\partial}{\partial z}K_{it}(z).
+}
+\tag{S16}
+$$
+
+这里 \(K_\nu\) 是第二类修正 Bessel 函数，不是前文的滤波算子。
+

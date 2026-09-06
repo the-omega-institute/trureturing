@@ -1,0 +1,40 @@
+**充分性。**
+
+令 \(A^+\) 为 Moore–Penrose 逆，在 \(\operatorname{ran}A\) 上定义
+
+$$
+\widetilde L_j=AL_jA^+.
+$$
+
+因为
+
+$$
+I-A^+A
+$$
+
+的像位于 \(\ker A\)，由式（31），
+
+$$
+AL_j(I-A^+A)=0.
+$$
+
+所以
+
+$$
+AL_j=\widetilde L_jA.
+$$
+
+定义
+
+$$
+\widetilde{\mathcal E}(\sigma)
+=
+\sum_j\widetilde L_j\sigma\widetilde L_j^*,
+$$
+
+即可得到式（30）。证毕。
+
+这里证明的是完全正兼容性。若还要求保迹，必须另外检查相应归一化条件，不能自动继承。
+
+---
+

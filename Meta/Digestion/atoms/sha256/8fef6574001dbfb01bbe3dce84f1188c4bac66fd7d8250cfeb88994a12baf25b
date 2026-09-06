@@ -1,0 +1,21 @@
+## 定义 9.1　Robin 对数余量
+
+对 \(n\ge3\)，定义：
+
+$$
+\boxed{
+\Delta(n)
+=
+\gamma+\ln\ln E(n)-W(n).
+}
+\tag{9.3}
+$$
+
+由于 \(E(n)=\ln n\)，也就是：
+
+$$
+\Delta(n)
+=
+\gamma+\ln\ln\ln n-\ln\frac{\sigma(n)}n.
+$$
+

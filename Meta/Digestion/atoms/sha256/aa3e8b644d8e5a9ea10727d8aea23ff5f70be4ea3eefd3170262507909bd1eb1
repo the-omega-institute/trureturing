@@ -1,0 +1,71 @@
+# 二、把实际二点相关写成一个真正的相干核
+
+定义模态集合
+
+$$
+\mathcal I_N
+=
+\{0\}
+\cup
+\{(q,a):2\le q\le N,\ 1\le a<q,\ (a,q)=1\}.
+$$
+
+其中
+
+$$
+\theta_0=0,\qquad
+\theta_{q,a}=\frac aq.
+$$
+
+定义合成矩阵
+
+$$
+\boxed{
+A_{n,\alpha}=e(n\theta_\alpha),
+\qquad
+n\in\mathcal N_X,\ \alpha\in\mathcal I_N.
+}
+\tag{5}
+$$
+
+定义模态振幅向量 \(b(\tau)\)：
+
+$$
+b_0(\tau)=\lambda_{1,N}(\tau)-1,
+$$
+
+$$
+b_{q,a}(\tau)=\lambda_{q,N}(\tau).
+$$
+
+再令实际算术向量
+
+$$
+f_n=\Lambda(n)-1.
+$$
+
+由定理 1，
+
+$$
+\boxed{
+Ab(\tau)=f
+\qquad\text{对所有 }\tau\in\mathbb R.
+}
+\tag{6}
+$$
+
+所以实际相关核为
+
+$$
+\boxed{
+K_X^{\mathrm{arith}}
+=
+ff^*
+=
+A\,b(\tau)b(\tau)^*A^*.
+}
+\tag{7}
+$$
+
+这是一条精确的有限矩阵等式。
+

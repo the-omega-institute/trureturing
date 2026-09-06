@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fa5a838eaf3a40ff0f857cd8a01c2cd16cf8791ae2ddf363564924611be2bcd2
+  normalized_sha256: sha256:fa5a838eaf3a40ff0f857cd8a01c2cd16cf8791ae2ddf363564924611be2bcd2
+cas_ref: sha256:fa5a838eaf3a40ff0f857cd8a01c2cd16cf8791ae2ddf363564924611be2bcd2
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/RefinementGeometry/StableObservationInverseLimit.stable_observation_inverse_limit_laws
+    target_statement_id: sha256:4390915ac7955bd1c8d761db5becd5de23c5cac87b4501279c4dc0f1792997c7
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementGeometry/StableObservationInverseLimit.stable_observation_inverse_limit_laws
+      definition_sha256: sha256:2ef18305b05511878f02a43ce0c98b09df5f4e72efbb4e39886afaa25f3c6fcd
+      emission_sha256: sha256:8458ea803912d2734fc47d17203dc31e54b68190b5ac0d6e0e979a6f691f68d3
+  unresolved_subitems: []

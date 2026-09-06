@@ -1,0 +1,65 @@
+# 七、欧拉常数控制有限中心，但它不能消除发散的概率宽度
+
+由式（T15）、（T23）：
+
+$$
+\boxed{
+\mathbb E[X_\sigma]
+=
+\frac{\xi'(\sigma)}{\xi(\sigma)}
+-\frac1{\sigma-1}.
+}
+\tag{T25}
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{\sigma\to1}
+\left(
+\mathbb E[X_\sigma]
++\frac1{\sigma-1}
+\right)
+=
+c,
+}
+$$
+
+其中：
+
+$$
+\boxed{
+c=
+1+\frac{\gamma_{\mathrm E}}2
+-\frac12\log4\pi.
+}
+\tag{T26}
+$$
+
+从 Gamma—素数分解也能独立算出：
+
+$$
+\mathbb E[X_\sigma]
+=
+\frac12\psi_\Gamma\!\left(1+\frac{\sigma}{2}\right)
+-\frac12\log\pi
++\frac{\zeta'(\sigma)}{\zeta(\sigma)}.
+$$
+
+利用：
+
+$$
+\frac{\zeta'(1+\lambda)}{\zeta(1+\lambda)}
+=
+-\frac1\lambda+\gamma_{\mathrm E}+O(\lambda),
+$$
+
+以及：
+
+$$
+\psi_\Gamma(3/2)=2-\gamma_{\mathrm E}-2\log2,
+$$
+
+就恢复式（T26）。这些 Laurent 与 digamma 特殊值均为标准公式。([DLMF][6])
+

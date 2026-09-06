@@ -1,0 +1,81 @@
+## 定理 175.1　内部接口不能识别 \(e\)
+
+对任意 \(e,e'\)，以下内部读数完全相同。
+
+量子态演化：
+
+$$
+\boxed{
+e^{-iH_e\tau/\hbar}\rho e^{iH_e\tau/\hbar}
+=
+e^{-ih\tau/\hbar}\rho e^{ih\tau/\hbar}.
+}
+\tag{175.2}
+$$
+
+归一化 Gibbs 态：
+
+$$
+\boxed{
+\frac{e^{-\beta H_e}}{\operatorname{Tr}e^{-\beta H_e}}
+=
+\frac{e^{-\beta h}}{\operatorname{Tr}e^{-\beta h}}.
+}
+\tag{175.3}
+$$
+
+循环控制的可提取功：
+
+$$
+\boxed{
+W_{H_e}(\rho,U)=W_h(\rho,U).
+}
+\tag{175.4}
+$$
+
+### 证明
+
+式（175.2）中的 \(e\) 仅产生相消的整体相位。
+
+式（175.3）中的 \(e^{-\beta e}\) 在分子、分母中相消。
+
+式（175.4）中，标量项贡献
+
+$$
+e\operatorname{Tr}\rho-e\operatorname{Tr}(U\rho U^\dagger)=0.
+$$
+
+∎
+
+### 结论
+
+即使一个观察者精确知道：
+
+$$
+\text{全部内部能级差},
+$$
+
+$$
+\text{全部内部相位演化},
+$$
+
+$$
+\text{全部归一化热态},
+$$
+
+也没有因此唯一确定 \(e\)。
+
+所以：
+
+$$
+\boxed{
+\text{内部时间与热力学完全已知}
+\not\Rightarrow
+\text{完整静止能量已经已知}.
+}
+$$
+
+如果质量与完整静止能量有关，这就是必须补足的观察接口，而不是可以用命名忽略的常数。
+
+---
+

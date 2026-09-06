@@ -1,0 +1,45 @@
+## 7.2 黄金粗粒化不自动保持转移
+
+沿用此前的黄金观察：
+
+$$
+\mathcal G(n)
+=
+\prod_pp^{G_{L_p}-1},
+$$
+
+其中：
+
+$$
+G_{L_p}\le v_p(n)+1<G_{L_p+1}.
+$$
+
+有：
+
+$$
+\mathcal G(10080)=\mathcal G(20160)=5040.
+$$
+
+但对两者都执行乘以 \(2\)：
+
+$$
+\mathcal G(2\cdot10080)=5040,
+$$
+
+$$
+\mathcal G(2\cdot20160)=40320.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal G(n)=\mathcal G(m)
+\not\Rightarrow
+\mathcal G(2n)=\mathcal G(2m).
+}
+\tag{17}
+$$
+
+也就是说，两个当前看起来相同的黄金状态，下一步可能产生不同的观察结果。
+

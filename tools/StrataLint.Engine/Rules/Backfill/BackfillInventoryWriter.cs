@@ -32,6 +32,7 @@ internal static class BackfillInventoryWriter
         AtomScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
         AtomQuarantine(builder, entry.Receipts.Quarantine);
+        Nonpropositional(builder, entry.Receipts.Nonpropositional, "  ");
         CoverDisposition(builder, entry.Receipts.CoverDisposition, "  ");
         if (entry.Receipts.ChainAtoms.Length > 0)
         {
@@ -114,6 +115,7 @@ internal static class BackfillInventoryWriter
         ScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "          unresolved_subitems", entry.Receipts.UnresolvedSubitems, 12);
         Quarantine(builder, entry.Receipts.Quarantine);
+        Nonpropositional(builder, entry.Receipts.Nonpropositional, "          ");
         CoverDisposition(builder, entry.Receipts.CoverDisposition, "          ");
         Strings(builder, "          chain_atoms", entry.Receipts.ChainAtoms, 12);
         if (entry.Receipts.TailAuthorization is { } tail)
@@ -218,12 +220,7 @@ internal static class BackfillInventoryWriter
         Line(builder, "  quarantine:");
         Line(builder, $"    justification: {Scalar(quarantine.Justification)}");
         Line(builder, $"    reentry_condition: {Scalar(quarantine.ReentryCondition)}");
-        // 仅在有值时输出:既有条目无 blocker_class,若无条件写出会改动其字节,
-        // 导致全量账本 churn 并连带触发 SL-008 材料漂移。
-        if (quarantine.BlockerClass is { } blockerClass)
-        {
-            Line(builder, $"    blocker_class: {Scalar(blockerClass)}");
-        }
+        Line(builder, $"    blocker_class: {Scalar(quarantine.BlockerClass)}");
     }
 
     private static void Quarantine(StringBuilder builder, DigestionQuarantine? quarantine)
@@ -236,10 +233,16 @@ internal static class BackfillInventoryWriter
         Line(builder, "          quarantine:");
         Line(builder, $"            justification: {Scalar(quarantine.Justification)}");
         Line(builder, $"            reentry_condition: {Scalar(quarantine.ReentryCondition)}");
-        if (quarantine.BlockerClass is { } nestedBlockerClass)
-        {
-            Line(builder, $"            blocker_class: {Scalar(nestedBlockerClass)}");
-        }
+        Line(builder, $"            blocker_class: {Scalar(quarantine.BlockerClass)}");
+    }
+
+    private static void Nonpropositional(StringBuilder builder, DigestionNonpropositional? receipt, string indent)
+    {
+        if (receipt is null) return;
+        Line(builder, indent + "nonpropositional:");
+        Line(builder, indent + "  justification: " + Scalar(receipt.Justification));
+        Line(builder, indent + "  previous_atom_id: " + NullableScalar(receipt.PreviousAtomId));
+        Line(builder, indent + "  next_atom_id: " + NullableScalar(receipt.NextAtomId));
     }
 
     private static void CoverDisposition(

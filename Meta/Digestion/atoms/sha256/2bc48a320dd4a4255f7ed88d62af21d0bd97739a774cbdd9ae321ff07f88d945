@@ -1,0 +1,57 @@
+## 定理 178.2　热态参数信息与力响应的联系
+
+关于参数 \(\nu\)，该 Gibbs 族的量子 Fisher 信息为
+
+$$
+\boxed{
+J_\nu
+=
+\beta^2\operatorname{Var}_{\rho_\nu}(H_{\mathrm{rest}})
+=
+-\beta\mathcal F''(\nu).
+}
+\tag{178.6}
+$$
+
+### 证明
+
+全部 \(\rho_\nu\) 在同一能量基底中对角。其概率满足
+
+$$
+\partial_\nu\log p_i
+=
+-\beta(E_i-\langle E\rangle_\nu).
+$$
+
+因此经典 Fisher 信息为 \(\beta^2\operatorname{Var}(E)\)。能量测量达到该可交换态族的量子 Fisher 信息。∎
+
+这种 Gibbs 参数估计与 Hamiltonian 不确定性的联系，是量子热计量中的标准结构。这里因为参数只缩放同一个 Hamiltonian，结果恰好化为普通方差；非交换参数模型需要更一般的公式。([APS Journals][6])
+
+### 两个不同的“时间信息”
+
+尽管 \(J_\nu\) 可以非零，固定 \(\nu\) 后，
+
+$$
+e^{-it\nu H_{\mathrm{rest}}/\hbar}
+\rho_\nu
+e^{it\nu H_{\mathrm{rest}}/\hbar}
+=
+\rho_\nu.
+$$
+
+所以该孤立 Gibbs 态本身不通过状态变化记录经过了多少时间。
+
+$$
+\boxed{
+\text{不同平衡制备能区分钟速参数}
+\ne
+\text{同一个平衡态本身会持续走时}.
+}
+$$
+
+实际钟还需要相干、非平衡准备或与其他系统的关系读数。时间相位资源与工作资源不能被当成同一个量。([APS Journals][7])
+
+此外，式（178.4）是平衡或准静态的平均力。若结构尚未来得及重新平衡，不能直接把 \(\mathcal F\) 当成完整动力 Hamiltonian；记忆、耗散及热交换仍须保留。
+
+---
+

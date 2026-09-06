@@ -1,0 +1,28 @@
+## 定理二：什么时候投影后的几何能够独立执行？
+
+对状态映射 \(T:X\to X\) 与观察 \(\pi:X\to Y\)，存在一个投影后的动力学：
+
+$$
+\overline T:\pi(X)\to\pi(X)
+$$
+
+使：
+
+$$
+\boxed{
+\pi\circ T=\overline T\circ\pi
+}
+\tag{10}
+$$
+
+当且仅当：
+
+$$
+\boxed{
+\pi(x)=\pi(y)
+\Longrightarrow
+\pi(Tx)=\pi(Ty).
+}
+\tag{11}
+$$
+

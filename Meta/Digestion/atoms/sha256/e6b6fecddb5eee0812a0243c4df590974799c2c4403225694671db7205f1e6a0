@@ -1,0 +1,13 @@
+## 定理 L1：非负平方展开
+
+$$
+\boxed{
+\mathcal H_q(r)
+=
+\sum_{k=0}^{\infty}b_{q,k}r^k,
+\qquad
+b_{q,k}\ge0.
+}
+\tag{L10}
+$$
+

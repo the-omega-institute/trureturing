@@ -1,0 +1,120 @@
+## 定理 3：逐项消失与连续正核极限
+
+首先，
+
+$$
+\boxed{
+\sup_{n,m}|\mathscr P_X(n,m)|=O(X^{-1}).
+}
+\tag{18}
+$$
+
+但是，对固定实数 \(s,t\)，
+
+$$
+\boxed{
+X\,\mathscr P_X(\lfloor Xs\rfloor,\lfloor Xt\rfloor)
+\longrightarrow
+\Gamma(s,t),
+}
+\tag{19}
+$$
+
+其中
+
+$$
+\boxed{
+\Gamma(s,t)
+=
+2\mathfrak a
+\int_{1/8}^{1/4}
+\cos\bigl(2\pi(s-t)\xi\bigr)\,d\xi.
+}
+\tag{20}
+$$
+
+收敛在 \(s,t\) 的固定紧集上一致。
+
+当 \(s\ne t\) 时，
+
+$$
+\boxed{
+\Gamma(s,t)
+=
+\mathfrak a\,
+\frac{
+\sin\bigl(\frac{\pi}{2}(s-t)\bigr)
+-
+\sin\bigl(\frac{\pi}{4}(s-t)\bigr)
+}{
+\pi(s-t)
+}.
+}
+\tag{21}
+$$
+
+对角值为
+
+$$
+\Gamma(s,s)=\frac{\mathfrak a}{4}.
+$$
+
+### 证明
+
+由引理 1，
+
+$$
+\sum_{4X<q\le8X}\alpha(q)=O(X).
+$$
+
+所以
+
+$$
+|\mathscr P_X(n,m)|
+\le
+2\sum_{4X<q\le8X}\frac{\alpha(q)}{q^2}
+=O(X^{-1}),
+$$
+
+证明式（18）。
+
+再写成
+
+$$
+\begin{aligned}
+&X\mathscr P_X(\lfloor Xs\rfloor,\lfloor Xt\rfloor)\\
+&\quad=
+\frac2X
+\sum_{4X<q\le8X}
+\frac{\alpha(q)}{(q/X)^2}
+\cos\left(
+2\pi\frac{(\lfloor Xs\rfloor-\lfloor Xt\rfloor)/X}{q/X}
+\right).
+\end{aligned}
+$$
+
+由式（15），加权测度
+
+$$
+\frac1X\sum_{4X<q\le8X}\alpha(q)\delta_{q/X}
+$$
+
+弱收敛到
+
+$$
+\mathfrak a\,\mathbf1_{[4,8]}(v)\,dv.
+$$
+
+于是极限为
+
+$$
+2\mathfrak a\int_4^8
+\frac{\cos(2\pi(s-t)/v)}{v^2}\,dv.
+$$
+
+令 \(\xi=1/v\)，得到式（20）。
+
+被积函数在固定紧参数集上构成一致有界、等度连续族，因此收敛也在该参数集上一致。证毕。
+
+---
+

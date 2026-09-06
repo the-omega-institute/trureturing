@@ -1,0 +1,46 @@
+## 推论 96.1　洛伦兹符号的稳健证书
+
+若
+
+$$
+\boxed{
+\widehat a>\epsilon,
+}
+\tag{96.4}
+$$
+
+且
+
+$$
+\boxed{
+\lambda_{\min}(\widehat C)>
+\frac{2d\,\epsilon}{h^2},
+}
+\tag{96.5}
+$$
+
+则真实参数满足
+
+$$
+a>0,\qquad C>0.
+$$
+
+因而在二次模型前提下，真实 \(g\) 确有一个负方向和 \(d\) 个正方向。
+
+### 证明
+
+第一项由式（96.1）。
+
+对任意单位向量 \(x\)，
+
+$$
+x^\mathsf TCx
+\ge
+\lambda_{\min}(\widehat C)
+-
+\|\widehat C-C\|_{\mathrm{op}}
+>0.
+$$
+
+∎
+

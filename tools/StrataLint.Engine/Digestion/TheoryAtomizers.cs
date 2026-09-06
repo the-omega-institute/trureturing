@@ -50,9 +50,23 @@ internal sealed record DigestionAtom(
 
 internal sealed record DigestionSlice(bool IsClaim, ImmutableArray<byte> RawBytes);
 
-internal sealed record DigestionClausePlan(
-    DigestionAtom Parent,
-    ImmutableArray<DigestionAtom> Children);
+internal sealed record DigestionClausePlan
+{
+    internal DigestionAtom Parent { get; }
+    internal ImmutableArray<DigestionSegment> Segments { get; }
+    internal ImmutableArray<DigestionAtom> Children { get; }
+
+    internal DigestionClausePlan(DigestionAtom parent, ImmutableArray<DigestionAtom> children)
+        : this(parent, children.Select(static child => new DigestionSegment(DigestionSegmentKind.Claim, child)).ToImmutableArray()) { }
+
+    internal DigestionClausePlan(DigestionAtom parent, ImmutableArray<DigestionSegment> segments)
+    {
+        Parent = parent;
+        Segments = segments;
+        Children = segments.Where(static segment => segment.Kind == DigestionSegmentKind.Claim)
+            .Select(static segment => segment.Atom).ToImmutableArray();
+    }
+}
 
 internal enum GenreRegistryCheckKind
 {
@@ -318,7 +332,7 @@ internal sealed class NumberedClaims
 
         var token = unknown.Groups["kind"].Value;
         unregistered.Add(token);
-        return token;
+        return DigestionContentDisposition.Unregistered(token);
     }
 
     private string Kind(string value) =>
@@ -328,20 +342,23 @@ internal sealed class NumberedClaims
 
 internal static class GictAtomizer
 {
+    internal const string AppendixKind = "appendix";
+
     private const string NumberPattern = "[0-9]+\\.[0-9]+";
     private static readonly Regex AppendixClaimPattern = new(
         "^\\*\\*(?<number>E\\.[0-9]+)\\s+[^\\r\\n*]+\\*\\*",
         RegexOptions.CultureInvariant);
 
     internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
-        Atomize(bytes, rules, contentKinds: null);
+        AtomizeWithContentKinds(bytes, rules, contentKinds: null);
 
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
         ReadOnlyMemory<byte> bytes,
         TheoryAtomizerRules rules) =>
-        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+        AtomizerRegistry.CaptureContentKinds(kinds =>
+            AtomizeWithContentKinds(bytes.Span, rules, kinds));
 
-    private static AtomizedTheoryDocument Atomize(
+    internal static AtomizedTheoryDocument AtomizeWithContentKinds(
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules rules,
         IDictionary<string, string>? contentKinds)
@@ -362,7 +379,7 @@ internal static class GictAtomizer
         var appendix = AppendixClaimPattern.Match(paragraph);
         if (appendix.Success)
         {
-            return "appendix/" + appendix.Groups["number"].Value;
+            return AppendixKind + "/" + appendix.Groups["number"].Value;
         }
 
         return claims.Identify(paragraph)
@@ -378,19 +395,23 @@ internal static class GictAtomizer
 
 internal static class PeriodicTreeAtomizer
 {
+    internal const string CoarseKind = "coarse";
+    internal const string SectionKind = "section";
+
     private static readonly Regex SectionHeadingPattern = new(
         "^(?<number>[0-9]+)\\.\\s+",
         RegexOptions.CultureInvariant);
 
     internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
-        Atomize(bytes, rules, contentKinds: null);
+        AtomizeWithContentKinds(bytes, rules, contentKinds: null);
 
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
         ReadOnlyMemory<byte> bytes,
         TheoryAtomizerRules rules) =>
-        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+        AtomizerRegistry.CaptureContentKinds(kinds =>
+            AtomizeWithContentKinds(bytes.Span, rules, kinds));
 
-    private static AtomizedTheoryDocument Atomize(
+    internal static AtomizedTheoryDocument AtomizeWithContentKinds(
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules _,
         IDictionary<string, string>? contentKinds)
@@ -413,7 +434,7 @@ internal static class PeriodicTreeAtomizer
             rawBytes,
             DigestionFingerprint.ComputeOpaque(rawBytes.AsSpan()),
             []);
-        AtomizerRegistry.RecordContentKind(contentKinds, atom, "coarse");
+        AtomizerRegistry.RecordContentKind(contentKinds, atom, CoarseKind);
         return new AtomizedTheoryDocument(
             [atom],
             [new DigestionSlice(true, rawBytes)],
@@ -423,26 +444,32 @@ internal static class PeriodicTreeAtomizer
     private static string? IdentifyHeading(string heading)
     {
         var match = SectionHeadingPattern.Match(heading);
-        return match.Success ? "section/" + match.Groups["number"].Value : null;
+        return match.Success ? SectionKind + "/" + match.Groups["number"].Value : null;
     }
 }
 
 internal static class PzgAtomizer
 {
+    internal const string MetadataKind = "metadata";
+    internal const string OpenKind = "open";
+    internal const string RemarkKind = "remark";
+    internal const string TraceNoteKind = "trace-note";
+
     private const string NumberPattern = "[0-9]+\\.[0-9]+(?:\\.[0-9]+)?[′″]*";
     private static readonly Regex OpenPattern = new(
         "^\\*\\*(?<id>O-[0-9]+)\\*\\*",
         RegexOptions.CultureInvariant);
 
     internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
-        Atomize(bytes, rules, contentKinds: null);
+        AtomizeWithContentKinds(bytes, rules, contentKinds: null);
 
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
         ReadOnlyMemory<byte> bytes,
         TheoryAtomizerRules rules) =>
-        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+        AtomizerRegistry.CaptureContentKinds(kinds =>
+            AtomizeWithContentKinds(bytes.Span, rules, kinds));
 
-    private static AtomizedTheoryDocument Atomize(
+    internal static AtomizedTheoryDocument AtomizeWithContentKinds(
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules rules,
         IDictionary<string, string>? contentKinds)
@@ -456,7 +483,7 @@ internal static class PzgAtomizer
             identifyHeading: heading => IdentifyHeading(heading, rules),
             contentKinds: contentKinds);
         var clausePlans = document.Claims
-            .Select(PlanClauses)
+            .Select(DigestionDecomposition.PlanClauses)
             .Where(static plan => plan is not null)
             .Select(static plan => plan!)
             .ToImmutableArray();
@@ -468,89 +495,6 @@ internal static class PzgAtomizer
             document.GenreRegistryCheck);
     }
 
-    // generic-v1 复用同一分解(GenericAtomizer.Atomize):子句语义跨方言一致,
-    // 执法侧(RequireDecompositionBeforeNewAbsorption)对全部方言生效,生产侧也必须。
-    internal static DigestionClausePlan? PlanClauses(DigestionAtom parent)
-    {
-        var text = Encoding.UTF8.GetString(parent.RawBytes.AsSpan());
-        var lines = SourceLines(text);
-        var explicitStarts = lines
-            .Skip(1)
-            .Where(static line => line.Text.StartsWith("**", StringComparison.Ordinal))
-            .Select(static line => line.Start)
-            .ToArray();
-        int[] clauseStarts;
-        if (explicitStarts.Length > 0)
-        {
-            clauseStarts = [0, .. explicitStarts];
-        }
-        else
-        {
-            var listStarts = lines
-                .Where(static line => line.Text.StartsWith("- ", StringComparison.Ordinal)
-                    || line.Text.StartsWith("* ", StringComparison.Ordinal))
-                .Select(static line => line.Start)
-                .ToArray();
-            if (listStarts.Length < 2)
-            {
-                return null;
-            }
-
-            clauseStarts = [0, .. listStarts.Skip(1)];
-        }
-
-        var children = ImmutableArray.CreateBuilder<DigestionAtom>(clauseStarts.Length);
-        for (var index = 0; index < clauseStarts.Length; index++)
-        {
-            var relativeStart = MarkdownAstAtomizer.ByteOffset(text, clauseStarts[index]);
-            var relativeEnd = index + 1 == clauseStarts.Length
-                ? parent.RawBytes.Length
-                : MarkdownAstAtomizer.ByteOffset(text, clauseStarts[index + 1]);
-            var childBytes = parent.RawBytes[relativeStart..relativeEnd];
-            children.Add(new DigestionAtom(
-                parent.StartByte + relativeStart,
-                parent.StartByte + relativeEnd,
-                childBytes,
-                DigestionFingerprint.Compute(childBytes.AsSpan()),
-                parent.Context,
-                DigestionAtomStatusMarker.Parse(childBytes.AsSpan())));
-        }
-
-        return new DigestionClausePlan(parent, children.MoveToImmutable());
-    }
-
-    private static ImmutableArray<PzgSourceLine> SourceLines(string text)
-    {
-        var lines = ImmutableArray.CreateBuilder<PzgSourceLine>();
-        var offset = 0;
-        while (offset < text.Length)
-        {
-            var lineEnd = text.IndexOfAny(['\r', '\n'], offset);
-            if (lineEnd < 0)
-            {
-                lineEnd = text.Length;
-            }
-
-            var line = text[offset..lineEnd];
-            var leadingWhitespace = line.Length - line.TrimStart().Length;
-            if (!string.IsNullOrWhiteSpace(line))
-            {
-                lines.Add(new PzgSourceLine(offset + leadingWhitespace, line.TrimStart()));
-            }
-
-            while (lineEnd < text.Length && text[lineEnd] is '\r' or '\n')
-            {
-                lineEnd++;
-            }
-
-            offset = lineEnd;
-        }
-
-        return lines.ToImmutable();
-    }
-
-    private sealed record PzgSourceLine(int Start, string Text);
-
     private static string? Identify(string paragraph, TheoryAtomizerRules rules, NumberedClaims claims)
     {
         var trace = Regex.Match(
@@ -560,13 +504,13 @@ internal static class PzgAtomizer
             RegexOptions.CultureInvariant);
         if (trace.Success)
         {
-            return "trace-note/" + trace.Groups["number"].Value;
+            return TraceNoteKind + "/" + trace.Groups["number"].Value;
         }
 
         var open = OpenPattern.Match(paragraph);
         if (open.Success)
         {
-            return "open/" + open.Groups["id"].Value;
+            return OpenKind + "/" + open.Groups["id"].Value;
         }
 
         return claims.Identify(paragraph);
@@ -582,7 +526,7 @@ internal static class PzgAtomizer
             RegexOptions.CultureInvariant);
         if (supplement.Success)
         {
-            return "metadata/supplement/" + supplement.Groups["version"].Value;
+            return MetadataKind + "/supplement/" + supplement.Groups["version"].Value;
         }
 
         var remark = rules.PzgGenres
@@ -595,7 +539,7 @@ internal static class PzgAtomizer
             .FirstOrDefault(static match => match.Success);
         if (remark is { Success: true })
         {
-            return "remark/" + remark.Groups["range"].Value
+            return RemarkKind + "/" + remark.Groups["range"].Value
                 .Replace('–', '-')
                 .Replace('—', '-');
         }

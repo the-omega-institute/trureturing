@@ -1,0 +1,48 @@
+# 一、先把上一轮的剩余积分变成有限算式
+
+沿用：
+
+$$
+E(n)=\ln n,\qquad
+W(n)=\ln\frac{\sigma(n)}n.
+$$
+
+上一轮定义了：
+
+$$
+\mathcal P_{5040}(\lambda)
+=
+\max_{a\in\mathscr A_>}
+\left[W(N(a))-\lambda E(N(a))\right],
+$$
+
+其中 \(\mathscr A_>\) 是对应整数大于 \(5040\) 的非增素数指数分拆。
+
+与其比较的连续压力为：
+
+$$
+\mathcal H(\lambda)
+=
+\max_{E\ge\ln5184}
+\left[\gamma+\ln\ln E-\lambda E\right].
+$$
+
+记：
+
+$$
+\mathcal G(\lambda)
+=
+\mathcal H(\lambda)-\mathcal P_{5040}(\lambda).
+$$
+
+此前的归约给出：
+
+$$
+\mathrm{RH}
+\iff
+\mathcal G(\lambda)>0
+\quad\forall\lambda>0.
+$$
+
+其数论起点仍是 Robin 判据，不是由最优化语言自动产生的新结论。([American Institute of Mathematics][1])
+

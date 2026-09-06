@@ -1,0 +1,29 @@
+## 修复 B：持续实施物理监视
+
+实际过程改成
+
+$$
+\boxed{
+\Phi_\delta
+=
+\mathcal P\circ\mathcal U_\delta\circ\mathcal P.
+}
+\tag{230.1}
+$$
+
+它满足
+
+$$
+\mathcal P\Phi_\delta=\Phi_\delta,
+\qquad
+\Phi_\delta\mathcal P=\Phi_\delta.
+$$
+
+因此在当前分块状态空间上具有精确下降；其高频极限进一步给出 Zeno 动力学。
+
+$$
+\boxed{
+\text{模型未必知道更多，而是实际过程被限制了}.
+}
+$$
+

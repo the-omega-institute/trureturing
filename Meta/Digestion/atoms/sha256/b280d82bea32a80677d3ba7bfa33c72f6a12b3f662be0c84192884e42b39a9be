@@ -1,0 +1,4 @@
+## 〇　G-c 闭合后的事实与问题本质
+
+G-c(增订三十三…三十六,#5427/#5445/#5465/#5568)在 kernel 中给出 `germLocalFactor_two_has_zero_near_candidate : ∃ z ∈ Metric.ball c (1/10⁸), germLocalFactor z 2 = 0`,c = ⟨0.238153…, 5.256712…⟩。c.re 落在黄金窗口 (1/(2φ³), 1/φ²) = (0.118034, 0.381966) 内且在拉回线 Re s = 1/(2φ²) = 0.190983 **之上**。由 G-g-5(`golden_third_residual_eq_zero_iff_exists_local_factor_zero`,Re s > 1/φ⁵)与冻结三阶分解,延拓 germ 在该球内有一个无条件的线外窗口零点——这正是增订十/十五/十七/二十一把「窗口零点 ⟺ RH」修正为 G-g 形态的原因。**问题本质**:G-c 只给出球内一个存在性点;下一条有 kernel 内容的边,是刻画这个零点沿冻结缩放定理生成的整条素数轨道相对窗口与拉回线的位置,而不是复述零点或复制证书。
+

@@ -9,6 +9,9 @@ coverage_gids:
     target_statement_id: sha256:0915061fdce78dc64a2a0c1db7dc5ec24ddb614cfd7dece77507d444d05f7b6f
 receipts:
   scribe:
+    - gid: D5/S3/Analytic/Dilation/MellinDilationFlow.mellin_eq_fourier_on_dilation_flow
+      definition_sha256: sha256:1af4d05acb1fcc8f392d7d86cc2bc8f8b3725afd7798d2cbd8b10e3d7bcf6aea
+      emission_sha256: sha256:c509b8252f71527175d38116c41e66d054dc6f0aaa99edcda64b61b18859b33f
     - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
       definition_sha256: sha256:268a66fbf2c27762c3b2f461b61e5eed199b91174f0caa6af19e27380105ca3e
       emission_sha256: sha256:4605fafacf96674d7085bcd33068eea6c707419a45a1d0549e920818620c522e

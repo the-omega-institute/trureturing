@@ -1,0 +1,40 @@
+## 定义 1：半整数区间上的有限读出
+
+对 \(k=X,\ldots,2X-1\)，定义
+
+$$
+y_{2(k-X)}(v)
+=
+\sum_{k<n\le2k}v_n,
+$$
+
+$$
+y_{2(k-X)+1}(v)
+=
+\sum_{k<n\le2k+1}v_n.
+$$
+
+记
+
+$$
+R_Xv
+=
+\bigl(y_0(v),\ldots,y_{2X-1}(v)\bigr)^{\mathsf T}.
+$$
+
+再定义正权重
+
+$$
+\boxed{
+d_j
+=
+\frac1{X+j/2}
+-
+\frac1{X+(j+1)/2},
+\qquad 0\le j<2X.
+}
+\tag{2}
+$$
+
+令 \(D_X=\operatorname{diag}(d_0,\ldots,d_{2X-1})\)。
+

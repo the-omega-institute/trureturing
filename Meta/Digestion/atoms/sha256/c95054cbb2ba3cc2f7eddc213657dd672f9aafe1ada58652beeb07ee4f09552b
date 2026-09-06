@@ -1,0 +1,2 @@
+**候签定理 6.223(Thue–Morse 约化阿贝尔复杂度的奇指标递推)**〔open;落 `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd`;新定理,`FromRepo`,Describe 以 Campbell–Currie–Rampersad 2026 为猜想出处(arXiv:2509.16034 作语境注)〕。以零基 `thueMorse s`(s 的二进制 1 的个数之奇偶,对应原文 t_{s+1})定义 Thue–Morse 词;`reducedParikh length start` 为起点 start、长 length 的因子经交替段压缩后的 Parikh 向量;`reducedAbelianClasses length` 为全体起点所见此类向量之有限集,R(length) 为其基数。则 `∀ n : ℕ, R (2 * n + 1) = R (n + 1)`。
+

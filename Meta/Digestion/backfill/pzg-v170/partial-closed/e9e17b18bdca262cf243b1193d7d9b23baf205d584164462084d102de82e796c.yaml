@@ -12,6 +12,18 @@ coverage_gids:
   - gid: D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
     target_statement_id: sha256:c7ffb59fb227f2a9f999119e6f1df6eba4167d0d000917bc7f1cf931e508d5da
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Midline/AddressableCoefficientFactorization.addressable_coefficient_factorization
+      definition_sha256: sha256:9231f723942dc15e78998c3f6214b8bcaba76fb2a4b4f870d5db2736f5294d07
+      emission_sha256: sha256:3d248071770c6a2a76ac650c573f7dd8158399606b1cc2a2b89c3a959893000b
+    - gid: D5/S3/Midline/OffLineCoefficientScaling.off_line_coefficient_scaling_spec
+      definition_sha256: sha256:b246d61a8473d9ab5ba096f35159a00e3319994063e0234893df3983e53ddc1c
+      emission_sha256: sha256:4aa0c729e434b233881ec10ecded811b81a0ec259962988c232b1840e4856885
+    - gid: D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
+      definition_sha256: sha256:2bbe6ad817ba1e4a0d4be2f155acbffd3b4cd1b9e6a71459269ab78e88497584
+      emission_sha256: sha256:71a26c856233a8a5b0a482f840fdc7b97e7ce7617186973c28ad59ca9270a6cf
+    - gid: D5/S3/Weil/SpectralDynamics.verticalPhase_norm
+      definition_sha256: sha256:a430f7ac0f6d9853c1a0e3ac5715358822aa84ff6588680d30abd1319810618f
+      emission_sha256: sha256:a22e43e122dbec394ae7e8b2e8b0d860cc781fc56e584227fe5a523a9c541344
   unresolved_subitems:
     - scaling-unbounded-along-me2

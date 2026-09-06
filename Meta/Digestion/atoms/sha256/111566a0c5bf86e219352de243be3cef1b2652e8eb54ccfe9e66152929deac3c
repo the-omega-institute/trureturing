@@ -1,0 +1,1 @@
+| `GoldenResourceOptimalInteger.lean`：明确成本下 \(5040\) 最优 | 区分静态资源最优性与实际程序轨迹，不预设二者相同          

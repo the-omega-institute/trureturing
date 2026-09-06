@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c367577a41dc315c90d409d2cd81ab4b2ed49e59639dac415d4bfd39f862d7dc
+  normalized_sha256: sha256:c367577a41dc315c90d409d2cd81ab4b2ed49e59639dac415d4bfd39f862d7dc
+cas_ref: sha256:c367577a41dc315c90d409d2cd81ab4b2ed49e59639dac415d4bfd39f862d7dc
+coverage_gids:
+  - gid: D5/S3/Observer/LinearMemory/EpsilonSelfDimension.epsilon_self_dimension_eq_threshold_count
+    target_statement_id: sha256:be5443404b19af366af6fc33d9f1dcfd41c70435613370d42717b24e1c12919c
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/LinearMemory/EpsilonSelfDimension.epsilon_self_dimension_eq_threshold_count
+      definition_sha256: sha256:4078605e972d813ed63131d355504a1e34abe0bc82bf677523c19ebbfbfa1a35
+      emission_sha256: sha256:179e1d8a0a6407eaa6d509517fcc5f9dc0b27005661216be68b164e9b0f7e73d
+  unresolved_subitems: []

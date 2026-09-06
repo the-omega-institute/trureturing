@@ -1,0 +1,6 @@
+- **定理 V4 的阈值等价** \(\sqrt{a^2+a}<5a\iff\frac1{24}<a\)。
+
+`computational_content.kind = none`:四条皆为对一切 \(a>0\)(与 \(t\in\mathbb{R}\))的一般定理,
+不是有界枚举、检查器、数值归约或已认证实例;\(a=\frac1{24}\) 处的等式是该一般定理的实例,不是它的依据。
+准入依据为 `escape-witness`。
+

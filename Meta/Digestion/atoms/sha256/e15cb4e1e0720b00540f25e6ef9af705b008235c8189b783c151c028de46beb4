@@ -1,0 +1,52 @@
+## 定义 2：去相干操作
+
+在模态坐标中定义
+
+$$
+\operatorname{Dec}(\rho)
+=
+\sum_{\alpha}
+P_\alpha\rho P_\alpha,
+$$
+
+其中 \(P_\alpha\) 是单个模态的正交投影。
+
+它删除所有不同模态之间的非对角元。
+
+相应去相干读出为
+
+$$
+\boxed{
+\mathfrak J_{\mathrm{dec}}(\tau)
+=
+\sum_\alpha
+|b_\alpha(\tau)|^2
+(\Omega_{X,N})_{\alpha\alpha}.
+}
+\tag{13}
+$$
+
+实际读出则是
+
+$$
+\boxed{
+\mathfrak J(X)
+=
+\mathfrak J_{\mathrm{dec}}(\tau)
++
+\mathfrak J_{\mathrm{cross}}(\tau),
+}
+\tag{14}
+$$
+
+其中
+
+$$
+\mathfrak J_{\mathrm{cross}}(\tau)
+=
+\sum_{\alpha\ne\beta}
+\overline{b_\alpha(\tau)}
+(\Omega_{X,N})_{\alpha\beta}
+b_\beta(\tau).
+$$
+

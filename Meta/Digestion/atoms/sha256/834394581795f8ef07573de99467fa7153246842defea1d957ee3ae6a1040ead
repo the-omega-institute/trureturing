@@ -1,0 +1,47 @@
+### 证明
+
+\(Y_\sigma-E_\lambda\) 的密度为：
+
+$$
+\begin{aligned}
+r(x)
+&=
+\int_0^\infty
+\lambda e^{-\lambda e}p_\sigma(x+e)\,de\\
+&=
+\frac{\lambda e^{\lambda x}}{\xi(\sigma)}
+\int_x^\infty e^{y/2}\Phi(y)\,dy.
+\end{aligned}
+$$
+
+代入式（T3），这正是式（T8）的 \(r_\sigma(x)\)。证毕。
+
+因此，本轮得到的完整分布恒等式是：
+
+$$
+\boxed{
+Y_\sigma-E_{\sigma-1}
+\overset d=
+\frac12\log\frac{\mathsf G_\sigma}{\pi}
+-\log N_\sigma,
+\qquad \sigma>1.
+}
+\tag{T16}
+$$
+
+每一侧内部的随机变量按前面的定义独立。
+
+这里没有未知零点作为输入。
+
+**Gamma 因子、素数模式、实际 theta 态与一个无记忆随机位移，确实接到了同一个对象上。**
+
+指数变量满足：
+
+$$
+\Pr(E>a+b\mid E>a)=e^{-\lambda b},
+$$
+
+所以“无记忆”是精确的 Markov 性质。但 \(E\) 在这里首先是对数尺度位移，不是已经推导出来的物理时间。
+
+---
+

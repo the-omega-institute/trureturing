@@ -33,7 +33,6 @@ public sealed class HeartsAuthorizationLedgerTests
     {
         var fixture = new RuleFixture();
         fixture.Baseline[HeartsAuthorizationLedger.Path] = HeartsAuthorizationLedger.Header;
-        fixture.ForkPoint[HeartsAuthorizationLedger.Path] = HeartsAuthorizationLedger.Header;
         fixture.Files[HeartsAuthorizationLedger.Path] =
             HeartsAuthorizationLedger.Header + "not a ledger row\n";
 
@@ -54,7 +53,6 @@ public sealed class HeartsAuthorizationLedgerTests
         var malformed = HeartsAuthorizationLedger.Header + "not a ledger row\n";
         fixture.Files[HeartsAuthorizationLedger.Path] = malformed;
         fixture.Baseline[HeartsAuthorizationLedger.Path] = malformed;
-        fixture.ForkPoint[HeartsAuthorizationLedger.Path] = malformed;
         var acceptedPath = FrozenLedgerChangeClassifier.AcceptedPath(
             "sha256:" + new string('a', 64));
         fixture.Files[acceptedPath] = "candidate accepted event\n";

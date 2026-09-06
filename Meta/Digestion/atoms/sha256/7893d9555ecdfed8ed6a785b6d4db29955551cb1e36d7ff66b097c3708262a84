@@ -1,0 +1,44 @@
+# 五、这可以重新变成黄金分辨率下的离散矩阵问题
+
+令：
+
+$$
+G_0=1,\quad G_1=2,\quad G_{L+2}=G_{L+1}+G_L.
+$$
+
+定义有理采样点：
+
+$$
+\boxed{
+x_{j,L}=1+\frac j{G_L},
+\qquad j,L\in\mathbb N.
+}
+\tag{19}
+$$
+
+这些点在 \([1,\infty)\) 中稠密。
+
+定义矩阵：
+
+$$
+\boxed{
+\mathsf M_{j,L}
+=
+\begin{pmatrix}
+C_\gamma&
+F(\ln x_{j,L})\\
+F(\ln x_{j,L})&
+C_\gamma
+\end{pmatrix}.
+}
+\tag{20}
+$$
+
+它的两个特征值是：
+
+$$
+C_\gamma+F(\ln x_{j,L}),
+\qquad
+C_\gamma-F(\ln x_{j,L}).
+$$
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c4897a118d74252c1f2c2910b49bb1b303c7589871a2128653c5928ffcb56455
+  normalized_sha256: sha256:c4897a118d74252c1f2c2910b49bb1b303c7589871a2128653c5928ffcb56455
+cas_ref: sha256:c4897a118d74252c1f2c2910b49bb1b303c7589871a2128653c5928ffcb56455
+coverage_gids:
+  - gid: D5/S3/Observer/HiddenFlow/ProjectionCommutatorIdentity.commutator_eq_cross_blocks
+    target_statement_id: sha256:0d7c8d0f51e47e2bd83485837d0656fe3da9f51e5a14ea7f69f4d927e3781131
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/HiddenFlow/ProjectionCommutatorIdentity.commutator_eq_cross_blocks
+      definition_sha256: sha256:00b5ffc63775313fd34ac027eb502914d69730dc1a0e1df5e220c23882efda3d
+      emission_sha256: sha256:c1e88bb7a63d56ffda46524da0eb8605bf67cfa13dceb7490fced83a1db83b9e
+  unresolved_subitems: []

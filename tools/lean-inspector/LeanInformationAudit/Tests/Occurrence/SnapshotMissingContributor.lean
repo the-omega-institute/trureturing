@@ -1,0 +1,20 @@
+import LeanInformationAudit.SealCommand
+
+open Lean Lean.Elab.Command LeanInformationAudit
+
+namespace LeanInformationAudit.Tests.SnapshotMissingContributor
+
+set_option linter.style.longLine false
+
+-- The production contributor InformationRoot is deliberately not imported.
+/-- error: IE-C028 AnalysisCertificateMismatch root=D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot catalog=registry-snapshot component=member-set expected=["D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena/D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application","D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena/D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary","D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena/D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause","D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena/D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power","D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena/D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification","D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena/D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective","D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena/D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points","D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena/D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual","D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena/D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state","D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena/D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention","D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena/D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design","D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena/D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual","D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena/D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention"] actual=[] -/
+#guard_msgs (error) in
+run_cmd do
+  let original ← getEnv
+  try
+    setEnv (original.setMainModule designatedInformationRootId)
+    elabCommand (← `(command| #seal_information_theory))
+  finally
+    setEnv original
+
+end LeanInformationAudit.Tests.SnapshotMissingContributor

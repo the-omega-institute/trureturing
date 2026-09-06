@@ -1,0 +1,56 @@
+# 八、如何让整个时间波真正检测安全，而不只给出漂亮的正相关？
+
+定义普通相关函数：
+
+$$
+C_r(t)
+=
+\langle\Psi_r(0)\mid\Psi_r(t)\rangle
+=
+\sum_{n>5040}
+\frac{e^{-r\Delta(n)}}{n^2}e^{-it\ln n}.
+$$
+
+对每个固定 \(r\)，它都是正定函数，因为它来自实际向量的 Gram 内积。
+
+**所以，证明 \(C_r\) 正定本身不包含 RH 的信息。**
+
+真正需要的是对滤波强度取导数：
+
+$$
+\boxed{
+K(t)
+=
+-\left.\frac{\partial C_r(t)}{\partial r}\right|_{r=0}
+=
+\sum_{n>5040}
+\frac{\Delta(n)}{n^2}e^{-it\ln n}.
+}
+\tag{24}
+$$
+
+这个核的系数可以有正有负。
+
+对任意时间点 \(t_1,\ldots,t_m\) 和复系数 \(c_1,\ldots,c_m\)：
+
+$$
+\boxed{
+\sum_{i,j}\overline{c_i}K(t_j-t_i)c_j
+=
+\sum_{n>5040}
+\frac{\Delta(n)}{n^2}
+\left|
+\sum_jc_je^{-it_j\ln n}
+\right|^2.
+}
+\tag{25}
+$$
+
+这就是把不同时刻的波相干组合后，测量安全算子 \(\widehat D\) 的二次型。
+
+若全部 \(\Delta(n)\ge0\)，右边当然非负。
+
+关键问题是反方向：**能否通过时间叠加，把一个隐藏的负余量模式分离出来？**
+
+答案是可以，而且比“需要全部时间”更强。
+

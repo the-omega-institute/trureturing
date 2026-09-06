@@ -164,6 +164,8 @@ public sealed class TruthReleaseCommandTests
                     repositoryRoot,
                     "Golden/Projection/statement-projection-expansion-v1.json"),
                 Encoding.UTF8),
+            [TheoryAtomizerDataLoader.DataPath] =
+                Encoding.UTF8.GetString(DigestionTestSupport.RulesBytes),
             ["Meta/FILEMAP.toml"] = FileMap(),
             ["Meta/Digestion/backfill/fixture-source/source.toml"] =
                 "source_id = \"fixture-source\"\n"

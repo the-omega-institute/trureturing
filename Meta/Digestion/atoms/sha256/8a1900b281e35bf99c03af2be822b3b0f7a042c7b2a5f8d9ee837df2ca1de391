@@ -1,0 +1,12 @@
+## 定理 N2：代数平方就是两条件态的相对振幅
+
+$$
+\boxed{
+\langle\phi_{B^*}|\phi_B\rangle
+=
+\frac{\operatorname{Tr}(B^2)}
+{\operatorname{Tr}(B^*B)}.
+}
+\tag{N9}
+$$
+

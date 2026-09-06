@@ -1,0 +1,186 @@
+## 定理 1：有界余项判据
+
+以下三个命题等价：
+
+$$
+\boxed{\mathrm{RH};}
+$$
+
+$$
+\boxed{\mathfrak J(X)=O(1);}
+$$
+
+$$
+\boxed{\mathfrak R(X)=O(1).}
+\tag{5}
+$$
+
+反向推导甚至只需在 \(X=2^j\) 上有统一上界：
+
+$$
+\boxed{
+\sup_{j\ge j_0}\mathfrak R(2^j)<\infty
+\Longrightarrow
+\mathrm{RH}.
+}
+\tag{6}
+$$
+
+### 证明：RH 推出常数级均方界
+
+令
+
+$$
+E(x)=\psi(x)-x,
+\qquad
+I(X)=\int_X^{2X}E(x)^2\,dx.
+$$
+
+RH 下，经典的 Cramér 均方估计给出
+
+$$
+I(X)=O(X^2).
+$$
+
+这比直接使用逐点估计 \(E(x)=O(\sqrt x\log^2x)\) 强；后者不能直接产生这个均方界。Brent、Platt、Trudgian 进一步证明了
+
+$$
+\limsup_{X\to\infty}\frac{I(X)}{X^2}\le0.8603
+$$
+
+这一显式版本。([arXiv][2])
+
+现在
+
+$$
+Y(x)=E(2x)-E(x)+x-M(x),
+$$
+
+且
+
+$$
+|x-M(x)|<1.
+$$
+
+由加权 \(L^2\) 三角不等式，
+
+$$
+\begin{aligned}
+\sqrt{\mathfrak J(X)}
+\le{}&
+\left(\int_X^{2X}\frac{E(2x)^2}{x^2}\,dx\right)^{1/2}\\
+&+
+\left(\int_X^{2X}\frac{E(x)^2}{x^2}\,dx\right)^{1/2}
++O(X^{-1/2}).
+\end{aligned}
+$$
+
+而
+
+$$
+\int_X^{2X}\frac{E(2x)^2}{x^2}\,dx
+\le\frac{I(2X)}{2X^2},
+$$
+
+$$
+\int_X^{2X}\frac{E(x)^2}{x^2}\,dx
+\le\frac{I(X)}{X^2}.
+$$
+
+所以 RH 推出 \(\mathfrak J(X)=O(1)\)，并且
+
+$$
+\boxed{
+\limsup_{X\to\infty}\mathfrak J(X)
+\le
+0.8603(1+\sqrt2)^2.
+}
+\tag{7}
+$$
+
+结合式（3），得到 \(\mathfrak R(X)=O(1)\)。
+
+### 证明：有界局部均方推出 RH
+
+令
+
+$$
+r(T)=e^{-T/2}E(e^T),
+$$
+
+$$
+z(T)=e^{-T/2}
+\left[\psi(2e^T)-\psi(e^T)-e^T\right].
+$$
+
+有精确关系
+
+$$
+z(T)=\sqrt2\,r(T+\log2)-r(T).
+$$
+
+把函数分成长度为 \(\log2\) 的区块，记为 \(r_j,z_j\)。于是
+
+$$
+r_j
+=
+2^{-j/2}r_0
++
+\sum_{k=0}^{j-1}2^{-(j-k)/2}z_k.
+\tag{8}
+$$
+
+若 \(\mathfrak J(2^j)\) 一致有界，地板函数修正只产生衰减误差，所以 \(\|z_j\|_2\) 一致有界。
+
+由于
+
+$$
+\sum_{k\ge1}2^{-k/2}<\infty,
+$$
+
+式（8）推出 \(\|r_j\|_2\) 一致有界。因此
+
+$$
+\int_0^L|r(T)|^2\,dT=O(L).
+$$
+
+这保证 \(r\) 的 Laplace 变换在 \(\Re s>0\) 内解析。
+
+另一方面，在初始收敛区域，
+
+$$
+\boxed{
+\widehat r(s)
+=
+-\frac{\zeta'(s+1/2)}
+{(s+1/2)\zeta(s+1/2)}
+-\frac1{s-1/2}.
+}
+\tag{9}
+$$
+
+该式直接来自 von Mangoldt 狄利克雷级数。([DLMF][3])
+
+若存在右侧离线零点
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad \delta>0,
+$$
+
+右边就在 \(s=\delta+i\gamma\) 有不可去极点，矛盾。结合零点反射对称性，得到 RH。
+
+最后，式（3）连接 \(\mathfrak J\) 与 \(\mathfrak R\)。证毕。
+
+---
+
+因此，我们现在知道真实余项的预期尺度应该是：
+
+$$
+\boxed{
+c_0-o(1)\le\mathfrak R(X)\le C
+}
+$$
+
+而不是趋于零。
+

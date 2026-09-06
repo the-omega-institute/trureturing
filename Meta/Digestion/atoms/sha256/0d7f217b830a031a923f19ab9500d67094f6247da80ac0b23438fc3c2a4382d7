@@ -1,0 +1,80 @@
+## 定理 116.1　非交换微观系数产生动态宏观钟律
+
+参考单元态满足：
+
+$$
+\langle X\rangle_t=\sin\Omega t,
+\qquad
+\langle Z\rangle_t=\cos\Omega t.
+$$
+
+所以：
+
+$$
+\boxed{
+r(t,v)
+=
+3+\sin\Omega t
+-
+\left(1+\frac12\cos\Omega t\right)v^2.
+}
+\tag{116.3}
+$$
+
+并且：
+
+$$
+\boxed{
+\operatorname{Var}_{\tau(t)}(\widehat R(v))
+=
+1+\frac{v^4}{4}
+-
+\left(
+\sin\Omega t-\frac{v^2}{2}\cos\Omega t
+\right)^2
+\le\frac54.
+}
+\tag{116.4}
+$$
+
+因此，任意符合第 115 节条件的有限观察协议满足：
+
+$$
+\boxed{
+\frac12
+\|\mathcal P_N-\mathcal P_{\mathrm{cl}}\|_\diamond
+\le
+\sqrt{\frac5{8N}}\,
+\mathcal B(T).
+}
+\tag{116.5}
+$$
+
+### 证明
+
+单量子比特绕 \(Y\) 轴的酉旋转给出前两个期望。
+
+对式（116.1）取期望得到式（116.3）。
+
+利用：
+
+$$
+X^2=Z^2=I,
+\qquad
+XZ+ZX=0,
+$$
+
+计算二阶矩后减去均值平方，即得式（116.4）。
+
+最后将 \(\Gamma_*=5/4\) 和 \(n_*=1/\sqrt2\) 代入式（115.4）。∎
+
+注意：
+
+$$
+[\widehat A,\widehat C]=-iY\ne0.
+$$
+
+所以微观系数并没有被预先定义成可交换经典变量。
+
+---
+

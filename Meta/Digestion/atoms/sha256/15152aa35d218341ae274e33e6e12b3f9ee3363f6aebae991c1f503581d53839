@@ -1,0 +1,34 @@
+**这带来一个与你原直觉互补的事实：离散系统也可以产生严格平坦的平台；统计平滑反而可以把尖锐跳变变成弯曲过渡。**
+
+例如，在有限候选集上定义：
+
+$$
+\mathcal F_\tau(\lambda)
+=
+\tau\log\sum_n
+\exp\left(\frac{W(n)-\lambda E(n)}{\tau}\right).
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal F_\tau''(\lambda)
+=
+\frac1\tau\operatorname{Var}_{\tau,\lambda}(E)\ge0.
+}
+\tag{14}
+$$
+
+\(\tau>0\) 时平滑，\(\tau\to0\) 时恢复分段线性最优包络。
+
+所以不能笼统地说：
+
+$$
+\text{统计一定把曲变平}.
+$$
+
+方向取决于我们究竟在对什么对象、用什么操作取近似。
+
+---
+

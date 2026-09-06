@@ -1,0 +1,55 @@
+## 定义 201.1　观察者中心模型
+
+取一个有限有效模型：
+
+$$
+\mathcal H
+=
+\mathcal H_C
+\otimes\mathcal H_M
+\otimes\mathcal H_A
+\otimes\mathcal H_E.
+$$
+
+其中，\(C\) 是内部钟，\(M\) 是记忆，\(A\) 是行动控制，\(E\) 是其余可交互结构。
+
+给定允许过程族：
+
+$$
+\Gamma=\{\Phi_a:a\in\mathcal A_{\mathrm{adm}}\}.
+$$
+
+每个 \(\Phi_a\) 必须有量子操作实现，而不只是写在纸上的状态映射。
+
+对结果 \(b\)，测量由量子仪器表示：
+
+$$
+\mathcal I_b^a,
+\qquad
+\sum_b\mathcal I_b^a
+\text{ 为完全正、保迹映射}.
+$$
+
+于是：
+
+$$
+\boxed{
+p(b\mid\rho,a)
+=
+\operatorname{Tr}\mathcal I_b^a(\rho).
+}
+\tag{201.1}
+$$
+
+观察者并不是在模型外面“选择宇宙”。它的行动寄存器、记录形成与后续反馈，都属于这个联合过程。
+
+特别地，若采用有限组受控酉操作：
+
+$$
+U_{\mathrm{ctrl}}
+=
+\sum_a|a\rangle\langle a|_A\otimes U_a,
+$$
+
+那么行动选择本身已经有一个量子实现。
+

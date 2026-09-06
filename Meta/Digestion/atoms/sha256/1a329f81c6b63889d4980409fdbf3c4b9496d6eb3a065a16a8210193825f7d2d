@@ -1,0 +1,44 @@
+## 同一批端点，历史计数改变了收敛边界
+
+给每个配对的“创造＋消耗”赋权 \(\chi\)。
+
+只计端点：
+
+$$
+\boxed{
+Z_{\mathrm{end}}(\chi)=\sum_{m\ge0}\chi^m=\frac1{1-\chi}.
+}
+\tag{11}
+$$
+
+逐条合法历史计数：
+
+$$
+\boxed{
+Z_{\mathrm{hist}}(\chi)
+=
+\sum_{m\ge0}C_m\chi^m
+=
+\frac{1-\sqrt{1-4\chi}}{2\chi}.
+}
+\tag{12}
+$$
+
+后一式由“首个回返把路径分成两段”得到：
+
+$$
+Z_{\mathrm{hist}}=1+\chi Z_{\mathrm{hist}}^2.
+$$
+
+因此，临界半径从：
+
+$$
+1
+$$
+
+变成：
+
+$$
+\boxed{\frac14}.
+$$
+

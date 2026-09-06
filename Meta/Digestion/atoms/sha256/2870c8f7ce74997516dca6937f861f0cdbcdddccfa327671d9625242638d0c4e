@@ -1,0 +1,17 @@
+## 经典输入：Hudson 定理
+
+对连续变量纯态，Wigner 函数处处非负，当且仅当波函数是二次多项式的指数，即广义高斯态。([sciencedirect.com][3])
+
+而实际 theta 核满足：
+
+$$
+\log\Phi(x)
+=
+-\pi e^{2x}+\frac92x+O(1)
+\qquad(x\to+\infty),
+$$
+
+显然不是二次多项式。
+
+因此：
+

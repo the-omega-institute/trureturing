@@ -1,0 +1,58 @@
+### 证明
+
+令：
+
+$$
+X_d(U)=\operatorname{Tr}(\Lambda_dU\Lambda_d^*U^*).
+$$
+
+写 \(c_i=|z_{d,i}|\)，则：
+
+$$
+|X_d(U)|
+\le
+\sum_{i,j}c_ic_j|U_{ij}|^2.
+$$
+
+设 \(L_d=\sum_i c_i\le L\)。把 \(c_ic_j/L_d^2\) 视为一组和为一的权重，由凸性：
+
+$$
+|X_d(U)|^k
+\le
+L_d^{2k}
+\sum_{i,j}
+\frac{c_ic_j}{L_d^2}|U_{ij}|^{2k}.
+$$
+
+取 Haar 平均：
+
+$$
+\mathbb E|X_d|^k
+\le
+L^{2k}\frac{k!}{d^{\overline k}}.
+$$
+
+而：
+
+$$
+b_{d,k}=\frac1{k!}\mathbb E[X_d^k],
+$$
+
+它的非负性由 Schur 平方展开保证。因此得到式（M8）。
+
+最后使用：
+
+$$
+d^{\overline k}\ge d^k,
+$$
+
+对非负级数求和：
+
+$$
+\mathcal H_d(r)
+\le
+\sum_{k\ge0}\left(\frac{rL^2}{d}\right)^k.
+$$
+
+即得式（M9）。证毕。
+

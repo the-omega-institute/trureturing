@@ -253,18 +253,9 @@ public sealed partial class ScriptTestGateClosureTests
     public void ControllerClosureSyntheticSnapshotHasExpectedMembership()
     {
         var snapshot = CurrentSnapshot();
-        var pure = ControllerClosure.Derive(snapshot);
-        var evaluatorPaths = pure.EvaluatorPaths;
-        var ownerPaths = pure.OwnerPaths;
+        var evaluatorPaths = ControllerClosure.Derive(snapshot);
         var runtimePaths = ControllerClosure.RuntimePaths;
 
-        // B8 是**编译期类型保证,不是运行时钉子**,如实记账:这里的静态类型就是
-        // ControllerClosurePaths,它不声明 Commit;只有 HEAD 适配器返回的
-        // ControllerClosureSnapshot 才带真实 commit 身份。原先用
-        // typeof(...).GetProperty("Commit") 做运行时断言,但反射使 ScribeTestMapDeriver
-        // 无法解析本方法,SL-003 对每条新引入的 conservative unknown 逐条 Block。
-        // 故撤下该断言;若 Commit 重新出现在 ControllerClosurePaths 上,**没有测试会红**,
-        // 只能由评审发现 —— 不冒领它仍被机器守着。
         Assert.NotEmpty(runtimePaths);
         Assert.All(runtimePaths, path => Assert.Contains(path, evaluatorPaths));
         Assert.Contains("tools/StrataLint.EngineeringScope/Program.cs", evaluatorPaths);
@@ -272,7 +263,8 @@ public sealed partial class ScriptTestGateClosureTests
         Assert.Contains("tools/StrataLint.EngineeringScope/packages.lock.json", evaluatorPaths);
         Assert.Contains("Directory.Build.props", evaluatorPaths);
         Assert.Contains("tools/scripts/report/report-supervisor.sh", evaluatorPaths);
-        Assert.Contains(".github/workflows/ci.yml", ownerPaths);
+        // 判官闭包只驱动 engineering 测试计划;探针退役后不再有第二个「owner」面,
+        // 故 ci.yml 不属于该闭包 —— 它的变更由 SL-022 保护面而非本闭包接住。
         Assert.DoesNotContain(".github/workflows/ci.yml", evaluatorPaths);
     }
 

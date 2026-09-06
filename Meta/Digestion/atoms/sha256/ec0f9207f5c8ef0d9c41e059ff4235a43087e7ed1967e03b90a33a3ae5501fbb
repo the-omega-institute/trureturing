@@ -1,0 +1,29 @@
+## 假设 171.1　有限系统与循环控制
+
+取有限维 Hilbert 空间 \(\mathcal H\)，Hamiltonian 为
+
+$$
+H=H^\dagger,
+$$
+
+状态为
+
+$$
+\rho>0,\qquad \operatorname{Tr}\rho=1.
+$$
+
+本节先采用一个明确的理想化操作类：允许通过循环控制实现任意酉操作 \(U\)，控制开始与结束时，系统 Hamiltonian 都为同一个 \(H\)。
+
+定义从系统中提取的平均功：
+
+$$
+\boxed{
+W_H(\rho,U)
+=
+\operatorname{Tr}(H\rho)
+-
+\operatorname{Tr}(HU\rho U^\dagger).
+}
+\tag{171.1}
+$$
+

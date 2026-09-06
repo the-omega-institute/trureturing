@@ -1,0 +1,28 @@
+## 定理 6：正核的导数读出
+
+对 \(0<s<4H\)，并按整体分布意义延拓，
+
+$$
+\boxed{
+\frac{k_H(s)}{c(H)}
+=
+2\kappa_H''(s)+\kappa_H'(s).
+}
+\tag{33}
+$$
+
+因此
+
+$$
+\boxed{
+\mathcal B_H(T)
+=
+\sum_p\frac{\log p}{\sqrt p}
+\left[
+2\kappa_H''(\log p-T)
++\kappa_H'(\log p-T)
+\right].
+}
+\tag{34}
+$$
+

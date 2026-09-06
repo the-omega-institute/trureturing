@@ -1,0 +1,13 @@
+### 本轮核验
+
+已完成 **18 项精确有限矩阵检查**，包括：
+
+受控效果空间的 \(2\to3\to4\) 增长；合法状态的当前不可区分与控制后完全区分；逃逸块；反复记录下的跃迁公式；经典记录破坏参考纠缠的实例；酉控制的概率范围。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_controlled_observer_completion.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/controlled_observer_completion_checks.json)
+
+本轮没有进行 Lean 编译。这些检查支持所列有限实例，不替代一般定理的内核证明，也不验证模型就是现实物理。
+
+---
+

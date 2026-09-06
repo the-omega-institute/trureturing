@@ -1,0 +1,51 @@
+# 四、构造承载全部算术状态的波
+
+现在专门回到 RH，采用规范终点标签，避免 840 这样的路径重数改变原问题。
+
+沿用：
+
+$$
+Z(n)=\frac{\sigma(n)}n,
+\qquad
+W(n)=\ln Z(n),
+\qquad
+E(n)=\ln n.
+$$
+
+定义二参数 Dirichlet 母函数：
+
+$$
+\boxed{
+\mathfrak Z_\beta(s)
+=
+\sum_{n\ge1}\frac{Z(n)^\beta}{n^s},
+\qquad
+\beta>0,\quad\Re s>1.
+}
+\tag{8}
+$$
+
+它同时记录全部整数状态，以及这些状态的归一化因数和。
+
+对价格 \(\lambda>0\)，定义未归一化的算术波：
+
+$$
+\boxed{
+|\mathcal W_{\lambda,\beta}(t)\rangle
+=
+\sum_{n\ge1}
+e^{\frac\beta2[W(n)-\lambda E(n)]}
+e^{-itE(n)}
+|n\rangle.
+}
+\tag{9}
+$$
+
+这里：
+
+* \(|n\rangle\) 可以由规范素数—Zeckendorf 表实现；
+* \(t\in\mathbb R\) 是与对数能量共轭的相位参数；
+* \(\beta\) 控制对高收益状态的偏重程度。
+
+**这个 \(t\) 与计算程序的步数不是同一个概念，也不自动等于物理时间。**
+

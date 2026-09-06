@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4d97ed27a19d2a67619a39d665a3c5848f56f27d87c3a1b45fb4de0d1873776a
+  normalized_sha256: sha256:4d97ed27a19d2a67619a39d665a3c5848f56f27d87c3a1b45fb4de0d1873776a
+cas_ref: sha256:4d97ed27a19d2a67619a39d665a3c5848f56f27d87c3a1b45fb4de0d1873776a
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GaloisPrimeObserver.frobenius_observation_has_infinite_fiber
+    target_statement_id: sha256:86aea301a80ada252e35afba4dd57904543263300683dde7efa901461dd42bcd
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/Galois/GaloisPrimeObserver.frobenius_observation_has_infinite_fiber
+      definition_sha256: sha256:f0545d8d91ed5c230b52bd0a581c00903305da3fc3d546f426009f74654fec98
+      emission_sha256: sha256:f21ccd971033f8c628bb430f0eadfca377a520c95c5c8e4b082574408c02c594
+  unresolved_subitems: []

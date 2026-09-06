@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:90970349bca65e715dc52b34b092c941d8957dfed85e73829b35a4822a247215
+  normalized_sha256: sha256:90970349bca65e715dc52b34b092c941d8957dfed85e73829b35a4822a247215
+cas_ref: sha256:90970349bca65e715dc52b34b092c941d8957dfed85e73829b35a4822a247215
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope commentary on the implication proof in atom 680832dcfe1992a7a4649a763031cb0b45d9cd957f9da47cf5c56c9f2e117744: it distinguishes proving the criterion from proving its RH antecedent, with no new mathematical assertion beyond the preceding theorem.'
+    previous_atom_id: 680832dcfe1992a7a4649a763031cb0b45d9cd957f9da47cf5c56c9f2e117744
+    next_atom_id: b0c9647c727173b67a84ea9424350405f282dc91d7765a20ba8df23cdaf6ce26
