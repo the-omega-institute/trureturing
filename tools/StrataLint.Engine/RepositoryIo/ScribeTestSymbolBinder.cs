@@ -60,11 +60,15 @@ internal static class ScribeTestSymbolBinder
 {
     internal static IReadOnlyList<ScribeParsedSource> Bind(
         IEnumerable<TestMapSource> sourceFiles,
+        ScribeBindingStrategy strategy,
         IReadOnlySet<string>? productionAssemblies = null,
-        ScribeProjectCompilationContext? compilationContext = null)
+        ScribeProjectCompilationContext? compilationContext = null,
+        IScribeBindingRecorder? recorder = null)
     {
         var sources = sourceFiles.ToArray();
         var compilations = ScribeProjectCompilationBuilder.Build(sources, compilationContext);
+        var projectPaths = compilations.ToDictionary(static project => project.Compilation,
+            static project => project.ProjectPath);
         var semanticModels = new ScribeSemanticModelProvider();
         foreach (var project in compilations) semanticModels.Add(project.Compilation);
         var callablesBySymbol = new ScribeCallableIndex();
@@ -157,14 +161,45 @@ internal static class ScribeTestSymbolBinder
         foreach (var (callable, symbol) in symbolsByCallable)
         {
             callable.IsProductionSource = IsProductionReader(symbol, productionAssemblies);
-            BindEdges(
-                callable,
-                symbol,
-                callable.SemanticModel,
-                callablesBySymbol,
-                productionAssemblies);
         }
-        LimitProductionTargets(symbolsByCallable, productionAssemblies);
+
+        switch (strategy)
+        {
+            case ScribeBindingStrategy.Eager:
+                foreach (var (callable, symbol) in symbolsByCallable)
+                {
+                    BindEdges(
+                        callable,
+                        symbol,
+                        callable.SemanticModel,
+                        callablesBySymbol,
+                        productionAssemblies,
+                        projectPaths[(CSharpCompilation)callable.SemanticModel.Compilation],
+                        recorder);
+                }
+                LimitProductionTargets(symbolsByCallable, productionAssemblies);
+                break;
+            case ScribeBindingStrategy.Demand:
+                var session = new ScribeDemandBindingSession(
+                    parsed.SelectMany(static source => source.Callables)
+                        .Where(static callable => callable.IsTest),
+                    symbolsByCallable,
+                    productionAssemblies,
+                    callable => projectPaths[(CSharpCompilation)callable.SemanticModel.Compilation],
+                    (callable, symbol) => BindEdges(
+                        callable,
+                        symbol,
+                        callable.SemanticModel,
+                        callablesBySymbol,
+                        productionAssemblies,
+                        projectPaths[(CSharpCompilation)callable.SemanticModel.Compilation],
+                        recorder),
+                    recorder);
+                session.Bind();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null);
+        }
 
         return parsed;
     }
@@ -230,8 +265,11 @@ internal static class ScribeTestSymbolBinder
         IMethodSymbol symbol,
         SemanticModel model,
         ScribeCallableIndex callablesBySymbol,
-        IReadOnlySet<string>? productionAssemblies)
+        IReadOnlySet<string>? productionAssemblies,
+        string projectPath,
+        IScribeBindingRecorder? recorder)
     {
+        recorder?.BindingEdges(ScribeBindingEvent.Create(projectPath, callable, symbol));
         var detectProductionRepositoryRead = !IsProductionReader(symbol, productionAssemblies);
         if (callable.IsTest)
         {

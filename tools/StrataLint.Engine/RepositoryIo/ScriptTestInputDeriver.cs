@@ -86,6 +86,7 @@ internal static partial class ScriptTestInputDeriver
             testProjects);
         var parsed = ScribeTestSymbolBinder.Bind(
             testSources,
+            ScribeBindingStrategy.Eager,
             context.ProductionAssemblies,
             context);
         return Inspect(parsed);

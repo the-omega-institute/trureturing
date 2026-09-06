@@ -315,7 +315,9 @@ internal static class ScribeTestMapDeriver
 
     internal static ScribeTestMap DeriveTracked(
         IReadOnlyList<ScribeTrackedSource> tracked,
-        MsBuildCompileMap compileMap)
+        MsBuildCompileMap compileMap,
+        ScribeBindingStrategy bindingStrategy = ScribeBindingStrategy.Demand,
+        IScribeBindingRecorder? recorder = null)
     {
         var projectFiles = tracked
             .Where(static file => file.Path.EndsWith(".csproj", StringComparison.Ordinal))
@@ -351,7 +353,9 @@ internal static class ScribeTestMapDeriver
                 projectFiles.Select(static project => project.Path)),
             compileMap.Findings,
             compilationContext.ProductionAssemblies,
-            compilationContext);
+            compilationContext,
+            bindingStrategy,
+            recorder);
     }
 
     internal static ScribeTestMap DeriveSources(
@@ -362,12 +366,16 @@ internal static class ScribeTestMapDeriver
         IReadOnlyList<string>? danglingCompileFailProofProjectExemptionPaths = null,
         IReadOnlyList<MsBuildCompileFinding>? compileQueryFindings = null,
         IReadOnlySet<string>? productionAssemblies = null,
-        ScribeProjectCompilationContext? compilationContext = null)
+        ScribeProjectCompilationContext? compilationContext = null,
+        ScribeBindingStrategy bindingStrategy = ScribeBindingStrategy.Demand,
+        IScribeBindingRecorder? recorder = null)
     {
         var parsed = ScribeTestSymbolBinder.Bind(
             sourceFiles,
+            bindingStrategy,
             productionAssemblies,
-            compilationContext).ToArray();
+            compilationContext,
+            recorder).ToArray();
         var discoveryCriteria = ExtractDiscoveryCriteria(parsed);
         var methods = parsed.SelectMany(static source => source.Callables).ToArray();
         var indirect = indirectProductionSites.ToArray();
