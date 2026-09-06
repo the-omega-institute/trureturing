@@ -618,6 +618,20 @@ jobs:
             candidate/tools/**/bin
             candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
+      - name: Restore base-side unknown-debt test maps
+        id: test-map-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .stratalint-test-map-cache
+          key: stratalint-test-map-v1-${{ runner.os }}-${{ github.sha }}
+          restore-keys: stratalint-test-map-v1-${{ runner.os }}-
+      - name: Snapshot test map cache before the gate
+        id: test-map-before
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .stratalint-test-map-cache
+          find .stratalint-test-map-cache -maxdepth 1 -type f -name '*.json' -printf '%f\n' | sort | sha256sum | cut -d ' ' -f 1 > "$RUNNER_TEMP/test-map-before.sha"
       - name: Download canonical Lean reports
         uses: actions/download-artifact@v4
         with:
@@ -647,6 +661,9 @@ jobs:
           elif ! grep -qF -- '--candidate-lean-report' "$gate"; then
             printf '%s\n' "candidate gate cannot consume canonical Lean reports" >&2
             exit 1
+          elif ! grep -qF -- '--test-map-cache-root' "$gate"; then
+            printf '%s\n' "candidate gate cannot forward the test map cache root" >&2
+            exit 1
           fi
           judge_args=()
           if [[ "${{ steps.judge-cache.outputs.cache-hit }}" == "true" ]]; then
@@ -659,6 +676,7 @@ jobs:
             --candidate "$GITHUB_WORKSPACE/candidate" \
             --base "$DEV_BASELINE_SHA" \
             --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
+            --test-map-cache-root "$GITHUB_WORKSPACE/.stratalint-test-map-cache" \
             "${judge_args[@]}" \
             2>&1 | tee "$RUNNER_TEMP/gate.log"
           rc="${PIPESTATUS[0]}"
@@ -672,6 +690,29 @@ jobs:
             printf '%s\n' "### protected-surface change (SL-022); content checks passed" >> "$GITHUB_STEP_SUMMARY"
           fi
           exit 0
+      - name: Prune and fingerprint test map cache after the gate (push only)
+        id: test-map-after
+        if: always() && github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Retention 16: fork-point age of the last 40 dev merges was p50<1h / p90 2h / max 3h
+          # (2026-09-06, git merge-base age), and dev merges touching derivation inputs ran at
+          # 112 per 24h; 16 entries cover the observed maximum. Policy constant, not a capacity
+          # derivation; revisit when either reading moves.
+          find .stratalint-test-map-cache -maxdepth 1 -type f -name '*.json' -printf '%T@ %f\n' | sort -rn | tail -n +17 | cut -d ' ' -f 2- | while read -r stale; do rm -f -- ".stratalint-test-map-cache/$stale"; done
+          after="$(find .stratalint-test-map-cache -maxdepth 1 -type f -name '*.json' -printf '%f\n' | sort | sha256sum | cut -d ' ' -f 1)"
+          before="$(cat "$RUNNER_TEMP/test-map-before.sha")"
+          changed=false
+          if [[ "$after" != "$before" ]]; then changed=true; fi
+          printf 'changed=%s\n' "$changed" >> "$GITHUB_OUTPUT"
+          printf 'test-map-cache entries=%s changed=%s\n' "$(find .stratalint-test-map-cache -maxdepth 1 -type f -name '*.json' | wc -l)" "$changed"
+      - name: Save test map cache by push SHA (push only, when changed)
+        if: always() && github.event_name == 'push' && steps.test-map-after.outputs.changed == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .stratalint-test-map-cache
+          key: stratalint-test-map-v1-${{ runner.os }}-${{ github.sha }}
       - name: Upload gate timing
         if: always()
         uses: actions/upload-artifact@v4
