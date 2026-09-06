@@ -36,6 +36,8 @@ public static class TemporaryFileSystem
             System.IO.Directory.CreateDirectory(EnsureTemporaryPath(path));
         public static DirectoryInfo CreateTempSubdirectory(string? prefix = null) =>
             System.IO.Directory.CreateTempSubdirectory(prefix);
+        public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, SearchOption searchOption) =>
+            System.IO.Directory.EnumerateFiles(EnsureTemporaryPath(path), searchPattern, searchOption);
         public static string GetCurrentDirectory() => System.IO.Directory.GetCurrentDirectory();
         public static void Delete(string path, bool recursive) =>
             System.IO.Directory.Delete(EnsureTemporaryPath(path), recursive);

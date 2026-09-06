@@ -171,12 +171,12 @@ internal static class MsBuildCompileOracle
         return new MsBuildCompileMap(owners, findings);
     }
 
-    internal static SnapshotCheckout Materialize(RepositorySnapshot snapshot)
+    internal static SnapshotCheckout Materialize(RepositorySnapshot snapshot, Func<string, bool> include)
     {
         var checkout = new SnapshotCheckout();
         try
         {
-            foreach (var file in snapshot.Files.Values)
+            foreach (var file in snapshot.Files.Values.Where(file => include(file.Path.Value)))
             {
                 var fullPath = Path.Combine(
                     checkout.Root,
