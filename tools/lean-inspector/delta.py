@@ -206,7 +206,13 @@ def plan(args: argparse.Namespace) -> int:
                 if dependency in reverse:
                     reverse[dependency].add(importer)
 
-        roots = set(changed) | set(added)
+        removed_importers = {
+            importer
+            for deleted in removed
+            for importer in reverse.get(deleted, set())
+            if importer in current
+        }
+        roots = set(changed) | set(added) | removed_importers
         recheck = set(roots)
         pending = list(roots)
         while pending:
@@ -215,14 +221,6 @@ def plan(args: argparse.Namespace) -> int:
                 if dependent in current and dependent not in recheck:
                     recheck.add(dependent)
                     pending.append(dependent)
-
-        # A deleted module is not an Inspector input, but an old importer still
-        # naming it must be rechecked so deletion cannot silently preserve a
-        # record whose environment is no longer loadable.
-        for deleted in removed:
-            for importer in reverse.get(deleted, set()):
-                if importer in current:
-                    recheck.add(importer)
 
         result = {
             "status": "reuse" if not changed and not added and not removed else "delta",
