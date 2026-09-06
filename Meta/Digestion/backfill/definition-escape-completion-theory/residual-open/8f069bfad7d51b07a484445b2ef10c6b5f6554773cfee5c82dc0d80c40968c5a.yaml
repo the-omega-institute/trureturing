@@ -8,3 +8,12 @@ receipts:
   unresolved_subitems:
     - definition-language-trigger-has-no-stage-residual-bridge
     - operation-family-trigger-has-no-stage-residual-bridge
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.closure_method_stop_three_parameter_completion_reopening
+    gaps:
+      - code: unresolved-subitem
+        detail: definition-language-trigger-has-no-stage-residual-bridge
+      - code: unresolved-subitem
+        detail: operation-family-trigger-has-no-stage-residual-bridge
