@@ -1,0 +1,6 @@
+**接下来承担 RH 证明责任的，仍然是从原始算术结构出发，无条件证明上述目标核的全尺度正性，或等价地证明整体范数的衰减；不能从已经归一化的波天然为正、天然酉，倒推出尚未建立的算术界。**
+
+[1]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"
+[2]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
+[3]: https://arxiv.org/abs/2105.02304 "https://arxiv.org/abs/2105.02304"
+[4]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"

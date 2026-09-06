@@ -1,0 +1,55 @@
+# 一、用一个显式三角波包替代无限构造
+
+固定
+
+$$
+a=\frac1{16}.
+$$
+
+定义
+
+$$
+\boxed{
+g_a(x)=\frac1a\left(1-\frac{|x|}{a}\right)_+.
+}
+\tag{1}
+$$
+
+它满足
+
+$$
+g_a\ge0,\qquad g_a(-x)=g_a(x),\qquad
+\int_{\mathbb R}g_a(x)\,dx=1,
+$$
+
+且支集为 \([-a,a]\)。
+
+采用 Fourier 变换
+
+$$
+\widehat f(z)=\int_{\mathbb R}f(x)e^{izx}\,dx.
+$$
+
+直接积分得到
+
+$$
+\boxed{
+\widehat g_a(z)
+=
+\left(\frac{\sin(az/2)}{az/2}\right)^2.
+}
+\tag{2}
+$$
+
+因此，
+
+$$
+\boxed{
+\widehat g_a(z)\ne0
+\qquad(z\notin\mathbb R).
+}
+\tag{3}
+$$
+
+这保留了上一轮最重要的性质：**任何离线零点对应的非实频率，都不会被这个波包精确消去。**
+

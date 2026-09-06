@@ -1,0 +1,54 @@
+## Gamma 尾部有单侧界
+
+令
+
+$$
+\Gamma_{a,J}(T)
+=
+\sum_{j=0}^{J-1}
+e^{-\lambda_jT}
+\left[
+\frac{\sinh(a\lambda_j/2)}{a\lambda_j/2}
+\right]^4.
+$$
+
+则
+
+$$
+\boxed{
+0\le
+\Gamma_a(T)-\Gamma_{a,J}(T)
+\le
+\frac{
+e^{-(2J+1/2)(T-2a)}
+}{
+1-e^{-2(T-2a)}
+}.
+}
+\tag{17}
+$$
+
+**证明。**因为 \(c_a\ge0\)、\(\int c_a=1\)、支集位于 \([-2a,2a]\)，
+
+$$
+\int c_a(u)e^{-\lambda u}\,du\le e^{2a\lambda}.
+$$
+
+剩余项由几何级数控制。证毕。
+
+因此，固定 \(T\) 后：
+
+$$
+\boxed{
+B_a(T)
+=
+\text{有限算术和}
++
+\text{有限指数和}
++
+\text{具有明确方向与大小的尾项}.
+}
+$$
+
+没有未指定的素数尾部。
+

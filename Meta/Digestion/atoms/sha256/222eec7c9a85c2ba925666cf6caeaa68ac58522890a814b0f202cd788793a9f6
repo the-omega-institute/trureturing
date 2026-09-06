@@ -1,0 +1,77 @@
+## 定理 6.1：固定素数的有界指数留下严格渐近缺口
+
+固定素数 \(p\) 和整数 \(A\ge0\)。则无条件地：
+
+$$
+\boxed{
+\limsup_{\substack{n\to\infty\\v_p(n)\le A}}
+\frac{\sigma(n)}{e^\gamma n\ln\ln n}
+\le
+1-p^{-(A+1)}<1.
+}
+\tag{18}
+$$
+
+### 证明
+
+记：
+
+$$
+z_p(a)=1+p^{-1}+\cdots+p^{-a}.
+$$
+
+固定 \(b>A\)。对任意 \(v_p(n)=a\le A\)，令：
+
+$$
+m=p^{b-a}n.
+$$
+
+于是：
+
+$$
+Z(m)=Z(n)\frac{z_p(b)}{z_p(a)}.
+$$
+
+同时：
+
+$$
+n\le m\le p^bn,
+$$
+
+所以：
+
+$$
+\frac{\ln\ln m}{\ln\ln n}\to1
+$$
+
+且这一收敛对 \(a\le A\) 一致。
+
+记 \(R(n)=Z(n)/(e^\gamma\ln\ln n)\)，则：
+
+$$
+R(n)
+=
+R(m)\frac{z_p(a)}{z_p(b)}
+\frac{\ln\ln m}{\ln\ln n}.
+$$
+
+由 Gronwall 定理，沿任意趋于无穷的 \(m\) 序列，\(\limsup R(m)\le1\)。因此：
+
+$$
+\limsup_{v_p(n)\le A}R(n)
+\le
+\frac{z_p(A)}{z_p(b)}.
+$$
+
+令 \(b\to\infty\)：
+
+$$
+\frac{z_p(A)}{z_p(\infty)}
+=
+1-p^{-(A+1)}.
+$$
+
+证毕。
+
+---
+
