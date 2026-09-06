@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Actual derivatives and pointwise Bochner reconstruction for absolutely continuous Hilbert paths.
+Actual derivatives and pointwise Bochner reconstruction for absolutely continuous Hilbert paths. In both statements, u is an arbitrary universe level.
 
 **Theorem 1.1 (Actual derivatives almost everywhere).**
 
-$$\forall H: Type, [\operatorname{NormedAddCommGroup}\left(H\right)], [\operatorname{InnerProductSpace}\left(Real, H\right)], [\operatorname{CompleteSpace}\left(H\right)],\\{}\forall f: Real \to H, \forall a, b: Real, \operatorname{AbsolutelyContinuousOnInterval}\left(f, a, b\right) \implies \operatorname{AlmostEverywhere}\left(volume, \lambda t: Real \mapsto t \in \operatorname{uIcc}\left(a, b\right) \implies \operatorname{HasDerivAt}\left(f, \operatorname{deriv}\left(f, t\right), t\right)\right).$$
+$$\forall H: \operatorname{Type}_{u}, [\operatorname{NormedAddCommGroup}\left(H\right)], [\operatorname{InnerProductSpace}\left(Real, H\right)], [\operatorname{CompleteSpace}\left(H\right)],\\{}\forall f: Real \to H, \forall a, b: Real, \operatorname{AbsolutelyContinuousOnInterval}\left(f, a, b\right) \implies \operatorname{AlmostEverywhere}\left(volume, \lambda t: Real \mapsto t \in \operatorname{uIcc}\left(a, b\right) \implies \operatorname{HasDerivAt}\left(f, \operatorname{deriv}\left(f, t\right), t\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/HilbertGeometry/HilbertPathFundamentalTheorem.absolutely_continuous_interval_ae_hasDerivAt` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ For an arbitrary complete real Hilbert space H and every absolutely continuous p
 
 **Theorem 1.2 (Pointwise Bochner reconstruction).**
 
-$$\forall H: Type, [\operatorname{NormedAddCommGroup}\left(H\right)], [\operatorname{InnerProductSpace}\left(Real, H\right)], [\operatorname{CompleteSpace}\left(H\right)],\\{}\forall f: Real \to H, \forall a, b: Real, \operatorname{AbsolutelyContinuousOnInterval}\left(f, a, b\right) \implies \forall t: Real, t \in \operatorname{uIcc}\left(a, b\right) \implies \operatorname{intervalIntegral}\left(\operatorname{deriv}\left(f\right), a, t, volume\right) = \operatorname{f}\left(t\right) - \operatorname{f}\left(a\right).$$
+$$\forall H: \operatorname{Type}_{u}, [\operatorname{NormedAddCommGroup}\left(H\right)], [\operatorname{InnerProductSpace}\left(Real, H\right)], [\operatorname{CompleteSpace}\left(H\right)],\\{}\forall f: Real \to H, \forall a, b: Real, \operatorname{AbsolutelyContinuousOnInterval}\left(f, a, b\right) \implies \forall t: Real, t \in \operatorname{uIcc}\left(a, b\right) \implies \operatorname{intervalIntegral}\left(\operatorname{deriv}\left(f\right), a, t, volume\right) = \operatorname{f}\left(t\right) - \operatorname{f}\left(a\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/HilbertGeometry/HilbertPathFundamentalTheorem.absolutely_continuous_interval_integral_deriv_eq_sub` (`✓ std3`). ∎
 

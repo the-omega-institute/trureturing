@@ -10,7 +10,8 @@ internal sealed class HilbertPathFundamentalTheoremDocument : IScribeDocumentDef
         "D5/S3/Observer/HilbertGeometry/HilbertPathFundamentalTheorem.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual derivatives and pointwise Bochner reconstruction for absolutely continuous Hilbert paths.",
+        "Actual derivatives and pointwise Bochner reconstruction for absolutely continuous Hilbert paths. "
+        + "In both statements, u is an arbitrary universe level.",
         H("Hilbert Path Fundamental Theorem"),
         Blocks(
             Describe.Lean(
@@ -81,7 +82,7 @@ internal sealed class HilbertPathFundamentalTheoremDocument : IScribeDocumentDef
         Formula space = F.Id("H");
         Formula real = F.Id("Real");
         return Disp(Seq(
-            Forall, Sp, space, Colon, Sp, F.Id("Type"), Comma, Sp,
+            Forall, Sp, space, Colon, Sp, Operatorname, Grp(F.Id("Type")), Underscore, Grp(F.Id("u")), Comma, Sp,
             OpenBracket, Call("NormedAddCommGroup", space), CloseBracket, Comma, Sp,
             OpenBracket, Call("InnerProductSpace", real, space), CloseBracket, Comma, Sp,
             OpenBracket, Call("CompleteSpace", space), CloseBracket, Comma,
