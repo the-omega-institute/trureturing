@@ -1,0 +1,63 @@
+## 定理276.1　任意整数核移动，都可以编译为一条 FRACTRAN 指令
+
+为每类状态分配不同素数 \(p_1,\ldots,p_k\)，编码：
+
+$$
+N(z)=\prod_{j=1}^kp_j^{z_j}.
+$$
+
+定义：
+
+$$
+\boxed{
+f_\delta
+=
+\frac{\prod_{\delta_j>0}p_j^{\delta_j}}
+{\prod_{\delta_j<0}p_j^{-\delta_j}}.
+}
+\tag{276.2}
+$$
+
+则：
+
+$$
+N(z)f_\delta\in\mathbb N
+\iff
+z+\delta\ge0,
+$$
+
+并且一旦可实施：
+
+$$
+\boxed{
+N(z)f_\delta=N(z+\delta),
+\qquad
+A(z+\delta)=Az.
+}
+\tag{276.3}
+$$
+
+### 证明
+
+分母恰好要求每个被消耗类别拥有足够数量。乘法增加和删除相应素数指数，得到 \(z+\delta\)。
+
+最后由 \(A\delta=0\) 得到观察不变量。∎
+
+这已经是一条真正的“几何编译规则”：
+
+$$
+\boxed{
+\text{几何观察的整数核}
+\longrightarrow
+\text{允许的内部重排}
+\longrightarrow
+\text{可执行分数}.
+}
+$$
+
+它与代数统计中“固定统计量、在整数纤维中移动”的 Markov 基思想有关。那一领域同样强调：线性核中的方向与非负整数状态之间的可达性需要共同处理。([Project Euclid][3])
+
+这里没有把 FRACTRAN 优先级程序与随机采样混为一谈。多个可用方向如何被选择，仍然是程序语义的一部分。
+
+---
+

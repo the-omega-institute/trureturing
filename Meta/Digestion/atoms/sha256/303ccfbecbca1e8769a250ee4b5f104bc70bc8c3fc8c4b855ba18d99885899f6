@@ -1,0 +1,65 @@
+# 五、奇偶与波的联系，现在可以精确放在有限循环上
+
+对于固定的 \(k\)，取一个 \(k\) 维量子寄存器，定义循环移位：
+
+$$
+\boxed{
+C_k|r\rangle=|r+1\bmod k\rangle.
+}
+\tag{13}
+$$
+
+这是一个酉置换。
+
+从 \(|0\rangle\) 出发：
+
+$$
+C_k^M|0\rangle=|M\bmod k\rangle.
+$$
+
+因此：
+
+$$
+\boxed{
+\langle0|C_k^M|0\rangle
+=
+\mathbf1_{\{k\mid M\}}.
+}
+\tag{14}
+$$
+
+换到有限 Fourier 基底，\(C_k\) 的本征值为 \(k\) 次单位根，所以同一个读数是：
+
+$$
+\boxed{
+\langle0|C_k^M|0\rangle
+=
+\frac1k\sum_{j=0}^{k-1}
+e^{2\pi i jM/k}.
+}
+\tag{15}
+$$
+
+这是有限几何级数恒等式：整除时所有相位相同，否则恰好相消。
+
+于是：
+
+$$
+\boxed{
+\text{余数寄存器中的回返}
+\longleftrightarrow
+\text{Fourier 相位的完全同相}.
+}
+$$
+
+当 \(k=2\)：
+
+$$
+\boxed{
+\mathbf1_{\{2\mid M\}}
+=
+\frac{1+(-1)^M}{2}.
+}
+\tag{16}
+$$
+

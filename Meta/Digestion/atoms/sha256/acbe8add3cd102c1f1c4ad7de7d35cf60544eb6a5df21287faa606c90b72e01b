@@ -1,0 +1,59 @@
+### 证明
+
+取 \(m=r+1\)。由式（13）：
+
+$$
+K_m(S)
+\le
+\int_0^\infty\frac{(U_St)^m}{m!}\,\nu_E(dt).
+$$
+
+而：
+
+$$
+\frac{(vt)^m}{m!}\le e^{vt}-1.
+$$
+
+所以：
+
+$$
+K_m(S)
+\le
+\left(\frac{U_S}{v}\right)^m
+\int_0^\infty(e^{vt}-1)\nu_E(dt).
+$$
+
+由于 \(E-v>1\)，最后的积分有限，并等于：
+
+$$
+h(E)-h(E-v).
+$$
+
+结合定理 4.1，得到结论。证毕。
+
+一个便于使用的特例是：
+
+$$
+U_S\le\frac{E-1}{4}.
+$$
+
+取：
+
+$$
+v=\frac{E-1}{2},
+$$
+
+便有：
+
+$$
+\boxed{
+|F(S)-Q_r(S)|
+\le
+2^{-(r+1)}
+\left[
+h(E)-h\left(\frac{E+1}{2}\right)
+\right].
+}
+\tag{15}
+$$
+

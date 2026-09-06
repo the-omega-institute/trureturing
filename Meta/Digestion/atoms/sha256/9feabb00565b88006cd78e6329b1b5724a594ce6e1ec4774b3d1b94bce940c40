@@ -1,0 +1,71 @@
+# 一、先区分：未知的高阶信息，与被模型强制决定的高阶关系
+
+沿用：
+
+$$
+E(n)=\ln n,
+\qquad
+W(n)=\ln\frac{\sigma(n)}n,
+$$
+
+$$
+\Delta(n)=\gamma+\ln\ln E(n)-W(n).
+$$
+
+Robin 定理给出：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Delta(n)>0
+\quad\forall n>5040.
+}
+$$
+
+这是下面使用的经典数论起点；新工作在于怎样对 \(\Delta\) 建立可组合的局部界。([arXiv][1])
+
+固定一个基点 \(n\ge3\)，选择不同素数：
+
+$$
+p_1,\ldots,p_k.
+$$
+
+每个方向允许“增加一层”或“不增加”。对集合 \(S\subseteq\{1,\ldots,k\}\)，定义：
+
+$$
+n_S=n\prod_{i\in S}p_i.
+$$
+
+令：
+
+$$
+E=\ln n,\qquad
+\ell_i=\ln p_i,
+$$
+
+$$
+\rho_i=W(np_i)-W(n),
+\qquad
+h(E)=\ln\ln E.
+$$
+
+由于不同素数方向的 \(W\) 增量相加，得到：
+
+$$
+\boxed{
+F(S):=\Delta(n_S)
+=
+\Delta(n)
++h\left(E+\sum_{i\in S}\ell_i\right)-h(E)
+-\sum_{i\in S}\rho_i.
+}
+\tag{1}
+$$
+
+这个公式揭示了一个关键事实：
+
+> **二阶以上的联合项，全部来自同一个非线性预算函数 \(h\)。算术收益 \(W\) 在这些不同素数方向上是可分离的。**
+
+所以，虽然一个 \(k\) 维二值立方体最多有 \(2^k\) 个 Fourier 或 Möbius 模式，但在当前模型中，它们不是 \(2^k\) 个可以随意指定的参数。
+

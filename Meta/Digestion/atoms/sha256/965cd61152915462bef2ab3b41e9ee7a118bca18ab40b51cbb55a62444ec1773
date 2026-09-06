@@ -1,0 +1,36 @@
+# 十一、对项目下一步的实际价值
+
+这次最值得写成理论与形式化目标的，不是重新命名一个神秘语言，而是以下三项具体结果：
+
+$$
+\boxed{
+\mathsf X(M,k)
+\longrightarrow
+\begin{cases}
+\mathsf S(M,0,0,k-1;1),&k\mid M,\\
+\mathsf X(M,k-1),&k\nmid M,
+\end{cases}
+}
+$$
+
+$$
+\boxed{
+\mathsf B(n,m)
+\longrightarrow
+\mathsf B(n+1,D(n+1)-1),
+}
+$$
+
+以及带明确版本约定的：
+
+$$
+\boxed{
+\tau(M,m)
+=
+M+m-1+(6M+2)(M-D(M))
++2\sum_{k=D(M)}^{M-1}\left\lfloor\frac Mk\right\rfloor.
+}
+$$
+
+本轮进行了独立核对：
+
