@@ -69,6 +69,8 @@ public sealed partial class MakeWorkflowTests
         "decompose",
         "quarantine",
         "quarantine-clear",
+        "settle",
+        "settle-clear",
         "worktree",
         "worktree-clean",
         "pr-open",

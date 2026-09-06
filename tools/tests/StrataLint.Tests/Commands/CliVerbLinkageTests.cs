@@ -18,6 +18,15 @@ namespace StrataLint.Tests;
 public sealed class CliVerbLinkageTests
 {
     [Fact]
+    public void SettleMakeTargetsLinkToRegisteredVerb()
+    {
+        Assert.Contains("settle-atom", CliApplication.ImplementedCommands);
+        Assert.Equal(2, CollectInvocations(TestRepositoryLayout.FindRoot()).Count(invocation =>
+            invocation.File == "Makefile" && invocation.Verb == "settle-atom"
+            && invocation.Program == CommandProgram.StrataLint));
+    }
+
+    [Fact]
     public void AtomContextMakeTargetLinksToRegisteredVerb()
     {
         Assert.Contains("atom-context", CliApplication.ImplementedCommands);

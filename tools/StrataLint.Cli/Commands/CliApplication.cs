@@ -43,6 +43,7 @@ internal interface ICliEnvironment
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
     CommandResult QuarantineAtom(IReadOnlyList<string> arguments);
+    CommandResult SettleAtom(IReadOnlyList<string> arguments);
 
     CommandResult DecomposeAtom(IReadOnlyList<string> arguments);
 
@@ -112,6 +113,8 @@ internal static class CliApplication
                 RenderCommand(environment.CoverAtom(tail), console),
             ["quarantine-atom"] = static (environment, tail, console) =>
                 RenderCommand(environment.QuarantineAtom(tail), console),
+            ["settle-atom"] = static (environment, tail, console) =>
+                RenderCommand(environment.SettleAtom(tail), console),
             ["decompose-atom"] = static (environment, tail, console) =>
                 RenderCommand(environment.DecomposeAtom(tail), console),
             ["dag-render"] = static (environment, tail, console) =>

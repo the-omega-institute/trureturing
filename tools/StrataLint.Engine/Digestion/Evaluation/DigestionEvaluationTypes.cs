@@ -79,6 +79,7 @@ internal static class DigestionStatusNames
         DigestionMigrationState.Residual => "residual",
         DigestionMigrationState.Partial => "partial",
         DigestionMigrationState.Absorbed => "absorbed",
+        DigestionMigrationState.Nonpropositional => "nonpropositional",
         _ => throw new ArgumentOutOfRangeException(nameof(value)),
     };
 
@@ -87,6 +88,7 @@ internal static class DigestionStatusNames
         DigestionTruthState.Closed => "closed",
         DigestionTruthState.Tail => "tail",
         DigestionTruthState.Open => "open",
+        DigestionTruthState.Inapplicable => "inapplicable",
         _ => throw new ArgumentOutOfRangeException(nameof(value)),
     };
 }

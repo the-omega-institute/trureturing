@@ -480,6 +480,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) =>
         QuarantineAtomCommand.Run(repositoryRoot, repository, arguments);
 
+    public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
+        SettleAtomCommand.Run(repositoryRoot, repository, arguments);
+
     public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) =>
         DecomposeAtomCommand.Run(repositoryRoot, repository, arguments);
 
