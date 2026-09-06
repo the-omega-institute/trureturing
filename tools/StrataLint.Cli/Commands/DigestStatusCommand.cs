@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static partial class DigestStatusCommand
+internal static class DigestStatusCommand
 {
     private const string ImplementationPath = "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs";
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -437,6 +437,31 @@ internal static partial class DigestStatusCommand
                 $"GAP atom={entry.Entry.AtomId} code={gap.Code} "
                 + $"detail={JsonSerializer.Serialize(gap.Detail)}\n")));
         return new CommandResult(false, string.Empty, error);
+    }
+
+    private sealed record ReceiptGateScope(
+        RawChangeSet Changes,
+        Func<string, bool> IsBaseFactAffected);
+
+    private static ReceiptGateScope ResolveReceiptGateScope(
+        RepositorySnapshot current,
+        RepositorySnapshot? baseline,
+        LeanAxiomReport report,
+        BackfillInventoryDocument document,
+        RawChangeSet repositoryChanges)
+    {
+        var changes = baseline is null
+            ? repositoryChanges
+            : BackfillDeltaImpactResolver.Resolve(
+                current,
+                baseline,
+                report,
+                document,
+                repositoryChanges).EvaluationChanges;
+        var affectedPaths = changes.Paths
+            .Select(static path => path.Value)
+            .ToHashSet(StringComparer.Ordinal);
+        return new ReceiptGateScope(changes, affectedPaths.Contains);
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>

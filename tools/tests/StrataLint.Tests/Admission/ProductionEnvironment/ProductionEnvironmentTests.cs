@@ -309,6 +309,30 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(second.Success, second.Error);
         Assert.Equal(first.Output, second.Output);
         Assert.Contains("SELFTEST PASS", first.Output, StringComparison.Ordinal);
+
+        var snapshot = Decode(new GitRepositoryGateway(repositoryRoot).ReadCurrent());
+        var report = new PrecomputedLeanReportSource(repositoryRoot).Load(snapshot);
+        var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
+            LeanClosureValidator.Validate(snapshot, report)).Capability;
+        var document = BackfillInventoryLoader.Load(snapshot);
+        var changes = RawChangeSet.Create(["README.md"]);
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            document,
+            snapshot,
+            lean,
+            new ProductionScribeEmissionVerifier().Verify(snapshot, report),
+            baselineDocument: document,
+            baselineSnapshot: snapshot,
+            changes: changes,
+            projectedStatusChanges: changes,
+            receiptGateChanges: changes);
+
+        Assert.Equal(
+            document.RequireDigestionEntries().Length,
+            evaluation.Entries.Length);
+        Assert.All(evaluation.Entries, static entry =>
+            Assert.Equal(entry.Entry.ProjectedStatus, entry.DerivedStatus));
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>

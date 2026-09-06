@@ -2,7 +2,6 @@ namespace StrataLint.Engine;
 
 internal sealed record BackfillDeltaImpact(
     RawChangeSet EvaluationChanges,
-    RawChangeSet ReceiptVerificationChanges,
     bool HasAffectedEdges);
 
 internal static class BackfillDeltaImpactResolver
@@ -63,19 +62,8 @@ internal static class BackfillDeltaImpactResolver
                 new RawChange(RepoPath.CreateKnown(path), RawChangeKind.Modified));
         }
 
-        var receiptVerificationEntries = evaluationEntries
-            .ToDictionary(static entry => entry.Key, static entry => entry.Value, StringComparer.Ordinal);
-        foreach (var change in repositoryChanges.Entries.Where(static change =>
-                     change.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
-                     && change.Path.Value.EndsWith(".lean", StringComparison.Ordinal)))
-        {
-            receiptVerificationEntries.TryAdd(change.Path.Value, change);
-        }
-
         return new BackfillDeltaImpact(
             RawChangeSet.CreateWithKinds(evaluationEntries.Values.Select(static change =>
-                (change.Path.Value, change.Kind))),
-            RawChangeSet.CreateWithKinds(receiptVerificationEntries.Values.Select(static change =>
                 (change.Path.Value, change.Kind))),
             affectedEntryPaths.Count > 0);
     }

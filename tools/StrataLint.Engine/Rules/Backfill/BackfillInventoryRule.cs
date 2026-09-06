@@ -149,7 +149,6 @@ internal static partial class BackfillInventoryRule
     {
         BackfillInventoryDocument document;
         RawChangeSet? evaluationChanges = changes;
-        RawChangeSet? receiptVerificationChanges = changes;
         Func<string, bool>? isBaseFactAffected = null;
         try
         {
@@ -165,7 +164,6 @@ internal static partial class BackfillInventoryRule
                     document,
                     changes);
                 evaluationChanges = impact.EvaluationChanges;
-                receiptVerificationChanges = impact.ReceiptVerificationChanges;
                 var affectedPaths = evaluationChanges.Paths
                     .Select(static path => path.Value)
                     .ToHashSet(StringComparer.Ordinal);
@@ -185,7 +183,7 @@ internal static partial class BackfillInventoryRule
                 context.Policy,
                 context.Lean,
                 context.VerifiedScribeEmissions,
-                receiptVerificationChanges,
+                evaluationChanges,
                 isBaseFactAffected,
                 ProjectedStatusChanges: evaluationChanges),
             document);

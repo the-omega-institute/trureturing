@@ -6,7 +6,7 @@ namespace StrataLint.Tests;
 
 // SL-016 的唤醒路径。独立成文件而非并入 RuleEngineTests:后者已达 SL-003 硬线 800 行,
 // 按 CLAUDE.md 第 8 条「桶满则裂、只裂不迁」,新条目入新桶,既有条目原地不动。
-public sealed class Sl016WakeupTests
+public sealed partial class Sl016WakeupTests
 {
     private const string AtomPath =
         "Meta/Digestion/backfill/delta-v0.1/partial-open/"
@@ -167,85 +167,6 @@ public sealed class Sl016WakeupTests
         Assert.Contains(evaluation.Diagnostics, static finding => finding.Message.Contains(
             "scribe-emission-mismatch",
             StringComparison.Ordinal));
-    }
-
-    [Theory]
-    [InlineData("invalid-header")]
-    [InlineData("pending-state")]
-    [InlineData("mixed-open-closed-to-pending")]
-    [InlineData("mixed-open-pending-to-closed")]
-    public void LeanApplicabilityChangeWithStableTargetValueWakesAndJudgesReferencedEdge(
-        string scenario)
-    {
-        const string targetGid = "D5/S0/Carrier/BackfillTarget";
-        var targetPath = targetGid + ".lean";
-        var fixture = CoverageReceiptFixture(
-            targetGid,
-            FrozenStatementReceiptTestData.Id('a'));
-        var changedPaths = new List<string> { targetPath };
-        var mixedOpen = scenario.StartsWith("mixed-open-", StringComparison.Ordinal);
-        if (scenario == "invalid-header")
-        {
-            fixture.Files[targetPath] = fixture.Files[targetPath].Replace(
-                "none(waiver:test-fixture)",
-                "none(waiver: )",
-                StringComparison.Ordinal);
-        }
-        else
-        {
-            if (!mixedOpen)
-            {
-                var closedAtomPath = AtomPath.Replace(
-                    "partial-open", "partial-closed", StringComparison.Ordinal);
-                foreach (var files in new[] { fixture.Files, fixture.Baseline })
-                {
-                    files[closedAtomPath] = files[AtomPath];
-                    files.Remove(AtomPath);
-                }
-            }
-            fixture.Files[targetPath] += "\n-- candidate proof authority changed\n";
-            if (scenario == "mixed-open-pending-to-closed")
-            {
-                var statePath = FrozenStatePath.FromModulePath(RepoPath.CreateKnown(targetPath)).Value;
-                fixture.Baseline.Remove(statePath);
-                changedPaths.Add(statePath);
-            }
-            else
-                fixture.Reports[targetPath] = new LeanFileReport([], [new LeanDeclaration(
-                    "protectedTargetFixture", "def", "Unit", ["fixture.nonstandard"])]);
-        }
-        if (mixedOpen)
-        {
-            foreach (var files in new[] { fixture.Files, fixture.Baseline })
-                files[AtomPath] = files[AtomPath].Replace("receipts:\n",
-                    "  - gid: D5/X_Frontier/Hearts\n    target_statement_id: null\nreceipts:\n",
-                    StringComparison.Ordinal);
-        }
-        var context = fixture.Build(RawChangeSet.Create(changedPaths));
-        var ruleEvaluation = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(context)).Capability;
-        var document = BackfillInventoryLoader.LoadCandidateDelta(
-            context.Current,
-            context.Baseline,
-            context.Changes);
-        var impact = BackfillDeltaImpactResolver.Resolve(
-            context.Current,
-            context.Baseline,
-            context.Lean.Report,
-            document,
-            context.Changes);
-        var entry = Assert.Single(document.RequireDigestionEntries());
-
-        Assert.True(impact.HasAffectedEdges);
-        Assert.True(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
-        if (scenario == "invalid-header")
-        {
-            Assert.Contains(
-                ruleEvaluation.Diagnostics,
-                static finding => finding.Message.Contains(
-                    "scribe-applicability-invalid",
-                    StringComparison.Ordinal));
-        }
     }
 
     [Fact]
@@ -536,6 +457,7 @@ public sealed class Sl016WakeupTests
     [Theory]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
+    [InlineData("scribe-declaration-reference-missing")]
     public void ChangedEdgeScribeReceiptIntegrityGapIsBlockingAtSl016Admission(
         string mismatchCode)
     {

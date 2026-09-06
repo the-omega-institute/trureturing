@@ -139,12 +139,30 @@ internal static class AlignScribeReceiptCommand
 
         var edge = CurrentEdgeValidator.Validate(pair.Gid, current, report, states, frozen);
         var applicability = ReceiptApplicability.Classify(ParseGid(pair.Gid), edge, current, report, frozen);
-        if (applicability is ReceiptApplicability.Failure failure)
-            throw new InvalidOperationException("scribe-applicability-invalid: " + failure.Message);
-        if (applicability is ReceiptApplicability.NotApplicableMirrorWaiver)
-            return new SeedPlan(pair, entry, SeedEligibility.NotApplicable, "SEED_MIRROR_WAIVER");
-        if (!edge.IsClosed)
-            return new SeedPlan(pair, entry, SeedEligibility.AmbiguousEdge, "SEED_EDGE_NOT_CLOSED: " + edge.Diagnostic);
+        switch (applicability)
+        {
+            case ReceiptApplicability.Failure failure:
+                throw new InvalidOperationException(
+                    "scribe-applicability-invalid: " + failure.Message);
+            case ReceiptApplicability.NotApplicableMirrorWaiver:
+                return new SeedPlan(
+                    pair,
+                    entry,
+                    SeedEligibility.NotApplicable,
+                    "SEED_MIRROR_WAIVER");
+            case ReceiptApplicability.PendingTarget:
+            case ReceiptApplicability.NotApplicableNonFormal:
+                return new SeedPlan(
+                    pair,
+                    entry,
+                    SeedEligibility.AmbiguousEdge,
+                    "SEED_EDGE_NOT_CLOSED: " + edge.Diagnostic);
+            case ReceiptApplicability.Required:
+                break;
+            default:
+                throw new InvalidOperationException("unknown receipt applicability");
+        }
+
         if (edges[0].TargetStatementId != edge.TargetStatementId)
             return new SeedPlan(pair, entry, SeedEligibility.AmbiguousEdge, "SEED_TARGET_MISMATCH");
         var documentGid = ScribeEmissionAttestation.DocumentGid(pair.Gid);

@@ -197,7 +197,7 @@ internal static partial class CoverAtomCommand
                 document,
                 receiptSeedChanges);
             var evaluationChanges = authorityImpact.EvaluationChanges;
-            var receiptVerificationChanges = receiptImpact.ReceiptVerificationChanges;
+            var receiptVerificationChanges = receiptImpact.EvaluationChanges;
             var evaluationScope = DigestionEvaluationScopes.ForChanges(
                 authorityChanges,
                 ImplementationPath);
