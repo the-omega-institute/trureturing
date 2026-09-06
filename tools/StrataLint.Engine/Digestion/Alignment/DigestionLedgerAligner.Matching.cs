@@ -82,10 +82,8 @@ internal static partial class DigestionLedgerAligner
     }
 
     private static HashSet<string> InheritedEntries(
-        BackfillInventoryDocument? baselineDocument,
-        ImmutableHashSet<string>? sourceIds = null) =>
+        BackfillInventoryDocument? baselineDocument) =>
         (baselineDocument?.RequireDigestionSources() ?? [])
-            .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
             .SelectMany(source => source.Entries.Select(entry => CanonicalEntry(
                 source,
                 entry)))

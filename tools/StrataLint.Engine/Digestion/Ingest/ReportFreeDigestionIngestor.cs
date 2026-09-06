@@ -109,7 +109,6 @@ internal static class ReportFreeDigestionIngestor
                 atomizerRules,
                 atomizerResolver,
                 contentKindAtomizerResolver,
-                currentAtomIds,
                 fallbacks);
             var outputSource = currentSourceIds.Contains(source.SourceId)
                 ? source
@@ -217,7 +216,6 @@ internal static class ReportFreeDigestionIngestor
         TheoryAtomizerRules rules,
         Func<string, TheoryAtomizer> atomizerResolver,
         Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver,
-        ImmutableHashSet<string> currentAtomIds,
         ImmutableArray<DigestionIngestFallback>.Builder fallbacks)
     {
         AtomizedTheoryDocument atomized;
@@ -233,7 +231,7 @@ internal static class ReportFreeDigestionIngestor
         catch (Exception exception) when (
             exception is TheorySourceFormatException or DecoderFallbackException)
         {
-            return CoarseFallback(source, sourceBytes, exception.Message, currentAtomIds, fallbacks);
+            return CoarseFallback(source, sourceBytes, exception.Message, fallbacks);
         }
 
         if (DigestionLedgerAligner.AtomizerIntegrityFailure(
@@ -252,7 +250,6 @@ internal static class ReportFreeDigestionIngestor
             source,
             sourceBytes,
             "atomizer recognition is incomplete or empty",
-            currentAtomIds,
             fallbacks);
     }
 
@@ -260,14 +257,12 @@ internal static class ReportFreeDigestionIngestor
         DigestionLedgerSource source,
         ImmutableArray<byte> sourceBytes,
         string reason,
-        ImmutableHashSet<string> currentAtomIds,
         ImmutableArray<DigestionIngestFallback>.Builder fallbacks)
     {
         var fingerprints = DigestionFingerprint.ComputeOpaque(sourceBytes.AsSpan());
         var atomId = fingerprints.RawSha256["sha256:".Length..];
         if (!source.Entries.IsEmpty
-            && !source.Entries.Any(entry => entry.AtomId == atomId)
-            && !currentAtomIds.Contains(atomId))
+            && !source.Entries.Any(entry => entry.AtomId == atomId))
         {
             throw new FormatException($"source {source.SourceId} atomization failed: {reason}");
         }

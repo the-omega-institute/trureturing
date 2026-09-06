@@ -8,8 +8,7 @@ internal static partial class DigestionStatusEvaluator
         BackfillInventoryDocument document,
         BackfillInventoryDocument baselineDocument,
         RawChangeSet? changes,
-        DigestionLedgerAlignment alignment,
-        ImmutableHashSet<string>? sourceIds = null)
+        DigestionLedgerAlignment alignment)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(baselineDocument);
@@ -18,7 +17,7 @@ internal static partial class DigestionStatusEvaluator
         var baselineEntries = baselineDocument.RequireDigestionEntries()
             .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         return ResolveStatusAuthorityChangedAtomIds(
-            entries.Where(entry => sourceIds is null || sourceIds.Contains(entry.SourceId)),
+            entries,
             baselineEntries.Keys.ToHashSet(StringComparer.Ordinal),
             changes,
             alignment,

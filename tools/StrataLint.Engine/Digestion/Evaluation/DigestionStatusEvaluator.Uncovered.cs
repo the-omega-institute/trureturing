@@ -10,11 +10,7 @@ internal static partial class DigestionStatusEvaluator
         RepositorySnapshot snapshot,
         BackfillInventoryDocument? baselineDocument = null,
         RawChangeSet? changes = null,
-        RawChangeSet? casChanges = null,
-        ImmutableHashSet<string>? sourceIds = null,
-        Func<string, TheoryAtomizer>? atomizerResolver = null,
-        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null,
-        ImmutableHashSet<string>? preservedAtomIds = null)
+        RawChangeSet? casChanges = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -33,14 +29,10 @@ internal static partial class DigestionStatusEvaluator
             snapshot,
             baselineDocument,
             DigestionAlignmentMode.Projection,
-            atomizerResolver,
             casEvaluation: DigestionCasStore.Evaluate(document, snapshot, casChanges),
             changes: changes,
-            casChanges: casChanges,
-            contentKindAtomizerResolver: contentKindAtomizerResolver,
-            sourceIds: sourceIds);
-        if (preservedAtomIds is null)
-            findings.AddRange(alignment.Findings);
+            casChanges: casChanges);
+        findings.AddRange(alignment.Findings);
         var emptyLeanReport = LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
         var emptyTruthStates = new Dictionary<RepoPath, TruthState>();
@@ -53,15 +45,12 @@ internal static partial class DigestionStatusEvaluator
             FrozenStateCatalog.Load(snapshot),
             emptyLeanReport));
         var statusAuthorityChangedAtomIds = ResolveStatusAuthorityChangedAtomIds(
-            entries.Where(entry => (sourceIds is null || sourceIds.Contains(entry.SourceId))
-                && (preservedAtomIds is null || !preservedAtomIds.Contains(entry.AtomId))),
+            entries,
             baselineAtomIds: ImmutableHashSet<string>.Empty,
             changes,
             alignment,
             isBaseFactAffected: null);
         var work = entries
-            .Where(entry => sourceIds is null || sourceIds.Contains(entry.SourceId))
-            .Where(entry => preservedAtomIds is null || !preservedAtomIds.Contains(entry.AtomId))
             .Where(static entry => entry.CoverageGids.Length == 0)
             .Select(entry => Inspect(
                 entry,

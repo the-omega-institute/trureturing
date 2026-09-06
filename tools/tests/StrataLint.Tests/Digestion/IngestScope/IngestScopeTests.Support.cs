@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -12,8 +11,6 @@ public sealed partial class IngestScopeTests
     private const string AlphaText = "## Claim 1\n\nAlpha fact.\n\n";
     private const string BetaText = "## Claim 2\n\nBeta fact.\n\n";
     private const string Addition = "## Claim 3\n\nAdditional fact.\n";
-    private static readonly ImmutableHashSet<string> BetaOnly =
-        ImmutableHashSet.Create(StringComparer.Ordinal, "beta");
 
     private static DigestionAtom Atom(string text) => Assert.Single(
         GenericAtomizer.Atomize(Encoding.UTF8.GetBytes(text), DigestionTestSupport.Rules).Claims);
@@ -66,10 +63,6 @@ public sealed partial class IngestScopeTests
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
-
-    private static RepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
-        DigestionTestSupport.Snapshot(files.Select(static item =>
-            (item.Key, Encoding.UTF8.GetBytes(item.Value))).ToArray());
 
     private static string AtomPath(DigestionLedgerEntry entry) =>
         $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/residual-open/{entry.AtomId}.yaml";
@@ -155,12 +148,4 @@ public sealed partial class IngestScopeTests
         TemporaryDirectory temporary,
         RuleFixture fixture) =>
         Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files));
-
-
-    private static DigestionIngestPlan Plan(BackfillInventoryDocument document, RepositorySnapshot snapshot,
-        BackfillInventoryDocument baseline, ImmutableHashSet<string>? sourceIds = null,
-        RawChangeSet? changes = null, Func<string, TheoryAtomizer>? atomizer = null,
-        Func<string, TheoryAtomizerWithContentKinds>? contentAtomizer = null) =>
-        DigestionIngestor.Plan(document, snapshot, baseline, sourceIds: sourceIds,
-            changes: changes, atomizerResolver: atomizer, contentKindAtomizerResolver: contentAtomizer);
 }

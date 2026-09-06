@@ -1,10 +1,51 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Reflection;
+using StrataLint.Cli;
+using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
 
 public sealed class DigestionStatusEvaluatorArchitectureTests
 {
+    [Fact]
+    public void IngestAlignmentApiIsWholeLedgerOnly()
+    {
+        AssertParameters(typeof(DigestionIngestor), "Plan",
+            "document", "snapshot", "baselineDocument", "baselineSnapshot", "atomizerResolver", "changes");
+        AssertParameters(typeof(DigestionIngestor), "NormalizeAtomIdentities", "document");
+        AssertParameters(typeof(DigestionLedgerAligner), "Evaluate",
+            "document", "snapshot", "baselineDocument", "mode", "atomizerResolver", "baselineSnapshot",
+            "casEvaluation", "changes", "casChanges", "contentKindAtomizerResolver");
+        AssertParameters(typeof(DigestionStatusEvaluator), "EvaluateUncovered",
+            "scope", "document", "snapshot", "baselineDocument", "changes", "casChanges");
+        AssertParameters(typeof(DigestionStatusEvaluator), "StatusAuthorityChangedAtomIds",
+            "document", "baselineDocument", "changes", "alignment");
+        Assert.Equal(
+            ["AdmissionDocument", "Alignment", "CasObjects", "Fallbacks", "ResidualOpenAdded", "StaleAcknowledged"],
+            typeof(DigestionIngestPlan).GetProperties().Select(static property => property.Name)
+                .Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
+    public void DigestionBackfillValidationHasOneTruthAlignedEntryPoint()
+    {
+        const BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+        Assert.Equal(["RenderOrThrow", "RequireValidBackfill"],
+            typeof(DigestionBackfillValidation).GetMethods(flags).Select(static method => method.Name)
+                .Order(StringComparer.Ordinal));
+        var entryPoint = Assert.Single(typeof(BackfillInventoryRule).GetMethods(flags),
+            static method => method.Name.StartsWith("EvaluateDocument", StringComparison.Ordinal));
+        Assert.Equal(["context", "document"], entryPoint.GetParameters().Select(static parameter => parameter.Name));
+    }
+
+    private static void AssertParameters(Type owner, string name, params string[] expected)
+    {
+        var method = Assert.Single(owner.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic),
+            method => method.Name == name);
+        Assert.Equal(expected, method.GetParameters().Select(static parameter => parameter.Name));
+    }
+
     [Fact]
     public void CompleteChainGapsUsesPrebuiltAtomIndex()
     {

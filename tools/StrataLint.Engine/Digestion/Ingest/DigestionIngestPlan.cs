@@ -8,9 +8,8 @@ internal sealed record DigestionIngestPlan(
     int StaleAcknowledged,
     int ResidualOpenAdded,
     ImmutableArray<DigestionCasObject> CasObjects,
-    ImmutableArray<DigestionIngestFallback> Fallbacks,
-    ImmutableHashSet<string>? SourceIds = null)
+    ImmutableArray<DigestionIngestFallback> Fallbacks)
 {
     internal BackfillInventoryDocument Document { get; } =
-        DigestionIngestor.NormalizeAtomIdentities(AdmissionDocument, SourceIds);
+        DigestionIngestor.NormalizeAtomIdentities(AdmissionDocument);
 }

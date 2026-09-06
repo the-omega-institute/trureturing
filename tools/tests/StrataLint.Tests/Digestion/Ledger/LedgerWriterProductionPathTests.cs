@@ -1,4 +1,6 @@
 using System.Collections.Immutable;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -38,25 +40,111 @@ public sealed class LedgerWriterProductionPathTests
     }
 
     [Fact]
-    public void DepositDelegatedMultiGidCover_WritesLedgerBytesInOrdinalOrder()
+    public async Task DepositDelegatedMultiGidCover_WritesLedgerBytesInOrdinalOrder()
     {
-        var spec = MaterializeSpec();
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.AddSecondaryFormalization();
+        var spec = new CoverSpec
+        {
+            ModuleGid = "D5/S3/Observer/WindowRegisterCRT",
+            Declaration = "window_register_crt_decomposition",
+            ReportDeclarations = ["window_register_crt_decomposition"],
+            SecondaryTarget = ("D5/S0/Carrier/Probe", "probe"),
+        };
         var world = spec.Materialize();
-        using var repository = new TemporaryDirectory();
-        var environment = Environment(repository, world, world.Document, world.Document);
+        DirectoryLedgerTestSupport.Write(fixture.Root, world.Files);
+        File.Delete(Path.Combine(fixture.Root, TransactionFixture.BackfillPath));
+        File.WriteAllText(Path.Combine(fixture.Root, "bin", "make"),
+            "#!/usr/bin/env bash\nset -euo pipefail\nprintf 'make:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"\n",
+            new UTF8Encoding(false));
+        using var listener = new TcpListener(IPAddress.Loopback, 0);
+        listener.Start();
+        var port = ((IPEndPoint)listener.LocalEndpoint).Port;
+        var dotnet = Path.Combine(fixture.Root, "bin", "dotnet");
+        File.Move(dotnet, dotnet + "-stub");
+        // Only transport crosses the process boundary. Coverage still runs through
+        // CliApplication and ProductionCliEnvironment before deposit can continue.
+        File.WriteAllText(dotnet, $$"""
+            #!/usr/bin/env bash
+            set -euo pipefail
+            original=("$@")
+            while [[ $# -gt 0 && $1 != -- ]]; do shift; done
+            [[ $# -gt 0 ]] || exit 96
+            shift
+            if [[ ${1:-} != cover-atom ]]; then
+              exec "$(dirname "$0")/dotnet-stub" "${original[@]}"
+            fi
+            printf 'dotnet:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
+            exec 3<>/dev/tcp/127.0.0.1/{{port}}
+            printf '%s\n' "$@" '' >&3
+            IFS= read -r status <&3
+            cat <&3
+            exit "$status"
+            """ + "\n", new UTF8Encoding(false));
+        File.SetUnixFileMode(dotnet, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
-        // deposit delegates its coverage write to this production command. Keep
-        // the command input deliberately reversed so the writer owns ordering.
-        var result = environment.CoverAtom(
-        [
-            "--cover-atom", spec.AtomId,
-            "--gid", ZetaGid,
-            "--gid", AlphaGid,
-            "--base", "baseline",
-        ]);
+        foreach (var gid in new[] { TransactionFixture.SecondaryGid, TransactionFixture.Gid })
+            await DepositThroughCli(fixture, listener, world, spec.AtomId, gid);
 
-        Assert.True(result.Success, result.Error);
-        AssertCanonicalGidBytes(ReadAtomBytes(repository, spec.AtomId));
+        Assert.Equal(
+            [TransactionFixture.SecondaryGid, TransactionFixture.Gid],
+            fixture.Calls().Where(static call => call.StartsWith("dotnet:cover-atom ", StringComparison.Ordinal))
+                .Select(static call => call.Split(' ')[4]));
+        var atomPath = Assert.Single(Directory.EnumerateFiles(
+            Path.Combine(fixture.Root, BackfillInventoryLoader.RootPath),
+            spec.AtomId + ".yaml", SearchOption.AllDirectories));
+        AssertCanonicalGidBytes(File.ReadAllBytes(atomPath), TransactionFixture.Gid, TransactionFixture.SecondaryGid);
+    }
+
+    private static async Task DepositThroughCli(
+        TransactionFixture fixture,
+        TcpListener listener,
+        CoverInputs world,
+        string atomId,
+        string gid)
+    {
+        using var cancellation = new CancellationTokenSource(TestBudgets.PlaybookProcessHangGuard);
+        var connection = listener.AcceptTcpClientAsync(cancellation.Token).AsTask();
+        var process = Task.Run(() => fixture.Run("deposit", gid: gid, atomId: atomId));
+        if (await Task.WhenAny(connection, process) == process)
+        {
+            cancellation.Cancel();
+            try { using var unused = await connection; }
+            catch (OperationCanceledException) { }
+            var failed = await process;
+            Assert.Fail("deposit exited without delegating cover-atom: "
+                + Encoding.UTF8.GetString(failed.StandardError));
+        }
+
+        using (var client = await connection)
+        {
+            var stream = client.GetStream();
+            using var reader = new StreamReader(stream, leaveOpen: true);
+            using var writer = new StreamWriter(stream, new UTF8Encoding(false), leaveOpen: true) { AutoFlush = true };
+            var arguments = new List<string>();
+            while (await reader.ReadLineAsync(cancellation.Token) is { Length: > 0 } argument)
+                arguments.Add(argument);
+            var current = world.Files.Where(static pair => !BackfillInventoryLoader.IsCanonicalPath(pair.Key))
+                .ToDictionary(StringComparer.Ordinal);
+            foreach (var path in Directory.EnumerateFiles(
+                Path.Combine(fixture.Root, BackfillInventoryLoader.RootPath), "*", SearchOption.AllDirectories))
+                current[Path.GetRelativePath(fixture.Root, path).Replace(Path.DirectorySeparatorChar, '/')] = File.ReadAllText(path);
+            var environment = new ProductionCliEnvironment(
+                fixture.Root,
+                new FakeRepositoryGateway(RawChangeSet.Create([]), CoverWorld.Raw(current), CoverWorld.Raw(world.Baseline)),
+                new FakeLeanReportSource(world.Report),
+                new FakeScribeEmissionVerifier(world.VerifiedEmissions),
+                CoverWorld.TimeProvider);
+            var console = new BufferedConsole();
+            var status = CliApplication.Run(arguments, environment, console);
+            await writer.WriteLineAsync(status.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            await writer.WriteAsync(console.Output + console.Error);
+        }
+        var result = await process;
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains($"COVER atom_id={atomId} gid={gid} ledger_changed=true",
+            Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -148,18 +236,18 @@ public sealed class LedgerWriterProductionPathTests
         return File.ReadAllBytes(path);
     }
 
-    private static void AssertCanonicalGidBytes(byte[] bytes)
+    private static void AssertCanonicalGidBytes(byte[] bytes, string alpha = AlphaGid, string zeta = ZetaGid)
     {
         var text = new UTF8Encoding(false, true).GetString(bytes);
         var receipts = text.IndexOf("receipts:\n", StringComparison.Ordinal);
-        var alphaCoverage = text.IndexOf($"  - gid: {AlphaGid}\n", StringComparison.Ordinal);
-        var zetaCoverage = text.IndexOf($"  - gid: {ZetaGid}\n", StringComparison.Ordinal);
+        var alphaCoverage = text.IndexOf($"  - gid: {alpha}\n", StringComparison.Ordinal);
+        var zetaCoverage = text.IndexOf($"  - gid: {zeta}\n", StringComparison.Ordinal);
         var alphaScribe = text.IndexOf(
-            $"    - gid: {AlphaGid}\n",
+            $"    - gid: {alpha}\n",
             receipts,
             StringComparison.Ordinal);
         var zetaScribe = text.IndexOf(
-            $"    - gid: {ZetaGid}\n",
+            $"    - gid: {zeta}\n",
             receipts,
             StringComparison.Ordinal);
 

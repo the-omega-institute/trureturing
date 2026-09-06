@@ -25,6 +25,10 @@ case "$VERB" in
       ingest_args+=(--source "$selector")
     done
     set +f
+    if [[ -n "$PAYLOAD" && ${#ingest_args[@]} -eq 3 ]]; then
+      echo "SOURCE must contain at least one selector" >&2
+      usage
+    fi
     exec dotnet run --project "$PROJECT" --configuration Release -- \
       "${ingest_args[@]}"
     ;;

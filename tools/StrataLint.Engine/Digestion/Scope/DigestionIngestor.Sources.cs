@@ -22,7 +22,7 @@ internal static partial class DigestionIngestor
         var declaredPaths = sources
             .Select(static source => source.SourcePath)
             .ToHashSet(StringComparer.Ordinal);
-        var sourceIds = sources.ToDictionary(
+        var sourcePathsById = sources.ToDictionary(
             static source => source.SourceId,
             static source => source.SourcePath,
             StringComparer.Ordinal);
@@ -37,13 +37,13 @@ internal static partial class DigestionIngestor
                      .Order(StringComparer.Ordinal))
         {
             var sourceId = DeriveSourceId(path);
-            if (sourceIds.TryGetValue(sourceId, out var claimant))
+            if (sourcePathsById.TryGetValue(sourceId, out var claimant))
             {
                 throw new FormatException(
                     $"theory source id derived from {path} collides with {claimant}: {sourceId}");
             }
 
-            sourceIds.Add(sourceId, path);
+            sourcePathsById.Add(sourceId, path);
             registered.Add(new DigestionLedgerSource(
                 sourceId,
                 path,

@@ -44,11 +44,10 @@ internal static partial class IngestCommand
             }
 
             var finalRaw = AddCasObjects(
-                ReplaceLedger(
+                AppendLedger(
                     inputs.CurrentRaw,
                     inputs.CurrentDocument,
-                    plan.Document,
-                    sourceIds),
+                    plan),
                 plan.CasObjects);
             return WriteReportFreeResult(
                 repositoryRoot,
@@ -70,14 +69,11 @@ internal static partial class IngestCommand
         RawRepositorySnapshot finalRaw,
         BackfillInventoryDocument finalDocument,
         DigestionLedgerEvaluation evaluation,
-        string backfillObservations,
-        ImmutableHashSet<string>? sourceIds = null)
+        string backfillObservations)
     {
-        var ledgerUpdates = LedgerUpdates(prepared.CurrentRaw, finalRaw, sourceIds);
-        RequireScopedCasObjects(prepared.Plan.CasObjects, finalDocument, sourceIds);
+        var ledgerUpdates = LedgerUpdates(prepared.CurrentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
         var openGenres = finalDocument.RequireDigestionSources()
-            .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
             .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>
                 (source.SourceId, Token: token)))
             .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
@@ -131,8 +127,7 @@ internal static partial class IngestCommand
         ReportFreeDigestionIngestPlan plan,
         ImmutableHashSet<string>? sourceIds)
     {
-        var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw, sourceIds);
-        RequireScopedCasObjects(plan.CasObjects, plan.Document, sourceIds);
+        var ledgerUpdates = LedgerAdditions(currentRaw, finalRaw, plan);
         RequireAppendOnlyWriteSet(
             currentRaw,
             currentDocument,
@@ -141,7 +136,7 @@ internal static partial class IngestCommand
             plan.CasObjects,
             plan.AddedAtomIds,
             sourceIds);
-        RequireNewCasIntegrity(currentRaw, plan.Document, plan.CasObjects, plan.AddedAtomIds);
+        RequireNewCasIntegrity(currentDocument, plan.Document, plan.CasObjects, plan.AddedAtomIds);
         var openGenres = plan.Document.RequireDigestionSources()
             .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
             .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>
@@ -152,7 +147,7 @@ internal static partial class IngestCommand
         var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
         try
         {
-            ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
+            ApplyLedgerAdditionsAtomically(repositoryRoot, ledgerUpdates);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

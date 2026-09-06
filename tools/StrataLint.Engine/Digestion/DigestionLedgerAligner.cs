@@ -85,8 +85,7 @@ internal static partial class DigestionLedgerAligner
         DigestionCasEvaluation? casEvaluation = null,
         RawChangeSet? changes = null,
         RawChangeSet? casChanges = null,
-        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null,
-        ImmutableHashSet<string>? sourceIds = null)
+        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -102,7 +101,6 @@ internal static partial class DigestionLedgerAligner
         var conflictedSources = new HashSet<string>(StringComparer.Ordinal);
         foreach (var source in sources)
         {
-            if (sourceIds is not null && !sourceIds.Contains(source.SourceId)) continue;
             if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile)
                 || DigestionSourceConflictMarkers.FindFirstLine(sourceFile.RawBytes.AsSpan()) is not { } line)
             {
@@ -169,9 +167,9 @@ internal static partial class DigestionLedgerAligner
 
         var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
-        var inheritedEntries = InheritedEntries(baselineDocument, sourceIds);
+        var inheritedEntries = InheritedEntries(baselineDocument);
         foreach (var (source, entry) in sources
-                     .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId)).SelectMany(source =>
+                     .SelectMany(source =>
                      source.Entries.Select(entry => (Source: source, Entry: entry))))
         {
             var inherited = inheritedEntries.Contains(CanonicalEntry(source, entry));
@@ -201,7 +199,6 @@ internal static partial class DigestionLedgerAligner
         var rejectedContentWideClones = new HashSet<string>(StringComparer.Ordinal);
         foreach (var baselineSource in baselineSources.Values)
         {
-            if (sourceIds is not null && !sourceIds.Contains(baselineSource.SourceId)) continue;
             candidateSources.TryGetValue(baselineSource.SourceId, out var candidateSource);
             var obligations = ContentWideReplacementObligations(
                 baselineSource,
@@ -231,7 +228,7 @@ internal static partial class DigestionLedgerAligner
             foreach (var baselineEntry in obligations)
             {
                 foreach (var (candidateSourceId, candidateEntry) in sources
-                             .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId)).SelectMany(source =>
+                             .SelectMany(source =>
                              source.Entries.Select(entry => (source.SourceId, Entry: entry))))
                 {
                     if (candidateEntry.AtomId == baselineEntry.AtomId
@@ -262,8 +259,7 @@ internal static partial class DigestionLedgerAligner
 
         foreach (var source in sources)
         {
-            if (sourceIds is not null && !sourceIds.Contains(source.SourceId)
-                || conflictedSources.Contains(source.SourceId))
+            if (conflictedSources.Contains(source.SourceId))
             {
                 continue;
             }

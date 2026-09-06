@@ -39,17 +39,13 @@ internal static partial class DigestionIngestor
         BackfillInventoryDocument baselineDocument,
         RepositorySnapshot? baselineSnapshot = null,
         Func<string, TheoryAtomizer>? atomizerResolver = null,
-        RawChangeSet? changes = null,
-        ImmutableHashSet<string>? sourceIds = null,
-        ImmutableHashSet<string>? registrationPaths = null,
-        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null)
+        RawChangeSet? changes = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(baselineDocument);
 
-        var migrationDocument = RegisterDefaultTheorySources(document, snapshot,
-            sourceIds is null ? null : registrationPaths ?? ImmutableHashSet<string>.Empty);
+        var migrationDocument = RegisterDefaultTheorySources(document, snapshot);
         var evaluationChanges = changes is null
             ? null
             : IncludeCasReverseDependencies(baselineDocument, changes);
@@ -59,12 +55,9 @@ internal static partial class DigestionIngestor
             baselineDocument,
             DigestionAlignmentMode.Ingest,
             atomizerResolver,
-            changes: evaluationChanges,
-            contentKindAtomizerResolver: contentKindAtomizerResolver,
-            sourceIds: sourceIds);
+            changes: evaluationChanges);
         var unverifiedChainParent = migrationDocument.RequireDigestionEntries().FirstOrDefault(entry =>
-            (sourceIds is null || sourceIds.Contains(entry.SourceId))
-            && entry.Receipts.ChainAtoms.Length > 0
+            entry.Receipts.ChainAtoms.Length > 0
             && alignment.ClausePlanChainParents.Contains(entry.AtomId)
             && !alignment.VerifiedClausePlanParents.Contains(entry.AtomId));
         if (unverifiedChainParent is not null)
@@ -98,11 +91,6 @@ internal static partial class DigestionIngestor
         var residualOpenAdded = 0;
         foreach (var source in migrationDocument.RequireDigestionSources())
         {
-            if (sourceIds is not null && !sourceIds.Contains(source.SourceId))
-            {
-                sources.Add(source);
-                continue;
-            }
             var resolvedSource = alignment.GenreRegistryChecks.TryGetValue(
                 source.SourceId,
                 out var genreRegistryCheck)
@@ -241,8 +229,7 @@ internal static partial class DigestionIngestor
             casObjects.Values
                 .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
                 .ToImmutableArray(),
-            alignment.Fallbacks,
-            sourceIds);
+            alignment.Fallbacks);
     }
 
     private static DigestionCasObject AddCasObject(
@@ -265,12 +252,10 @@ internal static partial class DigestionIngestor
     }
 
     internal static BackfillInventoryDocument NormalizeAtomIdentities(
-        BackfillInventoryDocument document,
-        ImmutableHashSet<string>? sourceIds = null)
+        BackfillInventoryDocument document)
     {
         var sources = document.RequireDigestionSources();
         var items = sources
-            .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
             .SelectMany((source, sourceIndex) => source.Entries.Select((entry, entryIndex) =>
                 (Source: source, SourceIndex: sourceIndex, Entry: entry, EntryIndex: entryIndex)))
             .ToArray();
@@ -392,8 +377,7 @@ internal static partial class DigestionIngestor
                 expectedReference));
         }
 
-        return document.WithDigestionSources(sources.Select(source =>
-            sourceIds is not null && !sourceIds.Contains(source.SourceId) ? source : source with
+        return document.WithDigestionSources(sources.Select(source => source with
         {
             AcknowledgedStale = source.AcknowledgedStale
                 .Select(Remap)

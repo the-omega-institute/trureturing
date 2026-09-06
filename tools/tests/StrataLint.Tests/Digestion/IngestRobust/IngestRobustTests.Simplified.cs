@@ -5,6 +5,62 @@ namespace StrataLint.Tests;
 
 public sealed partial class IngestRobustTests
 {
+    [Fact]
+    public void Ingest_ConcurrentExistingLedgerEditDoesNotBlockAppend()
+    {
+        var document = Ledger();
+        var fixture = Fixture(document);
+        fixture.Files[AlphaPath] += Addition;
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
+        var path = AtomPath(document.RequireDigestionSources()[0].Entries[0]);
+        var fullPath = Path.Combine(temporary.Path, path);
+        File.AppendAllText(fullPath, "# concurrent edit to an existing entry\n");
+        var before = File.ReadAllBytes(fullPath);
+
+        var result = Environment(fixture, temporary).Ingest(Arguments("alpha"));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(before, File.ReadAllBytes(fullPath));
+        AssertSummary(result, residualOpenAdded: 1, skippedExisting: 1);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Ingest_ExistingUnemittableScalarDoesNotBlockNewAtom(bool sourceScoped)
+    {
+        var document = Ledger();
+        var fixture = Fixture(document);
+        var entry = document.RequireDigestionSources()[0].Entries[0];
+        var path = AtomPath(entry);
+        fixture.Files[path] = fixture.Files[path].Replace(
+            "unresolved_subitems: []",
+            "unresolved_subitems:\n    - 'legacy # retained'",
+            StringComparison.Ordinal);
+        var loaded = BackfillInventoryLoader.Load(Decode(Raw(fixture.Files)))
+            .RequireDigestionEntries().Single(item => item.AtomId == entry.AtomId);
+        Assert.Equal("legacy # retained", Assert.Single(loaded.Receipts.UnresolvedSubitems));
+        Assert.Throws<FormatException>(() => BackfillInventoryWriter.WriteAtom(loaded));
+        fixture.Files[AlphaPath] += Addition;
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
+        var before = Raw(fixture.Files);
+
+        var result = Environment(fixture, temporary).Ingest(
+            sourceScoped ? Arguments("alpha") : Arguments());
+
+        Assert.True(result.Success, result.Error);
+        var after = Overlay(temporary, fixture);
+        foreach (var oldFile in before.Entries)
+            Assert.Equal(oldFile.Bytes.ToArray(), after.Entries.Single(item => item.Path == oldFile.Path).Bytes.ToArray());
+        var added = BackfillInventoryLoader.Load(Decode(after)).RequireDigestionEntries()
+            .ExceptBy(document.RequireDigestionEntries().Select(static item => item.AtomId),
+                static item => item.AtomId).ToArray();
+        Assert.Equal("alpha", Assert.Single(added).SourceId);
+        AssertSummary(result, residualOpenAdded: 1, skippedExisting: sourceScoped ? 1 : 2);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -73,6 +129,12 @@ public sealed partial class IngestRobustTests
         ]);
         var fixture = Fixture(document);
         var path = AtomPath(entry);
+        const string first = "  - gid: D5/S0/Carrier/Alpha.a\n    target_statement_id: null\n";
+        const string second = "  - gid: D5/S0/Carrier/Zeta.z\n    target_statement_id: null\n";
+        Assert.Contains(first + second, fixture.Files[path], StringComparison.Ordinal);
+        fixture.Files[path] = fixture.Files[path].Replace(first + second, second + first, StringComparison.Ordinal);
+        Assert.True(fixture.Files[path].IndexOf(second, StringComparison.Ordinal)
+            < fixture.Files[path].IndexOf(first, StringComparison.Ordinal));
         fixture.Files[path] = "# preserve non-canonical bytes\r\n"
             + fixture.Files[path].Replace("\n", "\r\n", StringComparison.Ordinal);
         using var temporary = new TemporaryDirectory();

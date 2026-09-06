@@ -358,8 +358,10 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(2, Run(0, "quarantine-clear", "baseline").ExitCode);
     }
 
-    [Fact]
-    public void IngestWrapperForwardsBaseWithoutLeanClosureProbe()
+    [Theory]
+    [InlineData("", "ingest --base HEAD")]
+    [InlineData("alpha beta", "ingest --base HEAD --source alpha --source beta")]
+    public void IngestWrapperForwardsBaseAndSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -404,11 +406,12 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest HEAD",
+                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest HEAD \"$4\"",
                 "ingest-wrapper",
                 binDirectory,
                 Path.Combine(fixture.Path, "cache"),
                 ingestPath,
+                sourcePayload,
             ],
             fixture.Path,
             BoundedProcessRunner.HangDetectionBudget,
@@ -417,23 +420,13 @@ public sealed partial class MakeWorkflowTests
         File.AppendAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), "-- closure delta\n");
         var changed = RunWrapper();
         Assert.Equal(0, changed.ExitCode);
-        Assert.Contains(
-            "ingest --base HEAD",
-            System.Text.Encoding.UTF8.GetString(changed.StandardOutput),
-            StringComparison.Ordinal);
-        Assert.DoesNotContain(
-            "report-input-state",
-            System.Text.Encoding.UTF8.GetString(changed.StandardOutput),
-            StringComparison.Ordinal);
+        Assert.Equal(expected, Encoding.UTF8.GetString(changed.StandardOutput).Split(" -- ")[^1].Trim());
 
         File.WriteAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), leanSource);
         File.AppendAllText(Path.Combine(fixture.Path, "README.md"), "markdown-only delta\n");
         var unchanged = RunWrapper();
         Assert.Equal(0, unchanged.ExitCode);
-        Assert.Contains(
-            "ingest --base HEAD",
-            System.Text.Encoding.UTF8.GetString(unchanged.StandardOutput),
-            StringComparison.Ordinal);
+        Assert.Equal(expected, Encoding.UTF8.GetString(unchanged.StandardOutput).Split(" -- ")[^1].Trim());
     }
 
     [Fact]

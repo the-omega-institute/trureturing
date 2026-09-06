@@ -193,37 +193,7 @@ internal static partial class BackfillInventoryRule
 
     internal static ImmutableArray<RuleFinding> EvaluateDocument(
         BackfillInventoryValidationContext context,
-        BackfillInventoryDocument document) =>
-        EvaluateDocument(context, document, validateTruthAlignment: true);
-
-    internal static ImmutableArray<RuleFinding> EvaluateDocumentWithoutTruthAlignment(
-        RepositorySnapshot current,
-        RepositorySnapshot baseline,
-        ValidatedPolicy policy,
-        BackfillInventoryDocument document,
-        RawChangeSet? changes = null,
-        Func<string, bool>? isBaseFactAffected = null,
-        RawChangeSet? casChanges = null,
-        ImmutableHashSet<string>? sourceIds = null) =>
-        EvaluateDocument(
-            new BackfillInventoryValidationContext(
-                current,
-                baseline,
-                policy,
-                Lean: null,
-                VerifiedScribeEmissions: null,
-                changes,
-                isBaseFactAffected,
-                casChanges),
-            document,
-            validateTruthAlignment: false,
-            sourceIds);
-
-    private static ImmutableArray<RuleFinding> EvaluateDocument(
-        BackfillInventoryValidationContext context,
-        BackfillInventoryDocument document,
-        bool validateTruthAlignment,
-        ImmutableHashSet<string>? sourceIds = null)
+        BackfillInventoryDocument document)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(document);
@@ -253,9 +223,7 @@ internal static partial class BackfillInventoryRule
                 document,
                 sources,
                 sources.SelectMany(static source => source.Entries).ToImmutableArray(),
-                findings,
-                validateTruthAlignment,
-                sourceIds);
+                findings);
         }
 
         return findings.ToImmutable();
@@ -301,9 +269,7 @@ internal static partial class BackfillInventoryRule
         BackfillInventoryDocument document,
         ImmutableArray<DigestionLedgerSource> sources,
         ImmutableArray<DigestionLedgerEntry> entries,
-        ImmutableArray<RuleFinding>.Builder findings,
-        bool validateTruthAlignment,
-        ImmutableHashSet<string>? sourceIds = null)
+        ImmutableArray<RuleFinding>.Builder findings)
     {
         if (sources.Length == 0)
         {
@@ -318,8 +284,7 @@ internal static partial class BackfillInventoryRule
         var validateAllRecords = context.Changes is null;
         foreach (var source in sources)
         {
-            var sourceMetadataChanged = (sourceIds is null || sourceIds.Contains(source.SourceId))
-                && (validateAllRecords || SourceMetadataChanged(source, context.Changes));
+            var sourceMetadataChanged = validateAllRecords || SourceMetadataChanged(source, context.Changes);
             if (sourceMetadataChanged)
             {
                 changedSourceIds.Add(source.SourceId);
@@ -405,7 +370,7 @@ internal static partial class BackfillInventoryRule
             }
         }
 
-        if (sourceIds is null) ValidateTheoryCoverage(context, seenPaths.Keys, findings);
+        ValidateTheoryCoverage(context, seenPaths.Keys, findings);
 
         if (entries.Length == 0)
         {
@@ -416,11 +381,10 @@ internal static partial class BackfillInventoryRule
         var changedAtomIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (var entry in entries)
         {
-            var entryChanged = (sourceIds is null || sourceIds.Contains(entry.SourceId))
-                && (validateAllRecords
+            var entryChanged = validateAllRecords
                 || changedSourceIds.Contains(entry.SourceId)
                 || context.Changes is not null
-                    && DigestionCasStore.EntryChanged(entry, context.Changes));
+                    && DigestionCasStore.EntryChanged(entry, context.Changes);
             if (entryChanged)
             {
                 changedAtomIds.Add(entry.AtomId);
@@ -479,11 +443,6 @@ internal static partial class BackfillInventoryRule
         foreach (var finding in casEvaluation.Findings)
         {
             findings.Add(new RuleFinding(BackfillPath, finding));
-        }
-
-        if (!validateTruthAlignment)
-        {
-            return;
         }
 
         if (hasStructuralFindings)

@@ -42,24 +42,4 @@ internal static partial class IngestCommand
         return (ids.ToImmutable(), paths.ToImmutable());
     }
 
-    private static bool IsSelectedLedgerPath(string path, ImmutableHashSet<string> sourceIds) =>
-        sourceIds.Any(id => path.StartsWith(BackfillInventoryLoader.RootPath + id + "/", StringComparison.Ordinal));
-
-    private static void RequireScopedCasObjects(
-        ImmutableArray<DigestionCasObject> objects,
-        BackfillInventoryDocument document,
-        ImmutableHashSet<string>? sourceIds)
-    {
-        if (sourceIds is null) return;
-        var references = document.RequireDigestionSources()
-            .Where(source => sourceIds.Contains(source.SourceId))
-            .SelectMany(static source => source.Entries)
-            .Select(static entry => entry.CasRef)
-            .ToHashSet(StringComparer.Ordinal);
-        foreach (var captured in objects)
-        {
-            if (!references.Contains(captured.Reference))
-                throw new InvalidOperationException($"ingest CAS write is outside selected sources: {captured.RelativePath}");
-        }
-    }
 }

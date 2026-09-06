@@ -165,16 +165,22 @@ public sealed partial class IngestScopeTests
         var fixture = Fixture(document);
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
-            files[AtomPath(entry)] = "# preserve entry layout\n\n" + files[AtomPath(entry)].Replace("\n", "\r\n", StringComparison.Ordinal);
+            var text = files[AtomPath(entry)];
+            foreach (var indent in new[] { "  ", "    " })
+            {
+                var suffix = indent.Length == 2
+                    ? $"\n{indent}  target_statement_id: {hashes}\n"
+                    : $"\n{indent}  definition_sha256: {hashes}\n{indent}  emission_sha256: {hashes}\n";
+                var first = $"{indent}- gid: D5/S0/Carrier/Alpha.a{suffix}";
+                var second = $"{indent}- gid: D5/S0/Carrier/Zeta.z{suffix}";
+                Assert.Contains(first + second, text, StringComparison.Ordinal);
+                text = text.Replace(first + second, second + first, StringComparison.Ordinal);
+                Assert.True(text.IndexOf(second, StringComparison.Ordinal) < text.IndexOf(first, StringComparison.Ordinal));
+            }
+            files[AtomPath(entry)] = "# preserve entry layout\r\n\r\n"
+                + text.Replace("\n", "\r\n", StringComparison.Ordinal);
         }
         fixture.Files[BetaPath] += Addition;
-        var current = BackfillInventoryLoader.Load(Snapshot(fixture.Files));
-        var plan = Plan(current, Snapshot(fixture.Files), current, BetaOnly);
-        Assert.Same(current.RequireDigestionSources()[0], plan.Document.RequireDigestionSources()[0]);
-        Assert.Equal(DirectoryLedgerTestSupport.Image(current.WithDigestionSources([current.RequireDigestionSources()[0]])),
-            DirectoryLedgerTestSupport.Image(plan.Document.WithDigestionSources([plan.Document.RequireDigestionSources()[0]])));
-        var candidate = IngestCommand.ReplaceLedger(Raw(fixture.Files), current, plan.Document, BetaOnly);
-        Assert.Equal(Image(Raw(fixture.Files), SourcePrefix("alpha")), Image(candidate, SourcePrefix("alpha")));
 
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);

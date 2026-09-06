@@ -17,8 +17,7 @@ internal static partial class IngestCommand
 
     internal static ImmutableArray<LedgerUpdate> LedgerUpdates(
         RawRepositorySnapshot current,
-        RawRepositorySnapshot final,
-        ImmutableHashSet<string>? sourceIds = null)
+        RawRepositorySnapshot final)
     {
         var currentEntries = current.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
         var finalEntries = final.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
@@ -44,20 +43,17 @@ internal static partial class IngestCommand
             .OrderBy(static update => update.DurabilityOrder)
             .ThenBy(static update => update.Path, StringComparer.Ordinal)
             .ToImmutableArray();
-        if (sourceIds is not null)
-        {
-            var outside = updates.FirstOrDefault(update => !IsSelectedLedgerPath(update.Path, sourceIds));
-            if (outside is not null)
-                throw new InvalidOperationException($"ingest ledger write is outside selected sources: {outside.Path}");
-        }
         return updates;
     }
 
     private static IReadOnlyDictionary<string, int> LedgerDurabilityRanks(
-        RawRepositorySnapshot snapshot)
+        RawRepositorySnapshot snapshot) =>
+        LedgerDurabilityRanks(LoadDocument(Decode(snapshot)).RequireDigestionEntries());
+
+    private static IReadOnlyDictionary<string, int> LedgerDurabilityRanks(
+        IEnumerable<DigestionLedgerEntry> ledgerEntries)
     {
-        var document = LoadDocument(Decode(snapshot));
-        var entries = document.RequireDigestionEntries().ToDictionary(
+        var entries = ledgerEntries.ToDictionary(
             static entry => entry.AtomId,
             StringComparer.Ordinal);
         var ranks = new Dictionary<string, int>(StringComparer.Ordinal);
