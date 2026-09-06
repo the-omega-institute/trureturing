@@ -1,0 +1,36 @@
+## 5. Convexity gives the central sharpness theorem
+
+The most useful general observation is elementary but powerful.
+
+Assume:
+
+1. `\mathcal F` is convex;
+2. `Q` is affine on `\mathcal F`;
+3. `L` and `U` are valid bounds;
+4. there are admissible endpoint witnesses `\pi_L,\pi_U` with query values `L,U`.
+
+For every `t\in[0,1]`, convexity gives
+
+\[
+\pi_t=(1-t)\pi_L+t\pi_U\in\mathcal F.
+\]
+
+Affinity gives
+
+\[
+Q(\pi_t)
+=(1-t)L+tU.
+\]
+
+As `t` ranges over `[0,1]`, the right-hand side ranges over the whole interval `[L,U]`. Hence
+
+\[
+\boxed{
+\mathcal I_Q=[L,U].
+}
+\]
+
+This theorem changes how sharpness proofs should be organized. One need not construct a new SCM independently for every interior target. It is enough to prove endpoint attainment and convex closure, provided mixing admissible laws preserves all assumptions.
+
+For finite linear constraints this convexity is automatic. It may fail after imposing nonlinear or nonconvex dependence restrictions.
+

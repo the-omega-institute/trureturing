@@ -1,0 +1,7 @@
+**该文未给出 \(m=2\) 的证明,亦未提出锐性方向。**
+- **未核**:Gribinski 的原始报告(该文引作 [12])全文;R. Morales 2026 年博士论文
+  《Free Probability Tools in the Study of Zeros of Polynomials》全文(获取失败)。
+  故**不**声称全球首次,只声称相对该文所述知识状态为新。
+- **仓内查重**:在 dev `adf62f2e8c` 上
+  `git grep -iE 'rectangularConvolution|rectangular_convolution|finiteFree|finite_free|freeCommutator' -- 'D5/**/*.lean'`
+  

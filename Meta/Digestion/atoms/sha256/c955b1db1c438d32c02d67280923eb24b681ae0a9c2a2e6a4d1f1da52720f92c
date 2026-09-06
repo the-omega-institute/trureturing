@@ -1,0 +1,17 @@
+## 19. Intrinsic-information interpretation and continuation verification status
+
+The governing reference read for this continuation is version 4.3 of
+
+```text
+docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
+```
+
+The new `fourMarginalReadout` acts on the existing full `MarkovianJointMechanismModel` carrier. The authored theorem `joint_benefit_strictly_refines_four_marginal_kernel` constructs two models with the same four-marginal readout and joint-benefit values zero and one quarter. Thus the mathematical witness certifies strict refinement of the observation kernel when the joint-benefit query is added. `no_joint_benefit_reconstruction_from_four_marginals` states the corresponding impossibility of a reconstruction function.
+
+This full rational model space is infinite. No uniform finite escape rate, sampled model arena, novelty score, or external Python admission judge is introduced. A two-model strict-refinement witness is not a proof of positive leave-one-out capture against all peers in a designated maximal catalog. The non-reconstruction corollary is not registered as an extra independently informative occurrence.
+
+Still outstanding for the new sources are their kernel-checked primitive realizations, canonical arena occurrence/disposition registration where applicable, designated-root maximal-catalog sealing, and protected build acceptance. The historical workflow name containing "baseline" in Section 15 is an engineering label; it is not an authorization to use historical deltas or scoring in the version 4.3 information theory.
+
+At the time of this writeback:
+
+- Both Lean sources and both authored Scribe documents have been pushed to the existing PR #5029 branch.

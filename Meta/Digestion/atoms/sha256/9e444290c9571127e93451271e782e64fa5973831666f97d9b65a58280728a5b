@@ -1,0 +1,10 @@
+## 6. Query-implied causal order
+
+`QueryImpliedCausalOrder` extracts intervention-to-outcome precedence obligations from counterfactual atoms. Reciprocal obligations are inconsistent with a strict causal order.
+
+`QueryOrderLinearExtension` embeds certified query requirements into a partial order and uses the Szpilrajn theorem to obtain a linear extension preserving every requirement.
+
+`CanonicalResponseSignature` stores one deterministic predecessor-response table at each position of a total order. Finite value spaces give a finite signature carrier, and every Boolean signature event is an exact zero-one linear objective in signature masses.
+
+`CausalOrderLinearProgram` joins those signatures to the finite causal LP interface. `AttainingStructuralModel` realizes every normalized signature law by a finite shared-exogenous structural model whose exogenous states index complete response signatures.
+

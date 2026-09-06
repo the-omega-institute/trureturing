@@ -38,15 +38,17 @@ abbrev CatalogId := Name
 
 inductive CatalogKind where
   | canonicalMaximal
+  | analysisView
   deriving BEq, Inhabited, Repr
 
 def CatalogKind.artifactName : CatalogKind -> String
   | .canonicalMaximal => "canonical_maximal"
+  | .analysisView => "analysis_view"
 
 structure InformationRegistryEntry where
   theoremName : Name
   unitName : Name
-  /-- The `PrimitiveLawArena` presentation; retained under its v4.1 field name. -/
+  /-- The `PrimitiveLawArena` presentation. -/
   arenaName : Name
   /-- The declaration holding the native realization or the legacy witness. -/
   realizationName : Name
@@ -56,8 +58,8 @@ structure InformationRegistryEntry where
   objectArenaName : Name := .anonymous
   /-- Stable identity of the elaborated theorem statement captured at registration. -/
   statementIdentity : String := ""
-  /-- False exactly for registrations using the occurrence-aware v4.2 syntax. -/
-  legacyNaming : Bool := true
+  /-- False exactly for registrations using occurrence-aware syntax. -/
+  localRegistrationNames : Bool := true
 
 def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : Name :=
   entry.arenaName
@@ -74,7 +76,7 @@ def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=
   (entry.canonicalObjectArenaName, entry.theoremName)
 
-/-- The one naming function used for all v4.2 occurrence companions. -/
+/-- The naming function used for all occurrence-qualified companions. -/
 def catalogQualifiedName (rootId objectArenaName : Name) (catalogId : CatalogId)
     (theoremName : Name) (suffix : String) : Name :=
   theoremName
@@ -356,7 +358,7 @@ private def sameEntry (left right : InformationRegistryEntry) : Bool :=
     left.registrationModuleName == right.registrationModuleName &&
     left.canonicalObjectArenaName == right.canonicalObjectArenaName &&
     left.statementIdentity == right.statementIdentity &&
-    left.legacyNaming == right.legacyNaming
+    left.localRegistrationNames == right.localRegistrationNames
 
 private def normalizedEntry (env : Environment)
     (entry : InformationRegistryEntry) : InformationRegistryEntry :=

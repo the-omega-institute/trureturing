@@ -1,0 +1,5 @@
+## 2. Reused library layer
+
+The causal lane reuses the following repository truth sources.
+
+- `D5/S0/Certificates/RationalFarkas` checks exact rational infeasibility certificates.

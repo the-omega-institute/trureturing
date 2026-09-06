@@ -1,0 +1,29 @@
+## 68. The simultaneous-attainment theorem
+
+For every pair (m,n), the conditional outcome benefit cell is bounded by
+
+```text
+cL(m,n) = max(0, r_1(n)-r_0(m)),
+cU(m,n) = min(1-r_0(m), r_1(n)).
+```
+
+Individual Frechet bounds would not suffice for sharpness if their attaining laws conflicted across pairs. `SharedThresholdResponseCoupling.lean` closes this obligation on the complete outcome-table carrier.
+
+Choose one uniform disturbance U. For the lower witness use
+
+```text
+Y_(0,m) = 1[U < r_0(m)],
+Y_(1,n) = 1[U < r_1(n)].
+```
+
+Its benefit event is r_0(m)<=U<r_1(n), with probability cL(m,n), for every pair simultaneously. For the upper witness use
+
+```text
+Y_(0,m) = 1[U >= 1-r_0(m)],
+Y_(1,n) = 1[U < r_1(n)].
+```
+
+The favourable control-failure and treated-success events are nested prefixes, giving cU(m,n) simultaneously. These two within-mechanism couplings are witness choices, not assumptions on all admissible models.
+
+The Lean source first proves exact prefix and intersection counting on Fin N. A private common-denominator argument represents every finite rational success kernel as integer counts divided by one positive N, so no equal-denominator premise is imposed on the final theorem. `simultaneous_frechet_outcome_laws` chooses the two normalized outcome laws before quantifying over all mediator pairs. `simultaneous_transport_endpoint_mechanisms` then shows that those same two laws attain the lower and upper linear costs for every complete mediator coupling pi.
+

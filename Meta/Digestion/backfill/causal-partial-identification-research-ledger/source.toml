@@ -1,0 +1,5 @@
+source_id = "causal-partial-identification-research-ledger"
+path = "docs/develop/theory/CAUSAL_PARTIAL_IDENTIFICATION_RESEARCH_LEDGER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

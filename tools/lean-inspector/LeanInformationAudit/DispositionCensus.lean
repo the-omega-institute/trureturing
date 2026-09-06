@@ -237,7 +237,7 @@ def artifact (report : FrozenReport) (inventory : DispositionInventory)
   let counts := count inventory
   checkCounts inventory counts
   return Json.mkObj [
-    ("schema", toJson "lean-information-disposition-census-v1"),
+    ("schema", toJson "lean-information-disposition-census"),
     ("head_sha", toJson report.headSha), ("report_sha256", toJson report.reportSha256),
     ("source_inputs", toJson sources),
     ("theorem_count", toJson report.theorems.size), ("counts", toJson counts),

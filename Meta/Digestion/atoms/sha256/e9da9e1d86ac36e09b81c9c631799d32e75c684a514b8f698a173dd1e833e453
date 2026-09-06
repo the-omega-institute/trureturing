@@ -1,0 +1,13 @@
+### Layer D. Exact certificate replay
+
+External solvers may discover candidate rational primal and dual solutions. The trusted proof boundary should remain:
+
+```text
+untrusted solver search
+    -> rational witness/certificate
+    -> Lean replay
+    -> theorem.
+```
+
+The existing `D5/S0/Certificates/RationalFarkas` module is a natural target for the dual side.
+
