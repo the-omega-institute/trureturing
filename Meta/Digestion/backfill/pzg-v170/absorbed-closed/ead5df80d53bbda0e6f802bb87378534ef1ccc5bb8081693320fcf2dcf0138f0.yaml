@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ead5df80d53bbda0e6f802bb87378534ef1ccc5bb8081693320fcf2dcf0138f0
+  normalized_sha256: sha256:ead5df80d53bbda0e6f802bb87378534ef1ccc5bb8081693320fcf2dcf0138f0
+cas_ref: sha256:ead5df80d53bbda0e6f802bb87378534ef1ccc5bb8081693320fcf2dcf0138f0
+coverage_gids:
+  - gid: D5/S3/Analytic/PrimeCashflowCost.cashflow_cost_strict_at_event
+    target_statement_id: sha256:1abc26d95c156e4e16708f39b7f176e720bce51c1618bd5f3bcc004ec3f5421d
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/PrimeCashflowCost.cashflow_cost_strict_at_event
+      definition_sha256: sha256:22a063e6c132a14c563837bfa257718c269f1ef5b105799eccc986d9a0a4dd88
+      emission_sha256: sha256:5f818d2650917e34787de37dd59f8df2a55985c75acbc7760cfd17aeae782f8c
+  unresolved_subitems: []
