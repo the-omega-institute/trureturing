@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Dynamics;
 
@@ -41,5 +43,49 @@ internal sealed class DynamicIrrationalObserverDocument : IScribeDocumentDefinit
                             + "injectivity: the displayed readout sequence omits the contraction "
                             + "ratio, and the source gives no convergence condition for arbitrary "
                             + "higher coefficients."))),
-                DescribeRole.Definition))));
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("golden-dynamic-irrational-observer-exists"),
+                DeclarationHandle.Create(
+                    DeclarationPrefix + "exists_golden_dynamic_irrational_observer"),
+                H("The golden dynamic irrational observer exists"),
+                StatementSource.FromAuthor(GoldenObserverFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "There exists an observer in the golden first-observation class with "
+                            + "thread n mapped to the golden ratio plus the nth power of the "
+                            + "golden projective multiplier.")),
+                    Paragraph(Text(
+                        "Its zeroth readout is the golden ratio, its first readout is one, and "
+                            + "every readout at an explicitly quantified order k at least two "
+                            + "is zero."))),
+                DescribeRole.Theorem))));
+
+    private static Formula GoldenObserverFormula()
+    {
+        Formula observer = F.Id("observer");
+        Formula time = F.Id("n");
+        Formula order = F.Id("k");
+        Formula golden = Call("goldenRatio");
+        Formula multiplier = F.Id("goldenProjectiveMultiplier");
+        Formula thread = Parenthesized(Seq(
+            time, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Mapsto, Sp,
+            golden, Sp, Plus, Sp, new Formula.Power(multiplier, time)));
+        Formula higherReadouts = Seq(
+            Forall, Sp, order, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp,
+            D(2), Sp, Leq, Sp, order, Sp, Rightarrow, Sp,
+            Call("readout", observer, order), Sp, Eq, Sp, D(0));
+
+        return Disp(Seq(
+            Exists, Sp, observer, Colon, Sp, F.Id("Observer"), Comma, RowBreak, Grp(),
+            Call("IsGoldenFirstObservationClass", observer), Sp, Land, Sp,
+            Call("HasThread", observer, thread), Sp, Land, RowBreak, Grp(),
+            Call("readout", observer, D(0)), Sp, Eq, Sp, golden, Sp, Land, Sp,
+            Call("readout", observer, D(1)), Sp, Eq, Sp, D(1), Sp, Land, RowBreak, Grp(),
+            Parenthesized(higherReadouts), Dot));
+    }
+
+    private static Formula Parenthesized(Formula value) =>
+        Seq(Open, value, Close);
 }

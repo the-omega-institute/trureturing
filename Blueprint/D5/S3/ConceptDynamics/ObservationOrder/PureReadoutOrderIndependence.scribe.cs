@@ -11,6 +11,19 @@ internal sealed class PureReadoutOrderIndependenceDocument : IScribeDocumentDefi
         H("Pure Readouts and Observation Order"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("has-order-effect"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence."
+                        + "hasOrderEffect"),
+                H("An order effect is witnessed at one state"),
+                StatementSource.FromAuthor(HasOrderEffectFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For two readouts from X into the same paired output C times D, an order "
+                        + "effect holds exactly when some state gives unequal forward and "
+                        + "reverse results."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("pure-readout-order-independence"),
                 DeclarationHandle.Create(
                     "D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence."
@@ -48,6 +61,27 @@ internal sealed class PureReadoutOrderIndependenceDocument : IScribeDocumentDefi
 
     private static Formula Arrow(Formula domain, Formula codomain) =>
         Seq(domain, Sp, To, Sp, codomain);
+
+    private static Formula HasOrderEffectFormula()
+    {
+        Formula stateType = F.Id("X");
+        Formula leftType = F.Id("C");
+        Formula rightType = F.Id("D");
+        Formula forward = F.Id("forward");
+        Formula reverse = F.Id("reverse");
+        Formula state = F.Id("state");
+        Formula output = Seq(leftType, Sp, Times, Sp, rightType);
+        Formula readoutType = Arrow(stateType, output);
+
+        return Disp(Seq(
+            Forall, Sp, stateType, Comma, Sp, leftType, Comma, Sp, rightType,
+            Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            forward, Comma, Sp, reverse, Colon, Sp, readoutType, Comma, RowBreak, Grp(),
+            Apply(Seq(Operatorname, Grp(F.Id("hasOrderEffect"))), forward, reverse),
+            Sp, Iff, Sp,
+            Exists, Sp, state, Colon, Sp, stateType, Comma, Sp,
+            Apply(forward, state), Sp, Neq, Sp, Apply(reverse, state), Dot));
+    }
 
     private static Formula IndependenceFormula()
     {

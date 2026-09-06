@@ -11,6 +11,17 @@ internal sealed class ConceptFiberDecompositionDocument : IScribeDocumentDefinit
         H("Concept Fiber Decomposition"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("concept-readout"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/ConceptFiberDecomposition.Concept"),
+                H("A concept is a typed readout"),
+                StatementSource.FromAuthor(ConceptFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For arbitrary source and coordinate types X and B, a concept from X to B "
+                        + "is exactly a function assigning one B-coordinate to each X-object."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("concept-fiber-decomposition"),
                 DeclarationHandle.Create(
                     "D5/S3/ConceptDynamics/ConceptFiberDecomposition.concept_fiber_decomposition"),
@@ -28,6 +39,17 @@ internal sealed class ConceptFiberDecompositionDocument : IScribeDocumentDefinit
                             + "transport that equivalence to the proof-relevant residual fiber "
                             + "notation used here."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ConceptFormula()
+    {
+        Formula source = F.Id("X");
+        Formula coordinate = F.Id("B");
+        return Disp(Seq(
+            Forall, Sp, source, Comma, Sp, coordinate, Colon, Sp,
+            Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            Call("Concept", source, coordinate), Sp, Eq, Sp,
+            new Formula.TypeArrow(source, coordinate), Dot));
+    }
 
     private static Formula DecompositionFormula()
     {

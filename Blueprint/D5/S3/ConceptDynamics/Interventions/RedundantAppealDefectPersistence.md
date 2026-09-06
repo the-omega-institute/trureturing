@@ -4,7 +4,19 @@
 
 Record-determined appeal evidence cannot repair a target defect.
 
-**Theorem 1.1 (Record-determined appeal evidence cannot repair a defect).**
+**Definition 1.1 (Concept equivalence is mutual refinement).**
+
+$$\forall X, C, D: \operatorname{Type}, left: X \to C, right: X \to D,\\{}\operatorname{ConceptEquivalent}(left, right) \iff \operatorname{Refines}(left, right) \land \operatorname{Refines}(right, left).$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence.ConceptEquivalent` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two readouts on the same source are concept-equivalent exactly when the left readout factors through the right and the right factors through the left.
+
+**Theorem 1.2 (Record-determined appeal evidence cannot repair a defect).**
 
 $$C: X \to B_{C}, A: X \to B_{A}, T: X \to Y,\\{}\operatorname{Refines}(Q, R) \iff \exists f, Q = \operatorname{compose}(f, R),\\{}\operatorname{join}(C, A)(x) = (C(x), A(x)),\\{}\operatorname{Defect}(Q, T) = \{(x, y) \mid Q(x) = Q(y) \land T(x) \neq T(y)\},\\{}\operatorname{Refines}(A, C) \Rightarrow\\{}(\operatorname{ConceptEquivalent}(\operatorname{join}(C, A), C)) \land\\{}(\forall x, y, \operatorname{join}(C, A)(x) = \operatorname{join}(C, A)(y) \iff C(x) = C(y)) \land\\{}(\operatorname{Defect}(C, T) \neq \emptyset \Rightarrow (\operatorname{Defect}(\operatorname{join}(C, A), T) \neq \emptyset \land \neg\operatorname{Refines}(T, \operatorname{join}(C, A)))).$$
 
@@ -26,5 +38,6 @@ Repository search found no theorem packaging all four public clauses. The proof 
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence.ConceptEquivalent`
 - Truth anchor: `D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence.redundant_appeal_cannot_repair_structural_defect`
 - Dependency: [D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff](../TargetRisk/RefinementRiskCostTradeoff.md)

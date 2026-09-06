@@ -11,6 +11,19 @@ internal sealed class ControlledBehaviorUniversalityDocument : IScribeDocumentDe
         H("Controlled Behavior Universality"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("controlled-behavior"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality."
+                        + "controlledBehavior"),
+                H("Controlled behavior records every finite-word readout"),
+                StatementSource.FromAuthor(ControlledBehaviorFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For an input-indexed update, a readout, an initial state y, and every "
+                        + "finite input word, controlledBehavior returns the readout of the "
+                        + "state obtained by applying that word from left to right."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("controlled-behavior-has-a-universal-minimal-realization"),
                 DeclarationHandle.Create(
                     "D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality."
@@ -57,6 +70,33 @@ internal sealed class ControlledBehaviorUniversalityDocument : IScribeDocumentDe
 
     private static Formula Card(Formula type) =>
         Seq(Operatorname, Grp(F.Id("card")), Open, type, Close);
+
+    private static Formula ControlledBehaviorFormula()
+    {
+        Formula input = F.Id("U");
+        Formula state = F.Id("Y");
+        Formula output = F.Id("O");
+        Formula update = F.Id("update");
+        Formula readout = F.Id("readout");
+        Formula initial = F.Id("y");
+        Formula word = F.Id("word");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula wordType = Call("List", input);
+        Formula behavior = Call("controlledBehavior", update, readout, initial, word);
+        Formula evolved = Call("runWord", update, word, initial);
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, input, Comma, Sp, state, Comma, Sp, output,
+            Colon, Sp, type, Comma, RowBreak, Grp(),
+            update, Colon, Sp,
+            new Formula.TypeArrow(input, new Formula.TypeArrow(state, state)), Comma, Sp,
+            readout, Colon, Sp, new Formula.TypeArrow(state, output), Comma, Sp,
+            initial, Colon, Sp, state, Comma, RowBreak, Grp(),
+            Forall, Sp, word, Colon, Sp, wordType, Comma, Sp,
+            behavior, Sp, Eq, Sp, Apply(readout, evolved), Dot,
+            End, Grp(F.Id("gathered"))));
+    }
 
     private static Formula UniversalPropertyFormula()
     {

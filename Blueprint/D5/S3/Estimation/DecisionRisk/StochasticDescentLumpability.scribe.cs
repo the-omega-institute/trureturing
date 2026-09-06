@@ -12,6 +12,19 @@ internal sealed class StochasticDescentLumpabilityDocument : IScribeDocumentDefi
         H("Zero Descent Defect and Exact Lumpability"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("strong-lumpability"),
+                DeclarationHandle.Create(
+                    "D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability."
+                        + "StronglyLumpable"),
+                H("Strong lumpability is constancy on every readout fiber"),
+                StatementSource.FromAuthor(StronglyLumpableFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For q : X -> B and a real-valued row kernel K : X -> B -> R, strong "
+                        + "lumpability means that any two source states with equal q-values "
+                        + "have equal entire rows K(x) and K(y)."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("zero-descent-defect-characterizes-strong-lumpability"),
                 DeclarationHandle.Create(
                     "D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability."
@@ -102,6 +115,31 @@ internal sealed class StochasticDescentLumpabilityDocument : IScribeDocumentDefi
                         "This is a boundary specialization of the defect lower bound, rather than "
                             + "an additional assertion that an optimizing quotient kernel exists."))),
                 DescribeRole.Lemma))));
+
+    private static Formula StronglyLumpableFormula()
+    {
+        Formula source = F.Id("X");
+        Formula readoutType = F.Id("B");
+        Formula readout = F.Id("q");
+        Formula kernel = F.Id("K");
+        Formula left = F.Id("x");
+        Formula right = F.Id("y");
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, source, Comma, Sp, readoutType, Colon, Sp,
+            Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            readout, Colon, Sp, new Formula.TypeArrow(source, readoutType), Comma, RowBreak, Grp(),
+            kernel, Colon, Sp,
+            new Formula.TypeArrow(source, new Formula.TypeArrow(readoutType, real)),
+            Comma, RowBreak, Grp(),
+            Call("StronglyLumpable", readout, kernel), Sp, Iff, Sp,
+            Forall, Sp, left, Comma, Sp, right, Colon, Sp, source, Comma, Sp,
+            At(readout, left), Sp, Eq, Sp, At(readout, right), Sp, Rightarrow, Sp,
+            At(kernel, left), Sp, Eq, Sp, At(kernel, right), Dot,
+            End, Grp(F.Id("gathered"))));
+    }
 
     private static Formula ZeroDefectFormula()
     {

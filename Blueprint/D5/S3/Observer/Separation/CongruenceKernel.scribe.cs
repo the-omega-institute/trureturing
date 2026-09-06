@@ -11,6 +11,30 @@ internal sealed class CongruenceKernelDocument : IScribeDocumentDefinition
         H("Congruence Kernel"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("tau-congruence"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/Separation/CongruenceKernel.TauCongruence"),
+                H("A tau-congruence is preserved by one forward update"),
+                StatementSource.FromAuthor(TauCongruenceFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A state relation S is a congruence for tau exactly when membership of an "
+                        + "ordered pair (y,y') in S implies membership of the updated pair "
+                        + "(tau(y),tau(y'))."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("congruence-kernel"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/Separation/CongruenceKernel.congruenceKernel"),
+                H("The congruence kernel pulls a relation back along every iterate"),
+                StatementSource.FromAuthor(CongruenceKernelFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The congruence kernel of R under tau consists exactly of those state "
+                        + "pairs whose two coordinates remain R-related after every natural "
+                        + "iterate of tau, including the zeroth iterate."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("all-iterate-pullback-is-maximal-forward-congruence"),
                 DeclarationHandle.Create(
                     "D5/S3/Observer/Separation/CongruenceKernel."
@@ -32,6 +56,53 @@ internal sealed class CongruenceKernelDocument : IScribeDocumentDefinition
 
     private static Formula Apply(Formula function, Formula argument) =>
         Seq(function, Open, argument, Close);
+
+    private static Formula TauCongruenceFormula()
+    {
+        Formula state = F.Id("Y");
+        Formula update = Tau;
+        Formula relation = F.Id("S");
+        Formula left = F.Id("y");
+        Formula right = F.Id("yprime");
+        Formula relationType = Call("StateRelation", state);
+        Formula pair = Call("pair", left, right);
+        Formula updatedPair = Call("pair", Apply(update, left), Apply(update, right));
+
+        return Disp(Seq(
+            Forall, Sp, state, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            update, Colon, Sp, new Formula.TypeArrow(state, state), Comma, Sp,
+            relation, Colon, Sp, relationType, Comma, RowBreak, Grp(),
+            Call("TauCongruence", update, relation), Sp, Iff, Sp,
+            Forall, Sp, left, Comma, Sp, right, Colon, Sp, state, Comma, Sp,
+            pair, Sp, InMacro, Sp, relation, Sp, Rightarrow, Sp,
+            updatedPair, Sp, InMacro, Sp, relation, Dot));
+    }
+
+    private static Formula CongruenceKernelFormula()
+    {
+        Formula state = F.Id("Y");
+        Formula update = Tau;
+        Formula relation = F.Id("R");
+        Formula pair = F.Id("pair");
+        Formula time = F.Id("k");
+        Formula relationType = Call("StateRelation", state);
+        Formula left = Call("fst", pair);
+        Formula right = Call("snd", pair);
+        Formula iteratedPair = Call(
+            "pair",
+            Call("iterate", update, time, left),
+            Call("iterate", update, time, right));
+        Formula set = Seq(
+            OpenBrace, pair, Colon, Sp, Seq(state, Sp, Times, Sp, state), Sp, Mid, Sp,
+            Forall, Sp, time, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp,
+            iteratedPair, Sp, InMacro, Sp, relation, CloseBrace);
+
+        return Disp(Seq(
+            Forall, Sp, state, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            update, Colon, Sp, new Formula.TypeArrow(state, state), Comma, Sp,
+            relation, Colon, Sp, relationType, Comma, RowBreak, Grp(),
+            Call("congruenceKernel", update, relation), Sp, Eq, Sp, set, Dot));
+    }
 
     private static Formula TheoremFormula()
     {

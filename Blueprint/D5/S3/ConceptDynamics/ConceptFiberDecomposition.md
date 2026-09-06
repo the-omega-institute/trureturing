@@ -4,7 +4,19 @@
 
 Every concept readout decomposes its source into dependent fibers.
 
-**Theorem 1.1 (Concept fiber decomposition).**
+**Definition 1.1 (A concept is a typed readout).**
+
+$$\forall X, B: \operatorname{Type}, \operatorname{Concept}\left(X, B\right) = X \to B.$$
+
+*Formalization.* `D5/S3/ConceptDynamics/ConceptFiberDecomposition.Concept` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary source and coordinate types X and B, a concept from X to B is exactly a function assigning one B-coordinate to each X-object.
+
+**Theorem 1.2 (Concept fiber decomposition).**
 
 $$\forall X, B_{C}: \operatorname{Type}, q_{C}: X \to B_{C},\ \operatorname{Nonempty}(X \equiv \sum _{b: B_{C}} R_{C}(b)).$$
 
@@ -20,4 +32,5 @@ Mathlib's sigmaFiberEquiv supplies the explicit forward map sending x to q_C x w
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/ConceptFiberDecomposition.Concept`
 - Truth anchor: `D5/S3/ConceptDynamics/ConceptFiberDecomposition.concept_fiber_decomposition`

@@ -4,7 +4,19 @@
 
 Compatible residues decompose bijectively into all prime-adic integer coordinates.
 
-**Theorem 1.1 (Compatible residues are equivalent to all prime-adic coordinates).**
+**Definition 1.1 (A compatible residue family determines one prime-adic coordinate).**
+
+$$\forall x: ProfiniteIntegers, p: NatPrimes, \operatorname{primeProjection}\left(x, p\right): \mathbb{Z}_{\operatorname{val}\left(p\right)},\\{}\operatorname{primeProjection}\left(x, p\right) = \operatorname{ofIntSeq}\left(\operatorname{primeApproximation}\left(x, p\right), \operatorname{compatibleCauchyCertificate}\left(x, p\right)\right).$$
+
+*Formalization.* `D5/S3/Factorization/ProfinitePrimeDecomposition.primeProjection` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a compatible residue family x and a certified prime p, the prime projection is the p-adic integer constructed from the sequence of residues of x at successive powers of p. Compatibility supplies the Cauchy certificate required by the constructor.
+
+**Theorem 1.2 (Compatible residues are equivalent to all prime-adic coordinates).**
 
 $$\widehat{\mathbb{Z}} \sim \prod_{p \text{prime}} \mathbb{Z}_{p}$$
 
@@ -20,4 +32,5 @@ The pinned Mathlib sources contain the required local ingredients but not this g
 
 ## References
 
+- Truth anchor: `D5/S3/Factorization/ProfinitePrimeDecomposition.primeProjection`
 - Truth anchor: `D5/S3/Factorization/ProfinitePrimeDecomposition.profinite_prime_decomposition`

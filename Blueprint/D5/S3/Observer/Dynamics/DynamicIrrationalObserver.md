@@ -24,7 +24,22 @@ The golden first observation class is inhabited. Its completed value is the gold
 
 The source's full-jet reconstruction sentence is not asserted as injectivity: the displayed readout sequence omits the contraction ratio, and the source gives no convergence condition for arbitrary higher coefficients.
 
+**Theorem 1.2 (The golden dynamic irrational observer exists).**
+
+$$\exists observer: Observer,\\{}\operatorname{IsGoldenFirstObservationClass}\left(observer\right) \land \operatorname{HasThread}\left(observer, (n: \mathbb{N} \mapsto \operatorname{goldenRatio}\left(\right) + goldenProjectiveMultiplier^{n})\right) \land\\{}\operatorname{readout}\left(observer, 0\right) = \operatorname{goldenRatio}\left(\right) \land \operatorname{readout}\left(observer, 1\right) = 1 \land\\{}(\forall k: \mathbb{N}, 2 \leq k \Rightarrow \operatorname{readout}\left(observer, k\right) = 0).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Dynamics/DynamicIrrationalObserver.exists_golden_dynamic_irrational_observer` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+There exists an observer in the golden first-observation class with thread n mapped to the golden ratio plus the nth power of the golden projective multiplier.
+
+Its zeroth readout is the golden ratio, its first readout is one, and every readout at an explicitly quantified order k at least two is zero.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/Dynamics/DynamicIrrationalObserver.Observer`
+- Truth anchor: `D5/S3/Observer/Dynamics/DynamicIrrationalObserver.exists_golden_dynamic_irrational_observer`
 - Dependency: [D5/S3/CompletionDynamics/GoldenMobius/GoldenProjectiveDerivative](../../CompletionDynamics/GoldenMobius/GoldenProjectiveDerivative.md)

@@ -15,6 +15,19 @@ internal sealed class FinitePrimeTimeTomographyDocument
         H("Finite Prime-Time Tomography"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("separated-by-complete-observation"),
+                DeclarationHandle.Create(
+                    DeclarationPrefix + "SeparatedByCompleteObservation"),
+                H("Complete observation separates through the common finite-window kernel"),
+                StatementSource.FromAuthor(CompleteObservationDefinitionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A readout family and transition separate states completely exactly when "
+                        + "the intersection of the indistinguishability relations over every "
+                        + "finite index set and every natural time horizon lies in the equality "
+                        + "diagonal."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("complete-separation-has-a-finite-window"),
                 DeclarationHandle.Create(
                     DeclarationPrefix + "finite_prime_time_tomography"),
@@ -79,6 +92,33 @@ internal sealed class FinitePrimeTimeTomographyDocument
         Formula readout,
         Formula transition) =>
         Call("Indist", indices, horizon, readout, transition);
+
+    private static Formula CompleteObservationDefinitionFormula()
+    {
+        Formula state = F.Id("X");
+        Formula output = F.Id("O");
+        Formula readout = F.Id("q");
+        Formula transition = F.Id("T");
+        Formula indices = F.Id("J");
+        Formula horizon = F.Id("m");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula commonKernel = Call(
+            "iInter",
+            Seq(indices, Colon, Sp, Call("Finset", naturals)),
+            Seq(horizon, Colon, Sp, naturals),
+            Indist(indices, horizon, readout, transition));
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, state, Comma, Sp, output, Colon, Sp, type, Comma, RowBreak, Grp(),
+            readout, Colon, Sp, new Formula.TypeArrow(
+                naturals, new Formula.TypeArrow(state, output)), Comma, Sp,
+            transition, Colon, Sp, new Formula.TypeArrow(state, state), Comma, RowBreak, Grp(),
+            Complete(readout, transition), Sp, Iff, Sp,
+            commonKernel, Sp, Subseteq, Sp, Diagonal(state), Dot,
+            End, Grp(F.Id("gathered"))));
+    }
 
     private static Formula FiniteTomographyFormula()
     {

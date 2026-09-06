@@ -11,6 +11,24 @@ internal sealed class StructuralEvaluationSemanticsDocument : IScribeDocumentDef
         H("Structural Evaluation Semantics"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("intervened-equation"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/Causal/StructuralEvaluationSemantics."
+                        + "intervenedEquation"),
+                H("Intervention replaces exactly the selected structural equations"),
+                StatementSource.FromAuthor(IntervenedEquationFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Given a finite-node structural model, an intervention set, and an "
+                            + "assignment, the equation at node v returns the assigned value "
+                            + "when v belongs to the intervention.")),
+                    Paragraph(Text(
+                        "At every node outside the intervention it evaluates the model's "
+                            + "original structural equation on the current state and external "
+                            + "state. The displayed equality preserves both branches."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("post-intervention-structural-evaluation-is-unique"),
                 DeclarationHandle.Create(
                     "D5/S3/ConceptDynamics/Causal/StructuralEvaluationSemantics."
@@ -77,5 +95,39 @@ internal sealed class StructuralEvaluationSemanticsDocument : IScribeDocumentDef
             external, Colon, Sp, uType, Sp, Rightarrow, Sp,
             Exists, Bang, Sp, result, Colon, Sp, assignmentType, Comma, Sp,
             evaluation, Dot));
+    }
+
+    private static Formula IntervenedEquationFormula()
+    {
+        Formula n = F.Id("n");
+        Formula x = F.Id("X");
+        Formula uType = F.Id("U");
+        Formula model = F.Id("model");
+        Formula intervention = F.Id("intervention");
+        Formula assigned = F.Id("assigned");
+        Formula node = F.Id("v");
+        Formula state = F.Id("state");
+        Formula external = F.Id("u");
+        Formula nodes = Apply("Fin", n);
+        Formula modelType = Apply("StructuralModel", n, x, uType);
+        Formula assignmentType = Seq(nodes, Sp, To, Sp, x);
+        Formula branch = Apply(
+            "if",
+            Seq(node, Sp, InMacro, Sp, intervention),
+            Apply("assigned", node),
+            Apply("equation", model, node, state, external));
+
+        return Disp(Seq(
+            Forall, Sp, n, Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            x, Comma, Sp, uType, Colon, Sp,
+            Operatorname, Grp(F.Id("Type")), Comma, RowBreak, Grp(),
+            model, Colon, Sp, modelType, Comma, Sp,
+            intervention, Colon, Sp, Apply("Finset", nodes), Comma, RowBreak, Grp(),
+            assigned, Colon, Sp, assignmentType, Comma, Sp,
+            node, Colon, Sp, nodes, Comma, Sp,
+            state, Colon, Sp, assignmentType, Comma, Sp,
+            external, Colon, Sp, uType, Comma, RowBreak, Grp(),
+            Apply("intervenedEquation", model, intervention, assigned, node, state, external),
+            Sp, Eq, Sp, branch, Dot));
     }
 }

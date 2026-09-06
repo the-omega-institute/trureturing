@@ -11,6 +11,29 @@ internal sealed class PredictionCompletionDocument : IScribeDocumentDefinition
         H("Predictive Completion under Observation Refinement"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("completed-state"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Refinement/PredictionCompletion.CompletedState"),
+                H("Completed states quotient equality of complete itineraries"),
+                StatementSource.FromAuthor(CompletedStateFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For an update and readout on Y, the completed state is the quotient of Y "
+                        + "by the kernel setoid of the complete future-itinerary map."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("completion-readout"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Refinement/PredictionCompletion.completionReadout"),
+                H("The current readout descends to predictive completion"),
+                StatementSource.FromAuthor(CompletionReadoutFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The current readout on a completed state is the quotient lift of the "
+                        + "original readout. Equality of complete itineraries implies equality "
+                        + "at time zero, which supplies the lift's well-definedness proof."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("observation-refinement-predictive-completion"),
                 DeclarationHandle.Create(
                     "D5/S3/ObserverMemory/Refinement/PredictionCompletion."
@@ -35,6 +58,53 @@ internal sealed class PredictionCompletionDocument : IScribeDocumentDefinition
                         + "combining the relation, uniqueness, surjectivity, and both "
                         + "intertwining equations."))),
                 DescribeRole.Theorem))));
+
+    private static Formula CompletedStateFormula()
+    {
+        Formula state = F.Id("Y");
+        Formula output = F.Id("O");
+        Formula update = F.Id("update");
+        Formula readout = F.Id("readout");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula itinerary = Call("completeItinerary", update, readout);
+
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                Bound("Y", type),
+                Bound("O", type),
+                Bound("update", Arrow(state, state)),
+                Bound("readout", Arrow(state, output)),
+            ],
+            Seq(
+                Call("CompletedState", update, readout), Sp, Eq, Sp,
+                Call("Quotient", Call("ker", itinerary)))));
+    }
+
+    private static Formula CompletionReadoutFormula()
+    {
+        Formula state = F.Id("Y");
+        Formula output = F.Id("O");
+        Formula update = F.Id("update");
+        Formula readout = F.Id("readout");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula completed = Call("CompletedState", update, readout);
+        Formula certificate = Call("timeZeroWellDefined", update, readout);
+
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                Bound("Y", type),
+                Bound("O", type),
+                Bound("update", Arrow(state, state)),
+                Bound("readout", Arrow(state, output)),
+            ],
+            Seq(
+                Call("completionReadout", update, readout), Colon, Sp,
+                Arrow(completed, output), Comma, Sp,
+                Call("completionReadout", update, readout), Sp, Eq, Sp,
+                Call("QuotientLift", readout, certificate))));
+    }
 
     private static Formula RefinementFormula()
     {

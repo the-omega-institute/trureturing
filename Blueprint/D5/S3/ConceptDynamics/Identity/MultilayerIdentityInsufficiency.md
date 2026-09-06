@@ -4,7 +4,19 @@
 
 A concrete two-layer cone loses its upper bit, and noninjective projections neither admit left inverses nor determine a unique fiber-constant assignment.
 
-**Lemma 1.1 (The two-layer cone loses its upper bit).**
+**Definition 1.1 (A compatible family commutes with every downward projection).**
+
+$$\forall I: Type, [\operatorname{Preorder}\left(I\right)],\\{}S: I \to Type, p: \forall i, j: I, i \leq j \to \operatorname{S}\left(j\right) \to \operatorname{S}\left(i\right),\\{}\operatorname{CompatibleFamily}\left(S, p\right) = \{s: \forall i: I, \operatorname{S}\left(i\right) \mid \forall i, j: I, h: i \leq j, \operatorname{p}\left(i, j, h, \operatorname{s}\left(j\right)\right) = \operatorname{s}\left(i\right)\}.$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.CompatibleFamily` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a preordered layer index, a state family S, and downward maps p, a compatible family consists of one state s_i at each layer such that projecting s_j along every proof i <= j gives s_i.
+
+**Lemma 1.2 (The two-layer cone loses its upper bit).**
 
 $$\operatorname{Nonempty}\left(\operatorname{CompatibleFamily}\left(twoLayerState, twoLayerProjection\right)\right) \land \left(\exists x \in \operatorname{CompatibleFamily}\left(twoLayerState, twoLayerProjection\right), y \in \operatorname{CompatibleFamily}\left(twoLayerState, twoLayerProjection\right),\; x_{0} = y_{0} \land x_{1} \ne y_{1}\right)$$
 
@@ -18,7 +30,7 @@ The concrete system has a one-point lower layer and a Boolean upper layer. Each 
 
 The subjects determined by false and true have the same lower component because the downward projection forgets the bit, while their upper components remain distinct. Thus lower-layer agreement does not recover the higher-layer state.
 
-**Theorem 1.2 (A noninjective layer cannot recover or choose uniquely).**
+**Theorem 1.3 (A noninjective layer cannot recover or choose uniquely).**
 
 $$\forall Sj \in Type, Si \in Type, Norm \in Type, p \in Sj \to Si, n1 \in Norm, n2 \in Norm,\; \left(\left(\neg \operatorname{Injective}\left(p\right)\right) \land n1 \ne n2\right) \Rightarrow \left(\left(\neg \left(\exists r \in Si \to Sj,\; \operatorname{LeftInverse}\left(r, p\right)\right)\right) \land \left(\exists q1 \in Sj \to Norm, q2 \in Sj \to Norm,\; \operatorname{FiberConstant}\left(p, q1\right) \land \left(\operatorname{FiberConstant}\left(p, q2\right) \land q1 \ne q2\right)\right)\right)$$
 
@@ -34,5 +46,6 @@ When the normative codomain contains two distinct values, the two constant assig
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.CompatibleFamily`
 - Truth anchor: `D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.noninjective_layer_cannot_recover`
 - Truth anchor: `D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.two_layer_cone_nonempty_and_loses_high_information`

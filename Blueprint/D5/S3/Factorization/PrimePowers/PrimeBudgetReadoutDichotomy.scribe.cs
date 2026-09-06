@@ -15,6 +15,17 @@ internal sealed class PrimeBudgetReadoutDichotomyDocument
         H("Prime Budget Readout Dichotomy"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("prime-budget"),
+                DeclarationHandle.Create(Prefix + "PrimeBudget"),
+                H("A prime budget has finite support and positive supported exponents"),
+                StatementSource.FromAuthor(PrimeBudgetFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A prime budget records a finite set of natural numbers, an exponent at "
+                        + "every natural number, a proof that each supported number is prime, "
+                        + "and a proof that every supported exponent is strictly positive."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("horizontal-prime-decomposition"),
                 DeclarationHandle.Create(Prefix + "horizontal_prime_decomposition"),
                 H("Different primes decompose horizontally by CRT"),
@@ -88,6 +99,33 @@ internal sealed class PrimeBudgetReadoutDichotomyDocument
 
     private static Formula Predicate(Formula name, Formula argument) =>
         At(name, argument);
+
+    private static Formula PrimeBudgetFormula()
+    {
+        Formula support = F.Id("support");
+        Formula exponent = F.Id("exponent");
+        Formula prime = F.Id("p");
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula supportType = Call("Finset", naturals);
+        Formula exponentType = new Formula.TypeArrow(naturals, naturals);
+        Formula primeField = Seq(
+            Forall, Sp, prime, Colon, Sp, naturals, Comma, Sp,
+            prime, Sp, InMacro, Sp, support, Sp, Rightarrow, Sp,
+            Call("Prime", prime));
+        Formula positiveField = Seq(
+            Forall, Sp, prime, Colon, Sp, naturals, Comma, Sp,
+            prime, Sp, InMacro, Sp, support, Sp, Rightarrow, Sp,
+            D(0), Sp, Lt, Sp, At(exponent, prime));
+
+        return Disp(Seq(
+            F.Id("PrimeBudget"), Sp, Eq, Sp,
+            OpenBrace,
+            support, Colon, Sp, supportType, SemiSpace,
+            exponent, Colon, Sp, exponentType, SemiSpace,
+            primeField, SemiSpace,
+            positiveField,
+            CloseBrace, Dot));
+    }
 
     private static Formula HorizontalFormula()
     {
