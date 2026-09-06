@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fc42837b1e3e72484d6a870dc65b786c96071e8c944cb0689d5694f589661573
+  normalized_sha256: sha256:fc42837b1e3e72484d6a870dc65b786c96071e8c944cb0689d5694f589661573
+cas_ref: sha256:fc42837b1e3e72484d6a870dc65b786c96071e8c944cb0689d5694f589661573
+coverage_gids:
+  - gid: D5/S0/Conventions/TotalCode.no_hidden_register
+    target_statement_id: sha256:cd08b63faaeaa2dbd34ef07b6c09048866441ffe1996d5d741771b0434912ab6
+receipts:
+  scribe:
+    - gid: D5/S0/Conventions/TotalCode.no_hidden_register
+      definition_sha256: sha256:7effbc38b731c8c4132f50982fb5e494b55d4ee55a5380a2a0576e14b16e57da
+      emission_sha256: sha256:f2ca3d11e0d8b00fc6369f23cb80fdd64fe5d344924cb19666b41c46dbfed40a
+  unresolved_subitems: []

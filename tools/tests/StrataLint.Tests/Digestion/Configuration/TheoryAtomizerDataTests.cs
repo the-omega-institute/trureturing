@@ -224,6 +224,11 @@ public sealed class TheoryAtomizerDataTests
         Assert.Single(atomizeMethods);
         Assert.Equal(typeof(TheoryAtomizerRules), atomizeMethods[0].GetParameters()[2].ParameterType);
         Assert.Equal(2, typeof(TheoryAtomizer).GetMethod("Invoke")!.GetParameters().Length);
+        foreach (var atomizer in typeof(AtomizerRegistry).Assembly.GetTypes()
+                     .Where(type => type.Namespace == typeof(AtomizerRegistry).Namespace
+                         && type.Name.EndsWith("Atomizer", StringComparison.Ordinal)))
+            Assert.DoesNotContain(atomizer.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic),
+                method => method.Name == "PlanClauses");
     }
 
     [Fact]
