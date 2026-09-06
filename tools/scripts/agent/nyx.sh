@@ -10,7 +10,7 @@
 # 而误读直接导致错误决策:读到「6 投全败」于是投得更多 → 更多 429。
 #
 # 用法:
-#   nyx.sh ask <brief> <outfile>     投一票(自动等到 in-flight < LIMIT 才投)
+#   nyx.sh ask <brief> <outfile>     投一票(自动等到 in-flight < LIMIT 才投)\n#   nyx.sh fetch <task-id> <out>     续等一个已提交的任务(ask 超时后用它,不重复提交)
 #   nyx.sh status [glob]             分类打印 /tmp/nyx-*.out 的真实状态
 #   nyx.sh inflight                  当前 in-flight 数
 export PATH="$HOME/.local/bin:$PATH"
@@ -71,6 +71,27 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
   echo OK
 }
 
+__poll_task() {  # <task-id> <outfile> —— 轮询取回,落判词与 EXIT= 哨兵。ask 与 fetch 共用**同一份**实现。
+  # **这不是挂钟猜测**(器律⑥′):池无 webhook,`nyxid oracle result` 是唯一取回原语;
+  # 间隔对齐真实任务时长(实测数分钟级),有上限,且判据(__verdict_of_payload)在开跑前已写死。
+  local tid="$1" out="$2" n=0 r rc verdict
+  while [ $n -lt "${NYX_POLL_ROUNDS:-60}" ]; do
+    r=$(nyxid oracle result "$tid" 2>&1)
+    case "$r" in *"Task is dispatched"*|*"Phase:"*|*queued*) ;; *) printf '%s\n' "$r" >> "$out"; break;; esac
+    n=$((n+1)); sleep "${NYX_POLL_SECONDS:-20}"
+  done
+  if [ $n -ge "${NYX_POLL_ROUNDS:-60}" ]; then
+    echo "NYX_TIMEOUT $tid 仍未落定;可随时 nyx.sh fetch $tid <out> 续等,或 nyxid oracle result $tid 取回"
+    rc=3; verdict=TIMEOUT
+  else
+    verdict=$(__verdict_of_payload "$r")
+    case "$verdict" in OK) rc=0;; *) rc=1;; esac
+  fi
+  echo "EXIT=$rc" >> "$out"
+  echo "NYX_$verdict $(basename "$out" .out)"
+  return $rc
+}
+
 __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**:`__classify` 的 OK 分支要求
   # `tail -1 = EXIT=0`,而 `EXIT=` 是**分类之后**才追加的 —— 在 ask 的活判决里该分支
   # **结构上不可达**,于是每一次成功取回都被判 rc=1。器律④:坏原材料让调用方误判。
@@ -122,6 +143,21 @@ case "$1" in
     done | sort -k2
     echo "  ---- in-flight=$(__inflight)/$LIMIT"
     ;;
+  fetch)
+    # `ask` 的取回循环有上限;一个深研究任务(读 500KB 理论卷 + 仓库树)常跑得比它久。
+    # 那时任务**仍活在池里**,只是没有动词能续等 —— 本会话两次撞上,故补此动词(器律⑥″:一切经器)。
+    # 幂等:重复调用只是再取一次;不重复提交,不消耗配额。
+    tid="$2"; out="$3"
+    [ -n "$tid" ] || { echo "NYX_ERR fetch 需要 <task-id>"; exit 2; }
+    [ -n "$out" ] || { echo "NYX_ERR fetch 需要 <outfile>"; exit 2; }
+    case "$tid" in
+      [0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*) ;;
+      *) echo "NYX_ERR fetch 的 <task-id> 不是 uuid 形: $tid"; exit 2 ;;
+    esac
+    : > "$out"
+    echo "$tid" > "$out.taskid"
+    __poll_task "$tid" "$out"; exit $?
+    ;;
   ask)
     brief="$2"; out="$3"
     [ -n "$LIMIT" ] || LIMIT="$(__capacity)"
@@ -155,28 +191,13 @@ case "$1" in
     [ -n "$tid" ] && echo "$tid" > "$out.taskid"
     rmdir "$LOCK" 2>/dev/null; trap - EXIT
     if [ -z "$tid" ]; then echo "EXIT=$rc" >> "$out"; echo "NYX_$(__classify "$out") $(basename "$out" .out)"; exit $rc; fi
-    # 轮询取回。**这不是挂钟猜测**:池无 webhook,`result` 是唯一取回原语;
-    # 间隔对齐真实任务时长(实测数分钟级),且有上限、每轮不打印噪声。
-    n=0
-    while [ $n -lt 60 ]; do
-      r=$(nyxid oracle result "$tid" 2>&1)
-      case "$r" in *"Task is dispatched"*|*"Phase:"*|*queued*) ;; *) printf '%s\n' "$r" >> "$out"; break;; esac
-      n=$((n+1)); sleep 20
-    done
+    # 轮询取回与判词由 __poll_task 承担(唯一真源;ask 与 fetch 共用)。
     # **退出码必须反映取回的内容,不能写死 0**
     # (2026-08-28:no-wait 改造首跑即回归 —— `extraction_failure` 报了 EXIT=0,
     #  正是器律④「原材料好,不靠读者警惕」要禁的坏材料:调用方按退出码判就会误判成功。)
-    if [ $n -ge 60 ]; then
-      echo "NYX_TIMEOUT $tid 仍未落定;可随时 nyxid oracle result $tid 取回"; rc=3; verdict=TIMEOUT
-    else
-      # 判**取回的文本**,不判文件:`__classify` 的 OK 分支要求 `tail -1 = EXIT=0`,
-      # 而 EXIT= 要到下一行才写 —— 在这里它结构上不可达,会把每个成功答案判成失败
-      # (2026-09-06 实测:company 池返回 `{"ok":true}` 仍报 EXIT=1)。见 --selftest。
-      verdict=$(__verdict_of_payload "$r")
-      case "$verdict" in OK) rc=0;; *) rc=1;; esac
-    fi
-    echo "EXIT=$rc" >> "$out"
-    echo "NYX_$verdict $(basename "$out" .out)"
+    # **进程退出码也必须反映判词**:此前 ask 分支以 echo 收尾,脚本恒 exit 0,
+    # 于是写进文件的 EXIT= 与进程退出码可以相反 —— 同一个「坏原材料」病的第二个面。
+    __poll_task "$tid" "$out"; exit $?
     ;;
-  *) echo "usage: nyx.sh {ask <brief> <out>|status [glob]|inflight|--selftest}" >&2; exit 2 ;;
+  *) echo "usage: nyx.sh {ask <brief> <out>|fetch <task-id> <out>|status [glob]|inflight|--selftest}" >&2; exit 2 ;;
 esac
