@@ -326,4 +326,6 @@ theorem golden_resource_5040_unique_maximum_of_price_interval
 
 end
 
+#print axioms golden_resource_5040_unique_maximum_of_price_interval
+
 end D5.S3.Arith.GoldenResource5040PriceInterval
