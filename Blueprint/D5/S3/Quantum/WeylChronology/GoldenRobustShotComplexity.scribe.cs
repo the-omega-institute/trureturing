@@ -15,7 +15,9 @@ internal sealed class GoldenRobustShotComplexityDocument : IScribeDocumentDefini
                 "The sharp affinity-power risk bound is combined with the repository's "
                     + "existing independent-sampling exponential envelope. The resulting "
                     + "shot-rate and logarithmic count condition are deterministic "
-                    + "consequences of the previously certified robust margin.")),
+                    + "consequences of the previously certified robust margin. The preceding "
+                    + "representation bridge means the same operational optimum controls "
+                    + "every recursive iid decision after exact reindexing.")),
             Describe.Lean(
                 DescribeId.Create("shot-rate"),
                 DeclarationHandle.Create(Prefix + "robustShotRate"),
