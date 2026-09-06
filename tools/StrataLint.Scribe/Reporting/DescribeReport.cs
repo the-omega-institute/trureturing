@@ -76,10 +76,25 @@ internal sealed class DescribeReport
         var material = documents
             .OrderBy(static document => document.Header.Gid.Value, StringComparer.Ordinal)
             .ToImmutableArray();
+        var declarationCatalog = leanReport is null ? null : DeclarationCatalog.Create(leanReport);
+        var libraryInspection = LibraryNoteCatalog.Inspect(repositoryRoot);
+        var redFindings = DescribeRepositoryValidator.Validate(
+            repositoryRoot,
+            material,
+            leanReport,
+            libraryInspection,
+            declarationCatalog).ToBuilder();
+        if (redFindings.Count == 0 && declarationCatalog is not null)
+        {
+            material = material
+                .Select(document => document.ResolveDeclarations(declarationCatalog))
+                .ToImmutableArray();
+        }
         var nodes = ImmutableArray.CreateBuilder<DescribeNodeRecord>();
         var observations = ImmutableArray.CreateBuilder<DescribeObservation>();
         var formulaContentSlots = 0;
-        foreach (var document in material)
+        // Invalid inputs carry diagnostics; their declaration kinds may be unresolved.
+        foreach (var document in redFindings.Count == 0 ? material : [])
         {
             var textOrdinal = 0;
             VisitBlocks(
@@ -92,7 +107,6 @@ internal sealed class DescribeReport
         }
 
         observations.AddRange(ObserveLeanDocstrings(repositoryRoot));
-        var libraryInspection = LibraryNoteCatalog.Inspect(repositoryRoot);
         var notes = libraryInspection.Notes;
         observations.AddRange(notes
             .Where(static note => note.Doi is not null)
@@ -123,12 +137,7 @@ internal sealed class DescribeReport
             orderedNodes.Count(static node => node.StatementKind == "lean-declaration"),
             byKind,
             byProvenance);
-        var redFindings = DescribeRepositoryValidator.Validate(
-            repositoryRoot,
-            material,
-            leanReport,
-            libraryInspection).ToBuilder();
-        if (validateContentGovernance)
+        if (validateContentGovernance && redFindings.Count == 0)
         {
             redFindings.AddRange(DescribeContentGovernance.Validate(
                 repositoryRoot,

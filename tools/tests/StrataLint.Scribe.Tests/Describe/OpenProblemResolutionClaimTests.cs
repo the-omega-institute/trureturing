@@ -245,7 +245,7 @@ public sealed class OpenProblemResolutionClaimTests
     [Fact]
     public void DescribeValueEqualityIncludesResolutionClaim()
     {
-        var proved = ClaimDescribe();
+        var proved = ClaimDescribe(role: DescribeRole.Theorem);
         var provedTwin = RehydrateWithClaim(
             proved,
             new OpenProblemResolutionClaim(
@@ -309,6 +309,117 @@ public sealed class OpenProblemResolutionClaimTests
     }
 
     [Fact]
+    public void DescribeReportResolvesDefaultRoleBeforeProjectingResolutionClaim()
+    {
+        WithRepository(root =>
+        {
+            var claim = new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create(ProblemSlug), ResolutionKind.Proved);
+            var describe = Describe.Lean(
+                DescribeId.Create("resolution"),
+                DeclarationHandle.Create(TheoremGid),
+                Heading.Create("Resolution"),
+                StatementSource.FromAuthor(InlineIdentity()),
+                AssessedProvenance.FromRepo(),
+                DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Resolution."))),
+                openProblemResolutionClaim: claim);
+
+            var report = DescribeReport.Build(
+                root, [CreateDocument(describe)], Report((TheoremGid, "theorem")));
+
+            Assert.Equal("classified", report.Status);
+            Assert.Empty(report.RedFindings);
+            var node = Assert.Single(report.Nodes);
+            Assert.Equal("theorem", node.Kind);
+            Assert.Equal(claim, node.OpenProblemResolutionClaim);
+            using var json = JsonDocument.Parse(DescribeReportWriter.WriteJson(report));
+            var projected = Assert.Single(json.RootElement.GetProperty("nodes").EnumerateArray());
+            Assert.Equal("theorem", projected.GetProperty("kind").GetString());
+            var resolution = projected.GetProperty("open_problem_resolution");
+            Assert.Equal(ProblemSlug, resolution.GetProperty("problem_slug").GetString());
+            Assert.Equal("proved", resolution.GetProperty("resolution_kind").GetString());
+        });
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DescribeReportRejectsDefaultRoleClaimWithoutLeanReport(bool validateContentGovernance)
+    {
+        WithRepository(root =>
+        {
+            var describe = Describe.Lean(
+                DescribeId.Create("resolution"),
+                DeclarationHandle.Create(TheoremGid),
+                Heading.Create("Resolution"),
+                StatementSource.FromAuthor(InlineIdentity()),
+                AssessedProvenance.FromRepo(),
+                DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Resolution."))),
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(ProblemSlug), ResolutionKind.Proved));
+
+            var report = DescribeReport.Build(
+                root, [CreateDocument(describe)], validateContentGovernance: validateContentGovernance);
+
+            Assert.Equal("invalid", report.Status);
+            Assert.Contains(report.RedFindings, static finding =>
+                finding.Code == "missing-problem-resolution-lean-report");
+            Assert.Empty(report.Nodes);
+        });
+    }
+
+    [Fact]
+    public void ReviewNestedDescribeRejectsMissingDossier() => WithRepository(root =>
+    {
+        var document = CreateDocument(Nest(ClaimDescribe(slug: "missing-open-problem")));
+        var findings = DescribeRepositoryValidator.Validate(root, [document], Report((TheoremGid, "theorem")));
+        Assert.Contains(findings, f => f.Code == "dangling-problem-slug");
+    });
+
+    [Fact]
+    public void ReviewNestedDescribeRejectsDuplicateClaim() => WithRepository(root =>
+    {
+        var document = CreateDocument(ClaimDescribe(), Nest(ClaimDescribe(id: "nested")));
+        var findings = DescribeRepositoryValidator.Validate(root, [document], Report((TheoremGid, "theorem")));
+        Assert.Single(findings, f => f.Code == "duplicate-problem-resolution-claim");
+    });
+
+    [Fact]
+    public void ReviewNestedClaimReportFailsClosedWithoutLeanReport() => WithRepository(root =>
+    {
+        var report = DescribeReport.Build(root,
+            [CreateDocument(Nest(ClaimDescribe(role: DescribeRole.Theorem)))]);
+        Assert.Equal("invalid", report.Status);
+        Assert.Contains(report.RedFindings, f => f.Code == "missing-problem-resolution-lean-report");
+    });
+
+    [Fact]
+    public void ClaimDescribeDefaultsIdToResolution() =>
+        Assert.Equal("resolution", ClaimDescribe().Id.Value);
+
+    [Fact]
+    public void ClaimDescribeDefaultsDeclarationToFixtureTheorem() =>
+        Assert.Equal(TheoremGid,
+            Assert.IsType<DescribeStatement.LeanDeclaration>(ClaimDescribe().Statement).Value.Value);
+
+    [Fact]
+    public void ClaimDescribeDefaultsSlugToFixtureProblem() =>
+        Assert.Equal(ProblemSlug, ClaimDescribe().OpenProblemResolutionClaim!.ProblemSlug.Value);
+
+    [Fact]
+    public void ClaimDescribeDefaultsResolutionKindToProved() =>
+        Assert.Equal(ResolutionKind.Proved, ClaimDescribe().OpenProblemResolutionClaim!.ResolutionKind);
+
+    [Fact]
+    public void ClaimDescribeDefaultsRoleToProductionDefault() =>
+        Assert.Null(Assert.IsType<DescribeKindSource.ReportDerived>(ClaimDescribe().KindSource).Role);
+
+    [Fact]
+    public void ClaimDescribeDefaultsClaimToFixtureResolution() =>
+        Assert.Equal(new OpenProblemResolutionClaim(ProblemSlugRef.Create(ProblemSlug), ResolutionKind.Proved),
+            ClaimDescribe().OpenProblemResolutionClaim);
+
+    [Fact]
     public void CanonicalMarkdownWriterEmitsClosedVersionedResolutionMarker()
     {
         var document = CreateDocument(ClaimDescribe());
@@ -370,7 +481,7 @@ public sealed class OpenProblemResolutionClaimTests
         string declarationGid = TheoremGid,
         string slug = ProblemSlug,
         ResolutionKind resolutionKind = ResolutionKind.Proved,
-        DescribeRole? role = DescribeRole.Theorem,
+        DescribeRole? role = null,
         OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(
             DescribeId.Create(id),
@@ -384,6 +495,10 @@ public sealed class OpenProblemResolutionClaimTests
             claim ?? new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create(slug),
                 resolutionKind));
+
+    private static DocumentBlock.Describe Nest(params DocumentBlock.Describe[] children) =>
+        Describe.Remark(DescribeId.Create("parent"), Heading.Create("Parent"), InlineIdentity(),
+            AssessedProvenance.FromRepo(), DefinitionDsl.Blocks(children));
 
     private static ScribeDocument CreateDocument(params DocumentBlock.Describe[] describes) =>
         ScribeDocument.Create(
