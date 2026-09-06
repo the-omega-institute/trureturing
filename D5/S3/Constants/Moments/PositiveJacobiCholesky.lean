@@ -6,7 +6,6 @@
    utility: none
    digest: Positive Jacobi matrices admit positive recursive Cholesky weights. -/
 
-import D5.S3.Constants.NewtonHankelRealRootCriterion
 import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import Mathlib.Analysis.Matrix.LDL
 import Mathlib.LinearAlgebra.Matrix.Block
@@ -17,8 +16,8 @@ import Mathlib.Tactic
       CoefficientDrivenJacobiCharacteristicPolynomial (monic-basis Jacobi shape and charpoly),
       NewtonHankelRealRootCriterion (root reality criterion), and
       ForbiddenNeighbourDeterminant (the canonical lowerBidiagonal and forbiddenPartition).
-      No positive Cholesky weight recurrence was found. Both imported D5 headers are G;
-      the two I-level moment modules were read but are not imported.
+      No positive Cholesky weight recurrence was found. The sole imported D5 header is G;
+      the two I-level moment modules and the G-level Newton criterion are not imported.
    2. Pinned mathlib v4.33.0 searches found LDL.lower_conj_diag,
       LDL.lowerInv_triangular, Matrix.blockTriangular_inv_of_blockTriangular,
       Matrix.IsHermitian.posDef_iff_eigenvalues_pos, and Matrix.det_one_add_mul_comm.
@@ -45,6 +44,8 @@ open Matrix Polynomial
 open scoped BigOperators
 
 namespace D5.S3.Constants.Moments.PositiveJacobiCholesky
+
+open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 
 /-- The odd Cholesky weights, computed by the Jacobi pivot recurrence. -/
 def jacobiPivot (α β : Nat → Real) : Nat → Real
@@ -227,5 +228,146 @@ private theorem jacobi_cholesky_weight_positivity {d : Nat} (hd : 0 < d)
   split_ifs with hi
   · exact hp _ (by omega)
   · exact div_pos (hβpos _ (by omega)) (hp _ (by omega))
+
+private theorem exists_positive_lower_cholesky {d : Nat}
+    {K : Matrix (Fin d) (Fin d) Real} (hK : K.PosDef) :
+    ∃ L : Matrix (Fin d) (Fin d) Real,
+      L.IsLowerTriangular ∧ K = L * L.transpose ∧ ∀ i, 0 < L i i := by
+  obtain ⟨L, hLower, hfactor, hdiag⟩ := exists_lower_cholesky hK
+  let S := Matrix.diagonal (fun i => if 0 < L i i then (1 : Real) else -1)
+  have hSS : S * S.transpose = 1 := by
+    simp only [S, diagonal_transpose, diagonal_mul_diagonal]
+    have hs : (fun i => (if 0 < L i i then (1 : Real) else -1) *
+        (if 0 < L i i then (1 : Real) else -1)) = fun _ => 1 := by
+      funext i
+      split_ifs <;> norm_num
+    rw [hs, Matrix.diagonal_one]
+  refine ⟨L * S, hLower.mul (Matrix.blockTriangular_diagonal _), ?_, ?_⟩
+  · calc
+      K = L * L.transpose := hfactor
+      _ = L * (S * S.transpose) * L.transpose := by rw [hSS, Matrix.mul_one]
+      _ = (L * S) * (L * S).transpose := by simp [transpose_mul, Matrix.mul_assoc]
+  · intro i
+    simp only [S, Matrix.mul_diagonal]
+    split_ifs with hi
+    · simpa using hi
+    · have hneg : L i i < 0 := lt_of_le_of_ne (le_of_not_gt hi) (hdiag i)
+      simpa using neg_pos.mpr hneg
+
+private theorem posDef_of_positive_charpoly_roots {d : Nat}
+    {K : Matrix (Fin d) (Fin d) Real} (hSym : K.IsHermitian)
+    (hroots : ∀ r : Real, K.charpoly.IsRoot r → 0 < r) : K.PosDef := by
+  apply hSym.posDef_iff_eigenvalues_pos.mpr
+  intro i
+  apply hroots
+  change K.charpoly.eval (hSym.eigenvalues i) = 0
+  rw [hSym.charpoly_eq, Polynomial.eval_prod]
+  exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp)
+
+/-- A symmetric Jacobi matrix with positive characteristic roots has strictly positive recursive
+weights, the prescribed Cholesky factor, and the forbidden-neighbour determinant polynomial.
+Root positivity and the symmetric Jacobi presentation are explicit input hypotheses. -/
+theorem positive_jacobi_cholesky {d : Nat} (hd : 0 < d)
+    (α β : Nat → Real) (K : Matrix (Fin d) (Fin d) Real)
+    (hSym : K.IsHermitian)
+    (hroots : ∀ r : Real, K.charpoly.IsRoot r → 0 < r)
+    (htri : ∀ i j, j.val + 1 < i.val → K i j = 0)
+    (hα : ∀ i : Fin d, K i i = α i.val)
+    (hsub : ∀ (j : Nat) (hj : j + 1 < d),
+      K ⟨j + 1, hj⟩ ⟨j, by omega⟩ = Real.sqrt (β (j + 1)))
+    (hβpos : ∀ j, j + 1 < d → 0 < β (j + 1)) :
+    let w : Fin (2 * d - 1) → Real := jacobiWeights α β
+    K.PosDef ∧ (∀ i, 0 < w i) ∧ w ⟨0, by omega⟩ = α 0 ∧
+      (∀ (j : Nat) (hj : j + 1 < d),
+        w ⟨2 * j + 1, by omega⟩ = β (j + 1) / w ⟨2 * j, by omega⟩ ∧
+        w ⟨2 * j + 2, by omega⟩ = α (j + 1) - w ⟨2 * j + 1, by omega⟩) ∧
+      K = lowerBidiagonal w * (lowerBidiagonal w).transpose ∧
+      Matrix.det ((1 : Matrix (Fin d) (Fin d) Real[X]) +
+        (Polynomial.X : Real[X]) • K.map Polynomial.C) = forbiddenPartition w := by
+  let w : Fin (2 * d - 1) → Real := jacobiWeights α β
+  have hK := posDef_of_positive_charpoly_roots hSym hroots
+  have hβ : ∀ (j : Nat) (hj : j + 1 < d),
+      K ⟨j + 1, hj⟩ ⟨j, by omega⟩ ^ 2 = β (j + 1) := by
+    intro j hj
+    rw [hsub j hj, Real.sq_sqrt (hβpos j hj).le]
+  obtain ⟨_, hw⟩ := jacobi_cholesky_weight_positivity hd α β hK htri hα hβ hβpos
+  obtain ⟨L, hLower, hfactor, hdiag⟩ := exists_positive_lower_cholesky hK
+  have hband := cholesky_bidiagonal_of_tridiagonal hLower hfactor
+    (fun i => ne_of_gt (hdiag i)) htri
+  have heq := jacobi_pivot_eq_cholesky_sq hd α β hLower hfactor
+    (fun i => ne_of_gt (hdiag i)) hband hα hβ
+  have hodd (j : Nat) (hj : j < d) : w ⟨2 * j, by omega⟩ = jacobiPivot α β j := by
+    simp [w, jacobiWeights]
+  have heven (j : Nat) (hj : j + 1 < d) :
+      w ⟨2 * j + 1, by omega⟩ = β (j + 1) / jacobiPivot α β j := by
+    simp [w, jacobiWeights, show (2 * j + 1) % 2 = 1 by omega,
+      show (2 * j + 1) / 2 = j by omega]
+  have hevenSq (j : Nat) (hj : j + 1 < d) :
+      β (j + 1) / jacobiPivot α β j = L ⟨j + 1, hj⟩ ⟨j, by omega⟩ ^ 2 := by
+    rw [heq j (by omega), ← hβ j hj,
+      cholesky_adjacent hLower hfactor hband j hj, mul_pow,
+      mul_div_cancel_right₀ _ (pow_ne_zero _ (ne_of_gt (hdiag _)))]
+  have hsubpos (j : Nat) (hj : j + 1 < d) : 0 < L ⟨j + 1, hj⟩ ⟨j, by omega⟩ := by
+    have he := cholesky_adjacent hLower hfactor hband j hj
+    rw [hsub j hj] at he
+    have hprod : 0 < L ⟨j + 1, hj⟩ ⟨j, by omega⟩ * L ⟨j, by omega⟩ ⟨j, by omega⟩ :=
+      he ▸ Real.sqrt_pos.mpr (hβpos j hj)
+    exact (mul_pos_iff_of_pos_right (hdiag _)).mp hprod
+  have hL : lowerBidiagonal w = L := by
+    ext i j
+    by_cases hij : i = j
+    · subst j
+      simp only [lowerBidiagonal]
+      rw [hodd i.val i.isLt, heq i.val i.isLt]
+      exact Real.sqrt_sq (hdiag i).le
+    · by_cases hstep : j.val + 1 = i.val
+      · have hj : j.val + 1 < d := by omega
+        have hi : i = ⟨j.val + 1, hj⟩ := Fin.ext hstep.symm
+        simp only [lowerBidiagonal, if_neg hij, dif_pos hstep]
+        rw [heven j.val hj, hevenSq j.val hj]
+        simpa only [hi] using Real.sqrt_sq (hsubpos j.val hj).le
+      · simp only [lowerBidiagonal, if_neg hij, dif_neg hstep]
+        symm
+        rcases lt_or_gt_of_ne hij with hu | hl
+        · exact hLower hu
+        · exact hband i j (by have := Fin.lt_def.mp hl; omega)
+  have hKw : K = lowerBidiagonal w * (lowerBidiagonal w).transpose := by
+    rw [hL]
+    exact hfactor
+  refine ⟨hK, hw, ?_, ?_, hKw, ?_⟩
+  · exact hodd 0 hd
+  · intro j hj
+    change w ⟨2 * j + 1, by omega⟩ = β (j + 1) / w ⟨2 * j, by omega⟩ ∧
+      w ⟨2 * j + 2, by omega⟩ = α (j + 1) - w ⟨2 * j + 1, by omega⟩
+    constructor
+    · rw [heven j hj, hodd j (by omega)]
+    · have hindex : 2 * j + 2 = 2 * (j + 1) := by omega
+      simp only [hindex, hodd (j + 1) hj, jacobiPivot, heven j hj]
+  · calc
+      _ = Matrix.det ((1 : Matrix (Fin d) (Fin d) Real[X]) +
+          (Polynomial.X : Real[X]) •
+            ((lowerBidiagonal w).transpose * lowerBidiagonal w).map Polynomial.C) := by
+        rw [hKw, Matrix.map_mul, Matrix.map_mul]
+        simpa only [Matrix.smul_mul, Matrix.mul_smul] using
+          Matrix.det_one_add_mul_comm
+            ((Polynomial.X : Real[X]) • (lowerBidiagonal w).map Polynomial.C)
+            ((lowerBidiagonal w).transpose.map Polynomial.C)
+      _ = forbiddenPartition w :=
+        (forbidden_neighbour_determinant (by omega) w (fun i => (hw i).le)).1.symm
+
+#print axioms positive_jacobi_cholesky
+
+run_cmd do
+  for (consumer, provider) in
+      [( ``positive_jacobi_cholesky, ``jacobi_cholesky_weight_positivity),
+       ( ``jacobi_cholesky_weight_positivity, ``jacobi_pivot_eq_cholesky_sq),
+       ( ``jacobi_pivot_eq_cholesky_sq, ``cholesky_diagonal)] do
+    let some info := (← Lean.getEnv).checked.get.find? consumer
+      | throwError "Missing declaration: {consumer}"
+    let some value := info.value? (allowOpaque := true)
+      | throwError "Missing proof body: {consumer}"
+    unless value.getUsedConstants.contains provider do
+      throwError "Missing elaborated dependency: {consumer} -> {provider}"
+    Lean.logInfo m!"ELABORATED_DEPENDENCY {consumer} -> {provider}"
 
 end D5.S3.Constants.Moments.PositiveJacobiCholesky
