@@ -109,8 +109,17 @@ internal static class ScribeTestMapDeriver
 
         try
         {
-            using var checkout = MsBuildCompileOracle.Materialize(snapshot);
-            return DeriveTracked(tracked, MsBuildCompileOracle.Query(checkout.Root, projects));
+            var probe = new Sl003PhaseProbe(snapshot.Files.Count, tracked.Length, projects.Length);
+            var checkout = probe.Time("materialize", () => MsBuildCompileOracle.Materialize(snapshot));
+            try
+            {
+                var compile = probe.Time("query", () => MsBuildCompileOracle.Query(checkout.Root, projects));
+                return probe.Time("derive-tracked", () => DeriveTracked(tracked, compile));
+            }
+            finally
+            {
+                probe.Time("dispose", () => { checkout.Dispose(); return 0; });
+            }
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
         {
@@ -741,4 +750,34 @@ internal static class ScribeTestMapDeriver
             && method.Name == "Discover"
             && SymbolEqualityComparer.Default.Equals(method.ReturnType, type));
 
+}
+
+// PROBE ONLY (run 5, jp0905c): CI phase attribution for the SL-003 derivation. Never to land.
+internal sealed class Sl003PhaseProbe(int snapshotFiles, int trackedInputs, int projects)
+{
+    private static int sequence;
+    private readonly int call = Interlocked.Increment(ref sequence);
+    private readonly long started = TimeProvider.System.GetTimestamp();
+
+    internal T Time<T>(string phase, Func<T> action)
+    {
+        var at = TimeProvider.System.GetTimestamp();
+        try
+        {
+            return action();
+        }
+        finally
+        {
+            var elapsed = TimeProvider.System.GetElapsedTime(at).TotalSeconds;
+            var sinceStart = TimeProvider.System.GetElapsedTime(started).TotalSeconds;
+            Console.Error.WriteLine(
+                "{\"event\":\"sl003_phase_probe\",\"call\":" + call.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                + ",\"phase\":\"" + phase + "\",\"elapsed_seconds\":" + elapsed.ToString("F3", System.Globalization.CultureInfo.InvariantCulture)
+                + ",\"since_call_start_seconds\":" + sinceStart.ToString("F3", System.Globalization.CultureInfo.InvariantCulture)
+                + ",\"snapshot_files\":" + snapshotFiles.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                + ",\"tracked_inputs\":" + trackedInputs.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                + ",\"projects\":" + projects.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                + ",\"thread\":" + Environment.CurrentManagedThreadId.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}");
+        }
+    }
 }
