@@ -1,0 +1,20 @@
+# 八、5040 与 RH 的第三项联系：四个素数方向在它之后已经可以完整排除反例
+
+Robin 定理说：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\frac{\sigma(n)}n
+<
+e^{\gamma_{\mathrm E}}\log\log n
+\quad\forall n>5040.
+}
+\tag{16}
+$$
+
+注意严格条件是 \(n>5040\)。5040 本身不满足这项不等式，并不能因此否证 RH。([Springer][6])
+
+这次还可以对当前四轴模型作一个完整限制。
+

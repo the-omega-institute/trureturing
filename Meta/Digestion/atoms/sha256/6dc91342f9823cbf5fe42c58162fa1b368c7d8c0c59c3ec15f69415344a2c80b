@@ -1,0 +1,84 @@
+## 一个明确的量子统计模型
+
+在 \(\ell^2(\mathbb N_+)\) 上定义
+
+$$
+H|n\rangle=(\log n)|n\rangle.
+$$
+
+那么
+
+$$
+\operatorname{Tr}(e^{-\beta H})
+=
+\sum_{n\ge1}n^{-\beta}
+=
+\zeta(\beta),
+\qquad\beta>1.
+\tag{10}
+$$
+
+归一化态为
+
+$$
+\rho_\beta
+=
+\frac{e^{-\beta H}}{\zeta(\beta)}.
+$$
+
+ζ 作为配分函数是已有的数学物理构造方向；这里仅使用这个明确的对角模型，不把更复杂的量子统计结论自动搬过来。([Springer][2])
+
+直接求导：
+
+$$
+\boxed{
+\langle H\rangle_\beta
+=
+-\frac{\zeta'(\beta)}{\zeta(\beta)},
+}
+$$
+
+$$
+\boxed{
+\operatorname{Var}_\beta(H)
+=
+\frac{d^2}{d\beta^2}\log\zeta(\beta).
+}
+\tag{11}
+$$
+
+令
+
+$$
+\varepsilon=\beta-1\downarrow0.
+$$
+
+由 ζ 在 \(1\) 处的 Laurent 展开，
+
+$$
+\zeta(1+\varepsilon)
+=
+\frac1\varepsilon+\gamma_{\mathrm E}+O(\varepsilon),
+$$
+
+得到
+
+$$
+\boxed{
+\langle H\rangle_\beta
+=
+\frac1\varepsilon-\gamma_{\mathrm E}+O(\varepsilon),
+}
+$$
+
+$$
+\boxed{
+\operatorname{Var}_\beta(H)
+=
+\frac1{\varepsilon^2}+O(1).
+}
+\tag{12}
+$$
+
+因此，这个角度不仅看到“发散”，还看到明确的临界指数。
+

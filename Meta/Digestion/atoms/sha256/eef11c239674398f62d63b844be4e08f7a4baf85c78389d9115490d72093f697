@@ -1,0 +1,19 @@
+# 295．最小临界资源：一个隐藏比特需要至少两个计数单元
+
+定义纤维量子空间
+
+$$
+\mathcal H_y=\operatorname{span}\{|z\rangle:z\in\mathcal F_y\}.
+$$
+
+则
+
+$$
+\boxed{
+d_y=\dim\mathcal H_y=s(y)+1.
+}
+\tag{295.1}
+$$
+
+这是在既有整数模型上选择的量子实现，不是单凭计数就证明自然界必须采用量子理论。
+
