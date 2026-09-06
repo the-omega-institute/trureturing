@@ -962,3 +962,140 @@ No 20-state exclusion, improved numerical powers-only lower bound, or resolution
 of the original Walnut 21/22 comparison is claimed. The new obstruction removes
 specific tempting compression routes; it does not rename the all-integer
 problem as the original sparse-input problem.
+
+## 2026-09-06 synchronization: four-slot exclusion and prime-residue stratification
+
+This appendix incorporates the completed gap4 and residue-bridge work that was
+previously present in source/evidence but absent from this cumulative theory file.
+The preceding sections remain historical snapshots. The current structural
+transient-signature lower bound is five, subject to the verification distinction
+below; the exact total-state minimum is still undetermined.
+
+### The finite obstruction uses genuine power inputs
+
+Let S be the 144 indices in `Evidence/D5/Automata/GoldenBase4/gap4_power_rows.tsv`.
+Every index lies between zero and 249. Exact Fibonacci evaluation reconstructs
+`4^n` from each row. Labels are computed using integer square roots:
+
+\[
+L(q)=\left\lfloor\frac{q+\lfloor\sqrt{5q^2}\rfloor}{2}\right\rfloor,
+\qquad D_4(n)=L(4^{n+1})-4L(4^n).
+\]
+
+For every typed partial candidate whose previous-one fiber has cardinality at
+most four, at least one row of S has an incorrect or undefined output. There
+is no bound on the previous-zero fiber. The reduction and completed external
+proof replay establish this statement without using the 21-state reference
+machine. Consequently the unresolved 21/22 artifact comparison cannot affect
+this particular exclusion.
+
+For a word `1 0^g1 1 ... 0^gk 1 0^ell`, with positive internal gaps and ell zero
+or one, retain only the state after each one. Actual successful runs induce
+partial maps H_g on that fiber and terminal outputs G and E. Fill unused
+partial entries arbitrarily. Different H_g are allowed to be independent,
+which is a relaxation: every fitted actual machine induces a fitted relaxed
+model. No assertion that every relaxed model has a recurrent realization is
+used in the exclusion.
+
+### Why the 48 output cases cover every four-slot candidate
+
+The exact rows n=0,1,26 end in one and have distinct outputs 2,1,3. Name their
+terminal states 0,1,2. Padding a smaller nonempty fiber to four states leaves
+all observed runs unchanged. The fourth G output can be restricted to 1,2,3:
+a value zero is never used by these terminal-one observations and can be changed
+to one without changing any sample. Every ell=1 observation is labelled zero
+or one. E outputs outside that set are likewise unused at observed endpoints
+and can be changed to zero. Thus the complete normalized family is
+
+\[
+G=(2,1,3,c),\quad c\in\{1,2,3\},
+\qquad E\in\{0,1\}^4,
+\]
+
+with exactly 48 cases. This is an observation-preserving output normalization,
+not a ban on transition self-loops or on unused slots. All gap maps remain
+arbitrary total four-state maps. The input family uses 19 gap lengths, giving
+76 four-valued transition variables and a 13,831-node shared prefix trie.
+Each arc enforces `child = H_g(parent)` with the same H_g reused across rows.
+
+The three stored proof parts cover all 48 cases. The independent C++ replay
+recomputes every power and label, then checks complete branch coverage and
+solution-preserving support pruning. It accepts only a genuinely empty-domain
+leaf. Recorded totals are 1,272,968 proof nodes, 420,692 branches, 852,276
+contradiction leaves, and maximum branch depth 21. Eight corrupted-data/proof
+checks were rejected in the original run. The producer's branching heuristic
+is not used by the replay. The two implementations were written by the same
+authoring assistant, not independently reviewed by another author.
+
+Files now in the PR include `FiniteDomainSelectionRefutation.lean` and its
+Scribe, the numeric rows, `check_gap4_certificate.cpp`, compressed complete
+proofs, the replay record, and `reproduce_gap4.sh`. The Lean checker was
+subsequently generalized from Fin 4 to Fin colors. Its soundness theorem is
+`accepted_refutation_excludes_solution`.
+
+The concrete B/L trees have not been parsed into a Lean Refutation value and
+kernel checked. The full typed-candidate normalization-to-instance proof also
+remains to be connected in Lean. The numerical conclusion is therefore an
+explicit mathematical reduction with completed exact external replay, not a
+claimed kernel-accepted numerical theorem.
+
+### Consequence for the original total-budget search
+
+Apply the exclusion after the existing transient-signature quotient. A
+canonical realization has one previous-one state per used signature, so s>=5.
+Together with r+s<=20 and s<=r this gives r<=15. Capacity padding covers every
+such candidate by one of
+
+```
+(10,10), (11,9), (12,8), (13,7), (14,6), (15,5).
+```
+
+Indeed r'=max(r,10) satisfies r<=r'<=15 and s<=20-r'. The old (16,4) case is
+excluded by the same four-slot certificate. None of these six remaining cases
+is excluded merely by this arithmetic observation. The inherited total-state
+lower bound 15 is not increased by the one-sided bound alone.
+
+### What the prime residues do and do not encode
+
+`GoldenBase4ResidueBridge.lean` and its Scribe preserve the distinction between
+Z(4^n), the actual input word, and Z(2n), the prime-axis exponent word for
+4^n=2^(2n). The residue pair
+
+\[
+((4^n\bmod5),(4^n\bmod7))
+\]
+
+depends exactly on n mod 6. Its values in order are
+
+```
+(1,1), (4,4), (1,2), (4,1), (1,4), (4,2).
+```
+
+Their injectivity and period-six reduction are proved in the source. Modulo
+three every power is one and no exponent information is obtained. Thus the
+four-prime/5040 lane supplies a genuine congruence coordinate; the Euler-Mascheroni
+constant is not a premise in this automaton argument.
+
+The previous exploratory phase split separated the 144 rows by n mod 6 and
+retained the three state-naming anchors in each subproblem. Each separate
+four-slot relaxation was reported satisfiable; no combined satisfying table
+was obtained. Such separate tables do not solve the joint problem. All phases
+must use the same transition variables, so the relevant feasible set is the
+intersection of the six phase constraints in one shared table space. A phase
+label must not be added as free state memory to the candidate under test.
+
+Chang-Miller's prefix theorem applies separately to 4^(a+6k). This exposes
+valid prefixes in each phase, but does not fix outputs at arbitrary nonpower
+prefixes or establish the required terminal error/power intersection. The
+residue lemma alone cannot justify a stronger lower bound.
+
+### The next finite problem
+
+Five transient states give two unnamed extra G outputs and 32 Boolean E maps.
+The same observation-preserving normalization therefore covers 3^2*2^5=288
+cases. The earlier bounded attempt ended UNKNOWN; it was not a five-slot
+refutation. For five-slot candidates, shared zero-generator constraints and
+cross-phase constraints must remain attached to the same candidate table.
+A complete five-slot refutation would imply s>=6 and remove (15,5); a relaxed
+SAT model would still require a genuine recurrent realization and all-power
+correctness. Neither conclusion follows from a timeout.
