@@ -1,0 +1,23 @@
+# 350．这条路线怎样继续连接 ζ、几何与形式化？
+
+本轮最重要的统一关系是
+
+$$
+\boxed{
+\begin{aligned}
+\text{内部空间谱 }(H_H,V)
+&\longrightarrow
+\mathcal K(t),\\
+&\longrightarrow
+\Sigma(z),\\
+&\longrightarrow
+\{R_\lambda\},\\
+&\longrightarrow
+d_{\min}.
+\end{aligned}
+}
+\tag{350.1}
+$$
+
+它把空间、时间、频率和记忆资源放在同一个模型中。
+

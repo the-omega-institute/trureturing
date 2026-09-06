@@ -1,0 +1,18 @@
+**第一种是代数运输证书。**
+
+例如 Poisson 平滑满足
+
+$$
+\mathcal P_a\mathcal P_b=\mathcal P_{ab},
+$$
+
+且在生成函数上
+
+$$
+\mathcal F_a(z)=\mathcal F(az),
+\qquad
+\mathcal S_a(z)=\mathcal S(az).
+$$
+
+仓库已有抽象半群接口；本轮具体算出了单位圆核、矩阵底线与首次返回的运输关系。仓库当前文件本身还没有包含这些全部定量结论。
+

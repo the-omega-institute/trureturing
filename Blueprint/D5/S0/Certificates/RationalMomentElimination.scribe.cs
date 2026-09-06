@@ -1,0 +1,65 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates;
+
+internal sealed class RationalMomentEliminationDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S0/Certificates/RationalMomentElimination.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A proposed null direction is checked using exact rational identities and cross-multiplied ratio inequalities. Acceptance implies nonnegative weights, unchanged moments, and strict support descent.",
+        H("Rational support elimination certificates"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("active-atoms"),
+                DeclarationHandle.Create(Prefix + "activeAtoms"), H("Computable raw-vector support"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Enumerates exactly the nonzero weights before packaging the vector as a normalized finite response law."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("elimination-step"),
+                DeclarationHandle.Create(Prefix + "EliminationStep"), H("Data-only elimination payload"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The payload contains a rational direction array and one pivot index. It contains no proof fields or trusted solver output."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("valid-step"),
+                DeclarationHandle.Create(Prefix + "ValidStep"), H("Finite arithmetic validity conditions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Checks nonnegative input, positive pivot, zero normalization and feature directions, no motion at inactive atoms, and all ratio comparisons."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("check-step"),
+                DeclarationHandle.Create(Prefix + "checkStep"), H("Exact executable validator"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Decides the finite rational conditions. No threshold or floating-point comparison is used."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("check-step-iff"),
+                DeclarationHandle.Create(Prefix + "checkStep_eq_true_iff"), H("Validator characterization"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Boolean acceptance is equivalent to the semantic arithmetic conditions used by the preservation proofs."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("eliminate"),
+                DeclarationHandle.Create(Prefix + "eliminate"), H("Rational boundary update"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Subtracts the pivot ratio times the direction. The checked pivot has a strictly positive denominator."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("nonnegative"),
+                DeclarationHandle.Create(Prefix + "validStep_nonnegative"), H("Retain nonnegative weights"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Positive direction coordinates are bounded by the certified pivot ratio; nonpositive direction coordinates cannot lower the weights."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("total"),
+                DeclarationHandle.Create(Prefix + "validStep_total"), H("Preserve total mass"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The direction sums to zero, so the rational update preserves total mass exactly."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("moment"),
+                DeclarationHandle.Create(Prefix + "validStep_moment"), H("Preserve every retained moment"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Uses the existing linearObjective semantics. Every checked zero directional moment remains unchanged after the update."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("zero-stays-zero"),
+                DeclarationHandle.Create(Prefix + "validStep_zero_stays_zero"), H("Respect hard support exclusions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An initially zero atom cannot acquire mass. The condition is separate from preservation of the nominated moments."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pivot-zero"),
+                DeclarationHandle.Create(Prefix + "validStep_pivot_zero"), H("Remove the chosen pivot exactly"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The pivot weight cancels identically at the selected ratio, without numerical tolerances."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("support"),
+                DeclarationHandle.Create(Prefix + "validStep_support"), H("Strict support descent"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The new support is a subset of the old support with strictly smaller cardinality. Ties may remove several atoms."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("maximal-rate"),
+                DeclarationHandle.Create(Prefix + "validStep_maximal_rate"), H("Maximal feasible move along the direction"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Any larger move makes the certified pivot negative. This is a linewise maximality statement, not an optimality claim for the causal query."))), DescribeRole.Theorem))));
+}

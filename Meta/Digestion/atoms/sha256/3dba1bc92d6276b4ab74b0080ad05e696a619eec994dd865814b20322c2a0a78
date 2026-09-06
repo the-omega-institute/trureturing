@@ -1,0 +1,65 @@
+## 真正零点留下什么不可删除的痕迹？
+
+假设实际 ζ 在：
+
+$$
+\rho,\qquad\Re\rho>\frac12
+$$
+
+有 \(m_\rho\) 重零点。
+
+局部写成：
+
+$$
+\zeta(s)=(s-\rho)^{m_\rho}g(s),
+\qquad g(\rho)\ne0.
+$$
+
+那么：
+
+$$
+\mathcal H(s)
+=
+D(s)+V(s)
+\left[
+m_\rho\log(s-\rho)+\log g(s)
+\right].
+$$
+
+绕 \(\rho\) 一周后：
+
+$$
+\boxed{
+\Delta_{\mathrm{loop}}\mathcal H(s)
+=
+2\pi i\,m_\rho V(s).
+}
+\tag{32}
+$$
+
+这就是解析延拓的绕行差。
+
+即使 \(V(\rho)=0\)，只要它不是在邻域里恒为零，就不能消除整个对数分支。有限阶的：
+
+$$
+(s-\rho)^k\log(s-\rho)
+$$
+
+仍然不是跨过 \(\rho\) 的单值全纯函数。
+
+所以：
+
+$$
+\boxed{
+\text{局部历史奇偶把许多整数项配掉}
+\quad\not\Rightarrow\quad
+\text{把实际 ζ 零点信息配掉}.
+}
+$$
+
+信息只是从“函数为零”运输成了“绕一圈后无法回到同一解析值”。
+
+这项运输依靠式（28）和（30），而不是类比。
+
+---
+
