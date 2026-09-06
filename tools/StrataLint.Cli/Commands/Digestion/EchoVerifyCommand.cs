@@ -12,7 +12,9 @@ internal static class EchoVerifyCommand
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyList<string> arguments)
+        IReadOnlyList<string> arguments,
+        IAtomHistorySource atomHistorySource,
+        TimeProvider timeProvider)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
@@ -38,7 +40,9 @@ internal static class EchoVerifyCommand
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
-                ["--residual-summary", "--base", prepared.Revision]);
+                ["--residual-summary", "--base", prepared.Revision],
+                atomHistorySource,
+                timeProvider);
             if (!summary.Success)
             {
                 return new ExplicitCommandResult(

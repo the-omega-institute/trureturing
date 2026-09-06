@@ -18,7 +18,8 @@ public sealed class DigestionFrontierViewsAndCorpusTests
             fixture.Document,
             selectedAtomId: null);
         var summary = DigestResidualSummary.Render(fixture.Evaluation, fixture.Projection);
-        var statusText = DigestStatusCommand.RenderJson(fixture.Evaluation, fixture.Projection);
+        var statusText = DigestStatusCommand.RenderJson(fixture.Evaluation, fixture.Projection,
+            FakeAtomHistorySource.Project(fixture.Evaluation, fixture.Projection));
 
         Assert.Equal(fixture.Projection.Total.ResidualOpen, readiness.Length);
         Assert.Equal(fixture.Projection.Total.Quarantined, readiness.Count(static item => item.Action == "quarantined"));
@@ -69,7 +70,8 @@ public sealed class DigestionFrontierViewsAndCorpusTests
         var fixture = DigestionFrontierFixture.Create();
 
         using var status = JsonDocument.Parse(
-            DigestStatusCommand.RenderJson(fixture.Evaluation, fixture.Projection));
+            DigestStatusCommand.RenderJson(fixture.Evaluation, fixture.Projection,
+                FakeAtomHistorySource.Project(fixture.Evaluation, fixture.Projection)));
         var entries = status.RootElement.GetProperty("frontier").GetProperty("entries");
         Assert.Equal(fixture.Projection.Total.ResidualOpen, entries.GetArrayLength());
         var quarantinedChainChild = entries.EnumerateArray().Single(entry =>
