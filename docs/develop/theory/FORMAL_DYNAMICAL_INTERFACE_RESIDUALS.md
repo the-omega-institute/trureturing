@@ -2598,3 +2598,129 @@ Varga 的 *Balanced truncation model reduction of periodic systems* 第 3 节、
 无间隙稳定性论证依赖离散时间的正项 \(A_{21}^*D_2A_{21}\)。本节没有将同一论证直接推广到连续时间 Lyapunov 方程，或带有限时域残差的 Gramian。它形式化经典稳定性机制及仓库连接，不主张新的误差常数或首次证明优先权。
 
 本轮独立运行了精确有理数及复有理数代数检查、数值复极点检查与有限时间误差回归。它们不执行 Lean，也不证明全称定理。排序和严格内部稳定性已具有完整候选证明脚本；谱半径到幂可和输入的转换、频域 \(H^\infty\) 范数接口及带噪 Ho–Kalman 的统一输入条件认证仍不属于本节已交付范围。
+
+---
+
+# 2026-09-06 增补：以真实最低模态逼近问题为目标的射影读出认证
+
+本节对应 PR #5882，承接 #5580 的实际平衡截断，并对照不同作者的研究路线。loning 的 #5326 将 Hankel 最小行为实现与行列式保持明确分开；#5602 在固定算术窗口给出实际候选及有理数能量证书，但完整算子域接口和尺度极限仍未闭合。因此，本节研究“误差究竟足以认证哪个目标读出”，没有把一般输入输出误差界解释为任意谱行列式的误差界。
+
+外部目标采用 Connes、Consani、Moscovici 的 *Zeta Spectral Triples*，`arXiv:2511.22755v1`，第 8 节。该节明确留下最低本征空间 simple-even 性质，以及构造候选对真实最低模态的充分逼近两个步骤。Lemma 7.3 的候选变换收敛不能代替第二步。作者网站在 2026 年收录的论文 PDF 第 32 页仍明确列出这两个缺口：`https://alainconnes.org/wp-content/uploads/zeta-spectral-triples-1.pdf`。本节完成的是该逼近任务的定量认证桥和边界，不声称解决这两个开放步骤或 RH。
+
+## A. 先证明一种不能使用的推理：行为误差小不保证状态行列式零点保持
+
+`BalancedDeterminantInformationLoss` 构造
+\[
+A=\operatorname{diag}(1/2,1/4),\qquad
+B_\varepsilon=C_\varepsilon=\operatorname{diag}(1,\varepsilon),\qquad
+D_\varepsilon=\operatorname{diag}(4/3,16\varepsilon^2/15).
+\]
+对每个 \(\varepsilon>0\)，输入和输出端口均为双射，没有零耦合的隐藏状态。两个 Stein 等式由精确代数成立。若 \(\varepsilon\le1\)，删除第二坐标确实删除较小权重。源码直接调用已有的实际截断误差定理，得到所有输入与有限窗口上的系数
+\[
+\|y-y_r\|_{2,[0,N)}\le\frac{32\varepsilon^2}{15}\|u\|_{2,[0,N)}.
+\]
+同时，对所有这些非零 \(\varepsilon\)，
+\[
+\det(I-4A)=0,\qquad\det(I-4A_r)=-1.
+\]
+`arbitrarily_small_error_with_determinant_loss` 对每个 \(\eta>0\) 实际选取 \(\varepsilon=\min(1,15\eta/64)\)，证明误差系数小于 \(\eta\) 而上述零点损失不变。这是全称参数族的候选 Lean 证明，不是有限采样断言。
+
+该结果针对原始状态行列式 \(\det(I-zA)\)，不反驳精确最小实现的相似唯一性，也不反驳已经单独证明的算术、相对或正则化行列式公式。它表明：若零点是目标，必须先证明目标对象对应与目标误差传递，不能仅凭 Hankel 行为压缩误差代替这两项。
+
+## B. 真实复算子域上的射影误差
+
+`ProjectiveRayleighReadout` 允许一个复线性算子域 \(\mathcal D\)、映射 \(\iota,A:\mathcal D\to H\)，并使用域上的对称性
+\[
+\langle\iota x,Ay\rangle=\langle Ax,\iota y\rangle.
+\]
+不要求把可能无界的算子改成全空间有界算子。设候选 \(k\) 满足 \(\|\iota k\|=1\)，真实本征向量满足 \(\iota u\ne0\)、\(Au=\lambda\iota u\)，且
+\[
+\ell\le\lambda<\theta,\qquad
+\mu:=\Re\langle\iota k,Ak\rangle\le U<\theta,
+\]
+\[
+\langle\iota k,\iota f\rangle=0\Longrightarrow
+\theta\|\iota f\|^2\le\Re\langle\iota f,Af\rangle.
+\]
+先由补空间强制性排除 \(\alpha=\langle\iota k,\iota u\rangle=0\)，再实际构造
+\[
+w=\alpha^{-1}u-k.
+\]
+域线性与对称性给出
+\[
+\langle\iota k,\iota w\rangle=0,\qquad
+\Re\langle\iota w,Aw\rangle=\lambda\|\iota w\|^2+\mu-\lambda.
+\]
+因此 \((\theta-\lambda)\|\iota w\|^2\le\mu-\lambda\)。从 \(U<\theta\) 先推出误差平方小于一，再用 \(\ell\le\lambda\) 替换本征值，得到
+\[
+\boxed{\|\iota w\|^2\le\delta:=\frac{U-\ell}{\theta-\ell}<1.}
+\]
+`rayleigh_projective_enclosure` 同时证明非零重叠、正交性及该预算。它不要求 \(u\) 已归一化，也不另外假设 \(\lambda\le\mu\)。但实际本征向量存在及其本征值低于 \(\theta\) 仍在明确前提中。
+
+#5602 已在 paper-level 使用这个射影比值，其原 Lean `WeilRayleighEnclosureModeCapture` 给出实数域、单位本征向量的不同误差界。本节增量是复算子域上的完整候选证明与目标读出接口，不主张首次发现该常数。
+
+## C. 对指定目标的锐读出条件
+
+给定读出向量 \(g\in H\)，令 \(k\) 为单位候选，\(g_\perp=g-\langle k,g\rangle k\)。对所有 \(w\perp k\)、\(\|w\|^2\le\delta\)，证明
+\[
+|\langle g,k+w\rangle-\langle g,k\rangle|^2
+\le\left(\|g\|^2-|\langle g,k\rangle|^2\right)\delta.
+\]
+误差只由实际读出在候选正交方向上的分量控制，平行部分不会产生误差。
+
+`ProjectiveReadoutSharpness` 进一步给出完整充要条件：
+\[
+\boxed{
+\forall w\perp k,\ \|w\|^2\le\delta\Rightarrow\langle g,k+w\rangle\ne0
+\iff
+\delta\|g\|^2<(1+\delta)|\langle g,k\rangle|^2.
+}
+\]
+反向使用实际构造的最小能量消零扰动。若 \(g_\perp\ne0\)，取
+\[
+w_*=-\frac{\langle g,k\rangle}{\|g_\perp\|^2}g_\perp,
+\qquad
+\|w_*\|^2=\frac{|\langle g,k\rangle|^2}{\|g_\perp\|^2}.
+\]
+源码证明其正交性、精确消零和最小能量，并包含 \(\delta=0\)、\(g_\perp=0\) 及 \(g=0\) 的退化情形。锐性针对整个 Hilbert 正交误差球，不断言每个球内扰动都由固定算术算子的本征向量实现。
+
+## D. 接入一个实际已有窗口，而非重新假定误差
+
+`WeilPrime3ProjectiveReadout` 固定读取 #5602 的提交 `4ddc8bf4cc75b3c7581ec5c2a1dccca7f91007a3` 中 `prime3_refined_certificate.json` 的三个有理输入：
+\[
+\ell=\frac{103}{2000000000},\qquad
+U=\frac{560909}{10000000000000},\qquad
+\theta=\frac1{200000}.
+\]
+精确算术给出
+\[
+\delta=\frac{15303}{16495000}<\left(\frac{61}{2000}\right)^2,
+\]
+以及读出判据
+\[
+\boxed{15303\|g\|^2<16510303|\langle g,k\rangle|^2.}
+\]
+该模块证明有理数算术和复域上的条件消费，不把 JSON 当作公理，也没有重跑原区间 LDL 或补齐真实 Weil 全域 Fourier/算子定义域桥。上述域和能量假设在终点 `prime3_capture_and_readouts` 中完整保留。
+
+实际执行的独立精确算术检查使用同一提交的 129 个整数候选系数。其平方和为 `1208925819614761052253583`。对坐标读出 \(g=e_j\)，仅 \(j=-2,-1,0,1,2\) 通过上述严格阈值，其余 124 个未通过。未通过表示当前误差球不能保证非零，不表示真实本征读出为零；实际算术本征模态的结论仍取决于保留的全域假设。
+
+## E. 剩余开放步骤现在具有可检验的量化目标
+
+在对数坐标区间 \([-a,a]\) 上，若 Fourier 读出约定为 \(\int e^{-izx}f(x)dx\)，则其 \(L^2\) 代表向量为 \(g_z(x)=e^{i\bar z x}\)，并有 elementary bound
+\[
+\|g_z\|\le\sqrt{2a}\,e^{ba}\qquad(|\Im z|\le b).
+\]
+因此，在完成实际 Fourier 读出与上述 Hilbert 接口的识别之后，一条充分的尺度目标是
+\[
+\boxed{|c_a|\sqrt{2a}\,e^{ba}\sqrt{\delta_a}\longrightarrow0
+\quad\text{对每个 }0\le b<1/2.}
+\]
+这里 \(c_a k_a\) 必须等于文献所用的候选及其归一化，不能任意缩小 \(c_a\) 来伪造收敛；\(\delta_a\) 必须来自同一真实算术窗口的能量包围与全补空间强制性。投影后的读出范数还能改善这个充分界。
+
+本段是下一步的分析推导与验收目标，尚无实际 Fourier 核/闭子带极限的 Lean 消费者。单个 \(a=\log(3)/2\) 的证书、更多小矩阵或更高精度的本征值均不能代替该无界尺度任务。零点计数还需要相应解析函数、轮廓与非零边界条件；本节没有宣称这些已完成。
+
+## F. 已执行的检查与未执行的验证
+
+四个 Lean 模块各配一个 Scribe。独立回归脚本和真实运行结果位于 `research/projective_spectral_readout/`。回归包括 36 个精确复 Hermitian 本征问题、108 个精确最小消零见证、324 个锐阈值检查、18 个精确行列式损失系统及 504 个实际递推窗口误差检查；另有 60 个数值复本征问题、240 个读出检查和上述 129 个真实候选坐标的整数比较。
+
+这些有限回归不验证全称 Lean 命题。当前环境无 Lean/lake，因此未获得内核编译、执行后的公理闭包或 Scribe 发射记录。科研层面的边界同样保留：本节提供目标认证桥、锐阈值及禁止错误推论的参数反模型，未完成真实最低模态的全尺度逼近，亦不主张新数学常数或首个形式化优先权。
