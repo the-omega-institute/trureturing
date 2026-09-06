@@ -32,6 +32,7 @@ internal static class BackfillInventoryWriter
         AtomScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
         AtomQuarantine(builder, entry.Receipts.Quarantine);
+        Nonpropositional(builder, entry.Receipts.Nonpropositional, "  ");
         CoverDisposition(builder, entry.Receipts.CoverDisposition, "  ");
         if (entry.Receipts.ChainAtoms.Length > 0)
         {
@@ -114,6 +115,7 @@ internal static class BackfillInventoryWriter
         ScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "          unresolved_subitems", entry.Receipts.UnresolvedSubitems, 12);
         Quarantine(builder, entry.Receipts.Quarantine);
+        Nonpropositional(builder, entry.Receipts.Nonpropositional, "          ");
         CoverDisposition(builder, entry.Receipts.CoverDisposition, "          ");
         Strings(builder, "          chain_atoms", entry.Receipts.ChainAtoms, 12);
         if (entry.Receipts.TailAuthorization is { } tail)
@@ -232,6 +234,15 @@ internal static class BackfillInventoryWriter
         Line(builder, $"            justification: {Scalar(quarantine.Justification)}");
         Line(builder, $"            reentry_condition: {Scalar(quarantine.ReentryCondition)}");
         Line(builder, $"            blocker_class: {Scalar(quarantine.BlockerClass)}");
+    }
+
+    private static void Nonpropositional(StringBuilder builder, DigestionNonpropositional? receipt, string indent)
+    {
+        if (receipt is null) return;
+        Line(builder, indent + "nonpropositional:");
+        Line(builder, indent + "  justification: " + Scalar(receipt.Justification));
+        Line(builder, indent + "  previous_atom_id: " + NullableScalar(receipt.PreviousAtomId));
+        Line(builder, indent + "  next_atom_id: " + NullableScalar(receipt.NextAtomId));
     }
 
     private static void CoverDisposition(

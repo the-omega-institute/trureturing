@@ -54,6 +54,7 @@ internal static partial class CoverAtomCommand
         DigestionTruthState.Open => 0,
         DigestionTruthState.Tail => 1,
         DigestionTruthState.Closed => 2,
+        DigestionTruthState.Inapplicable => throw new InvalidOperationException("inapplicable has no proof rank"),
         _ => throw new ArgumentOutOfRangeException(nameof(truth)),
     };
 }
