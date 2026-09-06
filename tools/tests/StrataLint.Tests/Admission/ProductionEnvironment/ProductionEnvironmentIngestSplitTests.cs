@@ -145,11 +145,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.Ingest(ReportInputUnchangedArguments);
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains(
-            $"INGEST_PRESERVED_EXISTING atom={existingAtomId} source=fixture-source "
-                + "kind=current-vs-base-changed",
-            result.Output,
-            StringComparison.Ordinal);
+        Assert.Contains("skipped_existing=1", result.Output, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(before, GeneratedIngestImage(temporary));
     }
@@ -176,8 +172,7 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
-            RawChangeSet.Create([atomPath, casPath]),
-            $"existing entry {existingAtomId} removed");
+            RawChangeSet.Create([atomPath, casPath]));
     }
 
     [Fact]
@@ -185,7 +180,6 @@ public sealed partial class ProductionEnvironmentTests
     {
         const string alternateSourcePath = "docs/GOVERNANCE-copy.md";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var existingAtomId = ExistingAtomId(fixture);
         fixture.Files[alternateSourcePath] = fixture.Files[RuleFixture.FixtureDigestionSourcePath];
         fixture.Files[DirectorySourceMetadataPath()] = fixture.Files[DirectorySourceMetadataPath()]
             .Replace(
@@ -195,15 +189,13 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
-            RawChangeSet.Create([alternateSourcePath, DirectorySourceMetadataPath()]),
-            $"existing entry {existingAtomId} changed status-authority inputs");
+            RawChangeSet.Create([alternateSourcePath, DirectorySourceMetadataPath()]));
     }
 
     [Fact]
     public void IngestPreservesExistingAtomizerAuthorityDeltaWithoutLoadingTruth()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var existingAtomId = ExistingAtomId(fixture);
         fixture.Files[DirectorySourceMetadataPath()] = fixture.Files[DirectorySourceMetadataPath()]
             .Replace(
                 $"atomizer = \"{AtomizerRegistry.GictId}\"",
@@ -212,15 +204,13 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
-            RawChangeSet.Create([DirectorySourceMetadataPath()]),
-            $"existing entry {existingAtomId} changed status-authority inputs");
+            RawChangeSet.Create([DirectorySourceMetadataPath()]));
     }
 
     [Fact]
     public void IngestPreservesExistingGenreAuthorityDeltaWithoutLoadingTruth()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var existingAtomId = ExistingAtomId(fixture);
         fixture.Files[DirectorySourceMetadataPath()] = fixture.Files[DirectorySourceMetadataPath()]
             .Replace(
                 "unregistered_genres = []",
@@ -229,8 +219,7 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
-            RawChangeSet.Create([DirectorySourceMetadataPath()]),
-            $"existing entry {existingAtomId} changed status-authority inputs");
+            RawChangeSet.Create([DirectorySourceMetadataPath()]));
     }
 
     [Fact]
@@ -252,8 +241,7 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.Create([
                 ScribeEmissionAttestation.DefinitionPath(
                     ScribeEmissionAttestation.DocumentGid(coverageGid)),
-            ]),
-            "covered entry");
+            ]));
     }
 
     [Fact]
@@ -272,8 +260,7 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
-            RawChangeSet.Create(Array.Empty<string>()),
-            "covered entry");
+            RawChangeSet.Create(Array.Empty<string>()));
     }
 
     [Fact]
@@ -436,8 +423,7 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.Create([
                 DirectoryAtomPath(entry.AtomId, "residual-open"),
                 capture.RelativePath,
-            ]),
-            "carries receipts");
+            ]));
     }
 
     [Fact]
@@ -478,8 +464,7 @@ public sealed partial class ProductionEnvironmentTests
                 RuleFixture.FixtureDigestionSourcePath,
                 DirectoryAtomPath(newEntry.AtomId, "partial-open"),
                 capture.RelativePath,
-            ]),
-            "projected status is not residual-open");
+            ]));
     }
 
     [Fact]
@@ -511,8 +496,7 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
-            RawChangeSet.Create(Array.Empty<string>()),
-            "planned rewrite of existing entry");
+            RawChangeSet.Create(Array.Empty<string>()));
     }
 
     [Fact]
@@ -567,48 +551,37 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
-            RawChangeSet.Create([casPath]),
-            $"entry {ExistingAtomId(fixture)} CAS blob is missing: {casPath}");
+            RawChangeSet.Create([casPath]));
     }
 
     [Fact]
-    public void IngestReportFreeRejectsHashMismatchedCasBlobBeforeTruthOrWrites()
+    public void IngestReportFreeSkipsExistingAtomWithHashMismatchedCasWithoutTruthOrWrites()
     {
-        var fixture = UncoveredOnlyIngestFixture();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
-        var currentBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.FixtureDigestionSourcePath]);
-        var atoms = AtomizerRegistry.Atomize(
-            atomizerId,
-            currentBytes,
-            DigestionTestSupport.Rules).Claims;
-        Assert.Equal(2, atoms.Length);
-        var newAtom = atoms[1];
-        var entry = DigestionTestSupport.Entry(
-            newAtom,
-            AtomId(newAtom),
-            atomizerId,
-            sourceId: "fixture-source",
-            sourcePath: RuleFixture.FixtureDigestionSourcePath);
-        var currentDocument = BackfillInventoryLoader.Load(Decode(Snapshot(fixture.Files)));
-        var currentSource = Assert.Single(currentDocument.RequireDigestionSources());
-        DirectoryLedgerTestSupport.ReplaceWithProjection(
-            fixture.Files,
-            currentDocument.WithDigestionSources(
-            [
-                currentSource with { Entries = currentSource.Entries.Add(entry) },
-            ]));
-        var capture = DigestionCasStore.Capture(newAtom.RawBytes.AsSpan());
-        fixture.Files[capture.RelativePath] = "tampered atom bytes\n";
+        var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
+        var casPath = Assert.Single(fixture.Files.Keys, DigestionCasStore.IsCanonicalPath);
+        fixture.Files[casPath] = "tampered atom bytes\n";
+        using var temporary = new TemporaryDirectory();
+        WriteDirectoryLedger(temporary.Path, fixture.Files);
+        var casOutputPath = Path.Combine(
+            temporary.Path,
+            casPath.Replace('/', Path.DirectorySeparatorChar));
+        Directory.CreateDirectory(Path.GetDirectoryName(casOutputPath)!);
+        File.WriteAllText(casOutputPath, fixture.Files[casPath], new UTF8Encoding(false));
+        var before = GeneratedIngestImage(temporary);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create([casPath]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(report: null),
+            new FakeScribeEmissionVerifier(verification: null));
 
-        AssertReportFreeRejectedWithoutTruthOrWrites(
-            fixture,
-            RawChangeSet.Create([
-                RuleFixture.FixtureDigestionSourcePath,
-                DirectoryAtomPath(entry.AtomId, "residual-open"),
-                capture.RelativePath,
-            ]),
-            "INGEST_INVALID",
-            "CAS blob hash mismatch");
+        var result = environment.Ingest(ReportInputUnchangedArguments);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("skipped_existing=1", result.Output, StringComparison.Ordinal);
+        Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
@@ -643,7 +616,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.Ingest(ReportInputUnchangedArguments);
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("kind=planned-rewrite", result.Output, StringComparison.Ordinal);
+        Assert.Contains("skipped_existing=1", result.Output, StringComparison.Ordinal);
         Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
@@ -683,8 +656,7 @@ public sealed partial class ProductionEnvironmentTests
 
     private static void AssertReportFreeExistingPreservedWithoutTruthOrWrites(
         RuleFixture fixture,
-        RawChangeSet changes,
-        string witness)
+        RawChangeSet changes)
     {
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
@@ -703,42 +675,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.Ingest(ReportInputUnchangedArguments);
 
         Assert.True(result.Success, result.Error);
-        var expectedKind = witness.Contains("removed", StringComparison.Ordinal)
-            ? "removed"
-            : witness.Contains("planned rewrite", StringComparison.Ordinal)
-                ? "planned-rewrite"
-                : "current-vs-base-changed";
-        Assert.Contains($"kind={expectedKind}", result.Output, StringComparison.Ordinal);
-        Assert.Equal(0, reportSource.CallCount);
-        Assert.Equal(0, scribeVerifier.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary));
-    }
-
-    private static void AssertReportFreeRejectedWithoutTruthOrWrites(
-        RuleFixture fixture,
-        RawChangeSet changes,
-        string errorCode,
-        string witness)
-    {
-        using var temporary = new TemporaryDirectory();
-        WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var before = GeneratedIngestImage(temporary);
-        var reportSource = new FakeLeanReportSource(report: null);
-        var scribeVerifier = new FakeScribeEmissionVerifier(verification: null);
-        var environment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                changes,
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            reportSource,
-            scribeVerifier);
-
-        var result = environment.Ingest(ReportInputUnchangedArguments);
-
-        Assert.False(result.Success);
-        Assert.Contains(errorCode, result.Error, StringComparison.Ordinal);
-        Assert.Contains(witness, result.Error, StringComparison.Ordinal);
+        Assert.Contains("skipped_existing=", result.Output, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
         Assert.Equal(before, GeneratedIngestImage(temporary));

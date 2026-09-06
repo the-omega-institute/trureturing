@@ -86,10 +86,13 @@ public sealed partial class IngestScopeTests
             .. selectors.SelectMany(static selector => new[] { "--source", selector })];
 
     private static ProductionCliEnvironment Environment(RuleFixture fixture, TemporaryDirectory temporary,
-        RawChangeSet? changes = null) => new(temporary.Path,
+        RawChangeSet? changes = null,
+        ReportFreeIngestDependencies? dependencies = null) => new(temporary.Path,
             new FakeRepositoryGateway(changes ?? RawChangeSet.Create([BetaPath]),
                 Raw(fixture.Files), Raw(fixture.Baseline)),
-            new FakeLeanReportSource(null), new FakeScribeEmissionVerifier(null));
+            new FakeLeanReportSource(null),
+            new FakeScribeEmissionVerifier(null),
+            reportFreeIngestDependencies: dependencies);
 
     private static void WriteFixture(TemporaryDirectory temporary, RuleFixture fixture)
     {
@@ -101,6 +104,57 @@ public sealed partial class IngestScopeTests
             File.WriteAllText(fullPath, text, new UTF8Encoding(false));
         }
     }
+
+    private static RuleFixture RobustFixture(
+        BackfillInventoryDocument current,
+        BackfillInventoryDocument baseline,
+        string alphaText = AlphaText,
+        string betaText = BetaText)
+    {
+        var fixture = new RuleFixture();
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
+        {
+            files.Remove(RuleFixture.FixtureDigestionSourcePath);
+            files.Remove(RuleFixture.FixtureCasPath);
+            files[AlphaPath] = alphaText;
+            files[BetaPath] = betaText;
+        }
+
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, current);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, baseline);
+        AddEntryCas(fixture.Files, current);
+        AddEntryCas(fixture.Baseline, baseline);
+        return fixture;
+    }
+
+    private static void AddEntryCas(
+        IDictionary<string, string> files,
+        BackfillInventoryDocument document)
+    {
+        foreach (var entry in document.RequireDigestionEntries())
+        {
+            var sourceText = entry.SourceId == "alpha" ? files[AlphaPath] : files[BetaPath];
+            var atom = GenericAtomizer.Atomize(
+                    Encoding.UTF8.GetBytes(sourceText),
+                    DigestionTestSupport.Rules)
+                .Claims
+                .FirstOrDefault(candidate => candidate.Fingerprints.RawSha256 == entry.CasRef);
+            if (atom is not null)
+            {
+                AddCas(files, atom);
+            }
+        }
+    }
+
+    private static BackfillInventoryDocument TwoSourceLedger(
+        DigestionLedgerSource alpha,
+        DigestionLedgerSource beta) =>
+        BackfillInventoryDocument.Create([alpha, beta], []);
+
+    private static RawRepositorySnapshot Overlay(
+        TemporaryDirectory temporary,
+        RuleFixture fixture) =>
+        Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files));
 
 
     private static DigestionIngestPlan Plan(BackfillInventoryDocument document, RepositorySnapshot snapshot,

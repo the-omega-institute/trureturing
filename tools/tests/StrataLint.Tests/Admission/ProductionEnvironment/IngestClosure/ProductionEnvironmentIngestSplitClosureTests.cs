@@ -231,68 +231,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Theory]
-    [InlineData(false, "covered-disappeared")]
-    [InlineData(true, "covered-cleared")]
-    public void ObservePlannedIdentifiesCoveredEntryLoss(bool retainEntry, string expectedKind)
-    {
-        var entry = StatusAuthorityClosureEntry();
-        var current = DigestionTestSupport.Document(
-            entry.Atomizer,
-            [entry],
-            sourceId: entry.SourceId,
-            sourcePath: entry.SourcePath);
-        var source = Assert.Single(current.RequireDigestionSources());
-        var planned = current.WithDigestionSources([
-            source with
-            {
-                Entries = retainEntry ? [entry with { Coverage = [] }] : [],
-            },
-        ]);
-        var observation = Assert.Single(
-            IngestPreservedExistingObserver.ObservePlanned(current, planned),
-            item => item.Kind == expectedKind);
-        Assert.Equal(entry.AtomId, observation.AtomId);
-        Assert.Equal(entry.SourceId, observation.SourceId);
-    }
-
-    [Fact]
-    public void ObserveCurrentTreatsCurrentOnlyChainEntryAsExisting()
-    {
-        var entry = StatusAuthorityClosureEntry() with
-        {
-            Coverage = [],
-            Receipts = new DigestionReceipts([], [], ["chain-child"], null),
-        };
-
-        var observation = Assert.Single(ObserveCurrentOnlyEntry(entry));
-        Assert.Equal("current-vs-base-changed", observation.Kind);
-    }
-
-    [Fact]
-    public void ObserveCurrentTreatsCurrentOnlyCoverageEntryAsExisting()
-    {
-        var observation = Assert.Single(ObserveCurrentOnlyEntry(StatusAuthorityClosureEntry()));
-
-        Assert.Equal("current-vs-base-changed", observation.Kind);
-    }
-
-    [Fact]
-    public void ObserveCurrentTreatsCurrentOnlyNonResidualEntryAsExisting()
-    {
-        var entry = StatusAuthorityClosureEntry() with
-        {
-            Coverage = [],
-            Receipts = new DigestionReceipts([], [], [], null),
-            ProjectedStatus = new DigestionStatus(
-                DigestionMigrationState.Partial,
-                DigestionTruthState.Open),
-        };
-
-        var observation = Assert.Single(ObserveCurrentOnlyEntry(entry));
-        Assert.Equal("current-vs-base-changed", observation.Kind);
-    }
-
-    [Theory]
     [InlineData("entry")]
     [InlineData("source-metadata")]
     [InlineData("accepted-event")]
@@ -463,19 +401,4 @@ public sealed partial class ProductionEnvironmentTests
             sourcePath: RuleFixture.FixtureDigestionSourcePath);
     }
 
-    private static ImmutableArray<DigestionIngestObservation> ObserveCurrentOnlyEntry(
-        DigestionLedgerEntry entry)
-    {
-        var current = DigestionTestSupport.Document(
-            entry.Atomizer,
-            [entry],
-            sourceId: entry.SourceId,
-            sourcePath: entry.SourcePath);
-        var baseline = DigestionTestSupport.Document(
-            entry.Atomizer,
-            [],
-            sourceId: entry.SourceId,
-            sourcePath: entry.SourcePath);
-        return IngestPreservedExistingObserver.ObserveCurrent(current, baseline);
-    }
 }

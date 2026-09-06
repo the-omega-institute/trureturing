@@ -241,7 +241,11 @@ public sealed partial class MakeWorkflowTests
     public void IngestWrapperSeparatesReportFreeDigestionFromTruthAlignment()
     {
         var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
-        Assert.Contains("make ingest [BASE=origin/dev] [SOURCE=\"id path ...\"]", makefile, StringComparison.Ordinal);
+        Assert.Contains(
+            "make ingest [BASE=origin/dev] [SOURCE=\"id path ...\"]  "
+                + "Atomize theory sources; add only atom ids absent from the on-disk ledger",
+            makefile,
+            StringComparison.Ordinal);
         var script = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
 

@@ -5,9 +5,73 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed partial class IngestScopeTests
+public sealed partial class IngestRobustTests
 {
+    private const string AlphaPath = "docs/develop/theory/ALPHA.md";
+    private const string BetaPath = "docs/develop/theory/BETA.md";
+    private const string AlphaText = "## Claim 1\n\nAlpha fact.\n\n";
+    private const string BetaText = "## Claim 2\n\nBeta fact.\n\n";
+    private const string Addition = "## Claim 3\n\nAdditional fact.\n";
     private const string ClauseText = "## Claim 10\n\n- First clause.\n- Second clause.\n";
+
+    private static DigestionAtom Atom(string text) => Assert.Single(
+        GenericAtomizer.Atomize(
+            Encoding.UTF8.GetBytes(text),
+            DigestionTestSupport.Rules).Claims);
+
+    private static DigestionLedgerSource Source(
+        string id,
+        string path,
+        string text,
+        bool populated = true)
+    {
+        var atom = Atom(text);
+        return new DigestionLedgerSource(
+            id,
+            path,
+            AtomizerRegistry.GenericId,
+            [],
+            GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
+            populated
+                ?
+                [
+                    DigestionTestSupport.Entry(
+                        atom,
+                        atom.Fingerprints.RawSha256["sha256:".Length..],
+                        AtomizerRegistry.GenericId,
+                        sourceId: id,
+                        sourcePath: path),
+                ]
+                : []);
+    }
+
+    private static DigestionLedgerSource EmptySource(string id, string path) =>
+        new(
+            id,
+            path,
+            AtomizerRegistry.GenericId,
+            [],
+            GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
+            []);
+
+    private static BackfillInventoryDocument Ledger(bool populated = true) =>
+        TwoSourceLedger(
+            Source("alpha", AlphaPath, AlphaText, populated),
+            Source("beta", BetaPath, BetaText, populated));
+
+    private static BackfillInventoryDocument TwoSourceLedger(
+        DigestionLedgerSource alpha,
+        DigestionLedgerSource beta) =>
+        BackfillInventoryDocument.Create([alpha, beta], []);
+
+    private static RuleFixture Fixture(
+        BackfillInventoryDocument? ledger = null,
+        string alphaText = AlphaText,
+        string betaText = BetaText)
+    {
+        ledger ??= Ledger();
+        return RobustFixture(ledger, ledger, alphaText, betaText);
+    }
 
     private static RuleFixture RobustFixture(
         BackfillInventoryDocument current,
@@ -50,19 +114,58 @@ public sealed partial class IngestScopeTests
         }
     }
 
-    private static BackfillInventoryDocument TwoSourceLedger(
-        DigestionLedgerSource alpha,
-        DigestionLedgerSource beta) =>
-        BackfillInventoryDocument.Create([alpha, beta], []);
+    private static void AddCas(IDictionary<string, string> files, DigestionAtom atom)
+    {
+        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
+    }
 
-    private static DigestionLedgerSource EmptySource(string id, string path) =>
+    private static RawRepositorySnapshot Raw(IReadOnlyDictionary<string, string> files) =>
+        RawRepositorySnapshot.Create(files.Select(static item =>
+            RawRepositoryEntry.FromText(item.Key, item.Value)));
+
+    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+
+    private static string AtomPath(DigestionLedgerEntry entry) =>
+        $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/residual-open/{entry.AtomId}.yaml";
+
+    private static string SourcePrefix(string id) =>
+        BackfillInventoryLoader.RootPath + id + "/";
+
+    private static string[] Arguments(params string[] selectors) =>
+        [
+            "--base",
+            "baseline",
+            .. selectors.SelectMany(static selector => new[] { "--source", selector }),
+        ];
+
+    private static ProductionCliEnvironment Environment(
+        RuleFixture fixture,
+        TemporaryDirectory temporary,
+        RawChangeSet? changes = null,
+        ReportFreeIngestDependencies? dependencies = null) =>
         new(
-            id,
-            path,
-            AtomizerRegistry.GenericId,
-            [],
-            GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
-            []);
+            temporary.Path,
+            new FakeRepositoryGateway(
+                changes ?? RawChangeSet.Create([BetaPath]),
+                Raw(fixture.Files),
+                Raw(fixture.Baseline)),
+            new FakeLeanReportSource(null),
+            new FakeScribeEmissionVerifier(null),
+            reportFreeIngestDependencies: dependencies);
+
+    private static void WriteFixture(TemporaryDirectory temporary, RuleFixture fixture)
+    {
+        DirectoryLedgerTestSupport.Write(temporary.Path, fixture.Files);
+        foreach (var (path, text) in fixture.Files.Where(static item =>
+                     DigestionCasStore.IsCanonicalPath(item.Key)))
+        {
+            var fullPath = Path.Combine(temporary.Path, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+            File.WriteAllText(fullPath, text, new UTF8Encoding(false));
+        }
+    }
 
     private static IReadOnlyDictionary<string, ImmutableArray<byte>> ExistingLedgerFiles(
         IReadOnlyDictionary<string, string> files) =>
@@ -83,48 +186,6 @@ public sealed partial class IngestScopeTests
             Assert.True(afterByPath.TryGetValue(path, out var entry), $"existing path removed: {path}");
             Assert.Equal(bytes.ToArray(), entry.Bytes.ToArray());
         }
-    }
-
-    private static string[] PreservedRows(CommandResult result) =>
-        result.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries)
-            .Where(static line => line.StartsWith(
-                "INGEST_PRESERVED_EXISTING ", StringComparison.Ordinal))
-            .ToArray();
-
-    private static void AssertObservation(
-        CommandResult result,
-        string atomId,
-        string sourceId,
-        string kind)
-    {
-        Assert.Contains(
-            $"INGEST_PRESERVED_EXISTING atom={atomId} source={sourceId} kind={kind}",
-            PreservedRows(result));
-        AssertSummaryCountMatchesRows(result);
-    }
-
-    private static void AssertNoObservation(
-        CommandResult result,
-        string atomId,
-        string sourceId,
-        string kind)
-    {
-        Assert.DoesNotContain(
-            $"INGEST_PRESERVED_EXISTING atom={atomId} source={sourceId} kind={kind}",
-            PreservedRows(result));
-        AssertSummaryCountMatchesRows(result);
-    }
-
-    private static void AssertSummaryCountMatchesRows(CommandResult result)
-    {
-        var rows = PreservedRows(result);
-        var summary = Assert.Single(result.Output.Split('\n'), static line =>
-            line.StartsWith("INGEST ", StringComparison.Ordinal));
-        var field = Assert.Single(summary.Split(' '), static token =>
-            token.StartsWith("preserved_existing=", StringComparison.Ordinal));
-        Assert.Equal(rows.Length, int.Parse(
-            field["preserved_existing=".Length..],
-            System.Globalization.CultureInfo.InvariantCulture));
     }
 
     private static RawRepositorySnapshot Overlay(

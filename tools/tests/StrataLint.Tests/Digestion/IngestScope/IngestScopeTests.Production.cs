@@ -1,48 +1,53 @@
 using System.Collections.Immutable;
 using System.Text;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed partial class IngestScopeTests
 {
-    public static IEnumerable<object[]> ProductionClassificationCases()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Ingest_UnselectedSourceAtomizerNeverCalledInAnyPass(bool contentKinds)
     {
-        foreach (var branch in new[] { "current", "planned" })
-        foreach (var selection in new[] { "beta", "alpha", "all" })
-            yield return [branch, selection];
-    }
-
-    [Fact]
-    public void IngestScope_UnselectedAtomizerNeverCalled_IncludingProjectionPass_ProductionPath()
-    {
-        var document = TwoSourceLedger(
-            EmptySource("alpha", AlphaPath) with { Atomizer = AtomizerRegistry.WmId },
-            Source("beta", BetaPath, BetaText));
+        var document = Ledger();
         var fixture = RobustFixture(document, document);
         fixture.Files[BetaPath] += Addition;
-        var before = Raw(fixture.Files);
-        using var unselectedRoot = new TemporaryDirectory();
-        WriteFixture(unselectedRoot, fixture);
+        var calls = new Dictionary<string, int>(StringComparer.Ordinal)
+        {
+            ["alpha"] = 0,
+            ["beta"] = 0,
+        };
+        string SourceFor(ReadOnlySpan<byte> bytes) =>
+            bytes.SequenceEqual(Encoding.UTF8.GetBytes(AlphaText)) ? "alpha" : "beta";
+        TheoryAtomizer atomizer = (bytes, rules) =>
+        {
+            calls[SourceFor(bytes)]++;
+            return GenericAtomizer.Atomize(bytes, rules);
+        };
+        TheoryAtomizerWithContentKinds contentAtomizer = (bytes, rules, kinds) =>
+        {
+            calls[SourceFor(bytes)]++;
+            return GenericAtomizer.AtomizeWithContentKinds(bytes, rules, kinds);
+        };
+        var dependencies = contentKinds
+            ? new ReportFreeIngestDependencies(
+                ContentKindAtomizerResolver: _ => contentAtomizer)
+            : new ReportFreeIngestDependencies(AtomizerResolver: _ => atomizer);
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
 
-        var unselected = Environment(
+        var result = Environment(
             fixture,
-            unselectedRoot,
-            RawChangeSet.Create([AlphaPath, BetaPath])).Ingest(Arguments("beta"));
+            temporary,
+            RawChangeSet.Create([AlphaPath, BetaPath]),
+            dependencies).Ingest(Arguments("beta"));
 
-        Assert.True(unselected.Success, unselected.Error);
-        Assert.DoesNotContain("INGEST_FALLBACK source=alpha", unselected.Output, StringComparison.Ordinal);
-        var after = Overlay(unselectedRoot, fixture);
-        Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
-
-        using var selectedRoot = new TemporaryDirectory();
-        WriteFixture(selectedRoot, fixture);
-        var selected = Environment(
-            fixture,
-            selectedRoot,
-            RawChangeSet.Create([AlphaPath])).Ingest(Arguments("alpha"));
-        Assert.True(selected.Success, selected.Error);
-        Assert.Contains("INGEST_FALLBACK source=alpha", selected.Output, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(0, calls["alpha"]);
+        Assert.Equal(1, calls["beta"]);
     }
 
     [Fact]
@@ -100,8 +105,6 @@ public sealed partial class IngestScopeTests
         Assert.True(result.Success, result.Error);
         var after = Overlay(temporary, fixture);
         Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
-        Assert.DoesNotContain(PreservedRows(result), static row =>
-            row.Contains(" source=alpha ", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -134,64 +137,5 @@ public sealed partial class IngestScopeTests
         var betaParent = Assert.Single(afterBeta.Entries, entry => entry.AtomId == betaParentId);
         Assert.Equal(2, betaParent.Receipts.ChainAtoms.Length);
         Assert.Equal(3, afterBeta.Entries.Length);
-        AssertNoObservation(result, Assert.Single(alpha.Entries).AtomId, "alpha", "planned-rewrite");
-    }
-
-    [Theory]
-    [MemberData(nameof(ProductionClassificationCases))]
-    public void IngestScope_ClassifierRespectsSelection_CurrentAndPlanned(
-        string branch,
-        string selection)
-    {
-        RuleFixture fixture;
-        RawChangeSet changes;
-        string atomId;
-        string expectedKind;
-        if (branch == "current")
-        {
-            var baseline = Ledger();
-            var alpha = baseline.RequireDigestionSources()[0];
-            var entry = Assert.Single(alpha.Entries);
-            var changed = entry with
-            {
-                Receipts = entry.Receipts with { UnresolvedSubitems = ["obligation"] },
-            };
-            var current = baseline.WithDigestionSources(
-            [
-                alpha with { Entries = [changed] },
-                baseline.RequireDigestionSources()[1],
-            ]);
-            fixture = RobustFixture(current, baseline);
-            changes = RawChangeSet.Create([AtomPath(changed)]);
-            atomId = changed.AtomId;
-            expectedKind = "current-vs-base-changed";
-        }
-        else if (branch == "planned")
-        {
-            var alpha = Source("alpha", AlphaPath, ClauseText);
-            var document = TwoSourceLedger(alpha, Source("beta", BetaPath, BetaText));
-            fixture = RobustFixture(document, document, ClauseText, BetaText);
-            changes = RawChangeSet.Create([AlphaPath]);
-            atomId = Assert.Single(alpha.Entries).AtomId;
-            expectedKind = "planned-rewrite";
-        }
-        else
-        {
-            throw new ArgumentOutOfRangeException(nameof(branch));
-        }
-
-        var before = ExistingLedgerFiles(fixture.Files);
-        using var temporary = new TemporaryDirectory();
-        WriteFixture(temporary, fixture);
-        var arguments = selection == "all" ? Arguments() : Arguments(selection);
-
-        var result = Environment(fixture, temporary, changes).Ingest(arguments);
-
-        Assert.True(result.Success, result.Error);
-        AssertExistingLedgerFilesUnchanged(before, Overlay(temporary, fixture));
-        if (selection == "beta")
-            AssertNoObservation(result, atomId, "alpha", expectedKind);
-        else
-            AssertObservation(result, atomId, "alpha", expectedKind);
     }
 }

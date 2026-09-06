@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # op-ingest-noalign.sh — finish an addendum ingest on an EXISTING lane branch that already carries the volume-append
-# commit, WITHOUT running `make align-digestion-status` (whose reordering of a foreign entry's coverage_gids made
-# `make ingest` fail-closed with INGEST_TRUTH_ALIGNMENT_REQUIRED three times on 2026-09-05, batch9).
+# commit, WITHOUT running `make align-digestion-status` (a foreign entry's reordered coverage_gids made the former
+# report-free alignment pass fail closed three times on 2026-09-05, batch9).
 # Steps: optionally revert the align commit → merge origin/dev → make lean-report → make ingest BASE=<origin/dev sha>
 #        → verify atoms match PATTERN → push → make pr-open AUTO_MERGE=1.
 # usage: op-ingest-noalign.sh WORKTREE BRANCH PRMSG_FILE PATTERN [ALIGN_COMMIT_TO_REVERT]

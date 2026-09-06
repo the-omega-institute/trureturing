@@ -35,7 +35,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestDeltaRejectsNewUnreferencedCasWithoutRecheckingHistoricalOrphan()
+    public void IngestDeltaIgnoresPreExistingUnreferencedCasOutsideItsWritePlan()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
         var historicalOrphan = DigestionCasStore.Capture(
@@ -61,9 +61,8 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.Ingest(ReportInputUnchangedArguments);
 
-        Assert.False(result.Success);
-        Assert.Contains($"orphan CAS blob: {newOrphan.RelativePath}", result.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain(historicalOrphan.RelativePath, result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=false", result.Output, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
         Assert.Equal(before, GeneratedIngestImage(temporary));

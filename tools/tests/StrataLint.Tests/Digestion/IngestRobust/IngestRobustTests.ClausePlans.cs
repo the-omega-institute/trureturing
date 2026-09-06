@@ -2,7 +2,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed partial class IngestScopeTests
+public sealed partial class IngestRobustTests
 {
     [Fact]
     public void AlignDigestionStatus_DeduplicatedClauseParentStillResolvesToZeroLedgerEntries()
@@ -27,7 +27,6 @@ public sealed partial class IngestScopeTests
                 + "resolves to 0 ledger entries",
             result.Error,
             StringComparison.Ordinal);
-        Assert.DoesNotContain("clause-parent-deduplicated", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -63,9 +62,8 @@ public sealed partial class IngestScopeTests
         Assert.Equal(1 + clausePlan.Children.Length, alpha.Entries.Length);
         Assert.Equal(alphaText, fixture.Files[AlphaPath]);
         Assert.Equal(betaText, fixture.Files[BetaPath]);
-        AssertObservation(result, parentId, "beta", "clause-parent-deduplicated");
-        Assert.Single(PreservedRows(result), row => row.EndsWith(
-            "kind=clause-parent-deduplicated", StringComparison.Ordinal));
+        Assert.Contains("residual_open_added=3", result.Output, StringComparison.Ordinal);
+        Assert.Contains("skipped_existing=0", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -103,7 +101,7 @@ public sealed partial class IngestScopeTests
         var parentId = parent.Fingerprints.RawSha256["sha256:".Length..];
         Assert.Single(alpha.Entries, entry => entry.AtomId == parentId);
         Assert.Empty(beta.Entries);
-        AssertObservation(second, parentId, "beta", "clause-parent-deduplicated");
-        Assert.Single(PreservedRows(second));
+        Assert.Contains("residual_open_added=0", second.Output, StringComparison.Ordinal);
+        Assert.Contains("skipped_existing=1", second.Output, StringComparison.Ordinal);
     }
 }

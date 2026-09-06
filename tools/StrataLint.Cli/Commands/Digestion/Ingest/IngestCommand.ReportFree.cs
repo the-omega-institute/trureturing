@@ -3,16 +3,23 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
+internal sealed record ReportFreeIngestDependencies(
+    Func<string, TheoryAtomizer>? AtomizerResolver = null,
+    Func<string, TheoryAtomizerWithContentKinds>? ContentKindAtomizerResolver = null,
+    Func<ReportFreeDigestionIngestPlan, ReportFreeDigestionIngestPlan>? BeforeValidation = null);
+
 internal static partial class IngestCommand
 {
     internal static CommandResult RunReportFree(
         string repositoryRoot,
         IRepositoryGateway repository,
-        IReadOnlyList<string> arguments)
+        IReadOnlyList<string> arguments,
+        ReportFreeIngestDependencies? dependencies = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(arguments);
+        dependencies ??= new ReportFreeIngestDependencies();
         try
         {
             var options = ParseReportFreeArguments(arguments);
@@ -21,114 +28,40 @@ internal static partial class IngestCommand
                 options.BaselineRevision,
                 requireBaselineSourceMetadata: true);
             var (sourceIds, registrationPaths) = ResolveSources(inputs, options.Sources);
-            var currentObservations = IngestPreservedExistingObserver.ObserveCurrent(
+            var plan = ReportFreeDigestionIngestor.Plan(
                 inputs.CurrentDocument,
+                inputs.Current,
                 inputs.BaselineDocument,
-                sourceIds);
-
-            var repositoryChanges = repository.ReadChanges(options.BaselineRevision);
-            var plan = Plan(
-                inputs,
-                repositoryChanges,
                 sourceIds,
                 registrationPaths,
-                DigestionIngestStrategy.AppendOnly);
-            var prepared = Prepare(
-                inputs,
-                repositoryChanges,
-                plan,
-                report: null,
-                sourceIds);
-            var observations = IngestPreservedExistingObserver.Combine(
-                currentObservations,
-                prepared.Plan.PreservedExisting,
-                IngestPreservedExistingObserver.ObserveAuthorityChanges(
-                    prepared.CurrentDocument,
-                    prepared.BaselineDocument,
-                    prepared.Plan.Alignment,
-                    prepared.PlannedScope,
-                    prepared.RepositoryChanges,
-                    sourceIds));
-            var appendOnlyChanges = EffectiveChanges(
-                prepared.CurrentRaw,
-                prepared.PlannedRaw);
-            var validationChanges = ReportFreeValidationChanges(
-                appendOnlyChanges,
-                prepared.RepositoryChanges,
-                prepared.CurrentRaw,
-                prepared.BaselineRaw);
+                dependencies.AtomizerResolver,
+                dependencies.ContentKindAtomizerResolver);
+            if (dependencies.BeforeValidation is not null)
+            {
+                plan = dependencies.BeforeValidation(plan)
+                    ?? throw new InvalidOperationException(
+                        "report-free ingest pre-write plan hook returned null");
+            }
 
-            var evaluation = DigestionStatusEvaluator.EvaluateUncovered(
-                DigestionEvaluationScope.ChangedSet,
-                prepared.PlannedDocument,
-                prepared.PlannedSnapshot,
-                prepared.BaselineDocument,
-                validationChanges,
-                validationChanges,
-                sourceIds,
-                preservedAtomIds: prepared.CurrentDocument.RequireDigestionEntries()
-                    .Select(static entry => entry.AtomId)
-                    .ToImmutableHashSet(StringComparer.Ordinal));
-            RequireValidReportFreeEvaluation(evaluation);
-            var backfillObservations = DigestionBackfillValidation.RequireValidBackfillWithoutTruthAlignment(
-                prepared.PlannedDocument,
-                prepared.PlannedSnapshot,
-                prepared.Baseline,
-                LoadPolicy(prepared.PlannedSnapshot),
-                validationChanges,
-                casChanges: validationChanges,
-                sourceIds: sourceIds);
-            return WriteResult(
+            var finalRaw = AddCasObjects(
+                ReplaceLedger(
+                    inputs.CurrentRaw,
+                    inputs.CurrentDocument,
+                    plan.Document,
+                    sourceIds),
+                plan.CasObjects);
+            return WriteReportFreeResult(
                 repositoryRoot,
-                prepared,
-                prepared.PlannedRaw,
-                prepared.PlannedDocument,
-                evaluation,
-                backfillObservations,
-                observations,
+                inputs.CurrentRaw,
+                inputs.CurrentDocument,
+                finalRaw,
+                plan,
                 sourceIds);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             return new CommandResult(false, string.Empty, $"INGEST_INVALID {exception.Message}\n");
         }
-    }
-
-    private static void RequireValidReportFreeEvaluation(DigestionLedgerEvaluation evaluation)
-    {
-        if (evaluation.Findings.Length > 0)
-        {
-            throw new InvalidOperationException(
-                "report-free digest status is invalid: "
-                + string.Join("; ", evaluation.Findings));
-        }
-    }
-
-    private static RawChangeSet ReportFreeValidationChanges(
-        RawChangeSet appendOnlyChanges,
-        RawChangeSet repositoryChanges,
-        RawRepositorySnapshot current,
-        RawRepositorySnapshot baseline)
-    {
-        var changes = appendOnlyChanges.Entries.ToDictionary(
-            static change => change.Path.Value,
-            static change => change.Kind,
-            StringComparer.Ordinal);
-        var currentPaths = current.Entries.Select(static entry => entry.Path)
-            .ToHashSet(StringComparer.Ordinal);
-        var baselinePaths = baseline.Entries.Select(static entry => entry.Path)
-            .ToHashSet(StringComparer.Ordinal);
-        foreach (var change in repositoryChanges.Entries.Where(change =>
-                     DigestionCasStore.IsCanonicalPath(change.Path.Value)
-                     && currentPaths.Contains(change.Path.Value)
-                     && !baselinePaths.Contains(change.Path.Value)))
-        {
-            changes[change.Path.Value] = change.Kind;
-        }
-
-        return RawChangeSet.CreateWithKinds(changes
-            .OrderBy(static item => item.Key, StringComparer.Ordinal)
-            .Select(static item => (item.Key, item.Value)));
     }
 
     private static CommandResult WriteResult(
@@ -138,23 +71,10 @@ internal static partial class IngestCommand
         BackfillInventoryDocument finalDocument,
         DigestionLedgerEvaluation evaluation,
         string backfillObservations,
-        ImmutableArray<DigestionIngestObservation> observations = default,
         ImmutableHashSet<string>? sourceIds = null)
     {
-        if (observations.IsDefault) observations = [];
         var ledgerUpdates = LedgerUpdates(prepared.CurrentRaw, finalRaw, sourceIds);
         RequireScopedCasObjects(prepared.Plan.CasObjects, finalDocument, sourceIds);
-        if (prepared.Plan.Strategy == DigestionIngestStrategy.AppendOnly)
-        {
-            RequireAppendOnlyWriteSet(
-                prepared.CurrentRaw,
-                prepared.CurrentDocument,
-                finalDocument,
-                ledgerUpdates,
-                prepared.Plan.CasObjects,
-                prepared.Plan.AddedAtomIds,
-                sourceIds);
-        }
         var changed = ledgerUpdates.Length > 0;
         var openGenres = finalDocument.RequireDigestionSources()
             .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
@@ -180,14 +100,8 @@ internal static partial class IngestCommand
             + $"residual_open_added={prepared.Plan.ResidualOpenAdded} "
             + $"coarse_fallbacks={prepared.Plan.Fallbacks.Length} "
             + $"open_genres={openGenres.Length} "
-            + (prepared.Plan.Strategy == DigestionIngestStrategy.AppendOnly
-                ? $"preserved_existing={observations.Length} "
-                : string.Empty)
             + $"cas_objects_written={createdCasPaths.Length} "
             + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
-            + string.Concat(observations.Select(static observation =>
-                $"INGEST_PRESERVED_EXISTING atom={observation.AtomId} "
-                + $"source={observation.SourceId} kind={observation.Kind}\n"))
             + string.Concat(openGenres.Select(static item =>
                 $"INGEST_OPEN_GENRE source={item.SourceId} "
                 + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
@@ -205,6 +119,66 @@ internal static partial class IngestCommand
                     + (prepared.Plan.Fallbacks.Length == 1 ? string.Empty : "s")
                     + " registered without being atomised: "
                     + string.Join(", ", prepared.Plan.Fallbacks.Select(static item => item.SourceId))
+                    + "\n"),
+            string.Empty);
+    }
+
+    private static CommandResult WriteReportFreeResult(
+        string repositoryRoot,
+        RawRepositorySnapshot currentRaw,
+        BackfillInventoryDocument currentDocument,
+        RawRepositorySnapshot finalRaw,
+        ReportFreeDigestionIngestPlan plan,
+        ImmutableHashSet<string>? sourceIds)
+    {
+        var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw, sourceIds);
+        RequireScopedCasObjects(plan.CasObjects, plan.Document, sourceIds);
+        RequireAppendOnlyWriteSet(
+            currentRaw,
+            currentDocument,
+            plan.Document,
+            ledgerUpdates,
+            plan.CasObjects,
+            plan.AddedAtomIds,
+            sourceIds);
+        RequireNewCasIntegrity(currentRaw, plan.Document, plan.CasObjects, plan.AddedAtomIds);
+        var openGenres = plan.Document.RequireDigestionSources()
+            .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
+            .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>
+                (source.SourceId, Token: token)))
+            .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
+            .ThenBy(static item => item.Token, StringComparer.Ordinal)
+            .ToImmutableArray();
+        var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
+        try
+        {
+            ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            RollbackCasObjects(createdCasPaths, exception);
+            throw;
+        }
+
+        return new CommandResult(
+            true,
+            $"INGEST residual_open_added={plan.ResidualOpenAdded} "
+            + $"skipped_existing={plan.SkippedExisting} "
+            + $"coarse_fallbacks={plan.Fallbacks.Length} "
+            + $"open_genres={openGenres.Length} "
+            + $"cas_objects_written={createdCasPaths.Length} "
+            + $"ledger_changed={(ledgerUpdates.Length > 0).ToString().ToLowerInvariant()}\n"
+            + string.Concat(openGenres.Select(static item =>
+                $"INGEST_OPEN_GENRE source={item.SourceId} "
+                + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
+            + string.Concat(plan.Fallbacks.Select(static fallback =>
+                $"INGEST_FALLBACK source={fallback.SourceId} reason={fallback.Reason}\n"))
+            + (plan.Fallbacks.Length == 0
+                ? string.Empty
+                : $"INGEST_INCOMPLETE {plan.Fallbacks.Length} source"
+                    + (plan.Fallbacks.Length == 1 ? string.Empty : "s")
+                    + " registered without being atomised: "
+                    + string.Join(", ", plan.Fallbacks.Select(static item => item.SourceId))
                     + "\n"),
             string.Empty);
     }

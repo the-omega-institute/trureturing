@@ -89,6 +89,50 @@ internal static partial class IngestCommand
         }
     }
 
+    internal static void RequireNewCasIntegrity(
+        RawRepositorySnapshot currentRaw,
+        BackfillInventoryDocument finalDocument,
+        ImmutableArray<DigestionCasObject> casObjects,
+        ImmutableHashSet<string> newAtomIds)
+    {
+        ArgumentNullException.ThrowIfNull(currentRaw);
+        ArgumentNullException.ThrowIfNull(finalDocument);
+        ArgumentNullException.ThrowIfNull(newAtomIds);
+        var currentAtomIds = BackfillInventoryLoader.Load(Decode(currentRaw))
+            .RequireDigestionEntries()
+            .Select(static entry => entry.AtomId)
+            .ToHashSet(StringComparer.Ordinal);
+        var newEntries = finalDocument.RequireDigestionEntries()
+            .Where(entry => newAtomIds.Contains(entry.AtomId))
+            .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+        if (newEntries.Count != newAtomIds.Count)
+        {
+            throw WriteSetError("new atom id set does not match final ledger entries");
+        }
+
+        var objects = casObjects.ToDictionary(static item => item.Reference, StringComparer.Ordinal);
+        foreach (var (atomId, entry) in newEntries)
+        {
+            var expectedReference = "sha256:" + atomId;
+            var expectedPath = DigestionCasStore.RootPath + atomId;
+            if (currentAtomIds.Contains(atomId)
+                || entry.Fingerprints.RawSha256 != expectedReference
+                || entry.CasRef != expectedReference
+                || !objects.TryGetValue(expectedReference, out var captured)
+                || captured.RelativePath != expectedPath)
+            {
+                throw WriteSetError(expectedPath);
+            }
+
+            var recaptured = DigestionCasStore.Capture(captured.Bytes.AsSpan());
+            if (recaptured.Reference != expectedReference
+                || recaptured.RelativePath != expectedPath)
+            {
+                throw WriteSetError(expectedPath);
+            }
+        }
+    }
+
     private static bool IsAllowedNewReceipt(DigestionReceipts receipts) =>
         receipts.Scribe.IsEmpty
         && receipts.UnresolvedSubitems.IsEmpty
