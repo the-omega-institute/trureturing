@@ -63,7 +63,8 @@ internal static class ScribeTestSymbolBinder
         ScribeBindingStrategy strategy,
         IReadOnlySet<string>? productionAssemblies = null,
         ScribeProjectCompilationContext? compilationContext = null,
-        IScribeBindingRecorder? recorder = null)
+        IScribeBindingRecorder? recorder = null,
+        Action<ScribeBindingObservation?>? observationStateObserver = null)
     {
         var sources = sourceFiles.ToArray();
         var compilations = ScribeProjectCompilationBuilder.Build(sources, compilationContext);
@@ -72,6 +73,7 @@ internal static class ScribeTestSymbolBinder
         {
             observation = new ScribeBindingObservation(recorder, compilations);
         }
+        observationStateObserver?.Invoke(observation);
         var semanticModels = new ScribeSemanticModelProvider();
         foreach (var project in compilations) semanticModels.Add(project.Compilation);
         var callablesBySymbol = new ScribeCallableIndex();
@@ -631,43 +633,52 @@ internal static class ScribeTestSymbolBinder
 
     internal static bool IsRepositoryRootExpression(
         ExpressionSyntax expression,
-        SemanticModel model) => ClassifyRepositoryRoot(
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels) => ClassifyRepositoryRoot(
             expression,
             model,
-            semanticModels: null,
+            semanticModels,
             new HashSet<ISymbol>(SymbolEqualityComparer.Default))
                 == RepositoryRootClassification.RepositoryRoot;
 
     private static RepositoryRootClassification ClassifyRepositoryRoot(
         ExpressionSyntax expression,
         SemanticModel model,
-        ScribeSemanticModelProvider? semanticModels,
+        ScribeSemanticModelProvider semanticModels,
         HashSet<ISymbol> visited)
     {
-        var expressionModel = ReferenceEquals(expression.SyntaxTree, model.SyntaxTree)
-            ? model
-            : semanticModels?.ModelFor(expression, model);
+        var findRootInvocations = expression.DescendantNodesAndSelf()
+            .OfType<InvocationExpressionSyntax>()
+            .Where(static invocation => invocation.Expression switch
+            {
+                SimpleNameSyntax { Identifier.ValueText: "FindRoot" } => true,
+                MemberAccessExpressionSyntax { Name.Identifier.ValueText: "FindRoot" } => true,
+                MemberBindingExpressionSyntax { Name.Identifier.ValueText: "FindRoot" } => true,
+                _ => false,
+            })
+            .ToArray();
+        if (expression.DescendantNodesAndSelf().OfType<MemberAccessExpressionSyntax>().Any(static member =>
+                member.Name.Identifier.ValueText == "FullPath"
+                && member.Expression is MemberAccessExpressionSyntax
+                {
+                    Name.Identifier.ValueText: "Root",
+                }))
+        {
+            return RepositoryRootClassification.RepositoryRoot;
+        }
+
+        var expressionModel = semanticModels.ModelFor(expression, model);
         if (expressionModel is null)
         {
             return RepositoryRootClassification.Unknown;
         }
         model = expressionModel;
 
-        if (expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>().Any(invocation =>
+        if (findRootInvocations.Any(invocation =>
                 model.GetSymbolInfo(invocation).Symbol is IMethodSymbol
                 {
                     Name: "FindRoot",
                     ReturnType.SpecialType: SpecialType.System_String,
-                }))
-        {
-            return RepositoryRootClassification.RepositoryRoot;
-        }
-
-        if (expression.DescendantNodesAndSelf().OfType<MemberAccessExpressionSyntax>().Any(static member =>
-                member.Name.Identifier.ValueText == "FullPath"
-                && member.Expression is MemberAccessExpressionSyntax
-                {
-                    Name.Identifier.ValueText: "Root",
                 }))
         {
             return RepositoryRootClassification.RepositoryRoot;
@@ -700,7 +711,7 @@ internal static class ScribeTestSymbolBinder
     private static RepositoryRootClassification ClassifyRepositoryRoot(
         IEnumerable<ExpressionSyntax> expressions,
         SemanticModel model,
-        ScribeSemanticModelProvider? semanticModels,
+        ScribeSemanticModelProvider semanticModels,
         HashSet<ISymbol> visited)
     {
         var classification = RepositoryRootClassification.NotRepositoryRoot;

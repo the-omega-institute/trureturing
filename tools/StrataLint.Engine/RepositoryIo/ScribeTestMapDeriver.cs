@@ -464,7 +464,7 @@ internal static class ScribeTestMapDeriver
                     continue;
                 }
                 reasons.Add(TestMapUnknownReason.DirectoryEnumeration);
-                InspectRepositoryPath(enumerationArgument, model, reasons);
+                InspectRepositoryPath(enumerationArgument, model, method.SemanticModels, reasons);
                 continue;
             }
 
@@ -494,7 +494,7 @@ internal static class ScribeTestMapDeriver
                 continue;
             }
 
-            InspectRepositoryPath(argument, model, reasons);
+            InspectRepositoryPath(argument, model, method.SemanticModels, reasons);
         }
     }
 
@@ -563,6 +563,7 @@ internal static class ScribeTestMapDeriver
     private static void InspectRepositoryPath(
         ExpressionSyntax? argument,
         SemanticModel model,
+        ScribeSemanticModelProvider semanticModels,
         HashSet<TestMapUnknownReason> reasons)
     {
         var create = argument
@@ -579,7 +580,7 @@ internal static class ScribeTestMapDeriver
             return;
         }
 
-        if (IsLiteralCombinedRepositoryPath(argument, model))
+        if (IsLiteralCombinedRepositoryPath(argument, model, semanticModels))
         {
             return;
         }
@@ -589,7 +590,8 @@ internal static class ScribeTestMapDeriver
 
     private static bool IsLiteralCombinedRepositoryPath(
         ExpressionSyntax? expression,
-        SemanticModel model)
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels)
     {
         if (expression is InvocationExpressionSyntax combine
             && model.GetSymbolInfo(combine).Symbol is IMethodSymbol
@@ -599,7 +601,8 @@ internal static class ScribeTestMapDeriver
             }
             && pathType.ToDisplayString() == "System.IO.Path"
             && combine.ArgumentList.Arguments is { Count: >= 2 } arguments
-            && ScribeTestSymbolBinder.IsRepositoryRootExpression(arguments[0].Expression, model))
+            && ScribeTestSymbolBinder.IsRepositoryRootExpression(
+                arguments[0].Expression, model, semanticModels))
         {
             foreach (var argument in arguments.Skip(1))
             {

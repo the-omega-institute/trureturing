@@ -44,8 +44,9 @@ public sealed class ScribeDemandBindingIsolationTests
               static void Left() { Shared(); }
               static void Right() { Shared(); }
               static void Shared() { Seed(); }
+              static void Seed() { _ = nameof(Universe); Missing(); }
               [StrataLint.Engine.CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
-              static void Seed() { Missing(); }
+              static string Universe => "";
               public static void Negative() { NLeft(); NRight(); }
               static void NLeft() { NShared(); }
               static void NRight() { NShared(); }
@@ -57,7 +58,6 @@ public sealed class ScribeDemandBindingIsolationTests
         AssertBound(lazy, "M:Cases.Root", "M:Cases.#ctor", "M:Production.Root", "M:Production.Left",
             "M:Production.Right", "M:Production.Shared", "M:Production.Seed", "M:Production.Negative",
             "M:Production.NLeft", "M:Production.NRight", "M:Production.NShared",
-            "M:StrataLint.Engine.CompileTimeInputUniverseAttribute.#ctor(System.String,System.String)",
             "M:Xunit.FactAttribute.#ctor");
         Assert.Equal(new[] { "M:Production.Left", "M:Production.Right", "M:Production.Root", "M:Production.Seed", "M:Production.Shared" },
             lazy.Expanded.Select(static item => item.Identity.DeclarationId).Order(StringComparer.Ordinal));
@@ -193,6 +193,61 @@ public sealed class ScribeDemandBindingIsolationTests
     }
 
     [Fact]
+    public void CrossTreeSyntacticRootInitializerStaysKnownOnBothStrategies()
+    {
+        var fixture = ProjectFixture("""
+            partial class Cases {
+              [Xunit.Fact]
+              public void Read() => _ = File.ReadAllText(Path.Combine(root, "marker"));
+            }
+            """, "public static class Production { }");
+        var project = fixture.Context!.Projects[1];
+        var sourceA = new ScribeTrackedSource("tests/A.cs", fixture.Sources[0].Content);
+        fixture = fixture with
+        {
+            Sources = [new("tests/A.cs", sourceA.Content, "Tests")],
+            Context = fixture.Context with
+            {
+                Projects =
+                [
+                    fixture.Context.Projects[0],
+                    project with
+                    {
+                        Sources =
+                        [
+                            sourceA,
+                            project.Sources[1],
+                            new("tests/B.cs", """
+                                partial class Cases {
+                                  static readonly Holder holder = new();
+                                  static readonly string root = holder.Root.FullPath;
+                                }
+                                readonly record struct RepositoryRoot(string FullPath);
+                                sealed class Holder { public RepositoryRoot Root { get; } = new(""); }
+                                """)
+                        ]
+                    }
+                ]
+            }
+        };
+
+        var expected = new ScribeTestMap(
+            [new("Tests", "tests/A.cs", "Cases.Read", [])], [], [], [], []);
+        var eager = Derive(fixture, ScribeBindingStrategy.Eager);
+        var demand = Derive(fixture, ScribeBindingStrategy.Demand);
+
+        Assert.DoesNotContain(TestMapUnknownReason.VariablePath,
+            Assert.Single(eager.Methods).UnknownReasons);
+        Assert.DoesNotContain(TestMapUnknownReason.VariablePath,
+            Assert.Single(demand.Methods).UnknownReasons);
+        Assert.Equal(Bytes(expected), Bytes(eager));
+        Assert.Equal(Bytes(expected), Bytes(demand));
+        var noFindings = FindingBytes([]);
+        Assert.Equal(noFindings, FindingBytes(ScribeUnknownDebtPolicy.Evaluate(eager, demand)));
+        Assert.Equal(noFindings, FindingBytes(ScribeUnknownDebtPolicy.Evaluate(demand, eager)));
+    }
+
+    [Fact]
     public void NullRecorderPathAllocatesNoObservationState()
     {
         var fixture = Synthetic("static class Cases { [Fact] public static void Root() { } }");
@@ -209,6 +264,21 @@ public sealed class ScribeDemandBindingIsolationTests
 
         Assert.Null(session.ObservationState);
         session.Bind();
+    }
+
+    [Fact]
+    public void BindNullRecorderCreatesNoObservationState()
+    {
+        var fixture = Synthetic("static class Cases { }");
+        var observed = new List<ScribeBindingObservation?>();
+
+        _ = ScribeTestSymbolBinder.Bind(
+            fixture.Sources,
+            ScribeBindingStrategy.Demand,
+            recorder: null,
+            observationStateObserver: observed.Add);
+
+        Assert.Null(Assert.Single(observed));
     }
 
     internal static (ScribeTestMap Map, Recorder Eager, Recorder Lazy) Compare(Fixture fixture)
