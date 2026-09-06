@@ -1,0 +1,39 @@
+{
+  "states": 851,
+  "reachable_states": 851,
+  "geometric_move_checks": 2553,
+  "integer_row_checks": 851,
+  "root_weight": 20000,
+  "minimum_integer_slack": 0,
+  "distinct_weights": 307,
+  "table_depth_checks": 85951,
+  "radius_speed_checks": 1875,
+  "memory_monotonicity_checks": 1080,
+  "controller_count_checks": 120,
+  "light_cone_checks": 126,
+  "uniform_block_checks": 558,
+  "projection_counterhistory": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "extra_fine_blocker": [
+    2,
+    -1
+  ],
+  "finite_domain_checks": 90,
+  "integer_separation_depth": 700,
+  "negative_controls": {
+    "missing-state": "row cardinality",
+    "duplicate-mask": "unique masks and initial mask",
+    "wrong-upper-weight": "upper row 0",
+    "omitted-origin": "missing geometric successor 0,0",
+    "radius-smaller-than-depth": {
+      "first_tested_mismatch_depth": 3
+    }
+  },
+  "data_sha256": "539f060617047d4334ac6e638b0e92d4f37369c174a89a4f092b6948d5eff36d",
+  "verifier_sha256": "32ff8ab35c6087ebec88c5eddf3dc2dc17b197ca5ddb78e29f18f623f429eb2b",
+  "lean_compilation": "not executed; independent integer and set replay only"
+}
