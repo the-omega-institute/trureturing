@@ -91,7 +91,7 @@ internal static class AlignScribeReceiptCommand
             }
             : entry);
         var changes = RawChangeSet.Create(plans.Select(plan => EntryPath(plan.Entry!)).Distinct(StringComparer.Ordinal));
-        var derived = Evaluate(planned, current, validateStatus: false);
+        var derived = Evaluate(planned, current, changes, validateStatus: false);
         IngestCommand.RequireNoReceiptIntegrityFailure(derived);
         var statusChanges = derived.Entries
             .Where(static item => item.StatusAuthorityChanged && item.DerivedStatus != item.Entry.ProjectedStatus)
@@ -102,19 +102,21 @@ internal static class AlignScribeReceiptCommand
         var finalRaw = IngestCommand.ReplaceLedger(raw, document, planned);
         var final = Decode(finalRaw);
         LeanTruthStates.RequireSameManagedInputs(current, final);
-        var evaluation = Evaluate(BackfillInventoryLoader.Load(final), final, validateStatus: true);
-        IngestCommand.RequireNoReceiptIntegrityFailure(evaluation);
         var updates = IngestCommand.LedgerUpdates(raw, finalRaw);
+        var evaluation = Evaluate(BackfillInventoryLoader.Load(final), final,
+            RawChangeSet.Create(updates.Select(static update => update.Path)), validateStatus: true);
+        IngestCommand.RequireNoReceiptIntegrityFailure(evaluation);
         if (!options.DryRun)
             applyUpdates(root, raw, updates);
         var changed = !options.DryRun && updates.Length > 0;
         return new CommandResult(true, Render(plans, options.DryRun, changed)
             + RenderStatusChanges(statusChanges.Values, options.DryRun, changed), string.Empty);
 
-        DigestionLedgerEvaluation Evaluate(BackfillInventoryDocument candidate, RepositorySnapshot snapshot, bool validateStatus) =>
+        DigestionLedgerEvaluation Evaluate(BackfillInventoryDocument candidate, RepositorySnapshot snapshot,
+            RawChangeSet receiptChanges, bool validateStatus) =>
             DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.ChangedSet, candidate, snapshot, lean,
                 verified, baselineDocument, validateProjectedStatus: validateStatus, baselineSnapshot: baseline,
-                changes: changes, truthStates: states);
+                changes: receiptChanges, truthStates: states);
     }
 
     private static SeedPlan Inspect(

@@ -1,3 +1,4 @@
+using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -5,6 +6,67 @@ namespace StrataLint.Tests;
 
 public sealed partial class ScribeSeedCommandTests
 {
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    [InlineData(true, true)]
+    public void SeedRejectsStaleAncestorReceiptBeforeApply(bool batch, bool dryRun)
+    {
+        var fixture = ChainFixture(1, batch);
+        var ancestor = Assert.Single(fixture.Document.RequireDigestionEntries(), entry =>
+            !entry.Receipts.ChainAtoms.IsEmpty);
+        fixture.Document = ScribeSeedFixture.Map(fixture.Document, entry => entry.AtomId == ancestor.AtomId
+            ? entry with
+            {
+                Receipts = entry.Receipts with
+                {
+                    Scribe = [entry.Receipts.Scribe[0] with { DefinitionSha256 = "sha256:" + new string('a', 64) }],
+                },
+            }
+            : entry);
+        fixture.Baseline = fixture.Document;
+        RequireValidChainBaseline(fixture, 1);
+
+        var execution = ExecuteChainSeed(fixture, batch, dryRun);
+
+        Assert.False(execution.Result.Success);
+        Assert.Contains(ancestor.AtomId + ":scribe-definition-mismatch", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Equal(0, execution.ApplyCalls);
+        Assert.Equal(Image(execution.Before), Image(execution.After));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SeedAcceptsCurrentAncestorReceiptAndAdmissionAcceptsDocuments(bool batch)
+    {
+        var fixture = ChainFixture(1, batch);
+        RequireValidChainBaseline(fixture, 1);
+
+        var execution = ExecuteChainSeed(fixture, batch, dryRun: false);
+
+        RequireProjectedChain(fixture, execution, 1);
+        var before = execution.Before.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+        var after = execution.After.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+        var changes = RawChangeSet.Create(before.Keys.Union(after.Keys, StringComparer.Ordinal).Where(path =>
+            !before.TryGetValue(path, out var oldEntry) || !after.TryGetValue(path, out var newEntry)
+            || !oldEntry.Bytes.AsSpan().SequenceEqual(newEntry.Bytes.AsSpan())));
+        var current = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(execution.After)).Snapshot;
+        var baseline = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(execution.Before)).Snapshot;
+        var policy = RegistryLoadAssert.Accepted(RegistryLoader.Load(
+            Encoding.UTF8.GetBytes(TestRegistry.Canonical), Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
+            LeanClosureValidator.Validate(current, fixture.Inputs.Report)).Capability;
+        var bootstrap = Assert.IsType<BootstrapOutcome.Clear>(BootstrapGate.Evaluate(changes));
+        var context = RuleEvaluationContext.Create(current, baseline, policy, lean, changes,
+            MetaEvaluationProfile.ForClear(bootstrap.Capability), fixture.Verified);
+
+        var findings = BackfillInventoryRule.EvaluateCandidateDelta(context);
+
+        Assert.Empty(findings);
+    }
+
     [Theory]
     [InlineData(1)]
     [InlineData(2)]
@@ -64,6 +126,17 @@ public sealed partial class ScribeSeedCommandTests
             Assert.Contains($"SCRIBE_SEED_STATUS atom_id={entry.AtomId} from=partial-closed "
                 + "to=absorbed-closed dry_run=true ledger_changed=false", statusLines);
         }
+    }
+
+    private static SeedExecution ExecuteChainSeed(ScribeSeedFixture fixture, bool batch, bool dryRun)
+    {
+        var children = fixture.Document.RequireDigestionEntries().Where(entry =>
+            entry.Receipts.Scribe.IsEmpty && entry.ProjectedStatus.Truth == DigestionTruthState.Closed);
+        var pairs = string.Concat(children.Select(entry => $"{entry.AtomId}\t{ScribeSeedFixture.DeclarationGid}\n"));
+        string[] arguments = batch ? BatchArgs()
+            : ["--seed-missing", "--atom", fixture.First.AtomId, "--gid",
+                ScribeSeedFixture.DeclarationGid, "--base", "baseline"];
+        return Execute(fixture, dryRun ? [.. arguments, "--dry-run"] : arguments, pairs);
     }
 
     private static ScribeSeedFixture ChainFixture(int ancestorCount, bool batch = false)
