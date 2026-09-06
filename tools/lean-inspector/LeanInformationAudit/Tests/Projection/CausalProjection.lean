@@ -85,7 +85,7 @@ run_cmd do
         let bundle ← mkAppM ``TheoremUnit.primitives #[unit]
         let addressExpr ← mkAppM ``primitiveKernelAddress
           #[← mkAppM ``Arena.stateFintype #[arena], bundle]
-        let address ← unsafe evalExpr String (mkConst ``String) addressExpr
+        let address ← unsafe evalExpr String (mkConst ``String) addressExpr (safety := .unsafe)
         let some row := projection.leaveOneOut.find? (·.theoremName == unitName)
           | throwError "causal missing occurrence"
         let mut roles := #[]
