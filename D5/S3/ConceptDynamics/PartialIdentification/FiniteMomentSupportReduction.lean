@@ -53,7 +53,7 @@ map. This detects duplicate profiles and affine dependencies among coordinates. 
 def profileAffineRank
     {Atom Feature : Type*} [Fintype Feature]
     (feature : Atom → Feature → ℚ) : Nat :=
-  Module.finrank ℚ (AffineSubspace.vectorSpan ℚ (Set.range feature))
+  Module.finrank ℚ (vectorSpan ℚ (Set.range feature))
 
 /-- The retained moment vector is a convex combination of the atom feature
 vectors. This is the exact entry point for Mathlib's Caratheodory theorem. -/
@@ -120,7 +120,7 @@ theorem exists_momentCompression
   obtain ⟨w, hw_nonnegative, hw_total, hw_center⟩ := hmem
   have hspan :
       Module.finrank ℚ
-          (AffineSubspace.vectorSpan ℚ
+          (vectorSpan ℚ
             (Set.range ((↑) : t → (Feature → ℚ)))) ≤
         Module.finrank ℚ (Feature → ℚ) :=
     Submodule.finrank_le _
@@ -128,7 +128,7 @@ theorem exists_momentCompression
     calc
       t.card = Fintype.card t := by simp
       _ ≤ Module.finrank ℚ
-            (AffineSubspace.vectorSpan ℚ
+            (vectorSpan ℚ
               (Set.range ((↑) : t → (Feature → ℚ)))) + 1 :=
         hind.card_le_finrank_succ
       _ ≤ Module.finrank ℚ (Feature → ℚ) + 1 :=
@@ -161,18 +161,18 @@ theorem MomentCompression.card_le_profileAffineRank
     rintro _ ⟨profile, rfl⟩
     exact compression.source profile.1 profile.2
   have hmono :
-      AffineSubspace.vectorSpan ℚ
+      vectorSpan ℚ
           (Set.range ((↑) : compression.profiles → (Feature → ℚ))) ≤
-        AffineSubspace.vectorSpan ℚ (Set.range feature) :=
-    AffineSubspace.vectorSpan_mono ℚ hsource
+        vectorSpan ℚ (Set.range feature) :=
+    vectorSpan_mono ℚ hsource
   calc
     Fintype.card compression.profiles ≤
         Module.finrank ℚ
-          (AffineSubspace.vectorSpan ℚ
+          (vectorSpan ℚ
             (Set.range ((↑) : compression.profiles → (Feature → ℚ)))) + 1 :=
       compression.independent.card_le_finrank_succ
     _ ≤ Module.finrank ℚ
-          (AffineSubspace.vectorSpan ℚ (Set.range feature)) + 1 :=
+          (vectorSpan ℚ (Set.range feature)) + 1 :=
       Nat.add_le_add_right (Submodule.finrank_mono hmono) 1
     _ = profileAffineRank feature + 1 := rfl
 
@@ -240,7 +240,7 @@ theorem MomentCompression.latent_source_moment_eq
     _ = ∑ profile ∈ compression.profiles,
         compression.weight profile • profile := by
           simp only [Finset.univ_eq_attach]
-          rw [Finset.sum_attach]
+          exact Finset.sum_attach _ (fun profile => compression.weight profile • profile)
     _ = lawMomentVector law feature := compression.moment_eq
 
 /-- Scalar coordinate form of exact moment preservation. -/
@@ -254,7 +254,7 @@ theorem MomentCompression.coordinate_eq
           feature (compression.sourceAtom state) coordinate) =
       ∑ atom, law.mass atom * feature atom coordinate := by
   have h := congrFun compression.latent_source_moment_eq coordinate
-  simpa [lawMomentVector, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using h
+  simpa only [lawMomentVector, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using h
 
 /-- Put every LP constraint row and one objective into a single finite feature
 vector. `none` is the objective coordinate; `some c` is constraint row `c`. -/
@@ -281,7 +281,7 @@ theorem linearProblemProfileRank_le
   unfold linearProblemProfileRank profileAffineRank
   calc
     Module.finrank ℚ
-        (AffineSubspace.vectorSpan ℚ
+        (vectorSpan ℚ
           (Set.range (linearRowQueryFeature A objective))) ≤
       Module.finrank ℚ (Option Constraint → ℚ) :=
         Submodule.finrank_le _
@@ -364,11 +364,38 @@ theorem finite_linear_problem_small_latent_witness
   classical
   obtain ⟨compression⟩ :=
     exists_momentCompression law (linearRowQueryFeature A objective)
-  refine ⟨compression.profiles, inferInstance, compression.latentLaw,
-    compression.sourceAtom, ?_, ?_, ?_⟩
-  · exact compression.linearRowQuery_card_le A objective law
-  · exact compression.latentLinearFeasible A b objective law feasible
-  · exact compression.latentLinearObjective_eq A objective law
+  refine ⟨ULift (Fin (Fintype.card compression.profiles)), inferInstance,
+    { mass := fun state =>
+        compression.latentLaw.mass ((Fintype.equivFin compression.profiles).symm state.down)
+      nonnegative := fun state => compression.latentLaw.nonnegative _
+      total := by
+        calc
+          _ = ∑ profile, compression.latentLaw.mass profile :=
+            Fintype.sum_equiv
+              (Equiv.ulift.trans (Fintype.equivFin compression.profiles).symm)
+              _ _ (fun _ => rfl)
+          _ = 1 := compression.latentLaw.total },
+    fun state =>
+      compression.sourceAtom ((Fintype.equivFin compression.profiles).symm state.down),
+    ?_, ?_, ?_⟩
+  · simpa using compression.linearRowQuery_card_le A objective law
+  · intro constraint
+    calc
+      _ = ∑ profile, A constraint (compression.sourceAtom profile) *
+          compression.latentLaw.mass profile :=
+        Fintype.sum_equiv
+          (Equiv.ulift.trans (Fintype.equivFin compression.profiles).symm)
+          _ _ (fun _ => rfl)
+      _ ≤ b constraint :=
+        compression.latentLinearFeasible A b objective law feasible constraint
+  · calc
+      _ = ∑ profile, objective (compression.sourceAtom profile) *
+          compression.latentLaw.mass profile :=
+        Fintype.sum_equiv
+          (Equiv.ulift.trans (Fintype.equivFin compression.profiles).symm)
+          _ _ (fun _ => rfl)
+      _ = linearObjective objective law.mass :=
+        compression.latentLinearObjective_eq A objective law
 
 /-- For k Boolean response-pair strata, retain all four one-stratum cell
 indicators plus one scalar query. -/
