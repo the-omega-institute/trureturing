@@ -1,0 +1,11 @@
+**评注 27.839(开放问题线各候签之档位与文献/计算核对登记;第五⁵条硬规则②之回填)**〔第五⁵条;开放问题线勘注〕。CLAUDE.md 5⁵(#5614,2026-09-06)要求搜题 brief 与预登记评注写明**档位**与「文献里有没有这条陈述 / 该计算是否已有人做过」的核对结果;本评注为此前已预登记、尚未落地或正在评审的 PZG 候签统一回填,逐条如实记账(核对皆由 orchestrator 或席位在 2026-09-05/06 联网完成;「未见」不排除未索引结果,记 ASSUMED-UNVERIFIED):
+- **5.96(Skolem 五阶模 31 排除)**:第一档(开放问题的可形式化切片)。核对:整数线性递推模素数幂周期、零点落在有限个剩余类是 Skolem–Mahler–Lech 文献中的标准技术(如 Luca 等「On Large Zeros of Linear Recurrence Sequences」MFCS 2025 综述所述之周期性论证;Ouaknine–Worrell 系列);对**该系数同余类**的具体 mod 31 排除陈述未见于文献;其价值是把该标准技术的一个精确实例以标准三公理冻结,不推进判定性;探针前记录见 PR #5684 评论(R9 候选 #10 07:59Z、探针 brief 08:02Z)。
+- **6.221–6.222(Archer–Bourne 2143 全幂判据)**:第一档。核对:该猜想在 Archer–Bourne(DMTCS 28:1 (2026),arXiv:2505.05218v3)「Further directions」节明确列为未证;全幂判据陈述未见于文献。
+- **6.223–6.224(Thue–Morse 约化阿贝尔复杂度奇递推)**:第一档。核对:Campbell–Currie–Rampersad(INTEGERS 26 (2026) A34)§3 明写「看来 … 但确定完整递推颇具挑战」,该等式在文中未证;未见其他证明。
+- **4.102–4.103(错排数二进赋值与 3 mod 4 完全幂排除)**:第一档。核对:v₂(D_n) = v₂(n−1) 已见于 Miska(J. Number Theory 2016;arXiv:1508.01987 §6.1)——已按评注 27.833 改标 FromLiterature;任意底的 n ≡ 3 (mod 4) 完全幂排除未见(Miska 命题 31 只处理素数幂);Sun 猜想(OEIS A000166,2025)仍开放。
+- **4.104(Erdős #7 两奇素数支撑排除)**:第一档。核对:erdosproblems.com/7 状态 OPEN(2026-09-05 curl);∑1/d ≥ 1 必要条件为 Erdős 覆盖系经典论述,两素数支撑不可覆盖属常识性推论;其量化形式(未覆盖点 ≥ L/8)未见明文;价值为词汇入库,已如实写于评注 27.827。
+- **5.97(铺砌多项式 P₅₆ 非实根)**:第一档。核对:Ahlberg–Alexandersson(arXiv:2605.03473)例 9 报告该计算结果、问题 2 开放;Laguerre 不等式为经典(实施须 FromLiterature);内核证书为新。
+- **18.12(Kotzig GK_{p+1} 族)**:第一档·已知族的内核认证。核对:Kotzig 1964 经典构造,Allsop–Wanless(arXiv:2506.02455)综述;实施须 FromLiterature;本条按 5⁵ 硬规则①属「已知结果只 cover 不派新席」的边界情形——因其 lane 在 5⁵ 落地前已派出,收尾落地后不再开同类 lane。
+- **9.21(Lee 球 n = 3 格点排除)**:第一档·已知结果的独立内核证明。核对:Gravier–Mollard–Payan 1998(DOI 10.1006/eujc.1998.0211)、Leung–Zhou 2020(DOI 10.1016/j.jcta.2019.105157);实施 FromLiterature;同上,收尾后不再开同类 lane。
+产地(第 9′ 条):skill=consensus-rnd:sshx;各核对由 orchestrator(claude 主循环)执行或转述席位自报(标明处);本评注由 Skolem v2 #5684 第二轮 architecture 席(ChatGPT Pro)按 5⁵ 硬规则②判 reject 而触发。
+
