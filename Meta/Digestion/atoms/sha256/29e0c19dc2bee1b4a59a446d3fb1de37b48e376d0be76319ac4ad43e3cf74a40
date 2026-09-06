@@ -1,0 +1,64 @@
+## 定义 7.1：各指数层的素数截止值
+
+对实数 \(x>1\)，定义：
+
+$$
+\eta(x,k)
+=
+\frac{
+\ln\left(1+\dfrac1{x+x^2+\cdots+x^k}\right)
+}{
+\ln x
+}.
+$$
+
+它随 \(x\) 严格递减。对给定 \(\lambda>0\)，令 \(x_k(\lambda)>1\) 是：
+
+$$
+\eta(x_k(\lambda),k)=\lambda
+$$
+
+的唯一解。
+
+于是：
+
+$$
+\eta_{p,k}>\lambda
+\iff
+p<x_k(\lambda).
+$$
+
+记：
+
+$$
+\vartheta_<(x)=\sum_{p<x}\ln p.
+$$
+
+得到：
+
+$$
+\boxed{
+\mathcal E(\lambda)
+=
+\sum_{k\ge1}\vartheta_<(x_k(\lambda))
+}
+\tag{20}
+$$
+
+在低价格区域成立；在切换点使用最小指数最优者即可，导数公式仍按几乎处处解释。
+
+这就是：
+
+$$
+\boxed{
+\text{总最优规模}
+=
+\text{第一指数层的素数质量}
++
+\text{第二指数层的素数质量}
++\cdots.
+}
+$$
+
+它已经不是模糊的“无限能级”，而是一组明确的素数截止层。
+

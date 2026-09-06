@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:25e5defd16fcc04c98a3fe4908ab1cb7bcf30dad1e57a40ede1228399deac413
+  normalized_sha256: sha256:25e5defd16fcc04c98a3fe4908ab1cb7bcf30dad1e57a40ede1228399deac413
+cas_ref: sha256:25e5defd16fcc04c98a3fe4908ab1cb7bcf30dad1e57a40ede1228399deac413
+coverage_gids:
+  - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
+    target_statement_id: sha256:a23c639bb7d0b7244e8d237835a05fb4bf57833d8e54cab8f4b31cd62d7c497f
+receipts:
+  scribe:
+    - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
+      definition_sha256: sha256:5e260e561a6d5ec9e5703b7fa33d7c6c3261be2ebf11be628e41aa3e360201bd
+      emission_sha256: sha256:faacc922f725f5541651980c3fdf7d26db2a1bb68d1ef1c6284ad3969c66d22f
+  unresolved_subitems: []

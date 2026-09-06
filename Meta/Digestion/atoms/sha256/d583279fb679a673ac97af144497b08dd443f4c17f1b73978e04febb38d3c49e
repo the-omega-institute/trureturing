@@ -1,0 +1,35 @@
+### 证明
+
+\(Y_\sigma-E_\lambda\) 的密度为：
+
+$$
+\begin{aligned}
+r(x)
+&=
+\int_0^\infty
+\lambda e^{-\lambda e}p_\sigma(x+e)\,de\\
+&=
+\frac{\lambda e^{\lambda x}}{\xi(\sigma)}
+\int_x^\infty e^{y/2}\Phi(y)\,dy.
+\end{aligned}
+$$
+
+代入式（T3），这正是式（T8）的 \(r_\sigma(x)\)。证毕。
+
+因此，本轮得到的完整分布恒等式是：
+
+$$
+\boxed{
+Y_\sigma-E_{\sigma-1}
+\overset d=
+\frac12\log\frac{\mathsf G_\sigma}{\pi}
+-\log N_\sigma,
+\qquad \sigma>1.
+}
+\tag{T16}
+$$
+
+每一侧内部的随机变量按前面的定义独立。
+
+这里没有未知零点作为输入。
+

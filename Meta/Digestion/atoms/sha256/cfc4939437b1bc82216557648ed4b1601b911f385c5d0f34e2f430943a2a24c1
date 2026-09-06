@@ -1,0 +1,65 @@
+## 定理 178.1　自由能—涨落恒等式
+
+有
+
+$$
+\boxed{
+\mathcal F'(\nu)
+=
+\langle H_{\mathrm{rest}}\rangle_\nu,
+}
+\tag{178.2}
+$$
+
+$$
+\boxed{
+\mathcal F''(\nu)
+=
+-\beta\operatorname{Var}_{\rho_\nu}(H_{\mathrm{rest}})
+\le0.
+}
+\tag{178.3}
+$$
+
+因此，平衡平均力为
+
+$$
+\boxed{
+\overline F_x
+=
+-\nu'(x)\langle H_{\mathrm{rest}}\rangle_\nu.
+}
+\tag{178.4}
+$$
+
+### 证明
+
+在 \(H_{\mathrm{rest}}\) 的本征基中，
+
+$$
+Z'(\nu)
+=
+-\beta Z(\nu)\langle H_{\mathrm{rest}}\rangle_\nu.
+$$
+
+对 \(\log Z\) 求导得到式（178.2）。
+
+再对平均能量求导，得到负的 \(\beta\) 倍方差，故式（178.3）成立。式（178.4）由力算子取期望得到。∎
+
+若 \(\nu=\nu(x)\)，则
+
+$$
+\boxed{
+\frac{d^2\mathcal F}{dx^2}
+=
+\langle H_{\mathrm{rest}}\rangle_\nu\,\nu''
+-
+\beta\operatorname{Var}(H_{\mathrm{rest}})(\nu')^2.
+}
+\tag{178.5}
+$$
+
+因此，局部力响应同时依赖平均能量与能量涨落，不能仅由一个“温度值”决定。
+
+---
+

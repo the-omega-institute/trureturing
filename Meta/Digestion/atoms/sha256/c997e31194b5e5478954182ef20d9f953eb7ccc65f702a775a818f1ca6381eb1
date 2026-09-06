@@ -1,0 +1,30 @@
+# 六、两个极限再次不交换，但这一次来自实际条件态的压缩
+
+对每个固定 \(n\)，和模态密度 \(\mu_n\) 可积，所以 Fourier 变换满足：
+
+$$
+R_n(t)\longrightarrow0
+\qquad(|t|\to\infty).
+$$
+
+另一方面，式（R20）给出固定 \(t\) 时 \(R_n(t)\to1\)。
+
+于是：
+
+$$
+\boxed{
+\lim_{n\to\infty}\lim_{|t|\to\infty}R_n(t)=0,
+}
+$$
+
+而：
+
+$$
+\boxed{
+\lim_{|t|\to\infty}\lim_{n\to\infty}R_n(t)=1.
+}
+\tag{R24}
+$$
+
+这里没有把某个模式删掉，也没有改变 ξ 的定义。发生的是：
+

@@ -1,0 +1,50 @@
+## 5.1 有限边界给出初始预算
+
+当 \(\Lambda\) 足够大时，所有可选新增层都不值得采用，最优状态来自 19 个初态中的最小整数 5184。
+
+进一步增大 \(\Lambda\) 后：
+
+$$
+\mathcal P_{5040}(\Lambda)
+=
+W(5184)-\Lambda\ln5184,
+$$
+
+$$
+\mathcal H(\Lambda)
+=
+h(\ln5184)-\Lambda\ln5184.
+$$
+
+所以：
+
+$$
+\mathcal G(\Lambda)=\Delta(5184)>0.
+$$
+
+其中：
+
+$$
+Z(5184)=\frac{15367}{5184}<3,
+$$
+
+而直接的初等界给出：
+
+$$
+e^\gamma\ln\ln5184>3.
+$$
+
+于是式（16）变成：
+
+$$
+\boxed{
+\mathcal G(\lambda)
+=
+\Delta(5184)
+-
+\int_\lambda^\Lambda
+\bigl[\mathcal E(u)-T_u\bigr]\,du.
+}
+\tag{17}
+$$
+

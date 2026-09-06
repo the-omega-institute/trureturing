@@ -1,0 +1,36 @@
+# 一、先把“固定差模态”与“高阶差模态筛选”分开
+
+沿用：
+
+$$
+p(x)=\frac{\Phi(x)}{\xi(1/2)},
+$$
+
+以及：
+
+$$
+A(t)=\int_{\mathbb R}p(x)e^{itx}\,dx
+=\frac{\Xi(t)}{\Xi(0)},
+\qquad
+\Xi(t)=\xi\!\left(\frac12+it\right).
+$$
+
+ξ 始终采用标准 completed 定义，\(\Phi\) 是前文固定的正偶 theta 核。([DLMF][1])
+
+取两个独立副本 \(X,Y\sim p\)。这次使用坐标：
+
+$$
+\boxed{
+x=\frac{X-Y}{2},
+\qquad
+v=X+Y.
+}
+\tag{S1}
+$$
+
+它们与上一轮的和／差模态关系为：
+
+$$
+U=\sqrt2x,\qquad S=\frac v{\sqrt2}.
+$$
+

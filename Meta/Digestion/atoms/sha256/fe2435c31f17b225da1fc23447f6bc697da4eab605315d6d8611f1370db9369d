@@ -1,0 +1,15 @@
+## 定理 T5：双副本补偿恒等式
+
+$$
+\boxed{
+\mathcal W(x,t)
+=
+\pi^2
+\left[
+\left(\frac{\partial}{\partial x}+1\right)^2+4t^2
+\right]
+\mathcal J(x,t).
+}
+\tag{T31}
+$$
+

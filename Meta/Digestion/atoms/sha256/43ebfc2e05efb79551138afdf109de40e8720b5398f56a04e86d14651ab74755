@@ -1,0 +1,59 @@
+# 九、现在可以直接写出真正待证的算术不等式
+
+由式（S4）、（S17），定义：
+
+$$
+\boxed{
+\begin{aligned}
+M_n(t)
+=
+8\pi^2
+\sum_{k=1}^{\infty}
+k^2\mathcal D_k(t)
+\int_0^\infty
+x^{2n}e^{5x}
+\mathscr B_t(2\pi ke^{2x})\,dx.
+\end{aligned}
+}
+\tag{S29}
+$$
+
+它就是：
+
+$$
+M_n(t)=\int_0^\infty x^{2n}\mathcal W(x,t)\,dx.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+M_n(t)\ge0
+\quad\forall n,t.
+}
+\tag{S30}
+$$
+
+这次的表达明确分出了：
+
+$$
+\boxed{
+\text{素数幂相位}
+\quad\times\quad
+\text{Bessel 尺度响应}
+\quad\times\quad
+\text{差模态高阶权重}.
+}
+$$
+
+没有未知零点作为输入。
+
+但也没有任何一项可以被随意正化：
+
+* \(\mathcal D_k(t)\) 可以为负；
+* \(\mathscr B_t(z)\) 可以变号；
+* \(\mathcal W(x,t)\) 本身确实有负区；
+* 最终需要非负的是指定的整体 \(M_n(t)\)。
+

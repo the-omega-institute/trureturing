@@ -1,0 +1,15 @@
+## 定理 T2：原函数的实际 Mellin 读数
+
+$$
+\boxed{
+Z_+(\sigma)
+=
+\frac{\xi(\sigma)}{2\pi(\sigma-1)}
+=
+\frac12
+\pi^{-1-\sigma/2}
+\Gamma\!\left(1+\frac{\sigma}{2}\right)\zeta(\sigma).
+}
+\tag{T7}
+$$
+

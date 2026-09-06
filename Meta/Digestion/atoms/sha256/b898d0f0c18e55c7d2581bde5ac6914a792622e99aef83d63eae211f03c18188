@@ -1,0 +1,24 @@
+## 第二条：从内部时间到完整静止能量
+
+$$
+\boxed{
+\text{内部钟与热接口}
+\longrightarrow
+H_{\mathrm{rest}}\bmod\mathbb RI,
+}
+$$
+
+而不是自动得到完整 \(H_{\mathrm{rest}}\)。
+
+路径比较与位置耦合可以进一步读取该接口遗漏的部分：
+
+$$
+\boxed{
+\text{相干路径实现}
++
+\text{共同钟标定}
+\longrightarrow
+\text{相对静止相位与力响应}.
+}
+$$
+

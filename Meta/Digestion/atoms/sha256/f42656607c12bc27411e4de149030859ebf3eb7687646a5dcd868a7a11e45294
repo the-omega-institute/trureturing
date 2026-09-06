@@ -1,0 +1,60 @@
+# 九、送回隧穿模型：高阶筛选让有限频率的原态保持通道趋于明亮
+
+沿用前文精确可解的双侧耦合：
+
+$$
+H_{\mathrm{hop}}
+=
+-g\left(
+|R\rangle\langle L|\otimes e^{i\sqrt2tS}
++
+|L\rangle\langle R|\otimes e^{-i\sqrt2tS}
+\right).
+$$
+
+从：
+
+$$
+|L\rangle|\chi_n\rangle
+$$
+
+出发，在物理脉冲时间 \(\tau\) 后，穿越且回到同一个观察态的概率为：
+
+$$
+\boxed{
+P_{\mathrm{same}}
+=
+\sin^2(g\tau/\hbar)\,|R_n(t)|^2.
+}
+\tag{R34}
+$$
+
+总穿越概率仍是：
+
+$$
+P_{\mathrm{cross}}=\sin^2(g\tau/\hbar).
+$$
+
+于是，对固定 \(t\)：
+
+$$
+\boxed{
+P_{\mathrm{same}}\longrightarrow P_{\mathrm{cross}}
+\qquad(n\to\infty).
+}
+$$
+
+但同时：
+
+$$
+\langle K_0\rangle_n\to\infty.
+$$
+
+所以：
+
+> **让当前观察态在穿越后“几乎保持不变”，并不意味着观察者已经对原始算术取得了无代价的完全认识。它可能只是被制备成了一个对这段有限相位范围越来越不敏感的高能条件态。**
+
+这项隧穿结论针对上述单独脉冲模型。若同时开启 \(K_0\) 的自由演化，必须重新求完整动力学，不能继续直接套用式（R34）。
+
+---
+

@@ -1,0 +1,49 @@
+# 五、连续—离散的差额，成为一条精确的面积公式
+
+对不发生最优切换的 \(\lambda\)，记最优整数为 \(n_\lambda\)，并定义：
+
+$$
+\mathcal E(\lambda)=\ln n_\lambda.
+$$
+
+由于最优配置在区间内不变：
+
+$$
+\mathcal P_{5040}'(\lambda)=-\mathcal E(\lambda).
+$$
+
+另一方面：
+
+$$
+\mathcal H'(\lambda)=-T_\lambda.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal G'(\lambda)
+=
+\mathcal E(\lambda)-T_\lambda
+}
+\tag{15}
+$$
+
+在几乎处处成立。
+
+左边是临界剩余预算的变化；右边是一条离散阶梯与一条连续曲线的差。
+
+对任意 \(0<\lambda<\Lambda\)：
+
+$$
+\boxed{
+\mathcal G(\lambda)
+=
+\mathcal G(\Lambda)
+-
+\int_\lambda^\Lambda
+\bigl[\mathcal E(u)-T_u\bigr]\,du.
+}
+\tag{16}
+$$
+

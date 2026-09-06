@@ -1,0 +1,59 @@
+# 六、量子语言此时有了一个准确的位置
+
+在 RH 成立的条件下，定义离散正测度：
+
+$$
+\nu
+=
+\frac1{C_\gamma}
+\sum_\rho
+\frac1{\frac14+\tau_\rho^2}\,
+\delta_{\tau_\rho}.
+$$
+
+它的总质量为 1，且：
+
+$$
+\boxed{
+\frac{F(t)}{C_\gamma}
+=
+\int_{\mathbb R}e^{i\omega t}\,d\nu(\omega).
+}
+\tag{22}
+$$
+
+因此它是一个概率分布的特征函数。
+
+在 Hilbert 空间 \(L^2(\nu)\) 中，令：
+
+$$
+\Omega(\omega)=1,
+$$
+
+$$
+(U(t)f)(\omega)=e^{i\omega t}f(\omega).
+$$
+
+那么 \(U(t)\) 是酉算子，且：
+
+$$
+\boxed{
+\frac{F(t)}{C_\gamma}
+=
+\langle\Omega,U(t)\Omega\rangle.
+}
+\tag{23}
+$$
+
+由 Cauchy–Schwarz：
+
+$$
+|\langle\Omega,U(t)\Omega\rangle|\le1.
+$$
+
+这就解释了主界：
+
+$$
+|F(t)|\le C_\gamma.
+$$
+

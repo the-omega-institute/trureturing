@@ -1,0 +1,71 @@
+# 本轮结论
+
+这次从上一轮的作用量模型进一步得到了一条完整的推导链：
+
+$$
+\boxed{
+p^{-k}
+\longrightarrow
+\eta_{p,k}
+\longrightarrow
+\mathcal P_{5040}(\lambda)
+\longrightarrow
+\mathcal G(\lambda)
+\longrightarrow
+I_\psi(T).
+}
+$$
+
+各层分别表示：
+
+$$
+\text{边界衰减},
+\quad
+\text{局部边际收益},
+\quad
+\text{5040 条件下的全局最优值},
+\quad
+\text{临界剩余预算},
+\quad
+\text{素数分布的累计误差}.
+$$
+
+本轮已经证明的核心结构是：
+
+$$
+\boxed{
+\mathcal P_{5040}(\lambda)
+=
+\max_{b\in\mathscr B_{5040}}
+\left[
+W(b)-\lambda E(b)
++
+\sum_p\sum_{k>b_p}
+(\ln p)(\eta_{p,k}-\lambda)_+
+\right],
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal H(\lambda)-\mathcal P_{5040}(\lambda)>0
+\quad\forall\lambda>0.
+}
+$$
+
+更深一层，得到：
+
+$$
+\boxed{
+\mathcal E(\lambda(T))
+=
+\psi(T)+(\sqrt2-1)\sqrt T+o(\sqrt T),
+}
+$$
+
+从而把压力差分成了确定的正修正与真实的素数分布误差。
+

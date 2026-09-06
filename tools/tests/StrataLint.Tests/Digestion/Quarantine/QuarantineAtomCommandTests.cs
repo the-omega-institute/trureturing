@@ -520,6 +520,7 @@ public sealed class QuarantineAtomCommandTests
 
     private sealed class QuarantineCliEnvironment : ICliEnvironment
     {
+        public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) => throw new NotSupportedException();
         internal IReadOnlyList<string> Arguments { get; private set; } = [];
 
         public CommandResult QuarantineAtom(IReadOnlyList<string> arguments)

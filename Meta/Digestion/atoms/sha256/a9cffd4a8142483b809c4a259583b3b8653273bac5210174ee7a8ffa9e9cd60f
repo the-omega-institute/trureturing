@@ -1,0 +1,13 @@
+### 推论 2.2：若 RH 为假，响应必须向两侧无界振荡
+
+$$
+\boxed{
+\liminf_{t\to\infty}F(t)=-\infty,
+\qquad
+\limsup_{t\to\infty}F(t)=+\infty.
+}
+\tag{6}
+$$
+
+否则就有某一侧的最终统一界，与定理 2.1 矛盾。
+

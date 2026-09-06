@@ -1,0 +1,84 @@
+## 定理 162.2　独立热输入的精确能量交换
+
+设初态为
+
+$$
+\gamma_A(\beta_A)\otimes\gamma_B(\beta_B).
+$$
+
+记激发概率
+
+$$
+p_i=\frac1{1+e^{\beta_i\epsilon_i}}.
+$$
+
+则接触后
+
+$$
+\boxed{
+\Delta\langle h_B\rangle
+=
+\epsilon_B\sin^2\theta\,(p_A-p_B),
+}
+\tag{162.3}
+$$
+
+$$
+\boxed{
+\Delta\langle h_A\rangle
+=
+-\epsilon_A\sin^2\theta\,(p_A-p_B).
+}
+\tag{162.4}
+$$
+
+### 证明
+
+初始单激发概率分别为
+
+$$
+P_{10}=p_A(1-p_B),
+\qquad
+P_{01}=(1-p_A)p_B.
+$$
+
+交换门使
+
+$$
+P_{01}'=
+\cos^2\theta\,P_{01}
++
+\sin^2\theta\,P_{10}.
+$$
+
+因此
+
+$$
+P_{01}'-P_{01}
+=
+\sin^2\theta\,(p_A-p_B).
+$$
+
+\(|11\rangle\) 概率不变，故得到式（162.3）；另一侧同理。∎
+
+当共振条件成立，记
+
+$$
+\mathcal E=\nu_A\epsilon_A=\nu_B\epsilon_B,
+$$
+
+则从 \(A\) 向 \(B\) 转移的共同能量为
+
+$$
+\boxed{
+Q_{A\to B}
+=
+\mathcal E\sin^2\theta\,(p_A-p_B).
+}
+\tag{162.5}
+$$
+
+两侧局部能量变化不必数值相反，但共同参照能量严格守恒。
+
+---
+

@@ -1,0 +1,36 @@
+## 定义 181.1　内部结构与运动空间
+
+设观察者的内部空间为有限维空间
+
+$$
+\mathcal H_{\mathrm{int}}=\mathbb C^d,
+$$
+
+运动空间为
+
+$$
+\mathcal H_{\mathrm{mot}}=L^2(\mathbb R).
+$$
+
+完整空间为
+
+$$
+\mathcal H
+=
+\mathcal H_{\mathrm{int}}\otimes L^2(\mathbb R).
+$$
+
+给定三个内部算子：
+
+$$
+H_{\mathrm{rest}}=H_{\mathrm{rest}}^\dagger,
+$$
+
+$$
+M_I=M_I^\dagger>0,
+\qquad
+M_G=M_G^\dagger>0.
+$$
+
+分别表示静止能量、惯性质量和引力响应质量。
+

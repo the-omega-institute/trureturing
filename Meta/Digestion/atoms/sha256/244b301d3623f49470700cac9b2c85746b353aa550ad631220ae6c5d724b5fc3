@@ -1,0 +1,29 @@
+## 定理 2.1：单边界判据
+
+以下命题等价：
+
+$$
+\mathrm{RH};
+$$
+
+$$
+\boxed{
+\exists M<\infty,\qquad
+F(t)\ge-M
+\quad\text{对全部充分大的 }t;
+}
+\tag{3}
+$$
+
+$$
+\boxed{
+F(t)\ge-C_\gamma
+\quad\forall t\ge0.
+}
+\tag{4}
+$$
+
+同样地，存在某个最终统一上界也等价于 RH。
+
+这个结论并不适用于任意响应函数。它依赖于式（2）的特殊极点结构。
+

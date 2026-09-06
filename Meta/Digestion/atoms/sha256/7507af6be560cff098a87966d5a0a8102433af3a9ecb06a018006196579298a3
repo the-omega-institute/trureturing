@@ -1,0 +1,14 @@
+## 推论：低频联合能量判据
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\sup_{\substack{X=2^j\\j\ge1}}
+\frac1{X^2}
+\sum_{0\le r<R_X}|\eta_r(X)|^2
+<\infty.
+}
+\tag{29}
+$$
+
