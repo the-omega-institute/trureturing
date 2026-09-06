@@ -16,6 +16,8 @@ run_cmd liftTermElabM do
   validateEvidence `LeanInformationAudit.Tests.Census.Evidence inventory
   logInfo "nominated-root-excludes-caller-peer"
 
+-- Direct-context matrix qualification: its first control is accepted; later
+-- cumulative entries are expected rejections at maximal_catalog_membership.
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.structuralTheorem class=structural_occurrence invalid=maximal_catalog_membership -/
 #guard_msgs in
 run_cmd liftTermElabM do

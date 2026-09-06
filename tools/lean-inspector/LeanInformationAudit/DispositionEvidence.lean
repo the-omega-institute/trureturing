@@ -54,7 +54,7 @@ structure StructuralProvenanceEntry where
   certificateName : Name
   registrationModule : Name
   canonicalArena : Name
-  lawArenaSyntax : String
+  lawArenaSyntax : String := ""
   realizationSyntax : String := ""
   deriving Inhabited
 

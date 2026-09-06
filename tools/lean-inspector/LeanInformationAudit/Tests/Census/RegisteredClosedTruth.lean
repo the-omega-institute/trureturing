@@ -185,6 +185,8 @@ run_cmd do
   elabCommand (← `(command| run_cmd do
     let info ← getConstInfo ``ordinary
     let some proof := info.value? (allowOpaque := true) | throwError "missing proof"
+    -- Preserve the pass-5 record shape: the omitted syntax field must default
+    -- into the public provenance check, where this ordinary-theorem entry is rejected.
     let entry : StructuralProvenanceEntry := {
       theoremName := ``ordinary
       lawArenaConst := ``lawArena
@@ -195,8 +197,7 @@ run_cmd do
       levelParams := info.levelParams
       certificateName := ``nondegenerate
       registrationModule := (← getEnv).header.mainModule
-      canonicalArena := ``arena
-      lawArenaSyntax := "lawArena" }
+      canonicalArena := ``arena }
     modifyEnv fun current => ($registryId).addEntry current entry))
 
 /--
