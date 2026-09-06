@@ -18,6 +18,9 @@ universe u v w
 structure SealTheoremRecord where
   theoremName : Name
   unitName : Name
+  realizationName : Name
+  certificateName : Name
+  registrationModuleName : Name
   index : Nat
   primitiveCount : Nat
   primitiveAxes : Array String
@@ -31,6 +34,8 @@ structure SealTheoremRecord where
 /-- Computed arena data retained for summaries and the optional artifact. -/
 structure SealArenaRecord where
   catalog : CatalogRecord
+  irredundantCertificateName : Name
+  proofMethod : String
   stateCard : Nat
   offDiagonalPairCount : Nat
   fullEscapeCount : Nat
@@ -137,6 +142,32 @@ private def validateRoleHistogram (theoremName : Name) (uniqueCount : Nat)
   unless histogramTotal == uniqueCount do
     throw s!"IE-C009 ProofConstructionFailed: {theoremName}\nrole histogram mismatch"
 
+private def natArrayJson (values : Array Nat) : String :=
+  (Json.arr <| values.map toJson).compress
+
+private def catalogIndexCount {arena : Arena.{u}}
+    (catalog : Catalog.{u, v, w} arena) : Nat :=
+  @Fintype.card catalog.Index catalog.indexFintype
+
+/-- Bind the checked vector to the compiled catalog's full index domain. -/
+def validateCompleteCountVector (rootId : Name) (catalogId : CatalogId)
+    (memberCount : Nat) (expectedCounts checkedCounts : Array Nat) : Except String Unit := do
+  unless expectedCounts.size == memberCount && checkedCounts == expectedCounts do
+    let expected := toJson (memberCount, expectedCounts)
+    let actual := toJson (checkedCounts.size, checkedCounts)
+    throw s!"IE-C028 AnalysisCertificateMismatch root={rootId} catalog={catalogId} \
+component=count-vector expected={expected.compress} actual={actual.compress}"
+
+/-- Independently derive and check every zero index from the complete count vector. -/
+def validateRedundantIndices (rootId : Name) (catalogId : CatalogId)
+    (uniqueCounts certified : Array Nat) (phase : String) : Except String Unit := do
+  let expected := (uniqueCounts.foldl (init := (#[], 0))
+    (fun (result, index) count =>
+      (if count == 0 then result.push index else result, index + 1))).1
+  unless expected == certified do
+    throw s!"IE-C033 IncompleteRedundantIndexSet key={rootId}/{catalogId} \
+expected={natArrayJson expected} certified={natArrayJson certified} phase={phase}"
+
 private structure ReflectedRoute where
   witness : Expr
   indices : Expr
@@ -224,9 +255,7 @@ private def theoremProofs (prepared : PreparedCatalog) : Lean.Elab.Term.TermElab
     (Array Declaration × SealArenaRecord) := do
   let record := prepared.record
   let catalog := prepared.value
-  let arena ← mkAppM
-    `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
-    #[mkConst record.arenaName]
+  let arena := prepared.arenaValue
   let nondegenerateType ← mkAppM
     `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
   let nondegenerateProof ← mkDecideProof nondegenerateType
@@ -234,6 +263,14 @@ private def theoremProofs (prepared : PreparedCatalog) : Lean.Elab.Term.TermElab
     `D5.S3.ConceptDynamics.InformationEscape.Arena.card #[arena]
   let stateCard ← natValue stateCardExpr
   let route ← discoverCountingRoute prepared arena
+  let pairBudget := stateCard * (stateCard - 1)
+  if pairBudget > 65536 then
+    match route with
+    | .decide =>
+        throwError
+          "IE-C032 SizeBudgetRequiresReflectedSeal root={record.rootId} \
+catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.rootId}"
+    | .reflected _ => pure ()
   let fullCount ← match route with
     | .decide =>
         let fullSet ← mkAppM
@@ -246,6 +283,79 @@ private def theoremProofs (prepared : PreparedCatalog) : Lean.Elab.Term.TermElab
   let mut declarations := #[]
   let mut theoremRecords := #[]
   let mut loweringProofNames := #[]
+  let mut uniqueCounts := #[]
+  let mut withoutCounts := #[]
+  for unit in record.units do
+    let index <- finValue unit.index record.units.size
+    let uniqueExpr <- mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
+      #[catalog, index]
+    let uniqueCount <- match route with
+      | .decide => natValue uniqueExpr
+      | .reflected reflected => pure reflected.snapshot.unique[unit.index]!
+    let withoutCount <- match route with
+      | .decide =>
+          let withoutSet <- mkAppM
+            `D5.S3.ConceptDynamics.InformationEscape.Catalog.without #[catalog, index]
+          let withoutExpr <- mkAppM
+            `D5.S3.ConceptDynamics.InformationEscape.Catalog.escapeNumerator
+            #[catalog, withoutSet]
+          natValue withoutExpr
+      | .reflected _ => pure (fullCount + uniqueCount)
+    uniqueCounts := uniqueCounts.push uniqueCount
+    withoutCounts := withoutCounts.push withoutCount
+  let compiledSize ← natValue (← mkAppM ``catalogIndexCount #[catalog])
+  let expectedCounts ← match route with
+    | .decide => (Array.range compiledSize).mapM fun indexNat => do
+        let index ← finValue indexNat compiledSize
+        natValue (← mkAppM
+          `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
+          #[catalog, index])
+    | .reflected reflected => pure reflected.snapshot.unique
+  let mut redundantIndices := #[]
+  for index in [:uniqueCounts.size] do
+    if uniqueCounts[index]! == 0 then
+      redundantIndices := redundantIndices.push index
+  let mut certifiedRedundantIndices := #[]
+  for indexNat in redundantIndices do
+    let index <- finValue indexNat record.units.size
+    let uniqueExpr <- mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
+      #[catalog, index]
+    let zeroProof <- proofConstruction record.units[indexNat]!.theoremName <| match route with
+      | .decide => do
+          let zeroType <- mkEq uniqueExpr (mkNatLit 0)
+          mkDecideProof zeroType
+      | .reflected reflected => do
+          let fusedUnique <- mkAppM
+            `D5.S3.ConceptDynamics.InformationEscape.Catalog.FusedCounts.unique
+            #[reflected.counts, index]
+          let fusedZero <- mkDecideProof (← mkEq fusedUnique (mkNatLit 0))
+          let fusedEq <- mkAppM
+            `D5.S3.ConceptDynamics.InformationEscape.Catalog.fusedUnique_eq_uniqueCaptureCount
+            #[catalog, reflected.witness, reflected.indices, index]
+          let actualToFused <- mkAppM ``Eq.symm #[fusedEq]
+          mkAppM ``Eq.trans #[actualToFused, fusedZero]
+    checkWithKernel zeroProof
+    certifiedRedundantIndices := certifiedRedundantIndices.push indexNat
+  match validateRedundantIndices record.rootId record.catalogId expectedCounts
+      certifiedRedundantIndices "complete-scan" with
+  | .ok () => pure ()
+  | .error message => throwError message
+  match validateCompleteCountVector record.rootId record.catalogId compiledSize
+      expectedCounts uniqueCounts with
+  | .ok () => pure ()
+  | .error message => throwError message
+  if let some firstZero := redundantIndices[0]? then
+    let members := certifiedRedundantIndices.map fun index =>
+      record.units[index]!.theoremName.toString
+    logInfo s!"information seal redundancy: root={record.rootId} catalog={record.catalogId} \
+counts={natArrayJson uniqueCounts} certified={natArrayJson certifiedRedundantIndices} \
+members={(toJson members).compress}"
+    let unit := record.units[firstZero]!
+    throwError
+      "IE-C007 ZeroUniqueCapture: theorem {unit.theoremName} arena {record.arenaName} \
+full {fullCount} without {withoutCounts[firstZero]!}"
   for unit in record.units do
     let theoremName := unit.theoremName
     let unitName := unit.unitName
@@ -274,22 +384,8 @@ private def theoremProofs (prepared : PreparedCatalog) : Lean.Elab.Term.TermElab
     let uniqueExpr ← mkAppM
       `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
       #[catalog, index]
-    let uniqueCount ← match route with
-      | .decide => natValue uniqueExpr
-      | .reflected reflected => pure reflected.snapshot.unique[indexNat]!
-    let withoutCount ← match route with
-      | .decide =>
-          let withoutSet ← mkAppM
-            `D5.S3.ConceptDynamics.InformationEscape.Catalog.without #[catalog, index]
-          let withoutExpr ← mkAppM
-            `D5.S3.ConceptDynamics.InformationEscape.Catalog.escapeNumerator
-            #[catalog, withoutSet]
-          natValue withoutExpr
-      | .reflected _ => pure (fullCount + uniqueCount)
-    if uniqueCount == 0 then
-      throwError
-        "IE-C007 ZeroUniqueCapture: theorem {theoremName} arena {record.arenaName} \
-full {fullCount} without {withoutCount}"
+    let uniqueCount := uniqueCounts[indexNat]!
+    let withoutCount := withoutCounts[indexNat]!
     let positiveType ← mkLT (mkNatLit 0) uniqueExpr
     let positiveProof ← match route with
       | .decide => proofConstruction theoremName <| mkDecideProof positiveType
@@ -330,7 +426,11 @@ full {fullCount} without {withoutCount}"
         #[catalog, index, nondegenerateProof]
       let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
       pure (lowersProof, ← inferType lowersProof)
-    let lowersName := theoremName.str "__lowers_escape"
+    let lowersName := if record.compatibilityV2 then
+      theoremName.str "__lowers_escape"
+    else
+      catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
+        "__lowers_escape"
     loweringProofNames := loweringProofNames.push lowersName
     declarations := declarations.push <| .thmDecl {
       name := lowersName
@@ -343,8 +443,13 @@ full {fullCount} without {withoutCount}"
     let enrichedType ← mkAppM ``And #[theoremType, lowersType]
     let enrichedProof := mkAppN (mkConst ``And.intro)
       #[theoremType, lowersType, theoremExpr, mkConst lowersName]
+    let enrichedName := if record.compatibilityV2 then
+      theoremName.str "__escape_enriched"
+    else
+      catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
+        "__escape_enriched"
     declarations := declarations.push <| .thmDecl {
-      name := theoremName.str "__escape_enriched"
+      name := enrichedName
       levelParams := []
       type := enrichedType
       value := enrichedProof
@@ -352,6 +457,9 @@ full {fullCount} without {withoutCount}"
     theoremRecords := theoremRecords.push {
       theoremName
       unitName
+      realizationName := unit.realizationName
+      certificateName := lowersName
+      registrationModuleName := unit.registrationModuleName
       index := indexNat
       primitiveCount
       primitiveAxes
@@ -361,19 +469,28 @@ full {fullCount} without {withoutCount}"
       withoutEscapeCount := withoutCount
       roleSignatureHistogram
       proofMethod := match route with
-        | .decide => "decide"
+        | .decide => if record.compatibilityV2 then "decide" else "direct"
         | .reflected _ => "reflected-fused-counts"
     }
   let irredundantProof ← irredundantFromLoweringProofs catalog loweringProofNames
   let irredundantType ← inferType irredundantProof
+  let irredundantName := if record.compatibilityV2 then
+    record.arenaName.str "__catalog_irredundant"
+  else
+    catalogQualifiedName record.rootId record.arenaName record.catalogId record.arenaName
+      "__catalog_irredundant"
   declarations := declarations.push <| .thmDecl {
-    name := record.arenaName.str "__catalog_irredundant"
+    name := irredundantName
     levelParams := []
     type := irredundantType
     value := irredundantProof
   }
   pure (declarations, {
     catalog := record
+    irredundantCertificateName := irredundantName
+    proofMethod := match route with
+      | .decide => if record.compatibilityV2 then "decide" else "direct"
+      | .reflected _ => "reflected-fused-counts"
     stateCard
     offDiagonalPairCount := stateCard * (stateCard - 1)
     fullEscapeCount := fullCount

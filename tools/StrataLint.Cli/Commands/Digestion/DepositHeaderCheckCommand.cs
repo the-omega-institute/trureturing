@@ -8,9 +8,11 @@ internal static class DepositHeaderCheckCommand
 
     internal static ExplicitCommandResult Run(
         IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
         IReadOnlyList<string> arguments)
     {
         ArgumentNullException.ThrowIfNull(repository);
+        ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentNullException.ThrowIfNull(arguments);
         if (!TryParseTarget(arguments, out var target))
         {
@@ -58,6 +60,22 @@ internal static class DepositHeaderCheckCommand
                     1,
                     string.Concat(evaluation.Diagnostics.Select(diagnostic => diagnostic.Render() + "\n")),
                     string.Empty);
+            }
+
+            var statePath = FrozenStatePath.FromModulePath(targetFile.Path);
+            if (!current.Files.ContainsKey(statePath))
+            {
+                _ = RepositoryRules.TryHeader(targetFile.Text, out var header);
+                var validation = UtilityDeclarationValidator.Validate(
+                    UtilityValidationPhase.PreDeposit,
+                    targetFile.Path,
+                    header.Utility,
+                    current,
+                    () => leanReportSource.Load(current));
+                if (!validation.IsAccepted)
+                {
+                    return UtilityFailure(target, validation);
+                }
             }
 
             return new ExplicitCommandResult(
@@ -121,4 +139,28 @@ internal static class DepositHeaderCheckCommand
         2,
         string.Empty,
         "USAGE: StrataLint deposit-header-check --target D5/.../*.lean\n");
+
+    private static ExplicitCommandResult UtilityFailure(
+        string module,
+        UtilityValidationResult validation) =>
+        new(
+            1,
+            $"{DepositFailureCode(validation.Failure)} module={module}"
+                + (validation.Detail.Length == 0 ? "\n" : $" {validation.Detail}\n"),
+            string.Empty);
+
+    private static string DepositFailureCode(UtilityValidationFailure failure) => failure switch
+    {
+        UtilityValidationFailure.Missing => "DEPOSIT_HEADER_UTILITY_MISSING",
+        UtilityValidationFailure.Syntax => "DEPOSIT_HEADER_UTILITY_SYNTAX",
+        UtilityValidationFailure.InstanceMissing => "DEPOSIT_HEADER_UTILITY_INSTANCE_MISSING",
+        UtilityValidationFailure.PremisesMissing => "DEPOSIT_HEADER_UTILITY_PREMISES_MISSING",
+        UtilityValidationFailure.InputUnknown => "DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN",
+        UtilityValidationFailure.TargetDangling => "DEPOSIT_HEADER_UTILITY_TARGET_DANGLING",
+        UtilityValidationFailure.RefutesAtomNoCoverage =>
+            "DEPOSIT_HEADER_UTILITY_REFUTES_ATOM_NO_COVERAGE",
+        UtilityValidationFailure.ConsumerUnreachable =>
+            "DEPOSIT_HEADER_UTILITY_CONSUMER_UNREACHABLE",
+        _ => throw new ArgumentOutOfRangeException(nameof(failure)),
+    };
 }

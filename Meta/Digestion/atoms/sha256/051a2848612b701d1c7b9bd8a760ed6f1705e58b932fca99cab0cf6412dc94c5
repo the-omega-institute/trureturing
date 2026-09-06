@@ -1,0 +1,33 @@
+## 定义 151.1　方向寄存器与碰撞记录
+
+取方向量子比特：
+
+$$
+\mathcal H_D=\operatorname{span}\{|+\rangle,|-\rangle\},
+$$
+
+以及辅助记录比特：
+
+$$
+\mathcal H_E=\operatorname{span}\{|0\rangle,|1\rangle\}.
+$$
+
+令 \(X_D\) 交换两个方向，\(Y_E\) 为辅助比特上的 Pauli 算子。
+
+对 \(0\le p\le1\)，定义：
+
+$$
+\boxed{
+W_p
+=
+\sqrt{1-p}\,I
+-
+i\sqrt p\,X_D\otimes Y_E.
+}
+\tag{151.1}
+$$
+
+因 \(X_D\otimes Y_E\) 为自伴对合，\(W_p\) 是酉算子。
+
+---
+

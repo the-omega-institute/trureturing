@@ -19,8 +19,11 @@ public sealed class DependencyDirectionTests
     [Fact]
     public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynAndTruth()
     {
+        // …and YamlDotNet: SL-030 reads `.github/**` YAML with the parser family the Actions runner
+        // uses. The method keeps its original name on purpose: SL-003's test-map ratchet treats a
+        // renamed reflection-based test as a new "unknown" identity introduced after the fork point.
         Assert.Equal(
-            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Tomlyn", "Trureturing.Truth"],
+            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
     }
 

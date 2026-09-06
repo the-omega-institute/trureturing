@@ -625,7 +625,10 @@ public sealed partial class BackfillInventoryLoaderTests
         {
             Receipts = entry.Receipts with
             {
-                Quarantine = new DigestionQuarantine(expected, "bridge lands"),
+                Quarantine = new DigestionQuarantine(
+                    expected,
+                    "bridge lands",
+                    "missing-prerequisite"),
             },
         };
 

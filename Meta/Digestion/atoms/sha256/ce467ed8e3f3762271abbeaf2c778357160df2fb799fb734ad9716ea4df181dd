@@ -1,0 +1,23 @@
+## 定义 2：移动模数带核
+
+定义
+
+$$
+\boxed{
+\mathscr P_X(n,m)
+=
+2\sum_{4X<q\le8X}
+\frac{\mu(q)^2}{\varphi(q)^2}
+\cos\frac{2\pi(n-m)}q.
+}
+\tag{17}
+$$
+
+它是 \(\mathscr K_{8X}-\mathscr K_{4X}\) 中保留部分 Gram 坐标后得到的核，因此
+
+$$
+\mathscr P_X\succeq0.
+$$
+
+这组选取不是从未知零点倒填出来的；它只使用 \(\mu,\varphi\) 与明确的有理频率。
+

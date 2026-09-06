@@ -444,7 +444,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void AlignScribeReceiptRejectsTargetRepairWhenUnrelatedBacklogExistsAtForkPoint(
+    public void AlignScribeReceiptRejectsTargetRepairWhenUnrelatedBacklogExistsAtBaseline(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
@@ -452,20 +452,20 @@ public sealed partial class ProductionEnvironmentTests
             OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
         });
-        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
+        var inputs = DirectoryInputs(WithReceiptMismatchAtBaseline(
             materialized,
             mismatchCode,
             byteIdenticalBaseline: true));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.False(result.Success);
         Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 
     [Fact]

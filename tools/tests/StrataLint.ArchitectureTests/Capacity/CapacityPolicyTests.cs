@@ -39,7 +39,7 @@ public sealed class CapacityPolicyTests
     // concurrent additions - which admission cannot see, because strict is forbidden (19)
     // and each PR judges its own tree - does not turn the whole repository red and block
     // every unrelated PR. Inside the band the bucket is over pressure and must be split,
-    // and the next change introducing a capacity-counted path absent from its ForkPoint
+    // and the next change introducing a capacity-counted path absent from its Baseline
     // is refused at admission, which is where the split pressure belongs.
     [Fact]
     public void DirectoryPastToleranceIsRejectedByRedFixture()

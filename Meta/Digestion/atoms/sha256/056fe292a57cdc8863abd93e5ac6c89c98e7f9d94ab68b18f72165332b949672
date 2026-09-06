@@ -1,0 +1,94 @@
+# 一、保留上一轮已经分离出的实际余项
+
+令
+
+$$
+a(n)=\Lambda(n)-1,
+$$
+
+$$
+M(x)=\lfloor2x\rfloor-\lfloor x\rfloor,
+$$
+
+$$
+Y(x)=\sum_{x<n\le2x}a(n)
+=\psi(2x)-\psi(x)-M(x),
+$$
+
+并定义
+
+$$
+\boxed{
+\mathfrak J(X)=
+\int_X^{2X}\frac{Y(x)^2}{x^2}\,dx.
+}
+\tag{1}
+$$
+
+记窗口重叠权重
+
+$$
+W_X(n,m)=
+\int_X^{2X}
+\frac{
+\mathbf1_{\{x<n\le2x\}}
+\mathbf1_{\{x<m\le2x\}}
+}{x^2}\,dx.
+$$
+
+沿用二点奇异级数 \(\mathfrak S(d)\)，定义真实相关余项
+
+$$
+\boxed{
+\mathfrak R(X)
+=
+\sum_{n\ne m}
+\left[
+a(n)a(m)-\bigl(\mathfrak S(|n-m|)-1\bigr)
+\right]W_X(n,m).
+}
+\tag{2}
+$$
+
+这些都是有限求和。
+
+上一轮得到
+
+$$
+\boxed{
+\mathfrak J(X)=\mathfrak R(X)-c_0+o(1),
+}
+\tag{3}
+$$
+
+其中
+
+$$
+\boxed{
+c_0=
+\log2\left(\gamma_{\mathrm E}+\log\frac{\pi}{2}\right)>0.
+}
+\tag{4}
+$$
+
+这里使用的关键经典输入确实是
+
+$$
+2\sum_{d=1}^{H-1}
+(H-d)(\mathfrak S(d)-1)
+=
+-H\log H+
+(2-\gamma_{\mathrm E}-\log2\pi)H
++O_\varepsilon(H^{1/2+\varepsilon}),
+$$
+
+这是已经证明的奇异级数平均公式，不是尚未证明的素数对渐近式。([arXiv][1])
+
+因此
+
+$$
+\liminf_{X\to\infty}\mathfrak R(X)\ge c_0.
+$$
+
+这说明真实余项不能趋零。但它是否必须增长？下面给出更准确的答案。
+

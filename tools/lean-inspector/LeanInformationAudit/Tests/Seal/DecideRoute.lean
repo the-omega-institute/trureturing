@@ -30,6 +30,10 @@ information_theorem target
   primitives testRealization
   : arena.Law testRealization := by trivial
 
+expect_information_occurrence target
+  in arena
+  from "LeanInformationAudit.Tests.Seal.DecideRoute"
+
 /-- info: information seal: arena=LeanInformationAudit.Tests.Seal.DecideRoute.arena theorem=LeanInformationAudit.Tests.Seal.DecideRoute.target unique=2 method=decide -/
 #guard_msgs (info) in
 #seal_information_theory
