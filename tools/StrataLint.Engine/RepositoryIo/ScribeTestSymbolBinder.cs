@@ -56,15 +56,24 @@ internal sealed class ScribeBoundCallable
     });
 }
 
-internal static class ScribeTestSymbolBinder
+internal static partial class ScribeTestSymbolBinder
 {
     internal static IReadOnlyList<ScribeParsedSource> Bind(
         IEnumerable<TestMapSource> sourceFiles,
+        ScribeBindingStrategy strategy,
         IReadOnlySet<string>? productionAssemblies = null,
-        ScribeProjectCompilationContext? compilationContext = null)
+        ScribeProjectCompilationContext? compilationContext = null,
+        IScribeBindingRecorder? recorder = null,
+        Action<ScribeBindingObservation?>? observationStateObserver = null)
     {
         var sources = sourceFiles.ToArray();
         var compilations = ScribeProjectCompilationBuilder.Build(sources, compilationContext);
+        ScribeBindingObservation? observation = null;
+        if (recorder is not null)
+        {
+            observation = new ScribeBindingObservation(recorder, compilations);
+        }
+        observationStateObserver?.Invoke(observation);
         var semanticModels = new ScribeSemanticModelProvider();
         foreach (var project in compilations) semanticModels.Add(project.Compilation);
         var callablesBySymbol = new ScribeCallableIndex();
@@ -157,14 +166,42 @@ internal static class ScribeTestSymbolBinder
         foreach (var (callable, symbol) in symbolsByCallable)
         {
             callable.IsProductionSource = IsProductionReader(symbol, productionAssemblies);
-            BindEdges(
-                callable,
-                symbol,
-                callable.SemanticModel,
-                callablesBySymbol,
-                productionAssemblies);
         }
-        LimitProductionTargets(symbolsByCallable, productionAssemblies);
+
+        switch (strategy)
+        {
+            case ScribeBindingStrategy.Eager:
+                foreach (var (callable, symbol) in symbolsByCallable)
+                {
+                    BindEdges(
+                        callable,
+                        symbol,
+                        callable.SemanticModel,
+                        callablesBySymbol,
+                        productionAssemblies,
+                        observation);
+                }
+                LimitProductionTargets(symbolsByCallable, productionAssemblies);
+                break;
+            case ScribeBindingStrategy.Demand:
+                var session = new ScribeDemandBindingSession(
+                    parsed.SelectMany(static source => source.Callables)
+                        .Where(static callable => callable.IsTest),
+                    symbolsByCallable,
+                    productionAssemblies,
+                    (callable, symbol) => BindEdges(
+                        callable,
+                        symbol,
+                        callable.SemanticModel,
+                        callablesBySymbol,
+                        productionAssemblies,
+                        observation),
+                    observation);
+                session.Bind();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null);
+        }
 
         return parsed;
     }
@@ -230,8 +267,10 @@ internal static class ScribeTestSymbolBinder
         IMethodSymbol symbol,
         SemanticModel model,
         ScribeCallableIndex callablesBySymbol,
-        IReadOnlySet<string>? productionAssemblies)
+        IReadOnlySet<string>? productionAssemblies,
+        ScribeBindingObservation? observation)
     {
+        observation?.BindingEdges(callable, symbol);
         var detectProductionRepositoryRead = !IsProductionReader(symbol, productionAssemblies);
         if (callable.IsTest)
         {
@@ -344,7 +383,8 @@ internal static class ScribeTestSymbolBinder
         var candidates = info.CandidateSymbols.OfType<IMethodSymbol>().ToArray();
         if (detectProductionRepositoryRead
             && candidates.Length == 1
-            && IsProductionRepositoryRead(candidates[0], node, model, productionAssemblies))
+            && IsProductionRepositoryRead(
+                candidates[0], node, model, caller.SemanticModels, productionAssemblies))
         {
             caller.BindingUnknownReasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
         }
@@ -369,13 +409,15 @@ internal static class ScribeTestSymbolBinder
         {
             caller.Targets.Add(target);
             if (detectProductionRepositoryRead
-                && IsProductionRepositoryRead(normalized, node, model, productionAssemblies))
+                && IsProductionRepositoryRead(
+                    normalized, node, model, caller.SemanticModels, productionAssemblies))
             {
                 caller.BindingUnknownReasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
             }
         }
         else if (detectProductionRepositoryRead
-                 && IsProductionRepositoryRead(normalized, node, model, productionAssemblies))
+                 && IsProductionRepositoryRead(
+                     normalized, node, model, caller.SemanticModels, productionAssemblies))
         {
             caller.BindingUnknownReasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
         }
@@ -567,141 +609,5 @@ internal static class ScribeTestSymbolBinder
     private static bool IsInsideNameof(SyntaxNode node, SemanticModel model) => node.Ancestors()
         .OfType<InvocationExpressionSyntax>()
         .Any(invocation => model.GetOperation(invocation) is INameOfOperation);
-
-    private static bool IsProductionReader(
-        IMethodSymbol method,
-        IReadOnlySet<string>? productionAssemblies) =>
-        productionAssemblies?.Contains(method.ContainingAssembly.Name) == true;
-
-    private static bool IsProductionRepositoryRead(
-        IMethodSymbol method,
-        SyntaxNode node,
-        SemanticModel model,
-        IReadOnlySet<string>? productionAssemblies) =>
-        IsProductionReader(method, productionAssemblies)
-        && node is InvocationExpressionSyntax invocation
-        && invocation.ArgumentList.Arguments.Any(argument =>
-            IsRepositoryRootExpression(argument.Expression, model));
-
-    internal static bool IsRepositoryRootExpression(
-        ExpressionSyntax expression,
-        SemanticModel model) => IsRepositoryRoot(
-            expression,
-            model,
-            new HashSet<ISymbol>(SymbolEqualityComparer.Default));
-
-    private static bool IsRepositoryRoot(
-        ExpressionSyntax expression,
-        SemanticModel model,
-        HashSet<ISymbol> visited)
-    {
-        if (expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>().Any(invocation =>
-                model.GetSymbolInfo(invocation).Symbol is IMethodSymbol
-                {
-                    Name: "FindRoot",
-                    ReturnType.SpecialType: SpecialType.System_String,
-                }))
-        {
-            return true;
-        }
-
-        if (expression.DescendantNodesAndSelf().OfType<MemberAccessExpressionSyntax>().Any(static member =>
-                member.Name.Identifier.ValueText == "FullPath"
-                && member.Expression is MemberAccessExpressionSyntax
-                {
-                    Name.Identifier.ValueText: "Root",
-                }))
-        {
-            return true;
-        }
-
-        if (expression is not IdentifierNameSyntax identifier
-            || model.GetSymbolInfo(identifier).Symbol is not { } symbol
-            || !visited.Add(symbol))
-        {
-            return false;
-        }
-
-        return symbol switch
-        {
-            ILocalSymbol local => LocalInitializers(local).Any(value =>
-                    IsRepositoryRoot(value, model, visited))
-                || IsMarkerSearchRoot(local, model),
-            IFieldSymbol field => FieldInitializers(field).Any(value =>
-                IsRepositoryRoot(value, model, visited)),
-            IPropertySymbol property => PropertyInitializers(property).Any(value =>
-                IsRepositoryRoot(value, model, visited)),
-            _ => false,
-        };
-    }
-
-    private static IEnumerable<ExpressionSyntax> LocalInitializers(ILocalSymbol local) =>
-        local.DeclaringSyntaxReferences
-            .Select(static reference => reference.GetSyntax())
-            .OfType<VariableDeclaratorSyntax>()
-            .Select(static variable => variable.Initializer?.Value)
-            .Where(static value => value is not null)
-            .Select(static value => value!);
-
-    private static IEnumerable<ExpressionSyntax> FieldInitializers(IFieldSymbol field) =>
-        field.DeclaringSyntaxReferences
-            .Select(static reference => reference.GetSyntax())
-            .OfType<VariableDeclaratorSyntax>()
-            .Select(static variable => variable.Initializer?.Value)
-            .Where(static value => value is not null)
-            .Select(static value => value!);
-
-    private static IEnumerable<ExpressionSyntax> PropertyInitializers(IPropertySymbol property) =>
-        property.DeclaringSyntaxReferences
-            .Select(static reference => reference.GetSyntax())
-            .OfType<PropertyDeclarationSyntax>()
-            .Select(static declaration => declaration.Initializer?.Value)
-            .Where(static value => value is not null)
-            .Select(static value => value!);
-
-    private static bool IsMarkerSearchRoot(ILocalSymbol local, SemanticModel model)
-    {
-        var declaration = local.DeclaringSyntaxReferences
-            .Select(static reference => reference.GetSyntax())
-            .OfType<VariableDeclaratorSyntax>()
-            .FirstOrDefault();
-        var callable = declaration?.Ancestors().FirstOrDefault(static ancestor =>
-            ancestor is BaseMethodDeclarationSyntax or AccessorDeclarationSyntax
-                or LocalFunctionStatementSyntax);
-        if (callable is null
-            || declaration?.Initializer?.Value is not MemberAccessExpressionSyntax initializer
-            || model.GetSymbolInfo(initializer).Symbol is not IPropertySymbol
-            {
-                Name: "BaseDirectory",
-                ContainingType: { } appContext,
-            }
-            || appContext.ToDisplayString() != "System.AppContext")
-        {
-            return false;
-        }
-
-        return callable.DescendantNodes().OfType<WhileStatementSyntax>()
-            .SelectMany(static loop => loop.Condition.DescendantNodesAndSelf()
-                .OfType<InvocationExpressionSyntax>())
-            .Where(invocation => model.GetSymbolInfo(invocation).Symbol is IMethodSymbol
-            {
-                Name: "Exists",
-                ContainingType: { } type,
-            } && type.ToDisplayString() == "System.IO.File")
-            .SelectMany(static invocation => invocation.ArgumentList.Arguments)
-            .SelectMany(static argument => argument.Expression.DescendantNodesAndSelf()
-                .OfType<IdentifierNameSyntax>())
-            .Any(identifier => SymbolEqualityComparer.Default.Equals(
-                model.GetSymbolInfo(identifier).Symbol,
-                local));
-    }
-
-    private static bool IsReflectionDispatch(IMethodSymbol method)
-    {
-        var type = method.ContainingType.ToDisplayString();
-        return type.StartsWith("System.Reflection.", StringComparison.Ordinal)
-            || type == "System.Type" && method.Name.StartsWith("Get", StringComparison.Ordinal)
-            || type == "System.Activator" && method.Name == "CreateInstance";
-    }
 
 }
