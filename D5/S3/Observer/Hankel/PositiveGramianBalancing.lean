@@ -192,4 +192,4 @@ end Coordinates
 #print axioms coordinates_nonempty
 #print axioms Coordinates.gramian_product_charpoly
 
-end D5.S3.Observer/Hankel/PositiveGramianBalancing
+end D5.S3.Observer.Hankel.PositiveGramianBalancing
