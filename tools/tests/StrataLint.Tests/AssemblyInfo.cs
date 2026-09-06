@@ -23,3 +23,4 @@ using Xunit;
 [assembly: TestFramework("StrataLint.TestSupport.TestScratchFramework", "StrataLint.TestSupport")]
 // test-map cache probe payload 1 (2026-09-06): touches a derivation input so SL-003 derives both sides.
 // test-map cache probe payload 1b (synchronize event after the workflow index settled).
+// test-map cache probe payload 2 (2026-09-06): Baseline side should hit the cache saved by the previous push.
