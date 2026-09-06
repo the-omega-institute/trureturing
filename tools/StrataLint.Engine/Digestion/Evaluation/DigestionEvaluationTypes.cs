@@ -22,8 +22,6 @@ internal sealed record DigestionEntryEvaluation(
     bool Deletable,
     ImmutableArray<DigestionGap> Gaps)
 {
-    internal bool StatusAuthorityChanged { get; init; }
-
     internal DigestionEntryEvaluation(
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,

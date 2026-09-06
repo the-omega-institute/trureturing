@@ -14,8 +14,7 @@ internal static partial class CoverAtomCommand
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyList<string> arguments,
-        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>>? applyUpdates = null)
+        IReadOnlyList<string> arguments)
     {
         var options = ParseAlignArguments(arguments);
         var currentRaw = repository.ReadCurrent();
@@ -144,14 +143,7 @@ internal static partial class CoverAtomCommand
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
-        if (applyUpdates is null)
-        {
-            IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
-        }
-        else
-        {
-            applyUpdates(repositoryRoot, currentRaw, ledgerUpdates);
-        }
+        IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
 
         var suffix = $"ledger_changed={changed.ToString().ToLowerInvariant()}\n";
         return new CommandResult(

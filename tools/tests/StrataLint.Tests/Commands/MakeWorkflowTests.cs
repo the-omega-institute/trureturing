@@ -65,7 +65,6 @@ public sealed partial class MakeWorkflowTests
         "deposit",
         "cover",
         "cover-batch",
-        "scribe-seed",
         "quarantine",
         "quarantine-clear",
         "worktree",
