@@ -68,11 +68,35 @@ internal sealed class QuaternaryResponseTableCodingDocument : IScribeDocumentDef
                 Blocks(Paragraph(Text("The first k base-four digits of the golden ratio select one distinguished quaternary response table through the standard pair decoder."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("golden-response-prefix-code"),
+                DeclarationHandle.Create(Prefix + "goldenResponsePrefixCode"),
+                H("Choose one node at each table-tree level"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The distinguished k-row prefix is encoded as one concrete element of Fin(4^k). The coordinate orientation is inherited from Mathlib's explicit radix equivalence."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("golden-response-prefix-digit"),
                 DeclarationHandle.Create(Prefix + "goldenResponsePrefix_digit"),
                 H("Recover each golden digit"),
                 StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Re-encoding a row of the distinguished table returns the corresponding existing golden base-four digit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-response-prefix-cast-succ"),
+                DeclarationHandle.Create(Prefix + "goldenResponsePrefix_castSucc"),
+                H("Successive prefixes form one nested path"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Passing from k to k+1 preserves every old row. The golden digit sequence therefore selects one path through the rooted four-ary tree whose level k contains all 4^k response tables."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-response-prefix-code-lt-capacity"),
+                DeclarationHandle.Create(Prefix + "goldenResponsePrefixCode_lt_capacity"),
+                H("The selected node remains inside the full capacity"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The selected level-k node is one of the 4^k possible tables, so its code lies below the same boundary whose Zeckendorf representation is fed to the golden DFAO."))),
                 DescribeRole.Theorem))));
 }
