@@ -69,7 +69,7 @@ internal sealed class CarryStepConfluenceDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Pinned Mathlib and D5 searches found generic closure and Church-Rosser infrastructure, but no theorem for this raw carry relation. The result therefore reuses those interfaces and proves the domain-specific global property requested by the paper review."))),
                 DescribeRole.Theorem)),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Digit/Normalize"))]));
+        []));
 
     private static Formula Path(Formula source, Formula target) =>
         Call("ReflTransGen", F.Id("CarryStep"), source, target);

@@ -88,6 +88,11 @@ theorem ChargedReduces.toReflTransGen {r s : RawDigits} {z : ℤ}
   | refl => exact Relation.ReflTransGen.refl
   | tail _ step ih => exact ih.tail step.toCarryStep
 
+/- Library-first note: `betaDigits_add`, `betaDigits_single`, and `phi_pow_carry` restate
+`private` declarations of the frozen module `D5/S1/Deficit/DeficitInteger.lean`
+(lines 64, 71, 27 at base `4007e6dbc0`). Private constants are not importable and the
+frozen module cannot be edited, so the three short proofs are repeated here verbatim
+in intent; they are not new mathematics. -/
 private theorem betaDigits_add (r s : RawDigits) :
     betaDigits (r + s) = betaDigits r + betaDigits s := by
   classical
@@ -251,7 +256,14 @@ decreasing_by
   apply carryPass_step
   assumption
 
-/-- The analytic golden-addition deficit equals the integer golden Beatty coboundary. -/
+/-- The analytic golden-addition deficit equals the integer golden Beatty coboundary.
+
+Library-first note: this is a public restatement of the `private` theorem
+`deficit_eq_beattyDeficit` in the frozen module
+`D5/S1/Deficit/FixedModulusNoncongruence.lean` (line 97 at base `4007e6dbc0`).
+The public handle is what the charged-path results below consume; the proof
+repeats the frozen argument because a private constant cannot be applied from
+another module and the frozen module cannot be edited. -/
 theorem deficit_eq_beattyDeficit (v₁ v₂ : ℕ) :
     deficit v₁ v₂ = (beattyDeficit v₁ v₂ : ℝ) := by
   have hshift (v : ℕ) : (displacementDecode v : ℤ) = goldenShift v :=
