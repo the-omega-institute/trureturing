@@ -1,0 +1,12 @@
+**第一，精确结构临界可以是秩的跳变。**
+
+$$
+\boxed{
+d_{\min}
+=
+\sum_\lambda\operatorname{rank}R_\lambda
+}
+$$
+
+说明某个新谱方向什么时候真正进入未来预测。
+

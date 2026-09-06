@@ -1,0 +1,63 @@
+## 1. 完整 ξ 的边界响应
+
+令
+
+$$
+s=\frac1{1-r}\to+\infty.
+$$
+
+由 ξ 的定义，
+
+$$
+\frac{\xi'(s)}{\xi(s)}
+=
+\frac1s+\frac1{s-1}
+-\frac12\log\pi
++\frac12\psi(s/2)
++\frac{\zeta'(s)}{\zeta(s)}.
+$$
+
+利用 Gamma 对数导数的渐近展开，
+
+$$
+\psi(s/2)=\log(s/2)-\frac1s+O(s^{-2}),
+$$
+
+得到
+
+$$
+\boxed{
+\mathcal F_\xi(r)
+=
+\frac1{c_0}
+\log\frac1{2\pi(1-r)}
++O(1-r).
+}
+\tag{30}
+$$
+
+这里是无条件的正实轴渐近式。([DLMF][5])
+
+因此
+
+$$
+\boxed{
+\mathcal S_\xi(r)\to+1,
+}
+$$
+
+而且
+
+$$
+\boxed{
+1-\mathcal S_\xi(r)
+\sim
+\frac{2c_0}{\log[1/(1-r)]}.
+}
+\tag{31}
+$$
+
+它接近边界的速度只是对数级。
+
+这仍不能证明圆盘内整体收缩；沿一条实径向合法，不等于全部复方向合法。
+
