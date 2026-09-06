@@ -225,6 +225,50 @@ theorem companion_trace_hankel_quadratic_identity {d : Nat}
       intro j _
       ring
 
+/-- A nonreal conjugate pair in a conjugation-stable finite root family
+produces a real coefficient vector on which the Newton--Hankel quadratic form
+is strictly negative. The vector is obtained by interpolation with values
+`i`, `-i`, and zero on the remaining distinct roots. -/
+theorem companion_trace_hankel_hermite_sylvester_bridge {d : Nat}
+    (roots : Fin d → Complex)
+    (hconj : ∀ w, w ∈ Finset.univ.image roots ↔
+      conj w ∈ Finset.univ.image roots)
+    (z : Complex) (hzmem : z ∈ Finset.univ.image roots)
+    (hz : conj z ≠ z) :
+    ∃ coefficients : Fin d → Real,
+      dotProduct coefficients (newtonHankel roots *ᵥ coefficients) < 0 := by
+  classical
+  rcases exists_real_conjugate_pair_interpolant roots z hzmem hz hconj with
+    ⟨coefficients, heval⟩
+  refine ⟨coefficients, ?_⟩
+  rw [companion_trace_hankel_quadratic_identity]
+  rcases Finset.mem_image.mp hzmem with ⟨j, _, hj⟩
+  have hd : 0 < d := by
+    apply Nat.pos_of_ne_zero
+    intro hdzero
+    subst d
+    exact Fin.elim0 j
+  have hnonpos : ∀ k,
+      (vectorPolynomialValue coefficients (roots k) ^ 2).re ≤ 0 := by
+    intro k
+    rw [heval (roots k) (Finset.mem_image_of_mem roots (Finset.mem_univ k))]
+    by_cases hkz : roots k = z
+    · simp [conjugatePairValues, hkz]
+    by_cases hkcz : roots k = conj z
+    · simp [conjugatePairValues, hkz, hkcz]
+    · simp [conjugatePairValues, hkz, hkcz]
+  have hjneg :
+      (vectorPolynomialValue coefficients (roots j) ^ 2).re < 0 := by
+    rw [heval (roots j) (Finset.mem_image_of_mem roots (Finset.mem_univ j))]
+    simp [conjugatePairValues, hj]
+  have hsum : ∑ k, (vectorPolynomialValue coefficients (roots k) ^ 2).re < 0 := by
+    have hlt :
+        ∑ k, (vectorPolynomialValue coefficients (roots k) ^ 2).re < ∑ _k : Fin d, 0 :=
+      Finset.sum_lt_sum (fun k _ ↦ hnonpos k) ⟨j, Finset.mem_univ j, hjneg⟩
+    simpa using hlt
+  exact div_neg_of_neg_of_pos hsum (by exact_mod_cast hd)
+
 #print axioms companion_trace_hankel_quadratic_identity
+#print axioms companion_trace_hankel_hermite_sylvester_bridge
 
 end D5.S3.Constants.NewtonHankelRealRootCriterion
