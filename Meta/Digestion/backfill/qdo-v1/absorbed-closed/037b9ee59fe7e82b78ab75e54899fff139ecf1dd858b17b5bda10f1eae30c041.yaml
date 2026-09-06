@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletion.observation_refinement_completion
-      definition_sha256: sha256:011a6df62fd3468120fbb99d6b5150417e3a623d84d3d61f3b634a3524615d7f
-      emission_sha256: sha256:797a43274e559b912b7b21368a804ee29e808585755ea2590c20a7be4d1028c4
+      definition_sha256: sha256:49e9a3c97bdcd5315d09f8676ac3a32514dc3c3d73fbaa1990c360a19f71b3fc
+      emission_sha256: sha256:f375e1db19293c292aa40a90e0674e81381b81d72fba6fff0242757c06478e4d
   unresolved_subitems: []

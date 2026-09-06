@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal
-      definition_sha256: sha256:46682f25629d83436050a044df143dc982bfd68938fbae67a1a74c80687283bc
-      emission_sha256: sha256:76c1b3c14cd89a5cc23e315964b95a98c5f269b8179d90c48863f5db80a72dda
+      definition_sha256: sha256:6de06a32c8d8c80aefb417e4c86b02bae8e73234c819a050e858d602cfbc4261
+      emission_sha256: sha256:bb0f48429b927640346ab944fe50eba68b1da075a6ba83ce02e03390127d7905
   unresolved_subitems: []

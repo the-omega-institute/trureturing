@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/Observer/ArithmeticTomography/PrimeObservationDepthGeometry.horizontal_vertical_bit_cost_lower_bounds
-      definition_sha256: sha256:7384008870d1ced0cdb690e68ac825ac18332d6c00acbbfe58ee920d88d389a4
-      emission_sha256: sha256:091de010fd2ede9cdf26b84765d5ff4343a61aa9a6b8df6ca62a4975a497557e
+      definition_sha256: sha256:cd420ec05a583ae9b84154ea495aa80d8bcb9d0905ced9fcfff44ac40e6b2deb
+      emission_sha256: sha256:d89d38cef2fbbc3a2b30f24965b8f9a21f71bb18b817bb69d31c854f74a55a75
   unresolved_subitems: []

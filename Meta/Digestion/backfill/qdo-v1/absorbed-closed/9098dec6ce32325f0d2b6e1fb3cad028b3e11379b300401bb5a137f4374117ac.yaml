@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/Observer/Separation/CongruenceKernel.congruence_kernel_laws
-      definition_sha256: sha256:1cfcaab8ec6c5d2e5b9ac542d21a9ca88a8b5a73d9dc438b239c08bc55c03cad
-      emission_sha256: sha256:9defb23d4681802980f692a562e7dce00695ccf20f2e2d56237d70ee5ecd11d7
+      definition_sha256: sha256:ff7a9fc1e217f207323acf02995fde6c03414a1a872c9a6d0e778b83164911c4
+      emission_sha256: sha256:b095f2277648709cedc3762f4c2ebba0f7acb63a0b529543c6e6183e66778997
   unresolved_subitems: []

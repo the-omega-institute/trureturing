@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.noninjective_layer_cannot_recover
-      definition_sha256: sha256:5c88f58e42436774d1a220baa66e7b321c136d1b11120cdad983b5e73156ccc5
-      emission_sha256: sha256:44b53d17bd59c12339fc14dc9c054607d1afc210cdf5d41333e20e526ea11837
+      definition_sha256: sha256:8470cc1928f6e8154439e216f3d40cdf510c0c3fd8f9beae4d272a5529df110b
+      emission_sha256: sha256:0957da827b080787d2f35ec8391ead38ecd00a10d55251223c6df61f2ec59c9b
   unresolved_subitems: []

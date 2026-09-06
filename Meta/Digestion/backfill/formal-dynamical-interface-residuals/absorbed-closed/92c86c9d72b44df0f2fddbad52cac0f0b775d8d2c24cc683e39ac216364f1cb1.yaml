@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.descent_defect_zero_iff_strongly_lumpable
-      definition_sha256: sha256:b3a95d1a0a35692b8bc6f8445da24d4032af73a802ac090deef2677be4578aa4
-      emission_sha256: sha256:89d6e8845e032e58ce798d2277815709c3877315be44d801e0749dc1230d9ae1
+      definition_sha256: sha256:4c5b234a63f6e82e1dd517dd4ae93bf22c81687b27de33cf2d9e327ad162c271
+      emission_sha256: sha256:1d69a06498e90a2fb35154131cc33ae2ea357383a6fc0a0253bac77140c73e5f
   unresolved_subitems: []

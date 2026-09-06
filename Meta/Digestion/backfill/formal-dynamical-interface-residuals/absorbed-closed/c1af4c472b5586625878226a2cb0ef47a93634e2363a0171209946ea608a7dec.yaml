@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.finite_window_minimal_sufficiency
-      definition_sha256: sha256:38019b6370991e3b13878530abcc26a8c8a76da1f9fab0fcb556d5e25c9d4954
-      emission_sha256: sha256:bef44d1e22b5a3c7e6e9c44402eb24e8e8239f268cbe786829a9775db43037a5
+      definition_sha256: sha256:3f2d773d264acb3153e5a11bb2aee2e0a76375688c41a862f98c58b1d74c700a
+      emission_sha256: sha256:6427aa67fa2d469d946d4118008b38291ac82603f7186c4faa56d83f33663eb2
   unresolved_subitems: []

@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.joint_faithfulness_tfae
-      definition_sha256: sha256:385c05f342fee54bbbca59430bba13605c53e3d7ac7ac8d3d3dc0da638f25acb
-      emission_sha256: sha256:4050ef966a22dd1b77595dbdccb88d1522c89ef0e6947b3c6b75aec38c9527d0
+      definition_sha256: sha256:e72f9b85d3915768e416dbda2066d032d108e2232ef05aaad3166fa353683f89
+      emission_sha256: sha256:0a03b353a41c5e672b95845b5bf88da1d018511cb68c87ba8f427d15b8121aaa
   unresolved_subitems: []

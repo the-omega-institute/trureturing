@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/Factorization/Galois/GaloisPrimeObserver.frobenius_observation_has_infinite_fiber
-      definition_sha256: sha256:f0545d8d91ed5c230b52bd0a581c00903305da3fc3d546f426009f74654fec98
-      emission_sha256: sha256:f21ccd971033f8c628bb430f0eadfca377a520c95c5c8e4b082574408c02c594
+      definition_sha256: sha256:cb96c1c1ec1c6db1ac190d16bc618a49aeb1c75415cefc11013a917138b5ebe1
+      emission_sha256: sha256:c27a2d4415a2c761db8699fad654aff846cb0ebded15074a5832d800d230dbe3
   unresolved_subitems: []

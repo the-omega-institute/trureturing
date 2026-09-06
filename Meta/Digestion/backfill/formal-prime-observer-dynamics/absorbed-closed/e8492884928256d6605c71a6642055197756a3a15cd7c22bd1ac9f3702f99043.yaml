@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/Factorization/PrimePowers/PrimeBudgetReadoutDichotomy.horizontal_vertical_dichotomy
-      definition_sha256: sha256:479df2772bf63157998879b05b4d62d61cb46e44a2d80dba35f372eaca2b532f
-      emission_sha256: sha256:9f534e4f0362a7781b46a6166115f5506f44364f982652c21478bbd3c1c61840
+      definition_sha256: sha256:1bdebb18c68f3f4ccb53a6ad0864ca009c2e93b8b22a54a7f03f3c9b7909825f
+      emission_sha256: sha256:0a0e78a7f9c0953fd5095d217da3f7418a033c90976a3d219ca8000c79ec03b8
   unresolved_subitems: []

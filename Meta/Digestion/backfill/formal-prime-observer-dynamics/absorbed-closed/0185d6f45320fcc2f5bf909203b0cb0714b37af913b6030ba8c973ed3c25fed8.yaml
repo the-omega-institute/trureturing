@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.controlled_behavior_universal_property
-      definition_sha256: sha256:84e9d6253ea89ed7e70205fb1eb6e7e559835088b6effc88766bb3cd949eb798
-      emission_sha256: sha256:0071642ad09e291311406c551fd03fb0f6792a8f2f0b3ca08356b412e76ed2ee
+      definition_sha256: sha256:a70cabb48756876fb43720eacf342e70d244b2ce16070630bfdbdc9e41b3b30e
+      emission_sha256: sha256:93a651a5acbc87b186a70711d9bbfde01d5c66cc07048c8bd5fe2324e45ba071
   unresolved_subitems: []
