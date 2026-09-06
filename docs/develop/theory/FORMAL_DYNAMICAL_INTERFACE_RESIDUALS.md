@@ -1819,7 +1819,7 @@ a,&\ell_n=1,\\b,&\ell_n=0.
 
 ## 定理 20.1（固定状态域上的完全接口）
 
-若 \(q:X\to B\) 单射，则对任意普通目标 \(T:X\to Y\)，\(T\) 沿 \(q\) 因子化。
+若 \(q:X\to B\) 单射，则对任意普通目标 \(T:X\to Y\)，\(T\) 沿 \(\q\) 因子化。
 
 ### 证明
 
@@ -2494,7 +2494,7 @@ F=\mathcal OTE,\qquad G=\mathcal ZS^TE.
 \[
 \mathcal Hu=0\iff\forall i,\ \langle r_i,u\rangle=0.
 \]
-`nonzero_squared_singular_value` 还证明：若非零 \(\u\) 满足 \(\mathcal H^*\mathcal Hu=\lambda u\) 且 \(\lambda\ne0\)，则存在 \(i\) 使 \(\lambda=\sigma_i^2\)。因此没有额外的非零奇异方向，重复权重则由对应的正交模态保留重数。
+`nonzero_squared_singular_value` 还证明：若非零 \(u\) 满足 \(\mathcal H^*\mathcal Hu=\lambda u\) 且 \(\lambda\ne0\)，则存在 \(i\) 使 \(\lambda=\sigma_i^2\)。因此没有额外的非零奇异方向，重复权重则由对应的正交模态保留重数。
 
 `constructed_hankel_schmidt` 将实际 Gramian、构造坐标、正交性、双向奇异向量方程、全部输入上的展开、核刻画和特征多项式连成一个原系统终点。现有有限维 `hankel_gramian_singular_values` 同时被 `constructed_core_singular_values` 用实际平方根实例化。有限核心与上述无限算子的证明分别保留，没有将有限窗口的奇异值直接认作全局谱。
 
