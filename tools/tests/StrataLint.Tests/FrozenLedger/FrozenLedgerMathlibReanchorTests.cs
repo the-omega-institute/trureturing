@@ -365,7 +365,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void MathlibReanchorRejectsReplacementSetWithUnchangedExtraModule()
+    public void MathlibReanchorAllowsClosureDescendantWithUnchangedStatementIdentity()
     {
         var result = ValidateMathlibReanchor(
             baseModules: [Module("A"), Module("B", imports: ["A"])],
@@ -380,7 +380,73 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A", "B"],
             environment: ReanchorEnvironment.PinUpgrade);
 
+        var recognition = Assert.IsType<FrozenLedgerIncrementalReplacementRecognition>(
+            result.Recognition);
+        Assert.Equal(
+            [RepoPathFor("A")],
+            recognition.ChangedStatementModulePaths.OrderBy(static path => path.Value));
+        Assert.Equal(
+            [RepoPathFor("A"), RepoPathFor("B")],
+            recognition.ReanchoredModulePaths.OrderBy(static path => path.Value));
+        Assert.True(result.Authorized);
+    }
+
+    [Fact]
+    public void MathlibReanchorRejectsClosureWithAnUnrelatedExtraModule()
+    {
+        var baseModules = new[]
+        {
+            Module("A"),
+            Module("B", imports: ["A"]),
+            Module("C"),
+        };
+        var candidateModules = new[]
+        {
+            ModuleWithReport(
+                "A",
+                "theorem a : True := by trivial\n",
+                statementMaterial: "drifted A"),
+            Module("B", imports: ["A"]),
+            Module("C"),
+        };
+        var baseCatalog = BuildCatalog(baseModules);
+        var candidateCatalog = BuildCatalog(candidateModules);
+        var candidateC = candidateCatalog.ByPath[RepoPathFor("C")];
+        var extraStatement = StatementId.Create(Sha256("unrelated replacement C"));
+        var extraC = candidateC with
+        {
+            StatementId = extraStatement,
+            FrozenNodeId = FrozenContentAddress.ComputeFrozenNodeId(
+                candidateC.RepoPath,
+                extraStatement,
+                candidateC.PrerequisiteFrozenNodeIds),
+        };
+        var candidateEventCatalog = ReplaceCatalogMaterial(candidateCatalog, extraC);
+        var baseCEvent = LedgerFileForModule(EventFiles(baseCatalog), "C");
+        var replacementCEvent = LedgerFileForModule(EventFiles(candidateEventCatalog), "C");
+        Assert.NotEqual(baseCEvent.Path, replacementCEvent.Path);
+
+        var closureOnly = ValidateMathlibReanchorWithCatalogs(
+            baseCatalog,
+            candidateCatalog,
+            baseModules,
+            candidateModules,
+            replacedModules: ["A", "B"],
+            environment: ReanchorEnvironment.PinUpgrade,
+            candidateEventCatalog: candidateEventCatalog);
+        Assert.NotNull(closureOnly.Recognition);
+
+        var result = ValidateMathlibReanchorWithCatalogs(
+            baseCatalog,
+            candidateCatalog,
+            baseModules,
+            candidateModules,
+            replacedModules: ["A", "B", "C"],
+            environment: ReanchorEnvironment.PinUpgrade,
+            candidateEventCatalog: candidateEventCatalog);
+
         Assert.Null(result.Recognition);
+        Assert.False(result.Authorized);
     }
 
     [Fact]
