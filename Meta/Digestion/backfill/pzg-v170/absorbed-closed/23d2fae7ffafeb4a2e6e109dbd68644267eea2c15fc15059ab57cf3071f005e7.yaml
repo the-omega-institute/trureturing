@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:23d2fae7ffafeb4a2e6e109dbd68644267eea2c15fc15059ab57cf3071f005e7
+  normalized_sha256: sha256:23d2fae7ffafeb4a2e6e109dbd68644267eea2c15fc15059ab57cf3071f005e7
+cas_ref: sha256:23d2fae7ffafeb4a2e6e109dbd68644267eea2c15fc15059ab57cf3071f005e7
+coverage_gids:
+  - gid: D5/S1/Digit/OdiousMajorityDyadicSlice.annihilating_identity_and_D_recurrence
+    target_statement_id: sha256:21492227a84e386bc4da25b9512cdee8d746560e4066ec366943ba571d30ae29
+receipts:
+  scribe:
+    - gid: D5/S1/Digit/OdiousMajorityDyadicSlice.annihilating_identity_and_D_recurrence
+      definition_sha256: sha256:c79dda2b9986479c5d8203f4014df8e4397ac44b299b2594d91648348262e39b
+      emission_sha256: sha256:b3fb336e16ea3899eeda90f46a2578d0ca7b83bf2301d43f454172d1ec68044d
+  unresolved_subitems: []
