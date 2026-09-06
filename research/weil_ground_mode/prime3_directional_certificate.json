@@ -1,0 +1,93 @@
+{
+  "source_sha256": "4343355f261f800e77b518244946b311eae3a656e79dcf9b6421d901382dfc4b",
+  "arithmetic_dependency_sha256": "8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0",
+  "exact_gram_sha256": "7f4e1049624807432efe96a68fe63babbc1c3bd37f2d40600a4cddadbddb85a9",
+  "scale": "a=log(3)/2",
+  "N": 64,
+  "M": 32768,
+  "candidate": "unchanged dyadic vector from pinned arithmetic source",
+  "ground_lower": "11/200000000",
+  "candidate_upper": "560909/10000000000000",
+  "orthogonal_threshold": "1/200000",
+  "candidate_rayleigh_interval": "[0.0000000560907835275850890874743114995237658309895045623690485910183, 0.0000000560908238555741257344559807084299824772009075978314287922534]",
+  "projective_distance_sq_upper": "10909/49450000",
+  "weighted_gram_error": "4/152587890625",
+  "unweighted_gram_error": "1/10000000000",
+  "second_jet_scalar_tail": "9/10000000000000",
+  "shells": [
+    {
+      "first": 65,
+      "last": 128,
+      "energy_lower": "1879483/524288",
+      "inverse_weight": "1638400000/5873376183"
+    },
+    {
+      "first": 129,
+      "last": 256,
+      "energy_lower": "4480485/1048576",
+      "inverse_weight": "3276800000/14001499241"
+    },
+    {
+      "first": 257,
+      "last": 512,
+      "energy_lower": "2602323/524288",
+      "inverse_weight": "1638400000/8132251183"
+    },
+    {
+      "first": 513,
+      "last": 1024,
+      "energy_lower": "5930133/1048576",
+      "inverse_weight": "3276800000/18531649241"
+    },
+    {
+      "first": 1025,
+      "last": 2048,
+      "energy_lower": "6656285/1048576",
+      "inverse_weight": "3276800000/20800874241"
+    },
+    {
+      "first": 2049,
+      "last": 4096,
+      "energy_lower": "3691385/524288",
+      "inverse_weight": "1638400000/11535569933"
+    },
+    {
+      "first": 4097,
+      "last": 8192,
+      "energy_lower": "8109421/1048576",
+      "inverse_weight": "3276800000/25341924241"
+    },
+    {
+      "first": 8193,
+      "last": 16384,
+      "energy_lower": "8836155/1048576",
+      "inverse_weight": "3276800000/27612967991"
+    },
+    {
+      "first": 16385,
+      "last": 32768,
+      "energy_lower": "9562931/1048576",
+      "inverse_weight": "3276800000/29884142991"
+    }
+  ],
+  "far_energy_after_shift": "502427869/51200000",
+  "exact_binary_accumulator_regressions": 34,
+  "disk_center": "2827/200",
+  "disk_radius": "1/250",
+  "low_constrained_inverse_energy": "[0.47637177809664741521326605669885193729981060369378613449074, 0.536804140994437501163281166492576116402427256258074156986724]",
+  "entire_high_observation_energy": "[0.000000455293098199416123054060203896045873642156133582671722793687, 0.000000460198577057975022010130060765278122600404388475213386184717]",
+  "uniform_sensitivity_interval": "[0.476372233389745614629389110759055833345684245849919717157731, 0.536804601193014559138303176622636881680549856662462632205734]",
+  "uniform_ground_fourier_error": "[0.0000227963696540671469038636793861044908812114598929543531335332, 0.000024199176420726792630313959830417978537624248507724161560647]",
+  "largest_dual_tail_component_display": 1.9940536921899743e-10,
+  "candidate_value_at_center": "[0.00000230409341047828767885455485794595003969607614024476021125581, 0.00000230409341047828767885455485794595003969607614024483808618568]",
+  "candidate_derivative_at_center": "[0.010101660271669813924580643678456760716696482575546020202982, 0.0101016602716698139245806436784567607166964825755460202933104]",
+  "affine_boundary_floor": "[0.0000381025476762009680194680198558810928270898541619392427249864, 0.0000381025476762009680194680198558810928270898541619393209632237]",
+  "candidate_taylor_remainder": "[0.00000113399298357408518141525046071220063349253950552757483392099, 0.0000011339929835740851814152504607122006334925395055275748341349]",
+  "rouche_strict_margin": "[0.000012769378271900090207738809564750913655973066148687506330185, 0.0000141721850385597359341890900090644013123858547634573929958473]",
+  "zero_count": "Exactly one zero, counted with multiplicity, in each disk around +/-2827/200 of radius 1/250. The zero is real and simple by evenness, conjugation and uniqueness.",
+  "scope": "Actual fixed-window projectively normalized ground transform via paper operator/domain and Schur bridges. Not a Xi zero certificate, not an unbounded-scale limit, and not a Lean kernel replay.",
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "elapsed_seconds": 17.21582841873169,
+  "status": "directed interval, exact integer Gram, exact endpoint sums and strict Rouche inequality passed"
+}
