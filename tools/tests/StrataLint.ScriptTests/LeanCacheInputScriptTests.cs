@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
+using FixtureFile = StrataLint.TestSupport.TemporaryFileSystem.File;
 
 namespace StrataLint.Tests;
 
@@ -203,7 +204,7 @@ public sealed class LeanCacheInputScriptTests
                 assets = new[]
                 {
                     new { name = "lean-build.tgz", digest = "sha256:" + archiveSha },
-                    new { name = "manifest.txt", digest = "sha256:" + Hash(ScriptHarnessScratch.ReadScratchText(Path.Combine(payload, "manifest.txt"))) },
+                    new { name = "manifest.txt", digest = "sha256:" + Hash(FixtureFile.ReadAllText(Path.Combine(payload, "manifest.txt"))) },
                 },
             }));
             WriteStub(Path.Combine(bin, "gh"), """
@@ -254,7 +255,7 @@ public sealed class LeanCacheInputScriptTests
         internal string ExpectedConfig => HashManifest(["lean-toolchain", "lake-manifest.json", "lakefile.toml", "lakefile.lean"]);
         internal string Tag => $"lean-cache-v1-leanprover-lean4-v4-31-0-{ExpectedConfig[..16]}-{ExpectedSources[..16]}";
         internal string[] LakeCalls => ScriptHarnessScratch.ReadRecordedCalls(lakeCalls);
-        internal string PublishedManifest => ScriptHarnessScratch.ReadScratchText(publishedManifest);
+        internal string PublishedManifest => FixtureFile.ReadAllText(publishedManifest);
 
         internal void Write(string path, string text)
         {
