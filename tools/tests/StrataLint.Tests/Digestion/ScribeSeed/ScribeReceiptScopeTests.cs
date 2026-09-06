@@ -75,4 +75,30 @@ public sealed class ScribeReceiptScopeTests
             result.Output,
             StringComparison.Ordinal);
     }
+
+    [Fact]
+    public void DigestStatusHarmlessTargetChangeDoesNotPromoteHistoricalDeclarationReferenceDebt()
+    {
+        var fixture = ReceiptApplicabilityFixture.Create(waived: true);
+        ReceiptApplicabilityFixture.Receipts(fixture, 1);
+        fixture.Baseline = fixture.Document;
+        Assert.True(fixture.Verified.TryGet(ScribeSeedFixture.ModuleGid, out var emission));
+        fixture.Verified = VerifiedScribeEmissions.Create([emission]);
+        var changes = RawChangeSet.Create([ScribeSeedFixture.ModuleGid + ".lean"]);
+        var verifier = new FakeScribeEmissionVerifier(fixture.Verified);
+
+        var result = DigestStatusCommand.Run(
+            fixture.Gateway(changes),
+            new FakeLeanReportSource(fixture.Inputs.Report),
+            verifier,
+            ["--base", "baseline"],
+            FakeAtomHistorySource.ForEntries([]),
+            new DigestAgeClock());
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("DIGEST_STATUS_INVALID", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            verifier.LastChanges!.Paths,
+            static path => path.Value == ScribeSeedFixture.ModuleGid + ".lean");
+    }
 }

@@ -100,12 +100,15 @@ internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verifi
 {
     internal int CallCount { get; private set; }
 
+    internal RawChangeSet? LastChanges { get; private set; }
+
     public VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
         RawChangeSet? changes = null)
     {
         CallCount++;
+        LastChanges = changes;
         return verification
             ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
     }

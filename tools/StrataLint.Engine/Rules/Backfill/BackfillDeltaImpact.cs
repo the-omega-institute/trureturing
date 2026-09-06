@@ -234,8 +234,13 @@ internal static class BackfillDeltaImpactResolver
         catch (Exception exception) when (
             exception is FormatException or InvalidOperationException)
         {
-            // Frozen-state shape and the Lean report have their own admission owners. An
-            // invalid authority has no comparable statement value for SL-016 to propagate.
+            // Keep the candidate edges in scope so their applicability classifier reports
+            // the unreadable authority instead of turning a classifier failure into no judgment.
+            foreach (var dependency in candidates.SelectMany(static item => item.Value))
+            {
+                affectedEntryPaths.Add(dependency.EntryPath);
+            }
+
             return;
         }
 

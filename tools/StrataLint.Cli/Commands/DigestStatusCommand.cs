@@ -103,7 +103,6 @@ internal static class DigestStatusCommand
 
             var leanReport = leanReportSource.Load(snapshot);
             var lean = ValidateLean(snapshot, leanReport);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(snapshot, leanReport, changes);
             var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
             BackfillInventoryDocument? baselineDocument = null;
             RepositorySnapshot? baselineSnapshot = null;
@@ -118,14 +117,19 @@ internal static class DigestStatusCommand
                 leanReport,
                 document,
                 changes);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
+                snapshot,
+                leanReport,
+                receiptGateScope.Changes);
 
             var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
             bool IsBaseFactAffected(string path) =>
                 BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
+            var casChanges = DigestionEvaluationScopes.ResolveChanges(scope, changes);
             var casEvaluation = DigestionCasStore.Evaluate(
                 document,
                 snapshot,
-                DigestionEvaluationScopes.ResolveChanges(scope, changes),
+                casChanges,
                 IsBaseFactAffected);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 scope,
@@ -136,7 +140,8 @@ internal static class DigestStatusCommand
                 baselineDocument,
                 baselineSnapshot: baselineSnapshot,
                 casEvaluation: casEvaluation,
-                changes: changes,
+                changes: receiptGateScope.Changes,
+                casChanges: casChanges,
                 isBaseFactAffected: IsBaseFactAffected,
                 projectedStatusChanges: changes,
                 receiptGateChanges: receiptGateScope.Changes,
@@ -213,20 +218,22 @@ internal static class DigestStatusCommand
             leanReport,
             document,
             changes);
+        var casChanges = DigestionEvaluationScopes.ResolveChanges(scope, changes);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             scope,
             document,
             snapshot,
             ValidateLean(snapshot, leanReport),
-            scribeEmissionVerifier.Verify(snapshot, leanReport, changes),
+            scribeEmissionVerifier.Verify(snapshot, leanReport, receiptGateScope.Changes),
             BackfillInventoryLoader.LoadBaseline(baseline),
             baselineSnapshot: baseline,
             casEvaluation: DigestionCasStore.Evaluate(
                 document,
                 snapshot,
-                DigestionEvaluationScopes.ResolveChanges(scope, changes),
+                casChanges,
                 IsBaseFactAffected),
-            changes: changes,
+            changes: receiptGateScope.Changes,
+            casChanges: casChanges,
             isBaseFactAffected: IsBaseFactAffected,
             projectedStatusChanges: changes,
             receiptGateChanges: receiptGateScope.Changes,

@@ -177,6 +177,27 @@ public sealed partial class Sl016WakeupTests
         }
     }
 
+    [Fact]
+    public void MalformedChangedAuthorityRemainsBlockingAtSl016Admission()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var targetPath = targetGid + ".lean";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        var statePath = FrozenStatePath.FromModulePath(RepoPath.CreateKnown(targetPath)).Value;
+        fixture.Files[statePath] = "{}";
+        var context = fixture.Build(RawChangeSet.Create([statePath]));
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(context)).Capability;
+
+        var diagnostic = Assert.Single(completed.Diagnostics, static finding =>
+            finding.RuleId == RuleId.CreateKnown(16)
+            && finding.Message.Contains("scribe-applicability-invalid", StringComparison.Ordinal));
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+    }
+
     private static RuleEvaluationContext MissingDeclarationReferenceContext(bool definitionChanged)
     {
         const string documentGid = "D5/S0/Carrier/BackfillTarget";
