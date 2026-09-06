@@ -28,7 +28,7 @@ open D5.S3.ConceptDynamics.PartialIdentification.QuaternaryResponseTableCoding
 
 /-- A deterministic latent generator covers every positive-mass atom of a law. -/
 def SupportsLaw
-    {State Table : Type*}
+    {State Table : Type*} [Fintype Table]
     (law : FiniteResponseLaw Table) (generator : State → Table) : Prop :=
   ∀ table, law.mass table ≠ 0 → ∃ state, generator state = table
 
