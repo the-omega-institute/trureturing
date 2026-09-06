@@ -137,11 +137,6 @@ internal static partial class DigestionStatusEvaluator
             .Where(static group => group.Count() == 1)
             .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
 
-        if (baselineDocument is not null)
-        {
-            RequireScribeReceiptsForCoverageDelta(entries, baselineEntries, findings);
-        }
-
         var states = truthStates ?? LeanTruthStates.Resolve(snapshot, lean);
         var genreChecks = document.RequireDigestionSources()
             .ToDictionary(
@@ -178,6 +173,8 @@ internal static partial class DigestionStatusEvaluator
                 statusAuthorityChangedAtomIds.Contains(entry.AtomId),
                 findings);
         }).ToArray();
+        RequireScribeReceiptsForCoverageDelta(
+            work, statusAuthorityChangedAtomIds, baselineEntries, baselineDocument is not null, findings);
         DeriveMigration(work);
         RequireDecompositionBeforeNewAbsorption(
             work,
@@ -279,6 +276,11 @@ internal static partial class DigestionStatusEvaluator
                 gaps)
             {
                 StatusAuthorityChanged = item.StatusAuthorityChanged,
+                ReceiptObservations = item.ReceiptApplicabilities
+                    .Where(static pair => pair.Value.ObservationCode is not null)
+                    .OrderBy(static pair => pair.Key, StringComparer.Ordinal)
+                    .Select(static pair => new DigestionGap(pair.Value.ObservationCode!, pair.Key, DigestionGapSeverity.NonFatal))
+                    .ToImmutableArray(),
             });
         }
 
@@ -312,6 +314,7 @@ internal static partial class DigestionStatusEvaluator
         var structured = VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var edgeValidations = new Dictionary<string, CurrentEdgeValidation>(StringComparer.Ordinal);
+        var receiptApplicabilities = new Dictionary<string, ReceiptApplicability>(StringComparer.Ordinal);
         foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
         {
             CurrentEdgeValidation edge;
@@ -337,6 +340,7 @@ internal static partial class DigestionStatusEvaluator
                     $"current edge GID {gidText} has no readable frozen statement index: {exception.Message}");
             }
             edgeValidations.Add(gidText, edge);
+            receiptApplicabilities.Add(gidText, ClassifyReceipt(gidText, edge, snapshot, leanReport, frozenStatements));
             if (!edge.IsResolved)
             {
                 gaps.Add(edge.ResolutionGap!);
@@ -361,6 +365,7 @@ internal static partial class DigestionStatusEvaluator
             findings);
         var scribe = VerifyScribeReceipts(
             entry,
+            receiptApplicabilities,
             snapshot,
             verifiedScribeEmissions,
             verificationChanges,
@@ -415,7 +420,10 @@ internal static partial class DigestionStatusEvaluator
             localComplete,
             hasProgress,
             hasUnresolvedCoverageTarget,
-            authorityChanged);
+            authorityChanged)
+        {
+            ReceiptApplicabilities = receiptApplicabilities,
+        };
     }
 
     internal static bool StatusAuthorityClosureChanged(
@@ -677,6 +685,8 @@ internal static partial class DigestionStatusEvaluator
         bool statusAuthorityChanged)
     {
         internal DigestionLedgerEntry Entry { get; } = entry;
+
+        internal required IReadOnlyDictionary<string, ReceiptApplicability> ReceiptApplicabilities { get; init; }
 
         internal DigestionReceiptAlignment Alignment { get; } = alignment;
 

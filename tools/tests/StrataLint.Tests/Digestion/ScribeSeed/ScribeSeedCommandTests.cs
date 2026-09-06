@@ -181,10 +181,10 @@ public sealed partial class ScribeSeedCommandTests
     }
 
     [Fact]
-    public void DryRunPartitionsAllFiveEligibilityStatesWithoutWriting()
+    public void DryRunPartitionsAllSixEligibilityStatesWithoutWriting()
     {
         string[] states = ["eligible", "missing-definition", "missing-emission",
-            "missing-declaration-reference", "ambiguous-edge"];
+            "missing-declaration-reference", "ambiguous-edge", "not-applicable"];
         var fixtures = Enumerable.Range(0, states.Length).Select(index =>
             new ScribeSeedFixture(moduleGid: "D5/S0/Carrier/Probe" + index)).ToArray();
         var records = fixtures.Select(fixture =>
@@ -195,6 +195,7 @@ public sealed partial class ScribeSeedCommandTests
         }).ToArray();
         fixtures[1].Files.Remove(records[1].DefinitionPath);
         fixtures[4].Document = ScribeSeedFixture.Map(fixtures[4].Document, entry => entry with { Coverage = [] });
+        fixtures[5].Files["D5/S0/Carrier/Probe5.lean"] = DigestionTestSupport.Lean("D5/S0/Carrier/Probe5");
         var combined = fixtures[0];
         foreach (var fixture in fixtures.Skip(1))
         {
@@ -368,6 +369,8 @@ internal sealed class ScribeSeedFixture
             BaselineTargetIdentical = true,
         });
         Files = new Dictionary<string, string>(Inputs.Files, StringComparer.Ordinal);
+        Files[moduleGid + ".lean"] = Files[moduleGid + ".lean"].Replace(
+            "mirror-B: none(waiver:test)", "mirror-B: D5/B/" + moduleGid[3..], StringComparison.Ordinal);
         Files[TheoryAtomizerDataLoader.DataPath] = Encoding.UTF8.GetString(DigestionTestSupport.RulesBytes);
         Verified = Inputs.VerifiedEmissions!;
         var template = Assert.Single(Inputs.Document.RequireDigestionEntries());

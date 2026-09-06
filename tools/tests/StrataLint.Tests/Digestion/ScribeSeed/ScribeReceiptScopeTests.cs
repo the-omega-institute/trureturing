@@ -1,0 +1,57 @@
+using StrataLint.Engine;
+
+namespace StrataLint.Tests;
+
+public sealed class ScribeReceiptScopeTests
+{
+    [Fact]
+    public void UnrelatedEntryOutsideClosureIsNotJudgedEvenWhenLoaded()
+    {
+        var fixture = ReceiptApplicabilityFixture.Create();
+
+        var evaluation = ReceiptApplicabilityFixture.Evaluate(fixture, RawChangeSet.Create(["notes/unrelated.txt"]));
+
+        Assert.False(Assert.Single(evaluation.Entries).StatusAuthorityChanged);
+        Assert.DoesNotContain(evaluation.Findings, message => message.Contains("coverage-scribe-receipt-required", StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [InlineData("entry")]
+    [InlineData("definition")]
+    [InlineData("chain")]
+    public void EntryInsideAffectedClosureIsJudged(string dependency)
+    {
+        var fixture = ReceiptApplicabilityFixture.Create();
+        var path = ScribeSeedFixture.EntryPath(fixture.First);
+        if (dependency == "definition") path = ScribeEmissionAttestation.DefinitionPath(ScribeSeedFixture.ModuleGid);
+        if (dependency == "chain")
+        {
+            var child = new ScribeSeedFixture(moduleGid: "D5/S0/Carrier/Child");
+            foreach (var file in child.Files) fixture.Files[file.Key] = file.Value;
+            fixture.Inputs = fixture.Inputs with { Report = LeanAxiomReport.Create(
+                fixture.Inputs.Report.Files.Concat(child.Inputs.Report.Files)
+                    .ToDictionary(pair => pair.Key.Value, pair => pair.Value)) };
+            var parent = fixture.First with { Receipts = fixture.First.Receipts with { ChainAtoms = [child.First.AtomId] } };
+            var source = Assert.Single(fixture.Document.RequireDigestionSources());
+            fixture.Document = fixture.Document.WithDigestionSources([source with { Entries = [parent, child.First with { Coverage = [] }] }]);
+            path = ScribeSeedFixture.EntryPath(child.First);
+        }
+
+        var evaluation = ReceiptApplicabilityFixture.Evaluate(fixture, RawChangeSet.Create([path]));
+
+        Assert.True(evaluation.Entries.Single(item => item.Entry.AtomId == fixture.First.AtomId).StatusAuthorityChanged);
+        Assert.Contains(evaluation.Findings, message => message.Contains("coverage-scribe-receipt-required", StringComparison.Ordinal)
+            && message.Contains(fixture.First.AtomId, StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void RuleImplementationChangeDoesNotExpandReceiptGateToPopulation()
+    {
+        var fixture = ReceiptApplicabilityFixture.Create();
+        var evaluation = ReceiptApplicabilityFixture.Evaluate(fixture, RawChangeSet.Create([
+            "tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.ScribeCoverage.cs"]));
+
+        Assert.False(Assert.Single(evaluation.Entries).StatusAuthorityChanged);
+        Assert.DoesNotContain(evaluation.Findings, message => message.Contains("coverage-scribe-receipt-required", StringComparison.Ordinal));
+    }
+}

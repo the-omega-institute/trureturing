@@ -73,6 +73,7 @@ internal static partial class DigestionStatusEvaluator
 
     private static bool VerifyScribeReceipts(
         DigestionLedgerEntry entry,
+        IReadOnlyDictionary<string, ReceiptApplicability> applicabilities,
         RepositorySnapshot snapshot,
         VerifiedScribeEmissions? verifiedEmissions,
         RawChangeSet? changes,
@@ -83,13 +84,19 @@ internal static partial class DigestionStatusEvaluator
         var complete = true;
         foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
         {
+            var applicability = applicabilities[gid];
+            var required = applicability is ReceiptApplicability.Required;
             var hasReceipt = receipts.TryGetValue(gid, out var receipt);
+            // Receipt completeness still feeds migration. Applicability changes diagnostics
+            // and the admission obligation only, leaving that derivation unchanged.
+            void ObserveMissing(string code)
+            {
+                if (required || hasReceipt)
+                    gaps.Add(new DigestionGap(code, gid, DigestionGapSeverity.NonFatal));
+            }
             if (!hasReceipt)
             {
-                gaps.Add(new DigestionGap(
-                    "scribe-receipt-missing",
-                    gid,
-                    DigestionGapSeverity.NonFatal));
+                if (required) ObserveMissing("scribe-receipt-missing");
                 complete = false;
             }
 
@@ -106,18 +113,12 @@ internal static partial class DigestionStatusEvaluator
             ScribeEmissionRecord? verified = null;
             if (verifiedEmissions is null)
             {
-                gaps.Add(new DigestionGap(
-                    "scribe-emission-unverified",
-                    gid,
-                    DigestionGapSeverity.NonFatal));
+                ObserveMissing("scribe-emission-unverified");
                 complete = false;
             }
             else if (!verifiedEmissions.TryGet(documentGid, out var verifiedRecord))
             {
-                gaps.Add(new DigestionGap(
-                    "scribe-emission-missing",
-                    gid,
-                    DigestionGapSeverity.NonFatal));
+                ObserveMissing("scribe-emission-missing");
                 complete = false;
             }
             else
@@ -129,19 +130,13 @@ internal static partial class DigestionStatusEvaluator
                 && verifiedEmissions is not null
                 && !verifiedEmissions.ReferencesDeclaration(gid))
             {
-                gaps.Add(new DigestionGap(
-                    "scribe-declaration-reference-missing",
-                    gid,
-                    DigestionGapSeverity.NonFatal));
+                ObserveMissing("scribe-declaration-reference-missing");
                 complete = false;
             }
 
             if (!snapshot.TryGetFile(definitionPath, out var definition))
             {
-                gaps.Add(new DigestionGap(
-                    "scribe-definition-missing",
-                    gid,
-                    DigestionGapSeverity.NonFatal));
+                ObserveMissing("scribe-definition-missing");
                 complete = false;
             }
             // Binds scribe.definition_sha256 to both the definition bytes and verified Scribe

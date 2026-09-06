@@ -308,6 +308,8 @@ internal static class DigestStatusCommand
                 writer.WriteLine(
                     $"GAP atom={entry.Entry.AtomId} code={gap.Code} detail={RenderDetail(gap.Detail)}");
             }
+            foreach (var observation in entry.ReceiptObservations)
+                writer.WriteLine($"OBSERVATION atom={entry.Entry.AtomId} code={observation.Code} detail={RenderDetail(observation.Detail)}");
         }
 
         return writer.ToString();
@@ -369,6 +371,11 @@ internal static class DigestStatusCommand
                     {
                         code = gap.Code,
                         detail = gap.Detail,
+                    }),
+                    receipt_observations = item.ReceiptObservations.Select(static observation => new
+                    {
+                        code = observation.Code,
+                        detail = observation.Detail,
                     }),
                 }),
         };
