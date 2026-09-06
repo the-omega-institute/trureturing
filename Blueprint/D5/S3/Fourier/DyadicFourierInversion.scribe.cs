@@ -55,7 +55,7 @@ internal sealed class DyadicFourierInversionDocument : IScribeDocumentDefinition
 
     private static Formula InversionFormula()
     {
-        Formula frequency = Multiply(Multiply(D(-2), Call("pi")), F.Id("xi"));
+        Formula frequency = Multiply(Multiply(new Formula.Negate(D(2)), Call("pi")), F.Id("xi"));
         Formula transform = Lambda("xi", Call("Real"),
             Call("densityFourierLaplace", Density(), frequency));
         return Disp(ForAll("ell", Call("Real"), Implies(Less(D(0), F.Id("ell")),

@@ -43,6 +43,7 @@ namespace D5.S3.Fourier.DyadicFourierInversion
 
 open Filter MeasureTheory Set Topology
 open scoped FourierTransform
+open scoped NNReal
 open D5.S3.Fourier.InfiniteSincProduct
 open D5.S3.Fourier.DyadicConvolutionDensity
 open D5.S3.Fourier.DyadicTransformDecay
