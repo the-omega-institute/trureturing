@@ -1,0 +1,166 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.PartialIdentification;
+
+internal sealed class FiniteMomentSupportReductionDocument : IScribeDocumentDefinition
+{
+    private const string Prefix =
+        "D5/S3/ConceptDynamics/PartialIdentification/FiniteMomentSupportReduction.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite rational causal laws can be compressed relative to the linear information actually retained. Caratheodory gives a positive law-specific latent witness whose size depends on the feature dimension rather than the full response-table cardinality.",
+        H("Finite moment support reduction for causal response laws"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("law-moment-vector"),
+                DeclarationHandle.Create(Prefix + "lawMomentVector"),
+                H("Retained moment vector"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Collect a finite family of rational atom features into the vector of expectations under one normalized response law."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("law-moment-vector-convex-hull"),
+                DeclarationHandle.Create(Prefix + "lawMomentVector_mem_convexHull"),
+                H("Moments lie in the atom-profile convex hull"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The normalized nonnegative law expresses its moment vector as a convex combination of original atom feature vectors."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("moment-compression"),
+                DeclarationHandle.Create(Prefix + "MomentCompression"),
+                H("Positive sparse moment witness"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A compression stores finitely many original feature profiles, positive normalized weights, exact moment equality, and the Caratheodory cardinality bound."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("exists-moment-compression"),
+                DeclarationHandle.Create(Prefix + "exists_momentCompression"),
+                H("Every finite law has a small exact moment witness"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Mathlib Caratheodory reduction and finite-dimensional affine rank give at most one more selected atom profile than the number of retained features."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("source-atom"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.sourceAtom"),
+                H("Choose an original atom for each profile"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every retained profile is certified to occur among the original atoms, so one original source atom can be chosen for each latent profile."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("source-atom-feature"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.sourceAtom_feature"),
+                H("Chosen atoms realize their profiles"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The selected atom evaluates to exactly the feature profile naming its latent state."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("source-atom-injective"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.sourceAtom_injective"),
+                H("Selected atoms are distinct"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Different profiles cannot select the same original atom, so the latent carrier is a genuine sparse subset representation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latent-law"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.latentLaw"),
+                H("Normalized law on the sparse carrier"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Caratheodory weights themselves form a normalized nonnegative rational response law on the retained profile subtype."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("latent-source-moment-eq"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.latent_source_moment_eq"),
+                H("Sparse source realization preserves the whole moment vector"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Evaluating the chosen original source atoms under the sparse latent law reproduces every retained moment simultaneously."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("coordinate-eq"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.coordinate_eq"),
+                H("Coordinatewise moment preservation"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each scalar retained feature has exactly the same expectation before and after sparse latent realization."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("linear-row-query-feature"),
+                DeclarationHandle.Create(Prefix + "linearRowQueryFeature"),
+                H("Join LP rows and one query"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Constraint rows occupy the some coordinates of an Option index, while the none coordinate stores the scalar objective."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("linear-row-query-card-le"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.linearRowQuery_card_le"),
+                H("Rows plus query need at most m plus two atoms"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For m finite LP rows plus one objective coordinate, the ambient Caratheodory bound is m plus two latent atoms."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latent-linear-feasible"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.latentLinearFeasible"),
+                H("Feasibility survives sparse realization"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Exact preservation of every row expectation transports all original rational inequality constraints to the pulled-back latent problem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latent-linear-objective-eq"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.latentLinearObjective_eq"),
+                H("The exact query value survives"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The nominated linear objective has exactly the same value under the sparse latent witness."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-linear-problem-small-latent-witness"),
+                DeclarationHandle.Create(Prefix + "finite_linear_problem_small_latent_witness"),
+                H("Every feasible query point has a small attaining latent model"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A feasible finite linear causal law can be replaced, relative to the same rows and objective, by an attaining positive latent realization with at most the row count plus two states."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("response-table-cell-query-feature"),
+                DeclarationHandle.Create(Prefix + "responseTableCellQueryFeature"),
+                H("All response-cell marginals plus one query"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For k Boolean response-pair strata, retain all four one-stratum response-cell indicators and one scalar query."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("exists-response-table-cell-query-compression"),
+                DeclarationHandle.Create(Prefix + "exists_responseTableCellQueryCompression"),
+                H("Linear-size witness inside the four-to-the-k table space"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Although the unrestricted table carrier has four to the k atoms, all one-stratum four-cell marginals and one query admit a positive profile witness using at most four k plus two atoms."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("response-table-cell-moment-eq"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.responseTableCellMoment_eq"),
+                H("Every one-stratum cell probability is preserved"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each selected response-cell indicator has the same expectation under the original full table law and the sparse latent table witness."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("response-table-query-moment-eq"),
+                DeclarationHandle.Create(Prefix + "MomentCompression.responseTableQueryMoment_eq"),
+                H("The table query is preserved with the marginals"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The same sparse witness retains the nominated scalar query together with every one-stratum response-cell marginal."))),
+                DescribeRole.Theorem))));
+}
