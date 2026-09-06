@@ -588,6 +588,7 @@ public sealed partial class ProductionEnvironmentTests
         {
             OtherAtomGid = "D5/S0/Carrier/Probe.probe",
             OtherMigration = "absorbed",
+            IncludeOtherAtomInBaseline = true,
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
@@ -627,6 +628,7 @@ public sealed partial class ProductionEnvironmentTests
         {
             OtherAtomGid = "D5/S0/Carrier/Probe.probe",
             OtherMigration = "absorbed",
+            IncludeOtherAtomInBaseline = true,
         });
         var inputs = DirectoryInputs(
             WithSiblingReceiptMismatch(materialized, "coverage-target-mismatch"));

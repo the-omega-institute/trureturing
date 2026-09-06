@@ -515,15 +515,20 @@ public sealed class Sl016WakeupTests
     [Fact]
     public void CandidateScribeVerificationKeepsNewGapBlockingAtSl016Admission()
     {
-        var (_, evaluation) = EvaluateReceiptIntegrityGap(
+        var (_, definitionEvaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode: null,
             gapExistsInBaseline: false,
             candidateScribeInputsChanged: true);
+        var (_, emissionEvaluation) = EvaluateReceiptIntegrityGap(
+            mismatchCode: null,
+            gapExistsInBaseline: false,
+            candidateScribeInputsChanged: true,
+            candidateScribeEmissionOnly: true);
 
-        foreach (var mismatchCode in new[]
+        foreach (var (evaluation, mismatchCode) in new[]
                  {
-                     "scribe-definition-mismatch",
-                     "scribe-emission-mismatch",
+                     (definitionEvaluation, "scribe-definition-mismatch"),
+                     (emissionEvaluation, "scribe-emission-mismatch"),
                  })
         {
             var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
@@ -549,7 +554,7 @@ public sealed class Sl016WakeupTests
         var candidateDefinition = candidateScribeInputsChanged && !candidateScribeEmissionOnly
             ? "changed fixture Scribe definition\n"
             : baselineDefinition;
-        var candidateEmission = candidateScribeInputsChanged
+        var candidateEmission = candidateScribeInputsChanged && candidateScribeEmissionOnly
             ? "# Changed fixture Scribe emission\n"
             : baselineEmission;
         var fixture = new RuleFixture();
@@ -615,8 +620,8 @@ public sealed class Sl016WakeupTests
             ? candidateScribeEmissionOnly
                 ? includeRuleImplementationPath ? new[] { implementationPath, emissionPath } : [emissionPath]
                 : includeRuleImplementationPath
-                    ? new[] { implementationPath, definitionPath, emissionPath }
-                    : [definitionPath, emissionPath]
+                    ? new[] { implementationPath, definitionPath }
+                    : [definitionPath]
             : gapExistsInBaseline
                 ? new[] { implementationPath }
             : new[]

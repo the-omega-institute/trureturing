@@ -48,6 +48,32 @@ public sealed class Sl016ScribeWakeupTests
     }
 
     [Fact]
+    public void RuleCatalogWakesSl016ForDefinitionOnlyDelta()
+    {
+        const string coverageGid = "D5/S0/Carrier/BackfillTarget";
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(coverageGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(coverageGid);
+        var (context, _) = Sl016WakeupTests.EvaluateReceiptIntegrityGap(
+            mismatchCode: null,
+            gapExistsInBaseline: false,
+            candidateScribeInputsChanged: true,
+            candidateScribeEmissionOnly: false,
+            includeRuleImplementationPath: false);
+
+        Assert.Equal([definitionPath], context.Changes.Paths.Select(static path => path.Value));
+        Assert.True(context.Current.TryGetFile(emissionPath, out var currentEmission));
+        Assert.True(context.Baseline.TryGetFile(emissionPath, out var baselineEmission));
+        Assert.True(currentEmission.RawBytes.AsSpan().SequenceEqual(baselineEmission.RawBytes.AsSpan()));
+
+        var outcome = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(context));
+        var finding = Assert.Single(outcome.Capability.Diagnostics, diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(16)
+            && diagnostic.Message.Contains("scribe-definition-mismatch", StringComparison.Ordinal));
+        Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
+    }
+
+    [Fact]
     public void RuleCatalogDoesNotWakeSl016ForUnrelatedScribeModule()
     {
         const string unrelatedPath = "Blueprint/D5/S0/Carrier/Unrelated.scribe.cs";

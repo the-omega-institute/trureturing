@@ -62,6 +62,14 @@ internal static partial class CoverAtomCommand
             };
         }
 
+        if (!resumed)
+        {
+            return new CommandResult(
+                true,
+                "COVER_ATOM_ALIGNED cover=passed align=passed\n" + cover.Output,
+                string.Empty);
+        }
+
         var alignArguments = options.Gids
             .SelectMany(gid => new[] { "--atom-id", options.AtomId, "--gid", gid })
             .Concat(["--base", options.BaselineRevision])
@@ -74,21 +82,19 @@ internal static partial class CoverAtomCommand
                 cachedReportSource,
                 scribeEmissionVerifier,
                 alignArguments);
-            var coverState = resumed ? "resumed" : "passed";
             return new CommandResult(
                 true,
-                $"COVER_ATOM_ALIGNED cover={coverState} align=passed\n"
-                + (resumed ? cover.Error : cover.Output)
+                "COVER_ATOM_ALIGNED cover=resumed align=passed\n"
+                + cover.Error
                 + aligned.Output,
                 string.Empty);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            var coverState = resumed ? "resumed" : "passed";
             return new CommandResult(
                 false,
-                resumed ? cover.Error : cover.Output,
-                $"COVER_ATOM_ALIGNED cover={coverState} align=failed\n"
+                cover.Error,
+                "COVER_ATOM_ALIGNED cover=resumed align=failed\n"
                 + $"ALIGN_SCRIBE_RECEIPT_INVALID {exception.Message}\n");
         }
     }

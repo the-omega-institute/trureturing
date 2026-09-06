@@ -37,15 +37,8 @@ internal static partial class AlignScribeReceiptCommand
                     ParseSeedArguments(arguments, repositoryRoot, readPairs), applyUpdates);
             }
 
-            if (arguments.Contains("--refresh", StringComparer.Ordinal))
-            {
-                return CoverAtomCommand.AlignScribeReceiptRefresh(
-                    repositoryRoot, repository, leanReportSource, scribeEmissionVerifier,
-                    arguments, readPairs, applyUpdates);
-            }
-
             return CoverAtomCommand.AlignScribeReceipt(repositoryRoot, repository, leanReportSource,
-                scribeEmissionVerifier, arguments, applyUpdates);
+                scribeEmissionVerifier, arguments, readPairs, applyUpdates);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

@@ -60,6 +60,8 @@ internal sealed partial record CoverSpec
 
     internal string? OtherAtomGid { get; init; }
 
+    internal bool IncludeOtherAtomInBaseline { get; init; }
+
     internal string OtherMigration { get; init; } = "partial";
 
     internal string OtherTruth { get; init; } = "closed";
@@ -234,10 +236,11 @@ internal static partial class CoverWorld
             spec,
             atom,
             baselineCoverage,
-            includeOtherAtom: false,
+            includeOtherAtom: spec.IncludeOtherAtomInBaseline,
             null,
             null,
-            otherAtom: null,
+            gid => FrozenStatementIdFor(spec, gid),
+            otherAtom: otherAtom,
             otherSourcePath: OtherSourcePath,
             unrelatedAtom: unrelatedAtom,
             unrelatedSourcePath: UnrelatedSourcePath,

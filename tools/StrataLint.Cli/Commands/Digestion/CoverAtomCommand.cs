@@ -493,10 +493,6 @@ internal static partial class CoverAtomCommand
 
     private sealed record AlignPair(string AtomId, string Gid);
 
-    private sealed record AlignArguments(
-        ImmutableArray<AlignPair> Pairs,
-        string BaselineRevision);
-
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {
         string? atomId = null;

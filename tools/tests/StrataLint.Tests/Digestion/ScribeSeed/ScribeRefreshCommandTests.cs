@@ -103,6 +103,96 @@ public sealed class ScribeRefreshCommandTests
     }
 
     [Fact]
+    public void RefreshRejectsProtectedBaseAtomAbsent()
+    {
+        var fixture = Stale(new ScribeSeedFixture());
+        var source = Assert.Single(fixture.Baseline.RequireDigestionSources());
+        fixture.Baseline = fixture.Baseline.WithDigestionSources([source with { Entries = [] }]);
+
+        var execution = Execute(fixture, ScribeSeedFixture.ModuleGid + "\n");
+
+        AssertRefreshRejected(execution, "protected-base-atom-identity-absent");
+    }
+
+    [Fact]
+    public void RefreshRejectsProtectedBaseCoverageEdgeAbsent()
+    {
+        var fixture = Stale(new ScribeSeedFixture());
+        fixture.Baseline = ScribeSeedFixture.Map(fixture.Baseline, entry => entry with
+        {
+            Coverage = [],
+            Receipts = entry.Receipts with { Scribe = [] },
+        });
+
+        var execution = Execute(fixture, ScribeSeedFixture.ModuleGid + "\n");
+
+        AssertRefreshRejected(execution, "protected-base-coverage-edge-identity-absent");
+    }
+
+    [Fact]
+    public void RefreshRejectsProtectedBaseCoverageTargetMismatch()
+    {
+        var fixture = Stale(new ScribeSeedFixture());
+        fixture.Baseline = ScribeSeedFixture.Map(fixture.Baseline, entry => entry with
+        {
+            Coverage = entry.Coverage.Select(edge => edge with
+            {
+                TargetStatementId = "sha256:" + new string('0', 64),
+            }).ToImmutableArray(),
+        });
+
+        var execution = Execute(fixture, ScribeSeedFixture.ModuleGid + "\n");
+
+        AssertRefreshRejected(execution, "protected-base-coverage-edge-identity-absent");
+    }
+
+    [Fact]
+    public void RefreshRejectsProtectedBaseScribeReceiptAbsent()
+    {
+        var fixture = Stale(new ScribeSeedFixture());
+        fixture.Baseline = ScribeSeedFixture.Map(fixture.Baseline, entry => entry with
+        {
+            Receipts = entry.Receipts with { Scribe = [] },
+        });
+
+        var execution = Execute(fixture, ScribeSeedFixture.ModuleGid + "\n");
+
+        AssertRefreshRejected(execution, "protected-base-scribe-receipt-identity-absent");
+    }
+
+    [Fact]
+    public void PairSelectorUsesPromotedRefreshPolicyForModuleGid()
+    {
+        var fixture = Stale(new ScribeSeedFixture(module: true));
+
+        var execution = Execute(
+            fixture,
+            string.Empty,
+            arguments:
+            [
+                "--atom-id", fixture.First.AtomId,
+                "--gid", ScribeSeedFixture.ModuleGid,
+                "--base", "baseline",
+            ]);
+
+        Assert.True(execution.Result.Success, execution.Result.Error);
+        Assert.Equal(1, execution.ApplyCalls);
+        Assert.Equal(ScribeSeedFixture.ModuleGid,
+            Assert.Single(Assert.Single(Load(execution.After).RequireDigestionEntries()).Receipts.Scribe).Gid);
+    }
+
+    [Fact]
+    public void RefreshRejectsEvaluatorStatusChangeOutsideAuthorizedClosure()
+    {
+        var error = Assert.Throws<InvalidOperationException>(() =>
+            CoverAtomCommand.RequireRefreshStatusChangesInsideClosure(
+                ["selected-atom", "outside-atom"],
+                new HashSet<string>(["selected-atom"], StringComparer.Ordinal)));
+
+        Assert.Equal("status-change-outside-refresh-closure: outside-atom", error.Message);
+    }
+
+    [Fact]
     public void PlannedEntryByteChangeBeforeCommitRejectsWithoutWriting()
     {
         var fixture = Stale(new ScribeSeedFixture());
@@ -277,7 +367,8 @@ public sealed class ScribeRefreshCommandTests
         string documents,
         bool dryRun = false,
         RawRepositorySnapshot? baseline = null,
-        ImmutableArray<RawRepositorySnapshot> currentReads = default)
+        ImmutableArray<RawRepositorySnapshot> currentReads = default,
+        IReadOnlyList<string>? arguments = null)
     {
         var before = fixture.Raw(fixture.Document);
         var after = before;
@@ -289,13 +380,13 @@ public sealed class ScribeRefreshCommandTests
             before,
             baseline ?? fixture.Raw(fixture.Baseline),
             currentReader: () => reads[Math.Min(readIndex++, reads.Length - 1)]);
-        var arguments = new List<string>
-        {
+        var commandArguments = arguments?.ToList() ??
+        [
             "--refresh", "--documents", DocumentsPath, "--base", "baseline",
-        };
+        ];
         if (dryRun)
         {
-            arguments.Add("--dry-run");
+            commandArguments.Add("--dry-run");
         }
 
         var result = AlignScribeReceiptCommand.Run(
@@ -303,7 +394,7 @@ public sealed class ScribeRefreshCommandTests
             repository,
             new FakeLeanReportSource(fixture.Inputs.Report),
             new FakeScribeEmissionVerifier(fixture.Verified),
-            arguments,
+            commandArguments,
             (_, path) =>
             {
                 Assert.Equal(DocumentsPath, path);
@@ -333,6 +424,14 @@ public sealed class ScribeRefreshCommandTests
             after,
             applyCalls,
             repository.ReadCurrentCount);
+    }
+
+    private static void AssertRefreshRejected(RefreshExecution execution, string reason)
+    {
+        Assert.False(execution.Result.Success);
+        Assert.Contains(reason, execution.Result.Error, StringComparison.Ordinal);
+        Assert.Equal(0, execution.ApplyCalls);
+        Assert.Equal(Image(execution.Before), Image(execution.After));
     }
 
     private static string EntryPath(DigestionLedgerEntry entry) =>
