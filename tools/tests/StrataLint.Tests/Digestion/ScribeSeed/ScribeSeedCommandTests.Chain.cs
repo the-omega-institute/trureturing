@@ -11,7 +11,7 @@ public sealed partial class ScribeSeedCommandTests
     [InlineData(true, false)]
     [InlineData(false, true)]
     [InlineData(true, true)]
-    public void SeedRejectsStaleAncestorReceiptBeforeApply(bool batch, bool dryRun)
+    public void SeedAcceptsStaleAncestorByteReceipt(bool batch, bool dryRun)
     {
         var fixture = ChainFixture(1, batch);
         var ancestor = Assert.Single(fixture.Document.RequireDigestionEntries(), entry =>
@@ -30,10 +30,17 @@ public sealed partial class ScribeSeedCommandTests
 
         var execution = ExecuteChainSeed(fixture, batch, dryRun);
 
-        Assert.False(execution.Result.Success);
-        Assert.Contains(ancestor.AtomId + ":scribe-definition-mismatch", execution.Result.Error, StringComparison.Ordinal);
-        Assert.Equal(0, execution.ApplyCalls);
-        Assert.Equal(Image(execution.Before), Image(execution.After));
+        Assert.True(execution.Result.Success, execution.Result.Error);
+        Assert.DoesNotContain("scribe-definition-mismatch", execution.Result.Error, StringComparison.Ordinal);
+        if (dryRun)
+        {
+            Assert.Equal(0, execution.ApplyCalls);
+            Assert.Equal(Image(execution.Before), Image(execution.After));
+        }
+        else
+        {
+            RequireProjectedChain(fixture, execution, 1);
+        }
     }
 
     [Theory]
