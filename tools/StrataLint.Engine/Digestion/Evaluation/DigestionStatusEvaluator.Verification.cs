@@ -87,6 +87,16 @@ internal static partial class DigestionStatusEvaluator
             var applicability = applicabilities[gid];
             var required = applicability is ReceiptApplicability.Required;
             var hasReceipt = receipts.TryGetValue(gid, out var receipt);
+            var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
+            var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+            var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+            var selectsDeclaration = Gid.TryParse(gid, out var parsedGid)
+                && parsedGid.ToTarget() is Target.Formal { Declaration: not null };
+            var receiptInputChanged = changes is null
+                || DigestionCasStore.EntryChanged(entry, changes)
+                || PathChanged(changes, definitionPath)
+                || PathChanged(changes, emissionPath)
+                || parsedGid is not null && PathChanged(changes, parsedGid.Path.Value);
             // Receipt completeness still feeds migration. Applicability changes diagnostics
             // and the admission obligation only, leaving that derivation unchanged.
             void RecordUnavailable(string missingCode, string? integrityCode = null)
@@ -96,7 +106,9 @@ internal static partial class DigestionStatusEvaluator
                     gaps.Add(new DigestionGap(
                         integrityCode ?? missingCode,
                         gid,
-                        DigestionGapSeverity.ReceiptIntegrityFailure));
+                        receiptInputChanged
+                            ? DigestionGapSeverity.ReceiptIntegrityFailure
+                            : DigestionGapSeverity.NonFatal));
                 }
                 else if (required)
                 {
@@ -112,16 +124,6 @@ internal static partial class DigestionStatusEvaluator
                 complete = false;
             }
 
-            var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
-            var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
-            var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
-            var selectsDeclaration = Gid.TryParse(gid, out var parsedGid)
-                && parsedGid.ToTarget() is Target.Formal { Declaration: not null };
-            var receiptInputChanged = changes is null
-                || DigestionCasStore.EntryChanged(entry, changes)
-                || PathChanged(changes, definitionPath)
-                || PathChanged(changes, emissionPath)
-                || parsedGid is not null && PathChanged(changes, parsedGid.Path.Value);
             ScribeEmissionRecord? verified = null;
             if (verifiedEmissions is null)
             {

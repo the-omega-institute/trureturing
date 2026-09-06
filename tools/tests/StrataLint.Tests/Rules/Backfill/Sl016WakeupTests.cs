@@ -172,6 +172,8 @@ public sealed class Sl016WakeupTests
     [Theory]
     [InlineData("invalid-header")]
     [InlineData("pending-state")]
+    [InlineData("mixed-open-closed-to-pending")]
+    [InlineData("mixed-open-pending-to-closed")]
     public void LeanApplicabilityChangeWithStableTargetValueWakesAndJudgesReferencedEdge(
         string scenario)
     {
@@ -180,6 +182,8 @@ public sealed class Sl016WakeupTests
         var fixture = CoverageReceiptFixture(
             targetGid,
             FrozenStatementReceiptTestData.Id('a'));
+        var changedPaths = new List<string> { targetPath };
+        var mixedOpen = scenario.StartsWith("mixed-open-", StringComparison.Ordinal);
         if (scenario == "invalid-header")
         {
             fixture.Files[targetPath] = fixture.Files[targetPath].Replace(
@@ -189,25 +193,37 @@ public sealed class Sl016WakeupTests
         }
         else
         {
-            var closedAtomPath = AtomPath.Replace(
-                "partial-open",
-                "partial-closed",
-                StringComparison.Ordinal);
-            foreach (var files in new[] { fixture.Files, fixture.Baseline })
+            if (!mixedOpen)
             {
-                files[closedAtomPath] = files[AtomPath];
-                files.Remove(AtomPath);
+                var closedAtomPath = AtomPath.Replace(
+                    "partial-open", "partial-closed", StringComparison.Ordinal);
+                foreach (var files in new[] { fixture.Files, fixture.Baseline })
+                {
+                    files[closedAtomPath] = files[AtomPath];
+                    files.Remove(AtomPath);
+                }
             }
             fixture.Files[targetPath] += "\n-- candidate proof authority changed\n";
-            fixture.Reports[targetPath] = new LeanFileReport(
-                [],
-                [new LeanDeclaration(
-                    "protectedTargetFixture",
-                    "def",
-                    "Unit",
-                    ["fixture.nonstandard"])]);
+            if (scenario == "mixed-open-pending-to-closed")
+            {
+                var statePath = FrozenStatePath.FromModulePath(RepoPath.CreateKnown(targetPath)).Value;
+                fixture.Baseline.Remove(statePath);
+                changedPaths.Add(statePath);
+            }
+            else
+                fixture.Reports[targetPath] = new LeanFileReport([], [new LeanDeclaration(
+                    "protectedTargetFixture", "def", "Unit", ["fixture.nonstandard"])]);
         }
-        var context = fixture.Build(RawChangeSet.Create([targetPath]));
+        if (mixedOpen)
+        {
+            foreach (var files in new[] { fixture.Files, fixture.Baseline })
+                files[AtomPath] = files[AtomPath].Replace("receipts:\n",
+                    "  - gid: D5/X_Frontier/Hearts\n    target_statement_id: null\nreceipts:\n",
+                    StringComparison.Ordinal);
+        }
+        var context = fixture.Build(RawChangeSet.Create(changedPaths));
+        var ruleEvaluation = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(context)).Capability;
         var document = BackfillInventoryLoader.LoadCandidateDelta(
             context.Current,
             context.Baseline,
@@ -225,7 +241,7 @@ public sealed class Sl016WakeupTests
         if (scenario == "invalid-header")
         {
             Assert.Contains(
-                BackfillInventoryRule.EvaluateCandidateDelta(context),
+                ruleEvaluation.Diagnostics,
                 static finding => finding.Message.Contains(
                     "scribe-applicability-invalid",
                     StringComparison.Ordinal));
@@ -536,6 +552,7 @@ public sealed class Sl016WakeupTests
     [Theory]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
+    [InlineData("scribe-declaration-reference-missing")]
     public void RuleImplementationChangeDoesNotRepublishHistoricalScribeGap(
         string mismatchCode)
     {
@@ -577,8 +594,11 @@ public sealed class Sl016WakeupTests
             bool candidateScribeInputsChanged = false,
             bool candidateScribeEmissionOnly = false)
     {
-        const string coverageGid = "D5/S0/Carrier/BackfillTarget";
-        const string targetPath = coverageGid + ".lean";
+        const string documentGid = "D5/S0/Carrier/BackfillTarget";
+        var coverageGid = mismatchCode == "scribe-declaration-reference-missing"
+            ? documentGid + ".protectedTargetFixture"
+            : documentGid;
+        const string targetPath = documentGid + ".lean";
         const string baselineDefinition = "fixture Scribe definition\n";
         const string baselineEmission = "# Fixture Scribe emission\n";
         var candidateDefinition = candidateScribeInputsChanged && !candidateScribeEmissionOnly
@@ -590,10 +610,17 @@ public sealed class Sl016WakeupTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.UseValidDirectoryBackfill();
-        InstallFrozenModules(fixture, coverageGid);
+        InstallFrozenModules(fixture, documentGid);
+        if (coverageGid != documentGid)
+        {
+            fixture.Reports[targetPath] = new LeanFileReport(
+                [],
+                [new LeanDeclaration("protectedTargetFixture", "def", "Unit", [])
+                    { NameKey = "ns(n0,22:protectedTargetFixture)" }]);
+        }
 
-        var definitionPath = ScribeEmissionAttestation.DefinitionPath(coverageGid);
-        var emissionPath = ScribeEmissionAttestation.EmissionPath(coverageGid);
+        var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+        var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
         var baselineDefinitionSha256 = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes(baselineDefinition)).RawSha256;
         var baselineEmissionSha256 = DigestionFingerprint.Compute(
@@ -602,9 +629,11 @@ public sealed class Sl016WakeupTests
             Encoding.UTF8.GetBytes(candidateDefinition)).RawSha256;
         var candidateEmissionSha256 = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes(candidateEmission)).RawSha256;
-        var targetStatementId = FrozenStatementReceiptTestData.Resolve(
-            fixture.Files,
-            coverageGid);
+        var targetStatementId = coverageGid == documentGid
+            ? FrozenStatementReceiptTestData.Resolve(fixture.Files, coverageGid)
+            : Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+                RepoPath.CreateKnown(targetPath),
+                fixture.Reports[targetPath])).StatementId.Value;
         var mismatchSha256 = "sha256:" + new string('0', 64);
         foreach (var files in new[] { fixture.Baseline })
         {
@@ -632,7 +661,7 @@ public sealed class Sl016WakeupTests
         var verifiedScribeEmissions = VerifiedScribeEmissions.Create(
         [
             new ScribeEmissionRecord(
-                coverageGid,
+                documentGid,
                 definitionPath,
                 candidateDefinitionSha256,
                 emissionPath,
@@ -661,18 +690,10 @@ public sealed class Sl016WakeupTests
         var context = fixture.Build(
             RawChangeSet.Create(changedPaths),
             verifiedScribeEmissions: verifiedScribeEmissions);
-        var diagnostics = BackfillInventoryRule.EvaluateCandidateDelta(context)
-            .Select(static finding => new Diagnostic(
-                RuleId.CreateKnown(16),
-                "Digestion ledger",
-                DisplaySeverity.Error,
-                finding.Effect ?? AdmissionEffect.Block,
-                finding.Path,
-                finding.Message))
-            .ToImmutableArray();
-        return (
-            context,
-            new SingleRuleEvaluation(diagnostics, DeferredCase: null));
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(context)).Capability;
+        return (context, new SingleRuleEvaluation(completed.Diagnostics
+            .Where(static item => item.RuleId == RuleId.CreateKnown(16)).ToImmutableArray(), null));
     }
 
     private static string AddReceipts(string atom, string receiptProjection) => atom.Replace(
