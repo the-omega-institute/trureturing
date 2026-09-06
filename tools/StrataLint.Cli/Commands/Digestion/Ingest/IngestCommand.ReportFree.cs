@@ -6,7 +6,9 @@ namespace StrataLint.Cli;
 internal sealed record ReportFreeIngestDependencies(
     Func<string, TheoryAtomizer>? AtomizerResolver = null,
     Func<string, TheoryAtomizerWithContentKinds>? ContentKindAtomizerResolver = null,
-    Func<ReportFreeDigestionIngestPlan, ReportFreeDigestionIngestPlan>? BeforeValidation = null);
+    Func<ReportFreeDigestionIngestPlan, ReportFreeDigestionIngestPlan>? BeforeValidation = null,
+    Action? BeforeCommit = null,
+    Action<string, string>? CommitLedgerFile = null);
 
 internal static partial class IngestCommand
 {
@@ -55,7 +57,8 @@ internal static partial class IngestCommand
                 inputs.CurrentDocument,
                 finalRaw,
                 plan,
-                sourceIds);
+                sourceIds,
+                dependencies);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -125,7 +128,8 @@ internal static partial class IngestCommand
         BackfillInventoryDocument currentDocument,
         RawRepositorySnapshot finalRaw,
         ReportFreeDigestionIngestPlan plan,
-        ImmutableHashSet<string>? sourceIds)
+        ImmutableHashSet<string>? sourceIds,
+        ReportFreeIngestDependencies dependencies)
     {
         var ledgerUpdates = LedgerAdditions(currentRaw, finalRaw, plan);
         RequireAppendOnlyWriteSet(
@@ -144,16 +148,22 @@ internal static partial class IngestCommand
             .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item.Token, StringComparer.Ordinal)
             .ToImmutableArray();
-        RequireUnclaimedAtomIds(repositoryRoot, plan.AddedAtomIds);
-        var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
-        try
+        // The stage barrier runs after validation, outside the commit lock, so a peer can finish here.
+        dependencies.BeforeCommit?.Invoke();
+        ImmutableArray<string> createdCasPaths;
+        using (AcquireReportFreeCommitLock(repositoryRoot))
         {
-            ApplyLedgerAdditionsAtomically(repositoryRoot, ledgerUpdates);
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            RollbackCasObjects(createdCasPaths, exception);
-            throw;
+            RequireUnclaimedAtomIds(repositoryRoot, plan.AddedAtomIds);
+            createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
+            try
+            {
+                ApplyLedgerAdditionsAtomically(repositoryRoot, ledgerUpdates, dependencies.CommitLedgerFile);
+            }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            {
+                RollbackCasObjects(createdCasPaths, exception);
+                throw;
+            }
         }
 
         return new CommandResult(

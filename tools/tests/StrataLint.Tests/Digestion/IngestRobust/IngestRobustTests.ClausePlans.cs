@@ -39,10 +39,9 @@ public sealed partial class IngestRobustTests
             EmptySource("alpha", AlphaPath),
             EmptySource("beta", BetaPath));
         var fixture = RobustFixture(empty, empty, ClauseText, ClauseText);
-        var alphaText = fixture.Files[AlphaPath];
-        var betaText = fixture.Files[BetaPath];
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
+        var before = DirectoryLedgerTestSupport.ReadRepository(temporary);
 
         var result = Environment(
             fixture,
@@ -50,7 +49,9 @@ public sealed partial class IngestRobustTests
             RawChangeSet.Create([AlphaPath, BetaPath])).Ingest(Arguments());
 
         Assert.True(result.Success, result.Error);
-        var document = BackfillInventoryLoader.Load(Decode(DirectoryLedgerTestSupport.ReadRepository(temporary)));
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
+        AssertExistingLedgerFilesUnchanged(before, after);
+        var document = BackfillInventoryLoader.Load(Decode(after));
         var alpha = document.RequireDigestionSources().Single(static source => source.SourceId == "alpha");
         var beta = document.RequireDigestionSources().Single(static source => source.SourceId == "beta");
         var parentId = parent.Fingerprints.RawSha256["sha256:".Length..];
@@ -60,8 +61,6 @@ public sealed partial class IngestRobustTests
             Assert.Single(alpha.Entries, entry => entry.AtomId == childId));
         Assert.Empty(beta.Entries);
         Assert.Equal(1 + clausePlan.Children.Length, alpha.Entries.Length);
-        Assert.Equal(alphaText, fixture.Files[AlphaPath]);
-        Assert.Equal(betaText, fixture.Files[BetaPath]);
         Assert.Contains("residual_open_added=3", result.Output, StringComparison.Ordinal);
         Assert.Contains("skipped_existing=0", result.Output, StringComparison.Ordinal);
     }
@@ -76,6 +75,7 @@ public sealed partial class IngestRobustTests
         var fixture = RobustFixture(empty, empty, ClauseText, ClauseText);
         using var temporary = new TemporaryDirectory();
         WriteFixture(temporary, fixture);
+        var beforeFirst = DirectoryLedgerTestSupport.ReadRepository(temporary);
 
         var first = Environment(
             fixture,
@@ -83,6 +83,7 @@ public sealed partial class IngestRobustTests
             RawChangeSet.Create([AlphaPath])).Ingest(Arguments("alpha"));
         Assert.True(first.Success, first.Error);
         var beforeSecond = DirectoryLedgerTestSupport.ReadRepository(temporary);
+        AssertExistingLedgerFilesUnchanged(beforeFirst, beforeSecond);
         fixture.Files.Clear();
         foreach (var item in beforeSecond.Entries)
             fixture.Files.Add(item.Path, System.Text.Encoding.UTF8.GetString(item.Bytes.AsSpan()));
@@ -94,6 +95,7 @@ public sealed partial class IngestRobustTests
 
         Assert.True(second.Success, second.Error);
         var afterSecond = DirectoryLedgerTestSupport.ReadRepository(temporary);
+        AssertExistingLedgerFilesUnchanged(beforeFirst, afterSecond);
         AssertExistingLedgerFilesUnchanged(beforeSecond, afterSecond);
         var document = BackfillInventoryLoader.Load(Decode(afterSecond));
         var alpha = document.RequireDigestionSources().Single(static source => source.SourceId == "alpha");

@@ -1,10 +1,33 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
+using System.Text;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
 internal static partial class IngestCommand
 {
+    private static FileStream AcquireReportFreeCommitLock(string repositoryRoot)
+    {
+        var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(repositoryRoot));
+        var digest = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(root)));
+        var directory = Path.Combine(Path.GetTempPath(), "stratalint-ingest");
+        Directory.CreateDirectory(directory);
+        var path = Path.Combine(directory, digest + ".lock");
+        try
+        {
+            // Keep the file after release: unlinking it would let peers lock different inodes.
+            return new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+        }
+        // FileShare.None reports Win32 ERROR_SHARING_VIOLATION or Unix EWOULDBLOCK (Linux/macOS).
+        catch (IOException exception) when (
+            (exception.HResult & 0xffff) == 32 || exception.HResult is 11 or 35)
+        {
+            throw new InvalidOperationException(
+                $"digestion ledger is being written by another ingest ({path})", exception);
+        }
+    }
+
     private static RawRepositorySnapshot AppendLedger(
         RawRepositorySnapshot currentRaw,
         BackfillInventoryDocument currentDocument,
@@ -51,7 +74,8 @@ internal static partial class IngestCommand
 
     private static void ApplyLedgerAdditionsAtomically(
         string repositoryRoot,
-        ImmutableArray<LedgerUpdate> updates)
+        ImmutableArray<LedgerUpdate> updates,
+        Action<string, string>? commit = null)
     {
         var pending = updates.Select(update => (Update: update,
             FullPath: Path.Combine(repositoryRoot, update.Path.Replace('/', Path.DirectorySeparatorChar))))
@@ -68,8 +92,9 @@ internal static partial class IngestCommand
             foreach (var (update, fullPath) in pending)
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+                // This fault seam runs inside the commit lock; never synchronously reenter ingest here.
                 ReplaceLedgerAtomically(fullPath, update.Bytes!.Value.AsSpan(),
-                    static (source, destination) => File.Move(source, destination, overwrite: false));
+                    commit ?? (static (source, destination) => File.Move(source, destination, overwrite: false)));
                 created.Add(update.Path);
             }
         }
