@@ -6,8 +6,6 @@
    utility: kind=checker; basis=terminal=atom:53691a04bc2bbf1b68bda940b49e0895d083b9a8aead49dd2b8a93ff2ca861ba; instance=D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront.zarembaFiveCertificate; result=D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront.zaremba_five_upto_certified
    digest: A kernel-decided table certifies Zaremba's bound five through denominator 1024. -/
 
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.Data.Fintype.Basic
 
 namespace D5.S1.Depth.ContinuedFractions.ZarembaFiveFiniteFront
 
