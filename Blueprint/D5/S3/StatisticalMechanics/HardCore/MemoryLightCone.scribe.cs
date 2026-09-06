@@ -5,49 +5,49 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.HardCore;
 internal sealed class MemoryLightConeDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite geometric memory exactly reproduces complete deletion counts within its light cone.",
+        "Geometric hard-core memory, exact path semantics and integer certificates.",
         H("Finite-Depth Exactness of Geometric Memory"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("hard-core-grid-radius"),
+                DescribeId.Create("hard-core-memorylightcone-gridradius"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/MemoryLightCone.gridRadius"),
                 H("Manhattan radius"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The radius is the sum of the natural absolute values of the two integer coordinates."))),
+                Blocks(Paragraph(Text("The radius is the sum of the natural absolute values of the integer coordinates."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("hard-core-recenter-radius-bound"),
+                DescribeId.Create("hard-core-memorylightcone-recenter-radius-bound"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/MemoryLightCone.recenter_radius_bound"),
-                H("One step changes distance by at most one toward the origin"),
+                H("Finite propagation speed"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every grid point and every allowed direction, the previous radius is at most the recentered radius plus one. The proof applies the integer absolute-value triangle inequality to the actual three coordinate maps."))),
+                Blocks(Paragraph(Text("Every old radius is at most the recentered radius plus one. The proof uses the integer triangle inequality and the actual three coordinate maps."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("hard-core-agree-within"),
+                DescribeId.Create("hard-core-memorylightcone-agreewithin"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/MemoryLightCone.AgreeWithin"),
-                H("Local equality of blocker membership"),
+                H("Local blocker agreement"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Two complete finite sets may differ outside the specified disk. Agreement means equality of membership for every point inside the disk."))),
+                Blocks(Paragraph(Text("Membership agrees for every point in the specified disk; the sets may differ arbitrarily outside it."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("hard-core-memory-agreement-step"),
+                DescribeId.Create("hard-core-memorylightcone-memorystep-agreewithin"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/MemoryLightCone.memoryStep_agreeWithin"),
-                H("Agreement propagates to the smaller light cone"),
+                H("Agreement on the smaller light cone"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Agreement through radius n plus one implies agreement through radius n after the same deletion and recentering. Both retained radii need only be at least n. Equality of the full memories is not required."))),
+                Blocks(Paragraph(Text("Agreement through radius n plus one implies agreement through radius n after the same update, when both retention radii are at least n."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("hard-core-complete-blocker-step"),
+                DescribeId.Create("hard-core-memorylightcone-completestep"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/MemoryLightCone.completeStep"),
-                H("The complete accumulation of deleted vertices"),
+                H("Complete blocker accumulation"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("This transition uses the same ordered deletions and coordinate map as geometricStep, retaining every old blocker. There is no spatial truncation."))),
+                Blocks(Paragraph(Text("Use the same deletion and recentering without forgetting any old blocker."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("hard-core-finite-horizon-exact"),
+                DescribeId.Create("hard-core-memorylightcone-finite-horizon-exact"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/MemoryLightCone.finite_horizon_exact"),
-                H("Radius at least depth gives exact complete counts"),
+                H("Exact complete counts within the horizon"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("At every fixed depth n, a retention radius at least n gives exactly the complete count if initial membership agrees through radius n. Both computations use the same history-based ordering. The result permits arbitrary initial finite blocker sets and arbitrary direction histories. It does not interchange the radius and depth limits or prove convergence of asymptotic growth rates."))),
-                DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("For a common history-based ordering, radius at least n reproduces the complete depth-n count whenever initial blockers agree through radius n. This finite-depth statement alone does not interchange radius and depth limits."))),
+                DescribeRole.Theorem))));
 }
