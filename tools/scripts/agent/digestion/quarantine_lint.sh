@@ -65,6 +65,21 @@ for p in files:
     hits = sorted({m.group(0) for m in SL019.finditer(text)})
     if hits:
         bad(f"SL-019 anomaly-bearing words in quarantine payload: {hits}")
+    # SL-016 canonical emission: BackfillInventoryWriter.Scalar throws on these shapes.
+    # Landed case 2026-09-06: " #check" (a Lean command) and " #{y in Q ...}" (cardinality
+    # notation) both tripped the YAML inline-comment sequence and rejected the whole PR.
+    for key in ("justification", "reentry_condition"):
+        value = " ".join((q.get(key) or "").split())
+        if not value:
+            continue
+        if " #" in value:
+            idx = value.index(" #")
+            bad(f"{key}: contains ' #', which BackfillInventoryWriter cannot emit "
+                f"canonically (YAML inline comment) at {idx}: ...{value[max(0, idx - 30):idx + 24]}...")
+        if value[0] in "-?:!&*#{[":
+            bad(f"{key}: starts with {value[0]!r}, which BackfillInventoryWriter rejects")
+        if value[0].isspace() or value[-1].isspace():
+            bad(f"{key}: leading or trailing whitespace is rejected by the writer")
     if q.get("blocker_class") not in CLASSES:
         bad(f"blocker_class not in {sorted(CLASSES)}: {q.get('blocker_class')!r}")
     for key in ("justification", "reentry_condition"):
