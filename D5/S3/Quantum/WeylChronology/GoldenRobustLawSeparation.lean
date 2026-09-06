@@ -13,8 +13,8 @@ import D5.S3.TotalVariation.Asymptotics.BernoulliBiasPairDistance
 
 The calibration module stops at a deterministic plus-port probability gap.
 The generic Bernoulli adapter proves that this gap is exactly total variation
-for the repository's canonical Bool law.  This file performs only that
-transport.  It introduces no new testing inequality or concentration theorem.
+for the repository's canonical Bool law. This file performs only that
+transport. It introduces no new testing inequality or concentration theorem.
 -/
 
 set_option autoImplicit false
@@ -22,6 +22,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.WeylChronology.GoldenRobustLawSeparation
 
+open D5.S3.Quantum.WeylChronology.GoldenFiniteShotVisibility
 open D5.S3.Quantum.WeylChronology.GoldenRobustCalibration
 open D5.S3.TotalVariation.Asymptotics.SymmetricBernoulliSecondOrder
 open D5.S3.TotalVariation.Asymptotics.SymmetricBernoulliProbabilityData
@@ -61,8 +62,8 @@ theorem robust_law_total_variation
     (robustChronologyFringe leftCal left)
     (robustChronologyFringe rightCal right)
 
-/-- The deterministic calibration margin is therefore also a certified lower
-bound on one-shot total variation. -/
+/-- The deterministic calibration margin is also a certified lower bound on
+one-shot total variation. -/
 theorem robust_total_variation_lower_bound
     (leftCal rightCal : RamseyCalibration) (v0 k0 : ℝ)
     (left right : List Bool) :
