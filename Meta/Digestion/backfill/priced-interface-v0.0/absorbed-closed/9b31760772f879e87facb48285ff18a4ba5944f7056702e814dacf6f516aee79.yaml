@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9b31760772f879e87facb48285ff18a4ba5944f7056702e814dacf6f516aee79
+  normalized_sha256: sha256:9b31760772f879e87facb48285ff18a4ba5944f7056702e814dacf6f516aee79
+cas_ref: sha256:9b31760772f879e87facb48285ff18a4ba5944f7056702e814dacf6f516aee79
+coverage_gids:
+  - gid: D5/S3/Resource/PriceFace.priceFace
+    target_statement_id: sha256:8c436bc0fd4c5190fff8ddbac0754dbd5e495a9dd4be96c7d1170dc175368440
+receipts:
+  scribe:
+    - gid: D5/S3/Resource/PriceFace.priceFace
+      definition_sha256: sha256:26380641d02ea0a3b5d23c702081982acc04bdcfbc1a2e28e4263b9a06e99177
+      emission_sha256: sha256:48d4c6ab5823f1fe1978cd0b0fab2b0b665e0e7f4848f7a684840cc44acefc90
+  unresolved_subitems: []

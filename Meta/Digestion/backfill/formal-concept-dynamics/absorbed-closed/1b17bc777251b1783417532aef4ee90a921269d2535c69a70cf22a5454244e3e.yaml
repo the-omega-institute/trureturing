@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1b17bc777251b1783417532aef4ee90a921269d2535c69a70cf22a5454244e3e
+  normalized_sha256: sha256:1b17bc777251b1783417532aef4ee90a921269d2535c69a70cf22a5454244e3e
+cas_ref: sha256:1b17bc777251b1783417532aef4ee90a921269d2535c69a70cf22a5454244e3e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/TransportValidity/PredicateRestrictedValidity.predicate_valid_on_restricted_admission
+    target_statement_id: sha256:6c1e313d918ffa2218750493a9f3b6f78b5ab26469fead5fc54f27ebfd017072
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/TransportValidity/PredicateRestrictedValidity.predicate_valid_on_restricted_admission
+      definition_sha256: sha256:2779b4c58b6665ad80b5d4d88302b7022d7e184813c71ecda1b08a1a2d603d59
+      emission_sha256: sha256:c294d5da63f78b3d13f849c6540cad8869de727468f9f2fd1b1f4a7139587e3c
+  unresolved_subitems: []
