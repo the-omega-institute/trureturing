@@ -212,6 +212,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
     private readonly TimeProvider timeProvider;
+    private readonly IAtomHistorySource atomHistorySource;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
@@ -238,13 +239,15 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier? scribeEmissionVerifier)
+        IScribeEmissionVerifier? scribeEmissionVerifier,
+        IAtomHistorySource? atomHistorySource = null)
         : this(
             repositoryRoot,
             repository,
             leanReportSource,
             scribeEmissionVerifier,
-            TimeProvider.System)
+            TimeProvider.System,
+            atomHistorySource)
     {
     }
 
@@ -253,13 +256,15 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
-        TimeProvider timeProvider)
+        TimeProvider timeProvider,
+        IAtomHistorySource? atomHistorySource = null)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
         this.timeProvider = timeProvider;
+        this.atomHistorySource = atomHistorySource ?? new GitAtomHistorySource(this.repositoryRoot);
     }
 
     public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) =>
@@ -377,7 +382,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
-                arguments);
+                arguments,
+                atomHistorySource,
+                timeProvider);
 
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
@@ -393,7 +400,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
-                arguments);
+                arguments,
+                atomHistorySource,
+                timeProvider);
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         GateAuthorityCommand.Run(repositoryRoot, arguments);
