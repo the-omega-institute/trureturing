@@ -1,0 +1,32 @@
+{
+  "scale": "a=log(3)/2",
+  "N": 64,
+  "M": 32768,
+  "quantization_bits": 44,
+  "error_radius_bits": 60,
+  "source_sha256": "8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0",
+  "exact_gram_sha256": "7f4e1049624807432efe96a68fe63babbc1c3bd37f2d40600a4cddadbddb85a9",
+  "exact_error_energy": "2249064940320895/664613997892457936451903530140172288",
+  "gram_error_upper": "1/10000000000",
+  "scalar_second_jet_tail_upper": "9/10000000000000",
+  "beta_interval_display": "[1.04126433194457753543982110756551169239225226072965371460763, 1.0412643319445775354398211075655116923922522607296537793305]",
+  "candidate_rayleigh_interval": "[0.0000000560907835275850890874743114995237658309895045623690485910183, 0.0000000560908238555741257344559807084299824772009075978314287922534]",
+  "ground_lower": "103/2000000000",
+  "candidate_upper": "560909/10000000000000",
+  "orthogonal_threshold": "1/200000",
+  "projective_distance_sq_upper": "15303/16495000",
+  "projective_distance_upper": "61/2000",
+  "full_lower_ldl_pivots_display": {
+    "even": 0.0031531449201242043,
+    "odd": 0.03974454928419704
+  },
+  "complement_ldl_pivots_display": {
+    "even": 0.2649527465156704,
+    "odd": 0.03954403713951146
+  },
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "elapsed_seconds": 10.829471111297607,
+  "status": "directed interval and exact integer inequalities passed; not a Lean run",
+  "scope": "fixed-window full-form bounds using the stated paper Fourier/domain and second-jet summation bridges"
+}
