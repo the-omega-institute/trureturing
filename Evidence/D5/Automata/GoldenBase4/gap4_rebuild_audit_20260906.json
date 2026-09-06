@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "audited_remote_revision": "118f4f9bfe17694b0aa5a57d910141b96b295b11",
+  "source_blobs_read_back_and_matched": {
+    "gap4_produce.cpp": "d133067b8e9a78c392a392e6dc62f13276e4fa06",
+    "check_gap4_certificate.cpp": "99d575fa24d9c50e6eb9e5051d0ea2623af687a8"
+  },
+  "regenerated_sha256": {
+    "gap4_power_rows.tsv": "beda549ec107431204410568a33f6b4c9e13890bd51edc372f75748ac0095fa7",
+    "gap4_0_16.proof": "5ff9c5a2d534c18f9108c9a3a08afc366a1f038984d296f68589a8a018e4f889",
+    "gap4_16_32.proof": "bb73e976a6390e34261202e29a24516330022fbe56a1f99f8eb733b9a565de97",
+    "gap4_32_48.proof": "a989437328dacefa7756bb774385f305f70c4cd68b1f73ef0da67934d19fc243"
+  },
+  "regeneration": {
+    "compiled_with": "g++ -O3 -std=c++17",
+    "case_ranges": [[0,16],[16,32],[32,48]],
+    "results": ["UNSAT","UNSAT","UNSAT"],
+    "completed_cases": [16,16,16],
+    "byte_identical_to_original_complete_proofs": true
+  },
+  "independent_replay": {
+    "exact_power_rows": 144,
+    "maximum_index": 249,
+    "gap_letters": 19,
+    "trie_nodes": 13831,
+    "transition_variables": 76,
+    "output_cases": 48,
+    "certificate_nodes": 1272968,
+    "branch_nodes": 420692,
+    "contradiction_leaves": 852276,
+    "domain_updates": 2942575010,
+    "maximum_depth": 21,
+    "measured_seconds": 125.741,
+    "solver_used": false,
+    "recurrent_capacity_restricted": false
+  },
+  "rejected_mutations": [
+    "wrong_digit", "nonpower_word", "missing_branch_value", "false_contradiction",
+    "truncated_tree", "omitted_cases", "duplicate_case", "trailing_garbage"
+  ],
+  "scope": "The mathematical normalization plus complete exact replay supports at least five previous-one states. The decoded proof is reconstructed from retained deterministic source and the exact power samples, not from a stored PASS flag.",
+  "lean_executed": false,
+  "independent_author_review": false,
+  "new_total_state_lower_bound": false
+}
