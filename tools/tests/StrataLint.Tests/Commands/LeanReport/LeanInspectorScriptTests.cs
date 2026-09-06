@@ -125,7 +125,8 @@ public sealed class LeanInspectorScriptTests
         Write(repository, "Trureturing.lean", "import D5.Probe\n");
         Write(repository, "D5/Probe.lean", "def probe : Nat := 1\n");
         foreach (var relative in new[]
-            { InspectorScript, InspectorSource, MaterialCompactor, InputScript, ResourceObservationLibrary })
+            { InspectorScript, InspectorSource, MaterialCompactor, InputScript, ResourceObservationLibrary,
+                "tools/scripts/worktree/lean-cache-input.sh" })
         {
             Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository, relative))!);
             File.Copy(Path.Combine(root, relative), Path.Combine(repository, relative));

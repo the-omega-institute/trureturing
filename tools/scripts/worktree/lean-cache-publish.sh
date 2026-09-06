@@ -106,10 +106,12 @@ fi
 
 # ── 身份 ──────────────────────────────────────────────────────────────────────
 # 两个哈希来自本仓既有的唯一真源，不另算一套。
-helper="${repository}/tools/scripts/report/lean-report-input.sh"
+helper="${repository}/tools/scripts/worktree/lean-cache-input.sh"
 [[ -x "$helper" ]] || die "input helper is absent: $helper"
-read -r _address _producer sources_sha256 config_sha256 \
-  < <("$helper" address --repository "$repository")
+input_address="$("$helper" address --repository "$repository")" \
+  || die "Lean input address is unavailable"
+[[ "$input_address" =~ ^[0-9a-f]{64}\ [0-9a-f]{64}$ ]] || die "Lean input address is malformed"
+read -r sources_sha256 config_sha256 <<< "$input_address"
 [[ "$sources_sha256" =~ ^[0-9a-f]{64}$ ]] || die "sources address is malformed"
 [[ "$config_sha256" =~ ^[0-9a-f]{64}$ ]] || die "config address is malformed"
 
