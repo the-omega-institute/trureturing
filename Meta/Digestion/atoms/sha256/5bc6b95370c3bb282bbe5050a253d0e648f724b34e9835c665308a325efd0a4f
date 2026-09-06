@@ -1,0 +1,31 @@
+## 还可以给出有限测量误差
+
+若每个测得的 \(\ln w\) 误差至多为 \(\eta\)，且
+
+$$
+f=\partial_U\partial_V\ln w
+$$
+
+在该单元内满足
+
+$$
+|f(U,V)-f(U_c,V_c)|
+\le
+M(|U-U_c|+|V-V_c|),
+$$
+
+则
+
+$$
+\boxed{
+\left|
+\frac{\widehat{\mathcal K}}{h_Uh_V}
+-f(U_c,V_c)
+\right|
+\le
+\frac{4\eta}{h_Uh_V}
++\frac{M(h_U+h_V)}4.
+}
+\tag{339.7}
+$$
+

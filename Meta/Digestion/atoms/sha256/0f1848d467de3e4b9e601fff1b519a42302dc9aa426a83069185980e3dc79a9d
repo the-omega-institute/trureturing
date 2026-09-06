@@ -1,0 +1,13 @@
+### 本轮核验
+
+完成了 **38项精确有限恒等式或实例检查**，以及一组覆盖21个实能量点的数值交叉检查。
+
+其中包括：三步回声的完整递推、Schur 消元结合律、正核 Gram 分解、最小内部维数、谱分裂的秩跳变、5040模型的响应零点、诱导范数以及两类探针的不同低能速度。
+
+[核验脚本](sandbox:/mnt/data/observer_formalization/check_boundary_memory_geometry.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/boundary_memory_geometry_checks.json)
+
+**本轮没有运行 Lean 内核检查。**精确有限实例、一般纸面证明、数值交叉检查与现实物理验证，仍然分别记录。
+
+---
+

@@ -1,0 +1,24 @@
+**第二，对称性保护。**
+
+把：
+
+$$
+\mathsf S\Pi_A=-\Pi_A\mathsf S
+$$
+
+与：
+
+$$
+\mathsf S\rho\mathsf S=\rho
+$$
+
+组合成：
+
+$$
+\operatorname{Tr}(\rho\Pi_A)=0,
+$$
+
+并保留式（15）的误差版本。
+
+这样可以区分：零点是偶然的精细配重，还是受指定交换对称保护。
+

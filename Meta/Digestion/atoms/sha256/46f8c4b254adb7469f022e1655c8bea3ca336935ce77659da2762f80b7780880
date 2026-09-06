@@ -1,0 +1,52 @@
+## 定理344.1　最小自伴内部实现维数
+
+在有限维自伴实现类中，精确实现同一个 \(\Sigma(z)\) 所需的最小内部维数为
+
+$$
+\boxed{
+d_{\min}
+=
+\sum_{\lambda:R_\lambda\ne0}
+\operatorname{rank}R_\lambda.
+}
+\tag{344.4}
+$$
+
+### 证明
+
+在任意实现中，
+
+$$
+R_\lambda=VP_\lambda V^\dagger
+$$
+
+的秩不超过相应内部本征空间的维数。因此总内部维数至少为式（344.4）。
+
+反向，对每个权重作满列秩分解
+
+$$
+R_\lambda=B_\lambda B_\lambda^\dagger.
+$$
+
+取内部空间
+
+$$
+\bigoplus_\lambda\mathbb C^{\operatorname{rank}R_\lambda},
+$$
+
+在第 \(\lambda\) 块上令 Hamiltonian 为 \(\lambda I\)，并取
+
+$$
+V=(B_{\lambda_1},B_{\lambda_2},\ldots).
+$$
+
+它恰好实现原来的 \(\Sigma\)，达到下界。∎
+
+### 这是什么维数？
+
+它是**预测当前边界响应所需的最小自伴线性内部模式数**。
+
+它不是整个宇宙的维数，不是记忆比特数，也不排除其他类型的近似、非线性或非自伴实现。
+
+---
+

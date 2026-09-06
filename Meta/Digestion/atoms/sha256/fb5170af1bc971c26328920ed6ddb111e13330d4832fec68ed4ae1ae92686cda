@@ -1,0 +1,57 @@
+# 五、保持全部历史合法，仍然可以让所有实相位零点一起离开观察切面
+
+为了进一步明确“零点离线”可以怎样发生，定义历史顺序偏置：
+
+$$
+\boxed{
+\mathbb P_\kappa(\gamma)
+=
+\frac{e^{\kappa A(\gamma)}}{Q_{\mathbf a}(e^\kappa)},
+\qquad \kappa\in\mathbb R.
+}
+\tag{16}
+$$
+
+它始终是严格正概率，全部合法历史都保留。
+
+对应读数：
+
+$$
+\boxed{
+\mathcal A_\kappa(\theta)
+=
+\frac{
+Q_{\mathbf a}(e^{\kappa+i\theta})
+}{
+Q_{\mathbf a}(e^\kappa)
+}.
+}
+\tag{17}
+$$
+
+\(\kappa=0\) 恢复等权历史。
+
+对当前完整多重集历史，\(Q_{\mathbf a}\) 的全部零点都在单位圆上。因此：
+
+$$
+\boxed{
+\kappa\ne0
+\Longrightarrow
+\mathcal A_\kappa(\theta)\ne0
+\quad\forall\theta\in\mathbb R.
+}
+\tag{18}
+$$
+
+但是零点并没有在复参数中消失。
+
+若原零点相位为 \(\theta_j\)，则新零点位于：
+
+$$
+\boxed{
+\theta=\theta_j+i\kappa
+\pmod{2\pi}.
+}
+\tag{19}
+$$
+

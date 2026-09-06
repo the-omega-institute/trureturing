@@ -1,0 +1,16 @@
+**等概率是这里明确加入的模型选择，不是事件偏序自动规定的概率律。**
+
+定义历史态：
+
+$$
+\boxed{
+|\Psi_a\rangle
+=
+\frac1{\sqrt{M(a)}}
+\sum_{w:\operatorname{count}(w)=a}|w\rangle.
+}
+\tag{6}
+$$
+
+它作用在八个四能级时间槽组成的空间上。这类固定各标签占据数的均匀叠加，是已有研究中的 qudit Dicke 态；其 Schmidt 分解与精确矩阵乘积表示已有系统理论。([arXiv][1])
+

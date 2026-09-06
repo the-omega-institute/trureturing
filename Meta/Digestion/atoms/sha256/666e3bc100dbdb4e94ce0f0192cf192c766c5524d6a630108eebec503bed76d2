@@ -1,0 +1,44 @@
+## 临界点本身，所有有限矩阵仍然可以严格正定
+
+令
+
+$$
+f_a(\theta)=\Re\mathcal F_\xi(ae^{i\theta}).
+$$
+
+由于 \(a_*<R_0\)，这个函数在临界圆周附近仍光滑解析，并且
+
+$$
+f_{a_*}(\theta)\ge0,
+\qquad
+\min_\theta f_{a_*}(\theta)=0.
+\tag{33}
+$$
+
+它不恒为零，因为平均值为 \(1\)。
+
+因此，对每个非零有限次多项式 \(q\)，
+
+$$
+\int|q(e^{i\theta})|^2f_{a_*}(\theta)
+\frac{d\theta}{2\pi}>0.
+$$
+
+于是：
+
+$$
+\boxed{
+T_N(a_*)\succ0\quad\forall N.
+}
+\tag{34}
+$$
+
+但由于 \(f_{a_*}\) 有零点，越来越长的相干测试可以集中在那里，故
+
+$$
+\boxed{
+\inf_N\lambda_{\min}(T_N(a_*))=0.
+}
+\tag{35}
+$$
+

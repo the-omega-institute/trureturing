@@ -1,0 +1,12 @@
+**第一，调度保真。**
+
+不能只证明两种表示具有相同合法历史，还要证明：
+
+$$
+\mathbb P_{\mathrm{encoded}}(\mathcal Z\gamma)
+=
+\mathbb P_{\mathrm{original}}(\gamma).
+$$
+
+否则，虽然终点和时间都保留，相消零点仍可能改变。
+
