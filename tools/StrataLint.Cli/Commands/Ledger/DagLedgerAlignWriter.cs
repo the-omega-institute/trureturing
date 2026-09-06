@@ -199,12 +199,42 @@ internal static class DagLedgerAlignWriter
             .Where(path => state.Records.TryGetValue(path, out var record)
                 && record.StatementId != catalog.ByPath[path].StatementId)
             .ToImmutableHashSet();
+        // Resolve edges from the current report: dangling recorded identities cannot
+        // identify their former dependency paths or seed a ledger reverse traversal.
+        var prerequisiteRepairs = considered
+            .Where(path => baseView.ActiveByPath.TryGetValue(path, out var active)
+                && active.Material.StatementId == catalog.ByPath[path].StatementId
+                && !DagLedgerLoader.DependenciesPlaced(
+                    active.Material.PrerequisiteFrozenNodeIds.Select(static identity => identity.Value),
+                    baseView.EventIdentities))
+            .ToImmutableHashSet();
+        var repairClosure = DescendantClosure(
+            prerequisiteRepairs,
+            baseView.ActiveByPath.Keys,
+            adjacency);
+        ValidateClosed(repairClosure, truth.Snapshot, states);
+        foreach (var path in repairClosure.OrderBy(static path => path.Value, StringComparer.Ordinal))
+        {
+            var recorded = baseView.ActiveByPath[path].Material;
+            var candidate = catalog.ByPath[path];
+            if (recorded.StatementId != candidate.StatementId
+                || !recorded.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds)
+                || !candidate.AxiomClosure.All(LeanAxiomFacts.IsStandard)
+                || !state.Records.TryGetValue(path, out var pin)
+                || pin.StatementId != recorded.StatementId)
+            {
+                throw new InvalidOperationException(
+                    "AUTHORIZATION overall=fail prerequisite repair requires unchanged "
+                    + $"statement/declaration identities and matching frozen state: {path.Value}");
+            }
+        }
         var initialRegeneration = considered
             .Where(path => !baseView.ActiveByPath.TryGetValue(path, out var active)
                 || active.Material.StatementId != catalog.ByPath[path].StatementId
                 || !active.Material.DeclarationStatementIds.SequenceEqual(
                     catalog.ByPath[path].DeclarationStatementIds))
-            .ToImmutableHashSet();
+            .ToImmutableHashSet()
+            .Union(prerequisiteRepairs);
         var regeneration = DescendantClosure(
             initialRegeneration,
             baseView.ActiveByPath.Keys,
@@ -224,6 +254,12 @@ internal static class DagLedgerAlignWriter
             replacementFiles,
             "aligned frozen ledger");
         _ = ReadView(replacementFiles);
+        if (!prerequisiteRepairs.IsEmpty
+            && !DagLedgerLoader.TryOrderClosedDag(replacementEvents, [], out _))
+        {
+            throw new InvalidOperationException(
+                "repaired frozen ledger does not form a closed dependency DAG");
+        }
         var stateWritePaths = changedPaths
             .Union(addedPaths)
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
@@ -241,7 +277,10 @@ internal static class DagLedgerAlignWriter
                 changedPaths.Count,
                 addedPaths.Count,
                 considered.Length - changedPaths.Count - addedPaths.Count,
-                conflicts: 0),
+                conflicts: 0)
+            + (prerequisiteRepairs.IsEmpty ? string.Empty
+                : $"LEDGER_REPAIR seed_modules={prerequisiteRepairs.Count} "
+                    + $"reattested_modules={repairClosure.Count}\nAUTHORIZATION overall=pass\n"),
             string.Empty);
         if (newEventFiles.IsEmpty && stateEvents.IsEmpty)
         {
@@ -330,15 +369,7 @@ internal static class DagLedgerAlignWriter
                     $"canonical Lean report cannot materialize Closed module {path.Value}");
             }
 
-            var prerequisites = adjacency[path]
-                .Select(dependency => eventHashes.TryGetValue(dependency, out var eventHash)
-                    ? FrozenNodeId.Create(eventHash)
-                    : baseView.ActiveByPath.TryGetValue(dependency, out var active)
-                        ? FrozenNodeId.Create(active.EventHash)
-                        : throw new InvalidOperationException(
-                            $"module {path.Value} dependency {dependency.Value} has no accepted Freeze"))
-                .OrderBy(static identity => identity.Value, StringComparer.Ordinal)
-                .ToImmutableArray();
+            var prerequisites = ResolvePrerequisites(path, adjacency, baseView, eventHashes);
             var material = candidate with
             {
                 FrozenNodeId = FrozenContentAddress.ComputeFrozenNodeId(
@@ -365,6 +396,22 @@ internal static class DagLedgerAlignWriter
 
         return files.ToImmutable();
     }
+
+    private static ImmutableArray<FrozenNodeId> ResolvePrerequisites(
+        RepoPath path,
+        IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
+        FrozenLedgerBaseView baseView,
+        IReadOnlyDictionary<RepoPath, string>? eventHashes = null) =>
+        adjacency[path]
+            .Select(dependency => eventHashes is not null
+                && eventHashes.TryGetValue(dependency, out var eventHash)
+                    ? FrozenNodeId.Create(eventHash)
+                    : baseView.ActiveByPath.TryGetValue(dependency, out var active)
+                        ? FrozenNodeId.Create(active.EventHash)
+                        : throw new InvalidOperationException(
+                            $"module {path.Value} dependency {dependency.Value} has no accepted Freeze"))
+            .OrderBy(static identity => identity.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
 
     private static ImmutableArray<RepositoryFile> ReplaceEvents(
         ImmutableArray<RepositoryFile> acceptedFiles,
