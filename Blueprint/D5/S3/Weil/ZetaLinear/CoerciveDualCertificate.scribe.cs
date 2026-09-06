@@ -31,6 +31,6 @@ internal sealed class CoerciveDualCertificateDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("exact-optimality"),
                 DeclarationHandle.Create("D5/S3/Weil/ZetaLinear/CoerciveDualCertificate.exact_dual_budget_optimal"), H("Exact dual optimality when attained"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("When the full projected residual vanishes and the trial image is nonzero, the coefficient equals its actual energy and is a lower bound for every valid global energy-readout coefficient. Existence of such a trial is not asserted."))), DescribeRole.Theorem)),
+                Blocks(Paragraph(Text("When the full projected residual vanishes and the trial image is nonzero, the coefficient equals its actual energy, gives a valid bound for every orthogonal domain vector, and is minimal among all valid global energy-readout coefficients. Existence of such a trial is not asserted."))), DescribeRole.Theorem)),
         []));
 }
