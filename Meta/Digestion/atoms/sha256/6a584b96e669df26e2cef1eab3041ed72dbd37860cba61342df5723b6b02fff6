@@ -1,0 +1,20 @@
+## 34. Support complexity and automaton complexity are different quantities
+
+`StructuredResponseTableSupport.lean` formalizes the boundary needed to prevent an invalid compression argument.
+
+Let a deterministic latent generator map a finite state carrier `S` into all k-row response tables. If it is surjective, then
+
+```text
+4^k <= Fintype.card S.
+```
+
+This is `surjective_response_table_generator_requires_four_pow`, obtained directly from finite cardinality. Its contrapositive `small_generator_not_universal` says that every smaller latent family omits at least one unrestricted table.
+
+The probabilistic statement is stronger for the canonical independent-row witness. If every stratum response kernel gives strictly positive mass to all four response types, then `independentResponseTable_full_support` proves that every one of the `4^k` full tables has positive mass. Therefore any deterministic latent generator that exactly covers the positive-mass support needs at least `4^k` states. This is stated by `positive_independent_table_law_generator_lower_bound` and its small-generator impossibility corollary.
+
+Consequently, the exponential carrier in Section 31 is not merely an inefficient naming scheme when the product table law has full support. Exact atom-by-atom latent enumeration really has exponential support complexity.
+
+This does not conflict with the small DFAO in the golden-ratio lane. A DFAO state is a computational state used to evaluate a coordinate oracle. It need not correspond to one latent response table atom. A finite automaton can describe one infinite structured quaternary sequence with a small transition system while the unrestricted set of length-k quaternary sequences still has `4^k` members. Algorithmic description complexity and probability-support complexity are different invariants.
+
+In particular, the 21-state upper construction currently developed in draft PR #5405 cannot be read as a 21-atom representation of every causal response table. The bridge source deliberately imports only the stable `GoldenBase4AutomataOracle` definitions and does not depend on the unmerged 21-state candidate.
+

@@ -1,0 +1,16 @@
+## 67. The actual partial-mediation model and authoritative inputs
+
+Let treatment A and outcome Y be Boolean, and M range over any nonempty finite set of m mediator values. The structural equations are
+
+```text
+M = f_M(A,U_M),
+Y = f_Y(A,M,U_Y),
+U_M independent of U_Y.
+```
+
+The complete mediator disturbance carries (M_0,M_1) with law pi. The complete outcome disturbance carries the table (Y_(a,m))_(a,m) with law nu. The actual source law is pi x nu; every counterfactual world reads the same pair and the same outcome table. An independent treatment-assignment disturbance can be adjoined without changing these intervention responses.
+
+The inputs are alpha(m)=P(M_0=m), beta(n)=P(M_1=n), and r_a(m)=P(Y_(a,m)=1), all rational. These are intervention kernels in the formal statement. In the no-confounding graph and positive parent cells they agree with the corresponding observed conditionals, but the source does not prove that statistical identification bridge or infer null-cell kernels from data. No independence among entries inside either disturbance is required.
+
+The target is population benefit P(Y_(0,M_0)=0,Y_(1,M_1)=1). In `PartialMediatorTransportReduction.lean`, `partialMediatorResponseLaw` is the actual pushforward of the existing `productResponseLaw`, and `partialMediatorBenefit_actual_response` binds its objective to the pre-existing `benefitResponseMass`. `HasMediatorMarginals` fixes every row and column of the same pi. This prevents independently maximizing mediator cells that cannot coexist in one coupling.
+

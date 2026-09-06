@@ -498,7 +498,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void AlignRepairsCoverageButRejectsScribeIntegrityMismatchBeforeWritingLedger(
+    public void AlignRepairsCoverageAndAcceptsScribeByteMismatchBeforeWritingLedger(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
@@ -516,25 +516,19 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain(mismatchCode, result.Error, StringComparison.Ordinal);
         if (mismatchCode == "coverage-target-mismatch")
-        {
-            Assert.True(result.Success, result.Error);
             Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
         else
-        {
-            Assert.False(result.Success);
-            Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
-            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
             Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
     }
 
     [Theory]
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void AlignRepairsCoverageButRejectsScribeBacklogAtBaseline(string mismatchCode)
+    public void AlignRepairsCoverageAndAcceptsScribeByteBacklogAtBaseline(string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
@@ -555,17 +549,12 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain(mismatchCode, result.Error, StringComparison.Ordinal);
         if (mismatchCode == "coverage-target-mismatch")
-        {
-            Assert.True(result.Success, result.Error);
             Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
         else
-        {
-            Assert.False(result.Success);
-            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
             Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
     }
 
     [Fact]

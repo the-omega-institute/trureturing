@@ -1,0 +1,14 @@
+## 35. Relation to the current Zeckendorf/Fibonacci DFAO research and next formal target
+
+Barnoff, Bright, and Shallit, *Computing the base-b representation of quadratic irrationals using automata*, Theoretical Computer Science 1071 (2026), 115843, proves that the n-th base-b digit of a quadratic irrational is a finite-state function of the corresponding Ostrowski representation of `b^n`. In the golden-ratio, base-four case this is exactly the Zeckendorf representation of `4^n`. The bridge above uses the same repository input definition, rather than introducing a second power or Zeckendorf encoder.
+
+Moradi, Rampersad, and Shallit, arXiv:2603.21645v1, studies complexity of arithmetic relations and linear subsequences in Fibonacci-automatic systems. Its linear-subsequence results do not automatically imply a finite-state recurrence in the exponent k for the exponentially sparse restriction `4^k`. The bridge established here therefore stops at the exact capacity/input identity and the existing DFAO coordinate oracle.
+
+Earp-Lynch, Earp-Lynch, Kihel, and Tiebekabe, arXiv:2608.04445, studies powers represented as sparse sums of Fibonacci numbers. That number-theoretic sparsity can constrain the shapes of some Zeckendorf power inputs, but it supplies no support-reduction theorem for arbitrary causal response tables.
+
+A genuine causal use of automata would require an explicit cross-stratum structural hypothesis. For ordered strata, one could restrict admissible complete response tables to a regular, automatic, or sofic family. Such a restriction can reduce support and can tighten partial-identification bounds, but it changes the feasible causal model and therefore needs scientific justification. The unrestricted sharpness theorems must remain available as the outer model.
+
+There is also a separate compression mechanism that should be studied before attributing support reduction to automata. If only finitely many row marginals and query moments must be preserved, convex support-reduction results such as Caratheodory-type representations can potentially replace a `4^k` ambient carrier by a support whose size is controlled by the number of retained moment coordinates. That would preserve a specified finite observation/query map without imposing an automatic cross-stratum law. Formalizing this exact rational moment-preserving support reduction is the next high-value representation target.
+
+The two new Lean sources and their Scribe companions establish the radix bridge and the exact full-support obstruction. They do not claim that the golden sequence is a scientifically justified causal response mechanism, that the powers-only DFAO minimum has been resolved, or that automaton state count is an information-escape score.
+

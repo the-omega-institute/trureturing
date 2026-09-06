@@ -1,0 +1,28 @@
+## 57. Paper derivation: optimal residual width equals universal moment ambiguity
+
+This section is a finite linear-programming derivation; the strong-duality equality has not yet been added as a Lean theorem. Fix a nonempty finite allowed carrier S, rational feature columns phi(i), and a rational query q(i). Consider the worst query difference between probability laws on S sharing the same feature moments:
+
+```text
+Delta_S(phi,q) = max { abs(E_u[q]-E_v[q]) : u,v in simplex(S), E_u[phi]=E_v[phi] }.
+```
+
+Swapping u and v shows that the absolute-value maximum equals the maximum of the signed difference. The primal linear program has objective `q.u - q.v`, constraints `1.u=1`, `1.v=1`, `Phi.u-Phi.v=0`, and nonnegative u,v. Its dual minimizes alpha+gamma subject to
+
+```text
+alpha + beta.phi(i) >= q(i),
+gamma - beta.phi(i) >= -q(i)  for every i in S.
+```
+
+For fixed beta, the least alpha is the maximum of q-beta.phi and the least gamma is minus its minimum. Finite LP strong duality therefore gives
+
+```text
+Delta_S(phi,q) = min_beta [ max_i(q(i)-beta.phi(i)) - min_i(q(i)-beta.phi(i)) ]
+              = 2 * min_{alpha,beta} max_i abs(q(i)-alpha-beta.phi(i)).
+```
+
+The primal is nonempty and bounded. Since its data are rational, optimal rational primal and dual witnesses exist, so the same equality applies to rational probability laws. The residual center alpha does not affect oscillation; the centered best uniform approximation splits the optimal width in half.
+
+Thus universal zero ambiguity is equivalent to affine reconstruction on S. This is a statement about all laws on the allowed carrier and their moment fibers. It is distinct from the width for one fixed observed moment vector, which can be smaller, and from preservation by one particular compression map. Nonconvex Markovian restrictions on the probability-law family require their own analysis; the displayed duality uses the full pair of simplices.
+
+For the Boolean benefit query q=1[(Y0,Y1)=(0,1)] and retained features (Y0,Y1), choose beta=(-1/2,1/2). The residual is `(0,1/2,1/2,0)` in the established four-cell ordering, so its oscillation is 1/2. The equal-weight diagonal and anti-diagonal laws have identical marginals (1/2,1/2) and benefit values zero and 1/2. These witnesses match the residual certificate, giving universal ambiguity exactly 1/2. This supplies a consistency bridge to the original benefit nonidentification example without replacing its sharper data-dependent Frechet interval.
+

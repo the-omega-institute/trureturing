@@ -1,0 +1,32 @@
+## 37. Affine profile rank is the sharper complexity parameter
+
+The raw number of retained coordinates can overcount information. `profileAffineRank` is defined as
+
+```text
+r(phi) = finrank_Q vectorSpan(range(phi)).
+```
+
+`MomentCompression.card_le_profileAffineRank` proves the sharper bound
+
+```text
+selected atoms <= r(phi) + 1.
+```
+
+Thus duplicate feature profiles and affine dependencies among the retained rows reduce the support bound automatically. For an LP with constraint rows `A_c` and objective `q`, `linearRowQueryFeature` packages the joint profile of one atom as
+
+```text
+atom |-> (q(atom), A_1(atom), ..., A_m(atom)).
+```
+
+and `linearProblemProfileRank` is the affine rank of this joint profile family. The formal chain is
+
+```text
+selected atoms
+  <= linearProblemProfileRank(A,q) + 1
+  <= number_of_constraint_rows + 2.
+```
+
+The second inequality is only an ambient bound. The rank-aware statement is the mathematically informative one when constraints are repeated, linearly dependent, or unable to distinguish large groups of canonical atoms.
+
+This gives a direct geometric connection to canonical-domain reduction. Choe, Kwon, Park, and Lee, UAI 2026, quotient canonical counterfactual states that are indistinguishable to every LP row and the objective. The range of `linearRowQueryFeature` already collapses exactly such duplicate profiles. Caratheodory then performs a second, law-specific reduction inside the convex hull of the distinct profile family. Exact profile equality and affine redundancy are separate reductions and both can decrease the witness size.
+

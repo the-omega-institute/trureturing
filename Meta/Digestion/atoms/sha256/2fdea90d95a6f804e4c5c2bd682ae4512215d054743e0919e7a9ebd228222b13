@@ -1,0 +1,32 @@
+## 62. A complete Boolean benefit tolerance family
+
+`D5/S3/ConceptDynamics/PartialIdentification/BenefitMarginalToleranceSharp.lean` constructs a certificate for every eta0,eta1 >= 0. It retains the existing `FiniteResponseLaw (Bool x Bool)`, `controlSuccessMarginal`, `treatmentSuccessMarginal`, and `benefitResponseMass`. The Fin 4 array is only their encoding in order 00,01,10,11, with explicit expectation and probability-law transport in the proof.
+
+The main theorem gives the universal bound, an attaining pair of actual response laws, and the least affine residual budget:
+
+```text
+max abs(Benefit(u)-Benefit(v)) = min(1, (1+eta0+eta1)/2),
+```
+
+where the two control marginals differ by at most eta0 and the two treated marginals by at most eta1. There is no fixed marginal location, primal optimizer, numerical threshold table or strong-duality hypothesis in this theorem. Dependence between the two potential outcomes within one outcome mechanism remains unrestricted.
+
+For eta0+eta1 <= 1, put
+
+```text
+t=(1+eta0+eta1)/2,  s=(1+eta0-eta1)/2,
+u=(0,t,1-t,0),     v=(1-s,0,0,s).
+```
+
+Nonnegative tolerances and their sum bound give 0<=t,s<=1. The control discrepancy is -eta0, the treatment discrepancy eta1, and the benefit gap t. The predictor beta=(-1/2,1/2) has residual `(0,1/2,1/2,0)`, so both support contacts and both signed alignments hold. Its budget is exactly t.
+
+For eta0+eta1 > 1, take
+
+```text
+s=min(1,eta0),
+u=(0,1,0,0),  v=(1-s,0,0,s).
+```
+
+The marginal discrepancies are -s and 1-s. The second is at most eta1, including eta0>=1. Choosing beta=0 and residual interval [0,1] gives budget one and both contacts. The source includes the joining boundary in the first branch; both constructions have the same optimum there.
+
+For example, eta0=1/10 and eta1=1/5 give `u=(0,13/20,7/20,0)` and `v=(11/20,0,0,9/20)`, with benefit difference 13/20. At zero tolerances the earlier diagonal/anti-diagonal ambiguity 1/2 is recovered. This global modulus does not replace the narrower Frechet interval at a particular observed pair of marginals.
+
