@@ -1,0 +1,93 @@
+# 一、把“分辨率”变成一个可计算参数
+
+先对一个确实合法的单位圆概率测度 \(\mu\) 推导。
+
+定义相关系数
+
+$$
+r_n=\int e^{-in\theta}\,d\mu(\theta),
+\qquad r_0=1,\qquad r_{-n}=\overline{r_n}.
+$$
+
+对应矩阵为
+
+$$
+T_N=(r_{i-j})_{0\le i,j\le N}.
+$$
+
+它是一个 Gram 矩阵，因此半正定。
+
+现在引入
+
+$$
+0<a<1,
+$$
+
+定义平滑后的系数
+
+$$
+\boxed{
+r_n^{(a)}=a^{|n|}r_n.
+}
+\tag{1}
+$$
+
+\(a\) 越接近 \(1\)，保留的长程相关越多；\(a\) 越小，较远时刻之间的相关被压低得越强。
+
+令
+
+$$
+P_a(\theta)
+=
+\frac{1-a^2}{1-2a\cos\theta+a^2}.
+$$
+
+它满足
+
+$$
+P_a(\theta)
+=
+\sum_{n\in\mathbb Z}a^{|n|}e^{in\theta}.
+$$
+
+所以式（1）恰好对应谱测度与 Poisson 核卷积，而不是任意修改每一项。单位圆矩、正测度和相应解析函数之间的关系属于经典 OPUC 框架。([DLMF][1])
+
+如果写
+
+$$
+a=e^{-\varepsilon},
+$$
+
+那么
+
+$$
+\boxed{
+r_n^{(\varepsilon)}=e^{-\varepsilon|n|}r_n,
+\qquad
+\partial_\varepsilon r_n^{(\varepsilon)}
+=-|n|r_n^{(\varepsilon)}.
+}
+\tag{2}
+$$
+
+这里同时出现两个尺度：
+
+$$
+\boxed{
+n:\text{相关或历史跨度};
+\qquad
+\varepsilon:\text{分辨率损失}.
+}
+$$
+
+决定该项被削弱多少的，是乘积
+
+$$
+\boxed{\varepsilon n.}
+\tag{3}
+$$
+
+因此，空间／谱分辨率与时间长度不是可以分别忽略的两个参数。
+
+还要明确：**这里研究的是指定的谱平滑操作，不是说所有物理噪声、有限精度计算或测量扰动都等价于它。**
+

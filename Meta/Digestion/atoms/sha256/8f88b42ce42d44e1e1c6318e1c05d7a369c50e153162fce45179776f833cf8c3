@@ -1,0 +1,38 @@
+**作为完成化函数的对数响应，**它的非实零点会迫使特定正性失效。
+
+而5040与这条研究链的直接联系，现在可以写成：
+
+$$
+\boxed{
+\frac{w_{5040}(1+\varepsilon)}{\varepsilon}
+\longrightarrow
+\frac{403}{105}.
+}
+$$
+
+结合项目的成本项，它说明：
+
+> **5040是某个有限观察窗口在 ζ 归一化边界附近的最优资源配置，而不是 ζ 所有零点和临界的唯一来源。**
+
+因此，继续“换角度”最有效的方法不是寻找更多神秘形状，而是反复做同一件严格的事：
+
+$$
+\boxed{
+\text{明确观察对象}
+\longrightarrow
+\text{写出可实现性约束}
+\longrightarrow
+\text{计算失效边界}
+\longrightarrow
+\text{给出有限可核验见证}.
+}
+$$
+
+这样，我们不仅能够发现“哪里出现异常”，还能够回答：**究竟是哪一种解释、哪一种近似、哪一种正性或哪一个有限观察窗口，到那里不再足够。**
+
+[1]: https://dlmf.nist.gov/25.2 "https://dlmf.nist.gov/25.2"
+[2]: https://arxiv.org/abs/2104.10548 "https://arxiv.org/abs/2104.10548"
+[3]: https://arxiv.org/abs/0704.3448 "https://arxiv.org/abs/0704.3448"
+[4]: https://dlmf.nist.gov/25.11 "https://dlmf.nist.gov/25.11"
+[5]: https://dlmf.nist.gov/25.4 "https://dlmf.nist.gov/25.4"
+[6]: https://arxiv.org/abs/1005.1104 "https://arxiv.org/abs/1005.1104"

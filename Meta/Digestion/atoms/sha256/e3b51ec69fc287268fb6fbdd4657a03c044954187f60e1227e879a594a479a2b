@@ -1,0 +1,77 @@
+# 十、可以把整段离散计算统一编码成一个量子几何，但正性本身不会证明 RH
+
+现在假设一段有限计算已经通过保存输入、分支和必要记录，实现为幺正门：
+
+$$
+U_0,U_1,\ldots,U_{L-1}.
+$$
+
+不能直接假设一般 FRACTRAN 更新：
+
+$$
+|N\rangle\mapsto|T(N)\rangle
+$$
+
+就是幺正，因为不同输入可能合并到同一输出。
+
+引入时钟空间：
+
+$$
+\mathcal H_{\mathrm{clock}}
+=
+\operatorname{span}\{|0\rangle,\ldots,|L\rangle\}.
+$$
+
+完整空间为：
+
+$$
+\mathcal H_{\mathrm{clock}}\otimes\mathcal H_{\mathrm{data}}.
+$$
+
+对块向量：
+
+$$
+\Psi=(\psi_0,\ldots,\psi_L),
+$$
+
+定义传播能量：
+
+$$
+\boxed{
+\langle\Psi,H_{\mathrm{hist}}\Psi\rangle
+=
+E_c\sum_{k=0}^{L-1}
+\|\psi_{k+1}-U_k\psi_k\|^2,
+\qquad E_c>0.
+}
+\tag{31}
+$$
+
+它把“空间状态必须怎样随下一步变化”写成一个统一的正二次型。
+
+这是 Feynman–Kitaev 历史态构造的基本机制。([arXiv][7])
+
+其零能量态满足：
+
+$$
+\psi_{k+1}=U_k\psi_k.
+$$
+
+所以一份初态 \(\psi_0\) 产生：
+
+$$
+\boxed{
+|\Psi_{\mathrm{hist}}\rangle
+=
+\frac1{\sqrt{L+1}}
+\sum_{k=0}^{L}
+|k\rangle\otimes
+U_{k-1}\cdots U_0|\psi_0\rangle.
+}
+\tag{32}
+$$
+
+空间状态与离散时间被放入同一向量，但不同时间片仍保留各自的标签。
+
+---
+

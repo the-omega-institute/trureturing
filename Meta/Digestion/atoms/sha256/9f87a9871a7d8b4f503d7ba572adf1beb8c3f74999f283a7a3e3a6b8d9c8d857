@@ -1,0 +1,77 @@
+## 定理339.2　该交比具有明确的连续曲率极限
+
+对度量（339.1），按球面曲率为正的惯例，标量曲率为
+
+$$
+\boxed{
+R=\frac1w\,\partial_U\partial_V\ln w.
+}
+\tag{339.4}
+$$
+
+### 证明
+
+该度量仅有
+
+$$
+g_{UV}=g_{VU}=-2w.
+$$
+
+非零连接分量为
+
+$$
+\Gamma^U_{UU}=\partial_U\ln w,
+\qquad
+\Gamma^V_{VV}=\partial_V\ln w.
+$$
+
+于是
+
+$$
+R_{UV}=-\partial_U\partial_V\ln w.
+$$
+
+与逆度量收缩即得式（339.4）。∎
+
+另一方面，对边长 \(h_U,h_V\) 的矩形：
+
+$$
+\boxed{
+\mathcal K
+=
+\int_{U_0}^{U_0+h_U}
+\int_{V_0}^{V_0+h_V}
+\partial_U\partial_V\ln w\,dV\,dU.
+}
+\tag{339.5}
+$$
+
+因此小网格中：
+
+$$
+\frac{\mathcal K}{h_Uh_V}
+\longrightarrow
+\partial_U\partial_V\ln w.
+$$
+
+一个明确例子是
+
+$$
+w(U,V)=e^{\lambda UV}.
+$$
+
+此时
+
+$$
+\boxed{
+\mathcal K=\lambda h_Uh_V,
+\qquad
+R=\lambda e^{-\lambda UV}.
+}
+\tag{339.6}
+$$
+
+所有 \(w>0\) 的这类模型保持同一个局部因果锥，但曲率可以不同。
+
+---
+

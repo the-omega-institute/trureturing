@@ -1,0 +1,33 @@
+## 定义311.1　对数能量与 ζ 态
+
+在基底 \(\{|n\rangle:n\ge1\}\) 上，选择
+
+$$
+H|n\rangle=E_*\ln n\,|n\rangle,
+\qquad E_*>0.
+$$
+
+令无量纲逆温度为
+
+$$
+\sigma=\beta E_*.
+$$
+
+当 \(\sigma>1\) 时：
+
+$$
+\boxed{
+\rho_\sigma
+=
+\frac1{\zeta(\sigma)}
+\sum_{n\ge1}n^{-\sigma}|n\rangle\langle n|.
+}
+\tag{311.1}
+$$
+
+这是正的、迹为一的量子态。其对角概率就是 ζ 分布；该分布及其指数族、信息几何结构已有研究。([arXiv][2])
+
+这里的 \(E_*\ln n\) 是明确选择的能谱，不是已经由现实物理唯一确定。
+
+---
+

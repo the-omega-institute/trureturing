@@ -1,0 +1,19 @@
+## 定理三：整段历史的精确双端点读出
+
+固定端点
+
+$$
+\psi_0=x,\qquad\psi_L=y.
+$$
+
+则
+
+$$
+\boxed{
+\min_{\psi_1,\ldots,\psi_{L-1}}\mathcal E
+=
+\frac{\|y-\mathcal Ux\|^2}{\tau_{\mathrm{tot}}}.
+}
+\tag{10}
+$$
+

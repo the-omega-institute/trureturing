@@ -1,0 +1,17 @@
+## 定理一：交换对称保护的奇偶相消
+
+若调度满足：
+
+$$
+\mathbb P(\mathsf S\gamma)=\mathbb P(\gamma),
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal A_{\mathbb P}(\pi)=0.
+}
+\tag{13}
+$$
+

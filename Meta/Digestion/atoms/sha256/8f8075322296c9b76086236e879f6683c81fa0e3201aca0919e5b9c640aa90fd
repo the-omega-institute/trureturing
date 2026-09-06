@@ -1,0 +1,46 @@
+## 4.1 同一对象的几个切面
+
+对 \(B=5040\)：
+
+$$
+\boxed{
+\mathcal Q_{5040}(z,0)
+=
+(1+z+\cdots+z^4)(1+z+z^2)(1+z)^2.
+}
+$$
+
+其系数正好给出式（6）的时间层计数。
+
+而：
+
+$$
+\boxed{
+\mathcal Q_{5040}(1,1)=\frac{403}{105}.
+}
+$$
+
+这是原来的倒数因数总权重。
+
+若取：
+
+$$
+z=e^{i\omega},\qquad s=i\theta,
+$$
+
+就得到：
+
+$$
+\boxed{
+\mathcal Q_B(e^{i\omega},i\theta)
+=
+\sum_{d\mid B}
+e^{i\omega\tau(d)-i\theta E(d)}.
+}
+\tag{12}
+$$
+
+这是一种有限的时间—能量联合 Fourier 表示。
+
+这里的 \(\omega,\theta\) 是共轭参数，不应再次混同为执行步数或物理时间。
+

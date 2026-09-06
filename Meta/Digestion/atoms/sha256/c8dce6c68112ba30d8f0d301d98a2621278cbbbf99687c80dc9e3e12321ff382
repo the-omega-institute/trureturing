@@ -1,0 +1,74 @@
+# 八、现在正式研究“换切面”：跨切面的关系必须单独保留
+
+把一条历史分成前、后两段：
+
+$$
+\gamma=\gamma_1\gamma_2.
+$$
+
+设它们的事件计数分别为：
+
+$$
+\mathbf u,\qquad\mathbf v.
+$$
+
+则：
+
+$$
+\boxed{
+A(\gamma)
+=
+A(\gamma_1)+A(\gamma_2)+B(\mathbf u,\mathbf v),
+}
+\tag{20}
+$$
+
+其中：
+
+$$
+\boxed{
+B(\mathbf u,\mathbf v)
+=
+\sum_{i>j}u_i v_j.
+}
+\tag{21}
+$$
+
+这个最后一项统计：
+
+> 前段的较大类型事件，与后段的较小类型事件，形成了多少跨切面的逆序。
+
+因此，在第 \(k\) 拍切开：
+
+$$
+\boxed{
+Q_{\mathbf a}(q)
+=
+\sum_{\substack{0\le\mathbf u\le\mathbf a\\|\mathbf u|=k}}
+q^{B(\mathbf u,\mathbf a-\mathbf u)}
+Q_{\mathbf u}(q)\,
+Q_{\mathbf a-\mathbf u}(q).
+}
+\tag{22}
+$$
+
+它精确保留同一份整体读数。
+
+若只把前段和后段各自算对，却漏掉：
+
+$$
+q^{B(\mathbf u,\mathbf a-\mathbf u)},
+$$
+
+仍然会拼错整体。
+
+最小例子是两个不同事件：
+
+$$
+Q_{(1,1)}(q)=1+q.
+$$
+
+前后各只看一个事件时，每段都没有内部逆序。若直接相乘相加，只会得到 2，遗漏全部相消信息。
+
+---
+
