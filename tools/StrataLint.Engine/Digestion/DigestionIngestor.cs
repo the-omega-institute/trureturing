@@ -4,12 +4,16 @@ using System.Text;
 namespace StrataLint.Engine;
 
 internal sealed record DigestionIngestPlan(
-    BackfillInventoryDocument Document,
+    BackfillInventoryDocument AdmissionDocument,
     DigestionLedgerAlignment Alignment,
     int StaleAcknowledged,
     int ResidualOpenAdded,
     ImmutableArray<DigestionCasObject> CasObjects,
-    ImmutableArray<DigestionIngestFallback> Fallbacks);
+    ImmutableArray<DigestionIngestFallback> Fallbacks)
+{
+    internal BackfillInventoryDocument Document { get; } =
+        DigestionIngestor.NormalizeAtomIdentities(AdmissionDocument);
+}
 
 internal static class DigestionSourceConflictMarkers
 {
@@ -210,9 +214,6 @@ internal static class DigestionIngestor
         var clausePlansBySource = alignment.ClausePlans
             .GroupBy(static item => item.SourceId, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
-        var atomIds = migrationDocument.RequireDigestionEntries()
-            .Select(static entry => entry.AtomId)
-            .ToHashSet(StringComparer.Ordinal);
         var globalEntries = migrationDocument.RequireDigestionEntries()
             .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
@@ -251,7 +252,7 @@ internal static class DigestionIngestor
             {
                 foreach (var item in residual)
                 {
-                    if (!atomIds.Add(item.SuggestedAtomId))
+                    if (globalEntries.ContainsKey(item.SuggestedAtomId))
                     {
                         continue;
                     }
@@ -273,7 +274,7 @@ internal static class DigestionIngestor
                         .Distinct(StringComparer.Ordinal)
                         .Order(StringComparer.Ordinal)
                         .ToImmutableArray();
-                    entries.Add(new DigestionLedgerEntry(
+                    var admitted = new DigestionLedgerEntry(
                         source.SourceId,
                         source.SourcePath,
                         source.Atomizer,
@@ -282,7 +283,10 @@ internal static class DigestionIngestor
                         Coverage: inheritedCoverage,
                         new DigestionReceipts([], inheritedUnresolvedSubitems, [], null),
                         item.ProjectedStatus,
-                        CasRef: captured.Reference));
+                        CasRef: captured.Reference);
+                    if (!globalEntries.TryAdd(admitted.AtomId, admitted))
+                        continue;
+                    entries.Add(admitted);
                     residualOpenAdded++;
                 }
             }
@@ -318,18 +322,18 @@ internal static class DigestionIngestor
                         continue;
                     }
 
-                    foreach (var entry in entries) globalEntries[entry.AtomId] = entry;
                     var decomposition = DigestionDecomposition.Materialize(parent, clausePlan.Plan, globalEntries);
                     foreach (var child in decomposition.NewEntries)
                     {
-                        atomIds.Add(child.AtomId);
-                        globalEntries.Add(child.AtomId, child);
+                        if (!globalEntries.TryAdd(child.AtomId, child))
+                            continue;
                         entries.Add(child);
                         residualOpenAdded++;
                     }
                     foreach (var captured in decomposition.CasObjects)
                         AddCasObject(captured.Bytes.AsSpan(), casObjects);
                     entries[parentIndex] = decomposition.Parent;
+                    globalEntries[parent.AtomId] = decomposition.Parent;
                 }
             }
 
@@ -343,7 +347,7 @@ internal static class DigestionIngestor
         }
 
         return new DigestionIngestPlan(
-            NormalizeAtomIdentities(migrationDocument.WithDigestionSources(sources.ToImmutable())),
+            migrationDocument.WithDigestionSources(sources.ToImmutable()),
             alignment,
             staleAcknowledged,
             residualOpenAdded,

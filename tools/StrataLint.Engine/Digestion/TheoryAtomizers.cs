@@ -54,9 +54,7 @@ internal sealed record DigestionClausePlan
 {
     internal DigestionAtom Parent { get; }
     internal ImmutableArray<DigestionSegment> Segments { get; }
-    internal ImmutableArray<DigestionAtom> Children => Segments
-        .Where(static segment => segment.Kind == DigestionSegmentKind.Claim)
-        .Select(static segment => segment.Atom).ToImmutableArray();
+    internal ImmutableArray<DigestionAtom> Children { get; }
 
     internal DigestionClausePlan(DigestionAtom parent, ImmutableArray<DigestionAtom> children)
         : this(parent, children.Select(static child => new DigestionSegment(DigestionSegmentKind.Claim, child)).ToImmutableArray()) { }
@@ -65,6 +63,8 @@ internal sealed record DigestionClausePlan
     {
         Parent = parent;
         Segments = segments;
+        Children = segments.Where(static segment => segment.Kind == DigestionSegmentKind.Claim)
+            .Select(static segment => segment.Atom).ToImmutableArray();
     }
 }
 
@@ -483,7 +483,7 @@ internal static class PzgAtomizer
             identifyHeading: heading => IdentifyHeading(heading, rules),
             contentKinds: contentKinds);
         var clausePlans = document.Claims
-            .Select(PlanClauses)
+            .Select(DigestionDecomposition.PlanClauses)
             .Where(static plan => plan is not null)
             .Select(static plan => plan!)
             .ToImmutableArray();
@@ -494,9 +494,6 @@ internal static class PzgAtomizer
             clausePlans,
             document.GenreRegistryCheck);
     }
-
-    internal static DigestionClausePlan? PlanClauses(DigestionAtom parent) =>
-        DigestionDecomposition.PlanClauses(parent);
 
     private static string? Identify(string paragraph, TheoryAtomizerRules rules, NumberedClaims claims)
     {

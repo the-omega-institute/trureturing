@@ -255,6 +255,43 @@ public sealed class DecomposeAtomTests
     }
 
     [Fact]
+    public void IngestReusesChildAdmittedByAnEarlierSourceWithoutAClausePlan()
+    {
+        const string shared = "**Theorem 1.1** Shared.\n\n";
+        const string other = "**Second** Other.\n";
+        var first = new DigestionLedgerSource("a-single", "docs/single.md", AtomizerRegistry.GenericId,
+            [], GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])), []);
+        var second = first with { SourceId = "b-bundle", SourcePath = "docs/bundle.md" };
+        var raw = RawRepositorySnapshot.Create(
+        [
+            RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, DecomposeFixture.RulesText),
+            RawRepositoryEntry.FromText("docs/single.md", shared),
+            RawRepositoryEntry.FromText("docs/bundle.md", shared + other),
+            new RawRepositoryEntry("Meta/Digestion/backfill/a-single/source.toml",
+                BackfillInventoryWriter.WriteSourceMetadata(first)),
+            new RawRepositoryEntry("Meta/Digestion/backfill/b-bundle/source.toml",
+                BackfillInventoryWriter.WriteSourceMetadata(second)),
+        ]);
+        var snapshot = DecomposeFixture.Decode(raw);
+        var document = BackfillInventoryLoader.Load(snapshot);
+        var plan = DigestionIngestor.Plan(document, snapshot, document);
+
+        var admitted = plan.AdmissionDocument.RequireDigestionEntries();
+        Assert.Equal(3, admitted.Length);
+        Assert.Equal(3, admitted.Select(entry => entry.AtomId).Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(3, plan.ResidualOpenAdded);
+        Assert.Equal(3, plan.CasObjects.Length);
+        var child = Assert.Single(admitted, entry => entry.Fingerprints == DecomposeFixture.Atom(shared).Fingerprints);
+        Assert.Equal("a-single", child.SourceId);
+        Assert.Equal("docs/single.md", child.SourcePath);
+        var parent = Assert.Single(admitted, entry => !entry.Receipts.ChainAtoms.IsEmpty);
+        Assert.Equal("b-bundle", parent.SourceId);
+        Assert.Equal([child.AtomId, DecomposeFixture.Atom(other).Fingerprints.RawSha256[7..]],
+            parent.Receipts.ChainAtoms.ToArray());
+        Assert.Equal(3, plan.Document.RequireDigestionEntries().Length);
+    }
+
+    [Fact]
     public void IngestUsesDeclaredLosslessPlanAndCanonicalChildMaterialization()
     {
         var f = new DecomposeFixture(DecomposeFixture.Eight);
