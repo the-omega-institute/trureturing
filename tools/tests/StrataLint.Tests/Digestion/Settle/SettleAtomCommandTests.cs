@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Reflection;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -78,7 +77,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         var raw = code == "SOURCE_MISSING" ? fixture.RawSnapshot(false) : fixture.RawSnapshot();
         using var temporary = new TemporaryDirectory();
         WriteFiles(temporary.Path, raw);
-        var before = Image(temporary.Path);
+        var before = Image(temporary);
         var applyCalls = 0;
         var result = Run(temporary.Path, raw, request,
             code == "NONPROPOSITIONAL_ABSENT" ? ["--clear", target.AtomId, "--base", "baseline"] : null,
@@ -86,7 +85,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         Assert.False(result.Success);
         if (code == "CONTEXT_MISMATCH") output.WriteLine(result.Error.TrimEnd());
         Assert.StartsWith("SETTLE_INVALID " + code, result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, Image(temporary.Path));
+        Assert.Equal(before, Image(temporary));
         Assert.Equal(0, applyCalls);
     }
 
@@ -121,14 +120,14 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         var raw = fixture.RawSnapshot(!sourceMissing);
         using var temporary = new TemporaryDirectory();
         WriteFiles(temporary.Path, raw);
-        var before = Image(temporary.Path);
+        var before = Image(temporary);
         var applyCalls = 0;
         var result = Run(temporary.Path, raw, request, clear ? ["--clear", id, "--base", "baseline"] : null,
             apply: (_, _, _) => applyCalls++);
         Assert.False(result.Success);
         Assert.Equal($"SETTLE_INVALID CHAIN_PARENT atom_id={id}\n", result.Error);
         Assert.Equal(0, applyCalls);
-        Assert.Equal(before, Image(temporary.Path));
+        Assert.Equal(before, Image(temporary));
     }
 
     [Theory]
@@ -142,7 +141,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         var raw = fixture.RawSnapshot();
         using var temporary = new TemporaryDirectory();
         WriteFiles(temporary.Path, raw);
-        var before = Image(temporary.Path);
+        var before = Image(temporary);
         var applyCalls = 0;
         var result = Run(temporary.Path, raw, Request(fixture, id), null, (root, current, updates) =>
         {
@@ -162,15 +161,15 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         if (ioError)
         {
             Assert.Equal("SETTLE_INVALID INFRASTRUCTURE simulated write error after rename\n", result.Error);
-            Assert.Equal(before, Image(temporary.Path));
+            Assert.Equal(before, Image(temporary));
         }
         else
         {
-            Assert.False(File.Exists(Path.Combine(temporary.Path, PathFor(target))));
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(temporary.Path, PathFor(target))));
             var loaded = BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries().Single(entry => entry.AtomId == id);
             Assert.Equal(State, StateName(loaded.ProjectedStatus));
             Assert.Equal($"SETTLED_NONPROPOSITIONAL atom_id={id} path={PathFor(target, State)}\n", result.Output);
-            var after = ReadFiles(temporary.Path);
+            var after = ReadFiles(temporary);
             var replay = Run(temporary.Path, after, Request(fixture, id));
             Assert.StartsWith("SETTLE_INVALID NOT_RESIDUAL_OPEN", replay.Error, StringComparison.Ordinal);
         }
@@ -185,8 +184,8 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         var raw = fixture.RawSnapshot();
         using var temporary = new TemporaryDirectory();
         WriteFiles(temporary.Path, raw);
-        File.AppendAllText(Path.Combine(temporary.Path, PathFor(target)), "\n", Encoding.UTF8);
-        var before = Image(temporary.Path);
+        TemporaryFileSystem.File.AppendAllText(Path.Combine(temporary.Path, PathFor(target)), "\n", Encoding.UTF8);
+        var before = Image(temporary);
         var applyCalls = 0;
         var commitCalls = 0;
         var result = Run(temporary.Path, raw, Request(fixture, id), apply: (root, current, updates) =>
@@ -202,7 +201,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         Assert.StartsWith("SETTLE_INVALID INFRASTRUCTURE ledger changed under us ", result.Error, StringComparison.Ordinal);
         Assert.Equal(1, applyCalls);
         Assert.Equal(0, commitCalls);
-        Assert.Equal(before, Image(temporary.Path));
+        Assert.Equal(before, Image(temporary));
     }
 
     [Fact]
@@ -215,13 +214,13 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
             entry.Path == PathFor(target) ? RawRepositoryEntry.FromText(entry.Path, "receipts: []\n") : entry));
         using var temporary = new TemporaryDirectory();
         WriteFiles(temporary.Path, raw);
-        var before = Image(temporary.Path);
+        var before = Image(temporary);
         var applyCalls = 0;
         var result = Run(temporary.Path, raw, Request(fixture, id), apply: (_, _, _) => applyCalls++);
         Assert.False(result.Success);
         Assert.StartsWith("SETTLE_INVALID INFRASTRUCTURE ", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, applyCalls);
-        Assert.Equal(before, Image(temporary.Path));
+        Assert.Equal(before, Image(temporary));
     }
 
     [Fact]
@@ -237,8 +236,8 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         Assert.True(result.Success, result.Error);
         Assert.Equal($"SETTLE_CLEARED atom_id={target.AtomId} path={PathFor(target)}\n", result.Output);
         Assert.Equal(BackfillInventoryWriter.WriteAtom(target).ToArray(),
-            File.ReadAllBytes(Path.Combine(temporary.Path, PathFor(target))));
-        Assert.False(File.Exists(Path.Combine(temporary.Path, PathFor(target, State))));
+            TemporaryFileSystem.File.ReadAllBytes(Path.Combine(temporary.Path, PathFor(target))));
+        Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(temporary.Path, PathFor(target, State))));
     }
 
     [Fact]
@@ -250,13 +249,13 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         using var temporary = new TemporaryDirectory();
         var raw = fixture.RawSnapshot();
         WriteFiles(temporary.Path, raw);
-        var before = Image(temporary.Path);
+        var before = Image(temporary);
         var calls = 0;
         var result = Run(temporary.Path, raw, Request(fixture, target.AtomId), apply: (_, _, _) => calls++);
         Assert.False(result.Success);
         Assert.StartsWith("SETTLE_INVALID NOT_RESIDUAL_OPEN", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, calls);
-        Assert.Equal(before, Image(temporary.Path));
+        Assert.Equal(before, Image(temporary));
     }
 
     [Fact]
@@ -284,7 +283,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         using var temporary = new TemporaryDirectory();
         var raw = fixture.RawSnapshot();
         WriteFiles(temporary.Path, raw);
-        var before = Image(temporary.Path);
+        var before = Image(temporary);
         var calls = 0;
         var serializations = 0;
         ImmutableArray<byte> Writer(DigestionLedgerEntry entry)
@@ -297,7 +296,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         Assert.False(result.Success);
         Assert.StartsWith("SETTLE_INVALID ROUND_TRIP_FAILED", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, calls);
-        Assert.Equal(before, Image(temporary.Path));
+        Assert.Equal(before, Image(temporary));
     }
 
     [Fact]
@@ -374,16 +373,12 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>>? apply = null,
         Func<DigestionLedgerEntry, ImmutableArray<byte>>? writer = null)
     {
-        var type = typeof(CliApplication).Assembly.GetType("StrataLint.Cli.SettleAtomCommand");
-        Assert.NotNull(type);
-        var method = Assert.Single(type.GetMethods(BindingFlags.Static | BindingFlags.NonPublic),
-            method => method.Name == "Run" && method.GetParameters().Length == 6);
-        return Assert.IsType<CommandResult>(method.Invoke(null, [root,
+        return Assert.IsType<CommandResult>(SettleAtomCommand.Run(root,
             new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw),
             arguments ?? ["--request", "request.toml", "--base", "baseline"],
             writer ?? BackfillInventoryWriter.WriteAtom,
-            (Func<string, string, ImmutableArray<byte>>)((_, _) => [.. Encoding.UTF8.GetBytes(request)]),
-            apply ?? ((directory, current, updates) => IngestCommand.ApplyLedgerUpdatesAtomically(directory, current, updates))]));
+            (_, _) => [.. Encoding.UTF8.GetBytes(request)],
+            apply ?? ((directory, current, updates) => IngestCommand.ApplyLedgerUpdatesAtomically(directory, current, updates))));
     }
 
     internal static void WriteFiles(string root, RawRepositorySnapshot raw)
@@ -391,16 +386,16 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         foreach (var entry in raw.Entries)
         {
             var path = Path.Combine(root, entry.Path);
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllBytes(path, entry.Bytes.AsSpan());
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            TemporaryFileSystem.File.WriteAllBytes(path, entry.Bytes.ToArray());
         }
     }
 
-    internal static RawRepositorySnapshot ReadFiles(string root) => RawRepositorySnapshot.Create(
-        Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories).Select(path =>
-            new RawRepositoryEntry(Path.GetRelativePath(root, path).Replace('\\', '/'), [.. File.ReadAllBytes(path)])));
+    internal static RawRepositorySnapshot ReadFiles(TemporaryDirectory temporary) => RawRepositorySnapshot.Create(
+        Directory.EnumerateFiles(temporary.Path, "*", SearchOption.AllDirectories).Select(path =>
+            new RawRepositoryEntry(Path.GetRelativePath(temporary.Path, path).Replace('\\', '/'), [.. TemporaryFileSystem.File.ReadAllBytes(path)])));
 
-    internal static string Image(string root) => string.Join('\n', ReadFiles(root).Entries
+    internal static string Image(TemporaryDirectory temporary) => string.Join('\n', ReadFiles(temporary).Entries
         .OrderBy(static entry => entry.Path, StringComparer.Ordinal)
         .Select(static entry => entry.Path + ":" + Convert.ToHexString(entry.Bytes.AsSpan())));
 }

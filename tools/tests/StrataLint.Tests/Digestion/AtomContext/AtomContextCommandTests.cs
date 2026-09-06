@@ -71,14 +71,14 @@ public sealed class AtomContextCommandTests
         foreach (var entry in raw.Entries)
         {
             var path = Path.Combine(temporary.Path, entry.Path);
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllBytes(path, entry.Bytes.ToArray());
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            TemporaryFileSystem.File.WriteAllBytes(path, entry.Bytes.ToArray());
         }
-        var before = Bytes(temporary.Path);
+        var before = Bytes(temporary);
         var result = fixture.Environment(temporary.Path).AtomContext(
             ["--atom-id", Id(fixture.Atomized.ClausePlans.Single().Children[1])]);
         Assert.True(result.Success, result.Error);
-        Assert.Equal(before, Bytes(temporary.Path));
+        Assert.Equal(before, Bytes(temporary));
         Assert.Equal(raw.Entries.Select(static entry => (entry.Path, Convert.ToHexString(entry.Bytes.AsSpan()))),
             fixture.RawSnapshot().Entries.Select(static entry => (entry.Path, Convert.ToHexString(entry.Bytes.AsSpan()))));
     }
@@ -95,7 +95,7 @@ public sealed class AtomContextCommandTests
         Assert.StartsWith("ATOM_CONTEXT ", console.Output, StringComparison.Ordinal);
     }
 
-    private static string[] Bytes(string root) => Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
-        .Order(StringComparer.Ordinal).Select(path => Path.GetRelativePath(root, path) + ":"
-            + Convert.ToHexString(File.ReadAllBytes(path))).ToArray();
+    private static string[] Bytes(TemporaryDirectory temporary) => Directory.EnumerateFiles(temporary.Path, "*", SearchOption.AllDirectories)
+        .Order(StringComparer.Ordinal).Select(path => Path.GetRelativePath(temporary.Path, path) + ":"
+            + Convert.ToHexString(TemporaryFileSystem.File.ReadAllBytes(path))).ToArray();
 }

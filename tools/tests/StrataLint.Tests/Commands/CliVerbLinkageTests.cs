@@ -21,18 +21,18 @@ public sealed class CliVerbLinkageTests
     public void SettleMakeTargetsLinkToRegisteredVerb()
     {
         Assert.Contains("settle-atom", CliApplication.ImplementedCommands);
-        Assert.Equal(2, CollectInvocations(TestRepositoryLayout.FindRoot()).Count(invocation =>
-            invocation.File == "Makefile" && invocation.Verb == "settle-atom"
-            && invocation.Program == CommandProgram.StrataLint));
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Equal(2, Regex.Matches(makefile, @"--\s+settle-atom(?:\s|$)", RegexOptions.CultureInvariant).Count);
+        Assert.Matches(@"(?m)^settle:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --request ", makefile);
+        Assert.Matches(@"(?m)^settle-clear:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --clear ", makefile);
     }
 
     [Fact]
     public void AtomContextMakeTargetLinksToRegisteredVerb()
     {
         Assert.Contains("atom-context", CliApplication.ImplementedCommands);
-        Assert.Contains(CollectInvocations(TestRepositoryLayout.FindRoot()), invocation =>
-            invocation.File == "Makefile" && invocation.Verb == "atom-context"
-            && invocation.Program == CommandProgram.StrataLint);
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Matches(@"(?m)^atom-context:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- atom-context --atom-id ", makefile);
     }
 
     // 提取器至少应认出这么多次调用。低于此,说明提取器自己坏了(路径变了、调用形态变了),
