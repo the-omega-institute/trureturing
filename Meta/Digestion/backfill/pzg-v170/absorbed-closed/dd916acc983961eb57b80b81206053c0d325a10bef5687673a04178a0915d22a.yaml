@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:dd916acc983961eb57b80b81206053c0d325a10bef5687673a04178a0915d22a
+  normalized_sha256: sha256:dd916acc983961eb57b80b81206053c0d325a10bef5687673a04178a0915d22a
+cas_ref: sha256:dd916acc983961eb57b80b81206053c0d325a10bef5687673a04178a0915d22a
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity.two_odd_prime_uncovered_density
+    target_statement_id: sha256:4ab248e3c40907efbf6ed2f41f975eba675bea1cb051699980d3169f854adea9
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity.two_odd_prime_uncovered_density
+      definition_sha256: sha256:e57b82f3ea5e0c5b3ac4a4e1b13b01b2989ca42736a5b064a7b50f4de493de9c
+      emission_sha256: sha256:e44269eed5a28139446462c83a234ffbe8e140e424f492972f1b07b2afdec4f1
+  unresolved_subitems: []
