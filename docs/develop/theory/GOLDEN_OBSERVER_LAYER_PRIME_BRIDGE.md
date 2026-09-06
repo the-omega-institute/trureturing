@@ -537,3 +537,119 @@ Three local processes ran distinct exact-integer checks concurrently before the 
 These are reproducibility checks only. Universal truth and formal status come from the Lean kernel and repository admission. #5567 is the corresponding new source PR, based on dev rather than the closed omnibus branch.
 
 The next logical work is to transport the proved parity-minimal kernels into the designated-root analysis/disposition machinery once its current executable interface is verified, preserving zero-gain findings. A further generalization can replace the golden slope by a fixed irrational mechanical slope, but must first reuse existing mechanical-word owners and retain the finite-language restriction. The geometric-to-valuation bridge in section 16 remains open and is not closed by the observer classification.
+
+## 25. Literature-grounded continuous displacement readout, 2026-09-06
+
+The next source batch is PR #5750, stacked on the still-candidate #5567 rather than pretending its golden-recovery dependencies are frozen. It adds four Lean modules with matching authored Scribe under `D5/S3/Quantum/WeylChronology/`. Repository search on dev `315d6cb58b0c62155e313b59d4236cbd854b5dc5` found the frozen finite ZMod Weyl family in `Quantum/Algebra`; that representation is retained and is not substituted for arbitrary real translations.
+
+Three primary references determine the adopted model and readout:
+
+1. C. Fluehmann and J. P. Home, Direct characteristic-function tomography of quantum states of the trapped-ion motional oscillator, Physical Review Letters 125, 043602 (2020), DOI `10.1103/PhysRevLett.125.043602`, arXiv `1907.06478`. The full PDF and its readout-circuit/equation page were inspected. Spin-dependent displacement followed by phase-selective electronic readout gives real and imaginary characteristic-function components. This is an experimental precedent for the readout mechanism, not an experiment with our golden words.
+2. A. C. Vutha et al., Displacement operators: the classical face of their quantum phase, arXiv `1702.01833`. This supplies classical/quantum displacement-phase context; Weyl composition is not claimed as a discovery of this project.
+3. N. Razian, E.-J. Chang and H.-K. Lau, Discrete-variable assisted error correction of continuous-variable quantum information, arXiv `2604.06565v1`, 8 April 2026. The full HTML, equations (4)-(5), and the coupling/alias discussion were inspected. This is a theoretical preprint using a DV ancilla to read CV displacement information. It does not validate our protocol experimentally or confer its QEC claims on this batch.
+
+The controlled encoding is L -> D(a,0), S -> D(0,b). Golden grammar constrains event order. The two quadrature directions and amplitudes are chosen laboratory controls; they are not derived from golden geometry or prime arithmetic. No physical specialness of an amplitude ratio phi is assumed.
+
+## 26. Concrete wavefunction representation and chronology phase
+
+In dimensionless quadratures with commutator convention [Q,P]=i/2, define the actual function action
+
+```text
+D(x,y) f(q) = exp(i*(2*y*q-x*y)) f(q-x).
+```
+
+`SchrodingerDisplacement.displacement_comp` derives directly
+
+```text
+D(x,y) D(u,v) = exp(i*(y*u-x*v)) D(x+u,y+v).
+```
+
+The left operator acts last. The inverse, scalar-phase equivariance and pointwise intensity transport are also derived. No assumed CCR, BCH axiom or finite Fock truncation is used. The formal carrier is functions R -> C. Completion to a strongly continuous unitary L2 representation and self-adjoint generator domains are not claimed.
+
+Executing a list with its head first gives the exact normal form
+
+```text
+U_w f = exp(i*a*b*m(w)) D(a*r(w), b*z(w)) f.
+```
+
+This imports the existing integer `magnusCenter`; no independent chronology counter is introduced. Reversal preserves r,z and negates m, hence
+
+```text
+U_w f = exp(i*2*a*b*m(w)) U_reverse(w) f.
+```
+
+Bare pointwise intensities are identical. With a reference arm and analyzer theta, recombination yields
+
+```text
+plusOutput = (1+exp(i*(2abm-theta)))/2 * referenceWavefunction.
+```
+
+The candidate `normalized_output_probability` integrates the squared modulus and obtains `(1+cos(2abm-theta))/2` for a unit-normalized reference. This exposes a state-independent relative phase. The factor two belongs to word/reversal comparison, not to a single word versus its net displacement.
+
+## 27. Count-only compensation removes the need to replay the reverse
+
+Reversal comparison is useful for calibration but requires controlled access to both histories. A more operational reference uses only their inventory:
+
+```text
+D(-ar,-bz) U_w f = exp(i*ab*m(w)) f.
+```
+
+`endpoint_compensated_word_phase` proves that this compensation restores the input wavefunction up to the chronology phase. The compensator depends on counts, not their ordering. Interfering the compensated branch with an unchanged coherent reference yields
+
+```text
+p_theta(w) = (1+cos(ab*m(w)-theta))/2.
+```
+
+`normalized_compensated_probability` needs only unit normalization of the input; it does not assume a Gaussian, coherent, squeezed or Fock input shape. `compensated_probability_eq_chronology_fringe` connects this actual device to the calibrated recovery owner with kappa=ab/2.
+
+A physical ancilla realization requires coherent controlled execution of the signal and reference branches. A global phase of an uncontrolled black-box channel does not become measurable merely by writing a control symbol. The protocol is suitable as a candidate diagnostic for repeatable control histories with known inventory; it is not a reconstruction procedure for an arbitrary unreplayable past. The ideal motional state is restored, but finite control error and ancilla backaction are not modeled.
+
+## 28. Exact readout kernels, calibrated range and example
+
+The Ramsey amplitude is `(1+exp(i*(phase-theta)))/2`. The two settings theta=0 and theta=pi/2 give `(1+cos phase)/2` and `(1+sin phase)/2`. `quadrature_readout_kernel` identifies their joint kernel exactly with the wrapped complex phase. The zero setting loses orientation, and the two-setting readout still aliases phase zero with phase 2pi.
+
+For every binary word of length n, the oriented-pair identity gives
+
+```text
+abs(m) <= r*z,        4*abs(m) <= n^2.
+```
+
+Thus kappa != 0 and `abs(kappa)*n^2 <= pi` place `2*kappa*m` inside the monotone sine band. The ideal pi/2 fringe then has exactly the same kernel as m. A sufficient explicit choice is
+
+```text
+safeCoupling(n) = pi / (2*(n+1)^2).
+```
+
+For reversal comparison set ab=safeCoupling(n). For endpoint compensation set ab=2*safeCoupling(n). Both realize the same calibrated fringe. The latter still requires counts to construct the compensation, even where the resulting ideal probability identifies counts mathematically. Observation sufficiency does not eliminate state-preparation resources.
+
+At length four, this choice predicts:
+
+| Factor | m | Ideal plus probability |
+|---|---:|---:|
+| SLSL | -2 | 0.37565506 |
+| LSLL | -1 | 0.43733338 |
+| SLLS | 0 | 0.50000000 |
+| LLSL | 1 | 0.56266662 |
+| LSLS | 2 | 0.62434494 |
+
+These are model values, not experimental data. The source adapters recover a same-length legal golden factor from count plus calibrated fringe, or from fringe alone at even length using the parent parity theorem. At each odd length two distinct legal factors remain equal for every coupling; that collision is retained. Only the implication palindrome -> balanced fringe is imported in this batch. The earlier full zero-center iff palindrome argument is not silently treated as a compiled dependency.
+
+## 29. Scientific and verification boundaries of the Weyl batch
+
+The formal result is a concrete representation and recovery chain, not a new discovery of Weyl interference:
+
+```text
+existing golden Magnus integer
+ -> concrete ordered wavefunction action
+ -> a reference or count-only compensation
+ -> integrated two-port probability
+ -> an explicit calibrated observation kernel.
+```
+
+Phase, two quadratures and a calibrated integer readout can have the same kernel. They cannot be counted as several independent unique captures under the intrinsic-information specification. No maximal-root seal or disposition is produced by this batch.
+
+The amplitudes and integral identities are ideal. A single shot is a binary result, so statistical estimation is necessary. The strongest present experimental next step is to include residual endpoint displacement and loss of visibility, then derive a finite-shot decision margin under explicit control uncertainty. A larger phase slope can improve sensitivity while also wrapping the admissible range; the 2026 preprint explicitly discusses this tradeoff. No metrological advantage, QEC performance, measured data or hardware validation is claimed here.
+
+Three parallel self-check processes validated the cocycle and induction identities symbolically, all 2,047 binary words of lengths 0-10 against direct function-action evaluation, and 262,144 sampled golden windows against the range and kernel predictions. The maximum numerical wavefunction discrepancy was below 3.54e-15. These checks are finite self-checks, not Lean verdicts or independent model reviews.
+
+The implementation was authored and reviewed for mathematical logic by the GPT-6 Pro main session. No local Lean toolchain was available. #5750 and its parent remain candidate sources until actually compiled and admitted; no freeze event or merge has been asserted. The existing theory sections are preserved above, and this appendix does not close the geometric-to-valuation problem.
