@@ -60,7 +60,7 @@ public sealed partial class CodexFormalAnswerSkillTests
 
             1. `plain`: answer in ordinary prose.
             2. `show-work`: append the run `record` on request.
-            3. `in-repository`: model in `D5/` and judge with `make lean`.
+            3. `in-repository`: model in `D5/`, judge with `make lean`, and retain successful exact specializations as `tracked-S`.
             """);
 
         Assert.True(DefinesConversationContract(document));
@@ -173,7 +173,8 @@ public sealed partial class CodexFormalAnswerSkillTests
             && disclosureCodes.Contains("record")
             && repositoryCodes.Contains("in-repository")
             && repositoryCodes.Contains("D5/")
-            && repositoryCodes.Contains("make lean");
+            && repositoryCodes.Contains("make lean")
+            && repositoryCodes.Contains("tracked-S");
     }
 
     /// <summary>
