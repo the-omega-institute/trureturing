@@ -14,7 +14,7 @@ internal static class DescribeReportWriter
         ArgumentNullException.ThrowIfNull(report);
         var material = new
         {
-            schema = "scribe-describe-report-v1",
+            schema = "scribe-describe-report-v2",
             case_id = DescribeReport.CaseId,
             status = report.Status,
             projection_open_count = report.ProjectionOpenCount,
@@ -65,6 +65,13 @@ internal static class DescribeReportWriter
         {
             writer.WriteLine($"OPEN projection node={node.NodeId} reason={node.ProjectionFailureReason}");
         }
+        foreach (var node in report.Nodes.Where(static node => node.OpenProblemResolutionClaim is not null))
+        {
+            var claim = node.OpenProblemResolutionClaim!;
+            writer.WriteLine(
+                $"OPEN_PROBLEM_RESOLUTION node={node.NodeId} problem_slug={claim.ProblemSlug.Value} "
+                + $"resolution_kind={DescribeVocabulary.CanonicalName(claim.ResolutionKind)}");
+        }
         foreach (var finding in report.RedFindings)
         {
             writer.WriteLine(
@@ -91,5 +98,12 @@ internal static class DescribeReportWriter
         provenance = node.Provenance,
         literature_gid = node.LiteratureGid,
         acknowledgement_gids = node.AcknowledgementGids,
+        open_problem_resolution = node.OpenProblemResolutionClaim is not { } claim
+            ? null
+            : new
+            {
+                problem_slug = claim.ProblemSlug.Value,
+                resolution_kind = DescribeVocabulary.CanonicalName(claim.ResolutionKind),
+            },
     };
 }

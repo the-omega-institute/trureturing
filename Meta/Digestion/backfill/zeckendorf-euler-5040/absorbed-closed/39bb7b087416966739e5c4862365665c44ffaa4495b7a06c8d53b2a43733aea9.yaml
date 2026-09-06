@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:39bb7b087416966739e5c4862365665c44ffaa4495b7a06c8d53b2a43733aea9
+  normalized_sha256: sha256:39bb7b087416966739e5c4862365665c44ffaa4495b7a06c8d53b2a43733aea9
+cas_ref: sha256:39bb7b087416966739e5c4862365665c44ffaa4495b7a06c8d53b2a43733aea9
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/GoldenColossalClosure.colossal_closure_dvd_of_dvd_colossally_abundant
+    target_statement_id: sha256:d5e8dce74491a92df0b6fffdaca8a025b0dea4b36d673f16c697e8abee4d3a53
+  - gid: D5/S3/Arith/GoldenResource/GoldenColossalClosure.dvd_colossal_closure
+    target_statement_id: sha256:b1e6eee66c562fb9eb788a62e40c008d093c207da799912adb291151fddb5051
+  - gid: D5/S3/Arith/GoldenResource/GoldenColossalClosure.colossal_closure_is_colossally_abundant
+    target_statement_id: sha256:152a85b61c89ccb2828a8294556535c112c205285871cefc1e29be9aa171243e
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/GoldenResource/GoldenColossalClosure.colossal_closure_dvd_of_dvd_colossally_abundant
+      definition_sha256: sha256:ac318352ce9979f0d153e95a5426b304125a057799c64c3ed84d269b5370bc07
+      emission_sha256: sha256:382d01f1dc8bca0a28b8f9c520532fee499126ea6365a03fff7e412b5260e1c0
+    - gid: D5/S3/Arith/GoldenResource/GoldenColossalClosure.dvd_colossal_closure
+      definition_sha256: sha256:ac318352ce9979f0d153e95a5426b304125a057799c64c3ed84d269b5370bc07
+      emission_sha256: sha256:382d01f1dc8bca0a28b8f9c520532fee499126ea6365a03fff7e412b5260e1c0
+    - gid: D5/S3/Arith/GoldenResource/GoldenColossalClosure.colossal_closure_is_colossally_abundant
+      definition_sha256: sha256:ac318352ce9979f0d153e95a5426b304125a057799c64c3ed84d269b5370bc07
+      emission_sha256: sha256:382d01f1dc8bca0a28b8f9c520532fee499126ea6365a03fff7e412b5260e1c0
+  unresolved_subitems: []

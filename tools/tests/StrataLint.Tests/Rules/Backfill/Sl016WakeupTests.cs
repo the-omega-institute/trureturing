@@ -164,7 +164,7 @@ public sealed class Sl016WakeupTests
         Assert.True(DigestionCasStore.EntryChanged(
             Assert.Single(document.RequireDigestionEntries()),
             impact.EvaluationChanges));
-        Assert.Contains(evaluation.Diagnostics, static finding => finding.Message.Contains(
+        Assert.DoesNotContain(evaluation.Diagnostics, static finding => finding.Message.Contains(
             "scribe-emission-mismatch",
             StringComparison.Ordinal));
     }
@@ -483,17 +483,16 @@ public sealed class Sl016WakeupTests
     [Theory]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void ChangedEdgeScribeReceiptIntegrityGapIsBlockingAtSl016Admission(
+    public void ChangedEdgeScribeByteReceiptIsNotBlockingAtSl016Admission(
         string mismatchCode)
     {
         var (_, evaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode,
             gapExistsInBaseline: false);
 
-        var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
+        Assert.DoesNotContain(evaluation.Diagnostics, item => item.Message.Contains(
             mismatchCode,
             StringComparison.Ordinal));
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
     }
 
     [Theory]
@@ -513,7 +512,7 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
-    public void CandidateScribeVerificationKeepsNewGapBlockingAtSl016Admission()
+    public void CandidateScribeVerificationDoesNotEnforceStoredByteReceiptsAtSl016Admission()
     {
         var (_, evaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode: null,
@@ -526,10 +525,9 @@ public sealed class Sl016WakeupTests
                      "scribe-emission-mismatch",
                  })
         {
-            var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
+            Assert.DoesNotContain(evaluation.Diagnostics, item => item.Message.Contains(
                 mismatchCode,
                 StringComparison.Ordinal));
-            Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         }
     }
 

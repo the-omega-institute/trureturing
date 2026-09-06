@@ -198,7 +198,7 @@ materialize_manifest() {
   fi
 
   python3 - "$REPOSITORY" "$requests" "$eligible" "$snapshot" \
-    "$plan" "$live_paths" <<'PY'
+    "$plan" "$live_paths" <<'PY' || return 2
 import pathlib
 import re
 import sys
@@ -234,7 +234,7 @@ with plan_path.open("wb") as plan, live_path.open("wb") as live:
             live.write(path + b"\0")
 PY
 
-  hash_files_batch "$live_paths" "$live_hashes"
+  hash_files_batch "$live_paths" "$live_hashes" || return 2
   python3 - "$plan" "$live_hashes" "$manifest" "$MEMO_UPDATES" <<'PY'
 import pathlib
 import re
@@ -379,10 +379,12 @@ import sys
 
 root = pathlib.Path(sys.argv[1]).resolve()
 scope = sys.argv[2]
+inspector_entrypoint = pathlib.PurePosixPath("tools/lean-inspector/inspect.sh")
+inspector_root = root / "tools" / "lean-inspector"
 if scope == "lean-report":
     entrypoints = (
         pathlib.PurePosixPath(".github/workflows/ci.yml"),
-        pathlib.PurePosixPath("tools/lean-inspector/inspect.sh"),
+        inspector_entrypoint,
         pathlib.PurePosixPath("tools/scripts/lean-report-pair.sh"),
         pathlib.PurePosixPath("tools/scripts/report/lean-report-input.sh"),
     )
@@ -405,6 +407,8 @@ def source_text(relative):
         path.relative_to(root)
     except ValueError as error:
         raise SystemExit(f"lean-report-input: producer script escaped repository: {relative}") from error
+    if relative == inspector_entrypoint and not path.is_file() and not inspector_root.exists():
+        return None
     if not path.is_file():
         raise SystemExit(f"lean-report-input: reachable producer input is absent: {relative}")
     text = path.read_text(encoding="utf-8")
@@ -451,6 +455,8 @@ while pending:
     if source in reachable:
         continue
     text = source_text(source)
+    if text is None:
+        continue
     reachable.add(source)
     for match in reference_pattern.finditer(text):
         if text[max(0, match.start() - 3):match.start()] == "://":
@@ -550,19 +556,13 @@ producer_sha256() {
   : > "${manifest}.unsorted"
   : > "${manifest}.unsorted.requests"
   local producer_paths="$TMP_ROOT/producer-paths"
-  local closure_complete=1
-  if ! complete_producer_paths > "$producer_paths"; then
-    closure_complete=0
-    producer_declared_paths | sort -u > "$producer_paths"
-  fi
+  complete_producer_paths > "$producer_paths" \
+    || { echo "lean-report-input: producer closure is unavailable" >&2; return 2; }
   while IFS= read -r relative; do
     append_producer_manifest_entry "${manifest}.unsorted" "$relative" || return 2
   done < "$producer_paths"
-  materialize_manifest "${manifest}.unsorted"
-  if [[ "$closure_complete" == "0" ]]; then
-    printf '%s\n' "unavailable:candidate" >> "${manifest}.unsorted"
-  fi
-  sort "${manifest}.unsorted" > "$manifest"
+  materialize_manifest "${manifest}.unsorted" || return 2
+  sort "${manifest}.unsorted" > "$manifest" || return 2
   rm -f -- "${manifest}.unsorted"
   hash_file "$manifest"
 }
@@ -593,50 +593,50 @@ repository_address() {
   local resident_sha256 sources_sha256 config_sha256 lakefile_count=0 lakefile
 
   prepare_memo
-  resident_sha256="$(producer_sha256 "$resident_manifest")"
+  resident_sha256="$(producer_sha256 "$resident_manifest")" || return 2
 
   : > "$sources_manifest"
   : > "${sources_manifest}.requests"
-  append_manifest_entry "$sources_manifest" "Trureturing.lean"
+  append_manifest_entry "$sources_manifest" "Trureturing.lean" || return 2
   [[ -d "$REPOSITORY/D5" ]] \
     || { echo "lean-report-input: managed Lean root is absent: $REPOSITORY/D5" >&2; return 2; }
-  find "$REPOSITORY/D5" -type f -name '*.lean' -print | sort > "$sources_list"
+  find "$REPOSITORY/D5" -type f -name '*.lean' -print | sort > "$sources_list" || return 2
   while IFS= read -r path; do
-    append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}"
+    append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}" || return 2
   done < "$sources_list"
   if [[ -d "$REPOSITORY/tools/lean-inspector" ]]; then
     find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
-      | sort > "$inspector_sources_list"
+      | sort > "$inspector_sources_list" || return 2
     while IFS= read -r path; do
-      append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}"
+      append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}" || return 2
     done < "$inspector_sources_list"
   fi
-  materialize_manifest "$sources_manifest"
-  sources_sha256="$(hash_file "$sources_manifest")"
+  materialize_manifest "$sources_manifest" || return 2
+  sources_sha256="$(hash_file "$sources_manifest")" || return 2
 
   : > "$config_manifest"
   : > "${config_manifest}.requests"
-  append_manifest_entry "$config_manifest" "lean-toolchain"
-  append_manifest_entry "$config_manifest" "lake-manifest.json"
+  append_manifest_entry "$config_manifest" "lean-toolchain" || return 2
+  append_manifest_entry "$config_manifest" "lake-manifest.json" || return 2
   for lakefile in lakefile.toml lakefile.lean; do
     if [[ -f "$REPOSITORY/$lakefile" ]]; then
-      append_manifest_entry "$config_manifest" "$lakefile"
+      append_manifest_entry "$config_manifest" "$lakefile" || return 2
       lakefile_count=$((lakefile_count + 1))
     fi
   done
   [[ "$lakefile_count" -gt 0 ]] \
     || { echo "lean-report-input: repository has no lakefile" >&2; return 2; }
-  materialize_manifest "$config_manifest"
-  config_sha256="$(hash_file "$config_manifest")"
+  materialize_manifest "$config_manifest" || return 2
+  config_sha256="$(hash_file "$config_manifest")" || return 2
 
   {
     printf '%s\n' "schema=stratalint-lean-report-repository-input-v1"
     printf 'repository_inspector_sha256=%s\n' "$resident_sha256"
     printf 'lean_sources_sha256=%s\n' "$sources_sha256"
     printf 'lean_config_sha256=%s\n' "$config_sha256"
-  } > "$preimage"
+  } > "$preimage" || return 2
   local address_sha256
-  address_sha256="$(hash_file "$preimage")"
+  address_sha256="$(hash_file "$preimage")" || return 2
   store_memo_updates
   printf '%s %s %s %s\n' \
     "$address_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256"
@@ -695,7 +695,15 @@ case "$COMMAND" in
       && -z "$extra" ]] \
       || { echo "lean-report-input: production input attestation is malformed or stale; run make lean-report first" >&2; exit 2; }
     declared="${declared#repository_input_sha256=}"
-    read -r address _ <<< "$(repository_address)"
+    producer="${producer#producer_sha256=}"
+    address_output="$(repository_address)" || exit 2
+    # Validate the complete tuple before read can collapse an empty field.
+    address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
+    [[ "$address_output" =~ $address_pattern ]] \
+      || { echo "lean-report-input: repository address is malformed" >&2; exit 2; }
+    IFS=' ' read -r address current_producer current_sources current_config <<< "$address_output"
+    [[ "$producer" == "$current_producer" ]] \
+      || { echo "lean-report-input: raw Lean report producer is stale for current repository inputs; run make lean-report first" >&2; exit 2; }
     [[ "$declared" == "$address" ]] \
       || { echo "lean-report-input: raw Lean report is stale for current repository inputs; run make lean-report first" >&2; exit 2; }
     ;;

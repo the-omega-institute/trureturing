@@ -31,9 +31,11 @@ internal static class DescribeRepositoryValidator
         var findings = ImmutableArray.CreateBuilder<DescribeRedFinding>();
         findings.AddRange(inspectedLibrary.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
+        var resolvedDeclarationCatalog = declarationCatalog
+            ?? (leanReport is null ? null : DeclarationCatalog.Create(leanReport));
         var graph = DocumentGraphAssembler.Assemble(
             material,
-            declarationCatalog ?? (leanReport is null ? null : DeclarationCatalog.Create(leanReport)));
+            resolvedDeclarationCatalog);
         findings.AddRange(graph.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
 
@@ -108,7 +110,8 @@ internal static class DescribeRepositoryValidator
         var inspectedProblems = problemInspection ?? ProblemCandidateCatalog.Inspect(repositoryRoot);
         findings.AddRange(inspectedProblems.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
-        var frozenState = inspectedProblems.Candidates.IsEmpty
+        var resolutionClaims = EnumerateResolutionClaims(material).ToImmutableArray();
+        var frozenState = inspectedProblems.Candidates.IsEmpty && resolutionClaims.IsEmpty
             ? null
             : LoadFrozenStateCatalog(repositoryRoot);
         foreach (var candidate in inspectedProblems.Candidates)
@@ -128,6 +131,13 @@ internal static class DescribeRepositoryValidator
 
             ValidateProblemSource(candidate, notes, findings);
         }
+        ValidateResolutionClaims(
+            resolutionClaims,
+            inspectedProblems.Candidates,
+            leanReport,
+            resolvedDeclarationCatalog,
+            frozenState,
+            findings);
 
         return findings
             .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
@@ -135,6 +145,186 @@ internal static class DescribeRepositoryValidator
             .ThenBy(static finding => finding.Message, StringComparer.Ordinal)
             .ToImmutableArray();
     }
+
+    private static void ValidateResolutionClaims(
+        ImmutableArray<ResolutionClaimSource> sources,
+        ImmutableArray<ProblemCandidate> problems,
+        LeanAxiomReport? leanReport,
+        DeclarationCatalog? declarationCatalog,
+        FrozenStateCatalog? frozenState,
+        ImmutableArray<DescribeRedFinding>.Builder findings)
+    {
+        if (sources.IsEmpty)
+        {
+            return;
+        }
+
+        var problemsBySlug = problems.ToLookup(
+            static problem => problem.Slug,
+            StringComparer.Ordinal);
+        var firstClaimBySlug = new Dictionary<string, string>(StringComparer.Ordinal);
+        var frozenStatements = leanReport is null
+            ? null
+            : FrozenStatementIndex.Create(
+                frozenState ?? throw new InvalidOperationException(
+                    "Resolution claim validation requires the frozen-state catalog."),
+                leanReport);
+
+        foreach (var source in sources)
+        {
+            var slug = source.Claim.ProblemSlug.Value;
+            var problemCount = problemsBySlug[slug].Count();
+            if (problemCount != 1)
+            {
+                findings.Add(new DescribeRedFinding(
+                    "dangling-problem-slug",
+                    source.Path,
+                    $"problem slug resolves to {problemCount} current problem dossiers: {slug}"));
+            }
+
+            if (!firstClaimBySlug.TryAdd(slug, source.Path))
+            {
+                findings.Add(new DescribeRedFinding(
+                    "duplicate-problem-resolution-claim",
+                    source.Path,
+                    $"problem slug already has a resolution claim at "
+                    + $"{firstClaimBySlug[slug]}: {slug}"));
+            }
+
+            ValidateResolutionSource(
+                source,
+                leanReport,
+                declarationCatalog,
+                frozenStatements,
+                findings);
+        }
+    }
+
+    private static void ValidateResolutionSource(
+        ResolutionClaimSource source,
+        LeanAxiomReport? leanReport,
+        DeclarationCatalog? declarationCatalog,
+        FrozenStatementIndex? frozenStatements,
+        ImmutableArray<DescribeRedFinding>.Builder findings)
+    {
+        if (source.Describe.Statement is not DescribeStatement.LeanDeclaration lean)
+        {
+            findings.Add(new DescribeRedFinding(
+                "invalid-problem-resolution-source",
+                source.Path,
+                "an open-problem resolution claim must name a Lean declaration"));
+            return;
+        }
+
+        if (leanReport is null)
+        {
+            findings.Add(new DescribeRedFinding(
+                "missing-problem-resolution-lean-report",
+                source.Path,
+                $"the compiled-artifact report is required to validate resolution source "
+                + lean.Value.Value));
+            return;
+        }
+
+        if (!Gid.TryParse(lean.Value.Value, out var sourceGid))
+        {
+            findings.Add(new DescribeRedFinding(
+                "invalid-problem-resolution-source",
+                source.Path,
+                $"resolution source is not a canonical formal GID: {lean.Value.Value}"));
+            return;
+        }
+
+        var frozenMessage = "frozen statement index is unavailable";
+        if (frozenStatements is null
+            || !frozenStatements.TryResolve(sourceGid, out _, out frozenMessage))
+        {
+            findings.Add(new DescribeRedFinding(
+                "invalid-problem-resolution-source",
+                source.Path,
+                $"resolution source is not one exact current frozen declaration: "
+                + $"{lean.Value.Value} ({frozenMessage})"));
+            return;
+        }
+
+        try
+        {
+            var catalog = declarationCatalog
+                ?? throw new InvalidOperationException(
+                    "Resolution claim validation requires the declaration catalog.");
+            var formalKind = catalog.Resolve(DeclarationHandle.Create(lean.Value.Value)).FormalKind;
+            var narrativeKind = catalog.ResolveKind(source.Describe);
+            if (formalKind != LeanDeclarationKind.Theorem
+                || narrativeKind is not DescribeKind.Theorem
+                    and not DescribeKind.Proposition
+                    and not DescribeKind.Lemma)
+            {
+                findings.Add(new DescribeRedFinding(
+                    "invalid-problem-resolution-source",
+                    source.Path,
+                    $"resolution source must be theorem-like in both Lean and Scribe: "
+                    + $"{lean.Value.Value} is {formalKind}/{narrativeKind}"));
+            }
+        }
+        catch (InvalidOperationException exception)
+        {
+            findings.Add(new DescribeRedFinding(
+                "invalid-problem-resolution-source",
+                source.Path,
+                $"resolution source is not a validated theorem-like declaration: "
+                + $"{lean.Value.Value} ({exception.Message})"));
+        }
+    }
+
+    private static IEnumerable<ResolutionClaimSource> EnumerateResolutionClaims(
+        IEnumerable<ScribeDocument> documents)
+    {
+        foreach (var document in documents)
+        {
+            foreach (var source in EnumerateResolutionClaims(
+                         document.Header.Gid.Value,
+                         document.Content))
+            {
+                yield return source;
+            }
+        }
+    }
+
+    private static IEnumerable<ResolutionClaimSource> EnumerateResolutionClaims(
+        string documentGid,
+        BlockSequence blocks)
+    {
+        foreach (var block in blocks.Items)
+        {
+            switch (block)
+            {
+                case DocumentBlock.Section section:
+                    foreach (var source in EnumerateResolutionClaims(documentGid, section.Content))
+                    {
+                        yield return source;
+                    }
+                    break;
+                case DocumentBlock.Describe describe:
+                    if (describe.OpenProblemResolutionClaim is { } claim)
+                    {
+                        yield return new ResolutionClaimSource(
+                            $"{documentGid}#describe/{describe.Id.Value}",
+                            describe,
+                            claim);
+                    }
+                    foreach (var source in EnumerateResolutionClaims(documentGid, describe.Content))
+                    {
+                        yield return source;
+                    }
+                    break;
+            }
+        }
+    }
+
+    private sealed record ResolutionClaimSource(
+        string Path,
+        DocumentBlock.Describe Describe,
+        OpenProblemResolutionClaim Claim);
 
     private static FrozenStateCatalog LoadFrozenStateCatalog(string repositoryRoot)
     {
