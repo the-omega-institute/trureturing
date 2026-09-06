@@ -6,6 +6,7 @@
    digest: Even test functions interpolate finite data at sign-separated nodes. -/
 
 import D5.S3.Weil.TestFunctions.FinitePaleyWienerInterpolation
+import D5.S3.Weil.TestFunctions.QuantitativeEvenSeed
 
 /- Library-search audit trail (2026-09-02):
    * Searches for the theorem name, the sign-separation hypothesis, and the
@@ -192,7 +193,8 @@ private theorem exists_common_nonvanishing_even_seed (S : Finset Complex) :
   rw [mem_preimage, mem_ball, hvanish, dist_zero_left, norm_one] at himage
   exact lt_irrefl (1 : Real) himage
 
-private noncomputable def evenPolynomialDifferential
+/-- The existing even polynomial differential realization, exposed for quantitative reuse. -/
+noncomputable def evenPolynomialDifferential
     (P : Complex[X]) (psi : WeilTestFunction) : WeilTestFunction where
   toFun x := ∑ k ∈ P.support,
     P.coeff k * (-Complex.I) ^ (2 * k) * ((deriv^[2 * k]) psi) x
@@ -223,7 +225,8 @@ private noncomputable def evenPolynomialDifferential
     intro k _
     rw [iterate_deriv_even k psi psi.even]
 
-private theorem fourierLaplace_evenPolynomialDifferential
+/-- Its exact transform multiplier is the polynomial evaluated on the squared node. -/
+theorem fourierLaplace_evenPolynomialDifferential
     (P : Complex[X]) (psi : WeilTestFunction) (z : Complex) :
     fourierLaplace (evenPolynomialDifferential P psi) z =
       P.eval (z ^ 2) * fourierLaplace psi z := by
@@ -319,6 +322,89 @@ theorem even_weilTestFunction_finite_interpolation
   dsimp only [target]
   exact div_mul_cancel₀ (a z) (hpsiNonzero z)
 
+/-- Polynomial differentiation preserves the seed's topological support. -/
+theorem evenPolynomialDifferential_tsupport
+    (P : ℂ[X]) (psi : WeilTestFunction) :
+    tsupport (evenPolynomialDifferential P psi : ℝ → ℂ) ⊆ tsupport (psi : ℝ → ℂ) := by
+  have hsupport (q : ℕ) :
+      tsupport ((deriv^[q]) (psi : ℝ → ℂ)) ⊆ tsupport (psi : ℝ → ℂ) := by
+    induction q with
+    | zero => exact Set.Subset.rfl
+    | succ q ih =>
+        rw [Function.iterate_succ_apply']
+        exact tsupport_deriv_subset.trans ih
+  apply closure_minimal _ isClosed_closure
+  intro x hx
+  by_contra hnot
+  have hzero (q : ℕ) : ((deriv^[q]) (psi : ℝ → ℂ)) x = 0 := by
+    by_contra hne
+    exact hnot (hsupport q (subset_tsupport _ hne))
+  apply hx
+  change (∑ k ∈ P.support,
+    P.coeff k * (-Complex.I) ^ (2 * k) * ((deriv^[2 * k]) psi) x) = 0
+  apply Finset.sum_eq_zero
+  intro k _
+  rw [hzero, mul_zero]
+
+/-- The interpolation test can be constructed in the explicit radius
+1/(4(R+1)) when all nodes have norm at most R. Polynomial differentiation
+preserves this radius; its norm cost remains a separate conditioning issue. -/
+theorem even_weilTestFunction_finite_interpolation_with_radius
+    (S : Finset ℂ) (R : ℝ) (hR : 0 ≤ R)
+    (hbound : ∀ z : S, ‖z.1‖ ≤ R)
+    (hsep : ∀ ⦃z w : ℂ⦄, z ∈ S → w ∈ S → z ≠ w → z ≠ -w)
+    (a : S → ℂ) :
+    ∃ g : WeilTestFunction,
+      (∀ z : S, fourierLaplace g z.1 = a z) ∧
+      tsupport (g : ℝ → ℂ) ⊆
+        Icc (-(QuantitativeEvenSeed.quantitativeSeedRadius R))
+          (QuantitativeEvenSeed.quantitativeSeedRadius R) := by
+  let psi := QuantitativeEvenSeed.normalizedEvenSeed
+    (QuantitativeEvenSeed.quantitativeSeedRadius R)
+    (QuantitativeEvenSeed.quantitativeSeedRadius_pos R hR)
+  have hpsiNonzero (z : S) : fourierLaplace psi z.1 ≠ 0 := by
+    have h := QuantitativeEvenSeed.quantitativeEvenSeed_transform_lower R hR z.1 (hbound z)
+    intro hz
+    change (1 / 2 : ℝ) ≤ ‖fourierLaplace psi z.1‖ at h
+    rw [hz, norm_zero] at h
+    norm_num at h
+  let target : S → ℂ := fun z => a z / fourierLaplace psi z.1
+  let P : ℂ[X] := Lagrange.interpolate Finset.univ (fun z : S => z.1 ^ 2) target
+  refine ⟨evenPolynomialDifferential P psi, ?_, ?_⟩
+  · intro z
+    have hP : P.eval (z.1 ^ 2) = target z :=
+      Lagrange.eval_interpolate_at_node target
+        (square_nodes_injective S (@hsep)).injOn (Finset.mem_univ z)
+    rw [fourierLaplace_evenPolynomialDifferential, hP]
+    exact div_mul_cancel₀ (a z) (hpsiNonzero z)
+  · exact (evenPolynomialDifferential_tsupport P psi).trans
+      (QuantitativeEvenSeed.normalizedEvenSeed_tsupport _ _)
+
+/-- The fixed support budget one works for every finite separated node set.
+The test is reconstructed; no norm bound uniform over moving nodes is asserted. -/
+theorem even_weilTestFunction_finite_interpolation_unit_support
+    (S : Finset ℂ)
+    (hsep : ∀ ⦃z w : ℂ⦄, z ∈ S → w ∈ S → z ≠ w → z ≠ -w)
+    (a : S → ℂ) :
+    ∃ g : WeilTestFunction,
+      (∀ z : S, fourierLaplace g z.1 = a z) ∧
+      tsupport (g : ℝ → ℂ) ⊆ Icc (-1) 1 := by
+  classical
+  let R : ℝ := ∑ z : S, ‖z.1‖
+  have hR : 0 ≤ R := Finset.sum_nonneg fun _ _ => norm_nonneg _
+  have hbound (z : S) : ‖z.1‖ ≤ R :=
+    Finset.single_le_sum (fun w _ => norm_nonneg w.1) (Finset.mem_univ z)
+  obtain ⟨g, hg, hs⟩ :=
+    even_weilTestFunction_finite_interpolation_with_radius S R hR hbound hsep a
+  have hr : QuantitativeEvenSeed.quantitativeSeedRadius R ≤ 1 := by
+    unfold QuantitativeEvenSeed.quantitativeSeedRadius
+    apply (div_le_iff₀ (by positivity : 0 < 4 * (R + 1))).2
+    nlinarith
+  refine ⟨g, hg, ?_⟩
+  intro x hx
+  have h := hs hx
+  exact ⟨(neg_le_neg hr).trans h.1, h.2.trans hr⟩
+
 example : ∀ ⦃z w : ℂ⦄, z ∈ (∅ : Finset ℂ) → w ∈ (∅ : Finset ℂ) →
     z ≠ w → z ≠ -w := by
   simp
@@ -326,5 +412,7 @@ example : ∀ ⦃z w : ℂ⦄, z ∈ (∅ : Finset ℂ) → w ∈ (∅ : Finset 
 example : Nonempty WeilTestFunction := ⟨standardTestFunction⟩
 
 #print axioms even_weilTestFunction_finite_interpolation
+#print axioms even_weilTestFunction_finite_interpolation_with_radius
+#print axioms even_weilTestFunction_finite_interpolation_unit_support
 
 end D5.S3.Weil.TestFunctions.EvenTestFunctionFiniteInterpolation
