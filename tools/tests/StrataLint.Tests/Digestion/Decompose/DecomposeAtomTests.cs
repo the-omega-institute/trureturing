@@ -113,7 +113,7 @@ public sealed class DecomposeAtomTests
             var parent = DigestionAtom.FromFrozenCas([.. bytes]);
             var first = parent with { EndByte = 20, RawBytes = parent.RawBytes[..20] };
             first = first with { Fingerprints = DigestionFingerprint.Compute(first.RawBytes.AsSpan()) };
-            var start = defect == "gap" ? 21 : 19;
+            var start = defect switch { "gap" => 21, "overlap" => 19, _ => 20 };
             var last = parent with { StartByte = start, RawBytes = parent.RawBytes[start..] };
             last = last with { Fingerprints = DigestionFingerprint.Compute(last.RawBytes.AsSpan()) };
             var plan = new DigestionClausePlan(parent,
@@ -121,10 +121,34 @@ public sealed class DecomposeAtomTests
                     new DigestionSegment(DigestionSegmentKind.Claim, last)));
             return new AtomizedTheoryDocument([parent], [new DigestionSlice(true, parent.RawBytes)], [plan], GenreRegistryCheck.Collected([]));
         };
+        var before = f.Current;
         var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply, _ => malformed);
         Assert.False(result.Success);
         Assert.Contains("DECOMPOSE_INVALID", result.Error, StringComparison.Ordinal);
+        if (defect == "unknown-kind")
+            Assert.Contains("clause plan has unknown segment kind", result.Error, StringComparison.Ordinal);
         Assert.Equal(0, f.Writes);
+        Assert.Same(before, f.Current);
+    }
+
+    [Fact]
+    public void UnknownSegmentKindHasExactIntegrityFailureWithValidTiling()
+    {
+        var parent = DecomposeFixture.Atom(DecomposeFixture.Bold);
+        var first = DigestionAtom.FromFrozenCas(parent.RawBytes[..20]);
+        var last = DigestionAtom.FromFrozenCas(parent.RawBytes[20..]) with
+        {
+            StartByte = 20,
+            EndByte = parent.EndByte,
+        };
+        var known = new DigestionClausePlan(parent, ImmutableArray.Create(
+            new DigestionSegment(DigestionSegmentKind.Claim, first),
+            new DigestionSegment(DigestionSegmentKind.Claim, last)));
+        Assert.Null(DigestionDecomposition.IntegrityFailure(known));
+
+        var unknown = new DigestionClausePlan(parent, known.Segments.SetItem(0,
+            new DigestionSegment((DigestionSegmentKind)99, first)));
+        Assert.Equal("clause plan has unknown segment kind", DigestionDecomposition.IntegrityFailure(unknown));
     }
 
     [Fact]

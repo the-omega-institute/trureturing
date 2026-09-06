@@ -46,7 +46,6 @@ internal static class DigestionDecomposition
 
     internal static DigestionClausePlan? PlanClauses(DigestionAtom parent)
     {
-        if (!DigestionDecompositionPolicy.IsMultiClause(parent)) return null;
         var text = StrictUtf8.GetString(parent.RawBytes.AsSpan());
         var lines = Lines(text).ToArray();
         var bold = lines.Skip(1).Where(static line => line.Text.StartsWith("**", StringComparison.Ordinal)).ToArray();
@@ -151,7 +150,7 @@ internal static class DigestionDecomposition
         if (IntegrityFailure(plan) is { } failure) throw new FormatException(failure);
     }
 
-    private static IEnumerable<SourceLine> Lines(string text)
+    internal static IEnumerable<SourceLine> Lines(string text)
     {
         var start = 0;
         while (start < text.Length)
@@ -173,5 +172,5 @@ internal static class DigestionDecomposition
         return child.IsEmpty || start < 0 || parent[(start + 1)..].IndexOf(child) >= 0 ? -1 : start;
     }
 
-    private sealed record SourceLine(int Start, string Text);
+    internal sealed record SourceLine(int Start, string Text);
 }
