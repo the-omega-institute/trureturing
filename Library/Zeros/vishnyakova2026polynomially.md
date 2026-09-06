@@ -4,7 +4,7 @@ authors: Anna Vishnyakova
 year: 2026
 title: Polynomially Deformed Normalized Pochhammer Sequences Having Generating Functions With Only Real Non-positive Zeros
 doi: 10.48550/arXiv.2608.03723
-claim: Definition 1.4 specifies the normalized falling-Pochhammer linear operator; Example 6.4 defines its real-root parameter sets; Conjecture 6.5 proposes an upper bound on their even-degree extent.
+claim: Definition 1.4 specifies the normalized falling-Pochhammer linear operator; Example 6.2 exhibits the two quadratic inputs whose images are perfect squares; Example 6.4 defines its real-root parameter sets; Conjecture 6.5 proposes an upper bound on their even-degree extent.
 strata_touched:
   - D5/S3/Zeros/PochhammerDeformation/QuadraticInterval
 license: citation-only
@@ -19,11 +19,43 @@ in the repository. The refutation concerns the strict upper bound at degree
 two, while the asserted interval shape at that degree holds. It makes no claim
 about higher degrees, their monotonicity, or their limiting extent.
 
+### Antecedent to distinguish: Example 6.2
+
+Example 6.2 of the source already exhibits the two inputs
+`P(x) = (x + (a ± sqrt(a(a+1)))/2)^2` and computes
+`L_a(P)(x) = (sqrt(a(a+1)) x + (a ± sqrt(a(a+1)))/2)^2`, a perfect square whose
+double root lies in `[-1,0]`. Because `sqrt(a(a+1)) = sqrt(a^2+a)`, those two
+parameters are **exactly the two endpoints** of the interval classified here.
+The source therefore already establishes that both endpoints belong to the
+degree-two parameter set, at the repeated-root boundary.
+
+What this repository adds is disjoint from that antecedent:
+
+1. **Necessity / whole-interval classification** — that the parameter set
+   *equals* the closed interval between those endpoints, not merely contains
+   them. The source states no such equality at even degree and writes that for
+   even `n` "the situation is much more complicated".
+2. **The closed form of the extent** `c_2(a) = (sqrt(a^2+a) - a)/2`, which the
+   source records as open (`The proof of this fact and the possible value of the
+   limit ... remain open`).
+3. **The sharp threshold** `c_2(a) < 2a` iff `1/24 < a`, with equality at
+   `a = 1/24`, refuting Conjecture 6.5's strict clause `0 < c_{2k}(a) < 2a`
+   throughout `0 < a <= 1/24`. The source neither proves nor conjectures any
+   sharpness statement in this direction.
+
+This distinction was raised by an independent review seat reading the source,
+not by the implementation; it is recorded here so the increment is not
+overstated.
+
 ## Search Log
 
 - 2026-09-06: Read the v1 HTML, including the mathematical `alttext` for
-  Definition 1.4, Example 6.4, and Conjecture 6.5. The latter explicitly states
-  the strict bound `0 < c_{2k}(a) < 2a`.
+  Definition 1.4, Example 6.2, Example 6.4, and Conjecture 6.5. The last
+  explicitly states the strict bound `0 < c_{2k}(a) < 2a`.
+- 2026-09-06 (review round): an independent review seat identified Example 6.2
+  as an antecedent supplying both interval endpoints. Re-read and confirmed
+  against the source `alttext`; the antecedent and the increment are separated
+  above.
 - Searched pinned Mathlib, the repository's D5 declarations, installed Lean
   packages, and GitHub repositories for Lean Pochhammer formalizations.
   The unrelated GaussianWhoWhere project studies finite Hermite-Pochhammer
