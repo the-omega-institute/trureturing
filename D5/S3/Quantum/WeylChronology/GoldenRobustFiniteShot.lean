@@ -73,7 +73,14 @@ theorem robust_repeated_optimal_error_le_bhattacharyya_power
         bhattacharyya
           (robustChronologyLaw leftCal left)
           (robustChronologyLaw rightCal right) ^ shots := by
-    simp [p, q]
+    simp_rw [show ∀ i : Fin shots,
+      bhattacharyya (p i) (q i) =
+        bhattacharyya
+          (robustChronologyLaw leftCal left)
+          (robustChronologyLaw rightCal right) by
+        intro i
+        rfl]
+    rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   rw [hproduct] at hbound
   simpa [robustRepeatedOptimalError, p, q] using hbound
 
