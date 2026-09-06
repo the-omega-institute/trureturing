@@ -185,13 +185,18 @@ public sealed partial class IngestScopeTests
 
         foreach (var args in new[] { Arguments("alpha"), Arguments() })
         {
-            using var blocked = new TemporaryDirectory();
-            WriteFixture(blocked, fixture);
-            var before = DirectoryLedgerTestSupport.RepositoryImage(blocked);
-            var rejected = Environment(fixture, blocked).Ingest(args);
-            Assert.False(rejected.Success);
-            Assert.Contains("planned rewrite of existing entry " + entry.AtomId, rejected.Error, StringComparison.Ordinal);
-            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(blocked));
+            using var preserved = new TemporaryDirectory();
+            WriteFixture(preserved, fixture);
+            var accepted = Environment(fixture, preserved).Ingest(args);
+            Assert.True(accepted.Success, accepted.Error);
+            Assert.Contains(
+                $"INGEST_PRESERVED_EXISTING atom={entry.AtomId} source=alpha kind=planned-rewrite",
+                accepted.Output,
+                StringComparison.Ordinal);
+            var preservedRaw = Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(preserved, fixture.Files));
+            Assert.Equal(
+                Image(Raw(fixture.Files), SourcePrefix("alpha")),
+                Image(preservedRaw, SourcePrefix("alpha")));
         }
     }
 }

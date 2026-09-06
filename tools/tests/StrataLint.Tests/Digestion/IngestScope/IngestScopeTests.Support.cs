@@ -82,7 +82,7 @@ public sealed partial class IngestScopeTests
     private static string SourcePrefix(string id) => BackfillInventoryLoader.RootPath + id + "/";
 
     private static string[] Arguments(params string[] selectors) =>
-        ["--base", "baseline", "--report-input-state", "unchanged",
+        ["--base", "baseline",
             .. selectors.SelectMany(static selector => new[] { "--source", selector })];
 
     private static ProductionCliEnvironment Environment(RuleFixture fixture, TemporaryDirectory temporary,
@@ -109,11 +109,4 @@ public sealed partial class IngestScopeTests
         Func<string, TheoryAtomizerWithContentKinds>? contentAtomizer = null) =>
         DigestionIngestor.Plan(document, snapshot, baseline, sourceIds: sourceIds,
             changes: changes, atomizerResolver: atomizer, contentKindAtomizerResolver: contentAtomizer);
-
-    private static DigestionLedgerAlignment EmptyAlignment(BackfillInventoryDocument document) => new(
-        document.RequireDigestionEntries().ToImmutableDictionary(static entry => entry.AtomId,
-            static _ => DigestionReceiptAlignment.Seen, StringComparer.Ordinal),
-        ImmutableDictionary<string, DigestionAtom>.Empty,
-        ImmutableDictionary<string, ImmutableHashSet<string>>.Empty,
-        ImmutableDictionary<string, GenreRegistryCheck>.Empty, [], [], [], [], [], [], []);
 }

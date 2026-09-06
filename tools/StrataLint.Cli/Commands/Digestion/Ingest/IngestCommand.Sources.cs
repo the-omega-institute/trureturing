@@ -6,7 +6,7 @@ namespace StrataLint.Cli;
 internal static partial class IngestCommand
 {
     private static InvalidOperationException SourceUsage(string reason) => new(
-        "USAGE: StrataLint ingest --base REV --report-input-state unchanged|changed [--source X]...; " + reason);
+        "USAGE: StrataLint ingest --base REV [--source X]...; " + reason);
 
     private static (ImmutableHashSet<string>? SourceIds, ImmutableHashSet<string>? RegistrationPaths) ResolveSources(
         IngestInputs inputs,

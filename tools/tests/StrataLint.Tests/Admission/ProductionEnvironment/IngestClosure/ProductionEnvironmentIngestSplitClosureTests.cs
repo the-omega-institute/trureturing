@@ -231,9 +231,9 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Theory]
-    [InlineData(false, "covered entry closure-entry disappeared from plan")]
-    [InlineData(true, "covered entry closure-entry coverage was cleared in plan")]
-    public void ClassifyPlannedIdentifiesCoveredEntryLoss(bool retainEntry, string expectedWitness)
+    [InlineData(false, "covered-disappeared")]
+    [InlineData(true, "covered-cleared")]
+    public void ObservePlannedIdentifiesCoveredEntryLoss(bool retainEntry, string expectedKind)
     {
         var entry = StatusAuthorityClosureEntry();
         var current = DigestionTestSupport.Document(
@@ -248,36 +248,15 @@ public sealed partial class ProductionEnvironmentTests
                 Entries = retainEntry ? [entry with { Coverage = [] }] : [],
             },
         ]);
-        var alignment = new DigestionLedgerAlignment(
-            ImmutableDictionary.CreateRange(StringComparer.Ordinal,
-            [
-                KeyValuePair.Create(entry.AtomId, DigestionReceiptAlignment.Seen),
-            ]),
-            ImmutableDictionary<string, DigestionAtom>.Empty,
-            ImmutableDictionary<string, ImmutableHashSet<string>>.Empty,
-            ImmutableDictionary<string, GenreRegistryCheck>.Empty,
-            [],
-            [],
-            ImmutableHashSet<string>.Empty,
-            ImmutableHashSet<string>.Empty,
-            [],
-            [],
-            []);
-
-        var classification = IngestTruthAlignmentClassifier.ClassifyPlanned(
-            current,
-            current,
-            planned,
-            alignment,
-            DigestionEvaluationScope.ChangedSet,
-            RawChangeSet.Create([]));
-
-        Assert.False(classification.IsUncoveredOnly);
-        Assert.Equal(expectedWitness, classification.Witness);
+        var observation = Assert.Single(
+            IngestPreservedExistingObserver.ObservePlanned(current, planned),
+            item => item.Kind == expectedKind);
+        Assert.Equal(entry.AtomId, observation.AtomId);
+        Assert.Equal(entry.SourceId, observation.SourceId);
     }
 
     [Fact]
-    public void ClassifyCurrentAcceptsChainAtomReceiptsOnResidualOpenNewEntry()
+    public void ObserveCurrentTreatsCurrentOnlyChainEntryAsExisting()
     {
         var entry = StatusAuthorityClosureEntry() with
         {
@@ -285,23 +264,20 @@ public sealed partial class ProductionEnvironmentTests
             Receipts = new DigestionReceipts([], [], ["chain-child"], null),
         };
 
-        var classification = ClassifyCurrentOnlyNewEntry(entry);
-
-        Assert.True(classification.IsUncoveredOnly);
-        Assert.Null(classification.Witness);
+        var observation = Assert.Single(ObserveCurrentOnlyEntry(entry));
+        Assert.Equal("current-vs-base-changed", observation.Kind);
     }
 
     [Fact]
-    public void ClassifyCurrentRejectsCoverageBearingNewEntry()
+    public void ObserveCurrentTreatsCurrentOnlyCoverageEntryAsExisting()
     {
-        var classification = ClassifyCurrentOnlyNewEntry(StatusAuthorityClosureEntry());
+        var observation = Assert.Single(ObserveCurrentOnlyEntry(StatusAuthorityClosureEntry()));
 
-        Assert.False(classification.IsUncoveredOnly);
-        Assert.Equal("new entry closure-entry is coverage-bearing", classification.Witness);
+        Assert.Equal("current-vs-base-changed", observation.Kind);
     }
 
     [Fact]
-    public void ClassifyCurrentRejectsNonResidualOpenNewEntry()
+    public void ObserveCurrentTreatsCurrentOnlyNonResidualEntryAsExisting()
     {
         var entry = StatusAuthorityClosureEntry() with
         {
@@ -312,12 +288,8 @@ public sealed partial class ProductionEnvironmentTests
                 DigestionTruthState.Open),
         };
 
-        var classification = ClassifyCurrentOnlyNewEntry(entry);
-
-        Assert.False(classification.IsUncoveredOnly);
-        Assert.Equal(
-            "new entry closure-entry projected status is not residual-open",
-            classification.Witness);
+        var observation = Assert.Single(ObserveCurrentOnlyEntry(entry));
+        Assert.Equal("current-vs-base-changed", observation.Kind);
     }
 
     [Theory]
@@ -491,7 +463,7 @@ public sealed partial class ProductionEnvironmentTests
             sourcePath: RuleFixture.FixtureDigestionSourcePath);
     }
 
-    private static IngestTruthAlignmentClassification ClassifyCurrentOnlyNewEntry(
+    private static ImmutableArray<DigestionIngestObservation> ObserveCurrentOnlyEntry(
         DigestionLedgerEntry entry)
     {
         var current = DigestionTestSupport.Document(
@@ -504,9 +476,6 @@ public sealed partial class ProductionEnvironmentTests
             [],
             sourceId: entry.SourceId,
             sourcePath: entry.SourcePath);
-        return IngestTruthAlignmentClassifier.ClassifyCurrent(
-            LeanReportInputState.Unchanged,
-            current,
-            baseline);
+        return IngestPreservedExistingObserver.ObserveCurrent(current, baseline);
     }
 }

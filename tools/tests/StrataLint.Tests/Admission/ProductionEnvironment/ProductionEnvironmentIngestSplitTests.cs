@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     private static readonly string[] ReportInputUnchangedArguments =
-        ["--base", "baseline", "--report-input-state", "unchanged"];
+        ["--base", "baseline"];
 
     [Fact]
     public void IngestUncoveredOnlyDoesNotLoadLeanOrVerifyScribeAndMatchesAlignedBytes()
@@ -93,7 +93,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestRejectsReportInputDeltaBeforeLoadingLeanOrWriting()
+    public void IngestIgnoresReportInputDeltaWithoutLoadingLean()
     {
         var fixture = UncoveredOnlyIngestFixture();
         using var temporary = new TemporaryDirectory();
@@ -110,19 +110,16 @@ public sealed partial class ProductionEnvironmentTests
             reportSource,
             scribeVerifier);
 
-        var result = environment.Ingest(
-            ["--base", "baseline", "--report-input-state", "changed"]);
+        var result = environment.Ingest(ReportInputUnchangedArguments);
 
-        Assert.False(result.Success);
-        Assert.Contains("INGEST_TRUTH_ALIGNMENT_REQUIRED", result.Error, StringComparison.Ordinal);
-        Assert.Contains("make align-digestion-status", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary));
+        Assert.NotEqual(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
-    public void IngestRejectsExistingStatusAuthorityDeltaBeforeLoadingLeanOrWriting()
+    public void IngestPreservesExistingStatusAuthorityDeltaWithoutLoadingLean()
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
@@ -147,18 +144,18 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.Ingest(ReportInputUnchangedArguments);
 
-        Assert.False(result.Success);
-        Assert.Contains("INGEST_TRUTH_ALIGNMENT_REQUIRED", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
         Assert.Contains(
-            $"existing entry {existingAtomId} changed status-authority inputs",
-            result.Error,
+            $"INGEST_PRESERVED_EXISTING atom={existingAtomId} source=fixture-source "
+                + "kind=current-vs-base-changed",
+            result.Output,
             StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
-    public void IngestRejectsRemovedExistingReceiptedEntryBeforeLoadingTruthOrWriting()
+    public void IngestPreservesRemovedExistingReceiptedEntryWithoutRestoringIt()
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
@@ -177,14 +174,14 @@ public sealed partial class ProductionEnvironmentTests
         var casPath = Assert.Single(fixture.Files.Keys, DigestionCasStore.IsCanonicalPath);
         Assert.True(fixture.Files.Remove(casPath));
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([atomPath, casPath]),
             $"existing entry {existingAtomId} removed");
     }
 
     [Fact]
-    public void IngestRejectsExistingSourcePathAuthorityDeltaBeforeLoadingTruthOrWriting()
+    public void IngestPreservesExistingSourcePathAuthorityDeltaWithoutLoadingTruth()
     {
         const string alternateSourcePath = "docs/GOVERNANCE-copy.md";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
@@ -196,14 +193,14 @@ public sealed partial class ProductionEnvironmentTests
                 $"path = \"{alternateSourcePath}\"",
                 StringComparison.Ordinal);
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([alternateSourcePath, DirectorySourceMetadataPath()]),
             $"existing entry {existingAtomId} changed status-authority inputs");
     }
 
     [Fact]
-    public void IngestRejectsExistingAtomizerAuthorityDeltaBeforeLoadingTruthOrWriting()
+    public void IngestPreservesExistingAtomizerAuthorityDeltaWithoutLoadingTruth()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
         var existingAtomId = ExistingAtomId(fixture);
@@ -213,14 +210,14 @@ public sealed partial class ProductionEnvironmentTests
                 $"atomizer = \"{AtomizerRegistry.PzgId}\"",
                 StringComparison.Ordinal);
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([DirectorySourceMetadataPath()]),
             $"existing entry {existingAtomId} changed status-authority inputs");
     }
 
     [Fact]
-    public void IngestRejectsExistingGenreAuthorityDeltaBeforeLoadingTruthOrWriting()
+    public void IngestPreservesExistingGenreAuthorityDeltaWithoutLoadingTruth()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
         var existingAtomId = ExistingAtomId(fixture);
@@ -230,14 +227,14 @@ public sealed partial class ProductionEnvironmentTests
                 "unregistered_genres = [\"未登记体\"]",
                 StringComparison.Ordinal);
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([DirectorySourceMetadataPath()]),
             $"existing entry {existingAtomId} changed status-authority inputs");
     }
 
     [Fact]
-    public void IngestRejectsCoveredEntryExternalAuthorityDeltaBeforeLoadingTruthOrWriting()
+    public void IngestPreservesCoveredEntryExternalAuthorityDeltaWithoutLoadingTruth()
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
@@ -250,7 +247,7 @@ public sealed partial class ProductionEnvironmentTests
                 StringComparison.Ordinal);
         }
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([
                 ScribeEmissionAttestation.DefinitionPath(
@@ -260,7 +257,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestEmptyChangeSetWithCoveredEntryRequiresTruthAlignmentBeforeTruthOrWrites()
+    public void IngestEmptyChangeSetPreservesCoveredEntryWithoutTruthOrWrites()
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
@@ -273,7 +270,7 @@ public sealed partial class ProductionEnvironmentTests
                 StringComparison.Ordinal);
         }
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create(Array.Empty<string>()),
             "covered entry");
@@ -366,7 +363,7 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("tail")]
     [InlineData("quarantine")]
     [InlineData("cover-disposition")]
-    public void IngestRejectsNonChainReceiptKindsOnCurrentOnlyNewEntryBeforeTruthOrWrites(
+    public void IngestPreservesCurrentOnlyReceiptedEntryWithoutTruthOrWrites(
         string receiptKind)
     {
         const string gid = "D5/S0/Carrier/Ring.goldenRing";
@@ -434,7 +431,7 @@ public sealed partial class ProductionEnvironmentTests
         var capture = DigestionCasStore.Capture(newAtom.RawBytes.AsSpan());
         fixture.Files[capture.RelativePath] = Encoding.UTF8.GetString(capture.Bytes.AsSpan());
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([
                 DirectoryAtomPath(entry.AtomId, "residual-open"),
@@ -444,7 +441,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestRejectsNonResidualOpenNewEntryBeforeLoadingTruthOrWriting()
+    public void IngestPreservesCurrentOnlyNonResidualEntryWithoutLoadingTruth()
     {
         var fixture = UncoveredOnlyIngestFixture();
         var atomizerId = SyntheticNumberedAtomizer.Id;
@@ -475,7 +472,7 @@ public sealed partial class ProductionEnvironmentTests
         var capture = DigestionCasStore.Capture(newAtom.RawBytes.AsSpan());
         fixture.Files[capture.RelativePath] = Encoding.UTF8.GetString(capture.Bytes.AsSpan());
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([
                 RuleFixture.FixtureDigestionSourcePath,
@@ -486,7 +483,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestRejectsPlannedExistingEntryRewriteBeforeLoadingTruthOrWriting()
+    public void IngestPreservesPlannedExistingEntryRewriteWithoutLoadingTruth()
     {
         const string sourceText = """
             # PZG
@@ -512,14 +509,14 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = sourceText;
         InstallProjectedLedger(fixture, ledger, parent);
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create(Array.Empty<string>()),
             "planned rewrite of existing entry");
     }
 
     [Fact]
-    public void IngestReportFreeRejectsStructurallyInvalidLedgerWithoutWriting()
+    public void IngestReportFreePreservesStructurallyInvalidExistingLedgerWithoutWriting()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
         var atomizerId = SyntheticNumberedAtomizer.Id;
@@ -556,23 +553,21 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.Ingest(ReportInputUnchangedArguments);
 
-        Assert.False(result.Success);
-        Assert.Contains("invalid source_id: INVALID", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
     [Fact]
-    public void IngestReportFreeRejectsMissingReferencedCasBlobBeforeTruthOrWrites()
+    public void IngestReportFreePreservesEntryWithMissingExistingCasWithoutWrites()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
         var casPath = Assert.Single(fixture.Files.Keys, DigestionCasStore.IsCanonicalPath);
         Assert.True(fixture.Files.Remove(casPath));
 
-        AssertReportFreeRejectedWithoutTruthOrWrites(
+        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([casPath]),
-            "INGEST_INVALID",
             $"entry {ExistingAtomId(fixture)} CAS blob is missing: {casPath}");
     }
 
@@ -617,7 +612,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestReportFreeRejectsChangedStatusAuthorityWhenProjectedStatusWouldDrift()
+    public void IngestReportFreePreservesChangedStatusAuthorityWhenProjectedStatusWouldDrift()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
         var atomizerId = SyntheticNumberedAtomizer.Id;
@@ -647,9 +642,8 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.Ingest(ReportInputUnchangedArguments);
 
-        Assert.False(result.Success);
-        Assert.Contains("report-free digest status is invalid", result.Error, StringComparison.Ordinal);
-        Assert.Contains("handwritten status partial-open differs from derived residual-open", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("kind=planned-rewrite", result.Output, StringComparison.Ordinal);
         Assert.Equal(before, GeneratedIngestImage(temporary));
     }
 
@@ -687,15 +681,38 @@ public sealed partial class ProductionEnvironmentTests
         return AtomId(atom);
     }
 
-    private static void AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
+    private static void AssertReportFreeExistingPreservedWithoutTruthOrWrites(
         RuleFixture fixture,
         RawChangeSet changes,
-        string witness) =>
-        AssertReportFreeRejectedWithoutTruthOrWrites(
-            fixture,
-            changes,
-            "INGEST_TRUTH_ALIGNMENT_REQUIRED",
-            witness);
+        string witness)
+    {
+        using var temporary = new TemporaryDirectory();
+        WriteDirectoryLedger(temporary.Path, fixture.Files);
+        var before = GeneratedIngestImage(temporary);
+        var reportSource = new FakeLeanReportSource(report: null);
+        var scribeVerifier = new FakeScribeEmissionVerifier(verification: null);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                changes,
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            reportSource,
+            scribeVerifier);
+
+        var result = environment.Ingest(ReportInputUnchangedArguments);
+
+        Assert.True(result.Success, result.Error);
+        var expectedKind = witness.Contains("removed", StringComparison.Ordinal)
+            ? "removed"
+            : witness.Contains("planned rewrite", StringComparison.Ordinal)
+                ? "planned-rewrite"
+                : "current-vs-base-changed";
+        Assert.Contains($"kind={expectedKind}", result.Output, StringComparison.Ordinal);
+        Assert.Equal(0, reportSource.CallCount);
+        Assert.Equal(0, scribeVerifier.CallCount);
+        Assert.Equal(before, GeneratedIngestImage(temporary));
+    }
 
     private static void AssertReportFreeRejectedWithoutTruthOrWrites(
         RuleFixture fixture,

@@ -245,18 +245,11 @@ public sealed partial class MakeWorkflowTests
         var script = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
 
-        Assert.Contains("lean-report-input.sh", script, StringComparison.Ordinal);
-        Assert.Contains(" address --repository ", script, StringComparison.Ordinal);
-        Assert.Contains("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
-        Assert.DoesNotContain(
-            "input_state=\"$(report_input_state)\"",
-            script,
-            StringComparison.Ordinal);
-        Assert.Contains("report_input_state\n    cleanup", script, StringComparison.Ordinal);
-        Assert.Contains(
-            "ingest --base \"$BASE\" --report-input-state \"$REPORT_INPUT_STATE\"",
-            script,
-            StringComparison.Ordinal);
+        Assert.DoesNotContain("lean-report-input.sh", script, StringComparison.Ordinal);
+        Assert.DoesNotContain(" address --repository ", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("report_input_state", script, StringComparison.Ordinal);
+        Assert.Contains("ingest_args=(ingest --base \"$BASE\")", script, StringComparison.Ordinal);
         Assert.Contains("align-digestion-status)", script, StringComparison.Ordinal);
         Assert.Contains(
             "--role digestion-alignment-consumer --report \"$REPORT\"",
@@ -359,7 +352,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void IngestWrapperDerivesReportInputStateFromExecutableClosureDelta()
+    public void IngestWrapperForwardsBaseWithoutLeanClosureProbe()
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -368,14 +361,11 @@ public sealed partial class MakeWorkflowTests
         using var fixture = new TemporaryDirectory();
         var binDirectory = Path.Combine(fixture.Path, "bin");
         var ingestPath = Path.Combine(fixture.Path, IngestScriptPath);
-        var inputPath = Path.Combine(fixture.Path, LeanReportInputScriptPath);
         Directory.CreateDirectory(binDirectory);
         Directory.CreateDirectory(Path.GetDirectoryName(ingestPath)!);
-        Directory.CreateDirectory(Path.GetDirectoryName(inputPath)!);
         Directory.CreateDirectory(Path.Combine(fixture.Path, "D5"));
         Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Cli"));
         File.Copy(Path.Combine(root, IngestScriptPath), ingestPath);
-        File.Copy(Path.Combine(root, LeanReportInputScriptPath), inputPath);
         File.WriteAllText(Path.Combine(fixture.Path, "Trureturing.lean"), "import D5.Probe\n");
         File.WriteAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), leanSource);
         File.WriteAllText(Path.Combine(fixture.Path, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
@@ -390,7 +380,7 @@ public sealed partial class MakeWorkflowTests
             if [[ "${1:-}" == "msbuild" ]]; then exit 1; fi
             printf '%s\n' "$*"
             """ + "\n");
-        foreach (var executable in new[] { ingestPath, inputPath, dotnetPath })
+        foreach (var executable in new[] { ingestPath, dotnetPath })
         {
             File.SetUnixFileMode(
                 executable,
@@ -421,7 +411,11 @@ public sealed partial class MakeWorkflowTests
         var changed = RunWrapper();
         Assert.Equal(0, changed.ExitCode);
         Assert.Contains(
-            "ingest --base HEAD --report-input-state changed",
+            "ingest --base HEAD",
+            System.Text.Encoding.UTF8.GetString(changed.StandardOutput),
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "report-input-state",
             System.Text.Encoding.UTF8.GetString(changed.StandardOutput),
             StringComparison.Ordinal);
 
@@ -430,7 +424,7 @@ public sealed partial class MakeWorkflowTests
         var unchanged = RunWrapper();
         Assert.Equal(0, unchanged.ExitCode);
         Assert.Contains(
-            "ingest --base HEAD --report-input-state unchanged",
+            "ingest --base HEAD",
             System.Text.Encoding.UTF8.GetString(unchanged.StandardOutput),
             StringComparison.Ordinal);
     }

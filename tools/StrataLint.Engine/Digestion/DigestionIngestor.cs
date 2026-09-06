@@ -1,73 +1,6 @@
 using System.Collections.Immutable;
-using System.Text;
 
 namespace StrataLint.Engine;
-
-internal sealed record DigestionIngestPlan(
-    BackfillInventoryDocument AdmissionDocument,
-    DigestionLedgerAlignment Alignment,
-    int StaleAcknowledged,
-    int ResidualOpenAdded,
-    ImmutableArray<DigestionCasObject> CasObjects,
-    ImmutableArray<DigestionIngestFallback> Fallbacks,
-    ImmutableHashSet<string>? SourceIds = null)
-{
-    internal BackfillInventoryDocument Document { get; } =
-        DigestionIngestor.NormalizeAtomIdentities(AdmissionDocument, SourceIds);
-}
-
-internal static class DigestionSourceConflictMarkers
-{
-    internal const string DiagnosticCode = "INGEST-CONFLICT-MARKER-001";
-
-    internal static int? FindFirstLine(ReadOnlySpan<byte> bytes)
-    {
-        var start = bytes.Length >= 3
-            && bytes[0] == 0xef
-            && bytes[1] == 0xbb
-            && bytes[2] == 0xbf
-                ? 3
-                : 0;
-        var lineNumber = 1;
-        while (true)
-        {
-            var end = start;
-            while (end < bytes.Length
-                && bytes[end] != (byte)'\r'
-                && bytes[end] != (byte)'\n')
-            {
-                end++;
-            }
-
-            var line = bytes[start..end];
-            if (line.StartsWith("<<<<<<< "u8)
-                || line.StartsWith("||||||| "u8)
-                || line.SequenceEqual("======="u8)
-                || line.StartsWith(">>>>>>> "u8))
-            {
-                return lineNumber;
-            }
-
-            if (end == bytes.Length)
-            {
-                return null;
-            }
-
-            if (bytes[end] == (byte)'\r'
-                && end + 1 < bytes.Length
-                && bytes[end + 1] == (byte)'\n')
-            {
-                end++;
-            }
-
-            start = end + 1;
-            lineNumber++;
-        }
-    }
-
-    internal static string FormatFinding(string sourcePath, int line) =>
-        $"{DiagnosticCode} {sourcePath}:{line}: unresolved merge conflict marker in digestion source";
-}
 
 internal static partial class DigestionIngestor
 {
@@ -109,11 +42,26 @@ internal static partial class DigestionIngestor
         RawChangeSet? changes = null,
         ImmutableHashSet<string>? sourceIds = null,
         ImmutableHashSet<string>? registrationPaths = null,
-        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null)
+        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null,
+        DigestionIngestStrategy strategy = DigestionIngestStrategy.Align)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(baselineDocument);
+
+        var existingAtomIds = document.RequireDigestionEntries()
+            .Select(static entry => entry.AtomId)
+            .ToImmutableHashSet(StringComparer.Ordinal);
+        var reservedRemovedAtomIds = baselineDocument.RequireDigestionEntries()
+            .Select(static entry => entry.AtomId)
+            .Except(existingAtomIds, StringComparer.Ordinal)
+            .ToImmutableHashSet(StringComparer.Ordinal);
+        var existingSourceIds = document.RequireDigestionSources()
+            .Select(static source => source.SourceId)
+            .ToImmutableHashSet(StringComparer.Ordinal);
+        var observations = new HashSet<DigestionIngestObservation>();
+        void Observe(string atomId, string observedSourceId, string kind) =>
+            observations.Add(new DigestionIngestObservation(atomId, observedSourceId, kind));
 
         var migrationDocument = RegisterDefaultTheorySources(document, snapshot,
             sourceIds is null ? null : registrationPaths ?? ImmutableHashSet<string>.Empty);
@@ -134,7 +82,11 @@ internal static partial class DigestionIngestor
             && entry.Receipts.ChainAtoms.Length > 0
             && alignment.ClausePlanChainParents.Contains(entry.AtomId)
             && !alignment.VerifiedClausePlanParents.Contains(entry.AtomId));
-        if (unverifiedChainParent is not null)
+        if (unverifiedChainParent is not null && strategy == DigestionIngestStrategy.AppendOnly)
+        {
+            Observe(unverifiedChainParent.AtomId, unverifiedChainParent.SourceId, "planned-rewrite");
+        }
+        else if (unverifiedChainParent is not null)
         {
             var findingPrefix = $"entry {unverifiedChainParent.AtomId} malformed clause chain:";
             var reason = alignment.Findings.FirstOrDefault(finding =>
@@ -144,7 +96,7 @@ internal static partial class DigestionIngestor
                 + (reason is null ? string.Empty : $": {reason}"));
         }
 
-        if (alignment.Findings.Length > 0)
+        if (alignment.Findings.Length > 0 && strategy != DigestionIngestStrategy.AppendOnly)
         {
             throw new FormatException(
                 "ingest alignment is invalid: " + string.Join("; ", alignment.Findings));
@@ -161,6 +113,7 @@ internal static partial class DigestionIngestor
             .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
         var casObjects = new Dictionary<string, DigestionCasObject>(StringComparer.Ordinal);
+        var newAtomIds = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var staleAcknowledged = 0;
         var residualOpenAdded = 0;
         foreach (var source in migrationDocument.RequireDigestionSources())
@@ -170,12 +123,21 @@ internal static partial class DigestionIngestor
                 sources.Add(source);
                 continue;
             }
-            var resolvedSource = alignment.GenreRegistryChecks.TryGetValue(
+            var hasResolvedGenre = alignment.GenreRegistryChecks.TryGetValue(
                 source.SourceId,
-                out var genreRegistryCheck)
+                out var genreRegistryCheck);
+            if (strategy == DigestionIngestStrategy.AppendOnly
+                && existingSourceIds.Contains(source.SourceId)
+                && hasResolvedGenre
+                && !Equals(source.GenreRegistryCheck, genreRegistryCheck))
+            {
+                foreach (var entry in source.Entries)
+                    Observe(entry.AtomId, source.SourceId, "genre-projection-changed");
+            }
+            var resolvedSource = hasResolvedGenre
                     ? source with
                     {
-                        GenreRegistryProjection = GenreRegistryProjection.Available(genreRegistryCheck),
+                        GenreRegistryProjection = GenreRegistryProjection.Available(genreRegistryCheck!),
                     }
                     : source;
             if (!AtomizerRegistry.IsRegistered(source.Atomizer))
@@ -185,7 +147,10 @@ internal static partial class DigestionIngestor
                     throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
                 }
 
-                sources.Add(resolvedSource);
+                sources.Add(strategy == DigestionIngestStrategy.AppendOnly
+                        && existingSourceIds.Contains(source.SourceId)
+                    ? source
+                    : resolvedSource);
                 continue;
             }
 
@@ -195,12 +160,34 @@ internal static partial class DigestionIngestor
                 .Order(StringComparer.Ordinal)
                 .ToImmutableArray();
             var priorAcknowledgments = source.AcknowledgedStale.ToHashSet(StringComparer.Ordinal);
+            if (strategy == DigestionIngestStrategy.AppendOnly
+                && !acknowledgments.SequenceEqual(source.AcknowledgedStale, StringComparer.Ordinal))
+            {
+                foreach (var atomId in acknowledgments
+                             .Concat(source.AcknowledgedStale)
+                             .Distinct(StringComparer.Ordinal))
+                {
+                    Observe(atomId, source.SourceId, "acknowledged-stale-changed");
+                }
+            }
             var entries = source.Entries.ToBuilder();
             if (residualBySource.TryGetValue(source.SourceId, out var residual))
             {
                 foreach (var item in residual)
                 {
-                    if (globalEntries.ContainsKey(item.SuggestedAtomId))
+                    if (globalEntries.TryGetValue(item.SuggestedAtomId, out var existing))
+                    {
+                        if (!DigestionLedgerAligner.FingerprintsMatch(
+                                existing.Fingerprints,
+                                item.Atom.Fingerprints))
+                        {
+                            throw new FormatException(
+                                $"ingest atom id collision at {item.SuggestedAtomId}");
+                        }
+                        continue;
+                    }
+                    if (strategy == DigestionIngestStrategy.AppendOnly
+                        && reservedRemovedAtomIds.Contains(item.SuggestedAtomId))
                     {
                         continue;
                     }
@@ -235,6 +222,7 @@ internal static partial class DigestionIngestor
                     if (!globalEntries.TryAdd(admitted.AtomId, admitted))
                         continue;
                     entries.Add(admitted);
+                    newAtomIds.Add(admitted.AtomId);
                     residualOpenAdded++;
                 }
             }
@@ -244,12 +232,29 @@ internal static partial class DigestionIngestor
             {
                 foreach (var clausePlan in clausePlans)
                 {
+                    var clauseParentId =
+                        clausePlan.Parent.Fingerprints.RawSha256["sha256:".Length..];
                     var parentIndexes = entries
                         .Select((entry, index) => (Entry: entry, Index: index))
                         .Where(item => DigestionLedgerAligner.FingerprintsMatch(
                                 item.Entry.Fingerprints,
                                 clausePlan.Parent.Fingerprints))
                         .ToArray();
+                    if (parentIndexes.Length == 0
+                        && strategy == DigestionIngestStrategy.AppendOnly
+                        && reservedRemovedAtomIds.Contains(clauseParentId))
+                    {
+                        continue;
+                    }
+                    if (parentIndexes.Length == 0
+                        && globalEntries.ContainsKey(clauseParentId))
+                    {
+                        Observe(
+                            clauseParentId,
+                            source.SourceId,
+                            "clause-parent-deduplicated");
+                        continue;
+                    }
                     if (parentIndexes.Length != 1)
                     {
                         throw new FormatException(
@@ -258,6 +263,13 @@ internal static partial class DigestionIngestor
                     }
 
                     var (parent, parentIndex) = parentIndexes[0];
+                    if (strategy == DigestionIngestStrategy.AppendOnly
+                        && existingAtomIds.Contains(parent.AtomId))
+                    {
+                        if (parent.Receipts.ChainAtoms.Length == 0)
+                            Observe(parent.AtomId, source.SourceId, "planned-rewrite");
+                        continue;
+                    }
                     if (parent.Receipts.ChainAtoms.Length > 0)
                     {
                         continue;
@@ -276,6 +288,7 @@ internal static partial class DigestionIngestor
                         if (!globalEntries.TryAdd(child.AtomId, child))
                             continue;
                         entries.Add(child);
+                        newAtomIds.Add(child.AtomId);
                         residualOpenAdded++;
                     }
                     foreach (var captured in decomposition.CasObjects)
@@ -285,25 +298,81 @@ internal static partial class DigestionIngestor
                 }
             }
 
-            staleAcknowledged += acknowledgments.Count(priorAcknowledgment =>
-                !priorAcknowledgments.Contains(priorAcknowledgment));
-            sources.Add(resolvedSource with
+            if (strategy != DigestionIngestStrategy.AppendOnly)
             {
-                AcknowledgedStale = acknowledgments,
+                staleAcknowledged += acknowledgments.Count(priorAcknowledgment =>
+                    !priorAcknowledgments.Contains(priorAcknowledgment));
+            }
+            var outputSource = strategy == DigestionIngestStrategy.AppendOnly
+                    && existingSourceIds.Contains(source.SourceId)
+                ? source
+                : resolvedSource;
+            sources.Add(outputSource with
+            {
+                AcknowledgedStale = strategy == DigestionIngestStrategy.AppendOnly
+                    ? outputSource.AcknowledgedStale
+                    : acknowledgments,
                 Entries = entries.ToImmutable(),
             });
         }
 
+        if (strategy == DigestionIngestStrategy.AppendOnly)
+        {
+            foreach (var source in document.RequireDigestionSources()
+                         .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId)))
+            foreach (var entry in source.Entries.Where(NeedsIdentityNormalization))
+                Observe(entry.AtomId, source.SourceId, "planned-rewrite");
+        }
+
+        var admittedDocument = migrationDocument.WithDigestionSources(sources.ToImmutable());
+        var allowedCasReferences = admittedDocument.RequireDigestionEntries()
+            .Where(entry => newAtomIds.Contains(entry.AtomId))
+            .Select(static entry => entry.CasRef)
+            .ToHashSet(StringComparer.Ordinal);
         return new DigestionIngestPlan(
-            migrationDocument.WithDigestionSources(sources.ToImmutable()),
+            admittedDocument,
             alignment,
             staleAcknowledged,
             residualOpenAdded,
             casObjects.Values
+                .Where(item => strategy != DigestionIngestStrategy.AppendOnly
+                    || allowedCasReferences.Contains(item.Reference))
                 .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
                 .ToImmutableArray(),
             alignment.Fallbacks,
-            sourceIds);
+            sourceIds,
+            strategy,
+            newAtomIds.ToImmutable(),
+            observations
+                .OrderBy(static item => item.AtomId, StringComparer.Ordinal)
+                .ThenBy(static item => item.SourceId, StringComparer.Ordinal)
+                .ThenBy(static item => item.Kind, StringComparer.Ordinal)
+                .ToImmutableArray());
+    }
+
+    private static bool NeedsIdentityNormalization(DigestionLedgerEntry entry)
+    {
+        if (!DigestionFingerprint.IsCanonicalSha256(entry.Fingerprints.RawSha256)
+            || entry.AtomId != entry.Fingerprints.RawSha256["sha256:".Length..])
+        {
+            return true;
+        }
+
+        var residualOpen = new DigestionStatus(
+            DigestionMigrationState.Residual,
+            DigestionTruthState.Open);
+        return entry.Coverage.IsEmpty
+                && entry.Receipts.IsEmpty
+                && entry.ProjectedStatus != residualOpen
+            || !entry.Coverage.SequenceEqual(entry.Coverage
+                .OrderBy(static edge => edge.Gid, StringComparer.Ordinal))
+            || !entry.Receipts.Scribe.SequenceEqual(entry.Receipts.Scribe
+                .OrderBy(static receipt => receipt.Gid, StringComparer.Ordinal))
+            || !entry.Receipts.UnresolvedSubitems.SequenceEqual(
+                entry.Receipts.UnresolvedSubitems
+                    .Distinct(StringComparer.Ordinal)
+                    .Order(StringComparer.Ordinal),
+                StringComparer.Ordinal);
     }
 
     private static DigestionCasObject AddCasObject(

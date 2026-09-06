@@ -21,55 +21,62 @@ internal static partial class IngestCommand
                 options.BaselineRevision,
                 requireBaselineSourceMetadata: true);
             var (sourceIds, registrationPaths) = ResolveSources(inputs, options.Sources);
-            var classification = IngestTruthAlignmentClassifier.ClassifyCurrent(
-                options.ReportInputState,
+            var currentObservations = IngestPreservedExistingObserver.ObserveCurrent(
                 inputs.CurrentDocument,
                 inputs.BaselineDocument,
                 sourceIds);
-            if (!classification.IsUncoveredOnly)
-            {
-                return TruthAlignmentRequired(classification);
-            }
 
             var repositoryChanges = repository.ReadChanges(options.BaselineRevision);
-            var plan = Plan(inputs, repositoryChanges, sourceIds, registrationPaths);
+            var plan = Plan(
+                inputs,
+                repositoryChanges,
+                sourceIds,
+                registrationPaths,
+                DigestionIngestStrategy.AppendOnly);
             var prepared = Prepare(
                 inputs,
                 repositoryChanges,
                 plan,
                 report: null,
                 sourceIds);
-            classification = IngestTruthAlignmentClassifier.ClassifyPlanned(
-                prepared.CurrentDocument,
-                prepared.BaselineDocument,
-                prepared.PlannedDocument,
-                prepared.Plan.Alignment,
-                prepared.PlannedScope,
+            var observations = IngestPreservedExistingObserver.Combine(
+                currentObservations,
+                prepared.Plan.PreservedExisting,
+                IngestPreservedExistingObserver.ObserveAuthorityChanges(
+                    prepared.CurrentDocument,
+                    prepared.BaselineDocument,
+                    prepared.Plan.Alignment,
+                    prepared.PlannedScope,
+                    prepared.RepositoryChanges,
+                    sourceIds));
+            var appendOnlyChanges = EffectiveChanges(
+                prepared.CurrentRaw,
+                prepared.PlannedRaw);
+            var validationChanges = ReportFreeValidationChanges(
+                appendOnlyChanges,
                 prepared.RepositoryChanges,
-                sourceIds);
-            if (!classification.IsUncoveredOnly)
-            {
-                return TruthAlignmentRequired(classification);
-            }
+                prepared.CurrentRaw,
+                prepared.BaselineRaw);
 
             var evaluation = DigestionStatusEvaluator.EvaluateUncovered(
-                DigestionEvaluationScope.FullScan,
+                DigestionEvaluationScope.ChangedSet,
                 prepared.PlannedDocument,
                 prepared.PlannedSnapshot,
                 prepared.BaselineDocument,
-                prepared.PlannedReceiptVerificationChanges,
-                prepared.PlannedCasChanges,
-                sourceIds);
+                validationChanges,
+                validationChanges,
+                sourceIds,
+                preservedAtomIds: prepared.CurrentDocument.RequireDigestionEntries()
+                    .Select(static entry => entry.AtomId)
+                    .ToImmutableHashSet(StringComparer.Ordinal));
             RequireValidReportFreeEvaluation(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfillWithoutTruthAlignment(
                 prepared.PlannedDocument,
                 prepared.PlannedSnapshot,
                 prepared.Baseline,
                 LoadPolicy(prepared.PlannedSnapshot),
-                DigestionEvaluationScopes.ResolveChanges(
-                    prepared.PlannedScope,
-                    prepared.PlannedReceiptVerificationChanges),
-                casChanges: prepared.PlannedCasChanges,
+                validationChanges,
+                casChanges: validationChanges,
                 sourceIds: sourceIds);
             return WriteResult(
                 repositoryRoot,
@@ -78,6 +85,7 @@ internal static partial class IngestCommand
                 prepared.PlannedDocument,
                 evaluation,
                 backfillObservations,
+                observations,
                 sourceIds);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -85,15 +93,6 @@ internal static partial class IngestCommand
             return new CommandResult(false, string.Empty, $"INGEST_INVALID {exception.Message}\n");
         }
     }
-
-    private static CommandResult TruthAlignmentRequired(
-        IngestTruthAlignmentClassification classification) =>
-        new(
-            false,
-            string.Empty,
-            "INGEST_TRUTH_ALIGNMENT_REQUIRED "
-            + classification.Witness
-            + "; run make align-digestion-status\n");
 
     private static void RequireValidReportFreeEvaluation(DigestionLedgerEvaluation evaluation)
     {
@@ -105,6 +104,33 @@ internal static partial class IngestCommand
         }
     }
 
+    private static RawChangeSet ReportFreeValidationChanges(
+        RawChangeSet appendOnlyChanges,
+        RawChangeSet repositoryChanges,
+        RawRepositorySnapshot current,
+        RawRepositorySnapshot baseline)
+    {
+        var changes = appendOnlyChanges.Entries.ToDictionary(
+            static change => change.Path.Value,
+            static change => change.Kind,
+            StringComparer.Ordinal);
+        var currentPaths = current.Entries.Select(static entry => entry.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        var baselinePaths = baseline.Entries.Select(static entry => entry.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var change in repositoryChanges.Entries.Where(change =>
+                     DigestionCasStore.IsCanonicalPath(change.Path.Value)
+                     && currentPaths.Contains(change.Path.Value)
+                     && !baselinePaths.Contains(change.Path.Value)))
+        {
+            changes[change.Path.Value] = change.Kind;
+        }
+
+        return RawChangeSet.CreateWithKinds(changes
+            .OrderBy(static item => item.Key, StringComparer.Ordinal)
+            .Select(static item => (item.Key, item.Value)));
+    }
+
     private static CommandResult WriteResult(
         string repositoryRoot,
         IngestPreparation prepared,
@@ -112,10 +138,23 @@ internal static partial class IngestCommand
         BackfillInventoryDocument finalDocument,
         DigestionLedgerEvaluation evaluation,
         string backfillObservations,
+        ImmutableArray<DigestionIngestObservation> observations = default,
         ImmutableHashSet<string>? sourceIds = null)
     {
+        if (observations.IsDefault) observations = [];
         var ledgerUpdates = LedgerUpdates(prepared.CurrentRaw, finalRaw, sourceIds);
         RequireScopedCasObjects(prepared.Plan.CasObjects, finalDocument, sourceIds);
+        if (prepared.Plan.Strategy == DigestionIngestStrategy.AppendOnly)
+        {
+            RequireAppendOnlyWriteSet(
+                prepared.CurrentRaw,
+                prepared.CurrentDocument,
+                finalDocument,
+                ledgerUpdates,
+                prepared.Plan.CasObjects,
+                prepared.Plan.AddedAtomIds,
+                sourceIds);
+        }
         var changed = ledgerUpdates.Length > 0;
         var openGenres = finalDocument.RequireDigestionSources()
             .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
@@ -141,8 +180,14 @@ internal static partial class IngestCommand
             + $"residual_open_added={prepared.Plan.ResidualOpenAdded} "
             + $"coarse_fallbacks={prepared.Plan.Fallbacks.Length} "
             + $"open_genres={openGenres.Length} "
+            + (prepared.Plan.Strategy == DigestionIngestStrategy.AppendOnly
+                ? $"preserved_existing={observations.Length} "
+                : string.Empty)
             + $"cas_objects_written={createdCasPaths.Length} "
             + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
+            + string.Concat(observations.Select(static observation =>
+                $"INGEST_PRESERVED_EXISTING atom={observation.AtomId} "
+                + $"source={observation.SourceId} kind={observation.Kind}\n"))
             + string.Concat(openGenres.Select(static item =>
                 $"INGEST_OPEN_GENRE source={item.SourceId} "
                 + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
@@ -166,14 +211,12 @@ internal static partial class IngestCommand
 
     private static ReportFreeOptions ParseReportFreeArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count >= 4
+        if (arguments.Count >= 2
             && arguments[0] == "--base"
-            && !string.IsNullOrWhiteSpace(arguments[1])
-            && arguments[2] == "--report-input-state"
-            && Enum.TryParse<LeanReportInputState>(arguments[3], ignoreCase: true, out var state))
+            && !string.IsNullOrWhiteSpace(arguments[1]))
         {
             var sources = ImmutableArray.CreateBuilder<string>();
-            for (var index = 4; index < arguments.Count; index += 2)
+            for (var index = 2; index < arguments.Count; index += 2)
             {
                 if (arguments[index] != "--source")
                     throw SourceUsage($"unexpected argument '{arguments[index]}'");
@@ -183,7 +226,7 @@ internal static partial class IngestCommand
                     throw SourceUsage($"invalid --source selector '{arguments[index + 1]}'");
                 sources.Add(arguments[index + 1]);
             }
-            return new ReportFreeOptions(arguments[1], state, sources.ToImmutable());
+            return new ReportFreeOptions(arguments[1], sources.ToImmutable());
         }
 
         throw SourceUsage("invalid arguments");
@@ -191,7 +234,6 @@ internal static partial class IngestCommand
 
     private sealed record ReportFreeOptions(
         string BaselineRevision,
-        LeanReportInputState ReportInputState,
         ImmutableArray<string> Sources);
 
     private sealed record IngestInputs(

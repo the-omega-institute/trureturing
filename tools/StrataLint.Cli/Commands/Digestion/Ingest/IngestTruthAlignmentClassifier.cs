@@ -3,81 +3,120 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal enum LeanReportInputState
+internal static class IngestPreservedExistingObserver
 {
-    Unchanged,
-    Changed,
-}
-
-internal sealed record IngestTruthAlignmentClassification(bool IsUncoveredOnly, string? Witness)
-{
-    internal static IngestTruthAlignmentClassification UncoveredOnly { get; } = new(true, null);
-
-    internal static IngestTruthAlignmentClassification TruthAlignmentRequired(string witness) =>
-        new(false, witness);
-}
-
-internal static class IngestTruthAlignmentClassifier
-{
-    private static readonly DigestionStatus ResidualOpen = new(
-        DigestionMigrationState.Residual,
-        DigestionTruthState.Open);
-
-    internal static IngestTruthAlignmentClassification ClassifyCurrent(
-        LeanReportInputState reportInputState,
+    internal static ImmutableArray<DigestionIngestObservation> ObserveCurrent(
         BackfillInventoryDocument current,
         BackfillInventoryDocument baseline,
         ImmutableHashSet<string>? sourceIds = null)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
-        if (reportInputState == LeanReportInputState.Changed)
+        var observations = new HashSet<DigestionIngestObservation>();
+        var baselineEntries = Entries(baseline, sourceIds);
+        var currentEntries = Entries(current, sourceIds);
+        foreach (var item in currentEntries.Values)
         {
-            return IngestTruthAlignmentClassification.TruthAlignmentRequired(
-                "Lean report input closure changed");
+            if (!baselineEntries.TryGetValue(item.Entry.AtomId, out var baselineItem)
+                || !StatusAuthorityEqual(item, baselineItem))
+            {
+                observations.Add(new DigestionIngestObservation(
+                    item.Entry.AtomId,
+                    item.Source.SourceId,
+                    "current-vs-base-changed"));
+            }
         }
 
-        var baselineEntries = StatusAuthorityEntries(baseline, sourceIds);
-        var currentEntries = StatusAuthorityEntries(current, sourceIds);
-        foreach (var item in currentEntries.Values.OrderBy(
-                     static item => item.Entry.AtomId,
-                     StringComparer.Ordinal))
+        foreach (var item in baselineEntries.Values.Where(item =>
+                     !currentEntries.ContainsKey(item.Entry.AtomId)))
+        {
+            observations.Add(new DigestionIngestObservation(
+                item.Entry.AtomId,
+                item.Source.SourceId,
+                "removed"));
+        }
+
+        var currentSources = Sources(current, sourceIds);
+        var baselineSources = Sources(baseline, sourceIds);
+        foreach (var (sourceId, source) in currentSources)
+        {
+            if (!baselineSources.TryGetValue(sourceId, out var baselineSource))
+                continue;
+
+            var acknowledgmentChanges = source.AcknowledgedStale
+                .Concat(baselineSource.AcknowledgedStale)
+                .Distinct(StringComparer.Ordinal)
+                .Where(atomId => source.AcknowledgedStale.Contains(atomId, StringComparer.Ordinal)
+                    != baselineSource.AcknowledgedStale.Contains(atomId, StringComparer.Ordinal));
+            foreach (var atomId in acknowledgmentChanges)
+            {
+                observations.Add(new DigestionIngestObservation(
+                    atomId,
+                    sourceId,
+                    "acknowledged-stale-changed"));
+            }
+
+            if (!Equals(source.GenreRegistryCheck, baselineSource.GenreRegistryCheck))
+            {
+                foreach (var atomId in source.Entries.Select(static entry => entry.AtomId)
+                             .Concat(baselineSource.Entries.Select(static entry => entry.AtomId))
+                             .Distinct(StringComparer.Ordinal))
+                {
+                    observations.Add(new DigestionIngestObservation(
+                        atomId,
+                        sourceId,
+                        "genre-projection-changed"));
+                }
+            }
+        }
+
+        return Sort(observations);
+    }
+
+    internal static ImmutableArray<DigestionIngestObservation> ObservePlanned(
+        BackfillInventoryDocument current,
+        BackfillInventoryDocument planned,
+        ImmutableHashSet<string>? sourceIds = null)
+    {
+        ArgumentNullException.ThrowIfNull(current);
+        ArgumentNullException.ThrowIfNull(planned);
+        var observations = new HashSet<DigestionIngestObservation>();
+        var currentEntries = Entries(current, sourceIds);
+        var plannedEntries = Entries(planned, sourceIds);
+        foreach (var item in currentEntries.Values)
         {
             var entry = item.Entry;
-            if (!baselineEntries.TryGetValue(entry.AtomId, out var baselineItem))
+            if (!plannedEntries.TryGetValue(entry.AtomId, out var plannedItem))
             {
-                if (ValidateNewEntry(NormalizeNewEntryForValidation(entry)) is { } witness)
-                {
-                    return IngestTruthAlignmentClassification.TruthAlignmentRequired(witness);
-                }
-
+                observations.Add(new DigestionIngestObservation(
+                    entry.AtomId,
+                    item.Source.SourceId,
+                    entry.CoverageGids.IsEmpty ? "planned-rewrite" : "covered-disappeared"));
                 continue;
             }
 
-            if (!StatusAuthorityEqual(item, baselineItem))
+            if (!entry.CoverageGids.IsEmpty && plannedItem.Entry.CoverageGids.IsEmpty)
             {
-                return IngestTruthAlignmentClassification.TruthAlignmentRequired(
-                    $"existing entry {entry.AtomId} changed status-authority inputs");
+                observations.Add(new DigestionIngestObservation(
+                    entry.AtomId,
+                    item.Source.SourceId,
+                    "covered-cleared"));
+            }
+            if (!StatusAuthorityEqual(item, plannedItem))
+            {
+                observations.Add(new DigestionIngestObservation(
+                    entry.AtomId,
+                    item.Source.SourceId,
+                    "planned-rewrite"));
             }
         }
 
-        var removedEntry = baselineEntries.Keys
-            .Except(currentEntries.Keys, StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .FirstOrDefault();
-        if (removedEntry is not null)
-        {
-            return IngestTruthAlignmentClassification.TruthAlignmentRequired(
-                $"existing entry {removedEntry} removed");
-        }
-
-        return IngestTruthAlignmentClassification.UncoveredOnly;
+        return Sort(observations);
     }
 
-    internal static IngestTruthAlignmentClassification ClassifyPlanned(
+    internal static ImmutableArray<DigestionIngestObservation> ObserveAuthorityChanges(
         BackfillInventoryDocument current,
         BackfillInventoryDocument baseline,
-        BackfillInventoryDocument planned,
         DigestionLedgerAlignment alignment,
         DigestionEvaluationScope scope,
         RawChangeSet repositoryChanges,
@@ -85,72 +124,29 @@ internal static class IngestTruthAlignmentClassifier
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(planned);
+        ArgumentNullException.ThrowIfNull(alignment);
         ArgumentNullException.ThrowIfNull(repositoryChanges);
-        var currentEntries = StatusAuthorityEntries(current, sourceIds);
-        var plannedEntries = StatusAuthorityEntries(planned, sourceIds);
-        foreach (var item in currentEntries.Values
-                     .Where(static item => !item.Entry.CoverageGids.IsEmpty)
-                     .OrderBy(static item => item.Entry.AtomId, StringComparer.Ordinal))
-        {
-            var entry = item.Entry;
-            if (!plannedEntries.TryGetValue(entry.AtomId, out var plannedItem))
-            {
-                return IngestTruthAlignmentClassification.TruthAlignmentRequired(
-                    $"covered entry {entry.AtomId} disappeared from plan");
-            }
-
-            if (plannedItem.Entry.CoverageGids.IsEmpty)
-            {
-                return IngestTruthAlignmentClassification.TruthAlignmentRequired(
-                    $"covered entry {entry.AtomId} coverage was cleared in plan");
-            }
-        }
-
-        foreach (var item in plannedEntries.Values
-                     .OrderBy(static item => item.Entry.AtomId, StringComparer.Ordinal))
-        {
-            var entry = item.Entry;
-            if (currentEntries.TryGetValue(entry.AtomId, out var currentEntry))
-            {
-                if (!StatusAuthorityEqual(item, currentEntry))
-                {
-                    return IngestTruthAlignmentClassification.TruthAlignmentRequired(
-                        $"planned rewrite of existing entry {entry.AtomId}");
-                }
-
-                continue;
-            }
-
-            if (ValidateNewEntry(NormalizeNewEntryForValidation(entry)) is { } witness)
-            {
-                return IngestTruthAlignmentClassification.TruthAlignmentRequired(witness);
-            }
-        }
-
         var resolvedChanges = DigestionEvaluationScopes.ResolveChanges(scope, repositoryChanges);
-        var authorityChangedAtomIds = DigestionStatusEvaluator.StatusAuthorityChangedAtomIds(
-            planned,
+        var changed = DigestionStatusEvaluator.StatusAuthorityChangedAtomIds(
+            current,
             baseline,
             resolvedChanges,
             alignment,
             sourceIds);
-        var changedCoveredEntry = planned.RequireDigestionEntries()
-            .Where(entry => sourceIds is null || sourceIds.Contains(entry.SourceId))
-            .Where(static entry => !entry.CoverageGids.IsEmpty)
-            .Where(entry => authorityChangedAtomIds.Contains(entry.AtomId))
-            .OrderBy(static entry => entry.AtomId, StringComparer.Ordinal)
-            .FirstOrDefault();
-        if (changedCoveredEntry is not null)
-        {
-            return IngestTruthAlignmentClassification.TruthAlignmentRequired(
-                $"covered entry {changedCoveredEntry.AtomId} changed status-authority inputs");
-        }
-
-        return IngestTruthAlignmentClassification.UncoveredOnly;
+        return Sort(current.RequireDigestionEntries()
+            .Where(entry => (sourceIds is null || sourceIds.Contains(entry.SourceId))
+                && changed.Contains(entry.AtomId))
+            .Select(static entry => new DigestionIngestObservation(
+                entry.AtomId,
+                entry.SourceId,
+                "current-vs-base-changed")));
     }
 
-    private static Dictionary<string, StatusAuthorityEntry> StatusAuthorityEntries(
+    internal static ImmutableArray<DigestionIngestObservation> Combine(
+        params IEnumerable<DigestionIngestObservation>[] groups) =>
+        Sort(groups.SelectMany(static group => group));
+
+    private static Dictionary<string, StatusAuthorityEntry> Entries(
         BackfillInventoryDocument document,
         ImmutableHashSet<string>? sourceIds) =>
         document.RequireDigestionSources()
@@ -158,38 +154,27 @@ internal static class IngestTruthAlignmentClassifier
             .SelectMany(source => source.Entries.Select(entry => new StatusAuthorityEntry(source, entry)))
             .ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
 
+    private static Dictionary<string, DigestionLedgerSource> Sources(
+        BackfillInventoryDocument document,
+        ImmutableHashSet<string>? sourceIds) =>
+        document.RequireDigestionSources()
+            .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
+            .ToDictionary(static source => source.SourceId, StringComparer.Ordinal);
+
     private static bool StatusAuthorityEqual(StatusAuthorityEntry left, StatusAuthorityEntry right) =>
         BackfillInventoryWriter.WriteStatusAuthorityIdentity(left.Source, left.Entry)
             .AsSpan()
             .SequenceEqual(
                 BackfillInventoryWriter.WriteStatusAuthorityIdentity(right.Source, right.Entry).AsSpan());
 
-    private static DigestionLedgerEntry NormalizeNewEntryForValidation(
-        DigestionLedgerEntry entry) =>
-        entry with
-        {
-            Receipts = entry.Receipts with { ChainAtoms = [] },
-        };
-
-    private static string? ValidateNewEntry(DigestionLedgerEntry entry)
-    {
-        if (entry.CoverageGids.Length > 0)
-        {
-            return $"new entry {entry.AtomId} is coverage-bearing";
-        }
-
-        if (!entry.Receipts.IsEmpty)
-        {
-            return $"new entry {entry.AtomId} carries receipts";
-        }
-
-        if (entry.ProjectedStatus != ResidualOpen)
-        {
-            return $"new entry {entry.AtomId} projected status is not residual-open";
-        }
-
-        return null;
-    }
+    private static ImmutableArray<DigestionIngestObservation> Sort(
+        IEnumerable<DigestionIngestObservation> observations) =>
+        observations
+            .Distinct()
+            .OrderBy(static item => item.AtomId, StringComparer.Ordinal)
+            .ThenBy(static item => item.SourceId, StringComparer.Ordinal)
+            .ThenBy(static item => item.Kind, StringComparer.Ordinal)
+            .ToImmutableArray();
 
     private sealed record StatusAuthorityEntry(
         DigestionLedgerSource Source,

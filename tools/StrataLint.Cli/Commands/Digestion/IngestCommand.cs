@@ -199,7 +199,8 @@ internal static partial class IngestCommand
         IngestInputs inputs,
         RawChangeSet repositoryChanges,
         ImmutableHashSet<string>? sourceIds = null,
-        ImmutableHashSet<string>? registrationPaths = null) =>
+        ImmutableHashSet<string>? registrationPaths = null,
+        DigestionIngestStrategy strategy = DigestionIngestStrategy.Align) =>
         DigestionIngestor.Plan(
             inputs.CurrentDocument,
             inputs.Current,
@@ -207,7 +208,8 @@ internal static partial class IngestCommand
             inputs.Baseline,
             changes: repositoryChanges,
             sourceIds: sourceIds,
-            registrationPaths: registrationPaths);
+            registrationPaths: registrationPaths,
+            strategy: strategy);
 
     private static IngestPreparation Prepare(
         IngestInputs inputs,
