@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:42d15cad6b8751d682f68e884dc2d10b5ea7e2dbc7ce7c8a62945cd5183fa1b9
+  normalized_sha256: sha256:42d15cad6b8751d682f68e884dc2d10b5ea7e2dbc7ce7c8a62945cd5183fa1b9
+cas_ref: sha256:42d15cad6b8751d682f68e884dc2d10b5ea7e2dbc7ce7c8a62945cd5183fa1b9
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Causal/SoftInterventionModularity.softIntervention
+    target_statement_id: sha256:96b5686c7ac2329f3f8e6f6a28691b2b263153718f496c2057da9fc95678e73d
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Causal/SoftInterventionModularity.softIntervention
+      definition_sha256: sha256:846f9d62a5f93061e57d4d3d99778eb612cb2d6f9a6b6996c5bfebc631409fa3
+      emission_sha256: sha256:ff8a32832288dc6d3a3da75a39d6ddc014f9bd603802dda6fd6cc0b890057f4a
+  unresolved_subitems: []

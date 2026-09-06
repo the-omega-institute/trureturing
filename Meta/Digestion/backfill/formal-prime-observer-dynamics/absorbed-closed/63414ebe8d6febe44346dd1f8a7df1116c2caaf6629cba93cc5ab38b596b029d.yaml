@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:63414ebe8d6febe44346dd1f8a7df1116c2caaf6629cba93cc5ab38b596b029d
+  normalized_sha256: sha256:63414ebe8d6febe44346dd1f8a7df1116c2caaf6629cba93cc5ab38b596b029d
+cas_ref: sha256:63414ebe8d6febe44346dd1f8a7df1116c2caaf6629cba93cc5ab38b596b029d
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.prime_relative_density_does_not_determine_evidence_summability
+    target_statement_id: sha256:01caa8f1dcfbef30cc3bbaa6ccc0bc308f6249f6da8375791e50555b8843b008
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.prime_relative_density_does_not_determine_evidence_summability
+      definition_sha256: sha256:4afb12fe467cfeddf5f6ded04308f2c6aff971eb7f1394559edc3432276afc61
+      emission_sha256: sha256:bcfde78b2094f8149cb07826b5182cad17c943f3b1c8b11bcc5d7baf977b4a76
+  unresolved_subitems: []
