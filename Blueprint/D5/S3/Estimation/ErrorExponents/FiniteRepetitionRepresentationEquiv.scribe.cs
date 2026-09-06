@@ -8,7 +8,7 @@ internal sealed class FiniteRepetitionRepresentationEquivDocument : IScribeDocum
         "D5/S3/Estimation/ErrorExponents/FiniteRepetitionRepresentationEquiv.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Recursive IidSpace samples, product masses, distances, affinities and equal-prior decision risks transport exactly to the canonical Fin-indexed finite-suite representation.",
+        "Recursive IidSpace samples, product masses, distances, affinities, decision risks and the operational finite-suite optimum transport exactly to the canonical Fin-indexed representation.",
         H("Finite Repetition Representation Equivalence"),
         Blocks(
             Paragraph(Text(
@@ -117,5 +117,25 @@ internal sealed class FiniteRepetitionRepresentationEquivDocument : IScribeDocum
                     "Every recursive iid decision has exactly the same equal-prior risk after "
                         + "transport to the finite-suite coordinates used by the operational "
                         + "finiteSuiteOptimalError owner."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("optimal-error-recursive-tv"),
+                DeclarationHandle.Create(Prefix + "finite_suite_optimal_error_eq_iidPower_tv"),
+                H("The existing optimum is half one minus recursive iid TV"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For normalized one-shot laws, the existing finiteSuiteOptimalError equals "
+                        + "one half of one minus total variation of the recursive iidPower "
+                        + "laws. No second optimum is defined."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("optimal-lower-bound"),
+                DeclarationHandle.Create(Prefix + "finite_suite_optimal_error_le_iid_decision"),
+                H("The operational optimum lower-bounds every recursive decision risk"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every recursive iid decision transports to an admissible finite-suite "
+                        + "decision with identical equal-prior risk, so the existing operational "
+                        + "minimum is no larger than that recursive risk."))),
                 DescribeRole.Theorem))));
 }
