@@ -344,3 +344,298 @@ Transition for the Hard-Core Model in 2-Dimensions*. arXiv:1306.0431.
 Its limitations on strong spatial mixing of full Weitz trees must be respected
 when considering how far ordering-based refinements can ultimately go.
 https://arxiv.org/abs/1306.0431
+
+
+## 8. Retained geometry and explicit controller transport
+
+The continuation starts from the preceding radius-three delivery. The latest
+read of dev is b89d56d0c9a433f9b714821d2bb1779066c59ede. The original sources
+remain unchanged. MemoryRefinement now proves the radius/blocker inclusion
+statement proposed in Section 6 and its all-depth counting consequences.
+
+There is an important distinction between inclusion and projection. Running
+radius three and radius four from the same parent mask, with fixed SRL ordering
+and direction history S,S,R,R, gives a point (2,-1) present in the fine memory
+but absent from the coarse memory. That point is inside the radius-three disk:
+it had previously left the coarse disk and been forgotten. The independent
+integer-set replay checks the four steps and both memberships. Thus the fine
+state cannot simply be intersected with the coarse disk to recover the actual
+coarse controller state. This example is a replayed diagnostic, not a separately
+elaborated Lean theorem.
+
+For a policy depending only on the complete direction history, both models
+choose the same action automatically. The theorem history_count_antitone proves
+that r<=R and F contained in G imply C_R(n,G)<=C_r(n,F) for every depth and history.
+For a policy depending on its coarse state as well, coupledStep retains the pair
+(F,G), reads the policy at F, decides availability at G, and updates both with
+the same action. The theorem coupled_count_le_coarse proves the same domination
+for every such controller. No state-reconstruction hypothesis is used.
+
+The exact fixed_presentation_count theorem separately transfers a finite table
+to actual geometric sets by direction-preserving transition equality. Only the
+selected order requires closure. This avoids creating states for unused actions
+when a single-policy upper certificate is sufficient. Direction multiplicities
+are preserved even when two directions have equal successor states.
+
+## 9. Finite propagation and exact complete prefixes
+
+Let rho(p)=|p_x|+|p_y|. The actual recentering maps satisfy
+
+\[
+ \rho(p)\le\rho(T_d p)+1.
+\]
+
+Consequently, if two blocker sets agree inside radius n+1, their updates agree
+inside radius n when both retention radii are at least n. A point outside that
+larger disk cannot enter the smaller disk in one step. This is the local
+agreement theorem memoryStep_agreeWithin in MemoryLightCone.
+
+Define completeStep using the same deletion/recentering operation without the
+radius filter. For a common history-based ordering, finite_horizon_exact proves
+
+\[
+ \boxed{r\ge n,\quad F\cap B_n=G\cap B_n
+ \quad\Longrightarrow\quad C_r(n,F)=C_\infty(n,G).}
+\]
+
+There is no upper bound on the complete initial blocker set's size. At each
+induction step, availability agrees because the three candidate directions have
+radius one, and child blockers agree on the remaining smaller light cone.
+This result alone is a finite-depth statement. Uniform control over unbounded
+depth is supplied by the next theorem, rather than assumed by exchanging limits.
+
+## 10. Uniform block bounds and completeness of fixed-order memory
+
+Fix one relative ordering a. Write P={(-1,0)}, c_k=C_infinity(k,P), and
+c_n^(r)=C_r(n,P). Every allowed update retains the parent for r>=1. Any descendant
+blocker set therefore contains P, and its continuation count is bounded above
+by the count after resetting to P under the same fixed relative ordering.
+This reset domination would require an additional controller argument for a
+state-dependent policy; the theorem in this section fixes a.
+
+MemoryBlockBounds.fixed_order_block_bound proves, for every r>=1, k<=r,
+q,s>=0, every starting history and every finite F containing P,
+
+\[
+ \boxed{ C_r(qk+s,F)\le c_k^{\,q}\,3^s. }
+\]
+
+Proof: at depth k, reset domination followed by finite_horizon_exact bounds the
+number of descendants by the actual complete prefix c_k. Every child at depth k
+again contains P. Induct on the number q of full blocks; the remaining s steps
+have at most 3^s descendants. This is an all-depth inequality with a uniform
+coefficient for all eligible initial blocker sets, not an assumed spectral bound.
+The companion complete_count_le_memory proves c_n<=c_n^(r) for every n and r.
+
+### Paper consequence: the hierarchy reaches the complete growth rate
+
+Define mu_infinity=limsup c_n^(1/n) and mu_r=limsup (c_n^(r))^(1/n).
+For each fixed ordering, the following follows from the formal-source integer
+inequalities by ordinary real limit arguments:
+
+\[
+ \boxed{
+ \mu_\infty\le\mu_R\le\mu_r\quad(1\le r\le R),\qquad
+ \inf_{r\ge1}\mu_r=\mu_\infty=\inf_{k\ge1}c_k^{1/k}.
+ }
+\]
+
+Here are the quantifiers and proof. For a fixed k>=1 and any r>=k, write
+n=qk+s with 0<=s<k. The block inequality gives
+mu_r<=c_k^(1/k), since the factor 3^s is uniformly bounded as n grows.
+Complete domination gives mu_infinity<=mu_r. Hence
+mu_infinity<=inf_k c_k^(1/k). The reverse inequality follows because the infimum
+of a sequence is at most its limsup. For every epsilon>0 choose one k with
+c_k^(1/k)<mu_infinity+epsilon; then every r>=k satisfies
+mu_infinity<=mu_r<mu_infinity+epsilon. Monotonicity comes from the common-order
+refinement theorem. The complete all-straight path ensures c_k>=1, and all
+counts are bounded by 3^k, so no infinite or zero-root pathology is used.
+
+Thus larger fixed-order geometric memories converge in growth rate to the
+complete ordered-deletion process. This establishes mathematical completeness
+of this approximation hierarchy. It supplies neither a convergence rate nor a
+particular finite radius attaining 2.429 or 2.42. It also makes no assertion that
+optimizing over arbitrary controllers commutes with either limit. The limsup,
+infimum and epsilon argument are proved here on paper; no separate Lean limit
+declaration is claimed.
+
+### Paper consequence: strict targets admit finite rational potentials
+
+Suppose alpha is positive rational and c_k<alpha^k. For r>=k and r>=1, let
+B_r act by summing a function over the selected-order children, and define
+
+\[
+ W(F)=\sum_{j=0}^{k-1}\alpha^{k-1-j}C_r(j,F).
+\]
+
+For every eligible F containing P, W(F)>0 and telescoping gives
+
+\[
+ B_rW(F)-\alpha W(F)=C_r(k,F)-\alpha^k
+ \le c_k-\alpha^k<0.
+\]
+
+The radius-r universe of blocker sets is finite and closed under allowed steps.
+All these potential values are rational, so a common denominator gives a finite
+integer certificate. The hierarchy result guarantees such a k for each strict
+rational target alpha>mu_infinity. This is a paper existence construction; it
+is not a new executed large-radius certificate or a polynomial-time algorithm.
+The potentially very large prefix and state enumeration costs remain real.
+
+## 11. A concrete radius-four certificate and universal finite separation
+
+The fixed-SRL radius-four closure has 851 distinct geometric states, verified
+reachable from P by an independent set-based traversal. RadiusFourData contains
+the exact masks and a positive integer weight w with
+
+\[
+ 1\le w_i\le20000,\qquad w_0=20000,\qquad
+ 10000\sum_{i\longrightarrow j}w_j\le24827w_i.
+\]
+
+There are 307 distinct weight values. The data share these values losslessly;
+no geometric states are identified. The 41 mask bits refer to lexicographically
+ordered points of the punctured Manhattan disk followed by the origin. All
+2553 state-direction cases reconstruct their successors from memoryStep itself,
+and all 851 row inequalities pass exact integer replay. Minimum row slack is
+zero, which is permitted for this non-strict upper certificate.
+
+Candidate weights came from a numerical proposal, rescaling and monotone
+integer ceiling updates until every row passed. Only the final integer rows
+and geometric closure are mathematical evidence. No eigensolver output is
+assumed in the theorem. Unused actions are outside the finite table's coverage;
+the raw geometric transition remains defined for all six actions.
+
+The existing super-potential induction and exact presentation transport give
+
+\[
+ \boxed{10000^n c_n^{(4)}\le20000\,24827^n,\qquad
+ \mu_4(\mathrm{SRL})\le2.4827.}
+\]
+
+The same bound holds for the actual ordered deletion count of every finite
+integer-grid domain with its parent absent. That endpoint uses raw geometry and
+real domain membership; it never discards a real child because a lookup failed.
+The theorem radiusFour_finite_domain_upper has no supplied growth or finite-table
+coverage hypothesis.
+
+A stronger finite comparison consumes the previous radius-three lower theorem.
+The exact integer comparison
+
+\[
+ 20000\,24827^{700}<25205^{700}
+\]
+
+combines with 5041^n<=2000^n C_n^pi to prove
+
+\[
+ \boxed{c_{700}^{(4,\mathrm{SRL})}<C_{700}^{(3,\pi)}
+ \quad\text{for every history-dependent radius-three controller }\pi.}
+\]
+
+This is the public theorem radiusFour_beats_every_radiusThree_controller.
+The depth 700 is a sufficient choice, not a minimality assertion. The conclusion
+compares the two actual relaxed geometric models. It does not transfer their
+lower bound to the physical grid. The new upper rate remains above the published
+2.429, so no global zero-free improvement is claimed.
+
+## 12. Literature-guided continuation beyond scalar growth
+
+The checked version of Chen, Shao and Shi [1] remains v1 of 3 April 2026.
+Its family-uniform fixed-depth definition counts all depths up to k and takes
+suprema over roots and finite domains. Our complete-process and finite-domain
+count theorems still require a partition-polynomial/deletion-tree identification,
+the four-neighbor root wrapper, and this uniform analytic interface before any
+complex zero-free conclusion can be claimed.
+
+Vera, Vigoda and Yang [4, Section 5, version 2] already use type-dependent
+piecewise-linear message functions and linear programming to prove stronger
+spatial-mixing conditions than scalar branching estimates alone. Their
+criterion motivates the next certificate target on our actual geometric types:
+
+\[
+ x_i=(1+\lambda\prod_jx_j)^{-1},\qquad
+ (1-x_i)\sum_j\Psi_{t_j}(x_j)<\Psi_i(x_i).
+\]
+
+For positive decreasing affine pieces Psi_i(x)=b_i-a_i*x on intervals [X_i,Y_i],
+a sufficient row is
+
+\[
+ (1-X_i)\sum_j(b_{t_j}-a_{t_j}X_{t_j})
+ < b_i-a_iY_i.
+\]
+
+Only interval tuples consistent with the actual parent recursion are relevant.
+Every required child-pruning/boundary configuration must be included, and strict
+positivity of all message pieces must be checked. A fitted derivative at one
+fixed point does not certify strong spatial mixing. The piecewise-affine method
+and this sufficient inequality are prior art from [4], not a new method claimed
+by this repository.
+
+For the zero-free target, real contraction must additionally be extended to a
+common complex neighborhood under valid regularity and denominator conditions.
+Piecewise real messages do not themselves provide a holomorphic coordinate
+change. One must either construct a suitable smooth/analytic approximation with
+a retained strict margin or apply an independently proved complex-extension
+theorem with all of its hypotheses discharged. No such nonlinear message
+certificate or complex extension has been constructed in this increment.
+
+The next substantive target is therefore a geometry-specific rational
+contraction certificate at a parameter strictly above 2.538, or a stronger
+certified geometric growth bound below 2.429. Larger memory is now justified by
+a complete fixed-order hierarchy, while the type-dependent route can use the
+full geometry rather than reducing all types to a single growth constant.
+Neither target is promised by the present radius-four certificate.
+
+Cross-author comparison informed this separation. Loning's #5326 distinguishes
+behavioral compression from preservation of the mathematical quantity consumed
+downstream. The newer #5882 supplies an explicit determinant-loss family even
+under small balanced behavior error. Our shared-weight packing accordingly
+preserves every mask and direction; it is not a behavioral quotient. The recent
+#5602 actual prolate-model comparison likewise emphasizes deriving the relation
+between concrete objects before transporting estimates. These PRs were read as
+research context, not imported as proofs of hard-core facts.
+
+## 13. Source and verification status of this continuation
+
+The five new Lean owners are MemoryRefinement, MemoryLightCone,
+MemoryBlockBounds, RadiusFourData and RadiusFourCertificates. They have 24
+explicitly named public declarations with 24 matching canonical Scribe handles.
+The prior 28 declarations are unchanged. The general induction and geometry
+proofs reuse the preceding owners; no parallel pathCount or memoryStep is created.
+
+The final independent replay reads the actual Lean-owned radius-four payload.
+It checks 2553 geometric transitions, 851 integer rows, all 851 states through
+101 depths (85951 inequalities), 1875 finite-propagation cases, 1080 memory
+inclusions, 120 controller comparisons, 126 light-cone equalities, 558 block
+bounds and 90 actual-domain cases. It also checks the depth-700 integer
+comparison. Four malformed certificates are rejected; removing the necessary
+radius-versus-depth guard is witnessed by a depth-three mismatch. The S,S,R,R
+projection diagnostic is replayed explicitly.
+
+```sh
+python research/hard_core_weitz/verify_radius_four.py
+```
+
+Data SHA-256:
+539f060617047d4334ac6e638b0e92d4f37369c174a89a4f092b6948d5eff36d.
+Verifier SHA-256:
+32ff8ab35c6087ebec88c5eddf3dc2dc17b197ca5ddb78e29f18f623f429eb2b.
+
+The replay uses arbitrary-precision integers and finite coordinate sets, no
+floating-point eigensolver or saved success flag. It was executed again after
+final source assembly and reproduced the result JSON byte for byte. It is a
+separate implementation by the same authoring assistant, not independent-author
+review. Its finite regressions do not certify universal Lean proof terms.
+
+Logical source review and exact replay have been performed. Lean/lake is absent
+from the authoring environment, so elaboration, kernel checking, executed axiom
+closures and Scribe emission have not been performed. The new finite proofs
+request decide +kernel; this records their intended checking method, not an
+executed acceptance result. The original-problem zero-free improvement remains
+open. No first-formalization priority or literature-wide mathematical novelty
+has been established.
+
+Additional precise locator for [4]:
+https://arxiv.org/html/1306.0431v2#S5
