@@ -1,0 +1,38 @@
+## 定理245.2　可以保持一个“身份编码区”，同时让内部历史变化
+
+令数据初始准入子空间的投影为
+
+$$
+P_{\mathrm{ready}}
+=
+I_S\otimes|0^N\rangle\langle0^N|_M.
+$$
+
+定义完整编码区
+
+$$
+\boxed{
+\mathbb P
+=
+\mathsf G
+(I_C\otimes P_{\mathrm{ready}})
+\mathsf G^\dagger.
+}
+\tag{245.3}
+$$
+
+则
+
+$$
+\boxed{
+[H_{\mathrm{aut}},\mathbb P]=0.
+}
+\tag{245.4}
+$$
+
+### 证明
+
+在 \(\mathsf G\) 表示中，Hamiltonian 为 \(K_C\otimes I_D\)，与 \(I_C\otimes P_{\mathrm{ready}}\) 可交换。∎
+
+这意味着整个程序始终留在同一个合法编码区，但钟标签和记忆内容可以继续变化。
+

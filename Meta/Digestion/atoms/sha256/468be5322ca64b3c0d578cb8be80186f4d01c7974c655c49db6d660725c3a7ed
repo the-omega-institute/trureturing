@@ -1,0 +1,52 @@
+## 定理237.2　有限投影链逼近该输运
+
+设
+
+$$
+\|\dot P(t)\|\le a,
+\qquad
+\|\ddot P(t)\|\le b.
+$$
+
+对 \(H=0\)、总时间 \(T\) 和 \(N\) 次等间隔投影，有
+
+$$
+\boxed{
+\left\|
+P(T)P(T-\delta)\cdots P(\delta)P(0)
+-
+W(T)P(0)
+\right\|
+\le
+\frac{(3b+a^2)T^2}{2N},
+}
+\tag{237.4}
+$$
+
+其中 \(\delta=T/N\)。
+
+### 证明
+
+投影一步展开为
+
+$$
+P(t+\delta)P(t)
+=
+P+\delta\dot PP+O(\delta^2b).
+$$
+
+而平行输运一步展开为
+
+$$
+W(t+\delta,t)P
+=
+P+\delta KP
++O\!\left(\delta^2(2b+a^2)\right).
+$$
+
+由 \(KP=\dot PP\)，两者一阶项相同。
+
+使用积分余项给出的二阶界，再对 \(N\) 步作望远镜展开；投影为压缩算子，\(W\) 为酉算子，得到式（237.4）。∎
+
+---
+

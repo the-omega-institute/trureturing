@@ -1,0 +1,35 @@
+## Zeckendorf 的准确位置
+
+指数范围
+
+$$
+5,\ 3,\ 2,\ 2
+$$
+
+恰好对应前文的四个完整黄金窗口：
+
+$$
+\mathcal W_3,\quad\mathcal W_2,\quad
+\mathcal W_1,\quad\mathcal W_1.
+$$
+
+所以可以把每个指数基态换成其唯一 Zeckendorf 字串。该唯一表示及等价构造已有 mathlib 实现。([Lean社区][2])
+
+这种变换保持维数、内积和能谱：
+
+$$
+\boxed{
+\text{Zeckendorf 改变基底标签，不自动增加新自由度。}
+}
+\tag{10}
+$$
+
+仓库选择 \(5040\) 还有一个独立的优化理由：在
+
+$$
+\log\left(\sum_{d\mid n}\frac1d\right)
+-\frac1{25}\log n
+$$
+
+这个具体目标下，它被证明为唯一最优整数。这个事实来自明确目标函数，不来自金字塔形状。
+

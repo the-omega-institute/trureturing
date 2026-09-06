@@ -1,0 +1,29 @@
+## 被省略的相关，会造成多大能量不确定性？
+
+回到第一节的金字塔概率模型。设顶点状态能量为 \(\epsilon_*\)。
+
+平均能量为
+
+$$
+\boxed{
+\overline\epsilon
+=
+\epsilon_*z+\epsilon_0r+Ax+By+Jc.
+}
+\tag{14}
+$$
+
+如果观察者只知道 \((x,y,z)\)，没有读取 \(c\)，那么平均能量仍然不确定。
+
+由式（4），其可变化区间的长度恰好是
+
+$$
+\boxed{
+\operatorname{width}(\overline\epsilon)
+=
+2|J|
+\left[r-\max\{|x|,|y|\}\right].
+}
+\tag{15}
+$$
+
