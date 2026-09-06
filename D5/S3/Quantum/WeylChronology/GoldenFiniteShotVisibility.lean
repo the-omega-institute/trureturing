@@ -9,6 +9,7 @@ import D5.S3.Quantum.WeylChronology.GoldenInterferometricRecovery
 import D5.S3.TotalVariation.Asymptotics.FourLocalEvidenceClosedForms
 import D5.S3.TotalVariation.Asymptotics.SymmetricBernoulliProbabilityData
 import D5.S3.Estimation.ErrorExponents.FiniteRepetitionLawKernel
+import D5.S3.Estimation.ErrorExponents.FiniteSuiteErrorSqueeze
 
 /-!
 # Visibility and finite-shot golden chronology readout
@@ -45,11 +46,26 @@ and, for visibility strictly below one, their Bhattacharyya affinity is exactly
 necessary finite-shot error floor `(1 - signal^2)^N / 2` and its sample-count
 product consequence.
 
+The repository also owns a second finite-product encoding, `windowLaw`, and the
+operational `finiteSuiteOptimalError`. Specializing that independent-suite
+owner to `Fin N` identical coordinates gives an attainable equal-prior Bayes
+risk. Its exact Bhattacharyya budget reduces to `-N log rho`, where
+`rho = sqrt (1 - signal^2)`, yielding the explicit squeeze
+
+`(1 - sqrt (1 - rho^(2N))) / 2 <= e_N^* <= rho^N / 2`.
+
+No equivalence between the recursive `IidSpace` encoding and the `Fin N`
+function encoding is fabricated here. The former supplies the universal
+arbitrary-test lower bound; the latter supplies the already-owned operational
+minimum and its upper bound. A future general representation-equivalence
+bridge should live with those generic estimation owners, not inside this
+golden adapter.
+
 These are probability-level limits. A finite experiment observes samples, not
 the exact law. The module assumes independent repeated shots and a calibrated
 contrast. It does not model contrast uncertainty, additive readout offset,
-correlated drift, residual endpoint displacement, or a constructive optimal
-decision rule. It also does not import the unmerged Fourier-Magnus matrix draft
+correlated drift, residual endpoint displacement, or a hardware-specific
+classifier. It also does not import the unmerged Fourier-Magnus matrix draft
 #4504; that draft remains the adjacent noncommutative interpretation layer.
 -/
 
@@ -71,6 +87,7 @@ open D5.S3.RenyiDivergence
 open D5.S3.DivergenceSupport.PowerAdditivity
 open D5.S3.Estimation.BhattacharyyaExponent
 open D5.S3.Estimation.ErrorExponents.FiniteRepetitionLawKernel
+open D5.S3.Estimation.ErrorExponents.FiniteSuiteErrorSqueeze
 
 noncomputable section
 
@@ -89,6 +106,19 @@ def chronologyBias (visibility kappa : ℝ) (word : List Bool) : ℝ :=
 /-- One finite Ramsey shot, represented by the repository's canonical two-point bias law. -/
 def visibleChronologyLaw (visibility kappa : ℝ) (word : List Bool) : Bool → ℝ :=
   positiveBiasLaw (chronologyBias visibility kappa word)
+
+/-- The one-shot word/reversal Bhattacharyya affinity written in physical signal coordinates. -/
+def reversalAffinity (visibility kappa : ℝ) (word : List Bool) : ℝ :=
+  Real.sqrt (1 - visibilitySignal visibility kappa word ^ 2)
+
+/-- Operational equal-prior Bayes error for `shots` independent coordinates in the repository's
+canonical finite-suite encoding. -/
+def repeatedReversalOptimalError
+    (visibility kappa : ℝ) (word : List Bool) (shots : ℕ) : ℝ :=
+  finiteSuiteOptimalError
+    (Index := Fin shots)
+    (fun _ => visibleChronologyLaw visibility kappa word)
+    (fun _ => visibleChronologyLaw visibility kappa word.reverse)
 
 /-- The contrast model is exactly the affine damping of the previously frozen ideal fringe. -/
 theorem visible_chronology_fringe_eq_affine_ideal
@@ -293,7 +323,7 @@ theorem word_reverse_bhattacharyya
     bhattacharyya
         (visibleChronologyLaw visibility kappa word)
         (visibleChronologyLaw visibility kappa word.reverse) =
-      Real.sqrt (1 - visibilitySignal visibility kappa word ^ 2) := by
+      reversalAffinity visibility kappa word := by
   rw [visible_chronology_reverse_law]
   change bhattacharyya
       (positiveBiasLaw (chronologyBias visibility kappa word))
@@ -301,9 +331,7 @@ theorem word_reverse_bhattacharyya
   rw [bhattacharyya_closed_form
     (chronology_bias_abs_lt_half visibility kappa word
       hvisibility_nonneg hvisibility_one)]
-  unfold chronologyBias
-  congr 1
-  ring
+  rfl
 
 private theorem visibility_signal_square_lt_one
     (visibility kappa : ℝ) (word : List Bool)
@@ -315,6 +343,15 @@ private theorem visibility_signal_square_lt_one
       |visibilitySignal visibility kappa word| ^ 2 < (1 : ℝ) ^ 2 :=
     (sq_lt_sq₀ (abs_nonneg _) (by norm_num)).2 habs
   simpa [sq_abs] using hsquare
+
+private theorem reversal_affinity_pos
+    (visibility kappa : ℝ) (word : List Bool)
+    (hvisibility_nonneg : 0 ≤ visibility) (hvisibility_one : visibility < 1) :
+    0 < reversalAffinity visibility kappa word := by
+  unfold reversalAffinity
+  apply Real.sqrt_pos.2
+  linarith [visibility_signal_square_lt_one visibility kappa word
+    hvisibility_nonneg hvisibility_one]
 
 /-- No arbitrary decision event on `shots` independent Ramsey outcomes beats this explicit
 Bhattacharyya testing floor for distinguishing a word from its reversal. -/
@@ -342,8 +379,9 @@ theorem word_reverse_iid_testing_error_floor
       hvisibility_nonneg hvisibility_one
     linarith
   have hpower :
-      (Real.sqrt (1 - visibilitySignal visibility kappa word ^ 2)) ^ (2 * shots) =
+      reversalAffinity visibility kappa word ^ (2 * shots) =
         (1 - visibilitySignal visibility kappa word ^ 2) ^ shots := by
+    unfold reversalAffinity
     rw [pow_mul, Real.sq_sqrt hrad]
   rw [hpower] at hbound
   exact hbound
@@ -375,11 +413,89 @@ theorem word_reverse_sample_complexity_product
       hvisibility_nonneg hvisibility_one
     linarith
   have hpower :
-      (Real.sqrt (1 - visibilitySignal visibility kappa word ^ 2)) ^ (2 * shots) =
+      reversalAffinity visibility kappa word ^ (2 * shots) =
         (1 - visibilitySignal visibility kappa word ^ 2) ^ shots := by
+    unfold reversalAffinity
     rw [pow_mul, Real.sq_sqrt hrad]
   rw [hpower] at hbound
   exact hbound
+
+/-- The independent-suite representation gives an operational optimal equal-prior error whose
+lower and upper bounds are explicit powers of the one-shot reversal affinity. -/
+theorem repeated_reversal_optimal_error_squeeze
+    (visibility kappa : ℝ) (word : List Bool)
+    (hvisibility_nonneg : 0 ≤ visibility) (hvisibility_one : visibility < 1)
+    (shots : ℕ) :
+    (1 - Real.sqrt
+        (1 - reversalAffinity visibility kappa word ^ (2 * shots))) / 2 ≤
+        repeatedReversalOptimalError visibility kappa word shots ∧
+      repeatedReversalOptimalError visibility kappa word shots ≤
+        reversalAffinity visibility kappa word ^ shots / 2 := by
+  let p : Fin shots → Bool → ℝ :=
+    fun _ => visibleChronologyLaw visibility kappa word
+  let q : Fin shots → Bool → ℝ :=
+    fun _ => visibleChronologyLaw visibility kappa word.reverse
+  have hword := visible_chronology_probability_data
+    visibility kappa word hvisibility_nonneg hvisibility_one.le
+  have hreverse := visible_chronology_probability_data
+    visibility kappa word.reverse hvisibility_nonneg hvisibility_one.le
+  have hrhoPos := reversal_affinity_pos visibility kappa word
+    hvisibility_nonneg hvisibility_one
+  have hBudget : finiteSuiteBhattacharyyaBudget p q =
+      -(shots : ℝ) * Real.log (reversalAffinity visibility kappa word) := by
+    rw [finiteSuiteBhattacharyyaBudget]
+    simp_rw [show ∀ _i : Fin shots,
+      bhattacharyya (p _i) (q _i) = reversalAffinity visibility kappa word by
+        intro i
+        dsimp [p, q]
+        exact word_reverse_bhattacharyya visibility kappa word
+          hvisibility_nonneg hvisibility_one]
+    rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    ring
+  have hExpOne :
+      Real.exp (-finiteSuiteBhattacharyyaBudget p q) =
+        reversalAffinity visibility kappa word ^ shots := by
+    rw [hBudget]
+    simp only [neg_neg]
+    rw [mul_comm (shots : ℝ), Real.exp_nat_mul, Real.exp_log hrhoPos]
+  have hExpTwo :
+      Real.exp (-2 * finiteSuiteBhattacharyyaBudget p q) =
+        reversalAffinity visibility kappa word ^ (2 * shots) := by
+    calc
+      Real.exp (-2 * finiteSuiteBhattacharyyaBudget p q) =
+          Real.exp (-finiteSuiteBhattacharyyaBudget p q) *
+            Real.exp (-finiteSuiteBhattacharyyaBudget p q) := by
+              rw [← Real.exp_add]
+              congr 1
+              ring
+      _ = reversalAffinity visibility kappa word ^ shots *
+          reversalAffinity visibility kappa word ^ shots := by rw [hExpOne]
+      _ = reversalAffinity visibility kappa word ^ (2 * shots) := by
+        rw [← pow_add]
+        congr 1
+        omega
+  have hsqueeze := finite_suite_error_squeeze p q
+    (fun _ => hword) (fun _ => hreverse) (fun _ => by
+      dsimp [p, q]
+      rw [word_reverse_bhattacharyya visibility kappa word
+        hvisibility_nonneg hvisibility_one]
+      exact hrhoPos)
+  rw [hExpOne, hExpTwo] at hsqueeze
+  simpa [repeatedReversalOptimalError, p, q] using hsqueeze
+
+/-- A target equal-prior risk is achievable in the finite-suite model whenever the one-shot
+affinity power is below twice that target. This is a sufficient condition complementing the
+necessary arbitrary-test product condition above. -/
+theorem repeated_reversal_target_error_of_affinity_power
+    (visibility kappa : ℝ) (word : List Bool)
+    (hvisibility_nonneg : 0 ≤ visibility) (hvisibility_one : visibility < 1)
+    (shots : ℕ) (eps : ℝ)
+    (hpower : reversalAffinity visibility kappa word ^ shots ≤ 2 * eps) :
+    repeatedReversalOptimalError visibility kappa word shots ≤ eps := by
+  have hupper :=
+    (repeated_reversal_optimal_error_squeeze visibility kappa word
+      hvisibility_nonneg hvisibility_one shots).2
+  linarith
 
 #print axioms visible_chronology_fringe_eq_affine_ideal
 #print axioms visible_chronology_law_true
@@ -391,6 +507,8 @@ theorem word_reverse_sample_complexity_product
 #print axioms word_reverse_bhattacharyya
 #print axioms word_reverse_iid_testing_error_floor
 #print axioms word_reverse_sample_complexity_product
+#print axioms repeated_reversal_optimal_error_squeeze
+#print axioms repeated_reversal_target_error_of_affinity_power
 
 end
 end D5.S3.Quantum.WeylChronology.GoldenFiniteShotVisibility
