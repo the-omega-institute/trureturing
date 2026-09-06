@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:14288fb503341c64eb1588f8ada0280c584013b24ebe9f62030b1cb4804371d6
+  normalized_sha256: sha256:14288fb503341c64eb1588f8ada0280c584013b24ebe9f62030b1cb4804371d6
+cas_ref: sha256:14288fb503341c64eb1588f8ada0280c584013b24ebe9f62030b1cb4804371d6
+coverage_gids:
+  - gid: D5/S3/Arith/AbsoluteValues/NumberFieldProductFormula.number_field_product_formula
+    target_statement_id: sha256:eaa65ce83e62dfdb514d031732d10ba92c82bc43c3ce4b4449d3f10d4ac0692c
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/AbsoluteValues/NumberFieldProductFormula.number_field_product_formula
+      definition_sha256: sha256:056c681716cfc95169a35402cb7d206377f349be08b1b752af92b7a6c0cce420
+      emission_sha256: sha256:e572c0af5e6ad938f786730cb586b4e4478873e0b2753198b74ea49cddf20d60
+  unresolved_subitems: []

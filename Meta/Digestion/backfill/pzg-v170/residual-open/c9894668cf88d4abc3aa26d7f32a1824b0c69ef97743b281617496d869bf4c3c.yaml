@@ -7,3 +7,10 @@ receipts:
   scribe: []
   unresolved_subitems:
     - zero-data-inhabitance-not-proved
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Zeros/MirrorPairIdentity.mirror_pair_involution
+    gaps:
+      - code: unresolved-subitem
+        detail: zero-data-inhabitance-not-proved

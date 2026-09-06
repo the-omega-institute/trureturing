@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f694ee1ced92a50aefc0e81ce8ba9f3a3c62776a2f61dd303c1940e1a4d487bc
+  normalized_sha256: sha256:f694ee1ced92a50aefc0e81ce8ba9f3a3c62776a2f61dd303c1940e1a4d487bc
+cas_ref: sha256:f694ee1ced92a50aefc0e81ce8ba9f3a3c62776a2f61dd303c1940e1a4d487bc
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/OfflineZeroSpectralQuotient.offline_zero_spectral_quotient_coordinate
+    target_statement_id: sha256:74a84c519cfbd7996d6526875258110011dab5cfee8daa453c71c5ecda14d528
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaLinear/OfflineZeroSpectralQuotient.offline_zero_spectral_quotient_coordinate
+      definition_sha256: sha256:392d926cb30899f6d7e51d644a23c87efe50721a17610ffa59eee0a13c49bf61
+      emission_sha256: sha256:04a2a2fff5bec081acc42e44b97774c4e51b7f3b688b21ff2d4483bc5ec971e3
+  unresolved_subitems: []
