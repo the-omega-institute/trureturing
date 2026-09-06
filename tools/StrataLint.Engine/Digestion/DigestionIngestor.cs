@@ -246,7 +246,8 @@ internal static partial class DigestionIngestor
                     {
                         continue;
                     }
-                    if (parentIndexes.Length == 0
+                    if (strategy == DigestionIngestStrategy.AppendOnly
+                        && parentIndexes.Length == 0
                         && globalEntries.ContainsKey(clauseParentId))
                     {
                         Observe(

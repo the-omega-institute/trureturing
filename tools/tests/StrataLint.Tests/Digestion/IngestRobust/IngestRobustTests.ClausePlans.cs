@@ -5,6 +5,32 @@ namespace StrataLint.Tests;
 public sealed partial class IngestScopeTests
 {
     [Fact]
+    public void AlignDigestionStatus_DeduplicatedClauseParentStillResolvesToZeroLedgerEntries()
+    {
+        var parent = Atom(ClauseText);
+        var empty = TwoSourceLedger(
+            EmptySource("alpha", AlphaPath),
+            EmptySource("beta", BetaPath));
+        var fixture = RobustFixture(empty, empty, ClauseText, ClauseText);
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
+
+        var result = Environment(
+            fixture,
+            temporary,
+            RawChangeSet.Create([AlphaPath, BetaPath])).AlignDigestionStatus(
+                ["--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            $"INGEST_INVALID ingest clause plan parent {parent.Fingerprints.RawSha256} "
+                + "resolves to 0 ledger entries",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("clause-parent-deduplicated", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void IngestClausePlan_DeduplicatedParentIsSkippedWithinOneRun()
     {
         var parent = Atom(ClauseText);
