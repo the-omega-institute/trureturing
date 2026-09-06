@@ -26,11 +26,11 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
-      definition_sha256: sha256:167d00e5ca95c8394fa20d805a5a582f22d4240acf580c4d479e6a2eeb785f3c
-      emission_sha256: sha256:a69b6b5c22dbc29b44cdbb5be2c0f62b2971261aca65d5b39d0f48259548b1e3
+      definition_sha256: sha256:310d0e9bb2fbb07e444576f643dc979baf14d6c594da4d63b3b7daab2702e4ad
+      emission_sha256: sha256:3b690082ca5db65fcafd4d113d5665c6057a0a96f7129f67cc76d80f671aab37
     - gid: D5/S3/Observer/MatrixUnitCertificate.matrix_units_sum_diagonal
-      definition_sha256: sha256:167d00e5ca95c8394fa20d805a5a582f22d4240acf580c4d479e6a2eeb785f3c
-      emission_sha256: sha256:a69b6b5c22dbc29b44cdbb5be2c0f62b2971261aca65d5b39d0f48259548b1e3
+      definition_sha256: sha256:310d0e9bb2fbb07e444576f643dc979baf14d6c594da4d63b3b7daab2702e4ad
+      emission_sha256: sha256:3b690082ca5db65fcafd4d113d5665c6057a0a96f7129f67cc76d80f671aab37
     - gid: D5/S3/Observer/WindowAlgebra/WindowGeneration.window_generators_adjoin_top
       definition_sha256: sha256:6ed4a2c2586bd12a997c977bfe1e36ecc296924c82d6192ee57f5f0bf5892e07
       emission_sha256: sha256:6c3096baeda885dcf3bd578309ced7a99fad3616dbb44485ea8688c31a0b11d8
