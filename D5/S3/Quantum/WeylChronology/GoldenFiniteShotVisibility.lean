@@ -457,7 +457,7 @@ theorem repeated_reversal_optimal_error_squeeze
         reversalAffinity visibility kappa word ^ shots := by
     rw [hBudget]
     simp only [neg_neg]
-    rw [mul_comm (shots : ℝ), Real.exp_nat_mul, Real.exp_log hrhoPos]
+    rw [Real.exp_nat_mul, Real.exp_log hrhoPos]
   have hExpTwo :
       Real.exp (-2 * finiteSuiteBhattacharyyaBudget p q) =
         reversalAffinity visibility kappa word ^ (2 * shots) := by
