@@ -20,53 +20,7 @@ internal static partial class DigestionLedgerAligner
                 return $"clause plan parent at byte {plan.Parent.StartByte} is not a top-level atom";
             }
 
-            if (plan.Children.Length < 2)
-            {
-                return $"clause plan parent at byte {plan.Parent.StartByte} has fewer than two children";
-            }
-
-            var parent = plan.Parent;
-            var previousEnd = parent.StartByte;
-            foreach (var child in plan.Children)
-            {
-                if (child.StartByte < parent.StartByte
-                    || child.EndByte > parent.EndByte
-                    || child.EndByte <= child.StartByte
-                    || child.RawBytes.Length >= parent.RawBytes.Length
-                    || child.EndByte - child.StartByte != child.RawBytes.Length)
-                {
-                    return $"clause plan child at byte {child.StartByte} is outside its parent";
-                }
-
-                if (child.StartByte != previousEnd)
-                {
-                    return $"clause plan children do not tile parent at byte {child.StartByte}";
-                }
-
-                var relativeStart = child.StartByte - parent.StartByte;
-                if (!parent.RawBytes.AsSpan()[relativeStart..(relativeStart + child.RawBytes.Length)]
-                        .SequenceEqual(child.RawBytes.AsSpan()))
-                {
-                    return $"clause plan child at byte {child.StartByte} differs from its parent span";
-                }
-
-                if (UniqueSubspanStart(parent.RawBytes.AsSpan(), child.RawBytes.AsSpan()) != relativeStart)
-                {
-                    return $"clause plan child at byte {child.StartByte} is not a unique parent sub-span";
-                }
-
-                if (child.Fingerprints != DigestionFingerprint.Compute(child.RawBytes.AsSpan()))
-                {
-                    return $"clause plan child at byte {child.StartByte} fingerprint does not match its raw bytes";
-                }
-
-                previousEnd = child.EndByte;
-            }
-
-            if (previousEnd != parent.EndByte)
-            {
-                return $"clause plan children do not tile parent at byte {parent.StartByte} at its end";
-            }
+            if (DigestionDecomposition.IntegrityFailure(plan) is { } failure) return failure;
         }
 
         return null;
@@ -151,8 +105,18 @@ internal static partial class DigestionLedgerAligner
                 continue;
             }
 
-            var frozenParent = DigestionAtom.FromFrozenCas(parentBlob.RawBytes);
-            var plan = PzgAtomizer.PlanClauses(frozenParent);
+            DigestionClausePlan? plan = null;
+            string? planFailure = null;
+            try
+            {
+                plan = DigestionDecomposition.Plan(parent, parentBlob.RawBytes,
+                    AtomizerRegistry.Require(source.Atomizer).Atomize,
+                    TheoryAtomizerDataLoader.Load(snapshot));
+            }
+            catch (FormatException exception)
+            {
+                planFailure = exception.Message;
+            }
             ClaimClausePlanChain(
                 parent,
                 globalEntriesById,
@@ -161,7 +125,7 @@ internal static partial class DigestionLedgerAligner
                 clausePlanChainParents);
             if (plan is null)
             {
-                RejectClauseChain(parent, "parent CAS blob has no clause plan", findings);
+                RejectClauseChain(parent, planFailure ?? "parent CAS blob has no clause plan", findings);
                 continue;
             }
 
@@ -279,19 +243,4 @@ internal static partial class DigestionLedgerAligner
         ICollection<string> findings) =>
         findings.Add($"entry {parent.AtomId} malformed clause chain: {reason}");
 
-    private static int UniqueSubspanStart(ReadOnlySpan<byte> parent, ReadOnlySpan<byte> child)
-    {
-        if (child.IsEmpty)
-        {
-            return -1;
-        }
-
-        var start = parent.IndexOf(child);
-        if (start < 0 || parent[(start + 1)..].IndexOf(child) >= 0)
-        {
-            return -1;
-        }
-
-        return start;
-    }
 }

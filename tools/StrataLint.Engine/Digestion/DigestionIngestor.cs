@@ -4,12 +4,16 @@ using System.Text;
 namespace StrataLint.Engine;
 
 internal sealed record DigestionIngestPlan(
-    BackfillInventoryDocument Document,
+    BackfillInventoryDocument AdmissionDocument,
     DigestionLedgerAlignment Alignment,
     int StaleAcknowledged,
     int ResidualOpenAdded,
     ImmutableArray<DigestionCasObject> CasObjects,
-    ImmutableArray<DigestionIngestFallback> Fallbacks);
+    ImmutableArray<DigestionIngestFallback> Fallbacks)
+{
+    internal BackfillInventoryDocument Document { get; } =
+        DigestionIngestor.NormalizeAtomIdentities(AdmissionDocument);
+}
 
 internal static class DigestionSourceConflictMarkers
 {
@@ -210,9 +214,8 @@ internal static class DigestionIngestor
         var clausePlansBySource = alignment.ClausePlans
             .GroupBy(static item => item.SourceId, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
-        var atomIds = migrationDocument.RequireDigestionEntries()
-            .Select(static entry => entry.AtomId)
-            .ToHashSet(StringComparer.Ordinal);
+        var globalEntries = migrationDocument.RequireDigestionEntries()
+            .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
         var casObjects = new Dictionary<string, DigestionCasObject>(StringComparer.Ordinal);
         var staleAcknowledged = 0;
@@ -249,7 +252,7 @@ internal static class DigestionIngestor
             {
                 foreach (var item in residual)
                 {
-                    if (!atomIds.Add(item.SuggestedAtomId))
+                    if (globalEntries.ContainsKey(item.SuggestedAtomId))
                     {
                         continue;
                     }
@@ -271,7 +274,7 @@ internal static class DigestionIngestor
                         .Distinct(StringComparer.Ordinal)
                         .Order(StringComparer.Ordinal)
                         .ToImmutableArray();
-                    entries.Add(new DigestionLedgerEntry(
+                    var admitted = new DigestionLedgerEntry(
                         source.SourceId,
                         source.SourcePath,
                         source.Atomizer,
@@ -280,7 +283,10 @@ internal static class DigestionIngestor
                         Coverage: inheritedCoverage,
                         new DigestionReceipts([], inheritedUnresolvedSubitems, [], null),
                         item.ProjectedStatus,
-                        CasRef: captured.Reference));
+                        CasRef: captured.Reference);
+                    if (!globalEntries.TryAdd(admitted.AtomId, admitted))
+                        continue;
+                    entries.Add(admitted);
                     residualOpenAdded++;
                 }
             }
@@ -316,38 +322,18 @@ internal static class DigestionIngestor
                         continue;
                     }
 
-                    var childIds = ImmutableArray.CreateBuilder<string>(clausePlan.Plan.Children.Length);
-                    foreach (var child in clausePlan.Plan.Children)
+                    var decomposition = DigestionDecomposition.Materialize(parent, clausePlan.Plan, globalEntries);
+                    foreach (var child in decomposition.NewEntries)
                     {
-                        var childId = ClauseAtomId(child);
-                        if (atomIds.Add(childId))
-                        {
-                            var captured = AddCasObject(child.RawBytes.AsSpan(), casObjects);
-                            entries.Add(new DigestionLedgerEntry(
-                                source.SourceId,
-                                source.SourcePath,
-                                source.Atomizer,
-                                childId,
-                                child.Fingerprints,
-                                Coverage: [],
-                                new DigestionReceipts([], [], [], null),
-                                new DigestionStatus(
-                                    DigestionMigrationState.Residual,
-                                    DigestionTruthState.Open),
-                                CasRef: captured.Reference));
-                            residualOpenAdded++;
-                        }
-                        childIds.Add(childId);
+                        if (!globalEntries.TryAdd(child.AtomId, child))
+                            continue;
+                        entries.Add(child);
+                        residualOpenAdded++;
                     }
-
-                    entries[parentIndex] = parent with
-                    {
-                        Receipts = parent.Receipts with
-                        {
-                            UnresolvedSubitems = [],
-                            ChainAtoms = childIds.MoveToImmutable(),
-                        },
-                    };
+                    foreach (var captured in decomposition.CasObjects)
+                        AddCasObject(captured.Bytes.AsSpan(), casObjects);
+                    entries[parentIndex] = decomposition.Parent;
+                    globalEntries[parent.AtomId] = decomposition.Parent;
                 }
             }
 
@@ -361,7 +347,7 @@ internal static class DigestionIngestor
         }
 
         return new DigestionIngestPlan(
-            NormalizeAtomIdentities(migrationDocument.WithDigestionSources(sources.ToImmutable())),
+            migrationDocument.WithDigestionSources(sources.ToImmutable()),
             alignment,
             staleAcknowledged,
             residualOpenAdded,
@@ -370,9 +356,6 @@ internal static class DigestionIngestor
                 .ToImmutableArray(),
             alignment.Fallbacks);
     }
-
-    private static string ClauseAtomId(DigestionAtom child) =>
-        child.Fingerprints.RawSha256["sha256:".Length..];
 
     private static DigestionCasObject AddCasObject(
         ReadOnlySpan<byte> bytes,

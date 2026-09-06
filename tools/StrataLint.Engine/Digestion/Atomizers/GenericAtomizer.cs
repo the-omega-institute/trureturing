@@ -85,7 +85,7 @@ internal static class GenericAtomizer
         // 分解生产侧与 pzg 同一实现:08-15 的吸收分解门对全部方言执法,
         // generic-v1 的多子句 claim 同样必须能产出 clause plan(#3499)。
         var clausePlans = document.Claims
-            .Select(PzgAtomizer.PlanClauses)
+            .Select(DigestionDecomposition.PlanClauses)
             .Where(static plan => plan is not null)
             .Select(static plan => plan!)
             .ToImmutableArray();
