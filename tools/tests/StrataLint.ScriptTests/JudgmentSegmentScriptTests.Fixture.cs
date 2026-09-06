@@ -159,7 +159,7 @@ public sealed partial class JudgmentSegmentScriptTests
                 case "provenance-address":
                     WriteText(
                         reportCacheBundle + ".provenance.json",
-                        File.ReadAllText(reportCacheBundle + ".provenance.json", Utf8NoBom)
+                        TemporaryFileSystem.File.ReadAllText(reportCacheBundle + ".provenance.json", Utf8NoBom)
                             .Replace(PairInputAddress, new string('b', 64), StringComparison.Ordinal));
                     break;
                 case "report-sha":
@@ -170,7 +170,7 @@ public sealed partial class JudgmentSegmentScriptTests
                 case "input-attestation":
                     WriteText(
                         reportCacheBundle + ".input.attestation",
-                        File.ReadAllText(reportCacheBundle + ".input.attestation", Utf8NoBom)
+                        TemporaryFileSystem.File.ReadAllText(reportCacheBundle + ".input.attestation", Utf8NoBom)
                             .Replace(AddressComponent, new string('b', 64), StringComparison.Ordinal));
                     break;
                 case "materials-zip":
@@ -276,23 +276,23 @@ public sealed partial class JudgmentSegmentScriptTests
         {
             WriteExecutable(
                 Path.Combine(repository, "tools/scripts/workflow/segment-lean-inspect.sh"),
-                TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(),
                     "tools/scripts/workflow/segment-lean-inspect.sh")));
             WriteExecutable(
                 Path.Combine(repository, "tools/scripts/workflow/segment-admission.sh"),
-                TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(),
                     "tools/scripts/workflow/segment-admission.sh")));
             WriteExecutable(
                 Path.Combine(repository, "tools/scripts/lib/segment-evidence-lib.sh"),
-                TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(),
                     "tools/scripts/lib/segment-evidence-lib.sh")));
             WriteExecutable(
                 Path.Combine(repository, "tools/scripts/workflow/judge-content-address.sh"),
-                TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(),
                     "tools/scripts/workflow/judge-content-address.sh")));
             WriteText(
                 Path.Combine(repository, "Makefile"),
-                TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create("Makefile")));
+                File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile")));
         }
 
         private void InstallFixtureFiles()
@@ -320,7 +320,7 @@ public sealed partial class JudgmentSegmentScriptTests
                 """);
             WriteText(
                 Path.Combine(repository, "tools/scripts/report/lean-report-bundle-lib.sh"),
-                TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+                File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(),
                     "tools/scripts/report/lean-report-bundle-lib.sh")));
             WriteExecutable(
                 Path.Combine(repository, "tools/scripts/report/lean-report-ci-baseline.sh"),
@@ -409,7 +409,7 @@ public sealed partial class JudgmentSegmentScriptTests
 
         private static void WriteReportSidecars(string reportPath)
         {
-            var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(reportPath)));
+            var digest = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(reportPath)));
             WriteText(
                 reportPath + ".sha256",
                 $"{digest}  {Path.GetFileName(reportPath)}\n");

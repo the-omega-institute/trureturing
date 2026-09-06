@@ -66,7 +66,7 @@ internal static class LeanReportCiBaselineScriptContract
         var cache = Path.Combine(temporary.Path, "cache");
         WriteBundle(bundle);
         var provenancePath = bundle + ".provenance.json";
-        var canonical = File.ReadAllText(provenancePath, Encoding.UTF8);
+        var canonical = TemporaryFileSystem.File.ReadAllText(provenancePath, Encoding.UTF8);
         var malformed = mutation switch
         {
             "reordered-keys" => canonical.Replace(
@@ -258,7 +258,7 @@ internal static class LeanReportCiBaselineScriptContract
         const string repository = "1111111111111111111111111111111111111111111111111111111111111111";
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         File.WriteAllText(report, "{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v2\"}\n", new UTF8Encoding(false));
-        var reportSha = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(report))).ToLowerInvariant();
+        var reportSha = Convert.ToHexString(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report))).ToLowerInvariant();
         File.WriteAllText(report + ".sha256", $"{reportSha}  raw-lean-report.json\n", new UTF8Encoding(false));
         File.WriteAllText(
             report + ".input.attestation",

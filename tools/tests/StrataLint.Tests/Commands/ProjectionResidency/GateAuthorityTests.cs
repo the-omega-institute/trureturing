@@ -20,9 +20,9 @@ public sealed class GateAuthorityTests
     [Fact]
     public void RepositoryCatalogHasSixteenUniqueUtf8SortedRoots()
     {
-        var bytes = Encoding.UTF8.GetBytes(TestRepositoryLayout.ReadAllText(
-            RepositoryRelativePath.Create("Golden/gate-authority-roots.toml")));
-        var roots = GateAuthorityRootCatalogLoader.Parse(bytes);
+        var catalog = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "Golden/gate-authority-roots.toml"));
+        var roots = GateAuthorityRootCatalogLoader.Parse(Encoding.UTF8.GetBytes(catalog));
 
         Assert.Equal(16, roots.Length);
         Assert.Equal(
