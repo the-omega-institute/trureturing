@@ -1,0 +1,80 @@
+## 定理337.1　同一分类出现在量子概率流中
+
+对上一轮的连续 Dirac 极限，
+
+$$
+i\hbar\partial_t\psi
+=
+\left(
+-i\hbar c_*Z\partial_x+mc_*^2X
+\right)\psi,
+$$
+
+定义
+
+$$
+\rho=\psi^\dagger\psi,
+\qquad
+j=c_*\psi^\dagger Z\psi.
+$$
+
+则
+
+$$
+\boxed{
+\partial_t\rho+\partial_xj=0.
+}
+\tag{337.1}
+$$
+
+在曲线 \(t=f(x)\) 上，相应通量形式为
+
+$$
+\rho\,dx-j\,dt.
+$$
+
+写 \(\psi=(u,v)^{\mathsf T}\)，得到
+
+$$
+\boxed{
+\rho-jf'
+=
+(1-c_*f')|u|^2
++
+(1+c_*f')|v|^2.
+}
+\tag{337.2}
+$$
+
+### 证明
+
+将 Dirac 方程及其伴随代入 \(\partial_t(\psi^\dagger\psi)\)，质量项相消，剩下 \(-\partial_xj\)。
+
+再在曲线上使用 \(dt=f' dx\)。∎
+
+于是：
+
+$$
+|c_*f'|<1
+\quad\Rightarrow\quad
+\text{通量形成正定的状态读数};
+$$
+
+$$
+|c_*f'|=1
+\quad\Rightarrow\quad
+\text{一类传播分量不被该切面读取};
+$$
+
+$$
+|c_*f'|>1
+\quad\Rightarrow\quad
+\text{通量变成不定号}.
+$$
+
+### 统一解释
+
+时间切面上的正概率范数、空间边界上的带符号流，并非两套互不相关的规则。
+
+它们来自同一个守恒流在不同取向上的读取。
+

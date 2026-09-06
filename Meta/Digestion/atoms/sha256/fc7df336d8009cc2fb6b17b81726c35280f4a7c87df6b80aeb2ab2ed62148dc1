@@ -1,0 +1,32 @@
+## 定理一：平滑后的所有有限阶矩阵具有统一正下界
+
+令
+
+$$
+T_N^{(a)}=(a^{|i-j|}r_{i-j})_{0\le i,j\le N}.
+$$
+
+那么对所有 \(N\)，
+
+$$
+\boxed{
+\frac{1-a}{1+a}I
+\preceq
+T_N^{(a)}
+\preceq
+\frac{1+a}{1-a}I.
+}
+\tag{4}
+$$
+
+因此
+
+$$
+\boxed{
+\operatorname{cond}_2(T_N^{(a)})
+\le
+\left(\frac{1+a}{1-a}\right)^2.
+}
+\tag{5}
+$$
+

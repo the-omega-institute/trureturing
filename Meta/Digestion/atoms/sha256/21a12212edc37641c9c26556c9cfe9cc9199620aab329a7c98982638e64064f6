@@ -1,0 +1,25 @@
+# 296．奇偶的临界意义：它决定是否必然留下一个零模
+
+在一条长度为 \(d\) 的纤维上，只允许相邻的原始移动，取
+
+$$
+H=
+\sum_{j=0}^{d-2}
+t_j
+\bigl(
+|j+1\rangle\langle j|
++
+|j\rangle\langle j+1|
+\bigr),
+\qquad t_j>0.
+\tag{296.1}
+$$
+
+没有对角能量项。
+
+定义
+
+$$
+\Gamma|j\rangle=(-1)^j|j\rangle.
+$$
+

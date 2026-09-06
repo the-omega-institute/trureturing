@@ -1,0 +1,80 @@
+**从 1 出发，每一步乘一个素数，最终到达指定整数。**
+
+这不是 PRIMEGAME 的全部指令语义。它是一份明确的、可独立研究的生成模型。
+
+设：
+
+$$
+N=\prod_{i=1}^{m}p_i^{a_i},
+\qquad p_1<\cdots<p_m,
+$$
+
+并记：
+
+$$
+\mathbf a=(a_1,\ldots,a_m),
+\qquad
+L=\sum_i a_i.
+$$
+
+一条历史是一个长度为 \(L\) 的字：
+
+$$
+\gamma=(i_1,\ldots,i_L),
+$$
+
+其中类型 \(i\) 恰好出现 \(a_i\) 次。
+
+历史集合记为：
+
+$$
+\Gamma_{\mathbf a}.
+$$
+
+它有：
+
+$$
+\boxed{
+|\Gamma_{\mathbf a}|
+=
+\frac{L!}{a_1!\cdots a_m!}.
+}
+\tag{1}
+$$
+
+在第 \(k\) 拍，已经完成的指数向量为：
+
+$$
+\mathbf n_\gamma(k)
+=
+\left(
+\#\{r\le k:i_r=1\},\ldots,
+\#\{r\le k:i_r=m\}
+\right).
+$$
+
+因此：
+
+$$
+\boxed{
+\sum_i n_{\gamma,i}(k)=k.
+}
+\tag{2}
+$$
+
+这才是一份统一的离散时空记录：
+
+$$
+\boxed{
+\gamma
+\longmapsto
+\bigl\{(k,\mathbf n_\gamma(k))\bigr\}_{k=0}^{L}.
+}
+$$
+
+“空间切片”是某个时刻的指数状态；“时间过程”是这些切片之间允许的移动。
+
+项目的 `PrimeAxisEncoding.lean` 已经把黄金规范表与正整数建立成双射，并运输了乘法。它保证的是每张状态切片可以无损编码；要保持完整历史，还必须把事件顺序一起运输。
+
+---
+

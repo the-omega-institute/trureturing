@@ -1,0 +1,17 @@
+# 345．离散临界现在成为一个精确的秩跳变
+
+取一个标量边界，连接两个内部能级：
+
+$$
+H_H=
+\begin{pmatrix}
+E_0+\epsilon&0\\
+0&E_0-\epsilon
+\end{pmatrix},
+$$
+
+$$
+V=\frac g{\sqrt2}(1,1),
+\qquad g>0.
+$$
+

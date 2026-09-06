@@ -1,0 +1,41 @@
+# 四、空间方向原本独立，固定时间以后却产生严格关联
+
+在每个完整历史中：
+
+$$
+\sum_iB_i(t)=t.
+$$
+
+因此，各寄存器在同一时间切面上的变化不可能独立。
+
+令：
+
+$$
+\pi_i=\frac{a_i}{L}.
+$$
+
+由式（8）可以推出：
+
+$$
+\mathbb E[B_i(t)]=t\pi_i,
+$$
+
+$$
+\boxed{
+\operatorname{Var}(B_i(t))
+=
+\frac{t(L-t)}{L-1}\pi_i(1-\pi_i),
+}
+\tag{12}
+$$
+
+$$
+\boxed{
+\operatorname{Cov}(B_i(t),B_j(t))
+=
+-\frac{t(L-t)}{L-1}\pi_i\pi_j
+\quad(i\ne j).
+}
+\tag{13}
+$$
+

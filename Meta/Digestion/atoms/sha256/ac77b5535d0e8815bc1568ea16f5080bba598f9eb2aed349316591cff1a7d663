@@ -1,0 +1,72 @@
+## 定义：双参数资源目标
+
+对 \(\beta>0,\lambda>0\)，定义
+
+$$
+\boxed{
+\Phi_{\beta,\lambda}(n)
+=
+\log\left(\sum_{d\mid n}d^{-\beta}\right)
+-\lambda\log n.
+}
+\tag{1}
+$$
+
+其中：
+
+$$
+\beta:\text{控制大因数被压低多少};
+$$
+
+$$
+\lambda:\text{控制增加整数规模的资源价格}.
+$$
+
+\(\beta=1\) 时，回到项目原来的目标。
+
+若
+
+$$
+n=\prod_pp^{a_p},
+$$
+
+则
+
+$$
+\Phi_{\beta,\lambda}(n)
+=
+\sum_p
+\left[
+\log\left(\sum_{j=0}^{a_p}p^{-\beta j}\right)
+-\lambda a_p\log p
+\right].
+$$
+
+定义第 \(k\) 层的临界价格
+
+$$
+\boxed{
+\theta_{p,k}(\beta)
+=
+\frac{
+\log\!\left[
+\frac{1-p^{-(k+1)\beta}}{1-p^{-k\beta}}
+\right]
+}{\log p}.
+}
+\tag{2}
+$$
+
+新增这一层的收益是
+
+$$
+\boxed{
+\Delta_{p,k}
+=
+[\theta_{p,k}(\beta)-\lambda]\log p.
+}
+\tag{3}
+$$
+
+对固定 \(\beta,p\)，层边际随 \(k\) 严格下降。因此最优配置仍然由各方向的阈值确定。
+

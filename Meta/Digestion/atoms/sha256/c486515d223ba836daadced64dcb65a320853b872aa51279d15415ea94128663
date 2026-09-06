@@ -1,0 +1,74 @@
+# 五、同一个锥连续化以后，为什么没有这些零点？
+
+固定素数 \(p\)，记：
+
+$$
+\ell_p=\log p.
+$$
+
+把式（7）的整数求和改为对同一个实锥积分：
+
+$$
+I_{p,r}(s)
+=
+\int_0^\infty
+e^{-s\ell_pa}
+\prod_{j=1}^{r}
+\left(\int_0^a e^{-\ell_pb_j}\,db_j\right)da.
+$$
+
+计算得：
+
+$$
+I_{p,r}(s)
+=
+\frac1{\ell_p^r}
+\int_0^\infty
+e^{-s\ell_pa}(1-e^{-\ell_pa})^r\,da.
+$$
+
+令 \(u=e^{-\ell_pa}\)，得到 Beta 积分：
+
+$$
+\boxed{
+I_{p,r}(s)
+=
+\frac1{\ell_p^{r+1}}B(s,r+1)
+=
+\frac{r!}
+{\ell_p^{r+1}s(s+1)\cdots(s+r)}.
+}
+\tag{12}
+$$
+
+这在 \(\Re s>0\) 成立。Beta 积分及其 Gamma 表达采用标准定义。([DLMF][3])
+
+因此：
+
+$$
+\boxed{
+I_{p,r}(s)\text{ 没有有限零点}.
+}
+$$
+
+但离散模型具有分子：
+
+$$
+A_r(p^{-1},p^{-s}),
+$$
+
+它可以为零。
+
+于是我们得到了一个严格对照：
+
+$$
+\boxed{
+\begin{aligned}
+\text{连续锥积分}
+&:\quad\text{常数分子};\\
+\text{整数锥求和}
+&:\quad\text{携带排列与单位台阶信息的分子}.
+\end{aligned}
+}
+$$
+
