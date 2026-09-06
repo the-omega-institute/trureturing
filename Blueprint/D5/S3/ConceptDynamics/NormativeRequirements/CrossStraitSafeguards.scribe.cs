@@ -27,7 +27,7 @@ internal sealed class CrossStraitSafeguardsDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("failed-cross-strait-safeguard-excludes-endorsement"),
                 DeclarationHandle.Create(Prefix + "failed_cross_strait_safeguard_excludes_endorsement"),
-                H("Peace, consent, and rights remain separate necessary safeguards"),
+                H("A failed safeguard excludes endorsement under the stated standard"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(

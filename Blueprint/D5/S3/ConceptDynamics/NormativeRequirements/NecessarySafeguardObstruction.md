@@ -28,7 +28,7 @@ Lean statement: `D5/S3/ConceptDynamics/NormativeRequirements/NecessarySafeguardO
 
 Given a goal-achieving path that violates a necessary safeguard, that path is excluded and witnesses failure of the universal goal-to-permission rule. Goal achievement is not defined to include permission or the safeguard.
 
-**Theorem 1.3 (A missing safeguard obstructs an outcome-only decision).**
+**Theorem 1.3 (Equal outcomes with different permissions obstruct outcome-only decisions).**
 
 Lean statement: `D5/S3/ConceptDynamics/NormativeRequirements/NecessarySafeguardObstruction.necessary_safeguard_blocks_readout_factorization`
 

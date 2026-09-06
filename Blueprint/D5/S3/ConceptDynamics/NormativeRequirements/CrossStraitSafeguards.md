@@ -16,7 +16,7 @@ Lean statement: `D5/S3/ConceptDynamics/NormativeRequirements/CrossStraitSafeguar
 
 Assume endorsement requires the freely expressed consent of Taiwan residents. If a proposal serves a unification aim but lacks that consent, it is not endorsed under this standard, and the aim is not a sufficient criterion. The theorem supplies no polling data, historical entitlement, sovereignty ruling, or premise that a particular real proposal lacks consent.
 
-**Theorem 1.2 (Peace, consent, and rights remain separate necessary safeguards).**
+**Theorem 1.2 (A failed safeguard excludes endorsement under the stated standard).**
 
 Lean statement: `D5/S3/ConceptDynamics/NormativeRequirements/CrossStraitSafeguards.failed_cross_strait_safeguard_excludes_endorsement`
 

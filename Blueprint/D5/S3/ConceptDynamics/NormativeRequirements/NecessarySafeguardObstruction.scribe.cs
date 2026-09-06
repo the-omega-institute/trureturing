@@ -37,7 +37,7 @@ internal sealed class NecessarySafeguardObstructionDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("necessary-safeguard-blocks-readout-factorization"),
                 DeclarationHandle.Create(Prefix + "necessary_safeguard_blocks_readout_factorization"),
-                H("A missing safeguard obstructs an outcome-only decision"),
+                H("Equal outcomes with different permissions obstruct outcome-only decisions"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
