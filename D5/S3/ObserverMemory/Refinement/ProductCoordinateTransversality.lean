@@ -3,6 +3,7 @@
    mirror-B: none(waiver:new-observer-library-node)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Product coordinates have transverse fibers and commuting independent updates. -/
 
 import D5.S3.ObserverMemory.Refinement.JointReadoutSupremum

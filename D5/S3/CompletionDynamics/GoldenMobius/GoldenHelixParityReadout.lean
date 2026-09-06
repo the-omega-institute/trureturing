@@ -3,6 +3,7 @@
    mirror-B: none(waiver:new-golden-observer-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: kind=certified-instance; basis=consumer=D5/S3/CompletionDynamics/GoldenMobius/GoldenHelixParityReadout.golden_helix_odd_orientation_breaking; result=D5/S3/CompletionDynamics/GoldenMobius/GoldenHelixParityReadout.bool_not_ne_self
    digest: Golden helix orientation flips at odd depth and returns at even depth while the hidden level advances. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenScaleHelix

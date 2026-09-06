@@ -3,6 +3,7 @@
    mirror-B: none(waiver:new-observer-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: The canonical separation time is the exact boundary at which a pair leaves the finite observation fiber. -/
 
 import D5.S3.Observer.Separation.FiniteFutureCongruence
