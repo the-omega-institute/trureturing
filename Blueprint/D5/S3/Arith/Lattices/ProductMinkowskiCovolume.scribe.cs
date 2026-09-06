@@ -76,7 +76,7 @@ internal sealed class ProductMinkowskiCovolumeDocument : IScribeDocumentDefiniti
             Times, Sp, Sqrt, Grp(Call("abs", Call("disc", F.Id("K"))))), F.Id("r"))));
 
     private static Formula Product(Formula body) => Seq(
-        F.Prod, F.Underscore, Grp(F.Id("i"), InMacro, F.Id("I")), Sp, body);
+        F.Prod, F.Underscore, Grp(F.Id("i"), InMacro, Sp, F.Id("I")), Sp, body);
     private static Formula Pow(Formula value, Formula exponent) => Seq(value, Caret, Grp(exponent));
     private static Formula Sub(Formula value, Formula index) => Seq(value, Underscore, Grp(index));
     private static Formula Call(string name, params Formula[] args) =>

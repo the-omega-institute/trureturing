@@ -17,13 +17,13 @@ internal sealed class GoldenModelSetDeloneDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Gid + "norm_separation"),
                 H("Internal displacement bounds force physical separation"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("u"), Comma, F.Id("v"), InMacro, Call("GoldenInt"), Comma, Sp,
+                    F.Id("u"), Comma, F.Id("v"), InMacro, Sp, Call("GoldenInt"), Comma, Sp,
                     F.Id("u"), Neq, F.Id("v"), Comma, Sp,
-                    F.Id("B"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                    F.Id("B"), InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
                     Call("abs", Seq(Call("internal", F.Id("u")), Minus,
-                        Call("internal", F.Id("v")))), Le, F.Id("B"), Sp, Rightarrow, Sp,
-                    F.D(1), Le, Call("abs", Seq(Call("emb", F.Id("u")), Minus,
-                        Call("emb", F.Id("v")))), Times, F.Id("B")))),
+                        Call("internal", F.Id("v")))), Le, Sp, F.Id("B"), Sp, Rightarrow, Sp,
+                    F.D(1), Le, Sp, Call("abs", Seq(Call("emb", F.Id("u")), Minus,
+                        Call("emb", F.Id("v")))), Times, Sp, F.Id("B")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Internal(u) is embedding(conj(u)), and emb is the distinguished real "
@@ -35,7 +35,7 @@ internal sealed class GoldenModelSetDeloneDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Gid + "exists_golden_modelSet_delone"),
                 H("Packing radius one half and covering radius three"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Exists, Sp, F.Id("D"), InMacro, Call("DeloneSet", F.Id("R")), Comma, Sp,
+                    Exists, Sp, F.Id("D"), InMacro, Sp, Call("DeloneSet", F.Id("R")), Comma, Sp,
                     Call("carrier", F.Id("D")), Eq,
                     Call("modelSet", F.Id("W")), Sp, Land, Sp,
                     Call("packingRadius", F.Id("D")), Eq, Frac, Grp(F.D(1)), Grp(F.D(2)),
