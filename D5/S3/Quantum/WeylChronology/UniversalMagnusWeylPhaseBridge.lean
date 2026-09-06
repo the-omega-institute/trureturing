@@ -11,33 +11,23 @@ import D5.S3.Observer.Chronology.StepTwoFreeLieBridge
 /-!
 # Universal Magnus to concrete Weyl phase
 
-This module closes the representation gap between two already-owned layers.
-The chronology library has a universal step-two tensor signature, its primitive
-Magnus logarithm, a represented associative-algebra shadow, and a free-Lie
-interpretation.  The golden observer stack has the standard binary Parikh
-matrix representation whose central doubled-Magnus entry is the integer
-`m = 2 P - r z`.  The Weyl stack independently proved from the literal
-wavefunction action that exactly the same integer multiplies the geometric
-phase `a*b*m`.
+The chronology library already owns a universal step-two tensor signature, its
+primitive Magnus logarithm, a represented associative shadow and a free-Lie
+interpretation. The golden observer stack already owns the binary Parikh
+matrix representation whose central doubled-Magnus entry is
+`m = 2 P - r z`. The Weyl stack independently derives the phase `a*b*m` from
+the literal wavefunction action.
 
-No second Magnus coordinate is introduced here.  The first theorem transports
-the universal primitive tensor logarithm through the repository's existing
-`tensorMultiplication` representation and identifies its `(0,2)` entry with
-the existing `magnusCenter`.  The Weyl normal form is then rewritten through
-that universal coordinate.  For the elementary long-before-short pair, the
-existing free-Lie evaluation has central entry one, and the physical swap
-phase is exactly `exp(i*2*a*b)` times that free-Lie coefficient.
+This module only composes those owners. The represented universal primitive
+logarithm has central entry `magnusCenter`; the concrete Weyl normal form is
+rewritten through that coordinate. For one long-before-short pair, the
+free-Lie bracket has central coefficient one and exponentiates to the physical
+word/reversal phase `exp(i*2*a*b)`.
 
-The operational word executor is an anti-representation of chronological list
-order: the list head acts first, hence later operators multiply on the left.
-The factor two in the two-letter swap is therefore the group-commutator phase;
-the single compensated history retains the half phase `a*b*m`.
-
-The older draft PR #4504 was audited before this file was written.  Its
-Fourier/free-Lie ideas have since evolved into the stronger current owners
-`StepTwoFreeLieBridge` and `FiniteFourierMagnusCommutator`, both already present
-on this stack.  This module consumes the current owners rather than copying the
-stale draft definitions.
+The older draft PR #4504 was audited first. Its relevant Fourier/free-Lie ideas
+have since evolved into stronger current owners already present on this stack,
+so no stale draft definition is copied here. No unbounded generator, completed
+free Lie algebra or analytic BCH/Magnus convergence theorem is claimed.
 -/
 
 set_option autoImplicit false
@@ -55,16 +45,17 @@ open D5.S3.Observer.Chronology.StepTwoChronologicalSignature
 open D5.S3.Observer.Chronology.StepTwoFreeLieBridge
 open D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity
 
+attribute [local instance 100] LieRing.ofAssociativeRing
+attribute [local instance 100] LieAlgebra.ofAssociativeAlgebra
+
 noncomputable section
 
-/-- The universal tensor signature of the canonical binary Parikh observation. -/
-def binaryUniversalSignature (word : List Bool) :
-    TensorSignature ℤ IntegerMatrix3 :=
+/-- Universal tensor signature of the canonical binary Parikh observation. -/
+def binaryUniversalSignature (word : List Bool) : TensorSignature ℤ IntegerMatrix3 :=
   chronologicalTensorSignature ℤ IntegerMatrix3 binaryLetterObservation word
 
-/-- The central entry of the represented universal primitive logarithm is
-exactly the existing integer Magnus center.  This is the representation bridge
-from the tensor-level chronology to the binary observer used by the Weyl lane. -/
+/-- The represented universal primitive logarithm has central entry equal to
+the existing integer Magnus center. -/
 theorem binary_universal_magnus_central_entry (word : List Bool) :
     (tensorMultiplication ℤ IntegerMatrix3
       (doubledPrimitiveMagnus ℤ IntegerMatrix3
@@ -82,8 +73,7 @@ theorem binary_universal_magnus_central_entry (word : List Bool) :
           ℤ IntegerMatrix3 binaryLetterObservation word]
   rw [binary_doubled_magnus_center, magnus_center_formula]
 
-/-- The same bridge after casting the central integer coordinate to the real
-scalar used by the continuous Weyl representation. -/
+/-- Real scalar version of the universal central coordinate. -/
 theorem binary_universal_magnus_central_entry_real (word : List Bool) :
     (((tensorMultiplication ℤ IntegerMatrix3
       (doubledPrimitiveMagnus ℤ IntegerMatrix3
@@ -92,8 +82,7 @@ theorem binary_universal_magnus_central_entry_real (word : List Bool) :
   exact_mod_cast binary_universal_magnus_central_entry word
 
 /-- The concrete Weyl normal form is controlled by the represented universal
-primitive Magnus coordinate, rather than by a separately introduced phase
-counter. -/
+primitive Magnus coordinate. -/
 theorem run_word_normal_form_via_universal_magnus
     (a b : ℝ) (word : List Bool) (f : ℝ → ℂ) :
     runWord a b word f =
@@ -106,8 +95,8 @@ theorem run_word_normal_form_via_universal_magnus
   rw [binary_universal_magnus_central_entry_real]
   exact run_word_normal_form a b word f
 
-/-- The universal free-Lie bracket of long followed by short has unit central
-coefficient in the canonical binary Parikh representation. -/
+/-- The universal free-Lie long-before-short bracket has unit central
+coefficient in the canonical binary representation. -/
 theorem binary_free_lie_true_false_central_entry :
     (freeLieEvaluation ℤ IntegerMatrix3 binaryLetterObservation
       ⁅FreeLieAlgebra.of ℤ true, FreeLieAlgebra.of ℤ false⁆) 0 2 = 1 := by
@@ -121,17 +110,15 @@ theorem binary_free_lie_true_false_central_entry :
         ⁅FreeLieAlgebra.of ℤ true, FreeLieAlgebra.of ℤ false⁆) 0 2 =
         commutator (binaryLetterObservation true)
           (binaryLetterObservation false) 0 2 := by
-            exact congrArg (fun matrix => matrix 0 2) hFree
+      exact congrArg (fun matrix => matrix 0 2) hFree
     _ = (doubledMagnusDegreeTwo
           (chronologicalSignature binaryLetterObservation [true, false])) 0 2 := by
-            exact congrArg (fun matrix => matrix 0 2) hMagnus.symm
+      exact congrArg (fun matrix => matrix 0 2) hMagnus.symm
     _ = 1 := by
       simpa [scatteredTrueFalseCount] using hCenter
 
-/-- For the elementary ordered pair, the physical Weyl swap phase is exactly
-twice `a*b` times the central coefficient of the universal free-Lie bracket.
-This is the finite free-Lie-to-Weyl representation statement; it does not use
-infinitesimal unbounded generators or a BCH convergence theorem. -/
+/-- The elementary free-Lie coefficient exponentiates to the concrete Weyl
+word/reversal phase. -/
 theorem two_letter_weyl_swap_phase_from_free_lie
     (a b : ℝ) (f : ℝ → ℂ) :
     runWord a b [true, false] f =
