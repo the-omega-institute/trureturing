@@ -343,6 +343,11 @@ public sealed class ResourceObservationLibraryTests
         Assert.DoesNotContain("pid:201", output, StringComparison.Ordinal);
     }
 
+    // The stub installs a TERM trap so that both interleavings report exit=97 (#5973).
+    // resource_observe_run_periodic kills the sampler unconditionally; a stub that only
+    // "return 97" loses that race under load and is reaped with 143 instead, which made
+    // these two assertions intermittently red on CI while the property they are named for
+    // -- the command's own exit code -- held in both orderings.
     [Fact]
     public void SamplerFailureDoesNotChangeSuccessfulCommandExitCode()
     {
@@ -351,7 +356,7 @@ public sealed class ResourceObservationLibraryTests
 
         var result = Run(
             temporary,
-            "source \"$1\"\nresource_observe_periodically() { return 97; }\nresource_observe_run_periodic bash -c 'exit 0'\n");
+            "source \"$1\"\nresource_observe_periodically() { trap \"exit 97\" TERM; return 97; }\nresource_observe_run_periodic bash -c 'exit 0'\n");
 
         Assert.Equal(0, result.ExitCode);
         Assert.Contains(
@@ -368,7 +373,7 @@ public sealed class ResourceObservationLibraryTests
 
         var result = Run(
             temporary,
-            "source \"$1\"\nresource_observe_periodically() { return 97; }\nwrapped_command() { bash -c 'exit 23'; bash -c 'exit 0'; }\nset -e\nresource_observe_run_periodic wrapped_command\n");
+            "source \"$1\"\nresource_observe_periodically() { trap \"exit 97\" TERM; return 97; }\nwrapped_command() { bash -c 'exit 23'; bash -c 'exit 0'; }\nset -e\nresource_observe_run_periodic wrapped_command\n");
 
         Assert.Equal(23, result.ExitCode);
         Assert.Contains(
