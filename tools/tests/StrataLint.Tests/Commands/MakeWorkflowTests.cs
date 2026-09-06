@@ -468,6 +468,51 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
+    public void IngestWrapperDoesNotRunDownstreamWhenProducerInputHelperFails()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var root = TestRepositoryLayout.FindRoot();
+        var ingest = Path.Combine(fixture.Path, IngestScriptPath);
+        var helper = Path.Combine(fixture.Path, LeanReportInputScriptPath);
+        var bin = Path.Combine(fixture.Path, "bin");
+        Directory.CreateDirectory(Path.GetDirectoryName(ingest)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
+        Directory.CreateDirectory(bin);
+        File.Copy(Path.Combine(root, IngestScriptPath), ingest);
+        File.Copy(Path.Combine(root, LeanReportInputScriptPath), helper);
+        var project = Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
+        Directory.CreateDirectory(Path.GetDirectoryName(project)!);
+        File.WriteAllText(project, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+        var dotnet = Path.Combine(bin, "dotnet");
+        File.WriteAllText(dotnet, """
+            #!/usr/bin/env bash
+            if [[ "${1:-}" == msbuild ]]; then exit 71; fi
+            touch "$DOWNSTREAM_MARKER"
+            exit 0
+            """ + "\n");
+        foreach (var executable in new[] { ingest, helper, dotnet })
+            File.SetUnixFileMode(executable,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        ReviewRegressionTests.RunGit(fixture.Path, "init", "--quiet");
+        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.email", "stratalint@example.invalid");
+        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.name", "StrataLint Tests");
+        ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
+        ReviewRegressionTests.RunGit(fixture.Path, "commit", "--quiet", "-m", "failing ingest fixture");
+        var marker = Path.Combine(fixture.Path, "downstream-ran");
+
+        var result = TestProcessRunner.Run("/bin/bash",
+            ["-c", "PATH=\"$1:$PATH\" DOWNSTREAM_MARKER=\"$2\" exec \"$3\" ingest HEAD",
+                "ingest-failure", bin, marker, ingest],
+            fixture.Path, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("producer closure is unavailable", System.Text.Encoding.UTF8.GetString(result.StandardError));
+        Assert.False(File.Exists(marker));
+    }
+
+    [Fact]
     public void ScribeWrapperConsumesOnlyAPrecomputedLeanReport()
     {
         var root = TestRepositoryLayout.FindRoot();

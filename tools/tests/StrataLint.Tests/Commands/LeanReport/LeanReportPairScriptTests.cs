@@ -84,6 +84,50 @@ public sealed class LeanReportPairScriptTests
     }
 
     [Fact]
+    public void FailedFingerprintStopsBeforeCacheEnsureOrProducer()
+    {
+        using var fixture = new LeanReportPairFixture();
+        fixture.BreakProducerClosureEvaluation();
+
+        var result = fixture.Run();
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("producer closure is unavailable", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Empty(fixture.CacheEnsureLakeStates);
+        Assert.Equal(0, fixture.ProducerInvocationCount);
+        Assert.False(fixture.CandidateLakeExists);
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("extra")]
+    [InlineData("non-hex")]
+    [InlineData("multiline")]
+    public void MalformedAddressStopsBeforeCacheEnsureOrProducer(string malformed)
+    {
+        using var fixture = new LeanReportPairFixture();
+        var digest = new string('a', 64);
+        fixture.StubAddress(malformed switch
+        {
+            "missing" => $"{digest}  {digest} {digest}",
+            "extra" => string.Join(' ', Enumerable.Repeat(digest, 5)),
+            "non-hex" => $"{digest} {digest} {new string('z', 64)} {digest}",
+            "multiline" => string.Join(' ', Enumerable.Repeat(digest, 4)) + "\nextra",
+            _ => throw new InvalidOperationException(malformed),
+        });
+
+        var result = fixture.Run();
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("malformed", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Empty(fixture.CacheEnsureLakeStates);
+        Assert.Equal(0, fixture.ProducerInvocationCount);
+        Assert.False(fixture.CandidateLakeExists);
+    }
+
+    [Fact]
     public void FailedCacheEnsureReceiptReachesCallerOnStandardError()
     {
         using var fixture = new LeanReportPairFixture();
@@ -175,6 +219,8 @@ public sealed class LeanReportPairScriptTests
         private readonly string candidateReport;
         private readonly string cacheEnsureLog;
         private readonly string canonicalCandidateRoot;
+        private string script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
+        private string addressOutput = "";
 
         internal LeanReportPairFixture()
         {
@@ -242,7 +288,6 @@ public sealed class LeanReportPairScriptTests
             int cacheEnsureExitCode = 0,
             bool signalPairAfterReceipt = false)
         {
-            var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
             return TestProcessRunner.Run(
                 "env",
                 [
@@ -250,6 +295,7 @@ public sealed class LeanReportPairScriptTests
                     $"STUB_LEAN_CACHE_ENSURE_LOG={cacheEnsureLog}",
                     $"STUB_LEAN_CACHE_ENSURE_EXIT_CODE={cacheEnsureExitCode}",
                     $"STUB_LEAN_CACHE_ENSURE_SIGNAL_PARENT={(signalPairAfterReceipt ? 1 : 0)}",
+                    $"STUB_ADDRESS={addressOutput}",
                     "bash",
                     script,
                     "--producer", producer,
@@ -263,6 +309,31 @@ public sealed class LeanReportPairScriptTests
         }
 
         internal void DeleteCacheEnsure() => File.Delete(CacheEnsurePath);
+
+        internal void BreakProducerClosureEvaluation() =>
+            File.AppendAllText(Path.Combine(candidateRoot, CliProjectPath), "<");
+
+        internal void StubAddress(string output)
+        {
+            addressOutput = output;
+            var scripts = Path.Combine(temporary.Path, "driver");
+            Directory.CreateDirectory(Path.Combine(scripts, "report"));
+            var copy = Path.Combine(scripts, "lean-report-pair.sh");
+            File.Copy(script, copy);
+            script = copy;
+            foreach (var (name, contents) in new[]
+            {
+                ("lean-report-input.sh", "#!/usr/bin/env bash\nprintf '%s\\n' \"$STUB_ADDRESS\"\n"),
+                ("report-supervisor.sh", "#!/usr/bin/env bash\nexit 99\n"),
+            })
+            {
+                var path = Path.Combine(scripts, "report", name);
+                File.WriteAllText(path, contents, new UTF8Encoding(false));
+                var chmod = TestProcessRunner.Run("chmod", ["+x", path], temporary.Path,
+                    BoundedProcessRunner.HangDetectionBudget, 4096);
+                Assert.Equal(0, chmod.ExitCode);
+            }
+        }
 
         internal void AppendProducerComment() =>
             File.AppendAllText(producer, "\n# producer mutation\n", new UTF8Encoding(false));

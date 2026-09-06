@@ -145,6 +145,37 @@ public sealed class LeanReportInputScriptTests
     }
 
     [Fact]
+    public void VerifyRejectsEmptyProducerPreimageWhenCompileClosureFails()
+    {
+        using var fixture = new LeanReportInputFixture();
+        fixture.AttestEmptyProducerPreimage();
+        Assert.Equal(2, fixture.Verify().ExitCode);
+        fixture.BreakProducerClosureEvaluation();
+
+        var result = fixture.Verify();
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("producer closure is unavailable", Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void VerifyRejectsTheSameReportAcrossCSharpDriftWhenCompileClosureFails()
+    {
+        using var fixture = new LeanReportInputFixture();
+        fixture.AttestEmptyProducerPreimage();
+        fixture.BreakProducerClosureEvaluation();
+        var before = fixture.Verify();
+
+        fixture.Append(LeanModelsPath, "// C#-only drift\n");
+        var after = fixture.Verify();
+
+        Assert.Equal(2, before.ExitCode);
+        Assert.Equal(2, after.ExitCode);
+        Assert.Contains("producer closure is unavailable", Encoding.UTF8.GetString(after.StandardError));
+    }
+
+    [Fact]
     public void CompleteProducerClosureHasStableAddressAndVerifies()
     {
         using var fixture = new LeanReportInputFixture();
@@ -503,6 +534,22 @@ public sealed class LeanReportInputScriptTests
         }
 
         internal ProcessOutput Verify() => Run("verify");
+
+        internal void AttestEmptyProducerPreimage()
+        {
+            var sources = ManifestHash("Trureturing.lean", "D5/Probe.lean", inspectorSourcePath);
+            var config = ManifestHash("lean-toolchain", "lake-manifest.json", "lakefile.toml");
+            var preimage = "schema=stratalint-lean-report-repository-input-v1\n"
+                + "repository_inspector_sha256=\n"
+                + $"lean_sources_sha256={sources}\nlean_config_sha256={config}\n";
+            var address = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(preimage)));
+            var reportSha = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
+            File.WriteAllText(
+                report + ".input.attestation",
+                "schema=stratalint-lean-report-input-attestation-v1\n"
+                + $"repository_input_sha256={address}\nproducer_sha256={sources}\nreport_sha256={reportSha}\n",
+                new UTF8Encoding(false));
+        }
 
         internal void BreakProducerClosureEvaluation() =>
             Append(CliProjectPath, "<");
