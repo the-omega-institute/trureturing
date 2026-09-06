@@ -149,11 +149,6 @@ if ! declare -F segment_evidence_emit >/dev/null \
   exit 2
 fi
 
-repository_input="${REPOSITORY-}"
-if [[ -z "$repository_input" ]]; then
-  printf '%s\n' 'SEGMENT_ENGINEERING_INPUT_FAILED field=REPOSITORY reason=missing' >&2
-  finish 2 missing-required-input
-fi
 if [[ -z "$event_input" ]]; then
   printf '%s\n' 'SEGMENT_ENGINEERING_INPUT_FAILED field=EVENT reason=missing' >&2
   finish 2 missing-required-input
@@ -164,6 +159,12 @@ if [[ "$event_input" != PR && "$event_input" != push ]]; then
   finish 2 missing-required-input
 fi
 event="$event_input"
+
+repository_input="${REPOSITORY-}"
+if [[ -z "$repository_input" ]]; then
+  printf '%s\n' 'SEGMENT_ENGINEERING_INPUT_FAILED field=REPOSITORY reason=missing' >&2
+  finish 2 missing-required-input
+fi
 if ! repository="$(cd "$repository_input" 2>/dev/null && pwd -P)"; then
   printf 'SEGMENT_ENGINEERING_INPUT_FAILED field=REPOSITORY path=%s reason=unavailable\n' \
     "$repository_input" >&2

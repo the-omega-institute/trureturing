@@ -159,6 +159,17 @@ if ! declare -F segment_evidence_emit >/dev/null \
   exit 2
 fi
 
+if [[ -z "$event_input" ]]; then
+  printf '%s\n' 'SEGMENT_ADMISSION_INPUT_FAILED field=EVENT reason=missing' >&2
+  finish 2 missing-required-input
+fi
+if [[ "$event_input" != PR && "$event_input" != push ]]; then
+  printf 'SEGMENT_ADMISSION_INPUT_FAILED field=EVENT value=%q reason=invalid\n' \
+    "$event_input" >&2
+  finish 2 missing-required-input
+fi
+event="$event_input"
+
 repository_input="${REPOSITORY-}"
 report_input="${REPORT-}"
 lean_evidence_input="${LEAN_INSPECT_EVIDENCE-}"
@@ -166,10 +177,9 @@ judge_dll_input="${JUDGE_DLL-}"
 expected_judge_address="${JUDGE_SOURCE_ADDRESS-}"
 test_map_cache_input="${TEST_MAP_CACHE_ROOT-}"
 
-for required_name in REPOSITORY EVENT REPORT LEAN_INSPECT_EVIDENCE JUDGE_SOURCE_ADDRESS; do
+for required_name in REPOSITORY REPORT LEAN_INSPECT_EVIDENCE JUDGE_SOURCE_ADDRESS; do
   case "$required_name" in
     REPOSITORY) required_value="$repository_input" ;;
-    EVENT) required_value="$event_input" ;;
     REPORT) required_value="$report_input" ;;
     LEAN_INSPECT_EVIDENCE) required_value="$lean_evidence_input" ;;
     JUDGE_SOURCE_ADDRESS) required_value="$expected_judge_address" ;;
@@ -179,12 +189,6 @@ for required_name in REPOSITORY EVENT REPORT LEAN_INSPECT_EVIDENCE JUDGE_SOURCE_
     finish 2 missing-required-input
   fi
 done
-if [[ "$event_input" != PR && "$event_input" != push ]]; then
-  printf 'SEGMENT_ADMISSION_INPUT_FAILED field=EVENT value=%q reason=invalid\n' \
-    "$event_input" >&2
-  finish 2 missing-required-input
-fi
-event="$event_input"
 if ! repository="$(cd "$repository_input" 2>/dev/null && pwd -P)"; then
   printf 'SEGMENT_ADMISSION_INPUT_FAILED field=REPOSITORY path=%s reason=unavailable\n' \
     "$repository_input" >&2

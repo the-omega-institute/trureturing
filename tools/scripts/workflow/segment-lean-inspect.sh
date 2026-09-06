@@ -169,6 +169,17 @@ if ! declare -F segment_evidence_emit >/dev/null \
   exit 2
 fi
 
+if [[ -z "$event_input" ]]; then
+  printf '%s\n' 'SEGMENT_LEAN_INSPECT_INPUT_FAILED field=EVENT reason=missing' >&2
+  finish 2 missing-required-input
+fi
+if [[ "$event_input" != PR && "$event_input" != push ]]; then
+  printf 'SEGMENT_LEAN_INSPECT_INPUT_FAILED field=EVENT value=%q reason=invalid\n' \
+    "$event_input" >&2
+  finish 2 missing-required-input
+fi
+event="$event_input"
+
 repository_input="${REPOSITORY-}"
 report_input="${REPORT-}"
 evidence_input="${LEAN_INSPECT_EVIDENCE-}"
@@ -177,10 +188,9 @@ expected_scribe_address="${SCRIBE_SOURCE_ADDRESS-}"
 report_cache_bundle="${REPORT_CACHE_BUNDLE-}"
 report_cache_root="${REPORT_CACHE_ROOT-}"
 
-for required_name in REPOSITORY EVENT REPORT LEAN_INSPECT_EVIDENCE SCRIBE_SOURCE_ADDRESS; do
+for required_name in REPOSITORY REPORT LEAN_INSPECT_EVIDENCE SCRIBE_SOURCE_ADDRESS; do
   case "$required_name" in
     REPOSITORY) required_value="$repository_input" ;;
-    EVENT) required_value="$event_input" ;;
     REPORT) required_value="$report_input" ;;
     LEAN_INSPECT_EVIDENCE) required_value="$evidence_input" ;;
     SCRIBE_SOURCE_ADDRESS) required_value="$expected_scribe_address" ;;
@@ -190,12 +200,6 @@ for required_name in REPOSITORY EVENT REPORT LEAN_INSPECT_EVIDENCE SCRIBE_SOURCE
     finish 2 missing-required-input
   fi
 done
-if [[ "$event_input" != PR && "$event_input" != push ]]; then
-  printf 'SEGMENT_LEAN_INSPECT_INPUT_FAILED field=EVENT value=%q reason=invalid\n' \
-    "$event_input" >&2
-  finish 2 missing-required-input
-fi
-event="$event_input"
 if [[ ! "$expected_scribe_address" =~ ^[0-9a-f]{64}$ ]]; then
   printf 'SEGMENT_LEAN_INSPECT_ADDRESS_FAILED kind=scribe reason=invalid-expected-address\n' >&2
   finish 2 scribe-address-verification-failed
