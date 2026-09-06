@@ -11,49 +11,37 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 /-!
 # Robust calibration envelope for the golden Ramsey readout
 
-The ideal finite-shot module assumes a calibrated contrast and phase.  This
+The ideal finite-shot module assumes a calibrated contrast and phase. This
 file adds a deterministic nuisance-parameter envelope before any new
-concentration inequality is introduced.  A calibration record contains five
-experiment-facing quantities:
+concentration inequality is introduced. A calibration record contains five
+experiment-facing quantities: baseline probability, fringe visibility,
+chronology coupling, additive phase offset, and an additive probability-level
+closure/readout residual.
 
-* a baseline probability;
-* fringe visibility;
-* the chronology coupling;
-* an additive phase offset;
-* an additive probability-level closure/readout residual.
-
-The last coordinate is deliberately coarse.  It is a certified bound on the
+The last coordinate is deliberately coarse. It is a certified bound on the
 net probability perturbation left after imperfect endpoint closure or readout
 correction; this module does not claim to derive that scalar from a particular
 wavefunction norm or hardware error model.
 
-For a nominal visibility `V0` and coupling `kappa0`, the actual fringe is
-compared with the already-owned `visibleChronologyFringe V0 kappa0`.  The proof
-uses Mathlib's one-Lipschitz sine theorem.  The exact word-level deviation is
-bounded by baseline error, closure error, visibility error and the phase error
+For nominal visibility `V0` and coupling `kappa0`, the actual fringe is compared
+with the already-owned `visibleChronologyFringe V0 kappa0`. Mathlib's
+one-Lipschitz sine theorem bounds contrast and phase perturbations. The existing
+universal word inequality `4*abs(m)<=n^2` then removes the hidden center from a
+length-only calibration budget. Two words may use different calibration
+records, so the pair theorem also covers bounded run-to-run drift.
 
-`2*(kappa-kappa0)*m + phaseOffset`.
-
-The existing universal word bound `4*abs(m)<=n^2` then removes the hidden center
-from the calibration budget.  For two possibly different calibration records,
-which permits drift between the two experimental runs, the actual fringe gap
-is at least the nominal gap minus the two certified budgets.  Therefore a
-strictly positive remaining margin proves robust law separation.
-
-This interface is motivated by current Ramsey practice rather than by an
-invented noise taxonomy.  Tomita et al., Nature Communications 17, 4727
-(2026), DOI 10.1038/s41467-026-73348-x, report an approximately 80 percent
-Ramsey visibility, phase wrapping, two analyzer phases, and the projection-noise
-scaling `Delta phi = 1/(V*sqrt N)`.  You et al., Scientific Reports 16, 18474
-(2026), DOI 10.1038/s41598-026-49820-5, explicitly fit coherent phase
-modulation and heating in spin-echo Ramsey data.  The earlier trapped-ion
-exchange experiment, Nature Communications 15 (2024), DOI
-10.1038/s41467-024-45232-z, reports fitted Ramsey contrast and binomial
+Tomita et al., Nature Communications 17, 4727 (2026), DOI
+10.1038/s41467-026-73348-x, report imperfect Ramsey visibility, phase wrapping,
+two analyzer phases and the projection-noise scaling `Delta phi=1/(V*sqrt N)`.
+You et al., Scientific Reports 16, 18474 (2026), DOI
+10.1038/s41598-026-49820-5, explicitly fit coherent phase modulation and
+heating in spin-echo Ramsey data. The 2024 trapped-ion exchange experiment,
+DOI 10.1038/s41467-024-45232-z, reports fitted Ramsey contrast and binomial
 state-population confidence intervals.
 
 No Gaussian drift law, independence of calibration errors, hardware-specific
-likelihood, or robust finite-shot optimality theorem is assumed here.  The
-output is a deterministic separation certificate that can be composed later
+likelihood, or robust finite-shot optimality theorem is assumed here. The
+output is a deterministic separation certificate that can later be composed
 with the repository's existing testing-error machinery.
 -/
 
@@ -96,9 +84,8 @@ def robustChronologyFringe
         calibration.phaseOffset) +
     calibration.closureError
 
-/-- Canonical Bool law attached to the robust fringe.  Probability validity is
-proved separately from a unit-interval premise, rather than hidden in the
-definition. -/
+/-- Canonical Bool law attached to the robust fringe. Probability validity is
+proved separately from a unit-interval premise. -/
 def robustChronologyLaw
     (calibration : RamseyCalibration) (word : List Bool) : Bool → ℝ :=
   positiveBiasLaw (robustChronologyFringe calibration word - 1 / 2)
@@ -158,7 +145,7 @@ private theorem contrast_sine_deviation_le
     _ = |actualVisibility - nominalVisibility| * |Real.sin actualAngle| +
         |nominalVisibility| *
           |Real.sin actualAngle - Real.sin nominalAngle| := by
-          rw [abs_mul, abs_mul]
+      rw [abs_mul, abs_mul]
     _ ≤ |actualVisibility - nominalVisibility| * 1 +
         |nominalVisibility| * |actualAngle - nominalAngle| := by
       exact add_le_add
@@ -271,7 +258,7 @@ theorem calibration_deviation_budget_le_length
   unfold calibrationDeviationBudget calibrationLengthBudget
   gcongr
 
-/-- Pairwise robust gap bound.  The two words may be measured under different
+/-- Pairwise robust gap bound. The two words may be measured under different
 calibration records, so this also covers bounded run-to-run drift. -/
 theorem robust_pair_separation_lower_bound
     (leftCalibration rightCalibration : RamseyCalibration)
@@ -314,15 +301,3 @@ theorem robust_pair_separation_lower_bound
           (robustChronologyFringe rightCalibration right -
             visibleChronologyFringe nominalVisibility nominalCoupling right)| := by
           congr 1
-          ring
-      _ ≤ |visibleChronologyFringe nominalVisibility nominalCoupling left -
-            robustChronologyFringe leftCalibration left| +
-          |robustChronologyFringe leftCalibration left -
-            robustChronologyFringe rightCalibration right| +
-          |robustChronologyFringe rightCalibration right -
-            visibleChronologyFringe nominalVisibility nominalCoupling right| := by
-        calc
-          |_ + _ + _| ≤ |_ + _| + |_| := abs_add _ _
-          _ ≤ (|_| + |_|) + |_| := by
-            gcongr
-            exact abs_add _ _
