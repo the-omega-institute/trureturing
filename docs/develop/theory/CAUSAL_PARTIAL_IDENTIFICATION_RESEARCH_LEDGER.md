@@ -828,3 +828,105 @@ Zhang, Tian, and Bareinboim, *Partial Counterfactual Identification from Observa
 The source carrier is the entire table space. For k covariate values and a four-state response pair, one table has 4^k possible rows-of-responses assignments. This finite construction proves existence but does not provide an efficient minimal-support representation. A natural remaining obligation is exact rational support reduction preserving every row marginal and the required query cells, followed by transport of attaining models through that reduction. Cross-stratum restrictions must be retained when defining the constraints to preserve.
 
 The new table model space is not identified with an information-escape arena. The finite regression suite supplies no novelty score, maximal-catalog irredundancy certificate, or proof of root admission. The authored sources contain complete proof scripts and matching Scribe declaration coverage; their Lean kernel compilation has not been performed in this continuation.
+
+## 32. Exact quaternary capacity bridge to the golden base-four lane, 2026-09-06
+
+`QuaternaryResponseTableCoding.lean` formalizes the exact part of the numerical coincidence between the causal response-table construction and the golden-ratio base-four DFAO problem.
+
+One Boolean complete response pair has four possibilities:
+
+```text
+(false,false), (false,true), (true,false), (true,true).
+```
+
+`responsePairDigitEquiv` identifies these with the quaternary digits `0,1,2,3`. Coordinatewise application gives
+
+```text
+(Fin k -> Bool x Bool)  equivalent to  (Fin k -> Fin 4).
+```
+
+Mathlib's existing `finFunctionFinEquiv` then gives the explicit finite radix equivalence
+
+```text
+(Fin k -> Bool x Bool)  equivalent to  Fin (4^k).
+```
+
+The theorem `responseTable_card_eq_four_pow` records the corresponding cardinality. Thus the `4^k` in the fixed-noise causal construction is exactly the size of the unrestricted length-k word space over the same four-symbol alphabet that appears as the output alphabet of the golden base-four digit problem.
+
+The number `4^k` is a capacity boundary. Every actual k-row table is coded by an integer strictly smaller than `4^k`, as stated by `responseTableCode_lt_capacity`. It is therefore important not to identify `4^k` with one particular table code.
+
+The existing golden oracle defines
+
+```text
+base4PowerWord k = zeckendorfMSDWord (4^k).
+```
+
+Combining this unchanged definition with the response-table cardinality gives the new theorem
+
+```text
+golden_base4_power_word_is_response_table_capacity:
+  base4PowerWord k
+    = zeckendorfMSDWord (Fintype.card (Fin k -> Bool x Bool)).
+```
+
+This is an exact structural identity. The k-th sparse input of the golden DFAO is the Zeckendorf representation of the cardinality of the unrestricted k-row Boolean response-table carrier.
+
+## 33. The four-ary tree interpretation and the distinguished golden path
+
+The unrestricted response tables form a rooted four-ary tree by prefix extension. Level k consists of all k-row tables and has `4^k` nodes. The existing golden base-four digit `base4GoldenDigit k : Fin 4` supplies one branch symbol at depth k.
+
+`goldenResponsePrefix k` decodes the first k golden digits into one distinguished causal-style response table. `goldenResponsePrefix_castSucc` proves prefix consistency:
+
+```text
+goldenResponsePrefix (k+1) restricted to Fin k
+  = goldenResponsePrefix k.
+```
+
+Hence the golden digit sequence selects one nested path through the same four-ary table tree whose full level size is `4^k`. `goldenResponsePrefixCode k` places the chosen node in `Fin (4^k)`.
+
+The combined picture is therefore
+
+```text
+all level-k response prefixes:  A^k, |A|=4, |A^k|=4^k
+capacity input to golden DFAO:  Zeckendorf(4^k)
+returned branch symbol:         d_k in A
+golden prefix recursion:        g_(k+1) extends g_k by d_k.
+```
+
+The last line is a prefix statement about the coordinate family. Mathlib's integer radix equivalence fixes its own least-significant-coordinate convention for `goldenResponsePrefixCode`; no claim about textual big-endian concatenation is needed.
+
+This yields a useful level-size/branch-symbol duality. The automaton is queried at the arithmetic size of the whole unrestricted prefix level and returns the next symbol of one highly structured path through that level hierarchy.
+
+## 34. Support complexity and automaton complexity are different quantities
+
+`StructuredResponseTableSupport.lean` formalizes the boundary needed to prevent an invalid compression argument.
+
+Let a deterministic latent generator map a finite state carrier `S` into all k-row response tables. If it is surjective, then
+
+```text
+4^k <= Fintype.card S.
+```
+
+This is `surjective_response_table_generator_requires_four_pow`, obtained directly from finite cardinality. Its contrapositive `small_generator_not_universal` says that every smaller latent family omits at least one unrestricted table.
+
+The probabilistic statement is stronger for the canonical independent-row witness. If every stratum response kernel gives strictly positive mass to all four response types, then `independentResponseTable_full_support` proves that every one of the `4^k` full tables has positive mass. Therefore any deterministic latent generator that exactly covers the positive-mass support needs at least `4^k` states. This is stated by `positive_independent_table_law_generator_lower_bound` and its small-generator impossibility corollary.
+
+Consequently, the exponential carrier in Section 31 is not merely an inefficient naming scheme when the product table law has full support. Exact atom-by-atom latent enumeration really has exponential support complexity.
+
+This does not conflict with the small DFAO in the golden-ratio lane. A DFAO state is a computational state used to evaluate a coordinate oracle. It need not correspond to one latent response table atom. A finite automaton can describe one infinite structured quaternary sequence with a small transition system while the unrestricted set of length-k quaternary sequences still has `4^k` members. Algorithmic description complexity and probability-support complexity are different invariants.
+
+In particular, the 21-state upper construction currently developed in draft PR #5405 cannot be read as a 21-atom representation of every causal response table. The bridge source deliberately imports only the stable `GoldenBase4AutomataOracle` definitions and does not depend on the unmerged 21-state candidate.
+
+## 35. Relation to the current Zeckendorf/Fibonacci DFAO research and next formal target
+
+Barnoff, Bright, and Shallit, *Computing the base-b representation of quadratic irrationals using automata*, Theoretical Computer Science 1071 (2026), 115843, proves that the n-th base-b digit of a quadratic irrational is a finite-state function of the corresponding Ostrowski representation of `b^n`. In the golden-ratio, base-four case this is exactly the Zeckendorf representation of `4^n`. The bridge above uses the same repository input definition, rather than introducing a second power or Zeckendorf encoder.
+
+Moradi, Rampersad, and Shallit, arXiv:2603.21645v1, studies complexity of arithmetic relations and linear subsequences in Fibonacci-automatic systems. Its linear-subsequence results do not automatically imply a finite-state recurrence in the exponent k for the exponentially sparse restriction `4^k`. The bridge established here therefore stops at the exact capacity/input identity and the existing DFAO coordinate oracle.
+
+Earp-Lynch, Earp-Lynch, Kihel, and Tiebekabe, arXiv:2608.04445, studies powers represented as sparse sums of Fibonacci numbers. That number-theoretic sparsity can constrain the shapes of some Zeckendorf power inputs, but it supplies no support-reduction theorem for arbitrary causal response tables.
+
+A genuine causal use of automata would require an explicit cross-stratum structural hypothesis. For ordered strata, one could restrict admissible complete response tables to a regular, automatic, or sofic family. Such a restriction can reduce support and can tighten partial-identification bounds, but it changes the feasible causal model and therefore needs scientific justification. The unrestricted sharpness theorems must remain available as the outer model.
+
+There is also a separate compression mechanism that should be studied before attributing support reduction to automata. If only finitely many row marginals and query moments must be preserved, convex support-reduction results such as Caratheodory-type representations can potentially replace a `4^k` ambient carrier by a support whose size is controlled by the number of retained moment coordinates. That would preserve a specified finite observation/query map without imposing an automatic cross-stratum law. Formalizing this exact rational moment-preserving support reduction is the next high-value representation target.
+
+The two new Lean sources and their Scribe companions establish the radix bridge and the exact full-support obstruction. They do not claim that the golden sequence is a scientifically justified causal response mechanism, that the powers-only DFAO minimum has been resolved, or that automaton state count is an information-escape score.
