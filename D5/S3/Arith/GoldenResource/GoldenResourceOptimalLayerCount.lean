@@ -4,15 +4,16 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Strictly profitable layer counts give a globally optimal integer with minimal prime exponents. -/
+   digest: Positive layer counts give an optimizer with minimal prime exponents. -/
 
 import D5.S3.Arith.GoldenFutureExtensionMaximum
 import D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion
 import Mathlib.Order.Interval.Set.Nat
 
 /- Library-search audit trail (2026-09-07):
-   1. D5 searches for optimalLayerCount, positive_part_sum_finite_support, positive layers,
-      layer count/prefix, and golden_resource_optimal found no public count characterization.
+   1. This continuation repeated D5 searches for optimalLayerCount,
+      positive_part_sum_finite_support, positive layers, layer count/prefix, colossally,
+      and golden_resource_optimal: no public count characterization outside this draft.
       GoldenFutureExtensionMaximum has a private finite-prefix construction; its public
       golden_future_extension_maximum_attained is imported and applied at the integer 1.
       GoldenResourceThresholdCriterion supplies the public boundary-threshold equivalence.
@@ -22,19 +23,21 @@ import Mathlib.Order.Interval.Set.Nat
       products, interval cardinalities, finite-set maxima and factorization reconstruction
       found Finset.exists_mem_eq_sup, Set.ncard_eq_toFinset_card, Nat.card_Icc,
       Nat.prod_pow_factorization_eq_self and Nat.factorization_le_iff_dvd; these are reused.
-   3. Online Lean ecosystem search through NyxID/Tavily for "Lean theorem formalization
-      colossally abundant optimal prime exponent positive marginal layers goldenLayerMarginal"
-      returned Nagata/FLT formalizations, Lean's website, tutorials and the 100-theorems list,
-      with no matching declaration in those results. Request 464072dc-f0c5-4cfb-a3e8-02e55af8ee03.
-      Catalog discovery for slug tavily returned 404; the search itself succeeded using the
-      discovered configured service tavily-search-chrono-ai.
-   4. Preregistration v2 was written to the attempt artifact before implementation:
-      positive_layers_eq_count_interval is the escape witness. It identifies the finite
-      downward-closed layer set with the interval ending at its cardinality. The original
-      finite-support witness is retained as a live auxiliary, using imported attainment.
-      Consumer direction: optimal_layer_count_spec -> positive_layers_eq_count_interval
-      -> positive_part_sum_finite_support. These are arbitrary-price analytic/combinatorial
-      results, not bounded computations or certified numerical instances.
+   3. Online Lean ecosystem search through NyxID/Tavily for "Lean formalization colossally
+      abundant optimal prime exponent positive marginal layers" returned Wikipedia,
+      MathWorld, Math StackExchange, a probability formalization, and Mathematics in Lean;
+      no matching Lean declaration in those results. Request
+      909c7e42-17bc-4ca5-a4c3-a2d8d769c13d. An initial HTTP 422 was corrected by supplying
+      Content-Type: application/json; CLI exit zero alone did not establish HTTP success.
+   4. The original preregistered witness positive_part_sum_finite_support is retained.
+      Its finite union of factorization intervals bounds all active prime-layer pairs.
+      Imported attainment alone does not identify those pairs or their cardinalities.
+      The public count specification consumes the witness through its finite-support
+      integer construction and positive_layers_eq_count_interval. The latter identifies
+      a downward-closed finite layer set with the interval ending at its cardinality.
+      These are arbitrary-price analytic/combinatorial results, not bounded computations
+      or certified numerical instances. The predecessor's unverified audit was replaced
+      by the continuation's own searches; its proof core is retained and kernel-checked.
    Scope: the minimal-exponent optimizer only. At equality other optimizers are allowed;
    no uniqueness of all optimizers and no positive-part supremum formula is asserted. -/
 
@@ -69,11 +72,13 @@ theorem positive_part_sum_finite_support {lambda : ℝ} (hlambda : 0 < lambda) :
     golden_future_extension_maximum_attained hlambda (n := 1) le_rfl
   have hopt : IsGoldenResourceOptimal lambda n := by
     intro m hm
-    exact sub_le_sub_iff_right.mp (hmax m (one_dvd m) hm)
+    exact (sub_le_sub_iff_right _).mp (hmax m (one_dvd m) hm)
   let layers := n.primeFactors.biUnion fun p => (Icc 1 (n.factorization p)).image (p, ·)
   apply layers.finite_toSet.subset
   rintro ⟨p, k⟩ ⟨hk, hp, hgain⟩
   have hle := active_le_factorization hlambda hn hopt hp hgain
+  change k ≤ n.factorization p at hle
+  change 1 ≤ k at hk
   have hmem : p ∈ n.primeFactors := by
     rw [← Nat.support_factorization, Finsupp.mem_support_iff]
     omega
@@ -126,8 +131,12 @@ theorem positive_layers_eq_count_interval {lambda : ℝ} (hlambda : 0 < lambda)
     omega
   rw [hcount]
   ext k
+  change (1 ≤ k ∧ p.Prime ∧ lambda < goldenLayerMarginal p k) ↔ _
   rw [← hmem k, hs]
   simp
+
+#print axioms positive_part_sum_finite_support
+#print axioms positive_layers_eq_count_interval
 
 end
 
