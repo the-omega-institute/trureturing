@@ -1,0 +1,46 @@
+# 四、更强：指数多的整数，能够同时挤进越来越薄的收益层
+
+仅仅方向多还不够。我们继续计算：把这些方向全部视为“尚未决定”，到底会产生多大目标误差？
+
+定义总损失宽度：
+
+$$
+\boxed{
+C(T,\varepsilon)
+=
+\sum_{p\in\mathcal B_{T,\varepsilon}}
+\left|
+\ln\left(1+\frac1p\right)
+-\lambda_T\ln p
+\right|.
+}
+\tag{10}
+$$
+
+对这些 \(p\asymp T\)，第二层及更高层的收益远低于 \(\lambda_T\)，因此充分大的 \(T\) 下，最优指数只会是 \(0\) 或 \(1\)。
+
+固定最优整数 \(n_{\lambda_T}\) 在其他素数上的指数，允许这些近临界素数各自独立选择：
+
+$$
+a_p=0\quad\text{或}\quad a_p=1.
+$$
+
+由唯一素因数分解，得到：
+
+$$
+2^{M(T,\varepsilon)}
+$$
+
+个不同整数。
+
+根据定理2.1，每个这样的整数满足：
+
+$$
+\boxed{
+0\le
+J_{\lambda_T}(n_{\lambda_T})-J_{\lambda_T}(n)
+\le C(T,\varepsilon).
+}
+\tag{11}
+$$
+

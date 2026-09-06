@@ -1,0 +1,36 @@
+## 素数能量会检验这项保护究竟有多强
+
+5040三态链的混合 Hamiltonian 为
+
+$$
+H_{\mathrm{mix}}
+=
+J
+\begin{pmatrix}
+0&2\sqrt6&0\\
+2\sqrt6&0&2\sqrt5\\
+0&2\sqrt5&0
+\end{pmatrix}.
+$$
+
+若加入对数能量，并减去中间态5040的共同能量，附加项为
+
+$$
+D_{\log}=\operatorname{diag}(\Delta,0,-\Delta),
+\qquad
+\Delta=E_*\ln\frac{15}{14}>0.
+$$
+
+则
+
+$$
+\boxed{
+\det(H_{\mathrm{mix}}+D_{\log})
+=
+4J^2\Delta\ne0.
+}
+\tag{296.4}
+$$
+
+所以，原来的精确零模消失。
+

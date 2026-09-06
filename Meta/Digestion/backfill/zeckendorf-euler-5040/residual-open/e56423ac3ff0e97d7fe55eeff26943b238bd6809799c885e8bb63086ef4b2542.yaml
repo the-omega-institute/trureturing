@@ -6,6 +6,15 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Arith/GoldenResource5040PriceInterval.golden_resource_5040_unique_maximum_of_price_interval
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 231b33a19aed31a8d7fab0e105ddcb7acd4603fffdc660eb8dc356662443a713
+      - code: chain-migration-incomplete
+        detail: 553a164e28ae07f07f47c70bc8085c8db8176f73128c0086de9d07e7da2d2095
   chain_atoms:
     - 231b33a19aed31a8d7fab0e105ddcb7acd4603fffdc660eb8dc356662443a713
     - 553a164e28ae07f07f47c70bc8085c8db8176f73128c0086de9d07e7da2d2095

@@ -1,0 +1,31 @@
+### 情形一：\(r=0\)
+
+状态为：
+
+$$
+(M,0,0,k;13).
+$$
+
+接下来的两步是：
+
+$$
+(M,0,0,k;13)
+\longrightarrow
+(M,0,0,k-1;17)
+\longrightarrow
+(M,0,0,k-1;1).
+$$
+
+于是：
+
+$$
+\boxed{
+k\mid M
+\Longrightarrow
+\mathsf X(M,k)
+\longrightarrow
+\mathsf S(M,0,0,k-1;1).
+}
+\tag{8}
+$$
+

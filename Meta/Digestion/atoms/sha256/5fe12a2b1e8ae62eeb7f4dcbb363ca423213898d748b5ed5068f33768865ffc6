@@ -1,0 +1,96 @@
+## 定理 5：前三阶能量矩相同，第四阶出现明确差额
+
+对 \(r=0,1,2,3\)，
+
+$$
+\boxed{
+\mathbb E_\theta[E^r]=\mathbb E_0[E^r].
+}
+\tag{17}
+$$
+
+而
+
+$$
+\boxed{
+\mathbb E_\theta[E^4]
+-
+\mathbb E_0[E^4]
+=
+4\theta\log2\log3\log5\log7.
+}
+\tag{18}
+$$
+
+### 证明
+
+当 \(r\le3\) 时，\(E^r\) 中的每个单项式至多涉及三个不同寄存器。它与 \(\chi\) 相乘后，至少有一个未被能量单项式使用的 \(h_p\)，平均为零。
+
+当 \(r=4\) 时，只有同时包含四个寄存器各一次的项存活。其系数为 \(4!=24\)。
+
+分别计算
+
+$$
+\mathbb E_0\!\left[\left(k_2-2\right)h_2(k_2)\right]=1,
+$$
+
+$$
+\mathbb E_0\!\left[\left(k_3-1\right)h_3(k_3)\right]=\frac23,
+$$
+
+$$
+\mathbb E_0\!\left[\left(k_5-\frac12\right)h_5(k_5)\right]
+=
+\mathbb E_0\!\left[\left(k_7-\frac12\right)h_7(k_7)\right]
+=\frac12.
+$$
+
+所以差额为
+
+$$
+24\theta\cdot1\cdot\frac23\cdot\frac12\cdot\frac12
+\prod_p\log p,
+$$
+
+即式（18）。证毕。
+
+---
+
+定义整体相位读数
+
+$$
+\Phi_\theta(t)=\mathbb E_\theta[e^{-itE}].
+$$
+
+同时反转四个指数
+
+$$
+k_p\mapsto a_p-k_p
+$$
+
+会使 \(E\mapsto-E\)，却使 \(\chi\) 保持不变。因此 \(P_\theta\) 关于整体能量反射对称，全部奇数阶矩为零。
+
+由式（18），
+
+$$
+\boxed{
+\Phi_\theta(t)-\Phi_0(t)
+=
+\frac{\theta}{6}
+\log2\log3\log5\log7\,t^4
++O(t^6).
+}
+\tag{19}
+$$
+
+这给出了一个真正的“不同切片看起来相同，整体波却不同”的例子。
+
+而且可以将 \(P_\theta\) 放进对角密度矩阵
+
+$$
+\rho_\theta=\sum_{\mathbf k}
+P_\theta(\mathbf k)|\mathbf k\rangle\langle\mathbf k|.
+$$
+
+它们仍是由乘积基态混合而成的可分状态。**因此，这个四方向差异不需要先诉诸量子纠缠；经典高阶相关已经足够。**
+

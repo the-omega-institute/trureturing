@@ -1,0 +1,75 @@
+# 十、结合项目，下一层理论应当记录什么？
+
+项目已有的编码等价、动态闭包和前文矩几何，可以进一步组织成一个**带局部性与时钟成本的历史接口**：
+
+$$
+\boxed{
+\mathfrak S=
+(\mathcal X,\mathcal E,\tau,q,\mathcal A).
+}
+\tag{46}
+$$
+
+其中：
+
+$$
+\mathcal X:\text{数据、控制和必要历史组成的状态空间};
+$$
+
+$$
+\mathcal E:\text{允许的基本转移};
+$$
+
+$$
+\tau:\text{每条转移的时间成本};
+$$
+
+$$
+q:\text{实际观察协议};
+$$
+
+$$
+\mathcal A:\text{合法性、相干性与误差约束}.
+$$
+
+对于一个宏观程序，正确的语义保持应写成
+
+$$
+\boxed{
+F^{\tau(x)}(\iota x)=\iota(\overline F x),
+}
+\tag{47}
+$$
+
+而不是简单要求 \(F\iota=\iota\overline F\)。
+
+还需要检查：
+
+$$
+\boxed{
+\text{空间投影是否保留未来分支};
+}
+$$
+
+$$
+\boxed{
+\text{时间压缩是否保留返回成本};
+}
+$$
+
+$$
+\boxed{
+\text{空间与时间的混合路径是否相容};
+}
+$$
+
+$$
+\boxed{
+\text{随步数增长，误差与谱余量怎样共同变化}.
+}
+$$
+
+已有 `DynamicClosureMinimality` 可以支持第一项的抽象最小性；`PrimeAxisEncoding` 支持编码语义。局部执行成本、传播半径、带时钟模拟与混合方格条件，仍需作为明确的新前件和定理封装，而不能从编码双射中自动推出。
+
+本轮做了有限核对：\(63\) 组黄金进位输入对、\(31\) 组 \(5040\cdot7^r\) 的归一化时钟、随机幺正历史的路径谱、四边形相位残差，以及时间响应重叠界。整数部分为精确核对，矩阵部分为普通浮点复核。可复现代码见[核验脚本](sandbox:/mnt/data/discrete_spacetime_constraints_verify.py)，结果见[核验记录](sandbox:/mnt/data/discrete_spacetime_constraints_verify.json)。
+

@@ -1,0 +1,28 @@
+## 定义287.1　带相位的跃迁图
+
+对一个有限连通无向图，选择：
+
+$$
+H_\theta
+=
+\sum_{\{x,y\}}
+J_{xy}
+\left(
+e^{i\theta_{yx}}|y\rangle\langle x|
++
+e^{-i\theta_{yx}}|x\rangle\langle y|
+\right).
+$$
+
+局部基底重定义：
+
+$$
+|x\rangle\mapsto e^{i\chi_x}|x\rangle
+$$
+
+使边相位变化为：
+
+$$
+\theta_{yx}\mapsto\theta_{yx}+\chi_y-\chi_x.
+$$
+

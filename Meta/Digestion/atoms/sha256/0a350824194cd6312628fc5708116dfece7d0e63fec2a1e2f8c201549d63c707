@@ -1,0 +1,71 @@
+## 定理三：每一个连续时间切面的 Schmidt 系数都与 \(\theta\) 无关
+
+在第 \(k\) 拍后，将历史分成前 \(k\) 个寄存器和后 \(8-k\) 个寄存器。
+
+记：
+
+$$
+h(\mathbf u)=\frac{|\mathbf u|!}{\prod_i u_i!}.
+$$
+
+由式（20），有 Schmidt 分解：
+
+$$
+\boxed{
+|\Psi_\theta\rangle
+=
+\sum_{\substack{\mathbf u\le\mathbf a\\|\mathbf u|=k}}
+\sqrt{p_k(\mathbf u)}\,
+e^{i\theta B(\mathbf u,\mathbf a-\mathbf u)}
+|\mathbf u;\theta\rangle
+\otimes
+|\mathbf a-\mathbf u;\theta\rangle,
+}
+\tag{27}
+$$
+
+其中：
+
+$$
+\boxed{
+p_k(\mathbf u)
+=
+\frac{
+h(\mathbf u)h(\mathbf a-\mathbf u)
+}{
+h(\mathbf a)
+}.
+}
+\tag{28}
+$$
+
+不同 \(\mathbf u\) 对应不同事件计数，所以左右两侧的对应向量分别正交。
+
+因此，Schmidt 系数就是：
+
+$$
+\sqrt{p_k(\mathbf u)},
+$$
+
+与 \(\theta\) 无关。证毕。
+
+对 \(k=4\)，允许的 \(\mathbf u\) 恰好有 12 个，所以：
+
+$$
+\boxed{
+\operatorname{SchmidtRank}_{1\ldots4\,|\,5\ldots8}
+|\Psi_\theta\rangle=12.
+}
+\tag{29}
+$$
+
+于是：
+
+> **\(|\Psi_0\rangle\) 与 \(|\Psi_{\pi/4}\rangle\) 完全正交，但在每一个“前几拍／后几拍”切面上，它们具有相同的纠缠谱和纠缠熵。**
+
+这不表示它们的约化密度矩阵全部相同。其本征向量一般会变化；这里严格相同的是本征值。
+
+因此，**即使收集了全部连续时间切面的纠缠熵，也没有恢复整条历史的相位结构。**
+
+---
+

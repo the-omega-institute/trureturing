@@ -1,0 +1,81 @@
+## 定理 2.1：对数预算增量的正尺度表示
+
+对每个 \(E>1\)，存在正测度 \(\nu_E\)，使对全部 \(x\ge0\)：
+
+$$
+\boxed{
+h(E+x)-h(E)
+=
+\int_0^\infty
+(1-e^{-xt})\,\nu_E(dt).
+}
+\tag{3}
+$$
+
+一个显式选择是：
+
+$$
+\boxed{
+\nu_E(dt)
+=
+e^{-Et}
+\left[
+\int_0^\infty
+\frac{t^{u-1}}{\Gamma(u+1)}\,du
+\right]dt.
+}
+\tag{4}
+$$
+
+### 证明
+
+首先：
+
+$$
+h'(E)=\frac1{E\ln E}
+=
+\int_0^\infty E^{-u-1}\,du.
+$$
+
+再利用 Gamma 积分：
+
+$$
+E^{-u-1}
+=
+\frac1{\Gamma(u+1)}
+\int_0^\infty t^u e^{-Et}\,dt.
+$$
+
+所有被积函数非负，可以用 Tonelli 定理交换积分，得到：
+
+$$
+h'(E+s)
+=
+\int_0^\infty t e^{-st}\,\nu_E(dt).
+$$
+
+对 \(s\in[0,x]\) 积分：
+
+$$
+\begin{aligned}
+h(E+x)-h(E)
+&=
+\int_0^\infty
+\left[\int_0^xte^{-st}\,ds\right]\nu_E(dt)\\
+&=
+\int_0^\infty(1-e^{-xt})\,\nu_E(dt).
+\end{aligned}
+$$
+
+证毕。
+
+这种“导数完全单调，函数增量由正指数核混合表示”的机制，属于 Bernstein–Laplace 表示理论；这里给出了适用于当前函数的显式推导。([Djalil Chafai][3])
+
+要注意：
+
+$$
+\nu_E
+$$
+
+是正测度，不是已经归一化的概率分布；它的总质量一般无限，但式（3）中的积分有限。
+

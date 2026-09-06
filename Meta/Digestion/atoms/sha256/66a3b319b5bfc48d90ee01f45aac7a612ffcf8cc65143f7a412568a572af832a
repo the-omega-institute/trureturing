@@ -1,0 +1,50 @@
+# 八、新的定量结果：秩无限增长，但有效维数始终有界
+
+定义纯度
+
+$$
+\mathcal P_N
+=
+\operatorname{Tr}(\rho_{\mathrm{clock}}^2)
+=
+\operatorname{Tr}(\rho_{\mathrm{data}}^2),
+$$
+
+以及逆纯度意义下的有效维数
+
+$$
+\boxed{
+d_{\mathrm{eff}}(N)=\frac1{\mathcal P_N}.
+}
+\tag{29}
+$$
+
+它不是矩阵秩，也不必是整数。
+
+由式（26），
+
+$$
+\boxed{
+\mathcal P_N
+=
+\frac{
+(N+1)+2\sum_{k=1}^N(N+1-k)|r_k|^2
+}{(N+1)^2}.
+}
+\tag{30}
+$$
+
+从数据切面看，则有
+
+$$
+\boxed{
+\mathcal P_N
+=
+\sum_{j,k}p_jp_k
+\left|
+\frac1{N+1}\sum_{t=0}^N(w_j\overline{w_k})^t
+\right|^2.
+}
+\tag{31}
+$$
+

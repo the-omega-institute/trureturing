@@ -1,0 +1,13 @@
+# 三、第二种新切面：消去内部历史，把全部关系留在边界
+
+假设同一个 Hermitian 二次型按边界变量 \(x\) 与内部变量 \(y\) 分块：
+
+$$
+K=
+\begin{pmatrix}
+A&B\\
+B^*&C
+\end{pmatrix},
+\qquad C\succ0.
+$$
+
