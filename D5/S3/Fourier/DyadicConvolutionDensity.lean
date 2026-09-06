@@ -199,6 +199,144 @@ theorem dyadic_partial_convolution_fourierLaplace_tendsto
   rw [dyadic_partial_convolution_fourierLaplace]
   exact Finset.prod_congr rfl (fun j _ => (hd.1 j).2.2.2.2.2 z)
 
+private theorem uniform_density_bound {a : ℝ} (ha : 0 < a) (x : ℝ) :
+    |uniformIntervalDensity a x| ≤ (2 * a)⁻¹ := by
+  by_cases hx : x ∈ Icc (-a) a
+  · rw [uniformIntervalDensity, indicator_of_mem hx, abs_of_pos (by positivity)]
+  · rw [uniformIntervalDensity, indicator_of_notMem hx, abs_zero]
+    positivity
+
+private theorem uniform_convolution_integrable {f : ℝ → ℝ} (hf : Integrable f)
+    {a : ℝ} (ha : 0 < a) (x : ℝ) :
+    Integrable (fun t => f (x - t) * uniformIntervalDensity a t) :=
+  (hf.comp_sub_left x).mul_bdd (uniformIntervalDensity_integrable a).aestronglyMeasurable
+    (Eventually.of_forall fun t => by simpa [Real.norm_eq_abs] using uniform_density_bound ha t)
+
+private theorem uniform_convolution_interval (f : ℝ → ℝ) {a : ℝ} (ha : 0 < a) (x : ℝ) :
+    (f ⋆[ContinuousLinearMap.mul ℝ ℝ, volume] uniformIntervalDensity a) x =
+      (∫ t in (x - a)..(x + a), f t) * (2 * a)⁻¹ := by
+  rw [convolution_def]
+  have heq : (fun t => f t * uniformIntervalDensity a (x - t)) =
+      (Icc (x - a) (x + a)).indicator (fun t => f t * (2 * a)⁻¹) := by
+    funext t
+    have hm : x - t ∈ Icc (-a) a ↔ t ∈ Icc (x - a) (x + a) := by
+      constructor <;> rintro ⟨h₁, h₂⟩ <;> constructor <;> linarith
+    by_cases ht : t ∈ Icc (x - a) (x + a) <;>
+      simp [uniformIntervalDensity, ht, hm]
+  change (∫ t, f t * uniformIntervalDensity a (x - t)) = _
+  rw [heq, integral_indicator measurableSet_Icc, integral_mul_const,
+    integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le (by linarith)]
+
+private theorem uniform_convolution_lipschitz_from_bound {f : ℝ → ℝ}
+    (hf : Integrable f) {C a : ℝ} (ha : 0 < a) (hC : ∀ x, |f x| ≤ C) (x y : ℝ) :
+    |(f ⋆[ContinuousLinearMap.mul ℝ ℝ, volume] uniformIntervalDensity a) x -
+      (f ⋆[ContinuousLinearMap.mul ℝ ℝ, volume] uniformIntervalDensity a) y| ≤
+      (C / a) * |x - y| := by
+  rw [uniform_convolution_interval f ha x, uniform_convolution_interval f ha y,
+    ← sub_mul, abs_mul, abs_of_pos (by positivity : 0 < (2 * a)⁻¹),
+    intervalIntegral.integral_interval_sub_interval_comm
+      hf.intervalIntegrable hf.intervalIntegrable hf.intervalIntegrable]
+  have hb (p q : ℝ) : |∫ t in p..q, f t| ≤ C * |q - p| := by
+    simpa only [Real.norm_eq_abs] using
+      (intervalIntegral.norm_integral_le_of_norm_le_const (a := p) (b := q)
+        (f := f) (fun t _ => by simpa only [Real.norm_eq_abs] using hC t))
+  calc
+    |(∫ t in (x - a)..(y - a), f t) - ∫ t in (x + a)..(y + a), f t| * (2 * a)⁻¹ ≤
+        (C * |(y - a) - (x - a)| + C * |(y + a) - (x + a)|) * (2 * a)⁻¹ := by
+      gcongr
+      exact (abs_sub _ _).trans (add_le_add (hb _ _) (hb _ _))
+    _ = (C / a) * |x - y| := by
+      rw [show y - a - (x - a) = y - x by ring,
+        show y + a - (x + a) = y - x by ring, abs_sub_comm y x]
+      field_simp
+      ring
+
+private theorem uniform_convolution_lipschitz {f : ℝ → ℝ} (hf : Integrable f)
+    {a L : ℝ} (ha : 0 < a) (hL : ∀ x y, |f x - f y| ≤ L * |x - y|) (x y : ℝ) :
+    |(f ⋆[ContinuousLinearMap.mul ℝ ℝ, volume] uniformIntervalDensity a) x -
+      (f ⋆[ContinuousLinearMap.mul ℝ ℝ, volume] uniformIntervalDensity a) y| ≤
+      L * |x - y| := by
+  rw [convolution_mul_swap, convolution_mul_swap,
+    ← integral_sub (uniform_convolution_integrable hf ha x)
+      (uniform_convolution_integrable hf ha y)]
+  have hb : ∀ t, ‖f (x - t) * uniformIntervalDensity a t -
+      f (y - t) * uniformIntervalDensity a t‖ ≤
+      (L * |x - y|) * uniformIntervalDensity a t := by
+    intro t
+    rw [Real.norm_eq_abs, ← sub_mul, abs_mul,
+      abs_of_nonneg (uniformIntervalDensity_nonneg ha t)]
+    have hd : x - t - (y - t) = x - y := by ring
+    exact mul_le_mul_of_nonneg_right (hd ▸ hL (x - t) (y - t))
+      (uniformIntervalDensity_nonneg ha t)
+  have hi := norm_integral_le_of_norm_le
+    ((uniformIntervalDensity_integrable a).const_mul (L * |x - y|))
+    (Eventually.of_forall hb)
+  simpa [Real.norm_eq_abs, integral_const_mul, integral_uniformIntervalDensity ha] using hi
+
+private theorem uniform_convolution_close {f : ℝ → ℝ} (hf : Integrable f)
+    {a L : ℝ} (ha : 0 < a) (hL₀ : 0 ≤ L)
+    (hL : ∀ x y, |f x - f y| ≤ L * |x - y|) (x : ℝ) :
+    |(f ⋆[ContinuousLinearMap.mul ℝ ℝ, volume] uniformIntervalDensity a) x - f x| ≤
+      L * a := by
+  rw [convolution_mul_swap]
+  have hc : f x = ∫ t : ℝ, f x * uniformIntervalDensity a t := by
+    rw [integral_const_mul, integral_uniformIntervalDensity ha, mul_one]
+  rw [hc, ← integral_sub (uniform_convolution_integrable hf ha x)
+    ((uniformIntervalDensity_integrable a).const_mul (f x))]
+  have hb (t : ℝ) : ‖f (x - t) * uniformIntervalDensity a t -
+      f x * uniformIntervalDensity a t‖ ≤ (L * a) * uniformIntervalDensity a t := by
+    rw [Real.norm_eq_abs, ← sub_mul, abs_mul,
+      abs_of_nonneg (uniformIntervalDensity_nonneg ha t)]
+    by_cases ht : t ∈ Icc (-a) a
+    · apply mul_le_mul_of_nonneg_right _ (uniformIntervalDensity_nonneg ha t)
+      have ht' : |t| ≤ a := abs_le.mpr ht
+      have hd : |x - t - x| = |t| := by rw [show x - t - x = -t by ring, abs_neg]
+      exact (hL (x - t) x).trans (hd ▸ mul_le_mul_of_nonneg_left ht' hL₀)
+    · simp [uniformIntervalDensity, ht]
+  have hi := norm_integral_le_of_norm_le
+    ((uniformIntervalDensity_integrable a).const_mul (L * a)) (Eventually.of_forall hb)
+  simpa [Real.norm_eq_abs, integral_const_mul, integral_uniformIntervalDensity ha] using hi
+
+private theorem dyadic_lipschitz (ell : ℝ) (hell : 0 < ell) (n : ℕ) (x y : ℝ) :
+    |dyadicPartialConvolution ell (n + 1) x - dyadicPartialConvolution ell (n + 1) y| ≤
+      ((2 * dyadicHalfWidth ell 0)⁻¹ / dyadicHalfWidth ell 1) * |x - y| := by
+  have hp (j : ℕ) : 0 < dyadicHalfWidth ell j := by
+    unfold dyadicHalfWidth
+    positivity
+  induction n generalizing x y with
+  | zero =>
+      exact uniform_convolution_lipschitz_from_bound
+        (uniformIntervalDensity_integrable _) (hp 1) (uniform_density_bound (hp 0)) x y
+  | succ n ih =>
+      exact uniform_convolution_lipschitz
+        (dyadicPartialConvolution_integrable ell (n + 1)) (hp (n + 1 + 1)) ih x y
+
+/-- Pointwise existence follows from summable Lipschitz displacement bounds. -/
+theorem dyadicPartialConvolution_cauchy (ell : ℝ) (hell : 0 < ell) (x : ℝ) :
+    CauchySeq (fun n => dyadicPartialConvolution ell (n + 1) x) := by
+  let L := (2 * dyadicHalfWidth ell 0)⁻¹ / dyadicHalfWidth ell 1
+  have hp (j : ℕ) : 0 < dyadicHalfWidth ell j := by
+    unfold dyadicHalfWidth
+    positivity
+  have hL : 0 ≤ L := le_of_lt (div_pos (inv_pos.mpr (mul_pos (by norm_num) (hp 0))) (hp 1))
+  apply cauchySeq_of_dist_le_of_summable (fun n => L * dyadicHalfWidth ell (n + 2))
+  · intro n
+    rw [Real.dist_eq, abs_sub_comm]
+    exact uniform_convolution_close (dyadicPartialConvolution_integrable ell (n + 1))
+      (hp (n + 2)) hL (dyadic_lipschitz ell hell n) x
+  · refine (summable_geometric_two' (L * ell / 8)).congr fun n => ?_
+    simp [dyadicHalfWidth, pow_add]
+    ring
+
+/-- The pointwise limit of the dyadic finite convolution densities. -/
+def dyadicConvolutionDensity (ell : ℝ) (x : ℝ) : ℝ :=
+  limUnder atTop (fun n => dyadicPartialConvolution ell (n + 1) x)
+
+theorem dyadicPartialConvolution_tendsto (ell : ℝ) (hell : 0 < ell) (x : ℝ) :
+    Tendsto (fun n => dyadicPartialConvolution ell (n + 1) x) atTop
+      (nhds (dyadicConvolutionDensity ell x)) :=
+  (dyadicPartialConvolution_cauchy ell hell x).tendsto_limUnder
+
 #print axioms dyadic_partial_convolution_fourierLaplace
 #print axioms dyadic_partial_convolution_fourierLaplace_tendsto
 
