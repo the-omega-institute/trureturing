@@ -100,6 +100,70 @@ private theorem conjugatePairValues_conj {z w : Complex} (hz : conj z ≠ z) :
       _ = z := by simp
   simp [conjugatePairValues, hwz, hwcz, hcwz, hcwcz]
 
+private theorem exists_real_conjugate_pair_interpolant {d : Nat}
+    (roots : Fin d → Complex) (z : Complex)
+    (hzmem : z ∈ Finset.univ.image roots) (hz : conj z ≠ z)
+    (hconj : ∀ w, w ∈ Finset.univ.image roots ↔
+      conj w ∈ Finset.univ.image roots) :
+    ∃ coefficients : Fin d → Real, ∀ w ∈ Finset.univ.image roots,
+      vectorPolynomialValue coefficients w = conjugatePairValues z w := by
+  classical
+  let s : Finset Complex := Finset.univ.image roots
+  let f : Complex[X] := Lagrange.interpolate s id (conjugatePairValues z)
+  have hinj : Set.InjOn id (↑s : Set Complex) := Set.injOn_id _
+  have hf_eval : ∀ w ∈ s, f.eval w = conjugatePairValues z w := by
+    intro w hw
+    exact Lagrange.eval_interpolate_at_node _ hinj hw
+  have hf_degree : f.degree < s.card := Lagrange.degree_interpolate_lt _ hinj
+  have hmap_degree :
+      (f.map (Complex.conjAe : Complex →+* Complex)).degree < s.card := by
+    rw [Polynomial.degree_map_eq_of_injective
+      (f := (Complex.conjAe : Complex →+* Complex)) Complex.conjAe.injective f]
+    exact hf_degree
+  have hmap_eval : ∀ w ∈ s,
+      (f.map (Complex.conjAe : Complex →+* Complex)).eval w =
+        conjugatePairValues z w := by
+    intro w hw
+    rw [eval_map_conj, hf_eval (conj w), conjugatePairValues_conj hz]
+    exact (hconj w).mp hw
+  have hf_real : f.map (Complex.conjAe : Complex →+* Complex) = f := by
+    change f.map (Complex.conjAe : Complex →+* Complex) =
+      Lagrange.interpolate s id (conjugatePairValues z)
+    exact Lagrange.eq_interpolate_of_eval_eq _ hinj hmap_degree hmap_eval
+  have hcoeff_real : ∀ n, ((f.coeff n).re : Complex) = f.coeff n := by
+    intro n
+    have h := congrArg (fun p : Complex[X] ↦ p.coeff n) hf_real
+    simp only [Polynomial.coeff_map] at h
+    change conj (f.coeff n) = f.coeff n at h
+    exact Complex.conj_eq_iff_re.mp h
+  have hcard : s.card ≤ d := by
+    calc
+      s.card ≤ (Finset.univ : Finset (Fin d)).card := Finset.card_image_le
+      _ = d := Fintype.card_fin d
+  have hf_degree_d : f.degree < d := hf_degree.trans_le (by exact_mod_cast hcard)
+  have hfne : f ≠ 0 := by
+    intro hfzero
+    have h := hf_eval z (by exact hzmem)
+    simp [hfzero, conjugatePairValues] at h
+    have him := congrArg Complex.im h
+    norm_num at him
+  have hnat_degree : f.natDegree < d :=
+    (Polynomial.natDegree_lt_iff_degree_lt hfne).mpr hf_degree_d
+  refine ⟨fun i ↦ (f.coeff i.1).re, ?_⟩
+  intro w hw
+  calc
+    vectorPolynomialValue (fun i : Fin d ↦ (f.coeff i.1).re) w =
+        ∑ i ∈ Finset.range d, ((f.coeff i).re : Complex) * w ^ i := by
+          rw [vectorPolynomialValue]
+          exact Fin.sum_univ_eq_sum_range
+            (fun i : Nat ↦ ((f.coeff i).re : Complex) * w ^ i) d
+    _ = ∑ i ∈ Finset.range d, f.coeff i * w ^ i := by
+      apply Finset.sum_congr rfl
+      intro i _
+      rw [hcoeff_real i]
+    _ = f.eval w := (Polynomial.eval_eq_sum_range' hnat_degree w).symm
+    _ = conjugatePairValues z w := hf_eval w (by exact hw)
+
 private theorem newtonHankel_isHermitian {d : Nat} (roots : Fin d -> Complex) :
     (newtonHankel roots).IsHermitian := by
   rw [Matrix.isHermitian_iff_isSymm]
