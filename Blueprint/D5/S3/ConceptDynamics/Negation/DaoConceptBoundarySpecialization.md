@@ -10,7 +10,7 @@ The horizon is an explicitly chosen set, a concept is a subset, and its opposite
 
 $$\forall X \in Type, H \in \operatorname{Set}\left(X\right), C \in \operatorname{Set}\left(X\right),\; \left(C \subseteq H \land C \ne H\right) \Leftrightarrow \left(C \subseteq H \land \operatorname{Nonempty}\left(\operatorname{sdiff}\left(H, C\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.concept_boundary_iff_nonempty_remainder` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.concept_boundary_iff_nonempty_remainder` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ A concept is a proper subset of its horizon exactly when it lies inside that hor
 
 $$\forall X \in Type, H \in \operatorname{Set}\left(X\right), C \in \operatorname{Set}\left(X\right),\; \left(\operatorname{sdiff}\left(H, C\right) \subseteq H \land \operatorname{sdiff}\left(H, C\right) \ne H\right) \Leftrightarrow \operatorname{Nonempty}\left(\operatorname{inter}\left(H, C\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.relative_opposite_is_proper_iff_concept_present` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.relative_opposite_is_proper_iff_concept_present` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,7 +34,7 @@ Removing the concept from the horizon leaves a proper part precisely when the co
 
 $$\forall X \in Type, H \in \operatorname{Set}\left(X\right), C \in \operatorname{Set}\left(X\right),\; C \subseteq H \Rightarrow \operatorname{union}\left(\operatorname{sdiff}\left(H, C\right), C\right) = H$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.relative_opposite_and_concept_cover_horizon` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.relative_opposite_and_concept_cover_horizon` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ Whenever the concept lies inside the horizon, the union of the concept and its r
 
 $$\forall X \in Type, H \in \operatorname{Set}\left(X\right), C \in \operatorname{Set}\left(X\right), D \in \operatorname{Set}\left(X\right),\; \left(C \subseteq H \land D \subseteq H\right) \Rightarrow \left(\operatorname{sdiff}\left(H, C\right) = \operatorname{sdiff}\left(H, D\right) \Leftrightarrow C = D\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.equal_relative_opposites_iff_equal_concepts` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.equal_relative_opposites_iff_equal_concepts` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,7 +58,7 @@ For two concepts contained in the same horizon, their relative opposites are equ
 
 $$\forall X \in Type, E \in Type, H \in \operatorname{Set}\left(X\right), m \in E \to \operatorname{Set}\left(X\right),\; \left(\left(\forall e \in E,\; m\left(e\right) \subseteq H\right) \land \left(\forall e \in E,\; \operatorname{Nonempty}\left(\operatorname{sdiff}\left(H, m\left(e\right)\right)\right)\right)\right) \Rightarrow \left(\forall e \in E,\; m\left(e\right) \subseteq H \land m\left(e\right) \ne H\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.admissible_expressions_are_proper_parts` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.admissible_expressions_are_proper_parts` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -70,7 +70,7 @@ If each expression denotes something inside the horizon and leaves a nonempty re
 
 $$\forall X \in Type, E \in Type, H \in \operatorname{Set}\left(X\right), m \in E \to \operatorname{Set}\left(X\right), d \in E,\; \left(\left(\forall e \in E,\; m\left(e\right) \subseteq H\right) \land \left(\forall e \in E,\; \operatorname{Nonempty}\left(\operatorname{sdiff}\left(H, m\left(e\right)\right)\right)\right)\right) \Rightarrow \left(m\left(d\right) \subseteq H \land m\left(d\right) \ne H\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.dao_name_is_a_proper_part_under_the_same_premises` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.dao_name_is_a_proper_part_under_the_same_premises` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -82,7 +82,7 @@ A distinguished expression token called Dao is no exception: under the same univ
 
 $$\forall X \in Type, H \in \operatorname{Set}\left(X\right),\; \operatorname{sdiff}\left(H, \left\{\right\}\right) = H$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.empty_concept_opposite_is_whole` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.empty_concept_opposite_is_whole` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -94,7 +94,7 @@ The empty-concept boundary case shows why concept presence is necessary: its rel
 
 $$\forall X \in Type, H \in \operatorname{Set}\left(X\right),\; \operatorname{sdiff}\left(H, H\right) = \left\{\right\}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.whole_horizon_leaves_no_remainder` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.whole_horizon_leaves_no_remainder` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -104,12 +104,12 @@ At the other boundary, taking the entire horizon as the concept leaves the empty
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.admissible_expressions_are_proper_parts`
-- Truth anchor: `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.concept_boundary_iff_nonempty_remainder`
-- Truth anchor: `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.dao_name_is_a_proper_part_under_the_same_premises`
-- Truth anchor: `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.empty_concept_opposite_is_whole`
-- Truth anchor: `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.equal_relative_opposites_iff_equal_concepts`
-- Truth anchor: `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.relative_opposite_and_concept_cover_horizon`
-- Truth anchor: `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.relative_opposite_is_proper_iff_concept_present`
-- Truth anchor: `D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.whole_horizon_leaves_no_remainder`
-- Dependency: [D5/S3/ConceptDynamics/Negation/RelativeComplement](../Negation/RelativeComplement.md)
+- Truth anchor: `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.admissible_expressions_are_proper_parts`
+- Truth anchor: `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.concept_boundary_iff_nonempty_remainder`
+- Truth anchor: `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.dao_name_is_a_proper_part_under_the_same_premises`
+- Truth anchor: `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.empty_concept_opposite_is_whole`
+- Truth anchor: `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.equal_relative_opposites_iff_equal_concepts`
+- Truth anchor: `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.relative_opposite_and_concept_cover_horizon`
+- Truth anchor: `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.relative_opposite_is_proper_iff_concept_present`
+- Truth anchor: `D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.whole_horizon_leaves_no_remainder`
+- Dependency: [D5/S3/ConceptDynamics/Negation/RelativeComplement](RelativeComplement.md)

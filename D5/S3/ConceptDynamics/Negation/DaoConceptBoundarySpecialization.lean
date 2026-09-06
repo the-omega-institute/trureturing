@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization
+/- GID: D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization
    generality: I
-   mirror-B: D5/B/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization
+   mirror-B: D5/B/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -11,7 +11,7 @@ import D5.S3.ConceptDynamics.Negation.RelativeComplement
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.Answering.DaoConceptBoundarySpecialization
+namespace D5.S3.ConceptDynamics.Negation.DaoConceptBoundarySpecialization
 
 /-- A concept is a proper part of its horizon exactly when it is contained in
 the horizon and leaves a nonempty relative remainder. -/
@@ -102,4 +102,4 @@ theorem whole_horizon_leaves_no_remainder
 #print axioms empty_concept_opposite_is_whole
 #print axioms whole_horizon_leaves_no_remainder
 
-end D5.S3.ConceptDynamics.Answering.DaoConceptBoundarySpecialization
+end D5.S3.ConceptDynamics.Negation.DaoConceptBoundarySpecialization

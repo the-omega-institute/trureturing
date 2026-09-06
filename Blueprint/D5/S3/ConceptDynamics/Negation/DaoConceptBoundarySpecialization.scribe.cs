@@ -1,13 +1,13 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Answering;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Negation;
 
 internal sealed class DaoConceptBoundarySpecializationDocument
     : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/ConceptDynamics/Answering/DaoConceptBoundarySpecialization.";
+        "D5/S3/ConceptDynamics/Negation/DaoConceptBoundarySpecialization.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A set-theoretic specialization makes precise how a concept, its relative "
