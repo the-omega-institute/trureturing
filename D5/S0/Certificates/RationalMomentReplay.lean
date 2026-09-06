@@ -76,7 +76,7 @@ theorem activeAtoms_card_pos_of_total_one {n : Nat} (weight : Fin n → ℚ)
     by_contra nonzero
     have member : i ∈ activeAtoms weight :=
       Finset.mem_filter.mpr ⟨Finset.mem_univ i, nonzero⟩
-    simpa only [empty, Finset.not_mem_empty] using member
+    simpa only [empty, Finset.notMem_empty] using member
   have impossible : (0 : ℚ) = 1 := by simpa only [all_zero, Finset.sum_const_zero] using total
   norm_num at impossible
 
@@ -152,7 +152,7 @@ theorem mean_preserving_replay_example :
       (fun _ => 1 / 3)
       [{ direction := fun i => if i = 1 then -2 else 1, pivot := 0 }]).map
         (fun weight => weight 1) = some 1 := by
-  decide
+  decide +kernel
 
 /-- The same null direction would revive a zero atom in the law (1/2,0,1/2),
 so it is rejected even though it preserves the mean and yields nonnegative weights. -/
@@ -160,7 +160,7 @@ theorem rejects_zero_atom_reactivation :
     checkStep (n := 3) (d := 1) (fun i _ => (i.val : ℚ))
       (fun i => if i = 1 then 0 else 1 / 2)
       { direction := fun i => if i = 1 then -2 else 1, pivot := 0 } = false := by
-  decide
+  decide +kernel
 
 #print axioms replaySteps_sound
 #print axioms checkCompression_sound
