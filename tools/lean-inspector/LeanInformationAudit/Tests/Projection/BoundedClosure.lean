@@ -101,9 +101,7 @@ run_cmd do
           (← mkAppM ``realization #[mkNatLit (i / 2)])
         let bundle ← mkAppM ``TheoremUnit.primitives
           #[← mkAppM ``nativeUnit #[mkNatLit (i / 2)]]
-        let address ← unsafe evalExpr String (mkConst ``String)
-          (← mkAppM ``primitiveKernelAddress
-            #[← mkAppM ``Arena.stateFintype #[arenaValue], bundle]) (safety := .unsafe)
+        let address ← primitiveKernelAddress (← mkAppM ``Arena.stateFintype #[arenaValue]) bundle
         theorems := theorems.push {
           theoremName := name, unitName := qualified[i]!, realizationName, certificateName,
           registrationModuleName := moduleName, index := i, primitiveCount := 1,

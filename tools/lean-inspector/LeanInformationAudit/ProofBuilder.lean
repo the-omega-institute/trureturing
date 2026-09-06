@@ -128,25 +128,38 @@ Serialize classes in first-representative order as
 `class_count;class_1_ordinals;...`, then SHA-256 those ASCII bytes. The address is
 an output-only projection and is never read as seal decision input.
 -/
-unsafe def primitiveKernelAddress {X : Type u} (stateFintype : Fintype X)
-    (bundle : PrimitiveBundle X) : String := by
-  letI := stateFintype
-  let states := (unsafe stateFintype.elems.val.unquot).toArray
+def primitiveKernelAddress (stateFintype bundle : Expr) : MetaM String := do
+  let elems ← mkAppOptM ``Fintype.elems #[none, some stateFintype]
+  let multiset ← whnf (← mkAppM ``Finset.val #[elems])
+  unless multiset.isAppOfArity ``Quot.mk 3 do
+    throwError "cannot reflect primitive kernel state enumeration"
+  let mut remaining := multiset.getArg! 2
+  let mut states := #[]
+  repeat
+    remaining ← whnf remaining
+    if remaining.isAppOfArity ``List.nil 1 then break
+    unless remaining.isAppOfArity ``List.cons 3 do
+      throwError "cannot reflect primitive kernel state list"
+    states := states.push (remaining.getArg! 1)
+    remaining := remaining.getArg! 2
   let ordinals := List.range states.size
-  let classes := ordinals.foldl (init := #[]) fun classes ordinal =>
-    match classes.findIdx? fun candidate =>
-        match states[ordinal]?, candidate[0]? with
-        | some state, some representative =>
-            match states[representative]? with
-            | some representativeState => bundle.agreesB state representativeState
-            | none => false
-        | _, _ => false with
-    | some index => classes.modify index fun candidate => candidate.push ordinal
-    | none => classes.push #[ordinal]
+  let mut classes : Array (Array Nat) := #[]
+  for ordinal in ordinals do
+    let mut found := none
+    for index in [:classes.size] do
+      let representative := (classes[index]!)[0]!
+      let same ← (reduceEval (← mkAppM ``PrimitiveBundle.agreesB
+        #[bundle, states[ordinal]!, states[representative]!]) : MetaM Bool)
+      if same then
+        found := some index
+        break
+    classes := match found with
+      | some index => classes.modify index fun candidate => candidate.push ordinal
+      | none => classes.push #[ordinal]
   let encodedClasses := classes.toList.map fun candidate =>
     String.intercalate "," (candidate.toList.map toString)
   let serialization := String.intercalate ";" (toString classes.size :: encodedClasses)
-  exact "sha256:" ++ Sha256.hex serialization.toUTF8
+  pure ("sha256:" ++ Sha256.hex serialization.toUTF8)
 
 private def uniqueCaptureSignatureCount {arena : Arena.{u}}
     (catalog : Catalog.{u, v, w} arena) (index : catalog.Index)
@@ -253,9 +266,9 @@ private def loweringMotive (catalog : Expr) (offset remaining : Nat) : MetaM Exp
       #[catalog, globalIndex]
     mkLambdaFVars #[index] target
 
-private partial def finCasesValue (catalog : Expr) (names : Array Name)
+private def finCasesValue (catalog : Expr) (names : Array Name)
     (offset remaining : Nat) (index : Expr) : MetaM Expr := do
-  if remaining == 0 then
+  if remaining = 0 then
     let globalIndex ← finSuccN offset index
     let target ← mkAppM
       `D5.S3.ConceptDynamics.InformationEscape.Catalog.LowersEscape
@@ -270,6 +283,8 @@ private partial def finCasesValue (catalog : Expr) (names : Array Name)
       mkLambdaFVars #[tailIndex] body
     pure <| mkAppN (mkConst ``Fin.cases [0])
       #[mkNatLit (remaining - 1), motive, head, tail, index]
+termination_by remaining
+decreasing_by omega
 
 private def irredundantFromLoweringProofs (catalog : Expr)
     (names : Array Name) : MetaM Expr := do
@@ -396,9 +411,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
     let primitiveCount ← natValue primitiveCountExpr
     let stateFintype ← mkAppM
       `D5.S3.ConceptDynamics.InformationEscape.Arena.stateFintype #[arena]
-    let kernelAddressExpr ← mkAppM ``primitiveKernelAddress #[stateFintype, primitives]
-    let primitiveKernelAddress ← unsafe evalExpr String (mkConst ``String)
-      kernelAddressExpr (safety := .unsafe)
+    let primitiveKernelAddress ← primitiveKernelAddress stateFintype primitives
     let mut primitiveAxes := #[]
     for (axisName, label) in
         #[( ``PrimitiveAxis.cut, "cut"), (``PrimitiveAxis.flow, "flow"),

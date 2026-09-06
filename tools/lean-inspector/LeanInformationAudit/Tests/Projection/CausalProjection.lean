@@ -120,9 +120,7 @@ run_cmd do
       for unitName in names, i in [:3] do
         let unit ← mkAppM ``Catalog.theoremAt #[normalized, ← ProjectionProof.fin i 3]
         let bundle ← mkAppM ``TheoremUnit.primitives #[unit]
-        let addressExpr ← mkAppM ``primitiveKernelAddress
-          #[← mkAppM ``Arena.stateFintype #[arena], bundle]
-        let address ← unsafe evalExpr String (mkConst ``String) addressExpr (safety := .unsafe)
+        let address ← primitiveKernelAddress (← mkAppM ``Arena.stateFintype #[arena]) bundle
         let some row := projection.leaveOneOut.find? (·.theoremName == qualified[i]!)
           | throwError "causal missing occurrence"
         let mut roles := #[]

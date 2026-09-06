@@ -38,10 +38,10 @@ structure CheckedRefinement where
   snapshot : ReflectedRefinementSnapshot
   certificate : Name
 
-private partial def finiteProof (motive : Expr) (proofs : Array Expr)
+private def finiteProof (motive : Expr) (proofs : Array Expr)
     (offset remaining : Nat) : MetaM Expr := do
   let domain := mkApp (mkConst ``Fin) (mkNatLit remaining)
-  if remaining == 0 then
+  if remaining = 0 then
     return ← withLocalDeclD `index domain fun index => do
       mkLambdaFVars #[index] (← mkAppOptM ``Fin.elim0 #[some (mkApp motive index), some index])
   let tailDomain := mkApp (mkConst ``Fin) (mkNatLit (remaining - 1))
@@ -51,6 +51,8 @@ private partial def finiteProof (motive : Expr) (proofs : Array Expr)
   withLocalDeclD `index domain fun index => do
     mkLambdaFVars #[index] (← mkAppOptM ``Fin.cases
       #[some (mkNatLit (remaining - 1)), some motive, some proofs[offset]!, some tail, some index])
+termination_by remaining
+decreasing_by omega
 
 private def checkRefinementCells (nodes table : Expr) (size : Nat) : MetaM Expr := do
   let domain := mkApp (mkConst ``Fin) (mkNatLit size)
@@ -85,21 +87,25 @@ def reflectRefinement (nodes : Expr) (certPrefix : Name) : ProjectionM CheckedRe
   let certificate ← proof (certPrefix.str "sound") sound
   pure { nodes, table, checked, snapshot, certificate }
 
-private partial def readoutEquality (type : Expr) : MetaM Expr := do
+private def readoutEqualityAux (fuel : Nat) (type : Expr) : MetaM Expr := do
+  let fuel + 1 := fuel | throwError "readout equality exceeded maxRecDepth"
   let type ← whnf type
   if type.isAppOfArity ``Sum 2 then
     return ← mkAppOptM ``projectionSumDecision #[some (type.getArg! 0),
-      some (type.getArg! 1), some (← readoutEquality (type.getArg! 0)),
-      some (← readoutEquality (type.getArg! 1))]
+      some (type.getArg! 1), some (← readoutEqualityAux fuel (type.getArg! 0)),
+      some (← readoutEqualityAux fuel (type.getArg! 1))]
   if type.isForall then
     return ← forallBoundedTelescope type (some 1) fun arguments target => do
-      let decision ← readoutEquality target
+      let decision ← readoutEqualityAux fuel target
       let instances ← mkLambdaFVars arguments decision
       let domain := (← inferType arguments[0]!)
       let family ← mkLambdaFVars arguments target
       mkAppOptM ``Fintype.decidablePiFintype
         #[some domain, some family, some instances, none]
   synthInstance (← mkAppM ``DecidableEq #[type])
+
+private def readoutEquality (type : Expr) : MetaM Expr := do
+  readoutEqualityAux (maxRecDepth.get (← getOptions)) type
 
 private def reflectUnit (unit : Expr) : MetaM (Expr × Expr) := do
   let bundle ← mkAppM ``TheoremUnit.primitives #[unit]

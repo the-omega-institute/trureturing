@@ -7,7 +7,7 @@ namespace LeanInformationAudit
 open Lean Lean.Meta
 open D5.S3.ConceptDynamics.InformationEscape
 
-abbrev ProjectionM := StateRefT (Array Declaration) Lean.Elab.Term.TermElabM
+abbrev ProjectionM := StateT (Array Declaration) Lean.Elab.Term.TermElabM
 
 namespace ProjectionProof
 

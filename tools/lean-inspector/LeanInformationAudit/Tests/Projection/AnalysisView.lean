@@ -70,9 +70,7 @@ run_cmd do
         let _ ← ProjectionProof.value realizationName
           (← mkConstWithFreshMVarLevels ``fixtureRealization)
         let bundle ← mkAppM ``TheoremUnit.primitives #[← mkConstWithFreshMVarLevels ``unit]
-        let address ← unsafe evalExpr String (mkConst ``String)
-          (← mkAppM ``primitiveKernelAddress #[← mkAppM ``Arena.stateFintype #[arena], bundle])
-          (safety := .unsafe)
+        let address ← primitiveKernelAddress (← mkAppM ``Arena.stateFintype #[arena]) bundle
         theorems := theorems.push {
           theoremName := name, unitName := qualified[i]!,
           realizationName, certificateName, registrationModuleName := root, index := i,

@@ -111,10 +111,6 @@ private def logSummary (record : SealArenaRecord) : CommandElabM Unit := do
 theorem={theoremRecord.theoremName} unique={theoremRecord.uniqueCaptureCount} \
 method={theoremRecord.proofMethod}"
 
-syntax (name := sealInformationTheoryCmd)
-  "#seal_information_theory" (" output " str)?
-    (" analysis_output " str)? (" ascii_output " str)? : command
-
 private def declarationNames (declarations : Array Declaration) : List Name :=
   declarations.toList.foldl (init := []) fun names declaration =>
     names ++ declaration.getNames
@@ -272,7 +268,7 @@ proof declarations; preflight and kernel-check every declaration in a local pers
 environment; then publish that environment with one `setEnv`. All artifact bytes are
 prepared before publication; their writes are the terminal IO effect of the command. -/
 
-private def prepareSealPublication (stx : Syntax) : CommandElabM (Array (String × String)) := do
+def prepareSealPublication (requested : List ArtifactKind) : CommandElabM SealPublicationPlan := do
   let baseEnv ← getEnv
   try
     validateRegistrySnapshot baseEnv
@@ -285,10 +281,7 @@ private def prepareSealPublication (stx : Syntax) : CommandElabM (Array (String 
     let aliasEnv ← getEnv
     let catalogs ← prepareCatalogsFromEntries sourceEntries catalogEntries
     let proofs ← prepareProofs catalogs
-    let `( #seal_information_theory $[output $outputPath:str]?
-        $[analysis_output $analysisPath:str]? $[ascii_output $asciiPath:str]? ) := stx
-      | Lean.Elab.throwUnsupportedSyntax
-    let analysis ← if analysisPath.isSome || asciiPath.isSome then
+    let analysis ← if requested.contains .analysis || requested.contains .ascii then
       some <$> prepareAnalysisProofs catalogs proofs
     else pure none
     let declarations := catalogs.map (·.declaration) ++ proofs.declarations ++
@@ -296,22 +289,22 @@ private def prepareSealPublication (stx : Syntax) : CommandElabM (Array (String 
     preflightNames aliasEnv proofs.records declarations
     let stagedEnv ← stageDeclarations (← getEnv) declarations
     let stagedEnv := retainSealRecords stagedEnv proofs.records
-    let mut artifacts := #[]
-    if let some path := outputPath then
-      artifacts := artifacts.push (path.raw.isStrLit?.get!, serializeV2Artifact proofs.records)
+    let mut artifacts := []
+    if requested.contains .v2 then
+      artifacts := artifacts ++ [(.v2, serializeV2Artifact proofs.records)]
     if let some analysis := analysis then
-      if let some path := analysisPath then
+      if requested.contains .analysis then
         let contents ← withEnv stagedEnv <| liftTermElabM do
           serializeV3Artifact baseEnv.header.mainModule analysis.records analysis.systemCertificate
-        artifacts := artifacts.push (path.raw.isStrLit?.get!, contents)
-      if let some path := asciiPath then
+        artifacts := artifacts ++ [(.analysis, contents)]
+      if requested.contains .ascii then
         let contents ← match serializeAsciiArtifact analysis.records with
           | .ok contents => pure contents
           | .error message => throwError message
-        artifacts := artifacts.push (path.raw.isStrLit?.get!, contents)
+        artifacts := artifacts ++ [(.ascii, contents)]
     proofs.records.forM logSummary
     setEnv stagedEnv
-    return artifacts
+    return { staged := stagedEnv, artifacts }
   catch error =>
     setEnv baseEnv
     throw error
