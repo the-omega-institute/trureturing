@@ -1,0 +1,33 @@
+fingerprints:
+  raw_sha256: sha256:cea8eba5ad5ecc076ed36d846fc5b0bc88b60c7dc329fe8ab87bd21fcc5b7f3d
+  normalized_sha256: sha256:cea8eba5ad5ecc076ed36d846fc5b0bc88b60c7dc329fe8ab87bd21fcc5b7f3d
+cas_ref: sha256:cea8eba5ad5ecc076ed36d846fc5b0bc88b60c7dc329fe8ab87bd21fcc5b7f3d
+coverage_gids:
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.conjecture3_refuted
+    target_statement_id: sha256:cbbc30078a3feb54a6cd9bbcb8b19d48c7358af60c3931280e74a50d398e93a1
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.eulerCubic
+    target_statement_id: sha256:d49095089493d20506e9d63f8b5745a54c81b24440a8f36e75bb7cfb1062c34f
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_egf_coefficient
+    target_statement_id: sha256:8f100badb0c028c675a9f82f4dee824c8b9789064ac0000b31148839c62adc2f
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_coefficient_bridge
+    target_statement_id: sha256:a41f4da782557939b16b427e9ba1f73bcfc215398deecb682da4014cbb7f8e06
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_factorization
+    target_statement_id: sha256:0ec463b108b9897c183cb8a272658865417c0d269543b2542a1cf2aecc4c354a
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.conjecture3_refuted
+      definition_sha256: sha256:83c7f521cdd74352ed83b2bf939c84c763366cc1a3dd4c38a2659fc68b5c325f
+      emission_sha256: sha256:beb6822b97a95596bd8c2f48546a340710acd9a106f8db215e05202b81d102aa
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.eulerCubic
+      definition_sha256: sha256:83c7f521cdd74352ed83b2bf939c84c763366cc1a3dd4c38a2659fc68b5c325f
+      emission_sha256: sha256:beb6822b97a95596bd8c2f48546a340710acd9a106f8db215e05202b81d102aa
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_egf_coefficient
+      definition_sha256: sha256:83c7f521cdd74352ed83b2bf939c84c763366cc1a3dd4c38a2659fc68b5c325f
+      emission_sha256: sha256:beb6822b97a95596bd8c2f48546a340710acd9a106f8db215e05202b81d102aa
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_coefficient_bridge
+      definition_sha256: sha256:83c7f521cdd74352ed83b2bf939c84c763366cc1a3dd4c38a2659fc68b5c325f
+      emission_sha256: sha256:beb6822b97a95596bd8c2f48546a340710acd9a106f8db215e05202b81d102aa
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_factorization
+      definition_sha256: sha256:83c7f521cdd74352ed83b2bf939c84c763366cc1a3dd4c38a2659fc68b5c325f
+      emission_sha256: sha256:beb6822b97a95596bd8c2f48546a340710acd9a106f8db215e05202b81d102aa
+  unresolved_subitems: []
