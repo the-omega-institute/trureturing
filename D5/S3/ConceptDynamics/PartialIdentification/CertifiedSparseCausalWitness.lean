@@ -48,7 +48,7 @@ theorem exists_supported_moment_replacement {n d : Nat}
     calc
       (∑ i : S, law.mass i.1 * f i.1) = ∑ i ∈ S, law.mass i * f i := by
         simp only [Finset.univ_eq_attach]
-        rw [Finset.sum_attach]
+        exact Finset.sum_attach S (fun i => law.mass i * f i)
       _ = ∑ i, law.mass i * f i := by
         change (∑ i ∈ Finset.univ.filter (fun i => law.mass i ≠ 0), law.mass i * f i) = _
         rw [Finset.sum_filter]
@@ -137,7 +137,7 @@ theorem exists_accepted_moment_certificate {n d : Nat}
       · intro i zero
         change law.mass i - sparse.mass i = 0
         rw [zero, inactive i zero, sub_self]
-      · change (∑ i, law.mass i - sparse.mass i) = 0
+      · change (∑ i, (law.mass i - sparse.mass i)) = 0
         rw [Finset.sum_sub_distrib, law.total, sparse.total, sub_self]
       · intro j
         change linearObjective (fun i => feature i j) (fun i => law.mass i - sparse.mass i) = 0

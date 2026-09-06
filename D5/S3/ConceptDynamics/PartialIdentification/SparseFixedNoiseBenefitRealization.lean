@@ -64,7 +64,7 @@ theorem fixedNoise_pair_support_card_le
       (3 * Fintype.card Covariate + 1) ^ 2 := by
   classical
   have support_eq : finiteLawSupport (productResponseLaw model.leftTableLaw model.rightTableLaw) =
-      (finiteLawSupport model.leftTableLaw).product (finiteLawSupport model.rightTableLaw) := by
+      finiteLawSupport model.leftTableLaw ×ˢ finiteLawSupport model.rightTableLaw := by
     ext response
     rcases response with ⟨left, right⟩
     simp [finiteLawSupport, productResponseLaw, productResponseMass, mul_ne_zero_iff]
