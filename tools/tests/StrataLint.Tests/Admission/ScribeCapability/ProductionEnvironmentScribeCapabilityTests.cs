@@ -10,14 +10,15 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CheckBlocksNewAxiomBadgeScribeMismatchAbsentFromBaselineBytes()
+    public void CheckRetainsStatusValidationWhenAxiomBadgeScribeByteReceiptDrifts()
     {
         var (outcome, verifier) = CheckReportDerivedScribeStock(reportInputsChanged: true);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var mismatch = Assert.Single(rejected.Diagnostics, static diagnostic =>
+        Assert.Contains(rejected.Diagnostics, static diagnostic =>
+            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
+        Assert.DoesNotContain(rejected.Diagnostics, static diagnostic =>
             diagnostic.Message.Contains("scribe-emission-mismatch", StringComparison.Ordinal));
-        Assert.Equal(AdmissionEffect.Block, mismatch.AdmissionEffect);
         Assert.Equal(["std3"], verifier.AxiomBadges);
     }
 
@@ -226,10 +227,10 @@ public sealed partial class ProductionEnvironmentTests
             changedLean,
             verifiedScribeEmissions,
             baselineDocument).Entries);
-        Assert.Equal(DigestionMigrationState.Partial, changedStatus.DerivedStatus.Migration);
+        Assert.Equal(DigestionMigrationState.Absorbed, changedStatus.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, changedStatus.DerivedStatus.Truth);
-        Assert.False(changedStatus.Deletable);
-        Assert.Contains(changedStatus.Gaps, gap => gap.Code == "scribe-emission-mismatch");
+        Assert.True(changedStatus.Deletable);
+        Assert.Empty(changedStatus.Gaps);
     }
 
     private static (AdmissionOutcome Outcome, ReportDerivedScribeEmissionVerifier Verifier)

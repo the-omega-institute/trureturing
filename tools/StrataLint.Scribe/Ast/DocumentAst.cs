@@ -120,7 +120,8 @@ public abstract record DocumentBlock
             BlockSequence content,
             Formula? statementFormula = null,
             DescribeKindSource? kindSource = null,
-            StatementSource? statementSource = null)
+            StatementSource? statementSource = null,
+            OpenProblemResolutionClaim? openProblemResolutionClaim = null)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
             Title = title ?? throw new ArgumentNullException(nameof(title));
@@ -129,6 +130,7 @@ public abstract record DocumentBlock
             Content = content ?? throw new ArgumentNullException(nameof(content));
             StatementFormula = statementFormula;
             StatementSource = statementSource;
+            OpenProblemResolutionClaim = openProblemResolutionClaim;
             FormulaProvenance = statementSource is StatementSource.LeanDerived
                 || statementSource is null
                     && statementFormula is not null
@@ -176,7 +178,8 @@ public abstract record DocumentBlock
                 AssessedProvenance,
                 resolvedContent,
                 StatementFormula,
-                statementSource: StatementSource);
+                statementSource: StatementSource,
+                openProblemResolutionClaim: OpenProblemResolutionClaim);
         }
 
         public Heading Title { get; }
@@ -203,6 +206,8 @@ public abstract record DocumentBlock
         public Formula? StatementFormula { get; }
 
         public StatementSource? StatementSource { get; }
+
+        public OpenProblemResolutionClaim? OpenProblemResolutionClaim { get; }
 
         public StatementFormulaProvenance FormulaProvenance { get; }
 
@@ -268,7 +273,8 @@ public abstract record DocumentBlock
             StatementSource statementSource,
             AssessedProvenance provenance,
             BlockSequence content,
-            DescribeRole? role)
+            DescribeRole? role,
+            OpenProblemResolutionClaim? openProblemResolutionClaim)
         {
             var declaration = LeanDeclarationRef.Create(handle.Value);
             var materialized = StatementSource.Materialize(statementSource, declaration);
@@ -289,7 +295,8 @@ public abstract record DocumentBlock
                 content,
                 materialized.Formula,
                 new DescribeKindSource.ReportDerived(handle, role),
-                materialized.Source);
+                materialized.Source,
+                openProblemResolutionClaim);
         }
 
     }
