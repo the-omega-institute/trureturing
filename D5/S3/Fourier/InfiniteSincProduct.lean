@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Construct dyadic uniform-interval data whose sinc product is nonzero off the real axis. -/
+   digest: Dyadic uniform Fourier factors yield a sinc product nonzero off the real axis. -/
 
 /- Library-search audit trail (2026-09-06):
    * D5 searches for `sinc`, infinite products, `tprod`, `HasProd`,
@@ -14,7 +14,8 @@
    * Pinned Mathlib provides `tprod_one_add_ne_zero_of_summable`,
      `Summable.hasProdUniformlyOn_nat_one_add`,
      `Complex.exp_sub_sum_range_isBigO_pow`, and
-     `Complex.sin_ne_zero_iff`. Mathlib defines only `Real.sinc`, so the
+     `Complex.sin_ne_zero_iff`. The interval-transform bridge uses
+     `integral_exp_mul_complex`. Mathlib defines only `Real.sinc`, so the
      removable complex extension is defined below.
    * Credential-free GitHub repository search for `Lean4 sinc infinite
      product`, `Lean4 "infinite product"`, and `Lean theorem prover sinc`
@@ -146,6 +147,40 @@ theorem integral_uniformIntervalDensity {a : ℝ} (ha : 0 < a) :
     ∫ x : ℝ, uniformIntervalDensity a x = 1 := by
   simp [uniformIntervalDensity, Real.volume_Icc, ha.le, ENNReal.toReal_ofReal] <;>
     norm_num <;> field_simp <;> norm_num
+
+/-- The complex Fourier-Laplace transform of a uniform interval density. -/
+noncomputable def uniformIntervalFourierLaplace (a : ℝ) (z : ℂ) : ℂ :=
+  ∫ x : ℝ, (uniformIntervalDensity a x : ℂ) *
+    Complex.exp (Complex.I * z * x)
+
+theorem uniformIntervalFourierLaplace_eq_complexSinc {a : ℝ} (ha : 0 < a) (z : ℂ) :
+    uniformIntervalFourierLaplace a z = complexSinc ((a : ℂ) * z) := by
+  by_cases hz : z = 0
+  · subst z
+    rw [uniformIntervalFourierLaplace]
+    simp only [mul_zero, zero_mul, Complex.exp_zero, mul_one]
+    rw [integral_complex_ofReal, integral_uniformIntervalDensity ha, complexSinc_zero]
+    norm_num
+  · have haComplex : (a : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr ha.ne'
+    have hc : Complex.I * z ≠ 0 := mul_ne_zero Complex.I_ne_zero hz
+    have hfun : (fun x : ℝ ↦ (uniformIntervalDensity a x : ℂ) *
+        Complex.exp (Complex.I * z * x)) =
+        (Set.Icc (-a) a).indicator
+          (fun x : ℝ ↦ ((2 * a : ℝ)⁻¹ : ℂ) * Complex.exp (Complex.I * z * x)) := by
+      funext x
+      by_cases hx : x ∈ Set.Icc (-a) a <;>
+        simp [uniformIntervalDensity, hx]
+    rw [uniformIntervalFourierLaplace, hfun, integral_indicator measurableSet_Icc,
+      integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le (by linarith),
+      intervalIntegral.integral_const_mul, integral_exp_mul_complex hc,
+      complexSinc_of_ne_zero (mul_ne_zero haComplex hz), Complex.sin]
+    have hpos : (Complex.I * z) * (a : ℂ) = (a : ℂ) * z * Complex.I := by ring
+    have hneg : (Complex.I * z) * (-(a : ℂ)) = -((a : ℂ) * z) * Complex.I := by ring
+    push_cast
+    rw [hpos, hneg]
+    field_simp [haComplex, hz, Complex.I_ne_zero]
+    rw [Complex.I_sq]
+    ring
 
 private lemma tendsto_width_zero {a : ℕ → ℝ}
     (hsq : Summable (fun n ↦ a n ^ 2)) : Tendsto a atTop (nhds 0) := by
@@ -284,7 +319,10 @@ theorem dyadic_uniform_convolution_product_ne_zero_off_real (ell : ℝ) (hell : 
       (∀ x, uniformIntervalDensity (dyadicHalfWidth ell n) (-x) =
         uniformIntervalDensity (dyadicHalfWidth ell n) x) ∧
       Integrable (uniformIntervalDensity (dyadicHalfWidth ell n)) ∧
-      ∫ x : ℝ, uniformIntervalDensity (dyadicHalfWidth ell n) x = 1) ∧
+      (∫ x : ℝ, uniformIntervalDensity (dyadicHalfWidth ell n) x = 1) ∧
+      (∀ z : ℂ,
+        uniformIntervalFourierLaplace (dyadicHalfWidth ell n) z =
+          complexSinc ((dyadicHalfWidth ell n : ℝ) * z))) ∧
     (∑' n, dyadicHalfWidth ell n) = ell / 2 ∧
     (∀ K : Set ℂ, IsCompact K →
       HasProdUniformlyOn
@@ -303,7 +341,8 @@ theorem dyadic_uniform_convolution_product_ne_zero_off_real (ell : ℝ) (hell : 
     uniformIntervalDensity_nonneg (hwidthPos n),
     uniformIntervalDensity_even _,
     uniformIntervalDensity_integrable _,
-    integral_uniformIntervalDensity (hwidthPos n)⟩
+    integral_uniformIntervalDensity (hwidthPos n),
+    uniformIntervalFourierLaplace_eq_complexSinc (hwidthPos n)⟩
 
 #print axioms dyadic_uniform_convolution_product_ne_zero_off_real
 
