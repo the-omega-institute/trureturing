@@ -5,7 +5,7 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 [Collection("Lean report environment")]
-public sealed class LeanReportInputScriptTests
+public sealed partial class LeanReportInputScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
@@ -388,7 +388,7 @@ public sealed class LeanReportInputScriptTests
             StringComparison.OrdinalIgnoreCase);
     }
 
-    private sealed class LeanReportInputFixture : IDisposable
+    private sealed partial class LeanReportInputFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
         private readonly string repository;
@@ -705,7 +705,7 @@ public sealed class LeanReportInputScriptTests
                 SHA256.HashData(Encoding.UTF8.GetBytes(manifest.ToString())));
         }
 
-        private ProcessOutput Run(string command)
+        private ProcessOutput Run(string command, string? workingDirectory = null)
         {
             var arguments = new List<string>
             {
@@ -718,7 +718,7 @@ public sealed class LeanReportInputScriptTests
             return TestProcessRunner.Run(
                 "env",
                 arguments,
-                temporary.Path,
+                workingDirectory ?? temporary.Path,
                 BoundedProcessRunner.HangDetectionBudget,
                 1024 * 1024);
         }

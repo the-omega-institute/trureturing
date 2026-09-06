@@ -491,8 +491,16 @@ producer_compile_paths() {
   for project in "${projects[@]}"; do
     [[ -f "$REPOSITORY/$project" ]] || return 1
     json="$TMP_ROOT/$(basename "$project").compile.json"
-    dotnet msbuild "$REPOSITORY/$project" -getItem:Compile \
-      -verbosity:quiet -nologo > "$json" 2>/dev/null || return 1
+    if ! (
+      cd "$REPOSITORY" || exit 1
+      dotnet msbuild "$REPOSITORY/$project" -getItem:Compile \
+        -verbosity:quiet -nologo
+    ) > "$json" 2> "$json.stderr"; then
+      printf 'lean-report-input: producer Compile evaluation failed: %s\n' "$REPOSITORY/$project" >&2
+      # MSBuild can write errors to stdout even when -getItem requests JSON.
+      cat "$json.stderr" "$json" >&2
+      return 1
+    fi
     python3 - "$REPOSITORY" "$json" <<'PY' || return 1
 import json
 import pathlib
