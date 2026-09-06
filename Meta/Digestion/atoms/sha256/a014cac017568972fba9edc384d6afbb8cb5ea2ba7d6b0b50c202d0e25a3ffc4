@@ -1,0 +1,32 @@
+## 定义 197.1　两种具有相同边缘态的输入
+
+令
+
+$$
+E_A=e_AI+\epsilon_A|1\rangle\langle1|,
+\qquad
+E_B=e_BI+\epsilon_B|1\rangle\langle1|.
+$$
+
+取
+
+$$
+\rho_{\mathrm c}
+=
+\frac12|00\rangle\langle00|
++
+\frac12|11\rangle\langle11|,
+$$
+
+$$
+\rho_{\mathrm a}
+=
+\frac12|01\rangle\langle01|
++
+\frac12|10\rangle\langle10|.
+$$
+
+两者的每个单体边缘态都为 \(I/2\)。
+
+---
+

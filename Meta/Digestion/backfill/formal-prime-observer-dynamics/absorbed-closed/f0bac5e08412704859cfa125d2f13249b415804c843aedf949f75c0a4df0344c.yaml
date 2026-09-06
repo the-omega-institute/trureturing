@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f0bac5e08412704859cfa125d2f13249b415804c843aedf949f75c0a4df0344c
+  normalized_sha256: sha256:f0bac5e08412704859cfa125d2f13249b415804c843aedf949f75c0a4df0344c
+cas_ref: sha256:f0bac5e08412704859cfa125d2f13249b415804c843aedf949f75c0a4df0344c
+coverage_gids:
+  - gid: D5/S3/Estimation/ExperimentCost/OutputStateRandomnessSeparation.fpod_principle_202_1
+    target_statement_id: sha256:7afadb933d2c8dd290909998eae897b523b0aaee87e3d6d2e6835647f2aff242
+receipts:
+  scribe:
+    - gid: D5/S3/Estimation/ExperimentCost/OutputStateRandomnessSeparation.fpod_principle_202_1
+      definition_sha256: sha256:bbfea17e25fd2b0d5aae7ccf0d755890812b67bd9b0f488bdbf6a1f6f30af21f
+      emission_sha256: sha256:fda1325bf73aa9afa56175ec7f69e3209910cdd8fe385d483ab0f4d87abaf315
+  unresolved_subitems: []

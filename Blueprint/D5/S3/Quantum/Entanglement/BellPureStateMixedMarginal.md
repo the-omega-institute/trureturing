@@ -25,5 +25,6 @@ The proof applies the existing rank-one handshake and Bell-state certificate, th
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal`
+- Dependency: [D5/S3/Quantum/EnvironmentRecords](../EnvironmentRecords.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
 - Dependency: [D5/S3/QuantumBounds/CHSHWitness](../../QuantumBounds/CHSHWitness.md)

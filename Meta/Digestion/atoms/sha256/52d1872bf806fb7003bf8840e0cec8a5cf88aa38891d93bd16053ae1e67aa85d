@@ -1,0 +1,29 @@
+# 九、把势函数变成一条真正的 Robin 安全证书
+
+现在连接回目标。
+
+记：
+
+$$
+h(E)=\gamma+\ln\ln E,
+\qquad E>1.
+$$
+
+对任意基点 \(B\)，若 \(B\mid n\)，则：
+
+$$
+W(n)-\lambda E(n)
+\le\Phi_\lambda(B).
+$$
+
+所以：
+
+$$
+\boxed{
+\Delta(n)
+\ge
+h(E(n))-\lambda E(n)-\Phi_\lambda(B).
+}
+\tag{14}
+$$
+

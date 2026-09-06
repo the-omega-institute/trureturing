@@ -6,7 +6,10 @@ coverage_gids:
   - gid: D5/S1/Phase/Basic
     target_statement_id: sha256:931856c78824b9a6224418f283b6ac8f38e957d7aba99cd9486dacce49d02cbc
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S1/Phase/Basic
+      definition_sha256: sha256:390d1e5ecc5b1964e198fc2620f32640302362bec0c115ce6f93aeb3fec59e7f
+      emission_sha256: sha256:9a562dec38842500b43f4dd2a7bb2c9c7fb867b31680943a3dca184d2d102051
   unresolved_subitems: []
   chain_atoms:
     - 29b2c079a48fe1f051473ae42b4c6aaaa19b231cbdfd834aad4e33cc71f73301

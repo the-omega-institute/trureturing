@@ -1,0 +1,88 @@
+# 四、但隐藏状态很多，不代表遗漏的算术收益一定很大
+
+这个反方向同样重要。
+
+定义局部算术收益：
+
+$$
+f_p(a)=\ln\left(1+p^{-1}+\cdots+p^{-a}\right).
+$$
+
+假设只知道指数位于黄金单元：
+
+$$
+G_L-1\le a\le G_{L+1}-2.
+$$
+
+那么：
+
+$$
+\begin{aligned}
+0
+&\le f_p(a)-f_p(G_L-1)\\
+&\le
+-\ln(1-p^{-G_L}).
+\end{aligned}
+$$
+
+因为把指数继续扩展到无穷，最多也只能把局部几何和提高到：
+
+$$
+(1-p^{-1})^{-1}.
+$$
+
+于是：
+
+$$
+\boxed{
+\operatorname{Osc}_{\mathcal C_L}f_p
+\le
+\frac{p^{-G_L}}{1-p^{-G_L}}.
+}
+\tag{1}
+$$
+
+随着 \(L\to\infty\)：
+
+$$
+\ln|\mathcal C_L|\asymp L\ln\varphi
+\longrightarrow\infty,
+$$
+
+但：
+
+$$
+\operatorname{Osc}_{\mathcal C_L}f_p
+\longrightarrow0
+$$
+
+而且衰减尺度是：
+
+$$
+\exp(-c_p\varphi^L).
+$$
+
+所以：
+
+$$
+\boxed{
+\text{隐藏的指数状态越来越多，}
+\quad
+\text{隐藏的局部算术收益却可以越来越小}.
+}
+$$
+
+这说明，不能只按“还有多少比特未知”分配观察资源。
+
+不过，该单元内的能量差：
+
+$$
+(a_{\max}-a_{\min})\ln p
+=
+(w_L-1)\ln p
+$$
+
+并不小。因此也不能只估计 \(W\) 而忘记 \(E\)。
+
+**真正需要的是：对目标 \(\Delta=h(E)-W\)，保留一个方向正确、同时覆盖能量与收益的估计。**
+

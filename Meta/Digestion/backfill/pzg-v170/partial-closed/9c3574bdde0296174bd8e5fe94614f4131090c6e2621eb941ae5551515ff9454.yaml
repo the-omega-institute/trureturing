@@ -6,7 +6,10 @@ coverage_gids:
   - gid: D5/S3/Zeros/EulerWindows.prime_axis_heat_trace_eq_zeta
     target_statement_id: sha256:15423d71ebccff6f492379cb1f1daa5dd7b7e669168c67c43ff73416d2d2a020
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Zeros/EulerWindows.prime_axis_heat_trace_eq_zeta
+      definition_sha256: sha256:fb4a3fac0bdca0866a7f14deaf210045ce7935bba8fdf75aed36fb6a6bf120fa
+      emission_sha256: sha256:435aaae0fbd7884a8f0802eb7e68c7ae39aa4b4bd478eabb35f1548fe94eb6a9
   unresolved_subitems: []
   chain_atoms:
     - df62418365c3a695e5eb2a936b2e1045092e80b9cb1c5b4a1b8b2bd540cd7108

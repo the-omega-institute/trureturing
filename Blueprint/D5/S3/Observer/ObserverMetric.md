@@ -85,3 +85,4 @@ Scalar multiplication factors c out of every defect coordinate, and the complex 
 - Truth anchor: `D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul`
 - Truth anchor: `D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant`
 - Dependency: [D5/S3/Quantum/ObserverAlgebra](../Quantum/ObserverAlgebra.md)
+- Dependency: [D5/S3/Quantum/ObserverCommutator](../Quantum/ObserverCommutator.md)

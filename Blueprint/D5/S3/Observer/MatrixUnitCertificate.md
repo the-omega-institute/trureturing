@@ -4,7 +4,19 @@
 
 Finite Fourier combinations of the cyclic window clock and shift form exact matrix units.
 
-**Theorem 1.1 (Weyl Fourier matrix units multiply exactly).**
+**Theorem 1.1 (Fourier matrix units are single-entry matrices).**
+
+$$E_{ij}=\operatorname{single}(i,j,1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/MatrixUnitCertificate.matrix_unit_eq_single` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive window cardinality M and indices i and j in Z/MZ, the Fourier construction E_ij defined below equals the matrix with entry one at (i,j) and zero elsewhere. Character orthogonality gives the diagonal projector, and the shift places its nonzero entry at (i,j).
+
+**Theorem 1.2 (Weyl Fourier matrix units multiply exactly).**
 
 $$\begin{gathered}\forall M \in \mathbb{N}_{>0},\\\forall i, j, k, l \in \mathbb{Z}/M\mathbb{Z},\\E_{ij}:=(\frac{1}{M}\sum_{a \in \mathbb{Z}/M\mathbb{Z}}\omega_{M}^{-ia}V_{M}^{a})U_{M}^{i-j},\\E_{ij}E_{kl} = \begin{cases}1,&j=k\\0,&j\neq k\end{cases}E_{il}.\end{gathered}$$
 
@@ -20,7 +32,7 @@ The standard Z/MZ characters enumerate the full finite character group. Exact ch
 
 Consequently E_ij E_kl equals E_il when j=k and is the zero matrix otherwise. This is an identity of complex matrices for every four window indices; it has no residual, norm bound, tolerance, or numerical approximation.
 
-**Theorem 1.2 (Diagonal matrix units resolve the identity).**
+**Theorem 1.3 (Diagonal matrix units resolve the identity).**
 
 $$\forall M \in \mathbb{N}_{>0},\ \sum_{i \in \mathbb{Z}/M\mathbb{Z}}E_{ii} = I_{M}.$$
 
@@ -34,6 +46,7 @@ Summing the diagonal Fourier matrix units over every cyclic address gives the id
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/MatrixUnitCertificate.matrix_unit_eq_single`
 - Truth anchor: `D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul`
 - Truth anchor: `D5/S3/Observer/MatrixUnitCertificate.matrix_units_sum_diagonal`
 - Dependency: [D5/S3/Observer/WindowRegister](WindowRegister.md)

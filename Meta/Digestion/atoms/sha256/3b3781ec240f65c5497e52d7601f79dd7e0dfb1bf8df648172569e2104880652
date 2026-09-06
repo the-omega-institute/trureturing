@@ -1,0 +1,17 @@
+## 定理 V4　猜想的不等式子句在 \(0<a\le\frac1{24}\) 上为假
+
+对一切 \(a>0\),
+
+$$
+\boxed{
+c_2(a)<2a
+\iff
+\frac1{24}<a ,
+\qquad\text{且}\qquad
+c_2\Bigl(\frac1{24}\Bigr)=\frac1{12}=2\cdot\frac1{24}.
+}
+$$
+
+因此对一切 \(0<a\le\frac1{24}\) 有 \(c_2(a)\ge2a\),
+故 Conjecture 6.5 中的 \(0<c_{2k}(a)<2a\) 在 \(k=1\) 处**不成立**。
+

@@ -28836,3 +28836,179 @@ $$
 [4]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
 [5]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
 [6]: https://dlmf.nist.gov/27.12 "DLMF: §27.12 Asymptotic Formulas: Primes ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+
+---
+
+## ——量子—黎曼判据卷:Pochhammer 形变算子的实根区间(定理 V1–V4)增订
+
+### 摘要
+
+本增订处理一个**外部文献明文留开**的问题,并把它在最低阶上**完全解出**,同时**反驳**该文所提猜想的一个子句。
+
+A. Vishnyakova 在《Polynomially Deformed Normalized Pochhammer Sequences Having Generating Functions
+With Only Real Non-positive Zeros》(arXiv:2608.03723v1,2026-08-04)中,对 \(a>0\) 定义线性算子
+\(\mathcal L_a\)(该文 Definition 1.4),并研究使 \(\mathcal L_a(P)\) 的零点全为实且落在 \([-1,0]\) 的多项式 \(P\)。
+其 Example 6.4 定义
+
+$$
+M_n(a)=\bigl\{t\in\mathbb{R}\ :\ \mathcal L_a\bigl((X+t)^n\bigr)\ \text{的全部零点为实且落在}\ [-1,0]\bigr\}.
+$$
+
+该文证明了奇数情形 \(M_{2k+1}(a)=[0,a]\),对偶数情形写道「For even \(n\), the situation is much more complicated」,
+继而提出
+
+> **Conjecture 6.5.** For every \(k\in\mathbb{N}\), we have
+> \(M_{2k}(a)=[-c_{2k}(a),\,a+c_{2k}(a)],\ 0<c_{2k}(a)<2a\),
+> and \(c_2(a)\le c_4(a)\le c_6(a)\le\ldots\)
+> The proof of this fact and the possible value of the limit \(\lim_{k\to\infty}c_{2k}(a)\) remain open.
+
+本增订在 \(k=1\)(即 \(n=2\))处给出 \(M_2(a)\) 的**精确闭式**与 \(c_2(a)\) 的**闭式**,
+并由此证明该猜想的不等式子句 \(0<c_{2k}(a)<2a\) 对**一切** \(0<a\le\frac1{24}\) **为假**。
+
+### 范围墙(先立,后叙)
+
+- 只处理 \(k=1\)。**不**声称判定 \(k\ge2\),**不**声称单调子句 \(c_2\le c_4\le\ldots\) 的真伪,**不**声称极限值。
+- 猜想的**区间形状子句** \(M_2(a)=[-c_2(a),a+c_2(a)]\) 在 \(k=1\) 处**为真**并被本增订证明;
+  被反驳的**只是**不等式子句 \(c_{2k}(a)<2a\)。二者不可混为一谈。
+- **不**声称超出所记检索范围之外的全球新颖性(检索记录见末节)。
+- 本增订**不**使用、也**不**推出黎曼假设;它是本卷「仅依赖系数的有限多项式实根判据」入口上的一个精确测试对象。
+
+### 设定
+
+对 \(a>0\) 记 \((a)_k=\prod_{j=0}^{k-1}(a+j)\)。\(\mathcal L_a:\mathbb{R}[X]\to\mathbb{R}[X]\) 是使
+
+$$
+\mathcal L_a\Bigl(a_0+a_1\frac{X}{a}+a_2\frac{X(X-1)}{a(a+1)}+\cdots
++a_n\frac{X(X-1)\cdots(X-n+1)}{(a)_n}\Bigr)=a_0+a_1X+\cdots+a_nX^n
+$$
+
+的线性算子。
+
+## 定理 V1　二次形变像的显式系数
+
+对一切 \(a>0\) 与 \(t\in\mathbb{R}\),
+
+$$
+\boxed{
+\mathcal L_a\bigl((X+t)^2\bigr)=a(a+1)X^2+a(1+2t)X+t^2 .
+}
+$$
+
+### 证明
+
+由该文 Example 6.4 的有限差分公式
+\(a_k(t)=\frac{(a)_k}{k!}\sum_{j=0}^{k}(-1)^jC_k^j(k-j+t)^n\),在 \(n=2\) 处逐项求值:
+\(a_0=t^2\);\(a_1=a\bigl[(1+t)^2-t^2\bigr]=a(1+2t)\);
+\(a_2=\frac{a(a+1)}{2}\bigl[(2+t)^2-2(1+t)^2+t^2\bigr]=\frac{a(a+1)}{2}\cdot2=a(a+1)\)。∎
+
+## 定理 V2　两个端点值恒为平方,故端点约束恒成立
+
+记 \(Q_{a,t}(X)=\mathcal L_a\bigl((X+t)^2\bigr)\)。则对一切 \(a>0,\ t\in\mathbb{R}\),
+
+$$
+\boxed{
+Q_{a,t}(0)=t^2\ge0,
+\qquad
+Q_{a,t}(-1)=(a-t)^2\ge0 .
+}
+$$
+
+### 证明
+
+\(Q_{a,t}(0)=t^2\) 由定理 V1 直接读出。
+\(Q_{a,t}(-1)=a(a+1)-a(1+2t)+t^2=a^2+a-a-2at+t^2=a^2-2at+t^2=(a-t)^2\)。∎
+
+## 定理 V3　\(M_2(a)\) 的精确闭式
+
+对一切 \(a>0\),
+
+$$
+\boxed{
+M_2(a)=\Bigl[\frac{a-\sqrt{a^2+a}}{2},\ \frac{a+\sqrt{a^2+a}}{2}\Bigr],
+\qquad\text{故}\qquad
+c_2(a)=\frac{\sqrt{a^2+a}-a}{2}.
+}
+$$
+
+特别地,Conjecture 6.5 的**区间形状子句**在 \(k=1\) 处成立。
+
+### 证明
+
+\(Q_{a,t}\) 的首项系数 \(a(a+1)>0\)。一个首项系数为正的实二次式的两根皆为实且落在 \([-1,0]\),
+当且仅当四条同时成立:判别式非负、\(Q_{a,t}(0)\ge0\)、\(Q_{a,t}(-1)\ge0\)、顶点横坐标落在 \([-1,0]\)。
+
+由定理 V2,中间两条**恒成立**,故不构成任何约束。
+顶点横坐标为 \(-\frac{1+2t}{2(a+1)}\),落在 \([-1,0]\) 当且仅当 \(-\frac12\le t\le a+\frac12\)。
+判别式为
+
+$$
+a^2(1+2t)^2-4a(a+1)t^2=a\bigl(a+4at-4t^2\bigr),
+$$
+
+故非负当且仅当 \(4t^2-4at-a\le0\),即 \(t\) 落在所示闭区间。
+最后,由 \(a^2+a<a^2+2a+1\) 得 \(\sqrt{a^2+a}<a+1\),从而该闭区间含于 \(\bigl(-\frac12,\ a+\frac12\bigr)\);
+故顶点条件被判别式条件蕴含,四条约束化为一条。∎
+
+## 定理 V4　猜想的不等式子句在 \(0<a\le\frac1{24}\) 上为假
+
+对一切 \(a>0\),
+
+$$
+\boxed{
+c_2(a)<2a
+\iff
+\frac1{24}<a ,
+\qquad\text{且}\qquad
+c_2\Bigl(\frac1{24}\Bigr)=\frac1{12}=2\cdot\frac1{24}.
+}
+$$
+
+因此对一切 \(0<a\le\frac1{24}\) 有 \(c_2(a)\ge2a\),
+故 Conjecture 6.5 中的 \(0<c_{2k}(a)<2a\) 在 \(k=1\) 处**不成立**。
+
+### 证明
+
+由定理 V3,\(c_2(a)<2a\iff\sqrt{a^2+a}-a<4a\iff\sqrt{a^2+a}<5a\)。
+两侧非负,平方得 \(a^2+a<25a^2\iff a<24a^2\iff 1<24a\)。
+在 \(a=\frac1{24}\) 处 \(a^2+a=\frac{1}{576}+\frac{24}{576}=\frac{25}{576}\),故 \(\sqrt{a^2+a}=\frac5{24}\),
+于是 \(c_2=\frac12\bigl(\frac5{24}-\frac1{24}\bigr)=\frac1{12}=2a\)。∎
+
+### 解释与边界
+
+猜想被推翻的**根源**在定理 V2:右端点约束 \(Q_{a,t}(-1)\ge0\) 恒等地退化为一个平方,
+于是 \(M_2(a)\) 完全由判别式决定,其长度 \(\sqrt{a^2+a}\) 在 \(a\to0^+\) 时以 \(\sqrt a\) 的速度趋零,
+**比 \(a\) 慢**;而猜想要求半径 \(c_2(a)\) 被 \(2a\)(线性阶)压住。两个阶的交叉点恰在 \(a=\frac1{24}\)。
+该文自述其猜想来自 numerical calculations——若数值实验取的 \(a\) 皆不小于 \(1\) 量级,则不会看到这一交叉。
+
+同时可读出:\(c_2\) 在 \((0,\infty)\) 上严格递增,且 \(c_2(a)<\frac14\) 恒成立,\(\lim_{a\to\infty}c_2(a)=\frac14\)。
+本增订**不**据此推断 \(\lim_{k\to\infty}c_{2k}(a)\)——那是另一个方向的极限,仍开放。
+
+### 拟议逃逸见证(第 5⁴ 条,写在实施之前)
+
+- **定理 V2 的恒等式** \(Q_{a,t}(-1)=(a-t)^2\):它不由任何已冻结前置经实例化、投影或规范化改写得到,
+  且处在定理 V3 的**活推导路径**上——去掉它,\(M_2(a)\) 就不再由判别式单独决定,V3 的结论无法得出。
+- **定理 V3 的判别式恒等式** \(a^2(1+2t)^2-4a(a+1)t^2=a(a+4at-4t^2)\),以及由 \(\sqrt{a^2+a}<a+1\)
+  给出的「顶点条件被判别式条件蕴含」这一化约。
+- **定理 V4 的阈值等价** \(\sqrt{a^2+a}<5a\iff\frac1{24}<a\)。
+
+`computational_content.kind = none`:四条皆为对一切 \(a>0\)(与 \(t\in\mathbb{R}\))的一般定理,
+不是有界枚举、检查器、数值归约或已认证实例;\(a=\frac1{24}\) 处的等式是该一般定理的实例,不是它的依据。
+准入依据为 `escape-witness`。
+
+### 档位与文献核对(第 5⁵ 条)
+
+- **档位:第一档**——2026-08-04 论文明写的 conjecture,且原文自陈「The proof of this fact ... remain open」。
+- **核对结果**:核对了 arXiv:2608.03723 的 abs 页(当前仅列 v1,2026-08-04,无修订)、
+  正文 Definition 1.4 / Example 6.4 / Conjecture 6.5 的 **LaTeX 原文**(HTML 版 `alttext`,而非渲染文本
+  ——渲染文本会在 \(0<c_{2k}(a)<2a\) 的 `<` 处被截断,承重的上界正好丢失),
+  以及全文中 \(c_2\) 出现的**全部三处**公式:**该文未给出 \(c_2(a)\) 的闭式,亦未记录任何反例**。
+  未逐一检索全部引用该文的后续文献,故**不**声称全球首次。
+- **仓内查重**:`git grep -iE 'pochhammer|fallingFactorial|realRootedness|LaguerrePolya|brenti|wagner' -- 'D5/**/*.lean'`
+  仅命中 \(\texttt{D5/S3/Weil/CayleyLaguerre/ChebyshevHypergeometricExpansion.lean}\)(与本题无关),本仓无既有形式化。
+
+### 与本卷的接口
+
+本卷线 B 的入口是「仅依赖系数的正性检验与有限多项式实根判据」。
+\(\mathcal L_a\) 是把 Pochhammer 基映到单项式基的线性同构,\(M_n(a)\) 恰是该入口上一个可**精确**求解的检验对象。
+定理 V3 给出的是一个完整的、非渐近的参数化实根区间,可作为该入口的精确测试对象;
+它**不是** \(\xi\) 多项式,**不**推出 RH,也**不**改变本卷任何既有结论。

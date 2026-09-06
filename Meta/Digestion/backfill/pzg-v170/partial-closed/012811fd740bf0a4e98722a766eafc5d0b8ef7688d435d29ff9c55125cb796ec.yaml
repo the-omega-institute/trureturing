@@ -18,6 +18,18 @@ receipts:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
+    - gid: D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_fixed_iff
+      definition_sha256: sha256:d5dde6964e3df83948af575032e1e40c77bd2e861ae05b0d84a359e5247af3f8
+      emission_sha256: sha256:caa904a60629053ac63eca78e917e17efb6b084190f60c4a0cbb3949db2a2fb7
+    - gid: D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_mirror_fixed_locus_contrast
+      definition_sha256: sha256:d5dde6964e3df83948af575032e1e40c77bd2e861ae05b0d84a359e5247af3f8
+      emission_sha256: sha256:caa904a60629053ac63eca78e917e17efb6b084190f60c4a0cbb3949db2a2fb7
+    - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.completed_riemann_zeta_one_sub_conj
+      definition_sha256: sha256:dff6c9a8cd359ee61c10568babafd2a90adab151ea3b7045cba27b602a30adee
+      emission_sha256: sha256:2b39198fb60ec3677d6a2e56849d6568688bf6089a082679dd466c15b9bb969a
+    - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.riemann_zeta_conj
+      definition_sha256: sha256:dff6c9a8cd359ee61c10568babafd2a90adab151ea3b7045cba27b602a30adee
+      emission_sha256: sha256:2b39198fb60ec3677d6a2e56849d6568688bf6089a082679dd466c15b9bb969a
   unresolved_subitems:
     - critical-line-existence-from-information-reversal
     - genesis-plus-terminal-information-equals-total-knowledge
