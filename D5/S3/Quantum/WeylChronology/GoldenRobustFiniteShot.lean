@@ -3,10 +3,11 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:cross-library-adapter)
    anchors: []
-   digest: A certified robust Ramsey separation margin yields an explicit finite-shot optimal Bayes error upper bound through affinity multiplicativity. -/
+   digest: A certified robust Ramsey margin controls the operational finite-shot Bayes risk, with exact transport between recursive iid tests and the Fin-indexed finite-suite representation. -/
 
 import D5.S3.Quantum.WeylChronology.GoldenRobustAffinity
 import D5.S3.Estimation.ErrorExponents.FiniteSuiteAffinityProductBound
+import D5.S3.Estimation.ErrorExponents.FiniteRepetitionRepresentationEquiv
 
 /-!
 # Robust finite-shot chronology testing
@@ -17,10 +18,15 @@ layer turns it into the one-shot ceiling
 
 `sqrt (1 - margin^2)`.
 
-This module now feeds that ceiling into the repository's operational finite
+This module feeds that ceiling into the repository's operational finite
 independent-suite Bayes risk. Exact affinity multiplicativity gives the
-`shots`-th power, including zero-affinity endpoints. No new concentration
-inequality or classifier is introduced.
+`shots`-th power, including zero-affinity endpoints. The generic repetition
+representation bridge also identifies this same operational optimum with the
+recursive `iidPower` total variation and transports every recursive decision
+risk exactly to the finite-suite carrier.
+
+No new concentration inequality, classifier, repetition encoding, or Bayes-risk
+primitive is introduced.
 -/
 
 set_option autoImplicit false
@@ -32,6 +38,9 @@ open D5.S3.Quantum.WeylChronology.GoldenRobustCalibration
 open D5.S3.Quantum.WeylChronology.GoldenRobustAffinity
 open D5.S3.Estimation.ErrorExponents.FiniteSuiteErrorSqueeze
 open D5.S3.Estimation.ErrorExponents.FiniteSuiteAffinityProductBound
+open D5.S3.Estimation.ErrorExponents.FiniteRepetitionRepresentationEquiv
+open D5.S3.RenyiDivergence
+open D5.S3.TotalVariation.Pinsker
 open D5.S3.TotalVariation.Bhattacharyya
 
 noncomputable section
@@ -45,6 +54,47 @@ def robustRepeatedOptimalError
     (Index := Fin shots)
     (fun _ => robustChronologyLaw leftCal left)
     (fun _ => robustChronologyLaw rightCal right)
+
+/-- The operational robust optimum is exactly half of one minus total variation
+of the recursive iidPower laws. This removes the former representation split
+between recursive arbitrary-test bounds and the finite-suite optimum. -/
+theorem robust_repeated_optimal_error_eq_iidPower_tv
+    (leftCal rightCal : RamseyCalibration)
+    (left right : List Bool)
+    (hleft0 : 0 ≤ robustChronologyFringe leftCal left)
+    (hleft1 : robustChronologyFringe leftCal left ≤ 1)
+    (hright0 : 0 ≤ robustChronologyFringe rightCal right)
+    (hright1 : robustChronologyFringe rightCal right ≤ 1)
+    (shots : ℕ) :
+    robustRepeatedOptimalError leftCal rightCal left right shots =
+      (1 - totalVariation
+        (iidPower (robustChronologyLaw leftCal left) shots)
+        (iidPower (robustChronologyLaw rightCal right) shots)) / 2 := by
+  have hp := robust_chronology_probability_data leftCal left hleft0 hleft1
+  have hq := robust_chronology_probability_data rightCal right hright0 hright1
+  unfold robustRepeatedOptimalError
+  exact finite_suite_optimal_error_eq_iidPower_tv
+    (robustChronologyLaw leftCal left)
+    (robustChronologyLaw rightCal right)
+    shots hp.2 hq.2
+
+/-- Every recursive iid decision event has risk at least the same operational
+robust optimum. The statement needs no probability hypotheses because it is a
+pure finite minimum plus exact reindexing statement. -/
+theorem robust_repeated_optimal_error_le_iid_decision
+    (leftCal rightCal : RamseyCalibration)
+    (left right : List Bool) (shots : ℕ)
+    (decision : Finset (IidSpace Bool shots)) :
+    robustRepeatedOptimalError leftCal rightCal left right shots ≤
+      equalPriorError
+        (iidPower (robustChronologyLaw leftCal left) shots)
+        (iidPower (robustChronologyLaw rightCal right) shots)
+        decision := by
+  unfold robustRepeatedOptimalError
+  exact finite_suite_optimal_error_le_iid_decision
+    (robustChronologyLaw leftCal left)
+    (robustChronologyLaw rightCal right)
+    shots decision
 
 /-- Repeating one robust pair independently raises its one-shot affinity to the
 shot count. The operational optimum is bounded by half of that exact power. -/
@@ -140,6 +190,8 @@ theorem robust_repeated_target_error_of_margin_power
     hleft0 hleft1 hright0 hright1 hmargin shots
   nlinarith
 
+#print axioms robust_repeated_optimal_error_eq_iidPower_tv
+#print axioms robust_repeated_optimal_error_le_iid_decision
 #print axioms robust_repeated_optimal_error_le_bhattacharyya_power
 #print axioms robust_repeated_optimal_error_le_margin_power
 #print axioms robust_repeated_target_error_of_margin_power
