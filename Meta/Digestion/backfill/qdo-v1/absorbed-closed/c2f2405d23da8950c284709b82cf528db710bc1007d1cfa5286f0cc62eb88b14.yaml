@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c2f2405d23da8950c284709b82cf528db710bc1007d1cfa5286f0cc62eb88b14
+  normalized_sha256: sha256:c2f2405d23da8950c284709b82cf528db710bc1007d1cfa5286f0cc62eb88b14
+cas_ref: sha256:c2f2405d23da8950c284709b82cf528db710bc1007d1cfa5286f0cc62eb88b14
+coverage_gids:
+  - gid: D5/S3/Observer/HilbertGeometry/HilbertSubspaceAction.absolutely_continuous_subspace_action_minimum_unique
+    target_statement_id: sha256:20926bbb454b8ee98a86d43b2889106e30ca0488784500a0db5621d23272143e
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/HilbertGeometry/HilbertSubspaceAction.absolutely_continuous_subspace_action_minimum_unique
+      definition_sha256: sha256:1eb03aff28d3dc9113b21487cb2d583b573006c1edf277d755ecd51b991efdbe
+      emission_sha256: sha256:37f17e0f03dae9da1e195b654d46a5ffbec67f16155972247b3a0564e07483a0
+  unresolved_subitems: []
