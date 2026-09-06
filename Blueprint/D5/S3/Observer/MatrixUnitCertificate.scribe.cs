@@ -11,6 +11,22 @@ internal sealed class MatrixUnitCertificateDocument : IScribeDocumentDefinition
         H("Exact Matrix Units from a Finite Weyl Pair"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("fourier-matrix-units-are-single-entry-matrices"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/MatrixUnitCertificate.matrix_unit_eq_single"),
+                H("Fourier matrix units are single-entry matrices"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Unit(F.Id("i"), F.Id("j")), Eq,
+                    Operatorname, Grp(F.Id("single")),
+                    Open, F.Id("i"), Comma, F.Id("j"), Comma, D(1), Close))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive window cardinality M and indices i and j in Z/MZ, "
+                        + "the Fourier construction E_ij defined below equals the matrix with "
+                        + "entry one at (i,j) and zero elsewhere. Character orthogonality gives "
+                        + "the diagonal projector, and the shift places its nonzero entry at (i,j)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("weyl-fourier-matrix-units-multiply-exactly"),
                 DeclarationHandle.Create("D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul"),
                 H("Weyl Fourier matrix units multiply exactly"),
