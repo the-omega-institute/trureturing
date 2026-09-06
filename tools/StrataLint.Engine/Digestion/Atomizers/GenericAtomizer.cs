@@ -25,6 +25,10 @@ namespace StrataLint.Engine;
 /// </summary>
 internal static class GenericAtomizer
 {
+    internal const string ItemKind = "item";
+    internal const string RowKind = "row";
+    internal const string SectionKind = "section";
+
     /// <summary>
     /// 〈word〉 then 〈number〉: the lead shape every numbered dialect already shares. A genre
     /// is a word, so the token holds letters and digits and nothing else — no dash, no
@@ -55,14 +59,15 @@ internal static class GenericAtomizer
         RegexOptions.CultureInvariant);
 
     internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
-        Atomize(bytes, rules, contentKinds: null);
+        AtomizeWithContentKinds(bytes, rules, contentKinds: null);
 
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
         ReadOnlyMemory<byte> bytes,
         TheoryAtomizerRules rules) =>
-        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+        AtomizerRegistry.CaptureContentKinds(kinds =>
+            AtomizeWithContentKinds(bytes.Span, rules, kinds));
 
-    private static AtomizedTheoryDocument Atomize(
+    internal static AtomizedTheoryDocument AtomizeWithContentKinds(
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules _,
         IDictionary<string, string>? contentKinds)
@@ -100,14 +105,15 @@ internal static class GenericAtomizer
     private static string? IdentifyTableRow(MarkdownTableRow row) =>
         row.IsHeader || row.FirstCellText.Length == 0
             ? null
-            : "row/" + Slug(row.FirstCellText);
+            : RowKind + "/" + Slug(row.FirstCellText);
 
     private static string? IdentifyHeading(string heading)
     {
         var claim = HeadingClaim.Match(heading);
         return claim.Success
-            ? claim.Groups["kind"].Value + "/" + claim.Groups["number"].Value
-            : "section/" + Slug(heading);
+            ? DigestionContentDisposition.NormalizeNumberedClaimToken(
+                claim.Groups["kind"].Value) + "/" + claim.Groups["number"].Value
+            : SectionKind + "/" + Slug(heading);
     }
 
     private static bool IsHeadingClaim(string heading) => HeadingClaim.IsMatch(heading);
@@ -117,11 +123,12 @@ internal static class GenericAtomizer
         var claim = ParagraphClaim.Match(paragraph);
         if (claim.Success)
         {
-            return claim.Groups["kind"].Value + "/" + claim.Groups["number"].Value;
+            return DigestionContentDisposition.NormalizeNumberedClaimToken(
+                claim.Groups["kind"].Value) + "/" + claim.Groups["number"].Value;
         }
 
         var item = ParagraphItem.Match(paragraph);
-        return item.Success ? "item/" + item.Groups["number"].Value : null;
+        return item.Success ? ItemKind + "/" + item.Groups["number"].Value : null;
     }
 
     /// <summary>
