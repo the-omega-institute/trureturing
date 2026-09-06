@@ -22,6 +22,10 @@ public sealed partial class ProductionEnvironmentTests
         File.WriteAllText(Path.Combine(output, "keep.txt"), "keep");
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        var historyAvailable = true;
+        var history = new FakeAtomHistorySource(() => historyAvailable
+            ? FakeAtomHistorySource.ForPaths(fixture.Files.Keys).Read()
+            : throw new IOException("synthetic history unavailable"));
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -30,7 +34,7 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
-            atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
+            atomHistorySource: history);
 
         var emitted = environment.EchoVerify(["--emit", "--base", "baseline"]);
 
@@ -55,5 +59,22 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(expectedFileNames, actualFileNames);
         foreach (var name in actualFileNames)
             Assert.DoesNotContain("## age", File.ReadAllText(Path.Combine(output, name!)), StringComparison.Ordinal);
+
+        var before = Directory.GetFiles(output).ToDictionary(
+            static path => path, File.ReadAllBytes, StringComparer.Ordinal);
+        historyAvailable = false;
+
+        var unavailable = environment.EchoVerify(["--emit", "--base", "baseline"]);
+
+        Assert.Equal(2, history.Calls);
+        Assert.Equal(2, unavailable.ExitCode);
+        Assert.Empty(unavailable.Output);
+        Assert.Equal("ECHO_VERIFY_INFRASTRUCTURE residual derivation failed\n"
+            + "DIGEST_AGE_HISTORY_UNAVAILABLE synthetic history unavailable\n", unavailable.Error);
+        Assert.Equal(before.Keys.Order(StringComparer.Ordinal),
+            Directory.GetFiles(output).Order(StringComparer.Ordinal));
+        foreach (var (path, bytes) in before)
+            Assert.Equal(bytes, File.ReadAllBytes(path));
+        Assert.Equal("keep", File.ReadAllText(outside));
     }
 }

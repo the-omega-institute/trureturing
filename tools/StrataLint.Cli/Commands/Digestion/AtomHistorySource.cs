@@ -56,7 +56,7 @@ internal sealed class GitAtomHistorySource(string repositoryRoot) : IAtomHistory
         var shallow = IsShallow();
         var result = new ProductionGitProcessRunner().Run(
             "git",
-            ["log", "--full-history", "-m", "--format=%x1e%ct", "--name-only",
+            ["log", "--full-history", "--diff-merges=separate", "--root", "--format=%x1e%ct", "--name-only",
                 "--diff-filter=A", "--no-renames", "HEAD", "--", DigestionCasStore.RootPath],
             repositoryRoot,
             HistoryTimeout,
