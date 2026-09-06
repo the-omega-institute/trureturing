@@ -1,0 +1,27 @@
+### Zeckendorf 在这里怎样进入？
+
+把占据数 \(j\) 写成：
+
+$$
+j=\sum_rF_{r+1}b_r,
+\qquad b_rb_{r+1}=0,
+$$
+
+再限制 \(j\le e\)，就有：
+
+$$
+\boxed{
+H_{p,e}
+=
+(\log p)
+\left(
+eI-2\sum_rF_{r+1}\widehat b_r
+\right).
+}
+\tag{S20}
+$$
+
+这给出了实际除数相位的 Fibonacci 能量编码。
+
+仓库的 `FiniteZeckendorfEulerIdentity.lean` 已经提供合法黄金名字与有限整数区间的双射及求和运输；本轮使用的是同一个占据数重编码，而不是凭 Fibonacci 符号创造新谱。
+

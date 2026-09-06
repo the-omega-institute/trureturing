@@ -1,0 +1,50 @@
+## 定理 198.2　有限位移的潮汐估计误差
+
+取第 196 节的对称布局 \(a=b=h\,n\)，\(|n|=1\)。若相位已经解缠，测量误差满足
+
+$$
+|\widehat\Xi-\Xi|\le\varepsilon_\Xi,
+$$
+
+且邻域内四阶方向导数满足
+
+$$
+|D_n^4V|\le M_4,
+$$
+
+则
+
+$$
+\boxed{
+\left|
+\frac{\hbar\widehat\Xi}{Th^2}
+-
+n^{\mathsf T}\operatorname{Hess}V(r)n
+\right|
+\le
+\frac{\hbar\varepsilon_\Xi}{Th^2}
++
+\frac{M_4h^2}{12}.
+}
+\tag{198.4}
+$$
+
+### 证明
+
+该布局给出
+
+$$
+\Xi
+=
+\frac{T}{\hbar}
+\bigl[V(r+hn)+V(r-hn)-2V(r)\bigr].
+$$
+
+使用中心二阶差分的四阶余项，再加入相位测量误差即可。∎
+
+在三维中，选择三个坐标方向及三个对角方向，可以恢复对称 Hessian 的六个独立分量。
+
+但是，测量误差被 \(h^{-2}\) 放大。因此更小的空间分支并不无条件产生更好的曲率估计。
+
+---
+

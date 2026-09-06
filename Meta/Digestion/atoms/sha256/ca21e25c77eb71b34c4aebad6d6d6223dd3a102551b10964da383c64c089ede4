@@ -1,0 +1,1 @@
+**候签定理 4.110(A397588 的奇偶性:a(n) 为奇 ⟺ n 为 2 的幂)**〔open;落 `D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo`;拟议逃逸见证:在 ZMod 2 上以 k ↔ 2m−k 的对合消去卷积的非对角项得 a(2m) ≡ a(m)²=a(m);奇数 n>1 时因子 n+1 为偶故 a(n) ≡ 0;强归纳降到奇部〕。令 a(1)=1,a(n)=(n+1)·Σ_{k=1}^{n−1} a(k)a(n−k)(n>1)。则对一切 n ≥ 1:a(n) 为奇 ⟺ ∃ r ≥ 0,n=2^r。

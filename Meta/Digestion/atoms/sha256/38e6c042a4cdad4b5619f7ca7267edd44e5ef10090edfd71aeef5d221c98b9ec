@@ -1,0 +1,21 @@
+## 10.3 临界余量也没有固定正下界
+
+Gronwall 定理无条件给出：
+
+$$
+\limsup_{n\to\infty}
+\frac{\sigma(n)}{n\ln\ln n}=e^\gamma,
+$$
+
+因此：
+
+$$
+\boxed{
+\liminf_{n\to\infty}\Delta(n)=0.
+}
+$$
+
+这意味着即便 RH 成立，安全余量也会沿某些序列逼近零。([arXiv][3])
+
+所以，观察误差不只要“很小”，还必须小到足以分辨当前尺度上的临界余量。
+

@@ -137,6 +137,11 @@ internal static partial class DigestionStatusEvaluator
             .Where(static group => group.Count() == 1)
             .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
 
+        if (baselineDocument is not null)
+        {
+            RequireScribeReceiptsForCoverageDelta(entries, baselineEntries, findings);
+        }
+
         var states = truthStates ?? LeanTruthStates.Resolve(snapshot, lean);
         var genreChecks = document.RequireDigestionSources()
             .ToDictionary(
@@ -271,7 +276,10 @@ internal static partial class DigestionStatusEvaluator
                 item.Migration == DigestionMigrationState.Absorbed
                     && truth is DigestionTruthState.Closed or DigestionTruthState.Tail
                     && gaps.Length == 0,
-                gaps));
+                gaps)
+            {
+                StatusAuthorityChanged = item.StatusAuthorityChanged,
+            });
         }
 
         return new DigestionLedgerEvaluation(

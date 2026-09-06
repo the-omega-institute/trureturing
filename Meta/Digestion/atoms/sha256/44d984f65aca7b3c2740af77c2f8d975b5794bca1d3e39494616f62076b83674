@@ -1,0 +1,77 @@
+# 十、本轮真正补上的内容
+
+上一轮的最终目标是
+
+$$
+|\mathcal T_\Lambda(X)|\le CX^{3/2},
+$$
+
+其中 \(C\) 未指定。
+
+这次得到三个进一步明确的结果。
+
+首先，可以给出一个具体的单侧常数：
+
+$$
+\boxed{
+C_*=
+(5+3\sqrt2)
+\bigl[2+\gamma_{\mathrm E}-\log(4\pi)\bigr].
+}
+$$
+
+并证明
+
+$$
+\mathrm{RH}
+\iff
+\mathcal T_\Lambda(N)\le C_*N^{3/2}
+\quad\text{对全部整数 }N\ge2.
+$$
+
+其次，素数平方修正提供的偏移严格大于这个振荡界，因而
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal T_{\mathbb P}(N)
+\text{ 在全部充分大的整数尺度上非正}.
+}
+$$
+
+最后，还精确补回了把代数谱读数转成正范数时容易遗漏的项：
+
+$$
+\boxed{
+\sum_\rho\frac1{|\rho|^2}
+=
+2+\gamma_{\mathrm E}-\log(4\pi)
++
+\sum_{\text{离线四元组}}
+\frac{8m_\rho\delta^2}
+{
+[\gamma^2+(\frac12+\delta)^2]
+[\gamma^2+(\frac12-\delta)^2]
+}.
+}
+$$
+
+这与项目中区分“实际锚、读出、准入条件”的做法一致：合法的表示不能替代实际对象满足准入条件的证明。本次核对的 `ObserverStructure` 仍明确保留这三类数据，而不是只保留读出商空间。
+
+**尚未完成的算术任务，是不使用 RH 前件，直接证明式（23）的全尺度上界，或式（25）的最终符号。**
+
+本轮没有闭合这一步；但现在需要证明的常数、允许的振荡、必须保留的平方偏移，以及能够否决条件结论的有限证书，都已明确。最关键的缺口不再是“正核是否存在”，而是：
+
+$$
+\boxed{
+\text{实际三角加权素数读出，能否始终遵守这个已校准的谱振幅上界。}
+}
+$$
+
+[1]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[2]: https://terrytao.wordpress.com/2021/02/12/246b-notes-4-the-riemann-zeta-function-and-the-prime-number-theorem/ "246B, Notes 4: The Riemann zeta function and the prime number theorem | What's new"
+[3]: https://arxiv.org/html/1410.7036v1 "Yet another representation for the sum of reciprocals of the nontrivial zeros of the Riemann zeta-function"
+[4]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[5]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[6]: https://dlmf.nist.gov/27.12 "DLMF: §27.12 Asymptotic Formulas: Primes ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"

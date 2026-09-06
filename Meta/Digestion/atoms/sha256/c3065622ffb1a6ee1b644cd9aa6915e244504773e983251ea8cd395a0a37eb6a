@@ -1,0 +1,43 @@
+# 收束
+
+这次得到的三个核心关系是：
+
+$$
+\boxed{
+\operatorname{Var}_n(S)
+\sim
+\frac{W_0(n/\pi)}{4n},
+}
+$$
+
+$$
+\boxed{
+R_n\!\left(
+2\sqrt{\frac n{W_0(n/\pi)}}\,t
+\right)
+\longrightarrow e^{-t^2},
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\langle K_0\rangle_n
+\sim
+\frac{2E_*n^2}{W_0(n/\pi)^2}.
+}
+$$
+
+与此同时：
+
+$$
+\boxed{
+\langle\chi_n,\chi_{n+1}\rangle=0
+}
+$$
+
+始终精确成立。
+
+因此，前文的几个直觉现在可以被更严格地分开：
+

@@ -13,3 +13,7 @@ receipts:
     gaps:
       - code: structural-alignment-rejected
         detail: 定理/374.1
+  chain_atoms:
+    - 962eb13c4d47fc6e40bf1e4c99228bf763b6f90178f49bb0fe081f8dabb22d32
+    - 34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5
+    - a3e9d33756fb6d86932f1d10c83b75ef3ff1d85196a0b696a66abda38f1b3700

@@ -1,0 +1,30 @@
+## 10.2 价格下降，会打开新的离散裂隙
+
+若：
+
+$$
+0<\lambda'<\lambda,
+$$
+
+则：
+
+$$
+\boxed{
+R_{\lambda'}(n)-R_\lambda(n)
+=
+\int_{\lambda'}^\lambda
+\left[
+\sum_{\substack{p,\ k>v_p(n)\\
+\eta(p,k)>u}}
+\ln p
+\right]du,
+}
+\tag{17}
+$$
+
+其中：
+
+$$
+\eta(p,k)=\frac{\ln r(p,k)}{\ln p}.
+$$
+

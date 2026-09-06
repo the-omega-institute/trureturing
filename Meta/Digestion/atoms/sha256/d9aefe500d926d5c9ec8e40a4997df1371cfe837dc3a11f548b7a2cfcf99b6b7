@@ -1,0 +1,22 @@
+## 定理 R1：方差控制低频干涉
+
+对所有实数 \(t\)：
+
+$$
+\boxed{
+1-t^2v_n\le R_n(t)\le1.
+}
+\tag{R6}
+$$
+
+特别地：
+
+$$
+\boxed{
+|t|<v_n^{-1/2}
+\Longrightarrow
+R_n(t)>0.
+}
+\tag{R7}
+$$
+

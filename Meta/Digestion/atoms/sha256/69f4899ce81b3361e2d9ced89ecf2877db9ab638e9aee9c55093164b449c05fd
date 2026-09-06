@@ -1,0 +1,29 @@
+## 定义 1：带表示参数的有限除数和
+
+对任意实数 \(\tau\)，定义
+
+$$
+\boxed{
+L_{N,\tau}(n)
+=
+\sum_{\substack{d\mid n\\d\le N}}
+\mu(d)\left(\log\frac Nd+\tau\right).
+}
+\tag{1}
+$$
+
+这里 \(\tau\) 暂时只是一个表示参数，不是物理时间。
+
+再定义有限相位系数
+
+$$
+\boxed{
+\lambda_{q,N}(\tau)
+=
+\sum_{\substack{d\le N\\q\mid d}}
+\frac{\mu(d)}d
+\left(\log\frac Nd+\tau\right).
+}
+\tag{2}
+$$
+

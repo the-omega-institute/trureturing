@@ -1,0 +1,85 @@
+# 六、跨过 \(\sigma=1\) 时，改变的是可归一化的边界方向
+
+前面的 \(g_+\) 只适合 \(\sigma>1\)。但可以定义另一条正原函数：
+
+$$
+\boxed{
+g_-(x)
+=
+\frac{e^{-x/2}}{2\pi}
+\int_{-\infty}^x e^{y/2}\Phi(y)\,dy.
+}
+\tag{T20}
+$$
+
+它满足：
+
+$$
+\boxed{
+g_+(x)+g_-(x)=\frac{e^{-x/2}}{4\pi},
+}
+\tag{T21}
+$$
+
+以及：
+
+$$
+\boxed{
+\Phi(x)
+=
+2\pi\left(\frac d{dx}+\frac12\right)g_-(x).
+}
+$$
+
+对 \(\sigma<1\)：
+
+$$
+\boxed{
+\int e^{(\sigma-\frac12)x}g_-(x)\,dx
+=
+\frac{\xi(\sigma)}{2\pi(1-\sigma)}.
+}
+\tag{T22}
+$$
+
+归一化以后，对应：
+
+$$
+\boxed{
+X_\sigma\overset d=
+Y_\sigma+E_{1-\sigma},
+\qquad \sigma<1.
+}
+\tag{T23}
+$$
+
+所以两侧分别是：
+
+$$
+\begin{aligned}
+\sigma>1 &: \quad Y_\sigma-\operatorname{Exp}(\sigma-1),\\
+\sigma<1 &: \quad Y_\sigma+\operatorname{Exp}(1-\sigma).
+\end{aligned}
+$$
+
+它们的特征函数都可以写成：
+
+$$
+\boxed{
+B_\sigma(t)
+=
+A_\sigma(t)
+\frac{\sigma-1}{\sigma-1+it},
+\qquad\sigma\ne1.
+}
+\tag{T24}
+$$
+
+**同一个亚纯公式，在两侧对应不同的正积分实现。**
+
+这不是物理时间反向，也不是已经证明发生了热力学相变。它说明：若坚持正概率解释，跨过极点时必须更换原函数所采用的边界条件。
+
+在 \(\sigma=1\) 处，这两份原函数概率模型都没有普通的归一化极限。
+
+---
+

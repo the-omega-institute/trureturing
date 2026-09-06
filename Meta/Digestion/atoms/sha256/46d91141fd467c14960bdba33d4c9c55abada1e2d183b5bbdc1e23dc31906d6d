@@ -1,0 +1,58 @@
+## 它精确恢复上一轮的 Bessel 展开
+
+沿用除数相位：
+
+$$
+\mathcal D_k(t)
+=
+\sum_{ab=k}(b/a)^{it}.
+$$
+
+对原函数双副本作同样的变量代换，直接得到：
+
+$$
+\boxed{
+\mathcal J(x,t)
+=
+2e^{5x}
+\sum_{k\ge1}
+k^2\mathcal D_k(t)
+K_{it}(2\pi ke^{2x}).
+}
+\tag{T32}
+$$
+
+这里使用标准积分：
+
+$$
+K_{it}(z)
+=
+\frac12\int_{\mathbb R}
+e^{-z\cosh u}e^{itu}\,du.
+$$
+
+([DLMF][7])
+
+令 \(D_z=z\partial_z\)。修正 Bessel 方程给出：
+
+$$
+D_z^2K_{it}(z)=(z^2-t^2)K_{it}(z).
+$$
+
+所以：
+
+$$
+\boxed{
+\left[(D_z+3)^2+t^2\right]K_{it}(z)
+=
+(z^2+9)K_{it}(z)+6zK_{it}'(z).
+}
+\tag{T33}
+$$
+
+这恰好就是上一轮出现的 Bessel 组合，而不是额外人为加入的修正。([DLMF][8])
+
+**那组导数项的来源，现在明确了：它是两次一阶极点补偿，在双副本坐标中的作用。**
+
+---
+

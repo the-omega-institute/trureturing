@@ -1,0 +1,45 @@
+## 定义 S1：固定差坐标的干涉核
+
+定义：
+
+$$
+\boxed{
+\mathcal W(x,t)
+=
+\int_{\mathbb R}
+\Phi\!\left(x+\frac v2\right)
+\Phi\!\left(x-\frac v2\right)
+e^{itv}\,dv.
+}
+\tag{S2}
+$$
+
+因为 \(\Phi\) 为实偶函数，所以：
+
+$$
+\mathcal W(x,t)\in\mathbb R,
+$$
+
+并且它关于 \(x,t\) 分别为偶函数。
+
+特别地：
+
+$$
+\mathcal W(x,0)>0.
+$$
+
+因此：
+
+$$
+\boxed{
+J_x(t)=\frac{\mathcal W(x,t)}{\mathcal W(x,0)}
+}
+\tag{S3}
+$$
+
+是一份合法条件分布的特征函数：它表示固定差坐标 \(x\) 后，读取和坐标 \(v\) 的相位。
+
+连续变量的精确单点条件概率为零，但这个条件密度可以定义；实际操作可以使用一个有限宽度的差模态窗口，后面会说明。
+
+---
+

@@ -1,0 +1,58 @@
+## 为什么不能直接要求 \(\Omega_{X,8X}\) 的算子范数有界？
+
+零频率模态已经给出
+
+$$
+\begin{aligned}
+(\Omega_{X,8X})_{00}
+&=
+\int_X^{2X}
+\frac{[\lfloor2x\rfloor-\lfloor x\rfloor]^2}{x^2}\,dx\\
+&=
+X+O(1).
+\end{aligned}
+$$
+
+因此
+
+$$
+\boxed{
+\|\Omega_{X,8X}\|_{\mathrm{op}}
+\ge X+O(1).
+}
+\tag{35}
+$$
+
+所以不存在一个对所有模态输入都有效的常数级算子界。
+
+真正需要的是：
+
+$$
+\boxed{
+\text{实际 Möbius 振幅 }b_{8X}(0)
+\text{ 如何避开或抵消那些高增益方向。}
+}
+$$
+
+这是一项算术约束，而不是正矩阵的一般性质。
+
+同样，把
+
+$$
+b b^*
+$$
+
+归一化为迹为 \(1\) 的状态后，还必须保留
+
+$$
+\mathfrak J(X)
+=
+\|b\|^2
+\operatorname{Tr}
+\left(
+\frac{bb^*}{\|b\|^2}\Omega_{X,8X}
+\right).
+$$
+
+归一化不会消除前面的增益因子。
+

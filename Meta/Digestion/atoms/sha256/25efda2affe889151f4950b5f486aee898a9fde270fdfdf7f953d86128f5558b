@@ -1,0 +1,48 @@
+# 十、双副本算子的齐次部分，精确对应已知极点补偿
+
+为了看清边界结构，对 \(\Re b>1\) 作双边 Laplace 变换：
+
+$$
+\widehat{\mathcal J}(b,t)
+=
+\int_{\mathbb R}e^{bx}\mathcal J(x,t)\,dx.
+$$
+
+用两个原函数的 Mellin 读数直接相乘，得到：
+
+$$
+\boxed{
+\widehat{\mathcal J}(b,t)
+=
+\frac{
+\xi(\frac12+\frac b2+it)
+\xi(\frac12+\frac b2-it)
+}{
+\pi^2[(b-1)^2+4t^2]
+}.
+}
+\tag{T39}
+$$
+
+式（T31）在变换域中乘上：
+
+$$
+\pi^2[(b-1)^2+4t^2],
+$$
+
+因此：
+
+$$
+\boxed{
+\int_{\mathbb R}e^{bx}\mathcal W(x,t)\,dx
+=
+\xi\!\left(\frac12+\frac b2+it\right)
+\xi\!\left(\frac12+\frac b2-it\right).
+}
+\tag{T40}
+$$
+
+右边是整函数；左边的实际 \(\mathcal W\) 也具有足够衰减，所以该等式延伸到所有复数 \(b\)。
+
+这里需要区别：
+

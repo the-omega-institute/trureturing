@@ -1,0 +1,19 @@
+### 推论 2.2：乘法未来的黄金同余核是相等关系
+
+定义：
+
+$$
+n\sim_\infty m
+\quad\Longleftrightarrow\quad
+\mathcal G(nr)=\mathcal G(mr)
+\quad\forall r\in\mathbb N_+.
+$$
+
+则：
+
+$$
+\boxed{
+n\sim_\infty m\iff n=m.
+}
+$$
+
