@@ -1,0 +1,65 @@
+### 证明
+
+令未归一化向量
+
+$$
+|\Omega\rangle=\sum_{a=0}^{d-1}|a,a\rangle.
+$$
+
+直接检查指标：
+
+$$
+R(I)=|\Omega\rangle\langle\Omega|,
+\qquad
+R(S)=S.
+$$
+
+因此
+
+$$
+R(U_\theta)
+=
+\cos\theta\,|\Omega\rangle\langle\Omega|
++i\sin\theta\,S.
+$$
+
+在 \(|\Omega\rangle\) 方向，本征值是
+
+$$
+d\cos\theta+i\sin\theta.
+$$
+
+在其正交补上，第一项消失，交换门的本征值为 \(\pm1\)，所以奇异值均为 \(|\sin\theta|\)。证毕。
+
+于是：
+
+$$
+\theta=0:
+\quad U_\theta=I\text{ 完全可逆，但 }R(U_\theta)\text{ 只有秩 }1;
+$$
+
+$$
+\theta=\frac\pi2:
+\quad R(U_\theta)\text{ 也幺正};
+$$
+
+$$
+0<|\theta|\ll1:
+\quad R(U_\theta)\text{ 可逆但条件数很大}.
+$$
+
+具体地，
+
+$$
+\boxed{
+\operatorname{cond}_2R(U_\theta)
+=
+\sqrt{1+d^2\cot^2\theta}.
+}
+\tag{6}
+$$
+
+**因此，一个切面中的“平稳合法”，可以对应另一个切面中的“接近不可重建”。**
+
+这里的临界来自指标重组后的秩与奇异值，不是原时间演化失去幺正性。
+

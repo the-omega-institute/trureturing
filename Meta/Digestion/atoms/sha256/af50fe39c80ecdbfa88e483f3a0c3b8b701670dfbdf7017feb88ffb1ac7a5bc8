@@ -1,0 +1,31 @@
+# 七、真正的时间分辨率：高处零点为什么需要很长的回返窗口？
+
+这一节给出一个新的定量约束。
+
+先只研究一个固定时间采样通道。对候选频率 \(\vartheta\)，记录
+
+$$
+\boxed{
+u_N(\vartheta)
+=
+\frac1{\sqrt{N+1}}
+(1,e^{i\vartheta},\ldots,e^{iN\vartheta}).
+}
+\tag{27}
+$$
+
+这里比较的是两种频率的**时间响应向量**，不是已经能够直接读取的两个谱本征态。
+
+若频率差为 \(\delta\)，它们的重叠是
+
+$$
+\boxed{
+\langle u_N(\vartheta),u_N(\vartheta+\delta)\rangle
+=
+e^{iN\delta/2}
+\frac{\sin((N+1)\delta/2)}
+{(N+1)\sin(\delta/2)}.
+}
+\tag{28}
+$$
+

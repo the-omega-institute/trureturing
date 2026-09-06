@@ -9,7 +9,7 @@ receipts:
   cover_disposition:
     outcome: partial-closed
     gids:
-      - D5/S3/Arith/GoldenResource5040PriceInterval.golden_resource_5040_unique_maximum_of_price_interval
+      - D5/S3/Arith/GoldenResource/GoldenResource5040EndpointComparison.golden_resource_5040_endpoint_comparisons
     gaps:
       - code: chain-migration-incomplete
         detail: 231b33a19aed31a8d7fab0e105ddcb7acd4603fffdc660eb8dc356662443a713

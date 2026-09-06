@@ -1,0 +1,30 @@
+## 定理五：固定分离度需要足够长的时间
+
+有
+
+$$
+\boxed{
+1-
+|\langle u_N(\vartheta),u_N(\vartheta+\delta)\rangle|^2
+\le
+\frac{N(N+2)}{12}\delta^2.
+}
+\tag{29}
+$$
+
+因此，如果要求
+
+$$
+|\langle u_N(\vartheta),u_N(\vartheta+\delta)\rangle|
+\le\eta<1,
+$$
+
+就必须满足
+
+$$
+\boxed{
+N(N+2)\delta^2\ge12(1-\eta^2).
+}
+\tag{30}
+$$
+

@@ -1,0 +1,70 @@
+## 2. 每条有序生成历史都计一次
+
+一条历史是一列素数：
+
+$$
+\gamma=(p_1,\ldots,p_k).
+$$
+
+定义：
+
+$$
+\boxed{
+Z_{\mathrm{path}}(s,z)
+=
+\sum_\gamma
+z^{|\gamma|}
+(p_1\cdots p_k)^{-s}.
+}
+$$
+
+记素数 ζ 函数：
+
+$$
+P(s)=\sum_pp^{-s}.
+$$
+
+按长度求和：
+
+$$
+\boxed{
+Z_{\mathrm{path}}(s,z)
+=
+\sum_{k\ge0}[zP(s)]^k
+=
+\frac1{1-zP(s)},
+}
+\tag{18}
+$$
+
+成立条件为：
+
+$$
+|z|P(\Re s)<1.
+$$
+
+素数 ζ 函数及其收敛、计算关系是经典对象。([Springer][4])
+
+同一终点 \(n=\prod p^{a_p}\) 的历史数为：
+
+$$
+\boxed{
+h(n)=\frac{\Omega(n)!}{\prod_pa_p!}.
+}
+\tag{19}
+$$
+
+所以：
+
+$$
+Z_{\mathrm{path}}(s,z)
+=
+\sum_nh(n)z^{\Omega(n)}n^{-s}.
+$$
+
+对 5040：
+
+$$
+h(5040)=840.
+$$
+
