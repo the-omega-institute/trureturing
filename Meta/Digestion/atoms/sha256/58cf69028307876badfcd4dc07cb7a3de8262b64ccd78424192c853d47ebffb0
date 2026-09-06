@@ -1,0 +1,39 @@
+## 定义256.1　四条约束路径
+
+取四条互不连接的数位约束路径：
+
+$$
+\boxed{
+P_3\sqcup P_2\sqcup P_1\sqcup P_1.
+}
+\tag{256.1}
+$$
+
+分别对应素数：
+
+$$
+2,\quad3,\quad5,\quad7.
+$$
+
+各路径的合法字串数为：
+
+$$
+5,\quad3,\quad2,\quad2.
+$$
+
+因此合法量子空间为：
+
+$$
+\boxed{
+\mathcal H_{5040}
+=
+\mathbb C^5\otimes\mathbb C^3
+\otimes\mathbb C^2\otimes\mathbb C^2,
+\qquad
+\dim\mathcal H_{5040}=60.
+}
+\tag{256.2}
+$$
+
+---
+

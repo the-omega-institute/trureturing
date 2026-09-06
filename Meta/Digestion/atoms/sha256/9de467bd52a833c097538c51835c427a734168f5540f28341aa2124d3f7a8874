@@ -1,0 +1,38 @@
+## 定义242.1　时钟寄存器与累计程序
+
+引入时钟空间
+
+$$
+\mathcal H_C
+=
+\operatorname{span}\{|0\rangle,\ldots,|N\rangle\}.
+$$
+
+令数据空间包含系统和全部记录：
+
+$$
+\mathcal H_D=\mathcal H_S\otimes\mathcal H_M.
+$$
+
+定义累计操作
+
+$$
+G_0=I,
+\qquad
+G_j=V_jV_{j-1}\cdots V_1.
+\tag{242.1}
+$$
+
+构造联合酉变换
+
+$$
+\boxed{
+\mathsf G
+=
+\sum_{j=0}^N|j\rangle\langle j|\otimes G_j.
+}
+\tag{242.2}
+$$
+
+---
+

@@ -1,0 +1,45 @@
+### 证明
+
+因为：
+
+$$
+\Omega(N/d)=\Omega(N)-\Omega(d),
+$$
+
+所以：
+
+$$
+\Gamma R|d\rangle
+=
+(-1)^{\Omega(N)-\Omega(d)}|N/d\rangle
+=
+(-1)^{\Omega(N)}R\Gamma|d\rangle.
+$$
+
+证毕。
+
+于是：
+
+$$
+\boxed{
+\begin{aligned}
+\Omega(N)\text{ 偶}
+&\Longrightarrow \Gamma R=R\Gamma,\\
+\Omega(N)\text{ 奇}
+&\Longrightarrow \Gamma R=-R\Gamma.
+\end{aligned}
+}
+\tag{15}
+$$
+
+并且：
+
+$$
+\boxed{
+(\Gamma R)^2=(-1)^{\Omega(N)}I.
+}
+\tag{16}
+$$
+
+这正是一项“连续做两次交换，是否积累一个负相位”的精确公式。
+

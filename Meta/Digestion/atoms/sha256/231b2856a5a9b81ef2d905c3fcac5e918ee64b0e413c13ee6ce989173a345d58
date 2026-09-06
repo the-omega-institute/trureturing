@@ -1,0 +1,103 @@
+## 定理 3：新增方向的高度公式
+
+这个候选数据能够由同一个 Hilbert 空间中的向量实现，当且仅当
+
+$$
+\boxed{
+A\succeq0,\qquad
+b\in\operatorname{ran}A,\qquad
+c-b^*A^+b\ge0,
+}
+\tag{26}
+$$
+
+其中 \(A^+\) 是 Moore–Penrose 逆。
+
+而新向量到已有底面张成空间的距离满足
+
+$$
+\boxed{
+h_\perp^2
+=
+c-b^*A^+b.
+}
+\tag{27}
+$$
+
+### 证明
+
+令
+
+$$
+V\alpha=\sum_i\alpha_i v_i,
+$$
+
+则 \(A=V^*V\)。
+
+把 \(w\) 分成
+
+$$
+w=w_\parallel+w_\perp,
+$$
+
+其中 \(w_\parallel\in\operatorname{ran}V\)，且 \(w_\perp\) 与该空间正交。
+
+交叉数据只能看到 \(w_\parallel\)。满足这些交叉数据的最小范数向量是
+
+$$
+w_\parallel=VA^+b,
+$$
+
+要求 \(b\in\operatorname{ran}A\)，并且
+
+$$
+\|w_\parallel\|^2=b^*A^+b.
+$$
+
+由勾股关系，
+
+$$
+c=\|w_\parallel\|^2+\|w_\perp\|^2.
+$$
+
+得到式（27）。反过来，如果右边非负，加入一条正交方向并赋予相应长度即可实现。证毕。
+
+---
+
+这给“升出一个新方向”一个非常具体的含义：
+
+$$
+\boxed{
+\text{新增高度平方}
+=
+\text{候选总平方量}
+-
+\text{已有切片交叉关系强制要求的平方量}.
+}
+$$
+
+三种情况截然不同：
+
+$$
+h_\perp^2>0:
+\quad\text{确实需要新的正交方向};
+$$
+
+$$
+h_\perp^2=0:
+\quad\text{新向量仍在旧空间里};
+$$
+
+$$
+h_\perp^2<0:
+\quad\text{这些数据根本不能拼成正 Hilbert 几何}.
+$$
+
+对于中心在原点的字面正方形，以及正上方顶点 \((0,0,h)\)，有
+
+$$
+b=0,\qquad c=h^2,
+$$
+
+所以式（27）就是通常的几何高度。
+

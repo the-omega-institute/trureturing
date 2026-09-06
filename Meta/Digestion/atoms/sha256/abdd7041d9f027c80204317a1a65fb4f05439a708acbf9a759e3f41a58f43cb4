@@ -1,0 +1,95 @@
+## 定理 4：消去顶点后，底面增加一个频率相关的耦合
+
+在相关逆矩阵存在时，底面 resolvent 为
+
+$$
+\boxed{
+\left[
+zI-H_b-\frac{gg^*}{z-\epsilon_*}
+\right]^{-1}.
+}
+\tag{29}
+$$
+
+因此顶点留下的有效项是
+
+$$
+\boxed{
+\Sigma(z)=\frac{gg^*}{z-\epsilon_*}.
+}
+\tag{30}
+$$
+
+它的第 \(i,j\) 项为
+
+$$
+\Sigma_{ij}(z)
+=
+\frac{g_i\overline{g_j}}{z-\epsilon_*}.
+$$
+
+### 证明
+
+在 \(zI-H_{\mathrm{pyr}}\) 中消去顶点块，直接取 Schur 补。证毕。
+
+所以，即使底面原来没有某条直接连接，顶点也可能在消去后为两个底面方向产生有效交叉项。
+
+更直观地，令顶点振幅为 \(a(\tau)\)，底面振幅为 \(v(\tau)\)：
+
+$$
+i\dot a=\epsilon_*a+g^*v,
+$$
+
+$$
+i\dot v=H_bv+ga.
+$$
+
+解出第一式：
+
+$$
+\boxed{
+a(\tau)
+=
+e^{-i\epsilon_*\tau}a(0)
+-i\int_0^\tau
+e^{-i\epsilon_*(\tau-s)}g^*v(s)\,ds.
+}
+\tag{31}
+$$
+
+代回底面方程，得到
+
+$$
+\boxed{
+\begin{aligned}
+\dot v(\tau)
+={}&-iH_bv(\tau)
+-ig\,e^{-i\epsilon_*\tau}a(0)\\
+&-\int_0^\tau
+g\,e^{-i\epsilon_*(\tau-s)}g^*v(s)\,ds.
+\end{aligned}
+}
+\tag{32}
+$$
+
+这就是一个精确记忆项。
+
+因此：
+
+$$
+\boxed{
+\text{增加一个动态方向}
+\longrightarrow
+\text{再把它消去}
+\longrightarrow
+\text{旧平面上的非局部记忆与交叉耦合}.
+}
+\tag{33}
+$$
+
+这与你说的“把整体压在一个平面，再通过另一个坐标理解”最接近。
+
+不过，它不意味着时间与空间已经互换。它证明的是：**被压掉的动态自由度，不能无代价地从有效方程中删除。**
+
+并且，一个顶点只产生秩至多为 \(1\) 的自能矩阵 \(gg^*/(z-\epsilon_*)\)。如果实际缺失的耦合具有更高秩，一个顶点通常不够。
+

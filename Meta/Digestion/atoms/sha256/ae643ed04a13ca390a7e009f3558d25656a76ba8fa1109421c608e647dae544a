@@ -1,0 +1,60 @@
+## 定理232.1　短时跟随失败概率
+
+有
+
+$$
+\boxed{
+p_{\mathrm{fail}}(t,\delta)
+=
+\frac{\delta^2}{\hbar^2}
+\operatorname{Tr}\!\left[\rho B(t)^\dagger B(t)\right]
++
+O(\delta^3).
+}
+\tag{232.2}
+$$
+
+### 证明
+
+使用
+
+$$
+U(t+\delta,t)
+=
+I-\frac{i\delta}{\hbar}H(t)+O(\delta^2),
+$$
+
+以及
+
+$$
+Q(t+\delta)=Q(t)-\delta\dot P(t)+O(\delta^2).
+$$
+
+于是
+
+$$
+\begin{aligned}
+Q(t+\delta)U(t+\delta,t)P(t)
+&=
+-\delta\dot P P
+-\frac{i\delta}{\hbar}QHP
++O(\delta^2)\\
+&=
+-\frac{i\delta}{\hbar}B(t)+O(\delta^2).
+\end{aligned}
+$$
+
+对该失败振幅取平方并与 \(\rho\) 配对，即得。∎
+
+### 一个重要结果
+
+一般不能写成
+
+$$
+p_{\mathrm{fail}}
+\propto
+\|QHP\|^2+\hbar^2\|\dot PP\|^2,
+$$
+
+因为两项之间存在交叉项，可能相互增强，也可能相消。
+

@@ -1,0 +1,34 @@
+## 定义242.2　自主传播 Hamiltonian
+
+取频率尺度 \(\Omega>0\)，定义
+
+$$
+\boxed{
+\begin{aligned}
+H_{\mathrm{aut}}
+={}&
+\frac{\hbar\Omega N}{2}I\\
+&+
+\frac{\hbar\Omega}{2}
+\sum_{j=1}^N
+\sqrt{j(N+1-j)}
+\left(
+|j\rangle\langle j-1|\otimes V_j
++
+|j-1\rangle\langle j|\otimes V_j^\dagger
+\right).
+\end{aligned}
+}
+\tag{242.3}
+$$
+
+这个 Hamiltonian 不随运行时间改变。
+
+它表达的是：
+
+> 时钟从标签 \(j-1\) 转移到 \(j\) 时，同时实施第 \(j\) 个记录交互；反向传播则实施其逆过程。
+
+不是外部计时器命令“现在执行第 \(j\) 步”，而是这种关联已经写进固定耦合。
+
+---
+

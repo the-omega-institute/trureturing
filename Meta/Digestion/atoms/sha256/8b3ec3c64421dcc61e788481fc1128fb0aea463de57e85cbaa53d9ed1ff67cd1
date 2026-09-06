@@ -1,0 +1,54 @@
+## 收束
+
+你的金字塔直觉有价值，但最有力量的部分不是：
+
+$$
+4+1=5\quad\Rightarrow\quad\text{永远剩一个奇}.
+$$
+
+而是：
+
+> **四个局部方向怎样共享一个参考与约束？新增通道是否真的读到了原来缺失的交叉关系？**
+
+本轮最具体的三个结果是：
+
+$$
+\boxed{
+\Gamma R=(-1)^{\Omega(N)}R\Gamma,
+}
+$$
+
+它把实际素数指数与两种观察的相容／反相容关系直接连接起来；
+
+$$
+\boxed{
+\operatorname{Div}(5040)
+\cong
+\mathcal W_3\times\mathcal W_2\times\mathcal W_1\times\mathcal W_1,
+}
+$$
+
+它把 60 个实际因数状态与 Fibonacci 禁邻结构精确连接起来；
+
+以及：
+
+$$
+\boxed{
+E(d)=E_*\log d
+=
+E_*\sum_{p,j}G_jb_{p,j}\log p,
+}
+$$
+
+它把素数方向与黄金能量编码精确连接起来。
+
+同时，那个最小四边形已经告诉我们：
+
+$$
+\boxed{
+\text{局部边缘相同、平均能量相同}
+\quad\not\Rightarrow\quad
+\text{整体奇偶与干涉相同}.
+}
+$$
+
