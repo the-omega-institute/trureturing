@@ -1,0 +1,48 @@
+# 三、第二个角度：释放资源后，有限因数态会碰到真正的归一化边界
+
+上面的有限对象也能自然通向 ζ，而不需要另选一个无关模型。
+
+固定 \(\beta>0\)，让 \(\lambda\downarrow0\)，并在打平时保留所有零收益层，记最优整数为 \(n_{\beta,\lambda}\)。
+
+对每个固定素数层，\(\theta_{p,k}(\beta)>0\)，所以当价格足够低时，该层一定进入最优配置。
+
+因此，每个固定正整数最终都会成为 \(n_{\beta,\lambda}\) 的因数。
+
+于是
+
+$$
+\boxed{
+\lim_{\lambda\downarrow0}
+\sum_{d\mid n_{\beta,\lambda}}d^{-\beta}
+=
+\begin{cases}
+\zeta(\beta),&\beta>1,\\
++\infty,&0<\beta\le1.
+\end{cases}
+}
+\tag{8}
+$$
+
+这由有限因数集合逐渐覆盖全部正整数，以及 Dirichlet 级数的收敛性质得到。([DLMF][1])
+
+所以：
+
+$$
+\boxed{
+\lambda>0:\text{有限资源、有限因数系统};
+}
+$$
+
+$$
+\boxed{
+\lambda\downarrow0:\text{释放全部算术状态};
+}
+$$
+
+$$
+\boxed{
+\beta=1:\text{全状态配分函数开始失去有限性}.
+}
+\tag{9}
+$$
+

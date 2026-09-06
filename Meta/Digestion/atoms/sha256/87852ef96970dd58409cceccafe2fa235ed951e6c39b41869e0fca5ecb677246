@@ -1,0 +1,11 @@
+## 定理三：最大全局离线位移的距离公式
+
+$$
+\boxed{
+\delta_*
+=
+\lim_{b\to+\infty}\bigl[b-R(b)\bigr].
+}
+\tag{27}
+$$
+

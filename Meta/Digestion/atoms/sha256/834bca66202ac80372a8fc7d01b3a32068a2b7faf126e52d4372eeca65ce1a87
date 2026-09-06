@@ -1,0 +1,36 @@
+**这次最值得保留的认识是：离散临界几何并不是任意形状都能出现。**
+
+$$
+\boxed{
+\text{整数倍率限制临界价格；}
+}
+$$
+
+$$
+\boxed{
+\text{超越性限制临界面能怎样相交；}
+}
+$$
+
+$$
+\boxed{
+\text{预算凹性限制临界面内部能有多危险。}
+}
+$$
+
+因此，信息逃逸不一定要靠无限增加坐标来修复。对于难以区分的临界方向，有时更强的方法是：
+
+$$
+\boxed{
+\text{不强行区分它们，}
+\quad
+\text{而是证明它们全部可能的组合都不能越界。}
+}
+$$
+
+这使5040之后的研究从“继续寻找新的边界现象”，进一步转向了**建立对边界交叉、近碰撞和未知次序都稳健的证明几何**。
+
+[1]: https://arxiv.org/html/math/0008177v2 "1Introduction"
+[2]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"
+[3]: https://people.maths.ox.ac.uk/pila/Nex.pdf "https://people.maths.ox.ac.uk/pila/Nex.pdf"
+[4]: https://www.renyi.hu/~p_erdos/1944-03.pdf "https://www.renyi.hu/~p_erdos/1944-03.pdf"

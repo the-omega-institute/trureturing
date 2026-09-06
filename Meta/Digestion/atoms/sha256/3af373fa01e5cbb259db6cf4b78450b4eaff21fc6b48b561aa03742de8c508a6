@@ -1,0 +1,68 @@
+# 结论
+
+这一轮最值得保留的不是“又出现了一个素数”，而是一个更加完整的机制：
+
+$$
+\boxed{
+\text{5040可以位于一个可见几何固定的纤维中；}
+}
+$$
+
+$$
+\boxed{
+\text{这个纤维可以支持真实定义的量子振幅变化；}
+}
+$$
+
+$$
+\boxed{
+\text{变化能否被观察，取决于允许的耦合与读数。}
+}
+$$
+
+其中两个最明确的结果是：
+
+$$
+\boxed{
+|5040\rangle
+\longrightarrow
+\cos(\omega t)|5040\rangle
+-i\sin(\omega t)
+\left(
+\sqrt{\frac6{11}}|5400\rangle+
+\sqrt{\frac5{11}}|4704\rangle
+\right),
+}
+$$
+
+同时全部粗几何读数保持不变；以及：
+
+$$
+\boxed{
+\text{同一个四边形执行图}
++
+\text{不同闭路相位}
+\longrightarrow
+\text{完全转移或完全相消}.
+}
+$$
+
+**所以，“几何编程语言”的核心不应只是把数字摆成某种形状，而应是：哪些变化被观察接口保留，哪些变化发生在纤维内部，以及这些变化怎样通过相干、能量和因果允许的控制重新进入实验。**
+
+下一层真正尚缺的物理条件也已经清楚：为什么某个现实系统选择这些耦合幅度与相位、如何局域地实现它们，以及不同观察者怎样把这些内部关系共同识别为同一套钟、距离和传播结构。只有这些条件继续闭合，算术几何才能从一种可执行模型，进一步成为物理时空的候选理论。
+
+[1]: https://projecteuclid.org/journals/annals-of-statistics/volume-26/issue-1/Algebraic-algorithms-for-sampling-from-conditional-distributions/10.1214/aos/1030563990.short?utm_source=chatgpt.com "Algebraic algorithms for sampling from conditional ..."
+[2]: https://arxiv.org/html/quant-ph/9807004v2 "Decoherence Free Subspaces for Quantum Computation"
+[3]: https://arxiv.org/abs/1208.4049 "[1208.4049] Quantum Transport Enhancement by Time-Reversal Symmetry Breaking"
+**可以找到明确的“离散临界”，而且这次已经不只是几何类比。最重要的是两种不同的跃迁：**
+
+**一种是最优整数的切换：参数连续变化，但最优寄存器配置只能按整数层跳变。**
+
+**另一种是隐藏动力学的出现：某个整数余量从零变成一，原来只有一个状态的观察纤维，突然能够容纳两个不同状态，以及它们之间的量子叠加。**
+
+这里有一个值得先明确的结论：
+
+> **5040不是孤立的“宇宙临界数”。在项目已经定义的优化目标下，它占据一个非零宽度的稳定区间；真正的临界位置是这个区间的两端。另一方面，它对应的三态观察纤维，又处在另一种与奇偶、暗态有关的离散结构中。**
+
+这两类临界可以同时研究，但不能直接认定为同一个临界。
+

@@ -1,0 +1,29 @@
+## 定理二：第四阶在绝对收敛域内的全部零点
+
+令：
+
+$$
+\boxed{
+\sigma_*=-\frac{\log\alpha}{\log2}
+=
+1.512527257788209179\ldots
+}
+\tag{18}
+$$
+
+则：
+
+$$
+\boxed{
+F_4(s)=0,\ \Re s>1
+\iff
+s=
+\sigma_*+
+\frac{(2k+1)\pi i}{\log2},
+\qquad k\in\mathbb Z.
+}
+\tag{19}
+$$
+
+这些零点全部简单。
+

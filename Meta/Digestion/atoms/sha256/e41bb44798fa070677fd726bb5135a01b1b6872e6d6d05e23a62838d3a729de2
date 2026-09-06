@@ -1,0 +1,43 @@
+# 四、整数边界如何进入解析式？通过排列顺序留下一个多项式
+
+局部因子有一个精确公式：
+
+$$
+\boxed{
+L_{p,r}(x)
+=
+\frac{A_r(q,x)}
+{\prod_{j=0}^{r}(1-q^j x)},
+}
+\tag{9}
+$$
+
+其中：
+
+$$
+\boxed{
+A_r(q,x)
+=
+\sum_{\pi\in S_r}
+q^{\operatorname{maj}(\pi)}
+x^{\operatorname{des}(\pi)}.
+}
+\tag{10}
+$$
+
+这里：
+
+$$
+\operatorname{Des}(\pi)
+=
+\{j:\pi_j>\pi_{j+1}\},
+$$
+
+$$
+\operatorname{des}(\pi)=|\operatorname{Des}(\pi)|,
+\qquad
+\operatorname{maj}(\pi)=\sum_{j\in\operatorname{Des}(\pi)}j.
+$$
+
+这是经典的 Carlitz 型 \(q\)-Eulerian 恒等式，与加权整数多面体计数有严格联系。不是本轮首次发现的公式；关键是它现在精确进入了我们的算术配分函数。([DOI][2])
+

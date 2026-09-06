@@ -1,0 +1,24 @@
+## 与项目的方法论连接
+
+本轮得到两条互补的严格路线：
+
+$$
+\boxed{
+\text{层增益与资源价格}
+\longrightarrow
+\text{最优整数的稳定区间及严格差距};
+}
+$$
+
+$$
+\boxed{
+\text{非负整数约束}
+\longrightarrow
+\text{纤维维数、连通分量与谱结构}.
+}
+$$
+
+已有 `PrimeAxisEncoding.lean` 保证编码层的对应；但这些对应不自动选择物理 Hamiltonian。已有 `ExactDescentNoCarry.lean` 则要求针对指定 FLOW 和目标证明下降，不能把“当前几何没变”扩大成“全部未来实验都无法区分”。
+
+同样，项目的守恒—自主性区分继续重要：粗几何可以严格守恒，而其纤维中的状态持续变化。
+

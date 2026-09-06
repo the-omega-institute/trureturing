@@ -1,0 +1,35 @@
+## 6.1 仓库当前做到哪里？
+
+本轮读取的：
+
+```text
+D5/S3/Zeros/Jensen/JensenPolynomialObstruction.lean
+```
+
+已经定义 Jensen 多项式与“全部根为实数”的谓词，并证明：
+
+> 在给定 Jensen–Pólya 解析桥梁以后，RH 的失败会产生一个有限非实根见证，或相应的系数障碍。
+
+但源码中：
+
+```lean
+hRhToHyperbolic
+hNonnegativeHyperbolicToRh
+```
+
+明确是输入假设。真实 ζ 系数与这些解析定理之间的连接，并没有在这个模块中被无条件完成。
+
+所以，项目真正可以继续推进的是：
+
+$$
+\boxed{
+\text{真实 }\xi\text{ 系数}
+\longrightarrow
+\text{可核验的 Jensen 多项式}
+\longrightarrow
+\text{Hermite 矩阵与主子式证书}.
+}
+$$
+
+而不是把已存在的“有桥梁则有有限见证”定理，读成已经证明了全部真实矩阵正半定。
+

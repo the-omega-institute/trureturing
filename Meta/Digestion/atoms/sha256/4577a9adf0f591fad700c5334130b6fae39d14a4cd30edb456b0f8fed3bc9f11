@@ -1,0 +1,66 @@
+# 五、同一条边界还可以从量子可区分性读取
+
+在实参数 \(\lambda>T\) 下，定义概率：
+
+$$
+P_{T,\lambda}(n)
+=
+\frac{e^{J_\lambda(n)/T}}{\mathscr Z_T(\lambda)}.
+$$
+
+构造归一化纯态：
+
+$$
+\boxed{
+|\Omega_{T,\lambda}\rangle
+=
+\sum_{n\ge1}\sqrt{P_{T,\lambda}(n)}\,|n\rangle.
+}
+\tag{13}
+$$
+
+定义对数能量读出：
+
+$$
+E|n\rangle=(\log n)|n\rangle.
+$$
+
+则：
+
+$$
+\boxed{
+\langle\Omega_{T,\lambda},
+e^{-itE}\Omega_{T,\lambda}\rangle
+=
+\frac{\mathscr Z_T(\lambda+iTt)}
+{\mathscr Z_T(\lambda)}.
+}
+\tag{14}
+$$
+
+所以，复参数零点对应于原态与相位演化后态的正交。
+
+对同一族还可直接求导：
+
+$$
+\boxed{
+\mathscr F_T''(\lambda)
+=
+\frac1T\operatorname{Var}_{T,\lambda}(\log n).
+}
+\tag{15}
+$$
+
+其纯态量子 Fisher 信息为：
+
+$$
+\boxed{
+I_Q(\lambda)
+=
+\frac1{T^2}\operatorname{Var}_{T,\lambda}(\log n).
+}
+\tag{16}
+$$
+
+因此，最优结构切换附近的能量波动，同时控制了参数敏感度。
+
