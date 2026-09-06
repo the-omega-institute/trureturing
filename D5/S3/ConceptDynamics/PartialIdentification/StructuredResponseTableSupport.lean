@@ -54,6 +54,16 @@ theorem small_generator_not_universal
   have lower := surjective_response_table_generator_requires_four_pow generator surjective
   omega
 
+/-- Twenty-one deterministic latent atoms cannot cover the three-row unrestricted
+table carrier, which already has 4^3 = 64 elements. The number 21 is included to
+make the scale distinction with the current golden powers-only DFAO draft explicit;
+this theorem makes no claim about DFAO state minimality. -/
+theorem twenty_one_latent_states_not_universal_three_rows
+    (generator : Fin 21 → (Fin 3 → Bool × Bool)) :
+    ¬ Function.Surjective generator := by
+  apply small_generator_not_universal generator
+  norm_num
+
 /-- If every row law assigns positive mass to all four complete response types,
 the elementary independent table law assigns positive mass to every one of the
 4^k full tables. -/
@@ -95,6 +105,7 @@ theorem positive_independent_table_law_not_supported_by_small_generator
 
 #print axioms surjective_response_table_generator_requires_four_pow
 #print axioms small_generator_not_universal
+#print axioms twenty_one_latent_states_not_universal_three_rows
 #print axioms independentResponseTable_full_support
 #print axioms positive_independent_table_law_generator_lower_bound
 #print axioms positive_independent_table_law_not_supported_by_small_generator
