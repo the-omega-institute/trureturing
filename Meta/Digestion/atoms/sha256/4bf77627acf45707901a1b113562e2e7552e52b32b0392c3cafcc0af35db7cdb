@@ -1,0 +1,20 @@
+## 26. Counterfactual factorization under the original elementary source law
+
+`IndependentSourceCounterfactualFactorization.lean` connects the new source construction to the existing locality compiler and source-separation theorem. Its Scribe source covers all four public bridge theorems.
+
+`independentSource_pair_readout_eq_partitioned` proves that evaluating two original full-source readouts under `independentSourceLaw` gives exactly the existing `partitionedReadoutLaw`, with both block laws derived from the elementary family. `independentSource_separated_readouts_factorize` therefore obtains a product response law from disjoint semantic supports. Its joint-cell corollary uses the actual marginals of the original full-source pushforward.
+
+The end-to-end theorem is `compiled_counterfactual_events_independent_sources`. Its inputs are elementary normalized laws, the existing parent-indexed structural model and topological certificate, direct exogenous locality, two finite counterfactual query families, and disjoint compiled supports. Its conclusion concerns the direct pushforward of the original source law:
+
+```text
+mutually independent elementary disturbances
+  -> derived S/complement source product law
+  -> certified intervention-specific query locality
+  -> source-separated response maps
+  -> product-factorized Boolean counterfactual event law.
+```
+
+No separate block-law witness is supplied by the caller. No new structural evaluator or independent noise copy per counterfactual world is introduced. For two benefit indicators the `(true,true)` cell is the product of their marginal benefit probabilities. The previous block-level theorem remains more general about dependence inside each supplied source block; this continuation supplies its canonical elementary-independent specialization.
+
+These results are sufficient separation statements. Shared ancestors may still make compiled supports overlap, conditioning can change source dependence, and fixed structural equations can restrict the attainable response laws. The earlier obligations concerning same-mechanism coupling and simultaneous sharp attainment remain distinct.
+

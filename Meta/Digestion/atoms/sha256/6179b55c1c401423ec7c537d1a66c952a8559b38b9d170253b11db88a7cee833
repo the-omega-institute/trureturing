@@ -1,0 +1,36 @@
+### V7 —— `D5/S3/Zeros/PochhammerDeformation/LinearFactor`(PR #5949)
+
+预登记的枢纽 **(V7.0) 成立**,已内核确认,并落地为两条公开定理:
+
+```lean
+theorem lOp_linear_factor_on_falling (a t : ℝ) (ha : 0 < a) (k : ℕ) :
+    lOp a ((C a⁻¹ * X + C t) * descPochhammer ℝ k) =
+      (X + C t) * lOp a (descPochhammer ℝ k) +
+        C a⁻¹ * X * (1 + X) * (lOp a (descPochhammer ℝ k)).derivative
+
+theorem lOp_linear_factor (a t : ℝ) (ha : 0 < a) (P : ℝ[X]) :
+    lOp a ((C a⁻¹ * X + C t) * P) =
+      (X + C t) * lOp a P + C a⁻¹ * X * (1 + X) * (lOp a P).derivative
+```
+
+先在下降 Pochhammer 基上逐元素验证,再经 `Polynomial.Sequence.span` 与
+`Submodule.span_induction` 推广到全体;两边同为 `A_k·((1+k/a)z^{k+1} + (t+k/a)z^k)`(含 `k=0`),
+其中 `A_k = (a)_k`,由已冻结的 `lOp_definition` 给出 `L_a(D_k) = A_k z^k`。
+
+主结论与其分析枢纽:
+
+```lean
+theorem differential_preserves_unit_interval (a t : ℝ) (ha : 0 < a)
+    (ht : t ∈ Set.Icc (0:ℝ) 1) (Q : ℝ[X]) (hQ : RealRootsInUnitInterval Q) :
+    RealRootsInUnitInterval ((X + C t) * Q + C a⁻¹ * X * (1 + X) * Q.derivative)
+
+theorem linear_factor_preserves_unit_interval (a t : ℝ) (ha : 0 < a)
+    (ht : t ∈ Set.Icc (0:ℝ) 1) (P : ℝ[X]) (hP : RealRootsInUnitInterval (lOp a P)) :
+    RealRootsInUnitInterval (lOp a ((C a⁻¹ * X + C t) * P))
+```
+
+即:Open Problem 1.9 在「其中一个因子次数为 1」的情形下**对一切 `a > 0` 成立**
+(论文只对 `a = 1` 有 Wagner 的 Theorem D,一般 `a > 0` 明写 open)。
+`differential_preserves_unit_interval` 用 mathlib 的对数导数公式与一个正权倒数和的分离论证,
+是本条的分析逃逸见证。
+

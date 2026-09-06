@@ -1,0 +1,13 @@
+## 64. Paper continuation: a joint colored replay targets d+2 total atoms
+
+There is a sharper construction that treats the pair jointly. On the disjoint union of the upper and lower contact carriers, give atom (plus,i) mass u_i/2 and atom (minus,i) mass v_i/2. This is one normalized rational law. Retain only the following d+1 coordinates:
+
+```text
+psi(plus,i)  = (1,  phi(i)),
+psi(minus,i) = (0, -phi(i)).
+```
+
+The retained moments are `(1/2, delta/2)`. Apply support-contained moment compression to this single colored law. Its support has at most d+2 atoms. Preservation of the first coordinate gives mass 1/2 on each color. Multiplying the two color restrictions by two recovers two probability laws. Preservation of the signed features gives the same moment difference delta, and support containment retains the two residual contact levels. Consequently their query gap still equals the same optimal budget.
+
+Thus, at paper level, every existing contact certificate has another one with at most d+2 total active atoms across both endpoints. This can be sharper than separately bounding each endpoint by d+1. The argument holds for nonzero tolerances because it preserves the realized signed moment difference, not merely an error bound. The explicit Fin-index packing/unpacking adapter and joint replay theorem have not yet been added to Lean. The new formal source in Section 63 covers the separate two-trace construction only.
+

@@ -1,0 +1,34 @@
+## 22. A shared-root intervention cut and its limits
+
+The closed support calculation `fork_support_cut_certificate` uses four nodes:
+
+```text
+0 = C, 1 = A, 2 = first outcome, 3 = second outcome
+parents(0) = parents(1) = empty
+parents(2) = parents(3) = {0,1}
+N(v) = {v}
+order = [0,1,2,3].
+```
+
+The exact compiled supports are
+
+```text
+under do(A = a):
+  D(first outcome)  = {U_C, U_first}
+  D(second outcome) = {U_C, U_second}
+
+under do(C = c, A = a):
+  D(first outcome)  = {U_first}
+  D(second outcome) = {U_second}.
+```
+
+The support calculation is independent of the fixed assigned values. Consequently, taking the union across treatment values preserves these sets for complete treatment-response pairs and their benefit events. The shared-root example in Section 18 fails the disjoint-support premise under treatment-only intervention. Fixing the common root removes that shared coordinate and makes the source-separation route available under an appropriate independent block law.
+
+Three distinctions matter for interpretation.
+
+First, shrinking dependency supports concerns the source coordinates a query may read. Adding an intervention generally changes the estimand. No ordering of the old and new probabilities, or nesting of their identified intervals, follows from support antitonicity alone.
+
+Second, `do(C=c)` and conditioning on an endogenous event `C=c` require different arguments. Conditioning can change dependence between residual source blocks. The new modules prove the constant-intervention route and do not infer general conditional independence from it.
+
+Third, the interval in Section 17 is sharp over a family allowing all compatible complete within-mechanism response laws. A fixed set of structural equations can restrict that family further. The new source-separation theorem establishes factorization for a given structural model, while transferring the full sharp interval to a more restricted structural family still requires attaining models inside that family.
+

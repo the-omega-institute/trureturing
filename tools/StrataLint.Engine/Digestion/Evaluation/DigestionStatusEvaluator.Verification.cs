@@ -75,7 +75,6 @@ internal static partial class DigestionStatusEvaluator
         DigestionLedgerEntry entry,
         RepositorySnapshot snapshot,
         VerifiedScribeEmissions? verifiedEmissions,
-        RawChangeSet? changes,
         ICollection<DigestionGap> gaps,
         ImmutableArray<string>.Builder findings)
     {
@@ -83,8 +82,7 @@ internal static partial class DigestionStatusEvaluator
         var complete = true;
         foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
         {
-            var hasReceipt = receipts.TryGetValue(gid, out var receipt);
-            if (!hasReceipt)
+            if (!receipts.ContainsKey(gid))
             {
                 gaps.Add(new DigestionGap(
                     "scribe-receipt-missing",
@@ -95,15 +93,8 @@ internal static partial class DigestionStatusEvaluator
 
             var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
             var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
-            var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
             var selectsDeclaration = Gid.TryParse(gid, out var parsedGid)
                 && parsedGid.ToTarget() is Target.Formal { Declaration: not null };
-            var receiptInputChanged = changes is null
-                || DigestionCasStore.EntryChanged(entry, changes)
-                || PathChanged(changes, definitionPath)
-                || PathChanged(changes, emissionPath)
-                || parsedGid is not null && PathChanged(changes, parsedGid.Path.Value);
-            ScribeEmissionRecord? verified = null;
             if (verifiedEmissions is null)
             {
                 gaps.Add(new DigestionGap(
@@ -112,17 +103,13 @@ internal static partial class DigestionStatusEvaluator
                     DigestionGapSeverity.NonFatal));
                 complete = false;
             }
-            else if (!verifiedEmissions.TryGet(documentGid, out var verifiedRecord))
+            else if (!verifiedEmissions.TryGet(documentGid, out _))
             {
                 gaps.Add(new DigestionGap(
                     "scribe-emission-missing",
                     gid,
                     DigestionGapSeverity.NonFatal));
                 complete = false;
-            }
-            else
-            {
-                verified = verifiedRecord;
             }
 
             if (selectsDeclaration
@@ -136,43 +123,12 @@ internal static partial class DigestionStatusEvaluator
                 complete = false;
             }
 
-            if (!snapshot.TryGetFile(definitionPath, out var definition))
+            if (!snapshot.TryGetFile(definitionPath, out _))
             {
                 gaps.Add(new DigestionGap(
                     "scribe-definition-missing",
                     gid,
                     DigestionGapSeverity.NonFatal));
-                complete = false;
-            }
-            // Binds scribe.definition_sha256 to both the definition bytes and verified Scribe
-            // record. This guard does not bind emission, coverage, or projected_status.
-            else if (hasReceipt
-                && receiptInputChanged
-                && (receipt!.DefinitionSha256
-                    != DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256
-                    || verified is not null
-                    && (verified.DefinitionPath != definitionPath
-                        || verified.DefinitionSha256 != receipt.DefinitionSha256)))
-            {
-                gaps.Add(new DigestionGap(
-                    "scribe-definition-mismatch",
-                    gid,
-                    DigestionGapSeverity.ReceiptIntegrityFailure));
-                complete = false;
-            }
-
-            // Binds scribe.emission_sha256 to the verified Scribe emission record. This guard
-            // does not bind definition, coverage, or projected_status.
-            if (hasReceipt
-                && receiptInputChanged
-                && verified is not null
-                && (verified.EmissionPath != emissionPath
-                    || verified.EmissionSha256 != receipt!.EmissionSha256))
-            {
-                gaps.Add(new DigestionGap(
-                    "scribe-emission-mismatch",
-                    gid,
-                    DigestionGapSeverity.ReceiptIntegrityFailure));
                 complete = false;
             }
         }

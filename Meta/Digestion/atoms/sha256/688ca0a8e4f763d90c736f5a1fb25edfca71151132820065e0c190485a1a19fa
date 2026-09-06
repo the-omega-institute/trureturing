@@ -1,0 +1,36 @@
+## 74. Exact robustness of two independent benefit mechanisms
+
+`JointBenefitToleranceSharp.lean` reuses `MarkovianJointMechanismModel`, `markovianJointResponseMass`, and `jointMechanismBenefitMass`. Each candidate model has two independent complete Boolean response laws. Coupling between Y0 and Y1 within a mechanism remains arbitrary. The target J is the actual probability that both mechanisms benefit, hence the product of their two benefit probabilities by the existing theorem.
+
+For candidate models H and L, let each mechanism's control and treated success marginals differ by at most eta_i0 and eta_i1. All four tolerances are nonnegative rational numbers. Put
+
+```text
+s1 = eta10+eta11,  s2 = eta20+eta21,
+a = min(1,(1+s1)/2),  b = min(1,(1+s2)/2).
+```
+
+The new sharp modulus is
+
+```text
+max_{H,L satisfying all four marginal tolerances} abs(J(H)-J(L))
+  = max(a,b,1-4*(1-a)*(1-b)).
+```
+
+The main source theorem states both universal validity for the original product models and existence of an attaining pair for every tolerance tuple. It supplies no primal optimizer as an assumption. The formula is a global pairwise modulus over all marginal locations. It does not replace the identified interval at fixed observed marginals, and the tolerances are not automatically confidence radii around a common observation. Shared ancestors or coupled disturbances are not covered solely by calling an SCM Markovian.
+
+The necessary endpoint-sensitive information is stronger than the individual ambiguity bound. If x is one mechanism's benefit in H and u its benefit in L, then
+
+```text
+2*x-2*a <= u,   0<=x,u<=1.
+```
+
+For s1<=1, normalization gives `2*x <= 1+p1(H)-p0(H)`, while `p1(L)-p0(L)<=u`; the two marginal tolerance inequalities give the displayed result. For s1>1, a=1 and nonnegativity makes it immediate. The second mechanism gives `2*y-2*b<=v`.
+
+Consequently the oriented joint difference is bounded by `x*y-u*v`. If x<=a it is at most a; if y<=b it is at most b. In the remaining rectangle x in [a,1], y in [b,1], nonnegativity gives
+
+```text
+x*y-u*v <= g(x,y) = x*y-4*(x-a)*(y-b).
+```
+
+This polynomial is affine in each coordinate separately. Its four rectangle corners are a*b, a, b and `1-4*(1-a)*(1-b)`, with a*b dominated by a and b. The source proves the bound with explicit slice-slope signs, avoiding an assumed vertex theorem or convexification of product laws. Reversing the candidate models gives the absolute-value bound.
+

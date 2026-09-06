@@ -214,7 +214,7 @@ public sealed partial class FormulaCorpusInventoryTests
         {
             var constructor = typeof(DocumentBlock.Describe)
                 .GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
-                .Single(static candidate => candidate.GetParameters().Length == 9);
+                .Single(static candidate => candidate.GetParameters().Length == 10);
             var declaration = LeanDeclarationRef.Create(
                 $"D5/S0/Synthetic/RendererContract.{id.Replace('-', '_')}");
             return (DocumentBlock.Describe)constructor.Invoke(
@@ -225,6 +225,7 @@ public sealed partial class FormulaCorpusInventoryTests
                 DescribeStatement.FromLean(declaration),
                 provenance ?? AssessedProvenance.FromRepo(),
                 commentary,
+                null,
                 null,
                 null,
                 null,
@@ -417,7 +418,7 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(mulStartingNeg);
         formulas.Add(new Formula.LatexGroup([mulStartingNeg]));
         formulas.Add(new Formula.FunctionCall(FormulaIdentifier.Create("f"), [mulStartingNeg]));
-         // FunctionCall.Arguments=multiplicative;negation:true
+        // FunctionCall.Arguments=multiplicative;negation:true
         formulas.Add(new Formula.Power(function, one));
         formulas.Add(new Formula.Power(function, script));
         formulas.Add(new Formula.Power(function, subscript));

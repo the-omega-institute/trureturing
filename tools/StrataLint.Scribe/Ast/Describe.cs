@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
@@ -45,6 +46,43 @@ public enum DescribeProvenanceKind
     LiteratureAttested,
     RepoDerived,
     SuspectedNovel,
+}
+
+public sealed record ProblemSlugRef
+{
+    private ProblemSlugRef(string value) => Value = value;
+
+    public string Value { get; }
+
+    public static ProblemSlugRef Create(string value) =>
+        value is not null && ProblemPoolPaths.IsCanonicalSlug(value)
+            ? new ProblemSlugRef(value)
+            : throw new ArgumentException("Problem slug is not canonical.", nameof(value));
+
+    public override string ToString() => Value;
+}
+
+public enum ResolutionKind
+{
+    Proved,
+    Refuted,
+}
+
+public sealed record OpenProblemResolutionClaim
+{
+    public OpenProblemResolutionClaim(
+        ProblemSlugRef problemSlug,
+        ResolutionKind resolutionKind)
+    {
+        ProblemSlug = problemSlug ?? throw new ArgumentNullException(nameof(problemSlug));
+        ResolutionKind = resolutionKind is ResolutionKind.Proved or ResolutionKind.Refuted
+            ? resolutionKind
+            : throw new ArgumentOutOfRangeException(nameof(resolutionKind));
+    }
+
+    public ProblemSlugRef ProblemSlug { get; }
+
+    public ResolutionKind ResolutionKind { get; }
 }
 
 public abstract record DescribeStatement
@@ -217,11 +255,12 @@ public static class Describe
         StatementSource statementSource,
         AssessedProvenance provenance,
         BlockSequence narrative,
-        DescribeRole? role = null) =>
+        DescribeRole? role = null,
+        OpenProblemResolutionClaim? openProblemResolutionClaim = null) =>
         DocumentBlock.Describe.ReportDerived(
             id, title, handle, statementSource,
             provenance ?? throw new ArgumentNullException(nameof(provenance)),
-            narrative, role);
+            narrative, role, openProblemResolutionClaim);
 
     /// <summary>
     /// Commentary about a declaration, named by handle. Emits a reference and prose, never a formula,
@@ -290,6 +329,13 @@ internal static class DescribeVocabulary
         DescribeProvenanceKind.RepoDerived => "repo-derived",
         DescribeProvenanceKind.SuspectedNovel => "suspected-novel",
         _ => throw new ArgumentOutOfRangeException(nameof(provenance)),
+    };
+
+    internal static string CanonicalName(ResolutionKind resolution) => resolution switch
+    {
+        ResolutionKind.Proved => "proved",
+        ResolutionKind.Refuted => "refuted",
+        _ => throw new ArgumentOutOfRangeException(nameof(resolution)),
     };
 
     internal static DescribeProvenanceKind Kind(AssessedProvenance provenance) => provenance switch

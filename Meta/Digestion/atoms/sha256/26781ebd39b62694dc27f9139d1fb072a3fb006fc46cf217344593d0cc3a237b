@@ -1,0 +1,1 @@
+- **4.118(OEIS A396093,2026-05-19)**:A(x)=B(B(B(x))),B(x)=x/(1−x)²,即 A(x)=x(1−x)²(1−3x+x²)²/(1−7x+13x²−7x³+x⁴)²;原文两条猜想「Conjecture: a(2*n) is even for n >= 1.」「Conjecture: a(2*n-1) is even iff n is of the form 5*k-2 (k >= 1) for n >= 1.」。核对:OEIS 仍标猜想;编号检索未见证明。**档位:第一档**。

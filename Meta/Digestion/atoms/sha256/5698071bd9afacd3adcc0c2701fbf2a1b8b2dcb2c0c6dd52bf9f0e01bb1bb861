@@ -1,0 +1,27 @@
+### 摘要
+
+本增订**证明 Gribinski 猜想在 `m=2` 处成立**,并**给出该猜想参数范围的锐性**——后者原文未曾断言。
+
+J. Campbell、R. Morales、D. Perales 在《Even Hypergeometric Polynomials and Finite Free Commutators》
+(arXiv:2502.00254v2,v1 2025-02-01,v2 2025-12-21)的 Definition 3.10 中,
+对 \(m\in\mathbb N\) 与 \(\alpha\in\mathbb R\setminus\{-1,\dots,-m\}\) 定义**广义矩形卷积**
+\(p\boxplus_m^{\alpha}q\),其系数为
+
+$$
+\mathsf e_k\bigl(p\boxplus_m^{\alpha}q\bigr)
+=\frac{(m)_{\bar k}}{(m+\alpha)_{\bar k}}
+\sum_{i+j=k}\frac{\mathsf e_i(p)}{(m)_{\bar i}(m+\alpha)_{\bar i}}\cdot
+\frac{\mathsf e_j(q)}{(m)_{\bar j}(m+\alpha)_{\bar j}} .
+$$
+
+紧随其后该文写道:
+
+> We should also mention that **Gribinski [12] conjectured** that the generalized rectangular convolution
+> preserves positive real roots.
+> **Conjecture 3.13.** Given \(\alpha>-1\), if \(p,q\in\mathcal P_m(\mathbb R_{\ge0})\),
+> then \(p\boxplus_m^{\alpha}q\in\mathcal P_m(\mathbb R_{\ge0})\).
+> **At the time of writing, the conjecture is only known to hold when \(\alpha\) is a non-negative integer.**
+
+本增订在 \(m=2\) 处对**一切**满足 \(\alpha>-1\) 的实数 \(\alpha\) 证明该猜想,
+并证明在该文自己的定义域 \(\mathbb R\setminus\{-1,-2\}\) 上,\(\alpha>-1\) 是**充要**的。
+

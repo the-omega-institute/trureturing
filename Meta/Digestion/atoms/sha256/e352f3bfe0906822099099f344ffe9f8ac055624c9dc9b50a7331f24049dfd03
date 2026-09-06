@@ -1,0 +1,34 @@
+## 17. Four-marginal joint-benefit sharpness, 2026-09-05
+
+The remote audit at commit `41009328ecfb110c8e429522552d5329ec912fb8` found that the fixed-benefit singleton theorem in Section 12 was already present. This continuation reuses that module and its complete model carrier rather than recreating it.
+
+New authored Lean source:
+
+```text
+D5/S3/ConceptDynamics/Causal/PartialIdentification/
+  MarkovianJointBenefitMarginalSharpBounds.lean
+```
+
+Its Scribe source is under the matching `Blueprint` path. Compilation status for this continuation is stated explicitly in Section 19.
+
+Let the four interventional success probabilities be `p10,p11,p20,p21`. Define
+
+```text
+L1 = max(0, p11 - p10), U1 = min(p11, 1 - p10)
+L2 = max(0, p21 - p20), U2 = min(p21, 1 - p20).
+```
+
+Assume `L1 <= U1` and `L2 <= U2`. For independent complete mechanism response laws, the exact rational target range is
+
+```text
+[L1 * L2, U1 * U2] intersect Q.
+```
+
+The main authored theorem is `four_marginal_joint_benefit_sharp_iff`. Its existential witness fixes all four interventional marginals, rather than fixing the two cross-world benefit probabilities as Section 12 does. Each within-mechanism coupling remains free subject to its own marginals.
+
+The arithmetic core `nonnegative_product_interval_iff` constructs rational factors for every rational target `q` in that interval. If `q <= U1 * L2` and `L2 > 0`, choose `(b1,b2) = (q/L2,L2)`. If that edge has `L2 = 0`, the target is zero. Otherwise `U1 > 0` and choose `(b1,b2) = (U1,q/U1)`. This path follows two edges of the parameter rectangle. It does not interpolate joint product distributions and does not rely on square roots or a real intermediate-value theorem.
+
+For each chosen benefit value, `benefitResponseLaw` supplies the existing four-cell attaining response law. Their product realizes the desired simultaneous-benefit target. Necessity reuses `markovian_benefit_target_feasible_iff` through `outcomeLaw_benefit_bounds`.
+
+For four success marginals equal to one half, the resulting interval is `[0,1/4]`, as stated by `balanced_four_marginal_sharp_interval`. This must be distinguished from the singleton `{1/4}` obtained when the two benefit probabilities themselves are both fixed at one half.
+
