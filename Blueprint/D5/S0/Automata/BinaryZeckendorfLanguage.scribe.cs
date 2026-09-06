@@ -35,7 +35,7 @@ internal sealed class BinaryZeckendorfLanguageDocument : IScribeDocumentDefiniti
         Call("List", Call("Fin", F.D(2))), F.Comma, F.Sp,
         F.Grp(F.Exists, F.Sp, F.Id("q"), F.Sp, F.Colon, F.Sp,
             F.Id("BinaryZeckendorfState"), F.Comma, F.Sp,
-            Call("binaryZeckendorfBase.eval", F.Id("w")), F.Sp, F.Eq, F.Sp,
+            Call("evalBinaryZeckendorfBase", F.Id("w")), F.Sp, F.Eq, F.Sp,
             Call("some", F.Id("q"))),
         F.Sp, F.Iff, F.Sp, Call("NoAdjacentOnes", F.Id("w"))));
 

@@ -46,14 +46,14 @@ internal sealed class GoldenZeckendorfLanguageDocument : IScribeDocumentDefiniti
         F.Forall, F.Sp, F.Id("n"), F.Sp, F.Colon, F.Sp, F.Id("Nat"), F.Comma, F.Sp,
         F.Exists, F.Sp, F.Id("q"), F.Sp, F.Colon, F.Sp,
         F.Id("BinaryZeckendorfState"), F.Comma, F.Sp,
-        Call("binaryZeckendorfBase.eval", Call("zeckendorfMSDWord", F.Id("n"))),
+        Call("evalBinaryZeckendorfBase", Call("zeckendorfMSDWord", F.Id("n"))),
         F.Sp, F.Eq, F.Sp, Call("some", F.Id("q"))));
 
     private static Formula PowerFormula() => F.Disp(F.Seq(
         F.Forall, F.Sp, F.Id("i"), F.Sp, F.Colon, F.Sp, F.Id("Nat"), F.Comma, F.Sp,
         F.Exists, F.Sp, F.Id("q"), F.Sp, F.Colon, F.Sp,
         F.Id("BinaryZeckendorfState"), F.Comma, F.Sp,
-        Call("base4Problem.base.eval", Call("base4Problem.input", F.Id("i"))),
+        Call("evalBase4ProblemBase", Call("base4Problem.input", F.Id("i"))),
         F.Sp, F.Eq, F.Sp, Call("some", F.Id("q"))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
