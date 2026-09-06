@@ -1,0 +1,72 @@
+## 一个重要限制：这份时间能隙与具体算法内容无关
+
+令：
+
+$$
+V_0=I,\qquad V_k=U_{k-1}\cdots U_0.
+$$
+
+作分块酉变换：
+
+$$
+W=\sum_{k=0}^{L}|k\rangle\langle k|\otimes V_k.
+$$
+
+则：
+
+$$
+\boxed{
+W^*H_{\mathrm{hist}}W
+=
+E_cL_{\mathrm{path}}\otimes I,
+}
+\tag{33}
+$$
+
+其中 \(L_{\mathrm{path}}\) 是 \(L+1\) 个顶点的路径图 Laplacian。
+
+所以传播部分的本征值为：
+
+$$
+\boxed{
+2E_c\left[
+1-\cos\frac{j\pi}{L+1}
+\right],
+\qquad j=0,\ldots,L.
+}
+\tag{34}
+$$
+
+最小非零能隙为：
+
+$$
+\boxed{
+\Delta_L
+=
+2E_c\left[
+1-\cos\frac{\pi}{L+1}
+\right]
+\sim
+\frac{E_c\pi^2}{(L+1)^2}.
+}
+\tag{35}
+$$
+
+因此：
+
+$$
+L\to\infty
+\Longrightarrow
+\Delta_L\to0.
+$$
+
+这类历史时钟导致的临界性有系统研究，但必须保留具体构造与假设。([arXiv][8])
+
+**这里的能隙闭合，首先来自越来越长的时钟链，并不自动说明数据算法发现了 ζ 离线零点。**
+
+任何有限幺正计算都能构造这样的传播正算子。因此“已经找到一个正的时空哈密顿量”本身，还没有排除任何实际算术反例。
+
+真正的算术信息仍需进入：初始条件、允许事件、输出读数，以及它们与实际 ξ 的保真关系。
+
+---
+

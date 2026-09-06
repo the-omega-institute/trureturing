@@ -1,0 +1,24 @@
+* \(d^{-s}\)：算术能量权重。
+
+若：
+
+$$
+B=\prod_pp^{a_p},
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal Q_B(z,s)
+=
+\prod_{p\mid B}
+\left[
+1+zp^{-s}+\cdots+(zp^{-s})^{a_p}
+\right].
+}
+\tag{11}
+$$
+
+这是有限和，恒等式直接由展开乘积得到。
+

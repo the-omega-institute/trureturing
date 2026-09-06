@@ -1,0 +1,51 @@
+# 九、量子化整条历史：所有“过去／未来”纠缠谱都可能看不见区别
+
+把每一拍的事件类型保存在一个四维寄存器中。
+
+对 5040 的 840 条合法历史，定义：
+
+$$
+\boxed{
+|\Psi_\theta\rangle
+=
+\frac1{\sqrt{840}}
+\sum_{\gamma\in\Gamma_{(4,2,1,1)}}
+e^{i\theta A(\gamma)}|\gamma\rangle.
+}
+\tag{24}
+$$
+
+这是历史记录空间中的合法纯态。
+
+它与零相位态的重叠为：
+
+$$
+\boxed{
+\langle\Psi_0|\Psi_\theta\rangle
+=
+\frac{Q_{5040}(e^{i\theta})}{840}.
+}
+\tag{25}
+$$
+
+所以：
+
+$$
+\boxed{
+\langle\Psi_0|\Psi_{\pi/4}\rangle=0.
+}
+\tag{26}
+$$
+
+这不是原来的 \(\log N\) 能谱自动产生的相位。原模型中所有这些历史都有相同终点能量，不能仅靠那个终点能量区分它们。
+
+现在测量的是一个明确新增的历史观测量：
+
+$$
+\widehat A|\gamma\rangle=A(\gamma)|\gamma\rangle.
+$$
+
+可以用它实施受控相位，但不能把该零点叫作 ζ 零点。
+
+---
+

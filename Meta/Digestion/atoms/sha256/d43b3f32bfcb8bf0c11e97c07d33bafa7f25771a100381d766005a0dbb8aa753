@@ -1,0 +1,79 @@
+## 定理3.1：近临界方向的数量无界增长
+
+对每个固定 \(\varepsilon\in(0,1)\)：
+
+$$
+\boxed{
+M(T,\varepsilon)
+\sim
+\frac{2\varepsilon}{1-\varepsilon^2}
+\frac{T}{\ln T}.
+}
+\tag{9}
+$$
+
+### 证明
+
+对于固定正数 \(y\)：
+
+$$
+\frac{\eta(Ty,1)}{\lambda_T}
+=
+\frac{T\ln T\,\ln(1+1/(Ty))}{\ln(Ty)}
+\longrightarrow\frac1y.
+$$
+
+这个收敛在不接触零的有界 \(y\) 区间上一致。
+
+因此，近临界素数渐近位于：
+
+$$
+\frac{T}{1+\varepsilon}
+\lesssim p\lesssim
+\frac{T}{1-\varepsilon}.
+$$
+
+由素数定理：
+
+$$
+\pi(x)\sim\frac{x}{\ln x},
+$$
+
+该区间内素数数量渐近为：
+
+$$
+\left(
+\frac1{1-\varepsilon}
+-
+\frac1{1+\varepsilon}
+\right)\frac{T}{\ln T}.
+$$
+
+整理得到式（9）。此处唯一使用的整体分布输入是素数定理。([DLMF][2])
+
+所以：
+
+$$
+\boxed{
+\text{价格窗口越来越窄，}
+\quad
+\text{其中的近临界方向却越来越多。}
+}
+$$
+
+这并不与“精确同时临界方向很少”矛盾。因为：
+
+$$
+\text{恰好相等}
+$$
+
+与：
+
+$$
+\text{相差很小但非零}
+$$
+
+是不同的几何约束。
+
+**临界值向零聚集时，有限分辨率看到的有效几何，可以越来越高维。**
+

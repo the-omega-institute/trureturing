@@ -1,0 +1,25 @@
+# 317．量子正性比解析性更强：一个可验证的失效例子
+
+回到真正的 ζ 态。
+
+令无量纲时间为：
+
+$$
+t=\frac{E_*\tau}{\hbar}.
+$$
+
+在 \(\sigma>1\) 时，归一化返回振幅为：
+
+$$
+\boxed{
+\chi_\sigma(t)
+=
+\operatorname{Tr}\!\left(
+\rho_\sigma e^{-itH/E_*}
+\right)
+=
+\frac{\zeta(\sigma+it)}{\zeta(\sigma)}.
+}
+\tag{317.1}
+$$
+
