@@ -5159,7 +5159,7 @@ K_{\delta,\gamma}(t)
 \[
 O_\delta(t)
 =
-\frac{e^{\delta t}-e^{-\delta t}}{2}.
+\frac{e^{\delta t}-e^{-\delta t}}2.
 \]
 
 ### 6.3 负平方是稳定化债务
@@ -6952,3 +6952,291 @@ m\ge\frac{\max\{0,\log(A/\epsilon)\}}{4\log(1/\theta_0)}
 3. 沿无界尺度序列联合控制实际候选残差与谱间隔，使误差足以承受复频率权重，并接到文献已有 prolate 模型的 Xi 极限。
 
 其中第 1、2 项仍然是算术承重问题。本轮没有证明新的全空间尺度实例，没有获得无界尺度的单纯偶性，也没有证明真实最低模态变换收敛到 Xi。
+
+---
+
+## [PR #5602] INFINITE_WEIL_COMPLEMENT_COERCIVITY
+
+# 2026-09-06：无限 Galerkin 补空间的显式算术下界
+
+对应 Lean：`D5/S3/Weil/ZetaBridge/WeilInfiniteComplementLeakage.lean`。
+配套 Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilInfiniteComplementLeakage.scribe.cs`。
+
+本节处理此前尚未控制的全部高模态方向。这里的截断参数 N 删除的是空间 Fourier 基的低阶模式；上一节的 T 截断的是组装 Gamma 积分时的连续频率变量。两种尾项不同，上一节的有限矩阵精度不能消除本节的无限维义务。
+
+本节的无限 Cauchy 级数低频质量界已有 Lean 证明脚本。级数绝对收敛、连续性和积分可积性包含在证明内。真实 Fourier 展开识别、完整 Weil 补空间下界、含素数尺度实例和 Schur 运输是以下纸面证明，尚未全部连接成 Lean 中的算子定理。Lean 与 Scribe 编译未在本环境运行。
+
+## 1. 文献接口与保留的对象
+
+Connes–Consani–Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1，第 7 节和 Lemma 7.3 已给出明确 prolate 模型的 Xi 极限，第 8 节保留真实最低模态识别与单纯偶性。Connes–van Suijlekom, arXiv:2511.23257v1，提供精确分布与算子定义域条件下的实零点定理。
+
+Suzuki, *Weil's quadratic form via the screw function*, arXiv:2606.09096v1，Theorem 1.1 识别同一 Weil 形式的 Friedrichs 实现，并建立相关对数型形式域的紧嵌入。因此本节不将紧 resolvent 或抽象高谱发散登记为新发现。Groskin, *A finite Guinand–Weil dictionary and archimedean tail order for the truncated Weil quadratic form*, arXiv:2607.02828v1，Theorem 3.2 处理有限 Galerkin Gamma 尾项。本节使用同一 Fourier 约定，但补空间没有有限上截止。
+
+仓库中直接可复用的 Gamma 真源为 `Zeta23.MuFields.mu_monotoneOn`、`mu_zero_le`、`neg_one_lt_mu_zero` 和 `Zeta23.mu_even`。本文 gamma=2*pi*mu，即既有 `Zeta23.EF.gammaBracket`。平移项和极点项仍来自 `literatureRHS(weilTest f f)`。未通过零点位置、RH 或目标正性构造输入。
+
+参考：
+
+- https://arxiv.org/html/2511.22755v1
+- https://arxiv.org/html/2511.23257v1
+- https://arxiv.org/html/2606.09096v1
+- https://arxiv.org/html/2607.02828v1
+
+本节矩阵元采用内积对第二变量线性的约定；相关函数与 Fourier 约定保持不变。
+
+## 2. 全部无限 Fourier 尾部的低频泄漏界
+
+固定 L=2a>0，I=[-L/2,L/2]，rho=2*pi/L。使用零延拓的正交归一基
+
+\[
+e_n(x)=(-1)^nL^{-1/2}e^{i\rho n x}\mathbf1_I(x),\qquad n\in\mathbb Z.
+\]
+
+令 P_N 是到 |n|<=N 的正交投影，N>=1。对任意 g 属于 P_N 的正交补，记其两侧系数为 u_j 和 v_j，对应 n=N+j+1 及 n=-(N+j+1)。Parseval 给出
+
+\[
+A=\sum_{j\ge0}|u_j|^2+\sum_{j\ge0}|v_j|^2=\|g\|_2^2.
+\]
+
+定义
+
+\[
+C(d,u)=\sum_{j\ge0}\frac{u_j}{d+j+1}.
+\]
+
+对 d>0，有逐项可求和的正上界
+
+\[
+\sum_{j=0}^{M-1}(d+j+1)^{-2}
+\le d^{-1}-(d+M)^{-1}\le d^{-1}.
+\]
+
+由此和 Cauchy–Schwarz 得到绝对收敛，以及
+
+\[
+|C(d,u)|^2\le d^{-1}\sum_{j\ge0}|u_j|^2.
+\]
+
+在 |s|<=N/4 上，N+s 和 N-s 均至少为 3N/4。因此
+
+\[
+|C(N+s,u)-C(N-s,v)|^2\le\frac8{3N}A.
+\]
+
+对有限 Fourier 和逐项积分，再取 L2 极限，得到
+
+\[
+\boxed{
+|\widehat g(\rho s)|^2
+=\frac L{\pi^2}\sin^2(\pi s)
+|C(N+s,u)-C(N-s,v)|^2.
+}
+\]
+
+极限交换无需边界正则性：支撑固定在 I 时，L2 收敛蕴含 L1 收敛，且 Fourier 变换在实轴上以 sqrt(L) 倍的 L2 误差一致收敛。右侧 Cauchy 级数在该紧带上一致绝对收敛，故与同一 Fourier 极限一致。一般 L2 向量不必具有端点值。
+
+使用 sin^2<=1 并积分，得到
+
+\[
+\boxed{
+\frac1{2\pi}\int_{|t|\le R_N}|\widehat g(t)|^2dt
+\le\epsilon_*\|g\|_2^2,
+\quad R_N=\frac{\pi N}{2L},
+\quad\epsilon_*=\frac4{3\pi^2}<\frac17.
+}
+\tag{IC1}
+\]
+
+Lean 主声明 `infinite_complement_low_frequency_mass` 证明 dimensionless 密度在 [-N/4,N/4] 上可积及其归一化积分界。输入是两条任意平方可和复序列，没有有限上截止、偶性、实值性、边界消失或谱间隔前提。Fourier 基展开与 Parseval 的上述识别仍为纸面桥，未冒充已形式化。
+
+## 3. 对实际 Gamma、素数幂和极点的完整下界
+
+记
+
+\[
+\gamma(t)=\Re\psi_\Gamma(1/4+it/2)-\log\pi.
+\]
+
+它在 |t| 上递增，且 gamma(t)>=gamma(0)>-2*pi。对完整 Friedrichs 形式域中的 g，式 (IC1) 和 Plancherel 给出
+
+\[
+q_\Gamma(g)\ge
+\big[(1-\epsilon_*)\gamma(R_N)+\epsilon_*\gamma(0)\big]\|g\|_2^2.
+\]
+
+设
+
+\[
+P_a=2\sum_{2\le n\le e^{2a}}\frac{\Lambda(n)}{\sqrt n}.
+\]
+
+实际相关函数满足 |C(g,g)(s)|<=||g||_2^2，故素数项至少为 -P_a||g||_2^2。两个极点在完整奇偶空间上的精确贡献为
+
+\[
+2|\langle g,\cosh(x/2)\rangle|^2
+-2|\langle g,\sinh(x/2)\rangle|^2.
+\]
+
+由于
+
+\[
+\int_{-a}^a\sinh^2(x/2)dx=\sinh a-a,
+\]
+
+极点项至少为 -2(sinh(a)-a)||g||_2^2。于是得到纸面定理：
+
+\[
+\boxed{
+q_a(g)\ge\beta_{a,N}\|g\|_2^2
+\quad\text{对所有 }g\in\operatorname{Dom}(q_a)\cap P_N^\perp,
+}
+\tag{IC2}
+\]
+
+\[
+\boxed{
+\beta_{a,N}=(1-\epsilon_*)\gamma\!\left(\frac{\pi N}{4a}\right)
++\epsilon_*\gamma(0)-P_a-2(\sinh a-a).
+}
+\]
+
+量词覆盖无限补空间中的所有允许向量。Gamma 形式积分在其形式域中有定义；有限素数平移及极点项是 L2 上的有界形式。因此同一不等式适用于该 Friedrichs 实现，不额外假定每个向量在算子域中。对偶向量，极点的负 sinh 通道为零，可删除最后一项。
+
+这个下界不假定补空间非负。所有常数由 a、N、Gamma 和不超过 e^(2a) 的素数幂独立给出。
+
+## 4. 一个完全显式的模态截止族
+
+以下初等 Gamma 下界避免在本节另用未经运行的区间 digamma 计算。令 z=alpha+ib，alpha,b>0，并设
+
+\[
+f(x)=\frac{x+\alpha}{(x+\alpha)^2+b^2}.
+\]
+
+实 digamma 部分分式级数及 H_M-log M 的极限给出
+
+\[
+\Re\psi_\Gamma(z)=\lim_{M\to\infty}
+\left(\log M-\sum_{n=0}^{M-1}f(n)\right).
+\]
+
+每个单位区间上用导数积分控制左 Riemann 和误差，有
+
+\[
+\left|\sum_{n=0}^{M-1}f(n)-\int_0^Mf(x)dx\right|
+\le\int_0^M|f'(x)|dx\le\frac1b.
+\]
+
+最后一个不等式来自 f 最多先增后减且最大值不超过 1/(2b)。其总变差在 alpha<=b 时等于 1/b-f(0)，在 alpha>b 时等于 f(0)，均不超过 1/b。计算积分并取极限，得到
+
+\[
+\Re\psi_\Gamma(\alpha+ib)\ge\log|\alpha+ib|-1/b\ge\log b-1/b.
+\]
+
+故对 t>0，
+
+\[
+\boxed{\gamma(t)\ge\log\frac t{2\pi}-\frac2t.}
+\tag{IC3}
+\]
+
+本节的 Riemann 和、总变差及 digamma 极限论证是纸面证明，尚未写入 Lean。
+
+令 D_a=2(sinh(a)-a)。对任意实阈值 tau，选自然数 N 满足
+
+\[
+N>\max\left\{1,\frac{8a}{\pi},
+8a\exp\left(1+\frac{\tau+P_a+D_a+2\pi\epsilon_*}{1-\epsilon_*}\right)\right\}.
+\tag{IC4}
+\]
+
+将 (IC3) 代入 (IC2)，直接得到 beta(a,N)>tau。因此每个尺度均有明确有限 cutoff，使其无限补空间高于指定阈值；也可沿任何无界尺度序列使用这一公式。固定 a 时 beta(a,N) 趋向正无穷。
+
+代价必须保留：这里对素数项用了绝对值和，未利用算术抵消。该阈值可能非常大，不能据此声称已经获得可实际组装的低维全空间证书。
+
+## 5. 含实际素数平移的具体尺度
+
+取
+
+\[
+a=\tfrac12\log3,\qquad N=1024.
+\]
+
+素数 2 的平移距离 log2 严格小于窗口直径 log3，因此该窗口确实包含非零素数项。边界处 n=3 的相关函数贡献为零；下面仍把它计入 P_a，保持保守上界。
+
+用 exp 的正项有限 Taylor 和可验证 log2<7/10、log3<11/10，并有 sqrt2>7/5、sqrt3>17/10。因而
+
+\[
+P_a<2\left(\tfrac12+\tfrac{11}{17}\right)=\frac{39}{17}.
+\]
+
+a<11/20，且 sinh 的正项级数给出
+
+\[
+2(\sinh a-a)
+\le\frac{(11/20)^3}{3(1-(11/20)^2/20)}<\frac3{50}.
+\]
+
+pi>31/10 给出 epsilon_*<1/7。pi<22/7 给出 gamma(0)>-44/7。R_N>1024，而
+
+\[
+\gamma(1024)\ge\log(512/\pi)-1/512>4.
+\]
+
+最后一个严格界可由 e<3、sqrt3<7/4 核验：exp(9/2)<81*7/4<512/(22/7)，故 log(512/pi)>9/2。
+
+于是
+
+\[
+\boxed{
+\beta_{\log3/2,1024}>
+\frac{24}{7}-\frac{44}{49}-\frac{39}{17}-\frac3{50}
+=\frac{7351}{41650}>\frac16.
+}
+\tag{IC5}
+\]
+
+这给出含素数项窗口的整个无限高模态补空间严格正下界。没有据此断言整个 q_a>=1/6，也没有断言前 2049 个 Fourier 模态中的最低特征值单纯。该尺度结果的数学证明为本节的解析及有理数估计，不是浮点特征值实验，也尚未获得完整 Lean 算子证明。
+
+## 6. 剩余有限问题必须保留完整耦合
+
+若某个明确候选 k 已位于 P_NH 中，令 E=P_NH intersect k-perp，Q_N=I-P_N。对 tau=mu+delta<beta(a,N)，完整 (A) 的一个充分条件是
+
+\[
+\boxed{
+\left.P_N(A_a-\tau)P_N\right|_E
+-\frac1{\beta_{a,N}-\tau}
+\left.P_NA_aQ_NA_aP_N\right|_E\succeq0.
+}
+\tag{IC6}
+\]
+
+证明是将 f=x+y 分解到 E 和 Q_NH，使用 (IC2) 后配方。只有 beta 由本节独立下界控制；上述有限矩阵不等式尚未对实际候选证明。不能把它当作已成立输入来宣布 (A) 完成。
+
+对算子域中的有限基底，耦合 Gram 可由完整算子图像计算：
+
+\[
+G_{ij}=\langle A_ae_i,A_ae_j\rangle
+-\sum_{|n|\le N}\langle A_ae_i,e_n\rangle
+\langle e_n,A_ae_j\rangle.
+\]
+
+零延拓 Fourier 基属于本算子的形式域和算子域：其 Fourier 变换 O(1/|t|)，Gamma 乘子为 O(log(2+|t|))，故 Gamma 乘子作用后仍在 L2；有限平移与极点项有界。对应 Friedrichs 形式配对的表示向量是压回窗口后的这些完整算子项。该定义域识别仍是纸面桥。
+
+同样，对有限候选，实际算子残差满足
+
+\[
+\boxed{
+\|(A_a-\mu)k\|_2^2
+=\|P_N(A_a-\mu)k\|_2^2+\|Q_NA_ak\|_2^2.
+}
+\tag{IC7}
+\]
+
+第二项不会因为有限矩阵的 Gamma 积分算得很准而消失。候选来自 prolate 模型时，还需把原模型与所选有限 Fourier 近似的误差计入，而非假设原模型已经属于 P_NH。
+
+## 7. 本节消除的假设和下一承重边
+
+纸面上，补空间的下界与某个阈值以上的 cutoff 存在性已被显式 (IC2)–(IC4) 替代，并有 (IC5) 的含素数实例。Lean 保存的是支撑此结论的无限序列低频质量估计，含绝对收敛与可积性；真实 Fourier/L2 接口、完整算术形式和阈值例证尚未全部形式化。
+
+剩余承重边是对明确候选认证 (IC6) 中的有限算术块与完整耦合，并让 (IC7) 的全算子残差相对于所得谱间隔足够小。对素数项的粗绝对值处理会放大 N；下一步应保持 prime/pole/boundary 抵消，改进这两个有限矩阵量，而非继续添加抽象 Schur 包装。
+
+未证明无界尺度的最低模态单纯偶性，未证明条件 (C)，未证明真实最低模态 Fourier 变换收敛到 Xi，未证明 RH。本节的投影和 Fourier 估计属于经典工具的具体应用，未作原创优先权声明。
