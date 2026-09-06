@@ -1,0 +1,1 @@
+**候签定理 4.107(Yakubovich (4.27):奇偶中心阶乘数恒等式)**〔open;落 `D5/S1/Polynomial/CentralFactorialParityIdentity`;拟议逃逸见证:令 A_n(X)=X∏_{j=1}^{n−1}(X²−j²),C_n(X)=∏_{j=1}^{n−1}(X²−(j−1/2)²),归纳证 A_n(X+1/2)=(X+n−1/2)·C_n(X),故 F_n(X):=A_n((1+X)/2)/2=(X+2n−1)·C_n(X/2)/4,再比较 X^{2k−1} 的系数(C_n 为偶函数)〕。对 k, n ∈ ℕ:4^{−k} t(2n−1,2k−1) = Σ_{q=k}^{n} 4^{−q} C(2q−1,2k−1) t(2n,2q)。
