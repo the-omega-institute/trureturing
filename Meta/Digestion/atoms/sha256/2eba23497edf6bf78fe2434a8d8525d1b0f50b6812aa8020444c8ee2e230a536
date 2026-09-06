@@ -1,0 +1,3 @@
+**原文**:`R_n = sup_{P∈U_n} ( max{ |z| ∈ ℂ : P(z)=0 } )`;`R_1 = a`;
+「Example 6.6 shows `R_n ≥ a+n−1`」;**「Our conjecture is that `R_n = a+n−1`.」**
+

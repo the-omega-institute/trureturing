@@ -1,0 +1,16 @@
+## 44. When the extra query really costs one dimension
+
+The following exact rank classification is a mathematical derivation, not an additional Lean theorem in this continuation. On the unrestricted table carrier `{0,1,2,3}^k`, let b(t) be the 3k retained cell indicators. The all-3 table maps to zero. Changing only row c to a in {0,1,2} gives the standard basis vector e_(c,a). Therefore the affine rank of the row-profile family is exactly 3k.
+
+For one extra scalar query q, the augmented profile `(b(t),q(t))` has affine rank 3k precisely when
+
+```text
+q(t) = alpha + sum_c beta_c(t(c)), with beta_c(3)=0.
+```
+
+One implication is immediate from the displayed affine representation. For the other, subtract the augmented all-3 profile. The 3k single-row changes are independent. If any table has a query residual not explained by their linear combination, subtracting that combination produces a nonzero vector whose first 3k coordinates vanish. This adds exactly one independent direction. Hence the augmented rank is 3k+1 whenever q has such a residual.
+
+Thus an additive row query needs no new moment coordinate and admits the `3k+1` bound. A genuinely interacting query gives the ambient `3k+2` bound. At k=0 or k=1, every table query is additive in this sense, so an extra dimension cannot occur. Equivalently, a nonzero mixed rectangular difference across two distinct rows certifies an interaction; vanishing of every such difference gives the additive representation by successive row replacement.
+
+These rank bounds are worst-case support guarantees, not pointwise lower bounds. For a finite profile family of affine rank r, the union of convex hulls of all subsets of at most r profiles is contained in a finite union of proper affine subspaces. It cannot cover the relative interior of the full profile polytope. Rational points outside that union exist because all profiles are rational and a rational simplex in the polytope has dense rational barycentric points. Such moment points require r+1 atoms. Special points can require fewer. The exact rank classification and this worst-case lower-bound argument have not yet been implemented as Lean declarations.
+

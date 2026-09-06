@@ -1,0 +1,10 @@
+## 52. Cross-author source audit and the preservation question, 2026-09-06
+
+This continuation examined recent repository work across authors before selecting a mathematical interface. Three source-level connections were retained.
+
+- loning, PR #5326, `RH_OFFLINE_ZERO_LEE_YANG_INSTANTANEOUS_PHASE_TRANSITION_THEORY.md`, pinned at `3beb435bf9ca8aa35aa6079ea4033a9c2e6c9007`: the solenoid/Schur/Rouche appendix explicitly separates Hankel behavioral minimality from determinant preservation. Its proposed low-dimensional transfer still needs a determinant-preserving identification. The reusable lesson here is that preserving nominated observations does not establish preservation of every later invariant.
+- AlyciaBHZ, draft PR #5750, pinned at `dff43c8fe8cf16fa83bfacdda22090fd682acc61`: `SymmetricGaussianCompensation` retains the actual unequal-half phase before specializing, and `BernoulliIntervalThreshold` selects a common test before quantifying over unknown acquisition probabilities. The transferable quantifier pattern is one fixed construction with a guarantee for an entire parameter family.
+- PR #5803, `QuquintCertificateAssembly.lean`, pinned at `dfab12155e5f5d7a8524862a8d1ee0353b0bc6c3`: branch definiteness is connected to the actual matrices by explicit LDL identities. Its coefficient identities are a stronger interface than a numerical proxy. No ququint or spectral claim is imported into the causal lane.
+
+The new modules reuse only the causal lane's current `linearObjective`, support-monotone replay, `FiniteResponseLaw`, and primal-dual interfaces. The cross-author connections motivate the statements and their boundaries; they are not asserted to identify the different mathematical carriers or transfer physical conclusions. Searches for a matching affine presentation/replay or residual-envelope owner in the current lane did not produce a reusable exact owner. This is a scoped audit, not an exhaustive novelty claim.
+

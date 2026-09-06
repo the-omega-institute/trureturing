@@ -1,0 +1,4 @@
+- consistency restrictions between nested counterfactuals.
+
+The 2026 causal-order result is especially important conceptually: a complete graph is not always required. The query itself can imply enough topological order to parameterize an admissible finite SCM family and optimize the query over it.
+

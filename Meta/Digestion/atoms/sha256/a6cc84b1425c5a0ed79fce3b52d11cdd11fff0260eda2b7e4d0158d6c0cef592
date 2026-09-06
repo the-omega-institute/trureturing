@@ -1,0 +1,15 @@
+## 17. Research direction
+
+The strongest reusable target is therefore not one more isolated closed-form bound. It is a certified partial-identification compiler whose output consists of:
+
+```text
+1. an explicit feasible-model semantics;
+2. a finite rational constraint system when the problem is polyhedral;
+3. a linear causal query;
+4. a primal endpoint witness;
+5. a replayable rational dual certificate;
+6. a convexity/affinity bridge;
+7. a Lean theorem stating the exact sharp identified interval.
+```
+
+This would turn causal sharp bounds from solver output into machine-checkable mathematical objects.

@@ -1,0 +1,23 @@
+## 47. Data-only rational elimination certificates, 2026-09-06
+
+`D5/S0/Certificates/RationalMomentElimination.lean` turns the identity in Section 45 into a finite exact certificate consumer. The raw carrier is `Fin n`, the retained feature array has type `Fin n -> Fin d -> Q`, and the proposed `EliminationStep` contains only a rational direction z and a pivot index p. The payload contains no proof fields. Feature moments reuse the existing `linearObjective`.
+
+`checkStep` decides seven finite conditions: nonnegative current weights; positive pivot weight; positive pivot direction; zero direction at every zero-weight atom; zero total direction; zero direction for each retained moment; and the cross-multiplied ratio inequalities
+
+```text
+weight(p)*z(i) <= weight(i)*z(p) whenever z(i)>0.
+```
+
+The validator does not divide by unverified denominators. Once accepted, it performs
+
+```text
+theta = weight(p)/z(p),
+weight'(i) = weight(i) - theta*z(i).
+```
+
+`validStep_nonnegative`, `validStep_total`, and `validStep_moment` prove nonnegative output, exact mass conservation, and exact preservation of all nominated linear moments. `validStep_pivot_zero` proves cancellation of the positive pivot. `validStep_zero_stays_zero` prohibits reactivation of any zero atom. Together these imply the strict support theorem `validStep_support`: support is contained in the old support and its cardinality strictly decreases. Ratio ties may remove several atoms in one step.
+
+`validStep_maximal_rate` proves that no larger move along the same oriented direction keeps every weight nonnegative, because its pivot would become negative. This is maximality along one feasible direction; it is not objective optimality or minimum-support optimality.
+
+The inactive-coordinate condition matters independently of moment preservation. On atoms 0,1,2, the law `(1/2,0,1/2)` and direction `(1,-2,1)` would move to `(0,1,0)`, preserving total mass and mean while introducing the previously absent atom 1. The checker rejects this move. As a result, arbitrary hard support admissibility inherited from the initial law survives replay without needing a separate linear feature for every excluded atom.
+

@@ -1,0 +1,28 @@
+## 42. Sparse witnesses inside the same fixed-noise Markovian family
+
+`SparseFixedNoiseBenefitRealization.lean` resolves the independence issue that a direct compression of the two-mechanism joint law would leave open. Apply the row-only theorem separately to each complete mechanism table law and then use the unchanged `FixedNoisePairModel` product semantics.
+
+For every original model, `exists_fixedNoise_sparse_equivalent` constructs a replacement such that
+
+```text
+support(left table law) <= 3*k+1,
+support(right table law) <= 3*k+1,
+all left and right response-row laws are equal to the originals,
+selectedPairLaw(replacement).mass = selectedPairLaw(original).mass.
+```
+
+Thus the full distribution of `(C, W1(C), W2(C))` is preserved, not merely its simultaneous-benefit cell. The covariate root and the two complete mechanism disturbances remain independent because the source law is still their product. Cross-row dependence inside an individual table is allowed to change. No independence of Y0 and Y1 inside a response row is introduced.
+
+`fixedNoise_pair_support_card_le` uses the exact Cartesian-product support identity to bound the support of the two table disturbances together by `(3*k+1)^2`. Including the separate covariate root multiplies this bound by its support size, which is at most k.
+
+`fixedNoise_sparse_attainment_iff` proves equality of the unrestricted and support-bounded attainable benefit images for the existing four-conditional-marginal model class. Its composition with the previous sharpness theorem is `fixedNoise_sparse_joint_benefit_sharp_iff`:
+
+```text
+sum_c w(c)*L1(c)*L2(c) <= target <= sum_c w(c)*U1(c)*U2(c)
+iff
+one fixed-noise model attains target with the specified four kernels
+and at most 3*k+1 support points in each independent mechanism.
+```
+
+The interval and estimand are unchanged. Any additional cross-row condition or extra statistical moment must be preserved separately before this result can be used for a more restricted family. In particular, full-table-law equality and preservation of queries that intervene on the covariate in several worlds are not inferred from equality of the selected same-stratum response law.
+

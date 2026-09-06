@@ -1,0 +1,10 @@
+### 4.3 Interval sharpness
+
+The interval is sharp when
+
+\[
+\mathcal I_Q=[L,U].
+\]
+
+This requires every interior target to be attainable, not only validity of the two inequalities.
+
