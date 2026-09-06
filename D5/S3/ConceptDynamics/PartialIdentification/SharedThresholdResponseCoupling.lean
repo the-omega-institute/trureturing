@@ -44,9 +44,9 @@ theorem uniformThreshold_prefix (N K : ℕ) (hN : 0 < N) (hK : K ≤ N) :
     omega
   unfold linearObjective uniformThresholdLaw
   simp only [ite_mul, one_mul, zero_mul]
-  rw [Fin.sum_univ_eq_sum_range]
+  rw [Fin.sum_univ_eq_sum_range (fun i => if i < K then (1 : ℚ) / N else 0)]
   rw [← Finset.sum_filter, filtered]
-  simp [nsmul_eq_mul]
+  simp [nsmul_eq_mul, div_eq_mul_inv]
 
 private theorem uniformThreshold_both (N A B : ℕ) (hN : 0 < N)
     (hA : A ≤ N) (hB : B ≤ N) :
