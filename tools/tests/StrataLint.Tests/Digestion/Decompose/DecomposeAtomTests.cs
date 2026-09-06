@@ -24,13 +24,13 @@ public sealed class DecomposeAtomTests
     }
 
     [Fact]
-    public void TitlePreambleAndClosingRemarkAreLosslessStructuralSegments()
+    public void TitlePreambleAndClosingRemarkAreLosslessClaimBytes()
     {
         var f = new DecomposeFixture(DecomposeFixture.Eight);
         var plan = DigestionDecomposition.Plan(f.Parent, DecomposeFixture.Atom(DecomposeFixture.Eight).RawBytes,
             AtomizerRegistry.Require(DecomposeFixture.Dialect).Atomize, f.Rules);
         Assert.Equal(8, plan.Children.Length);
-        Assert.Contains(plan.Segments, s => s.Kind == DigestionSegmentKind.Structural);
+        Assert.All(plan.Segments, s => Assert.Equal(DigestionSegmentKind.Claim, s.Kind));
         Assert.Equal(DecomposeFixture.Eight, Encoding.UTF8.GetString(
             plan.Segments.SelectMany(s => s.Atom.RawBytes).ToArray()));
         Assert.Null(DigestionDecomposition.IntegrityFailure(plan));
@@ -39,7 +39,7 @@ public sealed class DecomposeAtomTests
         var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
         Assert.True(result.Success, result.Error);
         Assert.Equal(9, f.Document.RequireDigestionEntries().Length);
-        Assert.All(f.CasWrites, c => Assert.StartsWith("- obligation", Encoding.UTF8.GetString(c.Bytes.AsSpan()), StringComparison.Ordinal));
+        Assert.Equal(DecomposeFixture.Eight, Encoding.UTF8.GetString(f.CasWrites.SelectMany(c => c.Bytes).ToArray()));
     }
 
     [Fact]
@@ -133,7 +133,7 @@ public sealed class DecomposeAtomTests
         var f = new DecomposeFixture(DecomposeFixture.Eight);
         var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(dryRun: true), f.Apply);
         Assert.True(result.Success, result.Error);
-        Assert.Contains("type=structural", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("type=structural", result.Output, StringComparison.Ordinal);
         Assert.Equal(8, result.Output.Split('\n').Count(line => line.Contains("type=claim", StringComparison.Ordinal)));
         Assert.Contains("start=0", result.Output, StringComparison.Ordinal);
         Assert.Contains("dry_run=true", result.Output, StringComparison.Ordinal);
@@ -190,7 +190,7 @@ public sealed class DecomposeAtomTests
     }
 
     [Fact]
-    public void AlignerValidatesProducedStructuralPlanWithoutWritingBacklog()
+    public void AlignerValidatesProducedPlanWithoutWritingBacklog()
     {
         var f = new DecomposeFixture(DecomposeFixture.Eight);
         var untouched = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, f.Document, DigestionAlignmentMode.Ingest);
@@ -263,7 +263,8 @@ public sealed class DecomposeAtomTests
         Assert.Equal(8, plan.CasObjects.Length);
         var parent = Assert.Single(plan.Document.RequireDigestionEntries(), e => e.AtomId == f.Parent.AtomId);
         Assert.Equal(8, parent.Receipts.ChainAtoms.Length);
-        Assert.All(plan.CasObjects, item => Assert.StartsWith("- obligation", Encoding.UTF8.GetString(item.Bytes.AsSpan()), StringComparison.Ordinal));
+        Assert.Equal(DecomposeFixture.Eight, Encoding.UTF8.GetString(parent.Receipts.ChainAtoms
+            .SelectMany(id => plan.CasObjects.Single(item => item.Reference == "sha256:" + id).Bytes).ToArray()));
     }
 
     [Fact]

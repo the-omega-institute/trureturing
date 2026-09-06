@@ -1,7 +1,5 @@
 using System.Collections.Immutable;
 using System.Text;
-using Markdig;
-using Markdig.Syntax;
 
 namespace StrataLint.Engine;
 
@@ -50,49 +48,31 @@ internal static class DigestionDecomposition
     {
         if (!DigestionDecompositionPolicy.IsMultiClause(parent)) return null;
         var text = StrictUtf8.GetString(parent.RawBytes.AsSpan());
-        var ast = Markdown.Parse(text);
-        var opaque = ast.Descendants().Where(static block => block is CodeBlock or HtmlBlock)
-            .Select(static block => block.Span).ToArray();
-        var lines = Lines(text).Where(line =>
-            !opaque.Any(span => line.ContentStart >= span.Start && line.ContentStart <= span.End)).ToArray();
-        if (lines.Length == 0) return null;
+        var lines = Lines(text).ToArray();
         var bold = lines.Skip(1).Where(static line => line.Text.StartsWith("**", StringComparison.Ordinal)).ToArray();
-        var boundaries = new List<(int Start, DigestionSegmentKind Kind)>();
+        int[] boundaries;
         if (bold.Length > 0)
         {
-            boundaries.Add((0, HasAssertion(lines[0].Text) ? DigestionSegmentKind.Claim : DigestionSegmentKind.Structural));
-            boundaries.AddRange(bold.Select(static line => (line.Start, DigestionSegmentKind.Claim)));
+            boundaries = [0, .. bold.Select(static line => line.Start)];
         }
         else
         {
             var items = lines.Where(static line => line.Text.StartsWith("- ", StringComparison.Ordinal)
                 || line.Text.StartsWith("* ", StringComparison.Ordinal)).ToArray();
-            // A list item can itself be a parent. Choose the outermost level with at
-            // least two siblings; indentation stays inside the immutable byte spans.
-            var siblings = items.GroupBy(static line => line.ContentStart - line.Start)
-                .OrderBy(static group => group.Key).FirstOrDefault(static group => group.Count() >= 2)?.ToArray();
-            if (siblings is null) return null;
-            if (siblings[0].Start > 0) boundaries.Add((0, DigestionSegmentKind.Structural));
-            boundaries.AddRange(siblings.Select(static line => (line.Start, DigestionSegmentKind.Claim)));
-            var lastList = ast.Descendants().OfType<ListBlock>()
-                .Where(block => block.Span.Start <= siblings[^1].ContentStart
-                    && block.Span.End >= siblings[^1].ContentStart)
-                .OrderBy(static block => block.Span.End).FirstOrDefault();
-            if (lastList is not null)
-            {
-                var closing = lines.FirstOrDefault(line => line.Start > lastList.Span.End);
-                if (closing is not null) boundaries.Add((closing.Start, DigestionSegmentKind.Structural));
-            }
+            if (items.Length < 2) return null;
+            boundaries = [0, .. items.Skip(1).Select(static line => line.Start)];
         }
 
-        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(boundaries.Count);
-        for (var index = 0; index < boundaries.Count; index++)
+        // Persisted chains define the grammar: every span is a child, including
+        // preamble, closing prose, and markers at any indentation or inside code.
+        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(boundaries.Length);
+        for (var index = 0; index < boundaries.Length; index++)
         {
-            var start = MarkdownAstAtomizer.ByteOffset(text, boundaries[index].Start);
-            var end = index + 1 == boundaries.Count ? parent.RawBytes.Length
-                : MarkdownAstAtomizer.ByteOffset(text, boundaries[index + 1].Start);
+            var start = MarkdownAstAtomizer.ByteOffset(text, boundaries[index]);
+            var end = index + 1 == boundaries.Length ? parent.RawBytes.Length
+                : MarkdownAstAtomizer.ByteOffset(text, boundaries[index + 1]);
             var raw = parent.RawBytes[start..end];
-            segments.Add(new DigestionSegment(boundaries[index].Kind, new DigestionAtom(
+            segments.Add(new DigestionSegment(DigestionSegmentKind.Claim, new DigestionAtom(
                 parent.StartByte + start, parent.StartByte + end, raw,
                 DigestionFingerprint.Compute(raw.AsSpan()), parent.Context,
                 DigestionAtomStatusMarker.Parse(raw.AsSpan()))));
@@ -171,13 +151,6 @@ internal static class DigestionDecomposition
         if (IntegrityFailure(plan) is { } failure) throw new FormatException(failure);
     }
 
-    private static bool HasAssertion(string text)
-    {
-        if (!text.StartsWith("**", StringComparison.Ordinal)) return false;
-        var close = text.IndexOf("**", 2, StringComparison.Ordinal);
-        return close >= 0 && text[(close + 2)..].Trim().Length > 0;
-    }
-
     private static IEnumerable<SourceLine> Lines(string text)
     {
         var start = 0;
@@ -187,7 +160,7 @@ internal static class DigestionDecomposition
             if (end < 0) end = text.Length;
             var line = text[start..end];
             if (!string.IsNullOrWhiteSpace(line))
-                yield return new SourceLine(start, start + line.Length - line.TrimStart().Length, line.TrimStart());
+                yield return new SourceLine(start + line.Length - line.TrimStart().Length, line.TrimStart());
             if (end < text.Length && text[end] == '\r') end++;
             if (end < text.Length && text[end] == '\n') end++;
             start = end;
@@ -200,5 +173,5 @@ internal static class DigestionDecomposition
         return child.IsEmpty || start < 0 || parent[(start + 1)..].IndexOf(child) >= 0 ? -1 : start;
     }
 
-    private sealed record SourceLine(int Start, int ContentStart, string Text);
+    private sealed record SourceLine(int Start, string Text);
 }
