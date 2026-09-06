@@ -21,11 +21,11 @@ public sealed class ScribeDemandBindingIsolationTests
               static void Unused() => Missing();
             }
             """);
-        var (map, eager, lazy) = Compare(fixture);
+        var (map, eager, demand) = Compare(fixture);
         AssertReasons(map, "Cases.Root");
         Assert.Contains(eager.Bound, static item => item.Identity.DeclarationId == "M:Cases.Unused");
-        AssertBound(lazy, "M:Cases.Root", "M:Cases.Used", "M:Cases.#ctor");
-        Assert.All(lazy.Bound, item => {
+        AssertBound(demand, "M:Cases.Root", "M:Cases.Used", "M:Cases.#ctor");
+        Assert.All(demand.Bound, item => {
             Assert.Equal("Tests", item.ProjectPath);
             Assert.Equal("tests/Cases.cs", item.SourcePath);
             Assert.Equal("Tests", item.Identity.AssemblyName);
@@ -53,15 +53,15 @@ public sealed class ScribeDemandBindingIsolationTests
               static void NShared() { Missing(); }
             }
             """);
-        var (map, _, lazy) = Compare(fixture);
+        var (map, _, demand) = Compare(fixture);
         AssertReasons(map, "Cases.Root", TestMapUnknownReason.Other);
-        AssertBound(lazy, "M:Cases.Root", "M:Cases.#ctor", "M:Production.Root", "M:Production.Left",
+        AssertBound(demand, "M:Cases.Root", "M:Cases.#ctor", "M:Production.Root", "M:Production.Left",
             "M:Production.Right", "M:Production.Shared", "M:Production.Seed", "M:Production.Negative",
             "M:Production.NLeft", "M:Production.NRight", "M:Production.NShared",
             "M:Xunit.FactAttribute.#ctor");
         Assert.Equal(new[] { "M:Production.Left", "M:Production.Right", "M:Production.Root", "M:Production.Seed", "M:Production.Shared" },
-            lazy.Expanded.Select(static item => item.Identity.DeclarationId).Order(StringComparer.Ordinal));
-        Assert.All(lazy.Expanded.GroupBy(static item => item), group => Assert.Single(group));
+            demand.Expanded.Select(static item => item.Identity.DeclarationId).Order(StringComparer.Ordinal));
+        Assert.All(demand.Expanded.GroupBy(static item => item), group => Assert.Single(group));
     }
 
     [Fact]
@@ -106,9 +106,9 @@ public sealed class ScribeDemandBindingIsolationTests
         var fixture = new Fixture([
             new("tests/b.cs", "partial class Cases { string value = File.ReadAllText(Input()); static string Input() => \"v\"; }", "Tests"),
             new("tests/a.cs", "partial class Cases { [Fact] public void Root() { } }", "Tests")]);
-        var (map, eager, lazy) = Compare(fixture);
+        var (map, eager, demand) = Compare(fixture);
         AssertReasons(map, "Cases.Root", TestMapUnknownReason.VariablePath);
-        var constructor = Assert.Single(lazy.Bound, static item => item.Identity.DeclarationId == "M:Cases.#ctor");
+        var constructor = Assert.Single(demand.Bound, static item => item.Identity.DeclarationId == "M:Cases.#ctor");
         Assert.Equal("tests/b.cs", constructor.SourcePath);
         Assert.Equal(0, constructor.Span.Start);
         Assert.Equal(fixture.Sources[0].Content.Length, constructor.Span.Length);
@@ -281,15 +281,15 @@ public sealed class ScribeDemandBindingIsolationTests
         Assert.Null(Assert.Single(observed));
     }
 
-    internal static (ScribeTestMap Map, Recorder Eager, Recorder Lazy) Compare(Fixture fixture)
+    internal static (ScribeTestMap Map, Recorder Eager, Recorder Demand) Compare(Fixture fixture)
     {
         var eager = new Recorder();
-        var lazy = new Recorder();
+        var demand = new Recorder();
         var eagerMap = Derive(fixture, ScribeBindingStrategy.Eager, recorder: eager);
-        var lazyMap = Derive(fixture, ScribeBindingStrategy.Demand, recorder: lazy);
-        Assert.Equal(Bytes(eagerMap), Bytes(lazyMap));
-        Assert.All(lazy.Bound.GroupBy(static item => item), group => Assert.Single(group));
-        return (lazyMap, eager, lazy);
+        var demandMap = Derive(fixture, ScribeBindingStrategy.Demand, recorder: demand);
+        Assert.Equal(Bytes(eagerMap), Bytes(demandMap));
+        Assert.All(demand.Bound.GroupBy(static item => item), group => Assert.Single(group));
+        return (demandMap, eager, demand);
     }
 
     internal static void AssertBound(Recorder recorder, params string[] expected) =>

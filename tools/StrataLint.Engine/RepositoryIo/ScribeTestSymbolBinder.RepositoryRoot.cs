@@ -44,16 +44,25 @@ internal static partial class ScribeTestSymbolBinder
         ScribeSemanticModelProvider semanticModels,
         HashSet<ISymbol> visited)
     {
-        var findRootInvocations = expression.DescendantNodesAndSelf()
-            .OfType<InvocationExpressionSyntax>()
-            .Where(static invocation => invocation.Expression switch
+        var classification = RepositoryRootClassification.NotRepositoryRoot;
+        if (expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>().Any(invocation =>
             {
-                SimpleNameSyntax { Identifier.ValueText: "FindRoot" } => true,
-                MemberAccessExpressionSyntax { Name.Identifier.ValueText: "FindRoot" } => true,
-                MemberBindingExpressionSyntax { Name.Identifier.ValueText: "FindRoot" } => true,
-                _ => false,
-            })
-            .ToArray();
+                var invocationModel = semanticModels.ModelFor(invocation, model);
+                if (invocationModel is null)
+                {
+                    classification = RepositoryRootClassification.Unknown;
+                    return false;
+                }
+                return invocationModel.GetSymbolInfo(invocation).Symbol is IMethodSymbol
+                {
+                    Name: "FindRoot",
+                    ReturnType.SpecialType: SpecialType.System_String,
+                };
+            }))
+        {
+            return RepositoryRootClassification.RepositoryRoot;
+        }
+
         if (expression.DescendantNodesAndSelf().OfType<MemberAccessExpressionSyntax>().Any(static member =>
                 member.Name.Identifier.ValueText == "FullPath"
                 && member.Expression is MemberAccessExpressionSyntax
@@ -64,31 +73,25 @@ internal static partial class ScribeTestSymbolBinder
             return RepositoryRootClassification.RepositoryRoot;
         }
 
-        var expressionModel = semanticModels.ModelFor(expression, model);
-        if (expressionModel is null)
+        if (expression is not IdentifierNameSyntax identifier)
+        {
+            return classification;
+        }
+
+        var identifierModel = semanticModels.ModelFor(identifier, model);
+        if (identifierModel is null)
         {
             return RepositoryRootClassification.Unknown;
         }
-        model = expressionModel;
+        model = identifierModel;
 
-        if (findRootInvocations.Any(invocation =>
-                model.GetSymbolInfo(invocation).Symbol is IMethodSymbol
-                {
-                    Name: "FindRoot",
-                    ReturnType.SpecialType: SpecialType.System_String,
-                }))
-        {
-            return RepositoryRootClassification.RepositoryRoot;
-        }
-
-        if (expression is not IdentifierNameSyntax identifier
-            || model.GetSymbolInfo(identifier).Symbol is not { } symbol
+        if (model.GetSymbolInfo(identifier).Symbol is not { } symbol
             || !visited.Add(symbol))
         {
-            return RepositoryRootClassification.NotRepositoryRoot;
+            return classification;
         }
 
-        var classification = symbol switch
+        var initializers = symbol switch
         {
             ILocalSymbol local => ClassifyRepositoryRoot(
                 LocalInitializers(local), model, semanticModels, visited),
@@ -99,10 +102,10 @@ internal static partial class ScribeTestSymbolBinder
             _ => RepositoryRootClassification.NotRepositoryRoot,
         };
         return symbol is ILocalSymbol localSymbol
-            && classification is not RepositoryRootClassification.RepositoryRoot
-            && IsMarkerSearchRoot(localSymbol, model)
+            && initializers is not RepositoryRootClassification.RepositoryRoot
+            && IsMarkerSearchRoot(localSymbol, model, semanticModels)
                 ? RepositoryRootClassification.RepositoryRoot
-                : classification;
+                : initializers;
     }
 
     private static RepositoryRootClassification ClassifyRepositoryRoot(
@@ -152,7 +155,8 @@ internal static partial class ScribeTestSymbolBinder
             .Where(static value => value is not null)
             .Select(static value => value!);
 
-    private static bool IsMarkerSearchRoot(ILocalSymbol local, SemanticModel model)
+    private static bool IsMarkerSearchRoot(
+        ILocalSymbol local, SemanticModel model, ScribeSemanticModelProvider semanticModels)
     {
         var declaration = local.DeclaringSyntaxReferences
             .Select(static reference => reference.GetSyntax())
@@ -163,7 +167,7 @@ internal static partial class ScribeTestSymbolBinder
                 or LocalFunctionStatementSyntax);
         if (callable is null
             || declaration?.Initializer?.Value is not MemberAccessExpressionSyntax initializer
-            || model.GetSymbolInfo(initializer).Symbol is not IPropertySymbol
+            || semanticModels.ModelFor(initializer, model)?.GetSymbolInfo(initializer).Symbol is not IPropertySymbol
             {
                 Name: "BaseDirectory",
                 ContainingType: { } appContext,
@@ -176,7 +180,7 @@ internal static partial class ScribeTestSymbolBinder
         return callable.DescendantNodes().OfType<WhileStatementSyntax>()
             .SelectMany(static loop => loop.Condition.DescendantNodesAndSelf()
                 .OfType<InvocationExpressionSyntax>())
-            .Where(invocation => model.GetSymbolInfo(invocation).Symbol is IMethodSymbol
+            .Where(invocation => semanticModels.ModelFor(invocation, model)?.GetSymbolInfo(invocation).Symbol is IMethodSymbol
             {
                 Name: "Exists",
                 ContainingType: { } type,
@@ -185,7 +189,7 @@ internal static partial class ScribeTestSymbolBinder
             .SelectMany(static argument => argument.Expression.DescendantNodesAndSelf()
                 .OfType<IdentifierNameSyntax>())
             .Any(identifier => SymbolEqualityComparer.Default.Equals(
-                model.GetSymbolInfo(identifier).Symbol,
+                semanticModels.ModelFor(identifier, model)?.GetSymbolInfo(identifier).Symbol,
                 local));
     }
 

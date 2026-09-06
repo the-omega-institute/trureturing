@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 
 namespace StrataLint.Tests;
 
-public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output)
+public sealed partial class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output)
 {
     [Fact]
     public void DemandAndEagerCallableKindsProduceIdenticalMapBytes()
@@ -39,7 +39,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
             }
             """);
         var recorder = new ScribeDemandBindingIsolationTests.Recorder();
-        var map = EqualMaps(fixture, lazyRecorder: recorder);
+        var map = EqualMaps(fixture, demandRecorder: recorder);
         AssertReasons(map, "Cases.Automatic");
         foreach (var name in new[] { "Method", "Getter", "Setter", "Initializer", "Expression", "Indexer", "Local", "Constructor", "Operator" })
             AssertReasons(map, "Cases." + name, TestMapUnknownReason.VariablePath);
@@ -188,7 +188,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
     {
         var fixture = Documents();
         var recorder = new ScribeDemandBindingIsolationTests.Recorder();
-        var map = EqualMaps(fixture, lazyRecorder: recorder);
+        var map = EqualMaps(fixture, demandRecorder: recorder);
         AssertReasons(map, "Cases.Read", TestMapUnknownReason.Other);
         ScribeDemandBindingIsolationTests.AssertBound(recorder,
             "M:Cases.#ctor",
@@ -237,7 +237,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
             }
         ] } };
         var recorder = new ScribeDemandBindingIsolationTests.Recorder();
-        var map = EqualMaps(fixture, lazyRecorder: recorder);
+        var map = EqualMaps(fixture, demandRecorder: recorder);
         AssertReasons(map, "Cases.Empty", TestMapUnknownReason.MetadataUnavailable);
         AssertReasons(map, "Cases.Known", TestMapUnknownReason.MetadataUnavailable);
         Assert.DoesNotContain(recorder.Bound,
@@ -269,13 +269,13 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
     private ScribeTestMap EqualMaps(
         Fixture fixture,
         bool auxiliary = false,
-        ScribeDemandBindingIsolationTests.Recorder? lazyRecorder = null)
+        ScribeDemandBindingIsolationTests.Recorder? demandRecorder = null)
     {
         var eager = Derive(fixture, ScribeBindingStrategy.Eager, auxiliary);
-        var lazy = Derive(fixture, ScribeBindingStrategy.Demand, auxiliary, lazyRecorder);
-        Assert.Equal(Bytes(eager), Bytes(lazy));
+        var demand = Derive(fixture, ScribeBindingStrategy.Demand, auxiliary, demandRecorder);
+        Assert.Equal(Bytes(eager), Bytes(demand));
         output.WriteLine(Encoding.UTF8.GetString(Bytes(eager)));
-        return lazy;
+        return demand;
     }
 
     private static void AssertBoundKeys(
