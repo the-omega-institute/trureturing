@@ -81,14 +81,32 @@ table after the standard quaternary response-pair decoding. -/
 noncomputable def goldenResponsePrefix (k : Nat) : Fin k → Bool × Bool :=
   fun i => responsePairDigitEquiv.symm (base4GoldenDigit i.1)
 
+/-- The distinguished prefix is also one concrete node of the full 4^k table
+level. Mathlib's radix map fixes the coordinate convention of this code. -/
+noncomputable def goldenResponsePrefixCode (k : Nat) : Fin (4 ^ k) :=
+  responseTableCodeEquiv k (goldenResponsePrefix k)
+
 /-- Encoding the distinguished response table returns the original golden digit. -/
 @[simp] theorem goldenResponsePrefix_digit (k : Nat) (i : Fin k) :
     responsePairDigitEquiv (goldenResponsePrefix k i) = base4GoldenDigit i.1 := by
   simp [goldenResponsePrefix]
 
+/-- Successive prefixes lie on one nested path through the four-ary table tree.
+The old coordinates are unchanged when the next golden digit is appended. -/
+@[simp] theorem goldenResponsePrefix_castSucc (k : Nat) (i : Fin k) :
+    goldenResponsePrefix (k + 1) i.castSucc = goldenResponsePrefix k i := by
+  rfl
+
+/-- The chosen level-k node, like every table, lies below the capacity boundary. -/
+theorem goldenResponsePrefixCode_lt_capacity (k : Nat) :
+    (goldenResponsePrefixCode k).val < 4 ^ k :=
+  (goldenResponsePrefixCode k).isLt
+
 #print axioms responseTable_card_eq_four_pow
 #print axioms responseTableCode_lt_capacity
 #print axioms golden_base4_power_word_is_response_table_capacity
 #print axioms goldenResponsePrefix_digit
+#print axioms goldenResponsePrefix_castSucc
+#print axioms goldenResponsePrefixCode_lt_capacity
 
 end D5.S3.ConceptDynamics.PartialIdentification.QuaternaryResponseTableCoding
