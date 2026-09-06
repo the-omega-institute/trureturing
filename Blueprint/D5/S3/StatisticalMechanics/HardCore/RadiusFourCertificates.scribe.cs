@@ -63,5 +63,12 @@ internal sealed class RadiusFourCertificatesDocument : IScribeDocumentDefinition
                 H("An actual finite-domain consumer"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every finite integer-grid vertex set with the parent absent, the raw ordered deletion count has prefactor twenty thousand and rate at most 24827 over ten thousand. Real domain membership determines child availability. Partition-polynomial and complex zero-free consequences remain separate obligations."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("hard-core-radiusfourcertificates-radiusfour-beats-every-radiusthree-controller"),
+                DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/RadiusFourCertificates.radiusFour_beats_every_radiusThree_controller"),
+                H("A finite universal separation"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At depth seven hundred, the fixed-SRL radius-four count is strictly below the count of every history-dependent radius-three controller. The proof combines the actual two model certificates with an exact integer comparison; it does not enumerate policies or transfer a relaxed-model lower bound to the physical grid."))),
                 DescribeRole.Theorem))));
 }
