@@ -11,6 +11,24 @@ internal sealed class StreamlineTheoremDocument : IScribeDocumentDefinition
             H("Conditional Streamline Rigidity"),
             Blocks(
                 Describe.Lean(
+                    DescribeId.Create("the-throat-component-reconstructs-the-supplied-path"),
+                    DeclarationHandle.Create("D5/S3/Observer/StreamlineTheorem.path_decomposition"),
+                    H("The throat component reconstructs the supplied path"),
+                    StatementSource.FromAuthor(Disp(Seq(
+                        Forall, Sp, F.Id("t"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Esc,
+                        GammaLower, Underscore, F.Id("d"), Open, F.Id("t"), Close, Eq,
+                        F.Id("v"), Underscore, F.Id("d"), Open, F.Id("t"), Close, Plus,
+                        F.Id("e"), Underscore, F.Id("d"), Open,
+                        F.Id("c"), Underscore, F.Id("d"), Open, F.Id("t"), Close, Close))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "Let d be a supplied StreamlineDecomposition, with path gamma_d, "
+                            + "visible lift v_d, and hidden-kernel identification e_d. Applying "
+                            + "that identification to its throat component c_d recovers the "
+                            + "pointwise difference between the path and its visible lift. This "
+                            + "reconstruction requires no continuity hypothesis."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("a-supplied-decomposition-has-a-rigid-throat-offset"),
                     DeclarationHandle.Create("D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant"),
                     H("A supplied decomposition has a rigid throat offset"),

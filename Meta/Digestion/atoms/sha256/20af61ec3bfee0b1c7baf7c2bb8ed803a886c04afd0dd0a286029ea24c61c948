@@ -1,0 +1,47 @@
+## 定理 223.1　单次短时离开概率
+
+对任意初态
+
+$$
+\rho=P\rho P,
+$$
+
+经过时间 \(\delta\) 后测量 \(\{P,Q\}\)，得到 \(Q\) 的概率满足
+
+$$
+\boxed{
+p_{\mathrm{leave}}(\delta)
+\le
+\kappa_P^2\delta^2.
+}
+\tag{223.2}
+$$
+
+### 证明
+
+令
+
+$$
+H_{\mathrm{block}}=PHP+QHQ.
+$$
+
+它不产生 \(P\) 与 \(Q\) 之间的跃迁，并且
+
+$$
+\|H-H_{\mathrm{block}}\|=\|QHP\|.
+$$
+
+由 Duhamel 公式，
+
+$$
+\|Qe^{-iH\delta/\hbar}P\|
+\le
+\frac{\delta}{\hbar}\|QHP\|
+=
+\kappa_P\delta.
+$$
+
+平方并对支持于 \(P\) 的任意密度矩阵取期望，即得结论。∎
+
+---
+

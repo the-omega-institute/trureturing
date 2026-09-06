@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:852d24ea226ef5dcdf09eda5c7d48f2e25ac26d370b310adb112114678bf35a2
+  normalized_sha256: sha256:852d24ea226ef5dcdf09eda5c7d48f2e25ac26d370b310adb112114678bf35a2
+cas_ref: sha256:852d24ea226ef5dcdf09eda5c7d48f2e25ac26d370b310adb112114678bf35a2
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Refinement/RelativeMaturityIsFixedPoint.relative_maturity_is_not_absolute
+    target_statement_id: sha256:c1cb8b0ae3bd87193300bfc1e7d6c53235b3caeaad2dfb52a4ec132d4555f7fa
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Refinement/RelativeMaturityIsFixedPoint.relative_maturity_is_not_absolute
+      definition_sha256: sha256:8a8bfe53880c4126f1005b55197765ddd2bd28adb6a995752dad25ee66cd3823
+      emission_sha256: sha256:af8460565dee869a28a384bdcdbcfdc38437a1d50fdd9a83aa59a248285a3738
+  unresolved_subitems: []

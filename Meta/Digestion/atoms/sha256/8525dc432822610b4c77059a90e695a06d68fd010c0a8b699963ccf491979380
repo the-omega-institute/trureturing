@@ -1,0 +1,110 @@
+# 一、先固定“同一个整体”，再定义两张切片
+
+采用 Fourier 变换
+
+$$
+\widehat f(z)=\int_{\mathbb R}f(x)e^{izx}\,dx,
+$$
+
+以及
+
+$$
+\widetilde f(x)=\overline{f(-x)}.
+$$
+
+令 \(W\) 为实际 ζ 函数确定的 Weil 分布，定义
+
+$$
+\boxed{
+Q_W(f,g)=W(f*\widetilde g),
+\qquad
+Q_W(f)=Q_W(f,f).
+}
+\tag{1}
+$$
+
+经典 Weil 判据是
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Q_W(f)\ge0
+\quad\forall f\in C_c^\infty(\mathbb R).
+}
+\tag{2}
+$$
+
+在证明正性以前，\(Q_W\) 只是一个 Hermitian 二次型，不能提前把它叫作正范数。([arXiv][1])
+
+记平移为
+
+$$
+(\tau_Tf)(x)=f(x-T).
+$$
+
+卷积直接给出平移不变性：
+
+$$
+\boxed{
+Q_W(\tau_Tf,\tau_Tg)=Q_W(f,g).
+}
+\tag{3}
+$$
+
+我们将构造一个固定的实、偶、非负波包 \(g\)，然后只移动它，不再改变波包形状。
+
+定义
+
+$$
+q=Q_W(g),
+$$
+
+以及交叉读数
+
+$$
+\boxed{
+B(T)=
+Q_W\!\left(\tau_{T/2}g,\tau_{-T/2}g\right).
+}
+\tag{4}
+$$
+
+由于 \(g\) 实且偶，\(B(T)\) 为实偶函数。
+
+对应的两片联合矩阵为
+
+$$
+\boxed{
+G(T)=
+\begin{pmatrix}
+q&B(T)\\
+B(T)&q
+\end{pmatrix}.
+}
+\tag{5}
+$$
+
+它的两个本征值恰好是
+
+$$
+\boxed{q+B(T),\qquad q-B(T).}
+\tag{6}
+$$
+
+所以，奇偶现在不是另外增加的两个对象，而是**同一个拼接矩阵的两条本征方向**。
+
+但要使这个模型真正有用，我们必须证明两件事：
+
+$$
+q>0,
+$$
+
+以及
+
+$$
+\text{波包的读出不会消掉可能的离线零点。}
+$$
+
+下面同时完成它们。
+

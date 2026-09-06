@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:49ba5ab6409aa6b43c3e8f0df3ddc73d9a87ed4c8235aa3bc7c5068450ae0b01
+  normalized_sha256: sha256:49ba5ab6409aa6b43c3e8f0df3ddc73d9a87ed4c8235aa3bc7c5068450ae0b01
+cas_ref: sha256:49ba5ab6409aa6b43c3e8f0df3ddc73d9a87ed4c8235aa3bc7c5068450ae0b01
+coverage_gids:
+  - gid: D5/S1/FixedPoints/MaximalForwardInvariantSubkernel.maximal_forward_invariant_subkernel
+    target_statement_id: sha256:08dff305410eb216d929b79d36080474bd29590edae8fba22f9aaffb9770daff
+receipts:
+  scribe:
+    - gid: D5/S1/FixedPoints/MaximalForwardInvariantSubkernel.maximal_forward_invariant_subkernel
+      definition_sha256: sha256:b779367676743d0d59552135b49e856b05adc19fe11f7b4bc0cb2998ae8b3456
+      emission_sha256: sha256:840d0ca02fef9e377a9baa57fac57fc9e86114a36b495864246d6f19c0bfd514
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f7ebd3078018a0f790a68812860c198836be8806f560b16c3d1579a84c3f0eef
+  normalized_sha256: sha256:f7ebd3078018a0f790a68812860c198836be8806f560b16c3d1579a84c3f0eef
+cas_ref: sha256:f7ebd3078018a0f790a68812860c198836be8806f560b16c3d1579a84c3f0eef
+coverage_gids:
+  - gid: D5/S3/Observer/HiddenFlow/InfinitesimalReducingCriterion.infinitesimal_reducing_criterion
+    target_statement_id: sha256:ad766b9b243c036167342689080dd5ce3ba7d86441b0dd6db8cd7229754b9eff
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/HiddenFlow/InfinitesimalReducingCriterion.infinitesimal_reducing_criterion
+      definition_sha256: sha256:b55e7240c7c48b81f7f57389ee761648bfcc66105a92b09da7237ce987f92238
+      emission_sha256: sha256:e505bba1d08f3fed3b6077d7609c61f0f89d34bf3e1a3d90197d172dd9a55a7c
+  unresolved_subitems: []

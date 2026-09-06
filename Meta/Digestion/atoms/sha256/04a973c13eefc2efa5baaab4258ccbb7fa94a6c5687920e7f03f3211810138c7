@@ -1,0 +1,46 @@
+# 五、主定理：这一个固定波包的全部平移，已经保留 RH 判定信息
+
+把非平凡零点写成
+
+$$
+\rho=\frac12+i\omega.
+$$
+
+令 \(\mathcal Z\) 为不同 \(\omega\) 的集合，\(m_\omega\) 为重数。它满足
+
+$$
+\mathcal Z=-\mathcal Z=\overline{\mathcal Z},
+\qquad
+|\Im\omega|<\frac12.
+$$
+
+RH 等价于 \(\mathcal Z\subset\mathbb R\)。这些对称性来自 ξ 的函数方程。([DLMF][3])
+
+由于 \(g\) 实且偶，Weil 零点展开给出
+
+$$
+\boxed{
+B(T)
+=
+\sum_{\omega\in\mathcal Z}
+m_\omega\,\widehat g(\omega)^2e^{i\omega T}.
+}
+\tag{18}
+$$
+
+这里仍然是
+
+$$
+\widehat g(\omega)^2,
+$$
+
+不是擅自换成
+
+$$
+|\widehat g(\omega)|^2.
+$$
+
+这种共轭评价点之间的配对，是 Weil Hermitian 形式的准确零点表达。([arXiv][4])
+
+因为 \(g\in C_c^\infty\)，其 Fourier 变换在固定水平带内快速衰减；结合零点计数 \(N(Y)=O(Y\log Y)\)，式（18）在每个有限 \(T\) 区间内绝对一致收敛。([arXiv][5])
+

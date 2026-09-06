@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f7b046cfa85ee9aec65fcfea4bba353dc641f897187c2149376c73f73eb29ae5
+  normalized_sha256: sha256:f7b046cfa85ee9aec65fcfea4bba353dc641f897187c2149376c73f73eb29ae5
+cas_ref: sha256:f7b046cfa85ee9aec65fcfea4bba353dc641f897187c2149376c73f73eb29ae5
+coverage_gids:
+  - gid: D5/S3/ArithUnits/FiniteFieldTwoSquares.every_element_eq_sq_add_sq
+    target_statement_id: sha256:fd12459d0709f40e2afa30eee35fb78a57fe35be5a893a20ee7d4beafe809684
+receipts:
+  scribe:
+    - gid: D5/S3/ArithUnits/FiniteFieldTwoSquares.every_element_eq_sq_add_sq
+      definition_sha256: sha256:40950d3650d197ea8a344c95dea64d6f6c6bee11f953842d5c1c5b2a30150f41
+      emission_sha256: sha256:a05a3cc7a1305c0165d4acbf72efcec2c9c6488f8a1b8ee4fed3f22895c58a3b
+  unresolved_subitems: []

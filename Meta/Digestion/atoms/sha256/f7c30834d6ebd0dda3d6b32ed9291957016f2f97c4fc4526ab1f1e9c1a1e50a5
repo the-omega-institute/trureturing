@@ -1,0 +1,35 @@
+# 三、局部正性可以无条件证明，不需要 RH
+
+令
+
+$$
+k_\Gamma(t)=\frac{e^{t/2}}{e^t-e^{-t}},
+\qquad t>0.
+$$
+
+再定义
+
+$$
+\boxed{
+C_\Gamma=\log(8\pi)+\gamma_{\mathrm E}+\frac\pi2.
+}
+\tag{9}
+$$
+
+固定足够小的 \(\ell\)，满足
+
+$$
+0<\ell<\min\{1,\log2\},
+$$
+
+以及
+
+$$
+\boxed{
+e^{-1/2}\log\frac1\ell>C_\Gamma.
+}
+\tag{10}
+$$
+
+以后这个 \(\ell\) 不再随观察位置改变。
+

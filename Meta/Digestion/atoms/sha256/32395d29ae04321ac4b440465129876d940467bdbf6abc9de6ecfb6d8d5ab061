@@ -1,0 +1,104 @@
+## 定理 4：固定三角波包判据
+
+以下命题等价：
+
+$$
+\boxed{\mathrm{RH};}
+$$
+
+$$
+\boxed{
+|B_a(T)|\le q_a
+\qquad\forall T>2a;
+}
+\tag{19}
+$$
+
+$$
+\boxed{
+B_a(T)\text{ 在 }[2a,\infty)\text{ 上有界}.
+}
+\tag{20}
+$$
+
+### 证明
+
+把全部非平凡零点写成
+
+$$
+\rho=\frac12+i\omega,
+$$
+
+按重数求和。Weil 零点表达给出
+
+$$
+\boxed{
+B_a(T)
+=
+\sum_\omega
+m_\omega
+\left[
+\frac{\sin(a\omega/2)}{a\omega/2}
+\right]^4e^{i\omega T}.
+}
+\tag{21}
+$$
+
+该级数绝对收敛。注意这里是四次幂，而不是把非实数取模后的四次幂。
+
+如果 RH 成立，\(\omega\) 都是实数，每个系数非负。因此
+
+$$
+q_a=B_a(0)=
+\sum_\omega m_\omega
+\left[
+\frac{\sin(a\omega/2)}{a\omega/2}
+\right]^4
+$$
+
+且 \(|B_a(T)|\le q_a\)。
+
+反过来，若 \(B_a\) 在充分大范围有界，它在全部 \(T\ge0\) 上也有界，因为有限初始区间上的读出连续。
+
+于是其 Laplace 变换在 \(\Re s>0\) 内解析。但在初始收敛区域 \(\Re s>1/2\)，
+
+$$
+\boxed{
+\widehat B_a(s)
+=
+\sum_\omega
+\frac{
+m_\omega
+[\sin(a\omega/2)/(a\omega/2)]^4
+}{
+s-i\omega
+}.
+}
+\tag{22}
+$$
+
+若存在右侧离线零点
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad\delta>0,
+$$
+
+那么 \(\omega=\gamma-i\delta\)，式（22）在
+
+$$
+s=\delta+i\gamma
+$$
+
+有候选极点。
+
+由式（3），其留数不为零，所以极点不可去，与右半平面解析性矛盾。再由零点反射对称性得到 RH。([DLMF][4])
+
+证毕。
+
+---
+
+这说明无限卷积波包并非必要。**一个固定的、分段线性的形状，已经足以保留目标失败的信息。**
+
+不过，这仍是一个无限平移范围的判据，而不是一次有限计算解决全局问题。
+

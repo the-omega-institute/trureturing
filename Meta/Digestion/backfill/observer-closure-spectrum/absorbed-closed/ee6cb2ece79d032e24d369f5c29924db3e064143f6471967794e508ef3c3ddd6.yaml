@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ee6cb2ece79d032e24d369f5c29924db3e064143f6471967794e508ef3c3ddd6
+  normalized_sha256: sha256:ee6cb2ece79d032e24d369f5c29924db3e064143f6471967794e508ef3c3ddd6
+cas_ref: sha256:ee6cb2ece79d032e24d369f5c29924db3e064143f6471967794e508ef3c3ddd6
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyReserveStability.agency_reserve_stability
+    target_statement_id: sha256:11cc7031811d176a4fa1a6638c8146c9675d22a2a17483c8306fba2a91cc3eb1
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/AgencyReserveStability.agency_reserve_stability
+      definition_sha256: sha256:b1163d2b6feb46c4d3bdae6fd985e7da14254bcde14c81ec3e85201b35c0ea10
+      emission_sha256: sha256:333c6ba5555f35291c1b243549ad2a2d010e13f5d29702f179fe529ee6327a82
+  unresolved_subitems: []

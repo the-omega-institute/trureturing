@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d9e33045888c5a5457b333d78afd0251fd4c0a0be8f5c2733490fd845220f2f3
+  normalized_sha256: sha256:d9e33045888c5a5457b333d78afd0251fd4c0a0be8f5c2733490fd845220f2f3
+cas_ref: sha256:d9e33045888c5a5457b333d78afd0251fd4c0a0be8f5c2733490fd845220f2f3
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/LongitudinalCausal/LongitudinalStructuralCausalModel.policyIntervention
+    target_statement_id: sha256:be6641368aa778eb79890fa39935863f5402972faf7c981ff6f26a381bbf89cb
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/LongitudinalCausal/LongitudinalStructuralCausalModel.policyIntervention
+      definition_sha256: sha256:0921d838dcddd01ccbb9aeb73db04f142adb7691286279b8e495c38e1678fc93
+      emission_sha256: sha256:51709fe861804ea71efb4cfac6f7c07807c82152372c18710de48499aea31b5e
+  unresolved_subitems: []

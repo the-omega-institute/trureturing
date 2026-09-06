@@ -1,0 +1,85 @@
+## 一个更强的例子：奇态与偶态可以有完全相同的全部坐标概率
+
+令：
+
+$$
+Z_1=\iint u^2|\chi(s,u)|^2\,ds\,du.
+$$
+
+定义：
+
+$$
+\boxed{
+\chi_{\mathrm e}(s,u)
+=
+\frac{|u|\chi(s,u)}{\sqrt{Z_1}},
+\qquad
+\chi_{\mathrm o}(s,u)
+=
+\frac{u\chi(s,u)}{\sqrt{Z_1}}.
+}
+\tag{U4}
+$$
+
+它们分别满足：
+
+$$
+\mathsf X\chi_{\mathrm e}=\chi_{\mathrm e},
+\qquad
+\mathsf X\chi_{\mathrm o}=-\chi_{\mathrm o}.
+$$
+
+而：
+
+$$
+\boxed{
+|\chi_{\mathrm e}(s,u)|^2
+=
+|\chi_{\mathrm o}(s,u)|^2.
+}
+\tag{U5}
+$$
+
+所以，对任意有界的坐标函数 \(f(S,U)\)：
+
+$$
+\langle\chi_{\mathrm e},f(S,U)\chi_{\mathrm e}\rangle
+=
+\langle\chi_{\mathrm o},f(S,U)\chi_{\mathrm o}\rangle.
+$$
+
+包括我们之前不断读取的：
+
+$$
+e^{i\sqrt2tS}.
+$$
+
+但是：
+
+$$
+\boxed{
+\langle\chi_{\mathrm e},\chi_{\mathrm o}\rangle=0.
+}
+\tag{U6}
+$$
+
+证明只是：被积函数 \(|u|u|\chi|^2\) 关于 \(u\) 为奇函数。
+
+因此：
+
+$$
+\boxed{
+\text{所有坐标概率完全一样}
+\quad+\quad
+\text{整体量子态完全正交}
+}
+$$
+
+可以同时成立。
+
+两者的区别不是躲在一个无法表达的更高维里。测量交换算子 \(\mathsf X\)，就会分别得到 \(+1\) 与 \(-1\)。
+
+**缺少的不是“更多相同切片”，而是一种能够读取交换相位的不同观测。**
+
+---
+

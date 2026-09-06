@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3b26e8cb6077d1fb307d29c4194f63bfa4f1ca3025f5e7eb37823489abc31604
+  normalized_sha256: sha256:3b26e8cb6077d1fb307d29c4194f63bfa4f1ca3025f5e7eb37823489abc31604
+cas_ref: sha256:3b26e8cb6077d1fb307d29c4194f63bfa4f1ca3025f5e7eb37823489abc31604
+coverage_gids:
+  - gid: D5/S3/Analytic/Boundary/LogNormDirectionalDerivative.riesz_potential_real_direction_hasDerivAt
+    target_statement_id: sha256:9e4b9e25258545daa5aa56a51d82629dd7607ce486eddce1a917df1a225599d8
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Boundary/LogNormDirectionalDerivative.riesz_potential_real_direction_hasDerivAt
+      definition_sha256: sha256:fd2c3297f556d96727af93338a4a315f0122247c791294c30b9430970d8b7cee
+      emission_sha256: sha256:234ffdf19d4c66c5090003f27961b7b1a21c5020968265dc5356b95d2957fff4
+  unresolved_subitems: []
