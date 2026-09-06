@@ -1,0 +1,56 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Hankel;
+
+internal sealed class BalancedRealizationTransportDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Actual Gramians produce a balanced realization and a certified reduced system for the original behavior.",
+        H("BalancedRealizationTransport"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("balanceda"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.balancedA"), H("balanced A"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Constructs the transformed transition from the proved inverse balancing matrices."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("balancedb"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.balancedB"), H("balanced B"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Constructs the transformed input action."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("balancedc"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.balancedC"), H("balanced C"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Constructs the transformed output readout."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("balanced-observability-stein"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.balanced_observability_stein"), H("balanced observability stein"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Transports the exact observability Stein equality using the proved coordinate identities."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("balanced-control-stein"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.balanced_control_stein"), H("balanced control stein"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Transports the exact control Stein equality by the dual congruence."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("balanced-stein"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.balanced_stein"), H("balanced stein"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Derives all premises of the previous balanced-truncation theorem from the transformed exact matrix equations."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("matrixstate-transport"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.matrixState_transport"), H("matrix State transport"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Proves equivalence of the actual forced state trajectories for every input and time."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("matrixresponse-transport"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.matrixResponse_transport"), H("matrix Response transport"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Proves all-time equality of the original and balanced input-output behavior."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("systemcoordinates"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.systemCoordinates"), H("system Coordinates"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Constructs the Gramians and balancing coordinates from the system itself under explicit power stability and joint readout injectivity assumptions."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("constructed-reduction-window-bound"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.constructed_reduction_window_bound"), H("constructed reduction window bound"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("End-to-end finite-window error bound for the original system and a principal truncation of its constructed balanced realization."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("constructed-reduction-l2-bound"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport.constructed_reduction_l2_bound"), H("constructed reduction l2 bound"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("End-to-end total-energy error bound, with error summability proved, for the original system and the constructed reduced model."))), DescribeRole.Theorem)),
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Observer/Hankel/ExactGramianSeries")), DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Observer/Hankel/BalancedTruncationTail"))]));
+}

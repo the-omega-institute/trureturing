@@ -1,0 +1,57 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Hankel;
+
+internal sealed class OrderedBalancedCoordinatesDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Descending genuine Hankel weights and the correspondingly permuted actual realization.",
+        H("Ordered Balanced Coordinates"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("descending-permutation"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.descendingPermutation"), H("Descending permutation"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Uses the library tuple sort on negative weights. Real spectral construction remains noncomputable."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("descending-antitone"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.descendingPermutation_antitone"), H("Descending values"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The permuted weights are nonincreasing; equal weights are permitted."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("reindex-coordinates"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.reindexCoordinates"), H("Reindex actual coordinates"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Permutes both inverse state maps and proves both inverse identities and Gramian congruences."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ordered-coordinates"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.orderedCoordinates"), H("Ordered balancing output"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Sorts the actual balancing output, including its coordinate maps."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ordered-weight-antitone"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.ordered_weight_antitone"), H("Output weights are ordered"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Proves ordering of the weights stored in the transformed output."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("retained-ge-discarded"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.retained_weight_ge_discarded"), H("Largest-weight prefix"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every retained weight is at least every discarded weight, for the actual prefix cut."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("weight-multiset"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.ordered_weight_multiset"), H("Preserved multiplicities"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Sorting preserves the complete finite weight multiset including repetitions."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("sorted-values-unique"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.sorted_values_unique"), H("Uniqueness of sorted values"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("All sorting permutations return identical values. No uniqueness of eigenvectors within repeated eigenspaces is claimed."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("transition-reindex"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.balancedA_reindex"), H("Actual transition permutation"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The transformed transition is the row-and-column permutation of the previous transition."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("input-reindex"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.balancedB_reindex"), H("Actual input permutation"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The input rows use the same state permutation."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("output-reindex"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/OrderedBalancedCoordinates.balancedC_reindex"), H("Actual output permutation"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The output columns use the same state permutation."))), DescribeRole.Theorem)),
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport")),
+         DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Observer/Hankel/BalancedHankelSchmidt"))]));
+}
