@@ -102,7 +102,66 @@ theorem sinc_product_decay_bound (ell : ℝ) (hell : 0 < ell) (k : ℕ) :
         (fun j _ => real_factor_norm_le_inv (ha j) hxi0)
     _ = C / |xi| ^ k := by simp [C, Finset.prod_div_distrib]
 
+private theorem weighted_transform_bounded (ell : ℝ) (hell : 0 < ell) (k : ℕ) :
+    ∃ C > 0, ∀ xi : ℝ,
+      |xi| ^ k * ‖densityFourierLaplace (dyadicConvolutionDensity ell) (xi : ℂ)‖ ≤ C := by
+  obtain ⟨C, hC, hbound⟩ := sinc_product_decay_bound ell hell k
+  refine ⟨1 + C, by positivity, ?_⟩
+  intro xi
+  by_cases hxi : 1 ≤ |xi|
+  · have hpos : 0 < |xi| ^ k := pow_pos (lt_of_lt_of_le zero_lt_one hxi) _
+    have hb := (le_div_iff₀ hpos).mp (hbound xi hxi)
+    nlinarith
+  · have hp : |xi| ^ k ≤ 1 := pow_le_one₀ (abs_nonneg xi) (le_of_not_ge hxi)
+    have ht : ‖densityFourierLaplace (dyadicConvolutionDensity ell) (xi : ℂ)‖ ≤ 1 := by
+      rw [dyadicConvolutionDensity_fourierLaplace ell hell]
+      simpa only [Finset.range_zero, Finset.prod_empty] using
+        product_norm_le_prefix ell hell xi 0
+    have hb := mul_le_mul hp ht (norm_nonneg _) zero_le_one
+    nlinarith
+
+private theorem transform_aestronglyMeasurable (ell : ℝ) (hell : 0 < ell) :
+    AEStronglyMeasurable
+      (fun xi : ℝ => densityFourierLaplace (dyadicConvolutionDensity ell) (xi : ℂ)) := by
+  simp_rw [dyadicConvolutionDensity_fourierLaplace ell hell]
+  apply aestronglyMeasurable_of_tendsto_ae atTop
+    (f := fun (n : ℕ) (xi : ℝ) => ∏ j ∈ Finset.range n,
+      complexSinc ((dyadicHalfWidth ell j : ℂ) * (xi : ℂ)))
+  · intro n
+    apply Continuous.aestronglyMeasurable
+    apply continuous_finsetProd
+    intro j _
+    exact continuous_complexSinc.comp (continuous_const.mul Complex.continuous_ofReal)
+  · apply Eventually.of_forall
+    intro xi
+    have hd := dyadic_uniform_convolution_product_ne_zero_off_real ell hell
+    exact ((hd.2.2.1 {(xi : ℂ)} isCompact_singleton).hasProd
+      (mem_singleton _)).tendsto_prod_nat
+
+/-- Every polynomially weighted real-axis density transform has finite absolute integral. -/
+theorem dyadic_density_transform_decay (ell : ℝ) (hell : 0 < ell) (k : ℕ) :
+    Integrable (fun xi : ℝ =>
+      |xi| ^ k * ‖densityFourierLaplace (dyadicConvolutionDensity ell) (xi : ℂ)‖) := by
+  obtain ⟨C, _, hC⟩ := weighted_transform_bounded ell hell k
+  obtain ⟨D, _, hD⟩ := weighted_transform_bounded ell hell (k + 2)
+  have hm := (continuous_abs.pow k).aestronglyMeasurable.mul
+    (transform_aestronglyMeasurable ell hell).norm
+  refine (integrable_inv_one_add_sq.const_mul (C + D)).mono' hm
+    (Eventually.of_forall fun xi => ?_)
+  rw [Real.norm_eq_abs, abs_of_nonneg (by positivity), ← div_eq_mul_inv,
+    le_div_iff₀ (by positivity)]
+  calc
+    (|xi| ^ k * ‖densityFourierLaplace (dyadicConvolutionDensity ell) (xi : ℂ)‖) *
+        (1 + xi ^ 2) =
+      |xi| ^ k * ‖densityFourierLaplace (dyadicConvolutionDensity ell) (xi : ℂ)‖ +
+        |xi| ^ (k + 2) *
+          ‖densityFourierLaplace (dyadicConvolutionDensity ell) (xi : ℂ)‖ := by
+            rw [pow_add, sq_abs]
+            ring
+    _ ≤ C + D := add_le_add (hC xi) (hD xi)
+
 #print axioms sinc_product_decay_bound
+#print axioms dyadic_density_transform_decay
 
 end
 
