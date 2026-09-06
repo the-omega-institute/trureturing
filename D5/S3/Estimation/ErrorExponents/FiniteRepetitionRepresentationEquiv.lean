@@ -3,10 +3,11 @@
    mirror-B: D5/B/S3/Estimation/ErrorExponents/FiniteRepetitionRepresentationEquiv
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The recursive IidSpace repetition encoding is equivalent to Fin-indexed tuples, and iidPower transports exactly to the canonical windowLaw product. -/
+   digest: Recursive IidSpace samples, product masses, distances, affinities, and decision risks transport exactly to the canonical Fin-indexed finite-suite representation. -/
 
 import D5.S3.RenyiDivergence.PowerAdditivity
 import D5.S3.Entropy.NamingWindow.GreenClassWindowHellinger
+import D5.S3.Estimation.ErrorExponents.FiniteSuiteErrorSqueeze
 import D5.S3.TotalVariation.Metric
 import Mathlib.Data.Fin.Tuple.Basic
 
@@ -21,11 +22,12 @@ operational finite-suite Bayes-risk owner.
 This module proves that the carriers are equivalent using Mathlib's canonical
 `Fin.consEquiv`, then proves that the two product masses agree pointwise under
 that equivalence. Total variation and Bhattacharyya affinity therefore agree
-exactly after reindexing.
+exactly after reindexing. Decision finsets, their complements, and equal-prior
+risk also transport exactly.
 
-No third repetition representation is introduced. Decision-event and Bayes-risk
-transport can now be built on this carrier-and-law equivalence rather than by
-comparing the two encodings indirectly.
+No third repetition representation or second Bayes-risk primitive is
+introduced. The two existing interfaces are now related by an explicit
+change of coordinates.
 -/
 
 set_option autoImplicit false
@@ -35,6 +37,7 @@ namespace D5.S3.Estimation.ErrorExponents.FiniteRepetitionRepresentationEquiv
 
 open D5.S3.RenyiDivergence
 open D5.S3.Entropy.NamingWindow.GreenClassWindowEntropy
+open D5.S3.Estimation.ErrorExponents.FiniteSuiteErrorSqueeze
 open D5.S3.TotalVariation.Pinsker
 open D5.S3.TotalVariation.Bhattacharyya
 open scoped BigOperators
@@ -161,10 +164,74 @@ theorem bhattacharyya_iidPower_eq_windowLaw
             (windowLaw (fun _ : Fin n => p) u *
               windowLaw (fun _ : Fin n => q) u))
 
+/-- Transport a recursive iid decision event to the canonical finite-suite
+carrier. This is just the `Finset` action of the carrier equivalence. -/
+noncomputable def iidDecisionToFin
+    (ι : Type u) (n : ℕ) :
+    Finset (IidSpace ι n) -> Finset (Fin n -> ι) :=
+  (iidSpaceFinEquiv ι n).finsetCongr
+
+@[simp]
+theorem mem_iidDecisionToFin
+    {ι : Type u} (n : ℕ) (decision : Finset (IidSpace ι n))
+    (u : Fin n -> ι) :
+    u ∈ iidDecisionToFin ι n decision ↔
+      (iidSpaceFinEquiv ι n).symm u ∈ decision := by
+  simp [iidDecisionToFin, Equiv.finsetCongr_apply]
+
+/-- Complementing a decision event commutes with the carrier equivalence. -/
+theorem iidDecisionToFin_compl
+    {ι : Type u} [Fintype ι]
+    (n : ℕ) (decision : Finset (IidSpace ι n)) :
+    iidDecisionToFin ι n decisionᶜ =
+      (iidDecisionToFin ι n decision)ᶜ := by
+  classical
+  ext u
+  simp [mem_iidDecisionToFin]
+
+/-- The mass assigned to a decision event is unchanged when both the event and
+the repeated law are transported to the `Fin n` representation. -/
+theorem iid_decision_mass_eq_windowLaw
+    {ι : Type u} [Fintype ι]
+    (p : ι -> ℝ) (n : ℕ) (decision : Finset (IidSpace ι n)) :
+    (∑ z ∈ decision, iidPower p n z) =
+      ∑ u ∈ iidDecisionToFin ι n decision,
+        windowLaw (fun _ : Fin n => p) u := by
+  classical
+  let e := iidSpaceFinEquiv ι n
+  change (∑ z ∈ decision, iidPower p n z) =
+    ∑ u ∈ decision.map e.toEmbedding,
+      windowLaw (fun _ : Fin n => p) u
+  rw [Finset.sum_map]
+  apply Finset.sum_congr rfl
+  intro z hz
+  rw [iid_power_eq_windowLaw p n z]
+  rfl
+
+/-- Equal-prior decision risk is exactly representation invariant. This is the
+operational bridge between arbitrary recursive iid tests and the finite-suite
+coordinates used by `finiteSuiteOptimalError`. -/
+theorem iid_equal_prior_error_eq_windowLaw
+    {ι : Type u} [Fintype ι]
+    (p q : ι -> ℝ) (n : ℕ) (decision : Finset (IidSpace ι n)) :
+    equalPriorError (iidPower p n) (iidPower q n) decision =
+      equalPriorError
+        (windowLaw (fun _ : Fin n => p))
+        (windowLaw (fun _ : Fin n => q))
+        (iidDecisionToFin ι n decision) := by
+  unfold equalPriorError
+  rw [iid_decision_mass_eq_windowLaw p n decision,
+    iid_decision_mass_eq_windowLaw q n decisionᶜ,
+    iidDecisionToFin_compl]
+
 #print axioms iid_space_fin_equiv_succ_zero
 #print axioms iid_space_fin_equiv_succ_succ
 #print axioms iid_power_eq_windowLaw
 #print axioms total_variation_iidPower_eq_windowLaw
 #print axioms bhattacharyya_iidPower_eq_windowLaw
+#print axioms mem_iidDecisionToFin
+#print axioms iidDecisionToFin_compl
+#print axioms iid_decision_mass_eq_windowLaw
+#print axioms iid_equal_prior_error_eq_windowLaw
 
 end D5.S3.Estimation.ErrorExponents.FiniteRepetitionRepresentationEquiv
