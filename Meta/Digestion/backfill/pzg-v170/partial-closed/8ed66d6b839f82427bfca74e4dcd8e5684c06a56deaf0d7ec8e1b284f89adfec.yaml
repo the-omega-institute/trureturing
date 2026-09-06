@@ -16,6 +16,15 @@ receipts:
     - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
       definition_sha256: sha256:bde4ed75cb707872d65ee1d8275ee4883ea7cd4a9fe14d00b44b6f218b59be0f
       emission_sha256: sha256:780fb2bf4ea155ef65e33ba9430d282941b7866cdb0b7dbff6c2a46c9c0380ee
+    - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
+      definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2
+      emission_sha256: sha256:fbf5a8bede17691bfd26b0095a98ae4353665ee67311ceb008e16ec2c410da09
+    - gid: D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta
+      definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2
+      emission_sha256: sha256:fbf5a8bede17691bfd26b0095a98ae4353665ee67311ceb008e16ec2c410da09
+    - gid: D5/S3/Zeros/Endpoints/XiEndpointValues.xi_reading_endpoint_values
+      definition_sha256: sha256:680387b33e6e31f2e766a3e2b0e80e68e29c9498ee876d5699ba19023aeaf4a7
+      emission_sha256: sha256:422c9fb81fac3440c4aff4aa38d8a6d8d090e6a799c3a8580d2fb8c31b027774
   unresolved_subitems:
     - bohr-landau-measure-zero-interpretation
     - bridge-conditional-variance-t-times-one-minus-t

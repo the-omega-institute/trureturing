@@ -14,7 +14,22 @@ coverage_gids:
   - gid: D5/S3/PrimeForms/QuadraticResidueCounterexample.two_refutes_unqualified_quadratic_residue_equivalence
     target_statement_id: sha256:4d3278ab0eb000b8212c2fefbfe53dea2bcedd2abf8505f09f14cf97b9c8791e
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/PrimeForms/GoldenPrimeClassification.five_is_square_mod_prime_iff_mod_five_eq_one_or_four
+      definition_sha256: sha256:89bd17398fa3e12f38a11685ccbaa1a258d819e7e9b643fd16dfa1d68fc387cf
+      emission_sha256: sha256:d3eb89c833b4802f32a2fe7cb38e976773b9e6323cc3c7dd74740b3334dc3ac9
+    - gid: D5/S3/PrimeForms/GoldenPrimeClassification.golden_five_eq_ramified_square
+      definition_sha256: sha256:89bd17398fa3e12f38a11685ccbaa1a258d819e7e9b643fd16dfa1d68fc387cf
+      emission_sha256: sha256:d3eb89c833b4802f32a2fe7cb38e976773b9e6323cc3c7dd74740b3334dc3ac9
+    - gid: D5/S3/PrimeForms/GoldenPrimeClassification.golden_not_prime_iff_mod_five_eq_one_or_four
+      definition_sha256: sha256:89bd17398fa3e12f38a11685ccbaa1a258d819e7e9b643fd16dfa1d68fc387cf
+      emission_sha256: sha256:d3eb89c833b4802f32a2fe7cb38e976773b9e6323cc3c7dd74740b3334dc3ac9
+    - gid: D5/S3/PrimeForms/GoldenPrimeClassification.golden_prime_iff_mod_five_eq_two_or_three
+      definition_sha256: sha256:89bd17398fa3e12f38a11685ccbaa1a258d819e7e9b643fd16dfa1d68fc387cf
+      emission_sha256: sha256:d3eb89c833b4802f32a2fe7cb38e976773b9e6323cc3c7dd74740b3334dc3ac9
+    - gid: D5/S3/PrimeForms/QuadraticResidueCounterexample.two_refutes_unqualified_quadratic_residue_equivalence
+      definition_sha256: sha256:ac3dd3a70628b9d2487b417a41c0c4b9278e9bf85f388a0f6e8ef0459329e5fc
+      emission_sha256: sha256:00538f0a7008a20b4db71df97eae28460547d685f8e0047c175119564a11d4c1
   unresolved_subitems: []
   chain_atoms:
     - b6f8685802619fca8b64899252fa17472882ef9a5004031376ecdc0cbe06b0c5

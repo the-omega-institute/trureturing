@@ -14,4 +14,10 @@ receipts:
     - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
       definition_sha256: sha256:cda4200d1442ecf3540d4309105921148fa15722b199a7d8b898fe01eda5e5e3
       emission_sha256: sha256:6e265ce2fec24c0a3a00699b2e3416562c594f9978536c3a3408bd1024d44b7c
+    - gid: D5/S1/Dynamics/RecursiveDefinition.extremal_selection_distinguishes_fixed_points
+      definition_sha256: sha256:cda4200d1442ecf3540d4309105921148fa15722b199a7d8b898fe01eda5e5e3
+      emission_sha256: sha256:6e265ce2fec24c0a3a00699b2e3416562c594f9978536c3a3408bd1024d44b7c
+    - gid: D5/S1/Dynamics/RecursiveDefinition.unique_fixed_point_implies_lfp_eq_gfp
+      definition_sha256: sha256:cda4200d1442ecf3540d4309105921148fa15722b199a7d8b898fe01eda5e5e3
+      emission_sha256: sha256:6e265ce2fec24c0a3a00699b2e3416562c594f9978536c3a3408bd1024d44b7c
   unresolved_subitems: []
