@@ -1,0 +1,26 @@
+## 定理2.1：最优损失的精确几何公式
+
+$$
+\boxed{
+\max_mJ_\lambda(m)-J_\lambda(n)
+=
+d_\lambda(n,n_\lambda).
+}
+\tag{4}
+$$
+
+### 证明
+
+将目标展开成逐层增量：
+
+$$
+J_\lambda(n)
+=
+\sum_{p,k}x_{p,k}(n)\,g_\lambda(p,k).
+$$
+
+最优配置采用全部正项，拒绝全部负项。
+
+相对于它：
+
+* 漏掉一个正收益层，损失 \(g_\lambda(p,k)\)；

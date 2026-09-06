@@ -1,0 +1,13 @@
+### 本轮核验
+
+已完成 **49项有限代数、整数或符号检查**，以及一组包含四种参数配置的数值交叉检查。
+
+其中包括：更新酉性、联合色散、离散波动方程、时空奇偶支持、两步回归、三态采样维数、四分量 Clifford 关系，以及连续极限误差界。
+
+[核验脚本](sandbox:/mnt/data/observer_formalization/check_discrete_spacetime_bridge.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/discrete_spacetime_bridge_checks.json)
+
+**本轮未执行 Lean 内核检查。**有限代数检查、一般证明、连续极限假设和现实实验验证，仍然是不同层次。
+
+---
+

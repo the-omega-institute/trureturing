@@ -1,0 +1,37 @@
+## 定义311.2　有限因数观察窗口
+
+固定正整数 \(N\)，定义投影
+
+$$
+P_N=\sum_{d\mid N}|d\rangle\langle d|.
+$$
+
+观察者保留“整数标签是 \(N\) 的因数”这一子空间。
+
+其成功保留概率为
+
+$$
+\boxed{
+w_N(\sigma)
+=
+\operatorname{Tr}(P_N\rho_\sigma)
+=
+\frac{Z_N(\sigma)}{\zeta(\sigma)},
+}
+\tag{311.2}
+$$
+
+其中
+
+$$
+Z_N(s)=\sum_{d\mid N}d^{-s}.
+$$
+
+条件于成功投影，归一化状态为
+
+$$
+\rho_{\sigma,N}
+=
+\frac{P_N\rho_\sigma P_N}{w_N(\sigma)}.
+$$
+

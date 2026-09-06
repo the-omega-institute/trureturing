@@ -1,0 +1,40 @@
+## 定理五：消去历史以后，还会产生一个新的边界度量
+
+若
+
+$$
+C\succeq\Delta I,\qquad\Delta>0,
+$$
+
+则在 \(|z|<\Delta\) 内，
+
+$$
+\boxed{
+S(z)=S(0)-zM_{\mathrm{eff}}+R(z),
+}
+\tag{19}
+$$
+
+其中
+
+$$
+\boxed{
+M_{\mathrm{eff}}
+=
+I+BC^{-2}B^*\succ0,
+}
+\tag{20}
+$$
+
+并且
+
+$$
+\boxed{
+\|R(z)\|
+\le
+\frac{\|B\|^2|z|^2}
+{\Delta^2(\Delta-|z|)}.
+}
+\tag{21}
+$$
+

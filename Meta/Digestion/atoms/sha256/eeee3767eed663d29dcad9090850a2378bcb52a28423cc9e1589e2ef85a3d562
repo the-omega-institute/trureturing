@@ -1,0 +1,48 @@
+## 2. 任何有限的对称零点截断，边界值却是 \(-1\)
+
+以下再次采用 RH 前件，使零点可以成为单位圆正谱。
+
+保留
+
+$$
+|\Im\rho|\le G
+$$
+
+的全部零点，按重数计。定义
+
+$$
+C_G=\sum_{|\Im\rho|\le G}\frac1{|\rho|^2},
+$$
+
+$$
+\mu_G=
+\frac1{C_G}
+\sum_{|\Im\rho|\le G}
+\frac1{|\rho|^2}\delta_{w_\rho}.
+$$
+
+其边界函数为
+
+$$
+\mathcal F_G(z)
+=
+\int\frac{1+zw}{1-zw}\,d\mu_G(w),
+$$
+
+$$
+\mathcal S_G(z)=\frac{\mathcal F_G(z)-1}{\mathcal F_G(z)+1}.
+$$
+
+由于谱关于共轭对称，
+
+$$
+\boxed{
+\mathcal F_G(r)
+=
+\frac{1-r^2}{C_G}
+\sum_{|\Im\rho|\le G}
+\frac1{r+(1-r)^2|\rho|^2}.
+}
+\tag{32}
+$$
+

@@ -1,0 +1,54 @@
+## 剩余的权重也可以精确计算
+
+写：
+
+$$
+m=\prod_p p^{b_p},
+\qquad
+k=\Omega(m)=\sum_p b_p.
+$$
+
+定义：
+
+$$
+\boxed{
+w(m)
+=
+\frac{
+k!\prod_p(2b_p)!
+}{
+(2k)!\prod_p b_p!
+}.
+}
+\tag{24}
+$$
+
+其中 \(w(1)=1\)。
+
+则：
+
+$$
+\boxed{
+\varepsilon(m^2)=w(m),
+}
+$$
+
+$$
+\boxed{
+\varepsilon(pm^2)
+=
+w(m)\frac{2v_p(m)+1}{2\Omega(m)+1}.
+}
+\tag{25}
+$$
+
+并且：
+
+$$
+0<w(m)\le1.
+$$
+
+几个例子：
+
+| \(n\) | \(\varepsilon(n)\) |
+| ----: | -----------------: |

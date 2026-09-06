@@ -1,0 +1,34 @@
+### 证明
+
+完整测度与重新归一化截断测度的总变差质量为 \(2\epsilon_G\)。
+
+核满足
+
+$$
+\left|\frac{1+zw}{1-zw}\right|
+\le\frac{1+r}{1-r},
+$$
+
+所以 \(\mathcal F\) 的误差不超过
+
+$$
+2\epsilon_G\frac{1+r}{1-r}.
+$$
+
+又因两者实部均非负，
+
+$$
+|\mathcal F+1|\ge1.
+$$
+
+对 Möbius 变换直接相减，得到式（39）。证毕。
+
+因此，一条充分的统一控制条件是
+
+$$
+\boxed{
+\epsilon_G\,T_{\mathrm{obs}}\ll1.
+}
+\tag{40}
+$$
+

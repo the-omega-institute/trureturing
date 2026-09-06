@@ -1,0 +1,78 @@
+# 七、第四种新切面：同一个 ξ 历史态，分别看时钟侧与数据侧
+
+现在接回前文的实际算术读出。
+
+定义 Li 系数
+
+$$
+\log\frac{\xi(1/(1-z))}{\xi(1)}
+=
+\sum_{n\ge1}\frac{\ell_n}{n}z^n,
+$$
+
+以及
+
+$$
+c_0=2\ell_1
+=
+2+\gamma_{\mathrm E}-\log(4\pi),
+$$
+
+$$
+c_n=\ell_{n+1}-2\ell_n+\ell_{n-1},
+\qquad
+r_n=\frac{c_n}{c_0}.
+$$
+
+Li 系数的零点表达、单位圆映射及与 Weil 正性的联系具有经典依据。([arXiv][3])
+
+**本节明确假设 RH。**
+
+把不同零点记为 \(\rho_j\)，重数为 \(m_j\)，定义
+
+$$
+w_j=1-\frac1{\rho_j},
+$$
+
+$$
+\boxed{
+p_j=\frac{m_j}{c_0|\rho_j|^2}.
+}
+\tag{24}
+$$
+
+在 RH 下，
+
+$$
+|w_j|=1,\qquad
+p_j>0,\qquad
+\sum_jp_j=1,
+$$
+
+且
+
+$$
+r_n=\sum_jp_jw_j^n.
+$$
+
+令
+
+$$
+U|j\rangle=w_j|j\rangle,
+\qquad
+|v\rangle=\sum_j\sqrt{p_j}|j\rangle.
+$$
+
+构造历史态
+
+$$
+\boxed{
+|\Psi_N\rangle
+=
+\frac1{\sqrt{N+1}}
+\sum_{t=0}^N
+|t\rangle\otimes U^t|v\rangle.
+}
+\tag{25}
+$$
+

@@ -1,0 +1,56 @@
+# 三、重要补充：精确临界维数小，不代表近临界维数小
+
+上一轮对精确相等的阈值给出了很强的限制。但那个结论不能直接升级成：
+
+> 每个高精度窗口中，都只有一两个需要考虑的方向。
+
+下面证明，恰好相反的情况会在大尺度出现。
+
+令：
+
+$$
+\boxed{
+\lambda_T=\frac1{T\ln T},
+\qquad T>1.
+}
+\tag{7}
+$$
+
+这里 \(T\) 是价格对应的规模参数，不是被检查的整数 \(n\)。
+
+固定：
+
+$$
+0<\varepsilon<1.
+$$
+
+定义近临界第一层素数集合：
+
+$$
+\boxed{
+\mathcal B_{T,\varepsilon}
+=
+\left\{
+p:
+(1-\varepsilon)\lambda_T
+\le\eta(p,1)\le
+(1+\varepsilon)\lambda_T
+\right\}.
+}
+\tag{8}
+$$
+
+记：
+
+$$
+M(T,\varepsilon)=|\mathcal B_{T,\varepsilon}|.
+$$
+
+价格窗口的绝对宽度是：
+
+$$
+\frac{2\varepsilon}{T\ln T}\longrightarrow0.
+$$
+
+但里面有多少个素数方向？
+
