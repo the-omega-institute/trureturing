@@ -13,12 +13,13 @@
 # CapacityPolicyTests.RepositoryHasNoOversizeArtifactOrOverfullDirectory 判红(855 > 800)。
 # 教训与 #3518 同形:凡「deposit 会照做、只有事后 CI 报」的检查,一律前移到这道门。
 #
-# 合规形状(恰 6 行,第 6 行以 ` -/` 收尾):
+# 合规形状(既有 6 行,或带 utility 的 7 行;末行以 ` -/` 收尾):
 #   /- GID: <path>
 #      generality: <G|F|E>
 #      mirror-B: <path|none(...)>
 #      mirror-E: <path|none(...)>
 #      anchors: [...]
+#      utility: <record>          # 可选;在场时只能位于 anchors 与 digest 之间
 #      digest: <一行写完，不得折行> -/
 #
 # 退出码:0 = 全部合规;1 = 有不合规文件(逐条打印)
@@ -70,9 +71,13 @@ __main() {
     # 头部块结束行号(第一个含 ' -/' 的行)
     local endline; endline=$(grep -n -- ' -/' "$f" | head -1 | cut -d: -f1)
     if [ -z "$endline" ]; then echo "  ✗ $f  <- 头部块没有 ' -/' 收尾"; bad=1; continue; fi
-    if [ "$endline" -ne 6 ]; then
-      echo "  ✗ $f  <- 头部 $endline 行（应为 6）；#3518：deposit 会照冻不误，只有 SL-012 报"
+    if [ "$endline" -ne 6 ] && [ "$endline" -ne 7 ]; then
+      echo "  ✗ $f  <- 头部 $endline 行（应为 6，或含 utility 的 7）；#3518：deposit 会照冻不误，只有 SL-012 报"
       sed -n "1,${endline}p" "$f" | sed 's/^/      | /'
+      bad=1; continue
+    fi
+    if [ "$endline" -eq 7 ] && ! sed -n '6p' "$f" | grep -q '^   utility: '; then
+      echo "  ✗ $f  <- 7 行头部的第 6 行必须是 '   utility: '"
       bad=1; continue
     fi
     local keys ok=1 k
@@ -80,7 +85,7 @@ __main() {
       grep -q "^   $k:" "$f" || { echo "  ✗ $f  <- 头部缺键 '$k:'"; ok=0; }
     done
     [ "$ok" = 1 ] || { bad=1; continue; }
-    # ---- SL-003 容量(2026-08-28 扩条):行数硬线 800、目录文件数准入 12 ----
+    # ---- SL-003 容量(2026-08-28 扩条;2026-09-06 目录上限随 RepositoryRules.Structure.cs DirectoryFileLimit 改为 24):行数硬线 800、目录文件数准入 24 ----
     # 2026-08-28 二次勘正:此处原为 `wc -l` + `>= 800`,**两个方向都错**。
     #   ① 真判据是 `lineCount > ArtifactHardLineLimit`(`CapacityPolicy.cs:50`),
     #      即 **800 行合法、801 才红**;`>=` 会误拦合法文件(与我在目录上限犯的 off-by-one 同形)。
@@ -109,11 +114,11 @@ print(len(t.split(chr(10)))-(1 if t.endswith(chr(10)) else 0))" "$f")
     fi
     dn=$(ls -1 "$dir"/*.lean 2>/dev/null | wc -l | tr -d ' ')
     # SL-003 真规则(2026-08-28 查 RepositoryRules.Structure.cs:73,236 实证):
-    #   `DirectoryFileLimit = 12`,违规判据是 **Count > 12**;准入通过条件是 `projectedOccupancy <= 12`。
-    #   **12 个文件是合法的,13 个才红。** 我此前按记忆写成 `>= 12`,多拦一格 ——
+    #   `DirectoryFileLimit = 24`(`tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`),违规判据是 **Count > 24**;准入通过条件是 `projectedOccupancy <= 24`。
+    #   **24 个文件是合法的,25 个才红。**(2026-09-06 勘正:此前硬编码 12,与引擎脱节,把第 13 个文件误拦——Herzog lane 实测。) 我此前按记忆写成 `>= 12`,多拦一格 ——
     #   典型的「据记忆写判据而不读真规则」,与今晚反复抓的形状同源。
-    if [ "$dn" -gt 12 ]; then
-      echo "  ✗ $f  <- 目录 $dir 有 $dn 个 .lean，超 SL-003 上限 12(>12 才违规)"
+    if [ "$dn" -gt 24 ]; then
+      echo "  ✗ $f  <- 目录 $dir 有 $dn 个 .lean，超 SL-003 上限 24(>24 才违规)"
       bad=1; continue
     fi
     # ---- SL-010 地层(2026-08-28;13:05 按源码勘正)----

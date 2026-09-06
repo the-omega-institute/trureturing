@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:09527cef7193aa67baf77e7b7aa3905156d3f87a851841ba013cd773f26e1ec2
+  normalized_sha256: sha256:09527cef7193aa67baf77e7b7aa3905156d3f87a851841ba013cd773f26e1ec2
+cas_ref: sha256:09527cef7193aa67baf77e7b7aa3905156d3f87a851841ba013cd773f26e1ec2
+coverage_gids:
+  - gid: D5/S3/PrimeForms/PellFamilies/GlobalPellUnboundedness.global_unboundedness_and_prime_power_local_periodicity
+    target_statement_id: sha256:2c6c18d2a3d11c1766d6b4dc8fb6895eac8c25a9ed5e6b1f8413b2c41d9285ad
+receipts:
+  scribe:
+    - gid: D5/S3/PrimeForms/PellFamilies/GlobalPellUnboundedness.global_unboundedness_and_prime_power_local_periodicity
+      definition_sha256: sha256:3b3cbc6422d582212cb82033f6d2a65e678e345fc3b1db54bc16b858ca309d0b
+      emission_sha256: sha256:11dc0ff1625820f3a0faca7e53a320c03d9c3163745f0476d880017a3ce9615d
+  unresolved_subitems: []

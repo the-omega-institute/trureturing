@@ -1,0 +1,47 @@
+## 定理 165.2　满秩裕量控制热态反演稳定性
+
+若
+
+$$
+\rho,\sigma\ge mI,
+\qquad m>0,
+$$
+
+则
+
+$$
+\boxed{
+\|\log\rho-\log\sigma\|_{\mathrm{op}}
+\le
+\frac1m\|\rho-\sigma\|_{\mathrm{op}}.
+}
+\tag{165.4}
+$$
+
+### 证明
+
+使用积分表示
+
+$$
+\log\rho-\log\sigma
+=
+\int_0^\infty
+\left[
+(\sigma+tI)^{-1}-(\rho+tI)^{-1}
+\right]dt.
+$$
+
+由预解式恒等式，被积算子范数至多为
+
+$$
+\frac{\|\rho-\sigma\|}{(m+t)^2}.
+$$
+
+积分得到结论。∎
+
+低占据概率可能使精确温度识别非常敏感。这里再次需要区分项目中的精确可识别、条件良好的识别与物理可实现识别。
+
+另外，若探针始终强耦合于环境，其边缘平衡态一般不等于裸 Hamiltonian 的 Gibbs 态。此时应先处理相互作用及有效 Hamiltonian，而不能把式（165.1）的失配立即归咎于几何。([arXiv][5])
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:297e214784dd0a98612f02462fb82d8d515b7543ab1b1630a69ba7245a489c0f
+  normalized_sha256: sha256:297e214784dd0a98612f02462fb82d8d515b7543ab1b1630a69ba7245a489c0f
+cas_ref: sha256:297e214784dd0a98612f02462fb82d8d515b7543ab1b1630a69ba7245a489c0f
+coverage_gids:
+  - gid: D5/S3/Factorization/SolenoidProfiniteKernel.universal_solenoid_profinite_exact
+    target_statement_id: sha256:3bd373d54c28837e0f4520bfb31d7d69e50ea43c80ae62cfea1bf4506847b4fc
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/SolenoidProfiniteKernel.universal_solenoid_profinite_exact
+      definition_sha256: sha256:c9e7d07adee90b11449d6fa791c49d70829e95e3d2810951d621a940881d2355
+      emission_sha256: sha256:0df1402cd0eda9ae0d1581f0c257d6da4510017b29cfae149363f82c1cd887c0
+  unresolved_subitems: []

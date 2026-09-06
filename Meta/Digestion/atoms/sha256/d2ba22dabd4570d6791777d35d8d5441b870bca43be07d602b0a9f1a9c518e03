@@ -1,0 +1,91 @@
+## 收束
+
+这次把上一轮的历史正规化，接到了一个新的、明确的有限上界：
+
+$$
+\boxed{
+\mathcal Z_q(r)
+=
+\frac{\prod_{k=0}^{d-1}k!}{r^{d(d-1)/2}}
+\det G_q(r).
+}
+$$
+
+它始终为正，但：
+
+$$
+\boxed{
+q\text{ 全实根}
+\iff
+\mathcal Z_q(r)\le1\quad\forall r>0.
+}
+$$
+
+实谱情况下，它进一步成为：
+
+$$
+\boxed{
+\mathcal Z_q(r)
+=
+\int_{U(d)}
+e^{-\frac r2\|\Lambda-U\Lambda U^*\|_{\mathrm{HS}}^2}\,dU,
+}
+$$
+
+一份明确的非负平方衰减平均。
+
+非实谱情况下，某个有限历史宽度最终必然突破这个基准；不能靠平均、对称化或增加观察宽度永久隐藏。
+
+对实际 ξ，甚至可以固定每层只看：
+
+$$
+r=d^4.
+$$
+
+若沿无界次数证明对应体积不超过基准，就足以推出 RH。
+
+**本轮没有证明这项实际算术上界，也没有得到严格的超界反例；新增结果仍是纸面推导，未写入文件或作 Lean 编译验证。**
+
+但现在“整体”的含义又具体了一步：
+
+> **不是每个模式各自正常，也不是任意两项关系看起来相容，而是全部模式形成的反对称历史体积，能否满足同一个实谱结构所允许的上限。**
+
+这份上限，才是接下来应由实际 theta／质数关系承担的内容；单独的量子正性、GUE 外观或持续下降律，都不能替代它。
+
+[1]: https://arxiv.org/abs/1902.07321?utm_source=chatgpt.com "Jensen polynomials for the Riemann zeta function and other sequences"
+[2]: https://arxiv.org/abs/1806.10411?utm_source=chatgpt.com "Meet Andréief, Bordeaux 1886, and Andreev, Kharkov 1882-83"
+[3]: https://dlmf.nist.gov/18.3 "DLMF: §18.3 Definitions ‣ Classical Orthogonal Polynomials ‣ Chapter 18 Orthogonal Polynomials"
+这次可以把上一轮的“历史体积上限”，继续推进成一组**直接由实际系数计算的有限阶不等式**。
+
+同时，需要先澄清一件重要的事：
+
+> **真正的量子投影概率始终不超过一；前文定义的归一化历史体积，却不一定是这个概率。两者之间还隔着一个明确的指数因子。若把这两个归一化混同，就可能把待证的实谱性质偷偷放进量子模型。**
+
+下面会得到三项结果：
+
+$$
+\boxed{
+\text{历史体积}
+=
+\text{一个正平方级数}
+\times
+\text{固定指数补偿}.
+}
+$$
+
+$$
+\boxed{
+\text{有限多项式全实根}
+\iff
+\text{该级数的每阶系数不超过相应指数级数系数}.
+}
+$$
+
+以及一项限制：
+
+> **在实际 Jensen 塔中，一大片低阶检验区域会自动通过。因此，固定少数“量子激发阶数”的正常表现，不能决定整个无限塔。**
+
+以下继续给出定义与证明。使用的 Schur 多项式、酉群积分和 Fock 空间关系属于经典工具；本轮的工作是把它们接到前文固定的实际系数与历史体积上。
+
+---
+

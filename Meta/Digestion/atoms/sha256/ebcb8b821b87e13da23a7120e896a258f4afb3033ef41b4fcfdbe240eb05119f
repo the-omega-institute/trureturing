@@ -1,0 +1,62 @@
+# 七、离线零点没有被消去：它变成一个两读出负证书
+
+定义 Hermitian 核：
+
+$$
+\boxed{
+\mathcal L_F(z,w)=\mathcal B_F(z,\overline w).
+}
+\tag{P23}
+$$
+
+先考虑 \(F\) 的一个简单非实零点：
+
+$$
+F(a)=0,\qquad \Im a\ne0,\qquad F'(a)\ne0.
+$$
+
+因为 \(F\) 的系数实：
+
+$$
+F(\overline a)=0.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal L_F(a,a)=0.
+}
+$$
+
+但与基点 \(0\) 的交叉配对为：
+
+$$
+\boxed{
+\mathcal L_F(a,0)
+=
+-\frac{F'(a)}a\ne0.
+}
+\tag{P24}
+$$
+
+因此，两点矩阵：
+
+$$
+\boxed{
+\begin{pmatrix}
+0&-F'(a)/a\\
+-\overline{F'(a)/a}&\mathcal B_F(0,0)
+\end{pmatrix}
+}
+$$
+
+的行列式为：
+
+$$
+\boxed{
+-\left|\frac{F'(a)}a\right|^2<0.
+}
+\tag{P25}
+$$
+

@@ -53,7 +53,6 @@ public sealed partial class CoverAtomTests
         var fixture = new RuleFixture();
         Replace(fixture.Files, currentFiles);
         Replace(fixture.Baseline, baselineFiles);
-        Replace(fixture.ForkPoint, baselineFiles);
         fixture.Reports.Clear();
         foreach (var report in inputs.Report.Files)
         {

@@ -1,0 +1,68 @@
+# 结论：这次对“缺项”的定位比前文更窄了
+
+此前未知的是整个跨素数贡献。
+
+现在已经完成了如下分离：
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak D_{\mathrm{self}}(X)
+&=
++(\log2)\log X+\text{明确常数}+o(1),\\
+\mathfrak D_{\mathrm{cong}}(X)
+&=
+-(\log2)\log X+\text{明确常数}+o(1).
+\end{aligned}
+}
+$$
+
+它们的对数主项消去，但常数合计为
+
+$$
+\boxed{
+-\log2\left(\gamma_{\mathrm E}+\log\frac\pi2\right).
+}
+$$
+
+因此，实际余项必须满足一个已经证明的下界：
+
+$$
+\boxed{
+\liminf_{X\to\infty}\mathfrak R(X)
+\ge
+\log2\left(\gamma_{\mathrm E}+\log\frac\pi2\right).
+}
+$$
+
+而尚待完成的是上界：
+
+$$
+\boxed{
+\mathfrak R(2^j)\le C(1+j)^A
+}
+$$
+
+对某个固定有限 \(A\) 和全部充分大的 \(j\) 成立。
+
+**这轮没有证明该上界。已经证明的是：局部同余因素负责了哪一部分抵消、它们还缺多少才能成为正模型，以及剩余相关误差需要被控制到什么增长尺度。**
+
+更具体地，下一项算术工作不是继续增加一个量子假设，而是控制式（10）中**不同位移 \(d\) 的误差怎样共同相加**。单个位移的平方根估计、全部矩阵各自的正性、概率归一化，都不能替代这一层跨位移的联合控制。
+
+[1]: https://arxiv.org/html/math/0409258v1 "https://arxiv.org/html/math/0409258v1"
+[2]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
+[3]: https://dlmf.nist.gov/27.12 "https://dlmf.nist.gov/27.12"
+[4]: https://arxiv.org/html/1410.7015v4 "https://arxiv.org/html/1410.7015v4"
+[5]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+这次先把上一轮的一项前件补实，再推进到一个更具体的量子结构：
+
+**上一轮提出的 \(V'(x)/x\) 单调性，对实际 theta 核并非仍待证明的猜想，而是已有经典定理的等价形式。它确实能推出整族矩不等式。**
+
+但接下来还可以严格证明：
+
+> **这种很强的密度形状条件，仍然不足以排除非实零点。真正缺少的关系，可以放在同一实际态的两个副本中：对“差模态”作条件筛选以后，“和模态”的干涉振幅是否始终非负。**
+
+这使我们能够区分：哪些正性已经由实际 theta 结构保证，哪些正性仍然承担 RH 的证明责任。
+
+---
+

@@ -1,0 +1,20 @@
+**最需要保留为待证明问题的，则是“量子概率是否能够由逃逸结构推出”。**现有模型已经足以证明：普通的预测遗漏与 Born 随机性并不相同。真正的突破必须给出连接二者的新结构，同时复现干涉、严格零概率、跨测量一致性与量子关联，而不是把这些要求重新装进“逃逸率”的定义。
+
+因此，我们现在研究的可以不是“一个人从预先存在的命运波中挑选结局”，而是：
+
+$$
+\boxed{
+\text{一个有限量子观察者，
+如何在受因果与资源约束的波动过程中，
+形成记忆、实施控制，并建立可预测的世界。}
+}
+$$
+
+[1]: https://arxiv.org/abs/1306.1934 "[1306.1934] Derivation of the Dirac Equation from Principles of Information Processing"
+[2]: https://link.aps.org/doi/10.1103/PhysRevLett.77.2154 "Fringe Visibility and Which-Way Information: An Inequality | Phys. Rev. Lett."
+[3]: https://arxiv.org/html/quant-ph/9710043v2 "The maximum speed of dynamical evolution"
+[4]: https://link.aps.org/doi/10.1103/PhysRevA.92.012328 "Hierarchy of bounds on accessible information and informational power | Phys. Rev. A"
+[5]: https://arxiv.org/abs/quant-ph/9908043 "[quant-ph/9908043] Ultimate physical limits to computation"
+[6]: https://arxiv.org/html/quant-ph/9909073v3 "Quantum states and generalized observables:a simple proof of Gleason’s theorem"
+[7]: https://link.aps.org/doi/10.1103/PhysicsPhysiqueFizika.1.195 "On the Einstein Podolsky Rosen paradox | Physics Physique Fizika"
+[8]: https://www.bipm.org/en/measurement-units/si-defining-constants "Defining constants - BIPM"

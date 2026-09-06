@@ -1,0 +1,48 @@
+## 定理 5.1：全未来波的零温原则
+
+$$
+\boxed{
+\lim_{\beta\to\infty}
+\frac1\beta\ln Q_B(\lambda,\beta)
+=
+\Phi_\lambda(B).
+}
+\tag{14}
+$$
+
+### 证明
+
+取一个：
+
+$$
+\beta_0>\frac1\lambda.
+$$
+
+令：
+
+$$
+d_n=\Phi_\lambda(B)-J_\lambda(n)\ge0.
+$$
+
+则：
+
+$$
+e^{-\beta\Phi_\lambda(B)}Q_B(\lambda,\beta)
+=
+\sum_{B\mid n}e^{-\beta d_n}.
+$$
+
+对 \(\beta\ge\beta_0\)，它受可求和级数：
+
+$$
+\sum_{B\mid n}e^{-\beta_0d_n}
+$$
+
+控制。
+
+令 \(\beta\to\infty\)，非最优项趋于零，最优项保留为 1。因此上述和趋于最优整数的有限个数。
+
+取对数并除以 \(\beta\)，得到式（14）。证毕。
+
+这里的“零温”只是数学上 \(\beta\to\infty\) 的术语：它把对全部未来的加权求和，转成对最坏未来的最大化。
+

@@ -16,8 +16,9 @@ internal static class SnapshotAdmissionCore
         RawChangeSet changes,
         BootstrapOutcome bootstrap,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null,
-        AdmissionCheckTiming? timing = null)
+        AdmissionCheckTiming? timing = null,
+        ScribeTestMapStore? testMapStore = null,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
     {
         var phaseTiming = timing ?? AdmissionCheckTiming.Disabled;
         try
@@ -72,10 +73,11 @@ internal static class SnapshotAdmissionCore
                                 changes,
                                 clear.Capability,
                                 verifiedScribeEmissions,
-                                forkPoint,
                                 MeasureRule,
                                 MeasureApplicability,
-                                MeasureCanonicalization),
+                                MeasureCanonicalization,
+                                testMapStore,
+                                deriveTestMap),
                             BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
                                 AdmissionPipeline.EvaluateProtectedSurface(
                                     current,
@@ -85,10 +87,11 @@ internal static class SnapshotAdmissionCore
                                     changes,
                                     protectedSurfaceVerification.ChangeSet,
                                     verifiedScribeEmissions,
-                                    forkPoint,
                                     MeasureRule,
                                     MeasureApplicability,
-                                    MeasureCanonicalization),
+                                    MeasureCanonicalization,
+                                    testMapStore,
+                                    deriveTestMap),
                             _ => throw new InvalidOperationException("unknown bootstrap outcome"),
                         };
                     }

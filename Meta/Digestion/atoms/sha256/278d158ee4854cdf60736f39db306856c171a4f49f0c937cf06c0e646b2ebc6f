@@ -1,0 +1,44 @@
+# 十一、量子读出可以避免强制除以维数，但不自动给出算法加速
+
+因为：
+
+$$
+\|\mathsf K_N\|_{\mathrm{op}}\le B_0,
+$$
+
+可以在有限滤波寄存器上定义二结果测量：
+
+$$
+\boxed{
+E_\pm^{(N)}
+=
+\frac12\left(I_N\pm\frac{\mathsf K_N}{B_0}\right).
+}
+\tag{O30}
+$$
+
+它们满足：
+
+$$
+E_\pm^{(N)}\succeq0,
+\qquad
+E_+^{(N)}+E_-^{(N)}=I_N.
+$$
+
+对归一化系数态 \(|c\rangle\)：
+
+$$
+\boxed{
+p_+-p_-
+=
+\frac{\langle c,\mathsf K_Nc\rangle}{B_0}.
+}
+\tag{O31}
+$$
+
+所以负证书对应：
+
+$$
+p_->\frac12.
+$$
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8e320f1746015dc21418fa38e63a4a1b4b91aa50ccc616d39723c39357ac7a43
+  normalized_sha256: sha256:8e320f1746015dc21418fa38e63a4a1b4b91aa50ccc616d39723c39357ac7a43
+cas_ref: sha256:8e320f1746015dc21418fa38e63a4a1b4b91aa50ccc616d39723c39357ac7a43
+coverage_gids:
+  - gid: D5/S3/Entropy/NamingWindow/FutureWordInformationChain.future_word_information_chain
+    target_statement_id: sha256:cd6d440bfdc659143ff1f388dcc96afa52699a2f9ff43fab0cbf31076812c544
+receipts:
+  scribe:
+    - gid: D5/S3/Entropy/NamingWindow/FutureWordInformationChain.future_word_information_chain
+      definition_sha256: sha256:01d550cfd323f24c5151aef8336b325398126f4821e81452e251271fcb9787ff
+      emission_sha256: sha256:04e782cf30c72baf5283a6f711234f35c634dda5c33bd5cf2029fa103478d3c7
+  unresolved_subitems: []

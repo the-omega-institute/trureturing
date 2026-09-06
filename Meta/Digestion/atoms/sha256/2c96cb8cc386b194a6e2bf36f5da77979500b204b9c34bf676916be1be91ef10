@@ -1,0 +1,39 @@
+## 推论 133.1　二阶导数具有额外的分辨代价
+
+对 \(k=2\)，均方根误差可界为
+
+$$
+\boxed{
+\operatorname{RMSE}(\widehat{\partial^\alpha f})
+\le
+\frac{\alpha!}{\sqrt\gamma}
+\left[
+\frac{\beta}{h^2}
++
+\frac1{h^2}\sqrt{\frac{\Gamma}{N}}
++
+\frac{M_4h^2}{24}
+\right].
+}
+\tag{133.3}
+$$
+
+这显示三种性质不同的误差：
+
+$$
+\text{系统偏差放大：}\quad \beta h^{-2};
+$$
+
+$$
+\text{随机误差放大：}\quad
+\sqrt{\Gamma/N}\,h^{-2};
+$$
+
+$$
+\text{局部展开误差：}\quad M_4h^2.
+$$
+
+**缩小采样邻域会减小最后一项，却放大前两项。**
+
+---
+

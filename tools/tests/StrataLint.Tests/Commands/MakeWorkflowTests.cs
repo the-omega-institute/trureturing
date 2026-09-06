@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -68,6 +69,10 @@ public sealed partial class MakeWorkflowTests
         "deposit",
         "cover",
         "cover-batch",
+        "decompose",
+        "scribe-seed",
+        "quarantine",
+        "quarantine-clear",
         "worktree",
         "worktree-clean",
         "pr-open",
@@ -270,6 +275,90 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             2,
             Regex.Matches(script, Regex.Escape("exec \"$CONSUMER\"")).Count);
+    }
+
+    [Fact]
+    public void QuarantineMakeDoorsForwardStrictInputsThroughTheIngestWrapper()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
+        Assert.Equal(
+            $"\t@/bin/bash {IngestScriptPath} quarantine \"$(BASE)\" \"$(REQUEST)\"",
+            Recipe(makefile, "quarantine"));
+        Assert.Equal(
+            $"\t@/bin/bash {IngestScriptPath} quarantine-clear \"$(BASE)\" \"$(ATOM_ID)\"",
+            Recipe(makefile, "quarantine-clear"));
+        var help = TestProcessRunner.Run(
+            "make",
+            ["--no-print-directory", "help"],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+        Assert.Equal(0, help.ExitCode);
+        var helpText = Encoding.UTF8.GetString(help.StandardOutput);
+        Assert.Contains(
+            "make quarantine REQUEST=file [BASE=origin/dev]  Write one atom's receipts.quarantine from a strict request file",
+            helpText,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "make quarantine-clear ATOM_ID=x [BASE=origin/dev]  Clear one atom's receipts.quarantine",
+            helpText,
+            StringComparison.Ordinal);
+
+        using var fixture = new TemporaryDirectory();
+        var scriptPath = Path.Combine(fixture.Path, IngestScriptPath);
+        var projectDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        Directory.CreateDirectory(Path.GetDirectoryName(scriptPath)!);
+        Directory.CreateDirectory(projectDirectory);
+        Directory.CreateDirectory(binDirectory);
+        File.Copy(Path.Combine(root, IngestScriptPath), scriptPath);
+        File.SetUnixFileMode(
+            scriptPath,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var dotnetPath = Path.Combine(binDirectory, "dotnet");
+        File.WriteAllText(
+            dotnetPath,
+            "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\"\nexit \"${FAKE_DOTNET_EXIT:-0}\"\n");
+        File.SetUnixFileMode(
+            dotnetPath,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        ProcessOutput Run(int fakeDotnetExit, params string[] arguments) => TestProcessRunner.Run(
+            "env",
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"FAKE_DOTNET_EXIT={fakeDotnetExit}",
+                "/bin/bash",
+                scriptPath,
+                .. arguments,
+            ],
+            fixture.Path,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+
+        var set = Run(0, "quarantine", "baseline", "request.toml");
+        Assert.Equal(0, set.ExitCode);
+        Assert.Contains(
+            "quarantine-atom --request request.toml --base baseline",
+            Encoding.UTF8.GetString(set.StandardOutput),
+            StringComparison.Ordinal);
+
+        var clear = Run(0, "quarantine-clear", "baseline", "atom-id");
+        Assert.Equal(0, clear.ExitCode);
+        Assert.Contains(
+            "quarantine-atom --clear atom-id --base baseline",
+            Encoding.UTF8.GetString(clear.StandardOutput),
+            StringComparison.Ordinal);
+
+        Assert.Equal(23, Run(23, "quarantine", "baseline", "request.toml").ExitCode);
+        Assert.Equal(23, Run(23, "quarantine-clear", "baseline", "atom-id").ExitCode);
+
+        Assert.Equal(2, Run(0, "quarantine").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine", "baseline").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine-clear", "baseline").ExitCode);
     }
 
     [Fact]

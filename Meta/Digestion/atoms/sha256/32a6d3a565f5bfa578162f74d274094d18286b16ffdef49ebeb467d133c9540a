@@ -1,0 +1,48 @@
+## 一个清楚的概率解释
+
+当 \(S_q>0\)，定义：
+
+$$
+\boxed{
+R_{q,k}
+=
+\frac{k!\,b_{q,k}}{S_q^k},
+\qquad R_{q,0}=1.
+}
+\tag{L17}
+$$
+
+那么：
+
+$$
+\boxed{
+\mathcal Z_q(r)
+=
+\mathbb E_{K\sim\operatorname{Poisson}(rS_q)}
+[R_{q,K}].
+}
+\tag{L18}
+$$
+
+所以，历史体积是这些阶数指标的 Poisson 平均。
+
+但 \(R_{q,k}\) 本身不必是概率。由式（L15）：
+
+$$
+\boxed{
+R_{q,k}
+=
+\left(\frac{N_q}{S_q}\right)^k\pi_{q,k}.
+}
+$$
+
+实根性要求：
+
+$$
+\boxed{
+\pi_{q,k}\le\left(\frac{S_q}{N_q}\right)^k
+\quad\forall k.
+}
+\tag{L19}
+$$
+

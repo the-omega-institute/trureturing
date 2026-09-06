@@ -1,0 +1,35 @@
+### 证明
+
+迹范数估计使用矩阵元绝对值求和：
+
+$$
+\sum_{\substack{i,j\ge1\\i>N\text{ 或 }j>N}}
+B_0\,2^{-(i+j)}
+=
+B_0\left[1-(1-2^{-N})^2\right].
+$$
+
+这就是式（O17）。
+
+对算子范数，使用 Hilbert–Schmidt 范数：
+
+$$
+\begin{aligned}
+\|\mathsf K-\mathsf K_N\|_{\mathrm{op}}^2
+&\le
+\sum_{\substack{i,j\ge1\\i>N\text{ 或 }j>N}}
+B_0^2\,4^{-(i+j)}\\
+&=
+\frac{B_0^2}{9}
+\left(2\,4^{-N}-16^{-N}\right).
+\end{aligned}
+$$
+
+证毕。
+
+**这份误差界不需要找到第一个离线根，也不需要预设全部根在线。**
+
+它只使用实际函数在一个已知无零小圆盘内的解析控制。
+
+---
+

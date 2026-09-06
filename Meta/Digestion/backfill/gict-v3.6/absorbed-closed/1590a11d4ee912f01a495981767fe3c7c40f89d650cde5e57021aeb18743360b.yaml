@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
+  normalized_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
+cas_ref: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
+coverage_gids:
+  - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
+    target_statement_id: sha256:0e81205eafa3a4d98a159d801495a10ac105bdb297ec80b4d21fbe31f0c625ae
+receipts:
+  scribe:
+    - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
+      definition_sha256: sha256:85ad89356b64e5b0513187b68fb2d98e540524a748a0f2ab441cf2cbd032e2d7
+      emission_sha256: sha256:d506a60ab7116dd8381f9800c5b11bb2b950fc5ae27a4ff98123cf873acc9e52
+  unresolved_subitems: []

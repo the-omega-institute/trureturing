@@ -1,0 +1,63 @@
+# 八、上一轮的高斯尺度与现在的转折点尺度，并不是同一个量级
+
+上一轮得到典型差坐标：
+
+$$
+x_n\approx\frac12W_0(n/\pi).
+$$
+
+令：
+
+$$
+w_n=W_0(n/\pi).
+$$
+
+在该位置，第一 Bessel 模式的参数为：
+
+$$
+\boxed{
+a_n=2\pi e^{2x_n}
+=\frac{2n}{w_n}.
+}
+\tag{S27}
+$$
+
+上一轮的高斯频率尺度是：
+
+$$
+\boxed{
+\Omega_n=2\sqrt{\frac n{w_n}}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+a_n=\frac{\Omega_n^2}{2}.
+}
+\tag{S28}
+$$
+
+这说明存在两种明显不同的尺度：
+
+$$
+\boxed{
+t\sim\Omega_n:
+\quad\text{局部高斯干涉尺度},
+}
+$$
+
+$$
+\boxed{
+t\sim a_n:
+\quad\text{裸 Bessel 转折点尺度}.
+}
+$$
+
+后者比前者大得多。
+
+这与 Bessel 虚阶零点及指数势的半经典分析相呼应；相关渐近中也会出现 Lambert \(W\) 函数。([Sigma Journal][8])
+
+但这里必须保留限制：
+

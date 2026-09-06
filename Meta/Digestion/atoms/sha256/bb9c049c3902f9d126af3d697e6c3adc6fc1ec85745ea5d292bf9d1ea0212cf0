@@ -1,0 +1,30 @@
+# 十二、与项目的准确连接
+
+本轮读取的 `LaguerreLiBridge.lean`，研究的是在给定有限偶测度、质量恒等式与 Cayley 矩恒等式前件下，将 Li 曲率写成 Laguerre 多项式积分。它并不是这里的广义 Laguerre 表达式 \(L_n(t)\) 的全域非负证明；不能因为名称都含“Laguerre”就把两项结果合并。
+
+当前可以新增的理论链是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际 theta 尾部与对数凹性}
+&\longrightarrow
+\text{两模态条件密度的联合鞍点}\\
+&\longrightarrow
+|U|\sim W_0(n/\pi)/\sqrt2\\
+&\longrightarrow
+\operatorname{Var}_n(S)\sim W_0(n/\pi)/(4n)\\
+&\longrightarrow
+\text{放大后的高斯干涉极限}\\
+&\longrightarrow
+\text{有限正值区域与制备能量尺度}.
+\end{aligned}
+}
+$$
+
+这条链不以未知零点作为输入，也不以 RH 为前件。
+
+但它的输出是**尺度定理与局部正性**，不是全域零点定位。
+
+---
+

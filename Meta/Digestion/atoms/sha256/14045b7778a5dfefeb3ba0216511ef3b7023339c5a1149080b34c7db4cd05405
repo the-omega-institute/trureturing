@@ -1,0 +1,28 @@
+## 定义 121.1　有限局域结构
+
+设有限连通图为
+
+$$
+G=(\Lambda,E),
+$$
+
+其图距离为 \(d_G\)。每个节点 \(x\) 带有有限维 Hilbert 空间：
+
+$$
+\mathcal H_x.
+$$
+
+完整结构空间为
+
+$$
+\mathcal H_\Lambda
+=
+\bigotimes_{x\in\Lambda}\mathcal H_x.
+$$
+
+记 \(\mathcal A_X\) 为仅作用于节点集合 \(X\subseteq\Lambda\) 的算子代数。
+
+这里的图首先表示**允许直接交互的关系**。图距离尚不是米制空间距离；后者需要实际钟与信号标定。
+
+---
+

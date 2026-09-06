@@ -1,0 +1,107 @@
+## 定理 104.1　算子二次模型的有限经典性判据
+
+假设在十个采样方向 \(v_s\) 上，分别存在 \(n_s>0\)，满足：
+
+$$
+\boxed{
+\bigl(\widehat n(v_s)-n_sI\bigr)\sigma^{1/2}=0.
+}
+\tag{104.1}
+$$
+
+则存在唯一标量二次函数：
+
+$$
+r(v)=a+2b^{\mathsf T}v-v^{\mathsf T}Cv,
+$$
+
+使在整个 \(U\) 上：
+
+$$
+\boxed{
+\widehat R(v)P=r(v)P,
+}
+\tag{104.2}
+$$
+
+以及：
+
+$$
+\boxed{
+\widehat n(v)P=\sqrt{r(v)}\,P.
+}
+\tag{104.3}
+$$
+
+此外，\(a>0,C>0\)，因而得到唯一的共同洛伦兹候选：
+
+$$
+g=
+\begin{pmatrix}
+-a&-b^{\mathsf T}\\
+-b&C
+\end{pmatrix}.
+$$
+
+### 证明
+
+由定理 102.1，在每个采样方向：
+
+$$
+\widehat n(v_s)P=n_sP.
+$$
+
+平方得到：
+
+$$
+\widehat R(v_s)P=n_s^2P.
+$$
+
+算子值二次多项式的重建只使用实线性组合，不要求不同系数彼此可交换。例如：
+
+$$
+\widehat A=\widehat R(0),
+$$
+
+$$
+\widehat B_i
+=
+\frac{\widehat R(he_i)-\widehat R(-he_i)}{4h},
+$$
+
+$$
+\widehat C_{ii}
+=
+\frac{
+2\widehat R(0)-\widehat R(he_i)-\widehat R(-he_i)
+}{2h^2},
+$$
+
+$$
+\widehat C_{ij}
+=
+\frac{
+\widehat R(he_i)+\widehat R(he_j)
+-\widehat R(h(e_i+e_j))
+-\widehat R(0)
+}{2h^2}.
+$$
+
+右乘 \(P\)，每项都成为标量乘 \(P\)。因此存在：
+
+$$
+\widehat AP=aP,
+\qquad
+\widehat B_iP=b_iP,
+\qquad
+\widehat C_{ij}P=C_{ij}P.
+$$
+
+代回式（103.1），得到式（104.2）。
+
+由于 \(\widehat R(v)\) Hermitian，\(P\mathcal H_G\) 是其不变子空间；在该子空间上，正平方根也作用为标量 \(\sqrt{r(v)}\)，得到式（104.3）。
+
+取 \(P\mathcal H_G\) 中任意单位向量，应用假设（103.2），得到 \(a>0,C>0\)。唯一性由十点二次插值得到。∎
+
+---
+

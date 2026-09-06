@@ -1,0 +1,20 @@
+### 证明
+
+若坏证书成立，则：
+
+$$
+\frac{\sigma(n)}n
+\ge
+\overline U_k(n)
+>
+e^\gamma\ln\ln n.
+$$
+
+反过来，若左边严格大于临界预算，因为上逼近收敛，最终必有：
+
+$$
+\overline U_k(n)<\frac{\sigma(n)}n.
+$$
+
+于是整数检查失败，得到坏证书。证毕。
+

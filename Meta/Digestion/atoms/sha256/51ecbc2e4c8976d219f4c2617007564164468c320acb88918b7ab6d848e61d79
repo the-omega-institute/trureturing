@@ -1,0 +1,12 @@
+## 定理 Q5：条件读出的统一误差界
+
+$$
+\boxed{
+\sup_{t\in\mathbb R}
+|R_n(t)-R_{n,L}(t)|
+\le
+\frac{2\tau_n(L)}{Z_n}.
+}
+\tag{Q33}
+$$
+

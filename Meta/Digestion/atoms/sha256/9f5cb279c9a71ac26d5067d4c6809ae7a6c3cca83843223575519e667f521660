@@ -1,0 +1,28 @@
+# 五、条件干涉的正确频率尺度出现了
+
+定义：
+
+$$
+\boxed{
+\Omega_n=\sigma_n^{-1}
+=
+2\sqrt{\frac{n}{W_0(n/\pi)}}.
+}
+\tag{R18}
+$$
+
+由定理 R2：
+
+$$
+\begin{aligned}
+R_n(\Omega_nt)
+&=
+\mathbb E_n\!\left[
+\cos\left(\sqrt2t\frac S{\sigma_n}\right)
+\right]\\
+&\longrightarrow e^{-t^2}.
+\end{aligned}
+$$
+
+因此：
+

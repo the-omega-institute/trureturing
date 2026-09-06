@@ -1,0 +1,59 @@
+## 1.1 算术状态
+
+记：
+
+$$
+\mathbb P=\{2,3,5,7,\ldots\},
+\qquad
+\mathbb N_+=\{1,2,3,\ldots\}.
+$$
+
+任意正整数唯一写为：
+
+$$
+n=\prod_{p\in\mathbb P}p^{a_p(n)},
+$$
+
+其中：
+
+$$
+a_p(n)=v_p(n)\in\mathbb N,
+$$
+
+且只有有限多个 \(a_p(n)\) 非零。
+
+定义整数的对数规模：
+
+$$
+\boxed{
+E(n)=\ln n=\sum_pa_p(n)\ln p.
+}
+$$
+
+对复数 \(s\)，定义有限因数配分函数：
+
+$$
+\boxed{
+Z_n(s)=\sum_{d\mid n}d^{-s}.
+}
+$$
+
+在 \(s=1\) 时，简记：
+
+$$
+Z(n)=Z_n(1),
+\qquad
+W(n)=\ln Z(n).
+$$
+
+由于因数配对 \(d\leftrightarrow n/d\)：
+
+$$
+\boxed{
+Z(n)=\sum_{d\mid n}\frac1d=\frac{\sigma(n)}n.
+}
+\tag{1.1}
+$$
+
+全文用 \(\ln\) 表示自然对数，用 \(\log_2\) 表示二进制对数；熵若不注明，均以自然对数为单位。
+

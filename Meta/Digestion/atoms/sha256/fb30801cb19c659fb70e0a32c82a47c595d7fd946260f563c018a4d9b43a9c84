@@ -1,0 +1,34 @@
+## 假设 92.1　二次钟响应
+
+设 \(U\subset\mathbb R^d\) 为包含原点的开凸集，且
+
+$$
+r\in C^3(U),
+\qquad r(v)>0.
+$$
+
+要求：
+
+$$
+\boxed{
+\partial_i\partial_j\partial_k r=0
+\qquad\forall i,j,k,
+}
+\tag{92.1}
+$$
+
+以及
+
+$$
+\boxed{
+-\frac12\operatorname{Hess}_v r>0.
+}
+\tag{92.2}
+$$
+
+式（92.1）要求平方钟速的二阶响应不随控制方向继续变化；式（92.2）要求它在方向变量上严格凹。
+
+这两项都具有实质内容。它们不能从量子态正性直接推出。
+
+---
+

@@ -1,0 +1,89 @@
+## 定理 163.1　零热流的钟速判据
+
+在独立 Gibbs 制备、非零交换强度及共振条件下，
+
+$$
+Q_{A\to B}=0
+$$
+
+当且仅当
+
+$$
+\boxed{
+\frac{\beta_A}{\nu_A}
+=
+\frac{\beta_B}{\nu_B}.
+}
+\tag{163.1}
+$$
+
+等价地，
+
+$$
+\boxed{
+\nu_AT_A=\nu_BT_B.
+}
+\tag{163.2}
+$$
+
+### 证明
+
+因为 \(\sin^2\theta>0\)，零热流等价于 \(p_A=p_B\)。
+
+函数 \(x\mapsto(1+e^x)^{-1}\) 严格单调，故
+
+$$
+\beta_A\epsilon_A=\beta_B\epsilon_B.
+$$
+
+再使用
+
+$$
+\nu_A\epsilon_A=\nu_B\epsilon_B=\mathcal E>0,
+$$
+
+得到式（163.1），进而得到式（163.2）。∎
+
+### 一个明确实例
+
+若
+
+$$
+\nu_A=1,
+\qquad
+\nu_B=\frac12,
+$$
+
+选择共振探针
+
+$$
+\epsilon_A=\epsilon,
+\qquad
+\epsilon_B=2\epsilon.
+$$
+
+那么平衡要求
+
+$$
+\boxed{T_B=2T_A.}
+\tag{163.3}
+$$
+
+这不表示任何慢钟都必然更热。它表示：**在所指定的静态能量标定与热接触条件下，平衡局部温度必须这样变化。**
+
+若后续几何重建得到静态度量
+
+$$
+ds^2=-\nu(x)^2c^2dt^2+h_{ab}dx^adx^b,
+$$
+
+式（163.2）便成为标准 Tolman–Ehrenfest 关系
+
+$$
+T(x)\sqrt{-g_{tt}(x)}/c=\text{常数}.
+$$
+
+该关系在引力热平衡研究中已有成熟基础；本节给出的是它的有限量子接触实现。([arXiv][3])
+
+---
+

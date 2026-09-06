@@ -1,0 +1,85 @@
+## 定理 4：不可删除的正补偿项
+
+定义
+
+$$
+\boxed{
+c_0=\log2\left(\gamma_{\mathrm E}+\log\frac{\pi}{2}\right)>0.
+}
+\tag{16}
+$$
+
+那么
+
+$$
+\boxed{
+\mathfrak J(X)=\mathfrak R(X)-c_0+o(1).
+}
+\tag{17}
+$$
+
+因此，无条件地有
+
+$$
+\boxed{
+\liminf_{X\to\infty}\mathfrak R(X)\ge c_0.
+}
+\tag{18}
+$$
+
+特别是，
+
+$$
+\boxed{
+\mathfrak R(X)=o(1)
+}
+$$
+
+不可能成立。
+
+### 证明
+
+将式（12）与式（15）相加：
+
+$$
+\begin{aligned}
+\mathfrak D_{\mathrm{self}}
++\mathfrak D_{\mathrm{cong}}
+&=
+2(\log2)^2
++(A_0-2)\log2
++o(1)\\
+&=
+-\log2
+\left[
+\gamma_{\mathrm E}+\log(2\pi)-2\log2
+\right]
++o(1)\\
+&=-c_0+o(1).
+\end{aligned}
+$$
+
+再代入精确分解式（11），得到式（17）。
+
+因为 \(\mathfrak J(X)\ge0\)，于是式（18）成立。证毕。
+
+---
+
+这正好回答了此前“局部同余条件是否足以补上相关项”的问题：
+
+$$
+\boxed{
+\text{局部同余模型补上了主阶抵消，}
+}
+$$
+
+但
+
+$$
+\boxed{
+\text{它仍不能单独成为实际的正均方模型。}
+}
+$$
+
+若把 \(\mathfrak R\) 扔掉，模型会给出负的平方平均。
+

@@ -10,7 +10,7 @@ public sealed class BackfillCandidateDeltaOptimizationTests
         const string targetPath = "D5/S0/Carrier/BackfillTarget.lean";
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             FrozenStatementReceiptTestData.AddLedger(
                 files,

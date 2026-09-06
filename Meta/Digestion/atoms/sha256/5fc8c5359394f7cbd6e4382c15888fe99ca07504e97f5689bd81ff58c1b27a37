@@ -1,0 +1,40 @@
+## 定理 114.1　宏观系数渐近可交换
+
+对任意两个单元算子 \(A,B\)，记：
+
+$$
+\overline A_N=\frac1N\sum_jA^{(j)},
+\qquad
+\overline B_N=\frac1N\sum_jB^{(j)}.
+$$
+
+则：
+
+$$
+\boxed{
+[\overline A_N,\overline B_N]
+=
+\frac1{N^2}\sum_j[A,B]^{(j)},
+}
+\tag{114.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\|[\overline A_N,\overline B_N]\|
+\le
+\frac{\|[A,B]\|}{N}.
+}
+\tag{114.5}
+$$
+
+### 证明
+
+不同单元上的算子可交换，因此双重求和只保留相同单元的项。再用范数三角不等式。∎
+
+但渐近可交换还不足以给出确定读数，还必须控制状态中的相关性。
+
+---
+

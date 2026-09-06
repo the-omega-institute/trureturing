@@ -1,0 +1,64 @@
+# 一、先确定：我们要封住哪一种裂隙？
+
+沿用：
+
+$$
+E(n)=\ln n,
+$$
+
+$$
+W(n)=\ln\frac{\sigma(n)}n,
+$$
+
+$$
+\boxed{
+\Delta(n)=\gamma+\ln\ln E(n)-W(n),
+\qquad n\ge3.
+}
+$$
+
+Robin 定理给出：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Delta(n)>0
+\quad\forall n>5040.
+}
+$$
+
+因此，与 RH 直接相关的不是“一个观察者保留了多少状态”，而是它是否遗漏了足以改变 \(\Delta(n)\) 符号的情况。([arXiv][1])
+
+本轮读取的仓库 `ExactRate` 定义的是：
+
+$$
+\varepsilon(O)
+=
+\frac{
+\#\{(x,y):x\ne y,\ O(x)=O(y)\}
+}{
+|X|(|X|-1)
+}.
+$$
+
+它精确测量不同状态对的碰撞比例。
+
+而对于一个观察纤维：
+
+$$
+\mathcal F_o=\{n:O(n)=o\},
+$$
+
+证明 Robin 安全需要控制：
+
+$$
+\boxed{
+\underline\Delta(o)
+=
+\inf_{n\in\mathcal F_o}\Delta(n).
+}
+$$
+
+这两种量承担不同任务：前者统计混同的数量，后者控制混同后最危险的状态。
+

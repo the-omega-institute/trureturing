@@ -1,0 +1,42 @@
+## 5.2 精确接回上一轮势函数
+
+上一轮定义：
+
+$$
+b_\lambda(p,k)
+=
+\ln\frac{1+p^{-1}+\cdots+p^{-k}}
+{1+p^{-1}+\cdots+p^{-(k-1)}}
+-\lambda\ln p.
+$$
+
+那么：
+
+$$
+\boxed{
+\Phi_\lambda(B)
+=
+J_\lambda(B)
++
+\sum_p\sum_{k>v_p(B)}[b_\lambda(p,k)]_+.
+}
+\tag{15}
+$$
+
+原因是，各个素数方向的正边际收益构成前缀；最大者恰好把所有这些正收益层补齐。
+
+于是：
+
+$$
+\boxed{
+\text{当前收益}
++
+\text{未兑现的正收益储备}
+=
+\lim_{\beta\to\infty}
+\frac1\beta
+\ln\|P_B\mathcal W_{\lambda,\beta}\|^2.
+}
+\tag{16}
+$$
+

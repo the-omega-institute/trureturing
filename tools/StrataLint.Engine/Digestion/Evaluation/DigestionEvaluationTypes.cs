@@ -22,6 +22,8 @@ internal sealed record DigestionEntryEvaluation(
     bool Deletable,
     ImmutableArray<DigestionGap> Gaps)
 {
+    internal bool StatusAuthorityChanged { get; init; }
+
     internal DigestionEntryEvaluation(
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
@@ -47,10 +49,14 @@ internal sealed record DigestionLedgerEvaluation(
     ImmutableArray<string> Findings,
     // 非阻断的观察项:「已入库、尚未消化」。与 Findings 分开承载,使效力由**类型**
     // 决定而非由消费者按字符串猜(CLAUDE.md:好原材料无法被误读)。
-    ImmutableArray<string> ObservationalFindings = default)
+    ImmutableArray<string> ObservationalFindings = default,
+    ImmutableArray<DigestionContentKindObservation> ContentKindObservations = default)
 {
     internal ImmutableArray<string> Observations =>
         ObservationalFindings.IsDefault ? [] : ObservationalFindings;
+
+    internal ImmutableArray<DigestionContentKindObservation> ObservedContentKinds =>
+        ContentKindObservations.IsDefault ? [] : ContentKindObservations;
 
     internal int DeletableCount => Entries.Count(static entry => entry.Deletable);
 

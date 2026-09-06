@@ -1,0 +1,33 @@
+## 经典输入：Robin 定理
+
+记欧拉–马歇罗尼常数为：
+
+$$
+\gamma=\lim_{N\to\infty}(H_N-\ln N).
+$$
+
+Robin 定理指出：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Z(n)<e^\gamma\ln\ln n
+\qquad\forall n>5040.
+}
+\tag{9.1}
+$$
+
+Gronwall 定理则无条件给出：
+
+$$
+\boxed{
+\limsup_{n\to\infty}
+\frac{Z(n)}{\ln\ln n}
+=e^\gamma.
+}
+\tag{9.2}
+$$
+
+这两个经典结果分别承担逐点判据与极限标尺的作用。([arXiv][4])
+

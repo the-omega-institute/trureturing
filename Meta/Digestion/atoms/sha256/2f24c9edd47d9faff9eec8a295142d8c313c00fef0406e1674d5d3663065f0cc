@@ -1,0 +1,46 @@
+## 推论 12.4　RH 的连续超额—离散损失表达
+
+对 \(T>1\)，定义：
+
+$$
+\mathfrak Q(T)
+=
+\Phi(T)-\gamma-\ln\ln T.
+$$
+
+则：
+
+$$
+\boxed{
+\Delta(n)
+=
+\mathfrak D(n)-\mathfrak Q(\ln n).
+}
+\tag{12.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\sum_p\mathfrak D_p(n)>
+\mathfrak Q(\ln n)
+\quad\forall n>5040.
+}
+\tag{12.6}
+$$
+
+### 证明
+
+由定义直接相减，随后应用 Robin 判据。证毕。
+
+这个等价形式并未证明右边成立。尤其是：
+
+$$
+\mathfrak D_p(n)\ge0
+$$
+
+不能自动推出其总和大于指定的 \(\mathfrak Q\)。
+

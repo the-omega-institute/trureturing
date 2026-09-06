@@ -1,0 +1,62 @@
+## 定理 187.2　二次势给出精确的量子潮汐模型
+
+取
+
+$$
+\Phi(x)=g_0x+\frac{\kappa}{2}x^2,
+\qquad \kappa\ge0.
+$$
+
+则
+
+$$
+\boxed{
+\ddot Y=-\kappa Y.
+}
+\tag{187.3}
+$$
+
+并且联合 Hamiltonian 的势能精确分解为
+
+$$
+\boxed{
+\begin{aligned}
+M_A\Phi(X_A)+M_B\Phi(X_B)
+={}&
+M_{\mathrm{tot}}
+\left(g_0Q+\frac{\kappa}{2}Q^2\right)\\
+&+\frac{\kappa\mu}{2}Y^2.
+\end{aligned}
+}
+\tag{187.4}
+$$
+
+所以相对 Hamiltonian 为
+
+$$
+\boxed{
+H_{\mathrm{rel}}
+=
+\frac{p^2}{2\mu}+\frac{\kappa\mu}{2}Y^2.
+}
+\tag{187.5}
+$$
+
+### 证明
+
+使用
+
+$$
+X_A=Q-\frac{M_B}{M_{\mathrm{tot}}}Y,
+\qquad
+X_B=Q+\frac{M_A}{M_{\mathrm{tot}}}Y
+$$
+
+展开。交叉项相消，得到式（187.4），再计算 Heisenberg 方程。∎
+
+相对振荡频率 \(\sqrt\kappa\) 不依赖内部质量，但位置分布和零点展宽仍可以依赖约化质量 \(\mu\)。
+
+在已经建立的弱场度量实现中，\(\Phi''\) 对应相应的潮汐曲率分量。这个几何识别来自测地偏离关系，不是把任意内部算子交换子直接命名为曲率。([David Tong][6])
+
+---
+

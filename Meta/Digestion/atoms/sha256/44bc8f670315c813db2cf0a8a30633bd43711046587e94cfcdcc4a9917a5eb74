@@ -1,0 +1,58 @@
+## 4.2 用有限调和数处理欧拉常数
+
+令：
+
+$$
+H_k=\sum_{j=1}^k\frac1j.
+$$
+
+由欧拉常数的定义及调和数—对数差的单调性：
+
+$$
+H_k-\ln k>\gamma,
+\qquad
+H_k-\ln k\to\gamma.
+$$
+
+所以：
+
+$$
+\frac{e^{H_k}}k>e^\gamma,
+\qquad
+\frac{e^{H_k}}k\to e^\gamma.
+$$
+
+为了连指数函数也不作为实数运算使用，对 \(0<x\le k\) 定义：
+
+$$
+\boxed{
+\mathcal E_k(x)
+=
+\sum_{j=0}^{2k}\frac{x^j}{j!}
++
+\frac{x^{2k+1}}{(2k+1)!}
+\frac1{1-x/(2k+2)}.
+}
+\tag{8}
+$$
+
+由指数级数的几何尾项控制：
+
+$$
+e^x<\mathcal E_k(x).
+$$
+
+又因为：
+
+$$
+H_k\le1+\ln k,
+$$
+
+可知取 \(x=H_k\) 时，截断误差趋于零。因此：
+
+$$
+\frac{\mathcal E_k(H_k)}k\longrightarrow e^\gamma.
+$$
+
+这里每一步只涉及有限求和、整数幂、阶乘和有理数四则运算。
+

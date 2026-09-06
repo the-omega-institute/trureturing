@@ -18,7 +18,28 @@ coverage_gids:
   - gid: D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance
     target_statement_id: sha256:e7ed69ee47284549957ac3c2848e99ccd78303b00348fba32cc4efd5c3e3af7e
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Observer/Conditioning.conditionalState_isState
+      definition_sha256: sha256:b9bcce6c3b998c8d8dbb058c8e14855a3164cadc1219564531ef65f05dd162af
+      emission_sha256: sha256:3c000e8100e41064123cc8fccc6defda8fb16f406fc142bab09fcf546bfe3bd7
+    - gid: D5/S3/Observer/Conditioning.recordWeight_sum
+      definition_sha256: sha256:b9bcce6c3b998c8d8dbb058c8e14855a3164cadc1219564531ef65f05dd162af
+      emission_sha256: sha256:3c000e8100e41064123cc8fccc6defda8fb16f406fc142bab09fcf546bfe3bd7
+    - gid: D5/S3/Observer/Conditioning.unreadState_fixed_iff
+      definition_sha256: sha256:b9bcce6c3b998c8d8dbb058c8e14855a3164cadc1219564531ef65f05dd162af
+      emission_sha256: sha256:3c000e8100e41064123cc8fccc6defda8fb16f406fc142bab09fcf546bfe3bd7
+    - gid: D5/S3/Observer/Conditioning.unreadState_idempotent
+      definition_sha256: sha256:b9bcce6c3b998c8d8dbb058c8e14855a3164cadc1219564531ef65f05dd162af
+      emission_sha256: sha256:3c000e8100e41064123cc8fccc6defda8fb16f406fc142bab09fcf546bfe3bd7
+    - gid: D5/S3/Observer/Conditioning.unreadState_trace
+      definition_sha256: sha256:b9bcce6c3b998c8d8dbb058c8e14855a3164cadc1219564531ef65f05dd162af
+      emission_sha256: sha256:3c000e8100e41064123cc8fccc6defda8fb16f406fc142bab09fcf546bfe3bd7
+    - gid: D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
+      definition_sha256: sha256:b9bcce6c3b998c8d8dbb058c8e14855a3164cadc1219564531ef65f05dd162af
+      emission_sha256: sha256:3c000e8100e41064123cc8fccc6defda8fb16f406fc142bab09fcf546bfe3bd7
+    - gid: D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance
+      definition_sha256: sha256:52ff66a985ecaf323db8c3ef08aae02cfee567bee348327d9e05e1926aa25b63
+      emission_sha256: sha256:2645fe87a488a0b18682f056ada1ab15881a49f2b2f4f5369972ca4362ec4f09
   unresolved_subitems:
     - no-third-collapse-dynamics-interpretive-premise
     - same-system-record-state-throughout-premise

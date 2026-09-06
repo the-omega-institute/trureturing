@@ -1,0 +1,19 @@
+- matrix-order compatibility；
+
+的 pure character section。
+
+若证明该猜想，则离线零点无法作为一个全局点状观察者存在，即使更一般的非经典正 section 仍可存在。
+
+这与量子 contextuality 的经验相似：
+
+\[
+\boxed{
+\text{全局概率状态可以存在，
+而全局确定性 character 不存在。}
+}
+\]
+
+但本节不声称 RH atlas 已经构造，也不声称该猜想等同于 Kochen–Specker。
+
+---
+

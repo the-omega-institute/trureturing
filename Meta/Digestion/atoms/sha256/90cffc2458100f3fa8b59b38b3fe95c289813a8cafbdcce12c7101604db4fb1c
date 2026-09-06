@@ -1,0 +1,65 @@
+## 定理 7.1：有限维可逆系统中，完整未来读数已经决定完整过去读数
+
+设系统有限维，演化由酉算子 \(U\) 给出。令初始可观察空间为 \(\mathcal S_0\)。
+
+定义：
+
+$$
+\mathcal S_+
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+U^{-t}AU^t:
+A\in\mathcal S_0,\ t\ge0
+\right\},
+$$
+
+以及：
+
+$$
+\mathcal S_{\mathbb Z}
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+U^{-t}AU^t:
+A\in\mathcal S_0,\ t\in\mathbb Z
+\right\}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal S_+=\mathcal S_{\mathbb Z}.
+}
+\tag{23}
+$$
+
+### 证明
+
+令：
+
+$$
+\mathcal T(A)=U^{-1}AU.
+$$
+
+由定义：
+
+$$
+\mathcal T(\mathcal S_+)\subseteq\mathcal S_+.
+$$
+
+\(\mathcal T\) 可逆，所以它在 \(\mathcal S_+\) 上单射。由于 \(\mathcal S_+\) 有限维，单射必为满射。
+
+因此：
+
+$$
+\mathcal T^{-1}(\mathcal S_+)=\mathcal S_+.
+$$
+
+反复应用，就包含了全部负时间迭代。证毕。
+
+这意味着，在有限维可逆模型中，“把过去也补进去”不会超出**已经包含全部未来迭代的观察空间**。
+
+但这不意味着一个短的未来窗口就足够，也不意味着原算术系统天然有限维。
+

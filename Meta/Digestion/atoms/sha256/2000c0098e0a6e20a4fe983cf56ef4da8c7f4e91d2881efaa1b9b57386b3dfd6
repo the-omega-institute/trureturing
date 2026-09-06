@@ -1,0 +1,38 @@
+## 定义 124.1　区域平均与有效钟速
+
+定义
+
+$$
+\widehat R_Q
+=
+\frac1{N_Q}\sum_{x\in Q}R_x,
+$$
+
+$$
+\widehat n_Q=\sqrt{\widehat R_Q},
+$$
+
+以及参考均值
+
+$$
+r_Q(m)=\operatorname{Tr}(\sigma_m\widehat R_Q),
+\qquad
+n_Q(m)=\sqrt{r_Q(m)}.
+$$
+
+令
+
+$$
+n_*=\sqrt{r_-}.
+$$
+
+由于每个 \(R_x\ge r_-I\)，有
+
+$$
+\widehat n_Q\ge n_*I,
+\qquad
+n_Q(m)\ge n_*.
+$$
+
+---
+

@@ -1,0 +1,28 @@
+## 定理 O2：滤波器就是这个空间中的状态
+
+对有限实向量：
+
+$$
+c=(c_1,\ldots,c_N,0,\ldots),
+$$
+
+定义：
+
+$$
+\boxed{
+f_c(z)=\sum_{j=1}^{N}c_j(\ell z)^j.
+}
+\tag{O9}
+$$
+
+那么：
+
+$$
+\boxed{
+\langle c,\mathsf Kc\rangle
+=
+\mathcal Q_\infty(f_c).
+}
+\tag{O10}
+$$
+

@@ -1,0 +1,18 @@
+## 形式化依赖
+
+本轮按提交
+
+```text
+7964bc54f38cf4d24bf7b702ca3ec1d5f5b89a1e
+```
+
+核对了项目中的两个相关基础模块：
+
+`ExactDescentNoCarry.lean` 用于判定单体边缘接口是否足以支持后续受力目标。
+
+`ConservationAutonomySeparation.lean` 区分能量守恒与局部相位过程的自主性。
+
+新增证明可以分层为：
+
+| 层次    | 应形式化的对象             |
+| ----- | ------------------- |

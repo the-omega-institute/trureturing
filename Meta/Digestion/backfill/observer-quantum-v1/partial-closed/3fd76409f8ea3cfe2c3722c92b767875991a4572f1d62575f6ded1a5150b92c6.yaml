@@ -26,5 +26,20 @@ coverage_gids:
   - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
     target_statement_id: sha256:860c2c13fbf31e1cf13af4d22c15426ea2a3a09e5e4ddb7385b7a474c1b4f704
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+      definition_sha256: sha256:c5accedabf0f0d42752caec86430e25b771cb44fcbf3c0f383f245eaa04346cf
+      emission_sha256: sha256:cda294fe3dd6b93c43fac8ade1f713e543e12ee2c3fd6b93989bf60d6e3183b9
+    - gid: D5/S3/ObserverMemory/RecordCorrelationMonogamy.record_correlation_monogamy
+      definition_sha256: sha256:c2e13992023e405db66beaa1c3c41106faed22c5802de8bfdc047eb6e656bce6
+      emission_sha256: sha256:a9cfde54bc37101917bc7c8c079672cd2202581d812c44533ff99d32cca5eaa4
+    - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
+      definition_sha256: sha256:09dcb7a7b19f73aafc7011f0eef2d57192856a74a3b268ef9e3501779788893f
+      emission_sha256: sha256:35a0c6948bb4d549e53f5b8a2f3fd0950d4a85b5fc770b6ff95a27a7ad182eb3
+    - gid: D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+      definition_sha256: sha256:1e4783beb47fff9fabe71bc6c25912dc1935ac50a7228d4923c56c99d208acca
+      emission_sha256: sha256:7605f31d6cb6e0f33b7c86e9f2a548a89b93c9aaf32fbef0cf27075280031131
+    - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
+      definition_sha256: sha256:793ba7b0b839d6b9ce715b56de0bb548be3429f48e031c68d2528f04715e8e66
+      emission_sha256: sha256:d588d4d48d7264e66eee0734e30465d17eb64bf9dd5dcec2c64d8db71b2d1270
   unresolved_subitems: []

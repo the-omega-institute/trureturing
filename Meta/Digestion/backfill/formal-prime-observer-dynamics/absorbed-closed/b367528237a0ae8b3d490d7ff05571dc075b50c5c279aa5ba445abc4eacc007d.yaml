@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b367528237a0ae8b3d490d7ff05571dc075b50c5c279aa5ba445abc4eacc007d
+  normalized_sha256: sha256:b367528237a0ae8b3d490d7ff05571dc075b50c5c279aa5ba445abc4eacc007d
+cas_ref: sha256:b367528237a0ae8b3d490d7ff05571dc075b50c5c279aa5ba445abc4eacc007d
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/FifthStageEvidenceBeliefDecisionTheoremMap.fifth_stage_evidence_belief_decision_theorem_map
+    target_statement_id: sha256:9f760453bc46e4fe19fc2c8ff78abf8d0c484c3f9dcfbed44262ea6639f9dae9
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Completion/FifthStageEvidenceBeliefDecisionTheoremMap.fifth_stage_evidence_belief_decision_theorem_map
+      definition_sha256: sha256:bd3c3bb08942248eac83ef410b65f0b7f278b6de0ce8bd896e67231b2d2778d9
+      emission_sha256: sha256:4ae5c7b2f66ec02ff2ccdd5455dd8e67a1be6132c9c6d45a7681cd43229762f5
+  unresolved_subitems: []

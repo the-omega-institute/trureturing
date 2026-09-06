@@ -6,5 +6,11 @@ coverage_gids:
   - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq
     target_statement_id: sha256:bdf8eeacfce126ce351b2036f26c2fee106c8bbf5a053cdd4b14ea2a7551c6bc
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq
+      definition_sha256: sha256:61461dc14bbd4ff3954fedf0aca29d469f932f407b2f71f93f4308f77fdeb94d
+      emission_sha256: sha256:a5ba6a9bd178e1b592ed4a2420212db7a3e15f4366fd777026962f0482d54769
   unresolved_subitems: []
+  chain_atoms:
+    - d5e17b2a7f8690aa2b6ab5fee859e1c0dc430a8a606ae5798c83bc3dfecec08d
+    - 153d9a2857ba57a5e29f6fd6569fb54a3c6fbcae7433d36182926f8b4e816af8

@@ -1,0 +1,30 @@
+### 第一个推论：固定频率一定越来越正常
+
+$$
+\boxed{
+R_n(t)\longrightarrow1
+\qquad(n\to\infty)
+}
+\tag{R20}
+$$
+
+对每个固定实数 \(t\) 成立。
+
+更强地，对每个固定 \(T<\infty\)：
+
+$$
+\boxed{
+\sup_{|t|\le T}|R_n(t)-1|\longrightarrow0.
+}
+$$
+
+所以存在 \(N(T)\)，使：
+
+$$
+\boxed{
+n\ge N(T),\quad |t|\le T
+\Longrightarrow R_n(t)>0.
+}
+\tag{R21}
+$$
+

@@ -36,6 +36,10 @@ information_theorem emptyTheorem
   primitives emptyRealization
   : arena.Law emptyRealization := by trivial
 
+expect_information_occurrence emptyTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealEmptyState"
+
 /-- error: IE-C004 DegenerateArena:
 LeanInformationAudit.Tests.SealEmptyState.arena -/
 #guard_msgs (error) in

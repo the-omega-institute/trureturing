@@ -1,0 +1,65 @@
+# 五、把已有切片放回一个母函数：它们不是彼此独立的观察世界
+
+沿用：
+
+$$
+A(z)=\frac{\xi(\frac12+iz)}{\xi(\frac12)}.
+$$
+
+定义二变量整函数：
+
+$$
+\boxed{
+\mathcal I(t,y)=A(t+iy)A(t-iy).
+}
+\tag{U8}
+$$
+
+对实 \(t,y\)：
+
+$$
+\mathcal I(t,y)=|A(t+iy)|^2.
+$$
+
+在双副本模型中：
+
+$$
+\boxed{
+\mathcal I(t,y)
+=
+\mathbb E\!\left[
+\cos(\sqrt2tS)\cosh(\sqrt2yU)
+\right].
+}
+\tag{U9}
+$$
+
+前文的广义 Laguerre 读数，全部是同一个母函数沿 \(y=0\) 的导数：
+
+$$
+\boxed{
+\mathcal I(t,y)
+=
+\sum_{n\ge0}L_n(t)y^{2n},
+\qquad
+L_n(t)=\frac1{(2n)!}\partial_y^{2n}\mathcal I(t,0).
+}
+\tag{U10}
+$$
+
+这与广义 Laguerre 关联核的经典表达一致。([arXiv][5])
+
+所以，\(L_0,L_1,L_2,\ldots\) 不是不同对象。它们是同一个二变量函数的不同导数切片。
+
+而且它们不能任意拼接。因为 \(A\) 解析，\(\mathcal I\) 满足：
+
+$$
+\boxed{
+\mathcal I(\mathcal I_{tt}+\mathcal I_{yy})
+-
+\mathcal I_t^2-\mathcal I_y^2
+=0.
+}
+\tag{U11}
+$$
+

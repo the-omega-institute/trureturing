@@ -1,0 +1,76 @@
+# 六、与你的“波对换”最接近的严格结构：共轭配对中藏着一个正、一个负方向
+
+定义
+
+$$
+\omega_\rho=\frac{\rho-1/2}{i}.
+$$
+
+RH 等价于全部 \(\omega_\rho\) 为实数。
+
+采用 Fourier 变换
+
+$$
+\widehat f(z)=\int_{\mathbb R}f(x)e^{izx}\,dx.
+$$
+
+Weil 二次型的零点表示具有形式
+
+$$
+\boxed{
+Q_W(f)
+=
+\sum_\rho
+\widehat f(\omega_\rho)
+\overline{\widehat f(\overline{\omega_\rho})},
+}
+\tag{16}
+$$
+
+按重数计。关键是第二个因子在 \(\overline{\omega_\rho}\) 处取值，而不是未经证明就与第一个取同一位置。([arXiv][4])
+
+如果 \(\omega\) 与 \(\bar\omega\) 是一对不同的共轭点，记
+
+$$
+A=\widehat f(\omega),
+\qquad
+B=\widehat f(\bar\omega).
+$$
+
+这一对的贡献为
+
+$$
+A\bar B+B\bar A.
+$$
+
+令
+
+$$
+c_+=\frac{A+B}{\sqrt2},
+\qquad
+c_-=\frac{A-B}{\sqrt2}.
+$$
+
+则有精确等式
+
+$$
+\boxed{
+A\bar B+B\bar A
+=
+|c_+|^2-|c_-|^2.
+}
+\tag{17}
+$$
+
+这一次，“交换下的对称与反对称组合”确实产生了正、负两个方向。
+
+但要注意，它是**共轭评价点的交换**，不等于上一节的空间反射奇偶。
+
+这也说明，为什么不能把式（16）擅自替换为
+
+$$
+\sum_\rho|\widehat f(\omega_\rho)|^2.
+$$
+
+那相当于把原来的交换配对形式，改成了一个不同的正范数。
+

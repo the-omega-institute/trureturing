@@ -1,0 +1,26 @@
+## 9.2 算术范数预算目标
+
+对每个 \(\lambda>0\)，独立找到某个：
+
+$$
+\beta>\frac1\lambda,
+$$
+
+证明：
+
+$$
+\boxed{
+\mathfrak Z_\beta(\beta\lambda)
+-
+\sum_{n\le5040}Z(n)^\beta n^{-\beta\lambda}
+<
+e^{\beta\mathcal H(\lambda)}.
+}
+\tag{28}
+$$
+
+这就是主定理 6.1 的具体版本。
+
+这里已经有可以复用的结构：
+
+* 左边具有正项 Euler 乘积和有限边界减项；

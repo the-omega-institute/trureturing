@@ -1,0 +1,76 @@
+### 证明
+
+$$
+\langle\chi_n,\chi_{n+1}\rangle
+=
+\frac{
+\mathbb E[U^{2n+1}]
+}{
+\sqrt{Z_nZ_{n+1}}
+}
+=0,
+$$
+
+因为 \(U\) 的分布对称。证毕。
+
+但是它们的和模态读数都满足同样的高斯极限。
+
+所以：
+
+$$
+\boxed{
+\text{几乎相同的这族边缘读数}
+\quad+\quad
+\text{完全正交的整体量子态}
+}
+$$
+
+可以同时存在。
+
+另一方面：
+
+$$
+\boxed{
+\langle\chi_n,\chi_{n+2}\rangle
+=
+\frac{Z_{n+1}}{\sqrt{Z_nZ_{n+2}}}.
+}
+\tag{R27}
+$$
+
+由定理 R2 的矩收敛：
+
+$$
+\frac{Z_{n+1}}{Z_n}
+=
+\mathbb E_n[U^2]
+\sim
+\frac{w_n^2}{2}.
+$$
+
+因此：
+
+$$
+\boxed{
+\langle\chi_n,\chi_{n+2}\rangle\longrightarrow1.
+}
+\tag{R28}
+$$
+
+这形成两条渐近接近自身的奇偶支系：
+
+$$
+\boxed{
+\begin{aligned}
+\text{相差一阶：}&\quad\text{严格正交};\\
+\text{相差两阶：}&\quad\text{相邻态越来越接近}.
+\end{aligned}
+}
+$$
+
+但“相差两阶越来越接近”不保证整条序列在 Hilbert 范数中收敛。态的差模态中心还在向无穷远移动。
+
+**这里的奇偶结构有明确可观测量 \(\mathcal P_U\)，并没有被数学语言约掉；只是只读取和模态时，它没有进入那份边缘读数。**
+
+---
+

@@ -1,0 +1,26 @@
+# 七、怎样判断一个量子操作能否作用在“实际算术对象”上？
+
+这一步可以给出一个一般的有限维定理。
+
+设
+
+$$
+A:\mathcal H_{\mathrm{mode}}\to\mathcal H_{\mathrm{arith}}
+$$
+
+是合成映射，并把目标空间限制为 \(\operatorname{ran}A\)。
+
+定义合成操作
+
+$$
+\mathcal S(\rho)=A\rho A^*.
+$$
+
+它完全正，但 \(A\) 不一定是等距映射，因此不自动保迹。
+
+设模态空间上的完全正映射为
+
+$$
+\mathcal E(\rho)=\sum_jL_j\rho L_j^*.
+$$
+

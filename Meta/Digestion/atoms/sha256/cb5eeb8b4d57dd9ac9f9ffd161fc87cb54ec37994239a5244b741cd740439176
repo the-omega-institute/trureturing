@@ -1,0 +1,35 @@
+### 证明
+
+先假设中心化根 \(z_1,\ldots,z_d\) 互异。
+
+由 HCIZ 行列式公式：
+
+$$
+\mathcal H_q(r)
+=
+\frac{\prod_{j=0}^{d-1}j!}
+{r^{d(d-1)/2}|\Delta(z)|^2}
+\det\bigl(e^{rz_i\overline{z_j}}\bigr).
+$$
+
+对指数矩阵使用 Cauchy–Binet 展开：
+
+$$
+\det\bigl(e^{rz_i\overline{z_j}}\bigr)
+=
+\sum_{0\le n_1<\cdots<n_d}
+\frac{r^{n_1+\cdots+n_d}}
+{n_1!\cdots n_d!}
+\left|\det(z_i^{n_j})\right|^2.
+$$
+
+每一个严格递增序列 \((n_1,\ldots,n_d)\)，对应一个长度不超过 \(d\) 的分区。除去最小指数和 \(d(d-1)/2\) 与 Vandermonde 因子后，行列式商就是相应 Schur 多项式，而阶乘比为：
+
+$$
+\frac1{(d)_\lambda}.
+$$
+
+由此得到式（L10）。
+
+重根情形由多项式的连续性得到；Schur 读数本身不需要除以可能为零的 Vandermonde 因子。证毕。
+

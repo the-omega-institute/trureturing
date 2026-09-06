@@ -1,0 +1,39 @@
+## 收束
+
+这一轮最重要的结果，是把此前混在一起的两种“剩余”彻底分开：
+
+$$
+\boxed{
+\mathcal E_C(r)
+=
+\underbrace{\sum_j(\Im\lambda_j)^2}_{\text{真实谱障碍}}
++
+\underbrace{\frac12\|N_r\|_{\mathrm{HS}}^2}_{\text{可由历史正规化消除的部分}}.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathcal E_C'(r)
+=
+-\frac14\|[A_C(r),A_C(r)^*]\|_{\mathrm{HS}}^2.
+}
+$$
+
+所以，观察过程能够越来越稳定，却仍然留下严格正的极限；一个均匀、正规、没有额外耦合冲突的表示，也可以拥有非实谱。
+
+对实际 ξ，剩余极限精确为：
+
+$$
+\boxed{
+4\sum_{\Im\rho>0}
+\frac{
+m_\rho(\Re\rho-\frac12)^2(\Im\rho)^2
+}{
+\left[(\Re\rho-\frac12)^2+(\Im\rho)^2\right]^4
+}.
+}
+$$
+

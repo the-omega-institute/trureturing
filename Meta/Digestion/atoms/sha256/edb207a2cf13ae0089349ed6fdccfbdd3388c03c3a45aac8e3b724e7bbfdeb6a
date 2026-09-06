@@ -1,0 +1,19 @@
+## 定义 R1：筛选后的和模态方差
+
+由于 \(\mathbb P_n\) 关于 \(S\) 对称：
+
+$$
+\mathbb E_n[S]=0.
+$$
+
+定义：
+
+$$
+\boxed{
+v_n=\mathbb E_n[S^2]
+=
+\frac{\mathbb E[S^2U^{2n}]}{Z_n}.
+}
+\tag{R5}
+$$
+

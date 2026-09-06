@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:232333011db897e0de4f827c619ce303a6f3dc2fe8e9a8cdad01153be15373d1
+  normalized_sha256: sha256:232333011db897e0de4f827c619ce303a6f3dc2fe8e9a8cdad01153be15373d1
+cas_ref: sha256:232333011db897e0de4f827c619ce303a6f3dc2fe8e9a8cdad01153be15373d1
+coverage_gids:
+  - gid: D5/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency.posterior_adaptive_policy_universal_sufficiency
+    target_statement_id: sha256:6d4c6cacdfa38dce1071d9eaf25de07913885c34345cab0d32d1a8447d866cf0
+receipts:
+  scribe:
+    - gid: D5/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency.posterior_adaptive_policy_universal_sufficiency
+      definition_sha256: sha256:2231f0a781e8926905e9eed5a6424ef8159b61a3a27204d24b17ca3d8c0a340b
+      emission_sha256: sha256:1b4af344ad63fca528e89c6b6585fd51906589e1075fd554e4d8a4f338f4defd
+  unresolved_subitems: []

@@ -1,0 +1,63 @@
+## 命题 158.1　辐射侧应力一般不是独立守恒源
+
+若赋予每个方向相同能量 \(\epsilon_0\)，则定义：
+
+$$
+e=\epsilon_0n,
+\qquad
+F_E=\epsilon_0j,
+$$
+
+$$
+p=\frac{\epsilon_0j}{c^2},
+\qquad
+P=\epsilon_0n.
+$$
+
+方程给出：
+
+$$
+\boxed{
+\partial_te+\partial_xF_E=0,
+}
+\tag{158.3}
+$$
+
+但：
+
+$$
+\boxed{
+\partial_tp+\partial_xP=-\frac p\tau.
+}
+\tag{158.4}
+$$
+
+### 证明
+
+分别将式（153.3）、（153.4）乘以相应常数。∎
+
+因此，若希望构造协变的总应力，必须包含媒介：
+
+$$
+\nabla_\mu T_{\mathrm{rad}}^{\mu\nu}=J^\nu,
+$$
+
+$$
+\nabla_\mu T_{\mathrm{med}}^{\mu\nu}=-J^\nu,
+$$
+
+才能得到：
+
+$$
+\boxed{
+\nabla_\mu
+(T_{\mathrm{rad}}^{\mu\nu}+T_{\mathrm{med}}^{\mu\nu})=0.
+}
+$$
+
+上面的量子碰撞电路本身没有给出完整反冲 Hamiltonian，所以不能把“CPTP、概率守恒”直接升级为“真实能量—动量完全守恒”。
+
+**这正是从量子操作走向引力源时，必须额外完成的物理证明。**
+
+---
+

@@ -1,0 +1,26 @@
+## 主定理：明确常数判据与最终符号判据
+
+以下三个命题等价：
+
+$$
+\boxed{\mathrm{RH};}
+$$
+
+$$
+\boxed{
+\mathcal T_\Lambda(N)
+\le C_*N^{3/2}
+\qquad\forall N\in\mathbb Z,\ N\ge2;
+}
+\tag{23}
+$$
+
+$$
+\boxed{
+\exists N_0,\quad
+\mathcal T_{\mathbb P}(N)\le0
+\qquad\forall N\ge N_0.
+}
+\tag{24}
+$$
+

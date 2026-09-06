@@ -41,6 +41,10 @@ internal interface ICliEnvironment
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
+    CommandResult QuarantineAtom(IReadOnlyList<string> arguments);
+
+    CommandResult DecomposeAtom(IReadOnlyList<string> arguments);
+
     CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments);
 
     CommandResult Route(IReadOnlyList<string> arguments);
@@ -105,6 +109,10 @@ internal static class CliApplication
                 RenderCommand(environment.Coverage(tail), console),
             ["cover-atom"] = static (environment, tail, console) =>
                 RenderCommand(environment.CoverAtom(tail), console),
+            ["quarantine-atom"] = static (environment, tail, console) =>
+                RenderCommand(environment.QuarantineAtom(tail), console),
+            ["decompose-atom"] = static (environment, tail, console) =>
+                RenderCommand(environment.DecomposeAtom(tail), console),
             ["dag-render"] = static (environment, tail, console) =>
                 RenderCommand(environment.RenderDag(tail), console),
             ["deposit-header-check"] = static (environment, tail, console) =>

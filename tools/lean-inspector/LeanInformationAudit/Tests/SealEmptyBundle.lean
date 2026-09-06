@@ -30,6 +30,10 @@ information_theorem theoremWithoutPrimitives
   primitives fixtureRealization
   : arena.Law fixtureRealization := by trivial
 
+expect_information_occurrence theoremWithoutPrimitives
+  in arena
+  from "LeanInformationAudit.Tests.SealEmptyBundle"
+
 /-- error: IE-C013 MissingPrimitiveBundle:
 LeanInformationAudit.Tests.SealEmptyBundle.theoremWithoutPrimitives -/
 #guard_msgs (error) in

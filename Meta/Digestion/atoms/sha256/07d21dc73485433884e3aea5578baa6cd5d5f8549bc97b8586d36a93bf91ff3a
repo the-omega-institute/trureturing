@@ -1,0 +1,66 @@
+## 定理 137.2　每个有限 \(\varepsilon\) 都严格满足真空方程
+
+对式（137.2），只有 Ricci 分量 \(R_{uu}\) 可能非零，而且
+
+$$
+\boxed{
+R_{uu}
+=
+-2\left[
+\frac{b_\varepsilon''}{b_\varepsilon}
++
+(p_\varepsilon')^2
+\right].
+}
+\tag{137.4}
+$$
+
+因此
+
+$$
+\boxed{
+\operatorname{Ric}(g_\varepsilon)=0,
+\qquad
+\mathscr G[g_\varepsilon]=0.
+}
+\tag{137.5}
+$$
+
+### 证明
+
+对一般函数 \(b,p\)，令
+
+$$
+B=be^p,\qquad C=be^{-p}.
+$$
+
+度量为
+
+$$
+-2\,du\,dv+B(u)^2dx^2+C(u)^2dy^2.
+$$
+
+直接计算连接与 Ricci 张量，得到
+
+$$
+R_{uu}
+=
+-\frac{B''}{B}-\frac{C''}{C}
+=
+-2\left(\frac{b''}{b}+(p')^2\right),
+$$
+
+其余 Ricci 分量为零。
+
+而
+
+$$
+p_\varepsilon'=\Omega\cos(u/\varepsilon).
+$$
+
+结合式（137.1），\(R_{uu}=0\)。∎
+
+这里的真空结论不是近似成立，而是对每个 \(\varepsilon>0\) 精确成立。
+
+---
+

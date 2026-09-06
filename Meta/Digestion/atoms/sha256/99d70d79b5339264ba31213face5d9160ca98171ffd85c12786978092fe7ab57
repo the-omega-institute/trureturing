@@ -1,0 +1,32 @@
+## 定理 112.2　观察完成与经典稳定区的对偶关系
+
+定义轨道扩张：
+
+$$
+\operatorname{Orb}_{H_G}(W)
+=
+\operatorname{span}\{H_G^k\psi:
+\psi\in W,\ k\ge0\}.
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Orb}_{H_G}(W)\subseteq\mathcal E_\nu
+\iff
+W\subseteq\mathcal K_\nu.
+}
+\tag{112.4}
+$$
+
+### 证明
+
+左侧表示任意 \(\psi\in W\) 的全部幂轨道都落在
+\(\ker C_\nu\)，这正好等价于
+\(C_\nu H_G^k\psi=0\) 对全部 \(k\) 成立。∎
+
+这与项目的轨道闭包构造形成互补：轨道闭包向外扩张，保留未来可能进入读数的方向；稳定经典区向内筛选，保留永远不会产生指定经典性缺陷的初态。仓库目前读取到的 `ObserverOrbitClosure.lean` 给出了实线性版本的最小不变闭包；复量子应用应明确实化或建立对应复线性版本。
+
+---
+

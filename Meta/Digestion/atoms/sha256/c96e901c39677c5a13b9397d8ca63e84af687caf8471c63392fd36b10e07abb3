@@ -1,0 +1,81 @@
+# 六、两个极限确实不交换，而且差异可以算出来
+
+对固定 \(r>0\)，由定理 M1：
+
+$$
+\mathcal H_d(r)\longrightarrow1.
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{d\to\infty}
+\frac1r\log\mathcal Z_d(r)
+=
+-S_*.
+}
+\tag{M17}
+$$
+
+另一方面，固定 \(d\)，前文已经证明：
+
+$$
+\boxed{
+\lim_{r\to\infty}
+\frac1r\log\mathcal Z_d(r)
+=
+2\sum_{j=1}^{d}(\Im\theta_{d,j})^2.
+}
+\tag{M18}
+$$
+
+对于实际序列，局部零点收敛加上统一倒数谱尾界，允许对平方和取极限。
+
+记：
+
+$$
+\mathfrak E_\xi
+=
+4\sum_{\substack{\rho\ \mathrm{互异}\\\Im\rho>0}}
+\frac{
+m_\rho(\Re\rho-\frac12)^2(\Im\rho)^2
+}{
+\left[
+(\Re\rho-\frac12)^2+(\Im\rho)^2
+\right]^4
+}.
+$$
+
+它非负，且：
+
+$$
+\mathfrak E_\xi=0\iff\mathrm{RH}.
+$$
+
+于是：
+
+$$
+\boxed{
+\lim_{r\to\infty}\lim_{d\to\infty}
+\frac{\log\mathcal Z_d(r)}r
+=
+-S_*,
+}
+\tag{M19}
+$$
+
+而：
+
+$$
+\boxed{
+\lim_{d\to\infty}\lim_{r\to\infty}
+\frac{\log\mathcal Z_d(r)}r
+=
+2\mathfrak E_\xi.
+}
+\tag{M20}
+$$
+
+在 \(S_*>0\) 下，前者严格为负，后者非负。
+

@@ -6,7 +6,10 @@ coverage_gids:
   - gid: D5/S3/Zeros/ZeroGeometry.IsOntologicalZero
     target_statement_id: sha256:954064409d7e491778283fdd27bc099ba0fcceb798e4defde1d9398aa394b3b1
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Zeros/ZeroGeometry.IsOntologicalZero
+      definition_sha256: sha256:2bbe6ad817ba1e4a0d4be2f155acbffd3b4cd1b9e6a71459269ab78e88497584
+      emission_sha256: sha256:71a26c856233a8a5b0a482f840fdc7b97e7ce7617186973c28ad59ca9270a6cf
   unresolved_subitems:
     - analytic-projection-map-and-completed-reading-cancellation
     - closed-alpha-hierarchy-and-lifted-semantics

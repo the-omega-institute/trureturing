@@ -1,0 +1,24 @@
+## 定理 S2：实际 theta 条件读数存在负区
+
+$$
+\boxed{
+\exists x,t\in\mathbb R,\qquad
+\mathcal W(x,t)<0.
+}
+\tag{S9}
+$$
+
+这项存在性不需要 RH。
+
+由于 \(\mathcal W\) 连续，负点附近有一个有限宽度的负区。于是，可以选一个实际成功概率非零的差坐标窗口 \(I\)，使：
+
+$$
+\boxed{
+\frac{\int_I\mathcal W(x,t)\,dx}
+{\int_I\mathcal W(x,0)\,dx}<0.
+}
+\tag{S10}
+$$
+
+这是合法条件态的负干涉振幅，不是负概率。
+

@@ -1,0 +1,59 @@
+# 十二、本轮结论：裂隙已经可以分型、定位和计价
+
+这一轮得到的主要结论是：
+
+**预测裂隙。** 当前黄金读数相同，不代表未来相同；完全预测修复最终恢复全部整数指数。
+
+**平均量裂隙。** 碰撞逃逸率与条件熵都很小，仍不能排除一个影响全称命题的坏状态。
+
+**目标权重裂隙。** 隐藏状态很多，局部因数收益的不确定性却可以很小；观察资源应围绕目标敏感性分配，而不是只数未知比特。
+
+**未来收益裂隙。** 尚未采用、但仍有正净收益的指数层，必须进入证明预算。它们可以由一个有限素数幂窗口完整捕获。
+
+其中最有建设性的公式是：
+
+$$
+\boxed{
+\Phi_\lambda(n)
+=
+W(n)-\lambda\ln n
++
+\sum_{p}\sum_{k>v_p(n)}
+[\ln r(p,k)-\lambda\ln p]_+,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\Phi_\lambda(pn)\le\Phi_\lambda(n).
+}
+$$
+
+当 \(\lambda=c/d\) 时，进一步得到完全有理的：
+
+$$
+\boxed{
+\mathcal V_{c,d}(pn)
+=
+\mathcal V_{c,d}(n)
+\min\left\{
+1,\frac{r(p,v_p(n)+1)^d}{p^c}
+\right\}.
+}
+$$
+
+这给出一个明确方向：
+
+> **不必把全部未知状态恢复出来；但必须证明，所有尚未显露的有利变化，都已经被安全势函数预先计入。**
+
+本轮对 2400 个实例核对了纯有理数转移恒等式，对 112 个有限黄金单元核对了预测纤维公式，并以严格有理区间完成了式（16）的局部证书。全称结构结论来自正文证明，有限测试仅用于交叉检查；新增定理尚未在本轮写入仓库或交由 Lean 内核验证。
+
+[下载精确有理数证书、复核程序与结果](sandbox:/mnt/data/discrete_escape_certificates.zip)
+
+**因此，接下来应集中研究的“裂隙”，是随着价格趋于零而持续出现的新边际层：怎样在不恢复全部状态的情况下，为它们建立一个随尺度变化、始终不遗漏正收益的统一上包络。** 这才是从项目的离散观察、同余修复与信息逃逸理论，通向 RH 安全性证明的一条具体数学路径。
+
+[1]: https://arxiv.org/abs/2110.13478 "https://arxiv.org/abs/2110.13478"
+[2]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[3]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"

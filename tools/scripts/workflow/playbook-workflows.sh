@@ -12,6 +12,7 @@ ATOM_ID="${3:-}"
 GID="${4:-}"
 BATCH_ATOM_IDS=()
 BATCH_GIDS=()
+COVER_FAILURE_REASON=""
 
 run_cli() {
   dotnet run --project "$PROJECT" --configuration Release -- "$@"
@@ -264,6 +265,8 @@ cover_atom_or_resume() {
     return
   else
     local status=$?
+    COVER_FAILURE_REASON="${output##*$'\n'}"
+    [[ -n "$COVER_FAILURE_REASON" ]] || COVER_FAILURE_REASON="cover-atom-exit-$status"
     printf '%s\n' "$output" >&2
     if grep -Fq "cover atom $ATOM_ID already has coverage:" <<<"$output"; then
       printf 'PLAYBOOK_SKIP command=cover detail=coverage-already-applied atom_id=%s gid=%s\n' \
@@ -281,7 +284,7 @@ cover_row() {
   else
     local status=$?
     complete_step failed
-    exit "$status"
+    return "$status"
   fi
 }
 
@@ -319,6 +322,14 @@ case "$COMMAND" in
       freeze_precheck=0
     fi
     freeze_module_if_needed "$freeze_precheck"
+    if cover_row; then
+      step emit make emit
+    else
+      status=$?
+      printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=%s gid=%s reason=%s\n' \
+        "$ATOM_ID" "$GID" "$COVER_FAILURE_REASON" >&2
+      exit "$status"
+    fi
     ;;
   cover)
     require_transaction_arguments
