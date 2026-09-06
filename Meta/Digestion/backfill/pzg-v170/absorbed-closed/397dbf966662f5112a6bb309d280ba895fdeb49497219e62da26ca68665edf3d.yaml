@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:397dbf966662f5112a6bb309d280ba895fdeb49497219e62da26ca68665edf3d
+  normalized_sha256: sha256:397dbf966662f5112a6bb309d280ba895fdeb49497219e62da26ca68665edf3d
+cas_ref: sha256:397dbf966662f5112a6bb309d280ba895fdeb49497219e62da26ca68665edf3d
+coverage_gids:
+  - gid: D5/S3/Arith/DerangementTwoAdicValuation.numDerangements_four_mul_add_three_ne_pow
+    target_statement_id: sha256:94f7d0bb9397a372b27e8ae11a9d9e7421de53c789b51f33593d401aa52da0e2
+  - gid: D5/S3/Arith/DerangementTwoAdicValuation.padicValNat_two_four_mul_add_two
+    target_statement_id: sha256:ba3bdd152f585f9d663bd9939f1b5bd31d5ab83678559952a9768cb48b733132
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/DerangementTwoAdicValuation.numDerangements_four_mul_add_three_ne_pow
+      definition_sha256: sha256:39fa1abc09fd726651bcee69e6a6e715ae7e55e5b86f56503ab8503b9334180a
+      emission_sha256: sha256:9fcea49b2f916973aa5374c94469ede5cf80c696f100c6c7e55742996c1d7263
+    - gid: D5/S3/Arith/DerangementTwoAdicValuation.padicValNat_two_four_mul_add_two
+      definition_sha256: sha256:39fa1abc09fd726651bcee69e6a6e715ae7e55e5b86f56503ab8503b9334180a
+      emission_sha256: sha256:9fcea49b2f916973aa5374c94469ede5cf80c696f100c6c7e55742996c1d7263
+  unresolved_subitems: []
