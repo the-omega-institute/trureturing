@@ -3,6 +3,7 @@
    mirror-B: none(waiver:new-observer-library-node)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Involutive readouts break at odd iterates and complete at even iterates. -/
 
 import Mathlib.Algebra.Ring.Parity
