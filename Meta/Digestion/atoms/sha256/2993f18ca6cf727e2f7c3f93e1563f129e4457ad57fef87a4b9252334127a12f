@@ -1,0 +1,15 @@
+### Layer C. Causal compilation
+
+```text
+PotentialOutcomeQuery
+PartialCausalOrder
+StructuralResponseType
+ObservedMarginalConstraint
+InterventionalMarginalConstraint
+CovariateConstraint
+MediatorConstraint
+SensitivityConstraint
+```
+
+This layer proves that a causal problem is faithfully represented by Layer B.
+

@@ -1,0 +1,38 @@
+## 18. Conditional factorization and the shared-ancestor boundary
+
+New authored Lean source:
+
+```text
+D5/S3/ConceptDynamics/Causal/PartialIdentification/
+  ConditionalMarkovianBenefitBoundary.lean
+```
+
+The phrase "independent outcome mechanisms" in Section 12 means that the evaluated complete response laws actually factorize. Distinct local disturbances or distinct c-components alone do not establish this property for arbitrary evaluated potential outcomes. The response maps can share a random endogenous ancestor. A graph compiler must certify the exogenous dependencies of the queried events after intervention, not merely the local disturbance partition.
+
+The concrete counterexample has three independent exogenous variables: a fair Boolean root `U_C` and two degenerate Boolean local disturbances. Let `C = U_C` and let the two outcome equations be
+
+```text
+Y_i(a,c,u_i) = a AND c.
+```
+
+Both complete response pairs are `(false,C)`, so both benefit indicators equal `C`. Therefore both marginal benefits and their intersection have probability one half. Their marginal product is one quarter. The module gives an explicit product source law, a deterministic shared-root response map, a finite pushforward calculation, and an obstruction to factorizing the resulting response law. No causal graph compiler is claimed by this construction.
+
+The existing `product_pushforward_factorizes` theorem remains valid: it requires componentwise response maps on separate source coordinates, and the shared-root response map does not meet that premise.
+
+For a finite covariate and conditionally product-factorized mechanism laws, `conditional_joint_benefit_eq_weighted_products` states
+
+```text
+J = sum_c w(c) * b1(c) * b2(c).
+```
+
+For two strata with weight `w` on the second stratum, the exact certificate is
+
+```text
+J - ((1-w)*x0+w*x1) * ((1-w)*y0+w*y1)
+  = w*(1-w)*(x1-x0)*(y1-y0).
+```
+
+`binary_mixture_covariance_certificate` is the polynomial identity. With `0 < w < 1`, `binary_mixture_factorizes_iff` states that equality with the product of population means holds exactly when `x1=x0` or `y1=y0`. This criterion is specifically for two positive strata; with more strata, zero covariance may result from cancellation.
+
+Conditional sharp aggregation still requires jointly attainable stratum witnesses, as Section 4 already records. This continuation does not add a rational-to-real bridge to `CovariateSharpAggregation`, nor does it establish a general fixed-noise realization for arbitrary conditional kernel families.
+

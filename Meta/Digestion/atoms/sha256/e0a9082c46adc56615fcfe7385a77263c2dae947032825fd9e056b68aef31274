@@ -1,0 +1,11 @@
+### 3.2 Structural causal assumptions
+
+A causal graph, a partial graph, or merely a causal order restricts which response functions are admissible and how they may depend on parent variables. In a response-type encoding this can appear as:
+
+- removal of impossible response types;
+- equality constraints tying response coordinates together;
+- a factorized local response representation;
+- consistency restrictions between nested counterfactuals.
+
+The 2026 causal-order result is especially important conceptually: a complete graph is not always required. The query itself can imply enough topological order to parameterize an admissible finite SCM family and optimize the query over it.
+

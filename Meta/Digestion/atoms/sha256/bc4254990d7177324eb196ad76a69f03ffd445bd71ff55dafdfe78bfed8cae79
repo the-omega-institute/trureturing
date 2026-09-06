@@ -1,0 +1,10 @@
+## 63. Optimal contact supports remove the extra query coordinate
+
+`contact_certificate_preserved_by_compression` connects the new optimality witness to the existing support-monotone replay. Starting from a valid contact certificate, run `checkCompression` separately on its high and low laws, retaining only the d original feature coordinates. The output of each run has at most d+1 active atoms.
+
+Support containment keeps the high output on the old upper-contact set and the low output on the old lower-contact set. Their individually preserved feature means keep both the tolerance inequalities and signed alignment. The resulting pair is therefore another valid contact certificate with the unchanged envelope and exact query gap.
+
+The query is not added as a d+1st feature. On the upper contact support it already equals `alpha+beta.phi+upper`; on the lower contact support it equals `alpha+beta.phi+lower`. This is an exact support-local reconstruction, even when q is not affine on the whole original carrier. The result improves the general row-plus-query replay budget d+2 to d+1 per endpoint after an optimal contact certificate has been established.
+
+The theorem supplies preservation and size bounds for accepted traces. Existing certificate-language completeness can supply traces existentially; it does not turn the current rational Gaussian-elimination producer into a kernel-verified discovery algorithm. Nor does the result claim a pointwise minimum number of atoms.
+

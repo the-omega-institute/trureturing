@@ -1,0 +1,28 @@
+## 45. A direct rational construction and a replayable elimination identity
+
+The row-only `3k+1` bound also has a direct construction that avoids enumerating `4^k` table atoms. Given four-cell row laws q_c, form the three internal cumulative sums per row, add 0 and 1, and sort their distinct values
+
+```text
+0 = a_0 < a_1 < ... < a_M = 1.
+```
+
+There are at most 3k internal cut points, so M <= 3k+1. On every interval `[a_j,a_(j+1))`, each row's inverse cumulative distribution is constant. Record the resulting complete table t_j and give it mass `a_(j+1)-a_j`. The masses are nonnegative rational numbers and telescope to one. Summing interval lengths assigned to any row cell recovers exactly q_c. Empty or repeated cumulative intervals cause no problem after distinct cut points are used.
+
+Taking two independent copies of this finite interval-index disturbance realizes the two mechanisms with unchanged row laws. This is a choice of cross-row coupling for a witness, not an assumption imposed on all models. The construction preserves row marginals but need not preserve an arbitrary interacting query. Sorting uses O(k log k) rational comparisons and explicitly listing the at-most-3k+1 tables uses O(k^2) response entries; no rational bit-complexity bound is claimed here.
+
+For a general moment vector, exact support elimination instead starts from a supplied finite law. For supported atom profiles v_i, augment them with the normalization coordinate 1. A rational nonzero dependence z satisfying
+
+```text
+sum_i z_i = 0,
+sum_i z_i*v_i = 0
+```
+
+has both positive and negative coordinates. Define
+
+```text
+theta = min_{z_i>0} weight_i/z_i,
+weight'_i = weight_i - theta*z_i.
+```
+
+Positive-z coordinates remain nonnegative by the ratio minimum; negative-z coordinates increase; at least one positive weight becomes zero. Normalization and all moments are unchanged by the two zero-sum identities. Iterating removes support until the augmented profiles are linearly independent. Every arithmetic operation is rational. This is the certificate identity underlying the regression implementation; a data-only Lean checker and a termination/correctness proof for an executable eliminator remain separate implementation obligations.
+

@@ -1,0 +1,20 @@
+## 4. Covariate aggregation and shared parameters
+
+`CovariateSharpAggregation` proves that independently combinable stratum intervals
+
+```text
+Q_c in [L_c, U_c]
+```
+
+aggregate sharply to
+
+```text
+[sum_c w_c L_c, sum_c w_c U_c]
+```
+
+under nonnegative weights and an explicit joint-selection premise.
+
+`CovariateSharedParameterObstruction` proves that stratum projections alone do not justify that conclusion. Two complementary strata can each project to `[0, 1]`, while one shared parameter fixes the equal-weight global query at the singleton `{1 / 2}`.
+
+`ComplementSymmetryProjection` isolates the underlying affine involution. The value one half is the fixed point of `x -> 1 - x` and the invariant component retained by equal-weight averaging. This observation has no established implication for the Riemann hypothesis.
+

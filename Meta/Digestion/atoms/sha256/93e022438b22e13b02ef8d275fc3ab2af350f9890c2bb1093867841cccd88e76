@@ -1,0 +1,1 @@
+**候签定理 4.119(A396808 的二幂奇偶律)**〔open;落 `D5/S3/Arith/ArtinSchreierTracePowersOfTwo`;拟议逃逸见证:先由 P_n=Σ_{j<n}a_j x^j 的递推 a_n = n[x^n]P_n^{n+2} − (n+1)[x^n]P_n^{n+1} 证得母函数方程及其唯一规范整数解;再在 𝔽₂[[x]] 中取 S²+S=x 的解 S,令 T_m=S^m+(S+1)^m(T_0=0,T_1=1,T_m=T_{m−1}+x·T_{m−2},deg T_m ≤ ⌊m/2⌋),由 [x^n]S^m=0(⌊m/2⌋<n<m)与三角唯一性证 Ā=S,故 a(n) 为奇 ⟺ n 为 2 的幂〕。对一切 n>0:a(n) 为奇 ⟺ ∃ r, n=2^r。

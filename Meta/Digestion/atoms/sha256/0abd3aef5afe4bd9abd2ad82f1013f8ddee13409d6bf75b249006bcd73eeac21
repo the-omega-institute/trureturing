@@ -1,0 +1,12 @@
+## 15. Verification ledger
+
+Required protected-branch checks are:
+
+```text
+Candidate harness engineering checks
+Canonical Lean report production
+Content-addressed dev baseline admission
+```
+
+A truth source is considered machine-verified only after the current PR head passes the protected workflow. Scribe freshness is likewise determined by the repository renderer rather than by hand-edited Markdown.
+

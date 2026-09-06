@@ -1,0 +1,11 @@
+### 4.2 Endpoint optimality
+
+The lower endpoint is optimal when some admissible model attains it:
+
+\[
+\exists \pi_L\in\mathcal F,
+\qquad Q(\pi_L)=L.
+\]
+
+Likewise for `U`.
+

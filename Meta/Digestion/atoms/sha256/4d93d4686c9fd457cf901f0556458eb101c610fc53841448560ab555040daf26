@@ -1,0 +1,59 @@
+## 6. Primal and dual certificates have different jobs
+
+Suppose the finite problem is written as a linear program over `x=\pi`:
+
+\[
+Ax=b,
+\qquad
+Cx\le d,
+\qquad
+x\ge0,
+\]
+
+with query
+
+\[
+Q(x)=c^\top x.
+\]
+
+A dual or Farkas-style certificate can prove a bound by expressing the target inequality as a nonnegative combination of feasible constraints. Its logical role is universal:
+
+\[
+\boxed{
+\text{dual certificate}
+\Rightarrow
+\text{every feasible model obeys the bound}.
+}
+\]
+
+A primal witness has an existential role:
+
+\[
+\boxed{
+\text{primal witness at value }L
+\Rightarrow
+L\text{ is attainable}.
+}
+\]
+
+When a valid dual bound and a primal witness have the same objective value, the endpoint is optimal. If both endpoints are certified and the feasible set is convex with affine query, the complete interval is sharp.
+
+Thus the preferred proof architecture is
+
+\[
+\boxed{
+\begin{aligned}
+\text{causal assumptions}
+&\to \mathcal F,\\
+\text{dual certificate}
+&\to \text{valid endpoint},\\
+\text{primal witness}
+&\to \text{attained endpoint},\\
+\text{convexity + affinity}
+&\to \text{sharp interval}.
+\end{aligned}
+}
+\]
+
+This is stronger and more modular than asking an optimizer for a decimal optimum and calling it sharp.
+
