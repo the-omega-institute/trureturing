@@ -1,0 +1,10 @@
+## 77. Complete mediation: make the shared response restriction explicit, 2026-09-06
+
+The source audit resumed from the newly delivered two-mechanism tolerance files and the concurrently developed mediator modules. The recent cross-author PR scan included loning's #5867/#5884 and AlyciaBHZ's #5405/#5895. The concrete mathematical dependency read in full was `PartialMediatorTransportReduction.lean` at `b8019b86a0d5da0dcca0449230094a63663c6be7`, together with `SharedThresholdResponseCoupling` and the pinned Mathlib owner `Finite.exists_max`. No separate maximum-cut owner for this complete-mediation query was found in the searched source scope.
+
+`CompleteMediatorCutSharpBounds.lean` formalizes the complete-mediation boundary previously left as a paper derivation in Section 71. The mediator response law pi on (M0,M1) is fixed. The outcome disturbance is one full table y : Mediator -> Bool, with an arbitrary rational law nu independent of pi. The structural response is Y_a=y(M_a), so treatment has no direct effect once the mediator and disturbance are fixed.
+
+`completeOutcomeLaw` pushes nu to the existing treatment/mediator table space by the map `(a,m) -> y(m)`. Consequently the two treatment coordinates are identical for every source state. `completeOutcomeLaw_success` proves the actual intervention-kernel identity, and `completeOutcomeLaw_fair_kernel` connects fair coordinates to the existing `HasOutcomeKernel`. `completeMediatorBenefit_actual_response` identifies the query with the original `benefitResponseMass` of the existing two-world product-source pushforward.
+
+The fixed coupling pi is additional full response information or a fixed slice of a larger optimization. It is not inferred from the two mediator marginals. Extra support restrictions, nonfair outcome means, or uncertainty about pi require their own optimization. The full source equation and this input boundary prevent the graph problem below from being presented as an observational identification theorem.
+

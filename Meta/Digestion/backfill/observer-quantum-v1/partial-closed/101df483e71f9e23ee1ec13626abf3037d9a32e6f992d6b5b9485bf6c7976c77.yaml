@@ -41,11 +41,11 @@ receipts:
       definition_sha256: sha256:b5bca90b6fe16e6f200b8a0a4b380411a2103f1141a23e04bad7f71f4fd9dd64
       emission_sha256: sha256:4038db3e5c6034dac26df1fca02ab86352161230833fe2cadace19781267cc58
     - gid: D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
-      definition_sha256: sha256:1e4783beb47fff9fabe71bc6c25912dc1935ac50a7228d4923c56c99d208acca
-      emission_sha256: sha256:7605f31d6cb6e0f33b7c86e9f2a548a89b93c9aaf32fbef0cf27075280031131
+      definition_sha256: sha256:ce39ddc02e0f2b90ab65e13288dc37ae53acc03dbdb398c412c5e372610293f5
+      emission_sha256: sha256:a61d7fcde3a0453be84caa86f7a6349d11c1281d68c82e6ebbb12e58b63ab231
     - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
-      definition_sha256: sha256:793ba7b0b839d6b9ce715b56de0bb548be3429f48e031c68d2528f04715e8e66
-      emission_sha256: sha256:d588d4d48d7264e66eee0734e30465d17eb64bf9dd5dcec2c64d8db71b2d1270
+      definition_sha256: sha256:ba0e59654ceec4b6854674d13b38cb751288b34a52ae7fd3a8886b1cc66947e0
+      emission_sha256: sha256:df9ad32e5369d3ea74cb428db97eed4b02bea88f8dac0c3662684ed5743a6c4a
     - gid: D5/S3/QuantumContext/ClassicalAddressRealismExclusion.classical_address_realism_exclusion
       definition_sha256: sha256:e81db5d5228240a787b6de4b4222756c4bda3095eeb011a8072b6d0e73907ed8
       emission_sha256: sha256:d5ad61c46d082582a2833e2de71ebaa801ac03210fdca802f5a9fca6d47cfc1d

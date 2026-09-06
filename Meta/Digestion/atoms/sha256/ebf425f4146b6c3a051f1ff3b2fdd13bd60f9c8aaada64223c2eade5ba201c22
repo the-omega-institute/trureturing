@@ -1,0 +1,5 @@
+## 结算(2026-09-07,写在实施之后;预登记见上与 issue #5907)
+
+三条**全部成立**,均由 codex-cli 实施席在 Lean 4 中给出,公理闭包皆为
+`[propext, Classical.choice, Quot.sound]`。落地的公开声明与本增订的对应关系如下。
+

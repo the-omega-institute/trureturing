@@ -1,0 +1,32 @@
+## 20. Intervention-specific exogenous locality, 2026-09-05
+
+`InterventionExogenousLocality.lean` supplies the dependency-locality interface identified in Section 19. It reuses the existing parent-indexed `ParentOrderedStructuralEvaluationSemantics.StructuralModel`, its `EvaluationWitness`, and its unique evaluation theorem. The equation input has type `model.parents v -> Value`, so the parent boundary is enforced by the source type itself. The module introduces no competing structural evaluator.
+
+Let a complete exogenous assignment be `u : Source -> Noise`. For each node `v`, declare a finite set `N(v)` of direct exogenous coordinates. `ExogenousLocality` requires that, for every fixed parent assignment, the equation satisfies Mathlib's existing `DependsOn` predicate on `N(v)`. Agreement of two sources on those coordinates therefore forces equal equation values when parent values agree.
+
+The compiled transfer at an evaluation step is
+
+```text
+D'(v) = empty                              if v is intervened
+D'(v) = N(v) union union_{p in parents(v)} D(p) otherwise
+D'(w) = D(w)                               for w != v.
+```
+
+Every initial node support is the full source set. This accounts for arbitrary source dependence in `model.initial`; soundness does not assume a constant or source-independent initialization. The transfer follows the same finite list as the canonical evaluation trace.
+
+The main statement `evaluatedResponse_dependsOn` says that the evaluated intervention response at `v` depends only on `compiledSupport model direct intervention v`. Its proof is a trace induction. Agreement on a nonintervened node's compiled union yields agreement of the direct source coordinates and all parent values. Locality then gives agreement of the equation output. A constant intervention gives agreement immediately, and all untouched coordinates retain their prior locality certificates.
+
+The support compiler also proves `compiledSupport_antitone_intervention`:
+
+```text
+I subset J  ->  compiledSupport(J,v) subset compiledSupport(I,v).
+```
+
+This theorem applies to constant interventions whose assigned values do not depend on `u`. Source-dependent policies would need an additional support contribution for their assignment functions.
+
+For a finite family of counterfactual queries, `counterfactualReadout` evaluates every queried world at the same original exogenous assignment. `counterfactualSupport` unions the relevant intervention-specific supports. `counterfactualReadout_dependsOn` and `counterfactualEvent_factorsThrough` certify locality of the full vector and of every Boolean event applied to that vector. The formal query family is unnested and uses fixed intervention assignments. It does not create fresh independent disturbances for different worlds.
+
+The compiled sets are conservative dependency bounds. Their disjointness is useful evidence for separation; their overlap alone does not establish that the evaluated events are probabilistically dependent.
+
+All fourteen public definitions and theorems have matching declaration handles in `Blueprint/D5/S3/ConceptDynamics/Causal/PartialIdentification/InterventionExogenousLocality.scribe.cs`.
+

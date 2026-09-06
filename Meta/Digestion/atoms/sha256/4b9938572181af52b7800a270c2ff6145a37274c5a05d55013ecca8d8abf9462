@@ -1,0 +1,19 @@
+## 50. Preserve the original causal LP and reuse its dual witness
+
+The `rowQueryArray` adapter places the original scalar query at coordinate zero and the original m data rows at the successor coordinates. No coefficients are changed, and probability normalization remains a separate checker condition.
+
+`checked_causal_problem_witness` packages an accepted result as the existing `FiniteResponseLaw` on the original carrier. It proves
+
+```text
+support(result) subset support(original),
+support_size(result) <= m+2,
+LinearFeasible A b result,
+linearObjective query result = linearObjective query original.
+```
+
+The bound follows from retaining m+1 moment coordinates. Additional linear equalities or inequalities are preserved when their coefficients are among the retained rows, and any condition determined by the preserved moment vector remains true. Other nonlinear restrictions are not inferred automatically.
+
+`checked_lower_endpoint_witness` combines the checked sparse primal law with an unchanged `LowerBoundCertificate`, using the existing `exact_lower_bound_of_certificate_and_witness`. The resulting exact lower endpoint and sparse attaining witness belong to the same original inequality system. The corresponding upper-bound interface already exists in `LinearObjectiveDual`; a separate checked upper-endpoint wrapper has not been added here.
+
+For Markovian product families, apply the checker to a single current component using the fixed-component features from Section 43, recompute the features for the next component, and retain the product representation. The present new bridge formally covers one finite linear problem. An end-to-end executable multi-component replay driver remains to be implemented; a direct joint-law compression must not be treated as preserving independence.
+

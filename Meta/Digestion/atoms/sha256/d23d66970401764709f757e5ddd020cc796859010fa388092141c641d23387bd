@@ -1,0 +1,22 @@
+## 13. Continuous outcomes and copulas
+
+For continuous potential outcomes, the unknown object is a coupling measure `\gamma` with identified or partially identified marginals. The Fréchet-Hoeffding problem becomes an infinite-dimensional analogue of the finite transportation polytope.
+
+The same high-level objects remain:
+
+\[
+\text{marginal constraints}
+\to
+\Gamma
+\to
+Q(\gamma)
+\to
+\inf/\sup.
+\]
+
+If `\Gamma` is convex and `Q` is affine in the coupling measure, the convex sharpness theorem still applies abstractly.
+
+Copula information changes the admissible coupling family. A fixed parametric copula can identify a particular dependence model. A range of copula parameters acts as a sensitivity family. Such a family need not be convex as a set of couplings, so interval filling cannot be assumed from endpoint attainment alone.
+
+This gives a clean boundary between the finite LP theory and the future measure-theoretic theory.
+

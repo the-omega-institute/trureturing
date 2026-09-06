@@ -9,5 +9,5 @@ receipts:
   scribe:
     - gid: D5/S3/Observer/Approximation/ReadoutUpdateCommutatorFactorization.readout_update_commutator_factorization
       definition_sha256: sha256:44af627e827f075f9b6eaa089b85e0bc261d9520d19f028ca301a69c14840fa5
-      emission_sha256: sha256:19656d806669dc8a2a042a52c2b1d0fbcf513d8004c5777661d8c506417d73cd
+      emission_sha256: sha256:be9c7633b004cfb0086d2497b4de30d596ae44e8f1e9e4072cf8e46bb1c597cf
   unresolved_subitems: []

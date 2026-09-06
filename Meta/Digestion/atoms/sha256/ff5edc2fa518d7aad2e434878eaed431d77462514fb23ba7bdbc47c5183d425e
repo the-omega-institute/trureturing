@@ -1,0 +1,23 @@
+## 定理 G4　参数范围 \(\alpha>-1\) 是锐的
+
+对一切 \(\alpha\in\mathbb R\setminus\{-1,-2\}\) 且 \(\alpha<-1\),存在 \(a,b,c,d\ge0\) 使
+\(p\boxplus_2^{\alpha}q\notin\mathcal P_2(\mathbb R_{\ge0})\)。具体地,**两族显式反例,缺一不可**:
+
+$$
+\boxed{
+\begin{aligned}
+-2<\alpha<-1:&\quad (a,b,c,d)=(1,0,1,0)\ \Longrightarrow\ \text{根之积}=\kappa(\alpha)<0;\\
+\alpha<-2:&\quad (a,b,c,d)=(1,1,1,1)\ \Longrightarrow\ D=8\bigl(1-2\kappa(\alpha)\bigr)<0 .
+\end{aligned}
+}
+$$
+
+因此,在 Definition 3.10 的定义域 \(\mathbb R\setminus\{-1,-2\}\) 上,
+
+$$
+\boxed{
+\bigl[\forall\,p,q\in\mathcal P_2(\mathbb R_{\ge0}):\ p\boxplus_2^{\alpha}q\in\mathcal P_2(\mathbb R_{\ge0})\bigr]
+\iff \alpha>-1 .
+}
+$$
+

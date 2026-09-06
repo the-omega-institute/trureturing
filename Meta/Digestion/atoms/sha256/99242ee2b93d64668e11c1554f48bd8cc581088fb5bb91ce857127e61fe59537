@@ -1,0 +1,35 @@
+## 78. Exact cut identity, complete interval and simultaneous-attainment criterion
+
+For a deterministic Boolean table y define
+
+```text
+Cut_pi(y) = sum_(i,j) pi(i,j) * 1[y(i) != y(j)].
+```
+
+Directed pairs carry their own nonnegative weights; pi need not be symmetric or have equal row and column marginals. Loops contribute zero. The pointwise Boolean identity is
+
+```text
+2*1[y(i)=0 and y(j)=1] = 1[y(i)!=y(j)] + y(j)-y(i),
+```
+
+where Boolean values on the right are interpreted as zero-one rationals. `completeMediatorBenefit_cut_identity` averages it under the actual independent source law and proves
+
+```text
+2*J(pi,nu) = E_nu[Cut_pi(Y)]
+  + sum_(i,j) pi(i,j)*(P_nu(Y_j=1)-P_nu(Y_i=1)).
+```
+
+The full mean-drift term remains in the statement. If every outcome coordinate has success probability 1/2, it vanishes. For any deterministic y, the law assigning equal mass to y and its complement has all those fair marginals, and the two assignments have the same cut. `complementOutcomeLaw_benefit` proves that this one-bit complete outcome mechanism has benefit exactly Cut_pi(y)/2.
+
+`complete_mediator_maxcut_sharp` obtains a maximizing assignment from the whole finite Boolean table carrier and proves that half its cut mass is the greatest attained causal query value. `complete_mediator_cut_interval` goes further: the entire rational identified image, at this fixed pi and fair kernel, is
+
+```text
+[0, max_y Cut_pi(y)/2] intersect Q.
+```
+
+The zero endpoint uses a fair mixture of the two constant tables. Mixing this law with the maximizing complement law attains every intermediate value. The mixture is inside the outcome disturbance; pi remains fixed, so source independence and the no-direct-effect equations are preserved.
+
+`mediatorCutMass_eq_one_iff` and `complete_mediator_half_attainable_iff` give the exact saturation condition: the ceiling 1/2 is attainable if and only if one Boolean assignment separates every positive-mass mediator pair. This is a simultaneous two-coloring condition on the support, including its loop obstruction. It formalizes when the collection of pairwise one-half upper bounds can actually coexist in one response table.
+
+The formal three-cycle instance has pi(0,1)=pi(1,2)=pi(2,0)=1/3. Every Boolean assignment separates at most two of its three edges. `three_cycle_complete_mediation_sharp` proves the attained upper endpoint 1/3, using table 001 and its complement. This is strictly smaller than the relaxed cellwise value 1/2.
+

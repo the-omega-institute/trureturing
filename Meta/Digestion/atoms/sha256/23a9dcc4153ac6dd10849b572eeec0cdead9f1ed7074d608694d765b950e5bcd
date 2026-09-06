@@ -1,0 +1,10 @@
+### 设定
+
+对 \(m=2\) 与 \(\alpha\in\mathbb R\setminus\{-1,-2\}\) 记
+
+$$
+\kappa(\alpha)=\frac{\alpha+1}{2(\alpha+2)} .
+$$
+
+\(\mathcal P_2(\mathbb R_{\ge0})\) 即形如 \((X-a)(X-b)\)、\(a,b\ge0\) 的首一实二次式。
+

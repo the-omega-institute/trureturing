@@ -1,0 +1,7 @@
+## 16. Research claim boundary
+
+The theory above supports a broad architecture but does not by itself prove that every causal problem yields a convex polytope.
+
+In particular:
+
+- arbitrary partial causal diagrams require a correctness theorem for the compiler from structural semantics to constraints;

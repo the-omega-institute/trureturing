@@ -1,0 +1,12 @@
+## 定理 G2　判别式的下界及其取等情形
+
+记 \(P=a+b\),\(Q=c+d\),并记 \(D\) 为定理 G1 所得二次式的判别式。则对一切 \(a,b,c,d\ge0\),
+
+$$
+\boxed{
+D=(P+Q)^2-4ab-4cd-4\kappa(\alpha)PQ\;\ge\;2PQ\bigl(1-2\kappa(\alpha)\bigr),
+}
+$$
+
+且当 \(a=b\) 且 \(c=d\) 时取等。
+

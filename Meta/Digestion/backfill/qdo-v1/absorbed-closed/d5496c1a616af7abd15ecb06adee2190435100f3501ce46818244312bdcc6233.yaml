@@ -9,5 +9,5 @@ receipts:
   scribe:
     - gid: D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal
       definition_sha256: sha256:030583f6e14442d4c2bb999f272eb49bdbf68525e5064eb07ba712d18a8ea737
-      emission_sha256: sha256:d59df51d84961d0f57454e735d26906b78e91535d995af2d483a16c624d803b5
+      emission_sha256: sha256:4f010c8818d62093c0dfab3f646c8289f93f92bcd3f8af2116291bb074b63ad8
   unresolved_subitems: []

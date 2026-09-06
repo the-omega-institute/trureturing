@@ -1,0 +1,51 @@
+## 9. Partial-diagram event-row compiler
+
+`PartialDiagramEventRowCompilerSoundness` lifts the completion carrier to joint atoms:
+
+```text
+candidate graph completion x deterministic response signature.
+```
+
+This is the first truth source in the lane that places graph uncertainty and response-event probabilities in one exact rational program.
+
+Each supplied event has two independent audit labels:
+
+```text
+semantic kind: observational | interventional | counterfactual
+provenance layer: data | structural | sensitivity.
+```
+
+The distinction is substantive. An interventional event may be supplied as experimental data, derived structurally in a special model, or imposed as a sensitivity condition. Event meaning and justification must therefore remain separate fields.
+
+The compiler emits:
+
+```text
+one nonnegativity row per completion-signature atom
++ paired normalization rows
++ atomwise zero-support rows for every graph or query-order violation
++ paired upper and lower rows for every supplied causal-event probability.
+```
+
+For event `e`, the two statistical rows are exactly
+
+```text
+sum_atom 1[e holds on atom] mu_atom <= target_e
+-sum_atom 1[e holds on atom] mu_atom <= -target_e.
+```
+
+Together they enforce equality. The central theorem is:
+
+```text
+mu is feasible for every generated row
+iff
+mu is a normalized nonnegative joint law,
+its support uses only admissible graph completions,
+and every supplied event mass equals its exact rational target.
+```
+
+The theorem gives compiler soundness and completeness. It applies uniformly to observational, interventional, and counterfactual events because all three become finite Boolean predicates on completion-signature atoms after semantic evaluation.
+
+The module also proves a finite exogenous pushforward identity. Mapping each exogenous state to its graph completion and response signature preserves total mass, nonnegativity, and every Boolean event probability. Conversely, the joint atom carrier itself gives a canonical identity exogenous realization of every feasible event law.
+
+Diagram refinement preserves all event rows and removes admissible support. Consequently, every mass feasible under stronger graph information is feasible under the weaker event compiler, and rational lower or upper certificates for the weaker problem remain valid on the refined problem.
+

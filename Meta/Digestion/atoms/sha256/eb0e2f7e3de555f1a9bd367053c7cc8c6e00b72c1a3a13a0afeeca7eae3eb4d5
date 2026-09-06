@@ -1,0 +1,15 @@
+## 5. Partial-graph information order and completion ranges
+
+`PartialGraphInformationOrder` represents partial diagrams by required and forbidden directed edges. Refinement preserves every previous assertion and may add more. It proves:
+
+```text
+stronger diagram information
+  -> fewer compatible complete graphs
+  -> fewer compatible structural models
+  -> a smaller attainable query set.
+```
+
+Valid weaker-family bounds survive refinement. Exact lower endpoints can only rise, and exact upper endpoints can only fall.
+
+`PartialGraphCompletionRange` records a second semantic fact. When one complete graph is a single unknown global object, the partial-graph identified range is the union of completion-specific ranges. Its lower and upper envelope may be exact while the interval between them contains unattainable gaps.
+
