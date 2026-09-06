@@ -1,0 +1,31 @@
+## 但不是整个空间都允许这次平移
+
+指令 \(i\) 的真正执行区域是：
+
+$$
+\boxed{
+D_i=
+\left\{
+\mathbf a:
+\mathbf a\ge\mathbf d_i,\quad
+\mathbf a\not\ge\mathbf d_j\ \forall j<i
+\right\}.
+}
+\tag{2}
+$$
+
+所以，完整动力学是：
+
+$$
+\boxed{
+T(\mathbf a)=
+\mathbf a-\mathbf d_i+\mathbf u_i
+\qquad(\mathbf a\in D_i).
+}
+\tag{3}
+$$
+
+这是一种**带优先级的分片平移系统**。
+
+在每个区域内部，运动极其简单；复杂性来自区域边界，以及跨越边界以后换成哪条指令。用素数指数实现计数器、再用素数标记控制位置，是 FRACTRAN 与计数器机联系中的标准结构。([数字对象标识符][2])
+

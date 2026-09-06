@@ -1,0 +1,32 @@
+**这轮最重要的认识是：遗漏的高阶坐标，不必被视为任意未知。**
+
+在当前算术模型中，它们受到同一个正尺度机制约束：
+
+$$
+\boxed{
+\text{正权重}
+\longrightarrow
+\text{容斥奇偶}
+\longrightarrow
+\text{低阶关联约束}
+\longrightarrow
+\text{严格的残差预算}.
+}
+$$
+
+因此，下一步不必不断增加“第五个、第六个基础元素”。更有效的方向是：
+
+$$
+\boxed{
+\text{证明未被观察的联合模式，无论怎样合法组合，}
+\quad
+\text{都不足以推翻已认证的安全界。}
+}
+$$
+
+这才把金字塔的“可见顶层与隐藏底层”、Zeckendorf 的分辨率、以及项目的信息逃逸理论，连接成了一种能够实际构造数学证书的方法。
+
+[1]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"
+[2]: https://dlmf.nist.gov/27.5 "DLMF: §27.5 Inversion Formulas ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[3]: https://djalil.chafai.net/blog/2013/03/23/the-bernstein-theorem-on-completely-monotone-functions/ "https://djalil.chafai.net/blog/2013/03/23/the-bernstein-theorem-on-completely-monotone-functions/"
+[4]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "Mathlib.Data.Nat.Fib.Zeckendorf"

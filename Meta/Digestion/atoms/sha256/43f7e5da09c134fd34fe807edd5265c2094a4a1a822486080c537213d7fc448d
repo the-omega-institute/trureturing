@@ -1,0 +1,51 @@
+# 六、把它真正编译成“黄金几何语言”，需要证明一个交换图
+
+令：
+
+$$
+Z:\mathbb N\longrightarrow\mathcal W_{\mathrm{fin}}
+$$
+
+是唯一的有限 Zeckendorf 编码。
+
+对四计数器状态逐坐标编码：
+
+$$
+\boxed{
+\mathcal Z(a,b,c,d;q)
+=
+(Z(a),Z(b),Z(c),Z(d);q).
+}
+\tag{16}
+$$
+
+这是一份双射。
+
+因此可以定义黄金执行：
+
+$$
+\boxed{
+T_{\mathrm{gold}}
+=
+\mathcal Z\circ T_{\mathrm{counter}}\circ\mathcal Z^{-1}.
+}
+\tag{17}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal Z\circ T_{\mathrm{counter}}
+=
+T_{\mathrm{gold}}\circ\mathcal Z.
+}
+\tag{18}
+$$
+
+这才是“同一个程序在不同几何坐标里执行”的精确定义。
+
+它保留每一步的算术状态与控制状态。若逐位执行规范进位需要多个微步，必须另外记录微步成本；不能因此宣称两种机器的真实耗时相同。
+
+---
+

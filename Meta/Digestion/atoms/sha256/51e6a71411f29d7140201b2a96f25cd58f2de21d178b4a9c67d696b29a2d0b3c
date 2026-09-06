@@ -1,0 +1,63 @@
+## 定理 5.1：FRACTRAN 可以无损运输到 Zeckendorf 表
+
+记：
+
+$$
+\mathcal Z:\mathbb N^P\longrightarrow\text{规范 Zeckendorf 表}
+$$
+
+为逐寄存器规范编码。
+
+定义表上的更新：
+
+$$
+\boxed{
+T_{\mathcal Z}
+=
+\mathcal Z\circ T_{\mathrm{reg}}\circ\mathcal Z^{-1},
+}
+\tag{8}
+$$
+
+对停止状态作相应保留。
+
+那么：
+
+$$
+\boxed{
+\mathcal Z(T_{\mathrm{reg}}(a))
+=
+T_{\mathcal Z}(\mathcal Z(a)).
+}
+$$
+
+而且逐步迭代、停止与可达性全部保持。
+
+### 证明
+
+一步关系由定义成立；对执行步数归纳即可。由于 \(\mathcal Z\) 是双射，停止与可达性不会丢失或新增。证毕。
+
+真正需要实现的工作是：
+
+$$
+\boxed{
+\text{比较寄存器是否足够}
+\to
+\text{扣除分母指数}
+\to
+\text{加入分子指数}
+\to
+\text{规范化}.
+}
+$$
+
+不是每执行一条 FRACTRAN 指令，就只翻转一个 Zeckendorf 位。
+
+例如：
+
+$$
+4=1+3\quad\longrightarrow\quad5=5
+$$
+
+会触发数位重组，但它仍然只是一次数值上的加一。
+

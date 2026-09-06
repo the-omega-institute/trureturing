@@ -1,0 +1,75 @@
+# 六、现在真正计算曲率：切片平坦，整体却不平坦
+
+给式（13）的三参数分布族使用 Fisher 信息度量：
+
+$$
+ds^2=\sum_{\omega}
+\frac{(dp_\omega)^2}{p_\omega}.
+$$
+
+它衡量相邻概率分布的统计可区分性。Fisher 度量与指数族、充分统计及统计流形之间的关系是经典信息几何结构。([arXiv][3])
+
+直接求导，交叉项消失，得到：
+
+$$
+\boxed{
+ds^2
+=
+\frac{d\rho^2}{\rho(1-\rho)}
++
+(1-\rho)
+\left[
+\frac{da^2}{a(1-a)}
++
+\frac{db^2}{b(1-b)}
+\right].
+}
+\tag{15}
+$$
+
+现在换坐标：
+
+$$
+r=2\arcsin\sqrt\rho,
+$$
+
+$$
+u=2\arcsin\sqrt a,
+\qquad
+v=2\arcsin\sqrt b.
+$$
+
+这些只是统计坐标，\(r\) 不代表物理时间。
+
+于是：
+
+$$
+\boxed{
+ds^2
+=
+dr^2+
+\cos^2(r/2)(du^2+dv^2).
+}
+\tag{16}
+$$
+
+这是一份明确的弯曲乘积度量。
+
+记：
+
+$$
+f(r)=\cos(r/2).
+$$
+
+由该度量直接计算联络：
+
+$$
+\Gamma^r_{uu}=\Gamma^r_{vv}=-ff',
+$$
+
+$$
+\Gamma^u_{ru}=\Gamma^v_{rv}=\frac{f'}f.
+$$
+
+因此得到两类截面曲率。
+

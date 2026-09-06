@@ -1,0 +1,60 @@
+# 一、FRACTRAN 的确是一种几何程序，但几何不仅是外形
+
+FRACTRAN 程序是一列**有顺序的正有理数**：
+
+$$
+\mathcal P=
+\left(
+\frac{A_1}{B_1},
+\ldots,
+\frac{A_m}{B_m}
+\right).
+$$
+
+每一步从头扫描，选取第一条使：
+
+$$
+N\frac{A_i}{B_i}
+$$
+
+仍为整数的指令，并将它作为新状态。如果没有这样的指令，程序停止。这是 Conway 原始定义中的关键部分：**选第一条，而不是任选一条。** ([Springer][1])
+
+将每个分数先约分，定义素数指数向量：
+
+$$
+\mathbf a(N)=\bigl(v_p(N)\bigr)_p.
+$$
+
+再定义第 \(i\) 条指令的消耗与产生向量：
+
+$$
+\mathbf d_i=\bigl(v_p(B_i)\bigr)_p,
+\qquad
+\mathbf u_i=\bigl(v_p(A_i)\bigr)_p.
+$$
+
+那么：
+
+$$
+\boxed{
+N\frac{A_i}{B_i}\in\mathbb N
+\iff
+\mathbf a(N)\ge\mathbf d_i
+}
+$$
+
+其中不等式逐坐标理解。
+
+执行以后：
+
+$$
+\boxed{
+\mathbf a'
+=
+\mathbf a-\mathbf d_i+\mathbf u_i.
+}
+\tag{1}
+$$
+
+因此，乘一个分数，在指数坐标中就是一个固定向量平移。
+

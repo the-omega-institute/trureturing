@@ -1,0 +1,22 @@
+## 1. 整数相邻更新
+
+在三位黄金块中，整数加一对应：
+
+$$
+\boxed{
+000\leftrightarrow100\leftrightarrow010
+\leftrightarrow001\leftrightarrow101.
+}
+\tag{6}
+$$
+
+这是一条五顶点路径。
+
+其中：
+
+$$
+100\longleftrightarrow010
+$$
+
+会同时改变两个数位。这是规范进位，不是一个比特翻转。
+

@@ -1,0 +1,40 @@
+## 1.1 奇偶交互，其实是一个 Möbius 反演
+
+定义：
+
+$$
+c_I
+=
+\sum_{J\subseteq I}
+(-1)^{|I|-|J|}F(J).
+$$
+
+则：
+
+$$
+F(S)=F(\varnothing)+
+\sum_{\varnothing\ne I\subseteq S}c_I.
+$$
+
+如果：
+
+$$
+m_I=\prod_{i\in I}p_i,
+$$
+
+因为 \(m_I\) 是平方自由数，还可以写成：
+
+$$
+\boxed{
+c_I
+=
+\sum_{d\mid m_I}
+\mu\left(\frac{m_I}{d}\right)\Delta(nd),
+}
+\tag{2}
+$$
+
+其中 \(\mu\) 是数论 Möbius 函数。
+
+这里的奇偶符号来自子集格的容斥结构，与平方自由因数上的 Möbius 符号一致。它不是 Möbius 环的几何扭转，也不是整数 \(n\) 自身为奇数或偶数。Möbius 反演与因数求和之间的标准对应可见 NIST 数论公式。([DLMF][2])
+
