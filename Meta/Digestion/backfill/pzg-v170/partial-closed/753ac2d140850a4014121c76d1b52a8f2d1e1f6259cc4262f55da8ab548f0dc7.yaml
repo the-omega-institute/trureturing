@@ -11,6 +11,12 @@ coverage_gids:
     target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
 receipts:
   scribe:
+    - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
+      definition_sha256: sha256:2de8843d9faf3f08273a4e1c443faf82bac098460f773d7ececb93854bb88457
+      emission_sha256: sha256:89875ace263681ced42a79da96cbcf740323be49ebe4a1d4f4d519c124fee2e8
+    - gid: D5/S3/Fourier/GaussianThetaTransformation.gaussian_theta_transformation
+      definition_sha256: sha256:68c65cc450fc5063a16816a65a9ba30a7b7e3119c376cd6c1b8dbbb16994eb84
+      emission_sha256: sha256:5464557243921e4f04194062c6c4aafd49ab9c0bc82d99cb9beb6658a2eb90cf
     - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f

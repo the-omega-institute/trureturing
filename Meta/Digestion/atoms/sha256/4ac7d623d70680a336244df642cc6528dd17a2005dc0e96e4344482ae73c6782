@@ -1,0 +1,29 @@
+## 定义 203.1　双路径与量子记录
+
+取两条模式 \(|0\rangle,|1\rangle\)，以及记录态 \(|e_0\rangle,|e_1\rangle\)。
+
+定义：
+
+$$
+\boxed{
+|\Psi_\phi\rangle
+=
+\frac{
+|0\rangle|e_0\rangle
++
+e^{i\phi}|1\rangle|e_1\rangle
+}{\sqrt2}.
+}
+\tag{203.1}
+$$
+
+令：
+
+$$
+\gamma=\langle e_0|e_1\rangle.
+$$
+
+\(\phi\) 是观察者通过一个实际控制装置能够调节的相对相位。
+
+对路径实施一次平衡混合，再读取出口 \(0\)。
+

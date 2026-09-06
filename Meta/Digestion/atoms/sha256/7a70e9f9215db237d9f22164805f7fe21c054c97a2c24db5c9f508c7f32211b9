@@ -1,0 +1,119 @@
+# 十、回到“奇偶与拼接”：这次究竟补上了什么？
+
+现在整个模型只包含几类明确对象：
+
+$$
+\boxed{
+\text{三角波包 }g_a
+\longrightarrow
+\text{三次相关函数 }c_a
+\longrightarrow
+\text{有限素数读出 }P_a(T)
+\longrightarrow
+\text{交叉量 }B_a(T).
+}
+$$
+
+奇偶组合仍然只是
+
+$$
+\boxed{
+q_a+B_a(T),
+\qquad
+q_a-B_a(T).
+}
+$$
+
+它们同时非负的条件是
+
+$$
+\boxed{
+q_a-\frac{B_a(T)^2}{q_a}\ge0.
+}
+\tag{39}
+$$
+
+这是这个两片模型的 Schur 余量。
+
+本次核对的仓库 `SchurComplementAssociativity.lean` 证明的是：给定所列逆算子前件后，分步消元与一次消元一致。它可以支撑这种结构的消元组织，但不会自动证明式（39）的算术符号。
+
+这一轮新增的实质内容是：
+
+$$
+\boxed{
+\text{无限波包构造可以替换成明确有限形状};
+}
+$$
+
+$$
+\boxed{
+\text{Gamma 尾项与局部基准都可给出有限误差包络};
+}
+$$
+
+$$
+\boxed{
+\text{每个算术事件区间至多有四个驻点};
+}
+$$
+
+$$
+\boxed{
+\text{严格负读数可以转成光滑 Weil 测试函数的负证书}.
+}
+$$
+
+**但仍然没有证明**
+
+$$
+|B_a(T)|\le q_a
+\qquad\forall T>2a.
+$$
+
+有限范围内的检验方法、非实模式不被消除、局部波包正性，都不能替代这个全尺度估计。
+
+现在的缺口比上一轮更具体：
+
+$$
+\boxed{
+\left|
+2A_a^2\cosh(T/2)
+-
+\sum_{|\log n-T|\le2a}
+\frac{\Lambda(n)}{\sqrt n}c_a(\log n-T)
+-
+\Gamma_a(T)
+\right|
+\le q_a.
+}
+\tag{40}
+$$
+
+这是一条**固定三次权重、固定窗口比例、固定容许误差**的算术抵消要求。
+
+所以，下一步真正需要控制的不是再增加一张切片，而是：**素数幂事件依次进入、穿过和离开这个固定三次窗口时，能否始终阻止交叉读数越过 \(\pm q_a\)。**本轮已经把这些事件、事件之间的曲线形状，以及认证边界都写了出来；尚缺的是对所有事件序列同时成立的算术约束。
+
+[1]: https://arxiv.org/html/2301.00421v3 "On the Hilbert space derived from the Weil distribution"
+[2]: https://dlmf.nist.gov/5.9 "DLMF: §5.9 Integral Representations ‣ Properties ‣ Chapter 5 Gamma Function"
+[3]: https://arxiv.org/html/2606.09096v1 "Weil’s quadratic form via the screw function"
+[4]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+这次可以把上一轮的“多点拼接”再推进一层：
+
+> **两点相容，只限制实际响应变化得有多快；三个相邻切片要共同实现，还必须限制这个变化速度本身如何改变。**
+
+这个新条件可以写得很简单：
+
+$$
+\boxed{
+|\eta'|\le1-\eta^2.
+}
+$$
+
+其中 \(\eta\) 不是自由选择的几何量，而是由实际 ξ 的均值响应与方差唯一决定的无量纲比值。
+
+更进一步，它恰好是一套**逐层散射构造的第二个合法性条件**。第一层、第二层、第三层的反射系数，都可以从实际 ξ 在一个固定实点的导数直接算出，不必输入未知零点。
+
+下面将局部曲率、有限拼接和无限正实现接起来。这里的 Schur 递推与无损系统实现是经典理论；本轮的推导是将它们具体作用于当前固定的算术响应。
+
+---
+

@@ -1,0 +1,71 @@
+## 定理 2：FRACTRAN 就是带优先级的分区整数平移
+
+第 \(i\) 条指令可执行，当且仅当
+
+$$
+\boxed{
+\mathbf a\ge\mathbf v_i
+}
+\tag{9}
+$$
+
+逐坐标成立。
+
+执行后，
+
+$$
+\boxed{
+\mathbf a\longmapsto
+\mathbf a+\mathbf u_i-\mathbf v_i.
+}
+\tag{10}
+$$
+
+由于程序采用第一个可执行分数，第 \(i\) 条指令真正的执行区域是
+
+$$
+\boxed{
+D_i=
+\{\mathbf a:\mathbf a\ge\mathbf v_i\}
+\setminus
+\bigcup_{j<i}
+\{\mathbf a:\mathbf a\ge\mathbf v_j\}.
+}
+\tag{11}
+$$
+
+### 证明
+
+因为 \(\gcd(u_i,v_i)=1\)，
+
+$$
+N(\mathbf a)\frac{u_i}{v_i}\in\mathbb N
+\iff
+v_i\mid N(\mathbf a).
+$$
+
+唯一素因子分解把整除关系变成式（9），相乘则变成式（10）。最后加入指令优先级，得到式（11）。证毕。
+
+---
+
+因此，这种语言的三个关键对象是：
+
+$$
+\boxed{
+\text{格点：存储器状态};
+}
+$$
+
+$$
+\boxed{
+\text{区域边界：分支条件};
+}
+$$
+
+$$
+\boxed{
+\text{有优先级的平移：指令执行}.
+}
+\tag{12}
+$$
+

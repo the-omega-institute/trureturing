@@ -1,0 +1,35 @@
+## 7.1 RH 在这里对应一个真正的稳定性阈值
+
+存在常数 \(\Lambda_{\mathrm{DN}}\)，使：
+
+$$
+H_\tau\text{ 的全部零点为实数}
+\iff
+\tau\ge\Lambda_{\mathrm{DN}}.
+$$
+
+经典理论给出：
+
+$$
+\mathrm{RH}\iff\Lambda_{\mathrm{DN}}\le0.
+$$
+
+Rodgers–Tao 已证明：
+
+$$
+\Lambda_{\mathrm{DN}}\ge0.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Lambda_{\mathrm{DN}}=0.
+}
+\tag{26}
+$$
+
+这是一个已有严格理论支撑的“零点稳定性临界”，不是我们为了匹配5040而人为命名出来的。([arXiv][7])
+

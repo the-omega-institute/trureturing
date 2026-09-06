@@ -1,0 +1,56 @@
+## 定理 197.1　单体能量与温度接口不足以确定两体受力
+
+有
+
+$$
+\boxed{
+\langle E_AE_B\rangle_{\mathrm c}
+-
+\langle E_AE_B\rangle_{\mathrm a}
+=
+\frac{\epsilon_A\epsilon_B}{2}.
+}
+\tag{197.1}
+$$
+
+若两种内部态配上同一个初始运动状态，则
+
+$$
+\boxed{
+\Delta\langle\dot P_A\rangle
+=
+\frac{\epsilon_A\epsilon_B}{2}
+\left\langle\nabla\kappa_\ell(R)\right\rangle.
+}
+\tag{197.2}
+$$
+
+只要右侧非零，相同的当前单体接口就给出不同的后续动量读数。
+
+### 证明
+
+直接展开两种状态下的 \(E_AE_B\)，得到式（197.1）。
+
+由
+
+$$
+\dot P_A=E_AE_B\nabla\kappa_\ell(R),
+$$
+
+以及初始内部—运动乘积条件，得到式（197.2）。∎
+
+这两个态甚至不需要具有量子纠缠；经典关联已经足以产生差别。
+
+原因是
+
+$$
+\boxed{
+\langle E_AE_B\rangle
+=
+\langle E_A\rangle\langle E_B\rangle
++
+\operatorname{Cov}(E_A,E_B).
+}
+\tag{197.3}
+$$
+

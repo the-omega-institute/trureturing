@@ -1,0 +1,33 @@
+### 证明
+
+对 \(s\ge0\)，
+
+$$
+\mathbb E[e^{-sY_\varepsilon}]
+=
+\frac{\zeta(1+(1+s)\varepsilon)}
+{\zeta(1+\varepsilon)}
+\longrightarrow
+\frac1{1+s}.
+$$
+
+右边是均值为 \(1\) 的指数分布的 Laplace 变换。证毕。
+
+这提供了一个完整的临界描述：
+
+$$
+\boxed{
+\text{归一化失效}
++
+\text{能量均值发散}
++
+\text{涨落发散}
++
+\text{重标定后的极限分布}.
+}
+$$
+
+而不是仅说“到无穷时有信息逃逸”。
+
+这里仍然**没有得到 RH**。因为 \(\beta=1\) 控制的是正实权重求和；RH 控制的是解析延拓后的非平凡零点位置。
+

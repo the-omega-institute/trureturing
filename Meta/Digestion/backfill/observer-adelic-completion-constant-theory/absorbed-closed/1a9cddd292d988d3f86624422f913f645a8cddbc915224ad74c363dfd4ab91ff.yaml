@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1a9cddd292d988d3f86624422f913f645a8cddbc915224ad74c363dfd4ab91ff
+  normalized_sha256: sha256:1a9cddd292d988d3f86624422f913f645a8cddbc915224ad74c363dfd4ab91ff
+cas_ref: sha256:1a9cddd292d988d3f86624422f913f645a8cddbc915224ad74c363dfd4ab91ff
+coverage_gids:
+  - gid: D5/S3/Observer/BlockStructure/JetPencilFiniteExpansion.jet_pencil_finite_expansion
+    target_statement_id: sha256:24b3a0ec67ce6d0c020249ee4dfe2171fa7f5cfc702ba4356f0014cb963652bc
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/BlockStructure/JetPencilFiniteExpansion.jet_pencil_finite_expansion
+      definition_sha256: sha256:0ee6205ef7d044771323af2249d8e212fe2888be77fd4b31bbfb65178ff71857
+      emission_sha256: sha256:04f38de50821d44cb88ea396d2c73bbb925ba312f75d4a7cccd88dc721ff8dff
+  unresolved_subitems: []

@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:6a76e8cca3962b9ab9fc57da2e12f54015ac9cb6c20ff2fea8bcf68ea190ed8d
+  normalized_sha256: sha256:6a76e8cca3962b9ab9fc57da2e12f54015ac9cb6c20ff2fea8bcf68ea190ed8d
+cas_ref: sha256:6a76e8cca3962b9ab9fc57da2e12f54015ac9cb6c20ff2fea8bcf68ea190ed8d
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope commentary on the preceding explicit third-order matrix construction: it contrasts that construction with unproved higher-order continuation and adds no claim beyond atom 3216d4784784c462e895c7f777e05b5188c46c8dfdd7606c62eb48adfe893650.'
+    previous_atom_id: 3216d4784784c462e895c7f777e05b5188c46c8dfdd7606c62eb48adfe893650
+    next_atom_id: 05a9d60919cf3929d0eabac303a0366f4494ee46660ec42e956869878f631dff

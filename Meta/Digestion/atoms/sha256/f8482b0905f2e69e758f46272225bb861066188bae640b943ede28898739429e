@@ -1,0 +1,17 @@
+## 2. 合法的一位翻转
+
+如果要求每次只翻转一个数位，并且翻转后仍合法，则有底面四边形：
+
+$$
+000\leftrightarrow100\leftrightarrow101
+\leftrightarrow001\leftrightarrow000,
+$$
+
+以及一条附加边：
+
+$$
+000\leftrightarrow010.
+$$
+
+总共只有五条边。这是 Fibonacci 立方图的三位实例；其邻接由禁邻字串之间的 Hamming 距离一决定。([arXiv][2])
+

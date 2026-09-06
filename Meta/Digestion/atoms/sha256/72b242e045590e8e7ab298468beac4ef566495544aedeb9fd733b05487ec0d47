@@ -1,0 +1,61 @@
+## 与项目已有模块的连接
+
+本轮读取固定于提交
+
+```text
+8825fbe111c7fc39ddf4032a03192f1d20dfc7c8
+```
+
+其中，记录重叠模块可承担单次约化；往返模块提供路径组合的类型边界；精确下降模块用于判定一个较粗接口是否足以预测相干比较。
+
+最适合逐层形式化的依赖为：
+
+$$
+\boxed{
+P^2=P
+\Rightarrow
+P\dot PP=0
+\Rightarrow
+B\text{ 的短时失败公式};
+}
+$$
+
+$$
+\boxed{
+\text{有限投影乘积}
+\Rightarrow
+z_N,\ p_N
+\Rightarrow
+\text{相位与概率的分离见证};
+}
+$$
+
+$$
+\boxed{
+\text{Gram 正性}
+\Rightarrow
+G,\ F
+\Rightarrow
+F_{ab}^2\le4\det G_{ab};
+}
+$$
+
+$$
+\boxed{
+\text{有限矩阵微分方程}
+\Rightarrow
+\text{移动子空间输运}
+\Rightarrow
+O(N^{-1})\text{ 实现误差}.
+}
+$$
+
+本轮完成了 **31项精确有限算例与符号恒等式检查**，包括两种相同读数但不同更新的仪器、三步闭路、相干参照读出、量子几何张量、动力失配相消和纬线闭路公式。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_moving_zeno_geometry.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/moving_zeno_geometry_checks.json)
+
+本轮没有进行 Lean 内核检查；这些核验不替代一般分析定理的机器证明，也不证明模型已经对应现实引力。
+
+---
+

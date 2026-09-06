@@ -1,0 +1,24 @@
+## 4.1 单个素数贡献两个独立响应方向
+
+记：
+
+$$
+q=\frac1p,
+\qquad
+z_p(a)=1+q+\cdots+q^a.
+$$
+
+从指数 \(a\) 出发，考虑过去与未来各增加零次或一次 \(p\)，得到：
+
+$$
+\boxed{
+H_{p,a}
+=
+\begin{pmatrix}
+z_p(a)&z_p(a+1)\\
+z_p(a+1)&z_p(a+2)
+\end{pmatrix}.
+}
+\tag{6}
+$$
+

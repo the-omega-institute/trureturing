@@ -1,0 +1,67 @@
+# 三、再打开被截断的指数层：零点会发生可计算的偏移
+
+有限模型只允许 \(11\) 的指数为 \(0\) 或 \(1\)。现在不再截断它，而是纳入全部：
+
+$$
+0,1,2,3,\ldots.
+$$
+
+定义：
+
+$$
+z_p(a)=1+p^{-1}+\cdots+p^{-a}.
+$$
+
+考虑完整算术配分函数：
+
+$$
+\boxed{
+\mathcal A_\beta(\lambda)
+=
+\sum_{n\ge1}Z(n)^\beta n^{-\beta\lambda}.
+}
+\tag{8}
+$$
+
+它在：
+
+$$
+\boxed{\beta\Re\lambda>1}
+$$
+
+中绝对收敛。
+
+理由是：
+
+$$
+1\le Z(n)\le1+\ln n,
+$$
+
+所以收敛性由：
+
+$$
+\sum_n n^{-\beta\Re\lambda}(1+\ln n)^\beta
+$$
+
+控制。
+
+它不是与 ζ 无关的任意构造。例如：
+
+$$
+\boxed{
+\mathcal A_1(\lambda)=\zeta(\lambda)\zeta(\lambda+1),
+\qquad\Re\lambda>1.
+}
+\tag{9}
+$$
+
+这是由：
+
+$$
+Z(n)=\sum_{d\mid n}\frac1d
+$$
+
+交换绝对收敛求和直接得到的。
+
+但 \(\beta\) 改变后，函数也改变，不能把 \(\mathcal A_\beta\) 的零点直接称为 ζ 的零点。
+

@@ -1,0 +1,43 @@
+## 3.1 “理论上可见”不等于“容易测到”
+
+若使用酉演化：
+
+$$
+U_\varepsilon(t)=e^{-itA_\varepsilon},
+$$
+
+那么对初态 \(\chi\)，由 Duhamel 公式：
+
+$$
+\|U_\varepsilon(t)-U_0(t)\|
+\le
+|t|\|A_\varepsilon-A_0\|
+=
+2|\varepsilon t|.
+$$
+
+由于原模型中顶点永远看不见 \(\chi\)：
+
+$$
+\boxed{
+|\langle a|U_\varepsilon(t)|\chi\rangle|
+\le2|\varepsilon t|.
+}
+\tag{7}
+$$
+
+因此顶点处的概率满足：
+
+$$
+\boxed{
+|\langle a|U_\varepsilon(t)|\chi\rangle|^2
+\le
+\min\{1,4\varepsilon^2t^2\}.
+}
+\tag{8}
+$$
+
+这不是传输一定达到该上界的保证，但说明：在固定观察时间内，对称性破缺越小，新显露的信号可以越弱。
+
+**精确代数中的“秩已经增加”，与有限误差下“能够稳定区分”，仍然是两种问题。**
+

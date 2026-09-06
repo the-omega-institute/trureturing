@@ -1,0 +1,40 @@
+## 推论 198.1　可认证的纠缠
+
+设理想输出为第 194 节的纯态 \(|\Psi_\Xi\rangle\)，其最大 Schmidt 概率为
+
+$$
+\lambda_{\max}
+=
+\frac{1+|\cos(\Xi/2)|}{2}.
+$$
+
+若实际输出满足
+
+$$
+D(\rho_{\mathrm{act}},|\Psi_\Xi\rangle\langle\Psi_\Xi|)
+\le\varepsilon,
+$$
+
+且
+
+$$
+\boxed{
+\varepsilon
+<
+\frac{1-|\cos(\Xi/2)|}{2},
+}
+\tag{198.3}
+$$
+
+则实际输出必纠缠。
+
+### 证明
+
+任何可分态与 \(|\Psi_\Xi\rangle\) 的重叠概率都不超过 \(\lambda_{\max}\)。
+
+迹距离界保证实际重叠概率至少为 \(1-\varepsilon\)。若 \(1-\varepsilon>\lambda_{\max}\)，实际态不可能可分。∎
+
+这是一个充分条件，不是所有纠缠检测协议的最优阈值。
+
+---
+

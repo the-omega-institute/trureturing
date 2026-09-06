@@ -1,0 +1,14 @@
+## 定理 V3　\(M_2(a)\) 的精确闭式
+
+对一切 \(a>0\),
+
+$$
+\boxed{
+M_2(a)=\Bigl[\frac{a-\sqrt{a^2+a}}{2},\ \frac{a+\sqrt{a^2+a}}{2}\Bigr],
+\qquad\text{故}\qquad
+c_2(a)=\frac{\sqrt{a^2+a}-a}{2}.
+}
+$$
+
+特别地,Conjecture 6.5 的**区间形状子句**在 \(k=1\) 处成立。
+

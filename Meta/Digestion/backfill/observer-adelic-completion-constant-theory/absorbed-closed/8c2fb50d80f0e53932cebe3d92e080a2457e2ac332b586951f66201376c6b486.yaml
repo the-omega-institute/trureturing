@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8c2fb50d80f0e53932cebe3d92e080a2457e2ac332b586951f66201376c6b486
+  normalized_sha256: sha256:8c2fb50d80f0e53932cebe3d92e080a2457e2ac332b586951f66201376c6b486
+cas_ref: sha256:8c2fb50d80f0e53932cebe3d92e080a2457e2ac332b586951f66201376c6b486
+coverage_gids:
+  - gid: D5/S3/Zeros/Jensen/JensenPolynomialObstruction.jensen_polynomial_obstruction
+    target_statement_id: sha256:ea04044fba0d24c98867f3fe4405682d1e95f38c22b9d4ec51f62003dcd41b39
+receipts:
+  scribe:
+    - gid: D5/S3/Zeros/Jensen/JensenPolynomialObstruction.jensen_polynomial_obstruction
+      definition_sha256: sha256:5942ddbe5a74a1ce61eda56a4443c6ca19005bba7ae16cd9dd25a1c80ce9bdcb
+      emission_sha256: sha256:bbea04ec2c5be3aa1713204de93fc0b0b8d38875ebc4447dbf9fa162a1b807f2
+  unresolved_subitems: []

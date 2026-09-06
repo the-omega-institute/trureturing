@@ -3,41 +3,41 @@ fingerprints:
   normalized_sha256: sha256:7d8c95c432b82f5ca6e54d02d10b5982ee9f0131273d82ae31633aedb934f2dc
 cas_ref: sha256:7d8c95c432b82f5ca6e54d02d10b5982ee9f0131273d82ae31633aedb934f2dc
 coverage_gids:
-  - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_lattice_obstruction
-    target_statement_id: sha256:3a46b28596804ca44b6a053cce2eed1de994a369ebffc408cf990708593b0a13
-  - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod25_readout_not_injective
-    target_statement_id: sha256:7c543ace1b98ec9a41461ba7f679309ecfcc463e6a67bf5721acd37269f72425
-  - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod5_pair_readout_not_injective
-    target_statement_id: sha256:9a0fdd142bf68644610d7e8c4eb84b94f6fac74cb8ca74c38b9313463e0e16a6
   - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.addCommGroup_card_twenty_five_classification
     target_statement_id: sha256:f49647fbf9073b2b9c130821ddc9dce2244bb60c51e5724ecda2b95556997099
   - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_card
     target_statement_id: sha256:2648495d9ac1f498055abffa8b2da072c03a6677e63826958068c4b636d98ad7
-  - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_second_moment
-    target_statement_id: sha256:9b5bb5b930de490a7ccd65cc1e430ddab9db6a41b283d51cdc178d6f49a808f4
   - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_fourth_moment
     target_statement_id: sha256:ad8aea1c69d096ae2d9c50c9c49297fdec2af6f491e726bf638d3917d2d673fe
+  - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_lattice_obstruction
+    target_statement_id: sha256:3a46b28596804ca44b6a053cce2eed1de994a369ebffc408cf990708593b0a13
+  - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_second_moment
+    target_statement_id: sha256:9b5bb5b930de490a7ccd65cc1e430ddab9db6a41b283d51cdc178d6f49a808f4
+  - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod25_readout_not_injective
+    target_statement_id: sha256:7c543ace1b98ec9a41461ba7f679309ecfcc463e6a67bf5721acd37269f72425
+  - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod5_pair_readout_not_injective
+    target_statement_id: sha256:9a0fdd142bf68644610d7e8c4eb84b94f6fac74cb8ca74c38b9313463e0e16a6
 receipts:
   scribe:
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_lattice_obstruction
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod25_readout_not_injective
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod5_pair_readout_not_injective
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
     - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.addCommGroup_card_twenty_five_classification
       definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
       emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
     - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_card
       definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
       emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
+    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_fourth_moment
+      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
+      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
+    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_lattice_obstruction
+      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
+      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
     - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_second_moment
       definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
       emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_fourth_moment
+    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod25_readout_not_injective
+      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
+      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
+    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod5_pair_readout_not_injective
       definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
       emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
   unresolved_subitems: []

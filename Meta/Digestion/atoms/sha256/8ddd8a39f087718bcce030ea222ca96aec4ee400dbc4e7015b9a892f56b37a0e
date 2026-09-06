@@ -1,0 +1,5 @@
+**因此，接下来应集中研究的“裂隙”，是随着价格趋于零而持续出现的新边际层：怎样在不恢复全部状态的情况下，为它们建立一个随尺度变化、始终不遗漏正收益的统一上包络。** 这才是从项目的离散观察、同余修复与信息逃逸理论，通向 RH 安全性证明的一条具体数学路径。
+
+[1]: https://arxiv.org/abs/2110.13478 "https://arxiv.org/abs/2110.13478"
+[2]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[3]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"

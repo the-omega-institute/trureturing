@@ -1,0 +1,85 @@
+# 七、整体预算确实会在素数方向之间产生耦合
+
+此前未加全局预算时，因数 Gibbs 权重可以按素数分解。
+
+但当前权重是：
+
+$$
+w_r(n)
+=
+\frac1{n^2}
+\left[
+\frac{Z(n)}{e^\gamma\ln\ln n}
+\right]^r.
+$$
+
+其中：
+
+$$
+\ln\ln n
+=
+\ln\left(\sum_pa_p\ln p\right)
+$$
+
+把所有素数方向联在一起。
+
+取两个不同素数 \(p,q\)，令：
+
+$$
+E=\ln n,\quad u=\ln p,\quad v=\ln q.
+$$
+
+由于不同素数方向的局部因数收益独立相乘：
+
+$$
+Z(npq)Z(n)=Z(np)Z(nq).
+$$
+
+所以：
+
+$$
+\boxed{
+\frac{w_r(npq)w_r(n)}{w_r(np)w_r(nq)}
+=
+\left[
+\frac{\ln(E+u)\ln(E+v)}
+{\ln(E+u+v)\ln E}
+\right]^r.
+}
+\tag{22}
+$$
+
+又因为：
+
+$$
+h(E)=\ln\ln E
+$$
+
+严格凹：
+
+$$
+h(E+u)+h(E+v)
+>
+h(E+u+v)+h(E).
+$$
+
+因此对 \(r>0\)：
+
+$$
+\boxed{
+w_r(npq)w_r(n)>w_r(np)w_r(nq).
+}
+\tag{23}
+$$
+
+这表明当前临界权重不再是素数方向的乘积分布。
+
+例如 \(n=10080,p=11,q=13\)，本轮计算得到：
+
+$$
+\ln
+\frac{w_r(npq)w_r(n)}{w_r(np)w_r(nq)}
+=
+0.02661516557\ldots\,r.
+$$
+

@@ -1,0 +1,70 @@
+# 四、回到 5040：多素数联合项具有严格的奇偶规律
+
+现在从传播图转回算术状态图。
+
+固定：
+
+$$
+n\ge3,
+$$
+
+以及不同素数：
+
+$$
+p_1,\ldots,p_k.
+$$
+
+每个方向只问“再增加一层指数，还是不增加”。对集合 \(S\subseteq\{1,\ldots,k\}\)，定义：
+
+$$
+n_S=n\prod_{i\in S}p_i.
+$$
+
+记：
+
+$$
+E=\ln n,\qquad \ell_i=\ln p_i,
+$$
+
+$$
+\rho_i
+=
+\ln\frac{Z(np_i)}{Z(n)},
+\qquad
+Z(n)=\frac{\sigma(n)}n.
+$$
+
+由于不同素数方向的局部收益可以相加：
+
+$$
+\ln Z(n_S)=\ln Z(n)+\sum_{i\in S}\rho_i.
+$$
+
+定义：
+
+$$
+h(E)=\ln\ln E.
+$$
+
+那么 Robin 对数余量在这个二值立方体上为：
+
+$$
+\boxed{
+F(S):=\Delta(n_S)
+=
+\gamma+h\left(E+\sum_{i\in S}\ell_i\right)
+-\ln Z(n)-\sum_{i\in S}\rho_i.
+}
+\tag{10}
+$$
+
+这里：
+
+$$
+\Delta(n)>0
+\iff
+Z(n)<e^\gamma\ln\ln n.
+$$
+
+对全部 \(n>5040\) 的正性等价于 RH，这是使用的经典 Robin 输入。([arXiv][1])
+

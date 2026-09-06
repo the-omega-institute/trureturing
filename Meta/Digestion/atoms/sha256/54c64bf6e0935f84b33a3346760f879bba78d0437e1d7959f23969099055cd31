@@ -1,0 +1,15 @@
+### 正向
+
+在 RH 前件下，\(A\) 只有实零点。其配对整函数乘积给出：
+
+$$
+-\frac{A'(z)}{A(z)}
+=
+\sum_{\gamma>0}m_\gamma
+\left(
+\frac1{\gamma-z}+\frac1{-\gamma-z}
+\right).
+$$
+
+当 \(\Im z>0\) 时，每一项的虚部为正。因此 \(m_A\) 是 Nevanlinna 函数，式（V7）给出收缩性。
+

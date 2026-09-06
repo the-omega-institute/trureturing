@@ -1,0 +1,24 @@
+## 定理 216.1　零受控逃逸的闭合判据
+
+有
+
+$$
+\boxed{
+\ell_\Gamma(\mathcal S)=0
+\iff
+\mathcal L_a(\mathcal S)\subseteq\mathcal S
+\quad\forall a\in\Gamma.
+}
+\tag{216.3}
+$$
+
+因此，在这一条件下，任意有限段允许 Hamiltonian 演化都保持 \(\mathcal S\)。
+
+### 证明
+
+每个非对角块为零，恰好表示对应生成元不把 \(\mathcal S\) 送出自身。
+
+有限维中，生成元保持一个子空间，就意味着其指数也保持该子空间；有限次复合仍然保持。∎
+
+---
+

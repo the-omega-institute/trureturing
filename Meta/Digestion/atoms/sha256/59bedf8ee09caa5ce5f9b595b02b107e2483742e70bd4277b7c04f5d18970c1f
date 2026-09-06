@@ -1,0 +1,73 @@
+## 一个最小的严格例子
+
+取：
+
+$$
+x=z=\frac12,\qquad y=0.
+$$
+
+这时：
+
+$$
+0\le c\le\frac12.
+$$
+
+两个端点分布是：
+
+$$
+\mathbb P_A=\frac12\delta_{000}+\frac12\delta_{101},
+$$
+
+$$
+\mathbb P_B=\frac12\delta_{100}+\frac12\delta_{001}.
+$$
+
+它们的全部单数位分布相同，平均指数也都等于 \(2\)。
+
+但：
+
+$$
+c_A=\frac12,\qquad c_B=0.
+$$
+
+并且 \(\mathbb P_A\) 全在偶指数上，\(\mathbb P_B\) 全在奇指数上。
+
+若令：
+
+$$
+E=E_*(\log2)V,
+\qquad
+\tau=\frac{E_*t}{\hbar},
+$$
+
+它们的能量相位平均分别为：
+
+$$
+\boxed{
+A_A(\tau)
+=
+e^{-2i\tau\log2}\cos(2\tau\log2),
+}
+$$
+
+$$
+\boxed{
+A_B(\tau)
+=
+e^{-2i\tau\log2}\cos(\tau\log2).
+}
+\tag{12}
+$$
+
+**相同观察坐标、相同平均能量，可以对应不同的整体干涉。**
+
+所以，局部信息难以拼起来，有时不是“缺一个更高的坐标系”，而是缺少一个明确的联合读出：
+
+$$
+b_0b_2.
+$$
+
+项目的 `ObserverConceptReadoutCorrespondence.lean` 正是在区分读出族、准入条件和实际锚点；它还证明，仅保留不可区分关系，会遗忘部分原始观察结构。
+
+---
+

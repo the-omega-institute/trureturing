@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ff93a678857211ecbf1e690961c50eeae17b85bc0979f8c9fbd003900ddca747
+  normalized_sha256: sha256:ff93a678857211ecbf1e690961c50eeae17b85bc0979f8c9fbd003900ddca747
+cas_ref: sha256:ff93a678857211ecbf1e690961c50eeae17b85bc0979f8c9fbd003900ddca747
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaEntropyPlane/ZeroDensityReciprocalPrimeSet.zero_density_divergent_reciprocal_prime_set
+    target_statement_id: sha256:e9254ce7a42f17b40266dffc5931186746980328809d116a9092603693843b6f
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/ZetaEntropyPlane/ZeroDensityReciprocalPrimeSet.zero_density_divergent_reciprocal_prime_set
+      definition_sha256: sha256:fa679cb7c9916ac8d49a08e7db93d61adbd1c32d0825177f33efefc0cc282801
+      emission_sha256: sha256:e9e6f8c08b7fa81ae786d8b6a3dae78ef073d6a21ccc8a016097d13b1708ad09
+  unresolved_subitems: []

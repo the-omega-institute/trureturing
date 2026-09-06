@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2939374df7d3b240d2c255c996e4835387228e07bce222b1b00332002897e182
+  normalized_sha256: sha256:2939374df7d3b240d2c255c996e4835387228e07bce222b1b00332002897e182
+cas_ref: sha256:2939374df7d3b240d2c255c996e4835387228e07bce222b1b00332002897e182
+coverage_gids:
+  - gid: D5/S3/Divergence/CauchyClosedForm.shifted_cauchy_kl_eq_horizon_free_energy
+    target_statement_id: sha256:a4a93a94240a5ca778c089891eca4c17921c5ce8028fb87e6d2b7ddfcb86bb64
+receipts:
+  scribe:
+    - gid: D5/S3/Divergence/CauchyClosedForm.shifted_cauchy_kl_eq_horizon_free_energy
+      definition_sha256: sha256:96c79bf69c6f63aaf22b40002c15aa5018b610b08ba017513a36c28efd04b667
+      emission_sha256: sha256:def5d0bf1e5ca0f0475f02fb2a9ba22d12dacddfcf447dda22132f1b1651c070
+  unresolved_subitems: []

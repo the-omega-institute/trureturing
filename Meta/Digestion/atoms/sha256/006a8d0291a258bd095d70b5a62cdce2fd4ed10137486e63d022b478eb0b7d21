@@ -1,0 +1,1 @@
+| `ExactDescentNoCarry.lean`    | 精确下降排除后续可见的 carry          | 区分“补足原过程的预测”与“通过监视改变原过程” 

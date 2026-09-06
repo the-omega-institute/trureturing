@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c8d4ccf0b9196e4837aff9a09b9369057f49f08a3827a31bb317f938889d88f8
+  normalized_sha256: sha256:c8d4ccf0b9196e4837aff9a09b9369057f49f08a3827a31bb317f938889d88f8
+cas_ref: sha256:c8d4ccf0b9196e4837aff9a09b9369057f49f08a3827a31bb317f938889d88f8
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/PointwiseAlmostEverywhereSeparation.fpod_principle_118_1
+    target_statement_id: sha256:2cfd52ce01ecc010efc0b37a615803d9b659d72b75598ff4f607e31c033c3bcc
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/ProbabilisticClosure/PointwiseAlmostEverywhereSeparation.fpod_principle_118_1
+      definition_sha256: sha256:813e6e817ed540ab58dd5893ed97f28ba873b7d0de948d4e56a10b267197e1fc
+      emission_sha256: sha256:0a282b65ef14059e58db828ed5179756edee3686aaa80febc7ebfcd5841b879f
+  unresolved_subitems: []

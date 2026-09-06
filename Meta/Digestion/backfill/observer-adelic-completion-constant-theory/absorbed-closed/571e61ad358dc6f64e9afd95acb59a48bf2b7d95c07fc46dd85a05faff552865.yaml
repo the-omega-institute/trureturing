@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:571e61ad358dc6f64e9afd95acb59a48bf2b7d95c07fc46dd85a05faff552865
+  normalized_sha256: sha256:571e61ad358dc6f64e9afd95acb59a48bf2b7d95c07fc46dd85a05faff552865
+cas_ref: sha256:571e61ad358dc6f64e9afd95acb59a48bf2b7d95c07fc46dd85a05faff552865
+coverage_gids:
+  - gid: D5/S3/Weil/CayleyLaguerre/ChebyshevHypergeometricExpansion.shifted_chebyshev_hypergeometric_expansion
+    target_statement_id: sha256:e082ee40620b51daedf83579865cd373c26593e1612657cc0f3bf482f97ffe46
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/CayleyLaguerre/ChebyshevHypergeometricExpansion.shifted_chebyshev_hypergeometric_expansion
+      definition_sha256: sha256:4e785f691dbcf319c43d807ac2f07d06789fc83751e76342254a9eaa1e72d3a6
+      emission_sha256: sha256:7f52946f17c96f6228707276efe936394ac6a50f774c79ad4b03c147db47f028
+  unresolved_subitems: []

@@ -1,0 +1,22 @@
+## 定义238.1　两个不同的转动速率
+
+令实际 Hamiltonian 为
+
+$$
+H=\frac{\hbar\Omega}{2}Y.
+$$
+
+观察者希望系统跟随的投影族为
+
+$$
+P(t)=|\psi_\omega(t)\rangle\langle\psi_\omega(t)|,
+$$
+
+$$
+|\psi_\omega(t)\rangle
+=
+\cos\frac{\omega t}{2}|0\rangle
++
+\sin\frac{\omega t}{2}|1\rangle.
+$$
+

@@ -1,0 +1,108 @@
+# 五、一个方形里的两种态：局部坐标、平均能量都相同，整体奇偶却相反
+
+在素数 \(2,3\) 的最小方形中，四个状态是：
+
+$$
+1,\quad2,\quad3,\quad6.
+$$
+
+取：
+
+$$
+\boxed{
+|\psi_{\mathrm e}\rangle
+=
+\frac{|1\rangle+|6\rangle}{\sqrt2},
+\qquad
+|\psi_{\mathrm o}\rangle
+=
+\frac{|2\rangle+|3\rangle}{\sqrt2}.
+}
+\tag{18}
+$$
+
+把它们写成两个占据寄存器，就是：
+
+$$
+|\psi_{\mathrm e}\rangle
+=
+\frac{|00\rangle+|11\rangle}{\sqrt2},
+$$
+
+$$
+|\psi_{\mathrm o}\rangle
+=
+\frac{|10\rangle+|01\rangle}{\sqrt2}.
+$$
+
+对每个单独素数方向，两种态的约化密度矩阵都为：
+
+$$
+\frac12I_2.
+$$
+
+所以，分别观察 2 方向或 3 方向，完全无法区分它们。
+
+两者的平均能量也相同：
+
+$$
+\boxed{
+\langle H\rangle_{\mathrm e}
+=
+\langle H\rangle_{\mathrm o}
+=
+\frac{E_*}{2}\log6.
+}
+\tag{19}
+$$
+
+但整体奇偶为：
+
+$$
+\boxed{
+\Gamma|\psi_{\mathrm e}\rangle=|\psi_{\mathrm e}\rangle,
+\qquad
+\Gamma|\psi_{\mathrm o}\rangle=-|\psi_{\mathrm o}\rangle.
+}
+\tag{20}
+$$
+
+这里遗漏的是**两个方向之间的联合关系**。
+
+令：
+
+$$
+\tau=\frac{E_*t}{\hbar},
+$$
+
+则原态保持振幅分别为：
+
+$$
+\boxed{
+A_{\mathrm e}(\tau)
+=
+e^{-i\tau\log6/2}
+\cos\!\left(\frac{\tau\log6}{2}\right),
+}
+$$
+
+$$
+\boxed{
+A_{\mathrm o}(\tau)
+=
+e^{-i\tau\log6/2}
+\cos\!\left(\frac{\tau\log(3/2)}{2}\right).
+}
+\tag{21}
+$$
+
+同样的局部占据统计、同样的平均能量，却产生不同的整体干涉。
+
+所以：
+
+> **我们之前难以拼接的“局部切片”，可以具体缺少什么？就是这类并不包含在任何单独边缘读数中的交叉关联。**
+
+它不一定需要增加空间维度才能读出。在原来的两个寄存器上测量联合奇偶 \(\Gamma\)，就已经能够区分。
+
+---
+

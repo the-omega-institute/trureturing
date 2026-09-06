@@ -1,0 +1,12 @@
+## 定理 V2　两个端点值恒为平方,故端点约束恒成立
+
+记 \(Q_{a,t}(X)=\mathcal L_a\bigl((X+t)^2\bigr)\)。则对一切 \(a>0,\ t\in\mathbb{R}\),
+
+$$
+\boxed{
+Q_{a,t}(0)=t^2\ge0,
+\qquad
+Q_{a,t}(-1)=(a-t)^2\ge0 .
+}
+$$
+

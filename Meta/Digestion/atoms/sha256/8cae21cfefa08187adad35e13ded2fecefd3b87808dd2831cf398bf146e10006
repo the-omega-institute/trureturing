@@ -1,0 +1,96 @@
+## 定理 207.2　刷新间隔内的预测误差
+
+对 \(E\in\mathcal S\)，定义当前模型内的预测：
+
+$$
+\overline E(\tau)
+=
+e^{\tau\Pi\mathcal L\Pi}E.
+$$
+
+则：
+
+$$
+\boxed{
+\|e^{\tau\mathcal L}E-\overline E(\tau)\|_2
+\le
+|\tau|\,\ell_H(\mathcal S)\,\|E\|_2.
+}
+\tag{207.3}
+$$
+
+### 证明
+
+\(\mathcal L\) 在 Hilbert–Schmidt 内积下为反对称生成元，其指数保持范数；\(\Pi\mathcal L\Pi\) 在 \(\mathcal S\) 上同样如此。
+
+Duhamel 公式给出：
+
+$$
+e^{\tau\mathcal L}E-\overline E(\tau)
+=
+\int_0^\tau
+e^{(\tau-s)\mathcal L}
+(I-\Pi)\mathcal L\Pi
+e^{s\Pi\mathcal L\Pi}E\,ds.
+$$
+
+取范数即可。∎
+
+若 \(\|E\|_2\le1\)，希望每次更新间隔中的这项误差不超过 \(\varepsilon\)，则一个充分条件是：
+
+$$
+\boxed{
+\ell_H(\mathcal S)\,\Delta\tau\le\varepsilon.
+}
+\tag{207.4}
+$$
+
+于是你说的“刷新率”与“逃逸率”第一次获得了一个直接的定量连接：
+
+$$
+\boxed{
+f_{\mathrm{refresh}}
+\ge
+\frac{\ell_H(\mathcal S)}{\varepsilon}
+}
+\tag{207.5}
+$$
+
+可以作为这类逐帧预测证书的充分设计条件。
+
+### 不能把它夸大成什么？
+
+它不是任何观察者都必须满足的宇宙刷新定律，也不是必要且最优的采样率。
+
+\(\overline E(\tau)\) 首先是线性预测量；若要把整个近似映射当作实际量子操作，还必须证明正性和完全正性。
+
+### 一个精确例子
+
+取：
+
+$$
+H=\frac{\hbar\omega}{2}X,
+\qquad
+\mathcal S=\operatorname{span}_{\mathbb R}\{I,Z\}.
+$$
+
+则：
+
+$$
+\mathcal L(Z)=\omega Y,
+\qquad
+\ell_H(\mathcal S)=|\omega|.
+$$
+
+两态：
+
+$$
+\rho_\pm=\frac{I\pm Y}{2}
+$$
+
+在当前接口上相同，但后续 \(Z\) 读数为：
+
+$$
+\langle Z\rangle_\pm(\tau)=\pm\sin\omega\tau.
+$$
+

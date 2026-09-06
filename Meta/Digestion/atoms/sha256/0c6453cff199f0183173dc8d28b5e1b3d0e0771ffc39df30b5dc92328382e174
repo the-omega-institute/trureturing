@@ -1,0 +1,73 @@
+# 九、实际的一点、两点检验已经全部通过；困难确实从多点共同实现开始
+
+这里可以补上一项有实质内容的结论，而不只是再次列等价条件。
+
+定义：
+
+$$
+D(v)=\sum_{n\ge0}\frac{\alpha_n}{n!}v^n,
+\qquad
+\alpha_n=\frac{n!m_{2n}}{(2n)!}.
+$$
+
+实际 theta 矩已知满足 Turán 不等式：
+
+$$
+\boxed{
+\alpha_n^2\ge\alpha_{n-1}\alpha_{n+1}.
+}
+\tag{V20}
+$$
+
+它来自实际 theta 核的已知凹性，而不需要 RH。([arXiv][5])
+
+令：
+
+$$
+r_n=\frac{\alpha_{n+1}}{\alpha_n}.
+$$
+
+式（V20）说明 \(r_n\) 不增。
+
+对 \(v>0\)，定义概率：
+
+$$
+\Pr_v(N=n)=\frac{\alpha_nv^n}{n!D(v)}.
+$$
+
+则：
+
+$$
+\frac{D'(v)}{D(v)}=\mathbb E_v[r_N].
+$$
+
+求导：
+
+$$
+\boxed{
+\left(\frac{D'}D\right)'(v)
+=
+\frac1v\operatorname{Cov}_v(r_N,N)\le0.
+}
+\tag{V21}
+$$
+
+因为 \(r_N\) 随 \(N\) 不增。
+
+而：
+
+$$
+\frac{\mu(b)}b
+=
+2\frac{D'(b^2)}{D(b^2)}.
+$$
+
+所以：
+
+$$
+\boxed{
+\frac{\mu(b)}b\text{ 单调不增}.
+}
+\tag{V22}
+$$
+

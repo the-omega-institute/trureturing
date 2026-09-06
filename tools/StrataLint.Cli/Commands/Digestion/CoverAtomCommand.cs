@@ -245,8 +245,7 @@ internal static partial class CoverAtomCommand
 
             var addedReceipts = gids
                 .Where(gid => !existingGids.Contains(gid.Value))
-                .Select(gid => BuildReceipts(
-                    target,
+                .Select(gid => DigestionReceiptBuilder.Build(
                     gid,
                     current,
                     frozenStatements,
@@ -416,46 +415,6 @@ internal static partial class CoverAtomCommand
         }
 
         return entry;
-    }
-
-    private static (DigestionCoverageEdge Coverage, DigestionScribeReceipt Scribe) BuildReceipts(
-        DigestionLedgerEntry entry,
-        Gid gid,
-        RepositorySnapshot snapshot,
-        FrozenStatementIndex frozenStatements,
-        VerifiedScribeEmissions verifiedScribeEmissions)
-    {
-        if (!snapshot.TryGetFile(gid.Path.Value, out var target))
-        {
-            throw new InvalidOperationException($"cover target Lean file is absent: {gid.Path.Value}");
-        }
-
-        if (!frozenStatements.TryResolve(gid, out var targetStatementId, out var resolutionError))
-        {
-            throw new InvalidOperationException(
-                $"cover target has no unique frozen statement: {gid.Value} ({resolutionError})");
-        }
-
-        var documentGid = ScribeEmissionAttestation.DocumentGid(gid.Value);
-        if (!verifiedScribeEmissions.TryGet(documentGid, out var verifiedRecord))
-        {
-            throw new InvalidOperationException(
-                $"cover verified Scribe emission is absent: {documentGid} "
-                + "(scribe-emission-missing; partial-closed)");
-        }
-
-        var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
-        if (!snapshot.TryGetFile(definitionPath, out var definition))
-        {
-            throw new InvalidOperationException($"cover Scribe definition is absent: {definitionPath}");
-        }
-
-        var coverage = new DigestionCoverageEdge(gid.Value, targetStatementId!.Value);
-        var scribe = new DigestionScribeReceipt(
-            gid.Value,
-            DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256,
-            verifiedRecord.EmissionSha256);
-        return (coverage, scribe);
     }
 
     private static BackfillInventoryDocument ReplaceEntry(

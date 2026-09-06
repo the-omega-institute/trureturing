@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c6572bbb713fea51d515c2c278350f90bb6395b9bf7033bcc3bb144bd5497c8c
+  normalized_sha256: sha256:c6572bbb713fea51d515c2c278350f90bb6395b9bf7033bcc3bb144bd5497c8c
+cas_ref: sha256:c6572bbb713fea51d515c2c278350f90bb6395b9bf7033bcc3bb144bd5497c8c
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentEquivalence.stochastic_descent_equivalence
+    target_statement_id: sha256:b9f0051cbe1b585714b0374da278c65736972989e9ab857bd56ab4f91394c46e
+receipts:
+  scribe:
+    - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentEquivalence.stochastic_descent_equivalence
+      definition_sha256: sha256:b8ed5c3df3f984ddc7e1d683e9b34125f71dbfea9947a45eaf663e8f97096d82
+      emission_sha256: sha256:9b1d67f94d81ec4d7da43ce5f565a3b9208649698e4c3463e0712f75311e10e5
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ae5eedcdcc9d3aa5fb4b46360d3f064640b4093d624d092ba913dcf26e4cb4bd
+  normalized_sha256: sha256:ae5eedcdcc9d3aa5fb4b46360d3f064640b4093d624d092ba913dcf26e4cb4bd
+cas_ref: sha256:ae5eedcdcc9d3aa5fb4b46360d3f064640b4093d624d092ba913dcf26e4cb4bd
+coverage_gids:
+  - gid: D5/S3/Weil/Pick/CayleyNevanlinnaKernelEquivalence.cayley_nevanlinna_kernel_posSemidef_iff
+    target_statement_id: sha256:ef7d465945cf03f29427c38449a96efe948dd77609dc8b7df88ad25e19786fe7
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Pick/CayleyNevanlinnaKernelEquivalence.cayley_nevanlinna_kernel_posSemidef_iff
+      definition_sha256: sha256:e423173daef4e85421722653064cbeea0b1bc5f60d524ab3527681acf921c7b8
+      emission_sha256: sha256:8a347be4a224132d0321670345d7da67a6e01e34f7e97c8c79cd43f81e250ecf
+  unresolved_subitems: []

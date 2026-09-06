@@ -1,0 +1,5 @@
+**评注 27.845(开放问题线第一档立案(二):Chamberland–Dilcher 猜想 2.1、OEIS A397588 奇偶猜想、A373183 猜想 1 与猜想 9;候签定理 4.109–4.112 立案;第五⁵条硬规则②)**〔remark;开放问题线勘注〕。R13(ChatGPT Pro 检索席,flight `op-r13-gptpro-tier1`,2026-09-06)按与 R12 相同的第一档判据(2024–2026 明写、文献无证、可能短证)给出候选;orchestrator 逐条取原文核对(pdftotext / OEIS 原始条目);「未见」不排除未索引结果,记 ASSUMED-UNVERIFIED;拟议逃逸见证写在探针之前。
+- **4.109(Chamberland–Dilcher,arXiv:2510.26291 v1,§2 猜想 2.1)**:原文「Let n ≥ 1 be an odd integer, and suppose that δ := d_n(λ) ≥ 2 … 存在 δ−1 个连续零值 … Furthermore, the sets of these zero values are disjoint」(作者自称证明尚不完整)。核对:arXiv 仅 v1(2025-10-30),标题/编号检索未见证明。**档位:第一档**。
+- **4.110(OEIS A397588,Hanna,2026-07-03 评注)**:原文「Conjecture: a(n) is odd iff n is a power of 2 for n ≥ 1」,序列由 a(1)=1、a(n)=(n+1)·Σ_{k=1}^{n−1} a(k)a(n−k)(n>1)定义(母函数 A(x)=x+(xA(x)²)′)。核对:OEIS 条目与 arXiv 检索未见证明。**档位:第一档**。
+- **4.111–4.112(OEIS A373183,Kurkov,FORMULA 猜想 1(2024-05-27)与猜想 9(2026-06-21))**:行多项式 R(0,x)=x,R(2n+1,x)=x·R(n,x),R(2n,x)=x·(R(n,x+1)−R(n,x))(n>0);猜想 1:R(2n,x)=R(n,x)+R(n−2^{f(n)},x)+R(2n−2^{f(n)},x),f(n)=v₂(n);猜想 9:T(2^{m+1}(2k+1)−2, q)=e(m+wt(k)+1, k, q)(T(n,q)=[x^q]R(n,x),e 为条目给出的 Pascal 型累加器)。核对:OEIS 仍标为猜想;MathOverflow 473119/483753 未给出证明。**档位:第一档**。
+

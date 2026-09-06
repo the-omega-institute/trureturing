@@ -1,0 +1,60 @@
+# 二、三组指令，已经给出明确的寄存器几何
+
+从十四条指令中抽出三组两步操作：
+
+$$
+\mathsf U=
+\left(\frac{17}{91},\frac{78}{85}\right),
+$$
+
+$$
+\mathsf V=
+\left(\frac{29}{33},\frac{77}{29}\right),
+$$
+
+$$
+\mathsf W=
+\left(\frac{23}{38},\frac{95}{23}\right).
+$$
+
+它们的乘积分别为
+
+$$
+\boxed{
+\mathsf U:\frac{6}{35},
+\qquad
+\mathsf V:\frac73,
+\qquad
+\mathsf W:\frac52.
+}
+\tag{1}
+$$
+
+但这些不能当作无条件的一步分数替换：**两步能够连续执行，依赖当前控制状态和寄存器非负条件。**
+
+在其合法区域内，四个数据坐标的变化为
+
+$$
+\mathsf U:
+(a,b,c,d)\mapsto(a+1,b+1,c-1,d-1),
+$$
+
+$$
+\mathsf V:
+(a,b,c,d)\mapsto(a,b-1,c,d+1),
+$$
+
+$$
+\mathsf W:
+(a,b,c,d)\mapsto(a-1,b,c+1,d).
+$$
+
+于是它们都保持
+
+$$
+\boxed{
+I_1=a+c,\qquad I_2=b+d.
+}
+\tag{2}
+$$
+

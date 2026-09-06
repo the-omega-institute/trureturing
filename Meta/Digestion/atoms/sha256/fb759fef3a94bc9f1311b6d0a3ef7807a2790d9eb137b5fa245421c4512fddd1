@@ -1,0 +1,44 @@
+## 在 5040 与 55440 的两配置极限中
+
+两者能量差是：
+
+$$
+\Delta E=\log11.
+$$
+
+在 \(\lambda=\lambda_c\)、\(T\downarrow0\) 时，它们的权重趋于各一半，因此：
+
+$$
+\operatorname{Var}(\log n)
+\longrightarrow
+\frac{(\log11)^2}{4}.
+$$
+
+于是：
+
+$$
+\mathscr F_T''(\lambda_c)
+\sim\frac{(\log11)^2}{4T},
+$$
+
+$$
+I_Q(\lambda_c)
+\sim\frac{(\log11)^2}{4T^2}.
+$$
+
+这时三个尺度由同一个 \(\log11\) 决定：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实参数过渡宽度}
+&\sim\frac{T}{\log11},\\
+\text{最近复零点高度}
+&\sim\frac{\pi T}{\log11},\\
+\text{两配置正交相位参数}
+&=\frac{\pi}{\log11}.
+\end{aligned}
+}
+\tag{17}
+$$
+

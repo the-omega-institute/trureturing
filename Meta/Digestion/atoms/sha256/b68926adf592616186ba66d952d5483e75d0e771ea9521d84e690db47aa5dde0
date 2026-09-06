@@ -1,0 +1,59 @@
+## 本轮真正得到的结论
+
+最值得保留的是三个等式：
+
+$$
+\boxed{
+\overline\epsilon
+=
+\text{可见坐标决定的部分}
++
+J\,c;
+}
+$$
+
+$$
+\boxed{
+h_\perp^2
+=
+\text{候选总平方量}
+-
+\text{旧切片已经要求的平方量};
+}
+$$
+
+$$
+\boxed{
+\text{压回底面后的动力学}
+=
+\text{原底面动力学}
++
+\text{顶点初态贡献}
++
+\text{回返记忆}.
+}
+$$
+
+它们共同说明：
+
+> **新增一条坐标的价值，不在于图像从二维变成三维，而在于它是否把原投影丢掉的相关、相位或回返信息明确保存下来。**
+
+在实际算术问题中，不能凭空指定一个足够高的顶点，让 Schur 余量变正；也不能挑选一个方便的相干状态，替代真实的素数读出。新增量必须由同一个算术锚确定。
+
+因此，当前比“金字塔是不是宇宙的基本形状”更可推进的数学问题是：
+
+$$
+\boxed{
+\text{给定实际算术切片，最少需要补充哪些联合读出，}
+\quad
+\text{才能使其几何实现与动态消元都不再丢失目标信息？}
+}
+$$
+
+本轮已经证明：**只加一个可见高度通常不够；但一旦把缺失量明确为奇偶相关、Schur 余量和回返核，“金字塔式升维”就从形状直觉变成了可检验的数学构造。**
+
+[1]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[2]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "Mathlib.Data.Nat.Fib.Zeckendorf"
+[3]: https://quantum.cloud.ibm.com/learning/courses/general-formulation-of-quantum-information/density-matrices/density-matrix-basics "Density matrix basics | IBM Quantum Learning"
+可以结合，而且这次能得到比“外形像奇偶”更具体的关系。
+

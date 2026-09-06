@@ -1,0 +1,24 @@
+# 四、得到一个全阶的奇偶截断定理
+
+定义保留至 \(r\) 阶的近似：
+
+$$
+\boxed{
+Q_r(S)
+=
+\Delta(n)-\sum_{i\in S}\rho_i
++
+\sum_{\substack{\varnothing\ne I\subseteq S\\|I|\le r}}
+(-1)^{|I|-1}\kappa_I.
+}
+\tag{10}
+$$
+
+再记第 \(m\) 阶交集总量：
+
+$$
+K_m(S)
+=
+\sum_{\substack{I\subseteq S\\|I|=m}}\kappa_I.
+$$
+

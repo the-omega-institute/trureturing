@@ -1,0 +1,55 @@
+## 定义282.1　有限计数量子空间
+
+固定总数量 \(K\)，取：
+
+$$
+\mathcal H_K
+=
+\operatorname{span}
+\{|z\rangle:z\in\mathbb N^5,\ \sum_jz_j=K\}.
+$$
+
+这是有限维空间。
+
+定义对角观察量：
+
+$$
+\widehat Q_\alpha|z\rangle=(Az)_\alpha|z\rangle.
+$$
+
+选择一个明确的成对交换算子：
+
+$$
+\boxed{
+\mathsf T|z\rangle
+=
+\sqrt{z_{00}z_{11}(z_{10}+1)(z_{01}+1)}
+\,|z+\delta\rangle,
+}
+\tag{282.1}
+$$
+
+当 \(z_{00}z_{11}=0\) 时，右侧定义为零。
+
+这个系数对应一种玻色模式交换的矩阵元：
+
+$$
+a_{10}^\dagger a_{01}^\dagger a_{00}a_{11}.
+$$
+
+但也可以直接把式（282.1）作为有限矩阵定义。**平方根系数是此次物理模型的选择，不由整数分数 \(15/14\) 单独决定。**
+
+定义：
+
+$$
+\boxed{
+H_{\mathrm{mix}}
+=
+J(\mathsf T+\mathsf T^\dagger),
+\qquad J>0,
+}
+\tag{282.2}
+$$
+
+其中 \(J\) 的单位是能量。
+

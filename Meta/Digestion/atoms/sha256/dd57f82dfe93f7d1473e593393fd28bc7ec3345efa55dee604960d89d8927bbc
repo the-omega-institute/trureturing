@@ -1,0 +1,27 @@
+## 三张切片真正的拼接条件
+
+设候选 Gram 矩阵为
+
+$$
+G=
+\begin{pmatrix}
+1&a&z\\
+\bar a&1&b\\
+\bar z&\bar b&1
+\end{pmatrix},
+\qquad |a|,|b|\le1.
+$$
+
+那么
+
+$$
+\boxed{
+G\succeq0
+\iff
+|z-ab|^2
+\le
+(1-|a|^2)(1-|b|^2).
+}
+\tag{7}
+$$
+

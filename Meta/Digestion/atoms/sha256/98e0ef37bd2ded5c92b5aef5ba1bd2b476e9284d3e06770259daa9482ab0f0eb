@@ -1,0 +1,11 @@
+# 七、全局下界出现一个清楚的二分：不是“略微负一点”
+
+定义
+
+$$
+\lambda_{\mathrm{glob}}
+=
+\inf_{\substack{f\in C_c^\infty(\mathbb R)\\f\ne0}}
+\frac{Q_W(f)}{\|f\|_2^2}.
+$$
+
