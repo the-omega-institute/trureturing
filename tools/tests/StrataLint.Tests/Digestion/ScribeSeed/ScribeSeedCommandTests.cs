@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class ScribeSeedCommandTests
+public sealed partial class ScribeSeedCommandTests
 {
     [Fact]
     public void SeedDeclarationReceiptUsesVerifiedBuilderAndDerivesAbsorption()

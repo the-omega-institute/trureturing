@@ -276,7 +276,10 @@ internal static partial class DigestionStatusEvaluator
                 item.Migration == DigestionMigrationState.Absorbed
                     && truth is DigestionTruthState.Closed or DigestionTruthState.Tail
                     && gaps.Length == 0,
-                gaps));
+                gaps)
+            {
+                StatusAuthorityChanged = item.StatusAuthorityChanged,
+            });
         }
 
         return new DigestionLedgerEvaluation(

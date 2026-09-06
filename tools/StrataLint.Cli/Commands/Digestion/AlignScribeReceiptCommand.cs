@@ -70,7 +70,7 @@ internal static class AlignScribeReceiptCommand
         var entries = document.RequireDigestionEntries().ToLookup(static entry => entry.AtomId, StringComparer.Ordinal);
         var plans = options.Pairs.Select(pair => Inspect(pair, entries[pair.AtomId].ToArray(),
             current, report, states, frozen, verified)).ToArray();
-        if (options.DryRun || plans.Any(static plan => plan.Eligibility != SeedEligibility.Eligible))
+        if (plans.Any(static plan => plan.Eligibility != SeedEligibility.Eligible))
         {
             var success = options.DryRun;
             return new CommandResult(success, Render(plans, options.DryRun, changed: false),
@@ -93,10 +93,11 @@ internal static class AlignScribeReceiptCommand
         var changes = RawChangeSet.Create(plans.Select(plan => EntryPath(plan.Entry!)).Distinct(StringComparer.Ordinal));
         var derived = Evaluate(planned, current, validateStatus: false);
         IngestCommand.RequireNoReceiptIntegrityFailure(derived);
-        var statuses = derived.Entries.ToDictionary(static item => item.Entry.AtomId, static item => item.DerivedStatus,
-            StringComparer.Ordinal);
-        planned = Map(planned, entry => receipts.Contains(entry.AtomId)
-            ? entry with { ProjectedStatus = statuses[entry.AtomId] }
+        var statusChanges = derived.Entries
+            .Where(static item => item.StatusAuthorityChanged && item.DerivedStatus != item.Entry.ProjectedStatus)
+            .ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
+        planned = Map(planned, entry => statusChanges.TryGetValue(entry.AtomId, out var change)
+            ? entry with { ProjectedStatus = change.DerivedStatus }
             : entry);
         var finalRaw = IngestCommand.ReplaceLedger(raw, document, planned);
         var final = Decode(finalRaw);
@@ -104,8 +105,11 @@ internal static class AlignScribeReceiptCommand
         var evaluation = Evaluate(BackfillInventoryLoader.Load(final), final, validateStatus: true);
         IngestCommand.RequireNoReceiptIntegrityFailure(evaluation);
         var updates = IngestCommand.LedgerUpdates(raw, finalRaw);
-        applyUpdates(root, raw, updates);
-        return new CommandResult(true, Render(plans, dryRun: false, changed: updates.Length > 0), string.Empty);
+        if (!options.DryRun)
+            applyUpdates(root, raw, updates);
+        var changed = !options.DryRun && updates.Length > 0;
+        return new CommandResult(true, Render(plans, options.DryRun, changed)
+            + RenderStatusChanges(statusChanges.Values, options.DryRun, changed), string.Empty);
 
         DigestionLedgerEvaluation Evaluate(BackfillInventoryDocument candidate, RepositorySnapshot snapshot, bool validateStatus) =>
             DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.ChangedSet, candidate, snapshot, lean,
@@ -228,6 +232,15 @@ internal static class AlignScribeReceiptCommand
     private static string Render(IEnumerable<SeedPlan> plans, bool dryRun, bool changed) =>
         string.Concat(plans.Select(plan => $"SCRIBE_SEED atom_id={plan.Pair.AtomId} gid={plan.Pair.Gid} "
             + $"eligibility={Name(plan.Eligibility)} reason={plan.Reason} "
+            + $"dry_run={dryRun.ToString().ToLowerInvariant()} ledger_changed={changed.ToString().ToLowerInvariant()}\n"));
+
+    private static string RenderStatusChanges(IEnumerable<DigestionEntryEvaluation> changes, bool dryRun, bool changed) =>
+        string.Concat(changes.OrderBy(static item => item.Entry.AtomId, StringComparer.Ordinal).Select(item =>
+            $"SCRIBE_SEED_STATUS atom_id={item.Entry.AtomId} "
+            + $"from={DigestionStatusNames.Migration(item.Entry.ProjectedStatus.Migration)}-"
+            + $"{DigestionStatusNames.Truth(item.Entry.ProjectedStatus.Truth)} "
+            + $"to={DigestionStatusNames.Migration(item.DerivedStatus.Migration)}-"
+            + $"{DigestionStatusNames.Truth(item.DerivedStatus.Truth)} "
             + $"dry_run={dryRun.ToString().ToLowerInvariant()} ledger_changed={changed.ToString().ToLowerInvariant()}\n"));
 
     private static string Name(SeedEligibility eligibility) => eligibility switch
