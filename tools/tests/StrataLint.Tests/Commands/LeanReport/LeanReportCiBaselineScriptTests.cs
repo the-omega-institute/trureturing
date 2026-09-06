@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
+using FixtureFile = StrataLint.TestSupport.TemporaryFileSystem.File;
 
 namespace StrataLint.Tests;
 
@@ -158,7 +159,7 @@ internal static class LeanReportCiBaselineScriptContract
         Assert.Equal(0, Run(bundle, cache).ExitCode);
 
         var plan = RunDeltaPlan(temporary.Path, cache, moduleTable);
-        using var document = JsonDocument.Parse(File.ReadAllText(plan));
+        using var document = JsonDocument.Parse(FixtureFile.ReadAllText(plan));
         var root = document.RootElement;
         Assert.Equal("delta", root.GetProperty("status").GetString());
         Assert.Empty(root.GetProperty("changed").EnumerateArray());
@@ -232,7 +233,7 @@ internal static class LeanReportCiBaselineScriptContract
         Assert.Equal(0, Run(bundle, cache).ExitCode);
 
         var plan = RunDeltaPlan(temporary.Path, cache, moduleTable);
-        using var document = JsonDocument.Parse(File.ReadAllText(plan));
+        using var document = JsonDocument.Parse(FixtureFile.ReadAllText(plan));
         var root = document.RootElement;
         Assert.Equal("delta", root.GetProperty("status").GetString());
         Assert.Equal(
@@ -253,7 +254,7 @@ internal static class LeanReportCiBaselineScriptContract
         var relativePath = module + ".lean";
         var sourcePath = Path.Combine(repository, relativePath);
         File.WriteAllText(sourcePath, $"-- {module}\n", new UTF8Encoding(false));
-        var sourceSha = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(sourcePath))).ToLowerInvariant();
+        var sourceSha = Convert.ToHexString(SHA256.HashData(FixtureFile.ReadAllBytes(sourcePath))).ToLowerInvariant();
         return JsonSerializer.Serialize(new
         {
             module,
@@ -315,7 +316,7 @@ internal static class LeanReportCiBaselineScriptContract
             report,
             $"{{\"modules\": [{moduleRecords}], \"schema\": \"stratalint-raw-lean-report-v2\"}}\n",
             new UTF8Encoding(false));
-        var reportSha = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(report))).ToLowerInvariant();
+        var reportSha = Convert.ToHexString(SHA256.HashData(FixtureFile.ReadAllBytes(report))).ToLowerInvariant();
         File.WriteAllText(report + ".sha256", $"{reportSha}  raw-lean-report.json\n", new UTF8Encoding(false));
         File.WriteAllText(
             report + ".input.attestation",
