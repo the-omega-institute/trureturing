@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:269a801cc190b9d936849b6793e539f6328080a91ad4af31103f1d38b8bf71fa
+  normalized_sha256: sha256:269a801cc190b9d936849b6793e539f6328080a91ad4af31103f1d38b8bf71fa
+cas_ref: sha256:269a801cc190b9d936849b6793e539f6328080a91ad4af31103f1d38b8bf71fa
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.descent_composes
+    target_statement_id: sha256:5c7789a492c533077255eaafda6a795e2e2761236fb360c2c879b38af31d78c5
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.descent_composes
+      definition_sha256: sha256:38019b6370991e3b13878530abcc26a8c8a76da1f9fab0fcb556d5e25c9d4954
+      emission_sha256: sha256:bef44d1e22b5a3c7e6e9c44402eb24e8e8239f268cbe786829a9775db43037a5
+  unresolved_subitems: []

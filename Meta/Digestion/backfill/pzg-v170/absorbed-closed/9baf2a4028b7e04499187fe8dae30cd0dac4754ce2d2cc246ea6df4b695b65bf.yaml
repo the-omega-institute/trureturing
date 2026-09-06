@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9baf2a4028b7e04499187fe8dae30cd0dac4754ce2d2cc246ea6df4b695b65bf
+  normalized_sha256: sha256:9baf2a4028b7e04499187fe8dae30cd0dac4754ce2d2cc246ea6df4b695b65bf
+cas_ref: sha256:9baf2a4028b7e04499187fe8dae30cd0dac4754ce2d2cc246ea6df4b695b65bf
+coverage_gids:
+  - gid: D5/S3/Fourier/GaussianThetaTransformation.gaussian_theta_transformation
+    target_statement_id: sha256:ac943a53b55376290b3ffe14d85e17451851bbb0fa5d727c1b385fdb085f1b20
+receipts:
+  scribe:
+    - gid: D5/S3/Fourier/GaussianThetaTransformation.gaussian_theta_transformation
+      definition_sha256: sha256:68c65cc450fc5063a16816a65a9ba30a7b7e3119c376cd6c1b8dbbb16994eb84
+      emission_sha256: sha256:5464557243921e4f04194062c6c4aafd49ab9c0bc82d99cb9beb6658a2eb90cf
+  unresolved_subitems: []

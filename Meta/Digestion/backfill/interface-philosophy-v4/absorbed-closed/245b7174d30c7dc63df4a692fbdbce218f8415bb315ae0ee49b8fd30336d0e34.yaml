@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:245b7174d30c7dc63df4a692fbdbce218f8415bb315ae0ee49b8fd30336d0e34
+  normalized_sha256: sha256:245b7174d30c7dc63df4a692fbdbce218f8415bb315ae0ee49b8fd30336d0e34
+cas_ref: sha256:245b7174d30c7dc63df4a692fbdbce218f8415bb315ae0ee49b8fd30336d0e34
+coverage_gids:
+  - gid: D5/S0/Computability/GuardedWall.wall_never_positive
+    target_statement_id: sha256:9b8e383285eba286847ad399d5c6f0802b62786b39a2820dae64c5ff2a722c29
+receipts:
+  scribe:
+    - gid: D5/S0/Computability/GuardedWall.wall_never_positive
+      definition_sha256: sha256:88baa776715e8741889415e2acf37633197bcbc4984097e7d708974ccfa23b8b
+      emission_sha256: sha256:3e5a30e0a410e87eae9829a9a592777c117b6c5f750bb0507e6793d2f7db5545
+  unresolved_subitems: []
