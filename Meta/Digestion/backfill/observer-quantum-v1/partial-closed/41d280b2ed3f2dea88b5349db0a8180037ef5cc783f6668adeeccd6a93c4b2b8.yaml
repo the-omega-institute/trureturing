@@ -29,9 +29,9 @@ receipts:
       definition_sha256: sha256:5d7ae1cd34ab631fea43204666a23b119967001c6b2bed6c0cb36359c95dfb36
       emission_sha256: sha256:8c19bc05646535705c52e2339e1ffa19e30bd0d8729bfddb4a1441c34c3d262d
     - gid: D5/S3/Observer/StreamlineTheorem.nonconstant_offset_not_continuous
-      definition_sha256: sha256:beb73017e81ad971ebd1ad6c0bbce9eb902b9cc2a950fff2d49e5c5dda6e3112
-      emission_sha256: sha256:d3fe537a95cb77fd79953d7990b0a6d2fde89c7ead3fed3c454c07b570d1ca8d
+      definition_sha256: sha256:0ac3d29434ce0d9c880a99ca05f5d21a138584eee7295eac59d099ecb5e4181d
+      emission_sha256: sha256:3db4bab6620acf52e66dd7517309e6a8da5ffb9df2964c3cfe9743f47331f70c
     - gid: D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant
-      definition_sha256: sha256:beb73017e81ad971ebd1ad6c0bbce9eb902b9cc2a950fff2d49e5c5dda6e3112
-      emission_sha256: sha256:d3fe537a95cb77fd79953d7990b0a6d2fde89c7ead3fed3c454c07b570d1ca8d
+      definition_sha256: sha256:0ac3d29434ce0d9c880a99ca05f5d21a138584eee7295eac59d099ecb5e4181d
+      emission_sha256: sha256:3db4bab6620acf52e66dd7517309e6a8da5ffb9df2964c3cfe9743f47331f70c
   unresolved_subitems: []
