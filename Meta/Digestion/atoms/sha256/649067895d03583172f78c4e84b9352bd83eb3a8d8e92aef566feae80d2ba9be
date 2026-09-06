@@ -1,0 +1,40 @@
+## 定理325.1　低频极限的质量壳
+
+由 \(X^2=Z^2=I\) 与 \(XZ+ZX=0\)：
+
+$$
+\boxed{
+H_D(p)^2
+=
+\left(m^2c_*^4+c_*^2p^2\right)I.
+}
+\tag{325.1}
+$$
+
+所以正能支：
+
+$$
+\boxed{
+E(p)=\sqrt{m^2c_*^4+c_*^2p^2}.
+}
+\tag{325.2}
+$$
+
+其群速度为：
+
+$$
+v=\frac{\partial E}{\partial p}
+=
+\frac{c_*^2p}{E}.
+$$
+
+因此：
+
+$$
+p=\frac{mv}{\sqrt{1-v^2/c_*^2}},
+\qquad
+E=\frac{mc_*^2}{\sqrt{1-v^2/c_*^2}}.
+$$
+
+---
+

@@ -1,0 +1,29 @@
+## 定义：传播一致性能量
+
+$$
+\boxed{
+\mathcal E_{\mathrm{prop}}(\Psi)
+=
+\sum_{t=0}^{T-1}
+\|\psi_{t+1}-U_t\psi_t\|^2.
+}
+\tag{9}
+$$
+
+它对应一个半正定算子 \(H_{\mathrm{prop}}\)。
+
+显然，
+
+$$
+\boxed{
+\mathcal E_{\mathrm{prop}}(\Psi)=0
+\iff
+\psi_{t+1}=U_t\psi_t\quad\forall t.
+}
+\tag{10}
+$$
+
+这就把时间规则变成了整段历史上的几何约束。
+
+但要注意：式（9）只检查“是否按这些 \(U_t\) 演化”，并不检查输入是否正确、输出是否满足 RH 等算术目标。历史态方法本来就需要把传播、初始化和输出条件分别编码。([arXiv][3])
+

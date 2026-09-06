@@ -1,0 +1,29 @@
+## 定理四：Toeplitz 矩阵是历史态的时钟约化密度矩阵
+
+构造
+
+$$
+\boxed{
+|\Psi_N\rangle
+=
+\frac1{\sqrt{N+1}}
+\sum_{t=0}^{N}
+|t\rangle\otimes U^t|v\rangle.
+}
+\tag{23}
+$$
+
+那么
+
+$$
+\boxed{
+\rho_{\mathrm{clock}}
+=
+\operatorname{Tr}_{\mathrm{data}}
+|\Psi_N\rangle\langle\Psi_N|
+=
+\frac{T_N}{N+1}.
+}
+\tag{24}
+$$
+

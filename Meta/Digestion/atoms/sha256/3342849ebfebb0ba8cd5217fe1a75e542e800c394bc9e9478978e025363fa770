@@ -1,0 +1,37 @@
+## 定理一：时间方向始终合法，另一切面可以经历秩临界
+
+令 \(S\) 为交换门：
+
+$$
+S|a,b\rangle=|b,a\rangle.
+$$
+
+定义
+
+$$
+\boxed{
+U_\theta=\cos\theta\,I+i\sin\theta\,S.
+}
+\tag{5}
+$$
+
+因为 \(S=S^*\)、\(S^2=I\)，所以 \(U_\theta\) 对每个实数 \(\theta\) 都幺正。
+
+但其重排矩阵的奇异值为
+
+$$
+\boxed{
+\sqrt{d^2\cos^2\theta+\sin^2\theta}
+}
+$$
+
+一次，以及
+
+$$
+\boxed{
+|\sin\theta|
+}
+$$
+
+共 \(d^2-1\) 次。
+

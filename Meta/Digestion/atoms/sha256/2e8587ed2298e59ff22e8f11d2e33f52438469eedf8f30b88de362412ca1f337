@@ -1,0 +1,46 @@
+# 八、空间维度被消去以后，常常不是消失，而是变成时间记忆
+
+这个关系可以直接用线性代数证明。
+
+设离散系统为：
+
+$$
+\begin{pmatrix}
+x_{k+1}\\y_{k+1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+A&B\\C&D
+\end{pmatrix}
+\begin{pmatrix}
+x_k\\y_k
+\end{pmatrix}.
+$$
+
+观察者只保留 \(x_k\)，忽略 \(y_k\)。
+
+迭代第二个方程：
+
+$$
+y_k=D^ky_0+
+\sum_{j=0}^{k-1}D^{k-1-j}Cx_j.
+$$
+
+代回得到：
+
+$$
+\boxed{
+x_{k+1}
+=
+Ax_k
++
+BD^ky_0
++
+\sum_{j=0}^{k-1}BD^{k-1-j}Cx_j.
+}
+\tag{23}
+$$
+
+它包含：
+
+* 当前状态项；
