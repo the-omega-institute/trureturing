@@ -24,4 +24,10 @@ receipts:
     - gid: D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta
       definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2
       emission_sha256: sha256:fbf5a8bede17691bfd26b0095a98ae4353665ee67311ceb008e16ec2c410da09
+    - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
+      definition_sha256: sha256:2de8843d9faf3f08273a4e1c443faf82bac098460f773d7ececb93854bb88457
+      emission_sha256: sha256:89875ace263681ced42a79da96cbcf740323be49ebe4a1d4f4d519c124fee2e8
+    - gid: D5/S3/Zeros/Endpoints/XiProductEndpointLimits.xi_product_form_attains_endpoint_values
+      definition_sha256: sha256:c4875441219f7f71d1d42e003579278dd2105f6a657b2f72ef35b2d397f66528
+      emission_sha256: sha256:f11125b0473418af4c760a7d56323ab8bd8319190ffb43eb39f1059e5303c680
   unresolved_subitems: []
