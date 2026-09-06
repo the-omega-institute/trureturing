@@ -6,13 +6,16 @@ namespace StrataLint.Engine.Tests;
 
 public sealed class DigestionDecompositionPolicyTests
 {
-    [Fact]
-    public void ExplicitSecondaryVerdictRequiresDecompositionBeforeAbsorption()
+    [Theory]
+    [InlineData("\r")]
+    [InlineData("\r\n")]
+    [InlineData("\n")]
+    public void ExplicitSecondaryVerdictRequiresDecompositionBeforeAbsorption(string newline)
     {
         var atom = Atom(
-            "**Theorem**. Covered claim.\n"
-            + "Proof: exact witness.\n"
-            + "**Structural verdict**: uncovered global clause.\n");
+            $"**Theorem**. Covered claim.{newline}"
+            + $"Proof: exact witness.{newline}"
+            + $"**Structural verdict**: uncovered global clause.{newline}");
 
         Assert.True(DigestionDecompositionPolicy.IsMultiClause(atom));
         Assert.True(DigestionDecompositionPolicy.RejectsNewAbsorption(

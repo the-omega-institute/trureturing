@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5042d69d7e8955430eec456255e798de7da091fadd8f9f1d9bcd946a52c5b22f
+  normalized_sha256: sha256:5042d69d7e8955430eec456255e798de7da091fadd8f9f1d9bcd946a52c5b22f
+cas_ref: sha256:5042d69d7e8955430eec456255e798de7da091fadd8f9f1d9bcd946a52c5b22f
+coverage_gids:
+  - gid: D5/S1/Solenoid/HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact
+    target_statement_id: sha256:2977913914fec0a1ccb1a141618adc6587c649f92cc3e5007f286d2110d6e609
+receipts:
+  scribe:
+    - gid: D5/S1/Solenoid/HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact
+      definition_sha256: sha256:9e8a382c6071c5854eda9173db1a7b5f7f9bca3e07f9273a022f7497f7fe2e9d
+      emission_sha256: sha256:eb6c1f7b76e6f042b7a60ee643fbb9f4c5d3b66ae1737b5bcfd58bf625af8c1f
+  unresolved_subitems: []
