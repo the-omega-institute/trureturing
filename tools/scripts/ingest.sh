@@ -33,18 +33,25 @@ report_input_state() {
 
 cd "$ROOT"
 usage() {
-  echo "USAGE: ingest.sh ingest|align-digestion-status|mathlib-reanchor|quarantine|quarantine-clear BASE [REQUEST|ATOM_ID]" >&2
+  echo "USAGE: ingest.sh ingest|align-digestion-status|mathlib-reanchor|quarantine|quarantine-clear BASE [SOURCE|REQUEST|ATOM_ID]" >&2
   exit 2
 }
 
 [[ -n "$BASE" ]] || usage
 case "$VERB" in
   ingest)
+    [[ $# -le 3 ]] || usage
     report_input_state
     cleanup
     BASE_TREE=""
+    ingest_args=(ingest --base "$BASE" --report-input-state "$REPORT_INPUT_STATE")
+    set -f
+    for selector in $PAYLOAD; do
+      ingest_args+=(--source "$selector")
+    done
+    set +f
     exec dotnet run --project "$PROJECT" --configuration Release -- \
-      ingest --base "$BASE" --report-input-state "$REPORT_INPUT_STATE"
+      "${ingest_args[@]}"
     ;;
   align-digestion-status)
     exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" -- \

@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -25,7 +26,8 @@ internal static class IngestTruthAlignmentClassifier
     internal static IngestTruthAlignmentClassification ClassifyCurrent(
         LeanReportInputState reportInputState,
         BackfillInventoryDocument current,
-        BackfillInventoryDocument baseline)
+        BackfillInventoryDocument baseline,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
@@ -35,8 +37,8 @@ internal static class IngestTruthAlignmentClassifier
                 "Lean report input closure changed");
         }
 
-        var baselineEntries = StatusAuthorityEntries(baseline);
-        var currentEntries = StatusAuthorityEntries(current);
+        var baselineEntries = StatusAuthorityEntries(baseline, sourceIds);
+        var currentEntries = StatusAuthorityEntries(current, sourceIds);
         foreach (var item in currentEntries.Values.OrderBy(
                      static item => item.Entry.AtomId,
                      StringComparer.Ordinal))
@@ -78,14 +80,15 @@ internal static class IngestTruthAlignmentClassifier
         BackfillInventoryDocument planned,
         DigestionLedgerAlignment alignment,
         DigestionEvaluationScope scope,
-        RawChangeSet repositoryChanges)
+        RawChangeSet repositoryChanges,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
         ArgumentNullException.ThrowIfNull(planned);
         ArgumentNullException.ThrowIfNull(repositoryChanges);
-        var currentEntries = StatusAuthorityEntries(current);
-        var plannedEntries = StatusAuthorityEntries(planned);
+        var currentEntries = StatusAuthorityEntries(current, sourceIds);
+        var plannedEntries = StatusAuthorityEntries(planned, sourceIds);
         foreach (var item in currentEntries.Values
                      .Where(static item => !item.Entry.CoverageGids.IsEmpty)
                      .OrderBy(static item => item.Entry.AtomId, StringComparer.Ordinal))
@@ -130,8 +133,10 @@ internal static class IngestTruthAlignmentClassifier
             planned,
             baseline,
             resolvedChanges,
-            alignment);
+            alignment,
+            sourceIds);
         var changedCoveredEntry = planned.RequireDigestionEntries()
+            .Where(entry => sourceIds is null || sourceIds.Contains(entry.SourceId))
             .Where(static entry => !entry.CoverageGids.IsEmpty)
             .Where(entry => authorityChangedAtomIds.Contains(entry.AtomId))
             .OrderBy(static entry => entry.AtomId, StringComparer.Ordinal)
@@ -146,8 +151,10 @@ internal static class IngestTruthAlignmentClassifier
     }
 
     private static Dictionary<string, StatusAuthorityEntry> StatusAuthorityEntries(
-        BackfillInventoryDocument document) =>
+        BackfillInventoryDocument document,
+        ImmutableHashSet<string>? sourceIds) =>
         document.RequireDigestionSources()
+            .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
             .SelectMany(source => source.Entries.Select(entry => new StatusAuthorityEntry(source, entry)))
             .ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
 

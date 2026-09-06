@@ -9,10 +9,11 @@ internal sealed record DigestionIngestPlan(
     int StaleAcknowledged,
     int ResidualOpenAdded,
     ImmutableArray<DigestionCasObject> CasObjects,
-    ImmutableArray<DigestionIngestFallback> Fallbacks)
+    ImmutableArray<DigestionIngestFallback> Fallbacks,
+    ImmutableHashSet<string>? SourceIds = null)
 {
     internal BackfillInventoryDocument Document { get; } =
-        DigestionIngestor.NormalizeAtomIdentities(AdmissionDocument);
+        DigestionIngestor.NormalizeAtomIdentities(AdmissionDocument, SourceIds);
 }
 
 internal static class DigestionSourceConflictMarkers
@@ -68,73 +69,8 @@ internal static class DigestionSourceConflictMarkers
         $"{DiagnosticCode} {sourcePath}:{line}: unresolved merge conflict marker in digestion source";
 }
 
-internal static class DigestionIngestor
+internal static partial class DigestionIngestor
 {
-    /// <summary>
-    /// Every theory document is digested by something. A volume nobody has written a
-    /// dialect for used to sit in the tree with no source declaration at all — not refused,
-    /// not digested, just unaccounted — because the declaration was a hand-written file and
-    /// nothing checked that one existed. It is derivable from the path, so ingest derives
-    /// it: the default atomizer, and a source id slugged from the file name. What remains
-    /// hand-written is only what is genuinely a decision — that this path is a canonical
-    /// volume at all, which stays with <c>governance_documents</c> on the base side.
-    /// </summary>
-    private static BackfillInventoryDocument RegisterDefaultTheorySources(
-        BackfillInventoryDocument document,
-        RepositorySnapshot snapshot)
-    {
-        var sources = document.RequireDigestionSources();
-        var declaredPaths = sources
-            .Select(static source => source.SourcePath)
-            .ToHashSet(StringComparer.Ordinal);
-        var sourceIds = sources.ToDictionary(
-            static source => source.SourceId,
-            static source => source.SourcePath,
-            StringComparer.Ordinal);
-        var registered = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
-        foreach (var path in snapshot.Files.Keys
-                     .Select(static path => path.Value)
-                     .Where(static path => path.StartsWith(
-                         DigestionOpaquePathPolicy.TheoryRootPath,
-                         StringComparison.Ordinal))
-                     .Where(path => !declaredPaths.Contains(path))
-                     .Order(StringComparer.Ordinal))
-        {
-            var sourceId = DeriveSourceId(path);
-            if (sourceIds.TryGetValue(sourceId, out var claimant))
-            {
-                throw new FormatException(
-                    $"theory source id derived from {path} collides with {claimant}: {sourceId}");
-            }
-
-            sourceIds.Add(sourceId, path);
-            registered.Add(new DigestionLedgerSource(
-                sourceId,
-                path,
-                AtomizerRegistry.GenericId,
-                [],
-                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
-                ImmutableArray<DigestionLedgerEntry>.Empty));
-        }
-
-        return registered.Count == 0
-            ? document
-            : document.WithDigestionSources(sources.AddRange(registered));
-    }
-
-    /// <summary>
-    /// The file name, lowercased, with every run of non-alphanumerics collapsed to a dash —
-    /// the shape <c>BackfillInventoryRule</c> already requires of a source id.
-    /// </summary>
-    private static string DeriveSourceId(string path)
-    {
-        var stem = Path.GetFileNameWithoutExtension(path);
-        var id = new string(stem.Select(static character =>
-            char.IsAsciiLetterOrDigit(character) ? char.ToLowerInvariant(character) : '-').ToArray());
-        id = string.Join('-', id.Split('-', StringSplitOptions.RemoveEmptyEntries));
-        return id.Length > 0 ? id : "source-" + DigestionFingerprint.ShortHash(path);
-    }
-
     internal static RawChangeSet IncludeCasReverseDependencies(
         BackfillInventoryDocument baselineDocument,
         RawChangeSet changes)
@@ -170,13 +106,17 @@ internal static class DigestionIngestor
         BackfillInventoryDocument baselineDocument,
         RepositorySnapshot? baselineSnapshot = null,
         Func<string, TheoryAtomizer>? atomizerResolver = null,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        ImmutableHashSet<string>? sourceIds = null,
+        ImmutableHashSet<string>? registrationPaths = null,
+        Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(baselineDocument);
 
-        var migrationDocument = RegisterDefaultTheorySources(document, snapshot);
+        var migrationDocument = RegisterDefaultTheorySources(document, snapshot,
+            sourceIds is null ? null : registrationPaths ?? ImmutableHashSet<string>.Empty);
         var evaluationChanges = changes is null
             ? null
             : IncludeCasReverseDependencies(baselineDocument, changes);
@@ -186,9 +126,12 @@ internal static class DigestionIngestor
             baselineDocument,
             DigestionAlignmentMode.Ingest,
             atomizerResolver,
-            changes: evaluationChanges);
+            changes: evaluationChanges,
+            contentKindAtomizerResolver: contentKindAtomizerResolver,
+            sourceIds: sourceIds);
         var unverifiedChainParent = migrationDocument.RequireDigestionEntries().FirstOrDefault(entry =>
-            entry.Receipts.ChainAtoms.Length > 0
+            (sourceIds is null || sourceIds.Contains(entry.SourceId))
+            && entry.Receipts.ChainAtoms.Length > 0
             && alignment.ClausePlanChainParents.Contains(entry.AtomId)
             && !alignment.VerifiedClausePlanParents.Contains(entry.AtomId));
         if (unverifiedChainParent is not null)
@@ -222,6 +165,11 @@ internal static class DigestionIngestor
         var residualOpenAdded = 0;
         foreach (var source in migrationDocument.RequireDigestionSources())
         {
+            if (sourceIds is not null && !sourceIds.Contains(source.SourceId))
+            {
+                sources.Add(source);
+                continue;
+            }
             var resolvedSource = alignment.GenreRegistryChecks.TryGetValue(
                 source.SourceId,
                 out var genreRegistryCheck)
@@ -354,7 +302,8 @@ internal static class DigestionIngestor
             casObjects.Values
                 .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
                 .ToImmutableArray(),
-            alignment.Fallbacks);
+            alignment.Fallbacks,
+            sourceIds);
     }
 
     private static DigestionCasObject AddCasObject(
@@ -377,10 +326,12 @@ internal static class DigestionIngestor
     }
 
     internal static BackfillInventoryDocument NormalizeAtomIdentities(
-        BackfillInventoryDocument document)
+        BackfillInventoryDocument document,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         var sources = document.RequireDigestionSources();
         var items = sources
+            .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
             .SelectMany((source, sourceIndex) => source.Entries.Select((entry, entryIndex) =>
                 (Source: source, SourceIndex: sourceIndex, Entry: entry, EntryIndex: entryIndex)))
             .ToArray();
@@ -495,7 +446,8 @@ internal static class DigestionIngestor
                 expectedReference));
         }
 
-        return document.WithDigestionSources(sources.Select(source => source with
+        return document.WithDigestionSources(sources.Select(source =>
+            sourceIds is not null && !sourceIds.Contains(source.SourceId) ? source : source with
         {
             AcknowledgedStale = source.AcknowledgedStale
                 .Select(Remap)

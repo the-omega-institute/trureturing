@@ -203,7 +203,8 @@ internal static partial class BackfillInventoryRule
         BackfillInventoryDocument document,
         RawChangeSet? changes = null,
         Func<string, bool>? isBaseFactAffected = null,
-        RawChangeSet? casChanges = null) =>
+        RawChangeSet? casChanges = null,
+        ImmutableHashSet<string>? sourceIds = null) =>
         EvaluateDocument(
             new BackfillInventoryValidationContext(
                 current,
@@ -215,12 +216,14 @@ internal static partial class BackfillInventoryRule
                 isBaseFactAffected,
                 casChanges),
             document,
-            validateTruthAlignment: false);
+            validateTruthAlignment: false,
+            sourceIds);
 
     private static ImmutableArray<RuleFinding> EvaluateDocument(
         BackfillInventoryValidationContext context,
         BackfillInventoryDocument document,
-        bool validateTruthAlignment)
+        bool validateTruthAlignment,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(document);
@@ -251,7 +254,8 @@ internal static partial class BackfillInventoryRule
                 sources,
                 sources.SelectMany(static source => source.Entries).ToImmutableArray(),
                 findings,
-                validateTruthAlignment);
+                validateTruthAlignment,
+                sourceIds);
         }
 
         return findings.ToImmutable();
@@ -298,7 +302,8 @@ internal static partial class BackfillInventoryRule
         ImmutableArray<DigestionLedgerSource> sources,
         ImmutableArray<DigestionLedgerEntry> entries,
         ImmutableArray<RuleFinding>.Builder findings,
-        bool validateTruthAlignment)
+        bool validateTruthAlignment,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         if (sources.Length == 0)
         {
@@ -313,8 +318,8 @@ internal static partial class BackfillInventoryRule
         var validateAllRecords = context.Changes is null;
         foreach (var source in sources)
         {
-            var sourceMetadataChanged = validateAllRecords
-                || SourceMetadataChanged(source, context.Changes);
+            var sourceMetadataChanged = (sourceIds is null || sourceIds.Contains(source.SourceId))
+                && (validateAllRecords || SourceMetadataChanged(source, context.Changes));
             if (sourceMetadataChanged)
             {
                 changedSourceIds.Add(source.SourceId);
@@ -400,7 +405,7 @@ internal static partial class BackfillInventoryRule
             }
         }
 
-        ValidateTheoryCoverage(context, seenPaths.Keys, findings);
+        if (sourceIds is null) ValidateTheoryCoverage(context, seenPaths.Keys, findings);
 
         if (entries.Length == 0)
         {
@@ -411,10 +416,11 @@ internal static partial class BackfillInventoryRule
         var changedAtomIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (var entry in entries)
         {
-            var entryChanged = validateAllRecords
+            var entryChanged = (sourceIds is null || sourceIds.Contains(entry.SourceId))
+                && (validateAllRecords
                 || changedSourceIds.Contains(entry.SourceId)
                 || context.Changes is not null
-                    && DigestionCasStore.EntryChanged(entry, context.Changes);
+                    && DigestionCasStore.EntryChanged(entry, context.Changes));
             if (entryChanged)
             {
                 changedAtomIds.Add(entry.AtomId);

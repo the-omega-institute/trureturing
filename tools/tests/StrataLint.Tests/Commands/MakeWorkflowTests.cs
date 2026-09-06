@@ -240,6 +240,8 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void IngestWrapperSeparatesReportFreeDigestionFromTruthAlignment()
     {
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Contains("make ingest [BASE=origin/dev] [SOURCE=\"id path ...\"]", makefile, StringComparison.Ordinal);
         var script = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
 

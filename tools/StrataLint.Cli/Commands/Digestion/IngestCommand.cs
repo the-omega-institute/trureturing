@@ -197,19 +197,24 @@ internal static partial class IngestCommand
 
     private static DigestionIngestPlan Plan(
         IngestInputs inputs,
-        RawChangeSet repositoryChanges) =>
+        RawChangeSet repositoryChanges,
+        ImmutableHashSet<string>? sourceIds = null,
+        ImmutableHashSet<string>? registrationPaths = null) =>
         DigestionIngestor.Plan(
             inputs.CurrentDocument,
             inputs.Current,
             inputs.BaselineDocument,
             inputs.Baseline,
-            changes: repositoryChanges);
+            changes: repositoryChanges,
+            sourceIds: sourceIds,
+            registrationPaths: registrationPaths);
 
     private static IngestPreparation Prepare(
         IngestInputs inputs,
         RawChangeSet repositoryChanges,
         DigestionIngestPlan plan,
-        LeanAxiomReport? report)
+        LeanAxiomReport? report,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         var currentRaw = inputs.CurrentRaw;
         var current = inputs.Current;
@@ -217,7 +222,7 @@ internal static partial class IngestCommand
         var currentDocument = inputs.CurrentDocument;
         var baselineDocument = inputs.BaselineDocument;
         var plannedRaw = AddCasObjects(
-            ReplaceLedger(currentRaw, currentDocument, plan.Document),
+            ReplaceLedger(currentRaw, currentDocument, plan.Document, sourceIds),
             plan.CasObjects);
         var plannedSnapshot = Decode(plannedRaw);
         var plannedDocument = LoadDocument(plannedSnapshot);
@@ -256,23 +261,26 @@ internal static partial class IngestCommand
             plannedDeltaImpact.ReceiptVerificationChanges,
             plannedCasChanges,
             plannedScope,
-            RenderCrossVolumeClearanceGaps(plan.Document, baselineDocument),
+            RenderCrossVolumeClearanceGaps(plan.Document, baselineDocument, sourceIds),
             SilentZeroExtractionWarnings(
                 currentDocument,
                 plan.Document,
                 current,
-                baseline));
+                baseline,
+                sourceIds));
     }
 
     private static ImmutableArray<DigestionLedgerSource> SilentZeroExtractionWarnings(
         BackfillInventoryDocument currentDocument,
         BackfillInventoryDocument plannedDocument,
         RepositorySnapshot current,
-        RepositorySnapshot baseline)
+        RepositorySnapshot baseline,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         var plannedSources = plannedDocument.RequireDigestionSources()
             .ToDictionary(static source => source.SourceId, StringComparer.Ordinal);
         return currentDocument.RequireDigestionSources()
+            .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
             .Where(source => AtomizerRegistry.IsRegistered(source.Atomizer))
             .Where(source => current.TryGetFile(source.SourcePath, out var currentFile)
                 && baseline.TryGetFile(source.SourcePath, out var baselineFile)
@@ -284,7 +292,8 @@ internal static partial class IngestCommand
 
     private static string RenderCrossVolumeClearanceGaps(
         BackfillInventoryDocument currentDocument,
-        BackfillInventoryDocument baselineDocument)
+        BackfillInventoryDocument baselineDocument,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         var currentHosts = ResidualHosts(currentDocument)
             .Distinct()
@@ -294,6 +303,7 @@ internal static partial class IngestCommand
             .ToHashSet();
         var currentByName = currentHosts.ToLookup(static host => host.Residue, StringComparer.Ordinal);
         var cleared = ResidualHosts(baselineDocument)
+            .Where(host => sourceIds is null || sourceIds.Contains(host.SourceId))
             .GroupBy(static host => new ResidueSourceVote(host.Residue, host.SourceId))
             .Where(group => !currentVotes.Contains(group.Key))
             .Select(static group => group
@@ -348,7 +358,8 @@ internal static partial class IngestCommand
     internal static RawRepositorySnapshot ReplaceLedger(
         RawRepositorySnapshot snapshot,
         BackfillInventoryDocument current,
-        BackfillInventoryDocument replacement)
+        BackfillInventoryDocument replacement,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         var matches = snapshot.Entries.Count(static entry =>
             entry.Path == BackfillInventoryLoader.RelativePath);
@@ -367,7 +378,8 @@ internal static partial class IngestCommand
         // Adding is how a theory document nobody declared enters the ledger, so it is
         // allowed and writes the source metadata below. The current writer does not
         // remove a source because that would also discard its receipts.
-        var removed = currentSources.Keys.Except(replacementSources.Keys, StringComparer.Ordinal).ToArray();
+        var removed = currentSources.Keys.Except(replacementSources.Keys, StringComparer.Ordinal)
+            .Where(id => sourceIds is null || sourceIds.Contains(id)).ToArray();
         if (removed.Length > 0)
         {
             throw new InvalidOperationException(
@@ -377,6 +389,7 @@ internal static partial class IngestCommand
 
         foreach (var (sourceId, replacementSource) in replacementSources)
         {
+            if (sourceIds is not null && !sourceIds.Contains(sourceId)) continue;
             if (currentSources.TryGetValue(sourceId, out var currentSource)
                 && SourceMetadataEquals(currentSource, replacementSource))
             {
@@ -395,12 +408,14 @@ internal static partial class IngestCommand
             static entry => (entry.SourceId, entry.AtomId));
         foreach (var key in currentEntries.Keys.Except(replacementEntries.Keys))
         {
+            if (sourceIds is not null && !sourceIds.Contains(key.SourceId)) continue;
             throw new InvalidOperationException(
                 $"ingest cannot remove directory ledger atom {key.AtomId}");
         }
 
         foreach (var (key, replacementEntry) in replacementEntries)
         {
+            if (sourceIds is not null && !sourceIds.Contains(key.SourceId)) continue;
             if (currentEntries.TryGetValue(key, out var currentEntry))
             {
                 var currentBytes = BackfillInventoryWriter.WriteAtom(currentEntry);

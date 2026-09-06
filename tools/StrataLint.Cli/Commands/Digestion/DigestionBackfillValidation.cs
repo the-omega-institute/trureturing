@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -35,7 +36,8 @@ internal static class DigestionBackfillValidation
         RepositorySnapshot baseline,
         ValidatedPolicy policy,
         RawChangeSet? changes = null,
-        RawChangeSet? casChanges = null)
+        RawChangeSet? casChanges = null,
+        ImmutableHashSet<string>? sourceIds = null)
     {
         var findings = BackfillInventoryRule.EvaluateDocumentWithoutTruthAlignment(
             current,
@@ -43,7 +45,8 @@ internal static class DigestionBackfillValidation
             policy,
             document,
             changes,
-            casChanges: casChanges);
+            casChanges: casChanges,
+            sourceIds: sourceIds);
         return RenderOrThrow(findings);
     }
 

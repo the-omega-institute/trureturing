@@ -20,29 +20,33 @@ internal static partial class IngestCommand
                 repository,
                 options.BaselineRevision,
                 requireBaselineSourceMetadata: true);
+            var (sourceIds, registrationPaths) = ResolveSources(inputs, options.Sources);
             var classification = IngestTruthAlignmentClassifier.ClassifyCurrent(
                 options.ReportInputState,
                 inputs.CurrentDocument,
-                inputs.BaselineDocument);
+                inputs.BaselineDocument,
+                sourceIds);
             if (!classification.IsUncoveredOnly)
             {
                 return TruthAlignmentRequired(classification);
             }
 
             var repositoryChanges = repository.ReadChanges(options.BaselineRevision);
-            var plan = Plan(inputs, repositoryChanges);
+            var plan = Plan(inputs, repositoryChanges, sourceIds, registrationPaths);
             var prepared = Prepare(
                 inputs,
                 repositoryChanges,
                 plan,
-                report: null);
+                report: null,
+                sourceIds);
             classification = IngestTruthAlignmentClassifier.ClassifyPlanned(
                 prepared.CurrentDocument,
                 prepared.BaselineDocument,
                 prepared.PlannedDocument,
                 prepared.Plan.Alignment,
                 prepared.PlannedScope,
-                prepared.RepositoryChanges);
+                prepared.RepositoryChanges,
+                sourceIds);
             if (!classification.IsUncoveredOnly)
             {
                 return TruthAlignmentRequired(classification);
@@ -54,7 +58,8 @@ internal static partial class IngestCommand
                 prepared.PlannedSnapshot,
                 prepared.BaselineDocument,
                 prepared.PlannedReceiptVerificationChanges,
-                prepared.PlannedCasChanges);
+                prepared.PlannedCasChanges,
+                sourceIds);
             RequireValidReportFreeEvaluation(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfillWithoutTruthAlignment(
                 prepared.PlannedDocument,
@@ -64,14 +69,16 @@ internal static partial class IngestCommand
                 DigestionEvaluationScopes.ResolveChanges(
                     prepared.PlannedScope,
                     prepared.PlannedReceiptVerificationChanges),
-                casChanges: prepared.PlannedCasChanges);
+                casChanges: prepared.PlannedCasChanges,
+                sourceIds: sourceIds);
             return WriteResult(
                 repositoryRoot,
                 prepared,
                 prepared.PlannedRaw,
                 prepared.PlannedDocument,
                 evaluation,
-                backfillObservations);
+                backfillObservations,
+                sourceIds);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -104,11 +111,14 @@ internal static partial class IngestCommand
         RawRepositorySnapshot finalRaw,
         BackfillInventoryDocument finalDocument,
         DigestionLedgerEvaluation evaluation,
-        string backfillObservations)
+        string backfillObservations,
+        ImmutableHashSet<string>? sourceIds = null)
     {
-        var ledgerUpdates = LedgerUpdates(prepared.CurrentRaw, finalRaw);
+        var ledgerUpdates = LedgerUpdates(prepared.CurrentRaw, finalRaw, sourceIds);
+        RequireScopedCasObjects(prepared.Plan.CasObjects, finalDocument, sourceIds);
         var changed = ledgerUpdates.Length > 0;
         var openGenres = finalDocument.RequireDigestionSources()
+            .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
             .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>
                 (source.SourceId, Token: token)))
             .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
@@ -156,22 +166,33 @@ internal static partial class IngestCommand
 
     private static ReportFreeOptions ParseReportFreeArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count == 4
+        if (arguments.Count >= 4
             && arguments[0] == "--base"
             && !string.IsNullOrWhiteSpace(arguments[1])
             && arguments[2] == "--report-input-state"
             && Enum.TryParse<LeanReportInputState>(arguments[3], ignoreCase: true, out var state))
         {
-            return new ReportFreeOptions(arguments[1], state);
+            var sources = ImmutableArray.CreateBuilder<string>();
+            for (var index = 4; index < arguments.Count; index += 2)
+            {
+                if (arguments[index] != "--source")
+                    throw SourceUsage($"unexpected argument '{arguments[index]}'");
+                if (index + 1 == arguments.Count)
+                    throw SourceUsage("--source missing value");
+                if (string.IsNullOrWhiteSpace(arguments[index + 1]))
+                    throw SourceUsage($"invalid --source selector '{arguments[index + 1]}'");
+                sources.Add(arguments[index + 1]);
+            }
+            return new ReportFreeOptions(arguments[1], state, sources.ToImmutable());
         }
 
-        throw new InvalidOperationException(
-            "USAGE: StrataLint ingest --base REV --report-input-state unchanged|changed");
+        throw SourceUsage("invalid arguments");
     }
 
     private sealed record ReportFreeOptions(
         string BaselineRevision,
-        LeanReportInputState ReportInputState);
+        LeanReportInputState ReportInputState,
+        ImmutableArray<string> Sources);
 
     private sealed record IngestInputs(
         RawRepositorySnapshot CurrentRaw,
