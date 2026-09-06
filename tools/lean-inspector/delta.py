@@ -197,7 +197,8 @@ def plan(args: argparse.Namespace) -> int:
         # The report edge points importer -> imported module.  For every
         # source-identical surviving importer, the attested old import list is
         # identical to the current one.  It is therefore the complete inbound
-        # graph needed to close changed/added roots without inspecting first.
+        # graph needed to close changed/added roots and surviving importers of
+        # removed modules without inspecting first.
         reverse = {name: set() for name in set(current) | set(old)}
         for importer, record in old.items():
             if importer not in current:
@@ -206,6 +207,8 @@ def plan(args: argparse.Namespace) -> int:
                 if dependency in reverse:
                     reverse[dependency].add(importer)
 
+        # Deleted modules are not Inspector inputs, but their surviving importers
+        # must be rechecked to avoid retaining records with unloadable environments.
         removed_importers = {
             importer
             for deleted in removed

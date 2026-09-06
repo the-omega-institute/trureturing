@@ -22,6 +22,10 @@ public sealed class LeanReportCiBaselineScriptTests
     [Fact]
     public void DeltaPlanDoesNotRecheckModuleOutsideRemovedDependencyClosure() =>
         LeanReportCiBaselineScriptContract.AssertDeltaPlanDoesNotRecheckModuleOutsideRemovedDependencyClosure();
+
+    [Fact]
+    public void DeltaPlanRechecksExactlySurvivingDescendantsOfRemovedModules() =>
+        LeanReportCiBaselineScriptContract.AssertDeltaPlanRechecksExactlySurvivingDescendantsOfRemovedModules();
 }
 
 internal static class LeanReportCiBaselineScriptContract
@@ -122,6 +126,50 @@ internal static class LeanReportCiBaselineScriptContract
         var recheck = RunRemovedDependencyPlan(includeUnrelatedModule: true);
 
         Assert.DoesNotContain("D", recheck);
+    }
+
+    internal static void AssertDeltaPlanRechecksExactlySurvivingDescendantsOfRemovedModules()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
+        var cache = Path.Combine(temporary.Path, "cache");
+        // Imports point toward dependencies: B/C survive A, while I survives removed H.
+        // E/F/G/J fork and join downstream; S/T are forward-only, D/U disconnected.
+        var baselineModules = new[]
+        {
+            CreateModuleRecord(temporary.Path, "A"),
+            CreateModuleRecord(temporary.Path, "B", "A", "S"),
+            CreateModuleRecord(temporary.Path, "C", "A"),
+            CreateModuleRecord(temporary.Path, "D"),
+            CreateModuleRecord(temporary.Path, "E", "B"),
+            CreateModuleRecord(temporary.Path, "F", "B", "C"),
+            CreateModuleRecord(temporary.Path, "G", "E", "F"),
+            CreateModuleRecord(temporary.Path, "H", "A"),
+            CreateModuleRecord(temporary.Path, "I", "H"),
+            CreateModuleRecord(temporary.Path, "J", "G", "I"),
+            CreateModuleRecord(temporary.Path, "S"),
+            CreateModuleRecord(temporary.Path, "T", "S"),
+            CreateModuleRecord(temporary.Path, "U", "D"),
+        };
+        var surviving = new[] { "B", "C", "D", "E", "F", "G", "I", "J", "S", "T", "U" };
+        var moduleTable = string.Concat(surviving.Select(module => $"{module}\t{module}.lean\n"));
+        WriteBundle(bundle, string.Join(", ", baselineModules));
+        Assert.Equal(0, Run(bundle, cache).ExitCode);
+
+        var plan = RunDeltaPlan(temporary.Path, cache, moduleTable);
+        using var document = JsonDocument.Parse(File.ReadAllText(plan));
+        var root = document.RootElement;
+        Assert.Equal("delta", root.GetProperty("status").GetString());
+        Assert.Empty(root.GetProperty("changed").EnumerateArray());
+        Assert.Empty(root.GetProperty("added").EnumerateArray());
+        Assert.Equal(
+            new[] { "A", "H" },
+            root.GetProperty("removed").EnumerateArray().Select(value => value.GetString()).ToArray());
+        Assert.Equal(surviving, root.GetProperty("current").EnumerateObject().Select(value => value.Name).ToArray());
+        Assert.Equal(
+            new[] { "B", "C", "E", "F", "G", "I", "J" },
+            root.GetProperty("recheck").EnumerateArray().Select(value => value.GetString()).ToArray());
     }
 
     private static void CompleteFlatBundleBecomesAContentAddressedDeltaEntry()
