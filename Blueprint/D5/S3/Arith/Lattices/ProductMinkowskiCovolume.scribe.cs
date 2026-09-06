@@ -72,7 +72,7 @@ internal sealed class ProductMinkowskiCovolumeDocument : IScribeDocumentDefiniti
         F.Id("r"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Sp, Rightarrow, Sp,
         Call("covol", Call("restrictedMinkowskiLattice", F.Id("K"), F.Id("r"))),
         Sp, Eq, Sp, Pow(Grp(
-            Pow(Pow(F.D(2), Seq(Minus, F.D(1))), Call("c", F.Id("K"))), Sp,
+            Pow(Grp(Pow(F.D(2), Seq(Minus, F.D(1)))), Call("c", F.Id("K"))), Sp,
             Times, Sp, Sqrt, Grp(Call("abs", Call("disc", F.Id("K"))))), F.Id("r"))));
 
     private static Formula Product(Formula body) => Seq(
