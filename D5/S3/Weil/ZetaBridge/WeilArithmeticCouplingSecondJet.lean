@@ -8,7 +8,6 @@
 import D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Nlinarith
 import Mathlib.Tactic.Ring
 
 /-!
