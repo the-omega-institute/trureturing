@@ -195,7 +195,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void CoverageVerifierRejectsTouchedTargetWhoseForkPointIdentityIsUnchanged()
+    public void CoverageVerifierRejectsTouchedTargetWhoseBaselineIdentityIsUnchanged()
     {
         var evaluation = EvaluateCompleteWitness(
             DigestionMigrationState.Partial,

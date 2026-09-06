@@ -1,0 +1,90 @@
+## 定理 159.1　熵闭合的对称双曲性与速度界
+
+定义：
+
+$$
+A_0(\alpha)
+=
+\sum_i f_i^*m_im_i^{\mathsf T},
+$$
+
+$$
+A_a(\alpha)
+=
+\sum_i v_i^a f_i^*m_im_i^{\mathsf T}.
+$$
+
+则：
+
+$$
+\boxed{A_0>0,}
+\tag{159.3}
+$$
+
+且 \(A_a\) 对称。
+
+闭合矩方程的主部为：
+
+$$
+A_0\partial_t\alpha+\sum_aA_a\partial_a\alpha.
+$$
+
+对任意单位空间方向 \(\xi\)，其特征速度 \(\lambda\) 满足：
+
+$$
+\boxed{
+\min_i(v_i\cdot\xi)
+\le\lambda\le
+\max_i(v_i\cdot\xi).
+}
+\tag{159.4}
+$$
+
+因此：
+
+$$
+|\lambda|\le c.
+$$
+
+### 证明
+
+对非零 \(z\)：
+
+$$
+z^{\mathsf T}A_0z
+=
+\sum_if_i^*(z\cdot m_i)^2>0,
+$$
+
+因为全部权重正，且 \(m_i\) 张成空间。
+
+令：
+
+$$
+A_\xi=\sum_a\xi_aA_a.
+$$
+
+广义本征值的 Rayleigh 商为：
+
+$$
+\lambda
+=
+\frac{
+\sum_i(v_i\cdot\xi)f_i^*(z\cdot m_i)^2
+}{
+\sum_if_i^*(z\cdot m_i)^2
+}.
+$$
+
+它是方向速度的非负加权平均，故得到式（159.4）。∎
+
+### 限定
+
+本定理保证可实现区域内的特征速度界和局部对称双曲结构。
+
+它没有保证任意初值的解永远光滑，也没有保证近似过程永远停留在可实现区域。
+
+更重要的是：**保持正性、熵结构和有限速度，仍然不等于已经预测准确。**
+
+---
+

@@ -1,0 +1,48 @@
+### 证明
+
+固定 \(n,\lambda\)，考虑概率测度：
+
+$$
+d\mu_{n,\lambda}(x)
+=
+\frac{x^{2n}e^{\lambda x^2}p(x)}{b_n(\lambda)}\,dx.
+$$
+
+记：
+
+$$
+R_\lambda(x)=R(x)-2\lambda.
+$$
+
+分部积分给出：
+
+$$
+\mathbb E_{\mu_{n,\lambda}}[R_\lambda(|X|)]
+=
+(2n-1)\frac{b_{n-1}}{b_n},
+$$
+
+$$
+\mathbb E_{\mu_{n,\lambda}}[X^2]
+=
+\frac{b_{n+1}}{b_n},
+$$
+
+$$
+\mathbb E_{\mu_{n,\lambda}}[X^2R_\lambda(|X|)]
+=
+2n+1.
+$$
+
+因为 \(X^2\) 与 \(R_\lambda(|X|)\) 都是 \(|X|\) 的严格递增函数，其协方差严格为正：
+
+$$
+2n+1
+>
+(2n-1)\frac{b_{n-1}b_{n+1}}{b_n^2}.
+$$
+
+整理即得。证毕。
+
+这给出了经典矩不等式的一条适合当前观察者语言的推导，而不是另造一组评价标准。此类实际 theta 矩不等式正是 Csordas–Varga 研究的对象。([ResearchGate][2])
+

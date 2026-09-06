@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d321c6977092b326826623d6f4476a310ea397785a57a64e5a28ea583e9689cd
+  normalized_sha256: sha256:d321c6977092b326826623d6f4476a310ea397785a57a64e5a28ea583e9689cd
+cas_ref: sha256:d321c6977092b326826623d6f4476a310ea397785a57a64e5a28ea583e9689cd
+coverage_gids:
+  - gid: D5/S0/Conventions/CanonicalInterchangeability.canonical_interchangeability
+    target_statement_id: sha256:e7ff3aa2e82bfb6c48ab2214c93c72fa830cfba64a9c2036476b438e55ac3afa
+receipts:
+  scribe:
+    - gid: D5/S0/Conventions/CanonicalInterchangeability.canonical_interchangeability
+      definition_sha256: sha256:3cc0a4dbab069f9e238d60b7b5009ef9fd7aa1288695bfd1db08cd5c3afd844e
+      emission_sha256: sha256:a24e2a81de38bed1fc9ccf03ba8a0811641a4a89c74df8b88a3540ea3b9337fa
+  unresolved_subitems: []

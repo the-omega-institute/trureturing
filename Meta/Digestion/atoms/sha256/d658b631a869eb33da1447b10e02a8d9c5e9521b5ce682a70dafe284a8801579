@@ -1,0 +1,25 @@
+# 七、截断模数应该增长多快？也可以精确回答
+
+上面选择了 \(q\asymp X\)。再考虑只保留两个共轭频率的尾核
+
+$$
+\mathscr P_{>Q}(n,m)
+=
+2\sum_{q>Q}
+\frac{\mu(q)^2}{\varphi(q)^2}
+\cos\frac{2\pi(n-m)}q.
+$$
+
+这个级数绝对收敛，并且仍是正核。
+
+定义相应窗口读出
+
+$$
+\mathfrak B(X,Q)
+=
+\int_X^{2X}
+\frac1{x^2}
+\sum_{x<n,m\le2x}
+\mathscr P_{>Q}(n,m)\,dx.
+$$
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:93ba1aed20f67041c034231186e59ee0b48b742469b64736f6eabe431fd19a1c
+  normalized_sha256: sha256:93ba1aed20f67041c034231186e59ee0b48b742469b64736f6eabe431fd19a1c
+cas_ref: sha256:93ba1aed20f67041c034231186e59ee0b48b742469b64736f6eabe431fd19a1c
+coverage_gids:
+  - gid: D5/S3/Divergence/CauchyMeasureEntropy.cauchy_poisson_coarse_graining
+    target_statement_id: sha256:1e4cc89b75f096587f84d5086e07af2952221fab31a353d9e07412cfb9dbae34
+receipts:
+  scribe:
+    - gid: D5/S3/Divergence/CauchyMeasureEntropy.cauchy_poisson_coarse_graining
+      definition_sha256: sha256:b37126554c92222617ba8b5b2c25704a26c5f85f21ba892c6d23c90c815d883b
+      emission_sha256: sha256:8f18f60bb0102af7394d1be96f920e8db1547dff1e69b86aa408072fec30756f
+  unresolved_subitems: []

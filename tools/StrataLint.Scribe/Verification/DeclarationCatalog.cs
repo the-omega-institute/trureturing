@@ -97,10 +97,10 @@ public sealed class DeclarationCatalog
     internal ImmutableArray<string> ImportsFor(RepoPath modulePath) =>
         imports.TryGetValue(modulePath, out var moduleImports) ? moduleImports : [];
 
-    internal IEnumerable<LeanDeclaration> Declarations => modules.Values
-        .SelectMany(static module => module.Values)
-        .SelectMany(static declarations => declarations)
-        .Select(static declaration => declaration.Declaration);
+    internal ImmutableArray<LeanDeclaration> DeclarationsFor(RepoPath sourcePath, string fullName) =>
+        modules.TryGetValue(sourcePath, out var module) && module.TryGetValue(fullName, out var declarations)
+            ? declarations.Select(static item => item.Declaration).ToImmutableArray()
+            : [];
 
     private static IndexedDeclaration Index(RepoPath path, LeanDeclaration declaration)
     {

@@ -1,0 +1,82 @@
+# 七、这些联系怎样回到 RH，而不是停留在一个漂亮模型？
+
+令：
+
+$$
+P=P(n)
+$$
+
+是 \(n\) 的最大素因子。现在把所有 \(p\le P\) 都纳入，包括未出现的素数；对于后者取 \(a_p=0\)。
+
+定义：
+
+$$
+A(P)=\prod_{p\le P}(1-p^{-1})^{-1},
+$$
+
+$$
+\boxed{
+\mathcal C(n)
+=
+-\sum_{p\le P}\ln\left(1-p^{-(a_p+1)}\right).
+}
+\tag{7.1}
+$$
+
+那么：
+
+$$
+\boxed{
+W(n)=\ln A(P)-\mathcal C(n).
+}
+\tag{7.2}
+$$
+
+Robin 判据是：
+
+$$
+\mathrm{RH}
+\iff
+W(n)<\gamma+\ln\ln\ln n
+\qquad\forall n>5040.
+$$
+
+这是经典等价关系。([arXiv][3])
+
+因此，定义：
+
+$$
+\Theta(n)
+=
+\ln A(P(n))-\gamma-\ln\ln\ln n,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal C(n)>\Theta(n)
+\qquad\forall n>5040.
+}
+\tag{7.3}
+$$
+
+再代入边界衰减指数：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\sum_{p\le P(n)}
+-\ln\left(1-e^{-\mathscr S_{p,a_p}}\right)
+>
+\Theta(n)
+\quad\forall n>5040.
+}
+\tag{7.4}
+$$
+
+这就是将“边界衰减—信息代价”转成 RH 的精确方式。
+

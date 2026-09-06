@@ -1,0 +1,143 @@
+## 定理 4：非消失联合贡献
+
+存在明确常数 \(C_{\mathrm{band}}>0\)，使
+
+$$
+\boxed{
+\mathfrak B(X)\longrightarrow C_{\mathrm{band}}.
+}
+\tag{24}
+$$
+
+其中
+
+$$
+\boxed{
+C_{\mathrm{band}}
+=
+\mathfrak a
+\int_{\mathcal B}\int_1^2
+\frac{
+\left|\displaystyle\int_u^{2u}e^{2\pi i\xi s}\,ds\right|^2
+}{u^2}
+\,du\,d\xi.
+}
+\tag{25}
+$$
+
+并且具有显式上下界
+
+$$
+\boxed{
+\frac{\mathfrak a}{\pi^2}
+\le C_{\mathrm{band}}
+\le\frac{\mathfrak a}{4}.
+}
+\tag{26}
+$$
+
+### 证明
+
+作缩放 \(x=Xu\)，并使用定理 3 的一致核收敛。窗口内的双重和变成 Riemann 和，得到
+
+$$
+\begin{aligned}
+\mathfrak B(X)
+&\longrightarrow
+\int_1^2\frac1{u^2}
+\int_u^{2u}\int_u^{2u}
+\Gamma(s,t)\,ds\,dt\,du.
+\end{aligned}
+$$
+
+代入式（20），即得式（25）。
+
+对于上界，
+
+$$
+\left|\int_u^{2u}e^{2\pi i\xi s}\,ds\right|
+\le u.
+$$
+
+所以
+
+$$
+C_{\mathrm{band}}
+\le
+\mathfrak a\,|\mathcal B|
+=\frac{\mathfrak a}{4}.
+$$
+
+对于下界，
+
+$$
+\left|\int_u^{2u}e^{2\pi i\xi s}\,ds\right|
+=
+\frac{|\sin(\pi u\xi)|}{\pi|\xi|}.
+$$
+
+在当前积分范围内，
+
+$$
+\frac18\le u|\xi|\le\frac12.
+$$
+
+使用
+
+$$
+\sin(\pi y)\ge2y
+\qquad(0\le y\le1/2),
+$$
+
+得到
+
+$$
+\left|\int_u^{2u}e^{2\pi i\xi s}\,ds\right|^2
+\ge\frac{4u^2}{\pi^2}.
+$$
+
+积分后即得下界。证毕。
+
+---
+
+现在有一个完整反例，反对如下推理：
+
+$$
+\text{“每个矩阵元趋零，所以这一部分可以删掉。”}
+$$
+
+实际情况是
+
+$$
+\boxed{
+\sup_{n,m}|\mathscr P_X(n,m)|=O(X^{-1}),
+}
+$$
+
+但
+
+$$
+\boxed{
+\mathfrak B(X)\longrightarrow C_{\mathrm{band}}>0.
+}
+\tag{27}
+$$
+
+原因不是抽象的“无限维神秘效应”，而是：
+
+$$
+\boxed{
+O(X^{-1})\text{ 的相关量}
+\times
+O(X^2)\text{ 个状态对}
+\times
+O(X^{-1})\text{ 的积分归一化}
+=
+O(1).
+}
+$$
+
+而这些相位在整个窗口内并未随机抵消，平方和结构保留了它们的相干贡献。
+
+**但 \(C_{\mathrm{band}}\) 不是前文的 \(c_0\)。**当前没有证明这组模数通道恰好等于实际余项的补偿；我们证明的是，它们能够产生一个此前逐项极限看不到的、明确非零的常数级贡献。
+

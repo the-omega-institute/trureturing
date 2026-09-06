@@ -123,6 +123,18 @@ example : fixtureCatalog.uniqueCaptureCount (0 : Fin 3) = 0 := by decide
 example : fixtureCatalog.uniqueCaptureCount (1 : Fin 3) = 0 := by decide
 example : fixtureCatalog.uniqueCaptureCount (2 : Fin 3) = 0 := by decide
 
+expect_information_occurrence fstTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealOvercomplete"
+
+expect_information_occurrence sndTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealOvercomplete"
+
+expect_information_occurrence idTheorem
+  in arena
+  from "LeanInformationAudit.Tests.SealOvercomplete"
+
 /-- error: IE-C007 ZeroUniqueCapture: theorem
 LeanInformationAudit.Tests.SealOvercomplete.fstTheorem arena
 LeanInformationAudit.Tests.SealOvercomplete.arena full 0 without 0 -/
