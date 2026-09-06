@@ -12,7 +12,7 @@ namespace StrataLint.Tests;
 public sealed class ScribeDemandBindingIsolationTests
 {
     [Fact]
-    public void LazyNeverBindsUnreachableCallableEdges()
+    public void DemandNeverBindsUnreachableCallableEdges()
     {
         var fixture = Synthetic("""
             class Cases {
@@ -34,7 +34,7 @@ public sealed class ScribeDemandBindingIsolationTests
     }
 
     [Fact]
-    public void LazyRelevanceMemoizesSharedPositiveAndNegativeSubgraphs()
+    public void DemandRelevanceMemoizesSharedPositiveAndNegativeSubgraphs()
     {
         var fixture = ProjectFixture("""
             class Cases { [Xunit.Fact] public void Root() { Production.Root(); Production.Negative(); } }
@@ -65,7 +65,7 @@ public sealed class ScribeDemandBindingIsolationTests
     }
 
     [Fact]
-    public void LazyBindingStateIsIsolatedBetweenDerivations()
+    public void DemandBindingStateIsIsolatedBetweenDerivations()
     {
         var fixture = Synthetic("class Cases { [Fact] public void Root() => Missing(); void Unused() { } }");
         var (first, _, firstRecorder) = Compare(fixture);
@@ -79,7 +79,7 @@ public sealed class ScribeDemandBindingIsolationTests
     }
 
     [Fact]
-    public void LazyAndEagerUnknownDebtFindingsAreByteIdentical()
+    public void DemandAndEagerUnknownDebtFindingsAreByteIdentical()
     {
         var fixture = Synthetic("class Cases { [Fact] public void Root() => Missing(); }");
         var current = new[] { Derive(fixture, ScribeBindingStrategy.Eager), Derive(fixture, ScribeBindingStrategy.Demand) };
@@ -154,7 +154,7 @@ public sealed class ScribeDemandBindingIsolationTests
     }
 
     [Fact]
-    public void UnreachableCrossTreeRootInitializerChangesFailureDomain()
+    public void CrossTreeRootInitializerIsClassifiedIdenticallyByEagerAndDemand()
     {
         var fixture = ProjectFixture("""
             partial class Cases { [Xunit.Fact] public void Root() { } static void Unused() => Production.Read(root); }
@@ -164,11 +164,51 @@ public sealed class ScribeDemandBindingIsolationTests
             project with { Sources = [.. project.Sources, new("tests/Root.cs", """
                 partial class Cases { static string root = FindRoot(); static string FindRoot() => ""; }
                 """)] }] } };
-        Assert.Throws<ArgumentException>(() => Derive(fixture, ScribeBindingStrategy.Eager));
-        var lazy = Derive(fixture, ScribeBindingStrategy.Demand);
-        AssertReasons(lazy, "Cases.Root");
         var expected = new ScribeTestMap([new("Tests", "tests/Cases.cs", "Cases.Root", [])], [], [], [], []);
-        Assert.Equal(Bytes(expected), Bytes(lazy));
+        var eager = Derive(fixture, ScribeBindingStrategy.Eager);
+        var demand = Derive(fixture, ScribeBindingStrategy.Demand);
+        Assert.Equal(Bytes(expected), Bytes(eager));
+        Assert.Equal(Bytes(expected), Bytes(demand));
+        Assert.Equal(Bytes(eager), Bytes(demand));
+    }
+
+    [Fact]
+    public void ReachableCrossTreeRootInitializerIsClassifiedIdenticallyByEagerAndDemand()
+    {
+        var fixture = ProjectFixture("""
+            partial class Cases { [Xunit.Fact] public void Root() => Production.Read(RootPath); }
+            """, "public static class Production { public static void Read(string path) { } }");
+        var project = fixture.Context!.Projects[1];
+        fixture = fixture with { Context = fixture.Context with { Projects = [fixture.Context.Projects[0],
+            project with { Sources = [.. project.Sources, new("tests/Root.cs", """
+                partial class Cases { static string RootPath { get; } = FindRoot(); static string FindRoot() => ""; }
+                """)] }] } };
+        var expected = new ScribeTestMap([new("Tests", "tests/Cases.cs", "Cases.Root",
+            [TestMapUnknownReason.IndirectViaProductionLoader])], [], [], [], []);
+        var eager = Derive(fixture, ScribeBindingStrategy.Eager);
+        var demand = Derive(fixture, ScribeBindingStrategy.Demand);
+        Assert.Equal(Bytes(expected), Bytes(eager));
+        Assert.Equal(Bytes(expected), Bytes(demand));
+        Assert.Equal(Bytes(eager), Bytes(demand));
+    }
+
+    [Fact]
+    public void NullRecorderPathAllocatesNoObservationState()
+    {
+        var fixture = Synthetic("static class Cases { [Fact] public static void Root() { } }");
+        var callable = Assert.Single(ScribeTestSymbolBinder.Bind(
+            fixture.Sources, ScribeBindingStrategy.Eager).Single().Callables);
+        var symbol = Assert.IsAssignableFrom<IMethodSymbol>(
+            callable.SemanticModel.GetDeclaredSymbol(callable.Syntax));
+        var session = new ScribeDemandBindingSession(
+            [callable],
+            new Dictionary<ScribeBoundCallable, IMethodSymbol> { [callable] = symbol },
+            null,
+            static (_, _) => { },
+            null);
+
+        Assert.Null(session.ObservationState);
+        session.Bind();
     }
 
     internal static (ScribeTestMap Map, Recorder Eager, Recorder Lazy) Compare(Fixture fixture)

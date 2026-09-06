@@ -11,7 +11,7 @@ namespace StrataLint.Tests;
 public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output)
 {
     [Fact]
-    public void LazyAndEagerCallableKindsProduceIdenticalMapBytes()
+    public void DemandAndEagerCallableKindsProduceIdenticalMapBytes()
     {
         var fixture = Synthetic("""
             class Cases {
@@ -73,7 +73,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
     }
 
     [Fact]
-    public void LazyAndEagerTestAndFixtureConstructorsProduceIdenticalMapBytes()
+    public void DemandAndEagerTestAndFixtureConstructorsProduceIdenticalMapBytes()
     {
         var map = EqualMaps(Synthetic("""
             class Cases : IClassFixture<Fixture> {
@@ -91,7 +91,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
     }
 
     [Fact]
-    public void LazyAndEagerImplicitConstructorsProduceIdenticalMapBytes()
+    public void DemandAndEagerImplicitConstructorsProduceIdenticalMapBytes()
     {
         var map = EqualMaps(ProjectFixture("""
             class Cases {
@@ -112,7 +112,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
     }
 
     [Fact]
-    public void LazyAndEagerPartialMethodsPreserveBodySelectionAndMultiplicity()
+    public void DemandAndEagerPartialMethodsPreserveBodySelectionAndMultiplicity()
     {
         var fixture = Synthetic("""
             partial class Cases { [Fact] public partial void Check(); }
@@ -128,7 +128,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
     }
 
     [Fact]
-    public void LazyAndEagerProductionRelevanceCyclesProduceIdenticalMapBytes()
+    public void DemandAndEagerProductionRelevanceCyclesProduceIdenticalMapBytes()
     {
         var map = EqualMaps(ProjectFixture("""
             class Cases {
@@ -159,7 +159,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
     }
 
     [Fact]
-    public void LazyAndEagerMetadataDegradationProduceIdenticalMapBytes()
+    public void DemandAndEagerMetadataDegradationProduceIdenticalMapBytes()
     {
         var fixture = ProjectFixture("""
             class Cases {
@@ -184,7 +184,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
     }
 
     [Fact]
-    public void LazyAndEagerReachableDocumentsProduceIdenticalMapBytes()
+    public void DemandAndEagerReachableDocumentsProduceIdenticalMapBytes()
     {
         var fixture = Documents();
         var recorder = new ScribeDemandBindingIsolationTests.Recorder();
@@ -245,7 +245,7 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
     }
 
     [Fact]
-    public void LazyAndEagerPreserveDiscoveryAndAllAuxiliaryMapFields()
+    public void DemandAndEagerPreserveDiscoveryAndAllAuxiliaryMapFields()
     {
         var fixture = Synthetic("""
             class Cases { [Fact] public void Read() { _ = RepositoryAccessor.Discover(RepositoryRootCriterion.Known); } }
@@ -342,16 +342,16 @@ public sealed class ScribeDemandBindingEquivalenceTests(ITestOutputHelper output
 
     internal static Fixture ProjectFixture(string tests, string production, string? middle = null)
     {
-        const string attribute = """
-            namespace StrataLint.Engine {
+        const string attribute = "namespace " + """
+            StrataLint.Engine {
               [System.AttributeUsage(System.AttributeTargets.All)]
               public sealed class CompileTimeInputUniverseAttribute : System.Attribute {
                 public CompileTimeInputUniverseAttribute(string prefix, string suffix) { }
               }
             }
             """;
-        const string xunit = """
-            namespace Xunit {
+        const string xunit = "namespace " + """
+            Xunit {
               public class FactAttribute : System.Attribute { }
               public interface IClassFixture<TFixture> { }
             }

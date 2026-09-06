@@ -67,8 +67,11 @@ internal static class ScribeTestSymbolBinder
     {
         var sources = sourceFiles.ToArray();
         var compilations = ScribeProjectCompilationBuilder.Build(sources, compilationContext);
-        var projectPaths = compilations.ToDictionary(static project => project.Compilation,
-            static project => project.ProjectPath);
+        ScribeBindingObservation? observation = null;
+        if (recorder is not null)
+        {
+            observation = new ScribeBindingObservation(recorder, compilations);
+        }
         var semanticModels = new ScribeSemanticModelProvider();
         foreach (var project in compilations) semanticModels.Add(project.Compilation);
         var callablesBySymbol = new ScribeCallableIndex();
@@ -174,8 +177,7 @@ internal static class ScribeTestSymbolBinder
                         callable.SemanticModel,
                         callablesBySymbol,
                         productionAssemblies,
-                        projectPaths[(CSharpCompilation)callable.SemanticModel.Compilation],
-                        recorder);
+                        observation);
                 }
                 LimitProductionTargets(symbolsByCallable, productionAssemblies);
                 break;
@@ -185,16 +187,14 @@ internal static class ScribeTestSymbolBinder
                         .Where(static callable => callable.IsTest),
                     symbolsByCallable,
                     productionAssemblies,
-                    callable => projectPaths[(CSharpCompilation)callable.SemanticModel.Compilation],
                     (callable, symbol) => BindEdges(
                         callable,
                         symbol,
                         callable.SemanticModel,
                         callablesBySymbol,
                         productionAssemblies,
-                        projectPaths[(CSharpCompilation)callable.SemanticModel.Compilation],
-                        recorder),
-                    recorder);
+                        observation),
+                    observation);
                 session.Bind();
                 break;
             default:
@@ -266,10 +266,9 @@ internal static class ScribeTestSymbolBinder
         SemanticModel model,
         ScribeCallableIndex callablesBySymbol,
         IReadOnlySet<string>? productionAssemblies,
-        string projectPath,
-        IScribeBindingRecorder? recorder)
+        ScribeBindingObservation? observation)
     {
-        recorder?.BindingEdges(ScribeBindingEvent.Create(projectPath, callable, symbol));
+        observation?.BindingEdges(callable, symbol);
         var detectProductionRepositoryRead = !IsProductionReader(symbol, productionAssemblies);
         if (callable.IsTest)
         {
@@ -382,7 +381,8 @@ internal static class ScribeTestSymbolBinder
         var candidates = info.CandidateSymbols.OfType<IMethodSymbol>().ToArray();
         if (detectProductionRepositoryRead
             && candidates.Length == 1
-            && IsProductionRepositoryRead(candidates[0], node, model, productionAssemblies))
+            && IsProductionRepositoryRead(
+                candidates[0], node, model, caller.SemanticModels, productionAssemblies))
         {
             caller.BindingUnknownReasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
         }
@@ -407,13 +407,15 @@ internal static class ScribeTestSymbolBinder
         {
             caller.Targets.Add(target);
             if (detectProductionRepositoryRead
-                && IsProductionRepositoryRead(normalized, node, model, productionAssemblies))
+                && IsProductionRepositoryRead(
+                    normalized, node, model, caller.SemanticModels, productionAssemblies))
             {
                 caller.BindingUnknownReasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
             }
         }
         else if (detectProductionRepositoryRead
-                 && IsProductionRepositoryRead(normalized, node, model, productionAssemblies))
+                 && IsProductionRepositoryRead(
+                     normalized, node, model, caller.SemanticModels, productionAssemblies))
         {
             caller.BindingUnknownReasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
         }
@@ -615,24 +617,42 @@ internal static class ScribeTestSymbolBinder
         IMethodSymbol method,
         SyntaxNode node,
         SemanticModel model,
+        ScribeSemanticModelProvider semanticModels,
         IReadOnlySet<string>? productionAssemblies) =>
         IsProductionReader(method, productionAssemblies)
         && node is InvocationExpressionSyntax invocation
         && invocation.ArgumentList.Arguments.Any(argument =>
-            IsRepositoryRootExpression(argument.Expression, model));
+            ClassifyRepositoryRoot(
+                argument.Expression,
+                model,
+                semanticModels,
+                new HashSet<ISymbol>(SymbolEqualityComparer.Default))
+                is not RepositoryRootClassification.NotRepositoryRoot);
 
     internal static bool IsRepositoryRootExpression(
         ExpressionSyntax expression,
-        SemanticModel model) => IsRepositoryRoot(
+        SemanticModel model) => ClassifyRepositoryRoot(
             expression,
             model,
-            new HashSet<ISymbol>(SymbolEqualityComparer.Default));
+            semanticModels: null,
+            new HashSet<ISymbol>(SymbolEqualityComparer.Default))
+                == RepositoryRootClassification.RepositoryRoot;
 
-    private static bool IsRepositoryRoot(
+    private static RepositoryRootClassification ClassifyRepositoryRoot(
         ExpressionSyntax expression,
         SemanticModel model,
+        ScribeSemanticModelProvider? semanticModels,
         HashSet<ISymbol> visited)
     {
+        var expressionModel = ReferenceEquals(expression.SyntaxTree, model.SyntaxTree)
+            ? model
+            : semanticModels?.ModelFor(expression, model);
+        if (expressionModel is null)
+        {
+            return RepositoryRootClassification.Unknown;
+        }
+        model = expressionModel;
+
         if (expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>().Any(invocation =>
                 model.GetSymbolInfo(invocation).Symbol is IMethodSymbol
                 {
@@ -640,7 +660,7 @@ internal static class ScribeTestSymbolBinder
                     ReturnType.SpecialType: SpecialType.System_String,
                 }))
         {
-            return true;
+            return RepositoryRootClassification.RepositoryRoot;
         }
 
         if (expression.DescendantNodesAndSelf().OfType<MemberAccessExpressionSyntax>().Any(static member =>
@@ -650,27 +670,54 @@ internal static class ScribeTestSymbolBinder
                     Name.Identifier.ValueText: "Root",
                 }))
         {
-            return true;
+            return RepositoryRootClassification.RepositoryRoot;
         }
 
         if (expression is not IdentifierNameSyntax identifier
             || model.GetSymbolInfo(identifier).Symbol is not { } symbol
             || !visited.Add(symbol))
         {
-            return false;
+            return RepositoryRootClassification.NotRepositoryRoot;
         }
 
-        return symbol switch
+        var classification = symbol switch
         {
-            ILocalSymbol local => LocalInitializers(local).Any(value =>
-                    IsRepositoryRoot(value, model, visited))
-                || IsMarkerSearchRoot(local, model),
-            IFieldSymbol field => FieldInitializers(field).Any(value =>
-                IsRepositoryRoot(value, model, visited)),
-            IPropertySymbol property => PropertyInitializers(property).Any(value =>
-                IsRepositoryRoot(value, model, visited)),
-            _ => false,
+            ILocalSymbol local => ClassifyRepositoryRoot(
+                LocalInitializers(local), model, semanticModels, visited),
+            IFieldSymbol field => ClassifyRepositoryRoot(
+                FieldInitializers(field), model, semanticModels, visited),
+            IPropertySymbol property => ClassifyRepositoryRoot(
+                PropertyInitializers(property), model, semanticModels, visited),
+            _ => RepositoryRootClassification.NotRepositoryRoot,
         };
+        return symbol is ILocalSymbol localSymbol
+            && classification is not RepositoryRootClassification.RepositoryRoot
+            && IsMarkerSearchRoot(localSymbol, model)
+                ? RepositoryRootClassification.RepositoryRoot
+                : classification;
+    }
+
+    private static RepositoryRootClassification ClassifyRepositoryRoot(
+        IEnumerable<ExpressionSyntax> expressions,
+        SemanticModel model,
+        ScribeSemanticModelProvider? semanticModels,
+        HashSet<ISymbol> visited)
+    {
+        var classification = RepositoryRootClassification.NotRepositoryRoot;
+        foreach (var expression in expressions)
+        {
+            var current = ClassifyRepositoryRoot(expression, model, semanticModels, visited);
+            if (current == RepositoryRootClassification.RepositoryRoot) return current;
+            if (current == RepositoryRootClassification.Unknown) classification = current;
+        }
+        return classification;
+    }
+
+    private enum RepositoryRootClassification
+    {
+        NotRepositoryRoot,
+        RepositoryRoot,
+        Unknown,
     }
 
     private static IEnumerable<ExpressionSyntax> LocalInitializers(ILocalSymbol local) =>
