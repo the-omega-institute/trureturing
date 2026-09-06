@@ -166,7 +166,7 @@ def parseInventory (json : Json) : Except String DispositionInventory := do
            entries := ← (← json.getObjValAs? (Array Json) "entries").mapM parseRow }
 
 /-- An immutable report already restricted to frozen elaborated theorem declarations.
-The producer owns frozen membership; this consumer never scans Lean source files. -/
+The producer owns frozen membership; source provenance checks do not discover members. -/
 structure FrozenReport where
   headSha : String
   reportSha256 : String
