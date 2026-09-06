@@ -1,0 +1,61 @@
+## 定理243.1　时钟的精确传播公式
+
+从
+
+$$
+|0\rangle_C\otimes|\chi\rangle_D
+$$
+
+开始，其中 \(|\chi\rangle_D\) 可以包含任意系统输入和准备好的记录，则
+
+$$
+\boxed{
+e^{-itH_{\mathrm{aut}}/\hbar}
+|0\rangle|\chi\rangle
+=
+\sum_{j=0}^N c_j(t)|j\rangle G_j|\chi\rangle,
+}
+\tag{243.1}
+$$
+
+其中
+
+$$
+\boxed{
+c_j(t)
+=
+e^{-iN\Omega t/2}
+(-i)^j\sqrt{\binom Nj}
+\sin^j\frac{\Omega t}{2}
+\cos^{N-j}\frac{\Omega t}{2}.
+}
+\tag{243.2}
+$$
+
+### 证明
+
+由定理242.1，只需计算 \(K_C\) 的演化。
+
+将 \(\mathcal H_C\) 识别为 \(N\) 个量子比特的完全对称子空间，\(|j\rangle\) 对应具有 \(j\) 个激发的归一化对称态。
+
+在该空间中，
+
+$$
+K_C
+=
+\hbar\Omega\left(J_x+\frac N2I\right),
+\qquad
+J_x=\frac12\sum_{r=1}^NX_r.
+$$
+
+从全部为零的初态出发，每个比特都演化为
+
+$$
+\cos\frac{\Omega t}{2}|0\rangle
+-i\sin\frac{\Omega t}{2}|1\rangle.
+$$
+
+展开其 \(N\) 重张量积，得到式（243.2）。再用 \(\mathsf G\) 变回程序表示。∎
+
+---
+

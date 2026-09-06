@@ -1,0 +1,25 @@
+**这轮最值得保留的认识是：**
+
+$$
+\boxed{
+\text{“多出来的坐标”不必是新实体，}
+\quad
+\text{它可以是原来被平均、投影或对称性隐藏的联合模式。}
+}
+$$
+
+四棱锥告诉我们，黄金可见部分与奇偶暗模式可以同时存在。算术立方体告诉我们，联合模式并非任意噪声，而有严格的符号和曲率规律。优化理论进一步告诉我们，**不必恢复所有模式，也能通过方向正确的下界控制它们的最坏影响。**
+
+真正的推进方向因此是：
+
+$$
+\boxed{
+\text{不是不断增加坐标，}
+\quad
+\text{而是证明：被省略的坐标再怎样组合，也不足以破坏安全界。}
+}
+$$
+
+[1]: https://arxiv.org/html/1211.2147v3 "https://arxiv.org/html/1211.2147v3"
+[2]: https://arxiv.org/abs/math/0004089 "https://arxiv.org/abs/math/0004089"
+[3]: https://pub.ista.ac.at/~vnk/papers/WHAT_ENERGIES.html "https://pub.ista.ac.at/~vnk/papers/WHAT_ENERGIES.html"

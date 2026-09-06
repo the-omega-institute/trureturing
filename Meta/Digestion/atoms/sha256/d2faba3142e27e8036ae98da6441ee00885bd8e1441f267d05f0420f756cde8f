@@ -1,0 +1,38 @@
+## 定义271.1　素数寄存器编码
+
+固定有限素数集合
+
+$$
+S=\{p_1,\ldots,p_s\}.
+$$
+
+寄存器状态是非负整数向量：
+
+$$
+a=(a_{p_1},\ldots,a_{p_s})\in\mathbb N^s.
+$$
+
+定义编码：
+
+$$
+\boxed{
+\operatorname{Enc}_S(a)=\prod_{p\in S}p^{a_p}.
+}
+\tag{271.1}
+$$
+
+因此：
+
+$$
+\boxed{
+(4,2,1,1)
+\longleftrightarrow
+2^4\,3^2\,5\,7
+=
+5040.
+}
+\tag{271.2}
+$$
+
+由于唯一素因数分解，编码在其定义域上是单射。仓库的 `primeAxisEncoding` 已经把这条结构与规范 Zeckendorf 行连接成等价，并证明规范化指数相加对应整数乘法。
+

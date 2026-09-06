@@ -1,0 +1,39 @@
+## 同一条路径的另一种实现
+
+若不采用后选择测量，而直接用 Hamiltonian \(H_{\mathrm{ctrl}}\) 实现同一条归一化纯态轨迹，则
+
+$$
+\boxed{
+\Delta H_{\mathrm{ctrl}}
+=
+\hbar\sqrt{G_{ab}\dot\lambda^a\dot\lambda^b}.
+}
+\tag{238.4}
+$$
+
+因为 Schrödinger 方程给出
+
+$$
+(I-P)|\dot\psi\rangle
+=
+-\frac i\hbar
+(H_{\mathrm{ctrl}}-\langle H_{\mathrm{ctrl}}\rangle)|\psi\rangle.
+$$
+
+因此
+
+$$
+\int_0^T\Delta H_{\mathrm{ctrl}}\,dt=\hbar L.
+$$
+
+在这类直接酉实现中，若 \(\Delta H_{\mathrm{ctrl}}\le E_{\max}\)，则
+
+$$
+\boxed{
+T\ge\frac{\hbar L}{E_{\max}}.
+}
+\tag{238.5}
+$$
+
+这不能直接套到归一化的后选择分支上；测量实现还要计算成功概率、仪器与辅助资源。
+

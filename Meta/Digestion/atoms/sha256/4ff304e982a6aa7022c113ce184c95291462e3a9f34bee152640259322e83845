@@ -1,0 +1,12 @@
+# 283．三态纤维中出现可精确求解的波与暗态
+
+按照：
+
+$$
+|0\rangle=|5400\rangle,\quad
+|1\rangle=|5040\rangle,\quad
+|2\rangle=|4704\rangle
+$$
+
+排列基底。
+

@@ -12,7 +12,11 @@
 # 检查项(逐条 fail-fast,任一不过即非零退出):
 #   1. 悬空引用   —— 正文提到 missing_statement / searches below / see below 一类
 #                     指向未落盘字段的措辞(账本 schema 只有那三个键)
-#   2. SL-019 词表 —— anomal|exception|failure|(?<!ex)tension,命中即 admission 判红
+#   2. SL-016 规范发射 —— 逐条对齐 BackfillInventoryWriter.Scalar 的**两支**:
+#                     含 ": " 或 RequiresStringQuotes 的值走单引号支,未引路径的形状检查不适用;
+#                     否则查 空白 / 首字符 -?:!&*#{[ / \r / \n / " #" / 首尾空白。
+#                     **中文判词多用全角冒号,故未引路径在真实记录里常常被走到。**
+#   2'. SL-019 词表 —— anomal|exception|failure|(?<!ex)tension,命中即 admission 判红
 #   3. 结构      —— blocker_class 取值合法、coverage_gids 为空
 #   4. 冲突      —— 同一条目不得已有 quarantine,也不得有 cover_disposition(门禁止共存)
 #   5. 位置      —— 必须仍在 residual-open
@@ -27,11 +31,17 @@
 #                     (那些常被合法地报告为缺席);③声明名以文本形式在该 .lean 内匹配,
 #                     `to_additive` 之类由属性生成的名字不在本器射程。
 #
-# --selftest: 12 条夹具,预期红数写在跑之前(六元组第六项)——
+# --selftest: 18 条夹具,预期红数写在跑之前(六元组第六项)——
 #   F1 悬空 .lean 路径=1 / F2 悬空声明=1 / F3 真 theorem=0 / F4 真 lemma=0
 #   F5 只提 .lean 路径=0 / F6 缺失声明但前有否定词=0 / F7 Blueprint 前缀路径不匹配=0
 #   F8 引用已撤回的尝试=0 / F9 「的」形真定理=0 / F10 「的」形假声明=1
 #   F11 无 GID 前缀的「的」形=0 / F12 **已知假阳**:账本字段名跟在「的」后=1
+#   F13 " #" 但同值含 ": "=0 / F14 " #" 走未引路径=1
+#   F15 首字符 '[' 但同值含 ": "=0 / F16 首字符 '[' 走未引路径=1
+#   F17 前导空白=1 / F18 含换行=1
+#   F13–F18 是 2026-09-06 的第二次修:检查 2 首版把写者**未引路径**的判据无条件施于两支,
+#   对含 ": " 的长判词判假红;同一处第二个缺陷是先归一空白再判首尾空白,
+#   那两条检查**结构上不可能红**。写 F13 时我自己又踩了一次全角冒号(见其行内注)。
 #   F12 是故意钉住的假阳:`X 的 statement_id 为 …` 会被判成声明引用。当前全库 0 次发生
 #   (实测 459 条记录、633 条配对、判红 0),故按第 20″ 条不预先加停用词表;
 #   真出一次再加,届时 F12 的预期由 1 改 0。本器是写前自检不是门,假阳的代价是我多看一眼。
@@ -58,6 +68,26 @@ DANGLING = ("missing_statement", "searches below", "see below", "as listed below
             "sibling_checked", "why_not_synthesizable")
 SL019 = re.compile(r"anomal|exception|failure|(?<!ex)tension", re.I)
 CLASSES = {"multi-clause-guard", "missing-prerequisite", "already-covered"}
+
+# BackfillInventoryWriter.RequiresStringQuotes 的镜像(逐字对照那段 C#):
+#   value is "[]" or "null" or "~" or "|" or "|-" or "|+" or ">" or ">-" or ">+"
+#   || int.TryParse(value, NumberStyles.Integer, InvariantCulture, out n) && n >= 0
+# int.TryParse 允许首尾空白与正负号,且溢出 Int32 即 false —— 这里逐条对齐,
+# 不用 Python 的 int(),因为它接受下划线分隔符而 C# 不接受。
+_CSHARP_INT = re.compile(r"\A[ \t\n\v\f\r]*[+-]?[0-9]+[ \t\n\v\f\r]*\Z")
+_QUOTE_LITERALS = {"[]", "null", "~", "|", "|-", "|+", ">", ">-", ">+"}
+
+
+def writer_single_quotes(value):
+    """写者是否走单引号支(走了则下列未引路径的形状检查一律不适用)。"""
+    if value in _QUOTE_LITERALS:
+        return True
+    if _CSHARP_INT.match(value):
+        parsed = int(value.strip())
+        if 0 <= parsed <= 2147483647:
+            return True
+    return ": " in value
+
 
 # --- 检查 6:仓内引用解析 -------------------------------------------------
 # 声明行文法。必须认 lemma——只认 theorem 是 2026-09-06 手搓校验器的第二个 bug,
@@ -137,20 +167,32 @@ def check_payload(q, doc, path, bad):
     hits = sorted({m.group(0) for m in SL019.finditer(text)})
     if hits:
         bad(f"SL-019 anomaly-bearing words in quarantine payload: {hits}")
-    # SL-016 canonical emission: BackfillInventoryWriter.Scalar throws on these shapes.
-    # Landed case 2026-09-06: " #check" (a Lean command) and " #{y in Q ...}" (cardinality
-    # notation) both tripped the YAML inline-comment sequence and rejected the whole PR.
+    # SL-016 canonical emission。判据的唯一真源是 BackfillInventoryWriter.Scalar,它有**两支**:
+    #   ① RequiresStringQuotes(v) || v.Contains(": ")  -> 单引号发射,下列形状**一律无害**
+    #   ② 否则(未引路径)-> 空白 / 首字符 -?:!&*#{[ / \r / \n / " #" / 首尾空白 任一命中即 throw
+    # 首版本器把 ② 的判据**无条件**施于两支,于是对任何含 ": " 的长判词判假红——
+    # 2026-09-06 因此在 #5801 里做过一次不必要的 `issue #1330` -> `issue 1330` 改写,
+    # 并把 dev 上一条合法记录 b779bdc39809 报成红。修法是先判走哪一支(F13/F15 钉住)。
+    # 同一处的第二个缺陷:原实现先 `" ".join(value.split())` 归一再判首尾空白与换行,
+    # 而归一恰好消掉这两种形状 —— 那两条检查**结构上不可能红**(F17/F18 钉住)。
     for key in ("justification", "reentry_condition"):
-        value = " ".join((q.get(key) or "").split())
+        value = q.get(key) or ""
         if not value:
+            continue
+        if writer_single_quotes(value):
+            continue
+        if not value.strip():
+            bad(f"{key}: blank scalar is rejected by the writer")
             continue
         if " #" in value:
             idx = value.index(" #")
-            bad(f"{key}: contains ' #', which BackfillInventoryWriter cannot emit "
-                f"canonically (YAML inline comment) at {idx}: "
+            bad(f"{key}: contains ' #' on the unquoted path, which BackfillInventoryWriter "
+                f"cannot emit canonically (YAML inline comment) at {idx}: "
                 f"...{value[max(0, idx - 30):idx + 24]}...")
         if value[0] in "-?:!&*#{[":
             bad(f"{key}: starts with {value[0]!r}, which BackfillInventoryWriter rejects")
+        if "\r" in value or "\n" in value:
+            bad(f"{key}: contains a line break, which BackfillInventoryWriter rejects")
         if value[0].isspace() or value[-1].isspace():
             bad(f"{key}: leading or trailing whitespace is rejected by the writer")
     if q.get("blocker_class") not in CLASSES:
@@ -202,6 +244,25 @@ def selftest():
         ("F11 de form without GID prefix, real lemma", 0, f"{lem_mod} 的 {lem} 是近似命中。"),
         ("F12 KNOWN FALSE POSITIVE: ledger field after 的", 1,
          f"{thm_mod} 的 statement_id 为 sha256:0000。"),
+        # F13–F18 钉住 BackfillInventoryWriter.Scalar 的**两个分支**。写入前必读那段源码:
+        #   if (RequiresStringQuotes(v) || v.Contains(": ")) -> 单引号发射,**下列形状一律无害**
+        #   否则 -> 空白/首字符 -?:!&*#{[ /\r/\n/" #"/首尾空白 任一命中即 throw
+        # 首版本器把第二支的判据无条件施于两支,故对**含 ": " 的值**判假红(F13/F15)。
+        # 注意:必须是 **ASCII** 冒号 + 空格。首版本条夹具用了全角 ":",于是不含 ": "、
+        # 实际走未引路径,判红是对的——是夹具错不是器错。中文判词多用全角冒号,
+        # 故未引路径在真实记录里**常常**被走到,不能假定 " #" 一定无害。
+        ("F13 ' #' but value also contains ': ' (writer single-quotes)", 0,
+         "该子句由另一模块承载,见 issue #5555。检索命令: rg -n ramanujanSum,零命中。"),
+        ("F14 ' #' on the unquoted path", 1,
+         "该子句由另一模块承载,见 issue #5555 的记录。"),
+        ("F15 leading '[' but value also contains ': '", 0,
+         "[SEARCH TRAIL] 命令: rg -n ramanujanSum,零命中。"),
+        ("F16 leading '[' on the unquoted path", 1,
+         "[SEARCH TRAIL] rg -n ramanujanSum 零命中。"),
+        ("F17 leading whitespace on the unquoted path", 1,
+         " 该子句由另一模块承载。"),
+        ("F18 newline on the unquoted path", 1,
+         "该子句由另一模块承载。\n第二行。"),
     ]
     bad_rows = 0
     for name, expected, just in cases:

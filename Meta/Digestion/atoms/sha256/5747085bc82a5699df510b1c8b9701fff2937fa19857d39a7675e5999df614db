@@ -1,0 +1,59 @@
+## 定理242.1　程序可以与纯时钟传播精确分离
+
+定义仅作用于时钟的矩阵
+
+$$
+K_C
+=
+\frac{\hbar\Omega N}{2}I_C
++
+\frac{\hbar\Omega}{2}
+\sum_{j=1}^N
+\sqrt{j(N+1-j)}
+\left(
+|j\rangle\langle j-1|
++
+|j-1\rangle\langle j|
+\right).
+$$
+
+则
+
+$$
+\boxed{
+H_{\mathrm{aut}}
+=
+\mathsf G(K_C\otimes I_D)\mathsf G^\dagger.
+}
+\tag{242.4}
+$$
+
+### 证明
+
+对每条相邻时钟边，
+
+$$
+G_jG_{j-1}^\dagger=V_j.
+$$
+
+因此
+
+$$
+\mathsf G
+\bigl(|j\rangle\langle j-1|\otimes I\bigr)
+\mathsf G^\dagger
+=
+|j\rangle\langle j-1|\otimes V_j.
+$$
+
+对全部边求和即可。∎
+
+这类把程序编码进时钟传播耦合的方法属于 Feynman 型 Hamiltonian 计算。这里选取的特殊耦合还允许精确完成传输，而不必在运行中切换边。([APS Journals][2])
+
+### 能量闭合的范围
+
+式（242.3）是有限维自伴算子，因此产生完整酉演化。
+
+但“总 Hamiltonian 守恒”还不能替代以下额外证明：
+
+* 它是否满足已经指定的裸系统能量账本；

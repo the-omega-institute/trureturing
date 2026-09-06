@@ -31,9 +31,6 @@ coverage_gids:
     target_statement_id: sha256:38fe3a77dcf59dd28a73d24e9308519f04188987facfefc13b458f03aeb140e7
 receipts:
   scribe:
-    - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
-      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
-      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
     - gid: D5/S1/Phase/Interference/FixedRayNineteenWitness.fixed_ray_nineteen_witness
       definition_sha256: sha256:536d30c541b4856269fb315071d108200d03852c19c1c71a9f6b034a1b815161
       emission_sha256: sha256:b446c52d8bd3ce2c741862b0dd7a0796ce08f8c7ad85f6636ea8a5081c2447b9
@@ -55,6 +52,9 @@ receipts:
     - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
       definition_sha256: sha256:74dc7747edb474cc66d3a095a487051ea7594d474a79c177acf1cfb3d912a936
       emission_sha256: sha256:0d784e8bdd3fb85260d8efa4a4c512dc4ebb73341e99072f422955a663c7f517
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
+      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
+      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
     - gid: D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
       definition_sha256: sha256:a7ca8e2a2c75ae1074aa5e1530cfe26a1b56693665912d613fb037ebeec78868
       emission_sha256: sha256:e8693837172147465ee8dd7f6464add3fa0a692771d5274aa3a36ff6e697a495

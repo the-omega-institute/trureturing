@@ -1,0 +1,143 @@
+## 定理 2：相同边际与平均能量，不决定整体波
+
+定义
+
+$$
+|\psi_{\mathrm{even}}\rangle
+=
+\frac{|0,0\rangle+|1,1\rangle}{\sqrt2},
+$$
+
+$$
+|\psi_{\mathrm{odd}}\rangle
+=
+\frac{|1,0\rangle+|0,1\rangle}{\sqrt2}.
+$$
+
+这里的奇偶指 \(u+v\bmod2\)，不是整数本身的奇偶。
+
+两种状态都满足
+
+$$
+\Pr(u=1)=\Pr(v=1)=\frac12.
+$$
+
+所以它们在只读取两个边际的四边形投影中，都是中心。
+
+平均能量也相同：
+
+$$
+\boxed{
+\langle H_{\mathrm{ar}}\rangle
+=
+\frac12\log5040.
+}
+\tag{17}
+$$
+
+但是能量方差分别为
+
+$$
+\boxed{
+\operatorname{Var}_{\mathrm{even}}(H_{\mathrm{ar}})
+=
+\frac14(\log A+\log B)^2,
+}
+$$
+
+$$
+\boxed{
+\operatorname{Var}_{\mathrm{odd}}(H_{\mathrm{ar}})
+=
+\frac14(\log A-\log B)^2.
+}
+\tag{18}
+$$
+
+二者相差
+
+$$
+\boxed{
+\operatorname{Var}_{\mathrm{even}}
+-
+\operatorname{Var}_{\mathrm{odd}}
+=
+(\log144)(\log35)>0.
+}
+\tag{19}
+$$
+
+### 证明
+
+第一种状态的两个能量值为
+
+$$
+0,\quad\log A+\log B;
+$$
+
+第二种为
+
+$$
+\log A,\quad\log B.
+$$
+
+各以概率 \(1/2\) 出现。直接计算均值与方差即可。证毕。
+
+如果令 \(\tau\) 为无量纲演化参数，则回返振幅为
+
+$$
+\boxed{
+\langle\psi_{\mathrm{even}}|
+e^{-i\tau H_{\mathrm{ar}}}
+|\psi_{\mathrm{even}}\rangle
+=
+e^{-i\tau\log5040/2}
+\cos\left(\frac{\tau\log5040}{2}\right),
+}
+\tag{20}
+$$
+
+$$
+\boxed{
+\langle\psi_{\mathrm{odd}}|
+e^{-i\tau H_{\mathrm{ar}}}
+|\psi_{\mathrm{odd}}\rangle
+=
+e^{-i\tau\log5040/2}
+\cos\left(\frac{\tau\log(144/35)}2\right).
+}
+\tag{21}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{相同局部投影}
++
+\text{相同平均能量}
+\quad\not\Rightarrow\quad
+\text{相同整体干涉波}.
+}
+\tag{22}
+$$
+
+这里缺失的是两个指数寄存器之间的相关。
+
+对一般分布，
+
+$$
+\operatorname{Var}(H_{\mathrm{ar}})
+=
+(\log A)^2\operatorname{Var}(u)
++
+(\log B)^2\operatorname{Var}(v)
++
+\boxed{
+2\log A\log B\,\operatorname{Cov}(u,v)
+}.
+\tag{23}
+$$
+
+最后这一项，就是局部边际无法独立确定的量。
+

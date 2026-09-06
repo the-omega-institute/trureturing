@@ -1,0 +1,25 @@
+## 完整候选检验的步数
+
+从上一轮边界：
+
+$$
+\mathsf B(M-1,m)
+$$
+
+开始，完成候选 \(M\) 的检验，共需：
+
+$$
+\boxed{
+\begin{aligned}
+\tau(M,m)
+={}&M+m-1\\
+&+(6M+2)\bigl(M-D(M)\bigr)\\
+&+2\sum_{k=D(M)}^{M-1}
+\left\lfloor\frac Mk\right\rfloor.
+\end{aligned}
+}
+\tag{27}
+$$
+
+这个公式已经区分了两种贡献：
+

@@ -1,0 +1,58 @@
+# 五、最关键的反转：顶点正好看不见底面的奇偶模式
+
+令底面顺序对应：
+
+$$
+(+,+),(+,-),(-,-),(-,+).
+$$
+
+定义棋盘奇偶模式：
+
+$$
+\boxed{
+|\chi\rangle
+=
+\frac12
+\left(
+|v_0\rangle-|v_1\rangle
++|v_2\rangle-|v_3\rangle
+\right).
+}
+\tag{11}
+$$
+
+计算得到：
+
+$$
+\boxed{
+A|\chi\rangle=-2|\chi\rangle.
+}
+\tag{12}
+$$
+
+而顶点分量始终为零：
+
+$$
+\langle a|\chi\rangle=0.
+$$
+
+因此：
+
+$$
+\boxed{
+\langle a|A^t|\chi\rangle=0
+\qquad\forall t\ge0.
+}
+\tag{13}
+$$
+
+若采用酉演化，同样有：
+
+$$
+\boxed{
+\langle a|e^{-itA}|\chi\rangle=0
+\qquad\forall t\in\mathbb R.
+}
+\tag{14}
+$$
+

@@ -1,0 +1,43 @@
+## 第三项：素数对角能量会破坏单翻转的谱反对称
+
+有：
+
+$$
+[\Gamma,H_{\mathrm{arith}}]=0,
+$$
+
+但一般：
+
+$$
+\boxed{
+\{\Gamma,H_{\mathrm{arith}}\}
+=
+2\Gamma H_{\mathrm{arith}}\ne0.
+}
+\tag{258.4}
+$$
+
+所以对总 Hamiltonian：
+
+$$
+H=H_{\mathrm{arith}}+H_{\mathrm{flip}},
+$$
+
+不能继续无条件使用：
+
+$$
+\Gamma H+H\Gamma=0.
+$$
+
+例如零模：
+
+$$
+|100\rangle-|001\rangle
+$$
+
+的两部分，现在分别具有 \(\epsilon_p\) 与 \(3\epsilon_p\) 的对角能量，它不再是同一个暗本征态。
+
+**同一个状态空间可以承载多种动力学，但不同动力学的结论不能全部叠加后仍声称自动成立。**
+
+---
+

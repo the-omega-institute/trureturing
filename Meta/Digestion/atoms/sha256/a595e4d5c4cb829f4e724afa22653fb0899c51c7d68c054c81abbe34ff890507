@@ -1,0 +1,60 @@
+## 定理 1：联合方向的正交高度
+
+定义中心化变量
+
+$$
+U=
+\begin{pmatrix}
+S-x\\T-y
+\end{pmatrix},
+\qquad
+V=ST-c.
+$$
+
+记
+
+$$
+A=\mathbb E[UU^{\mathsf T}],
+\qquad
+b=\mathbb E[UV],
+\qquad
+d=\mathbb E[V^2].
+$$
+
+则 \(ST\) 相对于旧线性读出的最小残差平方为
+
+$$
+\boxed{
+h_{\mathrm{lin}}^2
+=
+\min_{\alpha\in\mathbb R^2}
+\mathbb E[(V-\alpha^{\mathsf T}U)^2]
+=
+d-b^{\mathsf T}A^{-1}b.
+}
+\tag{5}
+$$
+
+### 证明
+
+展开：
+
+$$
+\mathbb E[(V-\alpha^{\mathsf T}U)^2]
+=
+d-2\alpha^{\mathsf T}b+\alpha^{\mathsf T}A\alpha.
+$$
+
+配方得到
+
+$$
+(\alpha-A^{-1}b)^{\mathsf T}
+A(\alpha-A^{-1}b)
++
+d-b^{\mathsf T}A^{-1}b.
+$$
+
+最小值在 \(\alpha=A^{-1}b\) 处达到。证毕。
+
+这就是统计读出中的 Schur 高度。
+
