@@ -1,0 +1,42 @@
+### 这一结果的意义
+
+$$
+\boxed{
+\text{空间上存在指数衰减}
++
+\text{两侧边界匹配}
+\longrightarrow
+\text{有限但非零的穿透概率}.
+}
+$$
+
+时间演化仍然酉，总入射概率被分配到透射与反射。
+
+在低频缩放
+
+$$
+\theta=\frac{E\delta}{\hbar},
+\qquad
+\mu=\frac{mc_*^2\delta}{\hbar},
+\qquad
+a=c_*\delta
+$$
+
+下，禁带中的衰减指数满足
+
+$$
+\boxed{
+\frac{\chi}{a}
+\longrightarrow
+\frac{\sqrt{m^2c_*^4-E^2}}{\hbar c_*},
+\qquad |E|<mc_*^2.
+}
+\tag{335.5}
+$$
+
+这与相应 Dirac 质量隙中的衰减尺度一致。
+
+但这个有限散射区域不是黑洞：本节没有建立事件视界、热辐射谱或引力反作用。
+
+---
+

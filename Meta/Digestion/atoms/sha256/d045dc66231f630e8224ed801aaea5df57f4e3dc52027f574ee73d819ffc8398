@@ -1,0 +1,16 @@
+# 334．同一个时空方程，在空间切面上出现三个临界区
+
+由式（333.2）：
+
+$$
+\operatorname{Tr}T_\mu(\theta)
+=
+2\frac{\cos\theta}{\cos\mu}.
+$$
+
+定义
+
+$$
+r=\frac{\cos\theta}{\cos\mu}.
+$$
+

@@ -1,0 +1,67 @@
+# 五、现在不假设 RH：定义实际 ξ 的最大合法分辨率
+
+接下来回到实际系数，不先假定存在正谱测度。
+
+沿用
+
+$$
+\log\frac{\xi(1/(1-z))}{\xi(1)}
+=
+\sum_{n\ge1}\frac{\ell_n}{n}z^n,
+$$
+
+$$
+C=2\ell_1
+=
+2+\gamma_{\mathrm E}-\log(4\pi),
+$$
+
+$$
+c_n=\ell_{n+1}-2\ell_n+\ell_{n-1},
+\qquad
+r_n=\frac{c_n}{C}.
+$$
+
+定义
+
+$$
+\boxed{
+\mathcal F_\xi(z)
+=
+1+2\sum_{n\ge1}r_nz^n
+=
+\frac2C
+\frac{\xi'(s)}{\xi(s)},
+\qquad
+s=\frac1{1-z}.
+}
+\tag{21}
+$$
+
+Li 系数与 \(1-1/\rho\) 的单位圆映射是经典结构；本轮研究的是其正性在分辨率参数下怎样失效。([arXiv][4])
+
+对每个 \(a\in[0,1]\)，定义
+
+$$
+\boxed{
+T_N(a)=
+(a^{|i-j|}r_{i-j})_{0\le i,j\le N}.
+}
+\tag{22}
+$$
+
+这里每一项都由实际 ξ 决定，即使尚未证明矩阵正性，也有定义。
+
+再定义
+
+$$
+\boxed{
+a_*=
+\max\left\{
+a\in[0,1]:
+T_N(a)\succeq0\ \text{对全部 }N
+\right\}.
+}
+\tag{23}
+$$
+

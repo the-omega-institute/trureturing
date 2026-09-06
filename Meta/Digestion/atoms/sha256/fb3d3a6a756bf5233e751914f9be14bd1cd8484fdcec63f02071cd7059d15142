@@ -1,0 +1,29 @@
+# 346．5040三态模型展示：消元的极点未必是物理奇点
+
+现在把结果接回前文的三态观察纤维：
+
+$$
+|L\rangle=|5400\rangle,\qquad
+|M\rangle=|5040\rangle,\qquad
+|R\rangle=|4704\rangle.
+$$
+
+它们是三个已经定义的编码状态，不在本节自动代表三个空间位置。
+
+保留两端，把中间态消去。取
+
+$$
+\boxed{
+H=
+\begin{pmatrix}
+0&2\sqrt6J&0\\
+2\sqrt6J&\Delta&2\sqrt5J\\
+0&2\sqrt5J&0
+\end{pmatrix},
+\qquad J>0.
+}
+\tag{346.1}
+$$
+
+\(\Delta\) 是新增的中间态失谐。它不是由5040这个整数自动给出的物理能量。
+
