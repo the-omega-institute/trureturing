@@ -1,0 +1,2 @@
+**候签定理 4.127(Jordan 余 totient 的 k→∞ 最终记录集 = {1} ∪ 偶数)**〔open;原文(A004277 评注,Hal M. Switkay 2025-11-30):"Then it appears that the terms of this sequence are precisely the values of n for which CoJ_k(n) achieves a new record for sufficiently large k.",其中 J_k(n)=n^k∏_{p∣n}(1−p^{−k}),CoJ_k(n)=n^k−J_k(n);落 `D5/S3/Factorization/JordanCototientRecordLimitInfinity`;拟议逃逸见证:对 n>1 令 p 为最小素因子,则 (n/p)^k ≤ CoJ_k(n) ≤ ω(n)·(n/p)^k;偶数 n 的底 n/2 严格大于一切前项的底,奇数 n≥5 败于 n−1(因 (n−1)/2 > n/3),3 与 2 恒平局;逐 n 取阈值 K(n)〕。对每个 n≥1:(∃K, ∀k>K, CoJ_k(n) > CoJ_k(m) 对一切 1≤m<n)⟺ n=1 或 n 为偶数。
+

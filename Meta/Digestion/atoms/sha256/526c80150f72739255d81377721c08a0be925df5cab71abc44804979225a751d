@@ -1,0 +1,2 @@
+**候签定理 4.126(Hoft:重复 121 分量的 SRS 模式蕴含 2n < σ(n) < 8n/3)**〔open;原文(A392096 评注,Hartmut F. W. Hoft 2025-12-30):"Conjecture: All numbers k in this sequence are abundant with 2k < sigma(k) < 8k/3; true for k <= 10^9.";成员判据以原文因数形式取:n = 2^m·q,m≥1,q 奇,q 的因数按升序恰构成 j≥2 个相继对 (a_i,b_i),满足 b_i < D·a_i 与 D·b_i < a_{i+1},D = 2^{m+1};落 `D5/S3/Factorization/SymmetricSigmaRepeatedPatternAbundancy`;拟议逃逸见证:令 p 为 q 的最小素因子,判据迫使 p < D、p² ∤ q、各对形如 (t, p·t);q/p 的因数相继比值 > D·p;伸缩求和得 σ(n)/n < 2(D−1)(p+1)/(Dp−1) < 8/3,而 2(D−1)(p+1)/(Dp) ≥ 2 与 q/p > 1 给出严格下界 2 < σ(n)/n〕。对一切满足上述因数判据的 n:2n < σ(n) < 8n/3。
+

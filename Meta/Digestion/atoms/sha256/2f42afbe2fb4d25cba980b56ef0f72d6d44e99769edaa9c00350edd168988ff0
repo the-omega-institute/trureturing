@@ -1,0 +1,6 @@
+**K1 proved / K2 proved**,无证伪。落地为
+`D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations` 的公开定理
+`r2_coeff_nonneg` 与 `r3_coeff_nonneg`,公理闭包 `[propext, Classical.choice, Quot.sound]`。
+实施席的检索留痕:钉版 mathlib `db584cd6d4` 上直接复用
+`ascPochhammer_succ_eval:130`、`ascPochhammer_pos:194`、`coeff_mul:112`、`coeff_add:41`、
+`coeff_C_mul_X_pow:147`;查过 Gamma 的对数凸性与 `convexOn_descPochhammer_eval`,
