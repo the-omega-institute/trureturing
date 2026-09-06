@@ -1,4 +1,5 @@
 using System.Text;
+using System.Xml.Linq;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using File = StrataLint.TestSupport.TemporaryFileSystem.File;
@@ -14,15 +15,31 @@ public sealed class GitAtomHistorySourceTests
     [InlineData("show-root-false")]
     [InlineData("both-disabled")]
     [InlineData("first-parent")]
+    [InlineData("inherited-config-redirections")]
     public void ReaddedMergeAtomRetainsSideBranchCommitterTimeAcrossGitConfig(string configuration)
     {
+        if (configuration == "inherited-config-redirections"
+            && Environment.GetEnvironmentVariable("STRATALINT_ATOM_HISTORY_CONFIG_CHILD") != "1")
+        {
+            AssertInheritedConfigurationIsolation();
+            return;
+        }
+
         using var fixture = new AtomHistoryRepository();
+        if (configuration == "inherited-config-redirections")
+        {
+            Assert.Equal("Atom History Fixture", fixture.Git("config", "--file",
+                Path.Combine(fixture.Root, ".git", "config"), "--get", "user.name").Trim());
+            Assert.Equal("atom-history@example.invalid", fixture.Git("config", "--file",
+                Path.Combine(fixture.Root, ".git", "config"), "--get", "user.email").Trim());
+            Assert.Equal("Atom History Fixture", fixture.Git("config", "--get", "user.name").Trim());
+        }
         if (configuration is "diff-merges-off" or "both-disabled")
-            fixture.Git("config", "log.diffMerges", "off");
+            fixture.Configure("log.diffMerges", "off");
         if (configuration is "first-parent")
-            fixture.Git("config", "log.diffMerges", "first-parent");
+            fixture.Configure("log.diffMerges", "first-parent");
         if (configuration is "show-root-false" or "both-disabled" or "first-parent")
-            fixture.Git("config", "log.showRoot", "false");
+            fixture.Configure("log.showRoot", "false");
 
         var history = fixture.ReadUnchanged(fixture.Root);
 
@@ -31,6 +48,35 @@ public sealed class GitAtomHistorySourceTests
         Assert.Equal(new DateTimeOffset(2026, 8, 14, 0, 0, 0, TimeSpan.Zero), side);
         Assert.True(history.FirstAdded.TryGetValue(fixture.RootAtomId, out var root), configuration);
         Assert.Equal(new DateTimeOffset(2026, 8, 1, 0, 0, 0, TimeSpan.Zero), root);
+    }
+
+    private static void AssertInheritedConfigurationIsolation()
+    {
+        using var temporary = new TemporaryDirectory();
+        var config = Path.Combine(temporary.Path, "redirect.config");
+        var global = Path.Combine(temporary.Path, "global.config");
+        var system = Path.Combine(temporary.Path, "system.config");
+        var bytes = Encoding.UTF8.GetBytes("[user]\n\tname = Outside Fixture\n"
+            + "\temail = outside@example.invalid\n[fixture]\n\tuntouched = true\n");
+        foreach (var path in new[] { config, global, system }) File.WriteAllBytes(path, bytes);
+
+        var result = TestProcessRunner.Run("/usr/bin/env",
+            ["-u", "GIT_DIR", "-u", "GIT_COMMON_DIR", "-u", "GIT_WORK_TREE", "-u", "GIT_INDEX_FILE",
+                $"GIT_CONFIG={config}", $"GIT_CONFIG_GLOBAL={global}", $"GIT_CONFIG_SYSTEM={system}",
+                "GIT_CONFIG_NOSYSTEM=0", "STRATALINT_ATOM_HISTORY_CONFIG_CHILD=1",
+                "dotnet", "vstest", Path.Combine(AppContext.BaseDirectory, "StrataLint.ScriptTests.dll"),
+                "--TestCaseFilter:DisplayName~ReaddedMergeAtomRetainsSideBranchCommitterTimeAcrossGitConfig&DisplayName~inherited-config-redirections",
+                "--Logger:trx;LogFileName=child.trx", $"--ResultsDirectory:{temporary.Path}"],
+            temporary.Path, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+
+        foreach (var path in new[] { config, global, system }) Assert.Equal(bytes, File.ReadAllBytes(path));
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
+            + Encoding.UTF8.GetString(result.StandardError));
+        var report = XDocument.Parse(File.ReadAllText(Path.Combine(temporary.Path, "child.trx")));
+        XNamespace ns = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010";
+        var test = Assert.Single(report.Descendants(ns + "UnitTestResult"));
+        Assert.Equal("Passed", test.Attribute("outcome")?.Value);
+        Assert.Contains("inherited-config-redirections", test.Attribute("testName")?.Value);
     }
 
     [Theory]
@@ -84,11 +130,10 @@ public sealed class GitAtomHistorySourceTests
             Root = Path.Combine(Temporary.Path, "repository");
             Directory.CreateDirectory(Root);
             Git("init", "--initial-branch=main");
-            Git("config", "user.name", "Atom History Fixture");
-            Git("config", "user.email", "atom-history@example.invalid");
-            Git("config", "commit.gpgsign", "false");
-            Git("config", "core.hooksPath", Path.Combine(Temporary.Path, "no-hooks"));
-            Git("config", "gc.auto", "0");
+            Assert.Equal(Path.Combine(Root, ".git"),
+                Path.GetFullPath(Git("rev-parse", "--git-dir").Trim(), Root));
+            Configure("user.name", "Atom History Fixture");
+            Configure("user.email", "atom-history@example.invalid");
             RootAtomId = WriteAtom("root claim\n");
             Commit("2026-08-01T00:00:00Z", "root addition");
             Git("checkout", "-b", "other");
@@ -134,18 +179,28 @@ public sealed class GitAtomHistorySourceTests
 
         internal string Git(params string[] arguments) => GitAt(Root, arguments);
 
+        internal void Configure(string key, string value) =>
+            Git("config", "--file", Path.Combine(Root, ".git", "config"), key, value);
+
         internal string GitAt(string checkout, params string[] arguments) =>
-            Run("git", arguments, checkout);
+            Run(arguments, checkout);
 
-        private void GitAtDate(string date, params string[] arguments) => Run(
-            "/usr/bin/env", [$"GIT_AUTHOR_DATE={date}", $"GIT_COMMITTER_DATE={date}",
-                "git", .. arguments], Root);
+        private void GitAtDate(string date, params string[] arguments) => Run(arguments, Root,
+            [$"GIT_AUTHOR_DATE={date}", $"GIT_COMMITTER_DATE={date}"]);
 
-        private static string Run(string executable, string[] arguments, string checkout)
+        private static string Run(string[] arguments, string checkout, string[]? environment = null)
         {
-            var result = TestProcessRunner.Run(executable, arguments, checkout,
+            var result = TestProcessRunner.Run("/usr/bin/env",
+                ["-u", "GIT_DIR", "-u", "GIT_COMMON_DIR", "-u", "GIT_WORK_TREE", "-u", "GIT_INDEX_FILE",
+                    "-u", "GIT_CONFIG",
+                    "-u", "GIT_CONFIG_GLOBAL", "-u", "GIT_CONFIG_SYSTEM", "-u", "GIT_CONFIG_NOSYSTEM",
+                    "-u", "GIT_CONFIG_PARAMETERS", "-u", "GIT_CONFIG_COUNT",
+                    "GIT_CONFIG_GLOBAL=/dev/null", "GIT_CONFIG_SYSTEM=/dev/null", "GIT_CONFIG_NOSYSTEM=1",
+                    .. environment ?? [], "git", "-C", checkout,
+                    "-c", "init.templateDir=", "-c", "core.hooksPath=/dev/null",
+                    "-c", "commit.gpgsign=false", "-c", "gc.auto=0", .. arguments], checkout,
                 TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
-            Assert.True(result.ExitCode == 0, $"{executable} exited {result.ExitCode}: "
+            Assert.True(result.ExitCode == 0, $"git exited {result.ExitCode}: "
                 + Encoding.UTF8.GetString(result.StandardOutput)
                 + Encoding.UTF8.GetString(result.StandardError));
             return Encoding.UTF8.GetString(result.StandardOutput);
