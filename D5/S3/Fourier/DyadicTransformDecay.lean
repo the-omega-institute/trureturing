@@ -6,10 +6,10 @@
    utility: none
    digest: Every polynomially weighted real-axis dyadic density transform is integrable. -/
 
-/- Library-search audit trail (2026-09-07):
+/- Library-search audit trail (2026-09-07, repeated by continuation worker):
    1. D5: searched `sinc.*decay`, `integrable.*sinc`,
-      `density_transform_decay`, and `sinc_product_decay`. No matching
-      decay or weighted-integrability theorem was found. Reuse
+      `density_transform_decay`, and `sinc_product_decay`. Only this
+      unverified draft matched; no existing decay theorem was found. Reuse
       InfiniteSincProduct.dyadic_uniform_convolution_product_ne_zero_off_real
       for product convergence and
       DyadicConvolutionDensity.dyadicConvolutionDensity_fourierLaplace
@@ -20,13 +20,14 @@
       Finset.prod_le_prod_of_subset_of_le_one, HasProd.tendsto_prod_nat,
       aestronglyMeasurable_of_tendsto_ae, and integrable_inv_one_add_sq.
       No theorem for arbitrary-order decay of this sinc product was found.
-   3. GitHub via NyxID public observer: repository queries
+   3. GitHub via NyxID observer proxy: repository queries
       `sinc language:Lean`, `"infinite convolution" Lean`, and
       `Fabius language:Lean`. The latter two returned zero repositories;
       the first returned only iank/sincos_lut, whose inspected README is
       about a finite sine/cosine lookup table, not infinite sinc products.
       Global code query `"sinc" "decay" language:Lean` returned HTTP 401.
-      Authenticated proxy requests returned HTTP 400 (failed API key).
+      Anonymous public routes returned HTTP 404; the proxy route worked.
+      Service discovery reports the GitHub OAuth services failed/expired.
       Third-party code-level completeness is ASSUMED-UNVERIFIED.
    4. Local proof: retain any finite prefix, bound all remaining real-axis
       factors by one, and pass to the product limit. The preregistered
@@ -89,7 +90,7 @@ theorem sinc_product_decay_bound (ell : ℝ) (hell : 0 < ell) (k : ℕ) :
     positivity
   refine ⟨C, Finset.prod_pos (fun j _ => inv_pos.mpr (ha j)), ?_⟩
   intro xi hxi
-  have hxi0 : xi ≠ 0 := by intro h; simp [h] at hxi
+  have hxi0 : xi ≠ 0 := by intro h; norm_num [h] at hxi
   rw [dyadicConvolutionDensity_fourierLaplace ell hell]
   calc
     ‖∏' j, complexSinc ((dyadicHalfWidth ell j : ℝ) * (xi : ℂ))‖ ≤
