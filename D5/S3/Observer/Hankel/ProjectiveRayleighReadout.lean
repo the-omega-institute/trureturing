@@ -89,7 +89,7 @@ theorem projective_error_energy_identity
     rw [mul_comm]
   have hcross : (⟪ι w, A k⟫_ℂ).re = (⟪ι k, A w⟫_ℂ).re := by
     rw [hsym w k]
-    exact inner_re_symm (A w) (ι k)
+    exact inner_re_symm (𝕜 := ℂ) (A w) (ι k)
   have hkz : (⟪ι k, A k⟫_ℂ).re + (⟪ι k, A w⟫_ℂ).re = lam := by
     have h := congrArg (fun y : H => (⟪ι k, y⟫_ℂ).re) hAz
     have hleft : (⟪ι k, A z⟫_ℂ).re =
@@ -175,7 +175,7 @@ theorem readout_orthogonal_geometry (k g : H) (hk : ‖k‖ = 1) :
   have hn := norm_add_sq (𝕜 := ℂ) (⟪k, g⟫_ℂ • k) g0
   rw [← hd, inner_smul_left, ho, mul_zero] at hn
   simp only [Complex.zero_re, mul_zero, add_zero, norm_smul, hk, mul_one] at hn
-  rw [norm_inner_symm k g] at hn
+  rw [norm_inner_symm (𝕜 := ℂ) k g] at hn
   exact ⟨ho, by linarith [hn]⟩
 
 /-- Goal-oriented readout error: only the component of the readout representer
@@ -187,7 +187,7 @@ theorem centered_readout_error_bound (k g w : H) (delta : ℝ)
   let g0 := g - ⟪k, g⟫_ℂ • k
   have hp : ⟪g0, w⟫_ℂ = ⟪g, w⟫_ℂ := by
     simp [g0, inner_smul_left, horth]
-  have hc := norm_inner_le_norm g0 w
+  have hc := norm_inner_le_norm (𝕜 := ℂ) g0 w
   have hsq := mul_self_le_mul_self (norm_nonneg (⟪g0, w⟫_ℂ)) hc
   have hmul := mul_le_mul_of_nonneg_left herr (sq_nonneg ‖g0‖)
   obtain ⟨_, hgeom⟩ := readout_orthogonal_geometry k g hk
