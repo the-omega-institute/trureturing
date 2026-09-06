@@ -7,6 +7,7 @@
 
 import D5.S3.StatisticalMechanics.HardCore.MemoryRefinement
 import D5.S3.StatisticalMechanics.HardCore.RadiusFourData
+import D5.S3.StatisticalMechanics.HardCore.RadiusThreeCertificates
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -124,10 +125,40 @@ theorem radiusFour_finite_domain_upper (n : ℕ) (V : Finset Point)
     (fun F => F) 4 hb hn n V {(-1, 0)} [] hd
   exact (Nat.mul_le_mul_left (10000 ^ n) hc).trans (radiusFour_geometric_upper n [])
 
+/-- A finite universal separation: at depth seven hundred, fixed-SRL radius
+four has fewer descendants than every history-dependent radius-three policy.
+This concerns the two relaxed geometric models, not a lower bound for the grid. -/
+theorem radiusFour_beats_every_radiusThree_controller
+    (policy : List (Fin 3) → Fin 483 → Fin 6) :
+    pathCount (geometricStep 4) (fun _ _ => 0) 700 [] {(-1, 0)} <
+      pathCount RadiusThreeCertificates.radiusThreeStep policy 700 [] 0 := by
+  have hlo := RadiusThreeCertificates.radiusThree_all_controllers_lower policy 700
+  have hhi := radiusFour_geometric_upper 700 []
+  have hs := Nat.mul_le_mul_left (5 ^ 700) hlo
+  have hnum : 20000 * 24827 ^ 700 < (5 * 5041 : ℕ) ^ 700 := by decide +kernel
+  have hc :
+      10000 ^ 700 * pathCount (geometricStep 4) (fun _ _ => 0) 700 [] {(-1, 0)} <
+        10000 ^ 700 * pathCount RadiusThreeCertificates.radiusThreeStep policy 700 [] 0 := by
+    calc
+      _ ≤ 20000 * 24827 ^ 700 := hhi
+      _ < (5 * 5041 : ℕ) ^ 700 := hnum
+      _ = 5 ^ 700 * 5041 ^ 700 := by rw [mul_pow]
+      _ ≤ 5 ^ 700 * (2000 ^ 700 *
+          pathCount RadiusThreeCertificates.radiusThreeStep policy 700 [] 0) := hs
+      _ = (5 * 2000 : ℕ) ^ 700 *
+          pathCount RadiusThreeCertificates.radiusThreeStep policy 700 [] 0 := by
+        rw [mul_pow]
+        ring
+      _ = _ := rfl
+  by_contra h
+  have hm := Nat.mul_le_mul_left (10000 ^ 700) (Nat.le_of_not_gt h)
+  exact (not_lt_of_ge hm) hc
+
 #print axioms radiusFour_geometry
 #print axioms radiusFour_potential
 #print axioms radiusFour_table_upper
 #print axioms radiusFour_geometric_upper
 #print axioms radiusFour_finite_domain_upper
+#print axioms radiusFour_beats_every_radiusThree_controller
 
 end D5.S3.StatisticalMechanics.HardCore.RadiusFourCertificates
