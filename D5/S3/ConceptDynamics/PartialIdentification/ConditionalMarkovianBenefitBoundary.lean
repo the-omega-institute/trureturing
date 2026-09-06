@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/ConditionalMarkovianBenefitBoundary
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Conditional product response laws aggregate to a weighted product query; an exact covariance certificate and independent-noise shared-root witness delimit unconditional benefit factorization. -/
 
 import D5.S3.ConceptDynamics.CausalMoments.MarkovianJointBenefitMarginalSharpBounds

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/FiniteIndependentSourceGrouping
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Finite independent rational disturbance laws regroup across any source partition without changing the full law; local queries admit exact marginal elimination and are invariant under changes to unused disturbance laws. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.MarkovianResponseLawFactorization

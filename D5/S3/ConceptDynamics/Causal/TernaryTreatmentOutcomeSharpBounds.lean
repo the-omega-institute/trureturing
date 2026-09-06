@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Causal/TernaryTreatmentOutcomeSharpBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A ternary-treatment ternary-outcome query has closed-form certified sharp bounds. -/
 
 import D5.S3.ConceptDynamics.Causal.FiniteEventCouplingSharpBounds

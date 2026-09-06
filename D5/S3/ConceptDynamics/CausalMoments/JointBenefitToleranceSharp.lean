@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/JointBenefitToleranceSharp
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/BenefitMarginalToleranceSharp]
+   anchors: []
    utility: none
    digest: The exact four-tolerance ambiguity of simultaneous benefit in two independent mechanisms is attained by one of three explicit product-model configurations. -/
 

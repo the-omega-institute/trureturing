@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/CausalOrderLinearProgram
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Canonical response-signature event probabilities compile to exact finite linear causal queries with replayable primal-dual bounds. -/
 
 import D5.S3.ConceptDynamics.Causal.FiniteLinearCausalIdentification

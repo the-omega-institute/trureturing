@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/ExtensionInvariantQueryBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Equivariant relabelings of finite response-signature programs preserve feasibility, event values, and the complete identified set. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.CausalOrderLinearProgram

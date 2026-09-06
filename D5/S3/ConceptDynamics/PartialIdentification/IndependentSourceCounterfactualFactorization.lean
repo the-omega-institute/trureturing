@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/IndependentSourceCounterfactualFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Certified counterfactual source separation yields product event laws directly under elementary independent disturbance distributions, with no separately supplied block-law factorization premise. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.FiniteIndependentSourceGrouping

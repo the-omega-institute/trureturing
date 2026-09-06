@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/ComplementSymmetryProjection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Equal averaging with a complementary parameter projects every value to one half while erasing the antisymmetric centered defect. -/
 
 import Mathlib.Data.Real.Basic

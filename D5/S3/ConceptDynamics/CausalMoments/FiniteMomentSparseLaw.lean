@@ -1,8 +1,9 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/FiniteMomentSparseLaw
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/FiniteMomentSparseLaw
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/FiniteMomentSupportReduction]
+   anchors: []
+   utility: none
    digest: The small Caratheodory latent witness pushes forward to a normalized law on the original response carrier that preserves every finite LP constraint and the exact query value, closing identified-set preservation on the original causal semantics. -/
 
 import D5.S3.ConceptDynamics.CausalMoments.FiniteMomentSupportReduction

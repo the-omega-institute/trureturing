@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/SeparatedCounterfactualSourceFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Certified disjoint counterfactual dependency sets induce product response laws under independent source blocks, using the standard full-assignment partition equivalence and existing finite pushforward factorization. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.InterventionExogenousLocality

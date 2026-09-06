@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Causal/NonconvexSharpIdentification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Nonconvex identified sets require direct range witnesses beyond endpoint attainment. -/
 
 import Mathlib.Data.Real.Basic

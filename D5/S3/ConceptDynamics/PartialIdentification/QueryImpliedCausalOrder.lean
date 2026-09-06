@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/QueryImpliedCausalOrder
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Counterfactual intervention atoms generate strict causal-order obligations and reject reciprocal cycles. -/
 
 import D5.S3.ConceptDynamics.Causal.StructuralEvaluationSemantics

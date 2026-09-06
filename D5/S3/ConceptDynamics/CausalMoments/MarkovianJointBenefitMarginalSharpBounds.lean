@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/MarkovianJointBenefitMarginalSharpBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Four interventional marginals sharply identify joint benefit across two independent complete response mechanisms to the product of their local benefit intervals, with rational attaining witnesses and an observation-kernel obstruction to point identification. -/
 
 import D5.S3.ConceptDynamics.CausalMoments.MarkovianJointMechanismBenefitSharpBounds

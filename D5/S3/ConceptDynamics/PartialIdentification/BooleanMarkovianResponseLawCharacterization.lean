@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/BooleanMarkovianResponseLawCharacterization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A normalized nonnegative Boolean two-component response law factorizes exactly when its two-by-two determinant vanishes; for benefit responses the determinant residual is the gap from the product-formula identification boundary. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.MarkovianBenefitIdentificationBoundary

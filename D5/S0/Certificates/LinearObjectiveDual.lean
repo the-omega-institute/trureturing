@@ -3,6 +3,7 @@
    mirror-B: D5/B/S0/Certificates/LinearObjectiveDual
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Exact rational row multipliers certify finite linear objective bounds and endpoint optimality. -/
 
 import D5.S0.Certificates.RationalFarkas

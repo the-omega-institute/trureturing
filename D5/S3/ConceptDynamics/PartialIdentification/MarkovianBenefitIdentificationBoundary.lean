@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/MarkovianBenefitIdentificationBoundary
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Independent treatment assignment noise leaves the Boolean benefit query at its sharp Frechet interval; factorizing the two outcome-response coordinates is a strictly stronger cross-world assumption that point identifies benefit. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.MarkovianResponseLawFactorization

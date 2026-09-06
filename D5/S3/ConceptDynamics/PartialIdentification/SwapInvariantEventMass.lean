@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/SwapInvariantEventMass
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Swap-connected causal orders induce identical finite event masses, event profiles, and linear query values under every exogenous law. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.SwapClosureExtensionInvariance

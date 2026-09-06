@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/AttainingStructuralModel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Every finite canonical response-signature probability law is realized by a finite structural model whose shared exogenous state indexes that signature. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.CausalOrderLinearProgram

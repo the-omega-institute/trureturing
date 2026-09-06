@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/QueryOrderLinearExtension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Every certified query-implied partial order admits a linear extension preserving all nontrivial counterfactual precedence obligations. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.QueryImpliedCausalOrder

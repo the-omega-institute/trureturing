@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/PartialDiagramEventRowCompilerSoundness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Observational, interventional, and counterfactual event probabilities compile to exact rational rows over admissible completion-signature atoms. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.PartialDiagramConstraintCompilerSoundness

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Causal/FiniteLinearCausalIdentification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Finite causal response models compile layered assumptions and scalar queries to exact rational linear certificates. -/
 
 import D5.S0.Certificates.LinearObjectiveDual

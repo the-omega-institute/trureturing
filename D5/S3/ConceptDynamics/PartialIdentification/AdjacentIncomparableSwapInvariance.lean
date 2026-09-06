@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/AdjacentIncomparableSwapInvariance
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Adjacent parent-independent structural updates commute, so swapping incomparable neighboring nodes preserves evaluation and every readout. -/
 
 import Mathlib.Data.Finset.Basic

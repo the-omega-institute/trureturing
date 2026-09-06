@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/MarkovianJointMechanismBenefitSharpBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Two mechanism-level benefit events have a sharp Frechet coupling interval, while Markovian independence across mechanisms collapses the joint benefit query to the product of its benefit marginals. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.MarkovianBenefitIdentificationBoundary

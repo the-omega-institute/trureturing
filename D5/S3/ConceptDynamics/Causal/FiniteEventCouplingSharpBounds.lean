@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Causal/FiniteEventCouplingSharpBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Two counterfactual events have explicit primal-dual sharp coupling bounds. -/
 
 import D5.S3.ConceptDynamics.Causal.BenefitProbabilityBounds

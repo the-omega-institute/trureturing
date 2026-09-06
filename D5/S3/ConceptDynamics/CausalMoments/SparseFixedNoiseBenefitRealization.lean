@@ -1,8 +1,9 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/SparseFixedNoiseBenefitRealization
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/SparseFixedNoiseBenefitRealization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/FixedNoiseCovariateBenefitSharpBounds]
+   anchors: []
+   utility: none
    digest: Componentwise table compression preserves independent mechanism laws, all selected response cells, and the exact covariate joint-benefit image using at most 3k+1 support points per mechanism. -/
 
 import D5.S3.ConceptDynamics.CausalMoments.ReducedResponseTableMoments

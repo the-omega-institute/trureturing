@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/InterventionExogenousLocality
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Finite parent-indexed intervention traces compile sound exogenous dependency sets, shrink them under added constant interventions, and certify counterfactual query descent through source-coordinate restriction. -/
 
 import D5.S3.ConceptDynamics.Causal.ParentOrderedStructuralEvaluationSemantics

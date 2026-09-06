@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/CanonicalResponseSignature
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A finite total causal order yields finite predecessor-indexed deterministic response signatures whose event queries are exact linear objectives. -/
 
 import D5.S0.Certificates.LinearObjectiveDual

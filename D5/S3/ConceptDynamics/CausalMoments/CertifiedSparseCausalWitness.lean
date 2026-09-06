@@ -1,8 +1,9 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/CertifiedSparseCausalWitness
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/CertifiedSparseCausalWitness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Certificates/RationalMomentReplay]
+   anchors: []
+   utility: none
    digest: Support-restricted rational Caratheodory witnesses give complete elimination certificates; accepted traces return original-carrier probability laws preserving all causal LP rows, objectives, and primal-dual endpoint witnesses. -/
 
 import D5.S0.Certificates.RationalMomentReplay

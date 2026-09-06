@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/MarkovianResponseLawFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Independent finite exogenous components induce product response laws; counterfactual events are multilinear and become exact LP objectives when all but one component law are fixed. -/
 
 import D5.S0.Certificates.LinearObjectiveDual

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/SwapClosureExtensionInvariance
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A finite chain of adjacent parent-independent swaps preserves structural evaluation, response profiles, and every query readout. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.AdjacentIncomparableSwapInvariance

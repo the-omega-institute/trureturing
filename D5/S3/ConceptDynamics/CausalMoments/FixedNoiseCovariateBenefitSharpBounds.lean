@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/FixedNoiseCovariateBenefitSharpBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Conditional four-marginal joint-benefit intervals aggregate sharply in one independent fixed-table-noise model, with explicit rational scalar interpolation and simultaneous structural witnesses. -/
 
 import D5.S3.ConceptDynamics.CausalMoments.FiniteConditionalResponseTable

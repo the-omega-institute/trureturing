@@ -2,7 +2,8 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/RationalMomentReplay
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Certificates/RationalMomentElimination]
+   anchors: []
+   utility: kind=checker; basis=consumer=D5/S3/ConceptDynamics/CausalMoments/CertifiedSparseCausalWitness.exists_accepted_moment_certificate; instance=D5/S0/Certificates/RationalMomentReplay.mean_preserving_replay_example
    digest: A structurally recursive exact checker replays rational support-elimination traces, rejects invalid steps, preserves all moments and support exclusions, and certifies a final d+1 support bound. -/
 
 import D5.S0.Certificates.RationalMomentElimination

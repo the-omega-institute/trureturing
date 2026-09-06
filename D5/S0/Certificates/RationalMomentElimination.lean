@@ -2,7 +2,8 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/RationalMomentElimination
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Certificates/LinearObjectiveDual]
+   anchors: []
+   utility: none
    digest: A data-only rational null-direction and ratio-pivot certificate yields an executable support-reducing update preserving total mass and every nominated linear moment. -/
 
 import D5.S0.Certificates.LinearObjectiveDual

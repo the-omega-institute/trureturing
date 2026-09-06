@@ -1,8 +1,8 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/PartialMediatorTransportReduction
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/PartialMediatorTransportReduction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/SharedThresholdResponseCoupling]
+   anchors: []
    utility: none
    digest: Binary-treatment binary-outcome partial mediation with independent mechanisms has an exact transportation-LP query image, including every rational target and simultaneous structural witnesses. -/
 

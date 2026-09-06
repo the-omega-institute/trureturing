@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/FiniteConditionalResponseTable
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Every finite rational conditional response family has one covariate-independent full-table realization; two independent mechanism tables reproduce all conditional product kernels simultaneously. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.FiniteIndependentSourceGrouping

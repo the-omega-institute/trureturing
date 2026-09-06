@@ -1,8 +1,8 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/CompleteMediatorCutSharpBounds
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/CompleteMediatorCutSharpBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/PartialMediatorTransportReduction]
+   anchors: []
    utility: none
    digest: Under complete mediation and fair outcome-response marginals, the exact fixed-coupling benefit interval is half the weighted maximum cut, with explicit common-noise attaining laws. -/
 

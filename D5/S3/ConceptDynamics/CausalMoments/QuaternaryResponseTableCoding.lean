@@ -1,8 +1,9 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/QuaternaryResponseTableCoding
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/QuaternaryResponseTableCoding
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Fin]
+   utility: none
    digest: A k-stratum Boolean potential-outcome response table is exactly a k-digit quaternary word, hence has 4^k possibilities; the golden base-four DFAO input at index k is the Zeckendorf representation of this exact table-space capacity. -/
 
 import D5.S3.ConceptDynamics.CausalMoments.FiniteConditionalResponseTable

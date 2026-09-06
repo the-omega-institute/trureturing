@@ -1,8 +1,9 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/RankAdaptiveSparseCausalWitness
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/RankAdaptiveSparseCausalWitness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/CertifiedSparseCausalWitness]
+   anchors: []
+   utility: none
    digest: Checked affine presentations reduce original causal witness support budgets while preserving all LP rows and the exact endpoint; certified residual widths transfer strict query decisions. -/
 
 import D5.S0.Certificates.RationalMomentQueryEnvelope

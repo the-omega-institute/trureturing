@@ -1,8 +1,8 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/BipartiteMediatorPricing
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/BipartiteMediatorPricing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/CompleteMediatorCutSharpBounds]
+   anchors: []
    utility: none
    digest: Complete-mediator column pricing on bipartite off-diagonal coupling support is exactly a nonnegative s-t cut problem; checked flows give actual maximizing columns and global restricted-master stopping certificates. -/
 

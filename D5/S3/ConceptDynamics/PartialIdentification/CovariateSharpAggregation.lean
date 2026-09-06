@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/CovariateSharpAggregation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Independently combinable covariate-stratum sharp intervals aggregate to an exact weighted sharp interval. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic

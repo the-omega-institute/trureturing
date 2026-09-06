@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/PartialGraphCompletionRange
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Partial-graph uncertainty forms a union of completion-specific sharp ranges; envelope endpoints remain exact while the full range may be disconnected. -/
 
 import D5.S3.ConceptDynamics.Causal.NonconvexSharpIdentification

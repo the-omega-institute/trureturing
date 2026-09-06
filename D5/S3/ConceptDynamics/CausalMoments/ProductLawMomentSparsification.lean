@@ -1,8 +1,9 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/ProductLawMomentSparsification
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/ProductLawMomentSparsification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/FiniteMomentSupportReduction]
+   anchors: []
+   utility: none
    digest: Sequential exact moment compression sparsifies both factors of a rational product law while preserving all nominated joint moments, and hence all finite linear data constraints and one target within the product family. -/
 
 import D5.S3.ConceptDynamics.CausalMoments.ReducedResponseTableMoments

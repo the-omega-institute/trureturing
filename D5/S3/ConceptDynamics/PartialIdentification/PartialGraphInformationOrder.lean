@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/PartialIdentification/PartialGraphInformationOrder
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Stronger partial causal diagrams induce smaller compatible-model and identified-query sets. -/
 
 import D5.S3.ConceptDynamics.Causal.NonconvexSharpIdentification

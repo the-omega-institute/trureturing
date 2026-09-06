@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Causal/ConvexSharpIdentification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Convex feasible models and affine queries turn attained endpoint bounds into a sharp interval. -/
 
 import Mathlib.Data.Real.Basic

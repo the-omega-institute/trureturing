@@ -1,8 +1,9 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/FiniteMomentSupportReduction
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/FiniteMomentSupportReduction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Convex.Caratheodory]
+   utility: none
    digest: Every finite rational causal law admits a positive latent realization with support controlled by the affine rank of retained linear moments; all LP rows plus one query give an exact witness of size at most the row count plus two. -/
 
 import D5.S3.ConceptDynamics.PartialIdentification.MarkovianResponseLawFactorization

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Causal/CrossWorldIndependenceSharpBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A polynomial cross-world independence restriction collapses a two-event joint query to a sharp singleton and is globally nonconvex. -/
 
 import D5.S3.ConceptDynamics.Causal.FiniteEventCouplingSharpBounds

@@ -1,8 +1,8 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/SharedThresholdResponseCoupling
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/SharedThresholdResponseCoupling
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/FiniteMomentSparseLaw]
+   anchors: []
    utility: none
    digest: One finite rational disturbance simultaneously attains every two-world Boolean Frechet cell bound across arbitrary finite mediator values. -/
 

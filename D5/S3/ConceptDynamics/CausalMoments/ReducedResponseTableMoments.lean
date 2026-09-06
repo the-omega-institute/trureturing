@@ -1,8 +1,9 @@
 /- GID: D5/S3/ConceptDynamics/CausalMoments/ReducedResponseTableMoments
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/CausalMoments/ReducedResponseTableMoments
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/ConceptDynamics/CausalMoments/FiniteMomentSparseLaw]
+   anchors: []
+   utility: none
    digest: Three cells per Boolean response row determine its complete law; rational moment compression preserves every row with 3k+1 support points, or every row and one further query with 3k+2. -/
 
 import D5.S3.ConceptDynamics.CausalMoments.FiniteMomentSparseLaw
