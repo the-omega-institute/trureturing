@@ -103,6 +103,18 @@ public sealed partial class IngestScopeTests
         AssertSummaryCountMatchesRows(result);
     }
 
+    private static void AssertNoObservation(
+        CommandResult result,
+        string atomId,
+        string sourceId,
+        string kind)
+    {
+        Assert.DoesNotContain(
+            $"INGEST_PRESERVED_EXISTING atom={atomId} source={sourceId} kind={kind}",
+            PreservedRows(result));
+        AssertSummaryCountMatchesRows(result);
+    }
+
     private static void AssertSummaryCountMatchesRows(CommandResult result)
     {
         var rows = PreservedRows(result);

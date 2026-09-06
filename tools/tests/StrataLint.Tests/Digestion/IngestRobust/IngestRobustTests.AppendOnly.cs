@@ -43,7 +43,7 @@ public sealed partial class IngestScopeTests
         AssertExistingLedgerFilesUnchanged(before, after);
         Assert.Equal(2, BackfillInventoryLoader.Load(Decode(after)).RequireDigestionSources()
             .Single(static source => source.SourceId == "beta").Entries.Length);
-        AssertObservation(result, entry.AtomId, "alpha", "planned-rewrite");
+        AssertNoObservation(result, entry.AtomId, "alpha", "planned-rewrite");
     }
 
     [Theory]

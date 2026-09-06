@@ -11,6 +11,7 @@ internal static class BackfillInventoryWriter
     internal static ImmutableArray<byte> WriteEntry(DigestionLedgerEntry entry)
     {
         ArgumentNullException.ThrowIfNull(entry);
+        entry = WithCanonicalGidOrder(entry);
         var builder = new StringBuilder();
         Line(builder, $"source_id: {Scalar(entry.SourceId)}");
         Line(builder, $"source_path: {Scalar(entry.SourcePath)}");
@@ -22,6 +23,7 @@ internal static class BackfillInventoryWriter
     internal static ImmutableArray<byte> WriteAtom(DigestionLedgerEntry entry)
     {
         ArgumentNullException.ThrowIfNull(entry);
+        entry = WithCanonicalGidOrder(entry);
         var builder = new StringBuilder();
         Line(builder, "fingerprints:");
         Line(builder, $"  raw_sha256: {Scalar(entry.Fingerprints.RawSha256)}");
@@ -80,6 +82,21 @@ internal static class BackfillInventoryWriter
         DigestionLedgerSource source,
         DigestionLedgerEntry entry) =>
         [.. WriteSourceMetadata(source with { AcknowledgedStale = [] }), .. WriteEntry(entry)];
+
+    private static DigestionLedgerEntry WithCanonicalGidOrder(DigestionLedgerEntry entry) =>
+        entry with
+        {
+            Coverage = StableOrderByGid(entry.Coverage, static edge => edge.Gid),
+            Receipts = entry.Receipts with
+            {
+                Scribe = StableOrderByGid(entry.Receipts.Scribe, static receipt => receipt.Gid),
+            },
+        };
+
+    private static ImmutableArray<T> StableOrderByGid<T>(
+        ImmutableArray<T> values,
+        Func<T, string> selectGid) =>
+        values.OrderBy(selectGid, StringComparer.Ordinal).ToImmutableArray();
 
     private static void ValidateGenreRegistryCheck(GenreRegistryCheck check)
     {

@@ -189,10 +189,7 @@ public sealed partial class IngestScopeTests
             WriteFixture(preserved, fixture);
             var accepted = Environment(fixture, preserved).Ingest(args);
             Assert.True(accepted.Success, accepted.Error);
-            Assert.Contains(
-                $"INGEST_PRESERVED_EXISTING atom={entry.AtomId} source=alpha kind=planned-rewrite",
-                accepted.Output,
-                StringComparison.Ordinal);
+            AssertNoObservation(accepted, entry.AtomId, "alpha", "planned-rewrite");
             var preservedRaw = Raw(DirectoryLedgerTestSupport.OverlayRepositoryFiles(preserved, fixture.Files));
             Assert.Equal(
                 Image(Raw(fixture.Files), SourcePrefix("alpha")),
