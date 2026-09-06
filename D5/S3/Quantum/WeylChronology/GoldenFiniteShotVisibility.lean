@@ -67,6 +67,7 @@ open D5.S3.TotalVariation.Asymptotics.SymmetricBernoulliProbabilityData
 open D5.S3.TotalVariation.Asymptotics.FourLocalEvidenceClosedForms
 open D5.S3.TotalVariation.Bhattacharyya
 open D5.S3.TotalVariation.Metric
+open D5.S3.RenyiDivergence
 open D5.S3.DivergenceSupport.PowerAdditivity
 open D5.S3.Estimation.BhattacharyyaExponent
 open D5.S3.Estimation.ErrorExponents.FiniteRepetitionLawKernel
@@ -213,11 +214,20 @@ theorem positive_visibility_law_kernel
   constructor
   · intro hlaw
     have htrue := congrFun hlaw true
+    have hbias :
+        chronologyBias visibility kappa left =
+          chronologyBias visibility kappa right := by
+      simpa [visibleChronologyLaw, positiveBiasLaw] using htrue
+    have hsignal :
+        visibilitySignal visibility kappa left =
+          visibilitySignal visibility kappa right := by
+      unfold chronologyBias at hbias
+      linarith
     have hvisible :
         visibleChronologyFringe visibility kappa left =
           visibleChronologyFringe visibility kappa right := by
-      simpa [visibleChronologyLaw, chronologyBias, visibleChronologyFringe,
-        positiveBiasLaw] using htrue
+      unfold visibleChronologyFringe
+      linarith
     rw [visible_chronology_fringe_eq_affine_ideal,
       visible_chronology_fringe_eq_affine_ideal] at hvisible
     have hscaled :
