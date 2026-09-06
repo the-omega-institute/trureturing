@@ -1,0 +1,33 @@
+# 六、还能更进一步：二阶数据会限制三阶数据
+
+前面只是用下一阶控制误差。现在证明不同阶之间也有强制关系。
+
+取非空集合 \(A\)，定义概率测度：
+
+$$
+\boxed{
+d\pi_A(t)
+=
+\frac{\prod_{i\in A}z_i(t)}{\kappa_A}\,\nu_E(dt).
+}
+\tag{17}
+$$
+
+虽然原来的 \(\nu_E\) 不是概率，但经过这个锚定权重后，总质量恰好为 1。
+
+对 \(j,k\notin A\)：
+
+$$
+\frac{\kappa_{A\cup\{j\}}}{\kappa_A}
+=
+\mathbb E_{\pi_A}z_j,
+$$
+
+$$
+\frac{\kappa_{A\cup\{j,k\}}}{\kappa_A}
+=
+\mathbb E_{\pi_A}(z_jz_k).
+$$
+
+由于 \(z_j(t),z_k(t)\) 都随 \(t\) 增加，得到：
+

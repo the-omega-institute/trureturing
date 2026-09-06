@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b7fe88191233c5121994962c3c03072c568a8082c4fc00c87d04022a00196fb5
+  normalized_sha256: sha256:b7fe88191233c5121994962c3c03072c568a8082c4fc00c87d04022a00196fb5
+cas_ref: sha256:b7fe88191233c5121994962c3c03072c568a8082c4fc00c87d04022a00196fb5
+coverage_gids:
+  - gid: D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.zero_memory_criterion
+    target_statement_id: sha256:419946c5de861e61071250c744bfa1593e690441eca7821668104bf2c79da9a6
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.zero_memory_criterion
+      definition_sha256: sha256:eae5e250915c5e5d1d5306add6f87ced1c47335932dc9cec311903cabdceeea2
+      emission_sha256: sha256:b9c71200cf2530a936d61d445eebaee2bdd65531193cf1d738b2739a0ea79bde
+  unresolved_subitems: []

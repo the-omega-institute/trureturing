@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b575df93623b5f4235e7a4d9b19c153333ac4e25fb689d33dfa867b48c2ecbd1
+  normalized_sha256: sha256:b575df93623b5f4235e7a4d9b19c153333ac4e25fb689d33dfa867b48c2ecbd1
+cas_ref: sha256:b575df93623b5f4235e7a4d9b19c153333ac4e25fb689d33dfa867b48c2ecbd1
+coverage_gids:
+  - gid: D5/S3/Quantum/Magic/QuquintFiniteMaximum.finite_sign_maximum_tangent
+    target_statement_id: sha256:887364d7b22dc3877b91cd4336b9b4db585464fcb201394df3ebca70a09f59d0
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Magic/QuquintFiniteMaximum.finite_sign_maximum_tangent
+      definition_sha256: sha256:307c130e64e55890c4e41f332216eb07e77725124d7ff889fd62031e8e49fc99
+      emission_sha256: sha256:818d39d22e4f3cdc5ee9c18bb0a468d4825d8da25488728539deea528c835fe1
+  unresolved_subitems: []

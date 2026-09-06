@@ -1,0 +1,51 @@
+## 定理 7：什么时候已有量子读出足以决定一个目标？
+
+在全部密度矩阵构成的状态类上，已知线性读出
+
+$$
+\operatorname{Tr}(\rho A_1),\ldots,
+\operatorname{Tr}(\rho A_m).
+$$
+
+它们能够对所有状态唯一决定
+
+$$
+\operatorname{Tr}(\rho B),
+$$
+
+当且仅当
+
+$$
+\boxed{
+B\in\operatorname{span}_{\mathbb R}\{I,A_1,\ldots,A_m\}.
+}
+\tag{31}
+$$
+
+### 证明
+
+若 \(B\) 位于该线性空间，目标显然由已有读出线性恢复。
+
+反之，令 \(D\) 为 \(B\) 在这个空间正交补上的非零分量。则
+
+$$
+\operatorname{Tr}D=0,\qquad
+\operatorname{Tr}(DA_i)=0,
+$$
+
+但
+
+$$
+\operatorname{Tr}(DB)=\|D\|_{\mathrm{HS}}^2>0.
+$$
+
+取充分小的 \(\varepsilon>0\)，两个矩阵
+
+$$
+\rho_\pm=\frac Id\pm\varepsilon D
+$$
+
+都为密度矩阵。它们已有读出全部相同，目标读出却不同。证毕。
+
+这一定理的状态类必须保留。若 `ADMIT` 已经把状态限制为某个特殊族，所需读出可能减少；但那种限制需要由实际锚证明，而不能为了得到答案临时加入。
+

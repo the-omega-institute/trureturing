@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3f715edbf538e4a2fe2fb99497d766f7d815888c581360b807abf36cf17472f8
+  normalized_sha256: sha256:3f715edbf538e4a2fe2fb99497d766f7d815888c581360b807abf36cf17472f8
+cas_ref: sha256:3f715edbf538e4a2fe2fb99497d766f7d815888c581360b807abf36cf17472f8
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/RamifiedFiveMatrixReduction.ramified_five_matrix_reduction
+    target_statement_id: sha256:eb5a3cb24454ea88b21db8aed7ebdd8cfcb1eece1ad6c6fc6c6e6cd17657dc84
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/Lattices/RamifiedFiveMatrixReduction.ramified_five_matrix_reduction
+      definition_sha256: sha256:23d3a737f6e641cb46e1b656a65d3b3b9a0740e693a33e2721760c1c4d36535b
+      emission_sha256: sha256:cb60d0b53288c87b1715edd0dcbc195d438d72232d0ac06a34c3bf6b4bec538b
+  unresolved_subitems: []

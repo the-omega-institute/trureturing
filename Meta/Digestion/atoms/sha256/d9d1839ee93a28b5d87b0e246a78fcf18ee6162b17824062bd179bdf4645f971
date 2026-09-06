@@ -1,0 +1,10 @@
+## 第二种：实现正确性
+
+设实际四边形装置实现：
+
+$$
+\widetilde H=H_\pi+\Delta H,
+\qquad
+\|\Delta H\|_{\mathrm{op}}\le\varepsilon_H.
+$$
+

@@ -468,6 +468,12 @@ internal static class DigestionIngestor
             var disposition = SingleCoverDisposition(
                 atomId,
                 members.Select(static item => item.Entry.Receipts.CoverDisposition));
+            var nonpropositional = SingleOptional(atomId, "nonpropositional",
+                members.Select(static item => item.Entry.Receipts.Nonpropositional));
+            if (nonpropositional is not null
+                && (!coverage.IsEmpty || quarantine is not null || disposition is not null
+                    || members.Any(static item => !item.Entry.Receipts.UnresolvedSubitems.IsEmpty)))
+                throw new FormatException($"atom {atomId} merged nonpropositional conflicts with live obligations");
             if (!coverage.IsEmpty && (quarantine is not null || disposition is not null))
             {
                 throw new FormatException(
@@ -490,7 +496,8 @@ internal static class DigestionIngestor
                     chain.IsDefault ? [] : chain,
                     tail,
                     quarantine,
-                    disposition),
+                    disposition,
+                    nonpropositional),
                 statuses[0],
                 expectedReference));
         }

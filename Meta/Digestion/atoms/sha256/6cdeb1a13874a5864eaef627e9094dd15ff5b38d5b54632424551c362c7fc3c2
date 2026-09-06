@@ -1,0 +1,35 @@
+## 4.2 它与 ζ 的联系不只是渐近
+
+由于 \(Z(n)\) 具有乘法性：
+
+$$
+\mathfrak Z_\beta(s)
+=
+\prod_p
+\sum_{a\ge0}
+\left(1+p^{-1}+\cdots+p^{-a}\right)^\beta
+p^{-as}.
+$$
+
+对于前两个整数矩，有精确公式：
+
+$$
+\boxed{
+\mathfrak Z_1(s)=\zeta(s)\zeta(s+1),
+}
+\tag{12}
+$$
+
+$$
+\boxed{
+\mathfrak Z_2(s)
+=
+\frac{
+\zeta(s)\zeta(s+1)^2\zeta(s+2)
+}{
+\zeta(2s+2)
+}.
+}
+\tag{13}
+$$
+

@@ -1,0 +1,51 @@
+## 定理 215.1　经典化的参考系统误差下界
+
+对 \(d\ge2\)，有
+
+$$
+\boxed{
+\frac12\|\mathcal C-\operatorname{id}\|_\diamond
+\ge1-\frac1d.
+}
+\tag{215.2}
+$$
+
+### 证明
+
+令输入与测试参照处于最大纠缠态：
+
+$$
+|\Phi_d\rangle
+=
+\frac1{\sqrt d}\sum_i|i\rangle|i\rangle.
+$$
+
+对一侧实施 \(\mathcal C\) 后，输出 \(\omega\) 为可分态。
+
+任意乘积态与 \(|\Phi_d\rangle\) 的重叠概率不超过 \(1/d\)，凸组合也如此：
+
+$$
+\langle\Phi_d|\omega|\Phi_d\rangle\le\frac1d.
+$$
+
+使用效果 \(|\Phi_d\rangle\langle\Phi_d|\) 区分理想和实际输出，得到
+
+$$
+D(\omega,|\Phi_d\rangle\langle\Phi_d|)
+\ge1-\frac1d.
+$$
+
+diamond 距离对所有参考输入取上确界，因此得到结论。∎
+
+### 解释
+
+这不是说经典记录不能存储数学模型，也不是说大量独立复制品不能用于状态估计。
+
+它说的是：
+
+> **对于一份未知量子输入，如果把所有剩余资源都压成纯经典记录，就不能同时保留它对任意后续相干实验的全部能力。**
+
+对量子比特，误差下界为 \(1/2\)，不是靠增加经典存储位数就会自动消失的小误差。
+
+---
+

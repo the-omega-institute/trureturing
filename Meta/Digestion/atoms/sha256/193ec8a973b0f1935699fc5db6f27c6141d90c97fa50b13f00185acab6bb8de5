@@ -1,0 +1,86 @@
+## 7.2 Robin 的非线性预算重新引入了耦合
+
+定义：
+
+$$
+E(n)=\ln n,
+$$
+
+$$
+h(E)=\gamma+\ln\ln E,
+$$
+
+$$
+\Delta(n)=h(E(n))-W(n).
+$$
+
+Robin 定理把 RH 等价为：
+
+$$
+\Delta(n)>0
+\qquad\forall n>5040.
+$$
+
+这里引用的是经典数论等价关系。([arXiv][4])
+
+令：
+
+$$
+u=\ln p,\qquad v=\ln q.
+$$
+
+由式（21）：
+
+$$
+\begin{aligned}
+&\Delta(pqn)-\Delta(pn)-\Delta(qn)+\Delta(n)\\
+&\qquad=
+h(E+u+v)-h(E+u)-h(E+v)+h(E).
+\end{aligned}
+$$
+
+而：
+
+$$
+h''(E)
+=
+-\frac{\ln E+1}{E^2(\ln E)^2}<0
+\qquad(E>1).
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+&\Delta(pqn)-\Delta(pn)-\Delta(qn)+\Delta(n)\\
+&\qquad=
+\int_0^u\int_0^v h''(E+s+t)\,dt\,ds
+<0.
+\end{aligned}
+}
+\tag{22}
+$$
+
+对 \(5040\) 的 \(2,3\) 面，该值约为：
+
+$$
+-0.00557286993532.
+$$
+
+这不是时空曲率的证明，也不是说两个素数操作不交换。
+
+它说明：
+
+$$
+\boxed{
+\text{局部素数增长可交换，}
+\quad
+\text{全局非线性预算却不等于两项独立预算之和。}
+}
+$$
+
+所以，只分别观察“加一个 \(2\) 怎样”“加一个 \(3\) 怎样”，然后按平面线性关系拼起来，会漏掉一个确定的联合修正。
+
+**这就是四边形缺少“高度信息”的算术版本：高度可以取为这个混合差分，而不是另造一个神秘基础元素。**
+

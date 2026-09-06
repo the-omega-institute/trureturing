@@ -1,0 +1,33 @@
+## 定义305.1　素数层的单位成本收益
+
+对 \(a\ge1\)，定义
+
+$$
+\boxed{
+m_p(a)=
+\frac{
+\ln\!\left[
+\dfrac{1-p^{-(a+1)}}{1-p^{-a}}
+\right]
+}{\ln p}.
+}
+\tag{305.2}
+$$
+
+增加第 \(a\) 层的目标增益是
+
+$$
+\boxed{
+\Delta F_{\lambda,p}(a)
+=
+\bigl(m_p(a)-\lambda\bigr)\ln p.
+}
+\tag{305.3}
+$$
+
+所以每层的准入条件就是：
+
+$$
+m_p(a)>\lambda.
+$$
+

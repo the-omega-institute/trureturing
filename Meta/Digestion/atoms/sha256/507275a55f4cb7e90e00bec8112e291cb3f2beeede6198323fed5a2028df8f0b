@@ -1,0 +1,102 @@
+# 核验结果与结论
+
+本轮使用精确有理数区间，完成了：
+
+* 四方向与六方向两个有限立方体中，224 个“子集—截断阶数”位置的双边界检查；
+* 243 个锚定关联不等式；
+* 四方向正交互 Gram 矩阵的正定性认证；
+* 5040 实例的一、二阶强化下界；
+* 导数递推界与几何误差界的有限实例核验。
+
+[下载精确有理数证书、程序与结果](sandbox:/mnt/data/positive_interaction_certificates.zip)
+
+全称结构结论来自正文证明，有限计算用于交叉核验。新增内容尚未在本轮写入仓库或转化为 Lean 内核证明，也不主张这些通用分析机制的文献首创性。
+
+**这轮最重要的认识是：遗漏的高阶坐标，不必被视为任意未知。**
+
+在当前算术模型中，它们受到同一个正尺度机制约束：
+
+$$
+\boxed{
+\text{正权重}
+\longrightarrow
+\text{容斥奇偶}
+\longrightarrow
+\text{低阶关联约束}
+\longrightarrow
+\text{严格的残差预算}.
+}
+$$
+
+因此，下一步不必不断增加“第五个、第六个基础元素”。更有效的方向是：
+
+$$
+\boxed{
+\text{证明未被观察的联合模式，无论怎样合法组合，}
+\quad
+\text{都不足以推翻已认证的安全界。}
+}
+$$
+
+这才把金字塔的“可见顶层与隐藏底层”、Zeckendorf 的分辨率、以及项目的信息逃逸理论，连接成了一种能够实际构造数学证书的方法。
+
+[1]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"
+[2]: https://dlmf.nist.gov/27.5 "DLMF: §27.5 Inversion Formulas ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[3]: https://djalil.chafai.net/blog/2013/03/23/the-bernstein-theorem-on-completely-monotone-functions/ "https://djalil.chafai.net/blog/2013/03/23/the-bernstein-theorem-on-completely-monotone-functions/"
+[4]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "Mathlib.Data.Nat.Fib.Zeckendorf"
+**这次可以把“几何编程语言”的直觉落实成一个真实、可执行、可证明的模型。而且，5040 确实在 Conway 原版 PRIMEGAME 的实际轨迹中出现为一个寄存器投影。**
+
+按原版规则，从 \(N_0=2\) 开始，执行恰好 157 次分数乘法后：
+
+$$
+\boxed{
+N_{157}=146160=2^4\,3^2\,5\,7\,29=5040\times29.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+(v_2,v_3,v_5,v_7)(N_{157})=(4,2,1,1).
+}
+$$
+
+但还有一个不能丢掉的控制标签：
+
+$$
+\boxed{29.}
+$$
+
+下一步正是由这个控制标签选择：
+
+$$
+\frac{77}{29},
+$$
+
+从而：
+
+$$
+146160\longrightarrow388080
+=
+2^4\,3^2\,5\,7^2\,11.
+$$
+
+**所以，你说“5040 可能只是这个几何的一个投影”，在这个具体程序中有一个精确实例：5040 是四个数据寄存器的读数，29 是被这个读数隐藏的程序控制状态。**
+
+这并未证明 Robin 截止值与 PRIMEGAME 的这一中间状态之间存在必然关系；但它给出了一个非常具体的研究入口：
+
+$$
+\boxed{
+\text{整数编码}
+\longleftrightarrow
+\text{寄存器格点}
+\longleftrightarrow
+\text{带条件的几何运动}
+\longleftrightarrow
+\text{Zeckendorf 规范表示}.
+}
+$$
+
+下面把这一体系正式展开。
+

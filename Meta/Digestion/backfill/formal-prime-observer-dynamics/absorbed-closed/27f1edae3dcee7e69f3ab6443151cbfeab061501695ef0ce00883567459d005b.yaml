@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:27f1edae3dcee7e69f3ab6443151cbfeab061501695ef0ce00883567459d005b
+  normalized_sha256: sha256:27f1edae3dcee7e69f3ab6443151cbfeab061501695ef0ce00883567459d005b
+cas_ref: sha256:27f1edae3dcee7e69f3ab6443151cbfeab061501695ef0ce00883567459d005b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/PullbackAlgebraRefinementDuality.pullback_algebra_refinement_duality
+    target_statement_id: sha256:7065231e6b20ae091f2c6c94c8f10940ad68a7119e1097bc91d9419c99f597ff
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/PullbackAlgebraRefinementDuality.pullback_algebra_refinement_duality
+      definition_sha256: sha256:135106d264d2bdae992cff4c8912295b0384aab35797b703d95c14b71c81e856
+      emission_sha256: sha256:b76d91f8a049b268027cd10e30c326168d6876f6ad77257339b3c6363d55ee38
+  unresolved_subitems: []

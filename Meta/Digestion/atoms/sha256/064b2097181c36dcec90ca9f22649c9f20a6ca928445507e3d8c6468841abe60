@@ -1,0 +1,41 @@
+## 定义327.1　四分量的局部传播结构
+
+取 Pauli 矩阵 \(\sigma_i\)，并定义：
+
+$$
+\alpha_i=X\otimes\sigma_i,
+\qquad
+\beta=Z\otimes I_2.
+$$
+
+它们满足：
+
+$$
+\boxed{
+\{\alpha_i,\alpha_j\}=2\delta_{ij}I,
+\qquad
+\{\alpha_i,\beta\}=0,
+\qquad
+\beta^2=I.
+}
+\tag{327.1}
+$$
+
+选择三个方向的条件平移和一个局部混合：
+
+$$
+\boxed{
+U_\delta(\mathbf k)
+=
+e^{-i\delta mc_*^2\beta/\hbar}
+e^{-ia k_3\alpha_3}
+e^{-ia k_2\alpha_2}
+e^{-ia k_1\alpha_1}.
+}
+\tag{327.2}
+$$
+
+每个空间因子都可按 \(\alpha_i\) 的 \(\pm1\) 子空间解释为向相反方向移动一格。
+
+---
+

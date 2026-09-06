@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:019c8465b0feb8506d1edc379887ee962c78d0f0a50a495b8fae17c407c9d606
+  normalized_sha256: sha256:019c8465b0feb8506d1edc379887ee962c78d0f0a50a495b8fae17c407c9d606
+cas_ref: sha256:019c8465b0feb8506d1edc379887ee962c78d0f0a50a495b8fae17c407c9d606
+coverage_gids:
+  - gid: D5/S3/Constants/FiniteStieltjesOperatorRealization.finite_stieltjes_operator_realization
+    target_statement_id: sha256:aaa8b7af535aa2c4384587ed3a4d8a9e88c99f36c2f67de41a7464bd1ef20914
+receipts:
+  scribe:
+    - gid: D5/S3/Constants/FiniteStieltjesOperatorRealization.finite_stieltjes_operator_realization
+      definition_sha256: sha256:928405dfa716e94529c66440271af5975e5f48b6dd0ca998dc4732a43f7953e2
+      emission_sha256: sha256:df6a29f694bc73624de9004e7db92b870b71f0a2f4c3bc529760c17a258c98a1
+  unresolved_subitems: []

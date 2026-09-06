@@ -1,0 +1,42 @@
+## 2.1 对时间寄存器作 Fourier 变换
+
+将式（1）的时间标签变成频率，定义向量值波：
+
+$$
+\boxed{
+\Psi_T(\theta)
+=
+\frac1{\sqrt{2T+1}}
+\sum_{t=-T}^{T}
+e^{it\theta}|\psi_t\rangle,
+\qquad0\le\theta<2\pi.
+}
+\tag{3}
+$$
+
+由 Fourier 正交性：
+
+$$
+\frac1{2\pi}
+\int_0^{2\pi}
+\|\Psi_T(\theta)\|^2\,d\theta
+=1.
+$$
+
+而每个时间切片可以恢复：
+
+$$
+\boxed{
+|\psi_t\rangle
+=
+\frac{\sqrt{2T+1}}{2\pi}
+\int_0^{2\pi}
+e^{-it\theta}\Psi_T(\theta)\,d\theta.
+}
+\tag{4}
+$$
+
+因此，整段历史确实被放进了一条波中，而且没有丢失任何切片。
+
+不过，这不是把 \(2T+1\) 个状态压缩成一个复数。**信息保存在波的全部 Fourier 分量中。**
+

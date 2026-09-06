@@ -25,12 +25,30 @@ internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization
             && LeanPropositionSourceComparer.AreEquivalent(
                 protectedBase,
                 candidate,
-                incremental.ReanchoredModulePaths,
+                incremental.ChangedStatementModulePaths,
                 context.BaseView,
                 context.CandidateCatalog)
+            && FindChangedClosureOnlyStatements(context, incremental).IsEmpty
             && incremental.ReanchoredModulePaths.All(path =>
                 context.CandidateCatalog.ByPath.TryGetValue(path, out var material)
                 && material.AxiomClosure.All(LeanAxiomFacts.IsStandard));
+    }
+
+    internal static ImmutableArray<RepoPath> FindChangedClosureOnlyStatements(
+        FrozenLedgerReplacementAuthorizationContext context,
+        FrozenLedgerIncrementalReplacementRecognition recognition)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(recognition);
+        return recognition.ReanchoredModulePaths
+            .Except(recognition.ChangedStatementModulePaths)
+            .Where(path => !context.BaseView.ActiveByPath.TryGetValue(path, out var recorded)
+                || !context.CandidateCatalog.ByPath.TryGetValue(path, out var current)
+                || recorded.Material.StatementId != current.StatementId
+                || !recorded.Material.DeclarationStatementIds.SequenceEqual(
+                    current.DeclarationStatementIds))
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
     }
 
     private static bool EffectiveLeanPinsChanged(

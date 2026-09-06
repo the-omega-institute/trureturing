@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6c6755f9c545fffb72e99838ba4015e2e4e3ae189b5685b8e25035520ce73611
+  normalized_sha256: sha256:6c6755f9c545fffb72e99838ba4015e2e4e3ae189b5685b8e25035520ce73611
+cas_ref: sha256:6c6755f9c545fffb72e99838ba4015e2e4e3ae189b5685b8e25035520ce73611
+coverage_gids:
+  - gid: D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairTimeGroup.oriented_time_recovery_symmetric_time_loss
+    target_statement_id: sha256:fc4b77be0538dfb9e977159b3eeb40e9dc2f83729c5f18e2b418a38dd5d1304f
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairTimeGroup.oriented_time_recovery_symmetric_time_loss
+      definition_sha256: sha256:f2b71fb577d5f1dc3d314c79218639a004fc498db52223c04833b1b614980d82
+      emission_sha256: sha256:882e2b56017b9b87775fd25acc50d5a082c3af115d6e759e08f0d30aa013229f
+  unresolved_subitems: []

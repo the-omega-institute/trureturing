@@ -3,16 +3,16 @@ fingerprints:
   normalized_sha256: sha256:33a0c49c89088efa8b9fcdd754c415e0d143feae6a059675163315c207b996f2
 cas_ref: sha256:33a0c49c89088efa8b9fcdd754c415e0d143feae6a059675163315c207b996f2
 coverage_gids:
-  - gid: D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_two_pow_add_one
-    target_statement_id: sha256:f3df502981fd41634707db019a775912968d3e8cfeed03206cdc7e0455f8b0ba
   - gid: D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_two
     target_statement_id: sha256:ede5e5675683804d08476b3f39279bc1cf7497f8b13bf92117ec8b77dc3fefe8
+  - gid: D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_two_pow_add_one
+    target_statement_id: sha256:f3df502981fd41634707db019a775912968d3e8cfeed03206cdc7e0455f8b0ba
 receipts:
   scribe:
-    - gid: D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_two_pow_add_one
+    - gid: D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_two
       definition_sha256: sha256:5c109cc7ade151de3c0616b6bd060011013353b498856be43c8978f5a67db8cc
       emission_sha256: sha256:3e9451436d7c6aaebff6627b27cc5589f71d1f3c9d00cd84f97b9c928a85e740
-    - gid: D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_two
+    - gid: D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.reducedAbelianComplexity_two_pow_add_one
       definition_sha256: sha256:5c109cc7ade151de3c0616b6bd060011013353b498856be43c8978f5a67db8cc
       emission_sha256: sha256:3e9451436d7c6aaebff6627b27cc5589f71d1f3c9d00cd84f97b9c928a85e740
   unresolved_subitems: []

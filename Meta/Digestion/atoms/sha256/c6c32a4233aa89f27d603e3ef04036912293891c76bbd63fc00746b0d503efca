@@ -1,0 +1,21 @@
+## 定义227.1　移动的测量方向
+
+令系统自由 Hamiltonian 为零。定义
+
+$$
+|\phi(\theta)\rangle
+=
+\cos\theta|0\rangle+\sin\theta|1\rangle.
+$$
+
+从 \(|0\rangle\) 开始，依次测量
+
+$$
+P_j=|\phi(j\Theta/N)\rangle\langle\phi(j\Theta/N)|,
+\qquad j=1,\ldots,N.
+$$
+
+每次都检查是否进入当前的 \(P_j\) 分支。
+
+---
+

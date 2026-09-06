@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:83f79e18118917583656638c2b0ea5803aeec54cecfbc11bb26036f343bc3bb0
+  normalized_sha256: sha256:83f79e18118917583656638c2b0ea5803aeec54cecfbc11bb26036f343bc3bb0
+cas_ref: sha256:83f79e18118917583656638c2b0ea5803aeec54cecfbc11bb26036f343bc3bb0
+coverage_gids:
+  - gid: D5/S3/Observer/RiemannNamingStabilityReduction.riemann_naming_stability_reduction
+    target_statement_id: sha256:df053e27a974cd6cf4a4d12547b39384a98d56864cebffb4e2ecefd644476e3b
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/RiemannNamingStabilityReduction.riemann_naming_stability_reduction
+      definition_sha256: sha256:d9475b7b03e76a3cbc8c191d3aca46f24303c790b4bc9fca7129667de361e1e7
+      emission_sha256: sha256:429137bdd5272246b7af242b488be2430ed77e139af50f866becbcac027902d9
+  unresolved_subitems: []

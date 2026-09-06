@@ -6,6 +6,15 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Constants/NewtonHankelRealRootCriterion.negative_real_roots_iff_newtonHankel_posSemidef
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 1092a12d2c47c409c753ed0a7fbcb0ef0523c7c854697f85e996561268beb5b7
+      - code: chain-migration-incomplete
+        detail: 9f39c1efbb8145daca469dc7c4dce48bea4cf9574fd663aba32c3cfb8ba508f4
   chain_atoms:
     - 9f39c1efbb8145daca469dc7c4dce48bea4cf9574fd663aba32c3cfb8ba508f4
     - 1092a12d2c47c409c753ed0a7fbcb0ef0523c7c854697f85e996561268beb5b7

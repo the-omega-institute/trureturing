@@ -1,0 +1,51 @@
+## 定理244.1　自主过程复现整个有限测量程序
+
+有
+
+$$
+\boxed{
+G_N\bigl(|\psi\rangle|0^N\rangle\bigr)
+=
+\sum_{\mathbf b}
+K_{\mathbf b}|\psi\rangle\otimes|\mathbf b\rangle.
+}
+\tag{244.2}
+$$
+
+因此最终记录概率为
+
+$$
+\boxed{
+p(\mathbf b)
+=
+\operatorname{Tr}
+\left(
+K_{\mathbf b}\rho K_{\mathbf b}^\dagger
+\right),
+}
+\tag{244.3}
+$$
+
+并且
+
+$$
+\boxed{
+\sum_{\mathbf b}K_{\mathbf b}^\dagger K_{\mathbf b}=I.
+}
+\tag{244.4}
+$$
+
+### 证明
+
+每个 \(V_j\) 都把当前系统分成 \(P_j\) 与 \(I-P_j\) 两个分支，并写入尚未使用的记录比特。
+
+对步骤数归纳，得到式（244.2）。正交记录给出式（244.3）；整体等距性或逐步归一化给出式（244.4）。∎
+
+因此，上一轮的全部成功分支
+
+$$
+P_N\cdots P_1|\psi\rangle
+$$
+
+只是完整联合态中的一个分量。
+

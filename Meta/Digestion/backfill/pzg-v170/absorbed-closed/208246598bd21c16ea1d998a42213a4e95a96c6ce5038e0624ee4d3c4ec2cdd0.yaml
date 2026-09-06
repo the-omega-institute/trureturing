@@ -1,0 +1,28 @@
+fingerprints:
+  raw_sha256: sha256:208246598bd21c16ea1d998a42213a4e95a96c6ce5038e0624ee4d3c4ec2cdd0
+  normalized_sha256: sha256:208246598bd21c16ea1d998a42213a4e95a96c6ce5038e0624ee4d3c4ec2cdd0
+cas_ref: sha256:208246598bd21c16ea1d998a42213a4e95a96c6ce5038e0624ee4d3c4ec2cdd0
+coverage_gids:
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.adjacent_coefficients
+    target_statement_id: sha256:b25fea2c578075272db16caf1ec3d7aad33dc8a89f1381d48bff4e8a1a6ba960
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.choose_adjacent
+    target_statement_id: sha256:e4211ee3fa8a9c6ee23f6164d455ad095b3201310dcb9cdc37083172cc37a394
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.identity_441
+    target_statement_id: sha256:861bc731b695701b1407d88a603f4327894e9bcc4a6beb5fbd3ba0e8627b2fa7
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.weighted_sum_reduction
+    target_statement_id: sha256:a9229fc98bb598e4e6dd4ff4f3aa6b820675677fcace1e5b7dbaff3592ce2af1
+receipts:
+  scribe:
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.adjacent_coefficients
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.choose_adjacent
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.identity_441
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.weighted_sum_reduction
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+  unresolved_subitems: []

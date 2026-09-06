@@ -1,0 +1,50 @@
+**本节明确假设 RH。**
+
+把不同零点记为 \(\rho_j\)，重数为 \(m_j\)，定义
+
+$$
+w_j=1-\frac1{\rho_j},
+$$
+
+$$
+\boxed{
+p_j=\frac{m_j}{c_0|\rho_j|^2}.
+}
+\tag{24}
+$$
+
+在 RH 下，
+
+$$
+|w_j|=1,\qquad
+p_j>0,\qquad
+\sum_jp_j=1,
+$$
+
+且
+
+$$
+r_n=\sum_jp_jw_j^n.
+$$
+
+令
+
+$$
+U|j\rangle=w_j|j\rangle,
+\qquad
+|v\rangle=\sum_j\sqrt{p_j}|j\rangle.
+$$
+
+构造历史态
+
+$$
+\boxed{
+|\Psi_N\rangle
+=
+\frac1{\sqrt{N+1}}
+\sum_{t=0}^N
+|t\rangle\otimes U^t|v\rangle.
+}
+\tag{25}
+$$
+

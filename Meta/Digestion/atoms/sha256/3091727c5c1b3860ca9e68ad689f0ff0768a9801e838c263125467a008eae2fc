@@ -1,0 +1,34 @@
+## 定义 216.1　受控生成元与接口逃逸
+
+在 Hermitian 算子空间上使用 Hilbert–Schmidt 内积。令 \(\Pi\) 投影到当前可见效果空间 \(\mathcal S\)。
+
+对允许 Hamiltonian \(H_a\)，定义
+
+$$
+\mathcal L_a(E)=\frac{i}{\hbar}[H_a,E],
+$$
+
+$$
+\boxed{
+\ell_a(\mathcal S)
+=
+\|(I-\Pi)\mathcal L_a\Pi\|_{2\to2}.
+}
+\tag{216.1}
+$$
+
+再定义最坏行动逃逸：
+
+$$
+\boxed{
+\ell_\Gamma(\mathcal S)
+=
+\sup_{a\in\Gamma}\ell_a(\mathcal S).
+}
+\tag{216.2}
+$$
+
+项目 `HamiltonianEffectCompletionGenerator.lean` 已把单 Hamiltonian 的效果轨道与嵌套交换子闭包联系起来。本节进一步要求对全部允许控制共同检查。
+
+---
+

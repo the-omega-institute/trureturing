@@ -1,0 +1,42 @@
+## 零温极限精确恢复原优化问题
+
+定义：
+
+$$
+\mathscr F_T(\lambda)=T\log\mathscr Z_T(\lambda).
+$$
+
+对固定 \(\lambda>0\)：
+
+$$
+\boxed{
+\lim_{T\downarrow0}\mathscr F_T(\lambda)
+=
+\max_{n\ge1}J_\lambda(n).
+}
+\tag{3}
+$$
+
+证明的关键是：
+
+$$
+J_\lambda(n)
+\le
+\log(1+\log n)-\lambda\log n
+\longrightarrow-\infty.
+$$
+
+因此最大值由某个有限整数取得。再取一个 \(T_0<\lambda\)，用已经收敛的 \(\mathscr Z_{T_0}\) 控制无限尾部，就能把通常的有限“最大项原理”推广到这里。
+
+所以，5040 不只是被放进一份新模型：
+
+$$
+\boxed{
+\text{原来的 5040 优化}
+=
+\text{同一算术配分函数的零温极限}.
+}
+$$
+
+---
+

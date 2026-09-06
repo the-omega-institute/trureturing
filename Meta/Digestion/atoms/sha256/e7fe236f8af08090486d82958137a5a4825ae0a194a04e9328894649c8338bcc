@@ -1,0 +1,52 @@
+# 一、四个原语，应当成为模型的四个接口，而不是四种混用的对象
+
+仓库当前的 `PrimitiveKernel` 明确保留 CUT、FLOW、ADMIT、ANCHOR 四个角色：CUT 比较读数，FLOW 比较变换后的结果，ADMIT 比较准入真值，ANCHOR 比较指定锚点的相等性。它们可以统一成核关系，但语义职责仍然不同。
+
+对我们当前的四素数系统，一个自然实例是：
+
+$$
+X=\mathbb N^4,
+$$
+
+$$
+\mathrm{FLOW}_p:
+(a_2,a_3,a_5,a_7)\longmapsto
+(a_2,a_3,a_5,a_7)+e_p,
+$$
+
+$$
+\mathrm{CUT}(a)
+=
+\prod_{p\in\{2,3,5,7\}}
+\left(1+p^{-1}+\cdots+p^{-a_p}\right),
+$$
+
+$$
+\mathrm{ANCHOR}=(4,2,1,1),
+$$
+
+而 ADMIT 规定允许的状态、输入操作与路径。
+
+这里的关系是：
+
+$$
+\boxed{
+\text{四角色组织一个模型，}
+\quad
+\text{该模型的 FLOW 家族中恰好有四个素数增长方向。}
+}
+$$
+
+不是必须逐项规定：
+
+$$
+\mathrm{CUT}=2,\quad
+\mathrm{FLOW}=3,\quad
+\mathrm{ADMIT}=5,\quad
+\mathrm{ANCHOR}=7.
+$$
+
+后一种对应可以作为标签编码，但不自动保存这些角色的类型和语义。
+
+**真正应当研究的是：哪些压缩保留了整个模型的行为？**
+

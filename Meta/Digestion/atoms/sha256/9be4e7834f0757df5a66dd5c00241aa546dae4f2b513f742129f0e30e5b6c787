@@ -1,0 +1,62 @@
+## 定理 4.1：波的可归一化临界条件
+
+$$
+\boxed{
+\|\mathcal W_{\lambda,\beta}(t)\|^2
+=
+\mathfrak Z_\beta(\beta\lambda)<\infty
+\iff
+\beta\lambda>1.
+}
+\tag{10}
+$$
+
+### 证明
+
+正交性给出：
+
+$$
+\|\mathcal W_{\lambda,\beta}(t)\|^2
+=
+\sum_n Z(n)^\beta n^{-\beta\lambda}.
+$$
+
+因为 \(Z(n)\ge1\)，若 \(\beta\lambda\le1\)，级数不小于发散的 \(p\)-级数。
+
+另一方面：
+
+$$
+Z(n)=\sum_{d\mid n}\frac1d
+\le H_n\le1+\ln n.
+$$
+
+所以当 \(\beta\lambda>1\) 时：
+
+$$
+Z(n)^\beta n^{-\beta\lambda}
+\le
+(1+\ln n)^\beta n^{-\beta\lambda},
+$$
+
+右边可求和。证毕。
+
+其时间相关函数为：
+
+$$
+\boxed{
+\langle\mathcal W_{\lambda,\beta}(0)
+\mid\mathcal W_{\lambda,\beta}(t)\rangle
+=
+\mathfrak Z_\beta(\beta\lambda+it).
+}
+\tag{11}
+$$
+
+因此，同一个解析对象同时记录：
+
+$$
+\boxed{
+\text{状态权重、资源价格、收益选择，以及相位响应。}
+}
+$$
+

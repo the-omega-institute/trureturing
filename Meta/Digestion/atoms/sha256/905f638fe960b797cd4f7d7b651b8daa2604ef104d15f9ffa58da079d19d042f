@@ -1,0 +1,36 @@
+## 第一种：编码正确性
+
+若 \(W\) 把某个有限计数基底一一映射到规范 Zeckendorf 基底，并定义：
+
+$$
+H_Z=WHW^\dagger,
+\qquad
+E_Z=WEW^\dagger,
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Tr}
+\left(
+E\,e^{-iHt/\hbar}\rho e^{iHt/\hbar}
+\right)
+=
+\operatorname{Tr}
+\left(
+E_Ze^{-iH_Zt/\hbar}
+W\rho W^\dagger e^{iH_Zt/\hbar}
+\right).
+}
+\tag{289.1}
+$$
+
+证明直接使用酉等价和迹循环性。
+
+这说明正确换编码不改变预测。但它不保证门的局域性、实现时间或存储成本也保持不变。
+
+项目 `primeAxisEncoding` 提供的是规范编码等价及算术组合结构；要得到式（289.1）的物理版本，还必须明确构造对应算子。
+
+---
+

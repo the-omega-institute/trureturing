@@ -1,0 +1,95 @@
+## 定理285.1　能量守恒的精确条件
+
+有：
+
+$$
+\boxed{
+[H_\varepsilon,\mathsf T]
+=
+(\varepsilon\cdot\delta)\mathsf T.
+}
+\tag{285.1}
+$$
+
+只要存在非零跃迁，\(H_\varepsilon\) 与 \(H_{\mathrm{mix}}\) 可交换的充要条件是：
+
+$$
+\boxed{
+\varepsilon_{00}+\varepsilon_{11}
+=
+\varepsilon_{10}+\varepsilon_{01}.
+}
+\tag{285.2}
+$$
+
+### 证明
+
+对基态 \(|z\rangle\)，跃迁前后的能量差为：
+
+$$
+\varepsilon\cdot(z+\delta)-\varepsilon\cdot z
+=
+\varepsilon\cdot\delta.
+$$
+
+得到式（285.1），再比较正、反向矩阵元。∎
+
+若每类能量来自其顶点坐标的同一个仿射函数，式（285.2）自动成立。这时，四边形的仿射关系就是该能量交换的共振条件。
+
+但若选择：
+
+$$
+\varepsilon=E_*(\ln2,\ln3,\ln5,\ln7,\ln11),
+$$
+
+则：
+
+$$
+\boxed{
+\varepsilon\cdot\delta
+=
+E_*\ln\frac{15}{14}
+=:\Delta>0.
+}
+\tag{285.3}
+$$
+
+每次执行正向 \(15/14\)，都提高这份对数能量。
+
+在三态纤维上：
+
+$$
+\boxed{
+H_{\log}
+=
+\operatorname{diag}
+(E_c,\ E_c-\Delta,\ E_c-2\Delta),
+}
+\tag{285.4}
+$$
+
+其中：
+
+$$
+E_c=E_*\ln5400.
+$$
+
+于是：
+
+$$
+\boxed{
+[H_{\log},H_{\mathrm{mix}}]\ne0.
+}
+\tag{285.5}
+$$
+
+### 结论
+
+第283节的漂亮振荡，并不自动同时具有“素数对数能量守恒”。
+
+若把 \(H_{\log}\) 加到 Hamiltonian 中，频率、暗态与转移概率一般都改变；若希望保持原来的跃迁结构，则需要补足能量供应与参照。
+
+**编程语义、态空间几何和物理能谱，不能由同一个整数标签无条件兼任。**
+
+---
+

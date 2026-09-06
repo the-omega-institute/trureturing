@@ -1,0 +1,18 @@
+## 本轮核验
+
+本轮用精确整数与有理数完成了 **25组检查**，其中包括：
+
+* 原版 PRIMEGAME 前10,000步的整数解释器与指数格点解释器逐步一致；
+* 前七个纯2幂输出及其执行步数；
+* 5040与隐藏控制寄存器造成的不同下一步；
+* 四边形纤维指令 \(15/14\) 的非负性、观察不变量与奇偶变化；
+* Zeckendorf加一的多位进位；
+* 记录指令编号后的一步可逆性有限检验。
+
+[精确解释器与核验脚本](sandbox:/mnt/data/observer_formalization/check_fractran_geometric_language.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/fractran_geometric_language_checks.json)
+
+**本轮未执行 Lean 内核检查。**有限轨迹核验也不替代 Conway 对无限素数输出序列的证明，更不证明这些算术结构已经是现实物理定律。
+
+---
+

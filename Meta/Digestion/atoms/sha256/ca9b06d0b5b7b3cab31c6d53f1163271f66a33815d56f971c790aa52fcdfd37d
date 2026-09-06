@@ -1,0 +1,27 @@
+# 267．素数能量把奇偶、关联和波动连接起来
+
+项目定义的算术规模是：
+
+$$
+E(n)=\ln n=\sum_pa_p(n)\ln p.
+$$
+
+它先是明确的算术量。要作为物理能量，还需选择能量单位和实际 Hamiltonian。
+
+沿用上一轮的候选，在单条素数轴 \(\mathfrak p\) 上取：
+
+$$
+\epsilon_{\mathfrak p}=E_*\ln\mathfrak p,
+$$
+
+$$
+\boxed{
+H_{\mathfrak p}
+=
+\epsilon_{\mathfrak p}(N_0+2N_1+3N_2).
+}
+\tag{267.1}
+$$
+
+---
+

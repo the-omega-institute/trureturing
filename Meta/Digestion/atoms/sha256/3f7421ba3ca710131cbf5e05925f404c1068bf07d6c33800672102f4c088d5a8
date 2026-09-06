@@ -1,0 +1,76 @@
+## 定理326.1　纯参照更名不产生非平凡时空单元闭路
+
+若存在局部参照映射 \(G_{n,j}\)，使：
+
+$$
+T_{n,j}=G_{n+1,j}G_{n,j}^\dagger,
+$$
+
+$$
+V_{n,j}=G_{n,j+1}G_{n,j}^\dagger,
+$$
+
+则：
+
+$$
+\boxed{W_\square=I.}
+\tag{326.2}
+$$
+
+### 证明
+
+沿两条路径，相邻 \(G^\dagger G\) 相消，均得到：
+
+$$
+G_{n+1,j+1}G_{n,j}^\dagger.
+$$
+
+∎
+
+因此，真正的非平凡闭路必须超出纯粹的局部命名变化。
+
+在光滑连接实现中，若边输运由：
+
+$$
+\mathcal P\exp\!\left(-\int\mathcal A\right)
+$$
+
+产生，则小单元展开为：
+
+$$
+\boxed{
+W_\square
+=
+I-a\delta\,\mathcal F_{tx}
++
+O(a^2\delta+a\delta^2),
+}
+\tag{326.3}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal F_{tx}
+=
+\partial_t\mathcal A_x
+-\partial_x\mathcal A_t
++
+[\mathcal A_t,\mathcal A_x].
+}
+\tag{326.4}
+$$
+
+这说明：
+
+> **统一空间与时间以后，几何的一部分不在某张“空间快照”中，而在两种执行顺序之间的相容性中。**
+
+但这里仍然是指定参照输运的连接曲率。
+
+有限维量子态空间上的酉连接，不会仅因写出 \(\mathcal F_{tx}\) 就自动变成时空 Levi–Civita 曲率。还需要证明它怎样作用于共同钟尺、空间标架和物质传播。
+
+同样，如果 \(V,T\) 是实际控制门而不是被动输运，它们的不交换可能来自控制 Hamiltonian，而不是引力。
+
+---
+

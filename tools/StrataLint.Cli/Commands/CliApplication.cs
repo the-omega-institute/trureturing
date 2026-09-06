@@ -24,6 +24,7 @@ internal interface ICliEnvironment
     CommandResult DigestStatus(IReadOnlyList<string> arguments);
 
     CommandResult ShowAtom(IReadOnlyList<string> arguments);
+    CommandResult AtomContext(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments);
 
@@ -42,6 +43,7 @@ internal interface ICliEnvironment
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
     CommandResult QuarantineAtom(IReadOnlyList<string> arguments);
+    CommandResult SettleAtom(IReadOnlyList<string> arguments);
 
     CommandResult DecomposeAtom(IReadOnlyList<string> arguments);
 
@@ -111,6 +113,8 @@ internal static class CliApplication
                 RenderCommand(environment.CoverAtom(tail), console),
             ["quarantine-atom"] = static (environment, tail, console) =>
                 RenderCommand(environment.QuarantineAtom(tail), console),
+            ["settle-atom"] = static (environment, tail, console) =>
+                RenderCommand(environment.SettleAtom(tail), console),
             ["decompose-atom"] = static (environment, tail, console) =>
                 RenderCommand(environment.DecomposeAtom(tail), console),
             ["dag-render"] = static (environment, tail, console) =>
@@ -143,6 +147,8 @@ internal static class CliApplication
                 RenderCommand(environment.SelfTest(tail), console),
             ["show-atom"] = static (environment, tail, console) =>
                 RenderCommand(environment.ShowAtom(tail), console),
+            ["atom-context"] = static (environment, tail, console) =>
+                RenderCommand(environment.AtomContext(tail), console),
             ["topology"] = static (environment, tail, console) =>
                 RenderTopology(environment.Topology(tail), console),
             ["truth-export"] = static (environment, tail, console) =>

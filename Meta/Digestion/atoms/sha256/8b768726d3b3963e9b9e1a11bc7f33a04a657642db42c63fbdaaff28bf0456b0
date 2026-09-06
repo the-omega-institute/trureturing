@@ -1,0 +1,16 @@
+## 定理一：忠实切面的拼接公式
+
+若一组边 \(\mathcal C\) 使每条完整历史**恰好经过其中一条边**，则：
+
+$$
+\boxed{
+Z_{s\to t}
+=
+\sum_{e\in\mathcal C}
+Z_{s\to\operatorname{tail}(e)}
+\,w(e)\,
+Z_{\operatorname{head}(e)\to t}.
+}
+\tag{5}
+$$
+

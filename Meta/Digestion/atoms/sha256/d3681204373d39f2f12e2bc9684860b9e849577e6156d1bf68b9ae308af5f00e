@@ -1,0 +1,16 @@
+## 定义 1.1：全历史态
+
+$$
+\boxed{
+|\mathrm{Hist}_T\rangle
+=
+\frac1{\sqrt{2T+1}}
+\sum_{t=-T}^{T}|t\rangle\otimes|\psi_t\rangle.
+}
+\tag{1}
+$$
+
+现在，过去、现在、未来不再是三个分开处理的对象，而是同一个态在不同时间标签下的分量。
+
+这种“用时钟寄存器把动力学写入静态整体”的构造，与 Page–Wootters 历史态及 Feynman–Kitaev 电路—Hamiltonian 方法有明确关系；已有研究还将局部时钟用于编码电路的时空结构。([arXiv][1])
+

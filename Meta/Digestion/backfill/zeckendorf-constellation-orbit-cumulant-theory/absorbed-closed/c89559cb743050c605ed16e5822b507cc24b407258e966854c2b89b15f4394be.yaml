@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c89559cb743050c605ed16e5822b507cc24b407258e966854c2b89b15f4394be
+  normalized_sha256: sha256:c89559cb743050c605ed16e5822b507cc24b407258e966854c2b89b15f4394be
+cas_ref: sha256:c89559cb743050c605ed16e5822b507cc24b407258e966854c2b89b15f4394be
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/ModFiveCharacterWordQuotient.mod_five_character_word_scalar_quotient
+    target_statement_id: sha256:3e2b9febadcd49c2e2515a484abf13d8f9fc0e3436bc34fa5f8eef1040408de5
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/GoldenCoding/ModFiveCharacterWordQuotient.mod_five_character_word_scalar_quotient
+      definition_sha256: sha256:7e5aa923a8c35d30651066d25029dfcf9245a5675728e082734e0a76c204297b
+      emission_sha256: sha256:4cdba10b1b1dd7ee64ef93b6be4c116c7faef551c4d59558810eae6a5545bdf1
+  unresolved_subitems: []

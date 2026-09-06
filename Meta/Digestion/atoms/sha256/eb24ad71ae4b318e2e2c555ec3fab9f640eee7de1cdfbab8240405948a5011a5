@@ -1,0 +1,57 @@
+## 3.2 把这个新坐标再删掉，会留下记忆
+
+将三维系统分成：
+
+$$
+x(t)\in\mathbb C^2
+\quad\text{和}\quad
+z(t)\in\mathbb C,
+$$
+
+其中 \(z\) 是奇偶模式。写成：
+
+$$
+i\dot x=Bx+vz,
+$$
+
+$$
+i\dot z=-2bz+v^\dagger x,
+\qquad
+v=\binom0{2\varepsilon}.
+$$
+
+解出隐藏变量：
+
+$$
+z(t)
+=
+e^{2ibt}z(0)
+-i\int_0^t e^{2ib(t-s)}v^\dagger x(s)\,ds.
+$$
+
+代回：
+
+$$
+\boxed{
+\begin{aligned}
+i\dot x(t)
+={}&Bx(t)+ve^{2ibt}z(0)\\
+&-i\int_0^t
+ve^{2ib(t-s)}v^\dagger x(s)\,ds.
+\end{aligned}
+}
+\tag{9}
+$$
+
+因此，删掉奇偶坐标以后，并不能通常只用原来的二维矩阵 \(B\) 更新。
+
+还必须保留：
+
+$$
+\text{隐藏初态的贡献}
+\quad+\quad
+\text{过去轨迹的记忆积分}.
+$$
+
+**这给“把整个时间放进一个波”一个具体含义：被消去的坐标，可能不是彻底消失，而是转化为有效演化中的历史依赖。**
+

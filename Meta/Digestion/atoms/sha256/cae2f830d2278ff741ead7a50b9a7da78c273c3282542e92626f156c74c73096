@@ -1,0 +1,44 @@
+# 十、黄金分辨率可以把这个判据整理成离散层级
+
+令：
+
+$$
+G_0=1,\quad G_1=2,\quad G_{L+2}=G_{L+1}+G_L.
+$$
+
+定义嵌套时间网格：
+
+$$
+\mathcal T_L
+=
+\bigcup_{\ell=0}^{L}
+\left\{
+\frac j{G_\ell}:0\le j\le G_\ell
+\right\}.
+$$
+
+全部网格都位于固定区间：
+
+$$
+[0,1].
+$$
+
+将重复点删除后，定义：
+
+$$
+\boxed{
+\mathsf K_L
+=
+\bigl[K(t_j-t_i)\bigr]_{t_i,t_j\in\mathcal T_L}.
+}
+\tag{27}
+$$
+
+因为：
+
+$$
+G_L\asymp\varphi^L,
+$$
+
+网格间距趋于零。Zeckendorf 的规范数值对应可以为这些层级和索引提供统一编码；其唯一性已有形式化基础。([Lean社区][4])
+
