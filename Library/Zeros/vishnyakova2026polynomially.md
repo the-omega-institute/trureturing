@@ -37,10 +37,14 @@ belong to the degree-two parameter set, at the repeated-root boundary.
 
 What this repository adds is disjoint from that antecedent:
 
-1. **Necessity / whole-interval classification** — that the parameter set
-   *equals* the closed interval between those endpoints, not merely contains
-   them. The source states no such equality at even degree and writes that for
-   even `n` "the situation is much more complicated".
+1. **Necessity / whole-interval classification** — a *proof* that the parameter
+   set *equals* the closed interval between those endpoints, not merely contains
+   them. The source does state this equality, but only conjecturally: Conjecture
+   6.5 asserts `M_{2k}(a) = [-c_{2k}(a), a + c_{2k}(a)]` for every even degree.
+   What it does not do is establish it at any even degree; it writes that for
+   even `n` "the situation is much more complicated". The increment here is
+   therefore the *proof* of that interval-shape clause at `k = 1`, not the
+   statement of it.
 2. **The closed form of the extent** `c_2(a) = (sqrt(a^2+a) - a)/2`. Stated
    precisely: the source gives no closed form at any even degree, and its
    sentence `The proof of this fact and the possible value of the limit ...
