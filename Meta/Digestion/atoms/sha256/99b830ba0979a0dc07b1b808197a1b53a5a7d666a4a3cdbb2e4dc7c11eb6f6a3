@@ -1,0 +1,54 @@
+## 定义272.1　指令的指数形式
+
+设程序为：
+
+$$
+\mathcal F=
+\left(
+\frac{u_1}{v_1},\ldots,\frac{u_m}{v_m}
+\right),
+\qquad
+\gcd(u_i,v_i)=1.
+$$
+
+选取包含初始状态和所有指令所用素数的集合 \(S\)。
+
+定义：
+
+$$
+\alpha_{i,p}=v_p(u_i),
+\qquad
+\beta_{i,p}=v_p(v_i),
+$$
+
+$$
+\delta_i=\alpha_i-\beta_i.
+$$
+
+第 \(i\) 条指令的可实施条件为：
+
+$$
+\boxed{
+a\ge\beta_i
+}
+\tag{272.1}
+$$
+
+其中不等式逐坐标理解。
+
+考虑优先级后，其实际执行区域为：
+
+$$
+\boxed{
+D_i=
+\left\{
+a:
+a\ge\beta_i,\;
+a\not\ge\beta_j\ \text{对全部 }j<i
+\right\}.
+}
+\tag{272.2}
+$$
+
+---
+

@@ -1,0 +1,37 @@
+## 定理264.1　振幅几何与相位几何的分解
+
+纯态的 Fubini–Study 线元满足：
+
+$$
+\boxed{
+ds_{\mathrm{FS}}^2
+=
+\frac14\sum_k\frac{dp_k^2}{p_k}
++
+\sum_kp_k\,d\varphi_k^2
+-
+\left(\sum_kp_k\,d\varphi_k\right)^2.
+}
+\tag{264.1}
+$$
+
+### 证明
+
+将态向量微分代入：
+
+$$
+ds_{\mathrm{FS}}^2
+=
+\langle d\Psi|d\Psi\rangle
+-
+|\langle\Psi|d\Psi\rangle|^2,
+$$
+
+并使用 \(\sum_kdp_k=0\)。∎
+
+当 \(p=p^*\)、相位固定时，第一项就是第263节 Fisher 度量的四分之一。
+
+但允许相位改变后，四棱锥仍然看不见额外的量子方向。
+
+---
+

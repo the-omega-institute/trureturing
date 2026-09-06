@@ -1,0 +1,74 @@
+## 定理3.1：无限指数修正后的临界零点
+
+当 \(\beta\to\infty\) 时，\(L_{11,\beta}\) 存在零点：
+
+$$
+\boxed{
+\lambda_\beta
+=
+\lambda_c+
+\frac{i\pi}{\beta\ln11}
+-
+\frac{(133/144)^\beta}{\beta\ln11}
++
+o\!\left(\frac{(133/144)^\beta}{\beta}\right).
+}
+\tag{12}
+$$
+
+### 证明
+
+记：
+
+$$
+\kappa=\frac{133}{144},
+\qquad
+c_3=\frac{61}{72}.
+$$
+
+式（11）在 \(v=0\) 附近写成：
+
+$$
+L(v)
+=
+v+\kappa^\beta
++
+O\!\left(v^2+\kappa^\beta|v|+c_3^\beta\right).
+$$
+
+后续系数的比值严格递减，可以用几何级数统一控制余项。
+
+由于：
+
+$$
+0<c_3<\kappa<1,
+$$
+
+在区间：
+
+$$
+-2\kappa^\beta\le v\le0
+$$
+
+内，充分大的 \(\beta\) 使 \(L(-2\kappa^\beta)<0\)、\(L(0)>0\)，而导数保持正。
+
+所以存在唯一的局部实根：
+
+$$
+v_\beta
+=
+-\kappa^\beta+o(\kappa^\beta).
+$$
+
+代回 \(\lambda\) 即得。证毕。
+
+在充分大的 \(\beta\) 下，该零点满足：
+
+$$
+\beta\Re\lambda_\beta>1,
+$$
+
+因而也是真正的完整配分函数 \(\mathcal A_\beta\) 的零点。
+
+**这一步揭示了新的边界信息：打开隐藏的高指数层以后，临界零点的实部会发生一个方向明确、大小可计算的偏移。**
+

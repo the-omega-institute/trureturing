@@ -1,0 +1,14 @@
+## 在 \(\theta=0\) 时
+
+所有历史振幅相同，因此按奇、偶寄存器各自的事件计数分块，每块都是秩一矩阵。
+
+仍然只有 12 个可能的计数块，所以：
+
+$$
+\boxed{
+\operatorname{SchmidtRank}_{\mathrm{odd}\,|\,\mathrm{even}}
+|\Psi_0\rangle=12.
+}
+\tag{30}
+$$
+

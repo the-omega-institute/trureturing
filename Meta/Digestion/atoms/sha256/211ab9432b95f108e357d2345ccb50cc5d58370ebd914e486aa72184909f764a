@@ -1,0 +1,20 @@
+# 308．“平坦区间＋离散转折”也出现在最优值的几何中
+
+定义最优值函数：
+
+$$
+\boxed{
+\Psi(\lambda)=\max_{n\ge1}
+\left[W(n)-\lambda E(n)\right],
+}
+\tag{308.1}
+$$
+
+其中
+
+$$
+E(n)=\ln n,\qquad W(n)=\ln Z(n).
+$$
+
+每个整数对应一条关于 \(\lambda\) 的直线。
+

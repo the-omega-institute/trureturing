@@ -1,0 +1,8 @@
+**真正需要补上的，往往是 \(xy\)、联合奇偶、闭环相位、Schur 交叉项这类关系，而不是一味增加空间维数或更高层的观察者。**
+
+这些有限结构尚未给出实际 ξ 的全阶正性证明，也没有提供离线零点反例。它们把下一步的任务变得更具体：**利用真实素数操作与规范编码，保留并控制那些在投影中容易被丢掉的联合关系，而不是凭图形的顶点数量判断整体是否完成。**
+
+[1]: https://arxiv.org/abs/1012.4665 "https://arxiv.org/abs/1012.4665"
+[2]: https://arxiv.org/abs/2205.04174 "https://arxiv.org/abs/2205.04174"
+[3]: https://dlmf.nist.gov/25.2 "https://dlmf.nist.gov/25.2"
+[4]: https://arxiv.org/abs/math/0604314 "https://arxiv.org/abs/math/0604314"

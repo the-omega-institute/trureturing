@@ -1,0 +1,115 @@
+## 定理318.1　RH可以等价表述为这个核的全域正性
+
+有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+K(z_1,\ldots,z_m)\succeq0
+}
+\tag{318.4}
+$$
+
+对全部有限采样点、全部 \(m\)，且采样点不为 \(\Xi\) 零点时成立。
+
+### 正向证明
+
+若RH成立，令全部正零点纵坐标为 \(\gamma\)，按重数计。
+
+由 \(\Xi\) 的成对 Hadamard 乘积：
+
+$$
+M(z)
+=
+\sum_{\gamma>0}
+\left[
+\frac1{\gamma-z}
++
+\frac1{-\gamma-z}
+\right].
+$$
+
+成对级数在远离零点的紧集上收敛。
+
+因此：
+
+$$
+\boxed{
+K_{ij}
+=
+\sum_{\gamma\in\{\pm\gamma_1,\pm\gamma_2,\ldots\}}
+\frac1{(\gamma-z_i)(\gamma-\overline{z_j})}.
+}
+\tag{318.5}
+$$
+
+每项都是一个正半定 Gram 矩阵，收敛和也正半定。
+
+### 反向证明
+
+若 \(\Xi\) 有非实零点，由实对称性，存在上半平面零点：
+
+$$
+z_0=x_0+iy_0,
+\qquad y_0>0.
+$$
+
+设其重数为 \(r\)，则局部：
+
+$$
+M(z)=-\frac r{z-z_0}+O(1).
+$$
+
+取：
+
+$$
+z=z_0-i\varepsilon,
+\qquad 0<\varepsilon<y_0.
+$$
+
+得到：
+
+$$
+\boxed{
+\operatorname{Im}M(z)
+=
+-\frac r\varepsilon+O(1)<0
+}
+\tag{318.6}
+$$
+
+当 \(\varepsilon\) 足够小时成立。
+
+但一阶核为：
+
+$$
+K(z,z)=\frac{\operatorname{Im}M(z)}{\operatorname{Im}z}<0.
+$$
+
+违反正性。∎
+
+### 为什么这个角度重要？
+
+在 \(\Xi\) 本身的图像中，一个零点是“函数值变为零”。
+
+在 \(M\) 中，它变成一个极点。
+
+在 \(K\) 中，非实零点进一步迫使一个有限正性条件失败。
+
+$$
+\boxed{
+\text{零点位置}
+\longrightarrow
+\text{对数响应的极点}
+\longrightarrow
+\text{正锥之外的有限见证}.
+}
+$$
+
+这是一条真正连接解析、几何正性与有限检测的链。
+
+但它仍是RH的等价重述，不是已经证明RH成立。困难转移到了：**怎样独立证明真实 \(\Xi\) 的这个核处处正，而不是预先只使用实零点构造一个当然为正的模型。**
+
+---
+

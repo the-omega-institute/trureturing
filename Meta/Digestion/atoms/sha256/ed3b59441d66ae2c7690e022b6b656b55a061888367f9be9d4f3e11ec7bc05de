@@ -1,0 +1,46 @@
+# 六、把这个临界面放进整个算术波，会得到统一的局部形式
+
+上一轮研究了5040与55440的复价格零点。现在可以推广到任意临界价格，而不只分析一个有限截断。
+
+定义：
+
+$$
+\boxed{
+\mathcal A_\beta(\lambda)
+=
+\sum_{n\ge1}
+e^{\beta[W(n)-\lambda E(n)]}.
+}
+\tag{14}
+$$
+
+当：
+
+$$
+\beta\Re\lambda>1
+$$
+
+时，它绝对收敛，因为：
+
+$$
+Z(n)\le1+\ln n.
+$$
+
+固定临界价格 \(\lambda_*>0\)，令：
+
+$$
+P_*=\max_nJ_{\lambda_*}(n),
+$$
+
+并定义缩放后的函数：
+
+$$
+\boxed{
+F_\beta(z)
+=
+e^{-\beta P_*+zE_-}
+\mathcal A_\beta\left(\lambda_*+\frac z\beta\right).
+}
+\tag{15}
+$$
+

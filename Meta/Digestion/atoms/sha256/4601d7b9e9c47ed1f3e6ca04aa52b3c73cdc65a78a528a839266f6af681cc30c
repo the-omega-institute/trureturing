@@ -1,0 +1,20 @@
+## 定义236.1　量子比特的纬线记录族
+
+取
+
+$$
+|\psi(\theta,\phi)\rangle
+=
+\cos\frac\theta2|0\rangle
++
+e^{i\phi}\sin\frac\theta2|1\rangle.
+$$
+
+固定
+
+$$
+0<\theta\le\frac\pi2,
+$$
+
+让 \(\phi\) 从零增加到 \(2\pi\)。
+

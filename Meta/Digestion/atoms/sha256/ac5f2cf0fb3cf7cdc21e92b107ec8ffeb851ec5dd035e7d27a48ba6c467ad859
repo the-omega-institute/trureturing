@@ -1,0 +1,58 @@
+## 定理 8.1：因果提升后的精确信息泄漏公式
+
+在一个有限维的精细历史模型中，假设更新 \(U\) 是酉的。
+
+令：
+
+$$
+P=VV^\dagger,
+$$
+
+$$
+K=V^\dagger UV,
+$$
+
+$$
+L=(I-P)UV.
+$$
+
+则：
+
+$$
+\boxed{
+K^\dagger K=I-L^\dagger L.
+}
+\tag{19}
+$$
+
+### 证明
+
+因为：
+
+$$
+(UV)^\dagger UV=I,
+$$
+
+把输出分解成 \(P\) 与 \(I-P\) 两个正交部分：
+
+$$
+I
+=
+V^\dagger U^\dagger PUV
++
+V^\dagger U^\dagger(I-P)UV.
+$$
+
+第一项等于 \(K^\dagger K\)，第二项等于 \(L^\dagger L\)。证毕。
+
+因此，对粗粒化输入 \(x\)：
+
+$$
+\boxed{
+\|x\|^2-\|Kx\|^2
+=
+\|Lx\|^2.
+}
+\tag{20}
+$$
+

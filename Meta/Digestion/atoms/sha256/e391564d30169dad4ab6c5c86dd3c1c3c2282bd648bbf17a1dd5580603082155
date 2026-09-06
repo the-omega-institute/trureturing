@@ -1,0 +1,48 @@
+## 7.2 局部碰撞怎样发生？
+
+最简单的模型是：
+
+$$
+\boxed{
+P_\tau(z)=z^2-2\tau.
+}
+\tag{27}
+$$
+
+它满足同一方程：
+
+$$
+\partial_\tau P_\tau=-\partial_z^2P_\tau.
+$$
+
+其零点为：
+
+$$
+z=\pm\sqrt{2\tau}.
+$$
+
+所以：
+
+$$
+\begin{cases}
+\tau>0:&\text{两个不同实根};\\
+\tau=0:&\text{一个二重实根};\\
+\tau<0:&\text{一对非实共轭根}.
+\end{cases}
+$$
+
+对应 Hermite 矩阵恰好是：
+
+$$
+\boxed{
+\mathsf H(P_\tau)
+=
+\begin{pmatrix}
+2&0\\
+0&4\tau
+\end{pmatrix}.
+}
+$$
+
+它的最小特征值穿过零，正好对应零点离开实轴。
+

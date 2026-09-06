@@ -1,0 +1,72 @@
+# 四、第三个角度：实际 ξ 的“零点稳定性”有一个已知的临界参数
+
+这一条与你之前的相变直觉最接近，而且不是我们随意构造的有限模型。
+
+采用标准归一化，定义
+
+$$
+H_\tau(z)
+=
+\int_0^\infty
+e^{\tau u^2}\Phi(u)\cos(zu)\,du,
+\tag{14}
+$$
+
+其中
+
+$$
+\Phi(u)=
+\sum_{n\ge1}
+\left(2\pi^2n^4e^{9u}-3\pi n^2e^{5u}\right)
+e^{-\pi n^2e^{4u}}.
+$$
+
+在 \(\tau=0\) 时，
+
+$$
+\boxed{
+H_0(z)=\frac18\xi\!\left(\frac12+\frac{iz}{2}\right).
+}
+\tag{15}
+$$
+
+这是 de Bruijn–Newman 变形，不是给 ξ 任意添加扰动。([What's new][3])
+
+它满足
+
+$$
+\boxed{
+\partial_\tau H_\tau=-\partial_z^2H_\tau.
+}
+\tag{16}
+$$
+
+存在一个实常数 \(\Lambda_{\mathrm{dBN}}\)，使
+
+$$
+H_\tau\text{ 全部零点为实数}
+\iff
+\tau\ge\Lambda_{\mathrm{dBN}}.
+$$
+
+Rodgers–Tao 已证明
+
+$$
+\boxed{\Lambda_{\mathrm{dBN}}\ge0.}
+$$
+
+而 RH 等价于 \(\Lambda_{\mathrm{dBN}}\le0\)。因此
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Lambda_{\mathrm{dBN}}=0.
+}
+\tag{17}
+$$
+
+这是已证明的临界框架，不是本轮新发现的 RH 证明。([arXiv][4])
+
+**含义非常重要：如果 RH 成立，它并不位于一个可以向负方向扰动很远的稳定区域，而恰好处在边界上。**
+

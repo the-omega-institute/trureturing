@@ -1,0 +1,12 @@
+**编码层**负责：
+
+$$
+\text{整数}
+\leftrightarrow
+\text{素数指数}
+\leftrightarrow
+\text{合法黄金字串}.
+$$
+
+它必须保留实际数值。
+

@@ -1,0 +1,77 @@
+# 五、临界四边形可以在投影中变成一条线
+
+假设确实存在双重临界价格 \(\lambda_*\)，相应四角为：
+
+$$
+N_-,\quad pN_-,\quad qN_-,\quad pqN_-.
+$$
+
+令：
+
+$$
+E_-=\ln N_-,
+\qquad
+P_*=\max_nJ_{\lambda_*}(n).
+$$
+
+所有四角都满足：
+
+$$
+\boxed{
+W(n)=\lambda_*E(n)+P_*.
+}
+\tag{13}
+$$
+
+因此，将它们投影到：
+
+$$
+(E,W)
+$$
+
+平面时，四个点全在同一条直线上。
+
+原来两个独立的二值选择：
+
+$$
+(x_p,x_q)\in\{0,1\}^2
+$$
+
+被映为：
+
+$$
+\begin{pmatrix}E\\W\end{pmatrix}
+=
+\begin{pmatrix}E_-\\W_-\end{pmatrix}
++
+x_p
+\begin{pmatrix}\ln p\\\lambda_*\ln p\end{pmatrix}
++
+x_q
+\begin{pmatrix}\ln q\\\lambda_*\ln q\end{pmatrix}.
+$$
+
+两个方向向量成比例，所以连续凸包的维数从二降到一。
+
+但要注意：四个整数的 \(E\) 值仍然不同，有限点集并没有因为共线而变成同一个点。
+
+真正将四者完全合并的读出是：
+
+$$
+\boxed{
+J_{\lambda_*}=W-\lambda_*E=P_*.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\text{一个目标值完全相同，}
+\quad
+\text{背后仍可以存在四个不同的算术配置。}
+}
+$$
+
+这就是一种精确的“临界信息被投影隐藏”。
+

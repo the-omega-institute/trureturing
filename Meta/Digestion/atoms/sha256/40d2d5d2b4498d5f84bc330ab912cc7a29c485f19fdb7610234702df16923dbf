@@ -1,0 +1,44 @@
+## 定义231.1　投影读数与记录操作
+
+取有限维 Hilbert 空间 \(\mathcal H\)，以及投影
+
+$$
+P=P^\dagger=P^2,
+\qquad
+Q=I-P.
+$$
+
+测量“系统是否位于 \(P\mathcal H\)”的概率是
+
+$$
+p_P(\rho)=\operatorname{Tr}(P\rho).
+$$
+
+但这个概率公式没有唯一指定测量后的状态。
+
+一种实现是 Lüders 仪器：
+
+$$
+\boxed{
+\mathcal I_P(\rho)=P\rho P,
+\qquad
+\mathcal I_Q(\rho)=Q\rho Q.
+}
+\tag{231.1}
+$$
+
+另一种实现可以是
+
+$$
+\boxed{
+\widetilde{\mathcal I}_P(\rho)=VP\rho PV^\dagger,
+\qquad
+\widetilde{\mathcal I}_Q(\rho)=Q\rho Q,
+}
+\tag{231.2}
+$$
+
+其中 \(V\) 为保持 \(P\mathcal H\) 的酉算子。
+
+两者给出相同的结果概率，却可能有不同的后续动力学。
+

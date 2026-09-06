@@ -1,0 +1,59 @@
+## 定义7.1：有限增长单元
+
+固定 \(B\ge3\)，取不同素数：
+
+$$
+p_1,\ldots,p_m.
+$$
+
+考虑：
+
+$$
+n_S=B\prod_{i\in S}p_i.
+$$
+
+令：
+
+$$
+E=\ln B,
+\qquad
+u_i=\ln p_i,
+\qquad
+U=\sum_i u_i,
+$$
+
+$$
+\eta_i
+=
+\frac{W(Bp_i)-W(B)}{u_i}.
+$$
+
+对集合 \(S\)，记：
+
+$$
+s=\sum_{i\in S}u_i.
+$$
+
+定义这组阈值的跨度：
+
+$$
+\boxed{
+R=\max_i\eta_i-\min_i\eta_i.
+}
+\tag{20}
+$$
+
+再定义：
+
+$$
+\boxed{
+\kappa
+=
+\frac{\ln(E+U)+1}
+{(E+U)^2[\ln(E+U)]^2}.
+}
+\tag{21}
+$$
+
+它是这个区间上预算曲线凹性的一个统一下界。
+

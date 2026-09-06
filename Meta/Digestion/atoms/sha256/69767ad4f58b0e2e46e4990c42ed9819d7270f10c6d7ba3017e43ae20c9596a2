@@ -1,0 +1,122 @@
+## 定理7.1：近临界区块的稳健安全界
+
+记：
+
+$$
+B_{\rm top}=B\prod_{i=1}^mp_i.
+$$
+
+则对任意 \(S\)：
+
+$$
+\boxed{
+\begin{aligned}
+\Delta(n_S)\ge{}&
+\left(1-\frac sU\right)\Delta(B)
++\frac sU\Delta(B_{\rm top})\\
+&+s(U-s)
+\left(
+\frac\kappa2-\frac RU
+\right).
+\end{aligned}
+}
+\tag{22}
+$$
+
+因此，若：
+
+$$
+\boxed{
+R\le\frac{\kappa U}{2},
+}
+\tag{23}
+$$
+
+就有：
+
+$$
+\boxed{
+\Delta(n_S)
+\ge
+\min\{\Delta(B),\Delta(B_{\rm top})\}
+\quad\forall S.
+}
+\tag{24}
+$$
+
+### 证明
+
+令：
+
+$$
+h(x)=\gamma+\ln\ln x.
+$$
+
+其二阶导数为：
+
+$$
+h''(x)
+=
+-\frac{\ln x+1}{x^2(\ln x)^2}.
+$$
+
+在 \([E,E+U]\) 上：
+
+$$
+h''(x)\le-\kappa.
+$$
+
+因此，它在两端弦线上方的高度至少为：
+
+$$
+\boxed{
+h(E+s)
+-
+\left(1-\frac sU\right)h(E)
+-\frac sU h(E+U)
+\ge
+\frac\kappa2s(U-s).
+}
+\tag{25}
+$$
+
+另一方面，\(W\) 在不同素数方向的增量可加。
+
+设被选择方向与未选择方向的加权平均阈值分别为：
+
+$$
+\bar\eta_S,\qquad\bar\eta_{S^c}.
+$$
+
+则 \(W(n_S)\) 相对两端弦线的偏离恰好为：
+
+$$
+\boxed{
+\frac{s(U-s)}U
+(\bar\eta_S-\bar\eta_{S^c}).
+}
+\tag{26}
+$$
+
+其绝对值不超过：
+
+$$
+\frac{s(U-s)}U R.
+$$
+
+用式（25）减去这个最坏偏离，就得到式（22）。端点 \(s=0,U\) 直接成立。证毕。
+
+---
+
+这个定理的意义很直接：
+
+$$
+\boxed{
+\text{预算曲线的凹性}
+\quad
+\text{可以压住一组阈值之间的不一致。}
+}
+$$
+
+所以，不必先证明它们精确相等，也不必先确定每一种发生顺序。
+

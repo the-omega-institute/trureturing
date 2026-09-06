@@ -1,0 +1,21 @@
+## 定义291.1　因数收益与资源价格
+
+令
+
+$$
+Z(n)=\sum_{d\mid n}\frac1d=\frac{\sigma(n)}n,
+$$
+
+并定义
+
+$$
+\boxed{
+F_\lambda(n)=\ln Z(n)-\lambda\ln n,
+\qquad \lambda>0.
+}
+\tag{291.1}
+$$
+
+其中：
+
+* \(\ln Z(n)\) 是当前模型选择的因数收益；

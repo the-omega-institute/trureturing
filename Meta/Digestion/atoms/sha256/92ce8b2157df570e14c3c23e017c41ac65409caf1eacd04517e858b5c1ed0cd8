@@ -1,0 +1,38 @@
+## 定义折叠矩泛函
+
+令 \(\mathcal L\) 由
+
+$$
+\mathcal L(T_k(x))=r_k
+$$
+
+定义，其中 \(T_k\) 是 Chebyshev 多项式。
+
+记
+
+$$
+s_j=\mathcal L(x^j).
+$$
+
+前几项为
+
+$$
+s_0=1,\qquad s_1=r_1,\qquad
+s_2=\frac{1+r_2}{2}.
+$$
+
+构造两组矩阵：
+
+$$
+\boxed{
+H_m=(s_{i+j})_{0\le i,j\le m},
+}
+$$
+
+$$
+\boxed{
+K_m=(s_{i+j}-s_{i+j+2})_{0\le i,j\le m}.
+}
+\tag{24}
+$$
+

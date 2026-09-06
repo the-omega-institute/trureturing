@@ -1,0 +1,23 @@
+# 268．把四条素数轴放在一起，得到的不是四维金字塔宇宙
+
+对：
+
+$$
+5040=2^4\,3^2\,5\,7,
+$$
+
+上一轮得到合法空间：
+
+$$
+\mathcal H_{5040}
+=
+\mathbb C^5\otimes\mathbb C^3
+\otimes\mathbb C^2\otimes\mathbb C^2.
+$$
+
+因此：
+
+$$
+\dim\mathcal H_{5040}=60.
+$$
+

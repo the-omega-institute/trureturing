@@ -1,0 +1,46 @@
+## 收束
+
+这次得到了一套可以彼此核验、但不能互相混同的几何：
+
+$$
+\boxed{
+\text{黄金合法态的凸几何}
+\quad+\quad
+\text{指定更新规则的图几何}
+\quad+\quad
+\text{观察纤维几何}
+\quad+\quad
+\text{统计可区分性的微分几何}.
+}
+$$
+
+最具体的结果是：
+
+$$
+\boxed{
+\operatorname{conv}(\mathcal W_3)
+\text{ 确实是四棱锥}.
+}
+$$
+
+但同一组顶点可以对应不同的跃迁图和不同的奇偶算子。
+
+而在明确选择最大熵补全后，这个金字塔的信息度量为：
+
+$$
+\boxed{
+ds^2=dr^2+\cos^2(r/2)(du^2+dv^2),
+}
+$$
+
+它满足：
+
+$$
+\boxed{
+K_{\mathrm{vertical}}=\frac14,
+\qquad
+K_{\mathrm{horizontal}}
+=-\frac{\rho}{4(1-\rho)}.
+}
+$$
+

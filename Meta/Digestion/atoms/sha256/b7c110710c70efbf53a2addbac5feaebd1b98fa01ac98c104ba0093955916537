@@ -1,0 +1,43 @@
+## 下一项实际约束，现在可以写得很精确
+
+要从第 \(n\) 阶推进到第 \(n+1\) 阶，需要证明
+
+$$
+\boxed{
+|r_{n+1}-m_n|\le h_n.
+}
+\tag{36}
+$$
+
+若计算提供
+
+$$
+|r_{n+1}-\widehat r_{n+1}|\le\varepsilon_r,
+$$
+
+$$
+|m_n-\widehat m_n|\le\varepsilon_m,
+$$
+
+$$
+h_n\ge\widehat h_n-\varepsilon_h,
+$$
+
+那么一个充分的严格正性证书是
+
+$$
+\boxed{
+|\widehat r_{n+1}-\widehat m_n|
++\varepsilon_r+\varepsilon_m
+<
+\widehat h_n-\varepsilon_h.
+}
+\tag{37}
+$$
+
+反方向，若左侧差额的严格下界超过 \(h_n\) 的上界，就得到有限负证书。
+
+**没有认证成功，只表示当前误差预算不足；不等于已经发现负性。**
+
+本轮的精确有理反例、80／110 位数值复核与逐层残差计算，可由[核验脚本](sandbox:/mnt/data/discrete_critical_geometry_verify.py)复现；数据见[核验记录](sandbox:/mnt/data/discrete_critical_geometry_verify.json)。其中 ξ 系数部分明确标记为数值核对，不是区间认证。
+

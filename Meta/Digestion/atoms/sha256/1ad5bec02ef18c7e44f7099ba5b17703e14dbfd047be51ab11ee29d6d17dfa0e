@@ -1,0 +1,23 @@
+## 定理六：ξ 历史态的统一有效维数界
+
+在 RH 前件下，对全部 \(N\ge0\)，
+
+$$
+\boxed{
+d_{\mathrm{eff}}(N)
+\le
+\frac{c_0^2}{2(c_0-c_1)}
+\approx28.7548583457.
+}
+\tag{32}
+$$
+
+同时，
+
+$$
+\boxed{
+\operatorname{rank}T_N=N+1.
+}
+\tag{33}
+$$
+

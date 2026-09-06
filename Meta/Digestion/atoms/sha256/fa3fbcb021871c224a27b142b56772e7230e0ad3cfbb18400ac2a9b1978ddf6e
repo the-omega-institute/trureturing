@@ -1,0 +1,82 @@
+# 本轮结果与核验
+
+这一轮的核心新推导是：
+
+$$
+\boxed{
+\text{忽略顺序是否合法}
+\iff
+\text{相应交换子在可观察商上为零};
+}
+$$
+
+$$
+\boxed{
+\det H_{p,a}=-p^{-(a+1)};
+}
+$$
+
+$$
+\boxed{
+\text{四素数全部未来倒数因数和的最小线性实现维数}=16;
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{历史提升后的范数损失}
+=
+\text{离开编码子空间的振幅平方}.
+}
+$$
+
+本轮用有理数运算核对了完整 \(16\times16\) Hankel 子矩阵的秩和行列式、256 组未来指数更新，以及整数状态与有序历史的有限计数差异。全称结论来自正文证明，有限计算用于交叉检查；新增结果尚未在本轮写入仓库或通过 Lean 内核。
+
+[下载精确核验程序、完整有理矩阵与结果](sandbox:/mnt/data/causal_rank_5040_certificates.zip)
+
+**最值得保留的方向是：四个原语可以作为一套保语义的组织语言；\(2,3,5,7\) 可以作为算术坐标；Zeckendorf 可以提供规范分辨率；但系统真正的因果与预测信息，藏在操作组合、过去—未来响应和隐藏子空间的回流里。**
+
+5040 的价值在于，它让这些量都能被完整算出来。它的四个边界尾项：
+
+$$
+\frac1{32},\quad\frac1{27},\quad\frac1{25},\quad\frac1{49}
+$$
+
+不仅是几何级数的余项，也是在有限预测矩阵中证明“信息尚未真正消失”的精确行列式。
+
+**这比单纯寻找四种元素之间的对应更进一步：我们已经可以判断，哪些信息只是换了编码，哪些信息被合法消除了，哪些信息只是小到暂时看不见，却仍然可能影响一个严格的全局结论。**
+
+[1]: https://arxiv.org/html/1506.02455v1 "Uniform Generation in Trace Monoids"
+[2]: https://arxiv.org/html/2009.01217v1 "Notes on Equivalence and Minimization of Weighted Automata"
+[3]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "Mathlib.Data.Nat.Fib.Zeckendorf"
+[4]: https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Fact-Sheet?utm_source=chatgpt.com "DNA Sequencing Fact Sheet"
+[5]: https://davidtong.org/teaching/gauge-theory/ "Gauge Theory | David Tong"
+[6]: https://arxiv.org/html/1905.09327v4 "Ramanujan’s theorem and highest abundant numbers"
+[![Square Pyramid - Formulas, Examples and Diagrams](https://images.openai.com/static-rsc-4/CuEuMKwEZiQF-WQvtej3kqJPo34x9uz88JcHBXLEALMMoNjsnk1S16ESrrCd2yuMQKDYN20zyXiGNWu-hp9mtZRNW4vmoWq6y-jSmNNSSRbmOvWsqrOuxfV3mfPWCPhgnEDnwA6Zg7tp-iYn_pWmqZZXDBgLrsYlgyddnkmEsvU?purpose=inline)](https://mathmonks.com/pyramid/square-pyramid?utm_source=chatgpt.com)
+
+**你这个观察里，有两条可以严格计算的联系，而且正好连接“黄金比例”和“信息逃逸”：**
+
+$$
+\boxed{
+\text{正方形四角加一个等权顶点，}
+\quad
+\text{其对称传播部分恰好是 Fibonacci 递推。}
+}
+$$
+
+但同时：
+
+$$
+\boxed{
+\text{底面最典型的奇偶交替模式，}
+\quad
+\text{对这个新增顶点始终不可见。}
+}
+$$
+
+所以，**增加一个几何高度，不等于自动补回所有信息。真正需要补的，可能是各坐标之间的关系，而不是又增加一个普通位置坐标。**
+
+下面先取最对称的情形——正方形底面的四棱锥——把这几种结构分开建立，再接回 \(5040\)、四素数与仓库的观察者理论。
+

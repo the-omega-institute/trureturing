@@ -1,0 +1,21 @@
+## 本轮核验
+
+本次按仓库提交：
+
+```text
+59a50025adb1d833bd870a64ec5eb34c8b425e85
+```
+
+核对了素数—Zeckendorf 编码与理论定义。
+
+本轮 **33项精确有限代数与枚举检查全部通过**，包括：
+
+三位合法状态、四棱锥读数的隐藏关联、单翻转奇偶关系与零模、60态因数双射、全局30对30的奇偶计数、有限配分函数，以及相同均值状态的不同干涉输出。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_zeckendorf_pyramid_energy.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/zeckendorf_pyramid_energy_checks.json)
+
+本轮未进行 Lean 内核检查。一般凸包、谱结构和近似回归结论由上文证明给出；有限脚本核验不替代完整形式化，也不认证这些能量权重已被现实物理选中。
+
+---
+
