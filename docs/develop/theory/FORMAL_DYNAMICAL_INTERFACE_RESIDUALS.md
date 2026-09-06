@@ -2270,3 +2270,90 @@ P_\alpha x\to x
 \]
 
 这条链给出一个统一但不混同层级的答案：所谓观察者缺失的信息，不是一个无类型的“隐藏量”；它是目标、动力学与接口共同决定的余量。只有把 kernel、carry、image、coupling、gauge 与 completion topology 分账，才能精确知道下一步究竟应增加读数、增加记忆、改变实验、约束动力学、补 gluing，还是承认目标在当前接口上根本不可识别。
+
+---
+
+# 2026-09-06 增补：离散平衡截断的实际系统与能量误差界
+
+本节承接有限时间残差界，将合法约化系统接到离散时间平衡截断的尾和估计。对应源码为 `BalancedSteinEnergy`、`BalancedTruncationStep`、`BalancedTruncationTail`，均位于 `D5/S3/Observer/Hankel/`，并配套同名 Scribe。这里给出完整的候选证明源码；本轮尚未执行 Lean 内核与 Scribe 发射检查。
+
+## A. 两个标准 Stein 不等式
+
+取实矩阵系统
+\[
+x_{k+1}=Ax_k+Bu_k,\qquad y_k=Cx_k,\qquad x_0=0.
+\]
+令 \(D=\operatorname{diag}(w_0,\ldots,w_{n-1})\)，其中每个 \(w_i>0\)。假设
+\[
+A^TDA+C^TC\preceq D,\qquad ADA^T+BB^T\preceq D.
+\]
+`BalancedStein` 用对所有实向量成立的二次型不等式直接表达这两个条件。其定义不包含逆储能界、约化误差界或误差可求和性。
+
+记 \(E_D(x)=\sum_i w_i x_i^2\)。对 \(t=Ax+Bu\) 取 \(z=D^{-1}t\)，加权 Young 不等式与转置配对给出
+\[
+2E_{D^{-1}}(t)
+\le E_D(A^Tz)+\lVert B^Tz\rVert_2^2+E_{D^{-1}}(x)+\lVert u\rVert_2^2
+\le E_{D^{-1}}(t)+E_{D^{-1}}(x)+\lVert u\rVert_2^2.
+\]
+因此 `inverse_energy_step` 推出
+\[
+E_{D^{-1}}(Ax+Bu)\le E_{D^{-1}}(x)+\lVert u\rVert_2^2.
+\]
+坐标平方和与默认 Pi 空间的上确界范数严格区分；有限时间输出范数通过 Mathlib 的 `EuclideanSpace` 连接到这些平方和。
+
+## B. 实际截断、继承性与交叉项消去
+
+保留前 \(n-1\) 个坐标，构造投影 \(P\) 和零填充 \(J\)。源码直接构造
+\[
+A_r=A_{11}=PAJ,\qquad B_r=B_1=PB,\qquad C_r=C_1=CJ.
+\]
+`truncated_model_is_projected` 将这三个矩阵与已有 `ProjectedRealizationError` 的构造逐一等同；轨道复用原有 `drivenState`。
+
+`truncate_preserves_stein` 在零填充向量上应用完整系统不等式，删除非负的遗漏坐标项，证明两个 Stein 不等式对截断系统继续成立。离散时间截断一般不保持原 Gramian 等式，本节没有使用这种错误的继承前提。
+
+单次删除权重 \(\sigma=w_{n-1}\)。令 \(z_k\) 为实际约化状态，并定义
+\[
+e_k=x_k-Jz_k,\quad s_k=x_k+Jz_k,\quad
+v_k=(AJz_k+Bu_k)_{n-1},\quad
+V_k=E_D(e_k)+\sigma^2E_{D^{-1}}(s_k).
+\]
+两个实际递推给出的遗漏坐标交叉项精确抵消。`single_step_dissipation` 证明
+\[
+V_{k+1}+\lVert y_k-y_{r,k}\rVert_2^2+2\sigma |v_k|^2
+\le V_k+4\sigma^2\lVert u_k\rVert_2^2.
+\]
+在 \(0\le k<N\) 上累加，且 \(V_0=0\)，得到保留终端储能的有限时间界
+\[
+V_N+\sum_{k<N}\lVert y_k-y_{r,k}\rVert_2^2
++2\sigma\sum_{k<N}|v_k|^2
+\le4\sigma^2\sum_{k<N}\lVert u_k\rVert_2^2.
+\]
+上述两个不等式从具体矩阵与具体轨道推导；不要求 \(\lVert A\rVert<1\) 或 \(\lVert A_r\rVert<1\)。
+
+## C. 任意保留维数与整个半轴
+
+`prefixA`、`prefixB`、`prefixC` 直接截取前 \(r\) 个状态坐标。利用已证明的 Stein 继承性逐坐标删除，再用有限窗口欧氏范数的三角不等式，`balanced_truncation_window_bound` 证明
+\[
+\boxed{\lVert y-y_r\rVert_{2,[0,N)}
+\le2\left(\sum_{i=r}^{n-1}w_i\right)\lVert u\rVert_{2,[0,N)}}
+\qquad(0\le r\le n,\ N\in\mathbb N).
+\]
+逐次删除得到的系统在源码中与直接前缀截断的系统一致。结论同时涵盖零维约化、完整保留和重复权重；尾和不等式本身不要求权重排序。
+
+若输入具有有限总能量，`balanced_truncation_l2_bound` 首先证明误差平方和可求和，再证明
+\[
+\boxed{\sum_{k=0}^{\infty}\lVert y_k-y_{r,k}\rVert_2^2
+\le\left(2\sum_{i=r}^{n-1}w_i\right)^2
+\sum_{k=0}^{\infty}\lVert u_k\rVert_2^2.}
+\]
+该极限步骤通过统一的非负部分和界与 Mathlib 的实级数定理完成，没有假设误差已属于 \(\ell_2\)。
+
+## D. 与原有结论及后续完整平衡实现的关系
+
+这是既有合法约化构造的一条专门误差路线。原残差定理处理任意投影和一般有限时间输入；本节增加共同正对角 Stein 条件，得到不依赖严格范数收缩的全时间能量保证。
+
+另需沿用 `ProjectedExactDescent` 对本卷第 5.3 节的勘正：固定全局算子满足精确下降 \(PA=A_rP\) 时，\(PA^k=A_r^kP\) 对全部 \(k\) 成立。此时隐藏方向的非零泄漏本身不会造成后续可见预测失败。
+
+本节从已给出的正对角 Stein 数据出发。一般稳定最小实现的平衡坐标构造、该对角与真正 Hankel 奇异值的识别、截断后的严格内部稳定性以及时间域诱导范数与频域 \(H^\infty\) 范数的等同，仍是独立的后续证明义务。对任意共同 Stein 上界，不能直接将其对角权重称为精确 Hankel 奇异值。有限噪声 Ho–Kalman 输出满足这些平衡前提，也需要单独建立。
+
+本节形式化的是经典平衡截断误差机制，不声称提出新的数值误差常数。可对照 Sandberg 与 Rantzer 的 *Balanced Truncation of Linear Time-Varying Systems*，IEEE TAC 49(2), 217–229 (2004), DOI `10.1109/TAC.2003.822862`。近期 Anand 与 Sandberg 的 *On Frequency-Weighted Extended Balanced Truncation*，arXiv:2512.02298v1 (2025)，第 2.1 节仍以 Lyapunov 不等式、平衡坐标和两倍尾和组织广义截断；其频率加权和 extended-LMI 算法不属于本节已经证明的范围。
