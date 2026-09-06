@@ -7,6 +7,7 @@ CANDIDATE_ROOT="$ROOT"
 BASE_REF="origin/dev"
 OBSERVED_BASE_REF=""
 SKIP_ENGINEERING=0
+TEST_MAP_CACHE_ARGS=()
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -18,6 +19,11 @@ while [[ $# -gt 0 ]]; do
     --base)
       [[ $# -ge 2 ]] || { echo "local-harness-gate: --base requires a value" >&2; exit 2; }
       BASE_REF="$2"
+      shift 2
+      ;;
+    --test-map-cache-root)
+      [[ $# -ge 2 && -n "$2" ]] || { echo "local-harness-gate: --test-map-cache-root requires a value" >&2; exit 2; }
+      TEST_MAP_CACHE_ARGS=(--test-map-cache-root "$2")
       shift 2
       ;;
     --skip-engineering)
@@ -161,7 +167,8 @@ set +e
   STRATALINT_TIMING="$SHARED_TIMING_FILE" "$GATE" \
   --candidate "$CANDIDATE_ROOT" \
   --base "$BASE_SHA" \
-  --candidate-lean-report "$CANDIDATE_REPORT"
+  --candidate-lean-report "$CANDIDATE_REPORT" \
+  ${TEST_MAP_CACHE_ARGS[@]+"${TEST_MAP_CACHE_ARGS[@]}"}
 gate_rc=$?
 set -e
 if [[ -s "$SHARED_TIMING_FILE" ]]; then
