@@ -2494,7 +2494,7 @@ F=\mathcal OTE,\qquad G=\mathcal ZS^TE.
 \[
 \mathcal Hu=0\iff\forall i,\ \langle r_i,u\rangle=0.
 \]
-`nonzero_squared_singular_value` 还证明：若非零 \(u\) 满足 \(\mathcal H^*\mathcal Hu=\lambda u\) 且 \(\lambda\ne0\)，则存在 \(i\) 使 \(\lambda=\sigma_i^2\)。因此没有额外的非零奇异方向，重复权重则由对应的正交模态保留重数。
+`nonzero_squared_singular_value` 还证明：若非零 \(\u\) 满足 \(\mathcal H^*\mathcal Hu=\lambda u\) 且 \(\lambda\ne0\)，则存在 \(i\) 使 \(\lambda=\sigma_i^2\)。因此没有额外的非零奇异方向，重复权重则由对应的正交模态保留重数。
 
 `constructed_hankel_schmidt` 将实际 Gramian、构造坐标、正交性、双向奇异向量方程、全部输入上的展开、核刻画和特征多项式连成一个原系统终点。现有有限维 `hankel_gramian_singular_values` 同时被 `constructed_core_singular_values` 用实际平方根实例化。有限核心与上述无限算子的证明分别保留，没有将有限窗口的奇异值直接认作全局谱。
 
@@ -2724,3 +2724,88 @@ U=\frac{560909}{10000000000000},\qquad
 四个 Lean 模块各配一个 Scribe。独立回归脚本和真实运行结果位于 `research/projective_spectral_readout/`。回归包括 36 个精确复 Hermitian 本征问题、108 个精确最小消零见证、324 个锐阈值检查、18 个精确行列式损失系统及 504 个实际递推窗口误差检查；另有 60 个数值复本征问题、240 个读出检查和上述 129 个真实候选坐标的整数比较。
 
 这些有限回归不验证全称 Lean 命题。当前环境无 Lean/lake，因此未获得内核编译、执行后的公理闭包或 Scribe 发射记录。科研层面的边界同样保留：本节提供目标认证桥、锐阈值及禁止错误推论的参数反模型，未完成真实最低模态的全尺度逼近，亦不主张新数学常数或首个形式化优先权。
+
+---
+
+# 2026-09-06 增补：复用现有 Fourier 真源的窗口读出与统一极限
+
+本节继续 PR #5882。起始源码为 `e89269583d0b05b24dca01939ae7245b62b12c35`，先库后证检索固定当前 `dev` 于 `b89d56d0c9a433f9b714821d2bb1779066c59ede`，Mathlib 于 `db584cd6d46c92f209a44c0f1c829460d327499d`。新增三个候选 Lean 模块及同名 Scribe，均位于 `D5/S3/Weil/FourierReadout/` 及相应 Blueprint 路径。没有重建 Fourier 变换、Plancherel 定理或已有无穷尾界。
+
+## A. 已有所有者与本次真正缺口
+
+| 已有所有者 | 已有内容 | 本次使用方式 |
+| --- | --- | --- |
+| `ZetaCore/Defs`、`ZetaCore/PaperFT` | `Zeta23.paperFT`、实频率 Mathlib 换算、支撑窗口指数上界、分部积分衰减 | 直接 import，使用原积分和 `norm_cexp_I_mul_le` |
+| `ZetaBridge/ClassicExplicitFormula` | 偶测试函数上正号 `paperFT` 与负号 `fourierLaplace` 的等同 | 识别其偶性前提，不用于任意窗口 L2 函数 |
+| `TestFunctions/FourierLaplaceClosedStripDecay` | 光滑测试函数的闭水平带衰减 | 保留原所有者，不重新证明 |
+| Mathlib `MeasureTheory/Function/L2Space`、`LpSpace/Basic` | L2 载体、积分内积、内积可积性、`MemLp.toLp` 的几乎处处语义 | 直接复用，只有窗口核属于 L2 需要构造 |
+| `Observer/Hankel/ProjectiveRayleighReadout`、`ProjectiveReadoutSharpness` | 真实算子域射影误差及闭误差球的锐读出条件 | 以构造出来的真实 Fourier 代表向量实例化 |
+
+`PaperFT.lean` 在当前 dev 与本 PR 起始头的 blob 都是 `a04282c4b02a9a185c3730a18e59b72d3b27fa1a`，无需移植副本。检索还读取了 #5602 的更新头 `6e95a93cffddabd62c06ebc1e50f57d6913c3c03`：其中已有 `WeilEvenFourierObservationTail` 的无穷偶 Fourier 尾估计，源码仍明确将 L2 Fourier 识别留在纸面。该估计及同 PR 的算术 dual-tail、Neumann 和 directional 证书均不在本轮重证范围。上述检索是所列仓库、分支与钉版库的范围检索，不是全形式化生态中的优先权证明。
+
+本轮要消除的前提是“假设所需的 Fourier 值等于某个 Hilbert 内积”。`WindowPaperFTReadout` 对现有积分实际证明这个等式，再由其承接能量证书。
+
+## B. 正号约定、普通测度与真正的窗口 L2 代表
+
+仓库采用
+\[
+\operatorname{paperFT}(f,z)=\int_{\mathbb R}f(x)e^{izx}\,dx.
+\]
+本节固定使用该正号约定。上一增补 E 节的负号 Fourier 示例有明确条件；对当前正号对象，相应代表向量必须改为
+\[
+K_{a,z}(x)=\overline{e^{izx}}=e^{-i\overline z x}.
+\]
+`WindowL2 a` 只是 Mathlib 的 `Lp Complex 2 (volume.restrict (Icc (-a) a))` 的缩写。测度是普通 Lebesgue 测度，没有除以区间长度。先用已有指数窗口界证明核的平方可积性，通过 `MemLp.toLp` 构造 `windowKernel`；再用 `L2.integrable_inner` 证明实际积分可积。对任意窗口 L2 元素 \(f\)，以 \(\widetilde f\) 表示区间外补零的代表，得到
+\[
+\boxed{\operatorname{paperFT}(\widetilde f,z)=\langle K_{a,z},f\rangle_{L^2}.}
+\]
+`paperFT_window_eq_inner` 处理几乎处处商及补零；`paperFT_eq_inner_toLp` 则允许已有的窗口支撑函数直接进入同一等式。这两个结论不要求偶性、连续性或光滑性，也不假设 Fourier 级数已构造。
+
+核的实际积分给出
+\[
+\|K_{a,z}\|^2=\int_{-a}^a e^{-2\operatorname{Im}(z)x}\,dx,
+\qquad \|K_{a,t}\|^2=2a\quad(t\in\mathbb R,\ a\ge0).
+\]
+沿用原指数界并积分，证明
+\[
+\boxed{\|K_{a,z}\|\le\sqrt{2a}\,e^{ba}\quad(|\operatorname{Im}z|\le b).}
+\]
+因此 `paperFT_window_sub_le` 对实际变换得到
+\[
+|\operatorname{paperFT}(\widetilde f,z)-\operatorname{paperFT}(\widetilde g,z)|
+\le\sqrt{2a}\,e^{ba}\|f-g\|_2.
+\]
+横向实频率不进入常数。零长度窗口也被该一般界覆盖；其中不存在单位范数候选，后续单位候选定理不会凭空产生它。
+
+## C. 原射影定理现在消费实际 Fourier 读出
+
+`ProjectivePaperFTCertificate` 直接复用已有射影误差与最小消零扰动定理。对单位候选 \(k\)、\(w\perp k\)、\(\|w\|^2\le\delta\)，有
+\[
+|\operatorname{paperFT}(\widetilde{k+w},z)-\operatorname{paperFT}(\widetilde k,z)|^2
+\le\bigl(\|K_{a,z}\|^2-|\operatorname{paperFT}(\widetilde k,z)|^2\bigr)\delta.
+\]
+对整个闭正交误差球，非零读出的锐充要条件成为
+\[
+\boxed{\delta\|K_{a,z}\|^2<(1+\delta)|\operatorname{paperFT}(\widetilde k,z)|^2.}
+\]
+实频率处左侧精确为 \(2a\delta\)。锐性仍针对完整 L2 正交误差球，不表示每个球内扰动都能由固定算术算子的本征函数实现。
+
+`rayleigh_paperFT_certificate` 从此前同一真实复算子域的对称性、实际本征向量、候选能量上界和全补空间强制性出发，推导非零重叠 \(\alpha\)、\(\delta=(U-\ell)/(\theta-\ell)\)、实际 Fourier 误差及非零判据。它没有输入 Fourier/L2 等同或射影误差本身。这些结论允许定义域中的算子无界，但不提供真实算术 Weil 算子满足各个能量前提的证明。
+
+## D. 固定窗口与增长窗口分开处理
+
+`PaperFTWindowLimit.paperFT_fixed_window_uniform` 证明：在固定有限窗口内，普通 \(L^2\) 收敛 \(f_j\to f\) 已足以推出实际 `paperFT` 在每个闭水平带上的统一收敛。该结论直接服务固定窗口的 Rayleigh–Ritz 逼近，无需再假设 Fourier 误差统一趋零。
+
+增长窗口中，令 \(\delta_j\) 为同一算子族实际能量证书给出的射影预算。`paperFT_projective_uniform_error` 将
+\[
+|c_j|\sqrt{2a_j}\,e^{ba_j}\sqrt{\delta_j}\longrightarrow0
+\]
+转为实际缩放 Fourier 误差在整个闭水平带上的统一趋零。终点 `rayleigh_paperFT_uniform_limit` 进一步允许任意目标集合 \(K\subseteq\{z:|\operatorname{Im}z|\le b\}\)，包括紧集或轮廓：只要求候选变换在 \(K\) 上统一趋于指定 \(F\)，便推出同样归一化的实际本征向量变换在 \(K\) 上趋于同一 \(F\)。这里使用 Mathlib 原有 `TendstoUniformlyOn`、限制和加法定理，未定义替代的收敛谓词。
+
+候选只需在目标集合收敛，不被额外要求在整个无界水平带上统一收敛。外部目标仍是 *Zeta Spectral Triples* 第 8 节的实际最低模态逼近。候选与文献归一化的识别、真实全域能量前提、足够的增长尺度误差率、候选趋于 Xi 的证明均明确保留；本轮没有证明该实际算术族的尺度率或 RH。#5602 后续使用的方向性 Schur Fourier 灵敏度可能给出更紧充分率，本节的全范数窗口率不被宣称为最优必要条件。
+
+## E. 实际检查
+
+三个 Lean 模块的 18 个公开声明均有对应 Scribe。新的独立回归 `research/projective_spectral_readout/verify_window_paperft.py` 用 40 位 mpmath 数值积分检查非偶复多项式和不连续函数的变换等同、核范数、候选中心化误差、实际消零扰动以及增长窗口的有限示例。18 组复频率实例、54 次锐阈值比较、24 次增长窗口误差检查及三类符号/归一化负控全部通过。初次开发运行发现测试中的 Python `1j/11` 提前落入双精度，改为 `mp.j/11` 后重新运行通过；未以降低阈值处理该问题。
+
+这些是有限数值回归，不是有向区间积分认证、统一极限证明或 Lean 内核检查。当前环境没有 Lean/lake，尚未执行新源码的 elaboration、公理闭包或 Scribe 发射。没有改动原 Fourier 所有者、#5602 分支、CI 或冻结账本。
