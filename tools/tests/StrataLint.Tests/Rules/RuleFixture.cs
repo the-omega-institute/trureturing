@@ -105,11 +105,8 @@ internal sealed partial class RuleFixture
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             [FixtureBackfillSourcePath] = FixtureBackfillSource,
             [FixtureBackfillAtomPath] = FixtureBackfillAtom,
-            [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
-                Path.Combine(
-                    TestRepositoryLayout.FindRoot(),
-                    "Meta/Digestion/atomizers.toml"),
-                Encoding.UTF8),
+            [TheoryAtomizerDataLoader.DataPath] =
+                Encoding.UTF8.GetString(DigestionTestSupport.RulesBytes),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",

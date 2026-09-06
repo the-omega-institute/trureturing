@@ -138,7 +138,10 @@ internal static partial class BackfillInventoryRule
         }
 
         var document = context.BackfillCandidateDeltaSession.GetDocument(context.Changes);
-        return BackfillDeltaImpactResolver.HasPotentialStatementDependants(
+        return BackfillDeltaImpactResolver.HasAffectedCoverageDependencies(
+            context.Current,
+            context.Baseline,
+            context.Lean.Report,
             document,
             context.Changes);
     }

@@ -4,10 +4,11 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class AlignScribeReceiptCommand
+internal static partial class AlignScribeReceiptCommand
 {
-    private const string Usage = "USAGE: StrataLint align-scribe-receipt --seed-missing "
-        + "(--atom ATOM_ID --gid GID | --pairs FILE) --base REV [--dry-run]";
+    internal const string Usage = "USAGE: StrataLint align-scribe-receipt --seed-missing "
+        + "(--atom ATOM_ID --gid GID | --pairs FILE) --base REV [--dry-run] | "
+        + "align-scribe-receipt --refresh --documents FILE --base REV [--dry-run]";
 
     internal static CommandResult Run(
         string repositoryRoot,
@@ -34,6 +35,13 @@ internal static class AlignScribeReceiptCommand
             {
                 return Seed(repositoryRoot, repository, leanReportSource, scribeEmissionVerifier,
                     ParseSeedArguments(arguments, repositoryRoot, readPairs), applyUpdates);
+            }
+
+            if (arguments.Contains("--refresh", StringComparer.Ordinal))
+            {
+                return CoverAtomCommand.AlignScribeReceiptRefresh(
+                    repositoryRoot, repository, leanReportSource, scribeEmissionVerifier,
+                    arguments, readPairs, applyUpdates);
             }
 
             return CoverAtomCommand.AlignScribeReceipt(repositoryRoot, repository, leanReportSource,
