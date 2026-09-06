@@ -36,3 +36,4 @@ Together, the universal classical preservation theorem and this explicit one-ste
 
 - Truth anchor: `D5/S3/Observer/StateNotPath.classical_diagonal_iterates_off_diag_eq_zero`
 - Truth anchor: `D5/S3/Observer/StateNotPath.hadamard_basis_zero_off_diag_certificate`
+- Dependency: [D5/S3/Quantum/PointerBasis](../Quantum/PointerBasis.md)
