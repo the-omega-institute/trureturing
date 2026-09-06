@@ -36,6 +36,7 @@ namespace D5.S3.Weil.ZetaBridge.CanonicalZeroDataProvider
 open D5.S3.Weil.ZeroSum
 open D5.S3.Weil.TestFunctions
 open D5.S3.Weil.ZetaBridge.CanonicalZeroDataFromRiemannVonMangoldt
+open scoped ComplexConjugate
 
 /-- The precise analytic source needed by the present canonical provider. -/
 structure CanonicalZeroDataSource : Prop where

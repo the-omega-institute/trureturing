@@ -208,7 +208,7 @@ private theorem weighted_norm_integral_le_support
     (B η J : ℝ) (hη : 0 ≤ η)
     (hs : tsupport g ⊆ Set.Icc (-B) B) (hJ : (∫ x : ℝ, ‖g x‖) ≤ J) :
     (∫ x : ℝ, Real.exp (η * |x|) * ‖g x‖) ≤ Real.exp (η * B) * J := by
-  have hi := hg.integrable_of_hasCompactSupport hc
+  have hi : Integrable g volume := hg.integrable_of_hasCompactSupport hc
   have hw : Integrable (fun x : ℝ => Real.exp (η * |x|) * ‖g x‖) :=
     (by fun_prop : Continuous (fun x : ℝ => Real.exp (η * |x|) * ‖g x‖)).integrable_of_hasCompactSupport
       hc.norm.mul_left

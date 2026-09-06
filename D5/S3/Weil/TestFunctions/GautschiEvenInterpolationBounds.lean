@@ -45,8 +45,8 @@ private theorem divisor_norm_le
       (R ^ 2 + A ^ 2) / d := by
   have hR : 0 ≤ R := (norm_nonneg _).trans hw
   have hA : 0 ≤ A := (norm_nonneg _).trans hy
-  have hw2 : ‖w‖ ^ 2 ≤ R ^ 2 := by nlinarith
-  have hy2 : ‖y‖ ^ 2 ≤ A ^ 2 := by nlinarith
+  have hw2 : ‖w‖ ^ 2 ≤ R ^ 2 := (sq_le_sq₀ (norm_nonneg w) hR).2 hw
+  have hy2 : ‖y‖ ^ 2 ≤ A ^ 2 := (sq_le_sq₀ (norm_nonneg y) hA).2 hy
   have hnum : ‖w ^ 2 - y ^ 2‖ ≤ R ^ 2 + A ^ 2 := by
     calc
       _ ≤ ‖w ^ 2‖ + ‖y ^ 2‖ := norm_sub_le _ _

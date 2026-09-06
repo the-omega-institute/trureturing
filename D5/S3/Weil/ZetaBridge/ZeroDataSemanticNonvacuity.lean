@@ -75,7 +75,7 @@ nontrivial zeta zero as a direct semantic consequence of the constructed
 theorem exists_nontrivial_zero_of_riemannVonMangoldt
     (hRvM : Zeta23.RiemannVonMangoldt Zeta23.zetaZeroConfig) :
     ∃ rho : ℂ, IsNontrivialZero rho :=
-  (zeroDataOfRiemannVonMangoldt hRvM).exists_nontrivial_zero
+  ZeroData.exists_nontrivial_zero (zeroDataOfRiemannVonMangoldt hRvM)
 
 /-- A universal theorem and canonical Riemann--von Mangoldt data jointly
 produce both a realizing enumeration and a represented nontrivial zero. -/
@@ -85,7 +85,7 @@ theorem realized_claim_with_nontrivial_zero
     (h : ∀ Z : ZeroData, P Z) :
     ∃ Z : ZeroData, P Z ∧ ∃ rho : ℂ, IsNontrivialZero rho := by
   let Z : ZeroData := zeroDataOfRiemannVonMangoldt hRvM
-  exact ⟨Z, h Z, Z.exists_nontrivial_zero⟩
+  exact ⟨Z, h Z, ZeroData.exists_nontrivial_zero Z⟩
 
 #print axioms ZeroData.exists_nontrivial_zero
 #print axioms forall_zeroData_of_not_nonempty
