@@ -1,0 +1,25 @@
+### 为什么这就是边界响应？
+
+因为
+
+$$
+\mathcal A(z)
+=
+\langle v,(I-zU)^{-1}v\rangle.
+$$
+
+对 \(I-zU\) 消去隐藏块 \(I-zD\)，剩下的标量恰好是 \(1-\mathcal S(z)\)。
+
+所以：
+
+$$
+\boxed{
+\text{隐藏空间的全部回返路径}
+\longrightarrow
+\text{边界上的一个频率相关记忆函数 }\mathcal S(z).
+}
+\tag{10}
+$$
+
+项目的 Schur 模块已经证明了在指定逆算子前件下，分步消去与一次消去一致；这里是在离散演化 resolvent 上应用同一种机制。
+

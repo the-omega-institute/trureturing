@@ -1,0 +1,54 @@
+# 七、离开边界以后，需要多长的离散时间才能形成负证书？
+
+现在把“无限阶失效”转为有限时间构造。
+
+固定
+
+$$
+a_*<a<R_0.
+$$
+
+假设在某个角度 \(\theta_0\)，有
+
+$$
+f_a(\theta_0)=-\eta<0,
+\qquad
+f_a'(\theta_0)=0.
+$$
+
+记
+
+$$
+M_a=\sup_\theta|f_a''(\theta)|<\infty.
+$$
+
+定义长度 \(N+1\) 的正弦包络
+
+$$
+u_j=
+\sqrt{\frac2{N+2}}
+\sin\frac{(j+1)\pi}{N+2},
+\qquad0\le j\le N.
+\tag{36}
+$$
+
+它满足
+
+$$
+\sum_ju_j^2=1,
+$$
+
+$$
+\sum_{j=0}^{N-1}u_ju_{j+1}
+=
+\cos\frac{\pi}{N+2}.
+$$
+
+把相位调到 \(\theta_0\)，组成测试多项式
+
+$$
+q_N(e^{i\theta})
+=
+\sum_{j=0}^Nu_je^{ij(\theta-\theta_0)}.
+$$
+

@@ -1,0 +1,52 @@
+# 八、不丢掉任何整数，完整历史奇偶级数可以分解为“解析背景＋素数 ζ”
+
+定义：
+
+$$
+\boxed{
+\mathcal H(s)
+=
+\sum_{n\ge1}\frac{\varepsilon(n)}{n^s},
+\qquad \Re s>1.
+}
+\tag{27}
+$$
+
+它就是上一轮母函数在：
+
+$$
+z=1,\qquad q=-1
+$$
+
+上的切面。
+
+由式（23）—（25），定义：
+
+$$
+U(s)=\sum_{m\ge1}\frac{w(m)}{m^{2s}},
+$$
+
+$$
+V(s)=
+\sum_{m\ge1}
+\frac{w(m)}
+{(2\Omega(m)+1)m^{2s}},
+$$
+
+$$
+W(s)=
+2\sum_{m\ge1}
+\frac{w(m)}
+{(2\Omega(m)+1)m^{2s}}
+\sum_{p\mid m}v_p(m)p^{-s}.
+$$
+
+那么：
+
+$$
+\boxed{
+\mathcal H(s)=U(s)+V(s)P(s)+W(s).
+}
+\tag{28}
+$$
+

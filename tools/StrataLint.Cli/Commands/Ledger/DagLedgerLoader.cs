@@ -81,7 +81,10 @@ public static class DagLedgerLoader
         DagLedgerFileEvent item,
         HashSet<string> placedIdentities) =>
         item.EventType == "Freeze"
-            && DependenciesPlaced(item, placedIdentities);
+            && DependenciesPlaced(
+                FrozenLedgerAttestationChain.RequiredStringArray(
+                    item.Payload, "prerequisite_frozen_node_ids"),
+                placedIdentities);
 
     private static void Place(
         DagLedgerFileEvent item,
@@ -97,14 +100,9 @@ public static class DagLedgerLoader
         placedHashes.Add(item.EventHash);
     }
 
-    private static bool DependenciesPlaced(
-        DagLedgerFileEvent item,
-        HashSet<string> placedIdentities)
-    {
-        var prerequisites = FrozenLedgerAttestationChain.RequiredStringArray(
-            item.Payload,
-            "prerequisite_frozen_node_ids");
-        return prerequisites.All(placedIdentities.Contains);
-    }
+    internal static bool DependenciesPlaced(
+        IEnumerable<string> prerequisites,
+        IReadOnlySet<string> placedIdentities) =>
+        prerequisites.All(placedIdentities.Contains);
 
 }

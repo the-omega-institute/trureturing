@@ -1,0 +1,87 @@
+# 一、先固定完整对象：合法历史，并不自动带有唯一概率
+
+沿用前文的简单生成协议：
+
+> 从 1 出发，每一步乘一个素数，最终到达指定整数。
+
+对：
+
+$$
+n=\prod_{i=1}^{m}p_i^{a_i},
+\qquad p_1<\cdots<p_m,
+$$
+
+记：
+
+$$
+L=\sum_i a_i,
+$$
+
+合法历史集合为：
+
+$$
+\Gamma_{\mathbf a}.
+$$
+
+每条历史是包含 \(a_i\) 个类型 \(i\) 的长度 \(L\) 字串，数量为：
+
+$$
+h(\mathbf a)=\frac{L!}{\prod_i a_i!}.
+$$
+
+定义历史逆序面积：
+
+$$
+A(\gamma)
+=
+\#\{(r,s):r<s,\ i_r>i_s\}.
+$$
+
+其计数多项式是：
+
+$$
+\boxed{
+Q_{\mathbf a}(q)
+=
+\sum_{\gamma\in\Gamma_{\mathbf a}}q^{A(\gamma)}
+=
+\frac{[L]_q!}{\prod_i[a_i]_q!}.
+}
+\tag{1}
+$$
+
+这是标准的多重集逆序生成恒等式。([DLMF][1])
+
+但指定合法集合以后，还没有指定概率。
+
+对任意概率分布 \(\mathbb P\)：
+
+$$
+\boxed{
+\mathcal A_{\mathbb P}(\theta)
+=
+\sum_{\gamma}\mathbb P(\gamma)e^{i\theta A(\gamma)}.
+}
+\tag{2}
+$$
+
+只有在等权历史下：
+
+$$
+\mathbb P(\gamma)=\frac1{h(\mathbf a)},
+$$
+
+才有：
+
+$$
+\mathcal A_{\mathrm{unif}}(\theta)
+=
+\frac{Q_{\mathbf a}(e^{i\theta})}{Q_{\mathbf a}(1)}.
+$$
+
+**因此，前文的分圆零点不是仅由“允许哪些历史”决定，还使用了“这些历史等权”这一重要条件。**
+
+这不是缺陷，而是必须写进模型的语义。
+
+---
+
