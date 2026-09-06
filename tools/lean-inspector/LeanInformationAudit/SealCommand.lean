@@ -1,7 +1,7 @@
 import LeanInformationAudit.ProofBuilder
-import LeanInformationAudit.ProjectionSeal
+import LeanInformationAudit.Projection.ProjectionSeal
 import LeanInformationAudit.Syntax
-import LeanInformationAudit.OutputOnlyAudit
+import LeanInformationAudit.Projection.OutputOnlyAudit
 
 namespace LeanInformationAudit
 
@@ -67,8 +67,23 @@ structure SealedOccurrenceState where
   registrationModuleName : Name
   deriving Inhabited, Repr
 
+/-- Projection records retained by seal for a later path-bearing export command. -/
+structure SealedAnalysisState where
+  rootId : Name
+  records : Array V3CatalogRecord
+  systemCertificate : Name
+  declarationNames : Array Name
+  deriving Inhabited
+
 private initialize sealRecordExt :
     SimplePersistentEnvExtension SealArenaRecord (Array SealArenaRecord) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
+  }
+
+private initialize sealedAnalysisExt :
+    SimplePersistentEnvExtension SealedAnalysisState (Array SealedAnalysisState) ←
   registerSimplePersistentEnvExtension {
     addEntryFn := Array.push
     addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
@@ -95,6 +110,9 @@ def occurrencesForRoot (env : Environment) (rootId : Name) :
       certificateName := theoremRecord.certificateName
       registrationModuleName := theoremRecord.registrationModuleName
     }
+
+def analysisForRoot? (env : Environment) (rootId : Name) : Option SealedAnalysisState :=
+  sealedAnalysisExt.getState env |>.find? (·.rootId == rootId)
 
 /-- A root verdict is true only when every retained record names a staged proof. -/
 def systemCatalogIrredundant (env : Environment) (rootId : Name) : Bool :=
@@ -213,7 +231,8 @@ private def stageDeclarations (env : Environment) (declarations : Array Declarat
   let options ← getOptions
   let mut stagedEnv := env
   for declaration in declarations do
-    match stagedEnv.addDeclCore (Core.getMaxHeartbeats options).toUSize
+    match stagedEnv.addDeclCore
+        (max (Core.getMaxHeartbeats options) sealAnalysisMaxHeartbeats).toUSize
         (maxRecDepth.get options).toUSize declaration none true with
     | .ok nextEnv => stagedEnv := nextEnv
     | .error error =>
@@ -263,12 +282,14 @@ private def retainSealRecords (env : Environment) (records : Array SealArenaReco
     Environment :=
   records.foldl (init := env) fun current record => sealRecordExt.addEntry current record
 
-/-! The seal has four phases: validate and prepare catalogs; compute counts and
-proof declarations; preflight and kernel-check every declaration in a local persistent
-environment; then publish that environment with one `setEnv`. All artifact bytes are
-prepared before publication; their writes are the terminal IO effect of the command. -/
+private def retainAnalysisState (env : Environment) (state : SealedAnalysisState) : Environment :=
+  sealedAnalysisExt.addEntry env state
 
-def prepareSealPublication (requested : List ArtifactKind) : CommandElabM SealPublicationPlan := do
+/-! The seal validates the registry, prepares both schema-v2 and analysis proof
+declarations, kernel-checks them in a local environment, retains their projection
+records, and publishes once. It has no artifact selector or destination capability. -/
+
+def prepareSealPublication : CommandElabM Unit := do
   let baseEnv ← getEnv
   try
     validateRegistrySnapshot baseEnv
@@ -281,42 +302,67 @@ def prepareSealPublication (requested : List ArtifactKind) : CommandElabM SealPu
     let aliasEnv ← getEnv
     let catalogs ← prepareCatalogsFromEntries sourceEntries catalogEntries
     let proofs ← prepareProofs catalogs
-    let analysis ← if requested.contains .analysis || requested.contains .ascii then
-      some <$> prepareAnalysisProofs catalogs proofs
-    else pure none
+    let analysis ← prepareAnalysisProofs catalogs proofs
     let declarations := catalogs.map (·.declaration) ++ proofs.declarations ++
-      (analysis.map (·.declarations)).getD #[]
+      analysis.declarations
     preflightNames aliasEnv proofs.records declarations
     let stagedEnv ← stageDeclarations (← getEnv) declarations
     let stagedEnv := retainSealRecords stagedEnv proofs.records
-    let mut artifacts := []
-    if requested.contains .v2 then
-      artifacts := artifacts ++ [(.v2, serializeV2Artifact proofs.records)]
-    if let some analysis := analysis then
-      if requested.contains .analysis then
-        let contents ← withEnv stagedEnv <| liftTermElabM do
-          serializeV3Artifact baseEnv.header.mainModule analysis.records analysis.systemCertificate
-        artifacts := artifacts ++ [(.analysis, contents)]
-      if requested.contains .ascii then
-        let contents ← match serializeAsciiArtifact analysis.records with
-          | .ok contents => pure contents
-          | .error message => throwError message
-        artifacts := artifacts ++ [(.ascii, contents)]
+    let stagedEnv := retainAnalysisState stagedEnv {
+      rootId := baseEnv.header.mainModule
+      records := analysis.records
+      systemCertificate := analysis.systemCertificate
+      declarationNames := declarationNames analysis.declarations |>.toArray
+    }
     proofs.records.forM logSummary
     setEnv stagedEnv
-    return { staged := stagedEnv, artifacts }
   catch error =>
     setEnv baseEnv
     throw error
+
+/-- Prepare bytes exclusively from records and certificates retained by seal. -/
+def prepareInformationAnalysisExport (rootId : Name) (requested : List ArtifactKind) :
+    CommandElabM AnalysisExportPlan := do
+  let env ← getEnv
+  let some analysis := SealRecords.analysisForRoot? env rootId
+    | throwError "IE-C044 UnsealedAnalysisExport root={rootId} catalog=system"
+  let records := SealRecords.forRoot env rootId
+  unless !records.isEmpty && env.contains analysis.systemCertificate do
+    throwError "IE-C044 UnsealedAnalysisExport root={rootId} catalog=system"
+  let mut artifacts := []
+  if requested.contains .v2 then
+    artifacts := artifacts ++ [(.v2, serializeV2Artifact records)]
+  if requested.contains .analysis then
+    let contents ← liftTermElabM do
+      serializeV3Artifact rootId analysis.records analysis.systemCertificate
+    artifacts := artifacts ++ [(.analysis, contents)]
+  if requested.contains .ascii then
+    let contents ← match serializeAsciiArtifact analysis.records with
+      | .ok contents => pure contents
+      | .error message => throwError message
+    artifacts := artifacts ++ [(.ascii, contents)]
+  return { artifacts }
 
 private def elabSealInformationTheory : CommandElab :=
   terminalSealCommand prepareSealPublication
 
 @[command_elab sealInformationTheoryCmd]
 private def elabAuditedSeal : CommandElab := fun stx => do
-  let env ← getEnv
-  match auditSealOutputOnly env ``elabSealInformationTheory env.header.mainModule with
+  let currentEnv ← getEnv
+  match auditSealOutputOnly currentEnv ``elabSealInformationTheory
+      currentEnv.header.mainModule with
   | .error message => throwError message
   | .ok () => elabSealInformationTheory stx
+
+private def elabInformationAnalysisExport : CommandElab :=
+  terminalInformationAnalysisExportCommand prepareInformationAnalysisExport
+
+@[command_elab exportInformationAnalysisCmd]
+private def elabAuditedInformationAnalysisExport : CommandElab := fun stx => do
+  let currentEnv ← getEnv
+  match auditInformationAnalysisExport currentEnv ``elabInformationAnalysisExport
+      currentEnv.header.mainModule with
+  | .error message => throwError message
+  | .ok () => elabInformationAnalysisExport stx
 
 end LeanInformationAudit

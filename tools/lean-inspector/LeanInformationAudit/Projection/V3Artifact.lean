@@ -1,7 +1,7 @@
 import LeanInformationAudit.ProofBuilder
-import LeanInformationAudit.KernelProjection
-import LeanInformationAudit.V3Inventory
-import LeanInformationAudit.V3Bindings
+import LeanInformationAudit.Projection.KernelProjection
+import LeanInformationAudit.Projection.V3Inventory
+import LeanInformationAudit.Projection.V3Bindings
 
 namespace LeanInformationAudit
 

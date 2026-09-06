@@ -1,4 +1,4 @@
-import LeanInformationAudit.ProjectionSeal
+import LeanInformationAudit.Projection.ProjectionSeal
 import LeanInformationAudit.Tests.Projection.FixtureState
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit

@@ -1,4 +1,4 @@
-import LeanInformationAudit.ProjectionSeal
+import LeanInformationAudit.Projection.ProjectionSeal
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalCatalog
 import LeanInformationAudit.Tests.Projection.FixtureState
 

@@ -1,4 +1,4 @@
-import LeanInformationAudit.ProjectionSchema
+import LeanInformationAudit.Projection.ProjectionSchema
 
 open Lean LeanInformationAudit
 

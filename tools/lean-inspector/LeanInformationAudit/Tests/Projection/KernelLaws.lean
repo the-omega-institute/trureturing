@@ -1,4 +1,4 @@
-import LeanInformationAudit.ProjectionKernel
+import LeanInformationAudit.Projection.ProjectionKernel
 
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.CIRPT

@@ -1,7 +1,7 @@
-import LeanInformationAudit.KernelProjection
-import LeanInformationAudit.ProjectionValidation
-import LeanInformationAudit.V3Artifact
-import LeanInformationAudit.AsciiHierarchy
+import LeanInformationAudit.Projection.KernelProjection
+import LeanInformationAudit.Projection.ProjectionValidation
+import LeanInformationAudit.Projection.V3Artifact
+import LeanInformationAudit.Projection.AsciiHierarchy
 
 namespace LeanInformationAudit
 
@@ -12,6 +12,15 @@ structure PreparedAnalysis where
   declarations : Array Declaration
   records : Array V3CatalogRecord
   systemCertificate : Name
+
+/-- Internal ceiling needed to stage the designated root's causal projection during seal. -/
+def sealAnalysisMaxHeartbeats : Nat := 8000000000
+
+private def withSealAnalysisBudget (action : Lean.Elab.Term.TermElabM α) :
+    Lean.Elab.Term.TermElabM α :=
+  withTheReader Core.Context
+    (fun context => { context with
+      maxHeartbeats := max context.maxHeartbeats sealAnalysisMaxHeartbeats }) action
 
 /-- V3 has separate qualified companions. Frozen v2 records are never renamed. -/
 def prepareV3QualifiedCounts (counts : SealArenaRecord) (available : Array Declaration) :
@@ -62,11 +71,12 @@ def prepareV3QualifiedCounts (counts : SealArenaRecord) (available : Array Decla
 def prepareAnalysisProofs (catalogs : Array PreparedCatalog) (proofs : PreparedProofs) :
     CommandElabM PreparedAnalysis := do
   let root := (← getEnv).header.mainModule
-  let ((records, systemCertificate), declarations) ← liftTermElabM do
-    (do
-      let mut records := #[]
-      let mut packed := #[]
-      for prepared in catalogs, counts in proofs.records do
+  let mut records := #[]
+  let mut packed := #[]
+  let mut declarations := #[]
+  for prepared in catalogs, counts in proofs.records do
+    let ((record, packedCatalog), nextDeclarations) ← liftTermElabM do
+      withSealAnalysisBudget <| (do
         let counts ← prepareV3QualifiedCounts counts proofs.declarations
         let record := prepared.record
         let certPrefix := catalogQualifiedName root record.arenaName record.catalogId
@@ -74,8 +84,14 @@ def prepareAnalysisProofs (catalogs : Array PreparedCatalog) (proofs : PreparedP
         let (projection, analysis, layerChains) ← prepareKernelProjection
           prepared.value prepared.arenaValue (counts.theorems.map (·.unitName)) root
           record.catalogId record.arenaName certPrefix
-        records := records.push { counts, projection, analysis, layerChains : V3CatalogRecord }
-        packed := packed.push (← mkAppM ``PackedCatalog.mk #[prepared.arenaValue, prepared.value])
+        let packedCatalog ← mkAppM ``PackedCatalog.mk #[prepared.arenaValue, prepared.value]
+        pure ({ counts, projection, analysis, layerChains : V3CatalogRecord }, packedCatalog) :
+          ProjectionM _).run declarations
+    records := records.push record
+    packed := packed.push packedCatalog
+    declarations := nextDeclarations
+  let (systemCertificate, finalDeclarations) ← liftTermElabM do
+    withSealAnalysisBudget <| (do
       let vector ← ProjectionProof.vector packed
       let rootExpr := toExpr root
       let suite ← mkAppM ``projectionSuite #[rootExpr, vector]
@@ -85,8 +101,8 @@ def prepareAnalysisProofs (catalogs : Array PreparedCatalog) (proofs : PreparedP
       let certificate ← ProjectionProof.proof (root.str "__system_catalog_irredundant")
         (← mkAppOptM ``of_decide_eq_true
           #[some proposition, some instanceValue, some (← mkEqRefl (mkConst ``Bool.true))])
-      pure (records, certificate) : ProjectionM _).run #[]
-  pure { declarations, records, systemCertificate }
+      pure certificate : ProjectionM _).run declarations
+  pure { declarations := finalDeclarations, records, systemCertificate }
 
 def serializeAsciiArtifact (records : Array V3CatalogRecord) : Except String String := do
   let records := records.qsort fun a b =>

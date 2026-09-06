@@ -1,4 +1,4 @@
-import LeanInformationAudit.KernelProjection
+import LeanInformationAudit.Projection.KernelProjection
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalCatalog
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit

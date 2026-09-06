@@ -82,7 +82,10 @@ expect_information_occurrence sharedTheorem
   in objectB
   from "LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity"
 
-#seal_information_theory output "/tmp/lean-information-audit-occurrence-identity.json"
+#seal_information_theory
+#export_information_analysis root
+  _root_.LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity
+  output "/tmp/lean-information-audit-occurrence-identity.json"
 
 /-- info: occurrence-qualified staged identities and v2 schema passed -/
 #guard_msgs (info) in

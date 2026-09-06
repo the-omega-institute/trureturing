@@ -1,5 +1,5 @@
-import LeanInformationAudit.KernelProjection
-import LeanInformationAudit.AsciiHierarchy
+import LeanInformationAudit.Projection.KernelProjection
+import LeanInformationAudit.Projection.AsciiHierarchy
 import LeanInformationAudit.Tests.Projection.FixtureState
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit

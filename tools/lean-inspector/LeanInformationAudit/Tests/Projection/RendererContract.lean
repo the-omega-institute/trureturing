@@ -1,4 +1,4 @@
-import LeanInformationAudit.AsciiHierarchy
+import LeanInformationAudit.Projection.AsciiHierarchy
 
 open Lean LeanInformationAudit
 

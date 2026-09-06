@@ -1,5 +1,5 @@
-import LeanInformationAudit.ProjectionCounts
-import LeanInformationAudit.ProjectionSchema
+import LeanInformationAudit.Projection.ProjectionCounts
+import LeanInformationAudit.Projection.ProjectionSchema
 import LeanInformationAudit.CatalogBuilder
 
 namespace LeanInformationAudit

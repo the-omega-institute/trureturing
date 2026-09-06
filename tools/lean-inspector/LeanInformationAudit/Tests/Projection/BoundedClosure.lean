@@ -1,4 +1,4 @@
-import LeanInformationAudit.ProjectionSeal
+import LeanInformationAudit.Projection.ProjectionSeal
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape D5.S3.ConceptDynamics.CIRPT

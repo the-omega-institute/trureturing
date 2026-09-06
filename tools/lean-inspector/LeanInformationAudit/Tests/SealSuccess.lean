@@ -118,7 +118,9 @@ expect_information_occurrence idTheorem
   in t001Arena
   from "LeanInformationAudit.Tests.SealSuccess"
 
-#seal_information_theory output "/tmp/lean-information-audit-seal-success.json"
+#seal_information_theory
+#export_information_analysis root _root_.LeanInformationAudit.Tests.SealSuccess
+  output "/tmp/lean-information-audit-seal-success.json"
 
 private def artifactAddress (json : Json) : Except String String := do
   let arenasJson ← Json.getObjVal? json "arenas"

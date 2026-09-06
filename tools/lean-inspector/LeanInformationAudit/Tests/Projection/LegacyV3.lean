@@ -37,7 +37,10 @@ set_option maxHeartbeats 16000000
 
 run_cmd do
   let path ← fixturePath "legacy-v3.json"
-  elabCommand (← `(command| #seal_information_theory analysis_output $(Syntax.mkStrLit path):str))
+  elabCommand (← `(command| #seal_information_theory))
+  let rootId := mkIdent (`_root_ ++ (← getEnv).header.mainModule)
+  elabCommand (← `(command| #export_information_analysis root $rootId:ident
+    analysis_output $(Syntax.mkStrLit path):str))
 
 /-- info: legacy v3 identities are qualified; v2 identities retained -/
 #guard_msgs in

@@ -1,5 +1,5 @@
 import LeanInformationAudit.ProofBuilder
-import LeanInformationAudit.KernelProjection
+import LeanInformationAudit.Projection.KernelProjection
 
 namespace LeanInformationAudit
 open Lean Lean.Meta

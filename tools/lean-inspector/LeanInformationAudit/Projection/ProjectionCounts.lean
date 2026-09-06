@@ -1,4 +1,4 @@
-import LeanInformationAudit.ProjectionKernel
+import LeanInformationAudit.Projection.ProjectionKernel
 
 namespace LeanInformationAudit
 

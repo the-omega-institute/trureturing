@@ -13,7 +13,10 @@ expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
-#seal_information_theory output "/tmp/lean-information-audit-import-closure.json"
+#seal_information_theory
+#export_information_analysis root
+  _root_.LeanInformationAudit.Tests.Occurrence.ImportClosureRoot
+  output "/tmp/lean-information-audit-import-closure.json"
 
 /-- info: import-closure qualified identity passed -/
 #guard_msgs (info) in

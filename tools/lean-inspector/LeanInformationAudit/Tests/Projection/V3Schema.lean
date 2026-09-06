@@ -1,4 +1,4 @@
-import LeanInformationAudit.V3Artifact
+import LeanInformationAudit.Projection.V3Artifact
 
 open Lean LeanInformationAudit
 

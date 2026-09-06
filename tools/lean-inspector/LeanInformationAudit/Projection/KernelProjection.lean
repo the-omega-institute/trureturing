@@ -1,6 +1,6 @@
-import LeanInformationAudit.AnalysisProjection
-import LeanInformationAudit.ProjectionValidation
-import LeanInformationAudit.ProjectionReflection
+import LeanInformationAudit.Projection.AnalysisProjection
+import LeanInformationAudit.Projection.ProjectionValidation
+import LeanInformationAudit.Projection.ProjectionReflection
 
 namespace LeanInformationAudit
 

@@ -1,4 +1,4 @@
-import LeanInformationAudit.ProjectionCertificates
+import LeanInformationAudit.Projection.ProjectionCertificates
 
 namespace LeanInformationAudit
 

@@ -1,5 +1,5 @@
 import LeanInformationAudit.Tests.Projection.E1Projection
-import LeanInformationAudit.ProjectionValidation
+import LeanInformationAudit.Projection.ProjectionValidation
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.Projection

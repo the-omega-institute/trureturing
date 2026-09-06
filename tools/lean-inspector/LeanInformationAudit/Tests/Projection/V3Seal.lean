@@ -20,7 +20,9 @@ run_cmd do
   let v2 := Syntax.mkStrLit (← fixturePath "seal-v2.json")
   let v3 := Syntax.mkStrLit (← fixturePath "seal-v3.json")
   let ascii := Syntax.mkStrLit (← fixturePath "seal-v3.txt")
-  elabCommand (← `(command| #seal_information_theory output $v2:str
+  elabCommand (← `(command| #seal_information_theory))
+  let rootId := mkIdent (`_root_ ++ (← getEnv).header.mainModule)
+  elabCommand (← `(command| #export_information_analysis root $rootId:ident output $v2:str
     analysis_output $v3:str ascii_output $ascii:str))
 
 /-- info: complete v3 seal and output noninterference passed -/

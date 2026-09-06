@@ -77,7 +77,7 @@ info: information seal redundancy: root=LeanInformationAudit.Tests.Occurrence.Co
 error: IE-C007 ZeroUniqueCapture: theorem LeanInformationAudit.Tests.CompleteRedundantIndices.firstTheorem arena LeanInformationAudit.Tests.CompleteRedundantIndices.arena full 2 without 2
 -/
 #guard_msgs in
-#seal_information_theory output "/tmp/lean-information-audit-complete-redundant-indices.json"
+#seal_information_theory
 
 /-- info: redundant seal failed before artifact output -/
 #guard_msgs (info) in

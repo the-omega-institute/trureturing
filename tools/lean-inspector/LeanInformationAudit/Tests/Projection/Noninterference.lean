@@ -1,5 +1,5 @@
 import LeanInformationAudit.Tests.Projection.V3Seal
-import LeanInformationAudit.OutputOnlyAudit
+import LeanInformationAudit.Projection.OutputOnlyAudit
 
 open Lean Lean.Elab.Command LeanInformationAudit
 

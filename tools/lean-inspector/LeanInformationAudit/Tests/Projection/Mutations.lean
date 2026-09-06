@@ -1,4 +1,4 @@
-import LeanInformationAudit.ProjectionValidation
+import LeanInformationAudit.Projection.ProjectionValidation
 
 open Lean LeanInformationAudit
 
