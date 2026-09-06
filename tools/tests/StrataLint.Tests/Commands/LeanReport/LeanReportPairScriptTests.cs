@@ -320,6 +320,11 @@ public sealed class LeanReportPairScriptTests
             Directory.CreateDirectory(Path.Combine(scripts, "report"));
             var copy = Path.Combine(scripts, "lean-report-pair.sh");
             File.Copy(script, copy);
+            File.WriteAllText(
+                Path.Combine(scripts, "report", "lean-report-bundle-lib.sh"),
+                TestRepositoryLayout.ReadAllText(
+                    RepositoryRelativePath.Create("tools/scripts/report/lean-report-bundle-lib.sh")),
+                new UTF8Encoding(false));
             script = copy;
             foreach (var (name, contents) in new[]
             {
@@ -396,6 +401,7 @@ public sealed class LeanReportPairScriptTests
             WriteProducerInput(root, "Directory.Build.props");
             WriteProducerInput(root, ".github/workflows/ci.yml", MinimalWorkflow);
             Directory.CreateDirectory(Path.Combine(root, "tools", "scripts", "worktree"));
+            LeanReportProducerFixture.SeedReachableScripts(root);
         }
 
         private static void WriteProducerInput(
@@ -458,7 +464,12 @@ public sealed class LeanReportPairScriptTests
             if [[ -f "$count_file" ]]; then read -r count < "$count_file"; fi
             printf '%s\n' "$((count + 1))" > "$count_file"
             mkdir -p "$(dirname "$output")"
-            printf '%s\n' 'stub material archive' > "${output}.materials.zip"
+            python3 - "${output}.materials.zip" <<'PY'
+            import sys
+            import zipfile
+            with zipfile.ZipFile(sys.argv[1], "w") as archive:
+                archive.writestr("fixture.txt", "stub material archive\n")
+            PY
             source_hash="$(openssl dgst -sha256 "$repository/Trureturing.lean" | awk '{print $NF}')"
             printf '{"source_sha256":"%s"}\n' "$source_hash" > "$output"
             report_hash="$(openssl dgst -sha256 "$output" | awk '{print $NF}')"

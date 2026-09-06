@@ -8,6 +8,8 @@ namespace StrataLint.Tests;
 public sealed class LeanReportInputScriptTests
 {
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
+    private const string BundleValidatorPath =
+        "tools/scripts/report/lean-report-bundle-lib.sh";
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/Trureturing.Truth/StructuredCanonicalWriter.cs";
     private const string LeanModelsPath = "tools/StrataLint.Engine/Snapshot/LeanModels.cs";
@@ -16,6 +18,10 @@ public sealed class LeanReportInputScriptTests
     private const string ScribeSourcePath = "tools/StrataLint.Scribe/Emission/FixtureEmitter.cs";
     private const string ScribeContentChecksPath =
         "tools/scripts/workflow/scribe-content-checks.sh";
+    private const string LeanInspectSegmentPath =
+        "tools/scripts/workflow/segment-lean-inspect.sh";
+    private const string SegmentEvidenceLibraryPath =
+        "tools/scripts/lib/segment-evidence-lib.sh";
     private static readonly string PairScriptPath = string.Join(
         '/', "tools", "scripts", "lean-report-pair.sh");
     private const string SupervisorScriptPath = "tools/scripts/report/report-supervisor.sh";
@@ -205,6 +211,7 @@ public sealed class LeanReportInputScriptTests
             Encoding.UTF8.GetString(result.StandardError));
         var paths = Lines(result);
         Assert.Contains(InputHelperPath, paths);
+        Assert.Contains(BundleValidatorPath, paths);
         Assert.Contains("Directory.Build.props", paths);
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
@@ -215,6 +222,8 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(ResourceObservationLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
         Assert.Contains(JudgeContentAddressPath, paths);
+        Assert.Contains(LeanInspectSegmentPath, paths);
+        Assert.Contains(SegmentEvidenceLibraryPath, paths);
         Assert.Contains(WorkflowPath, paths);
         Assert.Contains(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
@@ -231,6 +240,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Equal(0, result.ExitCode);
         var paths = Lines(result);
         Assert.Contains(InputHelperPath, paths);
+        Assert.Contains(BundleValidatorPath, paths);
         Assert.Contains("Directory.Build.props", paths);
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
@@ -417,6 +427,10 @@ public sealed class LeanReportInputScriptTests
             Write(inspectorScriptPath, "#!/usr/bin/env bash\n");
             Write(inspectorSourcePath, "def fixture : True := by trivial\n");
             Write(InputHelperPath, "#!/usr/bin/env bash\n");
+            Write(
+                BundleValidatorPath,
+                TestRepositoryLayout.ReadAllText(
+                    RepositoryRelativePath.Create(BundleValidatorPath)));
             // Cli 工程必须至少有一个编译项:零编译项会让 helper 的 msbuild 求值退化,
             // producer 分量对 Engine 源失敏(阶段 7 删 MergeCommand 桩后实测)。
             Write("tools/StrataLint.Cli/Commands/FixtureProbe.cs", "// fixture\n");
@@ -471,6 +485,14 @@ public sealed class LeanReportInputScriptTests
                         "tools", "scripts", "workflow", "judge-content-address.sh"),
                     Encoding.UTF8));
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
+            Write(
+                LeanInspectSegmentPath,
+                TestRepositoryLayout.ReadAllText(
+                    RepositoryRelativePath.Create(LeanInspectSegmentPath)));
+            Write(
+                SegmentEvidenceLibraryPath,
+                TestRepositoryLayout.ReadAllText(
+                    RepositoryRelativePath.Create(SegmentEvidenceLibraryPath)));
             Write(
                 WorkflowPath,
                 File.ReadAllText(

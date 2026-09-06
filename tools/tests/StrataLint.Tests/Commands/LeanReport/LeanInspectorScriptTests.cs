@@ -149,6 +149,7 @@ public sealed class LeanInspectorScriptTests
         Write(repository, "lean-toolchain", "leanprover/lean4:v4.31.0\n");
         Write(repository, "lakefile.toml", "name = \"Fixture\"\n");
         Write(repository, "lake-manifest.json", "{\"version\":\"1.1.0\"}\n");
+        LeanReportProducerFixture.SeedReachableScripts(repository);
     }
 
     private static ProcessOutput RunInspector(string temporary, string repository, string bin)

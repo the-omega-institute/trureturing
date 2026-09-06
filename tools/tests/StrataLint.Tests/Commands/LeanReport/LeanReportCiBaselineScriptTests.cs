@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -8,6 +9,22 @@ namespace StrataLint.Tests;
 
 public sealed class LeanReportCiBaselineScriptTests
 {
+    [Fact]
+    public void LeanReportBundleValidatorAcceptsCanonicalProvenanceBytes() =>
+        LeanReportCiBaselineScriptContract.AssertCanonicalProvenanceBytesAreAccepted();
+
+    [Fact]
+    public void LeanReportBundleValidatorRejectsReorderedProvenanceKeys() =>
+        LeanReportCiBaselineScriptContract.AssertNonCanonicalProvenanceBytesAreRejected("reordered-keys");
+
+    [Fact]
+    public void LeanReportBundleValidatorRejectsAlteredProvenanceWhitespace() =>
+        LeanReportCiBaselineScriptContract.AssertNonCanonicalProvenanceBytesAreRejected("whitespace");
+
+    [Fact]
+    public void LeanReportBundleValidatorRejectsDuplicateProvenanceKeys() =>
+        LeanReportCiBaselineScriptContract.AssertNonCanonicalProvenanceBytesAreRejected("duplicate-key");
+
     [Fact]
     public void DeltaBaselineWithDanglingLogsSymlinkIsRejected() =>
         LeanReportCiBaselineScriptContract.AssertDeltaBaselineWithDanglingLogsSymlinkIsRejected();
@@ -32,10 +49,67 @@ public sealed class LeanReportCiBaselineScriptTests
 internal static class LeanReportCiBaselineScriptContract
 {
     private const string ScriptPath = "tools/scripts/report/lean-report-ci-baseline.sh";
-    private const string Address = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private const string Address = "8b3819495bc2c23d0d68936f67cd83619c8eae2fcb3ee506d00ffb61e2448759";
     private const string Producer = "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
     private const string Resident = "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
     private const string Config = "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+
+    internal static void AssertCanonicalProvenanceBytesAreAccepted()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
+        var cache = Path.Combine(temporary.Path, "cache");
+        WriteBundle(bundle);
+
+        var result = Run(bundle, cache);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(cache, Encoding.UTF8.GetString(result.StandardOutput).Trim());
+        Assert.Contains(
+            "LEAN_REPORT_CI_BASELINE status=ready",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+    }
+
+    internal static void AssertNonCanonicalProvenanceBytesAreRejected(string mutation)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
+        var cache = Path.Combine(temporary.Path, "cache");
+        WriteBundle(bundle);
+        var provenancePath = bundle + ".provenance.json";
+        var canonical = TemporaryFileSystem.File.ReadAllText(provenancePath, Encoding.UTF8);
+        var malformed = mutation switch
+        {
+            "reordered-keys" => canonical.Replace(
+                "{\"schema\":\"stratalint-lean-report-provenance-v1\",\"side\":\"candidate\"",
+                "{\"side\":\"candidate\",\"schema\":\"stratalint-lean-report-provenance-v1\"",
+                StringComparison.Ordinal),
+            "whitespace" => canonical.Replace(
+                ",\"side\":\"candidate\"",
+                ", \"side\":\"candidate\"",
+                StringComparison.Ordinal),
+            "duplicate-key" => canonical.Replace(
+                "\"side\":\"candidate\",\"mode\"",
+                "\"side\":\"candidate\",\"side\":\"candidate\",\"mode\"",
+                StringComparison.Ordinal),
+            _ => throw new ArgumentOutOfRangeException(nameof(mutation), mutation, null),
+        };
+        Assert.NotEqual(canonical, malformed);
+        File.WriteAllText(provenancePath, malformed, new UTF8Encoding(false));
+
+        var result = Run(bundle, cache);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Contains(
+            "LEAN_REPORT_CI_BASELINE status=fallback reason=invalid-attestation",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.False(Directory.Exists(Path.Combine(cache, Address)));
+    }
 
     public static void AssertTrustedStagingAndFailClosedFallbacks()
     {
@@ -326,6 +400,9 @@ internal static class LeanReportCiBaselineScriptContract
             report + ".provenance.json",
             $"{{\"schema\":\"stratalint-lean-report-provenance-v1\",\"side\":\"candidate\",\"mode\":\"produced\",\"source_side\":\"candidate\",\"input_address\":\"sha256:{Address}\",\"producer_sha256\":\"{Producer}\",\"repository_inspector_sha256\":\"{Resident}\",\"lean_sources_sha256\":\"{sources}\",\"lean_config_sha256\":\"{Config}\",\"report_sha256\":\"{reportSha}\"}}\n",
             new UTF8Encoding(false));
-        File.WriteAllText(report + ".materials.zip", "materials\n", new UTF8Encoding(false));
+        using var archive = ZipFile.Open(report + ".materials.zip", ZipArchiveMode.Create);
+        var entry = archive.CreateEntry("materials.txt");
+        using var writer = new StreamWriter(entry.Open(), new UTF8Encoding(false));
+        writer.Write("materials\n");
     }
 }

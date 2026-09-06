@@ -54,12 +54,18 @@ public sealed class EngineeringScopeProgramTests
             root => WriteRunnableTestProjectWithoutMarker(
                 root,
                 NewProductTestsProject,
-                ProductProject));
+                ProductProject),
+            // Keep the new project cold without racing two builds of their shared dependency.
+            root => RunDotNet(
+                root, "build", ProductTestsProject, "--configuration", "Release", "--nologo"));
 
         Assert.True(result.ExitCode == 0, result.Diagnostic);
         Assert.Equal(
             [NewProductTestsProject, ProductTestsProject],
             result.SelectedProjects);
+        Assert.Equal(1, result.RetryCount);
+        Assert.Contains("\"newproduct.tests::SmokeTests.Runs\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"product.tests::SmokeTests.Runs\"", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -196,9 +202,72 @@ public sealed class EngineeringScopeProgramTests
             "RunsPrebuilt", "Assert.True(true);", prebuild: true, expectedExitCode: 0, expectedRetryCount: 0);
 
     [Fact]
-    public void RealTestFailureDoesNotRetry() =>
-        AssertRunTestsScenario(
-            "Fails", "Assert.True(false, \"intentional\");", prebuild: true, expectedExitCode: 1, expectedRetryCount: 0);
+    public void RealTestFailureDoesNotRetryAndStillEmitsExecutedIdentity()
+    {
+        var result = RunTestScenario(
+            "Fails", "Assert.True(false, \"intentional\");", prebuild: true);
+
+        Assert.True(result.ExitCode == 1, result.Diagnostic);
+        Assert.Equal(0, result.RetryCount);
+        var identityLine = Assert.Single(
+            result.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries),
+            static line => line.StartsWith(
+                "TEST_EVIDENCE_IDENTITIES selected_test_ids=",
+                StringComparison.Ordinal));
+        var identities = JsonSerializer.Deserialize<string[]>(
+            identityLine["TEST_EVIDENCE_IDENTITIES selected_test_ids=".Length..]);
+        var identity = Assert.Single(identities!);
+        Assert.True(
+            StringComparer.OrdinalIgnoreCase.Equals(
+                "Product.Tests::SmokeTests.Fails",
+                identity),
+            $"identity={identity}");
+    }
+
+    [Fact]
+    public void InfrastructureHangGuardEvidenceReturnsInfrastructureExitTwo()
+    {
+        var result = RunBoundary(
+            WriteProductProjects,
+            root => WriteFile(
+                root,
+                Path.Combine(Path.GetDirectoryName(ProductTestsProject)!, "SmokeTests.cs"),
+                "using Xunit; public sealed class SmokeTests { "
+                + "[Fact(Skip = \"infrastructure-hang-guard expired: fixture\")] "
+                + "public void Hung() { } }\n"),
+            root => RunDotNet(
+                root, "build", ProductTestsProject, "--configuration", "Release", "--nologo"));
+
+        Assert.True(result.ExitCode == 2, result.Diagnostic);
+        Assert.Contains("INFRASTRUCTURE_UNRESOLVED", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DotnetExitOneWithoutTrxEvidenceReturnsInfrastructureExitTwo()
+    {
+        var result = RunBoundary(
+            WriteProductProjects,
+            root => WriteSmokeTest(root, "Runs", "Assert.True(true);"),
+            root => File.Delete(Path.Combine(root, ProductTestsProject)));
+
+        Assert.True(result.ExitCode == 2, result.Diagnostic);
+        Assert.Equal([ProductTestsProject], result.SelectedProjects);
+        Assert.Contains("dotnet test produced no TRX evidence", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("TEST_EVIDENCE_IDENTITIES", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PlanWithNoSelectedProjectsDoesNotEmitIdentityEvidence()
+    {
+        var result = RunBoundary(
+            _ => { },
+            root => WriteFile(root, "docs/unowned-change.txt", "candidate\n"));
+
+        Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Empty(result.SelectedProjects);
+        Assert.Contains("selected=0", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("TEST_EVIDENCE_IDENTITIES", result.Output, StringComparison.Ordinal);
+    }
 
     [Fact]
     public void CandidateTestInvocationUsesMinimalVerbosity()
@@ -221,18 +290,24 @@ public sealed class EngineeringScopeProgramTests
         int expectedExitCode,
         int expectedRetryCount)
     {
-        var result = RunBoundary(
+        var result = RunTestScenario(testName, testBody, prebuild);
+
+        Assert.True(result.ExitCode == expectedExitCode, result.Diagnostic);
+        Assert.Equal([ProductTestsProject], result.SelectedProjects);
+        Assert.Equal(expectedRetryCount, result.RetryCount);
+    }
+
+    private static BoundaryResult RunTestScenario(
+        string testName,
+        string testBody,
+        bool prebuild) =>
+        RunBoundary(
             WriteProductProjects,
             root => WriteSmokeTest(root, testName, testBody),
             prebuild
                 ? root => RunDotNet(
                     root, "build", ProductTestsProject, "--configuration", "Release", "--nologo")
                 : null);
-
-        Assert.True(result.ExitCode == expectedExitCode, result.Diagnostic);
-        Assert.Equal([ProductTestsProject], result.SelectedProjects);
-        Assert.Equal(expectedRetryCount, result.RetryCount);
-    }
 
     private static BoundaryResult RunBoundary(
         Action<string> writeBase,

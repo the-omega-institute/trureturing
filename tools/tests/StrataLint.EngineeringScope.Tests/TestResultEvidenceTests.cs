@@ -93,7 +93,31 @@ public sealed class TestResultEvidenceTests
             (
                 ExitCode: 0,
                 Output: "ENGINEERING_BASE_FLOOR_EXECUTED assembly=First.Owner.Tests evidence=trx executed=1\n"
-                    + "ENGINEERING_BASE_FLOOR_EXECUTED assembly=Second.Owner.Tests evidence=trx executed=1\n",
+                    + "ENGINEERING_BASE_FLOOR_EXECUTED assembly=Second.Owner.Tests evidence=trx executed=1\n"
+                    + "TEST_EVIDENCE_IDENTITIES selected_test_ids=[\"First.Owner.Tests::FirstTest\",\"Second.Owner.Tests::SecondTest\"]\n",
+                Error: ""),
+            result);
+    }
+
+    [Fact]
+    public void EmitsSortedUniqueJsonEscapedExecutedTestIdentities()
+    {
+        var evidence = new TestResultEvidence(
+            3,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("Zulu.Tests", "Class.Last"),
+                ("Alpha\\Tests", "Class.Quote\"Test"),
+                ("Alpha.Tests", "Class.First"),
+            });
+
+        var result = RunVerifyTrx(evidence, "--results-directory", "unused");
+
+        Assert.Equal(
+            (
+                ExitCode: 0,
+                Output: "TEST_EVIDENCE_ACCEPTED evidence=trx executed=3\n"
+                    + "TEST_EVIDENCE_IDENTITIES selected_test_ids=[\"Alpha.Tests::Class.First\",\"Alpha\\\\Tests::Class.Quote\\u0022Test\",\"Zulu.Tests::Class.Last\"]\n",
                 Error: ""),
             result);
     }

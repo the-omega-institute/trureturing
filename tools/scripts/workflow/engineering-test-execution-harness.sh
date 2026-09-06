@@ -23,13 +23,8 @@ head_sha="$(git -C "$candidate_root" rev-parse HEAD)"
 base_sha="$(git -C "$candidate_root" rev-parse HEAD^1)"
 
 run_engineering_tests() {
-  make \
-    --no-print-directory \
-    -C "$candidate_root/tools" \
-    engineering-tests \
-    "REPOSITORY=$candidate_root" \
-    "HEAD=$head_sha" \
-    "BASE=$base_sha"
+  /bin/bash "$candidate_root/tools/scripts/engineering-tests.sh" \
+    "$candidate_root" "$head_sha" "$base_sha"
 }
 
 observation_library="$candidate_root/tools/scripts/lib/resource-observation-lib.sh"
