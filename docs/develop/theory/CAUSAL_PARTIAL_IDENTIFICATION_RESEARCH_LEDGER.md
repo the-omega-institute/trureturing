@@ -303,7 +303,7 @@ This comparison clarifies where Markovianity has identifying power. Separating a
 
 ## 13. Semantic boundary: mixture versus one global graph
 
-The support and event-row compilers have latent-completion mixture semantics. Different units may receive mass from different admissible completions of the graph.
+The support and event-row compilers have latent-completion mixture semantics. Different units may receive mass from different admissible completions.
 
 That object must be distinguished from epistemic uncertainty about one fixed complete graph. For one global unknown graph, the correct range is:
 
@@ -359,7 +359,7 @@ MarkovianResponseLawFactorization
   -> sharp PoC bounds.
 ```
 
-The next high-value compiler theorem should derive the independent response components from a finite causal graph or an explicit confounded-component partition. It must prove that every generated event polynomial has one factor per independent component and that fixing all but one component law produces exactly the linear slice already accepted by `LinearObjectiveDual`.
+The next high-value compiler theorem should derive the independent response components from a finite causal graph or an explicit confounded-component partition. It must prove that every generated event polynomial has one factor per independent component and that fixing all but one component produces exactly the linear slice already accepted by `LinearObjectiveDual`.
 
 A second target is an exact finite certificate for a two-component bilinear problem. Candidate payloads are a finite branch decomposition with one rational dual certificate per branch, or a verified alternating bound whose global validity is discharged by a separate envelope theorem. Local stationary-point evidence alone is insufficient for a sharpness claim.
 
@@ -678,7 +678,7 @@ F(u) = reduced_F(u restricted to S).
 F_*(mu) = reduced_F_*(mu_S).
 ```
 
-After regrouping, the complementary product law sums to one. `independentSource_restriction_marginal` identifies `mu_S` with the actual restriction marginal. `independentSource_readout_law_invariant` further proves that two elementary law families agreeing on S give the same complete readout distribution, irrespective of changes outside S. The readout and structural equations are fixed in this statement.
+`independentSource_restriction_marginal` identifies `mu_S` with the actual restriction marginal. `independentSource_readout_law_invariant` further proves that two elementary law families agreeing on S give the same complete readout distribution, irrespective of changes outside S. The readout and structural equations are fixed in this statement.
 
 This distributional invariance does not authorize deletion of statistical constraints involving other sources. Consider independent Bernoulli variables with parameters x and z, a target x, and supplied joint-event probability c. The data impose x*z = c. For nonnegative rational c, `joint_event_constraint_projection_iff` states the exact parameter projection:
 
@@ -1767,3 +1767,85 @@ The new source has four named public declarations and one corresponding Scribe d
 The reproducible Python diagnostic uses exact Fraction arithmetic with seed 20260906. It checks 6,561 four-tolerance tuples and all 19,683 proposed product-model pairs against the actual complete response laws, four marginal comparisons and joint benefit cell. It independently enumerates the necessary two-dimensional endpoint polygon and its bilinear vertex maxima for 1,681 total-tolerance pairs. This polygon is used as an outer relaxation; no full projection-sufficiency theorem is inferred from that enumeration. Explicit original-law witnesses attain the same maxima. Further checks cover 5,000 independently sampled original model pairs, 20,000 one-sided endpoint inequalities, 101 equal-total-tolerance cases and four symbolic slice identities. These are reproducibility checks, not an empirical evaluation or code extracted from Lean.
 
 The present result is a fully specified analytic bilinear benchmark family. A generic multiple-component column-generation method, an independent literature-priority determination for this formula, and a performance comparison on the cited authors' problem instances remain uncompleted. A meaningful next algorithmic deliverable must preserve all nominated observational/interventional rows, use actual independent response components, return globally valid lower/upper certificates rather than alternating stationary points, and match attaining models. Tests on a self-chosen duplicate-state example cannot establish that performance or scientific advance. The new closed form is a useful oracle for such tests, but it is not evidence that the general published open algorithmic target is solved.
+
+## 77. Complete mediation: make the shared response restriction explicit, 2026-09-06
+
+The source audit resumed from the newly delivered two-mechanism tolerance files and the concurrently developed mediator modules. The recent cross-author PR scan included loning's #5867/#5884 and AlyciaBHZ's #5405/#5895. The concrete mathematical dependency read in full was `PartialMediatorTransportReduction.lean` at `b8019b86a0d5da0dcca0449230094a63663c6be7`, together with `SharedThresholdResponseCoupling` and the pinned Mathlib owner `Finite.exists_max`. No separate maximum-cut owner for this complete-mediation query was found in the searched source scope.
+
+`CompleteMediatorCutSharpBounds.lean` formalizes the complete-mediation boundary previously left as a paper derivation in Section 71. The mediator response law pi on (M0,M1) is fixed. The outcome disturbance is one full table y : Mediator -> Bool, with an arbitrary rational law nu independent of pi. The structural response is Y_a=y(M_a), so treatment has no direct effect once the mediator and disturbance are fixed.
+
+`completeOutcomeLaw` pushes nu to the existing treatment/mediator table space by the map `(a,m) -> y(m)`. Consequently the two treatment coordinates are identical for every source state. `completeOutcomeLaw_success` proves the actual intervention-kernel identity, and `completeOutcomeLaw_fair_kernel` connects fair coordinates to the existing `HasOutcomeKernel`. `completeMediatorBenefit_actual_response` identifies the query with the original `benefitResponseMass` of the existing two-world product-source pushforward.
+
+The fixed coupling pi is additional full response information or a fixed slice of a larger optimization. It is not inferred from the two mediator marginals. Extra support restrictions, nonfair outcome means, or uncertainty about pi require their own optimization. The full source equation and this input boundary prevent the graph problem below from being presented as an observational identification theorem.
+
+## 78. Exact cut identity, complete interval and simultaneous-attainment criterion
+
+For a deterministic Boolean table y define
+
+```text
+Cut_pi(y) = sum_(i,j) pi(i,j) * 1[y(i) != y(j)].
+```
+
+Directed pairs carry their own nonnegative weights; pi need not be symmetric or have equal row and column marginals. Loops contribute zero. The pointwise Boolean identity is
+
+```text
+2*1[y(i)=0 and y(j)=1] = 1[y(i)!=y(j)] + y(j)-y(i),
+```
+
+where Boolean values on the right are interpreted as zero-one rationals. `completeMediatorBenefit_cut_identity` averages it under the actual independent source law and proves
+
+```text
+2*J(pi,nu) = E_nu[Cut_pi(Y)]
+  + sum_(i,j) pi(i,j)*(P_nu(Y_j=1)-P_nu(Y_i=1)).
+```
+
+The full mean-drift term remains in the statement. If every outcome coordinate has success probability 1/2, it vanishes. For any deterministic y, the law assigning equal mass to y and its complement has all those fair marginals, and the two assignments have the same cut. `complementOutcomeLaw_benefit` proves that this one-bit complete outcome mechanism has benefit exactly Cut_pi(y)/2.
+
+`complete_mediator_maxcut_sharp` obtains a maximizing assignment from the whole finite Boolean table carrier and proves that half its cut mass is the greatest attained causal query value. `complete_mediator_cut_interval` goes further: the entire rational identified image, at this fixed pi and fair kernel, is
+
+```text
+[0, max_y Cut_pi(y)/2] intersect Q.
+```
+
+The zero endpoint uses a fair mixture of the two constant tables. Mixing this law with the maximizing complement law attains every intermediate value. The mixture is inside the outcome disturbance; pi remains fixed, so source independence and the no-direct-effect equations are preserved.
+
+`mediatorCutMass_eq_one_iff` and `complete_mediator_half_attainable_iff` give the exact saturation condition: the ceiling 1/2 is attainable if and only if one Boolean assignment separates every positive-mass mediator pair. This is a simultaneous two-coloring condition on the support, including its loop obstruction. It formalizes when the collection of pairwise one-half upper bounds can actually coexist in one response table.
+
+The formal three-cycle instance has pi(0,1)=pi(1,2)=pi(2,0)=1/3. Every Boolean assignment separates at most two of its three edges. `three_cycle_complete_mediation_sharp` proves the attained upper endpoint 1/3, using table 001 and its complement. This is strictly smaller than the relaxed cellwise value 1/2.
+
+## 79. Actual column pricing is a graph objective with vertex fields
+
+The same derivation identifies an algorithmic subproblem, beyond the fair special case. For a deterministic complete-outcome column y, its actual benefit coefficient is
+
+```text
+b_pi(y) = sum_(i,j) pi(i,j)*1[y(i)=0 and y(j)=1].
+```
+
+For arbitrary rational outcome-marginal multipliers lambda_m, `completeMediatorPricingScore` is `b_pi(y)-sum_m lambda_m*y(m)`. The constant normalization multiplier can be subtracted afterward without changing the maximizing assignment. `completeMediatorPricingScore_graph_identity` proves
+
+```text
+2*pricing_pi,lambda(y) = Cut_pi(y)
+  + sum_m (incoming_pi(m)-outgoing_pi(m)-2*lambda_m)*y(m).
+```
+
+Incoming and outgoing weights are the existing right and left mediator marginals. The theorem requires neither fairness nor symmetry nor stationarity. Thus pricing the actual outcome columns at a fixed mediator slice is exactly a weighted-cut objective with explicit vertex linear terms. A solver that optimizes independent pairwise cells omits the shared Boolean assignment constraint and can return the wrong sharp bound.
+
+For fair outcome data, choosing lambda_m=(incoming_pi(m)-outgoing_pi(m))/2 cancels the fields. A certified upper bound C on every cut supplies a dual upper certificate C/2 for the causal objective, and a maximizing assignment supplies the complementary primal law. This is a paper certificate interpretation of the formal identity, not a newly implemented general branch-and-bound or column-generation driver.
+
+The reduction can encode any finite nonnegative weighted undirected graph: give each directed version of an edge {i,j} mass w_ij/(2W), where W is the sum of undirected edge weights and is positive. Then max Cut_pi is MaxCut(w)/W, and the causal optimum is MaxCut(w)/(2W). This polynomial-size encoding explains why a generic exact pricing routine cannot be replaced by independent scalar maximizations. A formal computational-complexity reduction to a Lean NP-completeness framework is not supplied here. No claim is made about the complexity of the larger unknown-pi optimization merely from this fixed-pi result.
+
+## 80. Literature placement and concrete remaining algorithmic work
+
+Arroyo et al., arXiv:2509.03548v1, Section 6, explicitly asks for multiple-intervention extensions, graph-based complexity analysis and decomposition methods. Xie and Li, arXiv:2602.14503v1, Section 6, discusses tractable mediator formulations. The new fixed-coupling result supplies an exact graphical description of one response-compatible pricing problem and an explicit boundary of the prior transport reduction. It does not solve the general multiple-component column-generation problem.
+
+Dawid, Humphreys and Musio, *Bounding Causes of Effects With Mediators*, Sociological Methods & Research 53(1):28-56 (2024; online 3 March 2022), DOI 10.1177/00491241211036161, already provides broad results for chains of binary complete mediators. Their conditional probability-of-causation analysis is not replaced by this arbitrary-finite-state mediator and fixed cross-world-coupling theorem. The current targeted searches do not establish first discovery of the cut connection or an independent publication-level novelty claim.
+
+The next algorithmic target is now concrete: use the displayed pricing identity to produce complete outcome columns and a checked global pricing bound; combine that with a restricted master problem whose original data rows are preserved. Graph decomposition can be investigated on this precise objective. Any proposed speedup must be tested on matched causal assumptions and against actual full canonical problems or published implementations. The present exact finite tests establish consistency of the reduction, not practical superiority.
+
+## 81. Current source and executed validation status
+
+The new module has 469 Lean lines and 21 named public declarations, with a source-owned Scribe covering all 21 and their formulas. The source reuses the current product-source query and fixed pinned Mathlib maxima rather than creating a second structural evaluator or assuming an optimizer. Mathematical and source review was performed. The runtime has no Lean/Lake or dotnet executable, so elaboration, kernel checking, Scribe compilation and executed axiom reports remain unperformed. No new axiom, sorry, admit or native_decide was introduced; this does not substitute for kernel verification.
+
+The independent Fraction diagnostic, seed 20260906, was executed on 72 finite instances with mediator sizes one through eight. It checked 4,600 deterministic assignments, 720 general drift identities on actual product-source laws, 648 fair outcome laws, 360 rational interior targets and 72 saturation/two-coloring equivalences. Seventy-two full canonical outcome-table LPs were separately solved as numerical proposals; their weights were reconstructed as rationals and checked exactly for normalization, nonnegativity, every fair marginal and equality with the enumerated maximum-cut endpoint. No floating tolerance was used for acceptance. These are finite diagnostics by the authoring assistant, not an independent review or Lean-extracted program.
+
+The directed cycles of lengths 3,4,5,6,7,8 give exact tested upper values 1/3,1/2,2/5,1/2,3/7,1/2 respectively. Only the three-cycle specialization is a separate named Lean theorem in this source; no general cycle-length formula is claimed as a new Lean declaration. The one-state and loop-containing cases are included in the general test family. The general cutoff-free identified interval and the pricing identity are source-level proof candidates awaiting the pinned compiler.
