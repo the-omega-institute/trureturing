@@ -325,10 +325,10 @@ def prepareInformationAnalysisExport (rootId : Name) (requested : List ArtifactK
     CommandElabM AnalysisExportPlan := do
   let env ← getEnv
   let some analysis := SealRecords.analysisForRoot? env rootId
-    | throwError "IE-C044 UnsealedAnalysisExport root={rootId} catalog=system"
+    | throwError "UnsealedAnalysisExport root={rootId} catalog=system"
   let records := SealRecords.forRoot env rootId
   unless !records.isEmpty && env.contains analysis.systemCertificate do
-    throwError "IE-C044 UnsealedAnalysisExport root={rootId} catalog=system"
+    throwError "UnsealedAnalysisExport root={rootId} catalog=system"
   let mut artifacts := []
   if requested.contains .v2 then
     artifacts := artifacts ++ [(.v2, serializeV2Artifact records)]

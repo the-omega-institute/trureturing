@@ -204,7 +204,7 @@ if (selected('unsealedExport')) {
     IE_EXPORT_BEFORE_SEAL: '1', IE_PROJECTION_OUTPUT_DIR: output,
   });
   assert.equal(test.status, 0, test.stdout + test.stderr);
-  assert(test.stdout.includes('RealSeal rejected export before seal: IE-C044 UnsealedAnalysisExport'));
+  assert(test.stdout.includes('RealSeal rejected export before seal: UnsealedAnalysisExport'));
   results.push({ label: 'unsealedExport', fixture_exit: test.status });
 }
 

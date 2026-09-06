@@ -67,7 +67,7 @@ run_cmd do
   let root := beforeSeal.header.mainModule
 
   if exportBeforeSeal.isSome then
-    let expected := s!"IE-C044 UnsealedAnalysisExport root={root} catalog=system"
+    let expected := s!"UnsealedAnalysisExport root={root} catalog=system"
     let errors ← commandErrors (← exportSyntax root firstPaths)
     unless errors == #[expected] do
       throwError "RealSeal expected unsealed export rejection {expected}; actual={errors}"
