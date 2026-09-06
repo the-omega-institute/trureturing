@@ -540,6 +540,7 @@ public sealed partial class FormalizeCandidatesTests
         "residual" => DigestionMigrationState.Residual,
         "partial" => DigestionMigrationState.Partial,
         "absorbed" => DigestionMigrationState.Absorbed,
+        "nonpropositional" => DigestionMigrationState.Nonpropositional,
         _ => throw new ArgumentOutOfRangeException(nameof(value)),
     };
 
@@ -548,6 +549,7 @@ public sealed partial class FormalizeCandidatesTests
         "closed" => DigestionTruthState.Closed,
         "tail" => DigestionTruthState.Tail,
         "open" => DigestionTruthState.Open,
+        "inapplicable" => DigestionTruthState.Inapplicable,
         _ => throw new ArgumentOutOfRangeException(nameof(value)),
     };
 

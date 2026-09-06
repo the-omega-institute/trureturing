@@ -1,0 +1,66 @@
+## 定理 4.2：最小极大丰倍数定理
+
+\(\operatorname{CAcl}(B)\) 满足：
+
+$$
+\boxed{B\mid\operatorname{CAcl}(B),}
+$$
+
+它本身是极大丰数，并且对任何极大丰数 \(N\)：
+
+$$
+\boxed{
+B\mid N
+\Longrightarrow
+\operatorname{CAcl}(B)\mid N.
+}
+\tag{10}
+$$
+
+因此，它不仅是数值最小的极大丰倍数，还是**整除偏序中的唯一最小者**。
+
+### 证明
+
+首先，\(c_p(B)\ge b_p\)，所以 \(B\mid\operatorname{CAcl}(B)\)。
+
+取价格 \(\lambda_B\)。构造 \(c_p\) 时，我们纳入了全部严格正收益层：
+
+$$
+\eta(p,k)>\lambda_B,
+$$
+
+并保留了 \(B\) 强制要求的层。后者也都满足：
+
+$$
+\eta(p,k)\ge\eta(p,b_p)\ge\lambda_B.
+$$
+
+因此没有采用负收益层，也没有遗漏正收益层。可能的等收益层按 \(B\) 的要求保留。
+
+所以共同价格判据成立，\(\operatorname{CAcl}(B)\) 是极大丰数。
+
+现在设 \(N\) 是极大丰数，且 \(B\mid N\)，其支持价格为 \(\lambda\)。
+
+因为 \(N\) 必须保留 \(B\) 的所有层：
+
+$$
+\lambda\le\eta(p,b_p)
+\qquad(p\mid B),
+$$
+
+故：
+
+$$
+\lambda\le\lambda_B.
+$$
+
+于是所有满足 \(\eta(p,k)>\lambda_B\) 的层，在价格 \(\lambda\) 下都严格值得采用，必须包含在 \(N\) 中。
+
+因此 \(N\) 的指数同时不小于 \(b_p\) 和 \(r_p(B)\)，即不小于 \(c_p(B)\)。所以：
+
+$$
+\operatorname{CAcl}(B)\mid N.
+$$
+
+证毕。
+

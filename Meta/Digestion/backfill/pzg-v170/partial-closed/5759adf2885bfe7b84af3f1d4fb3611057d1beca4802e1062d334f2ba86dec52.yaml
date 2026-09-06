@@ -16,6 +16,15 @@ receipts:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
+    - gid: D5/S3/Zeros/ToySpectrum/OffLineToySpectrum.explicit_off_line_j_invariant_four_point_counterexample
+      definition_sha256: sha256:0228f488faeb97f625bb14a94fc282e1e240f8fa8a38ae722bf78163ba1e6052
+      emission_sha256: sha256:589951e79ade7848359a3cd1dcfc29b6310df49675d1325e414667db744d7ae9
+    - gid: D5/S3/Zeros/ToySpectrum/OffLineToySpectrum.li_positivity_distinguishes_the_off_line_toy_spectrum
+      definition_sha256: sha256:0228f488faeb97f625bb14a94fc282e1e240f8fa8a38ae722bf78163ba1e6052
+      emission_sha256: sha256:589951e79ade7848359a3cd1dcfc29b6310df49675d1325e414667db744d7ae9
+    - gid: D5/S3/Zeros/ToySpectrum/OffLineToySpectrum.toy_spectrum_satisfies_formal_polynomial_symmetries
+      definition_sha256: sha256:0228f488faeb97f625bb14a94fc282e1e240f8fa8a38ae722bf78163ba1e6052
+      emission_sha256: sha256:589951e79ade7848359a3cd1dcfc29b6310df49675d1325e414667db744d7ae9
   unresolved_subitems:
     - antiunitary-symmetry-present-selfadjoint-hamiltonian-absent
     - rh-fixed-locus-formulation-as-conceptual-not-mathematical-advance

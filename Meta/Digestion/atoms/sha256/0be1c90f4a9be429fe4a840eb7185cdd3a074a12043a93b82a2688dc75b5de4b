@@ -1,0 +1,46 @@
+# 六、新的有限性结论：每个算术区间至多有四个驻点
+
+这一节是三角波包带来的具体优势。
+
+由式（4），在分布意义下，
+
+$$
+\boxed{
+c_a^{(4)}
+=
+\frac1{a^4}
+\left(
+\delta_{-2a}-4\delta_{-a}
++6\delta_0-4\delta_a+\delta_{2a}
+\right).
+}
+\tag{23}
+$$
+
+因此，每个素数幂 \(n\) 对 \(P_a(T)\) 产生五个事件位置：
+
+$$
+\boxed{
+\log n-2a,\quad
+\log n-a,\quad
+\log n,\quad
+\log n+a,\quad
+\log n+2a.
+}
+\tag{24}
+$$
+
+在相邻事件之间，\(P_a(T)\) 是一个三次多项式。
+
+定义完成项
+
+$$
+H_a(T)=2A_a^2\cosh(T/2)-\Gamma_a(T).
+$$
+
+于是
+
+$$
+B_a(T)=H_a(T)-P_a(T).
+$$
+

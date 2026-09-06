@@ -1,0 +1,68 @@
+## 定理 196.1　空间混合相位的精确 Hessian 表示
+
+若 \(V\) 在相应平行四边形上为 \(C^2\)，则
+
+$$
+\boxed{
+\Xi_{\mathrm{space}}
+=
+\frac{T}{\hbar}
+\int_0^1\!\!\int_0^1
+a^{\mathsf T}
+\operatorname{Hess}V(r+t\,b-s\,a)
+b\,ds\,dt.
+}
+\tag{196.1}
+$$
+
+### 证明
+
+令
+
+$$
+F(s,t)=V(r+t\,b-s\,a).
+$$
+
+则
+
+$$
+\partial_s\partial_tF
+=
+-a^{\mathsf T}\operatorname{Hess}V(r+t\,b-s\,a)b.
+$$
+
+对单位方形积分，得到
+
+$$
+V_{11}-V_{10}-V_{01}+V_{00}
+=
+-\int_0^1\!\!\int_0^1a^{\mathsf T}(\operatorname{Hess}V)b\,ds\,dt.
+$$
+
+再乘以 \(-T/\hbar\)。∎
+
+若 Hessian 的变化满足
+
+$$
+\|\operatorname{Hess}V(x)-\operatorname{Hess}V(y)\|
+\le L_3|x-y|,
+$$
+
+则
+
+$$
+\boxed{
+\left|
+\Xi_{\mathrm{space}}
+-
+\frac{T}{\hbar}a^{\mathsf T}\operatorname{Hess}V(r)b
+\right|
+\le
+\frac{TL_3}{2\hbar}
+|a||b|(|a|+|b|).
+}
+\tag{196.2}
+$$
+
+---
+

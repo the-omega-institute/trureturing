@@ -1,0 +1,11 @@
+## 定理 U1：正拼接的必要充分条件
+
+$$
+\boxed{
+G_{N+1}\succeq0
+\iff
+\delta_N:=d-b^*G_N^{-1}b\ge0.
+}
+\tag{U13}
+$$
+

@@ -1,0 +1,15 @@
+## 定理 V5：实际全部两点矩阵正半定
+
+对任意 \(b,c>0\)：
+
+$$
+\boxed{
+\begin{pmatrix}
+\mu(b)/b&[\mu(b)+\mu(c)]/(b+c)\\
+[\mu(b)+\mu(c)]/(b+c)&\mu(c)/c
+\end{pmatrix}
+\succeq0.
+}
+\tag{V23}
+$$
+

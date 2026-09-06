@@ -24,3 +24,4 @@ Applying the adjoint global coupling to either joint record restores its origina
 
 - Truth anchor: `D5/S3/Quantum/Decoherence/ReducedRecordAccessDefect.reduced_irreversibility_is_access_defect`
 - Dependency: [D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics](ProjectedUnistochasticDynamics.md)
+- Dependency: [D5/S3/Quantum/EnvironmentRecords](../EnvironmentRecords.md)

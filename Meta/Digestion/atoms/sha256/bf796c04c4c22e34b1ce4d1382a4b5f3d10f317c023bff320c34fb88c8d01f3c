@@ -1,0 +1,56 @@
+# 三、这一次，局部正性也能用显式波包直接证明
+
+记
+
+$$
+k_\Gamma(t)
+=
+\frac{e^{t/2}}{e^t-e^{-t}}
+=
+\frac{e^{-t/2}}{1-e^{-2t}},
+$$
+
+$$
+C_\Gamma
+=
+\log(8\pi)+\gamma_{\mathrm E}+\frac\pi2,
+$$
+
+以及
+
+$$
+\boxed{
+A_a
+=
+\int_{\mathbb R}e^{x/2}g_a(x)\,dx
+=
+\left(\frac{\sinh(a/4)}{a/4}\right)^2.
+}
+\tag{7}
+$$
+
+因为
+
+$$
+2a=\frac18<\log2,
+$$
+
+自相关 \(c_a\) 的支集没有碰到任何正的素数幂位移 \(\log n\)。
+
+由 Weil 显式公式，
+
+$$
+\boxed{
+q_a
+=
+2A_a^2+
+2\int_0^\infty
+k_\Gamma(t)\bigl[c_a(0)-c_a(t)\bigr]\,dt
+-
+C_\Gamma c_a(0).
+}
+\tag{8}
+$$
+
+这里 \(C_\Gamma\) 来自中心项与 Gamma 积分的合并；所需 digamma 差分和特殊值均为标准恒等式。([DLMF][2])
+

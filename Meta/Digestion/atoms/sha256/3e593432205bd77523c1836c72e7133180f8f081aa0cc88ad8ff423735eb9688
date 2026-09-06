@@ -1,0 +1,61 @@
+## 定理 4：切片余项的精确表达
+
+$$
+\boxed{
+R_{\chi,f}(t)
+=
+\frac12
+\int_{\mathbb R}
+f(x+t)\overline{f(x)}
+\sum_j
+[\chi_j(x+t)-\chi_j(x)]^2\,dx.
+}
+\tag{22}
+$$
+
+因此
+
+$$
+\boxed{
+Q_W(f)
+=
+\sum_jQ_W(\chi_jf)
++
+W(R_{\chi,f}).
+}
+\tag{23}
+$$
+
+### 证明
+
+由式（20），
+
+$$
+\begin{aligned}
+1-\sum_j\chi_j(x+t)\chi_j(x)
+&=
+\frac12\sum_j
+[\chi_j(x+t)-\chi_j(x)]^2.
+\end{aligned}
+$$
+
+把它乘以 \(f(x+t)\overline{f(x)}\) 后积分，得到式（22）。
+
+再使用 \(W\) 的线性性，得到式（23）。证毕。
+
+---
+
+这就是局部切片与全局对象之间的精确差额：
+
+$$
+\boxed{
+\text{全局二次型}
+=
+\text{局部二次型之和}
++
+\text{跨切口相关}.
+}
+$$
+
+它不是一个尚未命名的隐藏维度，而是式（22）这个明确函数。
+

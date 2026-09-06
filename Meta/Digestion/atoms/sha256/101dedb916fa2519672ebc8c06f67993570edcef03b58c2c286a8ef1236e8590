@@ -1,0 +1,52 @@
+## 定理 212.1　受控未来统计的充分性
+
+两个状态 \(\rho,\sigma\) 在全部有限允许协议下，具有相同的记录概率，当且仅当
+
+$$
+\boxed{
+\operatorname{Tr}[(\rho-\sigma)E]=0
+\qquad
+\forall E\in\mathcal S_\Gamma.
+}
+\tag{212.2}
+$$
+
+该结论包括根据先前结果选择下一行动的有限反馈协议。
+
+### 证明
+
+对一条记录分支
+
+$$
+w=(a_1,b_1,\ldots,a_n,b_n)
+$$
+
+以及终点效果 \(E\)，其联合概率为
+
+$$
+\begin{aligned}
+p(w,E\mid\rho)
+&=
+\operatorname{Tr}
+\left[
+E\,\Phi_{a_n,b_n}\cdots\Phi_{a_1,b_1}(\rho)
+\right]\\
+&=
+\operatorname{Tr}
+\left[
+\rho\,
+\Phi_{a_1,b_1}^*\cdots\Phi_{a_n,b_n}^*(E)
+\right].
+\end{aligned}
+$$
+
+这些效果恰好生成 \(\mathcal S_\Gamma\)。
+
+因此，所有生成效果上的期望相同，等价于其线性包上的期望相同。
+
+反馈协议中的每个叶节点也是这样一条分支；事件概率是相关叶节点概率之和，所以同一结论成立。∎
+
+这里使用的是未归一化分支概率。若进一步条件于某个结果，必须保留其发生概率，不能把后选择视为确定性免费操作。
+
+---
+

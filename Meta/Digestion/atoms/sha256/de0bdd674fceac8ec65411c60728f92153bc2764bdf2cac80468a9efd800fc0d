@@ -1,0 +1,76 @@
+# 八、真正不一样的地方：局部最优价格与 Robin 全局预算不是同一个量
+
+极大丰数最大化：
+
+$$
+W(n)-\lambda E(n).
+$$
+
+但 Robin 比较的是：
+
+$$
+W(n)
+<
+h(E(n)),
+\qquad
+h(E)=\gamma+\ln\ln E.
+$$
+
+后者的边际预算是：
+
+$$
+\boxed{
+h'(E)=\frac1{E\ln E}.
+}
+\tag{15}
+$$
+
+它随整体规模变化，不是一个固定价格。
+
+若把 \(p\) 的指数从 \(a\) 增至 \(a+1\)，则：
+
+$$
+\boxed{
+\begin{aligned}
+\Delta(pn)-\Delta(n)
+={}&
+\ln\frac{\ln(E+\ln p)}{\ln E}\\
+&-\ln\left(
+1+\frac1{p+p^2+\cdots+p^{a+1}}
+\right).
+\end{aligned}
+}
+\tag{16}
+$$
+
+也可以写成：
+
+$$
+\Delta(pn)-\Delta(n)
+=
+(\ln p)
+\left[
+\frac1{\ln p}
+\int_E^{E+\ln p}\frac{du}{u\ln u}
+-\eta(p,a+1)
+\right].
+$$
+
+所以存在两个不同的价格：
+
+$$
+\boxed{
+\lambda:
+\text{使某个整数成为极大丰数的共同资源价格};
+}
+$$
+
+$$
+\boxed{
+\frac1{E\ln E}:
+\text{Robin 临界曲线的瞬时边际预算}.
+}
+$$
+
+极大丰条件没有自动证明两者始终处于所需的安全顺序。
+

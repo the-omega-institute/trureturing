@@ -1,0 +1,46 @@
+## 5.3 观察一个新的事实，相当于对全未来波作条件化
+
+如果已知状态从 \(B\) 增长为 \(pB\)，那么：
+
+$$
+\{n:pB\mid n\}\subseteq\{n:B\mid n\}.
+$$
+
+所以：
+
+$$
+Q_{pB}(\lambda,\beta)\le Q_B(\lambda,\beta).
+$$
+
+将两者归一化为概率分布后，子域是母域的条件分布，并满足：
+
+$$
+\boxed{
+D_{\mathrm{KL}}(\mu_{pB}\Vert\mu_B)
+=
+\ln\frac{Q_B}{Q_{pB}}.
+}
+\tag{17}
+$$
+
+取零温极限：
+
+$$
+\boxed{
+\lim_{\beta\to\infty}
+\frac1\beta
+D_{\mathrm{KL}}(\mu_{pB}\Vert\mu_B)
+=
+\Phi_\lambda(B)-\Phi_\lambda(pB)
+=
+[-b_\lambda(p,v_p(B)+1)]_+.
+}
+\tag{18}
+$$
+
+因此，上一轮那个精确不增定律，可以被理解为：
+
+> **整个未来波已经包含全部可能收益；当前条件变得更严格时，只会删除一部分未来，不会凭空增加未计算的最优收益。**
+
+这是条件化的数学关系，不是“未来反过来改变现实过去”的物理结论。
+

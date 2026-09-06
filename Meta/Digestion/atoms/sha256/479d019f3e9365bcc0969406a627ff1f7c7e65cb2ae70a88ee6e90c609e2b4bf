@@ -1,0 +1,46 @@
+# 三、极大丰数真正增加的约束：所有素数必须接受同一个价格
+
+定义：
+
+$$
+Z(n)=\frac{\sigma(n)}n,
+\qquad
+W(n)=\ln Z(n),
+\qquad
+E(n)=\ln n.
+$$
+
+极大丰数的定义等价于：存在 \(\lambda>0\)，使 \(n\) 在全部正整数中最大化
+
+$$
+\boxed{
+J_\lambda(n)=W(n)-\lambda E(n).
+}
+\tag{5}
+$$
+
+这就是经典极大丰数的参数化最优性。([arXiv][2])
+
+令：
+
+$$
+f_p(a)=\ln(1+p^{-1}+\cdots+p^{-a}).
+$$
+
+增加第 \(k\) 层指数的单位规模收益为：
+
+$$
+\boxed{
+\eta(p,k)
+=
+\frac{f_p(k)-f_p(k-1)}{\ln p}
+=
+\frac{
+\ln\left(1+\dfrac1{p+\cdots+p^k}\right)
+}{\ln p}.
+}
+\tag{6}
+$$
+
+它对 \(k\) 严格递减，对 \(p\) 也严格递减。
+

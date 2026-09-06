@@ -1,0 +1,80 @@
+## 定理225.1　越来越密的弱刷新，不必冻结系统
+
+令每次记录强度随间隔缩放为
+
+$$
+\eta(\delta)=e^{-\gamma\delta},
+\qquad \gamma>0.
+$$
+
+固定总时间 \(T\)，取 \(\delta=T/N\)。则 \(N\to\infty\) 时，过程收敛到
+
+$$
+\boxed{
+\dot\rho
+=
+-\frac{i\Omega}{2}[X,\rho]
++
+\frac\gamma2(Z\rho Z-\rho).
+}
+\tag{225.2}
+$$
+
+其 \(z\) 分量满足
+
+$$
+\boxed{
+\ddot z+\gamma\dot z+\Omega^2z=0.
+}
+\tag{225.3}
+$$
+
+### 证明
+
+式（225.1）的单步矩阵展开为
+
+$$
+I+\delta
+\begin{pmatrix}
+-\gamma&-\Omega\\
+\Omega&0
+\end{pmatrix}
++O(\delta^2).
+$$
+
+有限维矩阵乘积极限给出连续生成元，从而
+
+$$
+\dot y=-\gamma y-\Omega z,
+\qquad
+\dot z=\Omega y.
+$$
+
+消去 \(y\) 即得式（225.3）。∎
+
+固定有限 \(\gamma\) 时，即使刷新间隔趋零，系统通常仍然变化。
+
+在
+
+$$
+\gamma\gg\Omega
+$$
+
+且已经越过快速暂态后，慢衰减指数为
+
+$$
+\boxed{
+\lambda_{\mathrm{slow}}
+=
+\frac{-\gamma+\sqrt{\gamma^2-4\Omega^2}}2
+=
+-\frac{\Omega^2}{\gamma}
++O(\gamma^{-3}).
+}
+\tag{225.4}
+$$
+
+因此强监视可以抑制跃迁，但**“分成无限多小步”和“物理监视强度无限增大”不是同一个极限。**
+
+---
+

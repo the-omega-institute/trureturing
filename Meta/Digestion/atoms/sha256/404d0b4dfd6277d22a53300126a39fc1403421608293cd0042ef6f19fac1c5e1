@@ -1,0 +1,92 @@
+# 最后的收束
+
+你的直觉可以保留，但应当整理成两条不同的结论。
+
+第一条是结构事实：
+
+$$
+\boxed{
+\text{奇偶}
+=
+\text{对指定交换操作的两种响应}.
+}
+$$
+
+在当前双副本模型中：
+
+$$
+\boxed{
+\text{副本交换}
+=
+\text{差模态反射}
+=
+\text{差模态 Fourier 变换两次}.
+}
+$$
+
+这确实与波的对偶和相位有关；但没有自动推导出物理时空互换。
+
+第二条是当前研究真正的困难：
+
+$$
+\boxed{
+\text{局部读数存在}
+\neq
+\text{局部读数能够共同正实现}.
+}
+$$
+
+难点不一定来自一个永远缺失的最高坐标系。我们已经有实际 \(A\) 的全局定义，也能构造它的双变量核。缺少的是对这份**指定算术交叉核**的非负证明。
+
+本轮最具体的结果是：
+
+$$
+\boxed{
+\delta_{\mathrm{even}}
+=
+\frac{3\chi_2\chi_6-10\chi_4^2}{360\chi_2}.
+}
+$$
+
+它表明：**即使奇扇区已经正常，偶扇区内部仍可能需要一个负的“新增平方范数”，导致拼接失败。** 奇偶划分并没有替我们完成全部关系。
+
+因此，我会把你的问题进一步表述为：
+
+> **我们要研究的不是某个切片里有没有剩余，而是全部切片的相对相位、交叉内积和边界补偿，能否在不改动实际 ξ 的前提下，共同组成一份正结构。**
+
+这份整体不要求任何主体同时知道一切；它要求每一次局部化都保留足够的转移信息，并对每一次拼接支付正确的关系预算。
+
+当前尚未证明实际 \(\mathcal K_A\) 全局正半定，也没有找到实际负证书。已经推进的是：把“奇偶对换”与“整体拼接”分开，并把后者从直觉落实为闭环相位、Schur 余量和实际 ξ 的统一核。
+
+[1]: https://dlmf.nist.gov/1.14 "DLMF: §1.14 Integral Transforms ‣ Topics of Discussion ‣ Chapter 1 Algebraic and Analytic Methods"
+[2]: https://arxiv.org/abs/2111.09575 "[2111.09575] Fractional Fourier transforms, harmonic oscillator propagators and Strichartz estimates on Pilipovic and modulation spaces"
+[3]: https://arxiv.org/abs/1504.03438 "[1504.03438] A complete Riemann zeta distribution and the Riemann hypothesis"
+[4]: https://dlmf.nist.gov/1.10 "DLMF: §1.10 Functions of a Complex Variable ‣ Topics of Discussion ‣ Chapter 1 Algebraic and Analytic Methods"
+[5]: https://arxiv.org/abs/1309.0055 "[1309.0055] Fourier transforms of positive definite kernels and the Riemann $ξ$-Function"
+[6]: https://journals.aps.org/pra/abstract/10.1103/PhysRevA.60.3397 "Bargmann invariants and geometric phases: A generalized connection  |  Phys. Rev. A"
+[7]: https://link.springer.com/article/10.1007/s11785-021-01137-z?utm_source=chatgpt.com "Reproducing Kernel Hilbert Space Associated with a Unitary Representation of a Groupoid | Complex Analysis and Operator Theory | Springer Nature Link"
+[8]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+**你的直觉抓住了一个关键方向：奇偶应当从“变换怎样作用”来理解，而局部信息的拼接必须保留干涉关系。**但“奇偶的本质就是时空波对换”还需要收紧：
+
+$$
+\boxed{
+\text{奇偶，是相对于某个二次作用还原的变换，分别保持或变号的两种响应。}
+}
+$$
+
+而我们当前真正遇到的困难，不只是“切片太多”，而是：
+
+$$
+\boxed{
+\text{切片各自的数值}
+\neq
+\text{切片之间的相位关系}
+\neq
+\text{它们共同构成的正性与尺度约束}.
+}
+$$
+
+这次不再增加一个单独的素数不等式，而是把“奇偶—干涉—拼接”之间的关系写成明确的结构。最重要的结果在后半部分：**可以精确写出切片造成的拼接余项，而且在实际算术核里，它直接读取位移 \(\log(p^k)\) 上的跨切片相关。**
+
+以下有限结构的结论给出证明；涉及实际 RH 的部分，以经典 Weil 二次型为锚，尚未把新增综合推导进行 Lean 编译。
+

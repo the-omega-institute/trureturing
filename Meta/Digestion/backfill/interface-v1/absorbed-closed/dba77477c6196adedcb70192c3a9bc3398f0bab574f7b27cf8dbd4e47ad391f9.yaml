@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+  normalized_sha256: sha256:dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+cas_ref: sha256:dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+coverage_gids:
+  - gid: D5/S0/Asymptotics/FixedPointFreeEscapeProbability.fixed_point_free_escape_probability_eq_one
+    target_statement_id: sha256:e1f9d8b2dece5d3c49aaa54357c848d62ac559a40d7257203c42e12de42b7dee
+receipts:
+  scribe:
+    - gid: D5/S0/Asymptotics/FixedPointFreeEscapeProbability.fixed_point_free_escape_probability_eq_one
+      definition_sha256: sha256:c8ae993c457a5bc45c091c5530891ad8211f479f14e96f71c9562ce9dc21876f
+      emission_sha256: sha256:aa303a8621a09b7b52011690c48560d487f307273397671a3b8721874e828846
+  unresolved_subitems: []

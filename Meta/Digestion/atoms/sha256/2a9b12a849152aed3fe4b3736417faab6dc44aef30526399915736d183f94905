@@ -1,0 +1,114 @@
+## 定理 2：固定窄波包的正局部读数
+
+对定理 1 构造的 \(g\)，有
+
+$$
+\boxed{q=Q_W(g)>0.}
+\tag{11}
+$$
+
+### 证明
+
+令
+
+$$
+c(t)=\int_{\mathbb R}g(x+t)g(x)\,dx,
+$$
+
+以及
+
+$$
+a_g=\int_{\mathbb R}e^{x/2}g(x)\,dx.
+$$
+
+因为 \(g\) 实、偶、非负，
+
+$$
+c(t)\ge0,\qquad c(-t)=c(t),
+\qquad
+\operatorname{supp}c\subset[-\ell,\ell].
+$$
+
+Weil 显式公式中的素数项读取 \(c(\log n)\)。由于
+
+$$
+\ell<\log2,
+$$
+
+这些项全部为零。
+
+整理 Gamma 项，可得
+
+$$
+\boxed{
+q=
+2a_g^2
++
+\int_0^\infty
+k_\Gamma(t)\|\tau_tg-g\|_2^2\,dt
+-
+C_\Gamma\|g\|_2^2.
+}
+\tag{12}
+$$
+
+这里的常数来自
+
+$$
+\begin{aligned}
+&\log(4\pi)+\gamma_{\mathrm E}
++2\int_0^\infty
+k_\Gamma(t)(1-e^{-t/2})\,dt\\
+&\qquad=
+\log(8\pi)+\gamma_{\mathrm E}+\frac\pi2.
+\end{aligned}
+$$
+
+该积分可通过 digamma 的级数与特殊值直接计算。([DLMF][2])
+
+当 \(t\ge\ell\) 时，\(g\) 与 \(\tau_tg\) 支集不相交，因此
+
+$$
+\|\tau_tg-g\|_2^2=2\|g\|_2^2.
+$$
+
+而在 \(0<t\le1\) 上，
+
+$$
+k_\Gamma(t)
+=
+\frac{e^{-t/2}}{1-e^{-2t}}
+\ge
+\frac{e^{-1/2}}{2t}.
+$$
+
+于是
+
+$$
+\begin{aligned}
+q
+&\ge
+\left[
+2\int_\ell^1k_\Gamma(t)\,dt-C_\Gamma
+\right]\|g\|_2^2\\
+&\ge
+\left[
+e^{-1/2}\log\frac1\ell-C_\Gamma
+\right]\|g\|_2^2\\
+&>0.
+\end{aligned}
+$$
+
+证毕。
+
+---
+
+所以，无论 RH 最终是真是假，每一个平移副本都满足
+
+$$
+\boxed{
+Q_W(\tau_Tg)=q>0.
+}
+\tag{13}
+$$
+

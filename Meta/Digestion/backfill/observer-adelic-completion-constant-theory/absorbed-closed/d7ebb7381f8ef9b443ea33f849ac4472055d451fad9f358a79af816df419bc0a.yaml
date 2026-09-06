@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d7ebb7381f8ef9b443ea33f849ac4472055d451fad9f358a79af816df419bc0a
+  normalized_sha256: sha256:d7ebb7381f8ef9b443ea33f849ac4472055d451fad9f358a79af816df419bc0a
+cas_ref: sha256:d7ebb7381f8ef9b443ea33f849ac4472055d451fad9f358a79af816df419bc0a
+coverage_gids:
+  - gid: D5/S3/Analytic/Toroidal/InnernessSelfImprovement.innerness_self_improvement
+    target_statement_id: sha256:8c5e30b3df666f2df51337fc10897b9b0a719946281f3448d8cb0b756d8aeafe
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Toroidal/InnernessSelfImprovement.innerness_self_improvement
+      definition_sha256: sha256:f33ee671bb1d79d519195a5ed2bee55e136cafe4218b8610fbbaa1248ddaab40
+      emission_sha256: sha256:276a9396f70768a73e39d3c5291b7abc66020775c4d3834ad8583d7cc213e18b
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:476b0f8b2ad58cab66431ebe574534fc2346a03f1b4da4c2f73f85c8e50a996b
+  normalized_sha256: sha256:476b0f8b2ad58cab66431ebe574534fc2346a03f1b4da4c2f73f85c8e50a996b
+cas_ref: sha256:476b0f8b2ad58cab66431ebe574534fc2346a03f1b4da4c2f73f85c8e50a996b
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator.hamiltonian_effect_orbit_hasDerivAt_zero
+    target_statement_id: sha256:07e90ecd5b25daf857a657d63b84f1f596092b3b10d7cfee86792d7a644150a9
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator.hamiltonian_effect_orbit_hasDerivAt_zero
+      definition_sha256: sha256:b35b1cc0299f5274f1a522a4186bf35b0de6ebd68887d3dd93d224a59705b922
+      emission_sha256: sha256:f2da63c2d452fc90abfd004f9ef873ce99cffccf6877267276ea85bf59792d52
+  unresolved_subitems: []

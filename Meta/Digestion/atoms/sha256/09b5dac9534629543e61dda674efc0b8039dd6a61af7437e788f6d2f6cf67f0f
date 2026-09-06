@@ -1,0 +1,47 @@
+# 200．本轮得到的是一个跨实验的一致性约束
+
+本轮最重要的统一对象不是某一个“量子引力参数”，而是同一个联合能量函数及其不同读数：
+
+$$
+\boxed{
+\mathcal E(e_A,e_B,R)
+=
+e_A+e_B+\kappa(R)e_Ae_B.
+}
+$$
+
+它同时决定：
+
+$$
+\boxed{
+n_A=\partial_{e_A}\mathcal E,
+\qquad
+n_B=\partial_{e_B}\mathcal E;
+}
+$$
+
+$$
+\boxed{
+F_A=+\nabla_R\mathcal E,
+\qquad
+F_B=-\nabla_R\mathcal E;
+}
+$$
+
+$$
+\boxed{
+\Xi
+=
+-\frac{T}{\hbar}
+\Delta_A\Delta_B\mathcal E.
+}
+$$
+
+这里，\(\Delta_A,\Delta_B\) 可以表示选定能级差，也可以表示选定空间分支差。
+
+因此：
+
+> **钟速修正、机械反作用与纠缠相位不能分别任意拟合。它们必须能够作为同一个联合实现的不同导数或有限差分，同时成立。**
+
+---
+

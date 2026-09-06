@@ -20,7 +20,17 @@ if [ "${1:-}" = "--selftest" ]; then T=--selftest; N=0; else
     root="${common%/.git}"
     [ -n "$root" ] && CLAUDE_PROJECT_DIR="$HOME/.claude/projects/$(printf '%s' "$root" | sed 's|/|-|g')"
   fi
-  T="$(ls -t "${CLAUDE_PROJECT_DIR:-/nonexistent}"/*.jsonl 2>/dev/null | head -1)"
+  # 显式传入的转录路径优先(#5832:此前恒取最新会话,多会话机上会审到别人的转录);
+  # 传了却不存在即红,不回退——回退会把「我传错了」读成「别人的 0 命中」。
+  if [ -n "${1:-}" ]; then
+    T="$1"
+    if [ ! -f "$T" ]; then
+      echo "SELFAUDIT_TRANSCRIPT_NOT_FOUND path=$T" >&2
+      exit 2
+    fi
+  else
+    T="$(ls -t "${CLAUDE_PROJECT_DIR:-/nonexistent}"/*.jsonl 2>/dev/null | head -1)"
+  fi
   # fail-closed:找不到转录就红,不得让一次崩溃被读成「0 命中」。
   if [ -z "$T" ]; then
     echo "SELFAUDIT_TRANSCRIPT_NOT_FOUND dir=${CLAUDE_PROJECT_DIR:-<未解析>}" >&2

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d40e9ed9dec8a15e84450c3b668558133caecacd7203f03c63b4cef4636c11b6
+  normalized_sha256: sha256:d40e9ed9dec8a15e84450c3b668558133caecacd7203f03c63b4cef4636c11b6
+cas_ref: sha256:d40e9ed9dec8a15e84450c3b668558133caecacd7203f03c63b4cef4636c11b6
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Sufficiency/AdditiveDescentDefectChainLaw.additive_descent_defect_chain_law
+    target_statement_id: sha256:6528c149a8b2a448eaf0c70d3808a22bc4ff6df2931d435c12622dbf1d6ab02b
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Sufficiency/AdditiveDescentDefectChainLaw.additive_descent_defect_chain_law
+      definition_sha256: sha256:abe1ec6ff568e912469a7b61f7b7890bb8d8870dbaca54d38037f6a2fa65b17a
+      emission_sha256: sha256:882e510129964ec2701f7c069f51b690ed730cf951923fc40c6eaade0407b69e
+  unresolved_subitems: []
