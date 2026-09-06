@@ -10,7 +10,16 @@ coverage_gids:
   - gid: D5/S0/Conventions/UnitIntervalReflection.unit_interval_reflection_involutive
     target_statement_id: sha256:14226dcc33ae6d2cf79684e7a4995d198271efda9d98a358aca2152b35c775d0
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S0/Carrier/Powers/IntegerPowerNorm.norm_phiUnit_zpow
+      definition_sha256: sha256:c63eb630fe0184e114fb3e39a4dc18b1069e65047e4749d9b8b673975e3ecb35
+      emission_sha256: sha256:521e4405eb2920fed720da03261d1febe67e724a4ba8f9473579a7cf1503f0ab
+    - gid: D5/S0/Carrier/Units.norm_phi_pow
+      definition_sha256: sha256:8bb3072a14926829cb4d47070470f6749585af0730f5b3f18af2009dce4e7949
+      emission_sha256: sha256:14a71667bd64103cde59a5c8e806f44eda0810fecf0fe0d87ce12a86a22f85db
+    - gid: D5/S0/Conventions/UnitIntervalReflection.unit_interval_reflection_involutive
+      definition_sha256: sha256:3fab486deb0acec26a2d2aa35d49970f96c1b2e89848bdab137ef43282b56521
+      emission_sha256: sha256:64a4f029ea71b2f3a36496067e43cb4c157eda69940ae4927871a61ec137c385
   unresolved_subitems:
     - even-conclusion-selected-by-the-cone
     - even-weight-integral-as-jeffreys-symmetric-divergence

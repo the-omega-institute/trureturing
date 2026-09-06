@@ -18,5 +18,20 @@ coverage_gids:
   - gid: D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant
     target_statement_id: sha256:cb78d8a7dd062418f7de03162755de2558d391a5c8b85f8638a0f9cdadcc50de
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S1/Dynamics/JumpCocycle.jump_cocycle
+      definition_sha256: sha256:3965db11070bce97ab9e0372240c4ed10446241e0b289738af9ceaadcbf4a27c
+      emission_sha256: sha256:e93f48bc1ed5c22e98620e125bf4fb611b7660a651f574a232c6f4b3953a5fda
+    - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
+      definition_sha256: sha256:0dbe0f8dd3075304d9f596e8bea4cbc2ec1d34092d214f4f41af362d08700c87
+      emission_sha256: sha256:bd03ea65dae51f964a0d22764fed71fd84d4c0e37cadeeb3bbcdddd6e758ead9
+    - gid: D5/S3/Observer/HiddenFlow/StreamlineExistence.existsUnique_frozen_streamline_decomposition
+      definition_sha256: sha256:5d7ae1cd34ab631fea43204666a23b119967001c6b2bed6c0cb36359c95dfb36
+      emission_sha256: sha256:8c19bc05646535705c52e2339e1ffa19e30bd0d8729bfddb4a1441c34c3d262d
+    - gid: D5/S3/Observer/StreamlineTheorem.nonconstant_offset_not_continuous
+      definition_sha256: sha256:beb73017e81ad971ebd1ad6c0bbce9eb902b9cc2a950fff2d49e5c5dda6e3112
+      emission_sha256: sha256:d3fe537a95cb77fd79953d7990b0a6d2fde89c7ead3fed3c454c07b570d1ca8d
+    - gid: D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant
+      definition_sha256: sha256:beb73017e81ad971ebd1ad6c0bbce9eb902b9cc2a950fff2d49e5c5dda6e3112
+      emission_sha256: sha256:d3fe537a95cb77fd79953d7990b0a6d2fde89c7ead3fed3c454c07b570d1ca8d
   unresolved_subitems: []
