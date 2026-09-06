@@ -15,13 +15,13 @@ private def alterFinite (f : {key : StatementKey} → FiniteOccurrenceDispositio
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.SealSuccess.idTheorem class=finite_occurrence invalid=state_enumeration_certificate -/
 #guard_msgs in
 run_cmd liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence
     (alterFinite fun value => { value with stateEnumerationCertificate := `Missing })
 
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.SealSuccess.idTheorem class=finite_occurrence invalid=nondegeneracy_certificate -/
 #guard_msgs in
 run_cmd liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence
     (alterFinite fun value => { value with nondegeneracyCertificate := ``closedNumerical })
 
 private def alterStructural (f : {key : StatementKey} → StructuralOccurrenceDisposition key →
@@ -34,13 +34,13 @@ private def alterStructural (f : {key : StatementKey} → StructuralOccurrenceDi
 /-- error: IE-C038 MissingStructuralWitness theorem=LeanInformationAudit.Tests.Census.Evidence.structuralTheorem arena=LeanInformationAudit.Tests.Census.Evidence.infiniteArena missing=witness_certificate -/
 #guard_msgs in
 run_cmd liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence
     (alterStructural fun value => { value with witnessCertificate := `Missing })
 
 /-- error: IE-C038 MissingStructuralWitness theorem=LeanInformationAudit.Tests.Census.Evidence.structuralTheorem arena=LeanInformationAudit.Tests.Census.Evidence.infiniteArena missing=witness_certificate -/
 #guard_msgs in
 run_cmd liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence
     (alterStructural fun value => { value with witnessCertificate := ``closedNumerical })
 
 abbrev aliasArena := infiniteArena
@@ -48,7 +48,7 @@ abbrev aliasArena := infiniteArena
 /-- error: IE-C036 DispositionIdentityMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.structuralTheorem component=canonical_arena expected=LeanInformationAudit.Tests.Census.Evidence.infiniteArena actual=LeanInformationAudit.Tests.Census.Evidence.aliasArena -/
 #guard_msgs in
 run_cmd liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence
     (alterStructural fun value => { value with canonicalArena := ``aliasArena })
 
 private def alterBounded (f : {key : StatementKey} → BoundedFiniteTruncationDisposition key →
@@ -61,23 +61,23 @@ private def alterBounded (f : {key : StatementKey} → BoundedFiniteTruncationDi
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.boundedTheorem class=bounded_finite_truncation invalid=comparison_statement -/
 #guard_msgs in
 run_cmd liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence
     (alterBounded fun value => { value with bound := 13 })
 
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.boundedTheorem class=bounded_finite_truncation invalid=transfer_theorem -/
 #guard_msgs in
 run_cmd liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence
     (alterBounded fun value => { value with certification := .transferred ``closedNumerical })
 
 run_cmd liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence
     (alterBounded fun value => { value with certification := .transferred ``transfer })
 
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.closedNumerical class=unreachable invalid=reason -/
 #guard_msgs in
 run_cmd liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess {
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence {
     inventory with entries := inventory.entries.map fun ⟨key, disposition⟩ =>
       ⟨key, match disposition with
         | .unreachable value => .unreachable { value with reason := .noFinitePrimitiveBundle }
@@ -99,7 +99,7 @@ run_cmd liftTermElabM do
         strictnessCertificate := value.strictnessCertificate
         witnessCertificate := value.witnessCertificate }⟩
     | _ => none
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess ⟨"fixture-head", rows⟩
+  validateEvidence `LeanInformationAudit.Tests.Census.Evidence ⟨"fixture-head", rows⟩
 
 #print axioms structuralAlias
 

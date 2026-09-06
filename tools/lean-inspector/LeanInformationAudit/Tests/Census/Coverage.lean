@@ -33,6 +33,16 @@ def encodeNameKey : Name → String
 
 theorem exactCoverage : fourRows.ExactlyCovers "fixture-head" frozenKeys := by decide
 
+-- CT-001: independent of the separate IE-C034 diagnostic path.
+theorem missingKeyDoesNotExactlyCover :
+    ¬({ fourRows with entries := fourRows.entries.extract 0 3 }).ExactlyCovers
+      "fixture-head" frozenKeys := by decide
+
+/-- info: false -/
+#guard_msgs in
+#eval decide <| ({ fourRows with entries := fourRows.entries.extract 0 3 }).ExactlyCovers
+  "fixture-head" frozenKeys
+
 /-- info: 'LeanInformationAudit.Tests.Census.exactCoverage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
 #print axioms exactCoverage
@@ -67,6 +77,19 @@ private def check (inventory : DispositionInventory) : Except String Unit :=
 #eval check { fourRows with headSha := "stale-head" }
 
 def counts := DispositionCensus.count fourRows
+
+def everyReason : DispositionInventory := ⟨"reasons", #[
+  ⟨⟨`NoCarrier, "1"⟩, .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩,
+  ⟨⟨`NoBundle, "2"⟩, .unreachable ⟨.noFinitePrimitiveBundle, `Evidence⟩⟩,
+  ⟨⟨`NoRealization, "3"⟩, .unreachable ⟨.noFaithfulPrimitiveRealization, `Evidence⟩⟩]⟩
+
+-- CT-002: literal expected totals, independently of the counting function.
+/-- info: (3, 1, 1, 1, 3) -/
+#guard_msgs in
+#eval let c := DispositionCensus.count everyReason
+  (c.unreachable, c.noCanonicalObjectCarrier, c.noFinitePrimitiveBundle,
+    c.noFaithfulPrimitiveRealization,
+    c.noCanonicalObjectCarrier + c.noFinitePrimitiveBundle + c.noFaithfulPrimitiveRealization)
 
 /-- info: (1, 1, 1, 1, 1, 0, 0) -/
 #guard_msgs in

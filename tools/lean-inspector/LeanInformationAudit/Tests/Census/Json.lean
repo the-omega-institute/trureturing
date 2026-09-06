@@ -12,7 +12,7 @@ private def decoded (inventory : DispositionInventory) : Bool :=
 #eval decoded { fourRows with entries := fourRows.sortedEntries }
 
 private def wrongClass : Json := Json.mkObj [
-  ("theorem_name", toJson "Fixture.unreachable"),
+  ("theorem_name", nameJson `Fixture.unreachable),
   ("statement_id", toJson "id-unreachable"),
   ("class", toJson "finite_occurrence"),
   ("payload", fourRows.entries[3]!.2.payloadJson)]
@@ -22,7 +22,7 @@ private def wrongClass : Json := Json.mkObj [
 #eval (parseRow wrongClass).map (fun _ => ())
 
 private def unknownReason : Json := Json.mkObj [
-  ("theorem_name", toJson "Fixture.unreachable"),
+  ("theorem_name", nameJson `Fixture.unreachable),
   ("statement_id", toJson "id-unreachable"),
   ("class", toJson "unreachable"),
   ("payload", Json.mkObj [("reason", toJson "not_an_enum_member"),

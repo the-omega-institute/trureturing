@@ -18,23 +18,28 @@ def inputBytes : String := (Json.mkObj [
       ("declaration_name_key", toJson (encodeNameKey entry.1.theoremName)),
       ("statement_id", toJson entry.1.statementId)])]])]).compress
 
-run_cmd do
-  IO.FS.writeFile "/tmp/lean-information-census-command-report.json" inputBytes
+run_cmd IO.FS.withTempDir fun dir => do
+  let reportPath := dir / "report.json"
+  let firstPath := dir / "census.json"
+  let repeatPath := dir / "repeat.json"
+  let reportStx := Syntax.mkStrLit reportPath.toString
+  let firstStx := Syntax.mkStrLit firstPath.toString
+  let repeatStx := Syntax.mkStrLit repeatPath.toString
+  IO.FS.writeFile reportPath inputBytes
   let digest := Syntax.mkStrLit ("sha256:" ++ Sha256.hex inputBytes.toUTF8)
   elabCommand (← `(command|
-    #disposition_census root LeanInformationAudit.Tests.SealSuccess
-      report "/tmp/lean-information-census-command-report.json"
+    #disposition_census root LeanInformationAudit.Tests.Census.Evidence
+      report $reportStx
       head "fixture-head" report_sha256 $digest
       inventory LeanInformationAudit.Tests.Census.Evidence.inventory
-      certificate censusCoverage output "/tmp/lean-information-census-command.json"))
+      certificate censusCoverage output $firstStx))
   elabCommand (← `(command|
-    #disposition_census root LeanInformationAudit.Tests.SealSuccess
-      report "/tmp/lean-information-census-command-report.json"
+    #disposition_census root LeanInformationAudit.Tests.Census.Evidence
+      report $reportStx
       head "fixture-head" report_sha256 $digest
       inventory LeanInformationAudit.Tests.Census.Evidence.inventory
-      certificate censusCoverageRepeat output "/tmp/lean-information-census-command-repeat.json"))
-  unless (← IO.FS.readFile "/tmp/lean-information-census-command.json") ==
-      (← IO.FS.readFile "/tmp/lean-information-census-command-repeat.json") do
+      certificate censusCoverageRepeat output $repeatStx))
+  unless (← IO.FS.readFile firstPath) == (← IO.FS.readFile repeatPath) do
     throwError "census output is not byte-identical"
 
 #print axioms censusCoverage

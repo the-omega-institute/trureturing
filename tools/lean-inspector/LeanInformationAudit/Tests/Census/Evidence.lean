@@ -18,6 +18,13 @@ abbrev infiniteArena : StructuralArena where
 
 theorem structuralTheorem : ∀ n : Nat, n % 2 < 2 := fun n => Nat.mod_lt n (by decide)
 
+def structuralLawArena : StructuralPrimitiveLawArena infiniteArena where
+  signature := ⟨Unit, inferInstance, fun _ => Nat⟩
+  Law readouts := ∀ n, readouts.readout () n < 2
+
+def structuralReadouts : StructuralPrimitiveRealization infiniteArena structuralLawArena.signature :=
+  ⟨fun _ n => n % 2⟩
+
 def structuralUnit : StructuralTheoremUnit infiniteArena where
   PrimitiveIndex := Unit
   primitiveIndexFintype := inferInstance
@@ -37,7 +44,8 @@ theorem structuralRegistration : StructuralRegistrationEvidence ``structuralTheo
     infiniteArena structuralUnit
     structuralCatalog () (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
 
-theorem structuralRealization : structuralUnit.Statement = (∀ n : Nat, n % 2 < 2) := rfl
+theorem structuralRealization : StructuralLegacyPrimitiveRealization structuralLawArena
+    (∀ n : Nat, n % 2 < 2) structuralReadouts := ⟨Iff.rfl⟩
 
 def structuralWitness : StructuralStrictnessCertificate structuralCatalog () where
   inclusion := by
@@ -71,10 +79,14 @@ theorem transfer : truncation.approximation 12 → (∀ n : Nat, n + 0 = n) :=
 
 theorem closedNumerical : 2 + 3 = 5 := by decide
 
+theorem closedObligation : ClosedNumericalObligation ``closedNumerical (2 + 3) 5 :=
+  ⟨closedNumerical⟩
+
 def noCarrier : UnreachableElaborationEvidence (2 + 3 = 5) where
   reason := .noCanonicalObjectCarrier
   candidateArena := none
   explanation := "Closed numerical proposition; no explicit object carrier or primitive realization."
+  failedObligation := some ``closedObligation
 
 def inventory : DispositionInventory := {
   headSha := "fixture-head"
@@ -100,8 +112,19 @@ def inventory : DispositionInventory := {
       .unreachable ⟨.noCanonicalObjectCarrier, ``noCarrier⟩⟩]
 }
 
+expect_information_occurrence SealSuccess.fstTheorem
+  in SealSuccess.arena from "LeanInformationAudit.Tests.SealSuccess"
+expect_information_occurrence SealSuccess.sndTheorem
+  in SealSuccess.arena from "LeanInformationAudit.Tests.SealSuccess"
+expect_information_occurrence SealSuccess.notTheorem
+  in SealSuccess.notArena from "LeanInformationAudit.Tests.SealSuccess"
+expect_information_occurrence SealSuccess.idTheorem
+  in SealSuccess.t001Arena from "LeanInformationAudit.Tests.SealSuccess"
+
+#seal_information_theory
+
 run_cmd Lean.Elab.Command.liftTermElabM do
-  validateEvidence `LeanInformationAudit.Tests.SealSuccess inventory
+  validateEvidence (← getEnv).header.mainModule inventory
 
 run_cmd do
   let report : FrozenReport := ⟨inventory.headSha, "fixture-digest", inventory.entries.map (·.1)⟩

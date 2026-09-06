@@ -87,7 +87,27 @@ instance (inventory : DispositionInventory) (head : String) (keys : Finset State
 
 def StatementKey.lt (left right : StatementKey) : Bool :=
   left.theoremName.toString < right.theoremName.toString ||
-    (left.theoremName == right.theoremName && left.statementId < right.statementId)
+    (left.theoremName.toString == right.theoremName.toString && left.statementId < right.statementId)
+
+/-- Machine identity preserves Name constructors, independently of display text. -/
+def nameJson : Name → Json
+  | .anonymous => toJson (["anonymous"] : List String)
+  | .str parent part => Json.arr #[toJson "str", nameJson parent, toJson part]
+  | .num parent part => Json.arr #[toJson "num", nameJson parent, toJson part]
+
+partial def parseNameJson (json : Json) : Except String Name := do
+  let parts ← json.getArr?
+  match parts.toList with
+  | [tag] =>
+    unless (← tag.getStr?) == "anonymous" do throw "name_constructor"
+    return .anonymous
+  | [tag, parent, value] =>
+    let parent ← parseNameJson parent
+    match ← tag.getStr? with
+    | "str" => return .str parent (← value.getStr?)
+    | "num" => return .num parent (← fromJson? value)
+    | _ => throw "name_constructor"
+  | _ => throw "name_components"
 
 def UnreachableReason.jsonName : UnreachableReason → String
   | .noCanonicalObjectCarrier => "no_canonical_object_carrier"
@@ -97,40 +117,40 @@ def UnreachableReason.jsonName : UnreachableReason → String
 instance : ToJson UnreachableReason := ⟨fun reason => toJson reason.jsonName⟩
 
 instance : ToJson StatementKey := ⟨fun key => Json.mkObj [
-  ("theorem_name", toJson key.theoremName.toString),
+  ("theorem_name", nameJson key.theoremName),
   ("statement_id", toJson key.statementId)]⟩
 
 instance {key : StatementKey} : ToJson (FiniteOccurrenceDisposition key) :=
   ⟨fun value => Json.mkObj [
-    ("canonical_arena", toJson value.canonicalArena.toString),
-    ("registration", toJson value.registration.toString),
-    ("realization", toJson value.realization.toString),
-    ("nondegeneracy_certificate", toJson value.nondegeneracyCertificate.toString),
-    ("state_enumeration_certificate", toJson value.stateEnumerationCertificate.toString)]⟩
+    ("canonical_arena", nameJson value.canonicalArena),
+    ("registration", nameJson value.registration),
+    ("realization", nameJson value.realization),
+    ("nondegeneracy_certificate", nameJson value.nondegeneracyCertificate),
+    ("state_enumeration_certificate", nameJson value.stateEnumerationCertificate)]⟩
 
 instance {key : StatementKey} : ToJson (StructuralOccurrenceDisposition key) :=
   ⟨fun value => Json.mkObj [
-    ("canonical_arena", toJson value.canonicalArena.toString),
-    ("registration", toJson value.registration.toString),
-    ("realization", toJson value.realization.toString),
-    ("strictness_certificate", toJson value.strictnessCertificate.toString),
-    ("witness_certificate", toJson value.witnessCertificate.toString)]⟩
+    ("canonical_arena", nameJson value.canonicalArena),
+    ("registration", nameJson value.registration),
+    ("realization", nameJson value.realization),
+    ("strictness_certificate", nameJson value.strictnessCertificate),
+    ("witness_certificate", nameJson value.witnessCertificate)]⟩
 
 instance : ToJson TruncationCertification := ⟨fun
   | .reportOnly => Json.mkObj [("kind", toJson "report_only")]
   | .transferred theoremName => Json.mkObj [
-      ("kind", toJson "transferred"), ("transfer_theorem", toJson theoremName.toString)]⟩
+      ("kind", toJson "transferred"), ("transfer_theorem", nameJson theoremName)]⟩
 
 instance {key : StatementKey} : ToJson (BoundedFiniteTruncationDisposition key) :=
   ⟨fun value => Json.mkObj [
-    ("truncation_family", toJson value.truncationFamily.toString),
+    ("truncation_family", nameJson value.truncationFamily),
     ("bound", toJson value.bound),
-    ("comparison_statement", toJson value.comparisonStatement.toString),
+    ("comparison_statement", nameJson value.comparisonStatement),
     ("certification", toJson value.certification)]⟩
 
 instance {key : StatementKey} : ToJson (UnreachableDisposition key) :=
   ⟨fun value => Json.mkObj [
-    ("reason", toJson value.reason), ("evidence", toJson value.evidence.toString)]⟩
+    ("reason", toJson value.reason), ("evidence", nameJson value.evidence)]⟩
 
 def AnalysisDisposition.className {key : StatementKey} : AnalysisDisposition key → String
   | .finiteOccurrence _ => "finite_occurrence"
@@ -150,7 +170,7 @@ instance {key : StatementKey} : ToJson (AnalysisDisposition key) :=
 
 def dispositionRowJson (entry : Sigma fun key : StatementKey => AnalysisDisposition key) : Json :=
   Json.mkObj [
-    ("theorem_name", toJson entry.1.theoremName.toString),
+    ("theorem_name", nameJson entry.1.theoremName),
     ("statement_id", toJson entry.1.statementId),
     ("class", toJson entry.2.className),
     ("payload", entry.2.payloadJson)]

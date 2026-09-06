@@ -105,10 +105,7 @@ private def stringField (json : Json) (field : String) : Except String String :=
   return value
 
 private def nameField (json : Json) (field : String) : Except String Name := do
-  let value ← stringField json field
-  let name := value.toName
-  if name.isAnonymous || name.toString != value then throw field
-  return name
+  parseNameJson (← json.getObjVal? field)
 
 private def exactFields (json : Json) (fields : List String) : Except String Unit := do
   let object ← json.getObj?
@@ -326,6 +323,21 @@ The resulting JSON is output, never seal input. -/
 elab "#disposition_census" &"root" root:ident &"report" reportPath:str
     &"head" head:str &"report_sha256" reportSha:str &"inventory" inventoryName:ident
     &"certificate" certificate:ident " output " outputPath:str : command => do
+  -- realPath resolves relative components and symlinks before any declaration is staged.
+  let inputResolved ← IO.FS.realPath reportPath.getString
+  let destination : System.FilePath := outputPath.getString
+  if ← destination.pathExists then
+    if inputResolved == (← IO.FS.realPath destination) then
+      throwError (censusError head.getString "output_path" "distinct-from-report" "report-alias")
+    -- Lean metadata exposes link counts but not inode identity. POSIX test -ef
+    -- compares the existing files without involving shell parsing.
+    if (← destination.metadata).numLinks > 1 then
+      let comparison ← IO.Process.output {
+        cmd := "/bin/test", args := #[reportPath.getString, "-ef", outputPath.getString] }
+      if comparison.exitCode == 0 then
+        throwError (censusError head.getString "output_path" "distinct-from-report" "report-alias")
+      unless comparison.exitCode == 1 do
+        throwError "cannot compare census input/output file identities"
   let reportBytes ← readUtf8 reportPath.getString
   let report ← ofExcept <| parseReport head.getString reportSha.getString reportBytes
   let inventory ← liftTermElabM do
