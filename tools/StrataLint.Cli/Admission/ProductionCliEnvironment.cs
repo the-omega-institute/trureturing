@@ -489,7 +489,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 
         try
         {
-            return AlignScribeReceiptCommand.Run(
+            return CoverAtomCommand.AlignScribeReceipt(
                 repositoryRoot,
                 repository,
                 leanReportSource,
