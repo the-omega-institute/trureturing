@@ -1,0 +1,48 @@
+{
+  "status": "all independent regressions passed; no Lean or Scribe execution",
+  "seed": 20260906,
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "sympy": "1.14.0",
+  "counts": {
+    "exact_hermitian_eigenproblems": 36,
+    "exact_projective_identities": 180,
+    "exact_radius_threshold_checks": 324,
+    "exact_readout_cancellation_witnesses": 108,
+    "exact_readout_identities": 432,
+    "exact_degenerate_ball_checks": 9,
+    "exact_stein_and_port_checks": 72,
+    "exact_forced_window_bounds": 504,
+    "exact_determinant_loss_systems": 18,
+    "numeric_centered_readout_checks": 240,
+    "numeric_complex_eigenproblems": 60,
+    "prime3_candidate_coordinate_thresholds": 129
+  },
+  "maximum_numeric_identity_error": 3.614677569121745e-15,
+  "prime3": {
+    "source_commit": "4ddc8bf4cc75b3c7581ec5c2a1dccca7f91007a3",
+    "certificate_git_blob": "d55cfc86e16019d22aa7c4e4ca758c01236f7b72",
+    "candidate_source_git_blob": "a8690fc54e79d1a80b12aeca2ce4837bb9e585af",
+    "external_json_sha256": null,
+    "delta": "15303/16495000",
+    "radius_upper": "61/2000",
+    "normalized_overlap_squared_threshold": "15303/16510303",
+    "candidate_integer_norm_squared": "1208925819614761052253583",
+    "candidate_coordinate_readouts_passing_margin": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "scope": "exact arithmetic for the pinned finite candidate and conditional Hilbert readout certificate; not arithmetic operator/domain verification"
+  },
+  "nonclaims": [
+    "No Lean kernel or Scribe check",
+    "No replay of PR5602 interval verifier",
+    "No verification of the actual infinite Weil domain or form coercivity",
+    "No contour zero count or Xi scale limit",
+    "No novelty or priority determination"
+  ],
+  "source_sha256": "675532770ac36f12e907e947587c7ce26c83acd69e9bed9f3f984977cdf64156"
+}
