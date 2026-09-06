@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
+  normalized_sha256: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
+cas_ref: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
+coverage_gids:
+  - gid: D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline
+    target_statement_id: sha256:2966b040c3f2200a9dbaeb3c53c58ef200bc888bbcd02a103aea613f4edb7300
+receipts:
+  scribe:
+    - gid: D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline
+      definition_sha256: sha256:17200e11323cde75ed79e3e30273759871e721fa1d5be16136ff1d3fa6aa7ef2
+      emission_sha256: sha256:dddf7f562fd69dd8e813c79be9ed16321d150749f5e2019c7c90940e145c627c
+  unresolved_subitems: []

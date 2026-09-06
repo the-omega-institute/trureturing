@@ -6,7 +6,10 @@ coverage_gids:
   - gid: D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
     target_statement_id: sha256:269d9f52fed5f629c115ae717c4da2a08b5f80667c87db54c02a74acda647ac1
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+      definition_sha256: sha256:2bbe6ad817ba1e4a0d4be2f155acbffd3b4cd1b9e6a71459269ab78e88497584
+      emission_sha256: sha256:71a26c856233a8a5b0a482f840fdc7b97e7ce7617186973c28ad59ca9270a6cf
   unresolved_subitems:
     - off-line-cross-position-pairing-numerical-instrument
     - theorem-24-3-and-24-5-meta-level-compatibility

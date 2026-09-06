@@ -24,5 +24,32 @@ coverage_gids:
   - gid: D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
     target_statement_id: sha256:87657bf82c7f0b5219b0f6a5c640131cdfe10480d25dde1ea38424c886afc975
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
+      definition_sha256: sha256:167d00e5ca95c8394fa20d805a5a582f22d4240acf580c4d479e6a2eeb785f3c
+      emission_sha256: sha256:a69b6b5c22dbc29b44cdbb5be2c0f62b2971261aca65d5b39d0f48259548b1e3
+    - gid: D5/S3/Observer/MatrixUnitCertificate.matrix_units_sum_diagonal
+      definition_sha256: sha256:167d00e5ca95c8394fa20d805a5a582f22d4240acf580c4d479e6a2eeb785f3c
+      emission_sha256: sha256:a69b6b5c22dbc29b44cdbb5be2c0f62b2971261aca65d5b39d0f48259548b1e3
+    - gid: D5/S3/Observer/WindowAlgebra/WindowGeneration.window_generators_adjoin_top
+      definition_sha256: sha256:6ed4a2c2586bd12a997c977bfe1e36ecc296924c82d6192ee57f5f0bf5892e07
+      emission_sha256: sha256:6c3096baeda885dcf3bd578309ced7a99fad3616dbb44485ea8688c31a0b11d8
+    - gid: D5/S3/Observer/WindowRegister.window_weyl
+      definition_sha256: sha256:722f20e716ea775a7056756d3d07c792c94f5fec132602dcf273a2c944234318
+      emission_sha256: sha256:955c416d7802dc0e16c6fcec0ffff59eb87cd88cb01a53ed875a6db75383796b
+    - gid: D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
+      definition_sha256: sha256:9c9753a823987130a66609b110b2346612b000cdbc2fa9a9c760660d27b1238f
+      emission_sha256: sha256:c771ea3a1551edd196edbbb5c2f744c3a87f9f51e895d0416605559dc95607f5
+    - gid: D5/S3/ObserverMemory/WindowRegisterCRT.window_register_crt_decomposition
+      definition_sha256: sha256:103a09e274c4cdb22868b4453ca6b63498d2326380bdbcc959587aee24ff06cb
+      emission_sha256: sha256:6a83538f0da48c6d968b722dc1f5bcef8b2635e1113562a753782f515a8313b0
+    - gid: D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
+      definition_sha256: sha256:09dcb7a7b19f73aafc7011f0eef2d57192856a74a3b268ef9e3501779788893f
+      emission_sha256: sha256:35a0c6948bb4d549e53f5b8a2f3fd0950d4a85b5fc770b6ff95a27a7ad182eb3
+    - gid: D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector
+      definition_sha256: sha256:b5bca90b6fe16e6f200b8a0a4b380411a2103f1141a23e04bad7f71f4fd9dd64
+      emission_sha256: sha256:4038db3e5c6034dac26df1fca02ab86352161230833fe2cadace19781267cc58
+    - gid: D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
+      definition_sha256: sha256:5bcc4a3774f6b9a9e3c87c351803ad1aca1540deaed3da8be0ead8d688205643
+      emission_sha256: sha256:ce9d7504089ae28da91ea2aacb769b3b8b1a58c0031a8632f87e93cfce8c3672
   unresolved_subitems: []
