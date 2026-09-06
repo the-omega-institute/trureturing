@@ -2522,3 +2522,79 @@ F=\mathcal OTE,\qquad G=\mathcal ZS^TE.
 本节尚未证明或执行：从单纯谱半径判据产生幂平方可和证书、有序重排的规范接口、约化系统的严格内部稳定性、时间域诱导范数与频域 \(H^\infty\) 范数的等同，以及对带噪 Ho–Kalman 估计族统一认证这些输入条件。零初态、实矩阵及上述稳定性与双侧读数条件均保留在精确类型中。
 
 平方根平衡方法与 Schmidt 分解属于经典系统理论。本节的工作是构造与连接完整证明项候选，不主张新的数学误差常数或首次形式化优先权。平方根算法可参照 pyMOR 官方 balanced truncation 教程；所复用 Mathlib 矩阵谱定理、正函数演算、Hilbert 和与伴随 API 均按仓库固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d` 审查。
+
+---
+
+# 2026-09-06 增补：有序真实截断与严格内部稳定性
+
+本节连接上一增补已构造的真实无限 Hankel 奇异权重与实际降阶系统。新增 `OrderedBalancedCoordinates`、`DiscreteSteinCompressionStability`、`OrderedStableBalancedTruncation` 三个候选 Lean 模块及同名 Scribe；文件位于 `D5/S3/Observer/Hankel/` 与相应 Blueprint 路径。文献定位与签名比较见 `Library/Control/discrete_balanced_truncation_stability.md`。本节候选证明源码尚未经过 Lean 内核或 Scribe 发射验证。
+
+## A. 排序作用于整个坐标构造
+
+给定已构造的 `Coordinates P Q`，以 Mathlib `Tuple.sort` 对负权重排序，得到置换 \(e\)。新权重为 \(\sigma'_i=\sigma_{e(i)}\)，同时以同一置换重排 \(T\) 的列与 \(S\) 的行。`reindexCoordinates` 重新证明
+\[
+S'T'=T'S'=I,\qquad S'P(S')^T=D',\qquad (T')^TQT'=D'.
+\]
+相应的实际状态矩阵满足
+\[
+\bar A'_{ij}=\bar A_{e(i),e(j)},\quad
+\bar B'_{ij}=\bar B_{e(i),j},\quad
+\bar C'_{ij}=\bar C_{i,e(j)}.
+\]
+`ordered_weight_antitone` 给出递减顺序；`retained_weight_ge_discarded` 给出每个保留权重不小于每个删除权重。权重多重集保持不变，所有递减排列具有相同的值序列。重复权重允许存在，对应特征向量的唯一性没有被断言。
+
+`ordered_hankel_schmidt` 将同一有序构造接到原系统真实无限 Hankel 的正交模态、双向奇异向量方程、全部 \(\ell_2\) 输入上的完整展开和核刻画。这里没有仅排序一个数值列表后继续使用未置换的系统矩阵。
+
+## B. 离散 Stein 不等式给出严格稳定性
+
+一般稳定性引理只要求 \(D=\operatorname{diag}(w_i)>0\)、
+\[
+A^TDA+C^TC\preceq D,
+\qquad \bigcap_{k\ge0}\ker(CA^k)=\{0\}.
+\]
+它不要求控制 Stein 不等式、奇异值排序、截断间隙或约化系统本身可观。
+
+把矩阵按保留与删除坐标分块，取任意复特征对 \(A_{11}v=\lambda v\)，其中 \(v\ne0\)。将实不等式分别作用于复向量的实部和虚部，得到复能量不等式。对零扩展 \(x=(v,0)\)，有
+\[
+(1-|\lambda|^2)v^*D_1v
+\ge \lVert C_1v\rVert_2^2+(A_{21}v)^*D_2(A_{21}v)\ge0.
+\]
+因为 \(v^*D_1v>0\)，首先得到 \(|\lambda|\le1\)。若等号成立，则两项非负能量同时为零：
+\[
+C_1v=0,\qquad A_{21}v=0.
+\]
+因此零扩展是完整系统的特征向量，\(Ax=\lambda x\) 且 \(Cx=0\)，从而 \(CA^kx=0\) 对全部 \(k\) 成立。完整实系统的可观性经实部、虚部转移为复可观性，推出 \(x=0\)，矛盾。
+
+`principal_truncation_eigenvalue_lt_one` 写出上述实际矩阵与投影能量证明；`principal_truncation_spectrum_lt_one` 经 Mathlib 的有限维谱与特征向量等价，得到标准复谱上的结论
+\[
+\boxed{\forall\lambda\in\operatorname{spec}_{\mathbb C}(A_{11}),\quad |\lambda|<1.}
+\]
+复共轭极点、重复权重、完整保留及零维截断均包含在类型中。没有以只检查实特征值或自定义空泛稳定性字段代替该结论。
+
+## C. 同一个有序模型同时具有稳定性与误差保证
+
+`balanced_full_observable` 通过 \(T\bar A^k=A^kT\) 及逆坐标关系，从原系统的全部未来读数推导完整平衡实现的可观性。该步骤对排序后的 `Coordinates` 同样有效。
+
+`orderedSystemCoordinates` 从原始 \(A,B,C\) 出发，沿上一增补的实际级数、正定性与平衡构造，再执行上述排序。终点 `ordered_stable_reduction` 的各个子句共同使用
+\[
+A_r=(S'AT')_{[0,r),[0,r)},\quad
+B_r=(S'B)_{[0,r),:},\quad C_r=(CT')_{:,[0,r)}.
+\]
+对这个唯一指定的约化模型，证明保留最大的 \(r\) 个权重、全部复谱位于开单位圆内，以及
+\[
+\lVert y-y_r\rVert_{2,[0,N)}
+\le2\left(\sum_{i=r}^{n-1}\sigma'_i\right)\lVert u\rVert_{2,[0,N)}.
+\]
+对有限能量输入，还同时证明误差能量可求和及整个半轴的平方尾和界。原系统上的前提仍是幂平方可和、实际未来读数的联合单射性以及实际对偶读数的联合单射性；没有输入约化模型已稳定的前提。
+
+## D. 文献匹配与重复权重的准确含义
+
+Duff 与 Kürschner 的 `arXiv:1902.01652v1` 第 3.2.1 节、打印页 8，明确区分普通无限时域离散平衡截断的稳定性保持与有限时域版本。本文以观测侧 Stein 不等式及完整可观性给出直接证明，未将该文有限时域 Proposition 3.1 的不同前提直接套用。
+
+Varga 的 *Balanced truncation model reduction of periodic systems* 第 3 节、第三 PDF 页，在分块权重间隙条件下给出周期系统的稳定性与最小性联合结论。本文没有形式化周期版本，也没有把稳定性自动升级成约化最小性。
+
+例如 \(A=\begin{pmatrix}0&1\\0&0\end{pmatrix}\)、\(B=(0,1)^T\)、\(C=(1,0)\) 满足真实 \(P=Q=I\)，两个奇异权重相等。保留第一坐标得到 \(A_r=0,B_r=0,C_r=1\)：严格稳定，但不可控。这个精确有理数实例说明，在重复权重内截断时，本节稳定性结论仍适用，而约化最小性需要另行处理。
+
+无间隙稳定性论证依赖离散时间的正项 \(A_{21}^*D_2A_{21}\)。本节没有将同一论证直接推广到连续时间 Lyapunov 方程，或带有限时域残差的 Gramian。它形式化经典稳定性机制及仓库连接，不主张新的误差常数或首次证明优先权。
+
+本轮独立运行了精确有理数及复有理数代数检查、数值复极点检查与有限时间误差回归。它们不执行 Lean，也不证明全称定理。排序和严格内部稳定性已具有完整候选证明脚本；谱半径到幂可和输入的转换、频域 \(H^\infty\) 范数接口及带噪 Ho–Kalman 的统一输入条件认证仍不属于本节已交付范围。
