@@ -191,4 +191,72 @@ theorem six_frames_have_large_cross_overlap_of_root_tube_cover
 
 #print axioms six_frames_have_large_cross_overlap_of_root_tube_cover
 
+/-- A two-relation tube certificate excludes two approximately mutually
+unbiased six-frames. The orthogonality supergraph may contain many six-cliques.
+For each possible first clique, its common unbiased-neighbor graph needs only
+five colors, so it cannot contain the second six-clique.
+
+The graph relations are one-sided enclosures of actual overlaps on whole tubes.
+Tubes need not be disjoint, nonempty, or contain a unique root. The finite
+coloring hypothesis must be proved for every first clique; an external JSON
+verdict is not a proof of that hypothesis. -/
+theorem two_relation_tube_certificate_forces_cross_unbiasedness_error
+    {κ : Type*}
+    (tube : κ → Set (Matrix (Fin 6) (Fin 6) ℂ))
+    (orthogonalCandidate unbiasedCandidate : κ → κ → Prop)
+    (η μ τ : ℝ) (hημ : η ≤ μ)
+    (hSame : ∀ k P ∈ tube k, ∀ Q ∈ tube k, μ ≤ (trace (P * Q)).re)
+    (hOrth : ∀ k l, k ≠ l → ∀ P ∈ tube k, ∀ Q ∈ tube l,
+      (trace (P * Q)).re < η → orthogonalCandidate k l)
+    (hUnbiased : ∀ k l, ∀ P ∈ tube k, ∀ Q ∈ tube l,
+      |(trace (P * Q)).re - (1 / 6 : ℝ)| < τ → unbiasedCandidate k l)
+    (hColor : ∀ c : Fin 6 → κ, Function.Injective c →
+      (∀ i j, i ≠ j → orthogonalCandidate (c i) (c j)) →
+      ∃ color : κ → Fin 5,
+        ∀ k l, k ≠ l →
+          (∀ i, unbiasedCandidate (c i) k) →
+          (∀ i, unbiasedCandidate (c i) l) →
+          orthogonalCandidate k l → color k ≠ color l)
+    (C D : Fin 6 → Matrix (Fin 6) (Fin 6) ℂ)
+    (hCoverC : ∀ i, ∃ k, C i ∈ tube k)
+    (hCoverD : ∀ i, ∃ k, D i ∈ tube k)
+    (hSmallC : ∀ i j, i ≠ j → (trace (C i * C j)).re < η)
+    (hSmallD : ∀ i j, i ≠ j → (trace (D i * D j)).re < η) :
+    ∃ i j, τ ≤ |(trace (C i * D j)).re - (1 / 6 : ℝ)| := by
+  classical
+  choose c hc using hCoverC
+  choose d hd using hCoverD
+  have hInj (V : Fin 6 → Matrix (Fin 6) (Fin 6) ℂ)
+      (v : Fin 6 → κ) (hv : ∀ i, V i ∈ tube (v i))
+      (hSmall : ∀ i j, i ≠ j → (trace (V i * V j)).re < η) :
+      Function.Injective v := by
+    intro i j hij
+    by_contra hne
+    have hmem : V j ∈ tube (v i) := by rw [hij]; exact hv j
+    have hlo := hSame (v i) (V i) (hv i) (V j) hmem
+    exact (not_lt_of_ge (le_trans hημ hlo)) (hSmall i j hne)
+  have hci := hInj C c hc hSmallC
+  have hdi := hInj D d hd hSmallD
+  have hCliqueC : ∀ i j, i ≠ j → orthogonalCandidate (c i) (c j) := by
+    intro i j hij
+    exact hOrth (c i) (c j) (hci.ne hij) (C i) (hc i) (C j) (hc j)
+      (hSmallC i j hij)
+  obtain ⟨color, hcolor⟩ := hColor c hci hCliqueC
+  by_contra hNo
+  have hClose (i j : Fin 6) : |(trace (C i * D j)).re - (1 / 6 : ℝ)| < τ := by
+    exact lt_of_not_ge (fun h ↦ hNo ⟨i, j, h⟩)
+  have hPartner (j : Fin 6) : ∀ i, unbiasedCandidate (c i) (d j) := by
+    intro i
+    exact hUnbiased (c i) (d j) (C i) (hc i) (D j) (hd j) (hClose i j)
+  have hColorInj : Function.Injective (fun j : Fin 6 ↦ color (d j)) := by
+    intro i j hij
+    by_contra hne
+    have hEdge := hOrth (d i) (d j) (hdi.ne hne)
+      (D i) (hd i) (D j) (hd j) (hSmallD i j hne)
+    exact hcolor (d i) (d j) (hdi.ne hne) (hPartner i) (hPartner j) hEdge hij
+  have hcard := Fintype.card_le_of_injective (fun j : Fin 6 ↦ color (d j)) hColorInj
+  norm_num at hcard
+
+#print axioms two_relation_tube_certificate_forces_cross_unbiasedness_error
+
 end D5.S3.Quantum.Tomography.CompleteRootSupergraphExclusion
