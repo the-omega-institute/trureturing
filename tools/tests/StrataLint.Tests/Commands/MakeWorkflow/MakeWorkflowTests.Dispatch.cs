@@ -97,11 +97,6 @@ public sealed partial class MakeWorkflowTests
             "\t@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- "
                 + "align-scribe-receipt --seed-missing --pairs \"$(PAIRS)\" --base \"$(BASE)\"",
             Recipe(makefile, "scribe-seed"));
-        Assert.Equal(
-            "\t@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- "
-                + "align-scribe-receipt --refresh --documents \"$(DOCUMENTS)\" --base \"$(BASE)\" "
-                + "$(if $(filter 1,$(DRY_RUN)),--dry-run,)",
-            Recipe(makefile, "scribe-refresh"));
         // make test 是薄委托;数学门链条的唯一真源在 math-gate.sh 里,断言脚本本体。
         var mathematicalTestRecipe = Recipe(makefile, "test");
         Assert.DoesNotContain("dotnet test", mathematicalTestRecipe, StringComparison.Ordinal);

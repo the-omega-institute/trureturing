@@ -13,12 +13,14 @@ internal static partial class CoverAtomCommand
         IScribeEmissionVerifier verifier,
         IReadOnlyList<string> arguments,
         Func<string, string, ImmutableArray<byte>>? readDocuments = null,
-        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>>? applyUpdates = null)
+        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>>? applyUpdates = null,
+        Func<ImmutableArray<DigestionLedgerEntry>, ImmutableHashSet<string>,
+            ImmutableHashSet<string>>? expandStatusAuthorityChanges = null)
     {
         var options = ParseAlignArguments(arguments, root, readDocuments);
         var raw = repository.ReadCurrent();
         var current = Decode(raw);
-        var baseline = Decode(repository.ReadRevision(options.BaseRevision));
+        var baseline = Decode(repository.ReadRevision(options.Alignment.BaselineRevision));
         var document = BackfillInventoryLoader.Load(current);
         var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
         var report = reportSource.Load(current);
@@ -83,9 +85,9 @@ internal static partial class CoverAtomCommand
         var selectedAtomIds = plans
             .Select(static plan => plan.Pair.AtomId)
             .ToImmutableHashSet(StringComparer.Ordinal);
-        var authorizedClosure = DigestionStatusEvaluator.ExpandStatusAuthorityChanges(
-            entries,
-            selectedAtomIds);
+        var authorizedClosure = expandStatusAuthorityChanges is null
+            ? DigestionStatusEvaluator.ExpandStatusAuthorityChanges(entries, selectedAtomIds)
+            : expandStatusAuthorityChanges(entries, selectedAtomIds);
         var selectedDocumentGids = plans
             .Select(static plan => plan.DocumentGid)
             .ToHashSet(StringComparer.Ordinal);
@@ -183,7 +185,7 @@ internal static partial class CoverAtomCommand
     {
         if (!options.IsDocumentSelection)
         {
-            return options.Pairs;
+            return options.Alignment.Pairs;
         }
 
         var selectedDocuments = options.DocumentGids.ToHashSet(StringComparer.Ordinal);
@@ -256,7 +258,9 @@ internal static partial class CoverAtomCommand
         if (!Gid.TryParse(pair.Gid, out var gid)
             || gid.ToTarget() is not Target.Formal formal)
         {
-            return Reject(pair, "coverage-gid-invalid");
+            return Reject(
+                pair,
+                "coverage-gid-invalid: align GID must select a Lean module or declaration");
         }
 
         var edge = CurrentEdgeValidator.Validate(pair.Gid, current, report, states, frozen);
@@ -289,7 +293,7 @@ internal static partial class CoverAtomCommand
 
         var documentGid = ScribeEmissionAttestation.DocumentGid(pair.Gid);
         var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
-        if (!current.TryGetFile(definitionPath, out var definition))
+        if (!current.TryGetFile(definitionPath, out _))
         {
             return Reject(pair, "scribe-definition-missing");
         }
@@ -297,13 +301,6 @@ internal static partial class CoverAtomCommand
         if (!verified.TryGet(documentGid, out var record))
         {
             return Reject(pair, "scribe-emission-unverified");
-        }
-
-        var definitionSha256 = DigestionFingerprint.Compute(
-            definition.RawBytes.AsSpan()).RawSha256;
-        if (record.DefinitionSha256 != definitionSha256)
-        {
-            return Reject(pair, "scribe-definition-mismatch");
         }
 
         if (record.DefinitionPath != definitionPath
@@ -318,11 +315,16 @@ internal static partial class CoverAtomCommand
         }
 
         var oldReceipt = receiptMatches[0];
-        var refreshed = oldReceipt with
+        var canonical = DigestionReceiptBuilder.Build(gid, current, frozen, verified);
+        if (!string.Equals(
+                canonical.Coverage.TargetStatementId,
+                edges[0].TargetStatementId,
+                StringComparison.Ordinal))
         {
-            DefinitionSha256 = record.DefinitionSha256,
-            EmissionSha256 = record.EmissionSha256,
-        };
+            return Reject(pair, "coverage-target-mismatch");
+        }
+
+        var refreshed = canonical.Scribe;
         return new RefreshPlan(
             pair,
             documentGid,
@@ -398,9 +400,8 @@ internal static partial class CoverAtomCommand
         }
 
         return new AlignOptions(
-            pairs.ToImmutable(),
+            new AlignArguments(pairs.ToImmutable(), baselineRevision),
             DocumentGids: [],
-            baselineRevision,
             DryRun: false,
             IsDocumentSelection: false);
     }
@@ -444,9 +445,8 @@ internal static partial class CoverAtomCommand
         }
 
         return new AlignOptions(
-            Pairs: [],
+            new AlignArguments([], baseline),
             ReadRefreshDocuments(readDocuments(root, path)),
-            baseline,
             dryRun,
             IsDocumentSelection: true);
     }
@@ -598,9 +598,8 @@ internal static partial class CoverAtomCommand
         }).ToImmutableArray());
 
     private sealed record AlignOptions(
-        ImmutableArray<AlignPair> Pairs,
+        AlignArguments Alignment,
         ImmutableArray<string> DocumentGids,
-        string BaseRevision,
         bool DryRun,
         bool IsDocumentSelection);
 

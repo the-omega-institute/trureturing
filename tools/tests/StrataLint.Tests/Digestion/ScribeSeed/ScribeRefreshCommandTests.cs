@@ -57,6 +57,73 @@ public sealed class ScribeRefreshCommandTests
     }
 
     [Fact]
+    public void RefreshUsesCanonicalReceiptBuilderForDefinitionBytes()
+    {
+        var fixture = Stale(new ScribeSeedFixture());
+        Assert.True(fixture.Verified.TryGet(ScribeSeedFixture.ModuleGid, out var canonical));
+        fixture.Verified = VerifiedScribeEmissions.Create(
+            [canonical with { DefinitionSha256 = "sha256:" + new string('0', 64) }],
+            [ScribeSeedFixture.DeclarationGid]);
+
+        var execution = Execute(fixture, ScribeSeedFixture.ModuleGid + "\n");
+
+        Assert.True(execution.Result.Success, execution.Result.Error);
+        var receipt = Assert.Single(Assert.Single(
+            Load(execution.After).RequireDigestionEntries()).Receipts.Scribe);
+        Assert.Equal(canonical.DefinitionSha256, receipt.DefinitionSha256);
+        Assert.Equal(canonical.EmissionSha256, receipt.EmissionSha256);
+    }
+
+    [Fact]
+    public void RefreshProjectsSelectedChildAndChainAncestorInExactWriteSet()
+    {
+        var fixture = ChainRefreshFixture();
+        var entries = fixture.Document.RequireDigestionEntries();
+        var child = Assert.Single(entries, static entry =>
+            entry.CoverageGids.Contains("D5/S0/Carrier/RefreshA.probe", StringComparer.Ordinal));
+        var ancestor = Assert.Single(entries, static entry =>
+            entry.CoverageGids.Contains("D5/S0/Carrier/RefreshB.probe", StringComparer.Ordinal));
+
+        var execution = Execute(fixture, "D5/S0/Carrier/RefreshA\n");
+
+        Assert.True(execution.Result.Success, execution.Result.Error);
+        Assert.Equal(1, execution.ApplyCalls);
+        var expectedPaths = new[]
+        {
+            EntryPath(child),
+            EntryPath(ancestor),
+            AbsorbedEntryPath(child),
+            AbsorbedEntryPath(ancestor),
+        }.Order(StringComparer.Ordinal).ToArray();
+        Assert.Equal(expectedPaths, execution.AppliedUpdates
+            .Select(static update => update.Path)
+            .Order(StringComparer.Ordinal));
+        Assert.Contains("SCRIBE_REFRESH_WRITE_SET count=4", execution.Result.Output,
+            StringComparison.Ordinal);
+        var after = Load(execution.After).RequireDigestionEntries();
+        Assert.All(after.Where(entry =>
+                entry.AtomId == child.AtomId || entry.AtomId == ancestor.AtomId),
+            entry => Assert.Equal(
+                new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
+                entry.ProjectedStatus));
+        var refreshedAncestor = Assert.Single(after, entry => entry.AtomId == ancestor.AtomId);
+        Assert.Equal([child.AtomId], refreshedAncestor.Receipts.ChainAtoms.ToArray());
+        Assert.Equal(ancestor.Coverage.ToArray(), refreshedAncestor.Coverage.ToArray());
+        Assert.Equal(ancestor.Receipts.Scribe.ToArray(), refreshedAncestor.Receipts.Scribe.ToArray());
+    }
+
+    [Fact]
+    public void RefreshCommandRejectsEvaluatorStatusChangeOutsideAuthorizedClosure()
+    {
+        var execution = Execute(
+            ChainRefreshFixture(),
+            "D5/S0/Carrier/RefreshA\n",
+            expandStatusAuthorityChanges: static (_, selected) => selected);
+
+        AssertRefreshRejected(execution, "status-change-outside-refresh-closure");
+    }
+
+    [Fact]
     public void BaselineReceiptFailureOutsideSelectedClosureDoesNotVetoRefresh()
     {
         var fixture = TwoDocuments();
@@ -362,17 +429,59 @@ public sealed class ScribeRefreshCommandTests
         return fixture;
     }
 
+    private static ScribeSeedFixture ChainRefreshFixture()
+    {
+        var fixture = TwoDocuments();
+        var entries = fixture.Document.RequireDigestionEntries();
+        var child = Assert.Single(entries, static entry =>
+            entry.CoverageGids.Contains("D5/S0/Carrier/RefreshA.probe", StringComparer.Ordinal));
+        Assert.True(fixture.Verified.TryGet("D5/S0/Carrier/RefreshB", out var ancestorRecord));
+        fixture.Document = ScribeSeedFixture.Map(fixture.Document, entry =>
+        {
+            if (entry.AtomId == child.AtomId)
+            {
+                return entry with
+                {
+                    ProjectedStatus = new(
+                        DigestionMigrationState.Partial,
+                        DigestionTruthState.Closed),
+                };
+            }
+
+            return entry with
+            {
+                Receipts = entry.Receipts with
+                {
+                    Scribe = entry.Receipts.Scribe.Select(receipt => receipt with
+                    {
+                        DefinitionSha256 = ancestorRecord.DefinitionSha256,
+                        EmissionSha256 = ancestorRecord.EmissionSha256,
+                    }).ToImmutableArray(),
+                    ChainAtoms = [child.AtomId],
+                },
+                ProjectedStatus = new(
+                    DigestionMigrationState.Partial,
+                    DigestionTruthState.Closed),
+            };
+        });
+        fixture.Baseline = fixture.Document;
+        return fixture;
+    }
+
     private static RefreshExecution Execute(
         ScribeSeedFixture fixture,
         string documents,
         bool dryRun = false,
         RawRepositorySnapshot? baseline = null,
         ImmutableArray<RawRepositorySnapshot> currentReads = default,
-        IReadOnlyList<string>? arguments = null)
+        IReadOnlyList<string>? arguments = null,
+        Func<ImmutableArray<DigestionLedgerEntry>, ImmutableHashSet<string>,
+            ImmutableHashSet<string>>? expandStatusAuthorityChanges = null)
     {
         var before = fixture.Raw(fixture.Document);
         var after = before;
         var applyCalls = 0;
+        var appliedUpdates = ImmutableArray<IngestCommand.LedgerUpdate>.Empty;
         var reads = currentReads.IsDefault ? ImmutableArray.Create(before) : currentReads;
         var readIndex = 0;
         var repository = new FakeRepositoryGateway(
@@ -403,6 +512,7 @@ public sealed class ScribeRefreshCommandTests
             (_, current, updates) =>
             {
                 applyCalls++;
+                appliedUpdates = updates;
                 var files = current.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
                 foreach (var update in updates)
                 {
@@ -417,13 +527,15 @@ public sealed class ScribeRefreshCommandTests
                 }
 
                 after = RawRepositorySnapshot.Create(files.Values);
-            });
+            },
+            expandStatusAuthorityChanges);
         return new RefreshExecution(
             result,
             before,
             after,
             applyCalls,
-            repository.ReadCurrentCount);
+            repository.ReadCurrentCount,
+            appliedUpdates);
     }
 
     private static void AssertRefreshRejected(RefreshExecution execution, string reason)
@@ -440,6 +552,10 @@ public sealed class ScribeRefreshCommandTests
         + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth) + "/"
         + entry.AtomId + ".yaml";
 
+    private static string AbsorbedEntryPath(DigestionLedgerEntry entry) =>
+        BackfillInventoryLoader.RootPath + entry.SourceId + "/absorbed-closed/"
+        + entry.AtomId + ".yaml";
+
     private static BackfillInventoryDocument Load(RawRepositorySnapshot raw) =>
         BackfillInventoryLoader.Load(Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(raw)).Snapshot);
@@ -453,5 +569,6 @@ public sealed class ScribeRefreshCommandTests
         RawRepositorySnapshot Before,
         RawRepositorySnapshot After,
         int ApplyCalls,
-        int ReadCurrentCalls);
+        int ReadCurrentCalls,
+        ImmutableArray<IngestCommand.LedgerUpdate> AppliedUpdates);
 }

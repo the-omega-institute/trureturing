@@ -601,6 +601,18 @@ public sealed class Sl016WakeupTests
         {
             fixture.Baseline[AtomPath] = AddReceipts(fixture.Baseline[AtomPath], receiptProjection);
         }
+        if (candidateScribeInputsChanged)
+        {
+            const string derivedAtomPath = BackfillInventoryLoader.RootPath
+                + "delta-v0.1/absorbed-closed/"
+                + RuleFixture.FixtureAtomId
+                + ".yaml";
+            foreach (var files in new[] { fixture.Files, fixture.Baseline })
+            {
+                files[derivedAtomPath] = files[AtomPath];
+                files.Remove(AtomPath);
+            }
+        }
 
         var verifiedScribeEmissions = VerifiedScribeEmissions.Create(
         [

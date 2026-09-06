@@ -82,6 +82,14 @@ internal static partial class CoverAtomCommand
                 cachedReportSource,
                 scribeEmissionVerifier,
                 alignArguments);
+            if (!aligned.Success)
+            {
+                return new CommandResult(
+                    false,
+                    cover.Error + aligned.Output,
+                    "COVER_ATOM_ALIGNED cover=resumed align=failed\n" + aligned.Error);
+            }
+
             return new CommandResult(
                 true,
                 "COVER_ATOM_ALIGNED cover=resumed align=passed\n"

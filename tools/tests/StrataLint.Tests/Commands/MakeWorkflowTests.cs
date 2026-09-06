@@ -284,6 +284,11 @@ public sealed partial class MakeWorkflowTests
         var root = TestRepositoryLayout.FindRoot();
         var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
         Assert.Equal(
+            "\t@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- "
+                + "align-scribe-receipt --refresh --documents \"$(DOCUMENTS)\" --base \"$(BASE)\" "
+                + "$(if $(filter 1,$(DRY_RUN)),--dry-run,)",
+            Recipe(makefile, "scribe-refresh"));
+        Assert.Equal(
             $"\t@/bin/bash {IngestScriptPath} quarantine \"$(BASE)\" \"$(REQUEST)\"",
             Recipe(makefile, "quarantine"));
         Assert.Equal(

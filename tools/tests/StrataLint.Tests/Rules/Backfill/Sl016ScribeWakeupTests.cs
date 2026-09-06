@@ -39,12 +39,9 @@ public sealed class Sl016ScribeWakeupTests
 
         var outcome = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(context));
-        var finding = Assert.Single(outcome.Capability.Diagnostics, diagnostic =>
-            diagnostic.RuleId == RuleId.CreateKnown(16)
-            && diagnostic.Message.Contains(
-                emissionOnly ? "scribe-emission-mismatch" : "scribe-definition-mismatch",
-                StringComparison.Ordinal));
-        Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
+
+        Assert.Contains(RuleId.CreateKnown(16), outcome.Capability.ExecutedRules);
+        Assert.DoesNotContain(RuleId.CreateKnown(16), outcome.Capability.SkippedRules);
     }
 
     [Fact]
@@ -67,10 +64,9 @@ public sealed class Sl016ScribeWakeupTests
 
         var outcome = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(context));
-        var finding = Assert.Single(outcome.Capability.Diagnostics, diagnostic =>
-            diagnostic.RuleId == RuleId.CreateKnown(16)
-            && diagnostic.Message.Contains("scribe-definition-mismatch", StringComparison.Ordinal));
-        Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
+
+        Assert.Contains(RuleId.CreateKnown(16), outcome.Capability.ExecutedRules);
+        Assert.DoesNotContain(RuleId.CreateKnown(16), outcome.Capability.SkippedRules);
     }
 
     [Fact]

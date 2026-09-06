@@ -27,7 +27,9 @@ internal static partial class AlignScribeReceiptCommand
         IScribeEmissionVerifier scribeEmissionVerifier,
         IReadOnlyList<string> arguments,
         Func<string, string, ImmutableArray<byte>> readPairs,
-        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>> applyUpdates)
+        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>> applyUpdates,
+        Func<ImmutableArray<DigestionLedgerEntry>, ImmutableHashSet<string>,
+            ImmutableHashSet<string>>? expandStatusAuthorityChanges = null)
     {
         try
         {
@@ -38,7 +40,8 @@ internal static partial class AlignScribeReceiptCommand
             }
 
             return CoverAtomCommand.AlignScribeReceipt(repositoryRoot, repository, leanReportSource,
-                scribeEmissionVerifier, arguments, readPairs, applyUpdates);
+                scribeEmissionVerifier, arguments, readPairs, applyUpdates,
+                expandStatusAuthorityChanges);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
