@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite dyadic convolution densities have the prescribed Fourier-Laplace products. -/
+   digest: A compactly supported dyadic convolution density realizes the infinite sinc product. -/
 
 /- Library-search audit trail (2026-09-07):
    * D5: `dyadicConvolution`, `partial_convolution`, and `infinite convolution`
@@ -28,12 +28,19 @@
    The finite sequence uses n+1 components: zero-fold convolution is a Dirac
    measure and has no Lebesgue density. This is only an index shift of the
    preregistered finite-convolution witness.
+   * The real-space limit applies Mathlib's interval integral bounds,
+     `integral_interval_sub_interval_comm`,
+     `cauchySeq_of_dist_le_of_summable`, and
+     `tendsto_integral_of_dominated_convergence`. No direct dyadic-density
+     construction or matching convolution Lipschitz estimate was found in
+     the searched D5 and pinned Mathlib sources.
 -/
 
 import D5.S3.Fourier.InfiniteSincProduct
 import Mathlib.Analysis.Convolution
 import Mathlib.MeasureTheory.Function.LocallyIntegrable
 import Mathlib.MeasureTheory.Measure.Haar.Unique
+import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 namespace D5.S3.Fourier.DyadicConvolutionDensity
 
@@ -337,8 +344,122 @@ theorem dyadicPartialConvolution_tendsto (ell : ℝ) (hell : 0 < ell) (x : ℝ) 
       (nhds (dyadicConvolutionDensity ell x)) :=
   (dyadicPartialConvolution_cauchy ell hell x).tendsto_limUnder
 
+private theorem partial_bound (ell : ℝ) (hell : 0 < ell) (n : ℕ) (x : ℝ) :
+    |dyadicPartialConvolution ell n x| ≤ (2 * dyadicHalfWidth ell 0)⁻¹ := by
+  have hp (j : ℕ) : 0 < dyadicHalfWidth ell j := by
+    unfold dyadicHalfWidth
+    positivity
+  induction n generalizing x with
+  | zero => exact uniform_density_bound (hp 0) x
+  | succ n ih =>
+      rw [dyadicPartialConvolution, convolution_mul_swap]
+      have hb (t : ℝ) : ‖dyadicPartialConvolution ell n (x - t) *
+          uniformIntervalDensity (dyadicHalfWidth ell (n + 1)) t‖ ≤
+          (2 * dyadicHalfWidth ell 0)⁻¹ *
+            uniformIntervalDensity (dyadicHalfWidth ell (n + 1)) t := by
+        rw [Real.norm_eq_abs, abs_mul,
+          abs_of_nonneg (uniformIntervalDensity_nonneg (hp (n + 1)) t)]
+        exact mul_le_mul_of_nonneg_right (ih (x - t))
+          (uniformIntervalDensity_nonneg (hp (n + 1)) t)
+      have hi := norm_integral_le_of_norm_le
+        ((uniformIntervalDensity_integrable (dyadicHalfWidth ell (n + 1))).const_mul
+          ((2 * dyadicHalfWidth ell 0)⁻¹)) (Eventually.of_forall hb)
+      simpa [Real.norm_eq_abs, integral_const_mul, integral_uniformIntervalDensity (hp (n + 1))]
+        using hi
+
+private def densityBound (ell : ℝ) : ℝ → ℝ :=
+  (Icc (-(ell / 2)) (ell / 2)).indicator (fun _ => (2 * dyadicHalfWidth ell 0)⁻¹)
+
+private theorem densityBound_integrable (ell : ℝ) : Integrable (densityBound ell) :=
+  IntegrableOn.integrable_indicator (integrableOn_const measure_Icc_lt_top.ne) measurableSet_Icc
+
+private theorem partial_domination (ell : ℝ) (hell : 0 < ell) (n : ℕ) (x : ℝ) :
+    |dyadicPartialConvolution ell n x| ≤ densityBound ell x := by
+  by_cases hx : x ∈ Icc (-(ell / 2)) (ell / 2)
+  · simpa [densityBound, hx] using partial_bound ell hell n x
+  · have hz : dyadicPartialConvolution ell n x = 0 := by
+      by_contra hn
+      exact hx (dyadicPartialConvolution_tsupport ell hell n (subset_tsupport _ hn))
+    simp [densityBound, hx, hz]
+
+private theorem density_domination (ell : ℝ) (hell : 0 < ell) (x : ℝ) :
+    |dyadicConvolutionDensity ell x| ≤ densityBound ell x :=
+  le_of_tendsto' (dyadicPartialConvolution_tendsto ell hell x).abs
+    (fun n => partial_domination ell hell (n + 1) x)
+
+theorem dyadicConvolutionDensity_nonneg (ell : ℝ) (hell : 0 < ell) (x : ℝ) :
+    0 ≤ dyadicConvolutionDensity ell x :=
+  ge_of_tendsto' (dyadicPartialConvolution_tendsto ell hell x)
+    (fun n => dyadicPartialConvolution_nonneg ell hell (n + 1) x)
+
+theorem dyadicConvolutionDensity_even (ell : ℝ) (hell : 0 < ell) (x : ℝ) :
+    dyadicConvolutionDensity ell (-x) = dyadicConvolutionDensity ell x := by
+  apply tendsto_nhds_unique (dyadicPartialConvolution_tendsto ell hell (-x))
+  simpa only [dyadicPartialConvolution_even] using dyadicPartialConvolution_tendsto ell hell x
+
+theorem dyadicConvolutionDensity_integrable (ell : ℝ) (hell : 0 < ell) :
+    Integrable (dyadicConvolutionDensity ell) := by
+  apply (densityBound_integrable ell).mono'
+  · exact aestronglyMeasurable_of_tendsto_ae atTop
+      (fun n => (dyadicPartialConvolution_integrable ell (n + 1)).aestronglyMeasurable)
+      (Eventually.of_forall (dyadicPartialConvolution_tendsto ell hell))
+  · exact Eventually.of_forall fun x => by
+      simpa only [Real.norm_eq_abs] using density_domination ell hell x
+
+theorem dyadicConvolutionDensity_tsupport (ell : ℝ) (hell : 0 < ell) :
+    tsupport (dyadicConvolutionDensity ell) ⊆ Icc (-(ell / 2)) (ell / 2) := by
+  apply closure_minimal _ isClosed_Icc
+  intro x hx
+  by_contra hn
+  have hb := density_domination ell hell x
+  simp only [densityBound, indicator_of_notMem hn, abs_nonpos_iff] at hb
+  exact hx hb
+
+theorem integral_dyadicConvolutionDensity (ell : ℝ) (hell : 0 < ell) :
+    ∫ x : ℝ, dyadicConvolutionDensity ell x = 1 := by
+  have ht := tendsto_integral_of_dominated_convergence (densityBound ell)
+    (fun n => (dyadicPartialConvolution_integrable ell (n + 1)).aestronglyMeasurable)
+    (densityBound_integrable ell)
+    (fun n => Eventually.of_forall fun x => by
+      simpa only [Real.norm_eq_abs] using partial_domination ell hell (n + 1) x)
+    (Eventually.of_forall (dyadicPartialConvolution_tendsto ell hell))
+  exact tendsto_nhds_unique ht (by
+    simpa only [integral_dyadicPartialConvolution ell hell] using
+      (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (nhds 1)))
+
+/-- The limiting probability density has precisely the frozen infinite sinc transform. -/
+theorem dyadicConvolutionDensity_fourierLaplace (ell : ℝ) (hell : 0 < ell) (z : ℂ) :
+    densityFourierLaplace (dyadicConvolutionDensity ell) z =
+      ∏' j, complexSinc ((dyadicHalfWidth ell j : ℝ) * z) := by
+  let B : ℝ → ℝ := (Icc (-(ell / 2)) (ell / 2)).indicator
+    (fun x => (2 * dyadicHalfWidth ell 0)⁻¹ * ‖Complex.exp (Complex.I * z * x)‖)
+  have hB : Integrable B := by
+    apply IntegrableOn.integrable_indicator _ measurableSet_Icc
+    apply Continuous.integrableOn_Icc
+    fun_prop
+  have hb (n : ℕ) (x : ℝ) : ‖tilt (dyadicPartialConvolution ell (n + 1)) z x‖ ≤ B x := by
+    by_cases hx : x ∈ Icc (-(ell / 2)) (ell / 2)
+    · simp only [B, indicator_of_mem hx, tilt, norm_mul, Complex.norm_real, Real.norm_eq_abs]
+      exact mul_le_mul_of_nonneg_right (partial_bound ell hell (n + 1) x) (norm_nonneg _)
+    · have hz : dyadicPartialConvolution ell (n + 1) x = 0 := by
+        have hd := partial_domination ell hell (n + 1) x
+        simpa only [densityBound, indicator_of_notMem hx, abs_nonpos_iff] using hd
+      simp [tilt, hz, B, hx]
+  have ht := tendsto_integral_of_dominated_convergence B
+    (fun n => (tilt_partial_integrable ell (n + 1) z).aestronglyMeasurable) hB
+    (fun n => Eventually.of_forall (hb n))
+    (Eventually.of_forall fun x =>
+      (Complex.continuous_ofReal.continuousAt.tendsto.comp
+        (dyadicPartialConvolution_tendsto ell hell x)).mul_const
+          (Complex.exp (Complex.I * z * x)))
+  exact tendsto_nhds_unique ht
+    ((dyadic_partial_convolution_fourierLaplace_tendsto ell hell z).comp
+      (tendsto_add_atTop_nat 1))
+
 #print axioms dyadic_partial_convolution_fourierLaplace
 #print axioms dyadic_partial_convolution_fourierLaplace_tendsto
+#print axioms dyadicConvolutionDensity_fourierLaplace
+#print axioms integral_dyadicConvolutionDensity
 
 end
 
