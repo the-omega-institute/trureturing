@@ -45,6 +45,8 @@ def rationalFourthMomentTail (T : ℕ) : ℚ :=
 
 noncomputable section
 open Finset Set
+open D5.S3.Weil.Convention
+open Zeta23
 open D5.S3.Weil.ZeroSum
 open D5.S3.Weil.ZetaBridge.ClassicExplicitFormula
 open D5.S3.Weil.ZetaBridge.WeilMixedHeadTailBudget
