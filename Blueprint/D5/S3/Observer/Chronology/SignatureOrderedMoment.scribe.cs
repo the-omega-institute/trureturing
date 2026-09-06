@@ -37,7 +37,7 @@ internal sealed class SignatureOrderedMomentDocument : IScribeDocumentDefinition
     private static Formula Hypotheses(string algebra) => Seq(
         Forall, Sp, F.Id("A"), Comma, Sp, F.Id("E"), Comma, Sp,
         Call(algebra, F.Id("A")), Comma, Sp,
-        F.Id("o"), Colon, F.Id("E"), To, F.Id("A"), Comma, Sp,
+        F.Id("o"), Colon, F.Id("E"), To, Sp, F.Id("A"), Comma, Sp,
         F.Id("w"), Colon, Call("List", F.Id("E")), Comma, Sp);
 
     private static Formula Values() => Call("map", F.Id("o"), F.Id("w"));
@@ -46,8 +46,8 @@ internal sealed class SignatureOrderedMomentDocument : IScribeDocumentDefinition
         Hypotheses("Semiring"),
         Call("doubledDegreeTwo", Call("chronologicalSignature", F.Id("o"), F.Id("w"))),
         Eq, Call("sum", Call("map", Seq(F.Id("e"), Mapsto,
-            Call("o", F.Id("e")), Cdot, Call("o", F.Id("e"))), F.Id("w"))),
-        Plus, D(2), Cdot, Call("orderedPairMoment", Values())));
+            Call("o", F.Id("e")), Cdot, Sp, Call("o", F.Id("e"))), F.Id("w"))),
+        Plus, D(2), Cdot, Sp, Call("orderedPairMoment", Values())));
 
     private static Formula MagnusFormula() => Disp(Seq(
         Hypotheses("Ring"),
