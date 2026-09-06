@@ -233,7 +233,9 @@ public static class AdmissionPipeline
         RepositorySnapshot? forkPoint = null,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null,
-        CanonicalizationMeasure? measureCanonicalization = null)
+        CanonicalizationMeasure? measureCanonicalization = null,
+        ScribeTestMapStore? testMapStore = null,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
         => Evaluate(
             current,
             baseline,
@@ -245,7 +247,9 @@ public static class AdmissionPipeline
             forkPoint,
             measureRule,
             measureApplicability,
-            measureCanonicalization);
+            measureCanonicalization,
+            testMapStore,
+            deriveTestMap);
 
     internal static AdmissionOutcome EvaluateProtectedSurface(
         RepositorySnapshot current,
@@ -258,7 +262,9 @@ public static class AdmissionPipeline
         RepositorySnapshot? forkPoint = null,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null,
-        CanonicalizationMeasure? measureCanonicalization = null)
+        CanonicalizationMeasure? measureCanonicalization = null,
+        ScribeTestMapStore? testMapStore = null,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
         => Evaluate(
             current,
             baseline,
@@ -270,7 +276,9 @@ public static class AdmissionPipeline
             forkPoint,
             measureRule,
             measureApplicability,
-            measureCanonicalization);
+            measureCanonicalization,
+            testMapStore,
+            deriveTestMap);
 
     private static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
@@ -283,7 +291,9 @@ public static class AdmissionPipeline
         RepositorySnapshot? forkPoint = null,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null,
-        CanonicalizationMeasure? measureCanonicalization = null)
+        CanonicalizationMeasure? measureCanonicalization = null,
+        ScribeTestMapStore? testMapStore = null,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
     {
         var context = RuleEvaluationContext.Create(
             current,
@@ -293,7 +303,9 @@ public static class AdmissionPipeline
             changes,
             metaEvaluation,
             verifiedScribeEmissions,
-            forkPoint);
+            forkPoint,
+            testMapStore,
+            deriveTestMap);
         return RuleCatalog.Default.Execute(context, measureRule, measureApplicability) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(

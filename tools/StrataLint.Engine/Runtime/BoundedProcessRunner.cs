@@ -6,7 +6,19 @@ internal sealed record ProcessOutput(int ExitCode, byte[] StandardOutput, byte[]
 
 internal static class BoundedProcessRunner
 {
+    internal delegate ProcessOutput ProcessRunner(
+        string fileName,
+        IEnumerable<string> arguments,
+        string workingDirectory,
+        TimeSpan timeout,
+        int maximumOutputBytes,
+        ReadOnlyMemory<byte> standardInput = default,
+        IReadOnlyDictionary<string, string>? environment = null);
+
     internal static readonly TimeSpan HangDetectionBudget = TimeSpan.FromMinutes(5);
+
+    // Flow the startup seam into Task.Run without sharing overrides between checks.
+    internal static readonly AsyncLocal<Func<Process, bool>?> StartProcess = new();
 
     internal static ProcessOutput Run(
         string fileName,
@@ -14,7 +26,8 @@ internal static class BoundedProcessRunner
         string workingDirectory,
         TimeSpan timeout,
         int maximumOutputBytes,
-        ReadOnlyMemory<byte> standardInput = default)
+        ReadOnlyMemory<byte> standardInput = default,
+        IReadOnlyDictionary<string, string>? environment = null)
     {
         var startInfo = new ProcessStartInfo
         {
@@ -26,13 +39,21 @@ internal static class BoundedProcessRunner
             RedirectStandardInput = !standardInput.IsEmpty,
             CreateNoWindow = true,
         };
+        if (environment is not null)
+        {
+            startInfo.Environment.Clear();
+            foreach (var (name, value) in environment)
+            {
+                startInfo.Environment.Add(name, value);
+            }
+        }
         foreach (var argument in arguments)
         {
             startInfo.ArgumentList.Add(argument);
         }
 
         using var process = new Process { StartInfo = startInfo };
-        if (!process.Start())
+        if (!(StartProcess.Value?.Invoke(process) ?? process.Start()))
         {
             throw new InvalidOperationException($"could not start {fileName}");
         }

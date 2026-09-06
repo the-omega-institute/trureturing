@@ -89,6 +89,98 @@ public sealed class RuleEngineCapacityDerivationTests
     }
 
     [Fact]
+    public void Sl003UsesTestMapStoreForBothSidesWhenPresent()
+    {
+        var fixture = FixtureWithUnknownDebt();
+        var changes = RawChangeSet.Create([DebtSourcePath]);
+        var context = fixture.Build(changes);
+        var environment = new ScribeTestMapEnvironment(
+            "test-rid",
+            ".NET test framework",
+            "/test/dotnet",
+            "10.0.100-test",
+            new string('d', 64));
+        var storage = new CapacityMemoryStorage();
+        var forkPointDigest = ScribeTestMapStore.ComputeInputDigest(context.ForkPoint);
+        storage.Write(
+            forkPointDigest + ".json",
+            ScribeTestMapEnvelope.Create(
+                forkPointDigest,
+                ScribeTestMapStore.ComputeMetadataDigest(context.ForkPoint),
+                environment,
+                UnknownTestMap("ExistingDebt")).Write());
+        var currentMap = UnknownTestMap("ExistingDebt", "CurrentDebt");
+        var forkPointMap = UnknownTestMap("ExistingDebt");
+        ScribeTestMap Derive(RepositorySnapshot snapshot) =>
+            ReferenceEquals(snapshot, context.Current) ? currentMap : forkPointMap;
+        var store = new ScribeTestMapStore(storage, environment, Derive);
+        var cachedContext = RuleEvaluationContext.Create(
+            context.Current,
+            context.Baseline,
+            context.Policy,
+            context.Lean,
+            context.Changes,
+            context.MetaEvaluation,
+            context.VerifiedScribeEmissions,
+            context.ForkPoint,
+            store);
+        var expected = RepositoryRules.EvaluateCapacity(context, Derive);
+        var actual = RepositoryRules.EvaluateCapacity(cachedContext, Derive);
+
+        Assert.Equal(expected.ToArray(), actual.ToArray());
+        Assert.Contains(actual, static finding => finding.Effect == AdmissionEffect.Block
+            && finding.Message.Contains("DebtTests.CurrentDebt", StringComparison.Ordinal));
+        var currentDigest = ScribeTestMapStore.ComputeInputDigest(context.Current);
+        Assert.NotEqual(forkPointDigest, currentDigest);
+        Assert.Equal(
+            ["hit"],
+            store.Events
+                .Where(item => item.InputDigest == forkPointDigest)
+                .Select(static item => item.Outcome));
+        Assert.Equal(
+            ["miss", "stored"],
+            store.Events
+                .Where(item => item.InputDigest == currentDigest)
+                .Select(static item => item.Outcome));
+    }
+
+    [Fact]
+    public void Sl003DerivesOnlyCurrentOnceWhenForkPointHitsStore()
+    {
+        var fixture = FixtureWithUnknownDebt();
+        var context = fixture.Build(RawChangeSet.Create([DebtSourcePath]));
+        var forkPointMap = UnknownTestMap("ExistingDebt");
+        var currentMap = UnknownTestMap("ExistingDebt", "CurrentDebt");
+        ScribeTestMap Derive(RepositorySnapshot snapshot) =>
+            ReferenceEquals(snapshot, context.Current) ? currentMap : forkPointMap;
+        Assert.Contains(forkPointMap.Methods, static method =>
+            method.Id == "DebtTests.ExistingDebt" && method.UnknownReasons.Count != 0);
+        var environment = new ScribeTestMapEnvironment("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test", new string('d', 64));
+        var storage = new CapacityMemoryStorage();
+        var digest = ScribeTestMapStore.ComputeInputDigest(context.ForkPoint);
+        storage.Write(digest + ".json", ScribeTestMapEnvelope.Create(digest,
+            ScribeTestMapStore.ComputeMetadataDigest(context.ForkPoint), environment, forkPointMap).Write());
+        var calls = new ConcurrentQueue<RepositorySnapshot>();
+        ScribeTestMap CountedDerive(RepositorySnapshot snapshot)
+        {
+            calls.Enqueue(snapshot);
+            return Derive(snapshot);
+        }
+        var store = new ScribeTestMapStore(storage, environment, CountedDerive);
+        var cachedContext = RuleEvaluationContext.Create(
+            context.Current, context.Baseline, context.Policy, context.Lean, context.Changes,
+            context.MetaEvaluation, context.VerifiedScribeEmissions, context.ForkPoint, store);
+        var expected = RepositoryRules.EvaluateCapacity(context, Derive);
+        var actual = RepositoryRules.EvaluateCapacity(cachedContext, CountedDerive);
+
+        Assert.Same(context.Current, Assert.Single(calls));
+        Assert.Equal(expected.ToArray(), actual.ToArray());
+        Assert.Contains(actual, static finding => finding.Effect == AdmissionEffect.Block
+            && finding.Message.Contains("DebtTests.CurrentDebt", StringComparison.Ordinal));
+        Assert.Contains(store.Events, item => item.InputDigest == digest && item.Outcome == "hit");
+    }
+
+    [Fact]
     public async Task Sl003PassesDerivedMapsToUnknownDebtPolicyInCurrentForkPointOrder()
     {
         var fixture = new RuleFixture();
@@ -256,19 +348,48 @@ public sealed class RuleEngineCapacityDerivationTests
         Assert.False(ScribeTestMapDeriver.IsDerivationInput(path));
     }
 
+    private const string DebtSourcePath = "tools/tests/Synthetic.Tests/DebtTests.cs";
+
+    private static RuleFixture FixtureWithUnknownDebt()
+    {
+        var fixture = new RuleFixture();
+        fixture.Baseline[DebtSourcePath] = "// existing debt\n";
+        fixture.ForkPoint[DebtSourcePath] = "// existing debt\n";
+        fixture.Files[DebtSourcePath] = "// existing and current debt\n";
+        return fixture;
+    }
+
     private static ScribeTestMap EmptyTestMap() => new([], [], [], [], []);
 
-    private static ScribeTestMap UnknownTestMap(string methodId) =>
+    private static ScribeTestMap UnknownTestMap(params string[] methodIds) =>
         new(
-            [
+            methodIds.Select(methodId =>
                 new ScribeTestMethod(
                     "tools/tests/Synthetic.Tests",
                     "tools/tests/Synthetic.Tests/DebtTests.cs",
                     "DebtTests." + methodId,
-                    [TestMapUnknownReason.Other]),
-            ],
+                    [TestMapUnknownReason.Other])).ToArray(),
             [],
             [],
             [],
             []);
+
+    private sealed class CapacityMemoryStorage : IScribeTestMapStorage
+    {
+        private readonly ConcurrentDictionary<string, byte[]> files = new(StringComparer.Ordinal);
+
+        public bool TryRead(string name, out byte[] bytes)
+        {
+            if (files.TryGetValue(name, out var stored))
+            {
+                bytes = stored.ToArray();
+                return true;
+            }
+
+            bytes = [];
+            return false;
+        }
+
+        public void Write(string name, byte[] bytes) => files[name] = bytes.ToArray();
+    }
 }
