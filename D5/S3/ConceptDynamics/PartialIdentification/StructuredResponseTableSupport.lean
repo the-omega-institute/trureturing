@@ -22,6 +22,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.PartialIdentification.StructuredResponseTableSupport
 
 open scoped BigOperators
+open D5.S3.ConceptDynamics.PartialIdentification.MarkovianResponseLawFactorization
 open D5.S3.ConceptDynamics.PartialIdentification.FiniteIndependentSourceGrouping
 open D5.S3.ConceptDynamics.PartialIdentification.QuaternaryResponseTableCoding
 
