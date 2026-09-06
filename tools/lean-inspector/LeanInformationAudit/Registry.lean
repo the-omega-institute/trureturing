@@ -38,10 +38,12 @@ abbrev CatalogId := Name
 
 inductive CatalogKind where
   | canonicalMaximal
+  | analysisView
   deriving BEq, Inhabited, Repr
 
 def CatalogKind.artifactName : CatalogKind -> String
   | .canonicalMaximal => "canonical_maximal"
+  | .analysisView => "analysis_view"
 
 structure InformationRegistryEntry where
   theoremName : Name

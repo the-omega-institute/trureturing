@@ -1,5 +1,6 @@
 import D5.S3.ConceptDynamics.InformationEscape.InformationRoot
 import LeanInformationAudit.ProjectionSeal
+import LeanInformationAudit.Tests.Projection.FixtureState
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -25,6 +26,7 @@ run_cmd do
       let mut records := #[]
       let mut packed := #[]
       for count in counts, i in [:counts.size] do
+        let count ← prepareV3QualifiedCounts count #[]
         let metadata := count.catalog
         let catalogValue ← mkConstWithFreshMVarLevels metadata.catalogName
         let arena ← mkAppM ``PrimitiveLawArena.toArena
@@ -33,6 +35,12 @@ run_cmd do
           (metadata.units.map (·.unitName)) root metadata.catalogId metadata.arenaName
           ((`LeanInformationAudit.Tests.Projection.FrozenRootV3).str s!"arena_{i}")
         records := records.push { counts := count, projection, analysis, layerChains : V3CatalogRecord }
+        for row in count.theorems do
+          unless row.unitName == catalogQualifiedName root metadata.arenaName metadata.catalogId
+              row.theoremName theoremUnitSuffix &&
+              row.certificateName == catalogQualifiedName root metadata.arenaName metadata.catalogId
+              row.theoremName "__lowers_escape" do
+            throwError "frozen root v3 identities are unqualified"
         packed := packed.push (← mkAppM ``PackedCatalog.mk #[arena, catalogValue])
       let family ← ProjectionProof.vector packed
       let suite ← mkAppM ``projectionSuite #[toExpr root, family]
@@ -52,9 +60,9 @@ run_cmd do
   let .ok artifact := Json.parse json | throwError "frozen root JSON"
   unless (artifact.getObjValAs? (Array Json) "catalogs").toOption.map (·.size) == some 11 do
     throwError "frozen root v3 arena inventory"
-  liftIO <| IO.FS.writeFile "/tmp/ie0905-j-frozen-v3.json" json
-  liftIO <| IO.FS.writeFile "/tmp/ie0905-j-frozen-v3.txt" ascii
-  liftIO <| IO.FS.writeFile "/tmp/ie0905-j-frozen-v2.json" v2
+  liftIO <| IO.FS.writeFile (← fixturePath "frozen-v3.json") json
+  liftIO <| IO.FS.writeFile (← fixturePath "frozen-v3.txt") ascii
+  liftIO <| IO.FS.writeFile (← fixturePath "frozen-v2.json") v2
   logInfo m!"frozen root v3: 11 arenas; unique counts {observed}"
 
 end LeanInformationAudit.Tests.Projection.FrozenRootV3

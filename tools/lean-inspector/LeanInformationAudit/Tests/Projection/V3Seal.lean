@@ -1,26 +1,32 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Projection.FixtureState
 
 open Lean LeanInformationAudit Lean.Elab.Command
 open LeanInformationAudit.Tests.ImportClosureProducer
+open LeanInformationAudit.Tests.Projection
 
 expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
 run_cmd do
-  liftIO <| IO.FS.writeFile "/tmp/ie0905-j-v3.json" "invalid prior JSON"
-  liftIO <| IO.FS.writeFile "/tmp/ie0905-j-v3.txt" "invalid prior ASCII"
+  liftIO <| IO.FS.writeFile (← fixturePath "seal-v3.json") "invalid prior JSON"
+  liftIO <| IO.FS.writeFile (← fixturePath "seal-v3.txt") "invalid prior ASCII"
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 8000000 in
-#seal_information_theory output "/tmp/ie0905-j-v2-additive.json"
-  analysis_output "/tmp/ie0905-j-v3.json" ascii_output "/tmp/ie0905-j-v3.txt"
+run_cmd do
+  let v2 := Syntax.mkStrLit (← fixturePath "seal-v2.json")
+  let v3 := Syntax.mkStrLit (← fixturePath "seal-v3.json")
+  let ascii := Syntax.mkStrLit (← fixturePath "seal-v3.txt")
+  elabCommand (← `(command| #seal_information_theory output $v2:str
+    analysis_output $v3:str ascii_output $ascii:str))
 
 /-- info: complete v3 seal and output noninterference passed -/
 #guard_msgs in
 run_cmd do
-  let contents ← liftIO <| IO.FS.readFile "/tmp/ie0905-j-v3.json"
+  let contents ← liftIO <| IO.FS.readFile (← fixturePath "seal-v3.json")
   let artifact ← match Json.parse contents with
     | .ok value => pure value
     | .error message => throwError message
@@ -35,9 +41,15 @@ run_cmd do
   let some records := (artifact.getObjValAs? (Array Json) "catalogs").toOption
     | throwError "catalog inventory"
   unless records.size == 1 do throwError "maximal catalog inventory"
-  let ascii ← liftIO <| IO.FS.readFile "/tmp/ie0905-j-v3.txt"
+  let occurrences := (records[0]!.getObjValAs? (Array Json) "theorems").toOption.get!
+  for row in occurrences do
+    match validateV3KeySet root `system "catalog_membership" #["root_id", "catalog_id"]
+        (row.getObjVal? "catalog_membership").toOption.get! with
+    | .ok () => pure ()
+    | .error message => throwError message
+  let ascii ← liftIO <| IO.FS.readFile (← fixturePath "seal-v3.txt")
   unless ascii.startsWith "CATALOG " do throwError "ASCII inventory"
-  let v2 ← liftIO <| IO.FS.readFile "/tmp/ie0905-j-v2-additive.json"
+  let v2 ← liftIO <| IO.FS.readFile (← fixturePath "seal-v2.json")
   unless v2 == serializeV2Artifact (SealRecords.forRoot (← getEnv) root) do
     throwError "v2 serializer changed"
   logInfo "complete v3 seal and output noninterference passed"

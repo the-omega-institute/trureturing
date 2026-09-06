@@ -37,7 +37,7 @@ run_cmd do
   modifyEnv (projectionFixtureStore.addEntry · projection)
   let .ok ascii := renderAsciiHierarchy `E1 `catalog ``arena projection
     | throwError "E1 renderer"
-  liftIO <| IO.FS.writeFile "/tmp/ie0905-j-e1.json" projection.toJson.pretty
-  liftIO <| IO.FS.writeFile "/tmp/ie0905-j-e1.txt" ascii
+  liftIO <| IO.FS.writeFile (← fixturePath "e1.json") projection.toJson.pretty
+  liftIO <| IO.FS.writeFile (← fixturePath "e1.txt") ascii
 
 end LeanInformationAudit.Tests.Projection

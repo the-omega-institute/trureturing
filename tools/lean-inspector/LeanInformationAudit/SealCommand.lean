@@ -1,6 +1,7 @@
 import LeanInformationAudit.ProofBuilder
 import LeanInformationAudit.ProjectionSeal
 import LeanInformationAudit.Syntax
+import LeanInformationAudit.OutputOnlyAudit
 
 namespace LeanInformationAudit
 
@@ -271,7 +272,6 @@ proof declarations; preflight and kernel-check every declaration in a local pers
 environment; then publish that environment with one `setEnv`. The optional JSON is
 written before publication and is output-only: no seal decision reads it back. -/
 
-@[command_elab sealInformationTheoryCmd]
 private def elabSealInformationTheory : CommandElab := fun stx => do
   let baseEnv ← getEnv
   try
@@ -294,7 +294,7 @@ private def elabSealInformationTheory : CommandElab := fun stx => do
     let declarations := catalogs.map (·.declaration) ++ proofs.declarations ++
       (analysis.map (·.declarations)).getD #[]
     preflightNames aliasEnv proofs.records declarations
-    let stagedEnv ← stageDeclarations aliasEnv declarations
+    let stagedEnv ← stageDeclarations (← getEnv) declarations
     let stagedEnv := retainSealRecords stagedEnv proofs.records
     if let some path := outputPath then
       liftIO <| IO.FS.writeFile path.raw.isStrLit?.get! (serializeV2Artifact proofs.records)
@@ -313,5 +313,12 @@ private def elabSealInformationTheory : CommandElab := fun stx => do
   catch error =>
     setEnv baseEnv
     throw error
+
+@[command_elab sealInformationTheoryCmd]
+private def elabAuditedSeal : CommandElab := fun stx => do
+  let env ← getEnv
+  match auditSealOutputOnly env ``elabSealInformationTheory env.header.mainModule with
+  | .error message => throwError message
+  | .ok () => elabSealInformationTheory stx
 
 end LeanInformationAudit

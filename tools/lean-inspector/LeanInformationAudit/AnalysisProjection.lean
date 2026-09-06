@@ -34,6 +34,7 @@ structure AnalysisProjectionRecord where
   roleTotals : Array (String × Nat) := #[]
   spectrum : Array SpectrumRow := #[]
   certificates : Array (String × Name) := #[]
+  deriving BEq
 
 def prepareMatrices (catalog enum : Expr) (members : Array Name) (certPrefix : Name) :
     ProjectionM (Array OverlapRow × Array RefinementRow × Array EquivalenceRow ×

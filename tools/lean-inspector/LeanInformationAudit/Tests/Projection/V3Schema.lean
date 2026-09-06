@@ -54,6 +54,8 @@ run_cmd do
     "kernel_equivalence_classes", "catalog_unique_capture_by_role_signature",
     "capture_multiplicity_spectrum", "layer_chains", "kernel_projection", "theorems"]
   let occurrence := (catalog.getObjValAs? (Array Json) "theorems").toOption.get![0]!
+  Lean.Elab.Command.liftCoreM <| checkKeys
+    ((occurrence.getObjVal? "catalog_membership").toOption.get!) #["root_id", "catalog_id"]
   Lean.Elab.Command.liftCoreM <| checkKeys occurrence #["theorem", "catalog_membership", "unit",
     "primitive_count", "primitive_axes", "primitive_kernel_address", "full_escape_count",
     "without_escape_count", "unique_capture_count", "unique_capture_by_role_signature",

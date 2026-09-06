@@ -1,5 +1,7 @@
 import LeanInformationAudit.ProofBuilder
-import LeanInformationAudit.AnalysisProjection
+import LeanInformationAudit.KernelProjection
+import LeanInformationAudit.V3Inventory
+import LeanInformationAudit.V3Bindings
 
 namespace LeanInformationAudit
 
@@ -84,17 +86,6 @@ def v3CatalogJson (record : V3CatalogRecord) : Json :=
     ("layer_chains", Json.arr <| layers.map (LayerChainRow.toJson denominator)),
     ("kernel_projection", record.projection.toJson),
     ("theorems", Json.arr <| theorems.map (occurrenceJson counts))]
-
-/-- Key-set checking is a schema check on freshly produced values, never an admission input. -/
-def validateV3KeySet (root catalog : Name) (component : String) (expected : Array String)
-    (value : Json) : Except String Unit := do
-  let expected := expected.qsort (· < ·)
-  let actual := match value.getObj? with
-    | .ok object => object.toArray.map (·.1) |>.qsort (· < ·)
-    | .error _ => #[]
-  unless actual == expected do
-    throw s!"IE-C028 AnalysisCertificateMismatch root={root} catalog={catalog} \
-component={component}-key-set expected={(toJson expected).compress} actual={(toJson actual).compress}"
 
 private def coincidenceClassesJson (records : Array V3CatalogRecord) : Json := Id.run do
   let occurrences := records.flatMap fun record => record.counts.theorems
@@ -211,8 +202,8 @@ private def validateInventory (root : Name) (record : V3CatalogRecord) : MetaM U
         (toJson row.comparison)
     let included := row.comparison == "equal" || row.comparison == "strictly_finer"
     unless row.proofName.isSome == included && row.counterexample.isSome == !included do
-      mismatch root catalog "kernel_refinement.evidence" (toJson "proof-or-counterexample")
-        (toJson row.comparison)
+      throwError "IE-C027 UncertifiedKernelRefinement root={root} catalog={catalog} \
+finer={row.finer} coarser={row.coarser} missing={if included then "proof" else "counterexample"}"
   let equivalenceMembers := record.analysis.equivalenceClasses.flatMap (·.members)
   unless sortedNames equivalenceMembers == memberNames && equivalenceMembers.size == size do
     mismatch root catalog "kernel_equivalence_classes" (namesJson memberNames)
@@ -273,6 +264,14 @@ component=system-certificate expected=Lean-theorem actual={systemCertificate}"
   unless ← isDefEq indexType (mkApp (mkConst ``Fin) (mkNatLit records.size)) do
     mismatch rootId `system "system-catalog-domain" (toJson records.size)
       (toJson systemCertificate.toString)
+  let mut occurrenceKeys : Array (Name × Name) := #[]
+  for record in records do
+    for row in record.counts.theorems do
+      let key := (record.counts.catalog.arenaName, row.theoremName)
+      if occurrenceKeys.contains key then
+        mismatch rootId record.counts.catalog.catalogId "occurrence-key"
+          (toJson "unique") (toJson s!"{key.1}/{key.2}")
+      occurrenceKeys := occurrenceKeys.push key
   for (record, i) in records.zipIdx do
     let packed ← mkAppM ``DesignatedRootCatalogSuite.catalogAt
       #[suite, ← ProjectionProof.fin i records.size]
@@ -281,6 +280,15 @@ component=system-certificate expected=Lean-theorem actual={systemCertificate}"
       mismatch rootId `system "system-catalog-membership"
         (toJson record.counts.catalog.catalogName.toString) (toJson systemCertificate.toString)
     validateInventory rootId record
+    let reflected ← validateCertifiedProjection rootId record.counts.catalog.catalogId actual
+      record.projection record.analysis record.layerChains
+    if record.counts.catalog.catalogKind == .canonicalMaximal &&
+        record.projection.verdict == "redundant" then
+      let zeroIndices := record.counts.theorems.filter (·.uniqueCaptureCount == 0) |>.map (·.index)
+      throwError "IE-C033 IncompleteRedundantIndexSet key={rootId}/{record.counts.catalog.catalogId} \
+expected=[] certified={(toJson (zeroIndices.qsort (· < ·))).compress} phase=canonical-export"
+    validateV3Bindings rootId actual reflected (← mkAppM ``PackedCatalog.arena #[packed])
+      record.counts record.projection
   let records := records.qsort fun a b =>
     a.counts.catalog.arenaName.toString < b.counts.catalog.arenaName.toString ||
       (a.counts.catalog.arenaName == b.counts.catalog.arenaName &&
@@ -295,6 +303,9 @@ component=system-certificate expected=Lean-theorem actual={systemCertificate}"
     ("system_catalog_irredundant", toJson positive),
     ("kernel_address_coincidence_classes", coincidenceClassesJson records),
     ("catalogs", Json.arr <| records.map v3CatalogJson)]
+  match validateV3Inventory rootId artifact with
+  | .error message => throwError message
+  | .ok () => pure ()
   return artifact.pretty
 
 end LeanInformationAudit

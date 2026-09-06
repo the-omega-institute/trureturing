@@ -1,5 +1,6 @@
 import LeanInformationAudit.ProjectionSeal
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalCatalog
+import LeanInformationAudit.Tests.Projection.FixtureState
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -8,17 +9,53 @@ open D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalCatalog
 
 namespace LeanInformationAudit.Tests.Projection.Causal
 
+local instance : DecidableEq ObsOut := projectionSumDecision
+local instance : DecidableEq IntOut := projectionSumDecision
+local instance : DecidableEq CfOut := projectionSumDecision
+
+def readoutArena {Output : Type} [DecidableEq Output]
+    (readout : UnifiedBoolSCM → Output) : PrimitiveLawArena where
+  toArena := unifiedArena
+  signature := {
+    Index := Fin 1, indexFintype := inferInstance, indexDecidableEq := inferInstance,
+    Output := fun _ => Output, outputDecidableEq := fun _ => inferInstance,
+    axis := fun _ => .cut, readoutAxisNotAnchor := by simp,
+    AnchorIndex := Fin 0, anchorFintype := inferInstance, anchorDecidableEq := inferInstance }
+  Law := fun realization => realization.readout 0 = readout
+
+def readoutRealization {Output : Type} [DecidableEq Output]
+    (readout : UnifiedBoolSCM → Output) :
+    PrimitiveRealization (readoutArena readout).signature where
+  readout := fun _ => readout
+  anchor := Fin.elim0
+
+def counterfactualRealization := readoutRealization CfU
+def interventionRealization := readoutRealization IntU
+def observationRealization := readoutRealization ObsU
+theorem counterfactualOccurrence : (readoutArena CfU).Law counterfactualRealization := rfl
+theorem interventionOccurrence : (readoutArena IntU).Law interventionRealization := rfl
+theorem observationOccurrence : (readoutArena ObsU).Law observationRealization := rfl
+def counterfactualUnit : TheoremUnit unifiedArena := NativeTheoremUnit.toTheoremUnit
+  (arena := readoutArena CfU) ⟨counterfactualRealization, counterfactualOccurrence⟩
+def interventionUnit : TheoremUnit unifiedArena := NativeTheoremUnit.toTheoremUnit
+  (arena := readoutArena IntU) ⟨interventionRealization, interventionOccurrence⟩
+def observationUnit : TheoremUnit unifiedArena := NativeTheoremUnit.toTheoremUnit
+  (arena := readoutArena ObsU) ⟨observationRealization, observationOccurrence⟩
+
 abbrev catalog : Catalog unifiedArena := Catalog.ofVector
-  ![unifiedCounterfactualUnit, unifiedInterventionUnit, unifiedObservationUnit]
+  ![counterfactualUnit, interventionUnit, observationUnit]
 
 set_option maxRecDepth 100000
 set_option maxHeartbeats 16000000
 
 run_cmd do
+  let occurrenceNames := #[``counterfactualOccurrence, ``interventionOccurrence, ``observationOccurrence]
+  let qualified := occurrenceNames.map fun name =>
+    catalogQualifiedName `Causal ``unifiedArena ``catalog name theoremUnitSuffix
   let ((projection, analysis, layers), declarations) ← liftTermElabM do
     (prepareKernelProjection (← mkConstWithFreshMVarLevels ``catalog)
       (← mkConstWithFreshMVarLevels ``unifiedArena)
-      #[``unifiedCounterfactualUnit, ``unifiedInterventionUnit, ``unifiedObservationUnit]
+      qualified
       `Causal ``catalog ``unifiedArena `CausalProjection {
         schedules := #[("obs-int-cf", #[2, 1, 0])]
       }).run #[]
@@ -41,8 +78,7 @@ run_cmd do
   unless layers.map (·.layers.map (·.count)) == #[#[0, 2120, 92, 44]] do
     throwError "causal layered captures"
   for (theoremName, expected) in #[
-      (``unifiedObservationUnit, 0), (``unifiedInterventionUnit, 0),
-      (``unifiedCounterfactualUnit, 44)] do
+      (qualified[2]!, 0), (qualified[1]!, 0), (qualified[0]!, 44)] do
     let some row := projection.leaveOneOut.find? (·.theoremName == theoremName)
       | throwError "causal missing leave-one-out row"
     unless row.uniqueCaptureCount == expected do
@@ -77,7 +113,8 @@ run_cmd do
       let system ← ProjectionProof.proof `CausalProjection.system
         (← mkAppM ``projectionSingletonSystemRedundant
           #[toExpr (`Causal : Name), original, normalized, same, index, zero])
-      let names := #[``unifiedCounterfactualUnit, ``unifiedInterventionUnit, ``unifiedObservationUnit]
+      let names := #[``counterfactualUnit, ``interventionUnit, ``observationUnit]
+      let realizations := #[``counterfactualRealization, ``interventionRealization, ``observationRealization]
       let mut theorems := #[]
       let moduleName := (← getEnv).header.mainModule
       for unitName in names, i in [:3] do
@@ -86,7 +123,7 @@ run_cmd do
         let addressExpr ← mkAppM ``primitiveKernelAddress
           #[← mkAppM ``Arena.stateFintype #[arena], bundle]
         let address ← unsafe evalExpr String (mkConst ``String) addressExpr (safety := .unsafe)
-        let some row := projection.leaveOneOut.find? (·.theoremName == unitName)
+        let some row := projection.leaveOneOut.find? (·.theoremName == qualified[i]!)
           | throwError "causal missing occurrence"
         let mut roles := #[]
         for mask in [1:16] do
@@ -101,7 +138,7 @@ run_cmd do
             roles := roles.push
               (String.ofList (bits.toList.map fun bit => if bit then '1' else '0'), count)
         theorems := theorems.push {
-          theoremName := ``True.intro, unitName, realizationName := unitName,
+          theoremName := occurrenceNames[i]!, unitName, realizationName := realizations[i]!,
           certificateName := row.certificate, registrationModuleName := moduleName,
           index := i, primitiveCount := 1, primitiveAxes := #["cut"],
           primitiveKernelAddress := address, uniqueCaptureCount := row.uniqueCaptureCount,
@@ -112,7 +149,7 @@ run_cmd do
         | throwError "causal missing verdict certificate"
       let counts : SealArenaRecord := {
         catalog := {
-          rootId := `Causal, catalogId := ``catalog, catalogKind := .canonicalMaximal,
+          rootId := `Causal, catalogId := ``catalog, catalogKind := .analysisView,
           arenaName := ``unifiedArena, catalogName := ``catalog,
           compatibilityV2 := false, units := theorems.map fun row => {
             theoremName := row.theoremName, unitName := row.unitName,
@@ -121,6 +158,7 @@ run_cmd do
         irredundantCertificateName := verdict.2, proofMethod := "reflected-readout",
         stateCard := 48, offDiagonalPairCount := projection.denominator,
         fullEscapeCount := chain.terminalEscapeCount, theorems }
+      let counts ← prepareV3QualifiedCounts counts (← get)
       pure ({ counts, projection, analysis, layerChains := layers : V3CatalogRecord }, system)
       : ProjectionM _).run #[]
   for declaration in countDeclarations do
@@ -131,8 +169,8 @@ run_cmd do
   let .ok artifact := Json.parse json | throwError "causal v3 JSON"
   unless (artifact.getObjValAs? Bool "system_catalog_irredundant").toOption == some false do
     throwError "causal system verdict"
-  liftIO <| IO.FS.writeFile "/tmp/ie0905-j-causal.json" json
-  liftIO <| IO.FS.writeFile "/tmp/ie0905-j-causal.txt" ascii
+  liftIO <| IO.FS.writeFile (← fixturePath "causal-v3.json") json
+  liftIO <| IO.FS.writeFile (← fixturePath "causal-v3.txt") ascii
 
 #print axioms catalog
 

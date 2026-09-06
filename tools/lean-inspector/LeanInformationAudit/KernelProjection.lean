@@ -14,6 +14,55 @@ structure KernelProjectionRequest where
   complete : Bool := false
   deriving Inhabited
 
+private structure CertifiedProjectionSnapshot where
+  rootId : Name
+  catalogId : Name
+  catalog : Expr
+  reflectedCatalog : Expr
+  projection : KernelProjectionRecord
+  analysis : AnalysisProjectionRecord
+  layers : Array LayerChainRow
+  propositions : Array (Name × Expr)
+
+private initialize certifiedProjectionExt : SimplePersistentEnvExtension
+    CertifiedProjectionSnapshot (Array CertifiedProjectionSnapshot) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
+
+/-- Compare at emission with rows retained by the proof builder, before callers can edit them.
+The retained propositions also bind the subsequently staged declarations to that builder run. -/
+def validateCertifiedProjection (root catalogId : Name) (catalog : Expr)
+    (projection : KernelProjectionRecord) (analysis : AnalysisProjectionRecord)
+    (layers : Array LayerChainRow) : MetaM Expr := do
+  let key := projection.certificates.find? (·.1 == "readout_reflection")
+  let some snapshot := (certifiedProjectionExt.getState (← getEnv)).find? fun snapshot =>
+      snapshot.rootId == root && snapshot.catalogId == catalogId &&
+      snapshot.projection.certificates.find? (·.1 == "readout_reflection") == key
+    | throwError "IE-C042 KernelProjectionCertificateMismatch root={root} catalog={catalogId} \
+component=certified-snapshot expected=retained actual=missing"
+  unless ← isDefEq catalog snapshot.catalog do
+    throwError "IE-C042 KernelProjectionCertificateMismatch root={root} catalog={catalogId} \
+component=certified-catalog expected=retained actual=different"
+  match validateProjectionSnapshot root catalogId snapshot.projection projection with
+  | .error message => throwError message
+  | .ok () => pure ()
+  unless analysis == snapshot.analysis do
+    throwError "IE-C028 AnalysisCertificateMismatch root={root} catalog={catalogId} \
+component=analysis expected=certified-snapshot actual=different"
+  unless layers == snapshot.layers do
+    let chain := layers[0]?.map (·.chainId) |>.getD "missing"
+    throwError "IE-C031 InvalidLayerChain root={root} catalog={catalogId} \
+chain={chain} layer=0 reason=certified-snapshot-mismatch"
+  for (name, expected) in snapshot.propositions do
+    let some (.thmInfo info) := (← getEnv).find? name
+      | throwError "IE-C042 KernelProjectionCertificateMismatch root={root} catalog={catalogId} \
+component=certificate:{name} expected=Lean-theorem actual=missing"
+    unless ← isDefEq info.type expected do
+      throwError "IE-C042 KernelProjectionCertificateMismatch root={root} catalog={catalogId} \
+component=certificate:{name} expected=retained-proposition actual=different"
+  return snapshot.reflectedCatalog
+
 private structure MaterializedKernel where
   selected : Array Nat
   selection : Expr
@@ -32,19 +81,27 @@ private def normalizeSelection (selected : Array Nat) : Array Nat :=
   selected.toList.eraseDups.toArray.qsort (· < ·)
 
 private partial def firstRepresentative (catalog target : Expr) (size : Nat)
-    (eligible : Array Nat) (remaining start : Nat) (chosen : Array Nat) :
-    MetaM (Option (Array Nat)) := do
+    (eligible : Array Nat) (remaining start : Nat) (chosen : Array Nat) (limit : Option Nat) :
+    StateRefT Nat MetaM (Option (Array Nat)) := do
+  if let some limit := limit then
+    if (← get) >= limit then
+      throwError "bounded canonical representative search exhausted; request complete=true"
+  modify (· + 1)
   if remaining == 0 then
     return if ← sameNode target (← generated catalog size chosen) then some chosen else none
   if eligible.size - start < remaining then return none
+  unless ← sameNode target (← generated catalog size (chosen ++ eligible.extract start eligible.size)) do
+    return none
   for position in [start:eligible.size] do
     if let some result ← firstRepresentative catalog target size eligible (remaining - 1)
-        (position + 1) (chosen.push eligible[position]!) then return some result
+        (position + 1) (chosen.push eligible[position]!) limit then return some result
   pure none
 
-/-- Search representatives only; this does not materialize or construct a lattice. -/
-private def canonicalSelection (catalog : Expr) (members : Array Name) (selected : Array Nat) :
-    MetaM (Array Nat) := do
+/-- Exact minimum representatives with a polynomial search-work cap in bounded mode.
+Exhaustion fails closed; only explicit complete mode permits unrestricted subset search. -/
+def canonicalSelectionWork (catalog : Expr) (members : Array Name) (selected : Array Nat)
+    (complete : Bool := false) :
+    MetaM (Array Nat × Nat) := (do
   let size := members.size
   let selected := normalizeSelection selected
   let target ← generated catalog size selected
@@ -53,10 +110,21 @@ private def canonicalSelection (catalog : Expr) (members : Array Name) (selected
     let singleton ← generated catalog size #[index]
     if ← ProjectionProof.truth (← mkLE target singleton) then eligible := eligible.push index
   eligible := eligible.qsort fun i j => members[i]!.toString < members[j]!.toString
-  for count in [:selected.size + 1] do
-    if let some representative ← firstRepresentative catalog target size eligible count 0 #[] then
-      return representative
-  throwError "generated relation has no representative"
+  let mut forced := #[]
+  for index in eligible do
+    unless ← sameNode target (← generated catalog size (eligible.filter (· != index))) do
+      forced := forced.push index
+  if ← sameNode target (← generated catalog size forced) then return forced
+  let optional := eligible.filter (!forced.contains ·)
+  let limit := if complete then none else some ((size + 1) ^ 3)
+  for count in [1:selected.size - forced.size + 1] do
+    if let some representative ← firstRepresentative catalog target size optional count 0 forced limit then
+      return representative.qsort fun i j => members[i]!.toString < members[j]!.toString
+  throwError "generated relation has no representative" : StateRefT Nat MetaM _).run 0
+
+private def canonicalSelection (catalog : Expr) (members : Array Name) (selected : Array Nat)
+    (complete : Bool) : MetaM (Array Nat) :=
+  return (← canonicalSelectionWork catalog members selected complete).1
 
 private def kernelIndex (kernels : Array MaterializedKernel) (node : Expr) : MetaM Nat := do
   for i in [:kernels.size] do
@@ -67,11 +135,11 @@ private def selectionKey (selected : Array Nat) : String :=
   "K_" ++ String.intercalate "_" (selected.toList.map toString)
 
 private def materialize (catalog : Expr) (members : Array Name) (certPrefix : Name)
-    (required : Array (Array Nat)) : ProjectionM (Array MaterializedKernel) := do
+    (required : Array (Array Nat)) (complete : Bool) : ProjectionM (Array MaterializedKernel) := do
   let mut kernels := #[]
   for selected in required do
     let requestedNode ← generated catalog members.size selected
-    let selected ← canonicalSelection catalog members selected
+    let selected ← canonicalSelection catalog members selected complete
     let selection ← ProjectionProof.selection members.size selected
     let node ← mkAppM ``Catalog.generatedKernel #[catalog, selection]
     if ← kernels.anyM (fun other => sameNode other.node node) then continue
@@ -214,6 +282,7 @@ def prepareKernelProjection (catalog arena : Expr) (members : Array Name)
     (rootId catalogId arenaName certPrefix : Name) (request : KernelProjectionRequest := {}) :
     ProjectionM (KernelProjectionRecord × AnalysisProjectionRecord × Array LayerChainRow) :=
     withTransparency .all do
+  let originalCatalog ← instantiateMVars catalog
   let size := members.size
   let (catalog, readoutEquality) ← ProjectionProof.reflectCatalog catalog size
   let readoutCertificate ← ProjectionProof.proof (certPrefix.str "readout_reflection") readoutEquality
@@ -239,7 +308,7 @@ chain={chainId} layer=0 reason=not-a-complete-ordering"
       throwError "IE-C039 InvalidGeneratedKernelNode root={rootId} catalog={catalogId} \
 node=request reason=invalid-generator-index"
   let enum ← ProjectionProof.enumeration arena arenaName
-  let kernels ← materialize catalog members certPrefix required
+  let kernels ← materialize catalog members certPrefix required request.complete
   let reflected ← ProjectionProof.reflectRefinement
     (← ProjectionProof.vector (kernels.map (·.node))) (certPrefix.str "refinement")
   let (edges, collapsedAdditions) ← prepareEdges catalog members certPrefix kernels reflected
@@ -298,9 +367,12 @@ node=request reason=invalid-generator-index"
   | .error message => throwError message
   | .ok () => pure ()
   let canonical := projection.canonical
-  match validateProjectionSnapshot rootId catalogId projection canonical with
-  | .error message => throwError message
-  | .ok () => pure ()
+  let propositions := (← get).filterMap fun declaration => match declaration with
+    | .thmDecl info => some (info.name, info.type)
+    | _ => none
+  modifyEnv fun env => certifiedProjectionExt.addEntry env {
+    rootId, catalogId, catalog := originalCatalog, reflectedCatalog := catalog, projection := canonical,
+    analysis, layers, propositions }
   pure (canonical, analysis, layers)
 
 end LeanInformationAudit

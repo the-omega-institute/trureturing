@@ -13,6 +13,43 @@ structure PreparedAnalysis where
   records : Array V3CatalogRecord
   systemCertificate : Name
 
+/-- V3 has separate qualified companions. Frozen v2 records are never renamed. -/
+def prepareV3QualifiedCounts (counts : SealArenaRecord) (available : Array Declaration) :
+    ProjectionM SealArenaRecord := do
+  let metadata := counts.catalog
+  let options ← getOptions
+  let mut certificateEnv ← getEnv
+  for declaration in available do
+    if declaration.getNames.all certificateEnv.contains then continue
+    match certificateEnv.addDeclCore (Core.getMaxHeartbeats options).toUSize
+        (maxRecDepth.get options).toUSize declaration none true with
+    | .ok next => certificateEnv := next
+    | .error error => throwError "{error.toMessageData options}"
+  let qualified (name : Name) (suffix : String) :=
+    catalogQualifiedName metadata.rootId metadata.arenaName metadata.catalogId name suffix
+  let certificateAlias (source target : Name) := withEnv certificateEnv do
+    if source == target then return
+    let value ← mkConstWithFreshMVarLevels source
+    let _ ← ProjectionProof.proof target value
+  let mut theorems := #[]
+  for row in counts.theorems do
+    let unitName := qualified row.theoremName theoremUnitSuffix
+    let realizationName := qualified row.theoremName primitiveRealizationSuffix
+    let certificateName := qualified row.theoremName "__lowers_escape"
+    for (source, target) in #[(row.unitName, unitName), (row.realizationName, realizationName)] do
+      if source != target then
+        let _ ← ProjectionProof.value target (← mkConstWithFreshMVarLevels source)
+    certificateAlias row.certificateName certificateName
+    theorems := theorems.push { row with unitName, realizationName, certificateName }
+  let irredundantCertificateName := qualified metadata.arenaName "__catalog_irredundant"
+  certificateAlias counts.irredundantCertificateName irredundantCertificateName
+  let units := theorems.map fun row => {
+    theoremName := row.theoremName, unitName := row.unitName, realizationName := row.realizationName,
+    registrationModuleName := row.registrationModuleName, index := row.index : CatalogUnitRecord }
+  return { counts with
+    theorems, irredundantCertificateName,
+    catalog := { metadata with units, compatibilityV2 := false } }
+
 /-- Build analysis certificates from the same prepared catalogs as the v2 seal. -/
 def prepareAnalysisProofs (catalogs : Array PreparedCatalog) (proofs : PreparedProofs) :
     CommandElabM PreparedAnalysis := do
@@ -22,11 +59,12 @@ def prepareAnalysisProofs (catalogs : Array PreparedCatalog) (proofs : PreparedP
       let mut records := #[]
       let mut packed := #[]
       for prepared in catalogs, counts in proofs.records do
+        let counts ← prepareV3QualifiedCounts counts proofs.declarations
         let record := prepared.record
         let certPrefix := catalogQualifiedName root record.arenaName record.catalogId
           record.arenaName "__kernel_projection"
         let (projection, analysis, layerChains) ← prepareKernelProjection
-          prepared.value prepared.arenaValue (record.units.map (·.unitName)) root
+          prepared.value prepared.arenaValue (counts.theorems.map (·.unitName)) root
           record.catalogId record.arenaName certPrefix
         records := records.push { counts, projection, analysis, layerChains : V3CatalogRecord }
         packed := packed.push (← mkAppM ``PackedCatalog.mk #[prepared.arenaValue, prepared.value])
