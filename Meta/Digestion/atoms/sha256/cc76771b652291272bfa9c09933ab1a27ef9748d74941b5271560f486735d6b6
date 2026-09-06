@@ -1,0 +1,55 @@
+# 结论
+
+上一轮说明：选择自由落体参照可以消去共同加速度，但不能消去潮汐结构。
+
+这一轮继续证明：
+
+**当两位观察者都成为物理源时，同一相互作用不仅改变相对运动，也改变双方的钟，并能在相干实验中产生不可局部分解的相位。**
+
+因此，当前理论进一步形成一个闭合要求：
+
+$$
+\boxed{
+\text{谁改变了谁的钟}
+}
+$$
+
+$$
+\boxed{
+\text{谁向谁传递了动量}
+}
+$$
+
+$$
+\boxed{
+\text{哪些联合分支形成了纠缠}
+}
+$$
+
+必须由同一个总能量、同一个状态和同一套控制实现解释。
+
+最值得保留的公式是
+
+$$
+\boxed{
+\Xi_{\mathrm{space}}
+\approx
+-\frac{\mu T}{\hbar}
+a^{\mathsf T}\mathcal T_{\mathrm{rel}}\,b.
+}
+$$
+
+在明确的弱场双体模型中，它把**关系运动的潮汐变化**与**联合量子相位**连接起来，同时保留可计算的有限位移误差。
+
+这使“量子观察者是中心”获得了更严格的含义：
+
+> **观察者可以成为描述的原点，但不能成为反作用的例外。它既是读取者，也是源；既有内部钟，也有反冲；既能保存局部记录，也可能通过相互作用与其他观察者形成不可分割的联合状态。**
+
+物理时空的进一步重建，应当由这些不同读数能否共同通过同一个动力学模型来决定，而不是先选定一张几何，再让观察者的钟、受力和量子关联分别去适应它。
+
+[1]: https://arxiv.org/html/1507.01955v3 "https://arxiv.org/html/1507.01955v3"
+[2]: https://arxiv.org/html/1707.06036v2 "https://arxiv.org/html/1707.06036v2"
+[3]: https://www.pnas.org/doi/10.1073/pnas.1616427114 "https://www.pnas.org/doi/10.1073/pnas.1616427114"
+[4]: https://davidtong.org/teaching/general-relativity/grhtml/S3.html "https://davidtong.org/teaching/general-relativity/grhtml/S3.html"
+[5]: https://arxiv.org/abs/2308.03093 "https://arxiv.org/abs/2308.03093"
+[6]: https://arxiv.org/abs/1401.0946 "https://arxiv.org/abs/1401.0946"
