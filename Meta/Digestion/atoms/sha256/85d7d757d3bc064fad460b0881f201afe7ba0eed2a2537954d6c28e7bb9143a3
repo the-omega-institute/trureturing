@@ -1,0 +1,1 @@
+- **4.110(OEIS A397588,Hanna,2026-07-03 评注)**:原文「Conjecture: a(n) is odd iff n is a power of 2 for n ≥ 1」,序列由 a(1)=1、a(n)=(n+1)·Σ_{k=1}^{n−1} a(k)a(n−k)(n>1)定义(母函数 A(x)=x+(xA(x)²)′)。核对:OEIS 条目与 arXiv 检索未见证明。**档位:第一档**。
