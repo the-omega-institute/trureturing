@@ -1,0 +1,38 @@
+fingerprints:
+  raw_sha256: sha256:838b7a95a147fe2e4f449288a036ce2d7e33fc048533db62b868d55bd7d65fa8
+  normalized_sha256: sha256:838b7a95a147fe2e4f449288a036ce2d7e33fc048533db62b868d55bd7d65fa8
+cas_ref: sha256:838b7a95a147fe2e4f449288a036ce2d7e33fc048533db62b868d55bd7d65fa8
+coverage_gids:
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulliCubic
+    target_statement_id: sha256:0f568dbff4f20933b4c7ef1b7842ccaf6041437f2774f87f5f739c22f270c7b2
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_coefficient_bridge
+    target_statement_id: sha256:a73b06542f4a3522a1c12e3028c4ab1c0f0d90aa43e84a80b620ca650de76b25
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_egf_coefficient
+    target_statement_id: sha256:2fbf7241425d08db35db6bffa8953ec547388e17a899692f89f8d0d3020ecf2c
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_factorization
+    target_statement_id: sha256:0309c7a74665a09950770e729a9c0e45ac19267c9a0e11fbbc47cecacf6fa6a1
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_parameter_identities
+    target_statement_id: sha256:99f523773d2f6bf0fdc1bb0b942f1de9ff02defbe85269a1aaeae4222f9de74b
+  - gid: D5/S3/Arith/CentralBellCubicRefutation.conjecture1_refuted
+    target_statement_id: sha256:2a29b81e9b6167fff8634cda33baffb556750fa91cc579fff28bef793accb8e8
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulliCubic
+      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
+      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_coefficient_bridge
+      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
+      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_egf_coefficient
+      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
+      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_factorization
+      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
+      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_parameter_identities
+      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
+      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
+    - gid: D5/S3/Arith/CentralBellCubicRefutation.conjecture1_refuted
+      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
+      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
+  unresolved_subitems: []

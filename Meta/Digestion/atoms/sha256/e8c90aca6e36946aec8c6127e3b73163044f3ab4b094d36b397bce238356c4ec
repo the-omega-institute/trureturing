@@ -1,0 +1,13 @@
+## 1. Scope
+
+This note develops the logical layer behind the causal sharp-bounds lane. The aim is to separate four questions that are often conflated:
+
+1. what causal or statistical assumptions define the admissible counterfactual worlds;
+2. how those worlds become a feasible coupling set;
+3. how a query is bounded over that set;
+4. what is required to call the resulting bounds sharp.
+
+The key point is that the reusable object is not a particular probability-of-causation formula. It is an identified set obtained by projecting a feasible set of counterfactual laws through a query functional.
+
+The finite polyhedral case is the first formal target because response-function models turn many discrete counterfactual problems into linear optimization over a simplex. The continuous case has the same logical shape but generally becomes an infinite-dimensional coupling problem.
+

@@ -1,0 +1,1 @@
+- The initial remote PR snapshot was open, draft, and unmergeable. A passing protected workflow for the new head has not been established. The convenience workflow lookup restricted to `pull_request` cannot adjudicate this repository's `pull_request_target` workflow.

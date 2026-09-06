@@ -62,7 +62,7 @@ internal static partial class CoverAtomCommand
             }
 
             if (!Gid.TryParse(pair.Gid, out var gid)
-                || gid.ToTarget() is not Target.Formal { Declaration: not null })
+                || gid.ToTarget() is not Target.Formal formal)
             {
                 throw new InvalidOperationException(
                     $"align GID must select a Lean declaration: {pair.Gid}");
@@ -70,7 +70,8 @@ internal static partial class CoverAtomCommand
 
             var documentGid = ScribeEmissionAttestation.DocumentGid(pair.Gid);
             if (!verified.TryGet(documentGid, out var verifiedRecord)
-                || !verified.ReferencesDeclaration(pair.Gid))
+                || (formal.Declaration is not null
+                    && !verified.ReferencesDeclaration(pair.Gid)))
             {
                 throw new InvalidOperationException(
                     $"align GID {pair.Gid} has no verified Scribe emission and declaration reference");

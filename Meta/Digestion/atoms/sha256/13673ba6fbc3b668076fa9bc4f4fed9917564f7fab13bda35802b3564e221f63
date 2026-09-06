@@ -1,0 +1,32 @@
+## 11. Covariates
+
+Let a discrete covariate be `C`. Conditional response laws `\pi^{(c)}` can be used within each stratum. If the stratum weights `w_c=P(C=c)` are known and there are no additional cross-stratum restrictions, then
+
+\[
+Q=\sum_c w_c Q_c.
+\]
+
+If each stratum has a sharp interval
+
+\[
+Q_c\in[L_c,U_c],
+\]
+
+and the strata can be varied independently, then
+
+\[
+\boxed{
+Q\in
+\left[
+\sum_c w_cL_c,
+\sum_c w_cU_c
+\right]
+}
+\]
+
+is sharp. Endpoint witnesses are obtained by choosing all stratum lower witnesses or all stratum upper witnesses.
+
+This explains why covariate information can tighten bounds: conditioning replaces one coarse coupling problem by smaller constrained coupling problems before the results are recombined.
+
+The independence qualification matters. If response laws across strata share parameters or obey global structural restrictions, simple endpoint-wise summation may cease to be sharp.
+

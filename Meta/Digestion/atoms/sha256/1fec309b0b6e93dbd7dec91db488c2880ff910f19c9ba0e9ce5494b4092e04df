@@ -1,0 +1,22 @@
+## 43. Sequential sparsification of arbitrary product-law moments
+
+`ProductLawMomentSparsification.lean` goes beyond the same-stratum example. Let mu and nu be normalized rational laws on finite carriers A and B, and let f_j(a,b), j in J, be any finite family of rational coefficients. The retained vector is
+
+```text
+M_j(mu,nu) = sum_a sum_b mu(a)*nu(b)*f_j(a,b).
+```
+
+Fix nu and form `g_j(a) = sum_b nu(b)*f_j(a,b)`. Compress mu while preserving every g_j expectation. Call the replacement mu'. Then form the second, updated feature family `h_j(b) = sum_a mu'(a)*f_j(a,b)` and compress nu while preserving every h_j expectation. The resulting nu' satisfies
+
+```text
+M_j(mu',nu') = M_j(mu',nu) = M_j(mu,nu)  for every j.
+```
+
+The Lean theorem `productLaw_moment_sparse_replacements` implements these two exact steps and proves that each new factor has support at most `|J|+1`. Both factors stay on their original carriers, and the resulting law remains their product. The argument needs neither convexity of the product family nor independent selectability of factor parameters after data constraints are imposed.
+
+For m supplied linear data rows and one target coefficient, `product_linear_problem_sparse_witness` retains all m+1 values and gives at most m+2 support points in each factor. The original `LinearFeasible` predicate and `linearObjective` are evaluated on the new product law itself. Any equalities or inequalities determined by the preserved moment vector therefore remain valid. Restrictions not determined by that vector still need their own preservation argument.
+
+Recomputing the second feature family matters. For two initially independent fair bits, the equality event has probability 1/2. Holding either original fair factor fixed makes the equality probability insensitive to the other factor, so each factor separately admits replacement by a point mass at zero. Replacing both using those stale slices gives equality probability 1. The ordered construction recomputes the second slice after the first change and excludes this failure.
+
+The same mathematical proof extends by finite induction to s independent components: retain the entire d-dimensional moment vector at each step, fix all other current factors, and replace only the current factor. Each final component needs at most d+1 atoms. This multi-component induction is a paper derivation here; the authored Lean endpoint covers two components. The small-support result is an existence statement and does not make the general multilinear optimization problem convex or polynomial-time solvable.
+

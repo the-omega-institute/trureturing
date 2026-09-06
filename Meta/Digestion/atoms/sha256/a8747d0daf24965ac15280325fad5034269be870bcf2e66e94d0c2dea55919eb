@@ -1,0 +1,13 @@
+### V5 / V6 —— `D5/S3/Zeros/PochhammerDeformation/QuadraticRadii`(PR #5943)
+
+```lean
+theorem quadratic_outer_radius (a : ℝ) (ha : 0 < a) : R2 a = a + 1
+theorem quadratic_inner_radius (a : ℝ) (ha : 0 < a) :
+    r2 a = (a + Real.sqrt (a * (a + 1))) / 2
+```
+
+`R2` / `r2` 定义为 `rootNorms` 在 `U2 a` 上取的上确界之上确界 / 下确界之上确界,
+即论文 (37) / (36) 的形式化。见证:`R2` 取 `u=v=1`,`(x+a)(x+a+1)`;
+`r2` 取 `u=v=M/s`,`(x+M)²`,其中 `s=√(a(a+1))`、`M=(a+s)/2`,并经已冻结的
+`quadratic_interval_closed_form` 证得 `M = a + c₂(a)`。
+

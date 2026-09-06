@@ -1,0 +1,20 @@
+## 7. Stronger assumptions form an information order
+
+Let `\mathcal F_2\subseteq\mathcal F_1`. The second model contains at least as much valid restriction as the first. Then
+
+\[
+\inf_{\pi\in\mathcal F_1}Q(\pi)
+\le
+\inf_{\pi\in\mathcal F_2}Q(\pi)
+\le
+\sup_{\pi\in\mathcal F_2}Q(\pi)
+\le
+\sup_{\pi\in\mathcal F_1}Q(\pi),
+\]
+
+whenever the extrema are defined.
+
+So adding valid information can only shrink the identified interval. This provides a precise interpretation of covariates, mediators, partial graph knowledge, or dependence restrictions as information operators on the feasible set.
+
+This also gives a useful diagnostic. If a purported additional assumption produces a wider exact identified interval under the same query and data, then either the feasible-set relation was encoded incorrectly or the reported intervals are not exact.
+

@@ -1,0 +1,31 @@
+## 28. Simultaneous finite conditional response tables, 2026-09-06
+
+`FiniteConditionalResponseTable.lean` addresses the common-noise realization target in Section 27. For a finite covariate carrier C and finite response carrier R, take a normalized rational kernel q_c on R for each c. A complete table has type C -> R. The previously constructed independentSourceLaw supplies
+
+```text
+nu(w) = product_c q_c(w(c)).
+```
+
+`tableEvaluationLaw_independentSource` proves that evaluating this one table at c has mass q_c. The proof reuses exact source restriction to the singleton {c}, then identifies a singleton-indexed assignment with its response value. `finite_conditional_table_realization` therefore realizes all rows in the same disturbance space.
+
+For two mechanisms, `FixedNoisePairModel` stores laws nu_1 and nu_2 on complete tables. The general model class permits arbitrary dependence between different rows inside each table. Its source law is
+
+```text
+P(U_C=c, W_1=w_1, W_2=w_2) = weight(c) * nu_1(w_1) * nu_2(w_2),
+C = U_C,
+R_1 = W_1(C), R_2 = W_2(C).
+```
+
+Thus the covariate root and both complete mechanism disturbances are mutually independent. `selectedPairLaw` is the actual pushforward of this full source law. For arbitrary table laws, `selectedPairLaw_mass` proves
+
+```text
+P(C=c, R_1=r_1, R_2=r_2)
+  = weight(c) * rowLaw_1(c,r_1) * rowLaw_2(c,r_2).
+```
+
+No conditional-probability division is used. The equality covers null strata; an interpretation as a conditional probability obtained by division requires weight(c) > 0.
+
+`canonicalFixedNoisePair` chooses the product table law for each prescribed row-kernel family. `simultaneous_conditional_product_realization` proves that one such model reproduces every specified conditional product cell simultaneously. Independent rows are a constructive choice of witness. They are not an additional assumption in the model class used for necessity.
+
+If R is Bool x Bool, dependence of the two potential-outcome coordinates inside each row remains unrestricted. Neither table construction nor mechanism independence implies Y_0 independent of Y_1.
+

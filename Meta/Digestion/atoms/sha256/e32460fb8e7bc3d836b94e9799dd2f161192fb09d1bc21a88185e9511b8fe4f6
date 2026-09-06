@@ -1,0 +1,21 @@
+## 85. Executed exact column generation and independent comparisons
+
+`research/causal_bipartite_pricing/verify_pricing.py` runs an actual restricted-master loop. A shared-threshold family initializes a feasible outcome law with every nominated success mean, including zero and one. Each iteration solves the current finite master, reconstructs rational primal weights and dual multipliers, checks all current constraints and exact primal/dual equality, then solves the transformed pricing network. Network capacities are scaled to integers; the proposed flow and cut are checked again using Fraction arithmetic. Positive reduced cost adds the actual maximizing complete table. A zero pricing gap certifies the full optimum.
+
+The final seed-20260906 run passed 48 arbitrary-multiplier pricing instances and 3,060 comparisons with all Boolean assignments for sizes one through eight. Twenty-four restricted-master solutions were compared with separately enumerated full canonical LPs on the same original coupling and all marginal rows. All matched exactly. There were 27 complete column-generation instances and 757 checked pricing calls inside those runs. Four malformed flow/cut payloads and all eight proposed colorings of a non-bipartite three-cycle were rejected.
+
+The larger dense bipartite examples used arbitrary nonfair rational outcome means and never materialized the canonical column family:
+
+```text
+mediator states | canonical columns | final restricted columns | pricing calls
+12              | 4096              | 52                       | 32
+24              | 16777216          | 131                      | 92
+48              | 281474976710656   | 591                      | 527
+```
+
+The corresponding exact upper values were 1809/5500, 1081/3664 and 47251/147260. Final restricted columns include inactive columns; these counts are not the positive support size of the attaining law. The 24-state data, complete rational primal/dual output and flow certificate are included in the downloadable reproduction package.
+
+An earlier 48-state numerical dual proposal failed exact reconstruction checks on a degenerate dual face. Reconstruction was corrected by solving proposed tight equations exactly and rationalizing only the free coordinates, then rechecking every original restricted inequality and objective equality. The acceptance inequalities were not relaxed. A deliberately changed cut initially remained another genuine minimum; the negative test was corrected to require unequal cut value before expecting rejection. These two failures distinguish numerical candidate production and test design from mathematical certificate acceptance.
+
+These are synthetic matched-assumption correctness tests, not a published dataset benchmark, independent-author review or demonstrated speedup. The 527 pricing calls in the largest instance also caution against inferring a small overall iteration bound from polynomial-time pricing.
+

@@ -1,0 +1,10 @@
+\[
+\boxed{
+\text{finite multivalued PoC}
+=
+\text{linear projection of a finite response polytope}.
+}
+\]
+
+The main mathematical difficulty is combinatorial growth and the structure of useful additional constraints, rather than a new notion of sharpness.
+

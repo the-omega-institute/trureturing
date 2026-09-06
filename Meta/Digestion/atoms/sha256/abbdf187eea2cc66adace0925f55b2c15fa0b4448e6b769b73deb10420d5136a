@@ -1,0 +1,15 @@
+## 16. Research claim boundary
+
+The theory above supports a broad architecture but does not by itself prove that every causal problem yields a convex polytope.
+
+In particular:
+
+- arbitrary partial causal diagrams require a correctness theorem for the compiler from structural semantics to constraints;
+- latent-variable restrictions may require careful response-function parameterization;
+- mediator cross-world independence can be nonlinear;
+- a restricted copula family can be nonconvex;
+- continuous outcomes require probability measures and existence results for extrema;
+- estimated constraints introduce statistical uncertainty distinct from identification uncertainty.
+
+The formal program should preserve these boundaries rather than hide them behind a single optimization interface.
+
