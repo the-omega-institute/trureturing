@@ -1,0 +1,44 @@
+## 算术能量的定义
+
+定义无量纲自伴算子
+
+$$
+\boxed{
+H_{\mathrm{ar}}
+=
+(\log2)\widehat k_2
++
+(\log3)\widehat k_3
++
+(\log5)\widehat k_5
++
+(\log7)\widehat k_7.
+}
+\tag{8}
+$$
+
+于是
+
+$$
+\boxed{
+H_{\mathrm{ar}}|d\rangle
+=
+(\log d)|d\rangle.
+}
+\tag{9}
+$$
+
+这里对数把乘法变为加法：
+
+$$
+\log(ab)=\log a+\log b.
+$$
+
+这也是素因子分解能够进入 Euler 乘积与算术配分函数的基本原因。([DLMF][1])
+
+若要把它实现为物理 Hamiltonian，需要再给定一个能量尺度 \(E_{\mathrm{ref}}\)：
+
+$$
+H_{\mathrm{phys}}=E_{\mathrm{ref}}H_{\mathrm{ar}}.
+$$
+

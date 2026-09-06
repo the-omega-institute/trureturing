@@ -1,0 +1,48 @@
+## 定理 6.1：锚定关联不等式
+
+$$
+\boxed{
+\kappa_A\kappa_{A\cup\{j,k\}}
+\ge
+\kappa_{A\cup\{j\}}
+\kappa_{A\cup\{k\}}.
+}
+\tag{18}
+$$
+
+### 证明
+
+对独立的 \(s,t\sim\pi_A\)：
+
+$$
+[z_j(s)-z_j(t)][z_k(s)-z_k(t)]\ge0.
+$$
+
+取期望并展开：
+
+$$
+2\left[
+\mathbb E(z_jz_k)-\mathbb Ez_j\,\mathbb Ez_k
+\right]\ge0.
+$$
+
+乘以 \(\kappa_A^2\) 即得。证毕。
+
+特别地：
+
+$$
+\boxed{
+\kappa_{\{i,j,k\}}
+\ge
+\frac{\kappa_{\{i,j\}}\kappa_{\{i,k\}}}
+{\kappa_{\{i\}}}.
+}
+\tag{19}
+$$
+
+因此：
+
+> **如果已经知道单方向与两方向的预算交互，三方向交互就不能任意接近零。**
+
+这是一种真正的“低阶读数限制高阶残差”，而不是把高阶信息人为设置为零。
+

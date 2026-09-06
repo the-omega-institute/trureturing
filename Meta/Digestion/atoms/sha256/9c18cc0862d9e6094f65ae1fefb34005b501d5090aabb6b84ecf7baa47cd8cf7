@@ -1,0 +1,20 @@
+**它不是自动包含所有几何奥秘的特殊常数；但它是一个足够丰富、又能够精确核验的实验状态，让编码、几何、控制和能量之间的区别与联系都显现出来。**
+
+现在真正可以研究的，不是“这些数字是不是某种神秘语言”，而是一个更强的问题：
+
+$$
+\boxed{
+\text{哪些几何关系能够被编译为程序，}
+\quad
+\text{哪些程序关系能由量子系统实现，}
+\quad
+\text{哪些观察接口能够保留其未来预测？}
+}
+$$
+
+这条路线已经具备可执行的起点。
+
+[1]: https://gwern.net/doc/cs/computable/1987-conway.pdf "https://gwern.net/doc/cs/computable/1987-conway.pdf"
+[2]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[3]: https://projecteuclid.org/journals/annals-of-statistics/volume-26/issue-1/Algebraic-algorithms-for-sampling-from-conditional-distributions/10.1214/aos/1030563990.short "https://projecteuclid.org/journals/annals-of-statistics/volume-26/issue-1/Algebraic-algorithms-for-sampling-from-conditional-distributions/10.1214/aos/1030563990.short"
+[4]: https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.FSCD.2021.18 "https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.FSCD.2021.18"

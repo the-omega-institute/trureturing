@@ -1,0 +1,58 @@
+## 定义234.1　平滑记录方向族
+
+设参数为
+
+$$
+\lambda=(\lambda^1,\ldots,\lambda^m),
+$$
+
+归一化态为
+
+$$
+|\psi(\lambda)\rangle,
+\qquad
+P(\lambda)=|\psi(\lambda)\rangle\langle\psi(\lambda)|.
+$$
+
+定义去除纯相位方向后的变化
+
+$$
+|D_a\psi\rangle
+=
+(I-P)|\partial_a\psi\rangle,
+$$
+
+以及
+
+$$
+\boxed{
+\mathcal Q_{ab}
+=
+\langle D_a\psi|D_b\psi\rangle.
+}
+\tag{234.1}
+$$
+
+令
+
+$$
+\boxed{
+G_{ab}=\operatorname{Re}\mathcal Q_{ab},
+}
+\tag{234.2}
+$$
+
+并选择相位连接约定
+
+$$
+A_a=i\langle\psi|\partial_a\psi\rangle.
+$$
+
+相位曲率为
+
+$$
+F_{ab}=\partial_aA_b-\partial_bA_a.
+$$
+
+这里的 \(\mathcal Q\) 就是量子几何张量；实部与虚部分别描述相邻态的可区分变化和相位曲率，这是已有量子几何框架。([arXiv][3])
+

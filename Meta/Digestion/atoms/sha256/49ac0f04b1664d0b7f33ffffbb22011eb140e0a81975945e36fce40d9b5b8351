@@ -1,0 +1,40 @@
+## 例224.1　边界保持，内部钟继续运行
+
+取三能级系统
+
+$$
+\frac H\hbar
+=
+\begin{pmatrix}
+0&\omega&0\\
+\omega&0&g\\
+0&g&0
+\end{pmatrix},
+\qquad
+P=\operatorname{diag}(1,1,0).
+$$
+
+频繁检查是否离开前两个能级，会抑制进入第三能级。
+
+但内部仍由
+
+$$
+PHP
+=
+\hbar\omega
+\begin{pmatrix}
+0&1\\
+1&0
+\end{pmatrix}
+$$
+
+驱动，从 \(|0\rangle\) 演化为
+
+$$
+\boxed{
+\cos(\omega T)|0\rangle
+-i\sin(\omega T)|1\rangle.
+}
+\tag{224.3}
+$$
+

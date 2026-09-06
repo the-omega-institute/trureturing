@@ -39,6 +39,9 @@ internal sealed partial class ProductionCliEnvironment
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
 
+    public CommandResult AtomContext(IReadOnlyList<string> arguments) =>
+        AtomContextCommand.Run(repository, arguments);
+
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new ExplicitCommandResult(
@@ -102,6 +105,9 @@ internal sealed partial class ProductionCliEnvironment
 
     public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) =>
         QuarantineAtomCommand.Run(repositoryRoot, repository, arguments);
+
+    public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
+        SettleAtomCommand.Run(repositoryRoot, repository, arguments);
 
     public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) =>
         DecomposeAtomCommand.Run(repositoryRoot, repository, arguments);

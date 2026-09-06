@@ -1,0 +1,49 @@
+# 最后：这次把“整个时空压进一个波”推进到了哪里？
+
+现在已经得到一组彼此衔接的结构：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Q(r)\longrightarrow0;
+}
+$$
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+Q(r)\text{ 由有限最坏状态主导并指数增长};
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+\text{归一化的临界质量逃离每个有限窗口，}
+}
+$$
+
+同时：
+
+$$
+\boxed{
+\mu_r\{B\mid n\}\longrightarrow1
+\quad\text{对每个固定 }B.
+}
+$$
+
+而在时间观察方面：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{固定时间窗内的全部黄金观察矩阵正半定}.
+}
+$$
+
+这里最重要的三处边界是：
+

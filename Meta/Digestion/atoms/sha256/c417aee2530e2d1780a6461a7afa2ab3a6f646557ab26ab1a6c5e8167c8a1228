@@ -1,0 +1,69 @@
+## 定理 5：全局下界二分
+
+$$
+\boxed{
+\lambda_{\mathrm{glob}}
+=
+\begin{cases}
+0,&\mathrm{RH}\text{ 成立},\\
+-\infty,&\mathrm{RH}\text{ 不成立}.
+\end{cases}
+}
+\tag{25}
+$$
+
+### 证明：失败时
+
+由式（24），存在 \(T_j\to\infty\)，使某种 \(Q_W(f_{T_j}^\pm)\to-\infty\)。
+
+但由式（17），
+
+$$
+\|f_{T_j}^\pm\|_2^2=\|g\|_2^2
+$$
+
+始终不变，所以 Rayleigh 商趋于负无穷。
+
+### 证明：RH 成立时
+
+Weil 判据给出 \(\lambda_{\mathrm{glob}}\ge0\)。
+
+还需证明不能有严格正的统一间隔。
+
+RH 下，
+
+$$
+B(T)=\sum_\omega a_\omega e^{i\omega T},
+\qquad
+a_\omega\ge0,\quad
+\sum_\omega a_\omega=q.
+$$
+
+先截去一个任意小的绝对收敛尾部。对剩下的有限组实频率，有限维环面上的同时逼近保证存在任意大的 \(T\)，使所有相位 \(e^{i\omega T}\) 同时接近 \(1\)。
+
+逐步缩小尾部与相位误差，就得到一列
+
+$$
+T_j\to\infty,
+\qquad
+B(T_j)\to q.
+$$
+
+所以
+
+$$
+Q_W(f_{T_j}^-)=q-B(T_j)\to0,
+$$
+
+而其 \(L^2\) 范数保持不变。于是 \(\lambda_{\mathrm{glob}}\le0\)。证毕。
+
+---
+
+因此，不能把研究目标设成
+
+$$
+Q_W(f)\ge\mu\|f\|_2^2
+\qquad\forall f,
+\quad \mu>0.
+$$
+

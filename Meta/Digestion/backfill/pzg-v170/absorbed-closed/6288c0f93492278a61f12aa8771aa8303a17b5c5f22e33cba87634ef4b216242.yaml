@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:6288c0f93492278a61f12aa8771aa8303a17b5c5f22e33cba87634ef4b216242
+  normalized_sha256: sha256:6288c0f93492278a61f12aa8771aa8303a17b5c5f22e33cba87634ef4b216242
+cas_ref: sha256:6288c0f93492278a61f12aa8771aa8303a17b5c5f22e33cba87634ef4b216242
+coverage_gids:
+  - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.conjecture17
+    target_statement_id: sha256:cb5cbc427992694629f31e6f6ba4dc0f0942204d2c3942fa5ee9963a9d41d766
+  - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.s_eq_A
+    target_statement_id: sha256:7169cfff7ad94706ac96430660f8f4bca177d071bd44a9b0d78fad46a5137305
+  - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.restricted_three_sum_eq_complement
+    target_statement_id: sha256:644ff2d9f9a11f4829031dfbe262507d6b002f4ec10a45a67af638b7b32165a4
+receipts:
+  scribe:
+    - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.conjecture17
+      definition_sha256: sha256:3d5d3d38c0b73f62bf75f94532899f5772041e5ce27ca8d2d32b4a1394559eef
+      emission_sha256: sha256:de74f978b193d694e4ceaf2693eb216f200beaf2bddb59f67f0215035330f9c3
+    - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.s_eq_A
+      definition_sha256: sha256:3d5d3d38c0b73f62bf75f94532899f5772041e5ce27ca8d2d32b4a1394559eef
+      emission_sha256: sha256:de74f978b193d694e4ceaf2693eb216f200beaf2bddb59f67f0215035330f9c3
+    - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.restricted_three_sum_eq_complement
+      definition_sha256: sha256:3d5d3d38c0b73f62bf75f94532899f5772041e5ce27ca8d2d32b4a1394559eef
+      emission_sha256: sha256:de74f978b193d694e4ceaf2693eb216f200beaf2bddb59f67f0215035330f9c3
+  unresolved_subitems: []

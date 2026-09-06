@@ -1,0 +1,48 @@
+## 定理 213.3　这种增长总能产生合法量子态见证
+
+若两个允许操作族满足
+
+$$
+\mathcal S_{\Gamma_1}\subsetneq\mathcal S_{\Gamma_2},
+$$
+
+则存在合法密度矩阵 \(\rho_+,\rho_-\)，使其在 \(\Gamma_1\) 下不可区分，但在 \(\Gamma_2\) 下可区分。
+
+### 证明
+
+选择非零 Hermitian 算子
+
+$$
+A\in
+\mathcal S_{\Gamma_2}\cap
+\mathcal S_{\Gamma_1}^{\perp}.
+$$
+
+因为 \(I\in\mathcal S_{\Gamma_1}\)，所以 \(\operatorname{Tr}A=0\)。
+
+取足够小的 \(\varepsilon>0\)，定义
+
+$$
+\rho_\pm=\frac Id\pm\varepsilon A.
+$$
+
+只要
+
+$$
+\varepsilon\|A\|_{\mathrm{op}}\le\frac1d,
+$$
+
+两者都正且迹为一。
+
+它们在旧效果空间上的期望相同，但在 \(A\) 上相差
+
+$$
+2\varepsilon\operatorname{Tr}(A^2)>0.
+$$
+
+由定理212.1，新增协议能够区分。∎
+
+**所以，扩大行动能力，可能同时提高观察能力和预测所需的信息量。**它不保证每个实际策略都更复杂，但会扩大模型必须负责的实验范围。
+
+---
+

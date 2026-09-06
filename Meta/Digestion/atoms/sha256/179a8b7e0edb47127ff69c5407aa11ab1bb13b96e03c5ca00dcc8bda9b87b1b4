@@ -1,0 +1,65 @@
+# 十、回到“奇偶与拼接”：这次究竟补上了什么？
+
+现在整个模型只包含几类明确对象：
+
+$$
+\boxed{
+\text{三角波包 }g_a
+\longrightarrow
+\text{三次相关函数 }c_a
+\longrightarrow
+\text{有限素数读出 }P_a(T)
+\longrightarrow
+\text{交叉量 }B_a(T).
+}
+$$
+
+奇偶组合仍然只是
+
+$$
+\boxed{
+q_a+B_a(T),
+\qquad
+q_a-B_a(T).
+}
+$$
+
+它们同时非负的条件是
+
+$$
+\boxed{
+q_a-\frac{B_a(T)^2}{q_a}\ge0.
+}
+\tag{39}
+$$
+
+这是这个两片模型的 Schur 余量。
+
+本次核对的仓库 `SchurComplementAssociativity.lean` 证明的是：给定所列逆算子前件后，分步消元与一次消元一致。它可以支撑这种结构的消元组织，但不会自动证明式（39）的算术符号。
+
+这一轮新增的实质内容是：
+
+$$
+\boxed{
+\text{无限波包构造可以替换成明确有限形状};
+}
+$$
+
+$$
+\boxed{
+\text{Gamma 尾项与局部基准都可给出有限误差包络};
+}
+$$
+
+$$
+\boxed{
+\text{每个算术事件区间至多有四个驻点};
+}
+$$
+
+$$
+\boxed{
+\text{严格负读数可以转成光滑 Weil 测试函数的负证书}.
+}
+$$
+

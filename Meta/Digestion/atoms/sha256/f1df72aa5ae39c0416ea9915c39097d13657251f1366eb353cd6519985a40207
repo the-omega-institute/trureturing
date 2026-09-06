@@ -1,0 +1,75 @@
+## 定理 3：交叉读出的完全显式公式
+
+$$
+\boxed{
+B_a(T)
+=
+2A_a^2\cosh(T/2)-P_a(T)-\Gamma_a(T),
+}
+\tag{15}
+$$
+
+其中
+
+$$
+\boxed{
+\Gamma_a(T)
+=
+\sum_{j=0}^\infty
+e^{-\lambda_jT}
+\left[
+\frac{\sinh(a\lambda_j/2)}{a\lambda_j/2}
+\right]^4,
+\qquad
+\lambda_j=2j+\frac12.
+}
+\tag{16}
+$$
+
+所有 Gamma 级数项都非负。
+
+### 证明
+
+对
+
+$$
+\phi_T(t)=c_a(t-T)
+$$
+
+应用 Weil 显式公式。极点项为
+
+$$
+\int c_a(t-T)(e^{t/2}+e^{-t/2})\,dt
+=
+2A_a^2\cosh(T/2).
+$$
+
+素数幂项恰好为式（14）。Gamma 项为
+
+$$
+\int_{-2a}^{2a}
+c_a(u)k_\Gamma(T+u)\,du.
+$$
+
+这是经典显式公式在当前测试函数上的直接代入。([arXiv][3])
+
+因为 \(T>2a\)，
+
+$$
+k_\Gamma(T+u)
+=
+\sum_{j\ge0}e^{-\lambda_j(T+u)}.
+$$
+
+逐项积分，并使用
+
+$$
+\int c_a(u)e^{-\lambda u}\,du
+=
+\left[
+\frac{\sinh(a\lambda/2)}{a\lambda/2}
+\right]^4,
+$$
+
+得到式（16）。证毕。
+

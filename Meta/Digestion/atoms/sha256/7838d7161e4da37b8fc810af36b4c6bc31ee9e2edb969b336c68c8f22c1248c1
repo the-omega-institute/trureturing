@@ -1,0 +1,33 @@
+## 定义：合并切片的导数 Gram 矩阵
+
+定义：
+
+$$
+J_2(\tau_0)
+=
+\left[
+\partial_\tau^i\partial_\sigma^j
+C(\tau,\sigma)
+\big|_{\tau=\sigma=\tau_0}
+\right]_{i,j=0}^{2}.
+$$
+
+如果所有邻近的三点采样矩阵都正半定，那么这个导数矩阵也必须正半定，因为导数可以由有限差分极限得到。
+
+将式（4）展开到相应阶数：
+
+$$
+\boxed{
+J_2=
+\begin{pmatrix}
+1&0&-\dfrac w4\\[2mm]
+0&\dfrac w4&-\dfrac{\eta\kappa}{4}\\[2mm]
+-\dfrac w4&-\dfrac{\eta\kappa}{4}&
+\dfrac{w(4+w)-4\kappa^2}{16}
+\end{pmatrix}.
+}
+\tag{8}
+$$
+
+这里一个值得注意的相消是：虽然核来自整个函数 \(\phi\)，这个三阶导数 Gram 矩阵最终只需要 \(\phi'\) 与 \(\phi''\)，不需要额外输入 \(\phi'''\)。
+

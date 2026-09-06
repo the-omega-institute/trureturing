@@ -1,0 +1,27 @@
+## 定理 V3：相位修补增加一个正秩一项
+
+对：
+
+$$
+\mathcal P_S(z,w)
+=
+\frac{1-S(z)\overline{S(w)}}{-i(z-\overline w)},
+$$
+
+有：
+
+$$
+\boxed{
+\mathcal P_{B_pS}(z,w)
+=
+\frac{
+2\Im p
+}{
+(z-\overline p)(\overline w-p)
+}
++
+B_p(z)\overline{B_p(w)}\mathcal P_S(z,w).
+}
+\tag{V15}
+$$
+

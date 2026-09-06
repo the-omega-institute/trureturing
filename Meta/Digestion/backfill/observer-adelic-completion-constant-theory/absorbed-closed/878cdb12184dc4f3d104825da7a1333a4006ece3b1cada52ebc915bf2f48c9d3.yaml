@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:878cdb12184dc4f3d104825da7a1333a4006ece3b1cada52ebc915bf2f48c9d3
+  normalized_sha256: sha256:878cdb12184dc4f3d104825da7a1333a4006ece3b1cada52ebc915bf2f48c9d3
+cas_ref: sha256:878cdb12184dc4f3d104825da7a1333a4006ece3b1cada52ebc915bf2f48c9d3
+coverage_gids:
+  - gid: D5/S3/Weil/MaximumSpectralFloorCompletion.maximum_spectral_floor_completion
+    target_statement_id: sha256:d7cf8d638b9f65b978650020de273ba842f1dfd5029548022ad9a4279213a73b
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/MaximumSpectralFloorCompletion.maximum_spectral_floor_completion
+      definition_sha256: sha256:0f8b2374d20f1b4f8612f09427ebc62114ee53455c138a740392aaeecd8da53d
+      emission_sha256: sha256:c9e70fd0133147b09c11fb1556412e391325fa7c637cb7db73ef49f8e13f3cbe
+  unresolved_subitems: []

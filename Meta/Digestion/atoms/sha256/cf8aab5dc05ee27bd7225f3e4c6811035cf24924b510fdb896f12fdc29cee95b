@@ -1,0 +1,60 @@
+## 定理 222.1　未读取的记录也会改变系统相干
+
+对记录寄存器取偏迹后，系统通道为
+
+$$
+\boxed{
+\mathcal D_\eta
+\begin{pmatrix}
+a&b\\
+\overline b&d
+\end{pmatrix}
+=
+\begin{pmatrix}
+a&\eta b\\
+\eta\overline b&d
+\end{pmatrix}.
+}
+\tag{222.1}
+$$
+
+### 证明
+
+联合状态中的非对角项为
+
+$$
+b\,|0\rangle\langle1|\otimes|m_0\rangle\langle m_1|.
+$$
+
+取记录偏迹，乘上
+
+$$
+\operatorname{Tr}|m_0\rangle\langle m_1|
+=
+\langle m_1|m_0\rangle=\eta.
+$$
+
+其他矩阵元同理。∎
+
+这正是项目已有记录重叠公式的直接实例。
+
+特别地：
+
+$$
+\eta=1
+\quad\Rightarrow\quad
+\mathcal D_\eta=\operatorname{id};
+$$
+
+$$
+\eta=0
+\quad\Rightarrow\quad
+\mathcal D_\eta(\rho)
+=
+P_0\rho P_0+P_1\rho P_1.
+$$
+
+后一种刷新完全消去两个记录块之间的相干，但不要求一个人随后看过记录。
+
+---
+

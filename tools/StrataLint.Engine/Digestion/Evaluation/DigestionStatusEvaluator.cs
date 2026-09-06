@@ -238,6 +238,9 @@ internal static partial class DigestionStatusEvaluator
         // judged against the current report and frozen statement index below.
         var verificationChanges = baselineEntryPresent ? changes : null;
         var structured = VerifyStructuredAlignment(entry, alignment, gaps, findings);
+        var nonpropositional = HasNonpropositionalReceipt(entry);
+        if (entry.Receipts.Nonpropositional is not null && !nonpropositional)
+            findings.Add($"entry {entry.AtomId} nonpropositional receipt is invalid or conflicts with live obligations");
         var targetStates = new List<(string Gid, TruthState State)>();
         var edgeValidations = new Dictionary<string, CurrentEdgeValidation>(StringComparer.Ordinal);
         foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
@@ -274,7 +277,7 @@ internal static partial class DigestionStatusEvaluator
             targetStates.Add((gidText, edge.State));
         }
 
-        if (entry.CoverageGids.Length == 0)
+        if (entry.CoverageGids.Length == 0 && !nonpropositional)
         {
             gaps.Add(new DigestionGap(
                 "coverage-gid-missing",
@@ -424,7 +427,9 @@ internal static partial class DigestionStatusEvaluator
     {
         foreach (var item in work)
         {
-            item.Migration = item.LocalComplete && item.Entry.Receipts.ChainAtoms.Length == 0
+            item.Migration = HasNonpropositionalReceipt(item.Entry)
+                ? DigestionMigrationState.Nonpropositional
+                : item.LocalComplete && item.Entry.Receipts.ChainAtoms.Length == 0
                 ? DigestionMigrationState.Absorbed
                 : item.HasProgress
                     ? DigestionMigrationState.Partial
@@ -437,11 +442,11 @@ internal static partial class DigestionStatusEvaluator
         {
             changed = false;
             foreach (var item in work.Where(static item =>
-                         item.Migration != DigestionMigrationState.Absorbed && item.LocalComplete))
+                         !IsChainClosed(item.Migration) && item.LocalComplete))
             {
                 if (item.Entry.Receipts.ChainAtoms.All(atomId =>
                         byId.TryGetValue(atomId, out var dependency)
-                        && dependency.Migration == DigestionMigrationState.Absorbed))
+                        && IsChainClosed(dependency.Migration)))
                 {
                     item.Migration = DigestionMigrationState.Absorbed;
                     changed = true;
@@ -457,7 +462,7 @@ internal static partial class DigestionStatusEvaluator
         foreach (var atomId in item.Entry.Receipts.ChainAtoms)
         {
             if (!byId.TryGetValue(atomId, out var dependency)
-                || dependency.Migration != DigestionMigrationState.Absorbed)
+                || !IsChainClosed(dependency.Migration))
             {
                 item.Gaps.Add(new DigestionGap(
                     "chain-migration-incomplete",
@@ -472,6 +477,7 @@ internal static partial class DigestionStatusEvaluator
         RepositorySnapshot snapshot,
         RawChangeSet? changes)
     {
+        if (HasNonpropositionalReceipt(item.Entry)) return DigestionTruthState.Inapplicable;
         if (item.HasUnresolvedCoverageTarget
             || item.TargetStates.Count == 0
             || item.TargetStates.Any(static target => target.State is TruthState.Open or TruthState.Semantic))

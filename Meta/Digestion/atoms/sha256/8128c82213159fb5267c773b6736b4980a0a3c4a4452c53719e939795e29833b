@@ -1,0 +1,76 @@
+## 一个闭路实例
+
+取：
+
+$$
+|\Psi(\varphi)\rangle
+=
+\frac{
+|000\rangle+|100\rangle
++e^{i\varphi}|010\rangle
++|001\rangle+|101\rangle
+}{\sqrt5}.
+$$
+
+整个过程中：
+
+$$
+\boxed{
+(x_0,x_1,x_2)
+=
+\left(\frac25,\frac15,\frac25\right),
+\qquad
+\langle\Pi\rangle=-\frac15.
+}
+\tag{264.2}
+$$
+
+连补入奇偶之后的全部对角概率都不变。
+
+但相位连接为：
+
+$$
+\boxed{
+i\langle\Psi|\partial_\varphi\Psi\rangle=-\frac15.
+}
+\tag{264.3}
+$$
+
+沿 \(\varphi:0\to2\pi\) 的闭路，几何相位为：
+
+$$
+\boxed{\gamma_{\mathrm{geom}}=-\frac{2\pi}{5}\pmod{2\pi}.}
+\tag{264.4}
+$$
+
+若采用上一轮已经定义的秩一投影跟随协议，等分成 \(N\) 步，其全部成功振幅为：
+
+$$
+\boxed{
+z_N=
+\left(
+\frac45+\frac15e^{-2\pi i/N}
+\right)^N.
+}
+\tag{264.5}
+$$
+
+所以：
+
+$$
+\boxed{
+p_N=
+\left[
+1-\frac{16}{25}\sin^2\frac\pi N
+\right]^N
+\longrightarrow1,
+}
+\tag{264.6}
+$$
+
+同时：
+
+$$
+z_N\longrightarrow e^{-2\pi i/5}.
+$$
+

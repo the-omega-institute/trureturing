@@ -1,0 +1,30 @@
+# 十二、有限截断怎样给出可靠的正性证书？
+
+对 \(N>5040\)，定义有限核：
+
+$$
+K_N(t)
+=
+\sum_{5040<n\le N}
+\frac{\Delta(n)}{n^2}e^{-it\ln n}.
+$$
+
+由前面的初等界，可取：
+
+$$
+|\Delta(n)|\le2\ln n
+\qquad(n>5040).
+$$
+
+因此：
+
+$$
+\boxed{
+\sup_t|K(t)-K_N(t)|
+\le
+\frac{2(\ln N+1)}N
+=:\varepsilon_N.
+}
+\tag{31}
+$$
+
