@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:7fcc4f707af3cc743cc9096ed403d2f959d21f240df981d11304e930a41236d3
+  normalized_sha256: sha256:7fcc4f707af3cc743cc9096ed403d2f959d21f240df981d11304e930a41236d3
+cas_ref: sha256:7fcc4f707af3cc743cc9096ed403d2f959d21f240df981d11304e930a41236d3
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A bare same-finite-statistic list item in the example sequence bounded by atoms 9deb1b53d18e71bf2d39790bf1124f1c303cb2babd2e821ca9ca28ac1999bc01 and 48b0962958083912aa0ff01e10751195ff1445f8ba7bb5c309112f0f04215a17; it has no predicate or independent claim.
+    previous_atom_id: 67fa33cbfa23fd70f9ea880078d69409206f37c9119babc6843d99f90bb30582
+    next_atom_id: 48b0962958083912aa0ff01e10751195ff1445f8ba7bb5c309112f0f04215a17

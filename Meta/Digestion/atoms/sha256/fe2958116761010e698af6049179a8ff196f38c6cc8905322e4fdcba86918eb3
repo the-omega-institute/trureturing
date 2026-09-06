@@ -1,0 +1,32 @@
+# 257．同一个金字塔点，甚至同一个平均能量，仍不能决定未来波动
+
+现在回到第253节的两个状态：
+
+$$
+\rho_A
+=
+\frac12|000\rangle\langle000|
++
+\frac12|101\rangle\langle101|,
+$$
+
+$$
+\rho_B
+=
+\frac12|100\rangle\langle100|
++
+\frac12|001\rangle\langle001|.
+$$
+
+它们具有相同的三个占据均值。
+
+在素数轴 \(p\) 上，令：
+
+$$
+\epsilon_p=E_*\ln p,
+\qquad
+\omega_p=\frac{\epsilon_p}{\hbar}.
+$$
+
+---
+

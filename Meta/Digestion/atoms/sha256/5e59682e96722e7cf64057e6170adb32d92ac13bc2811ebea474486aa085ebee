@@ -1,0 +1,47 @@
+## 但“补了奇偶相关”仍不等于补齐量子相位
+
+再比较
+
+$$
+|\phi_+\rangle
+=
+\frac{|0,0\rangle+|1,1\rangle}{\sqrt2},
+$$
+
+$$
+|\phi_-\rangle
+=
+\frac{|0,0\rangle-|1,1\rangle}{\sqrt2}.
+$$
+
+它们的全部基底概率相同，奇偶相关 \(c\) 相同，所有 \(H_{\mathrm{ar}}\) 的矩也相同。
+
+但对观测量
+
+$$
+O=|0,0\rangle\langle1,1|
++
+|1,1\rangle\langle0,0|,
+$$
+
+有
+
+$$
+\langle O\rangle_{\phi_+}=1,
+\qquad
+\langle O\rangle_{\phi_-}=-1.
+$$
+
+所以还需要区分：
+
+$$
+\boxed{
+\text{联合概率相关}
+\neq
+\text{量子相对相位}.
+}
+\tag{24}
+$$
+
+密度矩阵的对角元与非对角元正是在保留这两类不同信息；只知道对角概率，一般不能恢复相干态。([IBM Quantum][3])
+
