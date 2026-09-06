@@ -930,3 +930,151 @@ A genuine causal use of automata would require an explicit cross-stratum structu
 There is also a separate compression mechanism that should be studied before attributing support reduction to automata. If only finitely many row marginals and query moments must be preserved, convex support-reduction results such as Caratheodory-type representations can potentially replace a `4^k` ambient carrier by a support whose size is controlled by the number of retained moment coordinates. That would preserve a specified finite observation/query map without imposing an automatic cross-stratum law. Formalizing this exact rational moment-preserving support reduction is the next high-value representation target.
 
 The two new Lean sources and their Scribe companions establish the radix bridge and the exact full-support obstruction. They do not claim that the golden sequence is a scientifically justified causal response mechanism, that the powers-only DFAO minimum has been resolved, or that automaton state count is an information-escape score.
+
+## 36. Exact finite moment support reduction, 2026-09-06
+
+`FiniteMomentSupportReduction.lean` discharges the representation target left open in Section 35. The theorem is stated for the repository's existing `FiniteResponseLaw`, `LinearFeasible`, and `linearObjective`; it introduces no second probability or LP semantics.
+
+For a finite atom carrier `A`, a finite feature carrier `J`, and feature map
+
+```text
+phi : A -> (J -> Q),
+```
+
+a normalized nonnegative law `mu` has retained moment vector
+
+```text
+M(mu) = sum_a mu(a) * phi(a).
+```
+
+`lawMomentVector_mem_convexHull` proves that `M(mu)` belongs to the rational convex hull of the atom profiles `phi(a)`. Mathlib's existing Caratheodory construction then supplies an affinely independent finite family of original profiles with nonnegative weights summing to one and exactly the same moment vector. The resulting `MomentCompression` records the selected profiles, source certification, normalized weights, exact moment equality, and affine independence.
+
+The ambient theorem `exists_momentCompression` gives
+
+```text
+selected atoms <= |J| + 1.
+```
+
+This support depends on the particular law and retained moment point. It is therefore a witness reduction for one feasible probability law, rather than a universal generator for all atoms.
+
+## 37. Affine profile rank is the sharper complexity parameter
+
+The raw number of retained coordinates can overcount information. `profileAffineRank` is defined as
+
+```text
+r(phi) = finrank_Q vectorSpan(range(phi)).
+```
+
+`MomentCompression.card_le_profileAffineRank` proves the sharper bound
+
+```text
+selected atoms <= r(phi) + 1.
+```
+
+Thus duplicate feature profiles and affine dependencies among the retained rows reduce the support bound automatically. For an LP with constraint rows `A_c` and objective `q`, `linearRowQueryFeature` packages the joint profile of one atom as
+
+```text
+atom |-> (q(atom), A_1(atom), ..., A_m(atom)).
+```
+
+and `linearProblemProfileRank` is the affine rank of this joint profile family. The formal chain is
+
+```text
+selected atoms
+  <= linearProblemProfileRank(A,q) + 1
+  <= number_of_constraint_rows + 2.
+```
+
+The second inequality is only an ambient bound. The rank-aware statement is the mathematically informative one when constraints are repeated, linearly dependent, or unable to distinguish large groups of canonical atoms.
+
+This gives a direct geometric connection to canonical-domain reduction. Choe, Kwon, Park, and Lee, UAI 2026, quotient canonical counterfactual states that are indistinguishable to every LP row and the objective. The range of `linearRowQueryFeature` already collapses exactly such duplicate profiles. Caratheodory then performs a second, law-specific reduction inside the convex hull of the distinct profile family. Exact profile equality and affine redundancy are separate reductions and both can decrease the witness size.
+
+## 38. Feasibility and query value survive on the original causal carrier
+
+A small latent witness alone would leave open whether the original causal LP semantics were preserved after reparameterization. `FiniteMomentSparseLaw.lean` closes that gap.
+
+`pushforward_linearObjective` proves for every deterministic map `g : S -> A` and every rational atom coefficient `f` that
+
+```text
+E_{g_* nu}[f] = E_nu[f o g].
+```
+
+A `MomentCompression` therefore pushes its latent law through the selected original atoms to `sparseLaw`, a normalized law on the unchanged original atom carrier.
+
+For the joint LP row/query profile, the source proves
+
+```text
+original law feasible for (A,b)
+  -> sparseLaw feasible for the same (A,b),
+
+linearObjective q sparseLaw
+  = linearObjective q originalLaw.
+```
+
+The endpoint `finite_linear_problem_sparse_original_witness` gives, for every feasible law, a sparse law on the same original response carrier whose generating latent support is at most
+
+```text
+linearProblemProfileRank(A,q) + 1
+```
+
+and which has the identical query value. The coarser endpoint replaces the rank by `number_of_rows + 1`, giving `number_of_rows + 2` atoms.
+
+Consequently, for a finite linear partial-identification problem, every attainable query value has a sparse attaining representative without changing the original feasible family or the query map. This is pointwise preservation of the identified query image. It is stronger than merely constructing an alternative latent parameterization.
+
+## 39. Why this does not contradict the 4^k support lower bound
+
+Sections 34 and 38 concern different quantifiers.
+
+The full-support theorem says that one deterministic latent generator which must cover every positive-mass table of a strictly positive independent-row law needs all `4^k` table atoms. The new Caratheodory theorem says that, once a finite observation/query map is fixed, each particular attainable moment point has some sparse law with the same retained moments and query value.
+
+The sparse support is allowed to depend on the original law and on the retained query. There is no single set of `r+1` atoms asserted to represent every law or every future query. Therefore
+
+```text
+universal atom-by-atom support complexity = 4^k
+```
+
+can coexist with
+
+```text
+law-specific support needed for one finite LP/query profile <= r + 1.
+```
+
+This distinction is important for causal interpretation. The sparse law preserves exactly the finite rows and query supplied to the theorem. A later query outside that feature family may distinguish it from the original law.
+
+## 40. Specialization to k Boolean response-pair strata and next reduction
+
+For the response-table carrier
+
+```text
+Fin k -> Bool x Bool
+```
+
+there are `4^k` possible complete tables. `responseTableCellQueryFeature` retains all four one-stratum response-cell indicators for every stratum together with one scalar query. `exists_responseTableCellQueryCompression` proves a positive atomic witness with
+
+```text
+support <= 4*k + 2,
+```
+
+while `responseTableCellMoment_eq` and `responseTableQueryMoment_eq` prove exact preservation of every retained cell probability and the query.
+
+The displayed `4*k+2` is deliberately conservative. Within each stratum the four cell indicators sum to one, while every admitted law is already normalized. Hence only three independent cell coordinates per stratum are required to reconstruct the fourth. A direct three-cell specialization should therefore target the explicit ambient bound
+
+```text
+3*k + 2.
+```
+
+The rank theorem may reduce the support further when the query or data induce additional affine dependencies. The exact rank, rather than `3*k+1` or `4*k+1`, is the reusable final complexity parameter.
+
+For multilinear Markovian families, the present theorem applies directly to already linearized fixed-component slices. Applying it to the whole nonlinear feasible family would require retaining sufficient polynomial features and proving that the reduced witness still satisfies the structural factorization constraints. A linear moment projection alone does not preserve a nonconvex product-law model class.
+
+The resulting representation hierarchy is now:
+
+```text
+4^k unrestricted response atoms
+  -> quotient exact row/query duplicate profiles
+  -> affine profile rank r
+  -> law-specific Caratheodory witness of size <= r+1
+  -> pushforward to a sparse law on the original response carrier.
+```
+
+This is a lossless reduction for the nominated finite linear identification problem. An automatic or sofic cross-stratum restriction remains a separate scientifically substantive assumption that can shrink the causal model family itself. The next formal target is the explicit `3*k+2` response-marginal specialization and then an executable rational support-reduction certificate that can be replayed alongside the existing primal-dual LP certificates.
