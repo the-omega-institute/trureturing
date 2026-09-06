@@ -36,6 +36,14 @@ internal sealed class StructuredResponseTableSupportDocument : IScribeDocumentDe
                 Blocks(Paragraph(Text("Any latent family below the radix capacity fails to cover the unrestricted table carrier. This is a support statement, not a DFAO-state lower bound."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("twenty-one-latent-states-not-universal-three-rows"),
+                DeclarationHandle.Create(Prefix + "twenty_one_latent_states_not_universal_three_rows"),
+                H("Twenty-one latent atoms cannot cover three unrestricted rows"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Three quaternary rows already give 64 possible tables, so a 21-element latent carrier is not universal. The number 21 mirrors the current golden powers-only draft scale solely to make the complexity distinction explicit; no automaton-minimality conclusion follows."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("independent-response-table-full-support"),
                 DeclarationHandle.Create(Prefix + "independentResponseTable_full_support"),
                 H("Positive row kernels fill the full table space"),
