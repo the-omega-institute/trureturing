@@ -10,6 +10,35 @@ internal sealed class ClassicalFiberBoundDocument : IScribeDocumentDefinition
         H("Exact Classical Local-Fiber CHSH Bound"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("every-probability-weighted-local-model-satisfies-the-bound"),
+                DeclarationHandle.Create("D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two"),
+                H("Every probability-weighted local model satisfies the bound"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("m"), Comma, Esc,
+                    Vert, Sp, F.Id("S"), Underscore, Grp(Mathrm, Grp(F.Id("cl"))),
+                    Open, Mu, Comma, F.Id("m"), Close, Vert, Leq, D(2)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a finite fiber, let mu be nonnegative weights summing to one. "
+                        + "Every deterministic local answer model m then has weighted CHSH "
+                        + "value between minus two and two."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("constant-positive-answers-attain-two"),
+                DeclarationHandle.Create("D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists"),
+                H("Constant positive answers attain two"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Exists, Sp, F.Id("m"), Comma, Esc,
+                    F.Id("S"), Underscore, Grp(Mathrm, Grp(F.Id("cl"))),
+                    Open, Mu, Comma, F.Id("m"), Close, Eq, D(2)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any finite real weight table mu summing to one, the deterministic "
+                        + "model with all four answer tables constantly true attains CHSH "
+                        + "value two. This existence statement needs normalization alone, "
+                        + "without nonnegativity of the weights."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-classical-local-fiber-chsh-bound-is-exactly-two"),
                 DeclarationHandle.Create("D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact"),
                 H("The classical local-fiber CHSH bound is exactly two"),

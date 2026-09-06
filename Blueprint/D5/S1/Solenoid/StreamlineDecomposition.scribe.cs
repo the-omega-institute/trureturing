@@ -11,6 +11,30 @@ internal sealed class StreamlineDecompositionDocument : IScribeDocumentDefinitio
         H("Canonical Streamline Decomposition"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("a-prescribed-visible-representative-fixes-the-streamline"),
+                DeclarationHandle.Create(
+                    "D5/S1/Solenoid/StreamlineDecomposition.existsUnique_streamline"),
+                H("A prescribed visible representative fixes the streamline"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Pi, Open, GammaLower, Open, F.Id("t0"), Close, Close,
+                    Eq, Overline, Grp(F.Id("r0")), Sp, Rightarrow, Sp,
+                    Exists, Bang, Sp, Open, F.Id("r"), Comma, F.Id("k"), Close,
+                    InMacro, Sp, F.Id("C"), Open, Mathbb, Grp(F.Id("R")), Comma,
+                    Mathbb, Grp(F.Id("R")), Close, Times, Ker, Open, Pi, Close,
+                    Comma, Esc, F.Id("r"), Open, F.Id("t0"), Close, Eq, F.Id("r0"),
+                    Sp, Land, Sp, Forall, Sp, F.Id("t"), Comma, Esc,
+                    GammaLower, Open, F.Id("t"), Close, Eq,
+                    F.Id("realFlow"), Open, F.Id("r"), Open, F.Id("t"), Close, Close,
+                    Plus, F.Id("k")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a continuous solenoid path, fix a time t0 and a real representative "
+                        + "r0 of its visible phase at that time. There is a unique pair consisting "
+                        + "of a continuous real lift taking value r0 at t0 and a constant hidden "
+                        + "kernel element that reconstructs the path. The normalization is part "
+                        + "of the hypothesis; the representative need not lie between zero and one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("canonical-visible-phase-representative"),
                 DeclarationHandle.Create(
                     "D5/S1/Solenoid/StreamlineDecomposition.baseRepresentative"),
