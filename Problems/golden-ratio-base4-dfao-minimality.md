@@ -1099,3 +1099,205 @@ cross-phase constraints must remain attached to the same candidate table.
 A complete five-slot refutation would imply s>=6 and remove (15,5); a relaxed
 SAT model would still require a genuine recurrent realization and all-power
 correctness. Neither conclusion follows from a timeout.
+
+## 2026-09-06 finite-prefix barrier and completed source synchronization
+
+This continuation gives an explicit twenty-state machine fitting the original
+power observations through index 366 and failing at index 367. It establishes
+a necessary sample extent for any twenty-state exclusion based on an initial
+digit dictionary. It does not prove a new total-state lower bound or supply an
+all-powers twenty-state upper construction. The original minimum remains open
+in this work, and the reported Walnut 21/22 discrepancy remains unassigned.
+
+### Repaired four-slot evidence and the current proof interfaces
+
+The older appendix's references to stored numeric rows and compressed proofs
+are historical. A later source repair removed malformed serialized copies and
+retained `gap4_produce.cpp`, `rebuild_gap4.py`, `check_gap4_certificate.cpp`,
+`test_gap4_rejection.py`, and `reproduce_gap4.sh` instead. The deterministic
+producer regenerates all three complete proof parts. The audited rebuild gave
+the same sample and proof bytes as the previously replayed originals. Hash
+agreement checks integrity; the separate replay checks the proof steps. The
+accepted totals remain 144 true power samples, 48 cases, 1,272,968 nodes,
+420,692 branches, and 852,276 contradiction leaves. This supplies the external
+four-slot exclusion and hence s>=5; it is not a new Lean numeric certificate.
+
+The now-present `SkeletonSlotGapConstraintTransport` constructs actual finite
+assignments from `SlotWitness` runs. The existing shared gap maps are inserted
+as table values, actual prefix runs as trace values, and syntactic path-append
+identities imply the original Selection equations. Fitted terminal observations
+put these values into the observation domains. The endpoint is
+`fitted_slots_induce_selection_solution`. Concrete certificate parsing, state
+anchor normalization, and execution of the resulting million-node Lean value
+are still separate obligations.
+
+`SkeletonSlotProfileSymmetry` proves slot renaming while retaining the same
+Skeleton: B becomes pi composed with B, C becomes C composed with inverse pi,
+and G is renamed by inverse pi. Thus each gap map is conjugated, with no
+self-loop deleted. For five slots the three observation-named anchors stay
+fixed. Each remaining joint (G,E) profile has six possible values; sorting the
+two unnamed profiles leaves 6+choose(6,2)=21 unordered pairs. Including the
+three anchored Boolean E values gives 8*21=168 cases. This replaces the old
+288-case enumeration without identifying equal-profile states or restricting
+unused capacity. It is a complete symmetry cover, not a five-slot refutation.
+
+### Why free long-tail readouts cannot strengthen a gap-only lower bound
+
+`GoldenBase4ZeroTailForgetting.lean` was synchronized with its Scribe at
+`729b114484d766aaf886115a3a941472deccc2de`. For every successful reference prefix
+ending in the previous-one fiber and every terminal-zero length ell>=2,
+
+\[
+\Delta_4([u1\,0^\ell]_F)=
+\begin{cases}3&\ell\text{ even},\\0&\ell\text{ odd}.\end{cases}
+\]
+
+The source proves this for all depths by finite core transitions and induction,
+then uses the existing arithmetic correctness theorem. In the error coordinate,
+put t=phi-1. A previous-one error satisfies -t<e<-t^3. Zero multiplies it by -t;
+after at least two zeroes its absolute value is below 1/4, and its sign
+alternates. The two possible floor differences are consequently three and zero.
+
+For any fixed gap trace and fixed readouts at tail lengths zero and one, all
+longer labels can be satisfied by the constant readout prescribed by parity.
+The theorem `free_tail_completion_iff` proves both directions. This result
+applies to independently chosen readouts; actual machines must retain the
+common-map condition E_ell=F composed with A^(ell-1) composed with C. Therefore
+long-tail observations can constrain recurrent capacity, but merely adding
+them to the old free-readout relaxation cannot increase its transient bound.
+
+The executed source-bound check validates 700 exact arithmetic tail cases,
+256 pairs of fixed short readouts, and rejects two changed-table mutations.
+These are finite checks. The all-depth Lean proof has not been compiled here.
+
+### A concrete twenty-state candidate survives every index below 367
+
+`GoldenBase4TwentyStatePrefixBarrier.lean` and its Scribe were committed at
+`13cdd4e5f7c6f4b275467f5d44ba08f788278466`. The machine has thirteen
+previous-zero states 0 through 12 and seven previous-one states 13 through 19.
+Its start is zero, with zero output and a zero self-loop. The table is
+
+```
+zeroTarget = [0,8,7,6,5,4,4,3,3,2,2,2,1,12,11,11,10,9,8,8]
+oneTarget  = [17,19,18,17,17,17,16,16,15,14,14,13,13,0,0,0,0,0,0,0]
+output     = [0,3,3,3,3,0,0,0,0,0,1,1,1,1,1,2,2,2,2,3]
+```
+
+The last seven oneTarget entries are unused: the step definition makes a one
+from any previous-one state undefined. Every permitted transition is present.
+All twenty states are reachable, and there are seven distinct transient
+output-return signatures. The table was discovered by identifying old
+reference states 2 and 3 while retaining state 2's zero successor. This changes
+transition behavior and is not the output- and transition-preserving quotient
+excluded in the earlier section.
+
+Against the unchanged M01 words and digit functions, the new source statements
+are
+
+\[
+\forall n<367,\quad M_{20}(Z(4^n))=D_4(n),
+\qquad M_{20}(Z(4^{367}))=1,\quad D_4(367)=0.
+\]
+
+The finite prefix comparison uses kernel-style `decide` proof bodies against
+the reference machine, followed by the existing all-index arithmetic theorem.
+Those proof bodies have not been executed by Lean in this session. Separately,
+`check_twenty_state_prefix.py` reads the actual Lean vector literals and computes
+all labels from integer square roots, without using the reference machine as
+an oracle. It evaluates the canonical words at indices 0 through 1999 exactly.
+The first failure is 367; the only other failure in that finite range is 1164.
+No assertion about the complete infinite error set follows from that scan.
+
+The index-367 word has 1057 bits. Its SHA-256 is
+`6bcc16ae77b94c9423f921e1c103be2d13b85ead036f67fbf5c8ae31be1eadef`.
+The source SHA-256 is
+`1e937bdd9fd537f48c5583bcc5e3176ea29e10ef9163237d78cbc25407347048`.
+The checker also validates all twenty access states, the seven signatures,
+240 leading-zero cases, and rejection of altered zero-target, output, and type
+guard data. No floating-point arithmetic is used.
+
+### Consequence for the original lower-bound program
+
+For any index set S contained in {0,...,366}, the same explicit machine fits
+all observations in S. Thus no sound encoding of those observations can refute
+all twenty-state typed candidates. The source theorem
+`every_subprefix_has_twenty_state_witness` quantifies over arbitrary index
+families, including repetitions. In particular, the old 144-row gap4 dictionary
+with maximum index249 has a genuine (r,s)=(13,7) realization.
+
+This does not weaken s>=5: the witness has seven transient states. It does
+show that the (13,7) budget20 case on the old dictionary is satisfiable, rather
+than an unresolved UNSAT computation. Any initial-prefix certificate proving
+the total lower bound21 must include an index at least367. The single index367
+eliminates this witness only; it does not establish that all other twenty-state
+machines fail by that index.
+
+To raise the inherited total lower bound15 to16, combine s>=5, s<=r and
+r+s<=15. Setting r'=max(r,8) covers every candidate in one of
+
+```
+(10,5), (9,6), (8,7).
+```
+
+All three still require actual refutations. Earlier coupled searches on the
+first250 inputs ended UNKNOWN. This continuation also tried exact-table CNF
+and incremental candidate refinement for (8,7); fitted finite models were
+checked against every generated clause and their selected true power labels,
+but the final searches remained UNKNOWN. No partial proof log is promoted to
+a refutation. The twenty-state prefix witness is the new definitive finite
+result; it is neither a lower bound16 nor an all-powers upper bound20.
+
+### External methods and current repository reuse
+
+The original target remains Barnoff, Bright and Shallit's incomplete-input
+DFAO problem, TCS1071 (2026),115843, DOI10.1016/j.tcs.2026.115843.
+Heule and Verwer's exact SAT-based DFA identification (2010), DOI
+10.1007/978-3-642-15488-1_7, supplies the established finite-inference setting.
+Ulyantsev, Zakirzyanov and Shalyto, arXiv:1602.05028, supply explicit BFS/DFS
+symmetry-breaking methods; their assumptions must be matched before reuse.
+
+Brand, Faber, Held and Mutzel's ZykovColor work, arXiv:2504.04821 and ALENEX2026,
+pp.142-155, studies merge/separate search with transitivity propagation through
+IPASIR-UP. Its graph-coloring performance is not a performance guarantee for
+this typed DFAO instance. The current repository `TracePartitionRefutation`
+already provides equality closure, exhaustive merge/fresh branches, and a
+simultaneous recurrent/signature capacity statement. Its abstract source
+soundness must still be consumed by a complete numerical trace certificate.
+
+Meng, An, Li, Turrini, Xu, Zhan and Zhang's *Efficient Decomposition
+Identification of Deterministic Finite Automata from Examples*, SETTA2025,
+proceedings online 1 April2026, DOI10.1007/978-981-95-7826-9_10,
+arXiv:2509.24347v1, motivates compressed sample representations. Its encoding
+allows a merged representative to be related to multiple candidate states.
+Copying the APTA single-color constraint to an arbitrary compressed sample
+node would silently remove candidates. No compressed-data completeness theorem
+or claimed speedup on this instance is asserted in the present continuation.
+
+The current PR review included both loning and AlyciaBHZ work. PR#5818 exposes
+the existing binary-base language bridge; #5233 gives exact partial-signature
+completion costs. Loning's current closure-barrier review in #5867 reinforces
+that agreement between two implementations sharing a defect is not an
+independent truth anchor. Here the finite witness uses the original M01
+specification, while the separate executable labels come from exact integers.
+The reverted #5837/#5857 module is not used as a new prerequisite.
+
+### Executed validation and remaining verification
+
+Reproduce the new finite witness with
+
+```sh
+python Evidence/D5/Automata/GoldenBase4/check_twenty_state_prefix.py \
+  D5/S1/Digit/GoldenBase4TwentyStatePrefixBarrier.lean
+python Evidence/D5/Automata/GoldenBase4/check_zero_tail_forgetting.py \
+  D5/S1/Digit/GoldenBase4IntervalMachine.lean \
+  D5/S1/Digit/GoldenBase4ZeroTailForgetting.lean \
+  Blueprint/D5/S1/Digit/GoldenBase4ZeroTailForgetting.scribe.cs
+```
+
+The corresponding reports are `twenty_state_prefix_validation.json` and
+`zero_tail_validation.json`. The two newly synchronized Lean modules have
+paired Scribes for all seventeen public declarations, including ten theorems.
+No new axiom, admitted proof, sorry, or native_decide is authored. Logical
+review and exact executable checking are distinct from unperformed Lean
+elaboration, kernel acceptance, and transitive axiom-closure inspection.
+No new numerical minimum or first-priority claim is made.
