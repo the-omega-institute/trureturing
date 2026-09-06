@@ -28,7 +28,7 @@ internal sealed class SwapClosureExtensionInvarianceDocument
                 DeclarationHandle.Create(
                     Prefix + "evaluation_invariant_of_swap_chain"),
                 H("A finite admissible swap chain preserves evaluation"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The induction proof composes exact final-state equalities for the recorded local moves."))),
@@ -38,7 +38,7 @@ internal sealed class SwapClosureExtensionInvarianceDocument
                 DeclarationHandle.Create(
                     Prefix + "responseProfile_invariant_of_swap_chain"),
                 H("Swap-connected orders have identical response profiles"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The evaluation theorem is applied pointwise to every exogenous state."))),
@@ -48,7 +48,7 @@ internal sealed class SwapClosureExtensionInvarianceDocument
                 DeclarationHandle.Create(
                     Prefix + "extension_invariance_from_swap_connectivity"),
                 H("Swap connectivity discharges global extension invariance"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Any proof that compatible extensions belong to one swap component immediately yields equality of all query readout functions."))),

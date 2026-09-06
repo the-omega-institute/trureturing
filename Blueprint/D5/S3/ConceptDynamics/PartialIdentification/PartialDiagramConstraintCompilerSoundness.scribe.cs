@@ -24,7 +24,7 @@ internal sealed class PartialDiagramConstraintCompilerSoundnessDocument
                 DeclarationHandle.Create(
                     Prefix + "feasible_iff_compatible_completion_mixture"),
                 H("The compiled LP exactly characterizes admissible completion mixtures"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Nonnegativity and two normalization rows produce a probability law. Active violation rows force every inadmissible completion coordinate to zero. Conversely, an admissibly supported probability law satisfies every generated row."))),
@@ -34,7 +34,7 @@ internal sealed class PartialDiagramConstraintCompilerSoundnessDocument
                 DeclarationHandle.Create(
                     Prefix + "pointMass_feasible_iff_admissible"),
                 H("A deterministic completion witness is feasible exactly when it is admissible"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The unit mass concentrated on one completion passes the compiler exactly when that completion satisfies every required edge, every forbidden-edge exclusion, and the query-order condition."))),
@@ -44,7 +44,7 @@ internal sealed class PartialDiagramConstraintCompilerSoundnessDocument
                 DeclarationHandle.Create(
                     Prefix + "compiled_problem_nonempty_iff_exists_admissible"),
                 H("The support polytope is inhabited exactly when an admissible completion exists"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A normalized feasible mass has at least one nonzero support coordinate, which supplies an admissible completion. The reverse implication uses its point mass."))),
@@ -54,7 +54,7 @@ internal sealed class PartialDiagramConstraintCompilerSoundnessDocument
                 DeclarationHandle.Create(
                     Prefix + "feasible_antitone_under_refinement"),
                 H("Adding partial-graph information shrinks the compiled feasible set"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Every completion supporting a stronger diagram also supports the weaker diagram. The same normalized mass therefore remains feasible after forgetting graph assertions."))),
@@ -64,7 +64,7 @@ internal sealed class PartialDiagramConstraintCompilerSoundnessDocument
                 DeclarationHandle.Create(
                     Prefix + "lower_bound_survives_refinement"),
                 H("A weaker-diagram lower certificate remains valid after refinement"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Feasible-set inclusion transports any replayable rational lower certificate from a weaker partial diagram to every stronger one with the same completion semantics and query."))),
@@ -74,7 +74,7 @@ internal sealed class PartialDiagramConstraintCompilerSoundnessDocument
                 DeclarationHandle.Create(
                     Prefix + "upper_bound_survives_refinement"),
                 H("A weaker-diagram upper certificate remains valid after refinement"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The dual monotonicity statement holds at the upper endpoint. Additional graph assertions cannot invalidate a universal upper bound proved on the larger feasible family."))),

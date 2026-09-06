@@ -24,7 +24,7 @@ internal sealed class CovariateSharedParameterObstructionDocument
                 DescribeId.Create("local-attainable-iff"),
                 DeclarationHandle.Create(Prefix + "local_attainable_iff"),
                 H("Each stratum projection is the exact unit interval"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For either complementary response, every value between zero and one is realized by an admissible stratum-specific parameter, and no value outside the interval is realized."))),
@@ -33,7 +33,7 @@ internal sealed class CovariateSharedParameterObstructionDocument
                 DescribeId.Create("complement-fixed-point-eq-half"),
                 DeclarationHandle.Create(Prefix + "complement_fixed_point_eq_half"),
                 H("The affine complement involution has fixed point one half"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Solving x equals one minus x gives the unique affine midpoint. The theorem is intentionally independent of analytic number theory."))),
@@ -42,7 +42,7 @@ internal sealed class CovariateSharedParameterObstructionDocument
                 DescribeId.Create("shared-parameter-attainable-iff"),
                 DeclarationHandle.Create(Prefix + "shared_parameter_attainable_iff"),
                 H("The shared-parameter global range is a singleton"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Equal weighting of the complementary responses eliminates the common parameter and fixes the global query at one half."))),
@@ -51,7 +51,7 @@ internal sealed class CovariateSharedParameterObstructionDocument
                 DescribeId.Create("shared-parameter-invalidates-naive-weighted-sharpness"),
                 DeclarationHandle.Create(Prefix + "shared_parameter_invalidates_naive_weighted_sharpness"),
                 H("Independent weighted sharpness can fail under cross-stratum coupling"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The independent product family realizes global value zero, while the shared-parameter family cannot. This separates projected stratum information from jointly compatible causal models."))),

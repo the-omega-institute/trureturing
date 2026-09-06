@@ -27,7 +27,7 @@ internal sealed class PartialGraphCompletionRangeDocument
                 DeclarationHandle.Create(
                     Prefix + "partial_graph_range_is_completion_union"),
                 H("The partial-graph identified range is the completion union"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The theorem identifies global attainability exactly with membership in one compatible completion's sharp interval."))),
@@ -37,7 +37,7 @@ internal sealed class PartialGraphCompletionRangeDocument
                 DeclarationHandle.Create(
                     Prefix + "exact_lower_endpoint_of_completion_envelope"),
                 H("An attained completion envelope gives an exact global endpoint"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A lower value below every completion-specific lower endpoint is globally valid, and one completion attaining it proves exactness. The module also proves the dual upper statement."))),
@@ -47,7 +47,7 @@ internal sealed class PartialGraphCompletionRangeDocument
                 DeclarationHandle.Create(
                     Prefix + "partial_graph_envelope_need_not_be_sharp_interval"),
                 H("Exact envelope endpoints do not force interval sharpness"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Two graph completions with singleton ranges zero and two have exact envelope endpoints, while the intermediate value one remains unattainable."))),

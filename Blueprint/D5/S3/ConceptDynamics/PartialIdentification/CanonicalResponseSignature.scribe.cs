@@ -21,7 +21,7 @@ internal sealed class CanonicalResponseSignatureDocument : IScribeDocumentDefini
                 DescribeId.Create("node-has-unique-position"),
                 DeclarationHandle.Create(Prefix + "node_has_unique_position"),
                 H("Every node occupies a unique total-order position"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The inverse permutation gives the position witness, and injectivity gives uniqueness."))),
@@ -30,7 +30,7 @@ internal sealed class CanonicalResponseSignatureDocument : IScribeDocumentDefini
                 DescribeId.Create("signature-event-mass-eq-linear-objective"),
                 DeclarationHandle.Create(Prefix + "signature_event_mass_eq_linearObjective"),
                 H("A signature event probability is an exact linear objective"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The event indicator is zero or one on each response signature, so the finite event sum coincides term by term with linear-objective evaluation."))),
@@ -39,7 +39,7 @@ internal sealed class CanonicalResponseSignatureDocument : IScribeDocumentDefini
                 DescribeId.Create("pushforward-signature-mass-id"),
                 DeclarationHandle.Create(Prefix + "pushforwardSignatureMass_id"),
                 H("Every signature mass has an identity exogenous realization"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Taking the signature carrier itself as the exogenous state space and the identity as the signature map reproduces every mass exactly."))),

@@ -22,7 +22,7 @@ internal sealed class CovariateSharpAggregationDocument
                 DescribeId.Create("weighted-value-mono"),
                 DeclarationHandle.Create(Prefix + "weightedValue_mono"),
                 H("Nonnegative weights preserve pointwise stratum bounds"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Finite summation of the pointwise inequalities gives the global lower or upper bound."))),
@@ -31,7 +31,7 @@ internal sealed class CovariateSharpAggregationDocument
                 DescribeId.Create("covariate-weighted-sharp-iff"),
                 DeclarationHandle.Create(Prefix + "covariate_weighted_sharp_iff"),
                 H("The weighted covariate interval is exactly sharp"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A target lies between the weighted endpoints exactly when jointly attainable stratum values aggregate to that target. Equal endpoints use a boundary witness. Distinct endpoints use one common affine interpolation parameter."))),

@@ -21,7 +21,7 @@ internal sealed class CausalOrderLinearProgramDocument : IScribeDocumentDefiniti
                 DescribeId.Create("signature-event-problem-query-eq"),
                 DeclarationHandle.Create(Prefix + "signatureEventProblem_query_eq"),
                 H("The compiled objective equals the signature event probability"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The compiler selects the event indicator as its objective coefficient, so equality follows from the response-signature linearity theorem."))),
@@ -30,7 +30,7 @@ internal sealed class CausalOrderLinearProgramDocument : IScribeDocumentDefiniti
                 DescribeId.Create("signature-event-upper-bound-of-certificate"),
                 DeclarationHandle.Create(Prefix + "signature_event_upper_bound_of_certificate"),
                 H("A rational dual certificate bounds the causal event probability"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Replaying the generic finite causal upper certificate and transporting across the objective equality yields the event bound."))),
@@ -39,7 +39,7 @@ internal sealed class CausalOrderLinearProgramDocument : IScribeDocumentDefiniti
                 DescribeId.Create("signature-event-mass-pushforward"),
                 DeclarationHandle.Create(Prefix + "signature_event_mass_pushforward"),
                 H("Exogenous and response-signature event evaluations agree"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Finite sum exchange and deterministic signature assignment show that evaluating the event before or after pushforward gives the same probability."))),
@@ -48,7 +48,7 @@ internal sealed class CausalOrderLinearProgramDocument : IScribeDocumentDefiniti
                 DescribeId.Create("identity-exogenous-realizes-signature-event"),
                 DeclarationHandle.Create(Prefix + "identity_exogenous_realizes_signature_event"),
                 H("Every finite signature-law witness has an exogenous realization"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The response-signature carrier itself serves as the latent state space, making the structural realization explicit at the law level."))),

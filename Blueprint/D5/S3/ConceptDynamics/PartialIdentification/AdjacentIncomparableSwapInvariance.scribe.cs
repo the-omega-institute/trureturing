@@ -29,7 +29,7 @@ internal sealed class AdjacentIncomparableSwapInvarianceDocument
                 DeclarationHandle.Create(
                     Prefix + "localEvaluateNode_comm_of_no_direct_edges"),
                 H("Parent-independent local structural updates commute"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The proof reduces each local equation to the same pre-update value and then checks that writes to two distinct coordinates commute."))),
@@ -40,7 +40,7 @@ internal sealed class AdjacentIncomparableSwapInvarianceDocument
                     Prefix
                         + "parent_local_evaluation_invariant_under_adjacent_swap"),
                 H("One adjacent incomparable swap preserves structural evaluation"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Induction transports the commuting pair through an arbitrary evaluated prefix. "
@@ -51,7 +51,7 @@ internal sealed class AdjacentIncomparableSwapInvarianceDocument
                 DeclarationHandle.Create(
                     Prefix + "readout_invariant_under_adjacent_swap"),
                 H("Every final-state readout is invariant under the swap"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Applying an arbitrary readout to the equal final states supplies the local query-invariance certificate needed by causal-order LP compilation."))),

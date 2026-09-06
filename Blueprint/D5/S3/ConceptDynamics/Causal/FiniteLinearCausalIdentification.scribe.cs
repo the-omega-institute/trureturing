@@ -22,7 +22,7 @@ internal sealed class FiniteLinearCausalIdentificationDocument
                 DescribeId.Create("query-lower-bound-of-certificate"),
                 DeclarationHandle.Create(Prefix + "query_lower_bound_of_certificate"),
                 H("A generic rational lower certificate proves the compiled causal bound"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Every feasible response-type mass vector satisfies the bound after exact replay of the nonnegative row combination."))),
@@ -31,7 +31,7 @@ internal sealed class FiniteLinearCausalIdentificationDocument
                 DescribeId.Create("query-upper-bound-of-certificate"),
                 DeclarationHandle.Create(Prefix + "query_upper_bound_of_certificate"),
                 H("A generic rational upper certificate proves the compiled causal bound"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The certificate checker is independent of whether a row originated from data, causal structure, or a sensitivity assumption."))),
@@ -41,7 +41,7 @@ internal sealed class FiniteLinearCausalIdentificationDocument
                 DeclarationHandle.Create(
                     Prefix + "exact_endpoints_of_primal_dual_payload"),
                 H("A complete rational primal-dual payload certifies both exact causal endpoints"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Two valid dual certificates and two attaining feasible response distributions close the endpoint-optimality proof obligations for a finite linear causal query."))),
@@ -50,7 +50,7 @@ internal sealed class FiniteLinearCausalIdentificationDocument
                 DescribeId.Create("constraint-layer-is-exhaustive"),
                 DeclarationHandle.Create(Prefix + "constraint_layer_is_exhaustive"),
                 H("Every compiled row retains an auditable semantic provenance"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The layer tag makes explicit whether tightening comes from identified data, structural causal restrictions, or external sensitivity knowledge."))),

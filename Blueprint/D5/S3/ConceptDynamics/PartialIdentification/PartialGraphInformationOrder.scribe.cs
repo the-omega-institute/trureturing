@@ -22,7 +22,7 @@ internal sealed class PartialGraphInformationOrderDocument
                 DescribeId.Create("compatible-antitone"),
                 DeclarationHandle.Create(Prefix + "compatible_antitone"),
                 H("Stronger partial diagrams have fewer compatible graphs"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Required-edge and forbidden-edge inclusion are checked separately and then recombined into the weaker compatibility certificate."))),
@@ -31,7 +31,7 @@ internal sealed class PartialGraphInformationOrderDocument
                 DescribeId.Create("identified-set-antitone"),
                 DeclarationHandle.Create(Prefix + "identified_set_antitone"),
                 H("Stronger graph information removes identified query values"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Every stronger-family model is reused as a weaker-family witness with the same scalar query value."))),
@@ -40,7 +40,7 @@ internal sealed class PartialGraphInformationOrderDocument
                 DescribeId.Create("partial-graph-endpoint-monotonicity"),
                 DeclarationHandle.Create(Prefix + "lower_endpoint_monotone_under_refinement"),
                 H("Partial graph refinement raises attained lower endpoints"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A bound valid for the weaker outer family applies to an attaining witness in the stronger inner family. The companion theorem gives the reversed inequality for upper endpoints."))),

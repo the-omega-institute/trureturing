@@ -21,7 +21,7 @@ internal sealed class AttainingStructuralModelDocument : IScribeDocumentDefiniti
                 DescribeId.Create("canonical-scm-induced-signature-mass"),
                 DeclarationHandle.Create(Prefix + "canonicalSCM_inducedSignatureMass"),
                 H("The canonical structural witness realizes the nominated signature law"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Identity pushforward on the signature carrier returns every mass coordinate unchanged."))),
@@ -30,7 +30,7 @@ internal sealed class AttainingStructuralModelDocument : IScribeDocumentDefiniti
                 DescribeId.Create("canonical-scm-structural-response"),
                 DeclarationHandle.Create(Prefix + "canonicalSCM_structuralResponse"),
                 H("Canonical equations are exactly the stored response tables"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "At every total-order position and exogenous signature state, the structural response is definitionally the selected predecessor-response table."))),
@@ -39,7 +39,7 @@ internal sealed class AttainingStructuralModelDocument : IScribeDocumentDefiniti
                 DescribeId.Create("canonical-scm-attains-signature-event"),
                 DeclarationHandle.Create(Prefix + "canonicalSCM_attains_signature_event"),
                 H("The structural witness attains the LP event probability"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Evaluating a Boolean event on the canonical exogenous states gives the same finite sum as evaluating it on the signature-law vector."))),

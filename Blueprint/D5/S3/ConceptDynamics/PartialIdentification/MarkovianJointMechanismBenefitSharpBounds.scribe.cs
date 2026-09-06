@@ -23,7 +23,7 @@ internal sealed class MarkovianJointMechanismBenefitSharpBoundsDocument
                 DeclarationHandle.Create(
                     Prefix + "unrestricted_joint_benefit_target_feasible_iff"),
                 H("Unrestricted simultaneous benefit has the exact Frechet interval"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Every target in the two-event Frechet interval is attained by an explicit normalized four-cell coupling of the two mechanism-level benefit indicators. Conversely, normalization and cell nonnegativity recover both endpoint inequalities."))),
@@ -33,7 +33,7 @@ internal sealed class MarkovianJointMechanismBenefitSharpBoundsDocument
                 DeclarationHandle.Create(
                     Prefix + "markovian_benefit_status_pushforward_factorizes"),
                 H("Benefit-status projection preserves Markovian product structure"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Pushing two independent complete outcome-mechanism response laws through their componentwise benefit indicators yields the product of the two marginal benefit-status laws. Internal potential-outcome dependence inside each mechanism is left unchanged before projection."))),
@@ -43,7 +43,7 @@ internal sealed class MarkovianJointMechanismBenefitSharpBoundsDocument
                 DeclarationHandle.Create(
                     Prefix + "markovian_joint_benefit_sharp_singleton_iff"),
                 H("Independent mechanisms point identify simultaneous benefit"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A target is realized by two independent complete outcome mechanisms with nominated marginal benefit probabilities exactly when the target equals their product. Explicit component laws provide the attaining structural witness."))),
@@ -53,7 +53,7 @@ internal sealed class MarkovianJointMechanismBenefitSharpBoundsDocument
                 DeclarationHandle.Create(
                     Prefix + "half_joint_benefit_strict_tightening"),
                 H("The half-marginal interval strictly collapses to one quarter"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "When both mechanism benefit probabilities are one half, unrestricted cross-mechanism coupling admits simultaneous benefit zero and every value through one half. Every Markovian two-mechanism model instead has simultaneous benefit exactly one quarter."))),

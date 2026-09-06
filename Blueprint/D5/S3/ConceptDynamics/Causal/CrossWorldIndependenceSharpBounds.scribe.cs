@@ -22,7 +22,7 @@ internal sealed class CrossWorldIndependenceSharpBoundsDocument
                 DescribeId.Create("independent-joint-event-eq-product"),
                 DeclarationHandle.Create(Prefix + "independent_joint_event_eq_product"),
                 H("The determinant restriction identifies the joint mass as the marginal product"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The proof eliminates the other three cells using the linear marginal equations and then verifies the remaining polynomial identity exactly."))),
@@ -32,7 +32,7 @@ internal sealed class CrossWorldIndependenceSharpBoundsDocument
                 DeclarationHandle.Create(
                     Prefix + "independent_joint_event_sharp_singleton_iff"),
                 H("The cross-world joint query has an exact singleton identified set"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Necessity follows from polynomial elimination. Sufficiency is witnessed by the explicit product coupling for probability-valued marginals."))),
@@ -44,7 +44,7 @@ internal sealed class CrossWorldIndependenceSharpBoundsDocument
                     Prefix
                         + "independent_event_couplings_not_closed_under_midpoint"),
                 H("Independent event couplings are globally nonconvex"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Two normalized independent endpoint laws are constructed. Their normalized midpoint violates the determinant equation, providing a replayable obstruction to unqualified convex mixing."))),

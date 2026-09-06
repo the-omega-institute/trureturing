@@ -24,7 +24,7 @@ internal sealed class ComplementSymmetryProjectionDocument
                 DescribeId.Create("complement-average-is-half"),
                 DeclarationHandle.Create(Prefix + "symmetricAverage_eq_half"),
                 H("Complementary symmetrization always equals one half"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The identity follows by exact affine cancellation."))),
@@ -34,7 +34,7 @@ internal sealed class ComplementSymmetryProjectionDocument
                 DeclarationHandle.Create(
                     Prefix + "symmetric_average_does_not_identify_center"),
                 H("The symmetric projection cannot identify the original center"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Zero is an explicit off-center parameter whose symmetrized query is still one half."))),
@@ -44,7 +44,7 @@ internal sealed class ComplementSymmetryProjectionDocument
                 DeclarationHandle.Create(
                     Prefix + "weightedComplementaryQuery_constant_half_iff"),
                 H("Equal weight is exactly the parameter-cancelling regime"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Evaluating at zero proves necessity, while direct polynomial normalization proves sufficiency."))),

@@ -21,7 +21,7 @@ internal sealed class QueryOrderLinearExtensionDocument : IScribeDocumentDefinit
                 DescribeId.Create("query-requirement-source-ne-target"),
                 DeclarationHandle.Create(Prefix + "query_requirement_source_ne_target"),
                 H("Query-generated precedence requirements are nontrivial"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The source coordinate belongs to the intervention set and is explicitly distinct from the atom's outcome, which is the target coordinate."))),
@@ -30,7 +30,7 @@ internal sealed class QueryOrderLinearExtensionDocument : IScribeDocumentDefinit
                 DescribeId.Create("query-partial-order-has-linear-extension"),
                 DeclarationHandle.Create(Prefix + "query_partial_order_has_linear_extension"),
                 H("Every certified query partial order has a preserving linear extension"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The witness relation is linear, extends the full certified partial order, and preserves each query-generated intervention-to-outcome requirement together with source-target disequality."))),

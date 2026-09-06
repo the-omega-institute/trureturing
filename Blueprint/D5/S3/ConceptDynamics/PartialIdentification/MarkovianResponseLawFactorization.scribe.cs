@@ -24,7 +24,7 @@ internal sealed class MarkovianResponseLawFactorizationDocument
                 DescribeId.Create("product-pushforward-factorizes"),
                 DeclarationHandle.Create(Prefix + "product_pushforward_factorizes"),
                 H("Componentwise deterministic pushforward preserves product factorization"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Pushing an independent product exogenous law through two coordinatewise response maps gives exactly the product of the two local response pushforwards. Every coefficient is checked by finite sum rearrangement."))),
@@ -34,7 +34,7 @@ internal sealed class MarkovianResponseLawFactorizationDocument
                 DeclarationHandle.Create(
                     Prefix + "independent_exogenous_components_induce_markovian_response_law"),
                 H("Independent exogenous components induce a Markovian response law"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Normalized local exogenous laws are pushed to normalized local response laws, and the preceding factorization identity packages the resulting joint response distribution as Markovian at the selected component resolution."))),
@@ -44,7 +44,7 @@ internal sealed class MarkovianResponseLawFactorizationDocument
                 DeclarationHandle.Create(
                     Prefix + "responseEventMass_product_eq_left_linearObjective"),
                 H("Fixing one component converts a counterfactual event to a linear objective"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The coefficient of a left response state is the right-law probability of all right responses that jointly satisfy the event. The full product-law event probability is exactly the resulting rational linear objective."))),
@@ -54,7 +54,7 @@ internal sealed class MarkovianResponseLawFactorizationDocument
                 DeclarationHandle.Create(
                     Prefix + "response_event_bounds_of_fixed_right_certificates"),
                 H("Fixed-component LP certificates bound the Markovian event probability"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Exact rational lower and upper dual certificates for the remaining component law replay directly as bounds on the original counterfactual event probability."))),
@@ -64,7 +64,7 @@ internal sealed class MarkovianResponseLawFactorizationDocument
                 DeclarationHandle.Create(
                     Prefix + "markovian_response_laws_not_closed_under_midpoint"),
                 H("The Markovian response-law family is globally nonconvex"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Two degenerate product response laws are constructed. Their midpoint places equal mass on the two diagonal Boolean states and violates the product determinant identity, giving an exact obstruction to convex interpolation."))),

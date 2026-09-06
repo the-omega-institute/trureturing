@@ -23,7 +23,7 @@ internal sealed class NonconvexSharpIdentificationDocument
                 DeclarationHandle.Create(
                     Prefix + "valid_lower_bound_of_outer_relaxation"),
                 H("Outer-relaxation lower bounds remain valid for the inner model"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Feasible-set containment is sufficient to transfer universal validity. No convexity, topology, or attainment assumption is used."))),
@@ -33,7 +33,7 @@ internal sealed class NonconvexSharpIdentificationDocument
                 DeclarationHandle.Create(
                     Prefix + "valid_upper_bound_of_outer_relaxation"),
                 H("Outer-relaxation upper bounds remain valid for the inner model"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "This is the upper-bound counterpart used when a semialgebraic model is relaxed to a polyhedral or convex feasible family."))),
@@ -42,7 +42,7 @@ internal sealed class NonconvexSharpIdentificationDocument
                 DescribeId.Create("two-point-problem-exact-endpoints"),
                 DeclarationHandle.Create(Prefix + "twoPointProblem_exact_endpoints"),
                 H("A disconnected range can have two exact endpoints"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The feasible query range containing only zero and two has exact lower and upper endpoints."))),
@@ -54,7 +54,7 @@ internal sealed class NonconvexSharpIdentificationDocument
                     Prefix
                         + "endpoint_attainment_without_convexity_does_not_fill_interval"),
                 H("Endpoint attainment without convexity does not prove interval sharpness"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The target one lies between the two exact endpoints but has no feasible preimage, formally blocking the convex interpolation inference in nonlinear models."))),

@@ -22,7 +22,7 @@ internal sealed class MarkovianBenefitIdentificationBoundaryDocument
                 DescribeId.Create("markovian-benefit-target-feasible-iff"),
                 DeclarationHandle.Create(Prefix + "markovian_benefit_target_feasible_iff"),
                 H("Markovian assignment independence preserves the exact Frechet interval"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A benefit target is realized by a product assignment-outcome response law exactly when it lies between the positive marginal difference and the smaller of treated success and control failure. Necessity uses nonnegativity and normalization. Sufficiency uses an explicit four-cell response law."))),
@@ -32,7 +32,7 @@ internal sealed class MarkovianBenefitIdentificationBoundaryDocument
                 DeclarationHandle.Create(
                     Prefix + "markovian_assignment_noise_does_not_point_identify_benefit"),
                 H("Equal marginals admit distinct Markovian benefit probabilities"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Two Markovian models have control and treated success probabilities one half. One has benefit zero and the other has benefit one half, giving a concrete machine-checked failure of point identification."))),
@@ -42,7 +42,7 @@ internal sealed class MarkovianBenefitIdentificationBoundaryDocument
                 DeclarationHandle.Create(
                     Prefix + "response_coordinate_factorization_point_identifies_benefit"),
                 H("Cross-world response-coordinate factorization point identifies benefit"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "When the control and treated potential-outcome coordinates are themselves product-factorized, the benefit cell is exactly the product of control failure and treated success. The theorem makes this additional assumption explicit rather than attributing it to ordinary Markovian SCM semantics."))),

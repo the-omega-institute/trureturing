@@ -21,7 +21,7 @@ internal sealed class ExtensionInvariantQueryBoundDocument : IScribeDocumentDefi
                 DescribeId.Create("signature-event-mass-relabel"),
                 DeclarationHandle.Create(Prefix + "signatureEventMass_relabel"),
                 H("Query event mass is invariant under preserving signature relabeling"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "An equivalence reindexes the finite signature sum, while preservation of the Boolean event makes each transported term equal."))),
@@ -30,7 +30,7 @@ internal sealed class ExtensionInvariantQueryBoundDocument : IScribeDocumentDefi
                 DescribeId.Create("feasible-relabel-iff"),
                 DeclarationHandle.Create(Prefix + "feasible_relabel_iff"),
                 H("Equivariant response-signature relabeling preserves feasibility"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Every compiled constraint row has the same finite sum after relabeling, and the right-hand sides agree."))),
@@ -39,7 +39,7 @@ internal sealed class ExtensionInvariantQueryBoundDocument : IScribeDocumentDefi
                 DescribeId.Create("identified-set-invariant-under-signature-equivalence"),
                 DeclarationHandle.Create(Prefix + "identified_set_invariant_under_signature_equivalence"),
                 H("Preserving signature equivalences give identical identified sets"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Forward and inverse mass transports map every feasible witness at a target value to a feasible witness for the other order at the same value."))),

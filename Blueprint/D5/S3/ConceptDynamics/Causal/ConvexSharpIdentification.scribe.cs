@@ -22,7 +22,7 @@ internal sealed class ConvexSharpIdentificationDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create(
                     Prefix + "sharp_interval_of_valid_bounds_and_endpoint_witnesses"),
                 H("Attained endpoints and convexity imply interval sharpness"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Given valid lower and upper bounds, feasible models attaining both endpoints, closure under convex blends, and affine query behavior, a target is attainable exactly when it lies between the two endpoints."))),
@@ -32,7 +32,7 @@ internal sealed class ConvexSharpIdentificationDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create(
                     Prefix + "exact_lower_endpoint_monotone_under_refinement"),
                 H("Stronger assumptions raise exact lower endpoints"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A lower bound valid for a weaker feasible family applies to every stronger feasible model. An attaining stronger-family witness therefore cannot lie below the weaker exact lower endpoint."))),
@@ -42,7 +42,7 @@ internal sealed class ConvexSharpIdentificationDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create(
                     Prefix + "exact_upper_endpoint_monotone_under_refinement"),
                 H("Stronger assumptions lower exact upper endpoints"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The dual information-order statement holds at the upper endpoint: an attaining stronger-family witness cannot exceed a valid weaker-family upper bound."))),

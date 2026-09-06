@@ -22,7 +22,7 @@ internal sealed class QueryImpliedCausalOrderDocument
                 DescribeId.Create("intervention-precedes-outcome"),
                 DeclarationHandle.Create(Prefix + "intervention_precedes_outcome"),
                 H("Nontrivial interventions precede their counterfactual outcomes"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The result unfolds one atom-level compiler obligation and applies the supplied query-order certificate."))),
@@ -31,7 +31,7 @@ internal sealed class QueryImpliedCausalOrderDocument
                 DescribeId.Create("reciprocal-query-requirements-inconsistent"),
                 DeclarationHandle.Create(Prefix + "reciprocal_query_requirements_inconsistent"),
                 H("Reciprocal query-implied requirements are inconsistent"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Two opposed query requirements would force both directions of one strict order, contradicting asymmetry."))),
@@ -40,7 +40,7 @@ internal sealed class QueryImpliedCausalOrderDocument
                 DescribeId.Create("query-requirement-has-structural-before"),
                 DeclarationHandle.Create(Prefix + "query_requirement_has_structural_before"),
                 H("Query obligations connect to the existing structural list order"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The adapter reuses the canonical finite structural-model Before relation rather than introducing a second list-order semantics."))),

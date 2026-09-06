@@ -25,7 +25,7 @@ internal sealed class SwapInvariantEventMassDocument
                 DeclarationHandle.Create(
                     Prefix + "eventMass_invariant_of_swap_chain"),
                 H("Swap-connected orders assign equal mass to every event"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Every summand agrees because the event readout agrees pointwise for the same exogenous state."))),
@@ -35,7 +35,7 @@ internal sealed class SwapInvariantEventMassDocument
                 DeclarationHandle.Create(
                     Prefix + "eventMassProfile_invariant_of_swap_chain"),
                 H("The complete finite event profile is extension invariant"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Function extensionality applies the scalar event-mass identity to every compiled event index."))),
@@ -45,7 +45,7 @@ internal sealed class SwapInvariantEventMassDocument
                 DeclarationHandle.Create(
                     Prefix + "linearEventQuery_invariant_of_swap_chain"),
                 H("Every linear query on the event profile is invariant"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Equality of event-mass profiles immediately preserves all rational linear objectives used by the finite causal LP layer."))),
