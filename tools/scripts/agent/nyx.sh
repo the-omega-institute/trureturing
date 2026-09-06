@@ -56,7 +56,63 @@ __inflight() {
   # 注:`nyxid oracle status` 把状态写到 **stderr**,必须 2>&1,否则恒为空 → 恒判 99
 }
 
+__verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决唯一合法的分类器。
+  # 分界:载体是否把答案交回来了,与 worker 判词是 approve 还是 reject **无关**;
+  # 故只认 nyxid CLI 自己的错误形态,不因答案里出现 "Error:" 字样而误判(见 --selftest 阴性对照)。
+  local r="$1" first
+  case "$r" in
+    *oracle_quota_exceeded*|*"HTTP 429"*) echo QUOTA;      return;;
+    *"Failed to read prompt"*)            echo NOFILE;     return;;
+    *extraction_failure*)                 echo EXTRACTION; return;;
+  esac
+  [ -n "$r" ] || { echo UNKNOWN; return; }
+  first=${r%%$'\n'*}
+  case "$first" in "Error:"*) echo UNKNOWN; return;; esac
+  echo OK
+}
+
+__selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**:`__classify` 的 OK 分支要求
+  # `tail -1 = EXIT=0`,而 `EXIT=` 是**分类之后**才追加的 —— 在 ask 的活判决里该分支
+  # **结构上不可达**,于是每一次成功取回都被判 rc=1。器律④:坏原材料让调用方误判。
+  # 该错配无运行期信号(答案就在文件里,只有退出码是错的),故必须由对照钉住。
+  local fail=0 got
+  chk() {  # chk <期望> <名字> <payload>
+    got=$(__verdict_of_payload "$3" 2>/dev/null)
+    if [ "$got" = "$1" ]; then printf '  ok   %-30s %s\n' "$2" "$got"
+    else printf '  FAIL %-30s expected=%s got=%s\n' "$2" "$1" "${got:-<none>}"; fail=1; fi
+  }
+  # 阳性:真答案必须判 OK —— 载体成功与 worker 判词是两回事,reject 也是成功取回
+  chk OK         answer-json                '{"ok":true}'
+  chk OK         answer-reject-verdict      '{"verdict":"reject","conclusion":{"a":1}}'
+  chk OK         answer-contains-error-word '{"verdict":"reject","note":"Error: in their proof"}'
+  chk OK         answer-multiline-err-later "$(printf 'line one\nError: quoted from their log')"
+  # 阴性:载体侧失败必须各自可辨,不得混成一个
+  chk EXTRACTION carrier-extraction         'Error: Task failed (extraction_failure).'
+  chk QUOTA      carrier-quota-429          'Error: HTTP 429 {"error":"oracle_quota_exceeded"}'
+  chk NOFILE     carrier-prompt-missing     'Error: Failed to read prompt'
+  chk UNKNOWN    carrier-bare-error         'Error: forbidden'
+  chk UNKNOWN    empty-payload              ''
+  # 回归钉:文件级 __classify 在「最后一行是答案」的文件上必判 RUNNING,
+  # 这正是它不能用于活判决的原因;若有人把它改回去,本例变红。
+  local tmp; tmp=$(mktemp)
+  printf 'Task submitted.\n\n{"ok":true}\n' > "$tmp"
+  got=$(__classify "$tmp"); rm -f "$tmp"
+  if [ "$got" = RUNNING ]; then printf '  ok   %-30s %s\n' file-classifier-unusable-live "$got"
+  else printf '  FAIL %-30s expected=RUNNING got=%s\n' file-classifier-unusable-live "$got"; fail=1; fi
+  # 接线钉:活判决必须用 __verdict_of_payload,不得退回文件级 __classify。
+  # 载体是 shell,无语言服务器(器律⑩ 的辨析允许对这类载体作窄形状断言);
+  # 断言窄到一条赋值形状,不是通用文本判语义。
+  if grep -qE 'verdict=\$\(__classify' "$0"; then
+    printf '  FAIL %-30s live verdict still reads the file classifier\n' wiring-uses-payload-classifier; fail=1
+  else
+    printf '  ok   %-30s %s\n' wiring-uses-payload-classifier verdict_of_payload
+  fi
+  [ $fail -eq 0 ] && echo "SELFTEST_OK" || echo "SELFTEST_FAIL"
+  return $fail
+}
+
 case "$1" in
+  --selftest) __selftest; exit $? ;;
   inflight) __inflight ;;
   status)
     printf "%-8s %-26s %6s %s\n" 时间 状态 字节 文件
@@ -111,12 +167,16 @@ case "$1" in
     # (2026-08-28:no-wait 改造首跑即回归 —— `extraction_failure` 报了 EXIT=0,
     #  正是器律④「原材料好,不靠读者警惕」要禁的坏材料:调用方按退出码判就会误判成功。)
     if [ $n -ge 60 ]; then
-      echo "NYX_TIMEOUT $tid 仍未落定;可随时 nyxid oracle result $tid 取回"; rc=3
+      echo "NYX_TIMEOUT $tid 仍未落定;可随时 nyxid oracle result $tid 取回"; rc=3; verdict=TIMEOUT
     else
-      case "$(__classify "$out")" in OK) rc=0;; QUOTA) rc=1;; EXTRACTION) rc=1;; *) rc=1;; esac
+      # 判**取回的文本**,不判文件:`__classify` 的 OK 分支要求 `tail -1 = EXIT=0`,
+      # 而 EXIT= 要到下一行才写 —— 在这里它结构上不可达,会把每个成功答案判成失败
+      # (2026-09-06 实测:company 池返回 `{"ok":true}` 仍报 EXIT=1)。见 --selftest。
+      verdict=$(__verdict_of_payload "$r")
+      case "$verdict" in OK) rc=0;; *) rc=1;; esac
     fi
     echo "EXIT=$rc" >> "$out"
-    echo "NYX_$(__classify "$out") $(basename "$out" .out)"
+    echo "NYX_$verdict $(basename "$out" .out)"
     ;;
-  *) echo "usage: nyx.sh {ask <brief> <out>|status [glob]|inflight}" >&2; exit 2 ;;
+  *) echo "usage: nyx.sh {ask <brief> <out>|status [glob]|inflight|--selftest}" >&2; exit 2 ;;
 esac
