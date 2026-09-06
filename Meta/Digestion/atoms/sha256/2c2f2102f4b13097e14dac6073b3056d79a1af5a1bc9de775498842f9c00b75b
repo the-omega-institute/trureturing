@@ -1,0 +1,1 @@
+**候签定理 4.111(A373183 猜想 1:完整的二进多项式递推)**〔open;落 `D5/S1/Digit/DyadicRowPolynomialRecurrence`;拟议逃逸见证:定义算子 D(P)=x·(P(x+1)−P(x)),证其可加性与 D(xP)=xP+(x+1)D(P);r=0 情形即此交换子恒等式,对 r 归纳时对两边施 D;D(x)=x 处理零指标边界〕。在 ℤ[x] 中令 R_0=x,R_{2n+1}=x·R_n,R_{2n}=x·(R_n(x+1)−R_n(x))(n>0)。对 n>0、v=v₂(n):R_{2n}=R_n+R_{n−2^v}+R_{2n−2^v}。
