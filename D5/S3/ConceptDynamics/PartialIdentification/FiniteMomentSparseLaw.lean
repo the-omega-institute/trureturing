@@ -63,7 +63,7 @@ theorem pushforward_linearObjective
 
 /-- Push the sparse latent law back onto the unchanged original response
 carrier. Its support is contained in the selected source atoms. -/
-noncomputable def MomentCompression.sparseLaw
+noncomputable def _root_.D5.S3.ConceptDynamics.PartialIdentification.FiniteMomentSupportReduction.MomentCompression.sparseLaw
     {Atom Feature : Type*} [Fintype Atom] [Fintype Feature] [DecidableEq Atom]
     {law : FiniteResponseLaw Atom} {feature : Atom → Feature → ℚ}
     (compression : MomentCompression law feature) : FiniteResponseLaw Atom :=
@@ -71,7 +71,7 @@ noncomputable def MomentCompression.sparseLaw
 
 /-- Any original-carrier linear objective of the sparse pushforward is exactly
 the pulled-back latent objective. -/
-theorem MomentCompression.sparseLaw_linearObjective_eq
+theorem _root_.D5.S3.ConceptDynamics.PartialIdentification.FiniteMomentSupportReduction.MomentCompression.sparseLaw_linearObjective_eq
     {Atom Feature : Type*} [Fintype Atom] [Fintype Feature] [DecidableEq Atom]
     {law : FiniteResponseLaw Atom} {feature : Atom → Feature → ℚ}
     (compression : MomentCompression law feature)
@@ -85,7 +85,7 @@ theorem MomentCompression.sparseLaw_linearObjective_eq
 
 /-- For a row/query compression, pushing the latent witness back to the original
 atom carrier preserves every original LP inequality. -/
-theorem MomentCompression.sparseLawLinearFeasible
+theorem _root_.D5.S3.ConceptDynamics.PartialIdentification.FiniteMomentSupportReduction.MomentCompression.sparseLawLinearFeasible
     {Constraint Atom : Type*}
     [Fintype Constraint] [Fintype Atom] [DecidableEq Atom]
     (A : Constraint → Atom → ℚ) (b : Constraint → ℚ)
@@ -106,7 +106,7 @@ theorem MomentCompression.sparseLawLinearFeasible
 
 /-- The original-carrier sparse pushforward also preserves the exact nominated
 query value. -/
-theorem MomentCompression.sparseLawLinearObjective_eq
+theorem _root_.D5.S3.ConceptDynamics.PartialIdentification.FiniteMomentSupportReduction.MomentCompression.sparseLawLinearObjective_eq
     {Constraint Atom : Type*}
     [Fintype Constraint] [Fintype Atom] [DecidableEq Atom]
     (A : Constraint → Atom → ℚ) (objective : Atom → ℚ)
