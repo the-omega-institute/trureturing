@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6ba405c7fd50192514f02abcbdf9220bf4017b9e73e8831fca85aeb826fab180
+  normalized_sha256: sha256:6ba405c7fd50192514f02abcbdf9220bf4017b9e73e8831fca85aeb826fab180
+cas_ref: sha256:6ba405c7fd50192514f02abcbdf9220bf4017b9e73e8831fca85aeb826fab180
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/GraphColoring/OddPrimePerfectOneFactorization.odd_prime_perfect_one_factorization
+    target_statement_id: sha256:0c3ec6e93c35133e157b847dc194dbf78f63839621d7d10af8f3970c1274b694
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/GraphColoring/OddPrimePerfectOneFactorization.odd_prime_perfect_one_factorization
+      definition_sha256: sha256:536c9838dfa1137a9050ac3fb015d4036afdfe65c12fd375103bde3ba1d125aa
+      emission_sha256: sha256:d032e38debe6f560c65c2eb880fa9c480eb9ddf124f580fb69432a26cc723eaf
+  unresolved_subitems: []
