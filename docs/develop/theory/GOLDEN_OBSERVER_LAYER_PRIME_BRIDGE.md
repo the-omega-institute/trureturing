@@ -832,3 +832,157 @@ The desired conclusion has two levels:
 The repository already contains binomial KL-Chernoff tails, generic divergence testing bounds, and exact finite-suite optimal-error machinery. Those owners should be consumed before any new concentration inequality is written. The first unresolved task is to identify the smallest generic interval-uncertainty primitive that can express visibility, offset, phase calibration, and residual path closure without turning four physical errors into four ad hoc scores.
 
 The current candidate source for sections 30-35 is #5750 at `047738154d1c31712c397075183b64fbc551df5f`. It remains logically reviewed source without a local Lean compilation verdict. No frozen-state or admission claim is made here.
+
+## 36. Reconciled universal chronology and robust statistical interfaces
+
+The later #5750 continuation supersedes the roadmap status in sections 33-35 without changing their historical text. `UniversalMagnusWeylPhaseBridge` identifies the represented central entry of the universal second primitive tensor logarithm with the existing `magnusCenter`. Current tensor/free-Lie owners are reused; the stale #4504 definitions are not copied. This is a finite representation bridge, not a completed analytic Magnus series or unbounded-generator theorem.
+
+`GoldenRobustCalibration` admits baseline, visibility, coupling, phase-offset and probability-level closure residuals. For fixed acquisition records its deterministic budget gives
+
+```text
+actual probability gap >= nominal probability gap - left budget - right budget.
+```
+
+`BernoulliBiasPairDistance` and `BhattacharyyaVariationMargin` connect that certified gap delta to the canonical Bool probability laws:
+
+```text
+TV >= delta >= 0  =>  BC <= sqrt(1-delta^2).
+```
+
+`FiniteSuiteAffinityProductBound` consumes the existing zero-aware extended-budget owner and exact affinity multiplicativity. It includes zero-affinity endpoints. The resulting candidate statements are
+
+```text
+e_N^* <= (sqrt(1-delta^2))^N / 2
+      <= exp(-r_delta*N)/2,
+r_delta = 1-sqrt(1-delta^2).
+```
+
+For delta>0 and eps>0, `N >= log(1/(2*eps))/r_delta` is sufficient for this fixed pair's equal-prior optimum to be at most eps. These inequalities supply a usable risk envelope, not a new concentration theory.
+
+## 37. Representation invariance and the quantifiers of robust testing
+
+`FiniteRepetitionRepresentationEquiv` now gives the canonical equivalence
+
+```text
+IidSpace Outcome N equiv (Fin N -> Outcome).
+```
+
+The existing recursive `iidPower` equals `windowLaw` pointwise under this map. TV, Bhattacharyya affinity, decision events, complements and equal-prior decision risk are transported. The already-owned finite-suite optimum is therefore `(1-TV(iidPower p N,iidPower q N))/2`, and all recursive decision risks are at least this same optimum. No third repetition encoding or second optimal-risk definition is introduced.
+
+A necessary statistical qualification is explicit here. For every FIXED pair of acquired laws the optimal test may depend on that pair. A bound of the form
+
+```text
+for every admissible calibration pair, there exists a test with risk <= eps
+```
+
+does not prove
+
+```text
+there exists one calibration-independent test whose risk is <= eps
+for every admissible calibration pair.
+```
+
+The latter is a composite/minimax testing problem and remains open in this lane. Likewise, fixed acquisition parameters repeated independently are not a model of correlated shot-to-shot drift. Earlier descriptions of robust sufficient risk bounds must be read with these quantifiers. The deterministic pairwise margin remains valid on every record satisfying its premises.
+
+Under the intrinsic-information specification, transporting representations or improving shot confidence does not by itself create a new deterministic CUT. The state object, nuisance parameters, equality kernel and independent-sampling assumptions must remain explicit.
+
+## 38. From a supplied overlap to an actual Gaussian integral
+
+`RamseyResidualOverlap` previously supplied the physically motivated interface
+
+```text
+p_gamma = 1/2 + V/2 * Re(gamma * exp(i*(phi-theta))),
+|p_gamma-p_1| <= |V|/2 * norm(gamma-1).
+```
+
+Its input gamma was not derived from the continuous displacement action. The new `GaussianDisplacementOverlap` removes that input premise on a specified Gaussian reference family. For s>0, define the actual seed and normalized expectation by
+
+```text
+g_s(q) = exp(-s*q^2),
+M_s = integral conjugate(g_s(q))*g_s(q) dq,
+gamma_s(x,y) = integral conjugate(g_s(q))*D(x,y)g_s(q) dq / M_s.
+```
+
+The source establishes integrability, evaluates `M_s = sqrt(pi/(2s))`, and proves its nonvanishing before interpreting the quotient. Pinned Mathlib's `integral_cexp_quadratic` evaluates the numerator. The derived normalized overlap is
+
+```text
+gamma_s(x,y) = exp(-Q_s(x,y)),
+Q_s(x,y) = (s*x^2+y^2/s)/2.
+```
+
+This is the centered, axis-aligned squeezed-state characteristic function in C. Fluehmann and J. P. Home, Physical Review Letters 125, 043602 (2020), DOI 10.1103/PhysRevLett.125.043602, arXiv:1907.06478, equation (5), with s=exp(2r). Their equation (3) supplies the experimental phase-sensitive readout precedent. It is an established Gaussian identity; the contribution here is its explicit typed connection to this repository's concrete Weyl action and closure budget. The analytic Gaussian integration theorem is reused rather than reproved.
+
+The conclusions include `norm(gamma_s)<=1` and `norm(gamma_s-1)<=Q_s`. The scope is a centered, axis-aligned pure Gaussian on the actual real-line integral. It does not assert a completed L2 unitary representation, self-adjoint generator domains, or arbitrary mixed/non-Gaussian reference states.
+
+## 39. An imperfect compensator produces a phase as well as attenuation
+
+Write the ideal endpoint as X=a*r(w), Y=b*z(w). Fix the control-error model to one Weyl compensator `D(-X+dx,-Y+dy)` applied after the chronological signal. Direct use of the existing Weyl cocycle gives
+
+```text
+D(-X+dx,-Y+dy) U_w f
+ = exp(i*(a*b*m(w)+eta)) D(dx,dy) f,
+eta = X*dy-Y*dx.
+```
+
+The displacement `(dx,dy)` alone is therefore insufficient to describe the acquired relative phase. The extra term eta is linear in compensation error at a fixed endpoint. A different physical synthesis of the compensator can carry an additional known or unknown phase and requires a correspondingly explicit model.
+
+For the Gaussian seed, the actual normalized compensated expectation is
+
+```text
+exp(i*a*b*m(w)) * gamma_eff,
+gamma_eff = exp(i*eta) * exp(-Q_s(dx,dy)).
+```
+
+`compensated_gaussian_expectation_factorizes` derives this expression from the literal erroneous word action and its integral. Replacing all nonclosure by a real contrast factor would discard eta. In particular, squeezing can alter Q_s while leaving this compensator cocycle unchanged.
+
+## 40. Exact acquisition parameters and a physical error budget
+
+At analyzer phase pi/2 the existing overlap readout becomes
+
+```text
+p_actual(w) = 1/2 + V*exp(-Q_s)/2 * sin(a*b*m(w)+eta).
+```
+
+`GoldenGaussianClosure.gaussian_closure_fringe_eq_calibration` represents this same readout in the existing `RamseyCalibration` owner with
+
+```text
+baseline = 1/2,
+visibility = V*exp(-Q_s),
+coupling = a*b/2,
+phaseOffset = eta,
+closureError = 0.
+```
+
+The factor one half in the coupling belongs to compensated-word interference. Word-versus-reversal comparison has twice the relative chronology phase and uses a different coupling correspondence. No new Magnus coordinate or second noise model is introduced.
+
+For s>0 and 0<=V<=1 the derived overlap ensures a valid probability. Relative to the original nominal visibility and coupling, the existing deviation budget satisfies
+
+```text
+B(w) <= C(w) = |V|/2 * (Q_s(dx,dy)+|eta|).
+```
+
+This separates quadratic overlap attenuation from a potentially first-order phase error. Small residual displacement cannot be judged solely by its lost contrast. A zero-Magnus word may acquire a nonzero sine signal through eta even though its symbolic history has not changed; noisy palindrome certification therefore needs a phase budget, not just an ideal zero test.
+
+For two fixed acquired histories and a certified delta>=0 satisfying
+
+```text
+delta + C(left) + C(right) <= nominal fringe gap,
+```
+
+`gaussian_closure_finite_shot_bound` gives
+
+```text
+e_N^* <= (sqrt(1-delta^2))^N / 2.
+```
+
+This consumes the existing robust law, TV-margin, affinity and operational-risk owners. It retains the fixed-pair and independent-repetition qualifications in section 37. In particular, a single unknown-calibration minimax decoder has not been constructed.
+
+## 41. Source status, numerical checks and remaining scientific obligations
+
+The Gaussian continuation was written to source PR #5750 in commit `e093071699088b3e97584cfb2b53e56923642eff`, whose parent is `26e28252510866ce6bb8f6098b1a2916f7b1b519`. It adds `GaussianDisplacementOverlap.lean`, `GoldenGaussianClosure.lean` and their two corresponding Scribe files. The commit comparison reports four added files, 669 additions and zero deletions. All 26 public declarations are mirrored through source-owned statements.
+
+Three local worker processes performed complementary self-checks: exact symbolic polynomial identities for the Gaussian integrand, evaluated exponent and compensator cocycle; 120 direct continuous-integral cases; and 5,120 pair/shot model settings, of which 4,400 had strictly positive certified margin. Maximum absolute discrepancies were approximately 2.00e-15 for raw overlap, 1.48e-14 for the full compensated expectation, and 3.89e-15 for integrated output probability. The smallest numerical risk-bound slack was -4.44e-16, within floating-point roundoff. These are finite numerical/symbolic checks, not hardware measurements or kernel certificates.
+
+The new sources are logically reviewed candidates. No local Lean compilation receipt was obtained; no admission, freeze, independent AI review or merge is asserted. The companion Gaussian module uses the pinned Mathlib revision `db584cd6d46c92f209a44c0f1c829460d327499d`. Its Gaussian Fourier integral was inspected at that revision.
+
+There is now a concrete normalized-wavefunction-overlap-to-calibration edge. The overlap-sensitive Ramsey formula remains the previously defined readout interface. A standalone formal derivation of the perturbed two-path integrated Born law, including integrability and equal branch normalization, is a distinct remaining obligation; numerical integration alone does not close it. A unified test for unknown calibration sets, a treatment of correlated drift, and any experimental performance claim are also separate obligations. The golden grammar does not generate the laboratory quadrature controls, and this continuation does not close the geometric-to-valuation bridge.
