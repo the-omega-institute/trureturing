@@ -1,0 +1,29 @@
+# 九、把时间误差真正带回正性认证
+
+设实际目标仍是
+
+$$
+T_N=(r_{j-i}).
+$$
+
+如果有限计算得到 \(\widetilde r_k\)，并有经过证明的误差界
+
+$$
+\boxed{
+|\widetilde r_k-r_k|\le k\varepsilon,
+\qquad0\le k\le N,
+}
+\tag{42}
+$$
+
+其中 \(r_0\) 精确归一化，则对应矩阵误差满足
+
+$$
+\boxed{
+\|\widetilde T_N-T_N\|_{\mathrm{op}}
+\le
+\frac{N(N+1)}2\varepsilon.
+}
+\tag{43}
+$$
+

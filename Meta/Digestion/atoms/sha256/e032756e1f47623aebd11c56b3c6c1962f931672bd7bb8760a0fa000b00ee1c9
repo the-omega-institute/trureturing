@@ -1,0 +1,48 @@
+## 从局部传播矩阵识别弯曲几何
+
+在已经证明存在光滑极限的区域，假设主部具有：
+
+$$
+i\partial_t\psi
+=
+-i\sum_iA^i(x,t)\partial_i\psi+\text{低阶项},
+$$
+
+其中：
+
+$$
+A^i=w^iI+\sum_a e_a^{\,i}\alpha_a.
+$$
+
+定义：
+
+$$
+h^{ij}=\sum_a e_a^{\,i}e_a^{\,j}.
+$$
+
+若 \(h\) 正定，则特征关系为：
+
+$$
+\boxed{
+(\omega-w^ik_i)^2-h^{ij}k_ik_j=0.
+}
+\tag{327.5}
+$$
+
+它确定一个洛伦兹型共形度量：
+
+$$
+\boxed{
+ds^2
+=
+\Lambda^2
+\left[
+-dt^2+
+(h^{-1})_{ij}
+(dx^i-w^i dt)(dx^j-w^j dt)
+\right],
+\quad \Lambda>0.
+}
+\tag{327.6}
+$$
+

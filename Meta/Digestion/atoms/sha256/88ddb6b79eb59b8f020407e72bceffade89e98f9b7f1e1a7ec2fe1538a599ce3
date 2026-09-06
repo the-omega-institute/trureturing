@@ -1,0 +1,14 @@
+# 312．5040的优化意义，与 \(s=1\) 的归一化边界直接连接
+
+ζ 在 \(s=1\) 的留数为一，因此：
+
+$$
+\zeta(1+\varepsilon)
+=
+\frac1\varepsilon+O(1),
+\qquad
+\varepsilon\downarrow0.
+$$
+
+这是 ζ 的真实解析性质，不是有限模型中的人为边界。([DLMF][1])
+

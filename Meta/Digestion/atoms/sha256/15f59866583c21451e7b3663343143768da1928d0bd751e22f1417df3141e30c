@@ -1,0 +1,41 @@
+### 证明有效维数界
+
+式（31）的全部项非负，保留 \(j=k\) 项，得到
+
+$$
+\mathcal P_N\ge\sum_jp_j^2.
+$$
+
+在临界线上，
+
+$$
+\operatorname{Re}w_j
+=
+1-\frac1{2|\rho_j|^2}.
+$$
+
+因此
+
+$$
+\boxed{
+2(c_0-c_1)
+=
+\sum_j\frac{m_j}{|\rho_j|^4}.
+}
+\tag{34}
+$$
+
+而
+
+$$
+\sum_jp_j^2
+=
+\frac1{c_0^2}
+\sum_j\frac{m_j^2}{|\rho_j|^4}
+\ge
+\frac1{c_0^2}
+\sum_j\frac{m_j}{|\rho_j|^4}.
+$$
+
+结合式（34）即可。
+
