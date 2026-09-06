@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1df07a6f46f66e8fd4d81221ff9433ec53dc2d96b0beb63299921af2855312db
+  normalized_sha256: sha256:1df07a6f46f66e8fd4d81221ff9433ec53dc2d96b0beb63299921af2855312db
+cas_ref: sha256:1df07a6f46f66e8fd4d81221ff9433ec53dc2d96b0beb63299921af2855312db
+coverage_gids:
+  - gid: D5/S3/Analytic/SeriesInequalities/PrimeEulerLogTail.prime_euler_log_tail_le
+    target_statement_id: sha256:b2bb2ab527e381e0c0664e19cf109d890a8f621457af00c5514fada69a53f943
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/SeriesInequalities/PrimeEulerLogTail.prime_euler_log_tail_le
+      definition_sha256: sha256:39fd3f4611c87ccec3bd34f3b4f1f24c23a26e314e9015f6bd03914884224aa1
+      emission_sha256: sha256:072a6a2413baf5db1d64f4136e9db7a2ea9e77602c33581c9f2f5055cbe0f419
+  unresolved_subitems: []
