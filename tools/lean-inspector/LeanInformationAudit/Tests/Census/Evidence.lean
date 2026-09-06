@@ -44,6 +44,8 @@ theorem structuralRegistration : StructuralRegistrationEvidence ``structuralTheo
     infiniteArena structuralUnit
     structuralCatalog () (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
 
+register_structural_law structuralRegistration in structuralLawArena
+
 theorem structuralRealization : StructuralLegacyPrimitiveRealization structuralLawArena
     (∀ n : Nat, n % 2 < 2) structuralReadouts := ⟨Iff.rfl⟩
 

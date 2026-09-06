@@ -36,6 +36,14 @@ structure UnreachableElaborationEvidence (statement : Prop) where
 
 namespace DispositionCensus
 
+-- Registration, canonical law arena, and owning module. This is inspector
+-- metadata; the structural mathematical types and section 23.6 API stay intact.
+private initialize structuralLawRegistry :
+    SimplePersistentEnvExtension (Name × Name × Name) (Array (Name × Name × Name)) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
+
 private def failClass (key : StatementKey) (className invalid : String) : MetaM α :=
   throwError (classError key.theoremName className invalid)
 
@@ -127,6 +135,55 @@ private def structuralRegistrations (modules : Array Name) : MetaM (Array (Name 
       result := result.push (name, info.type)
   return result.qsort fun left right => left.1.toString < right.1.toString
 
+open Elab Command in
+/-- Bind the semantic law independently of any census payload. Duplicate bindings
+are rejected, including attempts to override an imported registration. -/
+elab "register_structural_law " registrationId:ident " in " lawArenaId:ident : command => do
+  let registrationName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo registrationId
+  let lawArenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo lawArenaId
+  let env ← getEnv
+  if (structuralLawRegistry.getState env).any (·.1 == registrationName) then
+    throwError "structural law already registered: {registrationName}"
+  liftTermElabM do
+    let registration ← mkConstWithFreshMVarLevels registrationName
+    let registrationType ← inferType registration
+    unless registrationType.isAppOfArity ``StructuralRegistrationEvidence 6 do
+      throwError "expected StructuralRegistrationEvidence: {registrationName}"
+    let args := registrationType.getAppArgs
+    let theoremName : Name ← reduceEval args[0]!
+    let key : StatementKey := ⟨theoremName, ""⟩
+    let _ ← constant key "structural_occurrence" "registration" registrationName
+    let lawArena ← constant key "structural_occurrence" "law_registration" lawArenaName
+    let lawType ← inferType lawArena
+    unless args[1]!.isConst && args[3]!.isConst &&
+        lawType.isAppOfArity ``StructuralPrimitiveLawArena 1 do
+      failClass key "structural_occurrence" "law_registration"
+    unless ← isDefEq lawType.getAppArgs[0]! args[1]! do
+      failClass key "structural_occurrence" "law_registration.arena"
+    checkWithKernel registration
+    checkWithKernel lawArena
+  modifyEnv fun current => structuralLawRegistry.addEntry current
+    (registrationName, lawArenaName, env.header.mainModule)
+
+private def validateStructuralObjectLaw (modules : Array Name) (key : StatementKey)
+    (registrationName : Name) (statement : Expr) (realizationArgs : Array Expr) : MetaM Unit := do
+  let className := "structural_occurrence"
+  let env ← getEnv
+  let bindings := (structuralLawRegistry.getState env).filter fun entry =>
+    entry.1 == registrationName && modules.contains entry.2.2
+  unless bindings.size == 1 do failClass key className "realization.law_registration"
+  let lawArenaName := bindings[0]!.2.1
+  unless inRoot env modules lawArenaName do
+    failClass key className "realization.law_arena.root_membership"
+  unless realizationArgs[1]!.isConstOf lawArenaName do
+    failClass key className "realization.canonical_law_arena"
+  let lawArena ← constant key className "realization.law_arena" lawArenaName
+  -- Spec 6.1 / 8.7 / AC-CIRPT-018: reuse Syntax.checkNativeStatement's
+  -- isDefEq obligation against the registered law, never an arbitrary Iff.
+  let expectedLaw ← mkAppM ``StructuralPrimitiveLawArena.Law
+    #[lawArena, realizationArgs[3]!]
+  unless ← isDefEq statement expectedLaw do failClass key className "realization.object_law"
+
 private def validateStructural (modules : Array Name)
     (registrations : Array (Name × Expr)) (key : StatementKey)
     (statement : Expr) (payload : StructuralOccurrenceDisposition key) : MetaM Unit := do
@@ -162,6 +219,7 @@ private def validateStructural (modules : Array Name)
   unless ← isDefEq realizationArgs[0]! args[1]! do failClass key className "realization.arena"
   unless ← isDefEq realizationArgs[2]! statement do failClass key className "realization.statement"
   checkWithKernel realizationProof
+  validateStructuralObjectLaw modules key payload.registration statement realizationArgs
   let theoremProof ← mkConstWithFreshMVarLevels key.theoremName
   let compiled ← mkAppM ``StructuralPrimitiveRealization.toTheoremUnit
     #[realizationArgs[3]!, statement, theoremProof]
@@ -308,7 +366,11 @@ def validateEvidence (root : Name) (inventory : DispositionInventory) : MetaM Un
     | .finiteOccurrence payload => validateFinite root key payload
     | .structuralOccurrence payload => validateStructural modules registrations key statement payload
     | .boundedFiniteTruncation payload => validateBounded key statement payload
-    | .unreachable payload => validateUnreachable registrations key statement payload
+    | .unreachable payload =>
+      unless inRoot env modules key.theoremName do
+        throwError (censusError inventory.headSha "root"
+          s!"import-closure-containing:{key.theoremName}" root.toString)
+      validateUnreachable registrations key statement payload
 
 end DispositionCensus
 
