@@ -7,6 +7,72 @@ namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
+    [Fact]
+    public void HarnessGateIncludesTestMapCacheRootInCheckArgumentsOnlyWhenSupplied()
+    {
+        var script = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "scripts", "harness-gate.sh"));
+
+        Assert.Contains("--test-map-cache-root)", script, StringComparison.Ordinal);
+        Assert.Contains("TEST_MAP_CACHE_ROOT=\"\"", script, StringComparison.Ordinal);
+        Assert.Contains(
+            """[[ $# -ge 2 && -n "$2" ]] || { echo "harness-gate: --test-map-cache-root requires a value" >&2; exit 2; }""",
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains("""TEST_MAP_CACHE_ROOT="$2"; shift 2 ;;""", script, StringComparison.Ordinal);
+        const string prepareCache = """
+            if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
+              mkdir -p "$TEST_MAP_CACHE_ROOT" \
+                || { echo "harness-gate: test map cache root '$TEST_MAP_CACHE_ROOT' is not creatable" >&2; exit 2; }
+              TEST_MAP_CACHE_ROOT="$(cd "$TEST_MAP_CACHE_ROOT" && pwd -P)"
+            fi
+            """;
+        Assert.Contains(prepareCache, script, StringComparison.Ordinal);
+        Assert.True(
+            script.IndexOf(prepareCache, StringComparison.Ordinal)
+                < script.IndexOf("dotnet restore ", StringComparison.Ordinal),
+            "cache root validation must precede dotnet");
+        Assert.Contains(
+            """
+            check_args=(--protected-base "$BASE_REF" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
+            if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
+              check_args+=(--test-map-cache-root "$TEST_MAP_CACHE_ROOT")
+            fi
+            """,
+            script,
+            StringComparison.Ordinal);
+        var checkCommand = Assert.Single(
+            script.Split('\n'),
+            static line => line.TrimStart().StartsWith("dotnet \"$JUDGE_DLL\" check ", StringComparison.Ordinal));
+        Assert.Equal("""  dotnet "$JUDGE_DLL" check "${check_args[@]}" """.TrimEnd(), checkCommand);
+    }
+
+    [Fact]
+    public void LocalHarnessGateForwardsTestMapCacheRootOnlyWhenSupplied()
+    {
+        var script = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "local-harness-gate.sh"));
+
+        Assert.Contains("--test-map-cache-root)", script, StringComparison.Ordinal);
+        Assert.Contains("TEST_MAP_CACHE_ARGS=()", script, StringComparison.Ordinal);
+        Assert.Contains(
+            """
+                --test-map-cache-root)
+                  [[ $# -ge 2 && -n "$2" ]] || { echo "local-harness-gate: --test-map-cache-root requires a value" >&2; exit 2; }
+                  TEST_MAP_CACHE_ARGS=(--test-map-cache-root "$2")
+                  shift 2
+                  ;;
+            """,
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            """
+              --candidate-lean-report "$CANDIDATE_REPORT" \
+              ${TEST_MAP_CACHE_ARGS[@]+"${TEST_MAP_CACHE_ARGS[@]}"}
+            """,
+            script,
+            StringComparison.Ordinal);
+    }
 
     [Fact(DisplayName = "Makefile and inspector dispatch counts are pinned in the thin dispatch table")]
     public void MakefileIsAThinCompleteDispatchTable()
