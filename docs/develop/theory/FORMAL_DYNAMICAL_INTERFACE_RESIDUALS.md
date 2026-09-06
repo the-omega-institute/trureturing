@@ -2569,6 +2569,7 @@ C_1v=0,\qquad A_{21}v=0.
 \[
 \boxed{\forall\lambda\in\operatorname{spec}_{\mathbb C}(A_{11}),\quad |\lambda|<1.}
 \]
+
 复共轭极点、重复权重、完整保留及零维截断均包含在类型中。没有以只检查实特征值或自定义空泛稳定性字段代替该结论。
 
 ## C. 同一个有序模型同时具有稳定性与误差保证
@@ -2598,3 +2599,309 @@ Varga 的 *Balanced truncation model reduction of periodic systems* 第 3 节、
 无间隙稳定性论证依赖离散时间的正项 \(A_{21}^*D_2A_{21}\)。本节没有将同一论证直接推广到连续时间 Lyapunov 方程，或带有限时域残差的 Gramian。它形式化经典稳定性机制及仓库连接，不主张新的误差常数或首次证明优先权。
 
 本轮独立运行了精确有理数及复有理数代数检查、数值复极点检查与有限时间误差回归。它们不执行 Lean，也不证明全称定理。排序和严格内部稳定性已具有完整候选证明脚本；谱半径到幂可和输入的转换、频域 \(H^\infty\) 范数接口及带噪 Ho–Kalman 的统一输入条件认证仍不属于本节已交付范围。
+
+---
+
+# 2026-09-06 增补：以真实最低模态逼近问题为目标的射影读出认证
+
+本节对应 PR #5882，承接 #5580 的实际平衡截断，并对照不同作者的研究路线。loning 的 #5326 将 Hankel 最小行为实现与行列式保持明确分开；#5602 在固定算术窗口给出实际候选及有理数能量证书，但完整算子域接口和尺度极限仍未闭合。因此，本节研究“误差究竟足以认证哪个目标读出”，没有把一般输入输出误差界解释为任意谱行列式的误差界。
+
+外部目标采用 Connes、Consani、Moscovici 的 *Zeta Spectral Triples*，`arXiv:2511.22755v1`，第 8 节。该节明确留下最低本征空间 simple-even 性质，以及构造候选对真实最低模态的充分逼近两个步骤。Lemma 7.3 的候选变换收敛不能代替第二步。作者网站在 2026 年收录的论文 PDF 第 32 页仍明确列出这两个缺口：`https://alainconnes.org/wp-content/uploads/zeta-spectral-triples-1.pdf`。本节完成的是该逼近任务的定量认证桥和边界，不声称解决这两个开放步骤或 RH。
+
+## A. 先证明一种不能使用的推理：行为误差小不保证状态行列式零点保持
+
+`BalancedDeterminantInformationLoss` 构造
+\[
+A=\operatorname{diag}(1/2,1/4),\qquad
+B_\varepsilon=C_\varepsilon=\operatorname{diag}(1,\varepsilon),\qquad
+D_\varepsilon=\operatorname{diag}(4/3,16\varepsilon^2/15).
+\]
+对每个 \(\varepsilon>0\)，输入和输出端口均为双射，没有零耦合的隐藏状态。两个 Stein 等式由精确代数成立。若 \(\varepsilon\le1\)，删除第二坐标确实删除较小权重。源码直接调用已有的实际截断误差定理，得到所有输入与有限窗口上的系数
+\[
+\|y-y_r\|_{2,[0,N)}\le\frac{32\varepsilon^2}{15}\|u\|_{2,[0,N)}.
+\]
+同时，对所有这些非零 \(\varepsilon\)，
+\[
+\det(I-4A)=0,\qquad\det(I-4A_r)=-1.
+\]
+`arbitrarily_small_error_with_determinant_loss` 对每个 \(\eta>0\) 实际选取 \(\varepsilon=\min(1,15\eta/64)\)，证明误差系数小于 \(\eta\) 而上述零点损失不变。这是全称参数族的候选 Lean 证明，不是有限采样断言。
+
+该结果针对原始状态行列式 \(\det(I-zA)\)，不反驳精确最小实现的相似唯一性，也不反驳已经单独证明的算术、相对或正则化行列式公式。它表明：若零点是目标，必须先证明目标对象对应与目标误差传递，不能仅凭 Hankel 行为压缩误差代替这两项。
+
+## B. 真实复算子域上的射影误差
+
+`ProjectiveRayleighReadout` 允许一个复线性算子域 \(\mathcal D\)、映射 \(\iota,A:\mathcal D\to H\)，并使用域上的对称性
+\[
+\langle\iota x,Ay\rangle=\langle Ax,\iota y\rangle.
+\]
+不要求把可能无界的算子改成全空间有界算子。设候选 \(k\) 满足 \(\|\iota k\|=1\)，真实本征向量满足 \(\iota u\ne0\)、\(Au=\lambda\iota u\)，且
+\[
+\ell\le\lambda<\theta,\qquad
+\mu:=\Re\langle\iota k,Ak\rangle\le U<\theta,
+\]
+\[
+\langle\iota k,\iota f\rangle=0\Longrightarrow
+\theta\|\iota f\|^2\le\Re\langle\iota f,Af\rangle.
+\]
+先由补空间强制性排除 \(\alpha=\langle\iota k,\iota u\rangle=0\)，再实际构造
+\[
+w=\alpha^{-1}u-k.
+\]
+域线性与对称性给出
+\[
+\langle\iota k,\iota w\rangle=0,\qquad
+\Re\langle\iota w,Aw\rangle=\lambda\|\iota w\|^2+\mu-\lambda.
+\]
+因此 \((\theta-\lambda)\|\iota w\|^2\le\mu-\lambda\)。从 \(U<\theta\) 先推出误差平方小于一，再用 \(\ell\le\lambda\) 替换本征值，得到
+\[
+\boxed{\|\iota w\|^2\le\delta:=\frac{U-\ell}{\theta-\ell}<1.}
+\]
+`rayleigh_projective_enclosure` 同时证明非零重叠、正交性及该预算。它不要求 \(u\) 已归一化，也不另外假设 \(\lambda\le\mu\)。但实际本征向量存在及其本征值低于 \(\theta\) 仍在明确前提中。
+
+#5602 已在 paper-level 使用这个射影比值，其原 Lean `WeilRayleighEnclosureModeCapture` 给出实数域、单位本征向量的不同误差界。本节增量是复算子域上的完整候选证明与目标读出接口，不主张首次发现该常数。
+
+## C. 对指定目标的锐读出条件
+
+给定读出向量 \(g\in H\)，令 \(k\) 为单位候选，\(g_\perp=g-\langle k,g\rangle k\)。对所有 \(w\perp k\)、\(\|w\|^2\le\delta\)，证明
+\[
+|\langle g,k+w\rangle-\langle g,k\rangle|^2
+\le\left(\|g\|^2-|\langle g,k\rangle|^2\right)\delta.
+\]
+误差只由实际读出在候选正交方向上的分量控制，平行部分不会产生误差。
+
+`ProjectiveReadoutSharpness` 进一步给出完整充要条件：
+\[
+\boxed{
+\forall w\perp k,\ \|w\|^2\le\delta\Rightarrow\langle g,k+w\rangle\ne0
+\iff
+\delta\|g\|^2<(1+\delta)|\langle g,k\rangle|^2.
+}
+\]
+反向使用实际构造的最小能量消零扰动。若 \(g_\perp\ne0\)，取
+\[
+w_*=-\frac{\langle g,k\rangle}{\|g_\perp\|^2}g_\perp,
+\qquad
+\|w_*\|^2=\frac{|\langle g,k\rangle|^2}{\|g_\perp\|^2}.
+\]
+源码证明其正交性、精确消零和最小能量，并包含 \(\delta=0\)、\(g_\perp=0\) 及 \(g=0\) 的退化情形。锐性针对整个 Hilbert 正交误差球，不断言每个球内扰动都由固定算术算子的本征向量实现。
+
+## D. 接入一个实际已有窗口，而非重新假定误差
+
+`WeilPrime3ProjectiveReadout` 固定读取 #5602 的提交 `4ddc8bf4cc75b3c7581ec5c2a1dccca7f91007a3` 中 `prime3_refined_certificate.json` 的三个有理输入：
+\[
+\ell=\frac{103}{2000000000},\qquad
+U=\frac{560909}{10000000000000},\qquad
+\theta=\frac1{200000}.
+\]
+精确算术给出
+\[
+\delta=\frac{15303}{16495000}<\left(\frac{61}{2000}\right)^2,
+\]
+以及读出判据
+\[
+\boxed{15303\|g\|^2<16510303|\langle g,k\rangle|^2.}
+\]
+该模块证明有理数算术和复域上的条件消费，不把 JSON 当作公理，也没有重跑原区间 LDL 或补齐真实 Weil 全域 Fourier/算子定义域桥。上述域和能量假设在终点 `prime3_capture_and_readouts` 中完整保留。
+
+实际执行的独立精确算术检查使用同一提交的 129 个整数候选系数。其平方和为 `1208925819614761052253583`。对坐标读出 \(g=e_j\)，仅 \(j=-2,-1,0,1,2\) 通过上述严格阈值，其余 124 个未通过。未通过表示当前误差球不能保证非零，不表示真实本征读出为零；实际算术本征模态的结论仍取决于保留的全域假设。
+
+## E. 剩余开放步骤现在具有可检验的量化目标
+
+在对数坐标区间 \([-a,a]\) 上，若 Fourier 读出约定为 \(\int e^{-izx}f(x)dx\)，则其 \(L^2\) 代表向量为 \(g_z(x)=e^{i\bar z x}\)，并有 elementary bound
+\[
+\|g_z\|\le\sqrt{2a}\,e^{ba}\qquad(|\Im z|\le b).
+\]
+因此，在完成实际 Fourier 读出与上述 Hilbert 接口的识别之后，一条充分的尺度目标是
+\[
+\boxed{|c_a|\sqrt{2a}\,e^{ba}\sqrt{\delta_a}\longrightarrow0
+\quad\text{对每个 }0\le b<1/2.}
+\]
+这里 \(c_a k_a\) 必须等于文献所用的候选及其归一化，不能任意缩小 \(c_a\) 来伪造收敛；\(\delta_a\) 必须来自同一真实算术窗口的能量包围与全补空间强制性。投影后的读出范数还能改善这个充分界。
+
+本段是下一步的分析推导与验收目标，尚无实际 Fourier 核/闭子带极限的 Lean 消费者。单个 \(a=\log(3)/2\) 的证书、更多小矩阵或更高精度的本征值均不能代替该无界尺度任务。零点计数还需要相应解析函数、轮廓与非零边界条件；本节没有宣称这些已完成。
+
+## F. 已执行的检查与未执行的验证
+
+四个 Lean 模块各配一个 Scribe。独立回归脚本和真实运行结果位于 `research/projective_spectral_readout/`。回归包括 36 个精确复 Hermitian 本征问题、108 个精确最小消零见证、324 个锐阈值检查、18 个行列式损失系统及 504 个实际递推窗口误差检查；另有 60 个数值复本征问题、240 个读出检查和上述 129 个真实候选坐标的整数比较。
+
+这些有限回归不验证全称 Lean 命题。当前环境无 Lean/lake，因此未获得内核编译、执行后的公理闭包或 Scribe 发射记录。科研层面的边界同样保留：本节提供目标认证桥、锐阈值及禁止错误推论的参数反模型，未完成真实最低模态的全尺度逼近，亦不主张新数学常数或首个形式化优先权。
+
+---
+
+# 2026-09-06 增补：复用现有 Fourier 真源的窗口读出与统一极限
+
+本节继续 PR #5882。起始源码为 `e89269583d0b05b24dca01939ae7245b62b12c35`，先库后证检索固定当前 `dev` 于 `b89d56d0c9a433f9b714821d2bb1779066c59ede`，Mathlib 于 `db584cd6d46c92f209a44c0f1c829460d327499d`。新增三个候选 Lean 模块及同名 Scribe，均位于 `D5/S3/Weil/FourierReadout/` 及相应 Blueprint 路径。没有重建 Fourier 变换、Plancherel 定理或已有无穷尾界。
+
+## A. 已有所有者与本次真正缺口
+
+| 已有所有者 | 已有内容 | 本次使用方式 |
+| --- | --- | --- |
+| `ZetaCore/Defs`、`ZetaCore/PaperFT` | `Zeta23.paperFT`、实频率 Mathlib 换算、支撑窗口指数上界、分部积分衰减 | 直接 import，使用原积分和 `norm_cexp_I_mul_le` |
+| `ZetaBridge/ClassicExplicitFormula` | 偶测试函数上正号 `paperFT` 与负号 `fourierLaplace` 的等同 | 识别其偶性前提，不用于任意窗口 L2 函数 |
+| `TestFunctions/FourierLaplaceClosedStripDecay` | 光滑测试函数的闭水平带衰减 | 保留原所有者，不重新证明 |
+| Mathlib `MeasureTheory/Function/L2Space`、`LpSpace/Basic` | L2 载体、积分内积、内积可积性、`MemLp.toLp` 的几乎处处语义 | 直接复用，只有窗口核属于 L2 需要构造 |
+| `Observer/Hankel/ProjectiveRayleighReadout`、`ProjectiveReadoutSharpness` | 真实算子域射影误差及闭误差球的锐读出条件 | 以构造出来的真实 Fourier 代表向量实例化 |
+
+`PaperFT.lean` 在当前 dev 与本 PR 起始头的 blob 都是 `a04282c4b02a9a185c3730a18e59b72d3b27fa1a`，无需移植副本。检索还读取了 #5602 的更新头 `6e95a93cffddabd62c06ebc1e50f57d6913c3c03`：其中已有 `WeilEvenFourierObservationTail` 的无穷偶 Fourier 尾估计，源码仍明确将 L2 Fourier 识别留在纸面。该估计及同 PR 的算术 dual-tail、Neumann 和 directional 证书均不在本轮重证范围。上述检索是所列仓库、分支与钉版库的范围检索，不是全形式化生态中的优先权证明。
+
+本轮要消除的前提是“假设所需的 Fourier 值等于某个 Hilbert 内积”。`WindowPaperFTReadout` 对现有积分实际证明这个等式，再由其承接能量证书。
+
+## B. 正号约定、普通测度与真正的窗口 L2 代表
+
+仓库采用
+\[
+\operatorname{paperFT}(f,z)=\int_{\mathbb R}f(x)e^{izx}\,dx.
+\]
+本节固定使用该正号约定。上一增补 E 节的负号 Fourier 示例有明确条件；对当前正号对象，相应代表向量必须改为
+\[
+K_{a,z}(x)=\overline{e^{izx}}=e^{-i\overline z x}.
+\]
+`WindowL2 a` 只是 Mathlib 的 `Lp Complex 2 (volume.restrict (Icc (-a) a))` 的缩写。测度是普通 Lebesgue 测度，没有除以区间长度。先用已有指数窗口界证明核的平方可积性，通过 `MemLp.toLp` 构造 `windowKernel`；再用 `L2.integrable_inner` 证明实际积分可积。对任意窗口 L2 元素 \(f\)，以 \(\widetilde f\) 表示区间外补零的代表，得到
+\[
+\boxed{\operatorname{paperFT}(\widetilde f,z)=\langle K_{a,z},f\rangle_{L^2}.}
+\]
+`paperFT_window_eq_inner` 处理几乎处处商及补零；`paperFT_eq_inner_toLp` 则允许已有的窗口支撑函数直接进入同一等式。这两个结论不要求偶性、连续性或光滑性，也不假设 Fourier 级数已构造。
+
+核的实际积分给出
+\[
+\|K_{a,z}\|^2=\int_{-a}^a e^{-2\operatorname{Im}(z)x}\,dx,
+\qquad \|K_{a,t}\|^2=2a\quad(t\in\mathbb R,\ a\ge0).
+\]
+沿用原指数界并积分，证明
+\[
+\boxed{\|K_{a,z}\|\le\sqrt{2a}\,e^{ba}\quad(|\operatorname{Im}z|\le b).}
+\]
+因此 `paperFT_window_sub_le` 对实际变换得到
+\[
+|\operatorname{paperFT}(\widetilde f,z)-\operatorname{paperFT}(\widetilde g,z)|
+\le\sqrt{2a}\,e^{ba}\|f-g\|_2.
+\]
+横向实频率不进入常数。零长度窗口也被该一般界覆盖；其中不存在单位范数候选，后续单位候选定理不会凭空产生它。
+
+## C. 原射影定理现在消费实际 Fourier 读出
+
+`ProjectivePaperFTCertificate` 直接复用已有射影误差与最小消零扰动定理。对单位候选 \(k\)、\(w\perp k\)、\(\|w\|^2\le\delta\)，有
+\[
+|\operatorname{paperFT}(\widetilde{k+w},z)-\operatorname{paperFT}(\widetilde k,z)|^2
+\le\bigl(\|K_{a,z}\|^2-|\operatorname{paperFT}(\widetilde k,z)|^2\bigr)\delta.
+\]
+对整个闭正交误差球，非零读出的锐充要条件成为
+\[
+\boxed{\delta\|K_{a,z}\|^2<(1+\delta)|\operatorname{paperFT}(\widetilde k,z)|^2.}
+\]
+实频率处左侧精确为 \(2a\delta\)。锐性仍针对完整 L2 正交误差球，不表示每个球内扰动都能由固定算术算子的本征函数实现。
+
+`rayleigh_paperFT_certificate` 从此前同一真实复算子域的对称性、实际本征向量、候选能量上界和全补空间强制性出发，推导非零重叠 \(\alpha\)、\(\delta=(U-\ell)/(\theta-\ell)\)、实际 Fourier 误差及非零判据。它没有输入 Fourier/L2 等同或射影误差本身。这些结论允许定义域中的算子无界，但不提供真实算术 Weil 算子满足各个能量前提的证明。
+
+## D. 固定窗口与增长窗口分开处理
+
+`PaperFTWindowLimit.paperFT_fixed_window_uniform` 证明：在固定有限窗口内，普通 \(L^2\) 收敛 \(f_j\to f\) 已足以推出实际 `paperFT` 在每个闭水平带上的统一收敛。该结论直接服务固定窗口的 Rayleigh–Ritz 逼近，无需再假设 Fourier 误差统一趋零。
+
+增长窗口中，令 \(\delta_j\) 为同一算子族实际能量证书给出的射影预算。`paperFT_projective_uniform_error` 将
+\[
+|c_j|\sqrt{2a_j}\,e^{ba_j}\sqrt{\delta_j}\longrightarrow0
+\]
+转为实际缩放 Fourier 误差在整个闭水平带上的统一趋零。终点 `rayleigh_paperFT_uniform_limit` 进一步允许任意目标集合 \(K\subseteq\{z:|\operatorname{Im}z|\le b\}\)，包括紧集或轮廓：只要求候选变换在 \(K\) 上统一趋于指定 \(F\)，便推出同样归一化的实际本征向量变换在 \(K\) 上趋于同一 \(F\)。这里使用 Mathlib 原有 `TendstoUniformlyOn`、限制和加法定理，未定义替代的收敛谓词。
+
+候选只需在目标集合收敛，不被额外要求在整个无界水平带上统一收敛。外部目标仍是 *Zeta Spectral Triples* 第 8 节的实际最低模态逼近。候选与文献归一化的识别、真实全域能量前提、足够的增长尺度误差率、候选趋于 Xi 的证明均明确保留；本轮没有证明该实际算术族的尺度率或 RH。#5602 后续使用的方向性 Schur Fourier 灵敏度可能给出更紧充分率，本节的全范数窗口率不被宣称为最优必要条件。
+
+## E. 实际检查
+
+三个 Lean 模块的 18 个公开声明均有对应 Scribe。新的独立回归 `research/projective_spectral_readout/verify_window_paperft.py` 用 40 位 mpmath 数值积分检查非偶复多项式和不连续函数的变换等同、核范数、候选中心化误差、实际消零扰动以及增长窗口的有限示例。18 组复频率实例、54 次锐阈值比较、24 次增长窗口误差检查及三类符号/归一化负控全部通过。初次开发运行发现测试中的 Python `1j/11` 提前落入双精度，改为 `mp.j/11` 后重新运行通过；未以降低阈值处理该问题。
+
+这些是有限数值回归，不是有向区间积分认证、统一极限证明或 Lean 内核检查。当前环境没有 Lean/lake，尚未执行新源码的 elaboration、公理闭包或 Scribe 发射。没有改动原 Fourier 所有者、#5602 分支、CI 或冻结账本。
+
+---
+
+# 2026-09-06 增补：完整残差认证的能量对偶 Fourier 读出
+
+本节承接上述实际 `paperFT` 接口，目标仍是 Connes、Consani、Moscovici 在 *Zeta Spectral Triples* 第 8 节提出的真实最低模态与 prolate 候选的定量比较。作者网站当前提供的 PDF 第 32 页仍将这一步与 simple-even 性质分别列出；候选变换的极限本身不能识别真实本征模态。新增 `ZetaLinear/CoerciveDualCertificate`、`ZetaLinear/ProjectiveEnergyDual` 与 `FourierReadout/EnergyDualPaperFT` 三个候选 Lean 模块及配套 Scribe，延续本卷，无新 Fourier 定义。
+
+## A. 先库后证与文献接口
+
+本轮读取了 #5602 的实际算术 dual-tail 源码和最新 prolate 比较说明，也读取了 loning 路线 #5892 的 Jacobi 源码。后者在明确自伴性前提下给出有限三对角化和特征多项式识别，不能充当实际无限 Weil 算子的定义域和能量证书。#5895 已给出归一化读出的完整范数球圆盘；本节不重建该几何。原有 `ZetaLinear/ExactStickyReduction` 处理实数块能量的精确消元并要求一个右逆；它不提供复算子域上任意近似对偶解的残差上界。
+
+直接复用的数学依赖是 `ProjectiveRayleighReadout` 的实际误差恒等式和非零重叠，以及 `WindowPaperFTReadout` 的实际 Fourier 核、L2 内积和积分识别。检索所见的 dev 源码为 `777f5c1694c1cb8f0e88c39d7b6153ea1daf0c8a`；随后远端 dev 已前进到 `5abc2e5b785d9338277026d3efbd134335d99aea`，不把两次读数混为同一快照。Mathlib 使用项目钉版 `db584cd6d46c92f209a44c0f1c829460d327499d`。
+
+方法上的参照是 Dusson、Sigal、Stamm 的 Feshbach–Schur 分析：近似有效算子时，需要控制被消去子空间的误差，有限块的求解精度不能代替这个控制。其 Fourier 离散化论文针对具有明确正则性条件的周期 Schrödinger 算子，并没有给出本项目算术 Weil 算子的现成实例。本节使用经典变分配方和完整残差，独立推导所需读出证书，不主张新的变分原理或首次形式化优先权。
+
+## B. 实际射影误差还具有移位能量界
+
+设 `ι,A : D →ₗ[ℂ] H` 满足域上的对称性，候选满足 \(\|\iota k\|=1\)，真实本征向量满足 \(A u=\lambda\iota u\)、\(\iota u\ne0\)。沿用原有条件
+\[
+\ell\le\lambda<T,\qquad \mu=\Re\langle\iota k,Ak\rangle\le U<T,
+\qquad f\perp k\Longrightarrow \Re\langle\iota f,Af\rangle\ge T\|\iota f\|^2.
+\]
+令 \(M=A-\ell\iota\)、\(q(f)=\Re\langle\iota f,Mf\rangle\)、\(\kappa=T-\ell>0\)。此前定理已经推出 \(\alpha=\langle\iota k,\iota u\rangle\ne0\)，并且实际误差 \(w=\alpha^{-1}u-k\) 正交于候选、\(\|\iota w\|^2<1\)。原能量恒等式进一步给出
+\[
+q(w)=(\lambda-\ell)\|\iota w\|^2+\mu-\lambda
+=\mu-\ell-(\lambda-\ell)(1-\|\iota w\|^2).
+\]
+最后一项非负，且补空间强制性给出下界。因此
+\[
+\boxed{0\le q(w)\le U-\ell.}
+\]
+`rayleigh_shifted_energy_bound` 从上述实际算子条件推导这一结论，没有把移位能量界作为新输入。
+
+## C. 任意近似对偶解都能产生可审查系数
+
+对指定读出 \(g\in H\)，选取任意域向量 \(v\perp k\)，定义完整残差与系数
+\[
+r_v=(g-Mv)-\langle\iota k,g-Mv\rangle\iota k,
+\qquad
+C_g(v)=2\Re\langle g,\iota v\rangle-q(v)+\frac{\|r_v\|^2}{\kappa}.
+\]
+候选为单位向量时，\(r_v\) 正是 \(g-Mv\) 的候选正交投影。通用变分引理只使用它与候选正交向量的配对，因而该引理本身甚至不需要候选单位归一化。
+
+对任意 \(f\perp k\)，令 \(h=f-v\)。域对称性保留两个交叉项并给出
+\[
+2\Re\langle g,\iota f\rangle-q(f)
+=2\Re\langle g,\iota v\rangle-q(v)
+ +2\Re\langle r_v,\iota h\rangle-q(h).
+\]
+由 Cauchy–Schwarz 与 \(q(h)\ge\kappa\|\iota h\|^2\)，剩余两项至多为 \(\|r_v\|^2/\kappa\)。取 \(f=0\) 得到 \(C_g(v)\ge0\)。再将测试向量替换成
+\[
+\frac{\overline{\langle g,\iota f\rangle}}{q(f)}f
+\]
+并单独处理 \(\iota f=0\) 的情形，得到
+\[
+\boxed{|\langle g,\iota f\rangle|^2\le C_g(v)q(f).}
+\]
+这分别对应 `dual_variational_upper` 与 `dual_energy_readout`。没有假设精确对偶解、逆算子、完备性、有限截断或所需读出不等式。
+
+当完整投影残差为零且 \(\iota v\ne0\) 时，`exact_dual_budget_optimal` 证明 \(C_g(v)=q(v)\)，且任何对全部候选正交域向量有效的系数都至少为 \(q(v)\)。该结论说明一个实际精确对偶解所达到的最优值；它不声明这种解已被构造。任意近似试探向量仍可直接使用上界。差的试探向量可能比零试探更差，必须比较认证后的系数。
+
+## D. 对真实 Fourier 值的方向性结论
+
+现在取已构造的 \(g=K_{a,z}\)，即原正号 `paperFT` 的完整 L2 代表。前两节组合为
+\[
+\boxed{
+|\operatorname{paperFT}(\widetilde{\alpha^{-1}\iota u},z)
+ -\operatorname{paperFT}(\widetilde{\iota k},z)|^2
+\le (U-\ell)C_{K_{a,z}}(v).
+}
+\]
+`rayleigh_paperFT_dual_error` 的终点直接写原积分。若右侧严格小于候选 Fourier 模平方，`rayleigh_paperFT_dual_nonzero` 推出真实本征向量的该 Fourier 读出非零。这里只给充分条件和点读出，不宣称零点计数。
+
+零试探 \(v=0\) 的系数由定义退化为
+\[
+C_g(0)=\frac{\|g-\langle\iota k,g\rangle\iota k\|^2}{T-\ell},
+\]
+因而恢复此前的中心化范数球预算。实际试探通过 \(M\) 的方向性能量有机会改进它，改进幅度必须由完整残差认证，不能只看有限线性方程是否解得精确。
+
+## E. 增长尺度的目标已变成具体残差任务
+
+若同一真实算子族、候选族与试探族在目标集合 \(K\) 上满足
+\[
+C_{K_{a_j,z}}(v_{j,z})\le B_j\quad(z\in K),
+\qquad |c_j|^2B_j(U_j-\ell_j)\longrightarrow0,
+\]
+则实际缩放 Fourier 误差在 \(K\) 上统一趋零。`rayleigh_paperFT_dual_uniform_limit` 随即把同样归一化的候选变换极限传递给实际射影本征向量。它使用标准 `TendstoUniformlyOn`，且不强迫代入 \(2a\exp(2ba)/(T-\ell)\) 这样的全方向最坏上界。\(K\) 可以是任意目标集合；应用于紧集时，仍需真实的统一系数上界。
+
+在 #5602 的方向性 Schur 路线上，可用有限约束求解产生不受信任的试探向量，再分别认证试探目标值与完整残差。其现有 arithmetic dual-tail 控制某类加权交叉级数，并非本节完整残差 L2 范数的自动证书。实际算子作用、基展开识别和全部遗漏模态的范数界仍需连接；应在同一空间中组合残差再计算范数，保留混合项。
+
+这里还要求试探向量位于所写的算子域，使 \(Mv\in H\)。仅有闭二次型的形式域条件不能无证明地替换它。本轮交付通用的完整残差认证与 Fourier 消费者，尚未产生实际算术族上的 \(B_j\) 增长尺度估计，也未证明真实最低模态趋于 Xi。对具体开放问题的下一项可检验任务是对同一实际 prolate 候选族认证这些全模态残差，而非继续增加同名 Fourier 或精确 Schur 定义。
+
+文献：Connes–Consani–Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, §8（作者现行 PDF：`https://alainconnes.org/wp-content/uploads/zeta-spectral-triples-1.pdf`）；Dusson–Sigal–Stamm, *The Feshbach–Schur map and perturbation theory*, arXiv:2105.02058, DOI `10.4171/ECR/18-1/5`；同作者 *Analysis of the Feshbach–Schur method for the Fourier spectral discretizations of Schrödinger operators*, arXiv:2008.10871v2, §2–3, Mathematics of Computation 92 (2023), 217–249, DOI `10.1090/mcom/3774`。
+
+本节十二个公开声明均有同名源文件的 Scribe 对应。源码经过数学与接口审查，尚未执行 Lean elaboration、内核公理检查或 Scribe 发射。本地精确有理数与数值模型检查只用于排查逻辑和符号错误，不能代替上述全称证明检查或实际算术算子的认证。

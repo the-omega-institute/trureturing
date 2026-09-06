@@ -1,0 +1,52 @@
+{
+  "status": "all finite numerical regressions passed; not Lean or interval certification",
+  "python": "3.13.5",
+  "mpmath": "1.3.0",
+  "precision_digits": 40,
+  "counts": {
+    "unit_candidate": 3,
+    "orthogonal_error": 3,
+    "actual_error_energy": 3,
+    "actual_fourier_inner_identity": 18,
+    "kernel_norm_integral": 18,
+    "kernel_strip_bounds": 18,
+    "real_frequency_normalization": 9,
+    "centered_kernel_energy": 18,
+    "centered_fourier_error_bounds": 18,
+    "fourier_strip_bounds": 18,
+    "cancelling_error_orthogonality": 18,
+    "actual_fourier_cancellation": 18,
+    "least_cancellation_energy": 18,
+    "sharp_radius_thresholds": 54,
+    "closed_ball_boundary": 18,
+    "discontinuous_representative": 3,
+    "varying_window_rate_bounds": 24,
+    "negative_controls_rejected": 3,
+    "zero_length_window": 1
+  },
+  "maximum_normalized_identity_error": "4.12104628980884e-41",
+  "sampled_varying_window_envelopes": [
+    "0.438234992464949",
+    "0.271599585423984",
+    "0.145774575242586",
+    "0.07376633480248",
+    "0.0361426726530889",
+    "0.0173507375156519",
+    "0.00821293502517504",
+    "0.00384770185703821"
+  ],
+  "negative_control_gaps": [
+    "9.81392360721478",
+    "8.42755066142486",
+    "2.29815468402821"
+  ],
+  "source_sha256": "0db48034664670d67557a3f7280ea48e83e2d253d82f7d2ba90d2f082e6a0028",
+  "scope": "actual plus-sign Fourier integrals on finite Lebesgue windows and synthetic error families",
+  "not_verified": [
+    "Lean elaboration/kernel",
+    "Scribe emission",
+    "Arithmetic Weil full-domain coercivity",
+    "Actual all-scale Rayleigh rate",
+    "Convergence of any actual candidate family to Xi"
+  ]
+}
