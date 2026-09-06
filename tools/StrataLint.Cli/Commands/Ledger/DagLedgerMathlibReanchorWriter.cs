@@ -139,6 +139,22 @@ internal static class DagLedgerMathlibReanchorWriter
                     "authorization diagnostics disagree with the canonical authorization result");
             }
 
+            var output = RenderResult(
+                driftPaths,
+                reanchoredPaths,
+                pinChanged,
+                propositionFailures,
+                closureStatementFailures,
+                axiomFailures,
+                authorized);
+            if (!authorized)
+            {
+                return new CommandResult(
+                    false,
+                    output,
+                    "MATHLIB_REANCHOR_FAILED authorization failed; frozen ledger was not published\n");
+            }
+
             FrozenLedgerPublication.PublishSnapshot(
                 repositoryRoot,
                 LedgerPath(repositoryRoot),
@@ -149,14 +165,7 @@ internal static class DagLedgerMathlibReanchorWriter
                 "ledger-reanchor-mathlib");
             return new CommandResult(
                 true,
-                RenderResult(
-                    driftPaths,
-                    reanchoredPaths,
-                    pinChanged,
-                    propositionFailures,
-                    closureStatementFailures,
-                    axiomFailures,
-                    authorized),
+                output,
                 string.Empty);
         }
         catch (Exception exception) when (
