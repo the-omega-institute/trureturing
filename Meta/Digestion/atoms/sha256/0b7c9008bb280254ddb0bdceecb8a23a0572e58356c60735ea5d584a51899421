@@ -1,0 +1,60 @@
+## 定理 185.1　自由落体参照中的精确余项
+
+令
+
+$$
+y=x-q(t).
+$$
+
+则 \(\psi\) 满足式（185.1）的 Schrödinger 方程，当且仅当 \(\chi\) 满足
+
+$$
+\boxed{
+i\hbar\partial_t\chi
+=
+\left[
+E+\frac{P_y^2}{2M}
++
+M\mathcal R_q(t,Y)
+\right]\chi,
+}
+\tag{185.3}
+$$
+
+其中
+
+$$
+\boxed{
+\mathcal R_q(t,y)
+=
+\Phi(q(t)+y)
+-\Phi(q(t))
+-y\Phi'(q(t)).
+}
+\tag{185.4}
+$$
+
+### 证明
+
+将式（185.2）代入 Schrödinger 方程。
+
+空间导数产生动量平移
+
+$$
+P\longmapsto P_y+M\dot q.
+$$
+
+时间导数中的平移项消去动能展开的交叉项。剩余势为
+
+$$
+M\left[
+\Phi(q+y)+\ddot q\,y+\dot s-\frac12\dot q^2
+\right].
+$$
+
+使用 \(q,s\) 的定义，得到式（185.4）。
+
+由于 \([E,M]=0\)，相位变换不会额外旋转 \(E\)。∎
+
+---
+

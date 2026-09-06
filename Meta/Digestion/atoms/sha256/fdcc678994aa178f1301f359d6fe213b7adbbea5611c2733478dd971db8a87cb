@@ -1,0 +1,39 @@
+## 定理 176.1　静止基准能量的关系可见性
+
+初始路径为 \(|+\rangle\)，内部态为 \(\rho\)。定义
+
+$$
+\Delta\tau=\tau_L-\tau_R.
+$$
+
+路径干涉系数为
+
+$$
+\boxed{
+\gamma_e
+=
+e^{-ie\Delta\tau/\hbar}
+\operatorname{Tr}\!\left(
+\rho e^{-ih\Delta\tau/\hbar}
+\right).
+}
+\tag{176.2}
+$$
+
+因此，不同 \(e\) 一般可以由路径干涉区分。
+
+### 证明
+
+计算两个条件演化的相对酉算子：
+
+$$
+e^{iH_e\tau_R/\hbar}e^{-iH_e\tau_L/\hbar}
+=
+e^{-ie\Delta\tau/\hbar}
+e^{-ih\Delta\tau/\hbar}.
+$$
+
+再对内部态取期望即可。∎
+
+---
+

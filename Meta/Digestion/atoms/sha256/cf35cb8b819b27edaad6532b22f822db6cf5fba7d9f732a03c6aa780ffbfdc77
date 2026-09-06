@@ -1,0 +1,102 @@
+## 定理 1：有限精确重建
+
+对每个
+
+$$
+2\le n\le N,
+$$
+
+都有
+
+$$
+\boxed{
+\Lambda(n)
+=
+L_{N,\tau}(n)
+=
+\sum_{q\le N}\lambda_{q,N}(\tau)c_q(n).
+}
+\tag{3}
+$$
+
+而且右边与 \(\tau\) 完全无关。
+
+### 证明
+
+Möbius 反演给出
+
+$$
+\sum_{d\mid n}\mu(d)=0\qquad(n>1),
+$$
+
+以及
+
+$$
+-\sum_{d\mid n}\mu(d)\log d=\Lambda(n).
+$$
+
+因此，当 \(2\le n\le N\) 时，
+
+$$
+\begin{aligned}
+L_{N,\tau}(n)
+&=
+(\log N+\tau)\sum_{d\mid n}\mu(d)
+-\sum_{d\mid n}\mu(d)\log d\\
+&=\Lambda(n).
+\end{aligned}
+$$
+
+这里使用的是标准除数反演恒等式。([DLMF][2])
+
+另一方面，有有限恒等式
+
+$$
+\boxed{
+\mathbf1_{\{d\mid n\}}
+=
+\frac1d\sum_{q\mid d}c_q(n).
+}
+\tag{4}
+$$
+
+把它代入式（1），交换有限求和，得到
+
+$$
+\begin{aligned}
+L_{N,\tau}(n)
+&=
+\sum_{d\le N}
+\mu(d)\left(\log\frac Nd+\tau\right)
+\frac1d\sum_{q\mid d}c_q(n)\\
+&=
+\sum_{q\le N}\lambda_{q,N}(\tau)c_q(n).
+\end{aligned}
+$$
+
+证毕。
+
+式（4）及由它生成的有限 Ramanujan 展开，在已有研究中有明确证明。([arXiv][1])
+
+---
+
+这一步已经不是
+
+$$
+\text{“希望某个正模型近似素数”。}
+$$
+
+而是
+
+$$
+\boxed{
+\text{实际 }\Lambda(n)
+=
+\text{明确的有限相位叠加}.
+}
+$$
+
+不过，**知道有限精确公式，不等于已经控制它在所有尺度上的大小。**
+
+另外必须保留 \(n>1\)：在 \(n=1\) 处，式（1）等于 \(\log N+\tau\)，并不等于 \(\Lambda(1)=0\)。
+

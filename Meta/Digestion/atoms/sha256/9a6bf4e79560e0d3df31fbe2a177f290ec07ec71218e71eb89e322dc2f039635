@@ -1,0 +1,10 @@
+## 定理 S4：裸 Bessel 核的有限正值区间
+
+$$
+\boxed{
+K_{it}(a)>0
+\qquad(|t|\le a).
+}
+\tag{S26}
+$$
+

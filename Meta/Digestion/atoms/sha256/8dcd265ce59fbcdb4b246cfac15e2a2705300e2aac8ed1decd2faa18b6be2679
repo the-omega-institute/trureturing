@@ -1,0 +1,58 @@
+## 定理 2.1：\(J\) 的有限算术公式
+
+$$
+\boxed{
+J(x)
+=
+\ln x-\gamma-1+\frac{\psi(x)}x-M_1(x).
+}
+\tag{8}
+$$
+
+### 证明
+
+在 \([x,Y]\) 上分部积分：
+
+$$
+\begin{aligned}
+\int_x^Y\frac{\psi(v)-v}{v^2}\,dv
+={}&
+\frac{\psi(x)}x-\frac{\psi(Y)}Y\\
+&+M_1(Y)-M_1(x)-\ln Y+\ln x.
+\end{aligned}
+$$
+
+由有效素数定理：
+
+$$
+\frac{\psi(Y)}Y\to1,
+$$
+
+而：
+
+$$
+M_1(Y)-\ln Y\to-\gamma.
+$$
+
+最后这个常数可以这样确定：有效素数定理先保证该极限存在，记为 \(c\)；再由分部求和得：
+
+$$
+-\frac{\zeta'}{\zeta}(1+\varepsilon)
+=
+\frac1\varepsilon+c+o(1).
+$$
+
+另一方面，ζ 在 \(s=1\) 的 Laurent 展开给出：
+
+$$
+-\frac{\zeta'}{\zeta}(1+\varepsilon)
+=
+\frac1\varepsilon-\gamma+O(\varepsilon).
+$$
+
+故 \(c=-\gamma\)。ζ 的极点及展开是经典解析输入。([DLMF][4])
+
+令 \(Y\to\infty\) 即得。证毕。
+
+---
+

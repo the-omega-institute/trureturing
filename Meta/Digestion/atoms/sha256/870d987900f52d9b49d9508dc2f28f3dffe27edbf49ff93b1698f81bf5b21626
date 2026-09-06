@@ -1,0 +1,53 @@
+# 三、一个无冗余的有限量子核
+
+定义未归一化向量
+
+$$
+\boxed{
+|\Phi_X(v)\rangle
+=
+\sum_{j=0}^{2X-1}
+\sqrt{d_j}\,y_j(v)|j\rangle.
+}
+\tag{11}
+$$
+
+于是
+
+$$
+K_X(v)=|\Phi_X(v)\rangle\langle\Phi_X(v)|
+$$
+
+始终半正定，并且
+
+$$
+\boxed{
+\operatorname{Tr}K_X(v)=\mathfrak J_X(v).
+}
+\tag{12}
+$$
+
+定理 2 还说明：如果要求对**所有输入 \(v\)** 都有一个线性 Hilbert 空间分解
+
+$$
+\mathfrak J_X(v)=\|Tv\|^2,
+$$
+
+那么实现空间的有效维数至少为 \(2X\)。
+
+因为
+
+$$
+T^*T=W_X
+$$
+
+迫使
+
+$$
+\operatorname{rank}T=\operatorname{rank}W_X=2X.
+$$
+
+所以式（11）已经给出了这种意义下的最小线性实现。
+
+但它依然是**针对当前观察的最小实现**，不是“全部算术只需要 \(2X\) 维”。
+

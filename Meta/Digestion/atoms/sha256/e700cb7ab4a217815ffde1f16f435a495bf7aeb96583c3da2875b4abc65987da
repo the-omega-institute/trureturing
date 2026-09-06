@@ -1,0 +1,47 @@
+# 结论
+
+本轮最重要的推进，是把“观察者是中心”从一种描述立场，转化成三项具有不同强度的数学命题。
+
+**第一，观察者内部结构必须与其运动角色相容。**
+
+$$
+\boxed{
+M_G=M_I,
+\qquad
+[H_{\mathrm{rest}},M_I]=0
+}
+$$
+
+在本模型中，恰好保证全状态的普适加速度。仅比较平均质量，无法完成这一检验。
+
+**第二，观察者自身可以是量子的，而共同自由落体仍然可以被消去。**
+
+参照者不必具有无限大的经典质量；使用两个量子物体的相对位置、相对动量和约化质量，均匀共同加速度依然从相对机械动力学中消失。
+
+**第三，真正保留下来的几何内容从空间不均匀性开始。**
+
+$$
+\boxed{
+\ddot Y
+=
+-Y\int_0^1\Phi''(X_A+sY)\,ds.
+}
+$$
+
+它说明局部观察者不是直接“看到一份绝对引力”，而是通过不同位置之间不可由共同自由落体消去的关系，读取潮汐结构。
+
+因此，当前理论可以进一步收紧为：
+
+> **先检验观察者内部能量、惯性与引力响应是否相容；再把共同参照运动从关系读数中分离；最后由剩余的、具有误差证书的跨位置响应重建几何。**
+
+这条路线没有把所有相位都叫作时间、把所有交换子都叫作曲率，也没有把任意参考系变换都叫作物理作用。
+
+**物理时空在这里逐渐成为：量子观察者能够共同消去什么，以及在合法参照变换之后仍然无法消去什么，由这两类结构共同确定的关系对象。**
+
+[1]: https://arxiv.org/abs/1502.00971?utm_source=chatgpt.com "Quantum formulation of the Einstein Equivalence Principle"
+[2]: https://arxiv.org/html/1808.05831v2?utm_source=chatgpt.com "Gravitational mass of composite systems"
+[3]: https://arxiv.org/html/2112.03303v4 "Quantum generalisation of Einstein’s Equivalence Principle can be verified with entangled clocks as quantum reference frames"
+[4]: https://arxiv.org/html/1302.5596v1 "1Introduction"
+[5]: https://arxiv.org/html/1712.07207v2 "Quantum mechanics and the covariance of physical laws in quantum reference frames"
+[6]: https://davidtong.org/teaching/general-relativity/grhtml/S3.html "3 Introducing Riemannian Geometry‣ General Relativity by David Tong"
+[7]: https://arxiv.org/html/1906.03725v1 "Puzzling out the mass-superselection rule"

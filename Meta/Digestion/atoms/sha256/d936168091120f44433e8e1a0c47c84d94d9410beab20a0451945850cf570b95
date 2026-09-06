@@ -1,0 +1,54 @@
+### 证明
+
+将式（T1）代入积分。对每项作：
+
+$$
+u=\pi n^2e^{2x}.
+$$
+
+得到：
+
+$$
+\begin{aligned}
+Z_+(\sigma)
+&=
+\frac12
+\pi^{-1-\sigma/2}
+\Gamma\!\left(1+\frac{\sigma}{2}\right)
+\sum_{n\ge1}n^{-\sigma}.
+\end{aligned}
+$$
+
+再使用 Gamma 递推关系及 ξ 的定义，得到式（T7）。全部交换都在 \(\sigma>1\) 的绝对收敛范围内完成。Gamma 积分及 ζ 的 Dirichlet 级数采用标准定义。([DLMF][3])
+
+定义归一化密度：
+
+$$
+\boxed{
+r_\sigma(x)
+=
+\frac{
+e^{(\sigma-\frac12)x}g_+(x)
+}{
+Z_+(\sigma)
+}.
+}
+\tag{T8}
+$$
+
+它的特征函数为：
+
+$$
+\boxed{
+B_\sigma(t)
+=
+\int e^{itx}r_\sigma(x)\,dx
+=
+\frac{\xi(\sigma+it)}{\xi(\sigma)}
+\frac{\sigma-1}{\sigma-1+it}.
+}
+\tag{T9}
+$$
+
+---
+

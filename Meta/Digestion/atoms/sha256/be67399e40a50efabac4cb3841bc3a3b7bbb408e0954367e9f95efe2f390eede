@@ -1,0 +1,31 @@
+## 定理 R2：实际两模态的局部高斯极限
+
+在筛选概率 \(\mathbb P_n\) 下：
+
+$$
+\boxed{
+\left(
+\frac{|U|/\sqrt2-h_n}{\varepsilon_n},
+\frac{S}{\sigma_n}
+\right)
+\ \Longrightarrow\
+N(0,1)\otimes N(0,1).
+}
+\tag{R15}
+$$
+
+并且所有固定阶多项式矩随之收敛。
+
+特别地：
+
+$$
+\boxed{
+v_n\sim\sigma_n^2
+=
+\frac{W_0(n/\pi)}{4n}.
+}
+\tag{R16}
+$$
+
+这个结论不使用 RH。
+

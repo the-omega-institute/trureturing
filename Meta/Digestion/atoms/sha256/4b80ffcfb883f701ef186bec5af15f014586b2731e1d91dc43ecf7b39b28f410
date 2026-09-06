@@ -1,0 +1,63 @@
+# 四、RH 等价于一条严格的压力上界
+
+现在构造与 Robin 临界曲线对应的连续比较对象。
+
+令：
+
+$$
+E_0=\ln5184.
+$$
+
+5184 是允许分拆中对应的最小整数。
+
+定义：
+
+$$
+h(E)=\gamma+\ln\ln E,
+\qquad E\ge E_0.
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal H(\lambda)
+=
+\max_{E\ge E_0}\bigl[h(E)-\lambda E\bigr].
+}
+\tag{10}
+$$
+
+由于：
+
+$$
+h'(E)=\frac1{E\ln E},
+\qquad
+h''(E)<0,
+$$
+
+最大者唯一。
+
+记 \(t_\lambda>1\) 为方程：
+
+$$
+t_\lambda\ln t_\lambda=\frac1\lambda
+$$
+
+的唯一解，令：
+
+$$
+T_\lambda=\max\{E_0,t_\lambda\}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal H(\lambda)
+=
+\gamma+\ln\ln T_\lambda-\lambda T_\lambda.
+}
+\tag{11}
+$$
+

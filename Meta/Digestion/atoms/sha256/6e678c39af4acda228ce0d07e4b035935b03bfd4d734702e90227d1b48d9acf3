@@ -1,0 +1,95 @@
+## 定理 167.2　稳定泛函与因果条件相互独立
+
+对适当无通量边界，定义
+
+$$
+\mathcal L
+=
+\frac12\int
+\left[
+\mathcal C\,\vartheta^2
++
+\frac{\tau}{\lambda}J^2
+\right]dx.
+$$
+
+则
+
+$$
+\boxed{
+\frac{d\mathcal L}{dt}
+=
+-\int\frac{J^2}{\lambda}\,dx\le0.
+}
+\tag{167.6}
+$$
+
+其局部特征速度为
+
+$$
+\boxed{
+v_{\mathrm{th}}^2
+=
+\frac{\lambda}{\mathcal C\tau}.
+}
+\tag{167.7}
+$$
+
+### 证明
+
+分别以 \(\vartheta\) 和 \(J/\lambda\) 乘两式，积分。由分部积分，交叉项抵消，得到式（167.6）。
+
+主符号矩阵为
+
+$$
+\begin{pmatrix}
+-\omega\mathcal C&k\\
+k&-\omega\tau/\lambda
+\end{pmatrix}.
+$$
+
+令行列式为零即得式（167.7）。∎
+
+若共同静态度量为
+
+$$
+ds^2=-\nu(x)^2c^2dt^2+a(x)^2dx^2,
+$$
+
+要使热扰动不超出其局部信号锥，至少需要
+
+$$
+\boxed{
+\frac{\lambda}{\mathcal C\tau}
+\le
+\frac{c^2\nu^2}{a^2}.
+}
+\tag{167.8}
+$$
+
+即
+
+$$
+\boxed{
+\tau\ge
+\frac{\lambda a^2}{\mathcal Cc^2\nu^2}.
+}
+\tag{167.9}
+$$
+
+**正导热系数和单调稳定泛函，不会自动保证共同因果性。**
+
+此外，
+
+$$
+\partial_x(\nu T)
+=
+\nu\left(
+\partial_xT+T\partial_x\log\nu
+\right).
+$$
+
+因此零流条件自然包含一个与钟速梯度相关的补偿项。把它删掉，再要求所有非均匀平衡温度都产生热流，会与第 163 节的能量交换定理冲突。
+
+---
+

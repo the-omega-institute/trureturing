@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  chain_atoms:
+    - c09d1358ef03e8469be9d3cc0047d394fce96e1cd8b85e20ae01880d74df18ff
+    - 28f8030028dcc9ee9fea5c5230b69068489d380cdd2e79f95ee79f66d04d1b42
+    - 73e359416a90b732e918fb895b410b448e0c72c3b15b312df48d67c0edb0eee0

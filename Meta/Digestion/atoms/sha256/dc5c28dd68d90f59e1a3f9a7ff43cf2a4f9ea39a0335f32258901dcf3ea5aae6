@@ -1,0 +1,30 @@
+# 十、对仓库而言，这次新增的接口已经很具体
+
+本轮读取了前文固定快照中的实际声明。
+
+`CompletedZetaMellinReconstruction.lean` 已保留 theta–Mellin 重构、极点补偿与反射关系，可以作为式（S14）的算术来源；它没有自动提供本轮 Bessel 重排及全阶 \(M_n(t)\) 非负性。
+
+`FiniteZeckendorfEulerIdentity.lean` 已提供有限占据数与黄金编码之间的精确双射，可以运输式（S18）的有限素数幂通道；它不自动控制不同通道之间的符号相消。
+
+因此，新的理论链可以写成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际 theta 双副本}
+&\longrightarrow
+\text{固定差模态的 Wigner 型读出}\\
+&\longrightarrow
+\text{除数相位—Bessel 精确展开}\\
+&\longrightarrow
+\text{素数幂量子通道与 Fibonacci 编码}\\
+&\longrightarrow
+\text{带尾界的全尺度符号检验}.
+\end{aligned}
+}
+$$
+
+最后一项才承担 RH 的证明责任。
+
+---
+

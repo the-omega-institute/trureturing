@@ -1,0 +1,18 @@
+# 九、纯素数与素数幂之间，还留下一个可精确算出的常数
+
+式（32）使用全部素数幂。现在定义只对素数求和的版本
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal T_{\mathbb P}(X)
+={}&
+\sum_{X<p\le2X}(p-X)\log p\\
+&+\frac12
+\sum_{2X<p\le4X}(4X-p)\log p
+-\frac32X^2.
+\end{aligned}
+}
+\tag{43}
+$$
+

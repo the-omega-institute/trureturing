@@ -1,0 +1,42 @@
+## 与内部钟的进一步连接
+
+若
+
+$$
+M=m_0I+\frac{H_C}{c^2},
+$$
+
+则潮汐项包含
+
+$$
+\boxed{
+H_{\mathrm{tidal,clock}}
+=
+\frac{H_C}{c^2}\mathcal R_q(t,Y).
+}
+\tag{189.6}
+$$
+
+在适当的路径控制与其他相位校准条件下，两条路径的内部相位差包含
+
+$$
+\boxed{
+\Delta\varphi_{\mathrm{tidal}}
+=
+-\frac{\Delta E}{\hbar c^2}
+\int
+\left[
+\mathcal R_q(t,y_1(t))
+-
+\mathcal R_q(t,y_2(t))
+\right]dt.
+}
+\tag{189.7}
+$$
+
+这只是潮汐势对钟相位的贡献；不同路径的动能相位、控制力和读出装置仍须一并处理。
+
+在已有弱场洛伦兹实现中，相对加速度和这种局部时间差可以共同约束曲率，而不必先把内部能量相位等同于几何本身。([David Tong][6])
+
+---
+

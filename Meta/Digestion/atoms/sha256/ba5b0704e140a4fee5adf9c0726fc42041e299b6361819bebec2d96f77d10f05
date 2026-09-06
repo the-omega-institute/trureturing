@@ -1,0 +1,31 @@
+# 一、从 Möbius 恒等式出发，精确重建实际算术
+
+固定整数
+
+$$
+X\ge2,\qquad N\ge4X.
+$$
+
+观察窗口中的整数为
+
+$$
+\mathcal N_X=\{n\in\mathbb N:X<n\le4X\}.
+$$
+
+所有对数均为自然对数。
+
+记
+
+$$
+e(t)=e^{2\pi it},
+$$
+
+以及 Ramanujan 和
+
+$$
+c_q(n)=
+\sum_{\substack{0\le a<q\\(a,q)=1}}e(an/q),
+$$
+
+约定 \(c_1(n)=1\)。
+

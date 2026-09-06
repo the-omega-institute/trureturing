@@ -1,0 +1,74 @@
+## 模式尾部可以明确控制
+
+记式（S17）截断到 \(k\le K\) 为 \(\mathcal W_K\)。
+
+由前面的 Bessel 积分估计：
+
+$$
+\boxed{
+\begin{aligned}
+|\mathcal W-\mathcal W_K|
+\le{}&
+8\pi^2e^{5x}
+\sum_{k>K}d(k)k^2\\
+&\times
+\left[
+(z_k^2+9)K_0(z_k)+6z_kK_1(z_k)
+\right].
+\end{aligned}
+}
+\tag{S22}
+$$
+
+进一步，用：
+
+$$
+K_0(z)\le e^{-z}\sqrt{\frac{\pi}{2z}},
+$$
+
+$$
+K_1(z)\le e^{-z}\sqrt{\frac{\pi}{2z}}e^{1/(2z)},
+$$
+
+便可把它化成初等指数尾界。
+
+例如，令：
+
+$$
+a=2\pi e^{2x},
+$$
+
+$$
+C_x=
+8\pi^2e^{5x}\sqrt{\frac{\pi}{2a}}
+\left(a^2+9+6ae^{1/(2a)}\right),
+$$
+
+则：
+
+$$
+\boxed{
+|\mathcal W-\mathcal W_K|
+\le
+C_x
+\frac{
+(K+1)^5e^{-a(K+1)}
+}{
+1-e^{5/(K+1)-a}
+}.
+}
+\tag{S23}
+$$
+
+因为 \(x\ge0\)，这里分母为正。
+
+在 \(x=0,K=8\) 时，这个尾界约为：
+
+$$
+5.77\times10^{-17}.
+$$
+
+它控制的是模式截断，不自动包括特殊函数求值的舍入误差。
+
+---
+

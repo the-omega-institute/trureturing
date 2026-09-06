@@ -1,0 +1,46 @@
+## 有限证书怎样形成？
+
+取有限模式数 \(K\) 和有限尺度范围 \(0\le x\le X\)，计算：
+
+$$
+\widetilde M_{n,K,X}(t)
+=
+\int_0^Xx^{2n}\mathcal W_K(x,t)\,dx.
+$$
+
+由：
+
+$$
+|\mathcal W(x,t)|\le\mathcal W(x,0),
+$$
+
+得到：
+
+$$
+\boxed{
+\begin{aligned}
+|M_n(t)-\widetilde M_{n,K,X}(t)|
+\le{}&
+\int_0^Xx^{2n}\varepsilon_K(x)\,dx\\
+&+\int_X^\infty x^{2n}\mathcal W(x,0)\,dx,
+\end{aligned}
+}
+\tag{S31}
+$$
+
+其中 \(\varepsilon_K\) 可以取式（S22）或（S23）。
+
+再加入数值积分与特殊函数的区间误差。
+
+如果最终认证：
+
+$$
+\boxed{
+\widetilde M_{n,K,X}(t)
++\text{全部误差上界}<0,
+}
+\tag{S32}
+$$
+
+才得到实际 RH 的反例证书。
+

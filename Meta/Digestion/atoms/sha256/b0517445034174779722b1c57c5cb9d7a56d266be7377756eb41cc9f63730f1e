@@ -1,0 +1,40 @@
+## 假设 167.1　局部平衡与因果松弛扩展
+
+为了建立连续宏观方程，另外选择一维静态背景，并令
+
+$$
+\vartheta(x,t)=\nu(x)T(x,t)-\Theta_0.
+$$
+
+取正系数
+
+$$
+\mathcal C(x)>0,\qquad
+\lambda(x)>0,\qquad
+\tau(x)>0,
+$$
+
+并定义
+
+$$
+\boxed{
+\mathcal C\,\partial_t\vartheta+\partial_xJ=0,
+}
+\tag{167.4}
+$$
+
+$$
+\boxed{
+\tau\,\partial_tJ+J
+=
+-\lambda\,\partial_x\vartheta.
+}
+\tag{167.5}
+$$
+
+这里 \(\mathcal C\) 是共同参照能量对 \(\Theta\) 的局部容量系数，\(J\) 是该能量的流量。
+
+式（167.4）—（167.5）是新增的局部平衡与松弛模型，不声称已经由单次碰撞公式无条件推出。相对论热传导中，温度梯度、观察者加速度和松弛项确实需要共同处理。([APS Journals][6])
+
+---
+

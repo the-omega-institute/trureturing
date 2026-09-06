@@ -1,0 +1,118 @@
+# 三、实际 theta 尾部决定了一个 Lambert \(W\) 尺度
+
+在本对话固定的坐标中，对 \(x\ge0\)：
+
+$$
+\Phi(x)
+=
+\sum_{j\ge1}
+\left(
+4\pi^2j^4e^{9x/2}
+-
+6\pi j^2e^{5x/2}
+\right)e^{-\pi j^2e^{2x}}.
+$$
+
+第一项控制 \(x\to+\infty\) 的渐近，其余项具有更快的指数衰减。因此：
+
+$$
+\boxed{
+p(x)
+=
+C_\theta
+e^{\frac92x-\pi e^{2x}}
+\left[1+O(e^{-2x})\right],
+\qquad
+C_\theta=\frac{4\pi^2}{\xi(1/2)}.
+}
+\tag{R10}
+$$
+
+相应的有限阶导数也可逐项控制。
+
+此外，实际 \(p\) 严格对数凹：
+
+$$
+V(x):=-\log p(x)
+$$
+
+是凸函数。上一轮已经核对了这一性质的经典来源；它比普通“密度为正”强，但仍不等于 Fourier 非负性。([arXiv][2])
+
+现在考虑筛选后的联合密度。在 \(U>0\) 一侧，令：
+
+$$
+x=\frac{U}{\sqrt2}>0.
+$$
+
+保留和模态坐标 \(s=S\)。忽略归一化常数，密度为：
+
+$$
+\boxed{
+q_n(x,s)
+=
+x^{2n}
+p\!\left(x+\frac{s}{\sqrt2}\right)
+p\!\left(x-\frac{s}{\sqrt2}\right).
+}
+\tag{R11}
+$$
+
+由于原密度偶对称，这也描述 \((|U|/\sqrt2,S)\) 的分布。
+
+在 \(x\) 很大、\(s\) 有界时：
+
+$$
+\boxed{
+\log q_n(x,s)
+=
+2n\log x+9x
+-2\pi e^{2x}\cosh(\sqrt2s)
++\text{常数}+O(e^{-2x}).
+}
+\tag{R12}
+$$
+
+在 \(s=0\) 附近，主导平衡为：
+
+$$
+\frac{2n}{x}=4\pi e^{2x}.
+$$
+
+也就是：
+
+$$
+(2x)e^{2x}=\frac n\pi.
+$$
+
+定义：
+
+$$
+\boxed{
+w_n=W_0(n/\pi),
+\qquad
+h_n=\frac{w_n}{2}.
+}
+\tag{R13}
+$$
+
+Lambert 函数满足：
+
+$$
+W_0(z)e^{W_0(z)}=z,
+$$
+
+且：
+
+$$
+W_0(z)=\log z-\log\log z+o(1)
+\qquad(z\to+\infty).
+$$
+
+所以：
+
+$$
+h_n\sim\frac12\log n.
+$$
+
+这些定义与渐近是标准 Lambert \(W\) 性质。([DLMF][3])
+

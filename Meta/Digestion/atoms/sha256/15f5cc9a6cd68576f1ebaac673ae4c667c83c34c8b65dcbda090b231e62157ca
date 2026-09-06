@@ -1,0 +1,113 @@
+## 定理 7：三角观察下的平方修正
+
+无条件地，
+
+$$
+\boxed{
+\mathcal T(X)-\mathcal T_{\mathbb P}(X)
+=
+\left(\frac{10}{3}-2\sqrt2\right)X^{3/2}
++o(X^{3/2}).
+}
+\tag{44}
+$$
+
+因此
+
+$$
+\boxed{
+\frac{\mathcal T_{\mathbb P}(X)}{X^{3/2}}
+=
+\mathfrak m(X)
+-
+\left(\frac{10}{3}-2\sqrt2\right)
++o(1).
+}
+\tag{45}
+$$
+
+### 证明
+
+定义固定三角权重
+
+$$
+\kappa(t)=
+\begin{cases}
+t-1,&1\le t\le2,\\
+(4-t)/2,&2\le t\le4,\\
+0,&\text{其他}.
+\end{cases}
+$$
+
+平方项贡献为
+
+$$
+X\sum_p\log p\,\kappa(p^2/X).
+$$
+
+令 \(p=\sqrt X\,u\)。由素数定理
+
+$$
+\theta(y)=\sum_{p\le y}\log p\sim y,
+$$
+
+分部积分或 Stieltjes 积分给出
+
+$$
+\frac1{X^{3/2}}
+X\sum_p\log p\,\kappa(p^2/X)
+\longrightarrow
+\int_1^2\kappa(u^2)\,du.
+$$
+
+这一步只使用无条件素数定理。([DLMF][2])
+
+直接积分：
+
+$$
+\begin{aligned}
+\int_1^2\kappa(u^2)\,du
+&=
+\int_1^{\sqrt2}(u^2-1)\,du
++
+\frac12\int_{\sqrt2}^{2}(4-u^2)\,du\\
+&=
+\frac{10}{3}-2\sqrt2.
+\end{aligned}
+$$
+
+对于 \(k\ge3\) 的素数幂，权重至多为 \(X\)，而相关素数不超过 \((4X)^{1/3}\)，总贡献可粗略控制为
+
+$$
+O(X^{4/3}\log X)=o(X^{3/2}).
+$$
+
+合并即得式（44）。证毕。
+
+---
+
+所以，这个观察面里的平方修正不是前文的 \(\frac14\log^2x\)，而是归一化后的常数
+
+$$
+\boxed{
+\frac{10}{3}-2\sqrt2
+\approx0.5049062086.
+}
+$$
+
+两者并不矛盾：**不同加权核对同一批素数平方，会产生不同的积分尺度。**
+
+这个常数可以被“统一有界”判据吸收，因此
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal T_{\mathbb P}(X)=O(X^{3/2})
+}
+$$
+
+对全部整数 \(X\) 成立。
+
+但若研究该模态的中心位置或精细渐近式，就不能把这个常数省略。
+

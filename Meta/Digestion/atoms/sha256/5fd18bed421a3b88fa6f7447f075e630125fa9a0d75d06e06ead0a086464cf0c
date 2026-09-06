@@ -1,0 +1,84 @@
+## 定理 5：精确截断系数的连续极限
+
+对每个固定实数 \(\tau\)，
+
+$$
+\boxed{
+\sup_{n,m}|\mathscr P_{X,\tau}(n,m)|
+=
+O_\tau(X^{-1}),
+}
+\tag{20}
+$$
+
+而且
+
+$$
+\boxed{
+X\mathscr P_{X,\tau}
+(\lfloor Xs\rfloor,\lfloor Xt\rfloor)
+\longrightarrow
+\Gamma_\tau(s,t),
+}
+\tag{21}
+$$
+
+其中
+
+$$
+\boxed{
+\Gamma_\tau(s,t)
+=
+\delta_0
+\int_{\mathcal B}
+\left[\tau+\log(8|\xi|)\right]^2
+e^{2\pi i(s-t)\xi}\,d\xi.
+}
+\tag{22}
+$$
+
+收敛在 \(s,t\) 的固定紧集上一致。
+
+### 证明
+
+先用平方自由整数的恒等式
+
+$$
+\mu(q)^2=\sum_{d^2\mid q}\mu(d).
+$$
+
+该恒等式是标准除数公式。([DLMF][3])
+
+求和后得到
+
+$$
+\begin{aligned}
+\sum_{q\le Y}\mu(q)^2
+&=
+\sum_{d\le\sqrt Y}
+\mu(d)\left\lfloor\frac{Y}{d^2}\right\rfloor\\
+&=
+\frac{Y}{\zeta(2)}+O(\sqrt Y)\\
+&=
+\delta_0Y+O(\sqrt Y).
+\end{aligned}
+\tag{23}
+$$
+
+因此式（20）立即成立。
+
+再令 \(v=q/X\)，将式（19）写成加权 Riemann 和，得到极限
+
+$$
+2\delta_0
+\int_4^8
+\frac{[\tau+\log(8/v)]^2}{v^2}
+\cos\frac{2\pi(s-t)}v\,dv.
+$$
+
+作变量代换 \(\xi=1/v\)，并合并正负频带，得到式（22）。
+
+紧集一致性来自被积函数族的一致有界与等度连续性。证毕。
+
+---
+
