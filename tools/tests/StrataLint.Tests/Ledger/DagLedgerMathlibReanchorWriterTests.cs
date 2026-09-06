@@ -176,6 +176,14 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             ModuleASource,
             changedSource,
             candidateAStatement: "True and True");
+        var before = ReadLedgerDirectory(fixture.LedgerPath);
+        var pin = StatementId.Create(LoadEvents(fixture.BaseEvents)
+            .Single(item => item.DescriptorPath == RepoPathFor("A"))
+            .Payload.GetProperty("statement_id").GetString()!);
+        Assert.True(FrozenStateWriter.Write(fixture.RepositoryRoot, RepoPathFor("A"), pin));
+        var statePath = Path.Combine(fixture.RepositoryRoot,
+            FrozenStatePath.FromModulePath(RepoPathFor("A")).Value);
+        var stateBefore = File.ReadAllBytes(statePath);
 
         var result = DagLedgerMathlibReanchorWriter.Reanchor(
             fixture.RepositoryRoot,
@@ -183,7 +191,7 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             fixture.ReportSource,
             ["--base", BaseRevision]);
 
-        Assert.True(result.Success, result.Error);
+        Assert.False(result.Success);
         Assert.Contains("MATHLIB_REANCHOR replacement_modules=1", result.Output, StringComparison.Ordinal);
         Assert.Contains("AUTHORIZATION proposition_source_equivalent=fail failed_modules=1", result.Output, StringComparison.Ordinal);
         Assert.Contains("AUTHORIZATION overall=fail", result.Output, StringComparison.Ordinal);
@@ -191,7 +199,9 @@ public sealed class DagLedgerMathlibReanchorWriterTests
 
         var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
         Assert.Equal(2, persisted.Length);
-        Assert.Contains(persisted, file => file.Path == EventFor(fixture.CandidateEvents, "A").Path);
+        Assert.Equal(before, ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.Equal(stateBefore, File.ReadAllBytes(statePath));
+        Assert.Contains(persisted, file => file.Path == EventFor(fixture.BaseEvents, "A").Path);
         Assert.Contains(persisted, file => file.Path == EventFor(fixture.BaseEvents, "B").Path);
     }
 

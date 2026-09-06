@@ -6,7 +6,7 @@ using static StrataLint.Tests.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
 
-public sealed class LedgerAlignWriterTests
+public sealed partial class LedgerAlignWriterTests
 {
     private const string ExpectedAddedModuleStatementPin =
         "sha256:2737dabb279d14181efe09f7531e5c4664421bdbc19bbcf8b588f8d71123954c";
