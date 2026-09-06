@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -59,7 +60,7 @@ public sealed partial class CoverAtomTests
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.False(result.Success);
-        Assert.Contains("must have exactly one Scribe receipt", result.Error, StringComparison.Ordinal);
+        Assert.Contains("scribe-receipt-cardinality-invalid", result.Error, StringComparison.Ordinal);
         Assert.Equal(
             before,
             DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
@@ -103,9 +104,8 @@ public sealed partial class CoverAtomTests
             ["--atom-id", CoverWorld.DefaultAtomId, "--gid", invalidGid, "--base", "baseline"]);
 
         Assert.False(result.Success);
-        Assert.Contains(
-            $"align GID must select a Lean declaration: {invalidGid}",
-            result.Error,
+        Assert.Contains("coverage-gid-invalid", result.Error, StringComparison.Ordinal);
+        Assert.Contains("align GID must select a Lean module or declaration", result.Error,
             StringComparison.Ordinal);
         Assert.Equal(
             before,
@@ -170,7 +170,7 @@ public sealed partial class CoverAtomTests
                 .AlignScribeReceipt(arguments);
 
             Assert.False(result.Success);
-            Assert.Contains("must have exactly one Scribe receipt", result.Error, StringComparison.Ordinal);
+            Assert.Contains("scribe-receipt-cardinality-invalid", result.Error, StringComparison.Ordinal);
             Assert.Equal(
                 before,
                 DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
@@ -262,6 +262,51 @@ public sealed partial class CoverAtomTests
         Assert.Contains(CoverWorld.OtherAtomId, result.Error, StringComparison.Ordinal);
         Assert.Equal(before,
             DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
+    }
+
+    [Fact]
+    public void AlignedCoverResumePropagatesProtectedBaseReceiptRejectionWithoutWriting()
+    {
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        var baselineDocument = ScribeSeedFixture.Map(
+            BackfillInventoryLoader.Load(Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+                SnapshotDecoder.Decode(CoverWorld.Raw(inputs.Baseline))).Snapshot),
+            entry => entry with
+            {
+                Receipts = entry.Receipts with { Scribe = [] },
+            });
+        var baseline = new Dictionary<string, string>(inputs.Baseline, StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(baseline, baselineDocument);
+        var currentRaw = CoverWorld.Raw(inputs.Files);
+        var repository = new FakeRepositoryGateway(
+            RawChangeSet.Create([]),
+            currentRaw,
+            CoverWorld.Raw(baseline));
+        var before = repository.ReadCurrent();
+
+        var result = CoverAtomCommand.Run(
+            "synthetic-repository",
+            repository,
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
+            CoverWorld.FixtureUtc,
+            [
+                "--cover-atom", CoverWorld.DefaultAtomId,
+                "--gid", inputs.Gid,
+                "--base", "baseline",
+                "--align-scribe-receipt",
+            ]);
+
+        Assert.False(result.Success);
+        Assert.Contains("COVER_ATOM_ALIGNED cover=resumed align=failed", result.Error,
+            StringComparison.Ordinal);
+        Assert.Contains("protected-base-scribe-receipt-identity-absent", result.Error,
+            StringComparison.Ordinal);
+        Assert.Equal(
+            before.Entries.Select(static entry =>
+                (entry.Path, Bytes: Convert.ToBase64String(entry.Bytes.AsSpan()))),
+            repository.ReadCurrent().Entries.Select(static entry =>
+                (entry.Path, Bytes: Convert.ToBase64String(entry.Bytes.AsSpan()))));
     }
 
     private static CoverInputs DocumentReceiptInputs() =>

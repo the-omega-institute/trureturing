@@ -4,10 +4,11 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class AlignScribeReceiptCommand
+internal static partial class AlignScribeReceiptCommand
 {
-    private const string Usage = "USAGE: StrataLint align-scribe-receipt --seed-missing "
-        + "(--atom ATOM_ID --gid GID | --pairs FILE) --base REV [--dry-run]";
+    internal const string Usage = "USAGE: StrataLint align-scribe-receipt --seed-missing "
+        + "(--atom ATOM_ID --gid GID | --pairs FILE) --base REV [--dry-run] | "
+        + "align-scribe-receipt --refresh --documents FILE --base REV [--dry-run]";
 
     internal static CommandResult Run(
         string repositoryRoot,
@@ -26,7 +27,9 @@ internal static class AlignScribeReceiptCommand
         IScribeEmissionVerifier scribeEmissionVerifier,
         IReadOnlyList<string> arguments,
         Func<string, string, ImmutableArray<byte>> readPairs,
-        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>> applyUpdates)
+        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>> applyUpdates,
+        Func<ImmutableArray<DigestionLedgerEntry>, ImmutableHashSet<string>,
+            ImmutableHashSet<string>>? expandStatusAuthorityChanges = null)
     {
         try
         {
@@ -37,7 +40,8 @@ internal static class AlignScribeReceiptCommand
             }
 
             return CoverAtomCommand.AlignScribeReceipt(repositoryRoot, repository, leanReportSource,
-                scribeEmissionVerifier, arguments, applyUpdates);
+                scribeEmissionVerifier, arguments, readPairs, applyUpdates,
+                expandStatusAuthorityChanges);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

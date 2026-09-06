@@ -443,13 +443,20 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
-        Assert.False(result.Success);
-        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
-        Assert.Contains(mismatchCode == "coverage-target-mismatch" ? mismatchCode : "handwritten status",
-            result.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-emission-mismatch", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        if (mismatchCode == "coverage-target-mismatch")
+        {
+            Assert.False(result.Success);
+            Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+            Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        }
+        else
+        {
+            Assert.True(result.Success, result.Error);
+            Assert.DoesNotContain("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
+            Assert.DoesNotContain("scribe-emission-mismatch", result.Error, StringComparison.Ordinal);
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        }
     }
 
     [Theory]

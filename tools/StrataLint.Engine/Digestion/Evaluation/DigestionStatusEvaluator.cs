@@ -512,7 +512,7 @@ internal static partial class DigestionStatusEvaluator
         return ExpandStatusAuthorityChanges(entries, directlyChanged);
     }
 
-    private static ImmutableHashSet<string> ExpandStatusAuthorityChanges(
+    internal static ImmutableHashSet<string> ExpandStatusAuthorityChanges(
         IEnumerable<DigestionLedgerEntry> sourceEntries,
         IEnumerable<string> initiallyChanged)
     {

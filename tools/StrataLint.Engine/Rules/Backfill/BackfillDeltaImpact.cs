@@ -1,9 +1,17 @@
+using System.Collections.Immutable;
+
 namespace StrataLint.Engine;
 
 internal sealed record BackfillDeltaImpact(
     RawChangeSet EvaluationChanges,
     RawChangeSet ReceiptVerificationChanges,
     bool HasAffectedEdges);
+
+internal sealed record BackfillScribeReceiptDependency(
+    string DocumentGid,
+    string EntryPath,
+    DigestionLedgerEntry Entry,
+    DigestionScribeReceipt Receipt);
 
 internal static class BackfillDeltaImpactResolver
 {
@@ -105,41 +113,74 @@ internal static class BackfillDeltaImpactResolver
             return true;
         }
 
-        foreach (var gid in entry.CoverageGids)
+        return CoverageDependencyValueChanged(entry, current, baseline, changedPaths);
+    }
+
+    internal static bool HasAffectedCoverageDependencies(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        LeanAxiomReport? report,
+        BackfillInventoryDocument document,
+        RawChangeSet repositoryChanges) =>
+        Resolve(current, baseline, report, document, repositoryChanges).HasAffectedEdges;
+
+    internal static ImmutableArray<BackfillScribeReceiptDependency> ExpandScribeReceiptDocuments(
+        BackfillInventoryDocument document,
+        IReadOnlySet<string> documentGids)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(documentGids);
+        var result = ImmutableArray.CreateBuilder<BackfillScribeReceiptDependency>();
+        foreach (var entry in document.RequireDigestionEntries())
         {
-            var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
-            if (FileValueChanged(
-                    ScribeEmissionAttestation.DefinitionPath(documentGid),
-                    current,
-                    baseline,
-                    changedPaths)
-                || FileValueChanged(
-                    ScribeEmissionAttestation.EmissionPath(documentGid),
-                    current,
-                    baseline,
-                    changedPaths))
+            var entryPath = EntryPath(entry);
+            foreach (var receipt in entry.Receipts.Scribe)
             {
-                return true;
+                if (!Gid.TryParse(receipt.Gid, out _))
+                {
+                    continue;
+                }
+
+                var documentGid = ScribeEmissionAttestation.DocumentGid(receipt.Gid);
+                if (documentGids.Contains(documentGid))
+                {
+                    result.Add(new BackfillScribeReceiptDependency(
+                        documentGid,
+                        entryPath,
+                        entry,
+                        receipt));
+                }
             }
         }
 
-        return false;
+        return result
+            .OrderBy(static dependency => dependency.Entry.AtomId, StringComparer.Ordinal)
+            .ThenBy(static dependency => dependency.Receipt.Gid, StringComparer.Ordinal)
+            .ToImmutableArray();
     }
 
-    internal static bool HasPotentialStatementDependants(
-        BackfillInventoryDocument document,
-        RawChangeSet repositoryChanges)
+    private static bool CoverageDependencyValueChanged(
+        DigestionLedgerEntry entry,
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        IReadOnlySet<string> changedPaths) =>
+        entry.CoverageGids
+            .Distinct(StringComparer.Ordinal)
+            .SelectMany(CoverageDependencyPaths)
+            .Distinct(StringComparer.Ordinal)
+            .Any(path => FileValueChanged(path, current, baseline, changedPaths));
+
+    private static IEnumerable<string> CoverageDependencyPaths(string gidText)
     {
-        ArgumentNullException.ThrowIfNull(document);
-        ArgumentNullException.ThrowIfNull(repositoryChanges);
-        var changedModules = ChangedStatementModules(repositoryChanges);
-        if (changedModules.Count == 0)
+        if (!Gid.TryParse(gidText, out var gid)
+            || gid.ToTarget() is not Target.Formal)
         {
-            return false;
+            yield break;
         }
 
-        return BuildCoverageReverseIndex(document).Values.Any(dependencies =>
-            changedModules.Contains(dependencies[0].HostModule));
+        var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
+        yield return ScribeEmissionAttestation.DefinitionPath(documentGid);
+        yield return ScribeEmissionAttestation.EmissionPath(documentGid);
     }
 
     private static void AddCurrentResolutionDependants(

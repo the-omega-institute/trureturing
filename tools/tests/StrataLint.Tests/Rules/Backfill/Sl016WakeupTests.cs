@@ -514,15 +514,20 @@ public sealed class Sl016WakeupTests
     [Fact]
     public void CandidateScribeVerificationDoesNotEnforceStoredByteReceiptsAtSl016Admission()
     {
-        var (_, evaluation) = EvaluateReceiptIntegrityGap(
+        var (_, definitionEvaluation) = EvaluateReceiptIntegrityGap(
             mismatchCode: null,
             gapExistsInBaseline: false,
             candidateScribeInputsChanged: true);
+        var (_, emissionEvaluation) = EvaluateReceiptIntegrityGap(
+            mismatchCode: null,
+            gapExistsInBaseline: false,
+            candidateScribeInputsChanged: true,
+            candidateScribeEmissionOnly: true);
 
-        foreach (var mismatchCode in new[]
+        foreach (var (evaluation, mismatchCode) in new[]
                  {
-                     "scribe-definition-mismatch",
-                     "scribe-emission-mismatch",
+                     (definitionEvaluation, "scribe-definition-mismatch"),
+                     (emissionEvaluation, "scribe-emission-mismatch"),
                  })
         {
             Assert.DoesNotContain(evaluation.Diagnostics, item => item.Message.Contains(
@@ -531,12 +536,14 @@ public sealed class Sl016WakeupTests
         }
     }
 
-    private static (RuleEvaluationContext Context, SingleRuleEvaluation Evaluation)
+    internal static (RuleEvaluationContext Context, SingleRuleEvaluation Evaluation)
         EvaluateReceiptIntegrityGap(
             string? mismatchCode,
             bool gapExistsInBaseline,
             bool candidateScribeInputsChanged = false,
-            bool candidateScribeEmissionOnly = false)
+            bool candidateScribeEmissionOnly = false,
+            bool includeRuleImplementationPath = true,
+            string? unrelatedChangedPath = null)
     {
         const string coverageGid = "D5/S0/Carrier/BackfillTarget";
         const string targetPath = coverageGid + ".lean";
@@ -545,7 +552,7 @@ public sealed class Sl016WakeupTests
         var candidateDefinition = candidateScribeInputsChanged && !candidateScribeEmissionOnly
             ? "changed fixture Scribe definition\n"
             : baselineDefinition;
-        var candidateEmission = candidateScribeInputsChanged
+        var candidateEmission = candidateScribeInputsChanged && candidateScribeEmissionOnly
             ? "# Changed fixture Scribe emission\n"
             : baselineEmission;
         var fixture = new RuleFixture();
@@ -575,6 +582,11 @@ public sealed class Sl016WakeupTests
         }
         fixture.Files[definitionPath] = candidateDefinition;
         fixture.Files[emissionPath] = candidateEmission;
+        if (unrelatedChangedPath is not null)
+        {
+            fixture.Baseline[unrelatedChangedPath] = "baseline unrelated Scribe input\n";
+            fixture.Files[unrelatedChangedPath] = "candidate unrelated Scribe input\n";
+        }
 
         var receiptProjection = "coverage_gids:\n"
             + $"  - gid: {coverageGid}\n"
@@ -589,6 +601,18 @@ public sealed class Sl016WakeupTests
         {
             fixture.Baseline[AtomPath] = AddReceipts(fixture.Baseline[AtomPath], receiptProjection);
         }
+        if (candidateScribeInputsChanged)
+        {
+            const string derivedAtomPath = BackfillInventoryLoader.RootPath
+                + "delta-v0.1/absorbed-closed/"
+                + RuleFixture.FixtureAtomId
+                + ".yaml";
+            foreach (var files in new[] { fixture.Files, fixture.Baseline })
+            {
+                files[derivedAtomPath] = files[AtomPath];
+                files.Remove(AtomPath);
+            }
+        }
 
         var verifiedScribeEmissions = VerifiedScribeEmissions.Create(
         [
@@ -599,24 +623,20 @@ public sealed class Sl016WakeupTests
                 emissionPath,
                 candidateEmissionSha256),
         ]);
-        var changedPaths = candidateScribeInputsChanged
+        var implementationPath = "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs";
+        var changedPaths = unrelatedChangedPath is not null
+            ? new[] { unrelatedChangedPath }
+            : candidateScribeInputsChanged
             ? candidateScribeEmissionOnly
-                ? new[]
-                {
-                    "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs",
-                    emissionPath,
-                }
-                : new[]
-                {
-                    "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs",
-                    definitionPath,
-                    emissionPath,
-                }
+                ? includeRuleImplementationPath ? new[] { implementationPath, emissionPath } : [emissionPath]
+                : includeRuleImplementationPath
+                    ? new[] { implementationPath, definitionPath }
+                    : [definitionPath]
             : gapExistsInBaseline
-                ? new[] { "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs" }
+                ? new[] { implementationPath }
             : new[]
             {
-                "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs",
+                implementationPath,
                 AtomPath,
             };
         var context = fixture.Build(
