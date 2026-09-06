@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "negative_core_states": 5,
+  "positive_core_states": 4,
+  "transient_entries_checked": 7,
+  "exact_arithmetic_tail_cases": 700,
+  "independent_readout_pairs_checked": 256,
+  "public_Scribe_handles": 4,
+  "kernel_checked": false,
+  "new_state_lower_bound": false,
+  "rejected_mutations": ["wrong_zero", "wrong_output"],
+  "sha256": {
+    "GoldenBase4IntervalMachine.lean": "d02440b7e57663841f541a3418b780bb950b114fc669beeacdd2cad82b762101",
+    "GoldenBase4ZeroTailForgetting.lean": "4d77f12bb96791c3a6a015b0dfb48648a76fc15f4c20532721863a990314b572",
+    "GoldenBase4ZeroTailForgetting.scribe.cs": "a42e404a51a3fb7bb4681f8778ed1fe5bd479628cee1df6b940dbdb8971b86ee"
+  }
+}
