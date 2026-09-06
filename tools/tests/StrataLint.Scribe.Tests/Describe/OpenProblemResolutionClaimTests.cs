@@ -1,7 +1,9 @@
 using System.Collections.Immutable;
-using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
@@ -179,17 +181,21 @@ public sealed class OpenProblemResolutionClaimTests
     [Fact]
     public void ResolutionClaimFactoriesAreClosedAwayFromRemarksAndAuthoredFormulaNodes()
     {
-        var publicFactories = typeof(Describe)
-            .GetMethods(BindingFlags.Public | BindingFlags.Static)
-            .Where(static method => method.ReturnType == typeof(DocumentBlock.Describe))
-            .Where(HasResolutionClaimParameter)
+        var symbols = DescribeSymbols();
+        var publicMethods = symbols.Factories.GetMembers().OfType<IMethodSymbol>()
+            .Where(static method => method.IsStatic
+                && method.DeclaredAccessibility == Accessibility.Public)
+            .ToArray();
+        var publicFactories = publicMethods
+            .Where(method => SymbolEqualityComparer.Default.Equals(method.ReturnType, symbols.Describe))
+            .Where(method => HasResolutionClaimParameter(method, symbols.Claim))
             .Select(static method => method.Name)
             .Order(StringComparer.Ordinal)
             .ToArray();
-        var internalFactories = typeof(DocumentBlock.Describe)
-            .GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
-            .Where(static method => method.ReturnType == typeof(DocumentBlock.Describe))
-            .Where(HasResolutionClaimParameter)
+        var internalFactories = symbols.Describe.GetMembers().OfType<IMethodSymbol>()
+            .Where(static method => method.IsStatic)
+            .Where(method => SymbolEqualityComparer.Default.Equals(method.ReturnType, symbols.Describe))
+            .Where(method => HasResolutionClaimParameter(method, symbols.Claim))
             .Select(static method => method.Name)
             .Order(StringComparer.Ordinal)
             .ToArray();
@@ -197,19 +203,18 @@ public sealed class OpenProblemResolutionClaimTests
         Assert.Equal([nameof(Describe.Lean)], publicFactories);
         Assert.Equal(["ReportDerived"], internalFactories);
         Assert.All(
-            typeof(Describe).GetMethods(BindingFlags.Public | BindingFlags.Static)
+            publicMethods
                 .Where(static method => method.Name is nameof(Describe.Remark) or nameof(Describe.Example)),
-            static method => Assert.DoesNotContain(
-                method.GetParameters(),
-                static parameter => parameter.ParameterType == typeof(OpenProblemResolutionClaim)));
+            method => Assert.False(HasResolutionClaimParameter(method, symbols.Claim)));
     }
 
     [Fact]
     public void DescribeCarriesOneOptionalScalarResolutionClaim()
     {
-        var property = typeof(DocumentBlock.Describe).GetProperty(
-            nameof(DocumentBlock.Describe.OpenProblemResolutionClaim));
-        var nullability = new NullabilityInfoContext().Create(property!);
+        var symbols = DescribeSymbols();
+        var property = Assert.Single(symbols.Describe
+            .GetMembers(nameof(DocumentBlock.Describe.OpenProblemResolutionClaim))
+            .OfType<IPropertySymbol>());
         var withoutClaim = Describe.Lean(
             DescribeId.Create("without-resolution"),
             DeclarationHandle.Create(TheoremGid),
@@ -220,9 +225,16 @@ public sealed class OpenProblemResolutionClaimTests
                 DefinitionDsl.Paragraph(DefinitionDsl.Text("No resolution claim."))),
             DescribeRole.Theorem);
 
-        Assert.NotNull(property);
-        Assert.Equal(typeof(OpenProblemResolutionClaim), property!.PropertyType);
-        Assert.Equal(NullabilityState.Nullable, nullability.ReadState);
+        Assert.Equal(Accessibility.Public, property.DeclaredAccessibility);
+        Assert.False(property.IsStatic);
+        Assert.NotNull(property.GetMethod);
+        Assert.Equal(Accessibility.Public, property.GetMethod.DeclaredAccessibility);
+        Assert.True(SymbolEqualityComparer.Default.Equals(symbols.Claim, property.Type));
+        Assert.Equal(NullableAnnotation.Annotated, property.NullableAnnotation);
+        Assert.DoesNotContain(
+            property.GetAttributes().Concat(property.GetMethod.GetReturnTypeAttributes()),
+            static attribute => attribute.AttributeClass?.ToDisplayString()
+                == "System.Diagnostics.CodeAnalysis.NotNullAttribute");
         Assert.Null(withoutClaim.OpenProblemResolutionClaim);
     }
 
@@ -450,19 +462,30 @@ public sealed class OpenProblemResolutionClaimTests
         });
     }
 
-    private static bool HasResolutionClaimParameter(MethodInfo method) =>
-        method.GetParameters().Any(static parameter =>
-            parameter.ParameterType == typeof(OpenProblemResolutionClaim));
+    private static bool HasResolutionClaimParameter(IMethodSymbol method, INamedTypeSymbol claim) =>
+        method.Parameters.Any(parameter => SymbolEqualityComparer.Default.Equals(parameter.Type, claim));
+
+    private static (INamedTypeSymbol Factories, INamedTypeSymbol Describe, INamedTypeSymbol Claim) DescribeSymbols()
+    {
+        // Inspect the loaded binary, including private factories, without invoking reflected code.
+        var reference = MetadataReference.CreateFromFile(typeof(Describe).Assembly.Location);
+        var compilation = CSharpCompilation.Create(
+            "ResolutionClaimContract",
+            references: [reference, MetadataReference.CreateFromFile(typeof(object).Assembly.Location)],
+            options: new CSharpCompilationOptions(
+                OutputKind.DynamicallyLinkedLibrary,
+                metadataImportOptions: MetadataImportOptions.All));
+        var assembly = Assert.IsAssignableFrom<IAssemblySymbol>(compilation.GetAssemblyOrModuleSymbol(reference));
+        return (
+            Assert.IsAssignableFrom<INamedTypeSymbol>(assembly.GetTypeByMetadataName("StrataLint.Scribe.Describe")),
+            Assert.IsAssignableFrom<INamedTypeSymbol>(assembly.GetTypeByMetadataName("StrataLint.Scribe.DocumentBlock+Describe")),
+            Assert.IsAssignableFrom<INamedTypeSymbol>(assembly.GetTypeByMetadataName("StrataLint.Scribe.OpenProblemResolutionClaim")));
+    }
 
     private static DocumentBlock.Describe RehydrateWithClaim(
         DocumentBlock.Describe source,
-        OpenProblemResolutionClaim claim)
-    {
-        var constructor = typeof(DocumentBlock.Describe)
-            .GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
-            .Single(static candidate => candidate.GetParameters().Length == 10);
-        return (DocumentBlock.Describe)constructor.Invoke(
-        [
+        OpenProblemResolutionClaim claim) =>
+        ConstructDescribe(
             source.Id,
             source.Kind,
             source.Title,
@@ -472,9 +495,21 @@ public sealed class OpenProblemResolutionClaimTests
             source.StatementFormula,
             source.KindSource,
             source.StatementSource,
-            claim,
-        ]);
-    }
+            claim);
+
+    // Pin the constructor signature so equality fixtures differ only in their claim argument.
+    [UnsafeAccessor(UnsafeAccessorKind.Constructor)]
+    private static extern DocumentBlock.Describe ConstructDescribe(
+        DescribeId id,
+        DescribeKind? kind,
+        Heading title,
+        DescribeStatement statement,
+        AssessedProvenance assessedProvenance,
+        BlockSequence content,
+        Formula? statementFormula,
+        DescribeKindSource? kindSource,
+        StatementSource? statementSource,
+        OpenProblemResolutionClaim? openProblemResolutionClaim);
 
     private static DocumentBlock.Describe ClaimDescribe(
         string id = "resolution",
