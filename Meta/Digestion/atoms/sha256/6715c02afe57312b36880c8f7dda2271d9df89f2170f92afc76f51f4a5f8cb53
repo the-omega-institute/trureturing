@@ -1,0 +1,58 @@
+## 定理 193.1　作用—反作用与相对加速度
+
+在共同测试函数核心上，
+
+$$
+\boxed{
+\dot P_A
+=
+M_AM_B\nabla u_\ell(R),
+}
+\tag{193.1}
+$$
+
+$$
+\boxed{
+\dot P_B
+=
+-M_AM_B\nabla u_\ell(R).
+}
+\tag{193.2}
+$$
+
+从而
+
+$$
+\boxed{
+\ddot X_A=M_B\nabla u_\ell(R),
+\qquad
+\ddot X_B=-M_A\nabla u_\ell(R),
+}
+\tag{193.3}
+$$
+
+以及
+
+$$
+\boxed{
+\ddot R
+=
+-(M_A+M_B)\nabla u_\ell(R).
+}
+\tag{193.4}
+$$
+
+### 证明
+
+相互作用对 \(X_A\) 求梯度时产生负号，对 \(X_B\) 求梯度时产生正号。由 Heisenberg 方程得到式（193.1）—（193.2）。
+
+质量算子与完整 Hamiltonian 可交换，因此可在时间求导中保持不变。再用
+
+$$
+\dot X_i=M_i^{-1}P_i
+$$
+
+得到其余结论。∎
+
+---
+
