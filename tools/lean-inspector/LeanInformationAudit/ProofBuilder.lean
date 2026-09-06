@@ -45,6 +45,33 @@ structure PreparedProofs where
   declarations : Array Declaration
   records : Array SealArenaRecord
 
+private structure CountingRouteSnapshot where
+  root : Name
+  catalogId : Name
+  catalog : Expr
+  method : String
+  proofs : Array (Name × Expr)
+
+private initialize countingRouteExt : SimplePersistentEnvExtension CountingRouteSnapshot
+    (Array CountingRouteSnapshot) ← registerSimplePersistentEnvExtension {
+  addEntryFn := Array.push
+  addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
+
+/-- Only the proof builder records this route; output metadata cannot select it. -/
+def validateCountingRoute (root catalogId : Name) (catalog : Expr) (method : String) : MetaM Unit := do
+  let env ← getEnv
+  let candidates := (countingRouteExt.getState env).filter fun entry =>
+    entry.root == root && entry.catalogId == catalogId
+  for entry in candidates do
+    if ← isDefEq catalog entry.catalog then
+      let staged := entry.proofs.all fun (name, expected) =>
+        match env.find? name with
+        | some (.thmInfo actual) => actual.value == expected
+        | _ => false
+      if method == entry.method && staged then return
+  throwError "IE-C028 AnalysisCertificateMismatch root={root} catalog={catalogId} \
+component=proof-method expected=certified-catalog actual=different"
+
 /-- A strict host-side copy of one reflected catalog-wide count. -/
 private structure ReflectedFusedSnapshot where
   full : Nat
@@ -485,19 +512,25 @@ full {fullCount} without {withoutCounts[firstZero]!}"
     type := irredundantType
     value := irredundantProof
   }
+  let method := match route with
+    | .decide => if record.compatibilityV2 then "decide" else "direct"
+    | .reflected _ => "reflected-fused-counts"
+  modifyEnv fun env => countingRouteExt.addEntry env {
+    root := record.rootId, catalogId := record.catalogId, catalog, method,
+    proofs := declarations.filterMap fun declaration => match declaration with
+      | .thmDecl info => some (info.name, info.value)
+      | _ => none }
   pure (declarations, {
     catalog := record
     irredundantCertificateName := irredundantName
-    proofMethod := match route with
-      | .decide => if record.compatibilityV2 then "decide" else "direct"
-      | .reflected _ => "reflected-fused-counts"
+    proofMethod := method
     stateCard
     offDiagonalPairCount := stateCard * (stateCard - 1)
     fullEscapeCount := fullCount
     theorems := theoremRecords
   })
 
-/-- Construct all theorem declarations without changing the environment. -/
+/-- Construct theorem declarations without installing them, retaining their counting route. -/
 def prepareProofs (catalogs : Array PreparedCatalog) : CommandElabM PreparedProofs := do
   let results ← liftTermElabM <| catalogs.mapM theoremProofs
   pure {

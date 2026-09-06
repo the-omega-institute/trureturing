@@ -25,6 +25,14 @@ def prepareV3QualifiedCounts (counts : SealArenaRecord) (available : Array Decla
         (maxRecDepth.get options).toUSize declaration none true with
     | .ok next => certificateEnv := next
     | .error error => throwError "{error.toMessageData options}"
+  withEnv certificateEnv do
+    let original ← if certificateEnv.contains metadata.catalogName then
+        mkConstWithFreshMVarLevels metadata.catalogName
+      else mkAppM ``Catalog.ofVector #[← ProjectionProof.vector
+        (← counts.theorems.mapM fun row => mkConstWithFreshMVarLevels row.unitName)]
+    let originalType ← whnf (← inferType original)
+    validateCatalogArena metadata.rootId metadata.catalogId metadata.arenaName original
+      originalType.appArg! counts.stateCard
   let qualified (name : Name) (suffix : String) :=
     catalogQualifiedName metadata.rootId metadata.arenaName metadata.catalogId name suffix
   let certificateAlias (source target : Name) := withEnv certificateEnv do

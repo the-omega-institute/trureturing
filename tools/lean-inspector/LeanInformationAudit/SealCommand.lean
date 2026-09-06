@@ -269,10 +269,10 @@ private def retainSealRecords (env : Environment) (records : Array SealArenaReco
 
 /-! The seal has four phases: validate and prepare catalogs; compute counts and
 proof declarations; preflight and kernel-check every declaration in a local persistent
-environment; then publish that environment with one `setEnv`. The optional JSON is
-written before publication and is output-only: no seal decision reads it back. -/
+environment; then publish that environment with one `setEnv`. All artifact bytes are
+prepared before publication; their writes are the terminal IO effect of the command. -/
 
-private def elabSealInformationTheory : CommandElab := fun stx => do
+private def prepareSealPublication (stx : Syntax) : CommandElabM (Array (String × String)) := do
   let baseEnv ← getEnv
   try
     validateRegistrySnapshot baseEnv
@@ -296,23 +296,28 @@ private def elabSealInformationTheory : CommandElab := fun stx => do
     preflightNames aliasEnv proofs.records declarations
     let stagedEnv ← stageDeclarations (← getEnv) declarations
     let stagedEnv := retainSealRecords stagedEnv proofs.records
+    let mut artifacts := #[]
     if let some path := outputPath then
-      liftIO <| IO.FS.writeFile path.raw.isStrLit?.get! (serializeV2Artifact proofs.records)
+      artifacts := artifacts.push (path.raw.isStrLit?.get!, serializeV2Artifact proofs.records)
     if let some analysis := analysis then
       if let some path := analysisPath then
         let contents ← withEnv stagedEnv <| liftTermElabM do
           serializeV3Artifact baseEnv.header.mainModule analysis.records analysis.systemCertificate
-        liftIO <| IO.FS.writeFile path.raw.isStrLit?.get! contents
+        artifacts := artifacts.push (path.raw.isStrLit?.get!, contents)
       if let some path := asciiPath then
         let contents ← match serializeAsciiArtifact analysis.records with
           | .ok contents => pure contents
           | .error message => throwError message
-        liftIO <| IO.FS.writeFile path.raw.isStrLit?.get! contents
-    setEnv stagedEnv
+        artifacts := artifacts.push (path.raw.isStrLit?.get!, contents)
     proofs.records.forM logSummary
+    setEnv stagedEnv
+    return artifacts
   catch error =>
     setEnv baseEnv
     throw error
+
+private def elabSealInformationTheory : CommandElab :=
+  terminalSealCommand prepareSealPublication
 
 @[command_elab sealInformationTheoryCmd]
 private def elabAuditedSeal : CommandElab := fun stx => do

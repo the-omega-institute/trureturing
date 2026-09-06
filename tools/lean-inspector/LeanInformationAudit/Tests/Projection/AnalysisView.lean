@@ -29,8 +29,11 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 16000000
 
 /--
-info: redundant-canonical rejected IE-C033
-duplicate-occurrence rejected IE-C028
+info: redundant-canonical rejected IE-C033 IncompleteRedundantIndexSet key=LeanInformationAudit.Tests.Projection.AnalysisView/LeanInformationAudit.Tests.Projection.AnalysisView.catalog expected=[] certified=[0,1] phase=canonical-export
+duplicate-occurrence rejected IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisView catalog=LeanInformationAudit.Tests.Projection.AnalysisView.catalog component=occurrence-key expected="unique" actual="LeanInformationAudit.Tests.Projection.AnalysisView.arena/LeanInformationAudit.Tests.Projection.AnalysisView.first"
+direct-route rejected IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisView catalog=LeanInformationAudit.Tests.Projection.AnalysisView.catalog component=proof-method expected=certified-catalog actual=different
+fused-route rejected IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisView catalog=LeanInformationAudit.Tests.Projection.AnalysisView.catalog component=proof-method expected=certified-catalog actual=different
+native-route rejected IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisView catalog=LeanInformationAudit.Tests.Projection.AnalysisView.catalog component=proof-method expected=certified-catalog actual=different
 nonempty coincidence key set passed
 -/
 #guard_msgs in
@@ -106,13 +109,18 @@ run_cmd do
   let badDuplicate := { record with counts := { record.counts with theorems := duplicateRows } }
   let mut messages := #[]
   for (label, candidate) in #[("redundant-canonical", badCanonical),
-      ("duplicate-occurrence", badDuplicate)] do
+      ("duplicate-occurrence", badDuplicate),
+      ("direct-route", { record with counts := { record.counts with proofMethod := "direct" } }),
+      ("fused-route", { record with counts := {
+        record.counts with proofMethod := "reflected-fused-counts" } }),
+      ("native-route", { record with counts := {
+        record.counts with proofMethod := "native_decide" } })] do
     let result ← try
       let _ ← liftTermElabM <| serializeV3Artifact root #[candidate] system
       pure "ACCEPTED"
     catch error =>
       let message ← error.toMessageData.toString
-      pure ("rejected " ++ (message.splitOn " ").head!)
+      pure ("rejected " ++ message)
     messages := messages.push (label ++ " " ++ result)
   messages := messages.push "nonempty coincidence key set passed"
   logInfo (String.intercalate "\n" messages.toList)

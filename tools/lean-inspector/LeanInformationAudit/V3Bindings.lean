@@ -14,6 +14,27 @@ private def certificateType (name : Name) : MetaM Expr := do
     | throwError "missing theorem certificate: {name}"
   return info.type
 
+/-- Resolve the declaration carried by the catalog type before using its name in companions.
+Legacy law arenas denote their `toArena`; native catalogs carry an `Arena` constant. -/
+def validateCatalogArena (root catalogId arenaName : Name) (catalog arena : Expr)
+    (stateCard : Nat) : MetaM Unit := withTransparency .all do
+  let fail := mismatch root catalogId
+  let type ← whnf (← inferType catalog)
+  unless type.isAppOf ``Catalog do fail "object-arena"
+  let declaredArena := type.appArg!
+  let canonicalName := if declaredArena.isAppOf ``PrimitiveLawArena.toArena then
+      declaredArena.appArg!.constName?
+    else declaredArena.constName?
+  unless canonicalName == some arenaName do fail "object-arena"
+  let named ← mkConstWithFreshMVarLevels arenaName
+  let namedType ← whnf (← inferType named)
+  let named ← if namedType.isAppOf ``PrimitiveLawArena then
+      mkAppM ``PrimitiveLawArena.toArena #[named]
+    else pure named
+  unless (← isDefEq named declaredArena) && (← isDefEq named arena) do fail "object-arena"
+  let actualCard : Nat ← reduceEval (← mkAppM ``Arena.card #[named])
+  unless actualCard == stateCard do fail "arena-counts"
+
 /-- Bind occurrence identities and numerals to the suite's actual catalog and its
 kernel-certified readout reflection, independently of the output record. -/
 def validateV3Bindings (root : Name) (original reflected arena : Expr)
@@ -21,6 +42,12 @@ def validateV3Bindings (root : Name) (original reflected arena : Expr)
     withTransparency .all do
   let metadata := counts.catalog
   let fail := mismatch root metadata.catalogId
+  validateCatalogArena root metadata.catalogId metadata.arenaName
+    (← mkConstWithFreshMVarLevels metadata.catalogName) arena counts.stateCard
+  if metadata.catalogKind == .analysisView then
+    validateProjectionCountingRoute root metadata.catalogId projection counts.proofMethod
+  else
+    validateCountingRoute root metadata.catalogId original counts.proofMethod
   let expectedName (name : Name) (suffix : String) :=
     catalogQualifiedName root metadata.arenaName metadata.catalogId name suffix
   let stateCard : Nat ← reduceEval (← mkAppM ``Arena.card #[arena])
@@ -39,6 +66,7 @@ def validateV3Bindings (root : Name) (original reflected arena : Expr)
   unless counts.irredundantCertificateName ==
       expectedName metadata.arenaName "__catalog_irredundant" do fail "verdict-qualification"
   for row in counts.theorems do
+    unless row.proofMethod == counts.proofMethod do fail "proof-method"
     unless row.unitName == expectedName row.theoremName theoremUnitSuffix &&
         row.realizationName == expectedName row.theoremName primitiveRealizationSuffix &&
         row.certificateName == expectedName row.theoremName "__lowers_escape" do
