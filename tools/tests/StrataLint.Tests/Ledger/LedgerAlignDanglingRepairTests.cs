@@ -8,6 +8,64 @@ namespace StrataLint.Tests;
 public sealed partial class LedgerAlignWriterTests
 {
     [Theory]
+    [InlineData(true, false)]
+    [InlineData(false, false)]
+    [InlineData(true, true)]
+    [InlineData(false, true)]
+    public void ResolvedPrerequisiteIdentityDoesNotSeedRepair(bool useFrozenNodeId, bool hasDangling)
+    {
+        var modules = new[] { Module("A"), Module("B", imports: ["A"]), Module("C", imports: ["A"]) };
+        var catalog = BuildCatalog(modules);
+        var aFile = EventFile("Freeze", FrozenLedgerCanonicalWriter.FreezeElement(
+            FrozenLedgerCanonicalWriter.FreezePayload(catalog.ByPath[RepoPathFor("A")])));
+        var a = Assert.Single(ReadRepairEvents([aFile]));
+        Assert.NotEqual(a.EventHash, a.FrozenNodeId.Value);
+        var b = catalog.ByPath[RepoPathFor("B")] with
+        {
+            PrerequisiteFrozenNodeIds = [useFrozenNodeId ? a.FrozenNodeId : FrozenNodeId.Create(a.EventHash)],
+        };
+        var c = catalog.ByPath[RepoPathFor("C")] with
+        {
+            PrerequisiteFrozenNodeIds = [FrozenNodeId.Create(hasDangling
+                ? Sha256("deleted prerequisite") : a.EventHash)],
+        };
+        using var fixture = new AlignFixture(modules);
+        fixture.InstallAccepted([
+            aFile,
+            EventFile("Freeze", FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(b))),
+            EventFile("Freeze", FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(c))),
+        ]);
+        foreach (var module in modules)
+        {
+            fixture.InstallState(module.Name, catalog.ByPath[RepoPathFor(module.Name)].StatementId);
+        }
+        Assert.Equal(!hasDangling, DagLedgerLoader.TryOrderClosedDag(
+            ReadRepairEvents(fixture.AcceptedFiles()), [], out _));
+        var healthyBytes = fixture.EventBytes("B");
+        var before = fixture.AllPublishedBytes();
+
+        var result = fixture.Align();
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("changed=0 added=0", result.Output, StringComparison.Ordinal);
+        Assert.Equal(healthyBytes, fixture.EventBytes("B"));
+        Assert.True(DagLedgerLoader.TryOrderClosedDag(ReadRepairEvents(fixture.AcceptedFiles()), [], out _));
+        if (hasDangling)
+        {
+            Assert.Contains("LEDGER_REPAIR seed_modules=1 reattested_modules=1", result.Output, StringComparison.Ordinal);
+            Assert.Contains("AUTHORIZATION overall=pass", result.Output, StringComparison.Ordinal);
+            AssertPrerequisite(ReadRepairEvents(fixture.AcceptedFiles()), "C", "A");
+        }
+        else
+        {
+            Assert.DoesNotContain("LEDGER_REPAIR", result.Output, StringComparison.Ordinal);
+            Assert.Equal(before, fixture.AllPublishedBytes());
+        }
+    }
+
+    [Theory]
     [InlineData(true)]
     [InlineData(false)]
     public void DanglingPrerequisiteRepairReattestsReportDescendantsWithoutChangingStatements(bool useSelector)

@@ -204,9 +204,9 @@ internal static class DagLedgerAlignWriter
         var prerequisiteRepairs = considered
             .Where(path => baseView.ActiveByPath.TryGetValue(path, out var active)
                 && active.Material.StatementId == catalog.ByPath[path].StatementId
-                && (!adjacency[path].All(baseView.ActiveByPath.ContainsKey)
-                    || !active.Material.PrerequisiteFrozenNodeIds.SequenceEqual(
-                        ResolvePrerequisites(path, adjacency, baseView))))
+                && !DagLedgerLoader.DependenciesPlaced(
+                    active.Material.PrerequisiteFrozenNodeIds.Select(static identity => identity.Value),
+                    baseView.EventIdentities))
             .ToImmutableHashSet();
         var repairClosure = DescendantClosure(
             prerequisiteRepairs,
