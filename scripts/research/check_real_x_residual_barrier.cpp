@@ -38,17 +38,19 @@ bool sublevel_krawczyk(Box const& X, int mask, ll epsilon, Kr& out) {
 int main(int argc,char** argv) {
  try {
   if(argc!=7 && argc!=8) throw runtime_error(
-    "usage: barrier centers chart max_nodes epsilon_bits guard_radius_bits report [matrix_bounds]");
+    "usage: barrier centers chart max_nodes epsilon_bits guard_radius_bits report [matrix_bounds|--raw-tube-cover]");
   int mask=stoi(argv[2]),eb=stoi(argv[4]),gb=stoi(argv[5]);
   long cap=stol(argv[3]);
   if(mask<0||mask>32||cap<1||eb<1||eb>39||gb<1||gb>16)
     throw runtime_error("invalid chart, budget, or exponent");
   ll epsilon=1LL<<(40-eb),guard=1LL<<(40-gb);
-  seed(); if(argc==8) interval_seed(argv[7]);
+  bool raw_tubes = argc==8 && string(argv[7])=="--raw-tube-cover";
+  seed(); if(argc==8 && !raw_tubes) interval_seed(argv[7]);
   load_roots(argv[1]);
   ll max_root_contraction=0;
   for(auto& root: roots) {
     for(auto& t: root.x) { ll center=mid(t); t=I(checked((wide)center-guard),checked((wide)center+guard)); }
+    if(raw_tubes) continue; // Set coverage consumes only tube membership.
     Kr q;
     if(!krawczyk(root.x,root.mask,q)||q.contraction>=ONE)
       throw runtime_error("enlarged guard is not a uniqueness neighborhood");
@@ -59,8 +61,9 @@ int main(int argc,char** argv) {
   if(mask==32) {
     dump_roots(string(argv[6])+".roots");
     ofstream local(argv[6]);if(!local)throw runtime_error("cannot write local report");
-    local<<"{\"status\":\"LOCAL_GUARDS_VERIFIED\",\"guards\":60,\"guard_radius_bits\":"<<gb
-      <<",\"max_guard_contraction_dyadic\":"<<max_root_contraction
+    local<<"{\"status\":\""<<(raw_tubes?"RAW_TUBES_PREPARED":"LOCAL_GUARDS_VERIFIED")<<"\",\"guards\":60,\"guard_radius_bits\":"<<gb
+      <<",\"tube_uniqueness_checked\":"<<(raw_tubes?"false":"true")
+      <<",\"max_guard_contraction_dyadic\":"<<(raw_tubes?string("null"):to_string(max_root_contraction))
       <<",\"dyadic_bits\":40,\"lean_kernel_verified\":false}\n";
     return 0;
   }
@@ -101,7 +104,8 @@ int main(int argc,char** argv) {
    ",\"contracted\":"+to_string(contracted)+",\"unresolved\":"+to_string(unresolved)+
    ",\"pending\":"+to_string(pending.size())+",\"max_depth\":"+to_string(maxdepth)+
    ",\"epsilon_bits\":"+to_string(eb)+",\"guard_radius_bits\":"+to_string(gb)+
-   ",\"max_guard_contraction_dyadic\":"+to_string(max_root_contraction)+
+   ",\"tube_uniqueness_checked\":"+string(raw_tubes?"false":"true")+
+   ",\"max_guard_contraction_dyadic\":"+(raw_tubes?string("null"):to_string(max_root_contraction))+
    ",\"dyadic_bits\":40,\"seconds\":"+to_string(secs)+
    ",\"lean_kernel_verified\":false}";
   ofstream out(argv[6]);if(!out)throw runtime_error("cannot write report");out<<report<<'\n';
