@@ -1,0 +1,49 @@
+## 观察量仍然保留绝对大小
+
+沿用
+
+$$
+Y(x)=\sum_{x<n\le2x}(\Lambda(n)-1),
+$$
+
+$$
+\mathfrak J(X)=
+\int_X^{2X}\frac{Y(x)^2}{x^2}\,dx.
+$$
+
+定义窗口矩阵
+
+$$
+W_X(n,m)
+=
+\int_X^{2X}
+\frac{
+\mathbf1_{\{x<n\le2x\}}
+\mathbf1_{\{x<m\le2x\}}
+}{x^2}\,dx.
+$$
+
+显然 \(W_X\succeq0\)。
+
+再定义模态空间上的观察矩阵
+
+$$
+\boxed{
+\Omega_{X,N}=A^*W_XA\succeq0.
+}
+\tag{8}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathfrak J(X)
+=
+f^*W_Xf
+=
+b(\tau)^*\Omega_{X,N}b(\tau).
+}
+\tag{9}
+$$
+

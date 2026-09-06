@@ -1,0 +1,110 @@
+## 定理 182.1　速度、动量变化与完整加速度
+
+在上述共同核心上，
+
+$$
+\boxed{
+\dot X=AP,
+}
+\tag{182.1}
+$$
+
+$$
+\boxed{
+\dot P=-B\Phi'(X).
+}
+\tag{182.2}
+$$
+
+但加速度一般不是简单的 \(-AB\Phi'(X)\)，而是
+
+$$
+\boxed{
+\begin{aligned}
+\ddot X
+={}&
+\frac{i}{\hbar}[E,A]P\\
+&+
+\frac{i}{2\hbar}[B,A]\{\Phi(X),P\}\\
+&-
+\frac12\{A,B\}\Phi'(X).
+\end{aligned}
+}
+\tag{182.3}
+$$
+
+### 证明
+
+首先，
+
+$$
+\dot X=\frac{i}{\hbar}[H_\Phi,X]=AP,
+$$
+
+以及
+
+$$
+\dot P=\frac{i}{\hbar}[H_\Phi,P]=-B\Phi'(X).
+$$
+
+因此
+
+$$
+\begin{aligned}
+\ddot X
+&=
+\frac{i}{\hbar}[H_\Phi,AP]\\
+&=
+\frac{i}{\hbar}[E,A]P
++
+\frac{i}{\hbar}[B,A]\Phi(X)P
+-
+AB\Phi'(X).
+\end{aligned}
+$$
+
+再使用
+
+$$
+\Phi P
+=
+\frac12\{\Phi,P\}
++\frac{i\hbar}{2}\Phi',
+$$
+
+得到式（182.3）。∎
+
+### 三个不同的结构
+
+式（182.3）区分了：
+
+$$
+\boxed{
+[E,M_I^{-1}]
+:
+\text{内部演化与惯性响应的不相容};
+}
+$$
+
+$$
+\boxed{
+[M_G,M_I^{-1}]
+:
+\text{引力响应与惯性响应的不相容};
+}
+$$
+
+$$
+\boxed{
+\frac12\{M_I^{-1},M_G\}
+:
+\text{直接的力—加速度转换}.
+}
+$$
+
+因此，先对 \(M_I,M_G\) 分别取平均，再计算它们的比值，通常无法恢复完整加速度。
+
+项目已经有有限维投影概率由 Hamiltonian 交换子控制的具体证明。本节沿同一原理计算运动读数，但位置—动量涉及无界算子，所以不能把已有有限矩阵定理直接当作本节的机器证明。
+
+---
+

@@ -1,0 +1,87 @@
+## 定理 164.1　有初始关联时的能量—信息恒等式
+
+设初态 \(\rho_{AB}\) 的两个边缘分别为
+
+$$
+\rho_A=\gamma_A(\beta_A),
+\qquad
+\rho_B=\gamma_B(\beta_B),
+$$
+
+但不要求联合态为乘积。
+
+对任意联合酉演化，记末态为 \(\rho'_{AB}\)，则
+
+$$
+\boxed{
+\begin{aligned}
+\beta_A\Delta E_A+\beta_B\Delta E_B
+={}&D(\rho_A'\|\gamma_A)
++D(\rho_B'\|\gamma_B)\\
+&+I(A:B)_{\rho'}-I(A:B)_\rho.
+\end{aligned}
+}
+\tag{164.1}
+$$
+
+这里
+
+$$
+D(\rho\|\sigma)
+=
+\operatorname{Tr}\rho(\log\rho-\log\sigma).
+$$
+
+### 证明
+
+由 Gibbs 形式，
+
+$$
+D(\rho_i'\|\gamma_i)
+=
+-S(\rho_i')
++\beta_iE_i'
++\log Z_i.
+$$
+
+又因
+
+$$
+S(\gamma_i)=\beta_iE_i+\log Z_i,
+$$
+
+所以
+
+$$
+D(\rho_i'\|\gamma_i)
+=
+\beta_i\Delta E_i-\Delta S_i.
+$$
+
+两式相加，并用联合酉演化保持总熵：
+
+$$
+\Delta S_A+\Delta S_B=\Delta I(A:B),
+$$
+
+即得结论。∎
+
+若同时保持 \(H_0\)，则
+
+$$
+\boxed{
+(b_B-b_A)Q_{A\to B}
+=
+D(\rho_A'\|\gamma_A)
++D(\rho_B'\|\gamma_B)
++\Delta I(A:B).
+}
+\tag{164.2}
+$$
+
+初始无关联时，右侧非负，从而能量按共同标定下的热力学方向传递。
+
+有初始关联时，\(\Delta I\) 可以为负。关联变化参与能量交换的约束；不能继续只看两个温度。相关量子系统中对热流方向的控制已有实验研究。([Nature][4])
+
+---
+

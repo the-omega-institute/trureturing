@@ -1,0 +1,15 @@
+## 190.3　本轮核验
+
+已作精确符号检查的内容包括：
+
+非交换质量的完整加速度公式；相同能级概率对应的 \(4/3\)、\(2/3\) 加速度因子；均匀场自由落体变换；双量子观察者的共同—相对动能分解；二次势的潮汐分解；平移—boost 闭路相位。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_quantum_freefall_tidal.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/quantum_freefall_tidal_checks.json)
+
+这些检查使用有限内部矩阵与符号微分算子，没有把精确正则对易关系替换成有限矩阵近似。
+
+**本轮未进行 Lean 编译。**符号核验支持所列恒等式和实例，不替代一般分析定理的机器证明，也不认证模型中的物理假设已经符合现实。
+
+---
+

@@ -1,0 +1,26 @@
+## 定理 6：单模态跨尺度判据
+
+以下命题等价：
+
+$$
+\boxed{\mathrm{RH};}
+$$
+
+$$
+\boxed{
+\mathfrak m(X)=O(1)
+\quad\text{对全部整数 }X\to\infty;
+}
+\tag{35}
+$$
+
+$$
+\boxed{
+\mathcal T(X)=O(X^{3/2})
+\quad\text{对全部整数 }X\to\infty.
+}
+\tag{36}
+$$
+
+注意：这里读取的是**每个整数尺度**，不能直接换成只检查一组稀疏尺度而不补证明。
+

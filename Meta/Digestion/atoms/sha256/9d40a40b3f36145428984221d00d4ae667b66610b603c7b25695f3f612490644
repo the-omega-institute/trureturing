@@ -1,0 +1,9 @@
+### 本轮核验
+
+已作精确符号核验的内容包括：
+
+共振交换子的公式、交换门酉性、热输入的能量转移、相同热边缘下的相反能流、三能级混合残差，以及热传导主符号。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_thermal_clock_consistency.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/thermal_clock_consistency_checks.json)
+

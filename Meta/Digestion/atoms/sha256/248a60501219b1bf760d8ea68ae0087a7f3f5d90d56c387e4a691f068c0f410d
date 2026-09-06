@@ -1,0 +1,47 @@
+## 密度层面的逆操作
+
+由卷积公式求导：
+
+$$
+\boxed{
+p_\sigma(x)
+=
+r_\sigma(x)-\frac1\lambda r_\sigma'(x).
+}
+\tag{T18}
+$$
+
+这个公式对当前实际密度成立。
+
+但它不是对所有概率密度都保正的操作。
+
+例如取标准高斯密度 \(r\)，则：
+
+$$
+r'(x)=-xr(x),
+$$
+
+所以：
+
+$$
+r(x)-\frac1\lambda r'(x)
+=
+r(x)\left(1+\frac x\lambda\right),
+$$
+
+在 \(x<-\lambda\) 时为负。
+
+因此：
+
+$$
+\boxed{
+\text{在实际对象上可精确反演}
+\quad\not\Rightarrow\quad
+\text{该逆运算是普遍合法的正信道}.
+}
+$$
+
+这正是“把随机平均撤销”必须付出的关系代价。
+
+---
+

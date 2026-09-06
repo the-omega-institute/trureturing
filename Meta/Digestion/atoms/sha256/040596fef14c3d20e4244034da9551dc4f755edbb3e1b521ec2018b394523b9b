@@ -1,0 +1,73 @@
+### 证明
+
+把式（S14）代入 \(\mathcal W\)，先考察一对整数模式 \(a,b\)。
+
+令：
+
+$$
+v=y+\log(b/a).
+$$
+
+则指数核变成：
+
+$$
+\pi e^{2x}
+\left(a^2e^v+b^2e^{-v}\right)
+=
+2\pi ab e^{2x}\cosh y.
+$$
+
+相位则变成：
+
+$$
+e^{itv}
+=
+\left(\frac ba\right)^{it}e^{ity}.
+$$
+
+两项多项式因子的乘积，在这个坐标下为：
+
+$$
+16\pi^4a^4b^4e^{9x}
+-
+48\pi^3a^3b^3e^{7x}\cosh y
++
+36\pi^2a^2b^2e^{5x}.
+$$
+
+使用标准积分：
+
+$$
+\boxed{
+K_{it}(z)
+=
+\frac12\int_{\mathbb R}
+e^{-z\cosh y}e^{ity}\,dy,
+}
+$$
+
+以及：
+
+$$
+\frac{\partial}{\partial z}K_{it}(z)
+=
+-\frac12\int_{\mathbb R}
+\cosh y\,e^{-z\cosh y}e^{ity}\,dy,
+$$
+
+即可算出每一对模式的贡献。([DLMF][5])
+
+最后按乘积 \(k=ab\) 合并，得到式（S17）。
+
+绝对收敛则由：
+
+$$
+|K_{it}(z)|\le K_0(z),
+\qquad
+|\partial_zK_{it}(z)|\le K_1(z),
+$$
+
+以及 \(K_0,K_1\) 在正实轴上的指数衰减保证。证毕。([DLMF][6])
+
+---
+

@@ -1,0 +1,29 @@
+## 定义 173.1　三能级资源
+
+取
+
+$$
+H=\epsilon\operatorname{diag}(0,2,3),
+\qquad
+\rho=\operatorname{diag}\left(\frac12,\frac25,\frac1{10}\right),
+\qquad \epsilon>0.
+$$
+
+该态的概率随能量下降，因此单份被动。
+
+但两份系统中：
+
+$$
+|1,1\rangle:
+\quad
+E=4\epsilon,\qquad p=\frac4{25},
+$$
+
+$$
+|0,2\rangle:
+\quad
+E=3\epsilon,\qquad p=\frac1{20}.
+$$
+
+---
+

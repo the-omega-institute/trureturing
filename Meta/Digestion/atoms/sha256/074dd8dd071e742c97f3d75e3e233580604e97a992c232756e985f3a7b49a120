@@ -1,0 +1,29 @@
+### 证明
+
+令：
+
+$$
+y_1=x+\frac v2,\qquad y_2=x-\frac v2.
+$$
+
+则：
+
+$$
+\partial_{y_1}=\frac12\partial_x+\partial_v,
+\qquad
+\partial_{y_2}=\frac12\partial_x-\partial_v.
+$$
+
+由式（T2），两个一阶算子的乘积为：
+
+$$
+4\pi^2
+\left[
+\frac14(\partial_x+1)^2-\partial_v^2
+\right].
+$$
+
+对 \(v\) 作 Fourier 积分，\(-\partial_v^2\) 变为 \(t^2\)。边界项由实际热核衰减消失，得到式（T31）。证毕。
+
+---
+

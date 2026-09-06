@@ -1,0 +1,50 @@
+# 十一、这给仓库的不变量工具留下什么明确任务？
+
+本轮读取的 `InvariantSafety.lean` 提供了通用定理：若初态属于不变量，不变量在每次转移下保持，并且不变量蕴含安全，那么全部有限执行都安全。
+
+当前可以实例化为：
+
+$$
+\text{状态}=(m_i,Y_i,V_i),
+$$
+
+$$
+\text{转移}=\text{式（19）},
+$$
+
+$$
+\text{安全}:\quad Y_i\ge0.
+$$
+
+真正尚需建立的是一个集合或参数化条件：
+
+$$
+\mathcal I(m,Y,V),
+$$
+
+使：
+
+$$
+\mathcal I(5040,Y_0,V_0),
+$$
+
+$$
+\mathcal I(m_i,Y_i,V_i)
+\Longrightarrow
+\mathcal I(m_{i+1},Y_{i+1},V_{i+1}),
+$$
+
+以及：
+
+$$
+\mathcal I(m,Y,V)\Longrightarrow Y\ge0.
+$$
+
+或者不逐事件处理，而对黄金区块证明：
+
+$$
+Y_{\rm in}\ge\mathcal B_I(V_{\rm in})
+$$
+
+在全部层级上成立。
+

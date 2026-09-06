@@ -1,0 +1,29 @@
+# 八、回到上一轮：Bessel 导数项其实是一个二阶补偿算子
+
+定义原函数的双副本局部核：
+
+$$
+\boxed{
+\mathcal J(x,t)
+=
+\int_{\mathbb R}
+g_+\!\left(x+\frac v2\right)
+g_+\!\left(x-\frac v2\right)
+e^{itv}\,dv.
+}
+\tag{T30}
+$$
+
+它在每个固定 \(x,t\) 上收敛。
+
+实际 theta 双副本核仍是：
+
+$$
+\mathcal W(x,t)
+=
+\int_{\mathbb R}
+\Phi\!\left(x+\frac v2\right)
+\Phi\!\left(x-\frac v2\right)
+e^{itv}\,dv.
+$$
+

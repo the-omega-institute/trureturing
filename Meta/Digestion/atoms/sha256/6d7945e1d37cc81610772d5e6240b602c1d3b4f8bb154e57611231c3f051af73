@@ -1,0 +1,58 @@
+## 得到一个没有 Bessel 导数的新表达
+
+定义：
+
+$$
+\boxed{
+Q_{n,t}(x)
+=
+(1+4t^2)x^2-4nx+2n(2n-1).
+}
+\tag{T36}
+$$
+
+由式（T32）、（T34）：
+
+$$
+\boxed{
+\begin{aligned}
+M_n(t)
+=
+2\pi^2
+\sum_{k\ge1}k^2\mathcal D_k(t)
+\int_0^\infty
+x^{2n-2}e^{5x}
+Q_{n,t}(x)
+K_{it}(2\pi ke^{2x})\,dx,
+\quad n\ge1.
+\end{aligned}
+}
+\tag{T37}
+$$
+
+这比上一轮少了一种可能造成数值相消的特殊函数导数。
+
+而且可以直接计算：
+
+$$
+\boxed{
+|t|\ge\frac1{2\sqrt{2n-1}}
+\Longrightarrow
+Q_{n,t}(x)\ge0
+\quad\forall x.
+}
+\tag{T38}
+$$
+
+因为这个二次多项式的判别式为：
+
+$$
+8n\left[1-4(2n-1)t^2\right].
+$$
+
+这使相消来源进一步集中：在该频率范围，权重 \(Q_{n,t}\) 本身已经非负；剩余符号来自除数相位及 Bessel 响应。
+
+但这仍不意味着总和非负。
+
+---
+
