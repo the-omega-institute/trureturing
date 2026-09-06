@@ -1,6 +1,7 @@
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import LeanInformationAudit.Sha256
 import LeanInformationAudit.FixedSnapshot
+import LeanInformationAudit.FrozenBaseline
 import Lean
 
 namespace LeanInformationAudit
@@ -175,10 +176,9 @@ def frozenInformationRootId : Name :=
 def designatedInformationRootId : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 
-/-- Read-only expectations captured by SnapshotEnumerator, independently of the root. -/
-def fixedSnapshotOccurrences (rootId : Name) :
+private def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrence) :
     Array ExpectedOccurrence :=
-  fixedInformationSourceSnapshot.occurrences.map fun row => {
+  rows.map fun row => {
     rootId
     objectArenaName := row.objectArenaName
     theoremName := row.theoremName
@@ -186,10 +186,20 @@ def fixedSnapshotOccurrences (rootId : Name) :
     registrationModuleName := row.registrationModuleName
   }
 
+/-- Read-only expectations captured by SnapshotEnumerator, independently of the root. -/
+def fixedSnapshotOccurrences (rootId : Name) : Array ExpectedOccurrence :=
+  snapshotExpectations rootId fixedInformationSourceSnapshot.occurrences
+
+/-- The historical frozen root is independent of future source snapshot generation. -/
+def frozenBaselineOccurrences (rootId : Name) : Array ExpectedOccurrence :=
+  snapshotExpectations rootId frozenInformationRootBaseline
+
 /-- Resolve the independent expectation source for one sealing root. -/
 def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
     Array ExpectedOccurrence :=
-  if rootId == frozenInformationRootId || rootId == designatedInformationRootId then
+  if rootId == frozenInformationRootId then
+    frozenBaselineOccurrences rootId
+  else if rootId == designatedInformationRootId then
     fixedSnapshotOccurrences rootId
   else
     ExpectedOccurrenceManifest.declaredEntries env rootId
