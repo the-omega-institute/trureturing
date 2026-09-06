@@ -1,0 +1,98 @@
+## 定理7.1：观察丢失的 Fisher 信息等于隐藏能量方差
+
+对任意有限候选域，使用：
+
+$$
+P_{\beta,\lambda}(n)\propto e^{\beta[W(n)-\lambda E(n)]},
+$$
+
+以及一个确定性观察 \(q\)，有：
+
+$$
+\boxed{
+I_{\mathrm{full}}
+=
+I_{\mathrm{obs}}
++
+\beta^2\mathbb E\!\left[\operatorname{Var}(E\mid q)\right].
+}
+\tag{18}
+$$
+
+### 证明
+
+完整状态的参数分数为：
+
+$$
+\partial_\lambda\ln P(n)
+=
+-\beta(E(n)-\mathbb E E).
+$$
+
+观察结果的分数是它在该观察纤维上的条件期望：
+
+$$
+\partial_\lambda\ln P(q)
+=
+-\beta\bigl(\mathbb E[E\mid q]-\mathbb E E\bigr).
+$$
+
+分别平方取期望，再使用全方差公式：
+
+$$
+\operatorname{Var}(E)
+=
+\operatorname{Var}(\mathbb E[E\mid q])
++
+\mathbb E[\operatorname{Var}(E\mid q)],
+$$
+
+即得。证毕。
+
+对四素数读出 \(q_4\)，隐藏部分只有 \(b\ln11\)，所以：
+
+$$
+\boxed{
+I_{\mathrm{full}}-I_{\mathrm{obs}}
+=
+\beta^2(\ln11)^2r(1-r).
+}
+\tag{19}
+$$
+
+临界点上：
+
+$$
+\boxed{
+I_{\mathrm{full}}-I_{\mathrm{obs}}
+=
+\frac{\beta^2(\ln11)^2}{4}.
+}
+$$
+
+而隐藏状态的条件熵只有：
+
+$$
+\boxed{
+H(b\mid q_4)=\ln2,
+}
+$$
+
+即1比特。
+
+**一比特的隐藏状态，可以承载随 \(\beta^2\) 增长的参数敏感性。**
+
+这不是“一个比特包含无限 Shannon 信息”，而是说明：
+
+$$
+\boxed{
+\text{隐藏状态数量}
+\quad\text{与}\quad
+\text{隐藏状态对临界判断的影响}
+}
+$$
+
+并不是同一个量。
+
+这也解释了为什么只降低平均信息逃逸率，仍可能不足以证明一个尖锐的全称不等式。
+

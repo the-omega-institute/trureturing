@@ -1,0 +1,50 @@
+# 260．这一轮真正建立了怎样的统一关系？
+
+我们现在已经得到一条完整的有限链：
+
+$$
+\boxed{
+\text{相邻排斥约束}
+\longrightarrow
+\text{Zeckendorf 合法字串}
+\longrightarrow
+\text{Fibonacci 状态计数}.
+}
+$$
+
+同一合法字串空间又给出：
+
+$$
+\boxed{
+\text{占据均值的四棱锥}
+\quad\text{与}\quad
+\text{单翻转动力学的奇偶分块}.
+}
+$$
+
+再加入明确的能量合成规则：
+
+$$
+\boxed{
+\varepsilon_{p,j}=E_*G_j\ln p
+}
+$$
+
+得到：
+
+$$
+\boxed{
+\text{正整数标签}
+\longleftrightarrow
+\text{素数占据}
+\longleftrightarrow
+\text{量子能量本征态}.
+}
+$$
+
+而观察者若只保存四棱锥中的均值坐标，则仍可能遗漏未来会进入干涉实验的关联。
+
+**这次的核心对象，不是四边形、素数和 Fibonacci 各自“很像”，而是它们可以成为同一个模型的不同读取方式。**
+
+---
+

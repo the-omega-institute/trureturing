@@ -1,0 +1,74 @@
+# 八、能量的“曲率”也必须从导数或相关矩阵定义，而不是只从形状命名
+
+前文的倒数因数态使用
+
+$$
+Z_D(\beta)
+=
+\sum_{d\mid D}d^{-\beta}
+=
+\operatorname{Tr}e^{-\beta H_{\mathrm{ar}}}.
+$$
+
+这是有限几何级数乘积，与 Euler 乘积使用的是同一乘法分解机制。([DLMF][1])
+
+直接求导：
+
+$$
+\boxed{
+-\frac{d}{d\beta}\log Z_D(\beta)
+=
+\langle H_{\mathrm{ar}}\rangle_\beta,
+}
+\tag{34}
+$$
+
+$$
+\boxed{
+\frac{d^2}{d\beta^2}\log Z_D(\beta)
+=
+\operatorname{Var}_\beta(H_{\mathrm{ar}})\ge0.
+}
+\tag{35}
+$$
+
+所以，如果要在这里谈“能量曲率”，一个明确对象是
+
+$$
+\frac{d^2}{d\beta^2}\log Z_D.
+$$
+
+若分别给四个素数方向参数 \(\beta_p\)，则
+
+$$
+\boxed{
+\frac{\partial^2\log Z}
+{\partial\beta_p\,\partial\beta_q}
+=
+(\log p)(\log q)\,
+\operatorname{Cov}(k_p,k_q).
+}
+\tag{36}
+$$
+
+对于当前没有跨方向耦合的乘积 Gibbs 分布，
+
+$$
+\operatorname{Cov}(k_p,k_q)=0
+\qquad(p\ne q).
+$$
+
+这恰好说明：
+
+$$
+\boxed{
+\text{有四个素数能量方向}
+\quad\not\Rightarrow\quad
+\text{四个方向已经相互作用}.
+}
+$$
+
+需要联合约束、状态相关或像式（28）那样的共同通道，才会产生非零跨方向结构。
+
+因此，几何高度、Gram 高度、热统计曲率和物理空间曲率不能直接等同。**它们可以通过明确的映射连接，但映射本身就是需要证明的内容。**
+

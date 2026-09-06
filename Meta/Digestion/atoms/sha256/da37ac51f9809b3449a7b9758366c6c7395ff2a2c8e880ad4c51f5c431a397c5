@@ -1,0 +1,18 @@
+**因此，5040并不是在所有切面上都具有同一种“最优性”。它的临界意义取决于我们保留了哪些成本、哪些因果约束，以及哪些观察信息。**
+
+接下来真正有价值的统一方向是：
+
+$$
+\boxed{
+\text{允许切换观察切面，}
+\quad
+\text{但证明时间、可达性与安全预算在切换后仍被正确保存。}
+}
+$$
+
+这样，“统一离散时空”就不再只是把两个坐标拼起来，而成为一种能同时处理状态、过程、资源与临界证书的严格理论。
+
+[1]: https://arxiv.org/html/1911.06355v1 "https://arxiv.org/html/1911.06355v1"
+[2]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html"
+[3]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
+[4]: https://arxiv.org/html/1905.09327v4 "https://arxiv.org/html/1905.09327v4"

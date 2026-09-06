@@ -1,0 +1,27 @@
+## 定义314.1　两候选的平滑选择模型
+
+引入无量纲平滑参数 \(\tau>0\)：
+
+$$
+\boxed{
+Q_\tau(\lambda)
+=
+e^{F_\lambda(n)/\tau}
++
+e^{F_\lambda(m)/\tau}.
+}
+\tag{314.1}
+$$
+
+对实数 \(\lambda\)，它始终为正，并且：
+
+$$
+\tau\ln Q_\tau(\lambda)
+\longrightarrow
+\max\{F_\lambda(n),F_\lambda(m)\}.
+$$
+
+这里是两候选模型，不声称等于所有整数的完整统计总和。
+
+---
+

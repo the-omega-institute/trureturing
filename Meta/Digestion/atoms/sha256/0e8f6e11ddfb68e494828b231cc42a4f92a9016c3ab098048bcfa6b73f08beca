@@ -1,0 +1,90 @@
+### 证明
+
+当 \(b>\delta_*\) 时，对任意零点：
+
+$$
+|b-(\delta+i\gamma)|\ge b-\delta\ge b-\delta_*.
+$$
+
+所以：
+
+$$
+b-R(b)\le\delta_*.
+$$
+
+另一方面，对任意固定右侧零点 \(\delta+i\gamma\)：
+
+$$
+R(b)\le\sqrt{(b-\delta)^2+\gamma^2}.
+$$
+
+因此：
+
+$$
+\liminf_{b\to\infty}[b-R(b)]\ge\delta.
+$$
+
+对全部右侧位移取上确界，得到反向不等式。证毕。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\lim_{b\to\infty}[b-R(b)]=0.
+}
+\tag{28}
+$$
+
+也有一个几何上更直接的等价：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+R(b)\ge b
+\quad\forall b>0.
+}
+\tag{29}
+$$
+
+因为圆盘：
+
+$$
+D(b,b)=\{w:|w-b|<b\}
+$$
+
+全部位于右半平面，而且随着 \(b\) 增大，它们穷尽整个右半平面。
+
+如果存在 \(\delta>0\) 的零点，它会在：
+
+$$
+\boxed{
+b>\frac{\delta^2+\gamma^2}{2\delta}
+}
+\tag{30}
+$$
+
+时进入这个圆盘。
+
+**这给“换一个角度，隐藏信息突然出现”一个精确阈值。**
+
+但这里有两层极限：
+
+$$
+m\to\infty
+$$
+
+用于从累积量确定 \(R(b)\)，随后：
+
+$$
+b\to\infty
+$$
+
+用于读取 \(\delta_*\)。
+
+不能直接交换，也不能用有限个低阶导数代替完整结论。
+
+---
+

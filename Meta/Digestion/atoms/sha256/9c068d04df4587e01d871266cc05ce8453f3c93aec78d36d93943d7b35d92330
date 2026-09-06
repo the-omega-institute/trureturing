@@ -1,0 +1,61 @@
+# 三、负的二阶交互，背后其实是正的交集权重
+
+对非空集合 \(I\)，定义：
+
+$$
+\boxed{
+\kappa_I(E)
+=
+\int_0^\infty
+\prod_{i\in I}z_i(t)\,\nu_E(dt)>0.
+}
+\tag{6}
+$$
+
+展开式（5）：
+
+$$
+\boxed{
+F(S)
+=
+\Delta(n)-\sum_{i\in S}\rho_i
++
+\sum_{\varnothing\ne I\subseteq S}
+(-1)^{|I|-1}\kappa_I(E).
+}
+\tag{7}
+$$
+
+因此：
+
+$$
+c_{\{i\}}=\kappa_{\{i\}}-\rho_i,
+$$
+
+而对 \(|I|\ge2\)：
+
+$$
+\boxed{
+c_I=(-1)^{|I|-1}\kappa_I.
+}
+\tag{8}
+$$
+
+于是：
+
+$$
+\boxed{
+二阶负、三阶正、四阶负，
+}
+$$
+
+其来源不是负概率，而是：
+
+$$
+\boxed{
+正的交集权重，在容斥展开中交替加减。
+}
+$$
+
+这一点与仓库已有的 `FiniteInclusionExclusion` 十分贴合：该模块已经把有限捕获概率写成非空交集的交替和，并将前两阶连接到逃逸概率的上下界。
+

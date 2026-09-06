@@ -1,0 +1,63 @@
+## 定理267.1　占据均值确定平均能量，奇偶进一步确定能量方差
+
+有：
+
+$$
+\boxed{
+\langle H_{\mathfrak p}\rangle
+=
+\epsilon_{\mathfrak p}(x_0+2x_1+3x_2),
+}
+\tag{267.2}
+$$
+
+以及：
+
+$$
+\boxed{
+\langle H_{\mathfrak p}^2\rangle
+=
+\epsilon_{\mathfrak p}^2
+(x_0+4x_1+9x_2+6r).
+}
+\tag{267.3}
+$$
+
+利用奇偶重建式，还可写成：
+
+$$
+\boxed{
+\langle H_{\mathfrak p}^2\rangle
+=
+\epsilon_{\mathfrak p}^2
+\left(
+4x_0+7x_1+12x_2
++\frac32\eta-\frac32
+\right).
+}
+\tag{267.4}
+$$
+
+### 证明
+
+展开 \(H_{\mathfrak p}^2\)，使用：
+
+$$
+N_j^2=N_j,
+\qquad
+N_0N_1=N_1N_2=0.
+$$
+
+只剩两端交叉项 \(6N_0N_2\)。再代入式（261.5）。∎
+
+因此，对具有相同四棱锥坐标的两个态：
+
+$$
+\boxed{
+\Delta\operatorname{Var}(H_{\mathfrak p})
+=
+\frac32\epsilon_{\mathfrak p}^2\,\Delta\eta.
+}
+\tag{267.5}
+$$
+

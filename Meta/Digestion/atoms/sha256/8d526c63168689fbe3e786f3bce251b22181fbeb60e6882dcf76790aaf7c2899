@@ -1,0 +1,19 @@
+## 一个可直接用于估计的联合误差界
+
+设丢弃的归一化谱质量为
+
+$$
+\epsilon_G=1-\frac{C_G}{c_0}.
+$$
+
+则在 \(|z|\le r<1\) 上，
+
+$$
+\boxed{
+|\mathcal S_\xi(z)-\mathcal S_G(z)|
+\le
+4\epsilon_G\frac{1+r}{1-r}.
+}
+\tag{39}
+$$
+

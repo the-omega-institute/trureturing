@@ -1,0 +1,39 @@
+## 6.1 但全局最优值增加了一项
+
+$$
+\boxed{
+\Phi_5-\Phi_4
+=
+\frac1\beta
+\ln\left[
+1+e^{\beta(\ln(12/11)-\lambda\ln11)}
+\right].
+}
+\tag{13}
+$$
+
+令 \(\beta\to\infty\)：
+
+$$
+\boxed{
+\Phi_5-\Phi_4
+\longrightarrow
+\max\left\{
+0,\ln\frac{12}{11}-\lambda\ln11
+\right\}.
+}
+\tag{14}
+$$
+
+这是一条在 \(\lambda_-\) 处折弯的折线。
+
+它两侧分别对应：
+
+$$
+\text{不采用11},
+\qquad
+\text{采用11}.
+$$
+
+所以，**归一化后的四轴统计看不见的东西，恰好改变了全局最优值。**
+

@@ -1,0 +1,51 @@
+# 五、把统一历史沿“顺序面积”切开，得到一个精确多项式
+
+定义：
+
+$$
+\boxed{
+Q_{\mathbf a}(q)
+=
+\sum_{\gamma\in\Gamma_{\mathbf a}}q^{A(\gamma)}.
+}
+\tag{9}
+$$
+
+这里 \(q\) 是辅助生成参数，之后可以取单位复相位；它不是 PRIMEGAME 的控制标记。
+
+令：
+
+$$
+[n]_q=1+q+\cdots+q^{n-1},
+\qquad
+[n]_q!=\prod_{j=1}^{n}[j]_q.
+$$
+
+经典逆序生成恒等式给出：
+
+$$
+\boxed{
+Q_{\mathbf a}(q)
+=
+\frac{[L]_q!}{[a_1]_q!\cdots[a_m]_q!}.
+}
+\tag{10}
+$$
+
+这是一个具有非负整数系数的多项式，不是在单位根处随意代入一个未处理的 \(0/0\) 商。([DLMF][2])
+
+也可以直接用式（8）递推验证：
+
+$$
+\boxed{
+Q_{\mathbf a}(q)
+=
+\sum_{i:a_i>0}
+q^{\sum_{j>i}a_j}
+Q_{\mathbf a-\mathbf e_i}(q).
+}
+\tag{11}
+$$
+
+---
+

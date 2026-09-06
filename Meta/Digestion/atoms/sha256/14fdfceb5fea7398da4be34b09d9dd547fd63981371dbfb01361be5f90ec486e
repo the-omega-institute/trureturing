@@ -1,0 +1,35 @@
+## 定理231.1　概率接口不唯一决定记录实现
+
+取三维空间，
+
+$$
+P=\operatorname{diag}(1,1,0),
+$$
+
+令 \(V\) 交换 \(|0\rangle,|1\rangle\)，保持 \(|2\rangle\) 不变。
+
+对输入 \(|0\rangle\)，两种仪器都必然报告“位于 \(P\) 内”，但条件输出分别是
+
+$$
+\boxed{
+|0\rangle\langle0|,
+\qquad
+|1\rangle\langle1|.
+}
+\tag{231.3}
+$$
+
+### 证明
+
+两种成功分支的效果算子分别为
+
+$$
+P^\dagger P=P,
+\qquad
+(VP)^\dagger VP=P.
+$$
+
+所以结果概率相同。
+
+但 \(P|0\rangle=|0\rangle\)，而 \(VP|0\rangle=|1\rangle\)。∎
+

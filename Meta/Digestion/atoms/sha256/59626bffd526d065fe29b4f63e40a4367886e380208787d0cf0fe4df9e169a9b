@@ -1,0 +1,20 @@
+## 定理二：单次试除的精确指令数
+
+若 \(k\mid M\)，到达接受边界需要：
+
+$$
+\boxed{
+\tau_{\mathrm{yes}}(M,k)=4M+2Q+2.
+}
+\tag{25}
+$$
+
+若 \(k\nmid M\)，到达下一试除入口 \(\mathsf X(M,k-1)\) 需要：
+
+$$
+\boxed{
+\tau_{\mathrm{no}}(M,k)=6M+2Q+2.
+}
+\tag{26}
+$$
+

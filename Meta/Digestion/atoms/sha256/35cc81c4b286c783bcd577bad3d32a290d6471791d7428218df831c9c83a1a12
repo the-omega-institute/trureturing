@@ -1,0 +1,47 @@
+# 275．Zeckendorf给寄存器换坐标，但不自动保持局域性
+
+设：
+
+$$
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j.
+$$
+
+每个指数唯一写为：
+
+$$
+a_p=\sum_jb_{p,j}G_j,
+\qquad b_{p,j}b_{p,j+1}=0.
+$$
+
+相应唯一性已由 Mathlib 的 `Nat.zeckendorfEquiv` 表述为等价。([Lean社区][2])
+
+令 \(Z\) 表示逐寄存器的规范编码。FRACTRAN的一步可以编译成：
+
+$$
+\boxed{
+b
+\longmapsto
+Z\!\left(Z^{-1}(b)-\beta_i+\alpha_i\right),
+}
+\tag{275.1}
+$$
+
+其中仍然先检查原来的数值条件和优先级。
+
+所以：
+
+$$
+\boxed{
+\text{整数执行}
+\;\cong\;
+\text{指数格点执行}
+\;\cong\;
+\text{规范黄金字串执行}.
+}
+\tag{275.2}
+$$
+
+它们是同一程序的不同精确语义表示，不是三种不同的预测。
+
+---
+

@@ -49,11 +49,17 @@ internal static class DagLedgerMathlibReanchorWriter
             {
                 return new CommandResult(
                     true,
-                    "MATHLIB_REANCHOR replacement_modules=0 recognition=not-required\n",
+                    "MATHLIB_REANCHOR replacement_modules=0 drift_seed_modules=0 "
+                        + "recognition=not-required\n",
                     string.Empty);
             }
 
-            var missing = driftPaths
+            var reanchoredPaths = FrozenLedgerReplacementClosure.DescendantsFrom(
+                    baseView,
+                    driftPaths)
+                .OrderBy(static path => path.Value, StringComparer.Ordinal)
+                .ToImmutableArray();
+            var missing = reanchoredPaths
                 .Where(path => !completeCatalog.ByPath.ContainsKey(path))
                 .ToImmutableArray();
             if (!missing.IsEmpty)
@@ -67,11 +73,11 @@ internal static class DagLedgerMathlibReanchorWriter
                 baseView,
                 completeCatalog,
                 adjacency,
-                driftPaths);
+                reanchoredPaths);
             var replacementFiles = BuildReplacementFiles(
                 baseView,
                 protectedLedgerFiles,
-                driftPaths,
+                reanchoredPaths,
                 newEventFiles);
             var prospective = ReplaceLedgerSnapshot(truth.Snapshot, replacementFiles);
             var candidateView = FrozenLedgerBaseViewReader.Read(prospective);
@@ -86,7 +92,7 @@ internal static class DagLedgerMathlibReanchorWriter
                 DagLedgerCommandPreparation.Ask(() => repository.ReadChanges(protectedBaseName)),
                 baseView,
                 newEventFiles,
-                driftPaths);
+                reanchoredPaths);
             var deltaEvents = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
                 baseView,
                 newEventFiles,
@@ -109,9 +115,12 @@ internal static class DagLedgerMathlibReanchorWriter
             var propositionFailures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(
                 protectedBase,
                 prospective,
-                recognition.ReanchoredModulePaths,
+                recognition.ChangedStatementModulePaths,
                 baseView,
                 candidateCatalog);
+            var closureStatementFailures =
+                MathlibUpgradeFrozenLedgerReplacementAuthorization
+                    .FindChangedClosureOnlyStatements(context, recognition);
             var axiomFailures = recognition.ReanchoredModulePaths
                 .Where(path => !candidateCatalog.ByPath.TryGetValue(path, out var material)
                     || material.AxiomClosure.Any(axiom => !LeanAxiomFacts.IsStandard(axiom)))
@@ -122,11 +131,28 @@ internal static class DagLedgerMathlibReanchorWriter
                 prospective).IsAuthorized(context);
             var diagnosedAuthorization = pinChanged
                 && propositionFailures.IsEmpty
+                && closureStatementFailures.IsEmpty
                 && axiomFailures.IsEmpty;
             if (authorized != diagnosedAuthorization)
             {
                 throw new InvalidOperationException(
                     "authorization diagnostics disagree with the canonical authorization result");
+            }
+
+            var output = RenderResult(
+                driftPaths,
+                reanchoredPaths,
+                pinChanged,
+                propositionFailures,
+                closureStatementFailures,
+                axiomFailures,
+                authorized);
+            if (!authorized)
+            {
+                return new CommandResult(
+                    false,
+                    output,
+                    "MATHLIB_REANCHOR_FAILED authorization failed; frozen ledger was not published\n");
             }
 
             FrozenLedgerPublication.PublishSnapshot(
@@ -139,12 +165,7 @@ internal static class DagLedgerMathlibReanchorWriter
                 "ledger-reanchor-mathlib");
             return new CommandResult(
                 true,
-                RenderResult(
-                    driftPaths,
-                    pinChanged,
-                    propositionFailures,
-                    axiomFailures,
-                    authorized),
+                output,
                 string.Empty);
         }
         catch (Exception exception) when (
@@ -182,13 +203,13 @@ internal static class DagLedgerMathlibReanchorWriter
         FrozenLedgerBaseView baseView,
         FrozenMaterialCatalog completeCatalog,
         ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
-        ImmutableArray<RepoPath> driftPaths)
+        ImmutableArray<RepoPath> reanchoredPaths)
     {
-        var driftSet = driftPaths.ToImmutableHashSet();
+        var reanchoredSet = reanchoredPaths.ToImmutableHashSet();
         var eventHashes = new Dictionary<RepoPath, string>();
         var files = ImmutableArray.CreateBuilder<RepositoryFile>();
-        foreach (var path in LeanImportAdjacency.DependenciesFirst(driftPaths, adjacency)
-            .Where(driftSet.Contains))
+        foreach (var path in LeanImportAdjacency.DependenciesFirst(reanchoredPaths, adjacency)
+            .Where(reanchoredSet.Contains))
         {
             var candidate = completeCatalog.ByPath[path];
             var prerequisites = adjacency[path]
@@ -232,13 +253,14 @@ internal static class DagLedgerMathlibReanchorWriter
     private static ImmutableArray<RepositoryFile> BuildReplacementFiles(
         FrozenLedgerBaseView baseView,
         ImmutableArray<RepositoryFile> baselineFiles,
-        ImmutableArray<RepoPath> driftPaths,
+        ImmutableArray<RepoPath> reanchoredPaths,
         ImmutableArray<RepositoryFile> newEventFiles)
     {
-        var driftSet = driftPaths.ToImmutableHashSet();
+        var reanchoredSet = reanchoredPaths.ToImmutableHashSet();
         var replacedEventPaths = baseView.Events
             .Where(item => item.FreezePayload is not null
-                && driftSet.Contains(RepoPath.CreateKnown(item.FreezePayload.DescriptorSelector)))
+                && reanchoredSet.Contains(
+                    RepoPath.CreateKnown(item.FreezePayload.DescriptorSelector)))
             .Select(static item => item.SourcePath)
             .ToImmutableHashSet();
         return baselineFiles
@@ -252,12 +274,13 @@ internal static class DagLedgerMathlibReanchorWriter
         RawChangeSet sourceChanges,
         FrozenLedgerBaseView baseView,
         ImmutableArray<RepositoryFile> newEventFiles,
-        ImmutableArray<RepoPath> driftPaths)
+        ImmutableArray<RepoPath> reanchoredPaths)
     {
-        var driftSet = driftPaths.ToImmutableHashSet();
+        var reanchoredSet = reanchoredPaths.ToImmutableHashSet();
         var ledgerChanges = baseView.Events
             .Where(item => item.FreezePayload is not null
-                && driftSet.Contains(RepoPath.CreateKnown(item.FreezePayload.DescriptorSelector)))
+                && reanchoredSet.Contains(
+                    RepoPath.CreateKnown(item.FreezePayload.DescriptorSelector)))
             .Select(static item => (item.SourcePath.Value, RawChangeKind.Deleted))
             .Concat(newEventFiles.Select(static file =>
                 (file.Path.Value, RawChangeKind.Added)));
@@ -280,21 +303,29 @@ internal static class DagLedgerMathlibReanchorWriter
 
     private static string RenderResult(
         ImmutableArray<RepoPath> driftPaths,
+        ImmutableArray<RepoPath> reanchoredPaths,
         bool pinChanged,
         ImmutableArray<RepoPath> propositionFailures,
+        ImmutableArray<RepoPath> closureStatementFailures,
         ImmutableArray<RepoPath> axiomFailures,
         bool authorized)
     {
-        var output = "MATHLIB_REANCHOR replacement_modules=" + driftPaths.Length + "\n"
+        var output = "MATHLIB_REANCHOR replacement_modules=" + reanchoredPaths.Length + "\n"
+            + "MATHLIB_REANCHOR drift_seed_modules=" + driftPaths.Length + "\n"
             + "AUTHORIZATION incremental_replacement=pass\n"
             + $"AUTHORIZATION effective_lean_pins_changed={PassFail(pinChanged)}\n"
             + "AUTHORIZATION proposition_source_equivalent="
             + $"{PassFail(propositionFailures.IsEmpty)} failed_modules={propositionFailures.Length}\n"
+            + "AUTHORIZATION closure_statement_identity_unchanged="
+            + $"{PassFail(closureStatementFailures.IsEmpty)} "
+            + $"failed_modules={closureStatementFailures.Length}\n"
             + "AUTHORIZATION standard_axiom_closure="
             + $"{PassFail(axiomFailures.IsEmpty)} failed_modules={axiomFailures.Length}\n"
             + $"AUTHORIZATION overall={PassFail(authorized)}\n";
         output += string.Concat(propositionFailures.Select(static path =>
             $"PROPOSITION_SOURCE_FAILURE {path.Value}\n"));
+        output += string.Concat(closureStatementFailures.Select(static path =>
+            $"CLOSURE_STATEMENT_IDENTITY_FAILURE {path.Value}\n"));
         output += string.Concat(axiomFailures.Select(static path =>
             $"AXIOM_CLOSURE_FAILURE {path.Value}\n"));
         return output;

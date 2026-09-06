@@ -13,8 +13,8 @@ receipts:
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
     - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
-      definition_sha256: sha256:bde4ed75cb707872d65ee1d8275ee4883ea7cd4a9fe14d00b44b6f218b59be0f
-      emission_sha256: sha256:780fb2bf4ea155ef65e33ba9430d282941b7866cdb0b7dbff6c2a46c9c0380ee
+      definition_sha256: sha256:a430f7ac0f6d9853c1a0e3ac5715358822aa84ff6588680d30abd1319810618f
+      emission_sha256: sha256:a22e43e122dbec394ae7e8b2e8b0d860cc781fc56e584227fe5a523a9c541344
   unresolved_subitems:
     - classification-collapse-difficulty-depends-on-supporting-structure
     - half-line-uniqueness-from-four-structural-characterizations

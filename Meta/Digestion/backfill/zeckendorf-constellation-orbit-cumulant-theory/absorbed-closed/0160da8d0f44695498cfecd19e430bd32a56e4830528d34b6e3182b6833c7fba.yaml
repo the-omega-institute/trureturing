@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0160da8d0f44695498cfecd19e430bd32a56e4830528d34b6e3182b6833c7fba
+  normalized_sha256: sha256:0160da8d0f44695498cfecd19e430bd32a56e4830528d34b6e3182b6833c7fba
+cas_ref: sha256:0160da8d0f44695498cfecd19e430bd32a56e4830528d34b6e3182b6833c7fba
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/EvenDenseConstellationMirrorCode.even_dense_constellation_gap_code_self
+    target_statement_id: sha256:8333ba4f221e17e2b1df5df30c745aa4d1ee1bdc48d1fb2a75531653fb6d2986
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/Congruence/EvenDenseConstellationMirrorCode.even_dense_constellation_gap_code_self
+      definition_sha256: sha256:891e846eb59f5ffe5bad8e91357909a662520995a877a100255faa9b336438b0
+      emission_sha256: sha256:7a4ed0af423e18b94dd6fe6a0a88351c01542231c13b2b9c231c9c7ced3938df
+  unresolved_subitems: []

@@ -1,0 +1,54 @@
+## 定理312.1　有限窗口的保留率在边界附近线性消失
+
+对任意固定 \(N\)：
+
+$$
+\boxed{
+w_N(1+\varepsilon)
+=
+\varepsilon Z_N(1)+O(\varepsilon^2).
+}
+\tag{312.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{\varepsilon\downarrow0}
+\frac{w_N(1+\varepsilon)}{\varepsilon}
+=
+Z_N(1).
+}
+\tag{312.2}
+$$
+
+### 证明
+
+\(Z_N\) 是有限和，在1附近解析：
+
+$$
+Z_N(1+\varepsilon)=Z_N(1)+O(\varepsilon).
+$$
+
+再与 ζ 的 Laurent 展开相除。∎
+
+对5040：
+
+$$
+Z_{5040}(1)=\frac{403}{105},
+$$
+
+所以：
+
+$$
+\boxed{
+w_{5040}(1+\varepsilon)
+=
+\frac{403}{105}\varepsilon+O(\varepsilon^2).
+}
+\tag{312.3}
+$$
+
+---
+

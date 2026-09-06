@@ -1,0 +1,39 @@
+## 定理338.1　跨越该割的状态秩受容量限制
+
+若一个纯态网络沿该割分成左右两部分，则
+
+$$
+\boxed{
+\operatorname{SchmidtRank}|\Psi\rangle\le D_\Sigma.
+}
+\tag{338.2}
+$$
+
+因此纠缠熵满足
+
+$$
+\boxed{
+S\le\ln D_\Sigma=\sum_{e\in\Sigma}\ln d_e.
+}
+\tag{338.3}
+$$
+
+### 证明
+
+把全部切断指标合并为一个标签 \(\gamma=1,\ldots,D_\Sigma\)，完整态具有形式
+
+$$
+|\Psi\rangle
+=
+\sum_{\gamma=1}^{D_\Sigma}
+|L_\gamma\rangle\otimes|R_\gamma\rangle.
+$$
+
+其系数矩阵秩至多为 \(D_\Sigma\)。熵上界由 Schmidt 概率最多具有 \(D_\Sigma\) 个非零项得到。∎
+
+类似地，若一个输入—输出线性映射必须通过这条边界因子化，其秩也不能超过 \(D_\Sigma\)。
+
+这是上界，不保证任何网络都能达到。量子张量网络的一般最大流与最小割，不能无条件沿用经典的相等定理。([arXiv][4])
+
+---
+

@@ -315,7 +315,9 @@ internal static class ScribeTestMapDeriver
 
     internal static ScribeTestMap DeriveTracked(
         IReadOnlyList<ScribeTrackedSource> tracked,
-        MsBuildCompileMap compileMap)
+        MsBuildCompileMap compileMap,
+        ScribeBindingStrategy bindingStrategy = ScribeBindingStrategy.Demand,
+        IScribeBindingRecorder? recorder = null)
     {
         var projectFiles = tracked
             .Where(static file => file.Path.EndsWith(".csproj", StringComparison.Ordinal))
@@ -351,7 +353,9 @@ internal static class ScribeTestMapDeriver
                 projectFiles.Select(static project => project.Path)),
             compileMap.Findings,
             compilationContext.ProductionAssemblies,
-            compilationContext);
+            compilationContext,
+            bindingStrategy,
+            recorder);
     }
 
     internal static ScribeTestMap DeriveSources(
@@ -362,12 +366,16 @@ internal static class ScribeTestMapDeriver
         IReadOnlyList<string>? danglingCompileFailProofProjectExemptionPaths = null,
         IReadOnlyList<MsBuildCompileFinding>? compileQueryFindings = null,
         IReadOnlySet<string>? productionAssemblies = null,
-        ScribeProjectCompilationContext? compilationContext = null)
+        ScribeProjectCompilationContext? compilationContext = null,
+        ScribeBindingStrategy bindingStrategy = ScribeBindingStrategy.Demand,
+        IScribeBindingRecorder? recorder = null)
     {
         var parsed = ScribeTestSymbolBinder.Bind(
             sourceFiles,
+            bindingStrategy,
             productionAssemblies,
-            compilationContext).ToArray();
+            compilationContext,
+            recorder).ToArray();
         var discoveryCriteria = ExtractDiscoveryCriteria(parsed);
         var methods = parsed.SelectMany(static source => source.Callables).ToArray();
         var indirect = indirectProductionSites.ToArray();
@@ -456,7 +464,7 @@ internal static class ScribeTestMapDeriver
                     continue;
                 }
                 reasons.Add(TestMapUnknownReason.DirectoryEnumeration);
-                InspectRepositoryPath(enumerationArgument, model, reasons);
+                InspectRepositoryPath(enumerationArgument, model, method.SemanticModels, reasons);
                 continue;
             }
 
@@ -486,7 +494,7 @@ internal static class ScribeTestMapDeriver
                 continue;
             }
 
-            InspectRepositoryPath(argument, model, reasons);
+            InspectRepositoryPath(argument, model, method.SemanticModels, reasons);
         }
     }
 
@@ -555,6 +563,7 @@ internal static class ScribeTestMapDeriver
     private static void InspectRepositoryPath(
         ExpressionSyntax? argument,
         SemanticModel model,
+        ScribeSemanticModelProvider semanticModels,
         HashSet<TestMapUnknownReason> reasons)
     {
         var create = argument
@@ -571,7 +580,7 @@ internal static class ScribeTestMapDeriver
             return;
         }
 
-        if (IsLiteralCombinedRepositoryPath(argument, model))
+        if (IsLiteralCombinedRepositoryPath(argument, model, semanticModels))
         {
             return;
         }
@@ -581,7 +590,8 @@ internal static class ScribeTestMapDeriver
 
     private static bool IsLiteralCombinedRepositoryPath(
         ExpressionSyntax? expression,
-        SemanticModel model)
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels)
     {
         if (expression is InvocationExpressionSyntax combine
             && model.GetSymbolInfo(combine).Symbol is IMethodSymbol
@@ -591,7 +601,8 @@ internal static class ScribeTestMapDeriver
             }
             && pathType.ToDisplayString() == "System.IO.Path"
             && combine.ArgumentList.Arguments is { Count: >= 2 } arguments
-            && ScribeTestSymbolBinder.IsRepositoryRootExpression(arguments[0].Expression, model))
+            && ScribeTestSymbolBinder.IsRepositoryRootExpression(
+                arguments[0].Expression, model, semanticModels))
         {
             foreach (var argument in arguments.Skip(1))
             {

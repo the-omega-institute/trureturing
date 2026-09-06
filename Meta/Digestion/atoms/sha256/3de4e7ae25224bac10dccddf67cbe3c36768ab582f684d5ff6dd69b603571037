@@ -1,0 +1,51 @@
+# 六、前文的 ξ 矩阵，本来就同时是一张时间相关矩阵
+
+现在接回实际算术，而不是只讨论抽象电路。
+
+沿用
+
+$$
+\log\frac{\xi(1/(1-z))}{\xi(1)}
+=
+\sum_{n\ge1}\frac{\ell_n}{n}z^n,
+$$
+
+$$
+c_0=2+\gamma_{\mathrm E}-\log(4\pi),
+$$
+
+$$
+c_n=\ell_{n+1}-2\ell_n+\ell_{n-1},
+\qquad
+r_n=\frac{c_n}{c_0}.
+$$
+
+前文的 Toeplitz 矩阵为
+
+$$
+\boxed{
+T_N=(r_{j-i})_{0\le i,j\le N},
+\qquad r_{-n}=r_n\in\mathbb R.
+}
+\tag{21}
+$$
+
+Li 系数、单位圆映射与相关正性的联系具有经典基础。([arXiv][6])
+
+在 RH 前件下，令
+
+$$
+w_\rho=1-\frac1\rho,
+$$
+
+则 \(|w_\rho|=1\)，并可构造幺正算子 \(U\) 与单位向量 \(v\)，使
+
+$$
+\boxed{
+r_n=\langle v,U^nv\rangle.
+}
+\tag{22}
+$$
+
+这里明确使用了 RH。反过来，对实际系数建立全部阶数的共同正实现，正是此前的证明责任，不能预先假设。
+

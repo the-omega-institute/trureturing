@@ -1,0 +1,18 @@
+**所以，你说“5040 可能只是这个几何的一个投影”，在这个具体程序中有一个精确实例：5040 是四个数据寄存器的读数，29 是被这个读数隐藏的程序控制状态。**
+
+这并未证明 Robin 截止值与 PRIMEGAME 的这一中间状态之间存在必然关系；但它给出了一个非常具体的研究入口：
+
+$$
+\boxed{
+\text{整数编码}
+\longleftrightarrow
+\text{寄存器格点}
+\longleftrightarrow
+\text{带条件的几何运动}
+\longleftrightarrow
+\text{Zeckendorf 规范表示}.
+}
+$$
+
+下面把这一体系正式展开。
+
