@@ -1,0 +1,67 @@
+## 2.1 对 \((4,2,1,1)\) 的准确编码
+
+固定：
+
+$$
+G_0=1,\quad G_1=2,\quad G_2=3,\quad G_3=5,\ldots
+$$
+
+每个指数唯一写成：
+
+$$
+a_p=\sum_j b_{p,j}G_j,
+$$
+
+其中：
+
+$$
+b_{p,j}\in\{0,1\},
+\qquad
+b_{p,j}b_{p,j+1}=0.
+$$
+
+这是 Zeckendorf 定理，已有 mathlib 形式化。([Lean社区][3])
+
+对于：
+
+$$
+5040=2^4\,3^2\,5\,7,
+$$
+
+按低权重到高权重排列：
+
+$$
+\boxed{
+4\leftrightarrow101,\qquad
+2\leftrightarrow01,\qquad
+1\leftrightarrow1.
+}
+$$
+
+于是：
+
+$$
+(4,2,1,1)
+\longleftrightarrow
+(101,\;01,\;1,\;1).
+$$
+
+给每个位置赋权重：
+
+$$
+\epsilon_{p,j}=G_j\ln p,
+$$
+
+就有：
+
+$$
+\boxed{
+E(n)=\ln n
+=
+\sum_{p,j}b_{p,j}G_j\ln p.
+}
+\tag{3}
+$$
+
+这是一个精确的算术能量表示。
+

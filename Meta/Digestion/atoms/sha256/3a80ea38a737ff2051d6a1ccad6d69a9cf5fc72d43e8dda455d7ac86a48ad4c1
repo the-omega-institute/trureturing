@@ -1,0 +1,50 @@
+## 定义 4.1
+
+任取 \(B>1\)，写成：
+
+$$
+B=\prod_pp^{b_p}.
+$$
+
+定义它允许的最高共同价格：
+
+$$
+\boxed{
+\lambda_B
+=
+\min_{p\mid B}\eta(p,b_p).
+}
+\tag{8}
+$$
+
+再令：
+
+$$
+r_p(B)
+=
+\#\{k\ge1:\eta(p,k)>\lambda_B\},
+$$
+
+$$
+c_p(B)=\max\{b_p,r_p(B)\}.
+$$
+
+定义：
+
+$$
+\boxed{
+\operatorname{CAcl}(B)
+=
+\prod_pp^{c_p(B)}.
+}
+\tag{9}
+$$
+
+这个乘积是有限的。因为：
+
+$$
+\eta(p,k)<\frac{p^{-k}}{\ln p},
+$$
+
+固定正价格只能激活有限多个素数和指数层。
+
