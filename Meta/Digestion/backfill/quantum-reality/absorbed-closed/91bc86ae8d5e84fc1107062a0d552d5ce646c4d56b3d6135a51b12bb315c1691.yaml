@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:91bc86ae8d5e84fc1107062a0d552d5ce646c4d56b3d6135a51b12bb315c1691
+  normalized_sha256: sha256:91bc86ae8d5e84fc1107062a0d552d5ce646c4d56b3d6135a51b12bb315c1691
+cas_ref: sha256:91bc86ae8d5e84fc1107062a0d552d5ce646c4d56b3d6135a51b12bb315c1691
+coverage_gids:
+  - gid: D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.critical_geometry
+    target_statement_id: sha256:cb468a639a708a98511e5cf911f2bf64d365e8465c662cdf5d2331647c41ce62
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.critical_geometry
+      definition_sha256: sha256:8c8bfa0c61fc7e2afc77f70641c918b2b9874573281e3dccd740718be3927d47
+      emission_sha256: sha256:b2c8d68a2409e2e2a6cddb595b51113313210a5eb913c7386a2389e76b569714
+  unresolved_subitems: []
