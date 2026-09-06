@@ -1,0 +1,31 @@
+### 证明
+
+配方：
+
+$$
+\begin{aligned}
+\begin{pmatrix}x\\y\end{pmatrix}^{\!*}
+K
+\begin{pmatrix}x\\y\end{pmatrix}
+={}&x^*Sx\\
+&+
+(y+C^{-1}B^*x)^*
+C
+(y+C^{-1}B^*x).
+\end{aligned}
+$$
+
+第二项在
+
+$$
+y=-C^{-1}B^*x
+$$
+
+处达到零。证毕。
+
+这里消去的是**给定边界时的内部二次能量最小化**，不是未经说明地把内部变量求和、取迹或丢弃。
+
+图网络中的这种边界约化通常称为 Kron 约化；它保存的是指定的边界响应，而不是全部内部微观信息。([arXiv][2])
+
+项目已有的 `SchurComplementAssociativity.lean` 正好保证：在所列逆算子前件下，分步消去与一次消去得到同一个保留算子。
+

@@ -1,0 +1,73 @@
+# 七、联合时空约束确实能产生新的安全证书
+
+现在连接回 Robin 余量：
+
+$$
+\boxed{
+\Delta(n)
+=
+\gamma+\ln\ln\ln n-W(n),
+\qquad n\ge3.
+}
+\tag{26}
+$$
+
+Robin 定理说明，RH 等价于对全部 \(n>5040\) 证明 \(\Delta(n)>0\)。([arXiv][4])
+
+定义：
+
+$$
+\mathcal P(\lambda,\mu)
+=
+\max_{n\ge1}J_{\lambda,\mu}(n).
+$$
+
+那么：
+
+$$
+W(n)\le\mathcal P(\lambda,\mu)
++\lambda E(n)+\mu\tau(n).
+$$
+
+若只研究：
+
+$$
+E_-\le E(n)\le E_+,
+\qquad
+\tau(n)\le T,
+$$
+
+则：
+
+$$
+\boxed{
+\Delta(n)
+\ge
+h(E(n))-\lambda E(n)
+-\mu T-\mathcal P(\lambda,\mu),
+}
+\tag{27}
+$$
+
+其中：
+
+$$
+h(E)=\gamma+\ln\ln E.
+$$
+
+因为 \(h(E)-\lambda E\) 是凹函数，其区间最小值在端点取得。
+
+因此，只需证明：
+
+$$
+\boxed{
+\min_{\epsilon\in\{E_-,E_+\}}
+[h(\epsilon)-\lambda\epsilon]
+>
+\mu T+\mathcal P(\lambda,\mu),
+}
+\tag{28}
+$$
+
+就能认证整个空间—时间区域。
+

@@ -1,0 +1,72 @@
+## 定理328.1　能级差的混叠决定离散完成是否丢失方向
+
+设：
+
+$$
+H=\sum_aE_aP_a.
+$$
+
+连续效果轨道的不同频率为：
+
+$$
+\omega_{ab}=\frac{E_a-E_b}{\hbar}.
+$$
+
+离散采样只能区分：
+
+$$
+e^{i\omega_{ab}\delta}.
+$$
+
+因此不同频率若满足：
+
+$$
+\boxed{
+(\omega_{ab}-\omega_{cd})\delta\in2\pi\mathbb Z,
+}
+\tag{328.2}
+$$
+
+它们会进入同一个采样频率类别。
+
+若所有实际出现的不同频率在采样后仍然不同，则：
+
+$$
+\boxed{
+\mathcal S_\delta(E)
+=
+\mathcal S_{\mathrm{continuous}}(E).
+}
+\tag{328.3}
+$$
+
+### 证明
+
+把 \(E\) 按能级差分解：
+
+$$
+E=\sum_\omega E_\omega.
+$$
+
+离散轨道为：
+
+$$
+E(n\delta)=\sum_\omega e^{in\omega\delta}E_\omega.
+$$
+
+若相位 \(\lambda_\omega=e^{i\omega\delta}\) 两两不同，有限组采样构成可逆 Vandermonde 矩阵，因此能够分别恢复每个 \(E_\omega\)。
+
+若相位相同，采样只能直接看到相应 \(E_\omega\) 的和。∎
+
+这不仅是普通的频率测量问题，而是：
+
+$$
+\boxed{
+\text{改变时间采样}
+\longrightarrow
+\text{改变可预测效果空间的维数}.
+}
+$$
+
+---
+
