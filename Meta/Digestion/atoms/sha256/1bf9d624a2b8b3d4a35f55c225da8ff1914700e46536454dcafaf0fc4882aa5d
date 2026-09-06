@@ -1,0 +1,13 @@
+# Shankar Q closed-form Stieltjes obstruction
+
+Source: Umesh Shankar, *Avoiding patterns with three distinct letters in
+Canon permutations*, arXiv:2608.30002v2, 1 September 2026,
+https://arxiv.org/html/2608.30002v2, sections 2.2, 2.7, 7, and 9.
+Conjecture 9.5 asserts that both B and Q are Stieltjes moment sequences.
+The Q sequence counts words with k copies of 1, 2, and 3, with every
+prefix satisfying #1 >= #2 >= #3 and with no 321 subsequence; Q_0=1.
+The following obligation targets precisely the closed form identified
+with that count by the paper's Theorem 7.1. That combinatorial identity
+is a published input to the source interpretation, not a Lean axiom or
+a claimed kernel-verified bijection. B remains unresolved by this result.
+
