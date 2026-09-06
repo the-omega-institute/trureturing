@@ -107,7 +107,7 @@ private theorem benefit_expectation
     unfold outcomeBenefitCell completeOutcomeLaw
     exact pushforward_linearObjective law _ _
   simp_rw [cell]
-  unfold linearObjective assignmentBenefit
+  unfold assignmentBenefit linearObjective
   simp_rw [Finset.sum_mul]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
@@ -213,6 +213,7 @@ theorem fair_completeMediatorBenefit_eq_half_cut
     completeMediatorBenefit coupling law =
       linearObjective (mediatorCutMass coupling) law.mass / 2 := by
   have identity := completeMediatorBenefit_cut_identity coupling law
+  unfold FairCompleteOutcome at fair
   simp only [fair, sub_self, mul_zero, Finset.sum_const_zero, add_zero] at identity
   linarith
 
@@ -370,11 +371,14 @@ theorem mediatorCutMass_eq_one_iff
   constructor
   · intro full pair active same
     have bound : (if table pair.1 = table pair.2 then coupling.mass pair else 0) ≤
-        ∑ other, if table other.1 = table other.2 then coupling.mass other else 0 :=
-      Finset.single_le_sum (fun other _ => by
-        by_cases same : table other.1 = table other.2
-        · simpa only [if_pos same] using coupling.nonnegative other
-        · simp only [if_neg same, le_refl])
+        ∑ other, if table other.1 = table other.2 then coupling.mass other else 0 := by
+      exact Finset.single_le_sum (s := Finset.univ) (a := pair)
+        (f := fun other : Mediator × Mediator =>
+          if table other.1 = table other.2 then coupling.mass other else 0)
+        (fun other _ => by
+          split
+          · exact coupling.nonnegative other
+          · exact le_rfl)
         (Finset.mem_univ pair)
     rw [if_pos same, ← defect, full, sub_self] at bound
     exact active (le_antisymm bound (coupling.nonnegative pair))
@@ -422,7 +426,8 @@ theorem complete_mediator_half_attainable_iff
 def threeCycleCoupling : FiniteResponseLaw (Fin 3 × Fin 3) where
   mass := fun pair => if pair = (0, 1) ∨ pair = (1, 2) ∨ pair = (2, 0) then 1 / 3 else 0
   nonnegative := fun pair => by split <;> norm_num
-  total := by norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ]
+  total := by
+    norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff]
 
 private theorem threeCycle_cut_le (table : Fin 3 → Bool) :
     mediatorCutMass threeCycleCoupling table ≤ 2 / 3 := by
@@ -430,7 +435,8 @@ private theorem threeCycle_cut_le (table : Fin 3 → Bool) :
       ((if table 0 ≠ table 1 then (1 : ℚ) else 0) +
         (if table 1 ≠ table 2 then 1 else 0) + (if table 2 ≠ table 0 then 1 else 0)) / 3 := by
     norm_num [mediatorCutMass, linearObjective, threeCycleCoupling,
-      Fintype.sum_prod_type, Fin.sum_univ_succ] <;> ring
+      Fintype.sum_prod_type, Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff]
+    split_ifs <;> norm_num
   rw [expand]
   cases h0 : table 0 <;> cases h1 : table 1 <;> cases h2 : table 2 <;> norm_num [h0, h1, h2]
 
@@ -444,7 +450,7 @@ theorem three_cycle_complete_mediation_sharp :
   let table : Fin 3 → Bool := fun m => decide (m = 2)
   have cut : mediatorCutMass threeCycleCoupling table = 2 / 3 := by
     norm_num [mediatorCutMass, linearObjective, threeCycleCoupling, table,
-      Fintype.sum_prod_type, Fin.sum_univ_succ]
+      Fintype.sum_prod_type, Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff]
   constructor
   · refine ⟨complementOutcomeLaw table, complementOutcomeLaw_fair table, ?_⟩
     rw [complementOutcomeLaw_benefit, cut]
