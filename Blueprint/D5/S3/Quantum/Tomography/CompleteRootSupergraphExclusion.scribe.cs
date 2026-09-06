@@ -74,5 +74,39 @@ internal sealed class CompleteRootSupergraphExclusionDocument : IScribeDocumentD
                         + "the theorem itself does not read that instance or its PASS report. "
                         + "The previous exact root-catalogue theorem is retained. "
                         + "No new semantic Arena or intrinsic-information gain is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("two-relation-root-tubes-exclude-approximate-quartet"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Tomography/CompleteRootSupergraphExclusion."
+                    + "two_relation_tube_certificate_forces_cross_unbiasedness_error"),
+                H("Five-color partner certificates exclude a second six-frame"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    F.Id("WholeTubeOrthogonalityAndUnbiasednessEnclosures"), Sp, Land, Sp,
+                    F.Id("EveryFirstSixCliqueHasFiveColorableCommonPartnerGraph"), Sp, Land, Sp,
+                    F.Id("TwoCoveredSixFramesWithSmallInternalOverlaps"), Sp, Rightarrow, Sp,
+                    F.Id("SomeCrossUnbiasednessErrorAtLeastTau"), Dot))),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "The theorem is stated for actual matrices in sets of tube matrices, "
+                        + "using real trace overlap. Same-tube overlap at least mu and internal "
+                        + "overlap below eta <= mu make each six-frame use six distinct labels. "
+                        + "An orthogonality candidate relation contains every pair with overlap "
+                        + "below eta. A separate unbiased candidate relation contains every pair "
+                        + "whose overlap differs from one-sixth by less than tau.")),
+                    Paragraph(Text(
+                        "For every injectively labelled first six-clique, the induced graph on "
+                        + "labels unbiased-compatible with all six first labels has a proper "
+                        + "coloring into Fin 5. A hypothetical second compatible six-frame would "
+                        + "inject Fin 6 into Fin 5, a contradiction. No uniqueness of the first "
+                        + "completion, global bipartition, or canonical-only classification is used.")),
+                    Paragraph(Text(
+                        "The computational instance enumerates all 2414 first cliques, each "
+                        + "with at most fourteen common candidate labels. The compact certificate "
+                        + "covers their 23 distinct partner sets by nine five-colored supersets. "
+                        + "The Lean theorem retains exhaustive coverage, overlap enclosures, and "
+                        + "the coloring certificate as mathematical hypotheses. An external PASS "
+                        + "or saved list does not discharge them. No kernel admission is claimed."))),
                 DescribeRole.Theorem))));
 }
