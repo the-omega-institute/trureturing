@@ -28,5 +28,10 @@ claim that this module proves the existence of a Robin counterexample, the
 structure of every superabundant integer, or the Riemann hypothesis criterion.
 
 Verified bibliographic locator: https://doi.org/10.2307/1990319.
-The attribution and nonincreasing-exponent conclusion were also checked at
-https://en.wikipedia.org/wiki/Superabundant_number on 2026-09-06.
+Primary text: https://www.renyi.hu/~p_erdos/1944-03.pdf, section 2,
+Theorem 1 and its proof, checked on 2026-09-06. That theorem states the
+nonincreasing order of the prime exponents. Its proof compares a
+superabundant number with the smaller number obtained by transferring one
+prime factor, and uses the decrease of `(x^n - 1) / (x^n - x)` in the base
+and exponent. This is the provenance of the exchange argument, rather than
+a verbatim statement of the real-base full-swap inequality proved here.
