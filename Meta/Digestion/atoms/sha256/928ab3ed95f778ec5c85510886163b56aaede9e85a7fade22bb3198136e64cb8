@@ -1,0 +1,81 @@
+# 六、这个曲率条件，恰好成为下一层散射的反射系数
+
+现在把上述局部几何改写成一套固定递推。
+
+固定一个实际基点 \(b_0>0\)，记：
+
+$$
+\mu_0=\mu(b_0)>0.
+$$
+
+将右半平面映到单位圆盘：
+
+$$
+\boxed{
+b=b_0\frac{1+z}{1-z}.
+}
+\tag{18}
+$$
+
+再定义实际响应的 Cayley 变换：
+
+$$
+\boxed{
+\Theta(z)
+=
+\frac{\mu(b)-\mu_0}{\mu(b)+\mu_0}.
+}
+\tag{19}
+$$
+
+因为 \(\Theta(0)=0\)，定义解析函数芽：
+
+$$
+\boxed{
+g_0(z)=\frac{\Theta(z)}z.
+}
+\tag{20}
+$$
+
+这里只是在零附近定义实际解析对象，**尚未假设它能在整个单位圆盘内保持模长不超过一**。
+
+利用：
+
+$$
+\log(b/b_0)=2\operatorname{artanh}z,
+$$
+
+可写成：
+
+$$
+\Theta(z)
+=
+\tanh\left(
+\frac{\phi(2\operatorname{artanh}z)}2
+\right).
+$$
+
+在 \(\tau=0\) 记：
+
+$$
+\eta=\phi'(0),\qquad
+\kappa=\phi''(0),\qquad
+\kappa'=\phi'''(0).
+$$
+
+Taylor 展开给出：
+
+$$
+\boxed{
+g_0(z)
+=
+\eta+\kappa z
++
+\frac{\eta-\eta^3+2\kappa'}3z^2
++O(z^3).
+}
+\tag{21}
+$$
+
+---
+

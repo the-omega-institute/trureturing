@@ -1,0 +1,47 @@
+### 证明
+
+对任意向量 \(x\) 与标量 \(z\)：
+
+$$
+\begin{aligned}
+\begin{pmatrix}x\\z\end{pmatrix}^*
+G_{N+1}
+\begin{pmatrix}x\\z\end{pmatrix}
+={}&
+(x+G_N^{-1}bz)^*G_N(x+G_N^{-1}bz)\\
+&+\left(d-b^*G_N^{-1}b\right)|z|^2.
+\end{aligned}
+$$
+
+因此等价。证毕。
+
+这给“新增观察者的不可约部分”一个非常具体的含义：
+
+$$
+\boxed{
+d=
+\underbrace{b^*G_N^{-1}b}_{\text{由已有观察关系要求的部分}}
++
+\underbrace{\delta_N}_{\text{新增正交方向的平方范数}}.
+}
+\tag{U14}
+$$
+
+若 \(\delta_N>0\)，确实需要一个新的独立方向。
+
+若 \(\delta_N=0\)，新观察可以由旧观察线性实现。
+
+若 \(\delta_N<0\)，不是需要“更高维”——而是**任何正内积空间都无法满足这些关系**。
+
+当 \(G_N\) 只有半正定性时，还必须检查：
+
+$$
+b\in\operatorname{Ran}G_N,
+$$
+
+并把逆换成 Moore–Penrose 伪逆。不能只保留最后一个标量不等式。
+
+这正是 Schur 补的作用。项目中已经证明，在明确的逆算子前件下，逐步消元与一次消元给出相同保留算子；但该恒等式本身不自动证明消元后的正性。
+
+---
+

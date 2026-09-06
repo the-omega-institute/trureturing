@@ -1,0 +1,68 @@
+# 二、构造一个包含全部整数、全部相位时间的波
+
+为了避免某些状态完全没有被观察，选择一个对每个整数都非零的初始波：
+
+$$
+\boxed{
+|\Omega\rangle
+=
+\sum_{n>5040}\frac1n|n\rangle.
+}
+\tag{5}
+$$
+
+它的范数有限：
+
+$$
+\|\Omega\|^2
+=
+A_0:=
+\sum_{n>5040}\frac1{n^2}
+=
+\zeta(2)-\sum_{n=1}^{5040}\frac1{n^2}.
+$$
+
+ζ 级数与 Euler 乘积在绝对收敛域中的对应是这里的经典基础。([DLMF][2])
+
+定义：
+
+$$
+\boxed{
+|\Psi_r(t)\rangle
+=
+e^{-it\widehat E}
+e^{-r\widehat D/2}
+|\Omega\rangle,
+\qquad r\ge0,\quad t\in\mathbb R.
+}
+\tag{6}
+$$
+
+展开为：
+
+$$
+\boxed{
+|\Psi_r(t)\rangle
+=
+\sum_{n>5040}
+\frac1n
+e^{-r\Delta(n)/2}
+e^{-it\ln n}|n\rangle.
+}
+\tag{7}
+$$
+
+这里要区分两个参数：
+
+$$
+t:\text{相位演化参数，可正可负；}
+$$
+
+$$
+r:\text{按安全余量进行筛选的强度。}
+$$
+
+\(t\) 对应酉演化；\(r\) 对应一般不保持范数的滤波。不能把后者未经说明就当作普通物理时间。
+
+将动力学编码进整体历史态，在 Page–Wootters、Feynman–Kitaev 等框架中有严格实现；但这些构造本身并不自动保证历史满足指定安全性质。([arXiv][3])
+

@@ -1,0 +1,28 @@
+### 偶扇区的拼接条件
+
+偶扇区包含 \(1,z^2\)。新增 \(z^2\) 方向的 Schur 余量为：
+
+$$
+\begin{aligned}
+\delta_{\mathrm{even}}
+&=
+\frac{m_2m_4}{24}+\frac{m_6}{120}
+-\frac{m_4^2}{36m_2}\\
+&=
+\boxed{
+\frac{3\chi_2\chi_6-10\chi_4^2}
+{360\chi_2}
+}.
+\end{aligned}
+\tag{U19}
+$$
+
+因此，除了 \(\chi_4\le0\)，还必须满足：
+
+$$
+\boxed{
+3\chi_2\chi_6\ge10\chi_4^2.
+}
+\tag{U20}
+$$
+

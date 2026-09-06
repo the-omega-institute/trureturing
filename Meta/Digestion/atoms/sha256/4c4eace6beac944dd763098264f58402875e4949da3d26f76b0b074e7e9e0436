@@ -1,0 +1,83 @@
+# 一、把“偶振幅—奇导数”合成一份相位读数
+
+沿用实际对象：
+
+$$
+A(z)=\frac{\xi(\frac12+iz)}{\xi(\frac12)}.
+$$
+
+它满足：
+
+$$
+A(-z)=A(z),
+\qquad
+A(\overline z)=\overline{A(z)},
+\qquad
+A(0)=1.
+$$
+
+因此，\(A\) 是偶函数，\(A'\) 是奇函数。ξ 的定义与反射关系仍采用标准归一化。([DLMF][1])
+
+固定一个实数 \(h>0\)。它是下面的读出混合尺度，**不是普朗克常数**。
+
+定义：
+
+$$
+\boxed{
+E_h(z)=A(z)+ihA'(z),
+}
+$$
+
+$$
+E_h^\#(z)
+=
+\overline{E_h(\overline z)}
+=
+A(z)-ihA'(z).
+$$
+
+再定义亚纯函数：
+
+$$
+\boxed{
+S_h(z)
+=
+\frac{E_h^\#(z)}{E_h(z)}
+=
+\frac{A(z)-ihA'(z)}
+{A(z)+ihA'(z)}.
+}
+\tag{V1}
+$$
+
+共同零点处必须作实际的可去延拓，而不是把分母为零时的代数约定当作解析值。
+
+这个构造属于 Hermite–Biehler、de Branges 与 Schur 函数之间的经典联系；本轮研究的是它对**固定实际 \(A\)** 的含义。([arXiv][2])
+
+因为 \(A\) 偶、\(A'\) 奇：
+
+$$
+\boxed{
+E_h(-z)=E_h^\#(z),
+\qquad
+S_h(-z)=\frac1{S_h(z)}.
+}
+\tag{V2}
+$$
+
+这给出一项精确的奇偶关系：
+
+$$
+\boxed{
+\text{反射参数}
+\longrightarrow
+\text{交换两个相位组合}
+\longrightarrow
+\text{读数取倒数}.
+}
+$$
+
+它与交换和相位有关，但还没有把这些参数解释成真实物理时空。
+
+---
+

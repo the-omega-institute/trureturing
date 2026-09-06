@@ -1,0 +1,21 @@
+# 八、只用这些非振荡读数，仍然可以完整表达 RH
+
+对正实数 \(b_1,\ldots,b_N\)，定义：
+
+$$
+\boxed{
+\mathsf G(b_1,\ldots,b_N)_{ij}
+=
+\frac{\mu(b_i)+\mu(b_j)}{b_i+b_j}.
+}
+\tag{V19}
+$$
+
+它正是 \(m_A=-A'/A\) 的 Nevanlinna 核，在点 \(ib_i\) 上的采样。
+
+对角元为：
+
+$$
+\mathsf G_{ii}=\frac{\mu(b_i)}{b_i}>0.
+$$
+
