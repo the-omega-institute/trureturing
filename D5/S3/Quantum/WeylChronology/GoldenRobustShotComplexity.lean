@@ -52,8 +52,8 @@ def robustShotRate
   1 - Real.sqrt
     (1 - robustSeparationMargin leftCal rightCal v0 k0 left right ^ 2)
 
-/-- Every nonnegative certified robust margin between valid probability laws is
-at most one. -/
+/-- Every certified robust margin between valid probability laws is at most
+one, because it is bounded by total variation. -/
 theorem robust_separation_margin_le_one
     (leftCal rightCal : RamseyCalibration) (v0 k0 : ℝ)
     (left right : List Bool)
@@ -89,6 +89,8 @@ theorem robust_shot_rate_mem_unit
     0 ≤ robustShotRate leftCal rightCal v0 k0 left right ∧
       robustShotRate leftCal rightCal v0 k0 left right ≤ 1 := by
   let delta := robustSeparationMargin leftCal rightCal v0 k0 left right
+  have hdeltaNonnegative : 0 ≤ delta := by
+    simpa [delta] using hmargin
   have hdeltaOne : delta ≤ 1 :=
     robust_separation_margin_le_one leftCal rightCal v0 k0 left right
       hleft0 hleft1 hright0 hright1
@@ -117,6 +119,8 @@ theorem robust_shot_rate_pos_of_margin_pos
     (hmargin : 0 < robustSeparationMargin leftCal rightCal v0 k0 left right) :
     0 < robustShotRate leftCal rightCal v0 k0 left right := by
   let delta := robustSeparationMargin leftCal rightCal v0 k0 left right
+  have hdeltaPositive : 0 < delta := by
+    simpa [delta] using hmargin
   have hdeltaOne : delta ≤ 1 :=
     robust_separation_margin_le_one leftCal rightCal v0 k0 left right
       hleft0 hleft1 hright0 hright1
@@ -125,7 +129,7 @@ theorem robust_shot_rate_pos_of_margin_pos
   have hrootNonnegative : 0 ≤ Real.sqrt (1 - delta ^ 2) := Real.sqrt_nonneg _
   have hrootSquare : Real.sqrt (1 - delta ^ 2) ^ 2 = 1 - delta ^ 2 :=
     Real.sq_sqrt hradNonnegative
-  have hdeltaSquarePositive : 0 < delta ^ 2 := sq_pos_of_pos hmargin
+  have hdeltaSquarePositive : 0 < delta ^ 2 := sq_pos_of_pos hdeltaPositive
   have hradStrict : 1 - delta ^ 2 < 1 := by
     nlinarith
   have hrootStrict : Real.sqrt (1 - delta ^ 2) < 1 := by
