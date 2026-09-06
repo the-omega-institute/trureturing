@@ -8,7 +8,13 @@ coverage_gids:
   - gid: D5/S1/Depth/GoldenHurwitzBound.golden_hurwitz_bound
     target_statement_id: sha256:a982663a06856268f59db877cde7130b5e4c1680c150e2a63098e4e9c9d4a8e7
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S1/Depth/GoldenContinuedFraction.golden_ratio_continued_fraction
+      definition_sha256: sha256:446887c8a4b9863df8a6e40abc0162f3a8678b5865676a0c6bdc17446bf59266
+      emission_sha256: sha256:182f42d88d05e915a13cc51aaf6433ccf28594032cc4d1db420a56b0d267b714
+    - gid: D5/S1/Depth/GoldenHurwitzBound.golden_hurwitz_bound
+      definition_sha256: sha256:00205d7a3236aa28935a239f6d2689840fc88c2986ee248eb1175ca398776d4b
+      emission_sha256: sha256:2943b22923e29ffb33d052e45317935d18f375808013876f6c994d3915101477
   unresolved_subitems:
     - first-two-lagrange-spectrum-levels-sqrt-five-and-sqrt-eight
     - hurwitz-theorem-and-optimality-of-sqrt-five
