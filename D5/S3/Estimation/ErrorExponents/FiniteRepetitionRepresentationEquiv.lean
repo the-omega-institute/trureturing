@@ -3,11 +3,11 @@
    mirror-B: D5/B/S3/Estimation/ErrorExponents/FiniteRepetitionRepresentationEquiv
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Recursive IidSpace samples, product masses, distances, affinities, and decision risks transport exactly to the canonical Fin-indexed finite-suite representation. -/
+   digest: Recursive IidSpace samples, product masses, distances, affinities, decision risks, and the finite-suite optimum transport exactly to the canonical Fin-indexed representation. -/
 
 import D5.S3.RenyiDivergence.PowerAdditivity
 import D5.S3.Entropy.NamingWindow.GreenClassWindowHellinger
-import D5.S3.Estimation.ErrorExponents.FiniteSuiteErrorSqueeze
+import D5.S3.Estimation.ErrorExponents.FiniteSuiteOptimalErrorIdentity
 import D5.S3.TotalVariation.Metric
 import Mathlib.Data.Fin.Tuple.Basic
 
@@ -23,11 +23,13 @@ This module proves that the carriers are equivalent using Mathlib's canonical
 `Fin.consEquiv`, then proves that the two product masses agree pointwise under
 that equivalence. Total variation and Bhattacharyya affinity therefore agree
 exactly after reindexing. Decision finsets, their complements, and equal-prior
-risk also transport exactly.
+risk also transport exactly. Finally, the existing operational
+`finiteSuiteOptimalError` is identified directly with the recursive iid total
+variation, and it lower-bounds every transported recursive decision risk.
 
 No third repetition representation or second Bayes-risk primitive is
-introduced. The two existing interfaces are now related by an explicit
-change of coordinates.
+introduced. The two existing interfaces are related by an explicit change of
+coordinates.
 -/
 
 set_option autoImplicit false
@@ -38,6 +40,7 @@ namespace D5.S3.Estimation.ErrorExponents.FiniteRepetitionRepresentationEquiv
 open D5.S3.RenyiDivergence
 open D5.S3.Entropy.NamingWindow.GreenClassWindowEntropy
 open D5.S3.Estimation.ErrorExponents.FiniteSuiteErrorSqueeze
+open D5.S3.Estimation.ErrorExponents.FiniteSuiteOptimalErrorIdentity
 open D5.S3.TotalVariation.Pinsker
 open D5.S3.TotalVariation.Bhattacharyya
 open scoped BigOperators
@@ -224,6 +227,35 @@ theorem iid_equal_prior_error_eq_windowLaw
     iid_decision_mass_eq_windowLaw q n decisionᶜ,
     iidDecisionToFin_compl]
 
+/-- The existing operational finite-suite optimum can be written directly in
+the recursive iid total-variation coordinate. This closes the objective-level
+representation gap without defining another optimum. -/
+theorem finite_suite_optimal_error_eq_iidPower_tv
+    {ι : Type u} [Fintype ι]
+    (p q : ι -> ℝ) (n : ℕ)
+    (hp : ∑ a, p a = 1) (hq : ∑ a, q a = 1) :
+    finiteSuiteOptimalError
+        (fun _ : Fin n => p) (fun _ : Fin n => q) =
+      (1 - totalVariation (iidPower p n) (iidPower q n)) / 2 := by
+  rw [finite_suite_optimal_error_eq
+    (fun _ : Fin n => p) (fun _ : Fin n => q)
+    (fun _ => hp) (fun _ => hq)]
+  rw [total_variation_iidPower_eq_windowLaw p q n]
+
+/-- Every recursive iid decision has risk at least the existing operational
+finite-suite optimum, after the exact representation transport above. -/
+theorem finite_suite_optimal_error_le_iid_decision
+    {ι : Type u} [Fintype ι]
+    (p q : ι -> ℝ) (n : ℕ) (decision : Finset (IidSpace ι n)) :
+    finiteSuiteOptimalError
+        (fun _ : Fin n => p) (fun _ : Fin n => q) ≤
+      equalPriorError (iidPower p n) (iidPower q n) decision := by
+  rw [iid_equal_prior_error_eq_windowLaw p q n decision]
+  unfold finiteSuiteOptimalError
+  apply Finset.min'_le
+  apply Finset.mem_image.mpr
+  exact ⟨iidDecisionToFin ι n decision, Finset.mem_univ _, rfl⟩
+
 #print axioms iid_space_fin_equiv_succ_zero
 #print axioms iid_space_fin_equiv_succ_succ
 #print axioms iid_power_eq_windowLaw
@@ -233,5 +265,7 @@ theorem iid_equal_prior_error_eq_windowLaw
 #print axioms iidDecisionToFin_compl
 #print axioms iid_decision_mass_eq_windowLaw
 #print axioms iid_equal_prior_error_eq_windowLaw
+#print axioms finite_suite_optimal_error_eq_iidPower_tv
+#print axioms finite_suite_optimal_error_le_iid_decision
 
 end D5.S3.Estimation.ErrorExponents.FiniteRepetitionRepresentationEquiv
