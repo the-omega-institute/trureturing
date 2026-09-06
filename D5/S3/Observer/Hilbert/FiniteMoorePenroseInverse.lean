@@ -20,11 +20,57 @@ ForTauCeti/Analysis/InnerProductSpace/Singular/System.lean.
 Modified: repository header and namespace, minimal direct Mathlib import,
 selected only the inverse construction, its laws and uniqueness.
 Renamed upstream ite_eq_left/right to pinned if_pos/if_neg.
-The upstream license is retained verbatim below; no upstream NOTICE exists.
+The upstream license is retained verbatim below. Upstream vendor/lean/NOTICE.md
+exists; its applicable notices and the proof-source attribution chain follow.
 No claim of an original local proof is made.
 Consumer: FiniteSynthesisGramDistance.finite_synthesis_gram_distance.
 Retirement: replace this port by direct imports when this repository's pinned
 Mathlib contains equivalent declarations, following frozen-change governance.
+
+Proof-source chain: System.lean credits the Apache-2.0 matrix-Euclidean
+development in vendor/lean/lean-stat-learning-theory/SingularSystemGram.excerpt.lean
+by Yuanhe Zhang, Jason D. Lee and Fanghui Liu. Its Proof sources paragraph says
+the construction was restated intrinsically for linear maps, using the excerpt
+as a route map with no code copied verbatim. This attribution applies to the
+three selected prerequisites: rightSingularBasis,
+adjointCompSelf_apply_rightSingularBasis, and
+apply_rightSingularBasis_eq_zero_of_singularValue_eq_zero.
+The excerpt and upstream vendor/lean/manifest.toml identify the original as
+https://github.com/YuanheZ/lean-stat-learning-theory,
+SLT/MatrixInfra/Basic.lean at commit
+216e578c9576bab6b0abc3ba6c65762536768e96,
+blob 8c7dd1aaeaedd6c702c28fee2845d9f66cecf219.
+Additional notices from that original source and its LICENSE:
+Copyright (c) 2026 Yuanhe Zhang. All rights reserved.
+Copyright 2026 lean-stat-learning-theory contributors
+
+Retained text from vendor/lean/NOTICE.md at the Kitware commit above:
+
+The files under `vendor/lean/` are source references, not linked build dependencies.
+
+## Lean community / Mathlib
+
+Selected excerpts from Mathlib at the project-pinned revision.
+Copyright is retained by the named upstream authors and Mathlib contributors.
+Licensed under the Apache License, Version 2.0.
+See `LICENSES/Apache-2.0.txt` and `manifest.toml`.
+
+## Yuanhe Zhang, Jason D. Lee, Fanghui Liu / lean-stat-learning-theory
+
+Copyright (c) 2026 Yuanhe Zhang.
+Licensed under the Apache License, Version 2.0.
+See `LICENSES/Apache-2.0.txt` and `manifest.toml`.
+
+The paths in that retained text are relative to upstream vendor/lean/ at the
+Kitware commit above. Its LICENSES/Apache-2.0.txt is byte-identical to the full
+license retained below. The Mathlib notice is retained for the spectral route;
+this port imports this repository's pinned Mathlib directly, not vendor excerpts.
+Omitted NOTICE entries: Jacob Barr / jbarrcfl mathlib4 fork and Dronmong /
+drifting-identifiability. The upstream manifest associates them with
+TopSingularValue.excerpt.lean and FiniteFrameBound.excerpt.lean respectively;
+neither excerpt nor its top-singular-value norm or finite-frame-bound results
+is part of the selected inverse construction and three-prerequisite closure.
+No unrelated vendor source code is imported by this port.
 -/
 
 set_option autoImplicit false
