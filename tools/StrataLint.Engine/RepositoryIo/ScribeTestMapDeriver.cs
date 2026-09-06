@@ -90,7 +90,12 @@ internal static class ScribeTestMapDeriver
         }
     }
 
-    private static ScribeTestMap DeriveSnapshotUncached(RepositorySnapshot snapshot)
+    private static ScribeTestMap DeriveSnapshotUncached(RepositorySnapshot snapshot) =>
+        DeriveSnapshotUncached(snapshot, null);
+
+    internal static ScribeTestMap DeriveSnapshotUncached(
+        RepositorySnapshot snapshot,
+        BoundedProcessRunner.ProcessRunner? run)
     {
         var tracked = snapshot.Files.Values
             .Where(static file => IsTrackedInput(file.Path.Value))
@@ -109,8 +114,8 @@ internal static class ScribeTestMapDeriver
 
         try
         {
-            using var checkout = MsBuildCompileOracle.Materialize(snapshot);
-            return DeriveTracked(tracked, MsBuildCompileOracle.Query(checkout.Root, projects));
+            using var checkout = MsBuildCompileOracle.Materialize(snapshot, IsDerivationInput);
+            return DeriveTracked(tracked, MsBuildCompileOracle.Query(checkout.Root, projects, run: run));
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
         {

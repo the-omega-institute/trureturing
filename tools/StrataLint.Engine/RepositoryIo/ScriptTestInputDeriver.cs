@@ -113,7 +113,7 @@ internal static partial class ScriptTestInputDeriver
     {
         try
         {
-            using var checkout = MsBuildCompileOracle.Materialize(snapshot);
+            using var checkout = MsBuildCompileOracle.Materialize(snapshot, ScribeTestMapDeriver.IsDerivationInput);
             var entry = MsBuildCompileOracle.Query(
                 checkout.Root,
                 [ScriptTestGateClosurePolicy.ProjectPath]);

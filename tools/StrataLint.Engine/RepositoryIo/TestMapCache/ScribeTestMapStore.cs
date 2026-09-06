@@ -76,7 +76,8 @@ internal sealed record ScribeTestMapCacheEvent(string InputDigest, string Outcom
 //
 // C1 (2): environment (rid/framework/dotnet_host/dotnet_sdk_version/evaluation_environment_digest)
 // and metadata_digest bind the fixed MSBuild environment and Roslyn reference/nuspec contents.
-// MSBuild can still read outside the projection in a full-tree checkout; that A-layer residual is unclosed.
+// Snapshot derivation materializes only IsDerivationInput files, so its checkout exposes the
+// same tree-side projection as the input digest. Environment/reference inputs remain bound above.
 //
 // C1 (3): Cache provenance is the same as --judge-dll's judge-binaries cache: only dev push writes
 // the base scope; PRs read it. Cache tampering has zero recorded incidents (CLAUDE.md 20''); no Engine MAC.
