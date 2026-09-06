@@ -38,7 +38,7 @@ internal static class DeclaredDialectAtomizer
         var pattern = new Regex(dialect.ClaimPattern, RegexOptions.CultureInvariant);
         var unregistered = new SortedSet<string>(StringComparer.Ordinal);
         ImmutableArray<string> Seen() => [.. unregistered];
-        return dialect.HeadingClaims
+        var document = dialect.HeadingClaims
             ? MarkdownAstAtomizer.Atomize(
                 bytes,
                 static _ => null,
@@ -50,6 +50,10 @@ internal static class DeclaredDialectAtomizer
                 paragraph => Identify(paragraph, dialect, pattern, unregistered),
                 () => GenreRegistryCheck.Collected(Seen()),
                 contentKinds: contentKinds);
+        var plans = document.Claims.Select(DigestionDecomposition.PlanClauses)
+            .OfType<DigestionClausePlan>().ToImmutableArray();
+        AtomizerRegistry.InheritClauseContentKinds(contentKinds, plans);
+        return new AtomizedTheoryDocument(document.Claims, document.Slices, plans, document.GenreRegistryCheck);
     }
 
     internal static DeclaredDialect Require(string atomizerId, TheoryAtomizerRules rules)

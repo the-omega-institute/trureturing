@@ -17,10 +17,8 @@ internal static class DigestionDecompositionPolicy
     internal static bool IsMultiClause(DigestionAtom atom)
     {
         ArgumentNullException.ThrowIfNull(atom);
-        var lines = atom.RawBytes.AsSpan().IsEmpty
-            ? Array.Empty<string>()
-            : System.Text.Encoding.UTF8.GetString(atom.RawBytes.AsSpan())
-                .Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        var lines = DigestionDecomposition.Lines(System.Text.Encoding.UTF8.GetString(atom.RawBytes.AsSpan()))
+            .Select(static line => line.Text).ToArray();
         var explicitSections = lines
             .Skip(1)
             .Count(static line => line.StartsWith("**", StringComparison.Ordinal));
