@@ -11,9 +11,11 @@ import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 import D5.S3.Arith.GoldenResourceObjectiveFactorization
 
 /- Library-search audit trail (2026-09-07):
-   1. D5 searches for golden_resource_supremum, objective_at_optimal, local_objective/sum,
-      goldenResourceObjective, goldenLayerMarginal and positive_part found no public
-      supremum formula or local telescoping sum. Direct imports above all have generality I.
+   1. This continuation repeated D5 searches for golden_resource_supremum,
+      objective_at_optimal, local_objective/sum, goldenResourceObjective,
+      goldenLayerMarginal, colossally, superabundant and positive_part: no public
+      supremum formula or local telescoping sum outside this draft. Direct imports above
+      all have generality I, checked before editing.
       Reused: optimal_layer_count_spec, positive_part_sum_finite_support,
       positive_layers_eq_count_interval, golden_resource_objective_factorization,
       golden_resource_objective_sum_on and golden_resource_objective_single_layer_delta.
@@ -26,14 +28,19 @@ import D5.S3.Arith.GoldenResourceObjectiveFactorization
    3. Online Lean ecosystem search via NyxID/Tavily for "Lean formalization colossally
       abundant supremum positive marginal layers goldenResourceObjective" returned ordinary
       colossally abundant number references (Wikipedia, HandWiki, en-academic), no matching
-      Lean declaration. Request e66c180d-3034-4d06-adaf-11811596addd.
+      Lean declaration. This continuation's request: a73ca8f7-1bb6-4e8c-aaff-bdb4a4ef984c.
+      A second query, "colossally abundant Lean formalization", returned Wikipedia,
+      MathWorld, MathOverflow, lean-lang.org and Mathematics in Lean, with no matching
+      declaration. Request: 9e5bee73-27fe-4bd5-b886-a7f25d1eb5d2.
    4. Preregistered witness: objective_at_optimal_eq_positive_part_sum. It evaluates any
       positive integer realizing optimalLayerCount, hence applies to the integer supplied
       by optimal_layer_count_spec. The live bridge telescopes prime-power increments and
       identifies every active pair with a factorization interval before regrouping the sum.
       Frozen optimality alone gives no value; frozen factorization alone gives no layer sum.
-      The right side is a Finset.sum on the full finite strict-gain set, so omitted positive
-      layers have zero positive part. No assertion is made at nonpositive prices.
+      The right side is a Finset.sum on the full finite strict-gain set. Outside this set,
+      every prime's positive-index layer has zero positive part. No assertion is made at
+      nonpositive prices. The predecessor's proof core is retained for kernel verification;
+      the audit above records this continuation's own searches.
       Companion edges: supremum -> objective_at_optimal_eq_positive_part_sum;
       equality-price invariance -> imported single-layer delta. The latter is the named
       equality-price clause accompanying the supremum formula, and is bind-only.
