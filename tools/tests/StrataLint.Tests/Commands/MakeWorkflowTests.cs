@@ -60,6 +60,7 @@ public sealed partial class MakeWorkflowTests
         "echo-residual-summary",
         "digestion-readiness",
         "show-atom",
+        "atom-context",
         "truth-export",
         "deliver-check",
         "deposit",

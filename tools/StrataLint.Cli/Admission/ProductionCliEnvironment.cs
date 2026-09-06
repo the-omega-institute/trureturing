@@ -414,6 +414,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
 
+    public CommandResult AtomContext(IReadOnlyList<string> arguments) =>
+        AtomContextCommand.Run(repository, arguments);
+
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new ExplicitCommandResult(

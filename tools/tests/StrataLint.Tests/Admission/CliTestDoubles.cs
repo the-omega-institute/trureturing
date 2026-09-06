@@ -37,6 +37,9 @@ internal sealed class StubCliEnvironment(
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "show atom is not configured in this fixture");
 
+    public CommandResult AtomContext(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "atom context is not configured in this fixture");
+
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         echoVerify ?? new(2, string.Empty, "echo verify is not configured in this fixture");
 

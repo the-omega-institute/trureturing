@@ -17,6 +17,15 @@ namespace StrataLint.Tests;
 // 本测试刻意是纯 in-process 断言(不 spawn 进程),直接落在该全量 tools-test 中。
 public sealed class CliVerbLinkageTests
 {
+    [Fact]
+    public void AtomContextMakeTargetLinksToRegisteredVerb()
+    {
+        Assert.Contains("atom-context", CliApplication.ImplementedCommands);
+        Assert.Contains(CollectInvocations(TestRepositoryLayout.FindRoot()), invocation =>
+            invocation.File == "Makefile" && invocation.Verb == "atom-context"
+            && invocation.Program == CommandProgram.StrataLint);
+    }
+
     // 提取器至少应认出这么多次调用。低于此,说明提取器自己坏了(路径变了、调用形态变了),
     // 而不是「仓库很干净」——零匹配的 glob 不得静默通过。
     private const int MinimumRecognisedInvocations = 10;
