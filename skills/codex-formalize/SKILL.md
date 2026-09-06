@@ -363,6 +363,34 @@ compliance; they do not judge coverage faithfulness.
   gaps were all `chain-migration-incomplete`, while the draft record was about to label it
   `multi-clause-guard`. Deleting the door's accurate record to install a less accurate one is a
   bookkeeping error; the atom was dropped from the batch instead.
+- **`blocker_class` must match the actual carrying situation, and the boundary is "one *complete*
+  load-bearing clause".** `multi-clause-guard` means some frozen theorem really carries part of the
+  atom; `missing-prerequisite` means nothing in the repository carries any complete clause. Writing
+  the former for a zero-carrier atom claims partial coverage the ledger does not have. **A general
+  contract lemma that keeps every substantive premise in hypothesis position does not carry
+  anything**: landed rejection (2026-09-06, #5739) bound an atom needing certificates for 32 named
+  matrices to `confluent_negative_jet_block`, whose statement assumes `H.PosDef`, `IsUnit L`,
+  `G.IsHermitian` and the factorisation outright. The drafting seat had itself written "carried is a
+  conditional proof step... the concrete target is still not carried" — **its own honest annotation
+  was the evidence that convicted the record**, because line 10 admitted no carrier while line 12
+  said `multi-clause-guard`. Reviewers can read that contradiction mechanically; so can you, before
+  writing it.
+- **A seat refusing to draft is a reading, not lost throughput.** Three drafting rounds produced
+  three different refusal reasons, and each one corrected the layer above it: (1) the brief demanded
+  a sibling comparison that a low-digestion volume cannot supply — my defect, fixed by adding the
+  empty-set form; (2) `NONE_VERIFIED` on five atoms the mining seat had called `partial` — the seat
+  caught a false positive in the upstream triage; (3) two of those five came back with
+  "zero-carrier premise is false" once a wider search found the carrier — the third layer pushed
+  them back up. **Two refusals in opposite directions, both correct.** Always ask a drafting brief
+  to name what it found when it refuses; that name is what routes the atom to the right line.
+- **Check that a recorded collection command actually collects what it claims.** A record's commands
+  are its provenance: a broken one hands the next reader a lying reproduction path. Landed case
+  (2026-09-06, #5731): four records carried `rg -l '^ quarantine:'`, which demands exactly one space
+  before the key while the real `receipts.quarantine` has two — it silently matches nothing, so a
+  reader "confirming" the zero count would confirm a fabrication. The counts themselves were true
+  (independently recomputed with `git show <base>:<file> | grep -q 'quarantine:'`), and a fifth
+  record in the same batch had written the correct `'^[[:space:]]+quarantine:'` — **the same batch
+  disagreed with itself**. Grep the batch for its own commands and run them.
 - **`NOT_COMPLETE` is a runner-side verdict about artifacts, not a statement about the work.** Before
   concluding a seat failed, read `status.json` for `reason_code` and `carrier_exit`, and size
   `last-message.txt`. `carrier_exit=0` with a 30 KB last message means the seat did the work; the

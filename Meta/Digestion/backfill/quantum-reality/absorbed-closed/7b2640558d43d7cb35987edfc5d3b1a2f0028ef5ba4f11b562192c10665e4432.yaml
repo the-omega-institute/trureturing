@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:7b2640558d43d7cb35987edfc5d3b1a2f0028ef5ba4f11b562192c10665e4432
+  normalized_sha256: sha256:7b2640558d43d7cb35987edfc5d3b1a2f0028ef5ba4f11b562192c10665e4432
+cas_ref: sha256:7b2640558d43d7cb35987edfc5d3b1a2f0028ef5ba4f11b562192c10665e4432
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/QutritThresholdSharing.qutrit_two_share_reconstruction
+    target_statement_id: sha256:96f5955341d9641ecb854686965f979ef5402e8f532bdab61ce2e09113987f61
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Entanglement/QutritThresholdSharing.qutrit_two_share_reconstruction
+      definition_sha256: sha256:66cc7f96cd91b43c5215dcaaa8ca06e742697b9d53655e628b7563d4b5277e46
+      emission_sha256: sha256:2ba60977228fbcac9ccd45c4e0e990310be9f63eec6015e1d63e869133a51098
+  unresolved_subitems: []
