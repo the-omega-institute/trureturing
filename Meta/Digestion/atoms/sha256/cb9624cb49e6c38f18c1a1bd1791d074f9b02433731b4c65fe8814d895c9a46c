@@ -1,0 +1,27 @@
+### 第一步：RH 推出平均模态有界
+
+由 Cauchy–Schwarz，
+
+$$
+\begin{aligned}
+\left|\int_X^{2X}Y_f(x)\,dx\right|^2
+&\le
+\left(\int_X^{2X}\frac{Y_f(x)^2}{x^2}\,dx\right)
+\left(\int_X^{2X}x^2\,dx\right)\\
+&=
+\frac73X^3\mathfrak J(X).
+\end{aligned}
+$$
+
+所以
+
+$$
+\boxed{
+|\mathfrak m(X)|^2
+\le\frac73\mathfrak J(X).
+}
+\tag{37}
+$$
+
+RH 下 \(\mathfrak J(X)=O(1)\)，故得到式（35）。式（35）和式（36）由式（33）等价。
+

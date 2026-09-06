@@ -1,0 +1,48 @@
+### 第二步：从整数尺度界延拓到连续尺度
+
+对实数 \(x\ge2\)，定义
+
+$$
+H(x)=\psi(2x)-\psi(x)-x,
+$$
+
+$$
+\widetilde{\mathfrak m}(x)
+=
+x^{-3/2}\int_x^{2x}H(u)\,du.
+$$
+
+当 \(x=X\) 为整数时，由式（34），
+
+$$
+\widetilde{\mathfrak m}(X)=\mathfrak m(X).
+$$
+
+由无条件的 \(\psi(x)=O(x)\)，有 \(H(x)=O(x)\)。
+
+因此对 \(x,x'\in[X,X+1]\)，
+
+$$
+\left|
+\int_x^{2x}H(u)\,du
+-
+\int_{x'}^{2x'}H(u)\,du
+\right|
+=
+O(X|x-x'|).
+$$
+
+连同归一化因子的变化，可得
+
+$$
+\boxed{
+|\widetilde{\mathfrak m}(x)
+-\widetilde{\mathfrak m}(x')|
+=
+O(X^{-1/2}|x-x'|).
+}
+\tag{38}
+$$
+
+所以全部整数尺度上的统一界，会延拓为全部充分大实数尺度上的统一界。
+

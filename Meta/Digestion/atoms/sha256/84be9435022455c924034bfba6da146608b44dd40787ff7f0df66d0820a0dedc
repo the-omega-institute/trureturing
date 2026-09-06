@@ -1,0 +1,32 @@
+**尚未完成的是证明实际素数恰好以受控方式实现这些模态，而不是这些模态是否能够被构造出来。**本轮把这个区别变成了可以计算的阈值：逐项 \(o(1)\) 不够，窗口尺度上的联合误差才是决定性对象。
+
+[1]: https://arxiv.org/html/math/0409258v1 "Primes in short intervals"
+[2]: https://arxiv.org/html/2008.06140v1 "The mean square of the error term in the prime number theorem"
+[3]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[4]: https://dlmf.nist.gov/27.10 "DLMF: §27.10 Periodic Number-Theoretic Functions ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+这次可以从**实际 theta 核**推出一项更具体的结果，而不只是再增加一个 RH 等价表述：
+
+> **随着差模态筛选阶数 \(n\) 增大，和模态会被压缩到越来越窄的区域。固定频率的干涉读数因此自动趋向 \(1\)；在正确放大的频率尺度上，它趋向一个高斯函数。这个结论不需要 RH。**
+
+但与此同时：
+
+> **相邻两个筛选态始终严格正交；使读数越来越规则的筛选，其能量代价反而持续增长。**
+
+因此，“读数越来越经典、越来越高斯”与“底层量子态之间的差异消失”，完全不是同一件事。
+
+下面把这几项联系写成定义、定理和证明。核心的新尺度为：
+
+$$
+\boxed{
+\Omega_n
+=
+2\sqrt{\frac{n}{W_0(n/\pi)}}
+\asymp
+\sqrt{\frac n{\log n}},
+}
+$$
+
+其中 \(W_0\) 是 Lambert \(W\) 函数的实主支。
+
+---
+

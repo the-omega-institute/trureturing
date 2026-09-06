@@ -1,0 +1,57 @@
+# 结论
+
+本轮最重要的结果，是把三个容易混同的问题分开：
+
+$$
+\boxed{
+\text{这个状态是不是可组合的热平衡？}
+}
+$$
+
+$$
+\boxed{
+\text{观察者的内部时间读取了完整能量的哪一部分？}
+}
+$$
+
+$$
+\boxed{
+\text{这份能量怎样同时进入惯性、引力与路径相位？}
+}
+$$
+
+我们证明了：
+
+**热平衡的完整组合条件可以迫使 Gibbs 形式，但不会自动确定全部静止能量。**
+
+**内部不可见的能量标量，在更大的相干控制与位置耦合实验中可以成为可见区别；因此内部观察接口并不是对所有物理过程都充分。**
+
+**惯性与引力相等必须来自同一个完整动力学中的算子一致性。把不同物理角色分别平均，再把结果拼起来，可能制造并不存在的违反。**
+
+因此，量子观察者理论当前更完整的对象应当是
+
+$$
+\boxed{
+\text{内部钟}
++
+\text{平衡与非平衡资源}
++
+\text{完整静止能量}
++
+\text{相干路径实现}
++
+\text{内部—运动关联}.
+}
+$$
+
+**观察者不仅通过时间读数认识世界；它自身也是携带静止能量、能够交换功、产生反冲并进入相干路径的物理系统。只有把这些角色放在同一个可形式化的实现中，时间、温度、质量与几何才不会成为彼此独立、事后拼接的解释。**
+
+[1]: https://link.aps.org/doi/10.1103/PhysRevE.91.052133?utm_source=chatgpt.com "Passivity, complete passivity, and virtual temperatures"
+[2]: https://arxiv.org/abs/2103.06060?utm_source=chatgpt.com "Characterizing symmetry-protected thermal equilibrium by work extraction"
+[3]: https://arxiv.org/html/1412.5485v2 "A short note on passivity, complete passivity and virtual temperatures"
+[4]: https://arxiv.org/abs/1309.7976?utm_source=chatgpt.com "Quantum circuits cannot control unknown operations"
+[5]: https://www.nature.com/articles/s41567-018-0197-6 "Quantum formulation of the Einstein equivalence principle | Nature Physics"
+[6]: https://link.aps.org/doi/10.1103/PhysRevLett.133.040802 "Estimation of Hamiltonian Parameters from Thermal States | Phys. Rev. Lett."
+[7]: https://link.aps.org/doi/10.1103/PhysRevLett.129.190502?utm_source=chatgpt.com "Operational Interpretation of Quantum Fisher Information in ..."
+[8]: https://arxiv.org/abs/1707.04526?utm_source=chatgpt.com "Equivalence Principle for Quantum Systems: Dephasing and Phase Shift of Free-Falling Particles"
+[9]: https://arxiv.org/abs/1502.00971?utm_source=chatgpt.com "Quantum formulation of the Einstein Equivalence Principle"

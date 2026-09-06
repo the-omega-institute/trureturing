@@ -1,0 +1,85 @@
+# 一、固定同一个三角观察面
+
+定义紧支集权重
+
+$$
+\kappa(t)=
+\begin{cases}
+t-1,&1\le t\le2,\\[1mm]
+(4-t)/2,&2\le t\le4,\\
+0,&\text{其他}.
+\end{cases}
+$$
+
+对实数 \(X\ge2\)，定义两个读出：
+
+$$
+\boxed{
+\mathcal T_\Lambda(X)
+=
+X\sum_{n\ge1}\Lambda(n)\kappa(n/X)
+-\frac32X^2,
+}
+\tag{1}
+$$
+
+$$
+\boxed{
+\mathcal T_{\mathbb P}(X)
+=
+X\sum_p(\log p)\kappa(p/X)
+-\frac32X^2.
+}
+\tag{2}
+$$
+
+第一个保留全部素数幂，第二个只保留素数。这里
+
+$$
+\Lambda(p^k)=\log p,
+$$
+
+是 Euler 乘积对数导数对应的标准算术权重。([DLMF][1])
+
+定义归一化读数
+
+$$
+m_\Lambda(X)=\frac{\mathcal T_\Lambda(X)}{X^{3/2}},
+\qquad
+m_{\mathbb P}(X)=\frac{\mathcal T_{\mathbb P}(X)}{X^{3/2}}.
+$$
+
+主项不是拟合出来的，因为
+
+$$
+\int_1^4\kappa(t)\,dt=\frac32.
+$$
+
+而且与上一轮的平均模态完全一致：
+
+$$
+\boxed{
+\mathcal T_\Lambda(X)
+=
+\int_X^{2X}
+\bigl[\psi(2x)-\psi(x)-x\bigr]\,dx.
+}
+\tag{3}
+$$
+
+**证明。**固定一个整数 \(n\)，它被区间 \((x,2x]\) 读取的 \(x\) 集合长度为
+
+$$
+n-X\quad(X<n\le2X),
+$$
+
+或
+
+$$
+(4X-n)/2\quad(2X<n\le4X).
+$$
+
+交换有限求和与积分即可。证毕。
+
+因此，本轮没有换掉实际算术锚，只是继续分析同一个读出。
+

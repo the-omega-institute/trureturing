@@ -1,0 +1,63 @@
+## 7.2 在 RH 下，振荡预算可以明确算出
+
+若 RH 成立，则：
+
+$$
+|1+u-\rho|^2
+=
+\left(u+\frac12\right)^2+\tau^2
+\ge
+|\rho|^2.
+$$
+
+因此由式（25）：
+
+$$
+|K_\rho(T)|
+\le
+\frac1{|\rho|^2\sqrt T}
+\left(
+\frac1{\ln T}+\frac1{(\ln T)^2}
+\right).
+$$
+
+对全部零点求和：
+
+$$
+\boxed{
+\left|\sum_\rho K_\rho(T)\right|
+\le
+\frac{C_\gamma}{\sqrt T}
+\left(
+\frac1{\ln T}+\frac1{(\ln T)^2}
+\right).
+}
+\tag{28}
+$$
+
+另一方面，离散配置修正的主项系数是：
+
+$$
+2(\sqrt2-1)\approx0.8284271247.
+$$
+
+零点总权重则是：
+
+$$
+C_\gamma\approx0.0461914179.
+$$
+
+两者相差：
+
+$$
+\boxed{
+2(\sqrt2-1)-C_\gamma
+\approx0.7822357068>0.
+}
+\tag{29}
+$$
+
+因此，在 RH 假设下，确定的正修正足以压过零点振荡的最坏幅度。
+
+这一结构与 Ramanujan 的因数和估计、以及 Nicolas 对其有效化的研究相吻合：文献中同样出现 \(2(\sqrt2-1)\) 和 \(\sum_\rho x^{\rho-1}/[\rho(1-\rho)]\)。这说明我们接回了已有的精细数论机制，而不是仅仅发现相似数字。([Springer][7])
+

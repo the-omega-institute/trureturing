@@ -1,0 +1,109 @@
+## 定理 4：实际幂修正的极限
+
+无条件地，
+
+$$
+\boxed{
+P_{\mathrm{pow}}(X)
+=
+a_\square+o(1),
+\qquad
+a_\square=\frac{10}{3}-2\sqrt2.
+}
+\tag{15}
+$$
+
+### 证明
+
+平方项为
+
+$$
+P_2(X)
+=
+\frac1{\sqrt X}
+\sum_p(\log p)\kappa(p^2/X).
+$$
+
+令 \(Y=\sqrt X\)。由无条件素数定理
+
+$$
+\theta(y)=\sum_{p\le y}\log p\sim y,
+$$
+
+作 Stieltjes 积分缩放，得到
+
+$$
+P_2(X)
+\longrightarrow
+\int_1^2\kappa(u^2)\,du.
+$$
+
+这里使用的是素数定理，而不是 RH。([DLMF][6])
+
+直接积分：
+
+$$
+\begin{aligned}
+\int_1^2\kappa(u^2)\,du
+&=
+\int_1^{\sqrt2}(u^2-1)\,du
++
+\frac12\int_{\sqrt2}^{2}(4-u^2)\,du\\
+&=
+\frac{10}{3}-2\sqrt2.
+\end{aligned}
+$$
+
+对于 \(k\ge3\)，用 \(\theta(y)=O(y)\) 粗略估计，归一化后的总贡献为
+
+$$
+O(X^{-1/6}\log X)=o(1).
+$$
+
+证毕。
+
+---
+
+现在比较两个常数：
+
+$$
+a_\square
+\approx0.504906208587143,
+$$
+
+$$
+C_*
+\approx0.426930678776272.
+$$
+
+定义余量
+
+$$
+\boxed{
+\eta_*
+=
+a_\square-C_*
+\approx0.0779755298108713>0.
+}
+\tag{16}
+$$
+
+这个正号不依赖浮点猜测。例如，可以使用
+
+$$
+H_{100}-\log100-\frac1{200}
+<
+\gamma_{\mathrm E}
+<
+H_{100}-\log100-\frac1{200}
++\frac1{12\cdot100^2},
+$$
+
+配合对数和平方根的区间计算，严格验证
+
+$$
+\eta_*>0.0779.
+$$
+
+小数只是展示量级；证明使用的是式（16）的精确表达及其严格正性。
+

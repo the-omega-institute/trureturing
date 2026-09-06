@@ -1,0 +1,62 @@
+# 结论
+
+这轮最重要的推进，是把时间、温度和能量交换放到了同一个可检验结构中：
+
+$$
+\boxed{
+\text{一只钟怎样积累相位，}
+}
+$$
+
+$$
+\boxed{
+\text{一个探针怎样定义能级与温度，}
+}
+$$
+
+$$
+\boxed{
+\text{两处系统怎样无外部补偿地交换能量，}
+}
+$$
+
+不能分别任意指定。
+
+在静态、独立热制备和共振交换条件下，它们共同要求
+
+$$
+\boxed{
+\nu_iT_i=\text{常数}.
+}
+$$
+
+但真实量子关联又告诉我们：温度不是完整状态，平衡外观不是完整动力学，热态平均也不一定能压缩成单一几何参数。
+
+因此，当前理论的宏观对象应继续包含
+
+$$
+\boxed{
+\text{钟标定}
++
+\text{能量生成元}
++
+\text{热接触实现}
++
+\text{关联状态}
++
+\text{因果输运}
++
+\text{可认证误差}.
+}
+$$
+
+**物理时空并非由“时间本身变成热”而产生。更严格的说法是：有限量子观察者通过相位、能量交换和热统计，对同一套交互结构进行不同的读取；只有这些读取能在共同条件下相互约束、相互验证，时间与几何才成为可信的物理描述。**
+
+[1]: https://arxiv.org/html/1005.2985v5 "Thermal time and Tolman-Ehrenfest effect:“temperature as the speed of time”"
+[2]: https://arxiv.org/abs/1406.3618?utm_source=chatgpt.com "Gibbs-Preserving Maps outperform Thermal Operations in the quantum regime"
+[3]: https://arxiv.org/html/1803.04106v1?utm_source=chatgpt.com "Tolman temperature gradients in a gravitational field"
+[4]: https://www.nature.com/articles/s41467-019-10333-7?utm_source=chatgpt.com "Reversing the direction of heat flow using quantum ..."
+[5]: https://arxiv.org/html/2311.10427v2?utm_source=chatgpt.com "Structure of the Hamiltonian of mean force"
+[6]: https://link.aps.org/doi/10.1103/PhysRevD.105.L081501?utm_source=chatgpt.com "Local temperature in general relativity | Phys. Rev. D"
+[7]: https://arxiv.org/abs/1606.06605?utm_source=chatgpt.com "four-temperature, Killing vectors and Lie derivatives"
+[8]: https://link.aps.org/doi/10.1103/PhysRevD.98.064001?utm_source=chatgpt.com "Tolman-like temperature gradients in stationary spacetimes"

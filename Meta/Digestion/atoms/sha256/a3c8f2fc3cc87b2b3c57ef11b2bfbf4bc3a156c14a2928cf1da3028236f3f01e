@@ -1,0 +1,8 @@
+**现在最值得推进的对象，不是继续寻找一个更漂亮的“黄金能量”名称，而是研究安全包络 \(\mathcal B_I\)：哪些算术性质能够限制它的增长，哪些观察摘要能够保留它的最坏前缀，以及怎样让这些限制在 Fibonacci 分块拼接后仍然成立。**
+
+这样，Zeckendorf 承担规范分层，观察者承担状态与边界摘要，图论承担事件递推，解析数论负责证明这种递推与 RH 的等价；最后的证明责任，则集中为一个明确的、不能再被改名代替的全局安全不变量。
+
+[1]: https://terrytao.wordpress.com/tag/explicit-formula/ "explicit formula | What's new"
+[2]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[3]: https://arxiv.org/html/2504.16233v2 "A guide to Tauberian theorems for arithmetic applications"
+[4]: https://arxiv.org/html/1211.2147v3 "Superabundant numbers, their subsequences and the Riemann hypothesis"

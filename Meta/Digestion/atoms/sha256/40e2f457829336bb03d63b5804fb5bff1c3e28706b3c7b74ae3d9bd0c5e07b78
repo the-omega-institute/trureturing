@@ -1,0 +1,22 @@
+# 九、现在最有价值的联立系统是什么？
+
+可以把潜在的极大丰反例写成以下联合条件：
+
+$$
+\boxed{
+\begin{gathered}
+a_p\in\mathbb N,\quad\text{有限支撑};\\[1mm]
+a_2\ge21,\ a_3\ge13,\ a_5\ge9,\ a_7\ge7,\ a_{11}\ge6;\\[1mm]
+a_p=\sum_j b_{p,j}G_j,\quad
+b_{p,j}\in\{0,1\},\quad b_{p,j}b_{p,j+1}=0;\\[1mm]
+L(a)\le\lambda\le U(a)\quad\text{对某个 }\lambda>0;\\[1mm]
+\gamma+\ln\ln\!\left(\sum_pa_p\ln p\right)
+-\sum_pf_p(a_p)\le0.
+\end{gathered}
+}
+\tag{18}
+$$
+
+这里：
+
+* 第一、二行是算术状态及已知必要下界。

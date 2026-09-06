@@ -1,0 +1,72 @@
+## 本轮推进的实质
+
+这一轮获得了三项可以单独使用的结果：
+
+$$
+\boxed{
+I_\psi(T)
+\text{ 有精确的有限素数幂公式};
+}
+$$
+
+$$
+\boxed{
+F(t)
+\text{ 有绝对收敛的零点谱表示，且 }
+\mathrm{RH}\iff F\text{ 有界};
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部黄金采样 }2\times2\text{ 矩阵正半定}.
+}
+$$
+
+其中，有界性推出 RH 的证明使用了 Laplace 极点，因而没有忽略不同零点项之间的抵消。
+
+**最后尚需证明的不是“所有局部路径都衰减”，也不是“黄金编码可唯一恢复”，而是：由全部素数共同定义的响应，是否始终保留一个正的、可酉实现的全局结构。**
+
+这正是局部最小作用量与全局 RH 之间目前缺少的桥。现在这座桥不再只是一个方向性比喻，而有了式（31）及其黄金矩阵版本这样的明确证明目标。
+
+[1]: https://www.aimath.org/WWN/rh/articles/html/61a/ "61a"
+[2]: https://arxiv.org/html/2002.03361v3 "Mertens’ prime product formula, dissected"
+[3]: https://dlmf.nist.gov/27.12 "DLMF: §27.12 Asymptotic Formulas: Primes ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[4]: https://dlmf.nist.gov/25.2?utm_source=chatgpt.com "25.2 Definition and Expansions ‣ Riemann Zeta Function ..."
+[5]: https://terrytao.wordpress.com/tag/explicit-formula/ "explicit formula | What's new"
+[6]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[7]: https://link.springer.com/article/10.1007/s11139-021-00491-y "The sum of divisors function and the Riemann hypothesis | The Ramanujan Journal | Springer Nature Link"
+这一轮可以把上一轮的“连续响应有界”进一步缩减：
+
+$$
+\boxed{
+\text{不用检查全部连续时刻，也不用同时证明上下两个界；}
+}
+$$
+
+$$
+\boxed{
+\text{只需在全部素数幂事件上，证明一个明确的单边不等式。}
+}
+$$
+
+更进一步，这些事件之间的演化可以精确写成一个二维离散递推；连续部分可以解析消去。最后还能为任意长的事件区块构造一种**保留内部最坏状态的安全证书**，并按 Fibonacci 长度拼接。
+
+因此，这次的推进不只是增加一个等价表达，而是把证明对象组织成：
+
+$$
+\boxed{
+\text{素数幂事件流}
+\longrightarrow
+\text{二维状态递推}
+\longrightarrow
+\text{分块安全证书}
+\longrightarrow
+\text{全局不变量}.
+}
+$$
+
+下面给出定义与证明。所用经典输入是 ζ 的显式公式、零点对称性及 Landau 型非负变换原理；新增的事件归约、递推与证书组合在正文中证明，不预设 RH。
+

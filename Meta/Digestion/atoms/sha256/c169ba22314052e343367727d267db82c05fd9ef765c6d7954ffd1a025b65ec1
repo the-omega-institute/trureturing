@@ -1,0 +1,67 @@
+## 收束
+
+这次最重要的推进，不是证明“量子模型中可以出现负性”——这一点太普遍——而是明确了**哪一种负性相关，哪一种不相关**。
+
+实际局部核：
+
+$$
+\boxed{
+\mathcal W(x,t)
+=
+\int
+\Phi(x+v/2)\Phi(x-v/2)e^{itv}\,dv
+}
+$$
+
+确实存在负区；这来自实际 theta 非高斯结构，不能被禁止，也不能直接当作离线证据。
+
+真正的 RH 条件是：
+
+$$
+\boxed{
+\int_0^\infty x^{2n}\mathcal W(x,t)\,dx\ge0
+\quad\forall n,t.
+}
+$$
+
+而现在，这个局部核又精确等于：
+
+$$
+\boxed{
+8\pi^2e^{5x}
+\sum_{k\ge1}
+k^2\mathcal D_k(t)
+\left[
+(z_k^2+9)K_{it}(z_k)+6z_kK_{it}'(z_k)
+\right].
+}
+$$
+
+因此，你此前希望找到的“质数—量子通道—隧穿结构—黄金编码”，这次不再只是共享几个相似词语：**它们已经进入同一份实际 theta 读数的公式。**
+
+但这个公式也说明，问题不能靠“每个基本模块都自伴、每个概率都为正”解决。真正需要证明的是：
+
+> **素数通道带来的正负相位、Bessel 势垒响应与尺度权重，为什么在每一个规定的高阶矩中都能共同满足非负性。**
+
+本轮完成了精确展开、局部负性的类型区分、素数通道分解和截断误差框架；尚未证明全部 \(M_n(t)\ge0，也没有得到实际 \(M_n(t)<0\) 的证书。后续应直接研究这份算术相消，而不是继续把所有中间结构强行改写成逐点非负。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/abs/1309.0055?utm_source=chatgpt.com "Fourier transforms of positive definite kernels and the Riemann $ξ$-Function"
+[3]: https://www.sciencedirect.com/science/article/abs/pii/003448777490007X?utm_source=chatgpt.com "When is the wigner quasi-probability density non-negative? - ScienceDirect"
+[4]: https://dlmf.nist.gov/20.7 "DLMF: §20.7 Identities ‣ Properties ‣ Chapter 20 Theta Functions"
+[5]: https://dlmf.nist.gov/10.32 "DLMF: §10.32 Integral Representations ‣ Modified Bessel Functions ‣ Chapter 10 Bessel Functions"
+[6]: https://dlmf.nist.gov/10.40 "DLMF: §10.40 Asymptotic Expansions for Large Argument ‣ Modified Bessel Functions ‣ Chapter 10 Bessel Functions"
+[7]: https://dlmf.nist.gov/10.25.E1 "DLMF: §10.25 Definitions ‣ Modified Bessel Functions ‣ Chapter 10 Bessel Functions"
+[8]: https://sigma-journal.com/2021/057/?utm_source=chatgpt.com "Asymptotic Estimation for Eigenvalues in the Exponential Potential and for Zeros of K{i nu}(z) with Respect to Order"
+这次可以把上一轮的 Bessel—除数展开，接到一个**明确的随机位移模型**：
+
+> **同一份实际算术分布，既可以表示成“Gamma 连续尺度减去素数对数和”，也可以表示成“实际 ξ 观察变量减去一个独立的指数随机位移”。**
+
+这不是把两个相似模型放在一起，而是两种分解产生**完全相同的概率分布**。
+
+更进一步，上一轮 Bessel 公式里那组看起来复杂的导数项，恰好来自一个二阶微分算子。把它完整地转移到尺度权重上，可以消除 Bessel 导数，并明确哪些边界项不能丢掉。
+
+下面继续采用定义、定理和证明。这里的“随机位移”首先发生在对数尺度坐标上；它具有指数等待时间的无记忆结构，但不能未经物理建模就等同于真实时间、隧穿寿命或黑洞内部时间。
+
+---
+

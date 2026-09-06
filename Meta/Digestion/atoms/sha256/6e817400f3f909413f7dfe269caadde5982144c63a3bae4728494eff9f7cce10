@@ -1,0 +1,23 @@
+### 定理 24.10（近似半共轭的有限时域误差）
+
+对全部 \(k\ge0\) 与 \(y\in Y\)，
+\[
+\boxed{
+d_Z\bigl(\pi(\tau^k y),\sigma^k(\pi y)\bigr)
+\le
+\delta
+\sum_{j=0}^{k-1}L^j.
+}
+\]
+其中 \(k=0\) 时空和为 \(0\)。
+
+特别地：
+
+- 若 \(0\le L<1\)，则
+  \[
+  \boxed{
+  d_Z(\pi\tau^k y,\sigma^k\pi y)
+  \le
+  \frac{\delta}{1-L};
+  }
+  \]

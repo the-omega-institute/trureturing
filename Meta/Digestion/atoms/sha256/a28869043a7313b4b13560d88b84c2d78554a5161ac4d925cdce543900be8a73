@@ -1,0 +1,65 @@
+## 例 176.1　相同内部接口，正交的路径输出
+
+取
+
+$$
+h=\epsilon|1\rangle\langle1|,
+$$
+
+内部初态为 \(|0\rangle\)，并比较
+
+$$
+e_1=\epsilon,\qquad e_2=2\epsilon.
+$$
+
+选择
+
+$$
+\Delta\tau=\frac{\pi\hbar}{\epsilon}.
+$$
+
+则
+
+$$
+\gamma_{e_1}=-1,
+\qquad
+\gamma_{e_2}=1.
+$$
+
+两个路径输出为正交的 \(|-\rangle\) 与 \(|+\rangle\)。
+
+因此，若 CUT 只保存第 175 节的内部通道与热态，它无法决定这个后续路径实验。
+
+这是一个明确的目标残差：
+
+$$
+\boxed{
+q_{\mathrm{internal}}(e_1)=q_{\mathrm{internal}}(e_2),
+\qquad
+T_{\mathrm{path}}(e_1)\ne T_{\mathrm{path}}(e_2).
+}
+\tag{176.3}
+$$
+
+项目的 `exact_descent_has_no_carry` 因而禁止我们在没有补充实现信息时，宣称路径目标已经沿内部接口下降。
+
+### 为什么这不是“绝对整体相位可观测”？
+
+若给**完整联合 Hamiltonian**加上同一个常数 \(aI\)，它仍不可观测。
+
+这里改变的是
+
+$$
+e\bigl(
+\nu_L|L\rangle\langle L|
++
+\nu_R|R\rangle\langle R|
+\bigr)\otimes I,
+$$
+
+当两路径钟速不同，它不是整个联合系统的标量。
+
+另外，若只是把内部能量零点改为 \(h\mapsto h+aI\)，就必须同时令 \(e\mapsto e-a\)，保持完整 \(H_e\) 不变。**真正可检验的是完整耦合，不是任意选择的能量零点。**
+
+---
+
