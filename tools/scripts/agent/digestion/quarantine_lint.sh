@@ -27,10 +27,14 @@
 #                     (那些常被合法地报告为缺席);③声明名以文本形式在该 .lean 内匹配,
 #                     `to_additive` 之类由属性生成的名字不在本器射程。
 #
-# --selftest: 8 条夹具,预期红数写在跑之前(六元组第六项)——
+# --selftest: 12 条夹具,预期红数写在跑之前(六元组第六项)——
 #   F1 悬空 .lean 路径=1 / F2 悬空声明=1 / F3 真 theorem=0 / F4 真 lemma=0
 #   F5 只提 .lean 路径=0 / F6 缺失声明但前有否定词=0 / F7 Blueprint 前缀路径不匹配=0
-#   F8 引用已撤回的尝试=0
+#   F8 引用已撤回的尝试=0 / F9 「的」形真定理=0 / F10 「的」形假声明=1
+#   F11 无 GID 前缀的「的」形=0 / F12 **已知假阳**:账本字段名跟在「的」后=1
+#   F12 是故意钉住的假阳:`X 的 statement_id 为 …` 会被判成声明引用。当前全库 0 次发生
+#   (实测 459 条记录、633 条配对、判红 0),故按第 20″ 条不预先加停用词表;
+#   真出一次再加,届时 F12 的预期由 1 改 0。本器是写前自检不是门,假阳的代价是我多看一眼。
 #
 # usage: quarantine_lint.sh REPO [FILE...]      # 不给 FILE 则扫 REPO 里全部带 quarantine 的条目
 #        quarantine_lint.sh REPO --selftest     # 跑夹具,验本器仍能判红
@@ -68,7 +72,15 @@ DECL_LINE = re.compile(
 FILE_EXT = {"lean", "yaml", "json", "cs", "md", "sh", "toml", "txt", "jsonl"}
 # 左锚必须有:没有它,`Blueprint/D5/…/Foo.scribe.cs` 会从中间开始匹配并在 `.scribe` 截断,
 # 报出 17 条假的"声明 scribe 不存在"。这是同一天第三个手搓校验器 bug,故连同理由钉在这里。
-REPO_REF = re.compile(r"(?<![A-Za-z0-9_/])D5/[A-Za-z0-9_/]+\.[A-Za-z_][A-Za-z0-9_']*")
+#
+# 粘连词是本器的第二层(2026-09-06,同症状第二次即修根因):记录点名载体有两种写法——
+#   ① `D5/<路径>.<声明>`      ② `GID D5/<路径> 的 <声明>`(中文「的」分隔)
+# 首版只认 ①,于是在一整批用 ② 的记录上**空跑**:把其中一个真实引用改成假名,findings 仍为 0。
+# 这不是想象出来的缺口,是变异证明当场测出来的;实测该批 17→32,即多看见 15 条引用。
+# **粘连词只许 `.` 与 `的`,不许 `\s+`**:放宽到空白会把散文里的 `D5 search` / `D5 and` /
+# `D5 files` 一并配成引用,实测全库因此多出 54 条假红。
+REPO_REF = re.compile(
+    r"(?<![A-Za-z0-9_/])(D5/[A-Za-z0-9_/]+?)(?:\.|\s*的\s*)[`']?([A-Za-z_][A-Za-z0-9_']*)")
 # 记录合法地报告某物缺席时不判红(fail-open,见文件头反例集合)
 # 跳过语境分两类,都由实测发现,不是预想:
 #   ① 缺席报告——记录合法地写"未核到 X"。
@@ -100,8 +112,8 @@ def declared_names(lean_path):
 
 def check_repo_refs(text, bad):
     for m in REPO_REF.finditer(text):
-        ref = m.group(0)
-        module, tail = ref.rsplit(".", 1)
+        module, tail = m.group(1), m.group(2)
+        ref = f"{module}.{tail}"
         if NEG.search(text[max(0, m.start() - 60):m.start()]):
             continue
         if tail in FILE_EXT:
@@ -184,6 +196,12 @@ def selftest():
          f"已读 Blueprint/{thm_mod}.scribe.cs 与其 .md 投影。"),
         ("F8 retracted-attempt citation", 0,
          "Rejected attempt: `D5/NoSuchDir/NoSuchModule.lean`, retracted at commit deadbeef."),
+        ("F9 GID-de form, real theorem", 0, f"GID {thm_mod} 的 {thm} 已实读其冻结状态片。"),
+        ("F10 GID-de form, absent decl", 1,
+         f"GID {thm_mod} 的 no_such_declaration_xyz 承载该子句。"),
+        ("F11 de form without GID prefix, real lemma", 0, f"{lem_mod} 的 {lem} 是近似命中。"),
+        ("F12 KNOWN FALSE POSITIVE: ledger field after 的", 1,
+         f"{thm_mod} 的 statement_id 为 sha256:0000。"),
     ]
     bad_rows = 0
     for name, expected, just in cases:
