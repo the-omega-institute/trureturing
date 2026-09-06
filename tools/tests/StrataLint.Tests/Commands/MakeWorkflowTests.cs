@@ -376,6 +376,9 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(Path.GetDirectoryName(inputPath)!);
         Directory.CreateDirectory(Path.Combine(fixture.Path, "D5"));
         Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Cli"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Engine"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "Trureturing.Truth"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, ".github", "workflows"));
         File.Copy(Path.Combine(root, IngestScriptPath), ingestPath);
         File.Copy(Path.Combine(root, LeanReportInputScriptPath), inputPath);
         File.WriteAllText(Path.Combine(fixture.Path, "Trureturing.lean"), "import D5.Probe\n");
@@ -384,12 +387,40 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(Path.Combine(fixture.Path, "lake-manifest.json"), "{\"version\":\"1.1.0\"}\n");
         File.WriteAllText(Path.Combine(fixture.Path, "lakefile.toml"), "name = \"Fixture\"\n");
         File.WriteAllText(Path.Combine(fixture.Path, "README.md"), "baseline\n");
+        File.WriteAllText(
+            Path.Combine(fixture.Path, ".github", "workflows", "ci.yml"),
+            "jobs:\n  lean-inspect:\n    steps: []\n  baseline-admission:\n    steps: []\n");
+        File.WriteAllText(
+            Path.Combine(fixture.Path, LeanReportPairScriptPath),
+            "#!/usr/bin/env bash\n");
+        var scribeContentChecks = Path.Combine(
+            fixture.Path, "tools", "scripts", "workflow", "scribe-content-checks.sh");
+        Directory.CreateDirectory(Path.GetDirectoryName(scribeContentChecks)!);
+        File.WriteAllText(scribeContentChecks, "#!/usr/bin/env bash\n");
+        foreach (var project in new[]
+        {
+            "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+            "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+            "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+        })
+        {
+            File.WriteAllText(
+                Path.Combine(fixture.Path, project),
+                "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+        }
+        File.WriteAllText(
+            Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "FixtureProbe.cs"),
+            "// fixture\n");
         var dotnetPath = Path.Combine(binDirectory, "dotnet");
         File.WriteAllText(
             dotnetPath,
             """
             #!/usr/bin/env bash
-            if [[ "${1:-}" == "msbuild" ]]; then exit 1; fi
+            if [[ "${1:-}" == "msbuild" ]]; then
+              repository="$(cd "$(dirname "$2")/../.." && pwd -P)"
+              printf '{"Items":{"Compile":[{"FullPath":"%s/tools/StrataLint.Cli/FixtureProbe.cs"}]}}\n' "$repository"
+              exit 0
+            fi
             printf '%s\n' "$*"
             """ + "\n");
         foreach (var executable in new[] { ingestPath, inputPath, dotnetPath })
@@ -435,6 +466,51 @@ public sealed partial class MakeWorkflowTests
             "ingest --base HEAD --report-input-state unchanged",
             System.Text.Encoding.UTF8.GetString(unchanged.StandardOutput),
             StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IngestWrapperDoesNotRunDownstreamWhenProducerInputHelperFails()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var root = TestRepositoryLayout.FindRoot();
+        var ingest = Path.Combine(fixture.Path, IngestScriptPath);
+        var helper = Path.Combine(fixture.Path, LeanReportInputScriptPath);
+        var bin = Path.Combine(fixture.Path, "bin");
+        Directory.CreateDirectory(Path.GetDirectoryName(ingest)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
+        Directory.CreateDirectory(bin);
+        File.Copy(Path.Combine(root, IngestScriptPath), ingest);
+        File.Copy(Path.Combine(root, LeanReportInputScriptPath), helper);
+        var project = Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
+        Directory.CreateDirectory(Path.GetDirectoryName(project)!);
+        File.WriteAllText(project, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+        var dotnet = Path.Combine(bin, "dotnet");
+        File.WriteAllText(dotnet, """
+            #!/usr/bin/env bash
+            if [[ "${1:-}" == msbuild ]]; then exit 71; fi
+            touch "$DOWNSTREAM_MARKER"
+            exit 0
+            """ + "\n");
+        foreach (var executable in new[] { ingest, helper, dotnet })
+            File.SetUnixFileMode(executable,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        ReviewRegressionTests.RunGit(fixture.Path, "init", "--quiet");
+        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.email", "stratalint@example.invalid");
+        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.name", "StrataLint Tests");
+        ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
+        ReviewRegressionTests.RunGit(fixture.Path, "commit", "--quiet", "-m", "failing ingest fixture");
+        var marker = Path.Combine(fixture.Path, "downstream-ran");
+
+        var result = TestProcessRunner.Run("/bin/bash",
+            ["-c", "PATH=\"$1:$PATH\" DOWNSTREAM_MARKER=\"$2\" exec \"$3\" ingest HEAD",
+                "ingest-failure", bin, marker, ingest],
+            fixture.Path, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("producer closure is unavailable", System.Text.Encoding.UTF8.GetString(result.StandardError));
+        Assert.False(File.Exists(marker));
     }
 
     [Fact]

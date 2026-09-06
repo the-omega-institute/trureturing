@@ -1,0 +1,30 @@
+## 时间侧与数据侧是互补切面
+
+对数据取迹：
+
+$$
+\boxed{
+\rho_{\mathrm{clock}}
+=
+\frac{T_N}{N+1},
+\qquad
+T_N=(r_{j-i})_{0\le i,j\le N}.
+}
+\tag{26}
+$$
+
+对时钟取迹：
+
+$$
+\boxed{
+\rho_{\mathrm{data}}
+=
+\frac1{N+1}
+\sum_{t=0}^N
+U^t|v\rangle\langle v|U^{-t}.
+}
+\tag{27}
+$$
+
+两者具有相同的非零本征值。
+

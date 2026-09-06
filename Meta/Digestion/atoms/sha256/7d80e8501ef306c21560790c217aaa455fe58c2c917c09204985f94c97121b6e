@@ -1,0 +1,50 @@
+## 温度 \(T=\frac12\)
+
+同样，在 \(\Re\lambda>\frac12\)：
+
+$$
+\boxed{
+\mathscr Z_{1/2}(\lambda)
+=
+\frac{
+\zeta(2\lambda)\,
+\zeta(2\lambda+1)^2\,
+\zeta(2\lambda+2)
+}{
+\zeta(4\lambda+2)
+}.
+}
+\tag{5}
+$$
+
+这可以逐素数验证。令 \(q=1/p\)、\(x=p^{-2\lambda}\)，局部恒等式为：
+
+$$
+\boxed{
+\sum_{a\ge0}
+\left(\frac{1-q^{a+1}}{1-q}\right)^2x^a
+=
+\frac{1+qx}
+{(1-x)(1-qx)(1-q^2x)}.
+}
+\tag{6}
+$$
+
+本轮也用符号运算核对了式（6）。
+
+因此，我们获得了一条具体连接：
+
+$$
+\boxed{
+\begin{array}{c}
+T\downarrow0:\ \text{离散资源最优配置}\\[1mm]
+T=1:\ \zeta(\lambda)\zeta(\lambda+1)\\[1mm]
+T=\frac12:\ \text{另一份精确 ζ 乘积／商}
+\end{array}
+}
+$$
+
+**5040 的优化结构与真实 ζ，确实能够处于同一参数族的不同切片中。**
+
+---
+

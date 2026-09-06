@@ -1,0 +1,25 @@
+## 更强的尺度极限
+
+按概率
+
+$$
+P_\beta(n)=\frac{n^{-\beta}}{\zeta(\beta)}
+$$
+
+选取整数 \(N\)，定义重标定能量
+
+$$
+Y_\varepsilon=\varepsilon\log N.
+$$
+
+则
+
+$$
+\boxed{
+Y_\varepsilon
+\ \Longrightarrow\
+\operatorname{Exp}(1).
+}
+\tag{13}
+$$
+

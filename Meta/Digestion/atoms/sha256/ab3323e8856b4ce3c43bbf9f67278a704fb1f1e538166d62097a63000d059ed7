@@ -1,0 +1,17 @@
+## 定义285.1　线性计数能量
+
+给五类状态分配能量：
+
+$$
+\varepsilon_{00},\varepsilon_{10},
+\varepsilon_{01},\varepsilon_{11},\varepsilon_t.
+$$
+
+定义：
+
+$$
+H_\varepsilon|z\rangle
+=
+(\varepsilon\cdot z)|z\rangle.
+$$
+

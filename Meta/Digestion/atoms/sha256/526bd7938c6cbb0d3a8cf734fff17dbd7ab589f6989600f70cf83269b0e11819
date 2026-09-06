@@ -1,0 +1,12 @@
+## 假设324.1　固定物理参数的联合缩放
+
+保持 \(m,c_*\) 固定，并令：
+
+$$
+a=c_*\delta,
+\qquad
+\mu=\frac{mc_*^2\delta}{\hbar},
+\qquad
+\delta\to0.
+$$
+

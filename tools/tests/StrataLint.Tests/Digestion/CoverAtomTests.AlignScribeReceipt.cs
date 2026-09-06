@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 
@@ -5,6 +6,175 @@ namespace StrataLint.Tests;
 
 public sealed partial class CoverAtomTests
 {
+    [Fact]
+    public void AlignScribeReceiptAcceptsDocumentGidAndRefreshesFingerprints()
+    {
+        var inputs = DocumentReceiptInputs();
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+
+        var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles)
+            .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains($"gid={inputs.Gid}", result.Output, StringComparison.Ordinal);
+        var entry = Assert.Single(
+            BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries());
+        var receipt = Assert.Single(entry.Receipts.Scribe);
+        Assert.Equal(inputs.Gid, receipt.Gid);
+        Assert.Equal(
+            DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(
+                currentFiles[ScribeEmissionAttestation.DefinitionPath(inputs.Gid)])).RawSha256,
+            receipt.DefinitionSha256);
+        Assert.Equal(
+            DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(
+                currentFiles[ScribeEmissionAttestation.EmissionPath(inputs.Gid)])).RawSha256,
+            receipt.EmissionSha256);
+        Assert.NotEqual("sha256:" + new string('a', 64), receipt.DefinitionSha256);
+        Assert.NotEqual("sha256:" + new string('b', 64), receipt.EmissionSha256);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(2)]
+    public void AlignScribeReceiptDocumentDomainStillRequiresExactlyOneReceipt(int receiptCount)
+    {
+        AssertDocumentAlignSucceeds();
+        var inputs = DocumentReceiptInputs();
+        var receipt = Assert.Single(Assert.Single(
+            inputs.Document.RequireDigestionEntries()).Receipts.Scribe);
+        var document = WithScribeReceipts(
+            inputs.Document,
+            CoverWorld.DefaultAtomId,
+            Enumerable.Repeat(receipt, receiptCount).ToImmutableArray());
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(currentFiles, document);
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+        var before = DirectoryLedgerTestSupport.Image(
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
+
+        var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles)
+            .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains("scribe-receipt-cardinality-invalid", result.Error, StringComparison.Ordinal);
+        Assert.Equal(
+            before,
+            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
+    }
+
+    [Fact]
+    public void AlignScribeReceiptRejectsInvalidGidWithoutWriting()
+    {
+        AssertDocumentAlignSucceeds();
+        const string invalidGid = "not-a-gid";
+        var inputs = DocumentReceiptInputs();
+        var document = inputs.Document.WithDigestionSources(
+            inputs.Document.RequireDigestionSources()
+                .Select(source => source with
+                {
+                    Entries = source.Entries.Select(entry =>
+                        entry.AtomId == CoverWorld.DefaultAtomId
+                            ? entry with
+                            {
+                                Coverage = entry.Coverage
+                                    .Select(edge => edge with { Gid = invalidGid })
+                                    .ToImmutableArray(),
+                                Receipts = entry.Receipts with
+                                {
+                                    Scribe = entry.Receipts.Scribe
+                                        .Select(receipt => receipt with { Gid = invalidGid })
+                                        .ToImmutableArray(),
+                                },
+                            }
+                            : entry).ToImmutableArray(),
+                })
+                .ToImmutableArray());
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(currentFiles, document);
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+        var before = DirectoryLedgerTestSupport.Image(
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
+
+        var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles).AlignScribeReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", invalidGid, "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-gid-invalid", result.Error, StringComparison.Ordinal);
+        Assert.Equal(
+            before,
+            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
+    }
+
+    [Fact]
+    public void AlignScribeReceiptMixedDocumentAndDeclarationBatchIsAtomic()
+    {
+        var documentGid = CoverWorld.StaleReceiptSpec().ModuleGid;
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
+        {
+            OtherAtomGid = documentGid,
+            IncludeOtherAtomInBaseline = true,
+            OtherMigration = "absorbed",
+        });
+        var arguments = new[]
+        {
+            "--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
+            "--atom-id", CoverWorld.OtherAtomId, "--gid", documentGid,
+            "--base", "baseline",
+        };
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
+        using (var temporary = new TemporaryDirectory())
+        {
+            DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+
+            var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles)
+                .AlignScribeReceipt(arguments);
+
+            Assert.True(result.Success, result.Error);
+            Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
+            var after = BackfillInventoryLoader.LoadRoot(temporary.Path);
+            foreach (var (atomId, gid) in new[]
+                     {
+                         (CoverWorld.DefaultAtomId, inputs.Gid),
+                         (CoverWorld.OtherAtomId, documentGid),
+                     })
+            {
+                var entry = Assert.Single(
+                    after.RequireDigestionEntries(),
+                    candidate => candidate.AtomId == atomId);
+                var receipt = Assert.Single(entry.Receipts.Scribe);
+                Assert.Equal(gid, receipt.Gid);
+                Assert.Equal(verified.DefinitionSha256, receipt.DefinitionSha256);
+                Assert.Equal(verified.EmissionSha256, receipt.EmissionSha256);
+            }
+        }
+
+        var invalidDocument = WithScribeReceipts(
+            inputs.Document,
+            CoverWorld.OtherAtomId,
+            []);
+        var invalidFiles = new Dictionary<string, string>(currentFiles, StringComparer.Ordinal);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(invalidFiles, invalidDocument);
+        using (var temporary = new TemporaryDirectory())
+        {
+            DirectoryLedgerTestSupport.Write(temporary.Path, invalidFiles);
+            var before = DirectoryLedgerTestSupport.Image(
+                BackfillInventoryLoader.LoadRoot(temporary.Path));
+
+            var result = CoverWorld.Environment(temporary.Path, inputs, invalidFiles)
+                .AlignScribeReceipt(arguments);
+
+            Assert.False(result.Success);
+            Assert.Contains("scribe-receipt-cardinality-invalid", result.Error, StringComparison.Ordinal);
+            Assert.Equal(
+                before,
+                DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
+        }
+    }
+
     [Fact]
     public void AlignScribeReceiptUsesVerifiedFingerprintsAndIsIdempotent()
     {
@@ -91,4 +261,41 @@ public sealed partial class CoverAtomTests
         Assert.Equal(before,
             DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
+
+    private static CoverInputs DocumentReceiptInputs() =>
+        CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
+        {
+            Declaration = null,
+            InitialCoverage = [CoverWorld.StaleReceiptSpec().ModuleGid],
+        });
+
+    private static void AssertDocumentAlignSucceeds()
+    {
+        var inputs = DocumentReceiptInputs();
+        var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
+
+        var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles)
+            .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.True(result.Success, result.Error);
+    }
+
+    private static BackfillInventoryDocument WithScribeReceipts(
+        BackfillInventoryDocument document,
+        string atomId,
+        ImmutableArray<DigestionScribeReceipt> receipts) =>
+        document.WithDigestionSources(
+            document.RequireDigestionSources()
+                .Select(source => source with
+                {
+                    Entries = source.Entries.Select(entry => entry.AtomId == atomId
+                        ? entry with
+                        {
+                            Receipts = entry.Receipts with { Scribe = receipts },
+                        }
+                        : entry).ToImmutableArray(),
+                })
+                .ToImmutableArray());
 }

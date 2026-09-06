@@ -1,0 +1,34 @@
+# 一、时间不能只当作状态上的又一个标签：它首先属于路径
+
+设状态空间为 \(\mathcal X\)，允许的基本转移为
+
+$$
+x\xrightarrow{e}y.
+$$
+
+给每条基本转移赋予正整数成本
+
+$$
+\tau(e)\in\mathbb N_{>0}.
+$$
+
+一条历史
+
+$$
+\gamma:
+x_0\xrightarrow{e_0}x_1
+\xrightarrow{e_1}\cdots
+\xrightarrow{e_{m-1}}x_m
+$$
+
+的时间是
+
+$$
+\boxed{
+T(\gamma)=\sum_{j=0}^{m-1}\tau(e_j).
+}
+\tag{1}
+$$
+
+它一般不是仅由终点 \(x_m\) 决定的函数。
+

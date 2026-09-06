@@ -1,0 +1,65 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates;
+
+internal sealed class RationalAffineMomentCompressionDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S0/Certificates/RationalAffineMomentCompression.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Pointwise affine reconstruction on the original support justifies retaining fewer coordinates. The existing replay preserves this support, so the omitted original coordinates are recovered exactly.",
+        H("Support-local affine moment reconstruction"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("affine-coefficient"),
+                DeclarationHandle.Create(Prefix + "affineCoefficient"), H("Affine feature readout"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An offset and rational coefficient vector define a query on the actual original features."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("affine-expectation"),
+                DeclarationHandle.Create(Prefix + "linearObjective_affineCoefficient"), H("Reconstruct an affine expectation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Normalization transports the offset, while finite sum interchange transports the feature combination."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("active-congruence"),
+                DeclarationHandle.Create(Prefix + "linearObjective_congr_on_active"), H("Ignore zero-mass discrepancies"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Pointwise equality is required only at nonzero atoms of the evaluated vector."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("accepted-input"),
+                DeclarationHandle.Create(Prefix + "checkCompression_input_probability"), H("Recover the checked input conditions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Successful compression necessarily passed the existing initial nonnegativity and normalization checks."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("affine-presentation"),
+                DeclarationHandle.Create(Prefix + "AffinePresentation"), H("Data-only coordinate presentation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Records selected original coordinates, offsets and reconstruction coefficients. Selection need not be independent, so its size certifies only an upper dimension bound."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("selected-feature"),
+                DeclarationHandle.Create(Prefix + "selectedFeature"), H("Use original feature coordinates"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The reduced coordinates are selected from the original coefficient array without changing their values."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("valid-presentation"),
+                DeclarationHandle.Create(Prefix + "ValidPresentation"), H("Pointwise reconstruction contract"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every original coefficient must be reconstructed on every active input atom."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("check-presentation"),
+                DeclarationHandle.Create(Prefix + "checkPresentation"), H("Exact presentation checker"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Finite rational equality checks validate the proposed reconstruction. A small averaged residual is insufficient."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("presentation-reflection"),
+                DeclarationHandle.Create(Prefix + "checkPresentation_eq_true_iff"), H("Reflect presentation acceptance"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Acceptance is equivalent to the support-local coefficient equalities used by the proof."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("affine-compression"),
+                DeclarationHandle.Create(Prefix + "checkAffineCompression"), H("Replay with the reduced support budget"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("After validating reconstruction, the unchanged replay checks only selected moments and requires support at most the selected count plus one."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("affine-compression-sound"),
+                DeclarationHandle.Create(Prefix + "checkAffineCompression_sound"), H("Preserve all original moments"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The returned normalized nonnegative law has contained support, obeys the reduced support bound and preserves every original feature expectation."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("affine-query-family"),
+                DeclarationHandle.Create(Prefix + "checkAffineCompression_preserves_affine_family"), H("One compression for all affine queries"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The accepted compression is fixed before arbitrary affine query coefficients are chosen. No new compression is selected per query."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("affine-replay-example"),
+                DeclarationHandle.Create(Prefix + "affine_reconstruction_replay_example"), H("Three coordinates, two output atoms"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A closed rational example retains a mean and two affine transforms of that mean through a one-coordinate replay."))), DescribeRole.Theorem))));
+}

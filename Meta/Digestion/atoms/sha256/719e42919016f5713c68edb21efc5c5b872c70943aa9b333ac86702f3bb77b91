@@ -1,0 +1,31 @@
+## 多次换切面为何仍然一致？
+
+跨段项满足：
+
+$$
+\boxed{
+B(\mathbf u,\mathbf v)
++
+B(\mathbf u+\mathbf v,\mathbf w)
+=
+B(\mathbf v,\mathbf w)
++
+B(\mathbf u,\mathbf v+\mathbf w).
+}
+\tag{23}
+$$
+
+因为两边都等于：
+
+$$
+B(\mathbf u,\mathbf v)+B(\mathbf u,\mathbf w)+B(\mathbf v,\mathbf w).
+$$
+
+因此，先拼前两段还是先拼后两段，得到同一个总相位。
+
+这是一项明确的**拼接相容律**。
+
+项目中的 `SchurComplementAssociativity.lean` 在另一种算子表达下，同样强调：在相应逆算子存在的前件下，逐层消元与一次消元必须一致。这里不是直接调用那项定理证明式（23），而是形成了相同的审计要求——**换分解顺序，不能暗中换掉整体对象。**
+
+---
+

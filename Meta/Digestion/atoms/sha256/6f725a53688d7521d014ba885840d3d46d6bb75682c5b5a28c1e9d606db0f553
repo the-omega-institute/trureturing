@@ -1,0 +1,69 @@
+# 四、5040 在这个时间切面中，确实产生一个整数：平均返回时间为 60
+
+这里要使用一条已有的量子返回定理：
+
+> 对一个单位状态作逐步投影监测，若其谱测度只含 \(d\) 个不同且正权的谱点，那么最终返回概率为 \(1\)，平均首次返回步数恰好为 \(d\)。若谱测度是无限支撑的纯点测度，则最终仍以概率 \(1\) 返回，但平均返回时间无穷。([arXiv][4])
+
+有限情形还有一个拓扑表达：
+
+$$
+\boxed{
+\mathbb E[\tau]
+=
+\frac1{2\pi}
+\int_0^{2\pi}
+\frac{d}{d\theta}\arg\mathcal S(e^{i\theta})\,d\theta
+=
+d.
+}
+\tag{18}
+$$
+
+即平均步数等于首次回返函数的绕数。这里的 \(\mathcal S\) 是一个次数为 \(d\) 的有限 Blaschke 乘积；从 Taylor 系数积分也得到 \(\sum n|\kappa_n|^2\)。([arXiv][1])
+
+现在取
+
+$$
+D=5040.
+$$
+
+定义因数态
+
+$$
+|\Omega_\beta\rangle
+=
+\frac1{\sqrt{Z_D(\beta)}}
+\sum_{d\mid D}d^{-\beta/2}|d\rangle,
+$$
+
+$$
+Z_D(\beta)=\sum_{d\mid D}d^{-\beta}.
+$$
+
+以及
+
+$$
+U_\eta|d\rangle=e^{-i\eta\log d}|d\rangle.
+$$
+
+选择
+
+$$
+0<\eta\log D<2\pi.
+$$
+
+这保证六十个因数的相位互不相同：两个相位相等，只能有 \(\log d=\log e\)。
+
+对每个有限 \(\beta\)，全部因数权重都严格为正。因此：
+
+$$
+\boxed{
+\mathbb E_{\Omega_\beta}[\tau]
+=
+5\cdot3\cdot2\cdot2
+=
+60.
+}
+\tag{19}
+$$
+

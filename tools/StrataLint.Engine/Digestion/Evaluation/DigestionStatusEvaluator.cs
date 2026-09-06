@@ -306,9 +306,6 @@ internal static partial class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        // Scribe retains its existing baseline-only full check. Coverage edges are always
-        // judged against the current report and frozen statement index below.
-        var verificationChanges = baselineEntryPresent ? changes : null;
         var structured = VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var nonpropositional = HasNonpropositionalReceipt(entry);
         if (entry.Receipts.Nonpropositional is not null && !nonpropositional)
@@ -366,7 +363,6 @@ internal static partial class DigestionStatusEvaluator
             entry,
             snapshot,
             verifiedScribeEmissions,
-            verificationChanges,
             gaps,
             findings);
         if (entry.Receipts.UnresolvedSubitems.Length > 0)
