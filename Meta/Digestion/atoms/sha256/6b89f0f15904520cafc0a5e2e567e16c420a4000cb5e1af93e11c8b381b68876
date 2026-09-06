@@ -1,0 +1,141 @@
+### 证明
+
+离线零点对应 \(\mathcal U\) 中的一对非实点。取其中上半平面的一个：
+
+$$
+u_0=a+ib,\qquad b>0,
+$$
+
+重数为 \(m_0\)。
+
+选择：
+
+$$
+0<r<|u_0|,
+$$
+
+使 \(|u|=r\) 上没有谱点。
+
+集合：
+
+$$
+F=\{u\in\mathcal U:|u|>r\}
+$$
+
+是有限集。
+
+定义实系数多项式：
+
+$$
+\boxed{
+L(z)=
+z\prod_{u\in F\setminus\{u_0,\overline u_0\}}(z-u).
+}
+\tag{N25}
+$$
+
+它满足：
+
+$$
+L(0)=0,\qquad L(u_0)\ne0,
+$$
+
+并且消去目标共轭对之外的全部大谱点。
+
+对整数 \(n\ge0\)，定义：
+
+$$
+v_n=\frac{i}{u_0^nL(u_0)}.
+$$
+
+选实数：
+
+$$
+A_n=\frac{\Im v_n}{b},
+\qquad
+B_n=\Re v_n-aA_n.
+$$
+
+于是：
+
+$$
+A_nu_0+B_n=v_n.
+$$
+
+构造：
+
+$$
+\boxed{
+f_n(z)=z^nL(z)(A_nz+B_n).
+}
+\tag{N26}
+$$
+
+它满足：
+
+$$
+f_n(u_0)=i,
+\qquad
+f_n(\overline u_0)=-i,
+$$
+
+并在其余 \(F\) 中的谱点上为零。
+
+因此目标共轭对贡献恰好是：
+
+$$
+-2m_0.
+$$
+
+剩下只需控制 \(|u|\le r\) 的尾部。
+
+由 \(L(z)\) 含有因子 \(z\)，存在一个与 \(n\) 无关的有限常数 \(K\)，使：
+
+$$
+\boxed{
+|f_n(z)|
+\le
+K|z|
+\left(\frac r{|u_0|}\right)^n,
+\qquad |z|\le r.
+}
+\tag{N27}
+$$
+
+例如可取：
+
+$$
+K=
+\frac{\displaystyle\sup_{|z|\le r}|L(z)/z|}
+{|L(u_0)|}
+\left(1+\frac{r+|a|}{b}\right).
+$$
+
+所以：
+
+$$
+\begin{aligned}
+\mathcal Q_\infty(f_n)
+&\le
+-2m_0+
+\sum_{|u|\le r}m(u)|f_n(u)|^2\\
+&\le
+-2m_0+
+K^2
+\left(\frac r{|u_0|}\right)^{2n}
+\sum_{|u|\le r}m(u)|u|^2.
+\end{aligned}
+$$
+
+尾部总量有限，而 \(r/|u_0|<1\)。因此选取有限但足够大的 \(n\)，就有：
+
+$$
+\boxed{
+\mathcal Q_\infty(f_n)<-m_0<0.
+}
+$$
+
+最后，\(\mathcal Q_\infty\) 在固定次数的系数空间中是连续二次型。将 \(f_n\) 的实系数充分精确地近似为有理数，并保持常数项为零，严格负性仍然成立。证毕。
+
+---
+

@@ -7,6 +7,72 @@ namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
+    [Fact]
+    public void HarnessGateIncludesTestMapCacheRootInCheckArgumentsOnlyWhenSupplied()
+    {
+        var script = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "scripts", "harness-gate.sh"));
+
+        Assert.Contains("--test-map-cache-root)", script, StringComparison.Ordinal);
+        Assert.Contains("TEST_MAP_CACHE_ROOT=\"\"", script, StringComparison.Ordinal);
+        Assert.Contains(
+            """[[ $# -ge 2 && -n "$2" ]] || { echo "harness-gate: --test-map-cache-root requires a value" >&2; exit 2; }""",
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains("""TEST_MAP_CACHE_ROOT="$2"; shift 2 ;;""", script, StringComparison.Ordinal);
+        const string prepareCache = """
+            if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
+              mkdir -p "$TEST_MAP_CACHE_ROOT" \
+                || { echo "harness-gate: test map cache root '$TEST_MAP_CACHE_ROOT' is not creatable" >&2; exit 2; }
+              TEST_MAP_CACHE_ROOT="$(cd "$TEST_MAP_CACHE_ROOT" && pwd -P)"
+            fi
+            """;
+        Assert.Contains(prepareCache, script, StringComparison.Ordinal);
+        Assert.True(
+            script.IndexOf(prepareCache, StringComparison.Ordinal)
+                < script.IndexOf("dotnet restore ", StringComparison.Ordinal),
+            "cache root validation must precede dotnet");
+        Assert.Contains(
+            """
+            check_args=(--protected-base "$BASE_REF" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
+            if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
+              check_args+=(--test-map-cache-root "$TEST_MAP_CACHE_ROOT")
+            fi
+            """,
+            script,
+            StringComparison.Ordinal);
+        var checkCommand = Assert.Single(
+            script.Split('\n'),
+            static line => line.TrimStart().StartsWith("dotnet \"$JUDGE_DLL\" check ", StringComparison.Ordinal));
+        Assert.Equal("""  dotnet "$JUDGE_DLL" check "${check_args[@]}" """.TrimEnd(), checkCommand);
+    }
+
+    [Fact]
+    public void LocalHarnessGateForwardsTestMapCacheRootOnlyWhenSupplied()
+    {
+        var script = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "local-harness-gate.sh"));
+
+        Assert.Contains("--test-map-cache-root)", script, StringComparison.Ordinal);
+        Assert.Contains("TEST_MAP_CACHE_ARGS=()", script, StringComparison.Ordinal);
+        Assert.Contains(
+            """
+                --test-map-cache-root)
+                  [[ $# -ge 2 && -n "$2" ]] || { echo "local-harness-gate: --test-map-cache-root requires a value" >&2; exit 2; }
+                  TEST_MAP_CACHE_ARGS=(--test-map-cache-root "$2")
+                  shift 2
+                  ;;
+            """,
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            """
+              --candidate-lean-report "$CANDIDATE_REPORT" \
+              ${TEST_MAP_CACHE_ARGS[@]+"${TEST_MAP_CACHE_ARGS[@]}"}
+            """,
+            script,
+            StringComparison.Ordinal);
+    }
 
     [Fact(DisplayName = "Makefile and inspector dispatch counts are pinned in the thin dispatch table")]
     public void MakefileIsAThinCompleteDispatchTable()
@@ -27,6 +93,10 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("build: lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
+        Assert.Equal(
+            "\t@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- "
+                + "align-scribe-receipt --seed-missing --pairs \"$(PAIRS)\" --base \"$(BASE)\"",
+            Recipe(makefile, "scribe-seed"));
         // make test 是薄委托;数学门链条的唯一真源在 math-gate.sh 里,断言脚本本体。
         var mathematicalTestRecipe = Recipe(makefile, "test");
         Assert.DoesNotContain("dotnet test", mathematicalTestRecipe, StringComparison.Ordinal);
@@ -262,15 +332,8 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
         Assert.Contains("REPOSITORY ?= $(HERE)/..", makefile, StringComparison.Ordinal);
-        Assert.Contains("ENGINEERING_TESTS_CWD := $(REPOSITORY)", makefile, StringComparison.Ordinal);
-        Assert.Contains(
-            "engineering-tests-base-cwd: ENGINEERING_TESTS_CWD := $(HERE)/..",
-            makefile,
-            StringComparison.Ordinal);
-        Assert.Contains("engineering-tests-base-cwd: engineering-tests", makefile, StringComparison.Ordinal);
-        Assert.Equal(0, RecipeCount(makefile, "engineering-tests-base-cwd"));
         Assert.Equal(
-            "\t@cd \"$(ENGINEERING_TESTS_CWD)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\"",
+            "\t@cd \"$(REPOSITORY)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\"",
             engineeringTestsRecipe);
         Assert.Single(
             Regex.Matches(

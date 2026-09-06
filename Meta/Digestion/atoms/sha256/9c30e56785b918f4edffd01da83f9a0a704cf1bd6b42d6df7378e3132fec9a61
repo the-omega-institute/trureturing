@@ -1,0 +1,36 @@
+**它们共享同一个 \(n\)，每一个 \(d_j\) 都必须能放进这个共同的整除结构。**
+
+固定一个素数 \(p\)，写：
+
+$$
+a=v_p(n),\qquad b_j=v_p(d_j).
+$$
+
+共同约束就是：
+
+$$
+\boxed{
+a\in\mathbb N,\qquad
+0\le b_j\le a,\quad j=1,\ldots,r.
+}
+\tag{5}
+$$
+
+于是得到一个明确的整数锥：
+
+$$
+\boxed{
+\mathcal C_r=
+\{(a,b_1,\ldots,b_r)\in\mathbb N^{r+1}:0\le b_j\le a\}.
+}
+\tag{6}
+$$
+
+固定 \(a\)，截面是：
+
+$$
+\{0,\ldots,a\}^r.
+$$
+
+也就是一个 \(r\) 维整数立方体。
+

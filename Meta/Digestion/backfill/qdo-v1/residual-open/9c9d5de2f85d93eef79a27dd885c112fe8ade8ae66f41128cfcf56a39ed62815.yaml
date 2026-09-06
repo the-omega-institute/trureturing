@@ -4,6 +4,12 @@ fingerprints:
 cas_ref: sha256:9c9d5de2f85d93eef79a27dd885c112fe8ade8ae66f41128cfcf56a39ed62815
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Entropy/Submodularity/MarkovDataProcessing.conditional_mutual_information_eq_zero_iff_conditional_product
+    gaps:
+      - code: scribe-declaration-reference-missing
+        detail: D5/S3/Entropy/Submodularity/MarkovDataProcessing.conditional_mutual_information_eq_zero_iff_conditional_product

@@ -41,93 +41,40 @@ internal static partial class DigestionStatusEvaluator
         }
     }
 
-    private static bool VerifyCoverageReceipts(
+    private static bool VerifyCoverageEdges(
         DigestionLedgerEntry entry,
-        IReadOnlyDictionary<string, RepositoryFile> targets,
-        Lazy<FrozenStatementIndex> frozenStatements,
-        RawChangeSet? changes,
+        IReadOnlyDictionary<string, CurrentEdgeValidation> validations,
         ICollection<DigestionGap> gaps,
         ImmutableArray<string>.Builder findings)
     {
-        var receipts = UniqueByGid(entry.EntryLabel(), entry.Receipts.Coverage, static item => item.Gid, findings);
+        var edges = UniqueByGid(entry.EntryLabel(), entry.Coverage, static item => item.Gid, findings);
         var complete = true;
-        foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
+        foreach (var (gid, edge) in edges)
         {
-            if (!receipts.TryGetValue(gid, out var receipt))
+            if (edge.TargetStatementId is null)
             {
-                gaps.Add(new DigestionGap(
-                    "coverage-receipt-missing",
-                    gid,
-                    DigestionGapSeverity.NonFatal));
                 complete = false;
                 continue;
             }
 
-            var targetChanged = Gid.TryParse(gid, out var parsedGid)
-                && PathChanged(changes, parsedGid.Path.Value);
-            var frozenLedgerChanged = changes is not null
-                && changes.Paths.Any(path =>
-                    FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value));
-            if (changes is not null
-                && !DigestionCasStore.EntryChanged(entry, changes)
-                && !targetChanged
-                && !frozenLedgerChanged)
-            {
-                continue;
-            }
-
-            // Binds coverage.source_sha256 to the atom raw fingerprint and
-            // coverage.target_statement_id to the active frozen proposition selected by the
-            // GID. This guard does not bind either Scribe hash or projected_status.
-            if (!targets.TryGetValue(gid, out var target)
-                || receipt.SourceSha256 != entry.Fingerprints.RawSha256
-                || parsedGid is null
-                || !TryResolveFrozenStatement(frozenStatements, parsedGid, out var statementId)
-                || receipt.TargetStatementId != statementId)
+            var expectedTarget = validations.GetValueOrDefault(gid)?.TargetStatementId;
+            if (!string.Equals(edge.TargetStatementId, expectedTarget, StringComparison.Ordinal))
             {
                 gaps.Add(new DigestionGap(
-                    "coverage-receipt-mismatch",
+                    "coverage-target-mismatch",
                     gid,
                     DigestionGapSeverity.ReceiptIntegrityFailure));
                 complete = false;
             }
         }
 
-        foreach (var extra in receipts.Keys.Except(entry.CoverageGids, StringComparer.Ordinal))
-        {
-            findings.Add($"entry {entry.AtomId} has an extra coverage receipt for {extra}");
-            complete = false;
-        }
-
         return complete;
-    }
-
-    private static bool TryResolveFrozenStatement(
-        Lazy<FrozenStatementIndex> frozenStatements,
-        Gid gid,
-        out string statementId)
-    {
-        try
-        {
-            if (frozenStatements.Value.TryResolve(gid, out var resolved, out _))
-            {
-                statementId = resolved!.Value;
-                return true;
-            }
-        }
-        catch (Exception exception) when (exception is FormatException or InvalidOperationException)
-        {
-        }
-
-        statementId = string.Empty;
-        return false;
     }
 
     private static bool VerifyScribeReceipts(
         DigestionLedgerEntry entry,
         RepositorySnapshot snapshot,
         VerifiedScribeEmissions? verifiedEmissions,
-        RawChangeSet? changes,
         ICollection<DigestionGap> gaps,
         ImmutableArray<string>.Builder findings)
     {
@@ -135,8 +82,7 @@ internal static partial class DigestionStatusEvaluator
         var complete = true;
         foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
         {
-            var hasReceipt = receipts.TryGetValue(gid, out var receipt);
-            if (!hasReceipt)
+            if (!receipts.ContainsKey(gid))
             {
                 gaps.Add(new DigestionGap(
                     "scribe-receipt-missing",
@@ -147,15 +93,8 @@ internal static partial class DigestionStatusEvaluator
 
             var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
             var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
-            var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
             var selectsDeclaration = Gid.TryParse(gid, out var parsedGid)
                 && parsedGid.ToTarget() is Target.Formal { Declaration: not null };
-            var receiptInputChanged = changes is null
-                || DigestionCasStore.EntryChanged(entry, changes)
-                || PathChanged(changes, definitionPath)
-                || PathChanged(changes, emissionPath)
-                || parsedGid is not null && PathChanged(changes, parsedGid.Path.Value);
-            ScribeEmissionRecord? verified = null;
             if (verifiedEmissions is null)
             {
                 gaps.Add(new DigestionGap(
@@ -164,17 +103,13 @@ internal static partial class DigestionStatusEvaluator
                     DigestionGapSeverity.NonFatal));
                 complete = false;
             }
-            else if (!verifiedEmissions.TryGet(documentGid, out var verifiedRecord))
+            else if (!verifiedEmissions.TryGet(documentGid, out _))
             {
                 gaps.Add(new DigestionGap(
                     "scribe-emission-missing",
                     gid,
                     DigestionGapSeverity.NonFatal));
                 complete = false;
-            }
-            else
-            {
-                verified = verifiedRecord;
             }
 
             if (selectsDeclaration
@@ -188,43 +123,12 @@ internal static partial class DigestionStatusEvaluator
                 complete = false;
             }
 
-            if (!snapshot.TryGetFile(definitionPath, out var definition))
+            if (!snapshot.TryGetFile(definitionPath, out _))
             {
                 gaps.Add(new DigestionGap(
                     "scribe-definition-missing",
                     gid,
                     DigestionGapSeverity.NonFatal));
-                complete = false;
-            }
-            // Binds scribe.definition_sha256 to both the definition bytes and verified Scribe
-            // record. This guard does not bind emission, coverage, or projected_status.
-            else if (hasReceipt
-                && receiptInputChanged
-                && (receipt!.DefinitionSha256
-                    != DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256
-                    || verified is not null
-                    && (verified.DefinitionPath != definitionPath
-                        || verified.DefinitionSha256 != receipt.DefinitionSha256)))
-            {
-                gaps.Add(new DigestionGap(
-                    "scribe-definition-mismatch",
-                    gid,
-                    DigestionGapSeverity.ReceiptIntegrityFailure));
-                complete = false;
-            }
-
-            // Binds scribe.emission_sha256 to the verified Scribe emission record. This guard
-            // does not bind definition, coverage, or projected_status.
-            if (hasReceipt
-                && receiptInputChanged
-                && verified is not null
-                && (verified.EmissionPath != emissionPath
-                    || verified.EmissionSha256 != receipt!.EmissionSha256))
-            {
-                gaps.Add(new DigestionGap(
-                    "scribe-emission-mismatch",
-                    gid,
-                    DigestionGapSeverity.ReceiptIntegrityFailure));
                 complete = false;
             }
         }

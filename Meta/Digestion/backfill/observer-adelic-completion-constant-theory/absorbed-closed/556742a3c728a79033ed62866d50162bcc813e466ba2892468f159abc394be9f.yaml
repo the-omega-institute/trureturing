@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:556742a3c728a79033ed62866d50162bcc813e466ba2892468f159abc394be9f
 cas_ref: sha256:556742a3c728a79033ed62866d50162bcc813e466ba2892468f159abc394be9f
 coverage_gids:
-  - D5/S3/Weil/Budget/MultiscaleLoewnerConstraint.multiscale_loewner_constraint
+  - gid: D5/S3/Weil/Budget/MultiscaleLoewnerConstraint.multiscale_loewner_constraint
+    target_statement_id: sha256:1fd6ff553c5d35c01648c208854b365e565411ebd7f3faac734fc7bec59d25a4
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Budget/MultiscaleLoewnerConstraint.multiscale_loewner_constraint
-      source_sha256: sha256:556742a3c728a79033ed62866d50162bcc813e466ba2892468f159abc394be9f
-      target_statement_id: sha256:1fd6ff553c5d35c01648c208854b365e565411ebd7f3faac734fc7bec59d25a4
   scribe:
     - gid: D5/S3/Weil/Budget/MultiscaleLoewnerConstraint.multiscale_loewner_constraint
       definition_sha256: sha256:0f7e774270a6833c8690dcdd2a7e24399cc57866b1e05151d679163b7e6f3aca

@@ -3,18 +3,43 @@ fingerprints:
   normalized_sha256: sha256:3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6
 cas_ref: sha256:3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6
 coverage_gids:
-  - D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
-  - D5/S3/ObserverMemory/RecordCorrelationMonogamy.record_correlation_monogamy
-  - D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
-  - D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
-  - D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
-  - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
-  - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
-  - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
-  - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
-  - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
-  - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
+  - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+    target_statement_id: sha256:1762dfcfbcf1b350626e711534c61da8425e1e829dfb73e4ab1b7fb74e30db39
+  - gid: D5/S3/ObserverMemory/RecordCorrelationMonogamy.record_correlation_monogamy
+    target_statement_id: sha256:f885091f7e63c93723b90c230d1aad1f7b26a9ad22a27342792d9f9ee1b445a2
+  - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
+    target_statement_id: sha256:a64a7db140cf1b62437069ce3e400c326debb1675456048955a50730edd170ef
+  - gid: D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+    target_statement_id: sha256:89019a365c8d3c65512995702fdcc4f90c3a21cc538a37962cd90d3a8cfaf0af
+  - gid: D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
+    target_statement_id: sha256:f25b7239e34182d1cdaff8dfc1f1b67e43f85b40bdfbe3e850173bf7593427d5
+  - gid: D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
+    target_statement_id: sha256:04fdaf02610d18b00f28dbb1b6a3b058bd3e61773fa16a5b30575dc1d27790a8
+  - gid: D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
+    target_statement_id: sha256:ca1a691db162ef5c2def90c39385aabbce04efdba439a92dfb3e43f8dfa1b137
+  - gid: D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
+    target_statement_id: sha256:1577654018a5412c9492d172a9c61a5cf7b1cdde56e72cc4955625cc589078e7
+  - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
+    target_statement_id: sha256:4452133d5c13101de5a5eae13c32b2cc7f115f72cba4cf1088760d8884e57720
+  - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
+    target_statement_id: sha256:ff74fc9166fe86cfde2fed35f2739f227eab77c0598e49868349a7ddfbd8ffbe
+  - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
+    target_statement_id: sha256:860c2c13fbf31e1cf13af4d22c15426ea2a3a09e5e4ddb7385b7a474c1b4f704
 receipts:
-  coverage: []
-  scribe: []
+  scribe:
+    - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+      definition_sha256: sha256:c5accedabf0f0d42752caec86430e25b771cb44fcbf3c0f383f245eaa04346cf
+      emission_sha256: sha256:cda294fe3dd6b93c43fac8ade1f713e543e12ee2c3fd6b93989bf60d6e3183b9
+    - gid: D5/S3/ObserverMemory/RecordCorrelationMonogamy.record_correlation_monogamy
+      definition_sha256: sha256:c2e13992023e405db66beaa1c3c41106faed22c5802de8bfdc047eb6e656bce6
+      emission_sha256: sha256:a9cfde54bc37101917bc7c8c079672cd2202581d812c44533ff99d32cca5eaa4
+    - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
+      definition_sha256: sha256:09dcb7a7b19f73aafc7011f0eef2d57192856a74a3b268ef9e3501779788893f
+      emission_sha256: sha256:35a0c6948bb4d549e53f5b8a2f3fd0950d4a85b5fc770b6ff95a27a7ad182eb3
+    - gid: D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+      definition_sha256: sha256:ce39ddc02e0f2b90ab65e13288dc37ae53acc03dbdb398c412c5e372610293f5
+      emission_sha256: sha256:a61d7fcde3a0453be84caa86f7a6349d11c1281d68c82e6ebbb12e58b63ab231
+    - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
+      definition_sha256: sha256:ba0e59654ceec4b6854674d13b38cb751288b34a52ae7fd3a8886b1cc66947e0
+      emission_sha256: sha256:df9ad32e5369d3ea74cb428db97eed4b02bea88f8dac0c3662684ed5743a6c4a
   unresolved_subitems: []

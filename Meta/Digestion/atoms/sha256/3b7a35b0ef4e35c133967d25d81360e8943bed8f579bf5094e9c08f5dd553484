@@ -1,0 +1,14 @@
+### Layer B. Finite polyhedral identification
+
+```text
+FiniteResponseType
+ProbabilityMass
+LinearEqualityConstraint
+LinearInequalityConstraint
+LinearCausalQuery
+PrimalFeasibleWitness
+DualBoundCertificate
+```
+
+This layer proves that the feasible family is convex and the query affine, then invokes Layer A.
+

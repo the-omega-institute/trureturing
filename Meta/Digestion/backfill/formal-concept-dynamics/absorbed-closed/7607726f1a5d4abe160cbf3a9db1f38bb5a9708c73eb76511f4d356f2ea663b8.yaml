@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:7607726f1a5d4abe160cbf3a9db1f38bb5a9708c73eb76511f4d356f2ea663b8
 cas_ref: sha256:7607726f1a5d4abe160cbf3a9db1f38bb5a9708c73eb76511f4d356f2ea663b8
 coverage_gids:
-  - D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeStateJoin.commitment_normative_state_join
+  - gid: D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeStateJoin.commitment_normative_state_join
+    target_statement_id: sha256:19372411fed45b756d1e107a4f523a4c668f34bee8bed9ff9635ae58ce2ea11e
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeStateJoin.commitment_normative_state_join
-      source_sha256: sha256:7607726f1a5d4abe160cbf3a9db1f38bb5a9708c73eb76511f4d356f2ea663b8
-      target_statement_id: sha256:19372411fed45b756d1e107a4f523a4c668f34bee8bed9ff9635ae58ce2ea11e
   scribe:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeStateJoin.commitment_normative_state_join
       definition_sha256: sha256:4d7d5a7b5b297266b190807b38b5beac0ca8754ae97b7027d3799a217cb12901

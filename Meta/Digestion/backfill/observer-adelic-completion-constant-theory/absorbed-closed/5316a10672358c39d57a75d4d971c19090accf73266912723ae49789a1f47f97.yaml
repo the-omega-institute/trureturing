@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:5316a10672358c39d57a75d4d971c19090accf73266912723ae49789a1f47f97
 cas_ref: sha256:5316a10672358c39d57a75d4d971c19090accf73266912723ae49789a1f47f97
 coverage_gids:
-  - D5/S3/Observer/HyperbolicTransport/GoldenImageRecoveryObstruction.golden_image_recovery_obstruction
+  - gid: D5/S3/Observer/HyperbolicTransport/GoldenImageRecoveryObstruction.golden_image_recovery_obstruction
+    target_statement_id: sha256:de8b15308ebc357541075c7f9c4700eac0b7aaca20b533aa5dad3ede56fe3a1c
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/HyperbolicTransport/GoldenImageRecoveryObstruction.golden_image_recovery_obstruction
-      source_sha256: sha256:5316a10672358c39d57a75d4d971c19090accf73266912723ae49789a1f47f97
-      target_statement_id: sha256:de8b15308ebc357541075c7f9c4700eac0b7aaca20b533aa5dad3ede56fe3a1c
   scribe:
     - gid: D5/S3/Observer/HyperbolicTransport/GoldenImageRecoveryObstruction.golden_image_recovery_obstruction
       definition_sha256: sha256:a944daf7d71d2308822eacf276e4c13068c67411992173f592fb485b5885578b

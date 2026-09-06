@@ -31,9 +31,8 @@ public sealed partial class DigestionLedgerTests
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             "D5/S0/Carrier/Probe",
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 "D5/S0/Carrier/Probe",
-                atom.Fingerprints.RawSha256,
                 TestModuleStatementId),
             new DigestionScribeReceipt(
                 "D5/S0/Carrier/Probe",
@@ -77,9 +76,8 @@ public sealed partial class DigestionLedgerTests
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             "D5/S0/Carrier/Probe",
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 "D5/S0/Carrier/Probe",
-                atom.Fingerprints.RawSha256,
                 TestModuleStatementId),
             new DigestionScribeReceipt(
                 "D5/S0/Carrier/Probe",
@@ -157,7 +155,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void CandidateDeltaDoesNotPromoteBaselinePartialWithStaleScribeReceipts()
+    public void StaleScribeByteReceiptsDoNotProduceIntegrityGapsOrDegradeTruth()
     {
         const string gid = "D5/S0/Carrier/Probe";
         const string targetPath = "D5/S0/Carrier/Probe.lean";
@@ -174,12 +172,11 @@ public sealed partial class DigestionLedgerTests
             Encoding.UTF8.GetBytes("# Stale emitted narrative\n")).RawSha256;
         var document = Ledger(
             atom,
-            DigestionMigrationState.Partial,
+            DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             gid,
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 gid,
-                atom.Fingerprints.RawSha256,
                 TestModuleStatementId),
             new DigestionScribeReceipt(gid, staleDefinitionHash, staleEmissionHash));
         var record = new ScribeEmissionRecord(
@@ -207,11 +204,12 @@ public sealed partial class DigestionLedgerTests
             baselineSnapshot: snapshot);
         var status = Assert.Single(evaluation.Entries);
 
-        Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);
-        Assert.Contains(status.Gaps, static gap => gap.Code == "scribe-definition-mismatch");
-        Assert.Contains(status.Gaps, static gap => gap.Code == "scribe-emission-mismatch");
-        Assert.DoesNotContain(evaluation.Findings, static finding =>
-            finding.Contains("handwritten status", StringComparison.Ordinal));
+        Assert.DoesNotContain(status.Gaps, static gap => gap.Code == "scribe-definition-mismatch");
+        Assert.DoesNotContain(status.Gaps, static gap => gap.Code == "scribe-emission-mismatch");
+        Assert.Equal(DigestionMigrationState.Absorbed, status.DerivedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, status.DerivedStatus.Truth);
+        Assert.True(status.Deletable);
+        Assert.Empty(evaluation.Findings);
     }
 
     [Fact]
@@ -221,7 +219,12 @@ public sealed partial class DigestionLedgerTests
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var targetPath = "D5/X_Assumptions/Probe.lean";
         var target = Encoding.UTF8.GetBytes(Lean("D5/X_Assumptions/Probe"));
-        var snapshot = Snapshot(("docs/source.md", source), CasFile(atom), (targetPath, target));
+        var snapshot = Snapshot([
+            ("docs/source.md", source),
+            CasFile(atom),
+            (targetPath, target),
+            .. FrozenLedgerFiles(targetPath),
+        ]);
         var report = new LeanFileReport(
             ImmutableArray<string>.Empty,
             [new LeanDeclaration("tailProbe", "axiom", "True", ["tailProbe"])]);
@@ -230,7 +233,10 @@ public sealed partial class DigestionLedgerTests
             atom,
             DigestionMigrationState.Partial,
             DigestionTruthState.Open,
-            "D5/X_Assumptions/Probe");
+            "D5/X_Assumptions/Probe",
+            new DigestionCoverageEdge(
+                "D5/X_Assumptions/Probe",
+                TestModuleStatementId));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,

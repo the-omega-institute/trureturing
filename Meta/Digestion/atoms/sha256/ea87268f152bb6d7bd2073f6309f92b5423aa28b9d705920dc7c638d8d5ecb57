@@ -1,0 +1,39 @@
+## B6.2 determinant square identity
+
+考虑正算子
+
+$$
+K_N=4J_N^2.
+\tag{B6.4}
+$$
+
+其谱为
+
+$$
+4\cos^2\frac{k\pi}{N+1}.
+\tag{B6.5}
+$$
+
+于是
+
+$$
+\det(I_N+zK_N)
+=
+\prod_{k=1}^N
+\left(1+4z\cos^2\frac{k\pi}{N+1}\right).
+\tag{B6.6}
+$$
+
+利用 $k\leftrightarrow N+1-k$ 配对，并注意奇数 $N$ 时中央 mode 的平方本征值为零，得到：
+
+### 定理 B6.1　path--Zeckendorf determinant identity
+
+$$
+\boxed{
+\det(I_N+4zJ_N^2)
+=H_{N-1}(z)^2.}
+\tag{B6.7}
+$$
+
+因此 Zeckendorf hard-core polynomial 是一个有限正 path determinant 的规范谱平方根。
+

@@ -3,18 +3,23 @@ fingerprints:
   normalized_sha256: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
 cas_ref: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
 coverage_gids:
-  - D5/S3/Analytic/PrimeCashflowCost.cashflow_cost_strict_at_event
-  - D5/S3/Weil/SpectralDynamics.critical_line_characterizations
-  - D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff
+  - gid: D5/S3/Analytic/PrimeCashflowCost.cashflow_cost_strict_at_event
+    target_statement_id: sha256:1abc26d95c156e4e16708f39b7f176e720bce51c1618bd5f3bcc004ec3f5421d
+  - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+    target_statement_id: sha256:dc256aba0acd189a0637ceaffa25da20302027b1666cf98bb9db774029ce4bc8
+  - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff
+    target_statement_id: sha256:4e7016e272f56acd98f9e1559a01b30ffd20f7bb567ec68cbd24e15f0d9b4094
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
-      source_sha256: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
-      target_statement_id: sha256:dc256aba0acd189a0637ceaffa25da20302027b1666cf98bb9db774029ce4bc8
   scribe:
+    - gid: D5/S3/Analytic/PrimeCashflowCost.cashflow_cost_strict_at_event
+      definition_sha256: sha256:22a063e6c132a14c563837bfa257718c269f1ef5b105799eccc986d9a0a4dd88
+      emission_sha256: sha256:5f818d2650917e34787de37dd59f8df2a55985c75acbc7760cfd17aeae782f8c
     - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
-      definition_sha256: sha256:bde4ed75cb707872d65ee1d8275ee4883ea7cd4a9fe14d00b44b6f218b59be0f
-      emission_sha256: sha256:780fb2bf4ea155ef65e33ba9430d282941b7866cdb0b7dbff6c2a46c9c0380ee
+      definition_sha256: sha256:a430f7ac0f6d9853c1a0e3ac5715358822aa84ff6588680d30abd1319810618f
+      emission_sha256: sha256:a22e43e122dbec394ae7e8b2e8b0d860cc781fc56e584227fe5a523a9c541344
+    - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff
+      definition_sha256: sha256:61461dc14bbd4ff3954fedf0aca29d469f932f407b2f71f93f4308f77fdeb94d
+      emission_sha256: sha256:a5ba6a9bd178e1b592ed4a2420212db7a3e15f4366fd777026962f0482d54769
   unresolved_subitems:
     - critical-line-as-phase-transition-via-lee-yang-and-t-duality
     - irreversible-ledger-time-from-strictly-monotone-cost

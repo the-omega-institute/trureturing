@@ -1,0 +1,38 @@
+### 证明
+
+逐项代入：
+
+$$
+[v^k]P_d=\omega_{d,k}a_k.
+$$
+
+于是：
+
+$$
+\frac{\omega_{n,k}}{\omega_{d,k}}[v^k]P_d
+=
+\omega_{n,k}a_k.
+$$
+
+证毕。
+
+而且，固定 \(k\) 时，不碰撞概率随槽位数增加而增加，所以：
+
+$$
+0<
+\frac{\omega_{n,k}}{\omega_{d,k}}
+\le1.
+$$
+
+因此，若高阶系数误差为 \(\varepsilon_k\)，回读后的对应系数误差不超过：
+
+$$
+\boxed{
+\frac{\omega_{n,k}}{\omega_{d,k}}\varepsilon_k
+\le\varepsilon_k.
+}
+\tag{M26}
+$$
+
+这只是系数坐标中的稳定性；之后若构造病态矩阵，仍需继续传递误差。
+

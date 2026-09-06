@@ -1,0 +1,66 @@
+## 假设 21.1　局部二次量子场模型
+
+设已经从前文的交互网络中取得一个局部连续描述。空间维数 \(d\) 在本节作为模型参数，不预先声称它已由观察者定义唯一确定。
+
+令
+
+$$
+\Psi=(\psi_1,\ldots,\psi_r)^{\mathsf T}
+$$
+
+为 \(r\) 个实量子场。在一个系数可视为常数的局部区域，取二次 Lagrangian：
+
+$$
+\boxed{
+\mathcal L
+=
+\frac12\dot\Psi^{\mathsf T}M\dot\Psi
+-
+\frac12
+\sum_{i,j}
+(\partial_i\Psi)^{\mathsf T}S^{ij}(\partial_j\Psi)
+-
+\frac12\Psi^{\mathsf T}K\Psi.
+}
+\tag{21.1}
+$$
+
+要求
+
+$$
+M=M^{\mathsf T}>0,
+\qquad
+K=K^{\mathsf T}\ge0,
+$$
+
+$$
+S^{ij}=S^{ji}=(S^{ij})^{\mathsf T},
+$$
+
+并要求空间梯度二次型正定。
+
+这些条件给出稳定的线性传播模型。量子化后，Heisenberg 场方程仍为
+
+$$
+M\partial_t^2\Psi
+-
+\sum_{i,j}S^{ij}\partial_i\partial_j\Psi
++
+K\Psi=0.
+$$
+
+其二阶主符号为
+
+$$
+\boxed{
+\mathcal P_2(\omega,k)
+=
+-\omega^2M+\sum_{i,j}S^{ij}k_ik_j.
+}
+\tag{21.2}
+$$
+
+质量项 \(K\) 不进入主符号。因此，本节的传播锥不同于某个有质量波包在有限动量下的群速度。
+
+---
+

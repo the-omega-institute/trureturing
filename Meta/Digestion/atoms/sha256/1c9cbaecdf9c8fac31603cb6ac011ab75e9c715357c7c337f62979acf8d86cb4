@@ -1,0 +1,41 @@
+## 596.1 奇偶决定从哪一侧逼近
+
+由误差符号：
+
+$$
+\frac1{L_H}-\varphi^{-H}
+=
+(-1)^{H+1}
+\frac{\varphi^{-2H}}{L_H}
+$$
+
+可知：
+
+$$
+\boxed{
+H\text{ 为奇数}
+\Longrightarrow
+\frac1{L_H}>\varphi^{-H},
+}
+$$
+
+$$
+\boxed{
+H\text{ 为偶数}
+\Longrightarrow
+\frac1{L_H}<\varphi^{-H}.
+}
+$$
+
+所以 Lucas 素数影会随 \(H\) 奇偶，在黄金值两侧交替。
+
+这才是一个严格的：
+
+$$
+\boxed{
+\text{奇破缺、偶重完逼近}.
+}
+$$
+
+---
+

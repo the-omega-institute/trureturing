@@ -1,0 +1,14 @@
+**能否变成图论？**
+
+可以，而且至少要区分：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{约束图： }P_3\sqcup P_2\sqcup P_1\sqcup P_1;\\
+&\text{编码翻转图： }\Gamma_3\square\Gamma_2\square\Gamma_1\square\Gamma_1;\\
+&\text{算术增长图：素数标号的分拆增长图。}
+\end{aligned}
+}
+$$
+

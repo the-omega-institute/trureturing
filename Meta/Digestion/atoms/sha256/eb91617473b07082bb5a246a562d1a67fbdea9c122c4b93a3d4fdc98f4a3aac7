@@ -1,0 +1,14 @@
+### 定理 9.2　全局严格凸性
+
+若 $p\ne q$，则
+
+$$
+R_{p,q}''(\delta)
+=
+2\log^2\frac qp
+\cosh\!\left(2\delta\log\frac qp\right)>0.
+\tag{9.6}
+$$
+
+所以 $R_{p,q}$ 以 $\delta=0$ 为唯一全局极小点。
+

@@ -625,7 +625,10 @@ public sealed partial class BackfillInventoryLoaderTests
         {
             Receipts = entry.Receipts with
             {
-                Quarantine = new DigestionQuarantine(expected, "bridge lands"),
+                Quarantine = new DigestionQuarantine(
+                    expected,
+                    "bridge lands",
+                    "missing-prerequisite"),
             },
         };
 
@@ -678,7 +681,6 @@ public sealed partial class BackfillInventoryLoaderTests
             cas_ref: {{fingerprint}}
             coverage_gids: []
             receipts:
-              coverage: []
               scribe: []
               unresolved_subitems: []
               chain_atoms: []
@@ -729,7 +731,7 @@ public sealed partial class BackfillInventoryLoaderTests
             entry.AppendLine("        cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000");
         }
 
-        if (fields.Contains("coverage_gids"))
+        if (fields.Contains("coverage"))
         {
             entry.AppendLine("        coverage_gids: []");
         }
@@ -737,7 +739,6 @@ public sealed partial class BackfillInventoryLoaderTests
         if (fields.Contains("receipts"))
         {
             entry.AppendLine("        receipts:");
-            entry.AppendLine("          coverage: []");
             entry.AppendLine("          scribe: []");
             entry.AppendLine("          unresolved_subitems: []");
             entry.AppendLine("          chain_atoms: []");

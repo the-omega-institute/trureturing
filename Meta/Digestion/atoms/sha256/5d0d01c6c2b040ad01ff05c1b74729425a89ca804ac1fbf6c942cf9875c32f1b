@@ -1,0 +1,6 @@
+**真正还需要新增的数学内容，就是那个对全部素数尺度、全部指数深度和全部精度等级都成立的安全不变量。**
+
+它不再是一个模糊的“连续—离散奥秘”，而是一个可以准确建模、局部验证、归纳传递，并且与 RH 严格等价的算术安全性问题。
+
+[1]: https://arxiv.org/pdf/math/0008177 "arXiv:math/0008177v2  [math.NT]  6 May 2001"
+[2]: https://arxiv.org/html/1211.2147v3?utm_source=chatgpt.com "Superabundant numbers, their subsequences and the ..."

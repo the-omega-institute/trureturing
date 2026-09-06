@@ -1,0 +1,27 @@
+## 与项目的直接连接
+
+本轮按提交：
+
+```text
+ef1923eca123685ac10ba1fd1aeb79fe9e8e593a
+```
+
+核对了已有编码与下降结构。FRACTRAN、PRIMEGAME关键词检索未返回对应实现；因此不能宣称仓库已经具备本文的完整编译器。已核对的基础是 `primeAxisEncoding` 和 `exact_descent_has_no_carry`，新增桥梁需要另行证明。
+
+最自然的四角色对应是：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{CUT}&:\ \text{读取哪些寄存器或几何统计};\\
+\mathrm{FLOW}&:\ \text{执行哪个整数平移};\\
+\mathrm{ADMIT}&:\ \text{非负性、整除条件与优先级};\\
+\mathrm{ANCHOR}&:\ \text{实际初态、执行记录与输出见证}.
+\end{aligned}
+}
+$$
+
+这比直接把 \(2,3,5,7\) 分别命名为四个原语更有内容。**前者保持实际执行关系；后者若只有四对四的命名，还没有证明语义联系。**
+
+---
+

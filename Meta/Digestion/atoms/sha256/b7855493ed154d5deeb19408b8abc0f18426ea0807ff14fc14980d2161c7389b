@@ -1,0 +1,31 @@
+# 三、正性变得更稳定，首次返回性质却改变了
+
+沿用上一轮的普通回返与首次回返生成函数：
+
+$$
+\mathcal A(z)=\sum_{n\ge0}r_nz^n,
+$$
+
+$$
+\mathcal S(z)=\sum_{n\ge1}\kappa_nz^n,
+$$
+
+以及振幅更新关系
+
+$$
+\boxed{
+\mathcal A(z)=\frac1{1-\mathcal S(z)}.
+}
+\tag{9}
+$$
+
+这里 \(\kappa_n\) 是每一步都监测是否返回初始一维空间时的首次返回振幅，不是未监测的 \(r_n\)。这种区别及其 Schur 函数描述已有严格理论。([arXiv][2])
+
+平滑以后，
+
+$$
+\mathcal A_a(z)=\mathcal A(az).
+$$
+
+所以：
+

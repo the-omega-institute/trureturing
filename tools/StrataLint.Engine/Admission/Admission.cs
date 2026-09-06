@@ -230,8 +230,11 @@ public static class AdmissionPipeline
         RawChangeSet changes,
         MetaClear metaClear,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null,
-        RuleEvaluationMeasure? measureRule = null)
+        RuleEvaluationMeasure? measureRule = null,
+        RuleApplicabilityMeasure? measureApplicability = null,
+        CanonicalizationMeasure? measureCanonicalization = null,
+        ScribeTestMapStore? testMapStore = null,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
         => Evaluate(
             current,
             baseline,
@@ -240,8 +243,11 @@ public static class AdmissionPipeline
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
             verifiedScribeEmissions,
-            forkPoint,
-            measureRule);
+            measureRule,
+            measureApplicability,
+            measureCanonicalization,
+            testMapStore,
+            deriveTestMap);
 
     internal static AdmissionOutcome EvaluateProtectedSurface(
         RepositorySnapshot current,
@@ -251,8 +257,11 @@ public static class AdmissionPipeline
         RawChangeSet changes,
         MetaChangeSet protectedChanges,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        RepositorySnapshot? forkPoint = null,
-        RuleEvaluationMeasure? measureRule = null)
+        RuleEvaluationMeasure? measureRule = null,
+        RuleApplicabilityMeasure? measureApplicability = null,
+        CanonicalizationMeasure? measureCanonicalization = null,
+        ScribeTestMapStore? testMapStore = null,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
         => Evaluate(
             current,
             baseline,
@@ -261,8 +270,11 @@ public static class AdmissionPipeline
             changes,
             MetaEvaluationProfile.ForProtectedSurface(protectedChanges),
             verifiedScribeEmissions,
-            forkPoint,
-            measureRule);
+            measureRule,
+            measureApplicability,
+            measureCanonicalization,
+            testMapStore,
+            deriveTestMap);
 
     private static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
@@ -272,8 +284,11 @@ public static class AdmissionPipeline
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        RepositorySnapshot? forkPoint = null,
-        RuleEvaluationMeasure? measureRule = null)
+        RuleEvaluationMeasure? measureRule = null,
+        RuleApplicabilityMeasure? measureApplicability = null,
+        CanonicalizationMeasure? measureCanonicalization = null,
+        ScribeTestMapStore? testMapStore = null,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
     {
         var context = RuleEvaluationContext.Create(
             current,
@@ -283,11 +298,18 @@ public static class AdmissionPipeline
             changes,
             metaEvaluation,
             verifiedScribeEmissions,
-            forkPoint);
-        return RuleCatalog.Default.Execute(context, measureRule) switch
+            testMapStore,
+            deriveTestMap);
+        return RuleCatalog.Default.Execute(context, measureRule, measureApplicability) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(
-                current, policy, lean, completed.Capability, metaEvaluation, changes),
+                current,
+                policy,
+                lean,
+                completed.Capability,
+                metaEvaluation,
+                changes,
+                measureCanonicalization),
             RuleExecutionOutcome.InfrastructureFailure failure =>
                 new AdmissionOutcome.InfrastructureFailure(failure.Message),
         };
@@ -299,7 +321,8 @@ public static class AdmissionPipeline
         AcceptedLeanClosure lean,
         CompletedRuleSet rules,
         MetaEvaluationProfile metaEvaluation,
-        RawChangeSet changes)
+        RawChangeSet changes,
+        CanonicalizationMeasure? measureCanonicalization)
     {
         var rejected = AdmissionEngine.RejectIfNeeded(rules, metaEvaluation);
         if (rejected is not null)
@@ -307,7 +330,12 @@ public static class AdmissionPipeline
             return rejected;
         }
 
-        return RepositoryCanonicalizer.Validate(current, policy, changes) switch
+        CanonicalizationOutcome Canonicalize() =>
+            RepositoryCanonicalizer.Validate(current, policy, changes);
+        var canonicalization = measureCanonicalization is null
+            ? Canonicalize()
+            : measureCanonicalization(Canonicalize);
+        return canonicalization switch
         {
             CanonicalizationOutcome.Accepted accepted => AdmissionEngine.Decide(
                 policy,

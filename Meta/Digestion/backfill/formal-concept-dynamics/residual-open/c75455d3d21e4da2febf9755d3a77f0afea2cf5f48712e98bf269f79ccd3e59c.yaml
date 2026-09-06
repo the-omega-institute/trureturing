@@ -4,14 +4,17 @@ fingerprints:
 cas_ref: sha256:c75455d3d21e4da2febf9755d3a77f0afea2cf5f48712e98bf269f79ccd3e59c
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-08-26T19:18:10.5783220+00:00
     gids:
       - D5/S3/ConceptDynamics/DecisionValue/InformationValueMonotonicity.free_information_refinement_value_monotone
     gaps:
       - code: structural-alignment-rejected
         detail: 定理/212.1
+  chain_atoms:
+    - 9e5baf236f01a64fb13e40c840dc89e7c961e4f6d49bf27a511f8cd13cc94643
+    - fed49b200dd8f4abdc9549f23cdf349b0971f582482c6b0fb3817b458d602ce9
+    - ac43bac0a3fc515e4854ffb9a0d209cf9047e901c8af9dc5d9ab72ad62745082
+    - a74846afcda2dc4eb878a824abf4c0c3c891e065f6413fd6a4b53cfd681aeebb

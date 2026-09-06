@@ -26,7 +26,7 @@ public sealed class WorkflowTestProhibitionTests
 {
     // 扫描面是 "tools/tests";**每处都直接写字面量,不抽成常量**——
     // ScribeTestMapDeriver 只静态折叠字面量实参,传标识符会 fail-closed 记 VariablePath,
-    // 于是这些 [Fact] 变成 "conservative unknown test method introduced after fork point"
+    // 于是这些 [Fact] 变成 "conservative unknown test method introduced after protected baseline"
     // 而被 SL-003 拒绝(2026-08-29 实测,PR #4021 首轮 admission rc=1,三条全中)。
 
     /// <summary>
@@ -42,9 +42,6 @@ public sealed class WorkflowTestProhibitionTests
             ["tools/tests/StrataLint.Tests/Commands/LeanReport/LeanReportInputScriptTests.cs"] =
                 "生产脚本 lean-report-input.sh 自己解析 ci.yml(缺 job boundaries 即 SystemExit),"
                 + "夹具必须喂它;被测的是该脚本的 producer-paths 派生。",
-            ["tools/tests/StrataLint.Tests/FrozenLedger/FrozenLedgerDeltaPredicateTests.cs"] =
-                "FrozenLedgerDeltaPredicate 把 ci.yml 列为 direct ledger input;测试复述生产数据,"
-                + "不读该文件内容。",
         };
 
     private static readonly Regex WorkflowReference = new(

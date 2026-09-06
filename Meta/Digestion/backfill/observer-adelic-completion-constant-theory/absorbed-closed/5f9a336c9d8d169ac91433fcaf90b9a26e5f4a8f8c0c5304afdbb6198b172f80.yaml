@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:5f9a336c9d8d169ac91433fcaf90b9a26e5f4a8f8c0c5304afdbb6198b172f80
 cas_ref: sha256:5f9a336c9d8d169ac91433fcaf90b9a26e5f4a8f8c0c5304afdbb6198b172f80
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/ToeplitzContactSupport.toeplitz_contact_support
+  - gid: D5/S3/Weil/TestFunctions/ToeplitzContactSupport.toeplitz_contact_support
+    target_statement_id: sha256:3429bb25b79bce3f645ecaaee39de98ecb0bcbffb6b72a24670abd0cd8cab294
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/ToeplitzContactSupport.toeplitz_contact_support
-      source_sha256: sha256:5f9a336c9d8d169ac91433fcaf90b9a26e5f4a8f8c0c5304afdbb6198b172f80
-      target_statement_id: sha256:3429bb25b79bce3f645ecaaee39de98ecb0bcbffb6b72a24670abd0cd8cab294
   scribe:
     - gid: D5/S3/Weil/TestFunctions/ToeplitzContactSupport.toeplitz_contact_support
       definition_sha256: sha256:be4135f6dee55a9fb22ac3376949129af39e815365e1bdfa3378c10b6a86cce6

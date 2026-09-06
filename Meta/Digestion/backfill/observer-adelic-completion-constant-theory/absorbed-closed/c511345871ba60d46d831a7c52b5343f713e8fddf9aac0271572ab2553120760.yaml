@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c511345871ba60d46d831a7c52b5343f713e8fddf9aac0271572ab2553120760
+  normalized_sha256: sha256:c511345871ba60d46d831a7c52b5343f713e8fddf9aac0271572ab2553120760
+cas_ref: sha256:c511345871ba60d46d831a7c52b5343f713e8fddf9aac0271572ab2553120760
+coverage_gids:
+  - gid: D5/S3/Analytic/Adelic/GlobalLogarithmicGaugeCriterion.global_logarithmic_gauge_criterion
+    target_statement_id: sha256:37f72a95893cf5c9e5eebbfa32ed33f5a184206f31469bab904d5ee6ce85f708
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Adelic/GlobalLogarithmicGaugeCriterion.global_logarithmic_gauge_criterion
+      definition_sha256: sha256:470826956f27d0e9efc867e015e8863f0208f394542e32b41ef7526d076bbd2f
+      emission_sha256: sha256:8119673c4fed059c52413332c38c82143b6d61d35aaedee237d91b2e3a3d2124
+  unresolved_subitems: []

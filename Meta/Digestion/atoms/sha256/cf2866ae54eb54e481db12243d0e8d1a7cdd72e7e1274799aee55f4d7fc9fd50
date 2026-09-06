@@ -1,0 +1,37 @@
+## B9.5 fidelity 的局部信息度量
+
+取负对数：
+
+$$
+\boxed{
+-\log\mathcal F_{\mathcal C}(\delta)
+=4\operatorname{Var}_\nu(\omega)\delta^2
++O(\delta^4).}
+\tag{B9.16}
+$$
+
+结合式 (B9.12)：
+
+$$
+\boxed{
+-\log\mathcal F_{\mathcal C}(\delta)
+=
+\frac2W\lambda_{\min}(G(\delta))
++O(\delta^4).}
+\tag{B9.17}
+$$
+
+所以临界线附近的三个量具有同一局部二次 metric：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{prime exterior }\sinh^2\text{ energy},\\
+&\text{reflected Gramian 的最小 eigenvalue},\\
+&\text{反射通道的 negative log fidelity}.
+\end{aligned}}
+\tag{B9.18}
+$$
+
+共同系数正是 weighted variance of $\log p$。
+

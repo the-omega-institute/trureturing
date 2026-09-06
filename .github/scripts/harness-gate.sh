@@ -7,6 +7,7 @@ CANDIDATE_ROOT="."
 BASE_REF=""
 CANDIDATE_LEAN_REPORT=""
 JUDGE_DLL=""
+TEST_MAP_CACHE_ROOT=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -14,6 +15,9 @@ while [[ $# -gt 0 ]]; do
     --base) BASE_REF="$2"; shift 2 ;;
     --candidate-lean-report) CANDIDATE_LEAN_REPORT="$2"; shift 2 ;;
     --judge-dll) JUDGE_DLL="$2"; shift 2 ;;
+    --test-map-cache-root)
+      [[ $# -ge 2 && -n "$2" ]] || { echo "harness-gate: --test-map-cache-root requires a value" >&2; exit 2; }
+      TEST_MAP_CACHE_ROOT="$2"; shift 2 ;;
     *) echo "harness-gate: unknown arg '$1'" >&2; exit 2 ;;
   esac
 done
@@ -32,6 +36,11 @@ if [[ -n "$JUDGE_DLL" ]]; then
   [[ -f "$JUDGE_DLL" ]] \
     || { echo "harness-gate: external judge DLL '$JUDGE_DLL' is absent" >&2; exit 2; }
   JUDGE_DLL="$(cd "$(dirname "$JUDGE_DLL")" && pwd -P)/$(basename "$JUDGE_DLL")"
+fi
+if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
+  mkdir -p "$TEST_MAP_CACHE_ROOT" \
+    || { echo "harness-gate: test map cache root '$TEST_MAP_CACHE_ROOT' is not creatable" >&2; exit 2; }
+  TEST_MAP_CACHE_ROOT="$(cd "$TEST_MAP_CACHE_ROOT" && pwd -P)"
 fi
 CLI_PROJECT_REL="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 
@@ -98,11 +107,15 @@ else
   mark cached-judge
 fi
 
+check_args=(--protected-base "$BASE_REF" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
+if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
+  check_args+=(--test-map-cache-root "$TEST_MAP_CACHE_ROOT")
+fi
+
 set +e
 (
   cd "$CANDIDATE_ROOT"
-  dotnet "$JUDGE_DLL" check --protected-base "$BASE_REF" \
-    --candidate-lean-report "$CANDIDATE_LEAN_REPORT"
+  dotnet "$JUDGE_DLL" check "${check_args[@]}"
 )
 rc=$?
 set -e

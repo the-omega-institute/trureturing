@@ -13,6 +13,7 @@ public sealed partial class DigestionQuarantineTests
         quarantine:
           justification: interpretive statement has no machine predicate
           reentry_condition: typed predicate or frozen witness
+          blocker_class: missing-prerequisite
         """;
 
     [Theory]
@@ -52,7 +53,7 @@ public sealed partial class DigestionQuarantineTests
     {
         var atom = Atom(AtomId, Quarantine).Replace(
             "coverage_gids: []",
-            "coverage_gids:\n  - D5/S0/Carrier/Probe.probe",
+            "coverage_gids:\n  - gid: D5/S0/Carrier/Probe.probe\n    target_statement_id: null",
             StringComparison.Ordinal);
 
         var error = Assert.Throws<FormatException>(() =>
@@ -78,7 +79,8 @@ public sealed partial class DigestionQuarantineTests
                         "atom-quarantined",
                         new DigestionQuarantine(
                             "interpretive statement has no machine predicate",
-                            "typed predicate or frozen witness"),
+                            "typed predicate or frozen witness",
+                            "missing-prerequisite"),
                         "semantic-one",
                         "semantic-two"),
                 ]),
@@ -98,7 +100,10 @@ public sealed partial class DigestionQuarantineTests
                     .ToImmutableArray()))
             .ToImmutableArray();
 
-        var summary = DigestResidualSummary.Render(new DigestionLedgerEvaluation(entries, []));
+        var evaluation = new DigestionLedgerEvaluation(entries, []);
+        var summary = DigestResidualSummary.Render(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
 
         var expected = """
             # Echo Residual Summary
@@ -106,7 +111,28 @@ public sealed partial class DigestionQuarantineTests
             - unresolved_subitems: 2
             - mother_residual_atom_ids: 1
 
-            ## quarantined residuals
+            ## frontier
+
+            - residual_open: 2
+            - formalization_frontier: 0
+            - quarantined: 1
+            - withheld: 0
+            - chain_child: 0
+            - not_formalizable: 1
+            - formalizable_claim: 0
+
+            Per-source frontier:
+
+            - `fixture-source`
+              - residual_open: 2
+              - formalization_frontier: 0
+              - quarantined: 1
+              - withheld: 0
+              - chain_child: 0
+              - not_formalizable: 1
+              - formalizable_claim: 0
+
+            ### quarantined residuals
 
             - quarantined_subitems: 2
             - mother_quarantined_atom_ids: 1
@@ -114,6 +140,7 @@ public sealed partial class DigestionQuarantineTests
             Quarantined residual atoms:
 
             - `fixture-source/atom-quarantined` (2)
+              - blocker_class: `missing-prerequisite`
               - justification: `interpretive statement has no machine predicate`
               - reentry_condition: `typed predicate or frozen witness`
               - `semantic-one`
@@ -159,7 +186,6 @@ public sealed partial class DigestionQuarantineTests
             + $"cas_ref: {Digest}\n"
             + "coverage_gids: []\n"
             + "receipts:\n"
-            + "  coverage: []\n"
             + "  scribe: []\n"
             + Indent(unresolved, 2)
             + quarantineBlock
@@ -198,7 +224,7 @@ public sealed partial class DigestionQuarantineTests
             atomId,
             new DigestionFingerprints(Digest, Digest),
             [],
-            new DigestionReceipts([], [], [.. unresolvedSubitems], [], null, quarantine),
+            new DigestionReceipts([], [.. unresolvedSubitems], [], null, quarantine),
             new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
             Digest);
 

@@ -6,6 +6,7 @@ namespace StrataLint.Cli;
 internal sealed record DigestionReadinessRecord(
     string SourceId,
     string AtomId,
+    ImmutableArray<string> CoverageGids,
     string Action,
     ImmutableArray<string> OrderedBlockers,
     ImmutableArray<string> UnknownPredicates);
@@ -19,82 +20,51 @@ internal static class DigestionReadinessQuery
             ["withheld"] = 1,
             ["refresh-stale"] = 2,
             ["not-formalizable"] = 3,
-            ["needs-routing"] = 4,
+            ["chain-child"] = 4,
             ["close-chain"] = 5,
-            ["cover-now"] = 6,
-            ["repair-scribe"] = 7,
-            ["deposit"] = 8,
+            ["deposit"] = 6,
         }.ToImmutableDictionary(StringComparer.Ordinal);
 
     internal static ImmutableArray<DigestionReadinessRecord> Classify(
-        BackfillInventoryDocument ledger,
-        DigestionLedgerEvaluation evaluation,
-        IReadOnlyDictionary<string, string> contentKinds)
+        DigestionFrontierProjection projection)
     {
-        ArgumentNullException.ThrowIfNull(ledger);
-        ArgumentNullException.ThrowIfNull(evaluation);
-        ArgumentNullException.ThrowIfNull(contentKinds);
+        ArgumentNullException.ThrowIfNull(projection);
 
-        var staleAtomIds = ledger.RequireDigestionSources()
-            .SelectMany(static source => source.AcknowledgedStale)
-            .ToImmutableHashSet(StringComparer.Ordinal);
-        return evaluation.Entries
-            .Where(static item =>
-                item.DerivedStatus.Migration == DigestionMigrationState.Residual
-                && item.DerivedStatus.Truth == DigestionTruthState.Open)
-            .Select(item => ClassifyEntry(
-                item,
-                staleAtomIds,
-                contentKinds))
+        return projection.Entries
+            .Select(ClassifyEntry)
             .OrderBy(static item => ActionPriorities[item.Action])
             .ThenBy(static item => item.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item.AtomId, StringComparer.Ordinal)
             .ToImmutableArray();
     }
 
-    private static DigestionReadinessRecord ClassifyEntry(
-        DigestionEntryEvaluation evaluation,
-        IReadOnlySet<string> staleAtomIds,
-        IReadOnlyDictionary<string, string> contentKinds)
+    internal static DigestionReadinessRecord ClassifyEntry(
+        DigestionFrontierEntry frontier) => frontier.PrimaryDisposition switch
     {
-        var entry = evaluation.Entry;
-        if (entry.Receipts.Quarantine is { } quarantine)
-        {
-            return Record(
-                entry,
+        DigestionFrontierDisposition.Quarantined => Record(
+                frontier.Entry,
                 "quarantined",
-                quarantine.BlockerClass is null
-                    ? ["quarantine"]
-                    : ["quarantine:" + quarantine.BlockerClass]);
-        }
-
-        if (DigestionCoverDispositionSelector.Classify(entry, retryDispositions: false)
-            == DigestionCoverDispositionSelection.Withheld)
-        {
-            return Record(entry, "withheld", [DigestionCoverDispositionSelector.WithholdReason]);
-        }
-
-        if (staleAtomIds.Contains(entry.AtomId))
-        {
-            return Record(entry, "refresh-stale", ["acknowledged-stale"]);
-        }
-
-        if (contentKinds.TryGetValue(entry.AtomId, out var contentKind)
-            && DigestionContentKindPolicy.IsNotFormalizable(contentKind))
-        {
-            return Record(
-                entry,
+                ["quarantine:" + frontier.PrimaryDetail]),
+        DigestionFrontierDisposition.Withheld =>
+            frontier.PrimaryDetail == "acknowledged-stale"
+                ? Record(frontier.Entry, "refresh-stale", [frontier.PrimaryDetail])
+                : Record(frontier.Entry, "withheld", [frontier.PrimaryDetail]),
+        DigestionFrontierDisposition.ChainChild =>
+            Record(frontier.Entry, "chain-child", frontier.ParentAtomIds),
+        DigestionFrontierDisposition.NotFormalizable => Record(
+                frontier.Entry,
                 "not-formalizable",
-                ["non-assertion-ast-kind:" + contentKind]);
-        }
+                ["non-assertion-ast-kind:" + frontier.KindLabel]),
+        DigestionFrontierDisposition.FormalizableClaim => ClassifyFormalizable(frontier),
+        _ => throw DigestionFrontierDispositionPolicy.Unsupported(frontier.PrimaryDisposition),
+    };
 
-        if (contentKind is null || !DigestionContentKindPolicy.IsFormalizable(contentKind))
-        {
-            return Record(entry, "needs-routing", ["unsupported-ast-kind"]);
-        }
-
+    private static DigestionReadinessRecord ClassifyFormalizable(
+        DigestionFrontierEntry frontier)
+    {
+        var entry = frontier.Entry;
         var openChildren = entry.Receipts.ChainAtoms
-            .Where(atomId => evaluation.Gaps.Any(gap =>
+            .Where(atomId => frontier.Evaluation.Gaps.Any(gap =>
                 string.Equals(gap.Code, "chain-migration-incomplete", StringComparison.Ordinal)
                 && string.Equals(gap.Detail, atomId, StringComparison.Ordinal)))
             .ToImmutableArray();
@@ -113,6 +83,7 @@ internal static class DigestionReadinessQuery
         ImmutableArray<string> unknownPredicates = default) => new(
             entry.SourceId,
             entry.AtomId,
+            entry.CoverageGids,
             action,
             orderedBlockers,
             unknownPredicates.IsDefault ? [] : unknownPredicates);

@@ -1,0 +1,2 @@
+**定理 2.2.1(Euclid 连分数检查器的可靠性)**〔候签;open;落 `D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront`〕。定义燃料化 Euclid 商列 `cfDigitsAux` 与 `cfDigits a q := cfDigitsAux (q+1) a q`,并定义 `ZarembaWitness A a q := Nat.Coprime a q ∧ 0<a ∧ a<q ∧ ∀ d∈cfDigits a q, d≤A` 及独立布尔检查器 `zarembaCheck`;证明每一步取商 `a/q`、以严格较小的余数 `a%q<q` 递归,且 `zarembaCheck A a q=true → ZarembaWitness A a q`。
+

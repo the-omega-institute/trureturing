@@ -3,20 +3,33 @@ fingerprints:
   normalized_sha256: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
 cas_ref: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
 coverage_gids:
-  - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
-  - D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_fixed_iff
-  - D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_mirror_fixed_locus_contrast
-  - D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.completed_riemann_zeta_one_sub_conj
-  - D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.riemann_zeta_conj
+  - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
+    target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
+  - gid: D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_fixed_iff
+    target_statement_id: sha256:404393f7c6c9368736090192ef9a00e50978f2b9db034e66d048707e1a36124e
+  - gid: D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_mirror_fixed_locus_contrast
+    target_statement_id: sha256:fd8fd3fb8622dd2712ab2218cf0616007766d60a01b4f957c6ea9032aa4241a6
+  - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.completed_riemann_zeta_one_sub_conj
+    target_statement_id: sha256:ef5b4d341a02620f9ae9c60b1da912f937171f98c7aa224ffc25a1320d2b9f91
+  - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.riemann_zeta_conj
+    target_statement_id: sha256:acd6c15d96a17e3f637a9a0636319ae0958028afe99540ba02c519cbf20646e5
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
-      source_sha256: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
-      target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
   scribe:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
+    - gid: D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_fixed_iff
+      definition_sha256: sha256:d5dde6964e3df83948af575032e1e40c77bd2e861ae05b0d84a359e5247af3f8
+      emission_sha256: sha256:caa904a60629053ac63eca78e917e17efb6b084190f60c4a0cbb3949db2a2fb7
+    - gid: D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_mirror_fixed_locus_contrast
+      definition_sha256: sha256:d5dde6964e3df83948af575032e1e40c77bd2e861ae05b0d84a359e5247af3f8
+      emission_sha256: sha256:caa904a60629053ac63eca78e917e17efb6b084190f60c4a0cbb3949db2a2fb7
+    - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.completed_riemann_zeta_one_sub_conj
+      definition_sha256: sha256:dff6c9a8cd359ee61c10568babafd2a90adab151ea3b7045cba27b602a30adee
+      emission_sha256: sha256:2b39198fb60ec3677d6a2e56849d6568688bf6089a082679dd466c15b9bb969a
+    - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.riemann_zeta_conj
+      definition_sha256: sha256:dff6c9a8cd359ee61c10568babafd2a90adab151ea3b7045cba27b602a30adee
+      emission_sha256: sha256:2b39198fb60ec3677d6a2e56849d6568688bf6089a082679dd466c15b9bb969a
   unresolved_subitems:
     - critical-line-existence-from-information-reversal
     - genesis-plus-terminal-information-equals-total-knowledge

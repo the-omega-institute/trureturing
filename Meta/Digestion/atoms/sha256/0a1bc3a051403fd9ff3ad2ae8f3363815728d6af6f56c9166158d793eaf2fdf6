@@ -1,0 +1,39 @@
+## 定义 71.2　精确推理步骤
+
+从接口 \(\mathfrak A\) 到接口 \(\mathfrak B\) 的一个精确步骤，是三元组
+
+$$
+\boxed{
+s=(F_s,\overline F_s,p_s),
+}
+\tag{71.1}
+$$
+
+其中
+
+$$
+F_s:X_A\to X_B,
+$$
+
+$$
+\overline F_s:B_A\to B_B,
+$$
+
+而 \(p_s\) 是命题
+
+$$
+\boxed{
+\forall x\in X_A,\qquad
+q_B(F_sx)=\overline F_s(q_Ax)
+}
+\tag{71.2}
+$$
+
+的证明。
+
+这里不能只声明“\(\overline F_s\) 是下降动力学”。必须实际给出该映射，并填入式（71.2）的证明。
+
+如果讨论量子物理，\(F_s\) 与 \(\overline F_s\) 还必须具有指定的物理实现见证；一般函数的存在不自动满足这一要求。
+
+---
+

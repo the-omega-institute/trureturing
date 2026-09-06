@@ -1,0 +1,12 @@
+# 六、这些正频带的联合贡献，也会随表示改变
+
+定义与实际均方相同窗口的子核读出
+
+$$
+\mathfrak B_\tau(X)
+=
+\int_X^{2X}\frac1{x^2}
+\sum_{x<n,m\le2x}
+\mathscr P_{X,\tau}(n,m)\,dx.
+$$
+

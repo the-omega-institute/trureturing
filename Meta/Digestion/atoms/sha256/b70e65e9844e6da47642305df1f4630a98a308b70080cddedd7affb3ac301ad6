@@ -1,0 +1,55 @@
+## C14.3 determinant floor
+
+所有 singular values 都不小于 $\sqrt\mu$，所以：
+
+$$
+\boxed{
+|\det T_N|
+\ge
+\mu^{d_N/2}.
+}
+\tag{C14.16}
+$$
+
+若：
+
+$$
+D_N(s)
+=
+U_N(s)\det T_N(s),
+\tag{C14.17}
+$$
+
+且边界上：
+
+$$
+|U_N(s)|\ge u_N>0,
+\tag{C14.18}
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Floor}_N(R)
+\ge
+u_N\mu_N^{d_N/2}.
+}
+\tag{C14.19}
+$$
+
+因此一个足够的 Rouché 条件是：
+
+$$
+\boxed{
+\operatorname{Err}_N(R)
+<
+u_N\mu_N^{d_N/2}.
+}
+\tag{C14.20}
+$$
+
+这就是 Schur margin 到 analytic zero-count stability 的定量桥。
+
+---
+

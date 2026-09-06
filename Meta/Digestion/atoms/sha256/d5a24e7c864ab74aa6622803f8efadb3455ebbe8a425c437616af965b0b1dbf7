@@ -1,0 +1,36 @@
+## B4.1 一步 transfer 是 norm $-1$ 单位作用
+
+记
+
+$$
+A=T(1)=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+\tag{B4.1}
+$$
+
+其 determinant 为
+
+$$
+\det A=-1,
+\tag{B4.2}
+$$
+
+且
+
+$$
+A^\mathsf TJ_1A=-J_1.
+\tag{B4.3}
+$$
+
+这对应黄金单位
+
+$$
+\operatorname{Norm}(\varphi)=-1.
+\tag{B4.4}
+$$
+
+所以一次 Fibonacci transfer 是 orientation-reversing 的 Lorentz unit；其平方才进入 proper boost 分量。
+

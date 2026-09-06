@@ -1,0 +1,10 @@
+## 334. Krein pairing
+
+每个非实离线 orbit 都释放一个 odd negative channel：
+
+$$
+|a_+|^2-|a_-|^2.
+$$
+
+仓库已经闭合其 \(a=1,b=-1\) 的严格负 witness。
+

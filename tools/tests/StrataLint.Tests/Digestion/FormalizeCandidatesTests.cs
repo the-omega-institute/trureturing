@@ -70,7 +70,7 @@ public sealed partial class FormalizeCandidatesTests
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
         Assert.Equal(
-            ["corollary", "lemma", "proposition", "theorem"],
+            ["corollary", "lemma", "proposition", "theorem", "theorem-form"],
             json.RootElement.GetProperty("candidates")
                 .EnumerateArray()
                 .Select(static candidate => candidate.GetProperty("kind").GetString())
@@ -496,9 +496,9 @@ public sealed partial class FormalizeCandidatesTests
                         atomizer,
                         entry.AtomId,
                         entry.Atom.Fingerprints,
-                        ImmutableArray.CreateRange(entry.CoverageGids),
+                        entry.CoverageGids.Select(static gid =>
+                            new DigestionCoverageEdge(gid, null)).ToImmutableArray(),
                         new DigestionReceipts(
-                            [],
                             [],
                             [],
                             [],
@@ -540,6 +540,7 @@ public sealed partial class FormalizeCandidatesTests
         "residual" => DigestionMigrationState.Residual,
         "partial" => DigestionMigrationState.Partial,
         "absorbed" => DigestionMigrationState.Absorbed,
+        "nonpropositional" => DigestionMigrationState.Nonpropositional,
         _ => throw new ArgumentOutOfRangeException(nameof(value)),
     };
 
@@ -548,6 +549,7 @@ public sealed partial class FormalizeCandidatesTests
         "closed" => DigestionTruthState.Closed,
         "tail" => DigestionTruthState.Tail,
         "open" => DigestionTruthState.Open,
+        "inapplicable" => DigestionTruthState.Inapplicable,
         _ => throw new ArgumentOutOfRangeException(nameof(value)),
     };
 

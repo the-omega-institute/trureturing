@@ -1,0 +1,23 @@
+## 17.4 载体像失效
+
+全部有限局部条件形成的 completion 不一定来自普通整数或经典 \(\xi\) 的真实实现。
+
+因此，真正的 RH 桥需要四个对应修复：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有限对称语法}
+&\quad\text{修复 non-Noetherianity};\\
+\text{紧算子或统一尾界}
+&\quad\text{修复 diagonal escape};\\
+\text{相对 jump norm}
+&\quad\text{修复 critical divergence};\\
+\text{realizability/faithfulness}
+&\quad\text{修复 completion-image escape}.
+\end{aligned}
+}
+$$
+
+---
+

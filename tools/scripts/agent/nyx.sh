@@ -1,0 +1,203 @@
+#!/usr/bin/env bash
+# nyx.sh — nyxid 派票与状态分类。**不要再用 `tail -1` 肉眼判成败。**
+#
+# 立条依据(2026-08-28):我用「tail -1 != EXIT=0」当失败的代理,它把**四个状态**混成一个:
+#   110B  Failed to read prompt   —— 我自己的 mkrev bug
+#   153B  extraction_failure      —— 载体侧随机,可重投
+#   178B  waiting_response        —— **还在跑,根本不是失败**
+#   248B  HTTP 429 quota_exceeded —— **我自己把池打满了**
+# 契约就写在 429 的 body 里:`limit 4` 并发。我从没读到它,因为代理把它藏了。
+# 而误读直接导致错误决策:读到「6 投全败」于是投得更多 → 更多 429。
+#
+# 用法:
+#   nyx.sh ask <brief> <outfile>     投一票(自动等到 in-flight < LIMIT 才投)\n#   nyx.sh fetch <task-id> <out>     续等一个已提交的任务(ask 超时后用它,不重复提交)
+#   nyx.sh status [glob]             分类打印 /tmp/nyx-*.out 的真实状态
+#   nyx.sh inflight                  当前 in-flight 数
+export PATH="$HOME/.local/bin:$PATH"
+# 2026-08-28 实测:契约写 limit 4,但实际吞吐更低,且 `nyxid oracle status` 的 in-flight
+# **包含别人的任务**(组织级共享池)—— 某刻显示 3 而我只有 2 张在跑。故保守取 2。
+POOL="${NYX_POOL:-chatgpt-pro-pool}"
+# LIMIT 缺省**由 pool 自报容量派生**,不写死(2026-09-04 立)。
+# 案由:await.sh 曾写死 NYX_LIMIT=4,而 company pool 容量为 10、已被他人占 6 —— 6 >= 4,
+# 于是持锁者永远等不到「空位」,10 分钟后报 NYX_BUSY,五票全部卡在提交之前、零输出。
+# 写死一个与被测对象无关的数,就是器律④ 的坏原材料:它看起来像个限额,实际与真实容量无关。
+LIMIT="${NYX_LIMIT:-}"
+# 提交模式(2026-09-04 立)。新版 worker 脚本(cdp-2.6+)执行 `nyxid.oracle.submission-gate.v1`,
+# **fresh task 必须显式带 mode tag**,否则秒退 `oracle_mode_required` 且 retryable=false。
+# 旧脚本(cdp-1.3)不要求,故同一条命令在不同 pool 上一个能过一个不能 —— 这正是
+# 「不看 pool 自报的契约就派」的代价。契约原文:`nyxid oracle pool show <slug> --output json`。
+# 取 mode:chat 因其默认模型即 ChatGPT **Pro**,与本仓 goal 的「1 席 gpt pro」精确对应;
+# mode:work 默认 Ultra,属另一档,不在 goal 射程内。
+TAG="${NYX_TAG:-mode:chat}"
+
+__classify() {  # 读一个 .out,打印:OK|EXTRACTION|QUOTA|NOFILE|RUNNING|UNKNOWN
+  local f="$1"
+  [ -f "$f" ] || { echo NOFILE_OUT; return; }
+  if [ "$(tail -1 "$f")" = "EXIT=0" ]; then echo OK; return; fi
+  grep -q 'oracle_quota_exceeded\|HTTP 429' "$f" && { echo QUOTA; return; }
+  grep -q 'Failed to read prompt' "$f" && { echo NOFILE; return; }
+  grep -q 'extraction_failure' "$f" && { echo EXTRACTION; return; }
+  grep -q 'EXIT=' "$f" && { echo UNKNOWN; return; }
+  echo RUNNING   # 无 EXIT= 行 ⟹ 进程还没结束
+}
+
+__expired() {  # 会话过期是能力缺口,不是池满 —— 必须与 in-flight 区分,否则白等 10 分钟
+  nyxid oracle status "$POOL" 2>&1 | grep -q 'session has expired' && return 0 || return 1
+}
+__capacity() {  # pool 自报的总容量(Dispatched: N / M 的 M)
+  local m
+  m=$(nyxid oracle status "$POOL" 2>&1 | grep -oE 'Dispatched: *[0-9]+ */ *[0-9]+' | grep -oE '[0-9]+$')
+  echo "${m:-2}"   # 读不到退回保守值,fail-closed
+}
+__inflight() {
+  local n
+  n=$(nyxid oracle status "$POOL" 2>&1 | grep -oE 'Dispatched: *[0-9]+' | grep -oE '[0-9]+$')
+  echo "${n:-99}"   # 读不到就当满,fail-closed:宁可等,不可再打 429
+  # 注:`nyxid oracle status` 把状态写到 **stderr**,必须 2>&1,否则恒为空 → 恒判 99
+}
+
+__verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决唯一合法的分类器。
+  # 分界:载体是否把答案交回来了,与 worker 判词是 approve 还是 reject **无关**;
+  # 故只认 nyxid CLI 自己的错误形态,不因答案里出现 "Error:" 字样而误判(见 --selftest 阴性对照)。
+  local r="$1" first
+  case "$r" in
+    *oracle_quota_exceeded*|*"HTTP 429"*) echo QUOTA;      return;;
+    *"Failed to read prompt"*)            echo NOFILE;     return;;
+    *extraction_failure*)                 echo EXTRACTION; return;;
+  esac
+  [ -n "$r" ] || { echo UNKNOWN; return; }
+  first=${r%%$'\n'*}
+  case "$first" in "Error:"*) echo UNKNOWN; return;; esac
+  echo OK
+}
+
+__poll_task() {  # <task-id> <outfile> —— 轮询取回,落判词与 EXIT= 哨兵。ask 与 fetch 共用**同一份**实现。
+  # **这不是挂钟猜测**(器律⑥′):池无 webhook,`nyxid oracle result` 是唯一取回原语;
+  # 间隔对齐真实任务时长(实测数分钟级),有上限,且判据(__verdict_of_payload)在开跑前已写死。
+  local tid="$1" out="$2" n=0 r rc verdict
+  while [ $n -lt "${NYX_POLL_ROUNDS:-60}" ]; do
+    r=$(nyxid oracle result "$tid" 2>&1)
+    case "$r" in *"Task is dispatched"*|*"Phase:"*|*queued*) ;; *) printf '%s\n' "$r" >> "$out"; break;; esac
+    n=$((n+1)); sleep "${NYX_POLL_SECONDS:-20}"
+  done
+  if [ $n -ge "${NYX_POLL_ROUNDS:-60}" ]; then
+    echo "NYX_TIMEOUT $tid 仍未落定;可随时 nyx.sh fetch $tid <out> 续等,或 nyxid oracle result $tid 取回"
+    rc=3; verdict=TIMEOUT
+  else
+    verdict=$(__verdict_of_payload "$r")
+    case "$verdict" in OK) rc=0;; *) rc=1;; esac
+  fi
+  echo "EXIT=$rc" >> "$out"
+  echo "NYX_$verdict $(basename "$out" .out)"
+  return $rc
+}
+
+__selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**:`__classify` 的 OK 分支要求
+  # `tail -1 = EXIT=0`,而 `EXIT=` 是**分类之后**才追加的 —— 在 ask 的活判决里该分支
+  # **结构上不可达**,于是每一次成功取回都被判 rc=1。器律④:坏原材料让调用方误判。
+  # 该错配无运行期信号(答案就在文件里,只有退出码是错的),故必须由对照钉住。
+  local fail=0 got
+  chk() {  # chk <期望> <名字> <payload>
+    got=$(__verdict_of_payload "$3" 2>/dev/null)
+    if [ "$got" = "$1" ]; then printf '  ok   %-30s %s\n' "$2" "$got"
+    else printf '  FAIL %-30s expected=%s got=%s\n' "$2" "$1" "${got:-<none>}"; fail=1; fi
+  }
+  # 阳性:真答案必须判 OK —— 载体成功与 worker 判词是两回事,reject 也是成功取回
+  chk OK         answer-json                '{"ok":true}'
+  chk OK         answer-reject-verdict      '{"verdict":"reject","conclusion":{"a":1}}'
+  chk OK         answer-contains-error-word '{"verdict":"reject","note":"Error: in their proof"}'
+  chk OK         answer-multiline-err-later "$(printf 'line one\nError: quoted from their log')"
+  # 阴性:载体侧失败必须各自可辨,不得混成一个
+  chk EXTRACTION carrier-extraction         'Error: Task failed (extraction_failure).'
+  chk QUOTA      carrier-quota-429          'Error: HTTP 429 {"error":"oracle_quota_exceeded"}'
+  chk NOFILE     carrier-prompt-missing     'Error: Failed to read prompt'
+  chk UNKNOWN    carrier-bare-error         'Error: forbidden'
+  chk UNKNOWN    empty-payload              ''
+  # 回归钉:文件级 __classify 在「最后一行是答案」的文件上必判 RUNNING,
+  # 这正是它不能用于活判决的原因;若有人把它改回去,本例变红。
+  local tmp; tmp=$(mktemp)
+  printf 'Task submitted.\n\n{"ok":true}\n' > "$tmp"
+  got=$(__classify "$tmp"); rm -f "$tmp"
+  if [ "$got" = RUNNING ]; then printf '  ok   %-30s %s\n' file-classifier-unusable-live "$got"
+  else printf '  FAIL %-30s expected=RUNNING got=%s\n' file-classifier-unusable-live "$got"; fail=1; fi
+  # 接线钉:活判决必须用 __verdict_of_payload,不得退回文件级 __classify。
+  # 载体是 shell,无语言服务器(器律⑩ 的辨析允许对这类载体作窄形状断言);
+  # 断言窄到一条赋值形状,不是通用文本判语义。
+  if grep -qE 'verdict=\$\(__classify' "$0"; then
+    printf '  FAIL %-30s live verdict still reads the file classifier\n' wiring-uses-payload-classifier; fail=1
+  else
+    printf '  ok   %-30s %s\n' wiring-uses-payload-classifier verdict_of_payload
+  fi
+  [ $fail -eq 0 ] && echo "SELFTEST_OK" || echo "SELFTEST_FAIL"
+  return $fail
+}
+
+case "$1" in
+  --selftest) __selftest; exit $? ;;
+  inflight) __inflight ;;
+  status)
+    printf "%-8s %-26s %6s %s\n" 时间 状态 字节 文件
+    for f in ${2:-/tmp/nyx-*.out}; do
+      printf "  %-8s %-26s %5sB %s\n" "$(stat -f '%Sm' -t '%H:%M' "$f")" "$(__classify "$f")" \
+        "$(wc -c <"$f"|tr -d ' ')" "$(basename "$f" .out)"
+    done | sort -k2
+    echo "  ---- in-flight=$(__inflight)/$LIMIT"
+    ;;
+  fetch)
+    # `ask` 的取回循环有上限;一个深研究任务(读 500KB 理论卷 + 仓库树)常跑得比它久。
+    # 那时任务**仍活在池里**,只是没有动词能续等 —— 本会话两次撞上,故补此动词(器律⑥″:一切经器)。
+    # 幂等:重复调用只是再取一次;不重复提交,不消耗配额。
+    tid="$2"; out="$3"
+    [ -n "$tid" ] || { echo "NYX_ERR fetch 需要 <task-id>"; exit 2; }
+    [ -n "$out" ] || { echo "NYX_ERR fetch 需要 <outfile>"; exit 2; }
+    case "$tid" in
+      [0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*) ;;
+      *) echo "NYX_ERR fetch 的 <task-id> 不是 uuid 形: $tid"; exit 2 ;;
+    esac
+    : > "$out"
+    echo "$tid" > "$out.taskid"
+    __poll_task "$tid" "$out"; exit $?
+    ;;
+  ask)
+    brief="$2"; out="$3"
+    [ -n "$LIMIT" ] || LIMIT="$(__capacity)"
+    [ -f "$brief" ] || { echo "NYX_ERR brief 不存在: $brief"; exit 2; }   # 110B 那个 bug 的门
+    # 会话过期 → 立刻报能力缺口,不要当池满去等 10 分钟(2026-08-28 实测遇到)
+    __expired && { echo "NYX_EXPIRED 会话已过期 —— 需人跑 \`nyxid login\`(第15条:能力缺口,等灯亮)"; exit 4; }
+    # **锁**:检查 in-flight 与提交之间必须原子,否则两个并发 ask 会都看到有空位、都提交 → 429。
+    # (2026-08-28 实测:并发两个 ask,in-flight=3,两者都判有空位,一者得 QUOTA。
+    #  这是 TOCTOU 竞态 —— 器自己犯了它要防的那个错。)
+    # 锁**按 pool 分片**:跨 pool 本无竞态,共用一把锁会让空闲 pool 的票排在满 pool 的票后面。
+    LOCK="${TMPDIR:-/tmp}/nyx-ask-${POOL}.lock"
+    n=0
+    while ! mkdir "$LOCK" 2>/dev/null; do
+      n=$((n+1)); [ $n -gt 120 ] && { echo "NYX_LOCKBUSY 等锁超时: $out"; exit 3; }
+      sleep 5
+    done
+    trap 'rmdir "$LOCK" 2>/dev/null' EXIT INT TERM
+    # 持锁期间等空位,再提交 —— 提交后立刻放锁(任务已计入 in-flight)
+    n=0
+    while [ "$(__inflight)" -ge "$LIMIT" ] && [ $n -lt 30 ]; do sleep 20; n=$((n+1)); done
+    if [ "$(__inflight)" -ge "$LIMIT" ]; then
+      rmdir "$LOCK" 2>/dev/null; trap - EXIT
+      echo "NYX_BUSY 等了 10 分钟仍满($LIMIT),放弃: $out"; exit 3
+    fi
+    # **--no-wait + 记 task id**:阻塞等待会让「我的进程生死」决定「任务是否丢失」。
+    # 2026-08-28 实测:前台 ask 被 2min 超时杀、后台 ask 被 SIGTERM(exit 143)杀,
+    # 而 `nyxid oracle result <task-id>` 显示**任务在池里仍活着**(`Phase: waiting_response`)。
+    # 故改为提交后立刻拿 id 落盘,等待与取回分离 —— 被杀只丢等待,不丢工作。
+    nyxid oracle ask "$POOL" --file "$brief" --tag "$TAG" --no-wait > "$out" 2>&1; rc=$?
+    tid=$(grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' "$out" | head -1)
+    [ -n "$tid" ] && echo "$tid" > "$out.taskid"
+    rmdir "$LOCK" 2>/dev/null; trap - EXIT
+    if [ -z "$tid" ]; then echo "EXIT=$rc" >> "$out"; echo "NYX_$(__classify "$out") $(basename "$out" .out)"; exit $rc; fi
+    # 轮询取回与判词由 __poll_task 承担(唯一真源;ask 与 fetch 共用)。
+    # **退出码必须反映取回的内容,不能写死 0**
+    # (2026-08-28:no-wait 改造首跑即回归 —— `extraction_failure` 报了 EXIT=0,
+    #  正是器律④「原材料好,不靠读者警惕」要禁的坏材料:调用方按退出码判就会误判成功。)
+    # **进程退出码也必须反映判词**:此前 ask 分支以 echo 收尾,脚本恒 exit 0,
+    # 于是写进文件的 EXIT= 与进程退出码可以相反 —— 同一个「坏原材料」病的第二个面。
+    __poll_task "$tid" "$out"; exit $?
+    ;;
+  *) echo "usage: nyx.sh {ask <brief> <out>|fetch <task-id> <out>|status [glob]|inflight|--selftest}" >&2; exit 2 ;;
+esac

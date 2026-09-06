@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:9bb7bfbf40965990f6f42f978bdbd85c8e205c099f1ea789fb479509b04ed9d5
 cas_ref: sha256:9bb7bfbf40965990f6f42f978bdbd85c8e205c099f1ea789fb479509b04ed9d5
 coverage_gids:
-  - D5/S3/Estimation/DecisionRisk/PosteriorStoppingMapErrorBound.posterior_stopping_map_error_bound
+  - gid: D5/S3/Estimation/DecisionRisk/PosteriorStoppingMapErrorBound.posterior_stopping_map_error_bound
+    target_statement_id: sha256:f61e316d70105da23b28445bedcc0ce3b39783696cb02b28e243dd19e0065971
 receipts:
-  coverage:
-    - gid: D5/S3/Estimation/DecisionRisk/PosteriorStoppingMapErrorBound.posterior_stopping_map_error_bound
-      source_sha256: sha256:9bb7bfbf40965990f6f42f978bdbd85c8e205c099f1ea789fb479509b04ed9d5
-      target_statement_id: sha256:f61e316d70105da23b28445bedcc0ce3b39783696cb02b28e243dd19e0065971
   scribe:
     - gid: D5/S3/Estimation/DecisionRisk/PosteriorStoppingMapErrorBound.posterior_stopping_map_error_bound
       definition_sha256: sha256:0c7a07fbfde986883cb936b8d394fc737eb4581dbe355e23894c496cd4f3b10b

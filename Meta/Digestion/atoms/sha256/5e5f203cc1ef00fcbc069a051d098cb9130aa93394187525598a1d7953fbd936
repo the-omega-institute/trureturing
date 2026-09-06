@@ -1,0 +1,28 @@
+## 233. 永久残余
+
+如果：
+
+$$
+\boxed{
+\bigcap_nR_n\neq\{0\},
+}
+$$
+
+则存在一个固定非零方向，被全部观察层同时遗漏。
+
+这才是严格的 intrinsic hidden sector。
+
+因此：
+
+$$
+\boxed{
+\text{“每层都有盲区”}
+\not\Rightarrow
+\text{“极限仍有盲区”}.
+}
+$$
+
+必须计算残余交。
+
+---
+

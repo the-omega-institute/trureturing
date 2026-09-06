@@ -1,0 +1,70 @@
+## 12.1 相对 Hilbert 空间
+
+候选半范数应更像：
+
+$$
+\|f\|_{\mathrm{rel}}^2
+=
+\sum_{p^m}
+w_{p^m}
+\left\|
+f-\tau_{\log p^m}f
+\right\|^2
++
+E_\infty(f).
+$$
+
+共同常值模式满足：
+
+$$
+f-\tau_a f=0,
+$$
+
+所以它被商掉。
+
+项目当前的 prime jump decomposition 已经在有限尺度把 prime term 写成：
+
+$$
+\boxed{
+\text{coherent mass}
+-
+\text{nonnegative translation jump energy}.
+}
+$$
+
+因此真正平方可和的对象可能不是：
+
+$$
+\text{全部素数绝对幅度},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{全部素数相对于共同观察起源的偏差。}
+}
+$$
+
+这再次导出：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{relative flatness}
++
+\text{global centering}.
+}
+$$
+
+prime side 负责消除相对不一致。
+
+函数方程和 completed structure 负责把共同中心固定到：
+
+$$
+\frac12.
+$$
+
+---
+

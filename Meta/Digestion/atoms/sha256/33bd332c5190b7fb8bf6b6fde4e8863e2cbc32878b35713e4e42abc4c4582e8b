@@ -1,0 +1,33 @@
+## 推论：实际算术没有稳定的“二次能量中间态”
+
+对实际素数，以下渐近式不可能成立：
+
+$$
+\boxed{
+\mathcal E_h(L)\sim cL^2,
+\qquad c>0.
+}
+\tag{8}
+$$
+
+因为它使式（5）左边为零，进而推出 RH；而 RH 又要求 \(\mathcal E_h(L)=O(L)\)，与 \(cL^2\) 矛盾。
+
+所以，对当前特定读出：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\Longrightarrow O(L),\\
+\neg\mathrm{RH}
+&\Longrightarrow
+\text{沿某个序列呈正指数率增长}.
+\end{aligned}
+}
+\tag{9}
+$$
+
+第二行是上极限意义的结论，不是说能量对每个 \(L\) 都具有同一个精确指数渐近式。
+
+---
+

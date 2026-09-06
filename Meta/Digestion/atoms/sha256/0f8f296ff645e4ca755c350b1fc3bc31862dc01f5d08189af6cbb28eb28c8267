@@ -1,0 +1,35 @@
+# 继续增订：Cayley–Casimir–Krein 重完备化理论
+
+这一轮可以把此前分散的结论进一步压缩为一条几乎闭合的等价链：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{零点上的解析对偶等于复现实}\\
+&\iff
+\text{Cayley 零点全部位于单位圆}\\
+&\iff
+\text{reflection-Casimir 坐标全部位于正射线}\\
+&\iff
+\text{每个零点轨道具有正的奇偶不变度量}\\
+&\iff
+\text{由 }\xi\text{ 系数生成的 Casimir 矩序列是 Hausdorff 矩序列}\\
+&\iff
+\text{该矩序列产生一个正自伴收缩算子}.
+\end{aligned}
+}
+$$
+
+前四步是直接代数等价；后两步需要消费 completed \(\xi\) 在反射商上的 genus-zero 乘积以及 Hausdorff 矩问题。仓库理论层已经登记了 `LiPowerTraceTransform`、`LiHausdorffMoments`、`CompleteMonotonicityRHCriterion` 等模块名，但当前检索只定位到规划条目，尚未定位到对应 Lean owner。
+
+这组结构可以称为：
+
+> **Cayley–Casimir–Krein Recompletion Theory，CCKRT**
+> **Cayley–Casimir–Krein 重完备化理论**
+
+它应作为 ZCOCT 的新解析核心，而不是另起一套平行理论。
+
+---
+

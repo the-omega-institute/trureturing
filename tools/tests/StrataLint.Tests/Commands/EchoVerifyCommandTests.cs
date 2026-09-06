@@ -48,8 +48,12 @@ public sealed class EchoVerifyCommandTests
             Entry("source-b", "atom-c", "shared", "b-only"),
         ], []);
 
-        var aggregate = DigestResidualSummary.Render(evaluation);
-        var shards = DigestResidualSummary.RenderShards(evaluation);
+        var aggregate = DigestResidualSummary.Render(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
+        var shards = DigestResidualSummary.RenderShards(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
 
         Assert.Equal(
             Metric(aggregate, "unresolved_subitems"),
@@ -87,7 +91,7 @@ public sealed class EchoVerifyCommandTests
             atomId,
             new DigestionFingerprints("sha256:synthetic", "sha256:synthetic"),
             [],
-            new DigestionReceipts([], [], [], [], null),
+            new DigestionReceipts([], [], [], null),
             status,
             "sha256:synthetic");
         return new DigestionEntryEvaluation(

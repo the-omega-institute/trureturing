@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:a2d4a09a5946acb9874db010bdd545e8e7e5a0fed6d39ebf4f55b89b45b8652f
 cas_ref: sha256:a2d4a09a5946acb9874db010bdd545e8e7e5a0fed6d39ebf4f55b89b45b8652f
 coverage_gids:
-  - D5/S3/ObserverMemory/Knowledge/ReadoutCoarseningKnowledge.readout_coarsening_shrinks_knowledge
+  - gid: D5/S3/ObserverMemory/Knowledge/ReadoutCoarseningKnowledge.readout_coarsening_shrinks_knowledge
+    target_statement_id: sha256:520fb947c83f586946600486640bc1c57c54d4e86614ec5b892d9dfae3918208
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Knowledge/ReadoutCoarseningKnowledge.readout_coarsening_shrinks_knowledge
-      source_sha256: sha256:a2d4a09a5946acb9874db010bdd545e8e7e5a0fed6d39ebf4f55b89b45b8652f
-      target_statement_id: sha256:520fb947c83f586946600486640bc1c57c54d4e86614ec5b892d9dfae3918208
   scribe:
     - gid: D5/S3/ObserverMemory/Knowledge/ReadoutCoarseningKnowledge.readout_coarsening_shrinks_knowledge
       definition_sha256: sha256:b2a3bd29ebc1587895916a56f1df3e05674197517c162ff65ba63dccb071bc58

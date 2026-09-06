@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:47f571421e23cdd976a4d5b4afe274c5238f1e2f31da651f5263a5300e8d64d5
+  normalized_sha256: sha256:47f571421e23cdd976a4d5b4afe274c5238f1e2f31da651f5263a5300e8d64d5
+cas_ref: sha256:47f571421e23cdd976a4d5b4afe274c5238f1e2f31da651f5263a5300e8d64d5
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/UniformCompletionObstruction.uniform_completion_obstruction
+    target_statement_id: sha256:46d1f68e4a9263c2ca8c47dd711fdd156bbdd6a0dd788d908f7248577d719467
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Completion/UniformCompletionObstruction.uniform_completion_obstruction
+      definition_sha256: sha256:f06ea1ed86644495121f7dfd79d9dd54f866d9a50964335f1ee3731c570147e6
+      emission_sha256: sha256:c7d9e60815461a93079cd58375e0c807220b8152f10e5b49c33c813f30fa68fd
+  unresolved_subitems: []

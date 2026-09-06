@@ -1,0 +1,37 @@
+## 定理 113.1　固定有限维读数的零方差刚性
+
+设 \(\widehat n\) 是固定的有限维 Hermitian 算子，\(\sigma(t)\) 在连通时间区间上连续。
+
+若对每个 \(t\)，存在实数 \(\nu(t)\)，使：
+
+$$
+\boxed{
+\operatorname{Tr}
+\left[
+\sigma(t)(\widehat n-\nu(t)I)^2
+\right]=0,
+}
+\tag{113.1}
+$$
+
+则 \(\nu(t)\) 必为常数。
+
+### 证明
+
+式（113.1）意味着 \(\sigma(t)\) 的支持完全位于
+\(\widehat n\) 的本征值 \(\nu(t)\) 对应子空间。因此：
+
+$$
+\nu(t)\in\operatorname{spec}(\widehat n).
+$$
+
+同时：
+
+$$
+\nu(t)=\operatorname{Tr}[\sigma(t)\widehat n]
+$$
+
+随 \(t\) 连续。
+
+有限维算子的谱为有限集。从连通区间到有限集的连续映射只能为常数。∎
+

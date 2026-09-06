@@ -3,39 +3,43 @@ fingerprints:
   normalized_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
 cas_ref: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
 coverage_gids:
-  - D5/S3/ObserverMemory/LedgerEnvironmentBridge.finite_record_channel_is_iterated_decoherence
-  - D5/S3/ObserverMemory/LedgerEnvironmentBridge.one_record_channel_is_environment_marginal
-  - D5/S3/Quantum/Decoherence.phase_damping_composition
-  - D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
-  - D5/S3/Quantum/EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping
-  - D5/S3/Quantum/PointerBasis.phase_damping_in_basis_fixed_iff
-  - D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
+  - gid: D5/S3/ObserverMemory/LedgerEnvironmentBridge.finite_record_channel_is_iterated_decoherence
+    target_statement_id: sha256:7ab6a4ee1f307011f8213544215ca2e77f80cf86c9b37d6978c4b50b223b135a
+  - gid: D5/S3/ObserverMemory/LedgerEnvironmentBridge.one_record_channel_is_environment_marginal
+    target_statement_id: sha256:bf9cbfa8f0e866b52082ed4e0935d1cd9ef128e7c0ec79ce8368beea0a068f6a
+  - gid: D5/S3/Quantum/Decoherence.phase_damping_composition
+    target_statement_id: sha256:d389bb6a248ba44043d4faa27d88c615aa79fea0c88d1edc4faff02cddd4d3e5
+  - gid: D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
+    target_statement_id: sha256:cabddb0f194df8ca556e0e1526aec0d3d63b148416f7a5b1cc7a6f82d31d9999
+  - gid: D5/S3/Quantum/EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping
+    target_statement_id: sha256:538b2139f42013c11b481364cd5c830484adb9ec81ac3d2070fcc9ca99aca26a
+  - gid: D5/S3/Quantum/PointerBasis.phase_damping_in_basis_fixed_iff
+    target_statement_id: sha256:ef9894d27e409099ecdfdaf45f9052b405cd7f87c2cab817b66736d97ad806b7
+  - gid: D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
+    target_statement_id: sha256:30e2dba93a1346d15e1ec2b2d54424c09f3f7f09876197609f2c4c81c17a8022
 receipts:
-  coverage:
+  scribe:
+    - gid: D5/S3/ObserverMemory/LedgerEnvironmentBridge.finite_record_channel_is_iterated_decoherence
+      definition_sha256: sha256:412ed1fa3cffd53170a574448657cfbd2c7412361b6b40695d3a35858d7f8f28
+      emission_sha256: sha256:3b8450a141858137c70756ae7c3cae04bf801c9d704a770594bc768b2c2390a8
+    - gid: D5/S3/ObserverMemory/LedgerEnvironmentBridge.one_record_channel_is_environment_marginal
+      definition_sha256: sha256:412ed1fa3cffd53170a574448657cfbd2c7412361b6b40695d3a35858d7f8f28
+      emission_sha256: sha256:3b8450a141858137c70756ae7c3cae04bf801c9d704a770594bc768b2c2390a8
     - gid: D5/S3/Quantum/Decoherence.phase_damping_composition
-      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
-      target_statement_id: sha256:d389bb6a248ba44043d4faa27d88c615aa79fea0c88d1edc4faff02cddd4d3e5
+      definition_sha256: sha256:f46375efdfefa6f0b16111bf89e1f72f3c7e5c0a4d083fcf7f23bcb5c8bafdd5
+      emission_sha256: sha256:1f4efb24db2b8d8b6a28e0624305c54f5b422ea626d68f2358308f5d1185e2a7
     - gid: D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
-      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
-      target_statement_id: sha256:cabddb0f194df8ca556e0e1526aec0d3d63b148416f7a5b1cc7a6f82d31d9999
+      definition_sha256: sha256:f46375efdfefa6f0b16111bf89e1f72f3c7e5c0a4d083fcf7f23bcb5c8bafdd5
+      emission_sha256: sha256:1f4efb24db2b8d8b6a28e0624305c54f5b422ea626d68f2358308f5d1185e2a7
     - gid: D5/S3/Quantum/EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping
-      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
-      target_statement_id: sha256:538b2139f42013c11b481364cd5c830484adb9ec81ac3d2070fcc9ca99aca26a
+      definition_sha256: sha256:70eb4b763cc08ee35d389c041922e74f7a0b153eefeadf4d7e97ca83ab79c2ab
+      emission_sha256: sha256:b2f68767f50f0b1267ee84cb7000a1b03821d304afb6c00607b84554b76b712d
     - gid: D5/S3/Quantum/PointerBasis.phase_damping_in_basis_fixed_iff
-      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
-      target_statement_id: sha256:ef9894d27e409099ecdfdaf45f9052b405cd7f87c2cab817b66736d97ad806b7
+      definition_sha256: sha256:47b9aea1373a9ee581cff03830c594bebec479e0f72fd927015d99e63e6cf531
+      emission_sha256: sha256:6963096a3ae585215b81925f96cba7ded8cf629d3e0fd124f3ab52141ee35a1e
     - gid: D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
-      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
-      target_statement_id: sha256:30e2dba93a1346d15e1ec2b2d54424c09f3f7f09876197609f2c4c81c17a8022
-      statement_id_history:
-        - statement_id: sha256:c8327bd4d719d03c216741b02421949a14b7f4c95bd352a557b422a648da4dd5
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
-  scribe: []
+      definition_sha256: sha256:b5bca90b6fe16e6f200b8a0a4b380411a2103f1141a23e04bad7f71f4fd9dd64
+      emission_sha256: sha256:4038db3e5c6034dac26df1fca02ab86352161230833fe2cadace19781267cc58
   unresolved_subitems:
     - bookkeeping-is-decoherence-identification
     - ledger-is-environment-identification

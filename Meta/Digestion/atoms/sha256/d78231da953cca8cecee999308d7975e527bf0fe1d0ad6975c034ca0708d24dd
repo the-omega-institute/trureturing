@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:逃逸内容为「双坐标翻转」——对非空真子集 A 取 i ∈ A、j ∉ A,同时翻转 x_i 与 x_j 是 ε-纤维上的无不动点对合,且把 A-积换号,故 A-积在纤维上的和为零(`Finset.sum_involution` 型配对);纤维基数由单坐标翻转在 ± 两纤维之间的双射给出。判形 content,准入依据 escape-witness;若 `Finset.sum_involution` 在钉版 API 下的形状不能直接承载「无不动点 + 换号」两个条件,本条按 open 记,不得以 `sorry` 或公理代替。

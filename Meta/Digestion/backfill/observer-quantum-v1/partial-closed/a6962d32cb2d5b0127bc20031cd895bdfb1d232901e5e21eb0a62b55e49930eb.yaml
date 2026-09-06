@@ -3,18 +3,38 @@ fingerprints:
   normalized_sha256: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
 cas_ref: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
 coverage_gids:
-  - D5/S3/Observer/BornReduction.rank_one_pure_state_modulus_square_reduction
-  - D5/S3/Quantum/FiniteDimensional.born_probability_skeleton
-  - D5/S3/QuantumContext/AdditivePricingPruning.born_control_numerical_tolerance_certificate
-  - D5/S3/QuantumContext/AdditivePricingPruning.harmonic_spectral_pruning_certificate
-  - D5/S3/QuantumContext/PublicLedgerDescent.public_ledger_descent_iff
-  - D5/S3/QuantumContext/QuarticContextWitness.quartic_pricing_context_counterexample
+  - gid: D5/S3/Observer/BornReduction.rank_one_pure_state_modulus_square_reduction
+    target_statement_id: sha256:b7155f94bd432210b5cbf71d0d3184450ca73a997dcd978a493c907ee4fc45e0
+  - gid: D5/S3/Quantum/FiniteDimensional.born_probability_skeleton
+    target_statement_id: sha256:23ce2a1f8e999242868864e28a8bf0653ddac0dbc9455b6bf5795fa62fd1e2cc
+  - gid: D5/S3/QuantumContext/AdditivePricingPruning.born_control_numerical_tolerance_certificate
+    target_statement_id: sha256:357ade41717bb19f77b581fa34ca690a397e6d0c2cebc8be26c276656fe5bf57
+  - gid: D5/S3/QuantumContext/AdditivePricingPruning.harmonic_spectral_pruning_certificate
+    target_statement_id: sha256:3d8cdfd1b6c4d286d1fa285c3e114800dd10efe6ac6561f2cec79b5b4427c603
+  - gid: D5/S3/QuantumContext/PublicLedgerDescent.public_ledger_descent_iff
+    target_statement_id: sha256:086fa745a012f3a40c604aabf9d2b6b846631f98a068cae8d3a00744fffe4d14
+  - gid: D5/S3/QuantumContext/QuarticContextWitness.quartic_pricing_context_counterexample
+    target_statement_id: sha256:eea770e888f242d26823969e4868f38f146312d00d5285b2e272461a7be2bb7c
 receipts:
-  coverage:
+  scribe:
+    - gid: D5/S3/Observer/BornReduction.rank_one_pure_state_modulus_square_reduction
+      definition_sha256: sha256:70bf50679c588b9b516a2f583317980c2e98fee1727f47fbb3487f32cbe54b28
+      emission_sha256: sha256:c72de0842e16f8635885dee944daa9f42178475f55423ff7debab335587ae4f7
     - gid: D5/S3/Quantum/FiniteDimensional.born_probability_skeleton
-      source_sha256: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
-      target_statement_id: sha256:23ce2a1f8e999242868864e28a8bf0653ddac0dbc9455b6bf5795fa62fd1e2cc
-  scribe: []
+      definition_sha256: sha256:09dcb7a7b19f73aafc7011f0eef2d57192856a74a3b268ef9e3501779788893f
+      emission_sha256: sha256:35a0c6948bb4d549e53f5b8a2f3fd0950d4a85b5fc770b6ff95a27a7ad182eb3
+    - gid: D5/S3/QuantumContext/AdditivePricingPruning.born_control_numerical_tolerance_certificate
+      definition_sha256: sha256:d2b5cd54e2c003f6be9f7df2193be2e5a116fd86ffd1310ab976f47e0ab1533b
+      emission_sha256: sha256:40b2c41366fec22c33a54b2f01fa3b197bafe98aadee8ebd20d9d74a389f0749
+    - gid: D5/S3/QuantumContext/AdditivePricingPruning.harmonic_spectral_pruning_certificate
+      definition_sha256: sha256:d2b5cd54e2c003f6be9f7df2193be2e5a116fd86ffd1310ab976f47e0ab1533b
+      emission_sha256: sha256:40b2c41366fec22c33a54b2f01fa3b197bafe98aadee8ebd20d9d74a389f0749
+    - gid: D5/S3/QuantumContext/PublicLedgerDescent.public_ledger_descent_iff
+      definition_sha256: sha256:613bc6ce9a95e0d91fc966225f15eb213034350d99a19a0431849d139e216071
+      emission_sha256: sha256:29cc955c4eea31f4dcf1b364d6a2ce0e50d736c0061a87f5cfc3f84037c7cfc2
+    - gid: D5/S3/QuantumContext/QuarticContextWitness.quartic_pricing_context_counterexample
+      definition_sha256: sha256:41f8b0d5c05d38b3360f2d71c39ba4b20a2185b1d3025936375c958a37345858
+      emission_sha256: sha256:caa82079c8b413ab8cf916d88e9f594cd786b4faa245e12b77e01a81b285450b
   unresolved_subitems:
     - complete-solution-space-characterization
     - gleason-representation-and-uniqueness-dimension-at-least-three

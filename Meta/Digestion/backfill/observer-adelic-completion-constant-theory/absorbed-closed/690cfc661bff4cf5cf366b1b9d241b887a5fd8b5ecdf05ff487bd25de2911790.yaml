@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:690cfc661bff4cf5cf366b1b9d241b887a5fd8b5ecdf05ff487bd25de2911790
 cas_ref: sha256:690cfc661bff4cf5cf366b1b9d241b887a5fd8b5ecdf05ff487bd25de2911790
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/ExactTruncatedHaarFloor.exact_truncated_haar_floor
+  - gid: D5/S3/Weil/TestFunctions/ExactTruncatedHaarFloor.exact_truncated_haar_floor
+    target_statement_id: sha256:86184764a2e047c47c6a4983e7d4995837089e7a600be17c4a8c88557cbf8ab5
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/ExactTruncatedHaarFloor.exact_truncated_haar_floor
-      source_sha256: sha256:690cfc661bff4cf5cf366b1b9d241b887a5fd8b5ecdf05ff487bd25de2911790
-      target_statement_id: sha256:86184764a2e047c47c6a4983e7d4995837089e7a600be17c4a8c88557cbf8ab5
   scribe:
     - gid: D5/S3/Weil/TestFunctions/ExactTruncatedHaarFloor.exact_truncated_haar_floor
       definition_sha256: sha256:c492eb722a76d92e8fbfa8bc7b2b3c6b2546114cd7727dba4ac24a09bb6d67ae

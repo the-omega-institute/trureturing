@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:52affc6bf3834b510e15ab434a776641e52030bbc8fab8d5ed8c09982746d21b
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Missing prerequisites after a whole-statement construction attempt. Current-dev D5 queries resident band|density sandwich|program population|Kolmogorov|prefix complexity|spectrumBottom|levin_upper_bound|arbitrarily_wide_vacuum_band|Markov union found LevinUpperBound.levin_upper_bound for the finite scaled-Kraft upper step, LookupProgramUpperBound.spectrumBottom, and WideVacuumBand.arbitrarily_wide_vacuum_band, but no source-carrier universal prefix machine/full-computable-function population, resident-band patch injection, or simultaneous all-budget selection theorem. Pinned Mathlib queries Kolmogorov|prefix complexity|universal prefix machine|description complexity|Markov union|Kraft card found only unrelated Kolmogorov-named topology/probability material and general Kraft infrastructure, with no algorithmic-information carrier or density theorem. Reachable A17 GitHub Lean search found SamuelSchlesinger/complexitylib with certified prefix-free machines, but its Lean v4.30.0 and Mathlib c5ea0035 pins differ from this tree's Lean v4.33.0 and Mathlib db584cd6; repository searches prefix-free|density sandwich|resident population|Markov Kolmogorov found no resident-density or simultaneous-selection theorem. Probe /private/tmp/w73a31-atom3-probe.lean compiled the imported Levin upper step and exited 1 on the explicit resident population lower bound and one-hard-record-for-all-budgets density bound goals."
+    reentry_condition: "Freeze a canonical source-carrier universal prefix-machine model for total computable functions, prove the resident-band injective patch-family lower bound and the full-population lower bound, and prove a simultaneous all-budget Markov selection lemma for the hard-record family; then combine those results with the existing finite scaled-Kraft upper owner."
+    blocker_class: missing-prerequisite

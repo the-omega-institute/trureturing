@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c5ebd4e7a26a167b677e271adbf94b35a5a5532950398a15a6f4f8b23028f100
+  normalized_sha256: sha256:c5ebd4e7a26a167b677e271adbf94b35a5a5532950398a15a6f4f8b23028f100
+cas_ref: sha256:c5ebd4e7a26a167b677e271adbf94b35a5a5532950398a15a6f4f8b23028f100
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/FiniteShiftedBlaschkeSymmetry.finite_shifted_blaschke_reflection_spec
+    target_statement_id: sha256:038528e09c2ec8a046dd76f3997acba855eaa611c04d158746b87a0343fe6f90
+receipts:
+  scribe:
+    - gid: D5/S3/Zeros/Symmetry/FiniteShiftedBlaschkeSymmetry.finite_shifted_blaschke_reflection_spec
+      definition_sha256: sha256:5061649a18e00b259ac4c65045b66f295ba1814fd0aa7237f26ed31c87c1d3e8
+      emission_sha256: sha256:b16ce783fd73557e23f0e8789da7f22f44219715eb5fa1a706fe0677e17ddb7c
+  unresolved_subitems: []

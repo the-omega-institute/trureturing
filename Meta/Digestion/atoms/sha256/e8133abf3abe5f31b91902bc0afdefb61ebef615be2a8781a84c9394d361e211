@@ -1,0 +1,51 @@
+## 定义 166.1　三能级热探针
+
+取
+
+$$
+h=\epsilon\operatorname{diag}(0,1,2),
+\qquad \epsilon>0.
+$$
+
+设结构具有若干钟速分支 \(\nu_a>0\)，权重 \(w_a>0\)，且
+
+$$
+\sum_aw_a=1.
+$$
+
+在每个分支中，探针相对于同一个共同逆温度 \(b>0\) 准备为
+
+$$
+\gamma_a
+=
+\frac{e^{-b\nu_ah}}{Z_a}.
+$$
+
+忽略分支标签后，
+
+$$
+\boxed{
+\overline\rho=\sum_aw_a\gamma_a.
+}
+\tag{166.1}
+$$
+
+该定义明确指定了一种分支条件制备。它不假定任意量子涨落都会自动产生这样的平衡混合。
+
+令
+
+$$
+x_a=e^{-b\nu_a\epsilon},
+\qquad
+A_a=\frac{w_a}{1+x_a+x_a^2}.
+$$
+
+则三能级概率为
+
+$$
+p_k=\sum_aA_ax_a^k,
+\qquad k=0,1,2.
+$$
+
+---
+

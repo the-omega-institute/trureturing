@@ -1,0 +1,37 @@
+## B10.2 有界边界耦合迫使近等模
+
+若在一个区域中存在
+
+$$
+0<m\le|a_\pm(s)|\le M<\infty,
+\tag{B10.4}
+$$
+
+则任何零点满足
+
+$$
+\boxed{
+\left|
+\log\frac{|\lambda_+|}{|\lambda_-|}
+\right|
+\le
+\frac1N\log\frac Mm.}
+\tag{B10.5}
+$$
+
+所以长度趋于无穷时，零点只能逼近 equimodular locus。
+
+若边界系数恰好等模，
+
+$$
+|a_+|=|a_-|,
+\tag{B10.6}
+$$
+
+则任何零点必须严格满足
+
+$$
+|\lambda_+|=|\lambda_-|.
+\tag{B10.7}
+$$
+

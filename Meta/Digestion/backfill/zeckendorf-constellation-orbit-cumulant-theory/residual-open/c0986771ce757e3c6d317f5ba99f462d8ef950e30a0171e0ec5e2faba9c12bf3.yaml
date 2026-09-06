@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:c0986771ce757e3c6d317f5ba99f462d8ef950e30a0171e0ec5e2faba9c12bf3
+  normalized_sha256: sha256:c0986771ce757e3c6d317f5ba99f462d8ef950e30a0171e0ec5e2faba9c12bf3
+cas_ref: sha256:c0986771ce757e3c6d317f5ba99f462d8ef950e30a0171e0ec5e2faba9c12bf3
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "对 CAS atom c0986771ce757e3c6d317f5ba99f462d8ef950e30a0171e0ec5e2faba9c12bf3『467. Euler/Witt 抽取』设置 multi-clause-guard。冻结 GID D5/S3/Analytic/Isolation/GoldenGermThirdOrderStructuralZeros.golden_germ_third_order_structural_zeros 无额外前提，公开展开三阶 Kp、G3 和含两个 reciprocal-zeta 因子的 F3，并以四个合取项陈述 MeromorphicAt F3 z2、meromorphicOrderAt F3 z2=1、MeromorphicAt F3 z3、meromorphicOrderAt F3 z3=1，其中 z2=1/(2*phi^2)、z3=1/(2*phi^3)。这精确承载原文两个真正的一阶结构零，承载层级是亚纯 germ 的阶数而非 totalization 后的点值。未携带的是：(a) 对 log Z 的所有重复结构到 primitive connected modes 的一般拆解，因为 owner 没有 Z、log 或该分解映射参数；(b) Möbius/Witt inversion 恢复 primitive factor exponents，因为 owner 没有指数族或反演恒等式；(c) 更深抽取会暴露新不可约结构的研究解释，因为 owner 没有阶数变量或全阶量化，只有固定三阶两点。source 的有限阶限制也不能被反写成 owner 已证明全阶否定。near misses：D5/S3/Analytic/EulerGerm/GoldenGermThirdOrderFactorization.golden_germ_third_order_factorization 给出半平面 Re s>1/phi^5 上的可和性、唯一延拓和五 zeta 表达式，没有这些零阶数或反演结论；D5/S1/Recurrence/Witt/GoldenCyclotomicTable.golden_cyclotomic_table_degree_five 只给 a+b<=5 的形式卷积等式；D5/S1/Recurrence/Witt/WittRowLaws.witt_row_closed_laws 只给纯方向恒等式及两个具名行的系数律；D5/S3/Analytic/Dilation/MonsterPrimitiveMobiusRecovery.monster_primitive_mobius_recovery 在 Monster 二元形式级数上还要求 logExpansion 前提，才恢复 primitiveHeatSeries，论域与无条件断言均不符。检索已按 witt/mobius/germ factorization 的 digest 及 primitive-connected、negativeFormalLog、mobiusRecovery、meromorphicOrderAt 的结论形状进行；没有据这些查询宣称仓内不存在所有相关概念。同族已覆盖 atom 9b725bdd02a4695767502a69eb623c76f7d7d668e0ac4773e733adbeff847e0c 的 owner D5/S3/Analytic/GermWindow/GoldenGermThirdOrderWindowZeroCriterion.golden_third_residual_eq_zero_iff_exists_local_factor_zero 只说 Re s>1/phi^5 下 G3 s=0 iff 存在 local factor 为零；本 atom 的函数是 F3，还多出 (a)、(b)、(c)，故本 atom 不得复用那条覆盖。"
+    reentry_condition: "优先由 dispatcher 拆分 source：把明确三阶 F3 的两个一阶亚纯结构零单列后绑定 D5/S3/Analytic/Isolation/GoldenGermThirdOrderStructuralZeros.golden_germ_third_order_structural_zeros；把 log/primitive-connected 分解与 Möbius/Witt 指数恢复另列，先给出 Z 的论域、形式或解析 log 的意义、重复结构与 primitive 指数的独立定义及适用前提，再分别寻找同域公开定理；把更深抽取的可能性与有限阶范围说明按研究叙事处理，不替它补写全阶定理。若保留原 atom 为一个数学命题，须先澄清上述一般子句，再提供单一公开 content 定理同时连接该 Z、其 primitive 反演与这两个 F3 结构零，并在首次冻结前预登记、验证符合 CLAUDE.md 5⁗ 的活推导路径逃逸见证后 re-cover；有限 Witt 表与三阶零点的合取打包不能充当逃逸见证。"
+    blocker_class: multi-clause-guard

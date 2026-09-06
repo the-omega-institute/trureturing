@@ -1,0 +1,30 @@
+# 十一、与项目的准确连接
+
+本轮读取的 `CompletedZetaMellinReconstruction.lean` 保留了实际 theta 尾项、Mellin 重构、极点补偿和反射关系。它能为这里的原始态提供算术来源，但并未自动提供式（Q36）的全阶 Fourier 非负性。
+
+`StaticEffectSequentialSeparation.lean` 证明，相同静态效应可以对应不同的两步联合规律。它也提醒我们：差模态筛选、成功概率、和模态干涉必须作为同一个协议保留，不能只保留一个最终的正概率。
+
+因此，这次的链条是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实际 theta 密度}
+&\longrightarrow
+\text{两个独立副本}\\
+&\longrightarrow
+\text{和／差模态混合}\\
+&\longrightarrow
+\text{差模态有限阶筛选}\\
+&\longrightarrow
+\text{和模态干涉符号}\\
+&\longleftrightarrow
+\text{广义 Laguerre 零点判据}.
+\end{aligned}
+}
+$$
+
+其中，密度形状已知能承担矩估计和截断控制；**它尚未承担最后一项统一符号约束。**
+
+---
+

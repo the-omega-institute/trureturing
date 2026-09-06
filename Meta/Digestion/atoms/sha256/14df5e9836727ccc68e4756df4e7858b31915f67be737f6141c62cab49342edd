@@ -1,0 +1,57 @@
+# 三、真正的量子投影概率，与历史体积之间差了什么？
+
+这里可以把式（L5）构造成一份明确的量子读数。
+
+取单粒子 Hilbert 空间：
+
+$$
+\mathfrak h=M_d(\mathbb C),
+\qquad
+\langle X,Y\rangle=\operatorname{Tr}(X^*Y),
+$$
+
+再取玻色 Fock 空间：
+
+$$
+\mathcal F_s(\mathfrak h)
+=
+\bigoplus_{k=0}^{\infty}\operatorname{Sym}^k\mathfrak h.
+$$
+
+定义归一化相干态：
+
+$$
+\boxed{
+|\Omega_{A,r}\rangle
+=
+e^{-rN_q/2}
+\bigoplus_{k=0}^{\infty}
+\frac{r^{k/2}}{\sqrt{k!}}A^{\otimes k}.
+}
+\tag{L11}
+$$
+
+因为 \(\|A^{\otimes k}\|^2=N_q^k\)，所以它的范数为一。
+
+酉群通过：
+
+$$
+A\longmapsto UAU^*
+$$
+
+作用于单粒子空间，再提升到 Fock 空间。
+
+令：
+
+$$
+\Pi_{\mathrm{inv}}
+=
+\int_{U(d)}\Gamma(\operatorname{Ad}_U)\,dU.
+$$
+
+它是投影到酉共轭不变子空间的正交投影。
+
+这是相干的群平均投影，**不是“随机选择一个酉操作，再忘记选择结果”的保迹混合信道**。两种操作不能混为一谈。
+
+HCIZ 与这种 Segal–Bargmann/Fock 不变子空间的关系已有完整研究，甚至存在与反对称函数空间之间的精确酉对应。([arXiv][4])
+

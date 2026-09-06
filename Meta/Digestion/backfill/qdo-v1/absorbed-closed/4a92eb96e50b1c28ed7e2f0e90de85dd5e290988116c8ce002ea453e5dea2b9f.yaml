@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4a92eb96e50b1c28ed7e2f0e90de85dd5e290988116c8ce002ea453e5dea2b9f
+  normalized_sha256: sha256:4a92eb96e50b1c28ed7e2f0e90de85dd5e290988116c8ce002ea453e5dea2b9f
+cas_ref: sha256:4a92eb96e50b1c28ed7e2f0e90de85dd5e290988116c8ce002ea453e5dea2b9f
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurements/OrthogonalAdditivity.orthogonal_additivity
+    target_statement_id: sha256:27c7125bf2026a40bfbe3edfa721ec63ca03a11b154c24824aa4edece4e62d21
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Measurements/OrthogonalAdditivity.orthogonal_additivity
+      definition_sha256: sha256:5c4ac8799075efac0be205f3c45e85b6f882e541753066a3668544c537dee9ab
+      emission_sha256: sha256:796dc1e9e9dba28c39b07cc63d172d3fa806505cb5befd0332608d8744c533e3
+  unresolved_subitems: []

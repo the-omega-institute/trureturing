@@ -3,18 +3,23 @@ fingerprints:
   normalized_sha256: sha256:4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed
 cas_ref: sha256:4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed
 coverage_gids:
-  - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
-  - D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
-  - D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+  - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
+    target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
+  - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+    target_statement_id: sha256:54194a5ed453f9739fa911583246728277b4fa9d97b031a0c37dbfb7e7d82e0d
+  - gid: D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+    target_statement_id: sha256:269d9f52fed5f629c115ae717c4da2a08b5f80667c87db54c02a74acda647ac1
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
-      source_sha256: sha256:4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed
-      target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
   scribe:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
+    - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+      definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2
+      emission_sha256: sha256:fbf5a8bede17691bfd26b0095a98ae4353665ee67311ceb008e16ec2c410da09
+    - gid: D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+      definition_sha256: sha256:2bbe6ad817ba1e4a0d4be2f155acbffd3b4cd1b9e6a71459269ab78e88497584
+      emission_sha256: sha256:71a26c856233a8a5b0a482f840fdc7b97e7ce7617186973c28ad59ca9270a6cf
   unresolved_subitems:
     - controlled-forgetting-of-identity-order-and-eigenbasis
     - half-density-cut-as-universal-measurement-midline

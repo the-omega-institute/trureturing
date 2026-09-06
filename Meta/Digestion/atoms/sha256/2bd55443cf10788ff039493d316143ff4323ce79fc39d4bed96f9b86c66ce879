@@ -1,0 +1,66 @@
+## 565. Jacobi 系数趋于零
+
+在正交多项式基中：
+
+$$
+J
+\sim
+\begin{pmatrix}
+\beta_0&\alpha_1&0&\cdots\\
+\alpha_1&\beta_1&\alpha_2&\cdots\\
+0&\alpha_2&\beta_2&\cdots\\
+\vdots&\vdots&\vdots&\ddots
+\end{pmatrix}.
+$$
+
+因为 \(J\) 紧，任一正交基向量 \(e_n\) 弱收敛到 \(0\)，从而：
+
+$$
+\|Je_n\|\to0.
+$$
+
+因此：
+
+$$
+\boxed{
+\alpha_n\to0,
+\qquad
+\beta_n\to0.
+}
+$$
+
+结合上一节：
+
+$$
+\boxed{
+\alpha_n>0
+\quad\forall n,
+\qquad
+\alpha_n\to0.
+}
+$$
+
+这可能是对你直觉最准确的最终公式：
+
+> 每一层确实都有一个不能约掉的项；
+> 但这些项的强度可以趋于零；
+> 系统因此不会有限终止，却能够紧致完成。
+
+可以称为：
+
+$$
+\boxed{
+\text{vanishing nontermination}
+}
+$$
+
+即：
+
+$$
+\boxed{
+\text{消失中的非终止}.
+}
+$$
+
+---
+

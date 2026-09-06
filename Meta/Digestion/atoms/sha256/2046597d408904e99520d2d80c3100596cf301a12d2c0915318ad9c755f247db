@@ -1,0 +1,13 @@
+## 本轮的形式化与核验状态
+
+已经完成 **15 项精确符号检查**，包括记录等距性、偏迹通道、有限强度刷新矩阵、连续弱测量生成元、完整记录概率、记录熵和 Fisher 信息。
+
+另外，对有限次数的子空间保持界及连续弱测量极限作了数值交叉检查；监视熵率峰值的数值计算与仓库所列约 \(0.9518\) 的无量纲位置一致。
+
+[精确核验脚本](sandbox:/mnt/data/observer_formalization/check_zeno_record_dynamics.py)
+[核验结果](sandbox:/mnt/data/observer_formalization/zeno_record_dynamics_checks.json)
+
+**本轮没有运行 Lean 编译。**有限算例核验、一般纸面证明、已有 Lean 源码证明项和现实实验支持，仍然分别记录，不相互替代。
+
+---
+

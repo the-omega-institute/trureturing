@@ -1,0 +1,6 @@
+## 二　W-15 预登记:∃-半径形与半径无关性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_exists_supportRadius_primeArchimedeanPoincare (Z : ZeroData) : RiemannHypothesis ↔ ∀ f : WeilTestFunction, ∃ L : ℝ, tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L ∧ (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f`。
+**可证伪预测(写在跑之前)**:→ 由 W-14 与支撑半径存在性;← 对每个 f 取见证的 L,经恒等式第二分量回到 0 ≤ Re zeroSum,再由 W-2。内容在于:给定恒等式,Poincaré 不等式对某一合法半径成立即对一切合法半径成立(素数项 primeTerm 不依赖 L)。探针已整证,标准三公理。支撑半径存在性作为同模块的公开辅助引理 `exists_supportRadius (f : WeilTestFunction) : ∃ L : ℝ, tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L`(dev 上无等价物,检索见产地),不另列义务。
+**边界**:同 §一。
+

@@ -1,0 +1,72 @@
+## 例 184.1　相同内部能级概率，不同初始加速度
+
+取
+
+$$
+M_I=mI,
+$$
+
+$$
+M_G=m(I+\eta\sigma_x),
+\qquad 0<\eta<1,
+$$
+
+以及
+
+$$
+E=E_0I+\Delta\sigma_z,
+\qquad E_0>|\Delta|.
+$$
+
+惯性质量为标量，因此
+
+$$
+\boxed{
+\ddot X
+=
+-(I+\eta\sigma_x)\Phi'(X).
+}
+\tag{184.1}
+$$
+
+取两种内部态
+
+$$
+|\pm x\rangle
+=
+\frac{|0\rangle\pm|1\rangle}{\sqrt2}.
+$$
+
+它们在静止能量本征基中的概率都是
+
+$$
+\left(\frac12,\frac12\right),
+$$
+
+内部平均能量也相同。
+
+对同一个初始运动态 \(\psi\)，记
+
+$$
+g_\psi=\langle\psi|\Phi'(X)|\psi\rangle.
+$$
+
+则初始加速度为
+
+$$
+\boxed{
+\langle\ddot X\rangle_{\pm x}
+=
+-(1\pm\eta)g_\psi.
+}
+\tag{184.2}
+$$
+
+当 \(\eta=1/3\) 时，分别是标准值的
+
+$$
+\boxed{\frac43,\qquad\frac23.}
+$$
+
+相比之下，单独准备 \(\sigma_z\) 的两个本征态，两者的平均加速度都为 \(-g_\psi\)。
+

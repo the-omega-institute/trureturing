@@ -1,0 +1,6 @@
+## 二　G-c-L2b 预登记:任意阶 sin/cos 包络、精确 floor 引理族、相位约简(`D5/S3/Analytic/Certified/` 新桶)
+
+**义务**:①`Real.cos`/`Real.sin` 在 |x| ≤ 1 上的任意阶 Taylor 包络:`abs_cos_sub_partial_le (x : ℝ) (hx : |x| ≤ 1) (n : ℕ) : |Real.cos x - ∑ k ∈ Finset.range n, (-1) ^ k * x ^ (2 * k) / (2 * k).factorial| ≤ |x| ^ (2 * n) / (2 * n).factorial` 及 sin 对应式(由 `Complex.exp_bound` 经 Euler 公式或直接由交错级数余项得);②`o5Beta_floor_table : ∀ v ≤ 60, ⌊((v + 1 : ℕ) : ℝ) * Real.goldenRatio⌋ = f v`(f 为显式整数表,证由 √5 的有理界逐项判定);③认证相位约简:`cos_of_sub_int_mul_two_pi (θ r : ℝ) (k : ℤ) (h : θ = r + k * (2 * Real.pi)) : Real.cos θ = Real.cos r` 一类的重写与由有理区间 [θ₋, θ₊] 产出 k 与 |r| ≤ 1 的判定引理(依赖 `Real.pi_gt_d20`/`pi_lt_d20`);④混合符号有限和的区间累加引理(实部与虚部分别以上下界逐项累加)。
+**拟议逃逸见证**:①的余项估计是 Mathlib 未提供的新命题(固定阶 `cos_bound` 不覆盖);②是 61 条由 √5 有理界判定的新整数事实;③④是区间传播的新组合引理。
+**边界**:通用于任何认证数值任务,不专属 G-c;不在此断言 G-c 的任何数值。
+

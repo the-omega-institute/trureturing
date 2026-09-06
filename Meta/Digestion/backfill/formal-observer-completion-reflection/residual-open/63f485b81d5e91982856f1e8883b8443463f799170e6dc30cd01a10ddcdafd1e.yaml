@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:63f485b81d5e91982856f1e8883b8443463f799170e6dc30cd01a10ddcdafd1e
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Parent 83bbca32d5fd66043b3e193a49c6c81090af09d96c6cf8c47e60344fcc916c37 requires choice on every nonempty finite carrier; this child includes that introductory claim and the labels or fixed-total-order example. D5/S3/ConceptDynamics/Attribution/NoNaturalFiniteChoice.no_natural_finite_choice carries only the naturality obstruction; the classical-choice sibling 82f0fef42842fe19cced93758566da734f913ecb11929dd7e2c55c0ec5cfec7a is already absorbed through ClassicalChoiceNonnaturality.classical_choice_family_is_nonnatural. D5/Blueprint search tie.?break|linearorder|labels|标签|全序 exit 0 (360 lines) found D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique: an explicit Boolean ordered example, not the child's universal family. Pinned Mathlib min'_mem|min'_le|exists_min_image exit 0 (93 lines), including finite ordered minima, but no public D5 law transporting the source selector under order-respecting bijections. Loogle Equiv.swap, Function.fixedPoints exit 0 hits 0; LeanSearch No natural choice of an element of every nonempty finite set under all bijections exit 0 hits 5 ordinary choice facts; A17 GitHub natural choice finite language:Lean exit 0 returned 20 textual near matches. Local /private/tmp/consensus-rnd/sshx/w73f5/attempt-1/atom2-probe.lean exit 0 derives general nonnaturality, not this added-order mechanism. A constructor label is not coverage."
+    reentry_condition: "Provide a generic finite ordered-minimum selector with its typed transport law under order isomorphisms, and a public comparison to the unstructured finite-choice family; cover the introductory necessity and the label/order clause together, without restricting the carrier to Bool."
+    blocker_class: multi-clause-guard

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0fab2b151ae47a0ba0e8b840d43536af04a98ef9493cb6d7f3c81e1c3572afb7
 cas_ref: sha256:0fab2b151ae47a0ba0e8b840d43536af04a98ef9493cb6d7f3c81e1c3572afb7
 coverage_gids:
-  - D5/S3/Analytic/ShiftedXiPoisson/ShiftedPoissonSemigroup.shifted_poisson_semigroup
+  - gid: D5/S3/Analytic/ShiftedXiPoisson/ShiftedPoissonSemigroup.shifted_poisson_semigroup
+    target_statement_id: sha256:4e8f160dda916af307fbc7fc8ceac1cf44d6c71c4ab0fddfb0efe51e4191fa9a
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/ShiftedXiPoisson/ShiftedPoissonSemigroup.shifted_poisson_semigroup
-      source_sha256: sha256:0fab2b151ae47a0ba0e8b840d43536af04a98ef9493cb6d7f3c81e1c3572afb7
-      target_statement_id: sha256:4e8f160dda916af307fbc7fc8ceac1cf44d6c71c4ab0fddfb0efe51e4191fa9a
   scribe:
     - gid: D5/S3/Analytic/ShiftedXiPoisson/ShiftedPoissonSemigroup.shifted_poisson_semigroup
       definition_sha256: sha256:4242919f317852970a40293a99950487e88a463d5e268b5c9be349cb0394e7d4

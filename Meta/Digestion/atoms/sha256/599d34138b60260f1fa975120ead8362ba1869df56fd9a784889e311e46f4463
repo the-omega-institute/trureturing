@@ -1,0 +1,62 @@
+# 结论
+
+这一轮将上一轮的“跨切口干涉余量”压缩成了一个可以逐项计算的对象：
+
+$$
+\boxed{
+B(T)=H_g(T)-P_g(T).
+}
+$$
+
+两张切片自身始终具有同一个已证明的正读数 \(q\)，而奇偶组合分别读取
+
+$$
+\boxed{
+q+B(T),\qquad q-B(T).
+}
+$$
+
+由此得到三个明确结论：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+|B(T)|\le q\quad\text{对全部分离距离成立};
+}
+$$
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+两种奇偶组合都能产生任意深的负方向;
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+虽然没有负方向，但全局统一正间隔仍然为零.
+}
+$$
+
+所以，你此前关于“波的对换与局部拼接”的直觉，可以进一步落到一个非常具体的位置：
+
+> **奇偶决定的是两片如何组合；真正决定能否拼成正整体的，是它们之间的实际交叉读数。局部正性不能决定这个交叉量，而切片变缓也不能自动让它消失。**
+
+本轮已经控制了 Gamma 拼接误差，并构造了不会遗漏离线模式的固定波包。**尚未完成的算术证明，就是式（34）：实际素数平移项与极点主项之间的抵消，能否在全部尺度上维持同一个固定余量。**这一步没有被奇偶对称、概率归一化或 Schur 消元替代掉。
+
+[1]: https://arxiv.org/html/2606.09096v1 "Weil’s quadratic form via the screw function"
+[2]: https://dlmf.nist.gov/5.4 "DLMF: §5.4 Special Values and Extrema ‣ Properties ‣ Chapter 5 Gamma Function"
+[3]: https://dlmf.nist.gov/25.10 "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[4]: https://arxiv.org/html/2301.00421v3 "On the Hilbert space derived from the Weil distribution"
+[5]: https://arxiv.org/abs/2412.15470 "[2412.15470] Improved estimates for the argument and zero-counting function of the Riemann zeta-function"
+[6]: https://dlmf.nist.gov/25.2 "DLMF: §25.2 Definition and Expansions ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+这次可以把“局部切片怎样拼成整体”推进到一个更明确的结论：
+
+> **实轴上的读数可以处处保持单位模长，相位也可以处处沿同一方向变化，但对应函数仍然可能有非实零点。真正需要保持的，是这些相位读数能否共同延伸成一个在整个半平面内受控的解析函数。**
+
+而且，对实际 ξ 可以进一步证明：
+

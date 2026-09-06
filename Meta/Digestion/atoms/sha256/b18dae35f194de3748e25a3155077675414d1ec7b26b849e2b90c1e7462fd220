@@ -1,0 +1,16 @@
+## 86. A simpler baseline and the route beyond bipartite support
+
+At paper level the present basic fixed-coupling, marginal-only bipartite class has a direct sharp upper formula:
+
+```text
+U(pi,r)=sum_(i!=j) pi(i,j)*min(1-r_i,r_j).
+```
+
+Choose one uniform threshold and orient its success sets oppositely on the two color classes: `Y_i=1[U<r_i]` on one class and `Y_i=1[U>=1-r_i]` on the other. Every active off-diagonal pair attains its upper Frechet cell simultaneously, in both orientations. Aligned thresholds give the lower formula `sum pi(i,j)*max(0,r_j-r_i)` on every support graph. A finite rational cut-point construction realizes these laws. These are paper derivations and independent analytic checks in this increment, not additional named Lean endpoints.
+
+The direct upper formula matched every executed master instance. Therefore column generation is not claimed to be the best algorithm for this simplest bipartite marginal-only problem. Its value here is an exact global pricing and stopping interface that can be used where a direct endpoint construction no longer solves the master problem. Extra constraints must be included in the pricing score; arbitrary higher-order rows need not preserve graph representability.
+
+One precise paper-level extension is a supplied set K of k mediator vertices whose deletion makes the off-diagonal support bipartite. Enumerate the 2^k assignments on K. For each, edges inside K become constants and edges between K and the remaining vertices become linear fields; the remaining free graph has the min-cut form above. Taking the greatest of the certified branch values produces an exact pricing oracle with exponential dependence on k rather than the total mediator count. Every branch must be covered, and the final witness must be reassembled as one original complete table. This conditioning adapter and its coverage proof have not yet been formalized or benchmarked here.
+
+When pi is unknown, even complete fixed-pi pricing does not supply a global joint bound for the two unknown mechanisms. Preserving the original input constraints across that outer optimization remains the substantive multi-component research target. The current result provides a certified tractable subroutine and an explicit boundary, without claiming the general open extension is solved.
+

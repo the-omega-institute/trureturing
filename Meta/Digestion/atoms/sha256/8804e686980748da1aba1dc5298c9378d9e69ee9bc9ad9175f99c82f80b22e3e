@@ -1,0 +1,110 @@
+## 定理 134.1　非退化区域中的曲率稳定性
+
+设 \(g,\widetilde g\) 为同一坐标域上的 \(C^2\) Lorentz 度量，并具有共同界
+
+$$
+\|g^{-1}\|,\|\widetilde g^{-1}\|\le L,
+$$
+
+$$
+\|\partial g\|,\|\partial\widetilde g\|\le B_1,
+$$
+
+$$
+\|\partial^2g\|,\|\partial^2\widetilde g\|\le B_2.
+$$
+
+定义
+
+$$
+\delta_k
+=
+\|\partial^k\widetilde g-\partial^kg\|,
+\qquad k=0,1,2.
+$$
+
+则存在仅依赖维数与所选分量范数的常数 \(C_d\)，使混合指标曲率满足
+
+$$
+\boxed{
+\begin{aligned}
+\|R(\widetilde g)-R(g)\|
+\le C_d\bigl[
+&L\delta_2
++
+L^2B_1\delta_1\\
+&+
+(L^2B_2+L^3B_1^2)\delta_0
+\bigr].
+\end{aligned}
+}
+\tag{134.1}
+$$
+
+### 证明
+
+首先，由逆矩阵恒等式，
+
+$$
+\widetilde g^{-1}-g^{-1}
+=
+\widetilde g^{-1}(g-\widetilde g)g^{-1},
+$$
+
+故
+
+$$
+\|\widetilde g^{-1}-g^{-1}\|
+\le L^2\delta_0.
+$$
+
+连接系数由 \(g^{-1}\partial g\) 的有限线性组合构成。
+
+曲率展开后仅包含以下两类项：
+
+$$
+g^{-1}\partial^2g,
+$$
+
+$$
+g^{-1}g^{-1}(\partial g)(\partial g).
+$$
+
+对每个乘积逐因子相减。第一类差异受
+
+$$
+L\delta_2+L^2B_2\delta_0
+$$
+
+控制；第二类差异受
+
+$$
+C_d\left(
+L^2B_1\delta_1+L^3B_1^2\delta_0
+\right)
+$$
+
+控制。合并即得。∎
+
+### 非退化性不能省略
+
+若 \(g^{-1}\) 的范数无界，微小系数误差也可能导致巨大曲率误差。
+
+因此，有限重建证书必须同时检查：
+
+$$
+\boxed{
+\text{系数误差}
++
+\text{一阶误差}
++
+\text{二阶误差}
++
+\text{非退化裕量}.
+}
+$$
+
+用钟网络测量曲率已有具体“钟罗盘”方案；本节强调的是从有限读数到曲率之间必须携带的稳定性条件。([arXiv][4])
+
+---
+

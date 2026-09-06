@@ -1,0 +1,53 @@
+# 一、固定前文对象，并明确三个不同的“深度”
+
+仍使用：
+
+$$
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k,
+$$
+
+以及：
+
+$$
+P_d(v)=\sum_{k=0}^{d}\frac{(d)_k}{d^k}a_kv^k,
+\qquad
+q_d(x)=x^dP_d(-1/x).
+$$
+
+ξ 的定义、反射关系与归一化保持不变。([DLMF][1])
+
+前文使用的 Jensen–Pólya 判据仍是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+q_d\text{ 的根全部为正实数，}\quad\forall d.
+}
+\tag{M1}
+$$
+
+这项分析桥属于经典理论，不是下面的量子群平均自动提供的结论。([arXiv][2])
+
+这里有三个不同参数：
+
+$$
+\boxed{
+d=\text{有限算术模型的维数},
+}
+$$
+
+$$
+\boxed{
+k=\text{Schur／Fock 激发阶数},
+}
+$$
+
+$$
+\boxed{
+r=\text{高斯历史方差或群积分的放大参数}.
+}
+$$
+

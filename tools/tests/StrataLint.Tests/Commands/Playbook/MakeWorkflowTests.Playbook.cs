@@ -26,6 +26,10 @@ public sealed partial class MakeWorkflowTests
                 makefile,
                 StringComparison.Ordinal);
         }
+        Assert.Contains(
+            "Build, emit, and freeze a theorem, then cover the anchor atom in the working tree",
+            makefile,
+            StringComparison.Ordinal);
 
         Assert.Contains("make cover-batch ATOMS=", makefile, StringComparison.Ordinal);
         Assert.Contains(
@@ -33,7 +37,14 @@ public sealed partial class MakeWorkflowTests
             makefile,
             StringComparison.Ordinal);
 
-        Assert.Contains("ledger-append --candidate-lean-report", script, StringComparison.Ordinal);
+        Assert.Contains(
+            "ledger-align --add \"$MODULE_PATH\" --candidate-lean-report \"$REPORT\"",
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "align_args+=(--candidate-lean-report \"$REPORT\")",
+            script,
+            StringComparison.Ordinal);
         Assert.Contains("digest-status --base", script, StringComparison.Ordinal);
     }
 }

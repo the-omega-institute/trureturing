@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:1b6141bd78df4c0eb0c26a6271d9fac189f0d1092afe059ed05c9af3a499dfbc
+  normalized_sha256: sha256:1b6141bd78df4c0eb0c26a6271d9fac189f0d1092afe059ed05c9af3a499dfbc
+cas_ref: sha256:1b6141bd78df4c0eb0c26a6271d9fac189f0d1092afe059ed05c9af3a499dfbc
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "No clause is carried by a frozen public statement. Retrieval preceded quarantine for the exact status-annotation clause `不在临界带中局部一致收敛到 xi`. The source does not define which ordered finite Euler-product truncations, completed xi normalization, or critical-strip compacta this annotation quantifies over, so binding it to a generic convergence theorem would change the carrier. `/private/tmp/w73b40-atom2-probe.lean` exits 1 at the exact goal `not LocallyUniformlyConvergesOn criticalStrip StandardFiniteEulerProducts completedXi`. D5 exact search for the probe predicates exited 1; broad search exited 0 and found `EulerProduct`, `AlternatingZetaContinuation`, and `XiLogDeriv`, but no canonical finite-truncation sequence with this negative local-uniform convergence statement. Pinned Mathlib exact search exited 1; near search exited 0 at generic `TendstoLocallyUniformlyOn` and `HasProdLocallyUniformlyOn` infrastructure, not at a Riemann-xi truncation theorem. The A17 GitHub Lean search `finite Euler product locally uniform` exited 0 with `[]`. As required for a status annotation, this child is guarded rather than bound."
+    reentry_condition: "Specify and admit canonical definitions `standardFiniteEulerProduct : Nat -> Complex -> Complex`, `criticalStrip : Set Complex`, and the intended completed-xi normalization, then prove nonconvergence by exhibiting a compact subset and a positive uniform-error lower bound for that exact sequence."
+    blocker_class: missing-prerequisite

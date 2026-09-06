@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:44c121a7de0a78b850b4ad6b0aaf6fbff985baeab5090bcad6828b950b9df9bd
 cas_ref: sha256:44c121a7de0a78b850b4ad6b0aaf6fbff985baeab5090bcad6828b950b9df9bd
 coverage_gids:
-  - D5/S1/Solenoid/Connectivity/FiniteNameInverseLimitNoGo.finite_name_inverse_limit_no_go
+  - gid: D5/S1/Solenoid/Connectivity/FiniteNameInverseLimitNoGo.finite_name_inverse_limit_no_go
+    target_statement_id: sha256:d591c963b0bf040df8bcda2b9f1e0797dc14efb553d2c20d3117d5b8da418689
 receipts:
-  coverage:
-    - gid: D5/S1/Solenoid/Connectivity/FiniteNameInverseLimitNoGo.finite_name_inverse_limit_no_go
-      source_sha256: sha256:44c121a7de0a78b850b4ad6b0aaf6fbff985baeab5090bcad6828b950b9df9bd
-      target_statement_id: sha256:d591c963b0bf040df8bcda2b9f1e0797dc14efb553d2c20d3117d5b8da418689
   scribe:
     - gid: D5/S1/Solenoid/Connectivity/FiniteNameInverseLimitNoGo.finite_name_inverse_limit_no_go
       definition_sha256: sha256:f75592fbbe78c724b010feac9b10fc1b1b5dbfc7e3a7206fa5509a62ecec7c9f

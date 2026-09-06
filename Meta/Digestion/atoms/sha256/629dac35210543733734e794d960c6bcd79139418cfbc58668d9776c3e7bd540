@@ -1,0 +1,18 @@
+## B14.4 CUT
+
+反射通道
+
+$$
+\delta\longleftrightarrow-\delta
+\tag{B14.3}
+$$
+
+以及 split/inert Frobenius
+
+$$
+y\longmapsto\pm y
+\tag{B14.4}
+$$
+
+决定二通道如何被固定或交换。
+

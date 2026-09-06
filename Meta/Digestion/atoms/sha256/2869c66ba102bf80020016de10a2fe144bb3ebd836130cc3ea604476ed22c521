@@ -1,0 +1,72 @@
+# 十、多重零点会把极小残余开根号放大
+
+设临界轴附近的局部方程为：
+
+$$
+F_0(z)
+=
+a z^m+O(z^{m+1}),
+\qquad
+a\neq0,
+$$
+
+其中：
+
+$$
+z=s-s_0.
+$$
+
+加入一个极小 residual：
+
+$$
+F_\varepsilon(z)
+=
+a z^m+\varepsilon b+\cdots.
+$$
+
+根满足：
+
+$$
+a z^m+\varepsilon b\approx0.
+$$
+
+所以：
+
+$$
+\boxed{
+z
+\asymp
+\left(
+-\frac{\varepsilon b}{a}
+\right)^{1/m}.
+}
+$$
+
+若：
+
+$$
+\varepsilon=\varphi^{-H},
+$$
+
+则：
+
+$$
+\boxed{
+|z|
+\asymp
+\varphi^{-H/m}.
+}
+$$
+
+这给出一条新的黄金 jet 定律：
+
+$$
+\boxed{
+\text{零点重数 }m
+\text{ 会把 residual depth }H
+\text{ 除以 }m.
+}
+$$
+
+---
+

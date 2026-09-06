@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -59,11 +60,18 @@ public sealed partial class MakeWorkflowTests
         "echo-residual-summary",
         "digestion-readiness",
         "show-atom",
+        "atom-context",
         "truth-export",
         "deliver-check",
         "deposit",
         "cover",
         "cover-batch",
+        "decompose",
+        "scribe-seed",
+        "quarantine",
+        "quarantine-clear",
+        "settle",
+        "settle-clear",
         "worktree",
         "worktree-clean",
         "pr-open",
@@ -79,7 +87,6 @@ public sealed partial class MakeWorkflowTests
         "check-fast",
         "test",
         "engineering-tests",
-        "engineering-tests-base-cwd",
         "selftest",
         "capacity-audit",
         "update-renderer-contract",
@@ -157,7 +164,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void AdmissionEntrypointsDelegateForkResolutionToOneLibrary()
+    public void PreflightOwnsExplicitBaseValidationWhileLocalGateDelegatesForkResolution()
     {
         var root = TestRepositoryLayout.FindRoot();
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
@@ -165,10 +172,15 @@ public sealed partial class MakeWorkflowTests
         var admissionBase = File.ReadAllText(Path.Combine(root, AdmissionBaseScriptPath));
 
         const string source = "source \"$ROOT/tools/scripts/lib/admission-base-lib.sh\"";
-        const string preflightResolve = "admission_resolve_base \"$ROOT\" \"$BASE_REF\"";
         const string localResolve =
             "admission_resolve_base \"$CANDIDATE_ROOT\" \"$BASE_REF\"";
-        string[] ordered = ["ROOT=\"$(git rev-parse --show-toplevel)\"", source, "fetch --prune", preflightResolve, "CI=true make -C tools dotnet"];
+        string[] ordered =
+        [
+            "ROOT=\"$(git rev-parse --show-toplevel)\"",
+            "git cat-file -t \"$BASE\"",
+            "git merge-base --is-ancestor \"$BASE\" HEAD",
+            "CI=true make -C tools dotnet",
+        ];
         var cursor = -1;
         foreach (var fragment in ordered)
         {
@@ -177,18 +189,19 @@ public sealed partial class MakeWorkflowTests
         }
         Assert.Contains(source, localGate, StringComparison.Ordinal);
         Assert.Contains(localResolve, localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain(source, preflight, StringComparison.Ordinal);
+        Assert.DoesNotContain("admission_resolve_base", preflight, StringComparison.Ordinal);
+        Assert.DoesNotContain("fetch --prune", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("BASE_RESOLUTION_FAILED", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("BASE_RESOLUTION_FAILED", localGate, StringComparison.Ordinal);
         Assert.Single(Regex.Matches(admissionBase, "BASE_RESOLUTION_FAILED").Cast<Match>());
         Assert.Single(Regex.Matches(
             admissionBase,
             "\\bgit\\s+-C\\s+\"\\$repository_root\"\\s+merge-base\\b").Cast<Match>());
-        Assert.DoesNotContain("git merge-base", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("git -C \"$CANDIDATE_ROOT\" merge-base", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("merge-base --is-ancestor", preflight, StringComparison.Ordinal);
+        Assert.Contains("merge-base --is-ancestor", preflight, StringComparison.Ordinal);
         Assert.Contains("make gate BASE=\"$BASE_SHA\"", preflight, StringComparison.Ordinal);
-        Assert.Contains("\"$observed_base\" != \"$BASE_TIP_SHA\"", preflight, StringComparison.Ordinal);
-        Assert.Contains("|| true", preflight[preflight.IndexOf("BASE_ADVANCED", StringComparison.Ordinal)..], StringComparison.Ordinal);
+        Assert.DoesNotContain("BASE_ADVANCED", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("merge-base --is-ancestor", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("pinned base is not a strict ancestor", localGate, StringComparison.Ordinal);
     }
@@ -263,6 +276,90 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
+    public void QuarantineMakeDoorsForwardStrictInputsThroughTheIngestWrapper()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
+        Assert.Equal(
+            $"\t@/bin/bash {IngestScriptPath} quarantine \"$(BASE)\" \"$(REQUEST)\"",
+            Recipe(makefile, "quarantine"));
+        Assert.Equal(
+            $"\t@/bin/bash {IngestScriptPath} quarantine-clear \"$(BASE)\" \"$(ATOM_ID)\"",
+            Recipe(makefile, "quarantine-clear"));
+        var help = TestProcessRunner.Run(
+            "make",
+            ["--no-print-directory", "help"],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+        Assert.Equal(0, help.ExitCode);
+        var helpText = Encoding.UTF8.GetString(help.StandardOutput);
+        Assert.Contains(
+            "make quarantine REQUEST=file [BASE=origin/dev]  Write one atom's receipts.quarantine from a strict request file",
+            helpText,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "make quarantine-clear ATOM_ID=x [BASE=origin/dev]  Clear one atom's receipts.quarantine",
+            helpText,
+            StringComparison.Ordinal);
+
+        using var fixture = new TemporaryDirectory();
+        var scriptPath = Path.Combine(fixture.Path, IngestScriptPath);
+        var projectDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        Directory.CreateDirectory(Path.GetDirectoryName(scriptPath)!);
+        Directory.CreateDirectory(projectDirectory);
+        Directory.CreateDirectory(binDirectory);
+        File.Copy(Path.Combine(root, IngestScriptPath), scriptPath);
+        File.SetUnixFileMode(
+            scriptPath,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var dotnetPath = Path.Combine(binDirectory, "dotnet");
+        File.WriteAllText(
+            dotnetPath,
+            "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\"\nexit \"${FAKE_DOTNET_EXIT:-0}\"\n");
+        File.SetUnixFileMode(
+            dotnetPath,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        ProcessOutput Run(int fakeDotnetExit, params string[] arguments) => TestProcessRunner.Run(
+            "env",
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"FAKE_DOTNET_EXIT={fakeDotnetExit}",
+                "/bin/bash",
+                scriptPath,
+                .. arguments,
+            ],
+            fixture.Path,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+
+        var set = Run(0, "quarantine", "baseline", "request.toml");
+        Assert.Equal(0, set.ExitCode);
+        Assert.Contains(
+            "quarantine-atom --request request.toml --base baseline",
+            Encoding.UTF8.GetString(set.StandardOutput),
+            StringComparison.Ordinal);
+
+        var clear = Run(0, "quarantine-clear", "baseline", "atom-id");
+        Assert.Equal(0, clear.ExitCode);
+        Assert.Contains(
+            "quarantine-atom --clear atom-id --base baseline",
+            Encoding.UTF8.GetString(clear.StandardOutput),
+            StringComparison.Ordinal);
+
+        Assert.Equal(23, Run(23, "quarantine", "baseline", "request.toml").ExitCode);
+        Assert.Equal(23, Run(23, "quarantine-clear", "baseline", "atom-id").ExitCode);
+
+        Assert.Equal(2, Run(0, "quarantine").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine", "baseline").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine-clear", "baseline").ExitCode);
+    }
+
+    [Fact]
     public void IngestWrapperDerivesReportInputStateFromExecutableClosureDelta()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -278,6 +375,9 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(Path.GetDirectoryName(inputPath)!);
         Directory.CreateDirectory(Path.Combine(fixture.Path, "D5"));
         Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Cli"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Engine"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "Trureturing.Truth"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, ".github", "workflows"));
         File.Copy(Path.Combine(root, IngestScriptPath), ingestPath);
         File.Copy(Path.Combine(root, LeanReportInputScriptPath), inputPath);
         File.WriteAllText(Path.Combine(fixture.Path, "Trureturing.lean"), "import D5.Probe\n");
@@ -286,12 +386,40 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(Path.Combine(fixture.Path, "lake-manifest.json"), "{\"version\":\"1.1.0\"}\n");
         File.WriteAllText(Path.Combine(fixture.Path, "lakefile.toml"), "name = \"Fixture\"\n");
         File.WriteAllText(Path.Combine(fixture.Path, "README.md"), "baseline\n");
+        File.WriteAllText(
+            Path.Combine(fixture.Path, ".github", "workflows", "ci.yml"),
+            "jobs:\n  lean-inspect:\n    steps: []\n  baseline-admission:\n    steps: []\n");
+        File.WriteAllText(
+            Path.Combine(fixture.Path, LeanReportPairScriptPath),
+            "#!/usr/bin/env bash\n");
+        var scribeContentChecks = Path.Combine(
+            fixture.Path, "tools", "scripts", "workflow", "scribe-content-checks.sh");
+        Directory.CreateDirectory(Path.GetDirectoryName(scribeContentChecks)!);
+        File.WriteAllText(scribeContentChecks, "#!/usr/bin/env bash\n");
+        foreach (var project in new[]
+        {
+            "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+            "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+            "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+        })
+        {
+            File.WriteAllText(
+                Path.Combine(fixture.Path, project),
+                "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+        }
+        File.WriteAllText(
+            Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "FixtureProbe.cs"),
+            "// fixture\n");
         var dotnetPath = Path.Combine(binDirectory, "dotnet");
         File.WriteAllText(
             dotnetPath,
             """
             #!/usr/bin/env bash
-            if [[ "${1:-}" == "msbuild" ]]; then exit 1; fi
+            if [[ "${1:-}" == "msbuild" ]]; then
+              repository="$(cd "$(dirname "$2")/../.." && pwd -P)"
+              printf '{"Items":{"Compile":[{"FullPath":"%s/tools/StrataLint.Cli/FixtureProbe.cs"}]}}\n' "$repository"
+              exit 0
+            fi
             printf '%s\n' "$*"
             """ + "\n");
         foreach (var executable in new[] { ingestPath, inputPath, dotnetPath })
@@ -337,6 +465,51 @@ public sealed partial class MakeWorkflowTests
             "ingest --base HEAD --report-input-state unchanged",
             System.Text.Encoding.UTF8.GetString(unchanged.StandardOutput),
             StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IngestWrapperDoesNotRunDownstreamWhenProducerInputHelperFails()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var root = TestRepositoryLayout.FindRoot();
+        var ingest = Path.Combine(fixture.Path, IngestScriptPath);
+        var helper = Path.Combine(fixture.Path, LeanReportInputScriptPath);
+        var bin = Path.Combine(fixture.Path, "bin");
+        Directory.CreateDirectory(Path.GetDirectoryName(ingest)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
+        Directory.CreateDirectory(bin);
+        File.Copy(Path.Combine(root, IngestScriptPath), ingest);
+        File.Copy(Path.Combine(root, LeanReportInputScriptPath), helper);
+        var project = Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
+        Directory.CreateDirectory(Path.GetDirectoryName(project)!);
+        File.WriteAllText(project, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+        var dotnet = Path.Combine(bin, "dotnet");
+        File.WriteAllText(dotnet, """
+            #!/usr/bin/env bash
+            if [[ "${1:-}" == msbuild ]]; then exit 71; fi
+            touch "$DOWNSTREAM_MARKER"
+            exit 0
+            """ + "\n");
+        foreach (var executable in new[] { ingest, helper, dotnet })
+            File.SetUnixFileMode(executable,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        ReviewRegressionTests.RunGit(fixture.Path, "init", "--quiet");
+        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.email", "stratalint@example.invalid");
+        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.name", "StrataLint Tests");
+        ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
+        ReviewRegressionTests.RunGit(fixture.Path, "commit", "--quiet", "-m", "failing ingest fixture");
+        var marker = Path.Combine(fixture.Path, "downstream-ran");
+
+        var result = TestProcessRunner.Run("/bin/bash",
+            ["-c", "PATH=\"$1:$PATH\" DOWNSTREAM_MARKER=\"$2\" exec \"$3\" ingest HEAD",
+                "ingest-failure", bin, marker, ingest],
+            fixture.Path, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("producer closure is unavailable", System.Text.Encoding.UTF8.GetString(result.StandardError));
+        Assert.False(File.Exists(marker));
     }
 
     [Fact]

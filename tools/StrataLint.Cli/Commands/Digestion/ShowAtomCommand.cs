@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -109,6 +110,8 @@ internal static class ShowAtomCommand
             $"HASH_RECORD raw_sha256={entry.Fingerprints.RawSha256} "
             + $"normalized_sha256={entry.Fingerprints.NormalizedSha256} "
             + $"cas_ref={entry.CasRef} source=ledger");
+        writer.WriteLine(
+            $"COVERAGE coverage_gids={JsonSerializer.Serialize(entry.CoverageGids)} source=coverage");
         WriteText(writer, "RAW", rawText);
         WriteText(writer, "NORMALIZED", normalizedText);
         return writer.ToString();

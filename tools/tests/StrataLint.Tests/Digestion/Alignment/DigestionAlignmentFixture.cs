@@ -47,7 +47,7 @@ public sealed partial class DigestionAlignmentTests
             atomId,
             fingerprints,
             [],
-            new DigestionReceipts([], [], [], [], null),
+            new DigestionReceipts([], [], [], null),
             new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
             fingerprints.RawSha256);
 

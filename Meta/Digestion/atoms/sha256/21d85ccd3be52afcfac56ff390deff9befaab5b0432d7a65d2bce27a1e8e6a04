@@ -1,0 +1,65 @@
+### 证明
+
+作逐步幺正坐标变换，把所有 \(U_j\) 消去。问题变成：在固定总位移 \(d\) 下，最小化
+
+$$
+\sum_j\frac{\|\Delta_j\|^2}{\tau_j},
+\qquad
+\sum_j\Delta_j=d.
+$$
+
+由加权 Cauchy–Schwarz，
+
+$$
+\|d\|^2
+\le
+\left(\sum_j\tau_j\right)
+\left(\sum_j\frac{\|\Delta_j\|^2}{\tau_j}\right).
+$$
+
+当
+
+$$
+\Delta_j=\frac{\tau_j}{\tau_{\mathrm{tot}}}d
+$$
+
+时取等号。再变回原坐标即可。证毕。
+
+---
+
+所以边界矩阵为
+
+$$
+\boxed{
+S_{\mathrm{path}}
+=
+\frac1{\tau_{\mathrm{tot}}}
+\begin{pmatrix}
+I&-\mathcal U^*\\
+-\mathcal U&I
+\end{pmatrix}.
+}
+\tag{11}
+$$
+
+它同时记录：
+
+$$
+\boxed{
+\mathcal U:\text{传播结果};
+\qquad
+\tau_{\mathrm{tot}}:\text{传播成本}.
+}
+$$
+
+串联两段路径时，
+
+$$
+\boxed{
+(\mathcal U_2,\tau_2)\circ(\mathcal U_1,\tau_1)
+=
+(\mathcal U_2\mathcal U_1,\tau_1+\tau_2).
+}
+\tag{12}
+$$
+

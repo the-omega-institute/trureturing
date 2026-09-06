@@ -25,12 +25,30 @@ internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization
             && LeanPropositionSourceComparer.AreEquivalent(
                 protectedBase,
                 candidate,
-                incremental.ReanchoredModulePaths,
+                incremental.ChangedStatementModulePaths,
                 context.BaseView,
                 context.CandidateCatalog)
+            && FindChangedClosureOnlyStatements(context, incremental).IsEmpty
             && incremental.ReanchoredModulePaths.All(path =>
                 context.CandidateCatalog.ByPath.TryGetValue(path, out var material)
                 && material.AxiomClosure.All(LeanAxiomFacts.IsStandard));
+    }
+
+    internal static ImmutableArray<RepoPath> FindChangedClosureOnlyStatements(
+        FrozenLedgerReplacementAuthorizationContext context,
+        FrozenLedgerIncrementalReplacementRecognition recognition)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(recognition);
+        return recognition.ReanchoredModulePaths
+            .Except(recognition.ChangedStatementModulePaths)
+            .Where(path => !context.BaseView.ActiveByPath.TryGetValue(path, out var recorded)
+                || !context.CandidateCatalog.ByPath.TryGetValue(path, out var current)
+                || recorded.Material.StatementId != current.StatementId
+                || !recorded.Material.DeclarationStatementIds.SequenceEqual(
+                    current.DeclarationStatementIds))
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
     }
 
     private static bool EffectiveLeanPinsChanged(
@@ -39,23 +57,6 @@ internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization
         EffectiveLeanPins.TryRead(protectedBase, out var basePins)
         && EffectiveLeanPins.TryRead(candidate, out var candidatePins)
         && basePins != candidatePins;
-}
-
-internal sealed class FrozenLedgerReplacementAuthorization(
-    IFrozenLedgerReplacementAuthorization incrementalAuthorization)
-    : IFrozenLedgerReplacementAuthorization
-{
-    private readonly IFrozenLedgerReplacementAuthorization incrementalAuthorization =
-        incrementalAuthorization ?? throw new ArgumentNullException(nameof(incrementalAuthorization));
-
-    public bool IsAuthorized(FrozenLedgerReplacementAuthorizationContext context)
-    {
-        ArgumentNullException.ThrowIfNull(context);
-        // Ledger v5 是唯一 schema,legacy 全量替换的授权已随解码器一并退役。
-        // 非增量替换此后没有合法授权者:fail-closed 拒绝,要放行须先立新授权。
-        return context.Recognition is FrozenLedgerIncrementalReplacementRecognition
-            && incrementalAuthorization.IsAuthorized(context);
-    }
 }
 
 internal sealed record EffectiveLeanPins(string Toolchain, string MathlibRevision)

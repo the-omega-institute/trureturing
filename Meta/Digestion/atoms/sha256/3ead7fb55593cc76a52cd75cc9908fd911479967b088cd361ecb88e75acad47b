@@ -1,0 +1,41 @@
+# 九、但有一部分误差确实能压小：Gamma 完成项
+
+这一步可以把“剩下的困难”进一步分开。
+
+令
+
+$$
+L_\chi^2
+=
+\sup_x\sum_j|\chi_j'(x)|^2.
+$$
+
+由 Cauchy–Schwarz，
+
+$$
+\sum_j|\chi_j(x+t)-\chi_j(x)|^2
+\le L_\chi^2t^2.
+$$
+
+于是
+
+$$
+\boxed{
+|R_{\chi,f}(t)|
+\le
+\frac12L_\chi^2t^2\|f\|_2^2.
+}
+\tag{28}
+$$
+
+Weil 拼接余项中的 Gamma 部分为
+
+$$
+E_\Gamma
+=
+-2\int_0^\infty
+k_\Gamma(t)\Re R_{\chi,f}(t)\,dt.
+$$
+
+因此：
+

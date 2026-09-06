@@ -1,0 +1,24 @@
+### 定理 C11.1　离线零点蕴含有理负径向先兆
+
+若 completed $\Xi$ 存在离线零点，则对任意固定 $a>1/2$，存在：
+
+$$
+q\in\mathbb Q,
+\qquad
+r\in\mathbb Q_{>0},
+\tag{C11.1}
+$$
+
+使：
+
+$$
+\boxed{
+\mathscr Q_a(q,r)>0,
+\qquad
+r\partial_r\log\mathscr Q_a(q,r)<0.
+}
+\tag{C11.2}
+$$
+
+这里的 $q$ 是角度的一个实代表，不要求是 $\pi$ 的有理倍数。
+

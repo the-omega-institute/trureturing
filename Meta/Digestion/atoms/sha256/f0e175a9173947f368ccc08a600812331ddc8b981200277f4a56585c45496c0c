@@ -1,0 +1,9 @@
+- 若 \(L=1\)，则
+  \[
+  \boxed{
+  d_Z(\pi\tau^k y,\sigma^k\pi y)
+  \le
+  k\delta.
+  }
+  \]
+

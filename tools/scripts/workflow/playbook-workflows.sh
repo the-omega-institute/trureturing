@@ -5,12 +5,14 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
 FROZEN_LEDGER="Golden/Frozen/accepted"
+TRUTH_GRAPH="Generated/truth-graph.v1.json"
 COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
 ATOM_ID="${3:-}"
 GID="${4:-}"
 BATCH_ATOM_IDS=()
 BATCH_GIDS=()
+COVER_FAILURE_REASON=""
 
 run_cli() {
   dotnet run --project "$PROJECT" --configuration Release -- "$@"
@@ -18,6 +20,51 @@ run_cli() {
 
 run_digest_status() {
   run_cli digest-status --base "$BASE"
+}
+
+align_delivery_ledger() {
+  local accepted_modules='[]' closed_modules module
+  local accepted_files=("$FROZEN_LEDGER"/*.json)
+  local align_args=(ledger-align)
+
+  if ! command -v jq >/dev/null 2>&1; then
+    echo "PLAYBOOK_INVALID jq is required to derive ledger additions" >&2
+    return 2
+  fi
+  if [[ ! -f "$TRUTH_GRAPH" ]]; then
+    echo "PLAYBOOK_INVALID truth graph is missing after emit: $TRUTH_GRAPH" >&2
+    return 2
+  fi
+  if [[ ! -e "${accepted_files[0]}" ]]; then
+    accepted_files=()
+  fi
+  if [[ "${#accepted_files[@]}" -gt 0 ]] \
+      && ! accepted_modules="$(jq -sc '
+        [ .[]
+          | select(.event_type == "Freeze" and .schema_version == 5)
+          | .payload.descriptor_selector
+          | select(type == "string") ]
+        | unique
+      ' "${accepted_files[@]}" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to read accepted module selectors: $accepted_modules" >&2
+    return 2
+  fi
+  if ! closed_modules="$(jq -r --argjson accepted "$accepted_modules" '
+      .truth.nodes[]
+      | select(.state == "closed")
+      | .repo_path as $path
+      | select(($accepted | index($path)) == null)
+      | $path
+    ' "$TRUTH_GRAPH" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to derive Closed modules from $TRUTH_GRAPH: $closed_modules" >&2
+    return 2
+  fi
+
+  while IFS= read -r module; do
+    [[ -z "$module" ]] || align_args+=(--add "$module")
+  done <<< "$closed_modules"
+  align_args+=(--candidate-lean-report "$REPORT")
+  run_cli "${align_args[@]}"
 }
 
 
@@ -115,70 +162,7 @@ require_new_module_blueprint_mirror() {
 
 
 freeze_exists() {
-  local active_state grep_output grep_status ledger_file
-  local module_ledger_files=()
-  if ! command -v jq >/dev/null 2>&1; then
-    echo "PLAYBOOK_INVALID jq is required to inspect $FROZEN_LEDGER" >&2
-    return 2
-  fi
-  if [[ ! -d "$FROZEN_LEDGER" ]]; then
-    echo "PLAYBOOK_INVALID frozen ledger is missing: $FROZEN_LEDGER" >&2
-    return 2
-  fi
-
-  if grep_output="$(git grep --untracked -l -F -e "$MODULE_PATH" \
-      -- "$FROZEN_LEDGER/*.json" 2>&1)"; then
-    while IFS= read -r ledger_file; do
-      [[ -z "$ledger_file" ]] || module_ledger_files+=("$ledger_file")
-    done <<< "$grep_output"
-  else
-    grep_status=$?
-    if [[ "$grep_status" -eq 1 ]]; then
-      return 1
-    fi
-    echo "PLAYBOOK_INVALID failed to locate target module ledger shards: $grep_output" >&2
-    return 2
-  fi
-
-  if ! active_state="$(jq -sc --arg node "$MODULE_PATH" '
-      def exact_keys($expected): (keys | sort) == ($expected | sort);
-      if all(.[];
-          exact_keys(["event_hash", "event_type", "payload", "schema_version"])
-          and .event_type == "Freeze"
-          and .schema_version == 5
-          and (.payload | exact_keys([
-            "declaration_statement_ids",
-            "descriptor_selector",
-            "prerequisite_frozen_node_ids",
-            "statement_id"
-          ]))
-          and (.payload.descriptor_selector | type) == "string"
-          and (.payload.statement_id | type) == "string"
-          and (.payload.declaration_statement_ids | type) == "array"
-          and all(.payload.declaration_statement_ids[];
-            type == "object"
-            and exact_keys(["declaration_name_key", "kind", "statement_id"])
-            and (.declaration_name_key | type) == "string"
-            and (.kind | type) == "string"
-            and (.statement_id | type) == "string")
-          and (.payload.prerequisite_frozen_node_ids | type) == "array"
-          and all(.payload.prerequisite_frozen_node_ids[]; type == "string"))
-      then any(.[]; .payload.descriptor_selector == $node)
-      else error("matching shard is not a canonical v5 Freeze")
-      end
-    ' "${module_ledger_files[@]}" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to inspect target module v5 Freeze shards: $active_state" >&2
-    return 2
-  fi
-
-  case "$active_state" in
-    true) return 0 ;;
-    false) return 1 ;;
-    *)
-      echo "PLAYBOOK_INVALID frozen ledger query returned an invalid state: $active_state" >&2
-      return 2
-      ;;
-  esac
+  run_cli ledger-frozen --target "$MODULE_PATH"
 }
 
 freeze_module_if_needed() {
@@ -189,10 +173,10 @@ freeze_module_if_needed() {
     return
   fi
 
-  step "ledger-append $MODULE_PATH" run_cli \
-    ledger-append --candidate-lean-report "$REPORT"
+  step "ledger-align --add $MODULE_PATH" run_cli \
+    ledger-align --add "$MODULE_PATH" --candidate-lean-report "$REPORT"
   if ! freeze_exists; then
-    echo "PLAYBOOK_INVALID ledger append did not freeze target module: $MODULE_PATH" >&2
+    echo "PLAYBOOK_INVALID ledger align did not freeze target module: $MODULE_PATH" >&2
     return 1
   fi
 }
@@ -281,6 +265,8 @@ cover_atom_or_resume() {
     return
   else
     local status=$?
+    COVER_FAILURE_REASON="${output##*$'\n'}"
+    [[ -n "$COVER_FAILURE_REASON" ]] || COVER_FAILURE_REASON="cover-atom-exit-$status"
     printf '%s\n' "$output" >&2
     if grep -Fq "cover atom $ATOM_ID already has coverage:" <<<"$output"; then
       printf 'PLAYBOOK_SKIP command=cover detail=coverage-already-applied atom_id=%s gid=%s\n' \
@@ -298,7 +284,7 @@ cover_row() {
   else
     local status=$?
     complete_step failed
-    exit "$status"
+    return "$status"
   fi
 }
 
@@ -315,9 +301,9 @@ case "$COMMAND" in
     run_digest_status
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     verify_added_frozen_events_v5
-    run_cli ledger-append --candidate-lean-report "$REPORT"
+    align_delivery_ledger
     run_digest_status
-    make preflight BASE="$BASE"
+    make preflight BASE="$(git rev-parse HEAD^1)"
     verify_added_frozen_events_v5
     ;;
   deposit)
@@ -336,6 +322,14 @@ case "$COMMAND" in
       freeze_precheck=0
     fi
     freeze_module_if_needed "$freeze_precheck"
+    if cover_row; then
+      step emit make emit
+    else
+      status=$?
+      printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=%s gid=%s reason=%s\n' \
+        "$ATOM_ID" "$GID" "$COVER_FAILURE_REASON" >&2
+      exit "$status"
+    fi
     ;;
   cover)
     require_transaction_arguments

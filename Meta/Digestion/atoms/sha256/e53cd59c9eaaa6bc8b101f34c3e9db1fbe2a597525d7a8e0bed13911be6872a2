@@ -1,0 +1,26 @@
+## 推论 4.3：它确实是一个闭包算子
+
+$$
+B\mid\operatorname{CAcl}(B),
+$$
+
+$$
+B\mid C
+\Longrightarrow
+\operatorname{CAcl}(B)\mid\operatorname{CAcl}(C),
+$$
+
+$$
+\boxed{
+\operatorname{CAcl}(\operatorname{CAcl}(B))
+=
+\operatorname{CAcl}(B).
+}
+$$
+
+这些性质分别来自包含性、最小性与输出已经是极大丰数。
+
+这里不需要假设 RH。
+
+---
+

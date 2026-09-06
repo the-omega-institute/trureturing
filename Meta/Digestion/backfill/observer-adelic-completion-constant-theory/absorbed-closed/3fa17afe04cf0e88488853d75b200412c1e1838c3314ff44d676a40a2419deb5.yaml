@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:3fa17afe04cf0e88488853d75b200412c1e1838c3314ff44d676a40a2419deb5
 cas_ref: sha256:3fa17afe04cf0e88488853d75b200412c1e1838c3314ff44d676a40a2419deb5
 coverage_gids:
-  - D5/S3/Weil/Budget/AtomicMomentHierarchyConvergence.atomic_moment_hierarchy_converges
+  - gid: D5/S3/Weil/Budget/AtomicMomentHierarchyConvergence.atomic_moment_hierarchy_converges
+    target_statement_id: sha256:9862786b0a295e5436a1089c0d4702b1b9902d70656b1a50e6929db4e41c3ff7
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Budget/AtomicMomentHierarchyConvergence.atomic_moment_hierarchy_converges
-      source_sha256: sha256:3fa17afe04cf0e88488853d75b200412c1e1838c3314ff44d676a40a2419deb5
-      target_statement_id: sha256:9862786b0a295e5436a1089c0d4702b1b9902d70656b1a50e6929db4e41c3ff7
   scribe:
     - gid: D5/S3/Weil/Budget/AtomicMomentHierarchyConvergence.atomic_moment_hierarchy_converges
       definition_sha256: sha256:30682c6a24d3bdb7865df67de8e2000ea8a2a1974da858e194f3441d44c37346

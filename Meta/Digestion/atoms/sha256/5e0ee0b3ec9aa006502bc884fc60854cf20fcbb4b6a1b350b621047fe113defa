@@ -1,0 +1,91 @@
+## 引理 1：平均权重
+
+有
+
+$$
+\boxed{
+\sum_{q\le Y}\alpha(q)
+=
+\mathfrak a\,Y+o(Y),
+}
+\tag{15}
+$$
+
+其中
+
+$$
+\boxed{
+\mathfrak a
+=
+\prod_p\left(1+\frac1{p(p-1)}\right)
+=
+\frac{\zeta(2)\zeta(3)}{\zeta(6)}.
+}
+\tag{16}
+$$
+
+这个结论不使用 RH。
+
+### 证明
+
+令 \(g=\alpha*\mu\)，则
+
+$$
+\alpha(n)=\sum_{d\mid n}g(d).
+$$
+
+局部值为
+
+$$
+g(p)=\frac{p^2}{(p-1)^2}-1=O(p^{-1}),
+$$
+
+$$
+g(p^2)=-\frac{p^2}{(p-1)^2},
+$$
+
+$$
+g(p^k)=0\qquad(k\ge3).
+$$
+
+因此
+
+$$
+\sum_{d\ge1}\frac{|g(d)|}{d}<\infty.
+$$
+
+于是由支配收敛，
+
+$$
+\begin{aligned}
+\frac1Y\sum_{q\le Y}\alpha(q)
+&=
+\sum_{d\le Y}g(d)\frac{\lfloor Y/d\rfloor}{Y}\\
+&\longrightarrow
+\sum_{d\ge1}\frac{g(d)}d.
+\end{aligned}
+$$
+
+其 Euler 因子为
+
+$$
+\begin{aligned}
+1+\frac{g(p)}p+\frac{g(p^2)}{p^2}
+&=
+\left(1-\frac1p\right)
+\left(1+\frac{p}{(p-1)^2}\right)\\
+&=
+1+\frac1{p(p-1)}.
+\end{aligned}
+$$
+
+最后利用
+
+$$
+1+\frac1{p(p-1)}
+=
+\frac{1-p^{-6}}{(1-p^{-2})(1-p^{-3})}
+$$
+
+得到式（16）。证毕。
+

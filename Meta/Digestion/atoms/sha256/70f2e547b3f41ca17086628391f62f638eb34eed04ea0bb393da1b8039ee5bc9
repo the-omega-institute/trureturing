@@ -1,0 +1,20 @@
+## 41. Three-cell reconstruction and actual support bounds, 2026-09-06
+
+`ReducedResponseTableMoments.lean` closes the explicit bound proposed in Section 40. For each Boolean response row, retain the cells with quaternary digits 0, 1, and 2. The omitted digit-3 probability is one minus their sum. `boolean_pair_law_eq_of_first_three` proves equality of the complete normalized response laws from equality of these three cells. The existing `responsePairDigitEquiv` fixes the encoding; no second response alphabet is introduced.
+
+`reducedTableFeature` has exactly `3*k` coordinates for k covariate values. Its moments are the actual cells of `tableEvaluationLaw`. Applying the existing rational moment compression and recovering the omitted cells gives
+
+```text
+exists_three_cell_table_compression:
+  every table law has a replacement with all row laws unchanged
+  and at most 3*k+1 nonzero original-table atoms.
+
+exists_three_cell_query_compression:
+  all row laws and one additional rational table-query expectation
+  are preserved with at most 3*k+2 nonzero original-table atoms.
+```
+
+`finiteLawSupport` counts nonzero masses on the original finite carrier. `momentCompression_sparse_support_card_le` proves that this support lies in the image of the compressed latent carrier. Consequently these are actual support bounds, in addition to the earlier latent-presentation bounds. The bounds also admit the independent trivial cap `4^k`; no claim that `3*k+2` is the exact minimum for every instance is made.
+
+No cross-row coupling is held fixed unless it is represented among the retained query or constraint moments. The replacement law is selected for each original moment vector. A universally fixed small list of table atoms is not obtained.
+

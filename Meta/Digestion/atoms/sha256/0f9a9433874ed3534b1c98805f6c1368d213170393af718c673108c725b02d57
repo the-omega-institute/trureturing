@@ -1,0 +1,98 @@
+# 一、固定上一轮的算术响应
+
+定义 von Mangoldt 函数：
+
+$$
+\Lambda(m)=
+\begin{cases}
+\ln p,&m=p^k,\quad p\text{ 为素数},\ k\ge1,\\
+0,&\text{其他情形}.
+\end{cases}
+$$
+
+它出现在：
+
+$$
+-\frac{\zeta'(s)}{\zeta(s)}
+=
+\sum_{m\ge1}\frac{\Lambda(m)}{m^s},
+\qquad\Re s>1.
+$$
+
+因此，真正驱动 ζ 的对数导数的离散事件是**素数幂**，不只是素数。([What's new][1])
+
+记：
+
+$$
+C_\gamma=2+\gamma-\ln(4\pi)>0,
+$$
+
+$$
+R_0(x)
+=
+\sum_{j=1}^{\infty}
+\frac{x^{-2j-1}}{2j(2j+1)},
+\qquad x\ge1.
+$$
+
+当 \(u=1/x\) 时：
+
+$$
+R_0(x)
+=
+u-\frac{1+u}{2}\ln(1+u)
++\frac{1-u}{2}\ln(1-u),
+$$
+
+在 \(x=1\) 处按连续极限解释。
+
+沿用上一轮的实响应函数：
+
+$$
+\boxed{
+\begin{aligned}
+F(\ln x)=\sqrt x\Bigg[
+&\gamma+1-\ln x\\
+&+\sum_{m\le x}\Lambda(m)
+\left(\frac1m-\frac1x\right)\\
+&-\frac{\ln(2\pi)}x+R_0(x)
+\Bigg].
+\end{aligned}
+}
+\tag{1}
+$$
+
+每个给定的 \(x\) 只涉及有限个素数幂。
+
+平滑显式公式给出：
+
+$$
+\boxed{
+F(t)
+=
+\sum_\rho
+\frac{e^{(\rho-\frac12)t}}{\rho(1-\rho)},
+}
+\tag{2}
+$$
+
+求和遍历全部非平凡零点，计入重数。积分平滑带来的分母 \(\rho(1-\rho)\)，使这个级数在每个有限 \(t\) 区间上一致绝对收敛。这里使用的原始显式公式及零点计数是经典数论输入。([What's new][1])
+
+由零点关于实轴和临界线的对称性，\(F\) 为实值偶函数，且：
+
+$$
+F(0)=C_\gamma.
+$$
+
+这些零点对称性不需要 RH。([DLMF][2])
+
+上一轮已经证明：
+
+$$
+\mathrm{RH}
+\iff
+F\text{ 在 }[0,\infty)\text{ 上有界}.
+$$
+
+现在把它加强成**单边有界性**。
+

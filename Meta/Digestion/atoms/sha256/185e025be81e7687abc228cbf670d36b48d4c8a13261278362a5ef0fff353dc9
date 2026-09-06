@@ -1,0 +1,38 @@
+### 离线复零点
+
+若：
+
+$$
+\Re s\neq\frac12,
+\qquad
+\Im s\neq0,
+$$
+
+则：
+
+$$
+q\notin\mathbb R,
+$$
+
+从而：
+
+$$
+y\notin\mathbb R.
+$$
+
+于是 Casimir 紧化把三类零点严格分开：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{零点类型}&y\text{ 的位置}\\
+\hline
+\text{RH-compatible}&(0,1]\\
+\text{实结构零}&(1,\infty)\\
+\text{离线复零}&\mathbb C\setminus\mathbb R
+\end{array}
+}
+$$
+
+---
+

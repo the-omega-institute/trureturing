@@ -1,0 +1,42 @@
+* bounded gaps 仍使绝对频率差趋于零。
+
+在黄金深度坐标
+
+$$
+H_\varphi(p)=\log_\varphi\log p
+$$
+
+中，bounded pair 满足
+
+$$
+H_\varphi(q)-H_\varphi(p)
+=
+O\left(
+\frac1{p\log p}
+\right).
+$$
+
+所以素数观察者不是均匀采样网格，而是一个同时具有：
+
+$$
+\boxed{
+\text{局部空窗}
++
+\text{局部近重合}
++
+\text{不断变化条件数}
+}
+$$
+
+的多尺度集合。
+
+这比“素数无法逼近某个偏移”更准确：
+
+$$
+\boxed{
+\text{素数可以逼近，但其观察 frame 并不稳定。}
+}
+$$
+
+---
+

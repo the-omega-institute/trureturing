@@ -1,0 +1,27 @@
+## 60. A robust ambiguity modulus for approximate moment agreement
+
+Fix a nonempty finite allowed carrier S, rational feature map phi with d coordinates, a rational query q, and nonnegative coordinate tolerances eta. Define the pairwise ambiguity
+
+```text
+Delta_eta(phi,q) = max { abs(E_u[q]-E_v[q]) :
+  u,v in simplex(S), abs(E_u[phi_j]-E_v[phi_j]) <= eta_j for every j }.
+```
+
+The errors compare two models directly. If each model is within epsilon_j of one observed center, triangle inequality only gives eta_j=2*epsilon_j; the common-center restrictions can make the actual range smaller than this global pairwise modulus.
+
+For e(i)=q(i)-alpha-beta.phi(i) in [lower,upper] on every allowed atom, define
+
+```text
+B_eta = upper-lower + sum_j abs(beta_j)*eta_j.
+```
+
+`query_gap_le_residualBudget` reuses the earlier expectation enclosure for each law and proves `abs(E_u[q]-E_v[q]) <= B_eta`. The proof bounds the change of the two affine predictor centers, rather than assuming those centers are still equal. The full-array check is essential: a certificate verified only on the proposed optimizing supports cannot bound other admissible laws.
+
+At paper level, the finite LP dual extends Section 57 to
+
+```text
+Delta_eta(phi,q) = min_beta [osc_S(q-beta.phi) + sum_j abs(beta_j)*eta_j].
+```
+
+Indeed, the primal has two simplex normalizations and the inequalities `-eta <= Phi*u-Phi*v <= eta`. Splitting the dual moment multiplier into its positive and negative parts gives the weighted absolute-value cost. This generic existence-and-equality statement still awaits a compatible connection to the external strong-duality owner. The Lean source below proves an exact certificate theorem and constructs a full parameter family of such certificates; it does not assume generic optimizer existence.
+

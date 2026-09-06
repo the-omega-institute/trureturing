@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
+  normalized_sha256: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
+cas_ref: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
+coverage_gids:
+  - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
+    target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+receipts:
+  scribe:
+    - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
+      definition_sha256: sha256:f4c36f3e7da3d2ca30ec36f031ef2e889424c671a56bb7e1aa126e54eeda1f04
+      emission_sha256: sha256:d4baee5d4578139d26d17f75d0b157d9873c42a7b8e2fb219b1726d7f7bc1f7f
+  unresolved_subitems: []

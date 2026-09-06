@@ -1,0 +1,82 @@
+## 246. Casimir inverse moments
+
+在 \(q=0\) 附近展开：
+
+$$
+-\frac{\mathcal X'(q)}
+{\mathcal X(q)}
+=
+\sum_{n=0}^{\infty}
+a_nq^n,
+$$
+
+其中：
+
+$$
+\boxed{
+a_n
+=
+\sum_j
+m_jq_j^{-(n+1)}.
+}
+$$
+
+再定义缩放序列：
+
+$$
+\boxed{
+b_n
+=
+4^{-n}a_n.
+}
+$$
+
+若 RH 成立，令：
+
+$$
+y_j=\frac1{4q_j}.
+$$
+
+由于：
+
+$$
+q_j\ge\frac14,
+$$
+
+所以：
+
+$$
+0<y_j\le1.
+$$
+
+而：
+
+$$
+b_n
+=
+\sum_j
+\frac{m_j}{q_j}y_j^n.
+$$
+
+因此 \(b_n\) 是区间 \([0,1]\) 上正测度：
+
+$$
+\nu
+=
+\sum_j
+\frac{m_j}{q_j}
+\delta_{y_j}
+$$
+
+的 Hausdorff moments：
+
+$$
+\boxed{
+b_n
+=
+\int_0^1y^n\,d\nu(y).
+}
+$$
+
+---
+

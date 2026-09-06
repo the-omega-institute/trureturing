@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:f7aa08160734d6fd949485fc06ef557ae050653897ee57e0a553d8ac5e7e498a
+  normalized_sha256: sha256:f7aa08160734d6fd949485fc06ef557ae050653897ee57e0a553d8ac5e7e498a
+cas_ref: sha256:f7aa08160734d6fd949485fc06ef557ae050653897ee57e0a553d8ac5e7e498a
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine for the exact theorem-headline clause `一个偶、奇交替的标量截断族，不可能以同一个非零函数为共同极限`. On origin/dev, parent `9174a90f22cd3b68c086acdf654f9234a92b9bbaf3d1d6d995d90c7cfbde2df8` lists this atom in `chain_atoms`; this residual-open record has `coverage_gids: []` and no prior quarantine. D5 exact search `alternating_reflection_common_limit_is_zero|even.?odd.{0,40}common.?limit|common.?limit.{0,40}(zero|nonzero)|同一个非零函数为共同极限|共同极限` under `D5/**/*.lean` exited 1. Scribe-title exact search `even.?odd.{0,40}common.?limit|common.?limit|共同极限|宇称交替` in `H(...)` titles under `Blueprint/**/*.scribe.cs` exited 1. Broad D5 and Scribe searches `parity|宇称|alternat|交替|common.?limit|共同极限|reflection|反射|InfiniteParityContinuityObstruction|DerivativeParityReadout` each exited 0; the nearest frozen public declarations are `D5/S3/Observer/Completion/InfiniteParityContinuityObstruction.finite_support_parity_has_no_continuous_completion`, about Boolean finite-support total parity on a countable path space, and `D5/S3/ContinuousObservables/DerivativeParityReadout.balanced_field_reflection_odd`, about derivatives of reflection-even real scalar fields. Neither states the common-limit obstruction on the source scalar truncation carrier. `/private/tmp/w73b40-atom2-probe.lean` proves the pointwise core `forall z, limit z = 0`; its proof-shape audit classifies the result as bind-only under CLAUDE.md 第 5⁗ 条 because every step uses the supplied reflection and convergence hypotheses, `Tendsto.congr'`, `tendsto_nhds_unique`, or elementary algebra, with no escape witness or admission basis. No frozen public statement carries this child."
+    reentry_condition: "A frozen public D5 owner states on the source scalar truncation carrier that reflection parity `f_N(-z)=(-1)^N f_N(z)` and convergence of both even and odd subsequences to one common limit force that limit to be zero, equivalently excluding a common nonzero limit; then bind this child to that GID rather than depositing a standalone bind-only module."
+    blocker_class: missing-prerequisite

@@ -9,9 +9,7 @@ internal static class Program
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     public static int Main(string[] arguments) =>
-        arguments.FirstOrDefault() == "self-lock-probe"
-            ? SelfLockProbeProgram.Run(arguments.Skip(1).ToArray())
-            : Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
+        Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
 
     internal static int Run(
         IReadOnlyList<string> arguments,
@@ -64,32 +62,58 @@ internal static class Program
 
     private static int Execute(Options options, string head, string @base)
     {
-        var full = Environment.GetEnvironmentVariable("FULL");
-        if (full is { Length: > 0 } && full != "1")
+        var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
+        var protectedBaseRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, @base);
+        var candidateRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, head);
+        var admissionPlane = AdmissionPlanePolicy.Evaluate(candidateRaw, changedPaths);
+        if (!admissionPlane.IsAdmissible)
         {
-            throw new InvalidOperationException("FULL must be unset or exactly 1");
+            throw new InvalidDataException(
+                $"{admissionPlane.Code} {admissionPlane.Path}: {admissionPlane.Message}");
         }
 
-        var protectedBase = RepositoryRules.ReadSnapshotProjects(
-            RevisionSnapshot(options.RepositoryRoot, @base, "protected base"));
-        var candidate = RepositoryRules.ReadSnapshotProjects(
-            RevisionSnapshot(options.RepositoryRoot, head, "candidate"));
+        var protectedBase = DecodeSnapshot(protectedBaseRaw, "protected base");
+        var candidate = DecodeSnapshot(candidateRaw, "candidate");
+        if (admissionPlane.RequiresFullEngineering())
+        {
+            var fullPlan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+                changedPaths,
+                RepositoryRules.ReadSnapshotProjects(protectedBase),
+                RepositoryRules.ReadSnapshotProjects(candidate),
+                full: true) with
+            {
+                Reason = $"candidate admission plane "
+                    + $"{admissionPlane.Classification!.Value.ToString().ToLowerInvariant()} "
+                    + "requires full engineering",
+            };
+            return ExecutePlan(options.RepositoryRoot, fullPlan);
+        }
+
+        var protectedBaseEvaluatorPaths = ControllerClosure.Derive(protectedBase);
+        var candidateEvaluatorPaths = ControllerClosure.Derive(candidate);
         var plan = EngineeringTestPlanPolicy.Evaluate(
-            GitPaths(options.RepositoryRoot, @base, head),
+            changedPaths,
             protectedBase,
             candidate,
-            full == "1");
+            protectedBaseEvaluatorPaths,
+            candidateEvaluatorPaths);
+        return ExecutePlan(options.RepositoryRoot, plan);
+    }
+
+    private static int ExecutePlan(string repositoryRoot, EngineeringTestPlan plan)
+    {
         WritePlan(plan);
         return EngineeringTestExecutor.Execute(
             plan,
-            invocation => RunTests(options.RepositoryRoot, invocation));
+            invocation => RunTests(repositoryRoot, invocation));
     }
 
     private static int RunTests(
         string repositoryRoot,
         EngineeringTestInvocation invocation)
     {
-        var resultsDirectory = Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
+        var resultsDirectory =
+            Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
         (int ExitCode, string StandardError) Run(bool noBuild)
         {
             var startInfo = new ProcessStartInfo
@@ -100,15 +124,13 @@ internal static class Program
                 UseShellExecute = false,
             };
             startInfo.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
-            foreach (var argument in new[] { "test", invocation.ProjectPath, "--configuration", "Release", "--verbosity", "normal" })
+            foreach (var argument in BuildTestArguments(
+                invocation.ProjectPath,
+                noBuild,
+                resultsDirectory))
             {
                 startInfo.ArgumentList.Add(argument);
             }
-            if (noBuild) startInfo.ArgumentList.Add("--no-build");
-            startInfo.ArgumentList.Add("--logger");
-            startInfo.ArgumentList.Add("trx;LogFilePrefix=engineering");
-            startInfo.ArgumentList.Add("--results-directory");
-            startInfo.ArgumentList.Add(resultsDirectory);
 
             using var process = Process.Start(startInfo)
                 ?? throw new InvalidOperationException("could not start dotnet test");
@@ -151,6 +173,28 @@ internal static class Program
         {
             Directory.Delete(resultsDirectory, recursive: true);
         }
+    }
+
+    internal static IReadOnlyList<string> BuildTestArguments(
+        string projectPath,
+        bool noBuild,
+        string resultsDirectory)
+    {
+        var arguments = new List<string>
+        {
+            "test",
+            projectPath,
+            "--configuration",
+            "Release",
+            "--verbosity",
+            "minimal",
+        };
+        if (noBuild) arguments.Add("--no-build");
+        arguments.Add("--logger");
+        arguments.Add("trx;LogFilePrefix=engineering");
+        arguments.Add("--results-directory");
+        arguments.Add(resultsDirectory);
+        return arguments;
     }
 
     private static bool ReportsMissingBuildOutput(string output) =>
@@ -255,11 +299,10 @@ internal static class Program
             .Split('\0', StringSplitOptions.RemoveEmptyEntries);
     }
 
-    private static RepositorySnapshot RevisionSnapshot(
-        string repositoryRoot,
-        string revision,
+    private static RepositorySnapshot DecodeSnapshot(
+        RawRepositorySnapshot raw,
         string description) =>
-        SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadRevision(repositoryRoot, revision)) switch
+        SnapshotDecoder.Decode(raw) switch
         {
             SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
             SnapshotDecodeOutcome.InfrastructureFailure failure =>

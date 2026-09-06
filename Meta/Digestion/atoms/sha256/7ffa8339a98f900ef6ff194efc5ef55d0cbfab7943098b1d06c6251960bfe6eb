@@ -1,0 +1,46 @@
+### 证明
+
+将 \(u_d\) 取为第一个基向量，余下基底张成 \(u_d^\perp\)。余子式公式给出：
+
+$$
+\langle u_d,(xI-K_d)^{-1}u_d\rangle
+=
+\frac{\det(xI-C_d)}{\det(xI-K_d)}.
+$$
+
+另一方面，由均衡性：
+
+$$
+\langle u_d,(xI-K_d)^{-1}u_d\rangle
+=
+\frac1d\operatorname{Tr}(xI-K_d)^{-1}
+=
+\frac{q_d'(x)}{dq_d(x)}.
+$$
+
+相乘得到式（B8）。再使用定理 B1，得到式（B9）。证毕。
+
+因此，正确的跨层结构不是：
+
+$$
+K_d\subset K_{d+1},
+$$
+
+而是：
+
+$$
+\boxed{
+K_d
+\longrightarrow
+\text{删除一个均衡方向}
+\longrightarrow
+\text{乘以 }\frac d{d-1}
+\longrightarrow
+K_{d-1}.
+}
+$$
+
+**前文所说的“需要重新分配关系”，现在有了一个明确的有限算子实现。**
+
+---
+

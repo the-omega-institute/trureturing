@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4a6f9dfa437cd061ea5cd823de12c18186a17c94e79760fe6d77d65436c3e3cd
+  normalized_sha256: sha256:4a6f9dfa437cd061ea5cd823de12c18186a17c94e79760fe6d77d65436c3e3cd
+cas_ref: sha256:4a6f9dfa437cd061ea5cd823de12c18186a17c94e79760fe6d77d65436c3e3cd
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/WhiteSpectrumDeltaNormalization.normalized_white_spectrum_inverse_fourier
+    target_statement_id: sha256:c9aebf39a0a9a72a658492e91d3c088a52298fa1ac6be8f92b2eabaf030e1c8e
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/WhiteSpectrumDeltaNormalization.normalized_white_spectrum_inverse_fourier
+      definition_sha256: sha256:b7f50211ac3151a5854da76ec224ba4b1a7ea28662123b573929dce2195d81f3
+      emission_sha256: sha256:7ba5d009a02f3478056b52c522b736aea82ca183c2e11465eca068dffc7238d6
+  unresolved_subitems: []

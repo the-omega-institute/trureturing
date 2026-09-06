@@ -1,0 +1,32 @@
+## 为什么“原始量子态为正”不够？
+
+原态无条件给出的是：
+
+$$
+G^{(0)}_{ij}
+=
+\langle e^{it_iQ}\psi,e^{it_jQ}\psi\rangle
+=
+A(t_j-t_i),
+$$
+
+它当然正半定。
+
+但式（U15）包含导数和减法，不是同一份 Gram 矩阵。
+
+所以：
+
+$$
+\boxed{
+[A(t_j-t_i)]\succeq0
+}
+$$
+
+不能自动推出：
+
+$$
+\boxed{
+[\mathcal K_A(z_i,z_j)]\succeq0.
+}
+$$
+

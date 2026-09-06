@@ -1,0 +1,42 @@
+## 520. 有限矩阵都正，不一定自动得到无限正算子
+
+若有限矩阵：
+
+$$
+G_N\succeq0
+\qquad
+\forall N,
+$$
+
+通常可以构造一个正半定核。
+
+但要把它升级成所需的 completed operator，还需要：
+
+* 一致性；
+* 完备化；
+* 有界性或闭性；
+* 正确的函数空间；
+* 与 \(\xi\) 或 explicit formula 的识别。
+
+因此：
+
+$$
+\boxed{
+\text{all finite shadows positive}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{the intended global operator positive}
+}
+$$
+
+之间仍有一个 gluing theorem。
+
+这就是极限层真正“约不掉”的新项。
+
+---
+

@@ -1,0 +1,30 @@
+## 定义 71.3　推理链
+
+推理链由以下构造归纳生成：
+
+$$
+\operatorname{Id}_{\mathfrak A}
+:
+\mathfrak A\rightsquigarrow\mathfrak A;
+$$
+
+$$
+\operatorname{Cons}(s,P)
+:
+\mathfrak A\rightsquigarrow\mathfrak C,
+$$
+
+其中
+
+$$
+s:\mathfrak A\rightsquigarrow\mathfrak B
+$$
+
+是一个精确步骤，且
+
+$$
+P:\mathfrak B\rightsquigarrow\mathfrak C
+$$
+
+是已经构造的推理链。
+

@@ -3,36 +3,55 @@ fingerprints:
   normalized_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
 cas_ref: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
 coverage_gids:
-  - D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
-  - D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
-  - D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
-  - D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
-  - D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
-  - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
-  - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
-  - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
-  - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
-  - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
-  - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
-  - D5/S3/QuantumContext/ClassicalAddressRealismExclusion.classical_address_realism_exclusion
-  - D5/S3/QuantumContext/ProjectionValuationObstruction.projection_valuation_obstruction
+  - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+    target_statement_id: sha256:1762dfcfbcf1b350626e711534c61da8425e1e829dfb73e4ab1b7fb74e30db39
+  - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
+    target_statement_id: sha256:a64a7db140cf1b62437069ce3e400c326debb1675456048955a50730edd170ef
+  - gid: D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
+    target_statement_id: sha256:0d54c32903e14d268173a993a963a82faee352eeb70f0ca1a56573c397a5eeb0
+  - gid: D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+    target_statement_id: sha256:89019a365c8d3c65512995702fdcc4f90c3a21cc538a37962cd90d3a8cfaf0af
+  - gid: D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
+    target_statement_id: sha256:f25b7239e34182d1cdaff8dfc1f1b67e43f85b40bdfbe3e850173bf7593427d5
+  - gid: D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
+    target_statement_id: sha256:04fdaf02610d18b00f28dbb1b6a3b058bd3e61773fa16a5b30575dc1d27790a8
+  - gid: D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
+    target_statement_id: sha256:ca1a691db162ef5c2def90c39385aabbce04efdba439a92dfb3e43f8dfa1b137
+  - gid: D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
+    target_statement_id: sha256:1577654018a5412c9492d172a9c61a5cf7b1cdde56e72cc4955625cc589078e7
+  - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
+    target_statement_id: sha256:4452133d5c13101de5a5eae13c32b2cc7f115f72cba4cf1088760d8884e57720
+  - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
+    target_statement_id: sha256:ff74fc9166fe86cfde2fed35f2739f227eab77c0598e49868349a7ddfbd8ffbe
+  - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
+    target_statement_id: sha256:860c2c13fbf31e1cf13af4d22c15426ea2a3a09e5e4ddb7385b7a474c1b4f704
+  - gid: D5/S3/QuantumContext/ClassicalAddressRealismExclusion.classical_address_realism_exclusion
+    target_statement_id: sha256:d35c5633f3755c18fbb9f4ad170c0d6fee8d01bfdb5a5629bbbce0ba800d46e3
+  - gid: D5/S3/QuantumContext/ProjectionValuationObstruction.projection_valuation_obstruction
+    target_statement_id: sha256:bed803597c697c05a5bd49384c223d18179f4172782d201487d13621e1c2a9bc
 receipts:
-  coverage:
+  scribe:
+    - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+      definition_sha256: sha256:c5accedabf0f0d42752caec86430e25b771cb44fcbf3c0f383f245eaa04346cf
+      emission_sha256: sha256:cda294fe3dd6b93c43fac8ade1f713e543e12ee2c3fd6b93989bf60d6e3183b9
     - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
-      source_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
-      target_statement_id: sha256:a64a7db140cf1b62437069ce3e400c326debb1675456048955a50730edd170ef
-      statement_id_history:
-        - statement_id: sha256:dc5c3f103d0e67f17a64f1ed85c361cc4e5496ba2bd4aa43444d74ecb8f19d9a
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
+      definition_sha256: sha256:09dcb7a7b19f73aafc7011f0eef2d57192856a74a3b268ef9e3501779788893f
+      emission_sha256: sha256:35a0c6948bb4d549e53f5b8a2f3fd0950d4a85b5fc770b6ff95a27a7ad182eb3
     - gid: D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
-      source_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
-      target_statement_id: sha256:0d54c32903e14d268173a993a963a82faee352eeb70f0ca1a56573c397a5eeb0
-  scribe: []
+      definition_sha256: sha256:b5bca90b6fe16e6f200b8a0a4b380411a2103f1141a23e04bad7f71f4fd9dd64
+      emission_sha256: sha256:4038db3e5c6034dac26df1fca02ab86352161230833fe2cadace19781267cc58
+    - gid: D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+      definition_sha256: sha256:ce39ddc02e0f2b90ab65e13288dc37ae53acc03dbdb398c412c5e372610293f5
+      emission_sha256: sha256:a61d7fcde3a0453be84caa86f7a6349d11c1281d68c82e6ebbb12e58b63ab231
+    - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
+      definition_sha256: sha256:ba0e59654ceec4b6854674d13b38cb751288b34a52ae7fd3a8886b1cc66947e0
+      emission_sha256: sha256:df9ad32e5369d3ea74cb428db97eed4b02bea88f8dac0c3662684ed5743a6c4a
+    - gid: D5/S3/QuantumContext/ClassicalAddressRealismExclusion.classical_address_realism_exclusion
+      definition_sha256: sha256:e81db5d5228240a787b6de4b4222756c4bda3095eeb011a8072b6d0e73907ed8
+      emission_sha256: sha256:d5ad61c46d082582a2833e2de71ebaa801ac03210fdca802f5a9fca6d47cfc1d
+    - gid: D5/S3/QuantumContext/ProjectionValuationObstruction.projection_valuation_obstruction
+      definition_sha256: sha256:8e5bc0d0ee54b6fb79a1aec21b7327e4e4b4f6864973355a2d1b523746523ec8
+      emission_sha256: sha256:1c5156ca1989948cf08cc87daf4e2650efb52b7ad6c7e7b8eefe4e405bd6d0b3
   unresolved_subitems:
     - hidden-address-local-variable-interpretation
     - kochen-specker-projection-valuation-obstruction

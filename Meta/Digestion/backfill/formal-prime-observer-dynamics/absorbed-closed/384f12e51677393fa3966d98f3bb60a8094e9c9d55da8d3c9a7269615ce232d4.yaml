@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:384f12e51677393fa3966d98f3bb60a8094e9c9d55da8d3c9a7269615ce232d4
 cas_ref: sha256:384f12e51677393fa3966d98f3bb60a8094e9c9d55da8d3c9a7269615ce232d4
 coverage_gids:
-  - D5/S3/Analytic/ZetaObservation/MinimalSufficientRelation.sample_product_is_minimal_sufficient_relation
+  - gid: D5/S3/Analytic/ZetaObservation/MinimalSufficientRelation.sample_product_is_minimal_sufficient_relation
+    target_statement_id: sha256:f92bf087d2d422f750dd93fe3152cd4209f524b08fce7481bbada631f17ad17a
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/ZetaObservation/MinimalSufficientRelation.sample_product_is_minimal_sufficient_relation
-      source_sha256: sha256:384f12e51677393fa3966d98f3bb60a8094e9c9d55da8d3c9a7269615ce232d4
-      target_statement_id: sha256:f92bf087d2d422f750dd93fe3152cd4209f524b08fce7481bbada631f17ad17a
   scribe:
     - gid: D5/S3/Analytic/ZetaObservation/MinimalSufficientRelation.sample_product_is_minimal_sufficient_relation
       definition_sha256: sha256:713ad3d32b2ae115a36f2e9a2de7792a57fce95a6e575e37db66c5feb5c375c2

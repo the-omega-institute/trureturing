@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:75a68a10ab7c62640200e61441ff489939de0b4fed4091873a9add1625e66940
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "w73d40 whole-clause audit: D5/S3/ConceptDynamics/Policy/DiscretionaryOutcomeNonuniqueness.discretionary_outcome_nonuniqueness carries the nonunique permitted-outcome fiber on unrestricted Case/PublicFact/Outcome types. It does not publicly state the resisting clause '任何确定裁判都必须加入: 优先级'. Source 447 defines the fiber from Adm, C_law and Permitted; subsequent out-of-boundary alternatives prevent reading priority as the only doctrine. D5/Scribe searches doctrine|priority|priorit|preceden|discretion|裁量|优先级|判例 (exit 0) found the nonuniqueness owner, DeterministicPolicySectionCount.deterministic_policy_sections_lower_bound (finite section counting), PrecedentTargetCompletion.target_completion_formal_distinction_not_noncircular (product-readout completion versus allowed facts), and supplied-input/value-scale results; none states priority necessity on this fiber. Pinned Mathlib db584cd6 Cardinal.one_lt_iff_nontrivial (Basic.lean:107) and nontrivial_iff (Defs.lean:32) are exact witness bridges, directly applied in /private/tmp/consensus-rnd/sshx/w73d40/attempt-1/atom3-probe.lean, exit 0. The probe preserves the source fiber and uses only Mathlib instantiation, subtype equality, and the frozen theorem: bind-only, no escape witness. A17 GitHub doctrine and permitted priority searches (exit 0) found edu-ap/legal-lean@629d404fbfb352c27af2e1e106d7f309e7a87b7c LegalLean/Core.lean:97-111 (MIT), a Priority/LegalRule carrier with supplied priority fields, not a necessity theorem. A priority field or label cannot cover the source clause. No whole-atom coverage is claimed."
+    reentry_condition: 'Required public bridge: formalize a source-grounded priority selection rule on the admissible permission fiber and prove its relation to determinate judgment, or delimit the mathematical nonuniqueness clause by a source erratum; reuse the existing nonuniqueness owner and do not add an unproved priority binder.'
+    blocker_class: multi-clause-guard

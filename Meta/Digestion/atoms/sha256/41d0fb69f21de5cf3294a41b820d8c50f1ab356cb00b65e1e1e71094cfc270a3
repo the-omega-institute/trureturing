@@ -1,0 +1,26 @@
+## B12.5 Poincare coercivity
+
+在上述 kernel 的正交补上，若
+
+$$
+\lambda_Z^+
+=\min_{v>0}v^2=1
+\tag{B12.13}
+$$
+
+且 $\lambda_P^+>0$ 是 prime graph Laplacian 的第一正 eigenvalue，则
+
+$$
+\boxed{
+\|D_{Q,\mathcal C}F\|^2
+\ge
+\lambda_P^+\|F\|^2}
+\tag{B12.14}
+$$
+
+对所有避开真空与共同 prime mode 的 $F$ 成立，适当理解张量权重。
+
+short-gap sticky clusters 的问题，正是 $\lambda_P^+$ 在跨尺度极限中可能变小；黄金 shell 只能改变 exponent factor，不能自动阻止 prime graph spectral gap collapse。
+
+---
+

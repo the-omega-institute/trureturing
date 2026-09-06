@@ -98,6 +98,14 @@ internal sealed partial class LeanSourceCatalog
             customSyntaxByModule.ToImmutable());
     }
 
+    internal static ImmutableArray<string> ParseFileImports(RepositoryFile file)
+    {
+        ArgumentNullException.ThrowIfNull(file);
+
+        var tokens = LeanSourceTokenizer.Tokenize(file.Text);
+        return ParseImports(tokens, FindCommandStarts(tokens));
+    }
+
     internal ImmutableArray<byte> ExtractPropositionSource(
         RepoPath modulePath,
         ImmutableArray<FrozenDeclarationStatement> recordedDeclarations)

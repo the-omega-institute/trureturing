@@ -3,10 +3,13 @@ fingerprints:
   normalized_sha256: sha256:1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4
 cas_ref: sha256:1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4
 coverage_gids:
-  - D5/S1/Recurrence/GoldenPartition.fibonacci_golden_partition
+  - gid: D5/S1/Recurrence/GoldenPartition.fibonacci_golden_partition
+    target_statement_id: sha256:3b522c177ae30ca1a8062ad38d15b46c3dd8bbff2cfde6cb02d98070d9c00dcd
 receipts:
-  coverage: []
-  scribe: []
+  scribe:
+    - gid: D5/S1/Recurrence/GoldenPartition.fibonacci_golden_partition
+      definition_sha256: sha256:f9192918e57e2c5736649ff19b1eec030b4bb21dc43d5e057a84296c1681f93d
+      emission_sha256: sha256:881d4bd63a39d4385ae6ac5c2e8feefaecf5bb20cf572732afc87ffaee1e7d18
   unresolved_subitems:
     - comparison-claim-stronger-than-cyclic-branch-gleason-conditions
     - golden-branch-born-type-pricing-unconditionally-unique

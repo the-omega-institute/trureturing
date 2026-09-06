@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -9,8 +7,6 @@ namespace StrataLint.Cli;
 internal static class DigestStatusCommand
 {
     private const string ImplementationPath = "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs";
-    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented = true,
@@ -22,12 +18,16 @@ internal static class DigestStatusCommand
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyList<string> arguments)
+        IReadOnlyList<string> arguments,
+        IAtomHistorySource atomHistorySource,
+        TimeProvider ageTimeProvider)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(arguments);
+        ArgumentNullException.ThrowIfNull(atomHistorySource);
+        ArgumentNullException.ThrowIfNull(ageTimeProvider);
         try
         {
             var options = ParseArguments(arguments);
@@ -83,16 +83,21 @@ internal static class DigestStatusCommand
                     return InvalidEvaluation(formalizeEvaluation);
                 }
 
+                var formalizeContentKinds = DigestionContentKindResolver.Resolve(
+                    snapshot,
+                    formalizeDocument);
+                var formalizeFrontier = DigestionFrontierProjection.Create(
+                    formalizeDocument,
+                    formalizeEvaluation,
+                    formalizeContentKinds,
+                    options.RetryDispositions);
                 return new CommandResult(
                     true,
-                    RenderFormalizeCandidates(
-                        formalizeEvaluation,
+                    DigestFormalizeCandidates.Render(
+                        formalizeFrontier,
                         snapshot,
                         formalizeDocument,
-                        DigestionContentKindResolver.Resolve(snapshot, formalizeDocument),
-                        formalizeLeanReport,
-                        options.FormalizeAtomId,
-                        options.RetryDispositions),
+                        options.FormalizeAtomId),
                     string.Empty);
             }
 
@@ -133,25 +138,41 @@ internal static class DigestStatusCommand
                 return InvalidEvaluation(evaluation);
             }
 
+            DigestionFrontierProjection? frontier = null;
+            if (options.Readiness || options.ResidualSummary || options.Json)
+            {
+                frontier = DigestionFrontierProjection.Create(
+                    document,
+                    evaluation,
+                    DigestionContentKindResolver.Resolve(snapshot, document),
+                    retryDispositions: false);
+            }
+
             if (options.Readiness)
             {
                 return new CommandResult(
                     true,
                     RenderReadiness(DigestionReadinessQuery.Classify(
-                        document,
-                        evaluation,
-                        DigestionContentKindResolver.Resolve(snapshot, document))),
+                        frontier!)),
                     string.Empty);
             }
 
+            var age = options.ResidualSummary || options.Json
+                ? DigestAtomAge.Read(evaluation, frontier!, atomHistorySource, ageTimeProvider)
+                : null;
             return new CommandResult(
                 true,
                 options.ResidualSummary
-                    ? DigestResidualSummary.Render(evaluation)
+                    ? DigestResidualSummary.Render(evaluation, frontier!) + age!.RenderSummary()
                     : options.Json
-                        ? RenderJson(evaluation)
+                        ? RenderJson(evaluation, frontier!, age!)
                         : RenderText(evaluation),
                 string.Empty);
+        }
+        catch (AtomHistoryUnavailableException exception)
+        {
+            return new CommandResult(false, string.Empty,
+                $"DIGEST_AGE_HISTORY_UNAVAILABLE {exception.Message}\n");
         }
         catch (Exception exception) when (
             exception is FormatException
@@ -199,7 +220,12 @@ internal static class DigestStatusCommand
             throw new InvalidOperationException(InvalidEvaluation(evaluation).Error.TrimEnd());
         }
 
-        return DigestResidualSummary.RenderShards(evaluation);
+        var frontier = DigestionFrontierProjection.Create(
+            document,
+            evaluation,
+            DigestionContentKindResolver.Resolve(snapshot, document),
+            retryDispositions: false);
+        return DigestResidualSummary.RenderShards(evaluation, frontier);
     }
 
     private static DigestStatusOptions ParseArguments(IReadOnlyList<string> arguments)
@@ -289,24 +315,56 @@ internal static class DigestStatusCommand
 
     internal static string RenderDetail(string detail) => JsonSerializer.Serialize(detail, JsonOptions);
 
-    private static string RenderJson(DigestionLedgerEvaluation evaluation)
+    internal static string RenderJson(
+        DigestionLedgerEvaluation evaluation,
+        DigestionFrontierProjection frontier,
+        DigestAtomAge age)
     {
+        ArgumentNullException.ThrowIfNull(evaluation);
+        ArgumentNullException.ThrowIfNull(frontier);
         var material = new
         {
             schema = "stratalint-digest-status-v1",
             entries_total = evaluation.Entries.Length,
             deletable_now = evaluation.DeletableCount,
+            age_histogram = new { total = age.Total, per_source = age.PerSource },
+            frontier = new
+            {
+                total = FrontierCounts(frontier.Total),
+                per_source = frontier.PerSource.Select(static source => new
+                {
+                    source_id = source.SourceId,
+                    counts = FrontierCounts(source.Counts),
+                }),
+                entries = frontier.Entries.Select(entry => new
+                {
+                    source_id = entry.Entry.SourceId,
+                    atom_id = entry.Entry.AtomId,
+                    primary_disposition = entry.PrimaryDispositionLabel,
+                    primary_detail = entry.PrimaryDetail,
+                    kind_label = entry.KindLabel,
+                    is_chain_child = entry.IsChainChild,
+                    parent_atom_ids = entry.ParentAtomIds,
+                    first_seen_date = age.Entries[entry.Entry.AtomId].FirstSeenDate,
+                    age_days = age.Entries[entry.Entry.AtomId].AgeDays,
+                    age_bucket = age.Entries[entry.Entry.AtomId].AgeBucket,
+                }),
+            },
             entries = evaluation.Entries
                 .OrderBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
                 .ThenBy(static item => item.Entry.AtomId, StringComparer.Ordinal)
-                .Select(static item => new
+                .Select(item => new
                 {
                     source_id = item.Entry.SourceId,
                     atom_id = item.Entry.AtomId,
+                    coverage_gids = item.Entry.CoverageGids,
                     alignment = DigestionReceiptAlignmentNames.Render(item.Alignment),
                     migration = DigestionStatusNames.Migration(item.DerivedStatus.Migration),
                     truth = DigestionStatusNames.Truth(item.DerivedStatus.Truth),
                     deletable = item.Deletable,
+                    first_seen_date = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.FirstSeenDate,
+                    age_days = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.AgeDays,
+                    age_bucket = age.Entries.GetValueOrDefault(item.Entry.AtomId)?.AgeBucket,
                     gaps = item.Gaps.Select(static gap => new
                     {
                         code = gap.Code,
@@ -316,6 +374,17 @@ internal static class DigestStatusCommand
         };
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
     }
+
+    private static object FrontierCounts(DigestionFrontierCounts counts) => new
+    {
+        residual_open = counts.ResidualOpen,
+        formalization_frontier = counts.FormalizationFrontier,
+        quarantined = counts.Quarantined,
+        withheld = counts.Withheld,
+        chain_child = counts.ChainChild,
+        not_formalizable = counts.NotFormalizable,
+        formalizable_claim = counts.FormalizableClaim,
+    };
 
     internal static string RenderReadiness(IEnumerable<DigestionReadinessRecord> entries)
     {
@@ -327,165 +396,13 @@ internal static class DigestStatusCommand
             {
                 source_id = item.SourceId,
                 atom_id = item.AtomId,
+                coverage_gids = item.CoverageGids,
                 action = item.Action,
                 ordered_blockers = item.OrderedBlockers,
                 unknown_predicates = item.UnknownPredicates,
             }),
         };
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
-    }
-
-    private static string RenderFormalizeCandidates(
-        DigestionLedgerEvaluation evaluation,
-        RepositorySnapshot snapshot,
-        BackfillInventoryDocument ledger,
-        IReadOnlyDictionary<string, string> contentKinds,
-        LeanAxiomReport leanReport,
-        string? selectedAtomId,
-        bool retryDispositions)
-    {
-        var projections = evaluation.Entries
-            .Where(item =>
-                item.Alignment == DigestionReceiptAlignment.Seen
-                && (selectedAtomId is not null
-                    ? string.Equals(item.Entry.AtomId, selectedAtomId, StringComparison.Ordinal)
-                    : item.DerivedStatus.Migration == DigestionMigrationState.Residual
-                        && item.DerivedStatus.Truth == DigestionTruthState.Open
-                        && item.Entry.CoverageGids.Length == 0))
-            .Select(item => Projection(
-                item,
-                snapshot,
-                contentKinds,
-                retryDispositions))
-            .Where(static item => item is not null)
-            .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
-            .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
-            .Select(static item => item!)
-            .ToArray();
-        var material = new
-        {
-            schema = "stratalint-formalize-candidates-v5",
-            ledger_sha256 = DigestionLedgerPreimage.ComputeSha256(ledger),
-            candidates = projections
-                .Where(static item => item.Candidate is not null)
-                .Select(static item => item.Candidate!),
-            quarantined = projections
-                .Where(static item => item.Quarantined is not null)
-                .Select(static item => item.Quarantined!),
-            withheld = projections
-                .Where(static item => item.Withheld is not null)
-                .Select(static item => item.Withheld!),
-        };
-        return JsonSerializer.Serialize(material, JsonOptions) + "\n";
-    }
-
-    private static FormalizeProjection? Projection(
-        DigestionEntryEvaluation evaluation,
-        RepositorySnapshot snapshot,
-        IReadOnlyDictionary<string, string> contentKinds,
-        bool retryDispositions)
-    {
-        var entry = evaluation.Entry;
-        if (!contentKinds.TryGetValue(entry.AtomId, out var contentKind)
-            || !DigestionContentKindPolicy.IsFormalizable(contentKind))
-        {
-            return null;
-        }
-
-        var dispositionSelection = DigestionCoverDispositionSelector.Classify(
-            entry,
-            retryDispositions);
-        if (entry.Receipts.Quarantine is { } quarantine)
-        {
-            return new FormalizeProjection(
-                entry.SourceId,
-                entry.AtomId,
-                null,
-                new QuarantinedFormalizeCandidate(
-                    entry.SourceId,
-                    entry.AtomId,
-                    quarantine.Justification,
-                    quarantine.ReentryCondition,
-                    quarantine.BlockerClass),
-                null);
-        }
-
-        if (dispositionSelection == DigestionCoverDispositionSelection.Withheld)
-        {
-            return new FormalizeProjection(
-                entry.SourceId,
-                entry.AtomId,
-                null,
-                null,
-                new WithheldFormalizeCandidate(
-                    entry.AtomId,
-                    DigestionCoverDispositionSelector.WithholdReason,
-                    null));
-        }
-
-        var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
-        if (!snapshot.TryGetFile(casPath, out var atom))
-        {
-            throw new InvalidOperationException($"entry {entry.AtomId} CAS blob is missing: {casPath}");
-        }
-
-        string atomText;
-        try
-        {
-            atomText = StrictUtf8.GetString(atom.RawBytes.AsSpan());
-        }
-        catch (DecoderFallbackException exception)
-        {
-            throw new FormatException(
-                $"entry {entry.AtomId} CAS blob must contain strict UTF-8: {casPath}",
-                exception);
-        }
-
-        var status = evaluation.Atom?.StatusMarker
-            ?? throw new FormatException($"entry {entry.AtomId} has no canonical atom alignment");
-        if (status.Kind == DigestionAtomStatusMarkerKind.Malformed)
-        {
-            return new FormalizeProjection(
-                entry.SourceId,
-                entry.AtomId,
-                null,
-                null,
-                new WithheldFormalizeCandidate(
-                    entry.AtomId,
-                    "malformed-status-marker",
-                    status.Qualifier));
-        }
-
-        if (status is
-            {
-                Kind: DigestionAtomStatusMarkerKind.Valid,
-                Status: "closed",
-                Qualifier.Length: > 0,
-            })
-        {
-            return new FormalizeProjection(
-                entry.SourceId,
-                entry.AtomId,
-                null,
-                null,
-                new WithheldFormalizeCandidate(
-                    entry.AtomId,
-                    "qualified-closed-status",
-                    status.Qualifier));
-        }
-
-        return new FormalizeProjection(
-            entry.SourceId,
-            entry.AtomId,
-            new FormalizeCandidate(
-                entry.SourceId,
-                entry.AtomId,
-                contentKind,
-                entry.CasRef,
-                entry.Fingerprints.RawSha256,
-                atomText),
-            null,
-            null);
     }
 
     private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
@@ -526,30 +443,4 @@ internal static class DigestStatusCommand
         string? BaselineRevision,
         string? FormalizeAtomId);
 
-    private sealed record FormalizeCandidate(
-        string SourceId,
-        string AtomId,
-        string Kind,
-        string CasRef,
-        string RawSha256,
-        string AtomText);
-
-    private sealed record WithheldFormalizeCandidate(
-        string AtomId,
-        string WithholdReason,
-        string? StatusQualifier);
-
-    private sealed record QuarantinedFormalizeCandidate(
-        string SourceId,
-        string AtomId,
-        string Justification,
-        string ReentryCondition,
-        string? BlockerClass);
-
-    private sealed record FormalizeProjection(
-        string SourceId,
-        string AtomId,
-        FormalizeCandidate? Candidate,
-        QuarantinedFormalizeCandidate? Quarantined,
-        WithheldFormalizeCandidate? Withheld);
 }

@@ -1,0 +1,13 @@
+## 定理 O3：负特征值的精确计数
+
+设 \(r_{\mathrm{off}}\) 是 \(\mathcal U\) 中不同非实共轭对的数量，允许为无穷。
+
+则：
+
+$$
+\boxed{
+n_-(\mathsf K)=r_{\mathrm{off}}.
+}
+\tag{O16}
+$$
+

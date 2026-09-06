@@ -1,0 +1,23 @@
+## 3.3 离线计数
+
+令 $N_{\mathrm{off}}(T)$ 为 $0<t\le T$ 内离线零点按重数计数的总数。由于同高度反射成对，
+
+$$
+\boxed{N_{\mathrm{off}}(T)\in2\mathbb N.}
+\tag{3.6}
+$$
+
+在第一离线高度，
+
+$$
+N_{\mathrm{off}}(T_{\mathrm{off}})
+-
+\lim_{T\uparrow T_{\mathrm{off}}}N_{\mathrm{off}}(T)
+\ge2.
+\tag{3.7}
+$$
+
+若同时计入负高度共轭零点，则完整轨道按四点出现。
+
+---
+

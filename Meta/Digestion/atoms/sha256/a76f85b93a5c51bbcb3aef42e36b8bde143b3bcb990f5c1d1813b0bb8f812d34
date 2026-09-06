@@ -1,0 +1,35 @@
+## 定理343.1　内部空间产生精确的时间卷积
+
+有
+
+$$
+\boxed{
+\begin{aligned}
+i\hbar\dot x(t)
+={}&H_Vx(t)
++Ve^{-iH_Ht/\hbar}y_0\\
+&-\frac{i}{\hbar}
+\int_0^t
+\mathcal K(t-s)x(s)\,ds,
+\end{aligned}
+}
+\tag{343.2}
+$$
+
+其中
+
+$$
+\boxed{
+\mathcal K(t)=Ve^{-iH_Ht/\hbar}V^\dagger.
+}
+\tag{343.3}
+$$
+
+### 证明
+
+用变化常数公式解第二个方程，再代入第一个方程。∎
+
+这与投影动力学中由未保留变量产生记忆项的机制一致；是否可以丢弃或近似记忆，需要另有衰减、尺度分离和误差估计，不能仅由“系统很大”推出。([arXiv][2])
+
+---
+

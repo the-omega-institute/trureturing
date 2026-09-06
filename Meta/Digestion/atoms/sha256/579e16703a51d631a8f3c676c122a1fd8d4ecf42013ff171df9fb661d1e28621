@@ -1,0 +1,16 @@
+## 48. Exact trace replay and a finite descent bound
+
+`D5/S0/Certificates/RationalMomentReplay.lean` defines `replaySteps` by structural recursion on a finite list of proposed elimination steps. Every step is checked against the current weight vector. Failure returns `none`; success computes the exact rational update and checks the remaining trace. The recursion terminates on every finite input, including invalid traces.
+
+`replaySteps_sound` proves the stronger quantitative invariant
+
+```text
+trace_length + final_support_size <= initial_support_size,
+```
+
+together with nonnegativity, conserved mass, equality of all retained moments, and support containment. A normalized vector cannot have empty support, so every successful trace from N active atoms has length at most N-1. This bounds accepted elimination steps, not rational arithmetic bit complexity or the runtime of an external search procedure.
+
+`checkCompression` first checks normalization and nonnegative input, then replays the trace and requires the final support count to be at most d+1. It recomputes the output; a producer-supplied terminal vector is not trusted. `checkCompression_sound` certifies all these properties for any accepted output. `checkCompression_preserves_support_predicate` additionally transports every predicate holding on all initially active atoms, even if that predicate is not decidable or expressible as one of the retained moments.
+
+Two closed examples are included as ordinary `decide` proof scripts: an accepted mean-preserving compression from the uniform law on 0,1,2 to the middle atom, and rejection of the zero-atom revival above. These Lean computations have not been executed in the current runtime.
+

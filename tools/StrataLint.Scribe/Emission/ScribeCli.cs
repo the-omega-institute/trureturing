@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Reflection;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
@@ -17,21 +18,24 @@ public static class ScribeCli
     ];
 
     public static int Run(
+        Assembly documentsAssembly,
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TextWriter output,
         TextWriter error) =>
-        Run(arguments, workingDirectory, output, error, leanReport: null);
+        Run(documentsAssembly, arguments, workingDirectory, output, error, leanReport: null);
 
     internal static int Run(
+        Assembly documentsAssembly,
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TextWriter output,
         TextWriter error,
         TextReader input) =>
-        Run(arguments, workingDirectory, output, error, leanReport: null, input);
+        Run(documentsAssembly, arguments, workingDirectory, output, error, leanReport: null, input);
 
     internal static int Run(
+        Assembly documentsAssembly,
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TextWriter output,
@@ -39,6 +43,7 @@ public static class ScribeCli
         LeanAxiomReport? leanReport,
         TextReader? input = null)
     {
+        ArgumentNullException.ThrowIfNull(documentsAssembly);
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentException.ThrowIfNullOrWhiteSpace(workingDirectory);
         ArgumentNullException.ThrowIfNull(output);
@@ -107,7 +112,14 @@ public static class ScribeCli
                 var scope = new MarkdownFormulaScope(
                     repositoryRoot,
                     ReadPaths(arguments[4], input));
-                return ScribeEmitter.CheckMarkdown(repositoryRoot, output, error, report, scope);
+                var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
+                return ScribeEmitter.CheckMarkdown(
+                    repositoryRoot,
+                    output,
+                    error,
+                    report,
+                    scope,
+                    definitions);
             }
             catch (Exception exception) when (
                 exception is IOException
@@ -139,9 +151,10 @@ public static class ScribeCli
                 var repositoryRoot = FindRepositoryRoot(workingDirectory);
                 var reportMaterial = leanReport
                     ?? LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
+                var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
                 var report = DescribeReport.Build(
                     repositoryRoot,
-                    DocumentDefinitions.All.Select(static definition => definition.Document),
+                    definitions.Select(static definition => definition.Document),
                     reportMaterial,
                     validateContentGovernance: describeCheck);
                 output.Write(json
@@ -185,8 +198,8 @@ public static class ScribeCli
             }
 
             return leanReport is null
-                ? ScribeEmitter.Emit(repositoryRoot, check, output, error)
-                : ScribeEmitter.Emit(repositoryRoot, check, output, error, leanReport);
+                ? ScribeEmitter.Emit(documentsAssembly, repositoryRoot, check, output, error)
+                : ScribeEmitter.Emit(documentsAssembly, repositoryRoot, check, output, error, leanReport);
         }
         catch (Exception exception) when (
             exception is IOException or UnauthorizedAccessException or ArgumentException)
@@ -197,7 +210,7 @@ public static class ScribeCli
     }
 
     private const string Usage =
-        "usage: dotnet run --project tools/StrataLint.Scribe -- "
+        "usage: dotnet run --project tools/StrataLint.Scribe.Documents -- "
         + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> --paths-from <file|->";

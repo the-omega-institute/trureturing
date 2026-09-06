@@ -1,0 +1,39 @@
+## 388. 一般构型需要全部 \(2^k\) 个角色
+
+对：
+
+$$
+H=\{h_1,\ldots,h_k\},
+$$
+
+令：
+
+$$
+\lambda_i=\lambda(n+h_i).
+$$
+
+全部坐标都处于奇 sector 的 indicator 为：
+
+$$
+\boxed{
+\prod_{i=1}^k
+\frac{1-\lambda_i}{2}
+=
+2^{-k}
+\sum_{A\subseteq[k]}
+(-1)^{|A|}
+\prod_{i\in A}\lambda_i.
+}
+$$
+
+所以要区分一个完整 parity profile，需要：
+
+$$
+2^k
+$$
+
+个 Walsh characters。
+
+只掌握：
+
+* 零阶全局密度；

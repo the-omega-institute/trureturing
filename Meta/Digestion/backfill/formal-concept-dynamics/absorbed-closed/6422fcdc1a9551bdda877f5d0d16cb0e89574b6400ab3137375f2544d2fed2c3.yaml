@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6422fcdc1a9551bdda877f5d0d16cb0e89574b6400ab3137375f2544d2fed2c3
 cas_ref: sha256:6422fcdc1a9551bdda877f5d0d16cb0e89574b6400ab3137375f2544d2fed2c3
 coverage_gids:
-  - D5/S3/ConceptDynamics/Aggregation/IndividualRationalityMajorityCycle.individual_rationality_majority_cycle
+  - gid: D5/S3/ConceptDynamics/Aggregation/IndividualRationalityMajorityCycle.individual_rationality_majority_cycle
+    target_statement_id: sha256:60e2f557a122a8c488b2008c64953c992700d03bc2c49303a347c283b997ab13
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Aggregation/IndividualRationalityMajorityCycle.individual_rationality_majority_cycle
-      source_sha256: sha256:6422fcdc1a9551bdda877f5d0d16cb0e89574b6400ab3137375f2544d2fed2c3
-      target_statement_id: sha256:60e2f557a122a8c488b2008c64953c992700d03bc2c49303a347c283b997ab13
   scribe:
     - gid: D5/S3/ConceptDynamics/Aggregation/IndividualRationalityMajorityCycle.individual_rationality_majority_cycle
       definition_sha256: sha256:76b3db3982d7cf9f5d07b251e6cde625500a8c6a389bb2b718863c1746a183b0

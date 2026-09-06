@@ -1,0 +1,53 @@
+fingerprints:
+  raw_sha256: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
+  normalized_sha256: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
+cas_ref: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
+coverage_gids:
+  - gid: D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
+    target_statement_id: sha256:31bdba8fc8afca6d5390e967dfbb067a34fa96b758cb0c1ff55748587be9f2b8
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
+    target_statement_id: sha256:2bec750f0e24b41141b6489925caf191ab445e94cd503f0220b1d621e05880f2
+  - gid: D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
+    target_statement_id: sha256:ed1277ea6dbf8903211f8def0accb6d4736022a79aec370b4f457f6fb3791fac
+  - gid: D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
+    target_statement_id: sha256:9fafc1ada78b79fc35e6b544ed36b183b6d0a6414474871841698f8414aec477
+  - gid: D5/S3/ObserverMemory/FiniteForgettingCertificate.finite_history_certificate
+    target_statement_id: sha256:a8c088f9d1b92aed04b60c4e9847aa05701deb34b6e76c52dcf35f666808cfd7
+  - gid: D5/S3/ObserverMemory/JointCoherentReversal.joint_coherent_reversal
+    target_statement_id: sha256:8d59c8b137a9275db27334fe8abc0f9ac4f9e020935d35eabc8e517649b27b12
+  - gid: D5/S3/ObserverMemory/MultiCopyErasure.multi_copy_erasure_quantifier
+    target_statement_id: sha256:2471f95c50e0ff8da07e0761e6b346d56c9fe04ceddce5f375a0a418db50e4d4
+  - gid: D5/S3/ObserverMemory/TwoTimeKnowledge.finite_certificate_instantiates_forgot
+    target_statement_id: sha256:dac2e6a256f94f4cb35bad0724c6a71741bc8f74a5f001f8644b0f851ede301a
+  - gid: D5/S3/ObserverMemory/TwoTimeKnowledge.knows_of_later_readout_factors_through_earlier
+    target_statement_id: sha256:df34080426470bcb7c2f65c6bc5503494e7440e1a981ff778ded65b4cc11c06e
+receipts:
+  scribe:
+    - gid: D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
+      definition_sha256: sha256:4affce6dec3ec464893f527ef82cd21722bb00b884b1c51fcfc24d0a4b2ea996
+      emission_sha256: sha256:3a6b16a34d7ed72d23fed45b17dffa450819f9a817408647686b58a4b18fe808
+    - gid: D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
+      definition_sha256: sha256:4b401147559ef850f4ca6424da36bb4b2491953d1aa02afae66bcdb48a246609
+      emission_sha256: sha256:e5d7c252fa9416b4737214eeffeee8a82a97a00c10eceab45a188a1088f20dfc
+    - gid: D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
+      definition_sha256: sha256:17f4a86c5f7ca545a5d46deb37a64379b63f7cccb3a2a069cbfde1537f0fd127
+      emission_sha256: sha256:90ee92873b7423acb1e60416bfa2d84402e3be1841319a6e7a0580cf2d60348f
+    - gid: D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
+      definition_sha256: sha256:17f4a86c5f7ca545a5d46deb37a64379b63f7cccb3a2a069cbfde1537f0fd127
+      emission_sha256: sha256:90ee92873b7423acb1e60416bfa2d84402e3be1841319a6e7a0580cf2d60348f
+    - gid: D5/S3/ObserverMemory/FiniteForgettingCertificate.finite_history_certificate
+      definition_sha256: sha256:3dfc7e4ac6d3e4d60bd591e14d516ab07be01c51bec5c7735c6c5ab47ec01764
+      emission_sha256: sha256:f83acf6675abe58157f9879e5c0e12421d4fd8da9cf56d61e0fd807d1b235e63
+    - gid: D5/S3/ObserverMemory/JointCoherentReversal.joint_coherent_reversal
+      definition_sha256: sha256:17f94db2254c52f8a0706e54ad83b7db2eb70f3cdee34dbc19b214d4f29ff3f8
+      emission_sha256: sha256:cb891508d529565ff1e95909d41918a82a50d3ca49ebe17f1dd385c56c34bd1c
+    - gid: D5/S3/ObserverMemory/MultiCopyErasure.multi_copy_erasure_quantifier
+      definition_sha256: sha256:1f330ef097c51150b2537022412340029f5703deae5fc673c9565904d79c0da2
+      emission_sha256: sha256:ac745175f7c9aecc7ff31f5fc388b80920f13e66c44fb0a2f2cdb0717a173ede
+    - gid: D5/S3/ObserverMemory/TwoTimeKnowledge.finite_certificate_instantiates_forgot
+      definition_sha256: sha256:799a0a9473a3294d6cb5ea0f37bcd7f21b5809db46dbbecc04920ba35351a198
+      emission_sha256: sha256:4cd572c94820486451933b41d0b18baabc1a000d144c4425806452b8f28449c2
+    - gid: D5/S3/ObserverMemory/TwoTimeKnowledge.knows_of_later_readout_factors_through_earlier
+      definition_sha256: sha256:799a0a9473a3294d6cb5ea0f37bcd7f21b5809db46dbbecc04920ba35351a198
+      emission_sha256: sha256:4cd572c94820486451933b41d0b18baabc1a000d144c4425806452b8f28449c2
+  unresolved_subitems: []

@@ -1,0 +1,19 @@
+## 第三层：簇外积能量
+
+$$
+\boxed{
+\mathcal E_{\mathcal C}
+=
+\sum_{p<q}
+w_{p,q}
+\left[
+\sinh^2(\delta\Delta\omega_{p,q})
++
+\sin^2(\tau\Delta\omega_{p,q}/2)
+\right].
+}
+\tag{2131.1}
+$$
+
+它把每一个微弱 gap 信号累加成正的 Gram／外积能量。
+

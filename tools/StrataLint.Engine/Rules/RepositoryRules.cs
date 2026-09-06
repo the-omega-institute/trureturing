@@ -14,6 +14,7 @@ internal static partial class RepositoryRules
         + "   mirror-B: (?<mirrorB>[^\\n]+)\\n"
         + "   mirror-E: (?<mirrorE>[^\\n]+)\\n"
         + "   anchors: \\[(?<anchors>[^\\n]*)\\]\\n"
+        + "(?:   utility: (?<utility>[^\\n]*)\\n)?"
         + "   digest: (?<digest>[^\\n]+) -/\\n?",
         RegexOptions.CultureInvariant);
 
@@ -59,7 +60,6 @@ internal static partial class RepositoryRules
         Register(2, "Sorry closure", new RepositoryRule(ManagedLean, Sorry, SorryAffected)),
         Register(3, "Capacity pressure", new RepositoryRule(CapacityScoped, Capacity, CapacityAffected)),
         Register(4, "Mirror completeness", new RepositoryRule(Formal, Mirrors, MirrorsAffected)),
-        Register(5, "Chronicle append only", new RepositoryRule(ChronicleScoped, Chronicle, ChronicleAffected)),
         Register(6, "Generated status", new RepositoryRule(StatusScoped, Badges, StatusAffected)),
         Register(
             7,
@@ -78,7 +78,7 @@ internal static partial class RepositoryRules
             "trust"),
         Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality, LeanReportAffected)),
         Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains, DomainsAffected)),
-        Register(12, "Six-line Lean header", new RepositoryRule(Formal, Headers, FormalSourceAffected)),
+        Register(12, "Canonical Lean header", new RepositoryRule(Formal, Headers, FormalSourceAffected)),
         // SL-013 remains deferred and has no rejection predicate. Keep this descriptor in place:
         // positional consumers would silently bind later registrations to the wrong rule otherwise.
         Register(
@@ -155,13 +155,21 @@ internal static partial class RepositoryRules
                 DuplicateStatementAdvisory.IsAffectedBy),
             AdmissionEffect.Observe),
         Register(
-            29,
-            "Theory volume append only",
-            new RepositoryRule(TheoryVolumeScoped, TheoryAppendOnly, TheoryVolumeAffected)),
-        Register(
             30,
-            "Digestion atoms append only",
-            new RepositoryRule(BackfillScoped, DigestionAtomsAppendOnly, DigestionAtomsAffected)),
+            "Judge surface reads no other revision",
+            new RepositoryRule(
+                JudgeSurfaceScoped,
+                JudgeSurfaceRevisionMaterialization,
+                JudgeSurfaceAffected),
+            category: "trust"),
+        Register(
+            31,
+            "Computational utility admission",
+            new RepositoryRule(
+                Formal,
+                UtilityAdmissionRule.Evaluate,
+                UtilityAdmissionRule.IsAffectedBy,
+                UtilityAdmissionRule.Evaluate)),
     ];
 
     private static RuleRegistration Register(

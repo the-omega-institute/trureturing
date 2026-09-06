@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:a3b221ab0cc8542db528bcf1f6f0a4c8fdc7bd148639a2b41a3b62e23c8d0144
 coverage_gids: []
 receipts:
-  coverage: []
+  quarantine:
+    justification: "Parent 5965600360f9b132c6d61db4493fe19b58209e89202d2e8f682954d953f828ba has mathematical carriers StrictKernelNoveltyCriterion.strict_kernel_novelty_criterion and DefinitionKernelGalois.not_mem_semanticClosure_iff_kernel_witness. This child says '输出 bit 数是否更多'. D5/Blueprint output|readout with bit|length|size search exited 0. D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target bounds finite target-identification depth, while D5/S3/ConceptDynamics/Experiment/ExperimentValueIsKernelReduction.experiment_value_is_kernel_reduction compares a constant Fin 1000 alphabet with Bool, not emitted bit lengths on this source carrier. TargetPairCoverageInformationContrast.target_pair_coverage_and_information_contrast concerns target information instead. Pinned Mathlib output-bit search exited 0 with unrelated Vector/MapLemmas.lean:293,305; GitHub bits+novelty language:Lean search exited 0 with no exact source-model statement identified. Local /private/tmp/consensus-rnd/sshx/w73f3/attempt-1/atom1-probe.lean exited 0 for both parent mathematical clauses. No binary encoding of the source's arbitrary output alphabet is supplied."
+    reentry_condition: "Supply the source output-to-bitstring encoding and a precise output-length comparison linked to the same protocol evaluation; a public theorem must compare that length with semantic separation, not merely compare alphabet cardinalities."
+    blocker_class: multi-clause-guard
   scribe: []
   unresolved_subitems: []

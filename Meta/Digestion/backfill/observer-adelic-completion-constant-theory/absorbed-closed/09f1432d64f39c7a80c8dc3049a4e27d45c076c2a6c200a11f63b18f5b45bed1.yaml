@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:09f1432d64f39c7a80c8dc3049a4e27d45c076c2a6c200a11f63b18f5b45bed1
 cas_ref: sha256:09f1432d64f39c7a80c8dc3049a4e27d45c076c2a6c200a11f63b18f5b45bed1
 coverage_gids:
-  - D5/S3/Weil/ZetaAnalytic/LocalSpectralFloor.parity_spectral_infimum
+  - gid: D5/S3/Weil/ZetaAnalytic/LocalSpectralFloor.parity_spectral_infimum
+    target_statement_id: sha256:8f837ee9dc9f7c5bffefab3bd0ae126ddc2ddc6134fc455402f47960ae595664
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaAnalytic/LocalSpectralFloor.parity_spectral_infimum
-      source_sha256: sha256:09f1432d64f39c7a80c8dc3049a4e27d45c076c2a6c200a11f63b18f5b45bed1
-      target_statement_id: sha256:8f837ee9dc9f7c5bffefab3bd0ae126ddc2ddc6134fc455402f47960ae595664
   scribe:
     - gid: D5/S3/Weil/ZetaAnalytic/LocalSpectralFloor.parity_spectral_infimum
       definition_sha256: sha256:62e750cd384893cd91785b2111cfaabf72aa7fc3962eb1482e8d41a3eaa24e03

@@ -1,0 +1,27 @@
+## 80. 反射不是第五原语
+
+令 \(\mathrm{Stage}\) 为阶段类型。
+
+则反射只是：
+
+\[
+\boxed{
+\mathsf{Reflect}:
+\mathrm{Stage}
+\to
+\mathrm{Stage}.
+}
+\]
+
+它是以阶段为状态类型的 FLOW。
+
+同样可在阶段空间上定义：
+
+- Meta-CUT：阶段分类；
+- Meta-ADMIT：方法论准入；
+- Meta-ANCHOR：当前实际且已认证阶段。
+
+因此 C-IRPT 可递归应用于自身，而无需新增“反射本体”。
+
+---
+

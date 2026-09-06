@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:d69cc43df2fa25cf4403f35a6e59b4111910d4ec1479366400b840203a13b946
 cas_ref: sha256:d69cc43df2fa25cf4403f35a6e59b4111910d4ec1479366400b840203a13b946
 coverage_gids:
-  - D5/S3/ConceptDynamics/Control/MaximalSafeControllableDomain.maximal_safe_controllable_domain
+  - gid: D5/S3/ConceptDynamics/Control/MaximalSafeControllableDomain.maximal_safe_controllable_domain
+    target_statement_id: sha256:98b5c833650e758812185373c277ec7104956ad9cc3023fb73672bbc45886d8b
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Control/MaximalSafeControllableDomain.maximal_safe_controllable_domain
-      source_sha256: sha256:d69cc43df2fa25cf4403f35a6e59b4111910d4ec1479366400b840203a13b946
-      target_statement_id: sha256:98b5c833650e758812185373c277ec7104956ad9cc3023fb73672bbc45886d8b
-      statement_id_history:
-        - statement_id: sha256:04bb2292e7baeae89ee457c30e025c8bcce08b339154463962e02a06851d2708
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Control/MaximalSafeControllableDomain.maximal_safe_controllable_domain
       definition_sha256: sha256:46d8805e160d8005433f78d04d88568c9b3f6d66d3d0e7e4186080a9095b2e0b

@@ -1,0 +1,7 @@
+### 证明
+
+由定理 V3,\(c_2(a)<2a\iff\sqrt{a^2+a}-a<4a\iff\sqrt{a^2+a}<5a\)。
+两侧非负,平方得 \(a^2+a<25a^2\iff a<24a^2\iff 1<24a\)。
+在 \(a=\frac1{24}\) 处 \(a^2+a=\frac{1}{576}+\frac{24}{576}=\frac{25}{576}\),故 \(\sqrt{a^2+a}=\frac5{24}\),
+于是 \(c_2=\frac12\bigl(\frac5{24}-\frac1{24}\bigr)=\frac1{12}=2a\)。∎
+

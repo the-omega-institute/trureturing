@@ -1,0 +1,16 @@
+\[
+\boxed{
+R_q(b)
+=
+\sum_{x:X}(q(x)=b).
+}
+\]
+
+一个锚点类型是：
+
+\[
+\operatorname{Anchor}(q,b)=R_q(b).
+\]
+
+若还要求状态准入 \(A:X\to\mathsf{Prop}\)，则：
+

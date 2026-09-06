@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2b278f9aa99b6c9e29a7528a42c743517a2906143371847fc0e88760e55756ff
 cas_ref: sha256:2b278f9aa99b6c9e29a7528a42c743517a2906143371847fc0e88760e55756ff
 coverage_gids:
-  - D5/S3/Fourier/CharacterSelection/BinaryCharacterUniformInformationExactness.binary_character_uniform_profile_entropy_bits
+  - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterUniformInformationExactness.binary_character_uniform_profile_entropy_bits
+    target_statement_id: sha256:d899f12f29b431eae075c25084be4a30929af7eeb74249880310daf5f5db2fae
 receipts:
-  coverage:
-    - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterUniformInformationExactness.binary_character_uniform_profile_entropy_bits
-      source_sha256: sha256:2b278f9aa99b6c9e29a7528a42c743517a2906143371847fc0e88760e55756ff
-      target_statement_id: sha256:d899f12f29b431eae075c25084be4a30929af7eeb74249880310daf5f5db2fae
   scribe:
     - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterUniformInformationExactness.binary_character_uniform_profile_entropy_bits
       definition_sha256: sha256:31ad71640e7d81ae40aacfa693f331d5ab9f958fbb6752b61a48ff2f690527e7

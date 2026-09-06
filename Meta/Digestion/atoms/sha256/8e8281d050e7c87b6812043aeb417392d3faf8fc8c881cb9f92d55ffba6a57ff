@@ -1,0 +1,20 @@
+## 4.1 局部 Euler fugacity 圆
+
+在式 (A3.3) 中，变量是
+
+$$
+x=p^{-s}.
+\tag{A4.1}
+$$
+
+所以
+
+$$
+|x|=1
+\Longleftrightarrow
+\Re s=0.
+\tag{A4.2}
+$$
+
+有限几何级数的单位圆根对应局部 Euler 坐标中的虚轴。
+

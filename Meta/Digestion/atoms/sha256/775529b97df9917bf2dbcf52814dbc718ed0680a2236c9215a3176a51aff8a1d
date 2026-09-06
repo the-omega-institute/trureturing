@@ -1,0 +1,19 @@
+## 258. 完整 golden divisor 的三部分
+
+第三阶黄金 germ 的 divisor 至少应区分：
+
+$$
+\boxed{
+D_{\mathrm{full}}
+=
+D_{\mathrm{transported\ zeta}}
++
+D_{\mathrm{structural}}
++
+D_{\mathrm{local\ residual}}.
+}
+$$
+
+其中：
+
+* transported ζ divisor 来自 \(\zeta(\lambda s)\) 的经典零点缩放；

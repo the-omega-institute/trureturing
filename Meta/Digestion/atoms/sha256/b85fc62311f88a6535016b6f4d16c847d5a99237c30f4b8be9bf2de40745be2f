@@ -1,0 +1,14 @@
+- No merge, auto-merge, workflow bypass, or modification of protected admission machinery was performed.
+
+The next compiler obligation is now more precise:
+
+```text
+intervened event semantics
+  -> certified exogenous dependency sets
+  -> disjoint independent source blocks, or explicit conditioning context
+  -> componentwise pushforward factorization
+  -> event polynomial and sharp attaining models.
+```
+
+This dependency-locality obligation prevents the shared-ancestor counterexample from being incorrectly admitted as an unconditional product query.
+

@@ -1,0 +1,1 @@
+**逃逸见证(探针已证,写在实施之前)**:尾项估计 `exists_radius_shifted_inv_sq_tsum`(把载体上的 tsum 按单位窗分组、逐窗用冻结局部计数、再用整数核 Σ 1/(1+n²) 的 Cauchy 尾)与 ε = c/(8KA₀) 的配平——两者都不由冻结前置经实例化得到;`literatureRHS_re_lower_log` 是右端的对数下界,比增订三十的定性发散更强。

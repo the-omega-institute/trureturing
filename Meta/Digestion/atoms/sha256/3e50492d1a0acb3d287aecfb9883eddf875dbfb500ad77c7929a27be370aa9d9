@@ -1,0 +1,17 @@
+## 定理 2002.3（宇称偏振判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Pi(s)
+=
+\frac{\zeta(2s)}{\zeta(s)^2}
+\text{ 在 }\mathbb H_{1/2}\text{ 全纯}.
+}
+\tag{2002.3}
+$$
+
+若离线零点重数为 \(m\)，则：
+
+* Möbius observer 出现 \(m\) 阶极点；

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:4f5436e44f6fd12742ca490e09920a6be3eb93c606ea4359518e49ba7a6a75b8
 cas_ref: sha256:4f5436e44f6fd12742ca490e09920a6be3eb93c606ea4359518e49ba7a6a75b8
 coverage_gids:
-  - D5/S3/Weil/CofinalSupport/GoldenCofinalPositivity.golden_cofinal_positivity
+  - gid: D5/S3/Weil/CofinalSupport/GoldenCofinalPositivity.golden_cofinal_positivity
+    target_statement_id: sha256:df4d80baf85eef0dd7ae438a1b7bf360a2006e3b70d52b27c17ed58fbf0a04eb
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/CofinalSupport/GoldenCofinalPositivity.golden_cofinal_positivity
-      source_sha256: sha256:4f5436e44f6fd12742ca490e09920a6be3eb93c606ea4359518e49ba7a6a75b8
-      target_statement_id: sha256:df4d80baf85eef0dd7ae438a1b7bf360a2006e3b70d52b27c17ed58fbf0a04eb
   scribe:
     - gid: D5/S3/Weil/CofinalSupport/GoldenCofinalPositivity.golden_cofinal_positivity
       definition_sha256: sha256:01bcf93a8885e2ff14f84ca38966406d89aba24ff00e4e9422238d6421a6e124

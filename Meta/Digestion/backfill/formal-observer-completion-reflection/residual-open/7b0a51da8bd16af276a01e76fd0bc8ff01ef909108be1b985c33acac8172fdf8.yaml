@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:7b0a51da8bd16af276a01e76fd0bc8ff01ef909108be1b985c33acac8172fdf8
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Uncarried child of 83bbca32d5fd66043b3e193a49c6c81090af09d96c6cf8c47e60344fcc916c37: hidden dynamical variables. Parent carrier D5/S3/ConceptDynamics/Attribution/NoNaturalFiniteChoice.no_natural_finite_choice gives nonnaturality; classical-choice sibling 82f0fef42842fe19cced93758566da734f913ecb11929dd7e2c55c0ec5cfec7a is already absorbed through ClassicalChoiceNonnaturality.classical_choice_family_is_nonnatural. D5/Blueprint hidden.*(dynam|variable|select)|隐藏动力 exit 0 (17 lines) found D5/S3/ConceptDynamics/Policy/CocyclePolicySeparation.cocycle_does_not_select_policy and LinearProjectionDescentCriterion. The former explicitly keeps policy nonunique despite hidden-jump accounting; the latter concerns linear visible dynamics. Neither provides the source hidden-state selector or its relabeling law. Pinned Mathlib hidden.*dynam|hidden.*select exit 1, zero hits. Loogle Equiv.swap, Function.fixedPoints exit 0 hits 0; LeanSearch No natural choice of an element of every nonempty finite set under all bijections exit 0 hits 5 ordinary choice facts; A17 GitHub natural choice finite language:Lean exit 0 returned 20 textual near matches. Local /private/tmp/consensus-rnd/sshx/w73f5/attempt-1/atom2-probe.lean exit 0 proves the obstruction only. A hidden-variable binder alone would not carry this clause."
+    reentry_condition: "Specify a hidden-state evolution and its actual selection map on the finite-carrier family, including the relabeling action and dependence on hidden state; prove a public law linking this mechanism to broken naturality."
+    blocker_class: multi-clause-guard

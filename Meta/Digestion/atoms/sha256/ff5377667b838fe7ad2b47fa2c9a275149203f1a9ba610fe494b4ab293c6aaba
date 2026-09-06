@@ -1,0 +1,4 @@
+## B14.3 FLOW
+
+successor/carry、prime word 顺序和 transfer cocycle 决定状态如何演化。ordered rapidity $U_n$ 属于 FLOW，而不是最终 character parity。
+

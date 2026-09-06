@@ -1,0 +1,21 @@
+**下一步真正需要攻克的，是在实际算术锚下，同时控制边界收缩性、隐藏回返尾部与两种极限的交换条件。只有这三者一起成立，多切面分析才保存的是同一个整体，而不是一系列各自合法、却在无限时刻分道扬镳的有限模型。**
+
+[1]: https://arxiv.org/html/1302.7286v1 "https://arxiv.org/html/1302.7286v1"
+[2]: https://arxiv.org/html/2301.05779v2 "https://arxiv.org/html/2301.05779v2"
+[3]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+[4]: https://arxiv.org/abs/1202.3903 "https://arxiv.org/abs/1202.3903"
+[5]: https://dlmf.nist.gov/25.4 "https://dlmf.nist.gov/25.4"
+[6]: https://arxiv.org/html/2412.15470v1 "https://arxiv.org/html/2412.15470v1"
+这次可以把“离散空间、离散时间和不同切面”推进成一张**同时含有分辨率与观察时长的临界图**。
+
+核心不是再构造一个更漂亮的正核，而是证明：
+
+$$
+\boxed{
+\text{某种处理让所有有限矩阵更稳定时，
+它是否也改变了我们要研究的无限历史？}
+}
+$$
+
+下面会得到三个具体结果：
+

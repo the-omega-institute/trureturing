@@ -1,0 +1,4 @@
+## 〇　为什么是这一节
+
+W-2 把 RH 与 Weil 平方正性绑在一起,但量词落在一个给定的 `Z : ZeroData` 上。M1-a 给出 `ZeroData` 恰在非平凡零点集无穷时可居;于是只要假设**零点无穷**(M1-b,本仓仍 open;另一 lane `rh-canonical-zero-data-nonvacuity-*` 由显式 Riemann–von Mangoldt 假设推它),等价就可以对**一切** `Z`(W-3)或**某个** `Z`(W-4)陈述,不再依赖谁提供了枚举。**诚实边界**:①`hInf` 未在本仓证明(M1-b);②`ZeroData` 的构造用了 `Classical.choice`(非构造性枚举),W-3/W-4 只是量词层面的收口;③右侧仍是本仓定义的正性;④不构成 RH 证明。
+

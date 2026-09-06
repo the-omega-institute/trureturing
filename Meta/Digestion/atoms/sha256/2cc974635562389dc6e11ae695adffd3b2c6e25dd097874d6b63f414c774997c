@@ -1,0 +1,92 @@
+## 定理 179.3　分别平均质量与逆质量可以制造虚假的等效原理失配
+
+即使完整模型严格满足
+
+$$
+M_I=M_G=M,
+$$
+
+若把有效 Hamiltonian 错误地替换为
+
+$$
+H_{\mathrm{naive}}
+=
+\text{常数}
++\frac12\langle M^{-1}\rangle P^2
++\langle M\rangle\Phi(X),
+$$
+
+它会预测
+
+$$
+\ddot X_{\mathrm{naive}}
+=
+-\langle M^{-1}\rangle\langle M\rangle\Phi'(X).
+$$
+
+而完整模型给出
+
+$$
+\boxed{\ddot X=-\Phi'(X).}
+\tag{179.6}
+$$
+
+对等权混合的两个质量 \(m,2m\)，
+
+$$
+\boxed{
+\langle M^{-1}\rangle\langle M\rangle=\frac98.
+}
+\tag{179.7}
+$$
+
+### 证明
+
+完整模型中是算子乘积
+
+$$
+M^{-1}M=I,
+$$
+
+而不是两个独立平均值的乘积。
+
+等权混合时，
+
+$$
+\langle M\rangle=\frac32m,
+\qquad
+\langle M^{-1}\rangle=\frac3{4m},
+$$
+
+相乘得到 \(9/8\)。∎
+
+### 解释
+
+引力作用会建立质量与动量之间的关联。真实速度读取
+
+$$
+\langle M^{-1}P\rangle,
+$$
+
+不能始终用
+
+$$
+\langle M^{-1}\rangle\langle P\rangle
+$$
+
+替代。
+
+因此，一个粗粒化模型显示“质量不同导致不同加速度”，不一定意味着底层理论违反等效原理；也可能只是它删除了动力学必需的关联。
+
+这与本会话反复出现的同一问题一致：
+
+$$
+\boxed{
+\text{先平均，再计算动力学}
+\quad\text{不一定等于}\quad
+\text{先计算动力学，再读取平均}.
+}
+$$
+
+---
+

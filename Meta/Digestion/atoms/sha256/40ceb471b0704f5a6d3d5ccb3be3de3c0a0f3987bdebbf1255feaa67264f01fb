@@ -1,0 +1,16 @@
+## 15. The next formal theorems
+
+The first generic theorem should state:
+
+> If a feasible family of real-valued masses is closed under convex blending, the query respects the same blend, every feasible model has query value in `[L,U]`, and feasible witnesses attain `L` and `U`, then a target is feasible exactly when it lies in `[L,U]`.
+
+The second should state the information-order rule:
+
+> If every model satisfying stronger assumptions also satisfies weaker assumptions, every valid lower bound for the weaker family remains a lower bound for the stronger family, and every valid upper bound remains an upper bound. With optimal endpoint witnesses, the stronger identified interval is nested inside the weaker one.
+
+The third should package primal-dual endpoint optimality:
+
+> A replayable universal certificate for `Q>=L`, together with a feasible model satisfying `Q=L`, proves that `L` is the exact lower endpoint. The analogous statement holds for `U`.
+
+These results are the logical bridge from the current four-cell examples to arbitrary finite causal LPs.
+

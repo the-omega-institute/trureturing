@@ -1,0 +1,25 @@
+## 76. 科学循环的四角色展开 `[D]`
+
+\[
+\begin{aligned}
+\mathsf{Define}
+&=\text{提出新的 CUT};\\
+\mathsf{Observe}
+&=\text{在 ANCHOR 上执行准入 FLOW 并读取 CUT};\\
+\mathsf{Predict}
+&=\text{由模型 CUT 与 FLOW 生成目标读数};\\
+\mathsf{Compare}
+&=\text{产生 residual/carry};\\
+\mathsf{Revise}
+&=\text{改变 CUT、FLOW、ADMIT 或 ANCHOR};\\
+\mathsf{Reflect}
+&=\text{在阶段类型上执行更高阶 FLOW};\\
+\mathsf{Certify}
+&=\text{给出证明、误差或反例类型中的 ANCHOR}.
+\end{aligned}
+\]
+
+因此 `CERTIFY` 和 `REFLECT` 是四角色在更高类型上的复用，不需升级为新的基础原语。
+
+---
+

@@ -4,12 +4,16 @@ using System.Text;
 namespace StrataLint.Engine;
 
 internal sealed record DigestionIngestPlan(
-    BackfillInventoryDocument Document,
+    BackfillInventoryDocument AdmissionDocument,
     DigestionLedgerAlignment Alignment,
     int StaleAcknowledged,
     int ResidualOpenAdded,
     ImmutableArray<DigestionCasObject> CasObjects,
-    ImmutableArray<DigestionIngestFallback> Fallbacks);
+    ImmutableArray<DigestionIngestFallback> Fallbacks)
+{
+    internal BackfillInventoryDocument Document { get; } =
+        DigestionIngestor.NormalizeAtomIdentities(AdmissionDocument);
+}
 
 internal static class DigestionSourceConflictMarkers
 {
@@ -210,9 +214,8 @@ internal static class DigestionIngestor
         var clausePlansBySource = alignment.ClausePlans
             .GroupBy(static item => item.SourceId, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
-        var atomIds = migrationDocument.RequireDigestionEntries()
-            .Select(static entry => entry.AtomId)
-            .ToHashSet(StringComparer.Ordinal);
+        var globalEntries = migrationDocument.RequireDigestionEntries()
+            .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
         var casObjects = new Dictionary<string, DigestionCasObject>(StringComparer.Ordinal);
         var staleAcknowledged = 0;
@@ -249,7 +252,7 @@ internal static class DigestionIngestor
             {
                 foreach (var item in residual)
                 {
-                    if (!atomIds.Add(item.SuggestedAtomId))
+                    if (globalEntries.ContainsKey(item.SuggestedAtomId))
                     {
                         continue;
                     }
@@ -259,7 +262,7 @@ internal static class DigestionIngestor
                         .Where(entry => entry.Fingerprints.RawSha256
                             == item.Atom.Fingerprints.RawSha256)
                         .ToArray();
-                    var inheritedCoverage = ImmutableArray<string>.Empty;
+                    var inheritedCoverage = ImmutableArray<DigestionCoverageEdge>.Empty;
                     var inheritedUnresolvedSubitems = priorGenerations
                         .SelectMany(static entry => entry.Receipts.UnresolvedSubitems)
                         .Distinct(StringComparer.Ordinal)
@@ -271,16 +274,19 @@ internal static class DigestionIngestor
                         .Distinct(StringComparer.Ordinal)
                         .Order(StringComparer.Ordinal)
                         .ToImmutableArray();
-                    entries.Add(new DigestionLedgerEntry(
+                    var admitted = new DigestionLedgerEntry(
                         source.SourceId,
                         source.SourcePath,
                         source.Atomizer,
                         item.SuggestedAtomId,
                         item.Atom.Fingerprints,
-                        CoverageGids: inheritedCoverage,
-                        new DigestionReceipts([], [], inheritedUnresolvedSubitems, [], null),
+                        Coverage: inheritedCoverage,
+                        new DigestionReceipts([], inheritedUnresolvedSubitems, [], null),
                         item.ProjectedStatus,
-                        CasRef: captured.Reference));
+                        CasRef: captured.Reference);
+                    if (!globalEntries.TryAdd(admitted.AtomId, admitted))
+                        continue;
+                    entries.Add(admitted);
                     residualOpenAdded++;
                 }
             }
@@ -316,38 +322,18 @@ internal static class DigestionIngestor
                         continue;
                     }
 
-                    var childIds = ImmutableArray.CreateBuilder<string>(clausePlan.Plan.Children.Length);
-                    foreach (var child in clausePlan.Plan.Children)
+                    var decomposition = DigestionDecomposition.Materialize(parent, clausePlan.Plan, globalEntries);
+                    foreach (var child in decomposition.NewEntries)
                     {
-                        var childId = ClauseAtomId(child);
-                        if (atomIds.Add(childId))
-                        {
-                            var captured = AddCasObject(child.RawBytes.AsSpan(), casObjects);
-                            entries.Add(new DigestionLedgerEntry(
-                                source.SourceId,
-                                source.SourcePath,
-                                source.Atomizer,
-                                childId,
-                                child.Fingerprints,
-                                CoverageGids: [],
-                                new DigestionReceipts([], [], [], [], null),
-                                new DigestionStatus(
-                                    DigestionMigrationState.Residual,
-                                    DigestionTruthState.Open),
-                                CasRef: captured.Reference));
-                            residualOpenAdded++;
-                        }
-                        childIds.Add(childId);
+                        if (!globalEntries.TryAdd(child.AtomId, child))
+                            continue;
+                        entries.Add(child);
+                        residualOpenAdded++;
                     }
-
-                    entries[parentIndex] = parent with
-                    {
-                        Receipts = parent.Receipts with
-                        {
-                            UnresolvedSubitems = [],
-                            ChainAtoms = childIds.MoveToImmutable(),
-                        },
-                    };
+                    foreach (var captured in decomposition.CasObjects)
+                        AddCasObject(captured.Bytes.AsSpan(), casObjects);
+                    entries[parentIndex] = decomposition.Parent;
+                    globalEntries[parent.AtomId] = decomposition.Parent;
                 }
             }
 
@@ -361,7 +347,7 @@ internal static class DigestionIngestor
         }
 
         return new DigestionIngestPlan(
-            NormalizeAtomIdentities(migrationDocument.WithDigestionSources(sources.ToImmutable())),
+            migrationDocument.WithDigestionSources(sources.ToImmutable()),
             alignment,
             staleAcknowledged,
             residualOpenAdded,
@@ -370,9 +356,6 @@ internal static class DigestionIngestor
                 .ToImmutableArray(),
             alignment.Fallbacks);
     }
-
-    private static string ClauseAtomId(DigestionAtom child) =>
-        child.Fingerprints.RawSha256["sha256:".Length..];
 
     private static DigestionCasObject AddCasObject(
         ReadOnlySpan<byte> bytes,
@@ -460,8 +443,8 @@ internal static class DigestionIngestor
                 throw new FormatException($"atom {atomId} has conflicting statuses");
             }
 
-            var coverage = MergeCoverageReceipts(atomId, members.SelectMany(
-                static item => item.Entry.Receipts.Coverage));
+            var coverage = MergeCoverageEdges(atomId, members.SelectMany(
+                static item => item.Entry.Coverage));
             var scribe = MergeScribeReceipts(atomId, members.SelectMany(
                 static item => item.Entry.Receipts.Scribe));
             var chainCandidates = members
@@ -485,12 +468,13 @@ internal static class DigestionIngestor
             var disposition = SingleCoverDisposition(
                 atomId,
                 members.Select(static item => item.Entry.Receipts.CoverDisposition));
-            var coverageGids = members
-                .SelectMany(static item => item.Entry.CoverageGids)
-                .Distinct(StringComparer.Ordinal)
-                .Order(StringComparer.Ordinal)
-                .ToImmutableArray();
-            if (!coverageGids.IsEmpty && (quarantine is not null || disposition is not null))
+            var nonpropositional = SingleOptional(atomId, "nonpropositional",
+                members.Select(static item => item.Entry.Receipts.Nonpropositional));
+            if (nonpropositional is not null
+                && (!coverage.IsEmpty || quarantine is not null || disposition is not null
+                    || members.Any(static item => !item.Entry.Receipts.UnresolvedSubitems.IsEmpty)))
+                throw new FormatException($"atom {atomId} merged nonpropositional conflicts with live obligations");
+            if (!coverage.IsEmpty && (quarantine is not null || disposition is not null))
             {
                 throw new FormatException(
                     $"atom {atomId} merged coverage conflicts with quarantine or disposition");
@@ -502,9 +486,8 @@ internal static class DigestionIngestor
                 owner.Source.Atomizer,
                 atomId,
                 new DigestionFingerprints(group.Key, normalizedFingerprints[0]),
-                coverageGids,
+                coverage,
                 new DigestionReceipts(
-                    coverage,
                     scribe,
                     members.SelectMany(static item => item.Entry.Receipts.UnresolvedSubitems)
                         .Distinct(StringComparer.Ordinal)
@@ -513,7 +496,8 @@ internal static class DigestionIngestor
                     chain.IsDefault ? [] : chain,
                     tail,
                     quarantine,
-                    disposition),
+                    disposition,
+                    nonpropositional),
                 statuses[0],
                 expectedReference));
         }
@@ -531,10 +515,10 @@ internal static class DigestionIngestor
         }).ToImmutableArray());
     }
 
-    private static ImmutableArray<DigestionCoverageReceipt> MergeCoverageReceipts(
+    private static ImmutableArray<DigestionCoverageEdge> MergeCoverageEdges(
         string atomId,
-        IEnumerable<DigestionCoverageReceipt> receipts) =>
-        receipts.GroupBy(static receipt => receipt.Gid, StringComparer.Ordinal)
+        IEnumerable<DigestionCoverageEdge> edges) =>
+        edges.GroupBy(static edge => edge.Gid, StringComparer.Ordinal)
             .OrderBy(static group => group.Key, StringComparer.Ordinal)
             .Select(group =>
             {
@@ -542,7 +526,7 @@ internal static class DigestionIngestor
                 return values.Length == 1
                     ? values[0]
                     : throw new FormatException(
-                        $"atom {atomId} has conflicting coverage receipts for {group.Key}");
+                        $"atom {atomId} has conflicting coverage edges for {group.Key}");
             })
             .ToImmutableArray();
 
@@ -589,7 +573,6 @@ internal static class DigestionIngestor
         var first = present[0];
         if (present.Skip(1).Any(value =>
                 value.Outcome != first.Outcome
-                || value.RecordedAtUtc != first.RecordedAtUtc
                 || !value.Gids.SequenceEqual(first.Gids, StringComparer.Ordinal)
                 || !value.Gaps.SequenceEqual(first.Gaps)))
         {

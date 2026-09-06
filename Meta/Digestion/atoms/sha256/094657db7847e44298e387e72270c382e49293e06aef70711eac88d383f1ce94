@@ -1,0 +1,47 @@
+## 定理 123.2　动态协方差求和界
+
+有
+
+$$
+\boxed{
+\sum_{x,y\in Q}
+\left|
+\operatorname{Cov}_{\sigma_m}(R_x,R_y)
+\right|
+\le
+N_Q\,b_Q(m)\,\Delta_R^2.
+}
+\tag{123.3}
+$$
+
+### 证明
+
+谱区间界给出
+
+$$
+\operatorname{Var}_{\sigma_m}(R_x)\le\Delta_R^2.
+$$
+
+由状态上的 Cauchy–Schwarz 不等式，
+
+$$
+|\operatorname{Cov}(R_x,R_y)|
+\le
+\sqrt{\operatorname{Var}(R_x)\operatorname{Var}(R_y)}
+\le\Delta_R^2.
+$$
+
+对每个 \(x\)，定理 123.1 保证至多 \(b_Q(m)\) 个 \(y\) 可能贡献非零项。求和即得。∎
+
+### 一个直接推论
+
+如果想从乘积态制备两处相距 \(L\)、且连通关联非零的记录，则必须有
+
+$$
+m\ge\frac{L}{2r_0}.
+$$
+
+因此，上一轮的长程相关反例并不能在任意短的局域演化中无条件产生。这类关联制备时间下界也是局域量子动力学研究的重要结论。([arXiv][1])
+
+---
+

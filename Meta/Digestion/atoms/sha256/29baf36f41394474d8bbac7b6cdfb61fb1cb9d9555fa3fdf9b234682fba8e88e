@@ -1,0 +1,53 @@
+## 81. 诚实阶段扩张 `[L/D/N]`
+
+设新阶段到旧阶段有投影：
+
+\[
+p:X'\to X.
+\]
+
+若 \(p\) 满射，则项目已证明：
+
+\[
+T\text{ 可由 }q\text{ 回答}
+\iff
+T\circ p\text{ 可由 }q\circ p\text{ 回答}.
+\]
+
+若 \(p\) 不满射，拉回后的新域可能仅因看不见旧状态而虚假消除不可回答性。
+
+因此诚实扩张至少要求：
+
+\[
+\boxed{
+\text{旧准入域上的满覆盖}
+}
+\]
+
+即：
+
+\[
+\forall x,\ A(x)
+\Rightarrow
+\exists x',\ A'(x')\land p(x')=x.
+\]
+
+还应要求：
+
+\[
+\begin{aligned}
+q\circ p
+&=
+\pi_B\circ q',\\
+p\circ F'_{\iota(u)}
+&=
+F_u\circ p,\\
+A'(x')
+&\Rightarrow A(p(x')),\\
+p(a')
+&=a.
+\end{aligned}
+\]
+
+---
+

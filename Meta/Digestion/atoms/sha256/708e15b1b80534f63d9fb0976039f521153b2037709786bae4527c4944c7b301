@@ -1,0 +1,10 @@
+\[
+\operatorname{Residual}(q,T)
+=
+\ker q\setminus\ker T.
+\]
+
+它表示当前 CUT 合并了目标必须区分的状态。
+
+---
+

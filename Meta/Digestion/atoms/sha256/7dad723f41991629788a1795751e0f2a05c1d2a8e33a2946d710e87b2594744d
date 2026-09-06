@@ -1,0 +1,32 @@
+## 3.3 无限局部 Euler 因子
+
+令 $\Omega_\infty$ 为有限支撑的无限合法 Zeckendorf 数位。Zeckendorf 定理给出
+
+$$
+\Omega_\infty\simeq\mathbb N.
+\tag{A3.6}
+$$
+
+因此当 $|x|<1$ 时，
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_\infty}x^{E(\eta)}
+=
+\sum_{v\ge0}x^v
+=
+\frac1{1-x}.
+}
+\tag{A3.7}
+$$
+
+取 $x=p^{-s}$，在 $\Re s>0$ 的单局部收敛域中，
+
+$$
+\sum_{\eta\in\Omega_\infty}
+p^{-sE(\eta)}
+=
+(1-p^{-s})^{-1}.
+\tag{A3.8}
+$$
+

@@ -1,0 +1,48 @@
+# 第一百三十六部　建议新增的形式化模块
+
+```text
+D5/S3/PrimeParity/Foundations/
+  NoCountableCardinalParity.lean
+  FiniteSymmetricDifferenceParity.lean
+  PrimeParityTorsor.lean
+  NoContinuousTotalParityExtension.lean
+
+D5/S3/ObserverOrigin/PointedSymmetry/
+  NoNaturalPrimeSelector.lean
+  PointedPrimeColimitObstruction.lean
+  OddObservableGlobalVanishing.lean
+  PairedOddObservableCompletion.lean
+
+D5/S3/PrimeParity/Factorization/
+  PrimeFactorParity.lean
+  SquareSquarefreeParityDecomposition.lean
+  PrimeCreationParityFlip.lean
+
+D5/S3/Analytic/ParityZeta/
+  ZetaTraceSupertrace.lean
+  EvenOddOmegaSectors.lean
+  ParityHyperbola.lean
+  LiouvilleSupertraceRHCriterion.lean
+
+D5/S3/Analytic/CyclotomicObservers/
+  OmegaCharacterEulerProduct.lean
+  CyclotomicObserverNorm.lean
+  OmegaResidueFourierInversion.lean
+
+D5/S3/PrimeConstellation/Parity/
+  ConstellationParityProfile.lean
+  WalshPrimeFactorParity.lean
+  TwinParityInsufficiency.lean
+
+D5/S3/Analytic/GoldenParity/
+  GoldenIndexOccupationBigrading.lean
+  GoldenStructuralZeroParityInterpretation.lean
+
+D5/X_Frontier/ParityTraceJet/
+  ArithmeticSpectralParityIntertwiner.lean
+  ObserverZeroParityIntertwiner.lean
+  RelativeRHObserverAtlas.lean
+```
+
+---
+

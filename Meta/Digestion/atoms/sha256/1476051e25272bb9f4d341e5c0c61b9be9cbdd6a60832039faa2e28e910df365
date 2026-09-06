@@ -1,0 +1,32 @@
+## 624. Prime-gap discriminant
+
+两个端点是方程：
+
+$$
+\boxed{
+\left(
+z-\varphi^{-H_{p,q}}
+\right)^2
+-
+D_{p,q}
+=
+0
+}
+$$
+
+的两个根，其中：
+
+$$
+\boxed{
+D_{p,q}
+=
+h_{p,q}^2
+=
+\varphi^{-2H_{p,q}}
+\eta_{p,q}^2.
+}
+$$
+
+因此：
+
+* 全局无指向系统只需保存 \(D_{p,q}\)；

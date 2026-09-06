@@ -1,0 +1,72 @@
+## 5.1 临界 ζ-Gibbs 状态中的奇偶趋于完全平衡
+
+令：
+
+$$
+\lambda(n)=(-1)^{\Omega(n)}.
+$$
+
+在 \(\sigma>1\) 时：
+
+$$
+\sum_{n\ge1}\frac{\lambda(n)}{n^\sigma}
+=
+\frac{\zeta(2\sigma)}{\zeta(\sigma)}.
+$$
+
+因此在 ζ-Gibbs 概率下：
+
+$$
+\mathbb E_\sigma[\lambda(N)]
+=
+\frac{\zeta(2\sigma)}{\zeta(\sigma)^2}.
+$$
+
+于是：
+
+$$
+\Pr_\sigma(\Omega(N)\text{ 偶})
+=
+\frac12
+\left(
+1+\frac{\zeta(2\sigma)}{\zeta(\sigma)^2}
+\right),
+$$
+
+$$
+\Pr_\sigma(\Omega(N)\text{ 奇})
+=
+\frac12
+\left(
+1-\frac{\zeta(2\sigma)}{\zeta(\sigma)^2}
+\right).
+$$
+
+当：
+
+$$
+\sigma\downarrow1
+$$
+
+时：
+
+$$
+\frac{\zeta(2\sigma)}{\zeta(\sigma)^2}\longrightarrow0.
+$$
+
+所以：
+
+$$
+\boxed{
+\Pr_\sigma(\text{偶})\to\frac12,
+\qquad
+\Pr_\sigma(\text{奇})\to\frac12.
+}
+$$
+
+临界边界不是某一种奇偶获胜，而是绝对奇偶偏置消失。
+
+这进一步说明 RH 不能由“偶类比奇类多”直接推出；真正的信息必须存在于高阶相关、边界条件和正性中。
+
+---
+

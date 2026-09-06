@@ -14,7 +14,8 @@ internal static partial class CoverAtomCommand
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyList<string> arguments)
+        IReadOnlyList<string> arguments,
+        Action<string, RawRepositorySnapshot, ImmutableArray<IngestCommand.LedgerUpdate>>? applyUpdates = null)
     {
         var options = ParseAlignArguments(arguments);
         var currentRaw = repository.ReadCurrent();
@@ -48,7 +49,7 @@ internal static partial class CoverAtomCommand
                     string.Equals(gid, pair.Gid, StringComparison.Ordinal)) != 1)
             {
                 throw new InvalidOperationException(
-                    $"align GID {pair.Gid} must occur exactly once in atom {pair.AtomId} coverage_gids");
+                    $"align GID {pair.Gid} must occur exactly once in atom {pair.AtomId} coverage edges");
             }
 
             var receiptMatches = target.Receipts.Scribe
@@ -61,7 +62,7 @@ internal static partial class CoverAtomCommand
             }
 
             if (!Gid.TryParse(pair.Gid, out var gid)
-                || gid.ToTarget() is not Target.Formal { Declaration: not null })
+                || gid.ToTarget() is not Target.Formal formal)
             {
                 throw new InvalidOperationException(
                     $"align GID must select a Lean declaration: {pair.Gid}");
@@ -69,7 +70,8 @@ internal static partial class CoverAtomCommand
 
             var documentGid = ScribeEmissionAttestation.DocumentGid(pair.Gid);
             if (!verified.TryGet(documentGid, out var verifiedRecord)
-                || !verified.ReferencesDeclaration(pair.Gid))
+                || (formal.Declaration is not null
+                    && !verified.ReferencesDeclaration(pair.Gid)))
             {
                 throw new InvalidOperationException(
                     $"align GID {pair.Gid} has no verified Scribe emission and declaration reference");
@@ -143,7 +145,14 @@ internal static partial class CoverAtomCommand
 
         var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
-        IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
+        if (applyUpdates is null)
+        {
+            IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
+        }
+        else
+        {
+            applyUpdates(repositoryRoot, currentRaw, ledgerUpdates);
+        }
 
         var suffix = $"ledger_changed={changed.ToString().ToLowerInvariant()}\n";
         return new CommandResult(

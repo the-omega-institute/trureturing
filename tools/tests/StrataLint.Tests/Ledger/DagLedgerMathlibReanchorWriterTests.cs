@@ -16,6 +16,32 @@ public sealed class DagLedgerMathlibReanchorWriterTests
     private const string ModuleBSource = "theorem b : True := by trivial\n";
 
     [Fact]
+    public void CanonicalProducerDoesNotChangeLedgerWhenNoStatementIdentityDrifts()
+    {
+        using var fixture = CreateFixture(
+            ModuleASource,
+            ModuleASource,
+            candidateAStatement: "True");
+        var before = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+
+        var result = DagLedgerMathlibReanchorWriter.Reanchor(
+            fixture.RepositoryRoot,
+            fixture.Repository,
+            fixture.ReportSource,
+            ["--base", BaseRevision]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains(
+            "MATHLIB_REANCHOR replacement_modules=0",
+            result.Output,
+            StringComparison.Ordinal);
+        var after = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        Assert.Equal(before.Select(static file => file.Path), after.Select(static file => file.Path));
+        Assert.All(before, baseline => Assert.True(after.Single(file => file.Path == baseline.Path)
+            .RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan())));
+    }
+
+    [Fact]
     public void CanonicalProducerReplacesExactlyStatementIdentityDrift()
     {
         using var fixture = CreateFixture(
@@ -46,7 +72,47 @@ public sealed class DagLedgerMathlibReanchorWriterTests
     }
 
     [Fact]
-    public void CanonicalProducerReanchorsCoverageReceiptsWithTheFrozenReplacement()
+    public void CanonicalProducerReanchorsExistingStateFragmentWithReplacementEvent()
+    {
+        using var fixture = CreateFixture(
+            ModuleASource,
+            ModuleASource,
+            candidateAStatement: "compiler-reanchored True");
+        var modulePath = RepoPathFor("A");
+        var basePin = StatementId.Create(LoadEvents(fixture.BaseEvents)
+            .Single(item => item.DescriptorPath == modulePath)
+            .Payload.GetProperty("statement_id").GetString()!);
+        var candidatePin = StatementId.Create(LoadEvents(fixture.CandidateEvents)
+            .Single(item => item.DescriptorPath == modulePath)
+            .Payload.GetProperty("statement_id").GetString()!);
+        Assert.NotEqual(basePin, candidatePin);
+        Assert.True(FrozenStateWriter.Write(fixture.RepositoryRoot, modulePath, basePin));
+
+        var result = DagLedgerMathlibReanchorWriter.Reanchor(
+            fixture.RepositoryRoot,
+            fixture.Repository,
+            fixture.ReportSource,
+            ["--base", BaseRevision]);
+
+        Assert.True(result.Success, result.Error);
+        var replacement = Assert.Single(
+            LoadEvents(DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath)),
+            item => item.DescriptorPath == modulePath);
+        var statePath = FrozenStatePath.FromModulePath(modulePath);
+        var stateBytes = File.ReadAllBytes(Path.Combine(
+            fixture.RepositoryRoot,
+            statePath.Value.Replace('/', Path.DirectorySeparatorChar)));
+        var state = FrozenStateRecordLoader.Load(new RepositoryFile(
+            statePath,
+            ImmutableArray.CreateRange(stateBytes),
+            Encoding.UTF8.GetString(stateBytes)));
+        Assert.Equal(candidatePin.Value, replacement.Payload.GetProperty("statement_id").GetString());
+        Assert.Equal(candidatePin, state.StatementId);
+        Assert.Equal(replacement.Payload.GetProperty("statement_id").GetString(), state.StatementId.Value);
+    }
+
+    [Fact]
+    public void FrozenProducerLeavesDigestionCoverageForItsOwnAligner()
     {
         using var fixture = CreateFixture(
             ModuleASource,
@@ -63,15 +129,15 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         Assert.True(result.Success, result.Error);
         var receipt = Assert.Single(Assert.Single(
             BackfillInventoryLoader.LoadRoot(fixture.RepositoryRoot)
-                .RequireDigestionEntries()).Receipts.Coverage);
+                .RequireDigestionEntries()).Coverage);
         Assert.Equal(
             BuildCatalogWithEnvironment(
-                CandidateToolchain,
+                BaseToolchain,
                 "[package]\nname = \"fixture\"\n",
-                Manifest('b'),
-                GitOid('e'),
-                GitOid('f'),
-                [ModuleWithReport("A", ModuleASource, "compiler-reanchored True"),
+                Manifest('a'),
+                GitOid('c'),
+                GitOid('d'),
+                [ModuleWithReport("A", ModuleASource, "True"),
                     ModuleWithReport("B", ModuleBSource, "True")])
                 .ByPath[RepoPathFor("A")].StatementId.Value,
             receipt.TargetStatementId);
@@ -110,6 +176,14 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             ModuleASource,
             changedSource,
             candidateAStatement: "True and True");
+        var before = ReadLedgerDirectory(fixture.LedgerPath);
+        var pin = StatementId.Create(LoadEvents(fixture.BaseEvents)
+            .Single(item => item.DescriptorPath == RepoPathFor("A"))
+            .Payload.GetProperty("statement_id").GetString()!);
+        Assert.True(FrozenStateWriter.Write(fixture.RepositoryRoot, RepoPathFor("A"), pin));
+        var statePath = Path.Combine(fixture.RepositoryRoot,
+            FrozenStatePath.FromModulePath(RepoPathFor("A")).Value);
+        var stateBefore = File.ReadAllBytes(statePath);
 
         var result = DagLedgerMathlibReanchorWriter.Reanchor(
             fixture.RepositoryRoot,
@@ -117,7 +191,7 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             fixture.ReportSource,
             ["--base", BaseRevision]);
 
-        Assert.True(result.Success, result.Error);
+        Assert.False(result.Success);
         Assert.Contains("MATHLIB_REANCHOR replacement_modules=1", result.Output, StringComparison.Ordinal);
         Assert.Contains("AUTHORIZATION proposition_source_equivalent=fail failed_modules=1", result.Output, StringComparison.Ordinal);
         Assert.Contains("AUTHORIZATION overall=fail", result.Output, StringComparison.Ordinal);
@@ -125,7 +199,9 @@ public sealed class DagLedgerMathlibReanchorWriterTests
 
         var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
         Assert.Equal(2, persisted.Length);
-        Assert.Contains(persisted, file => file.Path == EventFor(fixture.CandidateEvents, "A").Path);
+        Assert.Equal(before, ReadLedgerDirectory(fixture.LedgerPath));
+        Assert.Equal(stateBefore, File.ReadAllBytes(statePath));
+        Assert.Contains(persisted, file => file.Path == EventFor(fixture.BaseEvents, "A").Path);
         Assert.Contains(persisted, file => file.Path == EventFor(fixture.BaseEvents, "B").Path);
     }
 
@@ -161,13 +237,61 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         Assert.Contains(persisted, file => file.Path == EventFor(fixture.BaseEvents, "C").Path);
     }
 
+    [Fact]
+    public void CanonicalProducerReanchorsTheCompleteTransitiveDependentClosure()
+    {
+        using var fixture = CreateFixture(
+            ModuleASource,
+            ModuleASource,
+            candidateAStatement: "compiler-reanchored A",
+            bImportsA: true,
+            includeStableC: true,
+            cImportsB: true);
+
+        var result = DagLedgerMathlibReanchorWriter.Reanchor(
+            fixture.RepositoryRoot,
+            fixture.Repository,
+            fixture.ReportSource,
+            ["--base", BaseRevision]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains(
+            "MATHLIB_REANCHOR replacement_modules=3",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "MATHLIB_REANCHOR drift_seed_modules=1",
+            result.Output,
+            StringComparison.Ordinal);
+        var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        Assert.Equal(3, persisted.Length);
+        var events = LoadEvents(persisted);
+        var eventA = Assert.Single(events, item => item.DescriptorPath == RepoPathFor("A"));
+        var eventB = Assert.Single(events, item => item.DescriptorPath == RepoPathFor("B"));
+        var eventC = Assert.Single(events, item => item.DescriptorPath == RepoPathFor("C"));
+        Assert.Contains(
+            eventA.EventHash,
+            eventB.Payload.GetProperty("prerequisite_frozen_node_ids")
+                .EnumerateArray().Select(static item => item.GetString()));
+        Assert.Contains(
+            eventB.EventHash,
+            eventC.Payload.GetProperty("prerequisite_frozen_node_ids")
+                .EnumerateArray().Select(static item => item.GetString()));
+        Assert.Equal(RecomputeFrozenNodeId(eventB), eventB.FrozenNodeId);
+        Assert.Equal(RecomputeFrozenNodeId(eventC), eventC.FrozenNodeId);
+        Assert.DoesNotContain(persisted, file => fixture.BaseEvents.Any(
+            baseline => baseline.Path == file.Path));
+    }
+
     private static ReanchorFixture CreateFixture(
         string baseASource,
         string candidateASource,
         string candidateAStatement,
         string candidateBStatement = "True",
         bool aImportsB = false,
+        bool bImportsA = false,
         bool includeStableC = false,
+        bool cImportsB = false,
         bool includePriorCandidateAEvent = false,
         bool includeCoverageReceipt = false)
     {
@@ -179,9 +303,15 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             {
                 Imports = aImportsB ? ["B"] : [],
             },
-            ModuleWithReport("B", ModuleBSource, "True"),
+            ModuleWithReport("B", ModuleBSource, "True") with
+            {
+                Imports = bImportsA ? ["A"] : [],
+            },
         }.Concat(includeStableC
-            ? [ModuleWithReport("C", "theorem c : True := by trivial\n", "True")]
+            ? [ModuleWithReport("C", "theorem c : True := by trivial\n", "True") with
+                {
+                    Imports = cImportsB ? ["B"] : [],
+                }]
             : []).ToArray();
         var candidateModules = new[]
         {
@@ -189,9 +319,15 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             {
                 Imports = aImportsB ? ["B"] : [],
             },
-            ModuleWithReport("B", ModuleBSource, candidateBStatement),
+            ModuleWithReport("B", ModuleBSource, candidateBStatement) with
+            {
+                Imports = bImportsA ? ["A"] : [],
+            },
         }.Concat(includeStableC
-            ? [ModuleWithReport("C", "theorem c : True := by trivial\n", "True")]
+            ? [ModuleWithReport("C", "theorem c : True := by trivial\n", "True") with
+                {
+                    Imports = cImportsB ? ["B"] : [],
+                }]
             : []).ToArray();
         var baseCatalog = BuildCatalogWithEnvironment(
             BaseToolchain,
@@ -311,9 +447,8 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             DigestionFingerprint.Compute(bytes),
             []);
         var gid = "D5/S0/Carrier/A";
-        var receipt = new DigestionCoverageReceipt(
+        var receipt = new DigestionCoverageEdge(
             gid,
-            atom.Fingerprints.RawSha256,
             targetStatementId);
         var entry = Entry(
             atom,
@@ -321,8 +456,11 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             AtomizerRegistry.NoAtomizerId,
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
-            [gid],
-            new DigestionReceipts([receipt], [], [], [], null));
+            [],
+            new DigestionReceipts([], [], [], null)) with
+        {
+            Coverage = [receipt],
+        };
         return Document(AtomizerRegistry.NoAtomizerId, [entry]);
     }
 
@@ -341,6 +479,19 @@ public sealed class DagLedgerMathlibReanchorWriterTests
                     NameKey = $"ns(n0,{Encoding.UTF8.GetByteCount(module.Name)}:{module.Name.ToLowerInvariant()})",
                 })),
             StringComparer.Ordinal));
+
+    private static FrozenNodeId RecomputeFrozenNodeId(DagLedgerFileEvent item)
+    {
+        var prerequisites = item.Payload.GetProperty("prerequisite_frozen_node_ids")
+            .EnumerateArray()
+            .Select(static identity => FrozenNodeId.Create(identity.GetString()!))
+            .OrderBy(static identity => identity.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+        return FrozenContentAddress.ComputeFrozenNodeId(
+            item.DescriptorPath,
+            StatementId.Create(item.Payload.GetProperty("statement_id").GetString()!),
+            prerequisites);
+    }
 
     private static RepositoryFile EventFor(
         IEnumerable<RepositoryFile> events,

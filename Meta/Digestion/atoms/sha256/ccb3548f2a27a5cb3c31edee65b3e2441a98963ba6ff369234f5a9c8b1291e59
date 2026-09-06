@@ -1,0 +1,15 @@
+## C1.4 局部信息完整性
+
+对固定素数 $p$：
+
+- 任一单个 level 的 norm 已经恢复 $\delta$：
+
+$$
+\boxed{
+\delta
+=
+-\frac{m\log\|Z_{p,u}(m)\|}{\log p};
+}
+\tag{C1.11}
+$$
+

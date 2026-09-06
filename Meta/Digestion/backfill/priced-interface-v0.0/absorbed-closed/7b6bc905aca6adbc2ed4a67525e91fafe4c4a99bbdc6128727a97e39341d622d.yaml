@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:7b6bc905aca6adbc2ed4a67525e91fafe4c4a99bbdc6128727a97e39341d622d
+  normalized_sha256: sha256:7b6bc905aca6adbc2ed4a67525e91fafe4c4a99bbdc6128727a97e39341d622d
+cas_ref: sha256:7b6bc905aca6adbc2ed4a67525e91fafe4c4a99bbdc6128727a97e39341d622d
+coverage_gids:
+  - gid: D5/S3/Entropy/Relabeling/InjectiveInvariance.shannonEntropy_extend_injective
+    target_statement_id: sha256:8205044855aa2f782c1cf2f69550bb1fe272cee1629a2559683853c1b122879c
+receipts:
+  scribe:
+    - gid: D5/S3/Entropy/Relabeling/InjectiveInvariance.shannonEntropy_extend_injective
+      definition_sha256: sha256:e5da86f0ed0cb34cdf3c7e5a41428ab7aea568d429b98cad2bc780c352522b42
+      emission_sha256: sha256:da80488321f090491d7732d13883745f03bc5ef4959432e5d6f9a95577cee0a2
+  unresolved_subitems: []

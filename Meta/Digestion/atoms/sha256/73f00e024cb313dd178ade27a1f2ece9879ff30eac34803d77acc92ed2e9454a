@@ -1,0 +1,54 @@
+## 最终的算术拼接条件
+
+定义
+
+$$
+P_g(T)
+=
+\sum_{e^{T-\ell}\le n\le e^{T+\ell}}
+\frac{\Lambda(n)}{\sqrt n}c(\log n-T),
+$$
+
+$$
+H_g(T)=2a_g^2\cosh(T/2)-\Gamma_g(T).
+$$
+
+则
+
+$$
+B(T)=H_g(T)-P_g(T).
+$$
+
+因此，定理 3 等价地写成
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+H_g(T)-q
+\le P_g(T)\le H_g(T)+q
+\quad\forall T>\ell.
+}
+\tag{34}
+$$
+
+这个 \(q\) 是前面已经无条件确定的、与 \(T\) 无关的正数。
+
+所以当前实际任务已经是：
+
+$$
+\boxed{
+\text{一个固定非负权重的局部素数幂和，}
+\quad
+\text{与完成主项的差，始终不超过固定余量 }q.
+}
+$$
+
+它只涉及固定比例窗口
+
+$$
+e^{T-\ell}\le n\le e^{T+\ell}.
+$$
+
+这里 \(T\) 是对数算术平移参数；这些公式本身没有把它认定为物理时间。
+

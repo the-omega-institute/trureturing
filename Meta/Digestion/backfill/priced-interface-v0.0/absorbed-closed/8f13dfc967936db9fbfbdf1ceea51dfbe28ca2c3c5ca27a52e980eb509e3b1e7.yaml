@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8f13dfc967936db9fbfbdf1ceea51dfbe28ca2c3c5ca27a52e980eb509e3b1e7
+  normalized_sha256: sha256:8f13dfc967936db9fbfbdf1ceea51dfbe28ca2c3c5ca27a52e980eb509e3b1e7
+cas_ref: sha256:8f13dfc967936db9fbfbdf1ceea51dfbe28ca2c3c5ca27a52e980eb509e3b1e7
+coverage_gids:
+  - gid: D5/S0/Naming/DenseGreenClass.dense_inter_green_class_nonempty
+    target_statement_id: sha256:e8fd413102486bc84a90e828a425c6212b2430338db1d4246241a5da58d3a7f9
+receipts:
+  scribe:
+    - gid: D5/S0/Naming/DenseGreenClass.dense_inter_green_class_nonempty
+      definition_sha256: sha256:738b3df6f1b6fb595e30335779d49f6c94c88c18695e7d278b3873d4f4a10ba3
+      emission_sha256: sha256:91fd99dedbc29f2cb586ac7000bf375898dd068a449a203e8a7572ffda61a16d
+  unresolved_subitems: []

@@ -1,0 +1,73 @@
+## 定理 6.1：最坏严格反例必然在自身价格下最优
+
+假设存在严格反例。在允许分拆中，选取使 \(\Delta(n)\) 最小的整数 \(n_*\)。
+
+这样的最小者存在：Gronwall 定理给出：
+
+$$
+\liminf_{n\to\infty}\Delta(n)=0,
+$$
+
+而严格反例的余量为负，因此全局负最小值必然在有限范围内取得。([arXiv][1])
+
+令：
+
+$$
+E_*=\ln n_*,
+\qquad
+\lambda_*=\frac1{E_*\ln E_*}.
+$$
+
+则：
+
+$$
+\boxed{
+n_*\in
+\operatorname*{arg\,max}_{n\in\mathscr A_>}
+\bigl[W(n)-\lambda_*E(n)\bigr].
+}
+\tag{18}
+$$
+
+### 证明
+
+由 \(\Delta(n)\ge\Delta(n_*)\)：
+
+$$
+W(n)\le h(E(n))-\Delta(n_*).
+$$
+
+由于 \(h\) 凹，其在 \(E_*\) 的切线给出：
+
+$$
+h(E(n))
+\le
+h(E_*)+\lambda_*(E(n)-E_*).
+$$
+
+于是：
+
+$$
+\begin{aligned}
+W(n)-\lambda_*E(n)
+&\le
+h(E_*)-\Delta(n_*)-\lambda_*E_*\\
+&=
+W(n_*)-\lambda_*E_*.
+\end{aligned}
+$$
+
+证毕。
+
+这是一种明确的平衡条件：
+
+$$
+\boxed{
+\text{最坏状态的实际规模}
+=
+\text{使它成为最优状态的临界价格所要求的规模}.
+}
+$$
+
+但是“满足平衡条件”仍不等于“安全”。还要比较该平衡状态的实际收益与临界标尺。
+

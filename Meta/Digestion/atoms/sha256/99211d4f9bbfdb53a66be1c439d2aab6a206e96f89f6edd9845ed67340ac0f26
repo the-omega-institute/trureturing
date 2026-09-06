@@ -1,0 +1,25 @@
+## 定理 7：观察操作能够下降到算术空间的充要条件
+
+存在算术空间上的完全正映射 \(\widetilde{\mathcal E}\)，使
+
+$$
+\boxed{
+\mathcal S\circ\mathcal E
+=
+\widetilde{\mathcal E}\circ\mathcal S,
+}
+\tag{30}
+$$
+
+当且仅当
+
+$$
+\boxed{
+L_j(\ker A)\subseteq\ker A
+\qquad\text{对每个 }j.
+}
+\tag{31}
+$$
+
+### 证明
+

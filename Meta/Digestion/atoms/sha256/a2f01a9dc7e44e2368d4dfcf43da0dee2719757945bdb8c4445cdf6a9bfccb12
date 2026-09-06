@@ -1,0 +1,52 @@
+## 330. 构型源
+
+设构型：
+
+$$
+H=\{h_1,\ldots,h_k\}.
+$$
+
+目标不是只构造：
+
+$$
+\mathcal X(q),
+$$
+
+而是：
+
+$$
+\boxed{
+\mathcal X_H(q;\mathbf u)
+}
+$$
+
+满足：
+
+$$
+\mathcal X_H(q;0)=\mathcal X(q).
+$$
+
+定义 source-deformed Casimir moments：
+
+$$
+p_n(\mathbf u)
+=
+-\frac1{4^n(n-1)!}
+\partial_q^n
+\log\mathcal X_H(0;\mathbf u).
+$$
+
+要求：
+
+$$
+\left.
+\partial_{u_{h_1}}\cdots
+\partial_{u_{h_k}}
+p_n(\mathbf u)
+\right|_{\mathbf u=0}
+$$
+
+在 prime side 恢复 \(H\) 的 connected cumulant transform。
+
+---
+

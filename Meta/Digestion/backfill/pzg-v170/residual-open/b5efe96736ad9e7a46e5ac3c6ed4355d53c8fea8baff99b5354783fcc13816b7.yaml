@@ -4,6 +4,12 @@ fingerprints:
 cas_ref: sha256:b5efe96736ad9e7a46e5ac3c6ed4355d53c8fea8baff99b5354783fcc13816b7
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S0/History/SpliceEquations.splice_recursion_equations
+    gaps:
+      - code: scribe-declaration-reference-missing
+        detail: D5/S0/History/SpliceEquations.splice_recursion_equations

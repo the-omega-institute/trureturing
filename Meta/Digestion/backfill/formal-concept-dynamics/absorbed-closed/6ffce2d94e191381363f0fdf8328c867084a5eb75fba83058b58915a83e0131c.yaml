@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6ffce2d94e191381363f0fdf8328c867084a5eb75fba83058b58915a83e0131c
 cas_ref: sha256:6ffce2d94e191381363f0fdf8328c867084a5eb75fba83058b58915a83e0131c
 coverage_gids:
-  - D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeMemory.committed_permissions_do_not_factor_through_physical_state
+  - gid: D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeMemory.committed_permissions_do_not_factor_through_physical_state
+    target_statement_id: sha256:474b305346eb9bcd7873334b3681f532505b19c10ed09673daa8b2db4ca405c0
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeMemory.committed_permissions_do_not_factor_through_physical_state
-      source_sha256: sha256:6ffce2d94e191381363f0fdf8328c867084a5eb75fba83058b58915a83e0131c
-      target_statement_id: sha256:474b305346eb9bcd7873334b3681f532505b19c10ed09673daa8b2db4ca405c0
   scribe:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/CommitmentNormativeMemory.committed_permissions_do_not_factor_through_physical_state
       definition_sha256: sha256:5f0a42e7cffcd4b994ae14a3dd5845a27d63edd3f66faaa42cfa0ea5accafb4c

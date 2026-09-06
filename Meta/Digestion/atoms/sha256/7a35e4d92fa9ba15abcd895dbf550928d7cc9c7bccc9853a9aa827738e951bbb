@@ -1,0 +1,45 @@
+## 定理 1：每两张切片都合法，不保证三张切片共同合法
+
+考虑候选重叠矩阵
+
+$$
+G=
+\begin{pmatrix}
+1&-\frac34&-\frac34\\
+-\frac34&1&-\frac34\\
+-\frac34&-\frac34&1
+\end{pmatrix}.
+$$
+
+它的每个二阶主子矩阵都严格正定，本征值为
+
+$$
+\frac14,\qquad\frac74.
+$$
+
+但
+
+$$
+G
+\begin{pmatrix}1\\1\\1\end{pmatrix}
+=
+-\frac12
+\begin{pmatrix}1\\1\\1\end{pmatrix}.
+$$
+
+因此 \(G\) 不是半正定矩阵。
+
+如果假设存在三个单位向量 \(v_1,v_2,v_3\) 实现这些重叠，就会得到
+
+$$
+\begin{aligned}
+\|v_1+v_2+v_3\|^2
+&=3+2\cdot3\cdot\left(-\frac34\right)\\
+&=-\frac32,
+\end{aligned}
+$$
+
+矛盾。证毕。
+
+**问题不是任意一对看起来不合法，而是三者的联合相位与幅度不相容。**
+

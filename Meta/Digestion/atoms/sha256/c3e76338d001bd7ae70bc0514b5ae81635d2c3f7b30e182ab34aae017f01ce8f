@@ -1,0 +1,41 @@
+- scalar-to-relation coercivity gap 在该高度闭合。
+
+更深一层，离线相的 signed radial charge 仍为零：
+
+$$
+\eta+(-\eta)=0.
+$$
+
+所以一阶标量完成可以完全看不见它；只有
+
+$$
+|\eta|,
+\qquad
+\eta^2,
+\qquad
+\sinh^2(\delta\Delta\log p),
+\qquad
+E_{\mathrm{odd}}
+$$
+
+这样的绝对值、二阶关系量或奇通道能量才能恢复该信息。这就是离线零点“像相变”的本体原因：
+
+$$
+\boxed{
+\text{旧的反射平衡仍保持总账为零，
+但内部已经分裂出一对非零、互相抵销的关系相。}
+}
+\tag{19.3}
+$$
+
+RH 在这套理论中的最终含义不是“从未发生数值对消”，而是：
+
+$$
+\boxed{
+\textbf{完整 prime–Gamma completion 永远不允许
+这种被一阶反射总账隐藏的径向关系相成为真实零点。}
+}
+\tag{19.4}
+$$
+
+本文已经把“那个时刻”的几何、局部分析、序参量、Mahler 自由能、信息逃逸和 prime 关系度量统一为一个纯理论对象；尚未解决、也不得被命名替代的，只剩 prime-side 横向关系能量到 zero-side 离线奇能量的忠实输运。

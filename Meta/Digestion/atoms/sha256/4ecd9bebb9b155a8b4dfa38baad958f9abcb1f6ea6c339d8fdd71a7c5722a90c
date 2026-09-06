@@ -1,0 +1,45 @@
+## 2124.1 项目现有定理正是 \(\delta=0\) 截面
+
+当：
+
+$$
+\delta=0,
+$$
+
+式 (2124.3) 退化为：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sin^2
+\left(
+\frac{\tau}{2}
+\log\frac qp
+\right).
+}
+\tag{2124.4}
+$$
+
+项目已经机器证明，两个不同频率的二槽交替核强度恰为：
+
+$$
+4\sin^2
+\left(
+\frac{\Delta t\,\Delta\omega}{2}
+\right),
+$$
+
+并明确指出：每个频率对都有自己的最大分辨时钟，但该结论不提供一个统一公共时钟。轮的横向升级非常直接：
+
+$$
+\boxed{
+\text{把时间观察差复化，
+项目现有的 circular resolution kernel
+自动获得一个 hyperbolic normal component。}
+}
+$$
+
+---
+

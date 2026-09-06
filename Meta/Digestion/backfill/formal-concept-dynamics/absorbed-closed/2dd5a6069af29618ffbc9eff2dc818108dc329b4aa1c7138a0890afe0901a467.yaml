@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2dd5a6069af29618ffbc9eff2dc818108dc329b4aa1c7138a0890afe0901a467
 cas_ref: sha256:2dd5a6069af29618ffbc9eff2dc818108dc329b4aa1c7138a0890afe0901a467
 coverage_gids:
-  - D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeConjunction.robustKnowledge
+  - gid: D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeConjunction.robustKnowledge
+    target_statement_id: sha256:a5b99037d9d7de3d7745fdf90c7c202a7e537aeec3e636b1a19a174ce546873b
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeConjunction.robustKnowledge
-      source_sha256: sha256:2dd5a6069af29618ffbc9eff2dc818108dc329b4aa1c7138a0890afe0901a467
-      target_statement_id: sha256:a5b99037d9d7de3d7745fdf90c7c202a7e537aeec3e636b1a19a174ce546873b
   scribe:
     - gid: D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeConjunction.robustKnowledge
       definition_sha256: sha256:7f62764e9fd8b985ddaef54eee6e35ba5d044f58d87de73ae4ac4a8f857f1996

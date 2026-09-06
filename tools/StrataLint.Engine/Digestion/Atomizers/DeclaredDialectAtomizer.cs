@@ -18,16 +18,16 @@ internal static class DeclaredDialectAtomizer
         string atomizerId,
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules rules) =>
-        Atomize(atomizerId, bytes, rules, contentKinds: null);
+        AtomizeWithContentKinds(atomizerId, bytes, rules, contentKinds: null);
 
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
         string atomizerId,
         ReadOnlyMemory<byte> bytes,
         TheoryAtomizerRules rules) =>
         AtomizerRegistry.CaptureContentKinds(
-            kinds => Atomize(atomizerId, bytes.Span, rules, kinds));
+            kinds => AtomizeWithContentKinds(atomizerId, bytes.Span, rules, kinds));
 
-    private static AtomizedTheoryDocument Atomize(
+    internal static AtomizedTheoryDocument AtomizeWithContentKinds(
         string atomizerId,
         ReadOnlySpan<byte> bytes,
         TheoryAtomizerRules rules,
@@ -38,7 +38,7 @@ internal static class DeclaredDialectAtomizer
         var pattern = new Regex(dialect.ClaimPattern, RegexOptions.CultureInvariant);
         var unregistered = new SortedSet<string>(StringComparer.Ordinal);
         ImmutableArray<string> Seen() => [.. unregistered];
-        return dialect.HeadingClaims
+        var document = dialect.HeadingClaims
             ? MarkdownAstAtomizer.Atomize(
                 bytes,
                 static _ => null,
@@ -50,6 +50,10 @@ internal static class DeclaredDialectAtomizer
                 paragraph => Identify(paragraph, dialect, pattern, unregistered),
                 () => GenreRegistryCheck.Collected(Seen()),
                 contentKinds: contentKinds);
+        var plans = document.Claims.Select(DigestionDecomposition.PlanClauses)
+            .OfType<DigestionClausePlan>().ToImmutableArray();
+        AtomizerRegistry.InheritClauseContentKinds(contentKinds, plans);
+        return new AtomizedTheoryDocument(document.Claims, document.Slices, plans, document.GenreRegistryCheck);
     }
 
     internal static DeclaredDialect Require(string atomizerId, TheoryAtomizerRules rules)
@@ -91,6 +95,6 @@ internal static class DeclaredDialectAtomizer
             unregistered.Add(token);
         }
 
-        return genre is null ? token : genre.Value;
+        return genre is null ? DigestionContentDisposition.Unregistered(token) : genre.Value;
     }
 }

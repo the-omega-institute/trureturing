@@ -1,0 +1,10 @@
+## 6. Global-orientation compression
+
+\(n\) 个完全共同翻转的离线轨道，其联合方向熵只有
+
+$$
+\log2,
+$$
+
+而不是 \(n\log2\)。
+

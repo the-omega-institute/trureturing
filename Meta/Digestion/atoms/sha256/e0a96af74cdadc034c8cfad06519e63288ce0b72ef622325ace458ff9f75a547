@@ -1,0 +1,20 @@
+# 二、定理一：实际总能量的增长指数恰好是两倍谱偏离幅度
+
+定义
+
+$$
+\Delta_\zeta
+=
+\sup_\rho\left|\Re\rho-\frac12\right|.
+$$
+
+由零点的临界带位置和反射对称性，
+
+$$
+0\le\Delta_\zeta\le\frac12,
+\qquad
+\mathrm{RH}\iff\Delta_\zeta=0.
+$$
+
+这里不要求存在一个达到该上确界的零点。([DLMF][1])
+

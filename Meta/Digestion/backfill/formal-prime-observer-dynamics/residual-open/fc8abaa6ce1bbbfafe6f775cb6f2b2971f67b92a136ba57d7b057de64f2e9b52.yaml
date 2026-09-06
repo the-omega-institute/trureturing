@@ -4,6 +4,12 @@ fingerprints:
 cas_ref: sha256:fc8abaa6ce1bbbfafe6f775cb6f2b2971f67b92a136ba57d7b057de64f2e9b52
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.jointKernel
+    gaps:
+      - code: scribe-declaration-reference-missing
+        detail: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.jointKernel

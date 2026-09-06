@@ -1,0 +1,29 @@
+## 9.2 产生相干跃迁的非对角 Hamiltonian
+
+可以再定义一个算子，沿合法单个位翻转图发生跃迁：
+
+$$
+\widehat H_{\mathrm{flip}}
+=
+\sum_v\Omega_v
+\left[
+\prod_{u\sim v}(1-\widehat n_u)
+\right]\widehat X_v.
+$$
+
+邻居投影保证翻转后仍满足排斥条件。它的非零矩阵元正好对应 Fibonacci 翻转图的边。
+
+但加入：
+
+$$
+\widehat H=\widehat H_0+\widehat H_{\mathrm{flip}}
+$$
+
+后，一般不再有：
+
+$$
+\operatorname{Tr}e^{-s\widehat H}
+=
+\sum_{d\mid5040}d^{-s}.
+$$
+

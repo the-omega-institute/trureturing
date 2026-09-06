@@ -1,0 +1,21 @@
+### 定理 A4.1　两圆非同一
+
+局部变量 $x=p^{-s}$ 的圆与 completed Cayley 变量 $w=C_a(s-1/2)$ 的圆不是同一坐标集合：前者对应 $\Re s=0$，后者对应 $\Re s=1/2$。
+
+所以从式 (A3.5) 不能推出 RH。
+
+把两只圆识别起来所需的不是代数换名，而是一个真正承载全部素数、Gamma 因子、函数方程、解析延拓与零点输运的 prime–Gamma completion。
+
+这条非同一性是信息逃逸审计中的硬边界：
+
+$$
+\boxed{
+\text{局部 fugacity circle}
+\not\equiv
+\text{completed critical circle}.
+}
+\tag{A4.5}
+$$
+
+---
+

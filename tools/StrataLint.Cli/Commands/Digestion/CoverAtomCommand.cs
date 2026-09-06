@@ -4,7 +4,7 @@ using StrataLint.Engine;
 namespace StrataLint.Cli;
 
 // Phase 1 cover transaction: bind one or more already-proven Lean declarations to an
-// existing open residual atom by writing coverage_gids + coverage/scribe
+// existing open residual atom by writing a coverage edge plus its Scribe receipt
 // receipts. cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
 // atoms or rebinds boundaries. The write is all-or-nothing with a fail-closed
@@ -43,6 +43,8 @@ internal static partial class CoverAtomCommand
             var baseline = Decode(baselineRaw);
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
+            var report = leanReportSource.Load(current);
+            var lean = ValidateLean(current, report);
 
             // Gate ②(a): every cover GID must select a Lean declaration, not just a
             // module (module-level coverage is ingest's residual boundary, not a
@@ -58,10 +60,10 @@ internal static partial class CoverAtomCommand
 
                 return gid;
             }).ToImmutableArray();
-            FrozenStatementIndex frozenStatements;
+            FrozenStateCatalog frozenState;
             try
             {
-                frozenStatements = FrozenStatementIndex.Load(current);
+                frozenState = FrozenStateCatalog.Load(current);
             }
             catch (Exception exception) when (exception is FormatException or InvalidOperationException)
             {
@@ -72,13 +74,14 @@ internal static partial class CoverAtomCommand
 
             foreach (var gid in gids)
             {
-                if (!frozenStatements.ContainsModule(gid.Path))
+                if (!frozenState.Records.ContainsKey(gid.Path))
                 {
                     throw new InvalidOperationException(
                         $"cover target module {gid.Path.Value} is not frozen; "
                         + "run make deposit before cover");
                 }
             }
+            var frozenStatements = FrozenStatementIndex.Create(frozenState, report);
 
             // Gate ①: locate the single target atom. An initial cover requires an
             // open atom; a hosted extension adds at least one declaration while
@@ -174,6 +177,7 @@ internal static partial class CoverAtomCommand
             var authorityImpact = BackfillDeltaImpactResolver.Resolve(
                 current,
                 baseline,
+                report,
                 document,
                 authorityChanges);
             var authorityPaths = authorityChanges.Paths
@@ -189,6 +193,7 @@ internal static partial class CoverAtomCommand
             var receiptImpact = BackfillDeltaImpactResolver.Resolve(
                 current,
                 baseline,
+                report,
                 document,
                 receiptSeedChanges);
             var evaluationChanges = authorityImpact.EvaluationChanges;
@@ -206,12 +211,15 @@ internal static partial class CoverAtomCommand
                     && !currentFile!.RawBytes.AsSpan().SequenceEqual(
                         baselineFile!.RawBytes.AsSpan());
             }
-            var report = leanReportSource.Load(current);
-            var lean = ValidateLean(current, report);
             var truthStates = LeanTruthStates.Resolve(current, lean);
             foreach (var gid in gids)
             {
-                var edge = CurrentEdgeValidator.Validate(gid.Value, current, report, truthStates);
+                var edge = CurrentEdgeValidator.Validate(
+                    gid.Value,
+                    current,
+                    report,
+                    truthStates,
+                    frozenStatements);
                 if (!edge.IsClosed)
                 {
                     throw new InvalidOperationException(edge.Diagnostic);
@@ -237,8 +245,7 @@ internal static partial class CoverAtomCommand
 
             var addedReceipts = gids
                 .Where(gid => !existingGids.Contains(gid.Value))
-                .Select(gid => BuildReceipts(
-                    target,
+                .Select(gid => DigestionReceiptBuilder.Build(
                     gid,
                     current,
                     frozenStatements,
@@ -246,11 +253,10 @@ internal static partial class CoverAtomCommand
                 .ToImmutableArray();
             var covered = target with
             {
-                CoverageGids = target.CoverageGids.AddRange(addedGids),
+                Coverage = target.Coverage.AddRange(
+                    addedReceipts.Select(static receipt => receipt.Coverage)),
                 Receipts = target.Receipts with
                 {
-                    Coverage = target.Receipts.Coverage.AddRange(
-                        addedReceipts.Select(static receipt => receipt.Coverage)),
                     Scribe = target.Receipts.Scribe.AddRange(
                         addedReceipts.Select(static receipt => receipt.Scribe)),
                     CoverDisposition = null,
@@ -318,7 +324,6 @@ internal static partial class CoverAtomCommand
                 DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,
                     receiptVerificationChanges),
-                repositoryChanges: coverChanges,
                 projectedStatusChanges: DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,
                     evaluationChanges));
@@ -412,49 +417,6 @@ internal static partial class CoverAtomCommand
         return entry;
     }
 
-    private static (DigestionCoverageReceipt Coverage, DigestionScribeReceipt Scribe) BuildReceipts(
-        DigestionLedgerEntry entry,
-        Gid gid,
-        RepositorySnapshot snapshot,
-        FrozenStatementIndex frozenStatements,
-        VerifiedScribeEmissions verifiedScribeEmissions)
-    {
-        if (!snapshot.TryGetFile(gid.Path.Value, out var target))
-        {
-            throw new InvalidOperationException($"cover target Lean file is absent: {gid.Path.Value}");
-        }
-
-        if (!frozenStatements.TryResolve(gid, out var targetStatementId, out var resolutionError))
-        {
-            throw new InvalidOperationException(
-                $"cover target has no unique frozen statement: {gid.Value} ({resolutionError})");
-        }
-
-        var documentGid = ScribeEmissionAttestation.DocumentGid(gid.Value);
-        if (!verifiedScribeEmissions.TryGet(documentGid, out var verifiedRecord))
-        {
-            throw new InvalidOperationException(
-                $"cover verified Scribe emission is absent: {documentGid} "
-                + "(scribe-emission-missing; partial-closed)");
-        }
-
-        var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
-        if (!snapshot.TryGetFile(definitionPath, out var definition))
-        {
-            throw new InvalidOperationException($"cover Scribe definition is absent: {definitionPath}");
-        }
-
-        var coverage = new DigestionCoverageReceipt(
-            gid.Value,
-            entry.Fingerprints.RawSha256,
-            targetStatementId!.Value);
-        var scribe = new DigestionScribeReceipt(
-            gid.Value,
-            DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256,
-            verifiedRecord.EmissionSha256);
-        return (coverage, scribe);
-    }
-
     private static BackfillInventoryDocument ReplaceEntry(
         BackfillInventoryDocument document,
         string atomId,
@@ -511,8 +473,7 @@ internal static partial class CoverAtomCommand
                 .Select(static gap => new DigestionDispositionGap(gap.Code, gap.Detail))
                 .OrderBy(static gap => gap.Code, StringComparer.Ordinal)
                 .ThenBy(static gap => gap.Detail, StringComparer.Ordinal)
-                .ToImmutableArray(),
-            recordedAtUtc.ToUniversalTime());
+                .ToImmutableArray());
         var dispositionDocument = ReplaceEntry(
             document,
             target.AtomId,

@@ -1,0 +1,27 @@
+## 56. 怀疑
+
+定义：
+
+\[
+\boxed{
+\operatorname{Doubt}(e,A,a,P)
+\iff
+\exists x,\ 
+A(x)
+\land
+e(x)=e(\pi_Xa)
+\land
+\neg P(x).
+}
+\]
+
+于是：
+
+\[
+\operatorname{Doubt}
+\]
+
+就是证据余纤维中的反例 ANCHOR。
+
+---
+

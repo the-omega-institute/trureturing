@@ -1,0 +1,19 @@
+# 六、核心定理：把未决收益计入后，势函数沿离散增长不增加
+
+定义当前的带价格收益：
+
+$$
+J_\lambda(n)=W(n)-\lambda E(n).
+$$
+
+再定义：
+
+$$
+\boxed{
+\Phi_\lambda(n)
+=
+J_\lambda(n)+R_\lambda(n).
+}
+\tag{6}
+$$
+

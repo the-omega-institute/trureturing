@@ -1,0 +1,58 @@
+* \(p\) 表示素数层级。
+
+可能对每一个固定素数 \(p\) 都有：
+
+$$
+\boxed{
+r_{m,p}\longrightarrow0
+\qquad
+(m\to\infty).
+}
+\tag{2052.1}
+$$
+
+但这并不推出：
+
+$$
+\sum_pr_{m,p}\longrightarrow0.
+$$
+
+最简单的反例是：
+
+$$
+\boxed{
+r_{m,p}
+=
+\begin{cases}
+1,&p=p_m,\\
+0,&p\neq p_m.
+\end{cases}
+}
+\tag{2052.2}
+$$
+
+对每个固定 \(p\)，残差最终为零。
+
+但：
+
+$$
+\boxed{
+\sum_pr_{m,p}=1
+\qquad
+\forall m.
+}
+\tag{2052.3}
+$$
+
+残差没有消失，只是沿对角线移向更大的素数。
+
+这就是最精确的：
+
+$$
+\boxed{
+\text{信息对角逃逸}.
+}
+$$
+
+---
+

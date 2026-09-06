@@ -1,0 +1,60 @@
+* sticky／nonsticky 相位 grains；
+
+再谈 Kakeya 型控制。
+
+---
+
+而你所谓“达到临界值起飞”的最精确现有数学模型，其实是 de Bruijn–Newman 形变。
+
+在那里确实存在一个临界参数：
+
+$$
+\Lambda.
+$$
+
+零点可以碰撞、形成多重零点，再离开实轴。
+
+Rodgers–Tao 的结果说明：
+
+$$
+\Lambda\ge0,
+$$
+
+而 RH 等价于：
+
+$$
+\Lambda\le0.
+$$
+
+所以若 RH 成立：
+
+$$
+\boxed{
+\Lambda=0,
+}
+$$
+
+也就是 Riemann \(\xi\) 恰好位于“再轻微向错误方向形变，零点就可能逃逸”的临界边界。
+
+这与“束缚—临界—起飞”的直觉高度吻合，只是那个真正的临界参数不是零点高度 \(t\)，而是函数本身的外部热形变参数。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{临界线不是靠低转速把零点拴住；
+它是反射双 packet 完全平衡、法向奇通道尚未被激活的零 boost 位置。
+高 \(t\) 扩大可用方向和频率带宽，
+离线 \(\delta\) 则把这些方向按 }\delta\log n\text{ 分层拉伸。
+Kakeya 式困难在于：
+即使可见空间已经被压到一点，
+隐藏方向仍然可能在多尺度上组织出足够强的相消。
+RH 要证明的，正是这种离线多尺度组织永远不能完整闭合。}
+$$
+
+[1]: https://visiblecement.nist.gov/27.4 "https://visiblecement.nist.gov/27.4"
+[2]: https://dlmf.nist.gov/25.10 "https://dlmf.nist.gov/25.10"
+[3]: https://arxiv.org/abs/1801.05914 "https://arxiv.org/abs/1801.05914"
+[4]: https://arxiv.org/abs/2502.17655 "https://arxiv.org/abs/2502.17655"
+[5]: https://arxiv.org/abs/2505.07695 "https://arxiv.org/abs/2505.07695"
+[6]: https://arxiv.org/abs/1902.02073 "https://arxiv.org/abs/1902.02073"

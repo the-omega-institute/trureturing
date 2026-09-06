@@ -1,0 +1,14 @@
+## 589. 无限支撑 Hankel 正定
+
+```lean
+theorem infiniteSupport_hankel_posDef
+    (μ : Measure ℝ)
+    [IsFiniteMeasure μ]
+    (hSupport : Set.Infinite μ.support) :
+    Matrix.PosDef
+      (fun i j : Fin (N + 1) =>
+        ∫ x, x ^ ((i : ℕ) + (j : ℕ)) ∂μ)
+```
+
+---
+

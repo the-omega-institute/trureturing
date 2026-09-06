@@ -1,0 +1,13 @@
+\[
+\boxed{
+\operatorname{Residual}(q,T)
+=
+\{(x,y):
+q(x)=q(y)
+\land
+T(x)\ne T(y)\}.
+}
+\]
+
+即：
+

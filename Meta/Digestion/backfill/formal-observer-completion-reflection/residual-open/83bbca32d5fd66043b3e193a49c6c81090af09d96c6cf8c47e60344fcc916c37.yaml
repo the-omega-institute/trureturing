@@ -4,7 +4,6 @@ fingerprints:
 cas_ref: sha256:83bbca32d5fd66043b3e193a49c6c81090af09d96c6cf8c47e60344fcc916c37
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   chain_atoms:
@@ -15,3 +14,7 @@ receipts:
     - 7b0a51da8bd16af276a01e76fd0bc8ff01ef909108be1b985c33acac8172fdf8
     - 82f0fef42842fe19cced93758566da734f913ecb11929dd7e2c55c0ec5cfec7a
     - 744a45902db020269c3ad279bb4930f32c0cab0fef90ecd1b3c36f1c6e4969f1
+  quarantine:
+    justification: "Whole-atom guard: source section 56 quantifies selector families on every nonempty finite carrier and all bijections. D5/S3/ConceptDynamics/Attribution/NoNaturalFiniteChoice.no_natural_finite_choice carries the naturality obstruction. Child 82f0fef42842fe19cced93758566da734f913ecb11929dd7e2c55c0ec5cfec7a is already absorbed on dev through D5/S3/ConceptDynamics/Attribution/ClassicalChoiceNonnaturality.classical_choice_family_is_nonnatural and is unchanged. The remaining labels/order, value, memory/commitment, environment, hidden dynamics, and history-coordinate clauses have no specified connection to that finite-set selector family. D5/Blueprint English and Chinese searches hit NonuniqueOptimalActionSelector (Boolean ordered example), PlanCylinderCommitmentTelescoping (supplied actions and telescoping), ExternalPredictionReflectiveAutonomy (reason factorization), CocyclePolicySeparation (nonuniqueness), and LocalEulerFrameHistoryNonreconstruction (complex matrix histories); their public statements do not give those connections. SymmetryBreakingSourceClassification only eliminates a supplied four-constructor source set, so it cannot justify these clauses. Pinned Mathlib searches hit Finset.min'_mem, min'_le, min'_image and exists_min_image; no mechanism classification. Loogle Equiv.swap, Function.fixedPoints exit 0 hits 0; LeanSearch No natural choice of an element of every nonempty finite set under all bijections exit 0 hits 5 ordinary choice facts; A17 GitHub natural choice finite language:Lean exit 0 returned 20 textual near matches, no full classification. Local /private/tmp/consensus-rnd/sshx/w73f5/attempt-1/atom2-probe.lean exit 0 derives a bijection violating every supplied finite choice family directly from the frozen owner; it supplies no mechanism-specific proposition. Six residual children receive individual guards in this same change. No whole-atom coverage edge is added."
+    reentry_condition: "Specify the action of finite-carrier relabelings on each added mechanism and its selector, including value ties, memory updates, environmental and hidden inputs, and history charts. Reuse the existing naturality obstruction and classical-choice child; only bind each remaining child after its own typed transport or symmetry-breaking law has a frozen public owner."
+    blocker_class: multi-clause-guard

@@ -1,0 +1,37 @@
+### 第二个推论：负读数必须逃离每个固定的放大窗口
+
+对每个固定 \(M>0\)，因为：
+
+$$
+\min_{|t|\le M}e^{-t^2}=e^{-M^2}>0,
+$$
+
+式（R19）给出：
+
+$$
+\boxed{
+R_n(t)>0
+\quad\text{当}\quad |t|\le M\Omega_n,\ n\text{ 足够大}.
+}
+\tag{R22}
+$$
+
+因此，若存在一列负读数：
+
+$$
+n_j\to\infty,\qquad R_{n_j}(t_j)<0,
+$$
+
+则必须：
+
+$$
+\boxed{
+\frac{|t_j|}{\Omega_{n_j}}\longrightarrow\infty.
+}
+\tag{R23}
+$$
+
+这没有证明负读数不存在。它定位了高阶反例不能停留的区域。
+
+---
+

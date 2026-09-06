@@ -1,0 +1,48 @@
+fingerprints:
+  raw_sha256: sha256:d876825b9d4b75c10e19ddf12f95f5f1587ae05686765820b8661eb843dc4ca1
+  normalized_sha256: sha256:d876825b9d4b75c10e19ddf12f95f5f1587ae05686765820b8661eb843dc4ca1
+cas_ref: sha256:d876825b9d4b75c10e19ddf12f95f5f1587ae05686765820b8661eb843dc4ca1
+coverage_gids:
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.A
+    target_statement_id: sha256:94423f3791f5656f73c0fb5f682d4ca3e2a428440350c3e5ada4a3d3a2e093f2
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.Cpoly
+    target_statement_id: sha256:6a4fbf6b4d3c3ea91c49600cc5c72f1b51f650a4add1da8379d89c1dcbe981a9
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.Cpoly_even
+    target_statement_id: sha256:e11d178927c2208202fef0da0be13ed4d180460f48b7279429dbff5bc357cd70
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.F
+    target_statement_id: sha256:b1b2ef1fffde5086f95759d33603de4a295886436d92dcf473d912cfe8cbd0d5
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.F_factorization
+    target_statement_id: sha256:1275fd4e6a6865f002610d5128a36cbed0640cbbbdc938227b7d6101cc105973
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.centralFactorial
+    target_statement_id: sha256:1ee214b9c22567bc37245bdad3c7ee5f19f3ebde205ddd70fea143d75832e94b
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.half_shift
+    target_statement_id: sha256:31265b961a261ffd784ab5ab475f3b3e7f5f08974ec3ec417e1bfd9aea3d998f
+  - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.identity_427
+    target_statement_id: sha256:ccfc759cd702dc4ce5e6989952d77cfdb832b6675dfbbd20d97b45aa39711135
+receipts:
+  scribe:
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.A
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.Cpoly
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.Cpoly_even
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.F
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.F_factorization
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.centralFactorial
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.half_shift
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.identity_427
+      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
+      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
+  unresolved_subitems: []

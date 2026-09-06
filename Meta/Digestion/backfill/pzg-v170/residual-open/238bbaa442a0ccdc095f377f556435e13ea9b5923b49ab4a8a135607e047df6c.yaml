@@ -4,7 +4,6 @@ fingerprints:
 cas_ref: sha256:238bbaa442a0ccdc095f377f556435e13ea9b5923b49ab4a8a135607e047df6c
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems:
     - de-bruijn-newman-threshold-family-equivalence

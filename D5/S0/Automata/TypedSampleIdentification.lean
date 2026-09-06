@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Automata/TypedSampleIdentification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Computability.DFA]
+   anchors: [mathlib/module/Mathlib.Computability.MyhillNerode]
    digest: Finite typed sample obstructions imply global DFAO state lower bounds. -/
 
 import D5.S0.Automata.DFAOStateLowerBound

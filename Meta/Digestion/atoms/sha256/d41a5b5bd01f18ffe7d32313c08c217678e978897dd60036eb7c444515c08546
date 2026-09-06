@@ -1,0 +1,42 @@
+## 422. 正向证明
+
+若 RH 成立，则：
+
+$$
+x_{\mathcal O}\in[0,1].
+$$
+
+所以对所有 \(n,k\)：
+
+$$
+x_{\mathcal O}^{\,n+1}\ge0,
+$$
+
+$$
+(1-x_{\mathcal O})^k\ge0.
+$$
+
+故：
+
+$$
+C_{n,k}
+=
+\sum_{\mathcal O}
+m_{\mathcal O}
+x_{\mathcal O}^{\,n+1}
+(1-x_{\mathcal O})^k
+\ge0.
+$$
+
+特别地，偶数 \(k\) 和奇数 \(k\) 两类都非负，因此：
+
+$$
+\mathrm{RH}
+\Longrightarrow
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}.
+$$
+
+---
+

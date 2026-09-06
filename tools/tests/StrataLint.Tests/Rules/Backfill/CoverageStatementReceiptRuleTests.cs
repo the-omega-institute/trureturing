@@ -31,7 +31,7 @@ public sealed class CoverageStatementReceiptRuleTests
 
         Assert.Equal(AdmissionEffect.Block, finding.Effect);
         Assert.Equal(
-            "statement-receipt:coverage-receipt-mismatch:D5/S0/Carrier/StatementReceipt.target",
+            "statement-receipt:coverage-target-mismatch:D5/S0/Carrier/StatementReceipt.target",
             finding.Message);
     }
 

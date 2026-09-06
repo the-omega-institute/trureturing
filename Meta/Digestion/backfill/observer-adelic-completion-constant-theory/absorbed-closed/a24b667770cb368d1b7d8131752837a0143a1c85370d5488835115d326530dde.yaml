@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a24b667770cb368d1b7d8131752837a0143a1c85370d5488835115d326530dde
+  normalized_sha256: sha256:a24b667770cb368d1b7d8131752837a0143a1c85370d5488835115d326530dde
+cas_ref: sha256:a24b667770cb368d1b7d8131752837a0143a1c85370d5488835115d326530dde
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.cayley_laguerre_identity
+    target_statement_id: sha256:df34aa00ca8378e2ecb02a53911d72f221763bc09700aa368810998b6cbdfa22
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.cayley_laguerre_identity
+      definition_sha256: sha256:8fe55f32143e2fe8f962d456a07a2608ad62f3e354ad9781e1662488ed61cd4b
+      emission_sha256: sha256:7be896bd88ec5d85eb962b56d876e6b39137550acc8efbbaccdc851360411420
+  unresolved_subitems: []

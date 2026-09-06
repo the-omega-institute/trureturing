@@ -1,0 +1,4 @@
+- PR #5803, `QuquintCertificateAssembly.lean`, pinned at `dfab12155e5f5d7a8524862a8d1ee0353b0bc6c3`: branch definiteness is connected to the actual matrices by explicit LDL identities. Its coefficient identities are a stronger interface than a numerical proxy. No ququint or spectral claim is imported into the causal lane.
+
+The new modules reuse only the causal lane's current `linearObjective`, support-monotone replay, `FiniteResponseLaw`, and primal-dual interfaces. The cross-author connections motivate the statements and their boundaries; they are not asserted to identify the different mathematical carriers or transfer physical conclusions. Searches for a matching affine presentation/replay or residual-envelope owner in the current lane did not produce a reusable exact owner. This is a scoped audit, not an exhaustive novelty claim.
+

@@ -1,0 +1,92 @@
+# 第二百五十四部　建议新增到仓库的正式定理
+
+```text
+D5/S3/PrimeGaps/ShortGapJet/
+  BoundedGapLogCollision.lean
+  PrimePairJetSpinor.lean
+  PrimePairDividedDifferenceLimit.lean
+  PrimePairObserverConditionNumber.lean
+  GoldenDepthOddSuppression.lean
+
+D5/S3/PrimeGaps/ObserverFrame/
+  PrimeFrequencyPairGram.lean
+  BoundedGapGramDegeneration.lean
+  NoUniformPrimeFrequencySeparation.lean
+
+D5/S3/PrimeConstellation/GapChannels/
+  PairFactorialObservable.lean
+  DHLFixedPairExtraction.lean
+  GapChannelMass.lean
+  GapChannelFourierTransform.lean
+  TwinChannelLocalizationObstruction.lean
+
+D5/S3/PrimeGaps/Duality/
+  CoveringConcentrationDuality.lean
+  IntegerThresholdCollapse.lean
+  LongShortObserverNonuniformity.lean
+
+D5/S3/Observer/ProofResidual/
+  ConditionalTrialCertificate.lean
+  ThreeInputResidualVector.lean
+  NumericalEvidenceDoesNotDischargeAxiom.lean
+
+D5/X_Frontier/PrimeZero/
+  PrimePairJetToWeilOddChannel.lean
+  KloostermanCasimirIntertwiner.lean
+  QuantizedOffLineOrbitBound.lean
+```
+
+最先可以闭合的核心声明是：
+
+```lean
+theorem boundedGap_log_collision
+    {p q B : ℕ}
+    (hp : p.Prime) (hq : q.Prime)
+    (hpq : p < q) (hgap : q - p ≤ B) :
+    Real.log q - Real.log p ≤ B / (p : ℝ)
+```
+
+以及：
+
+```lean
+theorem primePair_evenOdd_ratio
+    {p q : ℕ} (hp : 0 < p) (hpq : p < q)
+    (δ : ℝ) :
+    |((p : ℝ) ^ (-δ) - (q : ℝ) ^ (-δ)) /
+      ((p : ℝ) ^ (-δ) + (q : ℝ) ^ (-δ))| =
+    |Real.tanh
+      ((δ / 2) * Real.log ((q : ℝ) / p))|
+```
+
+再接：
+
+```lean
+theorem boundedGap_pairGram_tendsto_singular
+    (pairs : ℕ → ℕ × ℕ)
+    (hPrime : ...)
+    (hGap : ∀ n, pairs n |>.2 - pairs n |>.1 ≤ B)
+    (hToInf : Tendsto (fun n => pairs n |>.1) atTop atTop) :
+    Tendsto
+      (fun n => smallestEigenvalue
+        (primePairGram T (pairs n)))
+      atTop
+      (nhds 0)
+```
+
+以及：
+
+```lean
+theorem primePair_dividedDifference_limit
+    {s : ℂ} :
+    Tendsto
+      (fun n =>
+        (p n : ℂ) ^ s *
+        (((q n : ℂ) ^ (-s) -
+          (p n : ℂ) ^ (-s)) /
+          (Real.log (q n) - Real.log (p n))))
+      atTop
+      (nhds (-s))
+```
+
+---
+

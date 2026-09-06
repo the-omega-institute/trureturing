@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:095b602925968fef7ff62ec484995447a6a0249dc6218a4ee9fa8e1c8c9af264
+  normalized_sha256: sha256:095b602925968fef7ff62ec484995447a6a0249dc6218a4ee9fa8e1c8c9af264
+cas_ref: sha256:095b602925968fef7ff62ec484995447a6a0249dc6218a4ee9fa8e1c8c9af264
+coverage_gids:
+  - gid: D5/S3/Midline/HeatLayers/GoldenHeatMidline.golden_heat_sixfold_midline
+    target_statement_id: sha256:7730e181e3cf5107344b931380236631891d610af8a8ff6686d29b4fb18e0e91
+receipts:
+  scribe:
+    - gid: D5/S3/Midline/HeatLayers/GoldenHeatMidline.golden_heat_sixfold_midline
+      definition_sha256: sha256:501c611ed6db3d86070076e9d6ee56d97a68f33d76298def05e18ca5761c471a
+      emission_sha256: sha256:8686fbc1165bdfc112a37509cc96071ef805310d707430e964b08da65e9a3df4
+  unresolved_subitems: []

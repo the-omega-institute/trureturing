@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8c17cad8b9e8747b0684249dd3451d47f8d843aee85d948349e3e8e713f36987
+  normalized_sha256: sha256:8c17cad8b9e8747b0684249dd3451d47f8d843aee85d948349e3e8e713f36987
+cas_ref: sha256:8c17cad8b9e8747b0684249dd3451d47f8d843aee85d948349e3e8e713f36987
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/RiemannStabilizerFreeOrbit.riemann_stabilizer_free_orbit
+    target_statement_id: sha256:190625db540b4e4032fa831fccc1f022cf1a61b24343b23dd75f750c2830b507
+receipts:
+  scribe:
+    - gid: D5/S3/Zeros/Symmetry/RiemannStabilizerFreeOrbit.riemann_stabilizer_free_orbit
+      definition_sha256: sha256:a04e9787ab69ed4e7a5c40132d2714361db1204633f29ba90741bdae36ae9f1b
+      emission_sha256: sha256:0d94ad2300fc22261e3af57363b9d027c68cf9c2f4454243a0f6a557ad9d3aa9
+  unresolved_subitems: []

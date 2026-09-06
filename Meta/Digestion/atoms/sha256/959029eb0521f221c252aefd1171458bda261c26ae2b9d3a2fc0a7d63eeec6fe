@@ -1,0 +1,14 @@
+## B11.1 transfer length
+
+$$
+N=\text{局部约束链或 cocycle 的因子数}.
+\tag{B11.1}
+$$
+
+它控制：
+
+- 两通道振幅的 $N$ 次幂；
+- 相位量子化间距 $O(N^{-1})$；
+- hard-core edge 的 $O(N^{-2})$ zero pinching；
+- boundary coefficient 相对 bulk gap 的权重。
+

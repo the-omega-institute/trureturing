@@ -4,10 +4,13 @@ fingerprints:
 cas_ref: sha256:a8aa41d6dfe54418a76730b22bf30306944fee939e9f19ea634ca08c74f9f824
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   chain_atoms:
     - c511345871ba60d46d831a7c52b5343f713e8fddf9aac0271572ab2553120760
     - bc4bf38b4f10bf09d1b632b704953b08f1e9797397633cc167adbc0e20079c0a
     - 1875dd64019c2d587a72d4efb771c28d78f041a377d33b1b27977acb8d8a0b65
+  quarantine:
+    justification: "Whole-statement chain guard after clause-by-clause retrieval and local construction probes. The frozen public owner D5/S3/Analytic/Adelic/GlobalLogarithmicGaugeCriterion.global_logarithmic_gauge_criterion at statement sha256:37f72a95893cf5c9e5eebbfa32ed33f5a184206f31469bab904d5ee6ce85f708 states RH iff a global analytic exponential lift exists, the RH phase gauge is continuous, and every shifted-xi zero is excluded from any exponential-lift domain; child c511345871ba60d46d831a7c52b5343f713e8fddf9aac0271572ab2553120760 is already absorbed-closed by that owner. Residual child bc4bf38b4f10bf09d1b632b704953b08f1e9797397633cc167adbc0e20079c0a requires a branch cut from the zero to the boundary or infinity, and residual child 1875dd64019c2d587a72d4efb771c28d78f041a377d33b1b27977acb8d8a0b65 requires regional analytic logarithms, gauge-dependent cut position, and gauge-independent endpoint and integer winding. D5 searches for branch cuts, local analytic logs, winding, monodromy, Dirac strings, transition functions, and shifted xi exited 0 and found only the stated owner, the unrelated Cayley-symbol cut LiCausalTrichotomy, finite-matrix CentralWinding, and rectangle zero counts in CountByIntegral. Pinned Mathlib search exited 0 and found generic continuous logarithm lifts on simply connected zero-free domains, a fixed slit plane, and abstract covering-map monodromy, but no shifted-xi cut atlas or gauge-invariance bridge. A17 searches over cloned physlib and Lean-QIT exited 0 with one unrelated local logarithm-transport hit and no whole chain carrier. Probes /private/tmp/w73b38-atom2-child-bc4b-probe.lean and /private/tmp/w73b38-atom2-child-1875-probe.lean each exited 1 only at their explicit cut or atlas construction goal after the frozen owner supplied zero exclusion. Binding this parent to the partial owner would leave both residual children hollow."
+    reentry_condition: "Freeze a public shifted-xi branch-atlas theorem that constructs cuts from every right-half-plane zero to the boundary or infinity, supplies analytic local exponential lifts on the resulting regions, and proves that changing the cut changes only its position while preserving its zero endpoint and analytic-order winding; then cover the two residual children and this parent together while retaining the existing c511345871ba60d46d831a7c52b5343f713e8fddf9aac0271572ab2553120760 edge."
+    blocker_class: multi-clause-guard

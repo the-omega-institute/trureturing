@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fe976be795669e87e290a9bf2e5adc0566c20d140dd27de6e7a8282f8153da0f
+  normalized_sha256: sha256:fe976be795669e87e290a9bf2e5adc0566c20d140dd27de6e7a8282f8153da0f
+cas_ref: sha256:fe976be795669e87e290a9bf2e5adc0566c20d140dd27de6e7a8282f8153da0f
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/FixedScaleWeilQuadraticForm.fixed_scale_weil_quadratic_form
+    target_statement_id: sha256:6d4916250f69337ad5a7cded36e3c1d445745e97fd8590ba010a7e37201c6a4a
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaBridge/FixedScaleWeilQuadraticForm.fixed_scale_weil_quadratic_form
+      definition_sha256: sha256:911d7f57b96d840bcac139d5c48bbeb4085f79fd3a16d0f31777dd1eb0a698e0
+      emission_sha256: sha256:f48d4b388a9ef9e2d26b7f5c4074fc5536083b27a7f61d325f2da65f6b4d4fff
+  unresolved_subitems: []

@@ -1,0 +1,101 @@
+fingerprints:
+  raw_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+  normalized_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+cas_ref: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+coverage_gids:
+  - gid: D5/S1/Phase/Interference/FixedRayNineteenWitness.fixed_ray_nineteen_witness
+    target_statement_id: sha256:0a2d8616b114d6e30cacab9e0f673c61b10801bfd84b0182f24e78322e1c4467
+  - gid: D5/S1/Phase/Interference/FixedRayNineteenWitness.no_fixed_ray_character
+    target_statement_id: sha256:1c82c128c6502c6f0eb11bab8925f1327965856e1ec4ec80fcdf96a6ccfa7b9a
+  - gid: D5/S1/Phase/Interference/M1728Countershot.m1728_countershot
+    target_statement_id: sha256:f5f9c9ae23e67ed5b3b8d2de56151969271f384dfd68f471b138de2d08d1c868
+  - gid: D5/S1/Phase/Interference/M468MemberTable.m468TwentyFourMemberTable
+    target_statement_id: null
+  - gid: D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization
+    target_statement_id: sha256:932da43eb3146675e5e36402bd3b40b137478c39bcfabae185c3645444cae5d3
+  - gid: D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_iff_successor_prime
+    target_statement_id: sha256:974a5a90faf7b01913b75b04bcd941cc8f61513554e7a9c8fab84b976b9ad366
+  - gid: D5/S1/Phase/Interference/ZolotarevSelector.zolotarev_selector_congruence
+    target_statement_id: sha256:8fbba6ad6d98e070e351b756ae8b40dbb9f822958ca906e5523405be168a1e9b
+  - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+    target_statement_id: sha256:8a50e401580b7951561cd3a1d416585460cb0ebe1811cace4b2e4aeea279d33f
+  - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
+    target_statement_id: sha256:e4f822db95151ad38062e097d33a6c14c5932bbb9bcab4cd31a914272a1769f1
+  - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
+    target_statement_id: sha256:380a231706a46fc14777d9f018cf192293e63d988129a7a79849cf52b5d936ac
+  - gid: D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
+    target_statement_id: sha256:f228a3a6442d3e435f1946c719e0463541f3ae817b3114ee72b05f83e269971f
+  - gid: D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
+    target_statement_id: sha256:3c35c5e3941cc69fb74119307de8909d16c5d31e6eb7f5422c153a513ed715e9
+  - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
+    target_statement_id: sha256:6666b90019b26c32797254ba1de6431b2ee0d16647f8893e68cc37aeee45ae00
+  - gid: D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
+    target_statement_id: sha256:38fe3a77dcf59dd28a73d24e9308519f04188987facfefc13b458f03aeb140e7
+receipts:
+  scribe:
+    - gid: D5/S1/Phase/Interference/FixedRayNineteenWitness.fixed_ray_nineteen_witness
+      definition_sha256: sha256:536d30c541b4856269fb315071d108200d03852c19c1c71a9f6b034a1b815161
+      emission_sha256: sha256:b446c52d8bd3ce2c741862b0dd7a0796ce08f8c7ad85f6636ea8a5081c2447b9
+    - gid: D5/S1/Phase/Interference/FixedRayNineteenWitness.no_fixed_ray_character
+      definition_sha256: sha256:536d30c541b4856269fb315071d108200d03852c19c1c71a9f6b034a1b815161
+      emission_sha256: sha256:b446c52d8bd3ce2c741862b0dd7a0796ce08f8c7ad85f6636ea8a5081c2447b9
+    - gid: D5/S1/Phase/Interference/M1728Countershot.m1728_countershot
+      definition_sha256: sha256:7363db480d5b4cf6f1d83fe4adf80311c3f46ee5118c540900c3c3009ca8ec87
+      emission_sha256: sha256:2f55760a9302a92ffd2552cdfced12eb2d4807eb9f57f4984d38e4813906cfdc
+    - gid: D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization
+      definition_sha256: sha256:50f34b3cb92e8d9ff6d877c38128d0658d0558f3d7c06709112794d6207de4ab
+      emission_sha256: sha256:110dc90b4a650a84178a314d73c13d2a00c95f97df93b961f6b9b92c6a7eb002
+    - gid: D5/S1/Phase/Interference/ZolotarevSelector.zolotarev_selector_congruence
+      definition_sha256: sha256:6b144af10b74666fd022c842c7637934a8e2d104c7b2a9f5b2506622fcd310ec
+      emission_sha256: sha256:45f5fa6f1813b06e107a07c7bfd90934c2997d42f841b9c1e68a6ea968057777
+    - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+      definition_sha256: sha256:74dc7747edb474cc66d3a095a487051ea7594d474a79c177acf1cfb3d912a936
+      emission_sha256: sha256:0d784e8bdd3fb85260d8efa4a4c512dc4ebb73341e99072f422955a663c7f517
+    - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
+      definition_sha256: sha256:74dc7747edb474cc66d3a095a487051ea7594d474a79c177acf1cfb3d912a936
+      emission_sha256: sha256:0d784e8bdd3fb85260d8efa4a4c512dc4ebb73341e99072f422955a663c7f517
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
+      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
+      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
+    - gid: D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
+      definition_sha256: sha256:a7ca8e2a2c75ae1074aa5e1530cfe26a1b56693665912d613fb037ebeec78868
+      emission_sha256: sha256:e8693837172147465ee8dd7f6464add3fa0a692771d5274aa3a36ff6e697a495
+    - gid: D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
+      definition_sha256: sha256:a7ca8e2a2c75ae1074aa5e1530cfe26a1b56693665912d613fb037ebeec78868
+      emission_sha256: sha256:e8693837172147465ee8dd7f6464add3fa0a692771d5274aa3a36ff6e697a495
+    - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
+      definition_sha256: sha256:a7ca8e2a2c75ae1074aa5e1530cfe26a1b56693665912d613fb037ebeec78868
+      emission_sha256: sha256:e8693837172147465ee8dd7f6464add3fa0a692771d5274aa3a36ff6e697a495
+    - gid: D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
+      definition_sha256: sha256:a7ca8e2a2c75ae1074aa5e1530cfe26a1b56693665912d613fb037ebeec78868
+      emission_sha256: sha256:e8693837172147465ee8dd7f6464add3fa0a692771d5274aa3a36ff6e697a495
+  unresolved_subitems:
+    - direction-law-counterexamples
+    - full-exponent-encoding-clause
+    - full-exponent-orbit-encoding-bridge
+    - jacobi-no-modular-locality-certificate
+    - jacobi-no-modular-locality-claim
+    - jacobi-selector-identification
+    - m-side-prime-observer-clause
+    - m1729-three-orbit-bijection
+    - m468-orbit-table-certificate
+    - m468-twenty-four-member-table
+    - m469-side-selector-equivalence
+    - m4788-opposite-direction-clause
+    - m4788-second-floor-classification
+    - mod-24-joint-locality-certificate
+    - mod-48-boundary-counterexample
+    - mod-96-conflict-enumeration
+    - mod-96-conflict-resolution
+    - mod24-j-locality-certificate
+    - mod48-boundary-counterexample-certificate
+    - mod96-j-conflict-absorption-certificate
+    - nonlocal-reciprocity-walk
+    - prediction-record-certificate
+    - prediction-three-trial-certificate
+    - prediction-trial-postmortem
+    - prime-city-zero-only-equivalence
+    - reciprocity-walk-identification
+    - three-prime-orbit-singleton-bijection
+    - three-prime-three-orbit-count
+    - twenty-two-city-separation-certificate

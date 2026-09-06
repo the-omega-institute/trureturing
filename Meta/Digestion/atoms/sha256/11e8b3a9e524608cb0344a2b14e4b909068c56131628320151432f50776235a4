@@ -1,0 +1,59 @@
+## 3.1 可以构造一个真正的正 Gram 矩阵
+
+定义：
+
+$$
+M_{ij}
+=
+\int_0^\infty z_i(t)z_j(t)\,\nu_E(dt).
+$$
+
+则对任意复系数 \(a_i\)：
+
+$$
+\boxed{
+\sum_{i,j}\overline{a_i}M_{ij}a_j
+=
+\int_0^\infty
+\left|\sum_i a_i z_i(t)\right|^2\nu_E(dt)
+\ge0.
+}
+\tag{9}
+$$
+
+所以 \(M\) 正半定。
+
+当 \(i\ne j\) 时：
+
+$$
+M_{ij}=\kappa_{\{i,j\}}=-c_{\{i,j\}}.
+$$
+
+对角元则是：
+
+$$
+M_{ii}
+=
+2h(E+\ell_i)-h(E)-h(E+2\ell_i).
+$$
+
+这个矩阵描述的是**预算交互的正相关结构**，不是前面那个可能不定的“过去—未来 Hankel 表”。
+
+尤其是，\(M\) 的正性在 \(n=5040\) 处也无条件成立，但：
+
+$$
+\Delta(5040)<0.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{交互 Gram 矩阵正定}
+\quad\not\Rightarrow\quad
+\text{Robin 余量为正}.
+}
+$$
+
+它提供的是可以利用的约束，不是自动完成的 RH 证明。
+

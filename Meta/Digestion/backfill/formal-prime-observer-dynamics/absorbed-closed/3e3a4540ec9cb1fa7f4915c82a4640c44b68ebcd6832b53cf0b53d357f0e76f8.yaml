@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:3e3a4540ec9cb1fa7f4915c82a4640c44b68ebcd6832b53cf0b53d357f0e76f8
 cas_ref: sha256:3e3a4540ec9cb1fa7f4915c82a4640c44b68ebcd6832b53cf0b53d357f0e76f8
 coverage_gids:
-  - D5/S3/Observer/ArithmeticTomography/ThreeFiveResidueCollisionDimension.three_five_residue_collision_and_dimension
+  - gid: D5/S3/Observer/ArithmeticTomography/ThreeFiveResidueCollisionDimension.three_five_residue_collision_and_dimension
+    target_statement_id: sha256:622e5ed64676d781bc7c5c5919647f5bedc8a08deb22c012f2d0c9ae0f521065
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/ArithmeticTomography/ThreeFiveResidueCollisionDimension.three_five_residue_collision_and_dimension
-      source_sha256: sha256:3e3a4540ec9cb1fa7f4915c82a4640c44b68ebcd6832b53cf0b53d357f0e76f8
-      target_statement_id: sha256:622e5ed64676d781bc7c5c5919647f5bedc8a08deb22c012f2d0c9ae0f521065
   scribe:
     - gid: D5/S3/Observer/ArithmeticTomography/ThreeFiveResidueCollisionDimension.three_five_residue_collision_and_dimension
       definition_sha256: sha256:8de12d9d32de9b2fc97fb3db19061695b2db77b3f85b90dcdd651e82151c570d

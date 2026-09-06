@@ -1,0 +1,14 @@
+## 定理 2002.1（Liouville 宇称判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\frac{\zeta(2s)}{\zeta(s)}
+\text{ 在 }\mathbb H_{1/2}\text{ 全纯}.
+}
+\tag{2002.1}
+$$
+
+同样：
+

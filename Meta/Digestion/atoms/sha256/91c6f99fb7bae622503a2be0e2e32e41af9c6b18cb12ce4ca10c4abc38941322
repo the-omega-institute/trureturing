@@ -1,0 +1,17 @@
+### 否定性结论 A3.3　Zeckendorf 重编码不会改变 Euler scalar
+
+Zeckendorf lift 对单个 Euler 因子是无损坐标变化。只要 Hamiltonian 仍然只是 $E(\eta)$ 的函数，它既不改变局部因子，也不改变由这些因子在绝对收敛域内形成的标量乘积。
+
+因此：
+
+$$
+\boxed{
+\text{Zeckendorf 本身不是新 zeta，也不是离线零点的来源。}
+}
+\tag{A3.9}
+$$
+
+新内容只能来自不因子化经过 $E$ 的 readout，例如 occupancy、carry、ordered holonomy、exterior energy 或 Gamma-coupled completion。
+
+---
+

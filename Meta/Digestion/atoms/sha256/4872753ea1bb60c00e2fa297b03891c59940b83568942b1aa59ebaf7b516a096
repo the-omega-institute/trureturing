@@ -1,0 +1,79 @@
+## 定理6.1：加入11以后，四素数边际分布完全不变
+
+每个 \(n\in X_5\) 唯一写成：
+
+$$
+n=m\,11^b,
+\qquad
+m\in X_4,\quad b\in\{0,1\}.
+$$
+
+由于 \(\gcd(m,11)=1\)：
+
+$$
+J_\lambda(m11^b)
+=
+J_\lambda(m)
++
+b\left[\ln\frac{12}{11}-\lambda\ln11\right].
+$$
+
+因此：
+
+$$
+\boxed{
+P^{(5)}_{\beta,\lambda}(m,b)
+=
+P^{(4)}_{\beta,\lambda}(m)
+\,
+r^b(1-r)^{1-b},
+}
+\tag{10}
+$$
+
+其中：
+
+$$
+\boxed{
+r=
+\frac1{1+\exp\!\left(\beta\ln11\,(\lambda-\lambda_-)\right)}.
+}
+\tag{11}
+$$
+
+### 证明
+
+将因式分解后的权重求和：
+
+$$
+\mathcal Z_5
+=
+\mathcal Z_4
+\left[
+1+e^{\beta(\ln(12/11)-\lambda\ln11)}
+\right].
+$$
+
+归一化后就是式（10）。证毕。
+
+所以，只观察：
+
+$$
+q_4(n)=(v_2,v_3,v_5,v_7)
+$$
+
+时：
+
+$$
+\boxed{
+(q_4)_*P^{(5)}_{\beta,\lambda}
+=
+P^{(4)}_{\beta,\lambda}.
+}
+\tag{12}
+$$
+
+**对每个有限 \(\beta\)、每个 \(\lambda\)，只看四轴的归一化统计，都无法察觉“是否存在这个11方向”。**
+
+这里不是说四轴分布完全不随 \(\lambda\) 变化，而是说：**在同一个 \(\lambda\) 下，加入隐藏方向前后，它的全部边际统计完全相同。**
+

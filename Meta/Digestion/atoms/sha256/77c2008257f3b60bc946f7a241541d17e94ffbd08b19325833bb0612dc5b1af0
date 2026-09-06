@@ -1,0 +1,13 @@
+## 定理 K3：历史体积上限与实根性等价
+
+对于实系数首一多项式 \(q\)：
+
+$$
+\boxed{
+q\text{ 全部实根}
+\iff
+\mathcal Z_q(r)\le1\quad\forall r>0.
+}
+\tag{K12}
+$$
+

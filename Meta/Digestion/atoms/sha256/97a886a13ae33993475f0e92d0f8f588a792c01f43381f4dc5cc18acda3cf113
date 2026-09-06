@@ -1,0 +1,15 @@
+## 542. Weil 有限压缩判据
+
+```lean
+theorem weilForm_nonnegative_iff_all_finite_compressions
+    (core : ℕ → WeilHilbertSpace)
+    (dense : DenseRange ...)
+    (closedForm : IsClosedForm weilForm) :
+    NonnegativeForm weilForm ↔
+      ∀ N,
+        Matrix.PosSemidef
+          (weilGramMatrix core N)
+```
+
+---
+

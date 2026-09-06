@@ -1,0 +1,40 @@
+## Zeckendorf 能量在这里是精确重编码
+
+将每个指数写成：
+
+$$
+k_p=\sum_jG_jb_{p,j},
+\qquad
+b_{p,j}b_{p,j+1}=0.
+$$
+
+那么：
+
+$$
+\boxed{
+H_{\mathrm{arith}}
+=
+E_*\sum_{p,j}
+G_j\log p\,\widehat b_{p,j}.
+}
+\tag{6}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Fibonacci 权重 }G_j
+\times
+\text{素数能量单位 }\log p
+}
+$$
+
+共同构成每个合法数位的能量。
+
+例如：
+
+$$
+4\log2=(3+1)\log2.
+$$
+

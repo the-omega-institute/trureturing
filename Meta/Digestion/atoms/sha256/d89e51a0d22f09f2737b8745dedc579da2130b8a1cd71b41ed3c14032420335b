@@ -1,0 +1,6 @@
+## 一　W-14 预登记:RH ⟺ 素数–阿基米德 Poincaré 不等式对一切支撑半径(`PrimeArchimedeanPoincareCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `rh_iff_primeArchimedeanPoincare (Z : ZeroData) : RiemannHypothesis ↔ ∀ (f : WeilTestFunction) (L : ℝ), tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L → (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f`。
+**可证伪预测(写在跑之前)**:→ 由 W-2 取 g := f、见证 M2-c,再经 `prime_archimedean_energy_identity Z f L hSupport _ (archimedeanConvergent_of_weilTestFunction (convolutionSquare f))` 的第二分量;← 对每个 g 由紧支撑取支撑半径 L(`hasCompactSupport → IsCompact.isBounded → subset_closedBall → Real.closedBall_eq_Icc`),同一恒等式反向。探针已在显式 `hArchAll` 下整证,标准三公理;落地绑 W-12 后陈述中不再出现任何可积性假设。若落地时 W-12 的名称或 `archimedeanTerm` 的证明参数形状与增订二十六所记不同,按冻结字面调整证明而非改陈述。
+**边界**:支撑半径 L 任意实数(L < 0 时 `Icc` 为空,前提蕴含 f = 0,不等式退化为 0 ≤ 0 + 非负项);不断言不等式对某个具体 f 成立,只断言其全称形式与 RH 等价。
+

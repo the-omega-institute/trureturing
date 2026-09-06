@@ -1,0 +1,40 @@
+## 定理317.1　合法量子返回振幅必须产生正半定矩阵
+
+对任意 \(t_1,\ldots,t_m\)，定义：
+
+$$
+C_{ij}=\chi_\sigma(t_i-t_j).
+$$
+
+则：
+
+$$
+\boxed{C\succeq0.}
+\tag{317.2}
+$$
+
+特别地：
+
+$$
+\boxed{|\chi_\sigma(t)|\le1.}
+\tag{317.3}
+$$
+
+### 证明
+
+对任意复向量 \(v\)：
+
+$$
+v^\dagger Cv
+=
+\sum_{n\ge1}\frac{n^{-\sigma}}{\zeta(\sigma)}
+\left|
+\sum_jv_je^{it_j\ln n}
+\right|^2
+\ge0.
+$$
+
+两点矩阵的行列式为 \(1-|\chi_\sigma(t)|^2\)，得到第二个结论。∎
+
+---
+

@@ -1,0 +1,6 @@
+## 二　W-10 预登记:素数侧判据(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_explicitFormulaPositivity (Z : ZeroData) (hArch : ∀ g : WeilTestFunction, ArchimedeanConvergent (convolutionSquare g)) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (hArch g)).re`。
+**可证伪预测(写在跑之前)**:若正确,由 W-2 与 W-11 逐 g 改写:`(rh_iff_weilSquarePositivity Z)` 的右侧在 `hZero := symmetricConvergent_of_zeroData Z (convolutionSquare g)` 下与素数侧表达式相等(需说明 `∀ hZero` 与取特定 `hZero` 的等价——`SymmetricConvergent` 是 Prop,proof-irrelevance 使 `zeroSum Z g hZero` 不依赖 hZero 的具体证明);标准三公理。
+**边界**:见 §〇;`hArch` 为假设,不断言其成立。
+

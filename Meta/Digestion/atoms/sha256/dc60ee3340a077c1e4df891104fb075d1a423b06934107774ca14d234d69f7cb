@@ -1,0 +1,39 @@
+## 定义 132.1　归一化采样设计
+
+固定目标点 \(p\) 和采样半径 \(h>0\)，写成
+
+$$
+x_j=p+hz_j,
+\qquad \|z_j\|\le1.
+$$
+
+令
+
+$$
+\mathcal B_3=\{\beta\in\mathbb N^d:|\beta|\le3\}.
+$$
+
+定义有限单项式向量
+
+$$
+v(z)=(z^\beta)_{\beta\in\mathcal B_3},
+$$
+
+以及归一化 Gram 矩阵
+
+$$
+\boxed{
+G_h=\frac1N\sum_{j=1}^Nv(z_j)v(z_j)^{\mathsf T}.
+}
+\tag{132.1}
+$$
+
+要求存在已认证的 \(\gamma>0\)，使
+
+$$
+\boxed{G_h\ge\gamma I.}
+\tag{132.2}
+$$
+
+这是一项有限矩阵条件。它防止采样点全部落在无法区分某些多项式方向的退化布局中。
+

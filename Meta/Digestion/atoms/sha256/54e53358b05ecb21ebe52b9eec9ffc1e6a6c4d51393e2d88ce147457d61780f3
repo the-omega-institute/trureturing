@@ -1,0 +1,47 @@
+## 实际素数在哪里读取这个余项？
+
+Weil 显式公式给出：
+
+$$
+\boxed{
+\begin{aligned}
+W(R_{\chi,f})
+={}&
+4\int_0^\infty
+\cosh(t/2)\,\Re R_{\chi,f}(t)\,dt\\
+&-
+2\sum_{n\ge2}
+\frac{\Lambda(n)}{\sqrt n}
+\Re R_{\chi,f}(\log n)\\
+&-
+2\int_0^\infty
+\frac{e^{t/2}}{e^t-e^{-t}}
+\Re R_{\chi,f}(t)\,dt.
+\end{aligned}
+}
+\tag{24}
+$$
+
+这里使用了
+
+$$
+R_{\chi,f}(0)=0,
+\qquad
+R_{\chi,f}(-t)=\overline{R_{\chi,f}(t)}.
+$$
+
+实际 Weil 分布中，极点项、素数幂项与 Gamma 完成项的这种分解是经典显式公式；Suzuki 的近期工作也直接以它组织局域二次型。([arXiv][6])
+
+因为 \(f\) 紧支集，相关函数也紧支集，所以式（24）的素数幂和实际上有限。
+
+现在看得很清楚：
+
+$$
+\boxed{
+\text{不同切片，会在位移 }t=\log(p^k)\text{ 处被实际算术重新耦合。}
+}
+\tag{25}
+$$
+
+即使两个测试函数的支集分开，只要它们之间的位移与这些算术平移发生重叠，交叉项就不能忽略。
+

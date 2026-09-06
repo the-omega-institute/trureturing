@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0df187b93b07ba8b4cdc47fb0fe626df7dfb49c9ade983252b4a3f9a7680c495
 cas_ref: sha256:0df187b93b07ba8b4cdc47fb0fe626df7dfb49c9ade983252b4a3f9a7680c495
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/FiniteMomentElimination.finite_moment_elimination
+  - gid: D5/S3/Weil/TestFunctions/FiniteMomentElimination.finite_moment_elimination
+    target_statement_id: sha256:b5f30bd38531cbf5dc43b2536b244299fd1f6962e49031bfe8268c0774d4ab40
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/FiniteMomentElimination.finite_moment_elimination
-      source_sha256: sha256:0df187b93b07ba8b4cdc47fb0fe626df7dfb49c9ade983252b4a3f9a7680c495
-      target_statement_id: sha256:b5f30bd38531cbf5dc43b2536b244299fd1f6962e49031bfe8268c0774d4ab40
   scribe:
     - gid: D5/S3/Weil/TestFunctions/FiniteMomentElimination.finite_moment_elimination
       definition_sha256: sha256:4e764d5346055faec43b95c977c623751a7633adf001581d567ee40cda2810be

@@ -134,7 +134,6 @@ public sealed class R14ScopeNarrowingTests
 
         var changed = new RuleFixture();
         changed.Baseline[path] = Header("D5/B/S0/Carrier/AnchorProbe");
-        changed.ForkPoint[path] = changed.Baseline[path];
         changed.Files[path] = Header("D5/B/S0/Carrier/AnchorProbe", "https://invalid");
         Assert.Equal(1, CountFindings(Execute(changed, path), 15, message));
 
@@ -175,7 +174,8 @@ public sealed class R14ScopeNarrowingTests
     public void Sl012LeanHeaderScopesHistoryAndKeepsDeltaAndImplementationRechecks()
     {
         const string malformed = "def goldenRing : Nat := 0\n";
-        const string message = "expected the exact six-line header at byte zero";
+        const string message = "expected the canonical Lean header at byte zero "
+            + "(six-line legacy header or seven-line header with utility)";
 
         var unrelated = new RuleFixture();
         SetHistorical(unrelated, RuleFixture.RingPath, malformed);
@@ -242,35 +242,6 @@ public sealed class R14ScopeNarrowingTests
             CountFindings(Execute(fixture, deletedPath), 25, message, findingPath));
     }
 
-    [Fact]
-    [BaseFactScopeProbe(5)]
-    public void Sl005ChronicleScopesHistoryAndKeepsDeltaAndImplementationRechecks()
-    {
-        const string historicalPath = "Chronicle/2026/07/10-historical.md";
-        const string unrelatedChronicle = "Chronicle/2026/07/11-new.md";
-        const string message = "tracked Chronicle entries are append-only";
-
-        var unrelated = ChronicleHistory(historicalPath);
-        unrelated.Files[unrelatedChronicle] = "new entry\n";
-        Assert.Equal(
-            0,
-            CountFindings(Execute(unrelated, unrelatedChronicle), 5, message, historicalPath));
-
-        var changed = ChronicleHistory(historicalPath);
-        Assert.Equal(
-            1,
-            CountFindings(Execute(changed, historicalPath), 5, message, historicalPath));
-
-        var implementation = ChronicleHistory(historicalPath);
-        Assert.Equal(
-            1,
-            CountFindings(
-                Execute(implementation, RuleImplementationPath),
-                5,
-                message,
-                historicalPath));
-    }
-
     private static RuleFixture DuplicateGidHistory()
     {
         var fixture = new RuleFixture();
@@ -293,15 +264,6 @@ public sealed class R14ScopeNarrowingTests
         return fixture;
     }
 
-    private static RuleFixture ChronicleHistory(string path)
-    {
-        var fixture = new RuleFixture();
-        fixture.ForkPoint[path] = "original\n";
-        fixture.Baseline[path] = "historical rewrite\n";
-        fixture.Files[path] = "historical rewrite\n";
-        return fixture;
-    }
-
     private static CompletedRuleSet Execute(RuleFixture fixture, params string[] changedPaths) =>
         Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(
@@ -321,13 +283,11 @@ public sealed class R14ScopeNarrowingTests
     {
         fixture.Files[path] = text;
         fixture.Baseline[path] = text;
-        fixture.ForkPoint[path] = text;
     }
 
     private static void SetDelta(RuleFixture fixture, string path, string baseline, string current)
     {
         fixture.Baseline[path] = baseline;
-        fixture.ForkPoint[path] = baseline;
         fixture.Files[path] = current;
     }
 

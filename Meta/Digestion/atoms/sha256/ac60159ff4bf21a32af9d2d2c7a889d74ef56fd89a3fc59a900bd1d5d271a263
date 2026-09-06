@@ -1,0 +1,17 @@
+### 可直接形式化 `[D→L]`
+
+1. `flow_descent_iff_visible_coordinate_independent_of_remainder`
+2. `carry_witness_iff_one_source_fiber_hits_two_target_fibers`
+3. `admit_lower_subset_original_subset_upper`
+4. `admit_descends_iff_boundary_empty`
+5. `anchor_shadow_empty_iff_anchor_fiber_subsingleton`
+6. `all_anchor_shadows_empty_iff_injective`
+7. `section_carry_cocycle`
+8. `section_change_adds_coboundary`
+9. `four_role_independence_boolean_models`
+10. `four_role_adequacy_iff_four_defects_empty`
+11. `static_cut_updates_commute`
+12. `certification_is_anchor_on_claim_type`
+13. `reflection_is_flow_on_stage_type`
+14. `admitted_surjective_extension_reflects_answerability`
+

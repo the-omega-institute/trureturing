@@ -1,0 +1,2 @@
+**定理 3.4.10(删去 r 个坐标的 Frankl 频率传输)[候签]**〔open;落 `D5/S1/Phase/CoordinateDeletionFrequencyTransport`〕。对任意带 DecidableEq 的类型 alpha、有限族 F : Finset (Finset alpha)、D : Finset alpha、r : Nat 与 j : alpha，若 D.card = r 且 j 不属于 D，令 G := F.image (fun A => A \ D)，N := F.card，M := G.card，x := (F.filter (fun A => j 属于 A)).card，b := (G.filter (fun B => j 属于 B)).card，则 `(b + 2^r * (M-b)) * x >= b*N`，且 `2*b >= M -> (2^r+1)*x >= N`。两式作为同一候签定理的合取落地；定量部分不假设 F 并闭。
+

@@ -1,0 +1,66 @@
+# 十五、Lean-ready 的最小理论核
+
+可以先增加以下定义：
+
+```lean
+def transverseSupport : Set ℝ :=
+  {d | ∃ ρ : ℂ,
+    IsNontrivialZero ρ ∧
+    d = ρ.re - 1 / 2}
+
+def GlobalEvenRH : Prop :=
+  ∀ d, d ∈ transverseSupport →
+    -d ∈ transverseSupport
+
+def OneObserverRH : Prop :=
+  transverseSupport.Subsingleton
+```
+
+核心定理：
+
+```lean
+theorem riemannHypothesis_iff_globalEven_and_oneObserver :
+    RiemannHypothesis ↔
+      GlobalEvenRH ∧ OneObserverRH
+```
+
+还可以定义：
+
+```lean
+def transverseDiameter : ℝ :=
+  sSup {r | ∃ x ∈ transverseSupport,
+              ∃ y ∈ transverseSupport,
+              r = |x - y|}
+```
+
+并证明：
+
+```lean
+theorem globalEven_transverseDiameter_eq_two_mul_radius :
+    GlobalEvenRH →
+    transverseDiameter = 2 * transverseRadius
+```
+
+从而：
+
+```lean
+theorem riemannHypothesis_iff_relativeDiameter_zero :
+    GlobalEvenRH →
+    (RiemannHypothesis ↔ transverseDiameter = 0)
+```
+
+项目目录可以采用：
+
+```text
+D5/S3/Zeros/Symmetry/GlobalEvenTransverseSupport.lean
+D5/S3/Zeros/Symmetry/OneObserverCoherence.lean
+D5/S3/Zeros/Symmetry/RHGlobalRelativeSplit.lean
+D5/S3/Zeros/Symmetry/TransverseDiameterIdentity.lean
+D5/S3/Zeros/Symmetry/WeightedBiasVarianceSplit.lean
+
+D5/S3/Observer/AgencyHolonomy/ObserverOriginVariance.lean
+D5/X_Frontier/ConstellationZero/RelativeCoherenceDomination.lean
+```
+
+---
+

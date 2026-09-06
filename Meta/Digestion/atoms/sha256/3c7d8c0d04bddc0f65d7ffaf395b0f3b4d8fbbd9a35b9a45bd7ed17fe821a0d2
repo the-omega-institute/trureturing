@@ -1,0 +1,34 @@
+## 推论 36.1　无限接收时间不等于接收无限源历史
+
+由式（36.2），
+
+$$
+\boxed{
+\frac{d\tau}{dT_R}
+\sim
+\frac{\kappa A}{c}e^{-\kappa T_R/c}
+\longrightarrow0.
+}
+\tag{36.3}
+$$
+
+若源钟相位为
+
+$$
+\phi_{\mathrm{src}}(\tau)=\omega_0\tau,
+$$
+
+则接收相位的瞬时频率为
+
+$$
+\boxed{
+\omega_{\mathrm{rec}}
+=
+\omega_0\frac{d\tau}{dT_R}
+\longrightarrow0.
+}
+\tag{36.4}
+$$
+
+因此，外部观察者越晚收到的信号，来自越接近 \(\tau_h\) 的那一小段源历史。
+

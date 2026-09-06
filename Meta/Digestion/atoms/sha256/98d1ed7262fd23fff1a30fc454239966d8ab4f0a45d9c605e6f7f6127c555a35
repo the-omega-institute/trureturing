@@ -1,0 +1,47 @@
+# 十、这个交叉量可以直接用一个有限算术窗口计算
+
+前面用零点证明了信息保留。现在把 \(B(T)\) 写回实际素数侧。
+
+保留
+
+$$
+c(u)=\int g(x+u)g(x)\,dx,
+$$
+
+$$
+a_g=\int e^{x/2}g(x)\,dx.
+$$
+
+当 \(T>\ell\) 时，Weil 显式公式给出
+
+$$
+\boxed{
+\begin{aligned}
+B(T)
+={}&
+2a_g^2\cosh(T/2)\\
+&-
+\sum_{e^{T-\ell}\le n\le e^{T+\ell}}
+\frac{\Lambda(n)}{\sqrt n}
+c(\log n-T)\\
+&-
+\Gamma_g(T),
+\end{aligned}
+}
+\tag{31}
+$$
+
+其中
+
+$$
+\boxed{
+\Gamma_g(T)
+=
+\int_{T-\ell}^{T+\ell}
+k_\Gamma(t)c(t-T)\,dt\ge0.
+}
+\tag{32}
+$$
+
+这是实际 Weil 分布中极点、素数幂和 Gamma 三部分在当前测试函数上的直接读出。([arXiv][1])
+

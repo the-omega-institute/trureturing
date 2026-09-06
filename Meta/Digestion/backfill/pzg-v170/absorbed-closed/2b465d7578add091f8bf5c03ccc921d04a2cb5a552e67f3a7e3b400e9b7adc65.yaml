@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2b465d7578add091f8bf5c03ccc921d04a2cb5a552e67f3a7e3b400e9b7adc65
+  normalized_sha256: sha256:2b465d7578add091f8bf5c03ccc921d04a2cb5a552e67f3a7e3b400e9b7adc65
+cas_ref: sha256:2b465d7578add091f8bf5c03ccc921d04a2cb5a552e67f3a7e3b400e9b7adc65
+coverage_gids:
+  - gid: D5/S1/Ledger/GenerationArrowOfTime.length_strictly_increases_under_generation
+    target_statement_id: sha256:97cf1c14201fc80e7ee5923b6fa03d4c4645f0d5356c179dd2af533bea2a82db
+receipts:
+  scribe:
+    - gid: D5/S1/Ledger/GenerationArrowOfTime.length_strictly_increases_under_generation
+      definition_sha256: sha256:b616c1291dd0943f7ff07b003729c2a22ed310300c5fe597598808448ee9dd71
+      emission_sha256: sha256:69b5c9dc4470f72c8ff0d3f44b5fdbee7583e790e0317054af09138dd6c12b1c
+  unresolved_subitems: []

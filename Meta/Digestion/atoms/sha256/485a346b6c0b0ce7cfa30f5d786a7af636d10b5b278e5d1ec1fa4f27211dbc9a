@@ -1,0 +1,22 @@
+**因此，剩余算术任务已经从“寻找一个正核”进一步收紧为：**
+
+$$
+\boxed{
+b_{8X}(0)^*
+\Omega_{X,8X}
+b_{8X}(0)
+=O(1).
+}
+$$
+
+本轮没有证明这个全尺度上界；已经证明的是如何精确固定其中的实际振幅、如何识别表示冗余，以及为什么不相容的去相干操作会改变问题。
+
+后续真正有价值的估计，应当作用于式（36）的**观察半范数**或式（39）的**相干误差**。它们对表示冗余不敏感，并且一旦得到统一控制，就能通过已经建立的均方—解析桥返回实际零点问题。
+
+[1]: https://arxiv.org/html/1612.03136v1 "Finite Ramanujan expansions and shifted convolution sums of arithmetical functions"
+[2]: https://dlmf.nist.gov/27.5?utm_source=chatgpt.com "27.5 Inversion Formulas ‣ Multiplicative Number Theory ‣ ..."
+[3]: https://dlmf.nist.gov/27.6 "DLMF: §27.6 Divisor Sums ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+[4]: https://arxiv.org/html/2008.06140v1 "The mean square of the error term in the prime number theorem"
+[5]: https://dlmf.nist.gov/27.4 "DLMF: §27.4 Euler Products and Dirichlet Series ‣ Multiplicative Number Theory ‣ Chapter 27 Functions of Number Theory"
+继续。这一轮可以把前文的观察结构进一步压缩，并证明三个具体结论：
+

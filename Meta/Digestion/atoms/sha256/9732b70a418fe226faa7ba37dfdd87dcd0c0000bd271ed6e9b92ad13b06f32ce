@@ -1,0 +1,40 @@
+## 525. 真正无界的是构型几何
+
+随着 \(k\) 增长，还同时增长：
+
+* offset 数量；
+* 构型直径；
+* residue collision graph；
+* partition lattice；
+* connected hypergraph 类型；
+* 所需小素数范围；
+* Walsh／character sector 数量。
+
+一个 \(k\)-点构型有：
+
+$$
+2^k
+$$
+
+个 subset moments。
+
+partition lattice 的大小是 Bell 数：
+
+$$
+B_k.
+$$
+
+所以即使每个局部素数模型有限，构型空间的组合复杂度仍然超指数增长。
+
+这才是“每层都有一个新项”的主要来源：
+
+$$
+\boxed{
+\text{不是单个素数难，}
+\qquad
+\text{是新 arity 产生新的不可约 partition type}.
+}
+$$
+
+---
+

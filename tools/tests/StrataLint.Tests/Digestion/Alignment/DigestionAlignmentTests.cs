@@ -567,7 +567,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.All(added, entry =>
         {
             Assert.Empty(entry.CoverageGids);
-            Assert.Empty(entry.Receipts.Coverage);
+            Assert.Empty(entry.Coverage);
             Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
             Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
         });

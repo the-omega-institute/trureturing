@@ -1,0 +1,59 @@
+### 证明
+
+因为筛选只乘上 \(u^n\)：
+
+$$
+D_S\chi_n=0,
+$$
+
+$$
+D_U\chi_n
+=
+\frac{nu^{n-1}\chi}{\sqrt{Z_n}}.
+$$
+
+代入二次型：
+
+$$
+\langle K_0\rangle_n
+=
+E_*\|D_U\chi_n\|^2
+=
+E_*n^2\frac{Z_{n-1}}{Z_n}.
+$$
+
+证毕。
+
+使用：
+
+$$
+\frac{Z_n}{Z_{n-1}}\sim\frac{w_n^2}{2},
+$$
+
+得到：
+
+$$
+\boxed{
+\langle K_0\rangle_n
+\sim
+\frac{2E_*n^2}{W_0(n/\pi)^2}.
+}
+\tag{R31}
+$$
+
+而：
+
+$$
+\Omega_n^4=\frac{16n^2}{w_n^2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\langle K_0\rangle_n
+\sim\frac{E_*}{8}\Omega_n^4.
+}
+\tag{R32}
+$$
+

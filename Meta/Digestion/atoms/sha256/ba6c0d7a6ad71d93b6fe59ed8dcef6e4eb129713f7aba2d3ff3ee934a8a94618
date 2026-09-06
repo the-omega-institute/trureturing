@@ -1,0 +1,28 @@
+## C4.3 Fibonacci shell 深度
+
+若选择 Fibonacci level $F_n$，条件成为：
+
+$$
+F_n>\frac{T\log p}{2\pi}.
+\tag{C4.7}
+$$
+
+由 Binet 渐近：
+
+$$
+\boxed{
+n_{\rm phase}(T,p)
+=
+\log_\varphi
+\left(
+\frac{\sqrt5\,T\log p}{2\pi}
+\right)
++
+O(1).
+}
+\tag{C4.8}
+$$
+
+这是一条不同于横向分辨深度的定律：
+
+- 横向分辨深度由 $|\delta|\log(q/p)$ 控制；

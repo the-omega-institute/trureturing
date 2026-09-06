@@ -1,0 +1,17 @@
+## 8. 状态级 ADMIT 与坐标级 ADMIT
+
+项目母文采用：
+
+\[
+A_X:X\to\mathsf{Prop}.
+\]
+
+`ObserverStructure` 采用：
+
+\[
+A_B:
+\left(\prod_iB_i\right)\to\mathsf{Prop}.
+\]
+
+二者通过联合 CUT \(J\) 联系：
+

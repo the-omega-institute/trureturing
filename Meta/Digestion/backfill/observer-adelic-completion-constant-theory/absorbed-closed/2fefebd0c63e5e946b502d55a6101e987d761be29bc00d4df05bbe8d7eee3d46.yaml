@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2fefebd0c63e5e946b502d55a6101e987d761be29bc00d4df05bbe8d7eee3d46
 cas_ref: sha256:2fefebd0c63e5e946b502d55a6101e987d761be29bc00d4df05bbe8d7eee3d46
 coverage_gids:
-  - D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.positive_fredholm_limit_zeros
+  - gid: D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.positive_fredholm_limit_zeros
+    target_statement_id: sha256:1cfade66b371f8c5d99c6dc9db29d5349406f6fbbf47c424489539f0e899c44a
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.positive_fredholm_limit_zeros
-      source_sha256: sha256:2fefebd0c63e5e946b502d55a6101e987d761be29bc00d4df05bbe8d7eee3d46
-      target_statement_id: sha256:1cfade66b371f8c5d99c6dc9db29d5349406f6fbbf47c424489539f0e899c44a
   scribe:
     - gid: D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.positive_fredholm_limit_zeros
       definition_sha256: sha256:e514b340f14668a21449d4a055b292641bca81dc8ad1a82cce5ad39d9ac41f2e

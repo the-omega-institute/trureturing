@@ -1,0 +1,22 @@
+**这使项目中一个重要区别完全具体化：**
+
+$$
+\boxed{
+\ker\Lambda_c=\Delta
+}
+$$
+
+不意味着
+
+$$
+\boxed{
+\exists\mathcal R\text{ 为量子信道},
+\quad
+\mathcal R\Lambda_c=\operatorname{id}.
+}
+$$
+
+代数上的逆函数和物理上的恢复过程，必须分别证明。
+
+---
+

@@ -1,0 +1,125 @@
+## C6.1 问题设置
+
+令 $\mathcal S$ 为 universal solenoid。对每个正整数 $m$，定义 coordinate observer：
+
+$$
+\pi_m:\mathcal S\to\mathbb R/\mathbb Z,
+\qquad
+\pi_m(\theta)=\theta_m.
+\tag{C6.1}
+$$
+
+给定非空有限已观察集合 $S$ 与候选新 level $m$，令：
+
+$$
+N=\operatorname{lcm}(S\cup\{m\}),
+\tag{C6.2}
+$$
+
+$$
+a_s=\frac Ns
+\qquad(s\in S),
+\tag{C6.3}
+$$
+
+$$
+b=\frac Nm,
+\tag{C6.4}
+$$
+
+$$
+d_S=\gcd\{a_s:s\in S\}.
+\tag{C6.5}
+$$
+
+由 compatibility：
+
+$$
+\theta_s=a_s\theta_N,
+\qquad
+\theta_m=b\theta_N.
+\tag{C6.6}
+$$
+
+### 定理 C6.1　finite-level semantic closure criterion
+
+$$
+\boxed{
+\pi_m
+\text{ 可由 }
+\{\pi_s:s\in S\}
+\text{ 恢复}
+\Longleftrightarrow
+d_S\mid b.
+}
+\tag{C6.7}
+$$
+
+#### 证明：充分性
+
+若 $d_S\mid b$，由 Bézout 存在整数 $k_s$ 使：
+
+$$
+d_S=\sum_{s\in S}k_sa_s.
+$$
+
+写 $b=hd_S$，则：
+
+$$
+\theta_m
+=
+b\theta_N
+=
+\sum_{s\in S}hk_sa_s\theta_N
+=
+\sum_{s\in S}hk_s\theta_s.
+\tag{C6.8}
+$$
+
+所以新 coordinate 是已有 coordinates 的整数线性组合。
+
+#### 证明：必要性与显式 witness
+
+若 $d_S\nmid b$，令：
+
+$$
+T=\frac N{d_S},
+\tag{C6.9}
+$$
+
+并取 real-generated solenoid thread：
+
+$$
+\vartheta^{(T)}_r
+=
+\frac Tr
+\pmod1.
+\tag{C6.10}
+$$
+
+对任意 $s\in S$：
+
+$$
+\vartheta_s^{(T)}
+=
+\frac{N/s}{d_S}
+=
+\frac{a_s}{d_S}
+=0\pmod1.
+\tag{C6.11}
+$$
+
+但：
+
+$$
+\vartheta_m^{(T)}
+=
+\frac b{d_S}
+\ne0\pmod1
+\tag{C6.12}
+$$
+
+因为 $d_S\nmid b$。
+
+所以零 phase thread 与 $\vartheta^{(T)}$ 在全部旧 observers 上碰撞，却被 $\pi_m$ 分离。
+

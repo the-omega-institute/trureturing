@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e54c873394d0c265c67555b2ee7c56cdaa6a101c8211530d622b8f7332cce7a5
+  normalized_sha256: sha256:e54c873394d0c265c67555b2ee7c56cdaa6a101c8211530d622b8f7332cce7a5
+cas_ref: sha256:e54c873394d0c265c67555b2ee7c56cdaa6a101c8211530d622b8f7332cce7a5
+coverage_gids:
+  - gid: D5/S3/Weil/Fredholm/PositiveFredholmProduct.positive_fredholm_completion
+    target_statement_id: sha256:0b9f76c11e4cfd481430bc18ba3f34f750b7f5bedfdae27a20aa80719b034848
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Fredholm/PositiveFredholmProduct.positive_fredholm_completion
+      definition_sha256: sha256:bc6331b95c34bed9816fa9729258bdffabc58caf7b703ed5008393c7adfab0f3
+      emission_sha256: sha256:319f82d4ce3f6ae7f2a72eb483a41b09f6e5efd67cbc163deda50ab92d8f9e06
+  unresolved_subitems: []

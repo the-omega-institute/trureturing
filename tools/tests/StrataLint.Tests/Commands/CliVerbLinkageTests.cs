@@ -10,13 +10,31 @@ namespace StrataLint.Tests;
 // 立条案由:`make c0-verify` / `make c0-reconcile-trust-root` / `make record-golden` 三个目标
 // 各自把一个 dispatch 表里不存在的动词交给 CLI,实跑得 `UNKNOWN_COMMAND ... exit=2`。
 // 既有的 MakeWorkflowTests 对此全绿——它断言的是「Makefile 文本里有这段字符串」,
-// 验的是语法不是指向。现行 base-owned required-project floor 显式运行包含本测试的
-// StrataLint.Tests；`EngineeringCheckUsesScopedExecutionAndABaseOwnedRequiredProjectFloor`
-// 守住这条执行链。
+// 验的是语法不是指向。本测试住在 StrataLint.Tests,由候选侧 EngineeringTestPlanPolicy
+// 的选择器路由;base 判官及其 required-project floor 已按 CLAUDE.md 第 19 条禁令退役
+// (#5170 / #5319),不再有 base 侧执行链守它。
 //
 // 本测试刻意是纯 in-process 断言(不 spawn 进程),直接落在该全量 tools-test 中。
 public sealed class CliVerbLinkageTests
 {
+    [Fact]
+    public void SettleMakeTargetsLinkToRegisteredVerb()
+    {
+        Assert.Contains("settle-atom", CliApplication.ImplementedCommands);
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Equal(2, Regex.Matches(makefile, @"--\s+settle-atom(?:\s|$)", RegexOptions.CultureInvariant).Count);
+        Assert.Matches(@"(?m)^settle:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --request ", makefile);
+        Assert.Matches(@"(?m)^settle-clear:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --clear ", makefile);
+    }
+
+    [Fact]
+    public void AtomContextMakeTargetLinksToRegisteredVerb()
+    {
+        Assert.Contains("atom-context", CliApplication.ImplementedCommands);
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Matches(@"(?m)^atom-context:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- atom-context --atom-id ", makefile);
+    }
+
     // 提取器至少应认出这么多次调用。低于此,说明提取器自己坏了(路径变了、调用形态变了),
     // 而不是「仓库很干净」——零匹配的 glob 不得静默通过。
     private const int MinimumRecognisedInvocations = 10;

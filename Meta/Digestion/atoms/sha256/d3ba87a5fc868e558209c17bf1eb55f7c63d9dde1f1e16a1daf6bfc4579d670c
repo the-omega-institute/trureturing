@@ -1,0 +1,38 @@
+### 第一步：均值主项被滤波器消去
+
+有
+
+$$
+\mathbb E\mathcal D_h^{\mathrm B}(T)
+=
+\sum_{n\ge3}\frac1{\sqrt n}k_h(\log n-T).
+$$
+
+相应连续积分为
+
+$$
+\begin{aligned}
+\int_0^\infty y^{-1/2}k_h(\log y-T)\,dy
+&=
+e^{T/2}\int_0^{4h}e^{s/2}k_h(s)\,ds\\
+&=0.
+\end{aligned}
+$$
+
+最后一步来自滤波器的零点
+
+$$
+Q_h(e^{h/2})=0.
+$$
+
+对紧支集分段光滑函数作求和—积分比较，得到
+
+$$
+\boxed{
+\mathbb E\mathcal D_h^{\mathrm B}(T)
+=
+O_h(e^{-T/2}).
+}
+\tag{11}
+$$
+

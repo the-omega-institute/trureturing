@@ -42,7 +42,7 @@ public sealed class DigestionReceiptIntegrityPredicateTests
             "atom",
             new DigestionFingerprints("sha256:synthetic", "sha256:synthetic"),
             [],
-            new DigestionReceipts([], [], [], [], null),
+            new DigestionReceipts([], [], [], null),
             status,
             "sha256:synthetic");
         var evaluated = new DigestionEntryEvaluation(

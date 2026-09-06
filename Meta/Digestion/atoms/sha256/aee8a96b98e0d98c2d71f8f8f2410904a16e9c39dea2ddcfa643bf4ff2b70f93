@@ -1,0 +1,36 @@
+\[
+\boxed{
+\partial_qA
+=
+A_q^\exists
+\setminus
+A_q^\forall.
+}
+\]
+
+则：
+
+\[
+\partial_qA\ne\varnothing
+\]
+
+当且仅当存在：
+
+\[
+x,y:X
+\]
+
+满足：
+
+\[
+q(x)=q(y),
+\qquad
+A(x),
+\qquad
+\neg A(y).
+\]
+
+它表示同一 CUT 纤维内混有合法与非法状态。
+
+---
+

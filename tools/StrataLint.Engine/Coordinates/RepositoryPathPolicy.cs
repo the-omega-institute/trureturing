@@ -9,15 +9,17 @@ internal sealed record RepositoryPathIssue(RuleId RuleId, string Path, string Me
 internal static partial class RepositoryPathPolicy
 {
     internal const string AgentFilesRootPath = "agents/";
+    // 规范草案与理论卷、docs/reports/ 同性质:作者选定的文件名无法预先枚举。
+    // 逐条枚举进 registry.yaml 曾使「加一份规范」必须同时改 harness,而那个改动
+    // 落不了地——准入面分区门拒绝同时触碰 judge 面(registry.yaml)与 content 面
+    // (文档)的 PR,两半各自单独提交又分别被 FILEMAP-REGISTRY-DANGLING 与本规则
+    // 的 SL-000 拒绝(三条判词见 #5251)。故改由路径规则治理。
+    internal const string SpecRootPath = "docs/develop/spec/";
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
     internal const string CachePublicationWorkflowPath =
         ".github/workflows/lean-cache-publish.yml";
-    internal const string IntegrationCachePublicationWorkflowPath =
-        ".github/workflows/lean-cache-publish-integration.yml";
-    internal const string IntegrationCacheSeedManualWorkflowPath =
-        ".github/workflows/lean-cache-seed-manual.yml";
     // Persistent truth-release publisher. `.github` remains an explicit allowlist.
     internal const string TruthReleasePublicationWorkflowPath =
         ".github/workflows/truth-release-publish.yml";
@@ -142,8 +144,6 @@ internal static partial class RepositoryPathPolicy
             or "Golden/values-kernels.toml"
             or WorkflowPath
             or CachePublicationWorkflowPath
-            or IntegrationCachePublicationWorkflowPath
-            or IntegrationCacheSeedManualWorkflowPath
             or TruthReleasePublicationWorkflowPath
             or ".github/CODEOWNERS"
             or HarnessGatePath
@@ -153,6 +153,7 @@ internal static partial class RepositoryPathPolicy
             || IsEchoResidualShardPath(value)
             || ProblemPoolPaths.IsCanonicalPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
+            || FrozenStatePath.TryToModulePath(value, out _)
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith("docs/reports/", StringComparison.Ordinal)
@@ -160,6 +161,7 @@ internal static partial class RepositoryPathPolicy
             // 逐个写进 registry.yaml 会让「加一个 markdown」被迫改 harness
             // (CLAUDE.md 商余结构:harness 存规则,不存代表元)。
             || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
+            || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
             || IsGoldenProjectionData(value)
             || IsCanonicalFutureCoordinate(value))
         {

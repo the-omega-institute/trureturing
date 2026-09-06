@@ -1,0 +1,24 @@
+### 摘要
+
+本增订处理一个**外部文献明文留开**的问题,并把它在最低阶上**完全解出**,同时**反驳**该文所提猜想的一个子句。
+
+A. Vishnyakova 在《Polynomially Deformed Normalized Pochhammer Sequences Having Generating Functions
+With Only Real Non-positive Zeros》(arXiv:2608.03723v1,2026-08-04)中,对 \(a>0\) 定义线性算子
+\(\mathcal L_a\)(该文 Definition 1.4),并研究使 \(\mathcal L_a(P)\) 的零点全为实且落在 \([-1,0]\) 的多项式 \(P\)。
+其 Example 6.4 定义
+
+$$
+M_n(a)=\bigl\{t\in\mathbb{R}\ :\ \mathcal L_a\bigl((X+t)^n\bigr)\ \text{的全部零点为实且落在}\ [-1,0]\bigr\}.
+$$
+
+该文证明了奇数情形 \(M_{2k+1}(a)=[0,a]\),对偶数情形写道「For even \(n\), the situation is much more complicated」,
+继而提出
+
+> **Conjecture 6.5.** For every \(k\in\mathbb{N}\), we have
+> \(M_{2k}(a)=[-c_{2k}(a),\,a+c_{2k}(a)],\ 0<c_{2k}(a)<2a\),
+> and \(c_2(a)\le c_4(a)\le c_6(a)\le\ldots\)
+> The proof of this fact and the possible value of the limit \(\lim_{k\to\infty}c_{2k}(a)\) remain open.
+
+本增订在 \(k=1\)(即 \(n=2\))处给出 \(M_2(a)\) 的**精确闭式**与 \(c_2(a)\) 的**闭式**,
+并由此证明该猜想的不等式子句 \(0<c_{2k}(a)<2a\) 对**一切** \(0<a\le\frac1{24}\) **为假**。
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6e435eb278b8de6a1736028d87cbdbcfd106e90f5a7e8d44ba1cf9c679349927
+  normalized_sha256: sha256:6e435eb278b8de6a1736028d87cbdbcfd106e90f5a7e8d44ba1cf9c679349927
+cas_ref: sha256:6e435eb278b8de6a1736028d87cbdbcfd106e90f5a7e8d44ba1cf9c679349927
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/FinitePairwiseGlobalClassifier.fpod_principle_227_1
+    target_statement_id: sha256:fa357c67a8c84758e80d75ea0e1c9f76f34257815844bc2308b1df454071526f
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/ProbabilisticClosure/FinitePairwiseGlobalClassifier.fpod_principle_227_1
+      definition_sha256: sha256:79ffbf1a2396c689123f01517b053bfbb22709b9f164996a605b3e120d3b60ec
+      emission_sha256: sha256:8dcfcbdc5f4408a93e559ab7c0089ff6f290044e4c9fa8cd220847d72d281c23
+  unresolved_subitems: []

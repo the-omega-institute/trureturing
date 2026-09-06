@@ -1,0 +1,67 @@
+## 定理 109.1　两种钟速的状态无关方差下界
+
+对第 107 节：
+
+$$
+\widehat n_+=I+\frac12Z,
+\qquad
+\widehat n_-=I+\frac12X,
+$$
+
+任意结构态 \(\sigma\) 都满足：
+
+$$
+\boxed{
+\operatorname{Var}_\sigma(\widehat n_+)
++
+\operatorname{Var}_\sigma(\widehat n_-)
+\ge\frac14.
+}
+\tag{109.1}
+$$
+
+### 证明
+
+令：
+
+$$
+x=\operatorname{Tr}(\sigma X),
+\qquad
+z=\operatorname{Tr}(\sigma Z).
+$$
+
+量子比特状态满足：
+
+$$
+x^2+z^2\le1.
+$$
+
+又因 \(X^2=Z^2=I\)：
+
+$$
+\operatorname{Var}_\sigma(\widehat n_+)
+=
+\frac14(1-z^2),
+$$
+
+$$
+\operatorname{Var}_\sigma(\widehat n_-)
+=
+\frac14(1-x^2).
+$$
+
+相加即得。∎
+
+因此：
+
+$$
+\boxed{
+\text{这个模型不存在同时使两种钟过程精确经典化的非零支持。}
+}
+\tag{109.2}
+$$
+
+可以把某一个方向准备成无方差状态，但另一个方向必然留下额外结构。
+
+---
+

@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using Trureturing.Truth;
 
@@ -82,18 +81,11 @@ internal sealed partial class BackfillInventoryDocument
         string sourcePath,
         string atomizer,
         object? rawEntry,
-        bool projectBaselineCoverage = false,
-        bool allowUnknownFields = false)
+        bool projectBaselineReferences = false)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
-        if (allowUnknownFields)
-        {
-            RequiredKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
-        }
-        else
-        {
-            ExactKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
-        }
+
+        ExactKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
 
         var atomId = Scalar(entry, "atom_id", $"source {sourceId} atom_id");
 
@@ -104,28 +96,33 @@ internal sealed partial class BackfillInventoryDocument
         var parsedFingerprints = new DigestionFingerprints(
             Scalar(fingerprints, "raw_sha256", $"entry {atomId} raw_sha256"),
             Scalar(fingerprints, "normalized_sha256", $"entry {atomId} normalized_sha256"));
-        if (projectBaselineCoverage && DigestionFingerprint.IsCanonicalSha256(parsedFingerprints.RawSha256))
+        if (projectBaselineReferences && DigestionFingerprint.IsCanonicalSha256(parsedFingerprints.RawSha256))
         {
             atomId = parsedFingerprints.RawSha256["sha256:".Length..];
         }
 
-        var coverageGids = Strings(
-            List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"),
-            $"entry {atomId} coverage_gids");
+        var coverage = ParseCoverage(
+            atomId,
+            List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"));
         var receipts = ParseReceipts(
             atomId,
-            entry.GetValueOrDefault("receipts"),
-            projectBaselineCoverage);
-        if (receipts.Quarantine is not null && coverageGids.Length > 0)
+            entry.GetValueOrDefault("receipts"));
+        if (receipts.Nonpropositional is not null
+            && (coverage.Length > 0 || receipts.Quarantine is not null
+                || receipts.CoverDisposition is not null || !receipts.UnresolvedSubitems.IsEmpty))
+        {
+            throw new FormatException($"entry {atomId} nonpropositional cannot coexist with coverage, quarantine, cover_disposition or unresolved_subitems");
+        }
+        if (receipts.Quarantine is not null && coverage.Length > 0)
         {
             throw new FormatException(
-                $"entry {atomId} cannot be quarantined because coverage_gids provides a machine-form statement");
+                $"entry {atomId} cannot be quarantined because coverage provides a machine-form statement");
         }
 
-        if (receipts.CoverDisposition is not null && coverageGids.Length > 0)
+        if (receipts.CoverDisposition is not null && coverage.Length > 0)
         {
             throw new FormatException(
-                $"entry {atomId} cover_disposition cannot coexist with coverage_gids");
+                $"entry {atomId} cover_disposition cannot coexist with coverage");
         }
 
         if (receipts.CoverDisposition is not null && receipts.Quarantine is not null)
@@ -143,18 +140,37 @@ internal sealed partial class BackfillInventoryDocument
             atomizer,
             atomId,
             parsedFingerprints,
-            coverageGids,
+            coverage,
             receipts,
-            new DigestionStatus(
-                ParseMigration(Scalar(status, "migration", $"entry {atomId} migration")),
-                ParseTruth(Scalar(status, "truth", $"entry {atomId} truth"))),
+            ParseStatus(
+                Scalar(status, "migration", $"entry {atomId} migration"),
+                Scalar(status, "truth", $"entry {atomId} truth")),
             Scalar(entry, "cas_ref", $"entry {atomId} cas_ref"));
+    }
+
+    private static ImmutableArray<DigestionCoverageEdge> ParseCoverage(
+        string atomId,
+        IEnumerable<object?> rawCoverage)
+    {
+        var coverage = ImmutableArray.CreateBuilder<DigestionCoverageEdge>();
+        foreach (var rawEdge in rawCoverage)
+        {
+            var edge = Mapping(rawEdge, $"entry {atomId} coverage edge must be a mapping");
+            ExactKeys(edge, ["gid", "target_statement_id"], $"entry {atomId} coverage edge");
+            coverage.Add(new DigestionCoverageEdge(
+                Scalar(edge, "gid", $"entry {atomId} coverage gid"),
+                NullableScalar(
+                    edge,
+                    "target_statement_id",
+                    $"entry {atomId} coverage target_statement_id")));
+        }
+
+        return coverage.ToImmutable();
     }
 
     private static DigestionReceipts ParseReceipts(
         string atomId,
-        object? rawReceipts,
-        bool projectBaselineCoverage)
+        object? rawReceipts)
     {
         var receipts = Mapping(rawReceipts, $"entry {atomId} receipts must be a mapping");
 
@@ -165,37 +181,13 @@ internal sealed partial class BackfillInventoryDocument
         // 只是尚无实例;把「当前没有实例」当成「机制已死」会削掉一条真能力。
         ExactKeys(
             receipts,
-            ["coverage", "scribe", "unresolved_subitems"],
-            ["chain_atoms", "tail_authorization", "quarantine", "cover_disposition"],
+            ["unresolved_subitems"],
+            ["scribe", "chain_atoms", "tail_authorization", "quarantine", "nonpropositional", "cover_disposition"],
             $"entry {atomId} receipts");
-        var rawCoverageReceipts = List(
-            receipts,
-            "coverage",
-            $"entry {atomId} coverage receipts must be a list");
-        var coverage = ImmutableArray.CreateBuilder<DigestionCoverageReceipt>();
-        // Baseline coverage receipts are projected away: admission only needs their
-        // coverage_gids and entry fingerprint to identify pre-existing edges. In
-        // particular, this path neither names nor interprets any historical target field.
-        foreach (var rawCoverage in projectBaselineCoverage ? [] : rawCoverageReceipts)
-        {
-            var item = Mapping(rawCoverage, $"entry {atomId} coverage receipt must be a mapping");
-            ExactKeys(
-                item,
-                ["gid", "source_sha256", "target_statement_id"],
-                ["statement_id_history"],
-                $"entry {atomId} coverage receipt");
-            coverage.Add(new DigestionCoverageReceipt(
-                Scalar(item, "gid", $"entry {atomId} coverage gid"),
-                Scalar(item, "source_sha256", $"entry {atomId} coverage source_sha256"),
-                Scalar(
-                    item,
-                    "target_statement_id",
-                    $"entry {atomId} coverage target_statement_id"),
-                ParseStatementIdHistory(atomId, item)));
-        }
-
         var scribe = ImmutableArray.CreateBuilder<DigestionScribeReceipt>();
-        foreach (var rawScribe in List(receipts, "scribe", $"entry {atomId} scribe receipts must be a list"))
+        foreach (var rawScribe in receipts.ContainsKey("scribe")
+                     ? List(receipts, "scribe", $"entry {atomId} scribe receipts must be a list")
+                     : [])
         {
             var item = Mapping(rawScribe, $"entry {atomId} scribe receipt must be a mapping");
             ExactKeys(item, ["gid", "definition_sha256", "emission_sha256"], $"entry {atomId} scribe receipt");
@@ -233,29 +225,27 @@ internal sealed partial class BackfillInventoryDocument
                     $"entry {atomId} quarantine reentry_condition is required");
             }
 
-            // `ExactKeys` 要求键集**恰好相等**(不是白名单),故按 blocker_class 是否出现
-            // 分别给出期望键集——否则既有的两键条目会被判「keys are not exactly …」而全部拒载。
+            if (!rawQuarantine.ContainsKey("blocker_class"))
+            {
+                throw new FormatException(
+                    $"entry {atomId} quarantine blocker_class is required");
+            }
+
             ExactKeys(
                 rawQuarantine,
-                rawQuarantine.ContainsKey("blocker_class")
-                    ? ["justification", "reentry_condition", "blocker_class"]
-                    : ["justification", "reentry_condition"],
+                ["justification", "reentry_condition", "blocker_class"],
                 $"entry {atomId} quarantine");
-            string? blockerClass = null;
-            if (rawQuarantine.ContainsKey("blocker_class"))
+            var blockerClass = Scalar(
+                rawQuarantine,
+                "blocker_class",
+                $"entry {atomId} quarantine blocker_class");
+            // 封闭字母表,未知取值 fail-closed:分类的价值全在于它可被机器统计与比较,
+            // 放行任意字符串等于退回自由文本(#2137 要治的正是那个)。
+            if (!DigestionQuarantine.BlockerClasses.Contains(blockerClass, StringComparer.Ordinal))
             {
-                blockerClass = Scalar(
-                    rawQuarantine,
-                    "blocker_class",
-                    $"entry {atomId} quarantine blocker_class");
-                // 封闭字母表,未知取值 fail-closed:分类的价值全在于它可被机器统计与比较,
-                // 放行任意字符串等于退回自由文本(#2137 要治的正是那个)。
-                if (!DigestionQuarantine.BlockerClasses.Contains(blockerClass, StringComparer.Ordinal))
-                {
-                    throw new FormatException(
-                        $"entry {atomId} quarantine blocker_class '{blockerClass}' is not one of "
-                        + string.Join(", ", DigestionQuarantine.BlockerClasses));
-                }
+                throw new FormatException(
+                    $"entry {atomId} quarantine blocker_class '{blockerClass}' is not one of "
+                    + string.Join(", ", DigestionQuarantine.BlockerClasses));
             }
 
             quarantine = new DigestionQuarantine(
@@ -265,7 +255,6 @@ internal sealed partial class BackfillInventoryDocument
         }
 
         return new DigestionReceipts(
-            coverage.ToImmutable(),
             scribe.ToImmutable(),
             Strings(
                 List(receipts, "unresolved_subitems", $"entry {atomId} unresolved_subitems must be a list"),
@@ -277,7 +266,8 @@ internal sealed partial class BackfillInventoryDocument
                 : [],
             tailAuthorization,
             quarantine,
-            ParseCoverDisposition(atomId, receipts));
+            ParseCoverDisposition(atomId, receipts),
+            ParseNonpropositional(atomId, receipts));
     }
 
     private static DigestionCoverDisposition? ParseCoverDisposition(
@@ -292,7 +282,7 @@ internal sealed partial class BackfillInventoryDocument
         var raw = Mapping(
             receipts.GetValueOrDefault("cover_disposition"),
             $"entry {atomId} cover_disposition must be a mapping");
-        ExactKeys(raw, ["outcome", "recorded_at_utc", "gids", "gaps"],
+        ExactKeys(raw, ["outcome", "gids", "gaps"],
             $"entry {atomId} cover_disposition");
 
         var outcomeText = Scalar(raw, "outcome", $"entry {atomId} cover_disposition outcome");
@@ -303,9 +293,7 @@ internal sealed partial class BackfillInventoryDocument
                 $"entry {atomId} cover_disposition outcome must be a canonical digestion status");
         }
 
-        var outcome = new DigestionStatus(
-            ParseMigration(outcomeText[..separator]),
-            ParseTruth(outcomeText[(separator + 1)..]));
+        var outcome = ParseStatus(outcomeText[..separator], outcomeText[(separator + 1)..]);
         var gids = Strings(
             List(raw, "gids", $"entry {atomId} cover_disposition gids must be a list"),
             $"entry {atomId} cover_disposition gids");
@@ -342,27 +330,7 @@ internal sealed partial class BackfillInventoryDocument
                 $"entry {atomId} cover_disposition gaps must use canonical ordinal ordering");
         }
 
-        var timestamp = Scalar(
-            raw,
-            "recorded_at_utc",
-            $"entry {atomId} cover_disposition recorded_at_utc");
-        if (!DateTimeOffset.TryParseExact(
-                timestamp,
-                "O",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.RoundtripKind,
-                out var recordedAtUtc)
-            || recordedAtUtc.Offset != TimeSpan.Zero
-            || !string.Equals(
-                timestamp,
-                recordedAtUtc.ToString("O", CultureInfo.InvariantCulture),
-                StringComparison.Ordinal))
-        {
-            throw new FormatException(
-                $"entry {atomId} cover_disposition recorded_at_utc must be canonical UTC round-trip time");
-        }
-
-        return new DigestionCoverDisposition(outcome, gids, orderedGaps, recordedAtUtc);
+        return new DigestionCoverDisposition(outcome, gids, orderedGaps);
     }
 
     private static DigestionMigrationState ParseMigration(string value) => value switch
@@ -370,6 +338,7 @@ internal sealed partial class BackfillInventoryDocument
         "residual" => DigestionMigrationState.Residual,
         "partial" => DigestionMigrationState.Partial,
         "absorbed" => DigestionMigrationState.Absorbed,
+        "nonpropositional" => DigestionMigrationState.Nonpropositional,
         _ => throw new FormatException($"invalid digestion migration status: {value}"),
     };
 
@@ -378,6 +347,7 @@ internal sealed partial class BackfillInventoryDocument
         "closed" => DigestionTruthState.Closed,
         "tail" => DigestionTruthState.Tail,
         "open" => DigestionTruthState.Open,
+        "inapplicable" => DigestionTruthState.Inapplicable,
         _ => throw new FormatException($"invalid digestion truth status: {value}"),
     };
 
@@ -397,6 +367,16 @@ internal sealed partial class BackfillInventoryDocument
         mapping.GetValueOrDefault(key) is string value && !string.IsNullOrWhiteSpace(value)
             ? value
             : throw new FormatException($"{context} must be a nonempty scalar");
+
+    private static string? NullableScalar(
+        IReadOnlyDictionary<string, object?> mapping,
+        string key,
+        string context) => mapping.GetValueOrDefault(key) switch
+        {
+            null => null,
+            string value when !string.IsNullOrWhiteSpace(value) => value,
+            _ => throw new FormatException($"{context} must be null or a nonempty scalar"),
+        };
 
     private static ImmutableArray<string> Strings(List<object?> values, string context)
     {
@@ -420,17 +400,6 @@ internal sealed partial class BackfillInventoryDocument
         string context)
     {
         if (!mapping.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(expected))
-        {
-            throw new FormatException($"{context} keys are not canonical");
-        }
-    }
-
-    private static void RequiredKeys(
-        IReadOnlyDictionary<string, object?> mapping,
-        IReadOnlyCollection<string> required,
-        string context)
-    {
-        if (!mapping.Keys.ToHashSet(StringComparer.Ordinal).IsSupersetOf(required))
         {
             throw new FormatException($"{context} keys are not canonical");
         }
@@ -475,8 +444,22 @@ internal static partial class BackfillInventoryLoader
         if (parts.Length != 3 || !parts[2].EndsWith(".yaml", StringComparison.Ordinal)) return false;
         var state = parts[1].Split('-');
         return state.Length == 2
-            && state[0] is "residual" or "partial" or "absorbed"
-            && state[1] is "closed" or "tail" or "open";
+            && ((state[0] is "residual" or "partial" or "absorbed"
+                 && state[1] is "closed" or "tail" or "open")
+                || (state[0] == "nonpropositional" && state[1] == "inapplicable"));
+    }
+
+    internal static bool IsInputPath(string path) =>
+        path.StartsWith(RootPath, StringComparison.Ordinal)
+        || string.Equals(path, RelativePath, StringComparison.Ordinal)
+        || IsD5LeanPath(path);
+
+    internal static RepositorySnapshot ProjectInputSnapshot(RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        return RepositorySnapshot.Create(snapshot.Files
+            .Where(static pair => IsInputPath(pair.Key.Value))
+            .ToImmutableDictionary());
     }
 
     internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot) =>
@@ -509,14 +492,7 @@ internal static partial class BackfillInventoryLoader
         var changed = changes.Paths
             .Select(static path => path.Value)
             .ToHashSet(StringComparer.Ordinal);
-        var entries = new Dictionary<string, RawRepositoryEntry>(StringComparer.Ordinal);
-        foreach (var (path, file) in candidate.Files)
-        {
-            entries[path.Value] = new RawRepositoryEntry(
-                path.Value,
-                file.RawBytes,
-                file.GitBlobOid);
-        }
+        var files = ProjectInputSnapshot(candidate).Files.ToBuilder();
 
         // Candidate-side parsing is authoritative only for the declared delta. For every
         // unchanged backfill record still present in the candidate, feed the trusted baseline
@@ -528,18 +504,10 @@ internal static partial class BackfillInventoryLoader
                      .Where(pair => candidate.TryGetFile(pair.Key.Value, out _))
                      .Where(pair => !changed.Contains(pair.Key.Value)))
         {
-            entries[path.Value] = new RawRepositoryEntry(
-                path.Value,
-                file.RawBytes,
-                file.GitBlobOid);
+            files[path] = file;
         }
 
-        var decoded = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries.Values));
-        return decoded switch
-        {
-            SnapshotDecodeOutcome.Decoded decodedSnapshot => Load(decodedSnapshot.Snapshot),
-            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
-        };
+        return Load(RepositorySnapshot.Create(files.ToImmutable()));
     }
 
     private static BackfillInventoryDocument LoadSnapshot(
@@ -645,14 +613,12 @@ internal static partial class BackfillInventoryLoader
         LoadDirectorySnapshot(
             snapshot,
             ParseBaselineSourceMetadata,
-            projectBaselineCoverage: true,
-            allowUnknownEntryFields: true);
+            projectBaselineReferences: true);
 
     private static BackfillInventoryDocument LoadDirectorySnapshot(
         RepositorySnapshot snapshot,
         Func<string, string, ParsedSourceMetadata> parseSourceMetadata,
-        bool projectBaselineCoverage = false,
-        bool allowUnknownEntryFields = false)
+        bool projectBaselineReferences = false)
     {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
@@ -708,9 +674,8 @@ internal static partial class BackfillInventoryLoader
                     fields["path"].Single(),
                     fields["atomizer"].Single(),
                     entry,
-                    projectBaselineCoverage,
-                    allowUnknownEntryFields);
-                if (projectBaselineCoverage)
+                    projectBaselineReferences);
+                if (projectBaselineReferences)
                 {
                     baselineAtomIds.Add(atomId, parsedEntry.AtomId);
                 }
@@ -744,7 +709,7 @@ internal static partial class BackfillInventoryLoader
 
         var loadedSources = sources.ToImmutable();
         return BackfillInventoryDocument.Create(
-            projectBaselineCoverage
+            projectBaselineReferences
                 ? ProjectBaselineReferences(loadedSources, baselineAtomIds)
                 : loadedSources,
             DeriveTickets(snapshot));
@@ -755,8 +720,7 @@ internal static partial class BackfillInventoryLoader
     {
         var modulesByCase = new SortedDictionary<string, string>(StringComparer.Ordinal);
         foreach (var (path, file) in snapshot.Files
-                     .Where(static pair => pair.Key.Value.StartsWith("D5/", StringComparison.Ordinal)
-                         && pair.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
+                     .Where(static pair => IsD5LeanPath(pair.Key.Value))
                      .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
         {
             var module = path.Value[..^".lean".Length];
@@ -779,6 +743,10 @@ internal static partial class BackfillInventoryLoader
             .Select(static pair => new BackfillTicketReference(pair.Key, pair.Value))
             .ToImmutableArray();
     }
+
+    private static bool IsD5LeanPath(string path) =>
+        path.StartsWith("D5/", StringComparison.Ordinal)
+        && path.EndsWith(".lean", StringComparison.Ordinal);
 
     private static IEnumerable<string> EnumerateD5LeanPaths(string root)
     {

@@ -3,11 +3,22 @@ fingerprints:
   normalized_sha256: sha256:52f4218f9195e554aad17c30ebe5b0a7b5f4474beaea97b1bdb87dc9a415a303
 cas_ref: sha256:52f4218f9195e554aad17c30ebe5b0a7b5f4474beaea97b1bdb87dc9a415a303
 coverage_gids:
-  - D5/S3/Observer/CenterOperational.center_iff_const
-  - D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
-  - D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+  - gid: D5/S3/Observer/CenterOperational.center_iff_const
+    target_statement_id: sha256:3bc8cd980d02c13522aa6e22f27bbcff97038d18336f08706195242bc0c523e9
+  - gid: D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
+    target_statement_id: sha256:34e04a09d69f409a303a158b9ac7b20b9439d75f954906efd3e9dfd4db6608f3
+  - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+    target_statement_id: sha256:a010683c1ec60b327e57c8295734bbcdd95d5b0644f6fa8e3dd878ead7659f7c
 receipts:
-  coverage: []
-  scribe: []
+  scribe:
+    - gid: D5/S3/Observer/CenterOperational.center_iff_const
+      definition_sha256: sha256:a49fdfc2120aad912f5dbdf858c440492a04f56fb52ffeb2c590f857c60f26b1
+      emission_sha256: sha256:26513624b966f06981cd7b559ed9eb6f2b65fb0c0ed27abb89399ffaa4d72ea8
+    - gid: D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
+    - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
   unresolved_subitems:
     - center-equals-continuous-torus-functions-crossed-product-form

@@ -1,0 +1,13 @@
+## 第二层：labelled relation geometry
+
+证明：
+
+$$
+\sinh^2(\delta\log(q/p))
+=
+\sinh^2(Q_p-Q_q),
+\tag{C19.3}
+$$
+
+并保留 compact phase difference。
+

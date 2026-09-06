@@ -1,0 +1,24 @@
+\[
+\operatorname{Create}(F;A_X,A_Y)
+=
+\{x:\neg A_X(x)\land A_Y(Fx)\}.
+\]
+
+若：
+
+\[
+\operatorname{Leak}=\varnothing,
+\]
+
+则 FLOW 保持合法性。
+
+若还要求反射：
+
+\[
+A_Y(Fx)\Rightarrow A_X(x),
+\]
+
+则 FLOW 在准入意义上精确。
+
+---
+

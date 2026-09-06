@@ -1,0 +1,18 @@
+\[
+\boxed{
+\Sigma_{n+1}
+=
+\mathsf{Reflect}
+\circ
+\mathsf{Revise}_{\Delta\mathsf C,\Delta\mathsf F,
+\Delta\mathsf A,\Delta\mathsf H}
+\left(
+\Sigma_n,
+\operatorname{Residual}_n
+\right).
+}
+\]
+
+其中：
+
+- `Reflect` 是阶段空间上的 FLOW；

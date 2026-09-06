@@ -1,0 +1,101 @@
+# 第两千一百二十五部　同一个 prime gap 同时测量切向和法向
+
+式 (2124.3) 中：
+
+$$
+\sin^2
+\left(
+\frac{\tau\Delta_{p,q}}2
+\right)
+$$
+
+测量的是虚部方向：
+
+$$
+t_1-t_2.
+$$
+
+而：
+
+$$
+\sinh^2
+\left(
+\delta\Delta_{p,q}
+\right)
+$$
+
+测量的是实部关于 \(1/2\) 的反射分裂：
+
+$$
+\left(
+\frac12+\delta
+\right)
+-
+\left(
+\frac12-\delta
+\right)
+=
+2\delta.
+$$
+
+因此：
+
+$$
+\boxed{
+\Delta\log p
+}
+$$
+
+就是统一的复观察灵敏度。
+
+更强地：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+\ge
+\sinh^2
+\left(
+\delta\log\frac qp
+\right)
+\ge
+\delta^2
+\log^2\frac qp.
+}
+\tag{2125.1}
+$$
+
+所以只要：
+
+$$
+p\neq q,
+\qquad
+\delta\neq0,
+$$
+
+便存在一个与时间相位无关的严格正分裂底：
+
+$$
+\boxed{
+\mathcal E_{p,q}^{\perp}
+=
+\sinh^2
+\left(
+\delta\log\frac qp
+\right)>0.
+}
+$$
+
+旋转可以使：
+
+$$
+\sin^2(\cdots)=0,
+$$
+
+却不能消除 hyperbolic 项。
+
+这就是把 `PrimeGaps` 升级成“真实横向分裂机制”的最短精确公式。
+
+---
+

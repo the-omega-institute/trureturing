@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5da5aaa28754099780933aee2b578d1d9a51375ed364ffa1cefd1dfa3b061127
+  normalized_sha256: sha256:5da5aaa28754099780933aee2b578d1d9a51375ed364ffa1cefd1dfa3b061127
+cas_ref: sha256:5da5aaa28754099780933aee2b578d1d9a51375ed364ffa1cefd1dfa3b061127
+coverage_gids:
+  - gid: D5/S1/FixedPoints/FiniteSplitBudget.strict_refinement_count_le_card_sub_initial_classes
+    target_statement_id: sha256:46a3bf87de832112f9d34458644ba21b1a00cb611bf6fa8a9190a95cd89833bc
+receipts:
+  scribe:
+    - gid: D5/S1/FixedPoints/FiniteSplitBudget.strict_refinement_count_le_card_sub_initial_classes
+      definition_sha256: sha256:72d030e972f0f4a17630e8ba5aebb8cf588cce3e4ee53553acc44598ddeff559
+      emission_sha256: sha256:2dcf1b0252726a9f4f41b14278bd7778ced801b453835b11bfeec1c40f19f006
+  unresolved_subitems: []

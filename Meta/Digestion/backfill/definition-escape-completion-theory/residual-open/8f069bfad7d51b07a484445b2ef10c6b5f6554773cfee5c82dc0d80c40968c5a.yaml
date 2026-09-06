@@ -4,8 +4,16 @@ fingerprints:
 cas_ref: sha256:8f069bfad7d51b07a484445b2ef10c6b5f6554773cfee5c82dc0d80c40968c5a
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems:
     - definition-language-trigger-has-no-stage-residual-bridge
     - operation-family-trigger-has-no-stage-residual-bridge
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.closure_method_stop_three_parameter_completion_reopening
+    gaps:
+      - code: unresolved-subitem
+        detail: definition-language-trigger-has-no-stage-residual-bridge
+      - code: unresolved-subitem
+        detail: operation-family-trigger-has-no-stage-residual-bridge

@@ -1,0 +1,14 @@
+# 九、全尺度积分可以消除 Bessel 导数，但不能丢掉边界
+
+定义：
+
+$$
+I_j(t)=\int_0^\infty x^j\mathcal J(x,t)\,dx,
+$$
+
+以及上一轮的目标量：
+
+$$
+M_n(t)=\int_0^\infty x^{2n}\mathcal W(x,t)\,dx.
+$$
+

@@ -1,0 +1,6 @@
+## 466. B-1 预登记:非空真子集的条件矩为零、纤维基数与最高阶符号(`ParityConditionedMoments`,落 `D5/S3/Analytic/ReflectedSpectrum/`)
+
+**义务**:公开定理 `parity_conditioned_moments (k : ℕ) (ε : ℤ) (hε : ε = -1 ∨ ε = 1) : (parityFiber (k + 1) ε).card = 2 ^ k ∧ (∀ A : Finset (Fin (k + 1)), A.Nonempty → A ≠ Finset.univ → (∑ x ∈ parityFiber (k + 1) ε, ∏ i ∈ A, paritySign (x i)) = 0) ∧ (∑ x ∈ parityFiber (k + 1) ε, ∏ i : Fin (k + 1), paritySign (x i)) = ε * ((parityFiber (k + 1) ε).card : ℤ)`,其中 `paritySign : Fin 2 → ℤ` 取值 ±1(0 ↦ −1,1 ↦ +1),`parityFiber d ε := Finset.univ.filter (fun x => ∏ i, paritySign (x i) = ε)` 为 {−1,+1}^d 上总积等于 ε 的纤维;d = k + 1 与原文一致。落新模块 `D5/S3/Analytic/ReflectedSpectrum/ParityConditionedMoments`(桶现 8/24),只依赖钉版 Mathlib。
+**可证伪预测(写在跑之前)**:逃逸内容为「双坐标翻转」——对非空真子集 A 取 i ∈ A、j ∉ A,同时翻转 x_i 与 x_j 是 ε-纤维上的无不动点对合,且把 A-积换号,故 A-积在纤维上的和为零(`Finset.sum_involution` 型配对);纤维基数由单坐标翻转在 ± 两纤维之间的双射给出。判形 content,准入依据 escape-witness;若 `Finset.sum_involution` 在钉版 API 下的形状不能直接承载「无不动点 + 换号」两个条件,本条按 open 记,不得以 `sorry` 或公理代替。
+**边界**:不断言 A = ∅ 的矩为零;不涉及 d = 0。
+

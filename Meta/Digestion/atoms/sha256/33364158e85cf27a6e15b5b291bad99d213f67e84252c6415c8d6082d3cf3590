@@ -1,0 +1,69 @@
+# 二、\(5040\) 对应的完整编码几何，是七维乘积，而不只是一座金字塔
+
+固定
+
+$$
+5040=2^4\,3^2\,5\,7.
+$$
+
+它的因数对应
+
+$$
+0\le a_2\le4,\qquad
+0\le a_3\le2,\qquad
+0\le a_5,a_7\le1.
+$$
+
+于是：
+
+$$
+\{0,\ldots,4\}
+\longleftrightarrow
+\text{三位 Zeckendorf 金字塔},
+$$
+
+$$
+\{0,1,2\}
+\longleftrightarrow
+\text{两位 Zeckendorf 三角形},
+$$
+
+$$
+\{0,1\}
+\longleftrightarrow
+\text{一条线段}.
+$$
+
+全部因数编码的凸包为
+
+$$
+\boxed{
+\mathcal P_{5040}
+=
+\mathcal P_3
+\times\mathcal P_2
+\times[0,1]\times[0,1].
+}
+\tag{5}
+$$
+
+它有
+
+$$
+\boxed{
+3+2+1+1=7
+}
+$$
+
+个连续几何维度，以及
+
+$$
+\boxed{
+5\cdot3\cdot2\cdot2=60
+}
+$$
+
+个合法离散顶点。
+
+我按整数枚举核对了这六十个顶点：其解码结果恰好是 \(5040\) 的全部因数，没有重复或缺失。这里的有限核对不代替上述双射证明。
+

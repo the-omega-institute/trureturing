@@ -1,0 +1,55 @@
+## 这个极限本身就是一个归一化量子重叠核
+
+令频带
+
+$$
+\mathcal B=
+[-1/4,-1/8]\cup[1/8,1/4].
+$$
+
+它的长度为 \(1/4\)。
+
+在 Hilbert 空间
+
+$$
+\mathcal H=L^2(\mathcal B,4\,d\xi)
+$$
+
+中定义单位向量
+
+$$
+v_s(\xi)=e^{-2\pi is\xi}.
+$$
+
+于是
+
+$$
+\boxed{
+\langle v_s,v_t\rangle
+=
+\frac4{\mathfrak a}\Gamma(s,t).
+}
+\tag{22}
+$$
+
+其生成元可以取为有界自伴乘法算子
+
+$$
+(Hf)(\xi)=2\pi\xi f(\xi).
+$$
+
+因此，同一构造有两种精确读出：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有限算术面}
+&:\ q\asymp X\text{ 的有理相位};\\
+\text{重标定连续面}
+&:\ \text{固定频带上的量子重叠核}.
+\end{aligned}
+}
+$$
+
+这里的 \(s\) 首先是缩放后的整数坐标，不自动等同于现实物理时间。
+

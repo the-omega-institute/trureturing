@@ -1,0 +1,6 @@
+## 三　W-18 预登记:小支撑归约(同模块第三条公开定理)
+
+**义务**:公开定理 `smallSupport_poincare_reduction (f : WeilTestFunction) (L : ℝ) (hL : Real.exp (2 * L) < 2) : ((2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f) ↔ (-archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f`。
+**可证伪预测(写在跑之前)**:辅助公开引理 `activePrimePowers_eq_empty_of_exp_lt_two (L : ℝ) (hL : Real.exp (2 * L) < 2) : activePrimePowers L = ∅`(`Nat.floor_lt` 给 ⌊exp 2L⌋₊ < 2,`Ioc 0 n ⊆ {1}`,`vonMangoldt_apply_one`),随后 `totalPrimeWeight L = 0`、`arithmeticJumpEnergy L f = 0` 由 `Finset.sum_empty`,恒等变形得 iff;标准三公理。探针已整证。辅助引理不另列义务。
+**边界**:阈值 exp(2L) < 2 即 L < (log 2)/2;不断言归约后的不等式成立。
+

@@ -1,0 +1,57 @@
+## 定理235.1　有限步成功概率上界
+
+若所有相邻重叠非零，则
+
+$$
+\boxed{
+-\log p_N
+\ge
+\sum_{j=1}^Nd_j^2
+\ge
+\frac{L_N^2}{N}.
+}
+\tag{235.1}
+$$
+
+因此
+
+$$
+\boxed{
+p_N\le e^{-L_N^2/N}.
+}
+\tag{235.2}
+$$
+
+### 证明
+
+由定理233.1，
+
+$$
+-\log p_N=-2\sum_j\log\cos d_j.
+$$
+
+对 \(0\le x<\pi/2\)，因为 \(\tan x\ge x\)，积分得到
+
+$$
+-2\log\cos x\ge x^2.
+$$
+
+再对 \(d_j\) 使用 Cauchy–Schwarz 不等式：
+
+$$
+\sum_jd_j^2\ge\frac{(\sum_jd_j)^2}{N}.
+$$
+
+∎
+
+更强地，由 \(-2\log\cos x\) 的凸性，
+
+$$
+p_N\le
+\cos^{2N}\left(\frac{L_N}{N}\right).
+$$
+
+给定总离散长度时，相邻步骤距离相等使这一上界达到。
+
+---
+

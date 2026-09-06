@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a972b1ccf221e9dbdea9ee9b92fd46892a2f70ab3d2c4528729130468da5cd31
+  normalized_sha256: sha256:a972b1ccf221e9dbdea9ee9b92fd46892a2f70ab3d2c4528729130468da5cd31
+cas_ref: sha256:a972b1ccf221e9dbdea9ee9b92fd46892a2f70ab3d2c4528729130468da5cd31
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Representation/IdentityJordanFullGroupTrace.full_group_trace_two
+    target_statement_id: sha256:5c49209d3127f4ce37fe0aca3933dd71ca2f2486c0374d64a5b683311314dac0
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Representation/IdentityJordanFullGroupTrace.full_group_trace_two
+      definition_sha256: sha256:9cf415314370c8d32fb799761e7f6b254f072958de96cb563016a863fa76dd6f
+      emission_sha256: sha256:c404898573d243056efd49871aff364f75daf88c76c04412c1c304fec3eccd0a
+  unresolved_subitems: []

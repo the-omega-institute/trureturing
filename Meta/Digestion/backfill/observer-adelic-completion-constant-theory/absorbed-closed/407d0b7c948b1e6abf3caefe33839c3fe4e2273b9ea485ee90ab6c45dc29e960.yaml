@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:407d0b7c948b1e6abf3caefe33839c3fe4e2273b9ea485ee90ab6c45dc29e960
 cas_ref: sha256:407d0b7c948b1e6abf3caefe33839c3fe4e2273b9ea485ee90ab6c45dc29e960
 coverage_gids:
-  - D5/S3/Observer/Tomography/ConstantInjectiveSubsingleton.constant_injective_subsingleton
+  - gid: D5/S3/Observer/Tomography/ConstantInjectiveSubsingleton.constant_injective_subsingleton
+    target_statement_id: sha256:18d1b284b2fc25dc90b3e59e73e9afcf367cba68e37b302dc0aa32416c751b00
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Tomography/ConstantInjectiveSubsingleton.constant_injective_subsingleton
-      source_sha256: sha256:407d0b7c948b1e6abf3caefe33839c3fe4e2273b9ea485ee90ab6c45dc29e960
-      target_statement_id: sha256:18d1b284b2fc25dc90b3e59e73e9afcf367cba68e37b302dc0aa32416c751b00
   scribe:
     - gid: D5/S3/Observer/Tomography/ConstantInjectiveSubsingleton.constant_injective_subsingleton
       definition_sha256: sha256:f5c871793825806c3ca4a84922a7d50a921fc97b7cf69fa5d82828d03b5041c8

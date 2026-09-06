@@ -1,0 +1,31 @@
+## B3.4 黄金 norm form
+
+在 $z=1$，
+
+$$
+q_1(X,Y)=-X^2+XY+Y^2.
+\tag{B3.8}
+$$
+
+令 $K=\mathbb Q(\sqrt5)$，则
+
+$$
+\operatorname{Norm}_{K/\mathbb Q}(X-Y\varphi)
+=X^2-XY-Y^2.
+\tag{B3.9}
+$$
+
+故
+
+$$
+\boxed{
+q_1(X,Y)
+=-\operatorname{Norm}_{K/\mathbb Q}(X-Y\varphi).
+}
+\tag{B3.10}
+$$
+
+黄金 Lorentz metric 正是实二次域 $\mathbb Q(\sqrt5)$ 的 norm form，差一个整体符号和基选择。
+
+---
+

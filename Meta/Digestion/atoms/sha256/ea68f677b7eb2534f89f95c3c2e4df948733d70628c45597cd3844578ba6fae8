@@ -1,0 +1,41 @@
+# 九、RH 的观察者相对轨道奇偶判据
+
+现在把这个结构直接应用于 ζ 零点。
+
+定义三个操作：
+
+$$
+C(s)=\overline s,
+$$
+
+$$
+R(s)=1-s,
+$$
+
+$$
+J(s)=1-\overline s.
+$$
+
+对：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\gamma>0,
+$$
+
+完整 Klein 轨道为：
+
+$$
+\mathcal O_G(\rho)
+=
+\left\{
+\frac12+\delta+i\gamma,
+\frac12+\delta-i\gamma,
+\frac12-\delta-i\gamma,
+\frac12-\delta+i\gamma
+\right\}.
+$$
+
+---
+

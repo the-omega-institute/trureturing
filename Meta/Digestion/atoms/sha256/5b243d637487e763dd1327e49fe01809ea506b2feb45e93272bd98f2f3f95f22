@@ -1,0 +1,34 @@
+### 证明
+
+假设可以跨过 \(\sigma_c\) 全纯延拓。
+
+选择 \(a>\sigma_c\)，使以 \(a\) 为中心的 Taylor 展开可以到达某个：
+
+$$
+a-r<\sigma_c.
+$$
+
+在收敛半平面内：
+
+$$
+(-1)^jL_h^{(j)}(a)
+=
+\int_0^\infty t^j h(t)e^{-at}\,dt.
+$$
+
+因为 \(h\ge0\)，Taylor 展开中的相关项均非负。由非负项交换求和与积分：
+
+$$
+\begin{aligned}
+L_h(a-r)
+&=
+\sum_{j\ge0}
+\frac{r^j}{j!}
+\int_0^\infty t^j h(t)e^{-at}\,dt\\
+&=
+\int_0^\infty h(t)e^{-(a-r)t}\,dt.
+\end{aligned}
+$$
+
+左边有限，所以积分在小于 \(\sigma_c\) 的实点也收敛，矛盾。证毕。
+

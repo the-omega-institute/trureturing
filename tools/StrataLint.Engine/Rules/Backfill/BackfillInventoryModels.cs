@@ -4,27 +4,7 @@ namespace StrataLint.Engine;
 
 internal sealed record BackfillTicketReference(string CaseId, string Gid);
 
-internal sealed record DigestionCoverageReceipt(
-    string Gid,
-    string SourceSha256,
-    string TargetStatementId,
-    ImmutableArray<DigestionStatementIdHistoryEntry> StatementIdHistory = default)
-{
-    internal void Deconstruct(
-        out string gid,
-        out string sourceSha256,
-        out string targetStatementId)
-    {
-        gid = Gid;
-        sourceSha256 = SourceSha256;
-        targetStatementId = TargetStatementId;
-    }
-}
-
-internal sealed record DigestionStatementIdHistoryEntry(
-    string StatementId,
-    EffectiveLeanPins EnvironmentPin,
-    EffectiveLeanPins SupersededByPin);
+internal sealed record DigestionCoverageEdge(string Gid, string? TargetStatementId);
 
 internal sealed record DigestionScribeReceipt(
     string Gid,
@@ -33,14 +13,24 @@ internal sealed record DigestionScribeReceipt(
 
 internal sealed record DigestionExternalReceipt(string Path, string Sha256);
 
+internal sealed record DigestionNonpropositional(
+    string Justification,
+    string? PreviousAtomId,
+    string? NextAtomId)
+{
+    internal bool IsValid => !string.IsNullOrWhiteSpace(Justification)
+        && Justification == Justification.Trim()
+        && (PreviousAtomId is null || IsAtomId(PreviousAtomId))
+        && (NextAtomId is null || IsAtomId(NextAtomId));
+
+    internal static bool IsAtomId(string value) => value.Length == 64
+        && value.All(static character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
+}
+
 internal sealed record DigestionQuarantine(
     string Justification,
     string ReentryCondition,
-    // 可选的类型化阻断分类(#2137)。此前隔离只有两个自由文本字段,故「某原子为何不该被
-    // 再次提供」不可机器判、不可分类统计——而生产线实测已产出 21 条**已分类**的弹出行。
-    // 字母表封闭且取自那批实测数据,不是发明的;未知取值由 loader fail-closed 拒绝。
-    // 可选:既有条目无此字段,加载与回写皆须保持其字节不变(见 writer 的 null 分支)。
-    string? BlockerClass = null)
+    string BlockerClass)
 {
     // 封闭字母表:三类均来自 #2137 记录的 21 条实测弹出行
     // (2 already-covered / 7 missing-prerequisite / 12 multi-clause-guard)。
@@ -53,25 +43,24 @@ internal sealed record DigestionDispositionGap(string Code, string Detail);
 internal sealed record DigestionCoverDisposition(
     DigestionStatus Outcome,
     ImmutableArray<string> Gids,
-    ImmutableArray<DigestionDispositionGap> Gaps,
-    DateTimeOffset RecordedAtUtc);
+    ImmutableArray<DigestionDispositionGap> Gaps);
 
 internal sealed record DigestionReceipts(
-    ImmutableArray<DigestionCoverageReceipt> Coverage,
     ImmutableArray<DigestionScribeReceipt> Scribe,
     ImmutableArray<string> UnresolvedSubitems,
     ImmutableArray<string> ChainAtoms,
     DigestionExternalReceipt? TailAuthorization,
     DigestionQuarantine? Quarantine = null,
-    DigestionCoverDisposition? CoverDisposition = null)
+    DigestionCoverDisposition? CoverDisposition = null,
+    DigestionNonpropositional? Nonpropositional = null)
 {
     internal bool IsEmptyForSourceRevision =>
-        Coverage.IsEmpty
-        && Scribe.IsEmpty
+        Scribe.IsEmpty
         && UnresolvedSubitems.IsEmpty
         && ChainAtoms.IsEmpty
         && TailAuthorization is null
-        && Quarantine is null;
+        && Quarantine is null
+        && Nonpropositional is null;
 
     internal bool IsEmpty =>
         IsEmptyForSourceRevision
@@ -83,6 +72,7 @@ internal enum DigestionMigrationState
     Residual,
     Partial,
     Absorbed,
+    Nonpropositional,
 }
 
 internal enum DigestionTruthState
@@ -90,6 +80,7 @@ internal enum DigestionTruthState
     Closed,
     Tail,
     Open,
+    Inapplicable,
 }
 
 internal sealed record DigestionStatus(
@@ -102,10 +93,16 @@ internal sealed record DigestionLedgerEntry(
     string Atomizer,
     string AtomId,
     DigestionFingerprints Fingerprints,
-    ImmutableArray<string> CoverageGids,
+    ImmutableArray<DigestionCoverageEdge> Coverage,
     DigestionReceipts Receipts,
     DigestionStatus ProjectedStatus,
-    string CasRef);
+    string CasRef)
+{
+    internal ImmutableArray<string> CoverageGids =>
+        Coverage.Select(static edge => edge.Gid)
+            .OrderBy(static gid => gid, StringComparer.Ordinal)
+            .ToImmutableArray();
+}
 
 internal sealed record GenreRegistryProjection
 {

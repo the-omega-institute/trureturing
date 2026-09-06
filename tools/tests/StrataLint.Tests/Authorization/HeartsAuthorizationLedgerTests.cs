@@ -33,7 +33,6 @@ public sealed class HeartsAuthorizationLedgerTests
     {
         var fixture = new RuleFixture();
         fixture.Baseline[HeartsAuthorizationLedger.Path] = HeartsAuthorizationLedger.Header;
-        fixture.ForkPoint[HeartsAuthorizationLedger.Path] = HeartsAuthorizationLedger.Header;
         fixture.Files[HeartsAuthorizationLedger.Path] =
             HeartsAuthorizationLedger.Header + "not a ledger row\n";
 
@@ -48,13 +47,12 @@ public sealed class HeartsAuthorizationLedgerTests
     }
 
     [Fact]
-    public void Sl008DoesNotRevalidateMalformedAuthorizationLedgerForAddedAcceptedEvent()
+    public void Sl008DoesNotRevalidateMalformedAuthorizationLedgerButFailsClosedForAddedAcceptedEvent()
     {
         var fixture = new RuleFixture();
         var malformed = HeartsAuthorizationLedger.Header + "not a ledger row\n";
         fixture.Files[HeartsAuthorizationLedger.Path] = malformed;
         fixture.Baseline[HeartsAuthorizationLedger.Path] = malformed;
-        fixture.ForkPoint[HeartsAuthorizationLedger.Path] = malformed;
         var acceptedPath = FrozenLedgerChangeClassifier.AcceptedPath(
             "sha256:" + new string('a', 64));
         fixture.Files[acceptedPath] = "candidate accepted event\n";
@@ -64,6 +62,11 @@ public sealed class HeartsAuthorizationLedgerTests
             fixture.Build(RawChangeSet.CreateWithKinds(
                 [(acceptedPath, RawChangeKind.Added)])));
 
-        Assert.Empty(evaluation.Diagnostics);
+        Assert.DoesNotContain(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Path == HeartsAuthorizationLedger.Path);
+        var diagnostic = Assert.Single(evaluation.Diagnostics);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(acceptedPath, diagnostic.Path);
+        Assert.Contains("accepted event could not be loaded", diagnostic.Message, StringComparison.Ordinal);
     }
 }

@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:7d3d65da6b7ebe09f508840d6e71deb06737c9b64d9b1a48d40c859006926363
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Uncarried child of 83bbca32d5fd66043b3e193a49c6c81090af09d96c6cf8c47e60344fcc916c37: memory and commitment. Parent obstruction owner is D5/S3/ConceptDynamics/Attribution/NoNaturalFiniteChoice.no_natural_finite_choice; classical-choice sibling 82f0fef42842fe19cced93758566da734f913ecb11929dd7e2c55c0ec5cfec7a is already absorbed through ClassicalChoiceNonnaturality.classical_choice_family_is_nonnatural. D5/Blueprint memory.*commit|commit.*memory|commitment|记忆|承诺 exit 0 (833 lines) found D5/S3/ConceptDynamics/Agency/PlanCylinderCommitmentTelescoping.plan_cylinder_commitment_depth_telescopes and BoundaryRelativeAgency.boundary_relative_agency. Their public statements concern supplied-action plan counts and control factorization, not symmetry breaking of finite-set choice by memory. Pinned Mathlib history|commitment exit 0 (22 textual history hits), no selector-memory transport law. Loogle Equiv.swap, Function.fixedPoints exit 0 hits 0; LeanSearch No natural choice of an element of every nonempty finite set under all bijections exit 0 hits 5 ordinary choice facts; A17 GitHub natural choice finite language:Lean exit 0 returned 20 textual near matches. Local /private/tmp/consensus-rnd/sshx/w73f5/attempt-1/atom2-probe.lean exit 0 proves general nonnaturality only. No source memory update or commitment operator is specified."
+    reentry_condition: "Define the source memory state, commitment update and induced selector on finite carriers, with their relabeling action; supply a public law showing how that recorded state changes the selector's naturality."
+    blocker_class: multi-clause-guard

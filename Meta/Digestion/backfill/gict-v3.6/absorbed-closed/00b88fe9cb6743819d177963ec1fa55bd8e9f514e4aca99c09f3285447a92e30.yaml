@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:00b88fe9cb6743819d177963ec1fa55bd8e9f514e4aca99c09f3285447a92e30
+  normalized_sha256: sha256:00b88fe9cb6743819d177963ec1fa55bd8e9f514e4aca99c09f3285447a92e30
+cas_ref: sha256:00b88fe9cb6743819d177963ec1fa55bd8e9f514e4aca99c09f3285447a92e30
+coverage_gids:
+  - gid: D5/S3/Quantum/Sharpness/FreeNegentropyBudget.free_negentropy_budget
+    target_statement_id: sha256:0b886ab8a8eb94b90ce39b027be67936f47de33369529a5679075100a0c83f4b
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Sharpness/FreeNegentropyBudget.free_negentropy_budget
+      definition_sha256: sha256:63195e4e43ef2dd59d8c0ce88bea0f77ba8f47bb2c402d3c81558dae38424f4d
+      emission_sha256: sha256:9c4ba60bc1008a1015df8af1d3e0aec8b4f9523d4581dd125462aba5eab31994
+  unresolved_subitems: []

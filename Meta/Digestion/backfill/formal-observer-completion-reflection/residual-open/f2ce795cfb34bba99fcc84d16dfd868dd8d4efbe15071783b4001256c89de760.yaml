@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:f2ce795cfb34bba99fcc84d16dfd868dd8d4efbe15071783b4001256c89de760
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Uncarried child of 83bbca32d5fd66043b3e193a49c6c81090af09d96c6cf8c47e60344fcc916c37: external environment variables. Parent obstruction is D5/S3/ConceptDynamics/Attribution/NoNaturalFiniteChoice.no_natural_finite_choice; classical-choice sibling 82f0fef42842fe19cced93758566da734f913ecb11929dd7e2c55c0ec5cfec7a is already absorbed through ClassicalChoiceNonnaturality.classical_choice_family_is_nonnatural. D5/Blueprint external.*(select|action)|environment.*(select|action)|外部环境 exit 0 (18 lines) found D5/S3/ConceptDynamics/Agency/ExternalPredictionReflectiveAutonomy.external_prediction_compatible_with_reflective_autonomy, which factors a reason policy through an external readout, and NoncanonicalAgencyCountermodels, which holds the external setting fixed. Neither states environmental symmetry breaking of finite-set selection. Pinned Mathlib environment.*select|select.*environment exit 1, zero hits. Loogle Equiv.swap, Function.fixedPoints exit 0 hits 0; LeanSearch No natural choice of an element of every nonempty finite set under all bijections exit 0 hits 5 ordinary choice facts; A17 GitHub natural choice finite language:Lean exit 0 returned 20 textual near matches. Local /private/tmp/consensus-rnd/sshx/w73f5/attempt-1/atom2-probe.lean exit 0 proves general nonnaturality only. No environmental carrier or selector dependence is specified by this label."
+    reentry_condition: "Specify an environmental input and a finite-carrier selector that actually depends on it, with the joint relabeling action; prove the corresponding public symmetry-breaking or transport law."
+    blocker_class: multi-clause-guard

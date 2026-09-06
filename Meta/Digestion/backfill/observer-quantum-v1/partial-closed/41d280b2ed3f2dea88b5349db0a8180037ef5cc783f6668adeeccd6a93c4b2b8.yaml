@@ -3,14 +3,35 @@ fingerprints:
   normalized_sha256: sha256:41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8
 cas_ref: sha256:41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8
 coverage_gids:
-  - D5/S1/Dynamics/JumpCocycle.jump_cocycle
-  - D5/S1/Solenoid/StreamlineDecomposition.existsUnique_streamline
-  - D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
-  - D5/S3/Observer/HiddenFlow/StreamlineExistence.existsUnique_frozen_streamline_decomposition
-  - D5/S3/Observer/StreamlineTheorem.nonconstant_offset_not_continuous
-  - D5/S3/Observer/StreamlineTheorem.path_decomposition
-  - D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant
+  - gid: D5/S1/Dynamics/JumpCocycle.jump_cocycle
+    target_statement_id: sha256:35612a103dd0bda47aea448eead5ecb7d270a1fc00ae5eb70b5c2c0d06f9f148
+  - gid: D5/S1/Solenoid/StreamlineDecomposition.existsUnique_streamline
+    target_statement_id: sha256:b826302d32f91498f632f9e1276e253798a2860875ed148106473ef4a4c7159d
+  - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
+    target_statement_id: sha256:523403efa9650627ad45be0890e9f110f75ff0f387f17b88bdb0abd1a69b354c
+  - gid: D5/S3/Observer/HiddenFlow/StreamlineExistence.existsUnique_frozen_streamline_decomposition
+    target_statement_id: sha256:3cb5265c11558d1cf7ff7a0236145f2554a45efa51545748449629448b83cb20
+  - gid: D5/S3/Observer/StreamlineTheorem.nonconstant_offset_not_continuous
+    target_statement_id: sha256:1db58526b6bfb405778e95daeb9a1bf0b5036b5b72ad142a2f22f46f7228eb7b
+  - gid: D5/S3/Observer/StreamlineTheorem.path_decomposition
+    target_statement_id: sha256:f96caa1c434f9b18dd93ea9acd064d7a9e1adb2f59adb41dced4b250a22a8f8e
+  - gid: D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant
+    target_statement_id: sha256:cb78d8a7dd062418f7de03162755de2558d391a5c8b85f8638a0f9cdadcc50de
 receipts:
-  coverage: []
-  scribe: []
+  scribe:
+    - gid: D5/S1/Dynamics/JumpCocycle.jump_cocycle
+      definition_sha256: sha256:3965db11070bce97ab9e0372240c4ed10446241e0b289738af9ceaadcbf4a27c
+      emission_sha256: sha256:e93f48bc1ed5c22e98620e125bf4fb611b7660a651f574a232c6f4b3953a5fda
+    - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
+      definition_sha256: sha256:0dbe0f8dd3075304d9f596e8bea4cbc2ec1d34092d214f4f41af362d08700c87
+      emission_sha256: sha256:bd03ea65dae51f964a0d22764fed71fd84d4c0e37cadeeb3bbcdddd6e758ead9
+    - gid: D5/S3/Observer/HiddenFlow/StreamlineExistence.existsUnique_frozen_streamline_decomposition
+      definition_sha256: sha256:5d7ae1cd34ab631fea43204666a23b119967001c6b2bed6c0cb36359c95dfb36
+      emission_sha256: sha256:8c19bc05646535705c52e2339e1ffa19e30bd0d8729bfddb4a1441c34c3d262d
+    - gid: D5/S3/Observer/StreamlineTheorem.nonconstant_offset_not_continuous
+      definition_sha256: sha256:0ac3d29434ce0d9c880a99ca05f5d21a138584eee7295eac59d099ecb5e4181d
+      emission_sha256: sha256:3db4bab6620acf52e66dd7517309e6a8da5ffb9df2964c3cfe9743f47331f70c
+    - gid: D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant
+      definition_sha256: sha256:0ac3d29434ce0d9c880a99ca05f5d21a138584eee7295eac59d099ecb5e4181d
+      emission_sha256: sha256:3db4bab6620acf52e66dd7517309e6a8da5ffb9df2964c3cfe9743f47331f70c
   unresolved_subitems: []

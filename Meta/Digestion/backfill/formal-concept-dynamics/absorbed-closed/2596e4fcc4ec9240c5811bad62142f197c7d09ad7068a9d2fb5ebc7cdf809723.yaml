@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2596e4fcc4ec9240c5811bad62142f197c7d09ad7068a9d2fb5ebc7cdf809723
+  normalized_sha256: sha256:2596e4fcc4ec9240c5811bad62142f197c7d09ad7068a9d2fb5ebc7cdf809723
+cas_ref: sha256:2596e4fcc4ec9240c5811bad62142f197c7d09ad7068a9d2fb5ebc7cdf809723
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Decision/PredictionLawDecisionSufficiency.prediction_law_sufficiency_implies_decision_sufficiency
+    target_statement_id: sha256:0832bf09fd0fc7fe90ddd097cd2faf6459d6a6db1af38ac9a5e1fa32e453be77
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Decision/PredictionLawDecisionSufficiency.prediction_law_sufficiency_implies_decision_sufficiency
+      definition_sha256: sha256:92a2deccbc86555c348d2ff37090374d4942fce98b96615726f5983749f317fd
+      emission_sha256: sha256:b25201ce10857b78ca3f150b56805d6e46ba6c84fc9f1c15fec2f313106fd552
+  unresolved_subitems: []

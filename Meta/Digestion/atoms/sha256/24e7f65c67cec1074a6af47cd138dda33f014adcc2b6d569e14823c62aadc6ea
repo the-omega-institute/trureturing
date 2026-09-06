@@ -1,0 +1,17 @@
+## 定理二：精确的历史奇偶筛选
+
+$$
+\boxed{
+Q_{\mathbf a}(-1)
+=
+\begin{cases}
+0,&o(n)\ge2,\\[1mm]
+\displaystyle
+\frac{\lfloor L/2\rfloor!}
+{\prod_i\lfloor a_i/2\rfloor!},
+&o(n)\le1.
+\end{cases}
+}
+\tag{22}
+$$
+

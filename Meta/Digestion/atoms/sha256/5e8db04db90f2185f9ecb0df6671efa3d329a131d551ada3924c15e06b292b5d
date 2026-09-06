@@ -1,0 +1,77 @@
+## 定理313.2　保持大部分 ζ 态需要迅速增长的量子维数
+
+令
+
+$$
+\sigma=1+\varepsilon,
+\qquad
+0<\varepsilon<1.
+$$
+
+若一个秩为 \(d\) 的投影能够保留至少 \(1-\delta\) 的概率，且
+
+$$
+\varepsilon+\delta<1,
+$$
+
+则：
+
+$$
+\boxed{
+d\ge
+(\varepsilon+\delta)^{-1/\varepsilon}.
+}
+\tag{313.3}
+$$
+
+### 证明
+
+\(\rho_\sigma\) 的本征值按 \(n\) 递减。任何秩 \(d\) 投影保留的概率，至多为最大的前 \(d\) 个本征值之和：
+
+$$
+\operatorname{Tr}(P\rho_\sigma)
+\le
+\frac{\sum_{n=1}^d n^{-1-\varepsilon}}
+{\zeta(1+\varepsilon)}.
+$$
+
+积分比较给出：
+
+$$
+\sum_{n=1}^d n^{-1-\varepsilon}
+\le
+1+\frac{1-d^{-\varepsilon}}{\varepsilon},
+$$
+
+以及：
+
+$$
+\zeta(1+\varepsilon)\ge\frac1\varepsilon.
+$$
+
+所以：
+
+$$
+\operatorname{Tr}(P\rho_\sigma)
+\le
+1+\varepsilon-d^{-\varepsilon}.
+$$
+
+若左侧至少为 \(1-\delta\)，则：
+
+$$
+d^{-\varepsilon}\le\varepsilon+\delta.
+$$
+
+整理即得。∎
+
+例如，在 \(\sigma=1.01\) 时，希望保留至少90%的完整概率质量，这个必要条件已经要求：
+
+$$
+\boxed{\ln d\ge220.72749\ldots}
+$$
+
+这是对**有限秩量子态近似**的限制，不表示写出这个分布的公式、计算某个期望或证明一个性质，也需要同样大的存储空间。
+
+---
+

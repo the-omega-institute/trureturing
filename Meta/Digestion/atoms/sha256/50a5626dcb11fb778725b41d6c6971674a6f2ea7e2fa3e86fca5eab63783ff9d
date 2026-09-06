@@ -1,0 +1,93 @@
+## 617. 黄金深度的候选状态数
+
+长度为 \(H\)、不含相邻 \(11\) 的 Zeckendorf 合法词数量为：
+
+$$
+F_{H+2}.
+$$
+
+渐近上：
+
+$$
+F_{H+2}\asymp\varphi^H.
+$$
+
+把第 \(H\) 层全部黄金候选状态编码成有限集合：
+
+$$
+S_H,
+\qquad
+|S_H|=F_{H+2}.
+$$
+
+那么贪心素数覆盖给出：
+
+$$
+\#\operatorname{Surv}(S_H,N)
+\le
+\frac{F_{H+2}}{\log N}.
+$$
+
+为了使右侧小于 \(1\)，一个充分条件是：
+
+$$
+\log N>F_{H+2}.
+$$
+
+所以：
+
+$$
+\boxed{
+N>
+\exp(F_{H+2})
+=
+\exp\bigl(\Theta(\varphi^H)\bigr).
+}
+$$
+
+这正是我们前面独立推导出的素数分辨率尺度：
+
+$$
+\boxed{
+N_{\mathrm{resolve}}(H)
+\sim
+e^{\varphi^H}.
+}
+$$
+
+所以这个双指数并不是任意想象出来的。
+
+它可以由 `PrimeGaps` 中的贪心剩余类不等式直接解释：
+
+$$
+\boxed{
+\text{黄金候选数按 }\varphi^H\text{ 增长，}
+}
+$$
+
+但全体素数到 \(N\) 为止提供的确定性剩余压缩仅为：
+
+$$
+\boxed{
+\frac1{\log N}.
+}
+$$
+
+令两者刚好平衡：
+
+$$
+\frac{\varphi^H}{\log N}\asymp1,
+$$
+
+立刻得到：
+
+$$
+\boxed{
+\log N\asymp\varphi^H,
+\qquad
+N\asymp e^{\varphi^H}.
+}
+$$
+
+---
+

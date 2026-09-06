@@ -1,0 +1,18 @@
+## 16.3 为什么 Zeckendorf 是候选而非答案
+
+Zeckendorf 提供了唯一 hard-core normal form、最小二态记忆、扩张／稳定 Galois 通道、稀疏 Fibonacci shell factorization、精确 balanced innovation，以及与 prime log-gap 互补的尺度增长。
+
+但它尚未提供 canonical zeta transfer operator、Gamma completion channel、prime-pair energy 的真实全局权、zero-side odd energy 的无条件支配、极限紧性和测试族分离性。
+
+所以最准确的判断是：
+
+$$
+\boxed{
+\text{Zeckendorf 给出了 RH 相变问题可能需要的最小 memory geometry，
+但没有自动给出该 geometry 在 completed }\Xi\text{ 中的动力学权。}
+}
+\tag{A16.6}
+$$
+
+---
+

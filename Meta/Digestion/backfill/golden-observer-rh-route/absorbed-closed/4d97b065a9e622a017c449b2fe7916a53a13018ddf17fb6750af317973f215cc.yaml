@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4d97b065a9e622a017c449b2fe7916a53a13018ddf17fb6750af317973f215cc
+  normalized_sha256: sha256:4d97b065a9e622a017c449b2fe7916a53a13018ddf17fb6750af317973f215cc
+cas_ref: sha256:4d97b065a9e622a017c449b2fe7916a53a13018ddf17fb6750af317973f215cc
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/PrimeArchimedeanPoincareCriterion.rh_iff_exists_supportRadius_primeArchimedeanPoincare
+    target_statement_id: sha256:5b338e3a0cc3b9ed50ceceed65bd73aaeb19ef0b214930a23767b78d57a9e4b3
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Separator/PrimeArchimedeanPoincareCriterion.rh_iff_exists_supportRadius_primeArchimedeanPoincare
+      definition_sha256: sha256:d3b88ff3e75975eb96f249a818baae0ed6f04e212dd7a54052d61d634fe41d8c
+      emission_sha256: sha256:7d27fc5b4275d12b2e3984f9df8d7252e8fe7387b4f141fed2dc1ad1e82766a8
+  unresolved_subitems: []

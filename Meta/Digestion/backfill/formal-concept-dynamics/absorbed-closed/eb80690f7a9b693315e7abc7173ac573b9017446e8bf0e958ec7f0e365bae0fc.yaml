@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:eb80690f7a9b693315e7abc7173ac573b9017446e8bf0e958ec7f0e365bae0fc
 cas_ref: sha256:eb80690f7a9b693315e7abc7173ac573b9017446e8bf0e958ec7f0e365bae0fc
 coverage_gids:
-  - D5/S3/ConceptDynamics/Information/EqualEntropyTargetValueContrast.equal_entropy_target_value_contrast
+  - gid: D5/S3/ConceptDynamics/Information/EqualEntropyTargetValueContrast.equal_entropy_target_value_contrast
+    target_statement_id: sha256:5f760d8491d93ffbeaaedfc62d204fbede0175b51fb7c6f6e08b2a088cccf44a
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Information/EqualEntropyTargetValueContrast.equal_entropy_target_value_contrast
-      source_sha256: sha256:eb80690f7a9b693315e7abc7173ac573b9017446e8bf0e958ec7f0e365bae0fc
-      target_statement_id: sha256:5f760d8491d93ffbeaaedfc62d204fbede0175b51fb7c6f6e08b2a088cccf44a
   scribe:
     - gid: D5/S3/ConceptDynamics/Information/EqualEntropyTargetValueContrast.equal_entropy_target_value_contrast
       definition_sha256: sha256:728052c3050db56d13ded23452f6fc92821cf4cdee97878a07543f69d8dc2114

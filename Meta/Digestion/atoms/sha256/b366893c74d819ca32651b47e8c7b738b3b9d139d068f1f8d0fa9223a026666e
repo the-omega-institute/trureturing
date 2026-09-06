@@ -1,0 +1,37 @@
+## 323. 两种互补坐标系
+
+在 prime valuation basis 中：
+
+* 乘法局部；
+* 加法高度非局部。
+
+在 Zeckendorf/Fibonacci digit basis 中：
+
+* 加法通过有限 carry rewrite 传播；
+* 模固定整数的 residue 可由有限状态读取；
+* 乘法则不再局部。
+
+因此：
+
+$$
+\boxed{
+\text{prime basis}
+\quad\text{与}\quad
+\text{Zeckendorf basis}
+}
+$$
+
+是一对互补坐标系。
+
+这正类似：
+
+$$
+\text{位置基}
+\quad\leftrightarrow\quad
+\text{频率基}.
+$$
+
+没有一个基能同时让乘法和加法都完全对角。
+
+---
+

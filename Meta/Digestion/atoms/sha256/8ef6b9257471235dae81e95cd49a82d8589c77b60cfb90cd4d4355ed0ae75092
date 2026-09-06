@@ -1,0 +1,12 @@
+## 定理 G3　Gribinski 猜想在 \(m=2\) 处成立
+
+设 \(\alpha>-1\)。则对一切 \(p,q\in\mathcal P_2(\mathbb R_{\ge0})\),有
+\(p\boxplus_2^{\alpha}q\in\mathcal P_2(\mathbb R_{\ge0})\)。等价地,
+
+$$
+\boxed{
+\forall\,\alpha>-1,\ \forall\,a,b,c,d\ge0,\quad
+\exists\,r,s\ge0:\ p\boxplus_2^{\alpha}q=(X-r)(X-s).
+}
+$$
+

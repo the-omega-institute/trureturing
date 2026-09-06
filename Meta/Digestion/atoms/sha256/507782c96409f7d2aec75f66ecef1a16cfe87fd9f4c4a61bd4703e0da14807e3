@@ -1,0 +1,43 @@
+## 一个完整的参照读出
+
+引入控制比特。每一步使用成功 Kraus 算子
+
+$$
+K_j
+=
+|0\rangle\langle0|\otimes I
++
+|1\rangle\langle1|\otimes P_j,
+$$
+
+以及失败算子
+
+$$
+L_j
+=
+|1\rangle\langle1|\otimes(I-P_j).
+$$
+
+它们满足
+
+$$
+K_j^\dagger K_j+L_j^\dagger L_j=I.
+$$
+
+控制比特从 \(|+\rangle\) 开始。全部步骤成功后，其未归一化态为
+
+$$
+\frac{|0\rangle+z_N|1\rangle}{\sqrt2}.
+$$
+
+对上述两条路径，整个受控实验的成功概率均为 \(9/16\)。条件于成功，再测量控制比特的 \(Y=+1\) 结果，其概率分别为
+
+$$
+\boxed{
+\frac5{18},
+\qquad
+\frac{13}{18}.
+}
+\tag{233.6}
+$$
+

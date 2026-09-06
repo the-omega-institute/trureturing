@@ -75,7 +75,7 @@ internal static partial class RepositoryRules
     // of limit+1 turns the repository-wide scan red - blocking every unrelated PR until
     // someone splits. That is what made strict (now forbidden, 19) load-bearing. The
     // admission rule keeps the unbanded limit, so the next change that introduces a
-    // capacity-counted path absent from its ForkPoint is still refused and the split
+    // capacity-counted path absent from its protected baseline is still refused and the split
     // pressure lands exactly where it belongs.
     // Thresholds raised 12/24 -> 24/48 by the owner on 2026-08-30 (wave-71 readings: nine
     // Weil/Analytic/Observer buckets at 12 and Weil/Budget at 13 within one day; the band
@@ -101,6 +101,7 @@ internal static partial class RepositoryRules
         || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
         || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+        || FrozenStatePath.IsUnderRoot(path)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
 
@@ -134,15 +135,72 @@ internal static partial class RepositoryRules
     }
 
     private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
+        => EvaluateCapacity(context, context.DeriveTestMap);
+
+    internal static ImmutableArray<RuleFinding> EvaluateCapacity(
+        RuleEvaluationContext context,
+        Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot)
+    {
+        // Wrap both snapshot derivations here so cache outcomes remain observational to capacity findings.
+        ScribeTestMap GetMap(RepositorySnapshot snapshot) => context.TestMapStore is null
+            ? deriveSnapshot(snapshot)
+            : context.TestMapStore.GetOrDerive(snapshot);
+        if (context.Changes.Paths.Any(static path =>
+                ScribeTestMapDeriver.IsDerivationInput(path.Value)))
+        {
+            var currentDerivation = Task.Run(() => GetMap(context.Current));
+            var baselineDerivation = ReferenceEquals(context.Current, context.Baseline)
+                ? currentDerivation
+                : Task.Run(() => GetMap(context.Baseline));
+            return EvaluateCapacityAsync(context, currentDerivation, baselineDerivation)
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        return EvaluateCapacityCore(context, derivedMaps: null);
+    }
+
+    internal static async Task<ImmutableArray<RuleFinding>> EvaluateCapacityAsync(
+        RuleEvaluationContext context,
+        Task<ScribeTestMap> currentDerivation,
+        Task<ScribeTestMap> baselineDerivation)
+    {
+        var bothDerivations = Task.WhenAll(currentDerivation, baselineDerivation);
+        try
+        {
+            await bothDerivations.ConfigureAwait(false);
+        }
+        catch
+        {
+            _ = bothDerivations.Exception;
+            if (!currentDerivation.IsCompletedSuccessfully)
+            {
+                await currentDerivation.ConfigureAwait(false);
+            }
+
+            await baselineDerivation.ConfigureAwait(false);
+            throw;
+        }
+
+        return EvaluateCapacityCore(
+            context,
+            (currentDerivation.Result, baselineDerivation.Result));
+    }
+
+    private static ImmutableArray<RuleFinding> EvaluateCapacityCore(
+        RuleEvaluationContext context,
+        (ScribeTestMap Current, ScribeTestMap Baseline)? derivedMaps)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(
-                ScribeTestMapDeriver.DeriveSnapshot(context.Current),
-                ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint))
-            .Select(static finding => new RuleFinding(
-                finding.Path,
-                finding.Message,
-                finding.Effect)));
+        if (derivedMaps is { } maps)
+        {
+            findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(maps.Current, maps.Baseline)
+                .Select(static finding => new RuleFinding(
+                    finding.Path,
+                    finding.Message,
+                    finding.Effect)));
+        }
+
         foreach (var (path, file) in context.Current.Files)
         {
             if (IsCapacityExcluded(path.Value))
@@ -153,8 +211,8 @@ internal static partial class RepositoryRules
             var lineCount = CountArtifactLines(file.Text);
             if (lineCount > ArtifactHardLineLimit)
             {
-                // 阻断落在把它推过线的那个候选身上,不落在无辜候选身上。判据取自分叉点:
-                // 本次改动有没有让它变长。与目录轴同构(带内候选只有引入了分叉点上不存在的
+                // 阻断落在把它推过线的那个候选身上,不落在无辜候选身上。判据取自受保护基线:
+                // 本次改动有没有让它变长。与目录轴同构(带内候选只有引入了基线上不存在的
                 // 路径才阻断,见下方 DirectoryToleranceLimit 注释与 2026-08-13 判例)。
                 //
                 // 案由(2026-08-15):dev 上 DigestionLedgerAligner.cs 因两个 PR 的**并集**
@@ -165,10 +223,10 @@ internal static partial class RepositoryRules
                 //
                 // 检测不降级:超线仍然出 finding,无辜者那条是 Observe;全仓检测由 push
                 // 侧的 capacity-audit 承担。第20条要的正是这个形状:窄化阻断须以加强检测为对价。
-                var forkPointLineCount = context.ForkPoint.Files.TryGetValue(path, out var forkFile)
-                    ? CountArtifactLines(forkFile.Text)
+                var baselineLineCount = context.Baseline.Files.TryGetValue(path, out var baselineFile)
+                    ? CountArtifactLines(baselineFile.Text)
                     : 0;
-                findings.Add(lineCount > forkPointLineCount
+                findings.Add(lineCount > baselineLineCount
                     ? new RuleFinding(path.Value, "artifact exceeds 800 lines")
                     : new RuleFinding(
                         path.Value,
@@ -189,7 +247,7 @@ internal static partial class RepositoryRules
         }
 
         var directories = CapacityPathsByDirectory(context.Current.Files.Keys);
-        var forkPointDirectories = CapacityPathsByDirectory(context.ForkPoint.Files.Keys);
+        var baselineDirectories = CapacityPathsByDirectory(context.Baseline.Files.Keys);
 
         // Occupancy is counted over the whole tree so the number reported is the real one, but
         // only buckets this change touches are reported. DirectoryToleranceLimit above was added
@@ -200,13 +258,14 @@ internal static partial class RepositoryRules
         // D5/S3/Constants, deposits f2296a0 and eb759dc each saw twelve and admitted, and union
         // 0ba924d held thirteen and stopped dev and every unrelated branch. Every member of that
         // bucket is frozen, so moving one out is not an available split. Admission therefore
-        // compares capacity-counted path membership with the ForkPoint: an overfull candidate blocks
-        // if any current path is absent there, and otherwise emits a non-blocking Observe.
+        // compares capacity-counted path membership with the protected baseline: an overfull
+        // candidate blocks if any current path is absent there, and otherwise emits a non-blocking
+        // Observe.
         //
-        // Closure: for each admitted overfull candidate C, relative to its own merge base F,
-        // Added_C(d) = C(d) \ F(d) is empty because CurrentPaths_C(d) is a subset of
-        // MergeBasePaths_C(d). A git three-way merge can introduce only paths in Added_C(d), so
-        // every such merge is non-growing in d; the candidates need not share a fork point.
+        // Closure: for each admitted overfull candidate C relative to protected baseline B,
+        // Added_C(d) = C(d) \ B(d) is empty because CurrentPaths_C(d) is a subset of
+        // BaselinePaths_C(d). A git three-way merge can introduce only paths in Added_C(d), so
+        // every such merge is non-growing in d.
         //
         // Residual: candidates at or below DirectoryFileLimit are not constrained by this
         // predicate. The 2026-08-13 union mechanism in that regime is unchanged by this change;
@@ -226,8 +285,8 @@ internal static partial class RepositoryRules
         foreach (var item in directories.Where(item => item.Value.Count > DirectoryFileLimit
             && touched.Contains(item.Key)))
         {
-            var forkPointPaths = forkPointDirectories.GetValueOrDefault(item.Key);
-            if (forkPointPaths is null || !item.Value.IsSubsetOf(forkPointPaths))
+            var baselinePaths = baselineDirectories.GetValueOrDefault(item.Key);
+            if (baselinePaths is null || !item.Value.IsSubsetOf(baselinePaths))
             {
                 findings.Add(new RuleFinding(
                     item.Key,
@@ -242,7 +301,7 @@ internal static partial class RepositoryRules
                     $"directory is overfull at {item.Value.Count} files (admission limit "
                     + $"{DirectoryFileLimit}, repository tolerance "
                     + $"{DirectoryToleranceLimit}), but this change introduced no capacity-counted "
-                    + "path absent from its fork point; split per CLAUDE.md 8",
+                    + "path absent from the protected baseline; split per CLAUDE.md 8",
                     AdmissionEffect.Observe));
             }
         }
@@ -277,87 +336,6 @@ internal static partial class RepositoryRules
 
         return findings.ToImmutable();
     }
-
-    private static ImmutableArray<RuleFinding> Chronicle(RuleEvaluationContext context) =>
-        context.ForkPoint.Files
-            .Where(static item => item.Key.Value.StartsWith("Chronicle/", StringComparison.Ordinal))
-            .Where(item => context.IsBaseFactAffected(item.Key.Value))
-            .Where(item => !context.Current.TryGetFile(item.Key.Value, out var current)
-                || !current.RawBytes.AsSpan().SequenceEqual(item.Value.RawBytes.AsSpan()))
-            .Select(static item => new RuleFinding(item.Key.Value, "tracked Chronicle entries are append-only"))
-            .ToImmutableArray();
-
-    /// <summary>
-    /// A theory volume grows only at its end. Every atom the digestion ledger holds was hashed
-    /// from a span of these bytes, so rewriting a span silently detaches whatever was digested
-    /// from it — and an atom that carries a Lean coverage GID would lose that link with no
-    /// signal at all. An erratum is therefore published the way everything else in this
-    /// repository is published: as new text appended after the old, leaving the earlier bytes
-    /// exactly as they were digested. Admitting a change means the base bytes are still a
-    /// prefix of the candidate bytes, which rejects in-place edits, truncation, and deletion
-    /// with one predicate rather than three.
-    /// </summary>
-    private static ImmutableArray<RuleFinding> TheoryAppendOnly(RuleEvaluationContext context) =>
-        context.ForkPoint.Files
-            .Where(static item => IsTheoryVolumePath(item.Key.Value))
-            .Where(item => context.IsBaseFactAffected(item.Key.Value))
-            .Where(item => !context.Current.TryGetFile(item.Key.Value, out var current)
-                || !current.RawBytes.AsSpan().StartsWith(item.Value.RawBytes.AsSpan()))
-            .Select(static item => new RuleFinding(
-                item.Key.Value,
-                "theory volumes are append-only; publish an erratum as newly appended prose"))
-            .ToImmutableArray();
-
-    private static ImmutableArray<RuleFinding> DigestionAtomsAppendOnly(
-        RuleEvaluationContext context)
-    {
-        var candidateHashes = DigestionAtomHashFacts(context.Current)
-            .Select(static fact => fact.Hash)
-            .ToHashSet(StringComparer.Ordinal);
-        return DigestionAtomHashFacts(context.ForkPoint)
-            .Where(fact => context.IsBaseFactAffected(fact.Path))
-            .Where(fact => !candidateHashes.Contains(fact.Hash))
-            .Select(static fact => new RuleFinding(
-                fact.Path,
-                $"digestion atoms are append-only; candidate dropped base content hash {fact.Hash}"))
-            .ToImmutableArray();
-    }
-
-    private static ImmutableArray<DigestionAtomHashFact> DigestionAtomHashFacts(
-        RepositorySnapshot snapshot)
-    {
-        var facts = ImmutableArray.CreateBuilder<DigestionAtomHashFact>();
-        foreach (var (path, file) in snapshot.Files
-                     .Where(static pair => IsBackfillAtomEntryPath(pair.Key.Value))
-                     .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
-        {
-            if (YamlSubsetParser.Parse(file.Text) is not Dictionary<string, object?> root
-                || root.GetValueOrDefault("fingerprints") is not Dictionary<string, object?> fingerprints
-                || fingerprints.GetValueOrDefault("raw_sha256") is not string raw
-                || !DigestionFingerprint.IsCanonicalSha256(raw))
-            {
-                throw new FormatException(
-                    $"backfill atom content hash projection is invalid: {path.Value}");
-            }
-
-            facts.Add(new DigestionAtomHashFact(path.Value, raw["sha256:".Length..]));
-        }
-
-        return facts.ToImmutable();
-    }
-
-    private static bool IsBackfillAtomEntryPath(string path)
-    {
-        if (!path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-            || !path.EndsWith(".yaml", StringComparison.Ordinal))
-        {
-            return false;
-        }
-
-        return path[BackfillInventoryLoader.RootPath.Length..].Split('/').Length == 3;
-    }
-
-    private sealed record DigestionAtomHashFact(string Path, string Hash);
 
     private static ImmutableArray<RuleFinding> Badges(RuleEvaluationContext context) =>
         context.Current.Files
@@ -398,6 +376,8 @@ internal static partial class RepositoryRules
             }
 
         }
+
+        findings.AddRange(FrozenStates(context));
 
         return findings.ToImmutable();
     }
@@ -508,7 +488,8 @@ internal static partial class RepositoryRules
                 {
                     findings.Add(new RuleFinding(
                         path.Value,
-                        "expected the exact six-line header at byte zero"));
+                        "expected the canonical Lean header at byte zero "
+                        + "(six-line legacy header or seven-line header with utility)"));
                 }
 
                 continue;

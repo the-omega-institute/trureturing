@@ -1,0 +1,49 @@
+## 定理 193.2　共同运动与关系运动的精确分解
+
+定义
+
+$$
+M_{\mathrm{tot}}=M_A+M_B,
+\qquad
+\mu=\frac{M_AM_B}{M_A+M_B},
+$$
+
+$$
+Q=\frac{M_AX_A+M_BX_B}{M_{\mathrm{tot}}},
+\qquad
+P_{\mathrm{tot}}=P_A+P_B,
+$$
+
+$$
+p=\frac{M_AP_B-M_BP_A}{M_{\mathrm{tot}}}.
+$$
+
+则
+
+$$
+\boxed{
+H=
+E_A+E_B
++
+\frac{P_{\mathrm{tot}}^2}{2M_{\mathrm{tot}}}
++
+\frac{p^2}{2\mu}
++
+M_AM_Bu_\ell(R).
+}
+\tag{193.5}
+$$
+
+并有
+
+$$
+\boxed{\ddot Q=0.}
+\tag{193.6}
+$$
+
+### 证明
+
+质量算子彼此可交换，可以在其联合谱分支上应用动能恒等式，再拼接为完整算子关系。
+
+相互作用只依赖 \(R\)，与共同位置 \(Q\) 无关，因此共同运动自由。∎
+

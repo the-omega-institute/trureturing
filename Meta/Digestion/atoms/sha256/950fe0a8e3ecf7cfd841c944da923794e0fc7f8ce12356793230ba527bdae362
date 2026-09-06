@@ -1,0 +1,2 @@
+**候签定理 5.95(A007018 的 p<=100 平方筛)**〔open;落 `D5/S1/Recurrence/A007018PrimeSquareSieve`〕。对任意 n,p : Nat，若 p.Prime 且 p<=100，则 `not (p^2 divides q n)`。证明不计算巨大 q_n：在 ZMod (p^2) 中迭代 x -> x(x+1)，以含 1、对迭代闭合且避开 0 的有限轨道证书归纳覆盖所有 n。二十五个素数平方模轨道共 3368 项，最大者为 p=89、长度 528；各证书由 kernel `decide` 核验。伴随：q 0..4=1,2,6,42,1806，且 1806=2*3*7*43 为 squarefree。
+

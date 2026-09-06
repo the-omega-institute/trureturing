@@ -1,0 +1,33 @@
+## 236. 稠密不等于稳定 frame
+
+采样点越来越密时，也会越来越接近。
+
+对应 evaluation kernels 可能趋近线性相关，Gram 矩阵最小特征值趋近零。
+
+于是最小插值成本：
+
+$$
+v^\ast G_n^{-1}v
+$$
+
+可以发散。
+
+所以还要区分：
+
+$$
+\boxed{
+\text{uniqueness}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{stable recoverability}.
+}
+$$
+
+这解释了为什么：
+
+* 全部零点或全部名字原则上可以确定对象；

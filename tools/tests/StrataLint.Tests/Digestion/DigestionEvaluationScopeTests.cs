@@ -92,7 +92,7 @@ public sealed class DigestionEvaluationScopeTests
         Assert.Equal(DigestionEvaluationScope.FullScan, scope);
         Assert.Contains(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
@@ -161,19 +161,19 @@ public sealed class DigestionEvaluationScopeTests
 
         Assert.Contains(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
-    public void UnrelatedChangeDoesNotValidateHistoricalCoverageReceipt()
+    public void UnrelatedChangeStillValidatesCurrentCoverageEdge()
     {
         var evaluation = EvaluateMismatchedCoverageReceipt(
             RawChangeSet.Create(["notes/r16-unrelated.txt"]),
             DigestionEvaluationScope.ChangedSet);
 
-        Assert.DoesNotContain(
+        Assert.Contains(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     private static DigestionLedgerEvaluation EvaluateMismatchedProjectedStatus(
@@ -209,9 +209,8 @@ public sealed class DigestionEvaluationScopeTests
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             gid,
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 gid,
-                atom.Fingerprints.RawSha256,
                 "sha256:0000000000000000000000000000000000000000000000000000000000000000"));
         var snapshot = Snapshot([
             (targetPath, target),
@@ -237,24 +236,26 @@ public sealed class DigestionEvaluationScopeTests
         DigestionMigrationState migration,
         DigestionTruthState truth,
         string coverageGid = "D5/X_Frontier/Probe",
-        DigestionCoverageReceipt? coverageReceipt = null,
+        DigestionCoverageEdge? coverageReceipt = null,
         bool includeCoverageGid = true)
     {
-        var receipts = new DigestionReceipts(
-            coverageReceipt is null ? [] : [coverageReceipt],
-            [],
-            [],
-            [],
-            null);
+        var receipts = new DigestionReceipts([], [], [], null);
         var entry = DigestionTestSupport.Entry(
             atom,
             "scope-probe",
             AtomizerRegistry.NoAtomizerId,
             migration,
             truth,
-            includeCoverageGid ? [coverageGid] : [],
+            [],
             receipts,
-            sourceId: "scope-probe");
+            sourceId: "scope-probe") with
+        {
+            Coverage = coverageReceipt is not null
+                ? [coverageReceipt]
+                : includeCoverageGid
+                    ? [new DigestionCoverageEdge(coverageGid, null)]
+                    : [],
+        };
         return DigestionTestSupport.Document(
             AtomizerRegistry.NoAtomizerId,
             [entry],

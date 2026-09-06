@@ -1,0 +1,49 @@
+## 定理 213.2　相同当前读数可以被同一个行动完全区分
+
+取
+
+$$
+\rho_\pm=\frac{I\pm Y}{2}.
+$$
+
+当前读数相同：
+
+$$
+\operatorname{Tr}(P_0\rho_+)
+=
+\operatorname{Tr}(P_0\rho_-)
+=
+\frac12.
+$$
+
+但实施同一个 \(U_x\) 后：
+
+$$
+\boxed{
+\operatorname{Tr}(P_0U_x\rho_+U_x^\dagger)=1,
+}
+$$
+
+$$
+\boxed{
+\operatorname{Tr}(P_0U_x\rho_-U_x^\dagger)=0.
+}
+\tag{213.3}
+$$
+
+### 证明
+
+因为
+
+$$
+U_x^\dagger P_0U_x=\frac{I+Y}{2},
+$$
+
+代入即可。∎
+
+这不是观察者“凭空创造了原来的区别”，而是它选择的操作让原来藏在相位中的区别进入了可读概率。
+
+对项目而言，这就是一个明确的 carry witness：旧 CUT 足以处理原来的被动实验，却不足以处理新增控制。
+
+---
+

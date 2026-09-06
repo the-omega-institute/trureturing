@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b0d065a60c0deb020ee8fd56d6793d8a96bfd248c3752716e51e4d2c032c60b0
+  normalized_sha256: sha256:b0d065a60c0deb020ee8fd56d6793d8a96bfd248c3752716e51e4d2c032c60b0
+cas_ref: sha256:b0d065a60c0deb020ee8fd56d6793d8a96bfd248c3752716e51e4d2c032c60b0
+coverage_gids:
+  - gid: D5/S3/PrimeForms/Crossing/CrossingNormForm.Qform_range_eq_eisNorm
+    target_statement_id: sha256:b866667e6c3aa34654c6f7711482762c40940fbba312741f5297ac49bcf569cc
+receipts:
+  scribe:
+    - gid: D5/S3/PrimeForms/Crossing/CrossingNormForm.Qform_range_eq_eisNorm
+      definition_sha256: sha256:554fea8a7b279b4106e8717732fe358b8c77a88a031c16fe937a5057fc7ce60e
+      emission_sha256: sha256:c1e639d7c4b2ae0afa30e6db21b810529909d5e9712a436f9d530bdb03d9f234
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+## B11.1 transfer length
+
+$$
+N=\text{局部约束链或 cocycle 的因子数}.
+\tag{B11.1}
+$$
+
+它控制：
+
+- 两通道振幅的 $N$ 次幂；

@@ -1,0 +1,20 @@
+**此时程序只需检查：\(3\) 寄存器是不是零。**
+
+$$
+b=r=0
+\iff
+d\mid m.
+$$
+
+所以，所谓“几何位置触发不同分支”，现在可以明确识别为：
+
+$$
+\boxed{
+\text{反复减法}
+\longrightarrow
+\text{余数}
+\longrightarrow
+\text{零测试}.
+}
+$$
+

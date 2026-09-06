@@ -1,0 +1,75 @@
+## 定理255.1　乘法合成与数值单调性迫使对数能量
+
+设：
+
+$$
+\mathcal E:\mathbb N_+\to\mathbb R
+$$
+
+满足：
+
+$$
+\mathcal E(mn)=\mathcal E(m)+\mathcal E(n),
+$$
+
+$$
+m\le n\Longrightarrow\mathcal E(m)\le\mathcal E(n),
+$$
+
+且 \(\mathcal E(2)>0\)。
+
+则存在 \(E_*>0\)，使：
+
+$$
+\boxed{\mathcal E(n)=E_*\ln n.}
+\tag{255.2}
+$$
+
+### 证明
+
+固定 \(n\)，令：
+
+$$
+k_m=\left\lfloor m\frac{\ln n}{\ln2}\right\rfloor.
+$$
+
+则：
+
+$$
+2^{k_m}\le n^m<2^{k_m+1}.
+$$
+
+由单调性和乘法可加性：
+
+$$
+k_m\mathcal E(2)
+\le
+m\mathcal E(n)
+\le
+(k_m+1)\mathcal E(2).
+$$
+
+除以 \(m\)，令 \(m\to\infty\)，得到：
+
+$$
+\mathcal E(n)=\frac{\mathcal E(2)}{\ln2}\ln n.
+$$
+
+∎
+
+### 一个不能省略的条件
+
+仅有乘法可加性时，完全可以选任意素数权重：
+
+$$
+\mathcal E(n)=\sum_pa_p(n)\varepsilon_p.
+$$
+
+不必有 \(\varepsilon_p\propto\ln p\)。
+
+所以，**素数对数能谱不是从唯一分解单独推出的，还需要合成规则、单调性或其他物理选择原则。**
+
+使用 \(\ln p\) 作为模式能量，并得到 ζ 型配分函数，是已有的 Riemann gas 模型路线。([arXiv][2])
+
+---
+

@@ -3,11 +3,14 @@ fingerprints:
   normalized_sha256: sha256:5da430cfa9b6c16bfd0a3924a0572b97a4f4d15f9667c0527ce2e30e80b2f611
 cas_ref: sha256:5da430cfa9b6c16bfd0a3924a0572b97a4f4d15f9667c0527ce2e30e80b2f611
 coverage_gids:
-  - D5/S1/Phase/Basic
+  - gid: D5/S1/Phase/Basic
+    target_statement_id: sha256:931856c78824b9a6224418f283b6ac8f38e957d7aba99cd9486dacce49d02cbc
 receipts:
-  coverage:
+  scribe:
     - gid: D5/S1/Phase/Basic
-      source_sha256: sha256:5da430cfa9b6c16bfd0a3924a0572b97a4f4d15f9667c0527ce2e30e80b2f611
-      target_statement_id: sha256:931856c78824b9a6224418f283b6ac8f38e957d7aba99cd9486dacce49d02cbc
-  scribe: []
+      definition_sha256: sha256:390d1e5ecc5b1964e198fc2620f32640302362bec0c115ce6f93aeb3fec59e7f
+      emission_sha256: sha256:9a562dec38842500b43f4dd2a7bb2c9c7fb867b31680943a3dca184d2d102051
   unresolved_subitems: []
+  chain_atoms:
+    - 29b2c079a48fe1f051473ae42b4c6aaaa19b231cbdfd834aad4e33cc71f73301
+    - 979e3bf864a3b026d2e135b9e4ca382389a42c132ed496bd6bbfe44ae314c957

@@ -104,7 +104,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsAnUnrelatedChangeWhenMaterialArchiveIsMissingAndUnused()
+    public void CheckAdmitsAnAddedAcceptedEventWithMatchingStatePinWithoutSidecarRead()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -114,15 +114,22 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         AddFrozenLedger(fixture);
+        var addedEventPath = fixture.Files.Keys
+            .First(FrozenLedgerChangeClassifier.IsAcceptedEventPath);
+        var snapshotWithEvent = Decode(Snapshot(fixture.Files));
+        var loaded = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
+            FrozenAcceptedEventLoader.LoadFiles(
+                [snapshotWithEvent.Files[RepoPath.CreateKnown(addedEventPath)]]));
+        var statePath = FrozenStatePath.FromModulePath(
+            Assert.Single(loaded.Events).DescriptorPath).Value;
+        fixture.Baseline.Remove(addedEventPath);
+        Assert.Contains(statePath, fixture.Files.Keys);
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create([RuleFixture.BlueprintPath]),
+            RawChangeSet.CreateWithKinds([(addedEventPath, RawChangeKind.Added)]),
             currentRaw,
             baselineRaw);
-        var ledger = new ProductionFrozenLedgerAdmissionServices(
-            "/repo",
-            ImmutableHashSet<string>.Empty);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
         RawLeanReportArtifact.WriteFile(
             candidateReport,
@@ -133,57 +140,14 @@ public sealed partial class ProductionEnvironmentTests
             "/repo",
             gateway,
             new FakeLeanReportSource(null),
-            scribeEmissionVerifier: null,
-            ledger);
+            scribeEmissionVerifier: null);
 
         var outcome = environment.Check([
             "--candidate-lean-report", candidateReport,
         ]);
 
         Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-        Assert.Equal(0, ledger.BaseViewReadCount);
-        Assert.Equal(0, ledger.DeltaEventLoadCount);
-        Assert.Equal(0, ledger.AdmissionCatalogBuildCount);
-        Assert.Equal(0, ledger.IncrementalValidationCount);
         Assert.Equal(0, gateway.CurrentRevisionResolutionCount);
-    }
-
-    [Fact]
-    public void CheckPerformsScopedLedgerCallsForAManagedLeanDelta()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = TrustedFrozenFixture();
-        var currentRaw = Snapshot(fixture.Files);
-        var baselineRaw = Snapshot(fixture.Baseline);
-        var gateway = new FakeRepositoryGateway(
-            RawChangeSet.CreateWithKinds([(RuleFixture.RingPath, RawChangeKind.Modified)]),
-            currentRaw,
-            baselineRaw);
-        var ledger = new ProductionFrozenLedgerAdmissionServices(
-            "/repo",
-            ImmutableHashSet<string>.Empty);
-        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        RawLeanReportArtifact.WriteFile(
-            candidateReport,
-            Decode(currentRaw),
-            LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            gateway,
-            new FakeLeanReportSource(null),
-            scribeEmissionVerifier: null,
-            ledger);
-
-        var outcome = environment.Check([
-            "--candidate-lean-report", candidateReport,
-        ]);
-
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-        Assert.Equal(1, ledger.BaseViewReadCount);
-        Assert.Equal(0, ledger.DeltaEventLoadCount);
-        Assert.Equal(1, ledger.AdmissionCatalogBuildCount);
-        Assert.Equal(1, ledger.IncrementalValidationCount);
-        Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
     }
 
     // --merge-base was an undocumented legacy alias of --protected-base; the
@@ -303,50 +267,6 @@ public sealed partial class ProductionEnvironmentTests
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("Scribe emission verification failed", failure.Message, StringComparison.Ordinal);
     }
-
-
-    [Fact]
-    public void CheckMapsTruthDagCyclesToSl001BeforeRuleCatalog()
-    {
-        const string loopPath = "D5/S0/Carrier/Loop.lean";
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
-        AddFrozenLedger(fixture);
-        fixture.Files[loopPath] = "def loop : Nat := 0\n";
-        fixture.Reports[RuleFixture.RingPath] = new LeanFileReport(
-            ImmutableArray.Create("D5.S0.Carrier.Loop"),
-            ImmutableArray<LeanDeclaration>.Empty);
-        fixture.Reports[loopPath] = new LeanFileReport(
-            ImmutableArray.Create("D5.S0.Carrier.Ring"),
-            ImmutableArray<LeanDeclaration>.Empty);
-        var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[]
-            {
-                RuleFixture.SyntheticProtectedPath,
-                RuleFixture.BlueprintPath,
-            }),
-            Snapshot(fixture.Files),
-            Snapshot(fixture.Baseline));
-        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, source);
-
-        var outcome = CheckWithReports(environment, fixture);
-
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var meta = Assert.Single(
-            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(22)));
-        Assert.DoesNotContain(
-            rejected.Diagnostics,
-            item => item.RuleId == RuleId.CreateKnown(1));
-        Assert.NotEmpty(
-            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(8)));
-        Assert.Equal(RuleFixture.SyntheticProtectedPath, meta.Path);
-    }
-
     [Fact]
     public void RouteUsesTheRepositoryRegistryAndEmitsStableJson()
     {
@@ -390,12 +310,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(first.Output, second.Output);
         Assert.Contains("SELFTEST PASS", first.Output, StringComparison.Ordinal);
     }
-
-    private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
-        RawRepositorySnapshot.Create(files.Select(pair => new RawRepositoryEntry(
-            pair.Key,
-            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(pair.Value)),
-            FrozenLedgerTestData.GitBlobOid(pair.Value))));
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
@@ -448,10 +362,7 @@ public sealed partial class ProductionEnvironmentTests
         var currentCatalog = Catalog(fixture.Files, fixture.Reports);
         var baselineEvents = FrozenLedgerTestData.EventFiles(baselineCatalog);
         var baselineCapability = FrozenLedgerTestData.Baseline(baselineCatalog);
-        var currentEvents = baselineEvents.AddRange(DagLedgerAppendWriter.BuildNewEventFiles(
-            FrozenLedgerGenerator.MissingFreezes(
-            baselineCapability,
-            currentCatalog)));
+        var currentEvents = FrozenLedgerTestData.EventFiles(currentCatalog);
         SetLedger(fixture.Files, currentEvents);
         SetLedger(fixture.Baseline, baselineEvents);
         return baselineCapability;
@@ -476,6 +387,10 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         _ = AddFrozenLedger(fixture);
+        SettleCurrentCoverage(fixture);
+        var settled = BackfillInventoryLoader.Load(Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, settled);
         foreach (var item in fixture.Files)
         {
             fixture.Baseline[item.Key] = item.Value;
@@ -489,115 +404,37 @@ public sealed partial class ProductionEnvironmentTests
         return fixture;
     }
 
-}
-
-internal sealed class FakeRepositoryGateway(
-    RawChangeSet changes,
-    RawRepositorySnapshot? current,
-    RawRepositorySnapshot? baseline,
-    Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
-    Func<string, RawChangeSet>? changesForBase = null,
-    RawRepositorySnapshot? forkPoint = null,
-    Func<RawRepositorySnapshot>? currentReader = null)
-    : IRepositoryGateway
-{
-    internal int ReadCount { get; private set; }
-
-    internal int ReadCurrentCount { get; private set; }
-
-    internal List<string> ReadRevisionCalls { get; } = [];
-
-    internal List<string> ReadChangesCalls { get; } = [];
-
-    internal int CurrentRevisionResolutionCount { get; private set; }
-
-    public AdmissionTopologyOutcome InspectAdmissionTopology() =>
-        throw new InvalidOperationException("topology should not be inspected");
-
-    public PreparedRepository Prepare(string? protectedBase) => new(
-        "baseline",
-        forkPoint is null ? "baseline" : "fork",
-        changes);
-
-    public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
+    private static void SettleCurrentCoverage(RuleFixture fixture)
     {
-        var algorithm = revision.Length == 40 ? "git-sha1:" : "git-sha256:";
-        return new FrozenRevisionIdentity(
-            revision,
-            algorithm + revision,
-            algorithm + new string('b', revision.Length));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot;
+        var lean = AcceptedLeanClosure.Create(LeanAxiomReport.Create(fixture.Reports));
+        var truthStates = LeanTruthStates.Resolve(snapshot, lean);
+        var aligned = DigestionCoverageTargetAligner.Align(
+            BackfillInventoryLoader.Load(snapshot),
+            snapshot,
+            lean,
+            truthStates);
+        var statusByAtomId = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.FullScan,
+                aligned,
+                snapshot,
+                lean,
+                truthStates: truthStates)
+            .Entries
+            .ToDictionary(
+                static entry => entry.Entry.AtomId,
+                static entry => entry.DerivedStatus,
+                StringComparer.Ordinal);
+        var settled = aligned.WithDigestionSources(aligned.RequireDigestionSources()
+            .Select(source => source with
+            {
+                Entries = source.Entries.Select(entry => entry with
+                {
+                    ProjectedStatus = statusByAtomId[entry.AtomId],
+                }).ToImmutableArray(),
+            }).ToImmutableArray());
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, settled);
     }
 
-    public FrozenRevisionIdentity ResolveCurrentRevision()
-    {
-        CurrentRevisionResolutionCount++;
-        return currentRevisionResolver?.Invoke()
-            ?? ResolveFrozenRevision(new string('a', 40));
-    }
-
-    public RawRepositorySnapshot ReadCurrent()
-    {
-        ReadCount++;
-        ReadCurrentCount++;
-        return WithAtomizerData(
-            currentReader?.Invoke()
-            ?? current
-            ?? throw new InvalidOperationException("current snapshot should not be read"));
-    }
-
-    public RawRepositorySnapshot ReadRevision(string revision)
-    {
-        ReadCount++;
-        ReadRevisionCalls.Add(revision);
-        if (string.Equals(revision, "fork", StringComparison.Ordinal))
-        {
-            return WithAtomizerData(
-                forkPoint ?? throw new InvalidOperationException("fork snapshot should not be read"));
-        }
-
-        return WithAtomizerData(
-            baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
-    }
-
-    public RawChangeSet ReadCurrentChanges() => changes;
-
-    public RawChangeSet ReadChanges(string changeBase)
-    {
-        ReadChangesCalls.Add(changeBase);
-        return changesForBase?.Invoke(changeBase) ?? changes;
-    }
-
-    private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>
-        snapshot.Entries.Any(static entry => entry.Path == TheoryAtomizerDataLoader.DataPath)
-            ? snapshot
-            : RawRepositorySnapshot.Create(snapshot.Entries.Add(new RawRepositoryEntry(
-                TheoryAtomizerDataLoader.DataPath,
-                ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes))));
-}
-
-internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanReportSource
-{
-    internal int CallCount { get; private set; }
-
-    public LeanAxiomReport Load(RepositorySnapshot snapshot)
-    {
-        CallCount++;
-        return report ?? throw new InvalidOperationException("Lean report source should not be called");
-    }
-}
-
-internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verification)
-    : IScribeEmissionVerifier
-{
-    internal int CallCount { get; private set; }
-
-    public VerifiedScribeEmissions Verify(
-        RepositorySnapshot snapshot,
-        LeanAxiomReport report,
-        RawChangeSet? changes = null)
-    {
-        CallCount++;
-        return verification
-            ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
-    }
 }

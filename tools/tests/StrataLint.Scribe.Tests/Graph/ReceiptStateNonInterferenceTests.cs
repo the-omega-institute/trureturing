@@ -171,7 +171,6 @@ public sealed class ReceiptStateNonInterferenceTests
             cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
             coverage_gids: []
             receipts:
-              coverage: []
               scribe:
                 - gid: {{SourceGid}}.formalized
                   definition_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:f4a7d27cc41095a8a18a39dfff30dd0feccd2bb5c061b49c7c9665022443df3e
 cas_ref: sha256:f4a7d27cc41095a8a18a39dfff30dd0feccd2bb5c061b49c7c9665022443df3e
 coverage_gids:
-  - D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.tendsto_alternating_partialSums_eta_of_ne_one
+  - gid: D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.tendsto_alternating_partialSums_eta_of_ne_one
+    target_statement_id: sha256:ca0f0c4ac775854035cd9431b07120d20178091c50687140b45dc2e94fc9bd9c
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.tendsto_alternating_partialSums_eta_of_ne_one
-      source_sha256: sha256:f4a7d27cc41095a8a18a39dfff30dd0feccd2bb5c061b49c7c9665022443df3e
-      target_statement_id: sha256:ca0f0c4ac775854035cd9431b07120d20178091c50687140b45dc2e94fc9bd9c
   scribe:
     - gid: D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.tendsto_alternating_partialSums_eta_of_ne_one
       definition_sha256: sha256:c1c646e0fb58044c3ad41a73378232bae9a716da687788ea99aac9d60311ddbc

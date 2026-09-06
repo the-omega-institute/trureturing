@@ -1,0 +1,59 @@
+## 定理283.2　从5040开始的精确波动
+
+令：
+
+$$
+\omega=\frac{2\sqrt{11}J}{\hbar}.
+$$
+
+则：
+
+$$
+\boxed{
+\begin{aligned}
+|\psi(t)\rangle
+={}&\cos(\omega t)|5040\rangle\\
+&-i\sin(\omega t)
+\left[
+\sqrt{\frac6{11}}|5400\rangle
++
+\sqrt{\frac5{11}}|4704\rangle
+\right].
+\end{aligned}
+}
+\tag{283.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+p_{5040}(t)&=\cos^2(\omega t),\\
+p_{5400}(t)&=\frac6{11}\sin^2(\omega t),\\
+p_{4704}(t)&=\frac5{11}\sin^2(\omega t).
+\end{aligned}
+}
+\tag{283.5}
+$$
+
+### 证明
+
+定义亮态：
+
+$$
+|B\rangle
+=
+\sqrt{\frac6{11}}|5400\rangle
++
+\sqrt{\frac5{11}}|4704\rangle.
+$$
+
+矩阵（283.1）在 \(\{|5040\rangle,|B\rangle\}\) 上等于：
+
+$$
+2\sqrt{11}J\,X,
+$$
+
+而暗态与它们解耦。对这个二维块求指数即可。∎
+

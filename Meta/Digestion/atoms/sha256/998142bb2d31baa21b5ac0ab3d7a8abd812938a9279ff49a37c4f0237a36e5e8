@@ -1,0 +1,147 @@
+## 定理 8.1：最优离散规模的平方根分解
+
+无条件地：
+
+$$
+\boxed{
+\mathcal E(\lambda(T))
+=
+\psi(T)+(\sqrt2-1)\sqrt T+o(\sqrt T).
+}
+\tag{21}
+$$
+
+证明使用素数定理，但不使用 RH。素数定理及其经典误差估计可见 NIST 的数论文档。([DLMF][3])
+
+### 证明第一步：第一层截止值距 \(T\) 不超过一个单位
+
+对 \(x=x_1(\lambda(T))\)：
+
+$$
+\frac{\ln(1+1/x)}{\ln x}
+=
+\frac1{T\ln T}.
+$$
+
+使用：
+
+$$
+\frac1{x+1}<\ln(1+1/x)<\frac1x,
+$$
+
+可得：
+
+$$
+\boxed{
+T-1<x_1(\lambda(T))<T.
+}
+\tag{22}
+$$
+
+因此：
+
+$$
+\vartheta_<(x_1)-\vartheta(T)=O(\ln T).
+$$
+
+这一层几乎就是尺度 \(T\) 以下的全部素数。
+
+### 证明第二步：第二层截止值为 \(\sqrt{2T}\)
+
+对固定 \(k=2\)，当 \(x\to\infty\)：
+
+$$
+\eta(x,2)
+\sim\frac1{x^2\ln x}.
+$$
+
+所以：
+
+$$
+x_2^2\ln x_2\sim T\ln T.
+$$
+
+由此：
+
+$$
+\boxed{
+x_2(\lambda(T))\sim\sqrt{2T}.
+}
+\tag{23}
+$$
+
+而 \(\psi(T)\) 中素数平方的截止值是：
+
+$$
+p\le\sqrt T.
+$$
+
+利用素数定理：
+
+$$
+\vartheta(x)\sim x,
+$$
+
+二者之差为：
+
+$$
+\vartheta_<(x_2)-\vartheta(\sqrt T)
+=
+(\sqrt2-1)\sqrt T+o(\sqrt T).
+$$
+
+### 证明第三步：第三层及以后是更低阶项
+
+如果 \(x_k\ge2\)，由：
+
+$$
+\eta(x_k,k)\le\frac{x_k^{-k}}{\ln2}
+$$
+
+得到：
+
+$$
+x_k^k\le\frac{T\ln T}{\ln2}.
+$$
+
+活跃层数只有 \(O(\ln T)\) 个。对 \(k\ge3\)，粗略使用：
+
+$$
+\vartheta(x)\le x\ln x
+$$
+
+就足以给出总贡献：
+
+$$
+O\!\left(T^{1/3}(\ln T)^{7/3}\right)
+=
+o(\sqrt T).
+$$
+
+\(\psi(T)\) 中第三次幂及以上的贡献同样为 \(o(\sqrt T)\)。
+
+合并三部分即得式（21）。证毕。
+
+---
+
+这条公式把两种来源严格分开了：
+
+$$
+\boxed{
+\mathcal E(\lambda(T))-T
+=
+\underbrace{\psi(T)-T}_{\text{真实素数分布误差}}
++
+\underbrace{(\sqrt2-1)\sqrt T}_{\text{第二指数层的确定修正}}
++
+o(\sqrt T).
+}
+\tag{24}
+$$
+
+这里出现的是 \(\sqrt2\)，不是 \(\varphi\)。
+
+这并不削弱黄金表示的作用，而是说明：**不同常数来自不同结构。黄金比例来自合法编码的递推；\(\sqrt2\) 来自第二指数层的最优截止尺度。**
+
+不能要求所有层级的常数都归结为同一个数。
+

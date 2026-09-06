@@ -3,19 +3,58 @@ fingerprints:
   normalized_sha256: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
 cas_ref: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
 coverage_gids:
-  - D5/S3/Observer/MetricGeometry/OrbitConnesDistance.orbit_connes_distance_eq
-  - D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.hiddenTranslation_visible_phase_witness
-  - D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.visible_phase_separation_distance_eq_top
-  - D5/S3/Observer/MetricGeometry/WindowObserverDistance.window_observer_distance_eq_cycle_distance
-  - D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero
-  - D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
-  - D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le
-  - D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
-  - D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul
-  - D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant
+  - gid: D5/S3/Observer/MetricGeometry/OrbitConnesDistance.orbit_connes_distance_eq
+    target_statement_id: sha256:4f63a2595177961343325de05090a82b627dda344f1153e3d678a51108f8c937
+  - gid: D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.hiddenTranslation_visible_phase_witness
+    target_statement_id: sha256:5ebe1845e8a0e581c92d48b61e00b53da4e23cb0ad5e3427c60f949bab992b46
+  - gid: D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.visible_phase_separation_distance_eq_top
+    target_statement_id: sha256:5d4e238144ffef553ca17708dfbdbe997888f6e670d6f0052dcdbada32e276fa
+  - gid: D5/S3/Observer/MetricGeometry/WindowObserverDistance.window_observer_distance_eq_cycle_distance
+    target_statement_id: sha256:e3fa0bd1bb54e0c3e99cfec1689c18630b4c530f8cf622e36b6c6d4795e85265
+  - gid: D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero
+    target_statement_id: sha256:9faf4eb79c56f19ef11f81deca31a33bac0c5d307b4e721a51c209b026612d66
+  - gid: D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
+    target_statement_id: sha256:34e04a09d69f409a303a158b9ac7b20b9439d75f954906efd3e9dfd4db6608f3
+  - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le
+    target_statement_id: sha256:a3fb68b455af665e488e4b05324d2b06bf96a242a48bce562e246273b2c52538
+  - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+    target_statement_id: sha256:a010683c1ec60b327e57c8295734bbcdd95d5b0644f6fa8e3dd878ead7659f7c
+  - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul
+    target_statement_id: sha256:4c402a2839bd29a33bad7c98f4706693224d875a4e4f11fb55178e7bef99e7ff
+  - gid: D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant
+    target_statement_id: sha256:4b8ea362b2298d5fced83b73a2a7f27a5c06448a2c0f39e09fbb4edaa7f9dfb9
 receipts:
-  coverage: []
-  scribe: []
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometry/OrbitConnesDistance.orbit_connes_distance_eq
+      definition_sha256: sha256:1f0bb31b8fce1253184ff89ef1a63a6d7d93521301c18b49af38b728a3932bce
+      emission_sha256: sha256:8438e7d788c5e6ea3022183dba7f6994a41796ae3f44c611b50548265ccaad11
+    - gid: D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.hiddenTranslation_visible_phase_witness
+      definition_sha256: sha256:0697e0f67cad65cc49a3012ef456405dfd9ecd0a72f78e7afc03d4ebbe62b928
+      emission_sha256: sha256:0bfe36b3494eaf790d29113f643f865b8683565aa4057ec1dbdf91e0c0c637fe
+    - gid: D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.visible_phase_separation_distance_eq_top
+      definition_sha256: sha256:0697e0f67cad65cc49a3012ef456405dfd9ecd0a72f78e7afc03d4ebbe62b928
+      emission_sha256: sha256:0bfe36b3494eaf790d29113f643f865b8683565aa4057ec1dbdf91e0c0c637fe
+    - gid: D5/S3/Observer/MetricGeometry/WindowObserverDistance.window_observer_distance_eq_cycle_distance
+      definition_sha256: sha256:c263b8baa740f50980bca98d97e867aa8817b25a6ab3d3fc31a5ec62aa1c7f50
+      emission_sha256: sha256:4264bcc7f16a40dbb87cba45f65fe484c41e65ea8d98c0f3f55f6b11dd8424ee
+    - gid: D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
+    - gid: D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
+    - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
+    - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
+    - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
+    - gid: D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant
+      definition_sha256: sha256:fc1af02e62d0fabc49606f27d5a9a2cd0ec68dd2fccd2aa454ed9c7e373507bf
+      emission_sha256: sha256:845d7283f84ee18afbce5b34c42a87c54684128fb58d69466661739664458f91
   unresolved_subitems:
     - LP-eight-pair-certificate
     - rieffel-metric-bundle-over-torus

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:370be8ff16c8b9b1e21c680c86d3c74ee850af31a42bfa435abd213c1b0c530e
 cas_ref: sha256:370be8ff16c8b9b1e21c680c86d3c74ee850af31a42bfa435abd213c1b0c530e
 coverage_gids:
-  - D5/S3/Weil/ZetaAnalytic/FiniteWindowGlobalBoundary.finite_window_positive_global_boundary
+  - gid: D5/S3/Weil/ZetaAnalytic/FiniteWindowGlobalBoundary.finite_window_positive_global_boundary
+    target_statement_id: sha256:4322ee2c0124f3fb16fe52ec8d986f73b40f52fd7bc8738e3bc7629a4f4e0ef1
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaAnalytic/FiniteWindowGlobalBoundary.finite_window_positive_global_boundary
-      source_sha256: sha256:370be8ff16c8b9b1e21c680c86d3c74ee850af31a42bfa435abd213c1b0c530e
-      target_statement_id: sha256:4322ee2c0124f3fb16fe52ec8d986f73b40f52fd7bc8738e3bc7629a4f4e0ef1
   scribe:
     - gid: D5/S3/Weil/ZetaAnalytic/FiniteWindowGlobalBoundary.finite_window_positive_global_boundary
       definition_sha256: sha256:85f30016fe25b43d5d0a44e57a48a43cb7be772840bd0124669232c8f8b7e3e1

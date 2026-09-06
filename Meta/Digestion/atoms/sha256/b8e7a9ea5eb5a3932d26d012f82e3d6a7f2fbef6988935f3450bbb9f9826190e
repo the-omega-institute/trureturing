@@ -1,0 +1,54 @@
+## 488. 仓库已经发生了一次重要压缩
+
+仓库现在已经证明，在给定 `ZeroData` 的前提下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall g\in\mathrm{WeilTestFunction},
+\quad
+Q_Z(g)\ge0,
+}
+$$
+
+其中：
+
+$$
+Q_Z(g)
+=
+\Re\,
+\operatorname{zeroSum}
+\bigl(
+Z,\operatorname{convolutionSquare}(g)
+\bigr).
+$$
+
+若存在离线零点，仓库的 separator 会产生一个 \(g\)，使：
+
+$$
+Q_Z(g)<0.
+$$
+
+该结果仍相对于给定的 `ZeroData`，不自动解决 `ZeroData` 的存在义务，也不是无条件 RH 证明。
+
+这说明：
+
+> 无穷多个零点条件已经可以被统一成“一个二次型是否非负”。
+
+所以 RH 的无限性并不意味着它无法合并。
+
+它已经被语义压缩为：
+
+$$
+\boxed{
+Q_Z\succeq0.
+}
+$$
+
+尚未解决的是：
+
+> 能否从素数侧直接证明这个全局二次型为正？
+
+---
+

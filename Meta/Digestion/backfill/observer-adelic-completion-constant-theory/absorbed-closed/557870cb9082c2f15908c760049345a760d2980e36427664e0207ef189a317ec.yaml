@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:557870cb9082c2f15908c760049345a760d2980e36427664e0207ef189a317ec
 cas_ref: sha256:557870cb9082c2f15908c760049345a760d2980e36427664e0207ef189a317ec
 coverage_gids:
-  - D5/S3/Weil/Budget/ResolventBudgetWeakDuality.resolvent_budget_weak_duality
+  - gid: D5/S3/Weil/Budget/ResolventBudgetWeakDuality.resolvent_budget_weak_duality
+    target_statement_id: sha256:bc3a1daba546929acdb0cda685c02f5a98ab39079e0e7c4ce81bc3f7f4aa5d3c
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Budget/ResolventBudgetWeakDuality.resolvent_budget_weak_duality
-      source_sha256: sha256:557870cb9082c2f15908c760049345a760d2980e36427664e0207ef189a317ec
-      target_statement_id: sha256:bc3a1daba546929acdb0cda685c02f5a98ab39079e0e7c4ce81bc3f7f4aa5d3c
   scribe:
     - gid: D5/S3/Weil/Budget/ResolventBudgetWeakDuality.resolvent_budget_weak_duality
       definition_sha256: sha256:62f86681575472982c3da4c47f95bba0d241057e98ea6f45ee063582ec7aa477

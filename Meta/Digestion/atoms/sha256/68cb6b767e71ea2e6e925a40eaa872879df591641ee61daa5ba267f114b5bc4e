@@ -1,0 +1,2 @@
+**候签定理 4.94(互素扩张判据)**〔open;同模块〕。若 `IsPPN K`、C 无平方因子、1 < C 且 gcd(K, C) = 1,则 `IsPPN (K * C) ↔ C − K * squarefreeDeriv C = 1`(即 `portDelta K 1 C = 1`)。
+

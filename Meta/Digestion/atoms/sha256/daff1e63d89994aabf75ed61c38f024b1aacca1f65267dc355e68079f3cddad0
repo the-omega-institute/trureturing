@@ -1,0 +1,8 @@
+- 离线零点使 scalar-to-relation coercivity 常数闭合。
+
+它们没有说明 completed zeta scalar 必须支配 prime relation layer。只有式 (18.2)–(18.3) 能把“相变诊断”升级为“相变不可能发生”的定理。
+
+因此，任何把 `canonical`、`positive`、`stable`、`converges` 或 `completion` 直接写入输入数据并由此推出 RH 的做法，都会把唯一承重桥从证明体逃逸到命名或前件中。
+
+---
+

@@ -1,0 +1,44 @@
+## 12.2 但 Euler 质量超指数衰减
+
+若同一个 $F_Q$ 被解释成 prime-power exponent，则对应 scalar Euler weight 包含
+
+$$
+P_Q^{-\sigma F_Q}
+=
+\exp\!\left(-\sigma F_Q\log P_Q\right).
+\tag{A12.5}
+$$
+
+由于
+
+$$
+F_Q\asymp\varphi^Q,
+\qquad
+\log P_Q\asymp Q,
+$$
+
+该权重按
+
+$$
+\exp(-cQ\varphi^Q)
+\tag{A12.6}
+$$
+
+超指数衰减。
+
+所以：
+
+$$
+\boxed{
+\text{归一化几何可以处在 fixed scale，
+实际 Euler mass 却可以趋于零。}
+}
+\tag{A12.7}
+$$
+
+这说明 Zeckendorf–PrimeGap renormalization 目前只建立了几何／observer 分辨结构，尚未建立 zeta 配分权下的非消失贡献。
+
+要形成真正的 multiscale sticky tower，必须另外证明 completion measure 对这些 shell 提供足够质量。该质量不能由状态数或归一化 kernel 自动生成。
+
+---
+

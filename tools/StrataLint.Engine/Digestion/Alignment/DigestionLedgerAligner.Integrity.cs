@@ -9,74 +9,6 @@ internal static partial class DigestionLedgerAligner
         DigestionMigrationState.Residual,
         DigestionTruthState.Open);
 
-    private static string? AdmissionGenreFinding(
-        DigestionAlignmentMode mode,
-        RepositorySnapshot candidateSnapshot,
-        RepositorySnapshot? baselineSnapshot,
-        DigestionLedgerSource candidateSource,
-        DigestionLedgerSource? baselineSource,
-        bool registeredAtomizer,
-        TheoryAtomizerRules? atomizerRules,
-        Func<string, TheoryAtomizer> atomizerResolver)
-    {
-        if (mode != DigestionAlignmentMode.Admission
-            || AtomizerDecisionClosureEqualBaseline(
-                candidateSnapshot,
-                baselineSnapshot,
-                candidateSource,
-                baselineSource))
-        {
-            return null;
-        }
-
-        if (candidateSource.Atomizer == AtomizerRegistry.NoAtomizerId)
-        {
-            return GenreRegistryChecksEqual(
-                candidateSource.GenreRegistryCheck,
-                GenreRegistryCheck.NoGenreRegistry)
-                    ? null
-                    : GenreRegistryProjectionFinding(
-                        candidateSource,
-                        candidateSource.GenreRegistryCheck,
-                        GenreRegistryCheck.NoGenreRegistry);
-        }
-
-        if (!registeredAtomizer
-            || atomizerRules is null
-            || !candidateSnapshot.TryGetFile(candidateSource.SourcePath, out var sourceFile))
-        {
-            return null;
-        }
-
-        AtomizedTheoryDocument atomized;
-        try
-        {
-            var atomize = atomizerResolver(candidateSource.Atomizer);
-            atomized = atomize(sourceFile.RawBytes.AsSpan(), atomizerRules);
-        }
-        catch (Exception exception) when (
-            exception is TheorySourceFormatException or DecoderFallbackException)
-        {
-            // The ordinary pass owns theory-source and UTF-8 decoding failures, so the probe
-            // must not replace those outcomes with a genre finding.
-            return null;
-        }
-
-        if (AtomizerIntegrityFailure(atomized, sourceFile.RawBytes.AsSpan()) is not null)
-        {
-            return null;
-        }
-
-        return GenreRegistryChecksEqual(
-            candidateSource.GenreRegistryCheck,
-            atomized.GenreRegistryCheck)
-                ? null
-                : GenreRegistryProjectionFinding(
-                    candidateSource,
-                    candidateSource.GenreRegistryCheck,
-                    atomized.GenreRegistryCheck);
-    }
-
     private static bool GenreRegistryChecksEqual(
         GenreRegistryCheck left,
         GenreRegistryCheck right) =>
@@ -154,13 +86,8 @@ internal static partial class DigestionLedgerAligner
         var admissionEntry = entry with
         {
             ProjectedStatus = StructuralIdentityStatus,
-            CoverageGids = [],
-            Receipts = entry.Receipts with
-            {
-                Coverage = [],
-                Scribe = [],
-                CoverDisposition = null,
-            },
+            Coverage = [],
+            Receipts = entry.Receipts with { Scribe = [], CoverDisposition = null },
         };
         return Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(admissionEntry).AsSpan());
     }

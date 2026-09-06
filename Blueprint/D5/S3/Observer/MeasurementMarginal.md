@@ -38,3 +38,4 @@ The theorem starts with the explicit controlledRecordJointState for the delta re
 
 - Truth anchor: `D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks`
 - Truth anchor: `D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero`
+- Dependency: [D5/S3/Quantum/EnvironmentRecords](../Quantum/EnvironmentRecords.md)

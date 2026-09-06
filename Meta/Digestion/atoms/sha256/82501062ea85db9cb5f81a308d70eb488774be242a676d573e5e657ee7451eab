@@ -1,0 +1,22 @@
+## 71. Strict tightening and the structural boundary
+
+A synthetic instance has alpha=beta=(1/2,1/2), r_0=(1/10,9/10), and r_1=(1/2,1/2). Both aggregate outcome success probabilities are 1/2. Without the mediator mechanism the Frechet benefit interval is [0,1/2]. The exact transport interval is [1/5,3/10]. All supplied outcome probabilities are strictly between zero and one.
+
+With outcome-table strings ordered as (Y_(0,0),Y_(0,1),Y_(1,0),Y_(1,1)), the lower witness has masses
+
+```text
+1111:1/10, 0111:2/5, 0100:2/5, 0000:1/10,
+```
+
+and the upper witness has masses
+
+```text
+0011:1/10, 0111:2/5, 0100:2/5, 1100:1/10.
+```
+
+Their products with respectively diagonal and anti-diagonal mediator couplings of weights (1/2,1/2) attain 1/5 and 3/10. Every indicated mediator and outcome row is checked directly. This is a mathematical validation example, not a real-data application, measured treatment effect or empirical performance claim.
+
+The direct treatment-to-outcome path matters for attainability. In complete mediation one requires the same Y_m in both worlds. Merely setting r_0(m)=r_1(m) does not enforce the almost-sure equality of those two response coordinates. The upper threshold witness generally violates that extra equality. For three mediator values with success 1/2 and a fixed directed-cycle coupling pi(m,m+1)=1/3, each separate upper cell bound is 1/2, but any Boolean response assignment has at most one favourable 0-to-1 edge around the cycle. The actual upper query value is 1/3, attained by mixing an assignment and its complement. Thus the simultaneous upper claim cannot be imported into that exclusion-restricted class.
+
+More generally, on paper, with fixed mediator coupling pi and complete-mediation success probabilities all 1/2, define Cut_pi(y)=sum pi(i,j)*1[y_i!=y_j]. Every admitted outcome law satisfies `2*J=E[Cut_pi(Y)]`, since the expected signed differences Y_j-Y_i vanish. Conversely mixing any assignment y and its complement with equal weights preserves all success marginals and has J=Cut_pi(y)/2. Therefore that fixed-coupling optimization equals half the maximum weighted cut. This exact reduction explains why extending the same easy simultaneous-attainment argument is obstructed. The maximum-cut reduction has not been formalized in Lean in this increment, and no complexity classification for the full unknown-coupling problem is inferred from it.
+

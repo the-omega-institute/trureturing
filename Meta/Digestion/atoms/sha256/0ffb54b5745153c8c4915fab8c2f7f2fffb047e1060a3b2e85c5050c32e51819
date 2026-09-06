@@ -1,0 +1,33 @@
+# 五、新矩阵只含原始 theta 矩的二次组合
+
+从式（P8）展开，得到：
+
+$$
+\boxed{
+\begin{aligned}
+\mathsf B_{ij}
+=
+\sum_{k=0}^{j}
+\Big[
+&(j-k+1)p_{i+k+1}p_{j-k+1}\\
+&-(i+k+2)p_{i+k+2}p_{j-k}
+\Big].
+\end{aligned}
+}
+\tag{P17}
+$$
+
+每项都是两个原始系数的乘积。
+
+因此，计算 \(\mathsf B_N\) 只需要：
+
+$$
+a_0,\ldots,a_{2N},
+$$
+
+即：
+
+$$
+m_0,m_2,\ldots,m_{4N}.
+$$
+

@@ -1,0 +1,4 @@
+# 增订二十九　零点无穷假设下不含 `ZeroData` 的 Weil 判据(W-19 / W-20 / W-21 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-w19-zfree`,`make lean` exit 0、`lake env lean` exit 0,三条声明全为标准三公理)在 `origin/dev` = `1b0cb4fed6`(增订二十七之 la156 模块已合入)的暖树上整证,消费冻结的 M1-a 桥 `ZetaBridge.ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite`、W-13 `Separator.ArchimedeanConvergence.rh_iff_primeSidePositivity`、W-14/W-15 `Separator.PrimeArchimedeanPoincareCriterion.{rh_iff_primeArchimedeanPoincare, rh_iff_exists_supportRadius_primeArchimedeanPoincare}`;`IsNontrivialZero` 取 `D5.S3.Weil.ZeroSum` 命名空间(与 `WeilSquarePositivityCriterionOfInfinite` 同)。检索留痕:`git grep -n 'of_infinite\|hInf : {rho' -- 'D5/**/*.lean'` 命中仅 `WeilSquarePositivityCriterionOfInfinite.lean:40,59,80` 与 `ZeroDataNonemptyIffInfinite.lean:191,239`(零点侧判据的 ∀Z/∃Z 形),素数侧与 Poincaré 形无 Z-free 陈述;三个候选名零命中。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。
+
