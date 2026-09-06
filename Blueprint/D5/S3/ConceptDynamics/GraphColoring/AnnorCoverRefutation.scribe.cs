@@ -30,7 +30,7 @@ internal sealed class AnnorCoverRefutationDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string declaration, string title, Formula formula) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula),
-            AssessedProvenance.NovelAfterSearch(GidRef.Create("D5/L/annor2025domination"), Source),
+            AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text("V and W range over finite types, and F and G are undirected simple graphs. "
                 + "IsCover means an onto map, a bijection on each open neighborhood, and fiber cardinality k. "
                 + "Domination numbers and k are coerced from naturals to reals in the inequality. "

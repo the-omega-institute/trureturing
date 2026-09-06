@@ -12,7 +12,7 @@ $$\begin{gathered}\forall c: \mathbb{R},0<c \Rightarrow \\{}\exists V: \operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/AnnorCoverRefutation.exists_cover_violation` (`✓ std3`). ∎
 
-*Source.* Suspected novel.
+*Source.* Repository-derived.
 
 *Acknowledgement.* Dickson Y. B. Annor (2025). *Domination Parameters of Graph Covers*. DOI: [10.48550/arXiv.2502.14341](https://doi.org/10.48550/arXiv.2502.14341).
 
@@ -26,7 +26,7 @@ $$\begin{gathered}\neg(\exists c: \mathbb{R},(0<c) \land (\forall V: \operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/AnnorCoverRefutation.annor_conjecture14_false` (`✓ std3`). ∎
 
-*Source.* Suspected novel.
+*Source.* Repository-derived.
 
 *Acknowledgement.* Dickson Y. B. Annor (2025). *Domination Parameters of Graph Covers*. DOI: [10.48550/arXiv.2502.14341](https://doi.org/10.48550/arXiv.2502.14341).
 

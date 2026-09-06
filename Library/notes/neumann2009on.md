@@ -32,3 +32,13 @@ The arXiv title query for Leighton and graph/covering returned six entries,
 including arXiv:2507.01839v2; its abstract concerns proofs, group
 commensurability and virtual retracts, not domination. No complete later
 literature review or global novelty conclusion is claimed.
+
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.0906.2496. Independently resolved and
+checked on 2026-09-07 Asia/Singapore against
+https://arxiv.org/html/0906.2496v2 (2010-05-25), the introductory statement
+and "Proof of the k-regular case." The text assumes connected graphs and
+attributes the regular common finite cover result to Angluin and Gardiner.
+The perfect-code consequence above is repository inference from that
+classical result, not a quoted theorem of Neumann or a novelty claim.

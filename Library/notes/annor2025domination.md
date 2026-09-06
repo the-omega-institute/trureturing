@@ -58,3 +58,12 @@ Search on 2026-09-07 Asia/Singapore (2026-09-06 UTC):
 The stored search responses and preregistrations are in the implementation
 attempt log referenced by the worker result. Independent mathematical and
 novelty review remains required before merging or counting a solved problem.
+
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.2502.14341. Independently resolved and
+checked on 2026-09-07 Asia/Singapore against
+https://arxiv.org/html/2502.14341v2 (2025-11-25), Introduction and
+Conjecture 14. These locate the finite simple graph-cover conventions and
+the universal positive-constant conjecture quoted above. The source
+attests that conjecture, not the repository's refutation or its novelty.

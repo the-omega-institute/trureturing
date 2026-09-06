@@ -31,3 +31,13 @@ revised preregistration used r factors of size 2*r; the shift removes zero
 coordinate and subtraction bookkeeping and preserves the same density
 and unbounded-domination argument. This implementation adjustment is
 disclosed after the probes, not represented as an earlier preregistration.
+
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.1908.02445. Independently resolved and
+checked on 2026-09-07 Asia/Singapore against
+https://arxiv.org/html/1908.02445v1 (2019-08-07), Introduction,
+Theorems 1.1 and 1.2. Theorem 1.1 attributes the bound gamma >= t+1 for
+t >= 4 complete factors of size at least two to Mekis (2010), Theorem 2.1;
+Theorem 1.2 cites Defant and Iyer. This locates established product-graph
+ingredients, not the repository's cover refutation or a priority claim.
