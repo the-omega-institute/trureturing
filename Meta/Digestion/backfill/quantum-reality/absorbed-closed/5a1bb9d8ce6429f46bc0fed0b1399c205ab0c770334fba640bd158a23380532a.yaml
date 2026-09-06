@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry.gradient_psi
-      definition_sha256: sha256:8c8bfa0c61fc7e2afc77f70641c918b2b9874573281e3dccd740718be3927d47
-      emission_sha256: sha256:b2c8d68a2409e2e2a6cddb595b51113313210a5eb913c7386a2389e76b569714
+      definition_sha256: sha256:a79f02bcaecfc7517a8ea3da92c3b9f7b35aa9273a44b1adbec16452eca2de97
+      emission_sha256: sha256:767e99ac6d72796b02ad724e019c767faa52e1a7bf325e63106379a55de5bcf1
   unresolved_subitems: []

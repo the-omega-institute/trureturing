@@ -13,14 +13,14 @@ noncomputable section
 open Complex Matrix
 open scoped BigOperators
 open D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry
-open D5.S3.Quantum.Magic.QuquintCertificateData (base zeroQ)
+open D5.S3.Quantum.Magic.QuquintCertificateData (base zeroQ radical radical_sq radical_quartic)
 set_option maxRecDepth 2000
 set_option maxHeartbeats 8000000
 
 namespace D5.S3.Quantum.Magic.QuquintCertificateBridge
 
--- Reuse the checked computations without changing the inherited geometry module.
-open private zeta_value zeta_powers powerTable radical_sq radical_quartic sign_table from
+-- Reuse the checked phase-point computations from the geometry module.
+open private zeta_value zeta_powers powerTable sign_table from
   D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry
 
 private theorem zeta_two : zeta ^ 2 =
@@ -79,7 +79,6 @@ theorem gram_eq : gram = basisMatrixᵀ * basisMatrix := by
 theorem zeroQ_0_eq : zeroQ 0 = phaseForm 0 3 := by
   have h := radical_quartic
   unfold zeroQ
-  simp only [show QuquintCertificateData.radical = radical from rfl]
   ext i j
   fin_cases i <;> fin_cases j
   all_goals simp [phaseForm, pullback, complexBasis, basisMatrix, phases, phasePoint,
@@ -93,7 +92,6 @@ theorem zeroQ_0_eq : zeroQ 0 = phaseForm 0 3 := by
 theorem zeroQ_1_eq : zeroQ 1 = phaseForm 1 3 := by
   have h := radical_quartic
   unfold zeroQ
-  simp only [show QuquintCertificateData.radical = radical from rfl]
   ext i j
   fin_cases i <;> fin_cases j
   all_goals simp [phaseForm, pullback, complexBasis, basisMatrix, phases, phasePoint,
@@ -107,7 +105,6 @@ theorem zeroQ_1_eq : zeroQ 1 = phaseForm 1 3 := by
 theorem zeroQ_2_eq : zeroQ 2 = phaseForm 2 4 := by
   have h := radical_quartic
   unfold zeroQ
-  simp only [show QuquintCertificateData.radical = radical from rfl]
   ext i j
   fin_cases i <;> fin_cases j
   all_goals simp [phaseForm, pullback, complexBasis, basisMatrix, phases, phasePoint,
@@ -121,7 +118,6 @@ theorem zeroQ_2_eq : zeroQ 2 = phaseForm 2 4 := by
 theorem zeroQ_3_eq : zeroQ 3 = phaseForm 3 1 := by
   have h := radical_quartic
   unfold zeroQ
-  simp only [show QuquintCertificateData.radical = radical from rfl]
   ext i j
   fin_cases i <;> fin_cases j
   all_goals simp [phaseForm, pullback, complexBasis, basisMatrix, phases, phasePoint,
@@ -135,7 +131,6 @@ theorem zeroQ_3_eq : zeroQ 3 = phaseForm 3 1 := by
 theorem zeroQ_4_eq : zeroQ 4 = phaseForm 4 4 := by
   have h := radical_quartic
   unfold zeroQ
-  simp only [show QuquintCertificateData.radical = radical from rfl]
   ext i j
   fin_cases i <;> fin_cases j
   all_goals simp [phaseForm, pullback, complexBasis, basisMatrix, phases, phasePoint,
@@ -152,7 +147,6 @@ theorem base_eq_gradient : base = pullback gradient - lOne psi • gram := by
   have hs : Real.sqrt 5 = (radical ^ 2 - 10) / 2 := by linarith [radical_sq]
   unfold base
   rw [lOne_psi, hs]
-  simp only [show QuquintCertificateData.radical = radical from rfl]
   unfold gradient
   simp only [sign_table]
   ext i j

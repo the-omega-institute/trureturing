@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Magic/QuquintStrictDecrease
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=certified-instance; basis=terminal=atom:d885ced9fe875f3ea62f898fd21397dffe54026cc171199a8466c3631684e761; result=D5/S3/Quantum/Magic/QuquintStrictDecrease.directional_decrease
+   utility: kind=certified-instance; basis=terminal=atom:37ec7efabb2d0058768e27a8d0a0f8e4504f01e8cfdd808721bb7500a5bb2fd6; result=D5/S3/Quantum/Magic/QuquintStrictDecrease.directional_decrease
    digest: Exact normalized change and strict mana decrease on constrained directions. -/
 
 import D5.S3.Quantum.Magic.QuquintFiniteMaximum

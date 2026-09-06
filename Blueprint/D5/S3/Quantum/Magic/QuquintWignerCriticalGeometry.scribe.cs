@@ -15,9 +15,8 @@ internal sealed class QuquintWignerCriticalGeometryDocument : IScribeDocumentDef
             Claim("State", "The state space",
                 Seq(Name("State"), Eq, Call(Name("EuclideanSpace"), ComplexType, Fin(5))),
                 "State is the complex Euclidean space on Fin 5, with its L2 norm.", DescribeRole.Definition),
-            Claim("radical", "The positive radical",
-                Seq(Name("radical"), Eq, Sqrt, Grp(Seq(D(1, 0), Plus, D(2), Cdot, Sqrt, Grp(D(5))))),
-                "All exact coordinate entries use this positive real square root.", DescribeRole.Definition),
+            Paragraph(Text("radical denotes QuquintCertificateData.radical. Its definition, square, "
+                + "quartic identity and bounds are given in QuquintCertificateData.")),
             Claim("zeta", "The fifth root of unity",
                 Seq(Name("zeta"), Eq, Call(Qualified("Complex", "exp"),
                     Seq(D(2), Cdot, Cast(Qualified("Real", "pi"), ComplexType), Cdot,

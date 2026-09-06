@@ -42,7 +42,7 @@ Each phaseForm is a four-by-four real matrix obtained by the displayed pullback 
 
 **Definition 1.4 (The coordinate Gram matrix).**
 
-$$\mathrm{gram}:\mathrm{Matrix}(\mathrm{Fin} 4,\mathrm{Fin} 4,\mathbb{R})=\mathrm{Matrix}.\mathrm{transpose}(\mathrm{D5}.\mathrm{S3}.\mathrm{Quantum}.\mathrm{Magic}.\mathrm{QuquintWignerCriticalGeometry}.\mathrm{basisMatrix})\cdot\mathrm{D5}.\mathrm{S3}.\mathrm{Quantum}.\mathrm{Magic}.\mathrm{QuquintWignerCriticalGeometry}.\mathrm{basisMatrix}$$
+$$\mathrm{gram}:\mathrm{Matrix}(\mathrm{Fin} 4,\mathrm{Fin} 4,\mathbb{R})=[[10-\mathrm{radical}^{2}/2,10-3\cdot\mathrm{radical}^{2}/4,\mathrm{radical}^{3}/4-3\cdot\mathrm{radical},-\mathrm{radical}^{3}/8+5\cdot\mathrm{radical}/2],[10-3\cdot\mathrm{radical}^{2}/4,10-\mathrm{radical}^{2}/2,\mathrm{radical}^{3}/8-5\cdot\mathrm{radical}/2,-\mathrm{radical}^{3}/4+3\cdot\mathrm{radical}],[\mathrm{radical}^{3}/4-3\cdot\mathrm{radical},\mathrm{radical}^{3}/8-5\cdot\mathrm{radical}/2,7\cdot\mathrm{radical}^{2}/10+2,31\cdot\mathrm{radical}^{2}/20-12],[-\mathrm{radical}^{3}/8+5\cdot\mathrm{radical}/2,-\mathrm{radical}^{3}/4+3\cdot\mathrm{radical},31\cdot\mathrm{radical}^{2}/20-12,7\cdot\mathrm{radical}^{2}/10+2]]$$
 
 *Formalization.* `D5/S3/Quantum/Magic/QuquintCertificateBridge.gram` (`✓ std3`).
 
@@ -50,7 +50,7 @@ $$\mathrm{gram}:\mathrm{Matrix}(\mathrm{Fin} 4,\mathrm{Fin} 4,\mathbb{R})=\mathr
 
 *Commentary.*
 
-gram is the explicit numerical table in Lean. The public identity gram_eq below proves that its defining geometric expression is this real matrix product.
+The matrix is displayed as a vector of rows, with radical from QuquintCertificateData. The public identity gram_eq below identifies this table with the real matrix product.
 
 **Definition 1.5 (The complete Wigner sign table).**
 

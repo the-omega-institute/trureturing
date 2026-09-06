@@ -37,9 +37,13 @@ internal sealed class QuquintCertificateBridgeDocument : IScribeDocumentDefiniti
                 DescribeRole.Definition),
             Claim("gram", "The coordinate Gram matrix",
                 Seq(Name("gram"), Colon, MatrixType(4, 4, RealType), Eq,
-                    Call(Local("Matrix", "transpose"), Geo("basisMatrix")), Cdot, Geo("basisMatrix")),
-                "gram is the explicit numerical table in Lean. The public identity gram_eq below proves "
-                    + "that its defining geometric expression is this real matrix product.", DescribeRole.Definition),
+                    Vector(
+                        Vector(Seq(Num(10), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(2)), Seq(Num(10), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(4)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(4), Minus, Num(3), Cdot, Radical), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(8), Plus, Num(5), Cdot, Radical, Slash, Num(2))),
+                        Vector(Seq(Num(10), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(4)), Seq(Num(10), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(2)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(8), Minus, Num(5), Cdot, Radical, Slash, Num(2)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(4), Plus, Num(3), Cdot, Radical)),
+                        Vector(Seq(Radical, Caret, Grp(Num(3)), Slash, Num(4), Minus, Num(3), Cdot, Radical), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(8), Minus, Num(5), Cdot, Radical, Slash, Num(2)), Seq(Num(7), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(10), Plus, Num(2)), Seq(Num(31), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(20), Minus, Num(12))),
+                        Vector(Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(8), Plus, Num(5), Cdot, Radical, Slash, Num(2)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(4), Plus, Num(3), Cdot, Radical), Seq(Num(31), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(20), Minus, Num(12)), Seq(Num(7), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(10), Plus, Num(2))))),
+                "The matrix is displayed as a vector of rows, with radical from QuquintCertificateData. "
+                    + "The public identity gram_eq below identifies this table with the real matrix product.", DescribeRole.Definition),
             Claim("signs", "The complete Wigner sign table",
                 Seq(Name("signs"), Colon, MatrixType(5, 5, Name("SignType")), Eq,
                     Vector(Vector(Seq(Minus, D(1)), D(1), D(1), D(0), D(1)), Vector(Seq(Minus, D(1)), D(1), D(1), D(0), D(1)),
@@ -166,6 +170,7 @@ internal sealed class QuquintCertificateBridgeDocument : IScribeDocumentDefiniti
         Parenthesized(Seq(Parenthesized(Seq(v, Colon, type)), Mapsto, body));
     private static Formula EntryPart(string part) => Call(Local("Complex", part), Call(M, X, Y));
     private static Formula MatrixType(int rows, int cols, Formula field) => Call(Name("Matrix"), Fin(rows), Fin(cols), field);
+    private static Formula Radical => Name("radical");
     private static Formula Vector(params Formula[] entries) => Seq(OpenBracket,
         Seq(entries.SelectMany((v, i) => i == 0 ? new[] { v } : new[] { Comma, v }).ToArray()), CloseBracket);
     private static Formula Point(int q, int p) => Parenthesized(Seq(Num(q), Comma, Num(p)));

@@ -7,12 +7,14 @@
    digest: Exact ququint Wigner zeros, tangent dimension, and critical gradient. -/
 
 import D5.S3.Constants.PentagonCosines
+import D5.S3.Quantum.Magic.QuquintCertificateData
 import Mathlib.Analysis.Calculus.Deriv.Abs
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.Analysis.Calculus.Deriv.Mul
 
 noncomputable section
 open Complex Matrix
+open D5.S3.Quantum.Magic.QuquintCertificateData (radical radical_sq radical_quartic radical_bounds)
 open scoped BigOperators
 set_option maxRecDepth 2000
 
@@ -20,7 +22,6 @@ namespace D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry
 
 abbrev State := EuclideanSpace ℂ (Fin 5)
 
-def radical : ℝ := Real.sqrt (10 + 2 * Real.sqrt 5)
 def zeta : ℂ := Complex.exp (2 * Real.pi * Complex.I / 5)
 def phasePoint (q p : Fin 5) : Matrix (Fin 5) (Fin 5) ℂ := fun x y =>
   if (x : ZMod 5) + (y : ZMod 5) = 2 * (q : ZMod 5) then
@@ -32,15 +33,6 @@ def psi : State := WithLp.toLp 2 ((1 / (Real.sqrt 5 : ℂ)) • ![1, 1, zeta ^ 3
 def zeroPoints : Finset (Fin 5 × Fin 5) :=
   by classical exact Finset.univ.filter fun qp => wigner psi qp.1 qp.2 = 0
 
-private theorem radical_sq : radical ^ 2 = 10 + 2 * Real.sqrt 5 :=
-  Real.sq_sqrt (by positivity)
-private theorem radical_quartic : radical ^ 4 - 20 * radical ^ 2 + 80 = 0 := by
-  have h := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
-  nlinarith [radical_sq]
-private theorem radical_bounds : 14 < radical ^ 2 ∧ radical ^ 2 < 15 := by
-  have h := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
-  have hp := Real.sqrt_nonneg 5
-  constructor <;> nlinarith [radical_sq]
 private theorem zeta_value : zeta = ⟨(radical ^ 2 - 12) / 8, radical / 4⟩ := by
   have hc : Real.cos (2 * Real.pi / 5) = (radical ^ 2 - 12) / 8 := by
     have h := D5.S3.Constants.PentagonCosines.pentagon_golden_cosines.2.1

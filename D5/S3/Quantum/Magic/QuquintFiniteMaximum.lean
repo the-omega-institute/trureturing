@@ -192,7 +192,7 @@ private theorem radical_intervals :
     (550552 / 10000 : ℝ) < QuquintCertificateData.radical ^ 3 ∧
     QuquintCertificateData.radical ^ 3 < 550554 / 10000 := by
   let r := QuquintCertificateData.radical
-  have hsq : r ^ 2 = 10 + 2 * Real.sqrt 5 := Real.sq_sqrt (by positivity)
+  have hsq : r ^ 2 = 10 + 2 * Real.sqrt 5 := QuquintCertificateData.radical_sq
   have hf := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
   have hfp := Real.sqrt_nonneg 5
   have hr : 0 < r := by dsimp [r, QuquintCertificateData.radical]; positivity

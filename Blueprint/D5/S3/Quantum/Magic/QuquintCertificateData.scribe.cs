@@ -19,6 +19,13 @@ internal sealed class QuquintCertificateDataDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The positive real square root fixes the radical used in every numerical entry."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ququint-certificate-square"),
+                DeclarationHandle.Create(Module + "radical_sq"), H("Square identity"),
+                StatementSource.FromAuthor(Disp(Seq(Radical, Caret, Grp(D(2)), Eq,
+                    D(1, 0), Plus, D(2), Cdot, Sqrt, Grp(D(5))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Real.sq_sqrt gives the shared square identity used by the quartic relation and bounds."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("ququint-certificate-quartic"),
                 DeclarationHandle.Create(Module + "radical_quartic"), H("Quartic identity"),
                 StatementSource.FromAuthor(Disp(Seq(
@@ -35,19 +42,51 @@ internal sealed class QuquintCertificateDataDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The squared radical lies strictly between fourteen and fifteen; these bounds certify the pivots."))),
                 DescribeRole.Theorem),
-            Describe.Remark(DescribeId.Create("ququint-certificate-base"),
+            Describe.Lean(DescribeId.Create("ququint-certificate-base"),
                 DeclarationHandle.Create(Module + "base"), H("The numerical base matrix"),
+                StatementSource.FromAuthor(Disp(Seq(Name("base"), Eq,
+                    Vector(
+                        Vector(Seq(Num(5), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(4)), Seq(Radical, Caret, Grp(Num(2)), Slash, Num(8)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(8), Plus, Radical, Slash, Num(2)), Seq(Minus, Num(3), Cdot, Radical, Caret, Grp(Num(3)), Slash, Num(16), Plus, Num(5), Cdot, Radical, Slash, Num(4))),
+                        Vector(Seq(Radical, Caret, Grp(Num(2)), Slash, Num(8)), Seq(Num(5), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(4)), Seq(Num(3), Cdot, Radical, Caret, Grp(Num(3)), Slash, Num(16), Minus, Num(5), Cdot, Radical, Slash, Num(4)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(8), Minus, Radical, Slash, Num(2))),
+                        Vector(Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(8), Plus, Radical, Slash, Num(2)), Seq(Num(3), Cdot, Radical, Caret, Grp(Num(3)), Slash, Num(16), Minus, Num(5), Cdot, Radical, Slash, Num(4)), Seq(Num(21), Minus, Num(61), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Num(10), Minus, Num(83), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40))),
+                        Vector(Seq(Minus, Num(3), Cdot, Radical, Caret, Grp(Num(3)), Slash, Num(16), Plus, Num(5), Cdot, Radical, Slash, Num(4)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(8), Minus, Radical, Slash, Num(2)), Seq(Num(10), Minus, Num(83), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Num(21), Minus, Num(61), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(20))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("base is the explicit four-by-four real matrix "
-                    + "whose entries are rational polynomials in radical. "
-                    + "QuquintCertificateBridge.base_eq identifies it with the signed "
-                    + "nonzero phase-point contribution minus the norm contribution.")))),
-            Describe.Remark(DescribeId.Create("ququint-certificate-zero-forms"),
+                Blocks(Paragraph(Text("Matrices are vectors of rows. QuquintCertificateBridge.base_eq identifies "
+                    + "base with the signed nonzero phase-point contribution minus the norm contribution."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ququint-certificate-zero-forms"),
                 DeclarationHandle.Create(Module + "zeroQ"), H("The five numerical matrices"),
+                StatementSource.FromAuthor(Disp(Seq(Name("zeroQ"), Eq, Vector(
+                        Vector(
+                            Vector(Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(20), Minus, Radical, Slash, Num(2)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Radical, Slash, Num(20))),
+                            Vector(Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Num(7), Cdot, Radical, Slash, Num(20)), Seq(Minus, Radical, Slash, Num(10))),
+                            Vector(Seq(Radical, Caret, Grp(Num(3)), Slash, Num(20), Minus, Radical, Slash, Num(2)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Num(7), Cdot, Radical, Slash, Num(20)), Seq(Num(9), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100), Minus, Num(1), Slash, Num(5)), Seq(Num(17), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200), Minus, Num(2), Slash, Num(5))),
+                            Vector(Seq(Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Radical, Slash, Num(20)), Seq(Minus, Radical, Slash, Num(10)), Seq(Num(17), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200), Minus, Num(2), Slash, Num(5)), Seq(Num(9), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100), Minus, Num(1)))),
+                        Vector(
+                            Vector(Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(20), Minus, Num(7), Cdot, Radical, Slash, Num(10)), Seq(Minus, Num(3), Cdot, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Num(13), Cdot, Radical, Slash, Num(20))),
+                            Vector(Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Num(3), Cdot, Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Num(13), Cdot, Radical, Slash, Num(20)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(20), Plus, Num(7), Cdot, Radical, Slash, Num(10))),
+                            Vector(Seq(Radical, Caret, Grp(Num(3)), Slash, Num(20), Minus, Num(7), Cdot, Radical, Slash, Num(10)), Seq(Num(3), Cdot, Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Num(13), Cdot, Radical, Slash, Num(20)), Seq(Num(7), Slash, Num(5), Minus, Num(11), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100)), Seq(Num(17), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200), Minus, Num(7), Slash, Num(5))),
+                            Vector(Seq(Minus, Num(3), Cdot, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Num(13), Cdot, Radical, Slash, Num(20)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(20), Plus, Num(7), Cdot, Radical, Slash, Num(10)), Seq(Num(17), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200), Minus, Num(7), Slash, Num(5)), Seq(Num(7), Slash, Num(5), Minus, Num(11), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100)))),
+                        Vector(
+                            Vector(Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Radical, Slash, Num(10)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Num(7), Cdot, Radical, Slash, Num(20))),
+                            Vector(Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Radical, Slash, Num(20)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(20), Plus, Radical, Slash, Num(2))),
+                            Vector(Seq(Radical, Slash, Num(10)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Radical, Slash, Num(20)), Seq(Num(9), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100), Minus, Num(1)), Seq(Num(17), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200), Minus, Num(2), Slash, Num(5))),
+                            Vector(Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Num(7), Cdot, Radical, Slash, Num(20)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(20), Plus, Radical, Slash, Num(2)), Seq(Num(17), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200), Minus, Num(2), Slash, Num(5)), Seq(Num(9), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100), Minus, Num(1), Slash, Num(5)))),
+                        Vector(
+                            Vector(Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Minus, Radical, Slash, Num(10)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Radical, Slash, Num(20))),
+                            Vector(Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Radical, Slash, Num(4)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(40), Plus, Num(3), Cdot, Radical, Slash, Num(10))),
+                            Vector(Seq(Minus, Radical, Slash, Num(10)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Radical, Slash, Num(4)), Seq(Num(3), Slash, Num(5), Minus, Num(11), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100)), Seq(Num(3), Slash, Num(5), Minus, Num(23), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200))),
+                            Vector(Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Radical, Slash, Num(20)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(40), Plus, Num(3), Cdot, Radical, Slash, Num(10)), Seq(Num(3), Slash, Num(5), Minus, Num(23), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200)), Seq(Num(1), Slash, Num(5), Minus, Num(11), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100)))),
+                        Vector(
+                            Vector(Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(40), Minus, Num(3), Cdot, Radical, Slash, Num(10)), Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Radical, Slash, Num(4))),
+                            Vector(Seq(Num(1), Minus, Num(3), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(40)), Seq(Num(1), Minus, Radical, Caret, Grp(Num(2)), Slash, Num(20)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Radical, Slash, Num(20)), Seq(Radical, Slash, Num(10))),
+                            Vector(Seq(Radical, Caret, Grp(Num(3)), Slash, Num(40), Minus, Num(3), Cdot, Radical, Slash, Num(10)), Seq(Radical, Caret, Grp(Num(3)), Slash, Num(80), Minus, Radical, Slash, Num(20)), Seq(Num(1), Slash, Num(5), Minus, Num(11), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100)), Seq(Num(3), Slash, Num(5), Minus, Num(23), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200))),
+                            Vector(Seq(Minus, Radical, Caret, Grp(Num(3)), Slash, Num(80), Plus, Radical, Slash, Num(4)), Seq(Radical, Slash, Num(10)), Seq(Num(3), Slash, Num(5), Minus, Num(23), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(200)), Seq(Num(3), Slash, Num(5), Minus, Num(11), Cdot, Radical, Caret, Grp(Num(2)), Slash, Num(100)))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("zeroQ lists five explicit four-by-four real matrices "
-                    + "with entries in the same quartic field. QuquintCertificateBridge.zeroQ_eq "
-                    + "identifies them with the five vanishing phase-point forms.")))),
+                Blocks(Paragraph(Text("These five matrices use the same row convention and index order as "
+                    + "QuquintCertificateBridge.zeroIndex. QuquintCertificateBridge.zeroQ_eq "
+                    + "identifies them with the five vanishing phase-point forms."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("ququint-certificate-branch"),
                 DeclarationHandle.Create(Module + "branch"), H("The thirty-two branches"),
                 StatementSource.FromAuthor(Disp(Seq(
@@ -64,6 +103,11 @@ internal sealed class QuquintCertificateDataDocument : IScribeDocumentDefinition
                     + "A zero bit contributes minus one and a one bit contributes plus one."))),
                 DescribeRole.Definition))));
     
+    private static Formula Radical => Name("radical");
+
+    private static Formula Vector(params Formula[] entries) => Seq(OpenBracket,
+        Seq(entries.SelectMany((v, i) => i == 0 ? new[] { v } : new[] { Comma, v }).ToArray()), CloseBracket);
+
     private static Formula Call(Formula f, params Formula[] args) => Seq(f, Parenthesized(
         Seq(args.SelectMany((arg, i) => i == 0 ? new[] { arg } : new[] { Comma, arg }).ToArray())));
     private static Formula Name(string name) => Seq(Mathrm, Grp(F.Id(name)));
