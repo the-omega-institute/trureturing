@@ -35,3 +35,7 @@ superabundant number with the smaller number obtained by transferring one
 prime factor, and uses the decrease of `(x^n - 1) / (x^n - x)` in the base
 and exponent. This is the provenance of the exchange argument, rather than
 a verbatim statement of the real-base full-swap inequality proved here.
+
+## Verified locator
+
+- DOI: https://doi.org/10.2307/1990319
