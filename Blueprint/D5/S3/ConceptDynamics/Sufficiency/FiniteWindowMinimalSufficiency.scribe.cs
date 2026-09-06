@@ -16,6 +16,17 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
         H("Finite-Window Minimal Sufficiency"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("finite-window"),
+                DeclarationHandle.Create(DeclarationPrefix + "finiteWindow"),
+                H("The finite window jointly records every orbit target through the horizon"),
+                StatementSource.FromAuthor(FiniteWindowFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For q : X -> O, an endomorphism F, and a natural horizon n, the finite "
+                        + "window is the joint target indexed by Fin(n + 1), whose component i "
+                        + "is q observed after exactly i iterations of F."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("semiconjugate-descents-compose"),
                 DeclarationHandle.Create(DeclarationPrefix + "descent_composes"),
                 H("Semiconjugate descents compose"),
@@ -66,6 +77,31 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
 
     private static Formula TypeUniverse() =>
         Seq(Operatorname, Grp(F.Id("Type")));
+
+    private static Formula FiniteWindowFormula()
+    {
+        Formula state = F.Id("X");
+        Formula observationType = F.Id("O");
+        Formula observation = F.Id("q");
+        Formula update = F.Id("F");
+        Formula horizon = F.Id("n");
+        Formula index = F.Id("i");
+        Formula indexType = Call("Fin", Add(horizon, D(1)));
+        Formula components = Seq(
+            index, Colon, Sp, indexType, Sp, Mapsto, Sp,
+            Call("orbitTarget", observation, update, Call("val", index)));
+
+        return Disp(Seq(
+            Forall, Sp, Typed(Seq(state, Comma, Sp, observationType), TypeUniverse()),
+            Comma, Sp, Typed(observation, Arrow(state, observationType)), Comma, Sp,
+            Typed(update, Arrow(state, state)), Comma, Sp,
+            Typed(horizon, Seq(Mathbb, Grp(F.Id("N")))), Comma, RowBreak, Grp(),
+            Call("finiteWindow", observation, update, horizon), Sp, Eq, Sp,
+            Call("jointTarget", Parenthesized(components)), Dot));
+    }
+
+    private static Formula Parenthesized(Formula value) =>
+        Seq(Open, value, Close);
 
     private static Formula DescentCompositionFormula()
     {

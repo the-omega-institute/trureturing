@@ -11,6 +11,19 @@ internal sealed class RedundantAppealDefectPersistenceDocument : IScribeDocument
         H("Redundant Appeal and Defect Persistence"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("concept-equivalence"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence."
+                        + "ConceptEquivalent"),
+                H("Concept equivalence is mutual refinement"),
+                StatementSource.FromAuthor(ConceptEquivalentFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Two readouts on the same source are concept-equivalent exactly when the "
+                        + "left readout factors through the right and the right factors through "
+                        + "the left."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("redundant-appeal-cannot-repair-structural-defect"),
                 DeclarationHandle.Create(
                     "D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence."
@@ -58,6 +71,25 @@ internal sealed class RedundantAppealDefectPersistenceDocument : IScribeDocument
 
     private static Formula Apply(Formula function, Formula argument) =>
         Seq(function, Open, argument, Close);
+
+    private static Formula ConceptEquivalentFormula()
+    {
+        Formula source = F.Id("X");
+        Formula leftType = F.Id("C");
+        Formula rightType = F.Id("D");
+        Formula left = F.Id("left");
+        Formula right = F.Id("right");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+
+        return Disp(Seq(
+            Forall, Sp, source, Comma, Sp, leftType, Comma, Sp, rightType,
+            Colon, Sp, type, Comma, Sp,
+            left, Colon, Sp, new Formula.TypeArrow(source, leftType), Comma, Sp,
+            right, Colon, Sp, new Formula.TypeArrow(source, rightType), Comma, RowBreak, Grp(),
+            Call("ConceptEquivalent", left, right), Sp, Iff, Sp,
+            Call("Refines", left, right), Sp, Land, Sp,
+            Call("Refines", right, left), Dot));
+    }
 
     private static Formula TheoremFormula()
     {

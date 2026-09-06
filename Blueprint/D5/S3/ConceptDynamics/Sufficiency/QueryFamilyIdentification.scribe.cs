@@ -16,6 +16,16 @@ internal sealed class QueryFamilyIdentificationDocument
         H("Query Family Identification"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("query-kernel"),
+                DeclarationHandle.Create(DeclarationPrefix + "queryKernel"),
+                H("The query kernel is simultaneous answer equality"),
+                StatementSource.FromAuthor(QueryKernelFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a dependent query family Q, two models lie in its kernel exactly "
+                        + "when Q_i gives equal answers on the two models for every index i."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("identification-is-query-kernel-inclusion"),
                 DeclarationHandle.Create(
                     DeclarationPrefix + "identification_iff_kernel_inclusion"),
@@ -145,6 +155,30 @@ internal sealed class QueryFamilyIdentificationDocument
         Seq(
             Open, Typed(index, indexType), Close, Sp, To, Sp,
             modelType, Sp, To, Sp, Apply(answerFamily, index));
+
+    private static Formula QueryKernelFormula()
+    {
+        Formula model = F.Id("M");
+        Formula indexType = F.Id("I");
+        Formula answerFamily = F.Id("A");
+        Formula queries = F.Id("Q");
+        Formula index = F.Id("i");
+        Formula first = F.Id("m");
+        Formula second = F.Id("n");
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp,
+            Typed(Seq(model, Comma, Sp, indexType), TypeUniverse()), Comma, RowBreak, Grp(),
+            Typed(answerFamily, Arrow(indexType, TypeUniverse())), Comma, Sp,
+            Typed(queries, DependentQueryType(indexType, model, answerFamily, index)),
+            Comma, Sp, Typed(Seq(first, Comma, Sp, second), model), Comma, RowBreak, Grp(),
+            Apply(F.Id("queryKernel"), queries, first, second), Sp, Iff, Sp,
+            Forall, Sp, Typed(index, indexType), Comma, Sp,
+            Apply(queries, index, first), Sp, Eq, Sp,
+            Apply(queries, index, second), Dot,
+            End, Grp(F.Id("gathered"))));
+    }
 
     private static Formula KernelInclusionFormula()
     {

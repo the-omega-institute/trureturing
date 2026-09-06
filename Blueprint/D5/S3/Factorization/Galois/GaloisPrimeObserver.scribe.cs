@@ -14,6 +14,17 @@ internal sealed class GaloisPrimeObserverDocument : IScribeDocumentDefinition
         H("Galois Prime Observers"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("galois-prime-observer"),
+                DeclarationHandle.Create(Prefix + "galoisPrimeObserver"),
+                H("The Galois observer tags ramified and unramified primes"),
+                StatementSource.FromAuthor(GaloisPrimeObserverFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Given a monoid G, an unramified predicate, and a Frobenius element at "
+                        + "each certified unramified prime, the observer returns the associated "
+                        + "conjugacy class under some and returns none at every ramified prime."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("frobenius-observation-has-infinite-fiber"),
                 DeclarationHandle.Create(
                     Prefix + "frobenius_observation_has_infinite_fiber"),
@@ -99,6 +110,43 @@ internal sealed class GaloisPrimeObserverDocument : IScribeDocumentDefinition
         return Seq(
             OpenBrace, prime, Sp, InMacro, Sp, primes, Sp, Mid, Sp,
             observed, Sp, Eq, Sp, taggedValue, CloseBrace);
+    }
+
+    private static Formula GaloisPrimeObserverFormula()
+    {
+        Formula group = F.Id("G");
+        Formula primes = F.Id("Primes");
+        Formula unramified = F.Id("unramified");
+        Formula frobenius = F.Id("frobenius");
+        Formula prime = F.Id("p");
+        Formula proof = F.Id("hp");
+        Formula proposition = F.Id("Prop");
+        Formula classes = Call(F.Id("ConjClasses"), group);
+        Formula observer = Call(F.Id("galoisPrimeObserver"), unramified, frobenius);
+        Formula observerAtPrime = Call(observer, prime);
+        Formula observerType = new Formula.TypeArrow(
+            primes,
+            Call(F.Id("Option"), classes));
+        Formula trueValue = Call(
+            F.Id("some"),
+            Call(F.Id("class"), Call(frobenius, prime, proof)));
+        Formula branch = Call(
+            F.Id("if"),
+            Seq(proof, Colon, Sp, Call(unramified, prime)),
+            trueValue,
+            F.Id("none"));
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, group, Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            OpenBracket, Call(F.Id("Monoid"), group), CloseBracket, Comma, RowBreak, Grp(),
+            unramified, Colon, Sp, new Formula.TypeArrow(primes, proposition), Comma, Sp,
+            frobenius, Colon, Sp, Forall, Sp, prime, Colon, Sp, primes, Comma, Sp,
+            Call(unramified, prime), Sp, To, Sp, group, Comma, RowBreak, Grp(),
+            observer, Colon, Sp, observerType, Comma, RowBreak, Grp(),
+            Forall, Sp, prime, Colon, Sp, primes, Comma, Sp,
+            observerAtPrime, Sp, Eq, Sp, branch, Dot,
+            End, Grp(F.Id("gathered"))));
     }
 
     private static Formula MainFormula()

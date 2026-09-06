@@ -12,6 +12,25 @@ internal sealed class MarkovDataProcessingDocument : IScribeDocumentDefinition
         H("Markov Data Processing"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("conditional-mutual-information-zero-iff-conditional-product"),
+                DeclarationHandle.Create(
+                    "D5/S3/Entropy/Submodularity/MarkovDataProcessing."
+                        + "conditional_mutual_information_eq_zero_iff_conditional_product"),
+                H("Zero conditional mutual information is conditional factorization"),
+                StatementSource.FromAuthor(ConditionalProductFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For a normalized nonnegative law on I times (K times M), conditional "
+                            + "mutual information is zero exactly when every conditioning slice "
+                            + "of nonzero marginal mass is a product law.")),
+                    Paragraph(Text(
+                        "The right-hand marginal is formed after swapping the two coordinates "
+                            + "of the conditional slice. Zero-mass slices are excluded by the "
+                            + "explicit marginal hypothesis, and the conclusion is a function "
+                            + "equality on K times M."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("mutual-information-gap-is-a-conditional-information-gap"),
                 DeclarationHandle.Create(
                     "D5/S3/Entropy/Submodularity/MarkovDataProcessing.mutual_information_gap_eq_conditional_gap"),
@@ -99,4 +118,56 @@ internal sealed class MarkovDataProcessingDocument : IScribeDocumentDefinition
                         "so that remaining gap is nonnegative. Therefore the channel output Z " +
                         "retains no more mutual information about X than the intermediate Y."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ConditionalProductFormula()
+    {
+        Formula firstType = F.Id("I");
+        Formula secondType = F.Id("K");
+        Formula thirdType = F.Id("M");
+        Formula law = F.Id("p");
+        Formula point = F.Id("x");
+        Formula index = F.Id("i");
+        Formula pair = F.Id("q");
+        Formula swapped = F.Id("r");
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula productType = Seq(firstType, Sp, Times, Sp,
+            Parenthesized(Seq(secondType, Sp, Times, Sp, thirdType)));
+        Formula sliceType = Seq(secondType, Sp, Times, Sp, thirdType);
+        Formula conditional = Call("conditional", law, index);
+        Formula swappedConditional = Parenthesized(Seq(
+            swapped, Colon, Sp, Seq(thirdType, Sp, Times, Sp, secondType), Sp,
+            Mapsto, Sp,
+            Call("conditional", law, index,
+                Parenthesized(Seq(Call("snd", swapped), Comma, Sp, Call("fst", swapped))))));
+        Formula productSlice = Parenthesized(Seq(
+            pair, Colon, Sp, sliceType, Sp, Mapsto, Sp,
+            Call("marginal", conditional, Call("fst", pair)), Sp, Times, Sp,
+            Call("marginal", swappedConditional, Call("snd", pair))));
+        Formula lawHypothesis = Parenthesized(Seq(
+            Parenthesized(Seq(
+                Forall, Sp, point, Colon, Sp, productType, Comma, Sp,
+                D(0), Sp, Leq, Sp, Call("p", point))),
+            Sp, Land, Sp,
+            Sum, Underscore, Grp(point), Sp, Call("p", point), Sp, Eq, Sp, D(1)));
+        Formula factorization = Seq(
+            Forall, Sp, index, Colon, Sp, firstType, Comma, Sp,
+            Call("marginal", law, index), Sp, Neq, Sp, D(0), Sp, Rightarrow, Sp,
+            conditional, Sp, Eq, Sp, productSlice);
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, firstType, Comma, Sp, secondType, Comma, Sp, thirdType,
+            Colon, Sp, Operatorname, Grp(F.Id("Type")), Comma, RowBreak, Grp(),
+            OpenBracket, Call("Fintype", firstType), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", secondType), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", thirdType), CloseBracket, Comma, RowBreak, Grp(),
+            law, Colon, Sp, new Formula.TypeArrow(productType, real), Comma, Sp,
+            lawHypothesis, Sp, Rightarrow, RowBreak, Grp(),
+            Call("conditionalMutualInformation", law), Sp, Eq, Sp, D(0),
+            Sp, Iff, Sp, Parenthesized(factorization), Dot,
+            End, Grp(F.Id("gathered"))));
+    }
+
+    private static Formula Parenthesized(Formula value) =>
+        Seq(Open, value, Close);
 }

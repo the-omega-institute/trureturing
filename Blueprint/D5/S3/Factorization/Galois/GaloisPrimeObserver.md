@@ -4,7 +4,19 @@
 
 A tagged Frobenius observer has an infinite unramified fiber.
 
-**Theorem 1.1 (A finite Frobenius output merges infinitely many unramified primes).**
+**Definition 1.1 (The Galois observer tags ramified and unramified primes).**
+
+$$\begin{gathered}\forall G: \operatorname{Type}, [\operatorname{Monoid}(G)],\\{}unramified: Primes \to Prop, frobenius: \forall p: Primes, \operatorname{unramified}(p) \to G,\\{}\operatorname{galoisPrimeObserver}(unramified, frobenius): Primes \to \operatorname{Option}(\operatorname{ConjClasses}(G)),\\{}\forall p: Primes, \operatorname{\operatorname{galoisPrimeObserver}(unramified, frobenius)}(p) = \operatorname{if}(hp: \operatorname{unramified}(p), \operatorname{some}(\operatorname{class}(\operatorname{frobenius}(p, hp))), none).\end{gathered}$$
+
+*Formalization.* `D5/S3/Factorization/Galois/GaloisPrimeObserver.galoisPrimeObserver` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Given a monoid G, an unramified predicate, and a Frobenius element at each certified unramified prime, the observer returns the associated conjugacy class under some and returns none at every ramified prime.
+
+**Theorem 1.2 (A finite Frobenius output merges infinitely many unramified primes).**
 
 $$\forall G, \operatorname{Finite}(\operatorname{ConjClasses}(G)) \Rightarrow\\{}\forall O: Primes \to \operatorname{Option}(\operatorname{ConjClasses}(G)), \operatorname{Finite}(\operatorname{RamifiedPrimes}(O)) \Rightarrow\\{}\exists c\in \operatorname{ConjClasses}(G), \operatorname{Infinite}(\{p \in Primes \mid O(p) = \operatorname{some}(c)\}).$$
 
@@ -22,7 +34,7 @@ The strong infinite pigeonhole theorem first supplies an infinite fiber of the t
 
 The proof uses only a monoid with finitely many conjugacy classes. It does not assume fields, a number field, or a finite group; those structures belong only to the Mathlib bridge.
 
-**Lemma 1.2 (All-ramified tagging refutes the unramified-fiber conclusion).**
+**Lemma 1.3 (All-ramified tagging refutes the unramified-fiber conclusion).**
 
 $$\operatorname{Infinite}(RamifiedPrimes) \land \neg\exists c\in \operatorname{ConjClasses}(Unit), \operatorname{Infinite}(\{p \in Primes \mid R(p) = \operatorname{some}(c)\}).$$
 
@@ -34,7 +46,7 @@ $$\operatorname{Infinite}(RamifiedPrimes) \land \neg\exists c\in \operatorname{C
 
 Take the trivial group and tag every rational prime as ramified. The ramified set is infinite, the observer is constantly none, and every some-class fiber is empty. This is the concrete counterexample for omitting finite ramification.
 
-**Lemma 1.3 (An infinite conjugacy-class output can preserve prime identity).**
+**Lemma 1.4 (An infinite conjugacy-class output can preserve prime identity).**
 
 $$\operatorname{Infinite}(\operatorname{ConjClasses}(\operatorname{Multiplicative}(\mathbb{N}))) \land \neg\exists c\in \operatorname{ConjClasses}(\operatorname{Multiplicative}(\mathbb{N})), \operatorname{Infinite}(\{p \in Primes \mid J(p) = \operatorname{some}(c)\}).$$
 
@@ -53,3 +65,4 @@ The degenerate audit also covers the opposite endpoint: for the trivial group, t
 - Truth anchor: `D5/S3/Factorization/Galois/GaloisPrimeObserver.finite_conjugacy_output_is_necessary`
 - Truth anchor: `D5/S3/Factorization/Galois/GaloisPrimeObserver.finite_ramification_is_necessary`
 - Truth anchor: `D5/S3/Factorization/Galois/GaloisPrimeObserver.frobenius_observation_has_infinite_fiber`
+- Truth anchor: `D5/S3/Factorization/Galois/GaloisPrimeObserver.galoisPrimeObserver`

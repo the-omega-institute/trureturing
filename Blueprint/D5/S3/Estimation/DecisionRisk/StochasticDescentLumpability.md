@@ -4,7 +4,19 @@
 
 Zero finite same-fiber descent defect is equivalent to strong lumpability, which is equivalent to exact quotient factorization and yields zero uniform descent error.
 
-**Theorem 1.1 (Zero descent defect characterizes strong lumpability).**
+**Definition 1.1 (Strong lumpability is constancy on every readout fiber).**
+
+$$\begin{gathered}\forall X, B: \operatorname{Type}, q: X \to B,\\{}K: X \to \left(B \to \mathbb{R}\right),\\{}\operatorname{StronglyLumpable}\left(q, K\right) \iff \forall x, y: X, q(x) = q(y) \Rightarrow K(x) = K(y).\end{gathered}$$
+
+*Formalization.* `D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.StronglyLumpable` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For q : X -> B and a real-valued row kernel K : X -> B -> R, strong lumpability means that any two source states with equal q-values have equal entire rows K(x) and K(y).
+
+**Theorem 1.2 (Zero descent defect characterizes strong lumpability).**
 
 $$\begin{gathered}\forall X, B, \operatorname{Fintype}\left(X\right), \operatorname{Nonempty}\left(X\right), \operatorname{Fintype}\left(B\right),\\{}q: X \to B, K: X \to B \to \mathbb{R},\\{}\operatorname{descentDefect}\left(q, K\right) = 0 \iff \operatorname{StronglyLumpable}\left(q, K\right).\end{gathered}$$
 
@@ -18,7 +30,7 @@ The descent defect is the largest total-variation separation between rows indexe
 
 In one direction, separation of total variation turns a zero pairwise distance into equality of rows. In the other, fiberwise constancy makes every term in the finite maximum zero; a diagonal pair supplies the matching lower bound.
 
-**Lemma 1.2 (Strong lumpability is exact quotient factorization).**
+**Lemma 1.3 (Strong lumpability is exact quotient factorization).**
 
 $$\begin{gathered}\forall X, B,\\{}q: X \to B, K: X \to B \to \mathbb{R},\\{}\operatorname{StronglyLumpable}\left(q, K\right) \iff \operatorname{ExactQuotientKernel}\left(q, K\right).\end{gathered}$$
 
@@ -32,7 +44,7 @@ A kernel is constant on q-fibers exactly when its row assignment factors through
 
 Conversely, any quotient kernel that reproduces K at q(x) gives identical rows to source states with the same readout. This equivalence needs no finiteness or stochasticity assumptions.
 
-**Lemma 1.3 (An exact quotient kernel has zero uniform descent error).**
+**Lemma 1.4 (An exact quotient kernel has zero uniform descent error).**
 
 $$\begin{gathered}\forall X, B, \operatorname{Fintype}\left(X\right), \operatorname{Nonempty}\left(X\right), \operatorname{Fintype}\left(B\right),\\{}q: X \to B, K: X \to B \to \mathbb{R},\\{}Kbar: B \to B \to \mathbb{R},\\{}(\forall x: X, K(x) = Kbar(q(x))) \Rightarrow\\{}\operatorname{uniformDescentError}\left(q, K, Kbar\right) = 0.\end{gathered}$$
 
@@ -46,7 +58,7 @@ When Kbar evaluated at q(x) reproduces the row K(x) for every source state, ever
 
 The conclusion depends only on exact row reproduction. In particular, it does not require either K or Kbar to be row-stochastic.
 
-**Lemma 1.4 (Strong lumpability admits a zero-error exact quotient).**
+**Lemma 1.5 (Strong lumpability admits a zero-error exact quotient).**
 
 $$\begin{gathered}\forall X, B, \operatorname{Fintype}\left(X\right), \operatorname{Nonempty}\left(X\right), \operatorname{Fintype}\left(B\right),\\{}q: X \to B, K: X \to B \to \mathbb{R},\\{}\operatorname{StronglyLumpable}\left(q, K\right) \Rightarrow\\{}\exists Kbar: B \to B \to \mathbb{R},\\{}(\forall x: X, K(x) = Kbar(q(x))) \land\\{}\operatorname{uniformDescentError}\left(q, K, Kbar\right) = 0.\end{gathered}$$
 
@@ -60,7 +72,7 @@ Strong lumpability supplies a kernel on the readout space whose row at q(x) equa
 
 The result packages exact factorization and zero approximation error into one witness. Strong lumpability alone is sufficient; no stochasticity hypothesis is imposed.
 
-**Lemma 1.5 (At zero defect the best descent error is nonnegative).**
+**Lemma 1.6 (At zero defect the best descent error is nonnegative).**
 
 $$\begin{gathered}\forall X, B, \operatorname{Fintype}\left(X\right), \operatorname{Nonempty}\left(X\right), \operatorname{Fintype}\left(B\right),\\{}q: X \to B, K: X \to B \to \mathbb{R},\\{}\operatorname{IsRowStochastic}\left(K\right) \land \operatorname{descentDefect}\left(q, K\right) = 0 \Rightarrow\\{}0 \leq \operatorname{bestDescentError}\left(q, K\right).\end{gathered}$$
 
@@ -76,6 +88,7 @@ This is a boundary specialization of the defect lower bound, rather than an addi
 
 ## References
 
+- Truth anchor: `D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.StronglyLumpable`
 - Truth anchor: `D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.best_descent_error_nonneg_of_zero_defect`
 - Truth anchor: `D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.descent_defect_zero_iff_strongly_lumpable`
 - Truth anchor: `D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.strongly_lumpable_has_zero_uniform_descent_error`

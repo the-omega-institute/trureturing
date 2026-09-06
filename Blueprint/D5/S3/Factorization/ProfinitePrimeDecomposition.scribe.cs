@@ -11,6 +11,19 @@ internal sealed class ProfinitePrimeDecompositionDocument : IScribeDocumentDefin
         H("Profinite Integers Decompose Along the Prime Axes"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("prime-projection"),
+                DeclarationHandle.Create(
+                    "D5/S3/Factorization/ProfinitePrimeDecomposition.primeProjection"),
+                H("A compatible residue family determines one prime-adic coordinate"),
+                StatementSource.FromAuthor(PrimeProjectionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a compatible residue family x and a certified prime p, the prime "
+                        + "projection is the p-adic integer constructed from the sequence of "
+                        + "residues of x at successive powers of p. Compatibility supplies the "
+                        + "Cauchy certificate required by the constructor."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("compatible-residues-decompose-into-prime-adic-coordinates"),
                 DeclarationHandle.Create("D5/S3/Factorization/ProfinitePrimeDecomposition.profinite_prime_decomposition"),
                 H("Compatible residues are equivalent to all prime-adic coordinates"),
@@ -43,4 +56,23 @@ internal sealed class ProfinitePrimeDecompositionDocument : IScribeDocumentDefin
                                         + "numerical certificate."))),
                 DescribeRole.Theorem
             ))));
+
+    private static Formula PrimeProjectionFormula()
+    {
+        Formula residues = F.Id("ProfiniteIntegers");
+        Formula primeType = F.Id("NatPrimes");
+        Formula source = F.Id("x");
+        Formula prime = F.Id("p");
+        Formula target = Seq(
+            Mathbb, Grp(F.Id("Z")), Underscore, Grp(Call("val", prime)));
+        Formula approximation = Call("primeApproximation", source, prime);
+        Formula certificate = Call("compatibleCauchyCertificate", source, prime);
+
+        return Disp(Seq(
+            Forall, Sp, source, Colon, Sp, residues, Comma, Sp,
+            prime, Colon, Sp, primeType, Comma, Sp,
+            Call("primeProjection", source, prime), Colon, Sp, target, Comma, RowBreak, Grp(),
+            Call("primeProjection", source, prime), Sp, Eq, Sp,
+            Call("ofIntSeq", approximation, certificate), Dot));
+    }
 }

@@ -11,6 +11,31 @@ internal sealed class DeterministicInterfaceEquivalenceDocument : IScribeDocumen
         H("Deterministic Interface Equivalence"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("pullback-algebra"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence."
+                        + "PullbackAlgebra"),
+                H("The pullback algebra consists of fiber-constant propositions"),
+                StatementSource.FromAuthor(PullbackAlgebraFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a readout q : X -> B, the pullback algebra is the set of all "
+                        + "proposition-valued observables on X that factor through q."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("depth-zero-kernel"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence."
+                        + "depthZeroKernel"),
+                H("The depth-zero kernel records current readout equality"),
+                StatementSource.FromAuthor(DepthZeroKernelFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Two states lie in the depth-zero kernel of q exactly when their current "
+                        + "q-values are equal. No update or future observation enters this "
+                        + "relation."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("deterministic-interface-sixfold-equivalence"),
                 DeclarationHandle.Create(
                     "D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence."
@@ -40,6 +65,41 @@ internal sealed class DeterministicInterfaceEquivalenceDocument : IScribeDocumen
 
     private static Formula Call(string name, params Formula[] arguments) =>
         DefinitionDsl.Call(name, arguments);
+
+    private static Formula PullbackAlgebraFormula()
+    {
+        Formula source = F.Id("X");
+        Formula output = F.Id("B");
+        Formula readout = F.Id("q");
+        Formula observable = F.Id("observable");
+        Formula observableType = new Formula.TypeArrow(source, F.Id("Prop"));
+        Formula set = Seq(
+            OpenBrace, observable, Colon, Sp, observableType, Sp, Mid, Sp,
+            Call("FactorsThrough", observable, readout), CloseBrace);
+
+        return Disp(Seq(
+            Forall, Sp, source, Comma, Sp, output, Colon, Sp,
+            Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            readout, Colon, Sp, new Formula.TypeArrow(source, output), Comma, Sp,
+            Call("PullbackAlgebra", readout), Sp, Eq, Sp, set, Dot));
+    }
+
+    private static Formula DepthZeroKernelFormula()
+    {
+        Formula source = F.Id("X");
+        Formula output = F.Id("B");
+        Formula readout = F.Id("q");
+        Formula left = F.Id("x");
+        Formula right = F.Id("y");
+
+        return Disp(Seq(
+            Forall, Sp, source, Comma, Sp, output, Colon, Sp,
+            Operatorname, Grp(F.Id("Type")), Comma, Sp,
+            readout, Colon, Sp, new Formula.TypeArrow(source, output), Comma, Sp,
+            left, Comma, Sp, right, Colon, Sp, source, Comma, RowBreak, Grp(),
+            Call("depthZeroKernel", readout, left, right), Sp, Iff, Sp,
+            Call("q", left), Sp, Eq, Sp, Call("q", right), Dot));
+    }
 
     private static Formula TheoremFormula()
     {

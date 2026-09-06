@@ -8,6 +8,6 @@ coverage_gids:
 receipts:
   scribe:
     - gid: D5/S3/Factorization/ProfinitePrimeDecomposition.profinite_prime_decomposition
-      definition_sha256: sha256:c1eee64a7f42b57d14051e999af1326818367897f0d8f2e206aa79ee9d1c5c9e
-      emission_sha256: sha256:ef9cd8d814fe923870b8c16c7a99196547ec26456b8594cf8c77502fadb307ab
+      definition_sha256: sha256:b45db1642113571affe7888acea118126860a360999761ebdb48d59a648505d7
+      emission_sha256: sha256:8a1f8465f54766b3d9d562691682dc10c9496fac1f04466d1db19c8d8b3716ac
   unresolved_subitems: []

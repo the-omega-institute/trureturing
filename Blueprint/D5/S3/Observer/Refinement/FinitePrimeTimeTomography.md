@@ -4,7 +4,19 @@
 
 Complete prime-time separation on a finite state space has a finite witness.
 
-**Theorem 1.1 (Complete separation has a finite window).**
+**Definition 1.1 (Complete observation separates through the common finite-window kernel).**
+
+$$\begin{gathered}\forall X, O: \operatorname{Type},\\{}q: \mathbb{N} \to \left(X \to O\right), T: X \to X,\\{}\operatorname{SeparatedByCompleteObservation}\left(q, T\right) \iff \operatorname{iInter}\left(J: \operatorname{Finset}\left(\mathbb{N}\right), m: \mathbb{N}, \operatorname{Indist}\left(J, m, q, T\right)\right) \subseteq \operatorname{diagonal}\left(X\right).\end{gathered}$$
+
+*Formalization.* `D5/S3/Observer/Refinement/FinitePrimeTimeTomography.SeparatedByCompleteObservation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A readout family and transition separate states completely exactly when the intersection of the indistinguishability relations over every finite index set and every natural time horizon lies in the equality diagonal.
+
+**Theorem 1.2 (Complete separation has a finite window).**
 
 $$\begin{gathered}\forall X, O: \operatorname{Type},\\{}[\operatorname{Finite}(X)], q: \mathbb{N} \to X \to O, T: X \to X,\\{}\operatorname{SeparatedByCompleteObservation}\left(q, T\right) \Rightarrow \exists J: \operatorname{Finset}\left(\mathbb{N}\right), m: \mathbb{N},\\{}\operatorname{Indist}\left(J, m, q, T\right) \subseteq \operatorname{diagonal}\left(X\right).\end{gathered}$$
 
@@ -18,7 +30,7 @@ The relations arising from finite index sets and time horizons form a downward-d
 
 When the state space is finite, its set of binary relations is finite. A minimal member of the directed family is contained in every member, hence in the complete intersection and the equality diagonal. No primality or finite-output hypothesis is used.
 
-**Theorem 1.2 (Complete separation is necessary).**
+**Theorem 1.3 (Complete separation is necessary).**
 
 $$\neg\operatorname{SeparatedByCompleteObservation}\left(c, id\right) \land \neg\exists J: \operatorname{Finset}\left(\mathbb{N}\right), m: \mathbb{N}, \operatorname{Indist}\left(J, m, c, id\right) \subseteq \operatorname{diagonal}\left(\operatorname{Bool}\right).$$
 
@@ -32,7 +44,7 @@ For the two Boolean states, let every indexed readout be constant and let the tr
 
 It therefore remains in the complete intersection as well. Neither complete separation nor a separating finite window holds, showing that the separation premise cannot be removed.
 
-**Theorem 1.3 (Finiteness is necessary).**
+**Theorem 1.4 (Finiteness is necessary).**
 
 $$\neg\operatorname{Finite}(\mathbb{N}) \land \operatorname{SeparatedByCompleteObservation}\left(theta, id\right) \land \neg\exists J: \operatorname{Finset}\left(\mathbb{N}\right), m: \mathbb{N}, \operatorname{Indist}\left(J, m, theta, id\right) \subseteq \operatorname{diagonal}\left(\mathbb{N}\right).$$
 
@@ -48,6 +60,7 @@ For any finite index set, its maximum and the next natural number give identical
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/Refinement/FinitePrimeTimeTomography.SeparatedByCompleteObservation`
 - Truth anchor: `D5/S3/Observer/Refinement/FinitePrimeTimeTomography.complete_separation_is_necessary`
 - Truth anchor: `D5/S3/Observer/Refinement/FinitePrimeTimeTomography.finite_prime_time_tomography`
 - Truth anchor: `D5/S3/Observer/Refinement/FinitePrimeTimeTomography.finiteness_is_necessary`

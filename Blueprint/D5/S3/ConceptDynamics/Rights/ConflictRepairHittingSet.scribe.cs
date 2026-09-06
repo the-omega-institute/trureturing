@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Rights;
@@ -13,6 +14,17 @@ internal sealed class ConflictRepairHittingSetDocument : IScribeDocumentDefiniti
             + "contained in the original rights.",
         H("Conflict Repairs Are Hitting Sets"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("minimal-conflict-core"),
+                DeclarationHandle.Create(DeclarationPrefix + "MinimalConflictCore"),
+                H("A minimal conflict has only satisfiable proper subsets"),
+                StatementSource.FromAuthor(MinimalConflictCoreFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a satisfiability predicate on sets of rights, a core is minimally "
+                        + "conflicting exactly when the core itself is unsatisfiable and every "
+                        + "proper subset of it is satisfiable."))),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("a-successful-repair-hits-a-conflict-core"),
                 DeclarationHandle.Create(DeclarationPrefix + "repair_must_hit_conflict_core"),
@@ -44,6 +56,35 @@ internal sealed class ConflictRepairHittingSetDocument : IScribeDocumentDefiniti
                         + "one successful repair is a hitting set for the entire family of conflict "
                         + "cores present in the original rights."))),
                 DescribeRole.Lemma))));
+
+    private static Formula MinimalConflictCoreFormula()
+    {
+        Formula rightType = F.Id("Right");
+        Formula satisfiable = F.Id("Satisfiable");
+        Formula core = F.Id("core");
+        Formula smaller = F.Id("smaller");
+        Formula setOfRights = Call("Set", rightType);
+        Formula allProperSubsets = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("smaller", setOfRights)],
+            Implies(
+                Seq(smaller, Sp, Subset, Sp, core),
+                Apply(satisfiable, smaller)));
+
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [
+                Bound("Right", F.Id("Type")),
+                Bound("Satisfiable", Arrow(setOfRights, F.Id("Prop"))),
+                Bound("core", setOfRights),
+            ],
+            new Formula.Logic(
+                Call("MinimalConflictCore", satisfiable, core),
+                FormulaLogicOperator.Iff,
+                And(
+                    new Formula.Not(Apply(satisfiable, core)),
+                    allProperSubsets))));
+    }
 
     private static Formula RepairMustHitConflictCoreFormula()
     {

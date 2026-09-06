@@ -16,6 +16,18 @@ internal sealed class PredictiveMemoryEntropyLowerBoundDocument
         H("Predictive Memory Entropy Lower Bound"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("exact-predictive-memory"),
+                DeclarationHandle.Create(
+                    DeclarationPrefix + "IsExactPredictiveMemory"),
+                H("Exact predictive memory factors current and updated information"),
+                StatementSource.FromAuthor(ExactPredictiveMemoryFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A memory readout r is exact for q and F exactly when q factors through r "
+                        + "and the updated memory r after F also factors through r. Both "
+                        + "factorization clauses use the same present memory interface."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("predictive-memory-entropy-lower-bound"),
                 DeclarationHandle.Create(
                     DeclarationPrefix + "predictive_memory_entropy_lower_bound"),
@@ -94,6 +106,26 @@ internal sealed class PredictiveMemoryEntropyLowerBoundDocument
 
     private static Formula PredictiveProjection(Formula update, Formula readout) =>
         Call("predictiveProjection", update, readout);
+
+    private static Formula ExactPredictiveMemoryFormula()
+    {
+        Formula state = F.Id("X");
+        Formula output = F.Id("O");
+        Formula memory = F.Id("M");
+        Formula readout = F.Id("q");
+        Formula update = F.Id("F");
+        Formula encoder = F.Id("r");
+
+        return Disp(Seq(
+            Forall, Sp, state, Comma, Sp, output, Comma, Sp, memory,
+            Colon, Sp, TypeUniverse(), Comma, Sp,
+            readout, Colon, Sp, Arrow(state, output), Comma, Sp,
+            update, Colon, Sp, Arrow(state, state), Comma, Sp,
+            encoder, Colon, Sp, Arrow(state, memory), Comma, RowBreak, Grp(),
+            ExactMemory(readout, update, encoder), Sp, Iff, Sp,
+            Call("Refines", readout, encoder), Sp, Land, Sp,
+            Call("Refines", Seq(encoder, Sp, Circ, Sp, update), encoder), Dot));
+    }
 
     private static Formula MainFormula()
     {

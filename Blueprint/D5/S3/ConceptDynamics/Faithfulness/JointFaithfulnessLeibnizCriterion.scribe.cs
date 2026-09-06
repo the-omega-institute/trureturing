@@ -15,6 +15,27 @@ internal sealed class JointFaithfulnessLeibnizCriterionDocument : IScribeDocumen
         H("Joint Faithfulness and the Leibniz Criterion"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("joint-readout"),
+                DeclarationHandle.Create(DeclarationPrefix + "jointReadout"),
+                H("The joint readout evaluates every family member"),
+                StatementSource.FromAuthor(JointReadoutDefinitionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For an indexed dependent family q_i : X -> V_i, the joint readout sends "
+                        + "a state x to the dependent tuple whose i-coordinate is q_i(x)."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("joint-kernel"),
+                DeclarationHandle.Create(DeclarationPrefix + "jointKernel"),
+                H("The joint kernel is the intersection of component kernels"),
+                StatementSource.FromAuthor(JointKernelDefinitionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A pair of states belongs to the joint kernel exactly when it belongs to "
+                        + "the kernel of every indexed concept readout. Thus the set is the "
+                        + "intersection over all component kernels."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("joint-faithfulness-leibniz-criterion"),
                 DeclarationHandle.Create(DeclarationPrefix + "joint_faithfulness_tfae"),
                 H("Joint faithfulness, point separation, and diagonal kernels coincide"),
@@ -56,6 +77,45 @@ internal sealed class JointFaithfulnessLeibnizCriterionDocument : IScribeDocumen
                             + "component kernel while lying off the Boolean diagonal, so the "
                             + "joint kernel is not the diagonal."))),
                 DescribeRole.Theorem))));
+
+    private static Formula JointReadoutDefinitionFormula()
+    {
+        Formula indexType = F.Id("I");
+        Formula stateType = F.Id("X");
+        Formula valueFamily = F.Id("V");
+        Formula readouts = F.Id("q");
+        Formula index = F.Id("i");
+        Formula state = F.Id("x");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+
+        return Disp(Seq(
+            Forall, Sp, indexType, Comma, Sp, stateType, Colon, Sp, type, Comma, Sp,
+            valueFamily, Colon, Sp, new Formula.TypeArrow(indexType, type), Comma, RowBreak, Grp(),
+            readouts, Colon, Sp, Forall, Sp, index, Colon, Sp, indexType, Comma, Sp,
+            new Formula.TypeArrow(stateType, Call("V", index)), Comma, Sp,
+            state, Colon, Sp, stateType, Comma, Sp, index, Colon, Sp, indexType,
+            Comma, RowBreak, Grp(),
+            Call("jointReadout", readouts, state, index), Sp, Eq, Sp,
+            Call("q", index, state), Dot));
+    }
+
+    private static Formula JointKernelDefinitionFormula()
+    {
+        Formula indexType = F.Id("I");
+        Formula stateType = F.Id("X");
+        Formula valueFamily = F.Id("V");
+        Formula readouts = F.Id("q");
+        Formula index = F.Id("i");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+
+        return Disp(Seq(
+            Forall, Sp, indexType, Comma, Sp, stateType, Colon, Sp, type, Comma, Sp,
+            valueFamily, Colon, Sp, new Formula.TypeArrow(indexType, type), Comma, RowBreak, Grp(),
+            readouts, Colon, Sp, Forall, Sp, index, Colon, Sp, indexType, Comma, Sp,
+            new Formula.TypeArrow(stateType, Call("V", index)), Comma, RowBreak, Grp(),
+            Call("jointKernel", readouts), Sp, Eq, Sp,
+            Call("iInter", index, Call("conceptKernel", readouts, index)), Dot));
+    }
 
     private static Formula Read(Formula index, Formula state) =>
         Call("q", index, state);

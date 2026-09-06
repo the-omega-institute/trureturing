@@ -4,7 +4,19 @@
 
 Identity observation updates exclude order effects from two static readouts.
 
-**Theorem 1.1 (Pure readouts have no order effect).**
+**Definition 1.1 (An order effect is witnessed at one state).**
+
+$$\forall X, C, D: \operatorname{Type}, forward, reverse: X \to C \times D,\\{}\operatorname{hasOrderEffect}(forward, reverse) \iff \exists state: X, forward(state) \neq reverse(state).$$
+
+*Formalization.* `D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence.hasOrderEffect` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For two readouts from X into the same paired output C times D, an order effect holds exactly when some state gives unequal forward and reverse results.
+
+**Theorem 1.2 (Pure readouts have no order effect).**
 
 $$\forall X, C, D: \operatorname{Type}, o_{C}: X \to C, o_{D}: X \to D, p_{C}, p_{D}: X \to X, E: ApplicationDomain \to \operatorname{Prop}, (\forall a: ApplicationDomain, E(a) \Rightarrow \operatorname{hasOrderEffect}(\operatorname{forwardJoint}(o_{C}, o_{D}, p_{C}), \operatorname{reverseJoint}(o_{C}, o_{D}, p_{D}))) \Rightarrow\ ((p_{C} = id \land p_{D} = id) \Rightarrow \neg \operatorname{hasOrderEffect}(\operatorname{forwardJoint}(o_{C}, o_{D}, p_{C}), \operatorname{reverseJoint}(o_{C}, o_{D}, p_{D}))) \land\ (\forall a: ApplicationDomain, E(a) \Rightarrow p_{C} \neq id \lor p_{D} \neq id).$$
 
@@ -22,5 +34,6 @@ The public application domain contains quantum measurement, survey order, judici
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence.hasOrderEffect`
 - Truth anchor: `D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence.pure_readout_order_independence`
 - Dependency: [D5/S3/ConceptDynamics/ConceptJoinUniversal](../ConceptJoinUniversal.md)

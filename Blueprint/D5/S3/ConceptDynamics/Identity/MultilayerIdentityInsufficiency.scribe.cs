@@ -15,6 +15,17 @@ internal sealed class MultilayerIdentityInsufficiencyDocument : IScribeDocumentD
         H("Multilayer Identity Insufficiency"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("compatible-family"),
+                DeclarationHandle.Create(DeclarationPrefix + "CompatibleFamily"),
+                H("A compatible family commutes with every downward projection"),
+                StatementSource.FromAuthor(CompatibleFamilyFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a preordered layer index, a state family S, and downward maps p, a "
+                        + "compatible family consists of one state s_i at each layer such that "
+                        + "projecting s_j along every proof i <= j gives s_i."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("two-layer-cone-loses-high-information"),
                 DeclarationHandle.Create(
                     DeclarationPrefix + "two_layer_cone_nonempty_and_loses_high_information"),
@@ -62,6 +73,41 @@ internal sealed class MultilayerIdentityInsufficiencyDocument : IScribeDocumentD
 
     private static Formula Component(Formula subject, byte layer) =>
         new Formula.Subscript(subject, D(layer));
+
+    private static Formula CompatibleFamilyFormula()
+    {
+        Formula indexType = F.Id("I");
+        Formula stateFamily = F.Id("S");
+        Formula projection = F.Id("p");
+        Formula family = F.Id("s");
+        Formula lower = F.Id("i");
+        Formula upper = F.Id("j");
+        Formula orderProof = F.Id("h");
+        Formula type = F.Id("Type");
+        Formula dependentState = Seq(
+            Forall, Sp, lower, Colon, Sp, indexType, Comma, Sp,
+            Call("S", lower));
+        Formula projectionType = Seq(
+            Forall, Sp, lower, Comma, Sp, upper, Colon, Sp, indexType, Comma, Sp,
+            lower, Sp, Leq, Sp, upper, Sp, To, Sp,
+            Arrow(Call("S", upper), Call("S", lower)));
+        Formula compatibility = Seq(
+            Forall, Sp, lower, Comma, Sp, upper, Colon, Sp, indexType, Comma, Sp,
+            orderProof, Colon, Sp, lower, Sp, Leq, Sp, upper, Comma, Sp,
+            Call("p", lower, upper, orderProof, Call("s", upper)),
+            Sp, Eq, Sp, Call("s", lower));
+        Formula subtype = Seq(
+            OpenBrace, family, Colon, Sp, dependentState, Sp, Mid, Sp,
+            compatibility, CloseBrace);
+
+        return Disp(Seq(
+            Forall, Sp, indexType, Colon, Sp, type, Comma, Sp,
+            OpenBracket, Call("Preorder", indexType), CloseBracket, Comma, RowBreak, Grp(),
+            stateFamily, Colon, Sp, Arrow(indexType, type), Comma, Sp,
+            projection, Colon, Sp, projectionType, Comma, RowBreak, Grp(),
+            Call("CompatibleFamily", stateFamily, projection), Sp, Eq, Sp,
+            subtype, Dot));
+    }
 
     private static Formula TwoLayerConeFormula()
     {

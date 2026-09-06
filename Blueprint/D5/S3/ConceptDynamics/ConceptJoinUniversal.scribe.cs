@@ -11,6 +11,18 @@ internal sealed class ConceptJoinUniversalDocument : IScribeDocumentDefinition
         H("Concept Join Universal Property"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("concept-refinement"),
+                DeclarationHandle.Create(
+                    "D5/S3/ConceptDynamics/ConceptJoinUniversal.Refines"),
+                H("Refinement is factorization through the finer readout"),
+                StatementSource.FromAuthor(RefinesFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For readouts q_C : X -> C and q_D : X -> D, q_C is refined by q_D "
+                        + "exactly when a map from D to C recovers q_C after q_D. The equality "
+                        + "is an equality of functions, not merely pointwise implication."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("concept-join-universal-property"),
                 DeclarationHandle.Create(
                     "D5/S3/ConceptDynamics/ConceptJoinUniversal.concept_join_universal"),
@@ -27,6 +39,26 @@ internal sealed class ConceptJoinUniversalDocument : IScribeDocumentDefinition
                             + "gives the factor map from q_E to the joint readout. This is the "
                             + "universal property of the concept join."))),
                 DescribeRole.Theorem))));
+
+    private static Formula RefinesFormula()
+    {
+        Formula source = F.Id("X");
+        Formula coarseType = F.Id("C");
+        Formula fineType = F.Id("D");
+        Formula coarse = Subscript(F.Id("q"), coarseType);
+        Formula fine = Subscript(F.Id("q"), fineType);
+        Formula factor = F.Id("factor");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+
+        return Disp(Seq(
+            Forall, Sp, source, Comma, Sp, coarseType, Comma, Sp, fineType,
+            Colon, Sp, type, Comma, Sp,
+            coarse, Colon, Sp, new Formula.TypeArrow(source, coarseType), Comma, Sp,
+            fine, Colon, Sp, new Formula.TypeArrow(source, fineType), Comma, RowBreak, Grp(),
+            Call("Refines", coarse, fine), Sp, Iff, Sp,
+            Exists, Sp, factor, Colon, Sp, new Formula.TypeArrow(fineType, coarseType),
+            Comma, Sp, coarse, Sp, Eq, Sp, factor, Sp, Circ, Sp, fine, Dot));
+    }
 
     private static Formula Refines(Formula coarse, Formula fine) =>
         Call("Refines", coarse, fine);

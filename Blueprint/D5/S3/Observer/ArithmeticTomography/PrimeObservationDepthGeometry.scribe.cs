@@ -15,6 +15,16 @@ internal sealed class PrimeObservationDepthGeometryDocument : IScribeDocumentDef
         H("Prime Observation Depth and Geometry"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("vertical-depth"),
+                DeclarationHandle.Create(Prefix + "verticalDepth"),
+                H("Vertical depth is the natural ceiling logarithm"),
+                StatementSource.FromAuthor(VerticalDepthDefinitionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For natural base p and capacity N, verticalDepth is defined to be "
+                        + "Nat.clog p N, the least-power depth used by the subsequent theorem."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("horizontal-cardinality-depth-is-least"),
                 DeclarationHandle.Create(Prefix + "horizontal_cardinality_depth_isLeast"),
                 H("Horizontal cardinality depth is least"),
@@ -101,6 +111,17 @@ internal sealed class PrimeObservationDepthGeometryDocument : IScribeDocumentDef
 
     private static Formula VerticalDepth(Formula prime, Formula window) =>
         Call("verticalDepth", prime, window);
+
+    private static Formula VerticalDepthDefinitionFormula()
+    {
+        Formula prime = F.Id("p");
+        Formula window = F.Id("N");
+        Formula naturals = Naturals();
+        return Disp(Seq(
+            Forall, Sp, prime, Comma, Sp, window, Colon, Sp, naturals, Comma, Sp,
+            VerticalDepth(prime, window), Sp, Eq, Sp,
+            Call("clog", prime, window), Dot));
+    }
 
     private static Formula PrefixProduct(Formula depth) =>
         Call("primePrefixProduct", depth);

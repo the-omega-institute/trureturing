@@ -4,7 +4,19 @@
 
 Prime budgets separate horizontal CRT factors from vertical precision maps.
 
-**Theorem 1.1 (Different primes decompose horizontally by CRT).**
+**Definition 1.1 (A prime budget has finite support and positive supported exponents).**
+
+$$PrimeBudget = \{support: \operatorname{Finset}\left(\mathbb{N}\right)\;exponent: \mathbb{N} \to \mathbb{N}\;\forall p: \mathbb{N}, p \in support \Rightarrow \operatorname{Prime}\left(p\right)\;\forall p: \mathbb{N}, p \in support \Rightarrow 0 < exponent(p)\}.$$
+
+*Formalization.* `D5/S3/Factorization/PrimePowers/PrimeBudgetReadoutDichotomy.PrimeBudget` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A prime budget records a finite set of natural numbers, an exponent at every natural number, a proof that each supported number is prime, and a proof that every supported exponent is strictly positive.
+
+**Theorem 1.2 (Different primes decompose horizontally by CRT).**
 
 $$\forall B: PrimeBudget, HorizontalPrimeDecomposition(B).$$
 
@@ -20,7 +32,7 @@ The proof applies finite_crt_join directly to the support and exponent fields. T
 
 The empty and singleton supports are included. The imported CRT lemma permits zero exponents, while PrimeBudget intentionally excludes them to represent the source definition.
 
-**Theorem 1.2 (One prime carries compatible precision projections).**
+**Theorem 1.3 (One prime carries compatible precision projections).**
 
 $$\forall p \in \mathbb{N}, VerticalPrimeInverseSystem(p).$$
 
@@ -36,7 +48,7 @@ ZMod.castHom_self and ZMod.castHom_comp prove the identity and composition laws.
 
 These laws are the requested inverse-system compatibility data. No inverse-limit object is required, and no primality premise is used in the vertical direction.
 
-**Theorem 1.3 (Horizontal CRT and vertical filtration hold together).**
+**Theorem 1.4 (Horizontal CRT and vertical filtration hold together).**
 
 $$\forall B: PrimeBudget,\\{}HorizontalPrimeDecomposition(B) \land \forall p \in S_{B}, VerticalPrimeInverseSystem(p).$$
 
@@ -48,7 +60,7 @@ $$\forall B: PrimeBudget,\\{}HorizontalPrimeDecomposition(B) \land \forall p \in
 
 For every positive prime budget, the existing CRT decomposition holds and every supported prime has the compatible vertical system. This is the single bundled structure principle.
 
-**Lemma 1.4 (Precision order is necessary for natural projections).**
+**Lemma 1.5 (Precision order is necessary for natural projections).**
 
 $$\neg\operatorname{Nonempty}(\operatorname{ZMod}(2) \to \operatorname{ZMod}(4)).$$
 
@@ -62,6 +74,7 @@ There is no unital ring homomorphism from ZMod 2 to ZMod 4: two is zero in the s
 
 ## References
 
+- Truth anchor: `D5/S3/Factorization/PrimePowers/PrimeBudgetReadoutDichotomy.PrimeBudget`
 - Truth anchor: `D5/S3/Factorization/PrimePowers/PrimeBudgetReadoutDichotomy.horizontal_prime_decomposition`
 - Truth anchor: `D5/S3/Factorization/PrimePowers/PrimeBudgetReadoutDichotomy.horizontal_vertical_dichotomy`
 - Truth anchor: `D5/S3/Factorization/PrimePowers/PrimeBudgetReadoutDichotomy.precision_order_is_necessary`
