@@ -206,7 +206,8 @@ internal sealed class RuleEvaluationContext
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        ScribeTestMapStore? testMapStore)
+        ScribeTestMapStore? testMapStore,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap)
     {
         Current = current;
         Baseline = baseline;
@@ -222,6 +223,7 @@ internal sealed class RuleEvaluationContext
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
         TestMapStore = testMapStore;
+        DeriveTestMap = deriveTestMap ?? ScribeTestMapDeriver.DeriveSnapshot;
     }
 
     internal RepositorySnapshot Current { get; }
@@ -260,6 +262,8 @@ internal sealed class RuleEvaluationContext
 
     internal ScribeTestMapStore? TestMapStore { get; }
 
+    internal Func<RepositorySnapshot, ScribeTestMap> DeriveTestMap { get; }
+
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
@@ -269,7 +273,8 @@ internal sealed class RuleEvaluationContext
         MetaClear metaClear,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
         RepositorySnapshot? forkPoint = null,
-        ScribeTestMapStore? testMapStore = null) =>
+        ScribeTestMapStore? testMapStore = null,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null) =>
         Create(
             current,
             baseline,
@@ -279,7 +284,8 @@ internal sealed class RuleEvaluationContext
             MetaEvaluationProfile.ForClear(metaClear),
             verifiedScribeEmissions,
             forkPoint,
-            testMapStore);
+            testMapStore,
+            deriveTestMap);
 
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
@@ -290,7 +296,8 @@ internal sealed class RuleEvaluationContext
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
         RepositorySnapshot? forkPoint = null,
-        ScribeTestMapStore? testMapStore = null) =>
+        ScribeTestMapStore? testMapStore = null,
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null) =>
         new(
             current,
             baseline,
@@ -300,7 +307,8 @@ internal sealed class RuleEvaluationContext
             changes,
             metaEvaluation,
             verifiedScribeEmissions,
-            testMapStore);
+            testMapStore,
+            deriveTestMap);
 }
 
 internal sealed class RepositoryRule(

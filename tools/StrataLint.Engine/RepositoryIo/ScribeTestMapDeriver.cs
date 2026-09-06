@@ -61,12 +61,13 @@ internal static class ScribeTestMapDeriver
 
     internal static ScribeTestMap DeriveSnapshot(
         RepositorySnapshot snapshot,
-        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths)
+        Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths,
+        Func<RepositorySnapshot, ScribeTestMap>? derive = null)
     {
         var metadataDigest = ScribeTestMapStore.ComputeMetadataDigest(snapshot, describeInputPaths);
         var key = SnapshotDerivationKey(snapshot, metadataDigest);
         var candidate = new Lazy<ScribeTestMap>(
-            () => DeriveSnapshotUncached(snapshot),
+            () => (derive ?? DeriveSnapshotUncached)(snapshot),
             LazyThreadSafetyMode.ExecutionAndPublication);
         var derivation = SnapshotDerivations.GetOrAdd(key, candidate);
         try

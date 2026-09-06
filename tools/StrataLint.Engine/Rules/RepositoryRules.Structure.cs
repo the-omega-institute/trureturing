@@ -135,7 +135,7 @@ internal static partial class RepositoryRules
     }
 
     private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
-        => EvaluateCapacity(context, ScribeTestMapDeriver.DeriveSnapshot);
+        => EvaluateCapacity(context, context.DeriveTestMap);
 
     internal static ImmutableArray<RuleFinding> EvaluateCapacity(
         RuleEvaluationContext context,
@@ -144,7 +144,7 @@ internal static partial class RepositoryRules
         // Wrap both snapshot derivations here so cache outcomes remain observational to capacity findings.
         ScribeTestMap GetMap(RepositorySnapshot snapshot) => context.TestMapStore is null
             ? deriveSnapshot(snapshot)
-            : context.TestMapStore.GetOrDerive(snapshot, deriveSnapshot);
+            : context.TestMapStore.GetOrDerive(snapshot);
         if (context.Changes.Paths.Any(static path =>
                 ScribeTestMapDeriver.IsDerivationInput(path.Value)))
         {

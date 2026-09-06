@@ -17,6 +17,9 @@ internal static class BoundedProcessRunner
 
     internal static readonly TimeSpan HangDetectionBudget = TimeSpan.FromMinutes(5);
 
+    // Flow the startup seam into Task.Run without sharing overrides between checks.
+    internal static readonly AsyncLocal<Func<Process, bool>?> StartProcess = new();
+
     internal static ProcessOutput Run(
         string fileName,
         IEnumerable<string> arguments,
@@ -50,7 +53,7 @@ internal static class BoundedProcessRunner
         }
 
         using var process = new Process { StartInfo = startInfo };
-        if (!process.Start())
+        if (!(StartProcess.Value?.Invoke(process) ?? process.Start()))
         {
             throw new InvalidOperationException($"could not start {fileName}");
         }

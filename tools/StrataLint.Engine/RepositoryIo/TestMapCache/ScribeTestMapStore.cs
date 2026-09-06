@@ -83,20 +83,20 @@ internal sealed record ScribeTestMapCacheEvent(string InputDigest, string Outcom
 internal sealed class ScribeTestMapStore(
     IScribeTestMapStorage storage,
     ScribeTestMapEnvironment environment,
+    Func<RepositorySnapshot, ScribeTestMap>? derive = null,
     Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null)
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    private readonly Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot =
+        derive ?? ScribeTestMapDeriver.DeriveSnapshot;
     private readonly ConcurrentQueue<ScribeTestMapCacheEvent> events = new();
 
     // Events are observational; ordering between Current and ForkPoint is not a contract.
     internal IReadOnlyList<ScribeTestMapCacheEvent> Events => events.ToArray();
 
-    internal ScribeTestMap GetOrDerive(
-        RepositorySnapshot snapshot,
-        Func<RepositorySnapshot, ScribeTestMap> derive)
+    internal ScribeTestMap GetOrDerive(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
-        ArgumentNullException.ThrowIfNull(derive);
         var inputDigest = ComputeInputDigest(snapshot);
         string? metadataDigest = null;
         try
@@ -114,7 +114,7 @@ internal sealed class ScribeTestMapStore(
             return cached;
         }
 
-        var map = derive(snapshot);
+        var map = deriveSnapshot(snapshot);
         if (map.CompileQueryFindings.Count != 0)
         {
             Record(inputDigest, "store-skipped-compile-findings");

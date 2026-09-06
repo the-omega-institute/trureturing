@@ -360,7 +360,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 verifiedScribeEmissions,
                 snapshots.ForkPoint,
                 timing,
-                testMapStore).Outcome;
+                testMapStore,
+                DeriveTestMap).Outcome;
         }
         catch (Exception exception)
         {

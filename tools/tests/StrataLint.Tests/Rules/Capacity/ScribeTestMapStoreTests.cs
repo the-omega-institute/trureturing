@@ -123,15 +123,14 @@ public sealed class ScribeTestMapStoreTests
         var storage = new MemoryStorage();
         var first = TestEnvironment with { EvaluationEnvironmentDigest = new string('a', 64) };
         var second = first with { EvaluationEnvironmentDigest = new string('b', 64) };
-        new ScribeTestMapStore(storage, first).GetOrDerive(snapshot, _ => Map("cached"));
-        var store = new ScribeTestMapStore(storage, second);
+        new ScribeTestMapStore(storage, first, _ => Map("cached")).GetOrDerive(snapshot);
         var calls = 0;
-
-        var result = store.GetOrDerive(snapshot, _ =>
+        var store = new ScribeTestMapStore(storage, second, _ =>
         {
             calls++;
             return Map("fresh");
         });
+        var result = store.GetOrDerive(snapshot);
 
         Assert.Equal(1, calls);
         Assert.Equal("fresh", Assert.Single(result.Methods).Id);
@@ -179,10 +178,18 @@ public sealed class ScribeTestMapStoreTests
         IReadOnlyList<string> Describe(IEnumerable<ScribeCompilationProject> _) =>
             ++descriptions == 1 ? [] : [typeof(object).Assembly.Location];
 
-        var first = ScribeTestMapDeriver.DeriveSnapshot(snapshot, Describe);
+        var calls = 0;
+        ScribeTestMap Derive(RepositorySnapshot input)
+        {
+            Assert.Same(snapshot, input);
+            calls++;
+            return Map("synthetic");
+        }
+        var first = ScribeTestMapDeriver.DeriveSnapshot(snapshot, Describe, Derive);
         descriptions = 0;
-        var second = ScribeTestMapDeriver.DeriveSnapshot(snapshot, Describe);
+        var second = ScribeTestMapDeriver.DeriveSnapshot(snapshot, Describe, Derive);
 
+        Assert.Equal(2, calls);
         Assert.NotSame(first, second);
         Assert.Empty(first.CompileQueryFindings);
         Assert.Empty(second.CompileQueryFindings);
@@ -194,15 +201,14 @@ public sealed class ScribeTestMapStoreTests
         var snapshot = Snapshot(("src/Test.cs", "class Test {}"));
         IReadOnlyList<string> paths = [];
         var storage = new MemoryStorage();
-        var store = new ScribeTestMapStore(storage, TestEnvironment, _ => paths);
         var calls = 0;
-
-        var result = store.GetOrDerive(snapshot, _ =>
+        var store = new ScribeTestMapStore(storage, TestEnvironment, _ =>
         {
             calls++;
             paths = [typeof(object).Assembly.Location];
             return Map("derived-before-metadata-change");
-        });
+        }, _ => paths);
+        var result = store.GetOrDerive(snapshot);
 
         Assert.Equal(1, calls);
         Assert.Equal("derived-before-metadata-change", Assert.Single(result.Methods).Id);
@@ -242,24 +248,24 @@ public sealed class ScribeTestMapStoreTests
         TemporaryFileSystem.File.WriteAllText(path, "before");
         var before = ScribeTestMapStore.ComputeMetadataDigest(snapshot, Inputs);
         var storage = new MemoryStorage();
-        var store = new ScribeTestMapStore(storage, TestEnvironment, Inputs);
-        store.GetOrDerive(snapshot, _ => Map("cached"));
+        var store = new ScribeTestMapStore(storage, TestEnvironment, _ => Map("cached"), Inputs);
+        store.GetOrDerive(snapshot);
         TemporaryFileSystem.File.WriteAllText(path, "after");
 
         Assert.NotEqual(before, ScribeTestMapStore.ComputeMetadataDigest(snapshot, Inputs));
         var calls = 0;
-        var changedStore = new ScribeTestMapStore(storage, TestEnvironment, Inputs);
-        var result = changedStore.GetOrDerive(snapshot, _ =>
+        var changedStore = new ScribeTestMapStore(storage, TestEnvironment, _ =>
         {
             calls++;
             return Map("changed");
-        });
+        }, Inputs);
+        var result = changedStore.GetOrDerive(snapshot);
 
         Assert.Equal(1, calls);
         Assert.Equal("changed", Assert.Single(result.Methods).Id);
         Assert.Contains(changedStore.Events, static item => item.Outcome == "invalid:metadata-digest");
-        var hit = new ScribeTestMapStore(storage, TestEnvironment, Inputs).GetOrDerive(
-            snapshot, _ => throw new InvalidOperationException("updated metadata must hit"));
+        var hit = new ScribeTestMapStore(storage, TestEnvironment,
+            _ => throw new InvalidOperationException("updated metadata must hit"), Inputs).GetOrDerive(snapshot);
         Assert.Equal("changed", Assert.Single(hit.Methods).Id);
         TemporaryFileSystem.File.Delete(path);
         Assert.NotEqual(before, ScribeTestMapStore.ComputeMetadataDigest(snapshot, Inputs));
@@ -353,11 +359,9 @@ public sealed class ScribeTestMapStoreTests
             ScribeTestMapStore.ComputeMetadataDigest(snapshot),
             TestEnvironment,
             Map("cached")).Write());
-        var store = new ScribeTestMapStore(storage, TestEnvironment);
-
-        var result = store.GetOrDerive(
-            snapshot,
+        var store = new ScribeTestMapStore(storage, TestEnvironment,
             static _ => throw new InvalidOperationException("derivation must not run"));
+        var result = store.GetOrDerive(snapshot);
 
         Assert.Equal("cached", Assert.Single(result.Methods).Id);
         Assert.Collection(store.Events, item => Assert.Equal("hit", item.Outcome));
@@ -368,14 +372,13 @@ public sealed class ScribeTestMapStoreTests
     {
         var snapshot = Snapshot(("src/Test.cs", "class Test {}"));
         var storage = new MemoryStorage();
-        var store = new ScribeTestMapStore(storage, TestEnvironment);
         var calls = 0;
-
-        var result = store.GetOrDerive(snapshot, _ =>
+        var store = new ScribeTestMapStore(storage, TestEnvironment, _ =>
         {
             Interlocked.Increment(ref calls);
             return Map("derived");
         });
+        var result = store.GetOrDerive(snapshot);
 
         Assert.Equal("derived", Assert.Single(result.Methods).Id);
         Assert.Equal(1, calls);
@@ -401,14 +404,13 @@ public sealed class ScribeTestMapStoreTests
         var storage = new MemoryStorage();
         storage.Seed(digest + ".json", InvalidBytes(mutation, digest,
             ScribeTestMapStore.ComputeMetadataDigest(snapshot)));
-        var store = new ScribeTestMapStore(storage, TestEnvironment);
         var calls = 0;
-
-        var result = store.GetOrDerive(snapshot, _ =>
+        var store = new ScribeTestMapStore(storage, TestEnvironment, _ =>
         {
             Interlocked.Increment(ref calls);
             return Map("derived");
         });
+        var result = store.GetOrDerive(snapshot);
 
         Assert.Equal("derived", Assert.Single(result.Methods).Id);
         Assert.Equal(1, calls);
@@ -421,7 +423,6 @@ public sealed class ScribeTestMapStoreTests
     public void MapWithCompileFindingsIsNotStored()
     {
         var storage = new MemoryStorage();
-        var store = new ScribeTestMapStore(storage, TestEnvironment);
         var map = new ScribeTestMap(
             [],
             [],
@@ -429,7 +430,8 @@ public sealed class ScribeTestMapStoreTests
             [],
             [new MsBuildCompileFinding("src/Test.csproj", "query failed")]);
 
-        var result = store.GetOrDerive(Snapshot(("src/Test.cs", "class Test {}")), _ => map);
+        var store = new ScribeTestMapStore(storage, TestEnvironment, _ => map);
+        var result = store.GetOrDerive(Snapshot(("src/Test.cs", "class Test {}")));
 
         Assert.Same(map, result);
         Assert.Equal(0, storage.WriteCount);
@@ -442,10 +444,9 @@ public sealed class ScribeTestMapStoreTests
     public void StorageWriteFailureDoesNotChangeReturnedMap()
     {
         var storage = new MemoryStorage { WriteFailure = new IOException("synthetic failure") };
-        var store = new ScribeTestMapStore(storage, TestEnvironment);
         var map = Map("derived");
-
-        var result = store.GetOrDerive(Snapshot(("src/Test.cs", "class Test {}")), _ => map);
+        var store = new ScribeTestMapStore(storage, TestEnvironment, _ => map);
+        var result = store.GetOrDerive(Snapshot(("src/Test.cs", "class Test {}")));
 
         Assert.Same(map, result);
         Assert.Contains(

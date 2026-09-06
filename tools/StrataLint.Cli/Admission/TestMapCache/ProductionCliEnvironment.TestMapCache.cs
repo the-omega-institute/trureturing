@@ -5,6 +5,9 @@ namespace StrataLint.Cli;
 
 internal sealed partial class ProductionCliEnvironment
 {
+    internal Func<RepositorySnapshot, ScribeTestMap> DeriveTestMap { get; init; } =
+        ScribeTestMapDeriver.DeriveSnapshot;
+
     internal Func<ScribeTestMapEnvironment> DescribeTestMapEnvironment { get; init; } =
         MsBuildCompileOracle.DescribeEnvironment;
 
@@ -28,7 +31,7 @@ internal sealed partial class ProductionCliEnvironment
 
         try
         {
-            return new ScribeTestMapStore(storage, DescribeTestMapEnvironment());
+            return new ScribeTestMapStore(storage, DescribeTestMapEnvironment(), DeriveTestMap);
         }
         catch (Exception exception)
         {

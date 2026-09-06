@@ -14,15 +14,22 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
     [Fact]
     public void CheckUsesStoreWhenCacheRootCanBeCreated()
     {
+        using var spawns = new ProcessSpawnCounter();
         using var temporary = new TemporaryDirectory();
         using var error = new StringWriter();
         var descriptions = 0;
+        var derivations = 0;
+        ScribeTestMap Derive(RepositorySnapshot snapshot)
+        {
+            Interlocked.Increment(ref derivations);
+            return SyntheticTestMap(snapshot);
+        }
         ScribeTestMapEnvironment Describe()
         {
             descriptions++;
             return DescribeFixedEnvironment();
         }
-        var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error, Describe);
+        var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error, Describe, Derive);
         var root = Path.Combine(temporary.Path, "cache");
         var console = new BufferedConsole();
 
@@ -30,13 +37,18 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
             "check", "--candidate-lean-report", report, "--test-map-cache-root", root,
         ], environment, console);
 
+        Assert.Equal(0, spawns.Attempts);
         Assert.True(code != 2, console.Error);
+        Assert.Contains("DebtTests.CurrentDebt", console.Output, StringComparison.Ordinal);
+        Assert.Equal(2, derivations);
         Assert.Contains("stored", CacheOutcomes(error.ToString()));
         var firstCode = code;
         error.GetStringBuilder().Clear();
         code = CliApplication.Run([
             "check", "--candidate-lean-report", report, "--test-map-cache-root", root,
         ], environment, new BufferedConsole());
+        Assert.Equal(0, spawns.Attempts);
+        Assert.Equal(2, derivations);
         Assert.Equal(firstCode, code);
         Assert.Contains("hit", CacheOutcomes(error.ToString()));
         Assert.Equal(2, descriptions);
@@ -48,6 +60,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
     [InlineData("empty")]
     public void CheckDisablesCacheWhenHostOrVersionProbeFailsWithoutChangingExitCode(string failure)
     {
+        using var spawns = new ProcessSpawnCounter();
         using var temporary = new TemporaryDirectory();
         using var error = new StringWriter();
         var probes = 0;
@@ -67,12 +80,14 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error, Describe);
         var expected = CliApplication.Run(["check", "--candidate-lean-report", report],
             environment, new BufferedConsole());
+        Assert.Equal(0, spawns.Attempts);
 
         var actual = CliApplication.Run([
             "check", "--candidate-lean-report", report,
             "--test-map-cache-root", Path.Combine(temporary.Path, "cache"),
         ], environment, new BufferedConsole());
 
+        Assert.Equal(0, spawns.Attempts);
         Assert.Equal(expected, actual);
         Assert.NotEqual(2, actual);
         Assert.Equal(1, probes);
@@ -84,6 +99,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
     [Fact]
     public void CheckCacheEventWriteFailureDoesNotChangeDecision()
     {
+        using var spawns = new ProcessSpawnCounter();
         using var temporary = new TemporaryDirectory();
         using var error = new FailingEventWriter();
         var descriptions = 0;
@@ -96,6 +112,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         var expectedConsole = new BufferedConsole();
         var expected = CliApplication.Run(["check", "--candidate-lean-report", report],
             environment, expectedConsole);
+        Assert.Equal(0, spawns.Attempts);
         var actualConsole = new BufferedConsole();
 
         var actual = CliApplication.Run([
@@ -103,6 +120,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
             "--test-map-cache-root", Path.Combine(temporary.Path, "cache"),
         ], environment, actualConsole);
 
+        Assert.Equal(0, spawns.Attempts);
         Assert.True(error.Attempts > 0);
         Assert.NotEqual(2, actual);
         Assert.Equal(expected, actual);
@@ -114,6 +132,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
     [Fact]
     public void CheckReportsCacheRootConstructionFailureWithoutProbingEnvironment()
     {
+        using var spawns = new ProcessSpawnCounter();
         using var temporary = new TemporaryDirectory();
         using var error = new StringWriter();
         var probes = 0;
@@ -125,11 +144,13 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         var (environment, report) = EnvironmentWithCheckFixture(temporary.Path, error, Describe);
         var expected = CliApplication.Run(["check", "--candidate-lean-report", report],
             environment, new BufferedConsole());
+        Assert.Equal(0, spawns.Attempts);
 
         var actual = CliApplication.Run([
             "check", "--candidate-lean-report", report, "--test-map-cache-root", "\0",
         ], environment, new BufferedConsole());
 
+        Assert.Equal(0, spawns.Attempts);
         Assert.Equal(expected, actual);
         Assert.NotEqual(2, actual);
         Assert.Equal(0, probes);
@@ -139,6 +160,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
     [Fact]
     public void CheckAcceptsTestMapCacheRoot()
     {
+        using var spawns = new ProcessSpawnCounter();
         var environment = EnvironmentWithUnreadableSnapshot();
 
         var outcome = environment.Check([
@@ -146,6 +168,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
             "--candidate-lean-report", "candidate.json",
         ]);
 
+        Assert.Equal(0, spawns.Attempts);
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
         Assert.DoesNotContain("USAGE:", failure.Message, StringComparison.Ordinal);
     }
@@ -202,7 +225,8 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
     }
 
     private static (ProductionCliEnvironment Environment, string Report) EnvironmentWithCheckFixture(
-        string root, TextWriter error, Func<ScribeTestMapEnvironment> describe)
+        string root, TextWriter error, Func<ScribeTestMapEnvironment> describe,
+        Func<RepositorySnapshot, ScribeTestMap>? derive = null)
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -223,13 +247,33 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         {
             TestMapCacheError = error,
             DescribeTestMapEnvironment = describe,
+            DeriveTestMap = derive ?? SyntheticTestMap,
         };
         // Assert the injected factory before any CLI path can reach the production process probe.
         Assert.Equal(describe, environment.DescribeTestMapEnvironment);
-        var console = new BufferedConsole();
-        var code = CliApplication.Run(["check", "--candidate-lean-report", report], environment, console);
-        Assert.True(code != 2, console.Error);
         return (environment, report);
+    }
+
+    private static ScribeTestMap SyntheticTestMap(RepositorySnapshot snapshot) => new(
+        snapshot.TryGetFile("tools/StrataLint.Engine/CacheChange.cs", out _)
+            ? [new ScribeTestMethod("tools/tests/Synthetic.Tests", "tools/tests/Synthetic.Tests/DebtTests.cs",
+                "DebtTests.CurrentDebt", [TestMapUnknownReason.Other])]
+            : [], [], [], [], []);
+
+    private sealed class ProcessSpawnCounter : IDisposable
+    {
+        private readonly Func<System.Diagnostics.Process, bool>? previous = BoundedProcessRunner.StartProcess.Value;
+        private int attempts;
+
+        internal ProcessSpawnCounter() => BoundedProcessRunner.StartProcess.Value = _ =>
+        {
+            Interlocked.Increment(ref attempts);
+            return false;
+        };
+
+        internal int Attempts => Volatile.Read(ref attempts);
+
+        public void Dispose() => BoundedProcessRunner.StartProcess.Value = previous;
     }
 
     private static ScribeTestMapEnvironment DescribeFixedEnvironment() =>
@@ -263,5 +307,9 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
                 RawChangeSet.Create([]),
                 current: null,
                 baseline: null),
-            new FakeLeanReportSource(null));
+            new FakeLeanReportSource(null))
+        {
+            DescribeTestMapEnvironment = DescribeFixedEnvironment,
+            DeriveTestMap = SyntheticTestMap,
+        };
 }

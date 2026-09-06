@@ -108,8 +108,12 @@ public sealed class RuleEngineCapacityDerivationTests
                 forkPointDigest,
                 ScribeTestMapStore.ComputeMetadataDigest(context.ForkPoint),
                 environment,
-                ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint)).Write());
-        var store = new ScribeTestMapStore(storage, environment);
+                UnknownTestMap("ExistingDebt")).Write());
+        var currentMap = UnknownTestMap("ExistingDebt", "CurrentDebt");
+        var forkPointMap = UnknownTestMap("ExistingDebt");
+        ScribeTestMap Derive(RepositorySnapshot snapshot) =>
+            ReferenceEquals(snapshot, context.Current) ? currentMap : forkPointMap;
+        var store = new ScribeTestMapStore(storage, environment, Derive);
         var cachedContext = RuleEvaluationContext.Create(
             context.Current,
             context.Baseline,
@@ -120,12 +124,8 @@ public sealed class RuleEngineCapacityDerivationTests
             context.VerifiedScribeEmissions,
             context.ForkPoint,
             store);
-        var rule = Assert.Single(
-            RepositoryRules.CreateRegistrations(),
-            static item => item.Descriptor.Id == RuleId.CreateKnown(3)).Rule;
-
-        var expected = rule.Evaluate(context);
-        var actual = rule.Evaluate(cachedContext);
+        var expected = RepositoryRules.EvaluateCapacity(context, Derive);
+        var actual = RepositoryRules.EvaluateCapacity(cachedContext, Derive);
 
         Assert.Equal(expected.ToArray(), actual.ToArray());
         Assert.Contains(actual, static finding => finding.Effect == AdmissionEffect.Block
@@ -149,7 +149,10 @@ public sealed class RuleEngineCapacityDerivationTests
     {
         var fixture = FixtureWithUnknownDebt();
         var context = fixture.Build(RawChangeSet.Create([DebtSourcePath]));
-        var forkPointMap = ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint);
+        var forkPointMap = UnknownTestMap("ExistingDebt");
+        var currentMap = UnknownTestMap("ExistingDebt", "CurrentDebt");
+        ScribeTestMap Derive(RepositorySnapshot snapshot) =>
+            ReferenceEquals(snapshot, context.Current) ? currentMap : forkPointMap;
         Assert.Contains(forkPointMap.Methods, static method =>
             method.Id == "DebtTests.ExistingDebt" && method.UnknownReasons.Count != 0);
         var environment = new ScribeTestMapEnvironment("test-rid", ".NET test framework", "/test/dotnet", "10.0.100-test", new string('d', 64));
@@ -157,18 +160,18 @@ public sealed class RuleEngineCapacityDerivationTests
         var digest = ScribeTestMapStore.ComputeInputDigest(context.ForkPoint);
         storage.Write(digest + ".json", ScribeTestMapEnvelope.Create(digest,
             ScribeTestMapStore.ComputeMetadataDigest(context.ForkPoint), environment, forkPointMap).Write());
-        var store = new ScribeTestMapStore(storage, environment);
+        var calls = new ConcurrentQueue<RepositorySnapshot>();
+        ScribeTestMap CountedDerive(RepositorySnapshot snapshot)
+        {
+            calls.Enqueue(snapshot);
+            return Derive(snapshot);
+        }
+        var store = new ScribeTestMapStore(storage, environment, CountedDerive);
         var cachedContext = RuleEvaluationContext.Create(
             context.Current, context.Baseline, context.Policy, context.Lean, context.Changes,
             context.MetaEvaluation, context.VerifiedScribeEmissions, context.ForkPoint, store);
-        var calls = new ConcurrentQueue<RepositorySnapshot>();
-
-        var expected = RepositoryRules.EvaluateCapacity(context, ScribeTestMapDeriver.DeriveSnapshot);
-        var actual = RepositoryRules.EvaluateCapacity(cachedContext, snapshot =>
-        {
-            calls.Enqueue(snapshot);
-            return ScribeTestMapDeriver.DeriveSnapshot(snapshot);
-        });
+        var expected = RepositoryRules.EvaluateCapacity(context, Derive);
+        var actual = RepositoryRules.EvaluateCapacity(cachedContext, CountedDerive);
 
         Assert.Same(context.Current, Assert.Single(calls));
         Assert.Equal(expected.ToArray(), actual.ToArray());
@@ -350,47 +353,22 @@ public sealed class RuleEngineCapacityDerivationTests
     private static RuleFixture FixtureWithUnknownDebt()
     {
         var fixture = new RuleFixture();
-        const string projectPath = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
-        const string project = """
-            <Project Sdk="Microsoft.NET.Sdk">
-              <PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup>
-              <ItemGroup><PackageReference Include="xunit" Version="2.9.3" /></ItemGroup>
-            </Project>
-            """;
-        const string source = """
-            using System.IO;
-            using Xunit;
-            public partial class DebtTests
-            {
-                [Fact] public void ExistingDebt() { var p = "example"; File.ReadAllText(p); }
-            }
-            """;
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
-        {
-            files[projectPath] = project;
-            files[DebtSourcePath] = source;
-        }
-        fixture.Files[DebtSourcePath] = source + """
-
-            public partial class DebtTests
-            {
-                [Fact] public void CurrentDebt() { var p = "current"; File.ReadAllText(p); }
-            }
-            """;
+        fixture.Baseline[DebtSourcePath] = "// existing debt\n";
+        fixture.ForkPoint[DebtSourcePath] = "// existing debt\n";
+        fixture.Files[DebtSourcePath] = "// existing and current debt\n";
         return fixture;
     }
 
     private static ScribeTestMap EmptyTestMap() => new([], [], [], [], []);
 
-    private static ScribeTestMap UnknownTestMap(string methodId) =>
+    private static ScribeTestMap UnknownTestMap(params string[] methodIds) =>
         new(
-            [
+            methodIds.Select(methodId =>
                 new ScribeTestMethod(
                     "tools/tests/Synthetic.Tests",
                     "tools/tests/Synthetic.Tests/DebtTests.cs",
                     "DebtTests." + methodId,
-                    [TestMapUnknownReason.Other]),
-            ],
+                    [TestMapUnknownReason.Other])).ToArray(),
             [],
             [],
             [],
