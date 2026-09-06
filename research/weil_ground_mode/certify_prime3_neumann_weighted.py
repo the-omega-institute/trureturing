@@ -8,7 +8,9 @@ even high-mode vector, the diagonal lower form
 The paper proof and its exact domain/normalization are in the existing RH
 research theory volume. The Lean companion proves the boundary-kernel
 factorization and finite Gamma-mixture positivity, not the full operator
-bridge. This executable certificate is not a Lean kernel proof.
+bridge. The odd block uses the independent simultaneous logarithmic form
+lower bound proved from the Gamma diagonal and discrete-Hilbert commutator.
+This executable certificate is not a Lean kernel proof.
 
 No zero locations or eigensolver enter. A failed interval LDL attempt during
 lower-bound search makes no claim about a negative eigenvalue.
@@ -39,7 +41,7 @@ if not __debug__:
 
 ROOT = Path(__file__).resolve().parent
 N, M, BITS, ERROR_BITS = 64, 32768, 44, 60
-THRESHOLD = Fraction(1, 200000)
+THRESHOLD = Fraction(3, 250000)
 OLD_LOWER = Fraction(103, 2000000000)
 UPPER = Fraction(560909, 10**13)
 
@@ -56,6 +58,20 @@ def neumann_weight_lower(n: int) -> Fraction:
     value = Fraction(math.floor(float(bound.a) * 2**20) - 1, 2**20)
     assert bool(rat(value) < bound)
     assert value > THRESHOLD
+    return value
+
+
+def logarithmic_weight_lower(n: int) -> Fraction:
+    """All-parity lower weight, including Gamma off-diagonal, prime and pole debt."""
+    assert n >= N + 1
+    L, pi, n0 = iv.ln(3), iv.pi, N + 1
+    pole_debt = iv.sqrt(3) - 1 / iv.sqrt(3) - L
+    bound = (iv.ln(iv.mpf(n) / L) - 2 - (2 * L + 1) / (pi * n0)
+             - L / (2 * pi**2 * n0**2) - iv.ln(2) / iv.sqrt(2) - pole_debt)
+    value = Fraction(math.floor(float(bound.a) * 2**20) - 1, 2**20)
+    assert bool(rat(value) < bound) and value > THRESHOLD
+    if n == n0:
+        assert value > Fraction(3, 2)
     return value
 
 
@@ -103,6 +119,8 @@ def run():
     assert 2 * radius.size * int(np.max(radius))**2 < 2**63
 
     weighted = [[Fraction(0) for _ in range(dimension)] for _ in range(dimension)]
+    weighted_odd = [[Fraction(0) for _ in range(dimension)] for _ in range(dimension)]
+    trace_odd, error_odd = Fraction(0), Fraction(0)
     ordinary = np.zeros((dimension, dimension), dtype=object)
     trace_w, error_w, error_unweighted = Fraction(0), Fraction(0), Fraction(0)
     shells = []
@@ -115,18 +133,25 @@ def run():
         ordinary += gram
         energy_lower = neumann_weight_lower(first)
         weight = 1 / (energy_lower - THRESHOLD)
+        energy_odd = logarithmic_weight_lower(first)
+        weight_odd = 1 / (energy_odd - THRESHOLD)
         e_shell = Fraction(2 * int(np.sum(radius[lo:hi]**2, dtype=np.int64)),
                            2**(2 * ERROR_BITS))
         error_w += weight * e_shell
+        error_odd += weight_odd * e_shell
+        trace_odd += weight_odd * Fraction(sum(int(gram[i, i]) for i in range(dimension)), 2**(2 * BITS))
         error_unweighted += e_shell
         trace_w += weight * Fraction(sum(int(gram[i, i]) for i in range(dimension)),
                                     2**(2 * BITS))
         for i in range(dimension):
             for j in range(dimension):
                 weighted[i][j] += weight * Fraction(int(gram[i, j]), 2**(2 * BITS))
+                weighted_odd[i][j] += weight_odd * Fraction(int(gram[i, j]), 2**(2 * BITS))
         shells.append({'first': first, 'last': last,
                        'energy_lower': str(energy_lower),
-                       'resolvent_weight_upper': str(weight)})
+                       'resolvent_weight_upper': str(weight),
+                       'odd_energy_lower': str(energy_odd),
+                       'odd_resolvent_weight_upper': str(weight_odd)})
         first = last + 1
 
     assert sum(s['last'] - s['first'] + 1 for s in shells) == M - N
@@ -134,11 +159,15 @@ def run():
     ordinary_hash = hashlib.sha256(json.dumps(
         [[str(int(x)) for x in row] for row in ordinary],
         separators=(',', ':')).encode()).hexdigest()
-    assert ordinary_hash == '7f4e1049624807432efe96a68fe63babbc1c3bd37f2d40600a4cddadbddb85a9' 
+    assert ordinary_hash == '7f4e1049624807432efe96a68fe63babbc1c3bd37f2d40600a4cddadbddb85a9'
     eta = Fraction(1, 10**16)
     while not (error_w < eta and 4 * trace_w * error_w < (eta - error_w)**2):
         eta *= 2
     assert eta < Fraction(1, 10**9)
+    eta_odd = Fraction(1, 10**16)
+    while not (error_odd < eta_odd and 4 * trace_odd * error_odd < (eta_odd - error_odd)**2):
+        eta_odd *= 2
+    assert eta_odd < Fraction(1, 10**9)
     ordinary_trace = Fraction(sum(int(ordinary[i, i]) for i in range(dimension)),
                               2**(2 * BITS))
     old_eta = Fraction(1, 10**10)
@@ -162,10 +191,13 @@ def run():
     assert bool(analytic_rem < rat(rem))
     far_lower = neumann_weight_lower(M + 1)
     far_weight = 1 / (far_lower - THRESHOLD)
+    far_lower_odd = logarithmic_weight_lower(M + 1)
+    far_weight_odd = 1 / (far_lower_odd - THRESHOLD)
 
     symbols = [iv.mpf([float(slo[i]), float(shi[i])]) for i in range(dimension)]
     arithmetic = [[iv.mpf(0) for _ in range(dimension)] for _ in range(dimension)]
     W = [[iv.mpf(0) for _ in range(dimension)] for _ in range(dimension)]
+    Wodd = [[iv.mpf(0) for _ in range(dimension)] for _ in range(dimension)]
     G = [[iv.mpf(0) for _ in range(dimension)] for _ in range(dimension)]
     for i, ni in enumerate(ns):
         arithmetic[i][i] = base.diagonal_iv(int(ni))
@@ -176,11 +208,14 @@ def run():
             tail = 8/iv.pi**2 * ((9+symbols[i]*symbols[j])/M +
                      int(ns[i])*int(ns[j])*(9+symbols[i]*symbols[j])/M**3)
             w = rat(weighted[i][j]) + rat(far_weight) * tail
+            wo = rat(weighted_odd[i][j]) + rat(far_weight_odd) * tail
             g = iv.mpf(int(ordinary[i, j]))/2**(2*BITS) + tail
             if i == j:
                 w += rat(eta + far_weight * rem)
+                wo += rat(eta_odd + far_weight_odd * rem)
                 g += rat(old_eta + rem)
             W[i][j] = W[j][i] = w
+            Wodd[i][j] = Wodd[j][i] = wo
             G[i][j] = G[j][i] = g
 
     candidate = [iv.mpf(int(x))/2**40 for x in base.CANDIDATE]
@@ -198,7 +233,7 @@ def run():
         return [[sum((sx*sy*A[i][j] for i, sx in x for j, sy in y), iv.mpf(0))
                  for y in basis] for x in basis]
 
-    odd_matrix = [[arithmetic[i][j] - G[i][j]/(1-rat(THRESHOLD)) -
+    odd_matrix = [[arithmetic[i][j] - Wodd[i][j] -
                    (rat(THRESHOLD) if i == j else 0)
                    for j in range(dimension)] for i in range(dimension)]
     odd_pivot = ldl_check(block(odd_matrix, odd))
@@ -229,7 +264,7 @@ def run():
     assert lower_pivot is not None and OLD_LOWER < low < UPPER < THRESHOLD
     projective_sq = (UPPER-low)/(THRESHOLD-low)
     # This is a substantive certification target, not a fitted error report.
-    assert projective_sq < Fraction(1, 2500)
+    assert projective_sq < Fraction(1, 10000)
     output = {
         'scale': 'a=log(3)/2', 'N': N, 'M': M,
         'candidate_source': 'certify_prime3_refined.CANDIDATE, unchanged',
@@ -240,19 +275,21 @@ def run():
             separators=(',', ':')).encode()).hexdigest(),
         'shells': shells, 'far_energy_lower': str(far_lower),
         'weighted_gram_error_upper': str(eta),
+        'odd_weighted_gram_error_upper': str(eta_odd),
+        'odd_far_energy_lower': str(far_lower_odd),
         'weighted_error_energy': str(error_w),
         'unweighted_second_jet_tail_upper': str(rem),
         'candidate_rayleigh_interval': str(ray),
         'ground_lower': str(low), 'candidate_upper': str(UPPER),
         'orthogonal_threshold': str(THRESHOLD),
         'projective_distance_sq_upper': str(projective_sq),
-        'projective_distance_upper': '1/50',
+        'projective_distance_upper': '1/100',
         'pivot_displays': {'even_lower': lower_pivot,
                            'even_complement': even_complement_pivot,
                            'odd_complement': odd_pivot},
         'status': 'directed intervals and exact rational/integer checks passed',
         'formal_scope': 'Not a Lean run. Operator identification and the Neumann Gamma '
-                        'mixture are paper bridges; the Lean companion proves the '
+                        'mixture and all-parity logarithmic bound are paper bridges; the Lean companion proves the '
                         'Green-kernel completion and finite-mixture positivity.',
         'search_scope': 'Failed LDL attempts imply no spectral upper bound; the '
                         'reported lower bound is separately rechecked.'}
