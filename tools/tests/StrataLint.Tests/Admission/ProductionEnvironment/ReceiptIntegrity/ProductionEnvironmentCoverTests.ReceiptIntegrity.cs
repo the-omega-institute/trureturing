@@ -6,8 +6,9 @@ namespace StrataLint.Tests;
 
 public sealed partial class ProductionEnvironmentTests
 {
-    [Fact]
-    public void CoverAtomAcceptsScribeByteDriftWhenBaselineTrackedProjectionIsStale()
+    // Preserve the baseline test identity; the display name describes its current contract.
+    [Fact(DisplayName = "Cover accepts Scribe byte drift when the baseline projection is stale")]
+    public void CoverAtomRejectsNewScribeEmissionGapWhenBaselineTrackedProjectionIsStale()
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {

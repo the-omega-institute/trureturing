@@ -330,8 +330,9 @@ public sealed partial class ProductionEnvironmentTests
         }
     }
 
-    [Fact]
-    public void AlignAcceptsProducerCapabilityWithoutRecheckingDefinitionBytes()
+    // Preserve the baseline test identity; the display name describes its current contract.
+    [Fact(DisplayName = "Align accepts producer capability without rechecking definition bytes")]
+    public void AlignFailsClosedWhenTargetScribeMismatchRemainsAfterAlignment()
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         var directoryInputs = DirectoryInputs(inputs);
@@ -423,11 +424,11 @@ public sealed partial class ProductionEnvironmentTests
             CoverWorld.DefaultAtomId + ".yaml")));
     }
 
-    [Theory]
+    [Theory(DisplayName = "Align keeps sibling status and coverage gates without Scribe byte checks")]
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void AlignScribeReceiptKeepsSiblingStatusAndCoverageGatesWithoutScribeByteChecks(
+    public void AlignScribeReceiptRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
