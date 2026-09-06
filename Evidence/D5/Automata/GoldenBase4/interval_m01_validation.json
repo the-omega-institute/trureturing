@@ -1,0 +1,54 @@
+{
+  "source_revision_description": "Final proof review: explicit vector import, pinned implicit Fibonacci index and integer digit bound.",
+  "interval": {
+    "status": "PASS",
+    "source_sha256": "d02440b7e57663841f541a3418b780bb950b114fc669beeacdd2cad82b762101",
+    "states": 21,
+    "legal_transitions": 35,
+    "noninitial_endpoint_inequalities": 66,
+    "output_cells": 21,
+    "phi_bracket": [
+      "8/5",
+      "13/8"
+    ],
+    "floating_point_used": false,
+    "unreachable_cut_assumption_used": false,
+    "lean_executed": false,
+    "power_minimality_claimed": false,
+    "rejected_mutations": [
+      "wrong_zero_target",
+      "wrong_one_target",
+      "wrong_output",
+      "wrong_endpoint"
+    ],
+    "fib_append_regression_checks": 16382
+  },
+  "dense_input": {
+    "status": "PASS",
+    "interval_source_sha256": "d02440b7e57663841f541a3418b780bb950b114fc669beeacdd2cad82b762101",
+    "consecutive_integers": 20000,
+    "power_inputs": 1000,
+    "first_power_index": 0,
+    "last_power_index": 999,
+    "input_zero_word": [
+      0
+    ],
+    "range_bijection_checked": true,
+    "canonical_separation_checked": true,
+    "exact_oracle_checked": true,
+    "floating_point_used": false,
+    "lean_executed": false
+  },
+  "sources": {
+    "GoldenBase4IntervalMachine.lean": {
+      "sha256": "d02440b7e57663841f541a3418b780bb950b114fc669beeacdd2cad82b762101",
+      "git_blob_sha1": "cfd4b45ca9e3ee197752f52aff8c2232a4a554c3"
+    },
+    "GoldenBase4DenseInput.lean": {
+      "sha256": "78c213ad2e9ab3c6709b4c352cb5d8b0d9b61c8c1898534297832a9b7dd8e113",
+      "git_blob_sha1": "0323eff1d33ab2fe41de9497cb1fdcaba64b97ae"
+    }
+  },
+  "lean_executed": false,
+  "independent_author_review": false
+}

@@ -1,0 +1,945 @@
+gap3-proof-v1
+P 0
+L
+P 1
+B 0 7
+L
+B 2 7
+B 15 7
+L
+L
+L
+B 15 7
+L
+B 17 7
+L
+B 3 7
+L
+L
+L
+L
+B 17 7
+B 3 7
+L
+L
+L
+L
+B 3 7
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+B 7 6
+B 5 7
+L
+B 6 7
+L
+L
+L
+B 6 7
+B 13 6
+L
+L
+L
+L
+L
+L
+B 7 5
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+B 6 6
+L
+B 12 7
+L
+L
+L
+B 4 5
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 3
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 6
+L
+L
+B 6 6
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 6
+L
+L
+L
+B 3 7
+L
+B 4 7
+L
+L
+L
+L
+B 17 7
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+L
+L
+B 16 7
+B 3 7
+L
+B 7 6
+L
+L
+L
+B 17 7
+B 3 7
+B 4 6
+L
+L
+B 4 7
+B 6 6
+L
+L
+L
+L
+L
+B 6 7
+L
+L
+L
+L
+B 3 7
+L
+L
+L
+P 2
+B 0 7
+L
+B 2 7
+B 15 7
+L
+L
+L
+B 15 7
+L
+B 17 7
+L
+B 3 7
+L
+L
+L
+L
+B 17 7
+B 3 7
+L
+L
+L
+L
+B 3 7
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+B 7 6
+L
+L
+L
+B 7 5
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+B 12 7
+L
+L
+L
+B 4 5
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 3
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+B 4 6
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 6
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 6
+L
+L
+L
+B 3 7
+L
+L
+L
+B 17 7
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+L
+L
+B 16 7
+B 3 7
+L
+B 7 6
+L
+L
+L
+B 17 7
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+L
+L
+B 3 7
+L
+L
+L
+P 3
+B 0 7
+L
+B 2 7
+B 15 7
+L
+L
+L
+B 15 7
+L
+B 17 7
+L
+B 3 7
+L
+L
+L
+L
+B 17 7
+B 3 7
+L
+B 4 7
+L
+L
+L
+L
+L
+B 3 7
+L
+B 4 7
+L
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+B 7 6
+L
+L
+L
+B 7 5
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+B 12 7
+L
+L
+L
+B 4 5
+L
+L
+L
+B 16 7
+B 3 7
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+L
+B 4 7
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 6
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 6
+L
+L
+L
+B 3 7
+L
+B 4 7
+L
+L
+L
+L
+B 17 7
+B 3 7
+L
+B 7 5
+L
+L
+L
+L
+L
+B 16 7
+B 3 7
+L
+B 7 6
+L
+L
+L
+B 17 7
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+B 6 7
+L
+L
+L
+L
+B 3 7
+L
+L
+L
+P 4
+B 0 7
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+B 8 3
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+B 6 7
+L
+L
+L
+L
+B 7 5
+L
+L
+B 8 3
+L
+L
+L
+B 3 7
+B 4 6
+L
+B 12 7
+L
+L
+L
+B 4 5
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 3
+L
+L
+L
+B 3 7
+B 4 6
+L
+B 6 3
+L
+L
+B 4 7
+L
+L
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+B 3 7
+B 4 6
+B 8 3
+L
+L
+L
+B 7 6
+L
+L
+B 12 7
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 6
+L
+L
+L
+B 3 7
+L
+L
+L
+B 17 7
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+L
+L
+B 16 7
+B 3 7
+L
+B 7 6
+L
+B 8 3
+L
+L
+L
+B 17 7
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+L
+L
+B 3 7
+L
+L
+L
+P 5
+B 0 7
+L
+B 2 7
+B 15 7
+L
+L
+L
+B 15 7
+L
+B 17 7
+L
+B 3 7
+L
+L
+L
+L
+B 17 7
+B 3 7
+L
+L
+L
+L
+B 3 7
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+B 7 6
+B 5 7
+L
+B 6 7
+L
+L
+L
+B 6 7
+B 13 6
+L
+L
+L
+L
+L
+L
+B 7 5
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+B 12 7
+L
+L
+L
+B 4 5
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 3
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+B 4 6
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 6
+L
+L
+B 12 7
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 6
+L
+L
+L
+B 3 7
+L
+B 4 7
+L
+L
+L
+L
+B 17 7
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+L
+L
+B 16 7
+B 3 7
+L
+B 7 6
+L
+L
+L
+B 17 7
+B 3 7
+B 4 6
+L
+L
+B 4 7
+B 13 6
+L
+L
+L
+L
+L
+B 6 7
+L
+L
+L
+L
+B 3 7
+L
+L
+L
+P 6
+B 0 7
+L
+B 2 7
+B 15 7
+L
+L
+L
+B 15 7
+L
+L
+B 3 7
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+B 16 7
+B 3 7
+L
+B 7 5
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+B 7 3
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+L
+L
+B 15 7
+B 16 7
+L
+B 3 7
+B 4 6
+L
+L
+B 4 7
+L
+L
+L
+B 4 6
+L
+L
+B 3 7
+L
+L
+L
+B 16 7
+B 3 7
+B 4 6
+L
+L
+L
+L
+L
+B 3 7
+B 4 6
+L
+L
+B 7 5
+L
+L
+L
+B 16 7
+B 3 7
+L
+B 12 6
+L
+L
+L
+B 3 7
+L
+B 4 7
+L
+L
+L
+L
+L
+P 7
+L

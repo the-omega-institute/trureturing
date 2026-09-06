@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "states": 20,
+  "previous_zero_states": 13,
+  "previous_one_states": 7,
+  "distinct_output_return_signatures": 7,
+  "reachable_states": 20,
+  "legal_transition_entries": 33,
+  "initial_power_indices_correct": [0, 366],
+  "first_error": {"n": 367, "actual": 1, "expected": 0, "state": 10, "word_length": 1057},
+  "checked_power_indices": [0, 1999],
+  "errors_in_checked_range": [
+    {"n": 367, "actual": 1, "expected": 0, "state": 10, "word_length": 1057},
+    {"n": 1164, "actual": 1, "expected": 0, "state": 10, "word_length": 3353}
+  ],
+  "leading_zero_checks": 240,
+  "failure_word_sha256": "6bcc16ae77b94c9423f921e1c103be2d13b85ead036f67fbf5c8ae31be1eadef",
+  "source_sha256": "1e937bdd9fd537f48c5583bcc5e3176ea29e10ef9163237d78cbc25407347048",
+  "floating_point_used": false,
+  "reference_automaton_used_as_oracle": false,
+  "lean_executed": false,
+  "all_powers_correct": false,
+  "new_global_state_lower_bound": false,
+  "rejected_mutations": ["changed_zero_transition", "changed_output", "missing_type_guard"]
+}

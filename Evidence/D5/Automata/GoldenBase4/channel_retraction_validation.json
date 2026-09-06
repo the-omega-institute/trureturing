@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "models": 24408,
+  "evaluation_equalities": 1462320,
+  "undefined_evaluations_preserved": 773372,
+  "strict_cost_reduction_models": 864,
+  "wrong_return_mutation_rejected": true,
+  "lean_executed": false,
+  "new_state_lower_bound": false,
+  "sha256": {
+    "D5/S0/Certificates/SkeletonChannelRetraction.lean": "52828627c3c117efee928a1d869f1c761630b773625fe3aaf2e9357ecdb03448",
+    "Blueprint/D5/S0/Certificates/SkeletonChannelRetraction.scribe.cs": "db7d9730f8d8a3d5fc61db598998e1da724a292a3aafe5457d2747c181c47787"
+  }
+}

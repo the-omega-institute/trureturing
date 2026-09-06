@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "separated_same_type_pairs": 112,
+  "core_access_states": 20,
+  "core_zero_nonfixed_states": 20,
+  "suffix_count": 13,
+  "maximum_suffix_length": 6,
+  "pumping_cycle": [
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "pumping_weights_tested": [
+    0,
+    1,
+    6,
+    14,
+    64
+  ],
+  "pumped_arithmetic_checks": 1255,
+  "power_terminal_first_indices": [
+    56,
+    19,
+    5,
+    2,
+    17,
+    27,
+    28,
+    57,
+    21,
+    4,
+    62,
+    20,
+    15,
+    11,
+    1,
+    45,
+    3,
+    0,
+    12,
+    26
+  ],
+  "power_scan_extent": 1000,
+  "all_core_states_terminal_by_index": 62,
+  "weight_six_indices_in_scan": [
+    6,
+    7,
+    14
+  ],
+  "literature_rows_recomputed": 3,
+  "external_diophantine_completeness_reproved": false,
+  "universal_claim": "Fewer than 21 anchored typed states implies arithmetic errors of unbounded one-count on legal integer words.",
+  "powers_only_minimum_proved": false,
+  "lean_executed": false,
+  "reference_sha256": "d02440b7e57663841f541a3418b780bb950b114fc669beeacdd2cad82b762101",
+  "source_sha256": "13faec22a8bacd5c8749315fede85466ef26c1c05188214e34cdbe5b37c7332a",
+  "rejected_mutations": [
+    "wrong_cycle",
+    "wrong_access",
+    "missing_final_separator"
+  ]
+}

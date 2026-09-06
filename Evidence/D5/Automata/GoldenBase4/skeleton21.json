@@ -1,0 +1,15 @@
+{
+  "recurrent_capacity": 14,
+  "signature_capacity": 7,
+  "canonical_cost": 21,
+  "start": 0,
+  "A": [0,9,8,7,7,6,5,5,4,4,3,2,2,1],
+  "F": [0,3,3,3,3,3,0,0,0,0,0,1,1,1],
+  "signature_selection": [4,6,5,5,4,4,4,3,3,2,1,1,0,0],
+  "signature_output": [1,1,2,2,2,2,3],
+  "signature_return": [13,12,12,11,10,9,9],
+  "G": [2,3,2,2,2,2,2,2,2,2,1,1,1,1],
+  "J": [10,9,9,9,10,10,10,11,11,12,12,12,13,13],
+  "PR_5405_base_head": "a02a13c3e358c262355013e712d42dfe5e0dae6d",
+  "source_semantics": "BinaryZeckendorfBlockSkeleton total skeleton; all legal transitions present"
+}

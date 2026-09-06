@@ -1,0 +1,66 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S1.Digit;
+
+internal sealed class GoldenBase4TwentyStatePrefixBarrierDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S1/Digit/GoldenBase4TwentyStatePrefixBarrier.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "An explicit twenty-state table fits all original power indices below 367 and first fails at 367. Dictionaries confined to that prefix cannot refute every twenty-state candidate.",
+        H("A Twenty-State Finite-Prefix Barrier"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("phi4-prefix-stateType"),
+                DeclarationHandle.Create(Prefix + "stateType"), H("stateType"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The thirteen previous-zero rows and seven previous-one rows."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("phi4-prefix-zeroTarget"),
+                DeclarationHandle.Create(Prefix + "zeroTarget"), H("zeroTarget"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Zero successors of the explicit finite-prefix witness."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("phi4-prefix-oneTarget"),
+                DeclarationHandle.Create(Prefix + "oneTarget"), H("oneTarget"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("One successors; unused entries remain hidden behind the type guard."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("phi4-prefix-output"),
+                DeclarationHandle.Create(Prefix + "output"), H("output"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The output is always a base-four digit."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("phi4-prefix-step"),
+                DeclarationHandle.Create(Prefix + "step"), H("step"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every legal symbol has a successor; consecutive ones remain undefined."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("phi4-prefix-machine"),
+                DeclarationHandle.Create(Prefix + "machine"), H("machine"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A concrete machine in the same candidate class as the original problem."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("phi4-prefix-correct-before-367"),
+                DeclarationHandle.Create(Prefix + "correct_before_367"), H("correct_before_367"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every original power input with index below 367 is computed correctly."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("phi4-prefix-output-at-367"),
+                DeclarationHandle.Create(Prefix + "output_at_367"), H("output_at_367"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At index 367 the concrete twenty-state table emits one."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("phi4-prefix-true-digit-at-367"),
+                DeclarationHandle.Create(Prefix + "true_digit_at_367"), H("true_digit_at_367"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original exact arithmetic oracle has digit zero at index 367."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("phi4-prefix-fails-at-367"),
+                DeclarationHandle.Create(Prefix + "fails_at_367"), H("fails_at_367"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This finite-prefix witness is not a solution of the infinite problem."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("phi4-prefix-no-earlier-failure"),
+                DeclarationHandle.Create(Prefix + "no_earlier_failure"), H("no_earlier_failure"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every failure of this witness is at least the explicitly attained index."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("phi4-prefix-initial-anchors"),
+                DeclarationHandle.Create(Prefix + "initial_anchors"), H("initial_anchors"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Both published initial anchors hold, including the leading-zero loop."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("phi4-prefix-every-subprefix-has-twenty-state-witness"),
+                DeclarationHandle.Create(Prefix + "every_subprefix_has_twenty_state_witness"), H("every_subprefix_has_twenty_state_witness"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every collection of observations confined to indices below 367 has a 20-state witness. This includes the original 79 rows and the 144 gap4 rows. The indices may repeat and the collection may be described by any index type."))), DescribeRole.Theorem)),
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Digit/GoldenBase4DenseInput"))]));
+}
