@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:22418f30542861f811b6cca2a40a67a70057d87356c426799d0d727a93dd7213
+  normalized_sha256: sha256:22418f30542861f811b6cca2a40a67a70057d87356c426799d0d727a93dd7213
+cas_ref: sha256:22418f30542861f811b6cca2a40a67a70057d87356c426799d0d727a93dd7213
+coverage_gids:
+  - gid: D5/S3/Arith/DerangementTwoAdicValuation.numDerangements_parity_valuation_and_power_exponent
+    target_statement_id: sha256:1e465d57096ec0767cc04a32baf89cff6928deb03a9b414491f3324d3f994d4d
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/DerangementTwoAdicValuation.numDerangements_parity_valuation_and_power_exponent
+      definition_sha256: sha256:595cb4085f6f1d64b3a6dc41337c450990e0d96b741415c03edd02891dc7cd47
+      emission_sha256: sha256:369d66dd8967470b3c4653550263e1f486a9884924246cd9af2eed16b04a1cac
+  unresolved_subitems: []
