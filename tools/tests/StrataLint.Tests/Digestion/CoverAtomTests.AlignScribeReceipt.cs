@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 
@@ -5,10 +6,13 @@ namespace StrataLint.Tests;
 
 public sealed partial class CoverAtomTests
 {
-    [Fact]
-    public void AlignScribeReceiptUsesVerifiedFingerprintsAndIsIdempotent()
+    [Theory]
+    [InlineData("probe")]
+    [InlineData(null)]
+    public void AlignScribeReceiptUsesVerifiedFingerprintsAndIsIdempotent(string? declaration)
     {
-        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        var spec = CoverWorld.StaleReceiptSpec() with { Declaration = declaration };
+        var inputs = CoverWorld.Materialize(spec with { InitialCoverage = [spec.Gid] });
         var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
@@ -28,7 +32,7 @@ public sealed partial class CoverAtomTests
         var afterFirst = DirectoryLedgerTestSupport.Image(
             BackfillInventoryLoader.LoadRoot(temporary.Path));
         Assert.True(inputs.VerifiedEmissions!.TryGet(
-            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
+            ScribeEmissionAttestation.DocumentGid(inputs.Gid), out var verifiedRecord));
         Assert.Equal(
             ExpectedAlignedScribeImage(inputs, verifiedRecord),
             afterFirst);
@@ -45,6 +49,77 @@ public sealed partial class CoverAtomTests
         Assert.Equal(
             afterFirst,
             DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
+    }
+
+    [Theory]
+    [InlineData(null, false)]
+    [InlineData("probe", false)]
+    [InlineData("probe", true)]
+    public void AlignScribeReceiptRequiresVerifiedEmissionAndAnyDeclarationReference(
+        string? declaration,
+        bool includeEmission)
+    {
+        var spec = CoverWorld.StaleReceiptSpec() with { Declaration = declaration };
+        var inputs = CoverWorld.Materialize(spec with { InitialCoverage = [spec.Gid] });
+        Assert.True(inputs.VerifiedEmissions!.TryGet(spec.ModuleGid, out var record));
+        inputs = inputs with
+        {
+            VerifiedEmissions = VerifiedScribeEmissions.Create(includeEmission ? [record] : []),
+        };
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
+
+        var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files)
+            .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains("has no verified Scribe emission", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+    }
+
+    [Theory]
+    [InlineData(null, 0, 1)]
+    [InlineData(null, 2, 1)]
+    [InlineData(null, 1, 0)]
+    [InlineData(null, 1, 2)]
+    [InlineData("probe", 0, 1)]
+    [InlineData("probe", 2, 1)]
+    [InlineData("probe", 1, 0)]
+    [InlineData("probe", 1, 2)]
+    public void AlignScribeReceiptRequiresExactlyOneExistingEdgeAndReceipt(
+        string? declaration,
+        int edgeCount,
+        int receiptCount)
+    {
+        var spec = CoverWorld.StaleReceiptSpec() with { Declaration = declaration };
+        var inputs = CoverWorld.Materialize(spec with { InitialCoverage = [spec.Gid] });
+        var source = Assert.Single(inputs.Document.RequireDigestionSources());
+        var entry = Assert.Single(source.Entries);
+        var document = inputs.Document.WithDigestionSources([source with
+        {
+            Entries = [entry with
+            {
+                Coverage = Enumerable.Repeat(Assert.Single(entry.Coverage), edgeCount).ToImmutableArray(),
+                Receipts = entry.Receipts with
+                {
+                    Scribe = Enumerable.Repeat(Assert.Single(entry.Receipts.Scribe), receiptCount)
+                        .ToImmutableArray(),
+                },
+            }],
+        }]);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(inputs.Files, document);
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
+
+        var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files)
+            .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains(edgeCount == 1 ? "exactly one Scribe receipt" : "exactly once",
+            result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 
     public static TheoryData<string, string> UnknownAlignTargets => new()

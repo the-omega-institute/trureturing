@@ -118,10 +118,13 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(concurrent, File.ReadAllText(metadataPath));
     }
 
-    [Fact]
-    public void AlignScribeReceiptIsReachableThroughProductionCliDispatch()
+    [Theory]
+    [InlineData("probe")]
+    [InlineData(null)]
+    public void AlignScribeReceiptIsReachableThroughProductionCliDispatch(string? declaration)
     {
-        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        var spec = CoverWorld.StaleReceiptSpec() with { Declaration = declaration };
+        var inputs = CoverWorld.Materialize(spec with { InitialCoverage = [spec.Gid] });
         var directoryInputs = DirectoryInputs(inputs);
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, directoryInputs.Files);
@@ -132,7 +135,7 @@ public sealed partial class ProductionEnvironmentTests
             CoverWorld.Environment(temporary.Path, directoryInputs, directoryInputs.Files),
             console);
 
-        Assert.Equal(0, exitCode);
+        Assert.True(exitCode == 0, console.Error);
         Assert.Contains("ALIGN_SCRIBE_RECEIPT", console.Output, StringComparison.Ordinal);
         Assert.Equal(string.Empty, console.Error);
     }
@@ -441,17 +444,23 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Theory]
-    [InlineData("coverage-target-mismatch")]
-    [InlineData("scribe-definition-mismatch")]
-    [InlineData("scribe-emission-mismatch")]
+    [InlineData("coverage-target-mismatch", "probe")]
+    [InlineData("scribe-definition-mismatch", "probe")]
+    [InlineData("scribe-emission-mismatch", "probe")]
+    [InlineData("coverage-target-mismatch", null)]
+    [InlineData("scribe-definition-mismatch", null)]
+    [InlineData("scribe-emission-mismatch", null)]
     public void AlignScribeReceiptRejectsTargetRepairWhenUnrelatedBacklogExistsAtBaseline(
-        string mismatchCode)
+        string mismatchCode,
+        string? declaration)
     {
-        var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
+        var spec = CoverWorld.StaleReceiptSpec() with
         {
+            Declaration = declaration,
             OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
-        });
+        };
+        var materialized = CoverWorld.Materialize(spec with { InitialCoverage = [spec.Gid] });
         var inputs = DirectoryInputs(WithReceiptMismatchAtBaseline(
             materialized,
             mismatchCode,
