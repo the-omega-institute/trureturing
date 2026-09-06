@@ -83,27 +83,32 @@ theorem benefitToleranceCertificate_accepted (eta0 eta1 : ℚ)
       benefitToleranceCertificate, if_pos small]
     refine ⟨⟨?_, ?_, ?_, ?_, ?_⟩, ?_, ?_, ?_, ?_⟩
     · intro i
-      fin_cases i <;> norm_num <;> linarith
-    · norm_num [Fin.sum_univ_succ] <;> ring
+      fin_cases i <;> simp <;> linarith
+    · norm_num [Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff] <;> ring
     · intro i
-      fin_cases i <;> norm_num <;> linarith
-    · norm_num [Fin.sum_univ_succ] <;> ring
+      fin_cases i <;> norm_num [Fin.ext_iff, -Fin.val_eq_zero_iff] <;> linarith
+    · norm_num [Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff] <;> ring
     · intro j
       fin_cases j <;>
-        norm_num [linearObjective, benefitMomentFeature, Fin.sum_univ_succ] <;>
+        norm_num [linearObjective, benefitMomentFeature, Fin.sum_univ_succ,
+          Fin.ext_iff, -Fin.val_eq_zero_iff] <;>
         apply abs_le.mpr <;> constructor <;> linarith
     · intro i
       fin_cases i <;> norm_num [queryResidual, affineCoefficient,
-        benefitMomentFeature, benefitMomentQuery, Fin.sum_univ_succ]
+        benefitMomentFeature, benefitMomentQuery, Fin.sum_univ_succ,
+        Fin.ext_iff, -Fin.val_eq_zero_iff]
     · intro i hi
-      fin_cases i <;> norm_num [queryResidual, affineCoefficient,
-        benefitMomentFeature, benefitMomentQuery, Fin.sum_univ_succ] at hi ⊢
+      fin_cases i <;> simp [queryResidual, affineCoefficient,
+        benefitMomentFeature, benefitMomentQuery, Fin.sum_univ_succ,
+        Fin.ext_iff, -Fin.val_eq_zero_iff] at hi ⊢
+      norm_num
     · intro i hi
-      fin_cases i <;> norm_num [queryResidual, affineCoefficient,
-        benefitMomentFeature, benefitMomentQuery, Fin.sum_univ_succ] at hi ⊢
+      fin_cases i <;> simp [queryResidual, affineCoefficient,
+        benefitMomentFeature, benefitMomentQuery, Fin.sum_univ_succ,
+        Fin.ext_iff, -Fin.val_eq_zero_iff] at hi ⊢
     · intro j
       fin_cases j <;> norm_num [linearObjective, benefitMomentFeature,
-        Fin.sum_univ_succ] <;> ring
+        Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff] <;> ring
   · have sn : 0 ≤ min (1 : ℚ) eta0 := le_min (by norm_num) h0
     have su : min (1 : ℚ) eta0 ≤ 1 := min_le_left _ _
     have se : min (1 : ℚ) eta0 ≤ eta0 := min_le_right _ _
@@ -120,21 +125,22 @@ theorem benefitToleranceCertificate_accepted (eta0 eta1 : ℚ)
       fin_cases i <;> norm_num
     · norm_num [Fin.sum_univ_succ]
     · intro i
-      fin_cases i <;> norm_num <;> linarith
-    · norm_num [Fin.sum_univ_succ] <;> ring
+      fin_cases i <;> norm_num [Fin.ext_iff, -Fin.val_eq_zero_iff] <;> linarith
+    · norm_num [Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff] <;> ring
     · intro j
       fin_cases j <;>
-        norm_num [linearObjective, benefitMomentFeature, Fin.sum_univ_succ] <;>
+        norm_num [linearObjective, benefitMomentFeature, Fin.sum_univ_succ,
+          Fin.ext_iff, -Fin.val_eq_zero_iff] <;>
         apply abs_le.mpr <;> constructor <;> linarith
     · intro i
       fin_cases i <;> norm_num [queryResidual, affineCoefficient,
         benefitMomentFeature, benefitMomentQuery, Fin.sum_univ_succ]
     · intro i hi
-      fin_cases i <;> norm_num [queryResidual, affineCoefficient,
-        benefitMomentFeature, benefitMomentQuery, Fin.sum_univ_succ] at hi ⊢
+      fin_cases i <;> simp [queryResidual, affineCoefficient,
+        benefitMomentFeature, benefitMomentQuery, Fin.ext_iff, -Fin.val_eq_zero_iff] at hi ⊢
     · intro i hi
-      fin_cases i <;> norm_num [queryResidual, affineCoefficient,
-        benefitMomentFeature, benefitMomentQuery, Fin.sum_univ_succ] at hi ⊢
+      fin_cases i <;> simp [queryResidual, affineCoefficient,
+        benefitMomentFeature, benefitMomentQuery, Fin.ext_iff, -Fin.val_eq_zero_iff] at hi ⊢
     · intro j
       fin_cases j <;> norm_num [linearObjective, benefitMomentFeature,
         Fin.sum_univ_succ]
@@ -162,7 +168,7 @@ private theorem indexed_total (law : FiniteResponseLaw (Bool × Bool)) :
     (∑ i, indexedMass law.mass i) = 1 := by
   have h := law.total
   simp only [Fintype.sum_prod_type, Fintype.sum_bool] at h
-  norm_num [indexedMass, Fin.sum_univ_succ]
+  norm_num [indexedMass, Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff]
   linarith
 
 private theorem indexed_nonnegative (law : FiniteResponseLaw (Bool × Bool)) :
@@ -178,18 +184,18 @@ private theorem indexed_control (mass : Bool × Bool → ℚ) :
     linearObjective (fun i => benefitMomentFeature i 0) (indexedMass mass) =
       controlSuccessMarginal mass := by
   norm_num [linearObjective, benefitMomentFeature, indexedMass,
-    controlSuccessMarginal, Fin.sum_univ_succ] <;> ring
+    controlSuccessMarginal, Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff]
 
 private theorem indexed_treatment (mass : Bool × Bool → ℚ) :
     linearObjective (fun i => benefitMomentFeature i 1) (indexedMass mass) =
       treatmentSuccessMarginal mass := by
   norm_num [linearObjective, benefitMomentFeature, indexedMass,
-    treatmentSuccessMarginal, Fin.sum_univ_succ] <;> ring
+    treatmentSuccessMarginal, Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff]
 
 private theorem indexed_benefit (mass : Bool × Bool → ℚ) :
     linearObjective benefitMomentQuery (indexedMass mass) = benefitResponseMass mass := by
   norm_num [linearObjective, benefitMomentQuery, indexedMass,
-    benefitResponseMass, Fin.sum_univ_succ]
+    benefitResponseMass, Fin.sum_univ_succ, Fin.ext_iff, -Fin.val_eq_zero_iff]
 
 private def responseLaw (mass : Fin 4 → ℚ) (hn : ∀ i, 0 ≤ mass i)
     (ht : (∑ i, mass i) = 1) : FiniteResponseLaw (Bool × Bool) where
@@ -203,6 +209,7 @@ private def responseLaw (mass : Fin 4 → ℚ) (hn : ∀ i, 0 ≤ mass i)
     cases a <;> cases b <;> exact hn _
   total := by
     norm_num [Fin.sum_univ_succ] at ht
+    change mass 0 + (mass 1 + (mass 2 + mass 3)) = 1 at ht
     simp only [Fintype.sum_prod_type, Fintype.sum_bool]
     linarith
 
