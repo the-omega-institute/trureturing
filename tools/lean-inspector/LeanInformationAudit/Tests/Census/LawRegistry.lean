@@ -164,6 +164,17 @@ info: rejected=true output-absent=true certificate-absent=true
 -/
 #guard_msgs in
 run_cmd do
+  tamper (← `(term| fun entry => { entry with lawArenaSyntax := "RegisteredClosedTruth.lawArena" }))
+    `differentSourceLaw (classError ``RegisteredClosedTruth.generated
+      "structural_occurrence" "realization.provenance.syntax")
+
+/--
+info: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.RegisteredClosedTruth.generated class=structural_occurrence invalid=realization.provenance.syntax
+---
+info: rejected=true output-absent=true certificate-absent=true
+-/
+#guard_msgs in
+run_cmd do
   tamper (← `(term| fun entry => { entry with realizationSyntax := "otherReadouts" }))
     `differentSourceRealization (classError ``RegisteredClosedTruth.generated
       "structural_occurrence" "realization.provenance.syntax")

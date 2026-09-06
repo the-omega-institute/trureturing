@@ -54,6 +54,7 @@ structure StructuralProvenanceEntry where
   certificateName : Name
   registrationModule : Name
   canonicalArena : Name
+  lawArenaSyntax : String
   realizationSyntax : String := ""
   deriving Inhabited
 
@@ -245,6 +246,7 @@ elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
         certificateName := certificateName
         registrationModule := before.header.mainModule
         canonicalArena := canonicalArena
+        lawArenaSyntax := lawArenaId.raw.reprint.getD ""
         realizationSyntax := realizationTerm.raw.reprint.getD "" } : StructuralProvenanceEntry)
     modifyEnv fun env => structuralRegistry.addEntry env entry
   catch error =>
@@ -339,8 +341,7 @@ private def validateProvenanceSyntax (entry : StructuralProvenanceEntry) : MetaM
           realization $realizationTerm:term nondegeneracy $_:ident := $_:term) := command then
         if sourceDeclName ns theoremId.getId == entry.theoremName then
           if found then return ← reject
-          let lawNames := Lean.ResolveName.resolveGlobalName env (← getOptions) ns opens lawId.getId
-          unless lawNames == [(entry.lawArenaConst, [])] &&
+          unless lawId.raw.reprint == some entry.lawArenaSyntax &&
               entry.realizationConst == entry.theoremName.str "__structural_realization" &&
               realizationTerm.raw.reprint == some entry.realizationSyntax do
             return ← reject

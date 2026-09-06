@@ -92,6 +92,56 @@ end LeanInformationAudit.Tests.Census.RegisteredClosedTruth
 
 open LeanInformationAudit.Tests.Census
 
+namespace CensusShadowingSource
+
+abbrev arena : StructuralArena := RegisteredClosedTruth.arena
+def lawArena : StructuralPrimitiveLawArena arena := RegisteredClosedTruth.lawArena
+def readouts : StructuralPrimitiveRealization arena lawArena.signature :=
+  RegisteredClosedTruth.readouts
+theorem nondegenerate : lawArena.Nondegenerate := RegisteredClosedTruth.nondegenerate
+
+end CensusShadowingSource
+
+open CensusShadowingSource
+
+namespace CensusLaterLawShadowing
+
+structural_theorem generated in lawArena realization readouts
+  nondegeneracy nondegenerate := rfl
+
+-- A later declaration with the written source name must not change provenance.
+def lawArena : StructuralPrimitiveLawArena CensusShadowingSource.arena :=
+  CensusShadowingSource.lawArena
+
+def testCatalog : StructuralCatalog CensusShadowingSource.arena :=
+  ⟨Unit, inferInstance, inferInstance, fun _ => generated.__structural_unit⟩
+theorem registration : StructuralRegistrationEvidence ``generated
+    CensusShadowingSource.arena generated.__structural_unit testCatalog ()
+    (CensusShadowingSource.lawArena.Law CensusShadowingSource.readouts) := ⟨rfl, rfl⟩
+def witness : StructuralStrictnessCertificate testCatalog () where
+  inclusion := by intro _ _ _ i ne; exact (ne rfl).elim
+  left := 0
+  right := 2
+  without_agrees := by intro i ne; exact (ne rfl).elim
+  full_separates := by
+    intro full
+    have impossible : (5 : Nat) = 6 := full () (Set.mem_univ ()) ()
+    exact (by decide : (5 : Nat) ≠ 6) impossible
+theorem strictness : testCatalog.StructurallyLowersEscape () :=
+  testCatalog.structurallyLowersEscape_of_certificate () witness
+def inventory : DispositionInventory := ⟨"shadowing-head", #[
+  ⟨⟨``generated, "shadowing-id"⟩, .structuralOccurrence
+    ⟨``CensusShadowingSource.arena, ``registration, ``generated.__structural_realization,
+      ``strictness, ``witness⟩⟩]⟩
+
+/-- info: accepted=true structural=1 certificate-kernel-checked=true -/
+#guard_msgs in
+run_cmd do
+  expectAcceptedCensus (← getEnv).header.mainModule ``inventory
+    `shadowingCoverage inventory 1
+
+end CensusLaterLawShadowing
+
 namespace CensusForgedProvenance
 
 abbrev arena : StructuralArena := ⟨Nat⟩
@@ -145,7 +195,8 @@ run_cmd do
       levelParams := info.levelParams
       certificateName := ``nondegenerate
       registrationModule := (← getEnv).header.mainModule
-      canonicalArena := ``arena }
+      canonicalArena := ``arena
+      lawArenaSyntax := "lawArena" }
     modifyEnv fun current => ($registryId).addEntry current entry))
 
 /--
