@@ -183,10 +183,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
+          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/worktree/lean-cache-input.sh"
           test -x "${helper}"
-          read -r address producer_sha256 sources_sha256 config_sha256 \
-            < <("${helper}" address --repository "$GITHUB_WORKSPACE/candidate")
+          input_address="$("${helper}" address --repository "$GITHUB_WORKSPACE/candidate")"
+          [[ "$input_address" =~ ^[0-9a-f]{64}\ [0-9a-f]{64}$ ]]
+          read -r sources_sha256 config_sha256 <<< "$input_address"
           echo "config_sha256=${config_sha256}" >> "$GITHUB_OUTPUT"
           echo "sources_sha256=${sources_sha256}" >> "$GITHUB_OUTPUT"
 

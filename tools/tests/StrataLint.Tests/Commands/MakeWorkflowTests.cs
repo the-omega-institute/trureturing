@@ -380,6 +380,9 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(Path.Combine(fixture.Path, ".github", "workflows"));
         File.Copy(Path.Combine(root, IngestScriptPath), ingestPath);
         File.Copy(Path.Combine(root, LeanReportInputScriptPath), inputPath);
+        ScriptHarnessScratch.CopyScriptInto(
+            Path.Combine(root, "tools/scripts/worktree/lean-cache-input.sh"),
+            Path.Combine(fixture.Path, "tools/scripts/worktree/lean-cache-input.sh"));
         File.WriteAllText(Path.Combine(fixture.Path, "Trureturing.lean"), "import D5.Probe\n");
         File.WriteAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), leanSource);
         File.WriteAllText(Path.Combine(fixture.Path, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
@@ -481,6 +484,9 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(bin);
         File.Copy(Path.Combine(root, IngestScriptPath), ingest);
         File.Copy(Path.Combine(root, LeanReportInputScriptPath), helper);
+        ScriptHarnessScratch.CopyScriptInto(
+            Path.Combine(root, "tools/scripts/worktree/lean-cache-input.sh"),
+            Path.Combine(fixture.Path, "tools/scripts/worktree/lean-cache-input.sh"));
         var project = Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
         Directory.CreateDirectory(Path.GetDirectoryName(project)!);
         File.WriteAllText(project, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");

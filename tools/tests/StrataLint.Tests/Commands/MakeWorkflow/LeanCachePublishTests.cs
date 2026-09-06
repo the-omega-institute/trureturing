@@ -153,7 +153,8 @@ public sealed partial class LeanCachePublishTests
     public void AddressesComeFromTheExistingInputHelperRatherThanASecondImplementation()
     {
         var script = Script();
-        Assert.Contains("lean-report-input.sh", script, StringComparison.Ordinal);
+        Assert.Contains("tools/scripts/worktree/lean-cache-input.sh", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("lean-report-input.sh", script, StringComparison.Ordinal);
         Assert.Contains("address --repository", script, StringComparison.Ordinal);
         Assert.DoesNotContain("sha256sum <<<", script, StringComparison.Ordinal);
     }
@@ -433,11 +434,11 @@ public sealed partial class LeanCachePublishTests
                 Path.Combine(Repository, "lean-toolchain"),
                 "leanprover/lean4:v4.31.0\n");
 
-            var helper = Path.Combine(Repository, "tools", "scripts", "report", "lean-report-input.sh");
+            var helper = Path.Combine(Repository, "tools", "scripts", "worktree", "lean-cache-input.sh");
             Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
             WriteExecutable(
                 helper,
-                "#!/usr/bin/env bash\nprintf 'addr producer %s %s\\n' "
+                "#!/usr/bin/env bash\nprintf '%s %s\\n' "
                     + $"\"{new string('1', 64)}\" \"{new string('2', 64)}\"\n");
 
             Directory.CreateDirectory(Bin);
@@ -563,11 +564,11 @@ public sealed partial class LeanCachePublishTests
             File.WriteAllText(
                 Path.Combine(Repository, "lean-toolchain"),
                 "leanprover/lean4:v4.31.0\n");
-            var helper = Path.Combine(Repository, "tools", "scripts", "report", "lean-report-input.sh");
+            var helper = Path.Combine(Repository, "tools", "scripts", "worktree", "lean-cache-input.sh");
             Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
             WriteExecutable(
                 helper,
-                "#!/usr/bin/env bash\nprintf 'addr producer %s %s\\n' "
+                "#!/usr/bin/env bash\nprintf '%s %s\\n' "
                     + $"\"{new string('3', 64)}\" \"{new string('4', 64)}\"\n");
 
             var producer = deviation == "no-producer" ? "" : $"producer_commit_sha={ProducerSha}\n";
