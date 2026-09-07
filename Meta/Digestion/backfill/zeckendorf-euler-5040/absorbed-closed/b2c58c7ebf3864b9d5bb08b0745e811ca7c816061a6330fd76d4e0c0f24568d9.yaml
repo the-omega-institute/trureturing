@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:b2c58c7ebf3864b9d5bb08b0745e811ca7c816061a6330fd76d4e0c0f24568d9
+  normalized_sha256: sha256:b2c58c7ebf3864b9d5bb08b0745e811ca7c816061a6330fd76d4e0c0f24568d9
+cas_ref: sha256:b2c58c7ebf3864b9d5bb08b0745e811ca7c816061a6330fd76d4e0c0f24568d9
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/GoldenCell5040Certificate.cellMinimum
+    target_statement_id: sha256:3c207458b02f42402f7ec0cae534f6f70f7cde7cc2262bb3ea9bb7b822bac862
+  - gid: D5/S3/Arith/GoldenResource/GoldenCell5040Certificate.goldenCellPlus_finite
+    target_statement_id: sha256:cb9d023b8fbb2fdf6fca52af045094b72b0393ea3bb9b6ae4c7b83087acf5e1d
+  - gid: D5/S3/Arith/GoldenResource/GoldenCell5040Certificate.cellMinimum_mem
+    target_statement_id: sha256:e051b539df553a4d5d6a32c1b80857f483b271814f4d6ffff6a90f5420503b38
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/GoldenResource/GoldenCell5040Certificate.cellMinimum
+      definition_sha256: sha256:29dbd68dcae73ab76fbef1d20106262300771bd69ccd9476b808a84725b392df
+      emission_sha256: sha256:e66d820ecca84063e916ba422b50c04e514f4e1bb57b68b12ac427a7d36ab96f
+    - gid: D5/S3/Arith/GoldenResource/GoldenCell5040Certificate.goldenCellPlus_finite
+      definition_sha256: sha256:29dbd68dcae73ab76fbef1d20106262300771bd69ccd9476b808a84725b392df
+      emission_sha256: sha256:e66d820ecca84063e916ba422b50c04e514f4e1bb57b68b12ac427a7d36ab96f
+    - gid: D5/S3/Arith/GoldenResource/GoldenCell5040Certificate.cellMinimum_mem
+      definition_sha256: sha256:29dbd68dcae73ab76fbef1d20106262300771bd69ccd9476b808a84725b392df
+      emission_sha256: sha256:e66d820ecca84063e916ba422b50c04e514f4e1bb57b68b12ac427a7d36ab96f
+  unresolved_subitems: []
