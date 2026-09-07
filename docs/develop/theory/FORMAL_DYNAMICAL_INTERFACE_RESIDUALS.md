@@ -2270,3 +2270,201 @@ P_\alpha x\to x
 \]
 
 这条链给出一个统一但不混同层级的答案：所谓观察者缺失的信息，不是一个无类型的“隐藏量”；它是目标、动力学与接口共同决定的余量。只有把 kernel、carry、image、coupling、gauge 与 completion topology 分账，才能精确知道下一步究竟应增加读数、增加记忆、改变实验、约束动力学、补 gluing，还是承认目标在当前接口上根本不可识别。
+
+---
+
+# 增补：有限噪声数据的主元型 Ho–Kalman 与预测证书（2026-09-05）
+
+本节给出有限 Markov 数据上的确定性重建算法及其误差证明。对应五个 Lean 模块和同名 Scribe 已提供候选源码；这些源码尚未取得 Lean 内核编译或 Scribe 发射通过的记录。本节的证明说明与数值回归不能替代该检查状态。
+
+## 输入、输出与有限数据模型
+
+固定输入数 \(m\)、输出数 \(p\)、目标状态阶数 \(r\) 和窗口参数 \(h\)。程序输入恰好为
+
+\[
+\widehat M_0,\ldots,\widehat M_{2h-1}\in\mathbb Q^{p\times m},
+\qquad \varepsilon\in\mathbb Q.
+\]
+
+Markov 参数采用 \(M_k=CA^kB\) 约定。直接馈通矩阵 \(D\) 不包含在该数组中。这里的噪声预算是逐条目确定性预算：
+
+\[
+|\widehat M_k(i,j)-M_k(i,j)|\le\varepsilon.
+\]
+
+真实系统允许实数矩阵。程序只运算有理数观测；真实矩阵和逐条目误差关系只出现在正确性定理中。程序返回含主元索引和 \((\widehat A,\widehat B,\widehat C)\) 的结果，或返回 `none`。
+
+## 四个可计算数据块与接受检验
+
+主元选择 \(r\) 个时间／输出行 \((t_i,a_i)\) 和 \(r\) 个时间／输入列 \((s_j,b_j)\)，其中所有时间索引都小于 \(h\)。定义
+
+\[
+\begin{aligned}
+\widehat K_{ij}&=\widehat M_{t_i+s_j}(a_i,b_j),&
+\widehat L_{ij}&=\widehat M_{t_i+1+s_j}(a_i,b_j),\\
+\widehat V_{i b}&=\widehat M_{t_i}(a_i,b),&
+\widehat W_{a j}&=\widehat M_{s_j}(a,b_j).
+\end{aligned}
+\]
+
+全部索引都落在输入的 \(2h\) 个矩阵内。有限列表枚举所有主元选择，包含重复索引；重复导致的奇异候选由行列式检查拒绝。记
+
+\[
+Q=\det(\widehat K)^{-1}\operatorname{adj}(\widehat K),
+\qquad q=\sum_{i,j}|Q_{ij}|.
+\]
+
+接受条件完全由输入计算：
+
+\[
+\det\widehat K\ne0,\qquad \varepsilon\ge0,\qquad q r\varepsilon<1.
+\]
+
+程序选择第一个通过检验的主元，计算
+
+\[
+\boxed{\widehat A=Q\widehat L,\qquad
+\widehat B=Q\widehat V,\qquad \widehat C=\widehat W.}
+\]
+
+`choosePivot_success` 证明存在通过该检验的候选就必然返回结果。`choosePivot_none_iff` 证明拒绝等价于每个候选都未通过此检验。拒绝本身没有排除低阶系统存在。枚举的透明实现有 \((hp)^r(hm)^r\) 个候选，且采用伴随矩阵求逆；本节不主张其具有大规模数值计算效率。
+
+## 无噪声恢复与最小阶数
+
+对任意与真实样本相符的状态系统，选取相应的观察行矩阵 \(O\) 和可达列矩阵 \(R\)。由样本语义直接推出
+
+\[
+K=OR,\qquad L=OAR,\qquad V=OB,\qquad W=CR.
+\]
+
+当状态阶数为 \(r\) 且 \(K\) 非奇异时，设 \(Q_0=K^{-1}\)、\(S=Q_0O\)。则 \(SR=I\)。由于二者为同阶方阵，还有 \(RS=I\)，因此
+
+\[
+A_0=Q_0L=SAR,\qquad B_0=Q_0V=SB,\qquad C_0=W=CR,
+\]
+
+并由幂次归纳得到
+
+\[
+\boxed{C_0A_0^nB_0=CA^nB\quad\text{对所有 }n\ge0.}
+\]
+
+这允许 Jordan 块和重复特征值。证明不要求预先给出模态分解。
+
+对任意其他维数 \(d\) 的匹配系统，仍有矩形分解 \(K=O_dR_d\)，从而
+
+\[
+r=\operatorname{rank}K\le\operatorname{rank}O_d\le d.
+\]
+
+`finite_samples_order_lower_bound` 因而证明有限样本上的状态维数下界。无噪声时，这个下界与实际构造出的 \(r\) 维实现共同给出最小性。
+
+## 从观察到的裕量推出真实非奇异性
+
+以下范数均为诱导的无穷范数，即最大绝对行和。逐条目预算推出
+
+\[
+\|\widehat K-K\|\le r\varepsilon,\quad
+\|\widehat L-L\|\le r\varepsilon,\quad
+\|\widehat V-V\|\le m\varepsilon,\quad
+\|\widehat W-W\|\le r\varepsilon.
+\]
+
+程序实际计算的 \(Q\) 满足 \(Q\widehat K=I\)、\(\|Q\|\le q\)。因此
+
+\[
+\|I-QK\|=\|Q(\widehat K-K)\|\le q r\varepsilon<1.
+\]
+
+Mathlib 的完备赋范环 Neumann 级数定理给出 \(QK\) 可逆，进而 \(K\) 非奇异。真实行列式非零由观察到的证书推出，并未作为噪声定理的隐藏假设。
+
+同一论证对每个落在噪声预算内的真实样本数组成立。结合矩形分解秩界，`run_order_lower_bound` 得到：任何与观测误差范围兼容的 \(d\) 维系统都满足 \(r\le d\)。该结论不要求事先将竞争系统限制为 \(r\) 维。
+
+## 参数误差的后验预算
+
+先考虑一般矩阵方程 \(KX=L\)，并令 \(\widehat X=Q\widehat L\)。实际方程给出
+
+\[
+\widehat X-X=Q\bigl(\widehat L-L-(\widehat K-K)X\bigr).
+\]
+
+若 \(\|\widehat K-K\|\le\delta_K\)、\(\|\widehat L-L\|\le\delta_L\)、\(\|\widehat X\|\le H\)，令 \(e=\|\widehat X-X\|\)，则
+
+\[
+e\le q(\delta_L+\delta_K\|X\|)
+\le q\bigl(\delta_L+\delta_K(H+e)\bigr).
+\]
+
+在 \(q\delta_K<1\) 下移项得到
+
+\[
+\boxed{e\le\frac{q(\delta_L+\delta_K H)}{1-q\delta_K}.}
+\]
+
+记有理数绝对条目总和 \(|Z|_\Sigma=\sum_{i,j}|Z_{ij}|\)，它上界诱导无穷范数。对实际返回的矩阵，计算
+
+\[
+\begin{aligned}
+\Delta_A&=\frac{q(r\varepsilon+r\varepsilon|\widehat A|_\Sigma)}{1-qr\varepsilon},\\
+\Delta_B&=\frac{q(m\varepsilon+r\varepsilon|\widehat B|_\Sigma)}{1-qr\varepsilon},\\
+\Delta_C&=r\varepsilon.
+\end{aligned}
+\]
+
+`run_noisy_recovery` 将它们证明为
+
+\[
+\|\widehat A-A_0\|\le\Delta_A,\qquad
+\|\widehat B-B_0\|\le\Delta_B,\qquad
+\|\widehat C-C_0\|\le\Delta_C.
+\]
+
+其中 \((A_0,B_0,C_0)\) 是真实样本在所选可达坐标中的规范实现。矩阵比较明确发生在同一坐标系；它没有把任意原始状态坐标与程序坐标直接相减。对真实系统阶数为 \(r\) 的情形，前面的精确恢复证明保证该规范实现具有真实系统的全部行为。
+
+## 每个预测时刻的有理数证书
+
+设 \(a=|\widehat A|_\Sigma\)、\(b=|\widehat B|_\Sigma\)、\(c=|\widehat C|_\Sigma\)，定义可计算递推
+
+\[
+e_0=\Delta_B,\qquad
+e_{n+1}=(a+\Delta_A)e_n+\Delta_Aa^n b,
+\]
+
+及
+
+\[
+E_n=(c+\Delta_C)e_n+\Delta_Ca^n b.
+\]
+
+通过两个实际系统的动力学归纳，可证明
+
+\[
+\|\widehat A^n\widehat B-A_0^nB_0\|\le e_n,
+\]
+
+继而得到终点定理
+
+\[
+\boxed{\|\widehat C\widehat A^n\widehat B-CA^nB\|\le E_n
+\quad\text{对所有 }n\ge0.}
+\]
+
+Lean 声明 `run_prediction_error_bound` 的右侧由 `outputErrorBudget` 直接在有理数中计算；它的前提是实际 `run` 返回值、真实有限阶系统的样本语义和有限噪声关系。误差递推由证明得出，没有要求调用者提供误差结论作为结构字段。
+
+该界对每个有限时刻成立，无须稳定性。它可能随时间增长，尚不构成稳定系统上的统一诱导范数界、平衡截断误差界或最优 Hankel 范数逼近结论。
+
+## 对应源码与适用范围
+
+源码位于 `D5/S3/Observer/Hankel/`：
+
+- `FiniteHoKalmanBlocks.lean`：有限索引、四块分解、精确恢复与阶数下界。
+- `ExecutableHoKalman.lean`：有理数枚举、接受与拒绝、实际输出及无噪声正确性。
+- `HoKalmanPerturbation.lean`：范数预算、真实非奇异性和后验线性方程误差。
+- `NoisyHoKalmanRecovery.lean`：有理数到实数语义、噪声恢复与兼容系统维数下界。
+- `HoKalmanPredictionBudget.lean`：可计算预测预算及每个时刻的终点误差定理。
+
+每个模块在 `Blueprint/D5/S3/Observer/Hankel/` 有同名 Scribe。其声明均从 Lean 源读取，当前应按待内核检查的候选源码理解。
+
+输入为已带误差预算的有限 Markov 参数；从原始输入输出轨迹估计这些参数并产生统计置信预算，属于另一个前端问题。本节没有实现截断 SVD，没有从有限数据推断真实阶数的上界，也没有完成平衡截断专门定理。固定阶数的恢复契约、噪声下的阶数下界和算法拒绝语义分别陈述。
+
+独立的精确有理数回归覆盖 26 个无噪声模型、26 个带噪声模型、312 个精确 Markov 等式、78 个参数误差检查和 416 个预测误差检查，另有拒绝与零维实例。它们包含 Jordan 块、多输入多输出及重复特征值，但这些有限检查不等于 Lean 全称定理的内核验证。

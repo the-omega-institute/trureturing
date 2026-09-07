@@ -43,6 +43,93 @@ public sealed class PrOpenScriptTests
         Assert.Equal(69, fixture.RunWatch42().ExitCode);
     }
     [Fact]
+    public void PrWatchReadsProtectedBranchWithLocalCredentials()
+    {
+        using var fixture = new PrScriptFixture();
+        Assert.Equal(0, fixture.RunWatch42().ExitCode);
+        Assert.Equal("api repos/owner/repo/branches/dev|token=none", fixture.Invocations[0]);
+    }
+    [Theory]
+    [InlineData("{")]
+    [InlineData("null")]
+    [InlineData("[]")]
+    [InlineData("{}")]
+    [InlineData("""{"protection":{"required_status_checks":{"contexts":[],"checks":[]}}}""")]
+    [InlineData("""{"protected":null,"protection":{"required_status_checks":{"contexts":[],"checks":[]}}}""")]
+    [InlineData("""{"protected":false,"protection":{"required_status_checks":{"contexts":[],"checks":[]}}}""")]
+    [InlineData("""{"protected":"true","protection":{"required_status_checks":{"contexts":[],"checks":[]}}}""")]
+    [InlineData("""{"protected":true}""")]
+    [InlineData("""{"protected":true,"protection":null}""")]
+    [InlineData("""{"protected":true,"protection":[]}""")]
+    [InlineData("""{"protected":true,"protection":{}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":null}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":[]}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"checks":[{"context":"valid"}]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":null,"checks":[{"context":"valid"}]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":"valid","checks":[]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid",""],"checks":[]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid",null],"checks":[]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid",7],"checks":[]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid"]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid"],"checks":null}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid"],"checks":{}}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid"],"checks":["valid"]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid"],"checks":[{"context":"valid"},null]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid"],"checks":[{}]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid"],"checks":[{"context":null}]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid"],"checks":[{"context":""}]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":["valid"],"checks":[{"context":7}]}}}""")]
+    [InlineData("""{"protected":true,"protection":{"required_status_checks":{"contexts":[],"checks":[]}}} {}""")]
+    public void PrWatchRejectsIncompleteOrMalformedRequiredMetadata(string metadata)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(metadata));
+        var result = fixture.RunWatch42();
+        Assert.Equal(69, result.ExitCode);
+        Assert.Equal("PR_WATCH_RESULT pr=42 outcome=query-unavailable step=required-set attempts=3\n", Text(result.StandardOutput));
+        Assert.Equal(3, fixture.Invocations.Count);
+        Assert.DoesNotContain(fixture.Invocations, invocation => invocation.StartsWith("pr view ", StringComparison.Ordinal));
+    }
+    [Fact]
+    public void PrWatchRetriesInvalidRequiredMetadataThenUsesValidBranchMetadata()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok("null"), Ok(Required("engineering")));
+        var result = fixture.RunWatch42();
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("step=required-set unavailable_attempts=1", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Equal(3, fixture.Invocations.Count);
+    }
+    [Fact]
+    public void PrWatchAcceptsExplicitlyEmptyRequiredArrays()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(Required()));
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN")));
+        Assert.Equal(0, fixture.RunWatch42().ExitCode);
+        Assert.Equal(2, fixture.Invocations.Count);
+    }
+    [Fact]
+    public void PrWatchWaitsForExactNameUnionFromBothRequiredArrays()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok("""
+            {"protected":true,"name":"dev","protection":{"required_status_checks":{
+              "enforcement_level":"non_admins","contexts":[" Context only "],
+              "checks":[{"context":"Checks only","app_id":1},{"context":"Checks only","app_id":2}]}}}
+            """));
+        fixture.SnapshotResponses(
+            Ok(Snapshot("OPEN", Context("Context only", "SUCCESS"))),
+            Ok(Snapshot("OPEN", Context(" Context only ", "SUCCESS"))),
+            Ok(Snapshot("OPEN", Context(" Context only ", "SUCCESS"), Check("Checks only", "COMPLETED", "SUCCESS"))));
+        var result = fixture.RunWatch42();
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("PR_WATCH_RESULT pr=42 outcome=green\n", Text(result.StandardOutput));
+        Assert.Contains("state=OPEN pending=0 missing=2", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Contains("state=OPEN pending=0 missing=1", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Equal(4, fixture.Invocations.Count);
+    }
+    [Fact]
     public void PrWatchReturnsQueryUnavailableForMalformedJson()
     {
         using var fixture = new PrScriptFixture();
@@ -314,7 +401,11 @@ public sealed class PrOpenScriptTests
     private static bool IsWatchInvocation(string invocation) =>
         invocation.StartsWith("api ", StringComparison.Ordinal) || invocation.StartsWith("pr view ", StringComparison.Ordinal);
     private static string Text(byte[] bytes) => Encoding.UTF8.GetString(bytes);
-    private static string Required(params string[] names) => JsonSerializer.Serialize(new { contexts = names });
+    private static string Required(params string[] names) => JsonSerializer.Serialize(new
+    {
+        @protected = true,
+        protection = new { required_status_checks = new { contexts = names, checks = names.Select(context => new { context }) } },
+    });
     private static object Check(string name, string status, string? conclusion) =>
         new { __typename = "CheckRun", name, status, conclusion };
     private static object Context(string context, string state) => new { __typename = "StatusContext", context, state };
@@ -366,7 +457,7 @@ public sealed class PrOpenScriptTests
         {
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "pr.sh");
             return TestProcessRunner.Run("env",
-                ["-u", "GH_TOKEN", $"PATH={bin}:/usr/bin:/bin:/usr/sbin:/sbin", "PR_OPEN_REPO=owner/repo",
+                ["GH_TOKEN=caller-token", $"PATH={bin}:/usr/bin:/bin:/usr/sbin:/sbin", "PR_OPEN_REPO=owner/repo",
                     "PR_OPEN_BASE=dev", $"PR_TEST_INVOCATIONS={invocations}",
                     $"PR_TEST_RESPONSES={responses}", $"PR_TEST_FAIL_STEP={FailStep}",
                     $"PR_TEST_APP_FAIL={(AppTokenFails ? "1" : "0")}", "bash", script, .. arguments],

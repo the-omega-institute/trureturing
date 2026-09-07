@@ -13,7 +13,8 @@ motivation_gids:
 
 This dossier deliberately anchors Conjecture 17 of Bosma et al., *Journal of
 Integer Sequences* 28 (2025), Article 25.3.8, printed page 18, which is
-Conjecture 6 in arXiv:2503.04122v1. The caller-supplied reading, 2026-09-07,
+the earlier Conjecture 6 of arXiv:2503.04122v1 with its third-seed bound
+corrected from `z > g+d` to `z >= g+d`. The caller-supplied reading, 2026-09-07,
 quotes this single proposition:
 
 > Let d >= 2. For every g >= d + 1 the greedy 3-sumfree sequence S_{1,g,g+d}

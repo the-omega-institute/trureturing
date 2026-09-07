@@ -15,8 +15,11 @@ triage: anchor
 
 This note anchors only printed Conjecture 17 in *Journal of Integer Sequences*
 28 (2025), Article 25.3.8, page 18, for
-`Problems/greedy-three-sumfree-two-parameter.md`. The same statement is
-Conjecture 6 in arXiv:2503.04122v1. The paper calls it a meta-conjecture based on
+`Problems/greedy-three-sumfree-two-parameter.md`. Conjecture 6 in
+arXiv:2503.04122v1 is the earlier form of the same conjecture and is **not the
+same statement**: it bounds the periodic branch by `z > g+d`, which is false at
+the third seed, and the printed version corrects that to `z >= g+d`. The anchor
+is the printed version, which is what the Lean statement matches. The paper calls it a meta-conjecture based on
 "firm computational evidence, from an implementation in Magma".
 
 The caller-supplied reading, 2026-09-07, transcribes the printed statement as:

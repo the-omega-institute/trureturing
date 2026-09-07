@@ -2,7 +2,8 @@ fingerprints:
   raw_sha256: sha256:003a894889f9902aad383342be1fc04a682581cf0458f96220578c37bee8ee12
   normalized_sha256: sha256:003a894889f9902aad383342be1fc04a682581cf0458f96220578c37bee8ee12
 cas_ref: sha256:003a894889f9902aad383342be1fc04a682581cf0458f96220578c37bee8ee12
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Decoherence/FiniteShiftedRecordChannel.finite_shifted_record_channel
+    target_statement_id: sha256:a2f82fe3272252463032ec878337fade9b0b22f834b13d431408cb70f075a2e1
 receipts:
-  scribe: []
   unresolved_subitems: []

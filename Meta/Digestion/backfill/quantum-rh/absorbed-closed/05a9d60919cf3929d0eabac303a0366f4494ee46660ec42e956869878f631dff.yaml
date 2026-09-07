@@ -2,7 +2,8 @@ fingerprints:
   raw_sha256: sha256:05a9d60919cf3929d0eabac303a0366f4494ee46660ec42e956869878f631dff
   normalized_sha256: sha256:05a9d60919cf3929d0eabac303a0366f4494ee46660ec42e956869878f631dff
 cas_ref: sha256:05a9d60919cf3929d0eabac303a0366f4494ee46660ec42e956869878f631dff
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering.source_jensen_degree_lowering
+    target_statement_id: sha256:5cc7d6726b507416f47892d7dba26050981908448772a4eb1bb35c465a785de7
 receipts:
-  scribe: []
   unresolved_subitems: []

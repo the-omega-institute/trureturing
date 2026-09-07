@@ -1,0 +1,139 @@
+# Opt-in analysis consumer (#5986). Shared dependency caches and release build
+# layers are read-only; outputs belong only to this workflow run's artifacts.
+# Dispatch is available because this job cannot publish a shared build layer.
+# This separate file gives opt-in analysis its own budget outside the required
+# lean-report job; ci.yml is text-slice-guarded and near its SL-003 line limit.
+name: Lean analysis fixtures
+
+on:
+  schedule:
+    - cron: '17 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analysis-fixtures:
+    name: Build and export Lean analysis fixtures
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-24.04-arm
+    # Budget owner: repository owner, 2026-09-07; scope: this analysis job.
+    # This is not a derived duration:
+    # lean-cache-publish.yml:127 records 40+ minutes from zero for `lake build`
+    # of the default targets on this runner.
+    # The three analysis module docstrings record single-module elaboration:
+    # BoundedClosure 289-367 s; FrozenRootAnalysis 424-528 s;
+    # CausalProjection 1194-1292 s, on a 28-core Apple Silicon host with warm
+    # mathlib/project caches. Lower bounds sum to 1907 s (about 32 min);
+    # upper bounds sum to 2187 s (about 36 min).
+    # runner core count not measured here; ratio ASSUMED-UNVERIFIED
+    # 240 is a `policy-override` with case #5986 and exit condition
+    # "replace by the measured first-run duration × 1.5 after run 1"
+    timeout-minutes: 240
+    steps:
+      - name: Check out the analysis commit
+        id: checkout-publish
+        uses: actions/checkout@v4
+        with:
+          path: candidate
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Strip checkout remote state
+        if: steps.checkout-publish.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
+      - name: Install the pinned Lean toolchain
+        shell: bash
+        env:
+          TOOLCHAIN_FILE: ${{ github.workspace }}/candidate/lean-toolchain
+        run: |
+          set -euo pipefail
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" \
+            "${TOOLCHAIN_FILE}" --github-path "$GITHUB_PATH"
+
+      - name: Resolve this commit's Lean input addresses
+        id: addr
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/worktree/lean-cache-input.sh"
+          test -x "${helper}"
+          input_address="$("${helper}" address --repository "$GITHUB_WORKSPACE/candidate")"
+          [[ "$input_address" =~ ^[0-9a-f]{64}\ [0-9a-f]{64}$ ]]
+          read -r sources_sha256 config_sha256 <<< "$input_address"
+          echo "config_sha256=${config_sha256}" >> "$GITHUB_OUTPUT"
+          echo "sources_sha256=${sources_sha256}" >> "$GITHUB_OUTPUT"
+          dependency_sha256="$("${helper}" dependency-address --repository "$GITHUB_WORKSPACE/candidate")"
+          [[ "$dependency_sha256" =~ ^[0-9a-f]{64}$ ]]
+          echo "dependency_sha256=${dependency_sha256}" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the Lean dependency layer
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v2-${{ steps.addr.outputs.dependency_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v2-
+
+      - name: Seed from the prior Lean release build layer
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          publisher="$GITHUB_WORKSPACE/candidate/tools/scripts/worktree/lean-cache-publish.sh"
+          test -x "${publisher}"
+          "${publisher}" fetch --allow-seed --repository "$GITHUB_WORKSPACE/candidate"
+
+      - name: Install the artifact hashing tool
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v shasum >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install --yes libdigest-sha-perl
+          fi
+
+      - name: Build and hash the analysis fixtures
+        id: fixtures
+        shell: bash
+        env:
+          OUTPUT_ROOT: ${{ runner.temp }}/lean-analysis-fixtures
+        run: |
+          set -euo pipefail
+          fixture_runner="$GITHUB_WORKSPACE/candidate/tools/lean-inspector/LeanInformationAuditAnalysis/run-analysis-fixtures.sh"
+          test -x "${fixture_runner}"
+          mkdir -p "${OUTPUT_ROOT}"
+          "${fixture_runner}" "${OUTPUT_ROOT}/artifacts" 2>&1 | tee "${OUTPUT_ROOT}/run.log"
+
+      - name: Upload the analysis artifacts and hash log
+        if: always() && steps.fixtures.outcome != 'skipped'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-analysis-fixtures
+          path: ${{ runner.temp }}/lean-analysis-fixtures/
+          if-no-files-found: error

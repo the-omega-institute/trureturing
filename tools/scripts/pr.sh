@@ -101,9 +101,17 @@ pr_watch_main() {
     now="$(date +%s)"; remaining=$((deadline - now))
     if (( remaining <= 0 )); then printf 'PR_WATCH_RESULT pr=%s outcome=query-unavailable step=required-set attempts=%s\n' "$number" "$failures"; return 69; fi
     call_timeout=$((remaining < PR_OPEN_TIMEOUT_SECONDS ? remaining : PR_OPEN_TIMEOUT_SECONDS))
-    if gh_local required-set "$call_timeout" api "repos/$PR_REPO/branches/$PR_BASE/protection/required_status_checks" \
+    if gh_local required-set "$call_timeout" api "repos/$PR_REPO/branches/$PR_BASE" \
         && [[ -n "$BOUNDED_OUTPUT" ]] \
-        && required="$(printf '%s' "$BOUNDED_OUTPUT" | jq -Rsec 'if length == 0 then [] else fromjson | select(type == "object" and (.contexts | type == "array") and all(.contexts[]; type == "string" and length > 0)) | [.contexts[]] | unique end' 2>/dev/null)" \
+        && required="$(printf '%s' "$BOUNDED_OUTPUT" | jq -Rsec '
+          fromjson |
+          select(type == "object" and .protected == true and (.protection | type == "object")) |
+          .protection.required_status_checks |
+          select(type == "object" and (.contexts | type == "array") and (.checks | type == "array") and
+            all(.contexts[]; type == "string" and length > 0) and
+            all(.checks[]; type == "object" and (.context | type == "string" and length > 0))) |
+          (.contexts + [.checks[].context]) | unique
+        ' 2>/dev/null)" \
         && [[ -n "$required" ]]; then
       failures=0; break
     fi
