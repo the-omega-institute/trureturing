@@ -24,3 +24,5 @@ name = "LeanInformationAudit"
 srcDir = "tools/lean-inspector"
 roots = ["LeanInformationAudit"]
 globs = ["LeanInformationAudit.+"]
+
+# CI seed-path payload for #5994: ci-leancache-seed-0907.
