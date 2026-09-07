@@ -92,7 +92,7 @@ internal static partial class DigestionLedgerAligner
         return Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(admissionEntry).AsSpan());
     }
 
-    private static string? AtomizerIntegrityFailure(
+    internal static string? AtomizerIntegrityFailure(
         AtomizedTheoryDocument document,
         ReadOnlySpan<byte> sourceBytes)
     {

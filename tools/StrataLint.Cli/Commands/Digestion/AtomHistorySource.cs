@@ -69,17 +69,8 @@ internal sealed class GitAtomHistorySource(string repositoryRoot) : IAtomHistory
 
     private bool IsShallow()
     {
-        var gitDirectory = Path.Combine(repositoryRoot, ".git");
-        if (File.Exists(gitDirectory))
-        {
-            var pointer = File.ReadAllText(gitDirectory).Trim();
-            const string prefix = "gitdir: ";
-            if (!pointer.StartsWith(prefix, StringComparison.Ordinal))
-                throw new IOException("invalid git directory pointer");
-            gitDirectory = Path.GetFullPath(pointer[prefix.Length..], repositoryRoot);
-        }
-
-        if (!Directory.Exists(gitDirectory)) throw new IOException("git metadata is absent");
+        var gitDirectory = GitWorktreeDirectory.Read(repositoryRoot)
+            ?? throw new IOException("git metadata is absent");
         var commonDirectory = Path.Combine(gitDirectory, "commondir");
         if (File.Exists(commonDirectory))
             gitDirectory = Path.GetFullPath(File.ReadAllText(commonDirectory).Trim(), gitDirectory);

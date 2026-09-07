@@ -29,24 +29,6 @@ internal static class DigestionBackfillValidation
         return RenderOrThrow(findings);
     }
 
-    internal static string RequireValidBackfillWithoutTruthAlignment(
-        BackfillInventoryDocument document,
-        RepositorySnapshot current,
-        RepositorySnapshot baseline,
-        ValidatedPolicy policy,
-        RawChangeSet? changes = null,
-        RawChangeSet? casChanges = null)
-    {
-        var findings = BackfillInventoryRule.EvaluateDocumentWithoutTruthAlignment(
-            current,
-            baseline,
-            policy,
-            document,
-            changes,
-            casChanges: casChanges);
-        return RenderOrThrow(findings);
-    }
-
     /// Split out from RequireValidBackfill so the two behaviours a review round found
     /// unpinned can be tested directly: that Block still throws, and that the observation
     /// order matches CliApplication's OBSERVED output. Driving those through a command

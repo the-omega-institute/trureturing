@@ -122,6 +122,7 @@ public sealed partial class ProductionEnvironmentTests
         string repositoryRoot,
         IReadOnlyDictionary<string, string> files)
     {
+        Directory.CreateDirectory(Path.Combine(repositoryRoot, ".git"));
         foreach (var (path, text) in files.Where(static pair =>
                      BackfillInventoryLoader.IsCanonicalPath(pair.Key)))
         {

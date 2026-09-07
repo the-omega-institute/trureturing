@@ -1,10 +1,21 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
+using TemporaryFileSystem = StrataLint.TestSupport.TemporaryFileSystem;
 
 namespace StrataLint.Tests;
 
 internal static class DirectoryLedgerTestSupport
 {
+    internal static TemporaryDirectory UseGitDirectoryPointer(TemporaryDirectory repository)
+    {
+        var gitDirectory = new TemporaryDirectory();
+        var dotGit = Path.Combine(repository.Path, ".git");
+        if (Directory.Exists(dotGit)) Directory.Delete(dotGit);
+        File.WriteAllText(dotGit, "gitdir: " + gitDirectory.Path + "\n");
+        return gitDirectory;
+    }
+
     internal static Dictionary<string, string> Project(IReadOnlyDictionary<string, string> files)
     {
         var ledger = BackfillInventoryLoader.Load(Decode(files));
@@ -137,31 +148,44 @@ internal static class DirectoryLedgerTestSupport
     internal static string RepositoryImage(TemporaryDirectory repository)
     {
         var root = Path.GetFullPath(repository.Path);
-        return string.Concat(Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
+        return string.Concat(RepositoryFiles(repository)
             .Order(StringComparer.Ordinal)
             .Select(path => Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/')
                 + "\0"
-                + Convert.ToBase64String(File.ReadAllBytes(path))
+                + Convert.ToBase64String(TemporaryFileSystem.File.ReadAllBytes(path))
                 + "\n"));
     }
 
+    internal static RawRepositorySnapshot ReadRepository(TemporaryDirectory repository) =>
+        RawRepositorySnapshot.Create(RepositoryFiles(repository)
+            .Select(path => new RawRepositoryEntry(
+                Path.GetRelativePath(repository.Path, path).Replace(Path.DirectorySeparatorChar, '/'),
+                ImmutableArray.CreateRange(TemporaryFileSystem.File.ReadAllBytes(path)))));
+
+    // Forms input for a subsequent fake gateway call, never a disk preservation oracle.
     internal static Dictionary<string, string> OverlayRepositoryFiles(
         TemporaryDirectory repository,
         IReadOnlyDictionary<string, string> files)
     {
         var repositoryRoot = repository.Path;
         var result = new Dictionary<string, string>(files, StringComparer.Ordinal);
-        foreach (var path in Directory.EnumerateFiles(
-                     repositoryRoot,
-                     "*",
-                     SearchOption.AllDirectories))
+        foreach (var path in RepositoryFiles(repository))
         {
             var relative = Path.GetRelativePath(repositoryRoot, path)
                 .Replace(Path.DirectorySeparatorChar, '/');
-            result[relative] = File.ReadAllText(path);
+            result[relative] = TemporaryFileSystem.File.ReadAllText(path);
         }
 
         return result;
+    }
+
+    // Git administrative files are outside the repository content snapshot.
+    private static IEnumerable<string> RepositoryFiles(TemporaryDirectory repository)
+    {
+        var dotGit = Path.Combine(repository.Path, ".git");
+        return Directory.EnumerateFiles(repository.Path, "*", SearchOption.AllDirectories)
+            .Where(path => path != dotGit
+                && !path.StartsWith(dotGit + Path.DirectorySeparatorChar, StringComparison.Ordinal));
     }
 
     internal static string Image(BackfillInventoryDocument ledger)

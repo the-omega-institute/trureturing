@@ -243,21 +243,20 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void IngestWrapperSeparatesReportFreeDigestionFromTruthAlignment()
     {
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Contains(
+            "make ingest [BASE=origin/dev] [SOURCE=\"id path ...\"]  "
+                + "Atomize theory sources; add only atom ids absent from the on-disk ledger",
+            makefile,
+            StringComparison.Ordinal);
         var script = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
 
-        Assert.Contains("lean-report-input.sh", script, StringComparison.Ordinal);
-        Assert.Contains(" address --repository ", script, StringComparison.Ordinal);
-        Assert.Contains("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
-        Assert.DoesNotContain(
-            "input_state=\"$(report_input_state)\"",
-            script,
-            StringComparison.Ordinal);
-        Assert.Contains("report_input_state\n    cleanup", script, StringComparison.Ordinal);
-        Assert.Contains(
-            "ingest --base \"$BASE\" --report-input-state \"$REPORT_INPUT_STATE\"",
-            script,
-            StringComparison.Ordinal);
+        Assert.DoesNotContain("lean-report-input.sh", script, StringComparison.Ordinal);
+        Assert.DoesNotContain(" address --repository ", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("report_input_state", script, StringComparison.Ordinal);
+        Assert.Contains("ingest_args=(ingest --base \"$BASE\")", script, StringComparison.Ordinal);
         Assert.Contains("align-digestion-status)", script, StringComparison.Ordinal);
         Assert.Contains(
             "--role digestion-alignment-consumer --report \"$REPORT\"",
@@ -359,8 +358,10 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(2, Run(0, "quarantine-clear", "baseline").ExitCode);
     }
 
-    [Fact]
-    public void IngestWrapperDerivesReportInputStateFromExecutableClosureDelta()
+    [Theory]
+    [InlineData("", "ingest --base HEAD")]
+    [InlineData("alpha beta", "ingest --base HEAD --source alpha --source beta")]
+    public void IngestWrapperForwardsBaseAndSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -369,17 +370,14 @@ public sealed partial class MakeWorkflowTests
         using var fixture = new TemporaryDirectory();
         var binDirectory = Path.Combine(fixture.Path, "bin");
         var ingestPath = Path.Combine(fixture.Path, IngestScriptPath);
-        var inputPath = Path.Combine(fixture.Path, LeanReportInputScriptPath);
         Directory.CreateDirectory(binDirectory);
         Directory.CreateDirectory(Path.GetDirectoryName(ingestPath)!);
-        Directory.CreateDirectory(Path.GetDirectoryName(inputPath)!);
         Directory.CreateDirectory(Path.Combine(fixture.Path, "D5"));
         Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Cli"));
         Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Engine"));
         Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "Trureturing.Truth"));
         Directory.CreateDirectory(Path.Combine(fixture.Path, ".github", "workflows"));
         File.Copy(Path.Combine(root, IngestScriptPath), ingestPath);
-        File.Copy(Path.Combine(root, LeanReportInputScriptPath), inputPath);
         File.WriteAllText(Path.Combine(fixture.Path, "Trureturing.lean"), "import D5.Probe\n");
         File.WriteAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), leanSource);
         File.WriteAllText(Path.Combine(fixture.Path, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
@@ -422,7 +420,7 @@ public sealed partial class MakeWorkflowTests
             fi
             printf '%s\n' "$*"
             """ + "\n");
-        foreach (var executable in new[] { ingestPath, inputPath, dotnetPath })
+        foreach (var executable in new[] { ingestPath, dotnetPath })
         {
             File.SetUnixFileMode(
                 executable,
@@ -439,11 +437,12 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest HEAD",
+                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest HEAD \"$4\"",
                 "ingest-wrapper",
                 binDirectory,
                 Path.Combine(fixture.Path, "cache"),
                 ingestPath,
+                sourcePayload,
             ],
             fixture.Path,
             BoundedProcessRunner.HangDetectionBudget,
@@ -452,64 +451,13 @@ public sealed partial class MakeWorkflowTests
         File.AppendAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), "-- closure delta\n");
         var changed = RunWrapper();
         Assert.Equal(0, changed.ExitCode);
-        Assert.Contains(
-            "ingest --base HEAD --report-input-state changed",
-            System.Text.Encoding.UTF8.GetString(changed.StandardOutput),
-            StringComparison.Ordinal);
+        Assert.Equal(expected, Encoding.UTF8.GetString(changed.StandardOutput).Split(" -- ")[^1].Trim());
 
         File.WriteAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), leanSource);
         File.AppendAllText(Path.Combine(fixture.Path, "README.md"), "markdown-only delta\n");
         var unchanged = RunWrapper();
         Assert.Equal(0, unchanged.ExitCode);
-        Assert.Contains(
-            "ingest --base HEAD --report-input-state unchanged",
-            System.Text.Encoding.UTF8.GetString(unchanged.StandardOutput),
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void IngestWrapperDoesNotRunDownstreamWhenProducerInputHelperFails()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TemporaryDirectory();
-        var root = TestRepositoryLayout.FindRoot();
-        var ingest = Path.Combine(fixture.Path, IngestScriptPath);
-        var helper = Path.Combine(fixture.Path, LeanReportInputScriptPath);
-        var bin = Path.Combine(fixture.Path, "bin");
-        Directory.CreateDirectory(Path.GetDirectoryName(ingest)!);
-        Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
-        Directory.CreateDirectory(bin);
-        File.Copy(Path.Combine(root, IngestScriptPath), ingest);
-        File.Copy(Path.Combine(root, LeanReportInputScriptPath), helper);
-        var project = Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
-        Directory.CreateDirectory(Path.GetDirectoryName(project)!);
-        File.WriteAllText(project, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
-        var dotnet = Path.Combine(bin, "dotnet");
-        File.WriteAllText(dotnet, """
-            #!/usr/bin/env bash
-            if [[ "${1:-}" == msbuild ]]; then exit 71; fi
-            touch "$DOWNSTREAM_MARKER"
-            exit 0
-            """ + "\n");
-        foreach (var executable in new[] { ingest, helper, dotnet })
-            File.SetUnixFileMode(executable,
-                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        ReviewRegressionTests.RunGit(fixture.Path, "init", "--quiet");
-        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.email", "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.name", "StrataLint Tests");
-        ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
-        ReviewRegressionTests.RunGit(fixture.Path, "commit", "--quiet", "-m", "failing ingest fixture");
-        var marker = Path.Combine(fixture.Path, "downstream-ran");
-
-        var result = TestProcessRunner.Run("/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" DOWNSTREAM_MARKER=\"$2\" exec \"$3\" ingest HEAD",
-                "ingest-failure", bin, marker, ingest],
-            fixture.Path, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.Empty(result.StandardOutput);
-        Assert.Contains("producer closure is unavailable", System.Text.Encoding.UTF8.GetString(result.StandardError));
-        Assert.False(File.Exists(marker));
+        Assert.Equal(expected, Encoding.UTF8.GetString(unchanged.StandardOutput).Split(" -- ")[^1].Trim());
     }
 
     [Fact]

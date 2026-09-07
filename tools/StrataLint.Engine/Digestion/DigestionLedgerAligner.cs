@@ -168,7 +168,8 @@ internal static partial class DigestionLedgerAligner
         var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
-        foreach (var (source, entry) in sources.SelectMany(source =>
+        foreach (var (source, entry) in sources
+                     .SelectMany(source =>
                      source.Entries.Select(entry => (Source: source, Entry: entry))))
         {
             var inherited = inheritedEntries.Contains(CanonicalEntry(source, entry));
@@ -226,7 +227,8 @@ internal static partial class DigestionLedgerAligner
 
             foreach (var baselineEntry in obligations)
             {
-                foreach (var (candidateSourceId, candidateEntry) in sources.SelectMany(source =>
+                foreach (var (candidateSourceId, candidateEntry) in sources
+                             .SelectMany(source =>
                              source.Entries.Select(entry => (source.SourceId, Entry: entry))))
                 {
                     if (candidateEntry.AtomId == baselineEntry.AtomId
@@ -576,27 +578,4 @@ internal static partial class DigestionLedgerAligner
             contentKindObservations.ToImmutable());
     }
 
-    private static bool InheritedSourceRequiresReplay(
-        DigestionLedgerSource source,
-        RawChangeSet? changes)
-    {
-        if (changes is null)
-        {
-            return false;
-        }
-
-        if (source.Entries.Any(entry => DigestionCasStore.EntryChanged(entry, changes)))
-        {
-            return true;
-        }
-
-        var casPaths = source.Entries
-            .Select(static entry => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
-            .ToHashSet(StringComparer.Ordinal);
-        return changes.Paths.Any(path =>
-            path.Value == source.SourcePath
-            || path.Value == TheoryAtomizerDataLoader.DataPath
-            || IsAtomizerImplementationPath(path.Value)
-            || casPaths.Contains(path.Value));
-    }
 }

@@ -133,4 +133,28 @@ internal static partial class DigestionLedgerAligner
         left.RawSha256 == right.RawSha256
         || left.NormalizedSha256 == right.NormalizedSha256;
 
+    private static bool InheritedSourceRequiresReplay(
+        DigestionLedgerSource source,
+        RawChangeSet? changes)
+    {
+        if (changes is null)
+        {
+            return false;
+        }
+
+        if (source.Entries.Any(entry => DigestionCasStore.EntryChanged(entry, changes)))
+        {
+            return true;
+        }
+
+        var casPaths = source.Entries
+            .Select(static entry => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
+            .ToHashSet(StringComparer.Ordinal);
+        return changes.Paths.Any(path =>
+            path.Value == source.SourcePath
+            || path.Value == TheoryAtomizerDataLoader.DataPath
+            || IsAtomizerImplementationPath(path.Value)
+            || casPaths.Contains(path.Value));
+    }
+
 }

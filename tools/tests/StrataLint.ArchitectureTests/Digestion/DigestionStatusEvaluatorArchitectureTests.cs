@@ -1,10 +1,75 @@
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using StrataLint.Cli;
+using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
 
 public sealed class DigestionStatusEvaluatorArchitectureTests
 {
+    [Fact]
+    public void IngestAlignmentApiIsWholeLedgerOnly()
+    {
+        AssertParameters(typeof(DigestionIngestor), "Plan",
+            "document", "snapshot", "baselineDocument", "baselineSnapshot", "atomizerResolver", "changes");
+        AssertParameters(typeof(DigestionIngestor), "NormalizeAtomIdentities", "document");
+        AssertParameters(typeof(DigestionLedgerAligner), "Evaluate",
+            "document", "snapshot", "baselineDocument", "mode", "atomizerResolver", "baselineSnapshot",
+            "casEvaluation", "changes", "casChanges", "contentKindAtomizerResolver");
+        AssertParameters(typeof(DigestionStatusEvaluator), "EvaluateUncovered",
+            "scope", "document", "snapshot", "baselineDocument", "changes", "casChanges");
+        AssertParameters(typeof(DigestionStatusEvaluator), "StatusAuthorityChangedAtomIds",
+            "document", "baselineDocument", "changes", "alignment");
+        Assert.Equal(
+            ["AdmissionDocument", "Alignment", "CasObjects", "Fallbacks", "ResidualOpenAdded", "StaleAcknowledged"],
+            ApiType(typeof(DigestionIngestPlan)).GetMembers().OfType<IPropertySymbol>()
+                .Where(static property => property.DeclaredAccessibility == Accessibility.Public)
+                .Select(static property => property.Name)
+                .Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
+    public void DigestionBackfillValidationHasOneTruthAlignedEntryPoint()
+    {
+        Assert.Equal(["RenderOrThrow", "RequireValidBackfill"],
+            StaticMethods(typeof(DigestionBackfillValidation)).Select(static method => method.Name)
+                .Order(StringComparer.Ordinal));
+        var entryPoint = Assert.Single(StaticMethods(typeof(BackfillInventoryRule)),
+            static method => method.Name.StartsWith("EvaluateDocument", StringComparison.Ordinal));
+        Assert.Equal(["context", "document"], entryPoint.Parameters.Select(static parameter => parameter.Name));
+    }
+
+    private static void AssertParameters(Type owner, string name, params string[] expected)
+    {
+        var method = Assert.Single(StaticMethods(owner),
+            method => method.Name == name);
+        Assert.Equal(expected, method.Parameters.Select(static parameter => parameter.Name));
+    }
+
+    private static IEnumerable<IMethodSymbol> StaticMethods(Type owner) =>
+        ApiType(owner).GetMembers().OfType<IMethodSymbol>()
+            .Where(static method => method.IsStatic
+                && method.MethodKind is not MethodKind.Constructor and not MethodKind.StaticConstructor);
+
+    private static INamedTypeSymbol ApiType(Type owner)
+    {
+        // Import private members too, matching the complete static API checked by these tests.
+        var compilation = CSharpCompilation.Create(
+            "DigestionApi",
+            references:
+            [
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                MetadataReference.CreateFromFile(owner.Assembly.Location),
+            ],
+            options: new CSharpCompilationOptions(
+                OutputKind.DynamicallyLinkedLibrary,
+                metadataImportOptions: MetadataImportOptions.All));
+        var type = compilation.GetTypeByMetadataName(owner.FullName!);
+        Assert.NotNull(type);
+        return type;
+    }
+
     [Fact]
     public void CompleteChainGapsUsesPrebuiltAtomIndex()
     {
