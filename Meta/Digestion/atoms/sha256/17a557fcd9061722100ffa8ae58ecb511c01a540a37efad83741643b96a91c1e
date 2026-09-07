@@ -1,0 +1,6 @@
+## 4. Product-domination ingredient
+
+For all naturals r,m with r<=m, let H be the categorical product of r+1
+complete graphs on m+1 vertices: its vertices are functions Fin(r+1) to
+Fin(m+1), and adjacency means inequality in every coordinate. Then
+r+1<=gamma(H).

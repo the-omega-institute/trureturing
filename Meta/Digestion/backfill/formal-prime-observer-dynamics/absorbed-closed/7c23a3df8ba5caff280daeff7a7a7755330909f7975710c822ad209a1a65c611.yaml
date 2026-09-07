@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:7c23a3df8ba5caff280daeff7a7a7755330909f7975710c822ad209a1a65c611
+  normalized_sha256: sha256:7c23a3df8ba5caff280daeff7a7a7755330909f7975710c822ad209a1a65c611
+cas_ref: sha256:7c23a3df8ba5caff280daeff7a7a7755330909f7975710c822ad209a1a65c611
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/PrimeBudgetReadoutDichotomy.PrimeBudget
+    target_statement_id: sha256:1b636ce8be50927c6ddf9bb870d119e8da34d05a22fbfb3ac50ce9dfae4a846e
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/PrimePowers/PrimeBudgetReadoutDichotomy.PrimeBudget
+      definition_sha256: sha256:1bdebb18c68f3f4ccb53a6ad0864ca009c2e93b8b22a54a7f03f3c9b7909825f
+      emission_sha256: sha256:0a0e78a7f9c0953fd5095d217da3f7418a033c90976a3d219ca8000c79ec03b8
+  unresolved_subitems: []

@@ -1,0 +1,33 @@
+fingerprints:
+  raw_sha256: sha256:d248c270bab138d363ccd11787ff970080d2b4ef3399a00e53926183077355d5
+  normalized_sha256: sha256:d248c270bab138d363ccd11787ff970080d2b4ef3399a00e53926183077355d5
+cas_ref: sha256:d248c270bab138d363ccd11787ff970080d2b4ef3399a00e53926183077355d5
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.log_expansion_remainder_bound
+    target_statement_id: sha256:8dc91e59b844186be7c30401c5ca031ec95e1b9b0b585b28d60a6ea5b7f29987
+  - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.eulerMascheroni_remainder_bounds
+    target_statement_id: sha256:e66631b91273b2455d2bdfb19bc1058ec7581824246a110fd39283187900047b
+  - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.log_harmonic_term_bounds
+    target_statement_id: sha256:ff784fa54d8f7b5dae4034ecd152c88c76ede0647e8f9de24a694e5c69d64ff9
+  - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.eulerMascheroni_decimal_bounds
+    target_statement_id: sha256:cfeea459eef282e115525208dc385f15423187fbddf8597482a6478ebabd2d42
+  - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.atanhParameter_lt_third
+    target_statement_id: sha256:aeac05066875a5f4d67549ba5b3d04d24b6406579288c0b3130764bb72d44d25
+receipts:
+  scribe:
+    - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.log_expansion_remainder_bound
+      definition_sha256: sha256:aa6f0c256f353a6814501400c40b6cfe03e44fade06231047128ebcc5c8cfb80
+      emission_sha256: sha256:fef86cb0ad50529ffd507878b09695718f9e3099c19628dca728d979a0125ee6
+    - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.eulerMascheroni_remainder_bounds
+      definition_sha256: sha256:aa6f0c256f353a6814501400c40b6cfe03e44fade06231047128ebcc5c8cfb80
+      emission_sha256: sha256:fef86cb0ad50529ffd507878b09695718f9e3099c19628dca728d979a0125ee6
+    - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.log_harmonic_term_bounds
+      definition_sha256: sha256:aa6f0c256f353a6814501400c40b6cfe03e44fade06231047128ebcc5c8cfb80
+      emission_sha256: sha256:fef86cb0ad50529ffd507878b09695718f9e3099c19628dca728d979a0125ee6
+    - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.eulerMascheroni_decimal_bounds
+      definition_sha256: sha256:aa6f0c256f353a6814501400c40b6cfe03e44fade06231047128ebcc5c8cfb80
+      emission_sha256: sha256:fef86cb0ad50529ffd507878b09695718f9e3099c19628dca728d979a0125ee6
+    - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.atanhParameter_lt_third
+      definition_sha256: sha256:aa6f0c256f353a6814501400c40b6cfe03e44fade06231047128ebcc5c8cfb80
+      emission_sha256: sha256:fef86cb0ad50529ffd507878b09695718f9e3099c19628dca728d979a0125ee6
+  unresolved_subitems: []

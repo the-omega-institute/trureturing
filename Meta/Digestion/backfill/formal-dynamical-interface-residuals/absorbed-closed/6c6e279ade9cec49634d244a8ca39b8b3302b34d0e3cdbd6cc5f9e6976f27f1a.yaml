@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6c6e279ade9cec49634d244a8ca39b8b3302b34d0e3cdbd6cc5f9e6976f27f1a
+  normalized_sha256: sha256:6c6e279ade9cec49634d244a8ca39b8b3302b34d0e3cdbd6cc5f9e6976f27f1a
+cas_ref: sha256:6c6e279ade9cec49634d244a8ca39b8b3302b34d0e3cdbd6cc5f9e6976f27f1a
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.StronglyLumpable
+    target_statement_id: sha256:5be4c085d0f4891f9bedef6947896e85a61c1876bd0d6deddea48265b40604bb
+receipts:
+  scribe:
+    - gid: D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.StronglyLumpable
+      definition_sha256: sha256:4c5b234a63f6e82e1dd517dd4ae93bf22c81687b27de33cf2d9e327ad162c271
+      emission_sha256: sha256:1d69a06498e90a2fb35154131cc33ae2ea357383a6fc0a0253bac77140c73e5f
+  unresolved_subitems: []

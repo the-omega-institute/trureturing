@@ -1,0 +1,7 @@
+## 1. Universal counterexample family
+
+For every positive real c there exist finite vertex types V and W,
+simple graphs F on V and G on W, a function p:W->V and a natural k>0
+such that F is connected, p is an onto local open-neighborhood bijection,
+every fiber of p has cardinality k, and gamma(G)<c*k*gamma(F).
+

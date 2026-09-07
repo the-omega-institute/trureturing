@@ -1,0 +1,8 @@
+## 3. Regular-cover ingredient
+
+For every finite vertex type V, every simple graph F on V with decidable
+adjacency, and every natural d such that F is d-regular, there exists a
+simple graph G on V times Option(Fin d) for which the first projection is
+onto, induces a bijection on every open neighborhood, has every fiber of
+cardinality d+1, and satisfies gamma(G)<=card(V).
+

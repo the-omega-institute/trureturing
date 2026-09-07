@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5f863594dd914beeb27b64b063cbdca76ee7e7cf6ce8406ce1e90739ff905aff
+  normalized_sha256: sha256:5f863594dd914beeb27b64b063cbdca76ee7e7cf6ce8406ce1e90739ff905aff
+cas_ref: sha256:5f863594dd914beeb27b64b063cbdca76ee7e7cf6ce8406ce1e90739ff905aff
+coverage_gids:
+  - gid: D5/S3/Observer/Dynamics/DynamicIrrationalObserver.exists_golden_dynamic_irrational_observer
+    target_statement_id: sha256:4d2987c0413f94b1f4e87c9bcf4451749ba6868dc3ea27fb264947692766fe25
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Dynamics/DynamicIrrationalObserver.exists_golden_dynamic_irrational_observer
+      definition_sha256: sha256:13912605fb14c45fb80827c53ce56b832aff2e1895f2e1df17309a7f3d88ff18
+      emission_sha256: sha256:ded0e07d92e7e93fb6d0edbea5e04271142b622ae2ff244b0c308b3a5ff2c524
+  unresolved_subitems: []

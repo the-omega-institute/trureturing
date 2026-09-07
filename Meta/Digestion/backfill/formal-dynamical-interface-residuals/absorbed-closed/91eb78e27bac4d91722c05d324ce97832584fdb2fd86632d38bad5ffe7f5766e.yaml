@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:91eb78e27bac4d91722c05d324ce97832584fdb2fd86632d38bad5ffe7f5766e
+  normalized_sha256: sha256:91eb78e27bac4d91722c05d324ce97832584fdb2fd86632d38bad5ffe7f5766e
+cas_ref: sha256:91eb78e27bac4d91722c05d324ce97832584fdb2fd86632d38bad5ffe7f5766e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.finiteWindow
+    target_statement_id: sha256:ffbe6ed36f525813bce322f76b4a7e61ed4d6a63eb083e72f4e979ceaba372ab
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.finiteWindow
+      definition_sha256: sha256:3f2d773d264acb3153e5a11bb2aee2e0a76375688c41a862f98c58b1d74c700a
+      emission_sha256: sha256:6427aa67fa2d469d946d4118008b38291ac82603f7186c4faa56d83f33663eb2
+  unresolved_subitems: []

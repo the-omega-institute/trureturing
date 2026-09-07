@@ -10,7 +10,7 @@ internal sealed class RobinRationalBasisDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sharp rational logarithm bounds and an exact rational checker certify the "
-            + "additive Robin difference at 10080 without floating-point assumptions.",
+            + "additive Robin gap at 10080 without floating-point assumptions.",
         H("Rational Basis for the Robin Certificate"),
         Blocks(
             Entry("atanhPartial", "atanh-partial", "Truncated atanh expansion",
@@ -87,17 +87,24 @@ internal sealed class RobinRationalBasisDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(),
                 "The Mathlib formal-series wrapper equals the rational indexed sum over natural "
                     + "i in range terms of q^i/i!."),
-            Entry("robinDelta", "robin-delta", "Additive Robin difference",
+            Entry("robinDelta", "robin-delta", "Additive Robin gap",
                 RobinDeltaFormula(), DescribeRole.Definition,
                 AssessedProvenance.FromRepo(),
-                "This is the chapter-9 additive difference exactly: exp(gamma_EM) times n times "
-                    + "log(log n), minus sigma_1(n). Natural n and the divisor sum are coerced to reals."),
+                "The additive Robin gap exp(gamma_EM) times n times log(log n), minus sigma_1(n), "
+                    + "is an auxiliary quantity of this module. The volume's chapter-9 margin "
+                    + "Delta(n) = gamma_EM + log(log(log n)) - log(sigma_1(n)/n) is a different "
+                    + "(logarithmic) quantity, formalized in the companion module "
+                    + "GoldenCell5040Certificate. Only the signs of the two agree, and no identity "
+                    + "between them is claimed here. Its exact rational basis follows "
+                    + "「ZECKENDORF_EULER_5040 附录」."),
             Entry("RobinPositiveJudge", "robin-positive-judge", "Rational positivity predicate",
                 RobinJudgeFormula(), DescribeRole.Definition,
                 AssessedProvenance.FromRepo(),
-                "The judge checks ordered gamma and log-log brackets, nonnegative lower endpoints, "
-                    + "and one strict rational inequality. sigma_1(n) and n are coerced to rationals. "
-                    + "No floating-point value enters this predicate."),
+                "This module's own auxiliary judge for the additive Robin gap checks ordered gamma "
+                    + "and log-log brackets, nonnegative lower endpoints, and one strict rational "
+                    + "inequality. sigma_1(n) and n are coerced to rationals. Its exact rational "
+                    + "basis follows 「ZECKENDORF_EULER_5040 附录」; no floating-point value enters "
+                    + "this predicate."),
             Entry("robinPositiveJudgeDecidable", "robin-positive-judge-decidable",
                 "Decidability of the rational judge", JudgeDecidableFormula(), DescribeRole.Definition,
                 AssessedProvenance.FromRepo(),
@@ -106,9 +113,11 @@ internal sealed class RobinRationalBasisDocument : IScribeDocumentDefinition
             Entry("robinPositiveJudge_sound", "robin-positive-judge-sound",
                 "Soundness of the rational checker", JudgeSoundFormula(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(),
-                "Valid semantic brackets and a successful rational check imply positive robinDelta. "
-                    + "The proof lower-bounds exp(gamma_EM) by the truncated Taylor sum and uses "
-                    + "monotonicity. This is the general result named by the checker utility record."),
+                "Valid semantic brackets and this module's own auxiliary judge imply positivity of "
+                    + "the additive Robin gap. The proof lower-bounds exp(gamma_EM) by the truncated "
+                    + "Taylor sum from the exact rational basis in 「ZECKENDORF_EULER_5040 附录」 "
+                    + "and uses monotonicity. This is the general result named by the checker utility "
+                    + "record, not an identity with the volume's logarithmic margin."),
             Entry("log_pow_two_mul_bounds", "log-pow-two-mul-bounds",
                 "Logarithm bounds after binary scaling", LogPowTwoFormula(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(),
@@ -149,10 +158,12 @@ internal sealed class RobinRationalBasisDocument : IScribeDocumentDefinition
                 "Kernel reduction proves that four exponential terms make the rational checker "
                     + "true at n=10080. The exact divisor sum sigma_1(10080)=39312 is proved privately."),
             Entry("robin_delta_10080_pos", "robin-delta-10080-positive",
-                "Positive Robin difference at 10080", Delta10080Formula(), DescribeRole.Theorem,
+                "Positive additive Robin gap at 10080", Delta10080Formula(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(),
-                "Checker soundness, the two semantic brackets, and the decided four-term input prove "
-                    + "the additive Robin difference positive at 10080 without floating point."))));
+                "Checker soundness, the two semantic brackets, and the decided four-term input from "
+                    + "the exact rational basis in 「ZECKENDORF_EULER_5040 附录」 prove that this "
+                    + "module's own auxiliary additive Robin gap is positive at 10080 without "
+                    + "floating point; this is not an identity with the volume's logarithmic margin."))));
 
     private static DocumentBlock.Describe Entry(string declaration, string id, string title,
         Formula formula, DescribeRole role, AssessedProvenance provenance, string text) => Describe.Lean(

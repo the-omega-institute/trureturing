@@ -413,14 +413,17 @@ theorem expPartial_eq_sum (q : ℚ) (terms : ℕ) :
   intro i hi
   exact NormedSpace.expSeries_apply_eq_div q i
 
-/-- The Robin margin, with Mathlib's divisor-sum function. -/
+/-- The additive Robin gap `e^γ · n · log log n − σ(n)`, an auxiliary quantity of this module.
+The volume's chapter-9 margin `Δ(n) = γ + log log log n − log(σ(n)/n)` is a different
+(logarithmic) quantity, formalized in the companion module `GoldenCell5040Certificate`; only the
+signs of the two agree, and no identity between them is claimed here. -/
 noncomputable def robinDelta (n : ℕ) : ℝ :=
   Real.exp Real.eulerMascheroniConstant * n * Real.log (Real.log n) -
     (ArithmeticFunction.sigma 1 n : ℝ)
 
-/-- A fully rational sufficient condition for positivity of the Robin margin. The upper endpoints
-are checked for interval consistency and retained for downstream interval composition; soundness
-uses the lower endpoints. -/
+/-- A fully rational sufficient condition for positivity of this module's auxiliary additive Robin
+gap. The upper endpoints are checked for interval consistency and retained for downstream interval
+composition; soundness uses the lower endpoints. -/
 def RobinPositiveJudge (n terms : ℕ) (gamma logLog : RationalBracket) : Prop :=
   gamma.lower ≤ gamma.upper ∧
     logLog.lower ≤ logLog.upper ∧
@@ -434,7 +437,7 @@ instance robinPositiveJudgeDecidable (n terms : ℕ) (gamma logLog : RationalBra
   unfold RobinPositiveJudge
   infer_instance
 
-/-- Soundness of the rational Robin-margin checker. -/
+/-- Soundness of this module's rational checker for the auxiliary additive Robin gap. -/
 theorem robinPositiveJudge_sound (n terms : ℕ) (gamma logLog : RationalBracket)
     (hgamma : gamma.Contains Real.eulerMascheroniConstant)
     (hlogLog : logLog.Contains (Real.log (Real.log n)))
@@ -592,7 +595,8 @@ theorem robin_positive_judge_10080 :
   rw [sigma_10080_value]
   norm_num [gammaBracket, logLog10080Bracket, expPartial_eq_sum, Finset.sum_range_succ]
 
-/-- The rational checker proves that the classical additive Robin difference is positive at 10080. -/
+/-- The rational checker proves that this module's auxiliary additive Robin gap is positive at
+10080. -/
 theorem robin_delta_10080_pos : 0 < robinDelta 10080 := by
   apply robinPositiveJudge_sound 10080 4 gammaBracket logLog10080Bracket
   · change ((5772155 / 10000000 : ℚ) : ℝ) ≤ Real.eulerMascheroniConstant ∧

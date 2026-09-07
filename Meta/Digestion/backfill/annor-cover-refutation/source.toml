@@ -1,0 +1,5 @@
+source_id = "annor-cover-refutation"
+path = "docs/develop/theory/ANNOR_COVER_REFUTATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

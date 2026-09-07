@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Sharp rational logarithm bounds and an exact rational checker certify the additive Robin difference at 10080 without floating-point assumptions.
+Sharp rational logarithm bounds and an exact rational checker certify the additive Robin gap at 10080 without floating-point assumptions.
 
 **Definition 1.1 (Truncated atanh expansion).**
 
@@ -160,7 +160,7 @@ $$\forall q \in \mathbb{Q}, terms \in \mathbb{N},\; expPartial\left(q, terms\rig
 
 The Mathlib formal-series wrapper equals the rational indexed sum over natural i in range terms of q^i/i!.
 
-**Definition 1.14 (Additive Robin difference).**
+**Definition 1.14 (Additive Robin gap).**
 
 $$\forall n \in \mathbb{N},\; robinDelta\left(n\right) = exp\left(eulerMascheroniConstant\left(\right)\right) \cdot castReal\left(n\right) \cdot log\left(log\left(castReal\left(n\right)\right)\right) - castReal\left(sigma\left(1, n\right)\right)$$
 
@@ -170,7 +170,7 @@ $$\forall n \in \mathbb{N},\; robinDelta\left(n\right) = exp\left(eulerMascheron
 
 *Commentary.*
 
-This is the chapter-9 additive difference exactly: exp(gamma_EM) times n times log(log n), minus sigma_1(n). Natural n and the divisor sum are coerced to reals.
+The additive Robin gap exp(gamma_EM) times n times log(log n), minus sigma_1(n), is an auxiliary quantity of this module. The volume's chapter-9 margin Delta(n) = gamma_EM + log(log(log n)) - log(sigma_1(n)/n) is a different (logarithmic) quantity, formalized in the companion module GoldenCell5040Certificate. Only the signs of the two agree, and no identity between them is claimed here. Its exact rational basis follows 「ZECKENDORF_EULER_5040 附录」.
 
 **Definition 1.15 (Rational positivity predicate).**
 
@@ -182,7 +182,7 @@ $$\forall n \in \mathbb{N}, terms \in \mathbb{N}, gamma \in RationalBracket, log
 
 *Commentary.*
 
-The judge checks ordered gamma and log-log brackets, nonnegative lower endpoints, and one strict rational inequality. sigma_1(n) and n are coerced to rationals. No floating-point value enters this predicate.
+This module's own auxiliary judge for the additive Robin gap checks ordered gamma and log-log brackets, nonnegative lower endpoints, and one strict rational inequality. sigma_1(n) and n are coerced to rationals. Its exact rational basis follows 「ZECKENDORF_EULER_5040 附录」; no floating-point value enters this predicate.
 
 **Definition 1.16 (Decidability of the rational judge).**
 
@@ -206,7 +206,7 @@ $$\forall n \in \mathbb{N}, terms \in \mathbb{N}, gamma \in RationalBracket, log
 
 *Commentary.*
 
-Valid semantic brackets and a successful rational check imply positive robinDelta. The proof lower-bounds exp(gamma_EM) by the truncated Taylor sum and uses monotonicity. This is the general result named by the checker utility record.
+Valid semantic brackets and this module's own auxiliary judge imply positivity of the additive Robin gap. The proof lower-bounds exp(gamma_EM) by the truncated Taylor sum from the exact rational basis in 「ZECKENDORF_EULER_5040 附录」 and uses monotonicity. This is the general result named by the checker utility record, not an identity with the volume's logarithmic margin.
 
 **Theorem 1.18 (Logarithm bounds after binary scaling).**
 
@@ -304,7 +304,7 @@ $$RobinPositiveJudge\left(10080, 4, gammaBracket, logLog10080Bracket\right)$$
 
 Kernel reduction proves that four exponential terms make the rational checker true at n=10080. The exact divisor sum sigma_1(10080)=39312 is proved privately.
 
-**Theorem 1.26 (Positive Robin difference at 10080).**
+**Theorem 1.26 (Positive additive Robin gap at 10080).**
 
 $$0 < robinDelta\left(10080\right)$$
 
@@ -314,7 +314,7 @@ $$0 < robinDelta\left(10080\right)$$
 
 *Commentary.*
 
-Checker soundness, the two semantic brackets, and the decided four-term input prove the additive Robin difference positive at 10080 without floating point.
+Checker soundness, the two semantic brackets, and the decided four-term input from the exact rational basis in 「ZECKENDORF_EULER_5040 附录」 prove that this module's own auxiliary additive Robin gap is positive at 10080 without floating point; this is not an identity with the volume's logarithmic margin.
 
 ## References
 

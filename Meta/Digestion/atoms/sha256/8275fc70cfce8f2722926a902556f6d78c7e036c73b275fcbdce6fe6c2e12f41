@@ -1,0 +1,8 @@
+## 2. Negation of Conjecture 14
+
+There is no positive real c such that, for every two finite vertex types
+V,W, every pair of simple graphs F on V and G on W, every function
+p:W->V and every natural k>0, if p is an onto local open-neighborhood
+bijection and every fiber has cardinality k, then
+c*k*gamma(F)<=gamma(G).
+

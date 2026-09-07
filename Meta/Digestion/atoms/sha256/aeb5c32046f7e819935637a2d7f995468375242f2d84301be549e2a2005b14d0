@@ -1,0 +1,27 @@
+## Theorem: The source closed form has no Stieltjes representation
+
+For an integer lower index j, let binom(m,j)=0 when j<0 or j>m,
+and otherwise let it be the usual binomial coefficient. Define q(0)=1
+and, for each natural k>=1, define
+
+\[
+q(k)=\frac{\binom{2k}{k}}{k+1}
+ +\sum_{b=1}^{k-1}\sum_{c=0}^{b}
+ \left[\binom{2k-b-c}{k-b}-\binom{2k-b-c}{k-b-1}\right]
+ \sum_{r=b}^{k-1}
+ \left[\binom{r+b-1}{b-1}-\binom{r+b-1}{b-2}\right]
+ \binom{k-1-r+c}{c}.
+\]
+
+There is no positive Borel measure mu on the real line concentrated on
+the nonnegative half-line such that every monomial is integrable and
+
+\[
+\int_{\mathbb R} t^n\,d\mu(t)=q(n)\qquad(n\in\mathbb N).
+\]
+
+The intended refutation uses an integer polynomial p of degree ten:
+the exact quadratic form involving q(i+j+3) is strictly negative,
+whereas any such representation makes it the nonnegative integral of
+t^3 p(t)^2. The claim is a refutation of the Q part of Conjecture 9.5
+through the source's Theorem 7.1; no conclusion about B is asserted.

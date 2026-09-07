@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c0fb881d52a9f3cbecdfb2100d7854f9ed33bda5c793e193222ba51775c23962
+  normalized_sha256: sha256:c0fb881d52a9f3cbecdfb2100d7854f9ed33bda5c793e193222ba51775c23962
+cas_ref: sha256:c0fb881d52a9f3cbecdfb2100d7854f9ed33bda5c793e193222ba51775c23962
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence.PullbackAlgebra
+    target_statement_id: sha256:2d06b5a7e2f988dc6027c44be38c15106c17065c15594d90c1aedcd7569f4a01
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence.PullbackAlgebra
+      definition_sha256: sha256:2c1c6eb855ab1cbeadc2a2ae4674c2a78330d142495d12a26f3a32d945d1d579
+      emission_sha256: sha256:78535a93e54e34713c7ca3bb99f0fa62a01b793e0cb0a76134f69c4237a199bf
+  unresolved_subitems: []
