@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S0/Asymptotics/EscapeProbability/DiploidSelectionRevealOrder.diploid_selection_reveal_order
     target_statement_id: sha256:8c0a433954840afc310f96e76fefc4aa02219299ed407085c7b2018e44fef3ad
 receipts:
-  scribe:
-    - gid: D5/S0/Asymptotics/EscapeProbability/DiploidSelectionRevealOrder.diploid_selection_reveal_order
-      definition_sha256: sha256:a2ff2ce3e9042e5bfd51d84cfcd21e34176ba03cc9cce24e5fbcff58d1fb1c38
-      emission_sha256: sha256:68ed7dd6284bbb62442507e0a74b501aa95d71273a0c7c771d135433cd62c7e5
+  scribe: []
   unresolved_subitems: []

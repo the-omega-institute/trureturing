@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/DivergenceSupport/LandauerIdentity.landauer_identity_from_balances
     target_statement_id: sha256:228d3f8961a93f0d2c981c70bb301d2cbf49372fca35898bd481a936cafa522b
 receipts:
-  scribe:
-    - gid: D5/S3/DivergenceSupport/LandauerIdentity.landauer_identity_from_balances
-      definition_sha256: sha256:400048090265b71df5eef398b4f74fda0e12ad76598d5e3d0d36b97cfbc0ec2a
-      emission_sha256: sha256:d06512af6a7deabe39aa7c00c5ad18a186cd0a28db9992823ffedc770fa510d9
+  scribe: []
   unresolved_subitems: []

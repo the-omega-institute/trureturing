@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoFrontierStopDivergence.pareto_frontier_requires_sourced_orientation
     target_statement_id: sha256:51c92a15a25977cce5cbfbac5d22a480ac7f099eddd3c63e9f9c7b6d8f20bc15
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoFrontierStopDivergence.pareto_frontier_requires_sourced_orientation
-      definition_sha256: sha256:9df946262a893fdbbca71f5e8ed12649c10fc33ad36e64bbf09af83bfb3b7d1e
-      emission_sha256: sha256:b8c04201e4f815c52d09b4e38d79a0820c093d14e5e6ee649ae32ab30122d1ad
+  scribe: []
   unresolved_subitems: []

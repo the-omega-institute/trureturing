@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticStrictSubsetWitness.semantic_strict_subset_has_new_only_witness
     target_statement_id: sha256:6fbc1934e5a776582f13881f62676eb532d230b51e01a538e765148d8b620ef3
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticStrictSubsetWitness.semantic_strict_subset_has_new_only_witness
-      definition_sha256: sha256:180100e447ac93bc39616f9652ea37133c7870dd8d2a70b28b21ba7315c150f9
-      emission_sha256: sha256:1ac3ddda4c88ea88d401e2c1797c944a4b6488d8aa4870af97da99fe8796d608
+  scribe: []
   unresolved_subitems: []

@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionUniverseKernel.definition_universe_kernel
     target_statement_id: sha256:f11a199d957bc3d300b2d7dd0c85d447ea0b257af00065985e9d36a0984a5b34
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionUniverseKernel.definition_universe_kernel
-      definition_sha256: sha256:09c3ac1e6fe409fe975e25194d68c97caa15a9c5d92d7f7d796d5f6f8ba217c6
-      emission_sha256: sha256:7f61c31eb7060f4b02344a1e1ee67bcb93f2ab161f8f5a11d9453190aa6b3a29
+  scribe: []
   unresolved_subitems: []

@@ -95,10 +95,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(0, RecipeCount(makefile, "build"));
         Assert.Equal(
             "\t@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- "
-                + "align-scribe-receipt --seed-missing --pairs \"$(PAIRS)\" --base \"$(BASE)\"",
-            Recipe(makefile, "scribe-seed"));
-        Assert.Equal(
-            "\t@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- "
                 + "strip-scribe-receipts "
                 + "$(foreach source,$(SOURCE),--source \"$(source)\") "
                 + "$(if $(filter 1,$(DRY_RUN)),--dry-run,)",

@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/Resource/LogDet/PathSpectralClassical.log_det_path_spectral_classical
     target_statement_id: sha256:5d5a18136186d4b8de0df2f944cf9ab6dff00af10c900582d0633385b076ecd4
 receipts:
-  scribe:
-    - gid: D5/S3/Resource/LogDet/PathSpectralClassical.log_det_path_spectral_classical
-      definition_sha256: sha256:59ac4e2f110f7ebb5bff38fec6f8a803f0b143c8e6d24eff7b74ca43c59ce504
-      emission_sha256: sha256:588ea972b15774e04da29863b5c75ae150fb83cc01b18f2f3461524298e4d8df
+  scribe: []
   unresolved_subitems: []

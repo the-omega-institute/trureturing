@@ -31,7 +31,6 @@ internal static class BackfillInventoryWriter
         Line(builder, $"cas_ref: {Scalar(entry.CasRef)}");
         AtomCoverage(builder, entry.Coverage);
         Line(builder, "receipts:");
-        AtomScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
         AtomQuarantine(builder, entry.Receipts.Quarantine);
         Nonpropositional(builder, entry.Receipts.Nonpropositional, "  ");
@@ -88,10 +87,6 @@ internal static class BackfillInventoryWriter
         entry with
         {
             Coverage = CanonicalCoverage(entry.Coverage),
-            Receipts = entry.Receipts with
-            {
-                Scribe = StableOrderByGid(entry.Receipts.Scribe, static receipt => receipt.Gid),
-            },
         };
 
     private static ImmutableArray<DigestionCoverageEdge> CanonicalCoverage(
@@ -146,7 +141,6 @@ internal static class BackfillInventoryWriter
 
         Coverage(builder, entry.Coverage);
         Line(builder, "        receipts:");
-        ScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "          unresolved_subitems", entry.Receipts.UnresolvedSubitems, 12);
         Quarantine(builder, entry.Receipts.Quarantine);
         Nonpropositional(builder, entry.Receipts.Nonpropositional, "          ");
@@ -188,25 +182,6 @@ internal static class BackfillInventoryWriter
         }
     }
 
-    private static void ScribeReceipts(
-        StringBuilder builder,
-        ImmutableArray<DigestionScribeReceipt> receipts)
-    {
-        if (receipts.Length == 0)
-        {
-            Line(builder, "          scribe: []");
-            return;
-        }
-
-        Line(builder, "          scribe:");
-        foreach (var receipt in receipts)
-        {
-            Line(builder, $"            - gid: {Scalar(receipt.Gid)}");
-            Line(builder, $"              definition_sha256: {Scalar(receipt.DefinitionSha256)}");
-            Line(builder, $"              emission_sha256: {Scalar(receipt.EmissionSha256)}");
-        }
-    }
-
     private static void AtomCoverage(
         StringBuilder builder,
         ImmutableArray<DigestionCoverageEdge> edges)
@@ -222,25 +197,6 @@ internal static class BackfillInventoryWriter
         {
             Line(builder, $"  - gid: {Scalar(edge.Gid)}");
             Line(builder, "    target_statement_id: " + NullableScalar(edge.TargetStatementId));
-        }
-    }
-
-    private static void AtomScribeReceipts(
-        StringBuilder builder,
-        ImmutableArray<DigestionScribeReceipt> receipts)
-    {
-        if (receipts.Length == 0)
-        {
-            Line(builder, "  scribe: []");
-            return;
-        }
-
-        Line(builder, "  scribe:");
-        foreach (var receipt in receipts)
-        {
-            Line(builder, $"    - gid: {Scalar(receipt.Gid)}");
-            Line(builder, $"      definition_sha256: {Scalar(receipt.DefinitionSha256)}");
-            Line(builder, $"      emission_sha256: {Scalar(receipt.EmissionSha256)}");
         }
     }
 

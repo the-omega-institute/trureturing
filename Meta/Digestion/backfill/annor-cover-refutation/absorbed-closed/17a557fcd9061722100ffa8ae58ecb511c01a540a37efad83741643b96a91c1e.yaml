@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/GraphColoring/AnnorCoverRefutation.productGraph_domination_lower
     target_statement_id: sha256:c5de8451c39ff83e8ac883a48eff222f4687c1a2bb7c997782b9925721f493f5
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/GraphColoring/AnnorCoverRefutation.productGraph_domination_lower
-      definition_sha256: sha256:2612acdc80bec54dc9660ce4e7877a6d8ad8379dad2a688e50463414a5cbeb8a
-      emission_sha256: sha256:55df5a9ba3e619d589af8b3253e0e127a00106a9be3c8d5e7fda3c1a7396a1c9
+  scribe: []
   unresolved_subitems: []

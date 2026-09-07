@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S0/Certificates/ShankarQStieltjesRefutation.closed_form_not_stieltjes
     target_statement_id: sha256:a05e20aa5126825c48f9226eba6e6d276cf01922ee370b4aef38319fd5a4536a
 receipts:
-  scribe:
-    - gid: D5/S0/Certificates/ShankarQStieltjesRefutation.closed_form_not_stieltjes
-      definition_sha256: sha256:eb293fb3037c617cc0c7a3bb44115c741592ae0f742467b442b1208de7b544ca
-      emission_sha256: sha256:def210aa794c1aa37db65f21ead54f06e4140e9ac3dd72f982533414e5f3a989
+  scribe: []
   unresolved_subitems: []

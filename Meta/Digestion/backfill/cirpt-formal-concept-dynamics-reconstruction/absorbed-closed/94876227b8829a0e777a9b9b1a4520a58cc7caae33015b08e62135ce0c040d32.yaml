@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/Sufficiency/FourTaskDefectCriterion.four_task_defect_zero_iff
     target_statement_id: sha256:8263fb53b1a5a4ef23d78ac95d8cf1783e7852775623b3cb19db34217f182b9d
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/Sufficiency/FourTaskDefectCriterion.four_task_defect_zero_iff
-      definition_sha256: sha256:a9f045ec50bf3c126150bc4950c186be7aef198842fa85c122e4837c7462786a
-      emission_sha256: sha256:1a70bfeb3d38f4e029d1b80b6a1377bd737fa0fe61470de65b49fbd18a6492c6
+  scribe: []
   unresolved_subitems: []

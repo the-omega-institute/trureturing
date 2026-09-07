@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/RefinementFactorization/SufficiencyEscapeEquivalence.sufficiency_escape_equivalence_tfae
     target_statement_id: sha256:99bb4a2706dfd9a112dfc0dd3a452050f6200870e9f648756362d6b8ab7b1411
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/RefinementFactorization/SufficiencyEscapeEquivalence.sufficiency_escape_equivalence_tfae
-      definition_sha256: sha256:1ff7a5084fd847c67fb1a86befcd15a4df2c77152abd93969dce7faab41fe0f0
-      emission_sha256: sha256:7d5cc3bf55ab8df242f3a5f2be4f45f13c6c54ec8b9400f4166583d23443751a
+  scribe: []
   unresolved_subitems: []

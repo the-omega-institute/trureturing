@@ -110,9 +110,6 @@ internal static partial class CoverWorld
         Truth = "closed",
     };
 
-    internal static string[] AlignArgs(CoverInputs inputs) =>
-        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
-
     internal static ProductionCliEnvironment Environment(
         string repositoryRoot,
         CoverInputs inputs,

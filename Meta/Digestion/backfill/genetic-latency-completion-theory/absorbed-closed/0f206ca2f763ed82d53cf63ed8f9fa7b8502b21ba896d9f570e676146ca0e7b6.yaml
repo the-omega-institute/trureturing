@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/Disclosure/ManifestationDescentObstruction.manifestation_excludes_noninterference_descent
     target_statement_id: sha256:325ccb810ed751c40fced91f28c3331c1afa6476f1f26541eebebf4b004954a9
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/Disclosure/ManifestationDescentObstruction.manifestation_excludes_noninterference_descent
-      definition_sha256: sha256:b8dd728764fb4513fc983719ec91ce474d250e5ff8947b41adef21bac6da8752
-      emission_sha256: sha256:9b1b7157a5e61348ba987352ad7c3e88daf4bdb8fdf57fb2600d1da3989f4776
+  scribe: []
   unresolved_subitems: []

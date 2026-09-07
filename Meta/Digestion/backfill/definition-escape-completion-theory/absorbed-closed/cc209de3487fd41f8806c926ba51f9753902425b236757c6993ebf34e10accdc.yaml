@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeEscapeDecidability.finite_time_escape_decidability
     target_statement_id: sha256:973d2ad084e64bebf74fa0ac0206902206f9c85985918db9f7f0986a9509b437
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeEscapeDecidability.finite_time_escape_decidability
-      definition_sha256: sha256:8c019d0957bfcac77277840e172ba14f4dcc714f0151f038cbddf401cfe8f473
-      emission_sha256: sha256:5860caba33d68e5dfd5e1a5db7f41aa9b05b8b6a2dc17db42b9ca987b51c969e
+  scribe: []
   unresolved_subitems: []

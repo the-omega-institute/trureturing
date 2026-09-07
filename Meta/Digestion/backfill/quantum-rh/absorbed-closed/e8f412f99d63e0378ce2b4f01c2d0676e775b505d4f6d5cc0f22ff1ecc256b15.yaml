@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/Zeros/PochhammerDeformation/LinearFactor.linear_factor_preserves_unit_interval
     target_statement_id: sha256:0e9c60b07e43206fb020d3f3d6953bfae379f434af08202a7a1874fe352d03d3
 receipts:
-  scribe:
-    - gid: D5/S3/Zeros/PochhammerDeformation/LinearFactor.linear_factor_preserves_unit_interval
-      definition_sha256: sha256:45713831b01f21d4804c7fd0a4130f5ed0cf1ab77ae88aed6c891a04d610ba67
-      emission_sha256: sha256:03dba8652f0191b29946dd5b4a5db5a3e4536c9ff3f53da1363abedc82306e1d
+  scribe: []
   unresolved_subitems: []

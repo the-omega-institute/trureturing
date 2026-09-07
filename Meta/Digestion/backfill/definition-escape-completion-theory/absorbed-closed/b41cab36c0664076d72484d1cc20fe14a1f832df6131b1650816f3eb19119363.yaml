@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticSketchTargetLaunderingBridge.semantic_sketch_target_laundering_iff_body_and_timestamp
     target_statement_id: sha256:6df4db8171baa5d482fee30f2efe7bbeb2992c50cbbc42f775cf2c73081796d2
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticSketchTargetLaunderingBridge.semantic_sketch_target_laundering_iff_body_and_timestamp
-      definition_sha256: sha256:b612eb6b13bd502d287bac8799b675d579d00dc29615acddf2539efa6b94a2a3
-      emission_sha256: sha256:359e911a643d365ef66e2241d6c10f545bf55586ad6b6f3057f2ba9f33576c2b
+  scribe: []
   unresolved_subitems: []

@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/EscapeSpectrum/CompactResidualFiniteCompletion.compact_residual_finite_completion
     target_statement_id: sha256:1c8b03c1b66e4ad7bfb6d6dc3c70544977ac07f3988ea639610593caf48f2d5a
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/EscapeSpectrum/CompactResidualFiniteCompletion.compact_residual_finite_completion
-      definition_sha256: sha256:96c1d7c7526fd7259d43ad205a03391962694e7322c2762565f6432cdfc39ee2
-      emission_sha256: sha256:6f1f7ce89ba1cbf481fa534806f5d276ce66c1727735cfab6952cde25a278129
+  scribe: []
   unresolved_subitems: []

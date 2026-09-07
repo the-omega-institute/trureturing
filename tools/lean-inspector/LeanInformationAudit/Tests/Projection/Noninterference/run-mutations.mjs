@@ -14,6 +14,7 @@ const root = 'tools/lean-inspector/LeanInformationAudit';
 const sealFile = `${root}/SealCommand.lean`;
 const auditFile = `${root}/Projection/OutputOnlyAudit.lean`;
 const fixture = `${root}/Tests/Projection/Noninterference/RealSeal.lean`;
+const importedFixture = `${root}/Tests/Projection/Noninterference/ImportedRoot.lean`;
 const contract = `${root}/Tests/Projection/Noninterference/Contract.lean`;
 const mutableFiles = phase === 'after' ? [sealFile, auditFile] : [];
 const originals = new Map(mutableFiles.map(file => [file, fs.readFileSync(file, 'utf8')]));
@@ -48,9 +49,10 @@ function run(label, args, env = {}) {
 
 const leanFile = file => ['env', 'lean', '--root=tools/lean-inspector', file];
 const fixtureRoot = 'LeanInformationAudit.Tests.Projection.Noninterference.RealSeal';
-const diagnostic = (consumer, field) =>
+const importedRoot = 'LeanInformationAudit.Tests.Projection.Noninterference.SealedRoot';
+const diagnostic = (consumer, field, selectedRoot = fixtureRoot) =>
   `IE-C043 KernelProjectionUsedForAdmission consumer=${consumer} field=${field} ` +
-  `root=${fixtureRoot} catalog=system`;
+  `root=${selectedRoot} catalog=system`;
 
 if (phase === 'before') {
   const realSeal = run('publication-contract-red', leanFile(fixture));
@@ -64,6 +66,10 @@ if (phase === 'before') {
   console.log(JSON.stringify(results, null, 2));
   process.exit(0);
 }
+
+const importedSeal = run('imported-seal-build',
+  ['build', 'LeanInformationAudit.Tests.Projection.Noninterference.SealedRoot']);
+assert.equal(importedSeal.status, 0, importedSeal.stdout + importedSeal.stderr);
 
 const sealCases = [
   ['readFile', 'IO.FS.readFile',
@@ -126,14 +132,15 @@ try {
         caseName === 'ownedImplementedBy' ? 'overriddenProbe' :
         caseName === 'ownedExtern' ? 'externProbe' : 'partialProbe'}` :
       `LeanInformationAudit.${entry}`);
-    const expected = diagnostic(consumer, `capability:${capability}`);
+    const expected = diagnostic(consumer, `capability:${capability}`,
+      publication === 'seal' ? fixtureRoot : importedRoot);
     replace(sealFile, source, mutated);
     try {
       const build = run(`${label}-build`, ['build', 'LeanInformationAudit.SealCommand']);
       assert.equal(build.status, 0, build.stdout + build.stderr);
       const output = path.join(logDirectory, `${label}-exports`);
       assert(!fs.existsSync(output), `use a fresh log directory: ${output}`);
-      const test = run(label, leanFile(fixture), {
+      const test = run(label, leanFile(publication === 'seal' ? fixture : importedFixture), {
         [publication === 'seal' ? 'IE_EXPECT_SEAL_REJECTION' : 'IE_EXPECT_STAGE_REJECTION']:
           expected,
         IE_PROJECTION_OUTPUT_DIR: output,
@@ -142,8 +149,21 @@ try {
         fixture_exit: test.status, expected_fixture_exit: 0 });
       assert.equal(test.status, 0, test.stdout + test.stderr);
       assert(test.stdout.includes(
-        `RealSeal ${publication} rejected before publication and writes: ${expected}`));
+        `${publication === 'seal' ? 'RealSeal' : 'ImportedRoot'} ${publication} ` +
+        `rejected before publication and writes: ${expected}`));
       assert.deepEqual(fs.readdirSync(output), []);
+      if (publication === 'stage') {
+        const sameRootExpected = diagnostic(consumer, `capability:${capability}`);
+        const sameRootOutput = path.join(logDirectory, `${label}-same-root-exports`);
+        const sameRoot = run(`${label}-same-root`, leanFile(fixture), {
+          IE_EXPECT_STAGE_REJECTION: sameRootExpected,
+          IE_PROJECTION_OUTPUT_DIR: sameRootOutput,
+        });
+        assert.equal(sameRoot.status, 0, sameRoot.stdout + sameRoot.stderr);
+        assert(sameRoot.stdout.includes(sameRootExpected));
+        assert.deepEqual(fs.readdirSync(sameRootOutput), []);
+        results.at(-1).same_root_fixture_exit = sameRoot.status;
+      }
     } finally {
       replace(sealFile, mutated, source);
     }
@@ -171,7 +191,8 @@ try {
         'capability:LeanInformationAudit.prepareSealPublication')],
     ['exportSetEnv', sealFile, source => changeOnce(source,
       '  let env ← getEnv\n', '  setEnv (← getEnv)\n  let env ← getEnv\n'),
-      diagnostic('LeanInformationAudit.prepareInformationAnalysisExport', 'capability:Lean.setEnv')],
+      diagnostic('LeanInformationAudit.prepareInformationAnalysisExport', 'capability:Lean.setEnv',
+        importedRoot)],
     ['stagePathThreaded', sealFile, source => changeOnce(source,
       'def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit',
       'def prepareInformationAnalysisStage (rootId : Name) ' +
@@ -190,7 +211,8 @@ try {
       const build = run(`${label}-build`, ['build', 'LeanInformationAudit.SealCommand']);
       assert.equal(build.status, 0, build.stdout + build.stderr);
       const output = path.join(logDirectory, `${label}-exports`);
-      const test = run(label, leanFile(expected ? fixture : contract), expected ? {
+      const test = run(label, leanFile(expected ?
+        (label === 'exportSetEnv' ? importedFixture : fixture) : contract), expected ? {
         [label === 'exportSetEnv' ? 'IE_EXPECT_EXPORT_REJECTION' : 'IE_EXPECT_SEAL_REJECTION']:
           expected,
         IE_PROJECTION_OUTPUT_DIR: output,
@@ -203,6 +225,19 @@ try {
         'seal closure contains analysis staging:' : label.endsWith('PathThreaded') ||
         label === 'pathThreaded' ? 'Type mismatch' : 'did not evaluate to `true`'));
       if (expected) assert.deepEqual(fs.readdirSync(output), []);
+      if (label === 'exportSetEnv') {
+        const sameRootExpected = diagnostic('LeanInformationAudit.prepareInformationAnalysisExport',
+          'capability:Lean.setEnv');
+        const sameRootOutput = path.join(logDirectory, `${label}-same-root-exports`);
+        const sameRoot = run(`${label}-same-root`, leanFile(fixture), {
+          IE_EXPECT_EXPORT_REJECTION: sameRootExpected,
+          IE_PROJECTION_OUTPUT_DIR: sameRootOutput,
+        });
+        assert.equal(sameRoot.status, 0, sameRoot.stdout + sameRoot.stderr);
+        assert(sameRoot.stdout.includes(sameRootExpected));
+        assert.deepEqual(fs.readdirSync(sameRootOutput), []);
+        results.at(-1).same_root_fixture_exit = sameRoot.status;
+      }
     } finally {
       replace(file, mutated, source);
     }
@@ -253,10 +288,15 @@ if (selected('positiveControl')) {
   });
   assert.equal(positive.status, 0, positive.stdout + positive.stderr);
   assert(positive.stdout.includes('RealSeal staged once and exported byte-identical artifacts twice'));
+  const imported = run('positive-imported-root', leanFile(importedFixture), {
+    IE_PROJECTION_OUTPUT_DIR: path.join(logDirectory, 'positive-imported-exports'),
+  });
+  assert.equal(imported.status, 0, imported.stdout + imported.stderr);
+  assert(imported.stdout.includes('ImportedRoot staged and exported the imported sealed root'));
   const pin = run('positive-contract', leanFile(contract));
   assert.equal(pin.status, 0, pin.stdout + pin.stderr);
   results.push({ label: 'positiveControl', fixture_exit: positive.status,
-    contract_exit: pin.status });
+    imported_fixture_exit: imported.status, contract_exit: pin.status });
 }
 
 fs.writeFileSync(path.join(logDirectory, 'after-mutation-results.json'),

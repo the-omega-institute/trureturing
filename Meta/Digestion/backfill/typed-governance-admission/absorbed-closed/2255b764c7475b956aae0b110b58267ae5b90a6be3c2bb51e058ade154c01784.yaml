@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/Governance/TypedProducerResolution.typed_producer_resolution_fail_closed
     target_statement_id: sha256:38d4e8fe192ee4a486b495ad35cf6c9d0a685bf61b1bb0621987add19b19e9cf
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/Governance/TypedProducerResolution.typed_producer_resolution_fail_closed
-      definition_sha256: sha256:0c7cd2e3e3e947cb21d80ea85939b772d9c36a5bf45da445a6f454a832ee6866
-      emission_sha256: sha256:3fe52a7330c2e9f96c92be7f30c2f6d99b9caf7c17ac4ca995cea463c5443b28
+  scribe: []
   unresolved_subitems: []

@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/AnalyticClosure/PrimeReciprocalLogApproximation.prime_reciprocal_log_quadratic_approximation
     target_statement_id: sha256:95bf1d4cae7ca16e8ec889aadd5a5e33c8fc49cdafe27d60b0de60b371ab5017
 receipts:
-  scribe:
-    - gid: D5/S3/AnalyticClosure/PrimeReciprocalLogApproximation.prime_reciprocal_log_quadratic_approximation
-      definition_sha256: sha256:2c06520fb6670ea918f7b70f0a9859fe50dff60c8f8a214e77cec0f091e7d1f6
-      emission_sha256: sha256:d94b456be83f277fe6a73ee6a95204568613a4c5efdef569999631394fd95ba1
+  scribe: []
   unresolved_subitems: []

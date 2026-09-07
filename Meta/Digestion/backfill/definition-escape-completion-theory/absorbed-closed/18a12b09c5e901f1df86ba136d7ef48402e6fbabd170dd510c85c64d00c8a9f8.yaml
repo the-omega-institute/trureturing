@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticTargetLaunderingDecision.target_laundering_decision_nonempty
     target_statement_id: sha256:e54507890cffebac5448576af21147d64a0dcd910e3c963abc224603b66964c0
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticTargetLaunderingDecision.target_laundering_decision_nonempty
-      definition_sha256: sha256:ebdf15194dac788ad228bc8f6b532f2b43342109a73c63d6f663a1e5377295bd
-      emission_sha256: sha256:15d597b1911a06ba3107ad738f0f9f1ed12972786c87246298599c7074bd1c40
+  scribe: []
   unresolved_subitems: []

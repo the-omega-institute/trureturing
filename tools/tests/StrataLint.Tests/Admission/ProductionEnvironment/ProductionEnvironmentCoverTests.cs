@@ -6,7 +6,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed partial class ProductionEnvironmentTests
+public sealed partial class ProductionEnvironmentTests(Xunit.Abstractions.ITestOutputHelper output)
 {
     [Fact]
     public void CoverAtomReadsAndMovesTheDirectoryFormDigestionLedgerAtom()
@@ -34,13 +34,9 @@ public sealed partial class ProductionEnvironmentTests
             reportSource,
             new FakeScribeEmissionVerifier(directoryInputs.VerifiedEmissions));
 
-        var result = environment.CoverAtom([.. CoverArgs(directoryInputs), "--align-scribe-receipt"]);
+        var result = environment.CoverAtom(CoverArgs(directoryInputs));
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains(
-            "COVER_ATOM_ALIGNED cover=passed align=passed",
-            result.Output,
-            StringComparison.Ordinal);
         Assert.Equal(1, reportSource.CallCount);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
         var oldPath = Path.Combine(
@@ -64,7 +60,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(File.Exists(Path.Combine(
             temporary.Path,
             BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar))));
-        AssertAlignedCoverRepairsPersistedScribeReceipt();
+        AssertProductionScribeVerifierMaterializesOnlyTheCapturedSnapshot();
     }
 
     [Fact]
@@ -118,136 +114,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(concurrent, File.ReadAllText(metadataPath));
     }
 
-    [Fact]
-    public void AlignScribeReceiptIsReachableThroughProductionCliDispatch()
-    {
-        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
-        var directoryInputs = DirectoryInputs(inputs);
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, directoryInputs.Files);
-        var console = new BufferedConsole();
-
-        var exitCode = CliApplication.Run(
-            ["align-scribe-receipt", .. CoverWorld.AlignArgs(inputs)],
-            CoverWorld.Environment(temporary.Path, directoryInputs, directoryInputs.Files),
-            console);
-
-        Assert.Equal(0, exitCode);
-        Assert.Contains("ALIGN_SCRIBE_RECEIPT", console.Output, StringComparison.Ordinal);
-        Assert.Equal(string.Empty, console.Error);
-    }
-
-    [Fact]
-    public void RootUsageListsAlignScribeReceipt()
-    {
-        var console = new BufferedConsole();
-
-        var exitCode = CliApplication.Run(
-            Array.Empty<string>(),
-            new StubCliEnvironment(new AdmissionOutcome.InfrastructureFailure("unused")),
-            console);
-
-        Assert.Equal(2, exitCode);
-        Assert.Contains("align-scribe-receipt", console.Error, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void AlignRemainsAvailableWhileDefinitionByteDriftIsAccepted()
-    {
-        var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
-        var inputs = DirectoryInputs(materialized);
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var initialEnvironment = CoverWorld.Environment(temporary.Path, inputs, inputs.Files);
-
-        var before = initialEnvironment.DigestStatus(Array.Empty<string>());
-        Assert.True(before.Success, before.Error);
-        Assert.DoesNotContain("scribe-definition-mismatch", before.Output, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-emission-mismatch", before.Output, StringComparison.Ordinal);
-
-        var aligned = initialEnvironment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
-        Assert.True(aligned.Success, aligned.Error);
-        var alignedFiles = FilesWithLedgerFromRoot(inputs.Files, temporary.Path);
-        var after = CoverWorld.Environment(temporary.Path, inputs, alignedFiles)
-            .DigestStatus(Array.Empty<string>());
-        Assert.True(after.Success, after.Error);
-        Assert.DoesNotContain("scribe-definition-mismatch", after.Output, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-emission-mismatch", after.Output, StringComparison.Ordinal);
-
-        var changedDefinition = "changed scribe definition\n";
-        alignedFiles[ScribeEmissionAttestation.DefinitionPath(inputs.Gid[..inputs.Gid.LastIndexOf('.')])] =
-            changedDefinition;
-        Assert.True(inputs.VerifiedEmissions!.TryGet(
-            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var oldRecord));
-        var changedRecord = oldRecord with
-        {
-            DefinitionSha256 = DigestionFingerprint.Compute(
-                Encoding.UTF8.GetBytes(changedDefinition)).RawSha256,
-        };
-        var changedVerification = VerifiedScribeEmissions.Create([changedRecord], [inputs.Gid]);
-        var driftEnvironment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(alignedFiles),
-                CoverWorld.Raw(inputs.Baseline)),
-            new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(changedVerification));
-
-        var drifted = driftEnvironment.DigestStatus(Array.Empty<string>());
-
-        Assert.True(drifted.Success, drifted.Error);
-        Assert.DoesNotContain("scribe-definition-mismatch", drifted.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void AlignRejectsCoverageReceiptMismatchBeforeWritingLedger()
-    {
-        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
-        {
-            BaselineTargetIdentical = true,
-        });
-        var entry = Assert.Single(
-            inputs.Document.RequireDigestionEntries(),
-            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
-        var oldCoverage = Assert.Single(entry.Coverage);
-        var source = Assert.Single(inputs.Document.RequireDigestionSources());
-        var driftedDocument = inputs.Document.WithDigestionSources(
-        [
-            source with
-            {
-                Entries = source.Entries.Select(candidate => candidate.AtomId == entry.AtomId
-                    ? candidate with
-                    {
-                        Coverage =
-                        [
-                            oldCoverage with
-                            {
-                                TargetStatementId = "sha256:" + new string('c', 64),
-                            },
-                        ],
-                    }
-                    : candidate).ToImmutableArray(),
-            },
-        ]);
-        var driftedFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal);
-        DirectoryLedgerTestSupport.ReplaceWithProjection(driftedFiles, driftedDocument);
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, driftedFiles);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
-        var console = new BufferedConsole();
-
-        var exitCode = CliApplication.Run(
-            ["align-scribe-receipt", .. CoverWorld.AlignArgs(inputs)],
-            CoverWorld.Environment(temporary.Path, inputs, driftedFiles),
-            console);
-
-        Assert.Equal(2, exitCode);
-        Assert.Equal(string.Empty, console.Output);
-        Assert.Contains("coverage-target-mismatch", console.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
-    }
-
     [Theory]
     [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
@@ -257,12 +123,7 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(CoverWorld.Materialize(CoverWorld.StaleReceiptSpec()));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var initialEnvironment = CoverWorld.Environment(temporary.Path, inputs, inputs.Files);
-
-        var aligned = initialEnvironment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
-
-        Assert.True(aligned.Success, aligned.Error);
-        var alignedFiles = FilesWithLedgerFromRoot(inputs.Files, temporary.Path);
+        var alignedFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal);
         var verification = inputs.VerifiedEmissions
             ?? throw new InvalidOperationException("cover fixture omitted Scribe verification");
         if (mismatchCode == "coverage-target-mismatch")
@@ -330,40 +191,6 @@ public sealed partial class ProductionEnvironmentTests
         }
     }
 
-    // Preserve the baseline test identity; the display name describes its current contract.
-    [Fact(DisplayName = "Align accepts producer capability without rechecking definition bytes")]
-    public void AlignFailsClosedWhenTargetScribeMismatchRemainsAfterAlignment()
-    {
-        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
-        var directoryInputs = DirectoryInputs(inputs);
-        Assert.True(inputs.VerifiedEmissions!.TryGet(
-            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
-        var inconsistentVerification = VerifiedScribeEmissions.Create(
-            [verifiedRecord with { DefinitionSha256 = "sha256:" + new string('c', 64) }],
-            [inputs.Gid]);
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, directoryInputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
-        var environment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                CoverWorld.Raw(directoryInputs.Files),
-                CoverWorld.Raw(directoryInputs.Baseline)),
-            new FakeLeanReportSource(inputs.Report),
-            new FakeScribeEmissionVerifier(inconsistentVerification));
-
-        var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
-
-        Assert.True(result.Success, result.Error);
-        Assert.DoesNotContain("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
-        Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
-
-        // Extend this already-paid repository-read test: the map budget is structural and must
-        // not be raised merely to add another representative of the same Scribe rule.
-        AssertProductionScribeVerifierMaterializesOnlyTheCapturedSnapshot();
-    }
-
     [Fact]
     public void CoverAtomWritesCoverageAndRecomputesDigestStatusThroughProductionEnvironment()
     {
@@ -387,7 +214,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CoverAtomWithReceiptsMovesCleanInheritedResidualOpenAtomToDeletableAbsorbedClosed()
+    public void CoverAtomWithoutScribeKeyMovesCleanInheritedResidualOpenAtomToDeletableAbsorbedClosed()
     {
         var inputs = DirectoryInputs(CoverWorld.Materialize(new CoverSpec()));
         const string sourceAfterHistoricalAtom =
@@ -398,16 +225,23 @@ public sealed partial class ProductionEnvironmentTests
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
-        var result = environment.CoverAtom(CoverArgs(inputs));
-
-        Assert.True(result.Success, result.Error);
+        var before = environment.DigestStatus(["--base", "baseline"]);
+        Assert.True(before.Success, before.Error);
+        output.WriteLine("BEFORE\n" + before.Output);
+        Assert.Contains("deletable_now=0", before.Output, StringComparison.Ordinal);
+        Assert.Contains("residual-open", before.Output, StringComparison.Ordinal);
+        var console = new BufferedConsole();
+        var exitCode = CliApplication.Run(["cover-atom", .. CoverArgs(inputs)], environment, console);
+        output.WriteLine("COVER exit=" + exitCode + "\n" + console.Output + console.Error);
+        Assert.Equal(0, exitCode);
+        var result = new CommandResult(true, console.Output, console.Error);
         Assert.Contains("deletable=true", result.Output, StringComparison.Ordinal);
         var entry = Assert.Single(
             BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
         Assert.Single(entry.Coverage);
-        Assert.Single(entry.Receipts.Scribe);
+        Assert.Empty(entry.Receipts.Scribe);
         Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
         var ledgerRoot = Path.Combine(
@@ -422,71 +256,18 @@ public sealed partial class ProductionEnvironmentTests
             ledgerRoot,
             "absorbed-closed",
             CoverWorld.DefaultAtomId + ".yaml")));
-    }
-
-    [Theory(DisplayName = "Align keeps sibling status and coverage gates without Scribe byte checks")]
-    [InlineData("coverage-target-mismatch")]
-    [InlineData("scribe-definition-mismatch")]
-    [InlineData("scribe-emission-mismatch")]
-    public void AlignScribeReceiptRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(
-        string mismatchCode)
-    {
-        var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
-        {
-            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
-        });
-        var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
-        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
-
-        var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
-
-        Assert.False(result.Success);
-        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
-        Assert.Contains(mismatchCode == "coverage-target-mismatch" ? mismatchCode : "handwritten status",
-            result.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("scribe-emission-mismatch", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
-    }
-
-    [Theory]
-    [InlineData("coverage-target-mismatch")]
-    [InlineData("scribe-definition-mismatch")]
-    [InlineData("scribe-emission-mismatch")]
-    public void AlignScribeReceiptKeepsCoverageGateWhileAcceptingScribeByteBacklogAtBaseline(
-        string mismatchCode)
-    {
-        var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
-        {
-            OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
-            OtherMigration = "absorbed",
-            ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
-        });
-        var inputs = DirectoryInputs(WithReceiptMismatchAtBaseline(
-            materialized,
-            mismatchCode,
-            byteIdenticalBaseline: true));
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
-        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
-
-        var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
-
-        if (mismatchCode == "coverage-target-mismatch")
-        {
-            Assert.False(result.Success);
-            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
-        else
-        {
-            Assert.True(result.Success, result.Error);
-            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
+        var persistedPath = Path.Combine(ledgerRoot, "absorbed-closed", CoverWorld.DefaultAtomId + ".yaml");
+        var persisted = File.ReadAllText(persistedPath);
+        Assert.DoesNotContain("scribe", persisted, StringComparison.Ordinal);
+        output.WriteLine("PERSISTED\n" + persisted);
+        var afterFiles = FilesWithLedgerFromRoot(inputs.Files, temporary.Path);
+        var after = BuildCoverEnvironment(temporary.Path, inputs, afterFiles)
+            .DigestStatus(["--base", "baseline"]);
+        Assert.True(after.Success, after.Error);
+        output.WriteLine("AFTER\n" + after.Output);
+        Assert.Contains("deletable_now=1", after.Output, StringComparison.Ordinal);
+        Assert.Contains("absorbed-closed", after.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("GAP ", after.Output, StringComparison.Ordinal);
     }
 
     [Fact]

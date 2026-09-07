@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/Observer/VisibleDescent/VisibleAutonomyCriterion.visible_autonomy_criterion
     target_statement_id: sha256:ab68da85fc344511e1c5465f9de377a40d2fbb486de08e5e48eb26eb53419c1c
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/VisibleDescent/VisibleAutonomyCriterion.visible_autonomy_criterion
-      definition_sha256: sha256:6bb965cfdcc1c339a4971694f4ab7f15b4530375168aa95c06694bdebec1182b
-      emission_sha256: sha256:28feffbf118e7135041dfa3b7279191332c7f123edfadea13c6dc5114a412fd7
+  scribe: []
   unresolved_subitems: []

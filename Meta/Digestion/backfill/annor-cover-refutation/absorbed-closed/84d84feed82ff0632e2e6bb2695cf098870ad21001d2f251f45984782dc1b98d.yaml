@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/GraphColoring/GraphCoverDomination.regular_cover_small_domination
     target_statement_id: sha256:312c85e77558874d9b7f7ce08ef74b209dd70b5453508511d0f31cfd28ec0c41
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/GraphColoring/GraphCoverDomination.regular_cover_small_domination
-      definition_sha256: sha256:639915af6716626863095ae549d2aab90dc52f2812fbc91483ecb18626ef89eb
-      emission_sha256: sha256:350cb7f3222db037c49a831d714d02e31d0b23e01083259fa65eb94bd608deed
+  scribe: []
   unresolved_subitems: []

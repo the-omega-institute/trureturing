@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/Observer/MetricGeometryLaws/CanonicalDiscountedFutureGeometry.canonical_discounted_future_geometry
     target_statement_id: sha256:ceb3ded471bd861c154b7a6fc53cfc88e906da873a954cd5557138e585e8a748
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/MetricGeometryLaws/CanonicalDiscountedFutureGeometry.canonical_discounted_future_geometry
-      definition_sha256: sha256:262e9f4a238dee94a0c237fea0697b8c689c471364d0503d0614ec8570f82bcb
-      emission_sha256: sha256:97cd555f893707d0ab12ff4495679633576bcd4b43777e3a1ddb4135c511bf72
+  scribe: []
   unresolved_subitems: []

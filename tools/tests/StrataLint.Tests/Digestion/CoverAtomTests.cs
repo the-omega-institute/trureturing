@@ -6,8 +6,7 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 // Phase 1 cover transaction gate matrix. cover binds one already-proven Lean
-// declaration to an existing open residual atom by writing a coverage edge plus
-// its Scribe receipt, all-or-nothing. Precondition and integrity rejects
+// declaration to an existing open residual atom by writing a coverage edge, all-or-nothing. Precondition and integrity rejects
 // leave the ledger unchanged; a terminal initial-cover failure writes only its
 // disposition.
 public sealed partial class CoverAtomTests
@@ -28,7 +27,7 @@ public sealed partial class CoverAtomTests
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
         Assert.Single(entry.Coverage);
-        Assert.Single(entry.Receipts.Scribe);
+        Assert.Empty(entry.Receipts.Scribe);
         Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
     }
@@ -103,7 +102,7 @@ public sealed partial class CoverAtomTests
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
         Assert.Single(entry.Coverage);
-        Assert.Single(entry.Receipts.Scribe);
+        Assert.Empty(entry.Receipts.Scribe);
     }
 
     [Fact]
@@ -139,14 +138,14 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverRejectsMissingProducerEmissionAsPartialClosed()
+    public void CoverWithoutProducerEmissionWritesCoverageWithoutScribeReceipts()
     {
         var (result, after, before, _) = Execute(new CoverSpec { VerifyScribe = false });
 
-        Assert.False(result.Success);
-        Assert.Contains("scribe-emission-missing", result.Error, StringComparison.Ordinal);
-        Assert.Contains("partial-closed", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, after);
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("deletable_now=1", result.Output, StringComparison.Ordinal);
+        Assert.NotEqual(before, after);
+        Assert.DoesNotContain("scribe:", after, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -326,32 +325,5 @@ public sealed partial class CoverAtomTests
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
         var after = DirectoryLedgerTestSupport.Image(afterDocument);
         return new CoverExecution(result, after, before, afterDocument);
-    }
-
-    private static string ExpectedAlignedScribeImage(
-        CoverInputs inputs,
-        ScribeEmissionRecord verifiedRecord)
-    {
-        var sources = inputs.Document.RequireDigestionSources()
-            .Select(source => source with
-            {
-                Entries = source.Entries.Select(entry => entry with
-                {
-                    Receipts = entry.Receipts with
-                    {
-                        Scribe = entry.Receipts.Scribe.Select(receipt =>
-                            entry.AtomId == CoverWorld.DefaultAtomId
-                                && receipt.Gid == inputs.Gid
-                                ? receipt with
-                                {
-                                    DefinitionSha256 = verifiedRecord.DefinitionSha256,
-                                    EmissionSha256 = verifiedRecord.EmissionSha256,
-                                }
-                                : receipt).ToImmutableArray(),
-                    },
-                }).ToImmutableArray(),
-            })
-            .ToImmutableArray();
-        return DirectoryLedgerTestSupport.Image(inputs.Document.WithDigestionSources(sources));
     }
 }

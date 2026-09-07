@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S0/Rewriting/BinaryPatchFamily.binary_patch_family_injective_and_consistent
     target_statement_id: sha256:184e1157973e0f37ac0592f40895d462a2db47a89032a29729851cf33cb99b69
 receipts:
-  scribe:
-    - gid: D5/S0/Rewriting/BinaryPatchFamily.binary_patch_family_injective_and_consistent
-      definition_sha256: sha256:4fa684a47b88348163ca03601f2b54e1f677eb08c92ac2ae1524f91de34e217d
-      emission_sha256: sha256:ae43e1e15948c0dfff0ce9e6af0ab75c0a76b6f2a1aa2743c9dccda4e3022a7d
+  scribe: []
   unresolved_subitems: []

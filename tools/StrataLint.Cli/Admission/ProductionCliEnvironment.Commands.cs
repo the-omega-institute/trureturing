@@ -112,34 +112,6 @@ internal sealed partial class ProductionCliEnvironment
     public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) =>
         DecomposeAtomCommand.Run(repositoryRoot, repository, arguments);
 
-    public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments)
-    {
-        if (scribeEmissionVerifier is null)
-        {
-            return new CommandResult(
-                false,
-                string.Empty,
-                "ALIGN_SCRIBE_RECEIPT_INVALID Scribe emission verifier is unavailable\n");
-        }
-
-        try
-        {
-            return AlignScribeReceiptCommand.Run(
-                repositoryRoot,
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                arguments);
-        }
-        catch (Exception exception)
-        {
-            return new CommandResult(
-                false,
-                string.Empty,
-                $"ALIGN_SCRIBE_RECEIPT_INVALID {exception.Message}\n");
-        }
-    }
-
     public CommandResult StripScribeReceipts(IReadOnlyList<string> arguments) =>
         StripScribeReceiptsCommand.Run(repositoryRoot, repository, arguments);
 

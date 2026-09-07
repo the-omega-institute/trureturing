@@ -4,8 +4,8 @@ using StrataLint.Engine;
 namespace StrataLint.Cli;
 
 // Phase 1 cover transaction: bind one or more already-proven Lean declarations to an
-// existing open residual atom by writing a coverage edge plus its Scribe receipt
-// receipts. cover is the narrow sibling of ingest — it reuses
+// existing open residual atom by writing a coverage edge.
+// cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
 // atoms or rebinds boundaries. The write is all-or-nothing with a fail-closed
 // check-then-act guard: every gate must pass and the on-disk ledger must still
@@ -21,7 +21,7 @@ internal static partial class CoverAtomCommand
     private const string ImplementationPath =
         "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.cs";
 
-    private static CommandResult RunSingle(
+    internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
@@ -159,14 +159,6 @@ internal static partial class CoverAtomCommand
             var repositoryPaths = repositoryChanges.Entries
                 .Select(static entry => entry.Path.Value)
                 .ToHashSet(StringComparer.Ordinal);
-            var coverChanges = RawChangeSet.CreateWithKinds(
-                repositoryChanges.Entries
-                    .Select(static entry => (Path: entry.Path.Value, Kind: entry.Kind))
-                    .Concat(inputPaths
-                        .Where(path => RepoPath.TryCreate(path, out _)
-                            && !repositoryPaths.Contains(path))
-                        .Select(static path => (Path: path, Kind: RawChangeKind.Modified)))
-                    .OrderBy(static entry => entry.Path, StringComparer.Ordinal));
             var authorityChanges = RawChangeSet.CreateWithKinds(
                 repositoryChanges.Entries
                     .Select(static entry => (Path: entry.Path.Value, Kind: entry.Kind))
@@ -212,6 +204,7 @@ internal static partial class CoverAtomCommand
                         baselineFile!.RawBytes.AsSpan());
             }
             var truthStates = LeanTruthStates.Resolve(current, lean);
+            var addedCoverage = ImmutableArray.CreateBuilder<DigestionCoverageEdge>();
             foreach (var gid in gids)
             {
                 var edge = CurrentEdgeValidator.Validate(
@@ -224,9 +217,14 @@ internal static partial class CoverAtomCommand
                 {
                     throw new InvalidOperationException(edge.Diagnostic);
                 }
+
+                if (!existingGids.Contains(gid.Value))
+                {
+                    addedCoverage.Add(new DigestionCoverageEdge(gid.Value, edge.TargetStatementId));
+                }
             }
 
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
+            scribeEmissionVerifier.Verify(
                 current,
                 report,
                 receiptVerificationChanges);
@@ -242,22 +240,11 @@ internal static partial class CoverAtomCommand
                 truthStates: truthStates);
             IngestCommand.RequireNoReceiptIntegrityFailure(beforeEvaluation);
 
-            var addedReceipts = gids
-                .Where(gid => !existingGids.Contains(gid.Value))
-                .Select(gid => DigestionReceiptBuilder.Build(
-                    gid,
-                    current,
-                    frozenStatements,
-                    verifiedScribeEmissions))
-                .ToImmutableArray();
             var covered = target with
             {
-                Coverage = target.Coverage.AddRange(
-                    addedReceipts.Select(static receipt => receipt.Coverage)),
+                Coverage = target.Coverage.AddRange(addedCoverage),
                 Receipts = target.Receipts with
                 {
-                    Scribe = target.Receipts.Scribe.AddRange(
-                        addedReceipts.Select(static receipt => receipt.Scribe)),
                     CoverDisposition = null,
                 },
             };
@@ -485,12 +472,6 @@ internal static partial class CoverAtomCommand
     private sealed record CoverArguments(
         string AtomId,
         ImmutableArray<string> Gids,
-        string BaselineRevision);
-
-    private sealed record AlignPair(string AtomId, string Gid);
-
-    private sealed record AlignArguments(
-        ImmutableArray<AlignPair> Pairs,
         string BaselineRevision);
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)

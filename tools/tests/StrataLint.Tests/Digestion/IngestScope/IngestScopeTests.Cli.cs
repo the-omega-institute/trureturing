@@ -169,8 +169,10 @@ public sealed partial class IngestScopeTests
             var suffix = $"\n      definition_sha256: {hashes}\n      emission_sha256: {hashes}\n";
             var first = $"    - gid: D5/S0/Carrier/Alpha.a{suffix}";
             var second = $"    - gid: D5/S0/Carrier/Zeta.z{suffix}";
-            Assert.Contains(first + second, text, StringComparison.Ordinal);
-            text = text.Replace(first + second, second + first, StringComparison.Ordinal);
+            Assert.DoesNotContain("scribe:", text, StringComparison.Ordinal);
+            // Historical input remains loadable until L3; the current writer cannot seed it.
+            text = text.Replace("receipts:\n", "receipts:\n  scribe:\n" + second + first,
+                StringComparison.Ordinal);
             Assert.True(text.IndexOf(second, StringComparison.Ordinal) < text.IndexOf(first, StringComparison.Ordinal));
             files[AtomPath(entry)] = "# preserve entry layout\r\n\r\n"
                 + text.Replace("\n", "\r\n", StringComparison.Ordinal);

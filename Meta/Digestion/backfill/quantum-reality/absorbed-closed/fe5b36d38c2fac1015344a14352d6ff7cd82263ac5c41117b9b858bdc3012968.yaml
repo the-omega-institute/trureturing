@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.positive_pauli_clock_order_separation
     target_statement_id: sha256:74531593e59980b255d35d879a49a0c4f535920b6fcdef496079d0c484682dc7
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.positive_pauli_clock_order_separation
-      definition_sha256: sha256:9de13ab61e9c8b241a57b1263a40b552569583a325450f56e6584ee0b56b0235
-      emission_sha256: sha256:3daebbcec96ee6af7952bd4ad3885d48a9198ab692f6939933b2a536acc9b9b8
+  scribe: []
   unresolved_subitems: []

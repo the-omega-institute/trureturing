@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S0/Naming/CompletionEmbeddingDense.completion_embedding_dense
     target_statement_id: sha256:c081e6e7f7e3ae13a6b316593e8800f2e8dbb95a7dbba463a2a2e1ee79a895fc
 receipts:
-  scribe:
-    - gid: D5/S0/Naming/CompletionEmbeddingDense.completion_embedding_dense
-      definition_sha256: sha256:b980074fed83d7bce49120168513a57defce55c3a089d893a951639cd22dd332
-      emission_sha256: sha256:33dd9e6df04ab669751280b82de3b4be9276332ba4a73330f527c112c79ca13a
+  scribe: []
   unresolved_subitems: []

@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/QuantumChannels/BoundarySaturation.cp_boundary_ratio_le_one
     target_statement_id: sha256:aff19749399e06ee18c1a46d656f0a7c21c6c7599137b11db88f632667637c06
 receipts:
-  scribe:
-    - gid: D5/S3/QuantumChannels/BoundarySaturation.cp_boundary_ratio_le_one
-      definition_sha256: sha256:541daa0ec755241d48e9828a0c171e827bafe8613e23f7db9557ce74effe4124
-      emission_sha256: sha256:4f09e682b4bb8040912ba328e37b3676e828b2b49276fb50481fff1409ee5ae7
+  scribe: []
   unresolved_subitems: []

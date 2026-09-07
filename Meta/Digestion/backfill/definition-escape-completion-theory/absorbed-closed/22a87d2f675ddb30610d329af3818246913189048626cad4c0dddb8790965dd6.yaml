@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.residual_join_law
     target_statement_id: sha256:51902b111223cfeba92b996bd17b15ed9ea8f9eede96eceb6d8826e46ec69d7b
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.residual_join_law
-      definition_sha256: sha256:2696e67a0ac93a268684761e8752f8bd69779483b43a1b4c4805e7eaef6d95b4
-      emission_sha256: sha256:04eade4f9c9d2daffb6ef2a8705e26d2ee9eb24c7b447ea5b735ac38585a35b2
+  scribe: []
   unresolved_subitems: []

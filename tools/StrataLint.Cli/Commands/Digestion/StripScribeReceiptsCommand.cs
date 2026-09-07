@@ -30,7 +30,20 @@ internal static class StripScribeReceiptsCommand
             if (document.RequireDigestionEntries().IsEmpty)
                 throw new InvalidOperationException("digestion ledger contains no atom entries");
             var plan = Plan(document, options.SourceIds);
-            var replacement = IngestCommand.ReplaceLedger(current, document, plan.Document);
+            var selected = plan.Changes.Select(static change => (change.SourceId, change.AtomId)).ToHashSet();
+            var replacements = plan.Document.RequireDigestionEntries()
+                .Where(entry => selected.Contains((entry.SourceId, entry.AtomId)))
+                .ToDictionary(
+                    static entry => $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/"
+                        + $"{DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)}-"
+                        + $"{DigestionStatusNames.Truth(entry.ProjectedStatus.Truth)}/{entry.AtomId}.yaml",
+                    BackfillInventoryWriter.WriteAtom,
+                    StringComparer.Ordinal);
+            // Rewriting both versions now omits Scribe, so select writes from the strip plan.
+            var replacement = RawRepositorySnapshot.Create(current.Entries.Select(entry =>
+                replacements.TryGetValue(entry.Path, out var bytes)
+                    ? new RawRepositoryEntry(entry.Path, bytes)
+                    : entry));
             var updates = IngestCommand.LedgerUpdates(current, replacement);
             if (!options.DryRun)
                 applyUpdates(repositoryRoot, current, updates);

@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S0/Naming/TranslationComposition.translation_composition
     target_statement_id: sha256:291be4663b97e01fcd96b69e35559f92e42c7b3448fab1828bdfd4403408fcea
 receipts:
-  scribe:
-    - gid: D5/S0/Naming/TranslationComposition.translation_composition
-      definition_sha256: sha256:ab1bb01ac75fb3b261c681d4a9b5dcc505a8da4af3260a1ad8c1c6e7cb3b2644
-      emission_sha256: sha256:36bf44f3420b2459ab806665ea754787ca01b145d4838577e46bb04911796d45
+  scribe: []
   unresolved_subitems: []

@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/DivergenceSupport/LandauerBound.landauer_bound_of_balance
     target_statement_id: sha256:e4c1b9123fa382f1fb3911b27020bad6d289877529a0a5388160b6de29fb8da9
 receipts:
-  scribe:
-    - gid: D5/S3/DivergenceSupport/LandauerBound.landauer_bound_of_balance
-      definition_sha256: sha256:5ed07cab00bcc7cb97b2941d9c47f3717bd1033ce005d583e521e6f5317b588f
-      emission_sha256: sha256:9d7c99a39c0be58de6da44062cf366ae91aaa89c629397a5f2050588ddfcce51
+  scribe: []
   unresolved_subitems: []

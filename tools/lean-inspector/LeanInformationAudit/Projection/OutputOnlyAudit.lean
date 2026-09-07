@@ -54,7 +54,8 @@ def terminalSealCommand (publication : CommandElabM Unit) : CommandElab :=
 private def absoluteName (name : Name) : Name :=
   if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else name
 
-private def commandRoot (stx : Syntax) : Name :=
+/-- Canonical selected root shared by the audits and terminal commands. -/
+def commandRoot (stx : Syntax) : Name :=
   absoluteName stx[2].getId
 
 /-- Staging receives only the root name, with no artifact or destination syntax. -/

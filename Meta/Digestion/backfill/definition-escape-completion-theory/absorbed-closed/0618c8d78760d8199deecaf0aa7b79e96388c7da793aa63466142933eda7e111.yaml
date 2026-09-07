@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoLinearExtensionStopRefutation.op5_pareto_stop_linear_extension_equivalences_refuted
     target_statement_id: sha256:aa3b0a77126d745158fbae9000895b14e4b167986479bdcf078e1e0969ecbbdd
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoLinearExtensionStopRefutation.op5_pareto_stop_linear_extension_equivalences_refuted
-      definition_sha256: sha256:7bddbb753169e88c7ff805b24f04e6fa34ded59f40fb0899823fe07780f6550d
-      emission_sha256: sha256:6977779c7c2d0637592fda17deeea3fd54f1827b9856f2a5d777a854910a9b31
+  scribe: []
   unresolved_subitems: []

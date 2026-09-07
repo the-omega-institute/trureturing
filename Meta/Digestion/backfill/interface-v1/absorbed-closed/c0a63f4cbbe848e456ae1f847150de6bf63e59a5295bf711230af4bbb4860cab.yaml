@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S0/Diagonal/EscapeCount.escaped_listing_card
     target_statement_id: sha256:23d423d7bdcd1cd179c77d60719a27944de6c8638ec4542329a2da65b96fdfca
 receipts:
-  scribe:
-    - gid: D5/S0/Diagonal/EscapeCount.escaped_listing_card
-      definition_sha256: sha256:64bdf339da61fa22cfad20a745fe5e8c9e7852f17d51545b073a413c2941784b
-      emission_sha256: sha256:c19fa9c9ae754d899d1c9594b497bcc7acdf4f938417e3dbe443490e48d7d381
+  scribe: []
   unresolved_subitems: []

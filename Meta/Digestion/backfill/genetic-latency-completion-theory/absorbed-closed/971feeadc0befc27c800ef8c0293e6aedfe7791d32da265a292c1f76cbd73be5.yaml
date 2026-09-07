@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/RefinementAlgebra/DominanceNontransitivityCountermodel.complete_dominance_not_transitive
     target_statement_id: sha256:f58d9e42fa5707af4026a7af16f56653f3fa1d4e1470b65bea396cc94eb1dc54
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/DominanceNontransitivityCountermodel.complete_dominance_not_transitive
-      definition_sha256: sha256:d2b6214bd790216ff21e896da4c7e3704ce2d9fded15b09a48a0674f56daef30
-      emission_sha256: sha256:776464c3117e37782b48bc47a46b1fe81b9fffd4e91b0dc0ebbe9122fcaff994
+  scribe: []
   unresolved_subitems: []

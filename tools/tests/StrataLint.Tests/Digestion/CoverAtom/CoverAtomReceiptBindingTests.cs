@@ -205,25 +205,22 @@ public sealed partial class CoverAtomTests
         Assert.Equal([gid], sibling.CoverageGids.ToArray());
         Assert.Equal([gid], target.Coverage.Select(static receipt => receipt.Gid).ToArray());
         Assert.Equal([gid], sibling.Coverage.Select(static receipt => receipt.Gid).ToArray());
-        Assert.Equal([gid], target.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
-        Assert.Equal([gid], sibling.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Empty(target.Receipts.Scribe);
+        Assert.Empty(sibling.Receipts.Scribe);
     }
 
     [Fact]
-    public void CoverReceiptUsesVerifiedProducerEmissionWhenTrackedProjectionDiffers()
+    public void CoverOmitsScribeReceiptWhenTrackedProjectionDiffers()
     {
         var spec = new CoverSpec();
         var inputs = spec.Materialize();
         var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
         var baselineFiles = DirectoryLedgerTestSupport.Project(inputs.Baseline);
         var documentGid = ScribeEmissionAttestation.DocumentGid(inputs.Gid);
-        Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verifiedRecord));
 
         var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
         var trackedEmission = "# stale tracked projection\n";
         currentFiles[emissionPath] = trackedEmission;
-        var trackedEmissionSha256 = DigestionFingerprint.Compute(
-            Encoding.UTF8.GetBytes(trackedEmission)).RawSha256;
 
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, currentFiles);
@@ -244,9 +241,14 @@ public sealed partial class CoverAtomTests
         var entry = Assert.Single(
             BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
             candidate => candidate.AtomId == spec.AtomId);
-        var receipt = Assert.Single(entry.Receipts.Scribe);
-        Assert.Equal(verifiedRecord.EmissionSha256, receipt.EmissionSha256);
-        Assert.NotEqual(trackedEmissionSha256, receipt.EmissionSha256);
+        Assert.Empty(entry.Receipts.Scribe);
+        var written = File.ReadAllText(Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RootPath,
+            entry.SourceId,
+            "absorbed-closed",
+            entry.AtomId + ".yaml"));
+        Assert.DoesNotContain("scribe:", written, StringComparison.Ordinal);
     }
 
     private static void Replace(

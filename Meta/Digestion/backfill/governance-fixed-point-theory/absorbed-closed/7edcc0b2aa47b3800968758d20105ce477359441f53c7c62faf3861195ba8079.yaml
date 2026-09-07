@@ -6,10 +6,7 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.deadlocked_iff_empty_joint_allowance
     target_statement_id: sha256:84af505569e32d76c8bf6e823db0d61c3b80249eec88231a6b596b52b4217e11
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.deadlocked_iff_empty_joint_allowance
-      definition_sha256: sha256:843fea64e93e0b58711409ab70dd5cc0e5de35a9c5b4e3e03ed23e0f9498e16f
-      emission_sha256: sha256:efca5fa2089d06a85d5230facac17f3d56bf2cfcec08551eccf115c05327f536
+  scribe: []
   unresolved_subitems: []
   chain_atoms:
     - 7c1f75f2c7f9bea61f8a6a196284d8aba0b1a1dfa57f7b7b318477aef69b3453

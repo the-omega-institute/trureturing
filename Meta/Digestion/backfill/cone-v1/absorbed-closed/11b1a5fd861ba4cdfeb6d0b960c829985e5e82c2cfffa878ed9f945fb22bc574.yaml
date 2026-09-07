@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel
     target_statement_id: sha256:2cb97276c74437fc0236e0af3cfeab8a3045daf7ba418939035acf3d903ff02c
 receipts:
-  scribe:
-    - gid: D5/S3/DivergenceSupport/Equality/PetzClassicalCorollary.zero_defect_equivalences_and_permutation_channel
-      definition_sha256: sha256:55db187947c8133c36c53f56dd7e7ac0dec09df1139f6427f0e0a27eb62f6a2b
-      emission_sha256: sha256:dc49dc6a11dfb4af970dc1f93ef6dd705dee863c245db02f5e6eb53867c9acce
+  scribe: []
   unresolved_subitems: []

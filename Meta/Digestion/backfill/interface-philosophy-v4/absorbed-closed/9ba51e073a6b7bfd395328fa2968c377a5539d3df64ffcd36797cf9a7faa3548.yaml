@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S0/Naming/Conservation/ExpansionTowerFullMeasure.naming_expansion_full_measure
     target_statement_id: sha256:bbd9115f36bcac3f28a46858a920431312547cd9df7fd766fad5f4368e929dc0
 receipts:
-  scribe:
-    - gid: D5/S0/Naming/Conservation/ExpansionTowerFullMeasure.naming_expansion_full_measure
-      definition_sha256: sha256:ba4aea7c6bbb6f3b118357999147071d84fc0473bd5f0eb8ddc6f261ba3661a0
-      emission_sha256: sha256:95753c86bdab2b10e42b5b8bb2b9054d5524af7bdb2effb87a7c259f330e4c1b
+  scribe: []
   unresolved_subitems: []

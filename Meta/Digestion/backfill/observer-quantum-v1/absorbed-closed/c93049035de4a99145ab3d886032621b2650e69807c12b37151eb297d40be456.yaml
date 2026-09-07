@@ -8,11 +8,5 @@ coverage_gids:
   - gid: D5/S3/Quantum/Sharpness/SpectralSharpnessSaturation.spectral_sharpness_one_iff_support_le_half
     target_statement_id: sha256:e5958efc9fec1fc0c38dcfbf3d5e5bd12b4fae0fa4d255aaea8b88540f799af0
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Sharpness/SpectralSharpness.spectral_sharpness_zero_iff_uniform
-      definition_sha256: sha256:e347361d1ed5b1baab1b7390a22df07b15bf85f794139a1704440ba71ff02088
-      emission_sha256: sha256:be3033e59abb04625a73c11a00a80af919a7b1c91fefe3861bcbc7a2850ceec8
-    - gid: D5/S3/Quantum/Sharpness/SpectralSharpnessSaturation.spectral_sharpness_one_iff_support_le_half
-      definition_sha256: sha256:dde8d9f045cee9b7aca32c5bc4a1131008a8ab54fa1f05fe6e62bb475ba6bbd0
-      emission_sha256: sha256:b8f68b202d99efa7cdee75e36bf5f2ccc848494e39dd0c0b183b53341c0d146f
+  scribe: []
   unresolved_subitems: []

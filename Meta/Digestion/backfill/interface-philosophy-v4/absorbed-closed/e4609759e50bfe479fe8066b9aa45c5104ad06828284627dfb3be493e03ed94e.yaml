@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S0/Asymptotics/FinitePartitionCellMeasure.exists_cell_measure_ge_reciprocal
     target_statement_id: sha256:d86c27ef42d387e3a053a62a80a4f13b4d82c792e852d38ba8f99b93e32b3f03
 receipts:
-  scribe:
-    - gid: D5/S0/Asymptotics/FinitePartitionCellMeasure.exists_cell_measure_ge_reciprocal
-      definition_sha256: sha256:426748cd38e79e046788f59b81aede25882140a28aaeeec71fa815cb4b8bb83d
-      emission_sha256: sha256:c6e198090ff7ec827f3098f59384628c5ecc4789f38f0fd0c040160c3801681c
+  scribe: []
   unresolved_subitems: []

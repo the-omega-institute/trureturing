@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -14,7 +13,7 @@ public sealed partial class LedgerWriterProductionPathTests
     private const string ZetaGid = "D5/S0/Carrier/Zeta.zeta";
 
     [Fact]
-    public void CoverAtom_AppendWritesCoverageAndScribeReceiptsInOrdinalOrder()
+    public void CoverAtomAppendWritesOrderedCoverageWithoutScribeReceipts()
     {
         var definition = DigestionFingerprint.Compute(
             Encoding.UTF8.GetBytes("scribe definition\n")).RawSha256;
@@ -130,53 +129,6 @@ public sealed partial class LedgerWriterProductionPathTests
             Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void AlignScribeReceipt_SeedMissingWritesScribeReceiptsInOrdinalOrder()
-    {
-        var spec = MaterializeSpec() with { BaselineTargetIdentical = true };
-        var world = spec.Materialize();
-        var target = Assert.Single(world.Document.RequireDigestionEntries());
-        var seedDocument = world.Document.WithDigestionSources(
-        [
-            Assert.Single(world.Document.RequireDigestionSources()) with
-            {
-                Entries =
-                [
-                    target with
-                    {
-                        Coverage =
-                        [
-                            new DigestionCoverageEdge(ZetaGid, spec.TargetStatementId),
-                            new DigestionCoverageEdge(
-                                AlphaGid,
-                                FrozenStatementReceiptTestData.Id('c')),
-                        ],
-                        Receipts = target.Receipts with
-                        {
-                            Scribe = ImmutableArray<DigestionScribeReceipt>.Empty,
-                        },
-                        ProjectedStatus = new DigestionStatus(
-                            DigestionMigrationState.Partial,
-                            DigestionTruthState.Closed),
-                    },
-                ],
-            },
-        ]);
-        using var repository = new TemporaryDirectory();
-        var environment = Environment(repository, world, seedDocument, seedDocument);
-        var pairsPath = Path.Combine(repository.Path, "pairs.tsv");
-        File.WriteAllText(
-            pairsPath,
-            $"{spec.AtomId}\t{ZetaGid}\n{spec.AtomId}\t{AlphaGid}\n",
-            new UTF8Encoding(false));
-
-        var result = environment.AlignScribeReceipt(
-            ["--seed-missing", "--pairs", "pairs.tsv", "--base", "baseline"]);
-
-        Assert.True(result.Success, result.Error);
-        AssertCanonicalGidBytes(ReadAtomBytes(repository, spec.AtomId));
-    }
-
     private static CoverSpec MaterializeSpec() => new()
     {
         ModuleGid = "D5/S0/Carrier/Zeta",
@@ -225,16 +177,7 @@ public sealed partial class LedgerWriterProductionPathTests
         var receipts = text.IndexOf("receipts:\n", StringComparison.Ordinal);
         var alphaCoverage = text.IndexOf($"  - gid: {alpha}\n", StringComparison.Ordinal);
         var zetaCoverage = text.IndexOf($"  - gid: {zeta}\n", StringComparison.Ordinal);
-        var alphaScribe = text.IndexOf(
-            $"    - gid: {alpha}\n",
-            receipts,
-            StringComparison.Ordinal);
-        var zetaScribe = text.IndexOf(
-            $"    - gid: {zeta}\n",
-            receipts,
-            StringComparison.Ordinal);
-
         Assert.True(alphaCoverage >= 0 && alphaCoverage < zetaCoverage && zetaCoverage < receipts, text);
-        Assert.True(alphaScribe > receipts && alphaScribe < zetaScribe, text);
+        Assert.DoesNotContain("scribe", text, StringComparison.Ordinal);
     }
 }

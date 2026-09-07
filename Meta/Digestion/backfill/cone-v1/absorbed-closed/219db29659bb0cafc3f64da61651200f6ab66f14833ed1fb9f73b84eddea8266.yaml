@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/QuantumBounds/LagrangeGramIdentity.lagrange_gram_identity
     target_statement_id: sha256:82e7a2e4b177029c6eb3b146ff93acceb3a20f5fc6f490f44f8d60c6b556d7ef
 receipts:
-  scribe:
-    - gid: D5/S3/QuantumBounds/LagrangeGramIdentity.lagrange_gram_identity
-      definition_sha256: sha256:f207a4f6effb4739ac15cb2fbee8904e075a64694f57b0314911cfcad80e8ddc
-      emission_sha256: sha256:b9b3a1c549e95203fe35d1caf03b66a1bc54e24da630ff5a2e1ea8c59581f505
+  scribe: []
   unresolved_subitems: []

@@ -379,7 +379,7 @@ private def elabInformationAnalysisStage : CommandElab :=
 private def elabAuditedInformationAnalysisStage : CommandElab := fun stx => do
   let currentEnv ← getEnv
   match auditInformationAnalysisStage currentEnv ``elabInformationAnalysisStage
-      currentEnv.header.mainModule with
+      (commandRoot stx) with
   | .error message => throwError message
   | .ok () => elabInformationAnalysisStage stx
 
@@ -387,7 +387,7 @@ private def elabAuditedInformationAnalysisStage : CommandElab := fun stx => do
 private def elabAuditedInformationAnalysisExport : CommandElab := fun stx => do
   let currentEnv ← getEnv
   match auditInformationAnalysisExport currentEnv ``elabInformationAnalysisExport
-      currentEnv.header.mainModule with
+      (commandRoot stx) with
   | .error message => throwError message
   | .ok () => elabInformationAnalysisExport stx
 

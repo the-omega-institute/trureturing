@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoEqOnVectorEquality.pareto_eq_on_iff_vector_eq
     target_statement_id: sha256:d94565213c09b79170bb1a6d68de8c00265f20c11380d3dc6f2df86b2c6b0db2
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoEqOnVectorEquality.pareto_eq_on_iff_vector_eq
-      definition_sha256: sha256:36e8aadd44f72f144cd76c87eb86ec3790501cf3338cfc50055e2275df9d653b
-      emission_sha256: sha256:693a5aa02bc79f8b509305d550b26f21bfea3ccb8fd597abbe9315473fde8e5f
+  scribe: []
   unresolved_subitems: []

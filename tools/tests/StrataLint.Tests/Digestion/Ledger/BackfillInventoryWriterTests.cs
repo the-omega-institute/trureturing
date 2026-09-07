@@ -38,7 +38,7 @@ public sealed class BackfillInventoryWriterTests
     }
 
     [Fact]
-    public void BackfillInventoryWriter_WritesScribeReceiptsInOrdinalOrder()
+    public void WriteAtomOmitsPopulatedScribeReceipts()
     {
         var entry = Entry(
             CanonicalCoverage(),
@@ -53,7 +53,39 @@ public sealed class BackfillInventoryWriterTests
 
         var written = Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(entry).AsSpan());
 
+        Assert.DoesNotContain("scribe", written, StringComparison.Ordinal);
         Assert.Equal(CanonicalAtomText(), written);
+    }
+
+    [Fact]
+    public void WriteAtomOmitsEmptyScribeReceipts()
+    {
+        var written = Encoding.UTF8.GetString(
+            BackfillInventoryWriter.WriteAtom(Entry(CanonicalCoverage(), [])).AsSpan());
+
+        Assert.DoesNotContain("scribe", written, StringComparison.Ordinal);
+        Assert.Equal(CanonicalAtomText(), written);
+    }
+
+    [Fact]
+    public void WriteEntryOmitsPopulatedScribeReceipts()
+    {
+        var written = Encoding.UTF8.GetString(
+            BackfillInventoryWriter.WriteEntry(Entry(CanonicalCoverage(), CanonicalScribeReceipts())).AsSpan());
+
+        Assert.DoesNotContain("scribe", written, StringComparison.Ordinal);
+        Assert.Contains("        coverage_gids:\n", written, StringComparison.Ordinal);
+        Assert.Contains("          migration: absorbed\n", written, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void WriteEntryOmitsEmptyScribeReceipts()
+    {
+        var written = Encoding.UTF8.GetString(
+            BackfillInventoryWriter.WriteEntry(Entry(CanonicalCoverage(), [])).AsSpan());
+
+        Assert.DoesNotContain("scribe", written, StringComparison.Ordinal);
+        Assert.Contains("          unresolved_subitems: []\n", written, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -154,16 +186,6 @@ public sealed class BackfillInventoryWriterTests
           - gid: {{ZetaGid}}
             target_statement_id: {{ZetaTargetHash}}
         receipts:
-          scribe:
-            - gid: {{AlphaGid}}
-              definition_sha256: {{AlphaDefinitionHash}}
-              emission_sha256: {{AlphaEmissionHash}}
-            - gid: {{AlphaGid}}
-              definition_sha256: {{AlphaSecondDefinitionHash}}
-              emission_sha256: {{AlphaSecondEmissionHash}}
-            - gid: {{ZetaGid}}
-              definition_sha256: {{ZetaDefinitionHash}}
-              emission_sha256: {{ZetaEmissionHash}}
           unresolved_subitems: []
         """ + "\n";
 }

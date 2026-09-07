@@ -6,8 +6,5 @@ coverage_gids:
   - gid: D5/S3/Quantum/MatrixInversion.positive_definite_inversion_identity
     target_statement_id: sha256:3882db17a33baf5a3f062a69409db3f3f28c3b7daa863930e3fc7f77f82aa52d
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/MatrixInversion.positive_definite_inversion_identity
-      definition_sha256: sha256:468aca955d0f917efbfabab8ce239fc3ae59f5e50272f385defcdc6272329b85
-      emission_sha256: sha256:b0476e8cc17d678eac486ca0edb0014442e8eca37645f0dfd28f4888aa5b474f
+  scribe: []
   unresolved_subitems: []

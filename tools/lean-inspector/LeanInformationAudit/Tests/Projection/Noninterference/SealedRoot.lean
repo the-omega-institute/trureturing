@@ -1,0 +1,10 @@
+import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+
+open LeanInformationAudit.Tests.ImportClosureProducer
+
+expect_information_occurrence importedTheorem
+  in objectArena
+  from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
+
+#seal_information_theory
