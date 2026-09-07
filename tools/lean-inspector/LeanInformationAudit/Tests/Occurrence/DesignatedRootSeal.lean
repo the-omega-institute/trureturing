@@ -16,6 +16,9 @@ run_cmd do
     elabCommand (← `(command| #seal_information_theory))
     if (← get).messages.hasErrors then return
     let env ← getEnv
+    if (SealRecords.analysisForRoot? env designatedInformationRootId).isSome ||
+        env.contains (designatedInformationRootId.str "__system_catalog_irredundant") then
+      throwError "DesignatedRootSeal closure contains analysis staging"
     let actual := SealRecords.occurrencesForRoot env designatedInformationRootId
     let expected := expectedOccurrencesForRoot env designatedInformationRootId
     unless actual.size == 13 && expected.size == 13 do

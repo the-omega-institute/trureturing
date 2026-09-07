@@ -26,7 +26,7 @@ structure CatalogRecord where
   arenaName : Name
   catalogName : Name
   units : Array CatalogUnitRecord
-  compatibilityV2 : Bool
+  localSealNames : Bool
 
 structure PreparedCatalog where
   record : CatalogRecord
@@ -39,8 +39,8 @@ private def nameLess (left right : Name) : Bool :=
   left.lt right
 
 private def catalogNameFor (rootId arenaName : Name) (catalogId : CatalogId)
-    (compatibilityV2 : Bool) : Name :=
-  if compatibilityV2 then arenaName.str "__information_catalog"
+    (localSealNames : Bool) : Name :=
+  if localSealNames then arenaName.str "__information_catalog"
   else catalogQualifiedName rootId arenaName catalogId arenaName "__information_catalog"
 
 private def entryArenaValue (entry : InformationRegistryEntry) : MetaM Expr := do
@@ -103,7 +103,7 @@ occurrences={nameArrayJson occurrences}"
 catalogs={nameArrayJson catalogIds}"
   pure catalogIds[0]!
 
-private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)
+private def prepareCatalog (rootId arenaName : Name) (localSealNames : Bool)
     (entries : Array InformationRegistryEntry) :
     Lean.Elab.Term.TermElabM PreparedCatalog := do
   let sorted := entries.qsort fun left right => nameLess left.theoremName right.theoremName
@@ -129,7 +129,7 @@ private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)
     registrationModuleName := entry.registrationModuleName
     index
   }
-  let catalogName := catalogNameFor rootId arenaName catalogId compatibilityV2
+  let catalogName := catalogNameFor rootId arenaName catalogId localSealNames
   let declaration := .defnDecl {
     name := catalogName
     levelParams := []
@@ -146,7 +146,7 @@ private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)
       arenaName
       catalogName
       units
-      compatibilityV2
+      localSealNames
     }
     arenaValue := arena
     type
@@ -169,11 +169,11 @@ def prepareCatalogsFromEntries (sourceEntries catalogEntries :
     throwError "IE-C001 UnregisteredTheoremUnit: registry is empty"
   validateSourceEntries env sourceEntries
   let rootId := env.header.mainModule
-  let compatibilityV2 := sourceEntries.all fun entry =>
-    entry.legacyNaming && entry.registrationModuleName == rootId
+  let localSealNames := sourceEntries.all fun entry =>
+    entry.localRegistrationNames && entry.registrationModuleName == rootId
   let groups := (groupEntries catalogEntries).qsort fun left right => nameLess left.1 right.1
   let catalogs <- liftTermElabM <| groups.mapM fun group =>
-    prepareCatalog rootId group.1 compatibilityV2 group.2
+    prepareCatalog rootId group.1 localSealNames group.2
   pure <| catalogs.qsort fun left right =>
     nameLess left.record.catalogId right.record.catalogId ||
       (left.record.catalogId == right.record.catalogId &&

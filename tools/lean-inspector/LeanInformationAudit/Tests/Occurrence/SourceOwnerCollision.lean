@@ -27,7 +27,7 @@ run_cmd do
     realizationName := `LeanInformationAudit.Tests.ImportClosureProducer.fixtureRealization
     catalogId := `importedBool
     objectArenaName := `LeanInformationAudit.Tests.ImportClosureProducer.objectArena
-    legacyNaming := false
+    localRegistrationNames := false
   }
 
 expect_information_occurrence importedTheorem

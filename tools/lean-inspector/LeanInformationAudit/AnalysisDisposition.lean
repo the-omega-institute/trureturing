@@ -5,7 +5,7 @@ namespace LeanInformationAudit
 
 open Lean
 
--- Canonical declarations copied verbatim from spec v4.3 section 23.6.
+-- Canonical declarations copied verbatim from the disposition section of the spec.
 inductive UnreachableReason
   | noCanonicalObjectCarrier
   | noFinitePrimitiveBundle

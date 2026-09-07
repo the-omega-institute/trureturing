@@ -1,4 +1,4 @@
-import LeanInformationAudit.Tests.Occurrence.V2Baseline
+import LeanInformationAudit.Tests.Occurrence.SealBaseline
 
 open Lean Lean.Elab.Command LeanInformationAudit
 

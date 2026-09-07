@@ -13,15 +13,14 @@ expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
-#seal_information_theory output "/tmp/lean-information-audit-import-closure.json"
+#seal_information_theory
 
 /-- info: import-closure qualified identity passed -/
 #guard_msgs (info) in
 run_cmd do
   let env <- getEnv
   let root := env.header.mainModule
-  let contents <- Lean.Elab.Command.liftIO <|
-    IO.FS.readFile "/tmp/lean-information-audit-import-closure.json"
+  let contents := serializeSealArtifact (SealRecords.forRoot env root)
   let json <- match Json.parse contents with
     | .ok value => pure value
     | .error message => throwError message
@@ -37,7 +36,7 @@ run_cmd do
   let qualifierOf : Name -> Option String
     | .str (.str _ value) _ => some value
     | _ => none
-  unless schema == "lean-intrinsic-information-escape-v2" &&
+  unless schema == "lean-intrinsic-information-escape-seal" &&
       occurrences.size == 1 && occurrence.rootId == root &&
       occurrence.catalogId == `importedBool &&
       qualifierOf occurrence.unitName == some qualifier &&

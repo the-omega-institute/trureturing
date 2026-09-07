@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:86718588043d98db75576fbb84b8148dd354df0a72159f8f3c3e669048a2ff21
+  normalized_sha256: sha256:86718588043d98db75576fbb84b8148dd354df0a72159f8f3c3e669048a2ff21
+cas_ref: sha256:86718588043d98db75576fbb84b8148dd354df0a72159f8f3c3e669048a2ff21
+coverage_gids:
+  - gid: D5/S3/Zeros/PochhammerDeformation/LinearFactor.lOp_linear_factor
+    target_statement_id: sha256:9b935bfdf3fa8076ff9765602165fd335a437c3fb59962002becff99cb351a9a
+receipts:
+  scribe:
+    - gid: D5/S3/Zeros/PochhammerDeformation/LinearFactor.lOp_linear_factor
+      definition_sha256: sha256:45713831b01f21d4804c7fd0a4130f5ed0cf1ab77ae88aed6c891a04d610ba67
+      emission_sha256: sha256:03dba8652f0191b29946dd5b4a5db5a3e4536c9ff3f53da1363abedc82306e1d
+  unresolved_subitems: []

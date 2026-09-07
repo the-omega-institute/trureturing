@@ -86,7 +86,7 @@ run_cmd do
     catalogId := `y
     registrationModuleName := env.header.mainModule
     objectArenaName := `LeanInformationAudit.Tests.QualifiedCollision.«object/catalog»
-    legacyNaming := false
+    localRegistrationNames := false
   }
   let owners := qualifiedNameCollisionEntries (InformationRegistry.entries env)
     existing.unitName prospective

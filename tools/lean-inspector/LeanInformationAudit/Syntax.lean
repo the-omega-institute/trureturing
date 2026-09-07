@@ -64,7 +64,7 @@ private def ensureOccurrenceRegisterable (env : Environment) (rootId objectArena
         catalogId
         registrationModuleName := rootId
         objectArenaName
-        legacyNaming := false
+        localRegistrationNames := false
       }
       throwError (qualifiedNameCollisionError rootId catalogId generatedName
         (qualifiedNameCollisionEntries (InformationRegistry.entries env)
@@ -275,7 +275,7 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
     catalogKind := .canonicalMaximal
     registrationModuleName := rootId
     objectArenaName
-    legacyNaming := false
+    localRegistrationNames := false
   }
 
 syntax (name := registerInformationTheoremOccurrenceCmd)
@@ -352,7 +352,7 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     catalogKind := .canonicalMaximal
     registrationModuleName := rootId
     objectArenaName
-    legacyNaming := false
+    localRegistrationNames := false
   }
 
 end LeanInformationAudit
