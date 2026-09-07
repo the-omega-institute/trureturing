@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S0/Asymptotics/NamingRate/TransparencyAsymptotic.naming_rate_transparency_asymptotic
     target_statement_id: sha256:2b283ca150bb1946681b9fd9683646598d879772047756a7d59143dc2fcbf9cb
 receipts:
-  scribe:
-    - gid: D5/S0/Asymptotics/NamingRate/TransparencyAsymptotic.naming_rate_transparency_asymptotic
-      definition_sha256: sha256:6b842e80c6bb97389c59db10489d3515e4a0ce9cb7943daf19c618f10602b189
-      emission_sha256: sha256:2ec220767e4dfd0528558519680c36a4ea35468a6b9b9e74e549b955e8b932b9
   unresolved_subitems: []

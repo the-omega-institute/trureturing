@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/PrimeForms/GaussianIntegers/GaussianIntegerNorm.gaussian_integer_mul_conj_eq_sq_add_sq
     target_statement_id: sha256:86702bfb80aa74b1e0807ae435fd1d0613103b09f2a3730fb31b3582c0167342
 receipts:
-  scribe:
-    - gid: D5/S3/PrimeForms/GaussianIntegers/GaussianIntegerNorm.gaussian_integer_mul_conj_eq_sq_add_sq
-      definition_sha256: sha256:99d411a6dc7a0be435638085c87f6b2c86ada398d4c53748140b45e4382f1cdc
-      emission_sha256: sha256:eb19ed288610bfa9d34afdc521ce67dffbfcd99ad8cb5071225a73fdf2d5d9d9
   unresolved_subitems: []

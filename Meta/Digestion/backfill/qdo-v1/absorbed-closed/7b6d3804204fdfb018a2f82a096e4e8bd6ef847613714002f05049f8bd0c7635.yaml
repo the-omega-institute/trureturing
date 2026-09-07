@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Separation/RefinementDistanceMonotonicity.observer_distance_mono_of_refinement
     target_statement_id: sha256:947ed9a61ae02fcdfc5c8b0eafc5529adcf24b1e8277633e5954f11412e5c0ce
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Separation/RefinementDistanceMonotonicity.observer_distance_mono_of_refinement
-      definition_sha256: sha256:acd1f19c1093c24ae568334e4c2d986beae0471ab44efd7e619cac865cb2d202
-      emission_sha256: sha256:575522f33a409ecc316bdafd4098722e695bcfc6b967c29b61c1a41f98ec1580
   unresolved_subitems: []

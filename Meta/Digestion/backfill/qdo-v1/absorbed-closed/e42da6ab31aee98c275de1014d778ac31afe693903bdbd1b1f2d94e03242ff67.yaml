@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Entropy/Forgetting/DeterministicEntropyStep.deterministic_entropy_step
     target_statement_id: sha256:2e0a1f9853d9f5362bc49d7a807f11f389d79db610594ede3642f5c29f8e8dac
 receipts:
-  scribe:
-    - gid: D5/S3/Entropy/Forgetting/DeterministicEntropyStep.deterministic_entropy_step
-      definition_sha256: sha256:014ab0ab9b57a91b6d5028334342782ac7c08a8fe42762c3d15a7011058b1486
-      emission_sha256: sha256:7cf00545fae60741d2c9406b95d4b314809420556ca4ea81985e6e73e0b5ec7d
   unresolved_subitems: []

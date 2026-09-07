@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
     target_statement_id: sha256:827994fa2aa5551e8a535a8d381935357a7d674497c5e69de853a54ff8db344f
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
-      definition_sha256: sha256:8346dd6da2d89463e7e86d85158a3c26ecdb1b25e633030272140cccfd3d61e6
-      emission_sha256: sha256:bc542343eff2e6049ee967b06f24a85c3a422933ca1723eb44e38f57848c8907
   unresolved_subitems: []

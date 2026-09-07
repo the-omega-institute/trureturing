@@ -6,7 +6,7 @@ using Trureturing.Truth;
 
 namespace StrataLint.Cli;
 
-/// Exports the strict active frozen truth from one immutable Git revision and one explicit Lean report.
+/// Exports current proven truth from one immutable Git revision and one explicit Lean report.
 /// The report's source bindings are checked against the resolved revision; the truth-export wire carries
 /// only the immutable commit and tree identities.
 internal static class TruthExportCommand
@@ -39,9 +39,9 @@ internal static class TruthExportCommand
                     $"TRUTH_EXPORT_REJECTED {rejected.Message}\n");
             }
 
-            var accepted = (FrozenLedgerValidationOutcome.Accepted)preparation.Outcome;
             var model = TruthExportProjection.Project(
-                accepted.Capability.ActiveFrozenNodes,
+                preparation.Catalog.ClosedNodes,
+                FrozenStateCatalog.Load(snapshot).Selectors.ToImmutableHashSet(),
                 identity.Revision,
                 Bare(identity.TreeOid));
             var finalPath = WriteAtomically(options.OutDirectory, model);
@@ -89,23 +89,19 @@ internal static class TruthExportCommand
         _ = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
             ledgerFiles,
             "frozen ledger");
-        var outcome = FrozenLedger.ValidateTrustedHistory(baseView, catalog);
-        return new StrictTruthHistoryPreparation(truth, states, baseView, outcome);
+        var outcome = FrozenLedger.ValidateTrustedHistory(baseView, catalog, requireCompleteCatalog: false);
+        return new StrictTruthHistoryPreparation(truth, states, baseView, catalog, outcome);
     }
 
     private static ImmutableArray<RepositoryFile> LedgerFiles(RepositorySnapshot snapshot)
     {
         var prefix = FrozenLedgerChangeClassifier.AcceptedRoot + "/";
-        var files = snapshot.Files.Values
+        return snapshot.Files.Values
             .Where(file => file.Path.Value.StartsWith(prefix, StringComparison.Ordinal)
                 && file.Path.Value.EndsWith(".json", StringComparison.Ordinal)
                 && !file.Path.Value[prefix.Length..].Contains('/', StringComparison.Ordinal))
             .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
             .ToImmutableArray();
-        return files.IsEmpty
-            ? throw new InvalidOperationException(
-                $"immutable revision contains no frozen ledger files under {FrozenLedgerChangeClassifier.AcceptedRoot}")
-            : files;
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
@@ -210,4 +206,5 @@ internal sealed record StrictTruthHistoryPreparation(
     TruthContext Truth,
     ImmutableDictionary<RepoPath, TruthState> States,
     FrozenLedgerBaseView BaseView,
+    FrozenMaterialCatalog Catalog,
     FrozenLedgerValidationOutcome Outcome);

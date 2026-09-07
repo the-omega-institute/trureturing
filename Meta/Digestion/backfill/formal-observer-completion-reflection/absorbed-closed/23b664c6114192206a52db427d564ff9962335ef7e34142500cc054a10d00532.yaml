@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
     target_statement_id: sha256:752669e04e67ecbbf5e02bada7edbbfedbb8e99a5f0f580cb13e5fa1dbb52cd3
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
-      definition_sha256: sha256:1f3f05ce0fb29485bc7097c26207af0085e93d7b4b905fed41afd6dfa7a85724
-      emission_sha256: sha256:dc55f87e43e4dabd9c751039e18dc1d8739c0c2c343406fadc97b229fe437dd8
   unresolved_subitems: []

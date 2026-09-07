@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/PrimeExponentRecordLimitOne.a384669_endpoint_limit_one
     target_statement_id: sha256:30cafcb4ac5490ee357b46a71a87b7a0ff038faa2f1e1d67ec859e2e5fef8f40
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/PrimeExponentRecordLimitOne.a384669_endpoint_limit_one
-      definition_sha256: sha256:13edc7d1d7ee969a00c5466d2329e3a91f1be94bf70df0f4865b3bc1c4274477
-      emission_sha256: sha256:d0c9299c77aa38620f98a89a4ad26cb5b39f6e7a46fd27fb8cb0a74ee5736014
   unresolved_subitems: []

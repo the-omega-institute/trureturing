@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Weil/LabeledZeta.labeled_zeta_vector_ne_zero
     target_statement_id: sha256:d97a734e4d660eaa8192dce112561aea20d66bd4ec5ee77d3557347d5f63aeeb
 receipts:
-  scribe:
-    - gid: D5/S3/Weil/LabeledZeta.labeled_zeta_vector_ne_zero
-      definition_sha256: sha256:be935dac0d1690f7032f7feec8943de6b029147c3a98ed6118b0473d1c352dc9
-      emission_sha256: sha256:5a5e4cfbc25877535987d92237bdcae285a69892fbb41f651dddba7f0e011c0d
   unresolved_subitems: []

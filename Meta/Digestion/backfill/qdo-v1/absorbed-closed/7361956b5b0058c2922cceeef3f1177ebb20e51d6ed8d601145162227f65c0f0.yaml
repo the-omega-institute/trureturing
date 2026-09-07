@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/Algorithms/ControlledDistinguishingDepth.controlled_shortest_intervention_witness
     target_statement_id: sha256:95e09298ac2b205d496230d06af44d8c29c3c9095fd7a39cf9d084c7e8304316
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/Algorithms/ControlledDistinguishingDepth.controlled_shortest_intervention_witness
-      definition_sha256: sha256:248f0a2d9349de5545ddd95c5a659cd8ddfb4235453fcfe4ed296cda2a6394bd
-      emission_sha256: sha256:2b5f431b5fbc8f17aa5339f7442912ef26e6aa54ac85801433c6bdafda05c449
   unresolved_subitems: []

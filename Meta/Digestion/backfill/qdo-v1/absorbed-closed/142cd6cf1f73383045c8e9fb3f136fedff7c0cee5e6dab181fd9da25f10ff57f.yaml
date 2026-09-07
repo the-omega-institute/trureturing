@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/HiddenFlow/RecurrentOrbitAge.recurrent_orbit_has_no_continuous_age
     target_statement_id: sha256:31f03fdf3fca79d6ef997cbc82003a0cd47ebf0731c96e41b47dd35eaaf11f8d
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/HiddenFlow/RecurrentOrbitAge.recurrent_orbit_has_no_continuous_age
-      definition_sha256: sha256:110356cec07eec70dfece4975021385fa6aa4e2a82116181c37a7bccb2b5c423
-      emission_sha256: sha256:472350c2378ed508f71446aa583bb3bb51f623823b34bfa4478d051d2de28ace
   unresolved_subitems: []

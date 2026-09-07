@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Digit/Carry/Successor.zeckendorf_successor_carry_terminates
     target_statement_id: sha256:c712307b8bdd264692ce666644c475b312c467164a6e99b2b860a88fe3124bd9
 receipts:
-  scribe:
-    - gid: D5/S1/Digit/Carry/Successor.zeckendorf_successor_carry_terminates
-      definition_sha256: sha256:0719df98000fbdff34fab9a6eb22fbd0c05d091163158bbcaf5f7f3ef3e556d7
-      emission_sha256: sha256:e89643fff5709b0370951146347868fa344cfce11903357241f1708d5fd25fab
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Constants/Enclosures/GoldenAmplitudeEnclosure.ah_seven_digit_enclosure
     target_statement_id: sha256:d216894ba856bed45b01347cef56eb3bfdf4ed40195f8403b5604a47cb9e993a
 receipts:
-  scribe:
-    - gid: D5/S3/Constants/Enclosures/GoldenAmplitudeEnclosure.ah_seven_digit_enclosure
-      definition_sha256: sha256:2fdc8f0c38e41f4b2ec62457f91efd049ed3bc86383229135f0ba1956a1199ce
-      emission_sha256: sha256:6d7bf5784b8630a111fb826c29d2f06a247b4ff62159bcc27b1145478659ebcb
   unresolved_subitems: []

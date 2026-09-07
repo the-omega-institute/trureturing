@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Measurement/OperationalObservationKernel.operational_observation_kernel_and_metric
     target_statement_id: sha256:05745df544067e627cfb34dc20f2ac829a3ff8fa9b03575f1555642a889501eb
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Measurement/OperationalObservationKernel.operational_observation_kernel_and_metric
-      definition_sha256: sha256:7bac9cfd692456a580594cf6d2c6bdc10a08c59e821726f84847b46b0e831da1
-      emission_sha256: sha256:5b0a2ea512ff85eaff8bb6c68bee327156b44150b69a6635c12af08777e59d9d
   unresolved_subitems: []

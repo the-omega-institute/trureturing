@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/Policy/CocyclePolicySeparation.cocycle_does_not_select_policy
     target_statement_id: sha256:dba787a1714bc6b7b1c61866e1b2078aa4842f03e9a2fcd6fd4fb1f5e5a6270b
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/Policy/CocyclePolicySeparation.cocycle_does_not_select_policy
-      definition_sha256: sha256:915a0d4d5876d964b2a91694b5c424ab7edb692708c3c57deb1b1b616421d5e4
-      emission_sha256: sha256:8a61b022b2938de6fe062b8bcffad91b4953a672898dc91978d48ed1b4a8e38a
   unresolved_subitems: []

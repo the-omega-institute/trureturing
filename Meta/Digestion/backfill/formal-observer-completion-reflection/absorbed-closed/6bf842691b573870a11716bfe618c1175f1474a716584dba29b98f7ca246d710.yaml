@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Solenoid/StreamlineDecomposition.existsUnique_normalized_streamline
     target_statement_id: sha256:696d196b38377e1a0c2927b0759d8e3db0d24eb2a9b9f5d09620aefe2178922b
 receipts:
-  scribe:
-    - gid: D5/S1/Solenoid/StreamlineDecomposition.existsUnique_normalized_streamline
-      definition_sha256: sha256:de20154f91f3d1ed52c5da46a1260ddad2dad331b2a982936d892de9976fba97
-      emission_sha256: sha256:c4b95c9f1186b25b25eb278409417c3cc90bda8ccf68abcbbc61dc25a5c626a3
   unresolved_subitems: []

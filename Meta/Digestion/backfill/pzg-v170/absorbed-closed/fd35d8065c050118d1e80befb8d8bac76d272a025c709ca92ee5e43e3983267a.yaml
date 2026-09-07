@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Arith/FiniteWindowEscape.finite_window_escape_and_hidden_fiber
     target_statement_id: sha256:973e7cc126a76ce84a712499b8db169609567e706702ff054af3a40de6d9b2c0
 receipts:
-  scribe:
-    - gid: D5/S3/Arith/FiniteWindowEscape.finite_window_escape_and_hidden_fiber
-      definition_sha256: sha256:b29583b83402471172c9500fba0a5516d9bd27ac32fb54205e0711abeff91b05
-      emission_sha256: sha256:010fb84622da8539366aadf8f40d0a1511618331e5f637ec0d9d7926fcc193ab
   unresolved_subitems: []

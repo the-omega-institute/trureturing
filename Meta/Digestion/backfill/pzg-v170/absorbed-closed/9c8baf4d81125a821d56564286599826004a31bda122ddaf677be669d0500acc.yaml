@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Words/Palindromes/PalindromeBalance.even_palindrome_alternating_sum_eq_zero
     target_statement_id: sha256:69fddbed7fcac74246ef635cd120b126224043d9186d32aef42e98262c63c18b
 receipts:
-  scribe:
-    - gid: D5/S1/Words/Palindromes/PalindromeBalance.even_palindrome_alternating_sum_eq_zero
-      definition_sha256: sha256:e41eda034878791f1b2f3172f053b44762540d65e0fc2bd1f6f882e606107acf
-      emission_sha256: sha256:2500f0220a3806916439c44aec908eaa8e791abfcfe4b879af287eb947dd1447
   unresolved_subitems: []

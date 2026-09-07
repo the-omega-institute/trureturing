@@ -14,7 +14,8 @@ public static partial class FrozenLedger
 
     internal static FrozenLedgerValidationOutcome ValidateTrustedHistory(
         FrozenLedgerBaseView baseView,
-        FrozenMaterialCatalog catalog)
+        FrozenMaterialCatalog catalog,
+        bool requireCompleteCatalog = true)
     {
         ArgumentNullException.ThrowIfNull(baseView);
         ArgumentNullException.ThrowIfNull(catalog);
@@ -24,7 +25,7 @@ public static partial class FrozenLedger
                 static item => item.Key,
                 static item => item.Value,
                 StringComparer.Ordinal);
-            ReconcileHistoricalActive(active, catalog, requireCompleteCatalog: true);
+            ReconcileHistoricalActive(active, catalog, requireCompleteCatalog);
             var baseline = baseView.ToWriterBaseline();
             var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);
             var activeNodes = activeEntries.Values

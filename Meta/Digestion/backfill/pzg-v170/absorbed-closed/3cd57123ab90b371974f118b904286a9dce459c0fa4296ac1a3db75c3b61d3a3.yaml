@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/QuantumContext/CliffordPhaseKernel.clifford_phase_kernel_invariant
     target_statement_id: sha256:ff0092705d76cc704bc6ba231746c164493be28be3262697739c8ad1ce800423
 receipts:
-  scribe:
-    - gid: D5/S3/QuantumContext/CliffordPhaseKernel.clifford_phase_kernel_invariant
-      definition_sha256: sha256:bcf90268c03782ad3effa98f611f0db118ce3a2ecd18ddbab51b6a723f81c27c
-      emission_sha256: sha256:953925eaa6865e2406b54cf5b5f7768c4ee04bafd68d7503d6217e810a25809e
   unresolved_subitems: []

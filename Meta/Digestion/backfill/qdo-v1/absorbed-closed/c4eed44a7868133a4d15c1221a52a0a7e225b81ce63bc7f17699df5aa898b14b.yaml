@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ResourceOrder/LiquidityReserveBound.liquidity_reserve_nonnegative
     target_statement_id: sha256:37503d015b5e46a41ca2e199d72a34da5b39e3bc1ddd56c8c84ed44aad9d2ca4
 receipts:
-  scribe:
-    - gid: D5/S3/ResourceOrder/LiquidityReserveBound.liquidity_reserve_nonnegative
-      definition_sha256: sha256:93c673fc5716bd2823c61590b19a1525ee4b14caac697bdb846658261626b2cb
-      emission_sha256: sha256:cc500bf04246355244a6394c656a13c10f032b2ded82db2d53af9ecd96629dac
   unresolved_subitems: []

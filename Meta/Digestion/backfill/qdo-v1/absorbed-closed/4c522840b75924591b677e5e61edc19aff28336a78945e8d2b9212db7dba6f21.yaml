@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/FixedPoints/AffineFeedbackThreshold.affine_feedback_threshold
     target_statement_id: sha256:ee86e6199d2a06b38003054a3a40e7b63758134327be9cebafdd57a9254e2ddc
 receipts:
-  scribe:
-    - gid: D5/S1/FixedPoints/AffineFeedbackThreshold.affine_feedback_threshold
-      definition_sha256: sha256:cb5feae385ac8537a9781e6e86bfde105b33099a848ae760b4ac3ec10b3046e7
-      emission_sha256: sha256:c2395be7f83069329b602fb6e9e487ef46555edadd7d309193b6c6b71c4351ea
   unresolved_subitems: []

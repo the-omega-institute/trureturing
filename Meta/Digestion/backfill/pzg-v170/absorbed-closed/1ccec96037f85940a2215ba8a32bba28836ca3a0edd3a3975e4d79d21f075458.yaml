@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/TotientNondivisorRecords.range_iff_lcm_jump
     target_statement_id: sha256:a8f522841840e4881c16b57e8fd64826b74a11bfe747327f5ee83285b0d3eaae
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/TotientNondivisorRecords.range_iff_lcm_jump
-      definition_sha256: sha256:f7649ca0b8e661010495846c04d74f33bd559c10f5c21ec25f81fdbb4892dc04
-      emission_sha256: sha256:f1eb36bfe3f43c4ce98e461ce129d4caf376f2bd772af3fe516eb5486d9a8e30
   unresolved_subitems: []

@@ -14,22 +14,6 @@ coverage_gids:
   - gid: D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
     target_statement_id: sha256:ec8bbbca86dab601ef48d6bc724273760fbcea897ae9f226fc19877c9b21c1ad
 receipts:
-  scribe:
-    - gid: D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count
-      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
-      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
-    - gid: D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd
-      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
-      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
-    - gid: D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity
-      definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
-      emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
-    - gid: D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
-      definition_sha256: sha256:9f86dea5bfcc72ffcf380ed16a5ee6f142da9ebc4add2bdb27b41e5dddffc9ba
-      emission_sha256: sha256:182e483f093b4e87b448df546aeea0c6f4b59983f4401281624d7fa066b60173
-    - gid: D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
-      definition_sha256: sha256:9f86dea5bfcc72ffcf380ed16a5ee6f142da9ebc4add2bdb27b41e5dddffc9ba
-      emission_sha256: sha256:182e483f093b4e87b448df546aeea0c6f4b59983f4401281624d7fa066b60173
   unresolved_subitems:
     - local-432-residue-enumeration-certificate
     - mirror-odd-offset-reversal-rotation-identity

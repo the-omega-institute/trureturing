@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ResourceOrder/PayoffPricingFactorization.payoff_price_factorization_iff
     target_statement_id: sha256:d4a0e65962e4c1229849e139308b20da93baaac1c0a820c18cf87221e6a002c1
 receipts:
-  scribe:
-    - gid: D5/S3/ResourceOrder/PayoffPricingFactorization.payoff_price_factorization_iff
-      definition_sha256: sha256:7de65e2375a527c0eada07f7162ee9fabfdcfbbeb73e6b6d770fa12877df98ab
-      emission_sha256: sha256:d7ef6db0825451a175596dbbe9dbdd844a6d727df1176ae68aeefd72c9ed5ace
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Dynamics/ObserverOrbitClosure.observer_closure_is_least_invariant
     target_statement_id: sha256:8a30a8e0eb46f16a931a3746458793457b29cd8f4a79f2214dffcc71047edd65
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Dynamics/ObserverOrbitClosure.observer_closure_is_least_invariant
-      definition_sha256: sha256:426caeddcb30dc30266f79a16c9f567f887d9a4ad657164c61dc41a45f26bc58
-      emission_sha256: sha256:ad24d01b05d2b960e77acf7f05943efe4ae2178fce3efb43e7972b44db02ed43
   unresolved_subitems: []

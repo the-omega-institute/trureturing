@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/Agency/CommitmentDepthTelescoping.finite_plan_commitment_depth_telescopes
     target_statement_id: sha256:9cccea89f246cdf673950f2a5130a685d69c5afdf1ff89066a572f13cdf95acd
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/Agency/CommitmentDepthTelescoping.finite_plan_commitment_depth_telescopes
-      definition_sha256: sha256:2e2dc2442a297f1b0037fab4e3324c77996919a02d8d04d2604204c715c1ea69
-      emission_sha256: sha256:c478ddf84101ee3907dc7d8f38e743f4ad45b345e80179dcee55733bc45899d5
   unresolved_subitems: []

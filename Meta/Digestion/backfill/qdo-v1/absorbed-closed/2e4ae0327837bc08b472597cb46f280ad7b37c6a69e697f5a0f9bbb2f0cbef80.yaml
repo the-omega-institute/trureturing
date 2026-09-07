@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/Refinement/RefinementReflexivity.refinement_reflexive
     target_statement_id: sha256:2de0d90bfc6526a81c43c6102aa49955d55c24dd49b7a14ec4e92772a147abb0
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/Refinement/RefinementReflexivity.refinement_reflexive
-      definition_sha256: sha256:1b3d4dc176560ee66c23f23af705ae16ffd09c7caa0bb16ffdc47e8d125273e6
-      emission_sha256: sha256:e6eac75f82ed59222cd50e5d2679720e5fed8091c857d3ec60787dadf39cb745
   unresolved_subitems: []

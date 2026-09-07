@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/QuantumStates/DynamicsResidualQuotientUnique.dynamics_residual_invariant_and_unique_quotient
     target_statement_id: sha256:35e42c53a9e835b0e9d4e023c3eb43aa45a656314f744263bd4d25bda4d6e474
 receipts:
-  scribe:
-    - gid: D5/S3/QuantumStates/DynamicsResidualQuotientUnique.dynamics_residual_invariant_and_unique_quotient
-      definition_sha256: sha256:a50303d5cbe8197af0c25250ae6ef5e707f47e1d06cda01c491b351661c10dd0
-      emission_sha256: sha256:8843156c3004239320eceb8c21f9b143416f6ee84413b01b2a724d4a64f3bc8b
   unresolved_subitems: []

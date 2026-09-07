@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Entanglement/SinglePrimeVisibleSpace.single_prime_visible_space
     target_statement_id: sha256:d473d8fd6293fb1283399e9cffe9e8df2d625824012f77a1f5f061ddffff3cde
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Entanglement/SinglePrimeVisibleSpace.single_prime_visible_space
-      definition_sha256: sha256:b13943a28fb604f6232c71a09eaa3eb4acf06bac0e6e62ca6ebf80890587c7fd
-      emission_sha256: sha256:fa5c3328e80c7dbc1662bce3cfcd849b84107e9bc1c2fbf6a9a91da37a75b6f9
   unresolved_subitems: []

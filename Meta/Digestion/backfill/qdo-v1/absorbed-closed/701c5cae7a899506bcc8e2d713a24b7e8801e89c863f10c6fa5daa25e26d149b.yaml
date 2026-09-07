@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ContinuousObservables/AnchoredObserverDistanceInvariance.anchored_observer_distance_invariance
     target_statement_id: sha256:31af5459876ce58550af4bea5e81e39c000bbb944c882b2768865901080a9e50
 receipts:
-  scribe:
-    - gid: D5/S3/ContinuousObservables/AnchoredObserverDistanceInvariance.anchored_observer_distance_invariance
-      definition_sha256: sha256:51c5fcdfafe16eb0cabfb9a3cfc8c3daea7a16400f2c1a5a47d74131755b8a68
-      emission_sha256: sha256:be3c20704068358ffcb123f64de3c1462feda286a9bd0075a996f999d3faf619
   unresolved_subitems: []

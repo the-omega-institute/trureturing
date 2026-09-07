@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Completion/ClosureNonimplicationTriple.closure_nonimplication_triple
     target_statement_id: sha256:48940de53946a589ff2fd286e7dbf168221698ee6f1764f9c9e6fbe9296c40fa
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Completion/ClosureNonimplicationTriple.closure_nonimplication_triple
-      definition_sha256: sha256:e18cd9d230cb577808f2e67ef4cb3afb56f0dc93863b682c3516614fa87f3a63
-      emission_sha256: sha256:c96f230073bb4323fde5b66eecc169748b6203871c9b33bb2cc6390e71c3f2c7
   unresolved_subitems: []

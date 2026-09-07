@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Completion/BareTowerDimensionClassification.bare_tower_dimension_classification
     target_statement_id: sha256:b169039945523ad69b3c27633f7d8a7db225898f0026b88f5811483b9a8edc2e
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Completion/BareTowerDimensionClassification.bare_tower_dimension_classification
-      definition_sha256: sha256:d3527817d414aa304611ba498a048ffc839dbb3ba32bb932d6fb979a946f68d1
-      emission_sha256: sha256:1b4c09c75cd5be5e979478933ea2ac9b64e04a6944af339d29e582d59559f3ba
   unresolved_subitems: []

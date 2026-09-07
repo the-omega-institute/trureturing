@@ -20,29 +20,4 @@ coverage_gids:
   - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.convolution_pairing
     target_statement_id: sha256:cbd33875d118bc97517ffb5a2744a145bf46d7e61edab71f567ae26059725edb
 receipts:
-  scribe:
-    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a
-      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
-      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
-    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_halving
-      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
-      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
-    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_halving_via_square
-      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
-      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
-    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_odd_iff_power_two
-      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
-      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
-    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_odd_index_zero
-      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
-      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
-    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_one
-      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
-      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
-    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.a_recurrence
-      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
-      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
-    - gid: D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.convolution_pairing
-      definition_sha256: sha256:22ed5fdf8ac8fc8a7b96f0925153599a0324b01e6212a5a5add7b1cc94560c0f
-      emission_sha256: sha256:6cf70b94771227f58a42cad6dfdd1f1782a6df667cbf3c2b842561530f9b6df2
   unresolved_subitems: []

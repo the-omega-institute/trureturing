@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ContinuousObservables/AsymmetricPermutationDistances.asymmetric_permutation_observer_distances
     target_statement_id: sha256:3c61dc59188de76346fd875e5b277b51fb6557e298d1b3c83446470161648d64
 receipts:
-  scribe:
-    - gid: D5/S3/ContinuousObservables/AsymmetricPermutationDistances.asymmetric_permutation_observer_distances
-      definition_sha256: sha256:9a7535eb3cae17b77418153f5eb21f5715226eb1f11e31f1ed715df510034cb7
-      emission_sha256: sha256:0d1fad68dad88c84865bd3a8dd39b527c0b274a8494105d0b532e2a5292d4bfd
   unresolved_subitems: []

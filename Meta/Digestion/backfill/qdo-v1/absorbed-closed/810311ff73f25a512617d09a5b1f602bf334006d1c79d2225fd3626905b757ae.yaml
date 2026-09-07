@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Sharpness/SideFlipPositivityRigidity.side_flip_positive_rigidity
     target_statement_id: sha256:81ac9269a8f15c271c5516ba6921c98a24179d093ead61af317ab533579ffd1a
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Sharpness/SideFlipPositivityRigidity.side_flip_positive_rigidity
-      definition_sha256: sha256:1e1a21b885597083588259fe99efa1fca1449e0f382ccf9efaaaf979ac5620a8
-      emission_sha256: sha256:888a863efdab00fda9fe55e55039cdcd3d655c72435a83fb7f664dadd29defd0
   unresolved_subitems: []

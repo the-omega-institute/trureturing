@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Entropy/Thermodynamics/JarzynskiSecondLaw.jarzynski_implies_second_law
     target_statement_id: sha256:b904cf689aabf31f43d372b081e29c4b8e6591a81e205843c3d8ab15a3740db6
 receipts:
-  scribe:
-    - gid: D5/S3/Entropy/Thermodynamics/JarzynskiSecondLaw.jarzynski_implies_second_law
-      definition_sha256: sha256:fb9335bd7c13359f6b277a191d31247df0005c1a2ff6d13b9dfc3e45e792314e
-      emission_sha256: sha256:72fc7838131a1549bc39247d7ae21a8b7d4f1a290aa281d4c304eee7e8213df1
   unresolved_subitems: []

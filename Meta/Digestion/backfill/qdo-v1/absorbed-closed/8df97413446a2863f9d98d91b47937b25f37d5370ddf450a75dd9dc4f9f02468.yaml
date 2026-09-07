@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Algebra/OrthogonalDeMorgan.orthogonal_de_morgan
     target_statement_id: sha256:7c52bf1672b597185f526897503f657cc3f919d9375d01212763da7c991d0149
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Algebra/OrthogonalDeMorgan.orthogonal_de_morgan
-      definition_sha256: sha256:11d9b1255160d5b1d734f30231d3c39d4b86a76494402453d946254ef4a96034
-      emission_sha256: sha256:c5794c2c1e520c0a0e1ca8c6055d483d8a58f83a94307893cf8557c74e77197f
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/Communication/JointLosslessCommunicationCriterion.joint_lossless_communication_criterion
     target_statement_id: sha256:2c029d3c27adac67522e746f2c78cbf41390758bd60dd777c1fb654eba044d25
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/Communication/JointLosslessCommunicationCriterion.joint_lossless_communication_criterion
-      definition_sha256: sha256:4b62eb92080e806b5ba726f3d15e5a15f9228ed2cf4ae94d38c72dbd60c0eab5
-      emission_sha256: sha256:21f91e91030b9383f0fc92fc971a28fae2bd3dce90a50b085a4f942c3e586782
   unresolved_subitems: []

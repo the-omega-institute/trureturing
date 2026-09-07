@@ -50,11 +50,11 @@ internal static class TruthReleaseCommand
                     $"TRUTH_RELEASE_REJECTED {rejected.Message}\n");
             }
 
-            var frozen = (FrozenLedgerValidationOutcome.Accepted)preparation.Outcome;
             var truth = preparation.Truth;
             var sourceTree = Bare(identity.TreeOid);
             var truthExportBytes = TruthExportJsonWriter.Write(TruthExportProjection.Project(
-                frozen.Capability.ActiveFrozenNodes,
+                preparation.Catalog.ClosedNodes,
+                FrozenStateCatalog.Load(snapshot).Selectors.ToImmutableHashSet(),
                 identity.Revision,
                 sourceTree));
             var projection = TruthDagProjectionAssembler.Build(

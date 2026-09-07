@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
     target_statement_id: sha256:6945d015d2ed4acee0cc5eae1eb004bf6f28d413dfee17fc762883317fbed9c5
 receipts:
-  scribe:
-    - gid: D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
-      definition_sha256: sha256:e6874ff82d71a563a321b775cef258b8e652e55747d74aeb5076752c99dd809d
-      emission_sha256: sha256:95c5d007e5a6c816f46854aba8b32eba377dfe62f660892ee59c84c273753bd2
   unresolved_subitems: []

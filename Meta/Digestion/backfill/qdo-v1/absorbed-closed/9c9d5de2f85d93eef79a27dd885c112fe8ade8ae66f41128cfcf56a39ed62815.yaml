@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Entropy/Submodularity/MarkovDataProcessing.conditional_mutual_information_eq_zero_iff_conditional_product
     target_statement_id: sha256:b19880e6e00033adead9d81601154c0791adbff8399cf682e60369833793a919
 receipts:
-  scribe:
-    - gid: D5/S3/Entropy/Submodularity/MarkovDataProcessing.conditional_mutual_information_eq_zero_iff_conditional_product
-      definition_sha256: sha256:3e59d8a7eba1e790ff247dc99cd73a0524cb429773f8c6e98fa402297fbc1ee6
-      emission_sha256: sha256:fbea0a5be31744bbd020125f708f4bcbc4c7a119c429b67b14ceefc2c3532ff7
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Entropy/Forgetting/ConditionalInformationPostprocessing.conditional_mutual_information_postprocessing_le
     target_statement_id: sha256:3391f7c5c55f0ee4f747205cbc8382e4efa9df288becb217b45c526545d46f19
 receipts:
-  scribe:
-    - gid: D5/S3/Entropy/Forgetting/ConditionalInformationPostprocessing.conditional_mutual_information_postprocessing_le
-      definition_sha256: sha256:f674c734d54d253f6707e1fd2a3f8a4e7a0644b0f8e1fd0c95a008485bd1fc9a
-      emission_sha256: sha256:315271b20618d0afdf9bc943f8d2b04c814b8a043f162e3fb5994c6d406cb76c
   unresolved_subitems: []

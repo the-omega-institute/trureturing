@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/Refinement/KernelRelationInclusion.refinement_implies_kernel_inclusion
     target_statement_id: sha256:d1a129033919f6c32afdbd98b18d9673f34c4f080d1c7918f916dd0f0b888737
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/Refinement/KernelRelationInclusion.refinement_implies_kernel_inclusion
-      definition_sha256: sha256:5a500daa8c68c447ef93f6041e2799c2d0aacaa6c5086007629b3b71e0fbbef6
-      emission_sha256: sha256:f55d3f82b2d5b4fd1804fce465076e53ace8f19c11291ca5018d3b60db05f394
   unresolved_subitems: []

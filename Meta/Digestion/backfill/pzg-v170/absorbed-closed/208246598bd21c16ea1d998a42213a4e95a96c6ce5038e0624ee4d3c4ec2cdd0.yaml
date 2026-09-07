@@ -12,17 +12,4 @@ coverage_gids:
   - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.weighted_sum_reduction
     target_statement_id: sha256:a9229fc98bb598e4e6dd4ff4f3aa6b820675677fcace1e5b7dbaff3592ce2af1
 receipts:
-  scribe:
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.adjacent_coefficients
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.choose_adjacent
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.identity_441
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.weighted_sum_reduction
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
   unresolved_subitems: []

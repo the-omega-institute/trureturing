@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/Prediction/CompletionDiagonalNaturality.completion_quotient_diagonal_naturality
     target_statement_id: sha256:cd03d0fa69f26c2164a1fe4e1d000c1804d77d08e4e0b5f82bb0f1f4f2cc8868
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/Prediction/CompletionDiagonalNaturality.completion_quotient_diagonal_naturality
-      definition_sha256: sha256:0e890ee3c9a0dabec4946a7f4539e0e10a6635ba849423498c6834d0f9636e1e
-      emission_sha256: sha256:a10657205bfaf611713c5c73570e46ecd3c5e34a60e49b93328c53aa001c225d
   unresolved_subitems: []

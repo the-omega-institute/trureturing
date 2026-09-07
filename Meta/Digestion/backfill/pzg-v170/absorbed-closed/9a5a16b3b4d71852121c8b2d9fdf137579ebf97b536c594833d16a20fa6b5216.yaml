@@ -14,20 +14,4 @@ coverage_gids:
   - gid: D5/S1/Words/TwoBooleanPersistenceRefutation.twoBoolean_set_differs_from_global_avoiders
     target_statement_id: sha256:5e45f9d87ee6163e03a969704e559be87e5727f10fc4eb849df7d340f5e3fec7
 receipts:
-  scribe:
-    - gid: D5/S1/Words/TwoBooleanPersistenceRefutation.longest_globallyContains_4321
-      definition_sha256: sha256:1f1dfb75754a61a775c0f0f7d00355f2ea5985bd4b0dfe5b293835a5a4766298
-      emission_sha256: sha256:87e1113a642bf574dc884a84c13d83e718291b51673f09411348b1c63296f620
-    - gid: D5/S1/Words/TwoBooleanPersistenceRefutation.longest_twoBoolean
-      definition_sha256: sha256:1f1dfb75754a61a775c0f0f7d00355f2ea5985bd4b0dfe5b293835a5a4766298
-      emission_sha256: sha256:87e1113a642bf574dc884a84c13d83e718291b51673f09411348b1c63296f620
-    - gid: D5/S1/Words/TwoBooleanPersistenceRefutation.reduced_words_longest_iff
-      definition_sha256: sha256:1f1dfb75754a61a775c0f0f7d00355f2ea5985bd4b0dfe5b293835a5a4766298
-      emission_sha256: sha256:87e1113a642bf574dc884a84c13d83e718291b51673f09411348b1c63296f620
-    - gid: D5/S1/Words/TwoBooleanPersistenceRefutation.twoBoolean_persistence_refutation
-      definition_sha256: sha256:1f1dfb75754a61a775c0f0f7d00355f2ea5985bd4b0dfe5b293835a5a4766298
-      emission_sha256: sha256:87e1113a642bf574dc884a84c13d83e718291b51673f09411348b1c63296f620
-    - gid: D5/S1/Words/TwoBooleanPersistenceRefutation.twoBoolean_set_differs_from_global_avoiders
-      definition_sha256: sha256:1f1dfb75754a61a775c0f0f7d00355f2ea5985bd4b0dfe5b293835a5a4766298
-      emission_sha256: sha256:87e1113a642bf574dc884a84c13d83e718291b51673f09411348b1c63296f620
   unresolved_subitems: []

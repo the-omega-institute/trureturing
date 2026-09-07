@@ -10,14 +10,4 @@ coverage_gids:
   - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.s_eq_A
     target_statement_id: sha256:7169cfff7ad94706ac96430660f8f4bca177d071bd44a9b0d78fad46a5137305
 receipts:
-  scribe:
-    - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.conjecture17
-      definition_sha256: sha256:3d5d3d38c0b73f62bf75f94532899f5772041e5ce27ca8d2d32b4a1394559eef
-      emission_sha256: sha256:de74f978b193d694e4ceaf2693eb216f200beaf2bddb59f67f0215035330f9c3
-    - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.restricted_three_sum_eq_complement
-      definition_sha256: sha256:3d5d3d38c0b73f62bf75f94532899f5772041e5ce27ca8d2d32b4a1394559eef
-      emission_sha256: sha256:de74f978b193d694e4ceaf2693eb216f200beaf2bddb59f67f0215035330f9c3
-    - gid: D5/S1/Words/Sumfree/GreedyThreeSumfreeTwoParameter.s_eq_A
-      definition_sha256: sha256:3d5d3d38c0b73f62bf75f94532899f5772041e5ce27ca8d2d32b4a1394559eef
-      emission_sha256: sha256:de74f978b193d694e4ceaf2693eb216f200beaf2bddb59f67f0215035330f9c3
   unresolved_subitems: []

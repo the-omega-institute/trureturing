@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Tomography/PurityPythagorasDecomposition.purity_pythagoras_decomposition
     target_statement_id: sha256:7a640e251b1bbedf4da90c0b48ec50750ced3f10ef79f2bc9e841727aba7f05f
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Tomography/PurityPythagorasDecomposition.purity_pythagoras_decomposition
-      definition_sha256: sha256:af7029be50941df5aedddc4cc40f4546b335d73d377adcb9dcbe3f719e9c79bf
-      emission_sha256: sha256:a705ca66aafa47d1113d63850bea03d345cadb0a281751d8c5446a75c472572b
   unresolved_subitems: []

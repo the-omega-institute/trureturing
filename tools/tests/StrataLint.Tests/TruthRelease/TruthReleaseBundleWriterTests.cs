@@ -369,7 +369,8 @@ public sealed class TruthReleaseBundleWriterTests
                     "nk-a",
                     "theorem",
                     "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")),
-                ImmutableArray<string>.Empty)),
+                ImmutableArray<string>.Empty,
+                "frozen")),
             SourceCommit,
             SourceTree);
 

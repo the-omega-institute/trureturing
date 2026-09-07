@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.finite_prediction_truncation_formula_and_error
     target_statement_id: sha256:c7a1e5bd69444454850c6af715cb076e12c58d0f63afb6d39a00e826eb8ff7e7
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.finite_prediction_truncation_formula_and_error
-      definition_sha256: sha256:517c73ad12498c901d8fc8d8089bc8cb0e20c7a14dd47c411aa2dc7297536693
-      emission_sha256: sha256:e2de8a93212cdc90fb0bef1e561d6f942916f302e981dec99e9f1afeee38c9b6
   unresolved_subitems: []

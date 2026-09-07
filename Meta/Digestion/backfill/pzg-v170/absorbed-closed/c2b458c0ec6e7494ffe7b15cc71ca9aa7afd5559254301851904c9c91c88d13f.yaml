@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Midline/DualCharacterization.midline_dual_characterization
     target_statement_id: sha256:e60fb81ba450193fb6be3b9663fae5fa394f860c3e8b50a19f2cafe33c913de0
 receipts:
-  scribe:
-    - gid: D5/S3/Midline/DualCharacterization.midline_dual_characterization
-      definition_sha256: sha256:dac3c5083673aa0c186b3ae47161b9ecf254bdb028827d8753cec9588d488ce5
-      emission_sha256: sha256:7fafaf1249d800ab45c4479eba9a768b1ede47d923a6a35396b4dbdc0fada7bd
   unresolved_subitems: []

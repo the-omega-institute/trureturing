@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Separation/FiniteDistanceInvariantSector.finite_distance_same_invariant_sector
     target_statement_id: sha256:13748cd9f1632dc93a13895ede4ad1c02213bb43739fe08f578acb34a3275ba6
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Separation/FiniteDistanceInvariantSector.finite_distance_same_invariant_sector
-      definition_sha256: sha256:34a96c054f73ebb1b336323643e70e2f8405641838f4c5b15248e8319710b505
-      emission_sha256: sha256:ce5f6da22f91bf75b5a43682ce5bce9cde08c8901640da1f605c2565fe25e481
   unresolved_subitems: []

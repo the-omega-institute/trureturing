@@ -22,32 +22,4 @@ coverage_gids:
   - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.conjecture1
     target_statement_id: sha256:ad9966d580edddf9e103157e460484de2386ad7ab037beda2fbc14c111e7487e
 receipts:
-  scribe:
-    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.D
-      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
-      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
-    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.D_X
-      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
-      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
-    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.D_X_mul
-      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
-      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
-    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.D_add
-      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
-      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
-    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R
-      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
-      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
-    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R_even
-      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
-      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
-    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R_odd
-      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
-      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
-    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.R_zero
-      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
-      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
-    - gid: D5/S1/Digit/DyadicRowPolynomialRecurrence.conjecture1
-      definition_sha256: sha256:4ca6ff239d47ada896f82288083c3475351fda78834b57483be704ff3fe780c7
-      emission_sha256: sha256:e0cd690aa9c7c585f61ac3dc1b09ef2bc4f69b71157cabf1cf6f979fe1ced0b9
   unresolved_subitems: []

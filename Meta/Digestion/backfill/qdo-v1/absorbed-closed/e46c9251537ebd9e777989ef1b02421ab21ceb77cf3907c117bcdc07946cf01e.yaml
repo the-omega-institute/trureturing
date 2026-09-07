@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Entropy/Submodularity/PredictiveMemoryMonotonicity.predictive_memory_monotone_under_refinement
     target_statement_id: sha256:960efa3cf5ddb35a42528633a8eda0515637b32bf941e59cbb9ec9a25b7ec1b1
 receipts:
-  scribe:
-    - gid: D5/S3/Entropy/Submodularity/PredictiveMemoryMonotonicity.predictive_memory_monotone_under_refinement
-      definition_sha256: sha256:9c5d02c6a096dfdce706994a4aee03211ee45c82588e2ef4fd7bf054609dca78
-      emission_sha256: sha256:922483464493bf3c353eaebd36b95b33cb314f4d1116824e9d578e70972bf734
   unresolved_subitems: []

@@ -12,17 +12,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/TotientNondivisorRecords.not_exception_form
     target_statement_id: sha256:2ba9c2e504807c6e221e9bcbca3f2436f92b681dd1c3fe77808d5d03d5f63e1c
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/TotientNondivisorRecords.A095366_1275120_ne_51
-      definition_sha256: sha256:f7649ca0b8e661010495846c04d74f33bd559c10f5c21ec25f81fdbb4892dc04
-      emission_sha256: sha256:f1eb36bfe3f43c4ce98e461ce129d4caf376f2bd772af3fe516eb5486d9a8e30
-    - gid: D5/S3/Factorization/TotientNondivisorRecords.a_1275120
-      definition_sha256: sha256:f7649ca0b8e661010495846c04d74f33bd559c10f5c21ec25f81fdbb4892dc04
-      emission_sha256: sha256:f1eb36bfe3f43c4ce98e461ce129d4caf376f2bd772af3fe516eb5486d9a8e30
-    - gid: D5/S3/Factorization/TotientNondivisorRecords.exception_set_claim_false
-      definition_sha256: sha256:f7649ca0b8e661010495846c04d74f33bd559c10f5c21ec25f81fdbb4892dc04
-      emission_sha256: sha256:f1eb36bfe3f43c4ce98e461ce129d4caf376f2bd772af3fe516eb5486d9a8e30
-    - gid: D5/S3/Factorization/TotientNondivisorRecords.not_exception_form
-      definition_sha256: sha256:f7649ca0b8e661010495846c04d74f33bd559c10f5c21ec25f81fdbb4892dc04
-      emission_sha256: sha256:f1eb36bfe3f43c4ce98e461ce129d4caf376f2bd772af3fe516eb5486d9a8e30
   unresolved_subitems: []

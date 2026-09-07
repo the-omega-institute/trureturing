@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/LogarithmicLength.factorization_log_length_eq_log
     target_statement_id: sha256:98e819e84ea1e30d096ce0cfef41e4b76e313a6960081918f077f17ee28deb37
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/LogarithmicLength.factorization_log_length_eq_log
-      definition_sha256: sha256:7da8a5b133b8eff951eacb288b4afaa995e47225806d2459a7229e28adb97acb
-      emission_sha256: sha256:a0e90c1ce4bda0cd0d2606728af14e4b3ba0270b279384f2933726ae5d424a05
   unresolved_subitems: []

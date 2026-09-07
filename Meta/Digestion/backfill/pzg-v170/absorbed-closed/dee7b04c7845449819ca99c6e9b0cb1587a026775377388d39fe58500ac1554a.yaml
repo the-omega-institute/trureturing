@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/FiniteReadoutKernel.finite_readout_quotient_equiv_range
     target_statement_id: sha256:5b2be47623af68c25267d683f271a8fdffab2adbc1d0b933417a47935c4fa785
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/FiniteReadoutKernel.finite_readout_quotient_equiv_range
-      definition_sha256: sha256:f188e7f3e5d5abb5b57f44e753615b891854cc1d45e950c2a37854ba42bd4412
-      emission_sha256: sha256:16f1a2bfa8dc98a88ceb133b1ab6edd1951f33b7747075962c6b5d1a00542b45
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Entropy/Observation/CompletionInformationChainDecompositionCanonical.completion_information_chain_decomposition_canonical
     target_statement_id: sha256:86a95743c8e2107ffbcb59d9af81e6391c1be2369c1d9cf0bfb8b794b753f5cd
 receipts:
-  scribe:
-    - gid: D5/S3/Entropy/Observation/CompletionInformationChainDecompositionCanonical.completion_information_chain_decomposition_canonical
-      definition_sha256: sha256:898c1f3ed5b788a6b241e20f2e5e0fe82d22e56c552f6993d7da7c91e60b21b2
-      emission_sha256: sha256:86759bd110d0c8b44fd7f952f9c6c8b5e8a57ab907dbb47d575f185fbea79361
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Eigenstructure/ZeroSlopeCombinations.zero_slope_combinations_finrank_add_one
     target_statement_id: sha256:1cf3aacc20490ce03e7478b1f9851715775531d1fd1a8ff6112cf09ef2fb4e65
 receipts:
-  scribe:
-    - gid: D5/S1/Eigenstructure/ZeroSlopeCombinations.zero_slope_combinations_finrank_add_one
-      definition_sha256: sha256:af94c7f1fe37e3d17360ec36c1fae09bc9d1ae2455dc1c0b5423adc2f7922720
-      emission_sha256: sha256:e4f6dabf916e8cbf63270a1728412f24d5e382b334132eee18e4e5185d6fa1b9
   unresolved_subitems: []

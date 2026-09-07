@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/LinearMemory/LosslessLinearPostprocessing.kernel_comp_eq_iff_injective_on_range
     target_statement_id: sha256:f7d7cbca00add7cf13483980cb2ce2c544e01c33920da8dc9c7788b579f2c8fb
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/LinearMemory/LosslessLinearPostprocessing.kernel_comp_eq_iff_injective_on_range
-      definition_sha256: sha256:7c302e0e2c1cb7808e3d44d751637d71d02e13911e8359950a29e9539f835fe8
-      emission_sha256: sha256:223f3a99f1776d6b582d395860c5559c35aa3a2f43659adac850093cc7ef2cd5
   unresolved_subitems: []

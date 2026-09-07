@@ -12,17 +12,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/DeeplyCompositeNotPrimeExponentRecord.score_25200_le_competitors
     target_statement_id: sha256:79c7a283a5341d4e2f857dede03b3e4e4a5d2663ae7e35f83962dc9243be48ab
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/DeeplyCompositeNotPrimeExponentRecord.dc_25200
-      definition_sha256: sha256:28b4deaea61e883a42836f4cc37c68f84c25a6b29541ae48bea1840a9cb56784
-      emission_sha256: sha256:32ab49e4469fdcf79c185e85ca424d4a0096810b4d3e0069a24b2d423bf7d355
-    - gid: D5/S3/Factorization/DeeplyCompositeNotPrimeExponentRecord.deeply_composite_25200_not_in_Binfty
-      definition_sha256: sha256:28b4deaea61e883a42836f4cc37c68f84c25a6b29541ae48bea1840a9cb56784
-      emission_sha256: sha256:32ab49e4469fdcf79c185e85ca424d4a0096810b4d3e0069a24b2d423bf7d355
-    - gid: D5/S3/Factorization/DeeplyCompositeNotPrimeExponentRecord.not_strictRecord_25200
-      definition_sha256: sha256:28b4deaea61e883a42836f4cc37c68f84c25a6b29541ae48bea1840a9cb56784
-      emission_sha256: sha256:32ab49e4469fdcf79c185e85ca424d4a0096810b4d3e0069a24b2d423bf7d355
-    - gid: D5/S3/Factorization/DeeplyCompositeNotPrimeExponentRecord.score_25200_le_competitors
-      definition_sha256: sha256:28b4deaea61e883a42836f4cc37c68f84c25a6b29541ae48bea1840a9cb56784
-      emission_sha256: sha256:32ab49e4469fdcf79c185e85ca424d4a0096810b4d3e0069a24b2d423bf7d355
   unresolved_subitems: []

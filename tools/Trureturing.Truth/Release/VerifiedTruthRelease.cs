@@ -48,8 +48,10 @@ public sealed class VerifiedTruthRelease
             TruthReleaseVerification.ReadVerifiedArtifactBytes(_bundleDirectory, Manifest.Artifacts.TruthGraph));
 
     /// <summary>
-    /// Reads the strict active-frozen <c>truth_export</c> artifact through its verified digest and returns
-    /// the typed model, with the same reread-and-rehash TOCTOU guarantee as <see cref="ReadTruthGraph"/>.
+    /// Reads the current proven (Closed) <c>truth_export</c> artifact through its verified digest and
+    /// returns the typed model, including both frozen and proven-not-yet-frozen nodes. Each node's
+    /// <c>freeze_status</c> reflects authoritative frozen-state membership in the source revision.
+    /// Provides the same reread-and-rehash TOCTOU guarantee as <see cref="ReadTruthGraph"/>.
     /// </summary>
     public TruthExportModel ReadTruthExport() =>
         TruthExportJsonReader.Read(

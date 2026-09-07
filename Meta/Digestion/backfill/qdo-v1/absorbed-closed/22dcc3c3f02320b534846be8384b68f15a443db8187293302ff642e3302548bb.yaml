@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Deficit/Cocycles/AdditiveCarryCocycleIdentity.additive_section_carry_cocycle_identity
     target_statement_id: sha256:6d62faa75eaa240dfafc4434574f492c18e70458c708702ec0d088ceb04b361f
 receipts:
-  scribe:
-    - gid: D5/S1/Deficit/Cocycles/AdditiveCarryCocycleIdentity.additive_section_carry_cocycle_identity
-      definition_sha256: sha256:f8fb3c401d86a148e17fa9e0aa760ae991e0929b57a30490c95914ebb71a5ea9
-      emission_sha256: sha256:fff4333930e6858c7d5707163c8e7183175014a3bf161ba418392893378be1f8
   unresolved_subitems: []

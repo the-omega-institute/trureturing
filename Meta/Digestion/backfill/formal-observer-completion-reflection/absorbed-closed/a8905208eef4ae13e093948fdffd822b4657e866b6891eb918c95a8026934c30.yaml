@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/PredictionCertificates/FiniteDistinguishingCertificate.finite_distinguishing_certificate
     target_statement_id: sha256:e6175c85d59e97be01fbb24623edeb408d17f04a8181df89a779fb467069b033
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/PredictionCertificates/FiniteDistinguishingCertificate.finite_distinguishing_certificate
-      definition_sha256: sha256:1827e82faf7c3bbdf6422970a1590071f44628cd4ae089d2e82b8110ff79e5ee
-      emission_sha256: sha256:3e86e6cd15cd2645c5e3491495aafa12880c64aeebd5314ad770a80c1876e4b8
   unresolved_subitems: []

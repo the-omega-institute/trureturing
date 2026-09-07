@@ -7,12 +7,13 @@ namespace StrataLint.Scribe;
 public static class TruthExportProjection
 {
     public static TruthExportModel Project(
-        ImmutableArray<FrozenNodeMaterial> activeNodes,
+        ImmutableArray<FrozenNodeMaterial> closedNodes,
+        ImmutableHashSet<RepoPath> frozenPaths,
         string sourceCommit,
         string sourceTree)
     {
-        var nodes = activeNodes
-            .Select(static node => new TruthExportNode(
+        var nodes = closedNodes
+            .Select(node => new TruthExportNode(
                 node.RepoPath.Value,
                 node.FrozenNodeId.Value,
                 node.AxiomClosure,
@@ -24,7 +25,8 @@ public static class TruthExportProjection
                     .ToImmutableArray(),
                 node.PrerequisiteFrozenNodeIds
                     .Select(static id => id.Value)
-                    .ToImmutableArray()))
+                    .ToImmutableArray(),
+                frozenPaths.Contains(node.RepoPath) ? "frozen" : "proven-not-yet-frozen"))
             .ToImmutableArray();
 
         return TruthExportModel.Create(nodes, sourceCommit, sourceTree);

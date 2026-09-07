@@ -84,7 +84,7 @@ public static class TruthExportValidation
     {
         ArgumentNullException.ThrowIfNull(model);
         if (model.Schema != TruthExportModel.SchemaName
-            || model.SchemaVersion != 1
+            || model.SchemaVersion != 2
             || model.Dialect != TruthExportModel.CanonicalDialect
             || model.Producer != TruthExportModel.ProducerName)
         {
@@ -99,6 +99,11 @@ public static class TruthExportValidation
         var frozenNodeIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (var node in model.Nodes)
         {
+            if (node.FreezeStatus is not ("frozen" or "proven-not-yet-frozen"))
+            {
+                throw new FormatException("Truth export freeze_status is unsupported.");
+            }
+
             RequireRepoPath(node.RepoPath);
             RequireSha256Id(node.FrozenNodeId, "frozen_node_id");
             if (!repoPaths.Add(node.RepoPath))

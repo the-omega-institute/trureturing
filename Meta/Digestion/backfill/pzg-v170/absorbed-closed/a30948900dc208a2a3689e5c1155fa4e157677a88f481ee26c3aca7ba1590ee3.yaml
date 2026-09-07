@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/FreeCommMonoid.pnat_free_comm_monoid_on_primes
     target_statement_id: sha256:cb80fb5140cb6fdba5350cf5ee1fea447acf9c6c2580be6625900403da5fc76e
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/FreeCommMonoid.pnat_free_comm_monoid_on_primes
-      definition_sha256: sha256:7cb07a2a16c4e40c72059338fdbc938c02cfd204a84aedc68c95e3f98d1cca84
-      emission_sha256: sha256:ab48b30eabd77335eff5b837b8bd1ccced166c70cb2a3b8a7dbff11f580958a7
   unresolved_subitems: []

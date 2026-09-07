@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Analytic/ScaledPoleAccumulation.scaled_candidate_poles_tendsto
     target_statement_id: sha256:3fadf0181a4b5b9aaf4a54b5743c28bb547a872b234d411943abaf326036b759
 receipts:
-  scribe:
-    - gid: D5/S3/Analytic/ScaledPoleAccumulation.scaled_candidate_poles_tendsto
-      definition_sha256: sha256:2dd9173420b4c576c2f4b80ddcf4c1d35abf34109fe2898d5d2251ad747e73cb
-      emission_sha256: sha256:c226074745136840e84fa2182493e9e9cfdd0e38b4c20c367abb0f038e4da1d6
   unresolved_subitems: []

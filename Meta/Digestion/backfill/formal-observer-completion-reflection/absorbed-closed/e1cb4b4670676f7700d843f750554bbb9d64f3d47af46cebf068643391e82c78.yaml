@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Refinement/DoubleExtensionalEvaluationDescent.double_extensional_evaluation_descent
     target_statement_id: sha256:bae5486602649880e1f8a8ca6d2f2deb936205bcf049c6a821233f7f24d9145d
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Refinement/DoubleExtensionalEvaluationDescent.double_extensional_evaluation_descent
-      definition_sha256: sha256:8d4a13126653f42e5b67b9f6ef96e662128caa6cfd9117c97e978a7d354f0f81
-      emission_sha256: sha256:063b4baa8d96fc8a6b4022f0d5771eabba9b86eb17d5050bbb9c24fc6f02af3a
   unresolved_subitems: []

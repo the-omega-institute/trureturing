@@ -20,6 +20,7 @@ public static class TruthExportJsonWriter
             nodes = model.Nodes.Select(static node => new
             {
                 repo_path = node.RepoPath,
+                freeze_status = node.FreezeStatus,
                 frozen_node_id = node.FrozenNodeId,
                 node_axiom_closure = node.NodeAxiomClosure,
                 declarations = node.Declarations.Select(static declaration => new
@@ -36,7 +37,7 @@ public static class TruthExportJsonWriter
 }
 
 /// <summary>
-/// Fail-closed reader for <c>truth-export.v1.json</c>. It enforces the exact field set, the schema /
+/// Fail-closed V2 reader for the release artifact <c>truth-export.v1.json</c>. It enforces the exact field set, the schema /
 /// version / dialect / producer identity, source and content-address syntax, strict ascending order,
 /// globally unique node identities, and a closed acyclic prerequisite graph. It ends by re-serialising
 /// the parsed model and requiring the bytes to match the input exactly, so only canonical bytes are accepted.
@@ -60,7 +61,7 @@ public static class TruthExportJsonReader
             var version = Integer(root, "schema_version");
             var dialect = String(root, "dialect");
             if (schema != TruthExportModel.SchemaName
-                || version != 1
+                || version != 2
                 || dialect != TruthExportModel.CanonicalDialect
                 || dialect != $"{schema}.v{version}")
             {
@@ -101,7 +102,7 @@ public static class TruthExportJsonReader
     {
         RequireProperties(
             element,
-            ["declarations", "frozen_node_id", "node_axiom_closure", "prerequisite_frozen_node_ids", "repo_path"],
+            ["declarations", "freeze_status", "frozen_node_id", "node_axiom_closure", "prerequisite_frozen_node_ids", "repo_path"],
             "truth export node");
         var axioms = ReadStringArray(element, "node_axiom_closure");
         var declarations = Array(element, "declarations")
@@ -113,7 +114,8 @@ public static class TruthExportJsonReader
             String(element, "frozen_node_id"),
             axioms,
             declarations,
-            ReadStringArray(element, "prerequisite_frozen_node_ids"));
+            ReadStringArray(element, "prerequisite_frozen_node_ids"),
+            String(element, "freeze_status"));
     }
 
     private static TruthExportDeclaration ReadDeclaration(JsonElement element)

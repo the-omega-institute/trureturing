@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/FixedPoints/OppositeTerminalInitial.terminal_iff_initial_op
     target_statement_id: sha256:bcd7924a62b485e743406c6df32c5aaf5097c2c6f1e41a5fe8f6713b7043c655
 receipts:
-  scribe:
-    - gid: D5/S1/FixedPoints/OppositeTerminalInitial.terminal_iff_initial_op
-      definition_sha256: sha256:b1b1da461b977ca580f206d87593c8d4224cdc038ae481aa471b46e3f6e2a453
-      emission_sha256: sha256:5d1ff8db6df382977ece49db7c37a7632c45c4d435ed28bb9f9a048a29803454
   unresolved_subitems: []

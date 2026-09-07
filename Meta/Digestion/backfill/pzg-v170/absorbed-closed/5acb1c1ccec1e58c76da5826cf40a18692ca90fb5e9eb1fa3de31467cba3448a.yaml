@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S0/History/ReferencedReversal.group_ledger_reversal_spec
     target_statement_id: sha256:7003f6f0275d08d81e0d2e3c2131e5c8618cb010abeffc027cbedee1cbbcd048
 receipts:
-  scribe:
-    - gid: D5/S0/History/ReferencedReversal.group_ledger_reversal_spec
-      definition_sha256: sha256:651bde1b63cde3d3485f56b7f21ad5b87a516eb43f320240f683597f404a30b7
-      emission_sha256: sha256:09b8f1fb462c32c90503655f025e8a45d6d34859caf09a6afc773dfec9b8eb67
   unresolved_subitems: []

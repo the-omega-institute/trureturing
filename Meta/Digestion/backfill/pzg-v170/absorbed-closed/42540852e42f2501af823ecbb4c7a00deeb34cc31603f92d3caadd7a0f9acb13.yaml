@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Axis/PrimeAxisEscape.prime_axis_escape
     target_statement_id: sha256:ddd0e8679ccfbb4f4b115e6fda0afbb0e9fcf43e5667d3ee4431c50d6560d2de
 receipts:
-  scribe:
-    - gid: D5/S3/Axis/PrimeAxisEscape.prime_axis_escape
-      definition_sha256: sha256:118a2538f1f29182429125126b0a9cb72408f0dd791f4a7a21b9894ace6ffb63
-      emission_sha256: sha256:6212e58be0b573da0a1761e890640fe207841d34b2eae31c0673f04bb82d5e16
   unresolved_subitems: []

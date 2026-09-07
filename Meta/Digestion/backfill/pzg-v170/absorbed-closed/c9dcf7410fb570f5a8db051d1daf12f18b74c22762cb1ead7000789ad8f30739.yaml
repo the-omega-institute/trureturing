@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/HilbertMonoidNonUnique.hilbert_monoid_factorization_not_unique
     target_statement_id: sha256:95b95df5144408495e97b78de631ea598ae06c00e75312967e1ffd8c0fadd017
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/HilbertMonoidNonUnique.hilbert_monoid_factorization_not_unique
-      definition_sha256: sha256:9880fd5cb7fd1c8f3c204c2c2d63d53cf254b9f33a4786edc4ea2f46de97216c
-      emission_sha256: sha256:d639f8748d9b10c59e30d5779b3b59d79312220f2a073914f075c2e3e17a0b30
   unresolved_subitems: []

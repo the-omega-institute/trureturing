@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/MetricGeometryLaws/ObserverUltrametricThresholdClosure.observer_ultrametric_threshold_closure
     target_statement_id: sha256:e004895e201d205ea2c2cac8cdad3d4146e48049ac32aa28b97ac67c0d0fadbd
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/MetricGeometryLaws/ObserverUltrametricThresholdClosure.observer_ultrametric_threshold_closure
-      definition_sha256: sha256:811568813ecdf26887ded48c8f9e35c990717c35f2b655628207150919cc41e0
-      emission_sha256: sha256:c3a08076d455d5c4d718857855d86b9448ed4f6bd7c13faa9fcbe6d134b80817
   unresolved_subitems: []

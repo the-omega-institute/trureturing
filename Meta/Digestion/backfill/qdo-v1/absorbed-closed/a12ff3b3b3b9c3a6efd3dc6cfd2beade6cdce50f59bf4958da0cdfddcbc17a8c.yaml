@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletionIdempotence.prediction_completion_idempotent
     target_statement_id: sha256:0bcc081d79b8ed5df5e4001519237a530e9d3c80afaaa2684b17120fcbd4c8b1
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletionIdempotence.prediction_completion_idempotent
-      definition_sha256: sha256:46a0db0d3d30da8efe4139ce8ff9b3888dcf5a11751737315611aaeb96088059
-      emission_sha256: sha256:368d2278842331d130cd305baf08b7179c8f1d4ab37057a723a55fd668e2317b
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Words/Mechanical/GoldenFiberPrefixCount.golden_fiber_prefix_count
     target_statement_id: sha256:145dbe0b8c5f2ce12f643881d20a1c307cd86c732c095ed2cd8841831ce50e76
 receipts:
-  scribe:
-    - gid: D5/S1/Words/Mechanical/GoldenFiberPrefixCount.golden_fiber_prefix_count
-      definition_sha256: sha256:0ab57541ec9faa9f33cb4a4043772088edcff0f8012fec7fa437a086cbb77bb8
-      emission_sha256: sha256:a5fc0334870f62b7d063adad95cdfd377d4a2394bd82b1b6c3e432efe4362d64
   unresolved_subitems: []

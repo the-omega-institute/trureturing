@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S0/History/SpliceEquations.splice_recursion_equations
     target_statement_id: sha256:a7fd5d77bfb1a148d8b8c640193797d621b14fb29d2b2a8763bfd4133a1184e7
 receipts:
-  scribe:
-    - gid: D5/S0/History/SpliceEquations.splice_recursion_equations
-      definition_sha256: sha256:7ab1ffef58934902a9ebbb4aa9e389fc8b948b40eb7a50fdc7b95700e70c9ccf
-      emission_sha256: sha256:28751ebeb84fb0303ad07f2175c64b9e81c5d7aaa6c18ad980bee9cb553fe027
   unresolved_subitems: []

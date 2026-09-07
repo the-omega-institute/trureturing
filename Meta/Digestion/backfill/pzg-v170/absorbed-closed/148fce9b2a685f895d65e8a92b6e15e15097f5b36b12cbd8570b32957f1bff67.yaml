@@ -10,14 +10,4 @@ coverage_gids:
   - gid: D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.recurrence_coefficient_period_three
     target_statement_id: sha256:36e1114a6a797d3e052d1f3eb16569050603acf57c518f4f71d7afcdb4fe1726
 receipts:
-  scribe:
-    - gid: D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.a392208_parity_conjecture
-      definition_sha256: sha256:5a6401e5562aa7f47f8dde06dffdf3a1063de013b3729cf3e04f1c53a696a78f
-      emission_sha256: sha256:c210ed01f2cba10aaa1e20ece42796545715836ea0897e60a12d2860f7b01f89
-    - gid: D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.initial_residues_mod_two
-      definition_sha256: sha256:5a6401e5562aa7f47f8dde06dffdf3a1063de013b3729cf3e04f1c53a696a78f
-      emission_sha256: sha256:c210ed01f2cba10aaa1e20ece42796545715836ea0897e60a12d2860f7b01f89
-    - gid: D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.recurrence_coefficient_period_three
-      definition_sha256: sha256:5a6401e5562aa7f47f8dde06dffdf3a1063de013b3729cf3e04f1c53a696a78f
-      emission_sha256: sha256:c210ed01f2cba10aaa1e20ece42796545715836ea0897e60a12d2860f7b01f89
   unresolved_subitems: []

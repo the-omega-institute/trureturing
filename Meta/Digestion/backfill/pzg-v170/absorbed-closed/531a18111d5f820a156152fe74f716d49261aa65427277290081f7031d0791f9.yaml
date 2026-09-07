@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons
     target_statement_id: sha256:9b316a7162b1dbb4d9d42e1178ceef70d5bffed613052ef3c3e353bb2a77871d
 receipts:
-  scribe:
-    - gid: D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons
-      definition_sha256: sha256:2dfe651a3675845ad03a1ee62361941a4b7375a01178ce403c699354fc185599
-      emission_sha256: sha256:b7b97860430a5d333b705d5ed15cc8a694e391a0843233193b8dcc8bb810d097
   unresolved_subitems: []

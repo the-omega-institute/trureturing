@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S0/Computability/SyntaxSemanticsBoundary.same_layer_predicates_not_enumerable
     target_statement_id: sha256:cdb41993e43a7b35e44d7d13801215300dab6f1e6b6cee9664d43de19d2a09ef
 receipts:
-  scribe:
-    - gid: D5/S0/Computability/SyntaxSemanticsBoundary.same_layer_predicates_not_enumerable
-      definition_sha256: sha256:a6bf6279d58ec17f40316785ac45fcc798641f413d95850f3dc91d9fa8015a01
-      emission_sha256: sha256:9ad6501b519901e0b294eef7c8f315cd93efca5d0eddfde24316bfd5ab55b49c
   unresolved_subitems: []

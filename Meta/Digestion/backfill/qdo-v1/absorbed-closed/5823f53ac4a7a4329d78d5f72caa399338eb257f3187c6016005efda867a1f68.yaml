@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/HiddenFlow/NormalizedHiddenAddressConservation.normalized_streamline_hidden_address_conservation
     target_statement_id: sha256:9b6dc1ac9da90d796a88ee2e369fdc99f346e5fb27061c3848edd3933d601c6f
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/HiddenFlow/NormalizedHiddenAddressConservation.normalized_streamline_hidden_address_conservation
-      definition_sha256: sha256:57022465b5043c54169dfde74396ad74d0c0623dab587af694b0f789d7e1aca5
-      emission_sha256: sha256:64299ec7ac6c2d5b6e8a7c662d6946736ac7c938cfe65d4f890b3193c0f8d4c1
   unresolved_subitems: []

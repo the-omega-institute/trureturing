@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.thirteenResidues_witness
     target_statement_id: sha256:f6b17d7f97884c67da8a529f2aea88036df447b72b00fd3e1b09ff37aa34b316
 receipts:
-  scribe:
-    - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.thirteenResidues_witness
-      definition_sha256: sha256:d09bfff0bec1696953538f7eca19c253399b30e178990a2c0bced7b60ce6bdf8
-      emission_sha256: sha256:de1de3bd9d055182cda85bb496c72649c7aeea2e85a33d1be85747c857c6b7e8
   unresolved_subitems: []

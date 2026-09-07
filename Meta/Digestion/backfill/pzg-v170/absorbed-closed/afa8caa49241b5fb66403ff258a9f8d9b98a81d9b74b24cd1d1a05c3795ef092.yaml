@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Recurrence/MultiplicativeExclusionResidueClass.sequence_formula
     target_statement_id: sha256:b98e248b9db9d351a8f395df7e6f77701b1064461d001bc53033795c3342d20a
 receipts:
-  scribe:
-    - gid: D5/S1/Recurrence/MultiplicativeExclusionResidueClass.sequence_formula
-      definition_sha256: sha256:ee0a5ce72faec67333193d37b577be07857216f656ddf5bf8edca8bec353869b
-      emission_sha256: sha256:8a7e191904c6339c09aff8e60b0241e7c32913222867deb795a02ce910bd8936
   unresolved_subitems: []

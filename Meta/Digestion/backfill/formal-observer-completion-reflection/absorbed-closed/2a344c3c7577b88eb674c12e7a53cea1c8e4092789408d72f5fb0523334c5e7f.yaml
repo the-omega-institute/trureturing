@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
     target_statement_id: sha256:4a612c38e9cc181797382c91b3a729accbc9e0f7817bbd7e84798fdbeca9d1c3
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
-      definition_sha256: sha256:0927d8b37e22004e0278549a54b73f8fea9cec1272610d519b32ccc574469439
-      emission_sha256: sha256:99d580e1116ac70dd7f778d669b1fcc483a4ccf83e2a00ad60be96da9b6a4c93
   unresolved_subitems: []

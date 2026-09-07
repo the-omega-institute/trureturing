@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/CountableSlices/CountableFiniteSliceResidual.countable_finite_slice_separable_and_residual
     target_statement_id: sha256:c5508c826a697e0e4f247602980a190728c924628257d94f7f54223e1e85fadc
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/CountableSlices/CountableFiniteSliceResidual.countable_finite_slice_separable_and_residual
-      definition_sha256: sha256:b10f970360056c4c66c68c3e5f9d70b1f13af02ae5556d4ef9ebc23543b53a58
-      emission_sha256: sha256:d8aa48a792d78227de2ab13f0ee652a39df0ebfe0a8bf9617f1285e65c6f909d
   unresolved_subitems: []

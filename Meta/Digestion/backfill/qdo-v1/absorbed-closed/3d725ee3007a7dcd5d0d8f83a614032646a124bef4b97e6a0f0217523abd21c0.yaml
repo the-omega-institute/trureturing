@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Prediction/CanonicalSignatureCompletion.canonical_signature_labels_stable_depth_and_completion
     target_statement_id: sha256:b6e9910fe64cab1c97d16ef2aa86bb405cbd9380a16cdb6b5a542111270d79e4
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Prediction/CanonicalSignatureCompletion.canonical_signature_labels_stable_depth_and_completion
-      definition_sha256: sha256:e267c0b4c581fd552a83bcb218964bdf506f0e7b4aff00aa3b48335ebf886cde
-      emission_sha256: sha256:745e64ec9302f203d93bdcce1f7fd5e31cbd2cc6c132f2cab19b422294a7c9ce
   unresolved_subitems: []

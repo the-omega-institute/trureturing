@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law
     target_statement_id: sha256:99d6da6e12fd161b217044af31c5768e53bef2a23305a2b98fc082a2cbd3cbb1
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law
-      definition_sha256: sha256:8a7bd10e5d19228d94b1bc90aeccd7df43bd8cef5e3e689c54865428beb338c8
-      emission_sha256: sha256:753cc4252fd58cf834354018325f9cfced9b6d053a27b998532d5fa8f02924e6
   unresolved_subitems: []

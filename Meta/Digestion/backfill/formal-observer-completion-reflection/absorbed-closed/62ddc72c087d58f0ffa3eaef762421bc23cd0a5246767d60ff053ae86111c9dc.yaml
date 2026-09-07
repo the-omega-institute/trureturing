@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Separation/CongruenceKernel.TauCongruence
     target_statement_id: sha256:32cf6481891709f041ac768dce73a38b93d5c3e73f508115fe3d2395550e9675
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Separation/CongruenceKernel.TauCongruence
-      definition_sha256: sha256:ff7a9fc1e217f207323acf02995fde6c03414a1a872c9a6d0e778b83164911c4
-      emission_sha256: sha256:b095f2277648709cedc3762f4c2ebba0f7acb63a0b529543c6e6183e66778997
   unresolved_subitems: []

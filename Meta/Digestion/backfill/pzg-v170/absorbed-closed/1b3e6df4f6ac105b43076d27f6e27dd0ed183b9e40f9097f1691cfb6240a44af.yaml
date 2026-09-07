@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S0/Carrier/Powers/GoldenCriticalBandScaling.golden_critical_band_scaling
     target_statement_id: sha256:abb4d3b09b16f35bfd81a2236ac97997e7c7cacfc6d8386235610b8ccbf7e4b2
 receipts:
-  scribe:
-    - gid: D5/S0/Carrier/Powers/GoldenCriticalBandScaling.golden_critical_band_scaling
-      definition_sha256: sha256:e8d964630b9bd00fc4e04f69ae723121241ca7b91f66c7a8fd2d3fad7a96ed45
-      emission_sha256: sha256:be002fced84a49b10689a67d7f9429c410954305cd99af39213b767b5f77d176
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.finite_sequential_word_certificate
     target_statement_id: sha256:d46359c570878503e13cd345ccc0cbd81e77b5b0b452654af0501205c63d642d
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.finite_sequential_word_certificate
-      definition_sha256: sha256:a70b48ec8495acf435a8ac83014c10749121b62449fc13ff695a2551e9e96121
-      emission_sha256: sha256:9db2c633e8d5c0e9a4b6f2adf2814799b386825f83831d1371798eb84b88c7ee
   unresolved_subitems: []

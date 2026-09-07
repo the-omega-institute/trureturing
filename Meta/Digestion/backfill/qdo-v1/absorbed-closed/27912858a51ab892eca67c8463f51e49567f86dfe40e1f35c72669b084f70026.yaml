@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Prediction/FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound
     target_statement_id: sha256:e59fcbaffb5fe63cd1d070de5aaae743c66a67808d4844ede06656ab01c42e8c
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Prediction/FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound
-      definition_sha256: sha256:2f6225bec36cdc526dc77a27e8b55c618718fa679178a9ccd4c5344e4ed674af
-      emission_sha256: sha256:c9b47a52953daa7f9bfd66867defa963c31a8a48e3c7c524608d4a9e739db296
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Conditioning/TargetVisibilityConditionCost.target_visibility_condition_cost
     target_statement_id: sha256:0042ddfa70bfd9e249e94e0f7f009208999bfda7cb61f9a30bea2e73cd4b7bd1
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Conditioning/TargetVisibilityConditionCost.target_visibility_condition_cost
-      definition_sha256: sha256:9b15e7a0abc37c8e772dbcf9ad20c92a1a9e160875b657f7cd3399ba4916b208
-      emission_sha256: sha256:339ef54ea9a1146000fda33273af6f59028473db17db2e4ad7f3b3f69d19bdf4
   unresolved_subitems: []

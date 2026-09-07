@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Constants/Moments/GoldenWindowMoment.golden_window_moment
     target_statement_id: sha256:f0e1f63f6af7f1ec4d96a1d8c333be55b37a6c5774023f87282889749668eda1
 receipts:
-  scribe:
-    - gid: D5/S3/Constants/Moments/GoldenWindowMoment.golden_window_moment
-      definition_sha256: sha256:be93218bd78a4dd0ca6dab75853db4209ca7a8deadab7efe5ad1e6459d806e21
-      emission_sha256: sha256:af1594052728b03b74494daa4e32f50e3a8662f919a2afa7a7f0475dbd4250e6
   unresolved_subitems: []

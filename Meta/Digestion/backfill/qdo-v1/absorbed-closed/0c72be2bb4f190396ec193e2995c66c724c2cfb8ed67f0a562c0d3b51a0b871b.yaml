@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/CanonicalStrongestSeparatingObserver.canonical_strongest_separating_observer
     target_statement_id: sha256:95f6e3a24dc621415478dbdeb0d67d920f9cdb99673041edc633f179f888ff15
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/CanonicalStrongestSeparatingObserver.canonical_strongest_separating_observer
-      definition_sha256: sha256:7999c553bea464cd2b28408cebe76dca8f921fa4c6caaff572da39c2a4605b81
-      emission_sha256: sha256:1d3aebd19db64118301c029d48d6c3e522461d15cd7e341aab75130a47021922
   unresolved_subitems: []

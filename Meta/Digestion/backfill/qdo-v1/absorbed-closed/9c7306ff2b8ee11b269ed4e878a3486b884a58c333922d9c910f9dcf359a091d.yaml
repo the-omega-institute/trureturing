@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Separation/ConeResidualWitness.cone_residual_observer_duality
     target_statement_id: sha256:cf9e2727afc9f4d7834f694ffe6b4c4da78aeb5b83e22137805b35a787214c6f
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Separation/ConeResidualWitness.cone_residual_observer_duality
-      definition_sha256: sha256:1cbb8df318d6614f610dd539781dcdb6c1262d4ef1bc35223bb6773f153a5c4c
-      emission_sha256: sha256:088aedca5c058d2459c4004dc9b24b4bfe4009bf88860e6255f3f7981cbcbdaf
   unresolved_subitems: []

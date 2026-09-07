@@ -20,29 +20,4 @@ coverage_gids:
   - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.identity_427
     target_statement_id: sha256:ccfc759cd702dc4ce5e6989952d77cfdb832b6675dfbbd20d97b45aa39711135
 receipts:
-  scribe:
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.A
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.Cpoly
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.Cpoly_even
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.F
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.F_factorization
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.centralFactorial
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.half_shift
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
-    - gid: D5/S1/Recurrence/CentralFactorialParityIdentity.identity_427
-      definition_sha256: sha256:2878cda56cf7dc223a53f308388cc7db2125c542cff4be7cbd499cfa42f040ab
-      emission_sha256: sha256:d56883583ab2a88c22facdb2a8f97edf7ed59502ab5a79ec9ef287fc71be1745
   unresolved_subitems: []

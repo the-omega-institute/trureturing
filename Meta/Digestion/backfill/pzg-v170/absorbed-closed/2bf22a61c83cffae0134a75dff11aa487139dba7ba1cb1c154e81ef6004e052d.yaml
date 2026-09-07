@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Dynamics/JumpCocycle.jump_cocycle
     target_statement_id: sha256:35612a103dd0bda47aea448eead5ecb7d270a1fc00ae5eb70b5c2c0d06f9f148
 receipts:
-  scribe:
-    - gid: D5/S1/Dynamics/JumpCocycle.jump_cocycle
-      definition_sha256: sha256:3965db11070bce97ab9e0372240c4ed10446241e0b289738af9ceaadcbf4a27c
-      emission_sha256: sha256:e93f48bc1ed5c22e98620e125bf4fb611b7660a651f574a232c6f4b3953a5fda
   unresolved_subitems: []

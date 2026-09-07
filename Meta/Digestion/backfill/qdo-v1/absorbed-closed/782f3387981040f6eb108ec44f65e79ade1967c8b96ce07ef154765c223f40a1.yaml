@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/InverseLimits/StableImagePeriodicCore.iterate_range_card_antitone_and_stable
     target_statement_id: sha256:09fd0dae58349f1bcd4b20374ef2e3ad3ff33bc03615954425d20e551d082584
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/InverseLimits/StableImagePeriodicCore.iterate_range_card_antitone_and_stable
-      definition_sha256: sha256:819b052a06f69fee8ab458c499f0b13e481e36200d63f8f9281183c8f2254fb9
-      emission_sha256: sha256:3977986bd1337693ff96ea6f210aa643b637c3119e65f9ac30492f20be76ff50
   unresolved_subitems: []

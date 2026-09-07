@@ -36,12 +36,15 @@ public sealed class TruthExportProjectionTests
                 material,
                 LeafMaterial("D5/S0/Carrier/PrerequisiteB.lean", prerequisiteB, 'b'),
                 LeafMaterial("D5/S0/Carrier/PrerequisiteA.lean", prerequisiteA, 'c')),
+            ImmutableHashSet.Create(RepoPath.CreateKnown(repoPath)),
             Commit,
             Tree);
 
         Assert.Equal(Commit, model.SourceCommit);
         Assert.Equal(Tree, model.SourceTree);
         Assert.Equal(3, model.Nodes.Length);
+        Assert.Single(model.Nodes, static node => node.FreezeStatus == "frozen");
+        Assert.Equal(2, model.Nodes.Count(static node => node.FreezeStatus == "proven-not-yet-frozen"));
         var node = model.Nodes.Single(candidate => candidate.FrozenNodeId == frozenNodeId);
         Assert.Equal(repoPath, node.RepoPath);
         Assert.Equal(frozenNodeId, node.FrozenNodeId);

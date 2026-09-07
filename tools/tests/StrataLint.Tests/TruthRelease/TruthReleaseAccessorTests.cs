@@ -75,7 +75,8 @@ public sealed class TruthReleaseAccessorTests
                     "nk-a",
                     "theorem",
                     "sha256:1111111111111111111111111111111111111111111111111111111111111111")),
-                ImmutableArray<string>.Empty)),
+                ImmutableArray<string>.Empty,
+                "frozen")),
             Commit,
             Tree)).ToArray();
 
@@ -151,7 +152,7 @@ public sealed class TruthReleaseAccessorTests
             Assert.Empty(graph.Truth.Nodes);
 
             var export = verified.ReadTruthExport();
-            Assert.Equal("stratalint.truth-export.v1", export.Dialect);
+            Assert.Equal("stratalint.truth-export.v2", export.Dialect);
             Assert.Equal("D5/S0/A.lean", Assert.Single(export.Nodes).RepoPath);
         }
         finally

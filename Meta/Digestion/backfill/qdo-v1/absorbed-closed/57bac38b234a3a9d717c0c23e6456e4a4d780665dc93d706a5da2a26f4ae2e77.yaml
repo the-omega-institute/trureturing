@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/PredictionCertificates/ShortestDistanceSemantics.shortest_distance_exact_semantics
     target_statement_id: sha256:39621413db78b3e24dd6713bc6faabdaa3b2923e24a4ea2ca90db9bc8575437a
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/PredictionCertificates/ShortestDistanceSemantics.shortest_distance_exact_semantics
-      definition_sha256: sha256:7fade95d96745092b6a2935c20cf72135919bdc438b9e1e88fbec994011d2f0c
-      emission_sha256: sha256:c379780fc89e43f0aeb1569ea95b11d6655dba960042d32ef9c1e01c099b56df
   unresolved_subitems: []

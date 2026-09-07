@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/PredictionDepth/FiniteInformationalEffectCertificate.finite_informational_effect_certificate
     target_statement_id: sha256:4971e5ecc42ec94b5de86dd9d77320728c88e70ac043bbc0c45287f8565a53b2
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/PredictionDepth/FiniteInformationalEffectCertificate.finite_informational_effect_certificate
-      definition_sha256: sha256:7b9d1c0cd726c7a8f5798272ca6977bfe7c2611b28029067086807a3deb2f9df
-      emission_sha256: sha256:49a2ce551d8dfd339d525dbe0a80c4eda97c77411f294cfb9cb5ca40239ca86c
   unresolved_subitems: []

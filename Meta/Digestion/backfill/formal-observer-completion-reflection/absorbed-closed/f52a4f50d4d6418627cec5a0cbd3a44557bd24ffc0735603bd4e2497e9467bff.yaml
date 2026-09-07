@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ConceptDynamics/Decision/SamePredictionOppositeOptima.same_prediction_opposite_unique_optima
     target_statement_id: sha256:61f16b9bca962807b209d87f9ee9132136af3d5586fa649df0421aa3d2bcf2b7
 receipts:
-  scribe:
-    - gid: D5/S3/ConceptDynamics/Decision/SamePredictionOppositeOptima.same_prediction_opposite_unique_optima
-      definition_sha256: sha256:2f36f729abbc5db1e17dcad308a862afd750bce0a8c86b0acbf8995292d503d0
-      emission_sha256: sha256:e78c541f92d6afa8c28e4063522cf614ac1004827e2220171d34f90021c6911c
   unresolved_subitems: []

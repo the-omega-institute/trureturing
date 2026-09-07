@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Entropy/Observation/AuthorInformationDecomposition.author_information_decomposition
     target_statement_id: sha256:3e5d5c41d32ceb24deacbd9b6cf268664c333af3e8d99532af994a60dfb5312a
 receipts:
-  scribe:
-    - gid: D5/S3/Entropy/Observation/AuthorInformationDecomposition.author_information_decomposition
-      definition_sha256: sha256:2b6b7174abec92a89a95ee9ba954f19774a8f42ca376ef3ee84c1683edd0779e
-      emission_sha256: sha256:b7520c03ec30c040316719e61f6937d77f3cdc07088862bc6ff11e5eaf052d97
   unresolved_subitems: []

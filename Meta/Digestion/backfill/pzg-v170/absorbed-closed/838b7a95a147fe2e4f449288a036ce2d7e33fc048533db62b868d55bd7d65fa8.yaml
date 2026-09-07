@@ -16,23 +16,4 @@ coverage_gids:
   - gid: D5/S3/Arith/CentralBellCubicRefutation.conjecture1_refuted
     target_statement_id: sha256:2a29b81e9b6167fff8634cda33baffb556750fa91cc579fff28bef793accb8e8
 receipts:
-  scribe:
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulliCubic
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_coefficient_bridge
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_egf_coefficient
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_factorization
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.bernoulli_parameter_identities
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.conjecture1_refuted
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
   unresolved_subitems: []

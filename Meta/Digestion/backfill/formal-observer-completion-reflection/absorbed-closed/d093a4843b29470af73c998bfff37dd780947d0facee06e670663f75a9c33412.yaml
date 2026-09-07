@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Conditioning/SelectiveRecordConditioning.selective_record_conditioning
     target_statement_id: sha256:b017acb11fd3649fb713cedfbfb6ee524bdf213d056f579d70a4246ec29e69c2
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Conditioning/SelectiveRecordConditioning.selective_record_conditioning
-      definition_sha256: sha256:ebe460d8324325ef8b6829be76814499e8eea48670cb9cb7c894bed03a63e6fe
-      emission_sha256: sha256:be3778a70dcd1f4351a035e71240ec7cdd5be7f61dc06c1015400cd7ba72070e
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Estimation/SequentialDecisionRisk/MeasurableDeficiencyTriangle.measurable_deficiency_triangle
     target_statement_id: sha256:408044adae4f57cbc390a036cbeeab508f561046b60d2830c5daf7ef6dfd6279
 receipts:
-  scribe:
-    - gid: D5/S3/Estimation/SequentialDecisionRisk/MeasurableDeficiencyTriangle.measurable_deficiency_triangle
-      definition_sha256: sha256:ab0a07862b3626c51b58a23ca9ec7bdfcc7a13c2be3b8982bf43a467c989e42e
-      emission_sha256: sha256:5feb4df0864f8f753b8a29af64344b5e831ca862be90d8b3e023978bbbf83c30
   unresolved_subitems: []

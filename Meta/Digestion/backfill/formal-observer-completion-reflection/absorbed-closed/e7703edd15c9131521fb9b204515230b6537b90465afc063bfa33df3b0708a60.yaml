@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/PredictionDepth/FiniteTimeObserverMonotonicity.finite_time_observer_monotonicity
     target_statement_id: sha256:3b0f8c5408c5e243367211a801dd42a9fe37b38f160a258e9d77600c5182f7e2
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/PredictionDepth/FiniteTimeObserverMonotonicity.finite_time_observer_monotonicity
-      definition_sha256: sha256:2b0f3ee325027ca358b9e90f5e11e1dbaa131a1d64af5c50a125e5e5eeff17c9
-      emission_sha256: sha256:dccfc057ed39e695712054be0ec3bc6ae753be24caaf6a435eade09d81a4293c
   unresolved_subitems: []

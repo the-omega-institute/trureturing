@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Residuals/FiniteRealizationCertificate.finite_realization_certificate
     target_statement_id: sha256:1374ee82e9b1f9e77fe634272e661e09bde95e7e066bedf39afdb81127f483c8
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Residuals/FiniteRealizationCertificate.finite_realization_certificate
-      definition_sha256: sha256:30beae6b9d5b88751a955ec278a7a98ecf25c9e746f7feb51e5417db6e81aecf
-      emission_sha256: sha256:f125fdbbe39dea8d3c0f81aedd924e663d7ff7e29ba33efd20c271f20e663273
   unresolved_subitems: []

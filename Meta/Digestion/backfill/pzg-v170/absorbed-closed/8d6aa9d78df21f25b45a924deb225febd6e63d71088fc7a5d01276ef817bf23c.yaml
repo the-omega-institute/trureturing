@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Analytic/DiagonalCollapse.diagonal_partition_collapse
     target_statement_id: sha256:408a743bc22f74c400a87658cae181d33b30a7eab0a528f6a056252a9513e676
 receipts:
-  scribe:
-    - gid: D5/S3/Analytic/DiagonalCollapse.diagonal_partition_collapse
-      definition_sha256: sha256:ea90bc22adaa45d733e9c17a060e0db2c50cc7b8e0e11a66f893b4449d3bfd52
-      emission_sha256: sha256:6dbd17244e9860037cb4430d5fe43f82c98a66357b9e3f3a99c801f05047e54e
   unresolved_subitems: []

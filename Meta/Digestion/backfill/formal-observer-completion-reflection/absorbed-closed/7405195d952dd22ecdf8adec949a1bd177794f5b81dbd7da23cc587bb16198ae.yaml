@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/DefectComposition/LinearPostprocessingDefectContraction.linear_postprocessing_defect_contraction
     target_statement_id: sha256:6321e9991c5adf1e754197e2064be136ad7f46c74fc2d141e13902e05bb3e804
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/DefectComposition/LinearPostprocessingDefectContraction.linear_postprocessing_defect_contraction
-      definition_sha256: sha256:3de6629b6b4b9efafc269d97c86c0e86d96a1f6c203efa430903e9ba8d1845fd
-      emission_sha256: sha256:3745c94239ea566effc07b098e0cf990d149a4abb2189f07d0f8dfa0fe814f73
   unresolved_subitems: []

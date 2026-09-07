@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Dynamics/SolenoidCharacter.continuous_solenoid_characters_are_rational
     target_statement_id: sha256:fdca2324aac5703b814022e93dd67f4fbdaa9fb2e4d0667d6eac87f18daaefd8
 receipts:
-  scribe:
-    - gid: D5/S1/Dynamics/SolenoidCharacter.continuous_solenoid_characters_are_rational
-      definition_sha256: sha256:7e15b4f0f2a596f775e2270849c9f123bd126159ebed59ae500a781883e72add
-      emission_sha256: sha256:a6f93654a618f33e3cfa31fd89636d7b60a836a47db79267ca33dff5c1cdccea
   unresolved_subitems: []

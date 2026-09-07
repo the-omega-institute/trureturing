@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/MetricGeometryLaws/ClosedConvexDistanceWitnessDuality.closed_convex_distance_witness_duality
     target_statement_id: sha256:ff21998a227cc718893b3bd3154d6218d48ea29222b5dc970a6a98061099707c
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/MetricGeometryLaws/ClosedConvexDistanceWitnessDuality.closed_convex_distance_witness_duality
-      definition_sha256: sha256:55c4fce74070e8372688481da4823c3c7c57f32c1105cf5af83ae733b4f83517
-      emission_sha256: sha256:5758795b6e63731522d173a7d6a59b0135d2ed6011ae93ca5c53b3a70651bbc4
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/ProfinitePrimeDecomposition.profinite_prime_decomposition
     target_statement_id: sha256:2e5d92a1873f18a3afcfa925b9e65c9f0d399b0cb8a0e3c18f91958dc88bb0a3
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/ProfinitePrimeDecomposition.profinite_prime_decomposition
-      definition_sha256: sha256:b45db1642113571affe7888acea118126860a360999761ebdb48d59a648505d7
-      emission_sha256: sha256:8a1f8465f54766b3d9d562691682dc10c9496fac1f04466d1db19c8d8b3716ac
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Completion/BehavioralImageCompactAndClosed.behavioral_image_compact_and_closed
     target_statement_id: sha256:56ccaee90e4d0303633fb76fec979784c1760d11116359a0f90333644dd256df
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Completion/BehavioralImageCompactAndClosed.behavioral_image_compact_and_closed
-      definition_sha256: sha256:e5939c8e26c550f7c0743522edc5721c14f2c899e72cf123ca91b2042587cbae
-      emission_sha256: sha256:ad8ab12787a36fa2bd24b04bdb6126d82f5ca4584c9c7d87246509e610982cc6
   unresolved_subitems: []

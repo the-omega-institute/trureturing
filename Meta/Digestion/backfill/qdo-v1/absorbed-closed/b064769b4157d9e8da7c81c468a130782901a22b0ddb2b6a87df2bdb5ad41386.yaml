@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Algebra/DoubleOrthogonalClosure.double_orthogonal_complement_eq_closure
     target_statement_id: sha256:01461b8f3320d2c33bd39ab8a9107dea3be5dfd979910dbff8af49c5ff5ca31f
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Algebra/DoubleOrthogonalClosure.double_orthogonal_complement_eq_closure
-      definition_sha256: sha256:a2a114663052540ea77c30077aa0f4e9762c841058293a8df0e23d1a9e4eb7bb
-      emission_sha256: sha256:227125b4253b16fb687af5ebc4001adefaf639d600738bd9a9cead87afbf1b5f
   unresolved_subitems: []

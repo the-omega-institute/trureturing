@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Conditioning/UnreadStateOrthogonalProjection.unread_state_orthogonal_projection
     target_statement_id: sha256:ba81ac06fcaedaec3ea1f1df12d2fc939ce6bf5005f117eb7c75726c288d9f7f
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Conditioning/UnreadStateOrthogonalProjection.unread_state_orthogonal_projection
-      definition_sha256: sha256:a406a0fe6c9d3c0c66ca4107177639c5f114cb4df1cfdcf0ffb08a14378019d4
-      emission_sha256: sha256:e7cf4f36819a85380b61e0109093a0ee709e9caff2b1f482b7091330cb26dd07
   unresolved_subitems: []

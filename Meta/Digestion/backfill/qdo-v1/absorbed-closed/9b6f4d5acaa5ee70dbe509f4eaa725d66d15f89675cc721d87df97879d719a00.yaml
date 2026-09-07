@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Fibers/MinimalPredictiveSummary.minimal_predictive_summary
     target_statement_id: sha256:c2e60f73fc02c69cc254fb7f4c98767ec840cd011d1bb02c7a40e7de63f05dcc
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Fibers/MinimalPredictiveSummary.minimal_predictive_summary
-      definition_sha256: sha256:408bdc257d20ef235884037a71729559ee4b2ee42d7cf44699476cb04428375f
-      emission_sha256: sha256:056c5cc56c29e8bc2b719e48f6111b6ba7070324ffe3b9c259008f307bc87c56
   unresolved_subitems: []

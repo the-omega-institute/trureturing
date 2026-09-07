@@ -8,11 +8,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/FactorDensityHighlyCompositeCounterexample.switkay_expanded_claim_false
     target_statement_id: sha256:0e35827819160a5b42ea792b60ef8bd8103ee4ac12938842d141cf96e38a91d4
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/FactorDensityHighlyCompositeCounterexample.factor_density_highly_composite_counterexample
-      definition_sha256: sha256:eb8caa953f0ed1a4b55262e6492bfeb468a865f3bd1fa5b0613698e073ad4581
-      emission_sha256: sha256:9be01082ca4f77aaba58aecbb504e77ecb28a675ff9b6409be80fd8e88a55278
-    - gid: D5/S3/Factorization/FactorDensityHighlyCompositeCounterexample.switkay_expanded_claim_false
-      definition_sha256: sha256:eb8caa953f0ed1a4b55262e6492bfeb468a865f3bd1fa5b0613698e073ad4581
-      emission_sha256: sha256:9be01082ca4f77aaba58aecbb504e77ecb28a675ff9b6409be80fd8e88a55278
   unresolved_subitems: []

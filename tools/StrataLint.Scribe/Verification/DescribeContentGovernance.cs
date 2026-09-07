@@ -77,7 +77,7 @@ internal static class DescribeContentGovernance
         return Order(findings);
     }
 
-    private static void ValidateCensus(
+    internal static void ValidateCensus(
         string repositoryRoot,
         ImmutableArray<ScribeDocument> documents,
         ImmutableArray<DescribeRedFinding>.Builder findings)
@@ -106,7 +106,13 @@ internal static class DescribeContentGovernance
             || !classified.SetEquals(documentGids)
             || !census.ReceiptBoundDocumentGids.SetEquals(expectedBound)
             || !census.ReceiptFreeDocumentGids.SetEquals(expectedFree)
-            || expectedBound.IsEmpty
+            // 【2026-09-07 移除 `expectedBound.IsEmpty`】L2c 把 Scribe 字节收据整批剥离
+            // (#6214 剥掉最后 881 条),终态下"有收据的文档集"必然为空 —— 那是该迁移的
+            // 目标,不是异常。此前这条析取使终态一落地 dev 就红在 receipt-census。
+            // 它原本承担的"防 census 空跑"由 ReceiptFreeDocumentCatalog.Load 直接把关
+            // (空文档集抛 "document corpus must not be empty",且 ValidateCensus 第一步
+            // 就调它),故删除它不打开空跑缺口。`expectedFree.IsEmpty` 保留:当前无证据
+            // 表明有合法输入会使它为空,动它超出本次证据。
             || expectedFree.IsEmpty
             || census.ReceiptFreeDocumentGids.Count + census.ReceiptBoundDocumentGids.Count
                 != documents.Length)

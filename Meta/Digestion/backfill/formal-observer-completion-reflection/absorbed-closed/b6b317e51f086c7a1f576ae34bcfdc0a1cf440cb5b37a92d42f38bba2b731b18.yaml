@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.target_prediction_sufficiency
     target_statement_id: sha256:83e8fe3359e2a1b890e4e4f9244f99f64fc96454b65d91cbe5a0f05eb3b661bd
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.target_prediction_sufficiency
-      definition_sha256: sha256:8be5ff1e45f22a167961dcb31bfbe2799d25fb3cbb888e284c5c4a65b75de4d3
-      emission_sha256: sha256:fd6f2b596488cff942c619d65c79ac04cece9842f2e9b82934750c7bc93b06d7
   unresolved_subitems: []

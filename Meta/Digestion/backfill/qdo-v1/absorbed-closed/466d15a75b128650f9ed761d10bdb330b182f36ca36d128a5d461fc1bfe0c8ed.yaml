@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/Trajectories/CurrentReadoutRecovery.recover_current_readout
     target_statement_id: sha256:94b758fda4a522a7a24d3bd6311798574e33f32f8b545af7c0755ebb10774f37
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/Trajectories/CurrentReadoutRecovery.recover_current_readout
-      definition_sha256: sha256:d50802642110441af9a12830706d6288750f1a6753ece65ec2c4a8e927a224eb
-      emission_sha256: sha256:549afc4f36edc663dc0700a4d7a26b093d8bbf7d6a05fc3d01015a523189fdcd
   unresolved_subitems: []

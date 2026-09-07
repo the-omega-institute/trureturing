@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Algebra/QuotientContractionRigidity.quotient_contraction_rigidity
     target_statement_id: sha256:a97b642976067ecd4859f8bb4f310225c0637bffc06037aa393432ac84b90ca7
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Algebra/QuotientContractionRigidity.quotient_contraction_rigidity
-      definition_sha256: sha256:0eb48bc536154ba9ae3b2ecd9bed8b5d6548472dc17244ccf3daed46aaba1343
-      emission_sha256: sha256:c5da4f878ef8a38525027cbef47abb6c4a06e4360d2475446d01bd62e6075d0d
   unresolved_subitems: []

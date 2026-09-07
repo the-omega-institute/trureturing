@@ -61,18 +61,129 @@ public sealed class TruthExportCommandTests
     }
 
     [Fact]
-    public void ClosedModuleWithoutAFreezeFailsClosedWithNoOutput()
+    public void ClosedModuleWithoutAFreezeExportsProvenTruthWithHonestFreezeStatus()
     {
         var genesisCatalog = BuildCatalog(Module("A"));
         var ledgerFiles = EventFiles(genesisCatalog);
-        using var fixture = FixtureFromLedger(ledgerFiles, [Module("A"), Module("B")]);
+        using var fixture = FixtureFromLedger(ledgerFiles, [Module("A"), Module("B", imports: ["A"])],
+            stateModules: [Module("A")]);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.True(exitCode == 0, console.Error);
+        using var document = JsonDocument.Parse(
+            TemporaryFileSystem.ReadAllBytes(output, "truth-export.v1.json"));
+        var root = document.RootElement;
+        Assert.Equal(2, root.GetProperty("schema_version").GetInt32());
+        Assert.Equal("stratalint.truth-export.v2", root.GetProperty("dialect").GetString());
+        var nodes = root.GetProperty("nodes").EnumerateArray().ToArray();
+        Assert.Equal(2, nodes.Length);
+        Assert.Equal("frozen", nodes[0].GetProperty("freeze_status").GetString());
+        Assert.Equal("proven-not-yet-frozen", nodes[1].GetProperty("freeze_status").GetString());
+        Assert.Equal(nodes[0].GetProperty("frozen_node_id").GetString(),
+            Assert.Single(nodes[1].GetProperty("prerequisite_frozen_node_ids").EnumerateArray()).GetString());
+    }
+
+    [Fact]
+    public void ProvenCatalogCanBePublishedBeforeAnyFreeze()
+    {
+        using var fixture = FixtureFromLedger([], [Module("A")]);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.True(exitCode == 0, console.Error);
+        using var document = JsonDocument.Parse(
+            TemporaryFileSystem.ReadAllBytes(output, "truth-export.v1.json"));
+        Assert.Equal("proven-not-yet-frozen", Assert.Single(
+            document.RootElement.GetProperty("nodes").EnumerateArray())
+            .GetProperty("freeze_status").GetString());
+    }
+
+    [Theory]
+    [InlineData(true, false, "proven-not-yet-frozen")]
+    [InlineData(false, true, "frozen")]
+    [InlineData(true, true, "frozen")]
+    [InlineData(false, false, "proven-not-yet-frozen")]
+    public void FreezeStatusUsesRevisionStateMembership(
+        bool hasAcceptedEvent, bool hasState, string expectedStatus)
+    {
+        var module = Module("A");
+        var catalog = BuildCatalog(module);
+        var ledgerFiles = hasAcceptedEvent ? EventFiles(catalog) : [];
+        using var fixture = FixtureFromLedger(ledgerFiles, [module],
+            stateModules: hasState ? [module] : []);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.True(exitCode == 0, console.Error);
+        using var document = JsonDocument.Parse(
+            TemporaryFileSystem.ReadAllBytes(output, "truth-export.v1.json"));
+        var node = Assert.Single(document.RootElement.GetProperty("nodes").EnumerateArray());
+        Assert.Equal(PathFor("A"), node.GetProperty("repo_path").GetString());
+        Assert.Equal(expectedStatus, node.GetProperty("freeze_status").GetString());
+        Assert.Equal(0, fixture.Gateway.ReadCurrentCount);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void UnfrozenPublicationStillRejectsUnboundSourceOrBrokenClosure(bool unboundSource)
+    {
+        using var fixture = FixtureFromLedger(EventFiles(BuildCatalog(Module("A"))),
+            [Module("A"), Module("B")]);
+        using var output = new TemporaryDirectory();
+        var files = RepositoryFiles([Module("A"), Module("B", source: "-- other source\n")]);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawSnapshot(files))).Snapshot;
+        var reports = Reports([Module("A"), Module("B")]);
+        if (!unboundSource)
+        {
+            files = RepositoryFiles([Module("A"), Module("B")]);
+            snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+                SnapshotDecoder.Decode(RawSnapshot(files))).Snapshot;
+            reports[PathFor("B")] = ReportFor(Module("B")) with { Imports = [" "] };
+        }
+        File.WriteAllBytes(fixture.ReportPath,
+            RawLeanReportArtifact.Write(snapshot, LeanAxiomReport.Create(reports)).AsSpan());
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("TRUTH_EXPORT_INVALID", console.Error, StringComparison.Ordinal);
+        Assert.Contains(unboundSource ? "source hash does not match" : "report is malformed",
+            console.Error, StringComparison.Ordinal);
+        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
+    }
+
+    [Fact]
+    public void UnfrozenPublicationStillRejectsChangedFrozenIdentity()
+    {
+        using var fixture = FixtureFromLedger(EventFiles(BuildCatalog(Module("A"))),
+            [Module("A") with { StatementMaterial = "False" }, Module("B")]);
         using var output = new TemporaryDirectory();
 
         var (exitCode, console) = Run(fixture, output.Path);
 
         Assert.Equal(2, exitCode);
         Assert.Contains("TRUTH_EXPORT_REJECTED", console.Error, StringComparison.Ordinal);
-        Assert.False(File.Exists(Path.Combine(output.Path, "truth-export.v1.json")));
+        Assert.Contains("statement identity changed", console.Error, StringComparison.Ordinal);
+        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
+    }
+
+    [Fact]
+    public void UnfrozenPublicationStillRejectsFrozenModuleOutsideClosedCatalog()
+    {
+        using var fixture = FixtureFromLedger(EventFiles(BuildCatalog(Module("A"))), [Module("B")]);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("outside the current Closed catalog", console.Error, StringComparison.Ordinal);
+        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
 
     [Fact]
@@ -187,11 +298,19 @@ public sealed class TruthExportCommandTests
         ImmutableArray<RepositoryFile> ledgerFiles,
         ModuleSpec[] revisionModules,
         FrozenRevisionIdentity? identity = null,
-        ModuleSpec[]? workingModules = null)
+        ModuleSpec[]? workingModules = null,
+        ModuleSpec[]? stateModules = null)
     {
         var temporary = new TemporaryDirectory();
         var revisionFiles = RepositoryFiles(revisionModules);
         AddLedgerFiles(revisionFiles, ledgerFiles);
+        foreach (var module in stateModules ?? [])
+        {
+            var path = RepoPath.CreateKnown(PathFor(module.Name));
+            revisionFiles[FrozenStatePath.FromModulePath(path).Value] = Encoding.UTF8.GetString(
+                FrozenStateRecord.Encode(
+                    FrozenContentAddress.ComputeModuleStatementId(path, ReportFor(module))).AsSpan());
+        }
         var revisionReports = Reports(revisionModules);
         var immutableRevision = RawSnapshot(revisionFiles);
         var revisionSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(

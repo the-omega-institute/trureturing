@@ -22,32 +22,4 @@ coverage_gids:
   - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.zero_block
     target_statement_id: sha256:a87254ae71d7e61257e2d8a710a972466bd9198e551ce37266beccb9954afe7d
 receipts:
-  scribe:
-    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.blockStart
-      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
-      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
-    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.block_point
-      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
-      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
-    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.blocks_disjoint
-      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
-      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
-    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.common_index_label_recovery
-      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
-      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
-    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.conjecture21
-      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
-      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
-    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.d
-      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
-      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
-    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.d_eq_floor_real_sqrt
-      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
-      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
-    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.witness_bounds
-      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
-      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
-    - gid: D5/S1/Digit/AlternatingFloorSqrtZeroBlocks.zero_block
-      definition_sha256: sha256:6d867942ab30d6028c5906e3f5187675d60815b0b304908861ffac6750240bc9
-      emission_sha256: sha256:cdf314ee3e0bb8d677551b169c5f2c15ffa2df6f22c14699638bc871d1048771
   unresolved_subitems: []

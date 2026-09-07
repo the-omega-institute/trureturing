@@ -32,7 +32,8 @@ public sealed class TruthExportJsonTests
                 .Select(static declaration => new TruthExportDeclaration(
                     declaration.NameKey, declaration.Kind, declaration.StatementId))
                 .ToImmutableArray(),
-            (prerequisites ?? Array.Empty<string>()).ToImmutableArray());
+            (prerequisites ?? Array.Empty<string>()).ToImmutableArray(),
+            "frozen");
 
     [Fact]
     public void CreateCanonicalizesAndWriteIsDeterministicUtf8()
@@ -62,7 +63,7 @@ public sealed class TruthExportJsonTests
         Assert.EndsWith("\n", text, StringComparison.Ordinal);
         Assert.False(text.EndsWith("\n\n", StringComparison.Ordinal));
         Assert.Equal("stratalint.truth-export", model.Schema);
-        Assert.Equal("stratalint.truth-export.v1", model.Dialect);
+        Assert.Equal("stratalint.truth-export.v2", model.Dialect);
         Assert.Equal("TruthExportCommand", model.Producer);
         Assert.Equal(Commit, model.SourceCommit);
         Assert.Equal(Tree, model.SourceTree);
@@ -112,7 +113,8 @@ public sealed class TruthExportJsonTests
     {
         var nodes = ImmutableArray.Create(
             Node("D5/S0/Carrier/A.lean", Id('a'), new[] { "propext" }, new[] { ("nk-a", "theorem", Id('1')) }),
-            Node("D5/S0/Carrier/B.lean", Id('b'), Array.Empty<string>(), new[] { ("nk-b", "def", Id('2')) }, new[] { Id('a') }));
+            Node("D5/S0/Carrier/B.lean", Id('b'), Array.Empty<string>(), new[] { ("nk-b", "def", Id('2')) }, new[] { Id('a') })
+                with { FreezeStatus = "proven-not-yet-frozen" });
         var expected = TruthExportModel.Create(nodes, Commit, Tree);
 
         var bytes = TruthExportJsonWriter.Write(expected);
@@ -129,6 +131,7 @@ public sealed class TruthExportJsonTests
         {
             Assert.Equal(expected.Nodes[index].RepoPath, actual.Nodes[index].RepoPath);
             Assert.Equal(expected.Nodes[index].FrozenNodeId, actual.Nodes[index].FrozenNodeId);
+            Assert.Equal(expected.Nodes[index].FreezeStatus, actual.Nodes[index].FreezeStatus);
             Assert.True(expected.Nodes[index].NodeAxiomClosure.SequenceEqual(actual.Nodes[index].NodeAxiomClosure));
             Assert.True(expected.Nodes[index].Declarations.SequenceEqual(actual.Nodes[index].Declarations));
             Assert.True(expected.Nodes[index].PrerequisiteFrozenNodeIds.SequenceEqual(
@@ -153,10 +156,10 @@ public sealed class TruthExportJsonTests
         // Hand-craft bytes whose nodes descend by repo_path; the writer would never emit this order,
         // so only the reader's strict-order guard catches it.
         var descending =
-            "{\"dialect\":\"stratalint.truth-export.v1\",\"nodes\":["
-            + "{\"declarations\":[{\"declaration_name_key\":\"nk-b\",\"kind\":\"theorem\",\"statement_id\":\"" + Id('2') + "\"}],\"frozen_node_id\":\"" + Id('b') + "\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/B.lean\"},"
-            + "{\"declarations\":[{\"declaration_name_key\":\"nk-a\",\"kind\":\"theorem\",\"statement_id\":\"" + Id('1') + "\"}],\"frozen_node_id\":\"" + Id('a') + "\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
-            + "],\"producer\":\"TruthExportCommand\",\"schema\":\"stratalint.truth-export\",\"schema_version\":1,"
+            "{\"dialect\":\"stratalint.truth-export.v2\",\"nodes\":["
+            + "{\"declarations\":[{\"declaration_name_key\":\"nk-b\",\"kind\":\"theorem\",\"statement_id\":\"" + Id('2') + "\"}],\"freeze_status\":\"frozen\",\"frozen_node_id\":\"" + Id('b') + "\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/B.lean\"},"
+            + "{\"declarations\":[{\"declaration_name_key\":\"nk-a\",\"kind\":\"theorem\",\"statement_id\":\"" + Id('1') + "\"}],\"freeze_status\":\"frozen\",\"frozen_node_id\":\"" + Id('a') + "\",\"node_axiom_closure\":[],\"prerequisite_frozen_node_ids\":[],\"repo_path\":\"D5/S0/Carrier/A.lean\"}"
+            + "],\"producer\":\"TruthExportCommand\",\"schema\":\"stratalint.truth-export\",\"schema_version\":2,"
             + "\"source_commit\":\"" + Commit + "\",\"source_tree\":\"" + Tree + "\"}\n";
 
         Assert.Throws<FormatException>(() => TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(descending)));

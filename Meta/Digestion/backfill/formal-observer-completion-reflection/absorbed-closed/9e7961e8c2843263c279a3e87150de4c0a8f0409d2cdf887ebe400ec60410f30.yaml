@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Linear/ObservationRankMonotonicity.observation_rank_monotonicity
     target_statement_id: sha256:7bb20b6f7fdc0b89a630df5ab2476d94353b28aee7b2269cd82565e8e6d3328e
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Linear/ObservationRankMonotonicity.observation_rank_monotonicity
-      definition_sha256: sha256:03b49e233f2299181cf2552c565f1997b194625c95458e6f8c8f9f31b0a3e7d5
-      emission_sha256: sha256:b87a9231dadbe17f3ef503cb8fb44161deba3487e32d83adff88893db5a2a92e
   unresolved_subitems: []

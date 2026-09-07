@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Bogoliubov/BogoliubovNormConservation.bogoliubov_norm_conservation
     target_statement_id: sha256:d1a4f20c3a604b04d4c1a744d5f4c164139bfd319187dfc19f5c11b719fdad72
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Bogoliubov/BogoliubovNormConservation.bogoliubov_norm_conservation
-      definition_sha256: sha256:60e5759735cdbd06f9a6cc18460213e7b2281eaa0d7f0b4d54069eea2b36fd3a
-      emission_sha256: sha256:718f12c5bb9f0863870b8233e7b4559c4aa618672bd64e5eff1d65435a0166cb
   unresolved_subitems: []

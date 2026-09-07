@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Quantum/Tomography/CompleteContextTomography.complete_context_tomography
     target_statement_id: sha256:0b30a477bd11d6deee267e52e1cb1cab97c45f9274fd5b504a27f19265f7c4d7
 receipts:
-  scribe:
-    - gid: D5/S3/Quantum/Tomography/CompleteContextTomography.complete_context_tomography
-      definition_sha256: sha256:a65f377f39f34b1c97102199608bbadca829276fb062563ea7d6790f5e026067
-      emission_sha256: sha256:7eab28f37507473c2735ca442605ff64ec9ab7f4e353491da15694c4eb85c2f5
   unresolved_subitems: []

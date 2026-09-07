@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Recurrence/Invariants/CassiniFrickeSpecializations.cassini_fricke_absolute_conservation
     target_statement_id: sha256:e51ca561e1e4f92b54883d704fb04cbee1e29ccd6dcbf4feebca591dbd75672c
 receipts:
-  scribe:
-    - gid: D5/S1/Recurrence/Invariants/CassiniFrickeSpecializations.cassini_fricke_absolute_conservation
-      definition_sha256: sha256:a581f8ac56cc529d71ce99d19aa71dec0d1d2b4bcadde5c5bbe4b8311c468116
-      emission_sha256: sha256:86e44b3c325385df1b6c9447f6e85818d6093bcd0bb5665aeff1b03d3ad22688
   unresolved_subitems: []

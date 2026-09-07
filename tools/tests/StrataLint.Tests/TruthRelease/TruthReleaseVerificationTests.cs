@@ -56,7 +56,8 @@ public sealed class TruthReleaseVerificationTests
                     "nk-a",
                     "theorem",
                     "sha256:1111111111111111111111111111111111111111111111111111111111111111")),
-                ImmutableArray<string>.Empty)),
+                ImmutableArray<string>.Empty,
+                "frozen")),
             commit,
             tree)).ToArray();
 

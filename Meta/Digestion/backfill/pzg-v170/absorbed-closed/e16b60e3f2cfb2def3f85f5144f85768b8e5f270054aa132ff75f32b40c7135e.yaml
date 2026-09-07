@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Zeros/Detection/LogTimeDoubling.log_time_shift_doubles_exponential_mode
     target_statement_id: sha256:18988e018c5b2e301a8729e42242a096f9a3d75ca26fef4e756fc7af3bb9b387
 receipts:
-  scribe:
-    - gid: D5/S3/Zeros/Detection/LogTimeDoubling.log_time_shift_doubles_exponential_mode
-      definition_sha256: sha256:d40a384abb8493a4cddc6efdfa89d4fcf191d1c29af990fb314176186ecee493
-      emission_sha256: sha256:1da0c243848284bc7fa27ad9b3164304042d18d81cdf148fe7dd11f5f4f8080c
   unresolved_subitems: []

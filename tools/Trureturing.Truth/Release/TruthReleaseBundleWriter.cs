@@ -27,6 +27,7 @@ public static class TruthReleaseBundleWriter
     public const string SourceSnapshotFileName = "source-snapshot.v1.json";
     public const string TruthGraphFileName = "truth-graph.v1.json";
     public const string RawLeanReportFileName = "raw-lean-report.json";
+    // Transport name is stable; the artifact's schema_version/dialect specify its V2 content contract.
     public const string TruthExportFileName = "truth-export.v1.json";
     public const string BlueprintIndexFileName = "blueprint-index.v1.json";
     public const string FrozenLedgerHeadFileName = "frozen-ledger-head.json";

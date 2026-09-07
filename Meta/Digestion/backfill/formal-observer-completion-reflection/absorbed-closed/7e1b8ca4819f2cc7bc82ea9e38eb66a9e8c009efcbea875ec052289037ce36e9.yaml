@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.observable_krylov_once_stable_permanently
     target_statement_id: sha256:84fdcc299559d74b3402799553a8ca31eddd0327b1ce1ebbea2a1d38ff758314
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.observable_krylov_once_stable_permanently
-      definition_sha256: sha256:a7b8c8dff077b1b2c85cd931158a7f37397eb981fad704368a69bfdc2cd2c441
-      emission_sha256: sha256:46311f6cc451ee7af2e32bb32516668aa54e322572e8c9ffcf7d068a4695f689
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Budget/ResponseCompletenessCardinality.response_complete_card_lower_bound
     target_statement_id: sha256:3d59f29db74c63d033fdbabeb6c55d8c8022812090317367303c409aaed094bb
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Budget/ResponseCompletenessCardinality.response_complete_card_lower_bound
-      definition_sha256: sha256:be0b5586f15c8e7f4dd1a15fa0a617f7da76599914d007a3060e4fce6d6f48e2
-      emission_sha256: sha256:f0ddc0efa5bb442aee426c731859419c0f1be5ceaac97db27e2bf50b42139b91
   unresolved_subitems: []

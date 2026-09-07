@@ -18,26 +18,4 @@ coverage_gids:
   - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod5_pair_readout_not_injective
     target_statement_id: sha256:9a0fdd142bf68644610d7e8c4eb84b94f6fac74cb8ca74c38b9313463e0e16a6
 receipts:
-  scribe:
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.addCommGroup_card_twenty_five_classification
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_card
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_fourth_moment
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_lattice_obstruction
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.leeBallTwo_second_moment
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod25_readout_not_injective
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
-    - gid: D5/S3/Arith/Coding/LeeBallTwoLatticeObstruction.zmod5_pair_readout_not_injective
-      definition_sha256: sha256:f7ab1fe944d693cbbdfe0158e14f625b9e04fc0dcc1bd9fc210e6991c6f52f06
-      emission_sha256: sha256:2e529b62c51621837a3103b5426838e7f4232933ee5aeda54d0e195979e1b3c5
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Arith/AbsoluteValues/OstrowskiClassification.rational_absolute_value_classification
     target_statement_id: sha256:1f5e6e0a2c7f4a46161598a7d587db74fc4058345c6f4e69679dbe28e5ae3b1f
 receipts:
-  scribe:
-    - gid: D5/S3/Arith/AbsoluteValues/OstrowskiClassification.rational_absolute_value_classification
-      definition_sha256: sha256:d3628b404fa0a73bf2d9ba55a5c1fcba7d0f22c55961249ff06888f838bf11e9
-      emission_sha256: sha256:bf11f8f3f24cdcedfa749058b0817820978e1b25eca4893d2c0fbbfa60cd9a69
   unresolved_subitems: []

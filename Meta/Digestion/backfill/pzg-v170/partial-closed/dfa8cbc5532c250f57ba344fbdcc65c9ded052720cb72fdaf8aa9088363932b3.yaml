@@ -8,13 +8,6 @@ coverage_gids:
   - gid: D5/S3/Zeros/MirrorPairEnvelope.mirror_pair_envelope_eq_two_cosh
     target_statement_id: sha256:3719e65eccad784903f14cf8b85c5c0df3eae60bb71555bb546b05a0d379e56a
 receipts:
-  scribe:
-    - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
-      definition_sha256: sha256:a430f7ac0f6d9853c1a0e3ac5715358822aa84ff6588680d30abd1319810618f
-      emission_sha256: sha256:a22e43e122dbec394ae7e8b2e8b0d860cc781fc56e584227fe5a523a9c541344
-    - gid: D5/S3/Zeros/MirrorPairEnvelope.mirror_pair_envelope_eq_two_cosh
-      definition_sha256: sha256:04bfe166b9ea69384a2aee8a2def2d48cc30ee6c3a07f28c05f823545e9287ff
-      emission_sha256: sha256:7d8831e4e9f636d13a8c5b74551543b6138337fda59aaf576503fac12ed62eee
   unresolved_subitems:
     - mirror-pair-envelope-monotonicity-and-numerical-certificate
     - off-line-clock-as-probability-leak

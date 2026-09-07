@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/ObserverMemory/InverseLimits/FactorImageStability.surjective_semiconj_iterate_ranges
     target_statement_id: sha256:f8cf467b7c244fb3d4b0e974e13a5abb50cc2afe124279c74dbb215216cac84e
 receipts:
-  scribe:
-    - gid: D5/S3/ObserverMemory/InverseLimits/FactorImageStability.surjective_semiconj_iterate_ranges
-      definition_sha256: sha256:b90730a7450d5d0923214ac63533689eed61d97ad77d577d7f41e2d3c2fcb56e
-      emission_sha256: sha256:7f8f23bc2caa0dabac524e1b2654bd7960553443721ba1198ce68035b7b27f0a
   unresolved_subitems: []

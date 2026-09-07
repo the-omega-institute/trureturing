@@ -6,10 +6,6 @@ coverage_gids:
   - gid: D5/S1/Deficit/LambdaMinusAdditive.lambdaMinus_coprime_add
     target_statement_id: sha256:177142fec7da639025a85d465f99ff2c5fd2aa4a1b6b13ead82dc3d383e059c0
 receipts:
-  scribe:
-    - gid: D5/S1/Deficit/LambdaMinusAdditive.lambdaMinus_coprime_add
-      definition_sha256: sha256:0983f5433068feef5ebd2ab22729305c427fc4e325e7ddbc8f9a57ce324b1695
-      emission_sha256: sha256:08b6a440d7d134fad2c1f51184bf00ee9b1a8c217da8c8413bcd0f48cc2c0c5a
   unresolved_subitems: []
   chain_atoms:
     - 4c8eb772793a97436015aca7e03d459622546fcf9c1501006c8d80c49bb715fb

@@ -44,9 +44,27 @@ public sealed class TruthExportContractValidationTests
         var model = ModelOf();
 
         Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { Schema = "wrong" }));
-        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { SchemaVersion = 2 }));
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { SchemaVersion = 1 }));
         Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { Dialect = "wrong" }));
         Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { Producer = "Impostor" }));
+    }
+
+    [Fact]
+    public void FreezeStatusIsRequiredAndUsesOnlyTheTwoGovernanceStates()
+    {
+        var model = ModelOf(Node("A.lean", 'a'));
+        var bytes = TruthExportJsonWriter.Write(model);
+        var json = Encoding.UTF8.GetString(bytes.AsSpan());
+        Assert.Contains("\"freeze_status\": \"frozen\"", json, StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(
+            json.Replace("\"freeze_status\": \"frozen\",", "", StringComparison.Ordinal))));
+        Assert.Throws<FormatException>(() => TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(
+            json.Replace("\"frozen\"", "\"closed\"", StringComparison.Ordinal))));
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(ModelOf(
+            Node("A.lean", 'a') with { FreezeStatus = "closed" })));
+        Assert.Throws<FormatException>(() => TruthExportJsonReader.Read(Encoding.UTF8.GetBytes(
+            json.Replace("stratalint.truth-export.v2", "stratalint.truth-export.v1", StringComparison.Ordinal)
+                .Replace("\"schema_version\": 2", "\"schema_version\": 1", StringComparison.Ordinal))));
     }
 
     [Fact]
@@ -277,7 +295,7 @@ public sealed class TruthExportContractValidationTests
         string sourceTree = Tree40) =>
         new(
             TruthExportModel.SchemaName,
-            1,
+            2,
             TruthExportModel.CanonicalDialect,
             sourceCommit,
             sourceTree,
@@ -295,7 +313,8 @@ public sealed class TruthExportContractValidationTests
             Id(frozenId),
             ImmutableArray<string>.Empty,
             ImmutableArray.Create(new TruthExportDeclaration("nk-" + frozenId, kind, statementId ?? Id('1'))),
-            (prerequisites ?? Array.Empty<string>()).ToImmutableArray());
+            (prerequisites ?? Array.Empty<string>()).ToImmutableArray(),
+            "frozen");
 
     private static string Id(char value) => "sha256:" + new string(value, 64);
 
@@ -320,6 +339,7 @@ public sealed class TruthExportContractValidationTests
     private static string UncheckedNodeJson(TruthExportNode node) =>
         "{"
         + "\"repo_path\":" + JsonString(node.RepoPath)
+        + ",\"freeze_status\":" + JsonString(node.FreezeStatus)
         + ",\"frozen_node_id\":" + JsonString(node.FrozenNodeId)
         + ",\"node_axiom_closure\":["
         + string.Join(',', node.NodeAxiomClosure.Select(JsonString)) + "]"

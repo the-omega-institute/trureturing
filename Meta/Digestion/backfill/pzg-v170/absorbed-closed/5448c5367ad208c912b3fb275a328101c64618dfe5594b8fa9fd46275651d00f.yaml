@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Phase/RenormalizationPayload.renormalization_payload
     target_statement_id: sha256:ce57ed74dcfd476104987c7d395d62c7dc2a239fe45ddb514dff803d8ca22586
 receipts:
-  scribe:
-    - gid: D5/S1/Phase/RenormalizationPayload.renormalization_payload
-      definition_sha256: sha256:c6fa01ba3868de711e93c2433736a4674e9c893440965a65be730fb0c8acaced
-      emission_sha256: sha256:b6b73dd4f5a1de2286c097a1f666825a9cb58a522caa48790ed915956f7c5032
   unresolved_subitems: []

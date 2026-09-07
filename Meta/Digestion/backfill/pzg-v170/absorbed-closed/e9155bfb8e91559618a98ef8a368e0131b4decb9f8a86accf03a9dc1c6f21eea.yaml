@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul
     target_statement_id: sha256:5806d4d4368267138798351e8beea47d17a8949c1df14701372c842e7f7f5c05
 receipts:
-  scribe:
-    - gid: D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul
-      definition_sha256: sha256:06235d8bada51b58bd5eb045a3234e7fa0139817515e9833335f6fdca6d876c3
-      emission_sha256: sha256:dd0c19aa75e5447a12eb540d5324e8174a5f4ffb74f0ff596abd50c927e31e82
   unresolved_subitems: []

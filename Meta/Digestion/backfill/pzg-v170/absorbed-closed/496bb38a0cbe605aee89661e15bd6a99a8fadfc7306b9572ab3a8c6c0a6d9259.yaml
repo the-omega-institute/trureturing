@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Factorization/PositiveRationalGroup.signed_prime_ledger_equiv_positive_rationals
     target_statement_id: sha256:eceadc52f2d9df415db1cd6509ab0a58e852ece003eab255b01423dcdbdd585a
 receipts:
-  scribe:
-    - gid: D5/S3/Factorization/PositiveRationalGroup.signed_prime_ledger_equiv_positive_rationals
-      definition_sha256: sha256:91e5005118d7eb6beae11984528bee710725d3b07c9b46d31d06b125fffaa6b1
-      emission_sha256: sha256:38ecb15fa4e4e6efa6635c4cb85abcbfe0eaf0d5a05803718ad885a7c0e25717
   unresolved_subitems: []

@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S1/Dynamics/ProfiniteCharacter.continuous_character_factors_through_residue
     target_statement_id: sha256:491d9c475d6218a65194146f851c7d3303d0cebe4ae5556dc99f8918b7593592
 receipts:
-  scribe:
-    - gid: D5/S1/Dynamics/ProfiniteCharacter.continuous_character_factors_through_residue
-      definition_sha256: sha256:8cbda9877ff6b8d9318da1e720eb4047022ab2da55f3a33500bccef4420342d4
-      emission_sha256: sha256:4e84c595cc4b1c262d26f028a3b8f2e2028783660148eb2bfeef6572ed78c9c6
   unresolved_subitems: []

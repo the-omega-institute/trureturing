@@ -10,16 +10,6 @@ coverage_gids:
   - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
     target_statement_id: sha256:80199c4d6f53e9c36264f68f3e17021e14e66f21334cd43179f4660642e6055e
 receipts:
-  scribe:
-    - gid: D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup
-      definition_sha256: sha256:a430f7ac0f6d9853c1a0e3ac5715358822aa84ff6588680d30abd1319810618f
-      emission_sha256: sha256:a22e43e122dbec394ae7e8b2e8b0d860cc781fc56e584227fe5a523a9c541344
-    - gid: D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec
-      definition_sha256: sha256:a430f7ac0f6d9853c1a0e3ac5715358822aa84ff6588680d30abd1319810618f
-      emission_sha256: sha256:a22e43e122dbec394ae7e8b2e8b0d860cc781fc56e584227fe5a523a9c541344
-    - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
-      definition_sha256: sha256:a430f7ac0f6d9853c1a0e3ac5715358822aa84ff6588680d30abd1319810618f
-      emission_sha256: sha256:a22e43e122dbec394ae7e8b2e8b0d860cc781fc56e584227fe5a523a9c541344
   unresolved_subitems: []
   chain_atoms:
     - a2912b2dfd71e1fe9599d70931f91e82d5f933aab1b2bf37878d7f962f75c32b

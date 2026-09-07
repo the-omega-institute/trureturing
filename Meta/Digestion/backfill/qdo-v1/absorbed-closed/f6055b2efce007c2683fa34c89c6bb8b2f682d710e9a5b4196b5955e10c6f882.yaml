@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/MetricGeometry/SemiconjugacyComposition.semiconjugacy_defect_composition
     target_statement_id: sha256:7757a802dea3f2f2db2419405392d33b14ee1cb8f897e6b477eb54b7ff745855
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/MetricGeometry/SemiconjugacyComposition.semiconjugacy_defect_composition
-      definition_sha256: sha256:0dad6250e49830a57c2217f56156923aec7cff881a83bf73c7cdbd5d106806f5
-      emission_sha256: sha256:6bb3740e23e192de87e431362c53dc01ba56672c95fac52310e06707ce17a7bd
   unresolved_subitems: []

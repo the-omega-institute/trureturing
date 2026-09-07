@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
     target_statement_id: sha256:523403efa9650627ad45be0890e9f110f75ff0f387f17b88bdb0abd1a69b354c
 receipts:
-  scribe:
-    - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
-      definition_sha256: sha256:0dbe0f8dd3075304d9f596e8bea4cbc2ec1d34092d214f4f41af362d08700c87
-      emission_sha256: sha256:bd03ea65dae51f964a0d22764fed71fd84d4c0e37cadeeb3bbcdddd6e758ead9
   unresolved_subitems: []

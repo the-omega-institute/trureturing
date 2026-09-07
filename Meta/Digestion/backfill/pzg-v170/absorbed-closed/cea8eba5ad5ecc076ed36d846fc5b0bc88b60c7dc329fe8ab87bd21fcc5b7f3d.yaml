@@ -14,20 +14,4 @@ coverage_gids:
   - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_factorization
     target_statement_id: sha256:0ec463b108b9897c183cb8a272658865417c0d269543b2542a1cf2aecc4c354a
 receipts:
-  scribe:
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.conjecture3_refuted
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.eulerCubic
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_coefficient_bridge
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_egf_coefficient
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
-    - gid: D5/S3/Arith/CentralBellCubicRefutation.euler_factorization
-      definition_sha256: sha256:43d34ef82822ff9279a908f12c0779170e0f673d47c3fcd35384e4031adfd20e
-      emission_sha256: sha256:d59a03ba221bfa1d4caf4ff7ea74e8834bce8ac78bc067f9e1f78bcbd57d16f4
   unresolved_subitems: []

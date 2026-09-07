@@ -6,8 +6,4 @@ coverage_gids:
   - gid: D5/S3/Observer/Hankel/HankelMinimalStateDimension.hankel_rank_lower_bound_and_quotient_attainment
     target_statement_id: sha256:8fecfb9751f9e3a2e94c104b34da37d8c3d340472a63a360def24088f3415a99
 receipts:
-  scribe:
-    - gid: D5/S3/Observer/Hankel/HankelMinimalStateDimension.hankel_rank_lower_bound_and_quotient_attainment
-      definition_sha256: sha256:5ecdc5d9e70835d2eeed94b013b02f971e1842ad7f3675dd873fd89553809115
-      emission_sha256: sha256:26f087ed28ffe616088d65aa54f0807c7aa92fc4425a7482d92920a98f948ec5
   unresolved_subitems: []
