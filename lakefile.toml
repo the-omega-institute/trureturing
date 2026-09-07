@@ -1,6 +1,6 @@
 name = "trureturing"
 version = "0.1.0"
-keywords = ["mathematics", "formalization"]
+keywords = ["mathematics", "formalization", "seed-probe"]
 defaultTargets = ["Trureturing", "LeanInformationAudit"]
 
 [leanOptions]
