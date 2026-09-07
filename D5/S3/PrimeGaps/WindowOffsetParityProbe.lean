@@ -6,7 +6,7 @@
    utility: none
    digest: An admissible window of width at least two has an even offset span. -/
 
-import Mathlib.Data.Nat.Defs
+import Mathlib.Tactic
 
 /-! # Trigger payload for the SL-034 gate
 
