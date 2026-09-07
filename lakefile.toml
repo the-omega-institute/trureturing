@@ -24,3 +24,5 @@ name = "LeanInformationAudit"
 srcDir = "tools/lean-inspector"
 roots = ["LeanInformationAudit"]
 globs = ["LeanInformationAudit.+"]
+
+# post-merge observation payload for #5994 (config hash change only; observe, never merge)
