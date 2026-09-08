@@ -19,7 +19,8 @@ public sealed class ProtectedSurfaceObservationTests
         var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(
             DecideProtectedSurfaceChange());
 
-        var observation = Assert.Single(protectedChange.Observations);
+        var observation = Assert.Single(protectedChange.Observations,
+            item => item.RuleId == RuleId.CreateKnown(28));
         Assert.Equal(RuleId.CreateKnown(28), observation.RuleId);
         Assert.Equal(AdmissionEffect.Observe, observation.AdmissionEffect);
         Assert.Equal(RuleFixture.DuplicateRightGid + ".lean", observation.Path);
@@ -185,6 +186,8 @@ public sealed class ProtectedSurfaceObservationTests
             RuleFixture.DuplicateRightGid,
             "D5.S1.Phase.DuplicateRight.dpi_defect",
             RuleFixture.DuplicateStatementType);
+        fixture.Files[duplicatePath] = UtilityAdmissionTestSupport.WithUtility(fixture.Files[duplicatePath], "none");
+        fixture.Baseline[duplicatePath] = fixture.Files[duplicatePath];
         fixture.AddDigestionCoverageTarget();
         fixture.Baseline[protectedPath] = "old owners\n";
         fixture.Files[protectedPath] = "new owners\n";

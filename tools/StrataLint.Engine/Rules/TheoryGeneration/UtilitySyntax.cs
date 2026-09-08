@@ -31,8 +31,6 @@ internal enum UtilityParseFailure
     None,
     Missing,
     Syntax,
-    InstanceMissing,
-    PremisesMissing,
 }
 
 internal sealed record UtilityTarget(UtilityTargetKind Kind, string Value, Gid? Gid);
@@ -43,7 +41,8 @@ internal sealed record UtilityDeclaration(
     UtilityTarget? BasisTarget,
     Gid? Instance,
     ImmutableArray<Gid> Premises,
-    Gid? Result);
+    Gid? Result,
+    Gid? Claim);
 
 internal static class UtilitySyntax
 {
@@ -68,6 +67,7 @@ internal static class UtilitySyntax
                 null,
                 null,
                 [],
+                null,
                 null);
             failure = UtilityParseFailure.None;
             return true;
@@ -89,7 +89,7 @@ internal static class UtilitySyntax
             fields.Add((encodedField[..separator], encodedField[(separator + 1)..]));
         }
 
-        if (fields.Count is < 2 or > 5
+        if (fields.Count is < 2 or > 6
             || fields[0].Key != "kind"
             || fields[1].Key != "basis")
         {
@@ -97,7 +97,7 @@ internal static class UtilitySyntax
         }
 
         var optionalKeys = fields.Skip(2).Select(static field => field.Key).ToArray();
-        var canonicalOptionalKeys = new[] { "instance", "premises", "result" }
+        var canonicalOptionalKeys = new[] { "instance", "premises", "result", "claim" }
             .Where(optionalKeys.Contains)
             .ToArray();
         if (!optionalKeys.SequenceEqual(canonicalOptionalKeys, StringComparer.Ordinal))
@@ -121,6 +121,7 @@ internal static class UtilitySyntax
         Gid? instance = null;
         var premises = ImmutableArray<Gid>.Empty;
         Gid? result = null;
+        Gid? claim = null;
         foreach (var field in fields.Skip(2))
         {
             if (field.Key == "instance")
@@ -142,24 +143,10 @@ internal static class UtilitySyntax
             {
                 if (!TryParseDeclarationGid(field.Value, out result)) return false;
             }
-        }
-
-        if (kind is UtilityKind.Checker && instance is null)
-        {
-            failure = UtilityParseFailure.InstanceMissing;
-            return false;
-        }
-
-        if (kind is UtilityKind.NumericReduction && premises.IsEmpty)
-        {
-            failure = UtilityParseFailure.PremisesMissing;
-            return false;
-        }
-
-        if (kind is UtilityKind.NumericReduction
-            && basisKind is not (UtilityBasisKind.Consumer or UtilityBasisKind.Refutes))
-        {
-            return false;
+            else if (field.Key == "claim")
+            {
+                if (!TryParseDeclarationGid(field.Value, out claim)) return false;
+            }
         }
 
         utility = new UtilityDeclaration(
@@ -168,7 +155,8 @@ internal static class UtilitySyntax
             basisTarget,
             instance,
             premises,
-            result);
+            result,
+            claim);
         failure = UtilityParseFailure.None;
         return true;
     }

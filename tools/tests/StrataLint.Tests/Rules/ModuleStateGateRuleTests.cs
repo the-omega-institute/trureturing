@@ -272,6 +272,7 @@ public sealed class ModuleStateGateRuleTests
             + "   mirror-B: none(waiver:test-fixture)\n"
             + "   mirror-E: none(waiver:test-fixture)\n"
             + "   anchors: []\n"
+            + "   utility: none\n"
             + "   digest: StrataLint fixture. -/\n"
             + declaration + "\n";
         fixture.Reports[path] = new LeanFileReport(

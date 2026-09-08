@@ -9,7 +9,7 @@ public sealed class UtilityAdmissionReachabilityTests
     public void ConsumerWithoutImportPathIsBlocked()
     {
         var diagnostics = EvaluateFirstFreeze(
-            "kind=certified-instance; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue");
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
 
         var diagnostic = Assert.Single(
             diagnostics,
@@ -28,7 +28,7 @@ public sealed class UtilityAdmissionReachabilityTests
     public void SameModuleConsumerIsAllowed()
     {
         var diagnostics = EvaluateFirstFreeze(
-            "kind=certified-instance; basis=consumer=D5/S0/Carrier/Ring.goldenRing");
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/Ring.goldenRing; premises=D5/S0/Carrier/Ring.goldenRing");
 
         Assert.DoesNotContain(
             diagnostics,
@@ -42,7 +42,7 @@ public sealed class UtilityAdmissionReachabilityTests
         var fixture = new RuleFixture();
         fixture.Files[RuleFixture.RingPath] = WithUtility(
             fixture.Files[RuleFixture.RingPath],
-            "kind=certified-instance; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue");
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
         fixture.Files[intermediatePath] = fixture.Files[RuleFixture.RingPath].Replace(
             "D5/S0/Carrier/Ring",
             "D5/S0/Carrier/Intermediate",
@@ -69,7 +69,7 @@ public sealed class UtilityAdmissionReachabilityTests
         var fixture = new RuleFixture();
         fixture.Files[RuleFixture.RingPath] = WithUtility(
             fixture.Files[RuleFixture.RingPath],
-            "kind=certified-instance; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue");
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
         fixture.Files[intermediatePath] = fixture.Files[RuleFixture.RingPath].Replace(
             "D5/S0/Carrier/Ring",
             "D5/S0/Carrier/Intermediate",
@@ -105,7 +105,7 @@ public sealed class UtilityAdmissionReachabilityTests
         var fixture = new RuleFixture();
         fixture.Files[RuleFixture.RingPath] = WithUtility(
             fixture.Files[RuleFixture.RingPath],
-            "kind=certified-instance; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue");
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
         fixture.Files[intermediatePath] = fixture.Files[RuleFixture.RingPath].Replace(
             "D5/S0/Carrier/Ring",
             "D5/S0/Carrier/Intermediate",
@@ -144,7 +144,7 @@ public sealed class UtilityAdmissionReachabilityTests
         var fixture = new RuleFixture();
         fixture.Files[RuleFixture.RingPath] = WithUtility(
             fixture.Files[RuleFixture.RingPath],
-            "kind=certified-instance; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue");
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
         fixture.Reports.Remove(RuleFixture.RingPath);
 
         var diagnostics = EvaluateFirstFreeze(fixture, validateLean: false);

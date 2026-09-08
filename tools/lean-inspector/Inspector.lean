@@ -5,6 +5,7 @@ import Lean.Environment
 import Lean.CoreM
 import Lean.PrivateName
 import Lean.Util.CollectAxioms
+import Lean.Meta
 
 open Lean
 
@@ -21,12 +22,32 @@ structure DeclarationReport where
   name : String
   nameKey : String
 
+structure UtilityInput where
+  modulePath : String
+  claimGid : String
+  claimModule : String
+  claimSelector : String
+  claimSourcePath : String
+  claimSourceSha256 : String
+  resultGid : String
+  resultModule : String
+  resultSelector : String
+  deriving FromJson
+
+structure RefutationReport where
+  claimGid : String
+  claimSourcePath : String
+  claimSourceSha256 : String
+  resultGid : String
+  isClosedNegation : Bool
+
 structure ModuleReport where
   declarations : Array DeclarationReport
   imports : Array String
   moduleName : String
   sourcePath : String
   sourceSha256 : String
+  refutation : Option RefutationReport := none
 
 def atom (value : String) : String := s!"{value.utf8ByteSize}:{value}"
 
@@ -191,8 +212,36 @@ def collectAxiomsShared (environment : Environment)
   strongConnect environment state constant
   return ((← state.get).closure.find? constant).getD #[]
 
+def resolveIncludedDeclaration (env : Environment) (moduleName selector : String) : Option ConstantInfo := do
+  let moduleIdx ← env.getModuleIdx? moduleName.toName
+  let selected := env.header.moduleData[moduleIdx]!.constNames.filterMap fun name => do
+    let info ← env.find? name
+    if name.getString! == selector && includeInStatement name info then some info else none
+  if selected.size == 1 then selected[0]? else none
+
+def closedExpression (expression : Expr) : Bool :=
+  !expression.hasFVar && !expression.hasMVar && !expression.hasLooseBVars
+
+/-- This checks one declared relationship, not the usefulness or classification of a module. -/
+def closedNegation (env : Environment) (input : ModuleInput) (utility : UtilityInput) : IO Bool := do
+  if utility.resultModule != input.moduleName || utility.claimGid == utility.resultGid then return false
+  let some (.defnInfo claim) := resolveIncludedDeclaration env utility.claimModule utility.claimSelector
+    | return false
+  let some (.thmInfo result) := resolveIncludedDeclaration env utility.resultModule utility.resultSelector
+    | return false
+  if !claim.levelParams.isEmpty || !result.levelParams.isEmpty
+      || !closedExpression claim.type || !closedExpression claim.value
+      || !closedExpression result.type || !closedExpression result.value then return false
+  let check : MetaM Bool := Meta.withTransparency .all do
+    if !(← Meta.isDefEq claim.type (mkSort .zero)) then return false
+    let expected := mkApp (mkConst ``Not) (mkConst claim.name)
+    if !(← Meta.isDefEq result.type expected) then return false
+    return ← Meta.isDefEq (← Meta.inferType result.value) expected
+  return (← check.run' |>.toIO { fileName := "<utility-refutation>", fileMap := default } { env }).1
+
 def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     (materialSpool : System.FilePath) (materialCounter : IO.Ref Nat)
+    (utilities : Array UtilityInput)
     (input : ModuleInput) : IO ModuleReport := do
   let moduleName := input.moduleName.toName
   let some moduleIdx := env.getModuleIdx? moduleName
@@ -217,12 +266,27 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
       name := name.toString
       nameKey := encodeName name
     }
+  let obligations := utilities.filter (·.modulePath == input.sourcePath)
+  if obligations.size > 1 then
+    throw <| IO.userError s!"duplicate utility obligation: {input.sourcePath}"
+  let refutation ← match obligations[0]? with
+    | none => pure none
+    | some utility => do
+      let valid ← closedNegation environment input utility
+      pure <| some {
+        claimGid := utility.claimGid
+        claimSourcePath := utility.claimSourcePath
+        claimSourceSha256 := utility.claimSourceSha256
+        resultGid := utility.resultGid
+        isClosedNegation := valid
+      }
   return {
     declarations
     imports := sortedUnique (moduleData.imports.map (fun item => item.module.toString))
     moduleName := input.moduleName
     sourcePath := input.sourcePath
     sourceSha256 := input.sourceSha256
+    refutation
   }
 
 def hexDigit (value : Nat) : Char :=
@@ -268,7 +332,15 @@ def renderModule (report : ModuleReport) : String :=
     ++ "], \"imports\": " ++ renderStrings report.imports
     ++ ", \"module\": " ++ jsonString report.moduleName
     ++ ", \"source_path\": " ++ jsonString report.sourcePath
-    ++ ", \"source_sha256\": " ++ jsonString report.sourceSha256 ++ "}"
+    ++ ", \"source_sha256\": " ++ jsonString report.sourceSha256
+    ++ ", \"utility_refutation\": " ++ (match report.refutation with
+      | none => "null"
+      | some evidence =>
+        "{\"claim_gid\": " ++ jsonString evidence.claimGid
+          ++ ", \"claim_source_path\": " ++ jsonString evidence.claimSourcePath
+          ++ ", \"claim_source_sha256\": " ++ jsonString evidence.claimSourceSha256
+          ++ ", \"is_closed_negation\": " ++ (if evidence.isClosedNegation then "true" else "false")
+          ++ ", \"result_gid\": " ++ jsonString evidence.resultGid ++ "}") ++ "}"
 
 def renderReport (reports : Array ModuleReport) : String :=
   "{\"modules\": [" ++ String.intercalate ", " (reports.toList.map renderModule)
@@ -282,25 +354,38 @@ def parseModuleInputs : List String → Except String (Array ModuleInput)
   | _ => .error "module arguments must be repeated triples: MODULE SOURCE_PATH SOURCE_SHA256"
 
 def parseArguments : List String → Except String
-    (System.FilePath × System.FilePath × Array ModuleInput)
+    (System.FilePath × System.FilePath × Option System.FilePath × Array ModuleInput)
   | "--output" :: output :: "--material-spool" :: materialSpool :: rest => do
+      let (utilityInput, rest) := match rest with
+        | "--utility-input" :: path :: tail => (some (System.FilePath.mk path), tail)
+        | _ => (none, rest)
       let inputs ← parseModuleInputs rest
       if inputs.isEmpty then
         throw "at least one module is required"
-      return (output, materialSpool,
+      return (output, materialSpool, utilityInput,
         inputs.qsort (fun left right => left.moduleName < right.moduleName))
   | _ => .error
-      "usage: Inspector.lean --output FILE --material-spool DIR MODULE SOURCE_PATH SOURCE_SHA256 [...]"
+      "usage: Inspector.lean --output FILE --material-spool DIR [--utility-input FILE] MODULE SOURCE_PATH SOURCE_SHA256 [...]"
 
 unsafe def main (args : List String) : IO Unit := do
-  let (output, materialSpool, inputs) ← match parseArguments args with
+  let (output, materialSpool, utilityInput, inputs) ← match parseArguments args with
     | .ok parsed => pure parsed
     | .error message => throw <| IO.userError message
   IO.FS.createDirAll materialSpool
   initSearchPath (← findSysroot)
-  let imports := inputs.map fun input => { module := input.moduleName.toName }
+  let utilities : Array UtilityInput ← match utilityInput with
+    | none => pure #[]
+    | some path => do
+      let encoded ← IO.FS.readFile path
+      match Json.parse encoded >>= fromJson? with
+      | .ok values => pure values
+      | .error message => throw <| IO.userError s!"invalid utility input: {message}"
+  let selectedUtilities := utilities.filter fun utility =>
+    inputs.any (·.sourcePath == utility.modulePath)
+  let moduleNames := sortedUnique (inputs.map (·.moduleName) ++ selectedUtilities.map (·.claimModule))
+  let imports := moduleNames.map fun moduleName => { module := moduleName.toName }
   let env ← importModules imports {} (trustLevel := 0)
   let cache ← IO.mkRef ({} : AxiomClosureState)
   let materialCounter ← IO.mkRef 0
-  let reports ← inputs.mapM (inspectModule env cache materialSpool materialCounter)
+  let reports ← inputs.mapM (inspectModule env cache materialSpool materialCounter utilities)
   IO.FS.writeFile output (renderReport reports)

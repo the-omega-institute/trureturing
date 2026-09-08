@@ -25,7 +25,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var repository = new FakeRepositoryGateway(
             RawChangeSet.Create([RuleFixture.RingPath]),
             current,
-            baseline: null);
+            baseline: current);
         var environment = new ProductionCliEnvironment(
             "/repo",
             repository,
@@ -33,7 +33,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
-            ["deposit-header-check", "--target", RuleFixture.RingPath],
+            ["deposit-header-check", "--target", RuleFixture.RingPath, "--protected-base", new string('b', 40)],
             environment,
             console);
 
@@ -107,7 +107,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var repository = new FakeRepositoryGateway(
             RawChangeSet.Create([RuleFixture.RingPath]),
             current,
-            baseline: null);
+            baseline: current);
         var environment = new ProductionCliEnvironment(
             "/repo",
             repository,
@@ -115,7 +115,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
-            ["deposit-header-check", "--target", RuleFixture.RingPath],
+            ["deposit-header-check", "--target", RuleFixture.RingPath, "--protected-base", new string('b', 40)],
             environment,
             console);
 
@@ -196,7 +196,7 @@ public sealed class DepositHeaderUtilityTests
         var fixture = new RuleFixture();
         AddUtility(
             fixture,
-            "kind=bounded-enumeration; basis=terminal=gid:D5/S0/Carrier/Ring.missing");
+            "kind=checker; basis=terminal=gid:D5/S0/Carrier/Ring.missing; instance=D5/S0/Carrier/Ring.goldenRing");
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
 
         var result = Run(fixture, source);
@@ -215,7 +215,8 @@ public sealed class DepositHeaderUtilityTests
         var atomFixture = new RuleFixture();
         AddUtility(
             atomFixture,
-            $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}");
+            UtilityAdmissionTestSupport.AddRefutationEvidence(atomFixture,
+                $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
         var atomSource = new FakeLeanReportSource(LeanAxiomReport.Create(atomFixture.Reports));
 
         var atomResult = Run(atomFixture, atomSource);
@@ -227,7 +228,7 @@ public sealed class DepositHeaderUtilityTests
         taskFixture.AddSyntheticUnregisteredFrontierTask("D5-T0098");
         AddUtility(
             taskFixture,
-            "kind=certified-instance; basis=terminal=task:D5-T0098");
+            "kind=checker; basis=terminal=task:D5-T0098; instance=D5/S0/Carrier/Ring.goldenRing");
         var taskSource = new FakeLeanReportSource(LeanAxiomReport.Create(taskFixture.Reports));
 
         var taskResult = Run(taskFixture, taskSource);
@@ -242,7 +243,8 @@ public sealed class DepositHeaderUtilityTests
         var fixture = new RuleFixture();
         AddUtility(
             fixture,
-            $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}");
+            UtilityAdmissionTestSupport.AddRefutationEvidence(fixture,
+                $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
         fixture.Files[RuleFixture.FixtureBackfillAtomPath.Replace(
             "/partial-open/",
             "/residual-open/",
@@ -279,8 +281,8 @@ public sealed class DepositHeaderUtilityTests
         var fixture = new RuleFixture();
         AddUtility(
             fixture,
-            "kind=certified-instance; "
-            + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue");
+            "kind=numeric-reduction; "
+            + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing");
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
 
         var result = Run(fixture, source);
@@ -316,6 +318,7 @@ public sealed class DepositHeaderUtilityTests
         var statePath = FrozenStatePath.FromModulePath(
             RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
         fixture.Files[statePath] = "{}\n";
+        fixture.Baseline[statePath] = "{}\n";
         var source = new FakeLeanReportSource(null);
 
         var result = Run(fixture, source);
@@ -333,9 +336,9 @@ public sealed class DepositHeaderUtilityTests
         var repository = new FakeRepositoryGateway(
             RawChangeSet.Create([RuleFixture.RingPath]),
             current,
-            baseline: null);
+            baseline: OrdinaryInstanceAdmissionTests.Raw(fixture.Baseline));
         var environment = new ProductionCliEnvironment("/repo", repository, source);
-        return environment.DepositHeaderCheck(["--target", RuleFixture.RingPath]);
+        return environment.DepositHeaderCheck(["--target", RuleFixture.RingPath, "--protected-base", new string('b', 40)]);
     }
 
     private static void AddUtility(RuleFixture fixture, string utility) =>

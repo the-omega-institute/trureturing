@@ -315,6 +315,7 @@ public sealed partial class LedgerAlignWriterTests
         public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult LeanUtilityInput(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult Ingest(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) => throw Unsupported();

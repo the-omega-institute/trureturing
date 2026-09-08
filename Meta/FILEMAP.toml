@@ -407,7 +407,27 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/develop/spec/**"
+pattern = "docs/develop/spec/golden-ledger-repo-spec.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "docs/develop/spec/trureturing_engineering_optimization_v1.md"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"

@@ -10,6 +10,7 @@ internal sealed record EngineeringTestPlan(
     EngineeringTestPlanKind Kind,
     ImmutableArray<string> ChangedPaths,
     ImmutableArray<string> Projects,
+    ImmutableArray<string> RemovedBaseTestProjects,
     string Reason);
 
 internal sealed record EngineeringTestInvocation(string ProjectPath);
@@ -63,8 +64,21 @@ internal static class EngineeringTestPlanPolicy
         var baseProjectPaths = baseProjects
             .Select(static project => project.Path)
             .ToHashSet(StringComparer.Ordinal);
-        var candidateAddedTestProjects = candidate.Projects
+        var candidateProjects = candidate.Projects
             .Select(ParseProject)
+            .OrderBy(static project => project.Path, StringComparer.Ordinal)
+            .ToArray();
+        var candidateProjectPaths = candidateProjects
+            .Select(static project => project.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        var removedBaseTestProjects = baseTestProjects
+            .Where(project => !candidateProjectPaths.Contains(project))
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
+        var candidatePresentBaseTestProjects = baseTestProjects
+            .Where(candidateProjectPaths.Contains)
+            .ToImmutableArray();
+        var candidateAddedTestProjects = candidateProjects
             .Where(project => !baseProjectPaths.Contains(project.Path))
             .Select(project => project.Classification switch
             {
@@ -78,7 +92,7 @@ internal static class EngineeringTestPlanPolicy
             .Where(static path => !IsExcludedFromContinuousIntegration(path))
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
-        var allTestProjects = baseTestProjects
+        var allTestProjects = candidatePresentBaseTestProjects
             .Concat(candidateAddedTestProjects)
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
@@ -90,7 +104,8 @@ internal static class EngineeringTestPlanPolicy
                 EngineeringTestPlanKind.Full,
                 changed,
                 allTestProjects,
-                "FULL=1 selects every protected-base and candidate-added test project");
+                removedBaseTestProjects,
+                "FULL=1 selects every candidate-present protected-base and candidate-added test project");
         }
 
         var unownedDigestionData = admissionPlane is
@@ -110,6 +125,7 @@ internal static class EngineeringTestPlanPolicy
                     EngineeringTestPlanKind.Full,
                     changed,
                     allTestProjects,
+                    removedBaseTestProjects,
                     $"changed path {path} has no protected-base project owner; "
                     + $"appended {candidateAddedTestProjects.Length} candidate-added test projects");
             }
@@ -118,7 +134,7 @@ internal static class EngineeringTestPlanPolicy
         }
 
         ExpandReverseClosure(baseProjects, affected);
-        var selected = baseTestProjects
+        var selected = candidatePresentBaseTestProjects
             .Where(affected.Contains)
             .Concat(candidateAddedTestProjects)
             .Distinct(StringComparer.Ordinal)
@@ -129,12 +145,14 @@ internal static class EngineeringTestPlanPolicy
                 EngineeringTestPlanKind.None,
                 changed,
                 [],
+                removedBaseTestProjects,
                 "candidate delta has no affected protected-base or candidate-added test project")
             : new EngineeringTestPlan(
                 EngineeringTestPlanKind.Selected,
                 changed,
                 selected,
-                $"selected {selected.Length} protected-base reverse-dependent or candidate-added test projects");
+                removedBaseTestProjects,
+                $"selected {selected.Length} candidate-present protected-base reverse-dependent or candidate-added test projects");
     }
 
     private static ProjectNode? FindOwner(IEnumerable<ProjectNode> projects, string changedPath) =>

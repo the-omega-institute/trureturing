@@ -268,7 +268,8 @@ case "$COMMAND" in
     require_transaction_arguments
     require_new_module_blueprint_mirror
     step lean-report make lean-report
-    step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH"
+    deposit_base_sha="$(git rev-parse --verify "${BASE}^{commit}")"
+    step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH" --protected-base "$deposit_base_sha"
     step emit make emit
     if freeze_exists; then
       freeze_precheck=1

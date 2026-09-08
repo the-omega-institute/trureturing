@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 using FixtureFile = StrataLint.TestSupport.TemporaryFileSystem.File;
 
@@ -27,6 +28,12 @@ public sealed class LeanReportCiBaselineScriptTests
     [Fact]
     public void DeltaPlanRechecksExactlySurvivingDescendantsOfRemovedModules() =>
         LeanReportCiBaselineScriptContract.AssertDeltaPlanRechecksExactlySurvivingDescendantsOfRemovedModules();
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void UtilityClaimOutsideImportClosureInvalidatesDependentRefutation(bool removed) =>
+        LeanReportCiBaselineScriptContract.AssertUtilityClaimInvalidatesRefutation(removed);
 }
 
 internal static class LeanReportCiBaselineScriptContract
@@ -171,6 +178,34 @@ internal static class LeanReportCiBaselineScriptContract
         Assert.Equal(
             new[] { "B", "C", "E", "F", "G", "I", "J" },
             root.GetProperty("recheck").EnumerateArray().Select(value => value.GetString()).ToArray());
+    }
+
+    internal static void AssertUtilityClaimInvalidatesRefutation(bool removed)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
+        var cache = Path.Combine(temporary.Path, "cache");
+        var claim = JsonNode.Parse(CreateModuleRecord(temporary.Path, "A"))!;
+        var result = JsonNode.Parse(CreateModuleRecord(temporary.Path, "B"))!;
+        result["utility_refutation"] = new JsonObject
+        {
+            ["claim_gid"] = "D5/S0/Carrier/A.claim",
+            ["claim_source_path"] = "A.lean",
+            ["claim_source_sha256"] = claim["source_sha256"]!.GetValue<string>(),
+            ["result_gid"] = "D5/S0/Carrier/B.result",
+            ["is_closed_negation"] = true,
+        };
+        WriteBundle(bundle, string.Join(", ", claim.ToJsonString(), result.ToJsonString(),
+            CreateModuleRecord(temporary.Path, "C", "B"), CreateModuleRecord(temporary.Path, "D")));
+        Assert.Equal(0, Run(bundle, cache).ExitCode);
+        File.WriteAllText(Path.Combine(temporary.Path, "A.lean"), "-- changed claim\n");
+        var table = (removed ? "" : "A\tA.lean\n") + "B\tB.lean\nC\tC.lean\nD\tD.lean\n";
+
+        using var document = JsonDocument.Parse(FixtureFile.ReadAllText(RunDeltaPlan(temporary.Path, cache, table)));
+
+        Assert.Equal(removed ? new[] { "B", "C" } : new[] { "A", "B", "C" },
+            document.RootElement.GetProperty("recheck").EnumerateArray().Select(item => item.GetString()).ToArray());
     }
 
     private static void CompleteFlatBundleBecomesAContentAddressedDeltaEntry()

@@ -333,7 +333,7 @@ public sealed partial class MakeWorkflowTests
         var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
         Assert.Contains("REPOSITORY ?= $(HERE)/..", makefile, StringComparison.Ordinal);
         Assert.Equal(
-            "\t@cd \"$(REPOSITORY)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\"",
+            "\t@cd \"$(REPOSITORY)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\" $(if $(filter 1,$(FULL)),--full 1,)",
             engineeringTestsRecipe);
         Assert.Single(
             Regex.Matches(

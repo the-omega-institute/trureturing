@@ -88,7 +88,17 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
             "path": source_path,
             "source_sha256": source_sha,
             "imports": imports,
+            "refutation_claim_path": None,
         }
+        refutation = item.get("utility_refutation")
+        if refutation is not None:
+            if (not isinstance(refutation, dict)
+                    or not isinstance(refutation.get("claim_source_path"), str)
+                    or not refutation["claim_source_path"]
+                    or not isinstance(refutation.get("claim_source_sha256"), str)
+                    or not SHA_FIELD.fullmatch(refutation["claim_source_sha256"])):
+                raise ValueError("refutation source binding is malformed")
+            modules[name]["refutation_claim_path"] = refutation["claim_source_path"]
     return modules, digest
 
 
@@ -196,16 +206,23 @@ def plan(args: argparse.Namespace) -> int:
 
         # The report edge points importer -> imported module.  For every
         # source-identical surviving importer, the attested old import list is
-        # identical to the current one.  It is therefore the complete inbound
-        # graph needed to close changed/added roots and surviving importers of
+        # identical to the current one. Together with declared refutation inputs,
+        # these edges close changed/added roots and surviving dependents of
         # removed modules without inspecting first.
         reverse = {name: set() for name in set(current) | set(old)}
+        names_by_path = {record["path"]: name for name, record in old.items()}
         for importer, record in old.items():
             if importer not in current:
                 continue
             for dependency in record.get("imports", []):
                 if dependency in reverse:
                     reverse[dependency].add(importer)
+            # A header-designated claim can affect definitional equality without a Lean import.
+            claim_path = record.get("refutation_claim_path")
+            if claim_path is not None:
+                if claim_path not in names_by_path:
+                    raise ValueError("refutation claim is absent from the baseline report")
+                reverse[names_by_path[claim_path]].add(importer)
 
         # Deleted modules are not Inspector inputs, but their surviving importers
         # must be rechecked to avoid retaining records with unloadable environments.

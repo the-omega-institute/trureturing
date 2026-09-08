@@ -105,6 +105,7 @@ public sealed class LeanInspectorScriptTests
         File.SetUnixFileMode(poisoned, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         InstallCacheRun(repository);
         InstallProducerInputs(repository);
+        Assert.Equal(0, Run("git", ["init", "--quiet"], repository).ExitCode);
         var lake = Path.Combine(temporary.Path, "lake");
         File.WriteAllText(lake, "#!/usr/bin/env bash\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
         File.SetUnixFileMode(lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
@@ -143,6 +144,10 @@ public sealed class LeanInspectorScriptTests
             Write(repository, $"tools/{project}/{project}.csproj", "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(repository, $"tools/{project}/Fixture.cs", "// fixture\n");
         }
+        Write(repository, "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType>"
+            + "<TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>\n");
+        Write(repository, "tools/StrataLint.Cli/Fixture.cs", "System.Console.WriteLine(\"[]\");\n");
         Write(repository, "tools/scripts/lean-report-pair.sh", "#!/usr/bin/env bash\n");
         Write(repository, "tools/scripts/worktree/lean-cache-publish.sh", "#!/usr/bin/env bash\n");
         Write(repository, "tools/scripts/workflow/scribe-content-checks.sh", "#!/usr/bin/env bash\n");

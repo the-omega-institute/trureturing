@@ -112,6 +112,70 @@ public sealed partial class EngineeringPathFilterTests
     }
 
     [Fact]
+    public void BaseTestProjectAbsentFromCandidateIsExcludedFromThePlan()
+    {
+        var protectedBase = new TestProjectTopologySnapshot(
+        [
+            Project(EngineProject, isTest: false),
+            Project(EngineTestsProject, isTest: true, EngineProject),
+        ]);
+        var candidate = new TestProjectTopologySnapshot(
+        [
+            Project(EngineProject, isTest: false),
+        ]);
+
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            [EngineTestsProject],
+            protectedBase,
+            candidate);
+
+        Assert.Equal(EngineeringTestPlanKind.None, plan.Kind);
+        Assert.Empty(plan.Projects);
+        Assert.Equal([EngineTestsProject], plan.RemovedBaseTestProjects.ToArray());
+    }
+
+    [Fact]
+    public void BaseTestProjectStillPresentInCandidateRemainsSelected()
+    {
+        var topology = new TestProjectTopologySnapshot(
+        [
+            Project(EngineProject, isTest: false),
+            Project(EngineTestsProject, isTest: true, EngineProject),
+        ]);
+
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            ["tools/StrataLint.Engine/Anything.cs"],
+            topology,
+            topology);
+
+        Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
+        Assert.Equal([EngineTestsProject], plan.Projects.ToArray());
+    }
+
+    [Fact]
+    public void CandidateAddedTestProjectRemainsSelectedWhenABaseTestProjectWasRemoved()
+    {
+        var protectedBase = new TestProjectTopologySnapshot(
+        [
+            Project(EngineProject, isTest: false),
+            Project(EngineTestsProject, isTest: true, EngineProject),
+        ]);
+        var candidate = new TestProjectTopologySnapshot(
+        [
+            Project(EngineProject, isTest: false),
+            Project(CandidateAddedProject, isTest: true, EngineProject),
+        ]);
+
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
+            ["tools/StrataLint.Engine/Anything.cs"],
+            protectedBase,
+            candidate);
+
+        Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
+        Assert.Equal([CandidateAddedProject], plan.Projects.ToArray());
+    }
+
+    [Fact]
     public void TestProjectChangeSelectsItselfAndItsBaseReverseDependents()
     {
         var topology = Topology(scribeTestsReferenceScribe: true);
@@ -165,6 +229,7 @@ public sealed partial class EngineeringPathFilterTests
             EngineeringTestPlanKind.Selected,
             [],
             [ScribeTestsProject, ArchitectureTestsProject],
+            [],
             "selected protected-base reverse closure");
         var calls = new HashSet<string>(StringComparer.Ordinal);
 

@@ -4,6 +4,7 @@ namespace StrataLint.Engine;
 
 internal enum UtilityValidationPhase
 {
+    ChangedContent,
     PreDeposit,
     FirstFreeze,
 }
@@ -19,6 +20,10 @@ internal enum UtilityValidationFailure
     TargetDangling,
     RefutesAtomNoCoverage,
     ConsumerUnreachable,
+    OrdinaryInstanceForbidden,
+    ClassificationDowngrade,
+    RefutationInvalid,
+    RefutationEvidenceMissing,
 }
 
 internal sealed record UtilityValidationResult(
@@ -49,38 +54,25 @@ internal static class UtilityDeclarationValidator
                 parseFailure switch
                 {
                     UtilityParseFailure.Missing => UtilityValidationFailure.Missing,
-                    UtilityParseFailure.InstanceMissing => UtilityValidationFailure.InstanceMissing,
-                    UtilityParseFailure.PremisesMissing => UtilityValidationFailure.PremisesMissing,
                     _ => UtilityValidationFailure.Syntax,
                 },
                 string.Empty);
         }
 
-        LeanAxiomReport? report = null;
-        if (phase is UtilityValidationPhase.FirstFreeze
-            || declaration!.Kind is not UtilityKind.None)
+        LeanAxiomReport report;
+        try
         {
-            try
-            {
-                report = loadLeanReport();
-            }
-            catch (Exception exception) when (
-                exception is InvalidOperationException
-                    or FormatException
-                    or ArgumentException
-                    or IOException)
-            {
-                return Failure(
-                    declaration!,
-                    UtilityValidationFailure.InputUnknown,
-                    "reason=current-lean-report-load-failed");
-            }
+            report = loadLeanReport();
+        }
+        catch (Exception exception) when (
+            exception is InvalidOperationException or FormatException or ArgumentException or IOException)
+        {
+            return Failure(declaration!, UtilityValidationFailure.InputUnknown,
+                "reason=current-lean-report-load-failed");
         }
 
-        LeanFileReport? moduleReport = null;
-        if (phase is UtilityValidationPhase.FirstFreeze
-            && (!report!.Files.TryGetValue(modulePath, out moduleReport)
-                || moduleReport.Error is not null))
+        if (!report.Files.TryGetValue(modulePath, out var moduleReport)
+            || moduleReport.Error is not null)
         {
             return Failure(
                 declaration!,
@@ -91,6 +83,26 @@ internal static class UtilityDeclarationValidator
         if (declaration!.Kind is UtilityKind.None)
         {
             return Accepted(declaration);
+        }
+
+        if (IsOrdinaryKind(declaration.Kind) && declaration.BasisKind is not UtilityBasisKind.Refutes)
+        {
+            return Failure(declaration, UtilityValidationFailure.OrdinaryInstanceForbidden,
+                "reason=ordinary-positive-instances-require-refutation");
+        }
+
+        if (declaration.BasisKind is not UtilityBasisKind.Refutes)
+        {
+            if (declaration.Kind is UtilityKind.Checker && declaration.Instance is null)
+                return Failure(declaration, UtilityValidationFailure.InstanceMissing, string.Empty);
+            if (declaration.Kind is UtilityKind.NumericReduction)
+            {
+                if (declaration.Premises.IsEmpty)
+                    return Failure(declaration, UtilityValidationFailure.PremisesMissing, string.Empty);
+                if (declaration.BasisKind is not UtilityBasisKind.Consumer)
+                    return Failure(declaration, UtilityValidationFailure.Syntax,
+                        "reason=numeric-reduction-requires-consumer-or-refutes");
+            }
         }
 
         foreach (var gid in DeclarationReferences(declaration))
@@ -168,7 +180,13 @@ internal static class UtilityDeclarationValidator
             }
         }
 
-        if (phase is UtilityValidationPhase.PreDeposit)
+        if (declaration.BasisKind is UtilityBasisKind.Refutes)
+        {
+            var refutation = ValidateRefutation(modulePath, declaration, report, moduleReport);
+            if (!refutation.IsAccepted) return refutation;
+        }
+
+        if (phase is not UtilityValidationPhase.FirstFreeze)
         {
             return Accepted(declaration);
         }
@@ -177,6 +195,7 @@ internal static class UtilityDeclarationValidator
             && softTarget is { Kind: UtilityTargetKind.Atom }
             && !HasExactCoverage(
                 atomTarget!,
+                declaration.Result,
                 modulePath,
                 moduleReport!))
         {
@@ -224,6 +243,51 @@ internal static class UtilityDeclarationValidator
         string detail) =>
         new(declaration, failure, detail);
 
+    internal static bool IsOrdinaryKind(UtilityKind kind) =>
+        kind is UtilityKind.CertifiedInstance or UtilityKind.BoundedEnumeration;
+
+    private static UtilityValidationResult ValidateRefutation(
+        RepoPath modulePath,
+        UtilityDeclaration declaration,
+        LeanAxiomReport report,
+        LeanFileReport moduleReport)
+    {
+        if (declaration.Claim is not { } claim || declaration.Result is not { } result)
+            return Failure(declaration, UtilityValidationFailure.RefutationInvalid, "reason=claim-and-result-required");
+        if (claim.Value == result.Value
+            || ((Target.Formal)result.ToTarget()).Path != modulePath
+            || declaration.BasisTarget is { Kind: UtilityTargetKind.Gid } target && target.Gid!.Value != claim.Value)
+            return Failure(declaration, UtilityValidationFailure.RefutationInvalid, "reason=claim-result-target-mismatch");
+
+        var claimReport = report.Files[((Target.Formal)claim.ToTarget()).Path];
+        if (!TryResolveDeclaration(result, moduleReport, out var resultDeclaration)
+            || !TryResolveDeclaration(claim, claimReport, out var claimDeclaration)
+            || resultDeclaration!.Kind != "theorem" || claimDeclaration!.Kind != "def"
+            || resultDeclaration.Axioms.Any(static axiom => !LeanAxiomFacts.IsStandard(axiom))
+            || claimDeclaration.Axioms.Any(static axiom => !LeanAxiomFacts.IsStandard(axiom)))
+            return Failure(declaration, UtilityValidationFailure.RefutationInvalid, "reason=invalid-result-or-claim-declaration");
+
+        if (moduleReport.Refutation is not { } evidence)
+            return Failure(declaration, UtilityValidationFailure.RefutationEvidenceMissing,
+                "reason=current-typed-refutation-evidence-required");
+        if (evidence.ClaimGid != claim.Value || evidence.ResultGid != result.Value || !evidence.IsClosedNegation)
+            return Failure(declaration, UtilityValidationFailure.RefutationInvalid, "reason=not-a-closed-proof-of-not-claim");
+        return Accepted(declaration);
+    }
+
+    internal static bool IsClassificationDowngrade(
+        RepositoryFile baseline,
+        RepositoryFile current)
+    {
+        return RepositoryRules.TryHeader(baseline.Text, out var before)
+            && RepositoryRules.TryHeader(current.Text, out var after)
+            && UtilitySyntax.TryParse(before.Utility, out var oldDeclaration, out _)
+            && UtilitySyntax.TryParse(after.Utility, out var newDeclaration, out _)
+            && IsOrdinaryKind(oldDeclaration!.Kind)
+            && !IsOrdinaryKind(newDeclaration!.Kind)
+            && baseline.Text.AsSpan(before.BodyOffset).SequenceEqual(current.Text.AsSpan(after.BodyOffset));
+    }
+
     private static IEnumerable<Gid> DeclarationReferences(UtilityDeclaration declaration)
     {
         if (declaration.BasisTarget?.Gid is { } basis)
@@ -244,6 +308,11 @@ internal static class UtilityDeclarationValidator
         if (declaration.Result is { } result)
         {
             yield return result;
+        }
+
+        if (declaration.Claim is { } claim)
+        {
+            yield return claim;
         }
     }
 
@@ -266,11 +335,14 @@ internal static class UtilityDeclarationValidator
 
     private static bool HasExactCoverage(
         DigestionLedgerEntry atom,
+        Gid? result,
         RepoPath modulePath,
         LeanFileReport moduleReport) =>
         atom.Coverage.Any(edge =>
         {
-            if (edge.TargetStatementId is null
+            if (result is null
+                || !string.Equals(edge.Gid, result.Value, StringComparison.Ordinal)
+                || edge.TargetStatementId is null
                 || !Gid.TryParse(edge.Gid, out var gid)
                 || gid.ToTarget() is not Target.Formal { Declaration: not null } target
                 || target.Path != modulePath

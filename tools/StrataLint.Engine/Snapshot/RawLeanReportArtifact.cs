@@ -73,7 +73,9 @@ internal static class RawLeanReportArtifact
         {
             RequireProperties(
                 moduleElement,
-                ["declarations", "imports", "module", "source_path", "source_sha256"],
+                moduleElement.TryGetProperty("utility_refutation", out _)
+                    ? ["declarations", "imports", "module", "source_path", "source_sha256", "utility_refutation"]
+                    : ["declarations", "imports", "module", "source_path", "source_sha256"],
                 "raw Lean module");
             var module = RequiredString(moduleElement, "module");
             RequireStrictOrder(previousModule, module, "modules");
@@ -100,7 +102,8 @@ internal static class RawLeanReportArtifact
             var declarations = ReadDeclarations(
                 RequiredArray(moduleElement, "declarations"),
                 materialArchive);
-            if (!reports.TryAdd(sourcePath, new LeanFileReport(imports, declarations)))
+            if (!reports.TryAdd(sourcePath, new LeanFileReport(imports, declarations)
+                { Refutation = ReadRefutation(moduleElement, source.File, snapshot) }))
             {
                 throw new FormatException($"Raw Lean report contains duplicate path {sourcePath}.");
             }
@@ -137,6 +140,9 @@ internal static class RawLeanReportArtifact
                             $"Lean report is missing {item.Value.Path.Value}.");
                     }
 
+                    var claimSource = fileReport.Refutation is { } refutation
+                        ? RefutationClaimSource(snapshot, refutation.ClaimGid)
+                        : null;
                     return new
                     {
                         declarations = fileReport.Declarations
@@ -161,11 +167,56 @@ internal static class RawLeanReportArtifact
                         module = item.Key,
                         source_path = item.Value.Path.Value,
                         source_sha256 = Sha256(item.Value.File.RawBytes.AsSpan()),
+                        utility_refutation = fileReport.Refutation is { } evidence ? new
+                        {
+                            claim_gid = evidence.ClaimGid,
+                            claim_source_path = claimSource!.Path.Value,
+                            claim_source_sha256 = Sha256(claimSource.RawBytes.AsSpan()),
+                            result_gid = evidence.ResultGid,
+                            is_closed_negation = evidence.IsClosedNegation,
+                        } : null,
                     };
                 }),
             schema = Schema,
+        }, new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
         });
         return StructuredCanonicalWriter.WriteJson(material);
+    }
+
+    private static LeanRefutationEvidence? ReadRefutation(
+        JsonElement module, RepositoryFile source, RepositorySnapshot snapshot)
+    {
+        if (!module.TryGetProperty("utility_refutation", out var value) || value.ValueKind is JsonValueKind.Null)
+            return null;
+        RequireProperties(value, ["claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"],
+            "utility refutation evidence");
+        var claim = RequiredString(value, "claim_gid");
+        var result = RequiredString(value, "result_gid");
+        var valid = RequiredBoolean(value, "is_closed_negation");
+        if (!RepositoryRules.TryHeader(source.Text, out var header)
+            || !UtilitySyntax.TryParse(header.Utility, out var declaration, out _)
+            || declaration!.BasisKind is not UtilityBasisKind.Refutes
+            || declaration.Claim?.Value != claim
+            || declaration.Result?.Value != result)
+        {
+            throw new FormatException($"Utility refutation evidence does not bind the current header: {source.Path.Value}.");
+        }
+
+        var claimSource = RefutationClaimSource(snapshot, claim);
+        if (RequiredString(value, "claim_source_path") != claimSource.Path.Value
+            || RequiredString(value, "claim_source_sha256") != Sha256(claimSource.RawBytes.AsSpan()))
+            throw new FormatException($"Utility refutation evidence does not bind the current claim source: {claimSource.Path.Value}.");
+        return new(claim, result, valid);
+    }
+
+    private static RepositoryFile RefutationClaimSource(RepositorySnapshot snapshot, string claim)
+    {
+        if (!Gid.TryParse(claim, out var gid) || gid.ToTarget() is not Target.Formal { Declaration: not null } target
+            || !snapshot.Files.TryGetValue(target.Path, out var source))
+            throw new FormatException($"Refutation claim source is unavailable: {claim}.");
+        return source;
     }
 
     internal static void WriteFile(

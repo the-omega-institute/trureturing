@@ -91,9 +91,12 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
     material_bytes = 0
     try:
         for raw_module in root["modules"]:
+            module_keys = {"declarations", "imports", "module", "source_path", "source_sha256"}
+            if "utility_refutation" in raw_module:
+                module_keys.add("utility_refutation")
             module = require_keys(
                 raw_module,
-                {"declarations", "imports", "module", "source_path", "source_sha256"},
+                module_keys,
                 "Inspector spool module",
             )
             module_name = module["module"]
@@ -106,6 +109,17 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 raise ValueError("Inspector spool module binding is malformed or unordered")
             previous_module = module_name
             imports = require_sorted_strings(module["imports"], "Inspector spool imports")
+            refutation = module.get("utility_refutation")
+            if refutation is not None:
+                require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"},
+                             "Inspector refutation")
+                if (not isinstance(refutation["claim_gid"], str) or not refutation["claim_gid"]
+                        or not isinstance(refutation["result_gid"], str) or not refutation["result_gid"]
+                        or not isinstance(refutation["claim_source_path"], str) or not refutation["claim_source_path"]
+                        or not isinstance(refutation["claim_source_sha256"], str)
+                        or not re.fullmatch(r"sha256:[0-9a-f]{64}", refutation["claim_source_sha256"])
+                        or not isinstance(refutation["is_closed_negation"], bool)):
+                    raise ValueError("Inspector refutation is malformed")
             if not isinstance(module["declarations"], list):
                 raise ValueError("Inspector spool declarations must be an array")
 
@@ -173,13 +187,16 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 })
                 declaration_count += 1
 
-            modules.append({
+            report_module = {
                 "declarations": declarations,
                 "imports": imports,
                 "module": module_name,
                 "source_path": source_path,
                 "source_sha256": source_sha256,
-            })
+            }
+            if refutation is not None:
+                report_module["utility_refutation"] = refutation
+            modules.append(report_module)
 
         actual_spools = {
             path.name for path in spool.iterdir()

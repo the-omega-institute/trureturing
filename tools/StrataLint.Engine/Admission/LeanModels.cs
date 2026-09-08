@@ -60,10 +60,15 @@ public sealed record LeanDeclaration(
     }
 }
 
+internal sealed record LeanRefutationEvidence(string ClaimGid, string ResultGid, bool IsClosedNegation);
+
 public sealed record LeanFileReport(
     ImmutableArray<string> Imports,
     ImmutableArray<LeanDeclaration> Declarations,
-    string? Error = null);
+    string? Error = null)
+{
+    internal LeanRefutationEvidence? Refutation { get; init; }
+}
 
 public sealed class LeanAxiomReport
 {

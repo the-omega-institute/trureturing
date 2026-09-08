@@ -72,7 +72,10 @@ internal static partial class RepositoryRules
             match.Groups["mirrorB"].Value.Trim(),
             match.Groups["mirrorE"].Value.Trim(),
             match.Groups["anchors"].Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries),
-            match.Groups["utility"].Success ? match.Groups["utility"].Value : null);
+            match.Groups["utility"].Success ? match.Groups["utility"].Value : null)
+        {
+            BodyOffset = match.Length,
+        };
         return true;
     }
 
@@ -178,6 +181,8 @@ internal static partial class RepositoryRules
         string[] Anchors,
         string? Utility)
     {
+        internal int BodyOffset { get; init; }
+
         internal static HeaderData Empty { get; } = new(
             string.Empty,
             string.Empty,

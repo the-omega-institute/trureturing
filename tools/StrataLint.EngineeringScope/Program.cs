@@ -93,6 +93,7 @@ internal static class Program
             changedPaths,
             RepositoryRules.ReadSnapshotProjects(protectedBase),
             RepositoryRules.ReadSnapshotProjects(candidate),
+            full: options.Full,
             admissionPlane: admissionPlane);
         return ExecutePlan(options.RepositoryRoot, plan);
     }
@@ -265,6 +266,11 @@ internal static class Program
             $"ENGINEERING_TEST_PLAN state={plan.Kind.ToString().ToLowerInvariant()} "
             + $"changed={plan.ChangedPaths.Length} selected={plan.Projects.Length} "
             + $"reason={JsonSerializer.Serialize(plan.Reason)}");
+        foreach (var project in plan.RemovedBaseTestProjects)
+        {
+            Console.WriteLine(
+                $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(project)}");
+        }
         foreach (var project in plan.Projects)
         {
             Console.WriteLine(
@@ -307,7 +313,7 @@ internal static class Program
             _ => throw new InvalidDataException($"{description} snapshot decode returned an unknown outcome"),
         };
 
-    private sealed record Options(string RepositoryRoot, string Head, string Base)
+    private sealed record Options(string RepositoryRoot, string Head, string Base, bool Full)
     {
         internal static Options Parse(IReadOnlyList<string> arguments)
         {
@@ -319,16 +325,21 @@ internal static class Program
                 if (!values.TryAdd(arguments[index], arguments[index + 1]))
                     throw new ArgumentException($"duplicate option: {arguments[index]}");
             }
-            if (values.Count != 3
-                || values.Keys.Any(static name => name is not "--repository" and not "--head" and not "--base"))
+            if (values.Keys.Any(static name => name is not "--repository" and not "--head" and not "--base" and not "--full"))
             {
-                throw new ArgumentException("options must be exactly --repository, --head, and --base");
+                throw new ArgumentException("options must be --repository, --head, --base, and optional --full 0|1");
             }
 
             return new Options(
                 Path.GetFullPath(Require(values, "--repository")),
                 Require(values, "--head"),
-                Require(values, "--base"));
+                Require(values, "--base"),
+                values.GetValueOrDefault("--full", "0") switch
+                {
+                    "0" => false,
+                    "1" => true,
+                    _ => throw new ArgumentException("--full must be 0 or 1"),
+                });
         }
 
         private static string Require(IReadOnlyDictionary<string, string> values, string name) =>

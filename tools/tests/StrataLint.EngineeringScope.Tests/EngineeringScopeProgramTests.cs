@@ -46,6 +46,28 @@ public sealed class EngineeringScopeProgramTests
     }
 
     [Fact]
+    public void CandidateDeletedBaseTestProjectIsExcludedAndReported()
+    {
+        var result = RunBoundary(
+            WriteProductProjects,
+            root =>
+            {
+                TemporaryFileSystem.File.Delete(Path.Combine(root, ProductTestsProject));
+                TemporaryFileSystem.File.Delete(Path.Combine(
+                    root,
+                    Path.GetDirectoryName(ProductTestsProject)!,
+                    "SmokeTests.cs"));
+            });
+
+        Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Empty(result.SelectedProjects);
+        Assert.Contains(
+            $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(ProductTestsProject)}",
+            result.Output,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CandidateNewXunitProjectWithoutLiteralIsTestProjectIsSelected()
     {
         var result = RunBoundary(
@@ -108,8 +130,10 @@ public sealed class EngineeringScopeProgramTests
         Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void DigestionOnlyContentChangeSelectsNoEngineeringTests()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DigestionOnlyContentChangeSelectsNoEngineeringTestsUnlessFull(bool full)
     {
         const string path = "Meta/Digestion/backfill/source/residual-open/atom.yaml";
         var result = RunBoundary(
@@ -119,11 +143,51 @@ public sealed class EngineeringScopeProgramTests
                 WriteFile(root, path, "# before\n");
                 WriteAdmissionPlaneFileMap(root, (path, "content"));
             },
-            root => WriteFile(root, path, "# after\n"));
+            root => WriteFile(root, path, "# after\n"),
+            full: full);
 
         Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Equal(full ? [ProductTestsProject] : [], result.SelectedProjects);
+        Assert.Contains(
+            $"ENGINEERING_TEST_PLAN state={(full ? "full" : "none")}",
+            result.Output,
+            StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void InvalidAdmissionIsRejectedBeforeFullRouting(bool full, bool mixed)
+    {
+        const string path = "Meta/Digestion/backfill/source/residual-open/atom.yaml";
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, path, "# before\n");
+                WriteFile(root, ProductFeature, "internal sealed class Feature { }\n");
+                WriteAdmissionPlaneFileMap(
+                    root,
+                    (mixed ? path : "unmatched", "content"),
+                    (ProductFeature, "judge"));
+            },
+            root =>
+            {
+                WriteFile(root, path, "# after\n");
+                if (mixed)
+                    WriteFile(root, ProductFeature, "internal sealed class Feature { public int Value => 1; }\n");
+            },
+            full: full);
+
+        Assert.True(result.ExitCode == 2, result.Diagnostic);
         Assert.Empty(result.SelectedProjects);
-        Assert.Contains("ENGINEERING_TEST_PLAN state=none", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("ENGINEERING_TEST_PLAN state=", result.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            mixed ? "ADMISSION-PLANE-MIXED" : "ADMISSION-PLANE-PATH-MATCH-COUNT",
+            result.Error,
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -283,7 +347,8 @@ public sealed class EngineeringScopeProgramTests
     private static BoundaryResult RunBoundary(
         Action<string> writeBase,
         Action<string> writeCandidate,
-        Action<string>? prepareExecution = null)
+        Action<string>? prepareExecution = null,
+        bool full = false)
     {
         var root = TemporaryFileSystem.Directory.CreateTempSubdirectory(
             "stratalint-engineering-scope-").FullName;
@@ -314,6 +379,7 @@ public sealed class EngineeringScopeProgramTests
                     "--repository", root,
                     "--head", head,
                     "--base", @base,
+                    .. full ? new[] { "--full", "1" } : [],
                 ],
                 TestResultEvidence.Load,
                 output,

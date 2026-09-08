@@ -164,9 +164,15 @@ invoke_inspector() {
     append_module "$module" "$path"
   done < "$MODULE_TABLE"
   [[ "${#inspector_arguments[@]}" -gt 0 ]] || return 2
+  run_phase utility-input-build dotnet build \
+    "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release --nologo --verbosity quiet
+  run_phase utility-input dotnet run \
+    --project "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" \
+    --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input
   run_phase inspect \
     "$CACHE_RUN" "$LAKE" env lean --run "$INSPECTOR" \
     --output "$SPOOL_REPORT" --material-spool "$MATERIAL_SPOOL" \
+    --utility-input "$LOG_DIR/utility-input.stdout.log" \
     "${inspector_arguments[@]}"
   run_phase compact python3 "$compactor" compact \
     "$SPOOL_REPORT" "$MATERIAL_SPOOL" "$output"

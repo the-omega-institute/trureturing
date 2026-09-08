@@ -49,6 +49,9 @@ internal sealed class StubCliEnvironment(
     public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) =>
         fileMapConform ?? new(2, string.Empty, "filemap conformance is not configured in this fixture");
 
+    public ExplicitCommandResult LeanUtilityInput(IReadOnlyList<string> arguments) =>
+        new(0, "[]\n", string.Empty);
+
     public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "deposit header check is not configured in this fixture");
 

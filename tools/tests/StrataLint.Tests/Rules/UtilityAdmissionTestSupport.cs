@@ -19,10 +19,11 @@ internal static class UtilityAdmissionTestSupport
         return EvaluateFirstFreeze(fixture);
     }
 
-    internal static IReadOnlyList<Diagnostic> EvaluateTaskUtility(string utility)
+    internal static IReadOnlyList<Diagnostic> EvaluateTaskUtility(string utility, bool refutation = false)
     {
         var fixture = new RuleFixture();
         fixture.AddSyntheticUnregisteredFrontierTask("D5-T0098");
+        if (refutation) utility = AddRefutationEvidence(fixture, utility);
         fixture.Files[RuleFixture.RingPath] = WithUtility(
             fixture.Files[RuleFixture.RingPath],
             utility);
@@ -40,17 +41,31 @@ internal static class UtilityAdmissionTestSupport
     {
         fixture.Files[RuleFixture.RingPath] = WithUtility(
             fixture.Files[RuleFixture.RingPath],
-            $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}");
+            AddRefutationEvidence(fixture,
+                $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}"));
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] =
             fixture.Files[RuleFixture.FixtureBackfillAtomPath]
                 .Replace(
                     "gid: D5/S0/Carrier/BackfillTarget",
-                    "gid: D5/S0/Carrier/Ring.goldenRing",
+                    "gid: " + UtilityRefutationTests.Result,
                     StringComparison.Ordinal)
                 .Replace(
                     "target_statement_id: null",
                     $"target_statement_id: {targetStatementId ?? "null"}",
                     StringComparison.Ordinal);
+    }
+
+    internal static string AddRefutationEvidence(RuleFixture fixture, string utility)
+    {
+        fixture.Reports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath] with
+        {
+            Declarations = fixture.Reports[RuleFixture.RingPath].Declarations.AddRange(new LeanDeclaration[] {
+                new LeanDeclaration("proposed_law", "def", "Prop := False", []),
+                new LeanDeclaration("refuted_law", "theorem", "Not proposed_law", []),
+            }),
+            Refutation = new(UtilityRefutationTests.Claim, UtilityRefutationTests.Result, true),
+        };
+        return utility + "; result=" + UtilityRefutationTests.Result + "; claim=" + UtilityRefutationTests.Claim;
     }
 
     internal static string AddExistingFrozenState(RuleFixture fixture)
@@ -94,7 +109,8 @@ internal static class UtilityAdmissionTestSupport
             item => item.AdmissionEffect is AdmissionEffect.Block);
         var observation = Assert.Single(
             diagnostics,
-            item => item.AdmissionEffect is AdmissionEffect.Observe);
+            item => item.AdmissionEffect is AdmissionEffect.Observe
+                && item.Message.StartsWith("UTILITY-OBSERVED ", StringComparison.Ordinal));
         Assert.Equal(RuleFixture.RingPath, observation.Path);
         Assert.Equal(
             $"UTILITY-OBSERVED module={RuleFixture.RingPath} {fields} "
@@ -113,7 +129,8 @@ internal static class UtilityAdmissionTestSupport
         Assert.Contains(blockCode, block.Message, StringComparison.Ordinal);
         var observation = Assert.Single(
             diagnostics,
-            item => item.AdmissionEffect is AdmissionEffect.Observe);
+            item => item.AdmissionEffect is AdmissionEffect.Observe
+                && item.Message.StartsWith("UTILITY-OBSERVED ", StringComparison.Ordinal));
         Assert.Equal(
             $"UTILITY-OBSERVED module={RuleFixture.RingPath} {observationFields} "
             + "semantics=unverified-by-machine",

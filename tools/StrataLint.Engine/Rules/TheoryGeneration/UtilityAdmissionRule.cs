@@ -2,38 +2,43 @@ using System.Collections.Immutable;
 
 namespace StrataLint.Engine;
 
-// SL-031. First-freeze utility admission for computational content.
+// SL-031. Changed unfrozen content and first-freeze utility admission.
 internal static class UtilityAdmissionRule
 {
     internal static bool IsAffectedBy(RuleEvaluationContext context) =>
         context.RuleImplementationChanged
-        || context.Changes.Paths.Any(path =>
-            FrozenStatePath.IsUnderRoot(path.Value)
-            || path.Value.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-            || string.Equals(path.Value, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
-            || IsChangedUtilityHeader(context, path));
+        || SelectedPaths(context).Any()
+        || context.Changes.Paths.Any(path => IsBaselineFrozen(context, path)
+            && IsChangedUtilityHeader(context, path));
 
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         AddRatchetFindings(context, findings);
-        foreach (var change in context.Changes.Entries
-                     .Where(static change =>
-                         change.Kind is RawChangeKind.Added
-                         && FrozenStatePath.IsUnderRoot(change.Path.Value))
-                     .Where(change => context.Current.Files.ContainsKey(change.Path)
-                         && !context.Baseline.Files.ContainsKey(change.Path))
-                     .OrderBy(static change => change.Path.Value, StringComparer.Ordinal))
+        var modules = new Dictionary<RepoPath, UtilityValidationPhase>();
+        foreach (var path in SelectedPaths(context))
         {
-            if (!FrozenStatePath.TryToModulePath(change.Path.Value, out var modulePath))
+            if (!FrozenStatePath.IsUnderRoot(path.Value))
             {
-                findings.Add(new RuleFinding(
-                    change.Path.Value,
-                    $"UTILITY-INPUT-UNKNOWN module={change.Path.Value} reason=invalid-frozen-state-path"));
+                modules.TryAdd(path, UtilityValidationPhase.ChangedContent);
                 continue;
             }
 
+            if (!FrozenStatePath.TryToModulePath(path.Value, out var modulePath))
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    $"UTILITY-INPUT-UNKNOWN module={path.Value} reason=invalid-frozen-state-path"));
+                continue;
+            }
+
+            modules[modulePath] = UtilityValidationPhase.FirstFreeze;
+        }
+
+        foreach (var (modulePath, phase) in modules.OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
+        {
+            AddClassificationFindings(context, modulePath, findings);
             if (!context.Current.TryGetFile(modulePath.Value, out var module)
                 || !RepositoryRules.TryHeader(module.Text, out var header))
             {
@@ -45,7 +50,7 @@ internal static class UtilityAdmissionRule
             }
 
             var validation = UtilityDeclarationValidator.Validate(
-                UtilityValidationPhase.FirstFreeze,
+                phase,
                 modulePath,
                 header.Utility,
                 context.Current,
@@ -62,6 +67,55 @@ internal static class UtilityAdmissionRule
         }
 
         return findings.ToImmutable();
+    }
+
+    private static IEnumerable<RepoPath> SelectedPaths(RuleEvaluationContext context) =>
+        context.Changes.Paths.Where(path =>
+            context.Current.Files.TryGetValue(path, out var current)
+            && (FrozenStatePath.IsUnderRoot(path.Value)
+                ? !context.Baseline.Files.ContainsKey(path)
+                : IsD5Lean(path.Value)
+                    && !IsBaselineFrozen(context, path)
+                    && (!context.Baseline.Files.TryGetValue(path, out var baseline)
+                        || !current.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()))));
+
+    private static bool IsBaselineFrozen(RuleEvaluationContext context, RepoPath path) =>
+        IsD5Lean(path.Value)
+        && FrozenStatePath.TryFromModulePath(path, out var statePath)
+        && context.Baseline.Files.ContainsKey(statePath);
+
+    private static void AddClassificationFindings(
+        RuleEvaluationContext context,
+        RepoPath path,
+        ImmutableArray<RuleFinding>.Builder findings)
+    {
+        if (!context.Baseline.Files.TryGetValue(path, out var baseline)
+            || !context.Current.Files.TryGetValue(path, out var current))
+        {
+            return;
+        }
+
+        var before = ClassificationDisplay(baseline);
+        var after = ClassificationDisplay(current);
+        if (before == after) return;
+        findings.Add(new RuleFinding(path.Value,
+            $"UTILITY-CLASSIFICATION-CHANGED module={path.Value} "
+            + $"before={before} after={after} semantics=unverified-by-machine",
+            AdmissionEffect.Observe));
+        if (UtilityDeclarationValidator.IsClassificationDowngrade(baseline, current))
+        {
+            findings.Add(new RuleFinding(path.Value,
+                $"UTILITY-CLASSIFICATION-DOWNGRADE module={path.Value} reason=ordinary-body-unchanged"));
+        }
+    }
+
+    private static string ClassificationDisplay(RepositoryFile file)
+    {
+        if (!RepositoryRules.TryHeader(file.Text, out var header) || header.Utility is null)
+            return "missing";
+        return UtilitySyntax.TryParse(header.Utility, out var declaration, out _)
+            ? KindDisplay(declaration!.Kind)
+            : "unparsed";
     }
 
     private static void AddObservation(
@@ -187,6 +241,10 @@ internal static class UtilityAdmissionRule
         UtilityValidationFailure.TargetDangling => "UTILITY-TARGET-DANGLING",
         UtilityValidationFailure.RefutesAtomNoCoverage => "UTILITY-REFUTES-ATOM-NO-COVERAGE",
         UtilityValidationFailure.ConsumerUnreachable => "UTILITY-CONSUMER-UNREACHABLE",
+        UtilityValidationFailure.OrdinaryInstanceForbidden => "UTILITY-ORDINARY-INSTANCE-BANNED",
+        UtilityValidationFailure.ClassificationDowngrade => "UTILITY-CLASSIFICATION-DOWNGRADE",
+        UtilityValidationFailure.RefutationInvalid => "UTILITY-REFUTATION-INVALID",
+        UtilityValidationFailure.RefutationEvidenceMissing => "UTILITY-REFUTATION-EVIDENCE-MISSING",
         _ => throw new ArgumentOutOfRangeException(nameof(failure)),
     };
 

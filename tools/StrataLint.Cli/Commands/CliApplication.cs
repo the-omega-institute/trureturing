@@ -34,6 +34,8 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult LeanUtilityInput(IReadOnlyList<string> arguments);
+
     ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments);
 
     CommandResult Ingest(IReadOnlyList<string> arguments);
@@ -122,6 +124,8 @@ internal static class CliApplication
                 RenderCommand(environment.RenderDag(tail), console),
             ["deposit-header-check"] = static (environment, tail, console) =>
                 RenderExplicit(environment.DepositHeaderCheck(tail), console),
+            ["lean-utility-input"] = static (environment, tail, console) =>
+                RenderExplicit(environment.LeanUtilityInput(tail), console),
             ["digest-status"] = static (environment, tail, console) =>
                 RenderCommand(environment.DigestStatus(tail), console),
             ["echo-verify"] = static (environment, tail, console) =>

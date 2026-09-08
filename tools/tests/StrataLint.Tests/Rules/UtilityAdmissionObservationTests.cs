@@ -9,7 +9,7 @@ public sealed class UtilityAdmissionObservationTests
     public void RefutesTaskIsObservedNotBlocked()
     {
         var diagnostics = EvaluateTaskUtility(
-            "kind=bounded-enumeration; basis=refutes=task:D5-T0098");
+            "kind=bounded-enumeration; basis=refutes=task:D5-T0098", refutation: true);
 
         AssertSoftObservation(
             diagnostics,
@@ -20,11 +20,11 @@ public sealed class UtilityAdmissionObservationTests
     public void TerminalIsObservedNotBlocked()
     {
         var diagnostics = EvaluateTaskUtility(
-            "kind=certified-instance; basis=terminal=task:D5-T0098");
+            "kind=checker; basis=terminal=task:D5-T0098; instance=D5/S0/Carrier/Ring.goldenRing");
 
         AssertSoftObservation(
             diagnostics,
-            "kind=certified-instance basis=terminal target=task:D5-T0098");
+            "kind=checker basis=terminal target=task:D5-T0098");
     }
 
     [Fact]
@@ -70,11 +70,12 @@ public sealed class UtilityAdmissionObservationTests
     [Fact]
     public void RefutesAtomWithExactCoverageEdgeIsObserved()
     {
-        var fixture = new RuleFixture();
-        var statementId = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+        var fixture = AtomUtilityFixture(targetStatementId: null);
+        var statementId = CanonicalStatementWriter.DeclarationStatementId(
             RepoPath.CreateKnown(RuleFixture.RingPath),
-            fixture.Reports[RuleFixture.RingPath])).StatementId.Value;
-        SetAtomUtility(fixture, statementId);
+            fixture.Reports[RuleFixture.RingPath].Declarations.Single(static item => item.Name == "refuted_law"));
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[RuleFixture.FixtureBackfillAtomPath]
+            .Replace("target_statement_id: null", "target_statement_id: " + statementId, StringComparison.Ordinal);
 
         var diagnostics = EvaluateFirstFreeze(fixture);
 
@@ -281,7 +282,8 @@ public sealed class UtilityAdmissionObservationTests
         var ambiguousObservation = Assert.Single(
             utilityDiagnostics,
             diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Observe
-                && diagnostic.Path == RuleFixture.RingPath);
+                && diagnostic.Path == RuleFixture.RingPath
+                && diagnostic.Message.StartsWith("UTILITY-OBSERVED ", StringComparison.Ordinal));
         Assert.Equal(
             $"UTILITY-OBSERVED module={RuleFixture.RingPath} "
             + $"kind=bounded-enumeration basis=refutes target=atom:{RuleFixture.FixtureAtomId} "

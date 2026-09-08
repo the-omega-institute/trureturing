@@ -20,7 +20,7 @@ test:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln
 
 engineering-tests:
-	@cd "$(REPOSITORY)" && dotnet run --project "$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --no-launch-profile -- --repository "$(REPOSITORY)" --head "$(HEAD)" --base "$(BASE)"
+	@cd "$(REPOSITORY)" && dotnet run --project "$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --no-launch-profile -- --repository "$(REPOSITORY)" --head "$(HEAD)" --base "$(BASE)" $(if $(filter 1,$(FULL)),--full 1,)
 
 selftest:
 	@/bin/bash $(HERE)/scripts/stratalint-selftest.sh

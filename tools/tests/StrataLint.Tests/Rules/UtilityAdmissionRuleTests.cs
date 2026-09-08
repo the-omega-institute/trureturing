@@ -38,18 +38,18 @@ public sealed class UtilityAdmissionRuleTests
                 Diagnostics: EvaluateFirstFreeze(
                     "kind=checker; basis=terminal=task:D5-T0001"),
                 BlockCode: "UTILITY-INSTANCE-MISSING",
-                ObservationFields: "kind=unparsed basis=n/a target=n/a"),
+                ObservationFields: "kind=checker basis=terminal target=task:D5-T0001"),
             (
                 Diagnostics: EvaluateFirstFreeze(
                     "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/Ring.goldenRing"),
                 BlockCode: "UTILITY-PREMISES-MISSING",
-                ObservationFields: "kind=unparsed basis=n/a target=n/a"),
+                ObservationFields: "kind=numeric-reduction basis=consumer target=D5/S0/Carrier/Ring.goldenRing"),
             (
                 Diagnostics: EvaluateFirstFreeze(
-                    "kind=certified-instance; basis=consumer=D5/S0/Carrier/Ring.missing"),
+                    "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/Ring.missing; premises=D5/S0/Carrier/Ring.goldenRing"),
                 BlockCode: "UTILITY-TARGET-DANGLING",
                 ObservationFields:
-                    "kind=certified-instance basis=consumer target=D5/S0/Carrier/Ring.missing"),
+                    "kind=numeric-reduction basis=consumer target=D5/S0/Carrier/Ring.missing"),
             (
                 Diagnostics: EvaluateFirstFreeze(missingReport, validateLean: false),
                 BlockCode: "UTILITY-INPUT-UNKNOWN",
@@ -63,11 +63,11 @@ public sealed class UtilityAdmissionRuleTests
                     $"kind=bounded-enumeration basis=refutes target=atom:{RuleFixture.FixtureAtomId}"),
             (
                 Diagnostics: EvaluateFirstFreeze(
-                    "kind=certified-instance; "
-                    + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue"),
+                    "kind=numeric-reduction; "
+                    + "basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue; premises=D5/S0/Carrier/Ring.goldenRing"),
                 BlockCode: "UTILITY-CONSUMER-UNREACHABLE",
                 ObservationFields:
-                    "kind=certified-instance basis=consumer "
+                    "kind=numeric-reduction basis=consumer "
                     + "target=D5/S0/Carrier/ValuesBinding.fixtureValue"),
         };
 
@@ -106,7 +106,7 @@ public sealed class UtilityAdmissionRuleTests
         AssertBlockedObservationPair(
             EvaluateFirstFreeze("kind=checker; basis=terminal=task:D5-T0001"),
             "UTILITY-INSTANCE-MISSING",
-            "kind=unparsed basis=n/a target=n/a");
+            "kind=checker basis=terminal target=task:D5-T0001");
     }
 
     [Fact]
@@ -116,14 +116,14 @@ public sealed class UtilityAdmissionRuleTests
             EvaluateFirstFreeze(
                 "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/Ring.goldenRing"),
             "UTILITY-PREMISES-MISSING",
-            "kind=unparsed basis=n/a target=n/a");
+            "kind=numeric-reduction basis=consumer target=D5/S0/Carrier/Ring.goldenRing");
     }
 
     [Fact]
     public void DanglingConsumerDeclarationIsBlocked()
     {
         var diagnostics = EvaluateFirstFreeze(
-            "kind=certified-instance; basis=consumer=D5/S0/Carrier/Ring.missing");
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/Ring.missing; premises=D5/S0/Carrier/Ring.goldenRing");
 
         var diagnostic = Assert.Single(
             diagnostics,
@@ -182,6 +182,7 @@ public sealed class UtilityAdmissionRuleTests
     public void BodyOnlyLeanEditDoesNotWakeUtilityRule()
     {
         var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
         fixture.Files[RuleFixture.RingPath] += "-- body-only change\n";
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.RingPath]));
 
@@ -207,7 +208,7 @@ public sealed class UtilityAdmissionRuleTests
     public void DanglingSoftTargetIsBlocked(string target)
     {
         var diagnostic = Assert.Single(EvaluateFirstFreeze(
-            $"kind=bounded-enumeration; basis=terminal={target}"),
+            $"kind=checker; basis=terminal={target}; instance=D5/S0/Carrier/Ring.goldenRing"),
             item => item.AdmissionEffect is AdmissionEffect.Block);
 
         Assert.Contains(
@@ -223,7 +224,7 @@ public sealed class UtilityAdmissionRuleTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = "not: canonical\n";
         fixture.Files[RuleFixture.RingPath] = WithUtility(
             fixture.Files[RuleFixture.RingPath],
-            $"kind=bounded-enumeration; basis=terminal=atom:{RuleFixture.FixtureAtomId}");
+            $"kind=checker; basis=terminal=atom:{RuleFixture.FixtureAtomId}; instance=D5/S0/Carrier/Ring.goldenRing");
 
         var diagnostic = Assert.Single(
             EvaluateFirstFreeze(fixture),
@@ -238,12 +239,14 @@ public sealed class UtilityAdmissionRuleTests
     [Fact]
     public void RefutesGidIsObservedNotBlocked()
     {
-        var diagnostics = EvaluateFirstFreeze(
-            "kind=bounded-enumeration; basis=refutes=gid:D5/S0/Carrier/Ring.goldenRing");
+        var fixture = new RuleFixture();
+        fixture.Files[RuleFixture.RingPath] = WithUtility(fixture.Files[RuleFixture.RingPath],
+            AddRefutationEvidence(fixture, "kind=bounded-enumeration; basis=refutes=gid:" + UtilityRefutationTests.Claim));
+        var diagnostics = EvaluateFirstFreeze(fixture);
 
         AssertSoftObservation(
             diagnostics,
             "kind=bounded-enumeration basis=refutes "
-            + "target=gid:D5/S0/Carrier/Ring.goldenRing");
+            + "target=gid:" + UtilityRefutationTests.Claim);
     }
 }
