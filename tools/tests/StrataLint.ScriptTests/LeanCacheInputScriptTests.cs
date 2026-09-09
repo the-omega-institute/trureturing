@@ -22,7 +22,20 @@ public sealed class LeanCacheInputScriptTests
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("python3",
-            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py")],
+            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py"),
+                "Contracts", "LegacyCallerTests"],
+            root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void SnapshotReadinessAndMaterialRespectWriterPermissions()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py"), "SnapshotContracts"],
             root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));

@@ -1,8 +1,10 @@
 """Executable resolver and optional Actions seed contracts, with isolated Git/data."""
+import hashlib
 import json
 import importlib
 import os
 import pathlib
+import platform
 import shutil
 import subprocess
 import sys
@@ -82,13 +84,14 @@ esac
         self.assertEqual("", invalid.stdout)
 
 
-class Contracts(unittest.TestCase):
+class CacheFixture:
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="ci-contract-")
         self.root = pathlib.Path(self.temp.name)
         self.env = dict(os.environ, GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                         GITHUB_EVENT_NAME="push", GITHUB_REF="refs/heads/dev",
                         STRATALINT_CHECK_SUCCEEDED="true", STRATALINT_CACHE_WRITES="true",
+                        HOME=str(self.root),
                         GITHUB_OUTPUT=str(self.root / "outputs"), GITHUB_ENV=str(self.root / "environment"))
         (self.root / "lake-manifest.json").write_text(json.dumps({"packages": [{"name": "mathlib", "rev": REV}]}))
 
@@ -99,6 +102,8 @@ class Contracts(unittest.TestCase):
         return subprocess.run([sys.executable, str(script), *args, "--repository", str(self.root)],
                               env=env or self.env, capture_output=True, text=True)
 
+
+class Contracts(CacheFixture, unittest.TestCase):
     def git(self, *args):
         return subprocess.run(["git", "-C", str(self.root), *args], check=True,
                               capture_output=True, text=True).stdout.strip()
@@ -209,6 +214,15 @@ class Contracts(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertFalse((self.root / "build/lean-cache/project/manifest.json").exists())
 
+    def test_pull_request_restores_seed_with_writes_disabled(self):
+        _, key = self.seed()
+        self.env.update(GITHUB_EVENT_NAME="pull_request_target", STRATALINT_CACHE_WRITES="false")
+        result = self.production(key)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual(b"seed bytes", (self.root / ".lake/build/lib/Module.olean").read_bytes())
+        self.assertEqual("producer\n", (self.root / "calls").read_text())
+        self.assertIn("STRATALINT_ACTIONS_CACHE_SEEDED=1", (self.root / "environment").read_text())
+
     def test_transport_delegates_to_common_owner_without_a_package_cache(self):
         sys.path.insert(0, str(CI.parent))
         owner = importlib.import_module("ci")
@@ -242,6 +256,66 @@ class Contracts(unittest.TestCase):
                     self.assertFalse((self.root / "environment").exists())
         extract.assert_called_once_with(self.root, args.archive)
         self.assertEqual(3, len(calls))
+
+
+class SnapshotContracts(CacheFixture, unittest.TestCase):
+    def test_snapshot_readiness_and_material_follow_writer_permissions(self):
+        material = {
+            "dependency": (".lake/packages", "mathlib/Mathlib.olean", b"private dependency seed\n"),
+            "project": (".lake/build", "lib/Module.olean", b"private project seed\n"),
+            "report": (".lake/report-cache", "fixture/raw-lean-report.json", b'{"fixture":"report seed"}\n'),
+        }
+        for target, relative, data in material.values():
+            path = self.root / target / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            path.chmod(0o640)
+        system, machine = platform.system().lower(), platform.machine().lower()
+        architecture = {"aarch64": "arm64", "x86_64": "x64", "amd64": "x64"}.get(machine, machine)
+        partition = f"{REV}/{system}-{architecture}"
+        cases = [
+            ("dev_push", "push", "refs/heads/dev", "true", "true", True),
+            ("dev_pr_target", "pull_request_target", "refs/heads/dev", "true", "true", False),
+            ("pr_merge", "pull_request", "refs/pull/7/merge", "true", "true", False),
+            ("dev_dispatch", "workflow_dispatch", "refs/heads/dev", "true", "true", False),
+            ("dev_writes_false", "push", "refs/heads/dev", "false", "true", False),
+            ("dev_check_failed", "push", "refs/heads/dev", "true", "false", False),
+            ("dev_check_missing", "push", "refs/heads/dev", "true", None, False),
+            ("other_branch", "push", "refs/heads/topic", "true", "true", False),
+            ("other_integration", "push", "refs/heads/integration-ci-other-tests", "true", "true", False),
+        ]
+        for name, event, ref, writes, success, allowed in cases:
+            with self.subTest(case=name):
+                cache = self.root / "build/lean-cache"
+                if cache.exists():
+                    shutil.rmtree(cache)
+                output = self.root / "outputs"
+                output.unlink(missing_ok=True)
+                env = dict(self.env, GITHUB_RUN_ID="34362630774", GITHUB_RUN_ATTEMPT="1",
+                           GITHUB_EVENT_NAME=event, GITHUB_REF=ref, STRATALINT_CACHE_WRITES=writes)
+                env.pop("STRATALINT_CHECK_SUCCEEDED", None)
+                if success is not None:
+                    env["STRATALINT_CHECK_SUCCEEDED"] = success
+                result = self.run_tool(CACHE, "snapshot", env=env)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertEqual({layer + "_ready": str(allowed).lower() for layer in material},
+                                 dict(line.split("=", 1) for line in output.read_text().splitlines()), result.stdout)
+                receipts = [json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
+                            for line in result.stdout.splitlines() if line.startswith("LEAN_ACTIONS_CACHE ")]
+                self.assertEqual({layer: "snapshot" if allowed else "save-disabled" for layer in material},
+                                 {receipt["layer"]: receipt["status"] for receipt in receipts})
+                if not allowed:
+                    self.assertFalse(cache.exists())
+                    continue
+                for layer, (target, relative, data) in material.items():
+                    staged = cache / layer
+                    self.assertEqual(data, (staged / "data" / relative).read_bytes())
+                    self.assertEqual(data, (self.root / target / relative).read_bytes())
+                    self.assertEqual({
+                        "schema": "lean-actions-seed-v1", "partition": partition, "layer": layer,
+                        "key": f"lean-{layer}-v3-{REV}-{system}-{architecture}-34362630774-1",
+                        "files": [{"path": relative, "sha256": hashlib.sha256(data).hexdigest(), "mode": 0o640}],
+                    }, json.loads((staged / "manifest.json").read_text()))
 
 
 if __name__ == "__main__":
