@@ -32,11 +32,23 @@ def receipt(layer, status, **fields):
     print("LEAN_ACTIONS_CACHE " + json.dumps({"layer": layer, "status": status, **fields}, sort_keys=True))
 
 
-def files(directory):
+def files(directory, *, materialize_links=False):
     result = []
     for path in sorted(directory.rglob("*")):
         if path.is_symlink():
-            raise ValueError("cache has a symlink")
+            relative = path.relative_to(directory).as_posix()
+            if not materialize_links:
+                raise ValueError(f"cache has a symlink: {relative}")
+            # Only the private dependency snapshot may turn internal file links
+            # into ordinary, hashed copies. Restores still reject raw links.
+            try:
+                target = path.resolve(strict=True)
+                if not target.is_relative_to(directory.resolve()) or not target.is_file():
+                    raise ValueError("link must resolve to an internal regular file")
+                path.unlink()
+                shutil.copy2(target, path)
+            except (OSError, RuntimeError, ValueError) as error:
+                raise ValueError(f"cache link {relative}: {error}") from error
         if path.is_file():
             result.append({"path": path.relative_to(directory).as_posix(), "sha256": sha(path), "mode": path.stat().st_mode & 0o777})
     if not result:
@@ -59,7 +71,7 @@ def snapshot(root, keys):
                 with cache_guard(root, shared=True):
                     shutil.copytree(root / spec["target"], staged / "data", symlinks=True)
                 manifest = {"schema": "lean-actions-seed-v1", "partition": keys["partition"], "layer": layer,
-                            "key": spec["key"], "files": files(staged / "data")}
+                            "key": spec["key"], "files": files(staged / "data", materialize_links=layer == "dependency")}
                 (staged / "manifest.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")
                 if target.exists():
                     shutil.rmtree(target)

@@ -259,6 +259,166 @@ class Contracts(CacheFixture, unittest.TestCase):
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
+    def snapshot_result(self):
+        (self.root / "outputs").unlink(missing_ok=True)
+        result = self.run_tool(CACHE, "snapshot")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        readiness = dict(line.split("=", 1) for line in (self.root / "outputs").read_text().splitlines())
+        receipts = {entry["layer"]: entry for entry in (
+            json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
+            for line in result.stdout.splitlines() if line.startswith("LEAN_ACTIONS_CACHE "))}
+        return readiness, receipts
+
+    def dependency_files(self):
+        source = self.root / ".lake/packages"
+        material = {
+            "mathlib/scripts/bench/size/run": (b"#!/bin/sh\nprintf 'size\\n'\n", 0o755),
+            "mathlib/scripts/bench/build/fake-root/bin/lean": (b"#!/bin/sh\nexit 0\n", 0o755),
+            "batteries/README.md": (b"# Batteries\n\x00private bytes\xff\n", 0o640),
+        }
+        for relative, (data, mode) in material.items():
+            path = source / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            path.chmod(mode)
+        return source, material
+
+    def test_internal_dependency_file_links_round_trip_as_private_material(self):
+        source, material = self.dependency_files()
+        links = {
+            "mathlib/scripts/bench/size/run.py": "run",
+            "mathlib/scripts/bench/build/fake-root/bin/lean.py": "lean",
+            "batteries/docs/README.md": "../README.md",
+            "batteries/docs/README.alias": "README.md",
+        }
+        expected = dict(material)
+        for relative, target in links.items():
+            path = source / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.symlink_to(target)
+            expected[relative] = (path.read_bytes(), path.stat().st_mode & 0o777)
+        readiness, receipts = self.snapshot_result()
+        self.assertEqual({"dependency_ready": "true", "project_ready": "false", "report_ready": "false"},
+                         readiness, receipts)
+        self.assertEqual("snapshot", receipts["dependency"]["status"])
+        cached = self.root / "build/lean-cache/dependency"
+        manifest = json.loads((cached / "manifest.json").read_text())
+        self.assertEqual("lean-actions-seed-v1", manifest["schema"])
+        self.assertEqual([{"path": relative, "sha256": hashlib.sha256(data).hexdigest(), "mode": mode}
+                          for relative, (data, mode) in sorted(expected.items())], manifest["files"])
+        self.assertFalse(any(path.is_symlink() for path in (cached / "data").rglob("*")))
+        for relative, (data, mode) in expected.items():
+            self.assertEqual(data, (source / relative).read_bytes())
+            self.assertEqual(mode, (source / relative).stat().st_mode & 0o777)
+            self.assertEqual(data, (cached / "data" / relative).read_bytes())
+        for relative, target in links.items():
+            self.assertTrue((source / relative).is_symlink())
+            self.assertEqual(target, os.readlink(source / relative))
+        (source / "batteries/README.md").write_bytes(b"changed producer bytes")
+        self.assertEqual(expected["batteries/README.md"][0], (cached / "data/batteries/README.md").read_bytes())
+        shutil.rmtree(source)
+        result = self.run_tool(CACHE, "restore", "--dependency-key", manifest["key"])
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status": "restored"', result.stdout)
+        self.assertIn("STRATALINT_ACTIONS_CACHE_SEEDED=0", (self.root / "environment").read_text())
+        for relative, (data, mode) in expected.items():
+            path = source / relative
+            self.assertFalse(path.is_symlink())
+            self.assertEqual(data, path.read_bytes())
+            self.assertEqual(mode, path.stat().st_mode & 0o777)
+        (source / "batteries/docs/README.md").write_bytes(b"changed consumer bytes")
+        self.assertEqual(expected["batteries/docs/README.md"][0],
+                         (cached / "data/batteries/docs/README.md").read_bytes())
+        self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
+        (cached / "data/batteries/README.md").write_bytes(b"changed cache bytes")
+        self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
+
+    def test_invalid_dependency_links_disable_only_that_save_with_an_offending_path(self):
+        source, _ = self.dependency_files()
+        for target in (".lake/build", ".lake/report-cache"):
+            directory = self.root / target
+            directory.mkdir(parents=True)
+            (directory / "fixture").write_bytes(b"other layer bytes")
+        readiness, _ = self.snapshot_result()
+        self.assertEqual({layer + "_ready": "true" for layer in ("dependency", "project", "report")}, readiness)
+        cached = self.root / "build/lean-cache/dependency"
+        outside = self.root / "outside"
+        outside.write_bytes(b"outside must stay private")
+        # The same relative escape also lands on an existing file from staging.
+        staged_outside = cached.parent / "outside"
+        staged_outside.write_bytes(b"outside staging must stay private")
+        cases = {
+            "escape": "../../../../outside",
+            "absolute": str(outside),
+            "broken": "missing",
+            "self-cycle": "bad-link",
+            "chain-cycle": "cycle-peer",
+            "directory": "..",
+        }
+        link = source / "batteries/docs/bad-link"
+        link.parent.mkdir()
+        peer = link.with_name("cycle-peer")
+        for name, target in cases.items():
+            before = (cached / "manifest.json").read_bytes()
+            with self.subTest(link=name):
+                link.symlink_to(target)
+                if name == "chain-cycle":
+                    peer.symlink_to("bad-link")
+                try:
+                    readiness, receipts = self.snapshot_result()
+                    self.assertEqual({"dependency_ready": "false", "project_ready": "true", "report_ready": "true"},
+                                     readiness, receipts)
+                    self.assertEqual("save-failed", receipts["dependency"]["status"])
+                    self.assertIn("batteries/docs/bad-link", receipts["dependency"]["reason"])
+                    self.assertEqual(before, (cached / "manifest.json").read_bytes())
+                    self.assertEqual(target, os.readlink(link))
+                    self.assertEqual(b"outside must stay private", outside.read_bytes())
+                    self.assertEqual(b"outside staging must stay private", staged_outside.read_bytes())
+                    self.assertFalse(list(cached.parent.glob(".snapshot-*")))
+                finally:
+                    link.unlink()
+                    peer.unlink(missing_ok=True)
+
+    def test_corrupt_dependency_seed_falls_back_without_replacing_current_material(self):
+        source, _ = self.dependency_files()
+        shutil.copy2(source / "batteries/README.md", source / "batteries/README.copy")
+        readiness, _ = self.snapshot_result()
+        self.assertEqual("true", readiness["dependency_ready"])
+        cached = self.root / "build/lean-cache/dependency"
+        key = json.loads((cached / "manifest.json").read_text())["key"]
+        saved = cached / "data/batteries/README.md"
+        original, mode = saved.read_bytes(), saved.stat().st_mode & 0o777
+        (self.root / "Makefile").write_text("current:\n\t@echo producer >> calls\n\t@exit $${PRODUCER_EXIT:-0}\n")
+        for corruption in ("bytes", "mode", "link", "missing", "extra"):
+            with self.subTest(corruption=corruption):
+                (source / "batteries/README.md").write_bytes(b"current material")
+                if corruption == "bytes":
+                    saved.write_bytes(b"corrupted bytes")
+                elif corruption == "mode":
+                    saved.chmod(0o755)
+                elif corruption == "link":
+                    saved.unlink()
+                    saved.symlink_to("README.copy")
+                elif corruption == "missing":
+                    saved.unlink()
+                else:
+                    (saved.parent / "extra").write_bytes(b"unlisted")
+                for production_exit in ("0", "9"):
+                    result = subprocess.run(["bash", "-euc",
+                        '"$PYTHON" "$CACHE" restore --repository "$ROOT" --dependency-key "$KEY"; make -C "$ROOT" current'],
+                        env=dict(self.env, PYTHON=sys.executable, CACHE=str(CACHE), ROOT=str(self.root),
+                                 KEY=key, PRODUCER_EXIT=production_exit), capture_output=True, text=True)
+                    self.assertEqual(production_exit == "0", result.returncode == 0, result.stdout + result.stderr)
+                    self.assertIn('"layer": "dependency", "reason":', result.stdout)
+                    self.assertIn('"status": "miss"', result.stdout)
+                    self.assertEqual(b"current material", (source / "batteries/README.md").read_bytes())
+                    self.assertNotIn("STRATALINT_ACTIONS_CACHE_SEEDED=1", (self.root / "environment").read_text())
+                saved.unlink(missing_ok=True)
+                saved.write_bytes(original)
+                saved.chmod(mode)
+                (saved.parent / "extra").unlink(missing_ok=True)
+        self.assertEqual(["producer"] * 10, (self.root / "calls").read_text().splitlines())
+
     def test_snapshot_readiness_and_material_follow_writer_permissions(self):
         material = {
             "dependency": (".lake/packages", "mathlib/Mathlib.olean", b"private dependency seed\n"),
