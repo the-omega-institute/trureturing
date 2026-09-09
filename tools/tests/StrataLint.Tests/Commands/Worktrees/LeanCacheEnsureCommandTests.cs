@@ -626,7 +626,7 @@ public sealed class LeanCacheRunScriptTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" WRAPPED_MARKER=\"$3\" STRATALINT_LEAN_CLI_DLL=\"$6\" exec /bin/bash \"$4\" \"$5\" payload",
+                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" WRAPPED_MARKER=\"$3\" STRATALINT_LEAN_PRODUCER_DLL=\"$6\" exec /bin/bash \"$4\" \"$5\" payload",
                 "lean-cache-run-test",
                 bin,
                 arguments,
@@ -645,7 +645,7 @@ public sealed class LeanCacheRunScriptTests
         [
             "run",
             "--project",
-            Path.Combine(LeanCacheGuard.PhysicalPath(repository), "tools", "StrataLint.Cli", "StrataLint.Cli.csproj"),
+            Path.Combine(LeanCacheGuard.PhysicalPath(repository), "tools", "StrataLint.EngineeringScope", "StrataLint.EngineeringScope.csproj"),
             "--configuration",
             "Release",
             "--",
@@ -653,8 +653,7 @@ public sealed class LeanCacheRunScriptTests
         Assert.Equal(
             cliArguments.Concat(new[]
             {
-                "worktree",
-                "with-cache-writer",
+                "lean-cache-writer",
                 "--",
                 wrapped,
                 "payload",

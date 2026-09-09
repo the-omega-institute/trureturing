@@ -5,7 +5,6 @@
     <AssemblyName>StrataLint</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Runtime/LeanCacheBudgetPolicy.cs" />
     <ProjectReference Include="../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../StrataLint.Scribe/StrataLint.Scribe.csproj" />

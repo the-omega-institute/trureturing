@@ -164,15 +164,15 @@ invoke_inspector() {
     append_module "$module" "$path"
   done < "$MODULE_TABLE"
   [[ "${#inspector_arguments[@]}" -gt 0 ]] || return 2
-  if [[ -n "${STRATALINT_LEAN_CLI_DLL:-}" ]]; then
-    [[ "$STRATALINT_LEAN_CLI_DLL" == /* && -f "$STRATALINT_LEAN_CLI_DLL" ]] \
-      || { echo "inspect.sh: candidate CLI is absent: $STRATALINT_LEAN_CLI_DLL" >&2; return 2; }
-    run_phase utility-input dotnet "$STRATALINT_LEAN_CLI_DLL" lean-utility-input
+  if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
+    [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
+      || { echo "inspect.sh: candidate producer is absent: $STRATALINT_LEAN_PRODUCER_DLL" >&2; return 2; }
+    run_phase utility-input dotnet "$STRATALINT_LEAN_PRODUCER_DLL" lean-utility-input
   else
     run_phase utility-input-build dotnet build \
-      "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release --nologo --verbosity quiet
+      "$INSPECTOR_DIR/../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --nologo --verbosity quiet
     run_phase utility-input dotnet run \
-      --project "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" \
+      --project "$INSPECTOR_DIR/../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
       --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input
   fi
   run_phase inspect \

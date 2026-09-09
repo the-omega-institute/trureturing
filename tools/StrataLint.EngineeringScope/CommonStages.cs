@@ -69,7 +69,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         foreach (var project in new[] { "tools/StrataLint.sln", "tools/tests/CompileFailProof/CompileFailProof.csproj", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj" })
             Step("restore-" + Path.GetFileNameWithoutExtension(project), "dotnet", ["restore", project, "--locked-mode"]);
         Step("build", "dotnet", ["build", "tools/StrataLint.sln", "--configuration", "Release", "--no-restore", "--warnaserror"]);
-        Step("tests", "dotnet", ["tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll", "--repository", root, "--all"]);
+        Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--all"]);
         var first = Step("selftest-first", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
         var second = Step("selftest-second", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
         if (first != second) throw new StageFailure(1, "selftest outputs differ");
@@ -78,7 +78,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             (raw, text) => CompilationProof.ValidateBannedApi(raw, text, File.ReadAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"))));
         if (candidate != CommonExecutionEvidence.Candidate(root)) throw new InvalidDataException("candidate changed during engineering");
         var directories = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.ScribePath,
-            "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" }.Select(path => Path.GetDirectoryName(Path.Combine(root, path))!);
+            CommonExecutionEvidence.RunnerPath }.Select(path => Path.GetDirectoryName(Path.Combine(root, path))!);
         var binaries = directories.SelectMany(directory => Directory.GetFiles(directory, "*", SearchOption.AllDirectories))
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'));
         CommonExecutionEvidence.SealEngineering(root, binaries, steps.ToArray());
@@ -89,7 +89,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var engineering = CommonExecutionEvidence.ValidateEngineering(root);
         RequireBinary(engineering, CommonExecutionEvidence.CliPath);
         RequireBinary(engineering, CommonExecutionEvidence.ScribePath);
-        RequireBinary(engineering, "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll");
+        RequireBinary(engineering, CommonExecutionEvidence.RunnerPath);
         File.Delete(Path.Combine(root, CommonExecutionEvidence.CurrentPath));
         var logs = Path.Combine(root, CommonExecutionEvidence.RootPath, "logs/current");
         if (Directory.Exists(logs)) Directory.Delete(logs, recursive: true);
@@ -98,7 +98,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             ? value : StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture);
         // Shared current supports normal cold production within the existing Lean
         // envelope. Nested defaults must not silently shorten that allowance.
-        Step("lean-report", "/usr/bin/env", [$"STRATALINT_LEAN_CLI_DLL={Path.Combine(root, CommonExecutionEvidence.CliPath)}",
+        Step("lean-report", "/usr/bin/env", [$"STRATALINT_LEAN_PRODUCER_DLL={Path.Combine(root, CommonExecutionEvidence.RunnerPath)}",
             $"STRATALINT_BUILD_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_BUILD_TIMEOUT_SECONDS")}",
             $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
             $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
@@ -152,7 +152,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var deadline = deadlineCancellation.CanBeCanceled ? null : Environment.GetEnvironmentVariable("PREFLIGHT_DEADLINE_AT");
         if (deadline is not null)
         {
-            if (!long.TryParse(deadline, out var seconds)) throw new ArgumentException("invalid PREFLIGHT_DEADLINE_AT");
+            if (!long.TryParse(deadline, System.Globalization.NumberStyles.Integer,
+                    System.Globalization.CultureInfo.InvariantCulture, out var seconds))
+                throw new ArgumentException("invalid PREFLIGHT_DEADLINE_AT");
             timeout = DateTimeOffset.FromUnixTimeSeconds(seconds) - clock.GetUtcNow();
             if (timeout <= TimeSpan.Zero) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
         }

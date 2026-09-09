@@ -8,7 +8,7 @@ public sealed class LeanCacheEnsureScriptTests
 {
     [Theory]
     [InlineData("tools/scripts/worktree/lean-cache-ensure.sh", "ensure-cache")]
-    [InlineData("tools/scripts/worktree/lean-cache-run.sh", "with-cache-writer")]
+    [InlineData("tools/scripts/worktree/lean-cache-run.sh", "lean-cache-writer")]
     public void MissingLakeDelegatesToCandidateBuiltDllWithoutRestoreOrBuild(string scriptPath, string command)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -36,7 +36,7 @@ public sealed class LeanCacheEnsureScriptTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" STRATALINT_LEAN_CLI_DLL=\"$(cd \"$5\" && pwd -P)/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll\" exec /bin/bash \"$4\"",
+                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" STRATALINT_LEAN_CLI_DLL=\"$(cd \"$5\" && pwd -P)/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll\" STRATALINT_LEAN_PRODUCER_DLL=\"$(cd \"$5\" && pwd -P)/tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll\" exec /bin/bash \"$4\"",
                 "lean-cache-test",
                 installed.Bin,
                 installed.ArgumentsPath,
@@ -59,13 +59,10 @@ public sealed class LeanCacheEnsureScriptTests
             4096);
         Assert.Equal(0, canonicalRoot.ExitCode);
         var canonicalRepository = Encoding.UTF8.GetString(canonicalRoot.StandardOutput).TrimEnd('\n');
-        var dll = Path.Combine(canonicalRepository, "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll");
-        Assert.Equal(
-            string.Join('\n',
-                dll,
-                "worktree",
-                command) + (command == "with-cache-writer" ? "\n--" : "") + "\n",
-            installed.ArgumentsText);
+        var expected = command == "lean-cache-writer"
+            ? Path.Combine(canonicalRepository, "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll") + "\nlean-cache-writer\n--\n"
+            : Path.Combine(canonicalRepository, "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll") + "\nworktree\nensure-cache\n";
+        Assert.Equal(expected, installed.ArgumentsText);
         Assert.Equal(canonicalRepository + "\n", installed.DotnetCwdText);
     }
 

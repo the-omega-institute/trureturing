@@ -21,6 +21,7 @@ internal static class CommonExecutionEvidence
     internal static readonly string[] ReportPaths = [ReportPath, ReportPath + ".sha256", ReportPath + ".input.attestation",
         ReportPath + ".provenance.json", ReportPath + ".materials.zip", ReportPath + ".seed.json"];
     internal const string CliPath = "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll";
+    internal const string RunnerPath = "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll";
     internal const string ScribePath = "tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll";
     internal static readonly string[] EngineeringSteps = ["restore-StrataLint", "restore-CompileFailProof", "restore-BannedApiCompileFailProof", "build", "tests", "selftest-first", "selftest-second", "capability-proof", "banned-api-proof"];
     internal static readonly string[] CurrentSteps = ["lean-report", "scribe", "filemap", "check-current"];

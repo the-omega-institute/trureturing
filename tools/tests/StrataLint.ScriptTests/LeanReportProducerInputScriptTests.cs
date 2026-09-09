@@ -5,6 +5,35 @@ namespace StrataLint.Tests;
 
 public sealed class LeanReportProducerInputScriptTests
 {
+    [Fact]
+    public void NativeIncrementalReportEqualsFullReportWithRefutationMaterials()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("/usr/bin/env",
+            [$"NATIVE_REPORT_PRODUCER={Path.Combine(AppContext.BaseDirectory, "StrataLint.EngineeringScope.dll")}",
+                "python3", Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/native_report_contract.py")],
+            root, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
+    [InlineData("ProducerIsolationTests.test_blueprint_only_change_selects_no_report_modules")]
+    [InlineData("ProducerIsolationTests.test_metadata_only_change_selects_no_report_modules")]
+    [InlineData("ProducerIsolationTests.test_shared_utility_parser_change_invalidates_report_modules")]
+    [InlineData("ReportImportTests.test_import_edit_rechecks_dependents_and_updates_reverse_closure")]
+    public void ExecutableProducerGraphDrivesRealPlannerInvalidation(string scenario)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py"), scenario],
+            root, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Theory]
     [InlineData("producer-paths")]
     [InlineData("scribe-producer-paths")]

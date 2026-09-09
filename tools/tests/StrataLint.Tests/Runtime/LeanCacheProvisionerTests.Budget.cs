@@ -117,7 +117,7 @@ public sealed partial class LeanCacheProvisionerTests
     {
         var file = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
-            "tools", "StrataLint.Cli", "Runtime", "LeanCacheBudgetPolicy.cs"));
+            "tools", "StrataLint.EngineeringScope", "Lean", "LeanCacheBudgetPolicy.cs"));
 
         // 只看该常数自己的 <summary> 块(#4122 tests 席:全文件 token 检查会被别处出现的同一
         // 字符串满足,例如复审线常数的注释里也写着案号与日期)。

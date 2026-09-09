@@ -11,6 +11,7 @@ public sealed class CurrentPrebuiltCliContractTests
     [InlineData("bound", null, null)]
     [InlineData("bound", "321", "654")]
     [InlineData("changed-dll", null, null)]
+    [InlineData("changed-producer-dll", null, null)]
     [InlineData("changed-source", null, null)]
     public void CurrentHandsOnlyValidatedCliToProducerWithoutRepeatingEngineering(string scenario, string? buildBudget, string? lockBudget)
     {
@@ -33,8 +34,8 @@ public sealed class CurrentPrebuiltCliContractTests
                 """);
             WriteExecutable("build/bin/make", """
                 [[ "$*" == '--no-print-directory lean-report' ]] || exit 91
-                [[ "${STRATALINT_LEAN_CLI_DLL:-}" -ef "$PWD/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" ]] || exit 92
-                [[ -f "$STRATALINT_LEAN_CLI_DLL" ]] || exit 93
+                [[ "${STRATALINT_LEAN_PRODUCER_DLL:-}" -ef "$PWD/tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" ]] || exit 92
+                [[ -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] || exit 93
                 printf 'validated-cli\n' > build/producer.log
                 printf '%s\n' "${STRATALINT_BUILD_TIMEOUT_SECONDS:-unset}" > build/producer-budget
                 printf '%s\n' "${STRATALINT_LOCK_TIMEOUT_SECONDS:-unset}" > build/producer-lock-budget
@@ -66,6 +67,7 @@ public sealed class CurrentPrebuiltCliContractTests
             var before = CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.EngineeringPath));
             Write("build/ci/logs/current/lean-inspector/stale.exit.log", "0\n");
             if (scenario == "changed-dll") Write(CommonExecutionEvidence.CliPath, "changed binary");
+            if (scenario == "changed-producer-dll") Write(CommonExecutionEvidence.RunnerPath, "changed producer binary");
             if (scenario == "changed-source") Write(project, "<Project />");
 
             using var output = new StringWriter();

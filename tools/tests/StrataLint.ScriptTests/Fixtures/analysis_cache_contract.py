@@ -12,12 +12,19 @@ from lean_seed_contract import ROOT, write
 
 class CurrentCacheTests(unittest.TestCase):
     def test_compiled_preparation_and_incremental_report_preserve_every_seed_outcome(self):
-        for seed in ("actions", "actions-corrupt", "release", "release-corrupt", "miss", "transport"):
+        seeds = ("actions", "actions-corrupt", "release", "release-corrupt", "miss", "transport")
+        selected = os.environ.get("ANALYSIS_SEED_CASE")
+        if selected:
+            self.assertIn(selected, seeds)
+            seeds = (selected,)
+        for seed in seeds:
             with self.subTest(seed=seed):
                 fixture = lean_seed_contract.InspectorTests("test_inspector_runs_lake_on_exact_seed_with_zero_reinspection")
                 fixture.setUp()
                 self.addCleanup(fixture.doCleanups)
                 root = fixture.root
+                write(root / ".gitignore", (ROOT / ".gitignore").read_text() + "remote/\nout/\ncache/\n")
+                subprocess.run(["git", "init", "-q", str(root)], check=True)
                 runtime = root / "bin"
                 runtime.mkdir()
                 remote = root / "remote"
@@ -27,9 +34,12 @@ class CurrentCacheTests(unittest.TestCase):
                 write(runtime / "dotnet", '''#!/usr/bin/env bash
 set -euo pipefail
 if [[ "$1" == msbuild ]]; then exec "$ANALYSIS_REAL_DOTNET" "$@"; fi
-[[ "$#" -ge 5 && "$1" == "$PWD/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" &&
-   "$2" == worktree && "$3" == with-cache-writer && "$4" == -- ]] || exit 86
-exec "$ANALYSIS_REAL_DOTNET" "$ANALYSIS_TEST_CLI" worktree with-cache-writer --path "$PWD" -- "${@:5}"
+if [[ "$#" == 2 && "$1" == "$STRATALINT_LEAN_PRODUCER_DLL" && "$2" == lean-utility-input ]]; then
+  exec "$ANALYSIS_REAL_DOTNET" "$@"
+fi
+[[ "$#" -ge 4 && "$1" == "$STRATALINT_LEAN_PRODUCER_DLL" &&
+   "$2" == lean-cache-writer && "$3" == -- ]] || exit 86
+exec "$ANALYSIS_REAL_DOTNET" "$STRATALINT_LEAN_PRODUCER_DLL" lean-cache-writer --path "$PWD" -- "${@:4}"
 ''')
                 write(runtime / "make", "#!/bin/sh\nexit 0\n")
                 write(runtime / "gh", lean_seed_contract.FAKE_GH.replace("args = sys.argv[1:]",
@@ -42,10 +52,10 @@ exec "$ANALYSIS_REAL_DOTNET" "$ANALYSIS_TEST_CLI" worktree with-cache-writer --p
                 # compiler-owned producer discovery through its DLL entrypoint.
                 write(root / "global.json", "{}\n")
                 write(root / "producer.props", "<Project />\n")
-                write(root / "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+                write(root / "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
                       '<Project><Import Project="../../producer.props" />'
                       '<ItemGroup><Compile Include="Fixture.cs" /></ItemGroup></Project>\n')
-                write(root / "tools/StrataLint.Cli/Fixture.cs", "internal class Fixture { }\n")
+                write(root / "tools/StrataLint.EngineeringScope/Fixture.cs", "internal class Fixture { }\n")
                 lake = lean_seed_contract.FAKE_LAKE.replace('if args == ["build"]:', '''if args == ["exe", "cache", "get"]:
     (root / ".lake/packages").mkdir(parents=True, exist_ok=True)
     sys.exit(0)
@@ -59,6 +69,7 @@ if args == ["build"]:
                     HOME=str(root), XDG_CACHE_HOME=str(root / "cache"), STRATALINT_LEAN_CACHE_DONORS="",
                     STRATALINT_ACTIONS_CACHE_SEEDED="", STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS="300",
                     ANALYSIS_REAL_DOTNET=shutil.which("dotnet"), ANALYSIS_TEST_CLI=str(cli),
+                    STRATALINT_LEAN_PRODUCER_DLL=str(cli.with_name("StrataLint.EngineeringScope.dll")),
                     FAKE_REMOTE=str(remote), GH_CALLS=str(root / "gh-calls"),
                     GITHUB_SHA="d" * 40, GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                     GITHUB_EVENT_NAME="push", GITHUB_REF="refs/heads/dev", STRATALINT_CHECK_SUCCEEDED="true",
@@ -162,6 +173,7 @@ subprocess.run = run
     def run_analysis(self, **extra):
         environment = self.transport.transport_environment(
             ANALYSIS_REAL_DOTNET=self.dotnet, ANALYSIS_TEST_CLI=str(self.cli),
+            STRATALINT_LEAN_CLI_DLL=str(self.root.resolve() / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"),
             LAKE_BIN=str(self.bin / "lake"), PYTHONPATH=str(self.bin),
             STRATALINT_LEAN_CACHE_DONORS="", XDG_CACHE_HOME=str(self.root / "cache"),
             STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS="300", **extra)

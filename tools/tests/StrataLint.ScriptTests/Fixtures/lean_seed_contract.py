@@ -175,6 +175,8 @@ class TransportTests(ReleaseTransportCases, unittest.TestCase):
 class PairFixture(PartitionFixture):
     def setUp(self):
         super().setUp()
+        self.supervisor = tempfile.TemporaryDirectory(prefix="lean-seed-supervisor-")
+        self.addCleanup(self.supervisor.cleanup)
         shutil.copytree(ROOT / "tools/scripts", self.root / "tools/scripts")
         shutil.copytree(ROOT / "tools/lean-inspector", self.root / "tools/lean-inspector")
         self.producer = self.root / "tools/lean-inspector/inspect.sh"
@@ -189,6 +191,7 @@ class PairFixture(PartitionFixture):
             "--producer", str(self.producer), "--lake-bin", "/bin/echo",
             "--candidate-root", str(self.root), "--candidate-output", str(self.output)],
             text=True, capture_output=True, env={**os.environ,
+                "STRATALINT_SUPERVISOR_ROOT": self.supervisor.name,
                 "STRATALINT_REPORT_CACHE_ROOT": str(self.cache), **extra})
 
     def report_input(self, command="address"):
@@ -452,7 +455,7 @@ exit 19
         self.assertEqual(2, self.report_input("verify").returncode)
 
 
-class ProducerClosureTests(PairFixture, unittest.TestCase):
+class ProducerClosureFixture(PairFixture):
     def setUp(self):
         super().setUp()
         shutil.copyfile(ROOT / "tools/lean-inspector/inspect.sh", self.producer)
@@ -475,26 +478,77 @@ class ProducerClosureTests(PairFixture, unittest.TestCase):
         self.assertEqual(4, len(fields))
         return fields
 
-    def assert_invalidates(self, before):
-        after = self.address()
-        self.assertNotEqual(before[:2], after[:2])
-        self.assertEqual(before[2:], after[2:])
-        self.assertEqual(REV, self.partition())
+    def plan_addresses(self, before, after):
         # Feed the real address into the existing incremental planner contract.
         delta = DeltaTests()
         delta.setUp()
         self.addCleanup(delta.doCleanups)
         delta.producer = before[1]
+        delta.config = before[3]
         delta.store()
         self.assertEqual("reuse", delta.plan()["status"])
-        plan = delta.plan(producer=after[1])
+        plan = delta.plan(producer=after[1], config=after[3])
+        print(json.dumps({"case": self.id(), "changed": len(plan["changed"]),
+            "selected": len(plan["recheck"]), "modules": len(plan["current"]),
+            "semantic_changed": plan["semantic_changed"]}), flush=True)
+        return plan
+
+    def assert_invalidates(self, before):
+        after = self.address()
+        self.assertNotEqual(before[:2], after[:2])
+        self.assertEqual(before[2:], after[2:])
+        self.assertEqual(REV, self.partition())
+        plan = self.plan_addresses(before, after)
         self.assertEqual("delta", plan["status"])
         self.assertEqual(["A", "B", "C", "D"], plan["recheck"])
         self.assertTrue(plan["semantic_changed"])
 
+
+class ProducerIsolationTests(ProducerClosureFixture, unittest.TestCase):
+    def test_blueprint_only_change_selects_no_report_modules(self):
+        path = "Blueprint/D5/S0/Asymptotics/Bonferroni/TailBounds.scribe.cs"
+        owner = self.root / path
+        write(owner, (ROOT / path).read_text())
+        before = self.address()
+        write(owner, owner.read_text() + "\n// Harmless narrative comment.\n")
+        after = self.address()
+        self.assertEqual(before[2:], after[2:])
+        self.assertEqual(REV, self.partition())
+        plan = self.plan_addresses(before, after)
+        self.assertEqual([], plan["recheck"])
+        self.assertEqual("reuse", plan["status"])
+
+    def test_metadata_only_change_selects_no_report_modules(self):
+        before = self.address()
+        write(self.root / "lakefile.toml", 'name = "renamed"\nkeywords = ["metadata"]\n[leanOptions]\nmaxRecDepth = 1000\n')
+        self.manifest["packages"][0]["inputRev"] = "metadata-tag"
+        self.save_manifest()
+        after = self.address()
+        self.assertEqual(REV, self.partition())
+        self.assertEqual([], self.plan_addresses(before, after)["recheck"])
+        config = self.root / "lakefile.toml"
+        write(config, config.read_text().replace("maxRecDepth = 1000", "maxRecDepth = 2000"))
+        options = self.address()
+        self.assertEqual(after[1:3], options[1:3])
+        self.assertNotEqual(after[3], options[3])
+        self.assertEqual(REV, self.partition())
+        self.assertEqual(["A", "B", "C", "D"], self.plan_addresses(after, options)["recheck"])
+
+    def test_shared_utility_parser_change_invalidates_report_modules(self):
+        before = self.address()
+        owners = list((self.root / "tools").rglob("UtilitySyntax.cs"))
+        self.assertEqual(1, len(owners))
+        original = owners[0].read_text()
+        changed = original.replace('text.Split("; ",', 'text.Split(";",')
+        self.assertNotEqual(original, changed)
+        write(owners[0], changed)
+        self.assert_invalidates(before)
+
+
+class ProducerClosureTests(ProducerClosureFixture, unittest.TestCase):
     def test_actual_cache_writer_source_invalidates_address_and_reuse(self):
         before = self.address()
-        owner = self.root / "tools/StrataLint.Cli/Commands/Worktrees/LeanCacheEnsureCommand.cs"
+        owner = self.root / "tools/StrataLint.EngineeringScope/Lean/LeanCacheEnsureCommand.cs"
         original = owner.read_bytes()
         write(owner, owner.read_text().replace('var receipt = ensured.Output;',
                                              'var receipt = ensured.Output + "producer-change";'))
@@ -527,16 +581,40 @@ class ProducerClosureTests(PairFixture, unittest.TestCase):
         self.assertNotEqual(0, self.report_input().returncode)
 
 
+class ReportImportTests(unittest.TestCase):
+    def test_import_edit_rechecks_dependents_and_updates_reverse_closure(self):
+        delta = DeltaTests()
+        delta.setUp()
+        self.addCleanup(delta.doCleanups)
+        source = delta.root / "B.lean"
+        write(source, "import D\ndef b := 2\n")
+        plan = delta.plan()
+        self.assertEqual(["B"], plan["changed"])
+        self.assertEqual(["B", "C"], plan["recheck"])
+        self.assertFalse(plan["semantic_changed"])
+        # Model the inspector's updated import list in the next seed.
+        delta.modules[1]["source_sha256"] = "sha256:" + digest(source.read_bytes())
+        delta.modules[1]["imports"] = ["D"]
+        delta.store()
+        write(delta.root / "A.lean", "def value := 2\n")
+        self.assertEqual(["A"], delta.plan()["recheck"])
+        write(delta.root / "A.lean", "def value := 1\n")
+        write(delta.root / "D.lean", "def value := 2\n")
+        self.assertEqual(["B", "C", "D"], delta.plan()["recheck"])
+        print(json.dumps({"case": "import-edit", "selected": 2, "modules": 4,
+            "old_dependency_selected": 1, "new_dependency_selected": 3}), flush=True)
+
+
 class InspectorTests(PairFixture, unittest.TestCase):
     def setUp(self):
         super().setUp()
         shutil.copyfile(ROOT / "tools/lean-inspector/inspect.sh", self.producer)
         shutil.copyfile(ROOT / "Makefile", self.root / "Makefile")
         write(self.root / "global.json", "{}\n")
-        write(self.root / "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        write(self.root / "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
             '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType>'
             '<TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>\n')
-        write(self.root / "tools/StrataLint.Cli/Program.cs", 'System.Console.WriteLine("[]");\n')
+        write(self.root / "tools/StrataLint.EngineeringScope/Program.cs", 'System.Console.WriteLine("[]");\n')
         runner = self.root / "tools/scripts/worktree/lean-cache-run.sh"
         write(runner, '#!/bin/sh\nexec "$@"\n')
         runner.chmod(0o755)
@@ -552,11 +630,13 @@ class InspectorTests(PairFixture, unittest.TestCase):
             "--producer", str(self.producer), "--lake-bin", str(self.lake),
             "--candidate-root", str(self.root), "--candidate-output", str(self.output)],
             text=True, capture_output=True, env={**os.environ,
+                "STRATALINT_SUPERVISOR_ROOT": self.supervisor.name,
                 "STRATALINT_REPORT_CACHE_ROOT": str(self.cache), **extra})
 
     def current_report(self):
         self.output = self.root / ".lake/build/stratalint/raw-lean-report.json"
-        environment = {**os.environ, "LAKE_BIN": str(self.lake)}
+        environment = {**os.environ, "LAKE_BIN": str(self.lake),
+                       "STRATALINT_SUPERVISOR_ROOT": self.supervisor.name}
         environment.pop("STRATALINT_REPORT_CACHE_ROOT", None)
         return subprocess.run(["make", "lean-report"], cwd=self.root,
             text=True, capture_output=True, env=environment)

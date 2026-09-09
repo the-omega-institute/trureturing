@@ -6,6 +6,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
-    <Compile Include="../StrataLint.Cli/Runtime/LeanCacheBudgetPolicy.cs" Link="LeanCacheBudgetPolicy.cs" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
   </ItemGroup>
 </Project>
