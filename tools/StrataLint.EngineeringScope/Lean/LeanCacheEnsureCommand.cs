@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace StrataLint.Cli;
+namespace StrataLint.EngineeringScope;
 
 internal static partial class LeanCacheEnsureCommand
 {

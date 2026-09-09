@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using StrataLint.Engine;
 
-namespace StrataLint.Cli;
+namespace StrataLint.EngineeringScope;
 
 internal sealed record LeanPinSet(string MathlibRevision)
 {

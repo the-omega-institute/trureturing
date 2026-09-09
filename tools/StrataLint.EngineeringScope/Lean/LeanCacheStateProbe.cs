@@ -1,4 +1,4 @@
-namespace StrataLint.Cli;
+namespace StrataLint.EngineeringScope;
 
 internal enum OleanWarmth
 {

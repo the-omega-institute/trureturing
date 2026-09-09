@@ -23,12 +23,12 @@ public sealed class ColdBuildBudgetReviewLineTests
     [Fact]
     public void ColdBuildBudgetReviewLineIsPinnedToTheAdjudicatedValue()
     {
-        Assert.Equal(8013, StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount);
+        Assert.Equal(8013, StrataLint.EngineeringScope.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount);
     }
 
     /// <summary>
     /// D5 内容层模块数尚未达到
-    /// <see cref="StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount"/>。
+    /// <see cref="StrataLint.EngineeringScope.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount"/>。
     ///
     /// **在本类之前那条线没有任何观察者** —— 2026-08-26 实测 `grep -rnw 2672` 全仓 0 命中,
     /// 阳性对照 `grep -rnw 7200` 得 7 条,证明探针有效,故那个 0 是阴性证据而非坏探针。
@@ -89,11 +89,11 @@ public sealed class ColdBuildBudgetReviewLineTests
             "`.lean` 集合不可能大于它所属的 D5 tracked 集合 —— 枚举自相矛盾。");
 
         Assert.True(
-            leanFiles.Length < StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount,
+            leanFiles.Length < StrataLint.EngineeringScope.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount,
             $"D5 内容层已有 {leanFiles.Length} 个模块,达到或越过 #3029 裁定的复审触发线 "
-            + $"{StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount}:"
+            + $"{StrataLint.EngineeringScope.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount}:"
             + "全量冷建的预计耗时已越过 "
-            + $"{StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds}s 预算的 80% 线,"
+            + $"{StrataLint.EngineeringScope.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds}s 预算的 80% 线,"
             + "该 policy-override 的取值依据失效,其「非永久」声明到期。"
             + "按 https://github.com/the-omega-institute/trureturing/issues/2535 重新按三型收口,"
             + "或按 #3029 的五条开建条件建拦全量冷建的门。");

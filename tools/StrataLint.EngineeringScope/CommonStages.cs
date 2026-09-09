@@ -93,9 +93,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         File.Delete(Path.Combine(root, CommonExecutionEvidence.CurrentPath));
         var logs = Path.Combine(root, CommonExecutionEvidence.RootPath, "logs/current");
         if (Directory.Exists(logs)) Directory.Delete(logs, recursive: true);
-        var reportBudget = TimeSpan.FromSeconds(StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds);
+        var reportBudget = TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds);
         string SupervisorBudget(string name) => Environment.GetEnvironmentVariable(name) is { Length: > 0 } value
-            ? value : StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            ? value : LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture);
         // Shared current supports normal cold production within the existing Lean
         // envelope. Nested defaults must not silently shorten that allowance.
         Step("lean-report", "/usr/bin/env", [$"STRATALINT_LEAN_PRODUCER_DLL={Path.Combine(root, CommonExecutionEvidence.RunnerPath)}",

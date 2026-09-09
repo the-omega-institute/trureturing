@@ -1,7 +1,7 @@
 using System.Text.Json;
 using StrataLint.Engine;
 
-namespace StrataLint.Cli;
+namespace StrataLint.EngineeringScope;
 
 // ensure 的收据渲染。与状态机正交：状态机决定「发生了什么」，这里只决定「怎么写下来」。
 // 拆出来是因为 LeanCacheEnsureCommand.cs 触到了 SL-003 的 800 行硬线（第 8 条：桶满则裂）。

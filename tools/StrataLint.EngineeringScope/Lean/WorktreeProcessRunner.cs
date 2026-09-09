@@ -1,6 +1,6 @@
 using StrataLint.Engine;
 
-namespace StrataLint.Cli;
+namespace StrataLint.EngineeringScope;
 
 internal interface IWorktreeProcessRunner
 {

@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace StrataLint.Cli;
+namespace StrataLint.EngineeringScope;
 
 /// <summary>
 /// Result of one directory-clone boundary call. Attempts counts native clonefile calls.

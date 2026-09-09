@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using StrataLint.EngineeringScope;
 
 namespace StrataLint.Tests;
 

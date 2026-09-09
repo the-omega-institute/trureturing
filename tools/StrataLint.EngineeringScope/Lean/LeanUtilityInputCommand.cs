@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using StrataLint.Engine;
 using Trureturing.Truth;
 
-namespace StrataLint.Cli;
+namespace StrataLint.EngineeringScope;
 
 // The inspector consumes this structured contract; utility header syntax has one parser.
 internal static class LeanUtilityInputCommand

@@ -2,7 +2,7 @@ using System.Text;
 using System.Collections.Immutable;
 using StrataLint.Engine;
 
-namespace StrataLint.Cli;
+namespace StrataLint.EngineeringScope;
 
 internal sealed record LeanCacheProvisionResult(
     string Strategy,

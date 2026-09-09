@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
-namespace StrataLint.Cli;
+namespace StrataLint.EngineeringScope;
 
 /// <summary>
 /// Reads the optional same-partition Release seed receipt. Every outcome still

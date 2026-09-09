@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
 using StrataLint.Engine;
-using StrataLint.Cli;
 
 namespace StrataLint.EngineeringScope;
 
