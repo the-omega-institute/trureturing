@@ -356,8 +356,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
-          restore-keys: stratalint-canonical-lean-report-v2-
+          key: stratalint-canonical-lean-report-reportcache0909-${{ steps.lean-report-input.outputs.address }}
+          restore-keys: stratalint-canonical-lean-report-reportcache0909-
       - name: Serve candidate canonical Lean report from the cached address
         id: report-reuse
         if: steps.report-cache.outcome == 'success' && steps.report-cache.outputs.cache-hit == 'true'
@@ -536,7 +536,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
+          key: stratalint-canonical-lean-report-reportcache0909-${{ steps.lean-report-input.outputs.address }}
       - name: Run complete mathematical content checks
         shell: bash
         env:
