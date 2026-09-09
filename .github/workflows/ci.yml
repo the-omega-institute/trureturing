@@ -1,11 +1,13 @@
+# TEMPORARY reportcache0910 integration fixture; revert this commit before dev delivery.
+# Native events and all cache publications are scoped to the named integration branch.
 # BOOTSTRAP-NOT-ACTIVE until this workflow and the C# harness exist on dev.
 name: admission
 
 on:
   push:
-    branches: [dev]
-  pull_request_target:
-    branches: [dev, 'integration-**']
+    branches: [integration-ci-lean-report-cache-restored-tests]
+  pull_request:
+    branches: [integration-ci-lean-report-cache-restored-tests]
     types: [opened, synchronize, reopened]
 
 permissions:
@@ -24,12 +26,13 @@ permissions:
 # 改用 github.sha:每次 dev push 自成一组,彼此既不取消也不排队。
 # 代价是这些 run 会跑完而不是中途被杀 —— 它们本来就已启动,增量是其尾段。
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.sha }}
+  # Separate native fixture events from default-dev pull_request_target runs.
+  group: ci-reportcache0910-${{ github.event_name }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
-# Trust topology: pull_request_target keeps workflow text on the base branch. The
-# candidate-owned Lean producer and .NET judge inspect GitHub's post-merge tree
-# (candidate plus the current dev parent). Candidate engineering is only a signal.
+# Integration fixture: native pull_request reads the PR merge-tree workflow.
+# The candidate-owned Lean producer and .NET judge inspect the merge tree
+# (candidate plus the integration parent). Candidate engineering is only a signal.
 # Admission consumes immutable raw reports from the predecessor job; the protected
 # base is the checked merge commit's first-parent SHA passed to the gate. The
 # workflow itself retains an unfiltered floor for engineering and root inputs.
@@ -47,9 +50,9 @@ jobs:
     steps:
       - name: Check out candidate
         id: checkout-merge
-        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
+        continue-on-error: ${{ github.event_name == 'pull_request' }}
         uses: actions/checkout@v4
-        with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+        with: { ref: "${{ github.event_name == 'pull_request' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -75,7 +78,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
             printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
           else
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
@@ -140,9 +143,9 @@ jobs:
         id: build-candidate
         if: steps.judge-cache.outputs.cache-hit != 'true' && github.event_name != 'schedule'
         run: make -C candidate/tools dotnet
-      - name: Stage judge binaries for the shared cache (dev push only)
+      - name: Stage judge binaries for the shared cache (integration push only)
         id: stage-judge
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests'
         shell: bash
         run: |
           set -euo pipefail
@@ -153,8 +156,8 @@ jobs:
             --configuration Release --output .judge-binaries/scribe
           test -s .judge-binaries/cli/StrataLint.dll
           test -s .judge-binaries/scribe/StrataLint.Scribe.Documents.dll
-      - name: Save judge binaries and candidate build outputs by content address (dev push only)
-        if: steps.build-candidate.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save judge binaries and candidate build outputs by content address (integration push only)
+        if: steps.build-candidate.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests'
         uses: actions/cache/save@v4
         with:
           path: |
@@ -163,7 +166,7 @@ jobs:
             candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
       - name: Signal PR head branch grammar
-        if: github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'
+        if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'integration-ci-lean-report-cache-restored-tests'
         shell: bash
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
@@ -216,8 +219,8 @@ jobs:
             test "${actual_lines[$index]}" = "$expected_line"
             ((index += 1))
           done
-      - name: Save elan toolchain for engineering checks (dev push only)
-        if: always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save elan toolchain for engineering checks (integration push only)
+        if: always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests'
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
@@ -245,9 +248,9 @@ jobs:
     steps:
       - name: Check out candidate with history
         id: checkout-merge
-        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
+        continue-on-error: ${{ github.event_name == 'pull_request' }}
         uses: actions/checkout@v4
-        with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+        with: { ref: "${{ github.event_name == 'pull_request' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -273,7 +276,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
             printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
           else
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
@@ -304,12 +307,12 @@ jobs:
       - name: Build candidate tools before Lean report production
         shell: bash
         run: make -C candidate/tools dotnet
-      - name: Resolve checked merge result's dev parent
+      - name: Resolve checked merge result's protected parent
         id: base
         shell: bash
         run: |
           set -euo pipefail
-          # PR merge refs and dev push commits both carry their protected base as
+          # PR merge refs and integration push commits both carry their protected base as
           # the checked object's first parent, so the verdict has no event-payload input.
           sha="$(git -C candidate rev-parse HEAD^1)"
           if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
@@ -356,8 +359,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
-          restore-keys: stratalint-canonical-lean-report-v2-
+          key: stratalint-canonical-lean-report-reportcache0909-restored-v1-${{ steps.lean-report-input.outputs.address }}
+          restore-keys: stratalint-canonical-lean-report-reportcache0909-restored-v1-
       - name: Serve candidate canonical Lean report from the cached address
         id: report-reuse
         if: steps.report-cache.outcome == 'success' && steps.report-cache.outputs.cache-hit == 'true'
@@ -460,16 +463,16 @@ jobs:
           PATH="$HOME/.elan/bin:$PATH" make -C candidate lean
       # Only a successful build materializes Lean artifacts. A report hit skips
       # that build; later report failures cannot revoke its completed cache supply.
-      - name: Save Lean project build artifacts (dev push only)
-        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save Lean project build artifacts (integration push only)
+        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
         with:
           path: candidate/.lake/build
           key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ steps.lean-input.outputs.sources_sha256 }}
-      - name: Save Lean dependency artifacts (dev push only)
-        if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save Lean dependency artifacts (integration push only)
+        if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -486,8 +489,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          export STRATALINT_REPORT_CACHE_ROOT="$("$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-ci-baseline.sh" \
-            --bundle "$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json" --cache-root "$RUNNER_TEMP/canonical-lean-report-delta-cache" || true)"
+          export STRATALINT_REPORT_CACHE_ROOT="$RUNNER_TEMP/canonical-lean-report-delta-cache"
+          export STRATALINT_REPORT_CACHE_REMOTE=1
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-ci-baseline.sh" \
+            --bundle "$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json" \
+            --cache-root "$STRATALINT_REPORT_CACHE_ROOT" >/dev/null || true
           producer="$GITHUB_WORKSPACE/candidate/tools/lean-inspector/inspect.sh"
           pair_producer="$GITHUB_WORKSPACE/candidate/tools/scripts/lean-report-pair.sh"
           test -x "$producer"
@@ -495,7 +501,7 @@ jobs:
           test -x "$pair_producer"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          # 只产受审的 post-merge 侧。base 是同一 merge 对象的 dev 第一父提交,
+          # 只产受审的 post-merge 侧。base 是同一 merge 对象的 integration 第一父提交,
           # 只参与 admission gate 的 diff 语义,不再为它编译或上传第二份 Lean 报告。
           "$pair_producer" \
             --producer "$producer" \
@@ -503,12 +509,15 @@ jobs:
             --candidate-root "$GITHUB_WORKSPACE/candidate" \
             --candidate-output "$reports/candidate-lean-report.json"
       - name: Stage candidate canonical Lean report cache
+        id: report-cache-stage
+        continue-on-error: true
         shell: bash
         run: |
           set -euo pipefail
           source="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
           target="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           mkdir -p "$(dirname "$target")"
+          rm -rf -- "${target}.logs"
           for suffix in '' .input.attestation .provenance.json .materials.zip; do
             test -s "${source}${suffix}"
             cp "${source}${suffix}" "${target}${suffix}"
@@ -518,19 +527,20 @@ jobs:
           test "$declaredSha256" = "$reportSha256"
           test "$declaredName" = "$(basename "$source")"
           printf '%s  %s\n' "$reportSha256" "$(basename "$target")" > "${target}.sha256"
-          cp -R "${source}.logs" "${target}.logs" 2>/dev/null || true
           "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"
 
-      # pull_request_target runs get a token without cache-write scope, so this save can only ever fail there: run 31389667812 logged "cache write denied: token has no writable scopes". The two saves below already carry this exact guard; this one was missing it, so every PR attempted a write it could not perform. dev-push runs do write it successfully (run 31389340892).
+      # Every remote cache save requires a push to the named integration branch.
+      # Native PRs only restore; Actions cache branch scope keeps these writes out of dev.
       # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
-      - name: Save candidate canonical Lean report (dev push only)
-        if: success() && steps.lean-report-input.outputs.address != '' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save candidate canonical Lean report (integration push only)
+        if: success() && steps.report-cache-stage.outcome == 'success' && steps.lean-report-input.outputs.address != '' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests'
+        continue-on-error: true
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
+          key: stratalint-canonical-lean-report-reportcache0909-restored-v1-${{ steps.lean-report-input.outputs.address }}
       - name: Run complete mathematical content checks
         shell: bash
         env:
@@ -553,10 +563,10 @@ jobs:
           retention-days: 7
 
       # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
-      - name: Save elan toolchains (dev push only)
+      - name: Save elan toolchains (integration push only)
         # 不挂在 success() 上:elan 装成功就该存。否则一次下载失败会让 job 红、缓存不写、
         # 下次继续 miss,故障自我延续。
-        if: always() && steps.install-elan.outcome == 'success' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: always() && steps.install-elan.outcome == 'success' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests'
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
@@ -572,9 +582,9 @@ jobs:
     steps:
       - name: Check out candidate with history
         id: checkout-merge
-        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
+        continue-on-error: ${{ github.event_name == 'pull_request' }}
         uses: actions/checkout@v4
-        with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+        with: { ref: "${{ github.event_name == 'pull_request' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -600,7 +610,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
             printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
           else
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
@@ -628,10 +638,9 @@ jobs:
             candidate/tools/**/bin
             candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
-      # Since 2025-12-08, pull_request_target evaluates github.sha as the repository default branch (dev) tip S for every PR regardless of its base.
-      # The primary key K(S) is therefore tried first for all PRs; it hits when a dev push run has already saved K(S)
-      # (a dev push saves only when the entry set changed). restore-keys prefix fallback selects the most recently saved cache otherwise;
-      # for PRs whose base is an integration-** branch the entries may not correspond to that base and then miss at the Engine (fail-closed).
+      # Native pull_request uses the merge SHA; exact test-map lookup may miss.
+      # Prefix fallback can restore this integration base or default-dev caches;
+      # the Engine still validates entries against the checked first-parent base.
       - name: Restore base-side unknown-debt test maps
         id: test-map-cache
         uses: actions/cache/restore@v4
@@ -714,7 +723,7 @@ jobs:
           exit 0
       - name: Prune and fingerprint test map cache after the gate (push only)
         id: test-map-after
-        if: always() && github.event_name == 'push'
+        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests'
         shell: bash
         run: |
           set -euo pipefail
@@ -731,7 +740,7 @@ jobs:
           printf 'changed=%s\n' "$changed" >> "$GITHUB_OUTPUT"
           printf 'test-map-cache entries=%s changed=%s\n' "$(find .stratalint-test-map-cache -maxdepth 1 -type f -name '*.json' | wc -l)" "$changed"
       - name: Save test map cache by push SHA (push only, when changed)
-        if: always() && github.event_name == 'push' && steps.test-map-after.outputs.changed == 'true'
+        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests' && steps.test-map-after.outputs.changed == 'true'
         uses: actions/cache/save@v4
         with:
           path: .stratalint-test-map-cache
@@ -744,3 +753,34 @@ jobs:
           path: ${{ runner.temp }}/gate-timing.jsonl
           if-no-files-found: warn
           retention-days: 7
+
+  publish-lean-report-cache:
+    name: Publish reusable Lean report cache
+    needs: [candidate-engineering, lean-inspect, baseline-admission]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    continue-on-error: true
+    permissions: { contents: write }
+    steps:
+      - name: Check out the successful report producer
+        id: checkout-producer
+        uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}", fetch-depth: 2, persist-credentials: false }
+      - name: Strip checkout remote state
+        if: steps.checkout-producer.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git remote remove origin
+          git for-each-ref --format='delete %(refname)' refs/remotes/ | git update-ref --stdin
+          test -z "$(git remote)"
+          test -z "$(git for-each-ref refs/remotes/)"
+          git rev-parse HEAD HEAD^1 >/dev/null
+      - uses: actions/setup-dotnet@v4
+        with: { global-json-file: global.json }
+      - uses: actions/download-artifact@v4
+        with: { name: raw-lean-reports, path: "${{ runner.temp }}/raw-lean-reports" }
+      - name: Publish the verified report bundle without a Lean build
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: make lean-report-cache-to-github LEAN_REPORT="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"

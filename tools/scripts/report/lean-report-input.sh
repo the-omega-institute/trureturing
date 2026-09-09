@@ -5,6 +5,30 @@ export LC_ALL=C
 
 COMMAND="${1:-}"
 if [[ -n "$COMMAND" ]]; then shift; fi
+# The repository (R) and pair provenance (A) are different canonical preimages.
+# Keep their byte definitions here for producers and bundle transport alike.
+input_coordinates() {
+  python3 - "$@" <<'PY'
+import hashlib
+import re
+import sys
+
+fields = sys.argv[1:]
+if len(fields) != 4 or any(not re.fullmatch(r"[0-9a-f]{64}", v) for v in fields):
+    raise SystemExit("lean-report-input: coordinates require producer, resident, sources, config SHA-256")
+producer, resident, sources, config = fields
+common = (f"repository_inspector_sha256={resident}\n"
+          f"lean_sources_sha256={sources}\nlean_config_sha256={config}\n")
+pair = "schema=stratalint-lean-report-input-v1\n" + f"producer_sha256={producer}\n" + common
+repository = "schema=stratalint-lean-report-repository-input-v1\n" + common
+print(hashlib.sha256(pair.encode("ascii")).hexdigest(),
+      hashlib.sha256(repository.encode("ascii")).hexdigest())
+PY
+}
+if [[ "$COMMAND" == "coordinates" ]]; then
+  input_coordinates "$@"
+  exit $?
+fi
 REPOSITORY=""
 REPORT=""
 PRODUCER_OVERRIDE=""
@@ -69,6 +93,7 @@ producer_declared_paths() {
     tools/lean-inspector/delta.py \
     tools/lean-inspector/materials.py \
     tools/scripts/report/lean-report-input.sh \
+    tools/scripts/report/lean-report-cache.py \
     tools/scripts/lean-report-pair.sh \
     tools/StrataLint.Engine/packages.lock.json \
     tools/StrataLint.Cli/packages.lock.json \
@@ -307,7 +332,6 @@ managed_modules() {
 # and the Lean toolchain/lake configuration as three named SHA-256 fields.
 repository_address() {
   local resident_manifest="$TMP_ROOT/resident-inspector.manifest"
-  local preimage="$TMP_ROOT/repository-input.preimage"
   local resident_sha256 sources_sha256 config_sha256 lean_input
 
   prepare_memo
@@ -317,14 +341,9 @@ repository_address() {
     || { echo "lean-report-input: Lean input address is malformed" >&2; return 2; }
   read -r sources_sha256 config_sha256 <<< "$lean_input"
 
-  {
-    printf '%s\n' "schema=stratalint-lean-report-repository-input-v1"
-    printf 'repository_inspector_sha256=%s\n' "$resident_sha256"
-    printf 'lean_sources_sha256=%s\n' "$sources_sha256"
-    printf 'lean_config_sha256=%s\n' "$config_sha256"
-  } > "$preimage" || return 2
-  local address_sha256
-  address_sha256="$(hash_file "$preimage")" || return 2
+  local coordinates address_sha256
+  coordinates="$(input_coordinates "$resident_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256")" || return 2
+  address_sha256="${coordinates#* }"
   store_memo_updates
   printf '%s %s %s %s\n' \
     "$address_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256"

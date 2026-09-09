@@ -388,6 +388,7 @@ public sealed class LeanReportCacheTests
                 "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             WriteRepositoryFile("tools/StrataLint.Cli/FixtureProbe.cs", "// fixture\n");
             WriteRepositoryFile("tools/scripts/worktree/lean-cache-publish.sh", "#!/usr/bin/env bash\n");
+            WriteRepositoryFile("tools/scripts/report/lean-report-cache.sh", "#!/usr/bin/env bash\n");
             WriteRepositoryFile(
                 "tools/StrataLint.Engine/StrataLint.Engine.csproj",
                 "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");

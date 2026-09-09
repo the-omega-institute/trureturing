@@ -79,7 +79,6 @@ hash_file() {
 
 fingerprint() {
   local root="$1"
-  local preimage="$TMP_ROOT/input.preimage"
 
   local repository_address resident_sha256 sources_sha256 config_sha256 address_output
   address_output="$("$INPUT_HELPER" address --repository "$root" --producer "$PRODUCER" --inspector "$INSPECTOR")" || return 2
@@ -89,15 +88,10 @@ fingerprint() {
   IFS=' ' read -r repository_address resident_sha256 sources_sha256 config_sha256 <<< "$address_output"
   local producer_sha256="$resident_sha256"
 
-  {
-    printf '%s\n' "schema=stratalint-lean-report-input-v1"
-    printf 'producer_sha256=%s\n' "$producer_sha256"
-    printf 'repository_inspector_sha256=%s\n' "$resident_sha256"
-    printf 'lean_sources_sha256=%s\n' "$sources_sha256"
-    printf 'lean_config_sha256=%s\n' "$config_sha256"
-  } > "$preimage" || return 2
-  local input_sha256
-  input_sha256="$(hash_file "$preimage")" || return 2
+  local coordinates input_sha256
+  coordinates="$("$INPUT_HELPER" coordinates "$producer_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256")" || return 2
+  [[ "${coordinates#* }" == "$repository_address" ]] || return 2
+  input_sha256="${coordinates%% *}"
   printf '%s %s %s %s %s %s\n' \
     "$input_sha256" \
     "$producer_sha256" \
@@ -283,7 +277,8 @@ cache_try_restore() {
 
 # Atomically publish the fully-materialised bundle at $output under $address.
 # No-op unless caching is enabled and the complete bundle exists. Entries are
-# content-addressed and immutable, so a concurrent winner is tolerated.
+# content-addressed and immutable, so a concurrent winner is tolerated. A write
+# failure returns 1 for the caller's optional-cache diagnostic.
 cache_store() {
   local address="$1"
   local output="$2"
@@ -294,14 +289,14 @@ cache_store() {
     || return 0
   local entry="$CACHE_ROOT/$address"
   [[ -e "$entry" ]] && return 0
-  mkdir -p "$CACHE_ROOT" 2>/dev/null || return 0
+  mkdir -p "$CACHE_ROOT" 2>/dev/null || return 1
   # Lock the root to this UID (harmless if we already own a 0700 dir; a no-op fail
   # if some other user pre-created it, in which case the trust check below refuses
   # to store). Never write into a root we cannot secure.
   chmod 700 "$CACHE_ROOT" 2>/dev/null || true
-  cache_root_trusted || return 0
+  cache_root_trusted || return 1
   local tmp
-  tmp="$(mktemp -d "$CACHE_ROOT/.tmp.$$.XXXXXXXX" 2>/dev/null)" || return 0
+  tmp="$(mktemp -d "$CACHE_ROOT/.tmp.$$.XXXXXXXX" 2>/dev/null)" || return 1
   local report="$tmp/raw-lean-report.json"
   # Best-effort: any copy or sidecar-write failure discards the temp and leaves the
   # gate untouched (never fails admission on a cache-write error).
@@ -311,10 +306,13 @@ cache_store() {
     && cp "${output}.materials.zip" "${report}.materials.zip" \
     && printf '%s  raw-lean-report.json\n' "$(hash_file "$report")" > "${report}.sha256"; }; then
     rm -rf -- "$tmp"
-    return 0
+    return 1
   fi
-  if [[ -e "$entry" ]] || ! mv "$tmp" "$entry" 2>/dev/null; then
+  if [[ -e "$entry" ]]; then
     rm -rf -- "$tmp"
+  elif ! mv "$tmp" "$entry" 2>/dev/null; then
+    rm -rf -- "$tmp"
+    return 1
   fi
   return 0
 }
@@ -325,11 +323,29 @@ materialize_report() {
   local address="$3"
   # Cache lookup precedes any slot acquisition or producer run.
   if cache_try_restore "$address" "$root" "$output"; then
+    printf 'LEAN_REPORT_CACHE status=hit mode=local-exact input_address=sha256:%s\n' "$address" >&2
     LAST_REPORT_MODE="cached"
     return 0
   else
     local cache_rc=$?
     [[ "$cache_rc" == "1" ]] || return "$cache_rc"
+  fi
+  printf 'LEAN_REPORT_CACHE status=miss reason=local-entry-unavailable input_address=sha256:%s\n' "$address" >&2
+  # Optional acquisition never touches .lake. A compatible local entry can avoid
+  # remote transfer; a source-stale seed is consumed only by inspect.sh/delta.py.
+  if [[ "${STRATALINT_REPORT_CACHE_REMOTE:-0}" == "1" && -n "$CACHE_ROOT" ]]; then
+    if "$BASH" "$SCRIPT_DIR/report/lean-report-cache.sh" fetch --repository "$root" \
+      --producer "$PRODUCER" --inspector "$INSPECTOR"; then
+      if cache_try_restore "$address" "$root" "$output"; then
+        LAST_REPORT_MODE="cached"
+        return 0
+      else
+        local cache_rc=$?
+        [[ "$cache_rc" == "1" ]] || return "$cache_rc"
+      fi
+    else
+      printf 'LEAN_REPORT_CACHE status=miss reason=acquisition-failed fallback=producer\n' >&2
+    fi
   fi
   # Per-module reuse is disabled. Before enabling it, producer identity must cover
   # the actually selected MSBuild SDK and dotnet runtime plus the bytes of every
@@ -516,5 +532,6 @@ publish_bundle "$candidate_staged_output" "$CANDIDATE_OUTPUT"
 emit_provenance_receipt \
   "$CANDIDATE_OUTPUT" "$candidate_mode" "$candidate_address" "$candidate_report_sha256"
 if [[ "$candidate_mode" == "produced" ]]; then
-  cache_store "$candidate_address" "$CANDIDATE_OUTPUT"
+  cache_store "$candidate_address" "$CANDIDATE_OUTPUT" \
+    || printf 'LEAN_REPORT_CACHE status=miss reason=cache-write-failed\n' >&2
 fi

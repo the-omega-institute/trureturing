@@ -453,6 +453,7 @@ public sealed partial class LeanReportInputScriptTests
                         "tools", "scripts", "report", "lean-report-ci-baseline.sh"),
                     Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
+            Write("tools/scripts/report/lean-report-cache.sh", "#!/usr/bin/env bash\n");
             Write(
                 CachePublishScriptPath,
                 File.ReadAllText(

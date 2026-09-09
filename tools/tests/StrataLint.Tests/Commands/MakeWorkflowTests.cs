@@ -46,6 +46,8 @@ public sealed partial class MakeWorkflowTests
     [
         "help",
         "test",
+        "lean-report-cache-from-github",
+        "lean-report-cache-to-github",
         "lean-cache-ensure",
         "lean-cache-to-github-without-mathlib",
         "lean-cache-from-github-without-mathlib",
