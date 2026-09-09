@@ -149,6 +149,9 @@ domains:
   RenyiDivergence:
     stratum: S3
     definition: Finite Renyi divergences of order alpha, their pinning identities against the Bhattacharyya coefficient and the classical divergence, and their monotonicity in the order.
+  Resolvent:
+    stratum: S3
+    definition: Resolvent identities and normalized logarithmic-derivative expansions over the classical zeta zero divisor.
   Resource:
     stratum: S3
     definition: Resource-theoretic functionals defined as infima over tensor-closed strategy classes and their subadditivity.
