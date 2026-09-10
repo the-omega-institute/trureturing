@@ -108,6 +108,7 @@ def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
   let mut todo := [readout]
   let mut constants : NameHashSet := {}
   let mut visited : Std.HashSet Expr := {}
+  let mut applications : Array Expr := #[]
   let mut forbidden := false
   let mut fuel := provenanceExpressionFuel
   while let e :: rest := todo do
@@ -133,12 +134,8 @@ def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
       let some proposition := recordHead env 256 e.getAppArgs[0]! | return (forbidden, none)
       let some statement := recordHead env 256 theoremInfo.type | return (forbidden, none)
       if proposition == statement then forbidden := true
-    if !forbidden && e.isApp && !e.hasLooseBVars && e.getAppFn.isConst then
-      let some type := appliedType env e | return (forbidden, none)
-      if type.isAppOfArity ``Decidable 1 then
-        let some proposition := recordHead env 256 type.getAppArgs[0]! | return (false, none)
-        let some statement := recordHead env 256 theoremInfo.type | return (false, none)
-        if proposition == statement then forbidden := true
+    if !forbidden && e.isApp && e.getAppFn.isConst then
+      applications := applications.push e
     if let .const name _ := e then
       if constants.contains name then continue
       if constants.size >= provenanceConstantFuel then return (forbidden, none)
@@ -160,6 +157,17 @@ def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
           return (forbidden, none)
     else
       todo := children e ++ todo
+  -- Classify specialized instances only when raw provenance is still clean.
+  -- Applications belong to the visited closure and therefore share its bound.
+  if !forbidden then
+    for e in applications do
+      let some type := appliedType env e | return (false, none)
+      if type.isAppOfArity ``Decidable 1 then
+        let some proposition := recordHead env 256 type.getAppArgs[0]! | return (false, none)
+        let some statement := recordHead env 256 theoremInfo.type | return (false, none)
+        if proposition == statement then
+          forbidden := true
+          break
   let names := constants.toArray.map Name.toString |>.qsort (· < ·)
   return (forbidden, some names)
 
