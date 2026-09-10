@@ -1,18 +1,18 @@
 # 算术边界的量化: 5040、整数判据与回返核舍入
 
-本卷是 `docs/develop/theory/` 下的**参考输入**,日期为 2026-09-08。文献定理、仓内纸面推导和 Arb 区间证据分别标注;它们都不因写入本卷或摄取为 atom 而成为 Lean/kernel-frozen 真值。本卷不主张数学新颖性,不主张 RH 进展。
+文献定理、仓内纸面推导和 Arb 区间证据分别标注;本卷不主张数学新颖性,不主张 RH 进展。
 
-## 1. 长期研究约定与本轮问题
+## 1. 定义与命题的范围
+
+**定义、定理与证明（保留原有证据地位及开放限制）。**
 
 用户的原标签是 **GH**。目前没有已识别的 GH 数学定义;根据用户关于 RH 等价判据的上下文及既有 `QUANTUM-RH.md`,本卷暂以经典黎曼假设 RH 为工作解释,即所有非平凡 ζ 零点满足实部为 \(1/2\)。这不把 GH 擅自解释成广义 RH。
 
-目标是持续研究整数索引、严格不等号、等号、零余量与量化规则之间的关系,给出明确的算术与量子模型接口及其剩余义务。本轮只回答一条具体问题: **对单位向量的酉回返核逐项作最近网格舍入,是否必保正性?** 第 5 节给出任意分辨率的纸面反例,第 6 节给出实际 ξ 数据上的区间证据。
-
-研究 lane 为 `lane/math/quantized-gh-boundaries-0908`,工作树为 `/Users/auricstudio/trureturing-qgh-boundaries`,intake base 为 `45e7b20dd95dd8b2d7b8784392c1814193b80515`。本轮保持该 Git 基线,只增加本卷及其 canonical ingestion 输出,不引入新形式根、私有公理或冻结声明。
-
-这是用户指定的长期核心问题研究线。host 目标轮次无上限,每次载体调用及其重试仍有界;同一症状第二次出现时停止原样重试并查根因。连续两周没有边际数学或证据增益时修订方法,不以增加卷数、有限样本数或计算精度冒充成功。继续由现有 host 驱动,不运行无限 daemon。本次有限增量不完成长期目标 S6;评审、PR 三门与 MERGED 落地由 caller 后续承担,未合并工作仍为 open。
+**对单位向量的酉回返核逐项作最近网格舍入,是否必保正性?** 第 5 节给出任意分辨率的纸面反例,第 6 节给出实际 ξ 数据上的区间证据。
 
 ## 2. 5040 与小素数: 两种编码不要混在一起
+
+**定义、定理与证明（保留原有证据地位及开放限制）。**
 
 先把用户的问题译成普通算术:
 
@@ -46,12 +46,14 @@
 
 **仓内的素数-黄金表**则先分解素因数,再把每个指数逐行作 Zeckendorf 编码。按旧卷定义 2.4 与定理 2.5 [Z],前三个权重为 \((1,2,3)\):
 
+~~~text
 | 素数坐标 | 指数 | 权重 1 的位 | 权重 2 的位 | 权重 3 的位 |
 |---|---:|---:|---:|---:|
 | 2 | \(4=1+3\) | 1 | 0 | 1 |
 | 3 | \(2=2\) | 0 | 1 | 0 |
 | 5 | \(1=1\) | 1 | 0 | 0 |
 | 7 | \(1=1\) | 1 | 0 | 0 |
+~~~
 
 每列把占用该位的素数相乘,得到 \((70,3,2)\),于是
 
@@ -59,9 +61,9 @@
 70^1\,3^2\,2^3=5040.
 \]
 
-完整带素数标签的表可逆:逐行还原指数,再乘回整数;反向则用唯一素因数分解和 Zeckendorf 唯一性。它提供坐标,不额外证明 RH。上面的整数恒等式由第 6 节程序作精确检查;编码解释沿用 [Z],不是本卷新定理。
+完整带素数标签的表可逆:逐行还原指数,再乘回整数;反向则用唯一素因数分解和 Zeckendorf 唯一性。它提供坐标,不额外证明 RH。编码解释沿用 [Z],不是本卷新定理。
 
-### 小素数为什么让因数较丰?
+### 定理（命题与证明）：小素数为什么让因数较丰?
 
 对正整数 \(n\),由 \(\sigma\) 的乘法性和有限几何级数,
 
@@ -107,8 +109,11 @@ A(n)=\frac{P_k}{\phi(P_k)}\prod_{j=1}^k(1-p_j^{-a_j-1}),
 
 ## 3. RH 等价判据的离散边界图谱
 
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
 本节的等价定理标为 **literature-attested**。统一使用自然对数,\(\gamma\) 为 Euler 常数;\(n,k,N\) 均为整数。下表给出边界的类型,随后固定每条的定义及量词。
 
+~~~text
 | 判据 | 离散变量 | 需要满足的条件 | 零与端点的语义 |
 |---|---|---|---|
 | Robin [L,R] | 每个整数 \(n\ge5041\) | 严格上界 | 5040 排除;等号也违反严格式 |
@@ -117,6 +122,7 @@ A(n)=\frac{P_k}{\phi(P_k)}\prod_{j=1}^k(1-p_j^{-a_j-1}),
 | Li [S] | 每个整数 \(n\ge1\) | 实数系数非负 | 索引整数不代表值整数;\(\lambda_0=0\) 仅约定 |
 | Nyman-Beurling-Baez-Duarte [B1] | 有限维数 \(N\to\infty\) | 平方距离趋零 | 下确界为零不等于某个有限距离为零 |
 | Baez-Duarte 系数 [B2] | 整数 \(k\to\infty\) | 对每个 \(\varepsilon>0\) 的衰减估计 | 有限前缀或个别系数的零不判全局 |
+~~~
 
 ### Robin 与 Lagarias
 
@@ -173,7 +179,7 @@ Robin 定理是
 \left[1-\left(1-\frac1\rho\right)^n\right],
 \]
 
-其中非平凡零点按重数计。Li 原文 DOI 仅作书目信息,本轮未取得其全文;不把二手核对写成亲读原文。第 6 节直接从导数定义核对本次使用的 Taylor 系数关系。这里 \(\lambda_n\) 为实数;\(\lambda_0=0\) 是后续差分的约定,不是上述导数公式在 \(n=0\) 的取值。
+其中非平凡零点按重数计。这里 \(\lambda_n\) 为实数;\(\lambda_0=0\) 是后续差分的约定,不是上述导数公式在 \(n=0\) 的取值。
 
 ### Nyman-Beurling-Baez-Duarte
 
@@ -233,6 +239,8 @@ Gronwall 定理 [L,定理 2.2] 则是无条件的比较背景:
 
 ## 4. 整数取整、真实等号与区间判定
 
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
 对整数 \(a\) 和任意实数 \(T\),有初等恒等关系
 
 \[
@@ -240,7 +248,7 @@ a<T\iff a\le\lceil T\rceil-1,\qquad
 a\le T\iff a\le\lfloor T\rfloor.
 \]
 
-证明:前式右边是严格小于 \(T\) 的最大整数,后式右边是不大于 \(T\) 的最大整数。因此 Robin 对应 \(\lceil e^\gamma n\log\log n\rceil-1-\sigma(n)\ge0\),Lagarias 对应 \(\lfloor T_n\rfloor-\sigma(n)\ge0\)。**取整余量为零表示落入一个格子,不表示实数余量为零。** 前者的零格为 \(\sigma(n)<T\le\sigma(n)+1\),后者为 \(\sigma(n)\le T<\sigma(n)+1\)。这些是记账事实,不是新数学或新的 RH 方法。[Z] 第 33 节已有 Lagarias floor 缺口,第 34 节另有价格正规化勘注;本卷不重做它的反驳或有限证书。
+证明:前式右边是严格小于 \(T\) 的最大整数,后式右边是不大于 \(T\) 的最大整数。因此 Robin 对应 \(\lceil e^\gamma n\log\log n\rceil-1-\sigma(n)\ge0\),Lagarias 对应 \(\lfloor T_n\rfloor-\sigma(n)\ge0\)。**取整余量为零表示落入一个格子,不表示实数余量为零。** 前者的零格为 \(\sigma(n)<T\le\sigma(n)+1\),后者为 \(\sigma(n)\le T<\sigma(n)+1\)。这些是记账事实,不是新数学或新的 RH 方法。[Z] 第 33 节已有 Lagarias floor 缺口,第 34 节另有价格正规化勘注。
 
 一个无条件、无需小数的见证是 \(n=2\):
 
@@ -259,16 +267,20 @@ a\le T\iff a\le\lfloor T\rfloor.
 
 有理区间只在端点充分时作判定。若已认证 \(L\le T\le U\),则:
 
+~~~text
 | 待判命题 | true 的充分条件 | false 的充分条件 | 其它情况 |
 |---|---|---|---|
 | \(a<T\) | \(a<L\) | \(a\ge U\) | undecided |
 | \(a\le T\) | \(a\le L\) | \(a>U\) | undecided |
+~~~
 
 若证书更强,给出的是**严格包围** \(L<T<U\),两行都可在 \(a\le L\) 判 true、在 \(a\ge U\) 判 false。端点开闭性必须随证书保留。对普通闭区间,要锁定 \(\lfloor T\rfloor=q\),可验 \(q\le L\le U<q+1\);要锁定 \(\lceil T\rceil=q\),可验 \(q-1<L\le U\le q\)。落在 undecided 时须加精度或作符号证明,不能按近似小数猜等号。
 
 ## 5. 纸面反例: 任意分辨率的最近网格舍入都不普遍保持回返正性
 
-**状态: repo-derived 纸面构造,此处代数核对;非 kernel-frozen,未作全球新颖性主张。** 下面反驳的是一条具名全称规则,不是 RH。
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**状态: repo-derived 纸面构造,非 kernel-frozen,未作全球新颖性主张。** 下面反驳的是一条具名全称规则,不是 RH。
 
 **命题。** 对每个整数 \(m\ge1\),置 \(h=1/m\),定义
 
@@ -342,13 +354,17 @@ Q_m[T]=\begin{pmatrix}1&1&1-h\\1&1&1\\1-h&1&1\end{pmatrix}.
 
 任何维数的 Gram 矩阵的主块都半正定。因此,只要保持上述**已舍入的三次观测块**不变,增加隐藏状态或扩大 Hilbert 空间都不能赋予它共同的酉回返实现。该结论限定于 unitary-return/Gram 实现,不覆盖所有量子可观测量。
 
-第 6 节程序还对 \(m=1,2,10,200,1000000\) 用 `Fraction` 检查原矩阵的顺序主子式为正,舍入行列式为 \(-1/m^2\),二次型为 \(-2/m\),退出码 0。这些是精确抽查;全称命题由上面的构造和不等式证明承担。它本身没有证明实际 ξ 序列在每种分辨率上都失败。
+证明的有限核对说明：这些是精确抽查;全称命题由上面的构造和不等式证明承担。它本身没有证明实际 ξ 序列在每种分辨率上都失败。
 
 ## 6. 实际 ξ 的三阶专门化: Arb 严格区间证据
 
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+证明附引（第 6 节的原有严格区间证据与精确有理运算；保持数值库证据地位）：[原文证据存档](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md#i31-inactive-archive)。
+
 **状态: 数值库支持的严格区间证据加精确有理矩阵运算;不依赖 RH,不是 Lean/kernel 证书。** [Q] 已有 Li 差分回返定义、三观测 Schur 边界及未经区间认证的 \(r_1,r_2\) 小数。本节沿用其定义,新增严格包围及 \(Q_{200}\) 的实际算术假阴性,不把旧证明重报为新发现。
 
-### 从 Taylor 系数到 Li 回返
+### 定义与证明：从 Taylor 系数到 Li 回返
 
 沿用
 
@@ -380,17 +396,17 @@ c_0=2b_1,\quad c_1=2b_2,\quad c_2=2b_2+3b_3,\quad
 r_1=\frac{b_2}{b_1},\quad r_2=\frac{2b_2+3b_3}{2b_1}.
 \]
 
-程序认证 \(b_1>0\),所以除法合法。取 \(s=1+t\),`zeta(deflate=True)` 表示 \(\zeta(s)-1/(s-1)\);因而
+ 原有区间证据给出\(b_1>0\),所以除法合法。取 \(s=1+t\),记号 \(\zeta_{\rm deflated}(s)\) 表示 \(\zeta(s)-1/(s-1)\);因而
 
 \[
 1+t\,\zeta_{\rm deflated}(1+t)=t\zeta(1+t)
 \]
 
-在 \(t=0\) 正则。程序中的 `x` 正是 \(\xi(1+t)\),常数项含精确值 \(1/2\)。`ctx.cap=4` 保留到三次幂,已足够计算上面三项;这不是截取未知零点或假设尾部为零。
+在 \(t=0\) 正则。\(\xi(1+t)\) 的常数项含精确值 \(1/2\)。这不是截取未知零点或假设尾部为零。
 
-### 严格包围与舍入的精确失败
+### 定理（原有数值证据）：严格包围与舍入的精确失败
 
-Python-FLINT 0.8.0 的 Arb,256 位精度,给出下列经球比较确认的严格有理包围。令 \(d=10^{18}\):
+严格有理包围。令 \(d=10^{18}\):
 
 \[
 \frac{999196806720852614}{d}<r_1<\frac{999196806720852615}{d},
@@ -417,7 +433,7 @@ T=\begin{pmatrix}1&r_1&r_2\\r_1&1&r_1\\r_2&r_1&1\end{pmatrix}
 \det T=(1-r_2)(1+r_2-2r_1^2)=(1-r_2)g>0.
 \]
 
-这里 \(0<r_1<1\)、\(r_2<1\)、\(g>0\) 全由包围推出,故 Sylvester 判据给出严格正定。程序还只用 \(r_1,r_2\) 的有理上下界验证 \(L_2-(2U_1^2-1)>0\),作为不依赖区间相关性的精确检查。
+这里 \(0<r_1<1\)、\(r_2<1\)、\(g>0\) 全由包围推出,故 Sylvester 判据给出严格正定。
 
 对于 \(m=200\),两个区间分别严格包含在最近网格的格子
 
@@ -435,98 +451,25 @@ r_2\in(397/400,399/400).
 
 这是**舍入规则在实际算术数据上的假阴性**,即把一个正定观测块变成了不定块。负性是对已舍入矩阵的正确判定,不能转移为对原始矩阵或 RH 的反例。未舍入的有限正定性也不证明全阶正性。
 
-### 可执行复现
+## 7. 定理的适用边界与未证目标
 
-在 `/tmp` 中执行下面完整命令即可复现。依赖固定为 `python-flint==0.8.0`;Python 标准库的 `Fraction` 负责精确有理运算。实施 worker 独立执行同一程序,退出码 0,最后输出 `python-flint=0.8.0 precision=256 cap=4 PASS`。信任边界包括 Python-FLINT 的接口、FLINT/Arb 特殊函数及级数球包围实现、Python 和运行环境;这没有生成 Lean 证明项。
+**定理的适用范围及未证目标；开放目标不作为有效前提。**
 
-```sh
-uv run --with python-flint==0.8.0 python - <<'PY'
-from fractions import Fraction as F
-from math import floor, prod
-import flint
-from flint import arb, arb_series, ctx
+一个指定普遍保正规则已被纸面构造反驳,并且它在实际 ξ 的一个严格认证三阶块上确实失败。它没有排除 RH 的任何未知情形。
 
-def toeplitz(x, y):
-    return [[F(1), x, y], [x, F(1), x], [y, x, F(1)]]
-
-def det3(a):
-    return (a[0][0] * (a[1][1] * a[2][2] - a[1][2] * a[2][1])
-            - a[0][1] * (a[1][0] * a[2][2] - a[1][2] * a[2][0])
-            + a[0][2] * (a[1][0] * a[2][1] - a[1][1] * a[2][0]))
-
-def witness(a):
-    v = [1, -2, 1]
-    return sum(v[i] * a[i][j] * v[j] for i in range(3) for j in range(3))
-
-def q(x, m):
-    return F(floor(m * x + F(1, 2)), m)
-
-assert prod(p**a for p, a in zip([2, 3, 5, 7], [4, 2, 1, 1])) == 5040
-assert prod(a + 1 for a in [4, 2, 1, 1]) == 60
-assert prod(sum(p**j for j in range(a + 1))
-            for p, a in zip([2, 3, 5, 7], [4, 2, 1, 1])) == 19344
-assert 4181 + 610 + 233 + 13 + 3 == 70 * 3**2 * 2**3 == 5040
-assert 2**4 * 3**2 * 5 * 11 == 7920
-print("arithmetic: 5040, tau=60, sigma=19344, both encodings, 7920 OK")
-
-for m in [1, 2, 10, 200, 1000000]:
-    h, eta, t = F(1, m), F(1, 12 * m), 1 - F(1, 3 * m)
-    r1, r2 = (1 - eta) * t, (1 - eta) * (2 * t*t - 1)
-    assert 0 < (1-r1)/h == F(5, 12)-h/36 < F(1, 2)
-    assert F(1, 2) < (1-r2)/h == F(17, 12)-h/3+h*h/54 < F(3, 2)
-    a = toeplitz(r1, r2)
-    assert 1-r1*r1 > 0 and det3(a) > 0
-    rounded = [[q(x, m) for x in row] for row in a]
-    assert rounded == toeplitz(F(1), 1-h)
-    assert det3(rounded) == -h*h and witness(rounded) == -2*h
-    print("family", m, "PD=True", "det=", det3(rounded), "vTv=", witness(rounded))
-
-ctx.prec, ctx.cap = 256, 4
-t = arb_series([0, 1])
-s = 1 + t
-x = s * (-s * arb.pi().log() / 2).exp() * (s/2).gamma() * (1+t*s.zeta(deflate=True)) / 2
-assert x[0].contains(arb(1)/2)
-f = (x/x[0]).log()
-assert f[1] > 0
-r1, r2 = f[2]/f[1], (2*f[2]+3*f[3])/(2*f[1])
-gap = r2 - (2*r1*r1-1)
-d = 10**18
-endpoints = [(999196806720852614, 999196806720852615),
-             (996790337371607624, 996790337371607625),
-             (1820249309832, 1820249309833)]
-for name, value, (lo, hi) in zip(["r1", "r2", "gap"], [r1, r2, gap], endpoints):
-    assert arb(lo)/d < value and value < arb(hi)/d
-    print(name, str(lo)+"/"+str(d), "< value <", str(hi)+"/"+str(d))
-bounds = [(F(lo, d), F(hi, d)) for lo, hi in endpoints]
-assert 0 < bounds[0][0] < bounds[0][1] < 1
-assert 0 < bounds[1][0] < bounds[1][1] < 1
-assert bounds[1][0] - (2*bounds[0][1]**2-1) > 0
-assert 1-r1*r1 > 0 and (1-r2)*gap > 0
-for (lo, hi), expected in zip(bounds[:2], [F(1), F(199, 200)]):
-    assert q(lo, 200) == q(hi, 200) == expected
-rounded = toeplitz(F(1), F(199, 200))
-assert q(F(1), 200) == 1
-assert det3(rounded) == -F(1, 40000)
-assert witness(rounded) == -F(1, 100)
-print("actual xi: PD=True, Q_200 det=-1/40000, vTv=-1/100")
-print("python-flint="+flint.__version__, "precision="+str(ctx.prec), "cap="+str(ctx.cap), "PASS")
-PY
-```
-
-## 7. 障碍登记与下一步
-
-本轮增加的证据是:一个指定普遍保正规则已被纸面构造反驳,并且它在实际 ξ 的一个严格认证三阶块上确实失败。它没有排除 RH 的任何未知情形。以下是本卷的研究义务,不是手写消化状态或新形式工单。
-
-| 义务 | 当前边界 | 下一次能改变它的结果 |
+~~~text
+| 义务 | 当前边界 | 未证数学目标 |
 |---|---|---|
 | GH 的准确含义 | 只有用户字面标签,采用工作 RH 解释 | 用户提供可识别定义后,重新核对哪些结论仍适用 |
 | 对实际序列的保正量化 | 不受约束的逐项最近网格舍入已失败 | 给出保正且有误差界的结构化规则;候选是在单位圆盘内舍入 Schur 参数,再精确传输回矩阵 |
 | Schur 端点与历史依赖 | 中心和尺度依赖全部前序数据 | 处理奇异主块、零 pivot 和 \(\lvert\alpha\rvert=1\) 端点;证明误差不会因传输失控,不能只投影一个区间 |
 | 算术桥 | 已有素数因子乘积恒等式 | 保留 \(\prod(1-p^{-a-1})\) 及 \(\log\theta(p_k)\),证明与实际回返核之间可使用的定量关系 |
 | 全局正性与尾项 | 第 6 节只处理三阶 | 对全阶实际 Li 回返给出统一正性或可闭合的尾估计;有限检查不能替代 |
-| 形式与发布 | 纸面和数值证据,未冻结、未合并 | caller 的独立评审、canonical PR 三门及 MERGED;形式化另按准入处理 |
+~~~
 
-不能把 Robin/Lagarias 余量放到一个对角算子上,再把其正性重命名为量子证明;那只重新编码目标不等式。即使构造了保正的近似核,也必须另外证明其与原实际序列的关系足以传递所需全称结论。本轮不重做相邻 #5908、#6160、#6298 所属的 Robin 有限证书、整数资源优化或物理响应 no-go 工作。
+不能把 Robin/Lagarias 余量放到一个对角算子上,再把其正性重命名为量子证明;那只重新编码目标不等式。即使构造了保正的近似核,也必须另外证明其与原实际序列的关系足以传递所需全称结论。
+
+**未证数学目标（原文整体保留）。** 下列距离算子目标仍待完整证明；不作为已证定理或假设使用。
 
 ### PRO 提供的下一篇纸面目标: 距离的算子实现
 
@@ -551,63 +494,32 @@ D_N=\sup\{\delta\ge0:A_N-\delta e_0e_0^*\succeq0\},
 
 目标必须使用全半轴范数,并处理有限 Gram 块奇异时的距离与减秩阈值;不能依赖未经证明的可逆性。缩放 \(f_k\mapsto f_k/k\) 不改变任何有限线性张成空间。即使上述实现全部写成证明,\(A\succeq0\) 本来就由 \(T^*T\) 自动成立,RH 内容仍在距离阈值趋零的全局条件,不会因“已有正算子”自动解决。
 
-## 8. 来源核对与产地
+## 8. 数学引文（附第 2–6 节及其后续引用）
 
-### 本轮实际核对的数学来源
+**证明附引：本节各标记附于使用该标记的定义或定理。**
 
-下列六份外部预印本或论文已在本轮成功下载并核对,两个仓内引用则按钉版的本地文件读取。Li DOI 仅是书目链接,没有取得其全文。HTML 用数学 `alttext` 保留公式,PDF 按页提取核对。本地源字节与 SHA-256 收据保存在实施 attempt 工件中;这些下载和提取工具不承担数学正确性。
+### 证明附引：各标记与原有适用范围
 
-| 标记 | 已检查文本 | 本卷使用范围 |
+~~~text
+| 标记 | 引文 | 本卷使用范围 |
 |---|---|---|
 | [L] | [Lagarias, An Elementary Problem Equivalent to the Riemann Hypothesis](https://arxiv.org/html/math/0008177v2) | Problem E、定理 1.1、式 (1.2)、定理 2.2 和第 3 节证明;弱式全称等价、RH 下严格性、Robin 域及 Gronwall |
 | [N] | [Nicolas, Small values of the Euler function and the Riemann hypothesis](https://arxiv.org/html/1202.0729v2) | 引言在 primorial 定义之后的 \(\forall k\ge1\) 严格式;未使用其它差值辅助恒等式 |
-| [S] | [Suzuki, Li coefficients as norms of functions in a model space](https://arxiv.org/html/2301.05779v2) | 引言式 (1.1)、全体正整数的非负条件、ξ 定义和参考文献 [8];Li 原文 [DOI 10.1006/jnth.1997.2137](https://doi.org/10.1006/jnth.1997.2137) 仅书目,未取得全文 |
+| [S] | [Suzuki, Li coefficients as norms of functions in a model space](https://arxiv.org/html/2301.05779v2) | 引言式 (1.1)、全体正整数的非负条件、ξ 定义和参考文献 [8];Li 原文 [DOI 10.1006/jnth.1997.2137](https://doi.org/10.1006/jnth.1997.2137) 仅书目 |
 | [B1] | [Baez-Duarte, A strengthening of the Nyman-Beurling criterion for the Riemann hypothesis, 2](https://arxiv.org/pdf/math/0205003v1) | PDF 第 1-2 页,全半轴空间、自然数生成族、定理 1.1 的闭包条件 |
 | [B2] | [Baez-Duarte, A new necessary and sufficient condition for the Riemann hypothesis](https://arxiv.org/pdf/math/0307215) | PDF 第 1 页定理 1.1,系数定义及每个 \(\varepsilon>0\) 的指数 \(-3/4+\varepsilon\) |
-| [R] | [Choie, Lichiardopol, Moree, Sole, On Robin's criterion for the Riemann hypothesis](https://www.numdam.org/article/JTNB_2007__19_2_357_0.pdf) | 期刊页 357-358 的判据和有限例外列表;DOI 10.5802/jtnb.591;未亲读 Robin 1984 原文 |
-| [Q] | [钉版 QUANTUM-RH.md](https://github.com/the-omega-institute/trureturing/blob/45e7b20dd95dd8b2d7b8784392c1814193b80515/docs/develop/theory/QUANTUM-RH.md) | 本地同一 HEAD 的 Li 差分定义、三片 Schur 边界、实际 ξ 小数及“不是严格区间认证”的原限定;定位约 49898、50545、50849 行 |
-| [Z] | [钉版 ZECKENDORF_EULER_5040.md](https://github.com/the-omega-institute/trureturing/blob/45e7b20dd95dd8b2d7b8784392c1814193b80515/docs/develop/theory/ZECKENDORF_EULER_5040.md) | 本地同一 HEAD 的定义 2.4、定理 2.5、第 33 节 floor 缺口及第 34 节价格正规化勘注 |
+| [R] | [Choie, Lichiardopol, Moree, Sole, On Robin's criterion for the Riemann hypothesis](https://www.numdam.org/article/JTNB_2007__19_2_357_0.pdf) | 期刊页 357-358 的判据和有限例外列表;DOI 10.5802/jtnb.591 |
+| [Q] | [钉版 QUANTUM-RH.md](https://github.com/the-omega-institute/trureturing/blob/45e7b20dd95dd8b2d7b8784392c1814193b80515/docs/develop/theory/QUANTUM-RH.md) | Li 差分定义、三片 Schur 边界、实际 ξ 小数及“不是严格区间认证”的原限定;定位约 49898、50545、50849 行 |
+| [Z] | [钉版 ZECKENDORF_EULER_5040.md](https://github.com/the-omega-institute/trureturing/blob/45e7b20dd95dd8b2d7b8784392c1814193b80515/docs/develop/theory/ZECKENDORF_EULER_5040.md) | 定义 2.4、定理 2.5、第 33 节 floor 缺口及第 34 节价格正规化勘注 |
+~~~
 
-[Q,Z] 是参考源的出处,其文字不构成 kernel 状态证明。以上文献查询支持判据的准确陈述;不构成对第 5 节构造的全球新颖性检索或新颖性结论。
-
-### 载体与独立性
-
-本卷由 caller 的 `consensus-rnd:sshx` implementation brief 驱动的 Codex worker 写作,worker 未调用新的 skill 或派出子席。worker 独立读文献、核对纸面代数并运行第 6 节程序,没有读取本轮 thinking 日志或 peer review 工件。这里的“独立复算”指重新执行与核对,也不是实施者给自己签发独立评审批准。先验边界为 Codex `repo-prior-exposed`、oracle `external-prior-exposed`;同轮 peer 输出不作为实施输入,不声称先验无污染。
-
-以下载体事实由 caller 提供,worker 未读取其私人运行日志。六个隔离 thinking 席最终均为 `revise`;caller 经元层收敛保留端点和正规化限制,选择了本卷的小型反驳及实际 ξ 区间证据。**这不表示六席一致批准一个未经修改的旧计划。** 有效 thinking 结果来自 oracle 回退失败后使用的 Codex,不能据此声称模型族多样性。
-
-独立的实际 GPT PRO 咨询已完成,caller 提供的记录为:
-
-| 字段 | 原记录 |
-|---|---|
-| task | `080f1df1-b4cf-4e0a-b1c4-d76dd21fcb1a` |
-| conversation | `conv_b9e496c90a421437` |
-| pool | `chrono-chatgpt-pro-pool` |
-| dispatch model | `chatgpt-5.5-pro` |
-| terminal model | 字面字符串 `6\nPro`,按 JSON 字符串表示为 `"6\\nPro"` |
-| ChatGPT URL | <https://chatgpt.com/c/6a9fe809-5830-83ec-8008-2fa7d47d2d92> |
-
-dispatch 与终态字段是两条不同观测,本卷不据此推断未见的精确后端型号。原 pool 的前两次尝试均以 `page.goto Page crashed` 失败,没有研究产出。另一个 PRO follow-up `e512bb9d-21ac-46f4-8209-9941632be445` 在本次 intake 中为 pending,不能引用为已完成回答。PRO 的建议仍是可错参考输入;第 7 节对 \(T^*T\) 的类型修正明确保留。
-
-本卷的 canonical 摄取命令为:
-
-```sh
-make ingest BASE=45e7b20dd95dd8b2d7b8784392c1814193b80515 SOURCE=docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md
-```
-
-摄取计数、atom 样本和退出码以 worker 结果信封中的实测输出为准,不能把摄取成功写成定理冻结或 PR 已合并。后续评审纠正须明确记下被改判的结论及其证据,已摄取 atom 不手改、不删除。
-
-## 9. 追加勘注: 终态字符串与本次来源
-
-日期 2026-09-08。本次 implementation worker 按 `consensus-rnd:sshx` worker 模式执行,没有派出子席,没有读取 peer 日志,没有提交、推送或操作 PR。以下为参考输入中的纸面论证与数值库证据,不是独立评审批准,也不是 Lean-frozen 定理。长期研究目标保持 active。
-
-**具体勘误,只追加不改旧文:** 第 8 节把 terminal model 当成含字面反斜杠的字符串,这是记录错误。caller 指定的 `pro-map-task-complete.json` 经本次 JSON 解析,其 model 字段的 Unicode codepoints 恰为 `[54,10,80,114,111]`:字符 `6`,一个实际 LF,再接 `Pro`。正确的 JSON 序列化是 `"6\nPro"`,其中只有一个换行转义序列;不是第 8 节所写的含两个反斜杠的序列化。原 JSON SHA256 为 `6274bc727c4a83f7056a8112edee31940604806de34a0c7d4d3413cb32f1c715`。本勘注不据此推断未见的后端型号,不改变第 5-6 节数学。
-
-本次实际源 HEAD 为 `8698bf1a197adb887967cb6722261ea525ea9400`,已经包含 caller 提交的第一卷。`45e7b20dd95dd8b2d7b8784392c1814193b80515` 仅保留为历史 intake 与摄取 BASE。追加前本卷 598 行,源 SHA256 为 `1051e55d93ab1beae2cfc2f4fcee04a6f9c79b1a17792c5ce187286d20b44404`;原文及 62 个已摄入 atom 全部保留。以下使用 [Q]、[Z] 的当前 HEAD 字节,其 SHA256 分别为 `4d38746e7e83ef96bb8c5af3b58f2e6d7a51484f4cbdd673ca4e644fa34bf246`、`2c60183ac740a7426db7f9113b5d769f883382d75bb216e6dfa780c42fca11f7`。
+[Q,Z] 是参考源的出处,其文字不构成 kernel 状态证明。不构成对第 5 节构造的全球新颖性检索或新颖性结论。
 
 ## 10. 指数截面、距离与已有的算术损失
 
-### 坐标独立不指定度量
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+### 定义与定理：坐标独立不指定度量
 
 固定非空有限素数集 \(P\),令 \(a=(a_p)_{p\in P}\)。素数指数是独立的坐标标签;选择内积 \(\langle a,b\rangle=\sum_{p\in P}a_pb_p\) 后,这些坐标轴才是欧氏正交轴。也可以选择正权内积 \(\sum_pc_pa_pb_p\),其中 \(c_p>0\);那是另一个明确的度量,不能默认为同一距离。
 
@@ -620,7 +532,7 @@ a=\frac{t}{\|w\|^2}w+a_\perp,\quad w\cdot a_\perp=0,
 
 这是正交投影与勾股定理的直接应用;非负指数松弛取此超平面与非负正交象限的交。对于精确的 \(t=\log n\),若 \(P\) 包含 \(n\) 的素数支撑,唯一分解定理使截面中只有一个非负整数指数向量;不包含时可以没有。它不是同一个 \(n\) 的许多整数编码解。因此实际整数搜索比较的是区间薄层 \(t_0\le w\cdot a\le t_1\) 或预算 \(w\cdot a\le t\),不能把连续截面的维数当成同一整数的自由度。
 
-### 黄金位是编码,不会新增独立方向
+### 定义与定理：黄金位是编码,不会新增独立方向
 
 逐素数的 Zeckendorf 编码把 \(a_p\) 写成 \(\sum_jF_jb_{pj}\),\(b_{pj}\in\{0,1\}\),且相邻位不能同时为 1。唯一编码没有增加指数的独立自由度。原指数度量拉回位坐标后是
 
@@ -634,7 +546,7 @@ a=\frac{t}{\|w\|^2}w+a_\perp,\quad w\cdot a_\perp=0,
 \sigma(2^4)=31\ne\sigma(2)\sigma(2^3)=3\cdot15=45.
 \]
 
-### Robin 的函数曲率与已有 KL 恒等式
+### 定义与定理：Robin 的函数曲率与已有 KL 恒等式
 
 令 \(F(a)=\log(\sigma(n)/n)=\sum_pf_p(a_p)\)。对实指数 \(a_p\ge0\) 作同一有限支撑延拓,
 
@@ -643,18 +555,20 @@ f_p(a)=\log\frac{1-p^{-a-1}}{1-p^{-1}},\qquad
 f_p''(a)=-\frac{(\log p)^2p^{a+1}}{(p^{a+1}-1)^2}<0.
 \]
 
-Hessian 是对角的,但曲率随素数和指数变化。普通欧氏距离没有单独决定 Robin 符号的信息。已有 [Z] 第十二章定理 12.2、12.3 与推论 12.4(本次源约 2210-2460 行)给出了连续最优指数、精确 Bernoulli KL 损失及
+Hessian 是对角的,但曲率随素数和指数变化。普通欧氏距离没有单独决定 Robin 符号的信息。已有 [Z] 第十二章定理 12.2、12.3 与推论 12.4给出了连续最优指数、精确 Bernoulli KL 损失及
 
 \[
 \Delta(n)=\mathfrak D(n)-\mathfrak Q(\log n),\qquad
 \mathrm{RH}\iff\mathfrak D(n)>\mathfrak Q(\log n)\quad(n>5040).
 \]
 
-这里 \(\Delta(n)=\gamma+\log\log\log n-F(a)\),其符号与 Robin 的严格上界相同。本节引用已有损失公式,不声称重新发现连续优化器或 KL 分解。截面几何能组织搜索;仍须比较函数损失与连续超额,不能用距离替代这笔比较。
+这里 \(\Delta(n)=\gamma+\log\log\log n-F(a)\),其符号与 Robin 的严格上界相同。本节引用已有损失公式,不声称重新发现连续优化器或 KL 分解。仍须比较函数损失与连续超额,不能用距离替代这笔比较。
 
 ## 11. 三片 Schur 坐标的正交几何与量化
 
-### 既有 Schur 条件的投影解释
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+### 定理与证明：既有 Schur 条件的投影解释
 
 沿用 [Q] 约 50545 行后的三片边界。三个单位历史向量 \(u_0,u_1,u_2\) 的相邻内积为实数 \(x\),两端内积为实数 \(y\)。投影到中间向量后,残差 \(r_0=u_0-xu_1\)、\(r_2=u_2-xu_1\) 都与 \(u_1\) 正交,且
 
@@ -672,7 +586,7 @@ y=x^2+(1-x^2)\beta,\qquad |\beta|\le1.
 
 这正是用户“沿截面取正交部分”的一个有用、精确的连接:中心分量与残差分量各自承载明确的内积约束。此解释复用既有 [Q],不增加全阶 RH 正性的结论。
 
-### 两个不同的量化输出空间
+### 定义与定理：两个不同的量化输出空间
 
 对固定输入 \(x,y\) 采用 \(Q_m(t)=\lfloor mt+1/2\rfloor/m\),\(m\ge1\) 为整数,正负半格的平局都向正无穷取整。直接逐项舍入得到 \(x'=k_x/m,y'=k_y/m\),令
 
@@ -681,7 +595,7 @@ B=m^2+mk_y-2k_x^2,\qquad
 \det T(x',y')=\frac{(m-k_y)B}{m^3}.
 \]
 
-全部主子式给出 PSD 当且仅当 \(|k_x|\le m,|k_y|\le m,B\ge0\);PD 当且仅当 \(|k_x|<m,k_y<m,B>0\)。失败时因对角全为 1 而有正方向,所以非 PSD 就是不定。若 \(B<0\),精确负向量 \(v=(m,-2k_x,m)\) 满足 \(v^{\mathsf T}T v=2B\)。(这里只用 Python 任意精度整数形成行列式乘积。)
+全部主子式给出 PSD 当且仅当 \(|k_x|\le m,|k_y|\le m,B\ge0\);PD 当且仅当 \(|k_x|<m,k_y<m,B>0\)。失败时因对角全为 1 而有正方向,所以非 PSD 就是不定。若 \(B<0\),精确负向量 \(v=(m,-2k_x,m)\) 满足 \(v^{\mathsf T}T v=2B\)。
 
 Schur 舍入则取 \(x'=k_x/m,\beta'=k_\beta/m\),再重建
 
@@ -695,18 +609,22 @@ y'=x'^2+(1-x'^2)\beta'
 
 ## 12. 实际 xi 固定矩阵的全分辨率分类
 
-### 输入认证与完整有限前缀
+**定义、定理与证明（保留原有证据地位及开放限制）。**
 
-程序 `tools/scripts/agent/xi_quantization.py` 从第 6 节的 completed xi Taylor 公式自身计算 \(x,y,\beta\),不读取理论散文。Python-FLINT 0.8.0、Arb 256 位、`ctx.cap=4`;分母 \(d=10^{40}\) 的严格有理区间是 \(a/d<t<(a+1)/d\),其中:
+### 定理（原有数值证据）：输入区间与有限前缀分类
 
+证明附引（第 12 节的原有数值证据；保持数值库证据地位）：[原文证据存档](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md#i31-inactive-archive)。
+
+分母 \(d=10^{40}\) 的严格有理区间是 \(a/d<t<(a+1)/d\),其中:
+
+~~~text
 | 量 | 下端分子 a |
 |---|---:|
 | x | 9991968067208526140634582694569946944348 |
 | y | 9967903373716076242217823134230970513645 |
 | beta | -9988664119479065813465651975246663407975 |
 | gap | 18202493098329066925943959890095315 |
-
-包围方法是对缩放 Arb 球求 `floor().unique_fmpz()`,再用 Arb 比较严格验证两个有理端点。无法认证时提高精度至最多 2048 位,仍失败则停止;不解析小数显示。程序也重新认证第 6 节全部 \(10^{18}\) 粗控制区间,结果一致。
+~~~
 
 对每一个计入完成的 \(m\),三个输入区间的两个端点都用
 
@@ -715,35 +633,20 @@ y'=x'^2+(1-x'^2)\beta'
 \qquad\left\lfloor\frac{2mb+d}{2d}\right\rfloor
 \]
 
-作 Python 整数计算,相同才认证该 bin。不同则将该 \(m\) 记入 unresolved,不会猜测精确平局或只检查 GPU 负候选。实际运行请求并完成 \([1,1399999]\),expected、attempted、classified 均为 1399999;unresolved 为 0。每个已完成分辨率还核对 Schur 重建的整系数行列式恒等式。
+相同才认证该 bin。不同则将该 \(m\) 记入 unresolved,不会猜测精确平局。分类域为 \([1,1399999]\)。
 
+~~~text
 | 精确方法 | 不定 | 奇异 PSD | PD | 首次 PD |
 |---|---:|---:|---:|---:|
 | 逐项舍入 | 298350 | 155 | 1101494 | 623 |
 | Schur 舍入 | 0 | 622 | 1399377 | 623 |
+~~~
 
-逐项奇异恰为 \(m=1,\ldots,155\),Schur 奇异恰为 \(m=1,\ldots,622\)。逐项首负 \(m=156\),末负 \(m=1123639\),故分类不是从第一次 PD 起就单调。首负预测在开跑前已登记,此次枚举确认它;末负与计数是本次新测量。首负行列式为 \(-1/24336\),向量 \((156,-312,156)\) 的值为 \(-312\)。末负 bins 为 \((1122737,1120032)\),\(B=-503569\),行列式为 \(-165124853/128969711562487829\),向量 \((1123639,-2245474,1123639)\) 的值为 \(-1007138\)。首末奇异的零向量及各类首末记录都在生成报告内。
+逐项奇异恰为 \(m=1,\ldots,155\),Schur 奇异恰为 \(m=1,\ldots,622\)。逐项首负 \(m=156\),末负 \(m=1123639\),故分类不是从第一次 PD 起就单调。首负行列式为 \(-1/24336\),向量 \((156,-312,156)\) 的值为 \(-312\)。末负 bins 为 \((1122737,1120032)\),\(B=-503569\),行列式为 \(-165124853/128969711562487829\),向量 \((1123639,-2245474,1123639)\) 的值为 \(-1007138\)。
 
 控制 \(m=200\) 仍为 bins \((200,199)\),行列式 \(-1/40000\),归一向量 \((1,-2,1)\) 的值为 \(-1/100\)。Schur 在此处给出 \(x'=1,\beta'=-1,y'=1\),是奇异 PSD。
 
-### 真 MPS 候选与误差账
-
-本次报告来自 Apple M3 Ultra、60 GPU 核、Metal 4、103079215104 字节内存,Python 3.12.13、Torch 2.8.0、NumPy 2.0.2。Torch 导入前设置 `PYTORCH_ENABLE_MPS_FALLBACK=0`,要求 MPS built/available,实际 tensors 位于 `mps:0`。bin 候选为 float32,索引与 \(B\) 符号运算为受支持的 int64;没有在 GPU 上用定宽整数乘行列式。先断言 \(m\le1400000<2^{24}\) 和 \(4(1400001)^2<2^{63}\),再按 65536 行分块分配。复用 `gpu5040.state_store.StateLocks`,在独立外部 state 目录先取 state 锁,再取 per-user GPU/verifier 锁;没有改动或停止既有 gpu5040 工作。
-
-比较 naive `floor(m*t+0.5)` 与 centered-deficit `m-ceil(m*(1-t)-0.5)`。后者的 \(1-t\) 先由高精度有理数形成,再转 float32;仍然只是候选。
-
-| MPS 候选 | 任一 x,y,beta bin 不同的 m 数 | 仅 x,y 任一不同的 m 数 | B 符号/逐项类别不同的 m 数 | Schur 类别不同 |
-|---|---:|---:|---:|---:|
-| naive | 131641 | 116459 | 50715 | 0 |
-| centered | 61386 | 196 | 61 | 0 |
-
-逐坐标 bin 差异为 naive `(x=64006,y=55539,beta=17380)`,centered `(x=55,y=141,beta=61201)`。beta 为负且靠近 -1,所规定的 centered 公式并没有同等改善它。精确不定而 GPU 报非负的数量为 naive 8314、centered 26;精确 PD 而 GPU 报不定分别为 42401、35。报告保留有界 bin/符号样本及完整三类混淆计数。例如 centered 在 \(m=188026\) 将精确 bins \((187875,187422)\) 算成 \((187875,187423)\),把不定报成 PD。因此即使 centered 也不能承担证书。
-
-**历史控制保留:** caller 在派发中给出的旧 MPS smoke 于 \(m=1400000\) 得 naive \((1398876,1395507)\),而精确 bins 是 \((1398876,1395506)\)。这是旧观测,不因新跑而改写。本次当前源码重跑再次得到同一 naive 偏一结果,centered 得精确 bins;两者在这个控制上都报 PD,所以 bin 差异不一定改变类别。控制不计入有限前缀的计数或 digest。
-
-最终主运行 UTC 为 `2026-09-08T12:14:36.796123+00:00` 至 `2026-09-08T12:14:45.828243+00:00`;两端 `torch.mps.synchronize()` 包围的分块总计 0.18041808810085058 秒,含分配/派发,不含 CPU 传输,全部枚举及比较耗时 7.707086249953136 秒。首轮实际 MPS 运行亦完整成功,最终报告是增加符号样本与混淆计数后的新运行,并非挪用旧计时。
-
-### 解析尾界,不是数值外推
+### 定理与证明：解析尾界,不是数值外推
 
 设 \(|x|\le1\),最近舍入误差满足 \(|d_x|,|d_y|\le1/(2m)\)。逐项舍入后的下抛物线余量有纸面恒等式和界
 
@@ -764,49 +667,17 @@ g'=y+d_y-2(x+d_x)^2+1
 
 Schur 的全域 PSD 已由第 11 节代数证明。对本次实际输入,在 \(m=623\) 的端点就能严格检查 \(L_x-1/1246>-1,U_x+1/1246<1,L_\beta-1/1246>-1,U_\beta+1/1246<1\);误差继续下降,所以它对所有 \(m\ge623\) 都 PD。奇异数量 622 因而也是全分辨率的数量,不是只在扫描窗口内的猜想。
 
-### 复现、状态与未履行义务
+证明附引：[xi-quantization-0908.md](../../reports/xi-quantization-0908.md)。
 
-结构化全部证据位于 [xi-quantization-0908.md](../../reports/xi-quantization-0908.md),包括有理区间、程序及本地 import SHA256、实际 HEAD、依赖/硬件、逐块计时、范围与样本。程序仅在请求范围完整且无 unresolved 时原子发布报告;失败记录留在外部 state 目录,不能覆盖已有完整报告。CPU-only 模式明确写无 MPS 运行,不能向仓内发表 GPU 主报告。可执行入口为:
-
-```sh
-make -C tools xi-quantization XI_REPORT=/Users/auricstudio/trureturing-qgh-boundaries/docs/reports/xi-quantization-0908.md
-make -C tools xi-quantization XI_MODE=cpu XI_CHUNK=50000 XI_REPORT=/tmp/qgh-xi-quantization-state/cpu-report.md
-make -C tools xi-quantization-test
-```
-
-Make 配方固定 `uv run --python 3.12 --with torch==2.8.0 --with numpy==2.0.2 --with python-flint==0.8.0 python ...`,没有修改全局 Python 或 Codex 配置。主报告内记录展开后的精确命令。完整有序数学流的 SHA256 为 `81e77ccc81333be01c37c6fbb3a8168c37386f8293c18131ad45b9f7776e2b60`:对递增的每个完成 \(m\),以 ASCII 写 `m,kx,ky,kbeta,entrywise_class,schur_class` 后接 LF,无头行;类别字面值为 `indefinite`、`singular`、`pd`,控制另记。这个 digest 不含时间、设备、源码版本等运行元数据,不同设备可以复算比较。
-
-完整 CPU-only 运行与主 MPS 运行的数学 digest 相同。另一份不导入分类实现的独立算式复核使用 512 位 Arb 比较、`divmod` 半格判定、缺额变量行列式及全部主子式,也复现同一计数和 digest,并以显式矩阵二次型核对首末负/零见证。这里的独立是算法与复算路径的独立,不是新增评审席或模型族独立性。9 个聚焦行为测试覆盖半格歧义、正负平局、奇异/不定、任意精度乘积、重建、覆盖缺口、序列化及 GPU 非负漏报;既有 ScriptTests 入口实际执行了这些测试。
-
-本增量将“对这一固定三阶块的所有分辨率”从未执行登记变成有限完整枚举加尾界的数值库/纸面结论。它没有证明 RH,没有证明更高阶实际 xi 截面正性,没有解决全历史 Schur 误差传输、奇异 pivot 的高阶控制或统一尾估计。第 7 节其它算术桥、物理检测与 PRO 距离算子义务仍 open。caller 仍负责独立评审、PR 三门与发布;本次 worker 不把任何本地验证称为 MERGED 或 standing-goal satisfaction。
-
-## 13. 实施收尾的追加记录
-
-第 12 节已摄入的运行事实继续保留。随后修正报告发布失败的状态记录:即使数学覆盖已完成,发布异常也明确记为 `publication_failed` 并返回非零,保留已完成覆盖与已有报告,不把发布失败说成完整运行。新增的存储失败注入测试使聚焦行为测试总数成为 10;这不改变任何 bin、分类或数学 digest。
-
-因此当前主报告采用终版程序的另一次完整 MPS 运行,UTC 为 `2026-09-08T12:26:31.783258+00:00` 至 `2026-09-08T12:26:40.339952+00:00`,同步 MPS 分块总计 0.162419916363433 秒,枚举/比较 7.136823707958683 秒。全部精确计数、混淆计数和 digest 与第 12 节所记运行相同。终版程序 SHA256 为 `52b0b82da67a608464b3acc189b1449e731e8c6ad4e9cef168978ca22a57908c`;本地 import `gpu5040/state_store.py` 为 `a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a`,Make 入口为 `624482b96b758254c78d31c8dacfa330fd8a775d6beef6412248a17e9aed1cb9`。终版 CPU-only 完整运行也给出同一 digest,且明确没有 MPS 执行。此前的运行来源和计时只作为历史,没有拿来替代终版源码的实跑。
-
-## 14. 评审勘误:发布边界与回归核验
-
-本节是 `consensus-rnd:sshx` 实施修复的 repo-derived 工程证据,不追加数学定理。第 12 节“失败记录不能覆盖已有完整报告”和第 13 节“发布异常保留已有报告”的全称保证不成立,在此明确收窄:共享 `state_store.atomic_write` 先 `os.replace`,后同步目录;只有 replacement 之前的失败保留旧目标字节。quality 席在独立字节相同的夹具中注入 replacement 之后的目录同步错误,观察到非零退出、外部 `publication_failed`,同时目标已是新报告。此时新字节可以可见,掉电后的持久性不确定,没有回滚保证。该反例不表明第 13 节的历史实际 MPS 运行发生过 I/O 失败;其来源、计时和已有 atom 均继续保留。
-
-修复后的报告 schema 为 2。`mathematical_status=complete` 只表示数学认证完成;写入 Markdown 的 `status=publication_unconfirmed` 是发布前快照,成功发布也不改写为自证成功。外部 runtime/stdout 的 `status=complete` 表示报告 writer 已返回,进程退出 0 还要求 runtime 写入返回。报告发布异常仍记 `publication_failed` 和异常类型/消息,保留覆盖、计数与完整数学 digest 并返回非零。若 runtime 记录本身也写失败,stdout 另带 `runtime_record_error` 并返回非零;此前可见的 runtime 同样不能自证自己的最终目录同步。此契约明确区分数学完成、可见字节和 I/O 结果,没有另造事务服务或改写共享 writer。
-
-聚焦 Python 套件现为 11 项。实际共享 writer 的测试覆盖成功、replacement 前失败、replacement 后目录同步失败,以及失败/成功结果记录的目录同步失败;成功和失败两侧都核对三行合成覆盖及独立 CSV digest。尾界测试独立钉住 `error_at_M=7000001/3920000000000` 与 `gap_minus_error=211525460221/6125000000000000000`,并拒绝 `gap-error` 不严格为正、x/y/beta 严格端点达到等号或越界,及独立端点 PD 前提失败。预登记把尾界系数 5 改为 1,实得仅 `test_tail_rational_bound_and_strict_hypotheses` 失败,Python 退出 1 / Make 退出 2,无编译或导入错误;恢复后 11 项全绿。Make 的两个 `.PHONY` 和两条 help 配方合为各一条,已有 `ToolsTargets` 增列两个真实命令,保留并扩充严格 dispatch 断言。实际 `ToolsMakefileIsAThinCompleteDispatchTable` 先复现 `Assert.Single` 的两项失败;修复后该测试、根 Make 薄表、ScriptTests 入口及原有必需 check-fast filters 共 19 项通过,构建零警告、零错误;canonical selftest 通过。这些是本 worker 的执行证据,不冒充独立复审或 PR 准入。
-
-修复终版只重跑一次实际 MPS 完整前缀,复用同一 per-user GPU/verifier 锁并使用独立外部 state;没有另做完整 CPU-only 扫描。UTC 为 `2026-09-08T13:39:56.700277+00:00` 至 `2026-09-08T13:40:04.933080+00:00`,同步 MPS 总计 0.1530874171294272 秒,枚举/比较 6.9315066249109805 秒;命令退出 0,外部 runtime 为 `complete`,无 publication/recording error。重现命令为:
-
-```sh
-make -C tools xi-quantization XI_MODE=mps XI_FIRST=1 XI_LAST=1399999 XI_CHUNK=65536 XI_PRECISION=256 XI_DIGITS=40 XI_STATE=/tmp/qgh-xi-quantization-i3-publication-contract XI_REPORT=/Users/auricstudio/trureturing-qgh-boundaries/docs/reports/xi-quantization-0908.md
-```
-
-相对 `309ff1c32e2ba45af38856c33059dbc5bbd13b55` 的报告,全部数学输入、尾界、1399999 项覆盖、精确计数、首末见证、控制和 GPU 混淆/差异记录均相同,有序 CSV digest 仍为 `81e77ccc81333be01c37c6fbb3a8168c37386f8293c18131ad45b9f7776e2b60`。变化仅为发布契约/schema、真实新运行的时刻/计时、运行路径和代码来源。报告的 `source_head` 是带未提交修复的该 HEAD,实际运行字节由 manifest 绑定:producer SHA256 `6bd7295216e998874ff2b9f47e7145f4224f0a7547e630d0157a295d10089a1d`,Make SHA256 `360891306af6257eaf4b4def814a9cd0ab73e77b452124277e8fe3ff107a63d4`,共享 writer 仍为第 13 节的 SHA256。新 Markdown 报告 SHA256 为 `cf8220d31dd7f878e0381b50527198868669ad9e485bdead5618597662817806`;旧报告留在上述提交,未把旧计时配给新代码。caller 继续负责 judge/content 分区、复制工程修复、独立复审和 PR 三门;此有界修复不宣称 MERGED、RH 进展或长期研究目标完成。
+“对这一固定三阶块的所有分辨率”是有限完整枚举加尾界的数值库/纸面结论。它没有证明 RH,没有证明更高阶实际 xi 截面正性,没有解决全历史 Schur 误差传输、奇异 pivot 的高阶控制或统一尾估计。第 7 节其它算术桥、物理检测与 距离算子义务仍 open。
 
 ## 15. 均值与平方偏差的尖锐因数丰度上包络
 
-**状态: PAPER_ARGUMENT / repo-derived 参考输入。** 本节落实第 10 节的距离问题,使用已完成实际 GPT PRO 的论证并由实施者逐步核对;产地见第 17 节。经典 Jensen、Hermite 插值和矩极值方法不是本线的发现。以下不是 Lean-frozen 定理,不主张新颖性或 RH 进展。GH 仍只有第 1 节的工作 RH 解释,没有另行定义。
+**定义、定理与证明（保留原有证据地位及开放限制）。**
 
-### 固定素数标签、预算与加权度量
+**状态: PAPER_ARGUMENT / repo-derived 参考输入。** 经典 Jensen、Hermite 插值和矩极值方法不是本线的发现。以下不是 Lean-frozen 定理,不主张新颖性或 RH 进展。GH 仍只有第 1 节的工作 RH 解释,没有另行定义。
+
+### 定义：固定素数标签、预算与加权度量
 
 固定有限非空素数集 \(S\),\(k=|S|\),取 \(a_p\in\mathbb Z_{\ge0}\),允许零指数及 \(n=1\)。所有对数都是自然对数,定义
 
@@ -844,7 +715,7 @@ V=\sum_p(\log p)^2(a_p-a_p^0)^2.
 
 同一素数行的交叉项 \(2(\log p)^2F_iF_j\delta b_{pi}\delta b_{pj}\) 必须保留。中心 \(a^0\) 可以是实数,并不要求有整数位编码。关于精确 \(T\) 截面至多一个整数点及薄层才容纳多个配置,沿用第 10 节,不把编码当成新增正交方向。
 
-### 强化的二次 Jensen 缺口
+### 定理与证明：强化的二次 Jensen 缺口
 
 **命题。** 置 \(N_-=\sum_{s_p<0}s_p^2\),则
 
@@ -873,7 +744,7 @@ J-F=\sum_{q\ge1}\frac{\sum_pe^{-qs_p}-k}{qB^q}.
 
 对这类整数配置严格。\(J\) 始终是上界;在固定 \(S,T\) 的实指数松弛中,只有 \(B\ge\max S\) 时等坐标点 \(a^0\) 才满足所有 \(a_p\ge0\),此时由严格凹性才可称 \(J\) 为可行连续最优值。若要求 \(a_p\ge1\),条件变为 \(B\ge(\max S)^2\)。
 
-### Hermite 上包络及全部等号情形
+### 定理与证明：Hermite 上包络及全部等号情形
 
 **定理。** 对任意 \(k\ge2\) 个正实坐标 \(x_1,\ldots,x_k\),令 \(\mu,V\) 如上,并置
 
@@ -927,7 +798,9 @@ J-F\ge\Lambda_k\ge\frac{BV}{2k(B-1)^2}.
 
 ## 16. 有限指数箱体与预算薄层的充分证书
 
-**状态: 上一定理的 PAPER_ARGUMENT 推论,无新搜索实现。** 固定带准确标签的 \(S\),\(k\ge2\),每个指数限制在有限非空集合 \(A_p\subset\mathbb Z_{\ge0}\)。取有限实数 \(\log5040<T_0\le T_1\),只考虑 \(T_0\le T=\log n\le T_1\) 的配置。定义
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**状态: 上一定理的 PAPER_ARGUMENT 推论。** 固定带准确标签的 \(S\),\(k\ge2\),每个指数限制在有限非空集合 \(A_p\subset\mathbb Z_{\ge0}\)。取有限实数 \(\log5040<T_0\le T_1\),只考虑 \(T_0\le T=\log n\le T_1\) 的配置。定义
 
 \[
 \mu_i=\frac{T_i+\sum_{p\in S}\log p}{k},\quad I=[\mu_0,\mu_1],\quad
@@ -951,7 +824,7 @@ U<\gamma+\log(\log T_0)
 
 证明箱体与薄层中每个整数满足严格 Robin 不等式。这里 \(T=\log n\),所以阈值对 \(n\) 是三层对数;\(T_0>\log5040\) 是全局预算条件。分离失败只表示未决,不是反例。\(V_0>0\) 时 \(U\) 严格小于同一薄层的 Jensen 上界 \(\log E_S+kf(\mu_1)\);这不比较其它剪枝器。
 
-### 固定坐标的常数不能丢
+### 定理与证明：固定坐标的常数不能丢
 
 若 \(S=S_{\rm fix}\sqcup S_{\rm free}\),固定指数为 \(b_p\),精确保留
 
@@ -973,9 +846,13 @@ F\le F_{\rm fix}+\log E_{S_{\rm free}}+
 
 ## 17. 5040 证据、已有 KL 关系与未决比较
 
-### 单个边界整数的有界复算
+**定义、定理与证明（保留原有证据地位及开放限制）。**
 
-本次只核验 \(5040=2^4\,3^2\,5\,7\),由整数几何级数得 \(\sigma=19344\)、\(\sigma/n=403/105\)、\(E_S=35/8\)。[5040-variance-0908.md](../../reports/5040-variance-0908.md) 保存 Python-FLINT 0.8.0 / Arb 256 位的完整可执行计算与 \(10^{50}\) 分母的严格有理包围。球比较及包围端点的精确有理比较均认证
+### 定理（原有数值证据）：单个边界整数的上界
+
+证明附引（第 17 节的原有单整数区间证据；保持数值库证据地位）：[原文证据存档](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md#i31-inactive-archive)。
+
+\(5040=2^4\,3^2\,5\,7\),由整数几何级数得 \(\sigma=19344\)、\(\sigma/n=403/105\)、\(E_S=35/8\)。[5040-variance-0908.md](../../reports/5040-variance-0908.md) 给出 \(10^{50}\) 分母的严格有理包围。原有区间证据为
 
 \[
 \frac{403}{105}
@@ -986,7 +863,7 @@ F\le F_{\rm fix}+\log E_{S_{\rm free}}+
 
 这些值依次约为 \(3.838095238095238\)、\(3.838655866895702\)、\(3.850047966183107\)、\(3.854387771992677\),仅作读数展示;证明依据不是解析 Arb 的显示字符串。\(\mu\) 约为 \(3.468067222945721\),\(V\) 约为 \(0.271331752493326\)。5040 不在 Robin 的 \(n>5040\) 域内,此例只展示界的收紧,没有证明 Robin 在 5040 或某个整数范围成立。
 
-### 固定支撑损失不等于任意全局损失
+### 定义与定理：固定支撑损失不等于任意全局损失
 
 第 10 节及 [Z] 第十二章的精确 Bernoulli-KL 分解是既有输入。定义
 \(D_{\rm Ber}(u\Vert v)=u\log(u/v)+(1-u)\log((1-u)/(1-v))\)。这里的固定支撑同型恒等式为
@@ -1025,7 +902,7 @@ J-F=kf(2)-f(k+1)-(k-1)f(1)=O(k),\qquad
 
 所以不能在所有维数的正实域上用某个正常数代替粗界中 \(1/k\) 的因子。这不是素数整数格的反例。尖锐连续包络已经达到其矩信息所能给出的最优值;RH 义务仍需额外的算术或全尺度误差信息。
 
-### 离散对偶比较与来源边界
+### 定义及开放比较：离散对偶
 
 对于第 16 节的同一箱体,既有可分离离散 Lagrange 基线可写为
 
@@ -1035,23 +912,15 @@ U_{\rm dual}=\inf_{\lambda\ge0}
 [g_p(a)-\lambda a\log p]\right\}.
 \]
 
-每个括号给所有预算不超过 \(T_1\) 的配置一个上界。距离证书相对这个最优对偶是否有实用优势仍 **OPEN**;比 Jensen 更紧是已经证明的较弱结论,不能升级为优于 \(U_{\rm dual}\)。caller 提供的两次后续任务 `949095a4-d3a7-4179-b842-f255db211159`、`db06ed96-26f3-47ff-90eb-db97ec4de9d6` 只有载体失败记录(`prompt_delivery_uncertain`;`page.goto Page crashed`),没有数学答案。它们既不证明也不否定优势。本增量未执行所提 GPU 窗口,不把预测当作结果,也不让新搜索依赖缺失结论。
+每个括号给所有预算不超过 \(T_1\) 的配置一个上界。距离证书相对这个最优对偶是否有实用优势仍 **OPEN**;比 Jensen 更紧是已经证明的较弱结论,不能升级为优于 \(U_{\rm dual}\)。
 
-主要研究输入是 caller 提供的实际 GPT PRO task `14803801-6a68-4b5a-8a76-f6615d838e88` 的 structured conclusion,完成时间 `2026-09-08T13:17:09.406+00:00`,返回 model `chatgpt-5.5-pro`;该输入没有单独提供 conversation id,不补造。实施 worker 没有打开 oracle transcript 或 opaque log_ref,没有新 oracle 调用。caller 的单点 256 位 Arb 读数是支持证据;本 worker 独立重算同一 5040 输入,结果一致。这里独立指证明核对和计算路径,不表示独立评审或模型族多样性;Codex 为 `repo-prior-exposed`。
-
-文献尽调范围明确如下:实施者于 2026-09-08 读取 [Liao-Berg, Sharpening Jensen's Inequality](https://arxiv.org/abs/1707.08644) 与 [Rodin, Variance and the Inequality of Arithmetic and Geometric Means](https://arxiv.org/abs/1409.0162) 的摘要页及作者元数据。后者摘要已陈述普通乘积在同均值、方差下的一个大坐标极值形状。PRO 自报亲读前者 Theorem 1 / Corollary 1.1、后者 Theorem 1 / Remark 1,并提供前者 DOI `10.1080/00031305.2017.1419145`;本 worker 未独立取得这些正文或核对 DOI,不把转述写成亲验。PRO 另报 Pittenger 的 *Sharp mean-variance bounds for Jensen-type inequalities* 正文获取失败,其一般结果是否覆盖本特例未核实。以上不支持全球新颖性或文献穷尽声明;本节的函数特例由第 15 节完整短证承担。
-
-本次是 `consensus-rnd:sshx` 的委派 implementation,无新增子席或独立评审判词。C17 允许的 continuation 工作树为 `/Users/auricstudio/trureturing-qgh-variance`,分支 `lane/math/quantized-gh-variance-0908`,封存起点 `0b8b5592d56d601d92db36b5f7ef331ef3ed33f1`;原 803 行前缀逐字节保留。源与报告之外仅由以下 canonical 命令生成新 atom/账目,计数由实施结果信封报告:
-
-```sh
-make ingest BASE=0b8b5592d56d601d92db36b5f7ef331ef3ed33f1 SOURCE=arithmetic-boundary-quantization
-```
-
-本轮不新建形式根或修改冻结 Lean,不重做既有有限扫描。独立复审、PR 三门和 MERGED 发布由 caller 负责,尚未交付的环节保持 open;有限追加不完成持续研究目标。
+[Liao-Berg, Sharpening Jensen's Inequality](https://arxiv.org/abs/1707.08644) 与 [Rodin, Variance and the Inequality of Arithmetic and Geometric Means](https://arxiv.org/abs/1409.0162) 。后者摘要已陈述普通乘积在同均值、方差下的一个大坐标极值形状。前者 Theorem 1 / Corollary 1.1、后者 Theorem 1 / Remark 1,并提供前者 DOI `10.1080/00031305.2017.1419145`;Pittenger 的 *Sharp mean-variance bounds for Jensen-type inequalities* 的一般结果是否覆盖本特例未核实。以上不支持全球新颖性或文献穷尽声明;本节的函数特例由第 15 节完整短证承担。
 
 ## 18. 相邻二点指数箱体:经典分数背包的精确对偶
 
-**状态: PAPER_ARGUMENT / repo-derived 专门化,经典 LP 材料。** 本次追加日期为 2026-09-09,保留此前 1050 行。第 17 节的真实素数域比较仍 **OPEN**;这里消去价格下确界,证明三个充分条件,并给出一个仅在人工实数网格上的反向实例。GH 的未定义边界沿用第 1 节。
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**状态: PAPER_ARGUMENT / repo-derived 专门化,经典 LP 材料。** 第 17 节的真实素数域比较仍 **OPEN**;这里消去价格下确界,证明三个充分条件,并给出一个仅在人工实数网格上的反向实例。GH 的未定义边界沿用第 1 节。
 
 固定有限的不同素数标签集 \(S\),\(k=|S|\ge2\),及整数 \(b_p\ge0\),只允许
 \(A_p=\{b_p,b_p+1\}\)。保留自然对数、\(g_p(a)=f((a+1)\log p)-\log(1-p^{-1})\)、\(f(x)=\log(1-e^{-x})\) 和准确的 \(E_S\)。设
@@ -1111,9 +980,11 @@ Q(\lambda_*)=F_b+\sum_{p\in J}\Delta_p+
 
 概率证书是:前缀取上端点,其余取下端点,第 \(j\) 行以概率 \(\theta\) 取上端点。\(0<\theta<1\) 时它由两个箱体配置混合而成,\(\theta=0\) 时退化为一个。任意满足期望预算的箱体分布,其上端点边际概率形成 LP 可行 \(t\);反过来任意 LP 可行 \(t\) 可用独立 Bernoulli 坐标实现。因此 LP 精确描述的是**期望预算**不超过 \(T_1\) 的混合最优值;它不要求支撑点各自在 \([T_0,T_1]\) 内,甚至不要求各自预算不超过 \(T_1\)。
 
-**去重与文献边界。** [Z] `ZECKENDORF_EULER_5040.md` 第四十一章 **F-4:预算侧的反面见证** 已记录整数预算真最优值与价格对偶的严格差,含 \(\lambda_0=\rho(3,1)\)、预算 \(\log4\) 的例子。本节继承该区别,不新建第二个整数优化器,不称发现了该间隙。按密度排序的分数背包是经典算法;实施时读取的 [Continuous knapsack problem](https://en.wikipedia.org/wiki/Continuous_knapsack_problem) 的问题定义与算法段也给出同一归约和贪心规则。这里的匹配证书自含证明,网页仅为经典归属的有限核对,不支持文献穷尽或全球新颖性声明。
+**去重与文献边界。** [Z] `ZECKENDORF_EULER_5040.md` 第四十一章 **F-4:预算侧的反面见证** 已记录整数预算真最优值与价格对偶的严格差,含 \(\lambda_0=\rho(3,1)\)、预算 \(\log4\) 的例子。本节继承该区别,不称发现了该间隙。按密度排序的分数背包是经典算法;[Continuous knapsack problem](https://en.wikipedia.org/wiki/Continuous_knapsack_problem) 的问题定义与算法段也给出同一归约和贪心规则。这里的匹配证书自含证明,不支持文献穷尽或全球新颖性声明。
 
 ## 19. 对方差包络的三个充分占优条件
+
+**定义、定理与证明（保留原有证据地位及开放限制）。**
 
 沿用第 16 节
 
@@ -1217,6 +1088,8 @@ U_{\rm dual}-\log E_S
 
 ## 20. 唯一分数坐标的精确剩余不等式
 
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
 三个条件排除后,只余 \(0<\theta<1\)、\(\overline V<V_0\)、\(c_j<\mu_0\le\mu<d_j\) 且
 \(\delta^2>(k-1)V_0/k\)。令
 
@@ -1239,6 +1112,8 @@ U_{\rm dual}-U_{\rm var}
 
 ## 21. 人工实数网格的反向实例与有界证据
 
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
 **状态: repo-derived PAPER_ARGUMENT + 单网格 Arb 证据。** 这是一般实数几何论证的边界,不是素数指数反例,不是 Robin 证书。取三行
 
 \[
@@ -1254,6 +1129,7 @@ V_0=13199640003/10^{12}=0.013199640003.
 
 下表以 0/1 表示各行下/上端点,列全 \(2^3=8\) 个状态;可行性同时检查薄层的两个闭端点。
 
+~~~text
 | 状态 | 精确坐标和 | 在 \([Q_0,Q_1]\) 内 |
 |---|---:|---|
 | 000 | 1491/50 | 否 |
@@ -1264,6 +1140,7 @@ V_0=13199640003/10^{12}=0.013199640003.
 | 101 | 151/5 | 否 |
 | 110 | 151/5 | 否 |
 | 111 | 1519/50 | 否 |
+~~~
 
 两个可行配置恰为 \((99/10,249/25,507/50)\) 与 \((99/10,507/50,249/25)\),和都为 30。它们是实数配置,不是两个实际整数指数配置。
 
@@ -1282,23 +1159,25 @@ V_0=13199640003/10^{12}=0.013199640003.
 
 弱对偶与此匹配的原始混合共同证明最优性,不靠两个 Arb 球重叠证明相等。均值向量为 \((252/25,249/25,249/25)\),\(\overline V=6/625=0.0096<V_0\),且 \((99999/10^6)^2>2V_0/3\),确在未被三个充分条件覆盖的区域。
 
-记 \(r=\sqrt{V_0/6}\),则 \(U_{\rm var}=\Psi_3(10,V_0)=f(10+2r)+2f(10-r)\)。[real-grid-dual-0909.md](../../reports/real-grid-dual-0909.md) 保存自含程序、完整输入、8 状态/2 可行的清单和执行身份。其 Python-FLINT 0.8.0 / Arb 256 位计算保持原给定包围,以精确有理端点和严格球比较认证下表,不是读取打印近似值作证明。
+证明附引（第 21 节的原有人工网格区间证据；保持数值库证据地位）：[原文证据存档](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md#i31-inactive-archive)。
 
+记 \(r=\sqrt{V_0/6}\),则 \(U_{\rm var}=\Psi_3(10,V_0)=f(10+2r)+2f(10-r)\)。[real-grid-dual-0909.md](../../reports/real-grid-dual-0909.md) （原有数值证据的证明附引）。
+
+~~~text
 | 量 | 严格下界 | 严格上界 |
 |---|---:|---:|
 | \(\Psi_3(10,V_0)\) | \(-136498016563252/10^{18}\) | \(-136498016563251/10^{18}\) |
 | \(U_{\rm dual}\) | \(-136497658176917/10^{18}\) | \(-136497658176916/10^{18}\) |
 | \(U_{\rm dual}-\Psi_3(10,V_0)\) | \(358386335/10^{18}\) | \(358386336/10^{18}\) |
+~~~
 
-所以人工网格上 \(U_{\rm dual}>U_{\rm var}\)。正性、二点网格与两个薄层可行点不足以推出普遍占优;算术结论仍需第 20 节的素数标签和梯级约束。本例不是 prime-lattice 证据,不认证任何 Robin 整数,也不提供新 GPU 搜索方向。
-
-**本次产地及保留义务。** 主输入是 caller 提供的实际 browser-PRO task `84963abe-485a-4093-901b-03acf69dc52e`,conversation `conv_fc5fcce44d2bc103`,载体 `company-chatgpt-pro` browser Work,实际返回模型 `GPT-6 Astra`,完成时间 `2026-09-08T15:45:56.133+00:00`。这不同于第 17 节返回 `chatgpt-5.5-pro` 的任务;此前两个失败任务保持失败,不复活。实施者在 caller 已应用的 `consensus-rnd:sshx` 下核对纸面证明和这个固定网格,为 `repo-prior-exposed`,无 sterile-prior、模型族多样性或独立评审批准声明。未打开 opaque primary log_ref 或 oracle transcript;结构化主结论是输入,不是批准票。
-
-本次使用已隔离且清洁复用的 `/Users/auricstudio/trureturing-qgh-variance`,分支 `lane/math/quantized-gh-dual-0909`,起点 `fa198bc9a4e5da392e3f2a6f826f73f2ea672c3c`。源与报告之外,仅由 `make ingest BASE=fa198bc9a4e5da392e3f2a6f826f73f2ea672c3c SOURCE=arithmetic-boundary-quantization` 生成 atoms/消化条目,全部历史保留。没有 CPU 候选生成、GPU 工作、xi/5040 实验重跑、工具改动、Lean 重建或冻结;无无限覆盖、新颖性或 RH 进展声明。独立复审、git/PR 三门及 MERGED 落地仍由 caller 承担,未合并即 open;本次追加不完成持续目标。
+所以人工网格上 \(U_{\rm dual}>U_{\rm var}\)。正性、二点网格与两个薄层可行点不足以推出普遍占优;算术结论仍需第 20 节的素数标签和梯级约束。本例不是 prime-lattice 证据,不认证任何 Robin 整数。
 
 ## 22. 正实二点网格的二坐标全域占优与等号分类
 
-**状态: PAPER_ARGUMENT / repo-derived 参考输入,后续结算。** 本次于 2026-09-09 追加,完整保留 I5 的 1297 行及其中历史 OPEN 陈述。这里解决第 18-20 节相邻二点问题的整个 \(k=2\) 参数族,并加强到任意正实二点坐标网格;不是把第 17 节的任意有限指数集合问题一并关闭。一般真实素数 \(k\ge3\) 比较仍 **OPEN**,第 21 节人工 \(k=3\) 反例及其原有适用范围保持有效。GH 的未定义边界沿用第 1 节。
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**状态: PAPER_ARGUMENT / repo-derived 参考输入,后续结算。** 这里解决第 18-20 节相邻二点问题的整个 \(k=2\) 参数族,并加强到任意正实二点坐标网格;不是把第 17 节的任意有限指数集合问题一并关闭。一般真实素数 \(k\ge3\) 比较仍 **OPEN**,第 21 节人工 \(k=3\) 反例及其原有适用范围保持有效。GH 的未定义边界沿用第 1 节。
 
 **定理。** 取 \(C_i=\{c_i,d_i\}\subset\mathbb R\),\(0<c_i<d_i\),\(i=1,2\),以及有限实数 \(M_0<M_1\)。假设四个角点中至少两个不同的**实际角点**属于
 
@@ -1490,7 +1369,9 @@ V_0\le v^2+s^2<2v^2<2\mu^2.
 \(\sum_i\mathbb E f(X_i)\le2f((\mathbb E X_1+\mathbb E X_2)/2)\le2f(\mu_1)\),该角点取得此值。还可直接匹配价格端:取 \(\lambda=f'(\mu_1)>0\),凹函数的支撑切线给出
 \(f(x)-\lambda x\le f(\mu_1)-\lambda\mu_1\),每行因含 \(\mu_1\) 而取到最大值。于是该价格值为 \(2f(\mu_1)\),与角点的弱对偶下界匹配,故 \(D(M_1)=2f(\mu_1)=\Psi_2(\mu_1,0)\)。等号分类不依赖未证明的强对偶。证毕。
 
-## 23. 两个不同素数的严格专门化与本次来源边界
+## 23. 两个不同素数的严格专门化与适用边界
+
+**定义、定理与证明（保留原有证据地位及开放限制）。**
 
 **推论。** 在第 18 节完整素数域中取 \(S=\{p,q\}\),\(p\ne q\) 为素数,\(b_p,b_q\in\mathbb Z_{\ge0}\),\(A_i=\{b_i,b_i+1\}\)。保留有限的 \(\log5040<T_0<T_1\),并要求至少两个不同的实际指数配置满足 \(T_0\le a_p\log p+a_q\log q\le T_1\)。则同一箱体和薄层的最优离散可分离对偶满足
 
@@ -1532,23 +1413,17 @@ U_{\rm var}=\log E_S+\Psi_2(\mu_1,V_0).
 
 两个幂指数都是正整数,与不同素数的唯一分解矛盾,所以严格。允许相邻指数选择包含零,因为 \(a_i+1\ge1\)、\(x_i>0\),且 \(g_i(0)=0\) 无需例外。假设 \(T_0>\log5040\) 完整继承,其具体数值不是这条比较所需的额外条件。证明只用两个不同配置确实落在薄层内,不要求它们预算相等;一般实数定理允许等预算角点。证毕。
 
-**本次来源与核验限度。** 主输入是 caller 提供的已完成 browser-PRO structured conclusion:task `6f6085dc-6f5a-473f-a229-072469c98c75`,conversation `conv_fc5fcce44d2bc103`,载体 `company-chatgpt-pro` browser Work,实际返回模型 `GPT-6 Astra`,完成时间 `2026-09-08T16:20:22.227+00:00`,opaque primary log_ref `qgh0909:k2-dominance:14c8e7b2`。这些是该次调用的来源记录,不是新的模型调用或独立批准票;该 opaque 引用及原始对话均未打开。主输入自报 `external-prior-exposed; sterile-context-unverified`。实施者是 caller 已应用的 `consensus-rnd:sshx` 下的委派 Codex implementation,为 `repo-prior-exposed`,没有新面板、子席、独立模型或 sterile-prior 声明。I5 的源和报告作为实施输入读取,不充作独立评审证据;caller 已有核对也只作支持。
+经典分数背包归属沿用第 18 节;[Hermite interpolation](https://en.wikipedia.org/wiki/Hermite_interpolation) ：以函数值和导数值插值的经典方法归属。所需余项的自含 Rolle 证明已在第 15 节。本次是具体函数与网格条件下的仓内纸面推导,不主张文献穷尽、全球新颖性、RH 进展或 Lean 冻结。
 
-本次纸面审核展开了实际角点计数、内点正性、上端权重、质量为 2 的矩匹配、Hermite 余项符号及等号的双向证明,并将整数情形统一记为 \(m^*,V^*\)。经典分数背包归属沿用第 18 节;实施时还读取 [Hermite interpolation](https://en.wikipedia.org/wiki/Hermite_interpolation) 的摘要接口,仅核对以函数值和导数值插值的经典方法归属,没有从摘要取得本定理。所需余项的自含 Rolle 证明已在第 15 节。本次是具体函数与网格条件下的仓内纸面推导,不主张文献穷尽、全球新颖性、RH 进展或 Lean 冻结。
+一般真实素数 \(k\ge3\) 仍 **OPEN**;反驳本结算须在完整二点域内给出 \(D>\Psi_2\),或在无等坐标角点时给出等号;真实二素数域中经精确匹配证书认证的 \(U_{\rm dual}\ge U_{\rm var}\) 也会反驳严格推论,只有一个实际薄层角点的例子不在定理域内。
 
-工作树仍为 `/Users/auricstudio/trureturing-qgh-variance`,分支 `lane/math/quantized-gh-dual-0909`。本次唯一摄入基线是已终态提交的 I5 `ba80db594e632ae67aad496a3d68bab506769478`;其完整前缀为 1297 行、81750 字节、SHA256 `c112c2a0f0aa190845d05e80b67ad36e784aa894730c3b4d0e5ec017277713d0`。除追加本卷,新 atom 与消化条目只通过以下 canonical 命令生成,所有历史 atoms/条目保留:
-
-```sh
-make ingest BASE=ba80db594e632ae67aad496a3d68bab506769478 SOURCE=arithmetic-boundary-quantization
-```
-
-本次无 CPU/GPU 候选搜索,不重跑 xi、5040 或人工网格实验,不修改既有报告、数值证据、工具、测试套件、其它理论、形式根或冻结状态。一般真实素数 \(k\ge3\) 仍 **OPEN**;未将另行进行的 primary follow-up 结论纳入本增量。反驳本结算须在完整二点域内给出 \(D>\Psi_2\),或在无等坐标角点时给出等号;真实二素数域中经精确匹配证书认证的 \(U_{\rm dual}\ge U_{\rm var}\) 也会反驳严格推论,只有一个实际薄层角点的例子不在定理域内。
-
-这关闭的是一个二坐标参数族的纸面比较,不产生新的 Robin 有限证书或无限整数覆盖,也不完成长期研究目标。I5/I6 组合源的独立复审、CI 三门和 PR MERGED 落地仍由 caller 承担;本次实施不声明这些义务已履行,也不为已解决的二素数比较安排 GPU 搜索。
+这关闭的是一个二坐标参数族的纸面比较,不产生新的 Robin 有限证书或无限整数覆盖。
 
 ## 24. 实际下端角点可行时的全维条件占优
 
-**24.1 状态与精确问题域。** 本节是 2026-09-09 的 S12 后续结算,状态为 **PAPER_ARGUMENT / repo-derived 参考输入**。沿用第 15-23 节的函数、平方偏差之和及预算约定。第 22-23 节的二坐标全域结算、第 21 节的人工实数网格反例和所有历史记录保持有效;一般真实素数 \(k\ge3\) 的无条件比较仍 **OPEN**。GH 仍只有第 1 节的工作 RH 解释,不另造 GH 定义,不主张 RH 进展、全球新颖性或 Lean 冻结。
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**24.1 定义（记号、范围及证明地位）：状态与精确问题域。** 状态为 **PAPER_ARGUMENT / repo-derived 参考输入**。沿用第 15-23 节的函数、平方偏差之和及预算约定。第 22-23 节的二坐标全域结算、第 21 节的人工实数网格反例和所有历史记录保持有效;一般真实素数 \(k\ge3\) 的无条件比较仍 **OPEN**。GH 仍只有第 1 节的工作 RH 解释,不另造 GH 定义,不主张 RH 进展、全球新颖性或 Lean 冻结。
 
 取整数 \(k\ge2\),每行恰为正实二点网格
 
@@ -1588,7 +1463,7 @@ r=\sqrt{\frac{V}{k(k-1)}},\qquad
 
 这里 \(V\) 不是平均方差 \(V/k\);\(M_i\) 是坐标和预算,不是未平移的素数指数预算。
 
-**24.2 条件定理与存在量词。** 在 24.1 的完整域中,进一步假设:**存在某个最优且真正分数的基本解,它对应的实际下端角点属于 \(\mathcal C\)**。更明确地,24.4 的 LP 有一个最优基本解,唯一真正分数行为 \(j\),其上端点权重 \(\theta\in(0,1)\),其它行固定在实际端点 \(t_i\in C_i\)。该解预算饱和,写成
+**24.2 定理（命题及证明）：条件定理与存在量词。** 在 24.1 的完整域中,进一步假设:**存在某个最优且真正分数的基本解,它对应的实际下端角点属于 \(\mathcal C\)**。更明确地,24.4 的 LP 有一个最优基本解,唯一真正分数行为 \(j\),其上端点权重 \(\theta\in(0,1)\),其它行固定在实际端点 \(t_i\in C_i\)。该解预算饱和,写成
 
 \[
 z=(1-\theta)c_j+\theta d_j=\mu+s\in(c_j,d_j),
@@ -1609,7 +1484,7 @@ x^-=(c_j,t_{-j}),\qquad M_0\le\sum_i x_i^-<M_1.
 
 ### 定义域、基本解与未使用分数假设的边界
 
-**24.3 正定义域与单调性。** 取任一实际 \(x\in\mathcal C\),令 \(m=\sum_i x_i/k\in I\)、\(V(x)=\sum_i(x_i-m)^2\)。正坐标且 \(k\ge2\) 给出
+**24.3 定理（命题及证明）：正定义域与单调性。** 取任一实际 \(x\in\mathcal C\),令 \(m=\sum_i x_i/k\in I\)、\(V(x)=\sum_i(x_i-m)^2\)。正坐标且 \(k\ge2\) 给出
 
 \[
 0\le V_0\le V(x)=\sum_i x_i^2-km^2
@@ -1618,7 +1493,7 @@ x^-=(c_j,t_{-j}),\qquad M_0\le\sum_i x_i^-<M_1.
 
 故 \(\mu\ge m>0\),不额外要求 \(\mu_0>0\)。第 15 节的包络以及第 16 节的均值严格递增、方差严格递减性均在这个正定义域内使用。方差比较包括零端点:在正方差区间严格递减并于零连续,所以 \(0\le V_a<V_b<k(k-1)m^2\) 仍给出 \(\Psi_k(m,V_b)<\Psi_k(m,V_a)\)。
 
-**24.4 精确 LP、并列与期望预算。** 置 \(h_i=d_i-c_i>0\)、\(\Delta_i=f(d_i)-f(c_i)>0\)、\(\rho_i=\Delta_i/h_i>0\)、\(R=M_1-\sum_i c_i\ge0\)。按第 18 节已证的逐项弱对偶与匹配乘子机制,有达到的精确值
+**24.4 定理（命题及证明）：精确 LP、并列与期望预算。** 置 \(h_i=d_i-c_i>0\)、\(\Delta_i=f(d_i)-f(c_i)>0\)、\(\rho_i=\Delta_i/h_i>0\)、\(R=M_1-\sum_i c_i\ge0\)。按第 18 节已证的逐项弱对偶与匹配乘子机制,有达到的精确值
 
 \[
 D(M_1)=\max_{\substack{0\le\alpha_i\le1\\\sum_i h_i\alpha_i\le R}}
@@ -1638,7 +1513,7 @@ M^-:=\sum_i x_i^-=M_1-\theta h_j<M_1,
 
 附加条件只使下角点 \(M^-\ge M_0\);上角点依然违反实际上预算。不能把期望可行说成整个支撑逐点可行。\(R=0\) 时唯一可行角点为全下端点,与至少两个实际薄层角点不相容,仍有 \(\lambda_*\ge\max_i\rho_i\) 的退化匹配证书。
 
-**24.5 整数最优解与 inactive budget 分列。** 若选择到整数最优基本解 \(x^*\),预算饱和时它的和为 \(M_1\),故确在薄层内。若预算覆盖全箱,正增益使 \(x^*=(d_1,\ldots,d_k)\) 唯一最优,它的和不超过 \(M_1\),又不小于任一已有薄层角点的和,故也至少为 \(M_0\)。令 \(m^*=\sum_i x_i^*/k\)、\(V_{\rm int}=\sum_i(x_i^*-m^*)^2\),则
+**24.5 定理（命题及证明）：整数最优解与 inactive budget 分列。** 若选择到整数最优基本解 \(x^*\),预算饱和时它的和为 \(M_1\),故确在薄层内。若预算覆盖全箱,正增益使 \(x^*=(d_1,\ldots,d_k)\) 唯一最优,它的和不超过 \(M_1\),又不小于任一已有薄层角点的和,故也至少为 \(M_0\)。令 \(m^*=\sum_i x_i^*/k\)、\(V_{\rm int}=\sum_i(x_i^*-m^*)^2\),则
 
 \[
 D(M_1)=\sum_i f(x_i^*)\le\Psi_k(m^*,V_{\rm int})
@@ -1652,7 +1527,9 @@ D(M_1)=\sum_i f(x_i^*)\le\Psi_k(m^*,V_{\rm int})
 
 ### Hermite 工具与真正分数分支
 
-**24.6 有限支撑上的二次上界。** 对参考矩 \(0<V<k(k-1)\mu^2\),令 \(L=\mu-\sqrt{V/[k(k-1)]}>0\)、\(H=\mu+\sqrt{(k-1)V/k}>L\)。取
+**证明（附下列原有编号条目）。**
+
+**24.6 定理（命题及证明）：有限支撑上的二次上界。** 对参考矩 \(0<V<k(k-1)\mu^2\),令 \(L=\mu-\sqrt{V/[k(k-1)]}>0\)、\(H=\mu+\sqrt{(k-1)V/k}>L\)。取
 
 \[
 P(x)=f(L)+f'(L)(x-L)+a(x-L)^2,\qquad
@@ -1677,7 +1554,7 @@ f(x)-P(x)=\frac{f'''(\xi)}6(x-L)^2(x-H)\le0
 
 因此 \(V_{\mathcal M}\ge V\) 时,因 \(a<0\),右边**不超过** \(\Psi_k(\mu,V)\)。质量是 \(k\),不是 1;不能把有多个加权支撑的对象未经矩核对直接当成 \(k\) 个实际坐标。此式只需参考矩 \(V\) 的正定义域,没有对 \(\Psi_k(\mu,V_{\mathcal M})\) 作求值要求。
 
-**24.7 均值向量已满足方差下界。** 以下固定 24.2 存在的那个最优解,写 \(c=c_j,d=d_j\),并置
+**24.7 定理（命题及证明）：均值向量已满足方差下界。** 以下固定 24.2 存在的那个最优解,写 \(c=c_j,d=d_j\),并置
 
 \[
 y_j=z=\mu+s,\quad y_i=t_i\ (i\ne j),\qquad
@@ -1694,7 +1571,7 @@ D(M_1)=(1-\theta)f(c)+\theta f(d)+\sum_{i\ne j}f(t_i)
 
 这包括 \(\overline V=V_0\)、\(V_0=0\) 及 \(\overline V=V_0=0\)。严格性来自 \(c<d\)、\(0<\theta<1\),无需非零方差,也不使用退化的 Hermite 插值或除以零距离。
 
-**24.8 剩余域中的实际下角点约束与内点正性。** 只余 \(\overline V<V_0\),令 \(v=\eta_j\)。其它行都是实际端点且 \(\mu\in I\),故
+**24.8 定理（命题及证明）：剩余域中的实际下角点约束与内点正性。** 只余 \(\overline V<V_0\),令 \(v=\eta_j\)。其它行都是实际端点且 \(\mu\in I\),故
 
 \[
 s^2+W<V_0=v^2+\sum_{i\ne j}\eta_i^2\le v^2+W,
@@ -1734,7 +1611,7 @@ z-c'=\frac{k(v+s)}{n}>0,\quad d'-z=v-s>0,
 
 令 \(q\) 为原 \((c,f(c)),(d,f(d))\) 的仿射割线。凹性保证任意收缩到内部子区间且保持均值 \(z\) 的混合,其目标至少为 \(q(z)\)。收缩到对称点 \(\mu-v,\mu+v\) 时严格提高:左端 \(\mu-v\in(c,d)\),\(f(\mu-v)>q(\mu-v)\),且其权重 \((v-s)/(2v)>0\)。收缩到 \(c',d'\) 只需弱提高即可。所有这些点均是**解析上界工具**,不宣称属于原二点网格或构成新的实际可行配置。
 
-**24.9 非集中距离域。** 若 \(v^2\le(k-1)V_0/k\),在分数行用对称支撑 \(\mu-v,\mu+v\),上端点权重 \(\alpha=(v+s)/(2v)\in(0,1)\),其它行保留原 \(t_i\)。对应加权和 \(\mathcal M_0\) 满足
+**24.9 定理（命题及证明）：非集中距离域。** 若 \(v^2\le(k-1)V_0/k\),在分数行用对称支撑 \(\mu-v,\mu+v\),上端点权重 \(\alpha=(v+s)/(2v)\in(0,1)\),其它行保留原 \(t_i\)。对应加权和 \(\mathcal M_0\) 满足
 
 \[
 D(M_1)<\mathcal M_0(f),\qquad
@@ -1760,7 +1637,9 @@ D(M_1)<\mathcal M_0(f)\le\mathcal M_0(P_0)
 
 ### 集中距离域的两个完整证明与矩公式勘正
 
-**24.10 先平均固定行并保持原来的 \(V_0\)。** 现在设 \(v^2>(k-1)V_0/k\)。因为 \(\sum_{i\ne j}(t_i-\mu)=-s\),固定行的算术平均为
+**证明（附下列原有编号条目）。**
+
+**24.10 定理（命题及证明）：先平均固定行并保持原来的 \(V_0\)。** 现在设 \(v^2>(k-1)V_0/k\)。因为 \(\sum_{i\ne j}(t_i-\mu)=-s\),固定行的算术平均为
 
 \[
 t=\frac1n\sum_{i\ne j}t_i=\mu-\frac{s}{n}>0,
@@ -1782,13 +1661,13 @@ D(M_1)\le(1-\theta')f(c')+\theta'f(d')+n f(t)=:\mathcal M_*(f).
 
 平均后的 \(t\) 与内侧端点是解析替代点,不是原离散配置。**\(V_0\) 从始至终仍是原 \(I,C_1,\ldots,C_k\) 的距离平方和**,不对平均行重建网格,不重算或换掉距离证书。
 
-**24.11 被拒绝的 caller 矩公式及正确方向。** 本任务早先 caller prompt 提出的行矩
+**24.11 定理（命题及证明）：错误矩公式及正确方向。** 行矩
 
 \[
 \frac{kv^2+2vs-(k-2)s^2}{k-1}
 \]
 
-是错误公式,已在任何源实施之前被主数学论证拒绝;它不是本卷已合入定理的撤回。正确的中心二阶矩由均值为 \(s\) 的两支撑 \(-A,v\) 直接算出:
+是错误公式。正确的中心二阶矩由均值为 \(s\) 的两支撑 \(-A,v\) 直接算出:
 
 \[
 (1-\theta')A^2+\theta'v^2
@@ -1813,7 +1692,7 @@ V_{\rm new}=\frac{kv^2}{k-1}+W-\frac{s^2}{k-1}
 最后一步是 Cauchy-Schwarz:
 \(s^2=(\sum_{i\ne j}(t_i-\mu))^2\le(k-1)W\)。因此在相同总质量、一次矩下,24.6 的**负二次系数**乘上 \(V_{\rm new}-V_*\ge0\) 给非正修正项,方向正好有利于所需上界,不需要错误地把 \(V_{\rm new}\) 估成不大于 \(V_*\)。
 
-**24.12 平均路线的精确矩匹配与严格性。** 对 \(V_*\) 置
+**24.12 定理（命题及证明）：平均路线的精确矩匹配与严格性。** 对 \(V_*\) 置
 
 \[
 L=\mu-\frac{v}{k-1},\qquad H=\mu+v=d'.
@@ -1842,7 +1721,7 @@ D(M_1)\le\mathcal M_*(f)\le\mathcal M_*(P)
 
 最后一步的严格性来自 \(V_*>V_0\),不依赖平均或内侧割线步骤是否取等。Hermite 在 \(c'<L\) 处仍有正确符号,并未跨过高节点使用上界。这完成集中域的第一条证明。
 
-**24.13 不平均固定行的直接证明。** 同在集中域,令
+**24.13 定理（命题及证明）：不平均固定行的直接证明。** 同在集中域,令
 
 \[
 \mathcal M_{\rm dir}(\phi)=(1-\theta')\phi(c')+\theta'\phi(d')+
@@ -1866,9 +1745,11 @@ D(M_1)\le\mathcal M_{\rm dir}(f)\le\mathcal M_{\rm dir}(P)
 
 这是保留原固定行的第二条完整路线,不是把平均证明的矩等式误用于未平均的行。\(W=s^2/(k-1)\) 的边界允许,最后的方差严格比较仍在。24.7、24.9、24.12 或 24.13 穷尽真正分数分支;零方差与整数、inactive budget 已分别处理。24.2 的条件定理证毕。
 
-### 素数平移、尚余区域与来源
+### 定理与证明：素数平移与尚余区域
 
-**24.14 精确的素数下角点条件。** 取第 18 节完整素数域:有限不同素数标签集 \(S=\{p_1,\ldots,p_k\}\)、\(k\ge2\)、\(b_i\in\mathbb Z_{\ge0}\)、\(A_{p_i}=\{b_i,b_i+1\}\)、有限 \(\log5040<T_0<T_1\),且至少两个不同的实际允许指数向量落在 \([T_0,T_1]\) 内。令
+**证明（附下列原有编号条目）。**
+
+**24.14 定理（命题及证明）：精确的素数下角点条件。** 取第 18 节完整素数域:有限不同素数标签集 \(S=\{p_1,\ldots,p_k\}\)、\(k\ge2\)、\(b_i\in\mathbb Z_{\ge0}\)、\(A_{p_i}=\{b_i,b_i+1\}\)、有限 \(\log5040<T_0<T_1\),且至少两个不同的实际允许指数向量落在 \([T_0,T_1]\) 内。令
 
 \[
 \ell_i=\log p_i,\quad c_i=(b_i+1)\ell_i,\quad d_i=(b_i+2)\ell_i,
@@ -1901,7 +1782,7 @@ M^-=M_1-\theta_j\ell_j,
 
 等号表示实际下角点恰在下预算端点,仍在定理域内。因此,只要**存在一个**最优真正分数基本解满足这个条件,就有 \(U_{\rm dual}<U_{\rm var}\)。\(T_0>\log5040\) 完整保留,但其数值不是本条比较证明所需的新性质;该结论本身不证明任何 Robin 阈值。
 
-**24.15 残余的一般素数问题与既有反例。** 对 \(k=2\),第 22 节的四角点引理已经从两个实际可行角点推出最优分数解的下角点可行,第 23 节的不同素数严格结算不变。对 \(k\ge3\),还没有证明总能选到满足 24.14 条件的最优基本解;不能把二行计数引理按维数直接外推。存在量词允许在密度并列时选择另一个最优基本解,但不提供这种选择一定成功的算术定理。
+**24.15 定理的适用范围（保留原有开放限制）：残余的一般素数问题与既有反例。** 对 \(k=2\),第 22 节的四角点引理已经从两个实际可行角点推出最优分数解的下角点可行,第 23 节的不同素数严格结算不变。对 \(k\ge3\),还没有证明总能选到满足 24.14 条件的最优基本解;不能把二行计数引理按维数直接外推。存在量词允许在密度并列时选择另一个最优基本解,但不提供这种选择一定成功的算术定理。
 
 结合第 19 节既有充分条件,若真实素数箱体出现反向 \(U_{\rm var}<U_{\rm dual}\),它必须没有整数最优基本解,并且每个最优基本解的相关分数行都必须同时避开已证区域,即
 
@@ -1913,27 +1794,21 @@ v^2>\frac{k-1}{k}V_0,\qquad
 
 最后一个条件就是实际下角点严格低于薄层。只要任一最优基本解满足已证的充分条件,其最优值就已受控;不能只找到一个不满足下角点条件的解便宣布反向。余域内第 20 节的精确分数行凹性缺口比较仍待解决,尚无本节提供的真实素数反例或普遍占优证明。
 
-第 21 节的人工 \(k=3\) 网格完全保留。直接引用那里已记录的最优解,其实际下角点和为 \(29.82\),而 \(M_0=29.999997\),所以下角点假设失败。另两个实际角点的和均为 \(30\) 不改变这一事实。该人工实数例仍非素数格反例;这里没有重跑其八状态枚举或数值报告,没有新数值实例。
+第 21 节的人工 \(k=3\) 网格完全保留。直接引用那里已记录的最优解,其实际下角点和为 \(29.82\),而 \(M_0=29.999997\),所以下角点假设失败。另两个实际角点的和均为 \(30\) 不改变这一事实。该人工实数例仍非素数格反例。
 
 反驳 24.2 需要在完整正二点域中,给出由匹配 LP 解与支持乘子认证的真正分数最优基本解,且其实际下角点属于薄层,却有 \(D(M_1)\ge\Psi_k(\mu,V_0)\)。下角点低于 \(M_0\) 的例子不构成这条条件定理的反证。
 
-**24.16 主数学来源、摄入边界与交付义务。** 主输入是 caller 提供的完成 structured conclusion:task `e96a5b22-8c16-4bd0-95ce-a06f1cf2413a`,conversation `conv_fc5fcce44d2bc103`,载体 `company-chatgpt-pro` browser Work,观测返回模型 `GPT-6 Astra`,完成时间 `2026-09-08T16:42:56.754+00:00`,opaque primary log_ref `qgh0909:lower-corner-all-k:73b2c9e4`。这是同一主数学对话的来源输入,不是独立评审、实施批准或投票。没有打开该 log_ref、原始对话、先前 worker 日志或同轮 peer 输出,没有新 PRO 调用。
+**24.16 证明附引（附 24.2–24.14）：经典引文与开放范围。**
 
-本次是 caller 已应用 `consensus-rnd:sshx` 下的 I7 implementation 同载体重试,实施者为 Codex、`repo-prior-exposed`,纸面逐式核对是实施支持证据,不冒称独立复审、上下文无先验或模型多样性。经典分数背包、Jensen 与 Hermite 方法的归属沿用第 15/18/23 节;本次写作还读取 [Continuous knapsack problem](https://en.wikipedia.org/wiki/Continuous_knapsack_problem) 与 [Hermite interpolation](https://en.wikipedia.org/wiki/Hermite_interpolation) 的摘要接口,只核对经典方法归属,未从摘要取得本条件定理,不声称文献穷尽或全球新颖性。
+经典分数背包、Jensen 与 Hermite 方法的归属沿用第 15/18/23 节;[Continuous knapsack problem](https://en.wikipedia.org/wiki/Continuous_knapsack_problem) 与 [Hermite interpolation](https://en.wikipedia.org/wiki/Hermite_interpolation) ：经典方法归属,不声称文献穷尽或全球新颖性。
 
-工作树为 `/Users/auricstudio/trureturing-qgh-variance`,分支 `lane/math/quantized-gh-lower-corner-0909`,封存 HEAD 与唯一摄入 BASE 均为 `6fe2f015c1191dca86563a2e1292227af48ce9e0`。追加前实际核对 PR 6488 为 MERGED,merge commit `e03d7817c7d77eb896d5ef5522ab59eb19f297d7`。完整历史前缀为 1547 行、95444 字节、SHA256 `4ac0311a51f086e4ad587f30a73067fca0ebcac222a9499b3ed55af58a9dfaee`,逐字节保留。源之外的新 CAS blob 与 residual-open 条目仅由以下 canonical 命令产生:
-
-```sh
-make ingest BASE=6fe2f015c1191dca86563a2e1292227af48ce9e0 SOURCE=arithmetic-boundary-quantization
-```
-
-所有历史 CAS/条目及既有报告保留。此前 Q1/T1 advisory 关于约 18 行旧散文未被旧 CAS 切片保留的追溯边界仍在;本增量不修历史源或 producer。本节使用编号项与普通标题,但摄入退出成功本身不证明散文全覆盖:本次实际 emitted claims 的新散文覆盖范围与任何遗漏,由本次实施结果信封逐项报告,不对旧切片作穷尽摄入声明。canonical CAS 的空白/文件末尾格式归 generator 所有,与源 diff 的 whitespace 核验分开报告。
-
-没有 CPU/GPU 候选生成,不重跑 xi、5040 或人工网格,不改工具、测试、其它理论、形式根或冻结状态,不重建 Lean。独立质量复审、CI 三门和 PR MERGED 落地仍由 caller 承担;本实施不宣布这些义务完成。有限的 S12 纸面追加不完成持续研究目标,余下一般素数 \(k\ge3\) 问题保持 **OPEN**。
+余下一般素数 \(k\ge3\) 问题保持 **OPEN**。
 
 ## 25. 素数逼近的局部障碍与变形三素数族
 
-**25.1 状态、归一化与三个不同的域。** 本节是 2026-09-09 的 S13 追加,状态为 **PAPER_ARGUMENT / repo-derived 参考输入**,另有一份既给人工网格的有界数值证据及一条 literature-attested 短区间素数定理。它们均不是独立数学批准、Lean 冻结、全局素数域定理、RH 进展或新颖性声明。第 1-24 节的全部结算保留;GH 仍未另行定义。
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**25.1 定义（记号、范围及证明地位）：状态、归一化与三个不同的域。** 状态为 **PAPER_ARGUMENT / repo-derived 参考输入**,另有一份既给人工网格的有界数值证据及一条 literature-attested 短区间素数定理。它们均不是Lean 冻结、全局素数域定理、RH 进展或新颖性声明。第 1-24 节的全部结算保留;GH 仍未另行定义。
 
 沿用 24.1:整数 \(k\ge2\),\(C_i=\{c_i,d_i\}\)、\(0<c_i<d_i<\infty\),有限 \(M_0<M_1\),闭薄层中的实际角点集 \(\mathcal C\) 至少有两个元素。定义
 
@@ -1959,7 +1834,7 @@ r=\sqrt{V_0/[k(k-1)]},\quad L=\mu-r,\quad H=\mu+(k-1)r,
 \(M_j=T_j+\sum_i\log p_i\)。精确地
 \(U_{\rm dual}=\log E_S+D\)、\(U_{\rm var}=\log E_S+\Psi_k\),其中 \(E_S=\prod_{p\in S}(1-p^{-1})^{-1}\);比较差始终为 \(D-\Psi_k\)。零指数允许,其平移后坐标仍正。
 
-**25.2 一个给定的整数比人工网格与八角点。** 本小节至 25.3 固定 \(k=3\),取
+**25.2 定理（命题及证明）：一个给定的整数比人工网格与八角点。** 本小节至 25.3 固定 \(k=3\),取
 
 \[
 (c_1,d_1)=(1000/101,1020/101),\qquad
@@ -1990,9 +1865,9 @@ I=[10-10^{-6},10].
 \end{array}
 \]
 
-证明只需从全下端点和 \(A=334300/11211\) 加所选宽度:允许增量为 \([h_2-3/10^6,h_2]\),而 \(0<h_2<h_1\)。于是只有 001、010 可行,二者预算都恰为 30。它们是两个不同实坐标向量;重复的第 2、3 行不是不同素数标签。有理宽度及整数下端点比不提供素数对数的实现,不能把此例升级为真正素数反例。本例为已给的单个人工见证,没有候选搜索。
+证明只需从全下端点和 \(A=334300/11211\) 加所选宽度:允许增量为 \([h_2-3/10^6,h_2]\),而 \(0<h_2<h_1\)。于是只有 001、010 可行,二者预算都恰为 30。它们是两个不同实坐标向量;重复的第 2、3 行不是不同素数标签。有理宽度及整数下端点比不提供素数对数的实现,不能把此例升级为真正素数反例。
 
-**25.3 最优割线证书、精确矩与严格正号。** 令
+**25.3 定理（原有数值证据及其证明附引）：最优割线证书、精确矩与严格正号。** 令
 \(\rho_i=[f(d_i)-f(c_i)]/h_i\)。由于 \(c_1<c_2=c_3\)、\(d_1<d_2=d_3\),对每个 \(v\in[0,1]\) 有
 \(c_1+vh_1<c_2+vh_2\)。由 \(f'(x)=1/(e^x-1)>0\) 严格递减及
 \(\rho_i=\int_0^1 f'(c_i+vh_i)\,dv\),得 \(\rho_1>\rho_2=\rho_3>0\)。置
@@ -2030,15 +1905,17 @@ V_0=\frac{1655254483717059563}{125686521000000000000}.
 =\frac{4059966367}{11211000000000000}>0.
 \]
 
-还有 \(3\eta_1^2>2V_0\)、\(\theta h_1=h_2>3/10^6\),所以它避开第 19 节相关充分条件及第 24 节下角点条件。给定的 Python-FLINT 0.8.0 / Arb 256 位程序,以精确有理输入和严格球比较认证
+证明附引（25.3 的原有人工网格区间证据；保持数值库证据地位）：[原文证据存档](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md#i31-inactive-archive)。
+
+还有 \(3\eta_1^2>2V_0\)、\(\theta h_1=h_2>3/10^6\),所以它避开第 19 节相关充分条件及第 24 节下角点条件。原有严格区间证据为
 
 \[
 \boxed{10^{-10}<D(30)-\Psi_3(10,V_0)<10^{-9}}.
 \]
 
-[integer-ratio-grid-0909.md](../../reports/integer-ratio-grid-0909.md) 完整保留所供 2512 字节程序、1840 字节 JSON 证书、全部八项分类及其摘要、原始程序身份和可复现命令。显示近似 \(3.3666865560\ldots\times10^{-10}\) 不承担符号认证。该报告还分列 primary 的 \(2^{-384}\) 有理包围及其自报算法身份,不把两份支持计算当成两张独立评审票。本次实施只执行这一既给程序一次并核对输出;没有生成新网格、枚举素数或重跑第 21 节旧报告。
+[integer-ratio-grid-0909.md](../../reports/integer-ratio-grid-0909.md)（原有数值证据的证明附引）。显示近似 \(3.3666865560\ldots\times10^{-10}\) 不承担符号认证。
 
-**25.4 一个低支撑点的充分条件。** 设整数 \(k\ge2\),\(0<L\le H\),且一个已匹配证明最优的混合写成
+**25.4 定理（命题及证明）：一个低支撑点的充分条件。** 设整数 \(k\ge2\),\(0<L\le H\),且一个已匹配证明最优的混合写成
 
 \[
 D=\alpha f(c)+\sum_{q=1}^N w_qf(z_q),\qquad
@@ -2057,7 +1934,7 @@ e^{-nH}+(k-1)e^{-nL}-\alpha e^{-nc}-\sum_qw_qe^{-nz_q}
 
 最后一步用 \(\alpha e^{n(L-c)}\ge\alpha e^{L-c}\ge k\);严格性来自删去的正支撑项,\(k-\alpha>0\) 保证这些项存在。差级数绝对收敛,逐项严格负即得结论。充分条件阈值取等仍严格;失败时不推断反向。用作方差比较时,\(L,H\) 须是 25.1 的有效包络节点。
 
-**25.5 明确的仿射邻域障碍及小尺度算术矛盾。** 以 25.2 的固定 \(c_i,d_i,M_j\) 为模板,置 \(\varepsilon=10^{-12}\)。定理的量词是:对每个 \(s>0\)、\(a\in\mathbb R\)、误差
+**25.5 定理（命题及证明）：明确的仿射邻域障碍及小尺度算术矛盾。** 以 25.2 的固定 \(c_i,d_i,M_j\) 为模板,置 \(\varepsilon=10^{-12}\)。定理的量词是:对每个 \(s>0\)、\(a\in\mathbb R\)、误差
 \(|e_i|,|f_i|,|u_j|\le\varepsilon\) (\(i=1,2,3;j=0,1\)),令
 
 \[
@@ -2074,7 +1951,7 @@ M'_j=3a+s(M_j+u_j).
 \(|\log p-\log q|\ge1/\max(p,q)>3^{-15}\)。但
 \(320\varepsilon<3^{-15}\),矛盾。这里只用整数间隔,没有素数密度或同时逼近假设。
 
-**25.6 大尺度证明,含平移与闭扰动边界。** 设 \(s\ge80\)。端点严格次序保留:原下端点差为 \(650/11211\),上端点差为 \(460/11211\),均大于 \(2\varepsilon\)。所以新第 1 行割线密度严格最大。令
+**25.6 定理（命题及证明）：大尺度证明,含平移与闭扰动边界。** 设 \(s\ge80\)。端点严格次序保留:原下端点差为 \(650/11211\),上端点差为 \(460/11211\),均大于 \(2\varepsilon\)。所以新第 1 行割线密度严格最大。令
 \(R'=M'_1-\sum_ic'_i\)、\(h'_1=d'_1-c'_1\),有
 
 \[
@@ -2106,7 +1983,7 @@ M'_j=3a+s(M_j+u_j).
 \(e^4>\sum_{n=0}^5 4^n/n!=643/15\),有
 \(\alpha'e^{L'-c'_1}>(2/25)(643/15)>3\)。正端点及实际非空保证 \(L'>0\),25.4 立即给出严格 \(D'<\Psi_3\)。所有估计与 \(a\) 无关,只需平移后端点正;\(s=80\) 与任一 \(|e_i|,|f_i|,|u_j|=\varepsilon\) 均包括,没有阈值等号情形。80 是足够的尺度,不声称最优。
 
-**25.7 精确实现限制与局部结论的边界。** 零误差时 \(h_1/h_2=222/203\)。若这些缩放宽度是不同素数对数,必有 \(p_1^{203}=p_2^{222}\),违反唯一分解;重复宽度还强制 \(p_2=p_3\)。共同平移不改变宽度。25.5-25.6 进一步排除整个明确邻域中的反向素数实例,不是仅排除精确相等。
+**25.7 定理（命题及证明）：精确实现限制与局部结论的边界。** 零误差时 \(h_1/h_2=222/203\)。若这些缩放宽度是不同素数对数,必有 \(p_1^{203}=p_2^{222}\),违反唯一分解;重复宽度还强制 \(p_2=p_3\)。共同平移不改变宽度。25.5-25.6 进一步排除整个明确邻域中的反向素数实例,不是仅排除精确相等。
 
 任意共同平移一般不保留整数下端点比。一个确实保留的子族是取 \(q=10/11211\)、\(a=sq\,45066N\)、\(N\in\mathbb Z_{\ge0}\),此时三个比为
 \(50+203N,55+222N,55+222N\)。\(s\ge80\) 时这些平移也严格负。更一般地,对零误差仿射族,令模板节点为 \(L,H\),有
@@ -2119,13 +1996,13 @@ A_f(t)=e^{-tH}+2e^{-tL}-\alpha e^{-tc_1}-\theta e^{-td_1}-2e^{-tc_2},
 正支撑保证绝对收敛,上述证明给出 \(A_f(t)<0\) 对每个 \(t\ge80\) 成立。固定 \(s>0\) 时,级数还给出
 \(\lim_{a\to\infty}e^a[D(s,a)-\Psi(s,a)]=A_f(s)\);某个有限平移的正差并不单独证明此系数为正。此障碍只属于这个固定仿射邻域,不排除较大形变、随素数改变形状的网格或其它整数比见证。唯一分解也不证明任意多个倒数素数对数的线性独立,不偷渡这种同时逼近假设。
 
-**25.8 所需短区间定理及 caller 核对的来源。** Literature-attested 输入为 R. C. Baker、G. Harman、J. Pintz, *The Difference Between Consecutive Primes, II*, *Proc. London Math. Soc.* (3) **83** (2001),532-562,DOI [10.1112/plms/83.3.532](https://doi.org/10.1112/plms/83.3.532),Theorem 1:存在 \(x_0\),对所有实数 \(x>x_0\),区间
+**25.8 定理（命题及证明）：所需短区间定理及引文。** Literature-attested 输入为 R. C. Baker、G. Harman、J. Pintz, *The Difference Between Consecutive Primes, II*, *Proc. London Math. Soc.* (3) **83** (2001),532-562,DOI [10.1112/plms/83.3.532](https://doi.org/10.1112/plms/83.3.532),Theorem 1:存在 \(x_0\),对所有实数 \(x>x_0\),区间
 
 \[
 [x-x^{0.525},x]=[x-x^{21/40},x]
 \]
 
-含素数。Caller 独立下载并核对了 [大学镜像的原论文](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/BakerHarmanPintz.pdf),位置 PDF 第 1 页 / 期刊第 532 页,PDF SHA256 为 `d3b6011255c49e52b002e08faebb7d252ca1027e545b72fa097176e6285443a2`。这是 caller-checked 书目、区间方向及实数全称量词的 provenance,不声称这就是先前 primary invocation 所访问的 author-uploaded URL。本增量没有复核完整筛法证明,没有有效数值 \(x_0\)。
+含素数。[大学镜像的原论文](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/BakerHarmanPintz.pdf),位置 PDF 第 1 页 / 期刊第 532 页,没有有效数值 \(x_0\)。
 
 令 \(P\) 趋于无穷并遍历素数,\(X=P-P^{3/5}\),\(Q\) 为不大于 \(X\) 的最大素数,\(R\) 为 \(Q\) 的前一素数。足够大时在 \(X\) 应用定理得到
 \(0\le X-Q\le X^{21/40}\)。再在实数 \(Q-1/2\) 应用,所得素数严格小于 \(Q\),从而不大于 \(R\),故
@@ -2137,7 +2014,7 @@ P-Q=P^{3/5}+O(P^{21/40}),\quad Q-R=O(P^{21/40}).
 
 这同时证明所选 \(Q,R\) 足够大时存在且 \(P>Q>R\)。隐常数沿本选择规则统一,不把 \(Q-R\) 指定成未经定理提供的渐近主项。
 
-**25.9 变形三素数族、精确薄层及八个分析角点。** 取 25.8 的素数规则,记
+**25.9 定理（命题及证明）：变形三素数族、精确薄层及八个分析角点。** 取 25.8 的素数规则,记
 
 \[
 h=\log P,\quad h_2=\log Q=h-\delta,\quad
@@ -2169,7 +2046,7 @@ A=c_1+c_2+c_3,\quad M_0=A+h_3,\quad M_1=A+h_2.
 \end{array}
 \]
 
-这是由严格宽度次序直接证明的全族分类,没有执行素数采样。与 25.2 不同,两可行角点有不同预算,精确平移回素数指数预算得到
+这是由严格宽度次序直接证明的全族分类。与 25.2 不同,两可行角点有不同预算,精确平移回素数指数预算得到
 
 \[
 T_0=(m-1)h+mh_2+(m+1)h_3,\quad
@@ -2179,7 +2056,7 @@ T_1=(m-1)h+(m+1)h_2+mh_3,
 对应实际整数 \(P^{m-1}Q^mR^{m+1}\) 和 \(P^{m-1}Q^{m+1}R^m\)。有
 \(T_1-T_0=M_1-M_0=\eta>0\),且最终 \(T_0>\log5040\)。两者均在闭薄层端点,不同素数的唯一分解保证整数不同。
 
-**25.10 素数间距与取整误差的统一控制。** 下面的推导也条件性适用于 25.8 的两条间距估计中任意固定 \(0<\beta<3/5\) 代替 \(21/40\)。由 \(-\log(1-x)=x+O(x^2)\) 在统一的小 \(x\) 区间展开,
+**25.10 定理（命题及证明）：素数间距与取整误差的统一控制。** 下面的推导也条件性适用于 25.8 的两条间距估计中任意固定 \(0<\beta<3/5\) 代替 \(21/40\)。由 \(-\log(1-x)=x+O(x^2)\) 在统一的小 \(x\) 区间展开,
 
 \[
 \delta=P^{-2/5}\{1+O(P^{\beta-3/5}+P^{-2/5})\},\quad
@@ -2207,7 +2084,7 @@ c_3=c_2-E,\quad\mu=M_1/3=c_2+w-E/3,\quad\mu_0=\mu-\eta/3.
 
 这些 \(O\) 常数不依赖素数 \(P\)、允许的间距波动或取整相位 \(\zeta\)。只用 \(0\le\zeta<\delta\),不假定它有极限或均匀分布;\(\zeta=0\) 包含在证明中。\(m\to\infty\) 也证明 25.9 的原指数最终非负及下预算趋于无穷。
 
-**25.11 真素数族的最优混合与价格。** 足够大时
+**25.11 定理（命题及证明）：真素数族的最优混合与价格。** 足够大时
 
 \[
 c_2-c_1=u>0,\quad c_3-c_1=u-E>0,\quad
@@ -2233,7 +2110,7 @@ D(M_1)=\alpha f(c_1)+\theta f(d_1)+f(c_2)+f(c_3).
 
 期望和 \(A+\theta h=M_1\) 与逐项弱对偶证明这个匹配值精确最优。实际混合下角点 000 的和 \(A<M_0\),上角点 100 的和 \(A+h>M_1\);本族不满足第 24 节的可行下角点条件。乘回准确的 \(E_{\{P,Q,R\}}\) 后,\(U_{\rm dual}-U_{\rm var}=D-\Psi_3\) 的身份不变。
 
-**25.12 最近端点的更正与精确包络。** 每行最终都严格跨越 \(I=[\mu-\eta/3,\mu]\)。依次列出到下/上端点的距离:
+**25.12 定理（命题及证明）：最近端点的更正与精确包络。** 每行最终都严格跨越 \(I=[\mu-\eta/3,\mu]\)。依次列出到下/上端点的距离:
 
 \[
 \begin{array}{c|c|c}
@@ -2243,7 +2120,7 @@ D(M_1)=\alpha f(c_1)+\theta f(d_1)+f(c_2)+f(c_3).
 \end{array}
 \]
 
-每一对除以 \(h\) 的极限分别为 \((3/5,2/5)\)、\((1/5,4/5)\)、\((1/5,4/5)\),全部为正且两项严格分离。故最近端点依次是 **第 1 行上端点 \(d_1\)、第 2 行下端点 \(c_2\)、第 3 行下端点 \(c_3\)**。这明确纠正 caller 曾丢弃的“第 1 行下端点最近”预期;不能沿用人工见证 25.3 的选择。
+每一对除以 \(h\) 的极限分别为 \((3/5,2/5)\)、\((1/5,4/5)\)、\((1/5,4/5)\),全部为正且两项严格分离。故最近端点依次是 **第 1 行上端点 \(d_1\)、第 2 行下端点 \(c_2\)、第 3 行下端点 \(c_3\)**。这明确纠正 “第 1 行下端点最近”预期;不能沿用人工见证 25.3 的选择。
 
 因此真正的距离和及包络精确为
 
@@ -2260,7 +2137,7 @@ V_0/h^2\longrightarrow6/25,\quad r/h\longrightarrow1/5.
 
 实际可行正角点按 25.1 保证 \(L>0\);下段还会证明它在最终范围内严格大于 \(c_1\)。本论证不把有限初段的端点选择或密度可能并列静默排除;所声称的是存在足够大的阈值使这些严格选择同时成立。
 
-**25.13 抵消位置与负指数函数的精确余项。** 距离向量为
+**25.13 定理（命题及证明）：抵消位置与负指数函数的精确余项。** 距离向量为
 
 \[
 (v,\ell_2,\ell_3)=(2w,w,w)+
@@ -2307,7 +2184,7 @@ e^{c_2}G_g=2e^{c_2-L}-1-e^E+e^{c_2-H}
 
 这一等式包含所有 floor 余数,而非将 \(m\delta\) 直接当成 \(3h/5\)。
 
-**25.14 回到 \(f\) 的统一误差与最终严格负号。** 对每个 \(x>0\),对数级数给出
+**25.14 定理（命题及证明）：回到 \(f\) 的统一误差与最终严格负号。** 对每个 \(x>0\),对数级数给出
 
 \[
 |f(x)+e^{-x}|=\sum_{n\ge2}\frac{e^{-nx}}n
@@ -2340,7 +2217,7 @@ D-\Psi_3=-\frac{1+o(1)}{\log P\,Q^{m+1}}.
 特别地,存在 \(P_*\),对每个素数 \(P>P_*\) 按上述精确规则选 \(Q,R,m\),完整素数薄层域成立且
 \(D-\Psi_3<-e^{-c_2}/(2h)<0\)。罕见的第 1 行下端点质量 \(\alpha\) 在抵消后贡献主负项。没有建立有限数值 \(P_*\),没有声称分类了初段;\(R\) 不存在或 \(m=0\) 的小值不在定理所述最终域。最终无 \(D=\Psi_3\) 等号,其它网格的等号分类仍未解决。一个小 \(P\) 的反向值本身不会反驳最终定理。
 
-**25.15 已由后续实际 PRO 更正的抵消引理。** 设整数 \(k\ge2\),正二点网格的精确最优基本混合只有一行真正分数,其端点为 \(0<c<d\)、下端点权重 \(\alpha\in(0,1)\),其它 \(k-1\) 行固定于正的实际端点 \(t_i\)。明确要求匹配原始/价格证书给出
+**25.15 定理（命题及证明）：已更正的抵消引理。** 设整数 \(k\ge2\),正二点网格的精确最优基本混合只有一行真正分数,其端点为 \(0<c<d\)、下端点权重 \(\alpha\in(0,1)\),其它 \(k-1\) 行固定于正的实际端点 \(t_i\)。明确要求匹配原始/价格证书给出
 
 \[
 D=\alpha f(c)+(1-\alpha)f(d)+\sum_{i\ne j}f(t_i).
@@ -2353,7 +2230,7 @@ D=\alpha f(c)+(1-\alpha)f(d)+\sum_{i\ne j}f(t_i).
 +\frac{e^{t-H}}{1-e^{-H}}.}
 \]
 
-第一项中 \((k-1)\)、正部 \(\max\{t-L,0\}\) 与 \(e^{t-L}\) 的相邻书写明确表示 **乘法**。若 \(\alpha e^{t-c}\ge K\),则严格 \(D<\Psi_k(\mu,V_0)\),包括条件阈值取等。这一公式采用 recovered primary payload 的 `K_correction`,更正先前纯文本歧义;恢复载体不构成独立评审票。
+第一项中 \((k-1)\)、正部 \(\max\{t-L,0\}\) 与 \(e^{t-L}\) 的相邻书写明确表示 **乘法**。若 \(\alpha e^{t-c}\ge K\),则严格 \(D<\Psi_k(\mu,V_0)\),包括条件阈值取等。
 
 证明:由 \(f\) 递增及 \(f'\) 递减,当 \(t\ge L\) 时积分给出
 \(f(t)-f(L)\le(t-L)/(e^L-1)\);当 \(t<L\) 时左边负而正部为零。因此统一有
@@ -2375,7 +2252,7 @@ D-\Psi_k
 \(\alpha e^{t-c_1}=\delta e^u/h\sim1/h\),故该引理最终直接适用于 \(f\)。相反,25.4 的量
 \(\alpha e^{L-c_1}=\delta e^u e^{L-c_2}/h\sim1/h\to0\),不能达到 3;抵消引理提供的是另一条充分条件。
 
-**25.16 研究问题的变化、量词边界与未决义务。** 25.2-25.3 给出整数比正实网格上的一个严格正差,没有真正素数标签。25.5-25.7 证明从这个见证作任意精确缩放/共同平移并在指定 \(10^{-12}\) 归一化邻域内逼近素数的反向路线失败。25.8-25.14 解决一族随素数改变形状的真正三素数网格,其差最终严格负,但不外推到其它形状、所有 \(P\) 或所有 \(k\ge3\)。本族不满足可行下角点条件,所以它增加一个已处理域,没有证明那项条件总可安排。
+**25.16 定理的适用范围（保留原有开放限制）：研究问题的变化、量词边界与未决义务。** 25.2-25.3 给出整数比正实网格上的一个严格正差,没有真正素数标签。25.5-25.7 证明从这个见证作任意精确缩放/共同平移并在指定 \(10^{-12}\) 归一化邻域内逼近素数的反向路线失败。25.8-25.14 解决一族随素数改变形状的真正三素数网格,其差最终严格负,但不外推到其它形状、所有 \(P\) 或所有 \(k\ge3\)。本族不满足可行下角点条件,所以它增加一个已处理域,没有证明那项条件总可安排。
 
 原来无界的不同素数 \(k\ge3\) 比较仍 **OPEN**:对每个有限不同素数集、每个相邻非负整数指数箱体、每个 \(\log5040<T_0<T_1\) 且至少两个实际配置的闭薄层,是否总有 \(U_{\rm dual}\le U_{\rm var}\)? 在既有充分条件及本节已处理域外,选一个匹配最优基本解,令唯一分数行上权重为 \(\theta\)、均值为 \(y_j=(1-\theta)c_j+\theta d_j\),其余 \(y_i=t_i\),写
 
@@ -2388,32 +2265,15 @@ D-\Psi_k=\sum_i f(y_i)-\Psi_k(\mu,V_0)-J_j.
 
 前瞻反驳标准也按域区分:满足 25.5 全部条件的严格反向素数实例会反驳邻域定理;满足 25.15 全部条件及阈值却有 \(D\ge\Psi_k\) 会反驳抵消引理。25.14 可直接检验的核心是所列距离选择、\(c_1\) 最小、节点界和匹配证书成立时的显式余项不等式。邻域之外的真正反例不会反驳局部障碍;孤立小素数反向值也不自动反驳最终负号。
 
-**25.17 主来源、支持证据与恢复身份。** 本次只消费 caller 所供完成输入的 conclusion 及完成元数据,未追随任何 `log_ref`,未打开 worker 日志或另一 S12 worktree。两次主数学任务均来自 `company-chatgpt-pro` browser Work,pool ID `61e1f52e-a625-4e08-b426-43e25bbab449`,完成记录观测模型均为 `GPT-6 Astra`,不是按产品名猜测模型:
-
-- 仿射障碍 task `c9caf71c-5b42-4d07-8de0-98540288eb7e`,conversation `conv_515ce9ddd365db68`,完成 `2026-09-08T17:49:38.119+00:00`。Envelope `pro-prime-bridge-retry-envelope-0909.json` SHA256 `1c8f5ae65d521ad567538a39a9623fcbbcdd6816f814307492682adada7cb515`;完成记录 `pro-prime-bridge-retry-complete-0909.json` SHA256 `862db73918aef78c101bd35ded76006783fa378d8cb53f483f5fad206ce554d9`。
-- 变形素数族 task `69b53236-d65f-4a22-92d4-fae3fd47b58f`,同 conversation 的 follow-up,完成 `2026-09-08T18:14:16.718+00:00`。Envelope `pro-short-interval-primes-envelope-0909.json` SHA256 `5ee071939adcc75ee407f20cc254b4c4002941e9aeb032169bf5a3990097f9f3`;完成记录 `pro-short-interval-primes-complete-0909.json` SHA256 `1e0da2ce725a0ae90f6f507d9b70eea21a0bb1691ed66094246f1f462f41dbf7`。
-- 两完成记录的 response 分别与给定 envelope 解析为相同对象。它们是 primary research 输入,不是相互独立的 review。原任务自报仿射论证核对一网格八角点、14 条固定有理不等式;短区间任务自报五项符号恒等式,零素数样本,这些自报与本次实际执行分列。
-- `caller-short-interval-audit-0909.json` SHA256 `8fe87b0f14e0997aec9a8f52b2c07060cd277e9f0403ab7f7ea1744d14d22c02` 记录 caller 用 SymPy 1.14.0 核对 11 条精确恒等式、exit 0、零素数样本,是支持证据而非独立批准。其旧 notation-gap 字段由下项后续 correction 解决。
-- `pro-prime-gpu-batch-recovered-input-0909.json` SHA256 `4bdcc8bae0a09e9303d968038f5f256055db717101270f3791755fcbfaff6252` 的 `K_correction` 是本节唯一采用的后续数学更正。`caller-prime-payload-recovery-0909.json` SHA256 `dc315e7fa8ff3d7a0e38754f09b10c3fffeb1bf10d46a1f536404f8d8a528f4f` 记录原 reply 需六处 JSON 反斜杠插入、caller 核对忠实身份及全部原 conclusion 字段保留;该恢复不是替代主数学或独立 review,不为其另造 invocation/model 身份。
-- `caller-bhp-source-check-0909.json` SHA256 `9ce134f11bd5d7fae613893f0b8706bf07e68cbd019c828efe80563e9d392ba1` 是 25.8 所用来源核对。以上 basename 均指 caller 的 `/tmp/qgh-boundaries-0908/` 完成输入;其所含路径只是 provenance,不作为追读日志的指令。整数比程序及证书则已完整保存于本节链接的持久报告。
-
-**25.18 摄入范围与交付边界。** 实施是 caller 已编排 `consensus-rnd:sshx` 的 I8 implementation,由 Codex 逐式审计和追加,`repo-prior-exposed`;无子 worker、无同轮独立评审票,不声称 sterile priors 或已证明模型族多样性。短区间定理、经典分数背包/弱对偶、对数级数及范数不等式按各自来源使用,本节组合是纸面推导,不声称文献穷尽。独立数学复审、普通 CI 三门及 MERGED 仍是 caller 的后续义务。
-
-本树 `/Users/auricstudio/trureturing-qgh-prime-obstructions`,分支 `lane/math/quantized-gh-prime-obstructions-0909`,封存 HEAD 和唯一摄入 BASE 均为 `c6bf5faaf36deb301317ef393195be039e410656`。追加前完整源为 1932 行、116207 字节、SHA256 `47c5027509e1641f3cbedff7dd2c8b5fe4c660c78931e06dbcc1f8d2c74ac8d6`,逐字节保留。唯一 CAS/条目写者为
-
-```sh
-make ingest BASE=c6bf5faaf36deb301317ef393195be039e410656 SOURCE=arithmetic-boundary-quantization
-```
-
-本次实际新增 blob/entry、编号证明覆盖及格式例外在 implementation envelope 中报告;成功 exit 本身不证明散文覆盖。新命题只进入 residual-open,不代表 Lean 吸收或数学冻结。历史 Q1/T1 关于 18 行旧散文位于旧 CAS 之外的 advisory 继续披露,本次不修历史。canonical generator 所有的 LF/空白 EOF 变体与源 diff 的 whitespace 检查分列。
-
-只增加本节、一个既有 `docs/reports/**` 约定下的给定见证报告及 canonical 摄入结果,保留全部历史 CAS/entry/report。不采用恢复 GPU 设计的 manifest 或歧义尾项,不修它们、不实现 kernel、不把设计计数称为执行计数;另一个仍在运行的全实数薄层有限归约 PRO 任务不在本节输入中。没有 CPU/GPU 候选生成、素数枚举、固定 xi 重放、Lean 重建、harness 或 workflow 改动,没有 commit/push/PR 操作。按 caller 最新交付上下文,S12 PR #6640 有三份 approve 但仍 OPEN,其外部 harness 修复 #6644 已 MERGED;这些是 caller 所供状态,不是本 worker 新取的 GitHub 读数。C22 只允许此隔离树提前实施,S12 MERGED 仍是 S13 delivery 依赖。有限的纸面追加不完成长期研究目标。
+**25.18 证明附引（附 25.2–25.15）：经典方法归属。** 短区间定理、经典分数背包/弱对偶、对数级数及范数不等式按各自来源使用,本节组合是纸面推导,不声称文献穷尽。
 
 ## 26. 固定素数箱体的全实数薄层有限归约
 
-**26.1 状态与量词。** 本节为 2026-09-09 的 S14 参考输入,状态为 PAPER_ARGUMENT / repo-derived。两次已完成的实际 GPT PRO 主推导依次给出有限归约及其活跃切换点精化;它们是顺序 primary 输入,不是独立 review 共识。下面给出本问题的完整专门化证明,经典材料的准确归属见 26.28。本节不作新颖性或 Lean-frozen 声明。第 1-25 节的源字节和既有结算保留;本节把每个固定素数/指数箱体内不可数的实预算域归约为有限测试,不截断素数或指数的无界量词。GH 仍是用户的原标签,没有增添其数学定义,也没有泛化 RH 的主张。
+**定义、定理与证明（保留原有证据地位及开放限制）。**
 
-**26.2 实际角点、闭薄层与预算平移。** 固定整数 \(k\ge2\)、两两不同的素数 \(p_1,\ldots,p_k\)、整数 \(b_i\ge0\),置
+**26.1 定义（记号、范围及证明地位）：状态与量词。** 状态为 PAPER_ARGUMENT / repo-derived。下面给出本问题的完整专门化证明,经典材料的准确归属见 26.28。本节不作新颖性或 Lean-frozen 声明。本节把每个固定素数/指数箱体内不可数的实预算域归约为有限测试,不截断素数或指数的无界量词。GH 仍是用户的原标签,没有增添其数学定义,也没有泛化 RH 的主张。
+
+**26.2 定义（记号、范围及证明地位）：实际角点、闭薄层与预算平移。** 固定整数 \(k\ge2\)、两两不同的素数 \(p_1,\ldots,p_k\)、整数 \(b_i\ge0\),置
 
 \[
 h_i=\log p_i,\quad c_i=(b_i+1)h_i,\quad d_i=(b_i+2)h_i,\quad
@@ -2441,7 +2301,7 @@ R_0<\cdots<R_{N-1},\qquad
 \(T_j=M_j-Q\),故严格 cutoff 恰为 \(\log5040<T_0<T_1\)。
 两端预算均为实数,不要求 \(e^{T_j}\) 为整数;“两个实际角点”也不能用两个混合支撑点替代。
 
-**26.3 同一对偶、同一方差和同一比较差。** 保留
+**26.3 定义（记号、范围及证明地位）：同一对偶、同一方差和同一比较差。** 保留
 \(f(x)=\log(1-e^{-x})\),对 \(u=M_1\) 定义
 
 \[
@@ -2480,7 +2340,7 @@ H=\mu+(k-1)\rho,\quad L=\mu-\rho,\quad
 共同的 \(\log E_S\) 精确抵消,所以 \(G=U_{\rm dual}-U_{\rm var}\);
 这里没有更换第 18、19、24、25 节的归一化。
 
-**26.4 包络的完整正定义域。** 置 \(c_{\min}=\min_i c_i\ge\log2\)。
+**26.4 定理（命题及证明）：包络的完整正定义域。** 置 \(c_{\min}=\min_i c_i\ge\log2\)。
 取薄层内任一实际角点 \(x\),其均值
 \(\bar x=k^{-1}\sum_i x_i\in I\)。因 \(x_i\in C_i\),有
 \(\delta_i\le|x_i-\bar x|\)。令 \(y_i=x_i-c_{\min}\ge0\)、
@@ -2507,7 +2367,7 @@ V_0&\le\sum_i(x_i-\bar x)^2
 这还给出 \(V_0<k(k-1)\mu^2\)。后面所有固定下预算的角点区间都保留实际角点,
 故此证明逐点适用,包括 \(\rho=0\)、角点预算等于薄层端点和 \(b_i=0\)。
 
-**26.5 二变量包络的严格性质。** 定义
+**26.5 定理（命题及证明）：二变量包络的严格性质。** 定义
 \[
 F(\mu,r)=f(\mu+(k-1)r)+(k-1)f(\mu-r),\qquad
 \Omega=\{(\mu,r):r\ge0,\ \mu-r>0\}.
@@ -2528,7 +2388,7 @@ f''(x)=-\frac{e^x}{(e^x-1)^2}<0.
 的行列式为 \(-k\ne0\),因而单射。不同输入至少使 \(H,L\) 中一个不同;
 对严格凹函数 \(f\) 的两个正权项应用 Jensen,即证 \(F\) 在 \(\Omega\) 上联合严格凹。
 
-**26.6 下预算饱和及其精确等号。** 给定 \((M_0,u)\in\mathscr S\),令
+**26.6 定理（命题及证明）：下预算饱和及其精确等号。** 给定 \((M_0,u)\in\mathscr S\),令
 \[
 j=\max\{s:\beta_s\le u\},\qquad b=\beta_{j-1}.
 \]
@@ -2549,7 +2409,7 @@ V_0(M_0,u)=V_0(b,u)
 后一等价用逐项非负且弱增;只要一项严格增加,平方和及半径严格增加,
 \(\Psi\) 就严格下降。因此 \(M_0=b\) 是充分条件,不是取等的必要条件。
 
-**26.7 距离的精确行公式与唯一凹折点。** 固定 \(b=\beta_{j-1}\)、\(a=b/k\),
+**26.7 定理（命题及证明）：距离的精确行公式与唯一凹折点。** 固定 \(b=\beta_{j-1}\)、\(a=b/k\),
 令 \(\mu=u/k\ge a\),简记
 \(\delta_i(\mu)=\operatorname{dist}([a,\mu],C_i)\)。
 逐个取区间到两个点的较小距离,得到彼此兼容的公式
@@ -2586,7 +2446,7 @@ u_*=k\mu_*=k(c_i+d_i)-b.
 \(a=c_i,a=d_i,a=(c_i+d_i)/2\) 都由上述兼容公式处理,
 不产生额外的内部向下跳变。
 
-**26.8 删除 \(kc_i,kd_i\) 分割点的理由。** 在没有活跃 \(\mu_*\) 位于内部的闭区间上,
+**26.8 定理（命题及证明）：删除 \(kc_i,kd_i\) 分割点的理由。** 在没有活跃 \(\mu_*\) 位于内部的闭区间上,
 每行距离都是非负凸函数:常数或正部仿射函数;若切换恰在端点,两式在该点相等。
 因此允许跨越 \(c_i,d_i\) 的正部折点。对
 \(\mu_t=t\mu_1+(1-t)\mu_2\)、\(0<t<1\),逐坐标有
@@ -2601,7 +2461,7 @@ u_*=k\mu_*=k(c_i+d_i)-b.
 所以 \(\rho\) 在整个区间上凸。这里没有把通常凹的平方根直接与任意凸函数复合;
 所用结构是“非负凸距离向量的欧氏范数”。
 
-**26.9 包括零方差的严格 Jensen 证明。** 在 26.8 的区间上取不同的
+**26.9 定理（命题及证明）：包括零方差的严格 Jensen 证明。** 在 26.8 的区间上取不同的
 \(\mu_1,\mu_2\),置 \(r_l=\rho(\mu_l)\)、
 \(\bar r=tr_1+(1-t)r_2\)。26.4 给出
 \[
@@ -2623,7 +2483,7 @@ u_*=k\mu_*=k(c_i+d_i)-b.
 故 \(\Psi(b,u)\) 在这些非退化区间上严格凹。
 这份证明不用 \(\rho'\) 或 \(\rho''\),没有在零方差处作未经许可的平方根微分。
 
-**26.10 分数背包的匹配原始/价格证书。** 置 \(\sigma_i=v_i/h_i>0\),
+**26.10 定理（命题及证明）：分数背包的匹配原始/价格证书。** 置 \(\sigma_i=v_i/h_i>0\),
 选任意排列 \(\pi\) 使 \(\sigma_{\pi(1)}\ge\cdots\ge\sigma_{\pi(k)}\),
 相等时任意固定次序。记
 \[
@@ -2654,7 +2514,7 @@ y_{\pi(\ell)}=
 排序是经典分数背包材料,本式的无间隙结论来自显式匹配证书,
 没有先假定未证明的强对偶。
 
-**26.11 并列斜率、整数最优解与角点间仿射性。** 若相邻 \(\sigma_i\) 相等,
+**26.11 定理（命题及证明）：并列斜率、整数最优解与角点间仿射性。** 若相邻 \(\sigma_i\) 相等,
 26.10 的非严格余值符号仍成立,相邻公式拥有相同斜率且在共同端点相等,
 故并列只消去折点,不会制造新折点。\(u=q_m\) 时可选整数最优解,
 上一段的分数为 1、下一段的分数为 0,两式相同;
@@ -2673,7 +2533,7 @@ D\ \text{在每个闭区间 }[\beta_j,\beta_{j+1}]\text{ 上仿射}.
 \]
 其它实际角点即使不是排序前缀,也只是进一步划分同一条仿射线段。
 
-**26.12 第一主推导的较大有限集仍有效。** 对 \(1\le j\le N-2\) 且
+**26.12 定理（命题及证明）：较大有限集仍有效。** 对 \(1\le j\le N-2\) 且
 \(b=\beta_{j-1}>B_{\rm cut}\),定义
 \[
 \mathcal B_j=
@@ -2688,9 +2548,9 @@ D\ \text{在每个闭区间 }[\beta_j,\beta_{j+1}]\text{ 上仿射}.
 26.8-26.9 因而适用。结合 26.11,每段 \(G\) 严格凸,
 由端点控制内部;最后一条上尾由 26.15 控制。
 所列薄层都至少含 \(\beta_{j-1},\beta_j\),所以 admissibility 无缺口。
-这证明较大集有效。下文的精化减少节点,不撤销第一主推导的结论。
+这证明较大集有效。下文的精化减少节点,不撤销较大有限集的结论。
 
-**26.13 精化有限测试集。** 定义 \(\mathcal K_{\rm sharp}\) 为以下有序预算对之集合。
+**26.13 定义（记号、范围及证明地位）：精化有限测试集。** 定义 \(\mathcal K_{\rm sharp}\) 为以下有序预算对之集合。
 第一类保留所有通过 cutoff 的相邻实际角点对:
 \[
 (\beta_{s-1},\beta_s),\qquad
@@ -2714,7 +2574,7 @@ b>B_{\rm cut},\quad c_i<a<(c_i+d_i)/2,\quad
 \(k=3,N=8\) 时为 \(7+6\cdot3=25\)。
 25 是通过 guards 之前的每箱容量上界,不是每个箱体都留下 25 个节点的断言。
 
-**26.14 分段严格凸性、外端点再饱和与有限支配。** 固定
+**26.14 定理（命题及证明）：分段严格凸性、外端点再饱和与有限支配。** 固定
 \(1\le j\le N-2\)、\(b=\beta_{j-1}>B_{\rm cut}\)。
 只用活跃反射点将 \([\beta_j,\beta_{j+1}]\) 划为有限个非退化闭线段。
 每段 \([v,w]\) 上 \(D\) 仿射、\(\Psi(b,\cdot)\) 严格凹,
@@ -2736,7 +2596,7 @@ G(b,\beta_{j+1})\le G(\beta_j,\beta_{j+1}),
 边界切换点不需另添非相邻对。因而每个饱和薄层在这一有限区间内,
 都被 \(\mathcal K_{\rm sharp}\) 的一个成员弱支配。
 
-**26.15 最大角点以后的严格递减上尾。** 当
+**26.15 定理（命题及证明）：最大角点以后的严格递减上尾。** 当
 \(j=N-1\),饱和下预算为 \(b=\beta_{N-2}\)。
 对 \(u\ge\beta_{N-1}\),26.11 给出常值 \(D=\sum_i f(d_i)\)。
 增加 \(\mu=u/k\) 扩大 \([b/k,\mu]\),故 \(\rho\) 非增。
@@ -2753,7 +2613,7 @@ F(\mu_2,\rho_2)\ge F(\mu_2,\rho_1)>F(\mu_1,\rho_1).
 G(s)\le G(v).}
 \]
 
-**26.16 非空性、达到的有限最大值及符号等价。** 存在可容许薄层当且仅当
+**26.16 定理（命题及证明）：非空性、达到的有限最大值及符号等价。** 存在可容许薄层当且仅当
 \[
 \boxed{\beta_{N-2}>B_{\rm cut}\quad\Longleftrightarrow\quad R_{N-2}>5040.}
 \]
@@ -2787,7 +2647,7 @@ g_*=\max_{v\in\mathcal K_{\rm sharp}}G(v).
 不声称 \(\eta\) 跨不同素数/指数箱体统一。
 若集合为空,上述全称式为空真、存在式为假,\(g_*\) 不定义,不声称存在达到的最大值。
 
-**26.17 最大者、饱和等号和零薄层的准确分类。** 以下假设 \(\mathscr S\ne\varnothing\)。
+**26.17 定理（命题及证明）：最大者、饱和等号和零薄层的准确分类。** 以下假设 \(\mathscr S\ne\varnothing\)。
 对任意 \((M_0,u)\in\mathscr S\),重新按实际 \(u\) 定义
 \(j=\max\{s:\beta_s\le u\}\)、\(b=\beta_{j-1}\)。则
 \[
@@ -2817,7 +2677,7 @@ g_*=\max_{v\in\mathcal K_{\rm sharp}}G(v).
 也不能把最大者的临界上端点条件强加给全部零点。
 本节没有最小值或下界的有限归约。
 
-**26.18 精确整数 guards 与预算端点。** 相邻对满足
+**26.18 定理（命题及证明）：精确整数 guards 与预算端点。** 相邻对满足
 \[
 e^{T_0}=R_{s-1},\qquad e^{T_1}=R_s.
 \]
@@ -2847,7 +2707,7 @@ P^2R_{j-1}R_j<E_i<P^2R_{j-1}R_{j+1}.
 \(e^{kd_i-Q}=p_i^{k(b_i+2)}/P\),但精化集已不需要它们。
 这些有理端点没有使 \(D,\rho,\Psi,G\) 变成有理数,也没有决定 \(G\) 的符号。
 
-**26.19 反射上端点恒非整数与无重复对。** 反射 \(e^{T_1}\) 中素数 \(p_l\) 的指数为
+**26.19 定理（命题及证明）：反射上端点恒非整数与无重复对。** 反射 \(e^{T_1}\) 中素数 \(p_l\) 的指数为
 \[
 k(2b_i+3)\mathbf1_{\{l=i\}}-b_l-e_l^{(j-1)}-2.
 \]
@@ -2862,9 +2722,9 @@ k(2b_i+3)\mathbf1_{\{l=i\}}-b_l-e_l^{(j-1)}-2.
 相邻对的下角点也互异,故同一固定素数箱体内没有幸存的重复预算对。
 26.13 可直接作为集合使用,无需靠数值容差去重。
 
-**26.20 常量角点次序证书。** PRO 选定的前瞻 \(k=3\) 范围使用素数列表
+**26.20 定理（命题及证明）：常量角点次序。** 固定 \(k=3\) 范围使用素数列表
 \([2,3,5,7,11,13,17,19]\),按列表指标递增的三元组取字典序,
-共 \(\binom83=56\) 个。此处为槽布局将坐标改标 \(i=0,1,2\),
+共 \(\binom83=56\) 个。此处将坐标改标 \(i=0,1,2\),
 bit \(i\) 选择第 \(i\) 坐标的上端点,bit 0 是最低位。
 对 \(p_0<p_1<p_2\),八个子集乘积的唯一未定比较是 \(p_2\) 与 \(p_0p_1\):
 二者都大于 \(p_1\)、小于 \(p_0p_2\),且
@@ -2880,13 +2740,9 @@ bit \(i\) 选择第 \(i\) 坐标的上端点,bit 0 是最低位。
 任意指数箱体均有 \(R_s=B m_s\)、\(B=\prod_i p_i^{b_i}>0\)。
 故这 56 个常量次序同时适用于全部指数,无须枚举指数箱体来验证次序。
 [prime-slab-corner-order-0909.json](../../reports/prime-slab-corner-order-0909.json)
-是给定输入的原样 6741 字节,SHA256
-9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672。
-它保存每个 triple、八个 mask 和严格递增的整数乘积,是常量输入证书而非搜索结果;
 [prime-slab-finite-design-0909.md](../../reports/prime-slab-finite-design-0909.md)
-给出逐行可复现的标准库 Python 检查。
 
-**26.21 前瞻箱体、槽和稳定行号。** 对每个三元组独立取
+**26.21 定义（记号、范围及证明地位）：箱体与槽的整数编码。** 对每个三元组独立取
 \(b_0,b_1,b_2\in\{0,\ldots,15\}\)。三元组指标 \(0\le t<56\),定义
 \[
 \mathrm{box\_id}=4096t+256b_0+16b_1+b_2.
@@ -2908,7 +2764,6 @@ bit \(i\) 选择第 \(i\) 坐标的上端点,bit 0 是最低位。
 \mathrm{row\_id}=25\,\mathrm{box\_id}+\mathrm{slot},
 \qquad 0\le\mathrm{row\_id}\le5734399.
 \]
-批次、压缩和调度必须保留此含箱体身份的行号。
 计数仅由布局乘法给出:
 \[
 \begin{aligned}
@@ -2918,10 +2773,8 @@ bit \(i\) 选择第 \(i\) 坐标的上端点,bit 0 是最低位。
 \end{aligned}
 \]
 这些全是 guards 前的 RAW slots,没有统计幸存槽。
-本次常量检查只遍历 56 个输入行,没有生成上述 229376 个指数箱体,
-也没有执行这些 row_id 的解析差值计算。
 
-**26.22 guards 的整数位宽与 carry 设计界。** 在 26.21 的范围内,
+**26.22 定理（命题及证明）：整数表示的位宽与进位界。** 在 26.21 的范围内,
 \(R_s\) 的每个素数指数至多 16,\(PR_s\) 至多 17,
 \(P^2R_sR_l\) 和 \((PR_s)^2\) 每个素数指数至多 34。
 \(E_i=p_i^{3(2b_i+3)}\) 的单素数指数至多 99,
@@ -2930,8 +2783,7 @@ bit \(i\) 选择第 \(i\) 坐标的上端点,bit 0 是最低位。
 19^{102}<2^{510}<2^{512};
 \]
 前一个严格不等式也直接由 \(19<2^5\) 得到。
-前瞻表示可取 64 个 base-256 limbs,每 limb 放在 32 位整数 lane,
-从 1 起至多作 102 次“小素数乘法加 carry”,比较时从最高 limb 向下。
+表示可取 64 个 base-256 limbs,从 1 起至多作 102 次“小素数乘法加 carry”,比较时从最高 limb 向下。
 若乘数 \(p\le19\)、旧 limb \(d\le255\)、输入 carry \(c\le p-1\),
 则
 \[
@@ -2939,11 +2791,8 @@ dp+c\le255p+(p-1)\le255\cdot19+18=4863,\qquad
 \left\lfloor\frac{dp+c}{256}\right\rfloor\le p-1\le18.
 \]
 初始 carry 为 0,故归纳保持该界;512 位也容纳全部最终操作数。
-这是整数表示的数学设计界,不是已验证的 MPS 指令、存储或 carry 行为。
-常量证书检查可精确核对 \(19^{102}\) 的 bit_length 为 434,
-该更小实测位数不改变预留 64 limbs 的设计。
 
-**26.23 六个可行排列混合给出精确 \(D\)。** 仅在本条及以下级数设计取 \(k=3\)。
+**26.23 定理（命题及证明）：六个可行排列混合给出精确 \(D\)。** 仅在本条及以下级数设计取 \(k=3\)。
 对六个排列 \(\pi\in S_3\) 的每一个,令 \(t=u-A\ge0\),
 \[
 y^\pi_{\pi(\ell)}
@@ -2965,7 +2814,7 @@ D_\pi(u)=\sum_i\left((1-y^\pi_i)f(c_i)+y^\pi_i f(d_i)\right).
 并列斜率、整数最优解、预算前缀端点及全上端点饱和都包括在内;
 六个值不必互异,后续仍须严格包围每个 fraction、clip 和最大值运算。
 
-**26.24 正质量总和为 3 的绝对收敛对数级数。** 任一上条混合
+**26.24 定理（命题及证明）：正质量总和为 3 的绝对收敛对数级数。** 任一上条混合
 (特别是某个最优混合)可写成
 \[
 D_\pi=\sum_r w_r f(z_r),\qquad w_r>0,\quad \sum_r w_r=3,\quad z_r\in\{c_i,d_i\}.
@@ -2991,7 +2840,7 @@ Z_\pi=e^\ell(D_\pi-\Psi)
 对最优混合即为 \(Z=e^\ell G\)。没有要求最优混合真正分数,
 也没有附加混合均值等于 \(\mu\) 的前提。
 
-**26.25 缩放后 24 项尾界与取最大值的稳定性。** 记 26.24 的前 24 项为 \(S_{\pi,24}\)。
+**26.25 定理（命题及证明）：缩放后 24 项尾界与取最大值的稳定性。** 记 26.24 的前 24 项为 \(S_{\pi,24}\)。
 由全部自变量至少为 \(\ell\) 及正质量总和为 3,
 \[
 \left|e^{-nH}+2e^{-nL}-\sum_r w_r e^{-nz_r}\right|
@@ -3021,7 +2870,7 @@ Z_\pi=e^\ell(D_\pi-\Psi)
 因此同一个统一尾界穿过六排列最大值,无需已认证的斜率选择。
 总质量与定义域保证其覆盖零质量删去、整数最优解、并列斜率和全上端点。
 
-**26.26 区间符号、等号和未决。** 因 \(e^\ell>0\),\(Z\) 与 \(G\) 同号。
+**26.26 定理（命题及证明）：区间符号、等号和未决。** 因 \(e^\ell>0\),\(Z\) 与 \(G\) 同号。
 对精确的 \(S\) 和有效尾界 \(\tau\),
 \[
 \begin{array}{c|c}
@@ -3045,25 +2894,10 @@ S-\tau\ge0&G\ge0
 六排列和分别有包围时,取各下界与各上界的最大值包围 \(S\),再加统一尾界。
 不能把未认证的 float32 部分和加上尾界就称作符号证书。
 
-**26.27 截断之外的数值义务。** 26.25 只界定省略 \(n\ge25\) 项的误差。
-未来实际 MPS 程序还须给出向外误差包围,或由 CPU 对已完成 GPU 输出作严格验证,
-涵盖输入 \(\log p_i\)、角点和反射预算、\(a,\mu,\ell\);
-距离中的 min/max、减法、平方和、平方根及 \(L,H\);
-混合 fraction、0/1 clipping、六排列最大值;
-乘除、消去、求和次序、reduction、融合运算和实际 roundoff;
-下溢、subnormal 或 flush-to-zero 丢项;以及实际 log、exp、log1p 和平方根的误差。
+**26.27 定理的适用范围（保留原有开放限制）：截断界的适用范围。** 26.25 只界定省略 \(n\ge25\) 项的误差。
 在反射点处最近距离精确并列,浮点分支不能自行取消这种等号。
 数学上的总质量 3 不是舍入质量和的自动保证。
-直接算 \(e^{\ell-nz}\) 可避免先形成大 \(e^\ell\) 因子,仍须包围下溢与抵消。
-
-每个原始 row_id 将来都须保留 active/inactive 及精确 guard 证据,
-每个 active 行须有认证分类或 unresolved,完整结论还须验证 GPU 非候选和所有必要排除,
-保留 GPU/CPU 分歧及完整分类摘要。CPU 可以认证已完成的 GPU 结果,
-不能变成持续指数箱体候选生成器或 GPU 计算的 fallback kernel。
-同一批次的域、输入/程序身份、范围、计数、未决项和复现命令必须随程序持久化;
-运行 checkpoint 留在仓外。这里没有实现或执行这些数值步骤。
-
-**26.28 经典材料归属及核对范围。** 本节专门化组合标为 repo-derived,
+**26.28 证明附引（附 26.4–26.17）：经典材料归属。** 本节专门化组合标为 repo-derived,
 以下只归属实际用到的经典材料,不是这个素数差值定理的既有文献证明或穷尽新颖性调查。
 HKUST [Lecture 14: Greedy Algorithms](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf)
 slides 4-7 给出按 value/weight 递减的分数背包、至多最后一项部分选取及其正确性;
@@ -3074,85 +2908,21 @@ slides 3.4、3.14、3.24、3.25 分别支持范数凸性、Jensen 和受单调�
 Doikov [Convex Functions](https://doikov.com/teaching/orie6365-s26/notes/lecture05_convex.pdf)
 §5.1.3 Theorem 5.1.4 给出任意仿射扰动后的线段端点最大化,
 取扰动系数为零得到这里的经典端点材料;本节的严格内部排除另由 26.14 证明。
-caller 核对位置分别为 HKUST PDF pp.4-7、Boyd/Vandenberghe PDF pp.6,16,26,27、
-Doikov 陈述 p.2 / 证明 p.3。I9 读取的是获准的核对 receipt 及文字摘录,
-没有把 primary 无法访问仓库 URL 改写成已独立读 GitHub。
-
-**26.29 当前调用的不可变来源事实。** 第一 primary task 为
-ce312694-86a6-4a1b-8318-90c77dc28f75,conversation conv_264064eff69b5335,
-实际完成模型 GPT-6 Astra,完成于 2026-09-09T13:25:33.673+00:00;
-其 pro-real-slab-reduction-envelope-0909.json 的 SHA256 为
-5f551e3062515163f220d7fce433908598f5147c5060d92e56ba1292e03ec77a。
-第二 primary task 为 3609e6b0-ab4d-4891-9b0f-55c613d43942,
-conversation conv_4c0b62a5e14b0f64,实际完成模型 GPT-6 Astra,
-完成于 2026-09-09T13:47:33.577+00:00;
-其 pro-real-slab-sharpening-envelope-0909.json 的 SHA256 为
-8105875c946f2c693c8db6a6b1f789756aab75fbd4cd297293431f08f25dcc92。
-两份完成记录分别绑定这些 envelope 身份;两次调用都未成功获取钉版仓库 URL,
-使用完整的供给定义,caller 已将定义与交付源核对。
-这两份顺序主输入不构成两票独立批准,也不证明模型族多样性或 sterile priors。
-
-本实施为 caller 的 consensus-rnd:sshx 编排下的 Codex CLI I9,
-repo-prior-exposed;未产生子 agent、额外 oracle 或独立 review 票。
-只消费给定 conclusion、完成元数据及列明的 caller 数学/文献/常量/gate 输入,
-不追读 log_ref、不消费 peer review 工件。
-上述输入位于 caller 的 /tmp/qgh-boundaries-0908/;其完整字节身份见设计报告和实施信封。
-较早恢复但 hash 不匹配的 GPU manifest 是历史,不属于本节输入。
-本节用明确乘法核对 \(7+6\cdot3=25\)、
-\(6\cdot2^{-23}/25=3/104857600\)、\(255\cdot19+18=4863\),
-没有采用 primary 中压缩的乘法串。
-
-**26.30 摄入、派发事实和剩余义务。** 本次指定树为
-/Users/auricstudio/trureturing-qgh-variance,分支
-lane/math/quantized-gh-real-slabs-0909,封存输入和 canonical ingest BASE 为
-0ba660de65b4224b8734908f7d0dd178115fa377。
-追加前源为 2410 行、144029 字节,SHA256
-b9898b7df94a1d46bb2898a738b27f927b6136ea1eb7db240fafc428f84bbe36,
-Git blob 41c4487989f5739f80e4098cd91a8b229f870891;完整前缀逐字节保留。
-新增源段、常量输入文件和设计报告之外,只由下列 canonical 命令产生 CAS/消化条目:
-
-~~~sh
-make ingest BASE=0ba660de65b4224b8734908f7d0dd178115fa377 SOURCE=arithmetic-boundary-quantization
-~~~
-
-新条目属于参考输入的 residual-open,不表示 Lean 吸收或冻结。
-本节每个实质内容单元均编号;新增 CAS/entry 身份、源覆盖和实际命令退出码
-由本次 implementation envelope 给出。旧 18 行散文覆盖 advisory 及 generator 所有的
-LF/EOF 变体均是历史,本次不重写、不手工规范化。
-caller gate 所给派发事实为 S12 PR #6640 已 MERGED,
-S13 的 sealed prefix 在派发时独立评审 pending;这里保留它的全部源字节,
-不读取或改动其活跃评审工作树。这是此调用的 provenance,不改写第 25 节当时的状态记录。
-
-本次执行的有界输入核验只有 56 个常量行及计数/位宽/carry/尾常数,
-指数箱体执行数为 0、解析测试行执行数为 0,没有候选实验或 exponent sweep。
+HKUST PDF pp.4-7、Boyd/Vandenberghe PDF pp.6,16,26,27、
+Doikov 陈述 p.2 / 证明 p.3。
+**26.30 定理的适用范围（保留原有开放限制）：一般素数比较的开放范围。**
 全素数、全非负指数、任意 \(k\ge3\) 的比较和 RH 均保持 OPEN。
-下一数值义务是按另行登记的 MPS 窗口实现并认证所有必要分类,
-本节不声称已有 GPU kernel、GPU 搜索、持续 CPU 候选生成、一般域符号结论、
-新 formal root、axiom 或 Lean freeze。
-S14 的独立数学评审、普通仓库门与 MERGED 尚属 caller 后续义务,
-最终交付依赖 S13 MERGED;Git/PR 动作不属于 I9。
-这次有限源追加不完成持续研究目标。
-
 ## 27. 坐标分离的全薄层严格排除与正整数射线边界
 
-**27.1 本次命题、来源和追加边界。** 本节为 2026-09-09 的 S16 参考输入,
-分类为 PAPER_ARGUMENT / repo-derived,承接已完成的实际 GPT PRO primary
-task a9d1269e-64ae-4a9a-b90f-8982ff023ee6,conversation conv_224b6f5d1adc6409,
-观测模型 GPT-6 Astra,完成于 2026-09-09T14:39:45.418+00:00。
-第 26 节已有实际角点给出的正定义域、分数背包对偶和固定箱体的有限薄层归约;
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**27.1 定义（记号、范围及证明地位）：命题范围。** PAPER_ARGUMENT / repo-derived。第 26 节已有实际角点给出的正定义域、分数背包对偶和固定箱体的有限薄层归约;
 这里复用这些事实,新增下包络端点的逐坐标单调性、无步宽损失的箱体下界、
 两个严格排除阈值、三坐标整数 guard 和固定正整数方向的最终排除。
 本地对照范围是本卷第 1-26 节,没有作全库或文献的穷尽新颖性断言。
 GH 仍是用户的原标签;RH 等价判据只是工作背景,没有新增 GH 定义或 RH 结论。
 
-本次 implementation-input HEAD / ingestion BASE 是
-391f7355698085c6500b46838a093dad05947ffb,不是尚待 caller 形成的 review-candidate HEAD。
-第 1-26 节的完整 176107 字节 / 3134 行前缀保持不变,SHA256 为
-4bbc7e0bbcd387c52a73d362ab78b61d00faf810d45d58df98b426e6fc34a266。
-既有 atoms、entries、报告和常量表均保留。独立评审、仓库门与 MERGED 尚未由本节取得;
-最终 S16 交付还依赖 S14 MERGED。本节不含另行在研的 relative-spread PRO 问题。
-
-**27.2 较弱分析域与原可容许域。** 全部对数均为自然对数。
+**27.2 定义（记号、范围及证明地位）：较弱分析域与原可容许域。** 全部对数均为自然对数。
 先取整数 \(k\ge2\) 和有限正二点网格
 \[
 0<c_i<d_i<\infty,\qquad h_i=d_i-c_i>0,\qquad C_i=\{c_i,d_i\},
@@ -3180,7 +2950,7 @@ Q+\log5040<M_0<M_1<\infty
 以及闭薄层内至少两个不同实际角点的要求。因此 \(\mathscr S\subseteq\mathscr S_+\)。
 严格宽度、两个角点和 5040 cutoff 不用于排除证明,但匹配原问题时不可撤掉。
 
-**27.3 同一目标与欧氏归一化。** 在 27.2 的分析域中定义
+**27.3 定义（记号、范围及证明地位）：同一目标与欧氏归一化。** 在 27.2 的分析域中定义
 \[
 f(z)=\log(1-e^{-z})\quad(z>0),\qquad
 D(M_1)=\max_{\substack{0\le y_i\le1\\\sum_i h_i y_i\le M_1-A}}
@@ -3214,7 +2984,7 @@ H=\mu+(k-1)\rho,\quad \Psi=f(H)+(k-1)f(L),\quad G=D-\Psi.
 \]
 这是同一平方偏差几何;给素数贴坐标标签本身没有证明新的正交关系。
 
-**27.4 定理 A:全 \(\mathbb R^k\) 的单调性及精确增量等号。** 对任意
+**27.4 定理（命题及证明）：定理 A:全 \(\mathbb R^k\) 的单调性及精确增量等号。** 对任意
 \(x\in\mathbb R^k\)、坐标 \(i\)、实数 \(u\ge0\),有
 \[
 \boxed{\ell(x+u e_i)\ge\ell(x).}
@@ -3253,7 +3023,7 @@ H=\mu+(k-1)\rho,\quad \Psi=f(H)+(k-1)f(L),\quad G=D-\Psi.
 因此是非减而非每个方向严格增加,零方差 \(\Pi x=0\) 也在等号内。
 这一定理自身不需要正性、素性或互异性。证毕。
 
-**27.5 一个实际角点足以给出箱体下界。** 记
+**27.5 定理（命题及证明）：一个实际角点足以给出箱体下界。** 记
 \(E=\ell(c)\)、\(c_{\min}=\min_i c_i\)。对 27.2 中任一实际可行角点 \(x\),
 \(\bar x\in I\)、\(\mu\ge\bar x\),故逐项
 \(0\le\delta_i\le|x_i-\bar x|\)。于是
@@ -3278,7 +3048,7 @@ L\ge\ell(x)\ge\ell(c)=E\ge\ell(c_{\min}\mathbf1)=c_{\min}>0.
 \(H=L\) 当且仅当 \(\rho=0\),等价于 \(V_0=0\),又等价于每行距离为零。
 此时 \(\Psi=kf(\mu)\),所有论证仍成立;本节不在零方差处微分平方根。证毕。
 
-**27.6 定理 B:初等阈值的严格排除。** 令
+**27.6 定理（命题及证明）：定理 B:初等阈值的严格排除。** 令
 \[
 d=\min_i d_i>0,\qquad S_d=\sum_i f(d_i)<0.
 \]
@@ -3309,7 +3079,7 @@ d=\min_i d_i>0,\qquad S_d=\sum_i f(d_i)<0.
 \(\Psi=kf(L)\) 恰当 \(V_0=0\),\(kf(L)=kf(E)\) 恰当 \(L=E\);
 这些可能等号均不会抵消中间的严格性。证毕。
 
-**27.7 更尖锐的标量阈值及箱体负裕量。** 对有限 \(d>0\) 定义精确实数
+**27.7 定理（命题及证明）：更尖锐的标量阈值及箱体负裕量。** 对有限 \(d>0\) 定义精确实数
 \[
 \boxed{T_k(d)=-\log\!\left(1-(1-e^{-d})^{1/k}\right).}
 \]
@@ -3336,7 +3106,7 @@ T_k(d)=d+\log\!\left(\sum_{j=0}^{k-1}a^j\right),
 \(G\le-\varepsilon_{\rm box}\)。即使原 \(\mathscr S\) 为空,此常数仍按公式为正,
 但原域上的全称符号结论是空真,不能据此声称有可容许薄层。证毕。
 
-**27.8 阈值最优性的有限含义与二坐标空前提。** 由于 \(f\) 严格递增,
+**27.8 定理（命题及证明）：阈值最优性的有限含义与二坐标空前提。** 由于 \(f\) 严格递增,
 \[
 E\ge T_k(d)\quad\Longleftrightarrow\quad f(d)\le kf(E)
 \quad(E,d>0).
@@ -3355,7 +3125,7 @@ E\ge T_k(d)\quad\Longleftrightarrow\quad f(d)\le kf(E)
 因此本节两个充分阈值在正二点网格的 \(k=2\) 域里都具有空前提,
 不提供也不替代第 22-23 节的二坐标全域定理。阈值未通过本身不建立任何符号。
 
-**27.9 定理 C 的有序三坐标几何。** 当 \(k=3\),按值排列
+**27.9 定理（命题及证明）：定理 C 的有序三坐标几何。** 当 \(k=3\),按值排列
 \(c_{(1)}\le c_{(2)}\le c_{(3)}\),置
 \(s=c_{(2)}-c_{(1)}\)、\(t=c_{(3)}-c_{(1)}\),故 \(0\le s\le t\)。则
 \[
@@ -3372,7 +3142,7 @@ E\ge T_k(d)\quad\Longleftrightarrow\quad f(d)\le kf(E)
 严格有序三元组 \((a,a+s,a+s+\eta)\)、\(s>0,\eta\downarrow0\) 也趋于该边界。
 这不是素数域 guard 常数的最优性证明。证毕。
 
-**27.10 不同素数的精确整数 guard 与不可能的等号。** 在原三素数箱体中,
+**27.10 定理（命题及证明）：不同素数的精确整数 guard 与不可能的等号。** 在原三素数箱体中,
 记 \(X_i=p_i^{b_i+1}=e^{c_i}\)。不同标签若有 \(c_i=c_j\),便有两个不同素数的
 正整数幂相等,违反唯一分解。因此存在唯一标签顺序
 \[
@@ -3399,7 +3169,7 @@ s\ge3\log(3p_*)
 同时 \(0<s<t\) 使 27.9 的几何不等式本身严格。
 此 guard 是充分排除,不是必要充分符号判据;失败不能推出 \(G\ge0\),也不能推出 \(G<0\)。
 
-**27.11 定理 D:每条固定正整数指数射线的精确截断。** 固定不同素数三元组
+**27.11 定理（命题及证明）：定理 D:每条固定正整数指数射线的精确截断。** 固定不同素数三元组
 \(p\)、\(m\in\mathbb Z_{\ge1}^3\)、\(r\in\mathbb Z_{\ge0}^3\)。
 对整数 \(n\ge0\),置
 \[
@@ -3441,7 +3211,7 @@ floor 加一保留了在精确实交点处的严格要求,不能换成未经处�
 所有分母严格正,数据有限,所以 \(N\) 是有限非负整数。证毕。
 这些是精确数学 floor/ceiling 公式,不是已经计算并认证的有效数值 cutoff。
 
-**27.12 可选非空域界及射线量词的限制。** 令 \(Q=\sum_i\log p_i\) 固定,
+**27.12 定理（命题及证明）：可选非空域界及射线量词的限制。** 令 \(Q=\sum_i\log p_i\) 固定,
 另定义
 \[
 N_{\rm domain}=\max\left\{0,
@@ -3459,7 +3229,7 @@ N_{\rm domain}=\max\left\{0,
 本推导只覆盖每个 \(m_i\ge1\) 的固定方向;有零分量的射线不在此定理范围内,
 任意无界指数序列也不必最终落在某个固定正整数方向上。
 
-**27.13 逃避该充分 guard 的无界箱体:无理对数与抽屉证明。** 固定任意不同素数三元组,
+**27.13 定理（命题及证明）：逃避该充分 guard 的无界箱体:无理对数与抽屉证明。** 固定任意不同素数三元组,
 先取两个不同标签 \(a,b\),记 \(\alpha=\log p_a/\log p_b>0\)。
 若 \(\alpha\) 有理,写为正整数比 \(v/u\),就有 \(p_a^u=p_b^v\),
 违反唯一分解,所以 \(\alpha\) 无理。
@@ -3492,9 +3262,9 @@ b_a=u_J-1,\qquad b_b=v_J-1,\qquad b_c=w_J-1.
 无论哪一个是最小标签,分离阈值至少为
 \(3\min\{\log(3p_a),\log(3p_b)\}>0\)。所以这些箱体最终都不满足 27.10 的 guard。
 又 \(A\to\infty\),最终可按 27.12 的同一两角点薄层取法得到非空原可容许域。
-这是抽屉原理的纸面构造,没有生成、搜索或数值评价其中任何一列箱体。证毕。
+证毕。
 
-**27.14 剩余问题的准确含义。** 对固定素数三元组,若某箱体存在原可容许薄层使
+**27.14 定理的适用范围（保留原有开放限制）：剩余问题的准确含义。** 对固定素数三元组,若某箱体存在原可容许薄层使
 \(G\ge0\),27.10 的逆否命题给出必要条件
 \[
 \boxed{0<c_{(2)}-c_{(1)}<3\log(3p_*),
@@ -3503,22 +3273,19 @@ b_a=u_J-1,\qquad b_b=v_J-1,\qquad b_c=w_J-1.
 它不是充分条件。27.13 的无界箱体说明这条 guard 留下的区域不具有有限补集,
 不说明这些箱体有 \(G\ge0\),也不声称其它阈值或其它方法不能排除它们。
 固定素数的任意非负指数全域比较、一般素数域 \(k\ge3\) 的占优以及 RH 都仍 OPEN。
-正整数射线定理没有把无界问题化成有限扫描,更没有完成长期研究目标。
-另行在研的相对展宽问题没有进入本节的证明或结论。
+正整数射线定理没有把无界问题化成有限扫描。
 
-**27.15 前瞻整箱过滤与第一处压缩记号订正。** 以下仅是未来设计的数学依据。
-对每箱可先精确构造 \(X_i=p_i^{b_i+1}\),排序保留标签 \(i_1,i_2,i_3\),
+**27.15 定理（命题及证明）：整箱排除条件与指数乘法记号。**
+对每箱构造 \(X_i=p_i^{b_i+1}\),排序保留标签 \(i_1,i_2,i_3\),
 再比较 \(X_{i_2}\) 与 \(R=27p_{i_1}^{b_{i_1}+4}\)。若精确认证 \(X_{i_2}\ge R\),
-27.10 给整箱所有可容许薄层的严格负号。若比较失败或未决,箱体留给既有 eligibility
-和符号程序,不得从浮点对数的近似次序直接宣布排除。
-
+27.10 给整箱所有可容许薄层的严格负号。
 等价的带符号指数表示使用去重素数基
 \(\mathcal B=\{p_1,p_2,p_3\}\cup\{3\}\),定义
 \[
 z_q=(b_{i_2}+1)\mathbf1_{\{q=p_{i_2}\}}
 -(b_{i_1}+4)\mathbf1_{\{q=p_{i_1}\}}-3\,\mathbf1_{\{q=3\}}.
 \]
-primary 的压缩串 `-31[q=3]` 明确应读为
+`-31[q=3]` 明确应读为
 `-3 * indicator(q=3)`,因为 \(27=3^3\),绝不是减去 31。
 若已有标签为 3,其全部贡献在同一 \(q=3\) 坐标相加。
 由 \(X_{i_2}/R=\prod_{q\in\mathcal B}q^{z_q}\),guard 精确等价于
@@ -3529,7 +3296,7 @@ primary 的压缩串 `-31[q=3]` 明确应读为
 这种向量以乘法表示正有理数,逐坐标或字典序比较指数不能决定该有理数与 1 的大小。
 它不是允许实际素数指数为负;负号只属于这个比值表示。
 
-**27.16 前瞻有限容量与第二处压缩记号订正。** 若另行预登记
+**27.16 定理（命题及证明）：有限整数容量与乘法记号。** 若给定
 \(0\le b_i\le U_i\)、整数 \(U_i\ge0\),令 \(\lambda_i\) 为 \(p_i\) 的精确二进制位长,
 故 \(p_i<2^{\lambda_i}\)。置
 \[
@@ -3541,21 +3308,18 @@ B=5+\max_i\{\lambda_i(U_i+4)\},\qquad
 足以容纳这些最终操作数。沿用第 26 节固定窗口 \(p_i\le19,U_i=15\) 时,
 这条**新比较本身**可取 \(B=100,W=13\);不替换既有其它 guards 的容量或常量表。
 
-未来逐内积立即处理进位的标准乘法,若两输入 limb、已有输出 limb 和 carry
+逐内积立即处理进位的标准乘法,若两输入 limb、已有输出 limb 和 carry
 都在 \(0,\ldots,255\),则临时值上界为
 \[
 \boxed{255\cdot255+255+255=65535=2^{16}-1.}
 \]
-primary 的 `255255+255+255` 明确应读为
+`255255+255+255` 明确应读为
 `255*255+255+255=65535`,不是整数 255255 再加两次 255。
 新 carry 是该临时值除以 256 的整商,仍至多 255,余数亦在 \(0,\ldots,255\),
 从零 carry 起给出这一步的归纳界。此论证依赖“每次内积后立即进位”,
 不能用于未经约束的一长串未进位累加。
-比较可从最高 limb 向下进行;完整幂构造、中间乘积、指数计数器、索引和进位传播
-仍须在真实实现中证明不越界。溢出、次序未认证或精确比较不可用只能返回 unresolved,
-不能排除箱体。这里没有认证任何 MPS 指令或 kernel。
 
-**27.17 保留第 26 节的稳定 25 槽,不采纳另一排列。** 对原登记的
+**27.17 定理（命题及证明）：25 槽编码与两种排列的区别。** 对原登记的
 \(0\le t<56\)、\(0\le b_0,b_1,b_2\le15\),继续精确使用
 \[
 \mathrm{box\_id}=4096t+256b_0+16b_1+b_2,\qquad
@@ -3569,27 +3333,22 @@ r=\mathrm{slot}-7,\quad j=1+\lfloor r/3\rfloor,\quad i=r\bmod3,
 \qquad (\beta_{j-1},\,3(c_i+d_i)-\beta_{j-1}),
 \]
 即 \(\mathrm{slot}=7+3(j-1)+i\)、\(j=1,\ldots,6\)。全部 eligibility 条件仍是 26.18/26.21 的原条件。
-primary 另写的 `7+6*(i-1)+(j-1)` 使用 \(i=1,2,3\)、\(j=1,\ldots,6\),
-是同一对集合的另一种排列,本次只披露为**未采用的呈现**,不替换任何既有 raw ID。
+`7+6*(i-1)+(j-1)` 使用 \(i=1,2,3\)、\(j=1,\ldots,6\),
+是同一对集合的另一种排列,**未采用的呈现**,不替换任何既有 raw ID。
 例如同一坐标行 \(i=0\)、\(j=2\) 在稳定布局为 slot 10,
 在该替代呈现以 \(i=1\) 表示时为 slot 8;两种编号不能互换而不说明。
 
-**27.18 条件覆盖的记账语义与本轮零执行。** 未来若认证一个箱体的分离 guard,
+**27.18 定义（记号、范围及证明地位）：条件覆盖的定义。** 若认证一个箱体的分离 guard,
 一个箱证书可覆盖它的全部 25 个既有 raw IDs,
 即 \([25\,\mathrm{box\_id},25\,\mathrm{box\_id}+24]\)。
 语义必须是“**若该 raw slot 可容许,则解析排除**”;eligibility 可以尚未求值,
 所以不能记作 25 个可容许薄层或 25 次数值符号评价。
-证书应绑定素数/指数三元组、带标签的精确坐标次序、guard 比较、定理身份与版本及 raw-ID 范围。
 压缩范围只有在规范展开逐一覆盖这些原始 ID 时才构成完整覆盖。
-未来一批中每个 raw slot 恰归一类:箱证书条件覆盖、ineligible、符号认证负、
+一批中每个 raw slot 恰归一类:箱证书条件覆盖、ineligible、符号认证负、
 符号认证非负、unresolved;五类互斥,总数须为登记箱数的 25 倍。
-guard 失败或未决的箱不能计入第一类;输入/程序身份和独立精确算术认证仍是实施义务。
+guard 失败或未决的箱不能计入第一类。
 
-本源增量的 searched boxes、executed box guards、executed kernels、numerically evaluated slots、
-certified computational exclusions 均为 0,没有实施 pruning,没有修改任何 kernel。
-固定代数和整数恒等式的 CPU 验算只支撑正文记号,不是候选生成、指数箱搜索或旧结果重放。
-
-**27.19 经典材料与历史访问限制。** Boyd/Vandenberghe 的
+**27.19 证明附引（附 27.4–27.13）：经典材料附引。** Boyd/Vandenberghe 的
 [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)
 Appendix A.1.2 印刷 p.634 给范数齐次性和三角不等式;
 §3.1.5 印刷 pp.72-73 给范数凸性及由三角不等式、齐次性作的证明;
@@ -3598,56 +3357,20 @@ Appendix A.1.2 印刷 p.634 给范数齐次性和三角不等式;
 27.4 的欧氏范数及增量等号、27.6 的严格 Bernoulli、27.13 的抽屉构造已在本节自足证明。
 这里没有穷尽检索新颖性,没有 Lean 或 RH 结果。
 
-caller 已检查这些书页,所供 PDF 为 6881335 字节,SHA256
-40d976c83c18cce1900eff8c41bd5ad408c102b813af39d05ff85678ccf8d76e。
-I11 读取所供核对材料、对应文字摘录,并核对 PDF 身份。
-primary 当时无法读取所给 immutable raw URL 和 GitHub blob URL,因此没有独立检查仓库全文或其身份;
-它使用请求提供的定义。这一历史限制不因 caller 后来的源核对或 I11 的本地前缀核对而抹去。
-primary、caller 的有界数学核验与 I11 实施自查是不同职责,不组成三票独立 review。
-本轮 provenance 和可复现的固定恒等式验算见
 [prime-coordinate-separation-0909.md](../../reports/prime-coordinate-separation-0909.md)。
-
-**27.20 本次 canonical 摄入及状态。** 本实施为 caller 的 consensus-rnd:sshx 编排下
-Codex CLI I11,flight qgh0909-i11-separation-append,attempt 1,retry budget 1;
-工作树为 /Users/auricstudio/trureturing-qgh-separation,分支
-lane/math/quantized-gh-separation-0909。实施者 repo-prior-exposed,
-primary external-prior-exposed;不声称 sterile priors 或模型族多样性。
-本轮没有子 worker、新 oracle、同轮 review 输入、worker 日志或 opaque log_ref 内容读取,
-没有邻近活跃工作树或 caller 会话发现。仅依指定参考源与显式供给材料执行本增量。
-源文和一个新报告之外的新增 CAS/entry 仅由
-~~~sh
-make ingest BASE=391f7355698085c6500b46838a093dad05947ffb SOURCE=arithmetic-boundary-quantization
-~~~
-产生,不手编或重命名 generated 文件。实际路径为 Meta/Digestion/atoms/sha256
-与 Meta/Digestion/backfill;schema 使用 fingerprints/cas_ref/coverage_gids,没有 body atom_id。
-新条目保持 residual-open,不表示证明已被 Lean 吸收。generator 若产生历史 LF 变体则原样保留,
-不重放历史 atom、不作全仓 harness/Lean 构建。每个新实质单元在本节中编号,
-新 canonical 源跨度覆盖、文件身份和命令退出码由本次 implementation envelope 记录。
-Git 暂存、提交、push、PR、merge 和后续独立评审均归 caller;本节没有代行这些动作,
-也没有把有效实施信封当作独立评审或长期目标完成。
 
 ## 28. 固定三素数的相对跨度界与非负整数指数射线排除
 
-**28.1 本层命题与证据身份。** 本节是 C33 / S17 的 PAPER_ARGUMENT / repo-derived
-参考输入,主数学输入为实际 GPT PRO task aaaf57ba-7b72-4143-b830-b4b58fe7fc2c,
-conversation conv_576df749336210e9,该调用观测模型 GPT-6 Astra。
-本节证明一个对共同高度一致的远第三坐标负裕量,再与第 27 节的小坐标分离结果合成
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**28.1 定义（记号、范围及证明地位）：命题范围与证明地位。** PAPER_ARGUMENT / repo-derived。本节证明一个对共同高度一致的远第三坐标负裕量,再与第 27 节的小坐标分离结果合成
 固定三素数的有界相对跨度结论,并把射线排除扩展到所有非零非负整数方向。
 经典范数与凹性材料的出处见 28.18;专门的组合估计是这里展开的推导,
 其原创性未作评定,不声称新颖性、优先权或穷尽文献检索。
 GH 保留为用户尚未数学定义的原标签。这个包络比较缺口不被称为 RH 等价判据,
 本节没有 RH 进展或形式化证明主张。
 
-本节只用已完成的 relative-spread primary、其 caller 固定核验和本树封存的先行源文。
-后续 common-height 与 balanced-all-slab primaries 不是本层输入。
-第 1-27 节的 201529 字节 / 3627 行前缀原样保留,SHA256 为
-b7cb35d87d0a7b7e569c49ab57f2b556c454257de8bd65899587d13be1338537;
-implementation BASE 为 feb497ec31f68e09ccc547a08810c398e66f3ee6。
-原始 primary payload 的 SHA256 为
-7d0bddfc1fcf761290f7bf777663f52f07af927eb2832001a67ff509bdeb4f11。
-其两处转义的非负整数记号在本节排作通常的 \(\mathbb Z_{\ge0}\),原始 payload 不改。
-
-**28.2 正步长、闭角点与同一比较目标。** 全部对数为自然对数,范数为通常欧氏范数。
+**28.2 定义（记号、范围及证明地位）：正步长、闭角点与同一比较目标。** 全部对数为自然对数,范数为通常欧氏范数。
 固定有限 \(h_1,h_2,h_3>0\),要求八个子集和两两不同,并按值排列为
 \[
 0=v_0<v_1<\cdots<v_7=Q,\qquad Q=h_1+h_2+h_3,
@@ -3686,8 +3409,8 @@ D(M_1)=\max_{\substack{0\le y_i\le1\\\sum_i h_i y_i\le M_1-A}}
 \(G=U_{\rm dual}-U_{\rm var}\),共同的 \(\log E_S\) 抵消;
 本节直接使用上述原始优化定义,无需重建背包价格证书。
 
-**28.3 定理 A:显式一致远坐标界。** 保留 primary 的常数,其中
-\(K\) 即原 payload 所记的 \(K_W\):
+**28.3 定理（命题及证明）：定理 A:显式一致远坐标界。** 其中
+\(K\) 即原记号 \(K_W\):
 \[
 \boxed{K=K_W=
 \frac{(S+4Q)^2+(2S+4Q)^2+(S+Q)^2}{9}},\qquad
@@ -3712,7 +3435,7 @@ D(M_1)=\max_{\substack{0\le y_i\le1\\\sum_i h_i y_i\le M_1-A}}
 证明依次由 28.4-28.12 给出。允许 \(T=\log2\)、\(s=0\)、\(s=S\),
 特别在 \(t=R\) 仍是严格负裕量。
 
-**28.4 正支持与饱和所需单调性。** 对 \(x\in\mathbb R^3\) 定义
+**28.4 定理（命题及证明）：正支持与饱和所需单调性。** 对 \(x\in\mathbb R^3\) 定义
 \[
 \bar x=\tfrac13\sum_i x_i,\qquad
 \Pi x=x-\bar x\mathbf1,\qquad
@@ -3732,7 +3455,7 @@ D(M_1)=\max_{\substack{0\le y_i\le1\\\sum_i h_i y_i\le M_1-A}}
 L\ge\mu-\|\Pi x\|/\sqrt6
 =\ell(x)+(\mu-\bar x)\ge\ell(c)\ge\ell(T\mathbf1)=T.
 \]
-这与 primary 从 \(\delta_i\le|x_i-\mu|\) 和三角不等式得到的较弱式
+这与从 \(\delta_i\le|x_i-\mu|\) 和三角不等式得到的较弱式
 \(L\ge\ell(x)+(1-1/\sqrt2)(\mu-\bar x)\ge T\) 一致。
 于是 \(H\ge L\ge T\ge\log2\),包括 \(\rho=0\) 的情形。
 
@@ -3751,7 +3474,7 @@ F_\rho=2\bigl(f'(H)-f'(L)\bigr)\le0.
 所以 \(\Psi\) 非增、\(G\) 非减。中间区间仍含保留角点,正支持一直有效。
 这是非严格单调性,不能把所有饱和步骤都说成严格。证毕。
 
-**28.5 第二角点饱和及空域的精确条件。** 给定任一可容许薄层,
+**28.5 定理（命题及证明）：第二角点饱和及空域的精确条件。** 给定任一可容许薄层,
 令 \(A+v_j\) 是不超过 \(M_1\) 的最大角点预算。至少两个角点在薄层内,
 故 \(j\ge1\),且第二大角点预算
 \[
@@ -3780,7 +3503,7 @@ G(M_0,M_1)\le G(a_*,M_1).
 取 \((M_0,M_1)=(A+v_6,A+Q)\) 即得可容许薄层。
 cutoff 的等号属于空域,不能用闭角点约定把它纳入。证毕。
 
-**28.6 饱和有限区间中的精确端点几何。** 现在只考虑
+**28.6 定理（命题及证明）：饱和有限区间中的精确端点几何。** 现在只考虑
 \(M_0=A+r,M_1=A+q\),其中 \(0\le r<q\le Q\)。若 \(t\ge2S+3Q\),则
 \[
 \frac{M_0}3-d_1=\frac{t+s+r}3-h_1
@@ -3803,7 +3526,7 @@ c_3-\frac{M_1}3=\frac{2t-s-q}3\ge S+\frac{5Q}3>0.
 这里的 \(c_3>M_1/3\) **不外推到** \(M_1\to\infty\) 的上尾;
 那时可失效的几何不参与 28.12 的证明。证毕。
 
-**28.7 精确范数余项、零条件与正分母。** 在 28.6 的范围置
+**28.7 定理（命题及证明）：精确范数余项、零条件与正分母。** 在 28.6 的范围置
 \[
 \boldsymbol\delta=tU+W,\qquad U=\frac{(1,1,2)}3,\qquad
 W=\left(\frac{s+r}3-h_1,\frac{r-2s}3-h_2,\frac{-s-q}3\right).
@@ -3846,7 +3569,7 @@ L_\infty=\mu-z/\sqrt6
 这些恒等式及分母估计完全不含共同高度 \(T\)。阈值等号
 \(t=\sqrt{6K}\) 也给严格正分母。证毕。
 
-**28.8 前两坐标的资源上界。** 继续固定有限区间,记
+**28.8 定理（命题及证明）：前两坐标的资源上界。** 继续固定有限区间,记
 \[
 B=h_1+h_2>0,\qquad
 m_{\rm low}=T+\frac{s+\min(q,B)}2.
@@ -3871,7 +3594,7 @@ m_{\rm low}=T+\frac{s+\min(q,B)}2.
 无论这些条件能否同时达到,最后一步因 \(d_3\) 有限且正而始终严格。
 \(q\le B\) 与 \(q\ge B\) 两种资源情形均被保留。证毕。
 
-**28.9 两种资源情形的端点间隙。** 将 28.7 与 28.8 的显式式子相减,分别得
+**28.9 定理（命题及证明）：两种资源情形的端点间隙。** 将 28.7 与 28.8 的显式式子相减,分别得
 \[
 \boxed{L_\infty-m_{\rm low}=
 \begin{cases}
@@ -3894,7 +3617,7 @@ L\ge L_\infty-\frac K{2t}
 允许 \(q-r=\delta\)、\(q=B\) 及两个余项阈值的等号。
 相邻角点足以满足间隔假设,但证明覆盖其间的每个实上预算。证毕。
 
-**28.10 一致负裕量在 \(t=R\) 仍严格。** 对 \(x\ge\log2\),
+**28.10 定理（命题及证明）：一致负裕量在 \(t=R\) 仍严格。** 对 \(x\ge\log2\),
 \[
 -f(x)=\int_0^{e^{-x}}\frac{du}{1-u}\le2e^{-x}.
 \]
@@ -3924,7 +3647,7 @@ B_{\rm tail}=\tfrac32(S+Q)+3\log\!\left(\frac2{1-e^{-\epsilon}}\right).
 这说明即使前面若干非严格估计取等,\(t=R\) 也不会失去严格裕量。
 没有计算或声称任何数值半径。证毕。
 
-**28.11 每个有限上预算薄层的归约。** 设 \(t\ge R\) 且
+**28.11 定理（命题及证明）：每个有限上预算薄层的归约。** 设 \(t\ge R\) 且
 \(M_1\le A+Q\)。28.5 的第二角点饱和给 \(r=v_{j-1}\)、\(q=M_1-A\),
 满足全部有限区间假设,特别是 \(q-r\ge\delta\)。
 因为 \(R\) 大于 28.6-28.9 所需阈值,28.10 直接适用,故
@@ -3932,12 +3655,12 @@ B_{\rm tail}=\tfrac32(S+Q)+3\log\!\left(\frac2{1-e^{-\epsilon}}\right).
 e^TG(M_0,M_1)\le e^TG(A+v_{j-1},M_1)<-a.
 \]
 上预算位于两个相邻角点之间、恰在角点、或恰为 \(A+Q\),结论一致。
-因此此处不依赖一般箱体的有限最大值定理,也不需要运行其 25 槽设计。
+因此此处不依赖一般箱体的有限最大值定理。
 若另有同箱体有限支配式 \(G\le\max_jG_j\),固定 \(T\) 下当然有
 \(e^TG\le\max_j(e^TG_j)\);本节给的是覆盖整个饱和区间的直接证明,
 不能把对角点的有限检查冒充这里的全实薄层证明。证毕。
 
-**28.12 上尾单独由严格单调性控制。** 设 \(M_1\ge A+Q\)。若原薄层可容许,
+**28.12 定理（命题及证明）：上尾单独由严格单调性控制。** 设 \(M_1\ge A+Q\)。若原薄层可容许,
 28.5 给 \(A+v_6>Q+\log5040\),所以末相邻对
 \((A+v_6,A+Q)\) 可容许,并已由 28.11 控制。
 饱和后固定 \(M_0=A+v_6\)。整个上尾中全上角点可行,所有弦增益
@@ -3961,7 +3684,7 @@ e^TG(M_0,M_1)\le e^TG(A+v_6,M_1)
 本证明完全没有假定上尾仍有 \(c_3>M_1/3\)。
 28.11 与本段合起来完成定理 A;空域情形按 28.5 是全称空真。证毕。
 
-**28.13 固定素数、标签排列与小坐标分离的正确符号。** 固定无序集合
+**28.13 定理（命题及证明）：固定素数、标签排列与小坐标分离的正确符号。** 固定无序集合
 \(P=\{p_1,p_2,p_3\}\),其中三个素数两两不同。对
 \(b\in\mathbb Z_{\ge0}^3\),取
 \[
@@ -4000,10 +3723,9 @@ p_2^{b_2+1}\ge27p_1^{b_1+4},
 \]
 使用的是坐标次序标签;不同素数的唯一分解又排除了该整数式的等号。
 **正确结论是条件证明 \(G<0\),从而排除 \(G\ge0\)**。
-primary 已纠正 caller 早先把被排除符号写成 \(G<0\) 的措辞;
-这里不沿用那个反向表述。证毕。
+证毕。
 
-**28.14 定理 B:每个固定三素数集合的有界相对跨度。** 对上述固定 \(P\),置
+**28.14 定理（命题及证明）：定理 B:每个固定三素数集合的有界相对跨度。** 对上述固定 \(P\),置
 \[
 p_{\max}=\max P,\qquad S=3\log(3p_{\max}),
 \]
@@ -4022,7 +3744,7 @@ p_{\max}=\max P,\qquad S=3\log(3p_{\max}),
 这不对小坐标分离那一支另声称统一的 \(-ae^{-T}\) 裕量;
 该显式裕量由定理 A 在 \(s\le S,t\ge R\) 的范围提供。证毕。
 
-**28.15 定理 C:非零非负整数指数射线的 ceiling 截断。** 固定同一 \(P\),取
+**28.15 定理（命题及证明）：定理 C:非零非负整数指数射线的 ceiling 截断。** 固定同一 \(P\),取
 \[
 m,r\in\mathbb Z_{\ge0}^3,\qquad m\ne(0,0,0),\qquad
 b_i(n)=m_i n+r_i\quad(n\in\mathbb Z_{\ge0}).
@@ -4057,7 +3779,7 @@ c_i(n)=\alpha_i n+\gamma_i.
 零斜率坐标可以存在,\(\beta\) 可以为负,都不改变证明。
 这里没有计算或认证任何数值 \(N\)。证毕。
 
-**28.16 原整数角点的严格 cutoff 与射线空域。** 对素数箱体记
+**28.16 定理（命题及证明）：原整数角点的严格 cutoff 与射线空域。** 对素数箱体记
 \[
 N_e=\prod_{i=1}^3p_i^{b_i+e_i},\qquad e_i\in\{0,1\}.
 \]
@@ -4076,7 +3798,7 @@ N_e(n)=\left(\prod_i p_i^{m_i}\right)^n\prod_i p_i^{r_i+e_i},
 这是最终非空性的直接证明,但不是定理 C 的附加前提;
 为了全称排除无需另加非空域 cutoff,也没有给出数值非空域界。证毕。
 
-**28.17 未闭的共同高度与精确范围。** 固定 \(P\) 后,定理 B 只把可能的
+**28.17 定理的适用范围（保留原有开放限制）：未闭的共同高度与精确范围。** 固定 \(P\) 后,定理 B 只把可能的
 \(G\ge0\) 限制到相对跨度 \(<R\);共同高度 \(T\) 仍无上界。
 该几何区域含无穷多素数指数箱体:对任意充分大的实数 \(Z\ge\max_i h_i\),取
 \[
@@ -4086,65 +3808,29 @@ c_i=h_i\lceil Z/h_i\rceil\in[Z,Z+h_i).
 因而 \(\max c_i-\min c_i<\max h_i\le Q<R\),且 \(\min c_i\to\infty\)。
 所以任意大的共同高度均有这种有界形状箱体;这构造的是剩余几何区域中的箱体,
 **不是** \(G\ge0\) 的见证。一般这样取得的指数序列不属于一条固定整数射线,
-与定理 C 无冲突。论证只是取整构造,本轮没有执行指数枚举。
+与定理 C 无冲突。论证只是取整构造。
 
 剩余区域的符号尚未由本节判定,可容许薄层中是否有 \(G=0\) 也未决定。
 远坐标区和小坐标分离区的结论都严格排除了零号。
 这里的常数不是对变化素数集合一致的常数,没有有限完整的素数/指数搜索补集,
 没有一般素数三坐标全域符号定理,也没有 RH 结论。
-下一数学缺口是固定步长、有界相对偏移但共同高度无界时的 \(G\) 控制;
-后续独立研究即使完成,也须作为另层输入,不能被本节提前引用。
+下一数学缺口是固定步长、有界相对偏移但共同高度无界时的 \(G\) 控制。
 
-**28.18 经典归属与已完成固定核验。** primary 已读并引用 Boyd/Vandenberghe,
+**28.18 证明附引（附 28.3–28.16）：经典材料附引。** Boyd/Vandenberghe,
 [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
 Appendix A.1.2 印刷 p.634 的范数公理,§3.1.5 印刷 pp.72-73 的范数凸性,
 以及 §3.1.3 印刷 p.70 式 (3.3) 的严格一阶条件。
-第 27.19 节已保存 caller 的书页与 PDF 身份核对。
 范数不等式、凹性、Jensen 及此处所用的初等微积分属于经典材料;
 本书不被说成含有这里专门的 \(K,\epsilon,a,R\) 或素数跨度定理。
 所需专门推导及正支持步骤已在本节给出,论文证明地位不等于 Lean 冻结。
 
-caller 的既有审计为 caller-relative-prime-spread-audit-0909.json,
-SHA256 493e5f8d2432469936611f95c5d34a42ea5463bb1b29188e827b135ac14b4c47:
-SymPy 1.14.0,11 项固定符号恒等式已通过,所供 host session 11977 退出 0。
-这些既有核验按其原身份保留,不作为本轮重新运行的 11 个结果,
-更不作为独立评审或历史数值搜索的重放许可。
-本轮 CPU 仅做源文/身份/生成覆盖验证及普通编排;搜索计数和 GPU dispatch 均为 0。
-完整输入限制、11 项名称、核验出处和剩余交付义务见唯一新增报告
 [relative-prime-spread-proof-0910.md](../../reports/relative-prime-spread-proof-0910.md)。
-
-**28.19 实施、canonical 摄入与尚待交付。** 本层为 caller 的 consensus-rnd:sshx
-编排下 Codex CLI I12 实施,flight qgh0910-i12-relative-spread,attempt 1,
-工作树 /Users/auricstudio/trureturing-qgh-variance,分支
-lane/math/quantized-gh-relative-spread-0910。
-实施者继承 repo-prior-exposed 的 CLAUDE.md / agents/CONTEXT.md 及完整所供 GoalArtifact;
-primary 自报 external-prior-exposed,账户/项目先验未知且不可控。
-不声称先验无污染或模型族多样性。primary 当时读取 pinned 仓库 URL 遇到 DisabledError,
-故其仓库全文忠实性未获独立检查;此历史访问限制不会被本次本地核对抹去。
-
-本层源文之外只加一份纸面核验/provenance 报告。全部新增 CAS 与条目仅由
-~~~sh
-make ingest BASE=feb497ec31f68e09ccc547a08810c398e66f3ee6 SOURCE=arithmetic-boundary-quantization
-~~~
-产生;旧 CAS/entry/report 保留,生成字节及生成器拥有的 EOF 空行不手修。
-源文是 paper reference input,CAS 是该输入的 canonical 摄入物,
-覆盖源跨度不表示其命题已由 Lean 吸收。条目的 receipts.chain_atoms 及嵌套子项
-按实际 schema 读取,不用删字段来迎合临时检查。
-本轮没有工具、Lean、source registry、策略或 GPU kernel 改动,
-没有候选生成、旧 fixed-xi 重放、子 worker、peer review 或 worker log_ref 内容读取。
-canonical 工具的实际退出码、生成身份及每个新编号单元的跨度覆盖由实施信封记录;
-工具若失败须显式交回,不能手工制造通过。
-
-源实现候选仍需 caller 在实施 terminal 后封存,再安排独立源文评审、普通仓库门和 PR。
-最终 S17 MERGED 依赖 S16 MERGED;本实施不判定前驱实时 review 状态。
-Git 暂存、提交、push、PR 和 merge 都归 caller,不由 I12 执行。
-本节交回候选不等于独立评审、正式交付、长期研究目标完成或允许立即用作已准入剪枝规则。
 
 ## 29. 共同高度的有限混合、矩判别与所选薄层邻域
 
-**29.1 本层范围与已有前置。** 本节为 C38 / S18 的 PAPER_ARGUMENT / repo-derived
-参考输入,主数学输入是已完成的 common-height primary
-fd06c983-162f-4f98-adab-2049d31a9f8d。这里处理固定相对形状和固定相对薄层,
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**29.1 定义（记号、范围及证明地位）：命题范围与前置引用。** PAPER_ARGUMENT / repo-derived。这里处理固定相对形状和固定相对薄层,
 让共同高度变化;只在最后给出步长 \((\log2,\log3,\log5)\) 的一个所选薄层邻域。
 第 25.7 节已有共同平移的绝对收敛级数和首项极限,
 26.23 已有六排列的精确最大式,26.24-26.25 已有正质量级数和取最大值的误差传递。
@@ -4157,7 +3843,7 @@ kernel-frozen 主张。GH 仍是用户未另作数学定义的原标签。
 \(G\) 只比较两个已有上界,不是 RH 等价判据,本节不构成 RH 进展。
 后来的整箱全薄层邻域、实际 5040 箱体和第三素数射线问题均不进入本层。
 
-**29.2 相对形状、真实端点角点和同一比较差。** 全部对数为自然对数,
+**29.2 定义（记号、范围及证明地位）：相对形状、真实端点角点和同一比较差。** 全部对数为自然对数,
 内积为通常欧氏内积。固定有限正步长 \(h_i>0\) 和有限相对形状
 \(\xi_i\ge0\)、\(\min_i\xi_i=0\),其中 \(1\le i\le3\)。置
 \[
@@ -4200,7 +3886,7 @@ L=T+\lambda,\quad H=T+\eta,\quad
 在素数域 \(h_i=\log p_i\)、\(c_i=(b_i+1)h_i\)、\(b_i\in\mathbb Z_{\ge0}\) 时,
 仍精确有 \(G_T=U_{\rm dual}-U_{\rm var}\),共同常数 \(\log E_S\) 抵消。
 
-**29.3 被容许的高度端点和反向的指数端点。** 固定有限
+**29.3 定理（命题及证明）：被容许的高度端点和反向的指数端点。** 固定有限
 \(T_{\rm base}\ge\log2\)。若同时要求连续放宽后的下指数非负,
 须另要求每行 \(T_{\rm base}+\xi_i\ge h_i\),
 因为该指数是 \((T+\xi_i)/h_i-1\)。原整数素数箱体还须逐行满足整性,
@@ -4237,7 +3923,7 @@ J=
 \]
 无穷大不是容许高度,\(z=0\) 也从不属于 \(J\)。
 
-**29.4 实际相对角点保证非负偏移和正支持。** 在 29.2 的假设下,
+**29.4 定理（命题及证明）：实际相对角点保证非负偏移和正支持。** 在 29.2 的假设下,
 \(\eta\ge\lambda\ge0\)。为核对这一相对坐标形式,取薄层内一个实际相对角点
 \(v_i=\xi_i+e_i h_i\ge0\),记 \(B=\sum_i v_i\)、\(\mu_r=u_1/3>0\)。
 因为 \(\mu_r\in I_r\),有 \(\delta_i\le|v_i-\mu_r|\);
@@ -4259,7 +3945,7 @@ a_L=e^{-\lambda},\quad a_H=e^{-\eta}.
 由于 \(z\le1/2\),每个 \(1-za\ge1/2>0\),所有对数和下文分母均有严格正域。
 \(\rho=0\) 时 \(\lambda=\eta\),此论证不在零范数处求导。
 
-**29.5 六个固定混合及随高度变化的最优排列。** 使用 26.23 的同一贪心权重,
+**29.5 定理（命题及证明）：六个固定混合及随高度变化的最优排列。** 使用 26.23 的同一贪心权重,
 本节把其中 \(u-A\) 换成固定 \(r\):对全部六个 \(\pi\in S_3\),
 \[
 y^\pi_{\pi(\ell)}=
@@ -4285,7 +3971,7 @@ G_\pi(z)=\sum_{i,e}w^\pi_{i,e}\log(1-za_{i,e})
 排序可以随 \(z\) 改变,取全部六个的最大值已经包括这些改变;
 零权重、整数最优点、并列和饱和没有被删掉。
 
-**29.6 带符号有限测度、系数界和归一化余项。** 记
+**29.6 定理（命题及证明）：带符号有限测度、系数界和归一化余项。** 记
 \[
 \nu_\pi=\delta_{a_H}+2\delta_{a_L}
 -\sum_{i,e}w^\pi_{i,e}\delta_{a_{i,e}},\qquad
@@ -4318,7 +4004,7 @@ G_\pi(z)=-\int\log(1-z\alpha)\,d\nu_\pi(\alpha)
 此界对本节全部许可形状、正步长、相对薄层和容许高度一致;
 特别 \(G(z)/z\to\max_\pi A_{\pi,1}\),而 \(G(z)\to0\)。
 
-**29.7 合并原子后的恒等判据和七阶上界。** 对每个固定排列,先合并
+**29.7 定理（命题及证明）：合并原子后的恒等判据和七阶上界。** 对每个固定排列,先合并
 \(\nu_\pi\) 中所有相同原子,再删除所得零质量,写成
 \[
 \nu_\pi=\sum_{j=1}^{q_\pi}s_j\delta_{\alpha_j},\qquad
@@ -4351,7 +4037,7 @@ G_\pi(z)=-\int\log(1-z\alpha)\,d\nu_\pi(\alpha)
 若 \(\lambda<\eta\),所有正端点权重须只落在这两个偏移,
 总权重分别为 2 和 1;若 \(\lambda=\eta\),全部正权重须集中于该一点,总量为 3。
 
-**29.8 单分支的严格最终符号截断。** 若 29.7 中一个非恒等分支的首个非零矩为
+**29.8 定理（命题及证明）：单分支的严格最终符号截断。** 若 29.7 中一个非恒等分支的首个非零矩为
 \(A_{\pi,k}\),则对 \(0<z<1\)
 \[
 \left|G_\pi(z)-\frac{A_{\pi,k}}kz^k\right|
@@ -4372,7 +4058,7 @@ T>\log\left(1+\frac{3k}{(k+1)|A_{\pi,k}|}\right).
 本估计不认证截断边界的符号,不能把严格号换成非严格号。
 这是给定非零矩后的精确解析界,没有算出或认证数值指数 cutoff。
 
-**29.9 六分支最大值的最终正、负、零分类。** 对 29.5 的全部六个分支,
+**29.9 定理（命题及证明）：六分支最大值的最终正、负、零分类。** 对 29.5 的全部六个分支,
 用 29.7 判恒等或取其首个非零矩。若存在非恒等分支,
 取这些分支的 \(\zeta_\pi\) 的最小值 \(\zeta>0\);
 若全部恒等,可取 \(\zeta=1\)。对容许域中充分小的 \(z<\zeta\),精确三分如下:
@@ -4390,7 +4076,7 @@ T>\log\left(1+\frac{3k}{(k+1)|A_{\pi,k}|}\right).
 上述最终零结论还需要没有正首矩分支。没有恒等分支时,
 解析性与有限阶判别排除了“每个分支都无首个非零矩却不恒等”的额外情况。
 
-**29.10 正分母、六次导数分子与至多 36 个驻点高度。** 对 29.7 合并后的非恒等分支,
+**29.10 定理（命题及证明）：正分母、六次导数分子与至多 36 个驻点高度。** 对 29.7 合并后的非恒等分支,
 在 \([0,z_*]\) 上求导得
 \[
 G_\pi'(z)=\frac{P_\pi(z)}{\prod_{j=1}^{q_\pi}(1-z\alpha_j)},\qquad
@@ -4414,7 +4100,7 @@ P_\pi(z)=\sum_{j=1}^{q_\pi}s_j\alpha_j
 若 \(P_\pi(0)=0\),该根只属于无穷高极限,不计为容许驻点。
 恒等分支另作常数处理,不把其恒零导数列成无穷多待检查根。
 
-**29.11 精确上确界、端点达到与无需搜索交叉。** 固定 29.2-29.3 的数据。
+**29.11 定理（命题及证明）：精确上确界、端点达到与无需搜索交叉。** 固定 29.2-29.3 的数据。
 对每个非恒等分支,只需评价
 \[
 G_\pi(0)=0,\quad G_\pi(z_*),\quad
@@ -4443,7 +4129,7 @@ G_\pi(z)\text{ 对所有 }0<z<z_*\text{ 且 }P_\pi(z)=0.
 本归约系数通常含对数、指数和实数参数;没有声称有理系数算法、已认证根隔离,
 或对形状连续统的一致判定程序。
 
-**29.12 仅所选 \((2,3,5)\) 薄层的明确邻域定理。** 固定
+**29.12 定理（命题及证明）：仅所选 \((2,3,5)\) 薄层的明确邻域定理。** 固定
 \[
 (h_1,h_2,h_3)=(a,b,c)=(\log2,\log3,\log5),
 \quad m=\frac{23}{12}-2e^{-3/10}-e^{-9/10},\quad
@@ -4466,7 +4152,7 @@ u_0=X+b,\quad u_1=X+c,\qquad
 29.13-29.17 给出完整证明,29.18 给出任意高的实际箱体存在性。
 量词中的薄层固定为上述一对,不表示该邻域箱体的每个薄层都负。
 
-**29.13 零形状的固定最优排列与精确距离。** 为证明 29.12,先取
+**29.13 定理（命题及证明）：零形状的固定最优排列与精确距离。** 为证明 29.12,先取
 \(\xi=(0,0,0)\)、\([u_0,u_1]=[b,c]\)。因 \(2<3<5<6\),
 有 \(a<b<c<a+b\)。对每个 \(T>0\),
 \[
@@ -4491,7 +4177,7 @@ y=(1,\theta,0),\qquad \theta=\frac{c-a}{b}\in(0,1).
 \]
 这些是固定薄层的精确距离比较,未枚举高度、形状或其它薄层。
 
-**29.14 零形状的有理证据与正邻域半径。** 29.13 所需的初等界为
+**29.14 定理（命题及证明）：零形状的有理证据与正邻域半径。** 29.13 所需的初等界为
 \[
 a<\tfrac7{10},\quad 1<b<\tfrac{11}{10},\quad c>\tfrac85.
 \]
@@ -4525,7 +4211,7 @@ e^{-\eta}<e^{-9/10}<\tfrac5{12},\qquad
 严格号给 \(m>0\),所以 \(\varepsilon_0>0\)。这里仅使用固定有理算术与正级数;
 没有半径小数值、数值见证或数值指数界的主张。
 
-**29.15 零形状的全部阶矩严格负。** 29.13 的最优混合有端点矩
+**29.15 定理（命题及证明）：零形状的全部阶矩严格负。** 29.13 的最优混合有端点矩
 \[
 W_n=2-\theta+2^{-n}+\theta3^{-n}
 >\frac98+2^{-n}+\frac78\,3^{-n},\qquad n\ge1.
@@ -4555,7 +4241,7 @@ G_0(z)=\sum_{n\ge1}\frac{A_n}{n}z^n<-mz\qquad(0<z<1).
 没有声称其它五分支的所有高阶矩都满足同一逐项负号;
 它们的函数被最优分支支配已足够。
 
-**29.16 所选薄层扰动的投影几何。** 令
+**29.16 定理（命题及证明）：所选薄层扰动的投影几何。** 令
 \(\varepsilon=\max_i\xi_i\le\varepsilon_0\)、\(\min_i\xi_i=0\),
 仍按 29.12 把相对薄层移动为 \([X+b,X+c]\)。有 \(X\le2\varepsilon\),
 容量始终为 \(u_1-X=c\),所以六组权重与零形状时逐项相同。
@@ -4584,7 +4270,7 @@ G_0(z)=\sum_{n\ge1}\frac{A_n}{n}z^n<-mz\qquad(0<z<1).
 这些界允许最近端点或最优排列改变,无需稳定的节点拓扑;
 每个扰动薄层仍含两个指定实际角点,故 29.4 的非负偏移始终适用。
 
-**29.17 量化扰动完成严格负号和首矩裕量。** 对 \(s\ge0\)、\(0<z<1\),
+**29.17 定理（命题及证明）：量化扰动完成严格负号和首矩裕量。** 对 \(s\ge0\)、\(0<z<1\),
 \[
 0<\frac{\partial}{\partial s}\log(1-ze^{-s})
 =\frac{ze^{-s}}{1-ze^{-s}}\le\frac z{1-z}.
@@ -4616,7 +4302,7 @@ G_\xi(z)<z\left(-m+\frac{32}{3}\varepsilon\right)
 零形状处已有严格号,所以闭扰动边界 \(\varepsilon=\varepsilon_0\) 仍严格。
 这完成 29.12,常数界定的是缩放差 \(e^TG_T\),不是无界高度上的未缩放负常数。
 
-**29.18 零形状附近任意高的实际素数幂箱体。** 29.12 的邻域确实被无穷多个
+**29.18 定理（命题及证明）：零形状附近任意高的实际素数幂箱体。** 29.12 的邻域确实被无穷多个
 \((2,3,5)\) 实际箱体达到。这里需要三个下坐标同时接近;
 27.13 的准确已有命题只把两个坐标接近、第三个抬高,故引用其无理性机制,
 再用经典二维齐次同时逼近,不把那条重述为本条。
@@ -4646,10 +4332,10 @@ G_\xi(z)<z\left(-m+\frac{32}{3}\varepsilon\right)
 \([A+\log3,A+\log5]\) 由两个实际角点封端,宽度严格正,
 因此在原域内满足 \(G_T<-(m/2)e^{-T}\)。
 \(T\) 无界保证有无穷多个不同箱体。这是抽屉存在性证明,
-没有执行该构造、产生指数候选、计算数值见证或有效指数 cutoff。
+未给出有效指数 cutoff。
 唯一分解只用于上述两个对数比的无理性,未被当作一般非齐次密度定理。
 
-**29.19 矩零集、形状连续统和实际格点转移的剩余义务。** 对任意有界形状和
+**29.19 定理的适用范围（保留原有开放限制）：矩零集、形状连续统和实际格点转移的剩余义务。** 对任意有界形状和
 任意相对薄层,\(\max_\pi A_{\pi,1}\) 的符号及其零集上更高矩的符号仍未统一解决。
 29.7-29.11 是每个固定实例的有限解析归约,不把形状连续统变成有限列表。
 当首个非零矩趋零或接近恒等测度时,29.8 的截断可以趋向 \(z=0\);
@@ -4673,81 +4359,34 @@ A_k(T)\longrightarrow A_k^*\ne0.
 
 每个固定形状的全部分支及 \(G\) 都趋零,故本节没有无界高度上的统一未缩放负裕量。
 第 26 节的 25 槽薄层归约若与本节合成,仍须逐项保留其原假设、guards、
-固定箱体量词和达到性;本节不运行它,不修改稳定行号或实现剪枝。
-一般三素数的全形状全薄层比较、有限零点分类及 RH 问题仍 OPEN,
-本结果不完成长期研究目标。
+固定箱体量词和达到性;一般三素数的全形状全薄层比较、有限零点分类及 RH 问题仍 OPEN。
 
-**29.20 经典出处、重叠核对与 primary 的历史限制。** 分数背包、
+**29.20 证明附引（附 29.5–29.18）：经典方法附引。** 分数背包、
 对数幂级数、有限测度矩界、Vandermonde 可逆性、有理函数微分、
 紧区间极值和抽屉齐次同时逼近均为经典方法。
 分数背包的已有来源记录直接引用 26.28;
-本次另实际取回 NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
+NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
 MathWorld [Vandermonde Determinant](https://mathworld.wolfram.com/VandermondeDeterminant.html)
 式 (1)-(2),及 Encyclopedia of Mathematics
 [Dirichlet theorem](https://encyclopediaofmath.org/wiki/Dirichlet_theorem)
 中 Diophantine approximations 小节的同时逼近与抽屉原理说明。
 这里使用的 \(Q=N^2\) 齐次特例已在 29.18 自足证明;
 没有把这些经典出处说成含有本比较差的专门邻域结论。
-三个限定站点的 Google 查询仅返回跳转页,DLMF 的完整 4.6 页面请求为 HTTP 403;
-成功取回的公式与两个条目、实际查询和内容身份均记录于本层唯一报告。
 收敛域和所需特殊化由本节的正支持及纸面证明核对。
 
-primary 自报请求 pinned source 时遇 DisabledError,未独立看到其字节、SHA256、25.7 或
-26 节全文,把先行源前提标为 ASSUMED-UNVERIFIED;它对原创性未作评定。
-这些是该次 primary 的历史访问/新颖性限制,不会因本次读取本树旧源而变成
-“primary 当时已经核查”。本次亲读 25.7、26.2-26.4、26.10-26.17、26.23-26.25、
-27.2-27.5 的相关条款、27.11-27.14、28.14-28.19 等先行文本,区分准确重叠与新增组合。
-本节专门推导的当前归属为 repo-derived,不以历史的“未评定”充当现行 provenance 状态,
-不声称穷尽文献检索或文献中无先例。
+证明附引：[common-height-finite-mixtures-0910.md](../../reports/common-height-finite-mixtures-0910.md)。
 
-**29.21 对 27.14 集合措辞的追加澄清。** 27.13 证明的是分离 guard 未排除的
+**29.21 定理（命题及证明）：对 27.14 集合措辞的追加澄清。** 27.13 证明的是分离 guard 未排除的
 剩余箱体集合无限,所以该 guard 的已排除区域不是余有限集。
 另一个事实是 27.11 给出一条固定正整数指数射线上的无限已排除尾部,
 所以已排除集合本身也无限。两个事实相容,但描述的是两个不同集合。
 27.14 的“有限补集”措辞应按上述两句分别理解。
-这里仅追加源文澄清,不修改 27.14,不新增定理,也不重开已结算的 S16 review。
-
-**29.22 本层产地、固定核验与 canonical 摄入。** 本实施为 caller 的
-consensus-rnd:sshx 1.0.0-beta.42 编排下 I13,flight qgh0910-i13-common-height,
-attempt 1,工作树 /Users/auricstudio/trureturing-qgh-common-height,
-分支 lane/math/quantized-gh-common-height-0910,immutable BASE
-66001d3b87d7063c5dd2a4ea97e51f8f1b876afa。
-实施者为 Codex CLI,继承完整所供 GoalArtifact 及 repo-prior-exposed 的仓库规范;
-没有子 worker 或同轮独立 review 票。primary 自报 external-prior-exposed,
-账户/项目上下文未知且不可控,其具体 serving-model/routing 未独立确认;
-本层不从 ACTUAL GPT PRO 的 caller 标签推断模型版本或模型族多样性。
-
-主 envelope 为 pro-common-height-envelope-0910.json,SHA256
-7bba088ffbdf3ae327aa0bbf34c17905e90a7510252a0e3f699ba28a27d6eda7,
-只消费 conclusion,所有 log_ref 保持不透明。
-caller-common-height-audit-0910.json 是已完成先行审计,
-记载 21 项成功固定精确核验、完整纸面审计及原 host exit 0,不是本轮 peer review。
-本层仅将同一 21 项算式适配成报告内自足固定证明证书并运行,
-原审计和原一次性程序字节不变;程序、实际结果和输入身份见
-[common-height-finite-mixtures-0910.md](../../reports/common-height-finite-mixtures-0910.md)。
-该证书不接受候选参数,不是可复用搜索器。CPU 仅用于固定核验、源和引用一致性;
-没有指数、高度、形状、素数或薄层候选生成,没有 GPU、daemon 或旧搜索重放。
-
-本节前的完整 224856 字节 / 4141 行源前缀保持不变,SHA256
-69702718f3602c508146f50cf70ebd78ef81adb09c2b826041d357e4a7dc11c8。
-所有历史 CAS、entry 和报告保留。源追加后唯一摄入门为
-~~~sh
-make ingest BASE=66001d3b87d7063c5dd2a4ea97e51f8f1b876afa SOURCE=arithmetic-boundary-quantization
-~~~
-全部新增 CAS/entry 仅由该命令生成,包括可能出现的历史末单元 terminal-LF 变体和
-自动 chain children;生成字节及其 EOF 空行不手修。摄入只提供源文内容地址,
-不表示数学被 Lean 吸收。本层源实现和独立源评审可在隔离树中推进,
-由 caller 在本次 implementation terminal 后封存、安排评审与普通仓库门;
-最终交付依赖 S17 MERGED。Git 暂存、提交、push、PR、merge 均由 caller 所有,
-本实施不执行,也不读取另一在飞 target 或同轮 reviewer 工件。
-交回本层候选不等于已独立批准、已正式交付或长期目标完成。
 
 ## 30. 三素数 (2,3,5) 的整箱全薄层邻域与无界共同高度
 
-**30.1 本层结果、状态与准确重叠。** 本节是 C41 / S19 的 PAPER_ARGUMENT / repo-derived
-参考输入,只追加已完成的 balanced-all-slabs primary
-8cfd404d-43c8-42f9-a5be-22e0811bc05a 及 caller 固定核验所支持的结果。
-对步长 \((\log2,\log3,\log5)\),零相对形状的每个两角点实薄层均满足
+**定义、定理与证明（保留原有证据地位及开放限制）。**
+
+**30.1 定义（记号、范围及证明地位）：命题范围与前置引用。** PAPER_ARGUMENT / repo-derived。对步长 \((\log2,\log3,\log5)\),零相对形状的每个两角点实薄层均满足
 \(e^TG<-1/60\);整个闭邻域 \(\max_i\xi_i\le1/480\) 均满足
 \(e^TG<-1/120\),共同高度为任意有限 \(T\ge\log2\)。
 第 26.4-26.15 节已有正支持、下预算饱和、临界节点和上尾论证,
@@ -4758,7 +4397,7 @@ make ingest BASE=66001d3b87d7063c5dd2a4ea97e51f8f1b876afa SOURCE=arithmetic-boun
 29.12-29.18 的所选薄层定理保留原量词,不被倒写为先前已有全薄层定理。
 本节不提出新颖性、优先权、RH 或 Lean/kernel-frozen 主张。
 
-**30.2 固定三步长、两个预算域与同一比较差。** 全部对数为自然对数,
+**30.2 定义（记号、范围及证明地位）：固定三步长、两个预算域与同一比较差。** 全部对数为自然对数,
 固定
 \[
 a=\log2,\quad b=\log3,\quad c=\log5,\quad
@@ -4802,7 +4441,7 @@ L=\mu-\rho,\quad H=\mu+2\rho,\quad
 26.10-26.11 的匹配价格证书保证它等于原价格下确界,包含并列、整数最优点和全上端点。
 在原素数域仍有 \(G=U_{\rm dual}-U_{\rm var}\),共同的 \(\log E_S\) 精确抵消。
 
-**30.3 宽域上的正支持。** 对 30.2 的任一薄层,取其中一个端点角点 \(v\),
+**30.3 定理（命题及证明）：宽域上的正支持。** 对 30.2 的任一薄层,取其中一个端点角点 \(v\),
 令 \(\bar v=\sum_i v_i/3\in I\)、\(w_i=v_i-T\ge0\)。因为 \(v_i\in C_i\),
 \[
 \sum_i\delta_i^2\le\sum_i(v_i-\bar v)^2
@@ -4820,7 +4459,7 @@ L=\mu-\rho,\quad H=\mu+2\rho,\quad
 定义 \(\lambda=L-T\)、\(\eta=H-T\),得到 \(0\le\lambda\le\eta\);
 本节 \(\lambda\) 是包络偏移,不是对偶价格。
 
-**30.4 去掉 cutoff 后的有限支配及其边界。** 固定 30.2 的箱体,
+**30.4 定理（命题及证明）：去掉 cutoff 后的有限支配及其边界。** 固定 30.2 的箱体,
 将八个预算严格排列为 \(\beta_0<\cdots<\beta_7\);
 互异性来自不同子集乘积 \(1,2,3,5,6,10,15,30\)。
 26.6-26.15 的有限支配证明在 \(\mathscr W_{T,\xi}\) 中仍成立,
@@ -4874,7 +4513,7 @@ c_i<b_*/3<(c_i+d_i)/2,\quad \beta_j<u_*<\beta_{j+1}.
 综上,每个宽域薄层都被七个相邻对或满足上述 guards 的反射对之一弱支配。
 全过程仅使用正支持和两角点包含,没有使用严格 5040 cutoff。
 
-**30.5 零形状的全部反射 guards 与稳定槽 10。** 取 \(\xi=0\),写
+**30.5 定理（命题及证明）：零形状的全部反射 guards 与稳定槽 10。** 取 \(\xi=0\),写
 \(\beta_s=3T+B_s\),其中
 \[
 (B_0,\ldots,B_7)=(0,a,b,c,a+b,a+c,b+c,Q),\qquad
@@ -4906,7 +4545,7 @@ j&(P_j,L_j,U_j)&p=2&p=3&p=5\\\hline
 下文纸面相邻节点标号 \(j=1,\ldots,7\) 对应 raw slots \(0,\ldots,6\),
 其 \(j\) 不等于 slot;反射仍只写 slot 10。最终保留八个节点。
 
-**30.6 每个正高度的严格贪心次序。** 零形状时,步长 \(h>0\) 的收益密度是
+**30.6 定理（命题及证明）：每个正高度的严格贪心次序。** 零形状时,步长 \(h>0\) 的收益密度是
 \[
 \sigma_T(h)=\frac{f(T+h)-f(T)}h=\frac1h\int_0^h f'(T+s)\,ds.
 \]
@@ -4923,7 +4562,7 @@ y_3=\operatorname{clip}((v-a-b)/c),\quad
 容量恰在前缀端点时两侧公式一致;\(v\ge Q\) 时全取 1。
 严格密度次序用于零形状,不被假设为任意扰动形状的共同最优次序。
 
-**30.7 八个节点的精确距离、权重与矩。** 对 30.5 的每个相对对 \((u,v)\),
+**30.7 定理（命题及证明）：八个节点的精确距离、权重与矩。** 对 30.5 的每个相对对 \((u,v)\),
 均有 \(u\ge0\)。令 \(q_i=3\delta_i\),则从区间 \([u/3,v/3]\) 到 \(\{0,h_i\}\) 的距离得
 \[
 q_i=\begin{cases}
@@ -4957,7 +4596,7 @@ E_n=2e^{-n\lambda}+e^{-n\eta}\quad(n\ge1).
 \end{array}
 \]
 表中的全部分支可由 30.10 的三个严格对数区间作有理线性比较认证,
-零向量单独判等;报告给出不调用浮点对数的可执行核对。
+零向量单独判等;
 令 \(r=a/b\)、\(\theta=(c-a)/b\)、\(s=b/c\)、\(t=a/c\),则按同一行序
 \[
 \begin{array}{c|l}
@@ -4974,7 +4613,7 @@ j&W_n\\\hline
 \]
 这些是每个正整数 \(n\) 的恒等式,不是在有限个矩上拟合所得。
 
-**30.8 两个累积质量界推出全部正整数矩的经典积分引理。**
+**30.8 定理（命题及证明）：两个累积质量界推出全部正整数矩的经典积分引理。**
 令 \(\nu\) 为 \([0,1]\) 上总质量为 3 的非负测度。
 对 \(0\le s\le3\),记 \(K_\nu(s)\) 为它最大的 \(s\) 单位质量之积分,
 允许在边界原子处分割质量。等价地,按数值递减积分其分位函数;
@@ -5007,7 +4646,7 @@ x^n=n(n-1)\int_0^1(x-t)_+t^{n-2}\,dt\quad(0\le x\le1),
 \(e^{-\lambda}<l_*\)、\(e^{-\eta}<h_*\),则严格单调的正整数幂立即给
 \(E_n<2l_*^n+h_*^n\le W_n\) 对所有 \(n\ge1\) 同时成立。
 
-**30.9 全八行有理大序证书与首矩裕量。** 对 30.7 的最优权重,取总质量为 3 的端点测度
+**30.9 定理（命题及证明）：全八行有理大序证书与首矩裕量。** 对 30.7 的最优权重,取总质量为 3 的端点测度
 \[
 \nu=\sum_{i=1}^3\bigl((1-y_i)\delta_1+y_i\delta_{1/p_i}\bigr),\qquad
 (p_1,p_2,p_3)=(2,3,5).
@@ -5056,11 +4695,10 @@ x^n=n(n-1)\int_0^1(x-t)_+t^{n-2}\,dt\quad(0\le x\le1),
 \]
 分别给 \(3/5<r<2/3\)、\(\theta<7/8\)、\(s>2/3\)、\(t>3/7\)。
 按各仿射式的单调方向代入即可逐行得到 \(w_*,k_*\)。
-primary 中的压缩乘法串在本节明确解释为 `2^8 * 3^7`,原始 primary 字节不改。
 第 3 行有理裕量恰为 \(1/60\)、第 4 行 \(k_*=2l_*\),但严格原子界仍保证
 \(W_1-E_1>w_*-2l_*-h_*\ge1/60\),并不会在这些表格等号处丢失严格性。
 
-**30.10 严格原子界的完整固定有理证书。** 首先认证
+**30.10 定理（命题及证明）：严格原子界的完整固定有理证书。** 首先认证
 \[
 693/1000<a<694/1000,\quad1098/1000<b<1099/1000,\quad
 1609/1000<c<1610/1000.
@@ -5072,7 +4710,7 @@ S_p=2\sum_{k=0}^{19}\frac{y^{2k+1}}{2k+1}<\log p
 \]
 左侧尾项严格正;右侧以 \(1/(2k+1)\le1/41\) 对 \(k\ge20\) 几何求和,
 且 \(k>20\) 时严格,所以右界也严格。
-报告中的有理运算把两端严格夹入上列千分数区间。
+有理运算把两端严格夹入上列千分数区间。
 第 1 节点有 \(R=0\)、\(\lambda=\eta=a/3\),而 \(125<128\) 给
 \(e^{-a/3}=2^{-1/3}<4/5\)。第 2 节点与 slot 10 有 \(R=a/\sqrt2\),
 由 \(2(480/1000)^2<(693/1000)^2\) 和
@@ -5125,10 +4763,8 @@ x&N&t_*&x&N&t_*\\\hline
 \]
 例如 \(\lambda>19/100\) 且 \(P_2(19/100)>6/5\),故 \(e^{-\lambda}<5/6\)。
 其它行取相应倒数同证;\(29/100\) 的多项式由第 4 节点与 slot 10 共用。
-所有算式均在单一报告内给出自足可执行的固定有理核验,不用浮点 exp/log/sqrt,
-没有生成高度、矩阶、素数或薄层候选。
 
-**30.11 八节点的无限矩符号与全薄层统一缩放界。**
+**30.11 定理（命题及证明）：八节点的无限矩符号与全薄层统一缩放界。**
 30.8-30.10 对每个保留节点给
 \[
 E_n<W_n\quad\text{对每个整数 }n\ge1,\qquad E_1-W_1<-1/60.
@@ -5154,7 +4790,7 @@ G_0(z)=\sum_{n=1}^{\infty}\frac{E_n-W_n}{n}z^n.
 无限矩结论来自积分引理,不是检查前若干矩再假定尾项符号;
 这里没有使用 26.25 的有限 24 项截断充当全矩证明。
 
-**30.12 减去 \(X\) 的预算对应及其严格域限制。** 对任意 30.2 的形状和宽域薄层,
+**30.12 定理（命题及证明）：减去 \(X\) 的预算对应及其严格域限制。** 对任意 30.2 的形状和宽域薄层,
 写 \(M_j^\xi=3T+X+r_j\),对应零形状预算为
 \(M_j^0=3T+r_j=M_j^\xi-X\)。两箱的同一角点指标 \(e\) 的预算分别是
 \[
@@ -5166,7 +4802,7 @@ G_0(z)=\sum_{n=1}^{\infty}\frac{E_n-W_n}{n}z^n.
 但 \(M_0^\xi>Q+\log5040\) 不必推出 \(M_0^0>Q+\log5040\)。
 因此后续传递使用 30.11 已在宽域证明的界;不能暗中把预算对应说成原严格域的双射。
 
-**30.13 投影位移对所有薄层的统一几何界。** 沿用 27.3 的
+**30.13 定理（命题及证明）：投影位移对所有薄层的统一几何界。** 沿用 27.3 的
 \(\Pi=\operatorname{Id}-\mathbf1\mathbf1^{\mathsf T}/3\)。
 30.12 中减去共同 \(T\) 后,形状箱的均值区间为
 \([X/3+r_0/3,X/3+r_1/3]\),端点对为 \(\{\xi_i,\xi_i+h_i\}\)。
@@ -5194,7 +4830,7 @@ G_0(z)=\sum_{n=1}^{\infty}\frac{E_n-W_n}{n}z^n.
 \(|\eta_\xi-\eta_0|\le4\varepsilon/3\)。当 \(\varepsilon=0\) 时全部相同。
 这些界完全不依赖最近端点分支是否改变或某个反射槽是否活跃。
 
-**30.14 共同六混合使对偶增量落入同一正区间。** 对 30.12 的共同容量 \(r_1\),
+**30.14 定理（命题及证明）：共同六混合使对偶增量落入同一正区间。** 对 30.12 的共同容量 \(r_1\),
 直接使用 26.23、29.5 的六排列权重
 \[
 y^\pi_{\pi(\ell)}=
@@ -5220,7 +4856,7 @@ y^\pi_{\pi(\ell)}=
 \]
 没有对最优排列求导,也没有假设贪心次序对形状或高度稳定。
 
-**30.15 包络增量的非负性及常数 2 的传递。** 在 30.13 的记号中 \(u-t\ge0\),且
+**30.15 定理（命题及证明）：包络增量的非负性及常数 2 的传递。** 在 30.13 的记号中 \(u-t\ge0\),且
 \[
 2|u-t|+|u+2t|\le2\varepsilon.
 \]
@@ -5250,7 +4886,7 @@ D_\xi-D_0\in[0,2\varepsilon K_z],\qquad
 不使用稳定临界节点拓扑、固定最优排列或最近端点 min 的可微性。
 29.17 的 \(16/3\) 是仍有效的较弱常数,不被修改为错误的历史结果。
 
-**30.16 闭半径 \(1/480\) 内每个薄层的严格负号。** 由 30.11、30.15 和
+**30.16 定理（命题及证明）：闭半径 \(1/480\) 内每个薄层的严格负号。** 由 30.11、30.15 和
 \(z=e^{-T}\le1/2\),对每个 \(\mathscr W_{T,\xi}\) 中的薄层有
 \[
 e^TG_\xi< -\frac1{60}+\frac{2\varepsilon}{1-z}
@@ -5266,7 +4902,7 @@ e^TG_\xi< -\frac1{60}+\frac{2\varepsilon}{1-z}
 原素数域取交后同样有效,其中没有 \(G=0\) 的等号薄层。
 原提议的更小半径 \(3(1/60)/64=1/1280\) 当然也可用,但本结论不以它代替已证闭半径。
 
-**30.17 齐次同时逼近给无界的实际素数幂箱体。** 复用 29.18 的抽屉构造,
+**30.17 定理（命题及证明）：齐次同时逼近给无界的实际素数幂箱体。** 复用 29.18 的抽屉构造,
 其结论本来就给零相对形状附近任意高的实际箱体;本层把同一序列用于新的全薄层半径。
 为写清量词,对每个整数 \(N\ge1\),把 \([0,1)^2\) 分成 \(N^2\) 个半开方格,
 将 \(N^2+1\) 个点 \((\{ja/b\},\{ja/c\})\)、\(0\le j\le N^2\) 放入其中。
@@ -5290,11 +4926,11 @@ T\to\infty,\qquad0\le\max_i\xi_i\le(b+c)/N\longrightarrow0.
 这里任意两坐标之差由相对于 \(qa\) 的两误差之和控制,不需倒数对数的一般线性独立。
 无界 \(T\) 给无穷多个不同箱体,它们最终进入闭半径 \(1/480\),
 于是每个箱体的每个被容许薄层均满足 30.16。
-这是齐次存在性证明,没有执行指数构造或给出有效数值指数 cutoff。
+未给出有效数值指数 cutoff。
 等高参考箱体是连续模型;正的不同素数幂不能精确相等,
 这里证明的是其对数下坐标之差趋零,不是精确相等的正素数幂。
 
-**30.18 严格 5040 域非空的充要阈值。** 对任一本节箱体,
+**30.18 定理（命题及证明）：严格 5040 域非空的充要阈值。** 对任一本节箱体,
 第二大角点为 \(A+b+c=A+Q-a\),最大角点为 \(A+Q\)。
 存在两角点薄层且 \(Q+\log5040<M_0\) 当且仅当
 \[
@@ -5309,7 +4945,7 @@ T\to\infty,\qquad0\le\max_i\xi_i\le(b+c)/N\longrightarrow0.
 对 30.17 的实际整数序列,\(A\ge3T\to\infty\),所以原域最终非空。
 从那时起,其全部原域实薄层都满足严格缩放界 \(e^TG<-1/120\)。
 
-**30.19 缩放、形状和研究目标的边界。** 取任一固定相对形状和固定相对两角点薄层,
+**30.19 定理的适用范围（保留原有开放限制）：缩放与形状的适用边界。** 取任一固定相对形状和固定相对两角点薄层,
 29.6 的六有限混合给 \(|A_{\pi,n}|\le3\),从而
 \(|G_\pi(z)|\le3\sum_{n\ge1}z^n/n\to0\),有限最大值也给 \(G(z)\to0\)。
 例如零形状的最后相邻薄层在充分大高度进入严格 cutoff 域,其 \(G\) 仍趋于零。
@@ -5326,66 +4962,22 @@ GH 仍是用户的原标签,本节不为它发明数学定义。
 两个上界之差为负既不是 RH 等价判据也不是 RH 证明或 RH 进展。
 其它素数三元组、一般素数、其余形状和 RH 仍 OPEN;
 后来的 \((2,3,7)\)、实际 fixed5040、translated5040 和第三素数射线结果不属于本层。
-本次源实现不完成持续研究目标。
 
-**30.20 当前文献归属、primary 访问限制及固定核验产地。**
+**30.20 证明附引（附 30.4–30.17）：经典方法附引。**
 本节专门的八节点、裕量、扰动组合及格点应用当前标为 repo-derived,
 没有以历史的未评定原始措辞作为现行 provenance 标签。
 经典分数背包、范数凸性和严格端点论证的已有核对直接引用 26.28;
-本次亲读本树第 26 节、27.3-27.5、29.1-29.22 和第 10 节度量定义作重叠检查。
-新增的聚合积分比较使用经典递增凸序:本次实际取得 Gushchin–Borzykh,
+新增的聚合积分比较使用经典递增凸序:Gushchin–Borzykh,
 *Integrated quantile functions: properties and applications*,
 Modern Stochastics: Theory and Applications 4(4) (2017),285–314,
 DOI [10.15559/17-VMSTA88](https://doi.org/10.15559/17-VMSTA88),
 [原文](https://arxiv.org/pdf/1801.00977) §2.3 Theorem 5(ii) 及其证明
 (PDF p.10 / 期刊 p.294),核对递增凸序、正部积分及积分分位函数的等价关系。
 把质量 3 的测度除以 3 后可与其概率约定对照;30.8 已直接证明本节所需版本。
-另实际取回 NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
+NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
 及 Encyclopedia of Mathematics 的
 [Dirichlet theorem](https://encyclopediaofmath.org/wiki/Dirichlet_theorem)
 中同时逼近与抽屉原理小节。30.17 只用已自足证明的 \(Q=N^2\) 齐次特例。
 这些出处只支持经典工具,不被说成含有本节专门素数比较定理。
-本次另试的 EoM Majorization 页面返回 HTTP 404;检索不构成文献穷尽或优先权判定。
 
-primary 原始 envelope 的 SHA256 为
-5ad15f1f87730e33edd6ef2e9045aa4255a4a85efb1e456312b438da91c5288c。
-只消费其中 conclusion,log_ref 保持不透明。它自报 pinned source 获取遇 DisabledError,
-未读源字节或独立核对其 SHA256,且没有成功取回外部文献;
-本次源/文献读取不改变那些历史事实。原压缩串 `2^83^7` 留在原始输入,
-本节只按其数学意图显式写为 `2^8 * 3^7`。
-primary 自报 34 项固定有理检查;caller 的原审计另记录总计 64 项成功检查、
-host exit 0 及纸面核验,包含那 34 项及额外的分支、eligibility、权重和半径核对。
-它们是已完成的先行数学输入,不是本轮同轮 peer review,也不能合称为 primary 跑了 64 项。
-本实施把固定算式改成报告内不依赖绝对临时路径的自足证书并实际执行,
-原 caller 审计和程序不改。全部输入身份、逐单元映射、当前调用结果及检索收据见
 [balanced-prime-235-all-slabs-0910.md](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md)。
-
-**30.21 单一源/报告/摄入层与交付义务。** 本实施是 caller 提供的
-consensus-rnd:sshx 1.0.0-beta.42 runner 合约下的 I14,flight
-qgh0910-i14-balanced-all-slabs,attempt 1,实施者为 Codex CLI。
-未查阅另一版本的 skill,没有 native subagent、委派、额外 oracle 或本轮独立评审票;
-只继承已供 GoalArtifact 与仓库先验,不声称无先验或模型族多样性。
-primary 的具体 serving-model/routing 未在本实施独立鉴定,实际 GPT PRO 身份是 caller 的来源记录。
-工作树为 /Users/auricstudio/trureturing-qgh-balanced-all-slabs,
-分支 lane/math/quantized-gh-balanced-all-slabs-0910,immutable BASE 为
-a8e208440d8a3f465a7b20c82ededbb27ee95026。
-准备文件旧的 predecessor-in-flight 行只属准备时状态,当前以这个实际封存 S18 base 为准;
-没有读取 S18 活跃评审 target、result、任何 worker 日志、log_ref 内容或 caller 转录。
-
-第 1-29 节完整前缀保持 254298 字节、4743 个 LF,SHA256
-c5e1fa97fff5921fe5ba10d84b0268c884caab112fb32beed0c92027ee1aa3f5,
-每个历史 CAS、entry 和报告均保留。只允许本节、一个报告及下列 canonical 摄入输出:
-~~~sh
-make ingest BASE=a8e208440d8a3f465a7b20c82ededbb27ee95026 SOURCE=arithmetic-boundary-quantization
-~~~
-每个新 CAS/YAML、raw/normalized 指纹、源的完整连续跨度和有序 chain children
-在实施结论中逐项给出;指纹/cas_ref 带 `sha256:`,子 atom_id 为裸 hash。
-生成器拥有的 EOF、历史末单元 terminal-LF 变体和自动 child 均原样保留,
-不手修 producer 字节。摄入是参考输入的内容寻址,不是 Lean 吸收或冻结。
-CPU 仅运行固定证明证书和必要编排,没有指数、高度、形状、素数或薄层候选生成,
-没有 GPU、daemon、旧搜索重放、工具/Lean/frozen 改动或广泛 build/preflight。
-源、报告与摄入组成同一可审查的内容层;不能在未保真源语义时单独交付派生地址,
-也没有理由把后来定理或新搜索绑入这一层。
-caller 在本次 implementation terminal 后负责封存、独立评审和普通仓库门,
-最终 S19 交付仍等待 S18 MERGED;本实施不执行暂存、commit、push、PR、merge 或生命周期动作。
-候选交回不是独立批准、正式交付或长期研究目标完成。
