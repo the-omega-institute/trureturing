@@ -170,6 +170,9 @@ domains:
   SpectralTopology:
     stratum: S3
     definition: Finite spectral localizers, point gaps, and chiral inertia counts for doubled Hermitian block operators.
+  StatisticalMechanics:
+    stratum: S3
+    definition: Hard-core lattice gas on grids and trees — mask data, branching potentials and the clamped certificates that bound their message maps.
   TotalVariation:
     stratum: S3
     definition: Finite total-variation distance between mass functions and its comparison inequalities against the classical divergence, including Pinsker-type bounds.
