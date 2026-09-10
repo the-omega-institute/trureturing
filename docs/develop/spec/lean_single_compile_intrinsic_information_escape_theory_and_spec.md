@@ -5822,7 +5822,7 @@ lake build D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 15. 在 designated root 中组装全部 maximal catalogs 的 `SystemCatalogIrredundant`；
 16. 新共享结果写 schema v3，且不改写 frozen v4.1 schema-v2 singleton baseline。
 17. 为每个 maximal catalog 构造 generated-kernel closure，并输出 bounded hierarchy projection 与 ASCII projection；
-18. 〔pending J3; lane census-generator-0908; #5214; 2026-09-08〕为完整 frozen theorem report 生成 exactly-one `CensusAssessment` census，分别报告记账完备与认证完备；其 artifact 只作报告，永不作为 seal input 或 required gate；
+18. 〔2026-09-10 已由 [#6660](https://github.com/the-omega-institute/trureturing/pull/6660)、[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 落地。〕为完整 frozen theorem report 生成 exactly-one `CensusAssessment` census，分别报告记账完备与认证完备；其 artifact 只作报告，永不作为 seal input 或 required gate；
 19. finite occurrences 继续精确计数，structural occurrences 以 strict inclusion pair witness 认证，truncations 与 unreachable reasons 诚实分栏；
 20. 保持 hierarchy projection 对 admission 的单向性，并把 5⁗ dual-novelty gate 标为 OPEN，直到 owner $\tau$ ruling。
 
