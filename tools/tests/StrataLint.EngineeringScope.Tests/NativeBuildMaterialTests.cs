@@ -16,7 +16,7 @@ public sealed class NativeBuildMaterialTests(ITestOutputHelper output)
         var root = fixture.Root;
         var physicalRoot = SharedBuildContractTests.Git(root, "rev-parse", "--show-toplevel");
         var paths = CommonBuildOutputs.Collect(physicalRoot);
-        output.WriteLine("MATERIAL_BEFORE_SAME_FIXTURE " + JsonSerializer.Serialize(fixture.FullInventory()));
+        output.WriteLine("MATERIAL_BEFORE_SAME_FIXTURE " + JsonSerializer.Serialize(fixture.FullInventory(physicalRoot)));
         output.WriteLine("MATERIAL_MEASUREMENT " + JsonSerializer.Serialize(new {
             files = paths.Length, bytes = paths.Sum(path => new FileInfo(Path.Combine(root, path)).Length),
             package_files = paths.Count(path => path.StartsWith(CommonBuildOutputs.PackagesPath + "/", StringComparison.Ordinal)),
@@ -53,7 +53,7 @@ public sealed class NativeBuildMaterialTests(ITestOutputHelper output)
             Assert.Contains("bonjour", app.Text, StringComparison.Ordinal);
             var appDirectory = Path.GetDirectoryName(Path.Combine(consumer.Root, CommonExecutionEvidence.CliPath))!;
             var localCopies = new[] { "Outer.dll", "Inner.dll", "fr/Inner.resources.dll" }
-                .ToDictionary(name => Path.Combine(appDirectory, name), name => File.ReadAllBytes(Path.Combine(appDirectory, name)));
+                .ToDictionary(name => Path.Combine(appDirectory, name), name => TemporaryFileSystem.File.ReadAllBytes(Path.Combine(appDirectory, name)));
             try
             {
                 foreach (var path in localCopies.Keys) TemporaryFileSystem.File.Delete(path);
@@ -73,7 +73,7 @@ public sealed class NativeBuildMaterialTests(ITestOutputHelper output)
             Assert.True(TestResultEvidence.Load(results).Executed > 0);
             // Retain the nested raw TRX with the outer result, before scratch cleanup.
             foreach (var trx in Directory.GetFiles(results, "*.trx", SearchOption.AllDirectories))
-                output.WriteLine("NESTED_TRX " + Convert.ToBase64String(File.ReadAllBytes(trx)));
+                output.WriteLine("NESTED_TRX " + Convert.ToBase64String(TemporaryFileSystem.File.ReadAllBytes(trx)));
             Assert.Empty(Directory.GetFiles(consumer.Root, "project.assets.json", SearchOption.AllDirectories));
             var restore = SharedBuildContractTests.Process(consumer.Root, "dotnet",
                 ["restore", NativeMaterialFixture.ProofProject, "--locked-mode", "--packages", packages], environment);
@@ -263,7 +263,7 @@ internal sealed class NativeMaterialFixture : IDisposable
             {
                 var target = Path.Combine(Root, "build/packages", path, Path.GetRelativePath(source, file));
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-                TemporaryFileSystem.File.WriteAllBytes(target, File.ReadAllBytes(file));
+                File.Copy(file, target, overwrite: true);
             }
         }
         Run("dotnet", "restore", "tools/StrataLint.sln", "--packages", Path.Combine(Root, "build/packages"), "--use-lock-file");
@@ -285,7 +285,7 @@ internal sealed class NativeMaterialFixture : IDisposable
 
     // Measurement of the former producer's complete FileWrites/package inventory
     // against these same physical files, without a second build or package download.
-    internal object FullInventory()
+    internal object FullInventory(string physicalRoot)
     {
         var files = new Dictionary<string, long>(StringComparer.Ordinal);
         foreach (var manifest in Directory.GetFiles(Path.Combine(Root, CommonBuildOutputs.RootPath), "*.outputs", SearchOption.AllDirectories))
@@ -294,7 +294,8 @@ internal sealed class NativeMaterialFixture : IDisposable
             foreach (var path in lines.Skip(5).Where(Path.IsPathRooted)
                          .Where(path => path.StartsWith(lines[2], StringComparison.Ordinal) || path == lines[4][10..]))
                 files[path] = new FileInfo(path).Length;
-            using var assets = JsonDocument.Parse(File.ReadAllText(lines[3]));
+            using var assets = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(
+                Path.Combine(Root, Path.GetRelativePath(physicalRoot, lines[3]))));
             var folders = assets.RootElement.GetProperty("packageFolders").EnumerateObject().Select(item => item.Name).ToArray();
             foreach (var library in assets.RootElement.GetProperty("libraries").EnumerateObject())
             {
