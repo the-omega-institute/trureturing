@@ -23,8 +23,8 @@ def observedRow (name : Name) (id : String) :
 
 def mixed : DispositionInventory := ⟨"fixture-head", #[
   fourRows.entries[0]!, fourRows.entries[1]!,
-  observedRow `Fixture.first "first-id", observedRow `Fixture.second "second-id",
-  observedRow `Fixture.third "third-id"]⟩
+  observedRow `Fixture.first "sha256:0000000000000000000000000000000000000000000000000000000000000016", observedRow `Fixture.second "sha256:0000000000000000000000000000000000000000000000000000000000000026",
+  observedRow `Fixture.third "sha256:000000000000000000000000000000000000000000000000000000000000002b"]⟩
 
 def mixedReport : FrozenReport := ⟨mixed.headSha, "fixture-digest", mixed.keys.toArray⟩
 
@@ -58,8 +58,8 @@ run_cmd unless parseInventory (toJson mixed) == .ok { mixed with entries := mixe
   throwError "assessmentRoundtrip"
 
 def incompleteQuery : DispositionInventory := ⟨"fixture-head", #[
-  ⟨⟨`Fixture.first, "first-id"⟩, .observed {
-    observation ⟨`Fixture.first, "first-id"⟩ with queryCompleted := false }⟩]⟩
+  ⟨⟨`Fixture.first, "sha256:0000000000000000000000000000000000000000000000000000000000000016"⟩, .observed {
+    observation ⟨`Fixture.first, "sha256:0000000000000000000000000000000000000000000000000000000000000016"⟩ with queryCompleted := false }⟩]⟩
 
 def incompleteQueryRejected : Bool :=
   rejected (artifact ⟨"fixture-head", "digest", incompleteQuery.keys.toArray⟩ incompleteQuery)
@@ -67,8 +67,8 @@ def incompleteQueryRejected : Bool :=
 run_cmd unless incompleteQueryRejected do throwError "incompleteQueryRejected"
 
 def incompleteScope : DispositionInventory := ⟨"fixture-head", #[
-  ⟨⟨`Fixture.first, "first-id"⟩, .observed {
-    observation ⟨`Fixture.first, "first-id"⟩ with
+  ⟨⟨`Fixture.first, "sha256:0000000000000000000000000000000000000000000000000000000000000016"⟩, .observed {
+    observation ⟨`Fixture.first, "sha256:0000000000000000000000000000000000000000000000000000000000000016"⟩ with
       importScope := { modules := #[`Fixture], completed := false } }⟩]⟩
 
 def incompleteScopeRejected : Bool :=

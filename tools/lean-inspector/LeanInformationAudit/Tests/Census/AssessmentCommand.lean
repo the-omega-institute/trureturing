@@ -7,7 +7,7 @@ namespace LeanInformationAudit.Tests.Census.AssessmentCommand
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 
-def structuralKey : StatementKey := ⟨``Evidence.structuralTheorem, "structural-id"⟩
+def structuralKey : StatementKey := ⟨``Evidence.structuralTheorem, "sha256:0000000000000000000000000000000000000000000000000000000000000029"⟩
 
 def observation (env : Environment) (key : StatementKey) : AnalysisObservation key where
   owningModule := `LeanInformationAudit.Tests.Census.Evidence
@@ -37,8 +37,8 @@ def expectCase (caseName : Name) (root : Name) (inventory : DispositionInventory
 
 run_cmd do
   let env ← getEnv
-  let first : StatementKey := ⟨``Evidence.finiteNondegenerate, "first-observed"⟩
-  let second : StatementKey := ⟨``Evidence.transfer, "second-observed"⟩
+  let first : StatementKey := ⟨``Evidence.finiteNondegenerate, "sha256:0000000000000000000000000000000000000000000000000000000000000017"⟩
+  let second : StatementKey := ⟨``Evidence.transfer, "sha256:0000000000000000000000000000000000000000000000000000000000000027"⟩
   let inventory : DispositionInventory := ⟨"fixture-head", #[
     Evidence.inventory.entries[2]!, Evidence.inventory.entries[3]!,
     ⟨structuralKey, .observed { observation env structuralKey with candidates := #[
@@ -123,10 +123,10 @@ run_cmd do
     ⟨structuralKey, .observed (observation env structuralKey)⟩]⟩
   expectCase `certifiedObservedDuplicate env.header.mainModule inventory
     s!"IE-C035 DuplicateAnalysisDisposition theorem={structuralKey.theoremName} \
-statement_id=structural-id records=[0,1]" fun report =>
+statement_id=sha256:0000000000000000000000000000000000000000000000000000000000000029 records=[0,1]" fun report =>
       let declarations := Json.arr #[Json.mkObj [("kind", toJson "theorem"),
         ("declaration_name_key", toJson (encodeNameKey structuralKey.theoremName)),
-        ("statement_id", toJson "structural-id")]]
+        ("statement_id", toJson "sha256:0000000000000000000000000000000000000000000000000000000000000029")]]
       report.setObjVal! "nodes" (Json.arr #[Json.mkObj [
         ("freeze_status", toJson "frozen"), ("declarations", declarations)]])
 

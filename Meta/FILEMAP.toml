@@ -387,6 +387,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "build/census/**"
+kind = "generated"
+admission_plane = "content"
+produced_by = "lean-inspector"
+consumed_by = ["reader"]
+verified_by = ["lean-inspector"]
+artifact_id = "none"
+runtime_disposition = "run-local"
+
+[[files]]
 pattern = "docs/CONTRIBUTING.md"
 kind = "program"
 admission_plane = "judge"
