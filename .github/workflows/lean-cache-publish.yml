@@ -1,8 +1,9 @@
 name: CI stability evaluation
 
+# Temporary pull_request entry for evaluating the candidate CI before rollout.
 on:
   pull_request:
-    branches: [integration-ci-current-stability-0909-tests]
+    branches: ['integration-**']
     types: [opened, synchronize, reopened]
 
 permissions:

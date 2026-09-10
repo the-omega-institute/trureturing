@@ -44,10 +44,8 @@ def actions_keys(root: pathlib.Path) -> dict:
     result = {"mathlib_revision": revision, "os": system, "arch": machine,
               "partition": partition_path(root),
               "save_allowed": os.environ.get("GITHUB_EVENT_NAME") == "push"
-                  and os.environ.get("GITHUB_REF") in (
-                      "refs/heads/dev",
-                      # Integration-only rollout binding; exclude from dev delivery.
-                      "refs/heads/integration-ci-current-stability-0909-tests")
+                  and (os.environ.get("GITHUB_REF") == "refs/heads/dev"
+                       or os.environ.get("GITHUB_REF", "").startswith("refs/heads/integration-"))
                   and os.environ.get("STRATALINT_CACHE_WRITES", "true") == "true"
                   and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true"}
     paths = {"dependency": ".lake/packages", "project": ".lake/build",

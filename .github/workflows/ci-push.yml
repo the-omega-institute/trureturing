@@ -2,7 +2,7 @@ name: CI current
 
 on:
   push:
-    branches: [integration-ci-current-stability-0909-tests]
+    branches: [dev, 'integration-**']
   workflow_call:
     inputs:
       candidate_sha:
@@ -33,7 +33,7 @@ permissions:
 env:
   CANDIDATE_SHA: ${{ inputs.candidate_sha || github.sha }}
   CI_WORKFLOW_INPUTS: ${{ toJSON(inputs) }}
-  STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-current-stability-0909-tests' && inputs.candidate_sha == '' }}
+  STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' }}
 
 jobs:
   build:
@@ -231,29 +231,29 @@ jobs:
           compression-level: 0
           retention-days: 14
       - id: snapshot
-        if: github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-current-stability-0909-tests' && inputs.candidate_sha == ''
+        if: env.STRATALINT_CACHE_WRITES == 'true'
         env:
           STRATALINT_CHECK_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE"
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-current-stability-0909-tests' && inputs.candidate_sha == '' && steps.snapshot.outputs.dependency_ready == 'true'
+      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.dependency_ready == 'true'
         continue-on-error: true
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.dependency_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-current-stability-0909-tests' && inputs.candidate_sha == '' && steps.snapshot.outputs.project_ready == 'true'
+      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.project_ready == 'true'
         continue-on-error: true
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.project_path }}
           key: ${{ steps.keys.outputs.project_key }}
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-current-stability-0909-tests' && inputs.candidate_sha == '' && steps.snapshot.outputs.report_ready == 'true'
+      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.report_ready == 'true'
         continue-on-error: true
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.report_path }}
           key: ${{ steps.keys.outputs.report_key }}
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-current-stability-0909-tests' && inputs.candidate_sha == '' && steps.elan.outputs.cache-hit != 'true' && steps.keys.outputs.elan_key != ''
+      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.elan.outputs.cache-hit != 'true' && steps.keys.outputs.elan_key != ''
         continue-on-error: true
         uses: actions/cache/save@v4
         with:
