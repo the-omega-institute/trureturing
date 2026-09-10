@@ -5665,6 +5665,12 @@ bundle 与 faithful realization；acceptance 由 strict inclusion 和 pair witne
 reasons 只计入 certified 分项；observed 另按 query-completion 计数，字段为
 `counts.observed_query_completed` 与 `counts.observed_query_incomplete`，且不履行 AC-023。
 认证 totality 的目标不变，完整记账本身不是认证 totality，report 不进入 seal 或 required gate。
+2026-09-10，[#6660](https://github.com/the-omega-institute/trureturing/pull/6660)、
+[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 经
+[#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 落地后的全库输出为
+accounted 22,524、certified 10、observed/query-completed 22,514、query-incomplete 0。
+`status=complete` 只报记账完成；`certified_complete=false`，认证 totality 与 AC-023 仍未满足。
+第 23.7 节的 report-only 结构读数不改变上述分栏或完成语义。
 assessment 与覆盖谓词见 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`，
 计数与输出见 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean`、
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`。
