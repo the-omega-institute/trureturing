@@ -34,13 +34,12 @@ private definitions/abbreviations); the public surface is `a` and
 sum. Its private helper proofs inform technique but provide no public GID.
 `D5/S3/ArithSums` contains 3 files at this base.
 
-## Pending evidence and nonclaims
+## Nonclaims
 
-Mathlib and third-party searches, paper full texts, independent numeric rerun,
-and Lean proof attempts are pending. No target is proved or refuted yet.
-No novelty claim, search-complete claim, freeze, coverage, CI success, or
-independent consensus is asserted. Unopened external sources remain
-`ASSUMED-UNVERIFIED` until a receipt and reading account replace this status.
+No A proof, target counterexample, novelty, exhaustive search, freeze, coverage,
+CI success, or independent consensus is asserted. The later upstream section
+records a kernel-checked B specialization, with unresolved admission conditions.
+Unopened external sources remain `ASSUMED-UNVERIFIED`.
 
 ## Numerical probe
 
@@ -49,7 +48,7 @@ readings: in `3 ≤ n ≤ 139`, 46 odd nonmultiples of 3 pass modulo `n^4`;
 all 23 odd multiples of 3 fail. All 28 primes in `5 ≤ p ≤ 113` pass modulo
 `p^4`; 27 fail modulo `p^5` (the sole fifth-power pass is `p=7`). The six
 specified composites all pass. The first 17 calculated terms start
-`0,4,1188,126144,10040000,682492500`; fetched OEIS identity comparison is pending.
+`0,4,1188,126144,10040000,682492500`; the OEIS comparison is recorded below.
 The exact probe output is `numeric-probe.json` in the runner attempt directory.
 These finite checks are probes only, not mathematical progress on A or B.
 
@@ -137,13 +136,17 @@ Additional prerequisite search found and fully read the public surface of
 bound, and will be reused by casting its denominator-cleared rational identity
 through the integers. Mathlib's `sum_range_pow` supplies the cube sum. The
 private `six_mul_sum_sq` in A373561 is unavailable as a public dependency.
+The planned square/cube summation was not implemented after the exact upstream
+B hit; the unused Dedekind and Bernoulli imports were removed.
 First Lean attempt exposed an unnecessary rewrite after `dsimp` had already
 normalized `p+(k+1)-1` to `p+k`; removing that rewrite preserves the statement.
 
 `b_step`, `transport`, `binomial_sq_scaled`, and `weighted_term` now elaborate
 with EXIT=0 and no `sorry` or added axiom. The only diagnostic is a tactic-style
-warning. The actual escape witness is `binomial_sq_scaled`, proved by induction
-and unit cancellation, and consumed by `weighted_term`.
+warning. The proposed intermediate `binomial_sq_scaled` is proved by induction
+and unit cancellation, and consumed by `weighted_term`. Since no public
+target theorem is being admitted, this is not a certified escape witness for
+a delivered theorem.
 
 A broader repository search found a material literature lead in
 `Library/Words/oeis2026triage0910.md`: its A357512 assessment records Kutal's
@@ -221,3 +224,40 @@ a separate whole-sum telescoping route is being examined.
 Attempt-local source receipts (not admitted/frozen modules):
 - `/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a357512-impl-0912/attempt-1/UpstreamSpecialization.lean`: 53064 bytes, SHA-256 `1bc1c8a986f29b5b87df22472753a1c103cb0a2e86c7d157e7c3033c10dcd204`.
 - `/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a357512-impl-0912/attempt-1/CompositeObstruction.lean`: 751 bytes, SHA-256 `6a4734a267566c47bfde9120212728287772e81b08881dd90d73e9b983ef9077`.
+
+## Exact composite reduction and remaining goal
+
+A second A-route attempt proved the following identity for every `0<n`, using
+`Nat.choose_succ_right_eq` twice and then summing; primality is unnecessary:
+
+```
+a(n-1) = n^2 * S(n)
+S(n) = ∑ k=0..n-2, (k+1)*(n-1-k)^2 * choose(n-1,k)^2 * choose(n+k,k)^2.
+```
+
+The private lemmas `shifted_binomial`, `weighted_exact`, and
+`sum_factorization` preserve this exact reduction in the work branch.
+The attempted remaining proof (`CompositeReduction.lean`, attempt directory)
+reaches this actual Lean goal and fails to close it:
+
+```lean
+n : ℕ
+hn : Odd n
+h3 : ¬3 ∣ n
+⊢ n ^ 2 ∣ ∑ k ∈ range (n - 1),
+    (k + 1) * (n - 1 - k) ^ 2 * (n - 1).choose k ^ 2 * (n + k).choose k ^ 2
+```
+
+For odd `n`, positivity makes this equivalent to the outstanding A target by
+cancelling the established factor `n^2`. This is the sharp remaining subclaim,
+not a request for an existing named theorem. Polynomial telescoping of the
+original summand leaves lower moments whose coefficients do not supply the
+needed powers of `n`; it did not close this subclaim. A reflection shortcut
+`k ↔ n-k` also fails the weighted termwise test at admissible composites.
+Neither failure is a counterexample to A.
+
+The branch retains only preparatory private theorems and the sequence
+definition; its digest now says that explicitly. The earlier prime helpers
+were developed before the exact upstream hit and are not proposed as an
+independent B delivery. No theorem of A or B has been added to D5, and these
+unfrozen preparatory proofs are not a substitute success target.

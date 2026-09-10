@@ -4,12 +4,10 @@
    mirror-E: none(waiver:universal-divisibility-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Basic]
    utility: none
-   digest: The fifth-weighted Apéry binomial sum at p-1 is divisible by p^4 for every prime p at least 5. -/
+   digest: Preparatory summand congruences and an exact square-factor reduction for the fifth-weighted Apéry sum. -/
 
-import D5.S1.Phase.Interference.DedekindReciprocityFiniteSums
 import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Data.ZMod.Basic
-import Mathlib.NumberTheory.Bernoulli
 import Mathlib.Tactic
 
 open Finset
@@ -68,7 +66,8 @@ private lemma binomial_sq_scaled (p : ℕ) (hp : p.Prime) (k : ℕ) (hk : k < p)
         (((p : R p) - k - 1) * (p + k)) * (b p k : R p) := by
       have h := congrArg (fun z : ℕ => (z : R p)) (b_step p k hp.pos)
       push_cast [Nat.cast_sub (by omega : k ≤ p - 1), Nat.cast_sub hp.one_le] at h
-      convert h using 1 <;> ring
+      convert h using 1
+      ring
     have hs := congrArg (fun z : R p => z ^ 2) hrec
     push_cast
     apply ((index_unit p k hp (by omega) (by omega)).pow 4).mul_left_cancel
@@ -85,5 +84,39 @@ private lemma weighted_term (p : ℕ) (hp : p.Prime) (k : ℕ) (hk : k < p) :
   have h := binomial_sq_scaled p hp k hk
   simp only [b, Nat.cast_mul] at h
   linear_combination (k : R p) * h
+
+-- Preparatory results only: neither target A nor target B is asserted here.
+private lemma shifted_binomial (n k : ℕ) :
+    (k+1)^2 * ((n-1).choose (k+1) * (n+k).choose (k+1)) =
+      n * (n-1-k) * ((n-1).choose k * (n+k).choose k) := by
+  have h₁ := Nat.choose_succ_right_eq (n-1) k
+  have h₂ := Nat.choose_succ_right_eq (n+k) k
+  rw [show n+k-k = n by omega] at h₂
+  calc
+    _ = ((n-1).choose (k+1)*(k+1)) * ((n+k).choose (k+1)*(k+1)) := by ring
+    _ = _ := by rw [h₁,h₂]; ring
+
+private lemma weighted_exact (n k : ℕ) :
+    (k+1)^5 * ((n-1).choose (k+1))^2 * ((n+k).choose (k+1))^2 =
+      n^2 * ((k+1)*(n-1-k)^2 * ((n-1).choose k)^2 * ((n+k).choose k)^2) := by
+  have h := congrArg (fun z : ℕ => z^2) (shifted_binomial n k)
+  calc
+    _ = (k+1) * ((k+1)^2 * ((n-1).choose (k+1) * (n+k).choose (k+1)))^2 := by ring
+    _ = _ := by rw [h]; ring
+
+private def reducedSum (n : ℕ) : ℕ :=
+  ∑ k ∈ range (n-1), (k+1)*(n-1-k)^2 * ((n-1).choose k)^2 * ((n+k).choose k)^2
+
+private lemma sum_factorization (n : ℕ) (hn : 0 < n) :
+    a (n-1) = n^2 * reducedSum n := by
+  unfold a reducedSum
+  rw [sum_range_succ']
+  simp only [zero_pow (by decide : 5 ≠ 0), zero_mul, add_zero]
+  rw [mul_sum]
+  apply sum_congr rfl
+  intro k hk
+  rw [show n-1+(k+1) = n+k by omega]
+  exact weighted_exact n k
+
 
 end D5.S3.ArithSums.A357512PrimeDivisibility
