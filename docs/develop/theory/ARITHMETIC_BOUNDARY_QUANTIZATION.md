@@ -6866,7 +6866,7 @@ For \(v>u\ge0\),
 so every additional prime strictly increases the finite bound, though every finite value is
 less than \(1/a_0\).
 
-**37.14 算例及证明（2357 字典、11 与 13、1432 门槛）。** For
+**37.14 命题及证明（2357 字典、11 与 13、1432 门槛）。** For
 \(S=\{2,3,5,7\}\), the integers 11 and 13 are primes outside \(S\). Neither is
 divisible by 2 or 3; any factorization with both factors at least 4 would have product at
 least 16. Hence both are omitted from \(A_S\). Their weights are
@@ -7324,7 +7324,7 @@ and \(\beta_{E_B}=0\). Use the empty coefficient columns and no inverse formula.
 There are no nonzero quotient competitors; the optimized lower-bound convention is zero.
 The later tail enclosure remains nontrivial despite this zero lower endpoint.
 
-**37.33 算例及证明（\(S=\{3\},B=4\) 的列转置与矩阵）。** Here \(Q=3\) and
+**37.33 命题及证明（\(S=\{3\},B=4\) 的列转置与矩阵）。** Here \(Q=3\) and
 \(E_B=\{2,4\}\), because 2 and 4 are coprime to 3 and 3 is not. The Möbius values
 are \(\mu(1)=1,\mu(2)=-1,\mu(4)=0\); hence
 \(r_2=v_2=u_2-u_1\), \(r_4=v_4-v_2=u_4-u_2\). In increasing order,
@@ -7349,7 +7349,7 @@ In contrast the product
 is not symmetric and cannot be this Gram matrix. This exact finite example demonstrates both
 the necessary transpose and the non-diagonality of the \(r_n\) basis.
 
-**37.34 算例及证明（逆矩阵、两个正规方程与非零 \(r_4\) 系数）。** The two integer
+**37.34 命题及证明（逆矩阵、两个正规方程与非零 \(r_4\) 系数）。** The two integer
 matrix determinants in 37.33 coincide:
 \[
 \Delta=304\cdot1024-62^2=304\cdot1204-242^2=307452.
@@ -7504,8 +7504,7 @@ On acceptance the recomputed \(T_B\) is precisely the rough sum, and 37.37 prove
 needed here is justified by \(K=M^*GM,b=M^*\mathbf1\) and the full cancellation
 of 37.32. Since those corrected formulas prove the same \(\phi(T_B)\), the scalar
 certificate rules need no altered endpoint or hidden coefficient computation.
-This is soundness of a finite mathematical language; it does not assert an implemented or
-executed verifier.
+This is soundness of a finite mathematical language.
 
 **37.40 定理及证明（总生成器、严格阈值与等号不终止边界）。** For legal finite \(S\)
 and rational \(\eta=p/d>0\), \(p,d\in\mathbb N_+\), define
@@ -7556,7 +7555,7 @@ For a prescribed finite \(E\), however, projection onto \(U_1\) need not stay in
 probes useless in a constrained finite joint problem. The Schur calculation in 37.8 and the
 nonzero \(r_4\) coefficient in 37.34 are explicit correlated examples.
 
-**37.42 推论与范围（固定坐标、保持的范数与经典依赖）。** Since
+**37.42 推论及证明（固定坐标、保持的范数与经典依赖）。** Since
 \(D_{A_S}\ge\Gamma_S>0\), allowing all exponents in a fixed finite prime set and
 then closing in the actual norm still leaves a positive error. For an omitted prime \(p\),
 \(\langle r_p,f_p\rangle=1\) and \(r_p\perp M_{A_S}\), whence
@@ -7590,8 +7589,4 @@ or claim density in all of \(H\). The value of the full-dictionary distance, equ
 \(D_{A_S}=\Gamma_S\), completeness of the omitted-probe complement, infinite coefficient
 attainment and a universal successful finite-certificate cutoff remain separate questions.
 Nothing here resolves the Robin \(n>5040\) criterion, the prime-box slab \(G\) sign
-problems, or the remaining common-height and general-prime questions. The user's label GH
-retains its stated working RH interpretation without an additional mathematical definition.
-These are paper arguments using the existing model and classical projection, divisor-inversion
-and finite-arithmetic facts; no new literature-priority, numerical execution or kernel theorem
-is entailed.
+problems, or the remaining common-height and general-prime questions.

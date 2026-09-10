@@ -1,0 +1,3305 @@
+{
+  "schema": "theory-body-migration-s26-v1",
+  "scope": {
+    "flight": "qgh0911-i43-s26-owned-body-repair",
+    "stage": "implementation",
+    "attempt": 1,
+    "retry_budget": 1,
+    "target": "/Users/auricstudio/trureturing-qgh-joint-smooth-dual",
+    "branch": "lane/math/quantized-gh-joint-smooth-dual-0911",
+    "base": "f0f3db2938a7f0b39d0589db73380a21b0c6a570",
+    "changed_addresses": [
+      "37.14",
+      "37.33",
+      "37.34",
+      "37.39",
+      "37.42"
+    ],
+    "status": "Narrow implementation and structural preservation only; independent review, exact pure predecessor composition and ordered delivery remain outstanding."
+  },
+  "immutable_maps": {
+    "I38": {
+      "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+      "bytes": 423364,
+      "sha256": "bb25d14b7a77567268bba686ee8095622d3fdfeb1694523aaf2d30f7f2fe428f",
+      "lf_count": 8964,
+      "trailing_lf_count": 1
+    },
+    "I36": {
+      "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+      "bytes": 559043,
+      "sha256": "9be8bd12f2b1a6d45b2aba2ae91bc4b569d7423579a95b517dd17bbfb00cb925",
+      "lf_count": 14694,
+      "trailing_lf_count": 1
+    },
+    "I33": {
+      "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+      "bytes": 2386329,
+      "sha256": "9abba55e13c08d0f784a6c958416c5cfb4245872ad087ccba2f385469f23a8ec",
+      "lf_count": 69444,
+      "trailing_lf_count": 1
+    },
+    "I31": {
+      "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+      "bytes": 7519398,
+      "sha256": "ac96c8675ae93c6eb4c76e63e010bd574d9f395d7d2742a27198bfc1982e489b",
+      "lf_count": 195301,
+      "trailing_lf_count": 1
+    }
+  },
+  "reference_semantics": "A path/pointer object is an RFC6901 pointer into that exact JSON file. Immutable map identities are bound above. Local pointers address this companion map without a recursive self-hash. Legacy map aliases are resolved against immutable_maps. Raw JSON pointers pair explicitly with their report payload record.",
+  "identity_semantics": "All bytes and offsets are UTF-8 byte counts, with half-open spans. lf_count counts every LF byte; trailing_lf_count counts consecutive final LF bytes, as an integer, not a boolean. Preserve producer bytes and all historical LF variants. Historical field names remain exactly as recorded in immutable maps.",
+  "source": {
+    "original": {
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "bytes": 391464,
+      "sha256": "dbd1cf7fc4e5c8eb17f41ca33b80b917c35be403dac08032ea5fdeaf616e349a",
+      "lf_count": 7597,
+      "trailing_lf_count": 1
+    },
+    "current": {
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "bytes": 391093,
+      "sha256": "4dbb0a1f62327dcff5d5bfd2161c74a0a8579338152787d15e97e9d7b553d8eb",
+      "lf_count": 7592,
+      "trailing_lf_count": 1
+    },
+    "unchanged_S19_prefix": {
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "byte_start": 0,
+      "byte_end_exclusive": 336935,
+      "line_start": 1,
+      "line_end_inclusive": 6566,
+      "bytes": 336935,
+      "sha256": "432782df7785d000f46b9f4836d0e65d692da278ab74ebb270819f5bd7b44f93",
+      "lf_count": 6566,
+      "trailing_lf_count": 1
+    },
+    "changes": [
+      {
+        "address": "37.14",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 353780,
+          "byte_end_exclusive": 355059,
+          "line_start": 6869,
+          "line_end_inclusive": 6896,
+          "bytes": 1279,
+          "sha256": "2a043a49cf412d52368c973653a5e9511b3709f5ec559b89c0e528ed34406118",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 353780,
+          "byte_end_exclusive": 355059,
+          "line_start": 6869,
+          "line_end_inclusive": 6896,
+          "bytes": 1279,
+          "sha256": "216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        },
+        "old_atom_id": "2a043a49cf412d52368c973653a5e9511b3709f5ec559b89c0e528ed34406118",
+        "current_atom_id": "216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+        "archive": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/report/archives/0"
+        },
+        "action": "Only 算例及证明 becomes 命题及证明 in the title; every other byte is retained."
+      },
+      {
+        "address": "37.33",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 375967,
+          "byte_end_exclusive": 377203,
+          "line_start": 7327,
+          "line_end_inclusive": 7351,
+          "bytes": 1236,
+          "sha256": "37f0afa3626f489b94d0e65bd6b7616382a5a98564678fcb190c5ed87ef923e6",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 375967,
+          "byte_end_exclusive": 377203,
+          "line_start": 7327,
+          "line_end_inclusive": 7351,
+          "bytes": 1236,
+          "sha256": "6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "old_atom_id": "37f0afa3626f489b94d0e65bd6b7616382a5a98564678fcb190c5ed87ef923e6",
+        "current_atom_id": "6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+        "archive": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/report/archives/1"
+        },
+        "action": "Only 算例及证明 becomes 命题及证明 in the title; every other byte is retained."
+      },
+      {
+        "address": "37.34",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 377203,
+          "byte_end_exclusive": 378551,
+          "line_start": 7352,
+          "line_end_inclusive": 7390,
+          "bytes": 1348,
+          "sha256": "4e1348e3007e262bfd722d6a39505ea5cd1df4c13732396b4645891bccfaa7bc",
+          "lf_count": 39,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 377203,
+          "byte_end_exclusive": 378551,
+          "line_start": 7352,
+          "line_end_inclusive": 7390,
+          "bytes": 1348,
+          "sha256": "515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+          "lf_count": 39,
+          "trailing_lf_count": 2
+        },
+        "old_atom_id": "4e1348e3007e262bfd722d6a39505ea5cd1df4c13732396b4645891bccfaa7bc",
+        "current_atom_id": "515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+        "archive": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/report/archives/2"
+        },
+        "action": "Only 算例及证明 becomes 命题及证明 in the title; every other byte is retained."
+      },
+      {
+        "address": "37.39",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 383467,
+          "byte_end_exclusive": 385283,
+          "line_start": 7484,
+          "line_end_inclusive": 7509,
+          "bytes": 1816,
+          "sha256": "361234c5795536963f3135d7ec254e5fba236a577dcbc8930f9e7ca1701330fc",
+          "lf_count": 26,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 383467,
+          "byte_end_exclusive": 385227,
+          "line_start": 7484,
+          "line_end_inclusive": 7508,
+          "bytes": 1760,
+          "sha256": "15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "old_atom_id": "361234c5795536963f3135d7ec254e5fba236a577dcbc8930f9e7ca1701330fc",
+        "current_atom_id": "15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+        "archive": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/report/archives/3"
+        },
+        "action": "Retain the mathematical soundness sentence; the execution-status qualification is preserved in the whole-unit report archive."
+      },
+      {
+        "address": "37.42",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 388296,
+          "byte_end_exclusive": 391464,
+          "line_start": 7559,
+          "line_end_inclusive": 7597,
+          "bytes": 3168,
+          "sha256": "03d49b996f46284427cb6e8a02231b3df7523365881a8e9082bd6b07fe4ae375",
+          "lf_count": 39,
+          "trailing_lf_count": 1
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 388240,
+          "byte_end_exclusive": 391093,
+          "line_start": 7558,
+          "line_end_inclusive": 7592,
+          "bytes": 2853,
+          "sha256": "9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+          "lf_count": 35,
+          "trailing_lf_count": 1
+        },
+        "old_atom_id": "03d49b996f46284427cb6e8a02231b3df7523365881a8e9082bd6b07fe4ae375",
+        "current_atom_id": "9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+        "archive": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/report/archives/4"
+        },
+        "action": "Use an explicit corollary-with-proof title; move only the final user-label and provenance/execution/kernel sentences into the report archive. All mathematical paragraphs and attached B1 citation remain."
+      }
+    ],
+    "pieces": [
+      {
+        "kind": "unchanged",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 0,
+          "byte_end_exclusive": 353780,
+          "line_start": 1,
+          "line_end_inclusive": 6868,
+          "bytes": 353780,
+          "sha256": "2c216fd1c364817a206d76230919a91ff81abf06680a038ae70e3bddaea9b408",
+          "lf_count": 6868,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 0,
+          "byte_end_exclusive": 353780,
+          "line_start": 1,
+          "line_end_inclusive": 6868,
+          "bytes": 353780,
+          "sha256": "2c216fd1c364817a206d76230919a91ff81abf06680a038ae70e3bddaea9b408",
+          "lf_count": 6868,
+          "trailing_lf_count": 2
+        },
+        "byte_displacement": 0,
+        "line_displacement": 0
+      },
+      {
+        "kind": "replacement",
+        "address": "37.14",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 353780,
+          "byte_end_exclusive": 355059,
+          "line_start": 6869,
+          "line_end_inclusive": 6896,
+          "bytes": 1279,
+          "sha256": "2a043a49cf412d52368c973653a5e9511b3709f5ec559b89c0e528ed34406118",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 353780,
+          "byte_end_exclusive": 355059,
+          "line_start": 6869,
+          "line_end_inclusive": 6896,
+          "bytes": 1279,
+          "sha256": "216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        },
+        "inverse_payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 103605,
+          "byte_end_exclusive": 104884,
+          "line_start": 667,
+          "line_end_inclusive": 694,
+          "bytes": 1279,
+          "sha256": "2a043a49cf412d52368c973653a5e9511b3709f5ec559b89c0e528ed34406118",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        }
+      },
+      {
+        "kind": "unchanged",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 355059,
+          "byte_end_exclusive": 375967,
+          "line_start": 6897,
+          "line_end_inclusive": 7326,
+          "bytes": 20908,
+          "sha256": "2143ef6ff8886ac91f98a62370cffcc829fd853f5e6ae3d2089133f53176852b",
+          "lf_count": 430,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 355059,
+          "byte_end_exclusive": 375967,
+          "line_start": 6897,
+          "line_end_inclusive": 7326,
+          "bytes": 20908,
+          "sha256": "2143ef6ff8886ac91f98a62370cffcc829fd853f5e6ae3d2089133f53176852b",
+          "lf_count": 430,
+          "trailing_lf_count": 2
+        },
+        "byte_displacement": 0,
+        "line_displacement": 0
+      },
+      {
+        "kind": "replacement",
+        "address": "37.33",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 375967,
+          "byte_end_exclusive": 377203,
+          "line_start": 7327,
+          "line_end_inclusive": 7351,
+          "bytes": 1236,
+          "sha256": "37f0afa3626f489b94d0e65bd6b7616382a5a98564678fcb190c5ed87ef923e6",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 375967,
+          "byte_end_exclusive": 377203,
+          "line_start": 7327,
+          "line_end_inclusive": 7351,
+          "bytes": 1236,
+          "sha256": "6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "inverse_payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 104963,
+          "byte_end_exclusive": 106199,
+          "line_start": 702,
+          "line_end_inclusive": 726,
+          "bytes": 1236,
+          "sha256": "37f0afa3626f489b94d0e65bd6b7616382a5a98564678fcb190c5ed87ef923e6",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        }
+      },
+      {
+        "kind": "replacement",
+        "address": "37.34",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 377203,
+          "byte_end_exclusive": 378551,
+          "line_start": 7352,
+          "line_end_inclusive": 7390,
+          "bytes": 1348,
+          "sha256": "4e1348e3007e262bfd722d6a39505ea5cd1df4c13732396b4645891bccfaa7bc",
+          "lf_count": 39,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 377203,
+          "byte_end_exclusive": 378551,
+          "line_start": 7352,
+          "line_end_inclusive": 7390,
+          "bytes": 1348,
+          "sha256": "515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+          "lf_count": 39,
+          "trailing_lf_count": 2
+        },
+        "inverse_payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 106278,
+          "byte_end_exclusive": 107626,
+          "line_start": 734,
+          "line_end_inclusive": 772,
+          "bytes": 1348,
+          "sha256": "4e1348e3007e262bfd722d6a39505ea5cd1df4c13732396b4645891bccfaa7bc",
+          "lf_count": 39,
+          "trailing_lf_count": 2
+        }
+      },
+      {
+        "kind": "unchanged",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 378551,
+          "byte_end_exclusive": 383467,
+          "line_start": 7391,
+          "line_end_inclusive": 7483,
+          "bytes": 4916,
+          "sha256": "89caf5743c76f21537e80f8b0bd0ab035f307d79507549cb0e82b2a9988b5754",
+          "lf_count": 93,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 378551,
+          "byte_end_exclusive": 383467,
+          "line_start": 7391,
+          "line_end_inclusive": 7483,
+          "bytes": 4916,
+          "sha256": "89caf5743c76f21537e80f8b0bd0ab035f307d79507549cb0e82b2a9988b5754",
+          "lf_count": 93,
+          "trailing_lf_count": 2
+        },
+        "byte_displacement": 0,
+        "line_displacement": 0
+      },
+      {
+        "kind": "replacement",
+        "address": "37.39",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 383467,
+          "byte_end_exclusive": 385283,
+          "line_start": 7484,
+          "line_end_inclusive": 7509,
+          "bytes": 1816,
+          "sha256": "361234c5795536963f3135d7ec254e5fba236a577dcbc8930f9e7ca1701330fc",
+          "lf_count": 26,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 383467,
+          "byte_end_exclusive": 385227,
+          "line_start": 7484,
+          "line_end_inclusive": 7508,
+          "bytes": 1760,
+          "sha256": "15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "inverse_payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 107705,
+          "byte_end_exclusive": 109521,
+          "line_start": 780,
+          "line_end_inclusive": 805,
+          "bytes": 1816,
+          "sha256": "361234c5795536963f3135d7ec254e5fba236a577dcbc8930f9e7ca1701330fc",
+          "lf_count": 26,
+          "trailing_lf_count": 2
+        }
+      },
+      {
+        "kind": "unchanged",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 385283,
+          "byte_end_exclusive": 388296,
+          "line_start": 7510,
+          "line_end_inclusive": 7558,
+          "bytes": 3013,
+          "sha256": "0420570e4119d2edb5ec2215605a17cc6214117f282668c970ea97492bb4d4ab",
+          "lf_count": 49,
+          "trailing_lf_count": 2
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 385227,
+          "byte_end_exclusive": 388240,
+          "line_start": 7509,
+          "line_end_inclusive": 7557,
+          "bytes": 3013,
+          "sha256": "0420570e4119d2edb5ec2215605a17cc6214117f282668c970ea97492bb4d4ab",
+          "lf_count": 49,
+          "trailing_lf_count": 2
+        },
+        "byte_displacement": -56,
+        "line_displacement": -1
+      },
+      {
+        "kind": "replacement",
+        "address": "37.42",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 388296,
+          "byte_end_exclusive": 391464,
+          "line_start": 7559,
+          "line_end_inclusive": 7597,
+          "bytes": 3168,
+          "sha256": "03d49b996f46284427cb6e8a02231b3df7523365881a8e9082bd6b07fe4ae375",
+          "lf_count": 39,
+          "trailing_lf_count": 1
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 388240,
+          "byte_end_exclusive": 391093,
+          "line_start": 7558,
+          "line_end_inclusive": 7592,
+          "bytes": 2853,
+          "sha256": "9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+          "lf_count": 35,
+          "trailing_lf_count": 1
+        },
+        "inverse_payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 109600,
+          "byte_end_exclusive": 112768,
+          "line_start": 813,
+          "line_end_inclusive": 851,
+          "bytes": 3168,
+          "sha256": "03d49b996f46284427cb6e8a02231b3df7523365881a8e9082bd6b07fe4ae375",
+          "lf_count": 39,
+          "trailing_lf_count": 1
+        }
+      }
+    ],
+    "whole_units": {
+      "count": 305,
+      "ordered_composition": [
+        {
+          "records": {
+            "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/canonical/whole_source_units"
+          },
+          "indices": [
+            0,
+            261
+          ],
+          "indices_are_half_open": true
+        },
+        {
+          "record": {
+            "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+            "pointer": "/canonical/inherited_final_unit_separator_variant"
+          },
+          "span_field": "current_span",
+          "atom_id_field": "current_atom_id"
+        },
+        {
+          "records": {
+            "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+            "pointer": "/source/new_units"
+          },
+          "indices": [
+            0,
+            43
+          ],
+          "indices_are_half_open": true
+        }
+      ],
+      "transform": "Concatenate the three sequences in order. Preserve all record fields, replace exactly the five matching address records by /source/changes current spans and atom IDs, and shift every other source span by the containing unchanged /source/pieces displacement. Recompute line/count fields from the actual frozen slice. The 305 spans concatenate to the full current source.",
+      "materialized_manifest_sha256": "0f0efe4cea9d351cbc437132e71844922946bf48c2260b3a581640579381d210",
+      "manifest_row_schema": [
+        "index",
+        "origin(path,pointer)",
+        "atom_id",
+        "span"
+      ],
+      "actual_trailing_lf_counts_verified_for_all_units": true,
+      "materialized_row_rule": "For the manifest only, project each transformed record to index (zero-based in the composed list), origin (exact path/pointer of the record), atom_id, and span. The span has path, byte_start, byte_end_exclusive, line_start, line_end_inclusive, bytes, sha256, lf_count, trailing_lf_count. Source content, labels and all other historical record fields remain resolvable through origin."
+    },
+    "span_resolution": {
+      "unchanged": "Translate only a span fully contained in an unchanged piece, preserving its hash.",
+      "selected_whole_unit": "Use the exact current replacement identity.",
+      "crossing_or_historical": "Recover full I38 source first; apply old offsets and old hash there. In particular I38 /source/appended_span is a historical recovered span, not the current suffix."
+    },
+    "frozen_before_ingest": {
+      "at_utc": "2026-09-10T20:52:50.182926+00:00",
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 391093,
+        "sha256": "4dbb0a1f62327dcff5d5bfd2161c74a0a8579338152787d15e97e9d7b553d8eb",
+        "lf_count": 7592,
+        "trailing_lf_count": 1
+      },
+      "source_edit_calls": 1,
+      "source_edits_after_ingest": 0
+    },
+    "source_edits_after_ingest": 0
+  },
+  "report": {
+    "current": {
+      "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+      "bytes": 115300,
+      "sha256": "a9a9c2a5af7b9790ef14ddb874c25e071ccce31ad0fda3b61b57ccf07332a2fe",
+      "lf_count": 862,
+      "trailing_lf_count": 1
+    },
+    "original_prefix": {
+      "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+      "byte_start": 0,
+      "byte_end_exclusive": 101665,
+      "line_start": 1,
+      "line_end_inclusive": 650,
+      "bytes": 101665,
+      "sha256": "d9c9a9c736b6ebef893013e9bfec0b79b675e23cb7daacc9ce4b5c4cff31d3e4",
+      "lf_count": 650,
+      "trailing_lf_count": 1
+    },
+    "append": {
+      "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+      "byte_start": 101665,
+      "byte_end_exclusive": 115300,
+      "line_start": 651,
+      "line_end_inclusive": 862,
+      "bytes": 13635,
+      "sha256": "e18bc260ac8f395089e188e7b10d924f9c1b16dfab0f0b3226fadfe13777aeff",
+      "lf_count": 212,
+      "trailing_lf_count": 1
+    },
+    "archives": [
+      {
+        "address": "37.14",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 353780,
+          "byte_end_exclusive": 355059,
+          "line_start": 6869,
+          "line_end_inclusive": 6896,
+          "bytes": 1279,
+          "sha256": "2a043a49cf412d52368c973653a5e9511b3709f5ec559b89c0e528ed34406118",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        },
+        "payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 103605,
+          "byte_end_exclusive": 104884,
+          "line_start": 667,
+          "line_end_inclusive": 694,
+          "bytes": 1279,
+          "sha256": "2a043a49cf412d52368c973653a5e9511b3709f5ec559b89c0e528ed34406118",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        },
+        "opening_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 103596,
+          "byte_end_exclusive": 103605,
+          "line_start": 666,
+          "line_end_inclusive": 666,
+          "bytes": 9,
+          "sha256": "da4d3177ca706488c8c1b3090fe268f5721023fa17122ad4e079abea83515e9d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "closing_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 104884,
+          "byte_end_exclusive": 104889,
+          "line_start": 695,
+          "line_end_inclusive": 695,
+          "bytes": 5,
+          "sha256": "eb33453d42949b5970c8e9c37110890fb1c0049eda3e36c49c7cade3004d6b6d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "fence_character": "~",
+        "fence_length": 4,
+        "maximum_inner_tilde_run": 0,
+        "delimiter_lf_count_outside_payload": 0,
+        "anchor": "i43-original-37-14"
+      },
+      {
+        "address": "37.33",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 375967,
+          "byte_end_exclusive": 377203,
+          "line_start": 7327,
+          "line_end_inclusive": 7351,
+          "bytes": 1236,
+          "sha256": "37f0afa3626f489b94d0e65bd6b7616382a5a98564678fcb190c5ed87ef923e6",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 104963,
+          "byte_end_exclusive": 106199,
+          "line_start": 702,
+          "line_end_inclusive": 726,
+          "bytes": 1236,
+          "sha256": "37f0afa3626f489b94d0e65bd6b7616382a5a98564678fcb190c5ed87ef923e6",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "opening_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 104954,
+          "byte_end_exclusive": 104963,
+          "line_start": 701,
+          "line_end_inclusive": 701,
+          "bytes": 9,
+          "sha256": "da4d3177ca706488c8c1b3090fe268f5721023fa17122ad4e079abea83515e9d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "closing_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 106199,
+          "byte_end_exclusive": 106204,
+          "line_start": 727,
+          "line_end_inclusive": 727,
+          "bytes": 5,
+          "sha256": "eb33453d42949b5970c8e9c37110890fb1c0049eda3e36c49c7cade3004d6b6d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "fence_character": "~",
+        "fence_length": 4,
+        "maximum_inner_tilde_run": 0,
+        "delimiter_lf_count_outside_payload": 0,
+        "anchor": "i43-original-37-33"
+      },
+      {
+        "address": "37.34",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 377203,
+          "byte_end_exclusive": 378551,
+          "line_start": 7352,
+          "line_end_inclusive": 7390,
+          "bytes": 1348,
+          "sha256": "4e1348e3007e262bfd722d6a39505ea5cd1df4c13732396b4645891bccfaa7bc",
+          "lf_count": 39,
+          "trailing_lf_count": 2
+        },
+        "payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 106278,
+          "byte_end_exclusive": 107626,
+          "line_start": 734,
+          "line_end_inclusive": 772,
+          "bytes": 1348,
+          "sha256": "4e1348e3007e262bfd722d6a39505ea5cd1df4c13732396b4645891bccfaa7bc",
+          "lf_count": 39,
+          "trailing_lf_count": 2
+        },
+        "opening_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 106269,
+          "byte_end_exclusive": 106278,
+          "line_start": 733,
+          "line_end_inclusive": 733,
+          "bytes": 9,
+          "sha256": "da4d3177ca706488c8c1b3090fe268f5721023fa17122ad4e079abea83515e9d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "closing_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 107626,
+          "byte_end_exclusive": 107631,
+          "line_start": 773,
+          "line_end_inclusive": 773,
+          "bytes": 5,
+          "sha256": "eb33453d42949b5970c8e9c37110890fb1c0049eda3e36c49c7cade3004d6b6d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "fence_character": "~",
+        "fence_length": 4,
+        "maximum_inner_tilde_run": 0,
+        "delimiter_lf_count_outside_payload": 0,
+        "anchor": "i43-original-37-34"
+      },
+      {
+        "address": "37.39",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 383467,
+          "byte_end_exclusive": 385283,
+          "line_start": 7484,
+          "line_end_inclusive": 7509,
+          "bytes": 1816,
+          "sha256": "361234c5795536963f3135d7ec254e5fba236a577dcbc8930f9e7ca1701330fc",
+          "lf_count": 26,
+          "trailing_lf_count": 2
+        },
+        "payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 107705,
+          "byte_end_exclusive": 109521,
+          "line_start": 780,
+          "line_end_inclusive": 805,
+          "bytes": 1816,
+          "sha256": "361234c5795536963f3135d7ec254e5fba236a577dcbc8930f9e7ca1701330fc",
+          "lf_count": 26,
+          "trailing_lf_count": 2
+        },
+        "opening_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 107696,
+          "byte_end_exclusive": 107705,
+          "line_start": 779,
+          "line_end_inclusive": 779,
+          "bytes": 9,
+          "sha256": "da4d3177ca706488c8c1b3090fe268f5721023fa17122ad4e079abea83515e9d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "closing_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 109521,
+          "byte_end_exclusive": 109526,
+          "line_start": 806,
+          "line_end_inclusive": 806,
+          "bytes": 5,
+          "sha256": "eb33453d42949b5970c8e9c37110890fb1c0049eda3e36c49c7cade3004d6b6d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "fence_character": "~",
+        "fence_length": 4,
+        "maximum_inner_tilde_run": 0,
+        "delimiter_lf_count_outside_payload": 0,
+        "anchor": "i43-original-37-39"
+      },
+      {
+        "address": "37.42",
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 388296,
+          "byte_end_exclusive": 391464,
+          "line_start": 7559,
+          "line_end_inclusive": 7597,
+          "bytes": 3168,
+          "sha256": "03d49b996f46284427cb6e8a02231b3df7523365881a8e9082bd6b07fe4ae375",
+          "lf_count": 39,
+          "trailing_lf_count": 1
+        },
+        "payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 109600,
+          "byte_end_exclusive": 112768,
+          "line_start": 813,
+          "line_end_inclusive": 851,
+          "bytes": 3168,
+          "sha256": "03d49b996f46284427cb6e8a02231b3df7523365881a8e9082bd6b07fe4ae375",
+          "lf_count": 39,
+          "trailing_lf_count": 1
+        },
+        "opening_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 109591,
+          "byte_end_exclusive": 109600,
+          "line_start": 812,
+          "line_end_inclusive": 812,
+          "bytes": 9,
+          "sha256": "da4d3177ca706488c8c1b3090fe268f5721023fa17122ad4e079abea83515e9d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "closing_fence": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 112768,
+          "byte_end_exclusive": 112773,
+          "line_start": 852,
+          "line_end_inclusive": 852,
+          "bytes": 5,
+          "sha256": "eb33453d42949b5970c8e9c37110890fb1c0049eda3e36c49c7cade3004d6b6d",
+          "lf_count": 1,
+          "trailing_lf_count": 1
+        },
+        "fence_character": "~",
+        "fence_length": 4,
+        "maximum_inner_tilde_run": 0,
+        "delimiter_lf_count_outside_payload": 0,
+        "anchor": "i43-original-37-42"
+      }
+    ],
+    "exact_whole_archives_count": 5,
+    "original_whole_unit_occurrences": [
+      {
+        "address": "37.14",
+        "before": 0,
+        "current": 1
+      },
+      {
+        "address": "37.33",
+        "before": 0,
+        "current": 1
+      },
+      {
+        "address": "37.34",
+        "before": 0,
+        "current": 1
+      },
+      {
+        "address": "37.39",
+        "before": 0,
+        "current": 1
+      },
+      {
+        "address": "37.42",
+        "before": 0,
+        "current": 1
+      }
+    ],
+    "raw_primary_payloads": [
+      {
+        "input": "C102",
+        "immutable_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_inputs/C102"
+        },
+        "current_payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 6868,
+          "byte_end_exclusive": 36287,
+          "line_start": 40,
+          "line_end_inclusive": 171,
+          "bytes": 29419,
+          "sha256": "3816b3ed07fc2a45f691178be9728232b251c70606afb0c8882e456a89f09853",
+          "lf_count": 131,
+          "trailing_lf_count": 0
+        },
+        "delimiter_lf_count_outside_payload": 1,
+        "occurrences_in_current_report": 1
+      },
+      {
+        "input": "C104",
+        "immutable_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_inputs/C104"
+        },
+        "current_payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 36524,
+          "byte_end_exclusive": 70721,
+          "line_start": 181,
+          "line_end_inclusive": 399,
+          "bytes": 34197,
+          "sha256": "725ac44a37a91fcff96b4fdec1828761f4b0489dfa32323c6607e9e33f81e79b",
+          "lf_count": 218,
+          "trailing_lf_count": 0
+        },
+        "delimiter_lf_count_outside_payload": 1,
+        "occurrences_in_current_report": 1
+      },
+      {
+        "input": "C106",
+        "immutable_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_inputs/C106"
+        },
+        "current_payload": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+          "byte_start": 70958,
+          "byte_end_exclusive": 98583,
+          "line_start": 409,
+          "line_end_inclusive": 637,
+          "bytes": 27625,
+          "sha256": "1d6973c59158c6413f2ea0d832c19561906e9f26242cdbb4b549dda1dbc1287b",
+          "lf_count": 228,
+          "trailing_lf_count": 0
+        },
+        "delimiter_lf_count_outside_payload": 1,
+        "occurrences_in_current_report": 1
+      }
+    ],
+    "old_wrapper_and_errors": "The entire original report prefix, including all raw erroneous/provenance/execution language and old final bookkeeping, remains byte-exact. It is an I38 snapshot; this companion owns current identities.",
+    "prior_report": {
+      "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+      "bytes": 221717,
+      "sha256": "c6b5fab2f8a2e6433666ee5af9e72d77ae568c98414cacc04f8bf68686503c9a",
+      "lf_count": 3823,
+      "trailing_lf_count": 1
+    }
+  },
+  "recovery": {
+    "I38_inverse": {
+      "ordered_pieces": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+        "pointer": "/source/pieces"
+      },
+      "algorithm": "In original-offset order, concatenate current source slices for unchanged pieces and exact report inverse_payload slices for replacements. The pieces exhaust original [0,391464).",
+      "result": {
+        "bytes": 391464,
+        "sha256": "dbd1cf7fc4e5c8eb17f41ca33b80b917c35be403dac08032ea5fdeaf616e349a",
+        "lf_count": 7597,
+        "trailing_lf_count": 1
+      },
+      "equals_original": true
+    },
+    "I36_current_input": {
+      "input": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+        "pointer": "/recovery/I38_inverse"
+      },
+      "slice": [
+        0,
+        336935
+      ],
+      "result": {
+        "bytes": 336935,
+        "sha256": "432782df7785d000f46b9f4836d0e65d692da278ab74ebb270819f5bd7b44f93",
+        "lf_count": 6566,
+        "trailing_lf_count": 1
+      }
+    },
+    "I36_inverse": {
+      "input": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+        "pointer": "/recovery/I36_current_input"
+      },
+      "report_input": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+      "ordered_slices": {
+        "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+        "pointer": "/recovery/original_i36_source"
+      },
+      "result": {
+        "bytes": 274562,
+        "sha256": "bc500324952d4c4b7ba8120745c6d061d86c0cff650565545b5da4136e5de804",
+        "lf_count": 5452,
+        "trailing_lf_count": 1
+      }
+    },
+    "I33_inverse": {
+      "input": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+        "pointer": "/recovery/I36_inverse"
+      },
+      "report_input": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+      "ordered_slices": {
+        "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+        "pointer": "/recovery/i33_original_source"
+      },
+      "result": {
+        "bytes": 238272,
+        "sha256": "9393b391e41432651264bde9a4e4dfdcb9a9f0eeaa880ab0c4afe502e6967dce",
+        "lf_count": 4983,
+        "trailing_lf_count": 1
+      }
+    },
+    "pre_I31_route_A": {
+      "input": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+        "pointer": "/recovery/I36_inverse"
+      },
+      "report_input": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+      "ordered_slices": {
+        "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+        "pointer": "/recovery/pre_i31_original_source"
+      },
+      "result": {
+        "bytes": 286339,
+        "sha256": "59838eb016d5a88043e4f9ca4ffc3c999d85357762d078cf4f05168521ad0d18",
+        "lf_count": 5391,
+        "trailing_lf_count": 1
+      }
+    },
+    "pre_I31_route_B": {
+      "input": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+        "pointer": "/recovery/I33_inverse"
+      },
+      "report_input": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+      "ordered_slices": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+        "pointer": "/recovery_spans"
+      },
+      "result": {
+        "bytes": 286339,
+        "sha256": "59838eb016d5a88043e4f9ca4ffc3c999d85357762d078cf4f05168521ad0d18",
+        "lf_count": 5391,
+        "trailing_lf_count": 1
+      }
+    },
+    "both_pre_I31_routes_byte_equal": true,
+    "row_semantics": "Each referenced original/current row is evaluated against its explicitly named recovered source input, or unchanged prior report when current.path is that report. Check original-offset exhaustiveness and exact SHA256 before concatenation.",
+    "report_prefix_contracts": [
+      {
+        "contract": {
+          "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/recovery/preserved_report_prefix"
+        },
+        "current_unchanged_span": {
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+          "byte_start": 0,
+          "byte_end_exclusive": 218517,
+          "line_start": 1,
+          "line_end_inclusive": 3794,
+          "bytes": 218517,
+          "sha256": "53035b35dcb1cecdbd4cf87f6dbd92645ed1b17096632f7c789cbc03f97ad617",
+          "lf_count": 3794,
+          "trailing_lf_count": 1
+        }
+      },
+      {
+        "contract": {
+          "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/report_original_prefix"
+        },
+        "current_unchanged_span": {
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+          "byte_start": 0,
+          "byte_end_exclusive": 211816,
+          "line_start": 1,
+          "line_end_inclusive": 3697,
+          "bytes": 211816,
+          "sha256": "0820b4f16dd3a4a7edbc0cae4f91a96ed81828509780f28303e50fe4beecaf4f",
+          "lf_count": 3697,
+          "trailing_lf_count": 1
+        }
+      },
+      {
+        "contract": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/original_report_prefix_recovery/current"
+        },
+        "current_unchanged_span": {
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+          "byte_start": 0,
+          "byte_end_exclusive": 47922,
+          "line_start": 1,
+          "line_end_inclusive": 764,
+          "bytes": 47922,
+          "sha256": "a073280a2a3c4382c89d284e9970e5335a33db78b87e49679f413592caa808ce",
+          "lf_count": 764,
+          "trailing_lf_count": 1
+        }
+      },
+      {
+        "contract": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/current_report"
+        },
+        "current_unchanged_span": {
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+          "byte_start": 0,
+          "byte_end_exclusive": 211816,
+          "line_start": 1,
+          "line_end_inclusive": 3697,
+          "bytes": 211816,
+          "sha256": "0820b4f16dd3a4a7edbc0cae4f91a96ed81828509780f28303e50fe4beecaf4f",
+          "lf_count": 3697,
+          "trailing_lf_count": 1
+        }
+      }
+    ],
+    "I33_report_footer_contract": {
+      "reference": {
+        "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+        "pointer": "/report_binding"
+      },
+      "reconstructed_report_prefix": {
+        "bytes": 218517,
+        "sha256": "53035b35dcb1cecdbd4cf87f6dbd92645ed1b17096632f7c789cbc03f97ad617",
+        "lf_count": 3794,
+        "trailing_lf_count": 1
+      },
+      "footer_and_masked_hash_verified": true,
+      "digest_hole_is_only_in_the_historical_I33_contract": true
+    },
+    "historical_snapshot_rule": "Every old source identity belongs to its old or recovered bytes. No old hash is assigned to a current span crossing a replacement. Historical report offsets remain unchanged; this map has no self-hash or digest hole."
+  },
+  "proof_addresses": {
+    "inherited_complete_records": {
+      "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+      "pointer": "/addresses"
+    },
+    "inherited_transform": "All inherited current_span positions and hashes remain unchanged; whole-unit 30.85 uses the separate immutable I38 separator overlay.",
+    "whole_unit_30_85": {
+      "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+      "pointer": "/canonical/inherited_final_unit_separator_variant"
+    },
+    "current_chapter_37": {
+      "37": {
+        "whole_unit_index": 262,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 336936,
+          "byte_end_exclusive": 337585,
+          "line_start": 6568,
+          "line_end_inclusive": 6576,
+          "bytes": 649,
+          "sha256": "be0abb90bbe71c16f7a538584f28902e59a7a87dbc741eabce1bb9f71391c6e3",
+          "lf_count": 9,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "be0abb90bbe71c16f7a538584f28902e59a7a87dbc741eabce1bb9f71391c6e3",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/0"
+        }
+      },
+      "37.1": {
+        "whole_unit_index": 263,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 337585,
+          "byte_end_exclusive": 338732,
+          "line_start": 6577,
+          "line_end_inclusive": 6597,
+          "bytes": 1147,
+          "sha256": "b936f1e7250c8767604472cbbc7b32ebb13c428d0a57fd7c1b9099049c554f05",
+          "lf_count": 21,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "b936f1e7250c8767604472cbbc7b32ebb13c428d0a57fd7c1b9099049c554f05",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/1"
+        }
+      },
+      "37.2": {
+        "whole_unit_index": 264,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 338732,
+          "byte_end_exclusive": 340494,
+          "line_start": 6598,
+          "line_end_inclusive": 6631,
+          "bytes": 1762,
+          "sha256": "f5c42bc47dd8ddd93d1c0ec03082298b766ef564676ae0c8097a6bbc8233d2a4",
+          "lf_count": 34,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "f5c42bc47dd8ddd93d1c0ec03082298b766ef564676ae0c8097a6bbc8233d2a4",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/2"
+        }
+      },
+      "37.3": {
+        "whole_unit_index": 265,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 340494,
+          "byte_end_exclusive": 341566,
+          "line_start": 6632,
+          "line_end_inclusive": 6652,
+          "bytes": 1072,
+          "sha256": "97e0d68327ccfcac3dba41a404bfd8f81402d13fdd5640cbd2ede4d1d0ad9424",
+          "lf_count": 21,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "97e0d68327ccfcac3dba41a404bfd8f81402d13fdd5640cbd2ede4d1d0ad9424",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/3"
+        }
+      },
+      "37.4": {
+        "whole_unit_index": 266,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 341566,
+          "byte_end_exclusive": 342560,
+          "line_start": 6653,
+          "line_end_inclusive": 6672,
+          "bytes": 994,
+          "sha256": "ab471c04345c937d8f3e07b804ea1db87033e84061a60b69fcdf819fcc97251d",
+          "lf_count": 20,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "ab471c04345c937d8f3e07b804ea1db87033e84061a60b69fcdf819fcc97251d",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/4"
+        }
+      },
+      "37.5": {
+        "whole_unit_index": 267,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 342560,
+          "byte_end_exclusive": 343644,
+          "line_start": 6673,
+          "line_end_inclusive": 6695,
+          "bytes": 1084,
+          "sha256": "528d116b43b57babf82028c546f483832f1ed842a55d1198385715126610816c",
+          "lf_count": 23,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "528d116b43b57babf82028c546f483832f1ed842a55d1198385715126610816c",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/5"
+        }
+      },
+      "37.6": {
+        "whole_unit_index": 268,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 343644,
+          "byte_end_exclusive": 344572,
+          "line_start": 6696,
+          "line_end_inclusive": 6713,
+          "bytes": 928,
+          "sha256": "c0c644fb04d500189b43439023615f774cd0d58b162990e874b9935a907b0adb",
+          "lf_count": 18,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "c0c644fb04d500189b43439023615f774cd0d58b162990e874b9935a907b0adb",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/6"
+        }
+      },
+      "37.7": {
+        "whole_unit_index": 269,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 344572,
+          "byte_end_exclusive": 345579,
+          "line_start": 6714,
+          "line_end_inclusive": 6737,
+          "bytes": 1007,
+          "sha256": "1a6fdeac4037f9790029124cc5c456a090dd3c33f2b2046fe3c6bfac2a27d98f",
+          "lf_count": 24,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "1a6fdeac4037f9790029124cc5c456a090dd3c33f2b2046fe3c6bfac2a27d98f",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/7"
+        }
+      },
+      "37.8": {
+        "whole_unit_index": 270,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 345579,
+          "byte_end_exclusive": 346607,
+          "line_start": 6738,
+          "line_end_inclusive": 6754,
+          "bytes": 1028,
+          "sha256": "e5e7bdacfbb261168e079d1a00c48113a5b8f84b668af0e08961d6a97e32d440",
+          "lf_count": 17,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "e5e7bdacfbb261168e079d1a00c48113a5b8f84b668af0e08961d6a97e32d440",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/8"
+        }
+      },
+      "37.9": {
+        "whole_unit_index": 271,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 346607,
+          "byte_end_exclusive": 348149,
+          "line_start": 6755,
+          "line_end_inclusive": 6773,
+          "bytes": 1542,
+          "sha256": "7d5bb7c9fd3ec260b90f5e48e6070772c44c002290353f77f1065d6f151ff671",
+          "lf_count": 19,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "7d5bb7c9fd3ec260b90f5e48e6070772c44c002290353f77f1065d6f151ff671",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/9"
+        }
+      },
+      "37.10": {
+        "whole_unit_index": 272,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 348149,
+          "byte_end_exclusive": 349585,
+          "line_start": 6774,
+          "line_end_inclusive": 6797,
+          "bytes": 1436,
+          "sha256": "9d3aa7df7ca9474ce721847f0aba87affe4ce3440459795f602da422ed03e869",
+          "lf_count": 24,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "9d3aa7df7ca9474ce721847f0aba87affe4ce3440459795f602da422ed03e869",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/10"
+        }
+      },
+      "37.11": {
+        "whole_unit_index": 273,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 349585,
+          "byte_end_exclusive": 351255,
+          "line_start": 6798,
+          "line_end_inclusive": 6824,
+          "bytes": 1670,
+          "sha256": "67b28f046d99d42c9a4dad093628ca0a1e3646e3da3e4454f6e4a820e9d6340f",
+          "lf_count": 27,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "67b28f046d99d42c9a4dad093628ca0a1e3646e3da3e4454f6e4a820e9d6340f",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/11"
+        }
+      },
+      "37.12": {
+        "whole_unit_index": 274,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 351255,
+          "byte_end_exclusive": 352780,
+          "line_start": 6825,
+          "line_end_inclusive": 6844,
+          "bytes": 1525,
+          "sha256": "a07d94fbc9d753eb350bcfbed5d8cb05bc5b90778f9eaf8dc8389484a448c091",
+          "lf_count": 20,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "a07d94fbc9d753eb350bcfbed5d8cb05bc5b90778f9eaf8dc8389484a448c091",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/12"
+        }
+      },
+      "37.13": {
+        "whole_unit_index": 275,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 352780,
+          "byte_end_exclusive": 353780,
+          "line_start": 6845,
+          "line_end_inclusive": 6868,
+          "bytes": 1000,
+          "sha256": "7f2596a7760290f89b347a885c984f218bdb90a7ab93675d01f4602e9091a5d7",
+          "lf_count": 24,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "7f2596a7760290f89b347a885c984f218bdb90a7ab93675d01f4602e9091a5d7",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/13"
+        }
+      },
+      "37.14": {
+        "whole_unit_index": 276,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 353780,
+          "byte_end_exclusive": 355059,
+          "line_start": 6869,
+          "line_end_inclusive": 6896,
+          "bytes": 1279,
+          "sha256": "216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/14"
+        }
+      },
+      "37.15": {
+        "whole_unit_index": 277,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 355059,
+          "byte_end_exclusive": 356381,
+          "line_start": 6897,
+          "line_end_inclusive": 6925,
+          "bytes": 1322,
+          "sha256": "dfa08e84d5c2da8c6206abd059308bcfbe3b2430732164154d9ab83c605f3efc",
+          "lf_count": 29,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "dfa08e84d5c2da8c6206abd059308bcfbe3b2430732164154d9ab83c605f3efc",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/15"
+        }
+      },
+      "37.16": {
+        "whole_unit_index": 278,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 356381,
+          "byte_end_exclusive": 357724,
+          "line_start": 6926,
+          "line_end_inclusive": 6953,
+          "bytes": 1343,
+          "sha256": "7b89afec5831fffc4f35506eb6d2d3f7d336b4856282612f0df6d44ddbab2e04",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "7b89afec5831fffc4f35506eb6d2d3f7d336b4856282612f0df6d44ddbab2e04",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/16"
+        }
+      },
+      "37.17": {
+        "whole_unit_index": 279,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 357724,
+          "byte_end_exclusive": 359244,
+          "line_start": 6954,
+          "line_end_inclusive": 6979,
+          "bytes": 1520,
+          "sha256": "c4250cdc48c242e4d5f2d507284f85bd28fc3e2dfe39e2e6df8333a74a898d96",
+          "lf_count": 26,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "c4250cdc48c242e4d5f2d507284f85bd28fc3e2dfe39e2e6df8333a74a898d96",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/17"
+        }
+      },
+      "37.18": {
+        "whole_unit_index": 280,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 359244,
+          "byte_end_exclusive": 360179,
+          "line_start": 6980,
+          "line_end_inclusive": 6992,
+          "bytes": 935,
+          "sha256": "c891620d3029c96b167d1363c6981074d45928423723060995102f208ead0c35",
+          "lf_count": 13,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "c891620d3029c96b167d1363c6981074d45928423723060995102f208ead0c35",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/18"
+        }
+      },
+      "37.19": {
+        "whole_unit_index": 281,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 360179,
+          "byte_end_exclusive": 361642,
+          "line_start": 6993,
+          "line_end_inclusive": 7023,
+          "bytes": 1463,
+          "sha256": "4acfd0d8a76402153500bd748984951d8b53a7d59f968406d38ac77368bc4f72",
+          "lf_count": 31,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "4acfd0d8a76402153500bd748984951d8b53a7d59f968406d38ac77368bc4f72",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/19"
+        }
+      },
+      "37.20": {
+        "whole_unit_index": 282,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 361642,
+          "byte_end_exclusive": 362910,
+          "line_start": 7024,
+          "line_end_inclusive": 7045,
+          "bytes": 1268,
+          "sha256": "6369044cbdfc79590468e27f7141c02c63e5700e36d9710746d84ae0f0b4017a",
+          "lf_count": 22,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "6369044cbdfc79590468e27f7141c02c63e5700e36d9710746d84ae0f0b4017a",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/20"
+        }
+      },
+      "37.21": {
+        "whole_unit_index": 283,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 362910,
+          "byte_end_exclusive": 363884,
+          "line_start": 7046,
+          "line_end_inclusive": 7067,
+          "bytes": 974,
+          "sha256": "21b1513cb422b0c6803624b44f9c5e5618717beb250501231b577e3e58667670",
+          "lf_count": 22,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "21b1513cb422b0c6803624b44f9c5e5618717beb250501231b577e3e58667670",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/21"
+        }
+      },
+      "37.22": {
+        "whole_unit_index": 284,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 363884,
+          "byte_end_exclusive": 365028,
+          "line_start": 7068,
+          "line_end_inclusive": 7089,
+          "bytes": 1144,
+          "sha256": "b7732b377306d6ffff144b5c4e09221c6c812721a0369624ca0619bd271c6988",
+          "lf_count": 22,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "b7732b377306d6ffff144b5c4e09221c6c812721a0369624ca0619bd271c6988",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/22"
+        }
+      },
+      "37.23": {
+        "whole_unit_index": 285,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 365028,
+          "byte_end_exclusive": 366647,
+          "line_start": 7090,
+          "line_end_inclusive": 7120,
+          "bytes": 1619,
+          "sha256": "9d045bc4c4409e992c65c051237343091e0ae2cf0f6982a19b2b3083650e3038",
+          "lf_count": 31,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "9d045bc4c4409e992c65c051237343091e0ae2cf0f6982a19b2b3083650e3038",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/23"
+        }
+      },
+      "37.24": {
+        "whole_unit_index": 286,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 366647,
+          "byte_end_exclusive": 367637,
+          "line_start": 7121,
+          "line_end_inclusive": 7146,
+          "bytes": 990,
+          "sha256": "51b52925be9f3afd9c7cd0b41bb340c2acfdc5079cf670a936d656bb71671727",
+          "lf_count": 26,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "51b52925be9f3afd9c7cd0b41bb340c2acfdc5079cf670a936d656bb71671727",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/24"
+        }
+      },
+      "37.25": {
+        "whole_unit_index": 287,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 367637,
+          "byte_end_exclusive": 369170,
+          "line_start": 7147,
+          "line_end_inclusive": 7177,
+          "bytes": 1533,
+          "sha256": "f8eb98a5666ac9da89934a80034f2848850d337140873aa70c634a6f6a2b1350",
+          "lf_count": 31,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "f8eb98a5666ac9da89934a80034f2848850d337140873aa70c634a6f6a2b1350",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/25"
+        }
+      },
+      "37.26": {
+        "whole_unit_index": 288,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 369170,
+          "byte_end_exclusive": 369874,
+          "line_start": 7178,
+          "line_end_inclusive": 7191,
+          "bytes": 704,
+          "sha256": "e449ab9b93ed219757956ff088a689b66fb9e4a0145186541aa917ef7ae91fba",
+          "lf_count": 14,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "e449ab9b93ed219757956ff088a689b66fb9e4a0145186541aa917ef7ae91fba",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/26"
+        }
+      },
+      "37.27": {
+        "whole_unit_index": 289,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 369874,
+          "byte_end_exclusive": 370647,
+          "line_start": 7192,
+          "line_end_inclusive": 7205,
+          "bytes": 773,
+          "sha256": "4420755c230d159314748956f8dcd89e08750b6aa609961cd401f19dc9801142",
+          "lf_count": 14,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "4420755c230d159314748956f8dcd89e08750b6aa609961cd401f19dc9801142",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/27"
+        }
+      },
+      "37.28": {
+        "whole_unit_index": 290,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 370647,
+          "byte_end_exclusive": 371525,
+          "line_start": 7206,
+          "line_end_inclusive": 7225,
+          "bytes": 878,
+          "sha256": "cf2512e1284d2774fa7c400d6dea56e9aafc27ac89b5f22adedf20621c4e685a",
+          "lf_count": 20,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "cf2512e1284d2774fa7c400d6dea56e9aafc27ac89b5f22adedf20621c4e685a",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/28"
+        }
+      },
+      "37.29": {
+        "whole_unit_index": 291,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 371525,
+          "byte_end_exclusive": 372548,
+          "line_start": 7226,
+          "line_end_inclusive": 7248,
+          "bytes": 1023,
+          "sha256": "1dfc3d33878528bd942c6dabb037dedddd293224661d2a4320081dc8096d3289",
+          "lf_count": 23,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "1dfc3d33878528bd942c6dabb037dedddd293224661d2a4320081dc8096d3289",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/29"
+        }
+      },
+      "37.30": {
+        "whole_unit_index": 292,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 372548,
+          "byte_end_exclusive": 373942,
+          "line_start": 7249,
+          "line_end_inclusive": 7282,
+          "bytes": 1394,
+          "sha256": "0ec9cc7e73a2fc79ec1e41f34d5fa10cfc0196723411107a40a771489a5a52a5",
+          "lf_count": 34,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "0ec9cc7e73a2fc79ec1e41f34d5fa10cfc0196723411107a40a771489a5a52a5",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/30"
+        }
+      },
+      "37.31": {
+        "whole_unit_index": 293,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 373942,
+          "byte_end_exclusive": 375045,
+          "line_start": 7283,
+          "line_end_inclusive": 7307,
+          "bytes": 1103,
+          "sha256": "06b42d178717b23307db9d6e416d8df6a5d755436fef7abfa5e53a59c8e081cf",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "06b42d178717b23307db9d6e416d8df6a5d755436fef7abfa5e53a59c8e081cf",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/31"
+        }
+      },
+      "37.32": {
+        "whole_unit_index": 294,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 375045,
+          "byte_end_exclusive": 375967,
+          "line_start": 7308,
+          "line_end_inclusive": 7326,
+          "bytes": 922,
+          "sha256": "245696ce80406126564bd4c61cdd0609f4b6f5826ba913bcf86eb482058597eb",
+          "lf_count": 19,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "245696ce80406126564bd4c61cdd0609f4b6f5826ba913bcf86eb482058597eb",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/32"
+        }
+      },
+      "37.33": {
+        "whole_unit_index": 295,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 375967,
+          "byte_end_exclusive": 377203,
+          "line_start": 7327,
+          "line_end_inclusive": 7351,
+          "bytes": 1236,
+          "sha256": "6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/33"
+        }
+      },
+      "37.34": {
+        "whole_unit_index": 296,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 377203,
+          "byte_end_exclusive": 378551,
+          "line_start": 7352,
+          "line_end_inclusive": 7390,
+          "bytes": 1348,
+          "sha256": "515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+          "lf_count": 39,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/34"
+        }
+      },
+      "37.35": {
+        "whole_unit_index": 297,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 378551,
+          "byte_end_exclusive": 380355,
+          "line_start": 7391,
+          "line_end_inclusive": 7423,
+          "bytes": 1804,
+          "sha256": "90fe497db5cfa5fc229cc3fe1d0568abcc556f196d6e6d028a315f6e33d1a9a8",
+          "lf_count": 33,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "90fe497db5cfa5fc229cc3fe1d0568abcc556f196d6e6d028a315f6e33d1a9a8",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/35"
+        }
+      },
+      "37.36": {
+        "whole_unit_index": 298,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 380355,
+          "byte_end_exclusive": 381212,
+          "line_start": 7424,
+          "line_end_inclusive": 7438,
+          "bytes": 857,
+          "sha256": "a325db0bd14a32558bf36d154584064b63a908a0edc76bdd429a57fe11d74743",
+          "lf_count": 15,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "a325db0bd14a32558bf36d154584064b63a908a0edc76bdd429a57fe11d74743",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/36"
+        }
+      },
+      "37.37": {
+        "whole_unit_index": 299,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 381212,
+          "byte_end_exclusive": 382130,
+          "line_start": 7439,
+          "line_end_inclusive": 7463,
+          "bytes": 918,
+          "sha256": "c0dfacea6de1316b08db27b4c98bbad591636080bd73215af71e2174353f97d3",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "c0dfacea6de1316b08db27b4c98bbad591636080bd73215af71e2174353f97d3",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/37"
+        }
+      },
+      "37.38": {
+        "whole_unit_index": 300,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 382130,
+          "byte_end_exclusive": 383467,
+          "line_start": 7464,
+          "line_end_inclusive": 7483,
+          "bytes": 1337,
+          "sha256": "2372326ccb98ad40bbed1d9793e66b6bf4e22e57703ccc7cf132851231ff0712",
+          "lf_count": 20,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "2372326ccb98ad40bbed1d9793e66b6bf4e22e57703ccc7cf132851231ff0712",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/38"
+        }
+      },
+      "37.39": {
+        "whole_unit_index": 301,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 383467,
+          "byte_end_exclusive": 385227,
+          "line_start": 7484,
+          "line_end_inclusive": 7508,
+          "bytes": 1760,
+          "sha256": "15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/39"
+        }
+      },
+      "37.40": {
+        "whole_unit_index": 302,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 385227,
+          "byte_end_exclusive": 387016,
+          "line_start": 7509,
+          "line_end_inclusive": 7534,
+          "bytes": 1789,
+          "sha256": "30e706ddceb001008c8c537e3cf53d8cad63b3a1779d21b3d745a102609ad329",
+          "lf_count": 26,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "30e706ddceb001008c8c537e3cf53d8cad63b3a1779d21b3d745a102609ad329",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/40"
+        }
+      },
+      "37.41": {
+        "whole_unit_index": 303,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 387016,
+          "byte_end_exclusive": 388240,
+          "line_start": 7535,
+          "line_end_inclusive": 7557,
+          "bytes": 1224,
+          "sha256": "9fffaa7000fdbda5782f1f61b79b26b911ef287f5f0ea64ab6c6852da71feec9",
+          "lf_count": 23,
+          "trailing_lf_count": 2
+        },
+        "atom_id": "9fffaa7000fdbda5782f1f61b79b26b911ef287f5f0ea64ab6c6852da71feec9",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/41"
+        }
+      },
+      "37.42": {
+        "whole_unit_index": 304,
+        "current_span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 388240,
+          "byte_end_exclusive": 391093,
+          "line_start": 7558,
+          "line_end_inclusive": 7592,
+          "bytes": 2853,
+          "sha256": "9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+          "lf_count": 35,
+          "trailing_lf_count": 1
+        },
+        "atom_id": "9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+        "original_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/source/new_units/42"
+        }
+      }
+    },
+    "permanent_reservations": [
+      "9",
+      "13",
+      "14",
+      "25.17",
+      "26.29",
+      "27.20",
+      "28.19",
+      "29.22",
+      "30.21"
+    ]
+  },
+  "primary_correspondence": {
+    "inputs": {
+      "C102": {
+        "complete_inventory": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_correspondence/C102"
+        },
+        "raw_archive_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_inputs/C102"
+        },
+        "raw_payload_identity": {
+          "bytes": 29419,
+          "sha256": "3816b3ed07fc2a45f691178be9728232b251c70606afb0c8882e456a89f09853",
+          "lf_count": 131,
+          "trailing_lf_count": 0
+        },
+        "current_proof_resolver": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/proof_addresses"
+        },
+        "all_json_nodes_exhaustively_resolved": true,
+        "counts": {
+          "nodes": 118,
+          "scalar_leaves": 104,
+          "containers": 14,
+          "metadata_only": 10,
+          "superseded_subtree_nodes": 0,
+          "containers_with_superseded_descendant": 0
+        }
+      },
+      "C104": {
+        "complete_inventory": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_correspondence/C104"
+        },
+        "raw_archive_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_inputs/C104"
+        },
+        "raw_payload_identity": {
+          "bytes": 34197,
+          "sha256": "725ac44a37a91fcff96b4fdec1828761f4b0489dfa32323c6607e9e33f81e79b",
+          "lf_count": 218,
+          "trailing_lf_count": 0
+        },
+        "current_proof_resolver": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/proof_addresses"
+        },
+        "all_json_nodes_exhaustively_resolved": true,
+        "counts": {
+          "nodes": 182,
+          "scalar_leaves": 145,
+          "containers": 37,
+          "metadata_only": 18,
+          "superseded_subtree_nodes": 8,
+          "containers_with_superseded_descendant": 3
+        }
+      },
+      "C106": {
+        "complete_inventory": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_correspondence/C106"
+        },
+        "raw_archive_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_inputs/C106"
+        },
+        "raw_payload_identity": {
+          "bytes": 27625,
+          "sha256": "1d6973c59158c6413f2ea0d832c19561906e9f26242cdbb4b549dda1dbc1287b",
+          "lf_count": 228,
+          "trailing_lf_count": 0
+        },
+        "current_proof_resolver": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/proof_addresses"
+        },
+        "all_json_nodes_exhaustively_resolved": true,
+        "counts": {
+          "nodes": 211,
+          "scalar_leaves": 163,
+          "containers": 48,
+          "metadata_only": 20,
+          "superseded_subtree_nodes": 0,
+          "containers_with_superseded_descendant": 0
+        }
+      }
+    },
+    "value_hash_rule": "SHA256 of json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"), allow_nan=False).encode(\"utf-8\") in Python 3. Sort object keys recursively; preserve array order and exact string code points. No BOM, whitespace outside string values, final LF, Unicode normalization or digest masking. Parse strict JSON with unique object keys and no NaN/Infinity. This differs from the exact raw-payload byte identity.",
+    "all_node_rule": "For every row of each complete referenced inventory, retain pointer, json_type, value_sha256 and original disposition. Resolve mathematical proof_addresses through this map. Scalar metadata and any metadata clause in a mixed mathematical scalar remain only in the exact raw payload at that pointer. Containers compose every child; a metadata-only container need not have proof addresses.",
+    "correction": {
+      "immutable_authority": {
+        "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+        "pointer": "/correction"
+      },
+      "as_received": {
+        "raw_archive_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_inputs/C104"
+        },
+        "pointer": "/conclusion/part_III_finite_supremum_and_certificates/rough_truncation_finite_algebra"
+      },
+      "wrong_field": {
+        "raw_archive_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_inputs/C104"
+        },
+        "pointer": "/conclusion/part_III_finite_supremum_and_certificates/rough_truncation_finite_algebra/correct_Gram"
+      },
+      "replacement": {
+        "raw_archive_record": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/primary_inputs/C106"
+        },
+        "pointer": "/conclusion/full_replacement/rough_truncation_finite_algebra"
+      },
+      "application": "The entire C104 subtree is preserved as received and superseded for active finite-basis algebra by the entire C106 replacement. Parent containers inherit this mixed disposition. Other C104 statements and C106 repeated dependency proofs keep their existing mathematical scope.",
+      "current_full_replacement_addresses": [
+        "37.28",
+        "37.29",
+        "37.30",
+        "37.31",
+        "37.32"
+      ],
+      "current_example_addresses": [
+        "37.33",
+        "37.34"
+      ],
+      "current_dependency_addresses": [
+        "37.19",
+        "37.20",
+        "37.21",
+        "37.22",
+        "37.23",
+        "37.24",
+        "37.25",
+        "37.26",
+        "37.27",
+        "37.35",
+        "37.36",
+        "37.37",
+        "37.38",
+        "37.39",
+        "37.40",
+        "37.41",
+        "37.42"
+      ],
+      "cause": "UNKNOWN; no claim about generation, rendering, extraction or transport origin."
+    },
+    "relocated_source_language": [
+      {
+        "address": "37.39",
+        "archive": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/report/archives/3"
+        },
+        "retained": "Full total finite-language definition, external input binding, termination/soundness and corrected adjoint derivation.",
+        "relocated": "Only the implemented/executed-verifier qualification; the original complete sentence remains in the archive."
+      },
+      {
+        "address": "37.42",
+        "archive": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+          "pointer": "/report/archives/4"
+        },
+        "retained": "Every mathematical paragraph, inequality, proper-subspace and nonorthogonality proof, recoding invariance, singular/zero/finite-infinite distinction, 30/37 reference, B1 theorem/URL/normalization and separate open obligation.",
+        "relocated": "User GH label/working RH interpretation and the final paper/provenance/numerical-execution/kernel-status sentence."
+      }
+    ],
+    "effective_disposition_manifest": {
+      "rows": 511,
+      "sha256": "e9fe58eda86fe4b3604c5d482b0817b316488950eeec7edaf5b2d9fffd847bcb",
+      "row_schema": [
+        "input",
+        "inventory_index",
+        "raw_json_pointer",
+        "value_sha256",
+        "proof_addresses",
+        "effective_disposition"
+      ],
+      "derivation": "Visit C102, C104, C106 in that exact order. Enumerate each complete immutable inventory array from zero independently, preserving array order and every row, including containers and the empty-pointer root. Emit exactly row_schema with values specified in projection_recipe; apply the five unchanged ordered_rules by first match. Hash the entire 511-row array using value_hash_rule. The public executable reconstruction is /materialized_projection_contract/python3_lines.",
+      "ordered_rules": [
+        {
+          "when": "input=C104 and pointer equals the replaced subtree pointer or starts with that pointer plus /",
+          "value": "superseded-as-received-subtree; archive exact, C106 full replacement supplies active algebra"
+        },
+        {
+          "when": "input=C104 and replaced subtree pointer starts with row pointer plus /",
+          "value": "mixed-container; compose all child dispositions including the explicit corrected subtree"
+        },
+        {
+          "when": "original disposition starts with Inert",
+          "value": "inert raw metadata only; no mathematical premise or independent approval"
+        },
+        {
+          "when": "resolved raw JSON value is an object or array",
+          "value": "ordered container; compose every child; mathematical addresses contain only mathematical content"
+        },
+        {
+          "when": "otherwise",
+          "value": "mathematics or stated mathematical limit at current proof addresses; any provenance/execution wording stays in exact raw archive"
+        }
+      ],
+      "projection_recipe": {
+        "input_order": [
+          "C102",
+          "C104",
+          "C106"
+        ],
+        "inventory_order": "For each input tag, resolve /primary_correspondence/inputs/<tag>/complete_inventory against its bound immutable map. Use that array order literally; do not traverse the raw object to choose row order, sort rows, filter metadata, deduplicate or omit containers.",
+        "inventory_index": "JSON integer, zero-based within each input: C102 0..117, C104 0..181, C106 0..210. Reset to zero at each input; never use a global index.",
+        "field_projection": {
+          "input": "Exact input tag string.",
+          "inventory_index": "Per-input zero-based array index described above.",
+          "raw_json_pointer": "Exact inventory row.pointer string; the root is the empty string.",
+          "value_sha256": "Exact inventory row.value_sha256 string, independently checked against the canonical encoding of the resolved raw node.",
+          "proof_addresses": "Copy row.proof_addresses exactly, preserving order, repetitions and string spellings. Use [] only when the key is absent; do not replace an explicit value or infer addresses from children.",
+          "effective_disposition": "Exact complete value string of the first matching ordered_rules entry. No abbreviations, trimming, translations or recomposition of the string."
+        },
+        "raw_node_resolution": "Resolve inputs/<tag>/raw_archive_record in the immutable map and take its payload byte_start:byte_end_exclusive from the frozen current report, verifying raw_payload_identity. Parse those exact UTF-8 bytes as JSON. Inventory row.pointer is an RFC6901 JSON Pointer into that raw root, not into the inventory, map or /conclusion alone. Empty pointer selects the root. Split nonempty pointers at /; unescape each token by replacing ~1 with / then ~0 with ~; decode list tokens as zero-based decimal indices. Re-escape ~ as ~0 then / as ~1 and require equality with the original pointer. No URI/percent decoding, leading-# handling, path cleanup, Unicode normalization or change to the emitted pointer. Raw log_ref fields are inert JSON values; never follow or read their referenced contents.",
+        "priority": "Let p be the unchanged row.pointer and q=/primary_correspondence/correction/as_received/pointer. Rule 1: tag==C104 and (p==q or p.startswith(q+\"/\")). Rule 2: tag==C104 and q.startswith(p+\"/\"). Rule 3: row.disposition.startswith(\"Inert\"), case-sensitive. Rule 4: resolved raw value is dict or list. Rule 5: otherwise. Stop at first match. Superseded subtree precedes mixed ancestors; both precede metadata and generic containers. The empty root is a strict ancestor of q. Test segment boundaries via the appended slash; do not use an unbounded textual prefix.",
+        "semantic_retention": "All original inventory fields and dispositions remain in the immutable inputs; this six-field digest projection does not replace them. All 511 nodes, full C104 error subtree and full C106 replacement/dependency relation remain governed by correction and all_node_rule. A mathematical row or mixed container does not adopt any metadata clause as a mathematical premise.",
+        "per_input_rule_counts": {
+          "C102": {
+            "1": 0,
+            "2": 0,
+            "3": 10,
+            "4": 14,
+            "5": 94
+          },
+          "C104": {
+            "1": 8,
+            "2": 3,
+            "3": 18,
+            "4": 33,
+            "5": 120
+          },
+          "C106": {
+            "1": 0,
+            "2": 0,
+            "3": 20,
+            "4": 48,
+            "5": 143
+          }
+        }
+      }
+    },
+    "inherited": {
+      "I36_all_C95_C96_C97_leaves": {
+        "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+        "pointer": "/primary_correspondence"
+      },
+      "I36_input_identities": {
+        "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+        "pointer": "/prerequisite_intake/files"
+      },
+      "I36_scope_and_mixed_metadata": {
+        "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+        "pointer": "/provenance_and_review_limits"
+      },
+      "I33_all_C88_C90_C92_C93_correspondence": {
+        "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+        "pointer": "/proof_to_primary"
+      },
+      "I33_primary_inputs": {
+        "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+        "pointer": "/primary_inputs"
+      },
+      "I33_complete_input_identities": {
+        "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+        "pointer": "/prerequisite_intake"
+      },
+      "I33_completeness": {
+        "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+        "pointer": "/primary_completeness"
+      },
+      "I31_all_citations": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+        "pointer": "/citations"
+      },
+      "I31_all_original_addresses": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+        "pointer": "/original_numbered_entries"
+      },
+      "I31_all_archives": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+        "pointer": "/archive_spans"
+      },
+      "I31_original_pending_Gram_history": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+        "pointer": "/pending_mathematics"
+      },
+      "current_address_owner": {
+        "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+        "pointer": "/addresses"
+      },
+      "composition": "All current inherited mathematical proof addresses resolve through I36 /addresses without displacement because they lie in the exact 336935-byte prefix; I38’s 30.85 whole-unit separator overlay remains. I33 and I31 original source offsets are resolved using the named recovered sources in /recovery, not directly against current source. Every prior report archive, table, error, input identity and status retains its exact prior meaning. Later I33/I36 adopted Gram proofs supersede the historical pending text; no fresh analytic review of inherited mathematics is claimed.",
+      "original_S19_primary_table": {
+        "span": {
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+          "byte_start": 4364,
+          "byte_end_exclusive": 7561,
+          "line_start": 58,
+          "line_end_inclusive": 90,
+          "bytes": 3197,
+          "sha256": "7b8a9060106ec213bdeca3a3061f991aa2c8c2deae866f26417336aeb80116c0",
+          "lf_count": 33,
+          "trailing_lf_count": 1
+        },
+        "row_count": 21,
+        "row_resolution": "Read the first column as the 30.x address. Resolve 30.1–30.20 through unchanged I36 /addresses. Unit 30.20 may mix retained mathematical content with provenance, whose original bytes remain in the I31 archive/recovery. Reserved 30.21 is archival only. The table’s relative primary paths and caller-paper references remain historical provenance, not permission to open their external referents.",
+        "address_records": {
+          "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/addresses"
+        },
+        "archive_records": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/archive_spans"
+        },
+        "original_address_recovery": {
+          "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/original_numbered_entries"
+        }
+      }
+    }
+  },
+  "canonical": {
+    "new_pairs": {
+      "216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+          "bytes": 1279,
+          "sha256": "216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+          "lf_count": 28,
+          "trailing_lf_count": 2
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99.yaml",
+          "bytes": 328,
+          "sha256": "3621ec103ca5f04aa37996b0d960bf9a3d3f905698fd0bd568296a8996068f62",
+          "lf_count": 7,
+          "trailing_lf_count": 1
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+            "normalized_sha256": "sha256:216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99"
+          },
+          "cas_ref": "sha256:216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_source_occurrences": [
+          [
+            353780,
+            355059
+          ]
+        ]
+      },
+      "6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+          "bytes": 1236,
+          "sha256": "6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5.yaml",
+          "bytes": 328,
+          "sha256": "49628619dd3d0268735b81c2988f104aa9a8cc8c36b99c30d4ac32515290f0d1",
+          "lf_count": 7,
+          "trailing_lf_count": 1
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+            "normalized_sha256": "sha256:6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5"
+          },
+          "cas_ref": "sha256:6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_source_occurrences": [
+          [
+            375967,
+            377203
+          ]
+        ]
+      },
+      "515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+          "bytes": 1348,
+          "sha256": "515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+          "lf_count": 39,
+          "trailing_lf_count": 2
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e.yaml",
+          "bytes": 328,
+          "sha256": "5a29290997903e77806a45d530aebbc3e3f16dda2ae8f679eb2c649bac6fe624",
+          "lf_count": 7,
+          "trailing_lf_count": 1
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+            "normalized_sha256": "sha256:515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e"
+          },
+          "cas_ref": "sha256:515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_source_occurrences": [
+          [
+            377203,
+            378551
+          ]
+        ]
+      },
+      "15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+          "bytes": 1760,
+          "sha256": "15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+          "lf_count": 25,
+          "trailing_lf_count": 2
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504.yaml",
+          "bytes": 328,
+          "sha256": "46353968ddd978fae62e79a57965688be842687faf1849778132b6d3388332fe",
+          "lf_count": 7,
+          "trailing_lf_count": 1
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+            "normalized_sha256": "sha256:15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504"
+          },
+          "cas_ref": "sha256:15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_source_occurrences": [
+          [
+            383467,
+            385227
+          ]
+        ]
+      },
+      "9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+          "bytes": 2853,
+          "sha256": "9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+          "lf_count": 35,
+          "trailing_lf_count": 1
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c.yaml",
+          "bytes": 328,
+          "sha256": "94fbaeaaf982861739ea2832e31369799dbd94ebf9ef60b54606607865545597",
+          "lf_count": 7,
+          "trailing_lf_count": 1
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+            "normalized_sha256": "sha256:9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c"
+          },
+          "cas_ref": "sha256:9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_source_occurrences": [
+          [
+            388240,
+            391093
+          ]
+        ]
+      }
+    },
+    "complete_current_pair_composition": {
+      "base": {
+        "union": [
+          {
+            "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/canonical/new_pairs"
+          },
+          {
+            "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/canonical/current_existing_bindings"
+          }
+        ],
+        "resolve_existing_bindings": "Follow each exact map/pointer record into the bound immutable map.",
+        "remove_from_reachability_only": [
+          "2a5e48687c0fb5fdaffac74c8b20d01a715d72665993c1c52c0d851cc439e0b5"
+        ],
+        "then_union": {
+          "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+          "pointer": "/canonical/new_pairs"
+        },
+        "I38_result_count": 397
+      },
+      "remove_from_reachability_only": [
+        "2a043a49cf412d52368c973653a5e9511b3709f5ec559b89c0e528ed34406118",
+        "37f0afa3626f489b94d0e65bd6b7616382a5a98564678fcb190c5ed87ef923e6",
+        "4e1348e3007e262bfd722d6a39505ea5cd1df4c13732396b4645891bccfaa7bc",
+        "361234c5795536963f3135d7ec254e5fba236a577dcbc8930f9e7ca1701330fc",
+        "03d49b996f46284427cb6e8a02231b3df7523365881a8e9082bd6b07fe4ae375"
+      ],
+      "then_union": {
+        "path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+        "pointer": "/canonical/new_pairs"
+      },
+      "counts": {
+        "inherited_I36_pairs": 353,
+        "unchanged_I38_pairs": 39,
+        "new_I43_pairs": 5,
+        "total": 397
+      },
+      "source_occurrences": "For every selected pair use the exact producer payload and enumerate all byte-equal occurrences in the frozen source. Historical I33/I36 occurrence offsets are not reused as current offsets; their current occurrences are recomputed. All current payloads resolve to at least one full source occurrence.",
+      "materialized_manifest_sha256": "c57105fe3e324d15fb6f6300145932216d01749ea6239d900c61d7d3f9330a2a",
+      "manifest": "Canonical JSON object keyed by the 397 bare atom_id strings. Each value has exactly cas, yaml, parsed_yaml and current_source_occurrences as specified in projection_recipe. Use /primary_correspondence/value_hash_rule for the complete object; all normalized identity fields use identity_semantics.",
+      "projection_recipe": {
+        "composition": "Resolve base.union in listed order. Direct pair records are values; map/pointer bindings resolve through immutable_maps (path/pointer references resolve directly). Union by bare atom_id, requiring disjoint keys. Remove base.remove_from_reachability_only, then union base.then_union: 397 I38 keys. Remove the five outer remove_from_reachability_only keys, then union outer then_union: 397 current keys (353 inherited I36, 39 unchanged I38, 5 I43). Removal affects current reachability only; no historical file is removed.",
+        "payloads": "Materialize the existing 305 whole-unit manifest using /source/whole_units. Each atom payload is its exact frozen current source span. For every ordered chain, resolve the immutable ordered_children_binding children records. Take each child from its exact parent payload[parent_byte_start:parent_byte_end_exclusive], requiring contiguous, exhaustive slices in recorded order and checking the child hash. Repeated atom IDs must resolve to byte-equal payloads. The union of whole and child IDs must equal the selected 397 pair keys. No CAS/YAML corpus reads or mathematical evaluation are needed.",
+        "identity_fields": [
+          "path",
+          "bytes",
+          "sha256",
+          "lf_count",
+          "trailing_lf_count"
+        ],
+        "identity_normalization": "For cas and yaml, path is nested record.path if present, otherwise the pair-level cas_path or yaml_path. bytes comes from bytes or byte_count; sha256 is copied exactly; lf_count from lf_count or lf; trailing_lf_count from trailing_lf_count, terminal_lf_count or terminal_lf. Require any simultaneously present aliases to agree. Counts are integers. Output exactly identity_fields and omit all historical alias keys. For CAS compare this normalized record with the identity computed from the exact reconstructed payload. YAML identity is from the bound record and unchanged Git delta, not a serialization of parsed_yaml.",
+        "parsed_yaml": "Copy the complete selected pair.parsed_yaml if present, otherwise pair.actual_yaml, with every value and ordered array unchanged. Verify cas_ref and both fingerprints equal sha256:<atom_id>. No YAML regeneration, canonical file mutation or inference of missing metadata.",
+        "current_source_occurrences": "Use each reconstructed nonempty payload to find all byte-equal occurrences in the full frozen source. Emit an array of [byte_start, byte_end_exclusive] integer pairs ordered by increasing start, including overlapping hits (resume search at prior start+1). Require at least one hit. Offsets are UTF-8 bytes, half-open, with no historical offset reuse, LF trimming, normalization or whole-unit-only filtering.",
+        "serialization": "The outer value is an object, not an array of records. Serialize the whole object with /primary_correspondence/value_hash_rule; recursive key sorting fixes object order, while occurrence and parsed-YAML array order remains exact. No LF or self-hash field enters the projection."
+      }
+    },
+    "ordered_chains": {
+      "complete_inventory": {
+        "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+        "pointer": "/canonical/ordered_current_chains"
+      },
+      "ordered_children": "Resolve every ordered_children_binding into its immutable children array (or use direct children records), preserve record order, and project each record to its bare atom_id string. This ordered string array must equal the complete bound parsed_yaml.receipts.chain_atoms array. Exact parent-relative slices must concatenate to the full reconstructed parent payload.",
+      "count": 38,
+      "new_chains": 0,
+      "all_ordered_concatenations_match": true,
+      "materialized_manifest_sha256": "cc3d1acd116ee00e817846fb6d6801c21987c6c9028af17f1b6f7f2810f7b869",
+      "manifest_row_fields": [
+        "ordered_children",
+        "current_parent_occurrences"
+      ],
+      "projection_recipe": {
+        "outer_shape": "Canonical JSON object keyed by each of the 38 bare parent atom_id strings in complete_inventory. Each value has exactly the two manifest_row_fields; it is not an array and carries no inherited verification booleans or child span records.",
+        "ordered_children": "Array of bare child atom_id strings, in the exact immutable children-record order, including any repetitions. Resolve ordered_children_binding through immutable_maps; compare the array exactly to the parent pair parsed_yaml.receipts.chain_atoms. Reconstruct each child using its exact contiguous parent-relative span, as specified in complete_current_pair_composition/projection_recipe.",
+        "current_parent_occurrences": "Copy the complete parent pair current_source_occurrences computed by the current pair projection. Each element is [byte_start, byte_end_exclusive], not an object; preserve increasing byte-start order and overlapping matches.",
+        "serialization": "Hash the complete 38-key object using /primary_correspondence/value_hash_rule. The original chain digest is retained because this exact projection reproduces it. All ordered child strings, payloads, parent occurrences and parsed YAML remain unchanged."
+      }
+    },
+    "all_old_I38_pairs": {
+      "inventory": {
+        "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+        "pointer": "/canonical/new_pairs"
+      },
+      "preserved_on_disk": 44,
+      "still_current": 39,
+      "superseded_but_preserved": 5
+    },
+    "earlier_objects": {
+      "preservation_authority": {
+        "path": "docs/reports/quantized-gh/joint-smooth-dual-adoption-s26-0911.json",
+        "pointer": "/preservation/old_canonical"
+      },
+      "method": "Use the pinned clean BASE and complete tracked Git delta to preserve every preexisting file, including every old CAS/YAML/LF variant. The passed old650/3192-object audit is inherited, not replayed; no old corpus scan is performed."
+    },
+    "ingest": {
+      "argv": [
+        "make",
+        "ingest",
+        "BASE=f0f3db2938a7f0b39d0589db73380a21b0c6a570",
+        "SOURCE=arithmetic-boundary-quantization"
+      ],
+      "exit_code": 0,
+      "stdout": "INGEST residual_open_added=5 skipped_existing=300 coarse_fallbacks=0 open_genres=0 cas_objects_written=5 ledger_changed=true\n",
+      "stderr": "",
+      "stdout_bytes": 125,
+      "stdout_sha256": "5c7697e7c8d09606010ae426195ca12e0237e4a40d7b154a422de194a47fe632",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "completed_at_utc": "2026-09-10T20:53:50.706526+00:00",
+      "source_unchanged": true
+    },
+    "invocations": 1,
+    "manual_canonical_edits": 0,
+    "source_edits_after_ingest": 0,
+    "whitespace": {
+      "new_file_observations": [
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/atoms/sha256/216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99"
+          ],
+          "exit_code": 3,
+          "stdout": "Meta/Digestion/atoms/sha256/216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99:28: new blank line at EOF.\n",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 120,
+            "sha256": "3695eb29d2ed1e23e9684dfc5d0cfe7cd16f6df6cbc8e0b8e1b86de2380e445d",
+            "lf_count": 1,
+            "trailing_lf_count": 1
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99.yaml"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/atoms/sha256/6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5"
+          ],
+          "exit_code": 3,
+          "stdout": "Meta/Digestion/atoms/sha256/6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5:25: new blank line at EOF.\n",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 120,
+            "sha256": "345535f39203182f4702e0cf8eed8cd7151921d42632483092759d0a8b87940d",
+            "lf_count": 1,
+            "trailing_lf_count": 1
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5.yaml"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/atoms/sha256/515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e"
+          ],
+          "exit_code": 3,
+          "stdout": "Meta/Digestion/atoms/sha256/515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e:39: new blank line at EOF.\n",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 120,
+            "sha256": "553e139939be6abfd63465c2bc2ec72a3208c6a14926e51be6a6efd73d07b188",
+            "lf_count": 1,
+            "trailing_lf_count": 1
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e.yaml"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/atoms/sha256/15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504"
+          ],
+          "exit_code": 3,
+          "stdout": "Meta/Digestion/atoms/sha256/15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504:25: new blank line at EOF.\n",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 120,
+            "sha256": "e5784ed41fd6b701880b446ab81244cb4bb8fbd467e871fe4645af0bac690025",
+            "lf_count": 1,
+            "trailing_lf_count": 1
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504.yaml"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/atoms/sha256/9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--no-index",
+            "--check",
+            "/dev/null",
+            "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c.yaml"
+          ],
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "",
+          "stdout_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          },
+          "stderr_identity": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "lf_count": 0,
+            "trailing_lf_count": 0
+          }
+        }
+      ],
+      "exit_meanings": {
+        "1": "new-file difference with no whitespace diagnostic",
+        "3": "new-file difference plus whitespace diagnostic"
+      },
+      "diagnostics_preserved_byte_exact": true,
+      "EOF_normalizations": 0
+    }
+  },
+  "historical_diagnostics": {
+    "I38_worker_result": "The complete allowed original I38 result remains unchanged; its original ingest and diagnostic counts describe its own snapshot.",
+    "caller_extractor": "Caller first treated new_pairs as a list instead of a dict (cc1254); the corrected extraction followed.",
+    "caller_schema": "Caller first required proof addresses in a metadata-only container; corrected schema check passed. Neither caller issue is a worker mathematical defect.",
+    "current_worker": [
+      "Before compaction, an overbroad filename-discovery rg under /Users/auricstudio enumerated outside the target and was interrupted with exit130. It produced permission errors, opened no discovered content intentionally and made no mutation; this is a disclosed scope deviation.",
+      "An exact-ancestor/in-target discovery command returned1 for no matches before compaction.",
+      "A guessed Meta/Digestion/sources.toml path did not exist (rg exit2); actual producer code and exact map inputs resolved needed guidance.",
+      "A metadata display tried len(bool), exited1, and was corrected before source editing.",
+      "Display truncations in indispensable text were closed with bounded reads; complete repetitive inventories were recursively parsed. No opaque log_ref, logs, registry or historical command paths were followed."
+    ]
+  },
+  "limitations": [
+    "No separately identified mathematical error is repaired; the C104 error was already corrected by I38 and both raw versions remain exact.",
+    "No mathematical evaluator, example, candidate generation, certificate/test/search replay, GPU/runtime, broad build, install, delegation/native subagent, external message or Git lifecycle mutation.",
+    "Canonical make ingest uses its normal producer orchestration; no second ingest, compatibility workaround, manual CAS/YAML edit, old-pair deletion or EOF normalization.",
+    "Inherited section12 remains S19/I42-owned. That physical target was not intentionally opened; the filename-discovery scope deviation is disclosed separately.",
+    "No chapters31–36 or C107/C108/C111/C114 adoption. Exact pure predecessor composition and complete independent review remain required.",
+    "All RH/dictionary/remainder/infinite-attainment/Robin/slab/common-height/general-prime obligations retain their original distinct scopes. No new GH definition or imported-theorem change.",
+    "No independent verdict, full-body approval, RH/Lean/kernel/novelty/delivery/MERGED or standing-goal completion claim. Caller owns staging, commits, push, PRs and ordered S19→S26 delivery."
+  ],
+  "hash_contract": "This map owns final source/report/new-pair identities. Its own exact full-file identity is supplied once externally in the final worker result. No self-hash, recursive digest hole or stale current-map identity is stored here.",
+  "changed_files": {
+    "non_map": [
+      {
+        "path": "Meta/Digestion/atoms/sha256/15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+        "bytes": 1760,
+        "sha256": "15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504",
+        "lf_count": 25,
+        "trailing_lf_count": 2
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+        "bytes": 1279,
+        "sha256": "216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99",
+        "lf_count": 28,
+        "trailing_lf_count": 2
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+        "bytes": 1348,
+        "sha256": "515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e",
+        "lf_count": 39,
+        "trailing_lf_count": 2
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+        "bytes": 1236,
+        "sha256": "6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5",
+        "lf_count": 25,
+        "trailing_lf_count": 2
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+        "bytes": 2853,
+        "sha256": "9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c",
+        "lf_count": 35,
+        "trailing_lf_count": 1
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/15d7660bc5027ddc9771c3935c346fc9b24e97c9975ef8c7dec1c05e74eee504.yaml",
+        "bytes": 328,
+        "sha256": "46353968ddd978fae62e79a57965688be842687faf1849778132b6d3388332fe",
+        "lf_count": 7,
+        "trailing_lf_count": 1
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/216f97d812978155ecca75a64816a7113b22015d0fdff0927542875ee52ffe99.yaml",
+        "bytes": 328,
+        "sha256": "3621ec103ca5f04aa37996b0d960bf9a3d3f905698fd0bd568296a8996068f62",
+        "lf_count": 7,
+        "trailing_lf_count": 1
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/515e51f7d2ebdd4aa8bd38c552c7c497abb6cdf70cd6c210d4784710be995b8e.yaml",
+        "bytes": 328,
+        "sha256": "5a29290997903e77806a45d530aebbc3e3f16dda2ae8f679eb2c649bac6fe624",
+        "lf_count": 7,
+        "trailing_lf_count": 1
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6340f86eac66e1eff97c4087176033f4b9b4f20ffc6acbe9c2f7f34a8f9d1cf5.yaml",
+        "bytes": 328,
+        "sha256": "49628619dd3d0268735b81c2988f104aa9a8cc8c36b99c30d4ac32515290f0d1",
+        "lf_count": 7,
+        "trailing_lf_count": 1
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9688b5f3e18eadc1b94e7703fdea7ff6db563c9a604b8e8720f0dcfac473970c.yaml",
+        "bytes": 328,
+        "sha256": "94fbaeaaf982861739ea2832e31369799dbd94ebf9ef60b54606607865545597",
+        "lf_count": 7,
+        "trailing_lf_count": 1
+      },
+      {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 391093,
+        "sha256": "4dbb0a1f62327dcff5d5bfd2161c74a0a8579338152787d15e97e9d7b553d8eb",
+        "lf_count": 7592,
+        "trailing_lf_count": 1
+      },
+      {
+        "path": "docs/reports/quantized-gh/joint-smooth-dual-closure-0911.md",
+        "bytes": 115300,
+        "sha256": "a9a9c2a5af7b9790ef14ddb874c25e071ccce31ad0fda3b61b57ccf07332a2fe",
+        "lf_count": 862,
+        "trailing_lf_count": 1
+      }
+    ],
+    "map_path": "docs/reports/quantized-gh/theory-body-migration-s26-0911.json",
+    "total_paths": 13,
+    "canonical_additions": 10,
+    "map_identity": "Externally bound in result.json only."
+  },
+  "verification_basis": {
+    "pre_mutation": "All prerequisite prose was fully read and indispensable display gaps closed; all repetitive map/primary inventories recursively parsed. Exact 305 whole units,397 current pairs,38 ordered chains and511 complete primary nodes passed fixed verification. Every inherited file identity and parsed YAML used in current composition was verified before mutation, with no LF-count discrepancy.",
+    "historical_preservation": "Pinned HEAD clean before mutation; tracked Git diff after mutation contains exactly source/report, no staged delta. No old canonical object, old map or prior report was modified. Historical650/3192/32770 corpus scans were not repeated.",
+    "source_scope": "Only the exact five original units changed; original section12 remains in the preserved336935-byte prefix. The only after-ingest writes concern report/map bookkeeping and worker-owned attempt artifacts.",
+    "process_deviation": "The initial overbroad filename discovery is explicitly disclosed in historical_diagnostics/current_worker; no assertion of perfect physical-target isolation is made."
+  },
+  "materialized_projection_contract": {
+    "scope": "Executable public representation recipe for the four existing materialized digests. It reads only this map, its four immutable maps, the frozen source and the frozen report from this worktree. It does not read historical CAS/YAML, logs or other worktrees and performs no mathematical execution. It creates no files.",
+    "execution": "From the repository root, join python3_lines with LF and run as Python 3 code (stdlib only). project() returns count, reconstructed digest, declared digest and match status for each projection, plus rule counts and bounded assertion counts. No worker-owned diagnostic or producer script is needed. The code is included here as the exact projection, not as an additional mathematical premise.",
+    "hash_input_exclusions": "Each digest hashes only its projected array/object. It never hashes this recipe, the enclosing map, validation/history fields, a digest field, a file-system path outside the projected records, or its own declared value. This map has no internal full-file hash or cyclic digest hole.",
+    "python3_lines": [
+      "\"\"\"Bounded JSON/UTF-8 representation projection; no CAS/YAML file reads.\"\"\"",
+      "from pathlib import Path",
+      "from collections import Counter",
+      "import hashlib",
+      "import json",
+      "",
+      "MAP = 'docs/reports/quantized-gh/theory-body-migration-s26-0911.json'",
+      "checks = Counter()",
+      "",
+      "def ck(group, condition):",
+      "    if not condition:",
+      "        raise AssertionError(group)",
+      "    checks[group] += 1",
+      "",
+      "def sha(data):",
+      "    return hashlib.sha256(data).hexdigest()",
+      "",
+      "def canonical(value):",
+      "    return json.dumps(value, ensure_ascii=False, sort_keys=True,",
+      "                      separators=(',', ':'), allow_nan=False).encode('utf-8')",
+      "",
+      "def unique_object(items):",
+      "    result = {}",
+      "    for key, value in items:",
+      "        ck('strict_json_unique_keys', key not in result)",
+      "        result[key] = value",
+      "    return result",
+      "",
+      "def reject_constant(value):",
+      "    raise ValueError(value)",
+      "",
+      "def parse(data):",
+      "    return json.loads(data.decode('utf-8'), object_pairs_hook=unique_object,",
+      "                      parse_constant=reject_constant)",
+      "",
+      "def escape(token):",
+      "    return token.replace('~', '~0').replace('/', '~1')",
+      "",
+      "def at(value, pointer):",
+      "    ck('pointer_syntax', pointer == '' or pointer.startswith('/'))",
+      "    if pointer == '':",
+      "        return value",
+      "    tokens = [t.replace('~1', '/').replace('~0', '~') for t in pointer[1:].split('/')]",
+      "    ck('pointer_canonical_escaping', '/' + '/'.join(map(escape, tokens)) == pointer)",
+      "    for token in tokens:",
+      "        if isinstance(value, list):",
+      "            ck('pointer_array_index', token == '0' or (token.isascii() and token.isdigit() and not token.startswith('0')))",
+      "            value = value[int(token)]",
+      "        else:",
+      "            value = value[token]",
+      "    return value",
+      "",
+      "def identity(data, path):",
+      "    return dict(path=path, bytes=len(data), sha256=sha(data),",
+      "                lf_count=data.count(b'\\n'), trailing_lf_count=len(data)-len(data.rstrip(b'\\n')))",
+      "",
+      "def field(record, names):",
+      "    values = [record[k] for k in names if k in record]",
+      "    ck('identity_aliases_agree', bool(values) and all(v == values[0] for v in values))",
+      "    return values[0]",
+      "",
+      "def normalized(record, path):",
+      "    return dict(path=path, bytes=field(record, ['bytes', 'byte_count']),",
+      "                sha256=record['sha256'], lf_count=field(record, ['lf_count', 'lf']),",
+      "                trailing_lf_count=field(record, ['trailing_lf_count', 'terminal_lf_count', 'terminal_lf']))",
+      "",
+      "def project():",
+      "    m = parse(Path(MAP).read_bytes())",
+      "    docs = {MAP: m}",
+      "    for record in m['immutable_maps'].values():",
+      "        data = Path(record['path']).read_bytes()",
+      "        ck('immutable_map_identity', identity(data, record['path']) == record)",
+      "        docs[record['path']] = parse(data)",
+      "    def resolve(ref):",
+      "        path = ref['path'] if 'path' in ref else m['immutable_maps'][ref['map']]['path']",
+      "        ck('bound_reference_path', path in docs)",
+      "        return at(docs[path], ref['pointer'])",
+      "    source = Path(m['source']['current']['path']).read_bytes()",
+      "    report = Path(m['report']['current']['path']).read_bytes()",
+      "    for data, record in [(source, m['source']['current']), (report, m['report']['current'])]:",
+      "        data.decode('utf-8')",
+      "        ck('frozen_identity', identity(data, record['path']) == record)",
+      "    changes = {row['address']: row for row in m['source']['changes']}",
+      "    def source_span(a, b):",
+      "        ck('source_span_bounds', 0 <= a < b <= len(source))",
+      "        data = source[a:b]",
+      "        return dict(identity(data, m['source']['current']['path']), byte_start=a,",
+      "                    byte_end_exclusive=b, line_start=source[:a].count(b'\\n')+1,",
+      "                    line_end_inclusive=source[:b].count(b'\\n')+(not data.endswith(b'\\n')))",
+      "    units = []",
+      "    payloads = {}",
+      "    def bind_payload(aid, data):",
+      "        ck('payload_hash', sha(data) == aid)",
+      "        ck('payload_consistency', aid not in payloads or payloads[aid] == data)",
+      "        payloads[aid] = data",
+      "    for part in m['source']['whole_units']['ordered_composition']:",
+      "        ref = part.get('records', part.get('record'))",
+      "        if 'records' in part:",
+      "            lo, hi = part['indices']",
+      "            records = [(i, resolve(ref)[i]) for i in range(lo, hi)]",
+      "        else:",
+      "            records = [(None, resolve(ref))]",
+      "        for i, row in records:",
+      "            origin = dict(path=ref['path'], pointer=ref['pointer']+('' if i is None else '/'+str(i)))",
+      "            old = row[part.get('span_field', 'span')]",
+      "            aid = row[part.get('atom_id_field', 'atom_id')]",
+      "            if row.get('address') in changes:",
+      "                change = changes[row['address']]",
+      "                a, b = change['current']['byte_start'], change['current']['byte_end_exclusive']",
+      "                aid = change['current_atom_id']",
+      "            else:",
+      "                a, b = old['byte_start'], old['byte_end_exclusive']",
+      "                pieces = [p for p in m['source']['pieces'] if p['kind'] == 'unchanged'",
+      "                          and p['original']['byte_start'] <= a and b <= p['original']['byte_end_exclusive']]",
+      "                ck('unique_unchanged_piece', len(pieces) == 1)",
+      "                shift = pieces[0]['current']['byte_start']-pieces[0]['original']['byte_start']",
+      "                a, b = a+shift, b+shift",
+      "            span = source_span(a, b)",
+      "            bind_payload(aid, source[a:b])",
+      "            units.append(dict(index=len(units), origin=origin, atom_id=aid, span=span))",
+      "    ck('whole_units_count', len(units) == 305)",
+      "    ck('whole_units_partition', units[0]['span']['byte_start'] == 0 and units[-1]['span']['byte_end_exclusive'] == len(source)",
+      "       and all(x['span']['byte_end_exclusive'] == y['span']['byte_start'] for x, y in zip(units, units[1:])))",
+      "    composition = m['canonical']['complete_current_pair_composition']",
+      "    records = {}",
+      "    def union(additions):",
+      "        ck('pair_union_disjoint', not (records.keys() & additions.keys()))",
+      "        records.update(additions)",
+      "    for ref in composition['base']['union']:",
+      "        union({aid: resolve(r) if 'pointer' in r else r for aid, r in resolve(ref).items()})",
+      "    for aid in composition['base']['remove_from_reachability_only']:",
+      "        del records[aid]",
+      "    union(resolve(composition['base']['then_union']))",
+      "    ck('I38_pair_count', len(records) == composition['base']['I38_result_count'])",
+      "    for aid in composition['remove_from_reachability_only']:",
+      "        del records[aid]",
+      "    union(resolve(composition['then_union']))",
+      "    child_lists = {}",
+      "    for parent, row in resolve(m['canonical']['ordered_chains']['complete_inventory']).items():",
+      "        children = resolve(row['ordered_children_binding'])['children'] if 'ordered_children_binding' in row else row['children']",
+      "        data = payloads[parent]",
+      "        end = 0",
+      "        ids = []",
+      "        for child in children:",
+      "            a, b = child['parent_byte_start'], child['parent_byte_end_exclusive']",
+      "            ck('child_partition', a == end and a < b <= len(data))",
+      "            bind_payload(child['atom_id'], data[a:b])",
+      "            ids.append(child['atom_id'])",
+      "            end = b",
+      "        ck('child_exhaustion', end == len(data))",
+      "        ck('child_concatenation', b''.join(payloads[aid] for aid in ids) == data)",
+      "        child_lists[parent] = ids",
+      "    ck('reachable_pair_set', set(payloads) == set(records) and len(records) == 397)",
+      "    def occurrences(data):",
+      "        hits = []",
+      "        start = 0",
+      "        while True:",
+      "            a = source.find(data, start)",
+      "            if a < 0:",
+      "                return hits",
+      "            hits.append([a, a+len(data)])",
+      "            start = a+1",
+      "    pairs = {}",
+      "    for aid, row in records.items():",
+      "        cas_path = row['cas']['path'] if 'path' in row['cas'] else row['cas_path']",
+      "        yaml_path = row['yaml']['path'] if 'path' in row['yaml'] else row['yaml_path']",
+      "        cas = identity(payloads[aid], cas_path)",
+      "        ck('cas_bound_metadata', cas == normalized(row['cas'], cas_path))",
+      "        parsed = row['parsed_yaml'] if 'parsed_yaml' in row else row['actual_yaml']",
+      "        ck('yaml_bindings', parsed['cas_ref'] == parsed['fingerprints']['raw_sha256'] == parsed['fingerprints']['normalized_sha256'] == 'sha256:'+aid)",
+      "        hits = occurrences(payloads[aid])",
+      "        ck('pair_occurs', bool(hits))",
+      "        pairs[aid] = dict(cas=cas, yaml=normalized(row['yaml'], yaml_path), parsed_yaml=parsed, current_source_occurrences=hits)",
+      "    chains = {}",
+      "    for parent, ids in child_lists.items():",
+      "        ck('chain_receipt_order', ids == pairs[parent]['parsed_yaml']['receipts']['chain_atoms'])",
+      "        chains[parent] = dict(ordered_children=ids, current_parent_occurrences=pairs[parent]['current_source_occurrences'])",
+      "    ck('chain_count', len(chains) == 38)",
+      "    primary = []",
+      "    rule_counts = {}",
+      "    pc = m['primary_correspondence']",
+      "    replaced = pc['correction']['as_received']['pointer']",
+      "    def node_pointers(value, pointer=''):",
+      "        yield pointer",
+      "        children = value.items() if isinstance(value, dict) else enumerate(value) if isinstance(value, list) else []",
+      "        for key, child in children:",
+      "            yield from node_pointers(child, pointer+'/'+escape(str(key)))",
+      "    for tag in ['C102', 'C104', 'C106']:",
+      "        inp = pc['inputs'][tag]",
+      "        rec = resolve(inp['raw_archive_record'])['payload']",
+      "        raw = report[rec['byte_start']:rec['byte_end_exclusive']]",
+      "        ck('raw_payload_identity', {k:v for k,v in identity(raw, rec['path']).items() if k != 'path'} == inp['raw_payload_identity'])",
+      "        obj = parse(raw)",
+      "        inventory = resolve(inp['complete_inventory'])",
+      "        pointers = [r['pointer'] for r in inventory]",
+      "        ck('all_raw_nodes', len(pointers) == len(set(pointers)) and set(pointers) == set(node_pointers(obj)))",
+      "        counts = Counter()",
+      "        for i, row in enumerate(inventory):",
+      "            p = row['pointer']",
+      "            value = at(obj, p)",
+      "            ck('primary_node_hash', sha(canonical(value)) == row['value_sha256'])",
+      "            addresses = row.get('proof_addresses', [])",
+      "            ck('proof_address_resolution', all(a in m['proof_addresses']['current_chapter_37'] for a in addresses))",
+      "            if tag == 'C104' and (p == replaced or p.startswith(replaced+'/')):",
+      "                rule = 0",
+      "            elif tag == 'C104' and replaced.startswith(p+'/'):",
+      "                rule = 1",
+      "            elif row['disposition'].startswith('Inert'):",
+      "                rule = 2",
+      "            elif isinstance(value, (dict, list)):",
+      "                rule = 3",
+      "            else:",
+      "                rule = 4",
+      "            counts[str(rule+1)] += 1",
+      "            primary.append(dict(input=tag, inventory_index=i, raw_json_pointer=p,",
+      "                                value_sha256=row['value_sha256'], proof_addresses=addresses,",
+      "                                effective_disposition=pc['effective_disposition_manifest']['ordered_rules'][rule]['value']))",
+      "        rule_counts[tag] = dict(counts)",
+      "    ck('primary_count', len(primary) == 511)",
+      "    values = dict(whole_units=units, pairs=pairs, ordered_chains=chains, primary=primary)",
+      "    declared = dict(whole_units=m['source']['whole_units']['materialized_manifest_sha256'],",
+      "                    pairs=composition['materialized_manifest_sha256'],",
+      "                    ordered_chains=m['canonical']['ordered_chains']['materialized_manifest_sha256'],",
+      "                    primary=pc['effective_disposition_manifest']['sha256'])",
+      "    summary = {k: dict(count=len(v), sha256=sha(canonical(v)), declared_sha256=declared[k],",
+      "                       matches=sha(canonical(v)) == declared[k]) for k, v in values.items()}",
+      "    summary['primary_rule_counts'] = rule_counts",
+      "    summary['bounded_assertions'] = dict(checks)",
+      "    return summary",
+      "",
+      "if __name__ == '__main__':",
+      "    print(json.dumps(project(), ensure_ascii=False, indent=2))"
+    ]
+  },
+  "representation_repair": {
+    "flight": "qgh0911-i45-s26-primary-manifest-repair",
+    "attempt": 1,
+    "stage": "implementation",
+    "scope": "Map-only representation repair of the existing unsealed I43 candidate. Source/report/immutable maps/all CAS and YAML/producer LF bytes/one prior I43 ingest remain unchanged. This is not independent review, sealed or pushed delivery, RH/Lean proof or goal completion.",
+    "historical_map_before_repair": {
+      "path": "/tmp/qgh-boundaries-0908/i43-s26-original-map-before-i45-0911.json",
+      "bytes": 118499,
+      "sha256": "604228d4ff0551890bf857753457acd19e7fe22f5fe884beed5266d2280a56a4",
+      "lf_count": 2946,
+      "trailing_lf_count": 1
+    },
+    "historical_map_status": "The preserved 118499-byte snapshot is the original I43 map, not the current map identity. Its provenance and original I43 result remain unchanged. The final current full-file map identity is supplied once externally in the I45 result.",
+    "primary_discrepancy": {
+      "old_declared_sha256": "d8f2fac7b13f23c3efb1bd241f63f52ae42e50c4867fcc804c7f4d16aba09d3f",
+      "literal_projection_sha256": "e9fe58eda86fe4b3604c5d482b0817b316488950eeec7edaf5b2d9fffd847bcb",
+      "rows": 511,
+      "cause": "Concrete contract defect: the old declared SHA256 does not hash the six-field, first-match literal projection with per-input zero-based indexing. The caller used those exact literal rules and did not violate the contract. The old map omitted an explicit index-base statement; this repair fixes it at per-input zero-based and corrects the digest without changing any ordered rule value or original disposition.",
+      "origin_of_old_declared_digest": "UNKNOWN; no producer-script, generation, extraction, rendering or transport cause inferred, and no logs or worker diagnostics opened."
+    },
+    "caller_audit_failure": {
+      "record": {
+        "path": "/tmp/qgh-boundaries-0908/caller-i43-s26-bounded-repair-audit-failure-20260910T213911Z.json",
+        "bytes": 551858,
+        "sha256": "91d7a1293e2018dd056bc51c06f380d1f2498b4b937b6e8e9f47bdc6643f0239",
+        "lf_count": 12234,
+        "trailing_lf_count": 1
+      },
+      "passed": false,
+      "checks_passed_before_stop": 12203,
+      "error": "AssertionError('primary/manifest_digest')",
+      "script_read_only_evidence": {
+        "path": "/tmp/qgh-boundaries-0908/caller-audit-i43-current-repair-0911.py",
+        "bytes": 16404,
+        "sha256": "483caee81164c0aec541ec444b2a73702f8c41a87eeaac5535754631d980b070",
+        "lf_count": 272,
+        "trailing_lf_count": 1
+      },
+      "script_executed_in_I45": false,
+      "evidence_scope": "These passing checks cover the exact current identities, map references, original-source recoveries, five archives and new pairs, 305 whole units, and 511 raw node hashes/current addresses. The audit stopped at the primary digest; this is not a blanket audit pass."
+    },
+    "caller_parser_history": "No caller parser violation was found in the current primary projection. Prior caller extractor/schema issues and I43 worker metadata-display failure remain distinct and unchanged in historical_diagnostics; none is substituted for the actual primary digest failure.",
+    "other_materialized_contracts": {
+      "whole_units": "305 rows: original 0f0efe4cea9d351cbc437132e71844922946bf48c2260b3a581640579381d210 reproduced and preserved.",
+      "current_pairs": "397-key object: original c57105fe3e324d15fb6f6300145932216d01749ea6239d900c61d7d3f9330a2a reproduced. The old prose did not enumerate the normalized identity keys/aliases, exact occurrence shape or full encoding; projection_recipe now states them explicitly.",
+      "ordered_chains": "38-key object: original cc3d1acd116ee00e817846fb6d6801c21987c6c9028af17f1b6f7f2810f7b869 reproduced. The old field-name list left the outer object and ordered_children value shape implicit; projection_recipe now fixes parent-ID keys and bare child-ID arrays."
+    },
+    "historical_verification_scope": "Existing scope, changed_files, verification_basis, canonical ingest counts and historical_diagnostics describe the original I43 implementation. They remain historical evidence, not an I45 blanket audit assertion. In particular, I43 reported verification is not proof that its old primary digest matched the printed recipe.",
+    "prior_process_deviation": "I43 disclosed early overbroad filename enumeration outside its physical target under /Users/auricstudio, interrupted with exit130. Preserve that history; no claim of perfect prior process compliance or no other-target access is made. The exact early I43 shell-call total remains unavailable.",
+    "remaining_obligations": [
+      "Caller audit of this map repair and complete later independent review.",
+      "Exact authorized predecessor composition; S19 R5 remains live and excluded from this flight.",
+      "Caller-owned Git/PR/sealing and ordered S19 through S26 MERGED.",
+      "All existing mathematical/RH/Lean/dictionary/remainder/infinite-attainment and other distinct open obligations remain; no C107/C108/C111/C114/C118/C120 or predecessor source integration is adopted."
+    ]
+  }
+}

@@ -648,3 +648,215 @@ Fixed byte/JSON/YAML checks verified all old-map embedded canonical identity rec
 Read/discovery limitations were closed before source mutation: an absent guessed `tools/Scribe` directory (exit 2), an unmatched zsh source glob (exit 1), and scoped no-match instruction discovery (exit 1). A later guessed standalone fingerprint file was absent (`cat` exit 1; the combined observation command ended 0); the actual fingerprint producer was located and read. A subsequent no-match path search returned 1 before the exact producer lookup succeeded. Early display truncations were closed by bounded semantic reads; map inventories were recursively parsed in full. The first final-map assembly attempt exited 1 before any repository write because it expected no-index clean-file exit 0; direct observations established exit 1 for clean new-file differences and exit 3 for differences plus blank-EOF diagnostics. The scratch check was corrected and final assembly completed. These are structural/discovery observations, not mathematical failures. Final fixed checks and the runner conclusion expose any remaining issue separately. No logs or transitive historical command references were opened.
 
 The final source/report/map and 88 canonical files are left unstaged. The inherited section 12 defect, predecessor composition, independent review and ordered delivery remain outstanding as stated above.
+
+## I43 / C116: five-unit mathematical-body repair
+
+The complete preceding 101665-byte report is the immutable I38 snapshot. Its source, ingest, execution, provenance and identity statements keep their historical meanings. The [companion migration map](theory-body-migration-s26-0911.json) owns the current source/report bindings, inverse recovery and canonical correspondence; the worker result binds that map externally.
+
+Only source units 37.14, 37.33, 37.34, 37.39 and 37.42 change. The first three receive explicit proposition-with-proof titles and preserve every other byte. Unit 37.39 retains the finite-language definition, termination and soundness proof; its implementation/execution qualification is historical report material. Unit 37.42 becomes a corollary with proof and attached mathematical citation; its user-label interpretation and final provenance, numerical execution and kernel-status sentences are preserved below. The original language remains available in each exact whole-unit archive. No example or mathematical algorithm was executed.
+
+The five archives below are inert historical source payloads, each occurring exactly once. Their outer fences exceed every possible matching inner closer; delimiters are outside the payload spans. No original source or primary payload is normalized. C104’s as-received formula error and C106’s complete correction remain separate, as do C102 recovery and original carrier failure. All three zero-trailing-LF primary payloads keep their old report offsets.
+
+The inherited section 12 defect remains owned by S19/I42. Chapters 31–36 and C107/C108/C111/C114 are not adopted here. Exact pure predecessor composition, complete independent review and ordered S19→S26 MERGED remain outstanding. This repair supplies no independent approval, RH/Lean/kernel/novelty/delivery or standing-goal completion.
+
+<a id="i43-original-37-14"></a>
+
+### Original whole unit 37.14
+
+~~~~text
+**37.14 算例及证明（2357 字典、11 与 13、1432 门槛）。** For
+\(S=\{2,3,5,7\}\), the integers 11 and 13 are primes outside \(S\). Neither is
+divisible by 2 or 3; any factorization with both factors at least 4 would have product at
+least 16. Hence both are omitted from \(A_S\). Their weights are
+\(\omega_{11}=7262/3\), \(\omega_{13}=10142/3\), and
+\[
+K_{\{11,13\}}=\frac13\begin{pmatrix}7324&62\\62&10204\end{pmatrix},
+\quad t=\frac{52212}{73651204},\quad
+1+a_0t=\frac{73651204+1079048}{73651204}
+=\frac{74730252}{73651204}.
+\]
+Consequently
+\[
+D_{A_S}\ge\beta_{\{11,13\}}=\frac{52212}{74730252}
+=\frac{4351}{6227521}.
+\]
+The same exact algebra follows from
+\(7324\cdot10204-62^2=74730252\) and the inverse quadratic-form numerator
+\(3(7324+10204-124)=52212\). The integer endpoint calculation is
+\[
+4351\cdot1431=6226281<6227521<6230632=4351\cdot1432.
+\]
+Thus \(\beta<1/1431\) but \(\beta>1/1432\); every integer \(m\ge1432\) excludes
+strict residual square \(<1/m\). For \(m<1432\) this argument makes no witness-existence
+claim. The individual bound \(3/7324\) and its \(m\ge2442\) exclusion in 30.77 remain
+valid. This is an exact rational paper example in the approximation model, separate from
+Robin's strict \(n>5040\) domain and the slab comparison \(G\).
+
+~~~~
+
+<a id="i43-original-37-33"></a>
+
+### Original whole unit 37.33
+
+~~~~text
+**37.33 算例及证明（\(S=\{3\},B=4\) 的列转置与矩阵）。** Here \(Q=3\) and
+\(E_B=\{2,4\}\), because 2 and 4 are coprime to 3 and 3 is not. The Möbius values
+are \(\mu(1)=1,\mu(2)=-1,\mu(4)=0\); hence
+\(r_2=v_2=u_2-u_1\), \(r_4=v_4-v_2=u_4-u_2\). In increasing order,
+\[
+M=\begin{pmatrix}1&-1\\0&1\end{pmatrix},\quad
+M^{\mathsf T}=\begin{pmatrix}1&0\\-1&1\end{pmatrix},\quad
+Z=M^{-1}=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad
+\mathbf1=\binom11,
+\quad b=M^{\mathsf T}\mathbf1=\binom10,\quad M\mathbf1=\binom01.
+\]
+The last two columns differ. With \(a_0=62/3,\omega_2=242/3,\omega_4=962/3\),
+\[
+G=\frac13\begin{pmatrix}304&62\\62&1024\end{pmatrix},\quad
+GM=\frac13\begin{pmatrix}304&-242\\62&962\end{pmatrix},\quad
+K=M^{\mathsf T}GM=\frac13\begin{pmatrix}304&-242\\-242&1204\end{pmatrix}.
+\]
+Directly, \(\|r_2\|^2=\omega_2+a_0=304/3\),
+\(\langle r_2,r_4\rangle=-\omega_2=-242/3\), and
+\(\|r_4\|^2=\omega_4+\omega_2=1204/3\), confirming the same \(K\).
+In contrast the product
+\(MGM=\frac13\left(\begin{smallmatrix}242&-1204\\62&962\end{smallmatrix}\right)\)
+is not symmetric and cannot be this Gram matrix. This exact finite example demonstrates both
+the necessary transpose and the non-diagonality of the \(r_n\) basis.
+
+~~~~
+
+<a id="i43-original-37-34"></a>
+
+### Original whole unit 37.34
+
+~~~~text
+**37.34 算例及证明（逆矩阵、两个正规方程与非零 \(r_4\) 系数）。** The two integer
+matrix determinants in 37.33 coincide:
+\[
+\Delta=304\cdot1024-62^2=304\cdot1204-242^2=307452.
+\]
+Consequently
+\[
+G^{-1}=\frac3\Delta\begin{pmatrix}1024&-62\\-62&304\end{pmatrix},\qquad
+K^{-1}=\frac3\Delta\begin{pmatrix}1204&242\\242&304\end{pmatrix}.
+\]
+The solutions and coefficient conversion are
+\[
+c^0=G^{-1}\mathbf1=\frac1{51242}\binom{481}{121},\qquad
+\alpha^0=K^{-1}b=\frac1{51242}\binom{602}{121}=Zc^0,
+\quad M\alpha^0=c^0.
+\]
+Both normal equations can be read as integer identities:
+\[
+\begin{pmatrix}304&62\\62&1024\end{pmatrix}\binom{481}{121}
+=\binom{153726}{153726},\qquad
+\begin{pmatrix}304&-242\\-242&1204\end{pmatrix}\binom{602}{121}
+=\binom{153726}{0},\qquad 3\cdot51242=153726.
+\]
+Also
+\[
+T_B=\frac3{242}+\frac3{962}=\frac{903}{58201},\quad
+\rho_B=\frac{76863}{58201},\quad
+\beta_{E_B}=\frac{301}{25621}=\frac{602}{51242}.
+\]
+The actual common projection is
+\[
+p_B=\frac{481v_2+121v_4}{51242}
+=\frac{602r_2+121r_4}{51242}
+=\frac{-602u_1+481u_2+121u_4}{51242}.
+\]
+The \(r_4\) coefficient is nonzero although \(b_4=-\mu(4)=0\). This illustrates
+precisely why a zero target coordinate cannot justify deleting a correlated finite probe.
+All displayed numbers are exact rational identities; no numerical approximation is needed.
+
+~~~~
+
+<a id="i43-original-37-39"></a>
+
+### Original whole unit 37.39
+
+~~~~text
+**37.39 定义与定理及证明（1041 总验证器与可靠性）。** Define the paper predicate
+\(\operatorname{VerifyRoughEnvelope104}(S,B,\eta,e)\) on finite input data and a
+natural certificate as follows. First require an external finite strictly increasing prime list
+\(S\), integer \(B\ge1\), and rational \(\eta>0\); primality is exactly the finite
+gcd predicate of 37.12, including vacuous proper-divisor range for the prime two. Decode the
+record, require tag 1041, eight fields and the declared types, and bind its \(S,B,\eta\)
+to these external inputs, using exact rational equality for precision. Reject any mismatch.
+Compute the finite integer product \(Q\), the ordered list
+\(\{2\le n\le B:\gcd(n,Q)=1\}\), its finite rational sum
+\(\sum_n3/(60n^2+2)\), and the two rational endpoint formulas of 37.37. Require exact
+equality to the record's \(E_B,T_B,L_B,V_B\), and finally require
+\[
+0\le L_B\le V_B\le1,\qquad V_B-L_B<\eta.
+\]
+All loops have finite input-dependent bounds or strictly decreasing positive-integer measures.
+All denominators \(60n^2+2\), \(20B\), and \(1+a_0t\) in legal data are positive.
+Gcd, products, sums, coding and cross-product comparisons terminate; any bad code is rejected.
+Thus this predicate is total without a real-number oracle or an infinite search.
+On acceptance the recomputed \(T_B\) is precisely the rough sum, and 37.37 proves
+\(\Gamma_S\in[L_B,V_B]\) with the required strict width. The finite value theorem
+needed here is justified by \(K=M^*GM,b=M^*\mathbf1\) and the full cancellation
+of 37.32. Since those corrected formulas prove the same \(\phi(T_B)\), the scalar
+certificate rules need no altered endpoint or hidden coefficient computation.
+This is soundness of a finite mathematical language; it does not assert an implemented or
+executed verifier.
+
+~~~~
+
+<a id="i43-original-37-42"></a>
+
+### Original whole unit 37.42
+
+~~~~text
+**37.42 推论与范围（固定坐标、保持的范数与经典依赖）。** Since
+\(D_{A_S}\ge\Gamma_S>0\), allowing all exponents in a fixed finite prime set and
+then closing in the actual norm still leaves a positive error. For an omitted prime \(p\),
+\(\langle r_p,f_p\rangle=1\) and \(r_p\perp M_{A_S}\), whence
+\(\operatorname{dist}(f_p,M_{A_S})^2\ge1/C_p>0\). Thus \(M_{A_S}\) is a proper
+subspace of the full dictionary closure, not a substitute for that closure.
+The original \(f_i,f_j\) are not orthogonal: on \(x>1\) their product is
+\(1/(ijx^2)\), and nonnegativity on the rest of the half-axis gives
+\(\langle f_i,f_j\rangle\ge1/(ij)>0\). Pythagoras above concerns actual orthogonal
+\(u_d\) coordinates or projections, not exponent labels or a diagonal original dictionary.
+Faithful prime-exponent or Zeckendorf recoding of the same integer parameters leaves the
+functions, measure, norm, algebraic spans, closed spaces, distances, and all these bounds
+unchanged. Changing functions or inner product defines another problem.
+
+The general Gram and Schur results, including singular blocks, pseudoinverse range conditions,
+zero/empty cases, finite strict-threshold attainment and distinctions from infinite synthesis
+attainment in 30.22–30.39, remain applicable in their stated domains. Positive definiteness of
+these particular finite probe matrices does not remove those general singular cases.
+The finite rational residual certificates and effective finite-distance bounds of 30.40–30.71,
+and the Möbius coercivity and local-certificate constructions of 30.72–30.85, retain their
+original constants, totality domains and strict boundaries. In particular coordinatewise
+Möbius convergence alone is insufficient for norm convergence (30.75); squarefree inclusion is
+necessary but no sufficiency theorem is supplied (30.76); and the ordinary finite spectral
+minimum tending to zero (30.40) does not by itself settle the global approximation distance.
+
+The classical closure bridge [B1], L. Báez-Duarte, *A strengthening of the Nyman–Beurling
+criterion for the Riemann hypothesis, 2*, [arXiv:math/0205003v1](https://arxiv.org/pdf/math/0205003v1),
+Theorem 1.1 with its full-half-axis definitions, is used exactly as in 30.36:
+RH is equivalent to \(\chi\) belonging to the specified full integer-dictionary closure.
+It is an external analytic theorem; the present obstruction proof does not reprove that bridge
+or claim density in all of \(H\). The value of the full-dictionary distance, equality
+\(D_{A_S}=\Gamma_S\), completeness of the omitted-probe complement, infinite coefficient
+attainment and a universal successful finite-certificate cutoff remain separate questions.
+Nothing here resolves the Robin \(n>5040\) criterion, the prime-box slab \(G\) sign
+problems, or the remaining common-height and general-prime questions. The user's label GH
+retains its stated working RH interpretation without an additional mathematical definition.
+These are paper arguments using the existing model and classical projection, divisor-inversion
+and finite-arithmetic facts; no new literature-priority, numerical execution or kernel theorem
+is entailed.
+~~~~
+
+### I43 final producer and preservation record
+
+The one authorized final command, `make ingest BASE=f0f3db2938a7f0b39d0589db73380a21b0c6a570 SOURCE=arithmetic-boundary-quantization`, returned exit 0: `residual_open_added=5 skipped_existing=300 coarse_fallbacks=0 open_genres=0 cas_objects_written=5 ledger_changed=true`. The frozen source is 391093 bytes, SHA256 `4dbb0a1f62327dcff5d5bfd2161c74a0a8579338152787d15e97e9d7b553d8eb`, with 7592 LF bytes and one trailing LF. There was no source edit after ingest and no second ingest. The complete current source still has 305 whole units, 397 reachable CAS/YAML pairs and 38 ordered chains. All five superseded pairs remain on disk, together with all other I38 and earlier objects and LF variants.
+
+Targeted no-index whitespace observations cover all ten new canonical files. Four CAS additions return exit 3 with a blank-EOF diagnostic; the final-unit CAS and all five YAML additions return exit 1 with no diagnostic, representing new-file differences. The exact diagnostic bytes are preserved in the companion map. No emitted byte was trimmed or repaired. A tracked diff check does not cover these untracked additions.
+
+Fixed byte/JSON/YAML/Git checks establish the five-unit edit boundary, exact-once inert archives, immutable old report/raw-primary prefix, unchanged maps and prior report, inverse full-I38 recovery, both pre-I31 recovery routes, complete current unit/pair/chain correspondence, and all 511 C102/C104/C106 primary nodes. These are structural implementation checks, not mathematical executions or independent approval. The old caller list-versus-dict extractor error and metadata-only proof-address assertion remain caller diagnostics, not worker mathematical defects.
+
+This worker’s initial filename-discovery command accidentally enumerated beyond this target under /Users/auricstudio. It was interrupted with exit 130 after permission errors; no discovered file content was intentionally opened and it performed no mutation. This is a scope deviation, so no blanket no-other-target-access claim is made. Later reads used exact paths or this target. A guessed local source-registration path was absent (exit 2); actual producer code and existing map records supplied the required guidance. An inspection of a boolean as a collection failed (exit 1) and was corrected before source editing. Early display truncations were closed for indispensable prose; repetitive inventories were parsed completely. No logs or opaque historical references were followed.

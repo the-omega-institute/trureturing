@@ -1,0 +1,39 @@
+**37.34 命题及证明（逆矩阵、两个正规方程与非零 \(r_4\) 系数）。** The two integer
+matrix determinants in 37.33 coincide:
+\[
+\Delta=304\cdot1024-62^2=304\cdot1204-242^2=307452.
+\]
+Consequently
+\[
+G^{-1}=\frac3\Delta\begin{pmatrix}1024&-62\\-62&304\end{pmatrix},\qquad
+K^{-1}=\frac3\Delta\begin{pmatrix}1204&242\\242&304\end{pmatrix}.
+\]
+The solutions and coefficient conversion are
+\[
+c^0=G^{-1}\mathbf1=\frac1{51242}\binom{481}{121},\qquad
+\alpha^0=K^{-1}b=\frac1{51242}\binom{602}{121}=Zc^0,
+\quad M\alpha^0=c^0.
+\]
+Both normal equations can be read as integer identities:
+\[
+\begin{pmatrix}304&62\\62&1024\end{pmatrix}\binom{481}{121}
+=\binom{153726}{153726},\qquad
+\begin{pmatrix}304&-242\\-242&1204\end{pmatrix}\binom{602}{121}
+=\binom{153726}{0},\qquad 3\cdot51242=153726.
+\]
+Also
+\[
+T_B=\frac3{242}+\frac3{962}=\frac{903}{58201},\quad
+\rho_B=\frac{76863}{58201},\quad
+\beta_{E_B}=\frac{301}{25621}=\frac{602}{51242}.
+\]
+The actual common projection is
+\[
+p_B=\frac{481v_2+121v_4}{51242}
+=\frac{602r_2+121r_4}{51242}
+=\frac{-602u_1+481u_2+121u_4}{51242}.
+\]
+The \(r_4\) coefficient is nonzero although \(b_4=-\mu(4)=0\). This illustrates
+precisely why a zero target coordinate cannot justify deleting a correlated finite probe.
+All displayed numbers are exact rational identities; no numerical approximation is needed.
+

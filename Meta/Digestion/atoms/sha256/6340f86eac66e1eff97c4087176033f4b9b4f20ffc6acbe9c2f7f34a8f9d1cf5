@@ -1,0 +1,25 @@
+**37.33 命题及证明（\(S=\{3\},B=4\) 的列转置与矩阵）。** Here \(Q=3\) and
+\(E_B=\{2,4\}\), because 2 and 4 are coprime to 3 and 3 is not. The Möbius values
+are \(\mu(1)=1,\mu(2)=-1,\mu(4)=0\); hence
+\(r_2=v_2=u_2-u_1\), \(r_4=v_4-v_2=u_4-u_2\). In increasing order,
+\[
+M=\begin{pmatrix}1&-1\\0&1\end{pmatrix},\quad
+M^{\mathsf T}=\begin{pmatrix}1&0\\-1&1\end{pmatrix},\quad
+Z=M^{-1}=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad
+\mathbf1=\binom11,
+\quad b=M^{\mathsf T}\mathbf1=\binom10,\quad M\mathbf1=\binom01.
+\]
+The last two columns differ. With \(a_0=62/3,\omega_2=242/3,\omega_4=962/3\),
+\[
+G=\frac13\begin{pmatrix}304&62\\62&1024\end{pmatrix},\quad
+GM=\frac13\begin{pmatrix}304&-242\\62&962\end{pmatrix},\quad
+K=M^{\mathsf T}GM=\frac13\begin{pmatrix}304&-242\\-242&1204\end{pmatrix}.
+\]
+Directly, \(\|r_2\|^2=\omega_2+a_0=304/3\),
+\(\langle r_2,r_4\rangle=-\omega_2=-242/3\), and
+\(\|r_4\|^2=\omega_4+\omega_2=1204/3\), confirming the same \(K\).
+In contrast the product
+\(MGM=\frac13\left(\begin{smallmatrix}242&-1204\\62&962\end{smallmatrix}\right)\)
+is not symmetric and cannot be this Gram matrix. This exact finite example demonstrates both
+the necessary transpose and the non-diagonality of the \(r_n\) basis.
+

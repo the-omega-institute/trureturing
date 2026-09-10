@@ -1,0 +1,28 @@
+**37.14 命题及证明（2357 字典、11 与 13、1432 门槛）。** For
+\(S=\{2,3,5,7\}\), the integers 11 and 13 are primes outside \(S\). Neither is
+divisible by 2 or 3; any factorization with both factors at least 4 would have product at
+least 16. Hence both are omitted from \(A_S\). Their weights are
+\(\omega_{11}=7262/3\), \(\omega_{13}=10142/3\), and
+\[
+K_{\{11,13\}}=\frac13\begin{pmatrix}7324&62\\62&10204\end{pmatrix},
+\quad t=\frac{52212}{73651204},\quad
+1+a_0t=\frac{73651204+1079048}{73651204}
+=\frac{74730252}{73651204}.
+\]
+Consequently
+\[
+D_{A_S}\ge\beta_{\{11,13\}}=\frac{52212}{74730252}
+=\frac{4351}{6227521}.
+\]
+The same exact algebra follows from
+\(7324\cdot10204-62^2=74730252\) and the inverse quadratic-form numerator
+\(3(7324+10204-124)=52212\). The integer endpoint calculation is
+\[
+4351\cdot1431=6226281<6227521<6230632=4351\cdot1432.
+\]
+Thus \(\beta<1/1431\) but \(\beta>1/1432\); every integer \(m\ge1432\) excludes
+strict residual square \(<1/m\). For \(m<1432\) this argument makes no witness-existence
+claim. The individual bound \(3/7324\) and its \(m\ge2442\) exclusion in 30.77 remain
+valid. This is an exact rational paper example in the approximation model, separate from
+Robin's strict \(n>5040\) domain and the slab comparison \(G\).
+
