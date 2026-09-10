@@ -52,3 +52,15 @@ Words 在 Meta/domains.yaml 注册于 S1；候选为 G，仅引入 G 的层 2 �
 未用裸 lake、native_decide；不改冻结层 2，不摄入自写理论卷。
 shapes.sh 与 proof-edges.sh 已先读；后者直接执行裸 lake env lean，前者仍查旧 accepted 事件。
 这与本任务禁止裸 lake、当前 state 片契约不匹配；后续依赖证据优先使用 make lean-report 的语义结果。
+
+## 预登记 v3（一般分解实施之前）
+
+在 v2 三条公开定理已经编译提交后，继续扩大分类的定义域。新增拟议见证：
+对任意整数 h、任意整数词 w，若 Good h w、Unswappable h w 且 0∈w，
+则存在正自然数对的列表 l，使 w=alternating l。逐块使用层 1 探针的
+blocked_pair 论证：首项严格正、次项严格负，因此零必须继续在尾词中；
+递归至单项时，该项只能为零。实际构造用 x.toNat 和 (−y).toNat。
+这是全局未配对词分类的正负/末零部分；不把给定 a,b 或其排列性放进假设。
+见证版本 v2 的 iff/单射/产品求和仍有效；v3 不撤销其结算。
+下一消费者是本轮原有目标“未配对词到 InResidual 的对应”；若恢复排列性与符号
+未完成，报告仍只交付已证明的一般分解，不将它称为完整双射。
