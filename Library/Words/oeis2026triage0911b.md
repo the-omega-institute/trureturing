@@ -23,7 +23,7 @@ triage: anchor
 
 本轮预定预算为30条计入分母的候选，按完整评注中的奇偶、剩余、分类、恒等式、计数形态优先采集；第三档只登记note-only，另计且不占预算。第一档占比争取超过40%，不是必须凑出的配额。校准仍是A392698“写过猜想”不足以降级，以及A388724的真实期刊证明足以降级；两条均为brief的历史判例，不重复计入本轮。
 
-当前批次已完成9条（预算30）；完整收尾统计将在其余批次完成后写入。
+当前批次已完成12条（预算30）；完整收尾统计将在其余批次完成后写入。
 
 ## 来源与完整性
 
@@ -50,6 +50,9 @@ triage: anchor
 | [A397592](https://oeis.org/A397592) | A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=2；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 | 1 | unknown | high | yes | note-only |
 | [A396491](https://oeis.org/A396491) | ∀n≥1，n 个有标号变量、允许子句内重复文字及公式内重复子句的五子句 3-SAT 不可满足公式数，等于 %F 给定的十项二项式多项式。 | 1 | unknown | med | yes | note-only |
 | [A396354](https://oeis.org/A396354) | ∀n≥1，四子句多重集 3-SAT 的不可满足公式计数 a(n)=n(16n^6+48n^5+340n^4+180n^3+2818n²−10011n+6789)/18。 | out | unknown | med | yes | note-only |
+| [A395896](https://oeis.org/A395896) | ∀n∈ℕ，n 偶数 ⇒ ∣{k∈ℕ:1≤k<m², rad(k)∣m, rad(k+1)∣m}∣=0，其中 m=A019565(n)。 | out | published | high | yes | drop |
+| [A395754](https://oeis.org/A395754) | ∀n≥1，令 m=A005117(n)，m 为奇数 ⇒ a(n)=0；a(n)=∣K_m∣，K_m={k∈ℕ:1≤k<m²,rad(k)∣m,rad(k+1)∣m}。 | out | published | high | yes | drop |
+| [A395721](https://oeis.org/A395721) | ∀n≥1，令 m=A005117(n)，a(n)=max K_m（K_m为空时取−1）；猜想 m 奇数 ⇒ a(n)=−1。 | out | published | high | yes | drop |
 
 ## 逐条证据
 
@@ -88,3 +91,75 @@ triage: anchor
 ### A396354
 
 本条完整源同时保留旧的 “Conjecture” 与 Jul 22 2026 Alper Ferudun 的 “The conjectured formula is true”；不能只抓旧标签。已打开固定官方镜像 URL 的 %C 两段与 %F 后补段，证明路线为取 c 子句的极小不可满足核，删重文字后 Tarsi 给核支持≤c−1，余下 4−c 子句至多增 3(4−c) 个变量，故总支持≤7，再按指定有标号 k 集计数 b(k) 作 a(n)=Σb(k)C(n,k)，给出 b=(10,811,7178,16400,22000,15360,4480)。这确实是公开证明主张，而不是又一个猜想；但 DOI 10.1016/0097-3165(86)90060-9 的打开结果只有 Redirecting，且本次只独立检查 n≤4，没有确认 n=5..7 的计数证明材料，故依委托的“claimed proof cannot be confirmed”规则标 unknown/note-only，绝不标成可派的 tier 1。已读 A396351 与 A396353 的所有字段，Cook 1971 的复杂性背景不能提供固定 m 的多重集枚举定理。D5 的 `LRATUnsatisfiable.empty_clause_proof_iff_unsatisfiable` 与 `Refutation.sound` 只认证一个 CNF 的不可满足，未计支持、未计同真值不同子句；mathlib 字词搜索未见 Tarsi 计数声明。数值 yes：同 sat_counts.py 的 AND-mask 多重集 DP，在 n=1,2,3,4 得 10,831,9641,50018，与多项式一致；M=5 的共用运行最大状态数 41746，没有用 n≤4 证明 ∀n。计算复杂度界同上，严格保留重复文字与重复子句。可设想的逃逸是有限支持集上的完整核分类与 b(k) 的组合推导，但这正是既有公开证明所声称的内容；在核验文献前不得以重证包装求席。停止：确认该公开证明即 out/published/drop；发现系数反例即转 refutation；仅无法访问就维持 unknown。A396493 也是本 m=4 家族，至多一席且当前零实施席；与 A396491/A395546 的 m=5 仅共享分类工具，计数目标不同。全部直接 A 引用 A396351,A396353。  可复制运行：`python3 sat_counts.py`，读取 `counts["4"]` 与 `formula4`；n≤4 是独立真值掩码计数，不是直接重算插值多项式。若只需快速求公开公式值： ```python from math import comb B=(10,811,7178,16400,22000,15360,4480) def proposed(n): return sum(b*comb(n,k) for k,b in enumerate(B,1) if k<=n) ``` 此 O(7) 求值器以公式正确为前提，不作为其核验。档位out仅表示出现具体证明主张后暂退出开放靶池，文献unknown保留系数审计缺口，不把未核完写成published。可照抄掩码计数见文末共用SAT算法。
+
+### A395896
+
+精确目标：∀n∈ℕ，n 偶数 ⇒ |{k∈ℕ:1≤k<m², rad(k)|m, rad(k+1)|m}|=0，其中 m=A019565(n)。A019565 以 n 的第 j 个二进制位选择第 j 个素数；最低位为0当且仅当2不整除 m，所以“偶索引”准确对应“奇 m”。n=0 给 m=1，集合为空，边界无例外。已打开 https://en.wikipedia.org/wiki/St%C3%B8rmer%27s_theorem 的 “Lehmer’s algorithm” 段，原文明确写出 “Assume p1 = 2; otherwise there could be no consecutive P-smooth numbers, because all P-smooth numbers would be odd.” 这已经给出所需一般断言及证明理由，取 P 为 m 的素因子集即覆盖目标，无须 Pell 方程或 Størmer 的深层有限性。https://en.wikipedia.org/wiki/Radical_of_an_integer 的定义段确认 rad 为不同素因子乘积；因此 rad(k)|m 与 k 为 P-smooth 在正整数域等价。不是仅因条目写了 conjecture 而判新题。bind 风险 high：实读 pin 中 Nat.mem_primeFactors、Nat.Prime.mem_primeFactors、Nat.primeFactors_mono，以及 Nat.prod_primeFactors_dvd_iff（k≠0 时，素因子乘积整除 k iff 素因子集包含）。它们的证明是列表/有限集转换与整除传递，虽未直接命名本 A 序号，但加上相邻整数必有一个偶数就只剩索引和空集合包装；没有可推荐的非 bind-only escape。停止条件：一旦完成正整数、严格上界及索引换算即停止，不为凑席扩写 Lean。三条只占同一概念家族，计数为0与最大值哨兵−1等价；当前已知初等证明，合计0个新实施席；三个条目仍各占一个采集预算项。把偶 m 的完整分类或所有 primorial 上与无界 A002071/A002072 的相等式当 escape 会改变问题，且必须另证每个解 k<m²；Størmer 有限性不能给这个平方界。已打开 Eppstein 2007 “Smooth pairs” 的主文及评论，它报告有限素数集的计算与算法条件，没有证明此统一平方界；该桥仍 ASSUMED-UNVERIFIED。若升级到一般 S-unit/有效 abc 界的深核心，列 tier3 note-only、不计采集预算，不派发。全部直接 A 引用：A002071, A005117, A007947, A019565, A395754。
+
+数值 yes：`python3 smooth_checks.py`；已运行全部 306 个平方自由 m≤500，以及 A019565 的索引 0≤n≤63（最大 m=30030），无奇 m 反例、无偶 m 缺少解、与三个源文件可比较的全部已列项一致。每个 m 完整生成 S={s≤m²:素因子均整除 m}，用集合查询 s+1；不是跳过奇 m 的循环论证。工作量 O(√m+ω(m)|S|)，存储 O(|S|)，单次生成每个素数阶段均只扩展原集合，不扫描 m² 个整数。可复制算法：
+```python
+def pairs(m):
+    q,t,ps=2,m,[]
+    while q*q<=t:
+        if t%q==0:
+            ps.append(q)
+            while t%q==0:t//=q
+        q+=1
+    if t>1:ps.append(t)
+    S={1}
+    for p in ps:
+        for s in list(S):
+            v=s*p
+            while v<=m*m:S.add(v);v*=p
+    return sorted(k for k in S if k<m*m and k+1 in S)
+print([(m,len(k:=pairs(m)),max(k,default=-1)) for m in [1,2,3,6,30]])
+```
+具体完整取样域及全部观察值保存于 smooth_checks.json；有限检查不替代无界定理。数值方案：先试除得到P=primeFactors(m)，S={1}；对每个p∈P及每个s∈list(S)，逐次乘p并仅加入≤m²的值，再取sorted(k for k in S if k<m² and k+1 in S)。完整代码见文末共用光滑数算法。读者实际检验306个平方自由m≤500与64个二进索引n≤63（最大m=30030），未见反例，与源可比DATA均相等；按生成集合大小工作，勿扫描至m²。其余未打开的源引文及页面全部ASSUMED-UNVERIFIED。
+
+### A395754
+
+精确目标：∀n≥1，令 m=A005117(n)，m 为奇数 ⇒ a(n)=0；a(n)=|K_m|，K_m={k∈ℕ:1≤k<m²,rad(k)|m,rad(k+1)|m}。平方自由索引从1开始，m=1 包含在空集情形；平方自由假设对奇偶排除实际多余。偶 m≥2 时 k=1 已给出 K_m 非空，所以零值分类恰为 m 奇数。已打开 https://en.wikipedia.org/wiki/St%C3%B8rmer%27s_theorem 的 “Lehmer’s algorithm” 段，原文明确写出 “Assume p1 = 2; otherwise there could be no consecutive P-smooth numbers, because all P-smooth numbers would be odd.” 这已经给出所需一般断言及证明理由，取 P 为 m 的素因子集即覆盖目标，无须 Pell 方程或 Størmer 的深层有限性。https://en.wikipedia.org/wiki/Radical_of_an_integer 的定义段确认 rad 为不同素因子乘积；因此 rad(k)|m 与 k 为 P-smooth 在正整数域等价。不是仅因条目写了 conjecture 而判新题。bind 风险 high：实读 pin 中 Nat.mem_primeFactors、Nat.Prime.mem_primeFactors、Nat.primeFactors_mono，以及 Nat.prod_primeFactors_dvd_iff（k≠0 时，素因子乘积整除 k iff 素因子集包含）。它们的证明是列表/有限集转换与整除传递，虽未直接命名本 A 序号，但加上相邻整数必有一个偶数就只剩索引和空集合包装；没有可推荐的非 bind-only escape。停止条件：一旦完成正整数、严格上界及索引换算即停止，不为凑席扩写 Lean。三条只占同一概念家族，计数为0与最大值哨兵−1等价；当前已知初等证明，合计0个新实施席；三个条目仍各占一个采集预算项。把偶 m 的完整分类或所有 primorial 上与无界 A002071/A002072 的相等式当 escape 会改变问题，且必须另证每个解 k<m²；Størmer 有限性不能给这个平方界。已打开 Eppstein 2007 “Smooth pairs” 的主文及评论，它报告有限素数集的计算与算法条件，没有证明此统一平方界；该桥仍 ASSUMED-UNVERIFIED。若升级到一般 S-unit/有效 abc 界的深核心，列 tier3 note-only、不计采集预算，不派发。全部直接 A 引用：A002071, A005117, A007947, A039956, A062503, A071403, A365435, A383008, A395721。
+
+数值 yes：`python3 smooth_checks.py`；已运行全部 306 个平方自由 m≤500，以及 A019565 的索引 0≤n≤63（最大 m=30030），无奇 m 反例、无偶 m 缺少解、与三个源文件可比较的全部已列项一致。每个 m 完整生成 S={s≤m²:素因子均整除 m}，用集合查询 s+1；不是跳过奇 m 的循环论证。工作量 O(√m+ω(m)|S|)，存储 O(|S|)，单次生成每个素数阶段均只扩展原集合，不扫描 m² 个整数。可复制算法：
+```python
+def pairs(m):
+    q,t,ps=2,m,[]
+    while q*q<=t:
+        if t%q==0:
+            ps.append(q)
+            while t%q==0:t//=q
+        q+=1
+    if t>1:ps.append(t)
+    S={1}
+    for p in ps:
+        for s in list(S):
+            v=s*p
+            while v<=m*m:S.add(v);v*=p
+    return sorted(k for k in S if k<m*m and k+1 in S)
+print([(m,len(k:=pairs(m)),max(k,default=-1)) for m in [1,2,3,6,30]])
+```
+具体完整取样域及全部观察值保存于 smooth_checks.json；有限检查不替代无界定理。数值方案：先试除得到P=primeFactors(m)，S={1}；对每个p∈P及每个s∈list(S)，逐次乘p并仅加入≤m²的值，再取sorted(k for k in S if k<m² and k+1 in S)。完整代码见文末共用光滑数算法。读者实际检验306个平方自由m≤500与64个二进索引n≤63（最大m=30030），未见反例，与源可比DATA均相等；按生成集合大小工作，勿扫描至m²。其余未打开的源引文及页面全部ASSUMED-UNVERIFIED。
+
+### A395721
+
+精确目标：∀n≥1，令 m=A005117(n)，a(n)=max K_m（K_m为空时取−1）；猜想 m 奇数 ⇒ a(n)=−1。哨兵−1是整数值而非自然数截断减法；正整数集合有严格界 k<m²，故最大值存在。由偶 m≥2 的 k=1 见证，还可得 a(n)=−1 iff m 奇数；这仍是同一空集分类。已打开 https://en.wikipedia.org/wiki/St%C3%B8rmer%27s_theorem 的 “Lehmer’s algorithm” 段，原文明确写出 “Assume p1 = 2; otherwise there could be no consecutive P-smooth numbers, because all P-smooth numbers would be odd.” 这已经给出所需一般断言及证明理由，取 P 为 m 的素因子集即覆盖目标，无须 Pell 方程或 Størmer 的深层有限性。https://en.wikipedia.org/wiki/Radical_of_an_integer 的定义段确认 rad 为不同素因子乘积；因此 rad(k)|m 与 k 为 P-smooth 在正整数域等价。不是仅因条目写了 conjecture 而判新题。bind 风险 high：实读 pin 中 Nat.mem_primeFactors、Nat.Prime.mem_primeFactors、Nat.primeFactors_mono，以及 Nat.prod_primeFactors_dvd_iff（k≠0 时，素因子乘积整除 k iff 素因子集包含）。它们的证明是列表/有限集转换与整除传递，虽未直接命名本 A 序号，但加上相邻整数必有一个偶数就只剩索引和空集合包装；没有可推荐的非 bind-only escape。停止条件：一旦完成正整数、严格上界及索引换算即停止，不为凑席扩写 Lean。三条只占同一概念家族，计数为0与最大值哨兵−1等价；当前已知初等证明，合计0个新实施席；三个条目仍各占一个采集预算项。把偶 m 的完整分类或所有 primorial 上与无界 A002071/A002072 的相等式当 escape 会改变问题，且必须另证每个解 k<m²；Størmer 有限性不能给这个平方界。已打开 Eppstein 2007 “Smooth pairs” 的主文及评论，它报告有限素数集的计算与算法条件，没有证明此统一平方界；该桥仍 ASSUMED-UNVERIFIED。若升级到一般 S-unit/有效 abc 界的深核心，列 tier3 note-only、不计采集预算，不派发。全部直接 A 引用：A002072, A005117, A007947, A039956, A062503, A071403, A365435, A383008, A395754。
+
+数值 yes：`python3 smooth_checks.py`；已运行全部 306 个平方自由 m≤500，以及 A019565 的索引 0≤n≤63（最大 m=30030），无奇 m 反例、无偶 m 缺少解、与三个源文件可比较的全部已列项一致。每个 m 完整生成 S={s≤m²:素因子均整除 m}，用集合查询 s+1；不是跳过奇 m 的循环论证。工作量 O(√m+ω(m)|S|)，存储 O(|S|)，单次生成每个素数阶段均只扩展原集合，不扫描 m² 个整数。可复制算法：
+```python
+def pairs(m):
+    q,t,ps=2,m,[]
+    while q*q<=t:
+        if t%q==0:
+            ps.append(q)
+            while t%q==0:t//=q
+        q+=1
+    if t>1:ps.append(t)
+    S={1}
+    for p in ps:
+        for s in list(S):
+            v=s*p
+            while v<=m*m:S.add(v);v*=p
+    return sorted(k for k in S if k<m*m and k+1 in S)
+print([(m,len(k:=pairs(m)),max(k,default=-1)) for m in [1,2,3,6,30]])
+```
+具体完整取样域及全部观察值保存于 smooth_checks.json；有限检查不替代无界定理。数值方案：先试除得到P=primeFactors(m)，S={1}；对每个p∈P及每个s∈list(S)，逐次乘p并仅加入≤m²的值，再取sorted(k for k in S if k<m² and k+1 in S)。完整代码见文末共用光滑数算法。读者实际检验306个平方自由m≤500与64个二进索引n≤63（最大m=30030），未见反例，与源可比DATA均相等；按生成集合大小工作，勿扫描至m²。其余未打开的源引文及页面全部ASSUMED-UNVERIFIED。
