@@ -47,6 +47,28 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = ".claude/skills"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+symlink = { target = "../skills", kind = "directory" }
+
+[[files]]
+pattern = ".codex/skills"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+symlink = { target = "../skills", kind = "directory" }
+
+[[files]]
 pattern = ".editorconfig"
 kind = "program"
 admission_plane = "judge"
@@ -85,6 +107,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+symlink = { target = "CLAUDE.md", kind = "file" }
 
 [[files]]
 pattern = "Blueprint/**/*.md"
