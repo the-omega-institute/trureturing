@@ -126,3 +126,15 @@ without mutation, then corrected). The seven-line header follows spec A5.1.
 Its delta plan reports 37 added modules relative to the cached report input;
 this is report-cache scope, not a claim that this PR adds 37 modules. Only the
 new LinearExponentDyadicSupport module belongs to this task's Lean delta.
+
+`make emit` exited 0 and generated exactly one changed Blueprint, the new
+LinearRows module mirror. `make -C tools capacity-audit` exited 0 with
+`CAPACITY_AUDIT_RESULT exit=0 reason=clean`. The existing kernel dependency
+extractor emitted `EDGES_OK edges=81 kernel_nonauxiliary_constants=6`.
+Across the extracted constants the only axioms are Classical.choice,
+Quot.sound and propext. Exact no-match scans for sorry, axiom declarations
+and native_decide are supplemented by this semantic closure audit.
+The direct external edges occur in U_support and target the frozen public
+binary_catalan theorem and catalanSeries definition; no private upstream
+identifier is referenced. Reproducible declaration/edge JSON remains in the
+runner scratch directory, not in tracked reports.
