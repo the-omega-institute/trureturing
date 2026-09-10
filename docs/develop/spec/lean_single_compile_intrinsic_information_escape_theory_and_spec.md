@@ -7005,6 +7005,106 @@ comparison 与 transfer 的方向检查见 `tools/lean-inspector/LeanInformation
 不改变 `census.json`、assessment rows／counts、`certified_complete` 或 `ExactlyCovers`。
 observed 永不因结构读数而成为 classified；core support、深度或后代数都不能替代证书。
 
+### 23.7 证明依赖结构读数(report-only)
+
+owner [2026-09-09 方向裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5607374209)
+原句为「给 observed 行加一层从证明项依赖闭包自动算出的结构读数, 我感觉只能这个方向吧」。
+依 [#5214 面板汇总](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5608154632)，
+这些读数已由 [#6717](https://github.com/the-omega-institute/trureturing/pull/6717) 实现，并于
+2026-09-10 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 合入 dev。
+产物是独立 run-local `census-structure.json`，绑定 `head_sha`、`report_sha256` 与实际
+`census.json` bytes 的 `census_sha256`；`source_inputs` 另绑定 olean-part manifests、reader、
+ownership、core set 与 projection 的指纹。展示 join 只按完整
+`(structured Name, statement_id)` key，不能只按 Name 或显示文本。
+
+每个 frozen theorem key 恰有一行，`status ∈ {complete, partial, unavailable}`。
+`complete` 仅表示该行结构字段齐备；`partial` 保留可得字段，以 `missing_fields` 点名
+缺失字段并置为 `null`；`unavailable` 写 `readings=null` 与一个 closed reason。
+失败不得以空集或零冒充；这些状态不改变 assessment class、query-completion 或
+`certified_complete`。sidecar 开关前后的 `census.json` 必须逐字节相同；提取或发布失败
+只记结构读数不可用，不撤回已生成的 census，也不阻断 seal 或 required gate。
+
+设 $v$ 为按完整 key 及真实 owner 定位的冻结定理，$U(v)$ 为其已 elaborate 证明 value 的
+`getUsedConstants` 去重集合。此处 $U(v)$ 是常量集合，与第 5 节的 unique-capture pair 集
+$U_i$ 无关。直接边的方向统一为「消费者 → 前置」，解析须保留 `ModuleData` 归属及
+import scope；无法唯一解析时显式不可用，自边不得静默删除。
+依赖规则的一名一址是自包含的 `tools/lean-inspector/Inspector.lean`：结构 reader 调用其
+`--dependencies` 模式，不另写一份 helper 依赖规则。
+
+| reading | 定义与边界 |
+|---|---|
+| `direct_frozen_prerequisites` | 将 $U(v)$ 中的常量按 declaring module 与 scope 解析到唯一 frozen key 后所得集合；只从 proof value 出发，不把 theorem type 的常量加入直接边。 |
+| `folded_frozen_prerequisites` | 从同一 value 常量集合出发，穿过全部 repository-owned 非冻结声明，沿 inspector 的 type／value 依赖规则递归；首遇 frozen key 即记录并停止该路径，遇上游声明或 axiom 也停止。包括私有 helper、编译器生成 helper 与公开非 theorem definitions，不按拼写或 `isInternalDetail` 决定是否穿透。 |
+| `frozen_dag_depth` | 在 folded frozen graph 上使用下述最长前置路径递推；不是入度、任意拓扑序号或完整声明图的深度。 |
+| `descendant_subgraph_size` | folded graph 中反向可达的不同 frozen 消费者数，去重且不计自身；表示该投影上的后代子图大小。 |
+| `upstream_boundary_constants` | 在首个 frozen hit 之前遇到的上游边界常量及 declaring-module／library provenance；Mathlib、Std、Init、Lean 等归属由实际来源解析，不由 namespace 前缀猜测，多来源保留全部 provenance。 |
+| `axiom_closure` | 复用 truth-export 实际使用的、已验证或重新生成并验证的 report 中逐声明公理闭包；它覆盖 type + value，与 value-only 直接读数分开。缺失或未绑定的闭包为不可用，不能写成空公理集。 |
+| `value_constant_count` | $\lvert U(v)\rvert$，即 proof value 直接使用的不同常量数；不是 proof-term 节点数、源码长度或信息量。 |
+| `core_or_frozen_support` | 恰在 $U(v)\subseteq C\cup\operatorname{direct\_frozen\_prerequisites}(v)$ 时为 `true`，其中前置按其已解析常量理解；其余为 `undetermined`，不发 `false`／`content` 语义判词。 |
+
+**direct ≠ folded**：若 $b$ 只引用仓内非冻结 helper $h$，而 $h$ 引用冻结 $a$，
+则 $b$ 没有 direct frozen prerequisite，却有 folded prerequisite $a$。
+已落地五节点 fixture 取 $F=\{a,b,c,d,g\}$，另有 $c\to a$、$d\to b,c$、$g\to b$：
+direct 图为 4 条边，folded 图补入 $b\to a$ 后为 5 条边；按 $a,b,c,d,g$ 顺序，
+direct 深度为 $(0,0,1,2,1)$，folded 深度为 $(0,1,1,2,2)$，
+folded 后代数为 $(4,2,1,0,0)$。不得拿 direct 根数或 direct depth 代替 folded 读数。
+
+令 $P(v)=\operatorname{folded\_frozen\_prerequisites}(v)$。`CLAUDE.md` §1.3 的递推只在
+这张投影图上解释为：
+
+$$
+\operatorname{depth}(v)=
+\begin{cases}
+0, & P(v)=\varnothing,\\
+1+\max_{u\in P(v)}\operatorname{depth}(u), & P(v)\ne\varnothing.
+\end{cases}
+$$
+
+递推只对依赖可读且无环的部分给值。非冻结 helper 的 SCC 以 visited 集闭合遍历，
+投影图的 cyclic SCC（含自环）记 `graph_cycle`；不可读前置或环使受影响消费者的 depth
+不可用，后代数也传播未知，不能把因环未进入拓扑序的消费者丢掉后发布 complete 0。
+仍有可得字段的行标 `partial`，不可读或位于 cyclic SCC 的行标 `unavailable`；
+辅助摘要 `direct_depths` 对直接图中的相应不可读、环与传播影响也置空。
+
+$C$ 是随 sidecar 发布的显式 52-name core set，带内容摘要；canonical 数据为
+`tools/lean-inspector/Census/Structure/core-logic.json`，不能用整个 namespace 代替成员枚举。
+`core_or_frozen_support` 只断言上述常量集合包含关系，**不是 bind-only、零信息、
+`proof_shape` 或 admission classifier**。短 proof、零深度、空前置、空公理闭包、generated
+标签及 support 正例均不证明 `TrivialInCatalog`；observed 行的信息与逃逸仍为 `undetermined`。
+第 5.8–5.10 节的 capture-multiplicity spectrum、ordered layered capture、generated-kernel
+lattice／strict generator-transition DAG 都是登记式 object analysis，不能与这里的依赖边、
+depth histogram 或后代数混名、互换或据此宣称取得其证书。
+
+generated policy 的现役值是 `in_denominator`：所有 frozen theorem keys 仍在分母，
+`generated_candidate` 只是 `.congr_simp` substring 的候选标签，不能证明 generated origin。
+落地样本有 307 个此标签；私有性、拼写或 `isInternalDetail` 也不是改分母的依据。
+将 generated 排除出分类分母须另有 owner 的语义裁决，不由本 sidecar 自动施行。
+
+**缓存与失效**：raw summary 按 olean-part 内容摘要、同模块有序 part layout 与 reader／
+toolchain 指纹缓存；项目摘要复用 census 的读取，不重复整库哈希。folded 结果还依赖 root
+summary、实际引用的 helper summaries、owner／scope 解析、涉及名称的 frozen membership
+以及 cut／core policy；graph projection 绑定 frozen key 集、图输入与所复用的公理闭包。
+因此「只改源码才失效」不成立：helper 新获冻结身份，即使 olean bytes 不变，也须重新
+结算 first-frozen-hit 的边。缓存命中仍核对依赖签名，sidecar 的 HEAD／report／census
+绑定每次重新生成，不能把旧 run 的 header 当作本次报告；原始 olean 摘要仍是 tree-local。
+resident 数据限于单模块读取、逐 key 标量与冻结图／import 图元数据；helper 遍历、frontier
+及后代集合放在盘上，发布逐流写出，不将所有 proof terms 或所有传递闭包驻留内存。
+内存界仍含最大 resident module 与 $O(V+E)$ 冻结图、$O(M+I)$ 模块／import 元数据，
+不是整库常量内存；后代计算的时间及磁盘量在最坏情形可超线性。
+
+unavailable reasons 的闭合集合为 `missing_olean_part`、`constant_missing`、`kind_mismatch`、
+`value_unavailable`、`dependency_unresolved`、`frozen_key_ambiguous`、`graph_cycle`。
+它们是 sidecar 字段，不分配新 IE-C codes，不构造 `UnreachableReason` 或 closed-reason proof。
+提取错误不能被解释为 registry absence，也不能修改 query 层的认证与观察分栏。
+
+**落地全库读数（2026-09-10，[#6717](https://github.com/the-omega-institute/trureturing/pull/6717)
+及 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767)）**：22,524 行中
+22,437 complete、74 partial、13 unavailable（12 `dependency_unresolved`、1 `frozen_key_ambiguous`）；
+direct edges 28,149，folded edges 39,647；folded depth histogram 为
+0:8,819 · 1:4,255 · 2:2,717 · … · 27:2；support 正例 46，其余 22,478 为 undetermined。
+这些数是该 frozen key 集上的结构测量；启用／关闭 sidecar 时 `census.json` 字节完全相同，
+主 census 仍为 certified 10、observed 22,514，`certified_complete=false`。
+
 ---
 
 ## 24. theorem 登记语法
