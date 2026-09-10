@@ -1,13 +1,29 @@
 <Project>
-  <!-- FileWrites is populated by the compiler and copy targets, including on an
-       incremental Build. Do not infer runtime membership by walking bin/obj. -->
-  <!-- CoreCompile owns this receipt. A native no-op retains its prior arguments. -->
-  <Target Name="RecordCiCompilerArguments" AfterTargets="CoreCompile"
-      Condition="'$(CiBuildOutputRoot)' != '' and '@(CscCommandLineArgs)' != ''">
+  <!-- The SDK computes switches in a separate project instance. NonExistentFile
+       forces only its CoreCompile; SkipCompilerExecution never runs csc/generators.
+       Compile retains SDK preparation, reference aliases, resources and options. -->
+  <Target Name="CaptureCiCompilerMetadata" AfterTargets="Build" BeforeTargets="RecordCiBuildOutputs"
+      Condition="'$(CiRepositoryRoot)' != '' and '$(CiMetadataInstance)' != 'true'">
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="WriteCiCompilerMetadata"
+      Properties="CiMetadataInstance=true;BuildProjectReferences=false;SkipCompilerExecution=true;ProvideCommandLineArgs=true;NonExistentFile=$(IntermediateOutputPath)ci-metadata-never-written" />
+  </Target>
+  <Target Name="WriteCiCompilerMetadata" DependsOnTargets="BuildOnlySettings;PrepareForBuild;PrepareResources;Compile"
+      Condition="'$(CiMetadataInstance)' == 'true'">
     <WriteLinesToFile File="$(IntermediateOutputPath)ci-compiler-arguments.txt"
       Lines="@(CscCommandLineArgs)" Overwrite="true" WriteOnlyWhenDifferent="true" />
+    <PropertyGroup>
+      <_CiProject>$([MSBuild]::MakeRelative('$(CiRepositoryRoot)', '$(MSBuildProjectFullPath)'))</_CiProject>
+      <_CiNative>$(CiBuildOutputRoot)/$(_CiProject).native</_CiNative>
+    </PropertyGroup>
+    <!-- Observed generated files are not attested as current by this metadata pass. -->
+    <ItemGroup><_CiGeneratedSource Include="$(CompilerGeneratedFilesOutputPath)/**/*.cs" Condition="'$(CompilerGeneratedFilesOutputPath)' != ''" /></ItemGroup>
+    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(_CiNative)'))" Condition="'$(CiBuildOutputRoot)' != ''" />
+    <WriteLinesToFile File="$(_CiNative)" Overwrite="true" Condition="'$(CiBuildOutputRoot)' != ''"
+      Lines="generated_provenance=not-rerun;@(_CiGeneratedSource->'generated=%(FullPath)');@(Compile->'compile=%(FullPath)');@(ReferencePath->'reference=%(FullPath)');@(ProjectReference->'project=%(FullPath)');@(CscCommandLineArgs->'argument=%(Identity)')" />
   </Target>
-  <Target Name="RecordCiBuildOutputs" AfterTargets="Build" Condition="'$(CiBuildOutputRoot)' != ''">
+  <!-- FileWrites is populated by the real compiler and copy targets, including
+       on an incremental Build. Metadata capture does not own emitting outputs. -->
+  <Target Name="RecordCiBuildOutputs" AfterTargets="Build" Condition="'$(CiBuildOutputRoot)' != '' and '$(CiMetadataInstance)' != 'true'">
     <PropertyGroup>
       <_CiProject>$([MSBuild]::MakeRelative('$(CiRepositoryRoot)', '$(MSBuildProjectFullPath)'))</_CiProject>
       <_CiManifest>$(CiBuildOutputRoot)/$(_CiProject).outputs</_CiManifest>
@@ -16,12 +32,5 @@
     <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(_CiManifest)'))" />
     <WriteLinesToFile File="$(_CiManifest)" Overwrite="true"
       Lines="$(MSBuildProjectFullPath);$(TargetPath);$(TargetDir);$(ProjectAssetsFile);reference=$(_CiReference);@(FileWrites->'%(FullPath)')" />
-    <ItemGroup><_CiGeneratedSource Include="$(CompilerGeneratedFilesOutputPath)/**/*.cs" Condition="'$(CompilerGeneratedFilesOutputPath)' != ''" /></ItemGroup>
-    <ReadLinesFromFile File="$(IntermediateOutputPath)ci-compiler-arguments.txt"
-        Condition="Exists('$(IntermediateOutputPath)ci-compiler-arguments.txt')">
-      <Output TaskParameter="Lines" ItemName="_CiCompilerArguments" />
-    </ReadLinesFromFile>
-    <WriteLinesToFile File="$([System.IO.Path]::ChangeExtension('$(_CiManifest)', '.native'))" Overwrite="true"
-      Lines="@(_CiGeneratedSource->'generated=%(FullPath)');@(Compile->'compile=%(FullPath)');@(ReferencePath->'reference=%(FullPath)');@(ProjectReference->'project=%(FullPath)');@(_CiCompilerArguments->'argument=%(Identity)')" />
   </Target>
 </Project>

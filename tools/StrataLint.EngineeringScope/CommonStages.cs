@@ -81,15 +81,28 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
 
     private CommonStageRecord Build()
     {
+        var clock = timeProvider ?? TimeProvider.System;
+        var started = clock.GetTimestamp();
         ClearEvidence("build", "engineering", "current");
         File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
         var outputs = Path.Combine(root, CommonBuildOutputs.RootPath);
         if (Directory.Exists(outputs)) Directory.Delete(outputs, recursive: true);
         Step("restore-StrataLint", "dotnet", ["restore", "tools/StrataLint.sln", "--locked-mode"]);
+        var restored = clock.GetTimestamp();
         Step("build", "dotnet", ["build", "tools/StrataLint.sln", "--configuration", "Release", "--no-restore", "--warnaserror", "--verbosity", "normal",
             "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
             "-p:ProvideCommandLineArgs=true", "-p:EmitCompilerGeneratedFiles=true", "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
-        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root), steps.ToArray());
+        var built = clock.GetTimestamp();
+        var products = CommonBuildOutputs.Collect(root);
+        var collected = clock.GetTimestamp();
+        var record = CommonExecutionEvidence.SealBuild(root, candidate!, products, steps.ToArray());
+        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.RootPath + "/build-cost.json", new {
+            restore_seconds = clock.GetElapsedTime(started, restored).TotalSeconds,
+            native_seconds = clock.GetElapsedTime(restored, built).TotalSeconds,
+            collect_seconds = clock.GetElapsedTime(built, collected).TotalSeconds,
+            seal_seconds = clock.GetElapsedTime(collected).TotalSeconds,
+            build_seconds = clock.GetElapsedTime(started).TotalSeconds });
+        return record;
     }
 
     private void Engineering(string? buildRound)

@@ -92,20 +92,37 @@ internal static class CommonExecutionEvidence
 
     internal static CommonStageRecord SealBuild(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
     {
+        var clock = TimeProvider.System;
+        var started = clock.GetTimestamp();
         RequirePassed(steps, BuildSteps);
         var completed = Candidate(root, out var snapshot, out var inputs);
-        var products = binaries.Concat(CommonCompileMetadata.Export(root, snapshot)).ToArray();
+        var candidateFinished = clock.GetTimestamp();
         if (candidate != completed) throw new InvalidDataException("candidate changed during build");
-        var materials = Materials(root, products.Concat(steps.Select(step => step.Log)));
-        if (products.Contains(AffectedTestPlan.NativePath, StringComparer.Ordinal))
+        var materials = Materials(root, binaries.Concat(steps.Select(step => step.Log)));
+        var hashFinished = clock.GetTimestamp();
+        materials = materials.Concat(Materials(root, CommonCompileMetadata.Export(root, snapshot, materials)))
+            .OrderBy(item => item.Path, StringComparer.Ordinal).ToArray();
+        var metadataFinished = clock.GetTimestamp();
+        var planFinished = metadataFinished;
+        var serializationFinished = metadataFinished;
+        if (materials.Any(material => material.Path == AffectedTestPlan.NativePath))
         {
             var plan = AffectedTestPlan.Derive(root, candidate, snapshot, inputs, materials);
+            planFinished = clock.GetTimestamp();
             Write(root, AffectedTestPlan.PathName, plan);
+            serializationFinished = clock.GetTimestamp();
             materials = materials.Concat(Materials(root, [AffectedTestPlan.PathName])).OrderBy(item => item.Path, StringComparer.Ordinal).ToArray();
         }
         var record = new CommonStageRecord(1, candidate, Guid.NewGuid().ToString("N"), steps, materials);
         Write(root, BuildPath, record);
         WriteBundleList(root, "build", record.Materials.Select(material => material.Path).Append(BuildPath));
+        Write(root, RootPath + "/seal-cost.json", new {
+            candidate_seconds = clock.GetElapsedTime(started, candidateFinished).TotalSeconds,
+            material_hash_seconds = clock.GetElapsedTime(candidateFinished, hashFinished).TotalSeconds,
+            compile_metadata_seconds = clock.GetElapsedTime(hashFinished, metadataFinished).TotalSeconds,
+            plan_seconds = clock.GetElapsedTime(metadataFinished, planFinished).TotalSeconds,
+            serialization_seconds = clock.GetElapsedTime(planFinished, serializationFinished).TotalSeconds,
+            seal_seconds = clock.GetElapsedTime(started).TotalSeconds });
         return record;
     }
 

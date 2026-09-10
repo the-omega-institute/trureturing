@@ -4,6 +4,8 @@ using Microsoft.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.CodeAnalysis.CSharp;
 using StrataLint.Engine;
 using StrataLint.Scribe;
@@ -14,9 +16,69 @@ internal sealed record ActionInput(string Path, string Identity);
 internal sealed record TestAction(string Project, string Assembly, string Scope, string[] Methods, ActionInput[] Inputs,
     string[] Edges, string[] Unknown, string ProjectIdentity, string Producer, string Environment, string Identity);
 internal sealed record TestProjectInputs(string Project, ActionInput[] Inputs, string[] Edges, string[] Unknown, string Identity);
+[JsonConverter(typeof(TestInputManifestConverter))]
 internal sealed record TestInputManifest(int Version, string Candidate, TestProjectInputs[] Projects, TestAction[] Actions);
 internal sealed record NativeProject(string Project, string[] Inputs, string[][] Semantics,
-    Dictionary<string, string> Properties, string[] Compile, string[] Reference, string[] ProjectReferences, string[] Argument, string[] Generated);
+    Dictionary<string, string> Properties, string[] Compile, string[] Reference, string[] ProjectReferences, string[] Argument, string[] Generated,
+    string GeneratedProvenance);
+
+// Indexes are references into unique tables, not another dependency authority.
+// Both current evidence and optional seeds use this one wire representation.
+internal sealed class TestInputManifestConverter : JsonConverter<TestInputManifest>
+{
+    private sealed record Project(string ProjectPath, int[] InputIds, int[] EdgeIds, int[] UnknownIds, string Identity);
+    private sealed record Action(string ProjectPath, string Assembly, string Scope, string[] Methods, int[] InputIds,
+        int[] EdgeIds, int[] UnknownIds, string ProjectIdentity, string Producer, string Environment, string Identity);
+    private sealed record Manifest(int Version, string Candidate, ActionInput[] Inputs, string[] Edges, string[] Unknown,
+        Project[] Projects, Action[] Actions);
+
+    public override TestInputManifest Read(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options)
+    {
+        var wire = JsonSerializer.Deserialize<Manifest>(ref reader, options) ?? throw new InvalidDataException("missing shared manifest");
+        if (wire.Version != 3) throw new InvalidDataException("invalid test input manifest version");
+        Unique(wire.Inputs); Unique(wire.Edges); Unique(wire.Unknown);
+        var plan = new TestInputManifest(wire.Version, wire.Candidate,
+            wire.Projects.Select(project => new TestProjectInputs(project.ProjectPath, Resolve(wire.Inputs, project.InputIds),
+                Resolve(wire.Edges, project.EdgeIds), Resolve(wire.Unknown, project.UnknownIds), project.Identity)).ToArray(),
+            wire.Actions.Select(action => new TestAction(action.ProjectPath, action.Assembly, action.Scope, action.Methods,
+                Resolve(wire.Inputs, action.InputIds), Resolve(wire.Edges, action.EdgeIds), Resolve(wire.Unknown, action.UnknownIds),
+                action.ProjectIdentity, action.Producer, action.Environment, action.Identity)).ToArray());
+        AffectedTestPlan.Validate(plan);
+        return plan;
+
+        static void Unique<T>(T[] values)
+        {
+            if (values is null || values.Any(value => value is null) || values.Distinct().Count() != values.Length)
+                throw new InvalidDataException("duplicate or missing shared record");
+        }
+        static T[] Resolve<T>(T[] values, int[] ids)
+        {
+            if (ids is null || ids.Any(id => id < 0 || id >= values.Length) || ids.Distinct().Count() != ids.Length)
+                throw new InvalidDataException("dangling or duplicate shared reference");
+            return ids.Select(id => values[id]).ToArray();
+        }
+    }
+
+    public override void Write(Utf8JsonWriter writer, TestInputManifest plan, JsonSerializerOptions options)
+    {
+        var inputs = new Dictionary<ActionInput, int>();
+        var edges = new Dictionary<string, int>(StringComparer.Ordinal);
+        var unknown = new Dictionary<string, int>(StringComparer.Ordinal);
+        var projects = plan.Projects.Select(project => new Project(project.Project, Intern(inputs, project.Inputs),
+            Intern(edges, project.Edges), Intern(unknown, project.Unknown), project.Identity)).ToArray();
+        var actions = plan.Actions.Select(action => new Action(action.Project, action.Assembly, action.Scope, action.Methods,
+            Intern(inputs, action.Inputs), Intern(edges, action.Edges), Intern(unknown, action.Unknown),
+            action.ProjectIdentity, action.Producer, action.Environment, action.Identity)).ToArray();
+        JsonSerializer.Serialize(writer, new Manifest(plan.Version, plan.Candidate, inputs.Keys.ToArray(), edges.Keys.ToArray(),
+            unknown.Keys.ToArray(), projects, actions), options);
+
+        static int[] Intern<T>(Dictionary<T, int> table, T[] values) where T : notnull => values.Select(value =>
+        {
+            if (!table.TryGetValue(value, out var id)) table.Add(value, id = table.Count);
+            return id;
+        }).ToArray();
+    }
+}
 
 internal static class AffectedTestPlan
 {
@@ -27,6 +89,10 @@ internal static class AffectedTestPlan
         Dictionary<string, ActionInput> hashes, ExecutionMaterial[] materials)
     {
         var native = CommonExecutionEvidence.Read<NativeProject[]>(root, NativePath);
+        var graph = native.ToDictionary(project => project.Project, StringComparer.Ordinal);
+        foreach (var node in native)
+            foreach (var reference in node.ProjectReferences)
+                if (!graph.ContainsKey(Relative(reference))) throw new InvalidDataException("dangling native project reference: " + reference);
         var projects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot));
         var testSet = projects.ToHashSet(StringComparer.Ordinal);
         var filemap = snapshot.TryGetFile(FileMapLoader.RelativePath, out var mapFile)
@@ -45,7 +111,7 @@ internal static class AffectedTestPlan
         // Reconstruct the selected projects' native dependency closure. Runtime
         // inventories above still retain every built project's exported outputs.
         var compilationProjects = native.Where(project => testSet.Contains(project.Project))
-            .SelectMany(project => Closure(project, native)).DistinctBy(project => project.Project).Select(project =>
+            .SelectMany(project => Closure(project)).DistinctBy(project => project.Project).Select(project =>
         {
             var command = project.Argument.Length == 0 ? null : CSharpCommandLineParser.Default.Parse(project.Argument,
                 Path.GetDirectoryName(System.IO.Path.Combine(root, project.Project))!, RuntimeEnvironment.GetRuntimeDirectory());
@@ -77,6 +143,28 @@ internal static class AffectedTestPlan
         var environment = EnvironmentIdentity();
         var actions = new List<TestAction>();
         var projectInputs = new List<TestProjectInputs>();
+        var ownersByPath = new Dictionary<string, ActionInput?>(StringComparer.Ordinal);
+        var nativeInputs = native.ToDictionary(node => node.Project, node =>
+        {
+            var unknown = new SortedSet<string>(StringComparer.Ordinal);
+            var inputs = new SortedDictionary<string, ActionInput>(StringComparer.Ordinal);
+            foreach (var path in node.Inputs) BindInput(path, inputs, unknown);
+            foreach (var pair in node.Semantics) inputs["msbuild:" + pair[0]] = new("msbuild:" + pair[0], pair[1]);
+            if (node.Argument.Length == 0) unknown.Add("compiler:missing-command-line:" + node.Project);
+            // Metadata capture observes generated files but does not rerun generators.
+            if (node.Generated.Length != 0)
+                unknown.Add("compiler:generated-provenance-unavailable:" + node.Project);
+            inputs["compiler:" + node.Project] = new("compiler:" + node.Project,
+                Digest(node.Argument.Select(argument => argument.Replace(root, "@repository", StringComparison.Ordinal))));
+            foreach (var reason in compilationUnknown.GetValueOrDefault(node.Project) ?? []) unknown.Add(reason);
+            foreach (var source in node.Compile.Concat(node.Generated))
+            {
+                var path = Relative(source);
+                if (!hashes.TryGetValue(path, out var input)) hashes[path] = input = new(path, CommonExecutionEvidence.Hash(source));
+                inputs["compile:" + path] = new("compile:" + path, input.Identity);
+            }
+            return (Inputs: inputs.Values.ToArray(), Unknown: unknown.ToArray());
+        }, StringComparer.Ordinal);
         foreach (var project in projects)
         {
             var node = native.Single(item => item.Project == project);
@@ -84,27 +172,17 @@ internal static class AffectedTestPlan
             if (projectScopes.Length == 0) projectScopes = [new(project, "*", [], [], [], [failure ?? "adapter:no-bound-test-identities"])];
             var commonUnknown = new SortedSet<string>(StringComparer.Ordinal);
             var common = new SortedDictionary<string, ActionInput>(StringComparer.Ordinal);
-            foreach (var path in node.Inputs) BindInput(path, common, commonUnknown);
-            foreach (var pair in node.Semantics) common["msbuild:" + pair[0]] = new("msbuild:" + pair[0], pair[1]);
             // TargetDir inventory owns testhost, adapters, dependencies and copied content.
             foreach (var material in runtime[project])
             {
                 common["material:" + material.Path] = new("material:" + material.Path, material.Sha256);
                 if (initializers.Contains(material.Sha256)) commonUnknown.Add("runtime:module-initializer:" + material.Path);
             }
-            var closure = Closure(node, native).ToArray();
+            var closure = Closure(node).ToArray();
             foreach (var dependency in closure)
             {
-                if (dependency.Argument.Length == 0) commonUnknown.Add("compiler:missing-command-line:" + dependency.Project);
-                common["compiler:" + dependency.Project] = new("compiler:" + dependency.Project,
-                    Digest(dependency.Argument.Select(argument => argument.Replace(root, "@repository", StringComparison.Ordinal))));
-                foreach (var reason in compilationUnknown.GetValueOrDefault(dependency.Project) ?? []) commonUnknown.Add(reason);
-                foreach (var source in dependency.Compile.Concat(dependency.Generated))
-                {
-                    var path = Relative(source);
-                    if (!hashes.TryGetValue(path, out var input)) hashes[path] = input = new(path, CommonExecutionEvidence.Hash(source));
-                    common["compile:" + path] = new("compile:" + path, input.Identity);
-                }
+                foreach (var input in nativeInputs[dependency.Project].Inputs) common[input.Path] = input;
+                commonUnknown.UnionWith(nativeInputs[dependency.Project].Unknown);
             }
             var projectEdges = closure.SelectMany(item => item.ProjectReferences.Select(reference =>
                 item.Project + " -> " + Relative(reference))).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
@@ -135,7 +213,7 @@ internal static class AffectedTestPlan
                 actions.Add(action with { Identity = Identity(action) });
             }
         }
-        return new(2, candidate, projectInputs.ToArray(), actions.ToArray());
+        return new(3, candidate, projectInputs.ToArray(), actions.ToArray());
 
         void BindInput(string path, SortedDictionary<string, ActionInput> inputs, SortedSet<string> unknown, bool runtimeInput = false)
         {
@@ -146,27 +224,26 @@ internal static class AffectedTestPlan
                 hashes[path] = input = new(path, identity);
             }
             inputs[path] = input;
-            var owners = filemap?.Match(path) ?? [];
-            if (owners.Length == 0) unknown.Add("filemap:unowned:" + path);
-            else inputs["ownership:" + path] = new("ownership:" + path, Digest(owners.Select(owner =>
-                $"{owner.Pattern}|{owner.Kind}|{owner.AdmissionPlane}|{owner.ProducedBy}|{string.Join(',', owner.ConsumedBy)}|{string.Join(',', owner.VerifiedBy)}|{owner.RuntimeDisposition}")));
+            if (!ownersByPath.TryGetValue(path, out var ownership))
+            {
+                var owners = filemap?.Match(path) ?? [];
+                ownersByPath[path] = ownership = owners.Length == 0 ? null : new("ownership:" + path, Digest(owners.Select(owner =>
+                    $"{owner.Pattern}|{owner.Kind}|{owner.AdmissionPlane}|{owner.ProducedBy}|{string.Join(',', owner.ConsumedBy)}|{string.Join(',', owner.VerifiedBy)}|{owner.RuntimeDisposition}")));
+            }
+            if (ownership is null) unknown.Add("filemap:unowned:" + path);
+            else inputs[ownership.Path] = ownership;
         }
 
         string Relative(string path) => System.IO.Path.GetRelativePath(root, System.IO.Path.GetFullPath(path, root)).Replace('\\', '/');
-    }
-
-    private static IEnumerable<NativeProject> Closure(NativeProject node, NativeProject[] projects)
-    {
-        var pending = new Stack<NativeProject>(); pending.Push(node);
-        var seen = new HashSet<string>(StringComparer.Ordinal);
-        while (pending.TryPop(out var next))
+        IEnumerable<NativeProject> Closure(NativeProject node)
         {
-            if (!seen.Add(next.Project)) continue;
-            yield return next;
-            foreach (var reference in next.ProjectReferences)
+            var pending = new Stack<NativeProject>(); pending.Push(node);
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            while (pending.TryPop(out var next))
             {
-                var target = projects.Single(project => reference.Replace('\\', '/').EndsWith("/" + project.Project, StringComparison.Ordinal));
-                pending.Push(target);
+                if (!seen.Add(next.Project)) continue;
+                yield return next;
+                foreach (var reference in next.ProjectReferences) pending.Push(graph[Relative(reference)]);
             }
         }
     }
@@ -178,7 +255,7 @@ internal static class AffectedTestPlan
         .Concat(action.Inputs.Select(input => input.Path + "\0" + input.Identity)).Concat(action.Edges).Concat(action.Unknown));
     internal static void Validate(TestInputManifest plan)
     {
-        if (plan.Version != 2 || plan.Projects.Any(project => project.Identity != ProjectIdentity(project)
+        if (plan.Version != 3 || plan.Projects.Any(project => project.Identity != ProjectIdentity(project)
                 || project.Inputs.Select(input => input.Path).Distinct(StringComparer.Ordinal).Count() != project.Inputs.Length)
             || plan.Projects.Select(project => project.Project).Distinct(StringComparer.Ordinal).Count() != plan.Projects.Length
             || plan.Actions.Any(action => action.Identity != Identity(action)

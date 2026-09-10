@@ -30,7 +30,9 @@ case "$stage" in
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-restore -- \
       dotnet restore tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-build -- \
-      dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror
+      dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror \
+      "-p:CustomAfterMicrosoftCommonTargets=$ROOT/tools/scripts/ci-build-outputs.targets" \
+      "-p:CiRepositoryRoot=$ROOT" -p:ProvideCommandLineArgs=true -p:EmitCompilerGeneratedFiles=true
     dotnet "$runner" "$stage" --repository "$ROOT"
     ;;
   current)
