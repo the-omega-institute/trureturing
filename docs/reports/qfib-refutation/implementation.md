@@ -208,3 +208,38 @@ Pre-PR duplicate check after fetching dev at
 origin/dev -- D5 Problems Library` had no matches (EXIT=1).
 `git merge-tree --write-tree HEAD origin/dev` EXIT=0, tree
 `ac105293118980ca5c0803169f28e699b6e25e4b`. No existing source was moved or retired.
+
+## Build and proof-shape evidence
+
+`make lean` EXIT=0, 232.479 seconds, 12,912 jobs, on this macOS ARM worktree
+with the seeded donor cache described above. This is a local build measurement,
+not a CI performance claim. Full log: attempt-1/make-lean.log.
+
+The repository `proof-edges.sh` succeeded:
+`EDGES_OK edges=10 kernel_nonauxiliary_constants=7`.
+Its kernel-derived live dependency path includes
+`result → six_unimodal (private) → family_coeff (private) → family_eq (private)`.
+The generated JSON stays attempt-local; it is not a tracked report projection.
+
+Only public theorem: `result`.
+- proof_shape: content.
+- Direct frozen dependencies (GID + statement_id): none (empty set).
+- escape_witness: private `six_unimodal`.
+- admission_basis: escape-witness.
+- Computational use: certified-instance; refutes the closed `claim`.
+
+Four escape-witness checks: (i) the elaborated constant edges above put it in
+result's transitive dependency closure; (ii) the new inequalities at the six-factor
+product are established here by exact arithmetic, not projected from a frozen
+premise or obtained by instantiating a pre-existing unimodality theorem;
+(iii) unimodality of a specific polynomial is not definitionally equal to the
+negation of the universal necessary-condition assertion; (iv) it is the actual
+unimodality argument supplied to the hypothesized claim, and that specialization
+is used to obtain the impossible divisibility-or-bound disjunction. It survives
+reduction and is not an unused conjunct. Dropping it leaves the implication's
+antecedent unproved. The coefficient/shift identities are supporting Mathlib
+rewrites; no new upstream binomial theorem is claimed.
+
+```text
+LEAN_CACHE {"status":"present","worktree":"/Users/chronoai/trureturing-qfib-unimodal","donor":null,"method":"none","reason":null,"stamp_miss":null,"pin_sha256":"sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":0,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"project olean state is warm","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+```
