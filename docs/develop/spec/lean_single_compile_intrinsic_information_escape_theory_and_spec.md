@@ -8618,7 +8618,7 @@ without agreement 与 full separation，故 strict inclusion 由 kernel proof接
 
 ### T-036　disposition census fixture
 
-现役四类 certified fixture 检查 class counts $(1,1,1,1)$、reason count $1$ 与 keys exact cover；
+现役 J2 四类 certified fixture 检查 class counts $(1,1,1,1)$、reason count $1$ 与 keys exact cover；
 声明见 `tools/lean-inspector/LeanInformationAudit/Tests/Census/Coverage.lean`，真实证据见
 `tools/lean-inspector/LeanInformationAudit/Tests/Census/Evidence.lean`。
 
@@ -8676,6 +8676,39 @@ theorem／statement／reason，用 IE-C037。候选 arena 身份不匹配用 IE-
 所有拒绝均为报告校验，
 census fixture 不把 artifact 接成 seal input 或 required gate。
 （J2 落地形态,2026-09-08:S0 的空列表一律拒绝、absence-status IE-C044 与 excluded-row IE-C044 未采用；现役检查区分 observation schema 的 IE-C037、scope／candidate 的 IE-C044 和 excluded identity 的 IE-C036。）
+
+**Phase 11 全库查询与发布 fixtures 已落地（2026-09-10，
+[#6660](https://github.com/the-omega-institute/trureturing/pull/6660)、
+[#6664](https://github.com/the-omega-institute/trureturing/pull/6664)，经
+[#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 进入 dev）**。
+上述合成 J2 inventories 保留其局部 API 断言；生产查询 fixtures 从真实 olean parts 生成 rows，
+不能把手填空列表或 fixture identity 当作完成查询。覆盖面包括 `ModuleData` owner 成员、
+同名不同 statement 的消歧与分批隔离、nested evidence 的 root scope、缺 tracked olean 的
+fail-closed、新鲜报告 attestation 的拒绝／重生成，以及读过 bytes 的 receipt replay。
+收据反例必须到达成功扫描后的 `IE-C044 receipt replay mismatch` 比较器，不能以坏 header
+的提前拒绝冒充重放覆盖。查询回归见 `tools/lean-inspector/Census/tests/test_review_fixes.py`。
+
+分桶证书检查的 kernel 命题恰为
+`strictlyAscending ids = true ∧ ids.length = requested ∧ ids = reportIds`；Name↔hex↔Nat
+绑定在 elaborator，不能把 Name 字符串排序或同源 manifest 自反等式当作该命题。
+codec fixtures 覆盖 256-bit 边界、前导零与 packed literal arity；逐 literal 绑定分别来自
+validated rows 和 report。多故障 fixtures 在 Lean publisher 与 Python entrypoint 都要求
+`IE-C044 > IE-C035 > IE-C036 > IE-C034`，特别是 duplicate 先于 malformed-id codec，
+`statement_id_nat` 绑定错误先于 missing row；class／evidence 的 IE-C037 义务不变。
+具名 Lean 反例见 `tools/lean-inspector/LeanInformationAudit/Tests/Census/Manifest/Precedence.lean`。
+
+range fixtures 检查每叶至多 $M$ ids、自适应分裂、错误 range 归属被拒、二叉组合的有序性／
+长度／report 等式，以及删除任一合取不能继续通过。每叶／节点独立编译并内容寻址，
+增量 fixture 新增一个 key 时只重编受影响叶、祖先与 Root；1k／10k 合成规模的每进程
+峰值约 0.29 GiB 持平是性能实验读数，不作为功能测试的挂钟或 RSS 判词。
+最终环境只能是 Init + `Census.Certificate` + range modules，axioms 为 `[propext]`；
+不得把外层 $O(\mathrm{rows})$ 报告校验 driver 的内存算进单叶上界后宣称整管线常量内存。
+发布 fixture 消费全流收据绑定的 `rows.jsonl`，拒绝 rows／receipt 篡改，不再走 per-partition
+receipt 协议；展开的 `census.json` 不被 handoff 重新解析，发布前后 bytes 不变。
+全流与分桶回归见 `tools/lean-inspector/Census/tests/test_pipeline.py`、
+`tools/lean-inspector/Census/tests/test_buckets.py` 及 `tools/lean-inspector/Census/tests/test_review_fixes.py`。
+结构 sidecar 的五节点 direct／folded、SCC、缓存失效及非干涉 fixtures 遵循第 23.7 节；
+它们不把 observed 加入 certified，也不新增 IE-C codes。
 
 ### T-037　extensional quotient mutation
 
