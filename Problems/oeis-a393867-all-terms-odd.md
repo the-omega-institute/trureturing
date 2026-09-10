@@ -147,6 +147,14 @@ claim and re-emit. The Lean proof is unchanged by this correction.
 The corrected pre-freeze `make emit` exits 0 in 65.568 seconds and generates
 the new Blueprint with both universal statements and their proof explanations.
 
+Pre-freeze `scribe-content-checks.sh` with the canonical report and exact
+base above: EXIT=0, 23.643 seconds. The changed paths select Describe and
+Markdown checks; Describe reports `red=0`, and KaTeX reports
+`judged=1 formula(s)=2 red=0`. The projection check is not selected by this
+delta (no projection JSON or producer change). The offline DOI observations
+concern repository library notes; they do not constitute online verification
+or a failed check.
+
 ### Elaborated dependency query
 
 A Lean `run_cmd` query used `Environment.find?`, `ConstantInfo.type`,
@@ -217,5 +225,24 @@ oddness conjecture. The only direct frozen module is
 `sha256:ac377909f3efe06da244e7960fe628f1ea740f752641f94947b75c57a790b785`.
 The source theorem dependencies are `generating_equation` and `lt_prime`;
 the original definitions `generatingSeries`, `prime`, `logDerivative`, and
-`a393867` retain their meanings. Declaration-level identities will be read
-from the canonical report/export before delivery.
+`a393867` retain their meanings. Declaration-level identities were read from
+the canonical Lean report and matched exactly by `name_key` against accepted
+frozen event `1cf1333b827273fcb1f83e0f21fa6ea633bbdf882aefa1b6c956dc68f5ae02ee`.
+No statement hashes were recomputed by the worker. Each short name below
+denotes the full GID
+`D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.<name>`.
+
+| Direct frozen declaration | statement_id | Consumers |
+| --- | --- | --- |
+| `lt_prime` | `sha256:6d1e9781ad95c0927e40e35b903401eb5faf74d76a655668f525adba8d384c59` | pair, oddness |
+| `prime` | `sha256:0a736efbf5ea49c36d6d348f1d3d21b17714ff433baaef1d2acb118a193af86b` | pair, oddness |
+| `generatingSeries` | `sha256:ad6449b1161b2a32010488990c77aa6cc3957460926b53e14e221181bdf878f2` | pair, oddness |
+| `generating_equation` | `sha256:b84125e62ee76082f046bc175964b51643eb15f3e07d6724e55078008a79ea29` | pair, oddness |
+| `logDerivative` | `sha256:43ab45a43a98fbbf4e86ca7e249c35dbbf819eb18188389589c7c3e964d0afb7` | oddness |
+| `a393867` | `sha256:e653feadb8c579450bd4c1a9151aaf899c9ba14e6be38a8e6c19b7000b7d1968` | oddness |
+
+The elaborator-generated `logDerivative.eq_1` is accounted for under its
+owning definition `logDerivative`; it is not a separate frozen public
+statement. The pair and oddness declarations' own report identities are,
+respectively, `sha256:01499cf51fce67e5b2ceb7d214f3d5a5fbe97157562324039dee651f6a58346d`
+and `sha256:3324701a7dfdca32def1679d93600fd9ad5950d7dfd0a4390ea04493efed0583`.
