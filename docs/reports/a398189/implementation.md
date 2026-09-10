@@ -130,3 +130,11 @@ axiom 闭包仍只有 Classical.choice、Quot.sound、propext。
 因此两处改为现役 FromAuthor，写完整自然数求和定义和带全部前提的两分支公式，
 由 Scribe 自动记录 projection gap。未改 projector、fixture、Lean 或任何门槛。
 早先 GitHub 第三查询的正确读数是1（已更正），不是0；后续阅读已排除该命中。
+
+手写 Formula 首次补写有一个 C# 右括号遗漏，第二次 emit 编译失败；补齐并将分支公式拆成局部变量后，
+`make emit` EXIT=0，85.984 s。生成的数学式已逐项对照 Lean 陈述。
+首轮内容检查 EXIT=1，32.563 s，唯一 RED 为 `code=suspected-novel`：
+`production Describe corpus must not contain suspected-novel nodes`。
+按 CLAUDE §4 的「确系本仓推导 → repo-derived」，改用 FromRepo 并明确这是本模块内的证明，
+同时保留 OEIS 猜想出处、全部检索收据和第一档定位；没有声称文献已经证明剩余目标。
+文献新颖性仍仅为搜过范围内未发现已有证明，不作全球优先权主张。

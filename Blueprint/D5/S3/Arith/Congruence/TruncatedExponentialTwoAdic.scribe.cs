@@ -34,7 +34,7 @@ internal sealed class TruncatedExponentialTwoAdicDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Prefix + "odd_positive_branches"),
                 H("The two valuation branches for odd n and positive k"),
                 StatementSource.FromAuthor(BranchesFormula()),
-                AssessedProvenance.NovelAfterSearch(GidRef.Create(SourceGid), Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For odd k the binary valuation is zero. "
                     + "For even k outside 14 modulo 16 it is the binary valuation of k+2. "
                     + "The proof first identifies the sum with H(0)=1 and "
@@ -43,7 +43,9 @@ internal sealed class TruncatedExponentialTwoAdicDocument : IScribeDocumentDefin
                     + "so this identity reduces every length at least six to residues. "
                     + "The shorter lengths are treated separately. The resulting residues "
                     + "are nonzero in the asserted range, so they determine the exact "
-                    + "valuation. No formula is asserted for k congruent to 14 modulo 16."))),
+                    + "valuation. This proof is derived in the present Lean module; the "
+                    + "OEIS comments state the formulas as conjectures. No formula is "
+                    + "asserted for k congruent to 14 modulo 16."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
@@ -59,15 +61,19 @@ internal sealed class TruncatedExponentialTwoAdicDocument : IScribeDocumentDefin
             Grp(Subtract(V("n"), V("k"))), Sp,
             new Formula.Fraction(Call("factorial", Subtract(V("n"), V("k"))),
                 Call("factorial", V("j"))), Sp, Cdot, Sp,
-            new Formula.Power(V("n"), V("j")))));
-    private static Formula BranchesFormula() => Disp(All(Seq(
-        Par(Seq(Call("Odd", V("n")), Sp, Land, Sp,
-            D(1), Sp, Le, Sp, V("k"), Sp, Land, Sp, V("k"), Sp, Le, Sp, V("n"))),
-        Sp, Rightarrow, Sp,
-        Par(Seq(Call("Odd", V("k")), Sp, Rightarrow, Sp,
-            Equal(Val(Call("S", V("n"), V("k"))), D(0)))), Sp, Land, Sp,
-        Par(Seq(Par(Seq(Call("Even", V("k")), Sp, Land, Sp,
+            new Formula.Power(V("n"), V("j"))))));
+    private static Formula BranchesFormula()
+    {
+        var hypotheses = Seq(Call("Odd", V("n")), Sp, Land, Sp,
+            D(1), Sp, Le, Sp, V("k"), Sp, Land, Sp, V("k"), Sp, Le, Sp, V("n"));
+        var oddBranch = Seq(Call("Odd", V("k")), Sp, Rightarrow, Sp,
+            Equal(Val(Call("S", V("n"), V("k"))), D(0)));
+        var evenHypotheses = Seq(Call("Even", V("k")), Sp, Land, Sp,
             new Formula.Relation(new Formula.Modulo(V("k"), D(1, 6)),
-                FormulaRelationOperator.NotEqual, D(1, 4)))), Sp, Rightarrow, Sp,
-            Equal(Val(Call("S", V("n"), V("k"))), Val(Add(V("k"), D(2)))))))));
+                FormulaRelationOperator.NotEqual, D(1, 4)));
+        var evenBranch = Seq(Par(evenHypotheses), Sp, Rightarrow, Sp,
+            Equal(Val(Call("S", V("n"), V("k"))), Val(Add(V("k"), D(2)))));
+        return Disp(All(Seq(Par(hypotheses), Sp, Rightarrow, Sp,
+            Par(Seq(Par(oddBranch), Sp, Land, Sp, Par(evenBranch))))));
+    }
 }
