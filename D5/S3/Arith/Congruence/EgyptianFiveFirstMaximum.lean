@@ -1,9 +1,20 @@
+/- GID: D5/S3/Arith/Congruence/EgyptianFiveFirstMaximum
+   generality: I
+   mirror-B: D5/B/S3/Arith/Congruence/EgyptianFiveFirstMaximum
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Separation of the first and maximal third denominators forces residue one modulo five. -/
+
 import Mathlib.Tactic
 import Mathlib.NumberTheory.Multiplicity
 
-namespace A398581Probe
+namespace D5.S3.Arith.Congruence.EgyptianFiveFirstMaximum
 
-def Sol (k x y z : ℤ) : Prop :=
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+private def Sol (k x y z : ℤ) : Prop :=
   0 < x ∧ x < y ∧ y < z ∧ 5 * x * y * z = k * (y * z + x * z + x * y)
 
 private theorem basic_bounds {k x y z : ℤ} (h : Sol k x y z) :
@@ -36,6 +47,7 @@ private theorem basic_bounds {k x y z : ℤ} (h : Sol k x y z) :
     exact (mul_lt_mul_iff_of_pos_right (mul_pos hy hz)).mp this
   exact ⟨hk, ha, this, hd⟩
 
+/-- A positive lower bound on the integer residual bounds the third denominator. -/
 private theorem residual_bound {k x y z d : ℤ} (h : Sol k x y z)
     (_hd : 0 < d) (hle : d ≤ (5 * x - k) * y - k * x) :
     d * (5 * x - k) * z ≤ (k * x) * (k * x + d) := by
@@ -73,6 +85,7 @@ private theorem same_x_antitone {k x y z v w : ℤ}
   have := (mul_nonneg_iff_of_pos_left hb.2.2.2).mp this
   omega
 
+/-- Beyond the midpoint, the strict order supplies a stronger residual bound. -/
 private theorem far_bound {k x y z : ℤ} (h : Sol k x y z)
     (hfar : 2 * k ≤ 5 * x) : 25 * z ≤ 2 * k * (2 * k + 5) := by
   have hb := basic_bounds h
@@ -98,6 +111,7 @@ private theorem far_bound {k x y z : ℤ} (h : Sol k x y z)
   have ha2 : 0 < a * a := mul_pos ha ha
   nlinarith
 
+/-- Before the midpoint, the residual upper bound decreases with the first denominator. -/
 private theorem near_bound {k x y z l d W : ℤ} (h : Sol k x y z)
     (hl : k < 5 * l) (hlx : l ≤ x) (hx : 5 * x ≤ 2 * k)
     (hd : 0 < d) (he : d ≤ (5 * x - k) * y - k * x)
@@ -120,6 +134,8 @@ private theorem near_bound {k x y z l d W : ℤ} (h : Sol k x y z)
     nlinarith only [hp, hm, hn]
   exact (mul_le_mul_iff_of_pos_left hc).mp hc'
 
+/-- Residual numerator eight cannot have denominator gap one: that would give a square
+congruent to three modulo four. -/
 private theorem residual_eight_gap {k x y z : ℤ} (h : Sol k x y z)
     (ha : 5 * x - k = 8) : 2 ≤ (5 * x - k) * y - k * x := by
   have hd := (basic_bounds h).2.2.2
@@ -251,6 +267,7 @@ private theorem later_two_divisible {q x y z W : ℤ} (hq : 11 ≤ q)
           positivity
         nlinarith only [hend, hW]
 
+-- Small branches split only x; each remaining pair y,z is bounded by the general estimate.
 private theorem small_2 {x y z : ℤ} (h : Sol 2 x y z) : z ≤ 1 := by
   have hb := basic_bounds h
   have hx := h.1
@@ -323,6 +340,7 @@ private theorem small_12 {x y z : ℤ} (h : Sol 12 x y z) : z ≤ 156 := by
     norm_num at this
     omega
 
+-- Small branches split only x; each remaining pair y,z is bounded by the general estimate.
 private theorem small_27 {x y z : ℤ} (h : Sol 27 x y z) : z ≤ 2970 := by
   have hb := basic_bounds h
   have hx := h.1
@@ -451,7 +469,7 @@ private theorem small_42 {x y z : ℤ} (h : Sol 42 x y z) : z ≤ 16002 := by
     norm_num at this
     omega
 
-def First (k x y z : ℤ) : Prop :=
+private def First (k x y z : ℤ) : Prop :=
   Sol k x y z ∧ ∀ u v w, Sol k u v w →
     x < u ∨ x = u ∧ (y < v ∨ y = v ∧ z ≤ w)
 
@@ -652,4 +670,4 @@ theorem first_maximum_separation_mod_five {k x y z : ℕ} (hfirst : IsLexFirst k
 
 #print axioms first_maximum_separation_mod_five
 
-end A398581Probe
+end D5.S3.Arith.Congruence.EgyptianFiveFirstMaximum

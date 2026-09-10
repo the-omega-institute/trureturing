@@ -85,6 +85,12 @@ First `make emit`: EXIT=2 in 20.640s, because the formula DSL emitted adjacent `
 
 The entire natural-number target is kernel proved. Local Scribe checks passed: `bash tools/scripts/workflow/scribe-content-checks.sh .lake/build/stratalint/raw-lean-report.json "" 343718ed191002a4708ccf381081f9b0c7a58e1a`, EXIT=0 in 24.530s (`scribe-checks.json` and `.log`), covering projections, describe-report, and real KaTeX markdown parsing. Freeze and PR receipts will be recorded below when complete. Earlier pending statements in this report record the preregistered state at those checkpoints; they do not describe the current mathematical result.
 
+`make deposit-uncovered GID=D5/S3/Arith/Congruence/EgyptianFiveFirstMaximum.first_maximum_separation_mod_five BASE=343718ed191002a4708ccf381081f9b0c7a58e1a`: EXIT=0 in 83.297s (`deposit.json` and `.log`). It reused the same canonical report, passed the deposit header check, emitted zero changed Blueprints, and ran `ledger-align --add`: added=1, changed=0, conflicts=0. Terminal receipt: `PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED ... reason=NO_ATOM`.
+
+Freeze event `Golden/Frozen/accepted/8fb5d9f8e17e7ec35f64a0ac2719762d7b236ad32e32d432c4b0718fb05d2965.json`; module state pin `sha256:a9e396d623b54059f3495d1e25ad70c0d85bf5f16d2b40d568624e5102aabf40`. This aggregate module pin is distinct from the public theorem statement_id above. No atom, theory source, or coverage edge was added.
+
+Pre-PR D5 repeat search `rg -n 'A398581|first_maximum_separation_mod_five|first_maximal|near_bound' D5 --glob '*.lean'` returned only this new module. After fetching dev, its tip was `45ca4ae3b012cb1f59ff74a84e845691a3f0c99c`; the only intervening D5/Blueprint/Library/Golden path was the separate `Library/Words/oeis2026triage0911.md`. Gate receipts remain tied to the immutable starting base, not silently retargeted. No source or frozen proof was rewritten.
+
 ## Unclaimed
 
 No all-k solvability, converse, universal maximality across all residues, literature novelty beyond checked sources, or independent review consensus is claimed. All unopened external pages remain ASSUMED-UNVERIFIED. The brief's proposed comparison route has now been proved in the exact form described above; no claim is made about an unexamined derivation from the triage seat.
