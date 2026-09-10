@@ -5,6 +5,11 @@ formal power series, with zero constant coefficient. The target is the `%C`
 conjecture for every n > 3: odd coefficient iff n = 2^k - 1 or 2^k + 1,
 with k > 1. The base is 588fe7fd3d5ebd6044a92be4bff1114968ade78b.
 
+Current status: the complete theorem, existence and uniqueness are proved;
+all final local build/content checks and the no-atom freeze passed. PR opening
+is the remaining delivery step. Sections below preserve chronological
+checkpoints: their earlier statements that proof or gates remain are historical.
+
 ## Preregistered proof route
 
 Proposed escape witnesses: the coefficientwise contracting normalized row
@@ -39,7 +44,7 @@ volume or atom is created. No finite probe is claimed as mathematical progress.
 ## Not claimed
 
 No global absence-of-proof claim, no proof from the finite sample, no theorem
-about A397590 or A397902, no completed Lean result, no independent review yet.
+about A397590 or A397902, no independent review, CI success or merge claim.
 Pages not successfully opened in this attempt are ASSUMED-UNVERIFIED.
 
 ## Provenance
@@ -175,3 +180,38 @@ path after header checks and cached report/emit.
 No existing frozen member was changed; no atom or coverage was created.
 Event hash: `sha256:f2f6de4bd0f7aae3c8d74d120caeaaf5f7da4b4c2968f84cf80dbd0a7f356004`.
 Module frozen statement identity: `sha256:9a983832927b28cd9fc9b598b634e0b1ca955829c9861ccb7cf37259022ea186`.
+
+## Final author assessment
+
+The formal per-theorem assessment and frozen dependency identities are in the
+implementation PR body; this section records the reasoning, not a generated
+declaration or dependency export. All three public theorems have
+`proof_shape: content` and `admission_basis: escape-witness`.
+
+- `generating_equation`: `escape_witness: normalized_change`. The coefficient
+  correction drives agreement, stabilization and the solution's vanishing rows.
+  There is no pre-existing frozen dependency after private scaffolding is inlined.
+- `integer_exists_unique`: `escape_witness: normalized_change`. Its induction
+  forces any two normalized solutions to agree at every coefficient. There is
+  no pre-existing frozen dependency after private scaffolding is inlined.
+- `hanna_conjecture`: `escape_witness: diagonal_zero`. Its positive-degree
+  descent proves the candidate's even normalized rows and hence solution_mod_two.
+  The pre-existing frozen prerequisites are the public binary_catalan theorem
+  and catalanSeries definition of CatalanCompositionSquareParity; the PR records
+  their exact GIDs and declaration identities.
+
+For each witness, the four criteria are met: (1) the extracted closure includes
+the directed paths just named; (2) neither coefficient correction nor diagonal
+descent is obtained by projecting the frozen Catalan support theorem; (3) their
+statements concern arbitrary agreeing series or vanishing diagonal coefficients,
+not a reformulation of the existence/uniqueness/parity conclusions; (4) their
+conclusions are consumed by stabilization, uniqueness or candidate identification
+on the live proof paths. These are author judgments, not an automated verdict.
+
+The existing shapes.sh tool initially exited 1 because the default Python 3.9.6
+cannot evaluate facts.py's `str | None` annotation. With the already installed
+Homebrew Python 3.14.4 selected through PATH, the unchanged tool exited 0 and
+rendered all six public declarations (three definitions, three theorems).
+Its extractor again emitted `EDGES_OK edges=81 kernel_nonauxiliary_constants=6`.
+The table and generated edge JSON remain runner-local. No repository tool was
+modified and no replacement dependency extractor was written.
