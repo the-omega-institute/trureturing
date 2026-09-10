@@ -52,7 +52,8 @@ private def ensureOccurrenceRegisterable (env : Environment) (rootId objectArena
     CommandElabM Unit := do
   if isCompanionName theoremName then
     throwError "IE-C011 GeneratedCertificateRegistered: {theoremName}"
-  if InformationRegistry.hasOccurrence env objectArenaName theoremName then
+  let canonicalArenaName ← liftTermElabM <| resolveCanonicalArenaName objectArenaName
+  if InformationRegistry.hasOccurrence env canonicalArenaName theoremName then
     throwError "IE-C002 DuplicateRegistration: {theoremName}"
   for generatedName in #[unitName, realizationName] do
     if env.contains generatedName then

@@ -40,11 +40,31 @@ def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : N
 
 def InformationRegistryEntry.canonicalObjectArenaName
     (entry : InformationRegistryEntry) : Name :=
-  if entry.objectArenaName.isAnonymous then entry.arenaName else entry.objectArenaName
+  if !entry.resolvedArenaName.isAnonymous then entry.resolvedArenaName
+  else if entry.objectArenaName.isAnonymous then entry.arenaName else entry.objectArenaName
 
 def InformationRegistryEntry.effectiveCatalogId
     (entry : InformationRegistryEntry) : CatalogId :=
-  if entry.catalogId.isAnonymous then entry.arenaName else entry.catalogId
+  if entry.catalogId.isAnonymous then entry.canonicalObjectArenaName else entry.catalogId
+
+/-- Follow declaration aliases without identifying separately constructed arenas.
+Delta/beta/iota/zeta steps stop at a named target before unfolding that target.
+Factories reaching a structure value (even on the same carrier) keep their own
+declaration owner; forwarding applications such as `id arena` remain aliases. -/
+def resolveCanonicalArenaName (spelling : Name) : MetaM Name := do
+  unless (← getEnv).contains spelling do return spelling
+  let mut current ← mkConstWithFreshMVarLevels spelling
+  repeat
+    let name := current.constName!
+    let some value ← unfoldDefinition? current (ignoreTransparency := true)
+      | return name
+    let mut value ← whnfCore value
+    while !value.isConst do
+      let some unfolded ← unfoldDefinition? value (ignoreTransparency := true)
+        | return name
+      value ← whnfCore unfolded
+    current := value
+  return spelling
 
 def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=
@@ -335,8 +355,12 @@ private def sameEntry (left right : InformationRegistryEntry) : Bool :=
     left.localRegistrationNames == right.localRegistrationNames
 
 private def normalizedEntry (env : Environment)
-    (entry : InformationRegistryEntry) : InformationRegistryEntry :=
-  { entry with
+    (entry : InformationRegistryEntry) : MetaM InformationRegistryEntry := do
+  let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName
+    else entry.objectArenaName
+  let resolvedArenaName ← resolveCanonicalArenaName spelling
+  return { entry with
+    resolvedArenaName
     registrationModuleName := if entry.registrationModuleName.isAnonymous then
       env.header.mainModule
     else
@@ -406,7 +430,7 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
 
 def registerValidatedEntry (entry : InformationRegistryEntry) :
     Lean.Elab.Command.CommandElabM Unit := do
-  let entry := normalizedEntry (← getEnv) entry
+  let entry ← Lean.Elab.Command.liftTermElabM <| normalizedEntry (← getEnv) entry
   let result <- Lean.Elab.Command.liftTermElabM <|
     validateNewEntry (← getEnv) entry
   match result with

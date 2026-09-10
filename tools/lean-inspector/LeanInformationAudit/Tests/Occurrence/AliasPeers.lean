@@ -35,7 +35,7 @@ information_theorem fstTheorem
 
 def cloneArena := arena
 abbrev abbreviatedArena := cloneArena
-@[reducible] def chainedArena := abbreviatedArena
+@[reducible] def chainedArena := id abbreviatedArena
 local instance : DecidableEq chainedArena.State := chainedArena.toArena.stateDecidableEq
 
 information_theorem sndTheorem
