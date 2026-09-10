@@ -1,0 +1,14 @@
+<Project>
+  <!-- FileWrites is populated by the compiler and copy targets, including on an
+       incremental Build. Do not infer runtime membership by walking bin/obj. -->
+  <Target Name="RecordCiBuildOutputs" AfterTargets="Build" Condition="'$(CiBuildOutputRoot)' != ''">
+    <PropertyGroup>
+      <_CiProject>$([MSBuild]::MakeRelative('$(CiRepositoryRoot)', '$(MSBuildProjectFullPath)'))</_CiProject>
+      <_CiManifest>$(CiBuildOutputRoot)/$(_CiProject).outputs</_CiManifest>
+      <_CiReference Condition="'$(ProduceReferenceAssembly)' == 'true'">$(TargetRefPath)</_CiReference>
+    </PropertyGroup>
+    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(_CiManifest)'))" />
+    <WriteLinesToFile File="$(_CiManifest)" Overwrite="true"
+      Lines="$(MSBuildProjectFullPath);$(TargetPath);$(TargetDir);$(ProjectAssetsFile);reference=$(_CiReference);@(FileWrites->'%(FullPath)')" />
+  </Target>
+</Project>

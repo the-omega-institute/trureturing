@@ -65,7 +65,8 @@ def extract(root, archive):
             path = pathlib.PurePosixPath(member.name)
             if path.is_absolute() or ".." in path.parts or not (member.isfile() or member.isdir()):
                 raise ValueError("invalid stage archive member")
-            if not (member.name.startswith("build/ci/") or member.name.startswith("tools/") and "/bin/Release/" in member.name
+            if not (member.name.startswith("build/ci/") or member.name.startswith("tools/") and (
+                    "/bin/Release/" in member.name or re.search(r"/obj/Release/[^/]+/ref/[^/]+\.dll$", member.name))
                     or member.name.startswith(".lake/build/stratalint/raw-lean-report.json")):
                 raise ValueError("unexpected stage archive destination")
         source.extractall(root, members=members)
@@ -102,7 +103,7 @@ def main():
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--commit", default="")
     parser.add_argument("--head", default="")
-    parser.add_argument("--stage", choices=("engineering", "current", "delta"))
+    parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
     parser.add_argument("--archive", type=pathlib.Path)
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID", ""))
     parser.add_argument("--run-attempt", default=os.environ.get("GITHUB_RUN_ATTEMPT", ""))

@@ -60,6 +60,7 @@ public sealed class AdmissionWorkflowTopologyTests
     [InlineData(".github/workflows/ci-push.yml")]
     [InlineData(".github/workflows/ci-pr.yml")]
     [InlineData("tools/scripts/ci-stage.sh")]
+    [InlineData("tools/scripts/ci-build-outputs.targets")]
     [InlineData("tools/scripts/workflow/ci.py")]
     [InlineData("tools/StrataLint.EngineeringScope/CommonStages.cs")]
     public void SharedStageDefinitionChangesWakeDeltaDefinitionValidation(string path) =>

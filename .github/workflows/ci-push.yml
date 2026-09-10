@@ -9,6 +9,12 @@ on:
         required: true
         type: string
     outputs:
+      engineering_artifact_id:
+        value: ${{ jobs.engineering.outputs.artifact_id }}
+      engineering_run_id:
+        value: ${{ jobs.engineering.outputs.run_id }}
+      engineering_run_attempt:
+        value: ${{ jobs.engineering.outputs.run_attempt }}
       artifact_id:
         value: ${{ jobs.current.outputs.artifact_id }}
       artifact_name:
@@ -30,8 +36,44 @@ env:
   STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/integration-ci-current-stability-0909-tests' && inputs.candidate_sha == '' }}
 
 jobs:
+  build:
+    name: build
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    outputs:
+      round: ${{ steps.pack.outputs.round }}
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+      run_id: ${{ steps.pack.outputs.run_id }}
+      run_attempt: ${{ steps.pack.outputs.run_attempt }}
+      commit: ${{ steps.pack.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          persist-credentials: false
+      - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: make -C tools ci-build
+      - id: pack
+        run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-build.tar.gz"
+      - id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.pack.outputs.artifact_name }}
+          path: ${{ steps.pack.outputs.archive }}
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+      - if: always()
+        run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage build
+
   engineering:
     name: engineering
+    needs: build
+    env:
+      CI_BUILD_ROUND: ${{ needs.build.outputs.round }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     outputs:
@@ -48,6 +90,16 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
+          path: ${{ runner.temp }}/build
+          merge-multiple: true
+      - name: Validate upstream build bundle
+        env:
+          UPSTREAM_RUN: ${{ needs.build.outputs.run_id }}
+          UPSTREAM_ATTEMPT: ${{ needs.build.outputs.run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/build/ci-build.tar.gz"
       - id: keys
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
@@ -74,7 +126,7 @@ jobs:
 
   current:
     name: current
-    needs: engineering
+    needs: build
     runs-on: ubuntu-24.04-arm
     # Match the existing six-hour normal Lean envelope at the hosted job ceiling.
     # Setup, checks and transport also consume this job's time.
@@ -96,14 +148,14 @@ jobs:
           global-json-file: global.json
       - uses: actions/download-artifact@v4
         with:
-          artifact-ids: ${{ needs.engineering.outputs.artifact_id }}
-          path: ${{ runner.temp }}/engineering
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
+          path: ${{ runner.temp }}/build
           merge-multiple: true
-      - name: Validate upstream engineering bundle
+      - name: Validate upstream build bundle
         env:
-          UPSTREAM_RUN: ${{ needs.engineering.outputs.run_id }}
-          UPSTREAM_ATTEMPT: ${{ needs.engineering.outputs.run_attempt }}
-        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/engineering/ci-engineering.tar.gz"
+          UPSTREAM_RUN: ${{ needs.build.outputs.run_id }}
+          UPSTREAM_ATTEMPT: ${{ needs.build.outputs.run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/build/ci-build.tar.gz"
       - id: keys
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan

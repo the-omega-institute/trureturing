@@ -11,7 +11,7 @@ public sealed class LeanReportProducerInputScriptTests
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("/usr/bin/env",
-            [$"NATIVE_REPORT_PRODUCER={Path.Combine(AppContext.BaseDirectory, "StrataLint.EngineeringScope.dll")}",
+            [$"NATIVE_REPORT_PRODUCER={Path.Combine(AppContext.BaseDirectory, "StrataLint.Lean.dll")}",
                 "python3", Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/native_report_contract.py")],
             root, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0,
