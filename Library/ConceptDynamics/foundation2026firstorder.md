@@ -5,7 +5,7 @@ year: 2026
 title: Foundation first-order logic and set theory, revision 30a16ffa
 doi: null
 url: https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29
-claim: Licensed logic, predicate-term syntax, entailment and finite-support prerequisites for first-order developments.
+claim: Licensed logic, predicate-term and finite formula syntax, entailment, finite support and language maps for first-order developments.
 strata_touched:
   - D5/S3/ConceptDynamics/ZfcEntailment/CalculusOne
   - D5/S3/ConceptDynamics/ZfcEntailment/CalculusTwo
@@ -36,6 +36,8 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcPropositional/IntEntailmentTwo
   - D5/S3/ConceptDynamics/ZfcSupport/AdjunctiveSet
   - D5/S3/ConceptDynamics/ZfcSupport/Function
+  - D5/S3/ConceptDynamics/ZfcSyntax/FormulaOne
+  - D5/S3/ConceptDynamics/ZfcSyntax/FormulaTwo
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne
 license: Apache-2.0
 triage: anchor
@@ -53,11 +55,11 @@ Copyright and attribution remain with the upstream contributors. Original author
 required source notices are preserved. The upstream distribution has no NOTICE file.
 The complete unmodified Apache-2.0 license follows below.
 
-The installed layer contains 30 modules from 22 immutable upstream source files,
-with 3,814 Lean source lines (including headers and blank lines). Its source footprint
-is 30 Lean files, 30 Scribe sources and 30 Markdown twins, plus this shared note:
-91 files. The table lists exactly the installed Lean paths; each `strata_touched`
-GID resolves to its corresponding `.lean` path.
+The installed layer contains 32 modules from 23 immutable upstream source files,
+with 4,242 Lean source lines (including headers and blank lines). Its source footprint
+is 32 Lean files, 32 Scribe sources and 32 Markdown twins, plus this shared note:
+97 files. The table lists exactly the installed Lean paths; each `strata_touched`
+GID resolves to its corresponding Lean/Scribe/Markdown triple.
 
 Each row preserves the original source path, SHA-256 and capacity span. Only selected
 command excerpts within those spans are copied; neither whole-file nor whole-span
@@ -67,8 +69,18 @@ upstream package dependency or package-pin change.
 
 The layer supplies logic symbols, semantic and forcing-relation interfaces, entailment
 and propositional calculi, predicate-language and term syntax, rewriting support and
-finite-data utilities for first-order developments. References in the Scribe prose to
-a concrete pair interpretation describe intended downstream use. This layer does not
+finite-data utilities for first-order developments. FormulaOne supplies the actual
+finite inductive first-order formula carrier with arbitrary relation arities, separate
+free variables and finite bound-variable indices, connectives, quantifiers, negation,
+structural recursion, complexity and conditional decidable equality. FormulaTwo adds
+finite free-variable support, bounds for natural-number variables and language maps
+with connective and quantifier preservation. This formula construction/support pair
+depends only on the frozen D5 Term/Quantifier APIs and pinned Mathlib; FormulaTwo also
+imports FormulaOne. These general APIs have independent mathematical use before the
+later term/formula rewriting and CSA graph-elimination layers.
+
+References in the Scribe prose to a concrete pair interpretation describe intended
+downstream use. This layer does not
 install a pair-language or pair-interpretation interface, establish ZFC conservativity
 or a relative-consistency bridge, construct the full CSA, or prove ZFC model existence
 or absolute consistency. Internal HF/omega, finite archives, CSA arithmetic and
@@ -89,6 +101,11 @@ particular, the original `simpa [NotModels, set_models_iff]` remains in the
 nonemptiness proof. Compiler normalization helpers are generated from the retained
 proof source; their ownership does not establish a need for the omitted instance.
 The capacity span below locates the excerpts and includes this explicit exclusion.
+
+The FormulaOne selection omits the optional upstream theorem
+`LO.FirstOrder.Semiformula.neg_allClosure`. The retained formula carrier and support
+commands preserve their original mathematical bodies and hypotheses; this exclusion
+belongs to the selected excerpts within FormulaOne's capacity span below.
 
 Retirement: replace a transplanted API by a direct Mathlib reference when the repository's pin
 provides a proved-equivalent syntax/theory/proof/definability API and its faithful bridge
@@ -126,6 +143,8 @@ elaborates. Upstream PR acceptance alone is insufficient.
 | D5/S3/ConceptDynamics/ZfcFiniteData/NatMatrix.lean | Foundation/Vorspiel/Nat/Matrix.lean | 1–86 | 1a1cc8e8d58a586247f408c20d31a4acc0ee7a84d6ab45998c082adf95a382ce |
 | D5/S3/ConceptDynamics/ZfcFiniteCollections/Quotient.lean | Foundation/Vorspiel/Quotient.lean | 1–44 | d0ee23b967dffb1fce05e4e6eeab82dcf3c583361dba0a31f8c85a12c6b34ef5 |
 | D5/S3/ConceptDynamics/ZfcLogic/ForcingRelation.lean | Foundation/Logic/ForcingRelation.lean | 1–155 | 1ccea85946aa4604136ec39cbd413ed475d315a4cd5eca5aaae9b63095ca035c |
+| D5/S3/ConceptDynamics/ZfcSyntax/FormulaOne.lean | Foundation/FirstOrder/Basic/Syntax/Formula.lean | 1–320 | 6726460b455fa93f42cd9c1849cf25bf7013cd4d349e7afada5e3678f05162c3 |
+| D5/S3/ConceptDynamics/ZfcSyntax/FormulaTwo.lean | Foundation/FirstOrder/Basic/Syntax/Formula.lean | 321–587 | 6726460b455fa93f42cd9c1849cf25bf7013cd4d349e7afada5e3678f05162c3 |
 
 ## Apache-2.0 license
 
