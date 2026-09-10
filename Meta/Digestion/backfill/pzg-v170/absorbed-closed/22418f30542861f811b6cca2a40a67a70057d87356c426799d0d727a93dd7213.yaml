@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:22418f30542861f811b6cca2a40a67a70057d87356c426799d0d727a93dd7213
   normalized_sha256: sha256:22418f30542861f811b6cca2a40a67a70057d87356c426799d0d727a93dd7213
 cas_ref: sha256:22418f30542861f811b6cca2a40a67a70057d87356c426799d0d727a93dd7213
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Derangements/DerangementTwoAdicValuation.padicValNat_numDerangements
+    target_statement_id: sha256:a27a38c648ca89a7a3fb2a1f2392bea3d58e6d69536254fcc7f30f5ab7b16db3
 receipts:
   unresolved_subitems: []
