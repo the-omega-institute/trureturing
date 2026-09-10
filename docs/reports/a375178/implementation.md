@@ -35,8 +35,8 @@ The subsequent OEIS b-file comparison matches all 19 terms. The initial JSON URL
 
 ## Unclaimed
 
-The universal congruence is now proved in the incremental Lean check.
-The full project gates, freeze, and PR remain pending at this checkpoint. The two higher conjectures are outside
+The universal congruence is proved and make lean passes.
+Freeze, Scribe checks, and PR remain pending at this checkpoint. The two higher conjectures are outside
 scope. Pages not retrieved by this worker remain `ASSUMED-UNVERIFIED`.
 
 ## Kernel checkpoints
@@ -125,3 +125,17 @@ as partial mathematical progress.
 
 Capacity audit at the proof/document checkpoint: make -C tools capacity-audit
 returned CAPACITY_AUDIT_RESULT exit=0 reason=clean.
+
+## Full project build
+
+make lean: EXIT=0, elapsed 269.112987541 seconds on this worktree, with the
+previously seeded clonefile cache. The log ends “Build completed successfully
+(12956 jobs).” Existing warnings outside this module do not affect the exit.
+The module has no sorry, private axiom, or native_decide; the kernel audit
+confirms only propext, Classical.choice, Quot.sound.
+
+LEAN_CACHE seed receipt: status=seeded; method=clonefile; donor
+/Users/chronoai/trureturing; clonefile_attempts=1; stamp_miss=null;
+mathlib_olean_state=warm; project_olean_state=warm;
+mathlib_missing_olean_files=0; pin_sha256=
+sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e.
