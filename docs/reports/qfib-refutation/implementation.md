@@ -276,3 +276,22 @@ Freeze event: `e7223612e75583c5d1c68a6cfb9f02cbfb143ce219afcbea0206b4846ca1ab80`
 State pin: `Golden/Frozen/state/D5/S0/Certificates/Polynomials/QProductNecessityRefutation.lean.json`.
 No atom or coverage edge was created; the delivery is an uncovered deposit of
 the external named assertion's refutation.
+
+The staged index passed `make -C tools capacity-audit`:
+`CAPACITY_AUDIT_RESULT exit=0 reason=clean`. Final source diff has seven intended
+paths and passes `git diff --check`.
+
+After committing the freeze, the required `shapes.sh` first failed on the system
+Python 3.9.6 importing `str | None` in facts.py. The inner kernel extraction had
+already succeeded. Re-running the same unmodified repository script with the
+installed `/opt/homebrew/bin/python3` (3.14.4) passed EXIT=0, 3.103 seconds:
+`EDGES_OK edges=10 kernel_nonauxiliary_constants=7`. It lists six public definitions
+and the sole public theorem `result`; its other-D5-module dependency column is
+empty. That column does not count Mathlib dependencies. The generated table and
+edge JSON remain attempt-local. No replacement evidence tool was written.
+
+The script's trailing stock prose abbreviates norm_num as zero contribution;
+the authoritative current CLAUDE.md 3.2 explicitly distinguishes normalization
+of supplied atoms from establishing a new atomic proposition. The content
+assessment above uses the latter criterion and the four witness checks; neither
+the marker column nor that stock prose is treated as a machine verdict.
