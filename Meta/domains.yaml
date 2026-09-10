@@ -161,6 +161,9 @@ domains:
   Rewriting:
     stratum: S0
     definition: Abstract terminating rewrite relations, confluence, and canonical normal forms.
+  RieszComparison:
+    stratum: S3
+    definition: Inverse-square exponential kernel estimates and continuous-discrete growth comparison of the original Riesz and Baez-Duarte transforms.
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
