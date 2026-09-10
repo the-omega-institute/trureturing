@@ -114,3 +114,53 @@ that for positive real inputs its truncated remainder has the same sign as the f
 omitted term and is bounded by its magnitude. Retrieved https://dlmf.nist.gov/5.11 on
 2026-09-10. The repository already has supported LibraryNoteRef and FromLiterature calls,
 so no fallback obstacle was observed. A citation-only L-plane note will record this source.
+
+
+## Implemented result and witness comparison
+
+The two public statements are now kernel checked in
+`D5/S3/Arith/GoldenResource/HarmonicGammaTail.lean`.
+
+| Public theorem | proof_shape | Direct frozen dependencies | escape_witness | admission_basis |
+| --- | --- | --- | --- | --- |
+| harmonic_log_tail_lower | content | none (GID/statement_id: not applicable) | step_gap_pos → corrected_seq_strictAnti with corrected_seq_tendsto | escape-witness |
+| eulerMascheroni_upper_128 | content after inlining its new main theorem; local specialization is arithmetic | none (GID/statement_id: not applicable) | the same live analytic path through harmonic_log_tail_lower at 128 | escape-witness (named companion) |
+
+The observed witness agrees with preregistration v1. The implementation uses the equivalent
+monotone-limit form of the telescoping argument: the consecutive corrected difference is
+positive and `γ ≤ q_(N+1) < q_N`. Thus the first strict gap is retained, with no separate
+infinite-sum definition. Neither derivative identity is exposed as a public deliverable.
+The main theorem handles every N ≥ 1. The numerical companion has no γ premise: its
+12-term lower logarithm sum and the 128-term harmonic sum are evaluated in Lean.
+
+Directed obligation edge (consumer → prerequisite):
+`D5/S3/Arith/GoldenResource/HarmonicGammaTail.eulerMascheroni_upper_128`
+→ `D5/S3/Arith/GoldenResource/HarmonicGammaTail.harmonic_log_tail_lower`.
+This is the task brief's named numerical companion, not a separate finite-instance module.
+The corrected sequence is stored at index n as q_(n+1) to keep all denominators positive.
+
+`utility: none`: the primary new mathematical content of both public declarations, after
+inlining, is the uniform analytic estimate. The second is its expressly requested named
+corollary. There is no new checker, numerical-reduction infrastructure, bounded-enumeration
+result, or independently delivered certified finite instance. The rational computations
+supply no independent escape claim. The numeric companion exception is explicitly scoped
+by the user brief; this record does not propose a general positive-instance exception.
+
+No frozen module is imported: the proved statement uses Mathlib's existing harmonic limit
+directly, so the new dependency list is empty. The existing Robin module state was read and
+matches the brief's statement_id. Its identity is a downstream contextual anchor, not a
+claimed proof dependency. The earlier honest limitation about its coarse hgamma remains.
+
+Provenance implementation: `Library/Arith/nist2026asymptotic.md` supplies the supported
+L-plane note `D5/L/Arith/nist2026asymptotic`. The uniform classical result uses
+`FromLiterature`; the newly calculated named corollary uses `FromRepo(Source)` to attribute
+its derivation to that same literature basis without pretending the source printed N=128.
+No unsupported-note obstacle and no unreferenced fallback occurred; no suspected-novel label.
+
+Validation so far: the complete probe and the formal module both report only
+`[propext, Classical.choice, Quot.sound]` for both public theorems. `make lean` completed
+successfully (12912 jobs; cache present and warm). During packaging an initial module-doc
+comment before imports and mistaken FormulaDsl constructor names were corrected. The first
+`make emit` refused a stale report, correctly requiring `make lean-report` first; no bypass.
+The formal module currently contains 2 public theorems and 8 private helpers/definitions.
+Lean report, emitted mirror, and local gate receipts follow below when complete.
