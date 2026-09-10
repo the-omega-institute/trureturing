@@ -1,0 +1,33 @@
+fingerprints:
+  raw_sha256: sha256:40e660deeb646a7e301c0d24e2e4f30d8e27d3ead0b732e200142e07855848e6
+  normalized_sha256: sha256:40e660deeb646a7e301c0d24e2e4f30d8e27d3ead0b732e200142e07855848e6
+cas_ref: sha256:40e660deeb646a7e301c0d24e2e4f30d8e27d3ead0b732e200142e07855848e6
+coverage_gids:
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.center_add_single
+    target_statement_id: sha256:64b590da3422995ba9eccf3a43eccbf2066a7ba0a67f7aa32c4ced8394603d8a
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.center_eq_zero_iff_constant
+    target_statement_id: sha256:3f71ba73ca7d12562578cc8c30fe54f03b681f680cbf3b5ba419c6d1a17d2607
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.centered_ray_iff_translated_single
+    target_statement_id: sha256:7ebfd0b69b08d0fb66ed6dadb70a36e26325d40dd939256e1e3a05f678ee8957
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_add_single_eq_iff_centered
+    target_statement_id: sha256:1b4b8609fa77cffc63444d7f0d1dfee31a34e3de5165743831a640fa05a4ee88
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_add_single_eq_iff_translated
+    target_statement_id: sha256:7c8ebec2aa89f56f08e4c658749c90b5ee2758124bae8190dce45e965140dfbc
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_add_single_sub
+    target_statement_id: sha256:c0e6d8f0880fd9b8c480ec6d27203c0cacc546a9ffe7032d4a35c351388456d6
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_add_zero_single
+    target_statement_id: sha256:864391ff486ffcbdca0348f3f9cbfbe9de33106ab913296dc5a45a1c3b7e0f69
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_le_add_single
+    target_statement_id: sha256:3aeb3108e8bfd14190cb3525ed37840b09a588fb1e5be3f162b645ec91521fb6
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_le_of_pointwise_le
+    target_statement_id: sha256:4558a65345337f181cb666140889e6449107594d7392604503801958e8a3e563
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.mean_add_single
+    target_statement_id: sha256:6d3137564935302701946b240a6d9095a1919459d5c81a820cf7d7225474e5ed
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.norm_center_single_div
+    target_statement_id: sha256:559ead4175247e5970cbc349c641f1ea7ecd665ae806cb45a3c8783091dda0b3
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.norm_center_single_sq
+    target_statement_id: sha256:008b70d4481beca0bfa08e72d5d765749d7480a7528f7fe8312de30f7a8e5443
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.norm_center_single_sq_expanded
+    target_statement_id: sha256:b99774c7694bfb8d6639da49fcf65ce7c5662cd081b3a10dc74f15ac70a30c93
+receipts:
+  unresolved_subitems: []
