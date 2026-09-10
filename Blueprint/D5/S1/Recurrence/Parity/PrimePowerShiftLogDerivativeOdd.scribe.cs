@@ -46,8 +46,7 @@ internal sealed class PrimePowerShiftLogDerivativeOddDocument : IScribeDocumentD
                     + "so every coefficient is one in ZMod 2. The integer terms "
                     + "are therefore odd. This proves exactly the second A393867 "
                     + "comment, 'Conjecture: all terms are odd.'"))),
-                DescribeRole.Theorem, new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("oeis-a393867-all-terms-odd"), ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);

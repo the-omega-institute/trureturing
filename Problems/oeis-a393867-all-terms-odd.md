@@ -139,6 +139,12 @@ input address
 `sha256:bb401f2f55ac34c9a3c75ff21cf9221fe176fcafe975902db20c7b323e2beef1`.
 The adjacent `.provenance.json` records the canonical producer receipt.
 
+First `make emit`: EXIT=2, 19.593 seconds. Scribe rejected the newly added
+problem-resolution claim with `invalid-problem-resolution-source`, because
+the target module was not frozen yet. The correction is sequencing: emit
+the theorem descriptions, freeze canonically, then attach the resolution
+claim and re-emit. The Lean proof is unchanged by this correction.
+
 ### Elaborated dependency query
 
 A Lean `run_cmd` query used `Environment.find?`, `ConstantInfo.type`,
