@@ -98,3 +98,36 @@ GitHub code searches: `supercongruence language:Lean` returned 0;
 `apery language:Lean` returned 3 (both `incomplete_results=false`).
 The hits are two files in `project-numina/LeanTriathlon` and unrelated prose
 in `deancureton/sphere-six-complex`; the relevant file is being opened.
+
+## Full-text reading and scope verdict
+
+The three PDFs were opened and their relevant sections read, beyond abstracts:
+Liu 2403.19503, §§1–5 (Theorems 2.1–2.2, Lemmas 3.1–3.4 and proofs), plus
+§6 conjectures; Straub 1803.07146, §1 and §4 (Theorem 4.1 and its proof,
+equations 23–29); Straub 1401.0854, §1, §3 Theorem 3.2, §5 Lemmas 5.1–5.3
+and the proof of Theorem 3.2. Liu treats generalized Domb and C-star numbers
+at `np`, with Bernoulli corrections; the 2018 paper treats q-binomial sums
+modulo cyclotomic cubes; the 2014 paper proves multivariate prime-power scaling
+modulo `p^(2r)` / `p^(3r)`. None of these read statements is A or B, nor is
+setting their parameters a direct proof of the fifth-weighted sum modulo `p^4`.
+Verdict: no proof of the target found in this stated scope; this is not an
+exhaustive-literature assertion. Sections not listed are `ASSUMED-UNVERIFIED`.
+PDF extraction used pypdf with fonttools; the rotated-text warnings concern
+unextracted rotated content, not a claim of complete PDF transcription.
+
+The relevant third-party Lean hit was opened at commit
+`2aede4209c203ae9901eff870744e4b77dc6173f`:
+https://github.com/project-numina/LeanTriathlon/blob/2aede4209c203ae9901eff870744e4b77dc6173f/LiveLeanTriathlonSorry/Apery/All.lean
+It states irrationality of zeta(3), with `sorry`; it provides no usable
+supercongruence lemma. No third-party library is imported.
+
+## Revised proof plan (before Lean attempts)
+
+The proposed expansion witness is sharpened: writing
+`b(p,k)=choose(p-1,k)*choose(p+k-1,k)`, prove in `ZMod(p^4)` that
+`k^4*b(p,k)^2 = p^2*k^2 - 2*p^3*k` for `0<k<p`, by the binomial recurrence
+and cancellation of units. Multiplying by `k` gives the weighted summand.
+The complete sum then vanishes by the square/cube sum formulas and cancellation
+of 12. Harmonic corrections are unnecessary at this precision because `b`
+already has a factor `p`. This replaces the provisional harmonic-cancellation
+part of the initial plan; the numerical and literature conclusions remain valid.
