@@ -1279,7 +1279,9 @@ assessment 分支由 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposit
 CensusAssessment key = certified (AnalysisDisposition key) | observed (AnalysisObservation key)
 ```
 
-〔pending J3; lane census-generator-0908; #5214; 2026-09-08〕`observed` 是绑定 exact key、owning module、census root 与 import-closure query scope 的
+〔2026-09-10 已落地：[查询 PR #6660](https://github.com/the-omega-institute/trureturing/pull/6660)
+经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 进入 dev。〕
+`observed` 是绑定 exact key、owning module、census root 与 import-closure query scope 的
 elaboration observation，query 必须标为 completed；它只记录该范围内缺少已登记的
 realization／certificate。**observed ≠ classified：observed 永不算已分类，永不计入 AC-023，
 也永不构成 closed reason。** census 必须自己核查该范围并完成查询；generator 提供的空列表
@@ -1339,6 +1341,20 @@ query-completion 分项：`counts.observed_query_completed` 与
 它不替代以下独立的 first-freeze obligations，也不激活第 39 节 GATE。计数与 artifact 字段见
 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean` 与
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`。
+
+**全库输出（2026-09-10，落地于 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767)）**：
+`make census` 已以读取 elaborated 输出(olean)的流式查询覆盖全部 22,524 个 frozen theorem keys：
+`accounted=22,524`、`certified=10`、`observed=22,514`，其中
+`observed_query_completed=22,514`、`observed_query_incomplete=0`。
+`status=complete` 表示本次记账完成；query-completion 表示规定 scope 的查询完成，
+二者都不是认证完备，`certified_complete=false`，AC-023 仍未满足。
+owner 2026-09-08 的原句「observed 永远不算完成」保持有效。
+[#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 的有界样本中，普查阶段约 75 s，
+安静宿主上全入口约 2.5 min，改一个模块后的增量重跑约 37 s；这些是该输入与宿主的读数，
+不是时限或性能判词，也不包含可选结构 sidecar 与证书发布的全管线成本。
+[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 已发布分桶 id 集记账证书；
+[#6717](https://github.com/the-omega-institute/trureturing/pull/6717) 已提供独立的 report-only
+证明依赖结构读数（第 23.7 节），不增加 certified 数量，不把 observed 转成 classified。
 
 定义 catalog-relative triviality：
 
