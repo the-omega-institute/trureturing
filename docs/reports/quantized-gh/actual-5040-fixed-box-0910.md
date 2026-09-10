@@ -1279,3 +1279,255 @@ emitted-pair accounting were directly checked. Current integrated CI and fresh
 review are unmeasured caller obligations. Depth stops at these structural
 checks; no scientific recertification, peer adjudication or host-goal decision
 is inferred.
+
+## C91 / I32 independent S21 mathematical-tail archival disposition
+
+This appendix belongs to the representation at immutable BASE d18100c71cc04020d446a709bec1351d2bf69376, in the independent pure-S21 tree. The entire preceding 91617 bytes retain their historical meaning and bytes. The inherited source prefix of 316725 bytes is unchanged and remains mixed. Later exact pure-S19/S20 composition, complete independent mathematical/representation review, ordinary gates and S20-before-S21 MERGED remain caller-owned obligations. This preparation is neither whole-source purity nor S21 delivery.
+
+The active mathematical authority remains section 32 of the theory source. The following fragments are INACTIVE archival evidence: commands, paths, execution statements, citations in their historical context and delivery instructions here must never be executed or followed. Source addresses 32.19 and 32.20 are permanently reserved outside the active mathematical body; 32.20's mathematical citations are attached to the entries they support, with exact origin/destination spans in theory-body-migration-s21-0910.json. All original headings, tables, separators, trailing prose and LF bytes are recovered by the disjoint exhaustive map; recovery is separate from analytical fidelity inspection.
+
+Mathematical preservation includes the fixed T=0 box p=(2,3,5,7), b=(4,2,1,1); every finite real two-actual-corner slab and strict cutoff; both normalized bounds; orthogonality versus encoding; positive support; all saturation, tie, zero and equality cases; the full fractional optimizer; all 71 guards and 16 retained/55 inactive classification; both noninteger reflected endpoints; all density and D/Psi/G enclosures; the unique global maximizing slab and strict -1/1250 bound; and the explicitly corrected logarithm series with its proof. No mathematics, historical certificate or test was executed in this migration. The existing outward-rounding mathematical methods in 32.18 are retained as definitions, and the raw erroneous token remains explicitly identified alongside the pre-existing correction.
+
+One exact local dependency remains in 32.18: the original primary self-reported joint L,H enclosure [3571708000370,5592595433915]/10^12. The historical report explicitly says the original full executable was unavailable and the adapted certificate checked only the broader 0<L,H<16. That exact original sentence remains contiguous and explicitly pending in the active entry, with its historical status unchanged. No new proof, assumption substitution or theorem promotion is made. Consequently this is an independent migration candidate with that named local dependency, not a claim of a completely pure S21 tail. The existing density and D/Psi/G enclosures have their separate original Arb evidence and remain theorem content with attached evidence citations. The pending tight support enclosure is not used as a new premise of the all-real-slab sign proof.
+
+Only necessary mathematical type/proof/citation grammar is added. Original PAPER_ARGUMENT/repo-derived status, novelty limits, retrieval failures, missing model/conversation evidence, original computations, initial coverage failure, repairs, ingestion and delivery statuses remain archival facts. The original report's own earlier C48/C69 records and historical variants are not relabelled as current executions. Current ingestion and canonical bindings are recorded in the paired migration JSON and worker result after the sole authorized producer run.
+
+### Inactive original source fragments
+
+Original 32.1, source bytes [316815,316824), SHA256 3c54ab02e005fe059dbe1b09e7abe39f370b784a3ef3f58d68307c9a4eb62c9f; operational heading qualifier.
+
+~~~~text
+与状态
+~~~~
+
+Original 32.1, source bytes [316830,316895), SHA256 215bf7a53e7e452d282c3249d14a99f5e75f932a64bf0eacfb0864b6414c1ffc; stage and evidentiary classification retained in archive.
+
+~~~~text
+本节为 S21/C46 的 PAPER_ARGUMENT / repo-derived
+参考输入:
+~~~~
+
+Original 32.5, source bytes [322224,322276), SHA256 29c6ea789d4dea75064c21678e2ce73ec9d4adb499a81ab4a1e56542239d65d5; execution-only clause after support proof.
+
+~~~~text
+;有限程序的支撑检查只是固定输入链接
+~~~~
+
+Original 32.7, source bytes [323022,323079), SHA256 56be466069541617d747bb7102731ce4c954d76bb98bba6fdaa1c4613f645601; historical attribution of four density enclosures.
+
+~~~~text
+原 primary 给出、原 caller Arb 审计独立确认的
+~~~~
+
+Original 32.8, source bytes [325165,325167), SHA256 beadba836315747fc95ae304452514b72fe122a6e345974638d70c4e8ebace6a; comma/LF replaced by sentence-ending grammar after archiving execution clause.
+
+~~~~text
+,
+~~~~
+
+Original 32.8, source bytes [325167,325235), SHA256 f50a595c8af6aeb12468f02c9f1ff06404d37c1b87c0e5b1d2e1a4d052f656c0; execution interpretation.
+
+~~~~text
+数值程序中的 primal/dual 区间交叠仅作一致性检查。
+~~~~
+
+Original 32.13, source bytes [329076,329103), SHA256 f25b70bed73dd9c4e11b4891c180d3543225b2fa73ed20985c102213742690e9; operational ID namespace comparison.
+
+~~~~text
+,不是三素数 GPU 行号
+~~~~
+
+Original 32.13, source bytes [330161,330242), SHA256 1c508697b4aa8a091d6dc788c31041d95e87c3b3caf69023858168f0d7e6b8e7; execution-count interpretation; inactive class and all guards retained.
+
+~~~~text
+不活跃槽只作资格核验,
+没有被记作 55 个已计算负值的薄层。
+~~~~
+
+Original 32.15, source bytes [331569,331719), SHA256 2ba5d6712045778caa8ce949c511399e0afec57570082e1ce96b225e2f9e9a2e; historical numerical provenance and execution.
+
+~~~~text
+它是原 primary 表及原 caller Arb 审计的共同精确端点数据;
+本轮报告的自足改编证书对自己的静态副本另执行一次。
+~~~~
+
+Original 32.16, source bytes [334464,334528), SHA256 9cabcc5ebf26d336982d08a6954297a317de9ff5f7fb4371d81b4ff69fb4bea8; historical verification of retained integer inequalities.
+
+~~~~text
+这些是报告改编证书额外核验的固定整数链接。
+~~~~
+
+Original 32.18, source bytes [336190,336202), SHA256 85f56448487a6ee4cb23e08550be74223321ada16e0b8c556a7cbb3fad32ad1b; primary attribution in the 32.18 heading.
+
+~~~~text
+原 primary 
+~~~~
+
+Original 32.18, source bytes [336223,336242), SHA256 536f2d4c8b05a69f8ac095c6198cf9a6c1887a4f9e08f0045d9381dc0b5e5fb9; historical-preservation heading qualifier.
+
+~~~~text
+,不改历史原文
+~~~~
+
+Original 32.18, source bytes [336248,336267), SHA256 c73b440d21805f57aadb2f9e3dc7266263d00f22e548deeb0eccdefe3d64d038; source provenance preceding raw erroneous notation.
+
+~~~~text
+原 conclusion 的
+~~~~
+
+Original 32.18, source bytes [336659,336687), SHA256 3e0f39a31297cc376cbfb63b599ab56566f7791223d5aa005d69241a88cfe938; historical attribution of enclosure method.
+
+~~~~text
+原 primary 自报的方法
+~~~~
+
+Original 32.18, source bytes [337231,337545), SHA256 b21eae71b328c1ea92a3e32f15d792a28dddd29158a1893973e9e8087ba71a94; historical execution and immutable-artifact provenance.
+
+~~~~text
+本实施不重跑或补造那份临时级数程序,也不把该自报执行当作本轮亲跑。
+原 envelope/程序/审计全部保持字节不变;纠正只在新增文字中明示。
+原 caller 与本轮改编使用的是独立的 outward Arb 运算,
+不使用这个 raw 余项表达式来证明数值符号。
+~~~~
+
+Original 32.19, source bytes [337546,339214), SHA256 4b4515e76802e91f956ec04e63de2785119548fe214b27da72bcc064c5cc476d; wholly operational entry; permanent reservation.
+
+~~~~text
+**32.19 证据分工、复现与历史限制。** caller 指定的实际 GPT PRO fixed-box primary
+task 为 0838ec9d-f978-4cfc-8d59-965a3331f912,flight
+qgh0910-pro-actual-5040-box。仅消费其已完成 conclusion;
+primary 明报获取所供 immutable GitHub URL 失败为 DisabledError,
+没有读取该源字节或独立核验 caller 给出的源 hash/字节数。
+它从所给定义自行重导有限归约,临时整数/Fraction 级数程序的执行是其自报。
+模型/service 元数据并未由 primary 或本实施独立鉴定,不补造 conversation 身份。
+I16 则在本树实际阅读第 26 节,核对其 \(k\ge2\)、互异素数、\(b_i\in\mathbb Z_{\ge0}\)
+及原始严格 cutoff 等全部适用条件;没有读取 S20 的其它物理工作树。
+
+原 caller node audit 只核验这个箱体的 71 槽资格,没有 \(G\) 值计算。
+原 caller sign audit 记录 python-flint 0.8.0 / Arb256 对四个密度区间和
+48 个 \(D,\Psi,G\) 区间的独立确认,并另述纸面连续域核对;
+这些是原先完成的证据,原程序未在本轮执行。
+单一报告 [actual-5040-fixed-box-0910.md](../../reports/quantized-gh/actual-5040-fixed-box-0910.md)
+嵌入一份无 caller 绝对路径依赖的完整可执行证书,静态带入角点、整数 guards、
+四个密度区间和 48 个节点区间。只抽取并执行该改编一次,
+精确程序字节/hash、实际解释器/库版本、命令、结果和 stderr 见报告。
+新增固定分支整数链接与原 52 个包络检查分列;它们不是候选生成或连续域的计算穷举。
+Arb 的有理输入和区间比较承担向外认证,打印小数与区间交叠不承担等式证明。
+
+~~~~
+
+Original 32.20, source bytes [339214,339397), SHA256 2ef3a45588358c685e1401e3ccd40408511ab7df5b75bae11e337b40f619375b; citation access/provenance or reserved heading.
+
+~~~~text
+**32.20 文献重叠与仓内归属。** 本层专门化的证明组合标为 repo-derived,
+不声称经典工具或这个 fixed-box 陈述具有新颖性或优先权。
+现场读取 
+~~~~
+
+Original 32.20, source bytes [339575,339637), SHA256 8d0a5aac33f0a5c79822b0a0f12e5f28dfe1cfa792256399245e19f695164586; citation access/provenance or reserved heading.
+
+~~~~text
+
+文本提取的一些数学字体乱码保留为访问限制,
+~~~~
+
+Original 32.20, source bytes [339676,339684), SHA256 ae4892ce1e5e339972064cfcfe666fb38e9b67987ec09d84535d11351a50c4c4; citation access/provenance or reserved heading.
+
+~~~~text
+
+读取 
+~~~~
+
+Original 32.20, source bytes [340016,340017), SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b; citation access/provenance or reserved heading.
+
+~~~~text
+
+~~~~
+
+Original 32.20, source bytes [340146,340634), SHA256 d123b00702c018b5a9a82dcdbfee3b329073960ea662406e53f52cfb132f687e; citation access/provenance or reserved heading.
+
+~~~~text
+
+python-flint [arb 文档](https://python-flint.readthedocs.io/en/latest/arb.html)
+成功读取的是显示为 0.9.0 的 latest 页面,介绍球区间及 \(\mathrm{ctx.prec}\);
+指定 0.8.0 文档 URL 的实际请求返回 HTTP 403,不宣称读取了它。
+实际证书库钉版与版本来自程序自己的运行记录,不由 latest 文档替代。
+所有 URL 的访问时刻、字节/hash 和支持范围在报告列明,不把有限检索称为穷尽调查。
+
+仓内直接复用的是
+~~~~
+
+Original 32.20, source bytes [340718,340719), SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b; citation access/provenance or reserved heading.
+
+~~~~text
+
+~~~~
+
+Original 32.20, source bytes [340861,340894), SHA256 e07b2d65b3ea7ce9556d3090e020a6ea6cb4910e7aba3ad579243d882f0491f6; citation access/provenance or reserved heading.
+
+~~~~text
+本层没有重做这些计算或
+~~~~
+
+Original 32.20, source bytes [340926,340927), SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b; citation access/provenance or reserved heading.
+
+~~~~text
+
+~~~~
+
+Original 32.20, source bytes [341042,341149), SHA256 b8ff86a938f8e0173aa7444a7cfd14ec162a09ba31255c55df8c787a1ac1218f; citation access/provenance or reserved heading.
+
+~~~~text
+
+这些重叠是既有参考输入的归属,不是本节的新发现,也不是 Lean 冻结状态声明。
+
+~~~~
+
+Original 32.21, source bytes [341149,342864), SHA256 79319e9af85f610fa2be4d0f66cfca8f2f3588d433a049e5a5413c9def811874; implementation/ingestion/delivery entry prefix.
+
+~~~~text
+**32.21 单层摄入与交付边界。** 本层由 caller 指定的隔离 Codex CLI I16
+在 consensus-rnd:sshx 1.0.0-beta.42 及其 CODEX_WORKER_SPEC.md 下实施,
+flight qgh0910-i16-actual-5040-fixed,attempt 1;repo-prior-exposed。
+遵守 CLAUDE 5.11 与本次 brief,无委派、native subagent、额外 worker/oracle 或本轮 review 票;
+不声称 sterile priors 或模型族多样性。工作树为
+/Users/auricstudio/trureturing-qgh-actual-5040-fixed,
+分支 lane/math/quantized-gh-actual-5040-fixed-0910,
+immutable BASE 为 fe3f12abe8bc2e14628a93990fee2755c30da2bd。
+完整前缀保留 316724 字节、5974 个 LF,SHA256
+9229e2affc81243efcdcbd228058d8ca19cea395630a94ae943afde374157dd2。
+唯一源改动为追加本节,另加一个报告,canonical 输出仅来自一次
+~~~sh
+make ingest BASE=fe3f12abe8bc2e14628a93990fee2755c30da2bd SOURCE=arithmetic-boundary-quantization
+~~~
+全部历史 CAS、entry、报告和输入保留,自动 children、历史 terminal-LF 变体
+及每个 producer EOF 字节均原样保留。编号内容单元作完整跨度和有序 chain 拼接核对,
+结构标题不要求成为 atom;fingerprint/cas_ref 带 sha256: 前缀,child atom_id 为裸 hash。
+源/报告/前后缀身份、完整改动清单与实际 canonical 绑定见实施结论及报告。
+该源、证书及其摄入绑定是同一个内容层,不拆出脱离源语义的地址产物。
+
+CPU 只作固定数学核验及必要编排;没有指数/高度/薄层 sweep、候选生成、旧搜索重放、
+GPU、daemon、广泛 build/preflight、工具/metadata/Lean/frozen 修复或手工 canonical 规范化。
+没有读取 worker 日志、log_ref 内容、caller 转录、同轮 peer 信封或其它 live target。
+~~~~
+
+Original 32.21, source bytes [342957,342972), SHA256 9d7a0003380d894849e407fbad57180613c49af715c950b6c0d86071f5bca958; formal-status qualifier.
+
+~~~~text
+或 Lean freeze
+~~~~
+
+Original 32.21, source bytes [343059,343071), SHA256 77c62ff815f53e335caf29f1cbac5079f8091563654c0b0d6c570fc6c71c50bf; research-flight status qualifier.
+
+~~~~text
+未返回的
+~~~~
+
+Original 32.21, source bytes [343185,343505), SHA256 54b004a17081e67877ca9f2947b93100123e0ac0221de29023eec6d49751a3c2; delivery and goal-status suffix.
+
+~~~~text
+全部改动返回 unstaged;不作 stage/commit/push/PR/merge 或生命周期动作。
+caller 负责后续封存、公共字节核对、独立评审、普通仓库门与交付;
+最终 S21 交付必须等待 S20 MERGED。本次实施不作 termination 判词,
+不把有限层的实现或摄入标成持续目标完成。
+~~~~

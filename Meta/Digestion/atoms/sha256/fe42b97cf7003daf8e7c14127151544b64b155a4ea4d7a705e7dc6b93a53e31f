@@ -1,0 +1,12 @@
+**32.16 定理：最大值的精确公式及分支链接。** 置
+\[
+\alpha=\log22226400=\beta_9,\qquad
+\omega=\log31752000=\beta_{10},
+\]
+\[
+z_0=(\alpha-24\log2)/4,\quad z_1=(16\log3-\omega)/4,
+\quad z_2=(12\log5-\omega)/4,\quad z_3=(\alpha-8\log7)/4,
+\]
+\[
+r_* = \sqrt{(z_0^2+z_1^2+z_2^2+z_3^2)/12}.
+\]
