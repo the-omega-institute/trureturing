@@ -104,8 +104,12 @@ Differentiating each term gives
 For `f-w`, add `1/(30*x^5) - 1/(30*(x+1)^5)`.
 With x > 0, Lean `field_simp` followed by `ring` verifies respectively
 `-1/(6*x^3*(x+1)^3)` and `(5*x^2+5*x+1)/(30*x^5*(x+1)^5)`.
-Derivative algebra probe exit 0. No discrepancy with the brief. The second identity is an
-auxiliary verification record only; the full upper-tail inequality remains out of scope.
+Derivative algebra probe exit 0. A separate strengthened audit also proves both actual
+`HasDerivAt` statements for the original `log(1+x⁻¹)` expression, by independently applying
+the chain rule before `field_simp` and `ring`; exit 0, standard three axioms only.
+Receipts: `HarmonicDerivativeAudit.lean` and `harmonic-gamma-derivative-audit.log` in the
+attempt directory. No discrepancy with the brief. The second identity is an auxiliary
+verification record only; the full upper-tail inequality remains out of scope.
 
 ## Provenance inspection
 
@@ -113,7 +117,7 @@ DLMF §5.11 equation (5.11.2) gives the digamma asymptotic expansion. Section (i
 that for positive real inputs its truncated remainder has the same sign as the first
 omitted term and is bounded by its magnitude. Retrieved https://dlmf.nist.gov/5.11 on
 2026-09-10. The repository already has supported LibraryNoteRef and FromLiterature calls,
-so no fallback obstacle was observed. A citation-only L-plane note will record this source.
+so no fallback obstacle was observed. The citation-only L-plane note records this source.
 
 
 ## Implemented result and witness comparison
@@ -163,4 +167,17 @@ successfully (12912 jobs; cache present and warm). During packaging an initial m
 comment before imports and mistaken FormulaDsl constructor names were corrected. The first
 `make emit` refused a stale report, correctly requiring `make lean-report` first; no bypass.
 The formal module currently contains 2 public theorems and 8 private helpers/definitions.
-Lean report, emitted mirror, and local gate receipts follow below when complete.
+`make lean-report` then completed with exit 0; the canonical inspector found both target
+declarations with only the standard three axioms. The full report hash is
+`sha256:6c196d0d6a1e17e8ffa108fa85459d81b2257ed7b98a5f81daaaca268ed81137`.
+The target module extract is saved as `lean-report-module.json` in the attempt directory.
+The public declaration statement identities are:
+
+- `harmonic_log_tail_lower`: `sha256:c5dd4b35decb8df3d6bb8483fb3b20d1e6c99516fa109dc118d08fce16329c3f`.
+- `eulerMascheroni_upper_128`: `sha256:08aacf51441e127037d707f4f29261fa35b9cdf2dfaadbbab9d91924783912e1`.
+
+`make emit` completed with exit 0 and generated the required
+`Blueprint/D5/S3/Arith/GoldenResource/HarmonicGammaTail.md`. Both formulae, the `✓ std3`
+markers, the literature citation, and the corollary's repository derivation were checked.
+Only this new Blueprint mirror is a tracked emission change. Local gate receipt follows
+when complete.
