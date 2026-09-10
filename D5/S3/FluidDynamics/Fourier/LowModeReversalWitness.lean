@@ -95,7 +95,7 @@ def acceleration (nu alpha beta : ℝ) (k : Mode) (c : Fin 3) : ℂ :=
 theorem input_divergence_free (alpha beta : ℝ) (j : Fin 4) :
     ((frequency j).1 : ℂ) * inputAmplitude alpha beta j 0 +
       ((frequency j).2 : ℂ) * inputAmplitude alpha beta j 1 = 0 := by
-  fin_cases j <;> norm_num [frequency, inputAmplitude] <;> ring
+  fin_cases j <;> norm_num [frequency, inputAmplitude, Fin.ext_iff]
 
 /-- Equal real amplitudes at each opposite-frequency pair. -/
 theorem conjugate_pair_data (alpha beta : ℝ) :
@@ -103,9 +103,9 @@ theorem conjugate_pair_data (alpha beta : ℝ) :
     inputAmplitude alpha beta 0 = inputAmplitude alpha beta 1 ∧
     inputAmplitude alpha beta 2 = inputAmplitude alpha beta 3 := by
   constructor
-  · norm_num [frequency]
+  · decide
   constructor
-  · norm_num [frequency]
+  · decide
   constructor <;> funext c <;> simp [inputAmplitude]
 
 /-- The low observation forgets beta at every output frequency and component. -/
@@ -130,9 +130,10 @@ both continuous amplitudes. It is not an assumed finite table entry. -/
 theorem transverse_acceleration (nu alpha beta : ℝ) :
     acceleration nu alpha beta (0, 1) 0 =
       -Complex.I * (alpha : ℂ) * (beta : ℂ) / 4 := by
-  norm_num [acceleration, coefficient, leray, advection, frequencySquared,
-    Fin.sum_univ_succ, frequency, inputAmplitude, Prod.mk_add_mk,
-    Prod.mk.injEq] <;> ring
+  simp only [acceleration, coefficient, leray, advection, Fin.sum_univ_four]
+  norm_num [frequencySquared, frequency, inputAmplitude, Prod.mk_add_mk,
+    Prod.mk.injEq, Fin.ext_iff]
+  ring
 
 /-- Full reversal (-1,-1) and visible-only reversal (-1,1) have the same
 entire low-frequency state and a nonzero low-frequency acceleration gap. -/
@@ -142,7 +143,8 @@ theorem full_partial_reversal_separation (nu : ℝ) :
       acceleration nu (-1) 1 (0, 1) 0 = -Complex.I / 2 := by
   refine ⟨lowObservation_independent (-1) (-1) 1, ?_⟩
   rw [transverse_acceleration, transverse_acceleration]
-  norm_num <;> ring
+  norm_num
+  ring
 
 /-- Every deterministic predictor from the same complete low-mode state has
 error at least 1/4 on one of the two actual complex acceleration coefficients. -/
@@ -162,7 +164,7 @@ theorem low_mode_prediction_error_floor (nu : ℝ)
   have hgap : ‖a - b‖ = (1 / 2 : ℝ) := by
     dsimp [a, b]
     rw [(full_partial_reversal_separation nu).2]
-    norm_num [norm_div, Complex.norm_I]
+    norm_num [Complex.norm_div, Complex.norm_I]
   have htriangle : ‖a - b‖ ≤ ‖a - z‖ + ‖b - z‖ := by
     have hid : a - b = (a - z) - (b - z) := by ring
     rw [hid]

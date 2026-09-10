@@ -8,6 +8,7 @@
 
 import D5.S3.FluidDynamics.Fourier.LowModeReversalWitness
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.Calculus.ContDiff.Operations
 import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Convert
@@ -52,10 +53,11 @@ def realVelocity (alpha beta x y : ℝ) (c : Fin 3) : ℝ :=
 /-- The finite Fourier data is exactly the advertised real cosine field. -/
 theorem synthesis_eq_realVelocity (alpha beta x y : ℝ) (c : Fin 3) :
     synthesis alpha beta x y c = (realVelocity alpha beta x y c : ℂ) := by
+  simp only [synthesis, Fin.sum_univ_four]
   fin_cases c <;>
     apply Complex.ext <;>
     norm_num [synthesis, realVelocity, character, frequency, inputAmplitude,
-      Fin.sum_univ_succ, Complex.mul_re, Complex.mul_im,
+      Fin.ext_iff, Complex.mul_re, Complex.mul_im,
       Real.cos_add, Real.sin_add, Real.cos_sub, Real.sin_sub] <;> ring
 
 /-- Both active spatial coordinates are jointly smooth to every finite order. -/
@@ -77,13 +79,13 @@ private theorem shifted_cosine_x (beta x y : ℝ) :
     HasDerivAt (fun s : ℝ => beta * Real.cos (y - s))
       (beta * Real.sin (y - x)) x := by
   have h := (((hasDerivAt_const x y).sub (hasDerivAt_id x)).cos).const_mul beta
-  convert h using 1 <;> ring
+  simpa using h
 
 private theorem shifted_cosine_y (beta x y : ℝ) :
     HasDerivAt (fun s : ℝ => beta * Real.cos (s - x))
       (-beta * Real.sin (y - x)) y := by
   have h := (((hasDerivAt_id y).sub_const x).cos).const_mul beta
-  convert h using 1 <;> ring
+  simpa [mul_neg] using h
 
 /-- Ordinary coordinate derivatives give zero divergence; no symbolic
 'divergence-free' label is used as a premise. -/
@@ -92,12 +94,10 @@ theorem realVelocity_divergence (alpha beta x y : ℝ) :
       deriv (fun s => realVelocity alpha beta x s 1) y = 0 := by
   have hx : HasDerivAt (fun s => realVelocity alpha beta s y 0)
       (beta * Real.sin (y - x)) x := by
-    simpa only [realVelocity, if_pos rfl] using shifted_cosine_x beta x y
+    simpa [realVelocity, Fin.ext_iff] using shifted_cosine_x beta x y
   have hy : HasDerivAt (fun s => realVelocity alpha beta x s 1)
       (-beta * Real.sin (y - x)) y := by
-    have h := (hasDerivAt_const y (alpha * Real.cos x)).add
-      (shifted_cosine_y beta x y)
-    simpa [realVelocity] using h
+    simpa [realVelocity, Fin.ext_iff] using shifted_cosine_y beta x y
   rw [hx.deriv, hy.deriv]
   ring
 
