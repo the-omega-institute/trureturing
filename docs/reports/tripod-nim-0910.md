@@ -1,4 +1,8 @@
-# Tripod Nim preregistration v1
+# Tripod Nim implementation report
+
+The kernel theorem refutes only printed Conjecture 2 of arXiv:2401.07943v1. The paper's transition at n=10 has a least-period-264 orbit, and 264 does not divide 3280. Both independent integer computations agree with all four supplied checkpoints. `make lean` and the final `make lean-report` pass; the latter confirms the closed negation and exactly one included theorem. Blueprint emission also passes. The requested local gate is the remaining validation step at this checkpoint.
+
+## Preregistration v1 (preserved initial record)
 
 Production: no skill; single Codex implementation worker; no independent review claimed.
 Target: printed Conjecture 2, arXiv:2401.07943v1, literature-attested.
@@ -71,3 +75,27 @@ The first successful `make lean-report` exposed that this repository includes pr
 
 
 The second semantic report confirms exactly one included theorem, `result`. Its absent utility evidence revealed a strict-header formatting error: `digest` must close the standard header on the same line. The required proof-shape annotations are now in a separate adjacent header comment. The canonical `lean-utility-input` command now emits the correct claim/result obligation. `make lean` run 6 exits 0; a new report will verify the typed evidence. No parser, admission rule or producer has been edited.
+
+
+## Verified semantic report
+`make lean-report` run 3 exits 0. Its optional `utility_refutation` evidence has `is_closed_negation: true` and binds this claim/result pair to source SHA-256 `0e0c357d70ed58f0100c292bd7bf020245b4eb8b3c984396fc36068e6c4a9b2d`. Exactly one declaration is both included and a theorem: `result`. Among included definitions, only `claim` has type `Prop`; the others define data types or operations. No claim/result universe parameters or free terms occur, and the producer verified `result`'s type and proof against `Not claim` through Lean's semantic API.
+
+- Claim GID: `D5/S0/Certificates/TripodNimPeriodRefutation.claim`; statement_id: `sha256:aa9ee55a7f9c2bdfe38f9c03d3f665a07221bd75a0b6db9b05eb623cf475e1f0`.
+- Result GID: `D5/S0/Certificates/TripodNimPeriodRefutation.result`; statement_id: `sha256:7c8192682e652b9e72e362c7f865de170523c311175a23661e4b660c71457c7c`.
+- Raw report SHA-256: `53a9385e651eb1042d0afa85424eb9ebef1b588447e48e43d7d1d708fc1210a5`.
+- Report input address: `sha256:dad4a38af558ceec1aa23d51bdab0354b5998497a66ceb21774350dac6dc1969`.
+- Standard axioms for both declarations: `[Classical.choice, Quot.sound, propext]`.
+
+The statement identifiers above are inspection receipts, not freeze receipts. Direct frozen dependencies remain empty. The observed content classification and source fidelity are the worker's reasoned assessment; typed evidence verifies the formal negation, not the prose-to-paper correspondence. There was no independent review.
+
+
+## Blueprint validation
+`make emit` runs 1 and 2 both exit 0. Run 1 generated the required `Blueprint/D5/S0/Certificates/TripodNimPeriodRefutation.md`; run 2, after the final source changes and semantic report, reports zero changed blueprints. The generated document was inspected and accompanies the `.scribe.cs` source.
+
+Before this push, the following Scribe-only scanner returned exit 1 (zero matches), and the same regex engine's positive control `rg -n -P '\bMathlib\b'` returned exit 0 at line 38:
+
+```text
+rg -n -i -P 'issue #\d+|PR #\d+|pull request|panel brief|dispatch brief|orchestrator|six-route|proof_shape|admission_basis|escape[ _-]witness|bind-only|postmortem|git-history|accepted-event receipts|\bsearch(?:es)?\b|\bduplicate\b' Blueprint/D5/S0/Certificates/TripodNimPeriodRefutation.scribe.cs
+```
+
+The full local gate will use the immutable initial base `248a800843acf89ed184074d66a8d577fc028f99`. No deposit, cover or PR is part of this attempt.
