@@ -1,0 +1,10 @@
+### Deleting children preserves the same inequality
+
+For any subset of actual children, set missing coordinates to one. The parent
+recursion is unchanged. The complete row includes the omitted terms Psi_j(1),
+which are nonnegative; removing them decreases the left side of (15.1), since
+1-y>=0. Thus the same contraction constant holds for every subtree-pruning
+pattern, including a leaf. The formal endpoint affine_pruned_row_contraction
+quantifies over every subset. This check is essential: stability of the full
+branching tree alone would not justify the finite-grid application.
+
