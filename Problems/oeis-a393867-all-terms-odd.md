@@ -124,6 +124,13 @@ uses `generating_coeff_pair` through `paired_derivative` and
 `log_mod_two_identity`; the paired result is on the live derivation path.
 Project build, report, emission, content checks, and freezing remain pending.
 
+Formal project gate: `make lean` EXIT=0, wall time 403.526 seconds on this
+macOS worktree. `LEAN_CACHE` status=present, method=none, stamp_miss=null,
+project_olean_state=warm, mathlib_olean_state=warm, mathlib_missing_olean_files=0;
+the earlier donor seed is recorded above. Lake reports successful completion
+of 12,896 jobs. This is a local build reading, not a CI timing claim.
+The directory now contains 27 files; the original frozen source has no diff.
+
 ### Elaborated dependency query
 
 A Lean `run_cmd` query used `Environment.find?`, `ConstantInfo.type`,
