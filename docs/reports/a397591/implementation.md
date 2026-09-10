@@ -147,3 +147,11 @@ warnings for this module. An explicit projections check against the pre-format
 report correctly failed source-hash binding; the report is being regenerated
 and the Scribe checks rerun against the final source. This failed stale-input
 check is not counted as a green validation result.
+
+The final source-bound `make lean-report` exited 0 and rechecked exactly one
+changed module. Report SHA-256 is
+`5019d9d1e4bf24995d35588195d41dc3765bb98f5e322c87e28ea62edac3808c`.
+Before PR creation, fetched dev at a9bccb706adebc97f90d8663dd4df55601c6ed04:
+its D5 A397591 search has no hits, and merge-tree against this branch exits 0
+with merge tree c1e8f40f207b2820dc0add144793f2bdd3687e8a. No overlapping
+implementation or merge conflict was found in this snapshot.
