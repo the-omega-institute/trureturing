@@ -107,3 +107,12 @@ SHA-256 `a267c1271024763b98ce0482d657741749254520fe940059619127b0c8ff605a`,
 were screened. Includes our existing triage note and unrelated hex matches.
 This query is not negative evidence and was not exhaustively paginated.
 Unopened linked contents are ASSUMED-UNVERIFIED.
+
+## Integer construction checkpoint
+
+The D5 module now proves integer existence and uniqueness of F=1-A.
+The normalized residual has coefficient multiplier one over every commutative
+ring; its coefficientwise fixed-point construction is performed over Z.
+A rational construction and an unproved integrality assumption are not used.
+File-level Lean check EXIT=0; full project gates and the all-n parity proof
+remain pending. The module is not frozen at this checkpoint.
