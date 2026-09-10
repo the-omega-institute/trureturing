@@ -140,3 +140,10 @@ returns EXIT=0 with no conflicts. No A357512 declaration is found in dev's D5
 tree. The merge base remains `d6836dd2ae403f006f1f2d6ae5ddef3af56c5e46`.
 The selected delivery route is `make deposit-uncovered`, whose canonical
 implementation calls `ledger-align --add`; no atom or theory input is created.
+
+`make lean-report`: EXIT=0, 96.956 seconds. The producer's delta plan rechecked
+31 added modules relative to the available seed report; this is not a claim
+that this lane added 31 modules. The report content hash is
+`7b6cbe09a71ea8075ba2a21e405caadc2653a1c3a3e49a2888dcbca6bd3a9614`.
+Its log and report are run-local. The fetched dev SHA for the conflict check is
+`176efa55c41a35d5e808710cd183f10ce09dffd7`.
