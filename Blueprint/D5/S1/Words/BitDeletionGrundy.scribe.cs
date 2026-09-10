@@ -138,12 +138,6 @@ internal sealed class BitDeletionGrundyDocument : IScribeDocumentDefinition
                     + "value with g. Rewriting the word mex equation therefore gives the "
                     + "natural-number recurrence under binary decoding."),
             Theorem(
-                "g_zero", "natural-bit-deletion-zero", "The zero boundary value",
-                GZero(),
-                AssessedProvenance.FromRepo(),
-                "The zero digit list is empty, so its word is empty and the mex of the empty "
-                    + "successor set is zero, establishing g(0)=0."),
-            Theorem(
                 "g_le_three", "grundy-values-at-most-three",
                 "No Grundy value exceeds three",
                 GBound(),
@@ -404,9 +398,6 @@ internal sealed class BitDeletionGrundyDocument : IScribeDocumentDefinition
             Call("g", n), Sp, Eq, Sp,
             Call("mex", Call("image", F.Id("g"), successors))));
     }
-
-    private static Formula GZero() =>
-        Disp(Seq(Call("g", D(0)), Sp, Eq, Sp, D(0)));
 
     private static Formula GBound()
     {

@@ -746,9 +746,8 @@ theorem g_mex_bitDeletionSuccessors (n : Nat) :
     have hdel : (deletionWords (true :: t)).image decodeWord = bitDeletionSuccessors n := by
       simpa [ht] using deletionWords_decode_eq_successors n
     rw [hdel]
-theorem g_zero : g 0 = 0 := by
-  simp [g, binaryWord, wordGrundy]
 example : bitDeletionSuccessors 5 = {1, 3, 2} := by decide
+example : g 0 = 0 := by simp [g, binaryWord, wordGrundy]
 example : g 5 = 3 := by
   rw [g, wordGrundy_eq_formula]
   decide

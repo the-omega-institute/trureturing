@@ -198,19 +198,7 @@ $$\forall n: \mathbb{N}, \operatorname{g}(n) = \operatorname{mex}(\operatorname{
 
 The digit-decoding correspondence identifies every normalized word deletion with exactly one Nat.ofDigits successor, and identifies its wordGrundy value with g. Rewriting the word mex equation therefore gives the natural-number recurrence under binary decoding.
 
-**Theorem 1.17 (The zero boundary value).**
-
-$$\operatorname{g}(0) = 0$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Words/BitDeletionGrundy.g_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The zero digit list is empty, so its word is empty and the mex of the empty successor set is zero, establishing g(0)=0.
-
-**Theorem 1.18 (No Grundy value exceeds three).**
+**Theorem 1.17 (No Grundy value exceeds three).**
 
 $$\forall n: \mathbb{N}, \operatorname{g}(n) \leq 3$$
 
@@ -222,7 +210,7 @@ $$\forall n: \mathbb{N}, \operatorname{g}(n) \leq 3$$
 
 The automaton formula lies in Fin 4, so the word-game identification bounds every natural-number Grundy value by three.
 
-**Theorem 1.19 (Multiplication by four preserves the value).**
+**Theorem 1.18 (Multiplication by four preserves the value).**
 
 $$\forall n: \mathbb{N}, \operatorname{g}(4 \cdot n) = \operatorname{g}(n)$$
 
@@ -234,7 +222,7 @@ $$\forall n: \mathbb{N}, \operatorname{g}(4 \cdot n) = \operatorname{g}(n)$$
 
 For nonzero n, Nat.digits_base_pow_mul identifies multiplication by four with appending the two bits 00 to the MSB-first word. The formula's two-zero invariance proves the claim; n=0 is immediate.
 
-**Theorem 1.20 (Both OEIS A398916 conjectures).**
+**Theorem 1.19 (Both OEIS A398916 conjectures).**
 
 $$(\forall n: \mathbb{N}, \operatorname{g}(n) \leq 3) \land (\forall n: \mathbb{N}, \operatorname{g}(4 \cdot n) = \operatorname{g}(n))$$
 
@@ -258,7 +246,6 @@ Together these conclusions state that all values are at most three and g(4n)=g(n
 - Truth anchor: `D5/S1/Words/BitDeletionGrundy.g_four_mul`
 - Truth anchor: `D5/S1/Words/BitDeletionGrundy.g_le_three`
 - Truth anchor: `D5/S1/Words/BitDeletionGrundy.g_mex_bitDeletionSuccessors`
-- Truth anchor: `D5/S1/Words/BitDeletionGrundy.g_zero`
 - Truth anchor: `D5/S1/Words/BitDeletionGrundy.mex`
 - Truth anchor: `D5/S1/Words/BitDeletionGrundy.mex_spec`
 - Truth anchor: `D5/S1/Words/BitDeletionGrundy.normalize`
