@@ -3,7 +3,7 @@ bibkey: connelly2026qfibonomial
 authors: Brendan B. Connelly; Ezekiel Ito; Thomas C. Martinez; Olha Shevchenko; Kacey Yang
 year: 2026
 title: Unimodality of q-Fibonomial coefficients for small cases
-doi: 10.48550/arXiv.2605.12822
+doi: null
 url: https://arxiv.org/html/2605.12822v1
 claim: Conjecture 5.4 asserts necessity of its divisibility-or-floor-bound condition when k is at most three or r is at most three.
 strata_touched:

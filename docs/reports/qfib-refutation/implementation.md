@@ -243,3 +243,14 @@ rewrites; no new upstream binomial theorem is claimed.
 ```text
 LEAN_CACHE {"status":"present","worktree":"/Users/chronoai/trureturing-qfib-unimodal","donor":null,"method":"none","reason":null,"stamp_miss":null,"pin_sha256":"sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":0,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"project olean state is warm","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
 ```
+
+## Report and locator gate
+
+`make lean-report` EXIT=0, 64.162 seconds. Its typed utility receipt reports
+`is_closed_negation=true` for the declared claim/result pair.
+The first `make emit` failed EXIT=2 after 15.686 seconds: `invalid-doi`, because
+LibraryNoteCatalog requires selecting DOI or URL, not both; the consequent
+`dangling-literature-reference` is the same rejected note. The frontmatter now
+selects the exact v1 HTML URL (`doi: null`); the actual DOI remains documented
+in the nonempty Verified locator section. This is a locator-selection fix, not
+a claim that the paper lacks a DOI. Rechecking follows this checkpoint.
