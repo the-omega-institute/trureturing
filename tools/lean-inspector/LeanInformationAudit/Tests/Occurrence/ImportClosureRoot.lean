@@ -9,6 +9,15 @@ namespace LeanInformationAudit.Tests.ImportClosureRoot
 
 set_option linter.style.longLine false
 
+def importedAlias := objectArena
+
+/-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.ImportClosureProducer.objectArena theorem_name=LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem registration_modules=["LeanInformationAudit.Tests.Occurrence.ImportClosureProducer","LeanInformationAudit.Tests.Occurrence.ImportClosureRoot"] count=2 -/
+#guard_msgs (error) in
+information_theorem _root_.LeanInformationAudit.Tests.ImportClosureProducer.importedTheorem
+  in lawArena object_arena importedAlias catalog duplicate
+  primitives fixtureRealization
+  : lawArena.Law fixtureRealization := by trivial
+
 expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"

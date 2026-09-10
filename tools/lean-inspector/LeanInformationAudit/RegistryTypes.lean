@@ -28,6 +28,8 @@ structure InformationRegistryEntry where
   catalogKind : CatalogKind := .canonicalMaximal
   registrationModuleName : Name := .anonymous
   objectArenaName : Name := .anonymous
+  /-- Resolved declaration owner; arenaName/objectArenaName retain the source spelling. -/
+  resolvedArenaName : Name := .anonymous
   /-- Stable identity of the elaborated theorem statement captured at registration. -/
   statementIdentity : String := ""
   /-- False exactly for registrations using occurrence-aware syntax. -/
