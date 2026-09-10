@@ -198,6 +198,21 @@ public sealed class StandaloneLeanInspectorTests
         Assert.Empty(free.Axioms);
     }
 
+    [Fact]
+    public void RegistrationMetadataIsReadAndExcludedFromStatementIdentity()
+    {
+        const string message = "IE-C048 RealizationIgnoredByLaw key=Root/Catalog/T law_arena=A signature=A.signature domain=all reason=missing_witness";
+        const string theorem = "theorem same : True := True.intro\n";
+        var plain = InspectSingleModule(theorem);
+        var metadata = InspectSingleModule(theorem
+            + "def same.__information_registration_diagnostic : String := \"" + message + "\"\n");
+        Assert.Equal(new[] { message }, metadata.InformationRegistrationErrors);
+        Assert.DoesNotContain(metadata.Declarations, d => d.Name.EndsWith("__information_registration_diagnostic", StringComparison.Ordinal));
+        var path = RepoPath.CreateKnown("Trureturing.lean");
+        Assert.True(CanonicalStatementWriter.DeclarationStatementIds(path, plain)
+            .SequenceEqual(CanonicalStatementWriter.DeclarationStatementIds(path, metadata)));
+    }
+
     private static LeanFileReport InspectSingleModule(string source)
     {
         using var repository = new TemporaryDirectory();
@@ -220,7 +235,7 @@ public sealed class StandaloneLeanInspectorTests
                 IncludeInStatement = declaration.IncludeInStatement,
                 NameKey = declaration.NameKey,
             }).ToImmutableArray(),
-            report.Error);
+            report.Error) { InformationRegistrationErrors = report.InformationRegistrationErrors };
     }
 
     private sealed class TestLeanReportProducer(string repositoryRoot)

@@ -24,6 +24,8 @@ structure InformationRegistryEntry where
   arenaName : Name
   /-- The declaration holding the native realization or the legacy witness. -/
   realizationName : Name
+  variationWitness : Name := .anonymous
+  sensitivityWitness : Name := .anonymous
   catalogId : CatalogId := .anonymous
   catalogKind : CatalogKind := .canonicalMaximal
   registrationModuleName : Name := .anonymous
@@ -34,6 +36,15 @@ structure InformationRegistryEntry where
   statementIdentity : String := ""
   /-- False exactly for registrations using occurrence-aware syntax. -/
   localRegistrationNames : Bool := true
+
+def InformationRegistryEntry.canonicalObjectArenaName
+    (entry : InformationRegistryEntry) : Name :=
+  if !entry.resolvedArenaName.isAnonymous then entry.resolvedArenaName
+  else if entry.objectArenaName.isAnonymous then entry.arenaName else entry.objectArenaName
+
+def InformationRegistryEntry.effectiveCatalogId
+    (entry : InformationRegistryEntry) : CatalogId :=
+  if entry.catalogId.isAnonymous then entry.canonicalObjectArenaName else entry.catalogId
 
 /-- A closed catalog and the canonical theorem-to-index assignment used by the seal. -/
 structure CatalogUnitRecord where
@@ -96,6 +107,8 @@ structure StructuralProvenanceEntry where
   proofExpr : Expr
   levelParams : List Name
   certificateName : Name
+  sensitivityWitness : Name := .anonymous
+  domainName : Name := .anonymous
   registrationModule : Name
   canonicalArena : Name
   lawArenaSyntax : String := ""

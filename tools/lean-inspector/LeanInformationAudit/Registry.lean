@@ -1,4 +1,4 @@
-import LeanInformationAudit.RegistryTypes
+import LeanInformationAudit.RegistrationGates
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import LeanInformationAudit.Sha256
 import LeanInformationAudit.FixedSnapshot
@@ -32,20 +32,12 @@ def generatedCompanionSuffixes : Array String := #[
   "__lowers_escape",
   "__escape_enriched",
   "__information_catalog",
-  "__catalog_irredundant"
+  "__catalog_irredundant",
+  "__information_registration_diagnostic"
 ]
 
 def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : Name :=
   entry.arenaName
-
-def InformationRegistryEntry.canonicalObjectArenaName
-    (entry : InformationRegistryEntry) : Name :=
-  if !entry.resolvedArenaName.isAnonymous then entry.resolvedArenaName
-  else if entry.objectArenaName.isAnonymous then entry.arenaName else entry.objectArenaName
-
-def InformationRegistryEntry.effectiveCatalogId
-    (entry : InformationRegistryEntry) : CatalogId :=
-  if entry.catalogId.isAnonymous then entry.canonicalObjectArenaName else entry.catalogId
 
 /-- A correctness bound, independent of host speed and caller heartbeat options.
 Every head transition, declaration lookup and environment lookup spends one unit. -/
@@ -403,6 +395,8 @@ private def sameEntry (left right : InformationRegistryEntry) : Bool :=
     left.unitName == right.unitName &&
     left.arenaName == right.arenaName &&
     left.realizationName == right.realizationName &&
+    left.variationWitness == right.variationWitness &&
+    left.sensitivityWitness == right.sensitivityWitness &&
     left.effectiveCatalogId == right.effectiveCatalogId &&
     left.catalogKind == right.catalogKind &&
     left.registrationModuleName == right.registrationModuleName &&
@@ -479,7 +473,11 @@ def registerValidatedEntry (entry : InformationRegistryEntry) :
   let result <- Lean.Elab.Command.liftTermElabM <|
     validateNewEntry (← getEnv) entry
   match result with
-  | .ok () => modifyEnv fun env => informationRegistryExt.addEntry env entry
+  | .ok () =>
+    Lean.Elab.Command.liftTermElabM do
+      let diagnostic ← RegistrationGates.validateFinite entry
+      RegistrationGates.publishDiagnostic entry.unitName diagnostic
+    modifyEnv fun env => informationRegistryExt.addEntry env entry
   | .error message => throwError message
 
 end LeanInformationAudit

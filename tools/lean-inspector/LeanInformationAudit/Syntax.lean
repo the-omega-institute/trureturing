@@ -54,6 +54,17 @@ private def resolveTheorem (id : TSyntax `ident) : CommandElabM Name := do
   | some (.thmInfo _) => pure theoremName
   | _ => throwErrorAt id "IE-C001 UnregisteredTheoremUnit: {theoremName}"
 
+private def witnessName (id : Option (TSyntax `ident)) : CommandElabM Name := do
+  match id with
+  | none => return .anonymous
+  | some id =>
+    try liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
+    catch _ => declarationName id
+
+private def optionalWitnessName (stx : Syntax) : CommandElabM Name := do
+  if stx.getNumArgs != 2 then return .anonymous
+  witnessName (some ⟨stx[1]⟩)
+
 private def registerEntry (entry : InformationRegistryEntry) : CommandElabM Unit := do
   registerValidatedEntry entry
 
@@ -153,6 +164,7 @@ private def checkNativeStatement (theoremName arenaName realizationName : Name)
 elab "information_theorem " theoremId:ident ppLine
     "in " arenaId:ident ppLine
     "primitives " primitives:term ppLine
+    variation:("variation " ident)? sensitivity:("sensitivity " ident)?
     ": " statement:term " := " proof:term : command => do
     let theoremName <- declarationName theoremId
     let arenaName <- try
@@ -176,12 +188,16 @@ elab "information_theorem " theoremId:ident ppLine
       { primitives := ($realizationId:ident).toPrimitiveBundle
         Statement := $statement
         proof := $theoremId }))
-    registerEntry entry
+    registerEntry { entry with
+      variationWitness := ← optionalWitnessName (← getRef)[9]
+      sensitivityWitness := ← optionalWitnessName (← getRef)[10]
+    }
 
 syntax (name := registerInformationTheoremCmd)
   "register_information_theorem " ident ppLine
     "in " ident ppLine
-    "primitives " term " realization " ident : command
+    "primitives " term " realization " ident
+    (" variation " ident)? (" sensitivity " ident)? : command
 
 @[command_elab registerInformationTheoremCmd]
 private def elabRegisterInformationTheorem : CommandElab := fun stx => do
@@ -229,7 +245,10 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => do
       D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
         $realizationId:ident $theoremId:ident)
     elabCommand (← `(command| def $unitId : $unitType := $unitValue))
-    registerEntry entry
+    registerEntry { entry with
+      variationWitness := ← optionalWitnessName stx[8]
+      sensitivityWitness := ← optionalWitnessName stx[9]
+    }
 
 syntax (name := informationTheoremOccurrenceCmd)
   "information_theorem " ident ppLine
@@ -237,6 +256,7 @@ syntax (name := informationTheoremOccurrenceCmd)
     "object_arena " ident ppLine
     "catalog " ident ppLine
     "primitives " term ppLine
+    ("variation " ident)? ("sensitivity " ident)?
     ": " term " := " term : command
 
 @[command_elab informationTheoremOccurrenceCmd]
@@ -246,8 +266,8 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
   let objectArenaId : TSyntax `ident := ⟨stx[5]⟩
   let catalogId := catalogIdFrom ⟨stx[7]⟩
   let primitiveTerm : TSyntax `term := ⟨stx[9]⟩
-  let statementTerm : TSyntax `term := ⟨stx[11]⟩
-  let proofTerm : TSyntax `term := ⟨stx[13]⟩
+  let statementTerm : TSyntax `term := ⟨stx[13]⟩
+  let proofTerm : TSyntax `term := ⟨stx[15]⟩
   let theoremName <- declarationName theoremId
   let lawArenaName <- resolveArena lawArenaId
   let objectArenaName <- resolveArena objectArenaId
@@ -281,14 +301,18 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
     D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.mk
       ($realizationId:ident).toPrimitiveBundle $statementTerm $theoremId)
   elabCommand (← `(command| def $unitId : $unitType := $unitValue))
-  registerEntry entry
+  registerEntry { entry with
+    variationWitness := ← optionalWitnessName stx[10]
+    sensitivityWitness := ← optionalWitnessName stx[11]
+  }
 
 syntax (name := registerInformationTheoremOccurrenceCmd)
   "register_information_theorem " ident ppLine
     "in " ident ppLine
     "object_arena " ident ppLine
     "catalog " ident ppLine
-    "primitives " term " realization " ident : command
+    "primitives " term " realization " ident
+    (" variation " ident)? (" sensitivity " ident)? : command
 
 @[command_elab registerInformationTheoremOccurrenceCmd]
 private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx => do
@@ -358,6 +382,9 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
       $qualifiedRealizationId:ident $theoremId:ident)
   elabCommand (← `(command| def $unitId : $unitType := $unitValue))
-  registerEntry entry
+  registerEntry { entry with
+    variationWitness := ← optionalWitnessName stx[12]
+    sensitivityWitness := ← optionalWitnessName stx[13]
+  }
 
 end LeanInformationAudit
