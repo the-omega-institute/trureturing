@@ -254,3 +254,13 @@ LibraryNoteCatalog requires selecting DOI or URL, not both; the consequent
 selects the exact v1 HTML URL (`doi: null`); the actual DOI remains documented
 in the nonempty Verified locator section. This is a locator-selection fix, not
 a claim that the paper lacks a DOI. Rechecking follows this checkpoint.
+
+Corrected `make emit` EXIT=0, 50.611 seconds, generated the one intended
+Blueprint. Mandatory `scribe-content-checks.sh` with the original exact base
+EXIT=0, 23.859 seconds: Describe `red=0`; Markdown `judged=1 formula(s)=0 red=0`.
+The document uses an addressable Lean statement and prose rather than a display
+formula, so the real Markdown/KaTeX check had zero formula expressions to parse.
+Its source acknowledgement resolves to the versioned Library URL. The script
+does not select projections for these changed paths, so `projections --check`
+was also run explicitly: EXIT=0, 10.856 seconds. These gates do not claim online
+verification of unrelated Library notes that the Describe tool marks OBSERVE.
