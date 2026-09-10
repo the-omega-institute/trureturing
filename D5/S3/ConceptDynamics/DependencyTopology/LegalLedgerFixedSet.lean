@@ -20,16 +20,22 @@ open DependencyReachabilityOrder (AcyclicEdge)
 universe u v w x
 
 /-- The source kernel, finite readouts, permitted axioms and model semantics. -/
-structure KernelData (P : Type u) (Proof : Type v) (Ax : Type w) (Model : Type x) where
-  accept : Proof → P → Bool
-  axioms : Proof → Finset Ax
-  refs : Proof → Finset P
-  permitted : Set Ax
-  neg : P → P
-  models : Model → Set Ax → Prop
-  holds : Model → P → Prop
+def KernelData (P : Type u) (Proof : Type v) (Ax : Type w) (Model : Type x) :=
+  (Proof → P → Bool) × (Proof → Finset Ax) × (Proof → Finset P) × Set Ax ×
+    (P → P) × (Model → Set Ax → Prop) × (Model → P → Prop)
 
 variable {P : Type u} {Proof : Type v} {Ax : Type w} {Model : Type x}
+
+def KernelData.accept (k : KernelData P Proof Ax Model) : Proof → P → Bool := k.1
+def KernelData.axioms (k : KernelData P Proof Ax Model) : Proof → Finset Ax := k.2.1
+def KernelData.refs (k : KernelData P Proof Ax Model) : Proof → Finset P := k.2.2.1
+def KernelData.permitted (k : KernelData P Proof Ax Model) : Set Ax := k.2.2.2.1
+def KernelData.neg (k : KernelData P Proof Ax Model) : P → P := k.2.2.2.2.1
+def KernelData.models (k : KernelData P Proof Ax Model) : Model → Set Ax → Prop :=
+  k.2.2.2.2.2.1
+def KernelData.holds (k : KernelData P Proof Ax Model) : Model → P → Prop :=
+  k.2.2.2.2.2.2
+
 variable (k : KernelData P Proof Ax Model)
 
 /-- A permitted proof is accepted and uses only permitted axioms. -/
@@ -37,15 +43,18 @@ def Proved (p : P) : Prop :=
   ∃ π : Proof, k.accept π p = true ∧ ∀ a ∈ k.axioms π, a ∈ k.permitted
 
 /-- A finite core with exact dependent witnesses and their acyclic reference graph. -/
-structure CertifiedNodes where
-  nodes : Finset P
-  witness : {p // p ∈ nodes} → Proof
-  accepted : ∀ p, k.accept (witness p) p.val = true
-  allowed : ∀ p, ∀ a ∈ k.axioms (witness p), a ∈ k.permitted
-  refsClosed : ∀ p, ∀ q ∈ k.refs (witness p), q ∈ nodes
-  acyclic : AcyclicEdge (fun q p => ∃ hp : p ∈ nodes, q ∈ k.refs (witness ⟨p, hp⟩))
+def CertifiedNodes :=
+  {data : (Σ nodes : Finset P, {p // p ∈ nodes} → Proof) //
+    (∀ p, k.accept (data.2 p) p.val = true) ∧
+    (∀ p, ∀ a ∈ k.axioms (data.2 p), a ∈ k.permitted) ∧
+    (∀ p, ∀ q ∈ k.refs (data.2 p), q ∈ data.1) ∧
+    AcyclicEdge (fun q p => ∃ hp : p ∈ data.1, q ∈ k.refs (data.2 ⟨p, hp⟩))}
 
 variable {k}
+
+def CertifiedNodes.nodes (C : CertifiedNodes k) : Finset P := C.val.1
+def CertifiedNodes.witness (C : CertifiedNodes k) : {p // p ∈ C.nodes} → Proof :=
+  C.val.2
 
 /-- Edges are the actual references of the selected witnesses. -/
 def CertifiedNodes.edge (C : CertifiedNodes k) (q p : P) : Prop :=
@@ -56,16 +65,17 @@ def Certificate (k : KernelData P Proof Ax Model) (p : P) :=
   {C : CertifiedNodes k // p ∈ C.nodes}
 
 /-- A legal ledger has a certified core and an arbitrary disjoint registered frontier. -/
-structure LegalLedger (k : KernelData P Proof Ax Model) where
-  core : CertifiedNodes k
-  frontier : Set P
-  frontierDisjoint : ∀ p ∈ frontier, p ∉ core.nodes
+def LegalLedger (k : KernelData P Proof Ax Model) :=
+  {data : CertifiedNodes k × Set P // ∀ p ∈ data.2, p ∉ data.1.nodes}
+
+def LegalLedger.core (L : LegalLedger k) : CertifiedNodes k := L.val.1
+def LegalLedger.frontier (L : LegalLedger k) : Set P := L.val.2
 
 /-- The source assumptions are premises, including soundness and consistency. -/
-structure SourceLaws (k : KernelData P Proof Ax Model) : Prop where
-  sound : ∀ p, Proved k p → ∀ M, k.models M k.permitted → k.holds M p
-  certificates : ∀ p, Proved k p → Nonempty (Certificate k p)
-  consistent : ∀ p, ¬ (Proved k p ∧ Proved k (k.neg p))
+def SourceLaws (k : KernelData P Proof Ax Model) : Prop :=
+  (∀ p, Proved k p → ∀ M, k.models M k.permitted → k.holds M p) ∧
+  (∀ p, Proved k p → Nonempty (Certificate k p)) ∧
+  (∀ p, ¬ (Proved k p ∧ Proved k (k.neg p)))
 
 def Frozen (L : LegalLedger k) : Set P := {p | p ∈ L.core.nodes}
 
@@ -96,15 +106,15 @@ private theorem chosen_acyclic (A C : CertifiedNodes k) :
   let tag : P → P ⊕ P := fun p => if p ∈ A.nodes then Sum.inl p else Sum.inr p
   let r : (P ⊕ P) → (P ⊕ P) → Prop :=
     Sum.Lex (Relation.TransGen A.edge) (Relation.TransGen C.edge)
-  let : Std.Irrefl (Relation.TransGen A.edge) := ⟨A.acyclic⟩
-  let : Std.Irrefl (Relation.TransGen C.edge) := ⟨C.acyclic⟩
+  let : Std.Irrefl (Relation.TransGen A.edge) := ⟨A.property.2.2.2⟩
+  let : Std.Irrefl (Relation.TransGen C.edge) := ⟨C.property.2.2.2⟩
   have liftEdge : ∀ q p, (∃ h : p ∈ A.nodes ∨ p ∈ C.nodes,
       q ∈ k.refs (chosenWitness A C p h)) → r (tag q) (tag p) := by
     rintro q p ⟨h, href⟩
     by_cases hp : p ∈ A.nodes
     · have hrefA : q ∈ k.refs (A.witness ⟨p, hp⟩) := by
         simpa only [chosenWitness, dif_pos hp] using href
-      have hq := A.refsClosed ⟨p, hp⟩ q hrefA
+      have hq : q ∈ A.nodes := A.property.2.2.1 ⟨p, hp⟩ q hrefA
       simp only [tag, if_pos hp, if_pos hq]
       exact Sum.Lex.inl (Relation.TransGen.single ⟨hp, hrefA⟩)
     · have hrefC : q ∈ k.refs (C.witness ⟨p, h.resolve_left hp⟩) := by
@@ -123,31 +133,28 @@ private theorem chosen_acyclic (A C : CertifiedNodes k) :
 
 private noncomputable def appendCore (A C : CertifiedNodes k) : CertifiedNodes k := by
   classical
-  refine {
-    nodes := A.nodes ∪ C.nodes
-    witness := fun p => chosenWitness A C p.val (Finset.mem_union.mp p.property)
-    accepted := ?_
-    allowed := ?_
-    refsClosed := ?_
-    acyclic := ?_ }
+  refine ⟨⟨A.nodes ∪ C.nodes,
+    fun p => chosenWitness A C p.val (Finset.mem_union.mp p.property)⟩,
+    ?_, ?_, ?_, ?_⟩
   · intro p
     by_cases hp : p.val ∈ A.nodes
-    · simpa only [chosenWitness, dif_pos hp] using A.accepted ⟨p.val, hp⟩
-    · simpa only [chosenWitness, dif_neg hp] using
-        C.accepted ⟨p.val, (Finset.mem_union.mp p.property).resolve_left hp⟩
+    · simp only [chosenWitness, dif_pos hp]
+      exact A.property.1 ⟨p.val, hp⟩
+    · simp only [chosenWitness, dif_neg hp]
+      exact C.property.1 ⟨p.val, (Finset.mem_union.mp p.property).resolve_left hp⟩
   · intro p a ha
     by_cases hp : p.val ∈ A.nodes
     · simp only [chosenWitness, dif_pos hp] at ha
-      exact A.allowed ⟨p.val, hp⟩ a ha
+      exact A.property.2.1 ⟨p.val, hp⟩ a ha
     · simp only [chosenWitness, dif_neg hp] at ha
-      exact C.allowed ⟨p.val, (Finset.mem_union.mp p.property).resolve_left hp⟩ a ha
+      exact C.property.2.1 ⟨p.val, (Finset.mem_union.mp p.property).resolve_left hp⟩ a ha
   · intro p q hq
     by_cases hp : p.val ∈ A.nodes
     · simp only [chosenWitness, dif_pos hp] at hq
-      exact Finset.mem_union_left _ (A.refsClosed ⟨p.val, hp⟩ q hq)
+      exact Finset.mem_union_left _ (A.property.2.2.1 ⟨p.val, hp⟩ q hq)
     · simp only [chosenWitness, dif_neg hp] at hq
       exact Finset.mem_union_right _
-        (C.refsClosed ⟨p.val, (Finset.mem_union.mp p.property).resolve_left hp⟩ q hq)
+        (C.property.2.2.1 ⟨p.val, (Finset.mem_union.mp p.property).resolve_left hp⟩ q hq)
   · intro p hcycle
     apply chosen_acyclic A C p
     apply Relation.TransGen.mono ?_ p p hcycle
@@ -156,15 +163,13 @@ private noncomputable def appendCore (A C : CertifiedNodes k) : CertifiedNodes k
 
 /-- Append the certificate, preserving old witnesses on every overlap. -/
 noncomputable def appendCertificate (L : LegalLedger k) (C : CertifiedNodes k) :
-    LegalLedger k where
-  core := appendCore L.core C
-  frontier := L.frontier \ {p | p ∈ C.nodes}
-  frontierDisjoint := by
+    LegalLedger k :=
+  ⟨⟨appendCore L.core C, L.frontier \ {p | p ∈ C.nodes}⟩, by
     classical
     rintro p ⟨hp, hC⟩ hmem
     rcases Finset.mem_union.mp hmem with hA | hC'
-    · exact L.frontierDisjoint p hp hA
-    · exact hC hC'
+    · exact L.property p hp hA
+    · exact hC hC'⟩
 
 private theorem appendCertificate_extends (L : LegalLedger k) (C : CertifiedNodes k) :
     Extends L (appendCertificate L C) := by
@@ -172,9 +177,11 @@ private theorem appendCertificate_extends (L : LegalLedger k) (C : CertifiedNode
   refine ⟨fun p hp => Finset.mem_union_left _ hp, ?_, ?_⟩
   · rintro q p ⟨hp, hq⟩
     refine ⟨Finset.mem_union_left _ hp, ?_⟩
-    simpa only [appendCertificate, appendCore, chosenWitness, dif_pos hp] using hq
+    change q ∈ k.refs (chosenWitness L.core C p (Or.inl hp))
+    simpa only [chosenWitness, dif_pos hp] using hq
   · intro p hp hp'
-    simp only [appendCertificate, appendCore, chosenWitness, dif_pos hp]
+    change chosenWitness L.core C p (Finset.mem_union.mp hp') = L.core.witness ⟨p, hp⟩
+    simp only [chosenWitness, dif_pos hp]
 
 /-- A total map: use the identity on inputs already containing the proposition. -/
 noncomputable def addWithCertificate (p : P) (C : Certificate k p)
@@ -194,7 +201,7 @@ theorem addWithCertificate_admissible (p : P) (C : Certificate k p) :
 
 private theorem frozen_proved (L : LegalLedger k) {p : P} (hp : p ∈ Frozen L) :
     Proved k p :=
-  ⟨L.core.witness ⟨p, hp⟩, L.core.accepted ⟨p, hp⟩, L.core.allowed ⟨p, hp⟩⟩
+  ⟨L.core.witness ⟨p, hp⟩, L.core.property.1 ⟨p, hp⟩, L.core.property.2.1 ⟨p, hp⟩⟩
 
 /-- Under the source laws, fixed membership is exactly frozen or unprovable membership. -/
 theorem fixed_eq_frozen_union_unprovable (laws : SourceLaws k) (L : LegalLedger k) :
@@ -207,7 +214,7 @@ theorem fixed_eq_frozen_union_unprovable (laws : SourceLaws k) (L : LegalLedger 
     · exact Or.inl hp
     · right
       intro hproved
-      obtain ⟨C⟩ := laws.certificates p hproved
+      obtain ⟨C⟩ := laws.2.1 p hproved
       have hmem : p ∈ Frozen (addWithCertificate p C L) := by
         change p ∈ Frozen (if p ∈ Frozen L then L else appendCertificate L C.val)
         rw [if_neg hp]

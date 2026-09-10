@@ -36,7 +36,7 @@ $$\forall laws: \operatorname{SourceLaws}\left(k\right), \forall L: \operatornam
 
 *Commentary.*
 
-SourceLaws includes kernel soundness in every permitted-axiom model, certificate existence for every proved proposition, and consistency: a proposition and its negation cannot both be proved. All three remain explicit in the theorem contract. The structural argument uses the certificate-existence field.
+SourceLaws includes kernel soundness in every permitted-axiom model, certificate existence for every proved proposition, and consistency: a proposition and its negation cannot both be proved. All three remain explicit in the theorem contract. The structural argument uses the certificate-existence conjunct.
 
 Frozen propositions stay frozen by admissibility. An unprovable proposition cannot appear in any legal core, since its selected witness would prove it. Hence both kinds have invariant membership.
 
