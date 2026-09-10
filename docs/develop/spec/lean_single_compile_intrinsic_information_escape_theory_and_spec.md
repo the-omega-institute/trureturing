@@ -1344,7 +1344,7 @@ query-completion 分项：`counts.observed_query_completed` 与
 `observed_query_incomplete=0`。`status=complete` 表示记账完成，query-completion 表示规定 scope
 的查询完成，二者都不表示认证完备。`observed > 0` 时 `certified_complete=false`，AC-023 不满足。
 observed 永远不算完成。查询与增量复用的验收见第 35 节 T-036 的生产查询 fixtures。
-普查、全入口与增量查询的性能读数不作时限或性能判词；可选结构 sidecar 与证书发布的成本须另计。
+特定输入与宿主的性能样本不构成一般时限或性能保证；可选结构 sidecar 与证书发布成本另计。
 全库发布分桶 id 集记账证书，并提供独立的 report-only 证明依赖结构读数（第 23.7 节）；
 结构读数不增加 certified 数量，不把 observed 转成 classified。
 
@@ -6955,12 +6955,14 @@ Lean publisher 与 Python entrypoint 都遵守诊断优先序
 `IE-C044 > IE-C035 > IE-C036 > IE-C034`：query／receipt 完整性先于重复，重复先于 identity
 绑定错误，identity 错误先于缺行；不得因换入口或 codec 提前运行而改变这一顺序。
 
-证书编译必须增量进行，并保持每进程工作集有界：
-证书按 id range 自适应分裂：每叶至多 $M$ 个 ids，内部节点二叉组合；Init-only 通用引理
+证书编译按叶与组合节点增量进行：
+证书按 id range 自适应分裂：每叶至多 $M=128$ 个 ids，内部节点二叉组合；Init-only 通用引理
 一次证明「有序范围中的有序子段蕴含父段有序」、长度相加与 congruence，再由各节点实例化。
 每个叶与组合节点都是单独编译、内容寻址的模块；新增一个 key 只重编受影响叶、其祖先与 Root。
 最终环境是 Init + `Census.Certificate` + range modules，公理闭包为 `[propext]`。
-证书编译的每进程工作集受单叶上限与二叉组合接口约束，上界不随全库 key 总数增长。
+单叶证明的输入与编译不依赖其他叶的内容；组合节点通过两个子节点的接口组合证明。
+导入接口与元数据随 range modules 数量增长；上述局部不变量不提供整进程工作集的常量上界。
+性能实验读数不作为功能测试的挂钟或 RSS 判词。
 增量与分桶验收见第 35 节 T-036 的 `test_buckets.py` 与 `test_review_fixes.py`。
 这不证明整管线常量内存：报告校验 driver 保留 $O(\mathrm{rows})$ 的校验及元数据；
 流式索引的 1 GiB 目标未满足。
@@ -6970,7 +6972,7 @@ Lean publisher 与 Python entrypoint 都遵守诊断优先序
 不打开或解析展开的 `census.json`；receipt digest、HEAD、export 与 rows digest
 必须一致。发布不改写 `census.json`，对该展开文件只检查 nonmutation。
 展开的 `census.json` 在每行内联 import scope 列表；该展开 artifact 的归一为开放限制（#6748），
-不由证书的每进程上界掩盖。
+不由分桶证书的局部不变量消除。
 
 有效 artifact 必须复核 `accounted = certified + observed`、class 分项之和等于 certified、reason 分项之和
 等于 certified unreachable、query-completion 分项之和等于 observed，且 incomplete 分项为零；
@@ -7065,7 +7067,7 @@ depth histogram 或后代数混名、互换或据此宣称取得其证书。
 
 generated policy 的现役值是 `in_denominator`：所有 frozen theorem keys 仍在分母，
 `generated_candidate` 只是 `.congr_simp` substring 的候选标签，不能证明 generated origin。
-落地样本有 307 个此标签；私有性、拼写或 `isInternalDetail` 也不是改分母的依据。
+私有性、拼写或 `isInternalDetail` 也不是改分母的依据。
 将 generated 排除出分类分母须另有 owner 的语义裁决，不由本 sidecar 自动施行。
 
 **缓存与失效**：raw summary 按 olean-part 内容摘要、同模块有序 part layout 与 reader／
@@ -8679,12 +8681,13 @@ validated rows 和 report。多故障 fixtures 在 Lean publisher 与 Python ent
 `statement_id_nat` 绑定错误先于 missing row；class／evidence 的 IE-C037 义务不变。
 具名 Lean 反例见 `tools/lean-inspector/LeanInformationAudit/Tests/Census/Manifest/Precedence.lean`。
 
-range fixtures 检查每叶至多 $M$ ids、自适应分裂、错误 range 归属被拒、二叉组合的有序性／
+range fixtures 检查每叶至多 $M=128$ ids、自适应分裂、错误 range 归属被拒、二叉组合的有序性／
 长度／report 等式，以及删除任一合取不能继续通过。每叶／节点独立编译并内容寻址，
 增量 fixture 新增一个 key 时只重编受影响叶、祖先与 Root。
-bucket build／assembly 的每进程工作集上界按第 23.6 节约束；性能实验读数不作为功能测试的挂钟或 RSS 判词。
+bucket build／assembly 按第 23.6 节验收单叶独立性与二叉组合；导入接口与元数据随 range modules 数量增长。
+性能实验读数不作为功能测试的挂钟或 RSS 判词。
 最终环境只能是 Init + `Census.Certificate` + range modules，axioms 为 `[propext]`；
-不得把外层 $O(\mathrm{rows})$ 报告校验 driver 的内存算进单叶上界后宣称整管线常量内存。
+不得由单叶界宣称整进程或整管线常量内存；外层报告校验 driver 仍保留 $O(\mathrm{rows})$ 的校验及元数据。
 发布 fixture 消费全流收据绑定的 `rows.jsonl`，拒绝 rows／receipt 篡改，不再走 per-partition
 receipt 协议；展开的 `census.json` 不被 handoff 重新解析，发布前后 bytes 不变。
 全流与分桶回归见 `tools/lean-inspector/Census/tests/test_pipeline.py`、
