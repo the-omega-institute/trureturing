@@ -203,3 +203,14 @@ The rendered formulas were inspected for the integer domain, zero constant
 term, inverse denominator, m>1, n>2, and four alternatives with k>1.
 See proof-review.md for the per-public-theorem assessments and four witness
 requirements; these will also be included in the PR body.
+
+## Scribe and harness checks
+
+Required `scribe-content-checks.sh` against exact base
+0011b3f0dfdd9eb32b753d122219f0749927922a: EXIT=0, 23.65 s.
+DESCRIBE_STATUS: nodes=10618, red=0; KaTeX markdown: judged=1,
+formula(s)=6, red=0. The script did not select a separate projections check
+because no Golden/Projection input changed. Existing unrelated OPEN projection
+and offline DOI observations remain observations, not claimed resolutions.
+`make -C tools selftest` EXIT=0, 5.06 s; governance checks passed and the
+active/deferred rule inventory was printed.
