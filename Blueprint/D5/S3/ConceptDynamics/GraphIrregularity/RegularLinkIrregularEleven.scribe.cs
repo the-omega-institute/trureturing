@@ -40,14 +40,14 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                     + "removed in revision. The refuted statement is the one printed "
                     + "in the arXiv preprint, not a conjecture published in DMGT.")),
             Paragraph(Text(
-                "Only the only-if direction is refuted. The if-direction, asserting "
-                    + "existence for every n >= 12, is untouched. Relative to the published "
-                    + "results, the contribution is that the smallest known order of a "
-                    + "regular link-irregular graph drops from 12 to 11. The paper's "
-                    + "Theorem 10 rules out n <= 9; n = 10 remains open. No minimality "
-                    + "of 11, classification, or count of such graphs is claimed. The "
-                    + "witness graph and invariant are repository constructions; the "
-                    + "paper supplies the conjecture, definitions, and n <= 9 exclusion.")),
+                "Only the only-if direction is refuted, and that refutation was already "
+                    + "available from the order-eleven graph reported in December 2025. The "
+                    + "if-direction, asserting existence for every n >= 12, is untouched. "
+                    + "The paper supplies the conjecture, the definitions and the exclusion "
+                    + "through order nine; the order-eleven graph is Harder\'s; what is "
+                    + "delivered here is the formal verification and the invariance lemma "
+                    + "used to carry it. No minimality of 11, classification, or count of "
+                    + "such graphs is claimed, and n = 10 is not addressed.")),
             Paragraph(Text(
                 "For a finite graph, take one round of degree refinement: each vertex "
                     + "contributes its degree paired with the multiset of its neighbors' "
@@ -129,7 +129,8 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                             Pair(F.Id("u"), F.Id("v")), Sp, InMacro, Sp, F.Id("witnessEdges"))))),
                 "The repository witness has 11 vertices, 33 undirected edges, and degree "
                     + "6 at every vertex. SimpleGraph.fromRel symmetrizes the listed relation "
-                    + "and excludes loops. Each edge below is listed once, smaller endpoint first."),
+                    + "and excludes loops. Each edge below is listed once, smaller endpoint first.",
+                Harder()),
             Paragraph(Text(
                 "witnessEdges = [(0,2), (0,4), (0,5), (0,8), (0,9), (0,10), "
                     + "(1,2), (1,3), (1,5), (1,7), (1,8), (1,10), "
@@ -174,7 +175,8 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                 ])),
                 "IsEmpty asserts that the type of graph isomorphisms between the two "
                     + "induced neighborhoods has no inhabitants. This implements the "
-                    + "paper's definition for finite simple graphs."),
+                    + "paper's definition for finite simple graphs.",
+                Paper()),
             Definition("regularLinkIrregularOnlyFromTwelve", "regular-link-irregular-only-from-twelve",
                 "The preprint's only-if direction",
                 Disp(new Formula.Aligned([
@@ -191,7 +193,8 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                     + "simple graph on Fin(n), "
                     + "and every natural degree r. Both regularity and link-irregularity "
                     + "are hypotheses. Lean supplies the decidability instances classically "
-                    + "inside this closed proposition; the if-direction is not encoded."),
+                    + "inside this closed proposition; the if-direction is not encoded.",
+                Paper()),
             Describe.Lean(DescribeId.Create("witness-link-irregular"),
                 DeclarationHandle.Create(Prefix + "witness_link_irregular"),
                 H("The witness has pairwise non-isomorphic links"),
@@ -220,10 +223,16 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string declaration, string id, string title,
-        Formula formula, string prose) => Describe.Lean(
+        Formula formula, string prose, AssessedProvenance? provenance = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(formula), provenance ?? AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static AssessedProvenance Harder() => AssessedProvenance.FromLiterature(
+        LibraryNoteRef.Create("D5/L/ConceptDynamics/harder2025linkirregular"));
+
+    private static AssessedProvenance Paper() => AssessedProvenance.FromLiterature(
+        LibraryNoteRef.Create("D5/L/ConceptDynamics/bastienkhormali2026link"));
 
     private static Formula Paren(Formula value) => Seq(Open, value, Close);
     private static Formula Member(Formula value, string name) => Seq(value, Dot, F.Id(name));
