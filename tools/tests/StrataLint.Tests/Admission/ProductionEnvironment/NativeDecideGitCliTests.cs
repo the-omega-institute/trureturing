@@ -106,7 +106,8 @@ public sealed partial class ProductionEnvironmentTests
         var snapshot = Decode(gateway.ReadCurrent());
         fixture.Reports[path] = new LeanFileReport(prefix.Length == 0 ? [] :
             [prefix.StartsWith("import Lean\n", StringComparison.Ordinal) ? "Lean" : "Init"], []);
-        var report = Path.Combine(temporary.Path, "report.json");
+        const string reportName = "report.json";
+        var report = Path.Combine(temporary.Path, reportName);
         RawLeanReportArtifact.WriteFile(report, snapshot, LeanAxiomReport.Create(fixture.Reports));
         Assert.Empty(RawLeanReportArtifact.ReadFile(report, snapshot).Files[RepoPath.CreateKnown(path)].Declarations);
         Assert.False(Directory.Exists(Path.Combine(root, ".lake")));
@@ -118,7 +119,8 @@ public sealed partial class ProductionEnvironmentTests
             Console.WriteLine($"SOURCE_ATTRIBUTE_COMPILE path={path} compile_errors=0 source_sha256="
                 + LeanSourceContextInput.SourceHash(snapshot.Files[RepoPath.CreateKnown(path)]));
             RunPreparation("first");
-            preparedContext = File.ReadAllBytes(report + ".source-context.json");
+            // Keep the sidecar read visibly rooted in the temporary fixture.
+            preparedContext = File.ReadAllBytes(Path.Combine(temporary.Path, reportName + ".source-context.json"));
         }
         // Observe every boundary before the acceptance assertion, including a
         // located producer failure that preparation truthfully publishes at exit 0.
