@@ -71,10 +71,9 @@ noncomputable def nzero (d : ℕ) (P : ℚ[X]) : ℚ[X] :=
 
 /-- Section 5.1's final constant term after floor(d/2) index-lowering steps.
 This total definition is used only at the polynomial's specified index. -/
-noncomputable def rho : ℕ → ℚ[X] → ℚ
-  | 0, P => P.coeff 0
-  | 1, P => P.coeff 0
-  | d + 2, P => rho d (nzero (d + 2) P)
+noncomputable def rho (d : ℕ) (P : ℚ[X]) : ℚ :=
+  (((fun state : ℕ × ℚ[X] =>
+    (state.1 - 2, nzero state.1 state.2))^[d / 2]) (d, P)).2.coeff 0
 
 /-- The entry formula, with the fixed index 2i+j and rational scaling. -/
 noncomputable def entry (i j : ℕ) : ℚ :=
@@ -92,19 +91,17 @@ def printedProduct (n : ℕ) : ℚ :=
 def claim : Prop :=
   ∀ n : ℕ, Matrix.det (printedMatrix n) = printedProduct n
 
--- This private wrapper reuses Mathlib's exact monic-division cancellation.
--- Each concrete numerator identity below is independently checked by ring.
-private theorem nzero_eq (d : ℕ) (P Q : ℚ[X])
-    (h : (X ^ d + 1) * C (P.eval 1) - 2 * P = (X - 1) ^ 2 * Q) :
-    nzero d P = Q := by
-  unfold nzero
-  rw [h]
-  exact Polynomial.mul_divByMonic_cancel_left Q
-    (by simpa using (monic_X_sub_C (1 : ℚ)).pow 2)
-
 /-- The n=2 specialization requires 1, but its definition gives determinant 4. -/
 theorem result : ¬ claim := by
   intro h
+  -- Reuse exact monic division locally; every concrete numerator is checked by ring.
+  have nzero_eq (d : ℕ) (P Q : ℚ[X])
+      (heq : (X ^ d + 1) * C (P.eval 1) - 2 * P = (X - 1) ^ 2 * Q) :
+      nzero d P = Q := by
+    unfold nzero
+    rw [heq]
+    exact Polynomial.mul_divByMonic_cancel_left Q
+      (by simpa using (monic_X_sub_C (1 : ℚ)).pow 2)
   have s02 : nzero 2 ((1 + X) ^ 2) = 2 := by
     apply nzero_eq
     norm_num [map_ofNat]
@@ -154,7 +151,7 @@ theorem result : ¬ claim := by
   have det_two : Matrix.det (printedMatrix 2) = 4 := by
     change Matrix.det (Matrix.of (fun i j : Fin 3 => entry i.val j.val)) = 4
     rw [Matrix.det_fin_three]
-    norm_num [entry, rho,
+    norm_num [entry, rho, Function.iterate_succ_apply,
       s02, s10, s11, s12, s12b, s20, s21, s21b, s22, s22b, s22c]
   have required := h 2
   rw [det_two] at required
