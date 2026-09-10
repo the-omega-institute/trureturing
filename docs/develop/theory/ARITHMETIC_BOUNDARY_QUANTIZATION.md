@@ -6499,8 +6499,7 @@ caller 负责后续封存、公共字节核对、独立评审、普通仓库门�
 
 ## 33. Actual5040 common height: strict fractional densities and the moment obstruction
 
-**33.1 Statement, labels and mathematical status.** This S22/C50 appendix implements
-the completed C44 primary as PAPER_ARGUMENT / repo-derived reference input.
+**33.1 Definition and theorem. Labels and scope.**
 All logarithms are natural. The ordered prime labels are
 \(\mathcal P=(p_1,p_2,p_3,p_4)=(2,3,5,7)\).
 Subscripts \(p\in\mathcal P\) are prime labels, so \(h_2=\log2\) and
@@ -6510,11 +6509,12 @@ The ordinary exponent vector is \((b_2,b_3,b_5,b_7)=(4,2,1,1)\), with
 \(5040=2^4\cdot3^2\cdot5\cdot7\). It is not a Zeckendorf digit string.
 We prove a common optimizer for the specified fractional resource problem at every
 finite height and a fixed obstruction to optimizing its moments separately.
-This is not a sign theorem for \(G=D-\Psi\). GH remains the user's literal,
-mathematically unidentified label. No RH equivalence, proof or progress, encoded
-orthogonality, arbitrary-prime/shape theorem or Lean admission is asserted.
+This is not a sign theorem for \(G=D-\Psi\). GH remains the mathematically unidentified label. No RH equivalence, proof or progress, encoded
+orthogonality, arbitrary-prime/shape theorem is asserted.
 
-**33.2 Fixed data and exact height domain.** For each prime label \(p\), set
+The needed remainder, matching gap and all endpoints are proved here.
+
+**33.2 Definition. Fixed data and exact height domain.** For each prime label \(p\), set
 \(h_p=\log p\), \(c_p^*=(b_p+1)h_p\), \(d_p^*=c_p^*+h_p\), and
 \(c_p(T)=c_p^*+T\), \(d_p(T)=d_p^*+T\), where \(T\) is finite and \(T\ge0\).
 Thus \(z=e^{-T}\in(0,1]\), \(\alpha_p=e^{-c_p^*}\),
@@ -6540,7 +6540,7 @@ For a separate continuous extension put \(s_p(0)=0\) and
 translated prime-exponent box. Common translation here is a continuous family;
 no arithmetic-lattice attainability is inferred from it.
 
-**33.3 Strict rational logarithm brackets with a derived remainder.** For a fixed
+**33.3 Theorem. Strict rational logarithm brackets with a derived remainder.** For a fixed
 \(p\in\{2,3,5,7\}\), let \(t=(p-1)/(p+1)\in(0,1)\) and
 \[
 S_p=2\sum_{k=0}^{31}\frac{t^{2k+1}}{2k+1},\qquad
@@ -6568,7 +6568,7 @@ Consequently \(0<L_p<h_p<U_p\). These are strict proved brackets, not decimal
 approximations assumed to be correctly rounded. The odd-power logarithm identity
 is classical (NIST DLMF 4.6.4); the finite remainder above supplies its needed bound.
 
-**33.4 Derivative comparison and its lower quadratic.** With the fixed data of
+**33.4 Theorem. Derivative comparison and its lower quadratic.** With the fixed data of
 33.2 let \(B_p(z)=(1-\alpha_pz)(1-\beta_pz)\). For \(0\le z\le1\),
 \(0<B_p(z)\le1\), and direct differentiation, including cancellation of mixed
 terms in the numerator, gives
@@ -6596,7 +6596,7 @@ q_2=A_iL_j\alpha_j\beta_j-A_jU_i\alpha_i\beta_i.
 All these formulas hold at both endpoints by differentiable extension to an open
 neighborhood of \([0,1]\); every denominator there is positive at the endpoints.
 
-**33.5 Complete fixed quadratic certificate.** For the pairs and ascending
+**33.5 Theorem. Complete fixed quadratic certificate.** For the pairs and ascending
 coefficients defined in 33.4, the exact rational rows are as follows.
 Here \(E_{ij}=Q_{ij}(1)-\delta_{ij}U_iU_j\).
 
@@ -6619,10 +6619,9 @@ Hence, on the entire closed interval, \(Q_{ij}(z)\ge Q_{ij}(1)
 \[
 (s_i-s_j)'(z)>\delta_{ij}\qquad(0\le z\le1).
 \]
-The sign proof is a global quadratic bound. Its fixed rational verification is
-recorded in the report; no height sampling supplies this quantifier.
+The sign proof is a global quadratic bound.
 
-**33.6 Strict order at every finite height and at the scaled endpoint.** Integrate
+**33.6 Theorem. Strict order at every finite height and at the scaled endpoint.** Integrate
 the continuous strict derivative inequality in 33.5 from 0 to \(z>0\).
 Because \(s_i(0)=s_j(0)=0\), this gives
 \[
@@ -6642,7 +6641,7 @@ w_2(z)-w_3(z)>1/200000,\quad w_3(z)-w_5(z)>1/500,
 Also \(w_7(0)=A_7/h_7>0\). None of these scaled bounds attains equality,
 including at \(z=0\) and \(z=1\); the constants are not claimed sharp.
 
-**33.7 The exact fractional resource problem.** For finite \(T\ge0\) and real
+**33.7 Definition and theorem. The exact fractional resource problem.** For finite \(T\ge0\) and real
 capacity \(r\), let
 \[
 K_r=\{y\in[0,1]^4:\sum_{p\in\mathcal P}h_py_p\le r\},\quad
@@ -6661,7 +6660,12 @@ If an upper mean-budget \(u\) is used, its residual is
 This is only a change of capacity coordinates. It imposes no lower budget,
 strict 5040 cutoff or requirement of two actual slab corners.
 
-**33.8 The common greedy vector, including every boundary.** In the program of
+Sections 18 and 26.10-26.11 already supply the fractional
+framework; 29.5-29.6 concern mass-three mixtures, not this four-label specialization;
+32.7-32.8 give the original fixed-height ordering. ZECKENDORF_EULER_5040's chapter
+41 F-4 already distinguishes integer budgets from price relaxations.
+
+**33.8 Theorem. The common greedy vector, including every boundary.** In the program of
 33.7, for every \(r\ge0\) the finite-height optimizer is
 \[
 y^*_{p_k}(r)=\min\{1,\max\{0,(r-H_{k-1})/h_{p_k}\}\}\quad(k=1,2,3,4).
@@ -6686,7 +6690,12 @@ from the explicit zero-gap proof in 33.10-33.12, without an integer relaxation
 being mistaken for an integer optimizer. For \(r>H_4\), unused capacity is
 exactly \(r-H_4\); full saturation \(r=H_4\) has zero slack.
 
-**33.9 The complete optimum value.** For the fixed data of 33.2 define, for
+The sorting rule is
+literature-attested fractional knapsack: HKUST's
+[Lecture 14](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf), PDF pages 4-7,
+states decreasing value/weight selection and at most one partial item.
+
+**33.9 Theorem. The complete optimum value.** For the fixed data of 33.2 define, for
 \(m=0,\ldots,4\),
 \[
 F_m(z)=\sum_{k\le m}\log(1-\beta_{p_k}z)
@@ -6703,7 +6712,7 @@ For \(r\ge H_4\), \(D(T,r)=F_4(z)\). These include \(r=0\) and the entire
 slack-capacity tail. The proof of maximality is the matching price certificate
 below, not merely the evaluation of one feasible vector.
 
-**33.10 A constructive nonnegative primal/dual gap.** Fix \(0<z\le1\),
+**33.10 Theorem. A constructive nonnegative primal/dual gap.** Fix \(0<z\le1\),
 \(r\ge0\), abbreviate \(s_p=s_p(z)\), and write \(x_+=\max(x,0)\).
 For \(\lambda\ge0\) put
 \[
@@ -6725,7 +6734,12 @@ This proves weak duality directly and will prove attainment by zero gap.
 For \(r<0\), \(\Phi_r(\lambda)=\lambda r\) for \(\lambda\ge s_2\), so its
 infimum is \(-\infty\), unattained by a finite price, consistently with infeasibility.
 
-**33.11 All matching nonnegative prices.** For finite \(T\ge0\) and the exact
+Boyd/Vandenberghe's
+[Duality](https://web.stanford.edu/class/ee364a/lectures/duality.pdf), PDF pages
+14 and 21-23 (slides 5.12 and 5.19-5.21), attests weak duality and complementary
+slackness/KKT.
+
+**33.11 Theorem. All matching nonnegative prices.** For finite \(T\ge0\) and the exact
 resource program 33.7, the complete sets of optimal resource prices are
 
 ~~~text
@@ -6748,7 +6762,7 @@ Strict density inequalities do not make the price unique at prefix boundaries,
 at zero capacity or at full saturation. There is no finite matching price for
 negative capacity. Completeness, including price endpoints, is proved next.
 
-**33.12 Completeness of prices and uniqueness of vectors.** For the finite-height
+**33.12 Theorem. Completeness of prices and uniqueness of vectors.** For the finite-height
 program, a price attaining the optimum must have zero 33.10 gap at \(y^*\).
 A filled coordinate then requires \(\lambda\le s_p\); an empty one requires
 \(\lambda\ge s_p\); a fractional one requires \(\lambda=s_p\).
@@ -6766,7 +6780,7 @@ In the full multiplier formulation, zero complementary products and stationarity
 also force \(\mu_p,\nu_p\) to be the formulas in 33.10 for each listed price;
 there are no additional optimal nonnegative box multipliers.
 
-**33.13 Mass-four mixture and permutation labels.** For \(r\ge0\) define the
+**33.13 Definition and theorem. Mass-four mixture and permutation labels.** For \(r\ge0\) define the
 height-independent positive measure
 \[
 \mu_r=\sum_{p\in\mathcal P}[(1-y_p^*)\delta_{\alpha_p}+y_p^*\delta_{\beta_p}],
@@ -6785,7 +6799,7 @@ Permuting labels within filled or empty blocks can preserve the vector; at zero
 capacity and at or above saturation all 24 labels agree. A unique optimizer
 vector is thus compatible with nonunique permutation labels and prices.
 
-**33.14 Density limits and all equality qualifications.** For the fixed family,
+**33.14 Theorem. Density limits and all equality qualifications.** For the fixed family,
 \(s_p(z)=zA_p/h_p+o(z)\) as \(z\downarrow0\), directly from differentiability
 at zero. Consequently all unscaled densities and all unscaled adjacent gaps
 tend to zero as \(T\to\infty\). Each adjacent unscaled gap has infimum 0 on
@@ -6796,7 +6810,7 @@ The separate scaled extension has \(w_p(0)=A_p/h_p\) and retains every strict
 margin in 33.6. An equality in the unscaled endpoint problem is not a scaled
 density tie or an equality at an actual finite height.
 
-**33.15 Value limits, endpoint degeneracy and scaled optimization.** For every
+**33.15 Theorem. Value limits, endpoint degeneracy and scaled optimization.** For every
 fixed real \(r\ge0\), the measure in 33.13 has mass four at strictly positive
 support points below 1. Thus \(D(T,r)<0\) for every finite \(T\ge0\),
 \(D(T,r)\to0\) from below, and
@@ -6815,7 +6829,7 @@ unique \(y^*\), and the complete table 33.11 holds with \(s_p\) replaced by
 \(w_p(0)\). The limiting full scaled objective additionally has the constant
 \(-\sum_p\alpha_p\), which does not change its optimizers or prices.
 
-**33.16 Logarithm series and moment objectives.** For \(p\in\mathcal P\) and
+**33.16 Definition and theorem. Logarithm series and moment objectives.** For \(p\in\mathcal P\) and
 integer \(n\ge1\), put
 \[
 a_{p,n}=\frac{\alpha_p^n-\beta_p^n}{h_p},\qquad
@@ -6834,7 +6848,10 @@ absolute uniform convergence even at \(z=1\), justifying the sums and subsequent
 limits. The first-moment density is \(a_{p,1}=w_p(0)\), whose strict order is
 33.6. This does not imply the same order for every \(n\).
 
-**33.17 The prescribed second-moment reversal and primary notation erratum.**
+The identities [DLMF 4.6.1](https://dlmf.nist.gov/4.6.E1) and
+[DLMF 4.6.4](https://dlmf.nist.gov/4.6.E4) attest the logarithm series.
+
+**33.17 Theorem. The prescribed second-moment reversal and notation erratum.**
 At precisely \(n=2\), direct rational arithmetic gives
 \[
 \alpha_2^2-\beta_2^2=3/4096,\qquad
@@ -6848,14 +6865,11 @@ Since \(3^5=243<256=2^8\), strict monotonicity of logarithms gives
 \]
 Thus \(19683h_3<32768h_2\), equivalently
 \(a_{2,2}=3/(4096h_2)<8/(6561h_3)=a_{3,2}\); equality is impossible.
-For historical fidelity, C44's returned conclusion literally used the compressed
-tokens `819683` and `532768` in `Since 819683=157464<163840=532768`.
+The compressed tokens `819683` and `532768` occur in `Since 819683=157464<163840=532768`.
 Those are not valid integer equalities as written. The mathematical exposition
-explicitly corrects them to `8*19683` and `5*32768`, respectively, as proved above;
-the original primary bytes are not edited or silently reinterpreted as a repaired
-historical envelope. Only this second-moment pair is evaluated here.
+explicitly corrects them to `8*19683` and `5*32768`, respectively, as proved above. Only this second-moment pair is evaluated here.
 
-**33.18 A fixed capacity witness against the moment order.** At the exact
+**33.18 Theorem. A fixed capacity witness against the moment order.** At the exact
 capacity \(r=h_2=\log2\), the unique full logarithmic optimizer is
 \(y^*=(1,0,0,0)\). The vector
 \(\widetilde y=(0,h_2/h_3,0,0)\) is feasible because \(0<h_2/h_3<1\),
@@ -6873,7 +6887,7 @@ Thus improving the second moment strictly worsens the full logarithmic value
 in this fixed witness. At \(z=0\) the two unscaled full values tie at zero,
 while the second-moment inequality itself remains strict.
 
-**33.19 Failure to commute optimization and momentwise maximization.** For fixed
+**33.19 Theorem. Failure to commute optimization and momentwise maximization.** For fixed
 \(r\ge0\), let \(M_n(r)=\max_{y\in K_r}J_n(y)\), which exists by compactness.
 The uniform bound in 33.16 also bounds \(M_n\), so
 \[
@@ -6894,59 +6908,5 @@ exactly when the full optimizer also maximizes every \(J_n\), since all weights
 \(z^n/n\) are positive. Equality holds at \(r=0\) and \(r\ge H_4\), where zero
 or full vectors maximize every moment. At \(z=0\) both sides are zero for all
 \(r\ge0\). No classification at other capacities or of other second-moment
-pairs is asserted. No additional moment order has been sampled.
+pairs is asserted.
 
-**33.20 Classical tools and bounded deduplication.** The sorting rule is
-literature-attested fractional knapsack: HKUST's
-[Lecture 14](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf), PDF pages 4-7,
-states decreasing value/weight selection and at most one partial item.
-Boyd/Vandenberghe's
-[Duality](https://web.stanford.edu/class/ee364a/lectures/duality.pdf), PDF pages
-14 and 21-23 (slides 5.12 and 5.19-5.21), attests weak duality and complementary
-slackness/KKT. The identities [DLMF 4.6.1](https://dlmf.nist.gov/4.6.E1) and
-[DLMF 4.6.4](https://dlmf.nist.gov/4.6.E4) attest the logarithm series.
-These sources were retrieved online during this implementation; exact timestamps,
-HTTP status, byte identities and extraction limitations are in the report.
-The needed remainder, matching gap and all endpoints are proved here.
-In this pinned predecessor, 18 and 26.10-26.11 already supply the fractional
-framework; 29.5-29.6 concern mass-three mixtures, not this four-label specialization;
-32.7-32.8 give the original fixed-height ordering. ZECKENDORF_EULER_5040's chapter
-41 F-4 already distinguishes integer budgets from price relaxations. Targeted
-text consultation of those volumes and QUANTUM-RH is not a whole-repository or
-Lean theorem search. This coordinate specialization is repo-derived, with no
-novelty, priority or exhaustive literature-search claim.
-
-**33.21 Primary and fixed-check attribution.** The caller supplied C44 task
-293edaba-2898-44f3-8038-c3fd198aa8cb's complete accepted conclusion, envelope SHA256
-b885a078d12b09b23156ad92c898a3f044c154caf96f49082cd1cf16130e0aba,
-with invocation-specific model observation `6\nPro`. This is previous-stage
-mathematical input, not an independent review of this source.
-C42 task 5f0129e1-eac7-4bfe-8837-91429f359565 remains formally abstained for its
-malformed envelope and damaged executable. Its supplied raw response identity is
-82671 bytes, SHA256 75e3e0cf945487ee43b3b2388debfa4e44d629fde3ce8953c4c16ede15114f39.
-Its claimed 37 checks were not reproduced. The caller's separate 18-check program
-is attributed historical evidence; it was not executed here. C44 reports a new
-22-check adaptation (3056 bytes, SHA256
-891f93fed300875cc3ceeca81116cff7aedc5b62e86bd77aa75164293151c60f) but returned no
-executable bytes, so neither reconstruction nor reproduction is claimed.
-Those historical byte identities are caller-supplied, not newly rehashed by I17.
-The one report [actual-5040-density-order-0910.md](../../reports/actual-5040-density-order-0910.md)
-contains I17's separately identified standalone adaptation and actual execution
-receipt; its fixed inputs come from the displayed definitions and caller program.
-
-**33.22 Implementation and remaining obligations.** This is the assigned Codex CLI
-I17 implementation flight qgh0910-i17-actual-5040-density-order, attempt 1,
-retry budget 1, under caller-pinned consensus-rnd:sshx beta.42 and CLAUDE 5.11.
-The work is repo-prior-exposed, with no sterile-context or model-diversity claim,
-no worker delegation and no source-review verdict. Only section 33, one report
-and canonical ingest outputs form this increment; all predecessor bytes remain.
-The new 24-check exact Fraction certificate comprises 18 corresponding caller
-checks and six separately counted fixed links; it is executed once, with no
-height/prime/exponent/moment sweep, G evaluation, GPU, daemon or historical replay.
-The report audits complete numbered spans, actual CAS/child/chain bindings and
-historical terminal-LF variants, separately from the one ingest exit code.
-C49's translated5040 G theorem and C47's dimension-general transfer remain
-unreturned and are neither consumed nor inferred. The caller owns sealing,
-public verification, independent source review, ordinary gates and Git delivery;
-S22 delivery requires S21 MERGED first. This finite implementation has no
-termination authority and does not end the standing continuous research goal.
