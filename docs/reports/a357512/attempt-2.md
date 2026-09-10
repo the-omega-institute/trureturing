@@ -147,3 +147,10 @@ that this lane added 31 modules. The report content hash is
 `7b6cbe09a71ea8075ba2a21e405caadc2653a1c3a3e49a2888dcbca6bd3a9614`.
 Its log and report are run-local. The fetched dev SHA for the conflict check is
 `176efa55c41a35d5e808710cd183f10ce09dffd7`.
+
+`make emit`: EXIT=0, 54.785 seconds, exactly one changed Blueprint. The emitted
+formula has the requested universal natural index, oddness, nondivisibility
+by three, and fourth-power conclusion. The Library note uses the fetched
+OEIS JSON URL and includes a nonempty `## Verified locator` containing both
+frontmatter locator lines verbatim. Scribe content checks are run separately
+before freeze/PR; `make emit` alone is not their evidence.
