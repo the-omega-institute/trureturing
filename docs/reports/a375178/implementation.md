@@ -36,7 +36,8 @@ The subsequent OEIS b-file comparison matches all 19 terms. The initial JSON URL
 ## Unclaimed
 
 The universal congruence is proved and make lean passes.
-Freeze, Scribe checks, and PR remain pending at this checkpoint. The two higher conjectures are outside
+The module is frozen and local Scribe checks pass. PR and CI receipts are
+recorded separately in the runner result. The two higher conjectures are outside
 scope. Pages not retrieved by this worker remain `ASSUMED-UNVERIFIED`.
 
 ## Kernel checkpoints
@@ -156,3 +157,40 @@ No atom or theory input was created.
 
 Pre-PR gh pr list --state all --search 'A375178 in:title' returned an empty
 array with exit 0. This is a bounded title search, not a body/full-text search.
+
+
+## Final local checks
+
+scribe-content-checks.sh was run after emit with the raw Lean report and
+immutable base 5a99ae1169edaf09a73a9685ec0dcb2ce3da2dad: EXIT=0.
+Describe reports nodes=10636, red=0; KaTeX reports
+markdown: judged=1 formula(s)=1 red=0. Since no projection fixture changed,
+the script did not request its conditional projection check; an explicit
+projections --check --report invocation was also run and exited 0.
+Library locator validation passes, including the mandatory DOI/URL section.
+
+shapes.sh first encountered system Python's lack of union-type syntax.
+Running the unchanged tool with /opt/homebrew/bin/python3 (3.14.4) succeeded:
+EDGES_OK edges=25 kernel_nonauxiliary_constants=2. Its raw generated table
+stays in the attempt directory; the PR includes the public rows and the
+human assessment, not a claim that the tool itself decides proof shape.
+
+The external nonvacuity.lean scratch check proves
+example : ∃ p : ℕ, p.Prime ∧ 7 ≤ p := ⟨7, by decide, by decide⟩
+and Nonempty ℕ. It exited 0 and repeated the final standard-axiom audit.
+This checks satisfiability of the hypotheses; it does not compute a(7)
+and is not frozen as a positive finite instance.
+
+The final index capacity audit again returned
+CAPACITY_AUDIT_RESULT exit=0 reason=clean. git diff --check is clean.
+One report-commit attempt overlapped lean-report's transient index lock;
+the commit was retried after report production finished, without deleting
+an active lock or losing changes.
+
+The exact scope remains the universal prime p>=7 statement. The natural
+range is k<p, the summand is choose(p+k-1,k)^3, and the modulus is p^5.
+The emitted formula uses equality of the two residues, equivalent to the
+Lean Nat.ModEq statement. It is neither an existential prime witness nor
+a finite p-range theorem; prime and lower-bound hypotheses match the brief.
+There are no operator claims, hidden outcome clauses, or extra conjecture
+clauses. The theorem is public and addressable by its declaration GID.
