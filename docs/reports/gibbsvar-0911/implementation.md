@@ -110,3 +110,33 @@ Scribe 首次 .NET 构建发现示例中的 All/Bound/Eqn/Mul/Sub 是局部助�
 已补充相同 typed Formula 构造并统一 rho 的 binder/显示符号。
 修正后 `make -C tools capacity-audit REPOSITORY=/Users/chronoai/trureturing-gibbsvar` EXIT=0，
 含文档程序集构建通过。
+
+## 逐条判形与准入
+
+所有七条公开 theorem 均判 bind-only，escape_witness=null，
+admission_basis=rule-11-upstream-wrapper。主式接入 atom (二) 明确要求的归一 Gibbs
+参考态；其他六条给出其前提或零 Hamiltonian 伴随接口。原拟议谱演算见证已在 mathlib
+中命中，故不主张任何 content 见证，第 3.2 条 content 四项不适用。
+
+| 公开定理 | 直接活依赖/组合依据 |
+| --- | --- |
+| partition_function_pos | exp 正性与可逆性；Matrix.PosDef.trace_pos |
+| gibbs_state_posDef | 正标量倍 exp 严格正；序等价传递 |
+| log_gibbs_state | partition_function_pos；CFC.log_smul'；CFC.log_exp |
+| gibbs_variational_identity | log_gibbs_state；冻结熵分解；迹循环 |
+| partition_function_zero | exp_zero；单位矩阵迹 |
+| gibbs_state_zero | partition_function_zero；exp_zero |
+| entropy_uniform_identity | gibbs_variational_identity；partition_function_zero |
+
+直接冻结声明标识供核对：
+- `D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState`:
+  `sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337`。
+- 同模块 `.quantumRelativeEntropy`:
+  `sha256:1fde73d469bc7e293eef439b271276205450d8758cb7358eaadae794794d8f0a`。
+- `D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.vonNeumannEntropy`:
+  `sha256:9cf1e21822d8f3f61a5d349f41c4287a3ef43a0e8a600534b28ab8d06f437cd1`。
+- 同模块 `.quantum_relative_entropy_eq_neg_entropy_sub_cross`:
+  `sha256:6ea5ea7305879cae28b98a42a45e8ca25de879256304a96a32fa7d985eef6ca7`。
+
+这些标识来自既有 Freeze 事件；完整新模块声明清单、依赖边、公理闭包不在报告重存。
+逐条直接边将由既有 proof-edges 工具检查并在 PR 正文关联以上标识。
