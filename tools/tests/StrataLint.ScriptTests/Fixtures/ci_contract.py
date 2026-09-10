@@ -93,6 +93,7 @@ class CacheFixture:
                         HOME=str(self.root),
                         GITHUB_OUTPUT=str(self.root / "outputs"), GITHUB_ENV=str(self.root / "environment"))
         (self.root / "lake-manifest.json").write_text(json.dumps({"packages": [{"name": "mathlib", "rev": REV}]}))
+        (self.root / "lean-toolchain").write_text("leanprover/lean4:v4.33.0\n")
 
     def tearDown(self):
         self.temp.cleanup()
@@ -176,12 +177,13 @@ class Contracts(CacheFixture, unittest.TestCase):
         (self.root / ".lake/build/lib/Module.olean").write_bytes(b"seed bytes")
         result = self.run_tool(CACHE, "snapshot")
         self.assertEqual(0, result.returncode, result.stderr)
-        keys = json.loads(subprocess.run([sys.executable, str(REPO / "tools/scripts/worktree/lean_cache.py"),
-            "keys", "--repository", str(self.root)], check=True, env=self.env, capture_output=True, text=True).stdout)
-        cached = self.root / keys["project"]["path"]
+        key_output = subprocess.run([sys.executable, str(CACHE),
+            "keys", "--repository", str(self.root)], check=True, env=self.env, capture_output=True, text=True).stdout
+        keys = dict(line.split("=", 1) for line in key_output.splitlines())
+        cached = self.root / keys["project_path"]
         self.assertTrue((cached / "manifest.json").is_file())
         shutil.rmtree(self.root / ".lake")
-        return cached, keys["project"]["key"]
+        return cached, keys["project_key"]
 
     def production(self, key, failure=False):
         (self.root / "Makefile").write_text("current:\n\t@echo producer >> calls\n\t@exit " + ("7" if failure else "0") + "\n")

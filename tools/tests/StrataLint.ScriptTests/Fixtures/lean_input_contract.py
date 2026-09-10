@@ -3,6 +3,7 @@ import importlib.util
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest import mock
@@ -119,10 +120,20 @@ lean_cache_address
 
     def test_actions_snapshots_share_partition_and_pr_cannot_save(self):
         def keys(run, attempt, event, ref, success="true"):
-            result = self.run_input("keys", env={"GITHUB_RUN_ID": run, "GITHUB_RUN_ATTEMPT": attempt,
-                "GITHUB_EVENT_NAME": event, "GITHUB_REF": ref, "STRATALINT_CHECK_SUCCEEDED": success})
+            environment = {"GITHUB_RUN_ID": run, "GITHUB_RUN_ATTEMPT": attempt,
+                           "GITHUB_EVENT_NAME": event, "GITHUB_REF": ref,
+                           "STRATALINT_CHECK_SUCCEEDED": success}
+            result = subprocess.run([sys.executable, str(ROOT / "tools/scripts/worktree/lean_actions.py"),
+                                     "keys", "--repository", str(self.root)],
+                                    text=True, capture_output=True,
+                                    env={**os.environ, **environment})
             self.assertEqual(0, result.returncode, result.stderr)
-            return json.loads(result.stdout)
+            flat = dict(line.split("=", 1) for line in result.stdout.splitlines())
+            flat["save_allowed"] = flat["save_allowed"] == "true"
+            return {**flat, **{
+                layer: {"restore_prefix": flat[layer + "_restore_prefix"],
+                        "key": flat[layer + "_key"], "path": flat[layer + "_path"]}
+                for layer in ("dependency", "project", "report")}}
         first = keys("12", "1", "push", "refs/heads/dev")
         self.manifest["packages"].append({"name": "other", "rev": OTHER})
         self.manifest["packages"][0]["inputRev"] = "another-tag"
@@ -149,15 +160,17 @@ lean_cache_address
             self.assertNotEqual(a["restore_prefix"], upgraded[layer]["restore_prefix"])
 
     def test_binary_platform_isolates_all_seed_layers(self):
-        spec = importlib.util.spec_from_file_location("lean_cache", ROOT / "tools/scripts/worktree/lean_cache.py")
+        sys.path.insert(0, str(ROOT / "tools/scripts/worktree"))
+        import lean_cache
+        spec = importlib.util.spec_from_file_location("lean_actions", ROOT / "tools/scripts/worktree/lean_actions.py")
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         for system, machine, expected in [("Linux", "x86_64", "linux-x64"),
                                           ("Linux", "aarch64", "linux-arm64"),
                                           ("Darwin", "arm64", "darwin-arm64")]:
             with self.subTest(platform=expected), \
-                    mock.patch.object(module.platform, "system", return_value=system), \
-                    mock.patch.object(module.platform, "machine", return_value=machine), \
+                    mock.patch.object(lean_cache.platform, "system", return_value=system), \
+                    mock.patch.object(lean_cache.platform, "machine", return_value=machine), \
                     mock.patch.dict(os.environ, GITHUB_RUN_ID="12", GITHUB_RUN_ATTEMPT="1"):
                 keys = module.actions_keys(self.root)
                 self.assertEqual(f"{REV}/{expected}", keys["partition"])
