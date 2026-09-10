@@ -180,3 +180,12 @@ Python 3.9 cannot load `facts.py`'s union annotations, so the installed Python
 was rewritten, and the earlier direct kernel edge extraction had already
 passed. Rendered evidence stays run-local; the assessed theorem row is above
 and in the PR body.
+
+The attempt-local `Faithfulness.lean` elaborates with EXIT=0. It applies the
+public theorem to exactly the user's conjunction-form universally quantified
+statement, and proves that the domain contains the composite index 25.
+The latter is a nonvacuity probe, not a frozen finite-instance result.
+`#print axioms` again returns only the standard three. Clause/symbol mapping:
+`n : ℕ` is the natural index, `Odd n` is oddness, `¬3 ∣ n` is the explicit
+exception condition, `a` is the original offset-zero sequence, and the conclusion
+is exactly `n^4 ∣ a(n-1)`. The emitted formula displays those same clauses.
