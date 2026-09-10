@@ -317,8 +317,18 @@ fi
 
 if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
   if [[ "$delta_status" == "reuse" ]]; then
-    cp "$delta_baseline" "$OUTPUT"
-    cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
+    # A zero-module-change plan still reuses the complete baseline bundle.
+    # Validate it through the canonical report-cache owner before allowing
+    # reuse to suppress authoritative production; an absent or rejected
+    # optional baseline follows the existing full-production fallback.
+    if ! python3 "$INSPECTOR_DIR/../scripts/report/lean-report-cache.py" \
+        validate "$delta_baseline"; then
+      echo "inspect.sh: cached reuse bundle rejected; falling back to full production" >&2
+      delta_status="full-fallback"
+    else
+      cp "$delta_baseline" "$OUTPUT"
+      cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
+    fi
   elif ! python3 "$DELTA_SCRIPT" merge \
       "$DELTA_PLAN" "$DELTA_SUBSET_OUTPUT" "$OUTPUT"; then
     delta_status="full-fallback"

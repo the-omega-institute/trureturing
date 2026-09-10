@@ -9,7 +9,7 @@ using Directory = StrataLint.TestSupport.TemporaryFileSystem.Directory;
 namespace StrataLint.Tests;
 
 [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-internal sealed class LeanReportTransportFixture : IDisposable
+internal sealed partial class LeanReportTransportFixture : IDisposable
 {
     internal static readonly string[] Suffixes = ["", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip"];
     private readonly TemporaryDirectory temporary = new();
