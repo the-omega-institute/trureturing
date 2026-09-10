@@ -1,0 +1,13 @@
+### 真正缺失的排除证书
+
+尚未证明的是：对于指定 generic strict-X branch，两个共同无偏向量的全局正交是否强制逐模正交。需要发现并精确验证：
+
+```math
+G(\alpha,v,w)^N\sum_{k=0}^2|\langle v_k,w_k\rangle|^2
+\in I_{UB}(T;v,w),
+```
+
+或适当的 real-radical / Positivstellensatz 版本。`G` 的每个非零 guard 都必须与实际 branch 对应，并覆盖其补集。不能用“generic”一词跳过 `Delta=0`、零 mode 或 Fourier seams。
+
+此 ideal-membership statement 目前仍是待寻找的证书；本轮没有得到它。也没有证明所有共同无偏向量已被枚举。
+

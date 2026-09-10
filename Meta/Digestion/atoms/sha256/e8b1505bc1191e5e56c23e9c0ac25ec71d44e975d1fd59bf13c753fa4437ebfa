@@ -1,0 +1,30 @@
+## 3. 实际移动窗口的精确尺度流
+
+先保持 H 为固定连续函数。设 s=1/2+iz。对每个整数 m 用 t=m exp(x-a) 代换，得到实际积分
+
+\[
+F_{a,H}(z)=4e^{as}\sum_{m\le e^{2a}}m^{-s}
+\int_{me^{-2a}}^1 H(t)t^{s-1}\,dt.
+\tag{MF5}
+\]
+
+在可见整数集合不变的尺度区间内，微分得到
+
+\[
+\boxed{\partial_a F_{a,H}(z)=sF_{a,H}(z)
++8e^{-as}\sum_{m\le e^{2a}}H(me^{-2a}).}
+\tag{MF6}
+\]
+
+新整数刚进入时，其 (MF5) 中积分区间长度为零。因此 F 在激活点连续，左右导数可不同，(MF6) 在每个开区间成立；有限个激活点两侧的统一导数界可以积分相加，得到跨阈值的 Lipschitz 界。没有将 moving-cutoff 项删除，也没有从函数的 L2 支撑差粗略推断线性误差。
+
+对固定偶多项式 H(t)=sum_(r<d) B_r t^(2r)，设 s_r=2r+s。复用原多项式 Fourier 定理，已提交的新 Lean 证明
+
+\[
+\boxed{e^{-as}F_{a,H}(z)=4\sum_{m=1}^M\sum_{r<d}
+B_rm^{2r}\frac{e^{-s_r\log m}-e^{-2as_r}}{s_r}.}
+\tag{MF7}
+\]
+
+条件是全部纳入的 m 满足 log m<=2a，Im z<1/2；原 integrand 的可积性由既有 owner 保证。`scaled_polynomial_centered_paperFT` 保存 (MF7)，`scaled_polynomial_paperFT_scale_difference` 将两尺度的上端项精确消去，留下下端指数差。后者要求两个尺度具有同一合法 M；跨激活点的连续拼接是 (MF5)-(MF6) 的纸面步骤，不能误称为该 Lean 声明直接覆盖变动索引集。偶化使用 F(z)、F(-z) 的平均，两个方向都保留。
+

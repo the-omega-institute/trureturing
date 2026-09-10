@@ -1,0 +1,2 @@
+**命题 17（扩签名只能细化）。** 在同一 $X,q$ 上，若 $\Sigma\subseteq\Sigma'$ 且旧符号的函数和定义域保持原样，则 $\approx_{\Sigma'}\subseteq\approx_\Sigma$。
+

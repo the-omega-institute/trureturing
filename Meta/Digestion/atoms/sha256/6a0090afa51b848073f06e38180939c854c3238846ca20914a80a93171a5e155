@@ -1,0 +1,1 @@
+| $X\triangleright Y$，域为 $M_X<m_Y$ | 左格 $(a,b,U)\mapsto(a,b,U\cup V_t(Y))$，右格不变，再相加 

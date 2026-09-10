@@ -1,0 +1,27 @@
+## 103. A one-sided improvement over the previous symmetric envelope
+
+Let F be the exact fair-kernel optimum from `unknown_coupling_fair_interval`:
+
+```text
+F = (1/2)*max_S [1-abs(alpha(S)+beta(S)-1)].
+```
+
+For every deterministic outcome table and every compatible mediator coupling, the cut is bounded by 2F. This statement itself does not require fair means. Hence every nonfair outcome law with means s satisfies
+
+```text
+J(pi,nu_s) <= F+D(1/2,s).
+```
+
+The full signed drift remains present, while no positive transport radius is added to this upper side. `partition_anchor_upper` proves this directly from the original expected-cut identity. In particular, the drift-centered optimum has a global maximum at the fair kernel, although the uncentered optimum can increase or decrease with s.
+
+For the lower side, the earlier fair theorem supplies an actual maximizing partition, a mediator coupling pi_star with all original marginals, and a fair outcome law nu_star. Apply the new transport to nu_star while leaving pi_star fixed. The resulting nonfair model has all required means and value at least F+D-R. The main unconditional theorem `nonfair_kernel_global_enclosure` thus proves
+
+```text
+exists an actual feasible independent-mechanism pair with value J_witness >= F+D-R;
+every feasible independent-mechanism pair has value <= F+D.
+```
+
+The witness itself also obeys the global upper bound. Consequently its certified optimality gap is at most R, rather than the former two-sided width 2R. Expressed in terms of an attained nonfair optimum when one is used, `0<=F+D-U(s)<=R`. The interval brackets the optimal upper endpoint. It is not asserted to be the complete identified range of the benefit query; smaller benefit values can also be feasible.
+
+This closes the proof-source marginal-transport obligation and gives a quantitative approximation guarantee once the fair partition is computed. It does not replace general nonfair optimization, mixed observational/interventional constraints or additional response-support assumptions. The principal theorem obtains the fair optimum through finite existence; a kernel-verified efficient subset-sum producer remains separate.
+

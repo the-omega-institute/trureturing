@@ -1,0 +1,11 @@
+**明示边界族（不替换默认）。** 若预先选择正整数延迟 $\kappa$，把每个新时刻规定为 $\max(a,b)+\kappa$，它仍严格晚于两父点，所以命题 3 的合法性证明逐边照用；但仅 $\kappa=1$ 有命题 32 的“最早整数”性质。同一结构归纳给根时刻 $\max_i(t_i+\kappa\operatorname{depth}_i)$。对正整数 $a$ 及整数 $b$，$h(t)=at+b$ 满足
+
+$$
+h(\max(t,u)+\kappa)
+=\max(h(t),h(u))+a\kappa.
+$$
+
+这是因为正缩放保 max 且 $h(v+\kappa)=h(v)+a\kappa$。因此缩放同时运输延迟为 $a\kappa$ 才交换；若固定 $\kappa>0$，取 $t=u$ 就迫使 $a\kappa=\kappa$，即 $a=1$。默认模型与 §20 主定理始终取 $\kappa=1$。
+
+<a id="pr2-reference"></a>
+

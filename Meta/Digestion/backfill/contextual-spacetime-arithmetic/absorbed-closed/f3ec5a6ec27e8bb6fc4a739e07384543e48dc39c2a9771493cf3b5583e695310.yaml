@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:f3ec5a6ec27e8bb6fc4a739e07384543e48dc39c2a9771493cf3b5583e695310
+  normalized_sha256: sha256:f3ec5a6ec27e8bb6fc4a739e07384543e48dc39c2a9771493cf3b5583e695310
+cas_ref: sha256:f3ec5a6ec27e8bb6fc4a739e07384543e48dc39c2a9771493cf3b5583e695310
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.Balanced
+    target_statement_id: sha256:e090e87ee089a619bd27c774940250addbd2f439383b1f709060d117b12b08b8
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.BalancedRich
+    target_statement_id: sha256:bb3bf9a6f3e26048541fd8c6e93d1d854ebf08cfc9d42ac3e65c75143d7d3d49
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.background
+    target_statement_id: sha256:0cb139afaefba123805399889108e08c874ca7bdc3b0ec16c71b8d805c9e4cb7
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.charge
+    target_statement_id: sha256:dcc34ed364a34513188510c3f1b66141be70fe4f4a8f83ad1c270ce9185b59a5
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.charge_eq_signed_card
+    target_statement_id: sha256:e2ba152bf501e5796ae3170a88d5262fe15986babc6cc80ec7fb804ebabf2184
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.complementBalanced
+    target_statement_id: sha256:8723d224b1249d452925ce9dbe18338731f5e50f43a4527e992ac33e364c4fe7
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.q
+    target_statement_id: sha256:bb0ca36ef5cadc0a4e91dca5da062bbb7809e399832b57fa5a561b75eda7b5b2
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.readout
+    target_statement_id: sha256:98ac428aa63c9546ba1e5802505f0906c3392d9eccc5bf32dce4f9dcc431d494
+receipts:
+  unresolved_subitems: []

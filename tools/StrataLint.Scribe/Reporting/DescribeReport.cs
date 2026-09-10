@@ -14,6 +14,7 @@ internal sealed record DescribeNodeRecord(
     string Provenance,
     string? LiteratureGid,
     ImmutableArray<string> AcknowledgementGids,
+    string? DeclarationGid,
     OpenProblemResolutionClaim? OpenProblemResolutionClaim);
 
 internal sealed record DescribeObservation(string Code, string Path, string Detail);
@@ -221,6 +222,8 @@ internal sealed class DescribeReport
                         describe.AcknowledgementReferences
                             .Select(static reference => reference.Value)
                             .ToImmutableArray(),
+                        describe.Statement is DescribeStatement.LeanDeclaration declaration
+                            ? declaration.Value.Value : null,
                         describe.OpenProblemResolutionClaim));
                     if (string.Equals(describe.Id.Value, PlainSlug(describe.Title.Value), StringComparison.Ordinal))
                     {

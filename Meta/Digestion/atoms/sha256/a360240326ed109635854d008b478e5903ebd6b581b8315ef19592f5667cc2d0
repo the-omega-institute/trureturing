@@ -1,0 +1,41 @@
+### A stable optimum depends on the specified resource
+
+The exact objective in the price-interval theorem is
+
+\[
+ F_\theta(n)=\log(\sigma(n)/n)-\theta\log n.
+\]
+
+Prime factorization separates it into local exponent contributions. For
+5040=2^4 3^2 5\,7, the existing theorem establishes unique optimality over all
+positive integers throughout the open price interval
+
+\[
+ \boxed{\frac{\log(12/11)}{\log11}<\theta<
+        \frac{\log(31/30)}{\log2}.}
+\]
+
+The approximate endpoints are 0.03628656 and 0.04730571. Price 1/25 lies
+strictly inside. The prime-layer marginal is
+
+\[
+ m_p(a)=\frac{\log((1-p^{-(a+1)})/(1-p^{-a}))}{\log p}.
+\]
+
+The boundary layers are the last selected (p,a)=(2,4) and first unselected
+(p,a)=(11,1). Strict local margins imply a stable global optimizer through an
+exact sum decomposition. This is the useful certificate pattern here.
+
+The same dev contains an explicit distinction: with the different constraint
+Omega(n)=8, the unique maximum of sigma(n)/n is attained at 180180, with
+
+\[
+ \frac{\sigma(180180)}{180180}=\frac{224}{55}>
+ \frac{403}{105}=\frac{\sigma(5040)}{5040},
+ \qquad \Omega(180180)=\Omega(5040)=8.
+\]
+
+Thus 5040 does not optimize every resource formulation. For the square grid,
+the actual parent-child relation and the complete message box define the
+problem; replacing them by a more convenient scalar cost changes the claim.
+

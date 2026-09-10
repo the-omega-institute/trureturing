@@ -1,0 +1,30 @@
+**定义 20（时间摘要及允许签名）。** 对 $X\in\mathcal B$ 记
+
+$$
+\Theta(X)=(\pi(X),m_X,M_X,s_X),\quad
+m_X=\min t_X[E_X],\quad M_X=\max t_X[E_X],\quad
+s_X=\max t_X[\Omega_X].
+\tag{TH}
+$$
+
+端点类型为 $m_X\in\mathbb Z\cup\{+\infty\}$，$M_X,s_X\in\mathbb Z\cup\{-\infty\}$，统一在扩展整数全序中比较。约定空 $E$ 的 $m=+\infty,M=-\infty$，空 $\Omega$ 的 $s=-\infty$。实际载体是
+
+$$
+\mathcal T:=\Theta[\mathcal B]\subseteq
+P\times(\mathbb Z\cup\{+\infty\})
+\times(\mathbb Z\cup\{-\infty\})^2.
+$$
+
+不声称右边任意元组可实现。例如 $E\ne\varnothing$ 时 $m,M$ 都有限且 $m\le M$；$\Omega\ne\varnothing$ 时还须 $m\le s\le M$。$\pi=(0,0)$ 不判定 $\Omega$ 为空，因未选的同位置正负对也有此读数。$s$ 检查整个当前整体，绝非 $\max t[A]$；例如所选正点在 $0$、未选负点在 $9$ 时，$s=9$ 而所选最大时刻为 $0$。
+
+指定
+
+$$
+\Sigma_{\rm st}=\{\boxplus,\boxtimes,N,\triangleright\}
+\cup\{F_S:S\subseteq\mathbb Z^3\}
+\cup\{T_k:k\in\mathbb Z\}.
+\tag{ST}
+$$
+
+乘法仍为定义 6 的 `max+1` 档案乘法，平移每次带显式整数 $k$。终端观察仍是 $q$，上下文严格按定义 16 使用全槽位、任意固定丰富参数及有限复合，失败为独立的 $\bot$。本签名不含来源、因果、出现身份或时间筛选。
+

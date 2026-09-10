@@ -1,0 +1,4 @@
+**定理 10.3(保证主张的信息 = 条件保证)**〔证〕。设保证主张是逐世界断言 $c(\omega):=(\omega\notin C\to Q(\omega))$,$C$ 为其**异常域**。则 $\mathrm{Excl}(c)=\{\omega\notin C\mid\neg Q(\omega)\}$。
+*证明*。定义 3.8:$c$ 在 $\omega$ 下为假当且仅当 $\omega\notin C$ 且 $\neg Q(\omega)$。∎
+*读法*。「凡为一道门写守护,先写出它的反例集合;写不出反例集合,就不能用『保证』二字」:反例集合 $C$ 是保证主张信息的显式边界。不附 $C$ **且无固定解释**的保证,其排除集未指定(读者无从复算);若约定 $C=\varnothing$,它就是无条件保证,排除集为 $\{\omega\mid\neg Q(\omega)\}$。若保证是对全部输入的主张,须分开世界 $m$ 与输入 $x$:$c(m):=\forall x\notin C_m,\ Q_m(x)$,$\mathrm{Excl}(c)=\{m\mid\exists x\notin C_m,\ \neg Q_m(x)\}$。本卷自己的反例集合见 10.5。
+

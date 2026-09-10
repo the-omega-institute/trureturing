@@ -1,0 +1,15 @@
+### 37.3 ingest 检查点与最终工件
+
+首次摄入以 684487f7be64b35e05cc62f8154cd9f541f81fa3 为已提交输入，实际命令如下，退出 **0**、stderr 为空。
+```sh
+BASE=462d0a4368ba5a890c5eab619c82437baa88966f make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
+```
+```text
+INGEST residual_open_added=33 skipped_existing=289 coarse_fallbacks=0 open_genres=0 cas_objects_written=33 ledger_changed=true
+```
+
+该次新增 33 atoms／33 residual-open，提交 c91664f4f9f1476e3d54a9877431171da959f36c；逐行核对 §36 的 149 行非空、非标题、非锚点内容，遗漏 0。这是本收据与周期对照补充之前的固定检查点，不能充作最终摄入。首次覆盖结果存于本次 runner 的 ingest-1-coverage.json。
+
+本 §37 最后一次改动之后再以同一命令 ingest 并提交；最终计数、全部逐节提交、两个纯插入 hunk、旧文零字节改动、允许路径、干净状态与 push 由 /var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-pr6-impl-0910/attempt-1/result.json 绑定记录，原始执行证据另存同目录。本批交付推送分支，不开 PR；评审、CI、合入和持续研究目标的完成不由实施收据预先判定。
+<a id="p2-cumulative"></a>
+

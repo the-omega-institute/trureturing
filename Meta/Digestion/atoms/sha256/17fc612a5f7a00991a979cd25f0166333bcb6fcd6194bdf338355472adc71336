@@ -1,0 +1,10 @@
+**命题 18（全局像及最小当前事件数，repo-derived）。**
+
+$$
+\pi[\mathcal B]=P:=I\times R.
+\qquad
+\min_{X:\pi(X)=(w,z)}|\Omega_X|
+=\sum_p\bigl(|z(p)|+|w(p)-z(p)|\bigr).
+\tag{IMAGE}
+$$
+

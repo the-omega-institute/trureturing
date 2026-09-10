@@ -1,0 +1,19 @@
+### 2. 全半径加权包络也是精确等价条件
+
+`CanonicalLiRadiusObstruction` 从 RH 下的绝对和构造每个半径的常数 C_R，证明
+
+\[
+\mathrm{RH}\iff
+\forall R\in[0,1),\ \exists C_R\ge0,\ \forall n\ge0,
+\quad |\lambda_{n+1}|R^n\le C_R.
+\]
+
+常数允许依赖 R。反向在任意 r<1 与 1 之间选择 R，保留精确恒等式
+
+\[
+|\lambda_{n+1}|r^n=(|\lambda_{n+1}|R^n)(r/R)^n
+\le C_R(r/R)^n,
+\]
+
+再用几何级数得到所需绝对收敛。等价的指数表述是：对每个 q>1 存在有限 C_q，使全部 |λ_(n+1)|≤C_q q^n。Lean 公共端点采用上面的加权半径表述，没有另外新增一个同义指数谓词。
+

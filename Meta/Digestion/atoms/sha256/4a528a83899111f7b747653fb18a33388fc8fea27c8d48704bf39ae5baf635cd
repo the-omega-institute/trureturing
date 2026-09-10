@@ -1,0 +1,19 @@
+**命题 60（辅助结合律、平移自同构及延迟校正式）。** $\diamond$ 交换、结合并对整数双线性，$\alpha$ 是 $(\mathcal L,+,\diamond)$ 的自同构，且
+
+$$
+c\odot d=\alpha(c\diamond d).
+\tag{CUM-TWIST}
+$$
+
+对全部 $c,d,e\in\mathcal L$，默认剖面乘法还满足两个分别成立的恒等式
+
+$$
+(c\odot d)\odot\alpha(e)=\alpha(c)\odot(d\odot e),
+\tag{CUM-HOM}
+$$
+
+$$
+\alpha(c\odot d)=\alpha(c)\odot\alpha(d).
+\tag{CUM-MULTIPLICATIVE}
+$$
+

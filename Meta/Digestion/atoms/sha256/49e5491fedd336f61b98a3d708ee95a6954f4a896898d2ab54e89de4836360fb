@@ -1,0 +1,1 @@
+| $X\boxtimes Y$ | 格对 $((a,b,U),(a',b',U'))\mapsto(a\diamond_t a',bb',\{a\diamond_t a'\})$，系数相乘后推送 

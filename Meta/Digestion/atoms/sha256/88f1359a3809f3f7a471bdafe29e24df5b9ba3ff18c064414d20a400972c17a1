@@ -1,0 +1,42 @@
+**27.11 定理 D:每条固定正整数指数射线的精确截断。** 固定不同素数三元组
+\(p\)、\(m\in\mathbb Z_{\ge1}^3\)、\(r\in\mathbb Z_{\ge0}^3\)。
+对整数 \(n\ge0\),置
+\[
+b_i(n)=m_i n+r_i,\quad
+\alpha_i=m_i\log p_i>0,\quad \gamma_i=(r_i+1)\log p_i>0,
+\quad c_i(n)=\alpha_i n+\gamma_i.
+\]
+斜率两两不同,因为 \(\alpha_i=\alpha_j\) 将迫使
+\(p_i^{m_i}=p_j^{m_j}\),与不同素数及 \(m_i,m_j\ge1\) 矛盾。
+令 \(\sigma\) 严格排列斜率,定义
+\[
+\alpha_{\sigma_1}<\alpha_{\sigma_2}<\alpha_{\sigma_3},\quad
+\Delta_{12}=\alpha_{\sigma_2}-\alpha_{\sigma_1}>0,\quad
+\Delta_{23}=\alpha_{\sigma_3}-\alpha_{\sigma_2}>0,
+\]
+\[
+\eta_{12}=\gamma_{\sigma_2}-\gamma_{\sigma_1},\quad
+\eta_{23}=\gamma_{\sigma_3}-\gamma_{\sigma_2},\quad
+S=3\log(3p_{\sigma_1}),
+\]
+\[
+N_{\rm order}=\max\left\{0,
+\left\lfloor\frac{-\eta_{12}}{\Delta_{12}}\right\rfloor+1,
+\left\lfloor\frac{-\eta_{23}}{\Delta_{23}}\right\rfloor+1\right\},
+\quad N_{\rm gap}=\max\left\{0,
+\left\lceil\frac{S-\eta_{12}}{\Delta_{12}}\right\rceil\right\},
+\qquad \boxed{N=\max\{N_{\rm order},N_{\rm gap}\}.}
+\]
+则对每个整数 \(n\ge N\) 和该箱体的每个原可容许实薄层,均有 \(G<0\)。
+
+证明。对任意实数 \(a\),整数 \(n\ge\lfloor a\rfloor+1\) 蕴含 \(n>a\),
+而整数 \(n\ge\lceil a\rceil\) 蕴含 \(n\ge a\)。所以
+\(n\ge N_{\rm order}\) 给两个相邻坐标差均严格正,即
+\(c_{\sigma_1}(n)<c_{\sigma_2}(n)<c_{\sigma_3}(n)\)。
+floor 加一保留了在精确实交点处的严格要求,不能换成未经处理的 ceiling。
+\(n\ge N_{\rm gap}\) 则给最小两坐标差
+\(\Delta_{12}n+\eta_{12}\ge S\),故 27.10 适用。
+分离阈值的非严格等号是安全的,虽然实际不同素数域不会取等。
+所有分母严格正,数据有限,所以 \(N\) 是有限非负整数。证毕。
+这些是精确数学 floor/ceiling 公式,不是已经计算并认证的有效数值 cutoff。
+

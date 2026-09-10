@@ -8294,3 +8294,1906 @@ Q01–Q10 没有算入 A001–A093。它们表明目前覆盖审查尚未完成�
 - **[E15]** American Institute of Mathematics, [RH expert workshop outline](https://www.aimath.org/WWN/rh/rh.pdf), Section C。第一方专家目录与原文追溯入口，空标题不充当完整定理。
 
 **当前状态：93 个节点、92 个替代表述规格、21 个判据族；公开文献全覆盖仍未完成，Q01–Q10 是明确未决项。**
+
+- Parallel #5602 source at `4804c4020d7d9f165a2e2683c42b01e3d47a8be4`: `WeilPrimeActivationEdge.lean`, blob `5cd36bfeef88311e1f5e6c140fc11e52b16e8881`; `certify_prime3_scale_schur.py`, blob `496333f97d20a6898d47f848a2abd839249e9207`.
+
+
+---
+
+## [PR #5602] SAME_PROLATE_SCALE_FLOW_AND_CENTERED_READOUT_TRANSPORT
+
+# 2026-09-07：同一真实 prolate 族的尺度流与中心化读出运输
+
+本节继续使用已认证的半宽区间 I={|a-a0|<=2e-8}，a0=log3/2。新结论处理随 a 变化的真正 prolate 模型，以及其原点归一化 Fourier 值和 model-centered 代表元。它不把中心尺度的种子固定后重新命名成真实尺度族，也不将模型的变化界当作新区间上真实 Weil ground 的误差界。
+
+新 Lean 为 `WeilMellinScaleFlow.lean`，有同名 Scribe；主程序为 `certify_prime3_prolate_scale_transport.py`。其 110、130 位定向运行均通过。Lean elaboration、Scribe emission 与传递公理审查未运行。标准正规 prolate 实现、谱投影、积分变量代换与以下范数运输是纸面桥；新 Lean 保存原 `Zeta23.paperFT` 的有限多项式尺度对应。
+
+## 1. 固定种子的精确尺度流，包含新整数进入的边界
+
+对固定连续偶种子 H 于 [-1,1]，物理种子为 h_a(t)=H(t exp(-a))，于 t>exp(a) 置零。实际未偶化算术函数为
+
+\[
+p_{a,H}(x)=1_{[-a,a]}(x)\,4e^{x/2}\sum_{1\le m\le e^{a-x}}H(me^{x-a}).
+\]
+
+令 s=1/2+iz，Phi_(a,H)(z)=paperFT(p_(a,H))(z)。按每个 m 的实际支撑积分，作 t=m exp(x-a) 代换，得到
+
+\[
+\boxed{\Phi_{a,H}(z)=4e^{as}\sum_{m\le e^{2a}}m^{-s}
+\int_{me^{-2a}}^1H(t)t^{s-1}\,dt.}
+\tag{SF1}
+\]
+
+正 t 上的复幂均按实对数定义，有限窗口内无分支歧义。固定可见整数集合的开区间内，微分下端积分给出
+
+\[
+\boxed{(\partial_a-s)\Phi_{a,H}(z)=8e^{-as}\sum_{m\le e^{2a}}H(me^{-2a}).}
+\tag{SF2}
+\]
+
+在 a_m=log(m)/2，新 m 项的上下积分限同为 1，其 Fourier 质量严格为零。因此 Phi 连续，可将两侧的导数上界相接。其该项的一阶导数右减左为 8 exp(-a_m s)H(1)，不应把整个尺度族无条件当成 C1。偶化值是 [Phi(z)+Phi(-z)]/2，两边均按同一公式处理。对真正变化的 H_a，本节不对其求导，而用下一节的独立谱误差分开运输。
+
+当 H(t)=sum_(r<d)B_r*t^(2r)，物理多项式的系数是 B_r exp(-2ra)。新定义 `scaledPolynomialWindow` 直接把这些系数送入已有 `polynomialMellinWindow`。`scaled_polynomial_centered_paperFT` 证明
+
+\[
+\boxed{e^{-as}\Phi_{a,H}(z)=4\sum_{m=1}^M\sum_{r<d}
+B_rm^{2r}\frac{e^{-(s+2r)\log m}-e^{-2(s+2r)a}}{s+2r}.}
+\tag{SF3}
+\]
+
+假设是各纳入整数满足 log(m)<=2a 及 Im(z)<1/2。可积性及实际端点积分来自原 owner。`scaled_polynomial_paperFT_scale_difference` 进一步证明两尺度的 (SF3) 相减只留下后一个指数的差。代码不假设目标误差界或积分值，也未新定义 Fourier。一般固定连续 H 的 (SF1)-(SF2) 为纸面推导；有限多项式情形的代数导数由独立符号测试核对。
+
+## 2. 对所有尺度重新认证实际 prolate 模式
+
+在固定 [-1,1] 上，实际正规偶 prolate 算子为
+
+\[
+\mathcal L_a=-\partial_t((1-t^2)\partial_t)+q(a)^2t^2,
+\qquad q(a)=2\pi e^{2a}.
+\]
+
+使用前文同一个正交归一偶 Legendre 基与正规自伴实现。J=32 个保留系数外的整个块仍有下界 2J(2J+1)=4160，因为乘法势 q(a)^2t^2 非负。跨块只有一项 b(a)。对每个实移位 eta<4160，真实 Schur 块夹在 A_J(a)-eta I 与 A_J(a)-eta I-b(a)^2/(4160-eta)*e_last e_last^* 之间。
+
+程序直接将 q(a)^2 作为整个闭区间，分别对两条固定 dyadic 提案中心 mu_i 的 mu_i-50 和 mu_i+50 检查两个 Schur 端点的严格惯性。四个计数依次为 (0,0,1,1) 和 (2,2,3,3)，对所有 a∈I 成立。这识别了真实偶谱编号 0、2，也保证它们各自为单特征值；未信任有限本征求解器或旧结果 JSON。
+
+为避免丢失尺度参数的相关性，残差使用精确算子关系
+
+\[
+(\mathcal L_a-\mu_i)v_i=(\mathcal L_{a0}-\mu_i)v_i
++[q(a)^2-q(a0)^2]t^2v_i.
+\tag{SF4}
+\]
+
+两项的完整范数都包含第 J 个遗漏坐标。独立算出的 ||t^2 v_i|| 约为 0.04535432874 和 0.28854567727。由其余谱与 mu_i 距离至少 50，真实单位模式的符号对齐误差 <=sqrt(2)*r_i/50。两个零阶 Legendre 系数均以严格正下界固定符号。
+
+设 rho=v_(4,0)/v_(0,0)，固定多项式组合 Htilde=v4-rho*v0。实际零积分组合为 H_a=psi_(4,a)-(psi_(4,a))_0/(psi_(0,a))_0*psi_(0,a)。两条单位模式误差 eps0、eps4 给出
+
+\[
+\Delta_\rho=(\epsilon_4+|\rho|\epsilon_0)/(v_{0,0}-\epsilon_0),\quad
+\|H_a-\widetilde H\|_2\le\epsilon_4+(|\rho|+\Delta_\rho)\epsilon_0+\Delta_\rho.
+\tag{SF5}
+\]
+
+分母被独立认证为正。本次整个区间的 (SF5) 小于 652/10^9；中心尺度独立计算的相同预算小于 3.142e-29。实际模式与固定多项式仅在这个明确误差内对应。
+
+## 3. 实际窗口、种子误差和归一化一起运输
+
+在本区间只有整数 1、2、3 可能出现。变量代换 t=m exp(x-a) 给出
+
+\[
+\|p_{a,H}-p_{a,G}\|_2\le C_a\|H-G\|_2,\qquad
+C_a=4e^{a/2}\sum_{m=1}^3m^{-1/2}.
+\tag{SF6}
+\]
+
+对 |Im(z)|<=b，Fourier 差再乘 sqrt(2a) exp(ab)。有限 Legendre 展开给出固定 Htilde 的 ||Htilde||_2<=1+|rho| 及 ||Htilde||_infinity<7.610。后者由 |P_n(t)|<=1 保留所有系数，不是假设真实 H_a 有该相同上界。
+
+取复圆盘 D={|z-(20+i/4)|<=1/1000}，b=251/1000。令 a_-、a_+ 为尺度区间端点，B_b=sqrt(2a_+) exp(a_+b) C_(a_+)。由 (SF2) 与 |s|<21，固定种子整个尺度区间内的分段导数界为
+
+\[
+K_b=21B_b(1+|\rho|)+24e^{-a_-(1/2-b)}\|\widetilde H\|_\infty.
+\tag{SF7}
+\]
+
+原点单独用 K_0=B_0(1+|rho|)/2+24 exp(-a_-/2)||Htilde||_infinity。将真实种子到多项式、固定种子的尺度流、多项式到中心真实种子三段相加，得到所有 a∈I、z∈D 的原始 Fourier 差 E_z<2.2230e-5，原点差 E_0<1.1189e-5。这些是参数区间和复圆盘的一致预算，没有抽样替代全称量词。
+
+中心多项式原点由原 Mellin 端点公式计算为约 2.33619788660；加入中心种子误差以及 E0 后，对本节固定的零积分组合标度有
+
+\[
+\boxed{|\widehat p_{a,H_a}^{+}(0)|>23/10\quad(a\in I).}
+\tag{SF8}
+\]
+
+令 P_a(z)=paperFT(p_(a,H_a)^+)(z)/paperFT(p_(a,H_a)^+)(0)。以中心原点模长下界 b0 和中心圆盘分子上界 M0 代入精确复商差式，
+
+\[
+|P_a(z)-P_{a0}(z)|\le(E_z+M_0E_0/b_0)/(b_0-E_0).
+\]
+
+计算所得上预算约 9.549046646e-6，严格证明
+
+\[
+\boxed{\sup_{a\in I,\ z\in D}|P_a(z)-P_{a0}(z)|<10^{-5}.}
+\tag{SF9}
+\]
+
+(SF8) 的原始范数依赖本节固定标度；(SF9) 代数消去一切整体尺度和相位，与此前原点归一化模型完全相同。
+
+## 4. 对接新的 model-centered 读出，而不冻结错误的中心系数
+
+本轮实际读取 #5895 提交 `44a831a15abe4d00268d973976101e0d62d66fd2` 中 `GenuineModelDualTransport.lean` 的 `model_centered_readout_identity` 和 `annihilating_energy_dual_transport`。其系数必须是同一真实模型的比值，且其对偶预算必须另行认证。
+
+在共同空间 L2([-1,1])，定义 g_(a,z)(y)=conjugate(cos(a z y))，g0=1，以及 h_(a,z)=g_(a,z)-conjugate(P_a(z))*g0。对真实模型的酉伸缩向量 e_a，严格有 <h_(a,z),e_a>=0，sqrt(a) 因子在原点比值中消去。由复指数核导数与 (SF9)，
+
+\[
+\|h_{a,z}-h_{a0,z}\|_2
+\le\sqrt2\,|z|e^{a_+b}|a-a0|+\sqrt2\,|P_a(z)-P_{a0}(z)|.
+\]
+
+定向程序证明
+
+\[
+\boxed{\sup_{a\in I,\ z\in D}\|h_{a,z}-h_{a0,z}\|_2<15/10^6.}
+\tag{SF10}
+\]
+
+这是实际中心化代表元的变化预算。它没有证明全对偶残差，因为还需要同一试探函数上的 (A_a-A_a0)v，以及正移位、候选/模型正交补和分母界的统一组合。不能将中心 z、a0 的旧 C 值无修改地用于整个参数区间。
+
+## 5. 研究来源、实际执行和剩余承重义务
+
+CCM, *Zeta Spectral Triples*, arXiv:2511.22755v1, Section 8 仍明确区分最低模态的单纯偶性与充分精确的真实模型对应。DLMF 30.3 的正规 spheroidal 模式和参数性质用于核对对象；此处数值隔离由实际无限 Jacobi 界独立认证，未由定性解析性代替误差率。Suzuki arXiv:2606.09096 的原始版本页此次返回 v1；未使用聚合站声称的未核验新版结果。
+
+也读取 loning/5040 研究链 #6204 的实际 `GronwallUpperEnvelope.lean`，提交 `0805069c8c630f909f89b0573dbe672c98f275bc`。它复用 Mertens III 得到归一化 divisor sum 最终 <=1+epsilon。这个标量包络没有提供严格 Robin 全称界或当前算子谱间隔；本节不将它混作前提。其已合并状态已从 PR 元数据核对，作者自报的编译未在此复验。
+
+新 verifier 以固定 proposal 的 SHA-256 为输入检查，并在 110、130 位定向精度分别运行通过；未读取旧数值谱结论、未用 eigensolver 或数值求积。种子比值、所有遗漏 Legendre 分量、激活边界、原点分母和中心化代表元变化均明确计入。独立表达式诊断核对了 24 条符号尺度/导数/激活等式、5 个错误 seed 缩放的失败对照，以及 12 次原物理窗口积分对照。后者为非定向 65 位诊断，最大相对差约 4.121e-66，不作为区间证明依据。
+
+Verifier SHA-256：`fe1d574f38a13e0dbcc185649c0e6c32dfd9e1cb676ceebb73ad7c6c31218b4f`。Proposal SHA-256：`242c9897bbd247ef0485039e6dcde819a351c5900ceac52fecc420934c1896db`。三个新公开 Lean 定义/定理有三个 FromLean Scribe 项。Lean、Scribe 编译及公理闭包未执行，测试由同一助手完成，无独立作者审查或数学优先权声明。
+
+本轮提供同一尺度区间中真正 prolate 族的 Fourier 和中心化读出变化率。此前的统一 simple-even/gap 证书已另行写回并重跑；它与 (SF9) 之间仍缺真实 Weil ground 的统一方向误差，不能据此宣称已得到区间 ground/prolate 的完整逼近或 Xi 极限。下一实际算术任务是联合验证变尺度对偶作用及其完整 Schur 补，保留本节已确定的同模型中心系数。
+
+参考：
+
+- Connes, Consani, Moscovici, arXiv:2511.22755v1, Sections 7-8. https://arxiv.org/html/2511.22755v1
+- NIST DLMF 30.3, 30.8, regular spheroidal eigenvalues and Legendre expansions. https://dlmf.nist.gov/30.3 ; https://dlmf.nist.gov/30.8
+- Suzuki, arXiv:2606.09096v1. https://arxiv.org/abs/2606.09096
+- Actual #5895 `GenuineModelDualTransport.lean`, blob `d6940d2ee2cc91ebe1f6faed01b75b9adc8cd7e3`; #6204 `GronwallUpperEnvelope.lean`, blob `75eb28885ee1250985d9dbd19b73fa76f3502d04`.
+
+参考：Connes-Consani-Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 7-8；Connes, arXiv:2602.04022；既有 `WeilPolynomialMellinWindow`、`WeilMellinScaleFlow` 和本卷 prolate Jacobi 实现。
+
+
+---
+
+## [PR #5602] SAME_SCALE_GROUND_PROLATE_AND_RESIDUAL_INVERSE_ENERGY
+
+# 2026-09-08：同尺度 ground/prolate 联合区间证书与残差驱动的逆能量
+
+新 Lean：`D5/S3/Weil/GroundMode/ResidualDrivenProjectiveEnergy.lean`，配套同名 Scribe。
+主程序：`research/weil_ground_mode/certify_prime3_uniform_ground_readout.py`；主结果为 `prime3_uniform_ground_readout_certificate.json`。
+第二表达检查：`test_uniform_ground_readout.py` 与 `uniform_ground_readout_regression.json`。
+
+本节连接前两节分别完成的统一 Weil 谱分离和真实 prolate 尺度传递。对同一个连续尺度区间和同一个复圆盘，直接认证实际最低模态与同尺度真实模型的原点归一化差。方法以实际候选残差和观察代表元在完整逆能量中的预算为输入，不再预设一条绝对的统一最低特征值下界。数值证书使用新鲜重放的全空间算术矩阵、高补空间和真实 prolate 数据；其 Fourier/core、高空间估计和逆形式识别仍是纸面分析，不冒称端到端内核结果。
+
+## 1. 精确交付目标与同一对象
+
+保持
+\[
+a_0=\tfrac12\log3,\quad I=[a_0-2\cdot10^{-8},a_0+2\cdot10^{-8}],
+\quad D=\{z:|z-(20+i/4)|\le10^{-3}\}.
+\tag{UG1}
+\]
+令 u_a 为原 Weil Friedrichs 实现的真实最低模态，p_a^+ 为前节同一个真实零积分 prolate 构造的算术合成与偶化。两个原点分母都需单独证明非零。本节的计算机辅助结论为
+\[
+\boxed{\sup_{a\in I,z\in D}
+\left|\frac{\widehat u_a(z)}{\widehat u_a(0)}-
+\frac{\widehat p_a^+(z)}{\widehat p_a^+(0)}\right|<\frac1{5000}.}
+\tag{UG2}
+\]
+实际充分上预算小于 0.000187345067。区间没有扩大，但原先缺少的同尺度 ground/model 连接现在被兑现。#5895 已记录中心尺度上更小的 7/50000 预算，本节不宣称改进其中心精度；这里同时覆盖整个 I 和 D，并去掉旧绝对 ground 下界这一数值前提。所有出现的十进制“上预算区间”都只用于上界，不能把其左端点解读为未知真实误差的正下界。
+
+用 J_a f(y)=sqrt(a)f(ay) 统一到 H=L2([-1,1])。k 为原 129 个整数坐标归一化后的固定实偶候选。记 A=J_a A_a J_a^-1、mu=<k,Ak>，本节所有内积第一变量反线性。原区间程序重新验证 mu<U=3/2500000、全候选正交补 q>=tau||.||^2，其中 tau=3/500000，并独立验证奇扇区下界。因此 lambda_0<U、最低模态单纯偶性以及原全空间间隔 >4.8e-6 在本节通过新鲜重放取得，不以历史结果 JSON 为输入。
+
+## 2. 新残差能量步骤：无需绝对 ground 下界
+
+在偶不变域设 M=A-U，Q 为 k 的正交补投影，r=QAk=Ak-mu k。设该补空间有 q_M(f)>=kap||f||^2、kap>0，并已由实际候选残差的独立计算得到
+\[
+|\langle r,f\rangle|^2\le E q_M(f)\qquad(f\perp k).
+\tag{UG3}
+\]
+令 alpha=<k,u>。如果 alpha=0，非零 u 位于该补空间，但 q_M(u)=(lambda_0-U)||u||^2<=0，与正 coercivity 矛盾。因此 alpha 非零。精确误差 w=u/alpha-k 满足 w perpendicular k，由本征方程有
+\[
+\boxed{q_M(w)+(U-\lambda_0)\|w\|^2=-\Re\langle w,r\rangle.}
+\tag{UG4}
+\]
+于是 0<=q_M(w)<=|<w,r>|；(UG3) 给出 q_M(w)^2<=E q_M(w)，从而
+\[
+\boxed{q_M(w)\le E,\qquad \|w\|^2\le E/\mathrm{kap}.}
+\tag{UG5}
+\]
+新 Lean `residual_driven_projective_energy` 从同一线性域上的 eigen-equation、非正 shifted eigenvalue、单位 k 和完整 residual-functional bound 证明非零 overlap、正交性及 (UG5)。其 residual 是 M(k)-Re<k,M(k)>k。真实自伴性用于数值消费者的谱和逆能量识别；这条代数/能量引理本身不额外要求未使用的对称性。没有接收未知 w 的误差界或绝对 lambda_0 下界作为假设。
+
+若实际 centered Fourier 代表元 g 另有 |<g,f>|^2<=C q_M(f) 于同一补空间，则 |<g,w>|^2<=EC。该最后一步是既有能量对偶思想的直接使用，不建立第二套通用读出 owner。
+
+## 3. 完整逆能量由实际 Schur 数据控制
+
+令 v 为原候选尚未归一化的有限实偶坐标，v=sqrt(beta)k，beta=||v||^2 由整数精确决定。考虑稳定化的偶扇区算子
+\[
+G=A-U+vv^*.
+\]
+它在 k 的正交补上与 M 具有相同二次型。低/高分块写成 G=[[L,C^*],[C,H]]，H>=D0>0，原生产者重新计算的 Wup 满足 Wup>=C^*D0^-1 C。D0 对近场 shells 取已证明下界 d_shell-tau；因 U<tau，这也保守控制 G 的高块。远场采用同一高空间公式在 M_cut+1 的下界，取 M_cut=32768。
+
+若 S=L-Wup>0，则 G_D=[[L,C^*],[C,D0]] 正定且 G>=G_D。对任意完整 load b=(b_L,b_H)，变分逆单调性和完整平方分解给出
+\[
+\begin{aligned}
+\langle b,G^{-1}b\rangle
+&\le\langle b,G_D^{-1}b\rangle\\
+&= e_H+\langle b_L-y,(L-C^*D_0^{-1}C)^{-1}(b_L-y)\rangle\\
+&\le e_H+\langle b_L-y,S^{-1}(b_L-y)\rangle,
+\quad e_H=\langle b_H,D_0^{-1}b_H\rangle,\quad y=C^*D_0^{-1}b_H.
+\end{aligned}
+\tag{UG6}
+\]
+这些等式先对有限高组合和低坐标配对证明，再由加权平方可和及形式表示推广；所有高坐标是实际无限空间，未把截断逆矩阵当作完整逆。C 的列是真实有限低基函数的高算子像，属于 L2；D0 下界正，交叉项由 Cauchy-Schwarz 收敛。
+
+浮点 Cholesky 只提出方阵 R，其每项随后固定为分母 2^32 的精确 dyadic。定向乘法与 Gershgorin 逐行认证
+\[
+R^*S R\succeq(99/100)I.
+\]
+因此 R 必可逆，S^-1<=RR^*/(99/100)。认证器实际使用
+\[
+\boxed{\langle b,G^{-1}b\rangle\le e_H+
+\|R^*(b_L-y)\|^2/(99/100).}
+\tag{UG7}
+\]
+R 的数值产生过程不提供正确性或最优性假设。把全逆变分 supremum 限制到 k 的正交补，只会使它变小，所以 (UG7) 同时给出 (UG3) 与观察量的完整双范数预算。
+
+另一次独立严格区间 LDL 检查增强偶 sector 的 coercivity。令 d_min 为首个高偶 shell 的下界，rho=(d_min-tau)/(d_min-U-kap)，取 kap=1/1000；对所有更高 d，(d-tau)/(d-U-kap)<=rho。程序验证 d_min>U+kap 和
+\[
+A_{\rm low}+vv^*-(U+\mathrm{kap})I-\rho W_{\rm up}>0.
+\]
+完整 Schur 推出 G>=kap I，因而同一偶 candidate complement 上 q_M>=kap||.||^2。这是新的整区间偶扇区检查；不能把 kap 赋给奇扇区或声称它是全空间 ground gap。
+
+## 4. 候选残差先保留共同高符号，再求完整逆能量
+
+取正 parity 基 E0=1/sqrt2、En=(-1)^n cos(pi*n*y)。设 k_n 为该基中的实际归一化候选坐标，s_n 为原 prime/pole/Gamma 边界符号。对 m>64，候选残差高坐标等于
+\[
+\boxed{r_m=
+\sum_{n=1}^{64}\frac{2n k_n s_n}{\pi(m^2-n^2)}
+-s_m\left\{\frac{\sqrt2 k_0}{\pi m}+
+\sum_{n=1}^{64}\frac{2m k_n}{\pi(m^2-n^2)}\right\}.}
+\tag{UG8}
+\]
+与原 parity 列相加完全相同，但同一个 s_m 只在候选求和之后乘一次。这保留了真实相关抵消。低残差则用同一完整低矩阵计算 Ak-mu k，没有假设有限候选是本征向量。
+
+所有 65<=m<=32768 的高 load、加权平方和及 y 的每个坐标都以向外舍入区间计算。最终批量求和将 binary64 上下端点精确转换为有理数，再向外包一次，不使用无误差预算的浮点求和。工作精度 100/120 位不意味着每个 bulk 输入有同样准确度。
+
+远场保留候选的两个真实边界 jet：
+\[
+t_0=k_0+\sqrt2\sum n^0k_n,\qquad t_1=\sqrt2\sum n k_n s_n,
+\quad K_1=|k_0|+\sqrt2\sum|k_n|.
+\]
+原符号 |s_n|<=B=4 由原生产者的真实 Gamma、pole、两个素数预算重新验证。原有列的二阶展开给出
+\[
+|r_m|\le a_1/m+a_2/m^2+a_3/m^3,
+\quad a_1=\sqrt2 B|t_0|/\pi,\ a_2=\sqrt2|t_1|/\pi,
+\quad a_3=\frac{2\sqrt2 BN^2K_1}{\pi(1-N/M_{\rm cut})}.
+\tag{UG9}
+\]
+因此远场加权平方尾为至多
+\[
+f_{\rm tail}\sum_{i,j=1}^3
+\frac{a_i a_j}{(i+j-1)M_{\rm cut}^{i+j-1}}.
+\]
+正 parity 坐标已经包含两个原始 Fourier 方向，不能再重复乘二。每个交叉坐标的远场模长用 sqrt(T_i e_tail) 控制，T_i 是原耦合列的完整加权尾上界。复圆盘外包为矩形会增加保守性，但不会丢掉相位或尾部。没有终端频率截止。
+
+## 5. 真正的 Fourier 观察量与整体归一化
+
+固定空间中取 g_(a,z)(y)=conjugate(cos(a*z*y))，K0=<1,k>=sqrt2*k0，与 a 无关。令 K_a(z)=<g_(a,z),k>/K0，并把代表元中心化为
+\[
+h_{a,z}=g_{a,z}-\overline{K_a(z)}\,1.
+\]
+它在 k 上严格读出零。写 zeta=conjugate(a z)，正 parity Fourier 系数为
+\[
+(g_{a,z})_0=\sqrt2\sin\zeta/\zeta,
+\qquad(g_{a,z})_n=\frac{2\zeta\sin\zeta}{\zeta^2-\pi^2n^2}\quad(n>0).
+\]
+中心化只改变零坐标，实际采用 h0=-sum_(n>0)k_n*g_n/k0，因此候选配对恒等式先精确消去。中心 z0 非实且 a>0，实际有限分母非零。对所有 m>M_cut 且 M_cut>=2|zeta|/pi，|h_m|<=4|2zeta sin zeta|/(3pi^2m^2)，完整加权平方尾由相应 m^-4 积分覆盖。
+
+把同一 (UG7) 分别用于 r_a 和 h_(a,z0)，两档执行均认证
+\[
+\boxed{E_a<4.4\cdot10^{-9},\qquad C_{a,z_0}<3.7.}
+\tag{UG10}
+\]
+实际充分上表达式的上端分别约为 4.353429552e-9、3.678035788。前者的原始近高加权质量约 1.19402e-9，剩余无限高尾上预算约 5.80375e-12，低 load 与全部高交叉相消后的预算也计入。
+
+令 b=251/1000、a_+=sup I、rho_z=1/1000。有限窗口 Fourier 导数和固定 k 给出
+\[
+\|h_{a,z}-h_{a,z_0}\|\le
+\sqrt2 a_+e^{a_+b}(1+\sqrt2/|K0|)\rho_z=:d.
+\]
+由于整个偶扇区 G>=kap I，在其逆能量范数中应用三角不等式，得
+\[
+C_{a,D}\le(\sqrt{C_{a,z_0}}+d/\sqrt{\mathrm{kap}})^2<4.
+\tag{UG11}
+\]
+这是整个复圆盘的解析控制，不是采样网格。
+
+由 (UG5)，||w_a||<=sqrt(E_a/kap)。固定空间的 projective 原点分母满足
+\[
+b_a=|\langle1,k+w_a\rangle|\ge |K0|-\sqrt2\sqrt{E_a/\mathrm{kap}}>27/25.
+\tag{UG12}
+\]
+这里 K0 约为 -1.085330103，是伸缩到 [-1,1] 后的积分；不要与旧物理窗口中的 -0.804394472 混用。物理 Fourier 积分有 sqrt(a) 因子，它在原点归一化中消去。精确中心化恒等式给出
+\[
+\boxed{\sup_{a\in I,z\in D}
+\left|\frac{\widehat u_a(z)}{\widehat u_a(0)}-K_a(z)\right|
+\le\frac{\sqrt{E_a C_{a,D}}}{b_a}<1/8000.}
+\tag{UG13}
+\]
+实际上预算小于 0.000120866616。固定区间的 ground placement、偶性和所有分母均已支付，没有每个 z 单独选择的相位。
+
+## 6. 接回同尺度真实 prolate 模型
+
+主程序实际重跑原中心 `certify_prime3_prolate_model.py` 和区间 `certify_prime3_prolate_scale_transport.py`。两者包含真实无限 Legendre 补空间和完整 residual，不从存储结果读取真假。保持此前同一个零积分组合和全局符号，中心单位模型与 k 的距离仍按新鲜结果 <113/100000 运输；多项式 Mellin 端点积分给出中心 Fourier 和原点值，真实模型误差及其分母变化全部保留。
+
+用代表元的频率变化界控制中心尺度的整个 D，再加固定 k 的尺度变化及前节真实 prolate 原点归一化尺度差，得到
+\[
+\boxed{\sup_{a\in I,z\in D}|K_a(z)-P_a(z)|<67\cdot10^{-6}.}
+\tag{UG14}
+\]
+其实际上预算小于 0.000066478451。相加 (UG13)、(UG14) 得 (UG2)，且粗有理界已满足 1/8000+67/10^6<1/5000。主程序还直接相加未粗化区间以保留更窄的数值余量。
+
+## 7. 源码复用、复验与边界
+
+原 `certify_prime3_scale_interval.py` 只增加关键字 `with_components` 返回已经完成全部 checks 的新鲜算术矩阵、symbols、shells 和耦合列，避免复制其计算或读取旧 JSON。默认执行和数学结论保持不变；单独重新执行 70 位后，解析后的结果与原记录唯一差异为源哈希。现行结果记录随之更新，排版变化不承担精度。原有 Lean/Scribe 字节不修改。
+
+新主程序最终源码在 100、120 位分别执行通过。每次都重跑全部 full-space Weil interval、两个真正 prolate 验证器、完整 loads、逆 Schur、增强偶 coercivity、原点与 Fourier 预算。旧绝对 ell、旧中心 ground 下界和旧能量对偶成功 JSON 均不作为数值前提。没有 zeta 零点、未验证 eigensolver 或随机采样作为全称证明。
+
+同一作者的第二表达检查通过 60 个精确复 Schur 恒等式、60 个高块逆单调比较、180 个残差能量例子、4 个原始列代数恒等式及9个完整尾原函数。60 个错误交叉符号都被发现；去掉非正 shifted eigenvalue 有一个精确失败例子。三个不允许的精度和一个错误输入 pin 均在重计算前拒绝；启用 Python -O 也实际拒绝。人工矩阵只检验代数，不被称为实际 Weil 数值证据或独立作者审稿。
+
+Lean 的唯一公开定理有同名 FromLean Scribe 条目。当前环境未取得 Lean/lake 执行，故没有 elaboration、公理闭包或 Scribe 发射成功声明。新定理是逻辑审查后的 Candidate；原 Fourier/core、完整高空间下界、逆形式和无限 block 消元继续属于明确的纸面桥。精确/区间重放不是内核验收。
+
+主程序 SHA-256：`9dd3a99fc5881b2acf59853633821a705d3416bc7d0f1b0b69d9ae43bdd74e15`。
+新鲜矩阵生产者 SHA-256：`13b50abcec06663e35ad8f704cac6de9f3c1a2c37159e7f63e8c24fee4681993`。
+
+## 8. 最新相关研究与剩余开放目标
+
+实际读取 #5895 at `023e6d1eccb223a563939590d301085a220b38f2` 的 `InvariantSectorEnergyReadout.lean`：不变 readout 可只支付本 sector 的 coercivity，但不能把该阈值充当全空间间隔。本节保留这一分工，并对更宽的前节 I 重做完整偶检查；未隐式导入未合并模块。#5882 的 `ProjectiveEnergyDual.lean` at `65339a3acbe99e661c6955dbb21728c4c62dfe76` 使用绝对 ell 和 U-ell，本节改用 (UG3)-(UG5) 中实际 residual 的双能量输入，未重复其通用读出包装。
+
+5040 研究 #6398 的 `PrimeValuationGap.lean` at `efd0a8a82d885491b22497822ad25da8cc2ee0bd` 已有固定素数/有界指数类的 Robin 尖锐渐近上包络。实际源码先固定 boost，再取整数阈值，保留量词顺序；该标量结果没有被移作当前谱假设。本节也不把“每个窄区间可认证”误写成无界尺度统一收敛。
+
+再次核对 CCM arXiv:2511.22755v1 Sections 7-8 的实际模型和缺失步骤，以及 Dusson-Sigal-Stamm arXiv:2008.10871 的 Schur 方法背景。残差后验估计、逆单调性和 block 配方为经典工具；这里的工作是同一算术对象的完整兑现，不宣称方法优先权。任何外部 Schrödinger 正则性假设均未移入本算子。
+
+本节完成的连接是：在一个跨 prime-3 激活的连续参数区间上，统一谱分离、真实模型尺度流和同尺度规范化 Fourier 误差终于同时可用。区间仍窄，复圆盘仍小，不能给出 Xi 极限。下一承重任务是扩展实际可认证的参数跨度，或在无界尺度序列上同时控制残差逆能量 E_a、centered 观察预算 C_(a,K)、非零原点 b_a 和正确模型识别，使 E_a C_(a,K)/b_a^2 趋零。本节不证明该全尺度率、一般简单偶最低族或 RH。
+
+## [PR #5602] UNIFORM_SCHUR_CERTIFICATE_RECEIPTS
+
+Verifier SHA-256：`c527fa349cc1b6e14afedaffae0a44eb453cfff68aea12709dac0379236fa7d6`。
+90 位结果 SHA-256：`d02b04f9318ccea70a8a7bc5d239f18a59142823608157739f57f1ab6185a146`。
+120 位结果 SHA-256：`9d9ad89760bcd2635bd569549810c74ddca582d9069d670bdb18e232a60064f0`。
+诊断源 SHA-256：`fd24021b55526ae061f22ecf327030c929836dd343d699aa2a89e2252edc8aff`。
+
+校核补记：第二表达诊断最初复用了一个已消耗的迭代器，导致有理复向量求和只检查实部。现已先物化系数列表，加入非零虚部控制，并重新执行全部诊断。主区间验证器、两个精度的谱结果和前述解析证明均未改变。
+
+三条公开 Lean 定义/定理具有三个对应 FromLean Scribe 条目。没有新 authored sorry、admit 或 axiom；Lean elaboration、Scribe 发射与传递公理报告未执行。计算机辅助结果依赖明确的 Fourier/core、无限尾纸面证明，以及 Python、NumPy、mpmath 的算术实现；没有独立作者审查。
+
+- https://arxiv.org/html/2511.22755v1 , Sections 7-8.
+- https://arxiv.org/html/2606.09096v1 , Sections 1.2 and 2.1.
+- https://arxiv.org/abs/math/0503328 , primary abstract and methodological scope.
+
+## [PR #5895] MODEL_CENTERED_ENERGY_READOUT_AND_NORMALIZED_SINGLE_RATE
+
+### 1. Target and the additional exact information
+
+The target remains the actual lowest-Weil-mode comparison with the SAME
+prolate family in Connes, Consani and Moscovici, arXiv:2511.22755v1,
+Section 8, distinct from the explicit-model limit in Lemma 7.3. This increment
+addresses the normalized observable F(u)(z)/F(u)(0). The normalization removes
+global phase and amplitude, but its denominator still needs a certificate.
+
+The current #5602 source at 4b56b742eb5d3bc67e0e1bba3de8457224b4abc9 already
+has an origin-normalized fixed-window certificate, with error <51/100000 on
+a disk of radius 1/1000 around 20+i/4. It also adds Gamma form-scale moduli.
+Those computations and scale results are not repeated or claimed here. The
+new result retains an exact annihilation identity in the positive-form
+transport and derives a single normalized directional-rate condition.
+The actual EnergyDualPaperFT source on #5882 was reread. Its original
+unnormalized full-residual limit transport is not redefined.
+
+Loning's #5326 was inspected at PR-description scope for its distinction
+between finite boundary evidence and actual limiting functions. The 2026
+paper Wu and Zhang, arXiv:2607.23850, was read at primary-abstract scope for
+output-specific adjoint error estimation. Its PDE assumptions and error
+representation are not imported as Weil theorems. Suzuki, arXiv:2606.09096v1,
+retains the localized form-domain/lower-bound distinction used here. The
+centered linear functional, positive-form Young estimate and quotient
+identity are classical algebraic tools; no priority is claimed.
+
+### 2. Center against the actual model before bounding
+
+Let g0,g_z be the actual Riesz vectors for the origin and target readouts.
+The inner product is conjugate-linear in its first entry. For the genuine
+unit model e, assume d_e=<g0,e> is nonzero and set
+
+    r_e(z)=<g_z,e>/<g0,e>,
+    h_(e,z)=g_z-conj(r_e(z))*g0.
+
+The SAME model appears on both sides of the exact identities
+
+    <h_(e,z),e>=0,
+    <g_z,p>/<g0,p>-r_e(z)=<h_(e,z),p>/<g0,p>.             (CE1)
+
+The second identity applies when the actual denominator is nonzero. The
+source derives that nonvanishing in the eigenmode consumer below. The complex
+conjugation in h is essential. The old complete dual coefficient for g_z is
+not automatically a coefficient for h_(e,z); it must be recomputed for this
+centered readout, retaining its correlation with g0.
+
+### 3. Multiplicative energy transport with no independent G term
+
+Use the existing actual complex-linear domain maps iota,M and
+q(f)=Re<iota(f),M(f)>. Assume symmetry and whole-domain shifted positivity,
+unit k, ||e-k||<=eps<1 and q(e)<=nu. Suppose the already-justified new
+complement satisfies q(f)>=kap||f||^2 on e-perp, kap>0. Suppose an old
+FULL-residual certificate gives
+
+    |<h,f>|^2<=C q(f) on k-perp, C>=0, and <h,e>=0.
+
+For f perpendicular to e, choose
+
+    beta=<k,f>/<k,e>,      v=f-beta e.
+
+The candidate-overlap floor gives |beta|<=eps||f||/(1-eps); v is
+k-orthogonal. Crucially <h,v>=<h,f> exactly. The previously proved positive
+energy Young inequality gives, for any t>0,
+
+    q(v)<=(1+t)q(f)+(1+1/t)|beta|^2 q(e).
+
+Consequently
+
+    |<h,f>|^2 <= A_t*C*q(f),
+    A_t=(1+t)+(1+1/t)*(eps/(1-eps))^2*nu/kap.             (CE2)
+
+This is purely multiplicative. It neither ignores the candidate readout nor
+claims it is small: annihilation preserves the entire readout in the change
+of hyperplane. No repaired trial's infinite action, model graph norm or new
+exact inverse is invoked by this argument.
+
+The original positive-form angle condition
+
+    eps^2*(kappa/2+delta)<=kappa/4,   q(k)<=delta,
+
+already derives kap=kappa/4 from the k-complement gap. With additionally
+0<=eps<=1/2 and nu<=kappa/4, t=1 gives A_t<=4. Thus the source proves both
+
+    q(f)>=(kappa/4)||f||^2,
+    |<h,f>|^2<=4C q(f),    f perpendicular to e.           (CE3)
+
+Whole-domain shifted positivity is essential. No unshifted all-window Weil
+positivity is assumed. The older uncentered readout theorem remains valid;
+one cannot delete its G term without changing and certifying the readout.
+
+### 4. Derive the actual eigenmode anchor and normalized error
+
+Let M u=lambda*u with u nonzero, 0<=lambda<kap and q(e)<=nu<kap, where e is
+unit. The existing projective Rayleigh theorem and energy identity yield
+
+    p_e=u/<e,u>=e+w,    w perpendicular to e,
+    0<=q(w)<=nu,       kap||w||^2<=nu.
+
+For b>0 assume the independently checkable squared origin margin
+
+    b<=|<g0,e>|,
+    ||g0||^2*nu<=kap*(|<g0,e>|-b)^2.                     (CE4)
+
+Cauchy-Schwarz then gives |<g0,p_e>|>=b, so <g0,u> is nonzero as well.
+Combining this conclusion with CE1-CE2 proves for the actual eigenvector
+
+    |<g_z,u>/<g0,u>-<g_z,e>/<g0,e>|^2
+       <= A_t*C*nu/b^2.                                 (CE5)
+
+The raw eigenvector may have any nonzero complex phase and scale. Both
+cancel algebraically. The hypotheses supply its eigenpair and spectral
+placement; the theorem does not create the eigenvector.
+
+The new moving-domain theorem uses CE3 and proves standard Mathlib
+TendstoUniformlyOn for the ACTUAL ratio difference when, on the target set K,
+
+    nu_j*Cbar_j/b_j^2 -> 0.                              (CE6)
+
+The centered coefficient, actual gap/energy and squared origin margins
+remain explicit. All Hilbert spaces and operator domains may vary with j.
+There is no additional W*eps^2*|F(k)|^2/kappa rate in this bound. This reduces
+the sufficient estimate to one correctly centered observable. It does not
+prove CE6 for the unbounded arithmetic Weil/prolate family, and a bound on
+the old uncentered C does not prove it either. Convergence of the SAME
+normalized model functions to Xi(z)/Xi(0) is a separate final input.
+
+### 5. New actual centered full-residual computation
+
+The local interval consumer replays the archived complete-residual verifier
+at c=3 on the unchanged finite candidate k and trial v. It uses the same
+true aligned prolate model and inherited <1e-23 polynomial model-error cap.
+It encloses the true ratio r_e(z) on the complete closed box of half-width
+1/100000 around 20+i/4, using the inherited compact-support derivative bound.
+All model and spectral premises retain their earlier paper/interval scope.
+
+In the translated Fourier basis the origin representer is g0=sqrt(L)*e0,
+L=log(3). Thus centering changes only the finite residual head. Every
+nonzero exterior coefficient and the complete uncomputed tail stay exactly
+the same, rather than being dropped or refitted.
+
+For R=P_k(g_z-Mv), k real unit, and q=conj(r_e(z))*sqrt(L), the exact head
+update is
+
+    ||R-q*(e0-k0*k)||^2
+       =||R||^2+|q|^2*(1-k0^2)-2 Re(q*conj(R0)).          (CE7)
+
+The objective changes by -2 Re(r_e(z)*sqrt(L)*v0). Both the direct finite
+sum and covariance formula were evaluated and compared. All omitted positive
+and negative modes remain in the inherited exterior budget. The resulting
+centered coefficient has upper endpoint about 107.800065579058, hence
+
+    C_centered<108.                                      (CE8)
+
+For the archived exact energy numbers use the positive-form gap parameter
+s=1/100000 and CE2 parameter t=1/50000. Exact Fraction arithmetic gives
+A_t<20001/20000. The true origin floor exceeds 805/1000. With b=39/50,
+log(3)<11/10 and CE4, the derived p_e anchor is at least 39/50. The exact
+rational guards give
+
+    A_t*108*nu/(39/50)^2 < (9/10000)^2.                   (CE9)
+
+Thus, conditional on the recorded actual domain/spectral/model identities,
+the normalized true-mode to SAME prolate-model error is <9/10000 everywhere
+on this box. This is a validation of the new centered-energy consumer. It
+does not improve #5602's tighter 51/100000 result on a larger disk, produce
+a new eigenvalue enclosure, or certify a physical unbounded-scale rate.
+
+### 6. Formal source and validation boundaries
+
+The existing GenuineModelDualTransport Lean/Scribe pair is extended by six
+public theorems: model_centered_readout_identity,
+annihilating_energy_dual_transport, positive_form_centered_readout_bound,
+model_centered_projective_ratio_bound, model_centered_normalized_uniform_limit,
+and prime_three_centered_budget. The prior ten declarations remain unchanged.
+The new import uses the existing projective Rayleigh proof rather than
+reproving the eigenmode identity. The last theorem checks only the exact
+rational arithmetic in CE9 and the anchor budget, not its interval premises.
+
+The generic readout theorem can consume the already-identified Fourier Riesz
+vector from #5882. This extension does not redefine Fourier transforms or
+copy its different unnormalized uniform-limit owner. The concrete analytic
+identification, upstream spectrum and model records have not been reverified
+by the new interval consumer. The actual unbounded-scale estimate remains CE6.
+
+Executed local diagnostics: 600 exact complex centered positive-form cases,
+600 elimination/readout identities, 600 multiplicative bounds, 600 four-C
+bounds and 600 full-head covariance checks; 300 exact eigenpair ratio cases
+and 900 complex phase/scale checks. All 600 missing-conjugation mutations
+were detected. Negative controls retain the need for exact model annihilation,
+a coefficient for the CENTERED readout, and an actual denominator margin.
+The new full-residual centered consumer was replayed at 100 and 120 decimal
+digits with the same rational conclusions. These are single-author checks.
+
+Lean elaboration, kernel acceptance, transitive axiom reports and Scribe
+emission have not been executed. The six statements remain logically reviewed
+Candidate proof scripts. Exact and interval diagnostics are retained in the
+reproduction package; the repository changes only the existing Lean, its
+Scribe, and this theory volume. No synthetic scale sequence is presented as
+an actual Weil experiment. No all-scale prolate rate or RH conclusion is claimed.
+
+Primary references read in this continuation:
+
+- https://arxiv.org/html/2511.22755v1 , Lemma 7.3 and Section 8.
+- https://arxiv.org/html/2606.09096v1 , localized forms and domain distinctions.
+- https://arxiv.org/abs/2607.23850 , primary abstract only; output-specific
+  adjoint estimation as a methodological comparison, without its PDE premises.
+
+[PR #5065] Pinned root observations 33969082693 and 33969495413 both failed. The first exposed obsolete finite-sum syntax and an unclosed mirror inverse simplification. The second verified the repaired mirror inverse with only standard axioms, then exposed a finite-window unfolding mismatch and a accidentally omitted second ZeroData binder introduced during the source repair. This revision explicitly unfolds `ZeroConfig.window` and restores that binder, without changing the intended theorem statements or admitting a placeholder. Compiler error recovery containing `sorryAx` is rejected as validation evidence. The new frozen source revision still requires its own observed successful root replay and independent required checks before any admission claim.
+
+---
+
+## [PR #6219] Canonical Li curvature and actual analytic zero-freeness
+
+本节补入上一轮已经完成的数学追加。基准 dev 为 `55a96922002fdbf5644c47264702e325d0b475c9`，已有六份 Lean/Scribe 在本次补写前的远端提交为 `b14a5818d44baadbdb28367e97825548367babb5`。本轮复用已合并 #6172 的实际 `canonicalLiCoefficient`、`xiReading`、局部 Keiper–Li 展开和首系数正性。这里没有另造一份 Li 序列，也不主张经典生成函数方法的文献优先权。
+
+### 1. 实际算术对象与局部关系
+
+记仓内从实际 xiReading 高阶导数定义的系数为 λ_n，λ_0=0。令
+
+\[
+G(z)=\sum_{n\ge0}\lambda_{n+1}z^n,
+\qquad F(z)=\xi\left(\frac1{1-z}\right).
+\]
+
+已合并来源给出零附近的实际局部展开
+
+\[
+G(z)=(1-z)^{-2}\frac{\xi'}{\xi}\left(\frac1{1-z}\right).
+\]
+
+由 ξ(1)=1/2 和连续性，先在零附近确认 F 非零，再由实际链式求导得到局部交叉相乘恒等式 F'=GF。没有在全盘预先引入 log F 或假定 ξ'/ξ 无极点。
+
+### 2. 全索引增长控制与全域解析延拓
+
+若实际系数满足对所有 n 的 |λ_n|≤Cn²，则对每个 0≤r<1，有
+
+\[
+\sum_{n\ge0}|\lambda_{n+1}|r^n
+\le C\sum_{n\ge0}(n+1)^2r^n<\infty.
+\]
+
+候选真源 `AnalyticLogarithmicContinuation` 复用钉版 Mathlib 的标量 formal series 收敛半径 API，证明原系数之和在单位圆盘上全纯。实际 F 由 ξ 为整函数而全纯。F' 与 GF 都在全盘全纯，因此局部 F'=GF 经恒等定理延拓到整个连通圆盘。
+
+注意延拓的对象是 F'−GF。即便正在排查 F 的零点，这个函数仍然全纯；不需要事先把 F'/F 延到全盘。
+
+### 3. 解析零点阶数排除
+
+假设 F 在盘内 z0 处为零。由于 F(0)=1/2，解析恒等定理排除了在 z0 无限阶为零。若其有限阶数为 k≥1，则 F' 的阶数为 k−1，而 G 全纯意味着 GF 的阶数至少为 k。全域等式 F'=GF 导致矛盾。
+
+对于任意 Re(s)>1/2，取 z=1−1/s，有精确恒等式
+
+\[
+1-|z|^2=\frac{2\Re(s)-1}{|s|^2}>0,
+\qquad (1-z)^{-1}=s.
+\]
+
+因此实际 xiReading 在 Re(s)>1/2 无零点。再复用既有 xi 与非平凡 zeta 零点的识别及右半条带反射归约，得到标准 Mathlib RiemannHypothesis。
+
+`canonical_li_quadratic_growth_implies_rh` 保留全索引绝对二次界作为输入。它没有输入抽象 Li 判据、期望中的全局对数公式、RH 或无零点前提。该算术增长界本身尚未无条件证明。
+
+### 4. 从实际 canonical 曲率矩阵导出所需界
+
+定义 c_0=1，对于 n≠0 取
+
+\[
+c_n=\frac{\lambda_{|n|+1}-2\lambda_{|n|}+\lambda_{|n|-1}}{2\lambda_1}.
+\]
+
+这是实际 canonical 序列的实值偶延拓，λ_1>0 复用已有首系数定理。在原 Toeplitz 约定 T_N(c)_(jk)=c_(j-k) 下，从第 n 阶矩阵取索引 0、n 的主压缩，即
+
+\[
+\begin{pmatrix}1&c_n\\c_n&1\end{pmatrix}.
+\]
+
+若原矩阵正半定，向量 (1,1) 与 (1,−1) 给出 2+2c_n≥0 和 2−2c_n≥0。因此
+
+\[
+|\lambda_{n+1}-2\lambda_n+\lambda_{n-1}|\le2\lambda_1.
+\]
+
+对一般实序列 L，假设 L_0=0、|L_1|≤a，且全部二阶差分绝对值≤2a。第一次归纳得到 |L_(n+1)−L_n|≤a(2n+1)，第二次归纳得到 |L_n|≤an²。系数可以带符号。
+
+由此得到候选端点 `canonical_curvature_posSemidef_implies_rh`：全部实际 canonical 曲率 Toeplitz 矩阵正半定蕴含标准 RH。共同 Herglotz 测度、抽象 Li 判据、期望中的递推和零点测度识别不再是该端点的额外输入。
+
+这仍然没有证明全部实际矩阵正半定。单项 |c_n|≤1 对一般序列也不能反推全矩阵正性。本轮采用正性到二点界的方向，然后使用这一个实际 canonical 序列已有的解析展开。
+
+### 5. 与概率支线及剩余任务
+
+#6114 的 `normalized_curvature_quadratic_bound` 给出一般概率重建序列的二次包络。本轮 `canonical_li_probability_envelope_implies_rh` 消费这个包络在 L=canonicalLiCoefficient 时的特化。新分支从已含 #6172 的 dev 创建，没有复制未合并概率模块或处理旧分支冲突。
+
+当前是 canonical 增长或全阶曲率正性到 RH 的前向解析连接。没有证明 RH 到完整 canonical 曲率正性的反向，也没有完成无条件全阶算术正性。失败 RH 的反证结论仅说明存在某个失败矩阵阶数或越过任何给定二次包络的系数，不提供统一检测截止阶数。
+
+三个 Lean 模块有配套 Scribe 候选。没有执行 elaboration、内核接受、公理闭包检查或 Scribe emission。有限有理数检查检验代数、递推、Möbius 几何和零点阶数的有限 jet。它不验证全索引 canonical 算术前提，也不能替代无限域解析证明。
+
+上一轮交付包内的标准库精确诊断现已重放：119 个多项式几何尾式、86 组带符号二阶差分序列、180 个有理复数 Möbius 往返、216 个复 Toeplitz Gram 恒等式及 96 个有限零阶障碍。重放是作者自检，不是独立复核或 Lean 内核证据。源码与该数学追加的远端身份另外通过 commit/blob 回读核对。
+
+- Existing owners: `WeilInfiniteComplementLeakage`, `WeilArithmeticCouplingJet`, `WeilEvenDualStencil`; actual #6029 and #6204 sources at the blobs above.
+
+
+---
+
+## [PR #5602] UNIFORM_SCHUR_CERTIFICATE_ACROSS_PRIME_THREE
+
+# 2026-09-07：穿过素数 3 激活点的完整区间 Schur 证书与奇块三次抑制
+
+本节的两个源码为 `D5/S3/Weil/ZetaBridge/WeilPrimeThresholdParity.lean` 及其同名 Scribe。数值源为 `research/weil_ground_mode/certify_prime3_scale_interval.py`，独立表达式诊断为 `test_prime3_scale_interval.py`。下面给出的有限区间数字已在 70、100 位定向区间精度执行；Lean elaboration、Scribe emission 和传递公理报告没有执行。完整 Fourier/闭形式实现、Neumann 比较和以下无穷 Schur 推导仍为纸面桥，不能视作端到端内核结果。
+
+本次对一个非退化参数区间直接认证，而不从上节的最坏情形 resolvent 模量逐步传播：
+
+\[
+I_*=[a_*-2\cdot10^{-8},a_*+2\cdot10^{-8}],\qquad a_*=\tfrac12\log3.
+\tag{PT1}
+\]
+
+在整个区间中，明确的同一 Fourier 系数候选族满足 q_a(k_a)<1.2e-6，整个候选正交形式域满足 q_a(f)>=6e-6||f||^2。因此真实最低模态简单、偶，并有统一间隔大于 4.8e-6。此数值证书不假设旧的数值谱间隔或最低值包络。区间仍很窄，尚未认证这里的真模态/prolate 误差，也未成为无界尺度证明。
+
+## 1. 当前研究背景与实际复用
+
+CCM, *Zeta Spectral Triples*, arXiv:2511.22755v1，Section 8 将真实最低模态的单纯偶性与充分精确的 prolate 比较分开。这里直接处理前者在一个含激活点的参数区间上的完整证书，不以增加孤立数值点代替它。
+
+本轮读取 #5895 在 `83f2bd4c2059bbe555447a594abc492fb16f6452` 的实际 `GenuineModelDualTransport.lean`，特别是正移位形式的能量 Young 不等式及 `positive_form_complement_coercivity`。该工作处理同一形式中候选方向的改变；本节处理形式随 a 改变，因此不复制其通用论证，也不将未合并源码隐式导入。
+
+读取 loning 研究链 #6171 的 `Mertens/Third.lean`，blob `435484ecbfc11097a057d6b435045728a6e41f01`。其标量 Mertens III 对 Robin/Gronwall 研究有用，未作为本节 s=1/2 平移作用的范数估计。上节 5040 的首缺失素数 11 提醒了普通范数跳变；当前区间同样跨过素数 3 的真实激活。
+
+交付期间，同一研究分支并行推进到 `4804c4020d7d9f165a2e2683c42b01e3d47a8be4`。实际读取其 `WeilPrimeActivationEdge.lean` 和 `certify_prime3_scale_schur.py`：前者处理偶块 rank-one 主项和零 trace 偶模板的五次界，后者记录 N=128、半宽 1e-8 的证书。本节的奇轮廓三次界与其互补；数值部分借鉴保留 Gram 方向性的 Young 处理，但重新独立计算 N=64、半宽 2e-8 的全部加权 Schur 数据。没有把初步完成的半宽 1e-9 证书重复报告为最新前沿，也没有将并行结果文件作为当前证明输入。
+
+Dusson-Sigal-Stamm, arXiv:2008.10871 的 Feshbach-Schur/Fourier 谱离散分析提供经典方法背景。本节所有 Gamma、prime、pole 和高补空间估计均按同一个 Weil 算子推导，不移植 Schrödinger 正则性假设。原 `certify_prime3_refined.py` 以 SHA-256 `8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0` 固定，仅复用其算术区间例程和明确候选数据，不执行其旧谱结果作为输入。
+
+## 2. 同一个实参数算术矩阵，激活项精确表示
+
+令 L=2a，使用原基 V_n(x)=(-1)^n exp(2pi*i*n*x/L)/sqrt(L)，窗口外零延拓。经 J_a 酉伸缩，其基在 [-1,1] 上固定为 (-1)^n exp(i*pi*n*y)/sqrt(2)。固定候选整数系数除以其精确范数后定义 k_a；没有把未知 ground 当作 k_a。
+
+在 (PT1) 上，log2<L<2log2，素数 4 及更大 prime powers 尚未进入。定义实际归一化交叠长度
+
+\[
+h_2=2-2\log2/L,\qquad h_3=\max(0,2-2\log3/L),\qquad
+w_p=\log p/\sqrt p.
+\tag{PT2}
+\]
+
+在边界符号和实际对角中，两个素数的贡献分别为
+
+\[
+s^{\rm prime}_L(n)=\sum_{p=2,3}w_p\sin(\pi n h_p),\qquad
+A^{\rm prime}_{nn}=-\sum_{p=2,3}w_ph_p\cos(\pi n h_p).
+\tag{PT3}
+\]
+
+这是原 -w_p sin(omega_n log p) 与 -2w_p(1-log p/L)cos(omega_n log p) 的精确格点相位改写；h_p=0 时两项均为零。端点等号是 L2 零测作用，(PT3) 跨阈值有效。程序对 L 的整个闭区间计算正部分包络，不将抽样或中心条件当作区间条件。
+
+完整边界符号为原 pole、无限 Gamma 边界级数与 (PT3) 的和，omega_n=2pi n/L。完整对角使用同一 digamma、trigamma、指数修正、pole 及 (PT3)。Gamma 指数修正保留前 32 项并显式包住无限尾。新的 sine 例程在选择整数周期后先严格检查余量位于 (-4,4)，再以 63 次 Taylor 多项式和 4^64/64! 的明确尾界覆盖整个参数区间；浮点周期选择不提供正确性假设。有限工作精度与 bulk binary64 符号包络的准确度分开：每个 bulk 运算都向外舍入，最终各项误差继续进入矩阵证书。
+
+## 3. 先做实际奇偶合并，再产生区间 Gram
+
+对原 a_mn=(s_n-s_m)/(pi(m-n))，s_-n=-s_n。实际偶、奇配对列是
+
+\[
+C^+_{mn}=\frac{2(ns_n-ms_m)}{\pi(m^2-n^2)},\qquad
+C^-_{mn}=\frac{2(ms_n-ns_m)}{\pi(m^2-n^2)}.
+\tag{PT4}
+\]
+
+新 Lean `arithmetic_parity_pair_columns` 从原 `couplingColumn` 展开证明两式，使用已证明的原符号奇性，并先排除全部分母碰撞。Lean 的 c 参数仍按原 owner 为自然数；实 L 的算术表达及其奇性在本节独立按同一公式解释，没有把 c 自然数定理冒用成实尺度实现。
+
+在正交归一 parity 基 E_0=V_0、E_n=(V_n+V_-n)/sqrt2、O_n=(V_n-V_-n)/sqrt2 中，正高编号之间的矩阵元素恰是 (PT4)，偶零列为 -sqrt2*s_m/(pi*m)。偶低块的 n>0 对角是 A_nn-s_n/(pi*n)，奇低块是 A_nn+s_n/(pi*n)。奇扇区乘整体 i 不改变矩阵或能量。
+
+这些相消在区间量化之前完成。实际高空间的正负编号已合并为一个正交 parity 坐标，因此后续不得再重复乘二。程序对每个 parity 块分别形成全体 65<=m<=32768 的 Gram，并保留参数区间造成的系数半径。
+
+## 4. 新 Lean 的另一个具体结果：奇低块的三次激活能量
+
+在固定空间采用实奇基 (-1)^n sin(pi*n*y)，其范数为 1。对有限复系数 v_n，记 F(t)=sum v_n sin(pi*n*t)。当新平移 s=2-h、0<=h<=1，左、右条带的轮廓分别为 F(t) 和 -F(h-t)。所以实际 Weil 的负对称 prime 项恰为
+
+\[
+Q^-_{w,h}(v)=w\int_0^h
+\{\overline{F(t)}F(h-t)+\overline{F(h-t)}F(t)\}\,dt.
+\tag{PT5}
+\]
+
+新 `oddPrimeActivation` 先独立定义这个完整复积分。其 integrand 是连续函数，所有交叉项保留。由 |sin(pi*n*t)|<=pi*n*|t|，令 B=sum n|v_n|，则积分内模长至多 2pi^2 B^2 t(h-t)。有限 Cauchy-Schwarz 和精确多项式积分给出
+
+\[
+\boxed{\|Q^-_{w,h}(v)\|\le
+\frac{w\pi^2h^3}{3}
+\left(\sum n^2\right)\left(\sum|v_n|^2\right),\qquad w,h\ge0.}
+\tag{PT6}
+\]
+
+`odd_prime_activation_cubic_bound` 保存 (PT6)，不接收边界值、组装后能量或积分值的假设。其积分表达对任意非负 h 都成立；与两个不交物理条带的识别使用 h<=1，正编号基下的系数平方和是实际 L2 范数。
+
+(PT1) 内 h3<=7.281914e-8，取 S={1,...,64} 后，对实际 w3 的 (PT6) 右侧系数再作定向检查，得到低奇块的新增素数能量范数上界小于 1e-16。这里是该有限块的预算，完整 Schur 计算仍使用未粗化的矩阵。
+
+(PT6) 的常数随有限频率集合增长。因此它与上一节全空间范数跳变、参考形式仅有对数模量完全相容。数值证书仍使用完整实际矩阵元素，没有用粗的 h^3 上界代替高低耦合计算。
+
+## 5. 整个高补空间的统一下界
+
+令 L_+=log3+4e-8、n0=65、w=w_2+w_3。整个参数区间内，每个可见非零 prime 平移在固定空间的位移大于 1，其对称块范数至多 1；故全高空间 prime 债保守使用完整 w，绝不以 h3 很小为理由省去 w3。
+
+偶空间沿用原 Neumann Gamma resolvent 完成式及偶 pole 非负性。对所有高偶系数 y_n，得到 q_a(y)>=sum d^+_n |y_n|^2，其中
+
+\[
+d^+_n=\log(n/L_+)-L_+/(\pi n)-w.
+\tag{PT7}
+\]
+
+奇空间的独立全高界可以从原 Γ 对角和离散 Hilbert 交换子直接核对。首先，digamma 调和极限与 t/(t^2+y^2) 的积分比较给出 Re psi(x+iy)>=log|y|-1/|y|，x>0、y!=0；误差由该函数总变差不超过 1/|y| 控制。因而 gamma(omega_n)>=log(n/L)-L/(pi*n)。
+
+Gamma 对角相对乘子值的边界修正模长至多 L/(2pi^2*n^2)+1/(4n)。这是用 (2/L)sum 1/(b_j^2+omega_n^2) 包住完整边界级数，再将递减求和与积分比较得到。高空间 Gamma 边界符号满足 |sGamma_n|<=pi/4+1/|omega_n|；标准离散 Hilbert 核 1/[pi(m-n)] 的 l2 范数为 1，所以其交换子范数至多 pi/2+L_+/(pi*n0)<2。这个最后严格界在程序中执行检查。
+
+奇 pole 的负范数为 2sinh(L/2)-L。合并并作安全的 n0 统一放宽，得到整个奇高空间下界
+
+\[
+d^-_n=\log(n/L_+)-2-\frac{2L_++1}{\pi n_0}
+-\frac{L_+}{2\pi^2n_0^2}-w-\{2\sinh(L_+/2)-L_+\}.
+\tag{PT8}
+\]
+
+这些是整个高子空间的形式不等式，不能只从逐对角值推出。有限高组合通过已有共同闭形式域的稠密性推广；没有遗漏 Gamma 非对角项。每个 dyadic shell 使用其首编号的经过检查的有理下界。n=65 的偶、奇下界分别为 `24750975/8388608` 与 `927117/1048576`，均远大于本次 tau=6e-6。
+
+## 6. 全无限 Schur 上预算和严格区间合同检查
+
+令 tau=6/10^6。对每个 parity，低高块为 C、高块为 H。由 (PT7)-(PT8)，H-tau>=diag(d_n-tau)>0，所以 Schur 扣除项满足
+
+\[
+C^*(H-\tau)^{-1}C\preceq C^*\operatorname{diag}((d_n-\tau)^{-1})C.
+\tag{PT9}
+\]
+
+先对 65..32768 的实际区间 C 取 dyadic 中点 X，分母 2^44，逐项误差半径分母 2^60。每个 shell 的 X^*X 用有溢出 guard 的整数算法精确算出，误差半径平方和使用任意精度整数。设 D 是正的 shell 权重，e>=||D^(1/2)(C-X)||_F^2。取明确正有理数 theta=1/200，逐向量应用 Young 不等式得到 C^*DC<=(1+theta)X^*DX+(1+1/theta)e I。程序因此保留 201/200 倍的原 Gram 方向性，只增加 eta=201e 的单位阵预算；theta 的额外正代价也完整扣入 Schur 补。中点和误差都是从当前整个参数区间重新计算，不能省去任一项。
+
+m>32768 的所有模式使用完整边界符号包络 B=4，其实际有限 prime、pole、Gamma 上界在程序中重查。原二阶耦合展开保留四个矩，配合正负 parity 给出秩至多四的正尾预算，另加 `2/10^12` 倍单位阵的余项。该余项逐次检查大于 16B^2 N^4(2N+1)/[pi^2(1-N/M)^2 M^5]。所有无穷平方级数由积分比较包住，没有更远的终端截断。
+
+合并 shell 与无限尾后的矩阵 W_+、W_- 是 (PT9) 的上界。偶低块另加实际未归一化候选 vv^*，奇块不加。最终需要同时确认
+
+\[
+A^+_{\rm low}-W_+-\tau I+vv^*\succ0,\qquad
+A^-_{\rm low}-W_--\tau I\succ0.
+\tag{PT10}
+\]
+
+原坐标的 interval LDL 曾无法判定，不能由此推断负特征值。程序用浮点 Cholesky 仅提出坐标变换，再舍入成分母 2^32 的精确 dyadic 方阵 R。对完整区间矩阵直接计算 R^T A R，再作严格定向 LDL。正定 R^T A R 本身蕴含 R 单射，方阵即双射，所以无需相信浮点可逆性或中点 Cholesky 的判断。输出的 pivot 只是合同后计算诊断，不是原算子的特征值下界。
+
+## 7. 一次认证覆盖整个参数区间
+
+70 位和 100 位运行分别确认 (PT10)，并在同一个区间包络中确认明确归一化候选 k_a 的 Rayleigh 上界。结果为
+
+\[
+\boxed{q_a(k_a)<U=\frac6{5\cdot10^6},\qquad
+f\perp k_a\Longrightarrow q_a(f)\ge\tau\|f\|^2,
+\quad\tau=\frac6{10^6},\quad a\in I_*.}
+\tag{PT11}
+\]
+
+实际候选 Rayleigh 的区间显示约为 [-9.5152736e-7,1.0637090e-6]，因此 U 留有裕量。偶加秩一证书在候选正交方向上严格消去该秩一项；奇扇区整体高于 tau。由已有同一 Friedrichs 实现的紧 resolvent 与 min-max，
+
+\[
+\boxed{\lambda_0(a)<U<\tau\le\lambda_1(a),\qquad
+\lambda_1(a)-\lambda_0(a)>\frac3{625000}.}
+\tag{PT12}
+\]
+
+最低特征值单纯；若最低向量为奇，则与奇扇区下界矛盾，故为偶；它与 k_a 的内积也不能为零。这是实际一族窗口的 simple-even/gap 证书，不是某个有限子矩阵的本征值图。此轮没有宣称 A_a 全空间非负，没有假设旧的数值 ell、U、T，也没有把新的 k_a 认作 prolate 模型。
+
+旧的通用形式连续性半径是 2^-9259287090。本次直接区间证书覆盖半宽 2e-8，不需要沿那个极小半径做数十亿次传播。即便如此，当前新区间仍很窄，不能称为实用的无界尺度扫描。证明更大跨度和控制真实模态/prolate Fourier 误差仍然是下一项。
+
+## 8. 复验、形式化范围和未解决部分
+
+最终交付数值源 SHA-256：`0bbadda0977f11052c7c492d2d44f958f6318b89954587486edc4bc6db796688`。诊断源 SHA-256：`5467e6f5b50395ebcfb033e5d4f92949458f8a9ce953c784fca4814c03c19257`。本次补交只删除了若干 Python 注释，并纠正 Scribe 中过时的区间半径说明；程序执行逻辑未改，最终版本重新在 70、100 位精度运行通过，诊断也重新运行通过。结果 JSON 的排版不作为数值精度证据。
+
+诊断通过三个符号恒等式、800 个精确 parity 列等式、120 个精确 Gram 半径例子、36 个独立原符号参考值、45 个原对角参考值和 72 个原 prime 相位比较。另有 20 个直接物理奇轮廓积分与 (PT5) 的对照。后面的点值与求积使用非定向高精度，仅为另一表达式的诊断，不是 (PT11) 的区间证明。其 Gamma 指数参考尾小于 3.28e-248。三个不定/奇异矩阵均被严格 LDL 拒绝。
+
+Lean 的三个公开定义/定理有三个对应 FromLean Scribe 项。区间认证器复用原算术例程的固定源码，新的中点 Cholesky 只产生待验证坐标；它不运行 eigensolver、不使用 zeta 零点、不用旧的数值谱结论，也没有把 CI 或 Scribe 状态计为数学证据。不存在已执行的新 Lean 内核、传递公理或独立作者审稿声明。
+
+本节推进的是：保留实际 parity 抵消、全高块下界和低高耦合后，可以跨过真实素数激活点直接得到一个连续参数族的完整余维一强制性。剩余任务是将该区间方法与真实 prolate 族和既有能量对偶读出联合，扩大跨度并控制归一化 Fourier 差。无界尺度上的 Xi 极限或 RH 未由本节建立。
+
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 3-4 and 8. https://arxiv.org/html/2511.22755v1
+- Dusson, Sigal, Stamm, *Analysis of the Feshbach-Schur method for the Fourier spectral discretizations of Schrödinger operators*, arXiv:2008.10871. https://arxiv.org/abs/2008.10871
+- NIST DLMF 5.7.6, digamma partial fractions; mathematical constants and tail identities retain the pinned arithmetic source conventions. https://dlmf.nist.gov/5.7.E6
+- Actual #5895 `GenuineModelDualTransport.lean` at `83f2bd4c2059bbe555447a594abc492fb16f6452`; loning research #6171 `Mertens/Third.lean`, blob `435484ecbfc11097a057d6b435045728a6e41f01`.
+- Parallel #5602 source at `4804c4020d7d9f165a2e2683c42b01e3d47a8be4`: `WeilPrimeActivationEdge.lean`, blob `5cd36bfeef88311e1f5e6c140fc11e52b16e8881`; `certify_prime3_scale_schur.py`, blob `496333f97d20a6898d47f848a2abd839249e9207`.
+
+上一轮交付包内的标准库精确诊断现已重放：119 个多项式几何尾式、86 组带符号二阶差分序列、180 个有理复数 Möbius 往返、216 个复 Toeplitz Gram 恒等式及 96 个有限零阶障碍。重放是作者自检，不是独立复核或 Lean 内核证据。源码与该数学追加的远端身份另外通过 commit/blob 回读核对。
+
+---
+
+## [PR #6219 continuation] Canonical disk equivalence and radius-dependent coefficient obstruction
+
+日期：2026-09-07。首先恢复上一轮缺失的理论追加：`b00b74c874b7fe6afbd975182d660e034ce1072a` 将已完成的 canonical 增长到实际 ξ 无零点推导补入本卷，87 行新增、零删除。六份既有 Lean/Scribe 的完整远端内容已重新回读。恢复并没有改变这些候选证明的编译状态。
+
+本轮继续使用 merged #6172 的同一 canonicalLiCoefficient、liGenerator 和 generator_taylor_coefficient。新扫描 dev 为 `65457467c879007d1e91f71ef861a4d3f7d462c3`；canonical 来源 blob 仍为 `0fb04eb79f87389016b51af25cdf6078d5616b7c`，当前 v4.3 规范 blob 为 `473d684ffda13d291c7df78f0edd8d4922550be6`。跨作者的相关 PR 与默认分支检索未找到可直接替代本轮全盘反向端点的新实现；工程类命中未作为数学来源。未将空检索结果解释为全库不存在。
+
+### 1. 从 RH 导出实际 canonical 全盘展开
+
+令 λ_n 是既有导数定义的 canonical 系数，F(z)=xiReading((1-z)^(-1))，G 使用既有 liGenerator。本轮 `CanonicalLiDiskEquivalence` 先证明 |z|<1 蕴含 Re((1-z)^(-1))>1/2。标准 RH 与既有 xi/nontrivial-zero 识别给出 F 在全盘非零。因此此方向下，实际 G 在全盘全纯。
+
+Mathlib 钉版 `db584cd6d46c92f209a44c0f1c829460d327499d` 的 Taylor 定理提供 G 的全盘展开，#6172 已证明的全阶系数恒等式将它识别为
+
+\[
+G(z)=\sum_{n\ge0}\lambda_{n+1}z^n,\qquad |z|<1.
+\]
+
+`rh_canonical_li_global_expansion` 保留实际 HasSum。复数是有限维实范数空间，钉版 `summable_norm_iff` 将其无条件可和性转成绝对可和性；这里没有把任意条件收敛级数误当成绝对收敛。
+
+结合上一轮通过 F'=GF 和零点阶数排除得到的反向，`rh_iff_canonical_li_disk_summable` 证明
+
+\[
+\mathrm{RH}\iff
+\forall r\in[0,1),\quad\sum_{n\ge0}|\lambda_{n+1}|r^n<\infty.
+\]
+
+`rh_iff_canonical_li_global_expansion` 同时将实际全盘 HasSum 等式与 RH 等价起来。这个反向不使用 RH，也没有外加抽象 Li 判据。本轮闭合的是全盘收敛判据的两向，并非 RH 与完整 canonical 曲率矩阵正性的两向。
+
+### 2. 全半径加权包络也是精确等价条件
+
+`CanonicalLiRadiusObstruction` 从 RH 下的绝对和构造每个半径的常数 C_R，证明
+
+\[
+\mathrm{RH}\iff
+\forall R\in[0,1),\ \exists C_R\ge0,\ \forall n\ge0,
+\quad |\lambda_{n+1}|R^n\le C_R.
+\]
+
+常数允许依赖 R。反向在任意 r<1 与 1 之间选择 R，保留精确恒等式
+
+\[
+|\lambda_{n+1}|r^n=(|\lambda_{n+1}|R^n)(r/R)^n
+\le C_R(r/R)^n,
+\]
+
+再用几何级数得到所需绝对收敛。等价的指数表述是：对每个 q>1 存在有限 C_q，使全部 |λ_(n+1)|≤C_q q^n。Lean 公共端点采用上面的加权半径表述，没有另外新增一个同义指数谓词。
+
+### 3. 指定实际零点导致每个尾段中的增长障碍
+
+本轮还把上一轮的全索引增长条件局部化到任意正半径 R≤1。若从某一阶起有 |λ_(n+1)|R^n≤C，Mathlib 的 `le_radius_of_eventually_le` 仍然保证相同 scalar series 在 |z|<R 解析。有限个初始系数不会改变这个结论。将旧的局部交叉相乘等式限制到这个圆盘并延拓，得到实际 F 在该盘无零点。
+
+因此对一个假设给定的实际 ξ 零点 ρ，记 z_ρ=1−1/ρ。若
+
+\[
+|z_\rho|<R\le1,
+\]
+
+则 `xi_zero_forces_weighted_tail_escape` 给出
+
+\[
+\forall N\in\mathbb N,\ \forall C\in\mathbb R,\ \exists n\ge N,
+\qquad |\lambda_{n+1}|R^n>C.
+\]
+
+这是每个尾段无界，强于某个系数超过一个给定二次界。若 |z_ρ|<1，可以选 |z_ρ|<R<1，故系数在任意尾段都会超过任意给定倍数的 R^(-n)。没有证明每一项最终都大，也没有给出第一次越界的索引上界。零点的存在始终是条件，没有假定或声称已找到离线零点。
+
+严格半径条件不可删除。有限诊断的模型 F(z)=(1-z/a)^m 有 G(z)=−m/(a-z)，其系数为 −m/a^(n+1)。在 R=|a| 时，加权模长恒等于 m/|a|，可以保持有界；零点此时在边界，不在 theorem 的开盘结论内。
+
+### 4. 读出半径对应真实 s 平面的位置，而非只对应高度
+
+令 ρ=β+iγ，有精确代数式
+
+\[
+|1-1/\rho|^2=1-\frac{2\beta-1}{\beta^2+\gamma^2}.
+\]
+
+因此控制 R 只排除满足 |1-1/s|<R 的零点。对于 0<R<1，这在原 s 平面等价于
+
+\[
+\left|s-\frac1{1-R^2}\right|<\frac{R}{1-R^2}.
+\]
+
+最后一个圆盘形状是本轮精确代数诊断和纸面解释，不是额外具名 Lean 定理。Lean 零点端点直接保留完整复数及其真实 Möbius 像。
+
+这个关系解释了为什么仅有限阶或固定读出半径不能直接得到全局 RH：每个半径控制一个确定区域，而全盘判据需要任意接近一的半径及各自的全索引界。黄金固定周期读出导致的层数丢失也不会由这一解析等价自动消除。
+
+### 5. 文献定位、实际复用与验证范围
+
+Li 系数、增长与 Weil 形式的联系已有成熟文献，例如 Lagarias, *Li Coefficients for Automorphic L-Functions*, Annales de l'Institut Fourier 57 (2007), 1689–1740, arXiv:math/0404394v4。Suzuki, *Li coefficients as norms of functions in a model space*, arXiv:2301.05779v2 (2023)，研究具体范数表示与 RH 判据。当前主要记录及摘要已核对；本轮不冒领这些经典解析关系的优先权，也未宣称重新审定两篇论文的全部证明。贡献是沿已合并 canonical 定义完成可组合的实际函数证明端点和尾段障碍。
+
+两份新 Lean 共 321 行、15 个公共定理，配套两个 Scribe 共 84 行，15 个 `StatementSource.FromLean()` 绑定全部匹配。四份代码通过字符串/注释感知的括号检查；新源码没有自定义 axiom、sorry、admit 或 native_decide。没有 Lean、Lake 或 dotnet 可执行程序，因此没有执行 elaboration、内核接受、传递公理报告或 Scribe emission。旧候选依赖也不因新增消费者而获得新的验证状态。
+
+seed 20260907 的 Fraction/有理复数重放通过 90 个有限解析多项式模型、3240 项 F'=GF 有限 jet 恒等式、1080 项精确几何余项、6480 项加权半径比较、864 项指定尾段越界实例、240 项 Möbius 往返、720 项原 s 平面圆盘测试、21 项临界线边界以及 90 项边界零点有界包络。五个负对照保留严格半径、全索引而非有限前缀、正半径、非零初值及完整复数零点位置等条件。完整重跑与结果文件逐字节一致。诊断是作者的第二实现，未计算真实 zeta 零点或 canonical 全序列，也不是独立审稿或 Lean 抽取代码。
+
+诊断源码 SHA-256：`1912d84a162e5328ac588487d17d0cc163265b26342d18dc4208aa27d1d48fad`；结果 SHA-256：`c197242b343bded46173e6286a745266d4fec049f769ecfdc0091481169f3662`。上一轮交付 ZIP 内的原诊断已另行重跑，JSON 与原包逐字节一致。研究产物保持在本 PR 的 Lean、配套 Scribe 和本卷追加；没有修改 CI 或冻结登记。
+
+- https://arxiv.org/abs/2607.23850 , primary abstract only; output-specific
+  adjoint estimation as a methodological comparison, without its PDE premises.
+
+## [PR #5895] INVARIANT_EVEN_SECTOR_AND_COMPLETE_CENTERED_DISK_BOUND
+
+### 1. Verified prior delivery and the specific next target
+
+The preceding centered-readout work was reread at remote commit
+44a831a15abe4d00268d973976101e0d62d66fd2. Its Lean, Scribe and existing
+RH theory blobs match the delivered archive. The present increment preserves
+that content and continues the actual lowest-Weil-mode/prolate comparison in
+Connes, Consani and Moscovici, Zeta Spectral Triples, arXiv:2511.22755v1,
+Section 8. The explicit-model limit and actual-mode approximation remain
+separate. The moving-scale rate has not been proved by the finite result below.
+
+The same paper's Section 5.2, Lemma 5.2, identifies the matrix involution
+V_n -> V_-n and its commutation with the truncated Weil matrix. The actual
+domain-level reflection and form-core realization remain required when this
+symmetry is used for the infinite operator. Suzuki, arXiv:2606.09096v1,
+provides the localized form/Friedrichs-domain context. These are classical
+invariant-sector and variational arguments; no priority claim is made.
+
+The latest #5602 sources were read at
+5b1c54e84706acdca64e2ec042b51a5d52c5fcea. Its new full-space scale certificate
+covers |a-log(3)/2|<=1e-8 with candidate-complement floor 1/200000. Its
+prime-activation, Gamma and complete Schur construction is the arithmetic
+reference for the independent stronger EVEN-sector test here. Loning's
+#5326 and #5296 were inspected at PR-description scope for the importance of
+preserving channels and independently certifying boundary readouts. Their
+theory descriptions are not used as arithmetic spectral hypotheses.
+
+The preceding centered coefficient paid the old whole-space gap even though
+the candidate, trial and centered Fourier readout are even. That can overpay
+for a direction invisible to the observable. We therefore certify an actual
+even candidate-complement floor and prove exactly when its readout estimate
+can be used in the existing whole-space centered transport.
+
+### 2. Exact invariant-sector energy and readout lifting
+
+Let iota,M:D->H be complex-linear maps on an actual linear domain. Let J be
+a linear involution on D and U a compatible complex-linear Hilbert isometry:
+
+    J^2=I,  iota(Jf)=U(iota(f)),  M(Jf)=U(M(f)),
+    <Ux,Uy>=<x,y>.
+
+Write q(f)=Re<iota(f),M(f)> and
+
+    f_+=(f+Jf)/2,       f_-=(f-Jf)/2.
+
+Domain linearity and inner-product invariance prove
+
+    Jf_+=f_+,  Jf_-=-f_-,  q(f)=q(f_+)+q(f_-).             (IS1)
+
+The identity needs no positivity or gap. If Jk=k and Ug=g, then
+
+    <iota(k),iota(f_+)>=<iota(k),iota(f)>,
+    <g,iota(f_+)>=<g,iota(f)>.
+
+Suppose an actual dual certificate on the invariant sector gives
+
+    |<g,iota(v)>|^2<=C_+ q(v),
+    Jv=v, v perpendicular to k, C_+>=0.
+
+If q is nonnegative on the opposite sector, then for every f perpendicular
+to k, IS1 implies
+
+    |<g,iota(f)>|^2<=C_+ q(f).                            (IS2)
+
+No positive opposite-sector gap appears in this lift. Its nonnegative
+SHIFTED energy remains essential. The conclusion concerns the readout,
+not a stronger full-space coercivity estimate. Dropping invariance of g,
+commutation of the action, or opposite-sector nonnegativity invalidates the
+argument; all three have explicit negative controls in the local diagnostics.
+
+For the arithmetic application J is reflection, M=A-ell, and the existing
+whole-space lower bound at a=log(3)/2 supplies shifted nonnegativity. The
+centered even Riesz vector is invariant because both its Fourier component
+and origin component are invariant. The original actual-mode evenness and
+Fourier/kernel identification still have their existing analytic scope.
+
+### 3. A complete uniform even Schur certificate
+
+The new verifier independently constructs the actual matrix and exterior
+couplings on the whole interval
+
+    |a-log(3)/2|<=1/100000000,    L=2a.                    (IS3)
+
+It uses N=128 retained positive/negative Fourier modes and explicitly sums
+both exterior signs through M_cut=8192. The prime-3 term is absent on the
+left of activation and present on the right. The diagonal overlap positive
+part and the column sine hull retain both cases, including the vanishing
+activation value. Gamma, pole, prime-2 and prime-3 contributions remain.
+The length enters interval expressions, not a collection of sampled scales.
+
+The original finite positive Gamma resolvent sum gives a uniform full
+high-complement floor beta>1; its computed lower endpoint exceeds
+1.009070267917372763. The near coupling is enclosed by a dyadic matrix and
+an exact two-sided Frobenius error. Young's inequality with parameter 1/20
+bounds its full Gram. The complete paired second-jet Gram and its nonzero
+far remainder pay every mode beyond 8192. No weighted pairing is substituted
+for this Gram or for an unweighted residual norm.
+
+Let G_upper bound the entire low-to-high coupling Gram, and let c be the
+same padded finite candidate coordinate vector. On the retained even basis,
+the verifier certifies positive definiteness of
+
+    A_low - T_+ I - G_upper/(1-T_+) + c c*,
+    T_+=1/1000.                                         (IS4)
+
+The basis is e_0 followed by e_n+e_-n, without an unrecorded unit rescaling.
+The rank-one term vanishes on the candidate complement. The complete Schur
+argument therefore gives, under the original Fourier/core and high-complement
+identifications,
+
+    q_a(f)>=||f||^2/1000
+    for all even f perpendicular to the transported candidate,
+    at EVERY a in IS3.                                  (IS5)
+
+This is an even candidate-complement bound. The odd sector and the full
+candidate complement are not assigned the threshold 1/1000. This increment
+also does not prove the historical positive ell is a lower bound throughout
+IS3. The normalized readout computation below uses that inherited ell only
+at the central physical window a=log(3)/2.
+
+Floating eigenvalues only propose congruence coordinates. Each matrix entry
+is enclosed about a 44-bit dyadic center, a 32-bit dyadic congruence is
+applied with exact integers, and an exact Gershgorin lower bound certifies
+positivity. Its positive bound is
+
+    322613388022726078131097863949363 /
+      324518553658426726783156020576256.
+
+This number belongs to the CONGRUENT matrix; it is not reported as the
+original operator's gap. The signed radix-20 integer Gram calculation has
+explicit overflow guards and was separately compared with object-integer
+multiplication on 80 matrices. Both 90- and 120-digit sector runs passed.
+
+### 4. Recompute the actual centered coefficient with the relevant gap
+
+At a=log(3)/2 retain the exact historical ell and the SAME candidate, trial,
+genuine model e, and centered readout h_(e,z) from the preceding appendix.
+The original complete residual is replayed, including its covariance-corrected
+finite head and every exterior mode. The model approximation and original
+whole-space spectral records remain inherited analytic premises.
+
+The even trial and even residual can use
+
+    kappa_+=1/1000-ell >999/1000000.
+
+The actual upper data are
+
+    J<=1173667110482754901/10^18,
+    R^2<=1273652293764969/10^18.
+
+The new complete coefficient is
+
+    C_+<=J+R^2/kappa_+
+       <=100239558744515453640283630281893 /
+           40957747186193000000000000000000
+       <49/20.                                         (IS6)
+
+It is about 2.4473894594062675. The same centered residual with the old
+whole-space gap gave about 107.800065579058. This compares two sufficient
+coefficients, not the unknown optimal coefficient or actual Fourier error.
+The residual did not become smaller and no high mode was dropped.
+
+The energy-dual theorem is applied on the invariant linear domain. IS2 then
+lifts this readout inequality to the whole candidate complement. Crucially,
+the OLD global model-recentering factor and origin certificate are retained.
+We never substitute T_+ into a theorem requiring full-space coercivity.
+
+### 5. Pay variation on the full complex disk
+
+For a unit genuine model e, nonzero d_e=<g0,e> and any g,g', direct algebra
+and Cauchy-Schwarz give
+
+    ||(g'-conj(<g',e>/d_e)g0)-(g-conj(<g,e>/d_e)g0)||
+       <=||g'-g||*(1+||g0||/|d_e|).                     (IS7)
+
+The changing model ratio is retained. For supported Fourier kernels and
+|Im z|<=251/1000, the full L2 derivative estimate is
+
+    D_F=a*sqrt(2a)*exp(a*251/1000).
+
+The inherited model origin is greater than 805/1000. Directed arithmetic
+therefore gives the centered-kernel Lipschitz bound
+
+    D_F*(1+sqrt(2a)/(805/1000))<8/5.
+
+This elementary compact-support integral/derivative specialization remains
+paper analysis; its generic centered-vector inequality is a new Lean proof.
+
+On the entire disk |z-(20+i/4)|<=1/1000, the readout-vector variation from
+its center is at most 8/5000. The same even-sector coercivity and a second
+Young inequality give
+
+    C_disk<=(31/30)*(49/20)+31*(8/5000)^2/(999/1000000)
+          =521699/199800 <21/8.                          (IS8)
+
+This is a full-disk statement from an independently bounded derivative,
+not a sampled-frequency inference. Every centered readout on the disk stays
+in the invariant sector and annihilates the SAME genuine model.
+
+The preceding global model-centering factor is below 20001/20000 and its
+derived projective origin lower bound is b=39/50. With the inherited model
+energy width nu=929549/15625000000000-ell, exact arithmetic proves
+
+    (20001/20000)*(21/8)*nu/(39/50)^2 <(7/50000)^2.
+
+Consequently, under the recorded actual spectrum, domain and Fourier/model
+identifications,
+
+    |FT(u)(z)/FT(u)(0)-FT(e)(z)/FT(e)(0)| <7/50000
+    for EVERY |z-(20+i/4)|<=1/1000.                      (IS9)
+
+The genuine model, normalization, physical window and disk are the same as
+#5602's earlier origin-normalized certificate with upper bound 51/100000.
+IS9 improves that sufficient radius by the factor 51/14, greater than 3.6.
+It does not measure the actual error, certify a new Xi zero, increase the
+physical window, or improve the full-space ground spectral gap.
+
+### 6. What this changes for the remaining scale problem
+
+The previous single-rate theorem can now consume centered coefficients
+certified in the invariant sector and lifted by IS2. The relevant rate is
+still
+
+    nu_a * C^circ_(+,a,K) / b_a^2 -> 0.
+
+An opposite-sector small positive gap need not amplify C^circ_+. This is a
+structural saving at every scale where the stated invariance, opposite-sector
+shifted positivity and complete even-sector certificate hold. It does not
+prove how the even threshold, model energy, origin floor or centered trial
+quality behave along unbounded physical windows.
+
+The older global spectral placement and positive-form/model-centering
+conditions have not disappeared from the complete chain. In particular,
+this continuation does not certify them throughout an unbounded family or
+replace them by the stronger even bound. The new results consist of a
+universal sector-lift proof, an actual full-exterior uniform interval test,
+and a quantitatively improved actual same-model disk certificate.
+
+### 7. Sources, executed checks and formalization scope
+
+New Lean owner and paired Scribe:
+
+    D5/S3/Weil/GroundMode/InvariantSectorEnergyReadout.lean
+    Blueprint/D5/S3/Weil/GroundMode/InvariantSectorEnergyReadout.scribe.cs
+
+Five public proof scripts cover the actual domain energy split, sector
+readout lift, readout-neighborhood budget, model-centered vector variation
+and exact rational implications. They introduce no replacement Fourier
+transform, canonical zero data, full-space gap or energy-dual definition.
+Lean elaboration, transitive axiom reports and Scribe emission were not run.
+The operator/domain and interval identities are not automatically kernel
+validated by these generic proof bodies.
+
+Two new research programs and their actual outputs are committed under
+research/weil_ground_mode/. The sector program is a fresh evaluation of
+#5602's complete scale-Schur arithmetic with a different, sector-specific
+threshold and its own exact Gram/congruence calculation. The normalized
+consumer reuses and reruns this session's earlier centered-residual formulas
+with explicit source, trial and model-directory arguments. It checks the
+sector result's producer binding but does not rerun that producer internally;
+the latter was separately executed in this continuation.
+
+Final sector programs ran at 90 and 120 digits; final readout programs ran
+at 100 and 120 digits. The rational sector/readout conclusions agree. Local
+exact diagnostics cover 400 complex invariant splits, 400 sector lifts,
+400 neighborhood estimates, 400 centered-vector variation checks and 80
+signed integer Grams. Three mathematical negative controls test the missing
+invariance, commutation and opposite-sector positivity; integer-overflow,
+minimum-int64 and noninteger-array inputs are also rejected. Of the centered
+phase tests, 369 detect omission of the conjugation. These are single-author
+finite checks, not independent proof review or a synthetic Weil experiment.
+
+The arithmetic loader executes only its already inspected AST projection;
+complete local input bytes are identified separately and are not claimed
+identical to the full remote arithmetic owner. True-prolate and original
+global-spectrum verifiers were not rerun. Their selected mathematical fields,
+full model-proposal hash and analytic obligations retain the prior scope.
+
+Primary sources reread:
+
+- https://arxiv.org/html/2511.22755v1 , Section 5.2, Lemma 5.2,
+  and Section 8's genuine-mode approximation problem.
+- https://arxiv.org/html/2606.09096v1 , localized lower-bounded forms
+  and the distinction between form cores and operator domains.
+- https://arxiv.org/abs/2008.10871 , complete-exterior spectral discretization
+  methodology; its Schrodinger assumptions are not asserted for the Weil form.
+
+- Parallel #5602 source at `4804c4020d7d9f165a2e2683c42b01e3d47a8be4`: `WeilPrimeActivationEdge.lean`, blob `5cd36bfeef88311e1f5e6c140fc11e52b16e8881`; `certify_prime3_scale_schur.py`, blob `496333f97d20a6898d47f848a2abd839249e9207`.
+
+
+---
+
+## [PR #5602] UNIFORM_TRUE_PROLATE_SCALE_TRANSPORT_AND_CENTERED_MELLIN_FLOW
+
+# 2026-09-08：真实 prolate 尺度族与移动算术窗口的定量 Fourier 传递
+
+本节补齐已在研究分支提交的 `WeilMellinScaleFlow.lean`、同名 Scribe 与 `certify_prime3_prolate_scale_transport.py` 的解析依据。处理的是同一个真正 prolate 模型随尺度的变化；前节提供的真实 Weil 最低模态谱分离是另一个结果。两者不能未经误差桥接就合并为同尺度 ground/prolate 逼近。
+
+本次回读确认，前一轮未交付的六个 `WeilPrimeThresholdParity` / `prime3_scale_interval` 工作产物和原理论卷的 184 行追加已经位于远端，后续 `5d22480c06da2ae5716d804129153ba47e115f2a` 又包含本节六个 scale-flow 工作产物。旧 Lean 真源字节保持不变；Scribe 的过时半径改为 2e-8，Python 仅删去说明注释，结果源哈希同步更新。验证了现行源码，并实际重放 70、100 位的统一 Weil 区间程序和 110、130 位的真实 prolate 尺度程序。以下数学内容追加到原卷，不覆盖并行成果。
+
+## 1. 保持同一个模型及原始 Fourier 约定
+
+令 a0=log3/2，I=[a0-epsilon,a0+epsilon]，epsilon=1/50000000。相应 c=exp(2a) 跨过整数 3，但始终在 (2,4)。固定空间 [-1,1] 上的实际正规 prolate 算子为
+
+\[
+J(a)=-\partial_t((1-t^2)\partial_t)+(2\pi e^{2a})^2t^2.
+\tag{MF1}
+\]
+
+其偶 Legendre 自伴实现、紧 resolvent 和有界乘法势沿用 (PM1)-(PM5)，全部尺度具有相同算子域。psi_(0,a)、psi_(4,a) 是编号 0、2 的真实偶模式，单位归一化并以零阶 Legendre 系数为正固定符号。定义
+
+\[
+H_a=\psi_{4,a}-\frac{(\psi_{4,a})_0}{(\psi_{0,a})_0}\psi_{0,a},
+\qquad h_a(u)=H_a(e^{-a}u).
+\]
+
+实际算术函数为
+
+\[
+p_{a,H}(x)=1_{[-a,a]}(x)4e^{x/2}
+\sum_{1\le m\le e^{a-x}}H(me^{x-a}),\qquad
+p_a^+=(p_{a,H_a}(x)+p_{a,H_a}(-x))/2.
+\tag{MF2}
+\]
+
+Fourier 仍为原 `Zeta23.paperFT`，即 integral f(x)exp(i*z*x)dx。定义待比较的明确归一化 P_a(z)=FT(p_a^+)(z)/FT(p_a^+)(0)，其分母在本节独立认证。没有将 H_a、p_a、前节 dyadic k_a 或未知 Weil 最低模态相互重新命名。
+
+## 2. 全区间上的真实无限 prolate 谱认证
+
+现行验证器读取原来的 32 维、分母 2^250 的固定提案 v_0、v_4。它们本身不被当作真实特征向量。J(a) 的偶 Legendre Jacobi 矩阵为 D0+q(a)^2 V，q(a)=2pi exp(2a)，V 是真实 t^2 乘法算子。V 对角和相邻项由标准 Legendre 递推给出。遗漏空间的完整形式下界仍为 2K(2K+1)=4160。
+
+在两个固定 dyadic 中心 mu_i 的 mu_i-50 和 mu_i+50 处，对整个 a 区间同时检验有限矩阵与其完整尾修正矩阵的惯性。两种 Schur 端点计数分别为 (0,0;1,1) 和 (2,2;3,3)。所以每个区间有且仅有一个对应编号的真实简单特征值，其余全部无限谱到固定中心的距离至少为 50。不能把有限 Jacobi 矩阵的单独计数当作这一步。
+
+保留参数差的相关性，完整残差满足
+
+\[
+\|(J(a)-\mu_i)v_i\|
+\le\|(J(a_0)-\mu_i)v_i\|
++|q(a)^2-q(a_0)^2|\,\|t^2v_i\|.
+\tag{MF3}
+\]
+
+两个范数都包括第 K 个遗漏坐标。谱分解和单位向量相位比较给出 eta_i=sqrt(2)*rhs/50 的模式误差。零阶坐标大于 eta_i 的检查固定同一符号。定向区间结果为 eta_0<3.646331e-8、eta_4<2.319807e-7；对应中心误差也从实际残差重新计算，没有读历史成功 JSON 作谱前提。
+
+令 r=v_(4,0)/v_(0,0)，固定多项式 Htilde=v_4-rv_0。其零阶系数严格为零。真实系数比的误差满足
+
+\[
+\delta_r\le(\eta_4+|r|\eta_0)/(v_{0,0}-\eta_0),
+\quad
+\|H_a-\widetilde H\|\le\eta_4+(|r|+\delta_r)\eta_0+\delta_r.
+\tag{MF4}
+\]
+
+验证器认证右侧小于 652/10^9；中心版本小于 3.142e-29。固定多项式的范数预算是 1+|r|，一致值预算是 sum_j |Htilde_j|sqrt((4j+1)/2)<7.61，来自真实 Legendre 系数。
+
+## 3. 实际移动窗口的精确尺度流
+
+先保持 H 为固定连续函数。设 s=1/2+iz。对每个整数 m 用 t=m exp(x-a) 代换，得到实际积分
+
+\[
+F_{a,H}(z)=4e^{as}\sum_{m\le e^{2a}}m^{-s}
+\int_{me^{-2a}}^1 H(t)t^{s-1}\,dt.
+\tag{MF5}
+\]
+
+在可见整数集合不变的尺度区间内，微分得到
+
+\[
+\boxed{\partial_a F_{a,H}(z)=sF_{a,H}(z)
++8e^{-as}\sum_{m\le e^{2a}}H(me^{-2a}).}
+\tag{MF6}
+\]
+
+新整数刚进入时，其 (MF5) 中积分区间长度为零。因此 F 在激活点连续，左右导数可不同，(MF6) 在每个开区间成立；有限个激活点两侧的统一导数界可以积分相加，得到跨阈值的 Lipschitz 界。没有将 moving-cutoff 项删除，也没有从函数的 L2 支撑差粗略推断线性误差。
+
+对固定偶多项式 H(t)=sum_(r<d) B_r t^(2r)，设 s_r=2r+s。复用原多项式 Fourier 定理，已提交的新 Lean 证明
+
+\[
+\boxed{e^{-as}F_{a,H}(z)=4\sum_{m=1}^M\sum_{r<d}
+B_rm^{2r}\frac{e^{-s_r\log m}-e^{-2as_r}}{s_r}.}
+\tag{MF7}
+\]
+
+条件是全部纳入的 m 满足 log m<=2a，Im z<1/2；原 integrand 的可积性由既有 owner 保证。`scaled_polynomial_centered_paperFT` 保存 (MF7)，`scaled_polynomial_paperFT_scale_difference` 将两尺度的上端项精确消去，留下下端指数差。后者要求两个尺度具有同一合法 M；跨激活点的连续拼接是 (MF5)-(MF6) 的纸面步骤，不能误称为该 Lean 声明直接覆盖变动索引集。偶化使用 F(z)、F(-z) 的平均，两个方向都保留。
+
+## 4. 真正变动模式的统一运输
+
+设 a_-、a_+ 为 I 的两端。单个整数项用 t=m exp(x) 代换，再合成并偶化，得到从固定 H 坐标到物理窗口的 L2 算子预算
+
+\[
+C=4e^{a_+/2}\sum_{m=1}^3m^{-1/2}.
+\]
+
+对 |Im z|<=b，记 W_b=sqrt(2a_+)exp(a_+b)C，W_0=sqrt(2a_+)C。在 D={|z-(20+i/4)|<=1/1000} 上取 b=251/1000，|s|<21。对固定 Htilde，(MF6) 给出导数上界
+
+\[
+L_b=21W_b(1+|r|)+24e^{-a_-(1/2-b)}\|\widetilde H\|_\infty,
+\quad
+L_0=\tfrac12W_0(1+|r|)+24e^{-a_-/2}\|\widetilde H\|_\infty.
+\tag{MF8}
+\]
+
+这里 24=8*3 保留所有可能可见整数。令 E_I、E_0 为 (MF4) 的区间和中心种子误差。分解真实函数的变化为“当前真实模式减固定多项式”、“同一固定多项式的尺度流”、“固定中心多项式减中心真实模式”，得到
+
+\[
+\sup_{a\in I,z\in D}|\widehat p_a^+(z)-\widehat p_{a_0}^+(z)|
+\le W_b(E_I+E_0)+\epsilon L_b=:d_b,
+\]
+
+\[
+\sup_{a\in I}|\widehat p_a^+(0)-\widehat p_{a_0}^+(0)|
+\le W_0(E_I+E_0)+\epsilon L_0=:d_0.
+\tag{MF9}
+\]
+
+只对固定多项式求尺度导数，未假设未知真模式导数或其连续常数。实际 d_b<2.2230e-5、d_0<1.1190e-5。
+
+原中心多项式的 Fourier 端点公式算出原点约为 2.336197886604782；减中心真模式误差得到 beta_0，再减 d_0 得到所有尺度的正下界 beta_I>23/10。这个正下界对应 (MF1)-(MF2) 的固定原始标度；原点归一化结果与非零整体标度无关。中心分子的圆盘上界 M_D 也包含真实模式误差和 Fourier 代表元导数，而非只用中心点值。精确商恒等式给出
+
+\[
+\sup_{a\in I,z\in D}|P_a(z)-P_{a_0}(z)|
+\le\frac{d_b+M_Dd_0/\beta_0}{\beta_I}.
+\tag{MF10}
+\]
+
+两种精度的实际验证均得到
+
+\[
+\boxed{\inf_{a\in I}|\widehat p_a^+(0)|>23/10,
+\qquad \sup_{a\in I,z\in D}|P_a(z)-P_{a_0}(z)|<10^{-5}.}
+\tag{MF11}
+\]
+
+充分上预算约为 9.54904664569e-6。令 r_(a,z)(y)=conjugate(cos(a z y)-P_a(z)) 于 [-1,1]，直接对指数核估计可再得
+
+\[
+\boxed{\sup_{a\in I,z\in D}\|r_{a,z}-r_{a_0,z}\|_{L^2[-1,1]}<15/10^6.}
+\tag{MF12}
+\]
+
+其实际预算约为 1.41537868833e-5。复共轭不改变范数；r_(a,z) 是针对同一真模型中心化的 Fourier 代表元，尚未假定它在真实 ground 上的读出很小。
+
+## 7. 研究意义、复验及尚缺的连接
+
+前节已经在同一个 I 上认证实际 Weil ground 的简单偶性和大于 4.8e-6 的间隔。本节消除了模型端尚无统一尺度误差及原点分母控制的缺口。不能因此声称 ground/model 的同尺度差已经小：还需要实际 q_a 正交补上的能量对偶试探及完整 residual，或有效的低能谱投影传递。中心尺度已有的 0.00051 归一化 ground/model 圆盘界，也不能未经 ground 传递误差预算就扩展到整个 I。
+
+本次重新核对 CCM arXiv:2511.22755 的官方版本页（取得的记录列出 v1）和正文 Sections 7-8；其模型极限与真实模式充分逼近保持分开。Connes 2026 综述 arXiv:2602.04022 为同一路线背景。实际读取 5040/Mertens 研究链 #6204 的 `GronwallUpperEnvelope.lean`，blob `75eb28885ee1250985d9dbd19b73fa76f3502d04`：该结论是 sigma(n)/(exp(gamma)*n*loglog n) 的渐近上包络，不是本节的算子间隔或 prolate 估计，不将标量渐近移作谱假设。原有 #5882 能量对偶、#5895 正移位形式和归一化消费者继续作为下游目标，未新建通用包装。
+
+现行模型源 SHA-256：`fe1d574f38a13e0dbcc185649c0e6c32dfd9e1cb676ceebb73ad7c6c31218b4f`；固定提案 SHA-256：`242c9897bbd247ef0485039e6dcde819a351c5900ceac52fecc420934c1896db`。本次实际重放 110、130 位定向区间计算，全部惯性、完整残差、符号、原点和误差 guard 通过。110 位结果 Git blob 与远端 `45c149e61156ad85ce1c5cd0cbde1ba297ec790f` 完全一致；其 SHA-256 为 `bd57ff4bf4b7a388dc086519f708ee33b381f1202af25a11cba0d0bfc81f4d0a`。同时重放前节 70、100 位的全空间 Weil 区间证书通过。本轮的重放不等于独立作者审稿。
+
+Lean 的三个公开声明与三个同名 Scribe handles 对应，完整谱实现、积分变换、跨激活拼接和归一化运输仍是上述纸面桥。Lean elaboration、Scribe emission、传递公理报告未执行，没有新增冻结或 CI 状态声明。经典谱残差、Leibniz 公式和商估计不作数学优先权主张。当前窄尺度区间和小复圆盘尚不能推出无界尺度族上的 Xi 极限或 RH。
+
+参考：Connes-Consani-Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 7-8；Connes, arXiv:2602.04022；既有 `WeilPolynomialMellinWindow`、`WeilMellinScaleFlow` 和本卷 prolate Jacobi 实现。
+
+- https://arxiv.org/abs/2008.10871 , complete-exterior spectral discretization
+  methodology; its Schrodinger assumptions are not asserted for the Weil form.
+
+## [PR #5895] SIGNED_MODEL_RESIDUAL_PAIRING_AND_GOAL_CORRECTION
+
+### 1. The open problem and the role of the old sufficient rate
+
+The target is still the actual lowest-Weil-mode comparison with the same
+correctly normalized prolate family in Connes, Consani and Moscovici,
+Zeta Spectral Triples, arXiv:2511.22755v1, Section 8. The explicit-model
+transform limit of Lemma 7.3 is a separate step. This increment preserves the
+signed complex primal/dual pairing before estimating the remaining error.
+It does not establish that pairing's decay along unbounded physical windows.
+
+The preceding condition nu*C_centered/b^2 -> 0 is sufficient. It is not a
+necessary condition for the actual normalized readout error to vanish.
+Directional residual cancellation may be lost when the full model error is
+bounded first by a single energy budget. The following exact identity is a
+complementary certificate; all earlier inequalities remain valid.
+
+The primary methodological reference is Wu and Zhang, Goal-Oriented Error
+Estimation for Least-Squares Finite Element Methods via Physically Meaningful
+Adjoint PDEs, arXiv:2607.23850v1 (26 July 2026), Section 4, especially the
+corrected-output and product-remainder statements. That paper explicitly
+retains the classical Giles--Suli lineage. Its elliptic PDE assumptions and
+least-squares estimates are not used as hypotheses for the Weil operator.
+The domain-level identity here needs neither a Galerkin solution nor an exact
+dual inverse. No priority for residual correction is claimed.
+
+Cross-session readback: #6029 at 99b3e1ca03e88f42a9b7c6ccadecc545e8c64a97
+identifies actual zero-extended Fourier convolutions with the exterior
+arithmetic column; it still separates the diagonal regularization and actual
+operator-domain realization. #5602 at 5b1c54e84706acdca64e2ec042b51a5d52c5fcea
+retains the complete genuine prolate model residual and newer scale work.
+Those results are not reimplemented or counted as this continuation's work.
+The numerical inputs below are the previously pinned c=3 records, not
+unverified values inferred from a more recent PR title or description.
+
+The final concurrent readback found #5895 advanced to
+e6a7b1837783c6b9b4eb00d90240ae53e4543045, adding only the separate
+InvariantSectorEnergyReadout Lean/Scribe pair. Its actual first 100 source
+lines were read: the invariant-sector split keeps opposite-sector shifted
+positivity separate from a positive gap. This contribution is not ours.
+No numerical sector improvement is substituted into SG7-SG9. The three
+paths proposed here were unchanged by that concurrent commit. This payload
+was subsequently delivered on top of 023e6d1eccb223a563939590d301085a220b38f2,
+preserving the completed parallel sector computation and theory appendix.
+
+### 2. Signed identity with the actual eigenvalue uncertainty
+
+Let iota,M:E->H be complex-linear maps on an actual operator domain, symmetric
+there. Inner products are conjugate-linear in their first argument. Suppress
+iota in the equations. Let e be a unit model and p an aligned eigenvector,
+
+    Mp=lambda p,       <e,p>=1,       w=p-e perpendicular to e.
+
+For g0 and g the actual origin and target readouts, put
+
+    h=g-conj(<g,e>/<g0,e>)*g0,       <h,e>=0.
+
+Choose a domain trial v perpendicular to e and ANY real spectral center sigma.
+Define the complete quantities
+
+    r_sigma=Me-sigma e,
+    s_sigma=P_(e-perp)(h-(Mv-sigma v)),
+    D=<v,r_sigma>.
+
+Symmetry and the actual eigenvalue equation give the exact complex identity
+
+    <h,p> + D = <s_sigma,w> + (lambda-sigma)<v,w>.          (SG1)
+
+The correction is -D. Dropping lambda-sigma is invalid unless it is zero
+or has been separately budgeted. Dropping the exterior of s_sigma is also
+invalid. No scalar norm inequality or approximation theorem is assumed to
+produce SG1.
+
+For certified bounds ||s_sigma||<=S, |lambda-sigma|<=eta, ||v||<=V and
+||w||<=R, Cauchy--Schwarz yields
+
+    |<h,p> + D| <= (S+eta V)R.                             (SG2)
+
+The right side is a product of the actual mode-error radius and the full
+dual-residual/shift uncertainty. A small signed pairing does not by itself
+make this remainder small, nor does it determine the actual output sign.
+
+### 3. The model-origin correction and the actual denominator
+
+Write d_e=<g0,e> and d_p=<g0,p>. From ||g0||<=G0 and the actual error bound,
+
+    |d_p-d_e|<=G0 R.
+
+If b,b0>0 and b+G0 R<=b0<=|d_e|, then |d_p|>=b. The existing centered-readout
+identity supplies the quotient difference. Normalizing the computable
+correction by the MODEL origin gives
+
+    |<g,p>/<g0,p> - <g,e>/<g0,e> + D/d_e|
+      <= (S+eta V)R/b + |D| G0 R/(b0 b).                 (SG3)
+
+The second term is the cost of replacing d_p by d_e. It remains even if the
+unscaled dual remainder vanishes. It is derived from the exact identity
+
+    H/d_p + D/d_e = (H+D)/d_p + D(d_p-d_e)/(d_e d_p),
+    H=<h,p>.
+
+The public projective consumer constructs p=u/<e,u> using the existing
+Rayleigh enclosure, derives the error radius from nu<=kap*R^2, and obtains
+SG3 for the ACTUAL raw eigenvector ratios. Arbitrary complex phase and scale
+cancel. The old eigenpair, spectral placement, domain and unit-model
+conditions are retained; the theorem does not manufacture an eigenvector.
+
+A scale limit to the ORIGINAL prolate model requires the normalized correction
+D_a/d_(e,a) to tend uniformly to zero, as well as the product remainder in
+SG3. Convergence to a newly corrected model alone does not establish the
+original Xi/Xi(0) limit. The model has not been silently redefined here.
+
+### 4. Why the finite trial can compute the genuine signed defect
+
+Let mu=Re<e,Me>. Symmetry makes this diagonal pairing real, so the actual
+Rayleigh residual r_mu=Me-mu e obeys <e,r_mu>=0. Therefore subtracting ANY
+multiple of e from a domain trial leaves its pairing with r_mu unchanged:
+
+    <v-beta e,r_mu>=<Mv,e>-mu<v,e>.                       (SG4)
+
+In particular let v_e=v-<e,v>e be the repaired trial used in SG1. Since
+v_e is e-orthogonal, its pairing with r_sigma also equals its pairing with
+r_mu. Thus its signed correction is exactly <(M-mu)v,e>, computed from the
+ORIGINAL finite v. The full action (M-mu)v is still generally infinite.
+SG4 does not assert finite support of that action or of the repaired trial.
+
+Split that action into finite a_head and exterior a_tail. A complete pairing
+budget can use a known finite candidate k with <a_tail,k>=0:
+
+    |<a_head+a_tail,e>-<a_head,e_approx>|
+      <= ||a_tail|| ||e-k|| + ||a_head|| ||e-e_approx||.    (SG5)
+
+For a sharper tail budget, unit normalization and orthogonal Fourier
+projection give
+
+    ||e_tail||^2 = 1-||e_head||^2
+      <= 1-(||e_approx,head||-gamma)^2,                  (SG6)
+
+provided ||e_head-e_approx,head||<=gamma<=||e_approx,head||.
+Subtract the approximation error before squaring. The near cancellation in
+one minus captured energy must use outward rounding. SG5 and SG6 have new
+Candidate Lean proof bodies; the actual Fourier/Parseval identification and
+model-approximation record are still the same separate analytic inputs.
+
+### 5. Executed signed pairing for the same genuine c=3 model
+
+The same archived 129-coordinate finite complex trial and aligned UNIT
+true prolate model are used. No eigensolver, zero-location table or numerical
+quadrature enters the new scalar consumer. The full arithmetic primitive
+projection and model proposal are pinned to the previous delivery.
+
+The actual pairing is
+
+    D=<v,(A-mu)e>=<(A-mu)v,e>.
+
+Both positive and negative column coefficients are evaluated independently.
+Fourier model coefficients are explicitly evaluated through |n|<=P=512.
+Action squares in the remaining finite exterior are evaluated through
+M=8192. The full analytic column tail beyond M retains all four boundary
+moments. The model tail is paid separately using SG6; no high coefficient
+is assigned zero.
+
+Two directed-interval executions, at 110 and 120 decimal digits, give the
+same outward rational enclosures. Convenient rounded statements are
+
+    -5.300e-6 < Re D < -5.288e-6,
+     1.209e-6 < Im D <  1.222e-6,
+    |D| < 5.44e-6.                                      (SG7)
+
+The actual interval endpoints and exact input hashes are in the local
+reproduction result. The all-tail radius is below 5.634e-9. A fixed rational
+complex approximation is
+
+    Dapprox=-10588081114283/2000000000000000000
+                 + i*(1215543485777/1000000000000000000),
+    |D-Dapprox| < 6/10^9.                                (SG8)
+
+The captured model energy gives a full model-tail norm below approximately
+5.065e-6. Combined with the complete column-tail energy, this is much tighter
+than using the old model/candidate distance 0.00113 for this scalar pairing.
+The basic product bound ||v||*rho<7*9.16662e-5 is over 117 times the new
+upper bound on |D|. This comparison concerns sufficient SCALAR-PAIRING budgets,
+not a 117-fold improvement of the actual mode or the final Fourier error.
+
+A P=128 calculation also completed. An exploratory P=1024 call hit the
+execution time limit and is not counted as a completed certificate. There
+is no claim of an optimal P, a converged unknown infinite-mode value, or
+an unbounded physical scale experiment.
+
+### 6. Complete corrected-output budget on the prior small box
+
+Use the same closed box of half-width 1/100000 around 20+i/4, the prior
+whole-domain lower bound ell, old candidate energy width delta and genuine
+model width nu. The previous centered full-residual verifier was replayed
+at 100 digits in this continuation. Its two-sided exterior is unchanged.
+
+Choose sigma=eta=delta/2, since the inherited eigenvalue enclosure gives
+0<=lambda<=delta for M=A-ell. The old complete centered residual radius is
+less than 357/10000. Recentring it with the full model residual and retaining
+the spectral-center shift yields
+
+    ||s_sigma|| < 3572/100000,
+    ||w|| < 194/10000,
+    ||v_e|| < 7,
+    ||g0|| < 21/20,
+    |d_e| > 805/1000,       |d_p| > 784/1000.
+
+The raw centered candidate component is below 13/1000, obtained from the
+prior uncentered component, the actual model ratio and the origin-kernel
+norm. Its contribution is not discarded. The original model graph residual
+is used here only to transport the full dual residual; it is not substituted
+for the signed scalar pairing in SG7.
+
+Exact Fraction arithmetic and a Candidate norm_num theorem give
+
+    |ratio(u)-ratio(e)+Dapprox/d_e| < 885/1000000,
+    |ratio(u)-ratio(e)| < 891/1000000.                    (SG9)
+
+These inherit the recorded canonical operator/domain, full spectrum, genuine
+model and Fourier identities. They are weaker than #5602's previously
+reported normalized bound 51/100000 on a larger disk. The useful new output
+is the signed defect and the product-remainder route, not a superior
+fixed-window zero-free region. The remainder is currently much larger than
+the signed defect, so no sign of the ACTUAL Fourier error is inferred.
+
+### 7. A control showing the preceding single rate is not necessary
+
+For a synthetic three-dimensional family let t=1/j, j>=10,
+
+    c=(1-t^2)/(1+t^2),   s=2t/(1+t^2),
+    M=diag(0,8s^2,1),   k=e=(c,0,s),   u=(1,0,0),
+    h=(0,1,0),   g0=(1,0,0),   v=(0,1/(8s^2),0).
+
+The old complement gap kappa=8s^2, model energy nu=s^2, eps=0 and anchor
+b=1/4 satisfy the old centered theorem's conditions. The sharp old coefficient
+is C=1/(8s^2), so nu*C/b^2=2 for every j. Nevertheless the actual normalized
+readout error is identically zero, as are D and the complete dual residual
+at sigma=lambda=0. The closed-form algebra proves the example; 101 exact
+instances were also replayed. This is not an arithmetic Weil family and is
+not evidence for its asymptotic cancellation.
+
+It demonstrates a precise methodological point: failure to prove the old
+single sufficient rate does not itself obstruct the original open problem.
+The signed product estimate can see output cancellation hidden by that rate.
+Conversely, a fixed-window nonzero D says nothing about whether D_a/d_(e,a)
+will decay in the physical scale limit. Both questions remain separate.
+
+### 8. Candidate sources and execution boundary
+
+This continuation adds eight public theorem scripts to the existing
+GenuineModelDualTransport.lean and eight matching canonical Scribe handles.
+All original source text is preserved except the syntactic closing delimiter
+needed to append Scribe entries. No new Fourier or dualBudget definition is
+introduced. This theory text is now appended to the existing volume.
+No Lean elaboration, transitive axiom audit or Scribe emitter was executed.
+
+Executed checks include 600 exact Hermitian eigenpair cases and signed
+identities, 600 product and ratio bounds, 600 repaired arbitrary-shift
+pairings, 480 captured-head model-tail checks, 1800 raw phase/scale checks,
+and negative controls for omitted eigenvalue uncertainty and omitted
+actual-denominator correction. Wrong signs and complex-conjugation mutations
+are detected. These are single-author finite diagnostics, not independent
+proof review or a universal kernel verdict.
+
+The previous exact centered diagnostics and 100-digit interval transport
+were rerun in the original computation. The 512-mode scalar calculation was
+run at 110 and 120 digits. At delivery the exact diagnostics, source/patch
+checks and rational budget assembly were rerun. The original full spectral,
+genuine-prolate and graph-norm verifiers were not rerun. Their input scope
+remains explicit. The local input projections are not misrepresented as
+complete upstream-file attestations.
+
+Primary references read in the original computation:
+
+- https://arxiv.org/html/2511.22755v1 , Lemma 7.3 and Section 8.
+- https://arxiv.org/html/2607.23850v1 , Section 4 and the abstract's
+  no-Galerkin/product-error qualifications, 26 July 2026.
+- https://arxiv.org/html/2606.09096v1 , localized forms and operator domains.
+
+## [PR #5895] SIGNED_SECTOR_CERTIFICATE_AND_ORIGINAL_MODEL_CLOSURE
+
+### 1. Which logical chain is now assembled
+
+The signed primal-dual proofs and their eight Scribe bindings from the previous
+round were delivered first at 088584353834d97bd5396f04b06abb13ef519612. That
+normal child preserves the independent invariant-sector work at
+023e6d1eccb223a563939590d301085a220b38f2. This continuation combines those two
+mathematical increments on the actual restricted domain. It also proves the
+terminal implication to the ORIGINAL model limit, explicitly retaining its
+unproved arithmetic scale hypotheses.
+
+The open problem remains CCM, Zeta Spectral Triples, arXiv:2511.22755v1,
+Section 8: actual lowest-mode approximation by the same normalized prolate
+family. Section 5.2 supplies the reflection setting, and the explicit model
+limit in Section 7 is a distinct input. Wu and Zhang, arXiv:2607.23850v1,
+Section 4, provides the classical output-correction/product-remainder
+comparison. Suzuki, arXiv:2606.09096v1, supplies the localized form and domain
+context. These versions were reread; their PDE hypotheses or unproved
+all-window conclusions are not asserted for the present operator.
+
+### 2. Use the even lower bound only inside the even domain
+
+The independently executed complete-sector certificate on this PR gives
+q_A(f)>=||f||^2/1000 for even k-orthogonal vectors, in the stated neighborhood
+of a=log(3)/2. Its source blob is c29d0459429becf39f294221949975a23894ef47.
+The normalized sector-readout report has blob
+05f5b73fabd92d68893fbb9c32d69816c71f3fb3. Both were reread at the immutable
+head above. Their Fourier/core, full high-complement and reflected-domain
+identifications remain inherited analytic premises. The sector producer was
+not rerun in this continuation.
+
+Let F be the complex submodule of actual even domain vectors. Require
+k,e,u,v in F. Restrict the original maps by iota_F=iota composed with the
+subtype map and M_F=M composed with that map. The stronger lower bound is
+used on F only. No assertion about an odd or full-space gap is made.
+
+At the CENTRAL window take the independently inherited global ell and set
+
+    kappa=1/1000-ell,   delta=q_M(k) upper,   nu=q_M(e) upper,
+    ||e-k||<=epsilon,
+    kap=kappa*(1-epsilon^2)/(1+t)-delta*epsilon^2/t.       (SC1)
+
+The already-proved positive shifted-form theorem derives the e-complement
+bound on F. The new sector_projective_signed_ratio_bound then calls the
+already-proved actual projective signed-output theorem on that restricted
+domain. Its hypotheses include actual eigenvalue placement, unit model,
+trial membership, full residual and origin margins. It does not receive a
+new-complement estimate or final output bound as an unexplained oracle.
+
+A whole-domain symmetric realization is used in this particular statement;
+positivity is needed only on F. The old global ell is not asserted uniform
+on the neighboring scale interval. Membership of the selected actual ground
+mode in the even sector is still supplied by the established symmetry chain.
+
+### 3. The fixed trial controls the entire frequency disk
+
+For the same e and trial v, let
+
+    h_z=g_z-conj(F(e)(z)/F(e)(0))*g0,
+    s_z=P_e(h_z-(M-sigma)v).
+
+Since v and sigma are FIXED as z changes,
+
+    s_z-s_z0=P_e(h_z-h_z0),
+    ||s_z||<=||s_z0||+||h_z-h_z0||.                      (SC2)
+
+The new signed_goal_residual_neighborhood proves this identity's norm
+consequence using the existing orthogonal projection contraction. The
+residual is a full Hilbert-space vector, including every omitted Fourier
+coefficient. No positive high-frequency term disappears during transport.
+
+The parallel same-model readout certificate independently proves
+||h_z-h_z0||<=(8/5)|z-z0| on |z-z0|<=1/1000, z0=20+i/4. It includes the
+variation of the true-model ratio, not just the raw Fourier kernel. The
+signed model pairing D=<v,(M-sigma)e> is constant across this disk because
+the repaired trial, model and spectral center are fixed.
+
+The previous complete centered residual calculation was rerun at 100 digits,
+and the complete signed 512-mode pairing was rerun at 120 digits. Both agree
+with the recorded outward rational enclosures. Model Fourier coefficients
+are evaluated through 512, arithmetic columns through 8192, and all remaining
+modes have their original complete tail budgets. The same arithmetic AST,
+finite trial, unit-model alignment and model-proposal hash are retained.
+
+### 4. Exact synthesis on the same physical disk
+
+The old global ell, delta, nu and epsilon are unchanged. Taking t=1/100000
+in SC1 gives approximately kap=0.0009999335842419315. Exact arithmetic proves
+
+    delta<kap, nu<kap, nu<kap*(212/100000)^2.
+
+Thus the actual model-aligned EVEN eigenvector p_e=u/<e,u> has
+
+    ||p_e-e||<=R,       R=212/100000.                     (SC3)
+
+This uses the full sector lower bound, not a truncated matrix eigenvalue.
+For sigma=eta=delta/2, V=7, the previously certified central full residual is
+below 3572/100000. SC2 gives the disk-wide cap
+
+    S=3572/100000+(8/5)*(1/1000)=0.03732.
+
+The same origin kernel has G0=21/20 as an upper bound. Set b0=805/1000 and
+b=802/1000. The exact inequality b+G0*R<b0 proves |F(p_e)(0)|>=b.
+
+Retain the full signed model pairing and its finite approximation from SG7-8:
+
+    |D|<544/10^8,
+    Dapprox=-10588081114283/(2*10^18)+i*1215543485777/10^18,
+    |D-Dapprox|<6/10^9.
+
+The new finite_pairing_corrected_ratio_bound transports the computational
+radius as q/b0, with q=6/10^9. The resulting full error expression is
+
+    E=(S+eta*V)*R/b+|D|*G0*R/(b0*b)+q/b0
+      <0.000098677591663762 <99/10^6.                    (SC4)
+
+Consequently, on the ENTIRE closed disk |z-(20+i/4)|<=1/1000,
+
+    |F(u)(z)/F(u)(0)-F(e)(z)/F(e)(0)+Dapprox/F(e)(0)|
+       <99/10^6.                                       (SC5)
+
+Adding the certified magnitude of the correction proves the original-model
+bound, rather than only a bound to a corrected surrogate:
+
+    |F(u)(z)/F(u)(0)-F(e)(z)/F(e)(0)|
+       <99/10^6+(544/10^8+6/10^9)/(805/1000)
+       <53/500000=0.000106.                             (SC6)
+
+This improves the preceding sector certificate's sufficient original-model
+error 7/50000=0.00014 on the SAME disk by factor 70/53>1.32. The unknown
+actual error has not been measured. There is no larger support window, new
+spectral enclosure or Xi-zero conclusion. The output radius still exceeds
+the leading signed correction; no sign of the actual Fourier error follows.
+
+The numeric synthesis is a new exact consequence of independently certified
+sector and model data. The inherited global spectrum, true-prolate spectrum,
+operator-domain identification and sector Schur producer are not reverified
+by this arithmetic. The new prime_three_sector_signed_budget checks the
+rational implications in SC1-SC6; it does not attest those upstream premises.
+
+### 5. Terminal implication to the original model limit
+
+The signed_goal_original_model_uniform_limit theorem permits a different
+Hilbert space and actual linear operator domain at each scale. Its inputs
+are actual eigenpairs, model energy and complement bounds, trial vectors,
+complete dual residual bounds S_j, spectral uncertainty eta_j, trial bounds
+V_j, derived-error radius data R_j, origin kernel bounds and margins b_j,b0_j.
+For the actual signed pairing assume a uniform finite bound |D_(j,z)|<=B_j.
+It invokes the existing projective signed theorem and proves convergence of
+the actual normalized eigenmode functions to the SAME limiting function as
+the original normalized models, provided
+
+    B_j/b0_j ->0,                                       (SC7)
+    (S_j+eta_j*V_j)*R_j/b_j
+       +B_j*G0_j*R_j/(b0_j*b_j) ->0,                    (SC8)
+
+and the original normalized models tend uniformly to that function on K.
+The triangle inequality adds SC7, SC8 and the original-model convergence.
+There is no assumed final mode-error estimate and no silent replacement of
+the model by a corrected one. If the correction does not vanish, convergence
+to the corrected surrogate alone gives a different possible limit.
+
+SC7-SC8 are still arithmetic hypotheses for the intended unbounded Weil
+windows. The theorem proves the complete implication from them, not those
+physical rates themselves. The finite-window certificates above establish
+neither an unbounded sequence of spectral enclosures nor the all-scale
+simple-even and model-normalization premises of CCM. Calling this endpoint
+an unconditional proof of the original open problem would be incorrect.
+
+### 6. Source and computation audit
+
+Five new declarations extend the existing GenuineModelDualTransport owner,
+with five matching canonical Scribe entries. No new Fourier transform,
+energy budget, model definition or logical axiom is introduced. The old
+signed proofs and the parallel invariant-sector module remain unchanged.
+All new statements have proof bodies, but Lean elaboration, transitive
+axiom reports and Scribe emission have not been executed in this runtime.
+The sources remain logically reviewed Candidates.
+
+New exact diagnostics exercise 400 restricted-domain examples, 400
+positive-form model-gap consequences, 400 full-residual frequency variations,
+400 finite pairing-error transports, 400 signed ratio bounds and 1200
+phase/scale identities. Negative controls retain the necessity of the actual
+sector restriction, the signed correction's vanishing in an original-model
+limit, full frequency variation and finite-pairing uncertainty. Those finite
+examples are not arithmetic Weil experiments or an independent review.
+
+The same old 512-mode interval calculation was actually replayed at 120
+digits and the full centered residual at 100. Their key intervals match the
+previous records. The local exact synthesis checks the named remote sector
+and readout fields as semantic projections, not an attestation or replay of
+their full spectral producers. All scripts, precise inputs and results are
+retained in the accompanying reproducibility archive.

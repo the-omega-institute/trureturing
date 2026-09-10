@@ -1,0 +1,16 @@
+**命题 54（有下界区域的固定 q 表达，repo-derived）。** 精确量词为
+
+$$
+\begin{aligned}
+\forall B\subseteq K\ \forall k_0\in\mathbb Z:\quad
+&\bigl[(\forall(\tau,p)\in B,\ \tau\ge k_0)\ \Longrightarrow\\
+&\quad\forall k\le k_0-1\ \forall X\in\mathcal B:\quad
+q(F_BX)=q\bigl(F_{\downarrow Q^*}(X\boxtimes T_k(U_0))\bigr)\bigr],\\
+Q^*&=\{(p,\epsilon,r,\tau+1):(\tau,p)\in B,
+                 \ \epsilon\in\{\pm1\},\ r\in T\}.
+\end{aligned}
+\tag{MIX-QEXPR}
+$$
+
+$B,k_0,k,Q^*$ 都在 $X$ 之前固定；不要求 $B$ 有限或有上界，也不声称该表达保持历史同构。
+

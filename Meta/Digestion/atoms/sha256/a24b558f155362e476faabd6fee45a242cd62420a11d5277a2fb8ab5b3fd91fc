@@ -1,0 +1,56 @@
+### 4. Exact synthesis on the same physical disk
+
+The old global ell, delta, nu and epsilon are unchanged. Taking t=1/100000
+in SC1 gives approximately kap=0.0009999335842419315. Exact arithmetic proves
+
+    delta<kap, nu<kap, nu<kap*(212/100000)^2.
+
+Thus the actual model-aligned EVEN eigenvector p_e=u/<e,u> has
+
+    ||p_e-e||<=R,       R=212/100000.                     (SC3)
+
+This uses the full sector lower bound, not a truncated matrix eigenvalue.
+For sigma=eta=delta/2, V=7, the previously certified central full residual is
+below 3572/100000. SC2 gives the disk-wide cap
+
+    S=3572/100000+(8/5)*(1/1000)=0.03732.
+
+The same origin kernel has G0=21/20 as an upper bound. Set b0=805/1000 and
+b=802/1000. The exact inequality b+G0*R<b0 proves |F(p_e)(0)|>=b.
+
+Retain the full signed model pairing and its finite approximation from SG7-8:
+
+    |D|<544/10^8,
+    Dapprox=-10588081114283/(2*10^18)+i*1215543485777/10^18,
+    |D-Dapprox|<6/10^9.
+
+The new finite_pairing_corrected_ratio_bound transports the computational
+radius as q/b0, with q=6/10^9. The resulting full error expression is
+
+    E=(S+eta*V)*R/b+|D|*G0*R/(b0*b)+q/b0
+      <0.000098677591663762 <99/10^6.                    (SC4)
+
+Consequently, on the ENTIRE closed disk |z-(20+i/4)|<=1/1000,
+
+    |F(u)(z)/F(u)(0)-F(e)(z)/F(e)(0)+Dapprox/F(e)(0)|
+       <99/10^6.                                       (SC5)
+
+Adding the certified magnitude of the correction proves the original-model
+bound, rather than only a bound to a corrected surrogate:
+
+    |F(u)(z)/F(u)(0)-F(e)(z)/F(e)(0)|
+       <99/10^6+(544/10^8+6/10^9)/(805/1000)
+       <53/500000=0.000106.                             (SC6)
+
+This improves the preceding sector certificate's sufficient original-model
+error 7/50000=0.00014 on the SAME disk by factor 70/53>1.32. The unknown
+actual error has not been measured. There is no larger support window, new
+spectral enclosure or Xi-zero conclusion. The output radius still exceeds
+the leading signed correction; no sign of the actual Fourier error follows.
+
+The numeric synthesis is a new exact consequence of independently certified
+sector and model data. The inherited global spectrum, true-prolate spectrum,
+operator-domain identification and sector Schur producer are not reverified
+by this arithmetic. The new prime_three_sector_signed_budget checks the
+rational implications in SC1-SC6; it does not attest those upstream premises.
+

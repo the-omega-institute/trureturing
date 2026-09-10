@@ -1,0 +1,21 @@
+### 4. 原曲率输入构造实际概率演化和全部卷积根
+
+主定理 `normalized_curvature_probability_evolution` 的输入只有：c(0)=1、全部原曲率 Toeplitz 矩阵正半定、L(0)=0、L(1)>=0，以及原始二阶递推
+
+\[
+L_{n+1}-2L_n+L_{n-1}=2L_1\Re c_n\quad(n\ge1).
+\]
+
+前一轮的 `normalized_curvature_reconstruction` 构造同一个曲率概率测度 sigma，重建全部原 L_n。本轮的实际 Gram 指数正性填入前一轮的半群构造，从而得到唯一的概率演化 rho_t，满足
+
+\[
+\widehat\rho_t(n)=e^{-tL_{|n|}},\qquad
+\rho_0=\delta_1,\qquad \rho_{s+t}=\rho_s*_m\rho_t,
+\]
+
+且 t |-> rho_t 在实际概率测度弱拓扑中连续。没有给正定性换标签，旧接口中的独立指数正性参数在此最终定理中已由证明消除。曲率测度 sigma 与演化测度 rho_t 仍是两个不同对象。
+
+`semigroup_probability_roots` 还给出每个正整数 k 的实际概率卷积根：取 nu=rho_(t/k)，证明从 delta_1 出发 k 次实际乘法卷积得到 rho_t。k=0 被明确排除，t=0 仍被覆盖。主定理同时返回这一结论，无穷可分性没有只作为自然语言标签。
+
+本节无需上一轮用于排除 Cayley 边界质量的次二次增长条件。若 sigma=delta_1，L_n=a n^2，其 Gaussian 型指数同样得到合法概率半群。边界原子是否应在实际 zeta 的谱识别中排除，是另一个算术问题。
+

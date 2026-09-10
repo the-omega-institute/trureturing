@@ -1,0 +1,49 @@
+### 42.9 有效载荷因子化与两种保持要求
+
+**命题 QI-P9（有效载荷恢复的充要条件，repo-derived）。** 给定摘要 $\beta:X\to B$ 及所需有效载荷 $P:X\to Z$，有
+
+$$
+\bigl(\exists!\,\bar P:\beta[X]\to Z,\quad P=\bar P\circ\beta\bigr)
+\iff \ker\beta\subseteq\ker P.
+\tag{QI-PAYLOAD}
+$$
+
+复合时将 $\beta$ 的余域缩为其实际像。**证明。** 因子化使相同 $\beta$ 值必有相同 $P$ 值，故必要。反之，
+
+$$
+\{(\beta(x),P(x)):x\in X\}
+$$
+
+在每个实际像点都有值，核包含使它单值，故就是 $\bar P$ 的图。任何因子化在这些像点都被迫取相同值，故唯一；没有对 $B\setminus\beta[X]$ 的任意延拓要求。证毕。
+
+对全局准入取 $X=J$、$P=\mathbf1_K|_J$。充要条件是 $W$ 为完整 $\beta$ 纤维的并，即
+
+$$
+\beta(u)=\beta(u')
+\Longrightarrow (u\in K\iff u'\in K)
+\quad(u,u'\in J).
+\tag{QI-GLOBAL-K-FACTOR}
+$$
+
+此时可用 $\bar k:\beta[J]\to\{0,1\}$ 替代原始准入测试，但 $\bar k$ 可非恒真，故因子化 $K$ 并不等于删除 $K$。局部取 $X=J_A$、$P(a)=D_A^K(a)$、$Z=\mathcal P(J_{I\setminus A})$，得到
+
+$$
+\ker\beta_A\subseteq\ker D_A^K
+\iff
+\forall a,a'\in J_A,\
+\beta_A(a)=\beta_A(a')\Longrightarrow D_A^K(a)=D_A^K(a').
+\tag{QI-LOCAL-K-FACTOR}
+$$
+
+逐个完整补全的成员关系给出准入测试的必要性与充分性；用于拼接的 $\beta_A$ 还须保留边界及所要求的结果观察。完全相同的判据适用于来源标识、依赖集及其他指定有效载荷，要求从摘要恢复多少，就对那一项 $P$ 检验核包含。若只要求结果像，可以改走 QI-P7 的精确存在见证关系；这不声称能恢复未被保留的有效载荷。
+
+**命题 QI-P10（世界保持与联合结果像保持，repo-derived）。** 删除 $K$ 保留全部世界的充要条件是 $W=J$。只要求指定联合结果像时，充要条件较弱：
+
+$$
+G[W]=G[J]
+\iff \forall u\in J\ \exists w\in W:\ G(u)=G(w).
+\tag{QI-IMAGE-COVERAGE}
+$$
+
+**证明。** 因 $W\subseteq J$，总有 $G[W]\subseteq G[J]$。像相等时每个 $G(u)$ 在 $W$ 中有一个见证；反之，右侧的见证给出缺少的包含 $G[J]\subseteq G[W]$。比较世界本身时，删除约束后恰是 $J$，所以世界保持恰为 $W=J$。结果纤维的存在覆盖不要求准入在每个摘要纤维上恒定，也不授权任意代表选择。证毕。
+

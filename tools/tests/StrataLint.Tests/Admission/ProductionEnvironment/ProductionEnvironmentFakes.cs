@@ -103,7 +103,9 @@ internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verifi
     public VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        FrozenStateCatalog? frozenState = null,
+        FrozenStatementIndex? frozenStatements = null)
     {
         CallCount++;
         return verification

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:31c02919c4a2aa2bb8cd999558922341d4ea6481eaa21be33951692e75c36026
+  normalized_sha256: sha256:31c02919c4a2aa2bb8cd999558922341d4ea6481eaa21be33951692e75c36026
+cas_ref: sha256:31c02919c4a2aa2bb8cd999558922341d4ea6481eaa21be33951692e75c36026
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This entire atom records repo-derived provenance, bibliographic metadata (Tao/Jech and DOI records), limitations of that metadata check, and navigation into a source-reference table. It does not state a new CSA proposition. The mathematical constructions named in it remain explicit obligations in the body map, especially integer/rational/real quotients and ZFC conservativity; no proof credit comes from this provenance.
+    previous_atom_id: 2136586b1af58d9387e9dd888dfa18f44588e9efac05d6ac45aee73e2f6b1194
+    next_atom_id: 16180f417c9d2a10df973600e22643f3a28fdd0999c77226951d63a31b5f2ff1

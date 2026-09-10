@@ -1,0 +1,34 @@
+## 89. Restrict actual response coordinates without renormalizing the model
+
+Fix the original normalized mediator law pi on M times M and the original deterministic outcome-column score
+
+```text
+P_pi,lambda(y) = sum_(i,j) pi(i,j)*1[y_i=0 and y_j=1] - sum_i lambda_i*y_i.
+```
+
+Let K be a supplied finite set of mediator-indexed outcome coordinates. A branch b is an entire function K -> Bool. `pinTable` extends b by false, and `clampTable` replaces precisely those coordinates in an arbitrary full table. `clampTable_restrict` proves that restricting any original table to K and then clamping it reconstructs that same table. Branching fixes deterministic response coordinates; it is not probabilistic conditioning on observed mediator values.
+
+`MediatorPricingRestriction.lean` defines a computational residual law rho by pushing pi through a deterministic map. Pairs with both endpoints outside K are retained; every other pair (i,j) is redirected to (i,i). This preserves total mass and nonnegativity in the existing FiniteResponseLaw API on the unchanged carrier. For i != j, `residualCoupling_offDiagonal` proves
+
+```text
+rho(i,j) = pi(i,j) if i,j are outside K, and 0 otherwise.
+```
+
+The changed diagonal weights have zero outcome-benefit contribution. They are bookkeeping for normalized computation, not newly asserted mediator data. No division by the surviving edge mass occurs. The original pi continues to define the causal objective and master constraints.
+
+For a free coordinate i, the corrected multiplier is
+
+```text
+theta_b(i) = lambda_i
+  + sum_(j in K,b_j=1) pi(i,j)
+  - sum_(j in K,b_j=0) pi(j,i).
+```
+
+On K, theta_b is zero. The branch constant is kappa_b=P_pi,lambda(pinTable(K,b)). The new `pricing_restriction_identity` proves, before imposing any graph condition,
+
+```text
+P_pi,lambda(clampTable(K,b,z)) = kappa_b + P_rho,theta_b(z)
+```
+
+for every original complete table z. The proof separates fixed/fixed, fixed/free, free/fixed and free/free edge contributions and uses the existing pushforward expectation theorem. Both oriented boundary terms and the full branch constant are retained. Dropping the constant can change the winning branch; renormalizing a surviving half-mass free edge can double its contribution. The exact diagnostic checks both failure modes.
+

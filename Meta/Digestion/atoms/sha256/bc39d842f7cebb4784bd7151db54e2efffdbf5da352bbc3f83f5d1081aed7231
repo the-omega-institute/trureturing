@@ -1,0 +1,34 @@
+**26.16 非空性、达到的有限最大值及符号等价。** 存在可容许薄层当且仅当
+\[
+\boxed{\beta_{N-2}>B_{\rm cut}\quad\Longleftrightarrow\quad R_{N-2}>5040.}
+\]
+必要性来自 \(M_0\le\beta_{N-2}\),充分性取最后相邻对。
+这也是 \(\mathcal K_{\rm sharp}\) 非空的充要条件。
+非空时定义
+\[
+g_*=\max_{v\in\mathcal K_{\rm sharp}}G(v).
+\]
+有限集为 \(\mathscr S\) 的子集,而 26.15 支配整个 \(\mathscr S\),故
+\[
+\boxed{\max_{s\in\mathscr S}G(s)=g_*}
+\]
+并实际达到,尽管原域具有严格 cutoff 且上预算无界。
+以下四组等价包括严格符号:
+\[
+\begin{array}{rcl}
+(\forall s\in\mathscr S,\ G(s)\le0)&\Longleftrightarrow&
+(\forall v\in\mathcal K_{\rm sharp},\ G(v)\le0),\\
+(\forall s\in\mathscr S,\ G(s)<0)&\Longleftrightarrow&
+(\forall v\in\mathcal K_{\rm sharp},\ G(v)<0),\\
+(\exists s\in\mathscr S,\ G(s)>0)&\Longleftrightarrow&
+(\exists v\in\mathcal K_{\rm sharp},\ G(v)>0),\\
+(\exists s\in\mathscr S,\ G(s)\ge0)&\Longleftrightarrow&
+(\exists v\in\mathcal K_{\rm sharp},\ G(v)\ge0).
+\end{array}
+\]
+证明的一向用有限集包含关系,另一向用支配;严格全负一向还用有限最大值严格负。
+若有限集非空且全部测试负,则 \(\eta=-g_*>0\) 给出
+\(G(s)\le-\eta\) 对该固定箱体的所有实薄层成立。
+不声称 \(\eta\) 跨不同素数/指数箱体统一。
+若集合为空,上述全称式为空真、存在式为假,\(g_*\) 不定义,不声称存在达到的最大值。
+

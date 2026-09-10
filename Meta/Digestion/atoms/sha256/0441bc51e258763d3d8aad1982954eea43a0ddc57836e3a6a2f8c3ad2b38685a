@@ -1,0 +1,19 @@
+## 92. Executed non-bipartite tests and a nonfair odd-cycle endpoint
+
+The local Fraction replay uses seed 20260907 and the prior supplied bipartite producer/checker as a proposal backend. It passed 7,746 exact branch-restriction identities, 2,040 comparisons against all original response columns, 32 pricing instances, 1,238 exact branch flow certificates, 20 complete master runs and 17 comparisons with separately enumerated full canonical LPs. Four negative tests rejected omitted branch data, broken flow conservation, a genuinely inferior proposed winner, and an invalid residual coloring. Empty/full K, diagonal mass, asymmetric directed weights and nonfair outcome means were included.
+
+A directed triangle pi(0,1)=pi(1,2)=pi(2,0)=1/3 with outcome means (1/5,3/5,7/10) has sharp upper endpoint 1/3. Taking K={0} gives two certified flow branches. An explicit attaining law assigns masses 1/5,1/10,1/2,1/5 to tables 001,010,011,100 respectively. All three means are exact. Every nonconstant triangle table has one favourable directed edge, so this law has benefit 1/3. The incompatible cellwise relaxation gives 2/5. This concrete value is an executed rational instance of the general certificate construction, not an additional named Lean triangle theorem in this increment.
+
+Three larger generated cases have genuinely non-bipartite original supports and do not enumerate their full canonical column families:
+
+```text
+states | |K| | canonical columns | final restricted columns | pricing calls | branch flows | exact upper
+12     | 1   | 4096              | 47                       | 29            | 58           | 52/205
+16     | 2   | 65536             | 97                       | 69            | 276          | 1171/3760
+24     | 2   | 16777216          | 166                      | 126           | 504          | 7167/23780
+```
+
+Final restricted-column counts include inactive columns. Fourteen of the twenty master cases strictly improve the incompatible pairwise upper relaxation, including these three larger cases. These counts describe this seeded synthetic suite, not prevalence in scientific data or a runtime superiority result. No published causal benchmark was executed.
+
+Every numerical LP solution is a proposal. Rational reconstruction is accepted only after exact nonnegativity, normalization, all original mean rows, restricted dual inequalities and primal/dual equality; global stopping additionally requires every branch's exact capacity/conservation/contact checks. The replay is a second implementation by the same assistant, not independent-author review or Lean-extracted code. Its source SHA-256 is `1cb7db6fd68bd5ad8c15e314f4ee54783ba509fbab7df524f3e4058caa34cd3e`; the prior backend SHA-256 is `4564f9e4563e242da74d8a597abe46e7f3c88fd86e8f2ccc6a6e5dfa5d4908e8`. Complete local scripts, inputs, rational witnesses and results accompany the downloadable review package rather than new repository research payloads.
+

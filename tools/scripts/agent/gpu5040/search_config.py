@@ -1,9 +1,10 @@
-"""Scientific identities are independent of source provenance and I/O cadence."""
+"""Scientific identities and protocol validation, independent of I/O cadence."""
 
 import dataclasses
 import hashlib
 import json
 import math
+from pathlib import Path
 
 
 OCCUPATION = (4, 2, 1, 1)
@@ -23,6 +24,11 @@ RESTRICTIONS = {
 }
 ALGORITHM = "householder-occupation-dp-adam-v1"
 SCHEMA = 2
+ANALYTIC_ALGORITHM = "householder-occupation-dp-adam-analytic-d55-v1"
+ANALYTIC_VERSION = "stationary55-column-rotation-v1"
+CONVERTER = "positive-target-householder-fixed-eye-v1"
+# Supported input identity, checked against the complete declarative recipe.
+D55_RECIPE_SHA256 = "f22c900bd1482a55fb7a8294f4e164fde99c38bd7feaa80caf6af23ae41c44af"
 
 
 @dataclasses.dataclass
@@ -91,8 +97,64 @@ def numerical_runtime(runtime):
     return result
 
 
-def descriptor(config, dimension, seed, runtime):
-    return {
+def analytic_initializer(recipe):
+    if not isinstance(recipe, dict) or identity(recipe) != D55_RECIPE_SHA256:
+        raise ValueError("unsupported analytic D55 recipe/candidate content")
+    return {"kind": "analytic-d55", "version": ANALYTIC_VERSION,
+            "recipe": json.loads(canonical(recipe)), "recipe_sha256": identity(recipe),
+            "converter": CONVERTER, "construction_dtype": "torch.float64",
+            "frame": "H[D-1] ... H[0] eye(4D,D); reversed reduction reflectors",
+            "neutral_reflector": "last ambient axis; entire current row must be exactly zero",
+            "initial": "copy physical vector; existing forward normalization",
+            "rng": "reset CPU and selected MPS RNG to effective seed 0; zero initializer draws",
+            "perturbation": "none"}
+
+
+def load_initializer(path):
+    raw = Path(path).read_bytes()
+    def pairs(items):
+        result = {}
+        for key, value in items:
+            if key in result:
+                raise ValueError("duplicate recipe key: " + key)
+            result[key] = value
+        return result
+    recipe = json.loads(raw, object_pairs_hook=pairs)
+    spec = analytic_initializer(recipe)
+    return spec, {"recipe_path": str(Path(path).resolve()),
+                  "recipe_raw_sha256": hashlib.sha256(raw).hexdigest(),
+                  "recipe_raw_utf8": raw.decode("utf-8")}
+
+
+def validate_initializer(initialization):
+    if initialization is not None and (not isinstance(initialization, dict)
+            or initialization != analytic_initializer(initialization.get("recipe"))):
+        raise ValueError("unsupported analytic initializer specification")
+    return initialization
+
+
+def protocol_initializer(value, algorithm=None):
+    """Validate the algorithm/initializer pair before any checkpoint reconciliation."""
+    if not isinstance(value, dict):
+        raise ValueError("trial descriptor must be an object")
+    if algorithm is not None and value.get("algorithm") != algorithm:
+        raise ValueError("algorithm envelope/descriptor mismatch")
+    algorithm = value.get("algorithm") if algorithm is None else algorithm
+    if algorithm == ANALYTIC_ALGORITHM:
+        spec = value.get("initialization")
+        if not isinstance(spec, dict) or spec.get("kind") != "analytic-d55":
+            raise ValueError("analytic algorithm requires complete initializer metadata")
+        return validate_initializer(spec)
+    if algorithm == ALGORITHM:
+        expected = descriptor(Config(), 13, 0, None)["initialization"]
+        if value.get("initialization") != expected:
+            raise ValueError("random algorithm/initializer mismatch")
+        return None
+    raise ValueError("unsupported algorithm/initializer combination")
+
+
+def descriptor(config, dimension, seed, runtime, initialization=None, source_sha256=None):
+    value = {
         "identity_schema": 1, "algorithm": ALGORITHM,
         "physical_model": {"field": "real", "occupation": list(OCCUPATION),
                            "alphabet": list(ALPHABET), "word_count": WORD_COUNT,
@@ -116,6 +178,19 @@ def descriptor(config, dimension, seed, runtime):
                       "schedule": "min + (lr-min)/2*(1+cos(pi*i/max(1,budget-1))); before update"},
         "runtime": numerical_runtime(runtime) if runtime is not None else None,
     }
+    if initialization is not None:
+        validate_initializer(initialization)
+        if dimension != 55 or tuple(config.dimensions) != (55,):
+            raise ValueError("analytic D55 requires dimensions [55]")
+        if not isinstance(source_sha256, str) or len(source_sha256) != 64 or any(
+                c not in "0123456789abcdef" for c in source_sha256):
+            raise ValueError("analytic trial requires actual scientific source SHA256")
+        precision = (runtime or {}).get("training_precision")
+        if precision not in ("torch.float64", "torch.float32"):
+            raise ValueError("unsupported analytic training precision")
+        value.update(algorithm=ANALYTIC_ALGORITHM, seed=0, initialization=initialization,
+                     dtype=precision, source_sha256=source_sha256)
+    return value
 
 
 def scientific_without_runtime(value):

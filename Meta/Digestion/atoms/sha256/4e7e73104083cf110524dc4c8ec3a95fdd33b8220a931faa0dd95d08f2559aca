@@ -1,0 +1,6 @@
+### 1. 实际复用与本轮消除的前提
+
+`TruncatedCircleMomentBridge.truncated_circle_moment_of_posSemidef` 已从每阶 Toeplitz 正半定矩阵构造有限原子测度。`FourierModeDetermination.all_fourier_modes_determine_measure` 已证明完整圆周 Fourier 数据的测度唯一性。`LiCurvatureCriterion` 已证明 Gram 积分、几何多项式能量、二阶递推唯一性与条件性 Li 判据，但其最后一个公共前提仍要求给出一份实现全部阶数的 Herglotz 概率测度。
+
+本轮以 Mathlib 钉版 `db584cd6d46c92f209a44c0f1c829460d327499d` 的概率测度弱拓扑和紧性，把有限见证完成为同一份测度。其后证明实际卷积半群、整列弱收敛及原 Li 型序列重建。旧定理没有显式的 `c(0)=1` 参数；新接口明确加入此归一化，不能声称在任意未归一化输入上删除了测度前提。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fe4a9f66d5bc0a634da2b1be2458150d9c163bfdf071c4c87b8b8b133dc526f9
+  normalized_sha256: sha256:fe4a9f66d5bc0a634da2b1be2458150d9c163bfdf071c4c87b8b8b133dc526f9
+cas_ref: sha256:fe4a9f66d5bc0a634da2b1be2458150d9c163bfdf071c4c87b8b8b133dc526f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This complete row is a crossreference to the previous fiber-stability descent theorem and an attribution of the present partial-domain extension. The total, partial and multivariate mathematical obligations remain in Proposition11 and its proof atom. In particular the partial-domain saturation obligation is not settled or proved by this reference.
+    previous_atom_id: 75b01f6a3c520b681cd348d77e3f9f19cfdb0fe5c5bc1267bcad0d4f3223229b
+    next_atom_id: 02b7ed21ab06fc8ac22f70433370b52b0bf6e66d3acd8656b91d4cf9997ce4a0

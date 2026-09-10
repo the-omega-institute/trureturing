@@ -1,0 +1,12 @@
+### Geometric simulation lemma
+
+If V and F are disjoint, then V' and M_r(F,a,d) are disjoint.
+Indeed, a point in both sets would have preimages u in V minus K and v in F
+union K. Injectivity gives u=v. Membership in F contradicts initial disjointness;
+membership in K contradicts u being outside K. Truncation only removes blockers.
+
+Consequently, every child available in V is allowed by F. Induction over depth
+gives actual ordered-domain count no greater than memory count, provided the
+finite representation has all required geometric successors. The radius-three
+closure theorem checks exactly that obligation.
+

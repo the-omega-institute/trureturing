@@ -1,0 +1,75 @@
+fingerprints:
+  raw_sha256: sha256:bf1bb81f05fd8420f21e6c0a9d076432e158541b783f3907410a7c6624ccb2ed
+  normalized_sha256: sha256:bf1bb81f05fd8420f21e6c0a9d076432e158541b783f3907410a7c6624ccb2ed
+cas_ref: sha256:bf1bb81f05fd8420f21e6c0a9d076432e158541b783f3907410a7c6624ccb2ed
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/FiniteCausalPaths.transGen_iff_bounded_series
+    target_statement_id: sha256:bf061633d2f0bf7aed8d12bcb58074a4c989f345305eca1f1cf02baf97c51d82
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.archive
+    target_statement_id: sha256:fcfa9ccac330f0e21c05567ac4e3c5aa51056a8e8a1117188c208f2731b62634
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.archive_card
+    target_statement_id: sha256:82e0f0b6e27d98774dd9a6788cad29c628ef69b183945f0c94169c2324f2c988
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.background_double_sum
+    target_statement_id: sha256:fbdf94cd71d581311a77cc40b2e76a9000500c2ab62ec50a6d0531490ff5a583
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.background_product
+    target_statement_id: sha256:78e270b5835f79889a64fd1126b9c7933b5a5b5e2a04dd34601730fdeebabaee
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.balanced_product
+    target_statement_id: sha256:608e5161451438e02eb0709ec5c8da858067fc4c7558e77fdc72e518e49cd803
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.causal_left
+    target_statement_id: sha256:2750974f096a610241af8a5e00b1b4b9a70615a3790b582579e83bb32315acb7
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.causal_right
+    target_statement_id: sha256:9dfd80b1d2ea1a6f0ef6c7921faca55ab0442384921c9c5257cc91eaffb7e85e
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.charge_generated
+    target_statement_id: sha256:1eb02f1162d7c9bc13b7102a450e78a7ce763e0c9c4a2a16b31d3c96920a02a7
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.embeddingLeft
+    target_statement_id: sha256:19c7c3fece192cc39774fe562a8fe9fcd6243a8c1e3f4d613ef460a29ab924f4
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.embeddingRight
+    target_statement_id: sha256:fbc900b1d2f90e616cb5eeb01b5f8c3240d7cc67cdcf5e5b7ee82114b2ed4467
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.left
+    target_statement_id: sha256:8b8a56fff91642ae154d7f799116dedd20c7542e5ab02d29ea575e05b302b70c
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.productBalanced
+    target_statement_id: sha256:3121456d5e5e5e8075641b9987bad8d5aed5239fc2786b7d827ee3ebc66e9e51
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.q_product
+    target_statement_id: sha256:0317eecfaee3d90e91417539d454d8b3952e72ce7609a0490a3fc76bd1605f29
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.recover_left
+    target_statement_id: sha256:9db7a51b08346f99b0b7522d4c52084b7bc768dab0eba210355ceb641f40fe9a
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.recover_right
+    target_statement_id: sha256:99bd270980b3a2c3b53f0e5e20c185aef5ab1db7433389949d1abde7b5a64e92
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.right
+    target_statement_id: sha256:55b5bb2d83fd0a5757dce8ea00967611a73a9ead963fe946102989f3dc0ef698
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.selected_double_sum
+    target_statement_id: sha256:e4ff568b31afca6e4426e8ef86ebf3644ea0e394586c96882912be5435c11c9e
+  - gid: D5/S3/ConceptDynamics/Spacetime/GeneratedProduct.sum_current
+    target_statement_id: sha256:c71775e06fc347f04277001194a1c4ae15ce80079b7fd03fba6df7dccd0e36b7
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductNodes.sum_selectedParents
+    target_statement_id: sha256:604e2c58b85be6bc5777cd86df1792d85e318ee04da3e6e411a2006a2c881077
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.conservativeLeft
+    target_statement_id: sha256:62f423051727da16971c988f7caef7f5f14982d3ab94a421055517976f6d3953
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.edge_time
+    target_statement_id: sha256:46a8870abe793441c4a8ca097d9bfccc05b12c437729e07ab9ab27ba2d8680c8
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.edge_to_left
+    target_statement_id: sha256:8d0bacd6a5075c21cd91b812bd6a7b5c84e271dad794297fdc1eb7ee05433e08
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.edge_to_right
+    target_statement_id: sha256:c930e8bdabc057f5368eac35622976c681820eee7613840fc5b14f5ed5e27ebe
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.generated_no_edge
+    target_statement_id: sha256:1e39e273af4856157a5c77481b12222b617568073b91d601f83493ff886c1f9f
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.generated_no_path
+    target_statement_id: sha256:ad017e6e478270ce8a72524755ef1b9b0735df8c5c8ba01e65b3e47ee4528306
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.map_old_left_path
+    target_statement_id: sha256:f8117ea921a37011da834c247e8fbd51658155ec404e2a96e61044210f03e3f1
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.no_cross_path
+    target_statement_id: sha256:8450cf887a7c1f7b93009c4a04ba120789367de5f74ee28005817aa79fdc6764
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.path_irrefl
+    target_statement_id: sha256:d87af88f66fe79bc5c2903278ad155db4a98b84af451398c2f04733878efa116
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.path_left_iff
+    target_statement_id: sha256:5da059910c88fdd15c3db7507be04a0d2fc543889be71257ea0385738b2760e4
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.path_right_iff
+    target_statement_id: sha256:82c299210c2845ade7aa8d31edfd97ba5bfd441fd0c3fdb3acbbdfab295b0137
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.path_time
+    target_statement_id: sha256:a0732a48a4687004aef8cabec72b6c481ca9a6128163725043da9b42b9bd6db6
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.path_to_left
+    target_statement_id: sha256:4e098bf35040913258240bec18654231fa21c780ff42860a64acac2d5f8b2603
+  - gid: D5/S3/ConceptDynamics/Spacetime/ProductPaths.path_to_right
+    target_statement_id: sha256:b6cb8a590a5c76100c96292afc9660100045ed32dfe6c000c5ea5d9bf762fb9f
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,23 @@
+## 7. 一次认证覆盖整个参数区间
+
+70 位和 100 位运行分别确认 (PT10)，并在同一个区间包络中确认明确归一化候选 k_a 的 Rayleigh 上界。结果为
+
+\[
+\boxed{q_a(k_a)<U=\frac6{5\cdot10^6},\qquad
+f\perp k_a\Longrightarrow q_a(f)\ge\tau\|f\|^2,
+\quad\tau=\frac6{10^6},\quad a\in I_*.}
+\tag{PT11}
+\]
+
+实际候选 Rayleigh 的区间显示约为 [-9.5152736e-7,1.0637090e-6]，因此 U 留有裕量。偶加秩一证书在候选正交方向上严格消去该秩一项；奇扇区整体高于 tau。由已有同一 Friedrichs 实现的紧 resolvent 与 min-max，
+
+\[
+\boxed{\lambda_0(a)<U<\tau\le\lambda_1(a),\qquad
+\lambda_1(a)-\lambda_0(a)>\frac3{625000}.}
+\tag{PT12}
+\]
+
+最低特征值单纯；若最低向量为奇，则与奇扇区下界矛盾，故为偶；它与 k_a 的内积也不能为零。这是实际一族窗口的 simple-even/gap 证书，不是某个有限子矩阵的本征值图。此轮没有宣称 A_a 全空间非负，没有假设旧的数值 ell、U、T，也没有把新的 k_a 认作 prolate 模型。
+
+旧的通用形式连续性半径是 2^-9259287090。本次直接区间证书覆盖半宽 2e-8，不需要沿那个极小半径做数十亿次传播。即便如此，当前新区间仍很窄，不能称为实用的无界尺度扫描。证明更大跨度和控制真实模态/prolate Fourier 误差仍然是下一项。
+

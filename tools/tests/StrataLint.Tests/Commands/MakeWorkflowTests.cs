@@ -64,6 +64,7 @@ public sealed partial class MakeWorkflowTests
         "truth-export",
         "deliver-check",
         "deposit",
+        "deposit-uncovered",
         "cover",
         "cover-batch",
         "decompose",
@@ -73,10 +74,12 @@ public sealed partial class MakeWorkflowTests
         "settle-clear",
         "worktree",
         "worktree-clean",
+        "worktree-remove",
         "pr-open",
         "pr-watch",
         "preflight",
         "gate",
+        "census",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -92,6 +95,12 @@ public sealed partial class MakeWorkflowTests
         "clean-lanes",
         "xi-quantization",
         "xi-quantization-test",
+        "prime-slab-search",
+        "prime-slab-test",
+        "prime-slab-device-test",
+        "prime-slab-verify",
+        "prime-slab-mutation-test",
+        "census-test",
     ];
 
     [Fact]

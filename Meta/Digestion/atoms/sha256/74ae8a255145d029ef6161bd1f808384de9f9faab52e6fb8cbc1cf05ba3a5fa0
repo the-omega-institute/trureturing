@@ -1,0 +1,34 @@
+**27.3 同一目标与欧氏归一化。** 在 27.2 的分析域中定义
+\[
+f(z)=\log(1-e^{-z})\quad(z>0),\qquad
+D(M_1)=\max_{\substack{0\le y_i\le1\\\sum_i h_i y_i\le M_1-A}}
+\sum_i\bigl((1-y_i)f(c_i)+y_i f(d_i)\bigr).
+\]
+可行域是非空紧集,目标有限连续。它也等于
+\[
+\inf_{\lambda\ge0}\left\{\lambda M_1+
+\sum_i\max_{z\in C_i}\bigl(f(z)-\lambda z\bigr)\right\}.
+\]
+这是 26.10-26.11 的同一匹配原始/价格证书:那些证明只用 \(h_i>0\)、
+\(f(d_i)-f(c_i)>0\) 和 \(M_1\ge A\),故逐字适用于本分析域,
+包括并列价格、端点饱和及上预算松弛。
+继续置
+\[
+I=[M_0/k,M_1/k],\quad \mu=M_1/k,\quad
+\delta_i=\operatorname{dist}(I,C_i),\quad V_0=\sum_i\delta_i^2,
+\]
+\[
+\rho=\sqrt{\frac{V_0}{k(k-1)}},\quad L=\mu-\rho,\quad
+H=\mu+(k-1)\rho,\quad \Psi=f(H)+(k-1)f(L),\quad G=D-\Psi.
+\]
+27.5 将先保证 \(L,H>0\),然后才使用 \(f(L),f(H)\)。
+\(V_0\) 没有额外除以 \(k\)。在素数域仍有
+\(G=U_{\rm dual}-U_{\rm var}\),共同常数 \(\log E_S\) 精确抵消。
+对所有 \(x\in\mathbb R^k\),在通常欧氏内积下定义
+\[
+\bar x=\frac1k\sum_i x_i,\qquad
+\Pi=\operatorname{Id}-\frac1k\mathbf1\mathbf1^{\mathsf T},\qquad
+\ell(x)=\bar x-\frac{\|\Pi x\|_2}{\sqrt{k(k-1)}}.
+\]
+这是同一平方偏差几何;给素数贴坐标标签本身没有证明新的正交关系。
+

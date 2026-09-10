@@ -1,0 +1,39 @@
+## 3. 完整逆能量由实际 Schur 数据控制
+
+令 v 为原候选尚未归一化的有限实偶坐标，v=sqrt(beta)k，beta=||v||^2 由整数精确决定。考虑稳定化的偶扇区算子
+\[
+G=A-U+vv^*.
+\]
+它在 k 的正交补上与 M 具有相同二次型。低/高分块写成 G=[[L,C^*],[C,H]]，H>=D0>0，原生产者重新计算的 Wup 满足 Wup>=C^*D0^-1 C。D0 对近场 shells 取已证明下界 d_shell-tau；因 U<tau，这也保守控制 G 的高块。远场采用同一高空间公式在 M_cut+1 的下界，取 M_cut=32768。
+
+若 S=L-Wup>0，则 G_D=[[L,C^*],[C,D0]] 正定且 G>=G_D。对任意完整 load b=(b_L,b_H)，变分逆单调性和完整平方分解给出
+\[
+\begin{aligned}
+\langle b,G^{-1}b\rangle
+&\le\langle b,G_D^{-1}b\rangle\\
+&= e_H+\langle b_L-y,(L-C^*D_0^{-1}C)^{-1}(b_L-y)\rangle\\
+&\le e_H+\langle b_L-y,S^{-1}(b_L-y)\rangle,
+\quad e_H=\langle b_H,D_0^{-1}b_H\rangle,\quad y=C^*D_0^{-1}b_H.
+\end{aligned}
+\tag{UG6}
+\]
+这些等式先对有限高组合和低坐标配对证明，再由加权平方可和及形式表示推广；所有高坐标是实际无限空间，未把截断逆矩阵当作完整逆。C 的列是真实有限低基函数的高算子像，属于 L2；D0 下界正，交叉项由 Cauchy-Schwarz 收敛。
+
+浮点 Cholesky 只提出方阵 R，其每项随后固定为分母 2^32 的精确 dyadic。定向乘法与 Gershgorin 逐行认证
+\[
+R^*S R\succeq(99/100)I.
+\]
+因此 R 必可逆，S^-1<=RR^*/(99/100)。认证器实际使用
+\[
+\boxed{\langle b,G^{-1}b\rangle\le e_H+
+\|R^*(b_L-y)\|^2/(99/100).}
+\tag{UG7}
+\]
+R 的数值产生过程不提供正确性或最优性假设。把全逆变分 supremum 限制到 k 的正交补，只会使它变小，所以 (UG7) 同时给出 (UG3) 与观察量的完整双范数预算。
+
+另一次独立严格区间 LDL 检查增强偶 sector 的 coercivity。令 d_min 为首个高偶 shell 的下界，rho=(d_min-tau)/(d_min-U-kap)，取 kap=1/1000；对所有更高 d，(d-tau)/(d-U-kap)<=rho。程序验证 d_min>U+kap 和
+\[
+A_{\rm low}+vv^*-(U+\mathrm{kap})I-\rho W_{\rm up}>0.
+\]
+完整 Schur 推出 G>=kap I，因而同一偶 candidate complement 上 q_M>=kap||.||^2。这是新的整区间偶扇区检查；不能把 kap 赋给奇扇区或声称它是全空间 ground gap。
+

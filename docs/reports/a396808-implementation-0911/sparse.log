@@ -1,0 +1,2 @@
+'_private._stdin.0.A396808Sparse.coeff_square_odd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private._stdin.0.A396808Sparse.coeff_square_off_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound]
