@@ -5,7 +5,7 @@ year: 2026
 title: Foundation first-order logic and set theory, revision 30a16ffa
 doi: null
 url: https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29
-claim: Licensed logic, predicate-term and finite formula syntax, entailment, finite support and language maps for first-order developments.
+claim: Licensed logic, predicate-term and finite formula syntax, entailment, finite support, language maps, empty-domain elimination and unique choice for first-order developments.
 strata_touched:
   - D5/S3/ConceptDynamics/ZfcEntailment/CalculusOne
   - D5/S3/ConceptDynamics/ZfcEntailment/CalculusTwo
@@ -18,6 +18,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcFiniteData/Fin
   - D5/S3/ConceptDynamics/ZfcFiniteData/Nat
   - D5/S3/ConceptDynamics/ZfcFiniteData/NatMatrix
+  - D5/S3/ConceptDynamics/ZfcLanguageSupport/Empty
   - D5/S3/ConceptDynamics/ZfcLanguageSupport/NotationClass
   - D5/S3/ConceptDynamics/ZfcLogic/ForcingRelation
   - D5/S3/ConceptDynamics/ZfcLogic/LogicSymbolOne
@@ -36,6 +37,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcPropositional/IntEntailmentTwo
   - D5/S3/ConceptDynamics/ZfcSupport/AdjunctiveSet
   - D5/S3/ConceptDynamics/ZfcSupport/Function
+  - D5/S3/ConceptDynamics/ZfcSupport/UniqueChoice
   - D5/S3/ConceptDynamics/ZfcSyntax/FormulaOne
   - D5/S3/ConceptDynamics/ZfcSyntax/FormulaTwo
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne
@@ -55,10 +57,10 @@ Copyright and attribution remain with the upstream contributors. Original author
 required source notices are preserved. The upstream distribution has no NOTICE file.
 The complete unmodified Apache-2.0 license follows below.
 
-The installed layer contains 32 modules from 23 immutable upstream source files,
-with 4,242 Lean source lines (including headers and blank lines). Its source footprint
-is 32 Lean files, 32 Scribe sources and 32 Markdown twins, plus this shared note:
-97 files. The table lists exactly the installed Lean paths; each `strata_touched`
+The installed layer contains 34 modules from 25 immutable upstream source files,
+with 4,309 Lean source lines (including headers and blank lines). Its source footprint
+is 34 Lean files, 34 Scribe sources and 34 Markdown twins, plus this shared note:
+103 files. The table lists exactly the installed Lean paths; each `strata_touched`
 GID resolves to its corresponding Lean/Scribe/Markdown triple.
 
 Each row preserves the original source path, SHA-256 and capacity span. Only selected
@@ -87,6 +89,18 @@ or absolute consistency. Internal HF/omega, finite archives, CSA arithmetic and
 rational/Cauchy-sequence constructions, and the complete CSA defining-graph and
 elimination obligations are outside this layer's scope. It does not identify an
 internal nonstandard carrier with a Lean type or establish source-atom coverage.
+
+The Empty/UniqueChoice support pair supplies equality of every map from an empty
+domain with its eliminator, and the chosen witness and specification of a proved
+unique existence on an arbitrary sort. It assumes no model of ZFC and does not
+establish full definitional conservativity. These are general API utilities
+(`utility: none`), with individually necessary rule-11 upstream-wrapper candidates
+and one compiler-generated exact-command companion. Generation supplies no new
+escape, proof-value, liveness or indispensability credit. The two Lean theorem
+names `Classical.choose!_spec` and `Classical.choose!_eq_iff_right` remain in prose
+with their typed formulas; `choose_uniq` is the legal direct selector. This pair has
+independent support meaning before the separate countable-filter and CSA
+interpretation layers. OrderDense remains preserved outside this installed layer.
 
 Modifications are canonical headers, import reduction/relocation, source-command excerpts,
 capacity scope boundaries and restricting attribute target lists to needed relation
@@ -145,6 +159,8 @@ elaborates. Upstream PR acceptance alone is insufficient.
 | D5/S3/ConceptDynamics/ZfcLogic/ForcingRelation.lean | Foundation/Logic/ForcingRelation.lean | 1–155 | 1ccea85946aa4604136ec39cbd413ed475d315a4cd5eca5aaae9b63095ca035c |
 | D5/S3/ConceptDynamics/ZfcSyntax/FormulaOne.lean | Foundation/FirstOrder/Basic/Syntax/Formula.lean | 1–320 | 6726460b455fa93f42cd9c1849cf25bf7013cd4d349e7afada5e3678f05162c3 |
 | D5/S3/ConceptDynamics/ZfcSyntax/FormulaTwo.lean | Foundation/FirstOrder/Basic/Syntax/Formula.lean | 321–587 | 6726460b455fa93f42cd9c1849cf25bf7013cd4d349e7afada5e3678f05162c3 |
+| D5/S3/ConceptDynamics/ZfcLanguageSupport/Empty.lean | Foundation/Vorspiel/Empty.lean | 9 (retained mathematical commands) | f3b5429d4ec0c230a633b343a6ac8cdd079d56c1eaa5812994c95dfd487ab985 |
+| D5/S3/ConceptDynamics/ZfcSupport/UniqueChoice.lean | Foundation/Vorspiel/ExistsUnique.lean | 11–18 (retained mathematical commands) | 9326800a0ed419feaa0dd7ebfe63de62371d728b0c4ee5b84b3f093d7e7f871e |
 
 ## Apache-2.0 license
 
