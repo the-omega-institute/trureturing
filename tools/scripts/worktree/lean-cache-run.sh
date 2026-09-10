@@ -8,6 +8,6 @@ cd "$ROOT"
 if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   cli=(dotnet "$STRATALINT_LEAN_PRODUCER_DLL")
 else
-  cli=(dotnet run --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --)
+  cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
 fi
 exec "${cli[@]}" lean-cache-writer -- "$@"

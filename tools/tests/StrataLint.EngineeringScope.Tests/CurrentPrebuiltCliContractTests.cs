@@ -34,7 +34,7 @@ public sealed class CurrentPrebuiltCliContractTests
                 """);
             WriteExecutable("build/bin/make", """
                 [[ "$*" == '--no-print-directory lean-report' ]] || exit 91
-                [[ "${STRATALINT_LEAN_PRODUCER_DLL:-}" -ef "$PWD/tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" ]] || exit 92
+                [[ "${STRATALINT_LEAN_PRODUCER_DLL:-}" -ef "$PWD/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll" ]] || exit 92
                 [[ -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] || exit 93
                 printf 'validated-cli\n' > build/producer.log
                 printf '%s\n' "${STRATALINT_BUILD_TIMEOUT_SECONDS:-unset}" > build/producer-budget
@@ -48,7 +48,7 @@ public sealed class CurrentPrebuiltCliContractTests
             Environment.SetEnvironmentVariable("STRATALINT_BUILD_TIMEOUT_SECONDS", buildBudget);
             Environment.SetEnvironmentVariable("STRATALINT_LOCK_TIMEOUT_SECONDS", lockBudget);
             var binaries = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.ScribePath,
-                "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" };
+                CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.LeanProducerPath };
             foreach (var binary in binaries) Write(binary, "synthetic candidate binary");
             Write("build/engineering.log", "synthetic engineering fixture\n");
             var candidate = CommonExecutionEvidence.Candidate(root);
@@ -57,7 +57,7 @@ public sealed class CurrentPrebuiltCliContractTests
             var before = CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath));
             Write("build/ci/logs/current/lean-inspector/stale.exit.log", "0\n");
             if (scenario == "changed-dll") Write(CommonExecutionEvidence.CliPath, "changed binary");
-            if (scenario == "changed-producer-dll") Write(CommonExecutionEvidence.RunnerPath, "changed producer binary");
+            if (scenario == "changed-producer-dll") Write(CommonExecutionEvidence.LeanProducerPath, "changed producer binary");
             if (scenario == "changed-source") Write(project, "<Project />");
 
             using var output = new StringWriter();
