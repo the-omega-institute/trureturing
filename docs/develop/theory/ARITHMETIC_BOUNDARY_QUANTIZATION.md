@@ -603,14 +603,29 @@ y'=x'^2+(1-x'^2)\beta'
 | gap | 18202493098329066925943959890095315 |
 ~~~
 
-对每一个计入完成的 \(m\),三个输入区间的两个端点都用
+对 \(m\ge1,d>0\) 以及 \(a<b\),若
 
 \[
-\left\lfloor\frac{2ma+d}{2d}\right\rfloor,
-\qquad\left\lfloor\frac{2mb+d}{2d}\right\rfloor
+\frac ad<t<\frac bd,
+\qquad
+ k_-:=\left\lfloor\frac{2ma+d}{2d}\right\rfloor,
+\qquad
+ k_+:=\left\lfloor\frac{2mb+d}{2d}\right\rfloor,
 \]
 
-相同才认证该 bin。不同则将该 \(m\) 记入 unresolved,不会猜测精确平局。分类域为 \([1,1399999]\)。
+并且 \(k_-=k_+=k\),则
+
+\[
+\left\lfloor mt+\frac12\right\rfloor=k.
+\]
+
+事实上，严格区间包含给出
+
+\[
+\frac{ma}{d}+\frac12<mt+\frac12<\frac{mb}{d}+\frac12.
+\]
+
+左、右端点的下取整都等于 \(k\),而下取整函数单调，因此中间量的下取整既不小于 \(k\) 也不大于 \(k\),只能等于 \(k\)。本节的四个输入区间均为单位宽度，故明确地取 \(b=a+1\)。端点下取整相等是这个确定性结论的充分条件而非必要条件；端点值不同本身既不推出区间内舍入值不唯一，也不推出存在精确平局。分类域为 \([1,1399999]\)。
 
 ~~~text
 | 精确方法 | 不定 | 奇异 PSD | PD | 首次 PD |

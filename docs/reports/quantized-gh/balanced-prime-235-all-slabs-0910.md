@@ -3821,3 +3821,52 @@ guard 失败或未决的箱不能计入第一类。
 Exactly one final ingest returned exit 0: `residual_open_added=36 skipped_existing=226 coarse_fallbacks=0 open_genres=0 cas_objects_written=36 ledger_changed=true`. The source remained unchanged afterwards. The map binds all 262 whole current units, 354 reachable pairs and 38 ordered parent chains, every new pair, and exact composition through both unchanged predecessor maps.
 
 The checks were fixed structural text/JSON/hash/YAML/Git checks and ingest orchestration. No mathematical evaluator, proposed generator/verifier, search, historical replay or test suite was executed. Producer EOF bytes remain exact. These implementation checks supply no independent approval; fresh full-source mathematical/fidelity/representation review, including previously browser-unread evidence, ordinary gates and caller integration remain open. All changes are unstaged; the continuous research goal is not declared complete.
+
+
+## I41 / Section 12 body-repair archive
+
+This appendix preserves the complete original section12 unit exactly once as an inert archive. The active source now states a sufficient endpoint-floor implication; this archive retains the former operational wording and its original numerical-evidence status. The fixed paper witness for the non-necessity limitation is `(a,b,d,m)=(0,1,2,1)`: the endpoint floors are 0 and 1, while every `0<t<1/2` has `floor(mt+1/2)=0`. This is a paper witness, not an executed experiment.
+
+Archive payload begins below; four-tildes delimiters are longer than every three-tilde run in the payload.
+
+~~~~text
+### 定理（原有数值证据）：输入区间与有限前缀分类
+
+证明附引（第 12 节的原有数值证据；保持数值库证据地位）：[原文证据存档](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md#i31-inactive-archive)。
+
+分母 \(d=10^{40}\) 的严格有理区间是 \(a/d<t<(a+1)/d\),其中:
+
+~~~text
+| 量 | 下端分子 a |
+|---|---:|
+| x | 9991968067208526140634582694569946944348 |
+| y | 9967903373716076242217823134230970513645 |
+| beta | -9988664119479065813465651975246663407975 |
+| gap | 18202493098329066925943959890095315 |
+~~~
+
+对每一个计入完成的 \(m\),三个输入区间的两个端点都用
+
+\[
+\left\lfloor\frac{2ma+d}{2d}\right\rfloor,
+\qquad\left\lfloor\frac{2mb+d}{2d}\right\rfloor
+\]
+
+相同才认证该 bin。不同则将该 \(m\) 记入 unresolved,不会猜测精确平局。分类域为 \([1,1399999]\)。
+
+~~~text
+| 精确方法 | 不定 | 奇异 PSD | PD | 首次 PD |
+|---|---:|---:|---:|---:|
+| 逐项舍入 | 298350 | 155 | 1101494 | 623 |
+| Schur 舍入 | 0 | 622 | 1399377 | 623 |
+~~~
+
+逐项奇异恰为 \(m=1,\ldots,155\),Schur 奇异恰为 \(m=1,\ldots,622\)。逐项首负 \(m=156\),末负 \(m=1123639\),故分类不是从第一次 PD 起就单调。首负行列式为 \(-1/24336\),向量 \((156,-312,156)\) 的值为 \(-312\)。末负 bins 为 \((1122737,1120032)\),\(B=-503569\),行列式为 \(-165124853/128969711562487829\),向量 \((1123639,-2245474,1123639)\) 的值为 \(-1007138\)。
+
+控制 \(m=200\) 仍为 bins \((200,199)\),行列式 \(-1/40000\),归一向量 \((1,-2,1)\) 的值为 \(-1/100\)。Schur 在此处给出 \(x'=1,\beta'=-1,y'=1\),是奇异 PSD。
+
+
+~~~~
+
+Exact archived payload span in the resulting report: byte_start=222353, byte_end_exclusive=224011, byte_count=1658, lf_count=35, sha256=3a2cc7373cd8a766c432edcdac16977105d48d9c19b0239c696cb8b15fa7ba57.
+Inverse recovery removes the archive heading, prose, four-tilde wrapper and this appended archive block, then restores the exact immutable 221717-byte prefix; the payload itself is copied byte-for-byte.
