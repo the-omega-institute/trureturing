@@ -261,3 +261,14 @@ definition; its digest now says that explicitly. The earlier prime helpers
 were developed before the exact upstream hit and are not proposed as an
 independent B delivery. No theorem of A or B has been added to D5, and these
 unfrozen preparatory proofs are not a substitute success target.
+
+## Admission-source receipts
+
+The upstream manifest pins mathlib `8a178386ffc0f5fef0b77738bb5449d50efeea95`,
+which also differs from this tree, independently of the toolchain mismatch.
+
+| URL | HTTP | Bytes | SHA-256 |
+| --- | --- | --- | --- |
+| https://api.github.com/repos/TheSil/A357513_conjecture | 200 | 5299 | `e0c55ee6f8002a00a856594b872b6f52ded26bd3e8b38ca1916d3f6cb94a7bd4` |
+| https://api.github.com/repos/TheSil/A357513_conjecture/git/trees/59c677df3563c4c506dfafcdf45237475140bb86 | 200 | 2016 | `cadbc92e6d578bf9a5d41db87dabe3a3e03d2d5bf55a6d4a75ef436feba96d75` |
+| https://raw.githubusercontent.com/TheSil/A357513_conjecture/59c677df3563c4c506dfafcdf45237475140bb86/lake-manifest.json | 200 | 3474 | `0761631f520c888f6f506e120c682be96b9c75298de9f1302ddd501ba46ecd91` |
