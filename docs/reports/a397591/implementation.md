@@ -223,6 +223,9 @@ modified and no replacement dependency extractor was written.
 
 The canonical `make pr-open` entry created PR #6843 successfully from the
 prepared message file, with `WATCH_TIMEOUT_SECONDS=60` and no AUTO_MERGE.
+Its CI watch ended with `PR_WATCH_RESULT pr=6843 outcome=timeout pending=2
+missing=1`: the watch returned 124 and Make returned 2. PR creation itself
+returned 0; the timeout is not claimed as CI success or creation failure.
 The GitHub readback confirms base dev, state OPEN, autoMergeRequest=null,
 and creation head 905ef2ca9831adc2f52f5258a81921599ec36160. Candidate harness
 engineering and Canonical Lean report production were IN_PROGRESS at that
