@@ -1,7 +1,7 @@
 # A357512 attempt 2
 
-A is now proved by `fourth_dvd_of_odd_not_three`; hot-tree Lean verification
-returns EXIT=0. Repository delivery gates remain to be completed. The proof
+A is now proved by `fourth_dvd_of_odd_not_three`; Lean, report, emission,
+Scribe content checks, and freeze all pass. The PR is being prepared. The proof
 does not consume any prime lemma or any external proof source. All attempt-1
 definitions and proofs are retained; only its preparatory digest/comment are
 updated to reflect the new A theorem.
@@ -162,3 +162,10 @@ The delta-selected Describe checks pass, and the real KaTeX markdown check
 reports `judged=1 formula(s)=1 red=0`. The script's separate projection-fixture
 check is outside this delta (no projection fixture or producer changes).
 No `sorry`, private `axiom`, or `native_decide` occurs in the module.
+
+`make deposit-uncovered`: EXIT=0, 85.029 seconds. The canonical header gate
+passes and `ledger-align --add` reports `changed=0 added=1 conflicts=0`.
+Freeze event: `8a959853464c1ca99e1bede704ff8ac01a66935f772d9a4036f95ce9dd927738`.
+The module has its canonical state pin; the writer reports
+`PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED ... reason=NO_ATOM`. This is a freeze with
+no atom coverage. No theory volume, atom, or coverage edge was added.
