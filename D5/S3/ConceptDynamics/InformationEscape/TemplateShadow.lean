@@ -6,6 +6,21 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.spectrum_kernel_equal; instance=D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.spectrumRealization
    digest: Shadow registration regression checks preserve canonical arenas, primitive kernels and statements, with sensitivity witnesses and sealed query evidence. -/
 
+/- Route-out: two_step_adaptive_residue_identification stays outside this first pack.
+In D5/S3/ConceptDynamics/InformationEscapeArenas/, adaptiveDepthFor
+(FirstThreeArenas.lean:92-95) and staticDepthFor (FirstThreeArenas.lean:97-102)
+are noncomputable Nat.find minima (with a zero fallback). residueArena
+(FirstThreeArenas.lean:116-135) has higher-order BinaryProtocol ResidueState 2
+and history-dependent question quantification (FirstThreeArenas.lean:125-131).
+The current constructors do not transport these source-depth minima or that
+higher-order protocol law. A future template needs a source-depth transport lemma
+relating adaptiveDepthFor/staticDepthFor at the source readout to the source
+depth constants, while preserving the protocol quantification. The existing
+hand bridges live in InformationEscapeRealizations/:
+adaptiveDepthFor_eq_source (FirstThreeRealizations.lean:94-100) and
+staticDepthFor_eq_source (FirstThreeRealizations.lean:102-109).
+This is a scoped route-out, not an impossibility claim or a new per-theorem bridge. -/
+
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscapeCounting.Enumerations
 import LeanInformationAudit.SealCommand
