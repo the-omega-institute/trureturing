@@ -212,4 +212,52 @@ private lemma cubic_harmonic_lift (p : ℕ) [Fact p.Prime] (hp : 7 ≤ p) :
   exact hzero
 
 
+private lemma sum_val_lt (p : ℕ) [Fact p.Prime] (k : ℕ) (hkp : k < p)
+    (f : ZMod p → ZMod p) :
+    (∑ x : ZMod p, if x.val < k then f x else 0) = ∑ j ∈ range k, f j := by
+  rw [← sum_cast_range p (fun x => if x.val < k then f x else 0)]
+  calc
+    _ = ∑ j ∈ range p, if j < k then f j else 0 := by
+      apply sum_congr rfl
+      intro j hj
+      rw [ZMod.val_natCast_of_lt (mem_range.mp hj)]
+    _ = ∑ j ∈ range k, if j < k then f j else 0 := by
+      symm
+      apply sum_subset (range_mono hkp.le)
+      intro j hj hjk
+      simp_all
+    _ = _ := by
+      apply sum_congr rfl
+      intro j hj
+      simp [mem_range.mp hj]
+
+private lemma doubleH_eq_nested (p : ℕ) [Fact p.Prime] :
+    doubleH p 1 3 =
+      ∑ k ∈ range p, (k : ZMod p)⁻¹ ^ 3 * ∑ j ∈ range k, (j : ZMod p)⁻¹ := by
+  unfold doubleH
+  rw [sum_comm, ← sum_cast_range p]
+  apply sum_congr rfl
+  intro k hk
+  rw [ZMod.val_natCast_of_lt (mem_range.mp hk), sum_val_lt p k (mem_range.mp hk)]
+  simp only [pow_one, mul_sum, mul_comm]
+
+private lemma lifted_doubleH (p : ℕ) [Fact p.Prime] (hp : 7 ≤ p) :
+    (p : R p) ^ 4 *
+      (∑ k ∈ range p, (k : R p)⁻¹ ^ 3 * ∑ j ∈ range k, (j : R p)⁻¹) = 0 := by
+  apply lift_zero
+  simp only [map_sum, map_mul, map_pow]
+  have he :
+      (∑ k ∈ range p, red p (k : R p)⁻¹ ^ 3 * ∑ j ∈ range k, red p (j : R p)⁻¹) =
+      ∑ k ∈ range p, (k : ZMod p)⁻¹ ^ 3 * ∑ j ∈ range k, (j : ZMod p)⁻¹ := by
+    apply sum_congr rfl
+    intro k hk
+    rw [red_inv p k (mem_range.mp hk)]
+    congr 1
+    apply sum_congr rfl
+    intro j hj
+    exact red_inv p j (lt_trans (mem_range.mp hj) (mem_range.mp hk))
+  rw [he, ← doubleH_eq_nested, doubleH_zero p hp]
+
+
+
 end D5.S3.ArithSums.A375178Supercongruence
