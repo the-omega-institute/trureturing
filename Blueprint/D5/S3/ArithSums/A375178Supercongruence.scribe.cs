@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ArithSums;
 
@@ -19,7 +20,7 @@ internal sealed class A375178SupercongruenceDocument : IScribeDocumentDefinition
                 DescribeId.Create("a375178-supercongruence"),
                 DeclarationHandle.Create("D5/S3/ArithSums/A375178Supercongruence.supercongruence"),
                 H("Universal congruence"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Congruence()),
                 AssessedProvenance.FromRepo(Oeis),
                 Blocks(
                     Paragraph(Text(
@@ -40,4 +41,21 @@ internal sealed class A375178SupercongruenceDocument : IScribeDocumentDefinition
                             + "them to the binomial sum. The conjectures for prime powers "
                             + "and the generalized family are separate questions."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Congruence()
+    {
+        Formula p = F.Id("p");
+        Formula modulus = F.Seq(p, F.Caret, F.Grp(F.D(5)));
+        Formula hypothesis = new Formula.Logic(Call("Prime", p), FormulaLogicOperator.And,
+            new Formula.Relation(F.D(7), FormulaRelationOperator.LessThanOrEqual, p));
+        Formula conclusion = new Formula.Relation(
+            new Formula.Modulo(Call("a", p), modulus), FormulaRelationOperator.Equal,
+            new Formula.Modulo(F.D(1), modulus));
+        return F.Disp(new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("p"), F.Seq(F.Mathbb, F.Grp(F.Id("N"))),
+            new Formula.Logic(hypothesis, FormulaLogicOperator.Implies, conclusion)));
+    }
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(F.Id(name), [.. arguments]);
 }

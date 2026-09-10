@@ -139,3 +139,10 @@ LEAN_CACHE seed receipt: status=seeded; method=clonefile; donor
 mathlib_olean_state=warm; project_olean_state=warm;
 mathlib_missing_olean_files=0; pin_sha256=
 sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e.
+
+make lean-report exited 0. First make emit exited 2 because FromLean had
+no projection fixture for the new declaration (missing declaration
+presentation). The supported FromAuthor fallback now states equality of
+the two residues under exactly the prime and p>=7 hypotheses. The second
+make emit exited 0 and emitted the new Blueprint. This changed only the
+presentation; the checked Lean source stayed unchanged.
