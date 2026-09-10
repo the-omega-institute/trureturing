@@ -40,7 +40,27 @@ After the rendered source check, method A uses Boolean arrays, slices off the le
 Script and complete orbit: worker-owned attempt directory `compute.py`, `computation.json`. These are independent implementations by one worker, not independently authored or reviewed computations.
 
 ## Bounded literature and ecosystem review
-The arXiv submission history retrieved during this attempt lists only [v1], Mon, 15 Jan 2024 19:23:26 UTC (the precise time is to be read from the archived HTML). Rendered source is the v1 PDF. The title-page date is distinct from the arXiv deposit date.
+The arXiv submission history retrieved during this attempt lists only [v1], Mon, 15 Jan 2024 20:15:55 UTC. Rendered source is the v1 PDF. The title-page date is distinct from the arXiv deposit date.
 OpenAlex title query returns only W4390962538, arXiv submittedVersion, not accepted/published, cited_by_count=0. Crossref query.title (top five) gives no exact title. Brave exact-title query returns only arXiv abstract/PDF. No published proof, refutation or formal correction was located within these successful queries. This is a bounded non-finding, not a claim that none exists. Google and DuckDuckGo returned challenges; Bing returned unrelated results and is not counted as a successful negative search; Semantic Scholar returned HTTP 429. Some further Brave queries returned HTTP 429. The supplied MathDB reader-written, unverified computation has not been independently retrieved and was not used as computational evidence. No priority claim.
 Third-party Lean: vihdzp/combinatorial-games HEAD a087fede837fa7f4ee6a2ffb2c6560a3112d4d6d contains standard ordinal/nimber Nim and Sprague–Grundy infrastructure; the inspected Specific/Nim.lean defines a single-heap game, not D(k,n). Happyves/Lean_Games at 66f6f0599b53cdd86c6ccc7000f0f76ecf83591d and t4ccer/misere-games at 8fffccecc75399358e3155e36e8742a78bc82eaa have no paths matching Nim/Tripod/Grundy/Sprague. Repository and path queries are screening evidence, not an exhaustive semantic proof of library absence.
 Initial bind-only attempt outcome: no proof obtained from the located declarations. General period arithmetic is available; the paper-specific transition and its evaluator bridge remain missing from the inspected libraries. Proceeding under the preregistered content hypothesis.
+
+Report correction: the arXiv submission time has now been read directly from archived HTML: 20:15:55 UTC. The earlier unverified time placeholder was incorrect and is withdrawn.
+
+
+## Implementation and observed proof shape
+Only public theorem: `D5/S0/Certificates/TripodNimPeriodRefutation.result`.
+- proof_shape: content.
+- Direct frozen dependencies (GID + statement_id): [] (none; only Mathlib imports).
+- escape_witness: `runRows_correct` proves by induction on rows that decoding the bit-vector row processor gives the literal Boolean-row processor, using `read_shift` and `read_insert`. `evaluator_correct` supplies the semiconjugacy and `decode_injective` reflects nonreturns. Four new kernel evaluations establish return at 264 and nonreturns at 24, 88, 132 on the live proof path. No checkpoint endpoints are definitions or hypotheses of the claim.
+- admission_basis: escape-witness.
+- utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/TripodNimPeriodRefutation.claim; result=D5/S0/Certificates/TripodNimPeriodRefutation.result; claim=D5/S0/Certificates/TripodNimPeriodRefutation.claim
+
+Proposed versus observed: the preregistered finite transition, evaluator bridge and four iteration certificates are all present. The implementation uses an absorbing `none` only when the paper's insertion rule has no legal column; all returning present boards have defined steps. This makes no extra default move. This is a representation detail within the original witness, not a replacement witness. Generic minimal-period and iterate results are reused from Mathlib. The finite divisor check and 264 ∤ 3280 arithmetic are not asserted as the escape witness. All helpers are private; `claim` is the only public closed Prop definition and `result` the only public theorem. No reachability segment, axiom, sorry, native_decide, deposit, cover or PR is introduced.
+
+`make lean` run 3 exited 0, 12912 jobs. Claim and result both report exactly [propext, Classical.choice, Quot.sound]. Run 1 failed on an incorrect Mathlib import path; run 2 found two bit-index proof obligations; run 3 resolves both. The earlier error builds' inserted diagnostic sorryAx terms are not accepted proofs; only the successful run is evidence. The final source contains no sorry. Logs are in the attempt directory. Blueprint and gate verification still pending at this checkpoint.
+
+## Exact source anchors
+Printed text: “Every periodic orbit of D(3,n) has a period which is a divisor of 2(4n)(4n+1).” Formula parentheses and divisor direction were checked visually on printed page 30. Page 28, §9.3 is the transition source. First n columns means indices 0 through n−1 in our convention, so index n is eligible. A logical left shift is an integer right shift because bit 0 is the left column. Simultaneous column exclusion concerns newly added ones only. For k=3 and n=10 the width is 23. The full checklist has no mismatch.
+
+PDF SHA-256: 0ad5c4442051e5ff5fcff63ce85bfb9c3773199512e7c5597809a8abba31cebd
