@@ -1,7 +1,54 @@
+using FixtureFile = StrataLint.TestSupport.TemporaryFileSystem.File;
+
 namespace StrataLint.Tests;
 
 public sealed class LeanReportTransportMaterialTests
 {
+    [Theory]
+    [InlineData("invalid-archive")]
+    [InlineData("missing-member")]
+    [InlineData("missing-archive")]
+    public void LocalExactMaterialDamageRegeneratesAfterAValidHit(string damage)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanReportTransportFixture();
+        fixture.Success(fixture.MakeReport("STRATALINT_REPORT_CACHE_REMOTE=0"));
+        Assert.Single(fixture.ProducerCalls);
+        var original = fixture.CacheSnapshot();
+        var materials = FixtureFile.ReadAllBytes(fixture.Output + ".materials.zip");
+        fixture.Success(fixture.Stage(fixture.Output));
+
+        var hit = fixture.MakeReport("STRATALINT_REPORT_CACHE_REMOTE=0");
+        fixture.Success(hit);
+        Assert.Contains("status=hit mode=local-exact", hit.Text, StringComparison.Ordinal);
+        Assert.Single(fixture.ProducerCalls);
+        Assert.Single(fixture.SlotCalls);
+        Assert.Equal(original, fixture.CacheSnapshot());
+
+        fixture.DamageCachedMaterials(damage);
+        foreach (var suffix in LeanReportTransportFixture.Suffixes.Where(suffix => suffix != ".materials.zip"))
+            Assert.Equal(original[Array.IndexOf(LeanReportTransportFixture.Suffixes, suffix)],
+                LeanReportTransportFixture.Digest(FixtureFile.ReadAllBytes(fixture.CachedReport + suffix)));
+        var recovered = fixture.MakeReport("STRATALINT_REPORT_CACHE_REMOTE=0");
+        fixture.Success(recovered);
+        Assert.Contains("status=miss reason=local-entry-unavailable", recovered.Text, StringComparison.Ordinal);
+        Assert.Contains("mode=produced", recovered.Text, StringComparison.Ordinal);
+        Assert.Equal(2, fixture.ProducerCalls.Length);
+        Assert.Equal(2, fixture.SlotCalls.Length);
+        Assert.Equal(["absent", "present", "present"], fixture.EnsureCalls);
+        Assert.Empty(fixture.ReleaseCalls);
+        Assert.Equal(materials, FixtureFile.ReadAllBytes(fixture.Output + ".materials.zip"));
+        fixture.Success(fixture.Stage(fixture.Output));
+        fixture.Success(fixture.Stage(fixture.CachedReport));
+    }
+
+    [Theory]
+    [InlineData("occupied", "valid")]
+    [InlineData("occupied", "missing-member")]
+    [InlineData("race", "valid")]
+    [InlineData("race", "missing-member")]
+    public void TransportStageValidatesTheSelectedEntry(string selection, string scenario) => RunMaterialCase(scenario, selection);
+
     [Theory]
     [InlineData("valid")]
     [InlineData("empty")]
@@ -10,20 +57,24 @@ public sealed class LeanReportTransportMaterialTests
     [InlineData("duplicate-member")]
     [InlineData("invalid-archive")]
     [InlineData("crc")]
-    public void TransportStageRequiresCompleteReadableMaterials(string scenario)
+    public void TransportStageRequiresCompleteReadableMaterials(string scenario) => RunMaterialCase(scenario, "fresh");
+
+    private static void RunMaterialCase(string scenario, string selection)
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
         var result = TestProcessRunner.Run("python3", ["-I", "-B", "-c", MaterialCase,
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/report/lean-report-cache.py"),
-            temporary.Path, scenario], temporary.Path, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+            temporary.Path, scenario, selection], temporary.Path, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0,
             System.Text.Encoding.UTF8.GetString(result.StandardOutput) + System.Text.Encoding.UTF8.GetString(result.StandardError));
     }
 
     private const string MaterialCase = """
-        import hashlib, json, pathlib, struct, subprocess, sys, warnings, zipfile
-        script, scratch, scenario = sys.argv[1:]
+        import contextlib, hashlib, io, json, pathlib, runpy, struct, subprocess, sys, warnings, zipfile
+        from unittest.mock import patch
+        script, scratch, selected_scenario, selection = sys.argv[1:]
+        scenario = selected_scenario if selection == 'fresh' else 'valid'
         scratch = pathlib.Path(scratch)
         report = scratch / 'candidate-lean-report.json'
         def sidecar(suffix): return pathlib.Path(str(report) + suffix)
@@ -63,6 +114,48 @@ public sealed class LeanReportTransportMaterialTests
             data[info.header_offset + 30 + namesize + extrasize] ^= 1
             archive.write_bytes(data)
         original = {p: p.read_bytes() for p in scratch.iterdir() if p.is_file()}
+        if selection != 'fresh':
+            api = runpy.run_path(script)
+            destination = scratch / 'selected-cache'
+            destination.mkdir(mode=0o700)
+            entry = destination / pair
+            def install_selected():
+                entry.mkdir()
+                selected = api['copy_bundle'](report, entry, True)
+                if selected_scenario == 'missing-member':
+                    with zipfile.ZipFile(str(selected) + '.materials.zip', 'w'): pass
+                return selected
+            if selection == 'occupied': install_selected()
+            original_rename = pathlib.Path.rename
+            raced = []
+            def rename(staged, target):
+                assert target == entry
+                assert not raced, 'unexpected repeated installation'
+                raced.append(install_selected())
+                # A real occupied-directory rename failure, injected at the IO seam.
+                return original_rename(staged, target)
+            sys.argv = [script, 'stage', '--transport', '--bundle', str(report), '--cache-root', str(destination)]
+            stdout, stderr = io.StringIO(), io.StringIO()
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                with patch.object(pathlib.Path, 'rename', rename) if selection == 'race' else contextlib.nullcontext():
+                    rc = api['main']()
+            valid = selected_scenario == 'valid'
+            assert rc == (0 if valid else 1), (rc, stdout.getvalue(), stderr.getvalue())
+            assert bool(stdout.getvalue().strip()) == valid, 'invalid selection reported ready'
+            assert ('status=ready' in stderr.getvalue()) == valid
+            selected = entry / 'raw-lean-report.json'
+            with zipfile.ZipFile(str(selected) + '.materials.zip') as z:
+                assert z.testzip() is None
+                assert z.namelist() == ([name] if valid else [])
+            if valid:
+                assert stdout.getvalue().strip() == str(destination)
+                assert selected.read_bytes() == report.read_bytes()
+                assert pathlib.Path(str(selected) + '.materials.zip').read_bytes() == archive.read_bytes()
+            else: assert 'material-members-mismatch' in stderr.getvalue()
+            assert bool(raced) == (selection == 'race')
+            assert not list(destination.glob('.staging.*')), 'staging directory leaked'
+            assert all(p.read_bytes() == data for p, data in original.items()), 'incoming bundle changed'
+            raise SystemExit(0)
         valid = scenario in ('valid', 'empty')
         for option in ('--staging-directory', '--cache-root'):
             destination = scratch / option[2:]

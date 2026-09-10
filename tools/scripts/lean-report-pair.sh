@@ -225,6 +225,11 @@ cache_try_restore() {
     && -s "${report}.materials.zip" \
     && ! -e "${report}.logs" && ! -L "${report}.logs" ]] \
     || { cache_evict "$address"; return 1; }
+  # Validate canonical materials before an exact hit can suppress production.
+  if ! python3 "$SCRIPT_DIR/report/lean-report-cache.py" validate "$report"; then
+    cache_evict "$address"
+    return 1
+  fi
   local declared="" declared_name=""
   read -r declared declared_name < "${report}.sha256" || true
   [[ "$declared" =~ ^[0-9a-f]{64}$ \

@@ -147,6 +147,8 @@ def stage(args):
         copy_bundle(report, staged, args.transport)
         if entry.exists():
             existing, _ = bundle_metadata(entry / RAW, args.transport)
+            if args.transport:
+                validate_transport_report(entry / RAW)
             if existing["input_address"] != provenance["input_address"]:
                 raise ValueError("cache-entry-address-mismatch")
         else:
@@ -156,6 +158,8 @@ def stage(args):
                 staged.rename(entry)
             except OSError:
                 existing, _ = bundle_metadata(entry / RAW, args.transport)
+                if args.transport:
+                    validate_transport_report(entry / RAW)
                 if existing["input_address"] != provenance["input_address"]:
                     raise
         print(f"LEAN_REPORT_CI_BASELINE status=ready input_address={provenance['input_address']}", file=sys.stderr)
@@ -291,6 +295,10 @@ def main():
             stage(parser.parse_args(values))
         elif command == "name":
             print(asset_name(*values))
+        elif command == "validate":
+            report, = map(pathlib.Path, values)
+            bundle_metadata(report, True)
+            validate_transport_report(report)
         elif command == "pack":
             pack(*map(pathlib.Path, values))
         elif command == "unpack":

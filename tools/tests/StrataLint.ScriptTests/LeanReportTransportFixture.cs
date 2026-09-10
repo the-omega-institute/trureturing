@@ -124,6 +124,14 @@ internal sealed class LeanReportTransportFixture : IDisposable
     internal Attempt Publish(string bundle, params string[] environment) => Run(["make", "lean-report-cache-to-github", $"LEAN_REPORT={bundle}"], environment);
     internal Attempt Fetch(params string[] environment) => Run(["make", "lean-report-cache-from-github"], environment);
     internal Attempt MakeReport(params string[] environment) => Run(["make", "lean-report"], environment);
+    internal Attempt Stage(string bundle) => Run(["python3", Path.Combine(Repository, "tools/scripts/report/lean-report-cache.py"),
+        "stage", "--transport", "--bundle", bundle, "--staging-directory", Path.Combine(temporary.Path, "validated")]);
+    internal void DamageCachedMaterials(string damage)
+    {
+        if (damage == "missing-archive") File.Delete(CachedReport + ".materials.zip");
+        else File.WriteAllBytes(CachedReport + ".materials.zip", damage == "missing-member"
+            ? Zip(new Dictionary<string, byte[]>()) : Encoding.ASCII.GetBytes("not a material ZIP"));
+    }
     internal Attempt PublicationState(string? created, string? updated)
     {
         const string archive = "report-fixture.zip";
@@ -317,13 +325,16 @@ internal sealed class LeanReportTransportFixture : IDisposable
         python3 - "$repository" "$output" <<'PY'
         import hashlib, json, pathlib, sys, zipfile
         root, out = map(pathlib.Path, sys.argv[1:])
+        material = b'canonical material fixture\n'
+        address = hashlib.sha256(b'trureturing:statement:v1\0' + material).hexdigest()
+        declaration = dict(type_sha256='sha256:' + address, statement_id='sha256:' + 'e' * 64)
         modules = []
         for name, path in [('D5.Probe', 'D5/Probe.lean'), ('Trureturing', 'Trureturing.lean')]:
-            modules.append(dict(module=name, source_path=path, source_sha256='sha256:'+hashlib.sha256((root/path).read_bytes()).hexdigest(), imports=['D5.Probe'] if name == 'Trureturing' else [], declarations=[]))
+            modules.append(dict(module=name, source_path=path, source_sha256='sha256:'+hashlib.sha256((root/path).read_bytes()).hexdigest(), imports=['D5.Probe'] if name == 'Trureturing' else [], declarations=[declaration]))
         out.write_text('{"modules": ['+', '.join(json.dumps(m) for m in modules)+'], "schema": "stratalint-raw-lean-report-v2"}\n')
         pathlib.Path(str(out)+'.sha256').write_text(hashlib.sha256(out.read_bytes()).hexdigest()+'  '+out.name+'\n')
         with zipfile.ZipFile(str(out)+'.materials.zip', 'w') as z:
-            pass
+            z.writestr(zipfile.ZipInfo('sha256/' + address), material)
         logs = pathlib.Path(str(out)+'.logs')
         logs.mkdir()
         (logs/'producer.log').write_text('diagnostic\n')
