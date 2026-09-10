@@ -95,3 +95,13 @@ Gibbs 归一参考态与现有 DensityState/熵 API 之间尚缺的接口。
 完整 make 门与冻结待后续记录。
 
 - https://arxiv.org/abs/1505.07835 status=200, bytes=42187, sha256=4858b33a7a8efba9743e224c5db54c65671949dcd78764f3c09bdfa38800130c
+
+## 文献定位与独立性边界
+
+Goold 等 review 的 DOI 由 arXiv abstract metadata 实际读得。PDF v3 第 12 页
+Example 1 明列 relative entropy/free-energy difference；该例是对角 qubit 的语境，
+不能冒称它逐字证明本轮一般非对易矩阵版本。第 5 页定义 box 用 base-two 熵，
+本轮自然对数及 H=-beta K 的变量转换在 Library note 明写。
+Library note 的 Verified locator 逐字含 DOI 和 URL。
+第三方 CsdLean4 的谱基证明未复制；本轮是优先级①②接口的本仓包装。
+重新 fetch origin/dev 后 Quantum 路径没有相对初始基线的新提交，未发现并行撞靶。

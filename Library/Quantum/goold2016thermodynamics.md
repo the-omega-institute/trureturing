@@ -32,7 +32,7 @@ On PDF page 12, Example 1, “Free energy as a monotone,” explicitly displays
 D(rho || tau(beta)) = Tr(rho(log rho - log tau(beta)))
 = beta(F_beta(rho) - F_beta(tau(beta))). The example discusses diagonal qubit
 states. Section V.D also identifies the relation between quantum relative entropy
-and free energy. The definitions box on PDF page 4 gives the Gibbs state and
+and free energy. The definitions box on PDF page 5 gives the Gibbs state and
 partition function and uses a base-two entropy convention.
 
 This is a literature locator for the thermodynamic identity, not an attribution
