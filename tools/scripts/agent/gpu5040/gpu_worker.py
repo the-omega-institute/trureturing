@@ -30,7 +30,8 @@ import torch
 
 from tensor_core import (DIMENSIONS, OBJECTIVE, OCCUPATION, RESTRICTIONS,
                          OccupationDP, RealIsometry, gram_error, verify_full_output)
-from search_config import ALGORITHM, SCHEMA, Config
+from search_config import (ALGORITHM, ANALYTIC_ALGORITHM, SCHEMA, Config,
+                           identity, load_initializer, protocol_initializer)
 from search_session import Campaign
 from state_store import (StateLocks, atomic_json, atomic_write, default_history, default_state,
                          external_path, file_hash, hash_json, tensor_digest, utc_now)
@@ -53,7 +54,7 @@ def atomic_checkpoint(path, value):
     atomic_write(path, lambda stream: torch.save(value, stream))
 
 
-def runtime_info():
+def runtime_info(device=DEVICE, dtype=torch.float32):
     hardware = platform.processor()
     if sys.platform == "darwin":
         hardware = subprocess.check_output(
@@ -62,8 +63,8 @@ def runtime_info():
             "torch": str(torch.__version__), "numpy": np.__version__,
             "torch_git": torch.version.git_version, "torch_build": torch.__config__.show(),
             "platform": platform.platform(), "machine": platform.machine(),
-            "hardware": hardware, "actual_device": "mps:0",
-            "training_precision": "torch.float32", "cpu_fallback": False,
+            "hardware": hardware, "actual_device": str(device),
+            "training_precision": str(dtype), "cpu_fallback": False,
             "torch_cpu_threads": 1,
             "deterministic_algorithms": torch.are_deterministic_algorithms_enabled(),
             "environment": {key: os.environ.get(key) for key in (
@@ -96,10 +97,19 @@ def load_checkpoint(path, directory):
     except Exception as error:
         raise ValueError("cannot load trusted checkpoint: " + str(error)) from error
     if (not isinstance(result, dict) or result.get("schema") != SCHEMA
-            or result.get("algorithm") != ALGORITHM):
+            or result.get("algorithm") not in (ALGORITHM, ANALYTIC_ALGORITHM)):
         raise ValueError("unsupported checkpoint schema/algorithm; convert schema 1 with legacy_conversion.py")
     if result.get("occupation") != list(OCCUPATION) or result.get("objective") != OBJECTIVE:
         raise ValueError("checkpoint physical objective mismatch")
+    if result.get("kind") == "latest":
+        protocol_initializer(result["trial"]["descriptor"], result["algorithm"])
+    elif result.get("algorithm") == ANALYTIC_ALGORITHM:
+        desc = result.get("trial_descriptor", {})
+        protocol_initializer(desc, result["algorithm"])
+        if (identity(desc) != result.get("trial_identity")
+                or desc.get("source_sha256") != result.get("source_sha256")
+                or desc.get("dimension") != result.get("dimension")):
+            raise ValueError("best checkpoint analytic identity/source mismatch")
     return result
 
 
@@ -175,14 +185,40 @@ class Worker:
         self.last_checkpoint = checkpoint
         self.started = time.monotonic()
         self.source_sha256 = source_hash()
-        self.config_sha256 = hash_json(dataclasses.asdict(config))
-        self.runtime = runtime_info()
+        saved_initializer = (protocol_initializer(checkpoint["trial"]["descriptor"], checkpoint["algorithm"])
+                             if checkpoint else None)
+        if (checkpoint and not args.fresh_start
+                and checkpoint.get("source_sha256") != self.source_sha256):
+            raise ValueError("checkpoint scientific source mismatch; retain its original source")
+        initialization, input_provenance = saved_initializer, {}
+        if args.initializer == "random" and saved_initializer is not None:
+            raise ValueError("use a separate state for a different initializer protocol")
+        if args.initializer_recipe or args.initializer == "analytic-d55":
+            if args.initializer == "random":
+                raise ValueError("random initializer cannot consume an analytic recipe")
+            recipe = args.initializer_recipe or ROOT.parents[3] / "Evidence/D5/S3/Quantum/AnalyticD55Initializer.result.json"
+            initialization, input_provenance = load_initializer(recipe)
+        elif checkpoint:
+            input_provenance = checkpoint.get("provenance", {}).get("initializer_input", {})
+        if initialization is not None and args.forever:
+            raise ValueError("analytic traversal is finite; --forever is unsupported")
+        self.device = torch.device(args.device or "mps:0")
+        self.dtype = getattr(torch, args.precision or "float32")
+        if self.device.type == "cpu" and initialization is None:
+            raise ValueError("CPU training is available only for explicit analytic verification")
+        if self.device.type == "mps" and self.dtype != torch.float32:
+            raise ValueError("MPS training requires float32")
+        self.runtime = runtime_info(self.device, self.dtype)
         self.gpu_initialized = False
         self.campaign = Campaign(directory, config, registry, self.runtime, checkpoint,
                                  fresh_start=args.fresh_start, lineage=args.legacy_lineage,
                                  provenance={"source_sha256": self.source_sha256,
-                                             "config_sha256": self.config_sha256},
-                                 session_id=args.session_id)
+                                             "requested_base_seed": config.base_seed,
+                                             "initializer_input": input_provenance},
+                                 session_id=args.session_id, initialization=initialization)
+        self.config = config = self.campaign.config
+        self.config_sha256 = hash_json(dataclasses.asdict(config))
+        self.campaign.provenance["config_sha256"] = self.config_sha256
         self.events = Events(directory, config)
         self.current = None
         self.best, self.last_verification = {}, {}
@@ -234,29 +270,38 @@ class Worker:
     def initialize(self):
         if os.environ.get("PYTORCH_ENABLE_MPS_FALLBACK") != "0":
             raise ValueError("PYTORCH_ENABLE_MPS_FALLBACK must be 0; CPU fallback is forbidden")
-        if not torch.backends.mps.is_available():
-            raise RuntimeError("actual Apple MPS is unavailable; no CPU training path exists")
         torch.set_num_threads(1)
-        torch.mps.set_per_process_memory_fraction(self.config.mps_memory_fraction)
-        probe = torch.ones(2, device=DEVICE, dtype=torch.float32)
-        if str(probe.device) != "mps:0":
-            raise RuntimeError("device probe is not on mps:0")
-        torch.mps.synchronize()
-        self.gpu_initialized = True
-        self.dp = OccupationDP(device=DEVICE)
+        if self.device.type == "mps":
+            if not torch.backends.mps.is_available():
+                raise RuntimeError("actual Apple MPS is unavailable; no automatic CPU fallback")
+            torch.mps.set_per_process_memory_fraction(self.config.mps_memory_fraction)
+            probe = torch.ones(2, device=self.device, dtype=self.dtype)
+            if str(probe.device) != "mps:0":
+                raise RuntimeError("device probe is not on mps:0")
+            torch.mps.synchronize()
+            self.gpu_initialized = True
+        self.dp = OccupationDP(device=self.device)
         self.new_model()
         if self.campaign.checkpoint and not self.campaign.checkpoint["trial"]["terminal"]:
             saved = self.campaign.checkpoint
             self.model.load_state_dict(saved["model"])
             self.optimizer.load_state_dict(saved["optimizer"])
             torch.set_rng_state(saved["rng"]["torch_cpu"])
-            torch.mps.set_rng_state(saved["rng"]["torch_mps"])
+            if self.device.type == "mps":
+                torch.mps.set_rng_state(saved["rng"]["torch_mps"])
+            elif saved["rng"]["torch_mps"] is not None:
+                raise ValueError("CPU checkpoint cannot contain an MPS RNG state")
             self.assert_optimizer_devices()
         self.campaign.checkpoint = None
+        with torch.no_grad():
+            matrices, initial = self.model()
+            first_forward = {"candidate_sha256": tensor_digest(matrices, initial),
+                             "metrics": self.metrics(matrices, initial,
+                                 self.dp(matrices, initial).square().sum())}
         startup = {**self.common(), "config": dataclasses.asdict(self.config),
                    "runtime": self.runtime, "argv": sys.argv,
                    "resumed_from": self.resumed_from, "fresh_start": self.args.fresh_start,
-                   "retained_best_dimensions": sorted(self.best),
+                   "retained_best_dimensions": sorted(self.best), "first_forward": first_forward,
                    "free_disk_bytes": os.statvfs(self.directory).f_bavail
                    * os.statvfs(self.directory).f_frsize}
         atomic_json(self.directory / "startup.json", startup)
@@ -265,9 +310,16 @@ class Worker:
                          fresh_start=self.args.fresh_start, retained_best_dimensions=sorted(self.best))
 
     def new_model(self):
-        torch.manual_seed(self.seed)
-        torch.mps.manual_seed(self.seed)
-        self.model = RealIsometry(self.dimension, DEVICE)
+        if self.device.type == "mps":
+            torch.manual_seed(self.seed)
+            torch.mps.manual_seed(self.seed)
+        else:
+            # torch.manual_seed also visits accelerator generators; CPU proof does not.
+            torch.random.default_generator.manual_seed(self.seed)
+        saved = self.campaign.checkpoint
+        self.model = RealIsometry(self.dimension, self.device, self.dtype,
+                                  initialization=self.campaign.initialization,
+                                  restore=saved is not None and not saved["trial"]["terminal"])
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.config.learning_rate,
                                           betas=(0.9, 0.999), eps=1e-8, weight_decay=0,
                                           foreach=False, fused=False)
@@ -275,11 +327,11 @@ class Worker:
     def assert_optimizer_devices(self):
         for state in self.optimizer.state.values():
             for name in ("exp_avg", "exp_avg_sq"):
-                if name in state and str(state[name].device) != "mps:0":
-                    raise RuntimeError("Adam moment tensor left MPS")
+                if name in state and state[name].device != self.device:
+                    raise RuntimeError("Adam moment tensor left the selected device")
 
     def common(self):
-        return {"schema": SCHEMA, "algorithm": ALGORITHM, "utc": utc_now(), "objective": OBJECTIVE,
+        return {"schema": SCHEMA, "algorithm": self.campaign.algorithm, "utc": utc_now(), "objective": OBJECTIVE,
                 "occupation": list(OCCUPATION), "alphabet": [0, 1, 2, 3],
                 "legal_words": 840, "restrictions": RESTRICTIONS,
                 "source_sha256": self.source_sha256, "config_sha256": self.config_sha256}
@@ -301,7 +353,8 @@ class Worker:
             self.best[self.dimension] = {
                 **self.common(), "kind": "best", "dimension": self.dimension,
                 "trial_identity": self.campaign.trial["identity"],
-                "metrics": metrics, "precision": "torch.float32", "device": "mps:0",
+                "trial_descriptor": self.campaign.trial["descriptor"],
+                "metrics": metrics, "precision": str(self.dtype), "device": str(self.device),
                 "model": {key: tensor.detach().clone()
                           for key, tensor in self.model.state_dict().items()},
                 "matrices": matrices.detach().clone(), "initial": initial.detach().clone(),
@@ -310,7 +363,8 @@ class Worker:
             self.dirty_best.add(self.dimension)
 
     def train_step(self):
-        torch.mps.synchronize()
+        if self.gpu_initialized:
+            torch.mps.synchronize()
         started = time.perf_counter()
         self.optimizer.zero_grad(set_to_none=True)
         matrices, initial = self.model()
@@ -320,10 +374,10 @@ class Worker:
         parameters = list(self.model.parameters())
         gradients = [parameter.grad for parameter in parameters]
         representatives = parameters + gradients + [matrices, initial, target, fidelity]
-        if any(tensor is None or str(tensor.device) != "mps:0" for tensor in representatives):
-            raise RuntimeError("a trainable tensor, contraction, or gradient left MPS")
-        if any(str(incidence.device) != "mps:0" for incidence in self.dp.layers):
-            raise RuntimeError("DP incidence tensors left MPS")
+        if any(tensor is None or tensor.device != self.device for tensor in representatives):
+            raise RuntimeError("a trainable tensor, contraction, or gradient left the selected device")
+        if any(incidence.device != self.device for incidence in self.dp.layers):
+            raise RuntimeError("DP incidence tensors left the selected device")
         gradient_l2 = torch.stack([gradient.square().sum() for gradient in gradients]).sum().sqrt()
         finite = torch.stack([torch.isfinite(gradient).all() for gradient in gradients]).all()
         values = torch.stack((fidelity.detach(), gradient_l2, finite.float())).detach().cpu().tolist()
@@ -335,7 +389,8 @@ class Worker:
         self.optimizer.step()
         self.assert_optimizer_devices()
         self.campaign.updated()
-        torch.mps.synchronize()
+        if self.gpu_initialized:
+            torch.mps.synchronize()
         elapsed = time.perf_counter() - started
         times = self.step_times
         times["count"] += 1
@@ -360,13 +415,15 @@ class Worker:
                                 "frame": str(matrices.device), "initial": str(initial.device),
                                 "target_vector": str(target.device), "loss": str(fidelity.device),
                                 "dp_incidence": str(self.dp.layers[0].device),
-                                "adam_moments": "mps:0", "adam_step_counter": "cpu (nontrainable)"}
+                                "adam_moments": str(self.device), "adam_step_counter": "cpu (nontrainable)"}
 
     def stop_reason(self):
         if self.stop.reason:
             return self.stop.reason
         if (self.directory / "STOP").exists():
             return "STOP"
+        if self.campaign.exhausted:
+            return "exhausted"
         if self.args.max_steps and self.total_steps - self.session_start_steps >= self.args.max_steps:
             return "max_steps"
         if self.args.max_seconds and time.monotonic() - self.started >= self.args.max_seconds:
@@ -431,6 +488,9 @@ class Worker:
                 "config": dataclasses.asdict(self.config), "runtime": self.runtime,
                 "progress": self.progress(), "current": self.current, "best": best,
                 "trial": self.campaign.trial,
+                "exhaustion": ({"descriptor": self.campaign.current_descriptor(),
+                                "identity": identity(self.campaign.analytic_descriptor)}
+                               if self.campaign.exhausted else None),
                 "session": {"id": self.campaign.session_id, "start_total_steps": self.session_start_steps,
                             "completed_steps": self.total_steps - self.session_start_steps,
                             "resumed_from": self.resumed_from,
@@ -465,7 +525,7 @@ class Worker:
                       "model": to_cpu(self.model.state_dict()),
                       "optimizer": to_cpu(self.optimizer.state_dict()),
                       "rng": {"torch_cpu": torch.get_rng_state(),
-                              "torch_mps": torch.mps.get_rng_state()},
+                              "torch_mps": torch.mps.get_rng_state() if self.device.type == "mps" else None},
                       "matrices": to_cpu(matrices), "initial": to_cpu(initial),
                       "metrics": self.current,
                       "candidate_sha256": tensor_digest(matrices, initial)}
@@ -484,8 +544,17 @@ class Worker:
 
     def stopped_without_initialization(self):
         reason = self.stop_reason()
-        status = self.status("stopped", reason, checkpoint_saved=self.last_checkpoint is not None)
-        if self.last_checkpoint:
+        skipped = self.campaign.exhausted and self.campaign.trial is None
+        status = self.status("stopped", reason,
+                             checkpoint_saved=self.last_checkpoint is not None and not skipped)
+        if self.last_checkpoint and skipped:
+            # A new traversal can skip different completed content. Its progress
+            # must not be replaced by the retained checkpoint's older traversal.
+            status["retained_checkpoint"] = {
+                "path": str(self.directory / "latest.pt"),
+                "sha256": file_hash(self.directory / "latest.pt"),
+                "trial_identity": self.last_checkpoint["trial"]["identity"]}
+        elif self.last_checkpoint:
             # Reconciliation has committed any terminal checkpoint. Republish its
             # unchanged tensors with this invocation's receipt, without using MPS.
             saved = dict(self.last_checkpoint)
@@ -553,6 +622,10 @@ def parser():
     result.add_argument("--history-db", help="shared external SQLite registry")
     result.add_argument("--legacy-lineage", help="explicit converted lineage exclusion scope")
     result.add_argument("--session-id", help=argparse.SUPPRESS)
+    result.add_argument("--initializer", choices=("random", "analytic-d55"))
+    result.add_argument("--initializer-recipe", help="content-bound analytic recipe; path is provenance only")
+    result.add_argument("--device", choices=("cpu", "mps:0"), help="explicit CPU analytic verification or MPS training")
+    result.add_argument("--precision", choices=("float32", "float64"), help="float64 requires explicit CPU")
     result.add_argument("--forever", action="store_true", help="explicit infinite round-robin mode")
     result.add_argument("--max-steps", type=int, help="maximum additional Adam updates this invocation")
     result.add_argument("--max-seconds", type=float, help="soft wall budget, checked once per batch")
@@ -580,7 +653,8 @@ def main(argv=None):
         if args.status or args.verify is not None:
             if (args.status and args.verify is not None) or any((args.forever, args.max_steps is not None,
                     args.max_seconds is not None, args.resume, args.fresh_start, bool(training_options),
-                    args.legacy_lineage, args.session_id)):
+                    args.legacy_lineage, args.session_id, args.initializer,
+                    args.initializer_recipe, args.device, args.precision)):
                 raise ValueError("--status/--verify accept only --state-dir and their own argument")
             if args.status:
                 path = directory / "status.json"
@@ -624,6 +698,8 @@ def main(argv=None):
                 raise ValueError("--resume requires a local latest.pt")
             checkpoint = load_checkpoint(checkpoint_path, directory) if checkpoint_path.exists() else None
             config = Config(**checkpoint["config"]) if checkpoint else Config()
+            if not checkpoint and (args.initializer == "analytic-d55" or args.initializer_recipe) and args.dimensions is None:
+                config.dimensions = (55,)
             config.dimensions = tuple(config.dimensions)
             for key, value in training_options.items():
                 setattr(config, key, value)
