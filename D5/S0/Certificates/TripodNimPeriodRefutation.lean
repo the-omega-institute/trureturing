@@ -4,8 +4,9 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Defs]
    utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/TripodNimPeriodRefutation.claim; result=D5/S0/Certificates/TripodNimPeriodRefutation.result; claim=D5/S0/Certificates/TripodNimPeriodRefutation.claim
-   digest: Refutes only printed Conjecture 2 of Tree and Tripod Nim, arXiv:2401.07943v1, using the section 9.3 transition at n=10. Literature-attested source; no priority claim.
-   proof_shape: content
+   digest: Refutes only printed Conjecture 2 of Tree and Tripod Nim, arXiv:2401.07943v1, using the section 9.3 transition at n=10. Literature-attested source; no priority claim. -/
+
+/- proof_shape: content
    escape_witness: Boolean-row semantics, bit-vector evaluator correctness, and a checked 264-step orbit with three proper-divisor nonreturns.
    admission_basis: escape-witness -/
 
