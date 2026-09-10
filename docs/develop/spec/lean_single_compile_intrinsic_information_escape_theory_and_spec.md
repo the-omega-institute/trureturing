@@ -6266,7 +6266,7 @@ def Catalog.roleHistogramDifference (catalog : Catalog arena)
     catalog.roleHistogram right signature
 ```
 
-复用已落地 `roleHistogram` 与 `roleHistogram_sum_eq_uniqueCaptureCount`。必须认证每行、
+复用 `roleHistogram` 与 `roleHistogram_sum_eq_uniqueCaptureCount`。必须认证每行、
 catalog column total 及 unweighted difference vector；不得生成 role score 或 weight。
 
 ### 20.10 Capture-multiplicity spectrum
@@ -6710,10 +6710,7 @@ catalog；该有限 family 的 membership 来自 `rootId` 的 import closure，�
 
 ### 23.6 AnalysisDisposition 与 census API
 
-**Phase 11 现役入口（2026-09-10）**：`make census` 已由
-[#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 的查询、
-[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 的证书发布，经
-[#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 合入 dev。
+**Phase 11 现役入口**：`make census` 提供全库查询与证书发布。
 全库查询是**读取 elaborated 输出(olean)的流式查询**。下列 J2 assessment、evidence 与
 `DispositionInventory.ExactlyCovers` API 仍是局部命令及 fixtures 的 Name-level 语义契约，
 不是局部命令产出的 kernel 命题；局部命令在 elaborator 中检查完整 key 覆盖并产出 id 集
@@ -6836,7 +6833,7 @@ def DispositionInventory.ExactlyCovers
   inventory.keys.toFinset = frozenTheorems
 ```
 
-（J2 落地形态,2026-09-08:S0 的 `ClosedReasonEvidence`、`AnalysisObservationStatus`、`CensusInventory` 与 `CertifiedComplete` 未作为声明落地；现役形态为上述 `Name` evidence、scope record 与 `DispositionInventory`。）
+assessment 使用上述 `Name` evidence、scope record 与 `DispositionInventory`。
 
 J2 局部 `#disposition_census` 的现役命令形状见
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`：
@@ -6866,7 +6863,7 @@ report input identity 来自实际 bytes 的 SHA-256，不是 generator 自报�
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
 两个不同 theorem `Name` 不能复用同一个 `statement_id` 来规避 IE-C035；certified 与 observed
 使用同一个 key 空间，不能各自另列 inventory 来绕过唯一性。
-（J2 落地形态,2026-09-08:S0 把 report identity／root 放在 `ExactlyCovers` 内；现役的同名声明是 Name-level 语义契约，非局部命令的 kernel 命题。现役命令在 id 集证书之外分别核查这两项，inventory 无 `reportInputId` 或 `censusRoot` 字段。）
+`ExactlyCovers` 是 Name-level 语义契约，非局部命令的 kernel 命题。命令在 id 集证书之外分别核查 report identity 与 root；inventory 无 `reportInputId` 或 `censusRoot` 字段。
 
 dependent constructors 只决定 payload shape，consumer 仍须逐 constructor 核验证书语义。
 `UnreachableDisposition.evidence` 必须解析为当前 statement 上的 `UnreachableElaborationEvidence`，
@@ -6877,7 +6874,7 @@ reason 匹配、explanation 非空，且 `failedObligation=some name` 指向 ker
 也不能被该 unreachable row 隐藏。证据类型与检查见
 `tools/lean-inspector/LeanInformationAudit/StructuralRealization.lean`、
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
-（J2 落地形态,2026-09-08:没有 S0 的 `semanticContract`／`candidateDomain` 字段；具名 typed obligation 承担对应的候选语义，超出其范围的 closed reason 仍须另证。）
+具名 typed obligation 承担对应的候选语义，不设 `semanticContract`／`candidateDomain` 字段。本证书不证明超出该 obligation 范围的 closed reason；该结论须另证。
 
 `AnalysisObservation key` 绑定同一 HEAD／report inputs 的 elaborated 输出及其查询作用域。
 `owningModule` 必须是该 key 的真实所属模块，`root` 必须等于命令 root，
@@ -6891,17 +6888,16 @@ IE-C044。字段见 `tools/lean-inspector/LeanInformationAudit/AnalysisDispositi
 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean`，语义检查见
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
 空 candidates 可在这些检查通过后入账，但不证明 registry absence 或候选列表穷尽性。
-Phase 11 已由读取 elaborated 输出(olean)的流式查询产生完整 rows：空列表或自报 completed 不能代替查询，
+Phase 11 通过读取 elaborated 输出(olean)的流式查询产生完整 rows：空列表或自报 completed 不能代替查询，
 查询失败、不完整或未完成不能计为 absence；若报告缺 realization、缺 certificate 或两者皆缺，
 必须由查询结果支持，两者皆有时不能报告 absence，已登记但无效的证书仍须报告验证失败，
 不能以 observed 隐藏。
-（J2 落地形态,2026-09-08:S0 的 `censusRoot`／`importClosure`／absence-status enum 未采用；现役 validator 核查 scope 和所列 candidates，不自行生成或证明穷尽的 absence 查询。）
+局部 validator 核查 scope 和所列 candidates，不自行生成或证明穷尽的 absence 查询；查询完备性由全库查询承担。
 
-**全库查询的归属、新鲜性与增量契约**（[#6660](https://github.com/the-omega-institute/trureturing/pull/6660)）：
+**全库查询的归属、新鲜性与增量契约**：
 流式索引以 `readModuleDataParts` 按顺序读取 olean parts，不对每个分区调用 `importModules`。
 owner 以声明在记录模块的 `ModuleData` 中的成员身份判定；同一 `Name` 的多个 owner 用
 报告生产器的 statement identity 消歧，不能把首次 import 出处当作唯一归属。
-落地全库样本中原有的 50 个冲突 keys 全部消歧，不再形成 incomplete rows。
 新鲜性的权威是 lake：生产入口经 `make lean` 的增量构建，缺失 tracked olean 时 fail closed，
 不以时间戳猜测 source 与 olean 一致。raw Lean report 在 truth-export 之前须通过 producer
 attestation 校验；失败即重新生成并验证报告，后续消费者使用这一份已验证报告。
@@ -6938,12 +6934,10 @@ consumer 必须复核，不信任 generator 自报的 totals 或 flags：
 | `counts.observed_query_completed`、`counts.observed_query_incomplete` | query completion 分项；未完成查询拒绝发射，有效 artifact 中后者恒为零 |
 | `certified_complete` | 有效 artifact 中 `counts.observed == 0`；`observed > 0` 时必为 `false` |
 
-（J2 落地形态,2026-09-08:S0 的 nested class／reason／absence-status maps 与 `accounting_complete` 未发射，也没有 `CertifiedComplete` 声明；记账完备由 elaborator 的完整 key 覆盖检查和 kernel 的 id 集 `Certificate` 体现，`ExactlyCovers` 是语义契约而非该 kernel 命题，JSON 只有上述 flat counts 与 `certified_complete`。）
+记账完备由 elaborator 的完整 key 覆盖检查和 kernel 的 id 集 `Certificate` 体现；`ExactlyCovers` 是语义契约而非该 kernel 命题。JSON 只发射上述 flat counts 与 `certified_complete`，不发射 nested maps 或 `accounting_complete`，也不另设 `CertifiedComplete` 声明。
 
-**全库 kernel 证书只证明 id 集记账**（[#6664](https://github.com/the-omega-institute/trureturing/pull/6664)）。
-owner [2026-09-09 裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5597487855)
-原句为「定理名不在会怎么样, 我感觉你这只是在防止一些不存在的攻击」。kernel-facing identity
-是 `statement_id` 的 256-bit `Nat`；ids 以 packed big-Nat literals 传入，在 kernel 中解码。
+**全库 kernel 证书只证明 id 集记账**。kernel-facing identity 是 `statement_id` 的 256-bit `Nat`；
+ids 以 packed big-Nat literals 传入，在 kernel 中解码。
 最终 `CensusRun.accountingCertificate` 的命题恰为：
 
 ```lean
@@ -6961,25 +6955,22 @@ Lean publisher 与 Python entrypoint 都遵守诊断优先序
 `IE-C044 > IE-C035 > IE-C036 > IE-C034`：query／receipt 完整性先于重复，重复先于 identity
 绑定错误，identity 错误先于缺行；不得因换入口或 codec 提前运行而改变这一顺序。
 
-owner [2026-09-09 增量裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5606788311)
-原句为「这种编译一定得增量, 不能一次要求太大内存, 因为这个库还在不断膨胀」。
+证书编译必须增量进行，并保持每进程工作集有界：
 证书按 id range 自适应分裂：每叶至多 $M$ 个 ids，内部节点二叉组合；Init-only 通用引理
 一次证明「有序范围中的有序子段蕴含父段有序」、长度相加与 congruence，再由各节点实例化。
 每个叶与组合节点都是单独编译、内容寻址的模块；新增一个 key 只重编受影响叶、其祖先与 Root。
 最终环境是 Init + `Census.Certificate` + range modules，公理闭包为 `[propext]`。
-证书编译的每进程工作集受单叶上限与二叉组合接口约束，上界不随全库 key 总数增长；
-[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 的落地全库 bucket build／assembly
-样本每进程峰值为 294,453,248 B（0.274231 GiB，约 0.27 GiB）。
-这不是整管线常量内存的主张：报告校验 driver 仍保留 $O(\mathrm{rows})$ 的校验及元数据，
-实测约 2.06 GiB，是已记录的剩余项；流式索引约 1.01 GiB 的读数也未冒称达到 1 GiB 目标。
+证书编译的每进程工作集受单叶上限与二叉组合接口约束，上界不随全库 key 总数增长。
+增量与分桶验收见第 35 节 T-036 的 `test_buckets.py` 与 `test_review_fixes.py`。
+这不证明整管线常量内存：报告校验 driver 保留 $O(\mathrm{rows})$ 的校验及元数据；
+流式索引的 1 GiB 目标未满足。
 
 发布消费全流收据 `receipt.json` 绑定的紧凑 `rows.jsonl`，不再需要 per-partition receipts。
 现役 handoff 从收据以 `rows_sha256` 绑定的紧凑 `rows.jsonl` 单次读取并校验每行，
 不打开或解析展开的 `census.json`；receipt digest、HEAD、export 与 rows digest
 必须一致。发布不改写 `census.json`，对该展开文件只检查 nonmutation。
-2026-09-10 记录的展开 `census.json` 大小为 21,810,544,658 B（约 21.8 GB），
-每行内联 import scope 列表是已知的归一剩余项，记在
-[#6748](https://github.com/the-omega-institute/trureturing/issues/6748)，不由证书的每进程上界掩盖。
+展开的 `census.json` 在每行内联 import scope 列表；该展开 artifact 的归一为开放限制（#6748），
+不由证书的每进程上界掩盖。
 
 有效 artifact 必须复核 `accounted = certified + observed`、class 分项之和等于 certified、reason 分项之和
 等于 certified unreachable、query-completion 分项之和等于 observed，且 incomplete 分项为零；
@@ -6988,7 +6979,7 @@ owner [2026-09-09 增量裁决](https://github.com/the-omega-institute/trureturi
 `tools/lean-inspector/LeanInformationAudit/Projection/AnalysisInventory.lean`。
 census 是 read-only report consumer，artifact 永不作为 seal input 或 required gate；它不推断
 object arena，不把缺 realization 自动归到 finite／structural／unreachable。
-（J2 落地形态,2026-09-08:S0 的 status 总和改为实际 query-completion 分项；未完成 observation 先拒绝，不能用计数平衡把它变成有效 row。）
+query-completion 分项只计有效 observation；未完成 observation 先拒绝，不能用计数平衡把它变成有效 row。
 
 finite 与 structural constructors 都必须由指定 root maximal catalog occurrence discharge
 `TrivialInCatalog`；bounded truncation 只有 `transferred` constructor 的具名 theorem 所明确
@@ -7000,8 +6991,7 @@ consumer 仍待第 39 节 GATE 的 owner $\tau$ ruling。
 证书可以认证其分类，但不因此取得全对象结论、transfer 或 positivity，原有 truncation 限制不变。
 comparison 与 transfer 的方向检查见 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
 
-**结构 sidecar 与 assessment 分栏**：[#6717](https://github.com/the-omega-institute/trureturing/pull/6717)
-已提供独立 run-local `census-structure.json`，绑定 `head_sha`、`report_sha256` 与 `census_sha256`。
+**结构 sidecar 与 assessment 分栏**：独立 run-local `census-structure.json` 绑定 `head_sha`、`report_sha256` 与 `census_sha256`。
 这些证明依赖结构读数只作 report（定义见第 23.7 节），不是 `AnalysisDisposition` evidence，
 不改变 `census.json`、assessment rows／counts、`certified_complete` 或 Name-level 语义契约
 `ExactlyCovers`（非局部命令的 kernel 命题）。
@@ -7009,11 +6999,7 @@ observed 永不因结构读数而成为 classified；core support、深度或后
 
 ### 23.7 证明依赖结构读数(report-only)
 
-owner [2026-09-09 方向裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5607374209)
-原句为「给 observed 行加一层从证明项依赖闭包自动算出的结构读数, 我感觉只能这个方向吧」。
-依 [#5214 面板汇总](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5608154632)，
-这些读数已由 [#6717](https://github.com/the-omega-institute/trureturing/pull/6717) 实现，并于
-2026-09-10 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 合入 dev。
+结构 sidecar 从证明项依赖闭包自动计算结构读数；observed 行同样具有这些读数。
 产物是独立 run-local `census-structure.json`，绑定 `head_sha`、`report_sha256` 与实际
 `census.json` bytes 的 `census_sha256`；`source_inputs` 另绑定 olean-part manifests、reader、
 ownership、core set 与 projection 的指纹。展示 join 只按完整
@@ -7046,7 +7032,7 @@ import scope；无法唯一解析时显式不可用，自边不得静默删除�
 
 **direct ≠ folded**：若 $b$ 只引用仓内非冻结 helper $h$，而 $h$ 引用冻结 $a$，
 则 $b$ 没有 direct frozen prerequisite，却有 folded prerequisite $a$。
-已落地五节点 fixture 取 $F=\{a,b,c,d,g\}$，另有 $c\to a$、$d\to b,c$、$g\to b$：
+五节点 fixture 取 $F=\{a,b,c,d,g\}$，另有 $c\to a$、$d\to b,c$、$g\to b$：
 direct 图为 4 条边，folded 图补入 $b\to a$ 后为 5 条边；按 $a,b,c,d,g$ 顺序，
 direct 深度为 $(0,0,1,2,1)$，folded 深度为 $(0,1,1,2,2)$，
 folded 后代数为 $(4,2,1,0,0)$。不得拿 direct 根数或 direct depth 代替 folded 读数。
@@ -7099,13 +7085,9 @@ unavailable reasons 的闭合集合为 `missing_olean_part`、`constant_missing`
 它们是 sidecar 字段，不分配新 IE-C codes，不构造 `UnreachableReason` 或 closed-reason proof。
 提取错误不能被解释为 registry absence，也不能修改 query 层的认证与观察分栏。
 
-**落地全库读数（2026-09-10，[#6717](https://github.com/the-omega-institute/trureturing/pull/6717)
-及 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767)）**：22,524 行中
-22,437 complete、74 partial、13 unavailable（12 `dependency_unresolved`、1 `frozen_key_ambiguous`）；
-direct edges 28,149，folded edges 39,647；folded depth histogram 为
-0:8,819 · 1:4,255 · 2:2,717 · … · 27:2；support 正例 46，其余 22,478 为 undetermined。
-这些数是该 frozen key 集上的结构测量；启用／关闭 sidecar 时 `census.json` 字节完全相同，
-主 census 仍为 certified 10、observed 22,514，`certified_complete=false`。
+结构 sidecar 的 complete／partial／unavailable 分栏与主 census 的认证分栏独立；
+启用／关闭 sidecar 时 `census.json` 必须逐字节相同，`certified_complete` 不变。
+验收采用第 35 节 T-036 的结构 sidecar 非干涉 fixtures。
 
 ---
 
@@ -7244,11 +7226,11 @@ snapshot coverage check，绝不用于过滤 seal membership。grouping key 只�
 
 ### 25.2 持久性
 
-已落地 v4.1 的事实是：`Registry.lean` 使用 `SimplePersistentEnvExtension`，其
+`Registry.lean` 使用 `SimplePersistentEnvExtension`，其
 `addImportedFn` 拼接 imported registrations；`CatalogBuilder.lean` 当前消费全部
 `InformationRegistry.entries`。因此 imported entries 对 consumers 可见且会进入 v4.1 seal。
 
-该已落地行为就是 v4.2 的 **import-closure seal membership** contract：
+该行为构成 **import-closure seal membership** contract：
 
 - 每个 seal 消费其 root import closure 中全部 `InformationRegistry.entries`，不得过滤 imported entries；
 - import 某个已经 sealed 的 `.olean` 会使其 entries 成为当前 seal members；
@@ -7602,7 +7584,7 @@ read-only JSON / CSV / DOT artifacts
 }
 ```
 
-v3 catalog record 必须另含。下列为示意结构,数值由封印实测：
+共享分析的 catalog record 必须另含下列示意结构，数值由封印计算：
 
 ```json
 {
@@ -7763,8 +7745,7 @@ LOO CfU node=K_int unique=44/2256 cert=causal_loo_cf
 CHAIN obs-int-cf generators=(ObsU,IntU,CfU) classes=(strict,strict,strict) increments=(2120,92,44) terminal_escape=0 cert=causal_telescope
 ```
 
-这些是第 43.1 节 literal `CfU | .inr N => .inr N` 的 H9 实测值：escape counts
-$2256/136/44/0$；H6 的预登记预测已被实验推翻。
+上述 causal mock 使用第 43.1 节 literal `CfU | .inr N => .inr N`，按第 35 节 T-034 的固定 counts 验收。
 
 ```text
 CATALOG e1-fst-snd-id arena=BoolPair verdict=redundant
@@ -7838,7 +7819,7 @@ SINGLETON[11] engine_census_self_application K_empty --[capture=<v2-certified-co
 }
 ```
 
-上面的 JSON block 与已落地 v2 theorem-record contract byte-for-byte 相同。冻结 v2 artifact
+上面的 JSON block 与本节冻结 theorem-record contract byte-for-byte 相同。该冻结 artifact
 不得要求、允许或容忍任何 v3-only 字段；尤其不得出现 `catalog_membership`、catalog-qualified
 `unit`/`certificate`、shared matrix、spectrum、layer-chain 或 root verdict。
 
