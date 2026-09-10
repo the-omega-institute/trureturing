@@ -14,8 +14,8 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
     esac
   done
   [[ "$COMMAND" == "address" || "$COMMAND" == "dependency-address" \
-    || "$COMMAND" == "partition" || "$COMMAND" == "partition-path" || "$COMMAND" == "keys" ]] \
-    || { echo "usage: lean-cache-input.sh address|dependency-address|partition|partition-path|keys --repository DIR" >&2; exit 2; }
+    || "$COMMAND" == "partition" || "$COMMAND" == "partition-path" ]] \
+    || { echo "usage: lean-cache-input.sh address|dependency-address|partition|partition-path --repository DIR" >&2; exit 2; }
   [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
     || { echo "lean-cache-input: --repository requires an absolute directory" >&2; exit 2; }
   REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
@@ -370,8 +370,7 @@ lean_cache_address() {
   printf '%s %s\n' "$sources_sha256" "$config_sha256"
 }
 
-# Temporary byte contract for ci.yml and lean-cache-publish.yml. Remove this
-# adapter and both direct legacy commands when those callers migrate to keys.
+# Temporary byte contract for ci.yml and lean-cache-publish.yml.
 lean_legacy_address() {
   local manifest="$TMP_ROOT/legacy.manifest"
   local sources_sha256 config_sha256 lakefile_count=0 lakefile
