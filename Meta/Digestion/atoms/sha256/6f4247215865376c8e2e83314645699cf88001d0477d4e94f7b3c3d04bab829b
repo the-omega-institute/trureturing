@@ -1,0 +1,37 @@
+**29.3 被容许的高度端点和反向的指数端点。** 固定有限
+\(T_{\rm base}\ge\log2\)。若同时要求连续放宽后的下指数非负,
+须另要求每行 \(T_{\rm base}+\xi_i\ge h_i\),
+因为该指数是 \((T+\xi_i)/h_i-1\)。原整数素数箱体还须逐行满足整性,
+并非每个连续高度都能实现。原严格 cutoff 为
+\[
+Q+\log5040<M_0(T)=3T+u_0.
+\]
+令
+\[
+\tau=\frac{Q+\log5040-u_0}{3},\qquad
+T_* =\max(T_{\rm base},\tau),\qquad z_*=e^{-T_*}.
+\]
+在 29.2 的固定形状和两角点相对薄层下,容许的连续高度域恰为
+\[
+\mathcal T=
+\begin{cases}
+[T_*,\infty),&T_{\rm base}>\tau,\\
+(T_*,\infty),&T_{\rm base}\le\tau.
+\end{cases}
+\]
+证明只需把 \(T\ge T_{\rm base}\) 与 \(T>\tau\) 取交。
+特别是 \(T_{\rm base}=\tau\) 时下端点仍排除。
+\(M_0<M_1\) 来自 \(u_0<u_1\),角点包含是闭的,与此严格 cutoff 分开。
+原指数预算 \(T_j=M_j-Q\) 仍满足 \(\log5040<T_0<T_1\);
+它们与共同高度 \(T\) 不是同一个变量。
+令 \(z=e^{-T}\),相应反向区间恰为
+\[
+J=
+\begin{cases}
+(0,z_*],&T_{\rm base}>\tau,\\
+(0,z_*),&T_{\rm base}\le\tau.
+\end{cases}
+\qquad 0<z\le z_*\le\tfrac12.
+\]
+无穷大不是容许高度,\(z=0\) 也从不属于 \(J\)。
+

@@ -1,0 +1,33 @@
+## 4. cube 与 centered projector plane 的同一性
+
+归一化写：
+
+```math
+\widehat C=C/d,
+\qquad
+\widehat D=D/d,
+\qquad
+u=d^{-1/2}\mathbf 1_d.
+```
+
+quartet cross Gram 化为：
+
+```math
+\widehat C^\dagger\widehat D=uu^\dagger.
+```
+
+于是：
+
+```math
+\widehat C(u^\perp)\perp\widehat D(u^\perp).
+```
+
+在 `d=6`，两个 image 都是五维空间。它们正是去掉 identity direction 后的 centered rank-one context planes。
+
+所以 Hadamard cube、projector-coordinate SoS 和 tomography Pythagoras 描述的是同一 geometry：
+
+```text
+common all-one direction
+  + orthogonal five-dimensional information planes.
+```
+

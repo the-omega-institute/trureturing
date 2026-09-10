@@ -4,10 +4,10 @@ open Lean LeanInformationAudit
 
 namespace LeanInformationAudit.Tests.Census
 
-def finiteKey : StatementKey := ⟨`Fixture.finite, "id-finite"⟩
-def structuralKey : StatementKey := ⟨`Fixture.structural, "id-structural"⟩
-def boundedKey : StatementKey := ⟨`Fixture.bounded, "id-bounded"⟩
-def unreachableKey : StatementKey := ⟨`Fixture.unreachable, "id-unreachable"⟩
+def finiteKey : StatementKey := ⟨`Fixture.finite, "sha256:000000000000000000000000000000000000000000000000000000000000001e"⟩
+def structuralKey : StatementKey := ⟨`Fixture.structural, "sha256:0000000000000000000000000000000000000000000000000000000000000020"⟩
+def boundedKey : StatementKey := ⟨`Fixture.bounded, "sha256:000000000000000000000000000000000000000000000000000000000000001c"⟩
+def unreachableKey : StatementKey := ⟨`Fixture.unreachable, "sha256:0000000000000000000000000000000000000000000000000000000000000021"⟩
 
 def fourRows : DispositionInventory := {
   headSha := "fixture-head"
@@ -24,24 +24,31 @@ def fourRows : DispositionInventory := {
 def frozenRows : Array StatementKey :=
   #[finiteKey, structuralKey, boundedKey, unreachableKey]
 
-def frozenKeys : Finset StatementKey := frozenRows.toList.toFinset
+def frozenKeys : List Nat := [28, 30, 32, 33]
+
+def keyManifest : CensusKeyManifest := ⟨"fixture-head", "digest", `Fixture, frozenKeys⟩
 
 def encodeNameKey : Name → String
   | .anonymous => "n0"
   | .str parent text => s!"ns({encodeNameKey parent},{text.utf8ByteSize}:{text})"
   | .num parent index => s!"nn({encodeNameKey parent},{index})"
 
-theorem exactCoverage : fourRows.ExactlyCovers "fixture-head" frozenKeys := by decide
+theorem exactCoverage : CensusKeyManifest.IdCoverage keyManifest.keys 4 frozenKeys.toFinset :=
+  CensusKeyManifest.idCoverage_of_certificate _ _ _ ⟨by decide, rfl, rfl⟩
 
 -- CT-001: independent of the separate IE-C034 diagnostic path.
 theorem missingKeyDoesNotExactlyCover :
-    ¬({ fourRows with entries := fourRows.entries.extract 0 3 }).ExactlyCovers
-      "fixture-head" frozenKeys := by decide
+    ¬CensusKeyManifest.IdCoverage (frozenKeys.take 3) 4 frozenKeys.toFinset := by
+  intro h
+  have member : 33 ∈ frozenKeys.toFinset := by simp [frozenKeys]
+  rw [← h.2.2] at member
+  simpa [frozenKeys] using member
 
 /-- info: false -/
 #guard_msgs in
-#eval decide <| ({ fourRows with entries := fourRows.entries.extract 0 3 }).ExactlyCovers
-  "fixture-head" frozenKeys
+#eval (CensusManifest.checkManifestBinding
+  ⟨"fixture-head", "digest", frozenRows⟩ `Fixture (frozenRows.extract 0 3)
+  keyManifest frozenKeys).isOk
 
 /-- info: 'LeanInformationAudit.Tests.Census.exactCoverage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
@@ -54,24 +61,26 @@ private def check (inventory : DispositionInventory) : Except String Unit :=
 #guard_msgs in
 #eval check fourRows
 
-/-- info: Except.error "IE-C034 MissingAnalysisDisposition theorem=Fixture.unreachable statement_id=id-unreachable head=fixture-head" -/
+/-- info: Except.error "IE-C034 MissingAnalysisDisposition theorem=Fixture.unreachable statement_id=sha256:0000000000000000000000000000000000000000000000000000000000000021 head=fixture-head" -/
 #guard_msgs in
 #eval check { fourRows with entries := fourRows.entries.extract 0 3 }
 
-/-- info: Except.error "IE-C035 DuplicateAnalysisDisposition theorem=Fixture.finite statement_id=id-finite records=[0,4]" -/
+/-- info: Except.error "IE-C035 DuplicateAnalysisDisposition theorem=Fixture.finite statement_id=sha256:000000000000000000000000000000000000000000000000000000000000001e records=[0,4]" -/
 #guard_msgs in
 #eval check { fourRows with entries := (fourRows.entries.push fourRows.entries[0]!) }
 
-/-- info: Except.error "IE-C035 DuplicateAnalysisDisposition theorem=Fixture.finite statement_id=id-finite records=[0,4]" -/
+/-- info: Except.error "IE-C035 DuplicateAnalysisDisposition theorem=Fixture.finite statement_id=sha256:000000000000000000000000000000000000000000000000000000000000001e records=[0,4]" -/
 #guard_msgs in
 #eval check { fourRows with entries :=
-  (fourRows.entries.push (⟨⟨`Fixture.alias, "id-finite"⟩,
+  (fourRows.entries.push (⟨⟨`Fixture.alias,
+    "sha256:000000000000000000000000000000000000000000000000000000000000001e"⟩,
     .certified <| .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩)) }
 
-/-- info: Except.error "IE-C036 DispositionIdentityMismatch theorem=Fixture.finite component=statement_id expected=id-finite actual=stale" -/
+/-- info: Except.error "IE-C036 DispositionIdentityMismatch theorem=Fixture.finite component=statement_id expected=sha256:000000000000000000000000000000000000000000000000000000000000001e actual=sha256:00000000000000000000000000000000000000000000000000000000000000ff" -/
 #guard_msgs in
 #eval check { fourRows with entries := fourRows.entries.set! 0 (
-  ⟨⟨`Fixture.finite, "stale"⟩, .certified <| .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩) }
+  ⟨⟨`Fixture.finite, "sha256:00000000000000000000000000000000000000000000000000000000000000ff"⟩,
+    .certified <| .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩) }
 
 /-- info: Except.error "IE-C036 DispositionIdentityMismatch theorem=Fixture.bounded component=head expected=fixture-head actual=stale-head" -/
 #guard_msgs in
@@ -80,9 +89,9 @@ private def check (inventory : DispositionInventory) : Except String Unit :=
 def counts := DispositionCensus.count fourRows
 
 def everyReason : DispositionInventory := ⟨"reasons", #[
-  ⟨⟨`NoCarrier, "1"⟩, .certified <| .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩,
-  ⟨⟨`NoBundle, "2"⟩, .certified <| .unreachable ⟨.noFinitePrimitiveBundle, `Evidence⟩⟩,
-  ⟨⟨`NoRealization, "3"⟩, .certified <| .unreachable ⟨.noFaithfulPrimitiveRealization, `Evidence⟩⟩]⟩
+  ⟨⟨`NoCarrier, "sha256:0000000000000000000000000000000000000000000000000000000000000001"⟩, .certified <| .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩,
+  ⟨⟨`NoBundle, "sha256:0000000000000000000000000000000000000000000000000000000000000002"⟩, .certified <| .unreachable ⟨.noFinitePrimitiveBundle, `Evidence⟩⟩,
+  ⟨⟨`NoRealization, "sha256:0000000000000000000000000000000000000000000000000000000000000003"⟩, .certified <| .unreachable ⟨.noFaithfulPrimitiveRealization, `Evidence⟩⟩]⟩
 
 -- CT-002: literal expected totals, independently of the counting function.
 /-- info: (3, 1, 1, 1, 3) -/

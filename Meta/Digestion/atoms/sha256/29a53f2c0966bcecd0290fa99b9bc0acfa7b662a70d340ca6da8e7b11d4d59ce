@@ -1,0 +1,1 @@
+| $X\boxtimes Y$ | 输入格对 $((a,b,U),(a',b',U'))\mapsto(a\diamond a',bb',\{a\diamond a'\})$，系数相乘后推送 

@@ -1,0 +1,53 @@
+## 15. symmetry-plane affinity
+
+定义 centered mode projectors：
+
+```math
+X_k=E_k-I/3.
+```
+
+它们张成二维 symmetry plane：
+
+```math
+V_S=\operatorname{span}\{X_0,X_1,X_2\}.
+```
+
+对 completion context plane `V_C` 定义 chordal affinity：
+
+```math
+\alpha_S(C)=
+\operatorname{Tr}(\Pi_{V_C}\Pi_{V_S}).
+```
+
+由于 `{X_k}` 是 frame bound `2` 的 regular two-simplex，而 centered basis projectors 是 `V_C` 的 Parseval simplex frame，可得：
+
+```math
+\boxed{
+\alpha_S(C)
+=
+\frac12
+\sum_{i,k}
+\left(p_{ik}-\frac13\right)^2.
+}
+```
+
+展开得到：
+
+```math
+\boxed{
+\alpha_S(C)
+=
+\frac12\left(\sum_{i,k}p_{ik}^2-2\right).
+}
+```
+
+因此：
+
+```math
+\boxed{
+M_S(C)=4-2\alpha_S(C).
+}
+```
+
+`alpha=2` 是 mode-local。`alpha=0` 是对 mode PVM 完全均匀。
+

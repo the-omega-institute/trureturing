@@ -1,0 +1,28 @@
+**27.2 较弱分析域与原可容许域。** 全部对数均为自然对数。
+先取整数 \(k\ge2\) 和有限正二点网格
+\[
+0<c_i<d_i<\infty,\qquad h_i=d_i-c_i>0,\qquad C_i=\{c_i,d_i\},
+\qquad A=\sum_i c_i.
+\]
+本节所需的分析薄层域 \(\mathscr S_+\) 只要求有限实预算
+\(M_0\le M_1\),且至少有一个**实际角点**
+\(x\in\prod_i C_i\) 满足 \(M_0\le\sum_i x_i\le M_1\)。
+角点可在任一端点,也允许 \(M_0=M_1\)。混合权重非整数的点不能冒充该实际角点。
+存在角点保证 \(M_1\ge A>0\),但无需假定 \(M_0>0\)。没有实际角点时,
+下面从角点推出 \(L\ge\ell(c)\) 的薄层应用不作断言。
+
+原素数域另要求两两不同的素数 \(p_i\)、整数 \(b_i\ge0\),并置
+\[
+h_i=\log p_i,\quad c_i=(b_i+1)h_i,\quad d_i=(b_i+2)h_i,
+\quad Q=\sum_i h_i,\quad T_j=M_j-Q.
+\]
+实际指数是 \(b_i+e_i\ge0\),其中 \(e_i\in\{0,1\}\);
+平移坐标中的素数幂指数 \(b_i+1\)、\(b_i+2\) 则严格正。
+原可容许域 \(\mathscr S\) 保留
+\[
+Q+\log5040<M_0<M_1<\infty
+\quad\Longleftrightarrow\quad \log5040<T_0<T_1<\infty,
+\]
+以及闭薄层内至少两个不同实际角点的要求。因此 \(\mathscr S\subseteq\mathscr S_+\)。
+严格宽度、两个角点和 5040 cutoff 不用于排除证明,但匹配原问题时不可撤掉。
+

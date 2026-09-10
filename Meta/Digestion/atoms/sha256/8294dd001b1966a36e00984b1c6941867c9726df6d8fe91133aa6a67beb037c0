@@ -1,0 +1,25 @@
+### 38.5 有限审计与下一步不能继续压缩的部分
+
+从实际 Lean 字面量重新读入并验证的结果：
+
+```text
+216000 ordered label/color cases checked
+60 quadratic polynomial refutations checked coefficientwise
+2403 first six-cliques in an independent diagnostic enumeration
+0 first six-cliques with a common partner
+```
+
+活动边的颜色碰撞、截断行表、擅自添加邻域边三类损坏都被拒绝。打包为十进制自然数时曾有一个未挂到分支的 blob 出现数字转录错误，Git blob 与本地已核验字节的对照检出了它；修正后的 blob 才进入实际研究提交。
+
+进一步用独立 maximal-clique 路径搜索，并逐边复核输出见证，发现：
+
+```text
+41 neighborhoods contain an explicit K5
+18 have maximum clique size 4 in the diagnostic search
+1 has maximum clique size 3 in the diagnostic search
+```
+
+每个邻域都有五着色，故其中 41 个的 chromatic number 确为五。这个有限上界图不能仅通过把五色证书改写成四色证书而得到更强排除。其余诊断中的最大值不作为 Lean theorem 导入。K5 是保守图中的候选，不代表五个真实向量可被同时实现。
+
+这标定了后续有意义的方向：针对这些 K5 候选检查共享变量的联合测量/正交/无偏方程，或用更紧的实际管几何删去其中至少一条边；不要继续只优化同一张图的颜色记账。
+

@@ -13,7 +13,7 @@ private def decoded (inventory : DispositionInventory) : Bool :=
 
 private def wrongClass : Json := Json.mkObj [
   ("theorem_name", nameJson `Fixture.unreachable),
-  ("statement_id", toJson "id-unreachable"),
+  ("statement_id", toJson "sha256:0000000000000000000000000000000000000000000000000000000000000021"),
   ("class", toJson "finite_occurrence"),
   ("payload", fourRows.entries[3]!.2.payloadJson)]
 
@@ -23,7 +23,7 @@ private def wrongClass : Json := Json.mkObj [
 
 private def unknownReason : Json := Json.mkObj [
   ("theorem_name", nameJson `Fixture.unreachable),
-  ("statement_id", toJson "id-unreachable"),
+  ("statement_id", toJson "sha256:0000000000000000000000000000000000000000000000000000000000000021"),
   ("class", toJson "unreachable"),
   ("payload", Json.mkObj [("reason", toJson "not_an_enum_member"),
     ("evidence", toJson "Evidence")])]

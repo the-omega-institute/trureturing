@@ -1,0 +1,1 @@
+| 检查点 `git status --porcelain=v1` | 退出 0，stdout 为空 

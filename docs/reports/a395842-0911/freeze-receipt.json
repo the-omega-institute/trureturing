@@ -1,0 +1,12 @@
+{
+  "kind": "deposit-uncovered",
+  "event_path": "Golden/Frozen/accepted/9ca72a064b8d1500986b46dd2e908dc81b5cadd9fe91f27ab68001ea7036d448.json",
+  "event_hash": "sha256:9ca72a064b8d1500986b46dd2e908dc81b5cadd9fe91f27ab68001ea7036d448",
+  "module_statement_id": "sha256:5c97eb142841d5726ad07c5f68fabc8d14a21e1efdbb595f2edb86c64c3c16c6",
+  "prerequisite_frozen_node_ids": [
+    "sha256:8961a45c8c0aaed51d2f3b7ba65a395c6063c6e28c25667729449c3a310b15a9"
+  ],
+  "source_id": null,
+  "atom_id": null,
+  "coverage_edge_added": false
+}

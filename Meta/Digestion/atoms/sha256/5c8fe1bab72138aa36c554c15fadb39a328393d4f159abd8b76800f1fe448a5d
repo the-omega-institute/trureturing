@@ -1,0 +1,18 @@
+**28.18 经典归属与已完成固定核验。** primary 已读并引用 Boyd/Vandenberghe,
+[Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+Appendix A.1.2 印刷 p.634 的范数公理,§3.1.5 印刷 pp.72-73 的范数凸性,
+以及 §3.1.3 印刷 p.70 式 (3.3) 的严格一阶条件。
+第 27.19 节已保存 caller 的书页与 PDF 身份核对。
+范数不等式、凹性、Jensen 及此处所用的初等微积分属于经典材料;
+本书不被说成含有这里专门的 \(K,\epsilon,a,R\) 或素数跨度定理。
+所需专门推导及正支持步骤已在本节给出,论文证明地位不等于 Lean 冻结。
+
+caller 的既有审计为 caller-relative-prime-spread-audit-0909.json,
+SHA256 493e5f8d2432469936611f95c5d34a42ea5463bb1b29188e827b135ac14b4c47:
+SymPy 1.14.0,11 项固定符号恒等式已通过,所供 host session 11977 退出 0。
+这些既有核验按其原身份保留,不作为本轮重新运行的 11 个结果,
+更不作为独立评审或历史数值搜索的重放许可。
+本轮 CPU 仅做源文/身份/生成覆盖验证及普通编排;搜索计数和 GPU dispatch 均为 0。
+完整输入限制、11 项名称、核验出处和剩余交付义务见唯一新增报告
+[relative-prime-spread-proof-0910.md](../../reports/relative-prime-spread-proof-0910.md)。
+

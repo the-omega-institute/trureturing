@@ -1,0 +1,8 @@
+**定义 1.2(证)**。命题 $P$ 在许可集 $\mathfrak A$ 下**已证**,记 $\mathrm{Proved}_{\mathfrak A}(P)$,当且仅当
+
+$$
+\exists\pi\in\Pi,\ K(\pi,P)=\mathsf{acc}\ \wedge\ \mathrm{ax}(\pi)\subseteq\mathfrak A .
+$$
+
+记 $\mathrm{Thm}(\mathfrak A)=\{P\mid\mathrm{Proved}_{\mathfrak A}(P)\}$。
+

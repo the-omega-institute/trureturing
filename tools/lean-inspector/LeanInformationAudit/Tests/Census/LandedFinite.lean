@@ -24,12 +24,12 @@ run_cmd do
       let proof ← mkDecideProof proposition
       addDecl <| .thmDecl { name := proofName, levelParams := [], type := proposition, value := proof }
     elabCommand (← `(command| #print axioms $(mkIdent proofName)))
-    rows := rows.push ⟨⟨registration.theoremName, s!"fixture-statement-id-{i}"⟩,
+    rows := rows.push ⟨⟨registration.theoremName, ← ofExcept <| renderStatementId i⟩,
       .certified <| .finiteOccurrence ⟨registration.canonicalObjectArenaName, registration.unitName,
         registration.realizationName, proofName, registration.arenaName.str "__state_enumeration"⟩⟩
   let inventory : DispositionInventory := ⟨"fixture-head", rows⟩
   liftTermElabM do
-    validateEvidence frozenInformationRootId inventory
+    validateEvidence (← getEnv).header.mainModule inventory
     let report : FrozenReport := ⟨"fixture-head", "fixture-report", inventory.keys.toArray⟩
     let proof ← coverageProof report inventory
     addDecl <| .thmDecl {

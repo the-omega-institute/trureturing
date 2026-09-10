@@ -1,0 +1,3 @@
+**假设 13.33(美先验)**〔semantic·先验〕。在有结构的世界里,前沿命题按 $\succeq$ 越靠前,被冻结的概率越高:$\rho_1\succeq\rho_2\Rightarrow\Pr[\text{冻结}\mid\rho_1]\ge\Pr[\text{冻结}\mid\rho_2]$。
+*读法*。这是 Occam 剃刀、Solomonoff 归纳(1964,`literature-attested`)与 Schmidhuber(2009,*J. SICE* 48(1):21–32,`literature-attested`;评审席亲读 arXiv:0812.4360 §2.3–2.4:他把**主观美**联系于当前编码下的可压缩性、把**趣味性**联系于压缩进展,二者原文分开)的共同内核,也是 Poincaré「有用的组合恰恰是最美的」(1908,*Science et méthode*,`literature-attested`)与 Hardy「丑陋的数学没有永久的位置」(1940,`literature-attested`)的经验陈述。**它是先验,不是定理**:母仓第 2.3 条「美不携真值,却携先验」。把这些作者的观察收成「冻结概率随美序单调」这一条,是本卷自己的 semantic 选择,不是他们任何一位的原话。12.2 把它写成可证伪预测 P1。
+

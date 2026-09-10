@@ -1,0 +1,26 @@
+**定义 31（剖面的累积表示）。** 对 $c\in\mathcal L$，令 $c_n\in R$ 为 $c_n(p)=c(n,p)$，并记有限时间支撑
+
+$$
+T(c)=\{n\in\mathbb Z:c_n\ne0\}.
+$$
+
+这样把 $c$ 识别为 $R$ 中的有限支撑时间序列 $(c_n)_{n\in\mathbb Z}$：只有有限多个时间分量非零，每个分量又只有有限空间支撑。反向，任何这样的时间序列也给出 $\mathcal L$ 的元素，因为有限多个有限空间支撑对应的时间—空间单元之并仍有限。
+
+定义累积算子及其目标类型为
+
+$$
+(Pc)(n)=C_n=\sum_{t\le n}c_t,
+\qquad
+\mathcal A(R)=
+\left\{C:\mathbb Z\to R:
+\begin{array}{l}
+\exists\,\ell,u\in\mathbb Z\ \exists\,B\in R,\\
+n<\ell\Longrightarrow C_n=0,\quad
+n\ge u\Longrightarrow C_n=B
+\end{array}
+\right\}.
+\tag{CUM-TYPE}
+$$
+
+两处蕴含均对所有 $n\in\mathbb Z$ 量化。左尾必须为零，右尾必须最终为同一常值；右尾的 $B$ 可以非零。因此 $\mathcal A(R)$ 不是有限支撑累积序列的集合，也不是全部 $R$ 值序列的集合。此处 $P$ 的类型是累积算子，区别于 §15 的空间读数像集合以及定义 24 的配对谓词。
+

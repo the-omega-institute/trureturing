@@ -1,0 +1,17 @@
+**27.1 本次命题、来源和追加边界。** 本节为 2026-09-09 的 S16 参考输入,
+分类为 PAPER_ARGUMENT / repo-derived,承接已完成的实际 GPT PRO primary
+task a9d1269e-64ae-4a9a-b90f-8982ff023ee6,conversation conv_224b6f5d1adc6409,
+观测模型 GPT-6 Astra,完成于 2026-09-09T14:39:45.418+00:00。
+第 26 节已有实际角点给出的正定义域、分数背包对偶和固定箱体的有限薄层归约;
+这里复用这些事实,新增下包络端点的逐坐标单调性、无步宽损失的箱体下界、
+两个严格排除阈值、三坐标整数 guard 和固定正整数方向的最终排除。
+本地对照范围是本卷第 1-26 节,没有作全库或文献的穷尽新颖性断言。
+GH 仍是用户的原标签;RH 等价判据只是工作背景,没有新增 GH 定义或 RH 结论。
+
+本次 implementation-input HEAD / ingestion BASE 是
+391f7355698085c6500b46838a093dad05947ffb,不是尚待 caller 形成的 review-candidate HEAD。
+第 1-26 节的完整 176107 字节 / 3134 行前缀保持不变,SHA256 为
+4bbc7e0bbcd387c52a73d362ab78b61d00faf810d45d58df98b426e6fc34a266。
+既有 atoms、entries、报告和常量表均保留。独立评审、仓库门与 MERGED 尚未由本节取得;
+最终 S16 交付还依赖 S14 MERGED。本节不含另行在研的 relative-spread PRO 问题。
+

@@ -1,0 +1,6 @@
+**定义 2.1(三层真)**。对命题 $P$:
+
+- **模型真**:$\mathrm{True}_{\mathfrak M}(P)\iff\mathfrak M\models P$——这是 FCD 定义 19.2「模型有效性」($\forall x,\ \mathrm{Adm}(x)\to P(x)$)的语义形;FCD 定义 19.1「锚点真理」$P(a)$ 是它在单个实际锚点上的特例,本卷取模型形,不把二者等同(母仓第 2.2 条之「真」);
+- **证真**:$\mathrm{Proved}_{\mathfrak A}(P)$(定义 1.2);
+- **账真**:$\mathrm{Frozen}_L(P)\iff P\in\mathrm{Frozen}(L)$(定义 1.5)。
+

@@ -1,0 +1,72 @@
+## 27. commutator 与 coarse mode transport
+
+令三阶 symmetry 为：
+
+```math
+S=E_0+\omega E_1+\omega^2E_2,
+```
+
+其中每个 `E_i` 的 rank 为 `2`。因为任意两个不同 cube roots 的 squared distance 都为 `3`：
+
+```math
+\|[S,U]\|_{HS}^2
+=3\sum_{i\ne j}\|E_iUE_j\|_{HS}^2
+=3L.
+```
+
+因此 robust leakage bound 也可以写成：
+
+```math
+\boxed{
+\widehat\Delta(U)
+\ge
+\frac18
+\left(
+4-\frac13\|[S,U]\|_{HS}^2
+\right)^2.
+}
+```
+
+canonical mode-local relative transition 与 `S` commute，commutator energy 为零，defect 至少为 `2`。flat transition 的 coarse mode mass 完全均匀，commutator energy 达到 `12`。
+
+还可定义 `3 x 3` coarse mode transport：
+
+```math
+q_{ij}
+=\frac12\sum_{r,s\in Fin 2}
+|U_{(r,i),(s,j)}|^2.
+```
+
+unitarity 使 `q` doubly stochastic。对每个 `2 x 2` block 使用 Cauchy：
+
+```math
+\boxed{
+\widehat\Delta(U)
+\ge
+\sum_{i,j}
+\left(q_{ij}-\frac13\right)^2.
+}
+```
+
+canonical mode-local transition 对应 `q=I_3`，右侧为 `2`。flat transition 对应 `q=J_3/3`，右侧为零。
+
+`q` 也有 fusion-frame 解释。它记录两个由 rank-two mode PVM 诱导的 decomposition 之间的 overlap。quartet 所需的 flat relative transition 会迫使这两个 coarse decompositions mutually unbiased。
+
+该 coarse inequality 与现有：
+
+```text
+threeModeCenteredSquare
+modeCenteredSquareTotal
+modeAffinityTotal
+threeModeCharacterSquare
+```
+
+处于同一坐标系。下一层 Lean 应建立一个薄桥，而不重建 mode-affinity 库：
+
+```text
+relativeModeProbability
+relativeModeTransport
+scaledRelativeGramDefect_ge_modeCenteredEnergy
+scaledRelativeGramDefect_ge_commutatorGap
+```
+

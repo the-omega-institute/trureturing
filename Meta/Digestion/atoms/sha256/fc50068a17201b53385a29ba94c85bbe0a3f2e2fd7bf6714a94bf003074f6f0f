@@ -1,0 +1,39 @@
+## 6. What this changes in the next research step
+
+Ordering-only optimization within radius three has at most 0.0001 of room left
+below the selected upper certificate. The gap from its certified floor 2.5205
+to the published 2.429 target is 0.0915. More solver precision, more policy
+iterations or a richer dependence on history cannot close that gap while the
+same relaxed branching model is retained.
+
+The next mathematical target is therefore **retained-geometry refinement**.
+For r<=R and F contained in G, under the same action and direction,
+
+\[
+ M_r(F,a,d)\subseteq M_R(G,a,d).
+\]
+
+This follows by monotonicity of union, injective image and nested disks. Coupling
+the two explorations under the same history-dependent sequence of actions then
+shows that the larger-memory tree has no more paths. This is the next proposed
+formal lemma. For independently chosen state policies the actions need not
+agree, so monotonicity cannot be asserted without a controller transport.
+
+A scalable implementation should retain deleted vertices associated with
+potential loop closures, and seek an exact simulation or action-respecting
+bisimulation before merging states. Equality of an approximate Perron weight
+is not sufficient for a quotient. The complete all-order state union may be
+much larger than the states reachable under a proposed policy, so upper and
+lower certificates should use their appropriate, explicitly proved coverage.
+
+Exploratory, unvalidated power iterations for fixed SRL at radii 4,5,6 returned
+approximately 2.48260, 2.46329, 2.45139. They motivate retaining more geometry but
+are not exact certificates or new global results. They cannot be extrapolated
+into a claim that some particular radius must achieve 2.42.
+
+After obtaining a genuine geometry-certified growth bound below 2.429, the next
+analytic tasks are the exact partition-function/deletion-tree bridge and the
+family-uniform complex block contraction. The sufficient proposed target
+mu<=121/50 would imply lambda_c(mu)>51/20 through the standard threshold formula,
+but the premise mu<=121/50 is unproved here. No 2.55 zero-free theorem is claimed.
+

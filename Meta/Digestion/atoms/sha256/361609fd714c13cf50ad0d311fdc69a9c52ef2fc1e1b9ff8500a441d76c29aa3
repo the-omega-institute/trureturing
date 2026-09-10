@@ -1,0 +1,31 @@
+**证明（两次完整上下文替换）。** 由两个等价假设，$a'$ 在 $\partial A$ 上等于 $a$，$b'$ 在 $\partial B$ 上等于 $b$，故初始匹配运输到 $a',b'$。每个 $\partial C$ 中的变量既在 $A$ 或 $B$ 内，又在 $C$ 外，故其值由相应组件的边界保留。因此两个合并记录在 $\partial C$ 上相同。
+
+取任意
+
+$$
+r\in\mathcal R_C(\rho_C(a\cup b)).
+$$
+
+初始匹配及这个边界条件使 $a\cup b\cup r\in J$，所以 $b\cup r$ 是 $A$ 的一个完整相容补集记录。先用 $a\equiv_A a'$ 得
+
+$$
+G(a\cup b\cup r)=G(a'\cup b\cup r).
+\tag{QI-SUBSTITUTE-A}
+$$
+
+$a'$ 保留全部边界，故新合并仍相容，$a'\cup r$ 是 $B$ 的完整相容补集记录。再用 $b\equiv_B b'$ 得
+
+$$
+G(a'\cup b\cup r)=G(a'\cup b'\cup r).
+\tag{QI-SUBSTITUTE-B}
+$$
+
+这对每个完整 $r$ 成立，并且已证合并边界相同，所以得到 $\equiv_C$。集合
+
+$$
+\{((q_A(a),q_B(b)),q_C(a\cup b)):
+a\in J_A,\ b\in J_B,\ a|_{U_A\cap U_B}=b|_{U_A\cap U_B}\}
+$$
+
+于是为单值图。每对边界匹配的实际商状态都有原像；由于全部原像保留边界，任何这样的一对原像都匹配，故此图的域恰为所述部分域。这里的关键是两次完整补集替换；只比较抽样上下文或边缘上下文不能承担这一步。证毕。
+

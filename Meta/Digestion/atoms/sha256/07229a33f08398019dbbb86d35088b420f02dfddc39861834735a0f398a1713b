@@ -1,0 +1,38 @@
+## 7. Formal source map and verification
+
+- BranchingPotential: weighted child sums, history-dependent counts, upper and
+  lower all-depth integer induction.
+- OrderedGridMemory: actual integer-grid maps, arbitrary-radius disjointness,
+  finite-domain path definition and simulation.
+- RadiusThreeData: lossless exact certificate data.
+- RadiusThreeCertificates: full geometric closure, integer row checks, concrete
+  upper, all-controller lower, fixed lower and finite-domain upper endpoints.
+
+All 28 public declarations have paired canonical Scribe source handles using
+StatementSource.FromLean. No authored formula replaces a Lean statement.
+No information score, sampled analysis arena, catalog admission or sealing
+claim is attached to these results. The finite presentation is checked against
+the actual geometric blocked-set object. The referenced single-compilation
+specification was read at version 4.3, blob
+bba1875f68c733b925582ffc81f1344cfce96931.
+
+Reproduce the independent exact research replay from the repository root:
+
+```sh
+python research/hard_core_weitz/verify_radius_three.py
+```
+
+The verifier reads the Lean-owned integer payload, reconstructs transitions
+with integer-coordinate sets, checks all geometry and rows, replays 243 depth
+regressions and 81 finite-domain regressions, and rejects six deliberately
+corrupted certificates. It uses no discovery cache, NumPy, eigenvalue solver or
+stored success JSON. The emitted validation JSON is a recorded output only.
+This replay is a separate implementation by the same authoring assistant; it
+is not independent-author review and does not check Lean proof terms.
+
+Lean compilation, executed axiom closure and Scribe emission were unavailable
+in the authoring runtime. The finite source proofs use decide +kernel, with no
+native_decide or external verdict axiom. Those proof scripts have not yet been
+executed. Thus the current delivery is a mathematically reviewed and exactly
+replayed candidate formalization, not a kernel-admitted truth release.
+

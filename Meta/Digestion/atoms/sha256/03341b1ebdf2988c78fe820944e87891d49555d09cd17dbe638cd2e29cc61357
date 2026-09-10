@@ -1,0 +1,4 @@
+**定理 4.7(不冒领与不静默是账平的两个方向)**〔证〕。$\mathrm{Balanced}(\mathcal U,L)$ 等价于两条合取:(a) 不冒领——不存在 $\mathrm{last}(P)=(P,\mathsf{frozen})$ 而 $s_L(P)\neq\mathsf{frozen}$;(b) 不静默——不存在 $\mathrm{last}(P)=(P,\mathsf{open})$ 或 $(P,\mathsf{refuted})$ 而 $s_L(P)$ 与之不同。
+*证明*。定义 3.2 按 $\sigma$ 的取值分情形展开。∎
+*读法*。(b) 只约束**已登记**的主张:一旦账本已经冻结了 $P$,还把它说成 open 同样是浮账——**账平是双向的**。「异常必登记」不由 (b) 推出,也不在假设 4.3 内(见其读法)。
+

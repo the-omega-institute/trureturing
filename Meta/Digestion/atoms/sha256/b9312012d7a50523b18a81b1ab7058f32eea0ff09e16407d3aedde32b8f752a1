@@ -1,0 +1,18 @@
+**27.20 本次 canonical 摄入及状态。** 本实施为 caller 的 consensus-rnd:sshx 编排下
+Codex CLI I11,flight qgh0909-i11-separation-append,attempt 1,retry budget 1;
+工作树为 /Users/auricstudio/trureturing-qgh-separation,分支
+lane/math/quantized-gh-separation-0909。实施者 repo-prior-exposed,
+primary external-prior-exposed;不声称 sterile priors 或模型族多样性。
+本轮没有子 worker、新 oracle、同轮 review 输入、worker 日志或 opaque log_ref 内容读取,
+没有邻近活跃工作树或 caller 会话发现。仅依指定参考源与显式供给材料执行本增量。
+源文和一个新报告之外的新增 CAS/entry 仅由
+~~~sh
+make ingest BASE=391f7355698085c6500b46838a093dad05947ffb SOURCE=arithmetic-boundary-quantization
+~~~
+产生,不手编或重命名 generated 文件。实际路径为 Meta/Digestion/atoms/sha256
+与 Meta/Digestion/backfill;schema 使用 fingerprints/cas_ref/coverage_gids,没有 body atom_id。
+新条目保持 residual-open,不表示证明已被 Lean 吸收。generator 若产生历史 LF 变体则原样保留,
+不重放历史 atom、不作全仓 harness/Lean 构建。每个新实质单元在本节中编号,
+新 canonical 源跨度覆盖、文件身份和命令退出码由本次 implementation envelope 记录。
+Git 暂存、提交、push、PR、merge 和后续独立评审均归 caller;本节没有代行这些动作,
+也没有把有效实施信封当作独立评审或长期目标完成。
