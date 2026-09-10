@@ -174,7 +174,7 @@ private theorem diagonal_unique {f g : PowerSeries R}
   induction n using Nat.strong_induction_on with
   | h n ih =>
     by_cases hn0 : n = 0
-    · subst n; simpa only [coeff_zero_eq_constantCoeff, hf, hg]
+    · subst n; simp only [coeff_zero_eq_constantCoeff, hf, hg]
     by_cases hn1 : n = 1
     · subst n; exact hf1.trans hg1.symm
     by_cases hn2 : n = 2
@@ -183,5 +183,118 @@ private theorem diagonal_unique {f g : PowerSeries R}
     rw [hfe n (by omega), hge n (by omega), sub_self] at ht
     exact sub_eq_zero.mp ht.symm
 
-#print axioms diagonal_unique
+private noncomputable def extend (n : ℕ) (f : PowerSeries R) : PowerSeries R :=
+  f - C (residual f n) * X ^ n
+
+private theorem extend_agree (n : ℕ) (f : PowerSeries R) : Agree n (extend n f) f := by
+  intro k hk
+  simp only [extend, map_sub, coeff_C_mul_X_pow, if_neg (show k ≠ n by omega), sub_zero]
+
+private theorem residual_agree {d : ℕ} {f g : PowerSeries R}
+    (hf : constantCoeff f = 0) (hg : constantCoeff g = 0) (h : Agree d f g)
+    (n : ℕ) (hn : n < d) : residual f n = residual g n := by
+  rw [residual, residual, iterate_agree hf hg h n n hn,
+    iterate_agree hf hg h (n - 1) n hn]
+
+private theorem extend_normal {n : ℕ} {f : PowerSeries R} (hn : 2 < n)
+    (hf : constantCoeff f = 0) (hf1 : coeff 1 f = 1) (hf2 : coeff 2 f = 1) :
+    constantCoeff (extend n f) = 0 ∧ coeff 1 (extend n f) = 1 ∧
+      coeff 2 (extend n f) = 1 := by
+  refine ⟨?_, (extend_agree n f 1 (by omega)).trans hf1,
+    (extend_agree n f 2 hn).trans hf2⟩
+  simpa only [coeff_zero_eq_constantCoeff, hf] using extend_agree n f 0 (by omega)
+
+private theorem extend_correct {n : ℕ} {f : PowerSeries R} (hn : 2 < n)
+    (hf : constantCoeff f = 0) (hf1 : coeff 1 f = 1) (hf2 : coeff 2 f = 1) :
+    residual (extend n f) n = 0 := by
+  have hz := extend_normal hn hf hf1 hf2
+  have ht := residual_top (by omega : 1 < n) hz.1 hf hz.2.1 hf1 (extend_agree n f)
+  simp only [extend, map_sub, coeff_C_mul_X_pow, ↓reduceIte] at ht
+  dsimp only [extend]
+  linear_combination ht
+
+private noncomputable def approximation : ℕ → PowerSeries R
+  | 0 => X + X ^ 2
+  | j + 1 => extend (j + 3) (approximation j)
+
+private theorem approximation_normal (j : ℕ) :
+    constantCoeff (approximation (R := R) j) = 0 ∧
+    coeff 1 (approximation (R := R) j) = 1 ∧ coeff 2 (approximation (R := R) j) = 1 := by
+  induction j with
+  | zero => simp [approximation, coeff_X, coeff_X_pow]
+  | succ j ih => exact extend_normal (by omega) ih.1 ih.2.1 ih.2.2
+
+private theorem approximation_correct (j n : ℕ) (hn : 2 < n) (hj : n < j + 3) :
+    residual (approximation (R := R) j) n = 0 := by
+  induction j with
+  | zero => omega
+  | succ j ih =>
+    by_cases hnj : n < j + 3
+    · exact (residual_agree (approximation_normal (j + 1)).1
+        (approximation_normal j).1 (extend_agree (j + 3) (approximation j)) n hnj).trans
+        (ih hnj)
+    · have he : n = j + 3 := by omega
+      subst n
+      exact extend_correct (by omega) (approximation_normal j).1
+        (approximation_normal j).2.1 (approximation_normal j).2.2
+
+private theorem approximation_stable {j k : ℕ} (hjk : j ≤ k) :
+    Agree (j + 3) (approximation (R := R) k) (approximation j) := by
+  induction k, hjk using Nat.le_induction with
+  | base => intro i hi; rfl
+  | succ k hk ih =>
+    intro i hi
+    exact (extend_agree (k + 3) (approximation k) i (by omega)).trans (ih i hi)
+
+private noncomputable def limitSeries : PowerSeries R :=
+  mk fun n => coeff n (approximation n)
+
+private theorem limit_agree (j : ℕ) : Agree (j + 3) (limitSeries (R := R)) (approximation j) := by
+  intro n hn
+  simp only [limitSeries, coeff_mk]
+  by_cases hnj : n ≤ j
+  · exact (approximation_stable hnj n (by omega)).symm
+  · exact approximation_stable (by omega : j ≤ n) n hn
+
+private theorem limit_spec : constantCoeff (limitSeries (R := R)) = 0 ∧
+    coeff 1 (limitSeries (R := R)) = 1 ∧ coeff 2 (limitSeries (R := R)) = 1 ∧
+    ∀ n, 2 < n → residual (limitSeries (R := R)) n = 0 := by
+  have hz : constantCoeff (limitSeries (R := R)) = 0 := by
+    simpa only [coeff_zero_eq_constantCoeff, (approximation_normal 0).1] using
+      limit_agree (R := R) 0 0 (by omega)
+  refine ⟨hz, (limit_agree 0 1 (by omega)).trans (approximation_normal 0).2.1,
+    (limit_agree 0 2 (by omega)).trans (approximation_normal 0).2.2, ?_⟩
+  intro n hn
+  exact (residual_agree hz (approximation_normal n).1 (limit_agree n) n (by omega)).trans
+    (approximation_correct n n hn (by omega))
+
+noncomputable def generatingSeries : PowerSeries ℤ := limitSeries
+
+noncomputable def a (n : ℕ) : ℤ := coeff n (iterate generatingSeries n)
+
+theorem generating_equation : constantCoeff generatingSeries = 0 ∧
+    coeff 1 generatingSeries = 1 ∧ coeff 2 generatingSeries = 1 ∧
+    ∀ n, 2 < n → coeff n (iterate generatingSeries n) =
+      coeff n (iterate generatingSeries (n - 1)) := by
+  exact ⟨limit_spec.1, limit_spec.2.1, limit_spec.2.2.1,
+    fun n hn => sub_eq_zero.mp (limit_spec.2.2.2 n hn)⟩
+
+theorem generating_unique (f : PowerSeries ℤ)
+    (hf : constantCoeff f = 0) (hf1 : coeff 1 f = 1) (hf2 : coeff 2 f = 1)
+    (he : ∀ n, 2 < n → coeff n (iterate f n) = coeff n (iterate f (n - 1))) :
+    f = generatingSeries :=
+  diagonal_unique hf limit_spec.1 hf1 limit_spec.2.1 hf2 limit_spec.2.2.1
+    (fun n hn => sub_eq_zero.mpr (he n hn)) limit_spec.2.2.2
+
+-- The brief's initial value 4 is inconsistent with g₁=g₂=1; the value is 2.
+private theorem initial_echo : a 2 = 2 := by
+  have hg := generating_equation
+  have hx : iterate generatingSeries 1 = generatingSeries := by
+    simp [iterate, subst_X (.of_constantCoeff_zero hg.1)]
+  rw [a, iterate, hx, subst_coeff _ _ hg.1]
+  simp [Finset.sum_range_succ, hg.2.1, hg.2.2.1, leading_pow hg.1 hg.2.1]
+
+#print axioms generating_equation
+#print axioms generating_unique
+#print axioms initial_echo
 end D5.S1.Recurrence.Parity.DiagonalIterateEven

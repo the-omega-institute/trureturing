@@ -53,6 +53,15 @@ EXIT=0; `diagonal_unique` axiom closure is propext, Classical.choice, Quot.sound
 This is a general symbolic lemma, not a finite numerical check. It is currently
 private and unfrozen, on the planned live path to the final series construction.
 
+Second Lean unit checked: construct the integer series by successively subtracting
+the residual times X^n, prove the coefficient limit satisfies all normalization
+and diagonal constraints, and prove uniqueness. `generatingSeries` and `a` have
+no parity condition in their definitions. The private semantic echo `a 2 = 2`
+also checks. Warm file check EXIT=0; all three printed axiom closures contain
+only propext, Classical.choice, Quot.sound. The first run caught a definitional
+unfolding mismatch in extend_correct; unfolding extend in the goal repaired it.
+This proves existence/uniqueness, not yet the parity conjecture.
+
 ## Search receipts and semantic correction
 
 Local searches used `rg` over D5 for A395842, A177775, diagonal iteration,
