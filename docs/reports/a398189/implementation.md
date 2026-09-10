@@ -118,3 +118,15 @@ mathlib_missing_olean_files=0, mathlib_olean_state=warm, project_olean_state=war
 开 PR 前再查 base：origin/dev=`45ca4ae3b012cb1f59ff74a84e845691a3f0c99c`，
 merge-tree 无冲突，合成树 `c709569368d43dd4b4936158bc4364c3454cec50`；
 本轮更新的 dev D5/Library/Blueprint 搜索未见目标重复。原构建基线未变更。
+
+## 最终报告与 Scribe 修复
+
+最终字节 `make lean-report` EXIT=0，61.098 s。
+公开定理 statement_id 为 `sha256:2e736644e8d10de8ac10b8f0119891f2e59157d3122789f10da2fede6452aa8a`，
+axiom 闭包仍只有 Classical.choice、Quot.sound、propext。
+首轮 `make emit` EXIT=2，8.137 s：`FromLean` 报 `missing:...TruncatedExponentialTwoAdic.S`。
+已读 projector 实现：它只消费两份固定 Golden/Projection fixture，不能从新 raw report 动态投影；
+且 def 的 type 不含定义体，本来应走 authored presentation。
+因此两处改为现役 FromAuthor，写完整自然数求和定义和带全部前提的两分支公式，
+由 Scribe 自动记录 projection gap。未改 projector、fixture、Lean 或任何门槛。
+早先 GitHub 第三查询的正确读数是1（已更正），不是0；后续阅读已排除该命中。
