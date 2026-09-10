@@ -94,10 +94,19 @@ def exported_path(log):
     return pathlib.Path(receipts[0].partition(" out=")[2]).resolve()
 
 
+def publication_result(path):
+    if path is None:
+        return {"status": "not_requested"}
+    value = json.loads(pathlib.Path(path).read_bytes())
+    return {"status": "published", "artifact": str(path),
+            "certificate": value["certificate"],
+            "query_receipt_digest": value["query_receipt_digest"]}
+
+
 def execute(options):
     from phases import read, write
     from resources import run
-    from streaming import canonical, freshness, replay, root_definitions
+    from streaming import canonical, file_stamp, freshness, replay, root_definitions
     import shutil
 
     repository = pathlib.Path(__file__).resolve().parents[3]
@@ -105,20 +114,20 @@ def execute(options):
     directory.mkdir(parents=True, exist_ok=False)
     started = time.monotonic()
     state = {"status": "running", "rss_budget_gib": 4, "concurrency": 1, "phases": {},
-             "replay": "not-run", "assumed_unverified": []}
+             "replay": "not-run", "assumed_unverified": [], "publication": publication_result(None)}
     env = dict(os.environ)
 
     def save():
         state["wall_seconds"] = round(time.monotonic() - started, 3)
         write(directory / "run.json", state)
 
-    def step(command, label, *, build=False, design_limit_gb=None, budget_gb=4):
+    def step(command, label, *, build=False, design_limit_gb=None, budget_gb=4, phase_path=None):
         print("CENSUS_STEP " + label, flush=True)
         census_seconds = sum(value["wall_seconds"] for value in state["phases"].values()
                              if value["rss_budget_gib"] is not None)
         result = run(command, directory / "logs", label, cwd=repository, env=env,
                      budget_gb=None if build else budget_gb, design_limit_gb=design_limit_gb,
-                     wall_limit_s=max(1, 1200 - census_seconds))
+                     wall_limit_s=max(1, 1200 - census_seconds), phase_path=phase_path)
         state["phases"][label] = result
         if build:
             log = (directory / "logs" / (label + ".log")).read_text()
@@ -260,17 +269,26 @@ def execute(options):
                     if not block:
                         break
             state["byte_identical"] = True
-        # The independent certificate lane owns the manifest/transport API. Its
-        # current publisher requires retired per-root query receipts and cannot
-        # consume a whole-stream receipt. These measured rows remain report-only.
-        state["publication"] = {"status": "blocked", "accounted": len(keys),
-            "reason": "certificate transport requires per-root receipts; whole-stream integration belongs to the certificate lane"}
         if not options.no_structure:
             from Structure.sidecar import run_sidecar
             # Only completed census bytes are inputs. Structural failures have
             # their own closed diagnostics and never change accounting status.
             os.environ.update(env)
             state["structure"] = run_sidecar(repository, directory, raw_report)
+        if not getattr(options, "no_publication", False):
+            census = directory / "census.json"
+            census_before_publication = file_stamp(census)
+            step([sys.executable, str(repository / "tools/lean-inspector/Census/Certificate/manifest.py"),
+                  "--directory", str(directory), "--report", str(report_path), "--prepare",
+                  "--rows", str(directory / "rows.jsonl"), "--receipt", str(directory / "receipt.json"),
+                  "--prefix", options.prefix], "certificate_manifest")
+            step([lean_binary, "-DmaxRecDepth=100000", "-DmaxHeartbeats=0",
+                  str(directory / "CensusPublish/Root.lean")], "certificate_publication",
+                 phase_path=directory / "publication.json.phase")
+            if file_stamp(census) != census_before_publication:
+                raise ValueError("certificate publication changed census.json")
+            state["publication"] = dict(publication_result(directory / "publication.json"),
+                accounted=len(keys), census_json_unchanged_by_publication=True)
         print(json.dumps({"status": state["status"], "counts": state["counts"], "replay": state["replay"]}), flush=True)
         return 0 if state["status"] == "complete" else 2
     except BaseException as error:
@@ -288,6 +306,7 @@ def main():
     parser.add_argument("--prefix", default="D5", help="explicit partial measurement scope")
     parser.add_argument("--replay-of", help="rerun every phase and compare canonical outputs to this prior run")
     parser.add_argument("--no-structure", action="store_true", help="omit the report-only structural sidecar")
+    parser.add_argument("--no-publication", action="store_true", help="omit the certificate publication")
     return execute(parser.parse_args())
 
 

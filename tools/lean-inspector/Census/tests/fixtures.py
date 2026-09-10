@@ -6,11 +6,20 @@ import pathlib
 import tempfile
 import shutil
 import unittest
+import sys
+
+if __package__ in (None, ""):
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 from negative_fixtures import prepare, check_manifest_negatives, lean_env, validate_control
 from receipt_fixtures import check_receipts
 from resources import run
 
+RETIRED_QUERY_PROTOCOL_FIXTURES = [
+    "missing-query-receipt", "missing-query-transport", "edited-query-transport",
+    "stale-query-receipt", "swapped-query-receipt", "invented-consistent-scope-and-completion",
+    "duplicate-evidence-imports", "input-flag",
+]
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -18,8 +27,8 @@ def main():
     options = parser.parse_args()
     directory = pathlib.Path(options.output or tempfile.mkdtemp(prefix="census-fixtures-")).resolve()
     directory.mkdir(parents=True, exist_ok=True)
-    repository = pathlib.Path(__file__).resolve().parents[3]
-    suite = unittest.defaultTestLoader.discover(str(pathlib.Path(__file__).parent), pattern="test_*.py")
+    repository = pathlib.Path(__file__).resolve().parents[4]
+    suite = unittest.defaultTestLoader.discover(str(pathlib.Path(__file__).resolve().parents[1]), pattern="test_*.py")
     if not unittest.TextTestRunner().run(suite).wasSuccessful():
         raise SystemExit(1)
     run(["make", "lean-cache-ensure"], directory, "cache", cwd=repository, budget_gb=None)
@@ -46,12 +55,20 @@ def main():
     bounds.append(named_ballast(repository, streaming))
     negatives.append(nested_scope(repository, streaming))
     negatives.append(receipt_sensitivity(repository, streaming))
-    from chunk_fixtures import check_chunks
+    from Certificate.chunk_fixtures import check_chunks
     chunks = check_chunks(repository, directory)
+    from Certificate.bucket_fixtures import check_bucket_negatives
+    chunks.extend(check_bucket_negatives(repository, directory))
+    from Certificate.publication_fixtures import prepare_publication, check_publication_negatives
+    prepare_publication(repository, directory)
+    negatives.extend(check_publication_negatives(repository, directory))
     from Structure.fixtures import check_structure
     structure = check_structure(repository, directory)
     result = {"negative_fixtures": negatives, "lean_fixture_modules": cases, "retained_fixture_execution": "Lake lean_lib build",
               "certificate_chunk_binding": chunks, "bounded_fixtures": bounds, "query_scheduler": "retired",
+              "retired_query_protocol_fixtures": RETIRED_QUERY_PROTOCOL_FIXTURES,
+              "observed_theorem_absent_from_publication": True,
+              "artifact_determinism": True, "partial_certified_denominator": "passed",
               "structure_fixtures": structure}
     (directory / "fixtures.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result), flush=True)

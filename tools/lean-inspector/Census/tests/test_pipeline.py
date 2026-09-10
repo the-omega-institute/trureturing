@@ -128,7 +128,7 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(any(c[:2] == ["make", "truth-export"] for c in calls), exported)
 
     def test_manifest_excludes_scope_payloads(self):
-        import emission
+        from Certificate import emission
         first = ["str", ["anonymous"], "First"]
         second = ["str", ["anonymous"], "Second"]
         rows = [{"theorem_name": first, "statement_id": "sha256:" + format(1, "064x"),
@@ -155,6 +155,18 @@ class PipelineTests(unittest.TestCase):
         summary["certified_complete"] = True
         with self.assertRaisesRegex(ValueError, "certified_complete"):
             self.program.validate_summary(summary, requested=1, accounted=1)
+
+    def test_publication_diagnostic_uses_the_result(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = pathlib.Path(temporary) / "publication.json"
+            self.assertEqual(self.program.publication_result(None), {"status": "not_requested"})
+            value = {"certificate": {"name": "CensusRun.accountingCertificate", "axioms": ["propext"]},
+                     "query_receipt_digest": "sha256:" + "c" * 64}
+            path.write_text(json.dumps(value))
+            result = self.program.publication_result(path)
+            self.assertEqual(result["status"], "published")
+            self.assertEqual(result["certificate"], value["certificate"])
+            self.assertEqual(result["query_receipt_digest"], value["query_receipt_digest"])
 
 
 if __name__ == "__main__":

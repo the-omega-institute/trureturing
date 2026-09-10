@@ -11,16 +11,19 @@ instance : ToExpr CensusKeyManifest where
   toExpr value := mkApp4 (mkConst ``CensusKeyManifest.mk) (toExpr value.headSha)
     (toExpr value.reportSha256) (toExpr value.censusRoot) (toExpr value.keys)
 
-/-- The existing inventory accounting contract restated over Name × Nat.
-The hex-to-Nat correspondence is elaborator-validated, not a String-level theorem. -/
-def CensusKeyManifest.ExactlyCovers (m : CensusKeyManifest) (head : String)
-    (reportKeys : Finset (Name × Nat)) : Prop :=
-  m.headSha = head ∧ m.keys.Nodup ∧ (m.keys.map Prod.snd).Nodup ∧ m.keys.toFinset = reportKeys
+/-- This adapter stays outside the Init-only final environment. It claims an id
+set equality, not the inventory's Name-level `ExactlyCovers` (elaborator-bound). -/
+theorem ids_toFinset_eq_of_eq {ids reportIds : List Nat} (h : ids = reportIds) :
+    ids.toFinset = reportIds.toFinset := congrArg List.toFinset h
 
-theorem CensusKeyManifest.exactlyCovers_of_certificate (m : CensusKeyManifest)
-    (head sha : String) (root : Name) (reportKeys : List (Name × Nat))
-    (h : m.Certificate head sha root reportKeys) : m.ExactlyCovers head reportKeys.toFinset := by
-  have ids := strictlyAscending_nodup _ h.2.2.2.1
-  exact ⟨h.1, List.Nodup.of_map Prod.snd ids, ids, congrArg List.toFinset h.2.2.2.2⟩
+def CensusKeyManifest.IdCoverage (ids : List Nat) (requested : Nat)
+    (reportIds : Finset Nat) : Prop :=
+  ids.Nodup ∧ ids.length = requested ∧ ids.toFinset = reportIds
+
+theorem CensusKeyManifest.idCoverage_of_certificate (ids : List Nat)
+    (requested : Nat) (reportIds : List Nat)
+    (h : CensusKeyManifest.Certificate ids requested reportIds) :
+    CensusKeyManifest.IdCoverage ids requested reportIds.toFinset :=
+  ⟨strictlyAscending_nodup _ h.1, h.2.1, ids_toFinset_eq_of_eq h.2.2⟩
 
 end LeanInformationAudit
