@@ -1,0 +1,8 @@
+**定义 88（固定总复制语言与共同过去尾）。** 固定[《情境时空算术》定义 26、28、34](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的签名 \(\Sigma_{{\rm cau},t}\)。其总复制项为有限树，至少一个输入叶，所有输入叶同时代入同一 \(X\in\mathcal B\)；其余叶为固定平衡参数。树、筛选谓词、平移、左右槽位均先于全部输入固定，节点严格求值，且整树对每个平衡输入有定义。记数值函数集为 \(\mathcal E\)，仅一个输入叶时为 \(\mathcal E_1\)。对任意 \(B\subseteq\mathbb Z\times\mathbb Z^3\)，令 \(L_B(X)=q(F_BX)\)，并定义
+\[
+\operatorname{Tail}(B)\iff
+\exists c\in\mathbb Z\ \forall p\in\mathbb Z^3\ \forall t,t'<c:
+\mathbf1_B(t,p)=\mathbf1_B(t',p).
+\]
+目标中的任意时空区域筛选 \(F_B\) 不因此成为项原语。身份对角与一般属性对筛选也不在此固定签名中。\(E_q(B)\)、\(E_q^{\rm dup}(B)\) 分别表示 \(L_B\) 可由总单孔项、总复制项表达。
+

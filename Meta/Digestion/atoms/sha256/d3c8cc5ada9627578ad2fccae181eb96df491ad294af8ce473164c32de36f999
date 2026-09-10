@@ -1,0 +1,6 @@
+**定理 78（定义性保守性与给定模型的同构）。** 只添加上述定义符号及其已证性质得到的理论 \(T_Z\)，对原集合论语言是保守的。若外部给定任意 \(\mathfrak M\models\mathrm{ZFC}\)，其内部定义确定外部双射
+\[
+\operatorname{Enc}^{\mathfrak M}:|\mathfrak M|\longrightarrow\mathfrak V_Z^{\mathfrak M},
+\]
+保持并反映 \(\mathfrak M\) 的成员关系与所解释的 \(\in_Z^{\mathfrak M}\)，从而保持每个外部标准有限公式。引文为[《情境时空算术》第 11 节命题 15](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的定义消去方法。
+
