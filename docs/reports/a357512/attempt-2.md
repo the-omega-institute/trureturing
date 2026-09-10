@@ -1,7 +1,8 @@
 # A357512 attempt 2
 
-A is now proved by `fourth_dvd_of_odd_not_three`; Lean, report, emission,
-Scribe content checks, and freeze all pass. The PR is being prepared. The proof
+A is proved by `fourth_dvd_of_odd_not_three`; Lean, report, emission,
+Scribe content checks, and freeze all pass. PR:
+https://github.com/the-omega-institute/trureturing/pull/6858 . The proof
 does not consume any prime lemma or any external proof source. All attempt-1
 definitions and proofs are retained; only its preparatory digest/comment are
 updated to reflect the new A theorem.
@@ -35,9 +36,11 @@ refuting A, or a concrete failed Lean goal and sharper remaining subclaim.
 
 ## Nonclaims
 
-No proof of A, new finite-case progress, counterexample, freeze, coverage, PR,
-CI success, or novelty is claimed at this checkpoint. No theory volume or atom
-will be created. Unopened external pages are `ASSUMED-UNVERIFIED`.
+No new finite-case progress, target counterexample, atom coverage, global
+novelty, independent consensus, B admission, or exceptional-set necessity
+theorem is claimed. No theory volume or atom was created. Unopened external
+pages are `ASSUMED-UNVERIFIED`. CI status is reported separately from the
+successful local gates and freeze.
 
 ## Fresh external and numerical checks
 
@@ -189,3 +192,13 @@ The latter is a nonvacuity probe, not a frozen finite-instance result.
 `n : ℕ` is the natural index, `Odd n` is oddness, `¬3 ∣ n` is the explicit
 exception condition, `a` is the original offset-zero sequence, and the conclusion
 is exactly `n^4 ∣ a(n-1)`. The emitted formula displays those same clauses.
+
+## Delivery
+
+PR #6858 is opened against dev through `make pr-open`, with auto-merge off.
+The user's implementation stopping condition is A plus the local gate sequence,
+freeze, push, and opened PR; no merge is claimed. Required CI is pending at
+this committed receipt. The runner result records the final observed CI state
+without changing the frozen mathematics or copying canonical projections into
+the reports directory. All attempt-1 definitions/proofs remain in the pushed
+module; the original `sum_factorization` is consumed by the A theorem.
