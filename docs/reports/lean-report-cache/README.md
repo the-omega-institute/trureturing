@@ -29,7 +29,7 @@ Remote acquisition needs read access and publication needs contents write access
 Input addressing also uses the repository's .NET SDK and Python tooling.
 
 Report input addresses come from the existing
-[canonical input owner](../../tools/scripts/report/lean-report-input.sh), which
+[canonical input owner](https://github.com/the-omega-institute/trureturing/blob/5f89ce2af7d4b29af813640838ff43d45e5f438d/tools/scripts/report/lean-report-input.sh), which
 owns both schemas and their byte encoding:
 
 | Address namespace | Existing input schema and fields | Uses |
@@ -49,11 +49,11 @@ Importing a Release bundle stages it under its provenance address `A`.
 Normal report production follows these paths:
 
 1. An exact local entry supplies the complete bundle after the
-   [pair producer](../../tools/scripts/lean-report-pair.sh) checks its report hash,
+   [pair producer](https://github.com/the-omega-institute/trureturing/blob/5f89ce2af7d4b29af813640838ff43d45e5f438d/tools/scripts/lean-report-pair.sh) checks its report hash,
    input attestation, and provenance against the current tree.
 2. After an exact miss, a local bundle with matching producer/inspector and
    configuration coordinates can seed the existing
-   [delta producer](../../tools/lean-inspector/delta.py). It compares current
+   [delta producer](https://github.com/the-omega-institute/trureturing/blob/5f89ce2af7d4b29af813640838ff43d45e5f438d/tools/lean-inspector/delta.py). It compares current
    module source hashes and rechecks changes and affected dependents, including
    declared refutation-claim dependencies, while retaining unchanged records
    and materials. A source-stale seed is not a current report.
@@ -103,7 +103,7 @@ merge `M=80e78fd`/blob `e53346`。default full fallback producer 为 737 s、采
 精确报告命中在验证、暂存完整 bundle 后跳过 Inspector；真实源码增量由既有 delta owner
 按权威重检闭包处理变更及受影响模块，保留未受影响的记录和材料，再合成完整报告。
 无效增量仍回落全量。内存取决于加载的依赖环境和材料，不能按重检模块数线性推算。
-[Inspector](../../tools/lean-inspector/Inspector.lean) 仍保留 private、excluded、opaque
+[Inspector](https://github.com/the-omega-institute/trureturing/blob/5f89ce2af7d4b29af813640838ff43d45e5f438d/tools/lean-inspector/Inspector.lean) 仍保留 private、excluded、opaque
 声明及所需材料，`include_in_statement=false` 不代表可以丢弃材料。
 规范 statement 编码正文保持不变，仍先构造完整 String，再一次写出并检查 flush；
 Lean 导入内存也仍在。
@@ -160,7 +160,7 @@ returns failure when that requested action cannot succeed.
 and `LEAN_REPORT_DELTA` report reuse/delta/full-fallback decisions with
 changed, added, removed, and rechecked module counts.
 
-The [cache helper](../../tools/scripts/report/lean-report-cache.sh) selects these
+The [cache helper](https://github.com/the-omega-institute/trureturing/blob/5f89ce2af7d4b29af813640838ff43d45e5f438d/tools/scripts/report/lean-report-cache.sh) selects these
 default roots:
 
 | Environment | Default report cache root |
@@ -180,13 +180,13 @@ with `--latest=false`. Each content-addressed ZIP has a transport SHA-256 sideca
 and contains the normalized `raw-lean-report.json` plus `.sha256`,
 `.input.attestation`, `.provenance.json`, and `.materials.zip`. Process logs are
 excluded from reusable bundles. The
-[transport helper](../../tools/scripts/report/lean-report-cache.py)
+[transport helper](https://github.com/the-omega-institute/trureturing/blob/5f89ce2af7d4b29af813640838ff43d45e5f438d/tools/scripts/report/lean-report-cache.py)
 checks archive membership, digests, input coordinates, and ZIP integrity, and
 delegates report parsing to the existing delta owner. Report schema and semantic
 acceptance remain with the existing consumers. Transport validation alone does
 not prove that the materials semantically cover every report declaration.
 
-In [CI](../../.github/workflows/ci.yml), runs within the configured PR and push
+In [CI](https://github.com/the-omega-institute/trureturing/blob/5f89ce2af7d4b29af813640838ff43d45e5f438d/.github/workflows/ci.yml), runs within the configured PR and push
 scope try the Actions report cache keyed by repository input `R`. A
 validated exact hit serves the report before Lean toolchain restoration and
 the Lean build. A prefix restore is only a possible delta seed. The ordinary
@@ -222,6 +222,6 @@ The Actions report save retains its existing push scope and success conditions.
 The report cache cooperates through existing make and producer entry points;
 Lean cache keys/helpers, `.lake/build` and `.lake/packages` ownership, ensure,
 and writer behavior remain separate. See
-[Lean cache ownership](lean-cache-ownership.md) for those boundaries, including
+[Lean cache ownership](../lean-cache-ownership.md) for those boundaries, including
 the existing CI Lean restore-action failure gap and the unverified mathlib
 regeneration caveat.
