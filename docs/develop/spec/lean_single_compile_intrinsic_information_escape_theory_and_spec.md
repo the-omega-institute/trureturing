@@ -5582,6 +5582,7 @@ readout 定义依赖已注册 theorem 的 truth、proof term 或 theorem-specifi
 identity 时触发，将 AC-CIRPT-011 落为 fail-closed 诊断：provenance 检查须取 readout 定义的传递
 常量闭包，闭包不得到达该 theorem、其 proof、该 statement 的 `Decidable` instances 或上述身份来源；
 闭包无法完整取得亦按本码失败。本码适用于 finite 与 structural 两条注册路径。
+优先序 `IE-C050 > IE-C021`：IE-C021（常值 `true` readout）是本码的特例，同一登记同时命中时只发 IE-C050。
 定义完成；消费者随判官层落地，当前无机器消费者。
 
 ---
@@ -8209,7 +8210,7 @@ IE-C045--IE-C047 仍为 reserved/open，不进入三表，也不得由现有 com
 | IE-C044 | `DispositionCensusMismatch` | frozen report 的 `statement_id` 不唯一、coverage/totals/flag 不精确，或 observation root/owner/scope/completion/candidates 不符 |
 | IE-C048 | `RealizationIgnoredByLaw` | finite／structural 注册缺少同 signature、声明 intervention domain 内的 kernel-checked Law-variation witness；结构路径两 realizations 均须在 Γ domain，Iff.rfl 不算见证 |
 | IE-C049 | `UnusedPrimitiveInBundle` | signature 的 readout index／anchor 不在 Law 的 exact generated slot support 中，删除后 Law 在声明域外延不变而 bundle kernel 改变；优先序 `IE-C048 > IE-C049`，IE-C048 触发时不判 |
-| IE-C050 | `ClosedTruthReadout` | readout 传递常量闭包到达注册 theorem、其 truth／proof、statement 的 Decidable instances 或 theorem-specific certificate／statement identity，或闭包无法完整取得 |
+| IE-C050 | `ClosedTruthReadout` | readout 传递常量闭包到达注册 theorem、其 truth／proof、statement 的 Decidable instances 或 theorem-specific certificate／statement identity，或闭包无法完整取得；优先序 `IE-C050 > IE-C021`，同时命中只发本码 |
 
 | code | exact deterministic message shape |
 |---|---|
