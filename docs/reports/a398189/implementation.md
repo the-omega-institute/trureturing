@@ -4,6 +4,7 @@
 用户转述的 orchestrator/分诊席读数不冒充本席亲验。
 工作树 `/Users/chronoai/trureturing-a398189`，分支 `lane/math/a398189`。
 初始 base：`343718ed191002a4708ccf381081f9b0c7a58e1a` (`origin/dev`)。
+以下按时间顺序保留工作记录；早期「尚未」状态以文末的最终收据为准。
 
 ## 预登记与边界
 
@@ -148,3 +149,15 @@ describe-report 无 RED，真 KaTeX 判词 `markdown: judged=1 formula(s)=2 red=
 projections --check 按脚本变更面判定未触发（本席没有改 Golden/Projection 或 projector）；
 没有把该未触发子项冒称运行成功。FromAuthor 的 missing projection gap 是显式 OPEN 展示能力，
 不影响 Lean 内核已证状态或原始 statement_id 的声明绑定。
+
+## 冻结完成
+
+`make deposit-uncovered GID=D5/S3/Arith/Congruence/TruncatedExponentialTwoAdic.odd_positive_branches
+BASE=343718ed191002a4708ccf381081f9b0c7a58e1a` EXIT=0，92.742 s。
+此入口按序复用同输入的 lean-report、检查头、emit，再执行 `ledger-align --add`。
+`LEDGER_ALIGN selectors_considered=3959 changed=0 added=1 unchanged=3958 conflicts=0`；
+`PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED ... reason=NO_ATOM` 是本题无 atom 路径的成功判词。
+模块冻结 statement_id：`sha256:f4ac79eb3331d669eb36b6e73501e5acf62ce5c5de1e7ac7d93cb745f5430a04`；
+公开定理 statement_id 保持上文 `sha256:2e736644e8d10de8ac10b8f0119891f2e59157d3122789f10da2fede6452aa8a`。
+接受事件：`Golden/Frozen/accepted/c9afbf1136a213d622f37bbf714f338caba8243879b3fdeb78bce16a165c23a4.json`。
+没有理论卷、atom 或 backfill 变更。未把私有余数枚举另做公开正向实例。
