@@ -161,6 +161,105 @@ class WorkerTests(unittest.TestCase):
         self.assertEqual(2, saved["optimizer"]["step"])
         self.assertEqual(status["session"]["id"], saved["invocation"]["session_id"])
 
+    def test_analytic_exact_budget_exhaustion_and_zero_allocation_skip(self):
+        from search_config import load_initializer
+        self.config = Config(dimensions=(55,), seed_steps=2, batch_steps=1)
+        spec = load_initializer(Path(__file__).resolve().parents[4] /
+            "Evidence/D5/S3/Quantum/AnalyticD55Initializer.result.json")[0]
+        args = worker.parser().parse_args(["--initializer", "analytic-d55", "--max-steps", "2",
+                                           "--device", "cpu", "--precision", "float64"])
+        first = SyntheticWorker(self.state, self.config, None, worker.StopRequest(), args, self.registry)
+        self.assertEqual(0, self.run_worker(first))
+        self.assertEqual([(55, 0)], first.initializations)
+        self.assertIsNone(args.initializer_recipe)
+        self.assertEqual("cpu", str(first.device))
+        self.assertEqual(str(Path(__file__).resolve().parents[4] /
+                             "Evidence/D5/S3/Quantum/AnalyticD55Initializer.result.json"),
+                         first.campaign.provenance["initializer_input"]["recipe_path"])
+        status = json.loads((self.state / "status.json").read_text())
+        self.assertEqual("exhausted", status["stop_reason"])
+        self.assertEqual(2, status["session"]["completed_steps"])
+        other = self.root / "other"
+        other.mkdir()
+        skipped = SyntheticWorker(other, self.config, None, worker.StopRequest(), args, self.registry)
+        with patch.object(skipped, "initialize", side_effect=AssertionError("must skip before allocation")):
+            self.assertEqual(0, self.run_worker(skipped))
+        status = json.loads((other / "status.json").read_text())
+        self.assertEqual("exhausted", status["stop_reason"])
+        self.assertFalse(status["checkpoint_saved"])
+        self.assertEqual(0, status["session"]["completed_steps"])
+        self.assertEqual(spec, status["exhaustion"]["descriptor"]["initialization"])
+
+    def test_scientific_source_hash_accounts_for_all_six_members(self):
+        members = ("gpu_worker.py", "tensor_core.py", "search_config.py", "state_store.py",
+                   "search_session.py", "trial_history.py")
+        source = self.root / "scientific-source"
+        source.mkdir()
+        original = worker.source_hash()
+        for name in members:
+            (source / name).write_bytes((worker.ROOT / name).read_bytes())
+        with patch.object(worker, "ROOT", source):
+            self.assertEqual(original, worker.source_hash())
+            for name in members:
+                with self.subTest(member=name):
+                    path = source / name
+                    before = path.read_bytes()
+                    path.write_bytes(before + b"\n")
+                    self.assertNotEqual(original, worker.source_hash())
+                    path.write_bytes(before)
+            self.assertEqual(original, worker.source_hash())
+
+    def test_source_mismatch_is_rejected_before_resume(self):
+        first = self.create(steps=1)
+        self.assertEqual(0, self.run_worker(first))
+        with patch.object(worker, "source_hash", return_value="b" * 64):
+            with self.assertRaisesRegex(ValueError, "source"):
+                self.create(steps=1)
+        saved = worker.load_checkpoint(self.state / "latest.pt", self.state)
+        saved["migration_evidence"] = {"source_sha256": saved["source_sha256"]}
+        worker.atomic_checkpoint(self.state / "latest.pt", saved)
+        with patch.object(worker, "source_hash", return_value="b" * 64):
+            with self.assertRaisesRegex(ValueError, "source"):
+                self.create(steps=1)
+
+    def test_analytic_fresh_skip_retains_checkpoint_without_mixing_progress(self):
+        from gpu_bounded_launcher import read_status
+        self.config = Config(dimensions=(55,), seed_steps=2, batch_steps=1)
+        args = worker.parser().parse_args(["--initializer", "analytic-d55", "--max-steps", "2"])
+        first = SyntheticWorker(self.state, self.config, None, worker.StopRequest(), args, self.registry)
+        self.assertEqual(0, self.run_worker(first))
+        original = (self.state / "latest.pt").read_bytes()
+        saved = worker.load_checkpoint(self.state / "latest.pt", self.state)
+        args.fresh_start = True
+        fresh = SyntheticWorker(self.state, self.config, saved, worker.StopRequest(), args, self.registry)
+        with patch.object(fresh, "initialize", side_effect=AssertionError("zero allocation skip")):
+            self.assertEqual(0, self.run_worker(fresh))
+        self.assertEqual(original, (self.state / "latest.pt").read_bytes())
+        status = read_status(self.state)
+        self.assertEqual(0, status["session"]["completed_steps"])
+        self.assertEqual(1, status["progress"]["skipped_trials"])
+        self.assertEqual(2, status["progress"]["traversal_start_steps"])
+        self.assertFalse(status["checkpoint_saved"])
+        self.assertIsNone(status["trial"])
+
+    def test_analytic_best_identity_mismatch_is_rejected(self):
+        self.config = Config(dimensions=(55,), seed_steps=2, batch_steps=1)
+        args = worker.parser().parse_args(["--initializer", "analytic-d55", "--max-steps", "2"])
+        first = SyntheticWorker(self.state, self.config, None, worker.StopRequest(), args, self.registry)
+        self.assertEqual(0, self.run_worker(first))
+        path = self.state / "best-55.pt"
+        record = worker.load_checkpoint(path, self.state)
+        record["trial_identity"] = "b" * 64
+        worker.atomic_checkpoint(path, record)
+        with self.assertRaisesRegex(ValueError, "identity"):
+            worker.load_checkpoint(path, self.state)
+
+    def test_analytic_forever_is_rejected_before_allocation(self):
+        args = worker.parser().parse_args(["--initializer", "analytic-d55", "--forever"])
+        with self.assertRaisesRegex(ValueError, "finite|forever"):
+            SyntheticWorker(self.state, Config(dimensions=(55,)), None,
+                            worker.StopRequest(), args, self.registry)
+
 
 if __name__ == "__main__":
     unittest.main()
