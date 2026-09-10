@@ -4,6 +4,29 @@ namespace StrataLint.Tests;
 
 public sealed class LeanReportTransportMaterialTests
 {
+    [Fact]
+    public void LocalExactUnavailableVerificationRetainsEntryForLaterReuse()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanReportTransportFixture();
+        fixture.Success(fixture.MakeReport("STRATALINT_REPORT_CACHE_REMOTE=0"));
+        var original = fixture.CacheSnapshot();
+        var live = fixture.LiveSnapshot();
+
+        fixture.InjectValidationUnavailableOnce();
+        var unavailable = fixture.MakeReport("STRATALINT_REPORT_CACHE_REMOTE=0", "FIXTURE_PRODUCER_EXIT=69");
+        Assert.NotEqual(0, unavailable.ExitCode);
+        Assert.Contains("fixture verifier unavailable", unavailable.Text, StringComparison.Ordinal);
+        Assert.Equal(original, fixture.CacheSnapshot());
+        Assert.Equal(live, fixture.LiveSnapshot());
+
+        var recovered = fixture.MakeReport("STRATALINT_REPORT_CACHE_REMOTE=0");
+        fixture.Success(recovered);
+        Assert.Contains("status=hit mode=local-exact", recovered.Text, StringComparison.Ordinal);
+        Assert.Equal(2, fixture.ProducerCalls.Length);
+        Assert.Equal(original, fixture.CacheSnapshot());
+    }
+
     [Theory]
     [InlineData("invalid-archive")]
     [InlineData("missing-member")]

@@ -226,8 +226,20 @@ cache_try_restore() {
     && ! -e "${report}.logs" && ! -L "${report}.logs" ]] \
     || { cache_evict "$address"; return 1; }
   # Validate canonical materials before an exact hit can suppress production.
-  if ! python3 "$SCRIPT_DIR/report/lean-report-cache.py" validate "$report"; then
+  # The canonical validator distinguishes rejected contents (1) from an
+  # unavailable verifier or I/O failure (2).  Only proven rejection permits
+  # eviction; an unavailable check must fall through to authoritative
+  # production without destroying a reusable entry.
+  local validate_rc=0
+  if python3 "$SCRIPT_DIR/report/lean-report-cache.py" validate "$report"; then
+    validate_rc=0
+  else
+    validate_rc=$?
+  fi
+  if [[ "$validate_rc" == "1" ]]; then
     cache_evict "$address"
+    return 1
+  elif [[ "$validate_rc" != "0" ]]; then
     return 1
   fi
   local declared="" declared_name=""

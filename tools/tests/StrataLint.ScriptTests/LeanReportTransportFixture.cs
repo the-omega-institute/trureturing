@@ -168,6 +168,14 @@ internal sealed partial class LeanReportTransportFixture : IDisposable
     }
 
     internal void BlockCacheRoot() => File.WriteAllText(CacheRoot, "unavailable\n");
+    internal void InjectValidationUnavailableOnce() => Executable(Path.Combine(Bin, "python3"), """
+        if [[ "${1:-}" == *lean-report-cache.py && "${2:-}" == validate && ! -e "$REPORT_FIXTURE/validation-fault-used" ]]; then
+          touch "$REPORT_FIXTURE/validation-fault-used"
+          printf 'fixture verifier unavailable\\n' >&2
+          exit 2
+        fi
+        exec /usr/bin/python3 "$@"
+        """);
     internal void ClearCache() { if (Directory.Exists(CacheRoot)) Directory.Delete(CacheRoot, true); }
     internal string[] LiveSnapshot() => Suffixes.Select(suffix => Digest(File.ReadAllBytes(Output + suffix)))
         .Append(Digest(File.ReadAllBytes(Output + ".logs/producer.log"))).ToArray();
