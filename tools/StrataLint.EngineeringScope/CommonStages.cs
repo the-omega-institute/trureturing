@@ -195,7 +195,10 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         if (stage != "build" && Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var arg in arguments) start.ArgumentList.Add(arg);
+        var startedAt = clock.GetTimestamp();
+        double Elapsed() => clock.GetElapsedTime(startedAt).TotalMilliseconds;
         using var process = Process.Start(start) ?? throw new IOException("cannot start " + executable);
+        var startedElapsed = Elapsed();
         using var timer = new CancellationTokenSource(timeout, clock);
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(deadlineCancellation, timer.Token);
         using var drainCancellation = new CancellationTokenSource();
@@ -203,19 +206,45 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         using var stderrReader = process.StandardError;
         var stdoutText = new StringBuilder();
         var stderrText = new StringBuilder();
-        var stdout = Drain(stdoutReader, stdoutText, drainCancellation.Token);
-        var stderr = Drain(stderrReader, stderrText, drainCancellation.Token);
+        var phase = "child-exit";
+        var outcome = "faulted";
+        string? cancelledPhase = null;
+        double? cancelledElapsed = null;
+        var deadlineCancelled = false;
+        var timeoutCancelled = false;
+        var childExit = new { code = (int?)null, phase = "not-observed", elapsed_ms = (double?)null };
+        var stdoutObservation = new { status = "pending", elapsed_ms = (double?)null };
+        var stderrObservation = stdoutObservation;
+        async Task WaitForExit(CancellationToken token)
+        {
+            var waitPhase = phase;
+            await process.WaitForExitAsync(token).ConfigureAwait(false);
+            if (childExit.code is null)
+                childExit = new { code = (int?)process.ExitCode, phase = waitPhase, elapsed_ms = (double?)Elapsed() };
+        }
+        var stdout = Drain(stdoutReader, stdoutText, drainCancellation.Token,
+            status => stdoutObservation = new { status, elapsed_ms = (double?)Elapsed() });
+        var stderr = Drain(stderrReader, stderrText, drainCancellation.Token,
+            status => stderrObservation = new { status, elapsed_ms = (double?)Elapsed() });
         var drains = Task.WhenAll(stdout, stderr);
         try
         {
-            process.WaitForExitAsync(cancellation.Token).GetAwaiter().GetResult();
+            WaitForExit(cancellation.Token).GetAwaiter().GetResult();
+            phase = "output-drain";
             processExited?.Invoke(process);
             drains.WaitAsync(cancellation.Token).GetAwaiter().GetResult();
             cancellation.Token.ThrowIfCancellationRequested();
+            outcome = "completed";
             return (process.ExitCode, Captured(stdoutText) + Captured(stderrText));
         }
         catch (OperationCanceledException)
         {
+            cancelledPhase = phase;
+            cancelledElapsed = Elapsed();
+            deadlineCancelled = deadlineCancellation.IsCancellationRequested;
+            timeoutCancelled = timer.IsCancellationRequested;
+            outcome = "cancelled";
+            phase = "cleanup";
             // Keep reading bytes emitted before the deadline while killing/reaping
             // the producer. An inherited pipe can stay open after its parent exits,
             // so the readers share the existing five-second cleanup bound.
@@ -224,7 +253,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             catch (InvalidOperationException) { } // Exit can race the kill.
             try
             {
-                Task.WhenAll(drains, process.WaitForExitAsync(drainCancellation.Token)).GetAwaiter().GetResult();
+                Task.WhenAll(drains, WaitForExit(drainCancellation.Token)).GetAwaiter().GetResult();
             }
             catch (OperationCanceledException) { }
             return (124, Captured(stdoutText) + Captured(stderrText)
@@ -237,17 +266,36 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             drainCancellation.Cancel();
             try { drains.GetAwaiter().GetResult(); }
             catch (OperationCanceledException) { }
+            finally
+            {
+                output.WriteLine("STAGE_PROCESS " + JsonSerializer.Serialize(new
+                {
+                    stage, command = executable, arguments, process_id = process.Id, phase, outcome,
+                    started_elapsed_ms = startedElapsed, elapsed_ms = Elapsed(),
+                    timeout_ms = timeout == Timeout.InfiniteTimeSpan ? (double?)null : timeout.TotalMilliseconds,
+                    cancelled_phase = cancelledPhase, cancelled_elapsed_ms = cancelledElapsed,
+                    deadline_cancelled = deadlineCancelled, timeout_cancelled = timeoutCancelled,
+                    child_exit = childExit, stdout = stdoutObservation, stderr = stderrObservation,
+                }));
+            }
         }
     }
 
-    private static async Task Drain(StreamReader reader, StringBuilder text, CancellationToken cancellation)
+    private static async Task Drain(StreamReader reader, StringBuilder text, CancellationToken cancellation, Action<string> observed)
     {
-        var buffer = new char[4096];
-        int count;
-        while ((count = await reader.ReadAsync(buffer.AsMemory(), cancellation).ConfigureAwait(false)) != 0)
+        var status = "faulted";
+        try
         {
-            lock (text) text.Append(buffer, 0, count);
+            var buffer = new char[4096];
+            int count;
+            while ((count = await reader.ReadAsync(buffer.AsMemory(), cancellation).ConfigureAwait(false)) != 0)
+            {
+                lock (text) text.Append(buffer, 0, count);
+            }
+            status = "eof";
         }
+        catch (OperationCanceledException) { status = "cancelled"; throw; }
+        finally { observed(status); }
     }
 
     private static string Captured(StringBuilder text)
