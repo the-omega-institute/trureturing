@@ -55,3 +55,21 @@ curl returned the above HTTP 200 response and the comparison was then run.
 `make lean-cache-ensure`: EXIT=0, status `present`, method `none`, project and
 Mathlib `warm`, missing Mathlib oleans 0, stamp miss `null`, pin SHA-256
 `6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e`.
+
+## Sharpened whole-sum route, before Lean verification
+
+Write `c_k = choose(n-1,k) choose(n+k,k)`. The proposed recurrence is
+`(k+1)^2 (c_{k+1}+c_k) = n^2 c_k` for `k<n`. Multiplication by
+`c_{k+1}-c_k` gives a denominator-free difference of squares. Summation by
+parts with the cubic antidifference `j^2(j+1)^2` should yield
+`n^2 ∣ 4 Σ j^3 c_{j-1}^2`. A separate binomial identity should yield
+`n ∣ j(c_j+c_{j-1})`, and summation by parts for squares should then yield
+`n ∣ 6 Σ j^2 c_{j-1}^2`. These two claims would give the stronger
+denominator-cleared target `n^4 ∣ 12*a(n-1)` for all positive `n`, followed by
+cancellation of 12 under the requested coprimality conditions. These are
+proposed general identities, not verified claims at this checkpoint.
+
+Prerequisite lookup found Mathlib's `Finset.sum_range_by_parts` and
+`Nat.choose_succ_right_eq`, `Nat.add_one_mul_choose_eq`. Their source statements
+were opened. A first search also named a nonexistent `D5/S3/Arithmetic`
+directory; that error is not counted as a negative search result.
