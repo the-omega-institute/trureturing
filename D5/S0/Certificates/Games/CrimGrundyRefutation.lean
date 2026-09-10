@@ -13,8 +13,9 @@
    Direct frozen dependencies: none. -/
 
 import Mathlib.Algebra.Order.BigOperators.Group.List
+import Mathlib.Algebra.Order.Group.Nat
 import Mathlib.Data.Finset.Max
-import Mathlib.Tactic
+import Mathlib.Tactic.SplitIfs
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 10000
@@ -128,7 +129,8 @@ private def missing_nonempty (s : Finset ℕ) :
   apply Finset.sdiff_nonempty.mpr
   intro h
   have := Finset.card_le_card h
-  simp at this
+  simp only [Finset.card_range] at this
+  omega
 
 /-- Least natural number absent from a finite set, using Mathlib finite minima. -/
 def mex (s : Finset ℕ) : ℕ :=
@@ -617,7 +619,7 @@ set_option maxHeartbeats 4000000 in
 theorem result : ¬ claim := by
   have checked : (domain certificate).all (check certificate) = true := by
     -- Keep each state's kernel reduction separate, then combine all checks.
-    conv_lhs => arg 1; reduce
+    conv => lhs; arg 1; reduce
     simp only [List.all_cons, List.all_nil, Bool.and_eq_true, and_true]
     repeat' apply And.intro
     all_goals decide +kernel
