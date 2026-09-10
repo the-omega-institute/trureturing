@@ -44,7 +44,7 @@ it does not authorize claiming that an unmerged PR has landed on dev.
 
 ## Current result
 
-The full parity theorem is checked by Lean at file level. Repository gates,
+The full parity theorem and `make lean` pass. Report production, Scribe checks,
 freeze and PR remain in progress; no freeze or landed PR is claimed yet.
 
 First Lean unit checked: the degree-n residual changes by exactly the change
@@ -155,5 +155,14 @@ grammar and registered Recurrence domain were checked.
 ## Unclaimed
 
 No claim of an exhaustive literature search, a resolution of A177775,
-an independent review, a freeze, or a successful repository build has been made yet.
+an independent review, a freeze, or a landed PR has been made yet.
 Unopened external pages are ASSUMED-UNVERIFIED.
+
+## Repository gate receipts
+
+`make lean`: EXIT=0, 379.806 seconds on this macOS ARM worktree; final output
+`Build completed successfully (12896 jobs)`. The new module took 5.7 seconds.
+LEAN_CACHE: status=present, method=none, stamp_miss=null, both project and Mathlib
+warm, no missing Mathlib oleans, archive not attempted. The initial clonefile
+seed is recorded above. Full structured receipt: build-receipts.json; raw log
+is the attempt directory's make-lean.log. These local timings are not CI timings.
