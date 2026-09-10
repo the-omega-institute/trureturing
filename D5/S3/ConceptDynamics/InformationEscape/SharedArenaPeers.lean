@@ -27,8 +27,8 @@ namespace D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
 open RegistrationTemplates
 open D5.S3.ConceptDynamics.InformationEscapeArenas
 
-/- Selection: docs/reports/regprog-m3-0910-pr-body.md, committed before these
-registrations. The separation template supplies both readouts; the bridges only
+/- Selection: docs/reports/regprog-m3-0910/pr-body.md.
+The separation template supplies both readouts; the bridges only
 transport statement shapes through existing fiber/factorization results.
 No primitive reads theorem truth or proof data. Each arena keeps its gold peer. -/
 

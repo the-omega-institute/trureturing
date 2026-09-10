@@ -6,7 +6,7 @@ This content-plane change asks whether five previously observed frozen theorems 
 
 ## Preregistered selection
 
-The selection is fixed before registration code. The source is the frozen public theorem inventory, screened with `rg -w` over canonical carrier names, `Fin 3`, and `Bool × Bool × Bool`, plus source-module importers. The [statement inventory](regprog-m3-0910-selection.jsonl) contains 167 carrier-screen hits: 157 `observed` and the 10 certified gold theorems. Every row includes the full pretty-printed statement, statement identity, carrier labels, and a family-fit assessment. All five fixed picks assess as `observed` in `InformationRoot` scope.
+The selection is pinned by preregistration commit `c7098f86d5`, before registration code. The research contract is [#5214 and its P2 plan](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5618899373). The source is the frozen public theorem inventory, screened with `rg -w` over canonical carrier names, `Fin 3`, and `Bool × Bool × Bool`, plus source-module importers. The [statement inventory](https://github.com/the-omega-institute/trureturing/blob/lane/math/regprog-m3-0910/docs/reports/regprog-m3-0910/selection.jsonl) contains 167 carrier-screen hits: 157 `observed` and the 10 certified gold theorems. Every row includes the full pretty-printed statement, statement identity, carrier labels, and a family-fit assessment. All five fixed picks assess as `observed` in `InformationRoot` scope.
 
 Canonical arena names below abbreviate the existing declarations under `D5.S3.ConceptDynamics.InformationEscapeArenas`: IC = `FourthFifthArenas.interventionArena` (16 outcome-table SCMs); OI = `ObservationIntervention.observationInterventionArena` (32 direction/root/child SCMs). These are different carrier types with the same short type name `DeterministicBoolSCM`. The canonical declarations, signatures, and state enumerations are reused verbatim.
 
@@ -63,7 +63,9 @@ Vacuity evidence is shared by definitional equality of each arena's occurrence b
 | Same root with the two expected-error guards absent | 1 | Exactly two IE-C007 errors: IC full/without 0/0 and OI full/without 24/24; no proof errors. |
 | `make lean-report` | 0 | Fresh canonical report includes the new root; all its proofs are closed. |
 | `make emit` | 0 | Emits `Blueprint/D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.md` from its scribe source. |
-| `make gate` | ASSUMED-UNVERIFIED | Pending. |
+| `make gate` | ASSUMED-UNVERIFIED | Capacity correction awaits verification; the reports occupy a lane subdirectory. |
+
+The gate classifies the Blueprint source with its ordinary SL-022 annotation; this is distinct from judge/content partition, which passes. The flat `docs/reports` directory exceeds its admission capacity with two additional files, so this lane keeps its report and inventory in one subdirectory.
 
 The negative finding refutes positive shared-arena admission for these five registrations with the fixed canonical readouts. Reuse reduces bridge authorship, while identical peer kernels prevent unique capture. Any change of semantic arena or readouts belongs to a separately justified change of Γ. Further registrations stop at the five-pick budget; independent blind review and global inventory completeness are ASSUMED-UNVERIFIED.
 
