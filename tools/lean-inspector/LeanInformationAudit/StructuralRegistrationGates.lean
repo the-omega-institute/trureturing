@@ -66,6 +66,8 @@ def structuralNondegenerate? (entry : DispositionCensus.StructuralProvenanceEntr
 
 def validateStructural (entry : DispositionCensus.StructuralProvenanceEntry) :
     MetaM (Option String) := budget do
+  if let some error := provenanceError (← getEnv) entry.registrationModule
+      entry.canonicalArena entry.theoremName entry.realizationConst then return some error
   let domain := if entry.domainName.isAnonymous then "all" else entry.domainName.toString
   if entry.certificateName.isAnonymous then
     return some <| variationError entry.registrationModule entry.canonicalArena

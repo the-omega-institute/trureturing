@@ -5,14 +5,16 @@ open Lean LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape
 namespace RegistrationProvenance
 
-theorem proofSource : True := True.intro
-theorem truth : True := proofSource
+theorem proofSource : True ∧ True := ⟨True.intro, True.intro⟩
+theorem numberProof (n : Nat) : n = n := rfl
+theorem truth : True := let _ := numberProof 0; proofSource.1
 instance statementDecision : Decidable True := .isTrue True.intro
 structure Certificate (theoremName : Name) where
   bit : Bool
 def certificate : Certificate ``truth := ⟨false⟩
 def identitySource : Name := ``truth
 def viaTruth (_ : Unit) (x : Bool) : Bool := let _ := truth; x
+def viaAppliedProof (_ : Unit) (x : Bool) : Bool := let _ := numberProof 0; x
 def viaProof (_ : Unit) (x : Bool) : Bool := let _ := proofSource; x
 def viaDecision (_ : Unit) (x : Bool) : Bool := if @decide True statementDecision then x else true
 def viaCertificate (_ : Unit) (x : Bool) : Bool := if certificate.bit then true else x
@@ -50,10 +52,26 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
       | some message => message.startsWith "IE-C050 ClosedTruthReadout key=" &&
           (message.splitOn s!" reason={reason.getString} provenance=").length == 2 &&
           (message.splitOn "IE-C021").length == 1
+    if let some message := actual then
+      let pieces := message.splitOn " provenance="
+      let payload := pieces.getLast!
+      let expectedKey := s!"key={entry.registrationModuleName}/{entry.effectiveCatalogId}/{entry.theoremName}"
+      unless (message.splitOn expectedKey).length == 2 &&
+          (message.splitOn s!"readout={n}").length == 2 do
+        throwError "[FAIL] {label.getString}: diagnostic keys"
+      if reason.getString == "incomplete_closure" then
+        unless payload == "null" do throwError "[FAIL] {label.getString}: partial closure"
+      else if let .ok json := Json.parse payload then
+        if let .ok names := fromJson? (α := Array String) json then
+          unless names == names.qsort (· < ·) && names.toList.eraseDups.length == names.size &&
+              names.contains n.toString do throwError "[FAIL] {label.getString}: canonical closure"
+        else throwError "[FAIL] {label.getString}: non-array closure"
+      else throwError "[FAIL] {label.getString}: invalid JSON"
     unless ok do throwError "[FAIL] {label.getString}: {actual}"
     logInfo m!"[PASS] {label.getString}"
 
 check_provenance "TheoremTruth" using viaTruth expects "forbidden_dependency"
+check_provenance "AppliedProof" using viaAppliedProof expects "forbidden_dependency"
 check_provenance "ProofConstant" using viaProof expects "forbidden_dependency"
 check_provenance "StatementDecidable" using viaDecision expects "forbidden_dependency"
 check_provenance "TheoremCertificate" using viaCertificate expects "forbidden_dependency"
@@ -90,6 +108,8 @@ run_cmd Elab.Command.liftTermElabM do
     name := `RegistrationProvenance.unavailable
     levelParams := [], type := (← getConstInfo ``clean).type, isUnsafe := false }
 check_provenance "UnavailableDefinition" using unavailable expects "incomplete_closure"
+noncomputable def unavailableAlias := unavailable
+check_provenance "UnavailableAlias" using unavailableAlias expects "incomplete_closure"
 
 -- The structural command stores a proof constant used by the readout.
 def structuralRead (_ : Unit) (x : Nat) : Nat := let _ := proofSource; x
@@ -106,4 +126,57 @@ run_cmd Elab.Command.liftTermElabM do
   unless (← getConstInfo name).value? == some (mkStrLit (actual.getD "")) do
     throwError "[FAIL] StructuralPublished"
   logInfo "[PASS] StructuralForbidden"
+-- A complete clean closure is asserted independently of the collector.
+run_cmd do
+  let actual := RegistrationGates.readoutClosure (← getEnv) ``truth (mkConst ``clean)
+  unless actual == (false, some #["Bool", "PUnit", "RegistrationProvenance.clean", "Unit"]) do
+    throwError "[FAIL] CanonicalClosure: {repr actual}"
+  logInfo "[PASS] CanonicalClosure"
+run_cmd Elab.Command.liftTermElabM do
+  addDecl <| .defnDecl {
+    name := `RegistrationProvenance.typeTruth, levelParams := []
+    type := .letE `evidence (mkConst ``True) (mkConst ``truth)
+      (← getConstInfo ``clean).type false
+    value := mkConst ``clean, hints := .abbrev, safety := .safe }
+check_provenance "TypeDependency" using typeTruth expects "forbidden_dependency"
+
+-- 131072 distinct leaves in a balanced term exhaust the expression budget
+-- while using only a handful of constants; no time-based assertion is involved.
+set_option maxHeartbeats 2000000 in
+run_cmd Elab.Command.liftTermElabM do
+  let mut layer := (List.range 131072).toArray.map mkNatLit
+  while layer.size > 1 do
+    layer := (List.range (layer.size / 2)).toArray.map fun i =>
+      mkApp2 (mkConst ``Nat.add) layer[2*i]! layer[2*i+1]!
+  let value := mkLambda `i .default (mkConst ``Unit) <|
+    mkLambda `x .default (mkConst ``Bool) <|
+      .letE `ignored (mkConst ``Nat) layer[0]! (.bvar 1) false
+  addDecl <| .defnDecl {
+    name := `RegistrationProvenance.expressionExhausted
+    levelParams := [], type := (← getConstInfo ``clean).type, value
+    hints := .abbrev, safety := .safe }
+check_provenance "ExpressionExhaustion" using expressionExhausted expects "incomplete_closure"
+
+abbrev boolArena : StructuralArena := ⟨Bool⟩
+def boolLaw : StructuralPrimitiveLawArena boolArena where
+  signature := ⟨Unit, inferInstance, fun _ => Bool⟩
+  Law r := r.readout () false = true
+def structuralCert : Certificate `RegistrationProvenance.structuralConstant := ⟨true⟩
+structural_theorem structuralConstant in boolLaw
+  realization ⟨fun _ _ => structuralCert.bit⟩ := rfl
+run_cmd Elab.Command.liftTermElabM do
+  let entry := ((structuralProvenanceEntries (← getEnv)).find?
+    (·.theoremName == ``structuralConstant)).get!
+  let actual ← RegistrationGates.validateStructural entry
+  unless (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
+      ((actual.getD "").splitOn " reason=forbidden_dependency provenance=").length == 2 do
+    throwError "[FAIL] StructuralC050BeforeC021: {actual}"
+  logInfo "[PASS] StructuralC050BeforeC021"
+run_cmd Elab.Command.liftTermElabM do
+  let some entry := InformationRegistry.find? (← getEnv) ``truth | throwError "missing entry"
+  addDecl <| .defnDecl {
+    name := `RegistrationProvenance.statementDigest, levelParams := [], type := mkConst ``String
+    value := mkStrLit entry.statementIdentity, hints := .abbrev, safety := .safe }
+def viaDigest (_ : Unit) (x : Bool) : Bool := let _ := statementDigest; x
+check_provenance "StatementDigest" using viaDigest expects "forbidden_dependency"
 end RegistrationProvenance
