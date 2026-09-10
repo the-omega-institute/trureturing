@@ -2,7 +2,7 @@ import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.Census.Report
 import LeanInformationAudit.Census.Ownership
 import LeanInformationAudit.SealCommand
-import LeanInformationAudit.RegistrationGates
+import LeanInformationAudit.StructuralRegistrationGates
 import LeanInformationAudit.Sha256
 import Lean.Parser.Module
 
@@ -406,7 +406,7 @@ private def validateStructuralProvenance (root : Name) (head : String) (modules 
     let value ← constant modules key className field name
     unless ← inRoot env modules name do failClass key className s!"{field}.root_membership"
     checkWithKernel value
-  let lawArena ← mkConstWithFreshMVarLevels entry.lawArenaConst
+  let lawArena ← mkConstWithLevelParams entry.lawArenaConst
   let lawType ← inferType lawArena
   unless lawType.isAppOfArity ``StructuralPrimitiveLawArena 1 &&
       lawType.getAppArgs[0]!.isConstOf entry.canonicalArena do
@@ -415,8 +415,10 @@ private def validateStructuralProvenance (root : Name) (head : String) (modules 
     if modules.contains other.registrationModule && other.canonicalArena == entry.canonicalArena &&
         other.lawArenaConst != entry.lawArenaConst then
       failClass key className "realization.canonical_law_arena"
-  let _ ← typed modules key className "realization.law_nondegeneracy" entry.certificateName
-    (← mkAppM ``StructuralPrimitiveLawArena.Nondegenerate #[lawArena])
+  unless entry.domainName.isAnonymous do
+    discard <| constant modules key className "realization.domain" entry.domainName
+  let some _ ← RegistrationGates.structuralNondegenerate? entry lawArena
+    | failClass key className "realization.law_nondegeneracy"
   let registration ← constant modules key className "registration" payload.registration
   let registrationType ← inferType registration
   unless registrationType.isAppOfArity ``StructuralRegistrationEvidence 6 do

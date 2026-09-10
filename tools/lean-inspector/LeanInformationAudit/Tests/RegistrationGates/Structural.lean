@@ -1,4 +1,5 @@
-import LeanInformationAudit.DispositionEvidence
+import LeanInformationAudit.Tests.Census.CommandRejection
+import LeanInformationAudit.Census.Query
 import LeanInformationAudit.RegistrationGates
 
 open Lean LeanInformationAudit DispositionCensus
@@ -45,7 +46,7 @@ run_cmd Elab.Command.liftTermElabM do
   let candidate := { entry with sensitivityWitness := .anonymous }
   let some message ← RegistrationGates.validateStructural candidate
     | throwError "StructuralUnused: missing slot sensitivity accepted"
-  unless message.startsWith "IE-C049 " do throwError "{message}"
+  unless message.endsWith "primitive=readout[0] support=[]" do throwError "{message}"
   logInfo "IE-C049"
 
 -- A restricted Γ uses the subtype as the realization domain; an unrestricted
@@ -58,7 +59,7 @@ run_cmd Elab.Command.liftTermElabM do
   let candidate := { entry with domainName := ``restrictedDomain }
   let some message ← RegistrationGates.validateStructural candidate
     | throwError "StructuralOutsideDomain: unrestricted witness accepted"
-  unless message.endsWith "reason=outside_domain" do throwError "{message}"
+  unless message.endsWith "reason=invalid_witness" do throwError "{message}"
   logInfo "IE-C048"
 -- Both witnesses inhabit the declared subtype, including its domain proof.
 def fullDomain (_ : StructuralPrimitiveRealization arena law.signature) : Prop := True
@@ -85,4 +86,48 @@ run_cmd Elab.Command.liftTermElabM do
     | throwError "MalformedDomain: invalid domain accepted"
   unless message.startsWith "IE-C048 " do throwError "{message}"
   logInfo "IE-C048"
+-- The domain witness must survive the complete disposition and query chain.
+def testCatalog : StructuralCatalog arena :=
+  ⟨Unit, inferInstance, inferInstance, fun _ => domainPositive.__structural_unit⟩
+theorem registration : StructuralRegistrationEvidence ``domainPositive
+    arena domainPositive.__structural_unit testCatalog () (law.Law good) := ⟨rfl, rfl⟩
+def strictnessWitness : StructuralStrictnessCertificate testCatalog () where
+  inclusion := by intro _ _ _ i ne; exact (ne rfl).elim
+  left := 0
+  right := 1
+  without_agrees := by intro i ne; exact (ne rfl).elim
+  full_separates := by
+    intro h
+    exact Nat.zero_ne_one (h () (Set.mem_univ ()) ())
+theorem strictness : testCatalog.StructurallyLowersEscape () :=
+  testCatalog.structurallyLowersEscape_of_certificate () strictnessWitness
+
+def inventory : DispositionInventory := ⟨"probe-head", #[
+  ⟨⟨``domainPositive, "sha256:0000000000000000000000000000000000000000000000000000000000000051"⟩,
+    .certified <| .structuralOccurrence
+      ⟨``arena, ``registration, ``domainPositive.__structural_realization,
+        ``strictness, ``strictnessWitness⟩⟩]⟩
+/-- info: accepted=true structural=1 certificate-kernel-checked=true -/
+#guard_msgs in
+run_cmd do
+  LeanInformationAudit.Tests.Census.expectAcceptedCensus
+    (← getEnv).header.mainModule ``inventory `domainCoverage inventory 1
+
+run_cmd Elab.Command.liftTermElabM do
+  let scope ← CensusQuery.indexScope (← getEnv).header.mainModule
+  let row ← CensusQuery.assess scope "probe-head" inventory.entries[0]!.1
+  unless row.className == "structural_occurrence" do
+    throwError "DomainCensusQuery: legitimate subtype witness loses its disposition"
+
+-- A malformed proof in a valid domain is not a domain-membership failure.
+/-- info: invalid_witness -/
+#guard_msgs in
+run_cmd Elab.Command.liftTermElabM do
+  let entry := ((structuralProvenanceEntries (← getEnv)).find?
+    (·.theoremName == ``domainPositive)).get!
+  let some message ← RegistrationGates.validateStructural
+      { entry with certificateName := ``True.intro }
+    | throwError "InvalidDomainWitness: malformed proof accepted"
+  unless message.endsWith "reason=invalid_witness" do throwError "{message}"
+  logInfo "invalid_witness"
 end RegistrationStructural

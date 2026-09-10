@@ -65,7 +65,8 @@ run_cmd Lean.Elab.Command.liftTermElabM do
   let entry := { entry with variationWitness := ``lawVariation }
   let some message ← RegistrationGates.validateFinite entry
     | throwError "P2Padding: missing expected IE-C049"
-  unless message.startsWith "IE-C049 " do throwError "unexpected verdict: {message}"
+  unless message.endsWith "primitive=readout[0] support=[]" do
+    throwError "unexpected verdict: {message}"
   let diagnosticName := RegistrationGates.diagnosticName
     entry.unitName entry.registrationModuleName
   let some info := (← Lean.getEnv).find? diagnosticName

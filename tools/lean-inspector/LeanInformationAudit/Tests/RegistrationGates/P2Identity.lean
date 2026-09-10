@@ -48,4 +48,15 @@ run_cmd Lean.Elab.Command.liftTermElabM do
   unless info.value? == some (Lean.mkStrLit message) do
     throwError "DiagnosticPublication: expected {message}, actual {info.value?}"
   Lean.logInfo "IE-C048"
+-- Missing clauses are a pure metadata result: no arena/type elaboration occurs.
+run_cmd Lean.Elab.Command.liftTermElabM do
+  let some entry := InformationRegistry.find? (← Lean.getEnv) ``source
+    | throwError "MissingWitnessFastPath: registration absent"
+  let candidate := { entry with arenaName := `NoArenaLookup, variationWitness := .anonymous }
+  let some message ← RegistrationGates.validateFinite candidate
+    | throwError "MissingWitnessFastPath: diagnostic absent"
+  unless message.endsWith "reason=missing_witness" do throwError "{message}"
+run_cmd do
+  if (← Lean.getEnv).contains `LeanInformationAudit.StructuralPrimitiveSignature then
+    throwError "FiniteImportBoundary: structural obligations reach a finite root"
 end P2Identity
