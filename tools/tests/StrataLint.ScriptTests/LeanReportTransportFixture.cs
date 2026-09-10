@@ -57,7 +57,8 @@ internal sealed partial class LeanReportTransportFixture : IDisposable
         foreach (var path in new[] { "Makefile", "tools/scripts/report/lean-report.sh", "tools/scripts/lean-report-pair.sh",
                      "tools/scripts/report/lean-report-input.sh", "tools/scripts/report/lean-report-ci-baseline.sh",
                      "tools/scripts/report/lean-report-cache.sh", "tools/scripts/report/lean-report-cache.py",
-                     "tools/scripts/worktree/lean-cache-input.sh", "tools/lean-inspector/delta.py" })
+                     "tools/scripts/worktree/lean-cache-input.sh", "tools/lean-inspector/delta.py",
+                     "tools/lean-inspector/materials.py" })
             ScriptHarnessScratch.CopyScriptInto(Path.Combine(TestRepositoryLayout.FindRoot(), path), Path.Combine(Repository, path));
         WriteSource("lean-toolchain", "leanprover/lean4:v4.31.0\n");
         WriteSource("lakefile.toml", "name = \"fixture\"\n");

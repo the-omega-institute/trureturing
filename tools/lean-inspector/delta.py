@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import pathlib
@@ -26,6 +27,13 @@ SHA_FIELD = re.compile(r"^sha256:[0-9a-f]{64}$")
 PREFIX = '{"modules": ['
 SUFFIX = '], "schema": "stratalint-raw-lean-report-v2"}\n'
 ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+
+# Load the sibling owner by its path, including when cache transport imports
+# this script or Python runs it in isolated mode.
+_materials_spec = importlib.util.spec_from_file_location(
+    "lean_report_materials", pathlib.Path(__file__).with_name("materials.py"))
+materials = importlib.util.module_from_spec(_materials_spec)
+_materials_spec.loader.exec_module(materials)
 
 
 def current_modules(module_table: pathlib.Path, repository: pathlib.Path) -> dict[str, dict[str, str]]:
@@ -110,6 +118,8 @@ def valid_baseline(
     resident_sha: str,
     config_sha: str,
 ) -> tuple[dict[str, dict], str] | None:
+    # Planning only: selected material bytes are verified at consumption, by
+    # merge's staged copy or inspect.sh's complete-bundle reuse validator.
     if not HEX64.fullmatch(entry.name) or entry.name == current_address:
         return None
     report = entry / "raw-lean-report.json"
@@ -356,7 +366,7 @@ def merge(args: argparse.Namespace) -> int:
                     info.create_system = 3
                     info.external_attr = (stat.S_IFREG | 0o644) << 16
                     with source.open(source_info) as material, destination.open(info, "w") as target:
-                        shutil.copyfileobj(material, target)
+                        materials.verify_material(material, address, target)
         finally:
             for source in sources:
                 if source is not None:

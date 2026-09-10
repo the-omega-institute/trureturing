@@ -424,6 +424,9 @@ public sealed class LeanReportCacheTests
             File.Copy(
                 Path.Combine(repositoryRoot, "tools", "lean-inspector", "delta.py"),
                 Path.Combine(inspectorDir, "delta.py"));
+            File.Copy(
+                Path.Combine(repositoryRoot, "tools", "lean-inspector", "materials.py"),
+                Path.Combine(inspectorDir, "materials.py"));
             foreach (var relative in new[]
             {
                 RawReportPath,

@@ -88,9 +88,6 @@ def bundle_metadata(report, transport=False):
         ], text=True).strip().split(" ")
         if coordinates != [provenance["input_address"][7:], repository]:
             raise ValueError("bundle-input-coordinate-mismatch")
-        with zipfile.ZipFile(member(report, ".materials.zip")) as materials:
-            if materials.testzip() is not None:
-                raise ValueError("corrupt-materials-zip")
     return provenance, repository
 
 
@@ -102,14 +99,21 @@ def checked_root(root):
 
 
 def validate_transport_report(report):
-    # The report owner supplies material references; transport checks membership
-    # without reimplementing report or statement semantics.
-    modules, _ = delta_owner().parse_json_modules(report)
+    # Report and statement owners supply references and byte validation. Reading
+    # each member to EOF also checks its ZIP CRC, in the same bounded pass.
+    owner = delta_owner()
+    modules, _ = owner.parse_json_modules(report)
     expected = {name for module in modules.values() for name in module["materials"]}
     with zipfile.ZipFile(member(report, ".materials.zip")) as materials:
         names = materials.namelist()
         if len(names) != len(expected) or set(names) != expected:
             raise ValueError("material-members-mismatch")
+        try:
+            for name in names:
+                with materials.open(name) as source:
+                    owner.materials.verify_material(source, "sha256:" + name[7:])
+        except zipfile.BadZipFile as error:
+            raise ValueError("corrupt-materials-zip") from error
 
 
 def copy_bundle(report, directory, transport):

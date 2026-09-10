@@ -11,7 +11,7 @@ internal sealed partial class LeanReportTransportFixture
     internal void UseRealInspector()
     {
         File.Delete(Path.Combine(Repository, "tools/lean-inspector/inspect.sh"));
-        foreach (var path in new[] { "tools/lean-inspector/inspect.sh", "tools/lean-inspector/materials.py",
+        foreach (var path in new[] { "tools/lean-inspector/inspect.sh",
                      "tools/scripts/lib/resource-observation-lib.sh", "tools/scripts/worktree/lean-cache-run.sh" })
             ScriptHarnessScratch.CopyScriptInto(Path.Combine(TestRepositoryLayout.FindRoot(), path), Path.Combine(Repository, path));
         WriteSource("D5/Probe.lean", "theorem probe : True := True.intro\n");
@@ -46,6 +46,8 @@ internal sealed partial class LeanReportTransportFixture
         Path.Combine(Repository, "tools/scripts/report/lean-report-input.sh"), .. arguments]);
     internal Attempt Validate(string report) => Run(["python3",
         Path.Combine(Repository, "tools/scripts/report/lean-report-cache.py"), "validate", report]);
+    internal string[][] ExtractedModules => Calls("extractions.jsonl")
+        .Select(line => System.Text.Json.JsonSerializer.Deserialize<string[]>(line)!).ToArray();
 
     internal InspectorInputs ReadInspectorInputs()
     {
@@ -78,18 +80,20 @@ internal sealed partial class LeanReportTransportFixture
         [[ "$1" == --output && "$3" == --material-spool && "$5" == --utility-input ]]
         printf 'produce\n' >> "$REPORT_FIXTURE/producer.log"
         python3 - "$@" <<'PY'
-        import json, pathlib, sys
+        import json, os, pathlib, sys
         args = sys.argv[1:]
         output, spool = pathlib.Path(args[1]), pathlib.Path(args[3])
         modules = []
         for index in range(6, len(args), 3):
             name, path, source = args[index:index+3]
             material_file = str(index) + '.statement'
-            (spool / material_file).write_text('canonical material fixture\n')
+            (spool / material_file).write_text('canonical material fixture ' + name + '\n')
             declaration = dict(name='probe', name_key='probe', kind='theorem', axioms=[],
                 include_in_statement=True, material_file=material_file)
             modules.append(dict(module=name, source_path=path, source_sha256=source,
                 imports=['D5.Probe'] if name == 'Trureturing' else [], declarations=[declaration]))
+        with (pathlib.Path(os.environ['REPORT_FIXTURE']) / 'extractions.jsonl').open('a') as log:
+            log.write(json.dumps([module['module'] for module in modules]) + '\n')
         output.write_text(json.dumps(dict(schema='stratalint-lean-inspector-spool-v1',
             modules=sorted(modules, key=lambda module: module['module']))) + '\n')
         PY

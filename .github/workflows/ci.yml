@@ -9,11 +9,11 @@ on:
 
 permissions:
   contents: read
-# PR updates cancel earlier runs for the same PR. Pushes use the commit SHA
-# so later merges preserve each push's required checks and cache writes.
+# PR updates cancel earlier runs for the same PR. Pushes use the ref and commit
+# so different branches and later merges retain their checks and cache writes.
 concurrency:
   # Keep PR and push runs in separate event groups.
-  group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.sha }}
+  group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.sha) }}
   cancel-in-progress: true
 
 # Native pull_request checks the PR merge tree; push checks the pushed commit.
