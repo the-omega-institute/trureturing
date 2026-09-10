@@ -114,6 +114,82 @@ $$\forall A \in Type,\; \left(Fintype\left(A\right) \land DecidableEq\left(A\rig
 
 The identified B normalized Gram of the actual C circuit has product-minus-maximum rank. The identification and the rank are proved; neither is an assumption.
 
+For the following statements A is also nonempty. Write h=maximalHead(a) and d=proposedDimension(a). Space(I) is the complex Euclidean space indexed by I. The displayed normalizedResidual is the actual prefix-derived residual for physicalGate(a) and paddingInitial(a), divided by ofReal(residualScale(r)); residualScale(r) is sqrt(NatToReal(multiplicity(card(r),r))). The initial padding vector is scaled once by the inverse of residualScale(a).
+
+TensorProduct(Complex,E,F) is the tensor product over the complex numbers, and tmul(Complex,x,y) puts the letter vector x first and the memory vector y second. LinearIsometry(Complex,E,F) denotes the complex linear isometries from E to F. For the tensor product of the two displayed orthonormal bases, repr maps a tensor to coordinates indexed by (letter,memory). Its inverse, regarded as a linear isometry, is composed with the existing emission. Thus the local V below is fixed by a and is independent of r and time. NatToReal casts a natural number to the reals; ofReal then embeds the real square root into the complex numbers. smul is complex scalar multiplication.
+
+**Theorem 1.10 (physical_normalized_emission).**
+
+$$\forall A \in Type,\; \left(Fintype\left(A\right) \land DecidableEq\left(A\right)\right) \Rightarrow \left(Nonempty\left(A\right) \Rightarrow \left(\forall a \in Multiset\left(A\right),\; \forall r \in Multiset\left(A\right),\; \left(r \le a \land r \ne 0\right) \Rightarrow let V:LinearIsometry\left(Complex, Space\left(Fin\left(proposedDimension\left(a\right)\right)\right), TensorProduct\left(Complex, Space\left(A\right), Space\left(Fin\left(proposedDimension\left(a\right)\right)\right)\right)\right) = comp\left(toLinearIsometry\left(symm\left(repr\left(tensorProduct\left(basisFun\left(A, Complex\right), basisFun\left(Fin\left(proposedDimension\left(a\right)\right), Complex\right)\right)\right)\right)\right), emission\left(maximalHead\left(a\right), physicalGate\left(a\right)\right)\right) in V\left(normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), r\right)\right) = \sum_{i:A}{smul\left(ofReal\left(\sqrt{\frac{NatToReal\left(count\left(i, r\right)\right)}{NatToReal\left(card\left(r\right)\right)}}\right), tmul\left(Complex, basis\left(i\right), normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), erase\left(r, i\right)\right)\right)\right)}\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_emission` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a legal nonzero remaining occupation, the actual fixed circuit has the prescribed square-root emission amplitudes. Its all-word output gives the normalized letter equations. Applying the tensor basis representation assembles those coordinates into the displayed equality. Absent letters have count zero, so their summands vanish even though erase is defined for them.
+
+**Theorem 1.11 (physical_normalized_terminal_emission).**
+
+$$\forall A \in Type,\; \left(Fintype\left(A\right) \land DecidableEq\left(A\right)\right) \Rightarrow \left(Nonempty\left(A\right) \Rightarrow \left(\forall a \in Multiset\left(A\right),\; let V:LinearIsometry\left(Complex, Space\left(Fin\left(proposedDimension\left(a\right)\right)\right), TensorProduct\left(Complex, Space\left(A\right), Space\left(Fin\left(proposedDimension\left(a\right)\right)\right)\right)\right) = comp\left(toLinearIsometry\left(symm\left(repr\left(tensorProduct\left(basisFun\left(A, Complex\right), basisFun\left(Fin\left(proposedDimension\left(a\right)\right), Complex\right)\right)\right)\right)\right), emission\left(maximalHead\left(a\right), physicalGate\left(a\right)\right)\right) in V\left(normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), 0\right)\right) = tmul\left(Complex, basis\left(maximalHead\left(a\right)\right), normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), 0\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_terminal_emission` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The normalized zero residual is the embedded padding basis vector at none. The actual gate fixes the joint basis vector (h,none), so this terminal memory emits h and remains unchanged. This equality includes a=0 and requires no positive head count.
+
+**Theorem 1.12 (physical_normalized_dependencies).**
+
+$$\forall A \in Type,\; \left(Fintype\left(A\right) \land DecidableEq\left(A\right)\right) \Rightarrow \left(Nonempty\left(A\right) \Rightarrow \left(\forall a \in Multiset\left(A\right),\; \forall J \in Type,\; Fintype\left(J\right) \Rightarrow \left(\forall r \in J \to Multiset\left(A\right),\; \forall c \in J \to Complex,\; \left(\forall j \in J,\; r\left(j\right) \le a\right) \Rightarrow \left(\sum_{j:J}{smul\left(c\left(j\right), normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), r\left(j\right)\right)\right)} = 0 \Rightarrow \sum_{j:J}{smul\left(c\left(j\right), if\left(r\left(j\right) = 0, tmul\left(Complex, basis\left(maximalHead\left(a\right)\right), normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), 0\right)\right), \sum_{i:A}{smul\left(ofReal\left(\sqrt{\frac{NatToReal\left(count\left(i, r\left(j\right)\right)\right)}{NatToReal\left(card\left(r\left(j\right)\right)\right)}}\right), tmul\left(Complex, basis\left(i\right), normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), erase\left(r\left(j\right), i\right)\right)\right)\right)}\right)\right)} = 0\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_dependencies` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let J be any finite type, r any family of legal residual occupations, and c any complex coefficients. Repetitions and zero residuals are allowed. Apply the same complex linear isometry V to the assumed zero sum. For each index, the terminal emission equality supplies the zero branch and the nonzero emission equality supplies the other branch of if. Both are required for the resulting prescribed tensor sum to vanish.
+
+**Theorem 1.13 (physical_normalized_span).**
+
+$$\forall A \in Type,\; \left(Fintype\left(A\right) \land DecidableEq\left(A\right)\right) \Rightarrow \left(Nonempty\left(A\right) \Rightarrow \left(\forall a \in Multiset\left(A\right),\; span\left(Complex, \{v:Space\left(Fin\left(proposedDimension\left(a\right)\right)\right) \mid \exists r \in Multiset\left(A\right),\; r \le a \land v = normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), r\right)\}\right) = top\left(Submodule\left(Complex, Space\left(Fin\left(proposedDimension\left(a\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_span` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The complex span of all actual legal normalized residuals is the whole physical memory space. Restrict the boxOccupation-indexed family to this subspace. Its inner products give exactly the actual normalizedGram. physical_source_gram_rank identifies its rank with d. Factoring that Gram through orthonormal coordinates in the subspace bounds d by its finrank; the ambient space has finrank d, hence the subspace is top.
+
+**Theorem 1.14 (physical_normalized_zero_eq_head).**
+
+$$\forall A \in Type,\; \left(Fintype\left(A\right) \land DecidableEq\left(A\right)\right) \Rightarrow \left(Nonempty\left(A\right) \Rightarrow \left(\forall a \in Multiset\left(A\right),\; 0 < count\left(maximalHead\left(a\right), a\right) \Rightarrow normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), 0\right) = normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), replicate\left(1, maximalHead\left(a\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_zero_eq_head` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+When the chosen head has positive count, its singleton is legal. Both its normalized padding vector and the zero normalized padding vector are exactly basis(none). Their identical coordinate embeddings give equality of the actual residuals, including their complex phase.
+
+**Theorem 1.15 (physical_normalized_nonterminal_span).**
+
+$$\forall A \in Type,\; \left(Fintype\left(A\right) \land DecidableEq\left(A\right)\right) \Rightarrow \left(Nonempty\left(A\right) \Rightarrow \left(\forall a \in Multiset\left(A\right),\; 0 < count\left(maximalHead\left(a\right), a\right) \Rightarrow span\left(Complex, \{v:Space\left(Fin\left(proposedDimension\left(a\right)\right)\right) \mid \exists r \in Multiset\left(A\right),\; r \le a \land \left(r \ne 0 \land v = normalizedResidual\left(a, maximalHead\left(a\right), physicalGate\left(a\right), paddingInitial\left(a\right), r\right)\right)\}\right) = top\left(Submodule\left(Complex, Space\left(Fin\left(proposedDimension\left(a\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_nonterminal_span` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the positive head-count condition, remove the zero occupation from the generating family. Every nonzero generator remains, and the zero generator equals the legal nonzero head singleton by the preceding equality. The full span result therefore gives the same whole memory space. For a=0 the memory dimension is one and the nonterminal family is empty; the positive head-count condition excludes that case.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.maximal_padding_gram_rank`
@@ -122,6 +198,12 @@ The identified B normalized Gram of the actual C circuit has product-minus-maxim
 - Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.padding_block_rank_positive`
 - Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.padding_block_rank_zero`
 - Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.padding_gram_rank`
+- Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_dependencies`
+- Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_emission`
+- Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_nonterminal_span`
+- Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_span`
+- Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_terminal_emission`
+- Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_normalized_zero_eq_head`
 - Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_source_gram_rank`
 - Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.physical_source_moments`
 - Truth anchor: `D5/S3/Quantum/StationaryPreparation/PaddingRanks.zero_padding_gram_rank`

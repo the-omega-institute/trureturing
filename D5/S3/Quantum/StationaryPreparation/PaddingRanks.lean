@@ -7,6 +7,7 @@
    digest: Exact individual and aggregate ranks of the actual padding Gram. -/
 
 import D5.S3.Quantum.StationaryPreparation.PaddingBlocks
+import Mathlib.Analysis.InnerProductSpace.TensorProduct
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -140,5 +141,187 @@ theorem physical_source_gram_rank (a : Multiset A) :
       (∏ i : A, (a.count i + 1)) - Finset.univ.sup a.count := by
   rw [padding_normalized_gram_identification]
   exact maximal_padding_gram_rank _ _ (maximal_head_spec a)
+
+open SequentialRegisterCircuit PhysicalGram NormalizedResiduals OccupancyWordSectors
+open StationaryOccupationResidualCircuit StationaryOccupationResidualStep
+open scoped TensorProduct
+
+/-- The actual fixed emission, transported through the letter-first tensor basis,
+has the normalized occupation amplitudes. -/
+theorem physical_normalized_emission
+    {A : Type*} [Fintype A] [DecidableEq A] [Nonempty A]
+    (a r : Multiset A) (hr : r ≤ a) (hr0 : r ≠ 0) :
+    let V : Space (Fin (proposedDimension a)) →ₗᵢ[ℂ]
+        (Space A ⊗[ℂ] Space (Fin (proposedDimension a))) :=
+      (((EuclideanSpace.basisFun A ℂ).tensorProduct
+        (EuclideanSpace.basisFun (Fin (proposedDimension a)) ℂ)).repr.symm.toLinearIsometry).comp
+        (emission (maximalHead a) (physicalGate a))
+    V (normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) r) =
+      ∑ i : A, (Real.sqrt ((r.count i : ℝ) / (r.card : ℝ)) : ℂ) •
+        ((basis i : Space A) ⊗ₜ[ℂ]
+          normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) (r.erase i)) := by
+  classical
+  have hs : ResidualStep a := by
+    intro b hb hb0 i k
+    by_cases ht : 0 < tailCount (maximalHead a) b
+    · by_cases hi : i ∈ b
+      · rw [if_pos hi]
+        exact positive_residual_step a b hb ht i hi k
+      · rw [if_neg hi]
+        exact physical_residual_step_absent a b hb hb0 i hi k
+    · exact physical_residual_step_tail_free a b hb hb0 (by omega) i k
+  have hout : ∀ w k, circuit (fun _ => physicalGate a) a.card 0
+      (initialized (maximalHead a) a.card (paddingInitial a)) (w,k) =
+        sectorVector a.card a w * physicalFinal a k := physical_residual_output a hs
+  let B := (EuclideanSpace.basisFun A ℂ).tensorProduct
+    (EuclideanSpace.basisFun (Fin (proposedDimension a)) ℂ)
+  change B.repr.symm (emission (maximalHead a) (physicalGate a) _) = _
+  apply B.repr.injective
+  rw [B.repr.apply_symm_apply]
+  ext ⟨i, k⟩
+  simp only [map_sum, map_smul, WithLp.ofLp_sum, Finset.sum_apply, PiLp.smul_apply, B,
+    OrthonormalBasis.tensorProduct_repr_tmul_apply, EuclideanSpace.basisFun_repr,
+    basis_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
+    Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  have hletter : letter (maximalHead a) (physicalGate a) i
+      (normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) r) =
+      (Real.sqrt ((r.count i : ℝ) / (r.card : ℝ)) : ℂ) •
+        normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) (r.erase i) := by
+    by_cases hi : i ∈ r
+    · exact normalized_letter_of_mem a _ _ _ (physicalFinal a) hout r hr hr0 i hi
+    · rw [normalized_letter_of_not_mem a _ _ _ (physicalFinal a) hout r hr hr0 i hi,
+        Multiset.count_eq_zero.mpr hi]
+      simp
+  exact congrArg (fun x : Space (Fin (proposedDimension a)) => x k) hletter
+
+/-- The actual terminal memory emits the chosen head and remains fixed. -/
+theorem physical_normalized_terminal_emission
+    {A : Type*} [Fintype A] [DecidableEq A] [Nonempty A]
+    (a : Multiset A) :
+    let V : Space (Fin (proposedDimension a)) →ₗᵢ[ℂ]
+        (Space A ⊗[ℂ] Space (Fin (proposedDimension a))) :=
+      (((EuclideanSpace.basisFun A ℂ).tensorProduct
+        (EuclideanSpace.basisFun (Fin (proposedDimension a)) ℂ)).repr.symm.toLinearIsometry).comp
+        (emission (maximalHead a) (physicalGate a))
+    V (normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) 0) =
+      (basis (maximalHead a) : Space A) ⊗ₜ[ℂ]
+        normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) 0 := by
+  classical
+  have hz := normalized_padding_identification a 0 (Multiset.zero_le a)
+  rw [PaddingGram.normalized_padding_zero] at hz
+  have he := coordinate_embedding_basis (physicalMemoryEquiv a).toEmbedding none
+  change coordinateEmbedding _ (basis none) = basis (physicalMemoryEquiv a none) at he
+  rw [he] at hz
+  dsimp only
+  rw [hz]
+  let B := (EuclideanSpace.basisFun A ℂ).tensorProduct
+    (EuclideanSpace.basisFun (Fin (proposedDimension a)) ℂ)
+  change B.repr.symm (emission (maximalHead a) (physicalGate a) _) = _
+  apply B.repr.injective
+  rw [B.repr.apply_symm_apply, emission_basis, physical_gate_sink]
+  ext ⟨i, k⟩
+  simp only [B, OrthonormalBasis.tensorProduct_repr_tmul_apply,
+    EuclideanSpace.basisFun_repr, basis_apply, Prod.mk.injEq]
+  split_ifs <;> simp_all
+
+/-- The prescribed tensor images preserve every finite dependence among legal
+residuals, including the terminal branch. -/
+theorem physical_normalized_dependencies
+    {A : Type*} [Fintype A] [DecidableEq A] [Nonempty A]
+    {J : Type*} [Fintype J]
+    (a : Multiset A) (r : J → Multiset A) (c : J → ℂ)
+    (hr : ∀ j, r j ≤ a)
+    (hdep : (∑ j : J, c j •
+      normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) (r j)) = 0) :
+    (∑ j : J, c j •
+      (if r j = 0 then
+        (basis (maximalHead a) : Space A) ⊗ₜ[ℂ]
+          normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) 0
+       else
+        ∑ i : A, (Real.sqrt (((r j).count i : ℝ) / ((r j).card : ℝ)) : ℂ) •
+          ((basis i : Space A) ⊗ₜ[ℂ]
+            normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a)
+              ((r j).erase i)))) = 0 := by
+  classical
+  let V := (((EuclideanSpace.basisFun A ℂ).tensorProduct
+    (EuclideanSpace.basisFun (Fin (proposedDimension a)) ℂ)).repr.symm.toLinearIsometry).comp
+      (emission (maximalHead a) (physicalGate a))
+  have hmap := congrArg V hdep
+  rw [map_sum, map_zero] at hmap
+  simp only [map_smul] at hmap
+  convert hmap using 1
+  apply Finset.sum_congr rfl
+  intro j _
+  congr 1
+  by_cases hj : r j = 0
+  · rw [if_pos hj, hj]
+    exact (physical_normalized_terminal_emission a).symm
+  · rw [if_neg hj]
+    exact (physical_normalized_emission a (r j) (hr j) hj).symm
+
+/-- The actual normalized Gram has the full physical memory dimension as rank,
+so the legal normalized residuals span that memory space. -/
+theorem physical_normalized_span
+    {A : Type*} [Fintype A] [DecidableEq A] [Nonempty A] (a : Multiset A) :
+    Submodule.span ℂ
+      {v : Space (Fin (proposedDimension a)) |
+        ∃ r : Multiset A, r ≤ a ∧ v = normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) r} = ⊤ := by
+  classical
+  let S := Submodule.span ℂ
+    {v : Space (Fin (proposedDimension a)) | ∃ r : Multiset A, r ≤ a ∧
+      v = normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) r}
+  let v : TailBox a.count → S := fun r =>
+    ⟨normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) (boxOccupation a r),
+      Submodule.subset_span ⟨boxOccupation a r, box_occupation_le a r, rfl⟩⟩
+  have hgram : Matrix.gram ℂ v =
+      NormalizedGram.normalizedGram a (maximalHead a) (physicalGate a) (paddingInitial a) := by
+    ext r s
+    exact (Submodule.coe_inner S (v r) (v s)).symm
+  have hbound : (Matrix.gram ℂ v).rank ≤ Module.finrank ℂ S := by
+    rw [Matrix.gram_eq_conjTranspose_mul (stdOrthonormalBasis ℂ S) v]
+    exact (Matrix.rank_mul_le_right _ _).trans (by
+      simpa using Matrix.rank_le_card_height
+        (Matrix.of fun i r => (stdOrthonormalBasis ℂ S).repr (v r) i))
+  rw [hgram, physical_source_gram_rank] at hbound
+  apply Submodule.eq_top_of_finrank_eq
+  apply le_antisymm (Submodule.finrank_le S)
+  change Module.finrank ℂ (EuclideanSpace ℂ (Fin (proposedDimension a))) ≤ _
+  rw [finrank_euclideanSpace_fin]
+  exact hbound
+
+/-- A legal head singleton has exactly the same normalized memory as zero. -/
+theorem physical_normalized_zero_eq_head
+    {A : Type*} [Fintype A] [DecidableEq A] [Nonempty A] (a : Multiset A)
+    (hhead : 0 < a.count (maximalHead a)) :
+    normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) 0 =
+      normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) (Multiset.replicate 1 (maximalHead a)) := by
+  have hlegal : Multiset.replicate 1 (maximalHead a) ≤ a := by
+    simpa only [Multiset.replicate_one, Multiset.singleton_le] using
+      (Multiset.count_pos.mp hhead)
+  rw [normalized_padding_identification a 0 (Multiset.zero_le a),
+    normalized_padding_identification a _ hlegal, PaddingGram.normalized_padding_zero,
+    PaddingGram.normalized_padding_axis _ _ 1 hhead]
+
+/-- With positive head count, the head singleton replaces the zero generator
+without changing the full physical memory span. -/
+theorem physical_normalized_nonterminal_span
+    {A : Type*} [Fintype A] [DecidableEq A] [Nonempty A] (a : Multiset A)
+    (hhead : 0 < a.count (maximalHead a)) :
+    Submodule.span ℂ
+      {v : Space (Fin (proposedDimension a)) |
+        ∃ r : Multiset A, r ≤ a ∧ r ≠ 0 ∧
+          v = normalizedResidual a (maximalHead a) (physicalGate a) (paddingInitial a) r} = ⊤ := by
+  classical
+  have hlegal : Multiset.replicate 1 (maximalHead a) ≤ a := by
+    simpa only [Multiset.replicate_one, Multiset.singleton_le] using
+      (Multiset.count_pos.mp hhead)
+  rw [← top_le_iff, ← physical_normalized_span a]
+  apply Submodule.span_le.mpr
+  rintro v ⟨r, hr, rfl⟩
+  apply Submodule.subset_span
+  by_cases hr0 : r = 0
+  · exact ⟨Multiset.replicate 1 (maximalHead a), hlegal, by simp,
+      hr0 ▸ physical_normalized_zero_eq_head a hhead⟩
+  · exact ⟨r, hr, hr0, rfl⟩
 
 end D5.S3.Quantum.StationaryPreparation.PaddingRanks
