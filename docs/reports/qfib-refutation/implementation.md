@@ -113,3 +113,59 @@ this is a name-search result, not a proof of absence under arbitrary names.
 Cache preheat: `make lean-cache-ensure` EXIT=0; `status=seeded`,
 `method=clonefile`, donor `/Users/chronoai/trureturing`, clonefile_attempts=1,
 mathlib/project olean states both warm, missing mathlib olean files=0.
+
+## External search completion within the stated scope
+
+GitHub authenticated API code search `unimodal language:Lean` returned 40 hits.
+Read the retrieved source of six mathematical/program-verification candidates:
+Lean's permutation benchmark uses strict array unimodality and contains sorry;
+Numina's Anderson theorem concerns integrable functions and contains sorry;
+automath's fiber result assumes its own unimodality implication;
+vericoding's input-conditional strict list property is unsuitable;
+IndepPoly supplies a Boolean list checker but no Polynomial soundness theorem;
+NegativeBinomial supplies infinite probability-mass ratio lemmas, whose
+coefficient `(j+i-1).choose (i-1) * p^i * (1-p)^j` is a different function.
+None supplies a q-product theorem or a Polynomial coefficient unimodality API.
+Mathlib Quasiconvex copies and finance/option-boundary paths were coarse-search
+hits only, not opened: ASSUMED-UNVERIFIED; no non-reuse claim depends on them.
+No upstream proof is transplanted. Local definitions use Polynomial ℕ and weak
+adjacent coefficient inequalities with an existential peak, including the zero
+tail. The binomial coefficient and shift identities are reused from Mathlib.
+
+Literature checks: arXiv API `all:fibonomial` returned all 35 entries. Titles,
+dates and abstracts were searched for counterexample/refutation/correction;
+no report of this counterexample was identified. The only later-dated entry
+in that query is 2605.14342, Fibonomial determinants; its abstract describes
+integer determinant evaluations. Its full text is ASSUMED-UNVERIFIED.
+GitHub issues query `"2605.12822"` returned zero. These are bounded indexed
+searches, not a claim that no unindexed report exists. Tier-1 status is supported
+by the original explicit conjecture and no proof/refutation found in this scope.
+
+Second engine batch: DuckDuckGo is an INVALID captcha response (202).
+Bing returned unrelated Poki/Windows/manufacturing results even for quoted
+identifiers, so these queries are INVALID for negative evidence. Google's
+basic fallback is again an INVALID redirect shell. Semantic Scholar returned
+429 and is INVALID. No failed query contributes negative evidence.
+
+Additional HTTP receipt ledger:
+- https://www.bing.com/search?q=%222605.12822%22%20counterexample — HTTP 200; 116797 bytes; SHA256 `5678a09a4a4d8f9c795a5cedc85ac432d962ef2d13de6fa48543d7456283c069`.
+- https://html.duckduckgo.com/html/?q=%222605.12822%22 — HTTP 202; 14218 bytes; SHA256 `cf951416656791885baf82fff3d38ff9f599a1913086a0deeeeb085567a4d3f6`.
+- https://www.bing.com/search?q=%22Fibonomial%22%20%22Conjecture%205.4%22 — HTTP 200; 116246 bytes; SHA256 `17ede12be54d01f76b533ae82c92f492450ac6f486a00dfc259855d52c1a6f0f`.
+- https://www.bing.com/search?q=Lean%20unimodal%20polynomial%20formalization — HTTP 200; 117035 bytes; SHA256 `80261cf698fe849e0a2bc384b453b49feb7304c6e88ba6bbd7e48d8f9a14f7f2`.
+- https://raw.githubusercontent.com/leanprover/lean-eval-leaderboard/939d69c88292358adf60b124f29605215a1e422a/benchmark-snapshot/BenchmarkProblems/ProblemPermuteToUnimodal.lean — HTTP 200; 3232 bytes; SHA256 `c233283c4aa516d7c27fbe249ad9f4b37aefc02aa296185bc4cacdec64576138`.
+- https://raw.githubusercontent.com/the-omega-institute/automath/60ce0a1548858b977dd8719efb939ceb3e87effe/lean4/Omega/Zeta/XiTimePart9KFoldFiberLayerCountRealrootLogconcavity.lean — HTTP 200; 743 bytes; SHA256 `ce9c815455a19284fb945953b9e0ba664a711126809c0e58f968f641db1d0f45`.
+- https://raw.githubusercontent.com/project-numina/LeanTriathlon/2aede4209c203ae9901eff870744e4b77dc6173f/LiveLeanTriathlonSorry/AndersonTheorem/All.lean — HTTP 200; 1024 bytes; SHA256 `3530579a0f3019a67ce5855f0eb0ea422750ee8a812b08567e2ee7e2ec5a76fe`.
+- https://raw.githubusercontent.com/alok/breakthroughs/5365082217b0aa641fdc753c4d910aded8c4c1b0/2026-07-24-erdos-attack/lean/Erdosattack/IndepPoly.lean — HTTP 200; 2868 bytes; SHA256 `1c31cbd4e6658ad9b5744d9bea50cc3ce97b811f728338234835486d163f8d4f`.
+- https://raw.githubusercontent.com/Beneficial-AI-Foundation/vericoding-benchmark/387cd69996792d452ead7b0460f36ee4c5cdd148/specs/LA0020_specs.lean — HTTP 200; 2993 bytes; SHA256 `c6ee6499747d2d6f770787ed985dd67030935defc7fcf88cb7de590c36572b56`.
+- https://raw.githubusercontent.com/plby/lean-proofs/1268917deaaaa0d674f651287027baa26cea9920/src/latest/ErdosProblems/Erdos1165/NegativeBinomial.lean — HTTP 200; 20687 bytes; SHA256 `0e5dbf0a873edf692b2e8034e77943c29c9a3a48fa447ee17b04620c0698da7b`.
+- https://www.google.com/search?gbv=1&udm=14&q=%222605.12822%22 — HTTP 200; 91183 bytes; SHA256 `d0dee97f179e2b81783b648f02bd5f9aaad766a404422e108277174b5f502b9a`.
+- https://export.arxiv.org/api/query?search_query=all%3Afibonomial&start=0&max_results=50 — HTTP 200; 50087 bytes; SHA256 `fe7c0d24da439c708c2e19b150d44f2ac6f664497feee301397b2f72d4de1c63`.
+- https://api.semanticscholar.org/graph/v1/paper/ARXIV:2605.12822?fields=title,year,citationCount,citations.title,citations.externalIds — INVALID: HTTP Error 429: .
+- https://api.github.com/search/repositories?q=unimodal%20language%3ALean — HTTP 200 via gh API (EXIT=0); 55 bytes; SHA256 `4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f`.
+- https://api.github.com/search/code?q=unimodal%20language%3ALean — HTTP 200 via gh API (EXIT=0); 216057 bytes; SHA256 `f47507b2b64037eeb9da2531055b17405f4aa90843d1f82ad6c58829d4672a9c`.
+- https://api.github.com/search/issues?q=%222605.12822%22 — HTTP 200 via gh API (EXIT=0); 79 bytes; SHA256 `c9938edecb99d754b2d039ac9eec320a94c769b6a6417921e2dcbef9e2fe01a0`.
+
+Planned address: `D5/S0/Certificates/Polynomials/QProductNecessityRefutation`.
+The existing Certificates Blueprint bucket has 70 direct files (72 recursive);
+a Polynomials child holds this first real certificate and its mirrored source.
+No new domain registration is needed; Certificates is already registered S0.
