@@ -47,6 +47,8 @@ it does not authorize claiming that an unmerged PR has landed on dev.
 The full parity theorem and `make lean` pass. Report production, Scribe checks,
 freeze and PR remain in progress; no freeze or landed PR is claimed yet.
 
+Historical proof checkpoints (their pending statements refer to that checkpoint):
+
 First Lean unit checked: the degree-n residual changes by exactly the change
 in g_n, and the diagonal constraints give uniqueness over any commutative ring.
 `lake env lean D5/S1/Recurrence/Parity/DiagonalIterateEven.lean` (warm tree)
@@ -181,3 +183,61 @@ its generated equation `iterate.eq_2`, with no other external D5 constant
 boundary. The first two reach `residual_top`; hanna_conjecture reaches
 `H_dyadic_gap`. The live mathematical paths and semantic four-part assessment
 are recorded below once the canonical declaration pins are available.
+
+## Per-theorem admission assessment
+
+The assessed module basis is `admission_basis: escape-witness`. These semantic
+classifications are worker assessments under CLAUDE 3.2, not machine verdicts.
+All public theorem statements are unbounded symbolic assertions; `utility: none`
+is appropriate because none is one of the four computational content classes.
+The finite positive echo `initial_echo` is private and is not independently frozen.
+
+| Public theorem | proof_shape | escape_witness | admission_basis |
+| --- | --- | --- | --- |
+| generating_equation | content | residual_top, used through extend_correct | escape-witness |
+| generating_unique | content | residual_top, used through diagonal_unique | escape-witness |
+| hanna_conjecture | content | H_dyadic_gap | escape-witness |
+
+For `generating_equation`, all four conditions hold as follows.
+(i) The elaborated audit contains residual_top and extend_correct.
+(ii) The imported iterate definition and its recursion equation do not supply
+the response of the degree-n diagonal residual to an arbitrary coefficient
+perturbation; finite substitution sums and induction on the iterate establish it.
+(iii) This perturbation identity compares arbitrary normalized series over a
+commutative ring and is neither the constructed limit's specification nor its
+definition. (iv) residual_top → extend_correct → approximation_correct →
+limit_spec.2.2.2 → generating_equation's final conjunct is a live path. The
+normalization projections alone cannot yield the diagonal constraints.
+The proof pattern follows private helpers in IterateProductNineModThree as
+explicitly credited in the Lean source; no public frozen perturbation API was found.
+
+For `generating_unique`, (i) the audit reaches residual_top through diagonal_unique.
+(ii) Equality at the next coefficient is newly forced using the residual identity
+and strong induction, and is not supplied by the imported iterate recursion.
+(iii) A one-degree perturbation identity for arbitrary series is not definitionally
+equivalent to uniqueness of the integer solution. (iv) diagonal_unique uses
+residual_top to close every degree beyond the three prescribed coefficients;
+this proof term survives reduction and is the value of generating_unique.
+The constructed solution's limit_spec supplies the second solution's assumptions.
+
+For `hanna_conjecture`, (i) H_dyadic_gap occurs in the elaborated closure.
+(ii) Neither Mathlib's inverse existence nor the imported iterate definition gives
+the doubly exponential degree gap. Its proof inducts on r using composition and
+Frobenius in characteristic two. (iii) The identity
+`iterate H (2^r) + (iterate H (2^r))^(2^(2^r)) = X` is about an auxiliary inverse
+series, not the definition of G, a, or integer diagonal evenness.
+(iv) H_dyadic_gap → H_dyadic_coeff → H_diagonal / H_previous_diagonal →
+H_residual → mod_two_identity → hanna_conjecture is live; H_diagonal also
+directly supplies the final zero coefficient. H_support handles the complementary
+non-dyadic degrees. The inverse and uniqueness facts alone give neither the
+needed H diagonal constraint nor its vanishing diagonal.
+
+The two public definitions are mathematical interfaces for the constructed
+series and diagonal coefficients. They assert no parity fact. No unrelated
+public finite instances or extra A177775 characterization were added.
+
+Before freezing, fetched origin/dev and searched its D5, Blueprint, Library and
+reports for A395842 and H_dyadic_gap. At
+6af98a19b1fd4f76f1bc1bf92b61593a0c167a09, only the supplied triage note matched;
+there was no D5 implementation. `git merge-tree --write-tree HEAD origin/dev`
+returned EXIT=0. The search is bounded to these repository paths and that SHA.
