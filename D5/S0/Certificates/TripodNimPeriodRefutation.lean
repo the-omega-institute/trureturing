@@ -57,18 +57,17 @@ private def firstZero {n : ℕ} (r : Row n) (used : List (Column n)) : Option (C
     decide (n ≤ c.val) && !r c && !used.contains c
 
 private def runRows {n : ℕ} {α : Type} (read : α → Row n)
-    (shift : α → α) (insert : α → Column n → α) :
-    List α → List (Column n) → Option (List α)
-  | [], _ => some []
-  | r :: rs, used =>
+    (shift : α → α) (insert : α → Column n → α)
+    (rs : List α) (used : List (Column n)) : Option (List α) :=
+  rs.foldr (fun r cont used =>
     let shifted := shift r
     if read r ⟨0, by omega⟩ then
-      (runRows read shift insert rs used).map (shifted :: ·)
+      (cont used).map (shifted :: ·)
     else
       match firstZero (read shifted) used with
       | none => none
-      | some c =>
-        (runRows read shift insert rs (c :: used)).map (insert shifted c :: ·)
+      | some c => (cont (c :: used)).map (insert shifted c :: ·))
+    (fun _ => some []) used
 
 /-- Exactly the section 9.3 transition, with an absorbing undefined state. -/
 def transition (n : ℕ) (s : Option (Board n)) : Option (Board n) :=
@@ -88,60 +87,6 @@ private def packedTransition (n : ℕ) (s : Option (List (PackedRow n))) :=
 private def decode {n : ℕ} (s : Option (List (PackedRow n))) : Option (Board n) :=
   s.map (List.map readBits)
 
-private theorem read_shift {n : ℕ} (r : PackedRow n) :
-    readBits (r >>> 1) = shiftRow (readBits r) := by
-  funext c
-  simp only [readBits, shiftRow, BitVec.getLsbD_ushiftRight]
-  split_ifs with h
-  · congr 1 <;> omega
-  · exact BitVec.getLsbD_of_ge r _ (by omega)
-
-private theorem read_insert {n : ℕ} (r : PackedRow n) (c : Column n) :
-    readBits (insertBit r c) = insertRow (readBits r) c := by
-  funext j
-  by_cases h : j = c
-  · subst j
-    simp [readBits, insertBit, insertRow, c.isLt]
-  · have hval : j.val ≠ c.val := fun he => h (Fin.ext he)
-    simp [readBits, insertBit, insertRow, j.isLt, h]
-    omega
-
-private theorem runRows_correct {n : ℕ} (rs : List (PackedRow n))
-    (used : List (Column n)) :
-    (runRows readBits (· >>> 1) insertBit rs used).map (List.map readBits) =
-      runRows id shiftRow insertRow (rs.map readBits) used := by
-  induction rs generalizing used with
-  | nil => rfl
-  | cons r rs ih =>
-    simp only [runRows, List.map_cons, id_eq, read_shift]
-    split
-    · simp only [Option.map_map, Function.comp_def, List.map_cons, read_shift]
-      rw [← ih]
-      simp [Option.map_map, Function.comp_def]
-    · cases hc : firstZero (shiftRow (readBits r)) used with
-      | none => rfl
-      | some c =>
-        simp only [Option.map_map, Function.comp_def, List.map_cons, read_insert, read_shift]
-        rw [← ih]
-        simp [Option.map_map, Function.comp_def]
-
-/-- The Boolean semantics and the word evaluator commute with decoding at every step. -/
-private theorem evaluator_correct (n : ℕ) :
-    Function.Semiconj (@decode n) (packedTransition n) (transition n) := by
-  intro s
-  cases s with
-  | none => rfl
-  | some rs => exact runRows_correct rs []
-
-private theorem readBits_injective (n : ℕ) : Function.Injective (@readBits n) := by
-  intro a b h
-  apply BitVec.eq_of_getLsbD_eq
-  intro i hi
-  exact congrFun h ⟨i, hi⟩
-
-private theorem decode_injective (n : ℕ) : Function.Injective (@decode n) := by
-  exact Option.map_injective (List.map_injective_iff.mpr (readBits_injective n))
-
 /-- The printed assertion for every periodic three-row board, with its actual transition. -/
 def claim : Prop :=
   ∀ (n : ℕ) (s : Board n), s.length = 3 →
@@ -152,6 +97,60 @@ set_option maxHeartbeats 4000000 in
 -- Covers the four finite orbit evaluations and the divisor certificate.
 /-- At n=10 the explicitly evaluated paper transition has a period-264 orbit. -/
 theorem result : ¬ claim := by
+  have read_shift {n : ℕ} (r : PackedRow n) :
+      readBits (r >>> 1) = shiftRow (readBits r) := by
+    funext c
+    simp only [readBits, shiftRow, BitVec.getLsbD_ushiftRight]
+    split_ifs with h
+    · congr 1 <;> omega
+    · exact BitVec.getLsbD_of_ge r _ (by omega)
+
+  have read_insert {n : ℕ} (r : PackedRow n) (c : Column n) :
+      readBits (insertBit r c) = insertRow (readBits r) c := by
+    funext j
+    by_cases h : j = c
+    · subst j
+      simp [readBits, insertBit, insertRow, c.isLt]
+    · have hval : j.val ≠ c.val := fun he => h (Fin.ext he)
+      simp [readBits, insertBit, insertRow, j.isLt, h]
+      omega
+
+  have runRows_correct {n : ℕ} (rs : List (PackedRow n))
+      (used : List (Column n)) :
+      (runRows readBits (· >>> 1) insertBit rs used).map (List.map readBits) =
+        runRows id shiftRow insertRow (rs.map readBits) used := by
+    induction rs generalizing used with
+    | nil => rfl
+    | cons r rs ih =>
+      simp only [runRows, List.foldr_cons, List.map_cons, id_eq, read_shift]
+      simp only [runRows, id_eq, read_shift] at ih
+      split
+      · simp only [Option.map_map, Function.comp_def, List.map_cons, read_shift]
+        rw [← ih]
+        simp [Option.map_map, Function.comp_def]
+      · cases hc : firstZero (shiftRow (readBits r)) used with
+        | none => rfl
+        | some c =>
+          simp only [Option.map_map, Function.comp_def, List.map_cons, read_insert, read_shift]
+          rw [← ih]
+          simp [Option.map_map, Function.comp_def]
+
+  have evaluator_correct (n : ℕ) :
+      Function.Semiconj (@decode n) (packedTransition n) (transition n) := by
+    intro s
+    cases s with
+    | none => rfl
+    | some rs => exact runRows_correct rs []
+
+  have readBits_injective (n : ℕ) : Function.Injective (@readBits n) := by
+    intro a b h
+    apply BitVec.eq_of_getLsbD_eq
+    intro i hi
+    exact congrFun h ⟨i, hi⟩
+
+  have decode_injective (n : ℕ) : Function.Injective (@decode n) := by
+    exact Option.map_injective (List.map_injective_iff.mpr (readBits_injective n))
+
   let seed : Option (List (PackedRow 10)) := some [1, 2047, 2042]
   have cycle : Function.IsPeriodicPt (packedTransition 10) 264 seed := by
     decide +kernel
