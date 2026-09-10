@@ -1,5 +1,5 @@
 using System.Runtime.InteropServices;
-using StrataLint.Cli;
+using StrataLint.EngineeringScope;
 
 namespace StrataLint.Tests;
 

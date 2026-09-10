@@ -12,22 +12,6 @@ internal static class Program
     {
         try
         {
-            if (arguments.FirstOrDefault() == "lean-utility-input")
-            {
-                var result = LeanUtilityInputCommand.Run(
-                    () => GitRepositorySnapshotReader.ReadCurrent(Directory.GetCurrentDirectory()), arguments.Skip(1).ToArray());
-                output.Write(result.Output);
-                error.Write(result.Error);
-                return result.ExitCode;
-            }
-            if (arguments.FirstOrDefault() == "lean-cache-writer")
-            {
-                var result = LeanCacheEnsureCommand.RunWithWriter(Directory.GetCurrentDirectory(),
-                    arguments.Skip(1).ToArray(), new ProductionWorktreeProcessRunner(), new ApfsDirectoryCloner());
-                output.Write(result.Output);
-                error.Write(result.Error);
-                return result.ExitCode ?? (result.Success ? 0 : 2);
-            }
             if (arguments.FirstOrDefault() == "truth-release-select")
                 return TruthReleaseSelection.Run(arguments, output);
             if (arguments.FirstOrDefault() is "transport-pack" or "transport-verify")

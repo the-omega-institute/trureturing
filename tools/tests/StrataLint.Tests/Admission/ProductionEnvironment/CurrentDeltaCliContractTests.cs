@@ -65,6 +65,7 @@ public sealed class CurrentDeltaCliContractTests
     [InlineData("mixed", 1, "SL-029")]
     [InlineData("first-freeze", 1, "SL-008")]
     [InlineData("ratchet", 1, "SL-003")]
+    [InlineData("unowned-project", 1, "TEST_PROJECT_TOPOLOGY candidate introduces topology debt: missing-owned-project StrataLint.NewProduct -> StrataLint.NewProduct.Tests")]
     [InlineData("missing-base-project", 2, "base test project")]
     [InlineData("missing-report", 2, "")]
     [InlineData("candidate-mismatch", 2, "candidate identity")]
@@ -93,6 +94,7 @@ public sealed class CurrentDeltaCliContractTests
             case "mixed": Write("tools/StrataLint.Cli/probe.cs", "// candidate judge\n"); Write(RuleFixture.BlueprintPath, "# changed\n"); break;
             case "first-freeze": Write("Golden/Frozen/accepted/" + new string('a', 64) + ".json", "{}\n"); break;
             case "ratchet": for (var i = 0; i <= RepositoryRules.DirectoryFileLimit; i++) Write($"docs/reports/ratchet/{i}.json", "{}\n"); break;
+            case "unowned-project": Write("tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj", "<Project />\n"); break;
             case "missing-base-project": File.Delete(Path.Combine(root, firstProject)); break;
             default: Write(RuleFixture.BlueprintPath, "# changed\n"); break;
         }

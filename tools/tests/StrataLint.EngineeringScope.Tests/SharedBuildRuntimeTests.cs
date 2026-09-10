@@ -21,16 +21,17 @@ public sealed class SharedBuildRuntimeTests
         Write("global.json", File.ReadAllText(Path.Combine(repository, "global.json")));
         Write("tools/scripts/ci-build-outputs.targets", File.ReadAllText(Path.Combine(repository, "tools/scripts/ci-build-outputs.targets")));
         var projects = new[] { ("StrataLint.Cli", "StrataLint"), ("StrataLint.EngineeringScope", "StrataLint.EngineeringScope"),
-            ("StrataLint.Scribe.Documents", "StrataLint.Scribe.Documents") };
+            ("StrataLint.Scribe.Documents", "StrataLint.Scribe.Documents"), ("StrataLint.Lean", "StrataLint.Lean") };
         foreach (var (project, assembly) in projects)
         {
             Write($"tools/{project}/{project}.csproj", $"""
                 <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
-                <AssemblyName>{assembly}</AssemblyName><GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+                <AssemblyName>{assembly}</AssemblyName><OutputType>{(project == "StrataLint.Lean" ? "Exe" : "Library")}</OutputType><GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
                 <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup></Project>
                 """);
             Write($"tools/{project}/Value.cs", $"namespace {project}; public class Value {{ public static void Require(int metaClear) {{ }} }}\n");
         }
+        Write("tools/StrataLint.Lean/Program.cs", "internal static class Program { public static void Main() => System.Console.WriteLine(\"report utility runtime\"); }\n");
         const string proofProject = "tools/tests/CompileFailProof/CompileFailProof.csproj";
         Write(proofProject, """
             <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
@@ -46,6 +47,7 @@ public sealed class SharedBuildRuntimeTests
             <PackageReference Include="xunit" Version="2.9.3" /><PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
             <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
             <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
+            <ProjectReference Include="../../StrataLint.Lean/StrataLint.Lean.csproj" />
             <ProjectReference Include="../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" /></ItemGroup></Project>
             """);
         Write("tools/tests/Runtime/RuntimeTests.cs", """
@@ -92,6 +94,9 @@ public sealed class SharedBuildRuntimeTests
             Assert.True(extraction.Exit == 0, extraction.Text);
             Directory.Move(root, offline);
             var received = CommonExecutionEvidence.ValidateBuild(destination, build.Round);
+            var producer = SharedBuildContractTests.Process(destination, "dotnet", [CommonExecutionEvidence.LeanProducerPath]);
+            Assert.True(producer.Exit == 0, producer.Text);
+            Assert.Equal("report utility runtime", producer.Text.Trim());
             var assemblies = CommonBuildOutputs.TestAssemblies(destination, received);
             using var testOutput = new StringWriter();
             var consumerExit = Program.RunCurrentTests(destination, (project, results) =>
