@@ -1,0 +1,32 @@
+## 38. 2026-09-07：补入完整候选的幅度输运
+
+本节补入此前已完成但未写回的数学内容。真源仍归 `HadamardResidualBarrier.lean` 所有；原有精确根和列扰动定理保持不变。新公开定理为 `near_unit_entry_families_admit_controlled_phase_replacement`，其配套说明追加在原 Scribe 中。实际交付提交为 `570c05455f7c55bc2350af113de407672f0cfb28`。
+
+设任意索引族 `z_a in C^6` 满足：
+
+```math
+0\le\rho\le1/4,\qquad
+\big||z_{a,i}|^2-1\big|\le\rho,\qquad
+\big||(H^\dagger z_a)_j|^2-6\big|\le\rho.
+```
+
+若 `|H_ij|<=M` 且 `M>=0`，存在同一个单位元素族 `u_a` 满足：
+
+```math
+|u_{a,i}|=1,\qquad |z_{a,i}-u_{a,i}|\le\rho,
+```
+
+```math
+\big||(H^\dagger u_a)_j|^2-6\big|
+\le\rho+6M\rho(5+6M\rho).
+```
+
+令 `p(x,y)=(1/6) sum_i conjugate(x_i)y_i`，同一替换还满足：
+
+```math
+|p(u_a,u_b)-p(z_a,z_b)|\le3\rho,\qquad
+\big||p(u_a,u_b)|^2-|p(z_a,z_b)|^2\big|\le15\rho.
+```
+
+原向量不必单位化，所以原始 `p(z_a,z_b)` 只是固定目标缩放下的代数量，不能预先解释成归一化量子态的 Born 概率。所有结论使用同一个构造族，不允许为不同约束分别选择相位替代。
+

@@ -66,15 +66,20 @@ internal sealed class FactorialSquareExponentSumParityDocument : IScribeDocument
             Node("hanna_conjecture", "Hanna's parity conjecture", HannaFormula(),
                 "Coefficient equality transfers the established A222013 parity theorem to a. "
                 + "An integer maps to one in ZMod(2) exactly when it is odd.",
-                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a222014-factorial-square-exponent-sum-parity"),
+                    ResolutionKind.Proved))),
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S1/Recurrence/Parity/FactorialProductSumCatalanParity"))]));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null) =>
+        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("a222014-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));

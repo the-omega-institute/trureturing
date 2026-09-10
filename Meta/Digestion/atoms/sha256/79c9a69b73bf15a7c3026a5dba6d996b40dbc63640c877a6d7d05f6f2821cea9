@@ -1,0 +1,38 @@
+## 20. no-degenerate Fourier-mode lemma
+
+在 2-circulant construction 中，设一个 circulant row 由 unit phases `a,b,c` 给出。若某个 three-Fourier coefficient 消失：
+
+```math
+a+\rho b+\rho^2c=0,
+\qquad \rho^3=1,
+```
+
+则三个 unit numbers `a,rho b,rho^2c` 构成 equilateral triple。纯代数地，若 unit `z_0+z_1+z_2=0`，则：
+
+```math
+z_0/z_1=z_1/z_2=z_2/z_0,
+```
+
+且公共 ratio 是非平凡 cube root。
+
+因此：
+
+```math
+a/b=b/c=c/a=t,
+\qquad t^3=1.
+```
+
+结合 2-circulant ratio equation，另一组三个 unit ratios 的和被迫等于 `-3t`。triangle equality 迫使三者均为 `-t`，其乘积为 `-1`，与 cyclic ratio product `1` 矛盾。
+
+所以该 2-circulant Hadamard seed 的三个 Fourier modes 都非零。该 lemma 可消除 local fibre quadratic 中的 denominator-degenerate cases。
+
+形式化时先检索项目和 Mathlib 是否已有：
+
+```text
+three unit vectors summing to zero
+triangle equality for unit complex numbers
+primitive cube-root ratio lemmas
+```
+
+若没有，再建立通用小 lemma。不得把它埋入 order-six 专用证明中。
+
