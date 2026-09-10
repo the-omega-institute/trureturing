@@ -118,5 +118,38 @@ private lemma sum_factorization (n : ℕ) (hn : 0 < n) :
   rw [show n-1+(k+1) = n+k by omega]
   exact weighted_exact n k
 
+private def c (n k : ℕ) : ℕ := (n - 1).choose k * (n + k).choose k
+
+private lemma c_step (n k : ℕ) (hk : k < n) :
+    (k + 1) ^ 2 * (c n (k + 1) + c n k) = n ^ 2 * c n k := by
+  have h₁ := Nat.choose_succ_right_eq (n - 1) k
+  have h₂ := Nat.add_one_mul_choose_eq (n + k) k
+  have hrec : (k + 1) ^ 2 * c n (k + 1) =
+      (n - 1 - k) * (n + k + 1) * c n k := by
+    dsimp [c]
+    calc
+      _ = ((n - 1).choose (k + 1) * (k + 1)) *
+          ((n + k + 1).choose (k + 1) * (k + 1)) := by ring
+      _ = _ := by rw [h₁, ← h₂]; ring
+  have hpoly : (n - 1 - k) * (n + k + 1) + (k + 1) ^ 2 = n ^ 2 := by
+    have hsub : n - 1 - k + (k + 1) = n := by omega
+    nlinarith
+  calc
+    _ = ((n - 1 - k) * (n + k + 1) + (k + 1) ^ 2) * c n k := by
+      rw [mul_add, hrec]; ring
+    _ = _ := by rw [hpoly]
+
+private lemma c_step_linear (n k : ℕ) (hk : k < n) :
+    (k + 1) * (c n (k + 1) + c n k) =
+      n * ((n - 1).choose k * (n + k).choose (k + 1)) := by
+  apply Nat.eq_of_mul_eq_mul_left (by omega : 0 < k + 1)
+  have h := Nat.choose_succ_right_eq (n + k) k
+  rw [show n + k - k = n by omega] at h
+  calc
+    _ = (k + 1) ^ 2 * (c n (k + 1) + c n k) := by ring
+    _ = n ^ 2 * c n k := c_step n k hk
+    _ = n * (n - 1).choose k * ((n + k).choose k * n) := by dsimp [c]; ring
+    _ = n * (n - 1).choose k * ((n + k).choose (k + 1) * (k + 1)) := by rw [h]
+    _ = _ := by ring
 
 end D5.S3.ArithSums.A357512PrimeDivisibility

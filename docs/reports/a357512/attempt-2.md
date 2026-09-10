@@ -73,3 +73,11 @@ Prerequisite lookup found Mathlib's `Finset.sum_range_by_parts` and
 `Nat.choose_succ_right_eq`, `Nat.add_one_mul_choose_eq`. Their source statements
 were opened. A first search also named a nonexistent `D5/S3/Arithmetic`
 directory; that error is not counted as a negative search result.
+
+The two proposed binomial recurrences now pass `lake env lean` in the ensured
+hot tree (EXIT=0): `c_step` and `c_step_linear`. Both hold for every `k<n`,
+without primality or index invertibility. The linear identity uses the explicit
+integer witness `choose(n-1,k)*choose(n+k,k+1)`. Its first proof attempt failed
+when `nlinarith` could not multiply a binomial equality by the other factors;
+explicit multiplication and rewriting closed that goal. The whole-sum proof
+is still outstanding at this checkpoint.
