@@ -78,3 +78,33 @@ lemma exact_normalization (F : PowerSeries R) (n : ℕ) (hn : 0 < n) :
 #print axioms exact_normalization
 end A397902Attempt
 ```
+
+## Binary diagonal experiment
+
+With `PowerSeries.Expand` and `ZMod.Basic` additionally imported, the following
+was checked in the same file (EXIT=0; standard three axioms only). This generic
+vanishing result is a proposed ingredient, not the source conjecture.
+
+```lean
+abbrev F2 := ZMod 2
+lemma square_expand (F : PowerSeries F2) : F^2 = expand 2 (by decide) F := by
+  have h := MvPowerSeries.map_frobenius_expand (σ := Unit) (R := ZMod 2)
+    2 (by decide) (f := F)
+  rw [ZMod.frobenius_zmod, MvPowerSeries.map_id] at h
+  exact h.symm
+lemma square_even (F : PowerSeries F2) (n : ℕ) : coeff (2*n) (F^2) = coeff n F := by
+  rw [square_expand, coeff_expand_mul]
+lemma square_odd (F : PowerSeries F2) (n : ℕ) : coeff (2*n+1) (F^2) = 0 := by
+  rw [square_expand, coeff_expand_of_not_dvd]
+  omega
+lemma power_diagonal_zero (F : PowerSeries F2) (n t : ℕ) (hn : 0 < n) :
+    coeff n (F^(2*n*t)) = 0 := by
+  induction n using Nat.strong_induction_on generalizing t with
+  | h n ih =>
+    obtain ⟨m, hm | hm⟩ := Nat.even_or_odd' n
+    · subst n
+      rw [show 2*(2*m)*t = (2*m*t)*2 by ring, pow_mul, square_even]
+      exact ih m (by omega) t (by omega)
+    · subst n
+      rw [show 2*(2*m+1)*t = ((2*m+1)*t)*2 by ring, pow_mul, square_odd]
+```
