@@ -40,7 +40,10 @@ def canonical_json(value: object) -> bytes:
     # scalars intact but renders supplementary-plane scalars as uppercase UTF-16
     # surrogate pairs. StructuredCanonicalWriter therefore has this exact byte
     # shape, and declaration identity includes it.
-    return (SUPPLEMENTARY_SCALAR.sub(escape_supplementary_scalar, text) + "\n").encode("utf-8")
+    # ASCII text cannot contain supplementary scalars; skip the regex scan.
+    if not text.isascii():
+        text = SUPPLEMENTARY_SCALAR.sub(escape_supplementary_scalar, text)
+    return (text + "\n").encode("utf-8")
 
 
 def statement_address(material: bytes) -> str:
