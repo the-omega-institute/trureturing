@@ -5572,6 +5572,8 @@ excluded rows 使用 IE-C036；状态分项是 query completion，完备标志�
 已注册 signature 的某个 readout index 或 anchor 不被 Law 消费、违反 exact generated slot support，
 即删去它后 Law 经遗忘该 primitive 的投影在声明域上外延不变，而 bundle kernel 改变时触发。
 语法出现、抵消表达式或死项不算消费；本码适用于 finite 与 structural 两条注册路径。
+优先序 `IE-C048 > IE-C049`：IE-C048 触发时不另判本码——常量 Law 下所有 primitive 皆未被消费，只发
+IE-C048；本码仅在 Law-variation 见证成立后判定，故每个登记至多命中其中一码。
 定义完成；消费者随判官层落地，当前无机器消费者。
 
 ### IE-C050　ClosedTruthReadout
