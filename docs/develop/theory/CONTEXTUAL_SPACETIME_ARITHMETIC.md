@@ -6319,11 +6319,686 @@ P2 初稿 `70463e7669a120e9fb180fadfb78bbe46ea6eaa1` 为 §§27–29，中间重
 
 在合入稿 `8b56117` 的 581 个账目所引用的 CAS 中，以“编号与完整名称”检索，本节所列定义 31–33、命题 58–63 九项均无命中。因此旧 34/34 CAS/账目对只证明中间编号原料已入账，不能证明最终改号正文已全部摄入。当前完整 `contextual-spacetime-arithmetic` 源及本勘误的摄入状态，以 canonical `make ingest` 的新收据和对应新增 CAS/YAML 判定；旧 CAS/YAML 保留其历史原料身份，不改内容地址，也不改释为其他批次的同号结果。摄入仅记录参考文本，不构成新的数学证明、Lean 内核验证或持续研究总目标完成的声明。
 
-## 42. PR7 增补 P：复制孔语言的 q 表达分类
 
-本节是 repo-derived 的 PR7 结算。它只讨论目标族 $q\circ F_B$；一般数值函数的复制表达力另列，不能由本节推出“复制不增加任何 q 表达力”。因 origin/dev 已在 §37 后追加 §§38–41，本批正文按当前最大编号续接为 §42；内容对应 brief 的 §38。
+## 42. Qi：守卫敏感的最粗边界观察接口
 
-### 42.1 定义 34：复制项语言与严格量词
+本节回答一个具体问题：固定完整分隔边界、实际对侧记录及严格消费者后，哪些组件记录可以合并，并且合并后的接口能否逐边拼接而保持全部联合结果？答案是保留边界标签的完整观察函数之核；其最粗性来自集合映射的商，其拼接正确性另由完整上下文中的两次替换证明。隐藏约束以同一世界见证的联合关系保留，不能由边缘的乘积代替。
+
+以下给出所需全部赋值、连接、标签、商及拼接定义，不以前稿 JT/P3b 已在本文中出现为前提。全部定义、命题使用本节局部标识 QI-D1 等、QI-P1 等，不占用全局编号。本节的 $K$ 专指世界准入约束，$W$ 专指实际世界集；它们不同于 §24 的时间—空间单元集及带下标的背景电荷 $W_X$。构造均在经典 ZFC 中进行。
+
+### 42.1 完整赋值、原始连接与全分隔集
+
+**定义 QI-D1（原始记录与世界）。** 令 $I$ 为有限非空节点集，$T=(I,E_T)$ 为树。每个源变量 $v$ 有值集 $V_v$；对变量集 $D$ 定义
+
+$$
+\mathcal A(D)=
+\{a:\operatorname{dom}(a)=D,\ a(v)\in V_v\text{ 对每个 }v\in D\},
+\qquad \mathcal A(\varnothing)=\{\varnothing\}.
+\tag{QI-ASSIGN}
+$$
+
+节点 $i$ 的作用域为 $S_i$，局部关系为 $\Gamma_i\subseteq\mathcal A(S_i)$。记录是整个作用域上的完整赋值，作用域、值集和关系均不要求有限，局部关系也允许为空。对任意 $A\subseteq I$ 令
+
+$$
+\begin{aligned}
+U_A&=\bigcup_{i\in A}S_i,\\
+J_A&=\{a\in\mathcal A(U_A):a|_{S_i}\in\Gamma_i\text{ 对每个 }i\in A\},\\
+J_\varnothing&=\{\varnothing\},\qquad J=J_I,\\
+K&\subseteq\mathcal A(U_I),\qquad W=J\cap K.
+\end{aligned}
+\tag{QI-JOIN}
+$$
+
+这里 $J_A$ 是原始组件连接，$J$ 是原始全局连接；$K$ 排除的记录不属于实际世界 $W$，这种排除不是算术失败。将完整组件记录直接识别为 $a\in J_A$，并从它导出响应，初始即保留了记录中的来源与依赖数据。压缩这些数据所需的条件见 §42.9。
+
+假设运行交集性质（RI）：对每个出现的变量 $v$，集合 $\{i\in I:v\in S_i\}$ 在树中连通。每条边 $e=\{i,j\}$ 保留完整分隔集 $C_e=S_i\cap S_j$，不先将其投影成更小的字段集。
+
+**命题 QI-P1（分隔集恰为割的完整重叠，repo-derived）。** 删除边 $e$ 后的节点分割记为 $L\mid R$，则
+
+$$
+U_L\cap U_R=C_e.
+\tag{QI-CUT}
+$$
+
+**证明。** 若变量同时出现在 $L$ 的一个节点和 $R$ 的一个节点，RI 使连接这两个节点的唯一路径上每个节点都含该变量。路径经过 $e$ 的两个端点，所以该变量属于 $C_e$。反向包含由两个端点各在一侧立即得到。因此 $a\in J_L$、$r\in J_R$ 在 $C_e$ 上相等时，$a\cup r$ 是定义良好的完整赋值；其每个局部限制仍属于对应 $\Gamma_i$，故 $a\cup r\in J$。证毕。
+
+### 42.2 总响应、部分消费者与严格标签闭包
+
+**定义 QI-D2（严格观察的类型）。** 每个节点给定总函数 $h_i:\Gamma_i\to Y_i$。定义
+
+$$
+H:J\longrightarrow\prod_{i\in I}Y_i,\qquad
+H(w)=(h_i(w|_{S_i}))_{i\in I}.
+\tag{QI-RESPONSE}
+$$
+
+固定一个消费者集合 $\mathcal F$。每个 $c\in\mathcal F$ 给定部分函数
+
+$$
+f_c:D_c\longrightarrow V_c,\qquad D_c\subseteq\prod_{i\in I}Y_i.
+$$
+
+使用不交标签集 $\operatorname{Tag}(V_c)=\{\operatorname{ok}(v):v\in V_c\}\sqcup\{\bot\}$，其中 $\operatorname{ok}$ 为单射且其像不含 $\bot$。另命名总化函数，不把它与 $f_c$ 混用：
+
+$$
+\widehat f_c:\prod_{i\in I}Y_i\longrightarrow\operatorname{Tag}(V_c),
+\qquad
+\widehat f_c(y)=
+\begin{cases}
+\operatorname{ok}(f_c(y)),&y\in D_c,\\
+\bot,&y\notin D_c.
+\end{cases}
+\tag{QI-TOTALIZE}
+$$
+
+令
+
+$$
+G_c=\widehat f_c\circ H:J\to\operatorname{Tag}(V_c),\qquad
+\mathcal V_{\mathcal F}=\prod_{c\in\mathcal F}\operatorname{Tag}(V_c),
+\qquad G:J\to\mathcal V_{\mathcal F},\quad G(w)=(G_c(w))_{c\in\mathcal F}.
+\tag{QI-VECTOR}
+$$
+
+因此 $G$ 在被 $K$ 排除的原始连接记录上也有定义；实际结果另取 $G[W]$。若消费者由有限表达式树给出，叶读取输入或常数，内部节点携带自己的部分操作及原始守卫。内部节点有任一失败子项就返回 $\bot$；只有全部子项成功时，才解标签、检查本节点守卫并计算。即使父操作在成功域上恒取一个常数，也须先执行这些步骤。独立的无子项常数表达式则直接成功。
+
+**命题 QI-P2（有限严格表达式的闭包，repo-derived）。** 将 $D_c$ 定义为该表达式全部原始中间守卫均通过的输入集，将 $f_c$ 定义为此域上的未加标签结果，则递归严格求值恰为 $\widehat f_c$。
+
+**证明。** 对表达式树归纳。叶的成功标签及常数值唯一。内部节点若有失败子项，归纳假设表明该子树的某个原始守卫未通过，整式不在 $D_c$，两种定义都返回 $\bot$。否则各子树的成功值唯一；本节点守卫失败时两者均失败，通过时两者均用同一个部分操作产生同一成功值。这同时证明类型闭合及全部中间守卫的保留，且不依赖父操作是否为常值。证毕。
+
+例如，对有理响应对定义
+
+$$
+F((a,b),(c,d))=
+\begin{cases}
+\operatorname{ok}\!\left(\dfrac{a+c}{b+d}\right),&b+d\ne0,\\
+\bot,&b+d=0.
+\end{cases}
+\tag{QI-RATIO}
+$$
+
+这是 $\mathbb Q$ 中的非零分母守卫；若采用 $\mathbb Z$ 中的精确除法，还须要求 $b+d\mid a+c$。二者的定义域不能混同。严格表达式 $0\cdot(1/0)$ 失败，而独立常数 $0$ 返回 $\operatorname{ok}(0)$；代数化简不能删除原表达式的除法守卫。
+
+### 42.3 固定边纤维与完整观察函数
+
+**定义 QI-D3（边观察契约）。** 固定有向边割 $L\mid R$ 及 $s\in\mathcal A(C_e)$，令
+
+$$
+\begin{aligned}
+\mathcal B_e(s)&=\{a\in J_L:a|_{C_e}=s\},\\
+\mathcal R_e(s)&=\{r\in J_R:r|_{C_e}=s\},\\
+O_{e,s}&:\mathcal B_e(s)\longrightarrow
+\mathcal V_{\mathcal F}^{\mathcal R_e(s)},\\
+O_{e,s}(a)(r)&=G(a\cup r).
+\end{aligned}
+\tag{QI-EDGE-OBS}
+$$
+
+$\mathcal R_e(s)$ 是模型中实际存在的原始对侧记录域，此处“原始”表示尚未用 $K$ 筛选；它不是各个响应边缘值集的乘积。命题 QI-P1 保证每次 $a\cup r$ 都在 $J$。契约固定了每个对侧记录及每个指定消费者，观察值是完整联合向量。若要改用更小的对侧摘要，全部相关兼容性测试与消费者必须先证明可经该摘要因子化。
+
+### 42.4 核序下的唯一最粗准确表示
+
+**命题 QI-P3（最大准确等价与普遍因子化，repo-derived）。** 定义
+
+$$
+a\equiv_{e,s}a'
+\iff O_{e,s}(a)=O_{e,s}(a'),
+\qquad
+q^*:\mathcal B_e(s)\twoheadrightarrow Q_e^*(s)
+=\mathcal B_e(s)/{\equiv_{e,s}}.
+\tag{QI-EDGE-QUOTIENT}
+$$
+
+表示是满射 $q:\mathcal B_e(s)\twoheadrightarrow Q$；任意到更大集合的函数可先将余域缩到实际像。称 $q$ 准确，是指对每个 $c$ 存在
+
+$$
+E_{c,q}:Q\times\mathcal R_e(s)\to\operatorname{Tag}(V_c),
+\qquad E_{c,q}(q(a),r)=G_c(a\cup r).
+$$
+
+对任意函数 $t$ 记 $\ker t=\{(x,x'):t(x)=t(x')\}$。表示的细化序定义为 $q_1\preceq q_2$ 当且仅当 $\ker q_1\subseteq\ker q_2$，左侧更细；相同核的表示视为同一信息等级后，这是偏序。则
+
+$$
+q\text{ 准确}\iff\ker q\subseteq\ker O_{e,s},
+\qquad Q_e^*(s)\cong O_{e,s}[\mathcal B_e(s)].
+\tag{QI-ACCURATE}
+$$
+
+$\equiv_{e,s}=\ker O_{e,s}$ 是最大的准确等价关系。对每个准确满射 $q$，存在唯一映射
+
+$$
+p:Q\to Q_e^*(s),\qquad q^*=p\circ q.
+\tag{QI-UNIVERSAL}
+$$
+
+**证明（核与准确性）。** 函数相等的自反、对称、传递性给出等价关系。若 $q$ 准确且 $q(a)=q(a')$，则对所有 $r,c$，
+
+$$
+G_c(a\cup r)=E_{c,q}(q(a),r)
+=E_{c,q}(q(a'),r)=G_c(a'\cup r),
+$$
+
+故得核包含。反之，在核包含成立时，集合
+
+$$
+\{((q(a),r),G_c(a\cup r)):
+a\in\mathcal B_e(s),\ r\in\mathcal R_e(s)\}
+$$
+
+就是 $E_{c,q}$ 的图：满射性保证在整个 $Q\times\mathcal R_e(s)$ 上有值，核包含保证单值。取 $q=q^*$ 即得商的准确性；任何准确等价的商也满足此核包含，所以 $\ker O_{e,s}$ 最大。
+
+**证明（实际像与方向）。** 集合 $\{([a],O_{e,s}(a)):a\in\mathcal B_e(s)\}$ 是从商到实际观察像的函数图；定义保证单值和满射，而观察相等恰为同类，故又单射。集合
+
+$$
+\{(q(a),[a]):a\in\mathcal B_e(s)\}
+$$
+
+是 $p$ 的图。准确性保证单值，$q$ 的满射性保证总性，并强制任何满足 (QI-UNIVERSAL) 的映射都有此图，故唯一。这些图直接定义函数，不需在每个纤维上挑选代表。方向是任意准确表示决定最粗商。若另一个表示也具有同一最粗核，两个由这些图给出的映射互逆，得到唯一的相容同构。核严格更小的准确表示可严格粗化到该核，所以不存在两个不可比的最粗准确等价。对字段选择、语法格式或机器编码附加限制，会形成另一个最小化问题。证毕。
+
+### 42.5 连通组件、保留边界与局部关系桥
+
+**定义 QI-D4（组件观察商）。** 对非空连通 $A\subseteq I$，定义以下边界与限制，并对 $s\in\mathcal A(\partial A)$ 定义补集记录域：
+
+$$
+\partial A=U_A\cap U_{I\setminus A},\qquad
+\rho_A(a)=a|_{\partial A},\qquad
+\mathcal R_A(s)=
+\{r\in J_{I\setminus A}:r|_{\partial A}=s\}.
+\tag{QI-BOUNDARY}
+$$
+
+RI 给出
+
+$$
+\partial A=\bigcup_{\substack{i\in A,\ j\notin A\\\{i,j\}\in E_T}}C_{\{i,j\}}.
+\tag{QI-BOUNDARY-UNION}
+$$
+
+确实，一个同时出现在组件内外的变量沿连接路径出现在某条出边的两个端点，反向包含显然。这里保留的是该并集上的一个共同赋值。补集可能不连通，但 $J_{I\setminus A}$ 仍是整个补集上的完整相容赋值，包含各部分之间共享变量的一致性。
+
+对 $a\in J_A$ 令 $O_A(a)$ 为函数 $\mathcal R_A(\rho_A(a))\to\mathcal V_{\mathcal F}$，其值是 $r\mapsto G(a\cup r)$。取带边界的签名及等价：
+
+$$
+\begin{aligned}
+\Sigma_A(a)&=(\rho_A(a),O_A(a))
+\in\coprod_{s\in\mathcal A(\partial A)}
+\mathcal V_{\mathcal F}^{\mathcal R_A(s)},\\
+a\equiv_A a'
+&\iff \rho_A(a)=\rho_A(a')
+\ \text{且}\quad
+\forall r\in\mathcal R_A(\rho_A(a)),\
+G(a\cup r)=G(a'\cup r),\\
+q_A&:J_A\twoheadrightarrow Q_A^{\rm obs}=J_A/{\equiv_A}.
+\end{aligned}
+\tag{QI-COMPONENT-OBS}
+$$
+
+这个核保留边界相等，即使某纤维没有任何补全也不跨边界合并。逐边界应用命题 QI-P3，得到它恰为“须恢复边界并回答所有完整相容补集观察”这一契约下的最粗表示，且 $Q_A^{\rm obs}\cong\Sigma_A[J_A]$。边界读出 $\bar\rho_A$ 由图 $\{(q_A(a),\rho_A(a)):a\in J_A\}$ 定义；这是后续拼接兼容域可从商状态恢复的原因。
+
+**定义 QI-D5（局部联合边界—响应关系）。** 对单节点 $i$，$J_{\{i\}}=\Gamma_i$。令
+
+$$
+\begin{aligned}
+\beta_i(a)&=(\rho_{\{i\}}(a),h_i(a)),\\
+Q_i^{\rm rel}&=\beta_i[\Gamma_i]
+=\{(s,y):\exists a\in\Gamma_i,\
+\rho_{\{i\}}(a)=s,\ h_i(a)=y\},\\
+Q_i^{\rm obs}&=Q_{\{i\}}^{\rm obs}.
+\end{aligned}
+\tag{QI-LOCAL-RELATION}
+$$
+
+$Q_i^{\rm rel}$ 完全由一个局部记录同时见证全部边界字段与响应，不能换成各个出边边缘及响应边缘的任意乘积。
+
+**命题 QI-P4（关系到观察商的因子化桥，repo-derived）。** 对上述原始观察契约，
+
+$$
+\ker\beta_i\subseteq{\equiv_{\{i\}}},
+\qquad
+\Phi_i:Q_i^{\rm rel}\to\Sigma_{\{i\}}[\Gamma_i],
+\qquad
+Q_i^{\rm rel}/\ker\Phi_i\cong Q_i^{\rm obs}.
+\tag{QI-REL-OBS-BRIDGE}
+$$
+
+**证明。** 若两局部记录有相同 $\beta_i$，其完整边界与 $h_i$ 相同。对同一个完整补集记录，其他每个 $h_j$ 的输入不变，因此整个 $H$ 相同，进而所有 $G_c$ 相同。于是
+
+$$
+\{(\beta_i(a),\Sigma_{\{i\}}(a)):a\in\Gamma_i\}
+$$
+
+是总的单值图，定义满射 $\Phi_i$。同理，图 $\{(\beta_i(a),q_{\{i\}}(a)):a\in\Gamma_i\}$ 定义到 $Q_i^{\rm obs}$ 的映射 $\phi_i$，且 $q_{\{i\}}=\phi_i\circ\beta_i$。再由图
+
+$$
+\{([\beta_i(a)]_{\ker\Phi_i},q_{\{i\}}(a)):a\in\Gamma_i\}
+$$
+
+得到 (QI-REL-OBS-BRIDGE) 的双射：$\Phi_i$ 相等恰为签名相等，所以该图单值、单射，局部原像的存在保证满射。因而 $Q_i^{\rm rel}$ 本身最粗当且仅当 $\Phi_i$ 单射。不同关系行若有相同签名可以合并，若签名不同则边界或某完整上下文禁止合并。本结论不承诺恢复每个原始响应；若要求恢复该响应，须把它本身列为所需观察。隐藏 $K$ 的准入也尚未由本桥保证。证毕。
+
+### 42.6 拼接同余、精确可达性与根的联合结果
+
+**命题 QI-P5（保边界的拼接同余，repo-derived）。** 设 $A,B$ 是不交、非空、连通且相邻的节点组件，令 $C=A\cup B$。取 $a,a'\in J_A$、$b,b'\in J_B$。首先要求原始记录 $a,b$ 在完整重叠 $U_A\cap U_B$ 上一致；再要求
+
+$$
+a\equiv_A a',\qquad b\equiv_B b'.
+\tag{QI-SPLICE-HYP}
+$$
+
+则 $a',b'$ 也一致，且 $a\cup b\equiv_C a'\cup b'$。因此存在部分拼接
+
+$$
+\bar\mu_{A,B}:Q_A^{\rm obs}\times Q_B^{\rm obs}
+\rightharpoonup Q_C^{\rm obs},
+\qquad
+\bar\mu_{A,B}(q_A(a),q_B(b))=q_C(a\cup b).
+\tag{QI-SPLICE}
+$$
+
+其准确域是两状态的边界标签在 $U_A\cap U_B$ 上相等。该重叠包含于 $\partial A\cap\partial B$，由 RI 还恰等于连接两个组件的唯一边之全分隔集。边界相等运输的是已给的初始兼容性，不能从无条件的两个记录产生兼容性。
+
+**证明（两次完整上下文替换）。** 由两个等价假设，$a'$ 在 $\partial A$ 上等于 $a$，$b'$ 在 $\partial B$ 上等于 $b$，故初始匹配运输到 $a',b'$。每个 $\partial C$ 中的变量既在 $A$ 或 $B$ 内，又在 $C$ 外，故其值由相应组件的边界保留。因此两个合并记录在 $\partial C$ 上相同。
+
+取任意
+
+$$
+r\in\mathcal R_C(\rho_C(a\cup b)).
+$$
+
+初始匹配及这个边界条件使 $a\cup b\cup r\in J$，所以 $b\cup r$ 是 $A$ 的一个完整相容补集记录。先用 $a\equiv_A a'$ 得
+
+$$
+G(a\cup b\cup r)=G(a'\cup b\cup r).
+\tag{QI-SUBSTITUTE-A}
+$$
+
+$a'$ 保留全部边界，故新合并仍相容，$a'\cup r$ 是 $B$ 的完整相容补集记录。再用 $b\equiv_B b'$ 得
+
+$$
+G(a'\cup b\cup r)=G(a'\cup b'\cup r).
+\tag{QI-SUBSTITUTE-B}
+$$
+
+这对每个完整 $r$ 成立，并且已证合并边界相同，所以得到 $\equiv_C$。集合
+
+$$
+\{((q_A(a),q_B(b)),q_C(a\cup b)):
+a\in J_A,\ b\in J_B,\ a|_{U_A\cap U_B}=b|_{U_A\cap U_B}\}
+$$
+
+于是为单值图。每对边界匹配的实际商状态都有原像；由于全部原像保留边界，任何这样的一对原像都匹配，故此图的域恰为所述部分域。这里的关键是两次完整补集替换；只比较抽样上下文或边缘上下文不能承担这一步。证毕。
+
+**命题 QI-P6（双向可达与有限收缩，repo-derived）。** 对同样的组件，
+
+$$
+Q_C^{\rm obs}
+=\{\bar\mu_{A,B}(x,y):
+x\in Q_A^{\rm obs},\ y\in Q_B^{\rm obs},\
+x,y\text{ 的完整边界匹配}\}.
+\tag{QI-REACH}
+$$
+
+**证明。** 任取 $u\in J_C$，其两个限制属于 $J_A,J_B$ 且匹配，合并回到 $u$，故左侧每个商状态在右侧可达。反之，右侧两个实际商状态有代表 $a,b$，匹配的边界使它们在完整重叠相等，故 $a\cup b\in J_C$，其商属于左侧。这只是针对一个有限拼接取两个存在见证，不是全体商类的代表选择函数。
+
+从每个单节点的全部实际 $Q_i^{\rm obs}$ 开始，每次只收缩相邻连通组件。收缩前若各组件状态集恰为其实际观察商，(QI-REACH) 的两向包含保证收缩后仍如此；对有限收缩次数归纳，最后恰得 $Q_I^{\rm obs}$，与收缩次序无关。在根，
+
+$$
+\partial I=\varnothing,\qquad
+\mathcal R_I(\varnothing)=J_\varnothing=\{\varnothing\}.
+\tag{QI-ROOT-CONTEXT}
+$$
+
+因此根观察不是空函数，而是在唯一空赋值处取整个 $G(w)$ 的函数；$q_I$ 恰按完整联合向量识别世界。区别于原始 $G$，下降后的映射定义为
+
+$$
+\bar G:q_I[J]=Q_I^{\rm obs}\longrightarrow\mathcal V_{\mathcal F},
+\qquad
+\operatorname{graph}(\bar G)=\{(q_I(w),G(w)):w\in J\}.
+\tag{QI-ROOT-MAP}
+$$
+
+根的等价定义使图单值，实际像使它总且唯一，并有
+
+$$
+\bar G[Q_I^{\rm obs}]=G[J].
+\tag{QI-ROOT-IMAGE}
+$$
+
+这保留整个联合输出像，不能改写成只保留每个消费者的坐标边缘。若某些局部关系为空或最终 $J=\varnothing$，两向包含和归纳仍成立；此时根状态集与结果像均为空。证毕。
+
+### 42.7 隐藏约束的主路径：同一世界见证的联合关系
+
+**命题 QI-P7（任意 $K$ 的精确运输，repo-derived）。** 对 $I$ 的任意连通组件分割 $\mathcal P$，保留
+
+$$
+K_{\mathcal P}=
+\{(q_A(w|_{U_A}))_{A\in\mathcal P}:w\in W\}
+\subseteq\prod_{A\in\mathcal P}Q_A^{\rm obs}.
+\tag{QI-JOINT-K}
+$$
+
+将相邻 $A,B$ 收缩为 $C$ 得 $\mathcal P'$，以 $\bar\mu_{A,B}$ 合并这两个坐标、保留其余坐标的映射记为 $m_{\mathcal P}$。其在 $K_{\mathcal P}$ 上处处有定义，且
+
+$$
+m_{\mathcal P}[K_{\mathcal P}]=K_{\mathcal P'},\qquad
+\bar G[q_I[W]]=G[W].
+\tag{QI-K-TRANSPORT}
+$$
+
+**证明。** 每个旧元组有同一世界 $w\in W$ 同时见证全部坐标，因而相邻坐标匹配。合并坐标等于 $q_C(w|_{U_C})$，得到由同一个 $w$ 见证的新元组，证明第一包含。反之，每个新元组本来就有某个 $w\in W$ 见证；取这个 $w$ 在旧分割的各个限制，即得旧元组，其像正是所给新元组。这证明反向包含，而未把不同世界的坐标拼成见证。对收缩次数归纳得到根集合 $q_I[W]$；(QI-ROOT-MAP) 的图给出第二式。证毕。
+
+这里允许任意 $K$，但携带的是完整联合关系 $K_{\mathcal P}$，绝非其各坐标投影的乘积。该关系以存在世界见证定义；定理没有给出廉价、小规模或可判定的表示。它保证指定结果像，不授权随意选一个原始代表并认为它仍满足 $K$。
+
+### 42.8 完成域增强与根准入测试
+
+**定义 QI-D6（准入完成域）。** 若要求任意等价代表替换都保持准入，定义
+
+$$
+\begin{aligned}
+D_A^K(a)&=\{r\in\mathcal R_A(\rho_A(a)):a\cup r\in K\}
+\subseteq J_{I\setminus A},\\
+\Sigma_A^+(a)&=(\rho_A(a),O_A(a),D_A^K(a)),\\
+a\equiv_A^+a'&\iff a\equiv_Aa'\ \text{且}\ D_A^K(a)=D_A^K(a'),\\
+q_A^+&:J_A\twoheadrightarrow Q_A^+=J_A/{\equiv_A^+}.
+\end{aligned}
+\tag{QI-ADMISSION-SIGNATURE}
+$$
+
+**命题 QI-P8（增强商的拼接与准入，repo-derived）。** 这是保留边界、全部原始算术观察及完整准入完成域的最粗商；它是拼接同余，并能在根精确筛出 $W$ 的像。
+
+**证明。** $\equiv_A^+$ 是完整增强签名的核。命题 QI-P3 的必要性、单值图构造与唯一因子化证明逐字适用于这个签名，所以最粗性指上述三项契约。
+
+取命题 QI-P5 的初始匹配，并同时假设 $a\equiv_A^+a'$、$b\equiv_B^+b'$。边界及原始结果的部分已经由 QI-P5 保证。对任意完整外部记录 $r\in\mathcal R_C(\rho_C(a\cup b))$，先在 $A$ 的补集 $b\cup r$ 中使用完成域相等，再在 $B$ 的补集 $a'\cup r$ 中使用完成域相等，得到
+
+$$
+a\cup b\cup r\in K
+\iff a'\cup b\cup r\in K
+\iff a'\cup b'\cup r\in K.
+\tag{QI-K-SUBSTITUTION}
+$$
+
+两个补集的合法性由相同的完整边界运输保证，不能省略第二个等价假设。故合并后完成域相等，连同全部原始观察相等给出 $\equiv_C^+$。相应拼接也由 QI-P5 所用形式的单值图定义；QI-P6 的限制与合并证明给出相同的双向可达及有限收缩归纳。
+
+根的补集只有空赋值，因此
+
+$$
+D_I^K(w)=
+\begin{cases}
+\{\varnothing\},&w\in K,\\
+\varnothing,&w\notin K.
+\end{cases}
+\tag{QI-ROOT-ADMISSION}
+$$
+
+图 $\{(q_I^+(w),\mathbf1_K(w)):w\in J\}$ 定义根准入函数 $\alpha_I^+:Q_I^+\to\{0,1\}$。其中值为 $1$ 的类恰是 $q_I^+[W]$，因为每类准入恒定。图 $\{(q_I^+(w),G(w)):w\in J\}$ 同样定义 $\bar G^+:Q_I^+\to\mathcal V_{\mathcal F}$，故
+
+$$
+\bar G^+[\{z\in Q_I^+:\alpha_I^+(z)=1\}]=G[W].
+\tag{QI-ADMITTED-ROOT-IMAGE}
+$$
+
+这只是准入可从接口恢复的语义结论，没有断言该函数可计算。$K$ 仍通过其全部兼容效果存在。证毕。
+
+若另一个契约只观察 $K$ 准入的补全，应改用
+
+$$
+\bigl(\rho_A(a),D_A^K(a),
+[\,r\mapsto G(a\cup r)\,]_{r\in D_A^K(a)}\bigr).
+\tag{QI-PARTIAL-CONTRACT}
+$$
+
+相等必须同时要求边界相等、定义域相等和该域上全部输出相等。它可比“原始观察加准入”更粗，因为无需记录被排除补全的原始算术值；两者不是同一个契约。其核仍有 QI-P3 的普遍性质，且仍为拼接同余：对每个完整外部 $r$，完成域相等给 (QI-K-SUBSTITUTION)；在共同准入的 $r$ 上，两次替换分别处于共同准入域内，所以再得 (QI-SUBSTITUTE-A)、(QI-SUBSTITUTE-B)。根仍用 (QI-ROOT-ADMISSION) 筛选，并在准入类上恢复联合结果。被排除的补全始终不同于返回 $\bot$ 的准入补全。
+
+### 42.9 有效载荷因子化与两种保持要求
+
+**命题 QI-P9（有效载荷恢复的充要条件，repo-derived）。** 给定摘要 $\beta:X\to B$ 及所需有效载荷 $P:X\to Z$，有
+
+$$
+\bigl(\exists!\,\bar P:\beta[X]\to Z,\quad P=\bar P\circ\beta\bigr)
+\iff \ker\beta\subseteq\ker P.
+\tag{QI-PAYLOAD}
+$$
+
+复合时将 $\beta$ 的余域缩为其实际像。**证明。** 因子化使相同 $\beta$ 值必有相同 $P$ 值，故必要。反之，
+
+$$
+\{(\beta(x),P(x)):x\in X\}
+$$
+
+在每个实际像点都有值，核包含使它单值，故就是 $\bar P$ 的图。任何因子化在这些像点都被迫取相同值，故唯一；没有对 $B\setminus\beta[X]$ 的任意延拓要求。证毕。
+
+对全局准入取 $X=J$、$P=\mathbf1_K|_J$。充要条件是 $W$ 为完整 $\beta$ 纤维的并，即
+
+$$
+\beta(u)=\beta(u')
+\Longrightarrow (u\in K\iff u'\in K)
+\quad(u,u'\in J).
+\tag{QI-GLOBAL-K-FACTOR}
+$$
+
+此时可用 $\bar k:\beta[J]\to\{0,1\}$ 替代原始准入测试，但 $\bar k$ 可非恒真，故因子化 $K$ 并不等于删除 $K$。局部取 $X=J_A$、$P(a)=D_A^K(a)$、$Z=\mathcal P(J_{I\setminus A})$，得到
+
+$$
+\ker\beta_A\subseteq\ker D_A^K
+\iff
+\forall a,a'\in J_A,\
+\beta_A(a)=\beta_A(a')\Longrightarrow D_A^K(a)=D_A^K(a').
+\tag{QI-LOCAL-K-FACTOR}
+$$
+
+逐个完整补全的成员关系给出准入测试的必要性与充分性；用于拼接的 $\beta_A$ 还须保留边界及所要求的结果观察。完全相同的判据适用于来源标识、依赖集及其他指定有效载荷，要求从摘要恢复多少，就对那一项 $P$ 检验核包含。若只要求结果像，可以改走 QI-P7 的精确存在见证关系；这不声称能恢复未被保留的有效载荷。
+
+**命题 QI-P10（世界保持与联合结果像保持，repo-derived）。** 删除 $K$ 保留全部世界的充要条件是 $W=J$。只要求指定联合结果像时，充要条件较弱：
+
+$$
+G[W]=G[J]
+\iff \forall u\in J\ \exists w\in W:\ G(u)=G(w).
+\tag{QI-IMAGE-COVERAGE}
+$$
+
+**证明。** 因 $W\subseteq J$，总有 $G[W]\subseteq G[J]$。像相等时每个 $G(u)$ 在 $W$ 中有一个见证；反之，右侧的见证给出缺少的包含 $G[J]\subseteq G[W]$。比较世界本身时，删除约束后恰是 $J$，所以世界保持恰为 $W=J$。结果纤维的存在覆盖不要求准入在每个摘要纤维上恒定，也不授权任意代表选择。证毕。
+
+### 42.10 有限表一：相同独立比值仍可被守卫区分
+
+以下三组有限表各只有一个消费者，联合向量以其唯一坐标显示。取两个节点，作用域为 $\{\sigma,\ell\}$、$\{\sigma,r\}$，所有记录的 $\sigma=0$。左变量的五个标签 $p,q,u,v,z$ 及右变量的两个标签 $r_0,r_1$ 都给出完整局部记录。其总响应分别为
+
+$$
+p=(1,1),\quad q=(2,2),\quad u=(0,2),\quad v=(0,3),\quad z=(0,0),
+\qquad r_0=(0,0),\quad r_1=(0,-1).
+$$
+
+这里等号简记标签对应的响应对；$K=\mathcal A(U_I)$，消费者为 (QI-RATIO)。下表的 $N_j=a+c_j$、$D_j=b+d_j$ 是对侧 $r_j=(c_j,d_j)$ 下的分子与分母，$F_j=F((a,b),r_j)$。所有五个左记录和两个实际对侧上下文均已列全。
+
+| 左记录 | $(a,b)$ | $N_0$ | $D_0$ | $F_0$ | $N_1$ | $D_1$ | $F_1$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $p$ | $(1,1)$ | $1$ | $1$ | $\operatorname{ok}(1)$ | $1$ | $0$ | $\bot$ |
+| $q$ | $(2,2)$ | $2$ | $2$ | $\operatorname{ok}(1)$ | $2$ | $1$ | $\operatorname{ok}(2)$ |
+| $u$ | $(0,2)$ | $0$ | $2$ | $\operatorname{ok}(0)$ | $0$ | $1$ | $\operatorname{ok}(0)$ |
+| $v$ | $(0,3)$ | $0$ | $3$ | $\operatorname{ok}(0)$ | $0$ | $2$ | $\operatorname{ok}(0)$ |
+| $z$ | $(0,0)$ | $0$ | $0$ | $\bot$ | $0$ | $-1$ | $\operatorname{ok}(0)$ |
+
+#### 42.10.1 表一的最粗分割与扩展上下文
+
+逐行比较完整标签向量，最粗分割恰为 $\{p\},\{q\},\{u,v\},\{z\}$。$p,q$ 的独立比值同为 $1$，但 $r_1$ 将失败与成功区分；$u,v$ 的响应对不同，却在这个固定对侧域中同类。四个类的观察行两两不同，故再合并任何两类都会破坏准确性。压缩前后结果像均为 $\{\operatorname{ok}(0),\operatorname{ok}(1),\operatorname{ok}(2),\bot\}$。
+
+若扩展实际对侧关系，加入 $r_2=(0,-2)$，则 $N_2=a$、$D_2=b-2$，$F_2=F((a,b),r_2)$。新增上下文对全部五个左记录的观察如下。
+
+| 左记录 | $N_2$ | $D_2$ | $F_2$ |
+| --- | --- | --- | --- |
+| $p$ | $1$ | $-1$ | $\operatorname{ok}(-1)$ |
+| $q$ | $2$ | $0$ | $\bot$ |
+| $u$ | $0$ | $0$ | $\bot$ |
+| $v$ | $0$ | $1$ | $\operatorname{ok}(0)$ |
+| $z$ | $0$ | $-2$ | $\operatorname{ok}(0)$ |
+
+#### 42.10.2 固定契约的必要性
+
+新增的 $r_2$ 使 $u$ 失败、$v$ 成功为零，故原来的 $\{u,v\}$ 必须拆开。在固定原始记录集上增加消费者或可用上下文，只会给观察相等增加条件，因而只能细化核；旧商不自动适用于扩大的契约。
+
+### 42.11 有限表二：中间组件的边缘乘积伪造世界
+
+取路径 $1-2-3$，二元变量及作用域为
+
+$$
+S_1=\{x\},\qquad S_2=\{x,y,k\},\qquad S_3=\{y\},
+\qquad x,y,k\in\{0,1\}.
+$$
+
+两个端点允许全部二元值；中间关系为 $\Gamma_2=\{(x,y,k):x=y,\ k\in\{0,1\}\}$，初始 $K=\mathcal A(U_I)$。总响应为
+
+$$
+h_1(x)=(x,1+x),\qquad h_2(x,y,k)=(0,0),\qquad h_3(y)=(y,-y).
+$$
+
+消费者将三个分子、分母分别相加后在 $\mathbb Q$ 中除法。因此分子 $N=x+y$、分母 $D=1+x-y$，成功时结果为 $\operatorname{ok}(\frac{x+y}{1+x-y})$，$D=0$ 时失败。四个实际世界完整列为：
+
+| $x$ | $y$ | $k$ | $N$ | $D$ | 标签结果 |
+| --- | --- | --- | --- | --- | --- |
+| $0$ | $0$ | $0$ | $0$ | $1$ | $\operatorname{ok}(0)$ |
+| $0$ | $0$ | $1$ | $0$ | $1$ | $\operatorname{ok}(0)$ |
+| $1$ | $1$ | $0$ | $2$ | $1$ | $\operatorname{ok}(2)$ |
+| $1$ | $1$ | $1$ | $2$ | $1$ | $\operatorname{ok}(2)$ |
+
+#### 42.11.1 中间联合关系与错误边缘化
+
+实际像为 $\{\operatorname{ok}(0),\operatorname{ok}(2)\}$。中间的完整边界是联合 $(x,y)$；$Q_2^{\rm rel}$ 恰含边界 $(0,0),(1,1)$ 与同一响应 $(0,0)$ 配成的两行。仅遗忘私有 $k$ 保留这两条对角线行，精确保持结果像。若将中间的两个分隔边缘各自取值 $\{0,1\}$ 后相乘，就加入另外两对。下表列全这种边缘乘积的四对，分子、分母仍为 $N=x+y$、$D=1+x-y$。
+
+| $(x,y)$ | 实际中间行存在 | $N$ | $D$ | 标签结果 |
+| --- | --- | --- | --- | --- |
+| $(0,0)$ | 是 | $0$ | $1$ | $\operatorname{ok}(0)$ |
+| $(0,1)$ | 否 | $1$ | $0$ | $\bot$ |
+| $(1,0)$ | 否 | $1$ | $2$ | $\operatorname{ok}(\frac{1}{2})$ |
+| $(1,1)$ | 是 | $2$ | $1$ | $\operatorname{ok}(2)$ |
+
+#### 42.11.2 伪造结果的来源
+
+错误边缘化同时增加 $\bot$ 和 $\operatorname{ok}(\frac{1}{2})$。这不是观察商的失效，而是把有共同局部见证的联合边界关系换成更大的关系；没有实际中间记录见证新增的两行。
+
+### 42.12 有限表三：局部投影忠实仍不能删除隐藏约束
+
+取两个节点，作用域为 $\{\sigma,x\},\{\sigma,y\}$，$\sigma=0$，$x,y$ 二元，两局部关系均为全部允许记录。令 $K=\{w\in\mathcal A(U_I):w(x)=w(y)\}$，响应为
+
+$$
+h_L(\sigma,x)=(1,1+x),\qquad h_R(\sigma,y)=(0,-y).
+$$
+
+消费者 (QI-RATIO) 的分子恒为 $1$，分母 $D=1+x-y$，成功时为 $\operatorname{ok}(\frac{1}{1+x-y})$。四个原始连接世界与准入如下；$\sigma$ 均为 $0$。
+
+| $(x,y)$ | 属于 $W$ | 分子 | $D$ | 标签结果 |
+| --- | --- | --- | --- | --- |
+| $(0,0)$ | 是 | $1$ | $1$ | $\operatorname{ok}(1)$ |
+| $(0,1)$ | 否 | $1$ | $0$ | $\bot$ |
+| $(1,0)$ | 否 | $1$ | $2$ | $\operatorname{ok}(\frac{1}{2})$ |
+| $(1,1)$ | 是 | $1$ | $1$ | $\operatorname{ok}(1)$ |
+
+#### 42.12.1 准入与存在覆盖的区别
+
+每个局部行都能延伸到 $W$ 中的一个世界，故 $W$ 的局部投影恰为原局部关系；然而实际结果像只有 $\{\operatorname{ok}(1)\}$。删除 $K$ 后加入失败与 $\operatorname{ok}(\frac{1}{2})$。树结构及局部投影忠实均不授权这种扩大，(QI-JOINT-K) 保留的正是同一世界的配对。
+
+反向警告沿用表二的原始 $J$，现在令 $K=\{w\in\mathcal A(U_I):w(k)=w(x)\}$，摘要 $\beta(x,y,k)=(x,y)$。完整四行如下，结果公式仍为 $\operatorname{ok}(\frac{x+y}{1+x-y})$。
+
+| $(x,y,k)$ | $\beta$ | 属于 $W$ | 分子 | 分母 | 标签结果 |
+| --- | --- | --- | --- | --- | --- |
+| $(0,0,0)$ | $(0,0)$ | 是 | $0$ | $1$ | $\operatorname{ok}(0)$ |
+| $(0,0,1)$ | $(0,0)$ | 否 | $0$ | $1$ | $\operatorname{ok}(0)$ |
+| $(1,1,0)$ | $(1,1)$ | 否 | $2$ | $1$ | $\operatorname{ok}(2)$ |
+| $(1,1,1)$ | $(1,1)$ | 是 | $2$ | $1$ | $\operatorname{ok}(2)$ |
+
+#### 42.12.2 非因子化而保持结果像
+
+每个 $\beta$ 纤维同时含准入与排除世界，故 $\mathbf1_K|_J$ 不经 $\beta$ 点态因子化。但每个对角线摘要仍有准入见证，完整结果像保持 $\{\operatorname{ok}(0),\operatorname{ok}(2)\}$。这具体区分 QI-P9 的点态恢复与 QI-P10 的存在覆盖；表中的有理数只支持这些有限实例，一般结论由前面的证明承担。
+
+### 42.13 空世界、全失败与两个弱化反例
+
+**命题 QI-P11（空性与严格失败像，repo-derived）。** 对固定消费者 $c$，令
+
+$$
+R_W=H[W],\qquad W_c=\{w\in W:H(w)\in D_c\}.
+$$
+
+则
+
+$$
+G_c[W]=
+\{\operatorname{ok}(v):v\in f_c[R_W\cap D_c]\}
+\cup
+\begin{cases}
+\{\bot\},&R_W\setminus D_c\ne\varnothing,\\
+\varnothing,&R_W\setminus D_c=\varnothing.
+\end{cases}
+\tag{QI-FAILURE-IMAGE}
+$$
+
+**证明。** 按 $H(w)$ 是否属于 $D_c$ 将实际世界分成两部分。成功部分给出所写直接像；失败部分有元素当且仅当 $R_W\setminus D_c$ 非空，因为实际响应像中的每个元素都有世界见证。两种标签不交，故等式成立。证毕。
+
+$W=\varnothing$ 时，每个坐标像及完整向量像均为空；$W\ne\varnothing$ 而 $W_c=\varnothing$ 时，该消费者的像恰为 $\{\bot\}$；成功零为 $\operatorname{ok}(0)$，三者互不混同。若全部消费者在每个世界均失败，非空 $W$ 的完整向量像是全失败向量的单点集。
+
+对非根边界纤维也可能有 $\mathcal R_A(s)=\varnothing$。其观察是唯一空函数；若该原始记录纤维非空，则纤维内全体记录在原始观察契约下同类，但这不产生一个世界，更不产生失败结果。原始记录纤维自身为空时，商为空。根的补集却固定为 $\{\varnothing\}$，不能把它误写成空集。准入增强契约还区分“没有任何 $K$ 准入补全”和“有准入补全，但它们全算术失败”：前者的 $D_A^K$ 为空，后者非空。
+
+只在准入域交集上比较输出会破坏传递性。取三个记录 $a,b,c$ 的准入域分别为 $\{r_0\},\{r_1\},\{r_0\}$，唯一输出分别为 $\operatorname{ok}(0),\operatorname{ok}(0),\operatorname{ok}(1)$。按交集比较，$a$ 与 $b$、$b$ 与 $c$ 都空真相等，但 $a$ 与 $c$ 在 $r_0$ 上不同。因此部分函数的等价必须保留定义域，不能用“有共同测试时才比较”代替 (QI-PARTIAL-CONTRACT)。
+
+RI 也不能省去。在作用域为 $\{x\},\{y\},\{x\}$ 的三节点路径上，两条边分隔集都为空。左端记录令 $x=0$、中间令 $y=0$、右端令 $x=1$，全部边检查都通过，但不存在共同完整赋值。这里含 $x$ 的节点不连通，正是 QI-P1 假设失败。
+
+### 42.14 与已发表完整 $\Xi$ 的准确类型连接
+
+本节的一个专门化直接使用已在 §§24–26 发表的接口，而非历史 JT/P3b 的编号。定义 22 给出 $\Xi(X)=(W_X,Z_X,m_X,M_X,s_X)$；$W_X,Z_X$ 是有限支撑联合时间—空间电荷，三个端点保留完整档案及当前区域的信息。命题 37 给出准确实际载体 $\mathcal D_{\rm ts}=\Xi[\mathcal B]$，不能将它替换为任意剖面与端点的形式乘积。空档案保留 $m=+\infty,M=-\infty$，空当前区域保留 $s=-\infty$。
+
+具体取总局部丰富响应 $\chi_i:\Gamma_i\to\mathcal B$，令 $h_i=\Xi\circ\chi_i$，便有
+
+$$
+H_\Xi:J\to\mathcal D_{\rm ts}^{\,I},\qquad
+H_\Xi(w)=(\Xi(\chi_i(w|_{S_i})))_{i\in I},
+\qquad H_\Xi[W]\subseteq\mathcal D_{\rm ts}^{\,I}.
+\tag{QI-XI-INPUT}
+$$
+
+这个实际联合输入像还受共享变量、局部关系及 $K$ 约束，可能为真子集。消费者的部分域取在 $\mathcal D_{\rm ts}^{\,I}$ 中；按指定 $V_c$ 加标签后，输出类型则是
+
+$$
+G[W]\subseteq\prod_{c\in\mathcal F}\operatorname{Tag}(V_c).
+\tag{QI-XI-OUTPUT}
+$$
+
+输入摘要像与输出联合标签像是不同对象。即使某个消费者成功时输出另一个完整摘要，其对应成功值域才是 $\mathcal D_{\rm ts}$，加入失败并组成多消费者向量后仍须使用上述标签乘积类型。
+
+命题 39 在 $\mathcal D_{\rm ts}$ 的实际像上证明更新闭包，严格时间复合的准确守卫仍为 $M_L<m_R$；每个中间复合均须保留该守卫及严格失败传播。零有符号剖面不决定端点：§26.1 的 D3 已给 $W_X=Z_X=0$、同 $m=0,M=10$ 而 $s=0,9$ 的两输入，并用后续乘法与时间守卫区分；D4 还区分空当前区域的档案端点。不能以零剖面或空选择删除这些数据。
+
+命题 40 的 $\approx_{\rm ts}=\ker\Xi$ 针对 §25.1 的完整语言、全部参数槽位、固定丰富参数及任意有限严格上下文。限制消费者或可实现上下文时，观察相等的条件减少，可能得到比该完整语言核更粗的核；本节的最粗性总相对于所声明契约。反之，$\Xi$ 对该语言充分并不证明任意来源敏感 $K$ 可经它因子化，仍须 QI-P9 的准入条件或 QI-P7 的共同世界见证。既有 $\mathbb Z/\mathbb Q/\mathbb R$ 接口、共同零参考点与默认 $\max+1$ 语义保持原定义。
+
+### 42.15 集合存在、有限性与有效性边界
+
+以上商构造只要求各对象为集合，不要求有限；有限树仅用于有限收缩归纳。商映射、评估器、恢复映射和下降拼接均由单值图定义，没有在所有纤维上统一选代表的步骤，也没有因此取得任何编码方案。一次具体拼接只取有限多个存在见证；局部记录本来就是完整赋值。
+
+若另有非空局部关系及每条边的投影一致
+
+$$
+\{a|_{C_e}:a\in\Gamma_i\}
+=\{b|_{C_e}:b\in\Gamma_j\}\quad(e=\{i,j\}),
+\tag{QI-EDGE-CONSISTENCY}
+$$
+
+则每个局部行都能延伸为一个 $J$ 世界。证明是以该节点为根、从给定行开始，逐个加入相邻节点；投影一致提供匹配父分隔集的行，QI-P1 保证它与已经赋值的全部重叠一致，有限步后得到全局世界。这些额外非空与投影一致假设不属于前述像等式的必要前提，而且即使它们成立，$K$ 仍可使 $W$ 为空。
+
+有限树不保证有限商。例如两节点取 $S_L=\{x\}$、$V_x=\mathbb R$、$\Gamma_L=\mathcal A(\{x\})$，$S_R=\varnothing$、$\Gamma_R=\{\varnothing\}$，故分隔赋值固定为空。左响应为 $(x,1)$，唯一对侧响应为 $(0,0)$；将 (QI-RATIO) 的同一非零分母规则解释在 $\mathbb R$ 中。每个左响应得到 $\operatorname{ok}(x)$，故观察核是这些左记录上的相等关系，商不可数。有限字母表上全部有限字符串可数，因此不存在该商到这些字符串的单射。这个例子只有一个上下文：它证明编码限制，并不证明有限测试基不可能存在。本节不解决一般的有限测试基问题；后续对此问题的分类推理不属于本节已发表结论。
+
+无限可数商可能允许变长有限编码而不允许有限表；有限抽象商也不自动提供可判定分类器。对签名使用全称量化不是计算它们的算法。有限显式记录集、有限消费者族以及有效的赋值相等、兼容性、响应求值和全部守卫与输出相等判定，足以逐项构造有限观察表：枚举实际兼容记录对，计算完整标签向量，再按相同观察行分类。这里“有限显式”包括所需记录及其限制可实际比较；若使用准入增强，还需有效的准入判定。没有复杂度界、任意无限关系可枚举性或任意 $K$ 可判定性的主张。
+
+### 42.16 数学来源、成熟锚与本次边界
+
+主数学来源是实际完成的 GPT PRO memo “guard-sensitive coarsest boundary interfaces”，Nyx 任务 d2969312-b17f-409a-b754-2afff38a2a91，池 company-chatgpt-pro，服务模型 GPT-6 Astra；对话为 [GPT PRO：守卫敏感的最粗边界接口](https://chatgpt.com/c/6aa204fd-5134-83ec-a231-24ef2414b50c)。原始渲染文本 SHA256 为 f1befc5064c4e4673f36dec954b2f86630cac20b83513c13dd70919f3b7c955e。该 memo 所读历史稿是 9cd1bf724c729e8d00aaf7be0dc25b78225dfdc9；其中的 JT/P3b 不能作为本次开发基线内已发表前置，本节已重给所需定义与证明，完整 $\Xi$ 的连接仅引用当前 §§24–26。
+
+本次由 consensus-rnd:sshx 派发的 codex-cli 实施席依据完成的 PRO 主数学及已接受设计重排、中文表述和核验，不另起主要数学推理。按派发记录，六个独立设计角色均终局 propose：五个原 Codex 席及 Nyx 未产意见、一次重试耗尽后的同角色 Codex 俭约性回退席。这是披露后的同模型族设计结论，不冒称更强模型多样性，也不把设计阶段等同于本次实施后的独立评审。
+
+成熟的核与商框架见 Burris 与 Sankappanavar，*A Course in Universal Algebra*，作者提供的 [2012 版](https://math.uwaterloo.ca/~snburris/htdocs/UALG/univ-algebra2012.pdf)，Chapter II Definition 6.7、Theorems 6.8、6.12。先行文献核实已读这些条目：它们给同态的核、同余与同构因子化框架。任意集合观察映射有核不自动证明它与另行指定的拼接同余；本节的这项额外义务由 QI-P5 的两次完整上下文替换承担。
+
+关系连接的成熟背景见 Beeri、Fagin、Maier、Yannakakis，*On the Desirability of Acyclic Database Schemes*，JACM 30(3) (1983), 479–513，[DOI 10.1145/2402.322389](https://doi.org/10.1145/2402.322389)，以及 [IBM Research 的公开摘要](https://research.ibm.com/publications/on-the-desirability-of-acyclic-database-schemes)。先行核实确认书目和摘要，未独立取回 memo 所称 Theorems 3.4、8.8 的精确正文；不以这两个编号承担本节某条精确命题。完整分隔集、联合边界、隐藏约束及结果保持均由本节自给证明承担。
+
+通用核与因子化工具为 literature-attested 背景；本节的 CSA 契约、严格标签应用、保边界拼接、准入完成域、联合见证与有限反例标为 repo-derived。它们不构成全球优先权、物理定律、量子解释或 Lean 内核验证声明。本节仅交付这一自给理论附录及其 canonical 摄入；独立实施后评审、PR 与合入由 caller 接续，也不据此宣称持续研究总目标终止。
+
+## 43. PR7 增补 P：复制孔语言的 q 表达分类
+
+本节是 repo-derived 的 PR7 结算。它只讨论目标族 $q\circ F_B$；一般数值函数的复制表达力另列，不能由本节推出“复制不增加任何 q 表达力”。因 origin/dev 已在 §37 后追加 §§38–42，本批正文按当前最大编号续接为 §43；内容对应 brief 的 §38。
+
+### 43.1 定义 34：复制项语言与严格量词
 
 **定义 34（复制项语言 $\operatorname{Ctx}^{\rm dup}$，repo-derived）。** 有限语法树的叶是输入变量 $X$ 或固定平衡参数（元语法记法，不增加原语），节点只使用原有 $\Sigma_{{\rm cau},t}$ 操作。整项至少出现一次 $X$；多次出现的 $X$ 是同一个输入。参数、谓词、平移、槽位和语法树均先于 $X$ 固定。失败严格传播，失败不被 $N$、空筛选或零因子挽救。令
 \[
@@ -6331,7 +7006,7 @@ E_q^{\rm dup}(B)\;:\Longleftrightarrow\;\exists\text{ 固定总项 }C\in\operato
 \]
 这里“总项”要求每个子项对全部输入有定义。命题 64 只分类 $q\circ F_B$；例如 $X\mapsto q(X)^2$ 的复制表达力不在该断言范围内。证明使用原 $\Sigma_{{\rm cau},t}$，不加入 $F_B$、$\widehat M_P$、身份对角筛选或输入自适应参数。
 
-### 42.2 引理 5：总项正规化、复制多项式与单叶切片
+### 43.2 引理 5：总项正规化、复制多项式与单叶切片
 
 **引理 5（repo-derived）。** 设 $C$ 是定义 34 意义下的总复制项，并令 $r$ 为其输入叶数。
 
@@ -6356,7 +7031,7 @@ P_{C,X}(z)\in\mathbb Z[z],\qquad q(C(nX))=P_{C,X}(n).
 \]
 形式系数或剖面差未被声称可实现；本引理只给出代数值，不冒称存在更丰富的状态。证毕。
 
-### 42.3 引理 6：有限单孔族的共同饱和
+### 43.3 引理 6：有限单孔族的共同饱和
 
 **引理 6（repo-derived）。** 对任意有限总单孔上下文族 $C_1,\ldots,C_r$，存在共同 $c\le0$，使得任意 $p$ 及 $t,t'<c$ 均有
 \[
@@ -6364,7 +7039,7 @@ q(C_i(X_t))=q(C_i(X_{t'}))\qquad(1\le i\le r).
 \]
 这里 $X_t$ 与 $X_{t'}$ 是同一对见证输入：唯一选中正点分别为 $e@(t,p)$、$e@(t',p)$；全部前缀见证的未选后继为 $d$，并置共同星形 $e\prec d$；加入时刻 $0$ 的共同孤立未选平衡点及两个共同非当前档案端点。$c$ 取全部前缀拉回见证时刻、固定平移后的下界，以及各非空首乘固定因子 $\min t[\Omega]$ 减累计平移的有限最小值。无乘积、空因子和非空因子三类分别由同位、空剖面和首乘同摘要处理；随后用命题 48 的后缀保摘要归纳。因所有 $C_i$ 同时使用同一对输入，结论不是把各自引理 4 阈值取最小而沿用不同见证。证毕。
 
-### 42.4 命题 64：OPEN-COPY 完整分类
+### 43.4 命题 64：OPEN-COPY 完整分类
 
 **命题 64（repo-derived，OPEN-COPY）。**
 \[
@@ -6393,29 +7068,29 @@ L_B(X)=\sum_iq(C_i(X)).
 
 **范围边界。** 结论只对固定有限总项、原签名和全部平衡输入成立；输入自适应参数、无限项、身份查询、新配对原语及一般 $q$ 函数的复制表达力均在范围外。有限核验不替代上述全称证明。
 
-### 42.5 反例 D17、D18：自乘对照与非总项切片失败
+### 43.5 反例 D17、D18：自乘对照与非总项切片失败
 
 **反例 D17（repo-derived，自乘子类，≤15 行）。** 一般先对任意 $Q$ 保留 $q(D_Q(nX))=n^2q(D_Q(X))$ 的齐次式与子类分类；数值例固定 $Q_{\rm odd}=\{a:\operatorname{time}(a)\text{ 为奇数}\}$（时间投影两端无界）。对 $D_Q(X)=F_{\downarrow Q}(X\boxtimes X)$，该子类实现区域线性目标当且仅当 $B=\varnothing$。在两端无界的 $B_{\rm even}$ 上，$t=-4$ 的同属性正点复制 $n=1,2,3$ 读数为 $1,4,9$，目标为 $1,2,3$。一般有序来源的交叉项是 $\epsilon\epsilon'[m(a,a')+m(a',a)]$；仅当核对称时才为 $2\epsilon\epsilon'm$。对角子点精确属性为 $(t+1,2p,+1,\operatorname{pair}(r,r))$，其 $b^2=b$；旧档案保留两个父出现 $(0,e),(1,e)$，而新 $U_t$ 只有该单点，故保留时间不恢复原事件；同属性非对角项不能由属性隔离。另有 $X\boxplus(A(X)\boxplus N(A(X)))$ 的 $q$ 恒等于 $q(X)$，故终端线性不能逐个消灭自乘结点。$B_{d,R}$ 与 $B_{\rm drift}$ 仍由命题 64 判不可表达（前者及 $B_{\rm even}$ 两端无界；后者无下界、上界 $0$）。来源只取 $(\operatorname{leaf}(0),\operatorname{leaf}(1))$ 时，四个异来源选择读数为 $0,0,0,1$。这只否定自乘子类，不能替代命题 64 的任意项证明。
 
 **反例 D18（repo-derived，引理 5A 的必要性）。** 令 $Q=\{(0,+1,\operatorname{leaf}(0),1)\}$、$D(X)=F_{\downarrow Q}(X\mathbin{\triangleright}T_1X)$。取 $X=U_0$，则 $q(D(nX))=2n$，而两次单出现替换 $D_1,D_2$ 的读数为 $0,1$，且 $D(0)=0$，所以 $2\ne0+1$，切片公式对非总项失败。$D$ 在含时刻 $0$ 与 $3$ 的档案输入上守卫失败，故不在命题 64 的量词域内；$Q$ 的时间投影上下界均为 $1$。
 
-### 42.6 命题 65：实现类数
+### 43.6 命题 65：实现类数
 
 **命题 65（repo-derived，实现类数）。** 给定命题 57 类型的 $(g,m,M)$，在历史同构 $\cong_h$ 下其实现在数满足：五条件任一失败时为 $0$；$g=0$ 且端点为 $(+\infty,-\infty)$ 时恰为 $1$ 个（空实现）；其余可实现三元组有 $\aleph_0$ 个。证明如下。命题 57 给出一个有限实现。对任意可实现非空剖面，在时刻 $m$ 追加任意多个孤立、非当前档案点；它们不改 $(g,m,M)$、摘要读数或 $q$，却改变 $|E|$，得到两两非同构实现。有限编码的有限集合全体可数，故上界为 $\aleph_0$。空当前区域而端点有限时，同样在端点档案中追加孤立点；其实现数仍为 $\aleph_0$。
 
 D10 型机制的短注：取 $r,s\ge1$，$E=\Omega$，$r$ 个选中正点 $a@0$（$U=\{a,b\}$）、$s$ 个选中正点 $b@1$（$U=\{b\}$），以及 $r+s$ 个孤立未选负点 $c@0$。函数型子类指每一行恰有一个 $1$；全部历史是无零行的 $r\times s$ 二部邻接矩阵在 $S_r\times S_s$ 下的轨道。该子类的类数为 $p_{\le s}(r)$（把 $r$ 拆成至多 $s$ 个正部件）；当 $s\ge r$ 时为普通分拆数 $p(r)$。例如 $(r,s)=(3,2)$ 有 $2$ 类，$(3,3)$ 有 $3$ 类。时间上下界为 $0,1$。本注只计该子类，不把一般 $g$ 的有限骨架轨道枚举列为本批目标。
 
-### 42.7 边界与范围收束
+### 43.7 边界与范围收束
 
 §36.7 原有的 OPEN-COPY open 文字由命题 64 完整结算；D17、D18 对自乘子类与非总项路线作具名的部分结算。引理 5 的多项式结论依赖严格总项；D18 说明删去该域后切片恒等式失效。命题 65 的 $\aleph_0$ 计数使用有限编码与历史同构，不能外推到无限档案。全文没有新增 Lean、axiom、判官或 schema；新推导均标 repo-derived，预期无新外部引用。
 
 <a id="pr7-evidence"></a>
 
-## 43. PR7 产地与核验收据
+## 44. PR7 产地与核验收据
 
-本批产地三项为：`skill=consensus-rnd:sshx`；思考六席载体见 caller 的 rotation 记录；实施席为 `codex-cli`。评审三席由 caller 另记，本席未代报其判词。形态为 `ingest`；不报告冻结或 absorbed 状态。因 `origin/dev` 在开工后已追加 §§38–41，本批按“当前 dev 最大编号续接”落在 §42–§43；brief 所称 §38–§39 内容对应本批的 §42–§43。
+本批产地三项为：`skill=consensus-rnd:sshx`；思考六席载体见 caller 的 rotation 记录；实施席为 `codex-cli`。评审三席由 caller 另记，本席未代报其判词。形态为 `ingest`；不报告冻结或 absorbed 状态。因 `origin/dev` 在开工后已追加 §§38–42，本批按“当前 dev 最大编号续接”落在 §43–§44；brief 所称 §38–§39 内容对应本批的 §43–§44。
 
-### 43.1 逐节提交与范围
+### 44.1 逐节提交与范围
 
 本批产地三项按 CLAUDE.md 第 5.2 条完整披露。思考六席为：`natural-ownership = nyxid-oracle`（`company-chatgpt-pro` 池，自报 **GPT-6 Astra Pro**）；`teleology`、`parsimony`、`fidelity`、`proportional-containment`、`worth` 均为 `codex-cli`（自报 **GPT-6/Codex**）。六席并发、互不可见，均看到 caller 暴露的候选计划，故属于非盲独立修订；六席均回报 revise，独立收敛为 **6/6 revise**。meta-judge 在 caller 上下文中运行。分歧裁决为：D17 保留短对照（4:1）；D18 采纳（`fidelity` 唯一提出，`teleology` 删除反事实佐证）；命题 65 单立短命题（5:1）；41 键字面集合（6:0）。由此形成 `GoalArtifact` 修订 **R1-PR7**。
 
@@ -6430,7 +7105,7 @@ D10 型机制的短注：取 $r,s\ge1$，$E=\Omega$，$r$ 个选中正点 $a@0$�
 
 round 1 评审中，`architecture`（`codex`）的 attempt-1 因载体过载 `turn.failed`，attempt-2 给出 reject；`tests`（`codex`）给出 reject；quality(nyxid-oracle):**abstained**——ask 提交至 macstudio3-trureturing 池后等待超时,fetch 续等再次超时(company-chatgpt-pro 池 10/10 满额),按 nyx.sh 契约未重投;任务未取消,若后续机会性取回只作附加意见,不回写为 round-1 判词。fix3 的 F-1..F-6 全部来自 architecture(codex)与 tests(codex)两席已取得的 findings,quality 席未提供 findings。round 2 评审中，architecture(nyxid-oracle,chrono-chatgpt-pro-pool,自报 GPT-5.6 Sol,ask 超时后 fetch 续等取得)reject 1 material(即本条);quality(codex-cli)reject 2 material(F-1 实现:夹具失衡、粗摘要/非空首乘无钉子);tests(codex-cli)reject 3 material + 1 minor(平衡、temporal(x,x) 守卫检查、函数型枚举、CAS 空白诊断);处置为 fix4(codex-cli)与本 fix5;round 3 按 rotation-review-r3.json(seed 15601493124212581291:architecture=codex、quality=nyxid、tests=codex)另记,不预报。两种载体自报的模型现含 GPT-6 家族(Astra Pro / Codex)与 GPT-5.6 Sol(仅该次调用的自报证据),仍按协议不宣称异模型共识已核验;凡 caller 未亲验的席位陈述标 ASSUMED-UNVERIFIED。未由 caller 核实的项目标为 **ASSUMED-UNVERIFIED**。后续评审、CI 与合入只留待后续记录，不在本节预报。
 
-### 43.2 附录命令与 stdout
+### 44.2 附录命令与 stdout
 
 实际执行命令（退出码 **0**，stderr 为空）为：
 
@@ -6452,11 +7127,11 @@ R2-T-H01 实测口径：fix4 摄入前提交 `542cca66b9` 相对 `BASE=820bd4536
 
 F-6 的三个控制均执行复制或乘积后核对运算结果：`copy_old_archive_control=1` 比较旧档案乘积与当前乘积的 profile/q；`copy_negative_time_control=1` 比较平移后的 profile/q；`copy_unselected_parent_control=1` 比较保留未选父与仅选域乘积的 profile 基数。其余 PR7 对照均在本次命令中通过；有限读数只支持这些固定实例，不承担全称否定。
 
-### 43.3 ingest 收据
+### 44.3 ingest 收据
 
 本 fix3 先合并了开工后追加的 `origin/dev=472501832bc5a90ff6d17571582217da5a196ac3`；`git merge-tree --write-tree origin/dev HEAD` 无冲突。清理摄入前按 `BASE=$(git merge-base origin/dev HEAD)` 逐路径比较：本 lane 的旧 PR7 产物只删除不在 dev 的 CAS 与 `residual-open` YAML，若 dev 已有相同 OID 则保留。删除／保留明细与计数由 caller 亲验并写入 result.json。
 
-正文（含本节与 §43.4）最后定稿并提交后，才运行：
+正文（含本节与 §44.4）最后定稿并提交后，才运行：
 
 ```sh
 BASE=$(git merge-base origin/dev HEAD) make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
@@ -6464,6 +7139,6 @@ BASE=$(git merge-base origin/dev HEAD) make ingest SOURCE="contextual-spacetime-
 
 该命令的退出码、`residual_open_added`、`skipped_existing`、`coarse_fallbacks`、`open_genres`、`cas_objects_written`、`ledger_changed`、摄入提交及最终 HEAD 均只在完成运行后写入本轮 runner-owned `result.json`；摄入完成后不回写本文，保持输入源字节稳定。
 
-### 43.4 git 读数与边界
+### 44.4 git 读数与边界
 
-最终以 `BASE=$(git merge-base origin/dev HEAD)` 为比较基线。caller 亲验并在 result.json 记录：理论卷相对 BASE 恰两个纯插入 hunk（唯一 Python 块中间插入区与文档尾部追加区）；`git diff --name-only BASE..HEAD` 只含本卷、允许的 atoms 与 backfill；重复定义检查 `uniq -d` 为空；`git merge-tree --write-tree origin/dev HEAD` 无冲突；附录命令退出码为 0，PR7 行逐字节 SHA-1 与 §43.2 相同。移除两个新增区后，BASE 的全文逐字节恢复；本节不把未经验证的 CI、后续评审或合入写成结论。
+最终以 `BASE=$(git merge-base origin/dev HEAD)` 为比较基线。caller 亲验并在 result.json 记录：理论卷相对 BASE 恰两个纯插入 hunk（唯一 Python 块中间插入区与文档尾部追加区）；`git diff --name-only BASE..HEAD` 只含本卷、允许的 atoms 与 backfill；重复定义检查 `uniq -d` 为空；`git merge-tree --write-tree origin/dev HEAD` 无冲突；附录命令退出码为 0，PR7 行逐字节 SHA-1 与 §44.2 相同。移除两个新增区后，BASE 的全文逐字节恢复；本节不把未经验证的 CI、后续评审或合入写成结论。

@@ -1,0 +1,477 @@
+---
+bibkey: oeis2026triage0911b
+authors: OEIS Foundation Inc.; Codex triage workers
+year: 2026
+title: Fourth OEIS proof triage — finite decision sampling, 0911b
+doi: null
+url: https://oeis.org/
+claim: Source-based triage and bounded counterexample checks; no new Lean module or kernel-verified theorem is claimed.
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
+# 第四轮 OEIS 分诊：判据不变，采样偏向第一档
+
+**落盘纪律：每分诊完一批就 git commit + git push。** 本轮已按批提交并推送指定分支；以下为完成版。
+
+基线 `0df1fdcb348147a3ebaea8a607db3662f07cb35e`（开工时 `origin/dev` 与远端 dev 一致），分支 `lane/math/oeis-triage4-0911`。Mathlib 钉版 `db584cd6d46c92f209a44c0f1c829460d327499d`，Lean v4.33.0。日期标签0911b沿用brief；实际采集日为2026-09-10（Asia/Singapore）。产地：Codex 主循环与三个同模型族 codex-cli 全条目阅读席；主循环综合、核对关键声明及数值，不冒充异模型独立共识。lean4 skill 仅用于只读声明检索，无Lean编译或内核重验。
+
+## 判据、预算与统计口径
+
+第一档靶的判据是「该陈述在文献中有没有证明」，不是「有没有人写过」。档位与前三轮相同：1为可考虑短组合/算术逃逸的小猜想，2为非常规有限计算前沿，3为尚无短逃逸的核心问题，out为已知、错误、纯定义或不派的渐近/分布目标。`published` 表示精确目标有公开证明或反驳（公开仓内证明另注明），出现过猜想不算证明；`open` 只限所读材料仍作猜想且未找到证明；`unknown` 为定义桥或证明身份未核实。数值yes仅指可作有意义的有限检验。bind-only风险是具名声明与目标比较，不用“mathlib里还没有”冒充开放性。
+
+本轮完成30条计入分母的候选，按完整评注中的奇偶、剩余、分类、恒等式、计数形态优先采集；第三档只登记note-only，另计且不占预算。第一档占比争取超过40%，不是必须凑出的配额。校准仍是A392698“写过猜想”不足以降级，以及A388724的真实期刊证明足以降级；两条均为brief的历史判例，不重复计入本轮。
+
+最终分母30条，第一档18条（60%）、第二档0、out 12；另有第三档4条note-only，不计分母。18条第一档中14条文献仍为unknown、4条为open；**60%是沿用前三轮档位字段的候选占比，不是18条均通过新颖性审核**。全预算文献分布为open 4、published 8、unknown 18；建议dispatch 3、note-only 17、drop 10。第一档内dispatch为3/18（16.7%），预算内为3/30（10%）；不据此主张矿脉趋势。
+
+建议共3个探针席：A396808仅剩余模3两个iff合一席；A395842的公共G模2识别与对角偶性合一席；A393867仅全奇性一席，A393868游程旁支不加席。三席都须证明段内具名的新桥，不能把猜想作假设。发现窗粗筛有170个未排除命中；原预算中的A397445、A396760在读完后因尚无统一有限逃逸移入核心note，以A393867、A393868补足两个位置。预置核心note为A398692、A398183。粗筛命中不冒充170条已分诊，也不把移出的核心问题算作drop。
+
+## 来源与完整性
+
+官方镜像为 https://github.com/oeis/oeisdata ，本次 `git ls-remote` 实测HEAD仍为 `69b127f67c75990effad199e316d6e8a5183b64c`。发现窗为该快照的A390000–A399693十个目录；复用第三轮留存的完整镜像快照作发现和阅读，缺文件才按此SHA补取原始`.seq`。关键词粗筛只用于发现，不据局部摘录作裁决。前三轮表格复原出372个唯一排除A号；新预算与note集合均与其零交集。
+
+来源如实分列：**镜像原文不冒充OEIS接口响应**。本轮对 `https://oeis.org/search?q=id:A397588&fmt=json` 实际取得HTTP200的完整原始JSON，并完整阅读；其余条目来源逐项见attempt里的`manifest.json`。不能把前轮HTTP429冒充本轮读数。
+
+最终113份完整`.seq`，共664154字节；`manifest.json`逐份保留URL、来源类别、字节数及SHA256，`source-audit.json`复算核对。本体及comment/formula/xref的所有直接A号均取完整条目；不递归无限追引。每段末列全部直接A号，同族说明合几席及原因。完整字段与外链全文是两笔账：条目读全不代表外链已读；来源原文、数值脚本与读取清单在runner attempt中保留，永久公共入口为钉版镜像URL。
+
+## 未主张栏
+
+未主张检索穷尽；未主张 `open` 等于全球无人证明；未主张外链论文已全文审读；未主张 `published` 等于原猜想为真。凡未真正打开的页面一律 **ASSUMED-UNVERIFIED**，逐段点名的打开页与源文件才承重。表格的OEIS网页链接只是导航，未逐一访问的导航页、%H/%D外链均为ASSUMED-UNVERIFIED；镜像文件阅读不等于访问同号网页。未运行Lean，未主张新的Lean/内核认证定理、冻结、CI通过或已经合并；本轮构造的有限反驳另标repo-derived。有限前缀和数值拟合不提升为全称证明。
+
+## 排序表（计入采集预算）
+
+| A号 | 一句话陈述 | 档位(1/2/3/out) | 文献(open/published/unknown) | bind-only(low/med/high) | 数值可验(yes/no) | 建议(dispatch/note-only/drop) |
+| --- | --- | --- | --- | --- | --- | --- |
+| [A397902](https://oeis.org/A397902) | A∈xℤ[[x]]，∀m>1，[x^(m−1)](1−A)^(m²)/(1−m²x)=0；∀n>2，a(n)奇⇔∃k>1，n∈{2^k,2^k−1,2^k−2,2^k−3}。 | 1 | unknown | med | yes | note-only |
+| [A397594](https://oeis.org/A397594) | A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=4；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 | 1 | unknown | high | yes | note-only |
+| [A397592](https://oeis.org/A397592) | A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=2；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 | 1 | unknown | high | yes | note-only |
+| [A397588](https://oeis.org/A397588) | a(1)=1、a(n)=(n+1)Σa(k)a(n−k)的奇项指标恰为2的幂。 | out | published | high | yes | drop |
+| [A397551](https://oeis.org/A397551) | ∀n≥0，半行 w_i=C(n,i), 0≤i<⌈n/2⌉ 的重复和值数等于 Σ_R 2^(⌈n/2⌉−∣supp R∣)，R 为全局包含极小非空平衡支撑（每支撑计一次） | out | unknown | med | yes | drop |
+| [A397501](https://oeis.org/A397501) | ∀奇数n≥1，索引集{0,…,n}的无序分拆（每非空块的Σ_i C(n,i)为2的非负整数次幂）数 P(n)=2^((n−1)/2)+1+A397551(n) | 1 | unknown | med | yes | note-only |
+| [A393867](https://oeis.org/A393867) | 保留第二猜想：prime-power隐式序列的对数导数系数全为奇数；整除prime(n)子命题已证。 | 1 | open | med | yes | dispatch |
+| [A397434](https://oeis.org/A397434) | ∀n≥1，阈值⌈n/2⌉多数布尔函数的ANF单项式数 a(n)=a(n+1) ↔ n≡2 (mod4) | 1 | unknown | med | yes | note-only |
+| [A397356](https://oeis.org/A397356) | A∈1+xℤ[[x]], a(0)=a(1)=1, [x^n]A^(−n²)=[x^n]A^(1−n²) (n>1)；∀n≥0，Odd a(n)↔∃k≥0,n+1=2^k，且3∤a(n)↔∃u,v≥0,2(n+1)=3^u+3^v | 1 | unknown | med | yes | note-only |
+| [A397349](https://oeis.org/A397349) | a(1)=1，Σ_{n≥1}a(n)x^n/n=log(1+x+Σ_{n≥2}3n a(n)x^n/(3n²−1))；∀n≥1，Odd a(n)↔∃k≥0,n=2^k，a(n)≡1(n奇)/2(n偶) mod3 | 1 | unknown | high | yes | note-only |
+| [A397347](https://oeis.org/A397347) | 对数系数a(n)模4为[1,3,3,3]周期；已由邻序列的更强归一化模8定理覆盖。 | out | published | high | yes | drop |
+| [A397265](https://oeis.org/A397265) | ∀n≥1，r₂(n,1)=A007808(n)−n!；r₂计数n个有标号对象的有序划分且恰一个大小≥2的块。 | out | published | high | yes | drop |
+| [A397244](https://oeis.org/A397244) | A(0)=a0=1,a1=1；∀n>1，2n[x^n]A^(2n)=(2n−1)[x^n]A^(2n+1)；∀n>0，Odd(a_n) iff ∃m≥0,n=2m+1且m&(m>>1)=0。 | 1 | unknown | med | yes | note-only |
+| [A396808](https://oeis.org/A396808) | 原隐式幂系数序列的两个模3支持猜想；奇偶子命题已证并排除。 | 1 | open | med | yes | dispatch |
+| [A396806](https://oeis.org/A396806) | A=Σ(n≥1)a_n x^n/n!, A=x exp(A^{∘6}), a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，a_n≡n mod3及mod6。 | 1 | unknown | med | yes | note-only |
+| [A396805](https://oeis.org/A396805) | EGF A=x exp(A∘5)的奇偶和mod3剩余候选；mod5=a_n≡n已由n23反驳。 | 1 | unknown | med | yes | note-only |
+| [A396803](https://oeis.org/A396803) | A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 | 1 | unknown | med | yes | note-only |
+| [A396798](https://oeis.org/A396798) | A=x+(A∘4)(A∘5)的七条迭代mod8猜想；首条周期原起点n≥1已反驳。 | 1 | unknown | med | yes | note-only |
+| [A393868](https://oeis.org/A393868) | A393866从常数项起的每个已结束极大奇偶游程长度为偶数。 | 1 | open | high | yes | note-only |
+| [A396493](https://oeis.org/A396493) | ∀n≥1，Sat4(n)=C(C(2n+2,3)+3,4)−n(16n^6+48n^5+340n^4+180n^3+2818n²−10011n+6789)/18；子句为3文字多重集，公式为4子句多重集，允许同义重复及重子句。 | out | unknown | high | yes | note-only |
+| [A396491](https://oeis.org/A396491) | ∀n≥1，n 个有标号变量、允许子句内重复文字及公式内重复子句的五子句 3-SAT 不可满足公式数，等于 %F 给定的十项二项式多项式。 | 1 | unknown | med | yes | note-only |
+| [A396354](https://oeis.org/A396354) | ∀n≥1，四子句多重集 3-SAT 的不可满足公式计数 a(n)=n(16n^6+48n^5+340n^4+180n^3+2818n²−10011n+6789)/18。 | out | unknown | med | yes | note-only |
+| [A396093](https://oeis.org/A396093) | B(x)=x/(1−x)²，a(n)=[x^n]B(B(B(x)))；∀n≥1，a(2n) 偶，且 a(2n−1) 偶 ⇔ ∃k≥1,n=5k−2。 | out | published | high | yes | drop |
+| [A395896](https://oeis.org/A395896) | ∀n∈ℕ，n 偶数 ⇒ ∣{k∈ℕ:1≤k<m², rad(k)∣m, rad(k+1)∣m}∣=0，其中 m=A019565(n)。 | out | published | high | yes | drop |
+| [A395842](https://oeis.org/A395842) | G∈ℤ[[x]]，g₀=0,g₁=g₂=1；∀n>2，[xⁿ]G^{∘n}=[xⁿ]G^{∘(n−1)}。a(n)=[xⁿ]G^{∘n}，要求∀n≥2，2∣a(n)。 | 1 | open | med | yes | dispatch |
+| [A395839](https://oeis.org/A395839) | Cₙ=C(2n,n)/(n+1)，a(n)=10Cₙ₊₁−Cₙ，n≥0。目标：Odd a(n) iff ∃k≥0,n=2ᵏ−1；且∀n≥0，a(3n+1)≡Cₙ (mod3)，a(3n)≡a(3n+2)≡0 (mod3)。 | out | published | high | yes | drop |
+| [A395833](https://oeis.org/A395833) | A∈ℤ[[x]]，a₀=a₁=1且∀n>1，[xⁿ]A(x/A(x)^(2n−1))=0。分别要求∀n≥1，(2n−1)∣aₙ；∀n≥2，3∣aₙ。常数项1确保负幂合法。 | 1 | unknown | med | yes | note-only |
+| [A395754](https://oeis.org/A395754) | ∀n≥1，令 m=A005117(n)，m 为奇数 ⇒ a(n)=0；a(n)=∣K_m∣，K_m={k∈ℕ:1≤k<m²,rad(k)∣m,rad(k+1)∣m}。 | out | published | high | yes | drop |
+| [A395721](https://oeis.org/A395721) | ∀n≥1，令 m=A005117(n)，a(n)=max K_m（K_m为空时取−1）；猜想 m 奇数 ⇒ a(n)=−1。 | out | published | high | yes | drop |
+| [A395546](https://oeis.org/A395546) | n≥1 个标号变量；允许重文字、重子句及重言式，五个三文字子句按多重集计数。S₅(n)=C(C(2n+2,3)+4,5)−U₅(n)；被审查的第二个 %F 将 U₅(n) 替为六次多项式 P₆(n)。 | out | unknown | high | yes | drop |
+
+## 核心问题 note-only（不计分母）
+
+| A号 | 一句话陈述 | 档位(1/2/3/out) | 文献(open/published/unknown) | bind-only(low/med/high) | 数值可验(yes/no) | 建议(dispatch/note-only/drop) |
+| --- | --- | --- | --- | --- | --- | --- |
+| [A398692](https://oeis.org/A398692) | 从[1]起，每轮取最小未出现正整数并逆序附加其首次进入已见集合前的Collatz轨迹；所有轮终止且所得序列遍历ℕ>0 ↔ ∀m≥1,∃k≥0,C^[k](m)=1 | 3 | open | high | yes | note-only |
+| [A398183](https://oeis.org/A398183) | G(n)={p素数:p≤n且2n−p素数}，a(n)为G(n)第二小元素或0；∀n≥3，a(n)=0 ↔ n∈{3,4,6}，即其余n的∣G(n)∣≥2 | 3 | open | med | yes | note-only |
+| [A397445](https://oeis.org/A397445) | n≥0；K_n(i,j)=[x^i](1+x)^(n−1−j)(1−x)^j (0≤i,j<n)，per(K_n)=0 ↔ n mod4∈{2,3}；per(K_0)=1 | 3 | unknown | med | yes | note-only |
+| [A396760](https://oeis.org/A396760) | ∀k≥1，M(k)=min{x:∃x≥y≥z≥w≥0,k=x²+y²+z²+w²}；g(k)=M(k)−ceil(sqrt(k/4))；[∀1≤j<k,g(j)<g(k)] iff k∈{1,11,53}∪{96·4^m,224·4^m,2816·4^m:m≥0}。 | 3 | open | low | yes | note-only |
+
+## 逐条证据
+
+### A397902
+
+精确目标：A∈xℤ[[x]]，∀m>1，[x^(m−1)](1−A)^(m²)/(1−m²x)=0；∀n>2，a(n)奇⇔∃k>1，n∈{2^k,2^k−1,2^k−2,2^k−3}。 精确域为零常数项的整数形式幂级数 A（若从 ℚ 上三角递推构造，整性仍须独立证明），目标是全部 n>2 的奇支撑分类，而非有限表或渐近式。已完整打开 manifest 中 A397902 及 A397591、A397596 的镜像文件：A397902 %C 是 Jul 20 2026 猜想，%F 的 Kotesovec 渐近没有奇偶证明；A397591 %C 是指数 m 的不同猜想，A397596 是指数 m、右端非零的不同定义，不能因为 Cf. 就移植结论。尝试 Google 精确 A 号+proof 仅得 JS 重定向、DuckDuckGo 得验证码、Yahoo 返回 500、Bing 返回与目标无关的酒店/CRM 结果（均有 web.json 收据）；这些不是有效的“无证明”检索，故文献状态 unknown，档位1仅沿用前三轮的候选形态登记，不能据此dispatch。D5 的精确 A 号搜索未命中；已读 mathlib PowerSeries.coeff_pow 的完整类型与证明（Basic.lean:635，按 finsuppAntidiag 展开乘积），它只给系数展开，不给归一化除 m² 后的模二信息，故 bind 风险 med。可预登记的非绑定逃逸是：对逐级取 e=(n+1)² 的整系数三角递推，建立足够 2-adic 精度下可约去 e 的二进制进位消去引理，再推出模二支撑；单纯 Frobenius 模二会丢失偶 e 的除法信息，不能当见证。numeric=yes：numeric.py 的 exact integer power-coefficient recurrence，O(N³) 算术操作、O(N) 工作数组，N=80，首16项逐值与 %S/%T/%U 一致，n=3..80 零反例，奇指标为 1,3,4,5,6,7,8,13,14,15,16,29,30,31,32,61,62,63,64；不构成无界证明。停止条件：发现同域证明/反例即 drop；桥接只剩引用或除法整性/模二提升不能闭合则保持 note-only。族合并：A397902 与 A397594/A397592 只共享幂系数/2-adic 工具，平方指数不等价，不应冒算同一数学席；本项当前0实施席，确认文献并取得上述新提升引理后至多1探针席。全部直接引用：A397591、A397596。主循环另实测GitHub公开代码精确号加language:Lean查询，total_count=0、incomplete_results=false；只限索引，不替代无编号文献检索。其余未打开的源b-file及网页均ASSUMED-UNVERIFIED。可照抄的逐级公式：已知a₁…a_(n−1)，令e=(n+1)²、f=[1,−a₁,…,−a_(n−1),0]；c₀=1，j=1..n用 c_j=Σ_{i=1}^j(((e+1)i−j)f_i c_(j−i))/j 精确整除，然后 a_n=Σ_{j=0}^n c_j e^(n−j)/e；每次断言整除，N=80。
+
+### A397594
+
+精确目标：A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=4；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 本项固定 y=4，索引从0起，量词是全部 n>3；不能误用 A397591 从1起的偏移，也不能把 m² 指数的 A397902 当同一递推。目标及7个直接引用的全部字段已读：A397594 %C 为 Jul 10 2026 猜想，%F 给 a_y(n)=Σ y^k T(n,k)，A397590 %F(5)–(8)明列 y=0、1、2、3、4、5 与主对角 A180747；A375457 的右端是 m，其对数导数整除观察不是本题奇支撑证明。已打开 arXiv 精确 A397592 OR A397594 查询（family592-arxiv.web.json），totalResults=0；Brave 429，通用搜索仍不可作有效否定证据，所以只记搜索范围内未见证明、总裁定 unknown。D5 精确号及 Abel/diagonal parity 文字初筛未命中，mathlib 已读 PowerSeries.coeff_pow（Basic.lean:635）只展开幂；系数整数三角 T 若被完整证明，则偶 y 的取值模2都等于 T(n,0)，这两个目标只是 A397591 奇支撑的绑定推论，故 bind=high。源文件把 T 当整数三角展示却没有证明全部系数整性，不能把有限表提升成已确认的桥。拟议逃逸须放在族公共核心：证明 T∈ℤ[y][[x]] 的整性及 T(n,0) 在模2的二进制下降，或在有理递推中保持足够2-adic精度后证明可约去 m；这才超出参数代入，给单项再包一层不算新见证。numeric=yes：精确三角幂递推 N=100，O(N³)大整数算术、O(N)工作空间，A397594 前10项与源一致，n=4..100 零反例，奇指标0,1,2,5,7,9,15,17,31,33,63,65；与 y=0 的奇偶逐项相同。有限检查不能证明三角整性或全称支撑。停止条件：找到 A397591/三角核心同域证明后这些特例 drop；整性桥仍未核实或候选仅取 y=2/4 时保持 note-only。族合并为 A397592+A397594（连同非目标 A397591）最多1公共核心探针席，确认桥之前只称共享构造，确认桥之后两目标逻辑等价于同一常数列奇偶结论；不占两个实施席。全部直接引用为 A180747, A375457, A397590, A397591, A397592, A397593, A397595。主循环另实测GitHub公开代码精确号加language:Lean查询，total_count=0、incomplete_results=false；只限索引，不替代无编号文献检索。其余未打开的源b-file及网页均ASSUMED-UNVERIFIED。精确数值指令：a₀=1；n=1..100令m=n+1、P=Σ_{i<n}a_i x^i，先按A397902段的幂系数递推以e=m、f=[a₀,…,a_(n−1),0]算c_j=[x^j]P^m，再置a_n=((ym)^n−Σ_{j=0}^n c_j m^(n−j))/m，每次断言整除；y取本条参数，避免先mod2再除m。前轮A397591已列1/unknown/note-only，本轮不另给这个排除号计行或派席。
+
+### A397592
+
+精确目标：A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=2；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 本项固定 y=2，索引从0起，量词是全部 n>3；不能误用 A397591 从1起的偏移，也不能把 m² 指数的 A397902 当同一递推。目标及7个直接引用的全部字段已读：A397592 %C 为 Jul 10 2026 猜想，%F 给 a_y(n)=Σ y^k T(n,k)，A397590 %F(5)–(8)明列 y=0、1、2、3、4、5 与主对角 A180747；A375457 的右端是 m，其对数导数整除观察不是本题奇支撑证明。已打开 arXiv 精确 A397592 OR A397594 查询（family592-arxiv.web.json），totalResults=0；Brave 429，通用搜索仍不可作有效否定证据，所以只记搜索范围内未见证明、总裁定 unknown。D5 精确号及 Abel/diagonal parity 文字初筛未命中，mathlib 已读 PowerSeries.coeff_pow（Basic.lean:635）只展开幂；系数整数三角 T 若被完整证明，则偶 y 的取值模2都等于 T(n,0)，这两个目标只是 A397591 奇支撑的绑定推论，故 bind=high。源文件把 T 当整数三角展示却没有证明全部系数整性，不能把有限表提升成已确认的桥。拟议逃逸须放在族公共核心：证明 T∈ℤ[y][[x]] 的整性及 T(n,0) 在模2的二进制下降，或在有理递推中保持足够2-adic精度后证明可约去 m；这才超出参数代入，给单项再包一层不算新见证。numeric=yes：精确三角幂递推 N=100，O(N³)大整数算术、O(N)工作空间，A397592 前10项与源一致，n=4..100 零反例，奇指标0,1,2,5,7,9,15,17,31,33,63,65；与 y=0 的奇偶逐项相同。有限检查不能证明三角整性或全称支撑。停止条件：找到 A397591/三角核心同域证明后这些特例 drop；整性桥仍未核实或候选仅取 y=2/4 时保持 note-only。族合并为 A397592+A397594（连同非目标 A397591）最多1公共核心探针席，确认桥之前只称共享构造，确认桥之后两目标逻辑等价于同一常数列奇偶结论；不占两个实施席。全部直接引用为 A180747, A375457, A397590, A397591, A397593, A397594, A397595。主循环另实测GitHub公开代码精确号加language:Lean查询，total_count=0、incomplete_results=false；只限索引，不替代无编号文献检索。其余未打开的源b-file及网页均ASSUMED-UNVERIFIED。精确数值指令：a₀=1；n=1..100令m=n+1、P=Σ_{i<n}a_i x^i，先按A397902段的幂系数递推以e=m、f=[a₀,…,a_(n−1),0]算c_j=[x^j]P^m，再置a_n=((ym)^n−Σ_{j=0}^n c_j m^(n−j))/m，每次断言整除；y取本条参数，避免先mod2再除m。前轮A397591已列1/unknown/note-only，本轮不另给这个排除号计行或派席。
+
+### A397588
+
+精确目标：a(1)=1，n>1时a(n)=(n+1)Σ_{k=1}^{n−1}a(k)a(n−k)，∀n≥1，Odd(a(n)) ↔ ∃r≥0,n=2^r。文献裁决：完整镜像与本轮HTTP200原始JSON仍写Conjecture，但基线已有 `D5.S1.Recurrence.ConvolutionRecurrenceOddPowersOfTwo.a_odd_iff_power_two`；主循环完整读 `D5/S1/Recurrence/ConvolutionRecurrenceOddPowersOfTwo.lean`，源递推和正指标域与目标相符，`a_halving`及`a_odd_index_zero`给出活证明路径。冻结state的statement_id为 `sha256:01c1cad519e2e056064c9dbb822bbb04688d12c1ea8bc8584da0bc48c4eabee7`；published指公开仓内证明，未重编译。bind-only疑似声明即上述exact iff，high；仅换GF定义不构成新逃逸。数值方案可照抄：`N=256; a=[0]*(N+1); a[1]=1`，随后 `for n in range(2,N+1): a[n]=(n+1)*sum(a[k]*a[n-k] for k in range(1,n))`，用 `bool(a[n]%2)==(n&(n-1)==0)` 检查所有正指标；实际20项DATA全等、256个指标零反例、奇指标为1,2,4,8,16,32,64,128,256，计算0.014秒；勿照原递归程序重复指数展开。拟议逃逸：已被同题证明覆盖，无新目标。停止条件已触发为精确已证，drop。同族合派：零席，不另把中点卷积消去包装为独立靶。xref预检全部直接A号：无（comment/formula/xref均无直接A引用）；b-file未打开，ASSUMED-UNVERIFIED。
+
+### A397551
+
+精确目标：∀n≥0，半行 w_i=C(n,i), 0≤i<⌈n/2⌉ 的重复和值数等于 Σ_R 2^(⌈n/2⌉−|supp R|)，R 为全局包含极小非空平衡支撑（每支撑计一次） 精确域是 n≥0（n=0 半行为空），计数对象是至少有两个不同子集表示的“和值”，不是表示对。已完整打开 https://oeis.org/A397551/a397551.txt：首段 Theorem 只证明碰撞与非零 {−1,0,1} 关系等价；Primitive relations 段把同一和值中的极小支撑误当全局极小，Appendix B 的 MinimalXORsupportsInClass/AllPrimitiveSupports 正执行这个较弱过程，Conjectural step 明说唯一核心尚属猜想。Generation 段“正权重故不同自由子集和值不同”亦不足：正数仍可有子集和碰撞。本次独立按全局支撑定义枚举 n=0..35，首个失配 n=34：17 个半行权重的 131072 个子集给出 2560 个重复值，全部碰撞类大小至多 2；全局 primitive 仅 S₁={8,9,10,11,12,13,14}、S₂={8,9,10,11,12,14,15}，故右侧 2^10+2^10=2048。第三关系 C(34,11)+C(34,13)+C(34,14)=C(34,8)+C(34,9)+C(34,10)+C(34,12)+C(34,15)=2606057160 的支撑含 S₁、S₂，非 primitive，却产生另 512 个值。n=35 同样 12≠2^3=8。直接 A397559 的 n34、n35 分别为 2、1，与全局定义一致，反而与附件表 3、2 不同；其 n12 示例把 {0,5} 写成“support”，等式实际全支撑为 {0,1,2,3,4,5}，亦须纠正。此为可复算有限反驳，非由前缀宣称无界定理。bind=med：D5 检索无相同目标；已读 Nat.choose_symm（Basic:194）、Nat.sum_range_choose（Sum:94）、Nat.sum_range_choose_halfway（Sum:98）完整型与证明，只给反射及总和，不能提供唯一核心。原正向靶立即停止；可提议的 escape 仅为保存上述反驳证书或重新定义类内核心后另行研究，不为已反驳靶派发。与 A397501 共享权重/子集和算法而不等价，A397551 占 0 席，不能用本次反例直接宣称 A397501 已反驳。全部直接 A 引用：A007318、A156700、A397501、A397559。算法先倍增生成和值→掩码类，再对每类成对 XOR 收集全部非空关系支撑，按基数排序做全局包含极小化；成本 O(2^L+Σ_s r_s²+R²)，本次 L≤18，禁止以 n≤55 的附件表代替本次范围。脚本及见证 JSON 已保存。主循环独立用17权重分成8+9的两半符号枚举（3^8+3^9=26244个半状态）复算全部三条非零关系（差整体负号），确认仅两个全局极小支撑；另用Counter倍增计数确认2560、最大重数2，合计0.052秒。可照抄算法见文末Pascal反例程序。unknown只保留外部证明/反驳先例未确认，本轮给出的是repo-derived有限反驳，不冒称已找到外部论文。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A397501
+
+精确目标：∀奇数n≥1，索引集{0,…,n}的无序分拆（每非空块的Σ_i C(n,i)为2的非负整数次幂）数 P(n)=2^((n−1)/2)+1+A397551(n) 靶量词限定正奇 n，完整 Pascal 行按索引区分相等权重，块无序且非空；一个全行块始终合法。已打开并读完 https://oeis.org/A397501/a397501.txt，其 Maple 递归并不是证明，且开头对 n−1 为 2 的幂直接返回 2^((n−1)/2)+1：这些 n 上把所需结论硬编码，不能当独立数值验证。已完整读目标和全部直接源，未见针对此无界等式的已确认证明；公共通用搜索先前受验证码/无关结果限制，故本项保守 unknown，不把“存在猜想”本身当淘汰理由。独立脚本完全不采用该捷径：预计算所有掩码和值，仅保留和为 2 的幂的块；以剩余最小索引所属块作唯一分支，记忆化 F(S)=Σ_{B⊆S,min S∈B,合法}F(S\B)，F(∅)=1，并记录块数。奇 n=1,3,…,17 得 2,3,5,9,17,33,73,129,257，均符合原式、只出现 1 或 2 块，最大 n 使用 2^18 个子集和、388 个递归状态；不是无界证明。bind=med：D5 无目标命中；已逐型读 Nat.choose_symm、Nat.sum_range_choose、Nat.sum_range_choose_halfway，能产生对称基本两分拆及总重 2^n，无法排除三块以上，也不证明碰撞类重数如何贡献额外两分拆。具体非 bind-only escape 是构造“非基本平衡二分拆↔半行重复和值”的真实双射，同时证明正奇行不存在三块以上合法分拆；任何一步发现反例或已出版完全同型定理即停止。A397551 的 n34、35 反驳针对其 primitive 公式，A397501 使用的实际重复和值数未被反驳；两者仅共享数据与工具，不能合并为等价定理，也不能用附件的错误核心分类来 dispatch。当前 0 实现席，若上述双射障碍确实未被文献解决，最多另开 1 个组合分类探针。全部直接引用 A000079、A007318、A156700、A397551、A397559；A156700 的奇数集等分模型不是 Pascal 行定理。可照抄：对i=0..n以 `sums += [v+C(n,i) for v in sums]` 构造全部子集和值，掩码b合法当sums[b]>0且 `sums[b]&(sums[b]-1)==0`；F递归以 `i=(S&-S).bit_length()-1` 唯一定首块，枚举包含i的合法b并过滤 `(b&S)==b`。有界N=17即可复核，不照原附件的特例直接返回值。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A393867
+
+精确目标：F₀=1且∀n≥1，[x^n]F(x)^p_n=p_n[x^(n−1)]F(x)^p_n，其中p_n为第n个素数；g_n=[x^(n−1)]F′/F，∀n≥1，Odd(g_n)。这只取A393867第二猜想。文献裁决：本条及定义所需A393866、游程旁支A393868已完整读；主循环完整读基线 `D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative.lean`，`generating_equation`、`generating_unique` 给整系数唯一源，`hanna_conjecture`只证p_n∣g_n（n>1），绝不推出g_n奇；`printed_formula_false`反驳的是A393866 %F(2)错移一位的[x^n]F′/F版本，亦不反驳本目标。有效arXiv精确两号OR与prime/Hanna/logarithmic主题查询均0项；所查源仍Conjecture、未找到奇偶证明，故open（限定搜索范围）。bind-only疑似声明为上述三个具名定理及Mathlib `PowerSeries.coeff_derivative`；整除奇素数不是全奇结论，风险med。拟议逃逸：利用n>1时p_n奇，按源方程归纳证明F_(2m)≡F_(2m+1)mod2，再构造F=(1+x)H(x²)于F2，得到F′/F=1/(1+x)，读出全奇。成对系数引理是尚需证明的新活路径，不能假定相邻相等后直接包装结论。数值方案：先筛p₁…p₂₅₆；F=[1]，n从1起令P为严格前缀且p=p_n，按A397902段幂系数递推算c_j=[x^j]P^p，令F_n=c_(n−1)−c_n/p（断言整除），再用g_n=nF_n−Σ_{k=1}^{n−1}g_kF_(n−k)。O(N³)整数运算，N256实跑1.119秒；F的21项、g的20项DATA全等，256个g全奇、128对F余数一致，70个已结束游程均偶且DATA全等，末尾未结束游程不纳入。建议dispatch一席，先证成对系数再得对数导数；A393868若登记，仅为同族伴随结论，不增席。停止条件：找到同源奇偶定理即drop、出现经源递推复核的偶g即转反驳、或仅能套已证p_n整除时停手。全部直接A号（comment/formula/xref）：无；但NAME及EXAMPLE的定义依赖A393866已额外完整预检，另完整读A393868防止重派。三者b-file未打开，ASSUMED-UNVERIFIED。 收尾另完整阅读 `Problems/oeis-a393867-prime-power-shift-log-derivative.md`：Problem段明确写“The second A393867 comment, ‘Conjecture: all terms are odd.’, is not resolved.”；这确认既有成果的范围边界，仍不替代外部文献检索。
+
+### A397434
+
+精确目标：∀n≥1，阈值⌈n/2⌉多数布尔函数的ANF单项式数 a(n)=a(n+1) ↔ n≡2 (mod4) 精确靶取官方 %F 的相邻计数分类，定义使用“至少 ceiling(n/2)”（偶数平票也输出 1），必须区别严格多数。%C 已提供 a(2^k+1)=2^(2^k)−1（k≥1）的 Lucas/二项式反射推导，该特殊族本身已写证明，应 drop，不能作为新 tier1。已打开 https://eprint.iacr.org/2019/999 摘要页：Méaux 的论文研究 fast algebraic immunity，摘要称其主结果确定 n=2^m+j 的免疫度；这不是相邻单项式数量定理。PDF https://eprint.iacr.org/2019/999.pdf 访问遭 403，未读正文，不能凭标题判定是否暗含当前分类，故保守 unknown/note-only。完整直引 A000225 的各项公式均已读，其 2^n−1 或 Catalan 奇下标条目不自动证明此靶。bind=med：D5 无此 A 号或 ANF 分类命中；已读 pinned Choose.choose_modEq_choose_mod_mul_choose_div_nat（Lucas:69）、Choose.choose_modEq_prod_range_choose_nat（97，alias Choose.lucas_theorem_nat）型与证明，及 Nat.sum_range_choose_halfway（Sum:98）。它们只给每个 ANF 系数的位判据、行和反射，不给全部 n 的相邻差严格性。有限算法：t=(n+1)//2，非零次数 d 的系数是 C(d−1,t−1) mod2，所以逐次递推 C(n,d)，当 ((d−1)&(t−1))=t−1 时累加；单个 n 只需 O(n) 整数乘除与位操作。独立与原始双和式核对 n1..40 无差；计算到 a(2049)，所有相邻 n1..2048 都与 n mod4=2 相符，k1..11 的特殊公式也吻合，均仅有限证据。非 bind-only escape 应是构造剩余三类 n 的单项式加权注入并给出至少一个未配对项，从而严格分离 a(n),a(n+1)，同时处理 n≡2 的精确抵消；仅重写 Lucas 及已证特殊下标不够。若论文正文含同型相邻定理、加权注入失效或出现反例即停止。家族最多一个“相邻计数分类”席，当前 0；A000225 是特殊子列，非另一个席。全部直接 A 引用：A000225。主循环另实测arXiv all:A397434为0项，但PDF全文缺口仍保留。可照抄：`t=(n+1)//2; a=sum(comb(n,d) for d in range(t,n+1) if (t-1)&~(d-1)==0)`；n=1..2049，再逐n比较相邻值。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A397356
+
+精确目标：A∈1+xℤ[[x]], a(0)=a(1)=1, [x^n]A^(−n²)=[x^n]A^(1−n²) (n>1)；∀n≥0，Odd a(n)↔∃k≥0,n+1=2^k，且3∤a(n)↔∃u,v≥0,2(n+1)=3^u+3^v 定义与两个量词均含 n=0，幂指数允许 0，两个 3 的幂允许相等。已完整读官方镜像 A397356、A055235、A237652，目标只有猜想、程序、数表链接及渐近估计，没有这两个剩余分类的证明；arXiv 对 A397356/A237652/A397349/A397348 的公开检索 totalResults=0，属窄 A号检索，不是全学科无证明断言。目标 b-file 未打开，一律 ASSUMED-UNVERIFIED。A237652 的 B 与本靶 A 之间 B(x)=1/A(−x) 的系数关系可由代换负号、取倒数及三角唯一性检查，然而 A237652 本身未陈述已证二/三进制支撑，不能由“较早编号”冒充既有证明，故保守 unknown。bind=med：D5 精确 A号/237652 无命中，已读 ExponentialSquareWeightCatalanParity.hanna_conjecture 完整证明，它对 A397242 的不同指数方程给出 n+1 幂2支撑；相同结论形式并非本靶 binding。已读 pinned PowerSeries.coeff_invOfUnit（Inverse:87）、coeff_inv_aux（55）及 PowerSeries.coeff_pow（Basic:635）型与证明，均仅是系数展开/逆元递推。非 bind-only escape 是从随 n 变化的指数 n² 本身推出 mod2 的 Catalan 型降采样不变量，并从 mod3 的 Frobenius 分段构造精确自动机，接受恰好 2(n+1) 的三进制数字为单个2或两个1的情形；须同时证明接受状态输出非零，不能只证明充分方向。本次精确算法把未知 a(n) 先置0，取 c_e=[x^n]A_<n^e，则 a(n)=c_(−n²)−c_(1−n²)，因未知系数线性项的差恰为−a(n)，无除以 n² 的损失；幂系数用 k c_k=Σ_i(((e+1)i−k)f_i c_(k−i))，逐步检查整除。O(N³) 大整数算术、O(N) 系数存储；N=120，官方全部19项吻合，奇下标0,1,3,7,15,31,63，mod3非零下标0,1,2,4,5,8,13,14,17,26,40,41,44,53,80，两个猜想零失配但并非证明。若发现文献已给同型对角指数约化、自动机桥只能假设目标、或有限反例，立即停止。奇偶和mod3是同一序列的两个不同断言，可共一个剩余分类席而不声称逻辑等价；与 A397349 仅共享形式幂级数/降采样工具。当前0实现席。全部直接 A引用 A055235、A237652。源递推与幂系数递推已写到可照抄形态；每步保留精确整数再除k，不能在mod2/mod3内直接除k。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A397349
+
+精确目标：a(1)=1，Σ_{n≥1}a(n)x^n/n=log(1+x+Σ_{n≥2}3n a(n)x^n/(3n²−1))；∀n≥1，Odd a(n)↔∃k≥0,n=2^k，a(n)≡1(n奇)/2(n偶) mod3 靶的起点为 n=1，二进制指数 k≥0。完整读 A397349 与 A396846、A397346、A397348 后，确切桥是对 B(x)=exp(Σ a(n)x^n/n) 令 b0=b1=1、a1=1、s_n=Σ_{k=1}^{n−1}a_k b_(n−k)，得 b_n=3n s_n、a_n=(3n²−1)s_n (n≥2)。这是可直接以导数 B′=L′B 核对的整系数三角递推，不能使用 A397348 %F(6) 错印的 b_n=n a_n/(n²−1)：n=2 时该式给22/3而正确b2=6，%e及A397349 %F(3)的3n/(3n²−1)才一致。官方各源未给目标两分类的完整证明，公开 arXiv A号查询无结果，外部 b-files未打开；因此文献严格保守 unknown，而非宣称世界无证明。bind=high：已完整读 D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity.lean 的 d_recurrence、generating_unique、mod_two_catalan、hanna_conjecture；其处理系数参数1的 A397242。对于此处 e_n=b_n/n，整数递推 e_n=3(n−1)e_(n−1)+Σ_{j=2}^{n−1}(3j²−1)(n−j)e_j e_(n−j) 在mod2与该 D5 的 d 递推完全同形，但整数序列与有理系数 hshape 不同，不能直接 exact hanna_conjecture。另已读 PowerSeries.coeff_derivative（Derivative:60），只给导数系数；PrimePowerShiftLogDerivative.hanna_conjecture 则针对第n素数整除另一序列，素数是固定3时其假设不满足。mod3在上述递推中 b_j≡0(j≥2)，故 a_n≡−a_(n−1)；此边界消去是很短的参数性质，不应作为新的大核心。读者初稿提到构造/唯一性逃逸，但主循环补检发现该通用部分已有，以下以主循环的更窄残余裁决为准。数值用 s_n 的 O(N²) 整数卷积（不做有理 exp/log 或 factorial 暴搜），N=300，首16项与源全合，奇下标1,2,4,8,16,32,64,128,256，两剩余猜想和3n a_n=(3n²−1)b_n均零失配。前缀不是全证明。家族 A397348 是exp/log关联，可放一个归一化核心席；A397346(参数2)、A396846(参数4)有不同模数/断言，仅共享工具而非逻辑等价。当前0独立实现席，尤其不能为同一参数归约在本12项中重复开席。全部直接 A引用 A396846、A397346、A397348。主循环又完整读ParametricExponentialSquareCongruence：normalized_mod_two已覆盖q=3到q=1的归一化模2运输，source_iff已有源方程桥；因此不得把这两步再登记成新逃逸。真正残余重点是模3交替列（或归一化b的mod9引理）。主循环以段内s递推分别用模6和精确整数复算至512/29，16项DATA全等、两个分类零反例，0.0073秒；高绑定风险仍note-only，现有q=2的模8归一化不是q=3的模9证明。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A397347
+
+精确目标：a₁=1，Σ_{n≥1}a_n x^n/n=log(1+x+Σ_{n≥2}2n a_n x^n/(2n²−1))，∀n≥1，a_n≡[1,3,3,3]_(n−1 mod4)。文献裁决：本条仍标Conjecture，但xref指向A397346；主循环完整阅读基线 `D5/S1/Recurrence/Residue/ParametricExponentialSquareCongruence.lean` 后发现读者漏查的更强公开证明。该模块 `source_iff` 对齐A397346的源指数方程，`normalized_mod_eight` 给归一化b(2,n)≡6（n≡3 mod4），其余n≥2为2；源关系在有理数中为 a_n=(2n²−1)b(2,n)/2，因此模8先除2再乘奇因子，直接给本目标模4。bind-only疑似声明正是 `normalized_mod_eight`、`coeff_M_rat` 与 `source_iff`，high；主循环将原读者1档建议改为out/published/drop，published限公开仓内证明及上述规范化推论、未重编译。A397346 %F(6)漏了参数2，n=2会给14/3而非4；本裁决使用目标定义、%e正确关系及源码归一化，不依赖那行错式。数值方案可照抄：g=2，a=[0,1]、b=[0,1]；n=2..N令 s=Σ_{k=1}^{n−1}a_k b_{n−k}，追加 a_n=(g n²−1)s、b_n=g n s。只验余数则从每步起取mod4，O(N²)整数运算、O(N)存储，勿反复展开exp/log；主循环N=512、0.0074秒零反例，另精确算至29并与17项DATA全等。拟议卷积消去虽可重证，但现靶已被更强归一化定理覆盖，无新增逃逸。停止条件已触发；同族本目标零席，A397349的mod3残余须另核，不把它随模2族一并淘汰。xref预检全部直接A号（读者完整读）：A396846、A397346、A397349。四个条目的b-file均未打开，ASSUMED-UNVERIFIED；源码为本地已提交原文阅读，不冒称新开网页。
+
+### A397265
+
+精确目标：∀n≥1，r₂(n,1)=A007808(n)−n!；r₂计数n个有标号对象的有序划分且恰一个大小≥2的块。 精确靶是所有n≥1的恰一次多人并列计数r₂(n,1)=A007808(n)−n!，示例的“size at least 1”不替代定义中的2。目标和A007808、A397883均全文读完。已打开 https://arxiv.org/html/2607.02085v1 ：§2 Theorem3从首名块大小分类证明递推；§3 Theorem7及证明给g=(e^x−T_(m−1))^k/(2−T_(m−1))^(k+1)；§5 Example11 Eq(13)明确推导r₂(n,1)=Σ_(i=2)^n n!(n+1−i)/i!。A007808 %F的Freedman 2014公式是n!加此和（j=i−1），%C也写at most one tie，故原目标it appears已被公开证明及重索引覆盖，out/published/drop，bind风险high。仓内编号搜索未获同靶声明；普通有限求和和组合数引理无新逃逸。复制执行python3 numeric.py A397265：阶乘表、r_n=n r_(n−1)+Σ_(i=2)^n C(n,i)(n−i)!，另用A007808的b_n=(n²b_(n−1)−1)/(n−1)交叉核对，O(N²)整数运算，不枚举排列；1..200零差异，r5=311、r6=2383。无非bind逃逸可建议；同论文一般r_m(n,k)已覆盖A397883工具家族，0席，不把一般k换作新题。停止条件已经触发：打开了精确公式的推导。所有其余未打开源引文在JSON标ASSUMED-UNVERIFIED。数值初始化 r₀=0、b₁=1；上式 r_n 的第二项等于 n!·Σ_{i=2}^n1/i!，所以可用阶乘整除逐项累加，b₂起用给定递推；首n个b减n!作交叉检验。
+
+### A397244
+
+精确目标：A(0)=a0=1,a1=1；∀n>1，2n[x^n]A^(2n)=(2n−1)[x^n]A^(2n+1)；∀n>0，Odd(a_n) iff ∃m≥0,n=2m+1且m&(m>>1)=0。 目标只取系数方程所独立确定的 a_n 的奇偶分类，不把已有“Conjecture”字样当排除理由。整性与计算来自严格前缀 P_n=Σ(j<n)a_jx^j：a_n=(2n−1)[x^n]P_n^(2n+1)−2n[x^n]P_n^(2n)，未知系数两边之差的系数为1，故定义无循环。源码 `%F(2)` 将对角线写成 A396846，示例却除以2；`%F(3)` 写 n+1 次幂而示例使用2n+1；`%F(4)` 的复合方向也不能不经核对就使用。完整读过 `FibbinarySquareSubstitutionParity.hanna_conjecture`，它针对 B=B(x²)−xB(x²)²；又读了 `AbsoluteReciprocalSquareFibbinaryParity.hanna_conjecture` 与 `mod_two_identity`，后者针对 A380708 的绝对值倒数平方方程。后者虽有完全相同的奇数下标描述，两个整数数列定义不同，缺少本源方程到模2三次方程的桥，不能直接bind。已读 mathlib `PowerSeries.coeff_subst_X_pow`（Substitution.lean 260附近）与 `MvPowerSeries.map_frobenius_expand`（Expand.lean 229附近）的类型及证明，它们只做幂次抽取/Frobenius，不自动产生这座桥。Google组合精确A号搜索为跳转壳，Bing精确A号RSS是无关YouTube结果（两者已打开、不作为证明）；所以裁决保守unknown/note-only。可复制运行 `python3 probes.py A397244`，模2时用bitset无进位乘法和Frobenius平方逐项算严格前缀；N=512无差异，精确n≤18复现1,1,6,235,17010，保守O(N³log N)位运算，避免生成排列。具体非包装逃逸是证明本源的约化系列满足 S³=S²+x、S(0)=1，或等价 S=1+xT(x²), T=1+xT³，再用现成二进制分类；这里明确是待证桥，不是假定已证的入口。停止条件是发现相同源的已证约化、任何反例、或只能引用相同结论而不能连接源方程；这三种情况均不继续派席。若修复桥和外部检索，整项至多1席；A397241/A397245/A396846只共享对角线和反演工具，目前不宣称逻辑等价。全部直接引用：A003714, A396846, A397241, A397245，均已逐字段完整阅读。可照抄的严格前缀公式已在段内；模2用Frobenius把P^(2n)写成P(x²)^n，再乘P取得2n+1次幂，所有环运算都截断至x^n，N=512；这比巨型精确整数或排列穷举便宜。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A396808
+
+精确目标：a0=a1=1；∀n>1，(n+1)[x^n]A^(n+1)=n[x^n]A^(n+2)。奇偶：∀n>0,Odd(a_n) iff n=2^r。模3：∀n>1,a_n≡2 iff n=3^r；a_n≡1 iff ∃0≤i<j,2n=3(3^i+3^j)，其余≡0。 此条必须拆分裁决。`D5/S3/Arith/ArtinSchreierTracePowersOfTwo.lean` 全593行已读：`nextCoeff`/`a`与源码严格前缀递推一致，`source_equation`和`normalized_solution_unique`覆盖原方程，`a396808_first_conjecture`（568行）的类型直接为全部n>0的奇偶等价，不带一个等价于猜想的假设；证明通过 S²+S=X 的迹多项式系数消失和唯一性，因此奇偶部分是已有成果、0新席。模3部分既不是 F2 定理的参数实例，也不是数学库 Frobenius 的一句推论。精确A号与ternary trace等声明搜索未找到同源模3结论；Google跳转壳与Brave 429不能证明全网无文献，此无效通用搜索不作阴性证据。具体逃逸为在F3构造 R=1+x+2Σ(r≥1)x^(3^r)+Σ(0≤i<j)x^[3(3^i+3^j)/2]，证明它满足原系数方程的约化，再用严格前缀唯一性；这是新的三元迹/稀疏级数系数恒等式，尚未确认，不可作为现成假设塞入最终定理。每个指数由至多两项3幂决定，构造可计算；两类支持不相交，需在证明内说明。可复制运行 `python3 probes.py A396808`：a_n=n[x^n]P_n^(n+2)−(n+1)[x^n]P_n^(n+1)，模6截断二进制幂，O(N³log N)环运算/O(N)存储；本次N=144、精确前缀n≤18，得到1,1,3,50,1395，奇偶及模3零差异。停止条件：模3反例、找到对应F3同源迹定理，或拟议恒等式需要把目标本身作前提；即转drop或unknown。若派发，限“模3精确支持”1席，两个模3 iff合成一个剩余系数分类问题；与A038464/A396838/A396839的反演联系需独立校正，不能另占席或视为已证等价。全部直接引用：A038464, A396838, A396839，均已逐字段完整阅读。主循环补取有效arXiv API精确A号及Hanna/congruence/power series主题查询，均0项；与完整直引、现存F2证明逐型比较后，在这个明确搜索范围裁为open，未主张全球无证明。主循环另用纯Z/3Z截断乘幂独立计算N=256，18项DATA余数全等，两个iff零反例，0.192秒。复制原递推时复用P^(n+1)，只多乘一次P得n+2次幂；无需除n或阶乘。可把逃逸进一步具体化为 S=Σ_{k≥0}x^((3^k−1)/2)、S=1+xS(x³)，候选R=1+x+2x³S(x³)²；证明R满足源约化式是未完成的新命题。最终建议dispatch一个模3探针席，两个iff合一；发现此约化已有精确证明或候选桥只能假定目标时即停。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A396806
+
+精确目标：A=Σ(n≥1)a_n x^n/n!, A=x exp(A^{∘6}), a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，a_n≡n mod3及mod6。 这是六次函数复合的EGF，不是 A(x)^6 的普通幂。目标限定全部n≥1的奇偶及模3；模6是两者的CRT合取，应合并而不能算第三条独立成果。已完整读 `IntegralEGFComposition.eCoeff_composition`、`composition_map` 的整系数链式递推证明；`QuarticEGFFixedPoint.A_equation`、`fixed_unique` 把复合次数写死为4；`QuarticEGFModFour.mod_four` 与 `linear_fourth_mod_four` 也只处理第四次迭代和模4，不能以换数字包装出本条。 还有更具体的危险：候选 F=x exp x 虽然EGF系数为n，但不能假设 F^{∘3} 或 F^{∘6} 在模3下就是x；本次辅助探针在第8次系数分别得到1和2。需要的是外层指数及因子n共同产生的消去，不能照抄四次迭代的整除证据。外部Google精确A号组合只有跳转页、Yahoo只有临时搜索失败，均已打开留档；完整源码及七份直接引用没有给此同余的论文证明，因此第一档仅指本次确实读过的范围，非全球无证明保证。整数EGF计算使用部分Bell多项式 B(m,k)=Σ(j=1..m−k+1)C(m−1,j−1)g_j B(m−j,k−1)，B(0,0)=1；复合系数为Σf_kB(m,k)。把严格前缀复合l次得g，再令 e_0=1、e_m=Σ(j=1..m)C(m−1,j−1)g_j e_(m−j)，a_n=n e_(n−1)。O(lN⁴)模运算、O(N²)存储，没有在有限特征内除n!，也不枚举排列。 可复制 `python3 probes.py A396806`，模30检查n=1..64，奇偶/mod3/mod6零差异，精确n≤16复现1,2,39,1804,139625。具体逃逸是证明整系数组合算子 Φ_l(f)_n=n·E(f^{∘l})_(n−1) 在F3下固定线性列f_n=n，分别l=3,6；证明需给出n不被3整除时的Bell系数消去，不能假设整体迭代为恒等。再用前缀收缩把它连接到原方程；这是尚待证明的新消去命题，现成库中未找到。停止条件：该消去式失败、只剩模6的CRT包装、或检索到相同EGF/同一l的既存定理。三次与六次可能共用消去引理，但目前没有逻辑等价证明；整个EGF族先给A396803代表至多1个候选席，本条从属验证，l=5的模3另有不同固定列，不能冒称全参数已解。全部直接A引用：A000169, A140054, A396799, A396800, A396803, A396804, A396805，每份文件全部字段、项目均已读完。复制数值时预计算C(m−1,j−1)三角并在模30中运行Bell、exp递推，系数数组始终是EGF的整数分子而非除过n!的普通系数；按n从小到大仅补新一阶，N64是本次实测范围。当前note-only，只与A396803共享一组潜在探针，不宣称两定理等价。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A396805
+
+精确目标：A=x exp(A^{∘5})为EGF，a0=0,a1=1。∀n≥1,Odd(a_n) iff Odd(n)；∀n≥3,a_n≡1 mod3 iff n≡1 mod3，其余≡0；原称∀n≥1,a_n≡n mod5为假。 主风险是源码把一个已能数值反驳的命题仍标为Conjecture。已打开 https://oeis.org/A396805/b396805.txt ，逐行核对1..24，其中第23行 a_23=516114659489378430688740267292635767160672734031357，模5为2而23模5为3；第24行 a_24=454037334939528563499548911469632061937352653587474112，模5为2而预期4。`counterexamples.py` 用Bell整系数算法及源码Manyama的缓存递推 b(n,k,l)=Σ i C(n,i)b(n−i,k,l)Σ(j=1..k)b(i,j+l−1,l)/(n−1) 独立计算至24，每次除法检查整除，双方及官方b-file全一致；故这是明确反例，不是前缀未通过而已。mod5在1..64的失败下标为23,24,43,44,63,64，原命题应drop，无须再求证明。奇偶和n≥3的模3周期仍零差异，首项异常n=2必须保留。已完整读 `IntegralEGFComposition.eCoeff_composition`、`composition_map` 的整系数链式递推证明；`QuarticEGFFixedPoint.A_equation`、`fixed_unique` 把复合次数写死为4；`QuarticEGFModFour.mod_four` 与 `linear_fourth_mod_four` 也只处理第四次迭代和模4，不能以换数字包装出本条。 特别不能把 `linear_fourth_mod_four` 泛化成“素数p次迭代模p恒等”：本次 F=x exp x 的五次迭代在第22项模5为3，恰是早期错误推广的警报。整数EGF计算使用部分Bell多项式 B(m,k)=Σ(j=1..m−k+1)C(m−1,j−1)g_j B(m−j,k−1)，B(0,0)=1；复合系数为Σf_kB(m,k)。把严格前缀复合l次得g，再令 e_0=1、e_m=Σ(j=1..m)C(m−1,j−1)g_j e_(m−j)，a_n=n e_(n−1)。O(lN⁴)模运算、O(N²)存储，没有在有限特征内除n!，也不枚举排列。 可复制 `python3 probes.py A396805` 及 `python3 counterexamples.py`；主探针N=64、精确前缀16、反例复核24。外部Google/Yahoo检索失效，不能据此确定其余两条全球未证。剩余非包装逃逸是对 u_0=0,u_1=1,u_2=2,u_n=1_{n≡1 mod3}(n≥3) 证明F3中Φ_5(u)=u，并通过原EGF的前缀收缩转移；这是尚未证明的固定列消去式，不建议因mod5错误顺手重写成新的模5周期。停止条件：继续尝试原mod5命题立即停；其余若查到同源固定列证明、反例或只复述数字表也停。与l=3,6只共享Bell/收缩设施，模3结论不是同一个命题；本条余项并入该族note-only，当前0新增席，未来完整固定列证明才讨论独立席。全部直接A引用：A000169, A140054, A396799, A396800, A396803, A396804, A396806，每份文件全部字段、项目均已读完。本行档位1仅登记仍未找到证明的奇偶及模3两句；模5原句已由n23反例淘汰。三方核对是同族读者的两种算法与b-file，不冒称三席独立共识。数值步骤完全沿用A396803段Bell/exp操作，ℓ=5，N64；无需照原来源扩大到400。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A396803
+
+精确目标：A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 精确对象是复合三次的自指EGF及全部正下标，而非Cayley树列 n^(n−1)（A000169只对应l=1），也不是普通三次幂的树方程。已完整读 `IntegralEGFComposition.eCoeff_composition`、`composition_map` 的整系数链式递推证明；`QuarticEGFFixedPoint.A_equation`、`fixed_unique` 把复合次数写死为4；`QuarticEGFModFour.mod_four` 与 `linear_fourth_mod_four` 也只处理第四次迭代和模4，不能以换数字包装出本条。 参数表A396800及l=2的A140054只提供公式、数据，没有这些同余的完整证明。直接引用A396804又明载旧mod3猜想被n=5的41005≡1（预期2）反驳，所以“各l皆 a_n≡n mod3”的推广无效。Google组合精确A号搜索只回跳转壳，Yahoo明确搜索失败；本条第一档仅按已读材料中未见证明裁决，仍有外部检索覆盖限制。整数EGF计算使用部分Bell多项式 B(m,k)=Σ(j=1..m−k+1)C(m−1,j−1)g_j B(m−j,k−1)，B(0,0)=1；复合系数为Σf_kB(m,k)。把严格前缀复合l次得g，再令 e_0=1、e_m=Σ(j=1..m)C(m−1,j−1)g_j e_(m−j)，a_n=n e_(n−1)。O(lN⁴)模运算、O(N²)存储，没有在有限特征内除n!，也不枚举排列。 可复制 `python3 probes.py A396803`：N=64、模30，奇偶和模3零差异；精确n≤16，首项1,2,21,472,17165,885696。新逃逸可具体落在F3的整EGF算子：设f_n=n，证明∀n≥1，n·E(f^{∘3})_(n−1)=n，而非错误地证明 f^{∘3}=identity；本次 `egf_escape.py` 显示后者在第8项为1已经不成立，但保留外层指数和n因子的固定列测试至64通过。需要新Bell系数消去或带特征的微分恒等式，随后才是现成前缀收缩方法；这一新命题不是现有q=4定理的bind。奇偶可以统一研究Φ_l在模2的固定列，若只复制已有四次证据则不构成成果。停止条件：发现该精确算子的文献证明、出现反例、或无法摆脱把固定列性质当假设。派发若获采纳，EGF族至多1席、以此模3消去为首个具体任务；六次参数是同设施的后续目标但尚无等价定理，五次mod3另列u且其mod5已drop，不能三个A号各占一席。全部直接A引用：A000169, A140054, A396799, A396800, A396804, A396805, A396806，每份文件全部字段、项目均已读完。当前note-only；潜在EGF组最多一席、以本条为首目标，先解决保留外层exp与n乘子的消去，再处理ℓ=6，尚未证明参数等价。数值核心在段内完整给出，所有Bell数组取B(0,0)=1、其他边界0，内层g₀=0；不得省略外层exp。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A396798
+
+精确目标：A(0)=0,A=x+A^{∘4}A^{∘5}。原∀n≥1,a_n mod8=[1,1,5,5]为假。其余：A²,A⁶在n>3系数≡0；A⁴在n>2系数≡0；A⁸在n>1系数≡0；A³,A⁵,A⁷在n>1分别从n2起周期[3,1,7,5],[5,1,1,5],[7,1,3,5]。 这里所有 A^k 都是函数迭代，乘积才是普通乘法。源码首条%C若严格按n≥1排列[1,1,5,5]，在a3=9已错（9 mod8=1而声称5），此反例直接来自完整镜像%S和独立递推；不能默默把起点改为n=2后称原猜想成立。实际前缀模8为1,1,1,5,5,1,1,5,…，修正版是在a1=1单列后，从n=2按[1,1,5,5]循环。其余七条的各自起点必须逐项保留，上述statement已列全。已完整读D5 `CompositionalIterateCongruence.fixed_unique`/`mobius_iterate`/`coefficient_congruence`，其step固定为5与6、模10；`ThreeFourIterateProductModSix.hanna_conjecture`固定为3与4、模6。两者提供收缩和Möbius迭代方法，却不能直接覆盖4与5的模8：本目标模8不是全系数1的几何级数。Google组合精确检索无有效结果；源及全部直接引用未列本组同余证明，所以剩余仍是有限检索候选，不把相关条目已解当本条已解。可复制 `python3 probes.py A396798`，以P_n严格前缀截断Horner复合得到四次与五次迭代，取乘积n次系数；O(N⁴)模运算/O(N)存储，N=64，另算精确前缀16。原首条共有31个失败，最早n3；其余七条在指定域零差异，`counterexamples.py`保存最小反例。具体修正版逃逸为在Z/8Z[[x]]中验证 R=x+(x²+x³+5x⁴+5x⁵)/(1−x⁴)=x/(1−x)+4x⁴/((1−x)(1+x²)) 满足 R=x+R^{∘4}R^{∘5}，再以收缩唯一性连接原源；模8下4的平方为0，可用一阶扰动展开控制迭代，然后统一计算R的2..8次迭代。这是待证有理恒等式，不是已打开的文献证明；未经完成不宣称剩余猜想已解。停止条件：原首条已反驳即停；修正版若有同源已证恒等式、分母非单位或恒等式失败则撤回，不能仅加一个目标等价假设。修正首条与其余七条至多作为同一R恒等式的一席候选，当前note-only；与A396797/A396807共享工具但不是逻辑等价，不能按八个同余重复计席。全部直接A引用：A213591, A396099, A396797, A396807，每份文件全部字段、项目均已读完。本行保留原七条精确同余为1档候选，原首条起点n≥1的版本已drop；修正版起点n2是明确另拟的靶，不冒充原文。复制Horner：compose(f,g)=f₀+g(f₁+g(f₂+…))，每次乘法截断至n；以P的迭代从x开始累乘复合到4和5，a_n=[x^n](P∘4)(P∘5)，原七条再共用同一最终P求2..8次迭代。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A393868
+
+精确目标：令F为A393867段的prime-power源序列，从F₀开始；对每个有限极大常奇偶区间[s,t)，要求t−s为偶数，不额外断言所有游程有限。文献裁决：本条%C仅It appears，全部直接A号A393866已完整读，并额外完整读A393867及其源代码证明；该模块hanna_conjecture只给对数导数系数的素数整除，printed_formula_false只处理导数错位，未给游程偶性。有效arXiv精确两号OR与prime/Hanna/logarithmic查询0项，所查材料未见游程或成对奇偶证明，open限定此范围。bind-only疑似声明为 `PrimePowerShiftLogDerivative.generating_equation`、`generating_unique`、`PowerSeries.coeff_derivative`；从未证成对系数引理F_(2m)≡F_(2m+1)推游程端点均偶数只属逻辑伴随，故本条high风险，不单开席。拟议逃逸统一归A393867：先证F=(1+x)H(x²)的活路径，游程结论随之产出；两条不先验宣称在可能有无限末游程时完全等价。数值方案共用A393867段的精确递推至F₂₅₆，再从s=0线性扫描，遇奇偶变化i就输出i−s并令s=i，末尾未结束一段丢弃。实得70个完成游程全部偶，且70项DATA全等；128对系数余数一致，共用运行1.119秒。停止条件：发现不成对系数或奇长度有限游程即保留边界和源前缀；若已有同源成对定理则drop；只剩游程包装绝不加席。与A393867合一组，主目标一席、本条note-only零附加席；本条替换第三档A396760的采集预算位置，仍与372条排除集零交集。全部直接A号：A393866；A393867为额外同族预检。三个b-file均未打开，ASSUMED-UNVERIFIED。
+
+### A396493
+
+精确目标：∀n≥1，Sat4(n)=C(C(2n+2,3)+3,4)−n(16n^6+48n^5+340n^4+180n^3+2818n²−10011n+6789)/18；子句为3文字多重集，公式为4子句多重集，允许同义重复及重子句。 必须把“固定4子句、任意n、允许重复文字/重复子句”的计数和随机3-SAT阈值、一般SAT复杂度区分开。完整读到直接引用A396354在7月22日Ferudun的%C证明段与%F明确写“The conjectured formula is true”：极小不可满足核含c≥2个子句，去重文字后由Tarsi引理支持≤c−1，其余4−c子句各增至多3个变量，故全公式支持≤11−2c≤7；再按指定标号k集的满支持计数b(k)，得U(n)=Σ(k=1..7)b(k)C(n,k)，并声称b=(10,811,7178,16400,22000,15360,4480)。证明位置为已联网打开且与完整本地源码逐字节相同的官方钉版镜像 https://raw.githubusercontent.com/oeis/oeisdata/69b127f67c75990effad199e316d6e8a5183b64c/seq/A396/A396354.seq 的Ferudun Start/End段，而非OEIS JSON。这个支持界推理与模型吻合，但文中数值由a(0)..a(7)反演，仍须独立确认七个基数来自真实枚举而非插值循环。已打开 https://doi.org/10.1016/0097-3165(86)90060-9 及Crossref元数据，前者只到Elsevier跳转壳，后者仅书目信息；实际1986年Aharoni–Linial证明页未打开，正文请求400，不能标作已读Tarsi证明。作者学校页也是防护错误。Cook1971、Ding–Sly–Sun大k阈值和Mézard等引用未打开，全部ASSUMED-UNVERIFIED，即使打开也不能仅凭标题推本精确计数。仓库/钉版mathlib对A396493、A396354、Tarsi和multiset clause的搜索未找到同源计数声明；mathlib中一般SAT反证战术的名字不是计数定理。可复制 `python3 probes.py A396493`：先将3文字多重集按真值掩码归组并保留组大小m，DP乘入Σ(r=0..4)C(m+r−1,r)z^r，携带掩码按位AND，z^4的零掩码数即UNSAT；n≤4只有3,9,27,65种不同子句真值掩码，最大44232个DP状态，避免对所有4子句多重集逐个扫赋值。实得UNSAT=10,831,9641,50018，SAT=25,8024,445485,9028612，与目标吻合。最坏掩码状态上界5·2^(2^n)，本次严格止于4，绝不声称核验了n=5..7或完整公式。由于已有明确证明声称但关键桥/基数证书未确认，按用户规则裁决unknown/note-only而非第一档新题；若补齐Tarsi及b1..7证书则直接out/published/drop。逃逸仅可作为独立可复算满支持证书的文献核验工作，不推荐把总数减UNSAT这一纯补集包装当新数学。停止条件是证书确认即drop，或发现该声明依赖同一插值值而不能独立计数则维持unknown，禁止用前四项通过代替。与A396354严格互补等价，只能视为一个问题且本次0席；A396353/A396492是3子句邻题、A396351为总数组，不额外计席。全部直接A引用：A396351, A396353, A396354, A396492，每份文件全部字段、项目均已读完。复制数值还可直接使用文末不合并相同真值的SAT算法（M=4）独立重验；相同掩码的子句多重数不可抹去。与A396354同一证明主张待核，out/unknown/note-only，不重复派席。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A396491
+
+精确目标：∀n≥1，n 个有标号变量、允许子句内重复文字及公式内重复子句的五子句 3-SAT 不可满足公式数，等于 %F 给定的十项二项式多项式。 完整读了本条及 A396351/A396353/A396354；本条 %C 明说插值所得 “should be treated as conjectural unless independently verified”。邻条 A396354 在 Jul 22 2026 提供四子句的证明思路，不能把 m=4 的结论绑定为 m=5。联网打开固定镜像 A396354 的 %C/%F，可见支持集界和 “The conjectured formula is true”；其 Aharoni–Linial DOI 只返回 Redirecting，论文未打开。Google 返回 JS 门、DuckDuckGo 返回验证码、Bing RSS 对 A396491 与 SAT 查询返回翻译/通信产品，故这些尝试不构成有效的阴性文献检索；全保存在 network.json，不能声称已搜尽。仓内逐字搜索无该计数声明；已读 `D5.S0.Certificates.LRATUnsatisfiable.empty_clause_proof_iff_unsatisfiable` 的类型与 rfl 证明，只把单个 Sat.Fmla 的空子句语义重述为不可满足，`Refutation.sound` 也不计多重集，不能直接给本条多项式；钉版 mathlib 的 Tarsi/minimal-unsatisfiable 字词搜索未见匹配声明。拟议非 bind-only 逃逸是对最多五子句的极小不可满足核按支持集与重叠作完整分类，并推得指定 k 集上的十个计数 b(k)；支持集上界 alone 不是逃逸的完整交付。数值 yes：sat_counts.py 用子句种类外层、子句数递增的 DP 保存满足赋值集的 AND 掩码，n=1..4 得 20,6760,244322,2703376，与公式相符；最大层状态数 41746，未枚举 n=5..10。该算法保留真值相同但文字多重集不同的子句类型，避免把模型错误商掉。每 n 的上界 O(m·binom(2n+2,3)·2^(2^n)) 个状态转移，稀疏字典在本次边界足够快。停止条件：找到同模型同量词证明即 drop；核分类遗漏重复子句/恒真子句则 invalid；只有插值或支持界则 note-only。与 A395546 同为 m=5，按相同多重集模型取补集后只占一个研究席；与 m=4 仅共享工具、不等价。当前未满足有效检索门，不推荐 dispatch。全部直接引用 A396351,A396353,A396354。拟议系数为 B=(20,6720,224102,1766568,6055360,13099520,17940160,15088640,7096320,1433600)，靶为Σ_{k=1}^{10}B[k−1]·C(n,k)。可照抄掩码计数见文末共用SAT算法；一次M=5的运行同时读dp[4][0]、dp[5][0]，不枚举全部公式的笛卡尔幂。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A396354
+
+精确目标：∀n≥1，四子句多重集 3-SAT 的不可满足公式计数 a(n)=n(16n^6+48n^5+340n^4+180n^3+2818n²−10011n+6789)/18。 本条完整源同时保留旧的 “Conjecture” 与 Jul 22 2026 Alper Ferudun 的 “The conjectured formula is true”；不能只抓旧标签。已打开固定官方镜像 URL 的 %C 两段与 %F 后补段，证明路线为取 c 子句的极小不可满足核，删重文字后 Tarsi 给核支持≤c−1，余下 4−c 子句至多增 3(4−c) 个变量，故总支持≤7，再按指定有标号 k 集计数 b(k) 作 a(n)=Σb(k)C(n,k)，给出 b=(10,811,7178,16400,22000,15360,4480)。这确实是公开证明主张，而不是又一个猜想；但 DOI 10.1016/0097-3165(86)90060-9 的打开结果只有 Redirecting，且本次只独立检查 n≤4，没有确认 n=5..7 的计数证明材料，故依委托的“claimed proof cannot be confirmed”规则标 unknown/note-only，绝不标成可派的 tier 1。已读 A396351 与 A396353 的所有字段，Cook 1971 的复杂性背景不能提供固定 m 的多重集枚举定理。D5 的 `LRATUnsatisfiable.empty_clause_proof_iff_unsatisfiable` 与 `Refutation.sound` 只认证一个 CNF 的不可满足，未计支持、未计同真值不同子句；mathlib 字词搜索未见 Tarsi 计数声明。数值 yes：同 sat_counts.py 的 AND-mask 多重集 DP，在 n=1,2,3,4 得 10,831,9641,50018，与多项式一致；M=5 的共用运行最大状态数 41746，没有用 n≤4 证明 ∀n。计算复杂度界同上，严格保留重复文字与重复子句。可设想的逃逸是有限支持集上的完整核分类与 b(k) 的组合推导，但这正是既有公开证明所声称的内容；在核验文献前不得以重证包装求席。停止：确认该公开证明即 out/published/drop；发现系数反例即转 refutation；仅无法访问就维持 unknown。A396493 也是本 m=4 家族，至多一席且当前零实施席；与 A396491/A395546 的 m=5 仅共享分类工具，计数目标不同。全部直接 A 引用 A396351,A396353。档位out仅表示出现具体证明主张后暂退出开放靶池，文献unknown保留系数审计缺口，不把未核完写成published。可照抄掩码计数见文末共用SAT算法。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A396093
+
+精确目标：B(x)=x/(1−x)²，a(n)=[x^n]B(B(B(x)))；∀n≥1，a(2n) 偶，且 a(2n−1) 偶 ⇔ ∃k≥1,n=5k−2。 目标与六个直接引用均已逐字段全文读取；A166482 的 L-四连块论文证明的是铺砌解释，不自动证明本目标奇偶。已打开公开仓库固定 HEAD 的 RationalCompositionParityPeriodTen.lean 并与本地完整源码连读，证明位置为 `reduced_recurrence`、`parity_period_ten`、`odd_iff_mod_ten`、`even_at_even_index`、`even_at_odd_index_iff`：模二八阶递推只留偶间隔项，两次相差 2 的递推相加得到周期 10，初值奇余数恰 {1,3,7,9}。并非仅把 conjecture 改名：`generating_function_identity` 逐系数建立递推数列乘 D=N，`generating_function` 用非零常数项除法，`coefficients_unique` 强归纳对齐任意整系数解；末尾 `triple_B_eq_formula_two` 是 RatFunc ℚ 的三重复合恒等式，采用非零分母及 field_simp。故本地定义到 OEIS 公式(2)有实质桥，不只是含未证奇偶前提的条件结论。本次未编译、未检查 kernel 工件；结论是已读公开源码中有该证明，非本席认证构建。钉版 mathlib 实际读了 `Function.Periodic.map_mod_nat`（前提 hf 已是 Periodic）和 `PowerSeries.eq_mul_inv_iff_mul_eq`（前提分母常数非零），这些单独不产生周期或生成函数桥；D5 已补齐，故再做目标 high bind-only。数值 yes：整数递推 n≤500 与模二递推 n≤100000 全吻合，坏指标列表为空；O(8N) 算术、模二可 O(8) 空间滚动。拟议逃逸若是“模二递推推出周期十”，已被具名定理占用，现靶无可派新逃逸；不同迭代次数/不同模数需要另有精确未证命题及独立文献检索，不能顺手换题。停止：现靶直接 drop；若桥仅被误读，则回到 note-only，而不凭前缀宣称解决。两条奇偶子句是同一周期分类的投影，只算 1 个数学家族、当前 0 新席；A396094/209/210 只共用迭代有理函数工具，非同一命题。全部直接引用 A030267,A119821,A166482,A396094,A396209,A396210。可照抄：`r=[14,-75,196,-269,196,-75,14,-1]; a=[0,1,6,33,174,892,4480,22149]`，随后 `for n in range(8,100001): a.append(sum(r[k]*a[n-1-k] for k in range(8))%2)`；初值检查亦取模，逐n断言 `a[n]%2==int(n%10 in (1,3,7,9))`。
+
+### A395896
+
+精确目标：∀n∈ℕ，n 偶数 ⇒ |{k∈ℕ:1≤k<m², rad(k)|m, rad(k+1)|m}|=0，其中 m=A019565(n)。A019565 以 n 的第 j 个二进制位选择第 j 个素数；最低位为0当且仅当2不整除 m，所以“偶索引”准确对应“奇 m”。n=0 给 m=1，集合为空，边界无例外。已打开 https://en.wikipedia.org/wiki/St%C3%B8rmer%27s_theorem 的 “Lehmer’s algorithm” 段，原文明确写出 “Assume p1 = 2; otherwise there could be no consecutive P-smooth numbers, because all P-smooth numbers would be odd.” 这已经给出所需一般断言及证明理由，取 P 为 m 的素因子集即覆盖目标，无须 Pell 方程或 Størmer 的深层有限性。https://en.wikipedia.org/wiki/Radical_of_an_integer 的定义段确认 rad 为不同素因子乘积；因此 rad(k)|m 与 k 为 P-smooth 在正整数域等价。不是仅因条目写了 conjecture 而判新题。bind 风险 high：实读 pin 中 Nat.mem_primeFactors、Nat.Prime.mem_primeFactors、Nat.primeFactors_mono，以及 Nat.prod_primeFactors_dvd_iff（k≠0 时，素因子乘积整除 k iff 素因子集包含）。它们的证明是列表/有限集转换与整除传递，虽未直接命名本 A 序号，但加上相邻整数必有一个偶数就只剩索引和空集合包装；没有可推荐的非 bind-only escape。停止条件：一旦完成正整数、严格上界及索引换算即停止，不为凑席扩写 Lean。三条只占同一概念家族，计数为0与最大值哨兵−1等价；当前已知初等证明，合计0个新实施席；三个条目仍各占一个采集预算项。把偶 m 的完整分类或所有 primorial 上与无界 A002071/A002072 的相等式当 escape 会改变问题，且必须另证每个解 k<m²；Størmer 有限性不能给这个平方界。已打开 Eppstein 2007 “Smooth pairs” 的主文及评论，它报告有限素数集的计算与算法条件，没有证明此统一平方界；该桥仍 ASSUMED-UNVERIFIED。若升级到一般 S-unit/有效 abc 界的深核心，列 tier3 note-only、不计采集预算，不派发。全部直接 A 引用：A002071, A005117, A007947, A019565, A395754。数值方案：先试除得到P=primeFactors(m)，S={1}；对每个p∈P及每个s∈list(S)，逐次乘p并仅加入≤m²的值，再取sorted(k for k in S if k<m² and k+1 in S)。完整代码见文末共用光滑数算法。读者实际检验306个平方自由m≤500与64个二进索引n≤63（最大m=30030），未见反例，与源可比DATA均相等；按生成集合大小工作，勿扫描至m²。其余未打开的源引文及页面全部ASSUMED-UNVERIFIED。
+
+### A395842
+
+精确目标：G∈ℤ[[x]]，g₀=0,g₁=g₂=1；∀n>2，[xⁿ]G^{∘n}=[xⁿ]G^{∘(n−1)}。a(n)=[xⁿ]G^{∘n}，要求∀n≥2，2|a(n)。 目标和唯一直接引用 A177775 的所有字段全文读完；又实际打开二者固定官方镜像 URL，逐字节核对与本地文件一致。A395842 %C “It appears that all terms are even after the initial term” 及 A177775 May19 2026 %C “a(n) is odd iff n is a power of 2” 均是猜想，没有附带证明；后者2010建条不等于其2026修订猜想已证。Crossref 的 A177775 元数据查询返回0项，但仅按编号检索不能排除不写编号的论文；Yahoo对精确 A395842返回“temporary problems”，A395833搜索为500，其他搜索引擎的挑战/无关页也不能算有效阴性。这些失败请求不作阴性证据，邻条猜想不能作前提。实读 D5.S1.Recurrence.Invariants.CompositionalIterateCongruence.iterate、fixed_unique、mobius_iterate 的类型与归纳证明：fixed_unique适用于 f=X+f^{∘5}f^{∘6}，mobius_iterate适用于 x/(1−tx)，均不满足本题逐阶对角消失条件；ShiftedIterateFixedPointCongruence.step 是 X+X*iterate f r，也不同。mathlib PowerSeries.coeff_subst' 给替换系数有限支撑求和，Choose.lucas_theorem 给指定界内逐位 binomial 同余，均不直接连接 G 的隐式约束。bind 风险 med，因为 degree-agreement 和模素数工具现成，但新约束的三角唯一性与候选级数迭代桥尚需实质证明。具体可行 escape：建立唯一解 G mod2=H=Σ_{r≥0}x^(2^r)，再证明 [x^(2^r)]H^{∘m}=C(m+r−1,r) mod2，并从 Lucas 导出在 n=2^r≥4 时相邻迭代残差 C(n+r−2,r−1)为0及对角系数为0；非2幂次数由 additive-series 支撑排除，n=2单独处理。此为明确待证的候选桥，不把本次手算路线冒称文献定理或形式证明。停止条件：找到同样对角条件的已刊证明则 drop；若只能引用 A177775未证奇偶猜想，停在 note-only；若剩余工作只是现有已证的 H 桥的索引改写，判 high bind 并停。家族 A177775/A395842 共用同一个唯一 G，计划的强模2识别和对角推论合并为至多1候选席；并非声称二条猜想逻辑双向等价，与其他固定点迭代序列仅共享工具。读者初稿未派席。全部直接 A ID：A177775。主循环补取有效arXiv API all:A395842 OR all:A177775，0项；结合无证明的两份完整源和现有定理的实际类型，当前裁定open并建议dispatch一个公共G的模2识别探针。主循环核对了拟议H迭代二项式及Lucas消去路线，其源码桥仍须证明，未把手算路线当既有文献。可照抄数值：逐阶令g_n=0，P₀=1、P_j=G·P_(j−1)截断至n，以 `next(h)[k]=sum(h[j]*P_j[k] for j in range(k+1))` 从h=x做n−1次迭代，d=next(h)[n]，最后g_n=h[n]−d、a_n=d+n*g_n。n2用已定g₂=1单独初始化；精确N32、模2 N96，19项DATA全等、零奇对角反例。O(N⁴)环运算、O(N²)存储；不要求下游提高枚举规模来代替H的统一证明。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A395839
+
+精确目标：Cₙ=C(2n,n)/(n+1)，a(n)=10Cₙ₊₁−Cₙ，n≥0。目标：Odd a(n) iff ∃k≥0,n=2ᵏ−1；且∀n≥0，a(3n+1)≡Cₙ (mod3)，a(3n)≡a(3n+2)≡0 (mod3)。 定义的自卷积由 C(x)=1+xC(x)² 给出 [xⁿ]C²=Cₙ₊₁，所以无需假定任何新的 OEIS 等价式。已打开 Deutsch–Sagan, “Congruences for Catalan and Motzkin numbers and related sequences”, https://arxiv.org/pdf/math/0407326：PDF页3 Theorem2.1 给 v₂(Cₙ)=s₂(n+1)−1，证明及 Lemma2.3 在页3–6，因10Cₙ₊₁为偶数，这完整覆盖奇偶目标；页15 Theorem5.2及同页证明给 Catalan 模3三进制分类。目标的模3桥还可直接逐项核实：在 F₃[[x]]，10C²−C=C²−C=C(C−1)=xC³=xC(x³)，最后一步为 Frobenius，故恰剩3n+1位置且系数为 Cₙ，包含 n=0 的三个边界。以上是已刊 Catalan 事实的直接代数后果，不能把新 A 编号当新未证命题。已读 D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.binary_catalan 的完整类型、binary_support 强归纳证明及 catalanSeries=X*Catalan 的真实定义；n→n+1 的索引转换即可复用奇偶。FactorialProductSumCatalanParity.hanna_conjecture 虽也写 Odd(a n) iff n+1=2^k，但其 a 是另一隐式级数，不能仅按结论同形绑定；本例应调用共享的 binary_catalan。SignedCatalanCubicSubstitutionModThree.signed_catalan_mod_three 的类型涉及 signedCatalanSeries 与不同替换方程，也非本目标的直接命名定理。pin 中 PowerSeries.catalanSeries_sq_mul_X_add_one 的逐系数证明及 MvPowerSeries.map_frobenius_expand 的截断多项式证明均已读，它们给上述二行模3桥的全部通用工具，bind 风险 high。拟议“找模3稀疏支持”逃逸已被上述恒等式消解；无可派非 bind-only 逃逸，停止于 drop，不扩大到10进数动机或其他模数。两个子句同属一个 Catalan 线性变换家族，合计0新席；A111019/A111020是经典模3类索引，A395834为同一 C 的10进值，仅共享对象，不是四个独立席。A000108含 core 标签不使本有限同余目标升级 tier3；若另研究 Catalan 深核心再按 note-only另列。全部直接 A 引用 A000108、A111019、A111020、A395834 已全文读完，A000108的全部长文献表和程序亦包含。未打开的链接（包括论文其他版本和 DOI）在 unverified_urls 逐项显式保留 ASSUMED-UNVERIFIED。数值方案可照抄：c=1，循环n=0..30002以c=c*(4*n+2)//(n+2)精确更新C_(n+1)，另存c mod6（保留c本身以免除法丢精度），a_n=(10C_(n+1)−C_n)mod6；检查全部n的奇偶和n=0..10000的三元组(a_(3n),a_(3n+1),a_(3n+2))mod3=(0,C_n,0)。读者零失配，O(N)大整数乘除。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A395833
+
+精确目标：A∈ℤ[[x]]，a₀=a₁=1且∀n>1，[xⁿ]A(x/A(x)^(2n−1))=0。分别要求∀n≥1，(2n−1)|aₙ；∀n≥2，3|aₙ。常数项1确保负幂合法。 已完整读本条及唯一直接引用 A266489，并打开它们固定官方 GitHub 镜像 URL核对全文。A395833 的两个 %C 都明确标 Conjecture；A266489 的 %C C1/C2 是指数 n、结论 n|aₙ及偶性，仍是2018版猜想，既不等于指数2n−1也不能作为已证前提。源中只有数表链接，未附论文证明；数表链接未打开，显式 ASSUMED-UNVERIFIED。精确编号公搜尝试受Yahoo500及先前引擎限制，不足以排除用其他表述发表的证明，故 unknown 而非认证 tier1；无打开的目标证明页可报告，具体文字证据位置是两份镜像的 %N/%C/%o。已搜索 D5及pin mathlib的实际系数/替换声明，实读 D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd.residual_difference、generating_equation、generating_unique：其方程为 n[xⁿ]Aⁿ=(n−1)[xⁿ]Aⁿ⁺¹，唯一性依此 residual，不能对本题 A(x/A^(2n−1)) 直接套用；虽可共享“第一个不同系数”的方法，仍须重建本题残差。PowerSeries.coeff_subst'、coeff_derivative、derivative_pow 的类型和证明只给替换求和/形式微分，Choose.lucas_theorem 要求素数及指数界；没有现成定理声称所有这样的 aₙ都被2n−1整除。bind 风险 med。具体非 bind-only escape分两层：先证明该负幂对角方程在任意交换环中三角系数为1并与整系数递推同一，模3候选 A≡1+x 的残差为 (−1)^(n−1)C(3n−3,n−1)，可由3进制最低非零位/Lucas消失，给真实序列的模3桥；变模数子句则需把同一递推或 Lagrange–Bürmann 系数恒等式转为一个显式整系数商 aₙ=(2n−1)bₙ，并证明 bₙ∈ℤ，不能仅定义 bₙ为有理商或从前缀推断。后者的整性桥目前未确认，不能凭“Lagrange inversion”四字当作证明。两子句并非等价（2n−1不恒被3整除），但共用同一唯一隐式序列及系数骨架，建议作为1候选家族；A266489只是参数类似、不同数列，尚无等价桥，不混为已证同一题。停止：找到任一子句的已刊证明就移除此子句；若模3最终仅是已有候选识别的绑定则该子句drop；若商整性仅靠不明引用，保持note-only，不自动升级到通用深层反演理论。全部直接 A ID：A266489。数值可照抄：令pc(a,r,d)按A397902段公式计算[x^d]A^r，a=[1,1]；n=2..60追加 −Σ_{j=1}^{n−1}a_j pc(a,−(2n−1)j,n−j)，每个pc里的除k断言整除。61项精确整数、源21项全等，两个整除检验零失配；不能先把系数mod3再做除法。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A395754
+
+精确目标：∀n≥1，令 m=A005117(n)，m 为奇数 ⇒ a(n)=0；a(n)=|K_m|，K_m={k∈ℕ:1≤k<m²,rad(k)|m,rad(k+1)|m}。平方自由索引从1开始，m=1 包含在空集情形；平方自由假设对奇偶排除实际多余。偶 m≥2 时 k=1 已给出 K_m 非空，所以零值分类恰为 m 奇数。已打开 https://en.wikipedia.org/wiki/St%C3%B8rmer%27s_theorem 的 “Lehmer’s algorithm” 段，原文明确写出 “Assume p1 = 2; otherwise there could be no consecutive P-smooth numbers, because all P-smooth numbers would be odd.” 这已经给出所需一般断言及证明理由，取 P 为 m 的素因子集即覆盖目标，无须 Pell 方程或 Størmer 的深层有限性。https://en.wikipedia.org/wiki/Radical_of_an_integer 的定义段确认 rad 为不同素因子乘积；因此 rad(k)|m 与 k 为 P-smooth 在正整数域等价。不是仅因条目写了 conjecture 而判新题。bind 风险 high：实读 pin 中 Nat.mem_primeFactors、Nat.Prime.mem_primeFactors、Nat.primeFactors_mono，以及 Nat.prod_primeFactors_dvd_iff（k≠0 时，素因子乘积整除 k iff 素因子集包含）。它们的证明是列表/有限集转换与整除传递，虽未直接命名本 A 序号，但加上相邻整数必有一个偶数就只剩索引和空集合包装；没有可推荐的非 bind-only escape。停止条件：一旦完成正整数、严格上界及索引换算即停止，不为凑席扩写 Lean。三条只占同一概念家族，计数为0与最大值哨兵−1等价；当前已知初等证明，合计0个新实施席；三个条目仍各占一个采集预算项。把偶 m 的完整分类或所有 primorial 上与无界 A002071/A002072 的相等式当 escape 会改变问题，且必须另证每个解 k<m²；Størmer 有限性不能给这个平方界。已打开 Eppstein 2007 “Smooth pairs” 的主文及评论，它报告有限素数集的计算与算法条件，没有证明此统一平方界；该桥仍 ASSUMED-UNVERIFIED。若升级到一般 S-unit/有效 abc 界的深核心，列 tier3 note-only、不计采集预算，不派发。全部直接 A 引用：A002071, A005117, A007947, A039956, A062503, A071403, A365435, A383008, A395721。数值方案：先试除得到P=primeFactors(m)，S={1}；对每个p∈P及每个s∈list(S)，逐次乘p并仅加入≤m²的值，再取sorted(k for k in S if k<m² and k+1 in S)。完整代码见文末共用光滑数算法。读者实际检验306个平方自由m≤500与64个二进索引n≤63（最大m=30030），未见反例，与源可比DATA均相等；按生成集合大小工作，勿扫描至m²。其余未打开的源引文及页面全部ASSUMED-UNVERIFIED。
+
+### A395721
+
+精确目标：∀n≥1，令 m=A005117(n)，a(n)=max K_m（K_m为空时取−1）；猜想 m 奇数 ⇒ a(n)=−1。哨兵−1是整数值而非自然数截断减法；正整数集合有严格界 k<m²，故最大值存在。由偶 m≥2 的 k=1 见证，还可得 a(n)=−1 iff m 奇数；这仍是同一空集分类。已打开 https://en.wikipedia.org/wiki/St%C3%B8rmer%27s_theorem 的 “Lehmer’s algorithm” 段，原文明确写出 “Assume p1 = 2; otherwise there could be no consecutive P-smooth numbers, because all P-smooth numbers would be odd.” 这已经给出所需一般断言及证明理由，取 P 为 m 的素因子集即覆盖目标，无须 Pell 方程或 Størmer 的深层有限性。https://en.wikipedia.org/wiki/Radical_of_an_integer 的定义段确认 rad 为不同素因子乘积；因此 rad(k)|m 与 k 为 P-smooth 在正整数域等价。不是仅因条目写了 conjecture 而判新题。bind 风险 high：实读 pin 中 Nat.mem_primeFactors、Nat.Prime.mem_primeFactors、Nat.primeFactors_mono，以及 Nat.prod_primeFactors_dvd_iff（k≠0 时，素因子乘积整除 k iff 素因子集包含）。它们的证明是列表/有限集转换与整除传递，虽未直接命名本 A 序号，但加上相邻整数必有一个偶数就只剩索引和空集合包装；没有可推荐的非 bind-only escape。停止条件：一旦完成正整数、严格上界及索引换算即停止，不为凑席扩写 Lean。三条只占同一概念家族，计数为0与最大值哨兵−1等价；当前已知初等证明，合计0个新实施席；三个条目仍各占一个采集预算项。把偶 m 的完整分类或所有 primorial 上与无界 A002071/A002072 的相等式当 escape 会改变问题，且必须另证每个解 k<m²；Størmer 有限性不能给这个平方界。已打开 Eppstein 2007 “Smooth pairs” 的主文及评论，它报告有限素数集的计算与算法条件，没有证明此统一平方界；该桥仍 ASSUMED-UNVERIFIED。若升级到一般 S-unit/有效 abc 界的深核心，列 tier3 note-only、不计采集预算，不派发。全部直接 A 引用：A002072, A005117, A007947, A039956, A062503, A071403, A365435, A383008, A395754。数值方案：先试除得到P=primeFactors(m)，S={1}；对每个p∈P及每个s∈list(S)，逐次乘p并仅加入≤m²的值，再取sorted(k for k in S if k<m² and k+1 in S)。完整代码见文末共用光滑数算法。读者实际检验306个平方自由m≤500与64个二进索引n≤63（最大m=30030），未见反例，与源可比DATA均相等；按生成集合大小工作，勿扫描至m²。其余未打开的源引文及页面全部ASSUMED-UNVERIFIED。
+
+### A395546
+
+精确目标：n≥1 个标号变量；允许重文字、重子句及重言式，五个三文字子句按多重集计数。S₅(n)=C(C(2n+2,3)+4,5)−U₅(n)；被审查的第二个 %F 将 U₅(n) 替为六次多项式 P₆(n)。 完整镜像 A395546 的首个 %F 是正确的互补计数，但第二个 %F 的六次插值式不是有效无界公式，不能与 A396491 当前十次插值式混用。本次不依赖 A396491 猜想，固定互相矛盾的两个单位子句 (x₁,x₁,x₁) 和 (¬x₁,¬x₁,¬x₁)，任意选择余下三子句多重集；删去固定两子句各一份给出单射，故 U₅(n)≥C(q+2,3)，q=C(2n+2,3)。n=40 时 q=88560，下界115764735802320，而旧式只给112961055559840，严格超出2803680242480；这是有限整数见证加明确集合单射的反驳，不是前缀猜测，也没有假称已发表的外部证明。文献入口就是已完整读的 pinned A395546.seq 的第二 %F 及 A396491.seq 的 %C/%F；Cook 1971 复杂性引用不证明固定五子句计数，其链接未打开而标 ASSUMED-UNVERIFIED。公开全网搜索仍受挑战页/无关返回限制，故当前十次修正式的文献新颖性保持 unknown，归 A396491 的审查结论。已读 D5.S0.Certificates.LRATUnsatisfiable.empty_clause_proof_iff_unsatisfiable、Refutation.sound、refutation_iff_unsatisfiable，分别是定义等价、sound 字段投影和包装，不枚举带重数的 CNF；它们不能给总计数。bind 风险：互补式 high；真正五子句极小不可满足核及额外子句重数分类 med。可设的非 bind-only escape 只能是 A396491 的精确五子句核计数、支持集分类与十个 binomial 基系数，不是给 S₅ 重新命名。停止条件：旧 P₆ 已反驳立即停；若修正为十次式则与 A396491 合并，未证分类和可靠文献检索完成前不 dispatch。SAT 三目标共享语义工具，四子句不与五子句逻辑等价；本目标与五子句互补目标严格等价，所以增加0席。全部直接引用 A396351、A396491、A396492、A396493 均全文读完。可照抄：`n=40; q=comb(2*n+2,3); lower=comb(q+2,3)`，`P=(129332*n**6-2237100*n**5+16427761*n**4-63136975*n**3+130884126*n*n-135887564*n+53820480)//3`；输出q=88560、P=112961055559840、lower=115764735802320，断言lower>P。读者扫描1..100时n40是这个构造下界首次触发，不主张最小真实反例。unknown限外部证明身份；本轮构造反驳为repo-derived。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A398692
+
+精确目标：从[1]起，每轮取最小未出现正整数并逆序附加其首次进入已见集合前的Collatz轨迹；所有轮终止且所得序列遍历ℕ>0 ↔ ∀m≥1,∃k≥0,C^[k](m)=1 必须把“无限序列”解释为每次最小遗漏起点的轨迹追踪都在有限步到达已见集合；若追踪不终止，不能在无限将来逆序追加。设 C(m)=m/2（偶m）或3m+1（奇m），全称终止/遍历与 Collatz 猜想等价：已经附加的各值沿 C 都通向1，所以某新轨迹连入旧集合即可通向1；反之若所有正整数都通向1，则每轮可完成且最小遗漏策略最终覆盖每个整数。这个等价是问题改写，不是解决深核心。已完整读 A398692、A006370、A061641；目标 %C 明说 iff，A006370 %C 明说未解，A061641 的 pure numbers 分类/密度及源引用 Shaw Theorem2.1 不能给所有轨迹终止。已打开 https://arxiv.org/abs/2111.02635 的 Lagarias Overview 摘要与metadata，说明是2010工作综述的2021版本；没有把摘要或未打开的综述全文当解决证明。bind=high：D5 全 A号/Collatz 搜索无数论命中，pinned Mathlib 的 Function.iterate_succ_apply（Iterate:65）是 rfl，iterate_add_apply（76）只重排有限迭代，完整型与证明已读，无法产出存在终止步的量词。唯一合理 escape 是有限带 fuel 的轨迹证书与“到达已验证集合即终止”的安全拼接，它不处理未证全称句，故不占新发现席。独立数值用 seen 集合、局部去环、全局 fuel=2000000、height_cap=10^12，按遗漏起点≤10000运行；共4326次追加、21663个新步、21664个值，最大值27114424，1..10000全部出现且无重复，首70项已保存并吻合镜像所列前缀。这不外推到任意起点；触发 fuel/height/cycle 即停止且报未决，不将超时误报反例。算法成本与实际访问新轨迹长度线性，内存同阶；无已证明统一运行上界。A006370是同一动力系统映射、A061641是相关新起点集合，只有一个 Collatz 核心，不应拆席；本项 tier3、note-only、30项预算外。全部直接 A引用 A006370、A061641。这是预先另列的核心note，始终未占采集预算，并非完成后追溯删分母。数值复制：对每个最小遗漏m，追C到seen（另设本地visited检测环），把新路径reverse后一次append并并入seen；fuel与height_cap如上，到限仅报未决。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A398183
+
+精确目标：G(n)={p素数:p≤n且2n−p素数}，a(n)为G(n)第二小元素或0；∀n≥3，a(n)=0 ↔ n∈{3,4,6}，即其余n的|G(n)|≥2 域从 n=3 起，p≤n 避免把同一无序 Goldbach 分拆计两次，但 p=n 的平方对允许；n=2 不在目标域，否则也应有零。靶要求除6、8、12之外每个偶数≥6至少有两种无序素数和，显然包含普通强 Goldbach 对所有较大偶数的存在性，不能当“小范围可判定”的全称轻题。已完整读 A398183 与六个直引。已打开 https://sweet.ua.pt/tos/goldbach.html 的 Introduction、Results：该站明确说强 Goldbach 未解，报告逐偶数验证到4·10^18，且策略仅找第一/最小分拆；因此不能把其边界当作“至少两种”已验证范围，更不能当无界证明。目标 %C 的2n≤10^7是镜像作者的有限检验声称，本读者只独立检查到10^5。A045917的“表示数趋于无穷”等仍标猜想；A025018/A025019是第一分拆纪录而非第二分拆，A398451/A398452只是目标纪录及发生下标。源中“纪录无界”也不可由前缀或素数无穷直接推出，保留为未核实附带断言，不另开席。bind=med：D5无目标/Goldbach数论定理，已读 mathlib Nat.coprime_fermatNumber_fermatNumber（Fermat:102）完整型/证明，虽注释称 Goldbach’s theorem，却是互异Fermat数互素；Nat.exists_infinite_primes（Prime/Infinite:33）及 Nat.exists_prime_lt_and_le_two_mul（Bertrand:222）只给某素数存在/区间素数，均不确保与2n−p同时为素且有两对。escape只有有限筛证书：埃氏筛至2N，递增素数p≤n，找到第二个命中就停止；整体内存O(N)，最坏查询O(Nπ(N))，实际早停很快。N=50000，零点精确{3,4,6}、首74项全合，纪录至(n,a)=(42058,379)，脚本和JSON均已保存；不是深猜想证明。任何新零点应保存其完整≤n素数枚举证书；资源上限或概率素性测试不可替代确定性结论。全称正向不存在本次可派发的非核心escape，立即在tier3停止，30项预算外。全家族仅一个Goldbach表示数核心、当前0席；全部直接 A引用 A020481、A025018、A025019、A045917、A398451、A398452。这是预先另列的核心note，始终未占采集预算。数值复制：布尔埃氏筛0..100000，对每n=3..50000遍历素数p≤n并检测is_prime[2*n-p]，第二次成功即记录p；遍历完不足二次则记录0。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A397445
+
+精确目标：n≥0；K_n(i,j)=[x^i](1+x)^(n−1−j)(1−x)^j (0≤i,j<n)，per(K_n)=0 ↔ n mod4∈{2,3}；per(K_0)=1 靶是整数矩阵 permanent 的完整零值分类，n=0 为空矩阵取 1，非负下标已与官方源例子核对。已打开 https://en.wikipedia.org/wiki/Krawtchouk_matrices 的 Definition/Properties：生成函数及显式二项式和与源的超几何写法吻合；K²=2^(n−1)I、det=(-2)^(n(n−1)/2) 是矩阵乘法/行列式性质，不是 permanent 非零证明。arXiv API 的 all:Krawtchouk AND all:permanent 查询 totalResults=0，只能说明这个窄搜索未见结果，不能代表全部文献；Wolfram 链接未打开，显式标为 ASSUMED-UNVERIFIED。文献状态保守 unknown。bind=med：已完整读 pinned Mathlib/LinearAlgebra/Matrix/Permanent.lean，Matrix.permanent（32）、permanent_permute_cols（80）、permanent_permute_rows（85）、permanent_updateRow_smul（109）各型与证明。列反射 j↦n−1−j 令第 i 行乘 (−1)^i，因此 per=(-1)^(n(n−1)/2)per，确能解释 n≡2,3 时为零；这些命名定理不能倒推出 n≡0,1 时非零。全 D5 A号/Krawtchouk 检索无命中。数值采用 Gray-code Ryser 子集容斥，O(n2^n) 大整数算术、O(n²) 矩阵内存，不做 n! 排列暴搜；n=0..18 全匹配官方前缀及分类，其中 n8=−8883840、n9=−250675200、n12=−14604025724682240、n13=292718885826099937280，符号变化排除直接套非负矩阵永久式。具体 escape 探针应为 n≡0,1 的非抵消证书（例如给出可验证 2-adic 最低阶与非零首系数的递推），而不是再写反射零值引理；尚未得到可支持无界式的最低阶规律，故不 dispatch。若找到额外零值、已有完整 nonvanishing 证明或仅能做反射 binding，即停止此原靶。与直接 A006125（行列式绝对值）、A057077（符号）、A077957（迹）、A042964（剩余类）只共享表达式，不是四项等价猜想：至多一个零值分类席，当前 0。全部直接 A 引用即 A006125、A042964、A057077、A077957，均完整读过。主循环按第3.6条将形态改记3：有界Ryser计算并未给出全n非消去的有限归约，已有零方向之外仍是研究线问题；只作note-only，不占30条采集分母。数值指令：按Gray码遍历非空列子集S，逐步更新各行和r_i，累加(−1)^(n−|S|)·Πr_i；生成K的元素用Σ_j(−1)^j C(col,j)C(n−1−col,row−j)，不存在的二项式项置0；N=18。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+### A396760
+
+精确目标：∀k≥1，M(k)=min{x:∃x≥y≥z≥w≥0,k=x²+y²+z²+w²}；g(k)=M(k)−ceil(sqrt(k/4))；[∀1≤j<k,g(j)<g(k)] iff k∈{1,11,53}∪{96·4^m,224·4^m,2816·4^m:m≥0}。 精确命题是所有正整数上的严格运行纪录集合分类，不只是三条链上的表示存在性。已打开作者仓库 https://github.com/nmicic/four-square-balance 的README，以及9月8日的完整说明 https://raw.githubusercontent.com/nmicic/four-square-balance/main/extra-observations/EXTRA_OBSERVATIONS.md ：“The square member”表明确将“No record families other than the three chains”标为Conjecture/open beyond retained scan；“Exact scaling of minimizers and gaps”给出正偶数n的M(4n)=2M(n)完整奇偶证明（8整除时四坐标必须全偶），其后“Infinitely many records”用96链证明纪录无限。两个证明都已逐句核对；它们不证明三条链一直是全局纪录，更不排除其他奇核。“固定形状”x+w=y+z及共享投影射线也只是形状事实。Grosswald第86页定理1和Lehmer1948只被直接引用A006431指向“唯一四平方分拆”，原书/论文未打开，严格标ASSUMED-UNVERIFIED；而53、2816不在A006431、512在A006431却非纪录，本源已给的反差排除了直接等价。已读 mathlib `Nat.sum_four_squares`（199行）类型与证明：只保证存在四平方表示，通过素因数归纳与Euler恒等式闭合，完全没有最小最大根或纪录上界，不能bind。可复制 `python3 probes.py A396760`：一次遍历0≤w≤z≤y≤x、平方和≤N，把每个和的最小x及见证保存在数组，之后用整数平方根扫描严格纪录；O(N²)有序四元组枚举/O(N)空间，N=20000得到13项1,11,53,96,224,384,896,1536,2816,3584,6144,11264,14336，最高gap36，和三链预测零差异。本次没有重复作者声称的10^9扫描。可能逃逸必须是新的“所有非三链整数的gap不超过最近预测纪录”统一包络或把无限多个奇核压缩到有界证书的引理；目前没有这种具体可执行有限归约，不能以缩放代替。故把完整分类保守放tier3核心note-only、退出30项预算，本轮用有限奇偶靶补槽；这是研究难度/缺少有限逃逸的分层，不是断言它与某经典大猜想等价。停止条件：仅证明已发表缩放、无穷性或扩大前缀而无全局包络即停。七个直接引用只给最小/最大坐标或唯一分拆邻题，均非本纪录命题；0席且不合并成“已有四平方定理即解”。全部直接A引用：A006431, A122921, A122922, A122923, A122924, A178786, A285552，每份文件全部字段、项目均已读完。主循环接受tier3裁决，另用A393868补回预算；本核心没有新增派席授权。整数ceil根可用c=isqrt(k//4)，若4c²<k再加1，避免浮点平方根边界。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+
+## 可复制数值附录
+
+以下完整代码保存为 `oeis_triage4_numeric.py`，只用Python标准库；例如 `python3 oeis_triage4_numeric.py mod3`。一次只跑指定任务，边界在代码中固定，不默认提高枚举规模。运行 `power` 检验三个参数/平方指数目标，`mod3` 检验A396808，`prime` 检验A393867/868，`iterate` 检验A395842，`sat` 同时检验四/五子句计数，`sat_bound` 复现A395546旧式反驳，`smooth` 检验三个光滑数旁支，`pascal` 复现A397551全局支撑反例。
+
+`power`使用常数项1的整数幂系数递推，负整数指数也适用；在整数中检查整除，不在有限域除以阶乘。`sat`保留每个不同文字多重集的子句，即使真值相同也分别处理，子句数**递增**更新允许重复子句。`smooth`只生成不超过m²的S-smooth数，再查相邻项；它验证条目规定的有限窗，不宣称该窗穷尽全体Størmer对。`pascal`仅用26244个半符号状态和131072个子集的Counter；按全局包含极小支撑计一次，不混用附件的类内极小定义。
+
+```python
+# Python 3.8+; standard library only. Finite checks, not universal proofs.
+from math import comb
+from itertools import product, combinations_with_replacement
+from collections import Counter, defaultdict
+from time import perf_counter
+import sys, json
+
+def power(f,e,m):
+ c=[1]+[0]*m
+ for k in range(1,m+1):
+  t=sum(((e+1)*i-k)*f[i]*c[k-i] for i in range(1,k+1))
+  assert t%k==0
+  c[k]=t//k
+ return c
+
+def diagonal(N,kind):
+ a=[0,1]
+ for m in range(2,N+1):
+  e=(m+1)**2 if kind=='square' else m+1
+  c=power([1]+[-v for v in a[1:]]+[0],e,m)
+  s=sum(c[k]*e**(m-k) for k in range(m+1))
+  assert s%e==0
+  a.append(s//e)
+ return a
+
+def parametric(N,y):
+ a=[1]
+ for m in range(1,N+1):
+  e=m+1;c=power(a+[0],e,m)
+  t=(y*e)**m-sum(c[k]*e**(m-k) for k in range(m+1))
+  assert t%e==0
+  a.append(t//e)
+ return a
+
+def mul(a,b,d):
+ out=[0]*(d+1)
+ for i,x in enumerate(a):
+  if x:
+   for j in range(min(len(b),d-i+1)):
+    if b[j]:out[i+j]+=x*b[j]
+ return [v%3 for v in out]
+
+def power3(a,e,d):
+ out=[1]+[0]*d
+ while e:
+  if e&1:out=mul(out,a,d)
+  e//=2
+  if e:a=mul(a,a,d)
+ return out
+
+def counts(n,M=5):
+ full=(1<<(1<<n))-1;dp=[defaultdict(int) for _ in range(M+1)];dp[0][full]=1
+ for c in combinations_with_replacement(list(range(-n,0))+list(range(1,n+1)),3):
+  mask=sum(1<<a for a in range(1<<n) if any(((a>>(abs(t)-1))&1)==(t>0) for t in c))
+  for j in range(1,M+1):
+   for old,v in list(dp[j-1].items()):dp[j][old&mask]+=v
+ return {str(m):dp[m][0] for m in range(3,M+1)},max(map(len,dp))
+
+def factors(m):
+    ps=[];q=2
+    while q*q<=m:
+        if m%q==0:
+            ps.append(q)
+            while m%q==0:m//=q
+        q+=1
+    if m>1:ps.append(m)
+    return ps
+
+def pairs(m):
+    bound=m*m;S={1}
+    for p in factors(m):
+        old=list(S)
+        for s in old:
+            v=s*p
+            while v<=bound:S.add(v);v*=p
+    return sorted(k for k in S if k<bound and k+1 in S)
+
+def powers(g,n,mod=None):
+    P=[[1]+[0]*n]
+    for j in range(1,n+1):
+        z=[0]*(n+1)
+        for k in range(j,n+1):
+            z[k]=sum(P[-1][k-i]*g[i] for i in range(1,k-j+2))
+            if mod:z[k]%=mod
+        P.append(z)
+    return P
+
+def apply(h,P,n,mod=None):
+    z=[sum(h[j]*P[j][k] for j in range(k+1)) for k in range(n+1)]
+    return [v%mod for v in z] if mod else z
+
+def iterated(N,mod=None):
+    g=[0,1,1];a=[0,1,2 if not mod else 2%mod]
+    for n in range(3,N+1):
+        g.append(0);P=powers(g,n,mod);h=[0,1]+[0]*(n-1)
+        for _ in range(n-1):h=apply(h,P,n,mod)
+        v=apply(h,P,n,mod)[n];g[n]=h[n]-v
+        if mod:g[n]%=mod
+        a.append((v+n*g[n])%mod if mod else v+n*g[n])
+    return g,a
+
+def check_power():
+    out = {}
+    for aid, y in [('A397592', 2), ('A397594', 4)]:
+        a = parametric(100, y)
+        expected = {2**k+s for k in range(2, 8) for s in (-1, 1)}
+        out[aid] = dict(N=100, errors=[n for n in range(4, 101)
+                                      if bool(a[n] % 2) != (n in expected)])
+    a = diagonal(80, 'square')
+    expected = {2**k-j for k in range(2, 8) for j in range(4)}
+    out['A397902'] = dict(N=80, errors=[n for n in range(3, 81)
+                                       if bool(a[n] % 2) != (n in expected)])
+    return out
+
+def check_mod3():
+    N=256; a=[1,1]
+    for n in range(2,N+1):
+        p=a+[0]; c=power3(p,n+1,n)
+        a.append((n*mul(c,p,n)[n]-(n+1)*c[n])%3)
+    pows=[]; v=1
+    while v<=N: pows.append(v); v*=3
+    mixed={3*(x+y)//2 for i,x in enumerate(pows) for y in pows[i+1:]}
+    return dict(N=N, errors=[n for n in range(2,N+1)
+                 if a[n]!=(2 if n in pows else 1 if n in mixed else 0)],
+                residue1=[n for n in range(2,N+1) if a[n]==1],
+                residue2=[n for n in range(2,N+1) if a[n]==2])
+
+def check_prime():
+    N=256; primes=[]; v=2
+    while len(primes)<N:
+        if all(v%p for p in primes if p*p<=v): primes.append(v)
+        v+=1
+    F=[1]; g=[0]
+    for n,p in enumerate(primes,1):
+        c=power(F+[0],p,n)
+        assert c[n]%p==0
+        F.append(c[n-1]-c[n]//p)
+        g.append(n*F[n]-sum(g[k]*F[n-k] for k in range(1,n)))
+    runs=[]; start=0
+    for i in range(1,len(F)):
+        if F[i]%2!=F[start]%2: runs.append(i-start); start=i
+    return dict(N=N, odd_errors=[n for n in range(1,N+1) if g[n]%2!=1],
+                pair_errors=[m for m in range(N//2) if F[2*m]%2!=F[2*m+1]%2],
+                completed_runs=runs, first_g=g[1:21])
+
+def check_iterate():
+    g,a=iterated(32); gm,am=iterated(96,2)
+    return dict(exact_N=32, mod2_N=96, first_diagonal=a[1:20],
+                exact_errors=[n for n in range(2,33) if a[n]%2],
+                mod2_errors=[n for n in range(2,97) if am[n]],
+                support_errors=[n for n in range(1,97)
+                                if gm[n]!=int(n&(n-1)==0)])
+
+def check_sat():
+    B4=[10,811,7178,16400,22000,15360,4480]
+    B5=[20,6720,224102,1766568,6055360,13099520,17940160,
+        15088640,7096320,1433600]
+    rows=[]
+    for n in range(1,5):
+        v,states=counts(n,5)
+        assert v['4']==sum(x*comb(n,k) for k,x in enumerate(B4,1) if k<=n)
+        assert v['5']==sum(x*comb(n,k) for k,x in enumerate(B5,1) if k<=n)
+        rows.append(dict(n=n, counts=v, max_states=states))
+    return rows
+
+def check_sat_bound():
+    n=40; q=comb(2*n+2,3); lower=comb(q+2,3)
+    numerator=(129332*n**6-2237100*n**5+16427761*n**4-63136975*n**3
+               +130884126*n*n-135887564*n+53820480)
+    assert numerator%3==0
+    P=numerator//3
+    assert lower>P
+    return dict(n=n,q=q,lower=lower,old_polynomial=P,excess=lower-P)
+
+def check_smooth():
+    squarefree=[m for m in range(1,501) if all(m%(p*p) for p in factors(m))]
+    primes=[2,3,5,7,11,13]; binary=[]
+    for n in range(64):
+        m=1
+        for i,p in enumerate(primes):
+            if (n>>i)&1: m*=p
+        binary.append(m)
+    errors=[m for m in squarefree+binary if bool(pairs(m))!=(m%2==0)]
+    return dict(squarefree_cases=len(squarefree),binary_cases=len(binary),errors=errors)
+
+def check_pascal():
+    n=34; w=[comb(n,i) for i in range(17)]; cut=8
+    left=defaultdict(list)
+    for signs in product((-1,0,1),repeat=cut):
+        left[sum(x*y for x,y in zip(signs,w[:cut]))].append(signs)
+    relations=[]
+    for signs in product((-1,0,1),repeat=len(w)-cut):
+        target=-sum(x*y for x,y in zip(signs,w[cut:]))
+        for lo in left.get(target,[]):
+            z=lo+signs
+            if not any(z) or next(x for x in z if x)!=1: continue
+            relations.append(set(i for i,x in enumerate(z) if x))
+    supports={frozenset(s) for s in relations}
+    primitive=[s for s in supports if not any(t<s for t in supports)]
+    c=Counter({0:1})
+    for x in w:
+        nxt=c.copy()
+        for k,v in c.items(): nxt[k+x]+=v
+        c=nxt
+    repeated=sum(v>1 for v in c.values())
+    rhs=sum(2**(len(w)-len(s)) for s in primitive)
+    assert (repeated,rhs,max(c.values()))==(2560,2048,2)
+    return dict(n=n,half_sign_states=3**8+3**9,repeated_values=repeated,
+                rhs=rhs,primitive=sorted(sorted(s) for s in primitive))
+
+if __name__=='__main__':
+    jobs=dict(power=check_power,mod3=check_mod3,prime=check_prime,
+              iterate=check_iterate,sat=check_sat,sat_bound=check_sat_bound,
+              smooth=check_smooth,pascal=check_pascal)
+    if len(sys.argv)!=2 or sys.argv[1] not in jobs:
+        raise SystemExit('choose one: '+', '.join(jobs))
+    start=perf_counter(); result=jobs[sys.argv[1]]()
+    print(json.dumps(dict(job=sys.argv[1],result=result,
+                          seconds=perf_counter()-start),ensure_ascii=False,indent=2))
+```
+
+## 检索与复核留痕
+
+全部worker自有证据保存在本轮attempt目录：`/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/oeis-triage4-0911/attempt-1`。`adjudications.json`为主循环最终裁决，`selected.json`和`notes.json`给出预算分组，`excluded.json`为372号排除集，`refs.json`为直接引用关系，`manifest.json`与`source-audit.json`保留完整源及散列，`url-inventory.json`单列访问边界。`final-audit.json`检查一行一段、字段、分母、排除集、全部直引及文件存在性；`appendix-runs/`保存以上复制版本的实际输出，原始更广数值与DATA对比仍在逐席脚本/JSON中。8个可复制任务均已运行成功；此次Pascal 0.061秒、SAT 0.178秒、模3 0.234秒、迭代0.904秒、素数对数导数1.189秒（机器与并发影响计时，不作速度保证）。
+
+三个同模型codex-cli阅读席均正常`turn.completed`并退出0，各自完整阅读41、41、36份源，去重110份；主循环补读A393866、A393867、A393868共达113份。原始`reader*/review.json`不是最终结论：主循环用完整公开声明纠正了A397347已证强命题、限定A396808仅剩模3，并以有效窄域arXiv检索及桥检查裁定三席；另独立重算Pascal n34、A395546计数下界、A393867奇偶及A396808模3。没有把同模型阅读席当异模型共识。
+
+GitHub公开代码的六个精确A号加`language:Lean`查询均为0、`incomplete_results=false`，但已知仓内A396808证明也未被索引命中，故此结果只证查询行为，不能承载“没有Lean证明”。有效arXiv精确A号及限定主题查询的URL、完整响应与零结果记录在`arxiv-*-search.json`及原XML；检索引擎挑战页、JS跳转、无关结果和Brave 429不算有效阴性，更不是OEIS接口429。收尾`origin/dev`更新至`820bd4536b00c365e42ad201c96931c32421fb82`；按该不可变提交重查本轮34号，未见推翻上述范围裁决的新数学声明，原始基线不变（记录见`latest-dev-id-search.txt`）。
+
+实际作为文献或声明证据读取的外部页面及读取范围如下；仅摘要/元数据或跳转壳不得据此标成论文全文已读。
+
+| 页面 | 实际读取范围及限制 |
+| --- | --- |
+| arxiv.org/html/2607.02085v1 | Chen–Zhu HTML全文；A397265承重处为§3 Thm7、§5 Example11 Eq13及推导。 |
+| arxiv.org/pdf/math/0407326 | Deutsch–Sagan PDF正文及提取文本；A395839承重处为Catalan奇偶Thm2.1。 |
+| oeis.org/A397551/a397551.txt；oeis.org/A397501/a397501.txt | 两份完整附件；全局与类内支撑定义的差别详见A397551段。 |
+| en.wikipedia.org/wiki/St%C3%B8rmer%27s_theorem | 已读Lehmer算法的奇素数集合段；只承重奇m没有连续光滑数这一直接结论。 |
+| en.wikipedia.org/wiki/Radical_of_an_integer；11011110.github.io/blog/2007/03/23/smooth-pairs.html | 已读radical定义/光滑数对背景，未据此证明本轮未登记的无界primorial上界。 |
+| en.wikipedia.org/wiki/Krawtchouk_matrices | Definition、Properties；没有得到permanent非零定理。 |
+| eprint.iacr.org/2019/999；arxiv.org/abs/2111.02635 | 前者仅摘要/元数据，PDF未成功；后者摘要、刊物及修订记录，均不作全称解决证据。 |
+| sweet.ua.pt/tos/goldbach.html | Introduction、Results，普通强Goldbach有限验证不解决第二分拆。 |
+| github.com/nmicic/four-square-balance；其extra-observations/EXTRA_OBSERVATIONS.md | 已读当次页面和作者补充，缩放族证明与“没有其他记录族”猜想分开。 |
+| doi.org/10.1016/0097-3165(86)90060-9；Crossref同DOI；作者学校页 | 仅跳转壳/元数据/防护错误；Aharoni–Linial正文ASSUMED-UNVERIFIED。 |
+| oeis.org/A396805/b396805.txt | 实际读取b-file，核对n23、n24反例；不是只凭模5拟合。 |
+| OEIS官方镜像钉版.seq、仓内公开钉版Lean源码 | 文件完整读取；逐URL来源及fresh/reused边界见manifest及访问清单，不伪装为OEIS API。 |
+
+上述列表之外，未真正打开的导航页、源引文及其外链全文一律 **ASSUMED-UNVERIFIED**；能打开书目页不代表打开论文。当前`published`八条只按各段精确命题与来源裁定，两个本轮有限构造反驳不冒充外部已发表结论。检查结果不能提供全球检索穷尽性、优先权或新的Lean内核认证。
