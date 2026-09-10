@@ -227,29 +227,35 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 **A21 性能账(2026-08-26 退役)** τ=0 owner 以 #3365 的机器负载相关失败裁决:挂钟与机器性能不得承测试判词,性能实验须与功能测试分离。退役前复核 `preflight.sh`、`local-harness-gate.sh` 与 `ci.yml` 对 `perf-report|PerfBudgetComparator|over-budget` 为 0 命中,三条预算全为 `warn-only`,`false_positive_rate_percent = "unmeasured"`,且无性能预算阻断事故;故按第 20″ 条与第Ⅵ节「为道日损」删除事件采集、账本 writer/report/comparator、预算数据、CLI/Make 入口及其测试,不留兼容动词或空壳。历史 revision notes 只作审计记录,不构成现役接口或义务。
 
-**A22 preflight 与 CI 共用 current/delta 契约(v7.31 修订,2026-09-07)**
+**A22 preflight 与 CI 共用 current/delta 契约(v7.31 修订,2026-09-10)**
 
-**状态与等价域。** 本条是用户已授权 CI/preflight 重构的目标契约,原位替代旧 engineering/lean-inspect/admission 三段方案及精确地址命中短路方案。规范修订时,根 `Makefile` 的 preflight 仍要求 BASE,`tools/Makefile` 的 `engineering-tests` 仍接收 HEAD/BASE,`preflight.sh` 仍要求 BASE 为 HEAD 祖先;下列新目标、类型分离、缓存与 workflow 迁移尚待实施。新 workflow 真跑、合入后观察与 required-set 更新均未验证,记 `ASSUMED-UNVERIFIED`;旧方案的 run 不构成本契约的验收证据。本地 preflight 是早反馈,不强制作提交前闸;CI 是合并判词的权威。同一候选树、base(仅 PR)、工具链及语义环境下,CI 与 preflight 必须具有相同检查集与判词,共同构建、测试与报告只生产一次;运输或缓存状态不得改变检查集。
+**状态与等价域。** 本条是用户已授权 CI/preflight 重构的目标契约,原位替代旧三段方案、精确缓存命中短路及每轮全测要求。下述依赖图驱动的增量计划、按影响范围执行及验证复用尚待程序实现和集成验收,不声称现有 FILEMAP 或工程证据已具备这些能力;既有 run 只证明其固定版本下实际验证的行为,不得追认为选择执行的证据。完整上线及 required-set 迁移仍未验收,记 `ASSUMED-UNVERIFIED`。本地 preflight 是早反馈,不强制作提交前闸;CI 是合并判词的权威。同一候选树、base(仅 PR)、工具链及语义环境下,CI 与 preflight 必须具有相同必需检查集与判词;缓存只改变计算或复用的安排,不得改变覆盖义务。共同构建、测试与报告不重复生产。
 
-**模式与候选。** `make preflight` 默认 `MODE=push`,只检查当前树,执行 engineering 与 current,不执行 delta。push 不要求 BASE、父提交或 remote,不隐式读取 `HEAD^1`、远端引用或其它基线;无父提交、无 remote 的仓库也须可用。证据须绑定实际受审树,不得把工作树输入冒记成另一棵已提交树。
+**模式与候选。** `make preflight` 默认 `MODE=push`,只检查当前树,调用 engineering 与 current,不调用 delta。push 不要求或读取 Git BASE、父提交或 remote,不隐式读取 `HEAD^1`、远端引用或其它基线;无父提交、无 remote 的仓库也须可用。push 的构建增量比较当前输入与已验证的缓存输入 manifest,不是 Git 跨树 delta。证据须绑定实际受审树,不得把工作树输入冒记成另一棵已提交树。
 
 `make preflight MODE=pr BASE=<sha>` 必须显式取得不可变 base commit SHA,并要求源 HEAD 已提交且工作树干净(含未跟踪文件)。入口校验模式、对象、路径与树状态,不以可变 ref 或隐式 fetch 补基线。以 `git merge-tree --write-tree BASE HEAD` 构造待合并候选树;冲突或无法合并即阻断,不得退回只判源 HEAD。BASE 无须是 HEAD 的祖先,不得设 ancestry 门。只物化合成候选,将其树身份与 BASE 固定后运行同一 engineering/current,再运行 delta;不得 checkout、restore、编译或执行 base 代码,base 仅作为候选判官的字节快照与差异输入。临时候选在所有出口清理,源工作树与分支不因预检改写。
 
-**共享入口与谓词。** 内容层与工具层的唯一阶段入口如下,CI 和 preflight 共用其实现:
+**增量计划与依赖。** `Meta/FILEMAP.toml` 仍是 ownership、producer、consumer、verifier 的唯一真源;实际执行依赖边须从语言原生编译/构建图及 producer 推导:MSBuild 求值后的输入与 project references、Lean imports/traces、实际 Scribe/producer 程序入口及测试的语义输入映射。现有 FILEMAP actor 字符串本身不证明可执行依赖闭包完整。不得另建手维 glob、逐 PR 清单或第二份 owner 注册表。
 
-| 阶段入口 | 必须执行的工作 |
+CI 与 preflight 共用一个 canonical、确定性的增量计划:以当前输入/材料身份和已验证的缓存输入 manifest 求差,仅恢复必需缓存层,沿反向依赖安排受影响的编译、生产、检查与测试。调度单元采用既有有意义的 producer/project/module/test 归属,不做逐文件特判。成员及依赖的新增/删除须纳入新旧图的反向失效闭包;程序/producer、选项、工具链及语义环境均是增量内部的失效因素。任何计算复用均须验证当前候选完整声明的输入、环境、producer 闭包与成功材料证据。Git delta 可缩小候选集,不能单独证明传递运行时或测试输入未变。图或输入范围未解析、种子缺失/损坏/不可用时,在受影响 owner 或无法界定的 unknown 范围保守执行,不得把 unknown 当作无需检查。
+
+**共享入口与谓词。** 内容层与工具层的唯一阶段入口如下,CI 和 preflight 共用其实现与增量计划:
+
+| 阶段入口 | 必须履行的工作 |
 |---|---|
-| `make -C tools engineering` | solution 与反证工程的 locked restore、候选 warnings-as-errors build、全部当前工程测试项目各一次、selftest 字节比对、CompileFailProof 与 BannedApi 两项反证编译证明。反证须核对预期诊断,不能以任意编译失败顶替;缓存不得省去所需 restore 或反证检查。 |
-| `make current` | 增量 Lean build 与报告生产、Scribe、filemap、当前树不变量。复用本轮候选 DLL 与工程产物,不重复 engineering。 |
-| `make delta BASE=<sha>` | 候选相对 base 的分区、保护面、首次冻结、棘轮及其余跨树约束;消费本轮 current 报告与 engineering 证据,不重跑共同工作。 |
+| `make -C tools engineering` | 验证 solution 与反证工程输入,按计划完成必要的 locked restore、候选 warnings-as-errors 增量 build 及受影响或输入未知的测试,全部必需当前项目取得成功覆盖证据。selftest 字节比对、CompileFailProof 与 BannedApi 两项反证证明亦须成功覆盖;仅在相关完整输入及成功证据验证成立时复用,否则执行。反证须核对预期诊断,不能以任意编译失败顶替。 |
+| `make current` | 进入 Lean build/报告的增量入口,按计划完成必要生产、Scribe、filemap 与当前树不变量的计算或验证复用;运行期调度及当前报告/证据校验每轮真实执行。消费已验证的候选 DLL 与工程产物,不重复 engineering。 |
+| `make delta BASE=<sha>` | 候选判官对当前 B→M 数据求值所有必需的分区、保护面、首次冻结、棘轮及其余跨树谓词;消费本轮 current 报告与 engineering 覆盖证据,不重跑共同工作,不得以历史 delta 判词替代本轮求值。 |
 
-引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及其当轮产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则若同时含当前有效性与跨树约束,须分别归属,不能只按规则名整条搬移。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得借拆分把它们改成 current 全树门、重判存量或漏掉跨树约束。
+引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及本轮验证可用的产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则若同时含当前有效性与跨树约束,须分别归属,不能只按规则名整条搬移。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得借拆分把它们改成 current 全树门、重判存量或漏掉跨树约束。
 
-engineering 从候选枚举全部当前测试项目,不按 base/diff 选择;Scribe 共用检查亦不得按 base 选测试或检查。delta 只把 base 的测试项目集合当数据读取,并用**本轮、同一候选身份绑定的 TRX** 确认这些项目已在候选中成功执行。项目被删、漏跑、执行失败或缺少有效成功证据均阻断;历史 TRX、另一候选的成功或重新运行 base 测试不能补证。此核验不再执行测试,也不引入 base 判官。
+engineering 从候选枚举全部必需当前测试项目,按完整输入闭包选执行范围;Scribe 共用检查同理,均不得由 base 或文件名差异单独选测。既有 `StrataLint.ScriptTests` 的有意 CI 排除保持。每个必需当前项目及 PR 中 base 要保留的项目均须有**绑定当前候选的成功覆盖证据**:受影响或输入未知者实际执行;未受影响者仅在当前候选完整声明的输入、环境、producer 闭包与材料证据全部验证后,才可复用先前成功计算。delta 只读取 base 项目集合数据,以本轮覆盖报告确认其在候选中的覆盖,不重跑测试。必需项目被删、未覆盖、失败或证据无效均阻断。
 
-**产物、退出与摘要属主。** producer 将报告、候选 DLL、TRX 与工程证据交给下游,每份产物必须能核对其候选身份、来源与完整性。预建 DLL 只可在确认由该候选源码生成后执行;无法确认的缓存产物须弃用并从候选构建。报告生产入口拥有增量生产与校验,消费者只校验和消费交接结果;必需报告或当轮证据缺失、格式错误、候选身份不符即失败,不得在下游静默重跑生产或把未执行记成成功。候选绑定与材料指纹用于验证和增量失效,不得变成远端缓存兼容选择器。
+旧 raw TRX 不能单独证明当前候选通过;本轮覆盖报告须区分 `executed` 与 `reused`,保留来源 run/原始成功证据及选择、失效理由。复用不得改写成新鲜执行或仅重标旧 TRX 的候选身份;另一候选的成功只有经当前完整闭包和材料验证后才可贡献复用证据。缺少该证据则执行候选测试,绝不执行 base 代码。
 
-共享程序入口拥有全部输入/报告验证、退出归一与摘要,包括早退出口;YAML 与 preflight 只编排和传递这些结果。摘要须如实区分执行、跳过、未执行和失败,列明已取得的候选身份、实际检查与测试项目结果、报告及工程证据,保留可诊断的原始失败原因。raw `0` 为成功,`1` 为候选检查失败或 merge 冲突,`2` 为输入/基础设施失败,`3` 只表示 SL-022 保护面变更标注。只有其它必需检查全部成功时才可把该标注归一为阶段成功;它不豁免 Lean 或任何检查,也不触发第二次 Lean/current。make 只承诺成功/配方失败,不能把其折叠后的 `2` 当作原始失败分类。cache 状态、缺失证据或未知结果都不是通过判词。
+**产物、退出与摘要属主。** producer 将报告、候选 DLL、TRX、覆盖报告与工程证据交给下游,每份产物必须能核对其对当前候选的适用性、原始来源与完整性。预建 DLL 只可在确认其完整编译输入及材料与当前候选相符后执行;无法确认的缓存产物须弃用并从候选构建。报告生产入口拥有增量生产与校验,消费者只校验和消费交接结果;最终交接的必需报告或当轮覆盖证据缺失、格式错误、候选绑定不符即失败,不得在下游静默重跑生产或把无覆盖记成成功。候选绑定与材料指纹用于验证和增量失效,不得变成远端缓存兼容选择器。
+
+共享程序入口拥有全部输入/报告验证、退出归一与摘要,包括早退出口;YAML 与 preflight 只编排和传递这些结果。计划及每轮摘要须说明恢复、计算、复用、失效、unknown 的范围与原因,如实区分执行、复用、跳过、未执行和失败;列出候选身份、编译/生产与测试数量、项目覆盖结果及证据来源。记录下载、验证、staging、snapshot、save 和实际关键路径耗时,保留原始失败原因,供消费者核对覆盖及完整 CI 成本。raw `0` 为成功,`1` 为候选检查失败或 merge 冲突,`2` 为输入/基础设施失败,`3` 只表示 SL-022 保护面变更标注。只有其它必需检查全部成功覆盖时才可把该标注归一为阶段成功;它不豁免 Lean 或任何检查,也不触发第二次 Lean/current。make 只承诺成功/配方失败,不能把其折叠后的 `2` 当作原始失败分类。cache 状态、缺失证据或未知结果都不是通过判词。
 
 **Workflow 与消费者。** `ci-push.yml` 承载 `push` 到 `dev` 与 `workflow_call`,运行 engineering/current。PR 调用固定传入候选 SHA,被调用 jobs 检出该候选且缓存只读。`ci-pr.yml` 只承载 `pull_request_target`,目标分支保持 `dev` 与 `integration-**`;每轮只解析一次 merge 候选 M 及其第一父 B,将不可变身份传给调用的 push 流程与 delta。所有检查 jobs 均检出同一个 M,B 只供 delta 使用;各 job 不得重新解析可变 merge ref,merge ref 不可用即失败。delta 依赖两个共享阶段的成功与产物交接,不再运行 engineering/current。
 
@@ -257,29 +263,34 @@ engineering 从候选枚举全部当前测试项目,不按 base/diff 选择;Scri
 
 切换 workflow 时须原子迁移 watcher、`AdmissionTopology`、FILEMAP 与 truth-release 的现役消费者,删除旧 job 名、旧拓扑与已被替代的重复逻辑。`truth-release` 只消费明确指定的 dev commit 的两个 push checks 成功及其报告 artifact,并校验 artifact 绑定该 commit;不得追逐移动 dev tip、等待该 commit 的 PR delta 或借用另一 commit 的报告。报告 producer 的依赖闭包从 canonical **程序入口及其传递依赖**推导,不再从 workflow YAML 文本切片取闭包;入口迁移必须同步闭包与消费者,不得丢失生产依赖。
 
-**缓存与增量报告。** 用结构化解析器从 `lake-manifest.json` 读取 mathlib 的 **resolved revision**。Lean 依赖、项目构建与报告缓存共享该兼容分区,二进制另按 OS/arch 隔离;即分区只由 resolved mathlib revision 与 OS/arch 决定。tag、请求的 ref、完整配置/源码指纹、commit SHA 均不得成为兼容选择器;`elan` 安装缓存独立。Actions 快照只以 run ID/attempt 区分不可变发布实例,该后缀不参与兼容判定。PR 只 restore,dev push 仅在成功生产后 save,并发 run 不覆盖彼此快照。
+**缓存与增量报告。** 用结构化解析器从 `lake-manifest.json` 读取 mathlib 的 **resolved revision**。依赖、项目构建(含 .NET 判官)、报告及成功计算证据缓存共享该兼容分区,二进制另按 OS/arch 隔离;即分区只由 resolved mathlib revision 与 OS/arch 决定。tag、请求的 ref、完整配置/源码指纹、commit SHA 均不得成为兼容选择器;`elan` 安装缓存独立。Actions 快照只以 run ID/attempt 区分不可变发布实例,该后缀不参与兼容判定。PR 只 restore,dev push 仅在成功生产后 save,并发 run 不覆盖彼此快照。
 
 保留定时 GitHub Release 缓存发布;仅在 Actions 无可用种子时,回落**同分区的成功 Release 快照**。删除 exact/config-prefix/same-toolchain 回落层级,不得跨分区借种。donor 与 stamp 使用同一分区口径;同 mathlib 的 metadata 改动不得删除 `.lake`。缺缓存、损坏、传输失败或保存失败须可诊断地降级为正常构建,不能阻断仅因缓存不可用而本可完成的检查;真实 restore/build/Lean/测试/规则失败仍必须阻断。
 
-所有命中均须进入 Lake 与报告的增量执行,缓存只提供起点,永不提供通过判词。报告 producer 必须保留模块新增/删除、源 hash、反向依赖闭包与材料完整性的失效覆盖。producer 闭包、Lean 选项或语义环境变化所需的重算在增量 producer 内完成,不得靠改变远端兼容分区逃避失效判定。相同 mathlib 下源码变化只重算受影响闭包;纯 metadata 变化应为零 Lean 模块重编、零报告模块检查;同环境的增量结果必须等于干净生产。
+缓存命中及既有报告种子仍须进入真实增量求值;构建入口验证输入并执行必要工作,不得因 Actions key 匹配跳过整个必需检查。Lake/报告增量入口每轮进入,无需重编时不得调用编译器;报告 producer 保留模块新增/删除、源 hash、反向依赖闭包与材料完整性的失效覆盖。producer 闭包、编译选项、工具链或语义环境变化所需重算在增量系统内部完成,不得改变远端兼容分区逃避失效判定。相同 mathlib 下源码变化只重算受影响闭包;完整输入验证未受影响的 README/metadata 改动应为零编译器调用、零报告模块重检、零无关单元测试,且保留 `.lake`。缓存只提供计算起点与待验证证据,永不提供通过判词。
 
-**验收矩阵。** 后续实现须先写程序行为测试再改程序;不新增 workflow 文本形状测试。至少覆盖以下放行与阻断边界,并以实际检查/产物证据判定,不能只比较最终退出码:
+**验收矩阵。** 后续实现须先写有意义的程序行为测试再改程序;不新增 workflow 文本形状测试。同环境的增量与全量须在判词和产物上等价,以有代表性的验收对照证明,不要求每轮全量重放。至少覆盖以下放行与阻断边界,并以实际检查/产物证据判定,不能只比较最终退出码:
 
 | 场景 | 必须观察到的结果 |
 |---|---|
-| 无父提交、无 remote、无 BASE 的 push | engineering/current 完整执行各一次,无基线读取、无 delta。 |
+| 无父提交、无 remote、无 BASE 的 push | engineering/current 入口各调用一次,按输入 manifest 增量求值并取得全部必需覆盖,无基线读取、无 delta。 |
 | PR 无冲突分叉或可快进;脏树、缺失/非法 base、冲突 | 合法候选按 merge-tree 判,无祖先要求;坏输入或不可合并阻断,所有出口清理临时候选。 |
-| 相同候选树/base/工具链的 CI 与 preflight | 检查集及判词一致,共同测试、Lean/report 不重跑,PR 各 job 的 M 一致,delta 的 B 为该 M 第一父。 |
-| 混分区、非法首次冻结、棘轮违规、base 测试项目未成功执行 | delta 逐项阻断,对应合法例放行;既有 delta-only 存量作用域不变。 |
-| 缺报告、交接身份错误、陈旧或另一候选 TRX/DLL | 必需证据校验失败;缓存材料不可用时由 producer 正常重建,不得假绿。 |
-| 同 mathlib 源码变化与纯 metadata 变化 | 前者仅重算受影响闭包;后者 Lean 模块重编与报告模块检查均为零,且保留 .lake。 |
+| 相同候选树/base/工具链/环境的 CI 与 preflight | 必需检查集及判词一致;同输入和已验证种子产生同一计划,共同测试、Lean/report 不重跑,PR 各 job 的 M 一致,delta 的 B 为该 M 第一父。 |
+| 混分区、非法首次冻结、棘轮违规、base 必需测试项目无成功覆盖 | delta 对当前 B/M 逐项阻断,对应合法例放行;既有 delta-only 存量作用域不变。 |
+| 缺报告、交接身份错误、仅有旧 raw TRX 或未验证的缓存 DLL | 最终必需证据校验失败;种子不可用由 producer 执行必要工作,不得假绿或重标旧执行。 |
+| 同 mathlib 相关源码变化与 README/纯 metadata 变化 | 前者失效并重算下游受影响闭包;后者在完整输入验证下零编译器调用、零报告模块重检、零无关单元测试,保留 .lake。 |
+| 测试/检查输入未变、受影响或 unknown | 未变且成功材料齐全可复用,本轮报告保留来源并诚实计数;受影响/unknown 或缺成功证据必须执行,负向受影响测试仍检出失败,未覆盖项目阻断。 |
 | mathlib 升级、OS/arch 变化 | 切换隔离分区,不复用跨分区种子;同分区增量结果等于同环境干净生产。 |
-| producer/Lean 选项/语义环境变化,模块增删或材料损坏 | producer 内必要失效及反向依赖重算完整,无旧报告残留或漏检。 |
+| producer/程序/编译选项/工具链/环境变化,成员增删、依赖移除或输入图不完整 | 必要失效及反向依赖重算完整;无法证明的范围保守执行,无旧报告残留或漏检。 |
 | absent/corrupt/transfer-failed/save-failed/concurrent caches | 仍进入真实增量构建与报告;缓存失败可降级,实际检查失败必阻断,并发快照互不覆盖。 |
 
 **分层落地与证据。** 通过 `make worktree` 隔离实施,依次以独立 PR 落地本 A22 规范、入口/类型/谓词与 preflight、缓存、workflow 与其消费者原子迁移;可按职责继续拆小,每层须能独立通过当期 required checks,判官与内容不混 PR。接口首次改变时同步其实际调用者及行为测试,包括 Make help、agent/skill 调用链与对应说明;删除被替代的入口、重复判决、缓存层级与陈旧注释,不留 alias、stub 或双读。CLAUDE.md 等操作指导只在实现已改变行为的那一层同步,不由规范层提前冒领。
 
-每层在 integration 上通过检查后,还须以最小触发 PR 在真实事件中验证新判据的具名拒绝或放行;测试载荷验完关闭不合并。特别是 `pull_request_target` 从 base 取 workflow,必须核对 run **实际执行的 workflow revision**,旧文本下的绿不算新 workflow 已验;同轮复核本地 merge-tree 与 GitHub M 的 tree 一致。向 dev 开 PR 前,将最新 dev 合入 integration,在含其新增量的集成树上复测 engineering/current 及真实 PR delta,不豁免分区、首次冻结或棘轮。留存对应候选/base、workflow revision、具名 checks、报告/工程证据与 run 链接;本地行为测试不能替代权限、缓存只读、拓扑、artifact 传递与报告发布的真实集成验证。合入后观察首个新 dev push 与后续 PR 的新 checks,确认实际名称与判词后更新 required set 并复核 `strict=false`;失败须按仓库流程修复或撤因,不作 admin bypass。规范合入、程序完成或某一轮绿均不单独代表完整目标完成。
+每层在 integration 上通过检查后,还须以最小触发 PR 在真实事件中验证新判据的具名拒绝或放行;专用探针载荷验完关闭不合并。`pull_request_target` 的入口 workflow 取自 **base 仓库的默认分支**,不是 PR 目标 integration 分支;必须逐 run 核对入口及 reusable workflow 的实际不可变版本、事件与权限,旧文本下的绿不算新 workflow 已验。可达的候选评估须保留其真实事件证据,并披露相对拟上线原生事件的缺口,不得冒领或为选中 workflow 提前部署到 dev。同轮复核本地 merge-tree 与 GitHub M 的 tree 一致;本地行为测试不能替代权限、缓存只读、拓扑、artifact 传递与报告发布的真实集成验证。
+
+落地遵循 CLAUDE.md 第 8.12/8.14 条的唯一 CI 政策:实际测试分支首个独立 PR 正常合入并产生可审 diff 后,立即建立并保持该 integration→dev 的跟踪 Draft,auto-merge 关闭;独立实现/修复/优化 PR 持续经检查正常合入该 integration。禁止整批 merge dev,真实开发原 PR 按依赖逐个重放,每个 PR 检查、正常合入及 postmerge push 完成后,分析判词、缓存与实际重算、重复工作、失败和优化机会,必要优化复验后才引入下一个。逐项保留原 PR/源 merge SHA、候选/base、workflow revision、run 链接、报告/工程覆盖证据;按可比载荷、runner、工具链与缓存条件比较改前/改后**完整 CI 耗时(含缓存开销)与关键路径**,不以抬预算或削弱检查掩盖退化。跳过/复用须如实计数,性能改善只据上述实测。
+
+本重构须全部受影响行为、性能与代码清晰度验收达标、至少 **48 小时连续稳定观察**,并同时满足 CLAUDE.md 当期重构稳定计数及重置政策,才可将跟踪 Draft 转 Ready 或合入 dev;稳定条数不抵销本目标的观察时长。最小 hotfix 仍按既有政策直接普通 PR 到 dev,不构成本重构的捷径。最终合入后观察首个新 dev push 与后续 PR 的新 checks,确认实际名称与判词后更新 required set 并复核 `strict=false`;失败按仓库流程修复或撤因,不作 admin bypass。规范合入、程序完成或某一轮绿均不单独代表完整目标完成。
 
 ---
 
