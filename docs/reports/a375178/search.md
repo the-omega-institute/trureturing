@@ -64,3 +64,31 @@ Theorem 3.2 covers H(1,3;p−1)=0 mod p for p≥7, indeed a stronger mod p²
 formula. Equation (22) is the product/shuffle identity and Lemma 3.3 is
 reversal. These are established prerequisites; they are not Lean dependencies.
 The source's statements and relevant proofs were opened, not inferred from title.
+
+## Final search batch and access limits
+
+- https://doi.org/10.1007/BFb0091139: HTTP 200, 251635 bytes, SHA-256 5b3ea65640b0b37af04a1ca3f56473a9bb9c2faefc56e22dd81ccd0e41e406f4.
+- https://api.crossref.org/works/10.1007/BFb0091139: HTTP 200, 8266 bytes, SHA-256 b775386c61524ace734033ebf761492616f80019b21930c12c8b32477a96ddf3.
+- https://export.arxiv.org/api/query?search_query=all%3AA112028: HTTP 200, 696 bytes, SHA-256 6678aa2e26e385343f0db9561285fae35f4762274ccf28a4451e2fbe38c2cc3f.
+- https://link.springer.com/content/pdf/10.1007/BFb0091139: HTTP 200, 251635 bytes, SHA-256 42f701daa1b9a75a0393af8ee25cce8c9d0d4626ecfa9a260f4b226ae6b8953c.
+
+The A112028 arXiv query is valid and returns totalResults=0. Coster DOI and
+Crossref metadata identify the 1990 chapter, pages 194–204. The publisher page
+provides abstract and references with subscription access. The PDF route
+returned HTML, not full text. Coster Theorem 4 has NOT been directly read; the
+p³ attribution is secondhand from OEIS. Neither access failure is negative
+evidence about the theorem.
+
+- Local response artifact a375178-gh-harmonic.json: 477648 bytes, SHA-256 d780f50a5e46fe285f75c891aba7215532671c965979f8ec28e81139f2040f95.
+- Local response artifact a375178-Usa2019P5.lean: 10877 bytes, SHA-256 dd1887118f0e06f565c2b82e1153552f6530bddc62c5ba7245e5ba6d5f8f90a1.
+
+Authenticated GitHub code search harmonic ZMod language:Lean returned 92 hits
+within the requested 100 results. Search metadata was examined; most hits were
+mathlib copies/import collections. The candidate
+https://github.com/dwrensha/compfiles/blob/master/Compfiles/Usa2019P5.lean
+was read completely, including its public helper interfaces: it concerns
+arithmetic/harmonic means and coprimality, not finite harmonic sum congruences.
+Not all 92 file bodies were read; those bodies are ASSUMED-UNVERIFIED.
+No usable Lean proof of the target or needed harmonic congruences was found
+in the stated scope. Published prerequisites are locally proved under the
+authorized fourth step of the repository search order.
