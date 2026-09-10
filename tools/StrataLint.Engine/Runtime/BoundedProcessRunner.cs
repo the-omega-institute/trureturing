@@ -71,14 +71,22 @@ internal static class BoundedProcessRunner
         }
 
         using var process = new Process { StartInfo = startInfo };
+        var probe = DefaultCliStartupProbe.Current.Value;
+        probe?.ConfigureGit(startInfo);
+        probe?.Mark("process-before-start", new { executable = Path.GetFileName(fileName), arguments = startInfo.ArgumentList.ToArray() });
         if (!(StartProcess.Value?.Invoke(process) ?? process.Start()))
         {
             throw new InvalidOperationException($"could not start {fileName}");
         }
-
+        var startReturned = probe is null ? 0 : TimeProvider.System.GetTimestamp();
         using var cancellation = new CancellationTokenSource(timeout);
+        var guardCreated = probe is null ? 0 : TimeProvider.System.GetTimestamp();
+        probe?.Mark("process-start-return", new { child_pid = process.Id }, startReturned);
+        probe?.Mark("guard-created", new { timeout_seconds = timeout.TotalSeconds, maximum_error_bytes = maximumErrorBytes }, guardCreated);
         try
         {
+            probe?.Resources("guard-created");
+            probe?.Mark("stream-setup-begin");
             var stdout = readStandardOutput(
                 process.StandardOutput.BaseStream,
                 cancellation.Token);
@@ -92,7 +100,9 @@ internal static class BoundedProcessRunner
                     process.StandardInput.BaseStream,
                     standardInput,
                     cancellation.Token);
+            probe?.Mark("wait-begin");
             process.WaitForExitAsync(cancellation.Token).GetAwaiter().GetResult();
+            probe?.ProcessState("observed-exit", process);
             try
             {
                 stdin.GetAwaiter().GetResult();
@@ -101,13 +111,20 @@ internal static class BoundedProcessRunner
             {
                 // The child owns whether it consumes stdin; preserve its completed verdict.
             }
-            return new StreamedProcessOutput<T>(
+            probe?.Mark("stream-drain-begin");
+            var result = new StreamedProcessOutput<T>(
                 process.ExitCode,
                 stdout.GetAwaiter().GetResult(),
                 stderr.GetAwaiter().GetResult());
+            probe?.Mark("stream-drain-end");
+            probe?.Resources("observed-exit");
+            return result;
         }
         catch (OperationCanceledException exception)
         {
+            // Capture liveness before TryKill; never query child CPU after exit.
+            probe?.ProcessState("timeout-before-kill", process);
+            probe?.Resources("timeout-before-kill");
             TryKill(process);
             throw new TimeoutException($"{fileName} timed out after {timeout.TotalSeconds:0} seconds", exception);
         }

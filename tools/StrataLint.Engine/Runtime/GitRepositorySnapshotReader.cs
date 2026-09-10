@@ -10,6 +10,8 @@ internal static class GitRepositorySnapshotReader
 
     internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null)
     {
+        var probe = DefaultCliStartupProbe.Current.Value;
+        probe?.Mark("snapshot-read-begin");
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
         var tracked = ParseIndex(Git(root, "ls-files", "--stage", "-z"));
@@ -56,6 +58,11 @@ internal static class GitRepositorySnapshotReader
                 ImmutableArray.CreateRange(File.ReadAllBytes(fullPath))));
         }
 
+        probe?.Mark("snapshot-read-end", new
+        {
+            files = entries.Count, bytes = entries.Sum(entry => (long)entry.Bytes.Length),
+            scribe_files = entries.Count(entry => entry.Path.EndsWith(".scribe.cs", StringComparison.Ordinal)),
+        });
         return RawRepositorySnapshot.Create(entries);
     }
 

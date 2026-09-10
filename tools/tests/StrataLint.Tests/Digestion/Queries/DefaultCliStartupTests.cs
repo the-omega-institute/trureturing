@@ -1,10 +1,12 @@
 using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
+using StrataLint.Engine;
+using Xunit.Abstractions;
 
 namespace StrataLint.Tests;
 
-public sealed class DefaultCliStartupTests
+public sealed class DefaultCliStartupTests(ITestOutputHelper output)
 {
     [Fact]
     public void DefaultCliValidatesBranchOutsideRepositoryWithoutScribeInputs()
@@ -45,7 +47,51 @@ public sealed class DefaultCliStartupTests
         Assert.Equal("stratalint-formalize-candidates-v5", candidates.RootElement.GetProperty("schema").GetString());
     }
 
-    private static StrataLint.Engine.ProcessOutput RunCli(string root, params string[] arguments) =>
-        TestProcessRunner.Run(Path.Combine(AppContext.BaseDirectory, "StrataLint"), arguments, root,
-            TestBudgets.LocalProcessHangGuard, 1024 * 1024);
+    private ProcessOutput RunCli(string root, params string[] arguments)
+    {
+        var name = arguments[0] == "worktree"
+            ? nameof(DefaultCliValidatesBranchOutsideRepositoryWithoutScribeInputs)
+            : nameof(DefaultCliBulkCandidatesNeedNoLeanReportOrScribeDiscoveryFixtures);
+        var lines = new List<string>();
+        var probe = new DefaultCliStartupProbe(name, "parent", lines.Add);
+        // Sibling of the fixture: diagnostic files must not enter its Git snapshot.
+        var tracePath = root + ".startup-probe.jsonl";
+        var executable = Path.Combine(AppContext.BaseDirectory, "StrataLint");
+        var previousStart = BoundedProcessRunner.StartProcess.Value;
+        var previousProbe = DefaultCliStartupProbe.Current.Value;
+        DefaultCliStartupProbe.Current.Value = probe;
+        BoundedProcessRunner.StartProcess.Value = process =>
+        {
+            if (process.StartInfo.FileName == executable && process.StartInfo.WorkingDirectory == root)
+            {
+                process.StartInfo.Environment[DefaultCliStartupProbe.PathVariable] = tracePath;
+                process.StartInfo.Environment[DefaultCliStartupProbe.InvocationVariable] = name;
+            }
+            return previousStart?.Invoke(process) ?? process.Start();
+        };
+        try
+        {
+            probe.Runtime();
+            probe.Fixture(root);
+            probe.Resources("before-invocation");
+            return TestProcessRunner.Run(executable, arguments, root,
+                TestBudgets.LocalProcessHangGuard, 1024 * 1024);
+        }
+        finally
+        {
+            BoundedProcessRunner.StartProcess.Value = previousStart;
+            DefaultCliStartupProbe.Current.Value = previousProbe;
+            probe.Mark("invocation-finally");
+            probe.Collect(tracePath, lines.Add);
+            probe.Identities(AppContext.BaseDirectory);
+            probe.Cleanup(tracePath);
+            // xUnit retains success/skip output in TRX; direct stderr also survives the
+            // ordinary console logger and the wrapper's subsequent TRX deletion.
+            foreach (var line in lines)
+            {
+                DefaultCliStartupProbe.Emit(output.WriteLine, line);
+                DefaultCliStartupProbe.Emit(Console.Error.WriteLine, line);
+            }
+        }
+    }
 }

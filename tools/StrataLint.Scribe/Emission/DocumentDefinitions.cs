@@ -84,6 +84,7 @@ public static class DocumentDefinitions
 
     private static ImmutableArray<DocumentDefinition> DiscoverCore(Assembly assembly)
     {
+        DefaultCliStartupProbe.Current.Value?.Count("scribe-discover");
         var definitions = assembly.GetTypes()
             .Where(static type =>
                 !type.IsAbstract

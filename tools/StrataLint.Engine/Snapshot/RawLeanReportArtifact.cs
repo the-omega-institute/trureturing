@@ -17,6 +17,7 @@ internal static class RawLeanReportArtifact
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot)
     {
+        DefaultCliStartupProbe.Current.Value?.Count("report-file-read");
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         var fullPath = Path.GetFullPath(path);
         var bytes = File.ReadAllBytes(fullPath);

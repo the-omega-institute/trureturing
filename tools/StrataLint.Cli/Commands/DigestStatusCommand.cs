@@ -22,6 +22,8 @@ internal static class DigestStatusCommand
         IAtomHistorySource atomHistorySource,
         TimeProvider ageTimeProvider)
     {
+        var probe = DefaultCliStartupProbe.Current.Value;
+        probe?.Mark("digest-begin");
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentNullException.ThrowIfNull(arguments);
@@ -37,18 +39,28 @@ internal static class DigestStatusCommand
                 throw new InvalidOperationException("Scribe emission verifier is unavailable");
             }
 
-            var snapshot = Decode(repository.ReadCurrent());
+            probe?.Resources("snapshot-begin");
+            probe?.Mark("snapshot-begin");
+            var raw = repository.ReadCurrent();
+            probe?.Mark("decode-begin");
+            var snapshot = Decode(raw);
+            probe?.Mark("decode-end");
+            probe?.Resources("snapshot-end");
+            probe?.Mark("changes-begin");
             var changes = options.BaselineRevision is null
                 ? repository.ReadCurrentChanges()
                 : repository.ReadChanges(options.BaselineRevision);
             var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
+            probe?.Mark("changes-end");
 
             if (options.FormalizeCandidates)
             {
                 var formalizeLeanReport = options.FormalizeAtomId is null
                     ? null
                     : leanReportSource.Load(snapshot);
+                probe?.Mark("inventory-begin");
                 var formalizeDocument = BackfillInventoryLoader.Load(snapshot, scope, changes);
+                probe?.Mark("inventory-end");
                 BackfillInventoryDocument? formalizeBaselineDocument = null;
                 RepositorySnapshot? formalizeBaselineSnapshot = null;
                 if (options.BaselineRevision is not null)
@@ -72,6 +84,7 @@ internal static class DigestStatusCommand
                     scribeEmissionVerifier!.Verify(snapshot, formalizeLeanReport!, changes);
                 }
 
+                probe?.Mark("ledger-evaluation-begin");
                 var formalizeEvaluation = options.FormalizeAtomId is null
                     ? DigestionStatusEvaluator.EvaluateUncovered(
                         scope,
@@ -88,6 +101,7 @@ internal static class DigestStatusCommand
                         baselineSnapshot: formalizeBaselineSnapshot,
                         changes: changes,
                         projectedStatusChanges: changes);
+                probe?.Mark("ledger-evaluation-end");
                 if (options.FormalizeAtomId is null
                     ? formalizeEvaluation.Findings.Length > 0
                     : formalizeEvaluation.HasReceiptIntegrityFailure)
@@ -95,15 +109,20 @@ internal static class DigestStatusCommand
                     return InvalidEvaluation(formalizeEvaluation);
                 }
 
+                probe?.Mark("content-kinds-begin");
                 var formalizeContentKinds = DigestionContentKindResolver.Resolve(
                     snapshot,
                     formalizeDocument);
+                probe?.Mark("content-kinds-end");
+                probe?.Mark("frontier-begin");
                 var formalizeFrontier = DigestionFrontierProjection.Create(
                     formalizeDocument,
                     formalizeEvaluation,
                     formalizeContentKinds,
                     options.RetryDispositions);
-                return new CommandResult(
+                probe?.Mark("frontier-end");
+                probe?.Mark("render-begin");
+                var result = new CommandResult(
                     true,
                     DigestFormalizeCandidates.Render(
                         formalizeFrontier,
@@ -111,6 +130,8 @@ internal static class DigestStatusCommand
                         formalizeDocument,
                         options.FormalizeAtomId),
                     string.Empty);
+                probe?.Mark("render-end");
+                return result;
             }
 
             var leanReport = leanReportSource.Load(snapshot);
@@ -195,6 +216,10 @@ internal static class DigestStatusCommand
                 or ArgumentException)
         {
             return new CommandResult(false, string.Empty, $"DIGEST_STATUS_INVALID {exception.Message}\n");
+        }
+        finally
+        {
+            probe?.Mark("digest-finally");
         }
     }
 

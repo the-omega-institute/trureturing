@@ -80,6 +80,7 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
         FrozenStateCatalog? frozenState = null,
         FrozenStatementIndex? frozenStatements = null)
     {
+        DefaultCliStartupProbe.Current.Value?.Count("scribe-verify");
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(report);
         using var materialized = MaterializedRepositorySnapshot.Create(snapshot);
