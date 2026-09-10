@@ -30,8 +30,8 @@ internal sealed class PrimePowerShiftLogDerivativeOddDocument : IScribeDocumentD
                     + "coefficient of D(B) vanishes identically. At even degree k>0, "
                     + "the source equation at n=k+1 gives coeff(k,D(F^p))=0. "
                     + "Strong induction removes the lower coefficients of D(F); "
-                    + "the constant coefficient of F^(p-1) is one, so its kth "
-                    + "coefficient also vanishes. At k=0 the integral equation "
+                    + "the constant coefficient of F^(p-1) is one, so the kth "
+                    + "coefficient of D(F) also vanishes. At k=0 the integral equation "
                     + "with p=2 first gives F_1=1. Extracting each even coefficient "
                     + "of D(F)=0 proves the displayed pair equality.")))),
             Describe.Lean(DescribeId.Create("a393867-all-terms-odd"),

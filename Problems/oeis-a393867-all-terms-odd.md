@@ -3,7 +3,7 @@ slug: oeis-a393867-all-terms-odd
 bibkey: hanna2026a393867
 doi: null
 url: https://oeis.org/A393867
-triage: open
+triage: theorem
 motivation_gids:
   - D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative
 ---
@@ -17,7 +17,12 @@ The target is `Odd (a393867 n)` for every `n >= 1`, using the definition in
 `PrimePowerShiftLogDerivative`. This is the first-tier 2026 conjecture; the
 prime-divisibility comment and A393866's shifted printed formula are distinct.
 
-## Implementation record
+## Motivation
+
+Resolve the second 2026 OEIS conjecture by a universal theorem, extending the
+frozen source construction without changing its definitions or statements.
+
+### Implementation record
 
 Skill context: `lean4`; Codex implementation worker, single source of reasoning,
 zero independent review seats in this worker. User-supplied numerical claims
@@ -26,7 +31,7 @@ Base: `6af98a19b1fd4f76f1bc1bf92b61593a0c167a09`.
 The existing frozen Lean module is read-only. The parity directory contains
 26 files before this change (`find D5/S1/Recurrence/Parity -type f | wc -l`).
 
-## Preregistered proof route
+## Route
 
 Proposed escape witness: the paired-coefficient theorem
 `F_(2m) = F_(2m+1)` modulo two, derived from the integral source equations.
@@ -42,7 +47,16 @@ This preserves the proposed paired-coefficient mathematics while eliminating
 the need to introduce a separate series H and substitution by X squared.
 The witness is a proof obligation, not a hypothesis.
 
-## Search receipts
+## Falsifier
+
+An index `n >= 1` with an even `a393867 n` would refute the target. A pair
+with unequal residues would refute the proposed intermediate claim. The
+finite probes found neither; the unbounded Lean theorems rule them out.
+
+## Gap
+
+Search receipts, in the required repository -> pinned mathlib -> external
+ecosystem order:
 
 - Repository D5: `rg` for `A39386[678]`, `a393867`, and `convolution_pairing`.
   Read all 278 lines of `PrimePowerShiftLogDerivative`, including private
@@ -71,7 +85,9 @@ The witness is a proof obligation, not a hypothesis.
   the exact query echoed. No failure is counted as a negative result.
   No proof found in this explicit search scope; no global absence claim.
 
-## Numerical semantic echo
+## Evidence
+
+### Numerical semantic echo
 
 Independently ran the specified strict-prefix Miller recurrence at N=100,
 asserting both exact Miller division and `prime n | c_n` at each step, then
@@ -87,7 +103,7 @@ F parity at indices 0 through 20:
 These checks are probes, not a finite positive formal instance or progress
 toward the unbounded theorem.
 
-## Build receipts
+### Build receipts
 
 `make lean-cache-ensure`: EXIT=0; `LEAN_CACHE` status=seeded,
 method=clonefile, donor=/Users/chronoai/trureturing, clonefile_attempts=1,
@@ -108,14 +124,31 @@ uses `generating_coeff_pair` through `paired_derivative` and
 `log_mod_two_identity`; the paired result is on the live derivation path.
 Project build, report, emission, content checks, and freezing remain pending.
 
-## Unclaimed and unverified
+### Elaborated dependency query
 
-No proof, priority, exhaustive literature search, A393868 result, or completed
+A Lean `run_cmd` query used `Environment.find?`, `ConstantInfo.type`,
+`value? (allowOpaque := true)`, and `Expr.getUsedConstants`, recursively
+expanding this module's private helpers and stopping at the frozen D5
+boundary. EXIT=0. It confirmed the four edges listed below, not just textual
+name matches. The paired theorem's boundary contains `lt_prime`, `prime`,
+`generatingSeries`, and `generating_equation`. The final theorem additionally
+contains `logDerivative`, its generated defining equation, and `a393867`.
+This confirms constant dependencies; live use is separately checked by
+reading the short coefficient derivation, not inferred from the graph alone.
+
+## ASSUMED-UNVERIFIED
+
+No priority, exhaustive literature search, A393868 result, or completed
 PR is claimed at this checkpoint. A393866 and A393868 b-files were not opened:
 `ASSUMED-UNVERIFIED`. The user's arXiv search report is not represented as a
 search performed by this worker. No theory volume or atom will be created.
 
-## Theorem admission analysis
+## Triage
+
+`theorem`: the exact target is proved by `a393867_odd`. Its Scribe node records
+the resolution; project gates and PR publication are still pending here.
+
+### Theorem admission analysis
 
 Both public declarations have `proof_shape: content` and
 `admission_basis: escape-witness`. `utility: none`: these are unbounded
