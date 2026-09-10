@@ -25,3 +25,22 @@ ArXiv abstract page lists only v1, 15 January 2024. Further literature checks pe
 2. Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d (v4.33.0): same mathematical name scan has no matches. Dynamics/PeriodicPts/Defs.lean provides IsPeriodicPt, minimalPeriod, IsPeriodicPt.minimalPeriod_pos, IsPeriodicPt.minimalPeriod_dvd and isPeriodicPt_iff_minimalPeriod_dvd. Logic/Function/Iterate.lean supplies Nat.iterate, iterate_succ_apply, iterate_succ_apply', iterate_add_apply. These remove the need to reprove general iteration and minimal-period theory, but provide no D(k,n) evaluator facts.
 3. GitHub repository query 'tripod nim lean': 0 repositories. Query 'combinatorial games lean': vihdzp/combinatorial-games, Happyves/Lean_Games, t4ccer/misere-games; contents not yet inspected.
 Bind-only status: no closure established; remaining obligation is transition semantics and evaluator correctness, not divisibility arithmetic. No D5 module has been created at this stage.
+
+
+## Independent exact computation
+After the rendered source check, method A uses Boolean arrays, slices off the left column, and scans permitted columns with a set recording this transition's insertions. Method B uses packed integer rows, shifts right by one (bit 0 represents the left column), and selects the lowest available bit with `available & -available`. Rows are bottom to top. Both start at (1,2047,2042); neither uses the supplied endpoint values. All 264 successive results agree and the only return in steps 1..264 is step 264. No floating point; no initial-state reachability calculation.
+
+| Steps | Boolean arrays | Packed words |
+|---|---|---|
+| 24 | (1024, 2047, 1021) | (1024, 2047, 1021) |
+| 88 | (1, 2038, 3464) | (1, 2038, 3464) |
+| 132 | (1, 2014, 2082) | (1, 2014, 2082) |
+| 264 | (1, 2047, 2042) | (1, 2047, 2042) |
+
+Script and complete orbit: worker-owned attempt directory `compute.py`, `computation.json`. These are independent implementations by one worker, not independently authored or reviewed computations.
+
+## Bounded literature and ecosystem review
+The arXiv submission history retrieved during this attempt lists only [v1], Mon, 15 Jan 2024 19:23:26 UTC (the precise time is to be read from the archived HTML). Rendered source is the v1 PDF. The title-page date is distinct from the arXiv deposit date.
+OpenAlex title query returns only W4390962538, arXiv submittedVersion, not accepted/published, cited_by_count=0. Crossref query.title (top five) gives no exact title. Brave exact-title query returns only arXiv abstract/PDF. No published proof, refutation or formal correction was located within these successful queries. This is a bounded non-finding, not a claim that none exists. Google and DuckDuckGo returned challenges; Bing returned unrelated results and is not counted as a successful negative search; Semantic Scholar returned HTTP 429. Some further Brave queries returned HTTP 429. The supplied MathDB reader-written, unverified computation has not been independently retrieved and was not used as computational evidence. No priority claim.
+Third-party Lean: vihdzp/combinatorial-games HEAD a087fede837fa7f4ee6a2ffb2c6560a3112d4d6d contains standard ordinal/nimber Nim and Sprague–Grundy infrastructure; the inspected Specific/Nim.lean defines a single-heap game, not D(k,n). Happyves/Lean_Games at 66f6f0599b53cdd86c6ccc7000f0f76ecf83591d and t4ccer/misere-games at 8fffccecc75399358e3155e36e8742a78bc82eaa have no paths matching Nim/Tripod/Grundy/Sprague. Repository and path queries are screening evidence, not an exhaustive semantic proof of library absence.
+Initial bind-only attempt outcome: no proof obtained from the located declarations. General period arithmetic is available; the paper-specific transition and its evaluator bridge remain missing from the inspected libraries. Proceeding under the preregistered content hypothesis.
