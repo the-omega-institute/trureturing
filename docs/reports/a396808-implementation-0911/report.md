@@ -14,7 +14,7 @@
 
 完整阅读 CLAUDE.md、agents/CONTEXT.md、lean4/SKILL.md、冻结基模块公开面及私有证明；utility 文法已查 spec A5.1，非计算性一般证明使用 `utility: none`。Arith 已注册 S3。`find D5/S3/Arith -maxdepth 1 -type f | wc -l` 得 34；递归计数 123，不将两种口径混用。
 
-`numeric_probe.py` 实现用户指定的严格前缀递推、二进制幂和截断乘法。实测 0.663 秒；完整读数见 numeric_probe.json。
+`numeric_probe.py` 实现用户指定的严格前缀递推、二进制幂和截断乘法。重现前先 `curl -L https://oeis.org/A396808/b396808.txt -o /tmp/a396808-bfile.txt`，再运行 `python3 docs/reports/a396808-implementation-0911/numeric_probe.py`。实测 0.663 秒；完整读数见 numeric_probe.json。
 
 - 18 项精确整数与实际下载的 https://oeis.org/A396808/b396808.txt 前 18 项相同。
 - 2…200：幂支持 {3,9,27,81}；配对支持 {6,15,18,42,45,54,123,126,135,162}；其余 185 项残基零；两条 iff 零反例。
@@ -52,7 +52,7 @@
 
 `make lean-cache-ensure` EXIT=0：status=seeded，method=clonefile，donor=/Users/chronoai/trureturing，clonefile_attempts=1，stamp_miss=null，mathlib_olean_state=warm，project_olean_state=warm，mathlib_missing_olean_files=0，pin_sha256=sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e。
 
-正式 `make lean` EXIT=0，耗时 220.484420334 秒。runner attempt 目录的 make-lean.log 与 make-lean-receipt.json 保留原始输出和计时。make lean-report、make emit、scribe-content-checks、无 atom deposit 及 PR 尚在执行，完成后补录。
+正式 `make lean` EXIT=0，耗时 220.484420334 秒。runner attempt 目录的 make-lean.log 与 make-lean-receipt.json 保留原始输出和计时。`make lean-report` EXIT=0，耗时 64.241444375 秒。make emit、scribe-content-checks、无 atom deposit 及 PR 尚在执行，完成后补录。
 
 ## 逐公开定理审计
 
@@ -61,7 +61,10 @@
 - proof_shape: content。
 - admission_basis: escape-witness；无额外数学假设，只有题定自然数索引与 n>1。
 - escape_witness: 本模块私有 `R_source`，即构造的 R 对所有 n>1 满足模三约化源方程。它已由三根迹次数界证明，不是前提。
-- 直接冻结依赖 GID: `D5/S3/Arith/ArtinSchreierTracePowersOfTwo.source_equation`，以及该模块的序列定义 `a`。声明级 statement_id 等 canonical report 生成后补录。
+- 定理 statement_id: `sha256:1d954b0f0a1049d9e6406a70b8c81999bb8059c5a191a9dbf4a08339071fc00c`，取自本次 canonical report。
+- 直接冻结依赖 GID: `D5/S3/Arith/ArtinSchreierTracePowersOfTwo.source_equation`；statement_id: `sha256:d1ebb64a4a7a6ebaa947d093e5c021b538303d8d00ca4c24d35b8618a1dc2c55`。
+- 使用的冻结序列定义 GID: `D5/S3/Arith/ArtinSchreierTracePowersOfTwo.a`；statement_id: `sha256:9f1fdaa4070faa703edc6a0b374815f5508ec3207cd689a203968973a69a157f`。a₀=a₁=1 由该公开定义的 rfl 得到。
+- 上述冻结声明身份直接读取 accepted 事件 `1e65aaf8f505ac0a16730bfcb2a7612743aa5b8b931c50c5a216b0fcfd9d7ea4.json`；不以模块身份代替声明身份。
 - utility: none；无界符号分类，非主要计算性结论；其他 utility 字段 not-applicable(kind=none)。
 
 第 3.2 条四项逐项核对：
