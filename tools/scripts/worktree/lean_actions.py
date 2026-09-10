@@ -8,6 +8,7 @@ import os
 import pathlib
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 
@@ -33,16 +34,102 @@ def receipt(layer, status, **fields):
     print("LEAN_ACTIONS_CACHE " + json.dumps({"layer": layer, "status": status, **fields}, sort_keys=True))
 
 
-def files(directory):
+def files(directory, *, materialize_links=False):
     result = []
     for path in sorted(directory.rglob("*")):
         if path.is_symlink():
-            raise ValueError("cache has a symlink")
+            relative = path.relative_to(directory).as_posix()
+            if not materialize_links:
+                raise ValueError(f"cache has a symlink: {relative}")
+            # Only the private dependency snapshot may turn internal file links
+            # into ordinary, hashed copies. Restores still reject raw links.
+            try:
+                target = path.resolve(strict=True)
+                if not target.is_relative_to(directory.resolve()) or not target.is_file():
+                    raise ValueError("link must resolve to an internal regular file")
+                path.unlink()
+                shutil.copy2(target, path)
+            except (OSError, RuntimeError, ValueError) as error:
+                raise ValueError(f"cache link {relative}: {error}") from error
         if path.is_file():
             result.append({"path": path.relative_to(directory).as_posix(), "sha256": sha(path), "mode": path.stat().st_mode & 0o777})
     if not result:
         raise ValueError("cache has no files")
     return result
+
+
+def snapshot_report(root, partition, destination):
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
+    from report_cache import SUFFIXES, copy_bundle, member, seed_identity
+    from delta import validate_report_sha
+
+    # Current and pack already accepted the semantics. Bind their exact handoff
+    # to this execution, then check transport integrity without replaying them.
+    transport = json.loads((root / "build/ci/current-transport.json").read_text())
+    if (not isinstance(transport, dict) or transport.get("version") != 1 or transport.get("stage") != "current"
+            or transport.get("commit") != os.environ["CANDIDATE_SHA"]
+            or transport.get("run_id") != int(os.environ["GITHUB_RUN_ID"])
+            or transport.get("run_attempt") != int(os.environ["GITHUB_RUN_ATTEMPT"])
+            or transport.get("repository") != os.environ["GITHUB_REPOSITORY"]
+            or not re.fullmatch(r"[0-9a-f]{64}", transport.get("candidate", ""))
+            or not isinstance(transport.get("round"), str) or not transport["round"].strip()):
+        raise ValueError("current transport execution mismatch")
+    transported = {item["path"]: item for item in transport["materials"]}
+    if len(transported) != len(transport["materials"]):
+        raise ValueError("duplicate current transport member")
+
+    def bound_bytes(path):
+        full = root / path
+        data = full.read_bytes()
+        if hashlib.sha256(data).hexdigest() != transported[path]["sha256"]:
+            raise ValueError("current handoff integrity mismatch: " + path)
+        return data
+
+    summary = json.loads(bound_bytes("build/ci/current-result.json"))
+    current = json.loads(bound_bytes("build/ci/current.json"))
+    if (not isinstance(summary, dict) or summary.get("stage") != "current" or summary.get("exit") != 0
+            or summary.get("current_evidence") != "build/ci/current.json"
+            or not isinstance(current, dict) or current.get("version") != 1
+            or current.get("candidate") != transport["candidate"] or current.get("round") != transport["round"]
+            or summary.get("candidate") != current["candidate"]):
+        raise ValueError("current report handoff mismatch")
+    relative = summary["report"]
+    if pathlib.PurePosixPath(relative).is_absolute() or any(part in ("", ".", "..") for part in relative.split("/")):
+        raise ValueError("invalid current report path")
+    accepted = {item["path"]: item["sha256"] for item in current["materials"]}
+    if len(accepted) != len(current["materials"]):
+        raise ValueError("duplicate current material")
+    for suffix in SUFFIXES:
+        path = relative + suffix
+        full = root / path
+        mode = 0 if os.name == "nt" else full.stat().st_mode & 0o7777
+        if (full.is_symlink() or not full.is_file() or accepted[path] != transported[path]["sha256"]
+                or mode != transported[path]["mode"]):
+            raise ValueError("current report member mismatch: " + path)
+    report = root / relative
+    bound_bytes(relative + ".sha256")
+    # copy_bundle rewrites this member. Validate the original, including its
+    # basename, before copying so corrupt input cannot be silently repaired.
+    validate_report_sha(report, accepted[relative])
+    seed = json.loads(bound_bytes(relative + ".seed.json"))
+    if not isinstance(seed, dict) or seed.get("partition") != partition:
+        raise ValueError("current report partition mismatch")
+    bound_bytes(relative + ".provenance.json")
+    destination.mkdir(mode=0o700)
+    staged = destination / partition / seed_identity(report) / "raw-lean-report.json"
+    copy_bundle(report, staged)
+    inventory = files(destination)
+    expected = {member(staged, suffix).relative_to(destination).as_posix(): accepted[relative + suffix] for suffix in SUFFIXES}
+    expected[member(staged, ".sha256").relative_to(destination).as_posix()] = hashlib.sha256(
+        f"{accepted[relative]}  {staged.name}\n".encode()).hexdigest()
+    if {item["path"]: item["sha256"] for item in inventory} != expected:
+        raise ValueError("staged report differs from accepted current material")
+    for args, expected_output in ((["rev-parse", "HEAD"], transport["commit"]),
+                                  (["status", "--porcelain", "--untracked-files=all"], "")):
+        result = subprocess.run(["git", "-C", str(root), *args], capture_output=True, text=True)
+        if result.returncode or result.stdout.strip() != expected_output:
+            raise ValueError("report snapshot requires the exact clean candidate commit")
+    return inventory
 
 
 def snapshot(root, keys, layers=LAYERS):
@@ -62,17 +149,21 @@ def snapshot(root, keys, layers=LAYERS):
                         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
                         from dotnet_producer import stage_seed
                         stage_seed(root, staged / "data")
+                    elif layer == "report":
+                        inventory = snapshot_report(root, keys["partition"], staged / "data")
                     else:
                         shutil.copytree(root / spec["target"], staged / "data", symlinks=True)
+                if layer != "report":
+                    inventory = files(staged / "data", materialize_links=layer == "dependency")
                 manifest = {"schema": "lean-actions-seed-v1", "partition": keys["partition"], "layer": layer,
-                            "key": spec["key"], "files": files(staged / "data")}
+                            "key": spec["key"], "files": inventory}
                 (staged / "manifest.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")
                 if target.exists():
                     shutil.rmtree(target)
                 staged.rename(target)
                 ready = True
                 receipt(layer, "snapshot", key=spec["key"])
-        except (OSError, ValueError, TypeError) as error:
+        except (OSError, ValueError, TypeError, KeyError) as error:
             receipt(layer, "save-failed", reason=str(error))
         finally:
             output({layer + "_ready": ready})

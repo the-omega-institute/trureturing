@@ -102,9 +102,18 @@ class CompilerSeeds(unittest.TestCase):
                 os.utime(path, ns=(stamp, stamp))
 
     def snapshot(self):
+        self.assertFalse((self.root / "build/ci/current-transport.json").exists())
+        self.assertFalse((self.root / "build/ci/current.json").exists())
         with mock.patch.dict(os.environ, self.env):
             keys = actions_keys(self.root)
-            actions.snapshot(self.root, keys, ("judge",))
+        result = subprocess.run([sys.executable, "-B", str(ROOT / "tools/scripts/worktree/lean_actions.py"),
+                                 "snapshot", "--repository", str(self.root), "--layers", "judge"],
+                                env=self.env, text=True, capture_output=True)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn("judge_ready=true", result.stdout)
+        self.assertNotIn("report_ready=", result.stdout)
+        self.observations.append({"name": "judge-only-snapshot", "exit": result.returncode,
+                                  "stdout": result.stdout, "current_handoff_present": False})
         self.assertTrue((self.root / keys["judge"]["path"] / "manifest.json").is_file())
         return keys
 

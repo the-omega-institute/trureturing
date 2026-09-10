@@ -23,6 +23,11 @@ def member(report: pathlib.Path, suffix: str) -> pathlib.Path:
     return pathlib.Path(str(report) + suffix)
 
 
+def seed_identity(report: pathlib.Path) -> str:
+    return hashlib.sha256(member(report, ".seed.json").read_bytes()
+        + member(report, ".provenance.json").read_bytes()).hexdigest()
+
+
 def sha(path: pathlib.Path) -> str:
     value = hashlib.sha256()
     with path.open("rb") as source:
@@ -94,8 +99,7 @@ def store(args: argparse.Namespace) -> bool:
         raise ValueError("report cache root is not private")
     target = cache / partition
     target.mkdir(parents=True, exist_ok=True)
-    identity = hashlib.sha256(member(args.report, ".seed.json").read_bytes()
-        + member(args.report, ".provenance.json").read_bytes()).hexdigest()
+    identity = seed_identity(args.report)
     snapshot = target / identity
     if snapshot.is_dir() and seed_valid(snapshot / "raw-lean-report.json", partition):
         return True
