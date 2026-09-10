@@ -6732,11 +6732,13 @@ catalog；该有限 family 的 membership 来自 `rootId` 的 import closure，�
 [#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 的证书发布，经
 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 合入 dev。
 全库查询是**读取 elaborated 输出(olean)的流式查询**。下列 J2 assessment、evidence 与
-`DispositionInventory.ExactlyCovers` API 仍承担其局部命令及 fixtures 的契约；全库发布使用本节
-所述的分桶 id 集证书，Name 与 report 的绑定由 elaborator 完成。
+`DispositionInventory.ExactlyCovers` API 仍是局部命令及 fixtures 的 Name-level 语义契约，
+不是局部命令产出的 kernel 命题；局部命令在 elaborator 中检查完整 key 覆盖并产出 id 集
+`Certificate`。全库发布使用本节所述的分桶 id 集证书，Name 与 report 的绑定由 elaborator 完成。
 
 当前 `DispositionInventory` 只有 `headSha` 与
-`entries : Array (Sigma fun key : StatementKey => CensusAssessment key)`；其 `ExactlyCovers`
+`entries : Array (Sigma fun key : StatementKey => CensusAssessment key)`；其 `ExactlyCovers` 是
+Name-level 语义契约（非局部命令的 kernel 命题），
 要求 HEAD 相等、完整 keys 与映射后的 `statementId` 均 `Nodup`、keys 集合等于 frozen theorem
 keys。`UnreachableDisposition.evidence : Name` 由 `UnreachableElaborationEvidence` 与
 对应 failed-obligation 检查消费。声明与检查分别见
@@ -6840,6 +6842,7 @@ def DispositionInventory.certifiedKeys
     | .certified _ => some entry.1
     | .observed _ => none
 
+-- Semantic contract; the local command's kernel proposition is the id-set Certificate.
 def DispositionInventory.ExactlyCovers
     (inventory : DispositionInventory)
     (frozenHeadSha : String)
@@ -6864,17 +6867,23 @@ J2 局部 `#disposition_census` 的现役命令形状见
 `frozenTheorems` 沿用 `TruthExportCommand` 当前 dialect 的两层选择：先选择
 `freeze_status=frozen` 的 nodes（模块），再选择其 `declarations` 中 `kind=theorem` 的声明；
 key 从 declaration 的 `declaration_name_key` 保留 structured Lean `Name`，并取其 `statement_id`。
-`ExactlyCovers` 是记账完备命题：集合精确相等、每个完整 key 恰一次、
-映射后的 `statementId` 也 `Nodup`，且 HEAD 相等。命令的 `parseReport` 另核对
+`ExactlyCovers` 是 Name-level 记账完备的语义契约（非局部命令的 kernel 命题）：集合精确相等、
+每个完整 key 恰一次、映射后的 `statementId` 也 `Nodup`，且 HEAD 相等；这些完整 key 义务
+由 elaborator 检查。命令的 `parseReport` 另核对
 `stratalint.truth-export.v2`、`schema_version=2`、`source_commit` 与钉住的 `report_sha256`；
 report input identity 来自实际 bytes 的 SHA-256，不是 generator 自报的标签。root 与 evidence
-由 `validateEvidenceSources` 核查，不是 `ExactlyCovers` 的字段。该局部命令的 `coverageProof` 对实际 inventory
-构造 `ExactlyCovers` 的 `mkDecideProof`，再以 `checkWithKernel` 检查；命令与 proof 见
-`tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`，root 检查见
+由 `validateEvidenceSources` 核查，不是 Name-level 语义契约 `ExactlyCovers` 的字段。
+该局部命令的 `coverageProof` 通过 `checkCoverage` 与 `CensusManifest.checkManifestBinding`
+在 elaborator 中核查完整 key 覆盖与绑定；`ExactlyCovers` 不是其产出的 kernel 命题。
+实际由 `CensusManifest.certificateProof` 对 Nat id lists 构造 `CensusKeyManifest.Certificate`：
+`strictlyAscending ids = true ∧ ids.length = requested ∧ ids = reportIds`，再以 `checkWithKernel` 检查。
+命令见 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`，proof 与命题分别见
+`tools/lean-inspector/LeanInformationAudit/Census/Manifest.lean`、
+`tools/lean-inspector/LeanInformationAudit/Census/Certificate.lean`；root 检查见
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
 两个不同 theorem `Name` 不能复用同一个 `statement_id` 来规避 IE-C035；certified 与 observed
 使用同一个 key 空间，不能各自另列 inventory 来绕过唯一性。
-（J2 落地形态,2026-09-08:S0 把 report identity／root 放在 `ExactlyCovers` 内；现役命令在覆盖证明之外分别核查这两项，inventory 无 `reportInputId` 或 `censusRoot` 字段。）
+（J2 落地形态,2026-09-08:S0 把 report identity／root 放在 `ExactlyCovers` 内；现役的同名声明是 Name-level 语义契约，非局部命令的 kernel 命题。现役命令在 id 集证书之外分别核查这两项，inventory 无 `reportInputId` 或 `censusRoot` 字段。）
 
 dependent constructors 只决定 payload shape，consumer 仍须逐 constructor 核验证书语义。
 `UnreachableDisposition.evidence` 必须解析为当前 statement 上的 `UnreachableElaborationEvidence`，
@@ -6946,7 +6955,7 @@ consumer 必须复核，不信任 generator 自报的 totals 或 flags：
 | `counts.observed_query_completed`、`counts.observed_query_incomplete` | query completion 分项；未完成查询拒绝发射，有效 artifact 中后者恒为零 |
 | `certified_complete` | 有效 artifact 中 `counts.observed == 0`；`observed > 0` 时必为 `false` |
 
-（J2 落地形态,2026-09-08:S0 的 nested class／reason／absence-status maps 与 `accounting_complete` 未发射，也没有 `CertifiedComplete` 声明；记账完备由命令校验和 kernel `ExactlyCovers` 证明体现，JSON 只有上述 flat counts 与 `certified_complete`。）
+（J2 落地形态,2026-09-08:S0 的 nested class／reason／absence-status maps 与 `accounting_complete` 未发射，也没有 `CertifiedComplete` 声明；记账完备由 elaborator 的完整 key 覆盖检查和 kernel 的 id 集 `Certificate` 体现，`ExactlyCovers` 是语义契约而非该 kernel 命题，JSON 只有上述 flat counts 与 `certified_complete`。）
 
 **全库 kernel 证书只证明 id 集记账**（[#6664](https://github.com/the-omega-institute/trureturing/pull/6664)）。
 owner [2026-09-09 裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5597487855)
@@ -6976,14 +6985,17 @@ owner [2026-09-09 增量裁决](https://github.com/the-omega-institute/trureturi
 每个叶与组合节点都是单独编译、内容寻址的模块；新增一个 key 只重编受影响叶、其祖先与 Root。
 最终环境是 Init + `Census.Certificate` + range modules，公理闭包为 `[propext]`。
 证书编译的每进程工作集受单叶上限与二叉组合接口约束，上界不随全库 key 总数增长；
-落地样本每进程峰值约 0.29 GiB，合成 1k／10k ids 的叶、节点与根峰值持平。
+[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 的落地全库 bucket build／assembly
+样本每进程峰值为 294,453,248 B（0.274231 GiB，约 0.27 GiB）。
 这不是整管线常量内存的主张：报告校验 driver 仍保留 $O(\mathrm{rows})$ 的校验及元数据，
 实测约 2.06 GiB，是已记录的剩余项；流式索引约 1.01 GiB 的读数也未冒称达到 1 GiB 目标。
 
-发布消费全流 `census.json`／`receipt.json` 的绑定，不再需要 per-partition receipts。
+发布消费全流收据 `receipt.json` 绑定的紧凑 `rows.jsonl`，不再需要 per-partition receipts。
 现役 handoff 从收据以 `rows_sha256` 绑定的紧凑 `rows.jsonl` 单次读取并校验每行，
-不展开 `census.json` 中逐行内联的 scope 列表；receipt digest、HEAD、export 与 rows digest
-必须一致。发布不改写 `census.json`。展开工件归一的剩余成本记在
+不打开或解析展开的 `census.json`；receipt digest、HEAD、export 与 rows digest
+必须一致。发布不改写 `census.json`，对该展开文件只检查 nonmutation。
+2026-09-10 记录的展开 `census.json` 大小为 21,810,544,658 B（约 21.8 GB），
+每行内联 import scope 列表是已知的归一剩余项，记在
 [#6748](https://github.com/the-omega-institute/trureturing/issues/6748)，不由证书的每进程上界掩盖。
 
 有效 artifact 必须复核 `accounted = certified + observed`、class 分项之和等于 certified、reason 分项之和
@@ -7008,7 +7020,8 @@ comparison 与 transfer 的方向检查见 `tools/lean-inspector/LeanInformation
 **结构 sidecar 与 assessment 分栏**：[#6717](https://github.com/the-omega-institute/trureturing/pull/6717)
 已提供独立 run-local `census-structure.json`，绑定 `head_sha`、`report_sha256` 与 `census_sha256`。
 这些证明依赖结构读数只作 report（定义见第 23.7 节），不是 `AnalysisDisposition` evidence，
-不改变 `census.json`、assessment rows／counts、`certified_complete` 或 `ExactlyCovers`。
+不改变 `census.json`、assessment rows／counts、`certified_complete` 或 Name-level 语义契约
+`ExactlyCovers`（非局部命令的 kernel 命题）。
 observed 永不因结构读数而成为 classified；core support、深度或后代数都不能替代证书。
 
 ### 23.7 证明依赖结构读数(report-only)
@@ -8692,7 +8705,9 @@ census fixture 不把 artifact 接成 seal input 或 required gate。
 同名不同 statement 的消歧与分批隔离、nested evidence 的 root scope、缺 tracked olean 的
 fail-closed、新鲜报告 attestation 的拒绝／重生成，以及读过 bytes 的 receipt replay。
 收据反例必须到达成功扫描后的 `IE-C044 receipt replay mismatch` 比较器，不能以坏 header
-的提前拒绝冒充重放覆盖。查询回归见 `tools/lean-inspector/Census/tests/test_review_fixes.py`。
+的提前拒绝冒充重放覆盖。查询回归见 `tools/lean-inspector/Census/tests/review_fixtures.py`
+的 `colliding_owners`、`nested_scope` 与 `receipt_sensitivity`，由
+`tools/lean-inspector/Census/tests/fixtures.py` 调用。
 
 分桶证书检查的 kernel 命题恰为
 `strictlyAscending ids = true ∧ ids.length = requested ∧ ids = reportIds`；Name↔hex↔Nat
@@ -8705,8 +8720,8 @@ validated rows 和 report。多故障 fixtures 在 Lean publisher 与 Python ent
 
 range fixtures 检查每叶至多 $M$ ids、自适应分裂、错误 range 归属被拒、二叉组合的有序性／
 长度／report 等式，以及删除任一合取不能继续通过。每叶／节点独立编译并内容寻址，
-增量 fixture 新增一个 key 时只重编受影响叶、祖先与 Root；1k／10k 合成规模的每进程
-峰值约 0.29 GiB 持平是性能实验读数，不作为功能测试的挂钟或 RSS 判词。
+增量 fixture 新增一个 key 时只重编受影响叶、祖先与 Root；第 23.6 节所引落地全库
+bucket build／assembly 的每进程峰值约 0.27 GiB 是性能实验读数，不作为功能测试的挂钟或 RSS 判词。
 最终环境只能是 Init + `Census.Certificate` + range modules，axioms 为 `[propext]`；
 不得把外层 $O(\mathrm{rows})$ 报告校验 driver 的内存算进单叶上界后宣称整管线常量内存。
 发布 fixture 消费全流收据绑定的 `rows.jsonl`，拒绝 rows／receipt 篡改，不再走 per-partition
@@ -9265,7 +9280,8 @@ report-only／transfer theorem，真正不可达者使用 closed reason。finite
 `statement_id` 的 256-bit Nat；完整 key 的 Name↔hex↔Nat 绑定与 report-side authority
 由 elaborator 的 strict codec／structural binder 承担，不在 kernel 命题中加入 theorem Name。
 分桶证书与绑定契约见第 23.6 节及 [#6664](https://github.com/the-omega-institute/trureturing/pull/6664)。
-J2 局部 `DispositionInventory.ExactlyCovers` 与 artifact 的 `certified_complete` 分别见
+J2 局部的 Name-level 语义契约 `DispositionInventory.ExactlyCovers`（非局部命令的 kernel 命题）
+与 artifact 的 `certified_complete` 分别见
 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`、
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`；二者的义务保持如下：
 
@@ -9274,8 +9290,9 @@ J2 局部 `DispositionInventory.ExactlyCovers` 与 artifact 的 `certified_compl
    的声明，以 declaration 的 `declaration_name_key` 与 `statement_id` 取得全部
    `(structured Name, statement_id)` keys，与 `CensusAssessment` inventory keys 完全相等，
    每 key 恰一次，并保持第 23.6 节的 HEAD／report inputs／root 绑定与唯一性约束。
-   J2 局部 `ExactlyCovers` 证明 HEAD 相等、keys 与 statement IDs 唯一以及 key 集合精确覆盖，report bytes 与 root
-   分别由命令及 evidence validator 核查，见
+   J2 局部 `ExactlyCovers` 是语义契约，非局部命令的 kernel 命题：HEAD 相等、keys 与 statement IDs
+   唯一以及 key 集合精确覆盖由 elaborator 检查；kernel 证书只证明上述 id 集三合取。
+   report bytes 与 root 分别由命令及 evidence validator 核查，见
    `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`、
    `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`；
 2. **认证完备（certified completeness）**：记账完备，且每个 key 的 row 都是语义证据已验证的
