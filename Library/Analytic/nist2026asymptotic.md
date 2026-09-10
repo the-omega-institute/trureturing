@@ -26,6 +26,10 @@ an elementary proof using a rational derivative and a monotone corrected sequenc
 It formalizes only this lower inequality, followed by a numerical corollary at 128.
 The source is not asserted to publish that particular numerical specialization.
 
+## Verified locator
+
+- URL: https://dlmf.nist.gov/5.11
+
 Retrieved on 2026-09-10. The source footer reports version 1.2.7, released 2026-06-15.
 Equation and sign statement were read directly from the cited page. No mathematical
 novelty is claimed for the estimate or its numerical consequence.
