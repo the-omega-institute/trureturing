@@ -214,3 +214,14 @@ because no Golden/Projection input changed. Existing unrelated OPEN projection
 and offline DOI observations remain observations, not claimed resolutions.
 `make -C tools selftest` EXIT=0, 5.06 s; governance checks passed and the
 active/deferred rule inventory was printed.
+
+## Freeze receipt
+
+`make deposit-uncovered` EXIT=0, 85.61 s, exact base as above.
+Its canonical playbook ran ledger-align --add; added=1, conflicts=0,
+and reported PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED reason=NO_ATOM.
+Freeze event: `sha256:defa535ef27cd026a5989d65b1977a820ee1b6427df682df109f73a766cb64cf`.
+The state is frozen and uncovered; source_id and atom_id are not applicable.
+`make -C tools capacity-audit` EXIT=0, 4.35 s, reason=clean.
+No sorry, axiom declaration or native_decide occurs in the module.
+PR creation and CI observation are the remaining delivery steps.
