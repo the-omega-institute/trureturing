@@ -25,7 +25,7 @@ internal sealed class PrimeInfinityDocument : IScribeDocumentDefinition
     private static Formula ClosureType => Call("ClosureOperator", Call("Set", Call("P", S)));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Exhaustive witness chains have a unique core limit and infinitely many primes.",
+        "Admissible chains: unique core limit; strict binding with exhaustion: infinite primes.",
         H("Prime Infinity and the Witnessed Core Limit"),
         Blocks(
             Describe.Remark(
@@ -62,9 +62,9 @@ internal sealed class PrimeInfinityDocument : IScribeDocumentDefinition
                 ChainFormula(Seq(Forall, Sp, T, Colon, Sp, F.Id("Nat"), Comma, Sp,
                     F.Id("a"), Comma, Sp, F.Id("b"), Colon, Sp, Call("P", S), Comma, Sp,
                     F.Id("b"), Sp, InMacro, Sp, Frozen(Stage), Sp, Rightarrow, RowBreak, Grp(),
-                    Call("StrictReachable", Call("limitEdge", L), F.Id("a"), F.Id("b")),
+                    Open, Call("StrictReachable", Call("limitEdge", L), F.Id("a"), F.Id("b")),
                     Sp, Iff, Sp, Call("StrictReachable", Call("E", StageCore),
-                        F.Id("a"), F.Id("b")))),
+                        F.Id("a"), F.Id("b")), Close)),
                 "Every old frozen stage is predecessor-closed for the raw union relation, giving "
                 + "a dependency filtration. The least predecessor-closed set containing a target "
                 + "contains each vertex on a path into it. Induction backward from an old target "

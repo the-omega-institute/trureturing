@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Exhaustive witness chains have a unique core limit and infinitely many primes. -/
+   digest: Admissible chains: unique core limit; strict binding with exhaustion: infinite primes. -/
 
 import D5.S3.ConceptDynamics.FixedPointPhilosophy.WitnessedLedger
 import D5.S3.ConceptDynamics.DagCompletion.DependencyClosedFiltration
