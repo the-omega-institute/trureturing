@@ -165,3 +165,13 @@ triggered by this content-only delta, so the canonical Scribe
 `projections --check --report` command was also run explicitly and exited 0.
 All three requested Scribe verification components have now passed on the final
 source-bound report. The no-atom deposit command follows these checks.
+
+## Freeze receipt
+
+`make deposit-uncovered` exited 0, invoking the canonical `ledger-align --add`
+path after header checks and cached report/emit.
+`LEDGER_ALIGN selectors_considered=4012 changed=0 added=1 unchanged=4011 conflicts=0`.
+`PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED` identifies hanna_conjecture with reason=NO_ATOM.
+No existing frozen member was changed; no atom or coverage was created.
+Event hash: `sha256:f2f6de4bd0f7aae3c8d74d120caeaaf5f7da4b4c2968f84cf80dbd0a7f356004`.
+Module frozen statement identity: `sha256:9a983832927b28cd9fc9b598b634e0b1ca955829c9861ccb7cf37259022ea186`.
