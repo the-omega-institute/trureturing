@@ -1531,3 +1531,1099 @@ caller 负责后续封存、公共字节核对、独立评审、普通仓库门�
 最终 S21 交付必须等待 S20 MERGED。本次实施不作 termination 判词,
 不把有限层的实现或摄入标成持续目标完成。
 ~~~~
+
+## C99 / I35 support-proof adoption
+
+This appendix records a new, scoped implementation at BASE 2dcd259aa895ad0030875378e2748da57ee563f8. The entire preceding report remains historical evidence. The mathematical authority is [source 32.22–32.24](../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md); the sole authoritative recovery and current canonical binding map is [support-proof-adoption-s21-0910.json](support-proof-adoption-s21-0910.json). The old I32 map is immutable and describes its own earlier representation.
+
+The original tight support interval is CERTIFIED for all sixteen prescribed nodes, with no refuted or inconclusive comparison. The paper bound 0 < L <= H < 14 < 16 is proved independently of this numerical evidence. The original pending clause is retired by proof, not by weakening its numbers. The raw result's preregistered field name `corrected_joint_grid` denotes a stronger enclosed interval here; it does not report a correction or a failure. The original density, D/Psi/G tables, all-real-slab theorem, strict domain and equality cases retain their existing evidence and status. No historical mathematical program was replayed.
+
+The current supplied CLAUDE authority (blob 3138b10dfc55b2e0c570da8079821518f36196eb) controls this layer. Compared with the older local file, its 2.10 adds concise, nonduplicated evidence requirements, and 3.8 requires mathematical-only active theory with fresh numbered corrections. Other observed differences are in 5.5, 7.4, 7.7, 7.14, 8.12, 8.14, 8.15 and 9.5 (integration/workflow authority; 8.12 includes the current 8-feature/16-refactor stability counts). The local authority file was not overwritten. Current 5.11 and the cumulative goal retain unlimited goal iterations; this worker obeys the explicit no-delegation, no-Git, single-verifier and single-ingest scope. The pinned sshx skill/spec govern the return envelope, not a new primary or independent review. CLI 0.154.0 capability is caller-observed; this implementation makes no new actual-PRO or hidden-model attestation.
+
+The inherited 316725-byte mixed source prefix remains unchanged. Addresses 32.19 and 32.20 remain permanently unavailable. Exact pure predecessor composition, full-source mathematical/representation review, ordinary gates and predecessor-ordered S21 delivery remain caller obligations. This tail repair is not whole-source purity, review approval, MERGED, RH progress or completion of the standing research goal. All other cumulative mathematical obligations and historical failures remain in force.
+
+### Inactive original pending passage
+
+The following is INACTIVE archival evidence, including its original pending label, primary self-report and evidence-link grammar. Embedded paths and commands are inert. The authoritative map supplies the exact byte recovery spans, including the original 121-byte sentence.
+
+~~~~text
+**待证子句（保留原记载）。**
+primary 自报所有节点的 \(L,H\) 位于
+\([3571708000370,5592595433915]/10^{12}\),以保证其指数级数范围。
+
+**证明依赖。** [原包络记载及证据限制](../../reports/quantized-gh/actual-5040-fixed-box-0910.md#original-inputs-and-execution-attribution)。
+
+
+~~~~
+
+<a id="i35-fixed-support-certificate"></a>
+### Fixed support certificate
+
+This is the single new mathematical execution authorized by C99. Before execution, the complete script, sixteen-node scope, 256-bit Arb precision and 10^-18 outward reporting grid were fixed. All input numbers are integers or exact rationals. Algebraic interval operations use exact Fraction endpoints; only logarithms and square roots use Arb. No float conversion, sample-height inference, guard classification, D/Psi/G/density evaluation, search, precision sweep, installation or second execution occurred. The analytical soundness argument is in source 32.23.
+
+The environment was found by fresh PATH/cache discovery, not by following an archived report command. System Python 3.9.6 and PATH Python 3.12.13 had no flint module; the already installed environment below supplied CPython 3.13.12, python-flint 0.9.0 and FLINT 3.6.0. Read-only method documentation confirmed that `lower()`/`upper()` round outward and return exact finite binary endpoints, and `man_exp()` extracts their exact integer representation. API inspection and syntax compilation did not execute the mathematical body.
+
+Execution record (the script identity was sealed before the sole invocation; exit 0 means all requested comparisons were decided and the coarse checks passed):
+
+~~~~json
+{
+  "registered_utc": "2026-09-10T16:18:53.861214+00:00",
+  "script": {
+    "path": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-i35-s21-support-proof/attempt-1/fixed_support_256.py",
+    "bytes": 4796,
+    "sha256": "429d101215267bff3519d9166eda3d58531a9b28cc65ea87c2c817652c025ba9"
+  },
+  "precision_bits": 256,
+  "output_grid_denominator": 1000000000000000000,
+  "syntax_only_passed": true,
+  "argv": [
+    "/Users/auricstudio/.cache/uv/archive-v0/LrAPww9gQrptI5dhPuGZq/bin/python",
+    "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-i35-s21-support-proof/attempt-1/fixed_support_256.py"
+  ],
+  "execution_count": 1,
+  "started_utc": "2026-09-10T16:19:13.781035+00:00",
+  "ended_utc": "2026-09-10T16:19:14.144746+00:00",
+  "exit": 0,
+  "stdout_bytes": 17518,
+  "stdout_sha256": "b975c26c9b4cf498554432ddcc2de5be91390d5afe088365dcb909a20872dbd2",
+  "stderr": ""
+}
+~~~~
+
+Exact standalone script (UTF-8; final LF included):
+
+~~~~python
+"""I35: one fixed 16-node support verification; no search or sign evaluation.
+
+Arb transcendental precision is 256 bits throughout. Interval endpoints and
+all algebraic interval operations use exact Fraction arithmetic. The reporting
+grid is fixed at 10^-18 before execution and is never used as an input.
+"""
+import json
+import sys
+from fractions import Fraction as Q
+import flint
+from flint import arb, fmpq, ctx
+
+PRECISION = 256
+GRID = 10**18
+Q_LIST = (1, 2, 3, 5, 6, 7, 10, 14, 15, 21, 30, 35, 42, 70, 105, 210)
+NODES = tuple((r, Q(1058400 * Q_LIST[r]), Q(1058400 * Q_LIST[r+1]))
+              for r in range(1, 15)) + (
+    (23, Q(3175200), Q(17592186044416, 3175200)),
+    (37, Q(7408800), Q(95367431640625, 7408800)),
+)
+TIGHT = (Q(3571708000370, 10**12), Q(5592595433915, 10**12))
+
+
+def dyadic(x):
+    m, e = x.man_exp()
+    m, e = int(m), int(e)
+    return Q(m * 2**e) if e >= 0 else Q(m, 2**(-e))
+
+
+def endpoints(x):
+    if not x.is_finite():
+        raise ArithmeticError("nonfinite Arb enclosure")
+    return dyadic(x.lower()), dyadic(x.upper())
+
+
+def ball(q):
+    return arb(fmpq(q.numerator, q.denominator))
+
+
+def log_interval(q):
+    assert q > 0
+    return endpoints(ball(q).log())
+
+
+def add(a, b):
+    return a[0] + b[0], a[1] + b[1]
+
+
+def sub(a, b):
+    return a[0] - b[1], a[1] - b[0]
+
+
+def scale(a, q):
+    assert q >= 0
+    return a[0] * q, a[1] * q
+
+
+def maximum(*args):
+    return max(a[0] for a in args), max(a[1] for a in args)
+
+
+def minimum(*args):
+    return min(a[0] for a in args), min(a[1] for a in args)
+
+
+def square_nonnegative(a):
+    assert 0 <= a[0] <= a[1]
+    return a[0]**2, a[1]**2
+
+
+def sqrt_nonnegative(a):
+    assert 0 <= a[0] <= a[1]
+    lo = endpoints(ball(a[0]).sqrt())[0]
+    hi = endpoints(ball(a[1]).sqrt())[1]
+    return max(Q(0), lo), hi
+
+
+def grid(a):
+    lo, hi = (x * GRID for x in a)
+    return [lo.numerator // lo.denominator,
+            -((-hi.numerator) // hi.denominator)]
+
+
+def ge(a, q):
+    return "proved" if a[0] >= q else "refuted" if a[1] < q else "inconclusive"
+
+
+def le(a, q):
+    return "proved" if a[1] <= q else "refuted" if a[0] > q else "inconclusive"
+
+
+def main():
+    ctx.prec = PRECISION
+    c = [log_interval(Q(n)) for n in (32, 27, 25, 49)]
+    d = [log_interval(Q(n)) for n in (64, 81, 125, 343)]
+    rows = []
+    zero = (Q(0), Q(0))
+    for slot, e0, e1 in NODES:
+        v, w = scale(log_interval(e0), Q(1, 4)), scale(log_interval(e1), Q(1, 4))
+        delta = [minimum(maximum(sub(ci, w), sub(v, ci), zero),
+                         maximum(sub(di, w), sub(v, di), zero))
+                 for ci, di in zip(c, d)]
+        V0 = zero
+        for a in delta:
+            V0 = add(V0, square_nonnegative(a))
+        rho = sqrt_nonnegative(scale(V0, Q(1, 12)))
+        L, H = sub(w, rho), add(w, scale(rho, Q(3)))
+        comparisons = {"L_ge_tight_lower": ge(L, TIGHT[0]),
+                       "L_le_tight_upper": le(L, TIGHT[1]),
+                       "H_ge_tight_lower": ge(H, TIGHT[0]),
+                       "H_le_tight_upper": le(H, TIGHT[1])}
+        rows.append({"slot": slot, "exp_M0": [e0.numerator, e0.denominator],
+                     "exp_M1": [e1.numerator, e1.denominator],
+                     "delta_grid": [grid(a) for a in delta], "V0_grid": grid(V0),
+                     "rho_grid": grid(rho), "L_grid": grid(L), "H_grid": grid(H),
+                     "tight_comparisons": comparisons,
+                     "coarse_0_lt_L_le_H_lt_14_lt_16":
+                         L[0] > 0 and rho[0] >= 0 and H[1] < 14 < 16})
+    verdicts = [v for row in rows for v in row["tight_comparisons"].values()]
+    status = "contradicted" if "refuted" in verdicts else (
+        "inconclusive" if "inconclusive" in verdicts else "certified")
+    result = {"schema": "fixed5040-support-256-v1", "precision_bits": ctx.prec,
+              "interpreter": sys.executable, "python_version": sys.version,
+              "python_flint_version": flint.__version__,
+              "flint_version": flint.__FLINT_VERSION__,
+              "grid_denominator": GRID, "node_count": len(rows),
+              "original_tight_numerators": [3571708000370, 5592595433915],
+              "original_tight_denominator": 10**12,
+              "original_tight_status": status,
+              "inconclusive_comparisons": verdicts.count("inconclusive"),
+              "corrected_joint_grid": [min(row["L_grid"][0] for row in rows),
+                                       max(row["H_grid"][1] for row in rows)],
+              "coarse_all_certified": all(row["coarse_0_lt_L_le_H_lt_14_lt_16"] for row in rows),
+              "rows": rows}
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0 if result["coarse_all_certified"] and not result["inconclusive_comparisons"] else 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+~~~~
+
+Actual stdout, verbatim (the stderr was empty):
+
+~~~~json
+{
+  "schema": "fixed5040-support-256-v1",
+  "precision_bits": 256,
+  "interpreter": "/Users/auricstudio/.cache/uv/archive-v0/LrAPww9gQrptI5dhPuGZq/bin/python",
+  "python_version": "3.13.12 (main, Mar 10 2026, 18:26:32) [Clang 21.1.4 ]",
+  "python_flint_version": "0.9.0",
+  "flint_version": "3.6.0",
+  "grid_denominator": 1000000000000000000,
+  "node_count": 16,
+  "original_tight_numerators": [
+    3571708000370,
+    5592595433915
+  ],
+  "original_tight_denominator": 1000000000000,
+  "original_tight_status": "certified",
+  "inconclusive_comparisons": 0,
+  "corrected_joint_grid": [
+    3571708000370205849,
+    5592595433914645222
+  ],
+  "coarse_all_certified": true,
+  "rows": [
+    {
+      "slot": 1,
+      "exp_M0": [
+        2116800,
+        1
+      ],
+      "exp_M1": [
+        3175200,
+        1
+      ],
+      "delta_grid": [
+        [
+          175618115285980525,
+          175618115285980526
+        ],
+        [
+          345517152081377998,
+          345517152081377999
+        ],
+        [
+          422478193217506323,
+          422478193217506324
+        ],
+        [
+          149100002997878442,
+          149100002997878443
+        ]
+      ],
+      "V0_grid": [
+        350942459437322005,
+        350942459437322006
+      ],
+      "rho_grid": [
+        171012294742542318,
+        171012294742542319
+      ],
+      "L_grid": [
+        3571708000370205849,
+        3571708000370205850
+      ],
+      "H_grid": [
+        4255757179340375123,
+        4255757179340375124
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 2,
+      "exp_M0": [
+        3175200,
+        1
+      ],
+      "exp_M1": [
+        5292000,
+        1
+      ],
+      "delta_grid": [
+        [
+          276984392313021620,
+          276984392313021621
+        ],
+        [
+          446883429108419093,
+          446883429108419094
+        ],
+        [
+          523844470244547418,
+          523844470244547419
+        ],
+        [
+          21393597056380771,
+          21393597056380772
+        ]
+      ],
+      "V0_grid": [
+        551295867797514614,
+        551295867797514615
+      ],
+      "rho_grid": [
+        214339269188964883,
+        214339269188964884
+      ],
+      "L_grid": [
+        3656087431865280954,
+        3656087431865280955
+      ],
+      "H_grid": [
+        4513444508621140490,
+        4513444508621140491
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 3,
+      "exp_M0": [
+        5292000,
+        1
+      ],
+      "exp_M1": [
+        6350400,
+        1
+      ],
+      "delta_grid": [
+        [
+          242875993106937361,
+          242875993106937362
+        ],
+        [
+          478442064419704270,
+          478442064419704271
+        ],
+        [
+          651550876186045089,
+          651550876186045090
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "V0_grid": [
+        712414101292672593,
+        712414101292672594
+      ],
+      "rho_grid": [
+        243655169808459805,
+        243655169808459806
+      ],
+      "L_grid": [
+        3672351920444274689,
+        3672351920444274690
+      ],
+      "H_grid": [
+        4646972599678113912,
+        4646972599678113913
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 4,
+      "exp_M0": [
+        6350400,
+        1
+      ],
+      "exp_M1": [
+        7408800,
+        1
+      ],
+      "delta_grid": [
+        [
+          204338323150122785,
+          204338323150122786
+        ],
+        [
+          439904394462889694,
+          439904394462889695
+        ],
+        [
+          697131265384533746,
+          697131265384533747
+        ],
+        [
+          24186792142107885,
+          24186792142107886
+        ]
+      ],
+      "V0_grid": [
+        721847028666332412,
+        721847028666332413
+      ],
+      "rho_grid": [
+        245262958996110338,
+        245262958996110339
+      ],
+      "L_grid": [
+        3709281801213438733,
+        3709281801213438734
+      ],
+      "H_grid": [
+        4690333637197880086,
+        4690333637197880087
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 5,
+      "exp_M0": [
+        7408800,
+        1
+      ],
+      "exp_M1": [
+        10584000,
+        1
+      ],
+      "delta_grid": [
+        [
+          115169587165439690,
+          115169587165439691
+        ],
+        [
+          350735658478206599,
+          350735658478206600
+        ],
+        [
+          735668935341348322,
+          735668935341348323
+        ],
+        [
+          62724462098922461,
+          62724462098922462
+        ]
+      ],
+      "V0_grid": [
+        681422676507871086,
+        681422676507871087
+      ],
+      "rho_grid": [
+        238296502371148096,
+        238296502371148097
+      ],
+      "L_grid": [
+        3805416993823084069,
+        3805416993823084070
+      ],
+      "H_grid": [
+        4758603003307676456,
+        4758603003307676457
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 6,
+      "exp_M0": [
+        10584000,
+        1
+      ],
+      "exp_M1": [
+        14817600,
+        1
+      ],
+      "delta_grid": [
+        [
+          31051528010136457,
+          31051528010136458
+        ],
+        [
+          266617599322903366,
+          266617599322903367
+        ],
+        [
+          700482181952765725,
+          700482181952765726
+        ],
+        [
+          151893198083605555,
+          151893198083605556
+        ]
+      ],
+      "V0_grid": [
+        585795972517845553,
+        585795972517845554
+      ],
+      "rho_grid": [
+        220944180831163317,
+        220944180831163318
+      ],
+      "L_grid": [
+        3906887374518372080,
+        3906887374518372081
+      ],
+      "H_grid": [
+        4790664097843025352,
+        4790664097843025353
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 7,
+      "exp_M0": [
+        14817600,
+        1
+      ],
+      "exp_M1": [
+        15876000,
+        1
+      ],
+      "delta_grid": [
+        [
+          13803310138398594,
+          13803310138398595
+        ],
+        [
+          249369381451165503,
+          249369381451165504
+        ],
+        [
+          683233964081027862,
+          683233964081027863
+        ],
+        [
+          236011257238908788,
+          236011257238908789
+        ]
+      ],
+      "V0_grid": [
+        584885582993479350,
+        584885582993479351
+      ],
+      "rho_grid": [
+        220772428644195995,
+        220772428644195996
+      ],
+      "L_grid": [
+        3924307344577077266,
+        3924307344577077267
+      ],
+      "H_grid": [
+        4807397059153861248,
+        4807397059153861249
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 8,
+      "exp_M0": [
+        15876000,
+        1
+      ],
+      "exp_M1": [
+        22226400,
+        1
+      ],
+      "delta_grid": [
+        [
+          0,
+          0
+        ],
+        [
+          165251322295862271,
+          165251322295862272
+        ],
+        [
+          599115904925724629,
+          599115904925724630
+        ],
+        [
+          253259475110646651,
+          253259475110646652
+        ]
+      ],
+      "V0_grid": [
+        450388228788821111,
+        450388228788821112
+      ],
+      "rho_grid": [
+        193732682836604588,
+        193732682836604589
+      ],
+      "L_grid": [
+        4035465149539971906,
+        4035465149539971907
+      ],
+      "H_grid": [
+        4810395880886390258,
+        4810395880886390259
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 9,
+      "exp_M0": [
+        22226400,
+        1
+      ],
+      "exp_M1": [
+        31752000,
+        1
+      ],
+      "delta_grid": [
+        [
+          70314749016904637,
+          70314749016904638
+        ],
+        [
+          76082586311179176,
+          76082586311179177
+        ],
+        [
+          509947168941041534,
+          509947168941041535
+        ],
+        [
+          337377534265949884,
+          337377534265949885
+        ]
+      ],
+      "V0_grid": [
+        384602439607463665,
+        384602439607463666
+      ],
+      "rho_grid": [
+        179025705697874494,
+        179025705697874495
+      ],
+      "L_grid": [
+        4139340862663385094,
+        4139340862663385095
+      ],
+      "H_grid": [
+        4855443685454883071,
+        4855443685454883072
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 10,
+      "exp_M0": [
+        31752000,
+        1
+      ],
+      "exp_M1": [
+        37044000,
+        1
+      ],
+      "delta_grid": [
+        [
+          159483485001587732,
+          159483485001587733
+        ],
+        [
+          37544916354364600,
+          37544916354364601
+        ],
+        [
+          471409498984226958,
+          471409498984226959
+        ],
+        [
+          426546270250632978,
+          426546270250632979
+        ]
+      ],
+      "V0_grid": [
+        431013239129593796,
+        431013239129593797
+      ],
+      "rho_grid": [
+        189519840458634171,
+        189519840458634172
+      ],
+      "L_grid": [
+        4167384397859439993,
+        4167384397859439994
+      ],
+      "H_grid": [
+        4925463759693976678,
+        4925463759693976679
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 11,
+      "exp_M0": [
+        37044000,
+        1
+      ],
+      "exp_M1": [
+        44452800,
+        1
+      ],
+      "delta_grid": [
+        [
+          198021154958402308,
+          198021154958402309
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          425829109785738302,
+          425829109785738303
+        ],
+        [
+          465083940207447554,
+          465083940207447555
+        ]
+      ],
+      "V0_grid": [
+        436845879990858595,
+        436845879990858596
+      ],
+      "rho_grid": [
+        190797859874191328,
+        190797859874191329
+      ],
+      "L_grid": [
+        4211686767642371492,
+        4211686767642371493
+      ],
+      "H_grid": [
+        4974878207139136808,
+        4974878207139136809
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 12,
+      "exp_M0": [
+        44452800,
+        1
+      ],
+      "exp_M1": [
+        74088000,
+        1
+      ],
+      "delta_grid": [
+        [
+          243601544156890965,
+          243601544156890966
+        ],
+        [
+          8035472844124056,
+          8035472844124057
+        ],
+        [
+          298122703844240631,
+          298122703844240632
+        ],
+        [
+          510664329405936211,
+          510664329405936212
+        ]
+      ],
+      "V0_grid": [
+        409061485014465688,
+        409061485014465689
+      ],
+      "rho_grid": [
+        184630596284957080,
+        184630596284957081
+      ],
+      "L_grid": [
+        4345560437173103411,
+        4345560437173103412
+      ],
+      "H_grid": [
+        5084082822312931734,
+        5084082822312931735
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 13,
+      "exp_M0": [
+        74088000,
+        1
+      ],
+      "exp_M1": [
+        111132000,
+        1
+      ],
+      "delta_grid": [
+        [
+          371307950098388635,
+          371307950098388636
+        ],
+        [
+          135741878785621726,
+          135741878785621727
+        ],
+        [
+          196756426817199535,
+          196756426817199536
+        ],
+        [
+          638370735347433882,
+          638370735347433883
+        ]
+      ],
+      "V0_grid": [
+        602525738704413354,
+        602525738704413355
+      ],
+      "rho_grid": [
+        224076947108281934,
+        224076947108281935
+      ],
+      "L_grid": [
+        4407480363376819653,
+        4407480363376819654
+      ],
+      "H_grid": [
+        5303788151809947391,
+        5303788151809947392
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 14,
+      "exp_M0": [
+        111132000,
+        1
+      ],
+      "exp_M1": [
+        222264000,
+        1
+      ],
+      "delta_grid": [
+        [
+          472674227125429731,
+          472674227125429732
+        ],
+        [
+          237108155812662822,
+          237108155812662823
+        ],
+        [
+          23469631677213208,
+          23469631677213209
+        ],
+        [
+          739737012374474977,
+          739737012374474978
+        ]
+      ],
+      "V0_grid": [
+        827402873629282518,
+        827402873629282519
+      ],
+      "rho_grid": [
+        262583776096519101,
+        262583776096519102
+      ],
+      "L_grid": [
+        4542260329528568813,
+        4542260329528568814
+      ],
+      "H_grid": [
+        5592595433914645221,
+        5592595433914645222
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 23,
+      "exp_M0": [
+        3175200,
+        1
+      ],
+      "exp_M1": [
+        549755813888,
+        99225
+      ],
+      "delta_grid": [
+        [
+          276984392313021620,
+          276984392313021621
+        ],
+        [
+          446883429108419093,
+          446883429108419094
+        ],
+        [
+          523844470244547418,
+          523844470244547419
+        ],
+        [
+          9921607063976374,
+          9921607063976375
+        ]
+      ],
+      "V0_grid": [
+        550936620089235776,
+        550936620089235777
+      ],
+      "rho_grid": [
+        214269421540816959,
+        214269421540816960
+      ],
+      "L_grid": [
+        3667629269505833276,
+        3667629269505833277
+      ],
+      "H_grid": [
+        4524706955669101113,
+        4524706955669101114
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    },
+    {
+      "slot": 37,
+      "exp_M0": [
+        7408800,
+        1
+      ],
+      "exp_M1": [
+        3814697265625,
+        296352
+      ],
+      "delta_grid": [
+        [
+          66238281398719054,
+          66238281398719055
+        ],
+        [
+          301804352711485964,
+          301804352711485965
+        ],
+        [
+          735668935341348322,
+          735668935341348323
+        ],
+        [
+          62724462098922461,
+          62724462098922462
+        ]
+      ],
+      "V0_grid": [
+        640616517810127014,
+        640616517810127015
+      ],
+      "rho_grid": [
+        231051314251857447,
+        231051314251857448
+      ],
+      "L_grid": [
+        3861593487709095353,
+        3861593487709095354
+      ],
+      "H_grid": [
+        4785798744716525144,
+        4785798744716525145
+      ],
+      "tight_comparisons": {
+        "L_ge_tight_lower": "proved",
+        "L_le_tight_upper": "proved",
+        "H_ge_tight_lower": "proved",
+        "H_le_tight_upper": "proved"
+      },
+      "coarse_0_lt_L_le_H_lt_14_lt_16": true
+    }
+  ]
+}
+~~~~
+
+### Observed errors and limitations
+
+Oversized intake displays were truncated (instruction/goal reads and later I32-map projections); the required text was recovered in bounded reads. The full structured I32 map was parsed, its semantic fields inspected, and every recovery/metadata/unit/CAS/YAML identity traversed against the assigned local files. Large historical inventories were not copied into this new appendix. A PATH discovery command, `command -v -a ...`, failed with exit 127 and `zsh:1: command not found: -v`; fresh `whence -a` discovery succeeded. A broad installed-package path display and runner search display were also truncated; the selected environment and completion predicate were then read directly. These were structural intake/discovery diagnostics, not mathematical executions. The single mathematical process exited 0 with empty stderr and no inconclusive comparisons. No blanket process-purity claim is made.
+
+Historical I32 errors remain in its unchanged map/report, including the old discovery failure and verbatim archival whitespace diagnostics; they are not newly executed failures. Only bounded syntax/JSON/byte/canonical checks and the prescribed ingest are performed in this layer. There is no new test suite, broad build, GPU, candidate generation, historical certificate replay, Lean/frozen/tool/policy edit, independent review or Git lifecycle action.
+
+### Sole ingest and complete-unit audit
+
+The prescribed producer exited 0 and added 26 CAS/YAML pairs. A subsequent byte audit found a real representation defect: the unfenced table in 32.24 was split into one header atom and sixteen row atoms; each row omits its final pipe and LF. The proof after the table is outside those objects, and the full 32.24 parent is absent. The authoritative map records all 16 uncovered spans (1025 bytes) and all actual fragments. The other 21 complete units and their ordered chains are exact. This is an implementation/ingestion gap despite the successful producer exit, not a failed support proposition. The single-ingest and no-source-edit-after-ingest limits were retained; no source or producer byte was repaired afterward. A separately authorized representation repair and new layer are needed for complete-unit canonical coverage. Current tracked diff whitespace checking passes. Producer-only whitespace diagnostics are recorded verbatim in the map, including the preserved row-ending spaces and blank final lines; no normalization was applied.
+
+Actual ingest receipt:
+
+~~~~json
+{
+  "argv": [
+    "make",
+    "ingest",
+    "BASE=2dcd259aa895ad0030875378e2748da57ee563f8",
+    "SOURCE=arithmetic-boundary-quantization"
+  ],
+  "cwd": "/Users/auricstudio/trureturing-qgh-pure-s21",
+  "invocation_count": 1,
+  "new_layer": true,
+  "source_sha256": "157686e0d16aeb73fe96616e28084c5c254d1c01dd8ebf136dba3dd00aecc986",
+  "started_utc": "2026-09-10T16:24:17.094028+00:00",
+  "ended_utc": "2026-09-10T16:24:46.194099+00:00",
+  "exit": 0,
+  "stdout": "INGEST residual_open_added=26 skipped_existing=292 coarse_fallbacks=0 open_genres=0 cas_objects_written=26 ledger_changed=true\n",
+  "stderr": ""
+}
+~~~~
