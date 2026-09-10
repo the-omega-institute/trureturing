@@ -65,10 +65,10 @@ public sealed class CiTransportTests
         foreach (var name in new[] { "current-transport.json", "current.json", "current-result.json", "current-paths.nul", "build.json" })
             Capture(name, File.ReadAllText(Path.Combine(root, "build/ci", name)));
         var report = Path.Combine(root, CommonExecutionEvidence.ReportPath);
-        using var seed = JsonDocument.Parse(File.ReadAllBytes(report + ".seed.json"));
+        using var seed = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllBytes(report + ".seed.json"));
         var partition = seed.RootElement.GetProperty("partition").GetString()!;
-        var identity = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report + ".seed.json")
-            .Concat(File.ReadAllBytes(report + ".provenance.json")).ToArray()));
+        var identity = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report + ".seed.json")
+            .Concat(TemporaryFileSystem.File.ReadAllBytes(report + ".provenance.json")).ToArray()));
         var suffixes = new[] { "", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip", ".seed.json" };
         if (!string.IsNullOrEmpty(evidence))
             foreach (var suffix in suffixes) File.Copy(report + suffix, Path.Combine(evidence, "producer-report.json" + suffix));
@@ -96,7 +96,7 @@ public sealed class CiTransportTests
         Assert.Equal("report", manifest.RootElement.GetProperty("layer").GetString());
         Assert.Equal(partition, manifest.RootElement.GetProperty("partition").GetString());
         var expected = suffixes.Select(suffix => (Path: partition + "/" + identity + "/raw-lean-report.json" + suffix,
-            Sha: Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report + suffix))),
+            Sha: Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report + suffix))),
             Mode: OperatingSystem.IsWindows() ? 0 : (int)File.GetUnixFileMode(report + suffix)))
             .OrderBy(item => item.Path, StringComparer.Ordinal).ToArray();
         var actual = manifest.RootElement.GetProperty("files").EnumerateArray().Select(item => (
@@ -125,7 +125,7 @@ public sealed class CiTransportTests
             if (defect == "wrong-commit") environment["CANDIDATE_SHA"] = new string('0', 40);
             Snapshot(defect, ready: false);
             Assert.Equal(saved.Keys.Order(StringComparer.Ordinal), Directory.GetFiles(cached, "*", SearchOption.AllDirectories).Order(StringComparer.Ordinal));
-            foreach (var item in saved) Assert.Equal(item.Value, File.ReadAllBytes(item.Key));
+            foreach (var item in saved) Assert.Equal(item.Value, TemporaryFileSystem.File.ReadAllBytes(item.Key));
             foreach (var item in expected) Assert.Equal(item.Mode, (int)File.GetUnixFileMode(Path.Combine(cached, "data", item.Path)));
             Assert.Equal(currentBytes, File.ReadAllBytes(Path.Combine(root, CommonExecutionEvidence.CurrentPath)));
             Assert.Equal(summaryBytes, File.ReadAllBytes(Path.Combine(root, "build/ci/current-result.json")));
@@ -142,7 +142,7 @@ public sealed class CiTransportTests
                 "snapshot", "--repository", root, "--layers", "report"], environment);
             Capture(label + ".log", result.Text);
             Assert.True(result.Exit == 0, result.Text);
-            Assert.Equal("report_ready=" + (ready ? "true\n" : "false\n"), File.ReadAllText(environment["GITHUB_OUTPUT"]));
+            Assert.Equal("report_ready=" + (ready ? "true\n" : "false\n"), TemporaryFileSystem.File.ReadAllText(environment["GITHUB_OUTPUT"]));
             Assert.Contains(ready ? "\"status\": \"snapshot\"" : "\"status\": \"save-failed\"", result.Text, StringComparison.Ordinal);
             Assert.False(File.Exists(Path.Combine(root, "build/ci/transport.json")));
             Assert.Empty(Directory.GetDirectories(Path.Combine(root, "build/lean-cache"), ".snapshot-*"));
