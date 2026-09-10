@@ -1,0 +1,26 @@
+### 进一步的主线缩减：只需覆盖能进入正交三元组的根
+
+令 `U(T)` 是全部共同无偏射线。定义：
+
+```math
+U_\triangle(T)=\{v\in U(T):\exists w,z\in U(T),\ (v,w,z)\text{ pairwise orthogonal}\}.
+```
+
+完整 completion 中的每个向量都属于 `U_triangle(T)`。因此，除了全局覆盖 `U(T)` 之外，还有一个更窄的可接受覆盖目标：
+
+```math
+\boxed{U_\triangle(T)\subseteq C_{known}.}
+```
+
+该命题成立就足以证明 completion 唯一，不需要枚举不能进入任何正交三角形的孤立 roots 或二分 components。当前的六十射线诱导图为这个目标提供了严格的正控制，但尚未证明盒外的 triangle-bearing roots 被覆盖。
+
+在 projector coordinates 中，三元组证书只需三个 Hermitian rank-one projectors `P0,P1,P2`，两两乘积为零、分别对两个固定基无偏。一个更弱的待证 inequality 是：
+
+```math
+\sum_{r=0}^2\sum_{k=0}^2\operatorname{Tr}(E_kP_r)^2\ge2.
+```
+
+若它对所有实际共同无偏正交三元组成立，则将任意六元 completion 分成两组三元组，得到总 collision 至少四，亦即 `alpha_S(C)>=1`。随后第 31 节排除两个 MUB completions 的预算等号。此三元组 inequality 当前仅是明确的下一项证书目标，不是本轮已经证明的下界。
+
+主线继续避免逐行下界和已被反例否定的全局到逐模蕴含。真正下一步是：精确全局 root cover、triangle-bearing locus 的排除证书，或实际三元组/完整基的 projector-affinity certificate。
+
