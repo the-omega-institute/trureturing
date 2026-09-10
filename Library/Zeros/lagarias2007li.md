@@ -6,7 +6,7 @@ title: Li Coefficients for Automorphic L-Functions
 doi: 10.5802/aif.2311
 claim: The pole-removed completed automorphic L-function is entire of order one; the trivial representation gives twice the classical Riemann xi function.
 strata_touched:
-  - D5/S3/Analytic/XiGlobalGrowth
+  - D5/S3/Analytic/Resolvent/XiGlobalGrowth
 license: citation-only
 triage: anchor
 ---
@@ -26,7 +26,7 @@ weaker consequence of order one, not the literal statement of Theorem 2.1(6).
 The factor two and a bounded initial disk can be absorbed into C. No Riemann
 hypothesis is required for this consequence.
 
-`D5/S3/Analytic/XiGlobalGrowth.xi_reading_norm_le_exp_three_halves` proves
+`D5/S3/Analytic/Resolvent/XiGlobalGrowth.xi_reading_norm_le_exp_three_halves` proves
 this consequence directly from the existing symmetric theta-Mellin integral.
 It does not formalize automorphic representations, an order-one theorem,
 Hadamard factorization, or the paper's Li coefficient identities. Its private

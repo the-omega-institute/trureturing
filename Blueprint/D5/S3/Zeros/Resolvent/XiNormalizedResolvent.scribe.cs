@@ -13,7 +13,7 @@ internal sealed class XiNormalizedResolventDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Zeros/Resolvent/XiNormalizedResolvent.xi_reading_normalized_resolvent_hasSum"),
                 H("The actual multiplicity-weighted zero sum"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Resolvent;
 
 internal sealed class XiGlobalGrowthDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class XiGlobalGrowthDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("xi-reading-norm-le-exp-three-halves"),
                 DeclarationHandle.Create(
-                    "D5/S3/Analytic/XiGlobalGrowth.xi_reading_norm_le_exp_three_halves"),
+                    "D5/S3/Analytic/Resolvent/XiGlobalGrowth.xi_reading_norm_le_exp_three_halves"),
                 H("A uniform three-halves growth bound"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Exists, Sp, F.Id("C"), InMacro, Mathbb, Grp(F.Id("R")), Comma,

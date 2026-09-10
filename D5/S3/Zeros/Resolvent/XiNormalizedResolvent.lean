@@ -6,7 +6,7 @@
    utility: none
    digest: Identify the centered xi logarithmic derivative with its normalized zero resolvent. -/
 
-import D5.S3.Analytic.XiGlobalGrowth
+import D5.S3.Analytic.Resolvent.XiGlobalGrowth
 import D5.S3.Analytic.Dilation.ScalarUnitDressing
 import D5.S3.Analytic.ShiftedXiPoisson.ShiftedPoissonSemigroup
 import D5.S3.Zeros.Endpoints.XiEndpointValues
@@ -332,7 +332,7 @@ theorem xi_reading_normalized_resolvent_hasSum
           (1 / (s - Z.zero n) + 1 / Z.zero n))
       (logDeriv D5.S3.Zeros.CompletedZeta.xiReading s -
         logDeriv D5.S3.Zeros.CompletedZeta.xiReading 0) := by
-  obtain ⟨C, hC, hg⟩ := D5.S3.Analytic.XiGlobalGrowth.xi_reading_norm_le_exp_three_halves
+  obtain ⟨C, hC, hg⟩ := D5.S3.Analytic.Resolvent.XiGlobalGrowth.xi_reading_norm_le_exp_three_halves
   let a := fun n : ℕ => (Z.multiplicity n : ℂ) * (1 / (s - Z.zero n) + 1 / Z.zero n)
   let e := fun R : ℝ => (logDeriv (Cf (22 / 25) (scaled R)) (s / (R : ℂ)) -
     logDeriv (Cf (22 / 25) (scaled R)) 0) / (R : ℂ)

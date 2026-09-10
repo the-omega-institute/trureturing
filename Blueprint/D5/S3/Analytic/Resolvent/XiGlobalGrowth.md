@@ -8,7 +8,7 @@ The classical pole-removed xi function satisfies a uniform exponential bound on 
 
 $$\exists C\in\mathbb{R},C>0\land\forall s\in\mathbb{C},\Vert\xi(s)\Vert\le\exp(C(1+\Vert s\Vert)^{\frac{3}{2}})$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XiGlobalGrowth.xi_reading_norm_le_exp_three_halves` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Resolvent/XiGlobalGrowth.xi_reading_norm_le_exp_three_halves` (`✓ std3`). ∎
 
 *Citation.* Jeffrey C. Lagarias (2007). *Li Coefficients for Automorphic L-Functions*. DOI: [10.5802/aif.2311](https://doi.org/10.5802/aif.2311).
 
@@ -22,5 +22,5 @@ The estimate is unconditional and includes both endpoints. It supplies a norm bo
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/XiGlobalGrowth.xi_reading_norm_le_exp_three_halves`
-- Dependency: [D5/S3/Analytic/CompletedZetaMellinReconstruction](CompletedZetaMellinReconstruction.md)
+- Truth anchor: `D5/S3/Analytic/Resolvent/XiGlobalGrowth.xi_reading_norm_le_exp_three_halves`
+- Dependency: [D5/S3/Analytic/CompletedZetaMellinReconstruction](../CompletedZetaMellinReconstruction.md)

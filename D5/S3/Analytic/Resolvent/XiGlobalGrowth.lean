@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/XiGlobalGrowth
+/- GID: D5/S3/Analytic/Resolvent/XiGlobalGrowth
    generality: I
-   mirror-B: D5/B/S3/Analytic/XiGlobalGrowth
+   mirror-B: D5/B/S3/Analytic/Resolvent/XiGlobalGrowth
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -11,7 +11,7 @@ import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 
 noncomputable section
 
-namespace D5.S3.Analytic.XiGlobalGrowth
+namespace D5.S3.Analytic.Resolvent.XiGlobalGrowth
 
 open MeasureTheory Set Filter Topology
 
@@ -207,4 +207,4 @@ theorem xi_reading_norm_le_exp_three_halves :
       dsimp only [R, r]
       ring
 
-end D5.S3.Analytic.XiGlobalGrowth
+end D5.S3.Analytic.Resolvent.XiGlobalGrowth
