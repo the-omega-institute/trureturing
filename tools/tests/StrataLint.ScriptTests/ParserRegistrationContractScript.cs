@@ -47,20 +47,20 @@ internal static class ParserRegistrationContractScript
                 (f'macro "eqList" xs:{parser}(term, "=\'", ",") : term => `(True)', False),
                 (f'elab "eqList" xs:{parser}(term, "=\'", ",") : term => return Lean.mkConst ``True', False),
             ]
-            requests, expected = [], []
             for declaration, registered in declarations:
                 source = "import Lean\n" + declaration + "\nexample : True := by decide\n"
                 contract.compile_source(source)
                 contract.compile_source(source + registry_assertion(registered))
                 managed = [dict(module="D5.Registration", path="D5/Registration.lean", source=source)]
+                # Bound each compiler process to one source and its three contexts.
+                requests = []
                 for mode in ["current", "projected", "source"]:
                     query = source if mode == "current" else "import D5.Registration\nexample : True := by decide\n"
                     requests.append(request_for(query, mode, managed))
-                    expected.append(registered)
-            results = contract.query_requests(requests)
-            print("SEPARATOR_PROJECTION " + json.dumps(results), flush=True)
-            for result, registered in zip(results, expected):
-                assert_result(result, registered)
+                results = contract.query_requests(requests)
+                print("SEPARATOR_PROJECTION " + json.dumps(results), flush=True)
+                for result in results:
+                    assert_result(result, registered)
         elif operation == "locality":
             locality, second = sys.argv[2], sys.argv[3] == "True"
             declaration = locality + 'infix:50 " =\' " => Eq\n'

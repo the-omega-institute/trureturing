@@ -27,6 +27,10 @@ public sealed class ParserRegistrationProducerTests(SourceCompilerFixture compil
             offset, expected_equality = true, actual_equality = actual, malformed_rows = input.MalformedRows.Count,
         }));
         Assert.Empty(input.MalformedRows);
+        // The parser consumes both wrapper commands before its first registration
+        // is projected. In the unwrapped control that registration precedes parsing.
+        var innerOffset = Encoding.UTF8.GetByteCount(source[..source.IndexOf("example", StringComparison.Ordinal)]);
+        Assert.Equal(!wrapped, context.EqualityAt(innerOffset));
         Assert.True(actual, "Compiler registry retains the global token after the wrapper and namespace.");
         Assert.Empty(NativeDecideSourceRule.Inspect(snapshot, path, input));
     }
