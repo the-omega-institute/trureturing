@@ -4,7 +4,6 @@ authors: Ina Bašić; Eric Gottlieb; Matjaž Krnc
 year: 2026
 title: "CRIM: A Natural Game on Integer Partitions"
 doi: 10.48550/arXiv.2606.16828
-url: https://arxiv.org/abs/2606.16828
 claim: Section 3 defines row deletion and conjugate-row-conjugate column deletion; printed Conjecture 3 gives a Sprague–Grundy formula for near-square rectairs with r at least seven.
 strata_touched:
   - D5/S0/Certificates/Games/CrimGrundyRefutation

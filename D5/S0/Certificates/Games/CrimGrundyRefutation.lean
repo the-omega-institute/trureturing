@@ -61,7 +61,7 @@ def conjugate (p : Position) : Position :=
 def moves (p : Position) : List Position :=
   rowMoves p ++ (rowMoves (conjugate p)).map conjugate
 
-private theorem row_decreases (p q : Position) (h : q ∈ rowMoves p) : q.sum < p.sum := by
+private def row_decreases (p q : Position) (h : q ∈ rowMoves p) : q.sum < p.sum := by
   induction p generalizing q with
   | nil => simp [rowMoves] at h
   | cons n p ih =>
@@ -75,7 +75,7 @@ private theorem row_decreases (p q : Position) (h : q ∈ rowMoves p) : q.sum < 
         omega
     · simpa using Nat.add_lt_add_left (ih s hs) n
 
-private theorem sum_indicator (w n : ℕ) (h : n ≤ w) :
+private def sum_indicator (w n : ℕ) (h : n ≤ w) :
     ((List.range w).map (fun j => if j < n then 1 else 0)).sum = n := by
   induction w with
   | zero =>
@@ -99,7 +99,7 @@ private theorem sum_indicator (w n : ℕ) (h : n ≤ w) :
       rw [he]
       simp
 
-private theorem sum_heights (p : Position) (w : ℕ) (h : ∀ n ∈ p, n ≤ w) :
+private def sum_heights (p : Position) (w : ℕ) (h : ∀ n ∈ p, n ≤ w) :
     ((List.range w).map (height p)).sum = p.sum := by
   induction p with
   | nil => simp [height]
@@ -107,23 +107,23 @@ private theorem sum_heights (p : Position) (w : ℕ) (h : ∀ n ∈ p, n ≤ w) 
     simp only [height, List.sum_map_add, List.sum_cons]
     rw [sum_indicator w n (h n (by simp)), ih (fun x hx => h x (by simp [hx]))]
 
-private theorem sum_nonzero (p : Position) : (p.filter (· != 0)).sum = p.sum := by
+private def sum_nonzero (p : Position) : (p.filter (· != 0)).sum = p.sum := by
   induction p with
   | nil => rfl
   | cons n p ih =>
     by_cases hn : n = 0 <;> simp [hn, ih]
 
-private theorem conjugate_sum (p : Position) : (conjugate p).sum = p.sum := by
+private def conjugate_sum (p : Position) : (conjugate p).sum = p.sum := by
   rw [conjugate, sum_nonzero]
   exact sum_heights p p.sum (fun n hn => List.single_le_sum (fun x _ => Nat.zero_le x) n hn)
 
-private theorem move_decreases (p q : Position) (h : q ∈ moves p) : q.sum < p.sum := by
+private def move_decreases (p q : Position) (h : q ∈ moves p) : q.sum < p.sum := by
   simp only [moves, List.mem_append, List.mem_map] at h
   rcases h with h | ⟨s, hs, rfl⟩
   · exact row_decreases p q h
   · simpa [conjugate_sum] using row_decreases (conjugate p) s hs
 
-private theorem missing_nonempty (s : Finset ℕ) :
+private def missing_nonempty (s : Finset ℕ) :
     (Finset.range (s.card + 1) \ s).Nonempty := by
   apply Finset.sdiff_nonempty.mpr
   intro h
@@ -134,7 +134,7 @@ private theorem missing_nonempty (s : Finset ℕ) :
 def mex (s : Finset ℕ) : ℕ :=
   (Finset.range (s.card + 1) \ s).min' (missing_nonempty s)
 
-private theorem mex_spec (s : Finset ℕ) :
+private def mex_spec (s : Finset ℕ) :
     mex s ∉ s ∧ ∀ n < mex s, n ∈ s := by
   have hm := Finset.min'_mem _ (missing_nonempty s)
   change mex s ∈ Finset.range (s.card + 1) \ s at hm
@@ -154,11 +154,11 @@ def grundy (p : Position) : ℕ :=
 termination_by p.sum
 decreasing_by exact move_decreases _ _ q.property
 
-private theorem grundy_eq (p : Position) :
+private def grundy_eq (p : Position) :
     grundy p = mex ((moves p).map grundy).toFinset := by
   rw [grundy]
   simp
-private theorem mex_unique (s : Finset ℕ) (n : ℕ)
+private def mex_unique (s : Finset ℕ) (n : ℕ)
     (hn : n ∉ s) (hbelow : ∀ m < n, m ∈ s) : mex s = n := by
   obtain ⟨hmissing, hsmall⟩ := mex_spec s
   rcases lt_trichotomy (mex s) n with h | h | h
@@ -177,7 +177,7 @@ private def check (c : Certificate) (p : Position) : Bool :=
     !used.contains (value c p) &&
     (List.range (value c p)).all (fun n => used.contains n)
 
-private theorem certificate_correct (c : Certificate)
+private def certificate_correct (c : Certificate)
     (hc : (domain c).all (check c) = true) (p : Position) (hp : p ∈ domain c) :
     grundy p = value c p := by
   induction p using (measure List.sum).wf.induction with

@@ -1,256 +1,271 @@
-# CRIM Conjecture 3: implementation record
+# CRIM Conjecture 3: implementation report
 
-Outcome: stopped before numerical probes and Lean implementation under the
-brief's section 10 prior-work stop condition. An already posted refutation
-contains exactly the proposed r=7 counterexample and all twelve option values.
-The public page labels that calculation unverified; this report establishes
-the prior posting, not its mathematical correctness or independent certification.
+## Provenance and scope
 
-Production: no skill; Codex implementation worker, single-agent source inspection
-and checks. No independent review is claimed. User-supplied numerical values
-are predictions to compare against, not computational evidence.
+No skill was used. One Codex implementation worker performed the source review,
+two algorithm implementations, Lean proof and local checks. No independent review
+agents were commissioned; two algorithms do not constitute two independent model
+sources. This is an implementation handoff, not an independent admission verdict.
+The supplied worktree and branch were clean at base
+`6ec605909ca7c64b117bc8bdecc8a62988dfebb4`.
 
-Worktree: `/Users/auricstudio/trureturing-robin7smooth-0909`.
-Branch: `lane/math/crim-grundy-refute-0910`.
-Immutable starting commit: `bf7e99c6dec64fc5d08786d6d2e4e885ef642f17`.
-Date: 2026-09-10 (Asia/Singapore).
-Worker artifacts: `/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/crim-grundy-0910/attempt-1`.
+Target: only the r ≥ 7 formula of printed Conjecture 3 in Bašić, Gottlieb and
+Krnc, *CRIM: A Natural Game on Integer Partitions*, arXiv:2606.16828v1.
+No statement about the rest of the paper, an intended assertion or any corrected
+formula is made. No priority for the counterexample is claimed.
 
-## Preregistration v1, before computational probes or Lean implementation
+## Preregistration and bind-only attempt
 
-question_answered: Does the displayed r >= 7 formula in printed Conjecture 3
-of arXiv:2606.16828v1 agree with the recursively defined normal-play CRIM
-Sprague–Grundy value? The proposed test is r=7, k=5, with rectair
-[6,6,5,4,3,2,1]. This is a first-tier recent conjecture target; the literature
-check below is still being completed. Implementation must stop if a prior
-proof/refutation is found or if the printed target differs from the brief.
+Before any mathematical probe, preregistration v1 was written to the runner
+attempt directory as `preregistration-v1.md`; the corresponding timestamp is in
+`worker-notes.log`. The repository copy is [preregistration.md](preregistration.md).
+`question_answered`: whether that previously printed formula holds.
+Research tier: first-tier recent small conjecture, with an explicitly unverified
+prior posting; the user's instruction authorizes implementation on that basis.
 
-Proposed escape_witness: the paper-specific move graph consisting of deletion
-of each row and conjugate–row-deletion–conjugate column moves, together with
-a verified finite-game SG/mex evaluator whose recursion descends in partition
-size. A finite DAG certificate must cover every option recursively through
-the terminal empty partition. The supplied prediction is 377 distinct states,
-maximum descent depth 12, 12 distinct root options and root SG value 1.
-These counts and option values are unverified predictions at this registration.
-No list of twelve hardcoded SG constants may define the claim or replace
-recursive verification. The equality mex({0,2,4,5})=1 alone is not the witness.
+The first route attempted was existing Mathlib instantiation, frozen projections
+and normalization. No exact CRIM move graph or SG evaluation was found in the
+ordered scopes below. Finite minima, list arithmetic and well-founded recursion
+alone do not supply any of the CRIM descendant values. Consequently this route
+cannot close the claim and the module is not bind-only. The counterfactual test
+is concrete: removing the checked graph recurrence leaves no premise from which
+the root SG value can be inferred. A mex computation on twelve assumed constants
+was never used as the target or a premise.
 
-Planned public theorem: `result : Not claim`; the claim must quantify only
-over the printed rectair formula and refer to the actual graph and evaluator.
-Proposed proof_shape: content. Direct frozen dependencies: none identified.
-Proposed admission_basis: escape-witness (conditional on observing a live
-witness satisfying CLAUDE.md 3.2). Proposed utility: certified-instance,
-refutes the module's claim. `refutes` is not an admission_basis value.
-There will be no priority claim, no conclusion about other paper results,
-and no assertion about an intended or repaired formula.
+Proposed `escape_witness`: paper-specific moves, descent by cell count, SG/mex
+evaluation, and a correct finite certificate for the reachable graph. Observed:
+`conjugate_sum`, `move_decreases`, `grundy`, `mex_spec`, `mex_unique` and
+`certificate_correct` implement exactly this; `result.checked` verifies the
+complete 377-entry certificate using `decide +kernel`. The observed witness
+matches preregistration v1. No replacement witness or retrospective relabelling
+was needed. The predicted counts and numerical values all agree with observation.
 
-## Rendered source inspection
+## Rendered source audit
 
-Downloaded `https://arxiv.org/pdf/2606.16828v1` (659535 bytes) and the current
-abstract page. Rendered PDF pages 4, 5, 6, 8 and 18 with PyMuPDF and visually
-inspected the PNGs, not only the extracted text. Images and text are retained
-in the worker artifact directory.
+The worker downloaded and rendered the PDF, then visually inspected printed
+pages 4, 5, 8 and 18 (physical PDF pages have the same numbers). The rendering
+files are `pdf-page-04.png`, `pdf-page-05.png`, `pdf-page-08.png`, and
+`pdf-page-18.png` in the attempt directory. The brief's text-layer P17 corresponds
+to the zero-based index of physical page 18. PDF SHA-256:
+`67a8151c78c73da470aae28cc5f1f7657a9de9367aa4f77e6a4dda325cd12cb3`.
 
-| Item | Printed reading | Comparison with brief |
+| Item | Rendered text / finding |
+| --- | --- |
+| Rectair definition, p. 5 | R^k_{r,c} = [c^(r−k), c−1, …, c−k] |
+| Valid parameters, p. 5 | r,c positive; 0 ≤ k < min(r,c) |
+| Conjecture subscript, p. 18 | R^k_{r,r−1}, not R^k_{r,r} |
+| Exceptional condition | k = r−2 and r odd |
+| Exceptional / other values | 3 / 1 |
+| Large-r range | “For r ≥ 7 we have” |
+| Row move, p. 8 | Delete the ith part for any 1 ≤ i ≤ r |
+| Column move, p. 8 | Take the conjugate of the partition resulting from a row move on λ′ |
+| Empty/zero convention, p. 4 | Parts are positive; the only partition of zero is [] |
+
+All task-critical characters match the brief. The Lean rectair uses r−k copies
+and k descending entries through c−k. Natural parameters and `k < min r (r−1)`
+express exactly the valid domain for this large-r formula. The evaluator's
+`moves` function is a list union of row deletions and conjugate-row-conjugate
+deletions. Multiple choices yielding the same position are harmless: SG uses
+the finite set of option values. `height p j` counts rows with length greater
+than zero-based column j. The scan through `p.sum` covers every column because
+each part is at most that sum, and it filters zero heights. Zero rows cannot be
+selected. This is a total extension to natural lists; on paper partitions it is
+exactly CRIM, with no fallback move, artificial terminal state or depth cutoff.
+
+## Two fresh computations
+
+[recompute.py](recompute.py) has no supplied SG value table as input. Its only
+root input is `(6,6,5,4,3,2,1)`. Method A constructs columns by conjugation,
+recursively evaluates all legal successors with memoization, and increments a
+candidate until absent. Method B directly deletes a column by shortening each
+row reaching that column, explicitly constructs the graph, orders by area, and
+finds mex using a membership vector. The implementations share neither the move
+routine nor the mex routine. Both start at terminal values through their own
+algorithm. The script compares all states, all move sets and every computed
+value, not just the root.
+
+| Successor | Recursive A | DAG bottom-up B |
 | --- | --- | --- |
-| Rectair, p. 5, section 2.2 | R^k_{r,c} = [c^{r-k}, c-1, ..., c-k] | matches |
-| Domain, p. 5 | r,c positive; 0 <= k < min(r,c) | retained |
-| Conjecture 3 argument, p. 18 | R^k_{r,r-1} | matches |
-| Exceptional condition | k=r-2 and r odd | matches |
-| Exceptional value | 3 | matches |
-| Otherwise value | 1 | matches |
-| Stated range | r >= 7 | matches |
-| Row move, p. 8 | Remove part i, 1 <= i <= r | matches |
-| Column move, p. 8 | Conjugate the result of a row move on the conjugate | matches |
-| Empty parts, p. 4 | Parts are positive; the only partition of 0 is [] | zero rows/columns are absent |
-| Play convention, p. 6 | Normal play; terminal ordinary SG is zero | retained |
+| [6, 6, 5, 4, 3, 2] | 0 | 0 |
+| [6, 6, 5, 4, 3, 1] | 2 | 2 |
+| [6, 6, 5, 4, 2, 1] | 0 | 0 |
+| [6, 6, 5, 3, 2, 1] | 4 | 4 |
+| [6, 6, 4, 3, 2, 1] | 0 | 0 |
+| [6, 5, 4, 3, 2, 1] | 0 | 0 |
+| [5, 5, 5, 4, 3, 2, 1] | 2 | 2 |
+| [5, 5, 4, 4, 3, 2, 1] | 4 | 4 |
+| [5, 5, 4, 3, 3, 2, 1] | 0 | 0 |
+| [5, 5, 4, 3, 2, 2, 1] | 4 | 4 |
+| [5, 5, 4, 3, 2, 1, 1] | 0 | 0 |
+| [5, 5, 4, 3, 2, 1] | 5 | 5 |
 
-Page 2 also states that the remaining pieces reattach after deletion. Page 18
-has surrounding assertions about small rectairs; the target here is exactly
-the displayed r >= 7 formula. The preceding prose mentions R^k_{r,r+1}, while
-Conjecture 3 itself prints R^k_{r,r-1}; the displayed conjecture is the target.
+Both visit 377 distinct partitions including the empty position and the root;
+their move graphs are identical. The explicit DAG has 2190 distinct directed
+edges and 12 distinct root options. Method B measures its longest descending
+chain as 12 edges (13 vertices). The root has 27 cells;
+its option-value set is exactly {0,2,4,5}, hence both root values are 1. There
+are no discrepancies with the task's table. The full independently computed DAG
+is preserved as `computation.json` in the attempt directory. Counts and depth
+are algorithmic observations; the kernel proof's obligation is recurrence and
+closure on all certificate entries, not a separate theorem about graph size.
 
-## Ordered reuse and bind-only check
+## Formal proof and per-declaration classification
 
-1. D5: `git grep -n -P '\b(Grundy|mex|Sprague|CRIM)\b' -- 'D5/**/*.lean'`
-   returned three comment occurrences, all in ComplementaryGoldenRatioLimit.
-   Positive control with the same PCRE word boundaries, `\b(theorem|def)\b`
-   on TripodNimPeriodRefutation, returned its actual declarations.
-2. Pinned Mathlib is v4.33.0, commit
-   `db584cd6d46c92f209a44c0f1c829460d327499d`.
-   Whole-Mathlib PCRE `\b(mex|PGame|Sprague|Grundy)\b` found only three
-   explanatory mex comments in Cardinal/Basic and Ordinal/Basic. No
-   `SetTheory/Game` files, `PGame`, named `Nat.mex` or `Ordinal.mex` API were
-   found. Nat.Partition exists in Combinatorics/Enumerative/Partition/Basic:
-   it bundles positive Multiset parts and their sum, including ofMultiset
-   and ofSums (which removes zero parts). Multiset.erase and its strict
-   decrease theorem are available. Finset.strongInductionOn and lt_wf are
-   available in Data/Finset/Card. These do not supply the CRIM graph or SG
-   value. One initial Multiset/Order path probe failed because that file
-   does not exist; the successful AddSub read supplies erase facts.
-3. GitHub repository discovery and Reservoir located
-   `vihdzp/combinatorial-games`. Inspected its tree at
-   `a087fede837fa7f4ee6a2ffb2c6560a3112d4d6d`, Graph.lean,
-   Impartial/Grundy.lean and Specific/Nim.lean. This library has GameGraph,
-   well-founded moveRecOn, toIGame, and IGame.grundyAux / Impartial.grundy.
-   These are noncomputable and use nimbers and infima of complements.
-   Its current toolchain is v4.34.0-rc2. The inspected tree has no CRIM or
-   partition-specific game. Reservoir lists older builds too; a toolchain
-   mismatch alone is not the reason for declining reuse. The missing work
-   remains the CRIM graph and an executable finite evaluation certificate.
+The only included public theorem is
+`D5/S0/Certificates/Games/CrimGrundyRefutation.result`; its type is literally
+`¬ claim`. The only included closed Prop definition is the matching `.claim`.
+It directly uses `grundy (rectair ...)`, and `grundy` recursively uses `moves`.
+No successor values are constants in the claim.
 
-No exact theorem or direct graph/evaluator instantiation establishing this
-counterexample was found in these scopes. Instantiation, frozen projections,
-and normalization alone do not discharge the required recursive computation.
-Thus the initial bind-only attempt did not close the target. No Lean module
-has been created at this registration.
-
-## Literature status and stopping evidence
-
-The current arXiv abstract page lists only v1, submitted
-15 June 2026 15:09:22 UTC. The rendered v1 retains Conjecture 3 above.
-OpenAlex exact-title query returns two records for this same preprint,
-W7164942864 and W7165064556; both have cited_by_count=0 and neither is
-accepted/published. Crossref query.title, first five results, has no exact
-title match. These are bounded observations, not proof of absence.
-
-The decisive source is
-<https://mathdb.com/p/375372/the-sprague-grundy-conjecture-for-near-square-rectairs>.
-Its search listing and full page say **Claimed solved**, with one solution.
-The full solution is attributed to **Shivam Patel**, posted
-**2026-08-20T14:33:05.996768Z** (HTML `time datetime`). The progress summary
-was refreshed 2026-08-21T22:25:12.720677Z. It says:
-
-> An unverified posted calculation claims the conjecture is false in both
-> parity cases, but no independent confirmation was found.
-
-The solution prints the exact row/conjugate-column SG recurrence and the
-counterexample R^5_{7,6}=[6,6,5,4,3,2,1], with these values:
-
-| Follower | SG claimed in the prior post |
+| Field for result | Value |
 | --- | --- |
-| (6,6,5,4,3,2) | 0 |
-| (6,6,5,4,3,1) | 2 |
-| (6,6,5,4,2,1) | 0 |
-| (6,6,5,3,2,1) | 4 |
-| (6,6,4,3,2,1) | 0 |
-| (6,5,4,3,2,1) | 0 |
-| (5,5,5,4,3,2,1) | 2 |
-| (5,5,4,4,3,2,1) | 4 |
-| (5,5,4,3,3,2,1) | 0 |
-| (5,5,4,3,2,2,1) | 4 |
-| (5,5,4,3,2,1,1) | 0 |
-| (5,5,4,3,2,1) | 5 |
+| proof_shape | content |
+| Direct frozen dependencies (GID + statement_id) | Empty set: there are no D5 imports, hence no such GID or statement_id |
+| escape_witness | Complete CRIM graph recurrence certificate, its soundness by cell-count induction, and well-founded SG evaluation |
+| admission_basis | escape-witness (one of the three allowed values) |
+| utility | kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Games/CrimGrundyRefutation.claim; result=D5/S0/Certificates/Games/CrimGrundyRefutation.result; claim=D5/S0/Certificates/Games/CrimGrundyRefutation.claim |
 
-It concludes G(R^5_{7,6})=mex({0,2,4,5})=1 against predicted 3.
-The twelve rows and values match the brief exactly. This table is transcribed
-solely to identify the prior post; **it is not an independently recomputed
-table and was not used as a Lean premise**. The post also discusses r=8 and
-another conjecture; neither is asserted or verified by this worker.
+All internal proofs are parameterized private proof definitions; no additional
+included theorem remains. The initial semantic report included private theorem
+helpers despite their visibility, so those helpers were converted to proof
+definitions before final validation. Their proof terms and the mathematical
+construction are unchanged; this enforces the single-theorem delivery contract.
+`refutes` is a utility basis, not a fourth admission_basis.
 
-This corrects the brief's statement that public MathDB still lists the target
-as unresolved with no prior refutation located. More precisely, MathDB
-distinguishes an unverified posted disproof from a confirmed resolution.
-The instruction to stop on finding prior proof/refutation is applied to this
-already public, explicit refutation attempt of the identical target; no
-independent certification of that attempt is claimed. This is a prior-work
-stop, **not a successful bind-only outcome**, and not a PDF transcription
-mismatch.
+The finite certificate contains candidate numbers generated by the fresh
+computation. The proof does not trust these numbers: for every listed position
+it checks closure under **all actual moves**, absence of its assigned value
+among option values, and presence of every smaller number. `certificate_correct`
+then proves the assigned value equals `grundy` by induction on cell count. The
+empty position is included with value zero, so this validates the recursion all
+the way from terminals. Its proof is on the live path
+`checked → certificate_correct → actual → result`; no irrelevant fact was added
+only to inflate the dependency closure. The value-1 root equality and the
+conjecture's value-3 equality produce the contradiction.
 
-Other bounded checks: the OpenAlex CRIM/rectairs query returned only the two
-original-paper records. A CRIM/Conjecture-3 query returned four unrelated
-records. The CRIM/Grundy query additionally found supplementary artifacts for
-"Losing positions of CRIM for partitions with at most six parts"
-(Zenodo 22070743/22070744). DataCite metadata for
-<https://doi.org/10.5281/zenodo.22070744> identifies Sanjit Singh Mehat,
-issued 2026-08-23, and describes a Lean v4.28.0 formalization of P/N status
-only, explicitly not an SG classification. The archive itself returned HTTP
-403 and was not inspected. This is an additional possible source of CRIM
-infrastructure, so the earlier general-library check must not be read as a
-claim that no third-party CRIM Lean definitions exist. Its reuse assessment
-was not pursued after the prior-post stop.
+`mex` uses Mathlib's `Finset.min'` on the complement within `range(card+1)`;
+cardinality proves this set nonempty. `mex_spec` proves the least-excluded
+property, and `mex_unique` is consumed in certificate soundness. `grundy` uses
+well-founded recursion with `termination_by p.sum`; row deletion strictly
+reduces area and conjugation preserves it. There is no `native_decide`, `sorry`,
+new axiom, trusted external numerical oracle or SG table assumption. The first
+`make lean` kernel build reported only `[propext, Classical.choice, Quot.sound]`
+for both claim and result.
 
-GitHub issue search for the arXiv identifier returned no results; repository
-search for CRIM with language Lean returned no results. A broad game-library
-query found `aayandeb/Partition-Games`, whose README describes a JavaScript
-research application associated with Gottlieb's group. Its CRIM files were
-located, but no numerical code was executed or used as evidence.
+## Ordered library receipts
 
-Google returned challenge pages, DuckDuckGo a challenge, Brave HTTP 429,
-Yahoo HTTP 500, and Bing irrelevant results. None of those failures counts
-as a successful negative search. MathDB's first request without a browser
-User-Agent returned 403; the request with that header succeeded. The actual
-MathDB site is mathdb.com; mathdb.org is unrelated. No journal version or
-formal erratum was located in the successful bounded checks. This is not
-a claim of absence. Provenance remains literature-attested, with no priority
-claim for either the numbers or the counterexample.
+Pinned environment: Lean v4.33.0; Mathlib
+`db584cd6d46c92f209a44c0f1c829460d327499d`.
 
-## Proposed versus observed work
+1. Repository first: `git grep -n -P '\b(Grundy|mex|Sprague|PGame|CRIM)\b' -- 'D5/**/*.lean'`
+   returned four comment hits at the starting tree: three in
+   `ComplementaryGoldenRatioLimit.lean`, one in
+   `Games/VersionBTwelvePileRefutation.lean`. Positive control with the same
+   boundary syntax, `\b(Mathlib|theorem)\b`, found the imports and theorem in
+   `TripodNimPeriodRefutation.lean`. Receipts: `repository-search.txt` and
+   `positive-control.txt`. Follow-up reading found public `mexScan`/`mexPos`
+   in the former (CamelCase names are outside the word-boundary query), but
+   no SG semantics and no least-excluded correctness theorem there. The latter
+   has a normal-play losing-state certificate for a different pile game,
+   not a CRIM/SG evaluator. Thus the broad “zero game pieces” description in the
+   brief is too strong for this tree; no directly reusable CRIM/SG result exists
+   among these hits. Neither module is imported or re-proved.
+2. Pinned Mathlib: filename inventory for Game/Mex/Partition/WellFounded;
+   `rg -n -P '\b(grundy|Grundy|mex|PGame|sprague|Sprague)\b' .lake/packages/mathlib/Mathlib`.
+   Three comment hits concern ordinal/cardinal least omissions. No
+   `SetTheory.Game.PGame`, `SetTheory.Game.Nim`, `Nat.mex` or `Ordinal.mex`
+   declarations/files were present. `Order.GameAdd` is about relations.
+   Positive control `\b(theorem|def)\b` there produced 24 lines.
+   `Nat.Partition` has positive multiset parts and sums; `Multiset` has erase
+   and sum infrastructure; `YoungDiagram.transpose` is available.
+   `Finset.wellFoundedLT` is present in `Data/Finset/Defs.lean`, and
+   `WellFounded.min`/induction are present in `Order/WellFounded.lean`.
+   These supply general tools, not a move graph or evaluated CRIM instance.
+   We directly reuse Mathlib list sums, finite minima, cardinal bounds and
+   measure induction. Receipts: `mathlib-games.txt`, `mathlib-positive.txt`,
+   `mathlib-finset-wf.txt`, `multiset.txt`; exact helper signatures were also
+   checked by Lean elaboration in a warm environment.
+3. Third-party Lean ecosystem: GitHub repository query
+   `combinatorial games language:Lean` found `vihdzp/combinatorial-games`,
+   `sinhp/Combinatorial-Games`, `t4ccer/misere-games`, `Happyves/Lean_Games`.
+   The relevant general SG file in the first repository was read at current
+   revision `a087fede837fa7f4ee6a2ffb2c6560a3112d4d6d`.
+   `IGame.grundyAux` and `Impartial.grundy`/`nim_grundy_equiv` are available,
+   noncomputable nimber theory. Its toolchain is v4.34.0-rc2 and Mathlib pin
+   `156b4fb3500549c5983e06348faca9d6ee499841`, incompatible with this tree.
+   There is no exact finite CRIM evaluation to import or port. The present
+   proof does not re-prove the general Sprague–Grundy equivalence theorem.
+   GitHub code queries `"CRIM" "Grundy" language:Lean`,
+   `"rectair" language:Lean`, and `"2606.16828" language:Lean` each returned
+   total_count 0 with incomplete_results=false; JSON receipts are saved.
+   A preliminary unquoted `CRIM` query produced substring false positives and
+   is not treated as a game result. Network search capability was exercised.
+4. Only after these stages was the local verified finite evaluator implemented.
 
-- Proposed escape_witness: CRIM graph plus a verified evaluator and complete
-  finite DAG. Observed escape_witness: **none**, because implementation stopped
-  during the required prior-work check.
-- Public Lean theorems: **none**. Consequently there are no per-theorem
-  proof_shape judgments, direct frozen GID/statement_id dependencies, or
-  admission_basis assignments. The proposed values in the preregistration
-  are plans, not observed classification. No fourth admission basis is used.
-- Independent algorithm A (memoized recursive SG): **not run**.
-- Independent algorithm B (explicit DAG, bottom-up SG): **not run**.
-- Actual state count and maximum depth: **not measured**; 377 and 12 remain
-  the brief's predictions. No checked root SG value is claimed by this worker.
-- No Lean module, claim/result declaration, Scribe source, emitted Blueprint,
-  Library note or frozen state was created. Locator and Scribe prohibited-word
-  checks therefore have no new target. No target-specific Lean build/report
-  or make emit was run. The complete repository check below does invoke the
-  existing Lean report producer. No make deposit*, make cover, or PR was
-  run or opened.
-- Resuming as independent certification of an already posted calculation
-  would be a revised task scope. Remaining work would include retrieving
-  the CRIM formalization above for reuse analysis, both independent
-  algorithms, the graph/evaluator correctness proof, the refutation theorem,
-  mirrored Scribe and Library source, and the required build/report checks.
+`dominating_theorem_search`: not-found-in-searched-scope; the scopes and
+positive controls above delimit that conclusion. No universal absence claim.
 
-## Source artifact identities
+## Version and prior-work review
 
-SHA-256 of the retained downloads:
+On 2026-09-10 the arXiv abstract/history page still listed only v1, submitted
+2026-06-15T15:09:22Z. DataCite independently listed version 1, type Preprint and
+no related publication identifiers. No author v2 or formal correction was
+identified. Crossref's bounded title query (top three returns) produced no
+matching journal publication. Google returned a challenge/browser requirement,
+DuckDuckGo returned a bot challenge, and Bing RSS returned unrelated results;
+none is counted as a successful literature search. These limits are recorded,
+not converted into a claim that the entire literature lacks a proof. The
+arXiv history and DataCite checks directly resolve the required v2 stop test.
 
-| Artifact | SHA-256 |
-| --- | --- |
-| crim-v1.pdf | 67a8151c78c73da470aae28cc5f1f7657a9de9367aa4f77e6a4dda325cd12cb3 |
-| arxiv-abs.html | afe6689789aaebdd2ad84c8f3a4d2905c5f3c7b7d2ca4420b63a7f2a3adf61cd |
-| mathdb-375372.html | baba66a0f98899bdd1cbac056bc738c39c14fd694f54df8bf9b9118dea1fe22c |
-| mathdb-375372.txt | a659ec60c85ab7be0e816a2da6eda946a82825c0df5f85e36b289d568917aa89 |
+The MathDB page was fetched and read. It explicitly labels the 2026-08-20
+Shivam Patel posting “Claimed solved” while stating “An unverified posted
+calculation claims the conjecture is false in both parity cases, but no
+independent confirmation was found.” The timestamp in page data is
+2026-08-20T14:33:05.996768Z. URL:
+https://mathdb.com/p/375372/the-sprague-grundy-conjecture-for-near-square-rectairs.
+The separately recomputed r=7 data coincide with that post. We make no verdict
+about its r=8 assertion or the post as a whole and no first-discovery claim.
 
-The raw page and extracted text include the complete solution and its date.
-The preregistration was committed and pushed as `74a33a2d52` before reading
-that solution. The worker's report-only validation is recorded below.
+Provenance for the printed claim and rules is `literature-attested`, with
+`Library/Certificates/basic2026crim.md` as the canonical note. The checked
+formal result has `repo-derived` provenance relative to that source. The note,
+Lean prose and this report explicitly record the prior unverified posting.
 
-## Validation and delivery
+## Validation and handoff
 
-Preregistration commit: `74a33a2d52`; stopping-evidence commit: `ac1b7fba4c`.
-Both were pushed to `origin/lane/math/crim-grundy-refute-0910` immediately.
-The only changed tracked path is this report. The repository was clean
-after the check; `git diff --check` passed.
+The canonical router returned
+`D5/S0/Certificates/Games/CrimGrundyRefutation.lean`. An initial absolute-path
+manifest invocation was rejected; rerunning with repository-relative
+`.lake/crim-manifest.json` succeeded. Exploratory Lean signature/proof probes
+used `lake env lean` only after `make lean-cache-ensure` reported both caches
+warm with stamp present. All project builds use `make lean`/`make lean-report`;
+no bare `lake build` was invoked. The temporary proof probes initially exposed
+ordinary syntax/lemma-name errors, all corrected before the module was built.
 
-On `ac1b7fba4c`, ran the requested full command:
+The first `make lean` exited 0 in 173.633 seconds on this macOS ARM worktree,
+with warm Mathlib/project caches; the new module's reported build time was
+131 seconds. This is a local measurement, not a CI timing prediction. The
+heartbeat comment warning was then fixed and the digest shortened; the
+required single-line utility header exceeds Mathlib's style line length.
+The final `make lean` after the helper conversion exited 0 in 117.999 seconds
+(module: 108 seconds). Its eleven `linter.defProp` warnings reflect the
+intentional private proof definitions used for the single-theorem contract;
+no linter was disabled. Both printed axiom closures still contain only
+`propext`, `Classical.choice` and `Quot.sound`.
 
-```text
-make gate BASE=bf7e99c6dec64fc5d08786d6d2e4e885ef642f17
-```
+The Scribe governance regex was run with `rg -n -i -P`, including the full
+GovernanceProcessReference alternatives plus `\bsearch(?:es)?\b` and
+`\bduplicate\b`: zero matches (exit 1). The same file gave a positive
+`\bMathlib\b` match (exit 0). `scribe-scan.txt` records the exact command.
+The non-null metadata locator is present **inside** `## Verified locator`:
+DOI `https://doi.org/10.48550/arXiv.2606.16828`. The section also retains URL
+`https://arxiv.org/abs/2606.16828` and the versioned PDF scope;
+`locator-check.txt` records the section body. The first `make emit` rejected
+metadata containing both DOI and URL (`invalid-doi`), so the metadata now
+selects DOI only, following `hennessey2024tree.md`. The four dangling-reference
+findings came from that rejected note, not from its canonical Library address.
+No loader or governance rule was changed.
 
-Exit **0**, measured elapsed **826.790 seconds** on this local macOS tree.
-The canonical log reports engineering-dotnet passed (15 s), engineering-test
-passed (688 s), engineering-selftest passed (3 s), lean-reports passed (81 s),
-and admission passed (40 s, including filemap). The final diagnostic is
-`Admission: content fully validated, no protected-surface change`.
-These are local results, not remote CI or a new CRIM theorem certificate.
-The Lean cache receipt reports project and Mathlib both warm; the report
-producer planned `mode=delta changed=0 added=1 removed=0 recheck=1` relative
-to its cached report. No D5 source was changed by this worker.
-
-Worker-owned validation files are `make-gate.log` and
-`make-gate.receipt.json` in the artifact directory above. This final paragraph
-only records that completed check; no mathematical or harness input changed
-after it. The report is copied to the attempt directory, and the structured
-result and completion sentinel are published there by temporary-file rename.
-The scope is stopped and reported, not implemented, frozen, covered, or merged.
+Final semantic report, emitted mirror and gate results will be recorded below
+once their commands have returned. No deposit, cover or PR command is authorized
+or performed; no frozen state file is added.
