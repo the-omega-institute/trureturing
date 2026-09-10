@@ -1,10 +1,9 @@
 ---
 bibkey: goold2016thermodynamics
-authors: John Goold, Marcus Huber, Arnau Riera, Lidia del Rio, Paul Skrzypczyk
+authors: John Goold, Marcus Huber, Arnau Riera, Lídia del Rio, Paul Skrzypczyk
 year: 2016
 title: The role of quantum information in thermodynamics — a topical review
 doi: 10.1088/1751-8113/49/14/143001
-url: https://arxiv.org/abs/1505.07835
 claim: Relative entropy to a Gibbs state expresses the excess free energy.
 strata_touched:
   - D5/S3/Quantum/Divergence/GibbsVariationalIdentity
