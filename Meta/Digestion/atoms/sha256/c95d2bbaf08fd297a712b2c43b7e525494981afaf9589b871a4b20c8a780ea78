@@ -1,0 +1,90 @@
+### 42.6 拼接同余、精确可达性与根的联合结果
+
+**命题 QI-P5（保边界的拼接同余，repo-derived）。** 设 $A,B$ 是不交、非空、连通且相邻的节点组件，令 $C=A\cup B$。取 $a,a'\in J_A$、$b,b'\in J_B$。首先要求原始记录 $a,b$ 在完整重叠 $U_A\cap U_B$ 上一致；再要求
+
+$$
+a\equiv_A a',\qquad b\equiv_B b'.
+\tag{QI-SPLICE-HYP}
+$$
+
+则 $a',b'$ 也一致，且 $a\cup b\equiv_C a'\cup b'$。因此存在部分拼接
+
+$$
+\bar\mu_{A,B}:Q_A^{\rm obs}\times Q_B^{\rm obs}
+\rightharpoonup Q_C^{\rm obs},
+\qquad
+\bar\mu_{A,B}(q_A(a),q_B(b))=q_C(a\cup b).
+\tag{QI-SPLICE}
+$$
+
+其准确域是两状态的边界标签在 $U_A\cap U_B$ 上相等。该重叠包含于 $\partial A\cap\partial B$，由 RI 还恰等于连接两个组件的唯一边之全分隔集。边界相等运输的是已给的初始兼容性，不能从无条件的两个记录产生兼容性。
+
+**证明（两次完整上下文替换）。** 由两个等价假设，$a'$ 在 $\partial A$ 上等于 $a$，$b'$ 在 $\partial B$ 上等于 $b$，故初始匹配运输到 $a',b'$。每个 $\partial C$ 中的变量既在 $A$ 或 $B$ 内，又在 $C$ 外，故其值由相应组件的边界保留。因此两个合并记录在 $\partial C$ 上相同。
+
+取任意
+
+$$
+r\in\mathcal R_C(\rho_C(a\cup b)).
+$$
+
+初始匹配及这个边界条件使 $a\cup b\cup r\in J$，所以 $b\cup r$ 是 $A$ 的一个完整相容补集记录。先用 $a\equiv_A a'$ 得
+
+$$
+G(a\cup b\cup r)=G(a'\cup b\cup r).
+\tag{QI-SUBSTITUTE-A}
+$$
+
+$a'$ 保留全部边界，故新合并仍相容，$a'\cup r$ 是 $B$ 的完整相容补集记录。再用 $b\equiv_B b'$ 得
+
+$$
+G(a'\cup b\cup r)=G(a'\cup b'\cup r).
+\tag{QI-SUBSTITUTE-B}
+$$
+
+这对每个完整 $r$ 成立，并且已证合并边界相同，所以得到 $\equiv_C$。集合
+
+$$
+\{((q_A(a),q_B(b)),q_C(a\cup b)):
+a\in J_A,\ b\in J_B,\ a|_{U_A\cap U_B}=b|_{U_A\cap U_B}\}
+$$
+
+于是为单值图。每对边界匹配的实际商状态都有原像；由于全部原像保留边界，任何这样的一对原像都匹配，故此图的域恰为所述部分域。这里的关键是两次完整补集替换；只比较抽样上下文或边缘上下文不能承担这一步。证毕。
+
+**命题 QI-P6（双向可达与有限收缩，repo-derived）。** 对同样的组件，
+
+$$
+Q_C^{\rm obs}
+=\{\bar\mu_{A,B}(x,y):
+x\in Q_A^{\rm obs},\ y\in Q_B^{\rm obs},\
+x,y\text{ 的完整边界匹配}\}.
+\tag{QI-REACH}
+$$
+
+**证明。** 任取 $u\in J_C$，其两个限制属于 $J_A,J_B$ 且匹配，合并回到 $u$，故左侧每个商状态在右侧可达。反之，右侧两个实际商状态有代表 $a,b$，匹配的边界使它们在完整重叠相等，故 $a\cup b\in J_C$，其商属于左侧。这只是针对一个有限拼接取两个存在见证，不是全体商类的代表选择函数。
+
+从每个单节点的全部实际 $Q_i^{\rm obs}$ 开始，每次只收缩相邻连通组件。收缩前若各组件状态集恰为其实际观察商，(QI-REACH) 的两向包含保证收缩后仍如此；对有限收缩次数归纳，最后恰得 $Q_I^{\rm obs}$，与收缩次序无关。在根，
+
+$$
+\partial I=\varnothing,\qquad
+\mathcal R_I(\varnothing)=J_\varnothing=\{\varnothing\}.
+\tag{QI-ROOT-CONTEXT}
+$$
+
+因此根观察不是空函数，而是在唯一空赋值处取整个 $G(w)$ 的函数；$q_I$ 恰按完整联合向量识别世界。区别于原始 $G$，下降后的映射定义为
+
+$$
+\bar G:q_I[J]=Q_I^{\rm obs}\longrightarrow\mathcal V_{\mathcal F},
+\qquad
+\operatorname{graph}(\bar G)=\{(q_I(w),G(w)):w\in J\}.
+\tag{QI-ROOT-MAP}
+$$
+
+根的等价定义使图单值，实际像使它总且唯一，并有
+
+$$
+\bar G[Q_I^{\rm obs}]=G[J].
+\tag{QI-ROOT-IMAGE}
+$$
+
+这保留整个联合输出像，不能改写成只保留每个消费者的坐标边缘。若某些局部关系为空或最终 $J=\varnothing$，两向包含和归纳仍成立；此时根状态集与结果像均为空。证毕。
+
