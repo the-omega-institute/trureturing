@@ -9020,27 +9020,28 @@ v1 §6.4 的 nested `InformationEscape/Counting/` proposal，`proof_method` 仍�
 
 ### Phase 11　disposition census
 
-〔pending J3; lane census-generator-0908; #5214; 2026-09-08〕本阶段只细化上述固定顺序的第 4 步，不改变各步依赖。在 import-closure identity／grouping
+〔2026-09-10 已由 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 落地，现役三层契约见第 23.6–23.7 节。〕本阶段只细化上述固定顺序的第 4 步，不改变各步依赖。在 import-closure identity／grouping
 mechanics 与第 3 步 structural engine 都存在后，依第 8.7 节 owner 2026-09-08 裁决，census 必须：
 
-1. 〔pending J3; lane census-generator-0908; #5214; 2026-09-08〕先完成 accounting：Lean Meta tool 只读当前 truth export dialect 的完整 elaborated nodes，
+1. 〔2026-09-10 accounting 已由 [#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 完成。〕先完成 accounting：Lean Meta tool 只读当前 truth export dialect 的完整 elaborated nodes，
    先选择 `freeze_status=frozen` 的 nodes（模块），再选择其 `declarations` 中 `kind=theorem`
    的声明，由 declaration 的 `declaration_name_key` 与 `statement_id` 派生
    `(structured Name, statement_id)` keys；每个 key 恰有一个 `CensusAssessment`，observed
    允许入账，但其完整 scope 与 completed query 必须由 census 自己核实；
-2. 〔pending J3; lane census-generator-0908; #5214; 2026-09-08〕certified classification 逐步增加：只有证据成立才写 finite／structural／bounded truncation／
+2. 〔2026-09-10 已按 [#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 的真实证据分栏，认证完备目标不变。〕certified classification 逐步增加：只有证据成立才写 finite／structural／bounded truncation／
    unreachable disposition；其余按实际完成查询写 observed，永不计作 classified、AC-023 完成
    或 closed reason。认证完备目标持续 open，直到全部 key 都有 certified disposition；
-3. 〔pending J3; lane census-generator-0908; #5214; 2026-09-08〕成功判据是 honest complete accounting **且**显式 certified／observed split；报告
-   `accounted`、certified class／unreachable reason 分项、observed status 分项与 exact rows，
-   核实 keys equality 并输出两种 completeness flags。`observed > 0` 时
+3. 〔2026-09-10 按 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 的现役输出勘正：两个完备命题不等于两个 JSON flags。〕成功判据是 honest complete accounting **且**显式 certified／observed split；报告
+   `accounted`、certified class／unreachable reason 分项、observed query-completion 分项与 exact rows，
+   核实 keys equality，分别报告记账完成（命令绑定、id 集证书与 `status=complete`）及认证完备
+   （`certified_complete`），不发射 `accounting_complete` flag。`observed > 0` 时
    `certified_complete=false`，即使所有 keys 已入账也不例外；
 4. assessment records 绑定 immutable HEAD/report inputs；census report 不回写数学，永不作为
    seal input 或 required gate；现役命令见 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`；
-5. 〔pending J3; lane census-generator-0908; #5214; 2026-09-08〕上述记账与分栏里程碑成立后才进入第 5 步 judge projection／ASCII；其后依次只能是第 6 步 fixtures 与
+5. 〔2026-09-10 上述前置已由 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 满足；后续依赖顺序保留。〕上述记账与分栏里程碑成立后才进入第 5 步 judge projection／ASCII；其后依次只能是第 6 步 fixtures 与
    第 7 步保持 OPEN 的 dual-novelty gate design／owner $\tau$ ruling request。
 
-〔pending J3; lane census-generator-0908; #5214; 2026-09-08〕里程碑不以 finite percentage 定义，也不以“所有 rows 都是 observed”定义；成功要求完整诚实
+〔2026-09-10 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 已达成记账与显式分栏里程碑，未宣称认证完备。〕里程碑不以 finite percentage 定义，也不以“所有 rows 都是 observed”定义；成功要求完整诚实
 记账、已有证据的认证及显式分栏，不能把已有认证退回 observed 来声称完成。它与 AC-023 的
 认证完备是两个命题。Real dynamics、function spaces 或 unbounded-index families 只有具备
 structural 所需证据才进入该 class；未有证据不自动分类。只有满足专属 closed-reason proof
@@ -9051,13 +9052,24 @@ truth export 读取与 frozen 过滤（#6340）；**J2 已由 #6389／#6403 于 
 assessment／closed-reason evidence contract 与合成 fixtures 的现役形态见第 23.6、35 节及
 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`、
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
-**J3 在 J2 之后，仍待落地**：于 `tools/**` 落 generator／loader，从 export 与 elaborated
-environment 产生并核查 assessment inventory；observation query、按 module group 分区查询、
-`make census`、run-local census projections 及首轮全仓 census 与其读数均属 J3，不能由 J2 fixtures 冒领。
+**J3 在 J2 之后已落地**：[#6446](https://github.com/the-omega-institute/trureturing/pull/6446)
+先实现查询，其按 module group 分区装载的形态已由
+[#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 的流式 olean 查询取代；
+generator／loader 位于 `tools/**`，从 export 与 elaborated 输出产生并核查 assessment inventory。
+observation query、`make census`、run-local census projections 及全仓 census 读数已有生产实现，
+不能由 J2 fixtures 冒领。[#6664](https://github.com/the-omega-institute/trureturing/pull/6664)
+提供全流收据绑定与自适应分桶 id 集证书，
+[#6717](https://github.com/the-omega-institute/trureturing/pull/6717) 提供 report-only 结构 sidecar；
+三者于 2026-09-10 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 合入 dev。
 J2／J3 均为独立 judge-plane PR，依 `CLAUDE.md` 器律⑦″先在 `integration-census-0908` 验证；
 不与内容行同 PR。真实内容行只在证据存在时落于 `D5/**`，每模块最多 100 条内容行且满足
 SL-003 的模块与目录容量约束；generator 不以空列表为完成证据，不为满足计数生成无证据的内容行。
 上述 S0／J2／J3 只细分第 4 步，不提前激活第 7 步 GATE。
+
+**落地读数（2026-09-10，[#6767](https://github.com/the-omega-institute/trureturing/pull/6767)）**：
+22,524 frozen theorem keys 全部 accounted，certified 10、observed/query-completed 22,514、
+query-incomplete 0，`certified_complete=false`。结构行另为 22,437 complete／74 partial／
+13 unavailable；它们是第 23.7 节的读数状态，不是新的 disposition class 或完成豁免。
 
 **实测基线（2026-09-08，dev `f222885ccb`，第 8.7 节裁决所据读数）**：
 `accounted=22,195`、`certified=11`（全部 finite；structural、bounded truncation 与 certified
