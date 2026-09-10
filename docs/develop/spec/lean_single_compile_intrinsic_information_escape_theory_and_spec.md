@@ -1181,7 +1181,7 @@ $\Theta=\texttt{AddCircle}\ p$：
    `(false, true)` 与 `(true, false)` 两个有序对。carrier 相同不使逃逸处相同。
 2. **覆盖不等于相位。** `AddCircle p` 的出现只给出指定商表示，不授权删除相位。
    覆盖 kernel 是 $p\mathbb Z$ 的 lift 歧义；旋转盲 kernel 是共同相位的 orbit 歧义。
-   不存在 $\Theta\to\{*\}$ 的 rotation-equivariant representative：它要求所选点被每个
+   不存在选取代表点的 rotation-equivariant section $\{*\}\to\Theta$：等变要求所选点被每个
    rotation 固定，而非零 rotation 没有固定点；选参考点或 branch 必须属于显式 $\Gamma$。
 3. **同一陈述有两种忠实读法。** 在同一状态空间 $S=\Theta\times\Theta$，
    令 $T_\theta(x)=x+\theta$，陈述是 `Function.Injective Tθ`。
@@ -1196,7 +1196,10 @@ $\Theta=\texttt{AddCircle}\ p$：
    对任意 $a\ne0$，$(0,0)\sim(a,a)$ 仅在相对读法成立，故两个 kernels 不等价。
    Law variation 与 exact-use 不选择 observation language，也不把这两种读法变成输出重编码。
 
-**结构注册的非空洞义务。** M0 registration gates 必须端到端消费以下契约，不能以定义存在代替执法：
+**结构注册的非空洞义务（契约；当前无机器消费者）。** 以下义务由结构路径的 registration gate 端到端执法；
+现役机器只检查 `StructuralPrimitiveLawArena.Nondegenerate`（任意两个 realization 的 Law 真假各一），
+没有 $\Gamma$／site／intervention domain／模板来源／slot support／冻结条目／localization／极限存在的检查，
+故在该消费者落地前这些义务由评审守，不得报为已执法：
 
 - readouts 不得编码 closed truth、proof 或 theorem-specific certificate；模板从开放 schema 生成 Law，
   statement／Law bridge 对指定 operation slots 一致成立，不用已证 theorem 的 truth／proof 拼接 `Iff`。
