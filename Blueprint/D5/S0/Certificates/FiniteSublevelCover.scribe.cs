@@ -12,7 +12,7 @@ internal sealed class FiniteSublevelCoverDocument : IScribeDocumentDefinition
             DescribeId.Create("sublevel-covered-by-locally-proved-finite-steps"),
             DeclarationHandle.Create("D5/S0/Certificates/FiniteSublevelCover.sublevel_mem_target_of_local_steps"),
             H("Strictly ordered local proofs imply the complete sublevel cover"),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(

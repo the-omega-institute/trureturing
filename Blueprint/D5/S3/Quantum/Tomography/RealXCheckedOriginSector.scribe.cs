@@ -12,7 +12,7 @@ internal sealed class RealXCheckedOriginSectorDocument : IScribeDocumentDefiniti
             DescribeId.Create("real-x-complete-origin-sector-sublevel-exclusion"),
             DeclarationHandle.Create("D5/S3/Quantum/Tomography/RealXCheckedOriginSector.no_common_unbiased_sublevel_in_checked_origin_sector"),
             H("No six-residual near-zero occurs in the stated five-dimensional sector"),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("The statement displays the exact seed matrix over Q(i,sqrt(21)) and the dephased signed-Cayley vector. Each of the five free real parameters lies in [-1/5,1/5]. The conclusion excludes simultaneous absolute residuals at most 1/64 for all six outcomes.")),
                 Paragraph(Text("The finite source contains 237 ordered nodes: 119 interval-expression exclusions and 118 closed splits. Every numerical annotation is independently rechecked, both split halves are retained, and each leaf expression must have the specified residual syntax. A separate identity relates that syntax to the actual conjugate-transpose measurement. No local enclosure or global cover is supplied as a premise.")),

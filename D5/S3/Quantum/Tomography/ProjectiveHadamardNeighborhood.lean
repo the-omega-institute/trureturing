@@ -62,10 +62,10 @@ private theorem domain_scale_iff (R : ℝ) (w : Fin 6 → ℂ)
   · intro h i j
     have hij := h i j
     rw [mul_left_comm R ‖c‖] at hij
-    exact (mul_lt_mul_left hcpos).mp hij
+    exact (mul_lt_mul_iff_right₀ hcpos).mp hij
   · intro h i j
     rw [mul_left_comm R ‖c‖]
-    exact (mul_lt_mul_left hcpos).mpr (h i j)
+    exact (mul_lt_mul_iff_right₀ hcpos).mpr (h i j)
 
 private theorem residual_scale_invariant
     (H : Matrix (Fin 6) (Fin 6) ℂ) (w : Fin 6 → ℂ)
@@ -112,7 +112,7 @@ theorem projective_reanchoring_preserves_domain_and_residual
     have hRp : 0 < R := lt_trans zero_lt_one hR
     rw [norm_div]
     apply (div_lt_div_iff₀ hRp hap).2
-    simpa only [one_mul, mul_comm] using hw a i
+    simpa only [one_mul, mul_one, mul_comm] using hw a i
   · simpa only [div_eq_mul_inv, mul_comm] using
       residual_scale_invariant H w ((w a)⁻¹) hc
 
@@ -155,10 +155,10 @@ theorem phase_ratio_domain_open_torus_and_gauges (R : ℝ) (hR : 1 < R) :
       have hij := h (p.symm i) (p.symm j)
       rw [hnorm, hnorm, p.apply_symm_apply, p.apply_symm_apply,
         mul_left_comm R ‖c‖] at hij
-      exact (mul_lt_mul_left hcpos).mp hij
+      exact (mul_lt_mul_iff_right₀ hcpos).mp hij
     · intro h i j
       rw [hnorm, hnorm, mul_left_comm R ‖c‖]
-      exact (mul_lt_mul_left hcpos).mpr (h (p i) (p j))
+      exact (mul_lt_mul_iff_right₀ hcpos).mpr (h (p i) (p j))
   · intro w
     simp only [phaseRatioDomain, Set.mem_setOf_eq, norm_star]
 
@@ -169,7 +169,7 @@ private theorem reciprocal_coordinate_hasFDerivAt
         (ContinuousLinearMap.proj i : (Fin 6 → ℂ) →L[ℂ] ℂ)) w := by
   have h := (hasDerivAt_inv hi).hasFDerivAt.comp w
     (ContinuousLinearMap.proj i : (Fin 6 → ℂ) →L[ℂ] ℂ).hasFDerivAt
-  convert h using 1
+  convert! h using 1
   ext v
   simp [ContinuousLinearMap.toSpanSingleton_apply, mul_comm]
 
@@ -203,19 +203,19 @@ theorem projective_residual_hasFDerivAt_and_scaled_bound
   · apply hasFDerivAt_pi.mpr
     intro a
     have hA := HasFDerivAt.fun_sum (u := Finset.univ) (fun k _ ↦
-      ((ContinuousLinearMap.proj k : (Fin 6 → ℂ) →L[ℂ] ℂ).hasFDerivAt.const_mul
+      ((ContinuousLinearMap.proj k : (Fin 6 → ℂ) →L[ℂ] ℂ).hasFDerivAt (x := w) |>.const_mul
         (star (H k a))))
     have hB := HasFDerivAt.fun_sum (u := Finset.univ) (fun k _ ↦
       (reciprocal_coordinate_hasFDerivAt w k (hnz k)).mul_const (H k a))
     have h := (hA.mul hB).sub_const (6 : ℂ)
-    convert h using 1 <;>
-      simp only [projectiveHadamardResidual, Matrix.mulVec, Matrix.vecMul,
-        dotProduct, Matrix.conjTranspose_apply]
+    convert! h using 1
     ext v
     simp only [J, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
-      ContinuousLinearMap.add_apply, ContinuousLinearMap.proj_apply,
-      smul_eq_mul, Finset.sum_sub_distrib, Finset.mul_sum, Finset.sum_mul,
-      div_eq_mul_inv, neg_mul, mul_neg]
+      ContinuousLinearMap.add_apply, ContinuousLinearMap.proj_apply, smul_eq_mul]
+    conv_rhs => rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro k _
+    simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Matrix.conjTranspose_apply]
     ring
   · intro a k
     let term : Fin 6 → ℂ := fun j ↦
@@ -236,7 +236,6 @@ theorem projective_residual_hasFDerivAt_and_scaled_bound
       apply Finset.sum_congr rfl
       intro j _
       field_simp [hnz k]
-      ring
     have hsum : w k * J a k = ∑ j, term j := by
       change w k * (star (H k a) * ((fun i ↦ (w i)⁻¹) ᵥ* H) a -
         (H k a / w k ^ 2) * (Hᴴ *ᵥ w) a) = _
@@ -282,10 +281,13 @@ theorem paired_cayley_residual_eq_projective_readout
         Complex.mul_conj (s k)
     have hprod : cayleyPhase (s k) (z k) *
         cayleyPhase (star (s k)) (-z k) = 1 := by
-      dsimp [cayleyPhase]
-      simp only [mul_neg, sub_neg_eq_add]
-      field_simp [hm k, hp k]
-      linear_combination (1 + Complex.I * z k) * (1 - Complex.I * z k) * hss
+      calc
+        _ = s k * star (s k) := by
+          dsimp [cayleyPhase]
+          simp only [mul_neg, sub_neg_eq_add]
+          field_simp [hm k, hp k]
+          <;> ring
+        _ = 1 := hss
     have hnz : cayleyPhase (s k) (z k) ≠ 0 := by
       intro hzero
       rw [hzero, zero_mul] at hprod

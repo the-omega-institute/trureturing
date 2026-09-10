@@ -50,7 +50,7 @@ theorem entrywiseConj_preserves_cardSq_rowGram
   ext i j
   have hEntry := congrFun (congrFun hP j) i
   simpa [entrywiseConj, Matrix.mul_apply,
-    Matrix.conjTranspose_apply, mul_comm, eq_comm] using hEntry
+    Matrix.conjTranspose_apply, Matrix.one_apply, mul_comm, eq_comm] using hEntry
 
 /-- If `X` has row Gram `d I` and `P` has row Gram `d^2 I`, then the rational
 recovery `d⁻¹ X P` again has row Gram `d I`. -/
@@ -65,9 +65,12 @@ theorem recoverFirst_rowGram
       (Fintype.card n : ℂ) • (1 : ComplexSquare n) := by
   let d : ℂ := Fintype.card n
   have hd : d ≠ 0 := card_cast_ne_zero
-  simp [recoverFirst, Matrix.conjTranspose_smul,
-    Matrix.conjTranspose_mul, Matrix.mul_assoc,
-    hP, hX.2, smul_smul, d, hd]
+  simp only [recoverFirst, Matrix.conjTranspose_smul, Matrix.conjTranspose_mul,
+    Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+  rw [Matrix.mul_assoc X P, ← Matrix.mul_assoc P, hP]
+  simp [Matrix.mul_assoc, hX.2, smul_smul]
+  change d⁻¹ * d⁻¹ * (d * d * d) = d
+  field_simp [hd]
 
 /-- The conjugate-coupled rational recovery has the same automatic row Gram. -/
 theorem recoverSecond_rowGram
@@ -161,7 +164,7 @@ theorem doubleCompletion_iff_scaledRelativeGram_and_twoDefects_six
         (Complex.normSq ((recoverFirst X P) i j) - 1) ^ 2 = 0) ∧
       (∑ i, ∑ j,
         (Complex.normSq ((recoverSecond Y P) i j) - 1) ^ 2 = 0) := by
-  simpa using
+  simpa [show (6 : ℂ) * 6 = 36 by norm_num] using
     doubleCompletion_iff_scaledRelativeGram_and_twoDefects
       H X Y hH hX hY
 

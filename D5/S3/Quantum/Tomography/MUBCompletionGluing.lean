@@ -131,7 +131,7 @@ theorem second_completion_determined_by_one_relativeGram
     (((Fintype.card n : ℂ)⁻¹) •
         (X * (Xᴴ * X')) = X') ∧
     (((Fintype.card n : ℂ)⁻¹) •
-        (Y * (fun k l ↦ star ((Xᴴ * X') k l))) = Y') := by
+        (Y * (show ComplexSquare n from fun k l ↦ star ((Xᴴ * X') k l))) = Y') := by
   have hProduct : ∀ k l,
       ((Xᴴ * X') k l) * ((Yᴴ * Y') k l) =
         (Fintype.card n : ℂ) := by

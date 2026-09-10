@@ -5,7 +5,7 @@
    anchors: []
    digest: Every exact common-unbiased root of a nearby order-six matrix lies in an explicitly bounded residual sublevel set of the base matrix. -/
 
-import Mathlib.Analysis.Complex.Norm
+import Mathlib.Analysis.Complex.Basic
 import Mathlib.Data.Matrix.Mul
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.Tactic.Linarith
@@ -42,7 +42,7 @@ private theorem normSq_change_of_reference_normSq_six
     calc
       ‖z‖ = ‖(z - w) + w‖ := by rw [sub_add_cancel]
       _ ≤ ‖z - w‖ + ‖w‖ := norm_add_le _ _
-      _ ≤ r + ‖w‖ := add_le_add_right hzw _
+      _ ≤ r + ‖w‖ := by linarith
   have hReverse : |‖z‖ - ‖w‖| ≤ r :=
     (abs_norm_sub_norm_le z w).trans hzw
   have hSum : ‖z‖ + ‖w‖ ≤ 5 + r := by linarith
@@ -185,7 +185,6 @@ private theorem phase_replacement (z : ℂ) :
     have hsplit : z - u = ((r : ℂ) - 1) * u := by
       dsimp [u]
       field_simp [hrC]
-      ring
     have hnorm : ‖z - u‖ = |r - 1| := by
       rw [hsplit, norm_mul, hu, mul_one]
       rw [show (r : ℂ) - 1 = ((r - 1 : ℝ) : ℂ) by simp]
@@ -199,7 +198,7 @@ private theorem phase_replacement (z : ℂ) :
     rw [hfactor]
     nlinarith [abs_nonneg (r - 1)]
 
-private abbrev normalizedPair (u v : Fin 6 → ℂ) : ℂ :=
+private noncomputable abbrev normalizedPair (u v : Fin 6 → ℂ) : ℂ :=
   (6 : ℂ)⁻¹ * ∑ i, star (u i) * v i
 
 private theorem normalizedPair_bound (u v : Fin 6 → ℂ) (a b : ℝ)
@@ -328,7 +327,7 @@ theorem near_unit_entry_families_admit_controlled_phase_replacement
   have hq : ‖q‖ ≤ 4 := by
     have h := normalizedPair_bound (z a) (z b) 2 2 (hzNorm a) (hzNorm b)
       (by norm_num) (by norm_num)
-    simpa [q] using h
+    simpa only [show (2 : ℝ) * 2 = 4 by norm_num] using h
   have hd : |‖p‖ - ‖q‖| ≤ 3 * ρ :=
     (abs_norm_sub_norm_le p q).trans (hPairMove a b)
   change |Complex.normSq p - Complex.normSq q| ≤ 15 * ρ

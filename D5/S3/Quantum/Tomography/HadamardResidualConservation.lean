@@ -57,36 +57,36 @@ private theorem actual_residual_sum_zero
       _ = ((6 : ℂ) * (star u ⬝ᵥ u)).re := congrArg Complex.re hEnergy
       _ = 6 * (star u ⬝ᵥ u).re := by simp
       _ = 6 * ∑ i, Complex.normSq (u i) := by rw [← normSq_sum_eq_real_star_dot]
-      _ = 36 := by simp [hu]
+      _ = 36 := by norm_num [hu]
   rw [Finset.sum_sub_distrib, hSum]
   norm_num
 
 private theorem weighted_sum_recenter
-    (c r : Fin 6 → ℝ) (λ : ℝ) (hr : ∑ i, r i = 0) :
-    ∑ i, c i * r i = ∑ i, (c i - λ) * r i := by
+    (c r : Fin 6 → ℝ) (lambda : ℝ) (hr : ∑ i, r i = 0) :
+    ∑ i, c i * r i = ∑ i, (c i - lambda) * r i := by
   simp_rw [sub_mul]
   rw [Finset.sum_sub_distrib, ← Finset.mul_sum, hr, mul_zero, sub_zero]
 
 private theorem balanced_box_dual
-    (c r lo hi : Fin 6 → ℝ) (λlo λhi : ℝ)
+    (c r lo hi : Fin 6 → ℝ) (lambdalo lambdahi : ℝ)
     (hr : ∑ i, r i = 0)
     (hlo : ∀ i, lo i ≤ r i) (hhi : ∀ i, r i ≤ hi i) :
-    (∑ i, min ((c i - λlo) * lo i) ((c i - λlo) * hi i)) ≤
+    (∑ i, min ((c i - lambdalo) * lo i) ((c i - lambdalo) * hi i)) ≤
         ∑ i, c i * r i ∧
       (∑ i, c i * r i) ≤
-        ∑ i, max ((c i - λhi) * lo i) ((c i - λhi) * hi i) := by
+        ∑ i, max ((c i - lambdahi) * lo i) ((c i - lambdahi) * hi i) := by
   constructor
-  · rw [weighted_sum_recenter c r λlo hr]
+  · rw [weighted_sum_recenter c r lambdalo hr]
     apply Finset.sum_le_sum
     intro i _
-    by_cases hsign : 0 ≤ c i - λlo
+    by_cases hsign : 0 ≤ c i - lambdalo
     · exact (min_le_left _ _).trans (mul_le_mul_of_nonneg_left (hlo i) hsign)
     · exact (min_le_right _ _).trans
         (mul_le_mul_of_nonpos_left (hhi i) (le_of_not_ge hsign))
-  · rw [weighted_sum_recenter c r λhi hr]
+  · rw [weighted_sum_recenter c r lambdahi hr]
     apply Finset.sum_le_sum
     intro i _
-    by_cases hsign : 0 ≤ c i - λhi
+    by_cases hsign : 0 ≤ c i - lambdahi
     · exact (mul_le_mul_of_nonneg_left (hhi i) hsign).trans (le_max_right _ _)
     · exact (mul_le_mul_of_nonpos_left (hlo i) (le_of_not_ge hsign)).trans
         (le_max_left _ _)
@@ -100,15 +100,15 @@ theorem hadamard_residual_box_dual
     (H : Matrix (Fin 6) (Fin 6) ℂ) (u : Fin 6 → ℂ)
     (hGram : H * Hᴴ = (6 : ℂ) • (1 : Matrix (Fin 6) (Fin 6) ℂ))
     (hu : ∀ i, Complex.normSq (u i) = 1)
-    (c lo hi : Fin 6 → ℝ) (λlo λhi : ℝ)
+    (c lo hi : Fin 6 → ℝ) (lambdalo lambdahi : ℝ)
     (hlo : ∀ i, lo i ≤ Complex.normSq ((Hᴴ *ᵥ u) i) - 6)
     (hhi : ∀ i, Complex.normSq ((Hᴴ *ᵥ u) i) - 6 ≤ hi i) :
-    (∑ i, min ((c i - λlo) * lo i) ((c i - λlo) * hi i)) ≤
+    (∑ i, min ((c i - lambdalo) * lo i) ((c i - lambdalo) * hi i)) ≤
         ∑ i, c i * (Complex.normSq ((Hᴴ *ᵥ u) i) - 6) ∧
       (∑ i, c i * (Complex.normSq ((Hᴴ *ᵥ u) i) - 6)) ≤
-        ∑ i, max ((c i - λhi) * lo i) ((c i - λhi) * hi i) := by
+        ∑ i, max ((c i - lambdahi) * lo i) ((c i - lambdahi) * hi i) := by
   exact balanced_box_dual c (fun i ↦ Complex.normSq ((Hᴴ *ᵥ u) i) - 6)
-    lo hi λlo λhi (actual_residual_sum_zero H u hGram hu) hlo hhi
+    lo hi lambdalo lambdahi (actual_residual_sum_zero H u hGram hu) hlo hhi
 
 /-- The balanced residual dual bounds enter the actual sublevel Newton-row
 enclosure additively. This replaces the independent-box inflation by the
@@ -124,7 +124,7 @@ theorem balanced_hadamard_sublevel_row_enclosure
     (H : Matrix (Fin 6) (Fin 6) ℂ) (phase : E → Fin 6 → ℂ)
     (J : E → E →L[ℝ] (Fin 6 → ℝ))
     (observe : E →L[ℝ] ℝ) (precondition : (Fin 6 → ℝ) →L[ℝ] ℝ)
-    (c lo hi : Fin 6 → ℝ) (m x : E) (radius λlo λhi : ℝ)
+    (c lo hi : Fin 6 → ℝ) (m x : E) (radius lambdalo lambdahi : ℝ)
     (hGram : H * Hᴴ = (6 : ℂ) • (1 : Matrix (Fin 6) (Fin 6) ℂ))
     (hphase : ∀ i, Complex.normSq (phase x i) = 1)
     (hprecondition : ∀ y, precondition y = ∑ i, c i * y i)
@@ -136,20 +136,20 @@ theorem balanced_hadamard_sublevel_row_enclosure
     (hlo : ∀ i, lo i ≤ Complex.normSq ((Hᴴ *ᵥ phase x) i) - 6)
     (hhi : ∀ i, Complex.normSq ((Hᴴ *ᵥ phase x) i) - 6 ≤ hi i) :
     observe m - precondition (fun i ↦ Complex.normSq ((Hᴴ *ᵥ phase m) i) - 6)
-        - radius + (∑ i, min ((c i - λlo) * lo i) ((c i - λlo) * hi i)) ≤
+        - radius + (∑ i, min ((c i - lambdalo) * lo i) ((c i - lambdalo) * hi i)) ≤
         observe x ∧
       observe x ≤
         observe m - precondition (fun i ↦ Complex.normSq ((Hᴴ *ᵥ phase m) i) - 6)
-          + radius + (∑ i, max ((c i - λhi) * lo i) ((c i - λhi) * hi i)) := by
+          + radius + (∑ i, max ((c i - lambdahi) * lo i) ((c i - lambdahi) * hi i)) := by
   let f : E → Fin 6 → ℝ := fun z i ↦ Complex.normSq ((Hᴴ *ᵥ phase z) i) - 6
   have hread := hadamard_residual_box_dual H (phase x) hGram hphase
-    c lo hi λlo λhi hlo hhi
-  have hreadLo : (∑ i, min ((c i - λlo) * lo i) ((c i - λlo) * hi i)) ≤
+    c lo hi lambdalo lambdahi hlo hhi
+  have hreadLo : (∑ i, min ((c i - lambdalo) * lo i) ((c i - lambdalo) * hi i)) ≤
       precondition (f x) := by
     rw [hprecondition]
     exact hread.1
   have hreadHi : precondition (f x) ≤
-      ∑ i, max ((c i - λhi) * lo i) ((c i - λhi) * hi i) := by
+      ∑ i, max ((c i - lambdahi) * lo i) ((c i - lambdahi) * hi i) := by
     rw [hprecondition]
     exact hread.2
   have hshift : ∀ t ∈ Set.Icc (0 : ℝ) 1,

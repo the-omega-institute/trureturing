@@ -51,7 +51,7 @@ theorem conjTranspose_mul_self_eq_card_smul
       _ = d⁻¹ • (d • (1 : ComplexSquare n)) := by rw [hH.2]
       _ = 1 := by simp [smul_smul, hd]
   have hLeft : Hᴴ * (d⁻¹ • H) = (1 : ComplexSquare n) :=
-    (Matrix.mul_eq_one_comm).mp hRight
+    (mul_eq_one_comm).mp hRight
   have hScaled : d⁻¹ • (Hᴴ * H) = (1 : ComplexSquare n) := by
     simpa [Matrix.mul_smul] using hLeft
   calc

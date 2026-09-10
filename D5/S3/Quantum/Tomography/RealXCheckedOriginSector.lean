@@ -6,6 +6,8 @@
    digest: A concrete complete 237-node rational forest excludes all six-residual near-zeros on the all-positive origin sector of radius one-fifth. -/
 
 import D5.S0.Certificates.CheckedRationalBoxCover
+import Mathlib.Data.Complex.BigOperators
+import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Data.Matrix.Mul
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
@@ -434,6 +436,7 @@ private def seedMatrix (s : ℝ) : Matrix (Fin 6) (Fin 6) ℂ := fun i j ↦
 private abbrev phase (t : ℝ) : ℂ :=
   ⟨(1 - t ^ 2) / (1 + t ^ 2), 2 * t / (1 + t ^ 2)⟩
 
+set_option maxRecDepth 8192 in
 private theorem residual_value (s : ℝ) (t : Fin 5 → ℝ) (a : Fin 6) :
     value (Fin.cases s t) (residual a) =
       Complex.normSq (((seedMatrix s)ᴴ *ᵥ
@@ -443,7 +446,8 @@ private theorem residual_value (s : ℝ) (t : Fin 5 → ℝ) (a : Fin 6) :
       Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
       Fin.sum_univ_succ, Complex.normSq_apply, Complex.star_def,
       Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
-      div_eq_mul_inv] <;> ring
+      div_eq_mul_inv] <;>
+    dsimp [Fin.cases, Fin.induction, Fin.induction.go] <;> ring
 
 /-- Every point of the stated five-dimensional signed-Cayley sector violates
 at least one of the six residual bands of the actual Q(i,sqrt(21)) seed.

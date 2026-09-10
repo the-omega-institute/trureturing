@@ -49,7 +49,7 @@ theorem preconditioned_sublevel_row_enclosure
   let path : ℝ → E := fun t ↦ m + t • (x - m)
   let g : ℝ → ℝ := fun t ↦ observe (path t) - precondition (f (path t))
   have hpath (t : ℝ) : HasDerivAt path (x - m) t := by
-    simpa only [path, one_smul] using
+    simpa only [path, id_eq, one_smul] using
       ((hasDerivAt_id t).smul_const (x - m)).const_add m
   have hg (t : ℝ) (ht : t ∈ Set.Icc (0 : ℝ) 1) :
       HasDerivAt g
@@ -59,7 +59,7 @@ theorem preconditioned_sublevel_row_enclosure
         (observe - precondition.comp (J (path t))) (path t) :=
       observe.hasFDerivAt.sub
         (precondition.hasFDerivAt.comp (path t) (hderiv t ht))
-    simpa only [g, ContinuousLinearMap.sub_apply, ContinuousLinearMap.comp_apply]
+    simpa only [g, Function.comp_def, sub_apply, ContinuousLinearMap.comp_apply]
       using houter.comp_hasDerivAt t (hpath t)
   have hmv := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
     (fun t ht ↦ (hg t ht).hasDerivWithinAt)
@@ -68,10 +68,10 @@ theorem preconditioned_sublevel_row_enclosure
     (show (1 : ℝ) ∈ Set.Icc (0 : ℝ) 1 from ⟨zero_le_one, le_rfl⟩)
   have hzero : path 0 = m := by simp only [path, zero_smul, add_zero]
   have hone : path 1 = x := by
-    simp only [path, one_smul]
+    simp only [path, id_eq, one_smul]
     abel
-  have hgzero : g 0 = observe m - precondition (f m) := by rw [g, hzero]
-  have hgone : g 1 = observe x - precondition (f x) := by rw [g, hone]
+  have hgzero : g 0 = observe m - precondition (f m) := by simp only [g, hzero]
+  have hgone : g 1 = observe x - precondition (f x) := by simp only [g, hone]
   have hdiff :
       ‖(observe x - precondition (f x)) - (observe m - precondition (f m))‖ ≤
         radius := by

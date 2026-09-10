@@ -69,7 +69,8 @@ theorem lower_bound_of_sos_semialgebraic_identity
       0 ≤ ∑ j, inequalityMultiplier j x * inequality j x :=
     Finset.sum_nonneg fun j hj ↦
       mul_nonneg (hMultiplierNonneg x j) (hInequality j)
-  rw [hIdentity x, hEquationSum]
+  have h := hIdentity x
+  rw [hEquationSum] at h
   linarith
 
 /-- The special `-1` identity excludes every point of the represented

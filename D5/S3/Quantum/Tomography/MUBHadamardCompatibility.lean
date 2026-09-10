@@ -219,7 +219,7 @@ private theorem fourierTwo_isComplexHadamard :
   · ext i j
     fin_cases i <;> fin_cases j <;>
       simp [fourierTwo, Matrix.mul_apply, Matrix.conjTranspose_apply,
-        Fin.sum_univ_two]
+        Fin.sum_univ_two] <;> norm_num
 
 private theorem phasedFourierTwo_isComplexHadamard :
     IsComplexHadamard phasedFourierTwo := by
@@ -296,6 +296,12 @@ theorem fourMUBContexts_have_maximal_incompatibility
       incompatibility (context l) (context k) = 1 := by
   intro l k hlk
   norm_num [incompatibility, hMUB l k hlk]
+
+attribute [local instance]
+  D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes.matrixNormedAddCommGroup
+  D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes.matrixInnerProductSpace
+  D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes.matrixRealInnerProductSpace
+  D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes.hermitianTraceZeroTopologicalSpace
 
 /-- Under the existing record-measurement interface, distinct members of a
 four-MUB context family have orthogonal centered projector planes. -/

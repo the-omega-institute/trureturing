@@ -50,7 +50,7 @@ private theorem adjoint_inl {κ : Type*} [Fintype κ]
       (∑ j, star (A j i) * v (Sum.inl j)) +
         ∑ j, B j i * v (Sum.inr j) := by
   simp [Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
-    conjugateBlock, Fintype.sum_sum_type]
+    conjugateBlock, Matrix.fromBlocks, Fintype.sum_sum_type]
 
 private theorem adjoint_inr {κ : Type*} [Fintype κ]
     (A B : Matrix κ κ ℂ) (v : κ ⊕ κ → ℂ) (i : κ) :
@@ -58,7 +58,7 @@ private theorem adjoint_inr {κ : Type*} [Fintype κ]
       (∑ j, star (B j i) * v (Sum.inl j)) -
         ∑ j, A j i * v (Sum.inr j) := by
   simp [Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
-    conjugateBlock, Fintype.sum_sum_type, sub_eq_add_neg]
+    conjugateBlock, Matrix.fromBlocks, Fintype.sum_sum_type, sub_eq_add_neg]
 
 private theorem adjoint_partner {κ : Type*} [Fintype κ]
     (A B : Matrix κ κ ℂ) (v : κ ⊕ κ → ℂ) :

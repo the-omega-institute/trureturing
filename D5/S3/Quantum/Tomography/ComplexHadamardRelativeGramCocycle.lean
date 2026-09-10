@@ -89,7 +89,7 @@ theorem fourMUBWitness_relativeGram_edges
   constructor
   · intro a b hab
     refine ⟨w.unbiased a b hab, ?_⟩
-    simpa using
+    simpa [show (6 : ℂ) * 6 = 36 by norm_num] using
       relativeGram_mul_conjTranspose_eq_card_sq_smul
         (w.matrix a) (w.matrix b)
         (w.hadamard a) (w.hadamard b)

@@ -156,7 +156,7 @@ needs only the stated trace inequalities, and permits empty or overlapping
 multiple-root tubes. -/
 theorem realX_six_frame_has_cross_error_to_any_covered_point
     (tube : Fin 60 → Set (Matrix (Fin 6) (Fin 6) ℂ))
-    (hSame : ∀ k P ∈ tube k, ∀ Q ∈ tube k,
+    (hSame : ∀ k, ∀ P ∈ tube k, ∀ Q ∈ tube k,
       (3 / 4 : ℝ) ≤ (trace (P * Q)).re)
     (hOrth : ∀ k l, k ≠ l → ∀ P ∈ tube k, ∀ Q ∈ tube l,
       (trace (P * Q)).re < (1 / 256 : ℝ) ^ 2 →

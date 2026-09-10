@@ -70,13 +70,13 @@ private theorem split_retains {n : ℕ} (box : Fin n → ℚ × ℚ)
     intro j
     by_cases hj : j = k
     · subst j
-      simpa only [leftBox, if_pos rfl] using And.intro (hx k).1 hcut
+      simpa only [leftBox, ite_true, ↓reduceIte] using And.intro (hx k).1 hcut
     · simpa only [leftBox, if_neg hj] using hx j
   · right
     intro j
     by_cases hj : j = k
     · subst j
-      simpa only [rightBox, if_pos rfl] using And.intro (le_of_not_ge hcut) (hx k).2
+      simpa only [rightBox, ite_true, ↓reduceIte] using And.intro (le_of_not_ge hcut) (hx k).2
     · simpa only [rightBox, if_neg hj] using hx j
 
 /-- Finite certificate instructions with typed outcome, tube and node indices.
@@ -146,7 +146,7 @@ theorem checked_forest_covers_sublevel
       exact Set.mem_iUnion.mpr ⟨k, sub_sound (of_decide_eq_true hi) hy⟩
     | excluded a e =>
       simp only [nodeCheck, hstep] at hi
-      obtain ⟨he, hrest⟩ := Bool.and_eq_true.mp hi
+      obtain ⟨he, hrest⟩ := Bool.and_eq_true_iff.mp hi
       obtain ⟨hsame, hsep⟩ := of_decide_eq_true hrest
       apply LocalStep.excluded a ((bounds e).1 : ℝ) ((bounds e).2 : ℝ)
       · intro y hy

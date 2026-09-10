@@ -52,8 +52,10 @@ private theorem phase_component_derivatives (s m v t : ℝ) :
   have hre := (((hasDerivAt_const t (1 : ℝ)).sub hx2).div hden hden0).const_mul s
   have him := ((hx.const_mul 2).div hden hden0).const_mul s
   constructor
-  · convert hre using 1 <;> dsimp [phase, velocity, x] <;> ring
-  · convert him using 1 <;> dsimp [phase, velocity, x] <;> ring
+  · convert! hre using 1 <;> (try funext q) <;>
+      simp only [phase, velocity, x, Pi.sub_apply, Pi.mul_apply, Pi.add_apply, Pi.div_apply] <;> ring
+  · convert! him using 1 <;> (try funext q) <;>
+      simp only [phase, velocity, x, Pi.sub_apply, Pi.mul_apply, Pi.add_apply, Pi.div_apply] <;> ring
 
 private theorem phase_normSq (s x : ℝ) (hs : s ^ 2 = 1) :
     Complex.normSq (phase s x) = 1 := by
@@ -100,10 +102,8 @@ theorem signed_cayley_hadamard_residual_hasDerivAt
   change HasDerivAt (fun q ↦ Complex.normSq ((Hᴴ *ᵥ u q) a) - 6)
     (2 * (((Hᴴ *ᵥ u t) a).re * ((Hᴴ *ᵥ du) a).re +
       ((Hᴴ *ᵥ u t) a).im * ((Hᴴ *ᵥ du) a).im)) t
-  convert ((hr.mul hr).add (hi.mul hi)).sub_const 6 using 1
-  · funext q
-    simp only [Complex.normSq_apply]
-  · ring
+  convert! ((hr.mul hr).add (hi.mul hi)).sub_const 6 using 1
+  ring
 
 /-- Actual balanced sublevel row enclosure for a signed-Cayley path. The
 explicit derivative formula is proved above, rather than required as input.
@@ -116,7 +116,7 @@ Cayley coordinates have unit modulus. -/
 theorem signed_cayley_balanced_sublevel_row_enclosure
     (H : Matrix (Fin 6) (Fin 6) ℂ)
     (s m v c lo hi : Fin 6 → ℝ) (k : Fin 6)
-    (radius λlo λhi : ℝ)
+    (radius lambdalo lambdahi : ℝ)
     (hGram : H * Hᴴ = (6 : ℂ) • (1 : Matrix (Fin 6) (Fin 6) ℂ))
     (hs : ∀ i, s i ^ 2 = 1) :
     let u : ℝ → Fin 6 → ℂ := fun q i ↦
@@ -133,9 +133,9 @@ theorem signed_cayley_balanced_sublevel_row_enclosure
     (∀ q ∈ Set.Icc (0 : ℝ) 1, |v k - ∑ a, c a * df q a| ≤ radius) →
     (∀ a, lo a ≤ f 1 a) → (∀ a, f 1 a ≤ hi a) →
     m k - (∑ a, c a * f 0 a) - radius +
-        (∑ a, min ((c a - λlo) * lo a) ((c a - λlo) * hi a)) ≤ m k + v k ∧
+        (∑ a, min ((c a - lambdalo) * lo a) ((c a - lambdalo) * hi a)) ≤ m k + v k ∧
       m k + v k ≤ m k - (∑ a, c a * f 0 a) + radius +
-        (∑ a, max ((c a - λhi) * lo a) ((c a - λhi) * hi a)) := by
+        (∑ a, max ((c a - lambdahi) * lo a) ((c a - lambdahi) * hi a)) := by
   dsimp only
   intro hdirectional hlo hhi
   let u : ℝ → Fin 6 → ℂ := fun q i ↦ phase (s i) (m i + q * v i)
@@ -162,13 +162,13 @@ theorem signed_cayley_balanced_sublevel_row_enclosure
     simpa only [sub_zero, norm_one, mul_one, Real.norm_eq_abs] using hmv
   have hread := hadamard_residual_box_dual H (u 1) hGram
     (fun i ↦ phase_normSq (s i) (m i + 1 * v i) (hs i))
-    c lo hi λlo λhi hlo hhi
+    c lo hi lambdalo lambdahi hlo hhi
   have hrlo := (abs_le.mp hrem).1
   have hrhi := (abs_le.mp hrem).2
-  change (∑ a, min ((c a - λlo) * lo a) ((c a - λlo) * hi a)) ≤
+  change (∑ a, min ((c a - lambdalo) * lo a) ((c a - lambdalo) * hi a)) ≤
       (∑ a, c a * f 1 a) ∧
       (∑ a, c a * f 1 a) ≤
-        (∑ a, max ((c a - λhi) * lo a) ((c a - λhi) * hi a)) at hread
+        (∑ a, max ((c a - lambdahi) * lo a) ((c a - lambdahi) * hi a)) at hread
   change m k - (∑ a, c a * f 0 a) - radius + _ ≤ m k + v k ∧
     m k + v k ≤ m k - (∑ a, c a * f 0 a) + radius + _
   dsimp [g] at hrlo hrhi

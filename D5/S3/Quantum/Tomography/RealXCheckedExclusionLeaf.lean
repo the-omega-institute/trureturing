@@ -123,7 +123,8 @@ private theorem seedLeaf_value (s : ℝ) (t : Fin 5 → ℝ) :
           (⟨-2 / 5, s / 5⟩ : ℂ) * phase (t 2) + phase (t 3) + phase (t 4)) - 6 := by
   norm_num [seedLeaf, value, phase, Complex.normSq_apply,
     Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
-    div_eq_mul_inv] <;> ring
+    div_eq_mul_inv] <;>
+    dsimp [Fin.cases, Fin.induction, Fin.induction.go] <;> ring
 
 /-- The actual first residual of the exact Q(i,sqrt(21)) seed is in [2,4]
 on the whole all-positive Cayley box with each free coordinate in

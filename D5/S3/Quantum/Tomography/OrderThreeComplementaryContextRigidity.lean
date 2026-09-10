@@ -72,7 +72,6 @@ private theorem diagonal_mul_diagonal {d : ℕ}
   change (∑ i, a i • C.projector i) * diagonalElement C c = _
   rw [Matrix.sum_mul]
   simp_rw [Matrix.smul_mul, projector_mul_diagonal C hC c, smul_smul]
-  rfl
 
 private theorem diagonal_adjoint {d : ℕ}
     (C : RankOneContext d) (a : Fin d → ℂ) :
@@ -224,6 +223,7 @@ private theorem no_split_of_projected_cubic {d : ℕ} [NeZero d]
       _ = (d : ℝ) * (alpha + Complex.normSq mu) := by
         rw [Finset.sum_sub_distrib, ← Finset.mul_sum, hCross]
         simp
+        ring
   have hScalar : alpha ^ 2 = alpha + Complex.normSq mu :=
     mul_left_cancel₀ hd hSum
   have hCertificate : alpha * beta + Complex.normSq mu = 0 := by
@@ -276,6 +276,7 @@ theorem orderThree_complementary_contexts_no_split
       diagonalElement D (fun i ↦ star (b i)) := by
     dsimp [S]
     rw [Matrix.conjTranspose_add, diagonal_adjoint, diagonal_adjoint]
+    rfl
   have hSS : S * Sᴴ = 1 := hUnitary
   have hCube : S ^ 3 = 1 := hOrderThree
   have hSquare : S * S = Sᴴ := by

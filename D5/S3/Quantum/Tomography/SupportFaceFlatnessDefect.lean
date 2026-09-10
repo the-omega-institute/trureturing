@@ -43,7 +43,7 @@ theorem row_normSq_sum_of_cardSq_rowGram
   have hEntry := congrFun (congrFun hP i) i
   have hReal := congrArg Complex.re hEntry
   simpa [Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Complex.normSq_eq_conj_mul_self, Matrix.one_apply,
+    Complex.normSq_apply, Matrix.one_apply,
     mul_comm, pow_two] using hReal
 
 /-- The raw six-column squared-deviation defect of one row. -/
@@ -73,7 +73,9 @@ theorem sixRowRawDefect_ge_four_hundred_thirty_two
   have hmass :=
     row_normSq_sum_of_cardSq_rowGram P hGram (r, i)
   fin_cases i
-  · have h001 : P (r, 0) (0, 1) = 0 :=
+  · change 432 ≤ sixRowRawDefect P r 0
+    change (∑ j, Complex.normSq (P (r, 0) j)) = _ at hmass
+    have h001 : P (r, 0) (0, 1) = 0 :=
       hOff r 0 0 1 (by decide)
     have h002 : P (r, 0) (0, 2) = 0 :=
       hOff r 0 0 2 (by decide)
@@ -95,7 +97,9 @@ theorem sixRowRawDefect_ge_four_hundred_thirty_two
     nlinarith [sq_nonneg
       (Complex.normSq (P (r, 0) (0, 0)) -
         Complex.normSq (P (r, 0) (1, 0)))]
-  · have h000 : P (r, 1) (0, 0) = 0 :=
+  · change 432 ≤ sixRowRawDefect P r 1
+    change (∑ j, Complex.normSq (P (r, 1) j)) = _ at hmass
+    have h000 : P (r, 1) (0, 0) = 0 :=
       hOff r 0 1 0 (by decide)
     have h002 : P (r, 1) (0, 2) = 0 :=
       hOff r 0 1 2 (by decide)
@@ -117,7 +121,9 @@ theorem sixRowRawDefect_ge_four_hundred_thirty_two
     nlinarith [sq_nonneg
       (Complex.normSq (P (r, 1) (0, 1)) -
         Complex.normSq (P (r, 1) (1, 1)))]
-  · have h000 : P (r, 2) (0, 0) = 0 :=
+  · change 432 ≤ sixRowRawDefect P r 2
+    change (∑ j, Complex.normSq (P (r, 2) j)) = _ at hmass
+    have h000 : P (r, 2) (0, 0) = 0 :=
       hOff r 0 2 0 (by decide)
     have h001 : P (r, 2) (0, 1) = 0 :=
       hOff r 0 2 1 (by decide)
@@ -165,8 +171,8 @@ theorem twoModeSupport_scaledRelativeGramDefect_ge_seventy_two
     P hP hOff 1 2
   unfold scaledRelativeGramEntrywiseDefect
   norm_num only [Fintype.card_prod, Fintype.card_fin, Nat.cast_ofNat]
-  rw [Fintype.sum_prod_type]
-  change (72 : ℝ) ≤ (6 : ℝ)⁻¹ ^ 2 *
+  simp only [Fintype.sum_prod_type]
+  change (72 : ℝ) ≤ (1 / 36 : ℝ) *
     ∑ r : Fin 2, ∑ i : Fin 3, sixRowRawDefect P r i
   simp only [Fin.sum_univ_two, Fin.sum_univ_three]
   norm_num at h00 h01 h02 h10 h11 h12 ⊢

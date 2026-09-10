@@ -58,7 +58,7 @@ theorem doubleCompletion_yields_singleRelativeGramSystem
       ((Fintype.card n : ℂ) * (Fintype.card n : ℂ)) •
         (1 : ComplexSquare n) ∧
     X * P = (Fintype.card n : ℂ) • X' ∧
-    Y * (fun i j ↦ star (P i j)) =
+    Y * (show ComplexSquare n from fun i j ↦ star (P i j)) =
       (Fintype.card n : ℂ) • Y' := by
   dsimp
   have hScaled := relativeGram_scaledHadamard X X' hX hX' hXX'
@@ -86,8 +86,8 @@ theorem doubleCompletion_yields_singleRelativeGramSystem_six
     (∀ i j, Complex.normSq (P i j) = 6) ∧
     P * Pᴴ = (36 : ℂ) • (1 : Mat6) ∧
     X * P = (6 : ℂ) • X' ∧
-    Y * (fun i j ↦ star (P i j)) = (6 : ℂ) • Y' := by
-  simpa using
+    Y * (show Mat6 from fun i j ↦ star (P i j)) = (6 : ℂ) • Y' := by
+  simpa [show (6 : ℂ) * 6 = 36 by norm_num] using
     (doubleCompletion_yields_singleRelativeGramSystem
       H X X' Y Y' hH hX hX' hY hXX' hCubeCross)
 

@@ -182,8 +182,8 @@ theorem checked_expression_encloses {n : ℕ}
     · exact_mod_cast h.2.2
   | add l u a b iha ihb =>
     intro hcheck
-    have hc := Bool.and_eq_true.mp hcheck
-    have hd := Bool.and_eq_true.mp hc.2
+    have hc := Bool.and_eq_true_iff.mp hcheck
+    have hd := Bool.and_eq_true_iff.mp hc.2
     have h := of_decide_eq_true hd.2
     have ha := iha hc.1
     have hb := ihb hd.1
@@ -195,7 +195,7 @@ theorem checked_expression_encloses {n : ℕ}
     exact ⟨hl.trans (add_le_add ha.1 hb.1), (add_le_add ha.2 hb.2).trans hu⟩
   | neg l u a iha =>
     intro hcheck
-    have hc := Bool.and_eq_true.mp hcheck
+    have hc := Bool.and_eq_true_iff.mp hcheck
     have h := of_decide_eq_true hc.2
     have ha := iha hc.1
     have hl : (l : ℝ) ≤ -((bounds a).2 : ℝ) := by exact_mod_cast h.2.1
@@ -204,8 +204,8 @@ theorem checked_expression_encloses {n : ℕ}
     exact ⟨hl.trans (neg_le_neg ha.2), (neg_le_neg ha.1).trans hu⟩
   | mul l u a b iha ihb =>
     intro hcheck
-    have hc := Bool.and_eq_true.mp hcheck
-    have hd := Bool.and_eq_true.mp hc.2
+    have hc := Bool.and_eq_true_iff.mp hcheck
+    have hd := Bool.and_eq_true_iff.mp hc.2
     rcases of_decide_eq_true hd.2 with
       ⟨_, hll, hlh, hhl, hhh, hll', hlh', hhl', hhh'⟩
     change (l : ℝ) ≤ value x a * value x b ∧ value x a * value x b ≤ (u : ℝ)
@@ -223,7 +223,7 @@ theorem checked_expression_encloses {n : ℕ}
     · exact_mod_cast hhh'
   | square l u a iha =>
     intro hcheck
-    have hc := Bool.and_eq_true.mp hcheck
+    have hc := Bool.and_eq_true_iff.mp hcheck
     rcases of_decide_eq_true hc.2 with ⟨_, hl, hla, hua⟩
     change (l : ℝ) ≤ value x a ^ 2 ∧ value x a ^ 2 ≤ (u : ℝ)
     apply square_bounds ((bounds a).1 : ℝ) ((bounds a).2 : ℝ)
@@ -242,7 +242,7 @@ theorem checked_expression_encloses {n : ℕ}
     · exact_mod_cast hua
   | inv l u a iha =>
     intro hcheck
-    have hc := Bool.and_eq_true.mp hcheck
+    have hc := Bool.and_eq_true_iff.mp hcheck
     rcases of_decide_eq_true hc.2 with ⟨_, hsign, hl, hu⟩
     have hsign' : ((bounds a).2 : ℝ) < 0 ∨ 0 < ((bounds a).1 : ℝ) := by
       rcases hsign with hneg | hpos

@@ -51,7 +51,9 @@ theorem threeModeMixing_nonneg
     (hsum : p 0 + p 1 + p 2 = 1) :
     0 ≤ threeModeMixing p := by
   rw [threeModeMixing_eq_pairProducts p hsum]
-  positivity
+  exact mul_nonneg (by norm_num)
+    (add_nonneg (add_nonneg (mul_nonneg (hp 0) (hp 1))
+      (mul_nonneg (hp 1) (hp 2))) (mul_nonneg (hp 2) (hp 0)))
 
 /-- The collision probability of a three-outcome distribution is at least
 `1 / 3`. -/

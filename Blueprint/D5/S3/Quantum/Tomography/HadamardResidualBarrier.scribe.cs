@@ -57,7 +57,7 @@ internal sealed class HadamardResidualBarrierDocument : IScribeDocumentDefinitio
                 "D5/S3/Quantum/Tomography/HadamardResidualBarrier."
                 + "near_unit_entry_families_admit_controlled_phase_replacement"),
             H("Amplitude-imperfect candidates admit one simultaneous phase replacement"),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(

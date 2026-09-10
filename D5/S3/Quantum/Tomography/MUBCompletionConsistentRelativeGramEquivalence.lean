@@ -46,7 +46,7 @@ theorem consistentDoubleCompletion_iff_oneRelativeGram
       HadamardUnbiased X X' ∧
       (factorizedCubeMatrix H X Y)ᴴ *
           factorizedCubeMatrix H X' Y' =
-        fun _ _ ↦ (Fintype.card n : ℂ) ∧
+        (fun _ _ ↦ (Fintype.card n : ℂ)) ∧
       H * X' = s • entrywiseConj Y') ↔
     ∃ P : ComplexSquare n,
       (∀ i j,
@@ -81,7 +81,7 @@ theorem consistentDoubleCompletion_iff_oneRelativeGram_six
       IsComplexHadamard Y' ∧
       HadamardUnbiased X X' ∧
       (factorizedCubeMatrix H X Y)ᴴ *
-          factorizedCubeMatrix H X' Y' = fun _ _ ↦ (6 : ℂ) ∧
+          factorizedCubeMatrix H X' Y' = (fun _ _ ↦ (6 : ℂ)) ∧
       H * X' = s • entrywiseConj Y') ↔
     ∃ P : Mat6,
       (∀ i j, Complex.normSq (P i j) = 6) ∧

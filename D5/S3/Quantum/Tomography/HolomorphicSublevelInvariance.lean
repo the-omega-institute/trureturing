@@ -5,6 +5,7 @@
    anchors: []
    digest: An actual complex Jacobian bound gives an invariant residual-band Newton ball uniformly over any family of certified node types. -/
 
+import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Calculus.FDeriv.Comp
 import Mathlib.Analysis.Calculus.FDeriv.Add
@@ -39,9 +40,9 @@ theorem complex_sublevel_newton_ball_invariant
     (C : Node → (Fin n → ℂ) →L[ℂ] (Fin n → ℂ))
     (m : Node → Fin n → ℂ) (r q b kappa gamma : ℝ)
     (hr : 0 ≤ r) (hq : 0 ≤ q) (hgamma : 0 ≤ gamma)
-    (hderiv : ∀ node z ∈ Metric.closedBall (m node) r,
+    (hderiv : ∀ node, ∀ z ∈ Metric.closedBall (m node) r,
       HasFDerivAt (f node) (J node z) z)
-    (hJac : ∀ node z ∈ Metric.closedBall (m node) r,
+    (hJac : ∀ node, ∀ z ∈ Metric.closedBall (m node) r,
       ‖ContinuousLinearMap.id ℂ (Fin n → ℂ) - (C node).comp (J node z)‖ ≤ q)
     (hcenter : ∀ node, ‖C node (f node (m node))‖ ≤ b)
     (hC : ∀ node, ‖C node‖ ≤ kappa)
@@ -82,7 +83,10 @@ theorem complex_sublevel_newton_ball_invariant
     calc
       ‖(N z - N (m node)) - C node (f node (m node)) + C node e‖ ≤
           ‖N z - N (m node)‖ + ‖C node (f node (m node))‖ + ‖C node e‖ := by
-        exact (norm_add_le _ _).trans (add_le_add_right (norm_sub_le _ _) _)
+        have hadd := norm_add_le
+          ((N z - N (m node)) - C node (f node (m node))) (C node e)
+        have hsub := norm_sub_le (N z - N (m node)) (C node (f node (m node)))
+        linarith
       _ ≤ q * r + b + kappa * gamma := by
         linarith [hmove, hcenter node, hforce]
       _ ≤ r := by linarith

@@ -49,8 +49,8 @@ theorem zaunerCanonicalCompletion_normalized_defect_ge_two_thirds
       (zaunerLeftFactor F x * (zaunerLeftFactor F x')ᴴ)
   have hOff (r s : Fin 2) (i j : Fin 3) (hij : i ≠ j) :
       A (r, i) (s, j) = 0 := by
-    dsimp [A]
-    rw [Matrix.smul_apply,
+    change (2 : ℂ)⁻¹ * (zaunerLeftFactor F x * (zaunerLeftFactor F x')ᴴ) (r, i) (s, j) = 0
+    rw [
       zaunerLeftFactor_mul_conjTranspose_offMode_zero
         F x x' hF r s i j hij]
     simp
@@ -58,9 +58,21 @@ theorem zaunerCanonicalCompletion_normalized_defect_ge_two_thirds
     ∑ p : Fin 2 × Fin 3, ∑ q : Fin 2 × Fin 3,
       (Complex.normSq (A p q) - (1 / 6 : ℝ)) ^ 2
   simp only [Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three]
-  simp only [hOff, Complex.normSq_zero]
+  simp (disch := decide) only [hOff, Complex.normSq_zero]
   norm_num
-  positivity
+  nlinarith [
+    sq_nonneg (Complex.normSq (A (0, 0) (0, 0)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (0, 1) (0, 1)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (0, 2) (0, 2)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (0, 0) (1, 0)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (0, 1) (1, 1)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (0, 2) (1, 2)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (1, 0) (0, 0)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (1, 1) (0, 1)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (1, 2) (0, 2)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (1, 0) (1, 0)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (1, 1) (1, 1)) - (1 / 6 : ℝ)),
+    sq_nonneg (Complex.normSq (A (1, 2) (1, 2)) - (1 / 6 : ℝ))]
 
 /-- Counting only the twenty-four structural zeros in the rational scaled
 relative Gram gives the preliminary lower bound twenty-four. -/
@@ -83,9 +95,21 @@ theorem zaunerCanonical_scaledRelativeGramDefect_ge_twenty_four
           (Fintype.card (Fin 2 × Fin 3) : ℝ)) ^ 2
   norm_num only [Fintype.card_prod, Fintype.card_fin, Nat.cast_ofNat]
   simp only [Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three]
-  simp only [hOff, Complex.normSq_zero]
+  simp (disch := decide) only [hOff, Complex.normSq_zero]
   norm_num
-  positivity
+  nlinarith [
+    sq_nonneg (Complex.normSq (P (0, 0) (0, 0)) - 6),
+    sq_nonneg (Complex.normSq (P (0, 1) (0, 1)) - 6),
+    sq_nonneg (Complex.normSq (P (0, 2) (0, 2)) - 6),
+    sq_nonneg (Complex.normSq (P (0, 0) (1, 0)) - 6),
+    sq_nonneg (Complex.normSq (P (0, 1) (1, 1)) - 6),
+    sq_nonneg (Complex.normSq (P (0, 2) (1, 2)) - 6),
+    sq_nonneg (Complex.normSq (P (1, 0) (0, 0)) - 6),
+    sq_nonneg (Complex.normSq (P (1, 1) (0, 1)) - 6),
+    sq_nonneg (Complex.normSq (P (1, 2) (0, 2)) - 6),
+    sq_nonneg (Complex.normSq (P (1, 0) (1, 0)) - 6),
+    sq_nonneg (Complex.normSq (P (1, 1) (1, 1)) - 6),
+    sq_nonneg (Complex.normSq (P (1, 2) (1, 2)) - 6)]
 
 /-- The preliminary zero-count bound transfers to the full potential. -/
 theorem zaunerCanonicalCompletion_threeFramePotential_ge_twenty_four

@@ -145,7 +145,7 @@ theorem six_frames_have_large_cross_overlap_of_root_tube_cover
     (tube : κ → Set (Matrix (Fin 6) (Fin 6) ℂ))
     (canonical : Finset κ) (hcard : canonical.card = 6) (color : κ → Bool)
     (η μ : ℝ) (hημ : η ≤ μ)
-    (hSame : ∀ k P ∈ tube k, ∀ Q ∈ tube k, μ ≤ (trace (P * Q)).re)
+    (hSame : ∀ k, ∀ P ∈ tube k, ∀ Q ∈ tube k, μ ≤ (trace (P * Q)).re)
     (hGraph : ∀ k l, k ≠ l → ∀ P ∈ tube k, ∀ Q ∈ tube l,
       (trace (P * Q)).re < η →
       (k ∈ canonical ∧ l ∈ canonical) ∨
@@ -205,7 +205,7 @@ theorem two_relation_tube_certificate_forces_cross_unbiasedness_error
     (tube : κ → Set (Matrix (Fin 6) (Fin 6) ℂ))
     (orthogonalCandidate unbiasedCandidate : κ → κ → Prop)
     (η μ τ : ℝ) (hημ : η ≤ μ)
-    (hSame : ∀ k P ∈ tube k, ∀ Q ∈ tube k, μ ≤ (trace (P * Q)).re)
+    (hSame : ∀ k, ∀ P ∈ tube k, ∀ Q ∈ tube k, μ ≤ (trace (P * Q)).re)
     (hOrth : ∀ k l, k ≠ l → ∀ P ∈ tube k, ∀ Q ∈ tube l,
       (trace (P * Q)).re < η → orthogonalCandidate k l)
     (hUnbiased : ∀ k l, ∀ P ∈ tube k, ∀ Q ∈ tube l,

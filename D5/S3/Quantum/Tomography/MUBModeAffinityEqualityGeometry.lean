@@ -67,11 +67,12 @@ theorem mode_gt_two_thirds_unique
     (hi : (2 / 3 : ℝ) < p i)
     (hj : (2 / 3 : ℝ) < p j) :
     i = j := by
-  fin_cases i <;> fin_cases j
+  change p 0 + p 1 + p ⟨2, by decide⟩ = 1 at hsum
+  fin_cases i <;> fin_cases j <;> norm_num at hi hj
   · rfl
-  · exfalso; nlinarith [hp 2]
+  · exfalso; nlinarith [hp ⟨2, by decide⟩]
   · exfalso; nlinarith [hp 1]
-  · exfalso; nlinarith [hp 2]
+  · exfalso; nlinarith [hp ⟨2, by decide⟩]
   · rfl
   · exfalso; nlinarith [hp 0]
   · exfalso; nlinarith [hp 1]
@@ -88,7 +89,7 @@ theorem existsUnique_mode_gt_two_thirds
   rcases exists_mode_gt_two_thirds p hp hsum hcollision with h0 | h1 | h2
   · refine ⟨0, h0, ?_⟩
     intro j hj
-    exact mode_gt_two_thirds_unique p hp hsum h0 hj
+    exact (mode_gt_two_thirds_unique p hp hsum h0 hj).symm
   · refine ⟨1, h1, ?_⟩
     intro j hj
     exact (mode_gt_two_thirds_unique p hp hsum h1 hj).symm

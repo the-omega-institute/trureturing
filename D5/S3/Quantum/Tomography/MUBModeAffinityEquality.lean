@@ -38,8 +38,9 @@ theorem row_collision_eq_two_thirds_of_affinity_eq_one
     norm_num
   have hzero :
       ∀ i, threeModeCollision (p i) - (2 / 3 : ℝ) = 0 := by
+    intro i
     exact (Finset.sum_eq_zero_iff_of_nonneg
-      (fun i hi ↦ sub_nonneg.mpr (hrow i))).mp hsum
+      (fun i hi ↦ sub_nonneg.mpr (hrow i))).mp hsum i (Finset.mem_univ i)
   intro i
   linarith [hzero i]
 

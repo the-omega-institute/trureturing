@@ -34,7 +34,7 @@ theorem relativeComplexStructure_is_skewAdjoint
       -(relativeComplexStructure A B) := by
   unfold relativeComplexStructure
   rw [Matrix.conjTranspose_smul]
-  simp only [map_ofNat]
+  simp only [star_ofNat]
   rw [crossProduct_is_skewAdjoint A B hCross]
   simp
 
@@ -48,8 +48,11 @@ theorem relativeComplexStructure_mul_conjTranspose
     relativeComplexStructure A B *
         (relativeComplexStructure A B)ᴴ =
       (1 : Matrix n n ℂ) := by
-  simp [relativeComplexStructure, Matrix.conjTranspose_mul,
-    Matrix.mul_assoc, hA, hB, halfIdentity]
+  simp only [relativeComplexStructure, Matrix.conjTranspose_smul,
+    Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, star_ofNat,
+    Matrix.smul_mul, Matrix.mul_smul]
+  rw [Matrix.mul_assoc A, ← Matrix.mul_assoc Bᴴ, hB]
+  simp [halfIdentity, Matrix.mul_smul, Matrix.smul_mul, hA, smul_smul]
 
 /-- Left unitarity follows from left normalization of `A` and right
 normalization of `B`. -/
@@ -61,8 +64,11 @@ theorem relativeComplexStructure_conjTranspose_mul
     (relativeComplexStructure A B)ᴴ *
         relativeComplexStructure A B =
       (1 : Matrix n n ℂ) := by
-  simp [relativeComplexStructure, Matrix.conjTranspose_mul,
-    Matrix.mul_assoc, hA, hB, halfIdentity]
+  simp only [relativeComplexStructure, Matrix.conjTranspose_smul,
+    Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, star_ofNat,
+    Matrix.smul_mul, Matrix.mul_smul]
+  rw [Matrix.mul_assoc B, ← Matrix.mul_assoc Aᴴ, hA]
+  simp [halfIdentity, Matrix.mul_smul, Matrix.smul_mul, hB, smul_smul]
 
 /-- A unitary skew-adjoint matrix squares to minus identity. -/
 theorem square_eq_neg_one_of_skewAdjoint_unitary
@@ -121,7 +127,7 @@ theorem relativeInvolution_square
     relativeInvolution A B * relativeInvolution A B =
       (1 : Matrix n n ℂ) := by
   simp [relativeInvolution, Matrix.mul_smul, Matrix.smul_mul,
-    relativeComplexStructure_square A B hCross hA hB]
+    relativeComplexStructure_square A B hCross hA hB, smul_smul]
 
 #print axioms relativeComplexStructure_is_skewAdjoint
 #print axioms relativeComplexStructure_mul_conjTranspose

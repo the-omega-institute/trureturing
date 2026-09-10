@@ -23,9 +23,9 @@ open D5.S3.Quantum.Tomography.MUBHadamardCompatibility
 /-- Flatten the two free coordinates of a factorized Hadamard-cube slice.
 The formula mirrors `C_{i,j,k} = H_{i,j} X_{j,k} Y_{i,k}`. -/
 def factorizedCubeMatrix
-    {ι κ λ : Type*}
-    (H : Matrix ι κ ℂ) (X : Matrix κ λ ℂ) (Y : Matrix ι λ ℂ) :
-    Matrix (ι × κ) λ ℂ :=
+    {ι κ lambda : Type*}
+    (H : Matrix ι κ ℂ) (X : Matrix κ lambda ℂ) (Y : Matrix ι lambda ℂ) :
+    Matrix (ι × κ) lambda ℂ :=
   fun ij k ↦ H ij.1 ij.2 * X ij.2 k * Y ij.1 k
 
 private theorem star_mul_self_of_normSq_one {z : ℂ}
@@ -37,13 +37,13 @@ private theorem star_mul_self_of_normSq_one {z : ℂ}
 unimodular bottom face. This is the algebraic core of
 `Cᴴ D = (Xᴴ X') ∘ (Yᴴ Y')`. -/
 theorem factorizedCube_crossGram_apply
-    {ι κ λ : Type*}
+    {ι κ lambda : Type*}
     [Fintype ι] [Fintype κ]
     (H : Matrix ι κ ℂ)
-    (X X' : Matrix κ λ ℂ)
-    (Y Y' : Matrix ι λ ℂ)
+    (X X' : Matrix κ lambda ℂ)
+    (Y Y' : Matrix ι lambda ℂ)
     (hH : EntrywiseUnit H)
-    (k l : λ) :
+    (k l : lambda) :
     ((factorizedCubeMatrix H X Y)ᴴ *
         factorizedCubeMatrix H X' Y') k l =
       ((Xᴴ * X') k l) * ((Yᴴ * Y') k l) := by
@@ -62,9 +62,9 @@ theorem factorizedCube_crossGram_apply
         intro j hj
         have hHij : star (H i j) * H i j = 1 :=
           star_mul_self_of_normSq_one (hH i j)
-        simp only [map_mul]
+        simp only [star_mul]
         calc
-          (star (Y i k) * star (X j k) * star (H i j)) *
+          (star (Y i k) * (star (X j k) * star (H i j))) *
               (H i j * X' j l * Y' i l) =
             (star (H i j) * H i j) *
               (star (X j k) * X' j l) *
@@ -85,11 +85,11 @@ theorem factorizedCube_crossGram_apply
 
 /-- The matrix-valued form of the cube cross-Gram factorization. -/
 theorem factorizedCube_crossGram
-    {ι κ λ : Type*}
+    {ι κ lambda : Type*}
     [Fintype ι] [Fintype κ]
     (H : Matrix ι κ ℂ)
-    (X X' : Matrix κ λ ℂ)
-    (Y Y' : Matrix ι λ ℂ)
+    (X X' : Matrix κ lambda ℂ)
+    (Y Y' : Matrix ι lambda ℂ)
     (hH : EntrywiseUnit H) :
     (factorizedCubeMatrix H X Y)ᴴ * factorizedCubeMatrix H X' Y' =
       fun k l ↦ ((Xᴴ * X') k l) * ((Yᴴ * Y') k l) := by
@@ -111,7 +111,7 @@ local factor fibre contains exactly the original factor and its swap.
 
 /-- Polynomial form of the local Zauner parameterization. Division is cleared
 so that the statement remains valid without nonzero side conditions. -/
-structure ZaunerTwoByTwoFactor (a b c d : ℂ) where
+@[ext] structure ZaunerTwoByTwoFactor (a b c d : ℂ) where
   u : ℂ
   v : ℂ
   x : ℂ
@@ -163,7 +163,7 @@ def swap {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
 /-- The local deck transformation is an involution. -/
 @[simp] theorem swap_swap {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
     z.swap.swap = z := by
-  apply ZaunerTwoByTwoFactor.ext <;> rfl
+  apply ZaunerTwoByTwoFactor.ext <;> simp
 
 end ZaunerTwoByTwoFactor
 
@@ -185,8 +185,8 @@ theorem zaunerTwoByTwo_x_quadratic
   have hdy : d * z.x = a * z.y := by
     have h := z.y_sum_eq
     rw [z.sum_eq] at h
-    linarith
-  rw [hb]
+    linear_combination -(1 / 2 : ℂ) * h
+  conv_rhs => rw [hb]
   calc
     c * d * z.x ^ 2 = c * (d * z.x) * z.x := by ring
     _ = c * (a * z.y) * z.x := by rw [hdy]
@@ -201,8 +201,8 @@ theorem zaunerTwoByTwo_y_quadratic
   have hdy : d * z.x = a * z.y := by
     have h := z.y_sum_eq
     rw [z.sum_eq] at h
-    linarith
-  rw [hb]
+    linear_combination -(1 / 2 : ℂ) * h
+  conv_rhs => rw [hb]
   calc
     a * c * z.y ^ 2 = c * z.y * (a * z.y) := by ring
     _ = c * z.y * (d * z.x) := by rw [← hdy]

@@ -55,11 +55,15 @@ private theorem top_gram
   have hd' := mul_star_of_unit d hd
   have hconj := congrArg (star : ℂ → ℂ) hcycle
   simp only [star_add, star_mul, star_star, star_zero] at hconj
+  simp only [Complex.star_def] at ha' hb' hc' hd' hcycle hconj
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [Matrix.add_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Matrix.circulant_apply, Fin.sum_univ_three, Matrix.smul_apply,
-      Matrix.one_apply] <;>
+      Matrix.one_apply, Complex.star_def] <;>
+    dsimp [Fin.neg_def, Fin.sub_def, Matrix.vecCons, Fin.cons,
+      Fin.cases, Fin.induction, Fin.induction.go] <;>
+    (try simp only [map_one, mul_one, one_mul]) <;>
     first
     | linear_combination ha' + hb' + hc' + hd'
     | linear_combination hcycle

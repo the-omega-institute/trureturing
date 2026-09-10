@@ -53,7 +53,7 @@ theorem cayley_neighborhood_open_real_and_poles :
   · intro t
     change 10 * |(t : ℂ).im| < 3 * (1 + Complex.normSq (t : ℂ))
     simp only [Complex.ofReal_im, abs_zero, mul_zero]
-    positivity
+    nlinarith [Complex.normSq_nonneg (t : ℂ)]
   · intro z hz
     change 10 * |z.im| < 3 * (1 + Complex.normSq z) at hz
     obtain ⟨hp, hm⟩ := denominator_normSq z
@@ -89,7 +89,10 @@ theorem cayley_neighborhood_chart_invariance (z : ℂ) :
         _ = 3 * (1 + Complex.normSq z) := by field_simp [hq0]; ring
     · intro h
       have hdiv := div_lt_div_of_pos_right h hq
-      convert hdiv using 1 <;> field_simp [hq0] <;> ring
+      calc
+        10 * (|z.im| / Complex.normSq z) = (10 * |z.im|) / Complex.normSq z := by ring
+        _ < (3 * (1 + Complex.normSq z)) / Complex.normSq z := hdiv
+        _ = 3 * (1 + (Complex.normSq z)⁻¹) := by field_simp [hq0]; ring
 
 /-- Throughout the common neighborhood, every unit-prefactor Cayley phase
 and its reciprocal companion have squared modulus strictly between 1/4 and 4.
@@ -222,7 +225,10 @@ theorem cayley_phase_reciprocal_transition (z s : ℂ)
     rw [h] at hpos
     norm_num at hpos
   dsimp [cayleyPhase]
-  field_simp [hz, hden, hden'] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
+  apply (div_eq_div_iff hden' hden).2
+  field_simp [hz]
+  ring_nf
+  simp [Complex.I_sq]
 
 /-- A single pole-free complex domain serves ANY family of candidate
 regions: each region may be produced by splits, restrictions, exclusions,

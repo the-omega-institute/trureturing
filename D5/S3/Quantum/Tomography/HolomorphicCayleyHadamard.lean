@@ -5,9 +5,10 @@
    anchors: []
    digest: The actual real Cayley residual admits a paired holomorphic extension with an explicit complex Frechet Jacobian and exact complex residual conservation. -/
 
+import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Calculus.FDeriv.Pi
-import Mathlib.Analysis.Complex.Norm
+import Mathlib.Analysis.Complex.Basic
 import Mathlib.Data.Matrix.Mul
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.Tactic.FieldSimp
@@ -66,7 +67,7 @@ private theorem phase_hasDerivAt (s z : ℂ) (hz : 1 - Complex.I * z ≠ 0) :
   have hn := (((hasDerivAt_id z).const_mul Complex.I).const_add 1).const_mul s
   have hd := (hasDerivAt_const z (1 : ℂ)).sub
     ((hasDerivAt_id z).const_mul Complex.I)
-  convert hn.div hd hz using 1 <;> dsimp only [cayleyPhase] <;> ring
+  convert! hn.div hd hz using 1 <;> simp only [cayleyPhase, id_eq, Pi.sub_apply] <;> ring
 
 private theorem dual_hasDerivAt (s z : ℂ) (hz : 1 + Complex.I * z ≠ 0) :
     HasDerivAt (fun w : ℂ ↦ cayleyPhase (star s) (-w))
@@ -74,7 +75,7 @@ private theorem dual_hasDerivAt (s z : ℂ) (hz : 1 + Complex.I * z ≠ 0) :
   have h := (phase_hasDerivAt (star s) (-z)
     (by simpa only [mul_neg, sub_neg_eq_add] using hz)).comp z
       (hasDerivAt_id z).neg
-  convert h using 1 <;> simp only [mul_neg, sub_neg_eq_add] <;> ring
+  convert! h using 1 <;> simp only [mul_neg, sub_neg_eq_add] <;> ring
 
 private theorem phase_coordinate_hasFDerivAt {d : ℕ}
     (s z : Fin d → ℂ) (k : Fin d) (hz : 1 - Complex.I * z k ≠ 0) :
@@ -83,7 +84,7 @@ private theorem phase_coordinate_hasFDerivAt {d : ℕ}
         (ContinuousLinearMap.proj k : (Fin d → ℂ) →L[ℂ] ℂ)) z := by
   have h := (phase_hasDerivAt (s k) (z k) hz).hasFDerivAt.comp z
     (ContinuousLinearMap.proj k : (Fin d → ℂ) →L[ℂ] ℂ).hasFDerivAt
-  convert h using 1
+  convert! h using 1
   ext v
   simp [ContinuousLinearMap.toSpanSingleton_apply, mul_comm]
 
@@ -94,7 +95,7 @@ private theorem dual_coordinate_hasFDerivAt {d : ℕ}
         (ContinuousLinearMap.proj k : (Fin d → ℂ) →L[ℂ] ℂ)) z := by
   have h := (dual_hasDerivAt (s k) (z k) hz).hasFDerivAt.comp z
     (ContinuousLinearMap.proj k : (Fin d → ℂ) →L[ℂ] ℂ).hasFDerivAt
-  convert h using 1
+  convert! h using 1
   ext v
   simp [ContinuousLinearMap.toSpanSingleton_apply, mul_comm]
 
@@ -116,12 +117,14 @@ theorem paired_cayley_residual_hasFDerivAt
   have hB := HasFDerivAt.fun_sum (u := Finset.univ) (fun k _ ↦
     (dual_coordinate_hasFDerivAt s z k (hplus k)).const_mul (H k a))
   have h := (hA.mul hB).sub_const (d : ℂ)
-  convert h using 1
+  convert! h using 1
   ext v
   simp only [pairedCayleyJacobian, ContinuousLinearMap.sum_apply,
     ContinuousLinearMap.smul_apply, ContinuousLinearMap.add_apply,
-    ContinuousLinearMap.proj_apply, smul_eq_mul, Finset.sum_add_distrib,
-    Finset.mul_sum, Finset.sum_mul, mul_assoc, mul_left_comm, mul_comm]
+    ContinuousLinearMap.proj_apply, smul_eq_mul]
+  conv_rhs => rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro k _
   ring
 
 /-- The actual square five-variable system: fix the first phase and delete
@@ -147,6 +150,9 @@ theorem dephased_cayley_residual_hasFDerivAt
     ContinuousLinearMap.pi (Fin.cases 0 (fun k ↦ ContinuousLinearMap.proj k))
   let select : (Fin 6 → ℂ) →L[ℂ] (Fin 5 → ℂ) :=
     ContinuousLinearMap.pi (fun a : Fin 5 ↦ ContinuousLinearMap.proj a.castSucc)
+  have he (w : Fin 5 → ℂ) : embed w = Fin.cases 0 w := by
+    funext k
+    refine Fin.cases ?_ (fun j ↦ ?_) k <;> rfl
   have hm6 : ∀ k : Fin 6, 1 - Complex.I * (embed z) k ≠ 0 := by
     intro k
     refine Fin.cases ?_ (fun j ↦ ?_) k
@@ -160,9 +166,13 @@ theorem dephased_cayley_residual_hasFDerivAt
   have h := select.hasFDerivAt.comp z
     ((paired_cayley_residual_hasFDerivAt H (Fin.cases 1 s) (embed z) hm6 hp6).comp
       z embed.hasFDerivAt)
-  convert h using 1
+  convert! h using 1
   ext v a
-  simp [embed, select, Fin.sum_univ_succ]
+  simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.pi_apply,
+    ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
+    ContinuousLinearMap.proj_apply, select, smul_eq_mul, he]
+  conv_rhs => rw [Fin.sum_univ_succ]
+  simp only [Fin.cases_zero, Fin.cases_succ, mul_zero, zero_add]
 
 private theorem dual_on_real (s : ℂ) (t : ℝ) :
     cayleyPhase (star s) (-(t : ℂ)) = star (cayleyPhase s (t : ℂ)) := by
@@ -179,10 +189,11 @@ theorem paired_cayley_residual_on_real
         (d : ℝ) : ℝ) : ℂ) := by
   have hb : minusAmplitude H s (fun k ↦ (t k : ℂ)) a =
       star (plusAmplitude H s (fun k ↦ (t k : ℂ)) a) := by
-    simp only [minusAmplitude, plusAmplitude, map_sum, map_mul, star_star]
+    simp only [minusAmplitude, plusAmplitude, star_sum, star_mul, star_star]
     apply Finset.sum_congr rfl
     intro k _
     rw [dual_on_real]
+    exact mul_comm _ _
   unfold pairedCayleyResidual
   rw [hb]
   simp only [plusAmplitude, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
@@ -192,12 +203,14 @@ private theorem phase_times_dual (s z : ℂ)
     (hs : Complex.normSq s = 1)
     (hm : 1 - Complex.I * z ≠ 0) (hp : 1 + Complex.I * z ≠ 0) :
     cayleyPhase s z * cayleyPhase (star s) (-z) = 1 := by
-  have hss : s * star s = 1 := by
-    simpa only [Complex.star_def, hs, Complex.ofReal_one] using Complex.mul_conj s
-  dsimp [cayleyPhase]
-  simp only [mul_neg, sub_neg_eq_add]
-  field_simp [hm, hp]
-  linear_combination (1 + Complex.I * z) * (1 - Complex.I * z) * hss
+  calc
+    cayleyPhase s z * cayleyPhase (star s) (-z) = s * star s := by
+      dsimp [cayleyPhase]
+      simp only [mul_neg, sub_neg_eq_add]
+      field_simp [hm, hp]
+      <;> ring
+    _ = 1 := by
+      simpa only [Complex.star_def, hs, Complex.ofReal_one] using Complex.mul_conj s
 
 /-- Residual conservation holds throughout the complex domain, by matrix
 algebra rather than an univariate identity-theorem argument. Hence a common

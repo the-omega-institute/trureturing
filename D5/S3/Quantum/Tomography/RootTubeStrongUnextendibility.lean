@@ -43,7 +43,7 @@ theorem six_frame_has_cross_error_to_any_covered_point
     (tube : κ → Set (Matrix (Fin 6) (Fin 6) ℂ))
     (orthogonalCandidate unbiasedCandidate : κ → κ → Prop)
     (η μ τ : ℝ) (hημ : η ≤ μ)
-    (hSame : ∀ k P ∈ tube k, ∀ Q ∈ tube k,
+    (hSame : ∀ k, ∀ P ∈ tube k, ∀ Q ∈ tube k,
       μ ≤ (trace (P * Q)).re)
     (hOrth : ∀ k l, k ≠ l → ∀ P ∈ tube k, ∀ Q ∈ tube l,
       (trace (P * Q)).re < η → orthogonalCandidate k l)

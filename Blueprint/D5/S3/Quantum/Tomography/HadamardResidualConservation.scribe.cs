@@ -14,7 +14,7 @@ internal sealed class HadamardResidualConservationDocument : IScribeDocumentDefi
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Tomography/HadamardResidualConservation.hadamard_residual_box_dual"),
                 H("Balanced endpoint dual for the actual matrix residual"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For H H*=6I and six unit-modulus input coordinates, the six squared-modulus "
@@ -29,7 +29,7 @@ internal sealed class HadamardResidualConservationDocument : IScribeDocumentDefi
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Tomography/HadamardResidualConservation.balanced_hadamard_sublevel_row_enclosure"),
                 H("Asymmetric conserved-residual Newton-row enclosure"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The explicit Hadamard residual and its actual Frechet derivative feed the existing "

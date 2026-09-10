@@ -32,6 +32,8 @@ private def columnCollision
     (p : Fin 6 → Fin 3 → ℝ) (k : Fin 3) : ℝ :=
   ∑ i, (p i k) ^ 2
 
+set_option maxHeartbeats 2000000 in
+-- The 32 binary saturation cases each require a nonlinear arithmetic proof.
 /-- Six real values with total two and the pairwise saturation law
 
 `(x_i - x_j)(x_i + x_j - 1) = 0`

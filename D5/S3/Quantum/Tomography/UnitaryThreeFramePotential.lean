@@ -35,7 +35,7 @@ private theorem row_normSq_sum_one
   have hEntry := congrFun (congrFun hB i) i
   have hReal := congrArg Complex.re hEntry
   simpa [Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Complex.normSq_eq_conj_mul_self, mul_comm] using hReal
+    Complex.normSq_apply, mul_comm] using hReal
 
 /-- Rowwise fourth-potential lower bound for a three-by-three unitary. -/
 theorem unitaryThree_row_fourthPotential_ge_one_third

@@ -121,8 +121,13 @@ theorem doubleCompletion_iff_oneRelativeGram
         H X X' Y Y' hH hX hY hXX' hCross
     refine ⟨P, ?_, ?_, ?_⟩
     · exact hXX'
-    · simpa [P, recoverFirst] using hDetermined.2.1 ▸ hX'
-    · simpa [P, recoverSecond, entrywiseConj] using hDetermined.2.2 ▸ hY'
+    · change IsComplexHadamard ((Fintype.card n : ℂ)⁻¹ • (X * (Xᴴ * X')))
+      rw [hDetermined.2.1]
+      exact hX'
+    · change IsComplexHadamard ((Fintype.card n : ℂ)⁻¹ •
+        (Y * (show ComplexSquare n from fun k l ↦ star ((Xᴴ * X') k l))))
+      rw [hDetermined.2.2]
+      exact hY'
   · rintro ⟨P, hPflat, hRecoverX, hRecoverY⟩
     have hReconstruct :=
       oneRelativeGram_reconstructs_doubleCompletion

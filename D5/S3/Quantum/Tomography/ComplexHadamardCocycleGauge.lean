@@ -39,6 +39,8 @@ theorem relativeGram_right_vertexGauge
   rw [Matrix.conjTranspose_mul]
   simp only [Matrix.mul_assoc]
 
+attribute [local instance] Classical.typeDecidableEq
+
 /-- A coherent vertex-unitary gauge preserves every scaled cocycle equation.
 The middle vertex gauge cancels exactly. -/
 theorem scaledCocycle_vertexGauge
@@ -84,7 +86,12 @@ theorem relativeGram_cocycle_after_vertexGauge
   rw [relativeGram_right_vertexGauge H M a c]
   exact scaledCocycle_vertexGauge
     (fun x y ↦ (H x)ᴴ * H y) M (Fintype.card n : ℂ)
-    hM (fun x y z ↦ relativeGram_cocycle
+    (by
+      intro b
+      ext i j
+      by_cases hij : i = j <;>
+        simpa [Matrix.one_apply, hij] using congrArg (fun A : ComplexSquare n ↦ A i j) (hM b))
+    (fun x y z ↦ relativeGram_cocycle
       (H x) (H y) (H z) (hH y)) a b c
 
 #print axioms relativeGram_right_vertexGauge

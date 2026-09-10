@@ -12,7 +12,7 @@ internal sealed class RealXFinitePartnerCertificateDocument : IScribeDocumentDef
                 DescribeId.Create("real-x-orthogonality-candidate"),
                 DeclarationHandle.Create("D5/S3/Quantum/Tomography/RealXFinitePartnerCertificate.realXOrthogonalityCandidate"),
                 H("The literal outer orthogonality relation"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The sixty bit-mask rows encode the conservative orthogonality relation "
@@ -24,7 +24,7 @@ internal sealed class RealXFinitePartnerCertificateDocument : IScribeDocumentDef
                 DescribeId.Create("real-x-unbiasedness-candidate"),
                 DeclarationHandle.Create("D5/S3/Quantum/Tomography/RealXFinitePartnerCertificate.realXUnbiasednessCandidate"),
                 H("The refined unbiasedness relation"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The second literal relation retains 859 unordered edges after the existing "
@@ -36,7 +36,7 @@ internal sealed class RealXFinitePartnerCertificateDocument : IScribeDocumentDef
                 DescribeId.Create("real-x-covered-six-frame-no-extra-vector"),
                 DeclarationHandle.Create("D5/S3/Quantum/Tomography/RealXFinitePartnerCertificate.realX_six_frame_has_cross_error_to_any_covered_point"),
                 H("Actual covered six-frames have a cross-unbiasedness error"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

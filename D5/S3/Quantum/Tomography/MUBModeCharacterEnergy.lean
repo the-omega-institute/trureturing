@@ -57,12 +57,14 @@ theorem two_thirds_le_collision_iff_half_le_characterSquare
 theorem threeModeCharacterSquare_uniform :
     threeModeCharacterSquare
       ![(1 / 3 : ℝ), (1 / 3 : ℝ), (1 / 3 : ℝ)] = 0 := by
-  norm_num [threeModeCharacterSquare]
+  norm_num [threeModeCharacterSquare, Matrix.vecCons, Fin.cons,
+    Fin.cases, Fin.induction, Fin.induction.go]
 
 /-- A mode-local probability vector has maximal character square one. -/
 theorem threeModeCharacterSquare_modeLocal :
     threeModeCharacterSquare ![(1 : ℝ), 0, 0] = 1 := by
-  norm_num [threeModeCharacterSquare]
+  norm_num [threeModeCharacterSquare, Matrix.vecCons, Fin.cons,
+    Fin.cases, Fin.induction, Fin.induction.go]
 
 /-- Character square is always nonnegative. -/
 theorem threeModeCharacterSquare_nonneg (p : Fin 3 → ℝ) :

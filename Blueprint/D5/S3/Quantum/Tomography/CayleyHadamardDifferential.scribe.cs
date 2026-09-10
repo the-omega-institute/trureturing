@@ -13,7 +13,7 @@ internal sealed class CayleyHadamardDifferentialDocument : IScribeDocumentDefini
                 DescribeId.Create("signed-cayley-actual-residual-derivative"),
                 DeclarationHandle.Create("D5/S3/Quantum/Tomography/CayleyHadamardDifferential.signed_cayley_hadamard_residual_hasDerivAt"),
                 H("The displayed residual derivative is derived from the actual matrix"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For an arbitrary complex six-by-six matrix, the source differentiates the real and imaginary signed-Cayley coordinates along an affine real segment. "
@@ -25,7 +25,7 @@ internal sealed class CayleyHadamardDifferentialDocument : IScribeDocumentDefini
                 DescribeId.Create("signed-cayley-balanced-sublevel-row"),
                 DeclarationHandle.Create("D5/S3/Quantum/Tomography/CayleyHadamardDifferential.signed_cayley_balanced_sublevel_row_enclosure"),
                 H("The derived directional derivative yields a balanced row enclosure"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The source reuses HadamardResidualConservation for the six-outcome residual dual and Mathlib's scalar mean-value inequality on the complete closed segment. "

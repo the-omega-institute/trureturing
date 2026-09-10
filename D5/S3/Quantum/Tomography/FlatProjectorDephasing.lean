@@ -32,16 +32,18 @@ private theorem coordinate_compression
     fun k l ↦ if k = 0 ∧ l = 0 then 1 else 0
   have hPE : P * E = fun k l ↦ if l = 0 then P k 0 else 0 := by
     ext k l
+    change (∑ a, P k a * E a l) = _
     by_cases hl : l = 0
     · subst l
       simp [Matrix.mul_apply, E]
     · simp [Matrix.mul_apply, E, hl]
   have htrace : trace (P * E) = P 0 0 := by
     rw [hPE]
-    simp [Matrix.trace]
+    simp [Matrix.trace, Matrix.diag]
   have h := congrArg (fun M : Matrix (Fin 6) (Fin 6) ℂ ↦ M i j) (hP.2.2.2 E)
   rw [htrace, hPE] at h
-  simpa [Matrix.mul_apply, Matrix.smul_apply, smul_eq_mul] using h
+  change (∑ k, (if k = 0 then P i 0 else 0) * P k j) = P 0 0 * P i j at h
+  simpa using h
 
 private theorem flat_rankOne_projector_has_canonical_dephased_lift
     (P : Matrix (Fin 6) (Fin 6) ℂ)
@@ -65,8 +67,8 @@ private theorem flat_rankOne_projector_has_canonical_dephased_lift
     norm_num
   · intro i
     have hprod : u i * star (u i) = 1 := by
-      dsimp [u]
-      simp only [map_mul, star_ofNat]
+      change (6 * P i 0) * star (6 * P i 0) = 1
+      rw [star_mul, star_ofNat]
       rw [← hrow i]
       have h := coordinate_compression P hP i i
       rw [hdiag 0, hdiag i] at h
@@ -75,8 +77,8 @@ private theorem flat_rankOne_projector_has_canonical_dephased_lift
       simpa only [Complex.star_def, Complex.mul_conj] using hprod
     exact_mod_cast hcast
   · intro i j
-    dsimp [u]
-    simp only [map_mul, star_ofNat]
+    change P i j = (6 * P i 0) * star (6 * P j 0) / 6
+    rw [star_mul, star_ofNat]
     rw [← hrow j, hrec i j]
     ring
 
@@ -100,10 +102,13 @@ theorem flat_rankOne_projector_has_canonical_dephased_root
   intro a
   have hentry : (Hᴴ * P * H) a a =
       ((Hᴴ *ᵥ u) a * star ((Hᴴ *ᵥ u) a)) / 6 := by
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.mulVec,
-      dotProduct, hrec, map_sum, map_mul, star_star,
+    have hPmatrix : P = Matrix.of (fun i j ↦ u i * star (u j) / 6) := by
+      ext i j
+      exact hrec i j
+    conv_lhs => rw [hPmatrix]
+    simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.conjTranspose_apply, Matrix.mulVec,
+      dotProduct, star_sum, star_mul, star_star,
       Finset.sum_mul, Finset.mul_sum, Finset.sum_div]
-    rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro i _
     apply Finset.sum_congr rfl

@@ -33,6 +33,7 @@ open Matrix
 open D5.S3.Quantum.Tomography.MUBHadamardCompatibility
 open D5.S3.Quantum.Tomography.MUBCubeCompatibility
 open D5.S3.Quantum.Tomography.MUBCompletionSingleRelativeGram
+open D5.S3.Quantum.Tomography.MUBCompletionRelativeGramEquivalence
 open D5.S3.Quantum.Tomography.MUBCompletionRecoveredRowGram
 open D5.S3.Quantum.Tomography.ComplexHadamardEntrywiseDefect
 open D5.S3.Quantum.Tomography.ZaunerCompletionFibre
@@ -179,7 +180,7 @@ theorem completionThreeFramePotential_eq_zero_iff
     have hSecondZero :=
       (entrywiseUnit_iff_sum_normSq_sub_one_sq_eq_zero
         (recoverSecond Y P)).mp hSecondFlat
-    simpa [completionThreeFramePotential, hPZero, hFirstZero, hSecondZero]
+    simp only [completionThreeFramePotential, hPZero, hFirstZero, hSecondZero, add_zero]
 
 /-- Fixed-edge double completion is exactly the zero locus of the three-frame
 potential on the scaled-Hadamard row-Gram variety. -/
@@ -267,6 +268,7 @@ theorem one_le_scaledRelativeGramEntrywiseDefect_of_zero_entry
     1 ≤ scaledRelativeGramEntrywiseDefect P := by
   let d : ℝ := Fintype.card n
   have hd : d ≠ 0 := by
+    dsimp [d]
     exact_mod_cast (Nat.ne_of_gt (Fintype.card_pos : 0 < Fintype.card n))
   have hRaw :
       d ^ 2 ≤

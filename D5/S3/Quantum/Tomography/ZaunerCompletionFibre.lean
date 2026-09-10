@@ -68,7 +68,7 @@ theorem zaunerLeftFactor_crossGram_not_nonzero_flat
   let i : κ := Classical.choice inferInstance
   have h := hflat ((0 : Fin 2), i) ((1 : Fin 2), i)
   rw [zaunerLeftFactor_crossGram_upperRight_zero F x x' i i] at h
-  simpa using hr h.symm
+  exact hr (by simpa using h.symm)
 
 /-! ## Correct fixed-edge completion direction
 
@@ -127,7 +127,7 @@ theorem zaunerLeftFactor_mul_conjTranspose_offMode_zero
           intro k hk
           rw [zaunerLeftFactor_apply_eq_weight_mul,
             zaunerLeftFactor_apply_eq_weight_mul]
-          simp only [map_mul]
+          simp only [star_mul]
           ring
     _ = 0 := by rw [hRow, mul_zero]
 
