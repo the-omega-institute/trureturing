@@ -34,7 +34,7 @@ public sealed class CurrentPrebuiltCliContractTests
                 """);
             WriteExecutable("build/bin/make", """
                 [[ "$*" == '--no-print-directory lean-report' ]] || exit 91
-                [[ "${STRATALINT_LEAN_PRODUCER_DLL:-}" -ef "$PWD/tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" ]] || exit 92
+                [[ "${STRATALINT_LEAN_PRODUCER_DLL:-}" -ef "$PWD/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll" ]] || exit 92
                 [[ -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] || exit 93
                 printf 'validated-cli\n' > build/producer.log
                 printf '%s\n' "${STRATALINT_BUILD_TIMEOUT_SECONDS:-unset}" > build/producer-budget
@@ -48,26 +48,16 @@ public sealed class CurrentPrebuiltCliContractTests
             Environment.SetEnvironmentVariable("STRATALINT_BUILD_TIMEOUT_SECONDS", buildBudget);
             Environment.SetEnvironmentVariable("STRATALINT_LOCK_TIMEOUT_SECONDS", lockBudget);
             var binaries = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.ScribePath,
-                "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" };
+                CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.LeanProducerPath };
             foreach (var binary in binaries) Write(binary, "synthetic candidate binary");
-            var executions = 0;
-            Assert.Equal(0, Program.RunCurrentTests(root, (_, directory) =>
-            {
-                executions++;
-                Write(Path.GetRelativePath(root, Path.Combine(directory, "execution.trx")), """
-                    <TestRun><Results><UnitTestResult testId="one" testName="Probe.Runs" outcome="Passed" /></Results>
-                    <TestDefinitions><UnitTest id="one" storage="Probe.dll"><TestMethod className="Probe" name="Runs" /></UnitTest></TestDefinitions>
-                    <ResultSummary outcome="Completed"><Counters executed="1" passed="1" failed="0" /></ResultSummary></TestRun>
-                    """);
-                return 0;
-            }, TextWriter.Null));
             Write("build/engineering.log", "synthetic engineering fixture\n");
-            CommonExecutionEvidence.SealEngineering(root, binaries, CommonExecutionEvidence.EngineeringSteps
+            var candidate = CommonExecutionEvidence.Candidate(root);
+            CommonExecutionEvidence.SealBuild(root, candidate, binaries, CommonExecutionEvidence.BuildSteps
                 .Select(name => new StageStep(name, 0, 0, "executed", "build/engineering.log")).ToArray());
-            var before = CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.EngineeringPath));
+            var before = CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath));
             Write("build/ci/logs/current/lean-inspector/stale.exit.log", "0\n");
             if (scenario == "changed-dll") Write(CommonExecutionEvidence.CliPath, "changed binary");
-            if (scenario == "changed-producer-dll") Write(CommonExecutionEvidence.RunnerPath, "changed producer binary");
+            if (scenario == "changed-producer-dll") Write(CommonExecutionEvidence.LeanProducerPath, "changed producer binary");
             if (scenario == "changed-source") Write(project, "<Project />");
 
             using var output = new StringWriter();
@@ -92,9 +82,10 @@ public sealed class CurrentPrebuiltCliContractTests
                 Assert.Empty(summary.RootElement.GetProperty("steps").EnumerateArray());
                 Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/producer.log")));
             }
-            Assert.Equal(1, executions);
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
             Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/repeated.log")));
-            Assert.Equal(before, CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
+            Assert.Equal(before, CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath)));
 
             void Write(string path, string text)
             {

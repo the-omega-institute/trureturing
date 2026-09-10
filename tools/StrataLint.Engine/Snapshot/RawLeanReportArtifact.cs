@@ -467,18 +467,20 @@ internal static class RawLeanReportArtifact
             return material.GetOrAdd(
                 address,
                 value => new Lazy<string>(
-                    () => ReadCore(value),
+                    () => ReadCore(value, materialize: true)!,
                     LazyThreadSafetyMode.ExecutionAndPublication)).Value;
         }
 
         internal void ValidateAll()
         {
             _ = addressesValidated.Value;
+            // Validate every entry without retaining expanded strings in the
+            // demand-read cache for the lifetime of the report.
             foreach (var name in contents.Value.Entries.Keys)
-                _ = Read("sha256:" + name[EntryPrefix.Length..]);
+                _ = ReadCore("sha256:" + name[EntryPrefix.Length..], materialize: false);
         }
 
-        private string ReadCore(string address)
+        private string? ReadCore(string address, bool materialize)
         {
             var archive = contents.Value;
             if (!archive.Entries.TryGetValue(EntryName(address), out var entry))
@@ -497,10 +499,11 @@ internal static class RawLeanReportArtifact
                 stream.ReadExactly(bytes);
             }
 
-            string value;
+            string? value = null;
             try
             {
-                value = StrictUtf8.GetString(bytes);
+                if (materialize) value = StrictUtf8.GetString(bytes);
+                else _ = StrictUtf8.GetCharCount(bytes);
             }
             catch (DecoderFallbackException exception)
             {

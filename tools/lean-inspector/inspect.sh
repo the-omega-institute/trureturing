@@ -170,9 +170,9 @@ invoke_inspector() {
     run_phase utility-input dotnet "$STRATALINT_LEAN_PRODUCER_DLL" lean-utility-input
   else
     run_phase utility-input-build dotnet build \
-      "$INSPECTOR_DIR/../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --nologo --verbosity quiet
+      "$INSPECTOR_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --nologo --verbosity quiet
     run_phase utility-input dotnet run \
-      --project "$INSPECTOR_DIR/../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
+      --project "$INSPECTOR_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
       --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input
   fi
   run_phase inspect \

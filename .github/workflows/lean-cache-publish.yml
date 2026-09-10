@@ -63,11 +63,21 @@ jobs:
           artifact-ids: ${{ needs.push.outputs.artifact_id }}
           path: ${{ runner.temp }}/current
           merge-multiple: true
-      - name: Validate upstream common bundle
+      - name: Validate completed current branch
         env:
           UPSTREAM_RUN: ${{ needs.push.outputs.run_id }}
           UPSTREAM_ATTEMPT: ${{ needs.push.outputs.run_attempt }}
         run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage current --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/current/ci-current.tar.gz"
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.push.outputs.engineering_artifact_id }}
+          path: ${{ runner.temp }}/engineering
+          merge-multiple: true
+      - name: Validate completed engineering branch
+        env:
+          UPSTREAM_RUN: ${{ needs.push.outputs.engineering_run_id }}
+          UPSTREAM_ATTEMPT: ${{ needs.push.outputs.engineering_run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/engineering/ci-engineering.tar.gz"
       - run: make delta BASE="$BASE_SHA"
       - name: Branch grammar advisory
         env:

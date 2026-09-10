@@ -45,12 +45,12 @@ public sealed class LeanInspectorScriptTests
         File.SetUnixFileMode(lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var log = Path.Combine(temporary.Path, "lake.log");
         var output = Path.Combine(temporary.Path, "report.json");
-        var cli = Path.Combine(repository, "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll");
+        var cli = Path.Combine(repository, "tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll");
         if (cliMode == "prebuilt")
         {
-            var build = Run("dotnet", ["build", "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj", "--configuration", "Release"], repository);
+            var build = Run("dotnet", ["build", "tools/StrataLint.Lean/StrataLint.Lean.csproj", "--configuration", "Release"], repository);
             Assert.True(build.ExitCode == 0, Encoding.UTF8.GetString(build.StandardOutput) + Encoding.UTF8.GetString(build.StandardError));
-            File.WriteAllText(Path.Combine(repository, "tools/StrataLint.EngineeringScope/Fixture.cs"), "invalid source forbids a repeated build");
+            File.WriteAllText(Path.Combine(repository, "tools/StrataLint.Lean/Fixture.cs"), "invalid source forbids a repeated build");
         }
 
         var full = Run("env", [$"LAKE_BIN={lake}", $"STUB_LOG={log}",
@@ -97,15 +97,15 @@ public sealed class LeanInspectorScriptTests
     private static void InstallProducerInputs(string repository)
     {
         Write(repository, "global.json", "{}\n");
-        foreach (var project in new[] { "StrataLint.EngineeringScope", "StrataLint.Engine", "Trureturing.Truth" })
+        foreach (var project in new[] { "StrataLint.Lean", "StrataLint.Engine", "Trureturing.Truth" })
         {
             Write(repository, $"tools/{project}/{project}.csproj", "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(repository, $"tools/{project}/Fixture.cs", "// fixture\n");
         }
-        Write(repository, "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        Write(repository, "tools/StrataLint.Lean/StrataLint.Lean.csproj",
             "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType>"
             + "<TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>\n");
-        Write(repository, "tools/StrataLint.EngineeringScope/Fixture.cs", "System.Console.WriteLine(\"[]\");\n");
+        Write(repository, "tools/StrataLint.Lean/Fixture.cs", "System.Console.WriteLine(\"[]\");\n");
         Write(repository, "tools/scripts/lean-report-pair.sh", "#!/usr/bin/env bash\n");
         Write(repository, "tools/scripts/worktree/lean-cache-publish.sh", "#!/usr/bin/env bash\n");
         Write(repository, "tools/scripts/workflow/scribe-content-checks.sh", "#!/usr/bin/env bash\n");

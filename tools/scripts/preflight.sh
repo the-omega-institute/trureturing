@@ -19,8 +19,16 @@ finish() {
     mkdir -p "$retained" || rc=2
     local bundle
     bundle="$(mktemp "$retained/candidate.XXXXXXXX")" || rc=2
-    if [[ -f "$CANDIDATE/build/ci/artifact-paths.nul" ]]; then
-      tar -czf "$bundle" -C "$CANDIDATE" --null -T "$CANDIDATE/build/ci/artifact-paths.nul" || rc=2
+    # Current includes the shared runtime and report; engineering's records and
+    # failure diagnostics live under build/ci. Archive each common member once.
+    local paths="$CANDIDATE/build/ci/current-paths.nul"
+    [[ -f "$paths" ]] || paths="$CANDIDATE/build/ci/build-paths.nul"
+    if [[ -f "$paths" ]]; then
+      while IFS= read -r -d '' path; do
+        case "$path" in build/ci|build/ci/*) ;; *) printf '%s\0' "$path" ;; esac
+      done < "$paths" > "$TEMPORARY/artifact-paths.nul"
+      printf 'build/ci\0' >> "$TEMPORARY/artifact-paths.nul"
+      tar -czf "$bundle" -C "$CANDIDATE" --null -T "$TEMPORARY/artifact-paths.nul" || rc=2
     else
       tar -czf "$bundle" -C "$CANDIDATE" build/ci || rc=2
     fi

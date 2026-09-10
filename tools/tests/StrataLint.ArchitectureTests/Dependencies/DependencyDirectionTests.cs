@@ -37,6 +37,7 @@ public sealed class DependencyDirectionTests
             [
                 "StrataLint.Engine",
                 "StrataLint.EngineeringScope",
+                "StrataLint.Lean",
                 "StrataLint.Scribe",
                 "StrataLint.Scribe.Documents",
                 "Tomlyn",
