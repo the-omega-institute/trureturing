@@ -3315,15 +3315,41 @@ r=\mathrm{slot}-7,\quad j=1+\lfloor r/3\rfloor,\quad i=r\bmod3,
 例如同一坐标行 \(i=0\)、\(j=2\) 在稳定布局为 slot 10,
 在该替代呈现以 \(i=1\) 表示时为 slot 8;两种编号不能互换而不说明。
 
-**27.18 定义（记号、范围及证明地位）：条件覆盖的定义。** 若认证一个箱体的分离 guard,
-一个箱证书可覆盖它的全部 25 个既有 raw IDs,
-即 \([25\,\mathrm{box\_id},25\,\mathrm{box\_id}+24]\)。
-语义必须是“**若该 raw slot 可容许,则解析排除**”;eligibility 可以尚未求值,
-所以不能记作 25 个可容许薄层或 25 次数值符号评价。
-压缩范围只有在规范展开逐一覆盖这些原始 ID 时才构成完整覆盖。
-一批中每个 raw slot 恰归一类:箱证书条件覆盖、ineligible、符号认证负、
-符号认证非负、unresolved;五类互斥,总数须为登记箱数的 25 倍。
-guard 失败或未决的箱不能计入第一类。
+**27.18 定义及定理（有限 ID 集、基数与条件排除）。** 固定 26.20–26.21 的一个箱体，
+其标签为 \(p_0<p_1<p_2\)，\(0\le t<56\)、\(b_0,b_1,b_2\in\{0,\ldots,15\}\)，并令
+\[
+B_{\rm id}=4096t+256b_0+16b_1+b_2,\qquad
+I(B_{\rm id})=\{25B_{\rm id}+s:s\in\{0,\ldots,24\}\}.
+\]
+映射 \(s\mapsto25B_{\rm id}+s\) 是到该集合的双射：满射由定义成立，
+相等的两个像相减即给两个槽号相等。因此 \(|I(B_{\rm id})|=25\)，且这恰为整数区间
+\([25B_{\rm id},25B_{\rm id}+24]\) 中的全部整数。
+每个 ID 的预算对仍由 27.17 的同一槽号给出：槽 \(0,\ldots,6\) 对应相邻角点，
+槽 \(7,\ldots,24\) 使用 \(j=1+\lfloor(s-7)/3\rfloor\)、\(i=(s-7)\bmod3\)
+的同一反射对，不改变其 j-major 次序或素数标签。
+
+令 \(E(B_{\rm id})\subseteq I(B_{\rm id})\) 是满足原 eligibility 条件的 ID 集。
+相邻槽要求其原下角点 \(R_{s}>5040\)（此处槽号 \(s=0,\ldots,6\)）；
+反射槽要求 26.18 在 \(k=3\) 时的全部严格整数 guards，包含
+\(R_{j-1}>5040\)、\(p_i^{3(b_i+1)}<PR_{j-1}\)、
+\((PR_{j-1})^2<p_i^{3(2b_i+3)}\) 及
+\(P^2R_{j-1}R_j<p_i^{3(2b_i+3)}<P^2R_{j-1}R_{j+1}\)，其中 \(P=p_0p_1p_2\)。
+这些正是原严格域 \(Q+\log5040<M_0<M_1\) 中相应可容许薄层的条件，
+故 \(0\le|E(B_{\rm id})|\le25\)。
+
+按 \(X_i=p_i^{b_i+1}\) 的值取 27.10 的唯一标签顺序
+\(X_{i_1}<X_{i_2}<X_{i_3}\)，最小坐标的素数标签为 \(p_*=p_{i_1}\)。则
+\[
+X_{i_2}\ge27p_{i_1}^{b_{i_1}+4}=27p_*^3X_{i_1}
+\quad\Longrightarrow\quad
+\forall r\in E(B_{\rm id}),\ G(\text{该 ID 的预算对})<0.
+\]
+证明：每个 \(r\in E(B_{\rm id})\) 的预算对满足原可容许条件，
+而左侧恰为 27.10 的分离 guard；该定理对箱内每个可容许实薄层给出严格 \(G<0\)，
+故对这一有限子集逐一成立。非严格 guard 在分析上已足够，其等号在不同素数域由唯一分解排除。
+本蕴含也覆盖 \(E(B_{\rm id})=\varnothing\) 的空集情形；它没有断言该子集基数为 25，
+也不把有限 ID 基数解释成已求值的 eligibility 或数值符号证书数。
+guard 不成立时，此充分蕴含不决定任何未由其它定理决定的符号。
 
 **27.19 证明附引（附 27.4–27.13）：经典材料附引。** Boyd/Vandenberghe 的
 [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)
@@ -5450,3 +5476,1091 @@ M^2+\Lambda\le C(Q_0):=(1+Q_0)^2+\frac{3Q_0(1+Q_0)}8.
 \(0\le B(N,q,r+1,r)-R_N(q)<\eta\)。这是真正关于系数有界族的一致精度界，不依赖维度或实际残差。但它不构造随 \(m\) 成功的 \(N,q\)，不证明成功证书有某个已知全局截止值。严格完备性的证明使用正余量的存在性；验收和精度安排不把未知余量作为输入。
 
 因为 Verify 全定义，可以在数学上按 \(e=0,1,2,\ldots\) 依次检查，对每个固定 \(m\) 在首次 true 时输出；每次检查有限，若存在证书则该过程终止。条件于 RH，30.49 保证这给一个对全部 \(m\ge1\) 总定义的可计算证书选择函数。本条不无条件证明该过程对每个 \(m\) 终止，也不给出无条件的全局运行时间或成功截止界，更不据此宣称 RH 可判定或不可判定。这个编码等价式不是 RH 的证明、核冻结的形式化定理、效率或新颖性结论；原模型的无限系数达到性及本卷其它尚未解决的算术/物理问题不由它解决。数学出处及本组证明的输入对应见 [本节资料报告](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md)。
+
+**30.52 定义（全半轴有限距离与两种下界）。** Use the full-half-axis model of 30.27–30.31:
+\[
+\mathcal H=L^2((0,\infty),dx),\quad
+\langle F,G\rangle=\int_0^\infty\overline{F(x)}G(x)\,dx,\quad
+\chi=\mathbf1_{(0,1]},\quad f_k(x)=\{1/(kx)\}.
+\]
+Here \(\mathbb N_0=\{0,1,\ldots\}\), \(N\in\mathbb N_+\), precision
+\(\eta\in\mathbb Q_{>0}\), and a comparison threshold \(r\in\mathbb Q\) may have either sign.
+On the unscaled coefficient space define
+\[
+V:\mathbb C^N\longrightarrow\mathcal H,\quad Va=\sum_{k=1}^Na_kf_k,
+\qquad R_N(a)=\|\chi-Va\|^2,\qquad D_N=\inf_{a\in\mathbb C^N}R_N(a).
+\]
+Composition means applying the right-hand map first; adjoints and pseudoinverses have the
+conjugate-linear-first conventions of 30.22–30.26. The infinite synthesis map still uses
+\(h_0=\chi,h_k=f_k/k\) and \(A=T^*T\); finite nonzero scaling preserves the span,
+but does not identify the two coefficient norms or give a bounded infinite inverse.
+There is no coefficient condition that cancels a tail. With
+\[
+L=L_N=\operatorname{lcm}(1,\ldots,N),\quad
+g_a(t)=\sum_{k=1}^Na_k\{t/k\},\quad b_a=\sum_{k=1}^Na_k/k,
+\]
+the substitution \(t=1/x\) gives exactly
+\[
+R_N(a)=\int_0^\infty|\mathbf1_{[1,\infty)}(t)-g_a(t)|^2\frac{dt}{t^2},
+\qquad \|Va\|^2=\int_0^\infty|g_a(t)|^2\frac{dt}{t^2}.
+\]
+Breakpoints are null sets. A lower bound on \(D_N\) and a coercivity bound
+\(\|Va\|^2\ge\delta\|a\|_2^2\) concern different quantities; neither can replace the other.
+
+**30.53 定理及证明（周期配对的显式正距离）。** For every complex \(a\),
+\[
+R_N(a)\ge\sigma_N:=\frac3{3L_N^2+3L_N+2}
+ >\frac1{1+(L_N+1)^2}>0,\qquad D_N\ge\sigma_N.
+\]
+Indeed \(L/k\) is an integer, so \(g_a(t+L)=g_a(t)\). On \(0<t<1\),
+\(g_a(t)=b_at\), while the target is zero there and one at \(L+t\).
+The intervals \((0,1)\) and \((L,L+1)\) are disjoint even for \(L=1\).
+Discarding only nonnegative contributions therefore gives
+\[
+R_N(a)\ge\int_0^1\left(\frac{|g_a(t)|^2}{t^2}
+                  +\frac{|1-g_a(t)|^2}{(L+t)^2}\right)dt.
+\]
+Put \(S(t)=t^2+(L+t)^2\). For every \(z\in\mathbb C\), expansion of the modulus square gives
+\[
+\frac{|z|^2}{t^2}+\frac{|1-z|^2}{(L+t)^2}
+=\left(\frac1{t^2}+\frac1{(L+t)^2}\right)
+ \left|z-\frac{t^2}{S(t)}\right|^2+\frac1{S(t)}.
+\]
+Consequently \(R_N(a)\ge\int_0^1S(t)^{-1}dt\). The bound
+\(S(t)\le1+(L+1)^2\) proves the weaker constant. Cauchy–Schwarz applied to
+\(\sqrt S\) and \(1/\sqrt S\) gives
+\[
+1\le\left(\int_0^1S(t)dt\right)\left(\int_0^1\frac{dt}{S(t)}\right),
+\qquad \int_0^1S(t)dt=L^2+L+\frac23.
+\]
+This proves \(\sigma_N\); its strict improvement follows from
+\(3[L^2+2L+2]-(3L^2+3L+2)=3L+4>0\). Take the infimum over all \(a\).
+Only lcm and rational arithmetic define the constant. The first retained integral is exactly
+\(|b_a|^2\), the full original \(x>1\) contribution; the second is from
+\(1/(L+1)<x<1/L\). It is not the entire \(t\ge J\) tail of 30.41.
+The apparent singularity at zero is removed by \(g_a(t)=b_at\); all endpoint values are immaterial.
+
+**30.54 定理及证明（有理矩阵、有限独立性与旧强制常数）。** Define a real symmetric matrix
+\[
+(K_N)_{kl}=\frac1{(N+1)^2}\int_0^{N+1}\{t/k\}\{t/l\}\,dt
+=\frac1{(N+1)^2kl}\sum_{j=0}^N
+ \left[r_{jk}r_{jl}+\frac{r_{jk}+r_{jl}}2+\frac13\right],
+\quad r_{jk}=j-k\lfloor j/k\rfloor.
+\]
+The equality follows by putting \(t=j+s\), \(0<s<1\): then
+\(\{t/k\}=(r_{jk}+s)/k\), with \(0\le r_{jk}<k\). Thus its entries are exact rationals.
+For complex coefficients,
+\[
+\langle a,K_Na\rangle=(N+1)^{-2}\int_0^{N+1}|g_a(t)|^2dt\ge0.
+\]
+If this is zero, on each \((j,j+1)\), \(j=0,\ldots,N\), the complex affine function
+\(g_a\) vanishes identically: a nonzero value would, by continuity, give positive integral
+on a neighborhood. In particular \(b_a=0\). Both affine one-sided limits at every integer
+\(j=1,\ldots,N\) are zero, and their difference is
+\(-\sum_{k\mid j}a_k\). Hence these divisor sums vanish. At \(j=1\) this gives
+\(a_1=0\); induction on \(j\) then gives \(a_j=0\), since every proper divisor is smaller.
+The interval to \(N+1\) supplies the right side of the last jump. Thus \(K_N\) is positive definite.
+Since \(t^{-2}\ge(N+1)^{-2}\) on this interval,
+\(\|Va\|^2\ge\langle a,K_Na\rangle\). In particular the actual \(f_1,\ldots,f_N\)
+are linearly independent over \(\mathbb C\).
+
+Write \(t_N=\operatorname{tr}K_N\), \(d_N=\det K_N\), and
+\[
+\delta_{\rm old}(N)=\frac{d_N}{t_N^{N-1}}>0.
+\]
+For the positive eigenvalues \(\lambda_1,\ldots,\lambda_N\) of \(K_N\),
+\(\prod_{j\ne i}\lambda_j\le(\sum_j\lambda_j)^{N-1}\). Therefore
+\(\lambda_i\ge d_N/t_N^{N-1}\) for every \(i\), and
+\[
+\|Va\|^2\ge\langle a,K_Na\rangle\ge\delta_{\rm old}(N)\|a\|_2^2.
+\]
+The spectral theorem is used only in this proof. The defining determinant is the finite signed
+permutation sum, with each sign determined by its finite inversion count. Traces, entries,
+integer gcd/lcm and this sum require no real-rank, singular-value or eigenvalue oracle.
+Their proved positive rational numerators may also be checked redundantly. For \(N=1\),
+\(K_1=[(1/4)(1/3+1/3)]=[1/6]\), and the empty product \(t_1^0=1\)
+gives \(\delta_{\rm old}(1)=1/6\). This matrix is a lower bound for the full Gram matrix,
+not an assertion that its entries equal the full Gram entries.
+
+**30.55 定理及证明（实最优系数、有限盒与二次网格误差）。** In 30.55–30.71 put
+\(\delta=\delta_{\rm old}(N)\). Splitting at \(x=1/k\) gives
+\(\|f_k\|^2\le1/k+1/k=2/k\). Thus, with \(U_N=2\sum_{k=1}^N1/k\),
+triangle and Cauchy–Schwarz inequalities give
+\[
+\|Va\|^2\le\left(\sum_k|a_k|\|f_k\|\right)^2\le U_N\|a\|_2^2.
+\]
+The range of \(V\) is closed. Explicitly, if \(Va_j\) converges, coercivity makes
+\(a_j\) a finite-dimensional Cauchy sequence, whose limit maps to the original limit.
+Let \(p_N\) be the orthogonal projection of \(\chi\) onto this range. Independence gives
+a unique \(a^\circ\in\mathbb C^N\) with \(Va^\circ=p_N\). Since the functions are real,
+for real \(b,c\) one has \(R_N(b+ic)=R_N(b)+\|Vc\|^2\).
+Minimality and coercivity force \(\operatorname{Im}a^\circ=0\); this does not assert positivity
+or rationality of the optimizer. Orthogonality gives, for every complex \(a\),
+\[
+1=\|p_N\|^2+D_N,\qquad
+\delta\|a^\circ\|_2^2\le\|p_N\|^2\le1,\qquad
+R_N(a)=D_N+\|V(a-a^\circ)\|^2.
+\]
+Set \(H_N=1+\lceil1/\delta\rceil\). The inequality \(\sqrt t<1+t\) for \(t>0\)
+shows \(|a_k^\circ|\le\delta^{-1/2}<H_N\). Hence the explicitly determined closed
+coefficient box \(\mathcal C_N=[-H_N,H_N]^N\) contains the global optimizer, and
+\(R_N(q)-D_N\le U_N\|q-a^\circ\|_2^2\). Its definition requires no knowledge of \(a^\circ\).
+
+**30.56 定义及证明（有理残差包络的统一形式）。** The scalar construction of 30.41–30.45
+has the following identical notation for \(q\in\mathbb Q^N\), \(J\ge2,K\ge1\):
+\[
+b=\sum_kq_k/k,\quad M=1+\sum_k|q_k|,\quad
+A_j=1+\sum_kq_k\lfloor j/k\rfloor,\quad d_j=-2A_jb,\quad d_j^+=\max(d_j,0),
+\]
+\[
+w_j=2j+1,\quad L_{j,K}=2\sum_{l=0}^{K-1}\frac1{(2l+1)w_j^{2l+1}},\qquad
+\rho_{j,K}=\frac2{(2K+1)w_j^{2K-1}(w_j^2-1)},
+\]
+\[
+B(N,q,J,K)=b^2+\sum_{j=1}^{J-1}
+ \left[\frac{A_j^2}{j(j+1)}+b^2+d_jL_{j,K}+d_j^+\rho_{j,K}\right]+\frac{M^2}{J},
+\quad E(N,q,J,K)=\frac{M^2}{J}+\frac{3|b|M}{8\,9^{K-1}}.
+\]
+Then \(B-E\le R_N(q)\le B\). Indeed the transformed residual on \((0,1)\)
+contributes \(b^2\), on \((j,j+1)\) it is \(A_j-bt\), whose integral is
+\(A_j^2/[j(j+1)]+b^2+d_j\log((j+1)/j)\), and the remaining weighted tail lies in
+\([0,M^2/J]\). Integrating
+\(1/(1-s^2)=\sum_{l=0}^{K-1}s^{2l}+s^{2K}/(1-s^2)\)
+from zero to \(1/(2j+1)\), and bounding the last denominator by its endpoint, proves
+\(L_{j,K}\le\log((j+1)/j)\le L_{j,K}+\rho_{j,K}\).
+The upper endpoint is used when \(d_j\ge0\), the lower when \(d_j<0\).
+Moreover \(|A_j|\le jM\), \(|d_j|\le2|b|Mj\),
+\(\rho_{j,K}\le(3/4)9^{1-K}/(2j+1)^3\),
+\(j/(2j+1)^3\le1/(8j^2)\), and \(\sum_{j=1}^{J-1}j^{-2}\le2\).
+Summing \(|d_j|\rho_{j,K}\) proves the stated \(E\).
+These are finite rational definitions; logarithms enter only the proof.
+
+For \(q\in\mathcal C_N\), set
+\[
+Q_0=NH_N,\quad M_0=1+Q_0,\quad \Lambda_0=3Q_0M_0/8,\quad
+\Gamma_0=M_0^2+\Lambda_0.
+\]
+Then for every integer \(v\ge1\),
+\[
+0\le B(N,q,v+1,v)-R_N(q)
+ \le\frac{M_0^2}{v+1}+\Lambda_0\,9^{1-v}\le\frac{\Gamma_0}{v}.
+\]
+The last step uses \(9^{v-1}\ge v\): equality holds at one, and induction follows from
+\(9v\ge v+1\). More generally, if \(\sum|q_k|\le Q\), put
+\(\Gamma(Q)=(1+Q)^2+3Q(1+Q)/8\). The same proof gives
+\(E(N,q,h+1,h)\le\Gamma(Q)/h\); for any rational \(\varepsilon>0\),
+\(h=1+\lfloor\Gamma(Q)/\varepsilon\rfloor\) makes this strictly less than \(\varepsilon\).
+All denominators are positive. For \(q=0\), telescoping gives \(B=R_N(0)=1\).
+For \(b=0\) with nonzero \(q\), all logarithmic terms disappear, leaving only the tail error.
+Negative coefficients, cancellation, \(J<N\), and non-lcm truncations require no additional hypotheses.
+
+**30.57 定理及证明（完整系数网格的双侧最优距离证书）。** For integers \(s,v\ge1\), let
+\[
+\mathcal G_{N,s}=\{(n_1/s,\ldots,n_N/s):-sH_N\le n_k\le sH_N,\ n_k\in\mathbb Z\},
+\quad \kappa_{\rm mesh}=\frac{U_NN}{4s^2},\quad \varepsilon=\frac{\Gamma_0}{v}.
+\]
+Every point of \(\mathcal C_N\) lies within \(1/(2s)\) in each coordinate of a grid point:
+round each \(sx_k\) to a nearest integer. Both boundaries \(\pm sH_N\) are integers,
+so this does not leave the box, even at boundary faces; either tie choice works.
+This proves coverage and does not prescribe evaluating the unknown optimizer.
+Applied to \(a^\circ\), it gives \(q^\circ\) with
+\(R_N(q^\circ)\le D_N+\kappa_{\rm mesh}\). There is also the supplied independent
+continuity bound on the same box:
+\[
+|R_N(x)-R_N(y)|\le4N(1+2NH_N)\|x-y\|_\infty.
+\]
+For its proof use \(\|f_k\|\le2\),
+\(\|\chi-Vx\|,\|\chi-Vy\|\le1+2NH_N\),
+\(\|V(x-y)\|\le2N\|x-y\|_\infty\), and the difference-of-squared-norms inequality.
+The sharper quadratic error above is the one used below.
+
+Define over the entire finite grid
+\[
+\beta(q)=B(N,q,v+1,v),\quad u=\min_{q\in\mathcal G_{N,s}}\beta(q),\quad
+\omega=\kappa_{\rm mesh}+\varepsilon,\qquad \ell=\max(\sigma_N,u-\omega).
+\]
+Every \(\beta(q)\ge R_N(q)\ge D_N\). Conversely,
+\(u\le\beta(q^\circ)\le R_N(q^\circ)+\varepsilon\le D_N+\omega\).
+The zero vector belongs to the grid and \(\beta(0)=1\). Thus
+\[
+0<\ell\le D_N\le u\le1,\qquad u-\ell\le\omega.
+\]
+Both lower-bound terms are justified: \(u-\omega\le D_N\) by coverage and
+\(\sigma_N\le D_N\) by 30.53. A single candidate upper bound, a partial table, or a
+minimum over a set without proved coverage does not justify \(u-\omega\le D_N\).
+
+**30.58 定义及总终止性证明（网格生成与自然数编码）。** Given \(N\ge1,\eta>0\),
+compute the constants of 30.53–30.56 and choose
+\[
+s=1+\lfloor U_NN/\eta\rfloor,\qquad v=1+\lfloor4\Gamma_0/\eta\rfloor.
+\]
+Since \(s>U_NN/\eta\) and \(s^2\ge s\), \(\kappa_{\rm mesh}<\eta/4\);
+similarly \(\varepsilon<\eta/4\). Hence \(\omega<\eta/2<\eta\), for every positive
+rational precision, including \(\eta>1\). Compute every \(\beta\), its minimum, and the endpoints
+of 30.57. The matrix has \(N^2\) entries with \(N+1\) summands each, its determinant a finite
+permutation sum, and the grid exactly \((2sH_N+1)^N\) points. Every \(B\) is a finite
+rational expression. Integer gcd terminates by decreasing nonzero remainders; lcm follows
+from gcd. Every subsequent operation and loop is finite. This is one total generation
+rule uniform in \(N,\eta\), with explicit coefficient, grid and residual precision bounds;
+it never waits for an unknown real sign. No practical complexity bound is inferred.
+
+Use the natural encodings of 30.47, equivalently
+\[
+\operatorname{Pair}(a,b)=2^a(2b+1)-1,\quad
+\operatorname{Sign}(p)=\begin{cases}2p&p\ge0,\\-2p-1&p<0,\end{cases}\quad
+\operatorname{Rat}(p,d)=\operatorname{Pair}(\operatorname{Sign}(p),d-1),\ d\ge1,
+\]
+\[
+\operatorname{List}()=0,\qquad
+\operatorname{List}(a_1,\ldots,a_n)=1+\operatorname{Pair}(a_1,\operatorname{List}(a_2,\ldots,a_n)).
+\]
+Repeated division of \(n+1\) by two gives its unique odd part \(2b+1\) and exponent \(a\),
+terminating because the positive integer decreases at every division. An even sign code
+\(a\) means \(a/2\); an odd one means \(-(a+1)/2\). Denominators decode positively
+and need not be reduced. A positive list code \(L=2^a(2t+1)\) has tail \(t<L\);
+therefore every natural code decodes to a finite list. Put \(P=2sH_N+1\), \(G=P^N\).
+Integer division gives the unique \(N\) digits (allowing leading zeros)
+\[
+i=\sum_{k=1}^Nd_kP^{k-1},\quad0\le d_k<P,\quad0\le i<G,
+\qquad q(i)_k=(d_k-sH_N)/s.
+\]
+This is a bijection with the grid: digit uniqueness gives injectivity, and the allowed
+numerators yield every digit tuple. It fixes the complete table order without real rounding.
+
+**30.59 定义及证明（总谓词 VerifyOpt）。** An optimum certificate is a natural list of exactly
+eight fields
+\[
+(N,\operatorname{Rat}(\eta),s,v,\operatorname{List}(T),i_0,
+ \operatorname{Rat}(\ell),\operatorname{Rat}(u)),
+\]
+where \(T\) consists of \(G=P^N\) rational codes in the order of 30.58.
+Here \(\operatorname{Rat}(\eta)\) means any numerator/positive-denominator encoding of that rational.
+Define \(\operatorname{VerifyOpt}(N,\eta,e)\) to be false for invalid external input,
+malformed shape, internal \(N,\eta\) unequal to the external values, or \(s,v<1\).
+Otherwise recompute \(L,\sigma,K_N,t_N,d_N,\delta,H_N,U_N,Q_0,M_0,\Lambda_0,\Gamma_0\)
+from \(N\), require \(t_N,d_N>0\), and compute \(\kappa_{\rm mesh},\varepsilon,\omega\).
+Require \(\omega<\eta\). The parameters need not equal the particular formulas of 30.58.
+Require table length exactly \(G\); for every index reconstruct \(q(i)\) and require
+\(T_i=B(N,q(i),v+1,v)\). A digest or a supplied subset is insufficient.
+Finally require
+\[
+0\le i_0<G,\quad u=T_{i_0},\quad u\le T_i\ (0\le i<G),\quad
+\ell=\max(\sigma_N,u-\omega),\quad0<\ell\le u\le1,\quad u-\ell<\eta.
+\]
+These requirements define the Boolean predicate completely. Rational comparison reduces
+\(p/d<r/s\) to \(ps<rd\), and equality to \(ps=rd\); addition, multiplication, powers,
+absolute values, floor, ceiling and finite extrema use signed integers and positive denominators.
+All decodings terminate by 30.58; all remaining sums, table checks and comparisons are finite.
+Thus the predicate is total on encoded inputs and uses no logarithm, square root, true residual,
+true Gram matrix, optimizer or infinite-limit oracle. If it accepts, the table is the entire
+minimum of 30.57, so \(0<\ell\le D_N\le u\le1\) and the required width follows.
+Conversely 30.58 produces a passing table and endpoints; choosing the least minimizing index
+resolves ties. Therefore \(\forall N\ge1\ \forall\eta\in\mathbb Q_{>0}\ \exists e\in\mathbb N_0\)
+with \(\operatorname{VerifyOpt}(N,\eta,e)\), by a total generation rule. Finite integer
+semantics, full table coverage and input binding are part of this mathematical definition;
+finite-width overflow, floating substitutions or unchecked compression define different predicates.
+
+**30.60 定理及证明（最优距离的严格有理分离与等号）。** Define
+\(\operatorname{VerifyLess}(N,r,e)\) by decoding a positive precision \(\eta_e\),
+requiring \(\operatorname{VerifyOpt}(N,\eta_e,e)\), and then \(u<r\).
+Define \(\operatorname{VerifyGreater}\) in the same way with \(\ell>r\).
+Malformed data give false. These are total predicates, and for every fixed \(N\ge1,r\in\mathbb Q\),
+\[
+D_N<r\iff\exists e\ \operatorname{VerifyLess}(N,r,e),\qquad
+D_N>r\iff\exists e\ \operatorname{VerifyGreater}(N,r,e).
+\]
+Soundness is \(D_N\le u<r\), respectively \(D_N\ge\ell>r\).
+For completeness generate at precisions \(\eta_j=2^{-j}\), \(j\ge1\).
+If \(D_N<r\), eventually \(\eta_j<r-D_N\), and
+\(u_j-D_N\le u_j-\ell_j<\eta_j\), so \(u_j<r\).
+If \(D_N>r\), eventually \(\eta_j<D_N-r\), and
+\(D_N-\ell_j<\eta_j\), so \(\ell_j>r\).
+The true positive gap is only an existence argument, never an input.
+At equality every reliable interval contains \(r\), so neither strict predicate accepts.
+Waiting for strict separation terminates exactly when \(D_N\ne r\), whereas every
+fixed-precision generation and verification terminates even at equality. Finitely many failures
+to separate do not prove equality. If \(r\le0\), every accepted interval has \(\ell>r\);
+if \(r>1\), every one has \(u<r\); \(r=1\) follows the same strict rule.
+A passing upper certificate supplies its actual grid minimizer with
+\(R_N(q(i_0))\le B(N,q(i_0),v+1,v)=u<r\), hence also a strict residual witness.
+
+**30.61 命题及证明（有限边界与无限范围）。** For \(N=1\), the formulas give
+\(L_1=1,\sigma_1=3/8,\delta_{\rm old}(1)=1/6,H_1=7\), so the full construction is valid.
+No \(K_N\) or coercivity formula here is defined at \(N=0\): the separate old value
+\(D_0=1\) admits the exact interval \([1,1]\). Complex coefficients were allowed before
+real reduction, and the grid includes negative, zero and boundary coordinates.
+No assumptions \(b\ne0,J\ge N\), or truncation at a common multiple occur.
+
+The actual finite \(f_k\) are independent and \(D_N>0\). If
+\(\alpha\chi+\sum b_kh_k=0\) and \(\alpha\ne0\), it would put \(\chi\) in the finite
+span, contradicting positive distance; if \(\alpha=0\), independence gives every \(b_k=0\).
+Thus the actual Gram \(A_N\) is positive definite. Nevertheless
+\(A_N-D_NE_{00}\) is positive semidefinite and singular by 30.23–30.25.
+This special independence does not add a hypothesis to the general, possibly dependent complex
+Gram theorem. Its range condition, pseudoinverse and singular/zero cases remain as proved there.
+Finite coercivity does not prove uniform coercivity in \(N\), closed infinite synthesis range,
+or an \(\ell^2\) minimizing coefficient vector. The infinite interval
+\([0,\inf_ND_N]\), compression equivalences, closure distance and the three distinct
+attainment questions remain those of 30.32–30.35. With \(c=\|f_1\|^2\),
+\[
+0\le\lambda_{\min}(A_N)\le\langle e_N,A_Ne_N\rangle=c/N^3\longrightarrow0
+\]
+is unconditional even though each finite \(A_N\) is positive definite. This ordinary
+spectral limit does not determine the distance limit.
+
+**30.62 定理及证明（网格证书的 RH 量词）。** The only external analytic-number-theory
+input in this bridge is [B1], Luis Báez-Duarte,
+*A strengthening of the Nyman-Beurling criterion for the Riemann hypothesis, 2*,
+[arXiv:math/0205003v1](https://arxiv.org/pdf/math/0205003v1), p. 1 definitions and p. 2
+Theorem 1.1: RH holds exactly when \(\chi\) belongs to the norm closure of the natural-parameter
+span of these \(f_k\) in the full \(\mathcal H\). This is the closure-membership statement
+used in 30.36, not density of the span in all \(\mathcal H\). Its full analytic proof is
+an imported theorem, not reproved by the finite estimates above.
+By the closure-distance theorem and 30.60,
+\[
+\mathrm{RH}\iff\forall m\in\mathbb N_+\ \exists N\in\mathbb N_+\ \exists e\in\mathbb N_0:
+ \operatorname{VerifyLess}(N,1/m,e).
+\]
+Forward, \(\inf_ND_N=0\) selects \(D_N<1/m\), and strict completeness gives a certificate.
+Backward, every certificate gives such a distance, so the infimum is zero and [B1] applies.
+All preceding finite lower bounds, optimizer bounds, grid coverage and totality proofs are
+independent of RH and [B1]. For any fixed \(N_0\), choose \(m\) with
+\(1/m\le\sigma_{N_0}\). Monotonicity of distance under enlarging the span gives
+\(D_N\ge D_{N_0}\ge\sigma_{N_0}\ge1/m\) for every \(N\le N_0\).
+Thus no finite prefix works for every \(m\). Computing intervals uniformly in \(N,\eta\)
+does not supply an unconditional successful cutoff \(m\mapsto N\).
+Since \(L_N\) is nondecreasing and \(L_N\ge N\), \(\sigma_N\downarrow0\).
+Positive finite lower bounds are compatible with zero limiting distance, and a lower bound tending
+to zero does not prove that limit. Neither finite collections of certificates nor finite failures
+to find one decide RH; no undecidability claim is involved. The constants and construction are
+not asserted optimal or practically fast, and they do not settle the separate prime-box sign problems.
+
+**30.63 定理及证明（原复问题的实最优解与半梯度）。** In the unscaled model let
+\[
+F=V^*V,\quad F_{ij}=\langle f_i,f_j\rangle,\quad y=V^*\chi,\quad
+ y_i=\langle f_i,\chi\rangle=\int_0^1f_i(x)dx.
+\]
+The matrix is real symmetric with \(F\succeq\delta I\), and \(0\le y_i\le1\), hence
+\(\|y\|_2\le\sqrt N\le N\). Orthogonality of the projection in 30.55 gives
+\(Fa^\circ=y\), so its unique real optimizer is \(a^\circ=F^{-1}y\).
+For any real rational candidate \(q\), define the half-gradient \(v(q)=Fq-y\).
+Expansion of \(R_N(q)=1-2y^Tq+q^TFq\) gives \(\nabla R_N(q)=2v(q)\), and
+\[
+R_N(q)-D_N=(q-a^\circ)^TF(q-a^\circ)
+ =v(q)^TF^{-1}v(q)\le\frac{\|v(q)\|_2^2}{\delta}.
+\]
+For completeness, coercivity and Cauchy–Schwarz yield
+\(\delta\|z\|_2^2\le\langle z,Fz\rangle\le\|z\|_2\|Fz\|_2\), so
+\(\|F^{-1}\|_{\rm op}\le1/\delta\). Substituting \(q-a^\circ=F^{-1}v\)
+proves the equality and bound without a real spectral computation.
+For \(s\in\mathbb R\), direct expansion gives
+\[
+R_N(q+se_k)=R_N(q)+2s\,v_k(q)+s^2F_{kk},\qquad
+v_k(q)=\frac{R_N(q+e_k)-R_N(q-e_k)}4.
+\]
+The divisor is four because \(v\) is half the gradient. Complex vectors require conjugate
+transpose in the quadratic gap; the centered real differences alone do not encode all imaginary
+directions. Real reduction of the original complex optimization was proved before using them.
+
+**30.64 定理及证明（任意单一候选的局部可靠区间）。** Fix any \(q\in\mathbb Q^N\).
+Derive the ordered vectors \(x_0=q,x_{2k-1}=q+e_k,x_{2k}=q-e_k\).
+For each \(i=0,\ldots,2N\), choose any integers \(J_i\ge2,K_i\ge1\), and set
+\(B_i=B(N,x_i,J_i,K_i)\), \(E_i=E(N,x_i,J_i,K_i)\) from 30.56.
+The exact differences and \(R_N(x_i)\in[B_i-E_i,B_i]\) give
+\[
+l_k=\frac{B_{2k-1}-E_{2k-1}-B_{2k}}4\le v_k(q)
+ \le\frac{B_{2k-1}-B_{2k}+E_{2k}}4=:u_k,
+\quad S=\sum_{k=1}^N\max(|l_k|,|u_k|)^2\ge\|v(q)\|_2^2.
+\]
+Consequently the rational endpoints
+\[
+\ell=\max\left(\sigma_N,B_0-E_0-S/\delta\right),\qquad u=\min(1,B_0)
+\]
+satisfy \(0<\ell\le D_N\le u\le1\). Indeed 30.63 gives
+\(D_N\ge R_N(q)-\|v(q)\|^2/\delta\ge B_0-E_0-S/\delta\),
+and 30.53 supplies the other lower term. For the upper endpoint use
+\(D_N\le R_N(q)\le B_0\) and \(D_N\le R_N(0)=1\).
+Since \(u\le B_0\) and \(\ell\ge B_0-E_0-S/\delta\),
+\[
+u-\ell\le E_0+S/\delta.
+\]
+This proof is valid for a bad, zero, negative or out-of-box candidate. Small residual
+approximation error alone need not make its interval narrow: a nonoptimal fixed \(q\) may retain
+a nonzero half-gradient. Coercivity turns the local gradient bound into a global optimality bound;
+without it that implication has not been proved. Each offset belongs to the same specified \(q\).
+
+**30.65 定义及证明（版本一 VerifyLocal 与总解码）。** Use exactly the Pair, Sign, Rat and
+List maps of 30.58 (the same natural encodings as 30.47). A local certificate has seven fields
+\[
+(1,N,\operatorname{Rat}(\eta),\operatorname{List}(q_1,\ldots,q_N),
+ \operatorname{List}(p_0,\ldots,p_{2N}),\operatorname{Rat}(\ell),\operatorname{Rat}(u)),
+\quad p_i=\operatorname{Pair}(J_i-2,K_i-1),
+\]
+with rational codes in the coefficient list. Define \(\operatorname{VerifyLocal}(N,\eta,e)\)
+to reject illegal external input, incorrect version or length, internal input mismatch, coefficient
+length other than \(N\), or parameter length other than \(2N+1\). Decode each parameter with
+\(J_i=2+a_i,K_i=1+b_i\). Recompute \(\delta_{\rm old}(N),\sigma_N\) and require their
+positive rational signs. Derive all \(x_i\) from the one decoded \(q\); recompute every
+\(B_i,E_i,l_k,u_k,S\) and both endpoints in 30.64. Require exact equality with the encoded
+endpoints and \(0<\ell\le u\le1\), \(u-\ell<\eta\). These conditions define acceptance.
+
+The certificate contains no trusted true residual, gradient, Gram matrix, optimizer, coercivity
+constant or generation history. Pair decoding terminates by repeated decreasing division of the
+positive integer \(n+1\); sign and positive-denominator decoding are total; each decoded list
+tail is a strictly smaller natural number. Thus malformed shape is decidable after finite decoding.
+The constants use finite rational formulas, and the remaining \(2N+1\) residual computations
+are finite. Cross multiplication with positive denominators decides all rational relations.
+There is no real-rank, logarithm, floating, square-root or infinite-limit operation in this
+predicate. It is total on every encoded input. If it accepts, 30.64 proves its interval contains
+\(D_N\), and the last comparison proves width \(<\eta\). No auxiliary polarization probe
+or matrix from a generator is accepted on trust or required in the certificate. Any source of
+rational \(q\) is governed by exactly this local predicate.
+
+**30.66 定义及证明（固定探针、有理 Gram 区间和对称近似）。** There is a total generation
+rule for 30.65 that uses no coefficient grid or enumeration of rational candidates. Given
+\(N,\eta\), form the strictly positive rational constants
+\[
+H_{\rm gen}=4N/\delta,\quad Q_{\rm gen}=NH_{\rm gen},\quad
+C_{\rm gen}=N(1+H_{\rm gen}),\quad C_{\rm width}=1+(N+4)/(2\delta),
+\]
+\[
+\tau=\min(1,\eta/(4C_{\rm width})),\qquad
+\theta=\min(1,\delta/(2N),\tau/C_{\rm gen}).
+\]
+These are generator bounds; they do not redefine \(H_N\) or the box in 30.55.
+Use the fixed integer probes
+\(\mathcal P_N=\{e_i,-e_i:1\le i\le N\}\cup\{e_i+e_j:i<j\}\),
+of cardinality \(2N+N(N-1)/2\), each with coefficient absolute sum at most two.
+The exact value \(R_N(0)=1\) is available separately. Choose
+\[
+h_0=1+\lfloor\Gamma(2)/\theta\rfloor,\quad \Gamma(2)=45/4,
+\quad B_p=B(N,p,h_0+1,h_0),\quad E_p=E(N,p,h_0+1,h_0),\quad c_p=B_p-E_p/2.
+\]
+By 30.56, \(E_p<\theta\) and \(|c_p-R_N(p)|\le E_p/2<\theta/2\).
+The residual quadratic polynomial yields the exact identities
+\[
+F_{ii}=\frac{R_N(e_i)+R_N(-e_i)-2}2,\qquad
+y_i=\frac{R_N(-e_i)-R_N(e_i)}4,
+\quad F_{ij}=\frac{R_N(e_i+e_j)-R_N(e_i)-R_N(e_j)+1}2\quad(i<j).
+\]
+The last constant is \(+1\) because \(R_N(0)=1\) and the remaining cross term is \(2F_{ij}\).
+In particular, writing \(a_p=B_p-E_p,b_p=B_p\), the complete rational entry enclosures are
+\[
+y_i\in\left[\frac{a_{-e_i}-b_{e_i}}4,\frac{b_{-e_i}-a_{e_i}}4\right],\qquad
+F_{ii}\in\left[\frac{a_{e_i}+a_{-e_i}-2}2,\frac{b_{e_i}+b_{-e_i}-2}2\right],
+\]
+\[
+F_{ij}\in\left[\frac{a_{e_i+e_j}-b_{e_i}-b_{e_j}+1}2,
+                 \frac{b_{e_i+e_j}-a_{e_i}-a_{e_j}+1}2\right]\quad(i<j).
+\]
+Replace every residual in the exact formulas by \(c_p\) to define rational
+\(\widetilde F_{ii},\widetilde y_i,\widetilde F_{ij}\) for \(i<j\), and define
+\(\widetilde F_{ji}=\widetilde F_{ij}\). The errors are, respectively,
+\(<\theta/2,<\theta/4,<3\theta/4\), hence at most \(\theta\) in every entry.
+Symmetry holds by definition, not by equality of two separately approximated entries.
+
+**30.67 定理及证明（正定近似、精确有理解与梯度控制）。** Let
+\(E_F=\widetilde F-F\). For complex \(z\),
+\[
+|(E_Fz)_i|\le\theta\sum_j|z_j|,\quad
+\|E_Fz\|_2^2\le N\theta^2(\sum_j|z_j|)^2\le N^2\theta^2\|z\|_2^2.
+\]
+Thus \(\|E_F\|_{\rm op}\le N\theta\) and \(\|\widetilde y-y\|_2\le N\theta\).
+For every \(z\),
+\[
+\langle z,\widetilde Fz\rangle\ge(\delta-N\theta)\|z\|_2^2
+ \ge(\delta/2)\|z\|_2^2.
+\]
+So \(\widetilde F\) is positive definite and invertible. Cauchy–Schwarz in this last
+inequality gives \(\|\widetilde F^{-1}\|_{\rm op}\le2/\delta\).
+An explicit finite rational solve is Cramer's formula
+\[
+q_j=\frac{\det\widetilde F^{(j)}}{\det\widetilde F},
+\]
+where column \(j\) in \(\widetilde F^{(j)}\) is replaced by \(\widetilde y\).
+All determinants are finite rational permutation sums and the denominator is nonzero by the
+proved positivity. The finite cofactor identity
+\(\widetilde F\operatorname{adjugate}(\widetilde F)=\det(\widetilde F)I\)
+proves \(\widetilde Fq=\widetilde y\) exactly. This is a rational approximation system,
+not an exact-real solve for \(Fq=y\).
+Because \(|y_i|\le1\), \(\theta\le1\), and entry errors are at most \(\theta\),
+\(\|\widetilde y\|_2\le2N\). Hence
+\[
+\|q\|_2\le(2/\delta)2N=H_{\rm gen},\qquad
+\sum_k|q_k|\le N\|q\|_2\le Q_{\rm gen}.
+\]
+Using the exact rational system,
+\[
+v(q)=(F-\widetilde F)q+(\widetilde y-y),\qquad
+\|v(q)\|_2\le N\theta H_{\rm gen}+N\theta=C_{\rm gen}\theta\le\tau.
+\]
+It also follows that \(R_N(q)-D_N\le\tau^2/\delta\), although the local predicate
+recomputes its own evidence rather than trusting this generator argument. True norms and true
+matrix errors in this proof are never needed as algorithm inputs.
+
+**30.68 定理及证明（局部宽度、有限输出与统一总生成）。** Every \(q\) or \(q\pm e_k\)
+from 30.67 has coefficient absolute sum at most \(Q_{\rm gen}+1\). Choose
+\[
+h_1=1+\lfloor\Gamma(Q_{\rm gen}+1)/\tau\rfloor,\qquad
+J_i=h_1+1,\quad K_i=h_1\quad(0\le i\le2N).
+\]
+Then every local \(E_i<\tau\), without requiring these vectors to lie in the old coefficient box.
+The gradient intervals have exact width
+\(u_k-l_k=(E_{2k-1}+E_{2k})/4<\tau/2\). Since they contain \(v_k(q)\),
+\(\max(|l_k|,|u_k|)\le|v_k(q)|+\tau/2\). Thus
+\[
+S\le2\|v(q)\|_2^2+N\tau^2/2\le(N+4)\tau^2/2,
+\]
+by \((a+b)^2\le2a^2+2b^2\). The interval from 30.64 therefore has
+\[
+u-\ell\le E_0+S/\delta
+ \le\tau+(N+4)\tau^2/(2\delta)
+ \le C_{\rm width}\tau\le\eta/4<\eta,
+\]
+using \(\tau\le1\). Encode \(q\), these \(2N+1\) parameters and the recomputed endpoints
+as in 30.65. Positivity, input consistency and the width proof show that this certificate passes.
+The auxiliary probe values and matrices need not appear in the final certificate.
+
+This defines \(\operatorname{GenLocal}(N,\eta)\). Constants use finite rational arithmetic;
+all precision parameters are explicit floors of positive rational expressions; there are exactly
+\(2N+N(N-1)/2\) fixed probes, finite residual sums, a proved nonzero-denominator rational
+solve, and \(2N+1\) final local computations and finite encodings. Every stage terminates.
+Thus the rule is uniform and total for every legal \(N,\eta\), and
+\(\forall N\ge1\ \forall\eta\in\mathbb Q_{>0}\ \exists e\ \operatorname{VerifyLocal}(N,\eta,e)\).
+It requires neither coefficient-grid enumeration nor a guess of the optimizer, true gradient,
+residual margin or optimum value. Small \(\delta\) or \(\eta\) can make the finite parameters
+very large; no efficiency assertion follows from totality.
+
+**30.69 定理及证明（局部严格证书与实际见证提取）。** Define
+\(\operatorname{LocalLess}(N,r,e)\) to require a legal decoded precision \(\eta_e>0\),
+\(\operatorname{VerifyLocal}(N,\eta_e,e)\), and \(u<r\); define
+\(\operatorname{LocalGreater}\) with \(\ell>r\). Invalid decoding gives false.
+For every fixed \(N\ge1,r\in\mathbb Q\), these total predicates satisfy
+\[
+D_N<r\iff\exists e\ \operatorname{LocalLess}(N,r,e),\qquad
+D_N>r\iff\exists e\ \operatorname{LocalGreater}(N,r,e).
+\]
+Soundness follows from the enclosing interval. For completeness generate at
+\(\eta_j=2^{-j}\). If \(D_N<r\), eventually \(u_j-D_N\le u_j-\ell_j<\eta_j<r-D_N\);
+if \(D_N>r\), eventually \(D_N-\ell_j<\eta_j<D_N-r\).
+At equality both strict predicates always fail, even though each fixed-precision generation and
+verification terminates. Finite failure to separate proves no equality. If \(r\le0\), any accepted
+interval gives the greater certificate; if \(r>1\), any gives the less certificate. The case
+\(r=1\) has the same strict meaning.
+
+Witness extraction must respect the clipping \(u=\min(1,B_0)\). If \(u<r\le1\), then
+\(u=B_0<r\), so the encoded \(q\) itself satisfies \(R_N(q)\le B_0<r\).
+For \(r>1\), clipping can make \(u<r\) even for a poor \(q\); instead the zero vector
+always supplies \(R_N(0)=1<r\). In particular, for \(r=1/m\), \(m\ge1\), the original
+candidate and its residual parameters give a certificate of 30.48. In the original scaled Gram model,
+\[
+Z(q)=(1,-q_1,-2q_2,\ldots,-Nq_N),\qquad
+\langle Z(q),(A_N-m^{-1}E_{00})Z(q)\rangle=R_N(q)-1/m<0.
+\]
+The factors \(k\), the leading coordinate one and the strict inequality are essential.
+
+**30.70 命题（局部方法的全部边界）。** For \(N=1\), \(\delta=1/6,\sigma=3/8\) and the
+two probes \(\pm e_1\) suffice; no off-diagonal probe is needed. Every positive rational \(\eta\)
+and arbitrarily small positive coercivity constant retain the stated definitions and totality.
+Zero, negative, cancelling or poor rational candidates have sound intervals by 30.64, but merely
+refining the residual enclosures at a fixed bad candidate need not achieve any requested width.
+The candidate and its offsets may escape \(\mathcal C_N\); the \(\Gamma(Q)\) bound applies to
+their actual coefficient absolute sums. No positive-coefficient, nonzero-tail, \(J\ge N\), or
+lcm-truncation condition is imposed. The two tails and null endpoints remain those of 30.56.
+The real reduction concerns this actual real-valued dictionary. General complex dependent families
+still require 30.24–30.26's singular Gram/range/pseudoinverse treatment; this local inverse bound
+requires an independently proved positive coercivity constant. At \(N=0\) use the separate
+\(D_0=1\) case, not the undefined constants here. No finite invertibility statement establishes
+closed infinite range, an infinite minimizing coefficient vector, or equality of the three
+attainment notions. The unconditional \(c/N^3\) smallest-eigenvalue bound and all prior infinite
+threshold results remain intact. The complete grid method of 30.57–30.60 remains valid alongside
+this different construction; no old verifier is redefined.
+
+**30.71 定理及证明（局部计算与全局量词的分界）。** With exactly the [B1] full-half-axis
+closure statement specified in 30.62,
+\[
+\mathrm{RH}\iff\forall m\ge1\ \exists N\ge1\ \exists e\in\mathbb N_0:
+ \operatorname{LocalLess}(N,1/m,e).
+\]
+If RH holds, closure distance tends to zero, so select \(N\) with \(D_N<1/m\) and use
+30.69. Conversely each passing certificate gives a true residual below \(1/m\); thus the
+infimum distance is zero, and [B1] yields RH. The finite local theorems and their total generator
+are independent of this external analytic theorem. Their quantifier is
+\(\forall N\forall\eta>0\exists e\), not an unconditional success statement
+\(\forall m\exists N\) with a supplied finite cutoff. For any \(N_0\), taking
+\(1/m\le\sigma_{N_0}\) excludes every \(N\le N_0\) by monotonicity.
+The shrinking positive bounds neither prove nor disprove RH. No finite RH decision,
+unconditional cross-dimension success bound, optimal constants or practical runtime bound is
+provided. The remaining all-prime, shape and slab sign questions are mathematically separate.
+
+**30.72 定义及证明（Möbius 函数与四阶梯探针的六个矩）。** Retain the full Hilbert model
+of 30.52. For any \(A\subseteq\mathbb N_+\), define
+\[
+V_A^{\rm fin}=\left\{\sum_{k\in A}a_kf_k:a_k\in\mathbb C,\ a\text{ has finite support}\right\},
+\quad M_A=\overline{V_A^{\rm fin}}^{\mathcal H},\quad
+D_A=\inf_{h\in M_A}\|\chi-h\|^2.
+\]
+Coefficients not in a finite support are zero; repeated occurrences of a parameter are combined.
+The Möbius function has \(\mu(1)=1\), \(\mu(n)=0\) when a prime square divides \(n\),
+and \(\mu(n)=(-1)^r\) for a product of \(r\) distinct primes. Unique factorization gives
+\[
+\sum_{d\mid n}\mu(d)=\prod_{p\mid n}(1-1)
+ =\begin{cases}1&n=1,\\0&n>1.\end{cases}
+\]
+For \(n=1\) the product is empty. Define, with arbitrary endpoint values,
+\[
+w(s)=\begin{cases}
+1&-1/2<s<-1/4,\\-3&-1/4<s<0,\\3&0<s<1/4,\\-1&1/4<s<1/2,\\0&\text{otherwise},
+\end{cases}\quad I_d=(d-1/2,d+1/2),\quad\psi_d(t)=w(t-d),\quad d\ge1.
+\]
+The six exact moments are
+\[
+\int_{\mathbb R}w=0,\quad\int_{\mathbb R}sw=0,\quad\int_0^\infty w=1/2,
+\qquad\int_{\mathbb R}w^2=5,\quad\int_{\mathbb R}sw^2=0,\quad\int_{\mathbb R}s^2w^2=1/6.
+\]
+Indeed \(w\) is odd and \(w^2\) even, proving the first and fifth identities. The other four are
+\[
+\int sw=2\left[3\int_0^{1/4}s\,ds-\int_{1/4}^{1/2}s\,ds\right]
+ =2(3/32-3/32)=0,\qquad \int_0^\infty w=3/4-1/4=1/2,
+\]
+\[
+\int w^2=2(9/4+1/4)=5,\qquad
+\int s^2w^2=2\left[9\int_0^{1/4}s^2ds+\int_{1/4}^{1/2}s^2ds\right]
+ =2(9/192+7/192)=1/6.
+\]
+Since \(I_d\subset(0,\infty)\), translation and expansion of \((d+s)^2\) give
+\[
+\int_0^\infty\psi_d=0,\quad\int_0^\infty t\psi_d=0,\quad
+\int_0^\infty t^2\psi_d(t)^2dt=5d^2+1/6.
+\]
+
+**30.73 定理及证明（a.e. 等价类上的有界复线性泛函与精确范数）。** For \(n\ge1\), set
+\[
+Q_n(t)=-2\sum_{d\mid n}\mu(n/d)\psi_d(t),\qquad
+\Lambda_n(h)=\int_0^\infty h(1/t)Q_n(t)\,dt.
+\]
+The substitution \(t=1/x\) yields
+\(\int_0^\infty|h(1/t)|^2dt/t^2=\|h\|^2\).
+A null set in \(x>0\) maps to a null set under inversion: restrict to compact intervals away
+from zero, where inversion is Lipschitz, and take a countable union. Equivalently the positive
+weighted change of variables transfers a.e. equality. The definition thus depends only on
+\(h\)'s \(L^2\) class. Weighted Cauchy–Schwarz gives absolute integrability and
+\[
+|\Lambda_n(h)|^2\le\|h\|^2\int_0^\infty t^2|Q_n(t)|^2dt.
+\]
+It is complex-linear in \(h\). Under the first-conjugate inner product the correctly conjugated
+Riesz representer is
+\[
+r_n(x)=x^{-2}\overline{Q_n(1/x)},\qquad\Lambda_n(h)=\langle r_n,h\rangle.
+\]
+It is supported within the compact interval \([1/(n+1/2),2]\), away from zero, and
+\(\|r_n\|^2=\int t^2|Q_n(t)|^2dt\). For the divisors of a fixed \(n\), the interiors
+\(I_d\) are disjoint, so the cross terms in that particular sum vanish a.e. Consequently
+\[
+C_n:=\|r_n\|^2=4\sum_{d\mid n}\mu(n/d)^2(5d^2+1/6)
+ =\frac23\sum_{d\mid n}\mu(n/d)^2(30d^2+1)>0.
+\]
+Positivity follows already from \(d=n\), where \(\mu(1)=1\).
+At \(h=r_n/\|r_n\|\), \(|\Lambda_n(h)|=\|r_n\|\); hence the exact squared
+operator norm is \(\|\Lambda_n\|^2=C_n\), with norm attained.
+This disjoint-support assertion is only within each divisor sum. Representers for different
+\(n\) can share divisor probes and are not claimed disjoint or orthogonal.
+
+**30.74 定理及证明（全部跳跃情形、Möbius 反演与目标值）。** For positive integers \(d,k\), let
+\(I(d,k)=\int_0^\infty\{t/k\}\psi_d(t)dt\).
+The only possible jumps of the fractional part are integer multiples of \(k\), and the only
+integer inside \(I_d\) is \(d\). If \(k\nmid d\), there is no jump and the function is
+affine of slope \(1/k\) on this interval; the constant and linear probe moments vanish,
+so \(I(d,k)=0\). In particular when \(k>d\), \(k\ge d+1>d+1/2\) and the function
+is simply \(t/k\) on the support. If \(k\mid d\), put \(t=d+s\). For negative \(s\)
+the fractional part is \(1+s/k\), for positive \(s\) it is \(s/k\). Thus a.e.
+\(\{t/k\}=1+s/k-\mathbf1_{(0,\infty)}(s)\). The first two moments cancel and
+\(I(d,k)=-\int_0^\infty w=-1/2\). This also covers \(d=k=1\).
+It follows that
+\[
+\Lambda_n(f_k)=\sum_{\substack{d\mid n\\k\mid d}}\mu(n/d)=\delta_{nk}.
+\]
+For \(k\nmid n\) the sum is empty. Otherwise write \(n=km,d=ke\), giving
+\(\sum_{e\mid m}\mu(m/e)\), which by 30.72 is one exactly when \(m=1\), and zero otherwise.
+For the target \(\chi(1/t)=\mathbf1_{[1,\infty)}(t)\), each \(d\ge2\) probe lies entirely
+above one and has integral zero. The \(d=1\) probe contributes only its positive half, namely
+\(1/2\). Therefore
+\[
+\Lambda_n(\chi)=-\mu(n),\qquad
+\Lambda_n\left(\sum_ka_kf_k\right)=a_n
+\]
+for every finite complex combination. Square factors make the target value zero but do not
+make the functional zero: \(\Lambda_n(f_n)=1\) and \(C_n>0\) still hold.
+For \(n=1\), \(\Lambda_1(\chi)=-1,\Lambda_1(f_1)=1,\Lambda_1(f_k)=0\) for \(k>1\),
+and \(C_1=62/3\). Applying every coordinate functional to a zero finite combination proves
+finite independence again. Nevertheless the original Gram entries satisfy
+\[
+\langle f_i,f_j\rangle\ge\int_1^\infty\frac{dx}{ijx^2}=\frac1{ij}>0,
+\]
+since the functions are nonnegative and equal \(1/(kx)\) on \(x>1\).
+Biorthogonality with a different family of functionals does not make the original dictionary orthogonal.
+
+**30.75 定理及证明（必要坐标极限与不充分性的显式反例）。** From 30.73–30.74,
+for every finite complex coefficient family,
+\[
+\left\|\chi-\sum_ka_kf_k\right\|^2\ge\frac{|a_n+\mu(n)|^2}{C_n}\quad(n\ge1).
+\]
+Indeed applying \(\Lambda_n\) to the residual gives \(-\mu(n)-a_n\), and its exact
+norm bound proves the inequality. If finite combinations \(P_j\to\chi\) in norm, then for
+every fixed \(n\), \(|a_n^{(j)}+\mu(n)|\le\sqrt{C_n}\|P_j-\chi\|\to0\).
+Support need not increase monotonically and coefficients may be complex or zero at some stages.
+More generally \(P_j\to h\) gives \(a_n^{(j)}\to\Lambda_n(h)\), so the coordinate
+has a unique continuous extension to the dictionary closure. This does not prove an infinite
+coefficient-series reconstruction theorem. A residual square \(<1/m\) implies the strict
+necessary coordinate bound \(|a_n+\mu(n)|^2<C_n/m\).
+
+The converse to coordinate convergence fails explicitly. For \(j\ge2\), take
+\[
+P_j=-\sum_{k=1}^j\mu(k)f_k+j^3f_{j+1}.
+\]
+Every fixed coordinate is eventually exactly \(-\mu(n)\). In the original model,
+\(\|f_k\|^2=c/k\), \(1\le c\le2\): the lower bound follows by retaining the
+\(x>1\) integral for \(f_1\), and the upper bound was proved in 30.55.
+Thus \(\|j^3f_{j+1}\|\ge j^3/\sqrt{j+1}\ge j^2\), while
+\(\|\chi+\sum_{k=1}^j\mu(k)f_k\|\le1+2j\).
+The reverse triangle inequality gives
+\(\|\chi-P_j\|\ge j^2-2j-1\to\infty\). Necessary coordinate convergence is therefore
+strictly weaker than Hilbert norm convergence or a norm-error certificate.
+
+**30.76 定理及证明（任意字典闭包、遗漏平方自由数与精确整数门槛）。** If \(n\notin A\),
+then \(\Lambda_n\) vanishes on every finite combination from \(A\). For any \(h\in M_A\)
+choose such combinations \(h_j\to h\). Continuity gives
+\(\Lambda_n(h)=\lim_j\Lambda_n(h_j)=0\). Therefore
+\[
+D_A\ge\frac{\mu(n)^2}{C_n},\qquad
+\operatorname{dist}(f_n,M_A)^2\ge\frac1{C_n}.
+\]
+The first follows by applying \(\Lambda_n\) to \(\chi-h\), the second to \(f_n-h\),
+and then taking infima. Hence \(D_A=0\) requires that \(A\) contain every squarefree
+positive integer, including one. Omitting a squareful integer gives only the zero target lower
+bound from this functional; it does not prove zero distance or harmlessness of that omission.
+Every individual dictionary vector is separated from the closed span of all the other parameters.
+For a prime \(p\), the two divisors give
+\[
+C_p=4[(5+1/6)+(5p^2+1/6)]=\frac{60p^2+64}3,
+\quad p\notin A\Longrightarrow D_A\ge\frac3{60p^2+64}.
+\]
+Allowing \(p^2\) or other multiples does not replace the missing parameter \(p\).
+If \(D_A<1/m\), in particular if a finite witness has residual square \(<1/m\), then
+for every prime
+\[
+60p^2+64\le3m\quad\Longrightarrow\quad p\in A.
+\]
+Otherwise the omitted-prime bound would be at least \(1/m\), a contradiction, including
+integer equality at the gate. For a specific witness the actual combined coefficient \(a_p\)
+must be nonzero: if zero, 30.75 and \(\mu(p)=-1\) give the same contradiction even when
+\(p\) is nominally allowed. The gate involves only integer squares, multiplication, addition
+and comparison; no square-root rounding is needed.
+
+This prime condition is not sufficient. The dictionary consisting of one and all positive prime
+powers contains every prime but omits six. Since all four quotients for the divisors of six are
+squarefree,
+\[
+C_6=4\left[5(1+4+9+36)+4/6\right]=3008/3,\qquad D_A\ge3/3008>0.
+\]
+No sufficiency theorem for inclusion of every squarefree integer follows either.
+For the empty dictionary \(M_\varnothing=\{0\},D_\varnothing=1\); all the omission bounds
+remain valid but need not be sharp.
+
+**30.77 推论及证明（有限素数支撑、2442 截断与编码不变性）。** For a finite set of primes \(S\),
+let \(A_S=\{\prod_{p\in S}p^{e_p}:e_p\in\mathbb N_0\}\), including one. A prime divisor
+of \(1+\prod_{p\in S}p\) belongs to no \(S\), since reduction modulo any \(p\in S\)
+gives one. Such a divisor exists by integer factorization. When \(S\) is empty the empty
+product is one and the number is two, so the same proof applies. Call a missing prime \(p\).
+Then \(p\notin A_S\) and
+\(D_{A_S}\ge3/(60p^2+64)>0\), even with all exponents unbounded and the whole norm closure.
+For \(S=\{2,3,5,7\}\), the omitted prime eleven gives
+\[
+D_{A_S}\ge\frac3{60\cdot11^2+64}=\frac3{7324}.
+\]
+A strict residual square \(<1/m\) is impossible whenever
+\(3m\ge7324\), equivalently for integer \(m\ge\lceil7324/3\rceil=2442\).
+This exact cutoff includes equality in the lower-bound comparison; for smaller \(m\) it makes
+no witness-existence claim. Faithful Zeckendorf recoding of the same integer parameters leaves
+\(A_S\), its functions, the measure, norm, span, closure and distance unchanged.
+Changing the functions or inner product creates a different model and requires a new argument;
+recoding adds no orthogonality. This is a full-half-axis approximation obstruction, separate from
+Robin's strict \(n>5040\) domain and the prime-box comparison \(G=D-\Psi\).
+It neither resolves those sign questions nor proves or refutes RH for the full dictionary.
+
+**30.78 定理及证明（对偶强制常数、约数重排与三种模式）。** Let
+\[
+T_N=\sum_{n=1}^NC_n,\qquad\delta_{\rm dual}(N)=1/T_N.
+\]
+For complex \(a\in\mathbb C^N\), biorthogonality and the individual norm bounds give
+\[
+\sum_{n=1}^N|a_n|^2=\sum_{n=1}^N|\Lambda_n(Va)|^2
+ \le\left(\sum_{n=1}^NC_n\right)\|Va\|^2.
+\]
+Hence \(F_N\succeq\delta_{\rm dual}(N)I\). This is a finite sum of individual inequalities,
+not a constant-one Bessel inequality or an orthogonal-projection argument.
+Writing \(n=dr\), reorder the entire finite divisor sum to obtain
+\[
+T_N=4\sum_{d=1}^N(5d^2+1/6)\sum_{r=1}^{\lfloor N/d\rfloor}\mu(r)^2
+ \le20N\sum_{d=1}^Nd+\frac{2N}3\sum_{d=1}^N\frac1d
+ =10N^2(N+1)+\frac{2N}3\sum_{d=1}^N\frac1d.
+\]
+Here \(\mu(r)^2\le1\) and \(\lfloor N/d\rfloor\le N/d\).
+Using \(N+1\le2N\), \(\sum_{d=1}^N1/d\le N\), and \(N^2\le N^3\), gives
+\[
+T_N\le20N^3+(2/3)N^2\le(62/3)N^3,\qquad
+\delta_{\rm dual}(N)\ge\delta_{\rm poly}(N):=\frac3{62N^3}.
+\]
+All are finite rational inequalities, with no prime-distribution or asymptotic input.
+The exact integer expression is
+\[
+U_N^{\rm dual}=\sum_{n=1}^N\sum_{d\mid n}\mu(n/d)^2(30d^2+1)\in\mathbb N_+,
+\quad T_N=\frac23U_N^{\rm dual},\quad\delta_{\rm dual}(N)=\frac3{2U_N^{\rm dual}}.
+\]
+Finite division and factorization determine \(\mu\) and the sums; trial divisors bounded by the
+input integer already give a terminating definition. The polynomial constant dispenses even with
+that sum. Define the following fixed modes, each from \(N\) alone:
+\[
+\kappa_N^{(0)}=\delta_{\rm poly}(N),\qquad
+\kappa_N^{(1)}=\delta_{\rm dual}(N),\qquad
+\kappa_N^{(2)}=\max(\delta_{\rm old}(N),\delta_{\rm dual}(N)).
+\]
+Each is positive rational and \(F_N\succeq\kappa_N^{(s)}I\). The maximum is valid because
+both inequalities hold separately; adding the constants is not justified. Modes zero and one
+require no determinant; mode two retains the old determinant computation.
+At \(N=1\), \(C_1=T_1=62/3\), so both new constants equal \(3/62\), weaker than
+\(\delta_{\rm old}(1)=1/6\). They are not uniformly improvements of the old numerical bound.
+For the scaled columns \(h_k=f_k/k\) one must instead use
+\[
+\left\|\sum_{k=1}^Nb_kh_k\right\|^2
+ \ge\kappa_N^{(s)}\sum_k\frac{|b_k|^2}{k^2}
+ \ge\frac{\kappa_N^{(s)}}{N^2}\|b\|_2^2.
+\]
+The unscaled constant cannot be transferred unchanged to the scaled coefficient norm.
+
+**30.79 定理及证明（强制常数替换后的完整局部界）。** Fix a mode
+\(s\in\{0,1,2\}\) and put \(\kappa=\kappa_N^{(s)}\). Since \(F,y\) are real and
+\(F\succeq\kappa I\), the projection optimizer is uniquely \(a^\circ=F^{-1}y\in\mathbb R^N\).
+For complex \(a=b+ic\), \(R_N(a)=R_N(b)+\|Vc\|^2\), so it remains the optimizer of the
+original complex problem. Coercivity and Cauchy–Schwarz give
+\(\kappa\|z\|^2\le\langle z,Fz\rangle\le\|z\|\|Fz\|\), hence
+\(\|F^{-1}\|\le1/\kappa\). For real rational \(q\), expansion therefore gives
+\[
+v=Fq-y=\tfrac12\nabla R_N(q),\qquad
+R_N(q)-D_N=v^TF^{-1}v\le\|v\|^2/\kappa,
+\quad v_k=\frac{R_N(q+e_k)-R_N(q-e_k)}4.
+\]
+The last identity follows again from
+\(R_N(q+te_k)=R_N(q)+2t v_k+t^2F_{kk}\), and so does not depend on the chosen constant.
+Retain precisely \(B,E\) of 30.56, including \(b^2\), both tails and the signed logarithm
+endpoint rule. For coefficient absolute sum at most \(Q\),
+\[
+E(N,x,h+1,h)\le\frac{(1+Q)^2}{h+1}
+ +\frac{3Q(1+Q)}{8\,9^{h-1}}\le\frac{\Gamma(Q)}h.
+\]
+The integer induction \(9^{h-1}\ge h\) and the explicit choice
+\(h=1+\lfloor\Gamma(Q)/\varepsilon\rfloor\) prove \(E<\varepsilon\).
+For the one candidate and its derived offsets, recompute every \(B_i,E_i\) and set
+\[
+l_k=(B_{2k-1}-E_{2k-1}-B_{2k})/4,\quad
+u_k=(B_{2k-1}-B_{2k}+E_{2k})/4,\quad
+S_q=\sum_k\max(|l_k|,|u_k|)^2.
+\]
+Subtracting the appropriate upper and lower residual bounds gives
+\(l_k\le v_k\le u_k\), hence \(\|v\|^2\le S_q\). Thus
+\[
+\ell=\max(\sigma_N,B_0-E_0-S_q/\kappa),\qquad u=\min(1,B_0)
+\]
+satisfies \(0<\ell\le D_N\le u\le1\) and \(u-\ell\le E_0+S_q/\kappa\).
+The lower proof is \(D_N\ge R_N(q)-\|v\|^2/\kappa\ge B_0-E_0-S_q/\kappa\), together
+with the unchanged periodic bound \(\sigma_N\). The upper proof uses \(R_N(q)\le B_0\)
+and \(R_N(0)=1\). Every rational candidate, including negative or zero coefficients, and every
+legal truncation has this soundness; a bad candidate can still fail a required width.
+
+**30.80 定义及证明（八字段版本二 VerifyLocalDual）。** The new certificate record is
+\[
+(2,s,N,\operatorname{Rat}(\eta),\operatorname{List}(q_1,\ldots,q_N),
+ \operatorname{List}(p_0,\ldots,p_{2N}),\operatorname{Rat}(\ell),\operatorname{Rat}(u)),
+\quad p_i=\operatorname{Pair}(J_i-2,K_i-1).
+\]
+Its length is exactly eight. Define \(\operatorname{VerifyLocalDual}(N,\eta,e)\) by
+requiring version two, \(s\in\{0,1,2\}\), legal external \(N\ge1,\eta>0\), equal
+internal inputs, exactly \(N\) rational coefficients and \(2N+1\) parameter codes.
+The encoded mode determines precisely \(\kappa_N^{(s)}\); an arbitrary reported constant is
+not a field. A fixed-mode predicate \(\operatorname{VerifyLocalDual}_s\) additionally requires
+that the encoded mode equal the specified \(s\). Recompute \(\kappa,\sigma_N>0\), derive
+\(q\pm e_k\), and recompute all of 30.79. Require the encoded endpoints to equal the resulting
+ones, and \(0<\ell\le u\le1\), \(u-\ell<\eta\). Reject every malformed or mismatched input.
+
+The Pair map is \(2^a(2b+1)-1\); sign codes are \(2p\) for \(p\ge0\),
+\(-2p-1\) otherwise; rational codes pair the sign code with \(d-1\), \(d\ge1\).
+An empty list is zero and a nonempty one is one plus Pair of its head and tail.
+Repeated division of the positive integer \(n+1\) by two terminates and uniquely decodes Pair.
+Even and odd sign codes invert as in 30.58, denominators are positive, and the tail of a positive
+list code \(L=2^a(2t+1)\) satisfies \(t<L\), proving total decoding on all naturals.
+Every remaining constant, divisor sum, finite residual expression and comparison uses finite
+integer arithmetic; rational comparisons use cross products with positive denominators.
+Thus this is a total predicate inspecting exactly one candidate's \(2N+1\) residual inputs
+and the fixed constants. It does not enumerate a coefficient grid or trust gradients or errors.
+Modes zero and one compute coercivity without determinants, real ranks or eigenvalues.
+Acceptance is sound by 30.79. Versions one and the old VerifyOpt/Verify definitions retain
+their original constants and record formats; a version-two mode cannot be assigned retroactively
+to any historical certificate.
+
+**30.81 定理及证明（新常数下的固定探针与正定有理系统）。** For each fixed mode, define
+from \(N,\eta\) the positive rationals
+\[
+H_{\rm gen}=4N/\kappa,\quad Q_{\rm gen}=NH_{\rm gen},\quad
+C_{\rm gen}=N(1+H_{\rm gen}),\quad C_{\rm width}=1+(N+4)/(2\kappa),
+\quad\tau=\min(1,\eta/(4C_{\rm width})),
+\quad\theta=\min(1,\kappa/(2N),\tau/C_{\rm gen}).
+\]
+Use all \(e_i,-e_i,e_i+e_j\ (i<j)\) as fixed probes, with absolute coefficient sum at most two,
+and choose \(h_0=1+\lfloor\Gamma(2)/\theta\rfloor\), \(\Gamma(2)=45/4\).
+With \(J=h_0+1,K=h_0\), compute \(B_p,E_p,c_p=B_p-E_p/2\).
+Then \(E_p<\theta\) by 30.79 and \(|c_p-R_N(p)|<\theta/2\).
+The exact residual polarizations are
+\[
+F_{ii}=(R_N(e_i)+R_N(-e_i)-2)/2,\quad
+y_i=(R_N(-e_i)-R_N(e_i))/4,\quad
+F_{ij}=(R_N(e_i+e_j)-R_N(e_i)-R_N(e_j)+1)/2.
+\]
+Replacing residuals by midpoints and explicitly reflecting upper-triangular entries defines
+real symmetric rational \(\widetilde F\) and rational \(\widetilde y\).
+The complete rational entry intervals are the three formulas of 30.66 with these new
+\(a_p=B_p-E_p,b_p=B_p\); they follow by choosing lower terms for positive signs and upper
+terms for negative signs in each displayed polarization. The diagonal, off-diagonal and vector
+errors are respectively \(<\theta/2,<3\theta/4,<\theta/4\), all at most \(\theta\).
+For \(E_F=\widetilde F-F\) and complex \(z\),
+\[
+\|E_Fz\|^2\le N\theta^2(\sum_j|z_j|)^2\le N^2\theta^2\|z\|^2.
+\]
+Therefore \(\|E_F\|_{\rm op}\le N\theta\) and
+\(\langle z,\widetilde Fz\rangle\ge(\kappa-N\theta)\|z\|^2\ge(\kappa/2)\|z\|^2\).
+The matrix is positive definite, and Cauchy–Schwarz applied to the last inequality gives
+\(\|\widetilde F^{-1}\|_{\rm op}\le2/\kappa\). The proof uses no computed true rank,
+true matrix error or spectral value.
+
+**30.82 定义及证明（不使用行列式的精确 Gaussian–Schur 求解）。** Solve
+\(\widetilde Fq=\widetilde y\) by rational Gaussian elimination. To prove every division
+legal, consider a positive definite current block
+\[
+M=\begin{pmatrix}a&b^*\\b&C\end{pmatrix}.
+\]
+Its first diagonal entry \(a>0\). For nonzero \(z\), substitute
+\((-\langle b,z\rangle/a,z)\) into its positive quadratic form. The result is
+\[
+\langle z,(C-bb^*/a)z\rangle>0.
+\]
+Thus the Schur complement is again positive definite. Eliminating the first component in
+\(M(x,z)^T=(\gamma,\xi)^T\) gives the exact smaller system
+\[
+(C-bb^*/a)z=\xi-b\gamma/a,\qquad x=(\gamma-b^*z)/a.
+\]
+Starting from the rational real symmetric \(\widetilde F\), these operations preserve
+rationality. Recursing through \(N\) positive pivots reaches a scalar positive system;
+finite back substitution then gives the exact rational solution. The scalar case is the base
+case, so no nonexistent final block is needed at \(N=1\). The displayed elimination identities
+show by induction that the solution satisfies the original system, and positivity gives uniqueness.
+This solver itself uses no determinant. With modes zero or one the coercivity computation is
+also determinant-free; mode two still includes the old determinant for its chosen constant.
+No unknown true-matrix rank or coefficient search is hidden in the recursion.
+
+**30.83 定理及证明（新模式的系数、梯度、局部宽度与总生成）。** Since
+\(0\le y_i\le1\), \(\theta\le1\) and each vector-entry error is at most \(\theta\),
+\(\|\widetilde y\|\le2N\). The exact solution of 30.82 therefore satisfies
+\[
+\|q\|\le(2/\kappa)2N=H_{\rm gen},\qquad\sum_k|q_k|\le N\|q\|\le Q_{\rm gen}.
+\]
+Using \(\widetilde Fq=\widetilde y\),
+\[
+v=Fq-y=(F-\widetilde F)q+(\widetilde y-y),\qquad
+\|v\|\le N\theta H_{\rm gen}+N\theta=C_{\rm gen}\theta\le\tau.
+\]
+Every local vector \(q,q\pm e_k\) has absolute coefficient sum at most \(Q_{\rm gen}+1\).
+Choose \(h_1=1+\lfloor\Gamma(Q_{\rm gen}+1)/\tau\rfloor\), and use
+\(J_i=h_1+1,K_i=h_1\) for all \(2N+1\) slots. Then \(E_i<\tau\).
+The interval width for each half-gradient coordinate is
+\((E_{2k-1}+E_{2k})/4<\tau/2\), so
+\(\max(|l_k|,|u_k|)\le|v_k|+\tau/2\). Squaring and summing gives
+\[
+S_q\le2\|v\|^2+N\tau^2/2\le(N+4)\tau^2/2.
+\]
+The complete substituted bound is consequently
+\[
+u-\ell\le E_0+S_q/\kappa
+ \le\tau+(N+4)\tau^2/(2\kappa)
+ \le C_{\rm width}\tau\le\eta/4<\eta.
+\]
+Here \(\tau\le1\) justifies the penultimate bound. All local endpoints are sound by 30.79,
+so encoding them with this \(q\), the parameters and fixed mode passes 30.80.
+
+The constants are finite rational formulas, \(\mu\) uses finite integer factorization when
+needed, the probe count is \(2N+N(N-1)/2\), every probe is a finite residual computation,
+and the solve has \(N\) proved positive pivots and finite back substitution. There remain only
+\(2N+1\) local computations and terminating encoding. Thus for every fixed mode
+\(s\in\{0,1,2\}\),
+\[
+\forall N\ge1\ \forall\eta\in\mathbb Q_{>0}\ \exists e\in\mathbb N_0:
+ \operatorname{VerifyLocalDual}_s(N,\eta,e),
+\]
+by an explicit uniform total generator. No coefficient grid, enumeration of all rational candidates,
+unknown optimum, true gradient or positive residual margin is required. A very small \(\kappa\)
+can inflate all the constants without defeating termination. These constants have not been proved
+optimal or practically fast. The older determinant/cofactor and complete-grid generation proofs
+remain separate valid constructions for the same \(D_N\).
+
+**30.84 定理及证明（新模式的严格阈值、等号、见证与 RH）。** For a fixed mode define
+\(\operatorname{DualLess}_s(N,r,e)\) and \(\operatorname{DualGreater}_s(N,r,e)\) to require
+a positive decoded precision, \(\operatorname{VerifyLocalDual}_s(N,\eta_e,e)\), and respectively
+\(u<r\) or \(\ell>r\). They reject invalid decoding and are total. For every rational \(r\),
+\[
+D_N<r\iff\exists e\ \operatorname{DualLess}_s(N,r,e),\qquad
+D_N>r\iff\exists e\ \operatorname{DualGreater}_s(N,r,e).
+\]
+The forward implications follow by generating at \(\eta_j=2^{-j}\): eventually the width
+is below \(r-D_N>0\) or \(D_N-r>0\), giving \(u_j<r\) or \(\ell_j>r\).
+Conversely the enclosing inequalities prove the corresponding strict relation immediately.
+The real gap is only used to prove eventual separation. At \(D_N=r\) no reliable interval
+can pass either strict test; the waiting procedure does not terminate, while each fixed-precision
+call still does. Finitely many failed strict tests prove no equality. For \(r\le0\),
+\(\ell\ge\sigma_N>r\); for \(r>1\), \(u\le1<r\). The threshold one retains strict semantics.
+If \(u<r\le1\), clipping forces \(B_0=u\), and the encoded \(q\) gives
+\(R_N(q)\le B_0<r\). If \(r>1\), the candidate itself need not work, but zero coefficients
+have residual one and do work. In particular at \(r=1/m\) the actual candidate and its parameters
+recover the old strict residual certificate and
+\[
+\langle Z(q),(A_N-m^{-1}E_{00})Z(q)\rangle=R_N(q)-1/m<0,
+\quad Z(q)=(1,-q_1,-2q_2,\ldots,-Nq_N).
+\]
+Using precisely [B1] at the URL and pages specified in 30.62, for each fixed mode
+\[
+\mathrm{RH}\iff\forall m\ge1\ \exists N\ge1\ \exists e\in\mathbb N_0:
+ \operatorname{DualLess}_s(N,1/m,e).
+\]
+Forward, zero closure distance selects \(N\) and the strict certificate; backward, actual
+residual witnesses for every \(m\) give zero closure distance and [B1] applies.
+The finite theorems, support obstructions and all generation bounds need no RH hypothesis.
+There is still no unconditional cutoff that finds a successful \(N\) from \(m\), no finite
+RH decision, and no exchange of \(\forall m\exists N\) for a fixed finite \(N\): the positive
+\(\sigma_{N_0}\) excludes any bounded prefix for sufficiently large \(m\).
+An omitted-prime integer gate is necessary only and cannot supply such a sufficient cutoff.
+
+**30.85 命题及证明（完整字典的真闭子空间与剩余边界）。** Even the full natural dictionary
+does not have closure equal to all \(\mathcal H\). Let
+\(z=\mathbf1_{(1,2)}-\mathbf1_{(2,4)}\). It is a nonzero element of \(\mathcal H\), and
+for each \(k\), since \(f_k(x)=1/(kx)\) on these intervals,
+\[
+\langle z,f_k\rangle=\frac1k\left(\int_1^2\frac{dx}{x}-\int_2^4\frac{dx}{x}\right)=0.
+\]
+The second integral equals the first by \(x=2u\). Continuity therefore puts \(M_{\mathbb N_+}\)
+inside the proper closed hyperplane \(z^\perp\); it is proper because \(z\ne0\).
+Whether that subspace contains the specific target \(\chi\) is the different question in [B1].
+Finite independence, positive finite distance and positive definite actual Gram matrices do not
+remove the general complex singular cases, the separate \(D_0=1\) case, the infinite compression
+threshold or the distinction between closure projection and attained infinite coefficient synthesis.
+Ordinary smallest eigenvalues still tend to zero unconditionally by the \(c/N^3\) bound.
+Coordinate limits are necessary and have the explicit norm-divergent counterexample of 30.75;
+including all primes is insufficient by 30.76, and sufficiency of including every squarefree
+parameter has not been proved. The new bounds neither determine \(\inf_ND_N\) nor settle the
+separate general-prime or all-slab sign problems. No optimality of the constants or practical efficiency bound is implied by these finite formulas.

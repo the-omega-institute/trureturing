@@ -3792,3 +3792,32 @@ The single authorized ingest exited 0: residual_open_added=40, skipped_existing=
 CPU activity was structural text/JSON/YAML/Git verification and intrinsic ingest orchestration only. No mathematical program, test, search or historical replay was executed. The map retains the pre-write scratch failures and corrected exits; they are representation failures, not rejected mathematics. No source edit followed ingest. All changes remain unstaged on the assigned BASE; implementation supplies no independent-review verdict or approval and does not complete the continuing goal or downstream delivery.
 
 Authoritative adoption map: [theory-proof-adoption-s19-0910.json](theory-proof-adoption-s19-0910.json), SHA256 `9abba55e13c08d0f784a6c958416c5cfb4245872ad087ccba2f385469f23a8ec`. The result envelope binds the full final source, report and map identities.
+
+## I36 / C101 finite-distance and Möbius-dual proof adoption
+
+The [mathematical source](../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md) adds complete proofs at 30.52–30.85. It retains the complete coefficient-grid construction, adds local optimum certificates and their rational construction, and proves the Möbius dual/support bounds. The precise operational passage at 27.18 is replaced by a finite-ID definition, cardinality proof and conditional analytic exclusion with the original guards and slot meanings. No additional grounded operational fragment was identified in the full-body inspection; mathematical certificate predicates, finite evidence, algorithms, proofs and limitations remain active.
+
+The single authoritative current adoption/recovery inventory is [finite-distance-dual-adoption-s19-0911.json](finite-distance-dual-adoption-s19-0911.json). It records every primary mathematical pointer, current proof binding, original/current byte disposition, exact inverse reconstruction, unchanged predecessor-map composition, input/provenance limits, commands and canonical bindings. The older maps remain immutable historical snapshots.
+
+### Inactive exact 27.18 archive
+
+The following is exactly original source bytes [160762,161487), 725 bytes, SHA256 `6a71711c4cd3e6959053720af28fee6ff3104efa86ff40d414f1609893da1911`. It is historical operational evidence, not an active mathematical classification or execution instruction. The delimiter lines are external to the preserved bytes.
+
+````text
+**27.18 定义（记号、范围及证明地位）：条件覆盖的定义。** 若认证一个箱体的分离 guard,
+一个箱证书可覆盖它的全部 25 个既有 raw IDs,
+即 \([25\,\mathrm{box\_id},25\,\mathrm{box\_id}+24]\)。
+语义必须是“**若该 raw slot 可容许,则解析排除**”;eligibility 可以尚未求值,
+所以不能记作 25 个可容许薄层或 25 次数值符号评价。
+压缩范围只有在规范展开逐一覆盖这些原始 ID 时才构成完整覆盖。
+一批中每个 raw slot 恰归一类:箱证书条件覆盖、ineligible、符号认证负、
+符号认证非负、unresolved;五类互斥,总数须为登记箱数的 25 倍。
+guard 失败或未决的箱不能计入第一类。
+
+````
+
+### I36 final canonical binding
+
+Exactly one final ingest returned exit 0: `residual_open_added=36 skipped_existing=226 coarse_fallbacks=0 open_genres=0 cas_objects_written=36 ledger_changed=true`. The source remained unchanged afterwards. The map binds all 262 whole current units, 354 reachable pairs and 38 ordered parent chains, every new pair, and exact composition through both unchanged predecessor maps.
+
+The checks were fixed structural text/JSON/hash/YAML/Git checks and ingest orchestration. No mathematical evaluator, proposed generator/verifier, search, historical replay or test suite was executed. Producer EOF bytes remain exact. These implementation checks supply no independent approval; fresh full-source mathematical/fidelity/representation review, including previously browser-unread evidence, ordinary gates and caller integration remain open. All changes are unstaged; the continuous research goal is not declared complete.
