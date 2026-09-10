@@ -46,6 +46,13 @@ it does not authorize claiming that an unmerged PR has landed on dev.
 
 Implementation in progress. No theorem has yet been claimed or frozen.
 
+First Lean unit checked: the degree-n residual changes by exactly the change
+in g_n, and the diagonal constraints give uniqueness over any commutative ring.
+`lake env lean D5/S1/Recurrence/Parity/DiagonalIterateEven.lean` (warm tree)
+EXIT=0; `diagonal_unique` axiom closure is propext, Classical.choice, Quot.sound.
+This is a general symbolic lemma, not a finite numerical check. It is currently
+private and unfrozen, on the planned live path to the final series construction.
+
 ## Search receipts and semantic correction
 
 Local searches used `rg` over D5 for A395842, A177775, diagonal iteration,
