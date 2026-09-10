@@ -30,6 +30,17 @@ public sealed class CurrentDeadlineContractTests
             Assert.Equal(rawExit, step.GetProperty("raw_exit").GetInt32());
             Assert.Equal(deadline is null ? 21600 : 100, clock.DueTime!.Value.TotalSeconds);
             Assert.Equal(rawExit == 0 ? "executed" : "failed", step.GetProperty("status").GetString());
+            var observation = CommonStageContractTests.ProcessObservation(output);
+            Assert.Equal(0, observation.GetProperty("child_exit").GetProperty("elapsed_ms").GetDouble());
+            Assert.Equal(advanceSeconds * 1000, observation.GetProperty("elapsed_ms").GetDouble());
+            Assert.Equal(rawExit == 0 ? "completed" : "cancelled", observation.GetProperty("outcome").GetString());
+            Assert.Equal(rawExit != 0, observation.GetProperty("timeout_cancelled").GetBoolean());
+            Assert.False(observation.GetProperty("deadline_cancelled").GetBoolean());
+            if (rawExit != 0)
+            {
+                Assert.Equal("output-drain", observation.GetProperty("cancelled_phase").GetString());
+                Assert.Equal(advanceSeconds * 1000, observation.GetProperty("cancelled_elapsed_ms").GetDouble());
+            }
             Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
             Assert.Throws<FileNotFoundException>(() => CommonExecutionEvidence.ValidateCurrent(fixture.Root));
         });
@@ -65,12 +76,15 @@ public sealed class CurrentDeadlineContractTests
         finally { Environment.SetEnvironmentVariable("PREFLIGHT_DEADLINE_AT", original); }
     }
 
-    private sealed class ManualClock : TimeProvider
+    internal sealed class ManualClock : TimeProvider
     {
         private DateTimeOffset now = DateTimeOffset.FromUnixTimeSeconds(2000000000);
+        private long timestamp;
         private ManualTimer? timer;
         internal TimeSpan? DueTime { get; private set; }
         public override DateTimeOffset GetUtcNow() => now;
+        public override long TimestampFrequency => 1;
+        public override long GetTimestamp() => Interlocked.Read(ref timestamp);
         public override ITimer CreateTimer(TimerCallback callback, object? state, TimeSpan dueTime, TimeSpan period)
         {
             DueTime = dueTime;
@@ -79,6 +93,7 @@ public sealed class CurrentDeadlineContractTests
         internal void Advance(int seconds)
         {
             now += TimeSpan.FromSeconds(seconds);
+            Interlocked.Add(ref timestamp, seconds);
             if (DueTime != Timeout.InfiniteTimeSpan && timer is { Disposed: false } && now >= timer.Deadline) timer.Fire();
         }
         private sealed class ManualTimer(TimerCallback callback, object? state, DateTimeOffset deadline) : ITimer
