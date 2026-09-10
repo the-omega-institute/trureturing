@@ -1,8 +1,9 @@
 /- GID: D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourData
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourData
    mirror-E: none(waiver:exact-data-consumed-by-geometric-certificate)
    anchors: []
+   utility: none
    digest: Lossless increasing-mask data for the adaptive radius-four controller. -/
 
 import Mathlib

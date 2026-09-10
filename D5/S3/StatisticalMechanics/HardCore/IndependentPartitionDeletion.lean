@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/HardCore/IndependentPartitionDeletion
    mirror-E: none(waiver:symbolic-weighted-partition-identity)
    anchors: []
+   utility: none
    digest: Actual independent sets give a weighted deletion identity without nonzero premises. -/
 
 import Mathlib

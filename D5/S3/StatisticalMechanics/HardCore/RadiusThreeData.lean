@@ -1,8 +1,9 @@
 /- GID: D5/S3/StatisticalMechanics/HardCore/RadiusThreeData
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/HardCore/RadiusThreeData
    mirror-E: none(waiver:exact-data-consumed-by-companion-theorems)
    anchors: []
+   utility: none
    digest: Complete reachable radius-three mask data and integer branching potentials. -/
 
 import Mathlib.Data.Nat.Basic

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/HardCore/BranchingPotential
    mirror-E: none(waiver:symbolic-induction)
    anchors: []
+   utility: none
    digest: Integer potentials bound controlled branching at every depth and history. -/
 
 import Mathlib

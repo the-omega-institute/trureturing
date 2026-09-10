@@ -1,8 +1,9 @@
 /- GID: D5/S3/StatisticalMechanics/HardCore/RadiusFourData
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/HardCore/RadiusFourData
    mirror-E: none(waiver:exact-data-consumed-by-companion-theorems)
    anchors: []
+   utility: none
    digest: Exact geometric radius-four masks and positive integer growth weights. -/
 
 import Mathlib.Data.Nat.Basic

@@ -1,8 +1,9 @@
 /- GID: D5/S3/StatisticalMechanics/HardCore/AdaptiveAffineMessageData
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/HardCore/AdaptiveAffineMessageData
    mirror-E: none(waiver:exact-certificate-data)
    anchors: []
+   utility: none
    digest: Rational affine messages and clamped witness patterns for all adaptive grid states. -/
 
 import Mathlib
