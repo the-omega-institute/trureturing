@@ -103,4 +103,121 @@ register_information_theorem observation_strictly_weaker_than_intervention in ob
   primitives observationRealization.toPrimitiveBundle realization observation_bridge
 end Observation
 
+section Agenda
+open D5.S3.ConceptDynamics.Aggregation.AgendaPower
+open D5.S3.ConceptDynamics.Aggregation.MajorityCycleNotScalarOrder
+open FirstThreeArenas
+attribute [local instance] agendaFintype
+local instance : DecidablePred ValidAgenda := fun _ => by unfold ValidAgenda; infer_instance
+def agendaTemplate := admittedSurjectionRealization (sequentialWinner majorityPrefers) ValidAgenda
+def agendaRealization : PrimitiveRealization agendaPowerSignature where
+  readout | .winner => agendaTemplate.readout false | .valid => agendaTemplate.readout true
+  anchor := Fin.elim0
+theorem agenda_bridge : LegacyPrimitiveRealization agendaPowerArena
+    ((∀ desired : Fin 3, ∃ a : Agenda, ValidAgenda a ∧ sequentialWinner majorityPrefers a = desired) ∧
+      ∃ a b : Agenda, ValidAgenda a ∧ ValidAgenda b ∧ a ≠ b ∧
+        sequentialWinner majorityPrefers a ≠ sequentialWinner majorityPrefers b) agendaRealization :=
+  ⟨(admittedSurjectionLegacy agendaPowerArena.toArena (sequentialWinner majorityPrefers) ValidAgenda).equivalence⟩
+example : (admittedSurjectionArena agendaPowerArena.toArena (Fin 3)).toArena = agendaPowerArena.toArena := rfl
+example : ∀ x y, agendaTemplate.toPrimitiveBundle.agrees x y ↔
+    FirstThreeRealizations.agendaPowerRealization.toPrimitiveBundle.agrees x y := by decide
+theorem agenda_nondegenerate : agendaPowerArena.toArena.Nondegenerate := by decide
+def agendaEnumeration : Arena.StateEnumeration agendaPowerArena.toArena := agendaPowerArena.__state_enumeration
+theorem agenda_lawSensitive : agendaPowerArena.Law agendaRealization ∧
+    ¬ agendaPowerArena.Law ⟨(fun i _ => agendaRealization.readout i ⟨0, 0, 0⟩), Fin.elim0⟩ := by
+  refine ⟨agenda_bridge.equivalence.mp agenda_power, ?_⟩
+  rintro ⟨_, a, b, _, _, _, h⟩
+  exact h rfl
+example : ¬ agendaTemplate.toPrimitiveBundle.agrees (⟨1, 2, 0⟩ : Agenda) ⟨0, 0, 0⟩ := by decide
+register_information_theorem agenda_power in agendaPowerArena
+  primitives agendaRealization.toPrimitiveBundle realization agenda_bridge
+example : agenda_power.__information_unit.Statement =
+    (FirstThreeRealizations.agenda_power_realization.toTheoremUnit agenda_power).Statement := rfl
+end Agenda
+
+section Preemption
+open D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause
+open InformationEscapeArenas.EndStateOmitsPreemptingCause
+def preemptionTemplate := anchoredSeparationRealization endState activeCause
+  (fun t => IsOrderedPreemption t .shooterA .shooterB)
+  (fun t => IsOrderedPreemption t .shooterB .shooterA) aThenB bThenA
+def preemptionRealization : PrimitiveRealization preemptionSignature where
+  readout | .cutEnd => preemptionTemplate.readout 0 | .cutCause => preemptionTemplate.readout 1
+          | .admitAThenB => preemptionTemplate.readout 2 | .admitBThenA => preemptionTemplate.readout 3
+  anchor | .aThenB => preemptionTemplate.anchor false | .bThenA => preemptionTemplate.anchor true
+theorem preemption_bridge : LegacyPrimitiveRealization endStateOmitsPreemptingCauseArena
+    EndStateOmitsPreemptingCauseStatement preemptionRealization :=
+  ⟨(anchoredSeparationLegacy endStateOmitsPreemptingCauseArena.toArena endState activeCause
+    (fun t => IsOrderedPreemption t .shooterA .shooterB)
+    (fun t => IsOrderedPreemption t .shooterB .shooterA) aThenB bThenA).equivalence⟩
+example : (anchoredSeparationArena endStateOmitsPreemptingCauseArena.toArena Bool
+    (Option Mechanism)).toArena = endStateOmitsPreemptingCauseArena.toArena := rfl
+example : ∀ x y, preemptionTemplate.toPrimitiveBundle.agrees x y ↔
+    InformationEscapeRealizations.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseRealization.toPrimitiveBundle.agrees x y := by decide
+theorem preemption_nondegenerate : endStateOmitsPreemptingCauseArena.toArena.Nondegenerate := by decide
+def preemptionEnumeration : Arena.StateEnumeration endStateOmitsPreemptingCauseArena.toArena :=
+  endStateOmitsPreemptingCauseArena.__state_enumeration
+theorem preemption_lawSensitive : endStateOmitsPreemptingCauseArena.Law preemptionRealization ∧
+    ¬ endStateOmitsPreemptingCauseArena.Law
+      ⟨(fun i _ => preemptionRealization.readout i aThenB), fun _ => aThenB⟩ := by
+  refine ⟨preemption_bridge.equivalence.mp end_state_omits_preempting_cause, ?_⟩
+  intro h
+  exact h.2.2.2.1 rfl
+example : ¬ preemptionTemplate.toPrimitiveBundle.agrees aThenB bThenA := by decide
+register_information_theorem end_state_omits_preempting_cause in endStateOmitsPreemptingCauseArena
+  primitives preemptionRealization.toPrimitiveBundle realization preemption_bridge
+example : end_state_omits_preempting_cause.__information_unit.Statement =
+    (InformationEscapeRealizations.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause_realization.toTheoremUnit
+      end_state_omits_preempting_cause).Statement := rfl
+end Preemption
+
+section Context
+open D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint
+open FourthFifthArenas
+attribute [local instance] contextFintype contextDecidableEq
+local instance (c : BinaryInterpretationContext) (b : Bool) :
+    Decidable (IsBinaryFixedMeaning c (b, b, b)) := by unfold IsBinaryFixedMeaning; infer_instance
+def contextTemplate := contextSelectionRealization
+  (fun c : BinaryInterpretationContext => c.text) (fun c => c.interpretationRule)
+  (fun c => c.readerAdmission) (fun c => c.background) (fun c => c.evaluationGoal)
+  (fun c => IsBinaryFixedMeaning c (false, false, false))
+  (fun c => IsBinaryFixedMeaning c (true, true, true)) baselineContext alternateContext
+def contextRealization : PrimitiveRealization contextSignature where
+  readout | .text => contextTemplate.readout 0 | .interpretationRule => contextTemplate.readout 1
+          | .readerAdmission => contextTemplate.readout 2 | .background => contextTemplate.readout 3
+          | .evaluationGoal => contextTemplate.readout 4 | .falseMeaning => contextTemplate.readout 5
+          | .trueMeaning => contextTemplate.readout 6
+  anchor := contextTemplate.anchor
+theorem context_bridge : LegacyPrimitiveRealization contextArena
+    (baselineContext.text = alternateContext.text ∧
+      baselineContext.interpretationRule = alternateContext.interpretationRule ∧
+      baselineContext.readerAdmission ≠ alternateContext.readerAdmission ∧
+      baselineContext.background ≠ alternateContext.background ∧
+      baselineContext.evaluationGoal ≠ alternateContext.evaluationGoal ∧
+      IsBinaryFixedMeaning baselineContext (false, false, false) ∧
+      IsBinaryFixedMeaning alternateContext (true, true, true) ∧
+      (false, false, false) ≠ (true, true, true)) contextRealization :=
+  ⟨(contextSelectionLegacy contextArena.toArena
+    (fun c => c.text) (fun c => c.interpretationRule)
+    (fun c => c.readerAdmission) (fun c => c.background) (fun c => c.evaluationGoal)
+    (fun c => IsBinaryFixedMeaning c (false, false, false))
+    (fun c => IsBinaryFixedMeaning c (true, true, true)) baselineContext alternateContext).equivalence⟩
+example : (contextSelectionArena contextArena.toArena Unit Unit).toArena = contextArena.toArena := rfl
+example : ∀ x y, contextTemplate.toPrimitiveBundle.agrees x y ↔
+    FourthFifthRealizations.contextRealization.toPrimitiveBundle.agrees x y := by decide
+theorem context_nondegenerate : contextArena.toArena.Nondegenerate := by decide
+def contextEnumeration : Arena.StateEnumeration contextArena.toArena := contextArena.__state_enumeration
+theorem context_lawSensitive : contextArena.Law contextRealization ∧
+    ¬ contextArena.Law ⟨(fun i _ => contextRealization.readout i baselineContext), fun _ => baselineContext⟩ := by
+  refine ⟨context_bridge.equivalence.mp context_parameters_can_select_distinct_fixed_points, ?_⟩
+  intro h
+  exact h.2.2.1 rfl
+example : ¬ contextTemplate.toPrimitiveBundle.agrees baselineContext alternateContext := by decide
+register_information_theorem context_parameters_can_select_distinct_fixed_points in contextArena
+  primitives contextRealization.toPrimitiveBundle realization context_bridge
+example : context_parameters_can_select_distinct_fixed_points.__information_unit.Statement =
+    (FourthFifthRealizations.context_parameters_can_select_distinct_fixed_points_realization.toTheoremUnit
+      context_parameters_can_select_distinct_fixed_points).Statement := rfl
+end Context
+
 end D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
