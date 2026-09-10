@@ -31,6 +31,12 @@ public sealed class CommonStageContractTests
         if (commandExit == 0) Assert.Equal(captured, log);
         else Assert.StartsWith(captured, log, StringComparison.Ordinal);
         Assert.DoesNotContain("stage deadline exceeded", log, StringComparison.Ordinal);
+        var observation = ProcessObservation(output);
+        Assert.Equal(rawExit, observation.GetProperty("child_exit").GetProperty("code").GetInt32());
+        Assert.Equal("completed", observation.GetProperty("outcome").GetString());
+        Assert.Equal("eof", observation.GetProperty("stdout").GetProperty("status").GetString());
+        Assert.Equal("eof", observation.GetProperty("stderr").GetProperty("status").GetString());
+        Assert.DoesNotContain("STAGE_PROCESS", log, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -85,21 +91,24 @@ public sealed class CommonStageContractTests
         var drain = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         using var deadline = new CancellationTokenSource();
         using var output = new StringWriter();
+        var clock = new CurrentDeadlineContractTests.ManualClock();
         System.Diagnostics.Process? helper = null;
         var helperPid = Path.Combine(fixture.Root, "build/helper-pid");
         var run = Task.Run(() => new CommonStages(fixture.Root, output, deadline.Token, process =>
         {
             Assert.True(process.HasExited);
             Assert.Equal(0, process.ExitCode);
+            clock.Advance(7);
             exited.TrySetResult();
             drain.Task.GetAwaiter().GetResult();
-        }).Run("current", null));
+        }, clock).Run("current", null));
         try
         {
             await exited.Task.WaitAsync(TestBudgets.ScriptProcessHangGuard);
             helper = System.Diagnostics.Process.GetProcessById(int.Parse(TemporaryFileSystem.File.ReadAllText(
                 helperPid), System.Globalization.CultureInfo.InvariantCulture));
             Assert.False(helper.HasExited);
+            clock.Advance(11);
             deadline.Cancel();
             if (releaseBeforeSummary)
                 TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/helper-release"), "release\n");
@@ -126,6 +135,21 @@ public sealed class CommonStageContractTests
                 Assert.Single(printed.RootElement.GetProperty("steps").EnumerateArray()));
             Assert.Equal(124, printedStep!.RawExit);
             Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+            var observation = ProcessObservation(output);
+            var child = observation.GetProperty("child_exit");
+            Assert.Equal(0, child.GetProperty("code").GetInt32());
+            Assert.Equal("child-exit", child.GetProperty("phase").GetString());
+            Assert.Equal(0, child.GetProperty("elapsed_ms").GetDouble());
+            Assert.Equal("output-drain", observation.GetProperty("cancelled_phase").GetString());
+            Assert.Equal(18000, observation.GetProperty("cancelled_elapsed_ms").GetDouble());
+            Assert.True(observation.GetProperty("deadline_cancelled").GetBoolean());
+            Assert.False(observation.GetProperty("timeout_cancelled").GetBoolean());
+            var held = observation.GetProperty(standardError ? "stderr" : "stdout");
+            Assert.Equal(releaseBeforeSummary ? "eof" : "cancelled", held.GetProperty("status").GetString());
+            Assert.Equal(18000, held.GetProperty("elapsed_ms").GetDouble());
+            Assert.Equal("cancelled", observation.GetProperty("outcome").GetString());
+            Assert.Equal(18000, observation.GetProperty("elapsed_ms").GetDouble());
+            Assert.DoesNotContain("STAGE_PROCESS", log, StringComparison.Ordinal);
             if (!releaseBeforeSummary) Assert.False(helper.HasExited);
         }
         catch (TimeoutException exception)
@@ -200,6 +224,7 @@ public sealed class CommonStageContractTests
         var log = TemporaryFileSystem.File.ReadAllText(Path.Combine(fixture.Root, step.GetProperty("log").GetString()!));
         Assert.StartsWith("producer-started\nproducer-stderr\n", log, StringComparison.Ordinal);
         Assert.Contains("stage deadline exceeded", log, StringComparison.Ordinal);
+        AssertRunningCancellation(output, log);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
     }
 
@@ -251,12 +276,38 @@ public sealed class CommonStageContractTests
         var log = TemporaryFileSystem.File.ReadAllText(Path.Combine(fixture.Root, step.GetProperty("log").GetString()!));
         Assert.Contains("producer-started", log, StringComparison.Ordinal);
         Assert.Contains("producer-stderr", log, StringComparison.Ordinal);
+        AssertRunningCancellation(output, log);
         var diagnostics = Path.Combine(fixture.Root, "build/ci/logs/current/lean-inspector");
         Assert.Equal("raw build progress\n", TemporaryFileSystem.File.ReadAllText(Path.Combine(diagnostics, "build.stdout.log")));
         Assert.Equal("raw inspector diagnostic\n", TemporaryFileSystem.File.ReadAllText(Path.Combine(diagnostics, "inspect.stderr.log")));
         Assert.Equal(new[] { "scribe", "filemap", "check-current" }, summary.RootElement.GetProperty("not_executed")
             .EnumerateArray().Select(value => value.GetString()));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+    }
+
+    internal static System.Text.Json.JsonElement ProcessObservation(StringWriter output)
+    {
+        const string prefix = "STAGE_PROCESS ";
+        var line = Assert.Single(output.ToString().Split('\n'), line => line.StartsWith(prefix, StringComparison.Ordinal));
+        using var document = System.Text.Json.JsonDocument.Parse(line[prefix.Length..]);
+        var observation = document.RootElement.Clone();
+        Assert.Equal("current", observation.GetProperty("stage").GetString());
+        Assert.Equal("/usr/bin/env", observation.GetProperty("command").GetString());
+        Assert.Contains(observation.GetProperty("arguments").EnumerateArray(), value => value.GetString() == "lean-report");
+        return observation;
+    }
+
+    private static void AssertRunningCancellation(StringWriter output, string log)
+    {
+        var observation = ProcessObservation(output);
+        Assert.Equal("cancelled", observation.GetProperty("outcome").GetString());
+        Assert.Equal("child-exit", observation.GetProperty("cancelled_phase").GetString());
+        Assert.Equal("cleanup", observation.GetProperty("child_exit").GetProperty("phase").GetString());
+        Assert.True(observation.GetProperty("deadline_cancelled").GetBoolean());
+        Assert.False(observation.GetProperty("timeout_cancelled").GetBoolean());
+        Assert.Equal("eof", observation.GetProperty("stdout").GetProperty("status").GetString());
+        Assert.Equal("eof", observation.GetProperty("stderr").GetProperty("status").GetString());
+        Assert.DoesNotContain("STAGE_PROCESS", log, StringComparison.Ordinal);
     }
 
     [Fact]
