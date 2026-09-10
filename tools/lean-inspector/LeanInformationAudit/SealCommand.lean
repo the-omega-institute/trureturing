@@ -211,7 +211,10 @@ def validateRegistrySnapshot (env : Environment) : CommandElabM Unit := do
   let rootId := env.header.mainModule
   if rootId == frozenInformationRootId || rootId == designatedInformationRootId then
     validateFrozenBaselineInSnapshot rootId (fixedSnapshotOccurrences rootId)
-  let expectedEntries := expectedOccurrencesForRoot env rootId
+  let expectedEntries ← liftTermElabM <|
+    (expectedOccurrencesForRoot env rootId).mapM fun entry => do
+      let objectArenaName ← resolveCanonicalArenaName entry.objectArenaName
+      pure { entry with objectArenaName }
   let actualEntries := InformationRegistry.entries env
   let expectedKeys := expectedEntries.map expectedKey |>.qsort (· < ·)
   let actualKeys := actualEntries.map actualKey |>.qsort (· < ·)

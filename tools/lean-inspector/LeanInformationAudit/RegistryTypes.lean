@@ -30,14 +30,21 @@ structure InformationRegistryEntry where
   catalogKind : CatalogKind := .canonicalMaximal
   registrationModuleName : Name := .anonymous
   objectArenaName : Name := .anonymous
+  /-- Resolved declaration owner; arenaName/objectArenaName retain the source spelling. -/
+  resolvedArenaName : Name := .anonymous
   /-- Stable identity of the elaborated theorem statement captured at registration. -/
   statementIdentity : String := ""
   /-- False exactly for registrations using occurrence-aware syntax. -/
   localRegistrationNames : Bool := true
 
+def InformationRegistryEntry.canonicalObjectArenaName
+    (entry : InformationRegistryEntry) : Name :=
+  if !entry.resolvedArenaName.isAnonymous then entry.resolvedArenaName
+  else if entry.objectArenaName.isAnonymous then entry.arenaName else entry.objectArenaName
+
 def InformationRegistryEntry.effectiveCatalogId
     (entry : InformationRegistryEntry) : CatalogId :=
-  if entry.catalogId.isAnonymous then entry.arenaName else entry.catalogId
+  if entry.catalogId.isAnonymous then entry.canonicalObjectArenaName else entry.catalogId
 
 /-- A closed catalog and the canonical theorem-to-index assignment used by the seal. -/
 structure CatalogUnitRecord where
