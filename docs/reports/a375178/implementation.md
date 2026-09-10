@@ -52,3 +52,71 @@ and Quot.sound (the abstract paired-cube identity does not require choice).
 The final binomial cube expansion and universal theorem now compile (scratch
 check 12, exit 0). The final theorem has only propext, Classical.choice, and
 Quot.sound in its transitive axiom closure.
+
+
+## Proof and admission assessment
+
+For the sole authored public theorem
+D5/S3/ArithSums/A375178Supercongruence.supercongruence:
+
+- proof_shape: content.
+- direct frozen dependencies (GID + statement_id): none; no D5 imports.
+  Pinned mathlib is reused, especially
+  FiniteField.sum_pow_lt_card_sub_one.
+- escape_witness: lifted_doubleH, supported by doubleH_zero, together with
+  the first-order binomial_cube_expansion. This implements the brief's
+  proposed missing first-order cancellation.
+- admission_basis: escape-witness.
+- utility: none. The sequence definition and symbolic theorem, as well as
+  the private general algebraic and harmonic lemmas, do not produce bounded
+  enumerations, checkers, numeric reductions, or certified finite instances.
+  Small literal positivity proofs are internal side conditions only.
+
+The four checks of CLAUDE.md 3.2 apply as follows:
+(i) the final elaborated proof uses lifted_doubleH as h13, while its sum
+identity uses binomial_cube_expansion; both are in the dependency closure;
+(ii) proving doubleH_zero requires constructing reversal and shuffle
+identities over varying finite fields, and the expansion requires induction
+over arbitrary finite products, rather than instantiating a frozen
+congruence; (iii) these statements concern weighted inverse sums and one
+binomial summand, not the final sequence congruence; (iv) the expanded sum
+is rewritten using h13 to kill its second term. Removing this rewrite
+leaves that summand undischarged. The witnesses are used in the live proof,
+not attached as unused conjunction components. Kernel edge audit receipts
+will be attached after the module build and freeze.
+
+The public definition a is the exact sequence, not a second theorem.
+All supporting lemmas are private and analyzed inside the public theorem.
+
+## Mathematical argument
+
+Let H_r be the sum of 1/k^r over 1<=k<p, and H_(1,3) the sum of
+1/(j*k^3) over 1<=j<k<p. Work with units in ZMod(p^5); the implementation
+includes the zero index only when its inverse term vanishes.
+
+First-order expansion gives
+a(p)-1 = p^3 H_3 + 3 p^4 H_(1,3) in ZMod(p^5).
+The product expansion has an explicit quadratic remainder, so cubing
+discards only a multiple of p^5.
+
+For the first term, put x=1/k and y=1/(p-k). Then x+y=p*x*y.
+Modulo p^5, p^3(x^3+y^3)=-3p^4*x^4. Sum over k and reflect the
+interval: 2p^3 H_3=-3p^4 H_4=0, using the fourth inverse-power sum in
+ZMod(p). The unit 2 can be cancelled.
+
+For the second term, reflection of the two indices yields
+H_(1,3)=H_(3,1) modulo p. The shuffle identity is
+H_1*H_3=H_(1,3)+H_(3,1)+H_4. Finite-field power sums give
+H_1=H_4=0 for p>=7, hence H_(1,3)=0. Both terms vanish as required.
+
+## Attempt history
+
+The initial ring and finite-field lemmas compiled first. The next successful
+unit was the paired cubic identity and its sum. The nested-sum conversion
+then connected the double harmonic identity to natural range sums.
+The binomial recurrence required explicitly casting its natural equality;
+exact_mod_cast did not normalize that equation. The final congruence
+translation required normalizing Nat.cast_one before change. These were
+elaboration issues in the same proof route, not remaining mathematical gaps.
+Every successful unit was committed and pushed. No finite probe is counted
+as partial mathematical progress.
