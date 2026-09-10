@@ -63,10 +63,28 @@ First `make lean`: EXIT=2 in 2.992s due to a missing parenthesis in the new Scri
 
 The code's active capacity constants are hard=1000 and soft=800 lines (`RepositoryRules.Structure.cs`); the formal module has 673 lines, below both. Spec A5 still mentions 400 lines; this discrepancy is disclosed and no capacity rule is changed. The former report proof was removed after migration, not frozen or ingested.
 
-## Verification and remaining obligations
+### Canonical inspection, dependency closure, and emission
 
-No Lean attempt run yet. No theorem frozen. Build/cache receipts, exact declaration classifications, and final outcome will be appended after each completed unit.
+`make lean-report`: EXIT=0 in 74.103s (`make-lean-report.json` and `.log`). Canonical report `.lake/build/stratalint/raw-lean-report.json`; report SHA256 `ee130a6009ea6a2e8b315d3642d185afeec12cd1767ddcb5af161105ad1be03a`; input address `sha256:7f685d18693cee32917ad3d0c7a09df5248faebf6967122417915f5df784d9c1`. The target module's source identity is `sha256:40ad040c07306b09231e06fd5e297e8791dd4f9f4dde50fa09ea0384af5d8164`.
+
+Public declaration identities:
+
+| Declaration | statement_id |
+|---|---|
+| `IsSolution` | `sha256:da13b015497ab7c32f11ac914a28bd4eb00ac1a0bb1b4c4e3a555511c83da77f` |
+| `IsLexFirst` | `sha256:8a61dd4e3cf589656b02f9c98df91d361c16decd19856b17823005cc3969f18d` |
+| `first_maximum_separation_mod_five` | `sha256:61c4cac0c24847e8672661fcf696d3cba6e10edca632e00c5a8b389b31033fb7` |
+
+The theorem GID is `D5/S3/Arith/Congruence/EgyptianFiveFirstMaximum.first_maximum_separation_mod_five`. Its directly frozen dependencies remain `[]`, so there are no dependency GID/statement_id pairs to list. The two public definitions specify the source problem; they are not separately claimed content theorems.
+
+`Closure.lean` read elaborated proof values with `getUsedConstants` and traversed this module's dependency closure, including private compiler auxiliaries: EXIT=0 (`closure-2.log`), 194 module constants, complete. Explicit edges are public theorem → `first_maximal` → `later_two_divisible` → `near_bound`. The residual-eight gap lemma is also on the active path. This supplies the promised semantic receipt for the escape witness's closure and live-use clauses; it is not inferred merely from names appearing in source. The initial audit used an unavailable `String.isInfixOf`; corrected to `splitOn` (`closure.log` preserves the audit-only error).
+
+First `make emit`: EXIT=2 in 20.640s, because the formula DSL emitted adjacent `Le` and identifier `w` as an invalid macro. Added the required `Sp` node. Second `make emit`: EXIT=0 in 67.876s (`make-emit-2.json` and `.log`). The generated Blueprint was read and agrees with the full three-coordinate lex predicate and the existential larger-z premise.
+
+## Current delivery state
+
+The entire natural-number target is kernel proved. Local Scribe checks passed: `bash tools/scripts/workflow/scribe-content-checks.sh .lake/build/stratalint/raw-lean-report.json "" 343718ed191002a4708ccf381081f9b0c7a58e1a`, EXIT=0 in 24.530s (`scribe-checks.json` and `.log`), covering projections, describe-report, and real KaTeX markdown parsing. Freeze and PR receipts will be recorded below when complete. Earlier pending statements in this report record the preregistered state at those checkpoints; they do not describe the current mathematical result.
 
 ## Unclaimed
 
-No all-k solvability, converse, universal maximality theorem, literature novelty beyond checked sources, or independent review consensus is claimed. All unopened external pages and the brief's proposed proof route are ASSUMED-UNVERIFIED.
+No all-k solvability, converse, universal maximality across all residues, literature novelty beyond checked sources, or independent review consensus is claimed. All unopened external pages remain ASSUMED-UNVERIFIED. The brief's proposed comparison route has now been proved in the exact form described above; no claim is made about an unexamined derivation from the triage seat.
