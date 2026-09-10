@@ -294,6 +294,89 @@ private theorem initial_echo : a 2 = 2 := by
   rw [a, iterate, hx, subst_coeff _ _ hg.1]
   simp [Finset.sum_range_succ, hg.2.1, hg.2.2.1, leading_pow hg.1 hg.2.1]
 
+private noncomputable def quadratic : PowerSeries (ZMod 2) := X + X ^ 2
+
+private instance : CharP (PowerSeries (ZMod 2)) 2 :=
+  CharTwo.of_one_ne_zero_of_two_eq_zero one_ne_zero (by
+    simpa only [map_ofNat, map_zero] using
+      congrArg (C (R := ZMod 2)) (show (2 : ZMod 2) = 0 by decide))
+
+private theorem quadratic_unit : IsUnit (coeff 1 quadratic) := by
+  simp [quadratic, coeff_X_pow]
+
+private noncomputable def H : PowerSeries (ZMod 2) :=
+  quadratic.substInvOfIsUnit quadratic_unit
+
+private theorem H_zero : constantCoeff H = 0 := constantCoeff_substInvOfIsUnit _ _
+
+private theorem H_quadratic : H + H ^ 2 = X := by
+  have he := subst_substInvOfIsUnit_right quadratic (by simp [quadratic]) quadratic_unit
+  change quadratic.subst H = X at he
+  simpa only [quadratic, subst_add (.of_constantCoeff_zero H_zero),
+    subst_pow (.of_constantCoeff_zero H_zero), subst_X (.of_constantCoeff_zero H_zero)] using he
+
+private theorem H_one : coeff 1 H = 1 := by
+  have hc := congrArg (coeff 1) H_quadratic
+  simpa only [map_add, pow_low H_zero (by omega : 1 < 2), add_zero, coeff_one_X] using hc
+
+private theorem H_two : coeff 2 H = 1 := by
+  have hc := congrArg (coeff 2) H_quadratic
+  simp only [map_add, leading_pow H_zero H_one, coeff_X, show (2 : ℕ) ≠ 1 by omega,
+    if_false] at hc
+  have hz : (2 : ZMod 2) = 0 := by decide
+  linear_combination hc - hz
+
+private theorem iterate_add {f : PowerSeries R}
+    (hf : constantCoeff f = 0) (hf1 : coeff 1 f = 1) (j k : ℕ) :
+    iterate f (j + k) = (iterate f j).subst (iterate f k) := by
+  induction k with
+  | zero => simp [iterate]
+  | succ k ih =>
+    change (iterate f (j + k)).subst f = (iterate f j).subst ((iterate f k).subst f)
+    rw [ih]
+    exact subst_comp_subst_apply (.of_constantCoeff_zero (iterate_normal hf hf1 k).1)
+      (.of_constantCoeff_zero hf) (iterate f j)
+
+private theorem H_recurrence (m : ℕ) :
+    iterate H (m + 1) + iterate H (m + 1) ^ 2 = iterate H m := by
+  induction m with
+  | zero => simpa [iterate, subst_X (.of_constantCoeff_zero H_zero)] using H_quadratic
+  | succ m ih =>
+    change (iterate H (m + 1)).subst H + ((iterate H (m + 1)).subst H) ^ 2 =
+      (iterate H m).subst H
+    simpa only [subst_add (.of_constantCoeff_zero H_zero),
+      subst_pow (.of_constantCoeff_zero H_zero)] using
+      congrArg (subst H) ih
+
+private theorem double_gap (u : PowerSeries (ZMod 2)) (hu : constantCoeff u = 0)
+    (q : ℕ) (he : u + u ^ (2 ^ q) = X) :
+    u.subst u + (u.subst u) ^ (2 ^ (q + q)) = X := by
+  have hv : u.subst u + (u.subst u) ^ (2 ^ q) = u := by
+    simpa only [subst_add (.of_constantCoeff_zero hu), subst_pow (.of_constantCoeff_zero hu),
+      subst_X (.of_constantCoeff_zero hu)] using congrArg (subst u) he
+  have hw := congrArg (fun v : PowerSeries (ZMod 2) => v ^ (2 ^ q)) hv
+  rw [add_pow_char_pow _ _ 2 q, ← pow_mul, ← pow_add] at hw
+  have htwo : (2 : PowerSeries (ZMod 2)) = 0 := by
+    simpa only [map_ofNat, map_zero] using
+      congrArg (C (R := ZMod 2)) (show (2 : ZMod 2) = 0 by decide)
+  linear_combination hv + hw + he - (u.subst u) ^ (2 ^ q) * htwo
+
+-- Successive doubling opens a degree gap far beyond the iteration index.
+private theorem H_dyadic_gap (r : ℕ) :
+    iterate H (2 ^ r) + iterate H (2 ^ r) ^ (2 ^ (2 ^ r)) = X := by
+  induction r with
+  | zero => simpa [iterate, subst_X (.of_constantCoeff_zero H_zero)] using H_quadratic
+  | succ r ih =>
+    have hd := double_gap (iterate H (2 ^ r)) (iterate_normal H_zero H_one _).1 (2 ^ r) ih
+    rw [← iterate_add H_zero H_one] at hd
+    simpa only [pow_succ, Nat.mul_two] using hd
+
+private theorem H_dyadic_coeff (r n : ℕ) (hn : n < 2 ^ (2 ^ r)) :
+    coeff n (iterate H (2 ^ r)) = coeff n (X : PowerSeries (ZMod 2)) := by
+  have hc := congrArg (coeff n) (H_dyadic_gap r)
+  simpa only [map_add, pow_low (iterate_normal H_zero H_one _).1 hn, add_zero] using hc
+
+#print axioms H_dyadic_gap
 #print axioms generating_equation
 #print axioms generating_unique
 #print axioms initial_echo

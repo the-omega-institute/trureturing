@@ -62,6 +62,14 @@ only propext, Classical.choice, Quot.sound. The first run caught a definitional
 unfolding mismatch in extend_correct; unfolding extend in the goal repaired it.
 This proves existence/uniqueness, not yet the parity conjecture.
 
+Third Lean unit checked: H is Mathlib's compositional inverse of X+X² over
+ZMod 2; prove H+H²=X and, for every r,
+H^∘(2^r)+(H^∘(2^r))^(2^(2^r))=X. `H_dyadic_gap` and the degree-gap coefficient
+consequence pass the warm file check (EXIT=0, three standard axioms only).
+The first run exposed substitution folding, a missing PowerSeries CharP instance,
+and a sign in the doubling calculation; all were corrected before this checkpoint.
+No binomial formula or unproved A177775 assertion was used.
+
 ## Search receipts and semantic correction
 
 Local searches used `rg` over D5 for A395842, A177775, diagonal iteration,
