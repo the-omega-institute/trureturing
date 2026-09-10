@@ -33,3 +33,10 @@
 输出：`SERIAL_LEAN status=complete built=6 failed=0 missing=6`。
 
 随后按要求运行 `make lean-report`、`make emit`、`make deposit-uncovered GID=D5/S1/Words/Compositions/PhiTailEncoding`；具体退出码与 axiom 闭包以终端日志为准。未使用 `native_decide`，未修改冻结模块。
+
+最终收据：`make lean-report` 退出 0（delta changed=1, added=0, recheck=1）；
+`make emit` 退出 0，`emitted: 0 changed blueprint(s)`；
+scribe-content-checks 的判词为
+`DESCRIBE_STATUS ... status=classified ... red=0`，markdown 为 `judged=1 formula(s)=3 red=0`。
+`make deposit-uncovered` 以
+`PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED ... reason=NO_ATOM` 结束，模块已冻结且无覆盖 atom。
