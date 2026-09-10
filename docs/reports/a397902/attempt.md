@@ -116,3 +116,20 @@ ring; its coefficientwise fixed-point construction is performed over Z.
 A rational construction and an unproved integrality assumption are not used.
 File-level Lean check EXIT=0; full project gates and the all-n parity proof
 remain pending. The module is not frozen at this checkpoint.
+
+## Binary identification checkpoint
+
+File-level Lean check EXIT=0. The integer solution reduced to ZMod 2 is now
+proved equal to the explicit candidate built from the Catalan unit U:
+H=U^2, O=(1+X)H, E=1+X+XO, candidate=E^2+XO^2.
+The proof establishes E+XO=1+X and EO=candidate, proves both normalized row
+families vanish, then applies normalized uniqueness. `solution_mod_two` reports
+only the standard three axioms. The final coefficient/support translation is pending.
+
+Additional D5 reuse search: read the full public API of
+`CatalanCompositionSquareParity`. Its public `binary_catalan` says that the
+mapped shifted Catalan series has coefficient one exactly at 2^k; this theorem
+is imported and applied in `U_support`. Its unrelated sequence conjecture is
+not transferred to A397902. The S3 Artin–Schreier module was also screened;
+no S3 import is added to this S1 module. No new independent literature claim is
+made for the pre-existing Catalan theorem.
