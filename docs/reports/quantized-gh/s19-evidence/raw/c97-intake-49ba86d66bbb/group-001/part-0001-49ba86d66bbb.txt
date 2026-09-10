@@ -1,0 +1,50 @@
+{
+  "recorded_at_utc": "2026-09-10T16:20:00.729994+00:00",
+  "source_task_id": "4b113aea-c074-4750-98bd-40363326d9eb",
+  "original_task_status": "failed prompt_delivery_uncertain; unchanged",
+  "read_only_import_task": "66de8069-0171-4543-9caa-d8a065282093",
+  "import_status": "completed",
+  "conversation_id": "conv_05c83edb10409027",
+  "chatgpt_url": "https://chatgpt.com/c/6aa2976f-bd7c-83ec-a508-f65682dcc906",
+  "raw_session_ref": "/tmp/qgh-boundaries-0908/c97-recovered-session-visible-0911.json",
+  "raw_session_bytes": 71708,
+  "raw_session_sha256": "5bf2df86e05f261ae9fca1866de15b403bac12be81685b882fa9cfb7bd9cf3ea",
+  "visible_envelope_ref": "/tmp/qgh-boundaries-0908/pro-prime-support-dual-obstruction-recovered-visible-c97-0911.json",
+  "visible_envelope_bytes": 30200,
+  "visible_envelope_sha256": "e06f1200c3fcb38381f64af69e50883d96c99962c88ef6b126acab747543e6aa",
+  "full_prompt_and_response_consumed": true,
+  "full_intake_chunks": [
+    "149a48",
+    "ad0f7c"
+  ],
+  "C96_previous_turn_exact_match": true,
+  "C96_turn_reread_chunk": "050ef7",
+  "prompt_identity": "Exact after whitespace normalization and removal of final rendered 展开收起 UI suffix; all mathematical and scope text retained.",
+  "valid_SshxResultEnvelope": true,
+  "verdict": "propose",
+  "primary_mathematical_status": "proved",
+  "caller_assessment": "Analytically checked all six probe moments, weighted variable substitution and Riesz conjugation, exact norm and divisor inversion, coefficient continuity and divergent converse counterexample, arbitrary dictionary closure, squarefree/prime necessary conditions, 2357 exact threshold, rational coercivity, mode-bound local verifier and Gaussian total generator, strict/equality/RH quantifiers and proper-full-H subspace example. No mathematical correction identified; independent review still required.",
+  "exact_results": [
+    "C_n=4 sum_{d|n} mu(n/d)^2 (5d^2+1/6)",
+    "Lambda_n(f_k)=1_{n=k}; Lambda_n(chi)=-mu(n)",
+    "omitted squarefree n => D_A>=1/C_n",
+    "omitted prime p => D_A>=3/(60p^2+64)",
+    "S={2,3,5,7} => D_A>=3/7324; strict residual<1/m impossible for m>=2442",
+    "delta_dual(N)=1/sum_{n<=N} C_n >=3/(62N^3)"
+  ],
+  "limitations": [
+    "Full original raw author serialization not recovered; visible transport text preserved exactly including rendered citation artifacts.",
+    "Primary author is not independent review; source adoption pending.",
+    "The full-half-axis model and squared norm matter; this is no Robin/slab-G result or RH refutation.",
+    "No complexity or GPU speedup claim; no execution of the proposed total algorithm."
+  ],
+  "independent_approval": false,
+  "source_adopted": false,
+  "underlying_raw_author_bytes_recovered": false,
+  "import_timestamps_are_generation_attestation": false,
+  "model_service_identity": "ASSUMED-UNVERIFIED",
+  "worker_logs_or_log_ref_contents_opened": false,
+  "mathematical_program_executions": 0,
+  "GPU_searches": 0,
+  "goal_status": "active"
+}

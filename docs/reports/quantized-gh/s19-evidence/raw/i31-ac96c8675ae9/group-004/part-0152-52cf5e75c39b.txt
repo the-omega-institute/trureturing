@@ -1,0 +1,783 @@
+      "active_original_bytes": 1449,
+      "classification": "mathematics / original logical-status or citation / structural grammar retained",
+      "recovery": [
+        {
+          "recovery_span_index": 503,
+          "original": {
+            "byte_start": 180129,
+            "byte_end_exclusive": 180136,
+            "line_start": 3217,
+            "line_end_inclusive": 3217,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "d7a253ef4f8cade3ce1032d59c3a21ea822a5b5d22b8d3840ba09d2292f6c473"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 144383,
+            "byte_end_exclusive": 144390,
+            "line_start": 2987,
+            "line_end_inclusive": 2987,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "d7a253ef4f8cade3ce1032d59c3a21ea822a5b5d22b8d3840ba09d2292f6c473"
+          }
+        },
+        {
+          "recovery_span_index": 504,
+          "original": {
+            "byte_start": 180136,
+            "byte_end_exclusive": 181578,
+            "line_start": 3217,
+            "line_end_inclusive": 3255,
+            "byte_count": 1442,
+            "lf_count": 39,
+            "terminal_lf_count": 2,
+            "sha256": "5a186fb0f6569920542850bf29be2b05abb9e34b52f2fbaad2fa5953fdec0937"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 144420,
+            "byte_end_exclusive": 145862,
+            "line_start": 2987,
+            "line_end_inclusive": 3025,
+            "byte_count": 1442,
+            "lf_count": 39,
+            "terminal_lf_count": 2,
+            "sha256": "5a186fb0f6569920542850bf29be2b05abb9e34b52f2fbaad2fa5953fdec0937"
+          }
+        }
+      ],
+      "region_id": "original-region-132",
+      "original_opening_line": "**27.4 定理 A:全 \\(\\mathbb R^k\\) 的单调性及精确增量等号。** 对任意",
+      "current_type_attachments": [
+        {
+          "kind": "numbered entry",
+          "label": "27.4",
+          "current": {
+            "byte_start": 144383,
+            "byte_end_exclusive": 145862,
+            "line_start": 2987,
+            "line_end_inclusive": 3025,
+            "byte_count": 1479,
+            "lf_count": 39,
+            "terminal_lf_count": 2,
+            "sha256": "cfb8b50edcb68bec749eb05bd46a4042fa67c59da06cb599fa1dcab278ea2091"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/cfb8b50edcb68bec749eb05bd46a4042fa67c59da06cb599fa1dcab278ea2091",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/cfb8b50edcb68bec749eb05bd46a4042fa67c59da06cb599fa1dcab278ea2091.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "section_assessment_reference": "section 27",
+      "pending_overlap": false
+    },
+    {
+      "original": {
+        "byte_start": 181578,
+        "byte_end_exclusive": 182830,
+        "line_start": 3256,
+        "line_end_inclusive": 3280,
+        "byte_count": 1252,
+        "lf_count": 25,
+        "terminal_lf_count": 2,
+        "sha256": "752c1312d4084cead9953921fb7463e578277bd09ab0b253bf1641fb5fc92052"
+      },
+      "active_original_bytes": 1252,
+      "classification": "mathematics / original logical-status or citation / structural grammar retained",
+      "recovery": [
+        {
+          "recovery_span_index": 505,
+          "original": {
+            "byte_start": 181578,
+            "byte_end_exclusive": 181585,
+            "line_start": 3256,
+            "line_end_inclusive": 3256,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "fbc44aa229c82504d8c1805dbad5f6574c3e4e672e2d8a22c54aa78d1b7bb410"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 145862,
+            "byte_end_exclusive": 145869,
+            "line_start": 3026,
+            "line_end_inclusive": 3026,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "fbc44aa229c82504d8c1805dbad5f6574c3e4e672e2d8a22c54aa78d1b7bb410"
+          }
+        },
+        {
+          "recovery_span_index": 506,
+          "original": {
+            "byte_start": 181585,
+            "byte_end_exclusive": 182830,
+            "line_start": 3256,
+            "line_end_inclusive": 3280,
+            "byte_count": 1245,
+            "lf_count": 25,
+            "terminal_lf_count": 2,
+            "sha256": "d72ad299da808792534778781b1fe3895ccadc183cc40bdf305ef8a6202026f5"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 145899,
+            "byte_end_exclusive": 147144,
+            "line_start": 3026,
+            "line_end_inclusive": 3050,
+            "byte_count": 1245,
+            "lf_count": 25,
+            "terminal_lf_count": 2,
+            "sha256": "d72ad299da808792534778781b1fe3895ccadc183cc40bdf305ef8a6202026f5"
+          }
+        }
+      ],
+      "region_id": "original-region-133",
+      "original_opening_line": "**27.5 一个实际角点足以给出箱体下界。** 记",
+      "current_type_attachments": [
+        {
+          "kind": "numbered entry",
+          "label": "27.5",
+          "current": {
+            "byte_start": 145862,
+            "byte_end_exclusive": 147144,
+            "line_start": 3026,
+            "line_end_inclusive": 3050,
+            "byte_count": 1282,
+            "lf_count": 25,
+            "terminal_lf_count": 2,
+            "sha256": "ad2e56ad06f124fdbd874e6b482e44450c571a4d21e54e032fe721ab26bfc542"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/ad2e56ad06f124fdbd874e6b482e44450c571a4d21e54e032fe721ab26bfc542",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ad2e56ad06f124fdbd874e6b482e44450c571a4d21e54e032fe721ab26bfc542.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "section_assessment_reference": "section 27",
+      "pending_overlap": false
+    },
+    {
+      "original": {
+        "byte_start": 182830,
+        "byte_end_exclusive": 184089,
+        "line_start": 3281,
+        "line_end_inclusive": 3311,
+        "byte_count": 1259,
+        "lf_count": 31,
+        "terminal_lf_count": 2,
+        "sha256": "f16b2dd8ac7473e79f582d4d5fe2616be5bce49e821efde811b84d901afc6977"
+      },
+      "active_original_bytes": 1259,
+      "classification": "mathematics / original logical-status or citation / structural grammar retained",
+      "recovery": [
+        {
+          "recovery_span_index": 507,
+          "original": {
+            "byte_start": 182830,
+            "byte_end_exclusive": 182837,
+            "line_start": 3281,
+            "line_end_inclusive": 3281,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "fc88b7569e9181e03afebb2c787b51b5d4b16739ab35dff0e77a7cade66c7cec"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 147144,
+            "byte_end_exclusive": 147151,
+            "line_start": 3051,
+            "line_end_inclusive": 3051,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "fc88b7569e9181e03afebb2c787b51b5d4b16739ab35dff0e77a7cade66c7cec"
+          }
+        },
+        {
+          "recovery_span_index": 508,
+          "original": {
+            "byte_start": 182837,
+            "byte_end_exclusive": 184089,
+            "line_start": 3281,
+            "line_end_inclusive": 3311,
+            "byte_count": 1252,
+            "lf_count": 31,
+            "terminal_lf_count": 2,
+            "sha256": "5137a30712aa24a304cef3c52b5fb6cd495138a20f2af4ca9c2b60a86728934f"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 147181,
+            "byte_end_exclusive": 148433,
+            "line_start": 3051,
+            "line_end_inclusive": 3081,
+            "byte_count": 1252,
+            "lf_count": 31,
+            "terminal_lf_count": 2,
+            "sha256": "5137a30712aa24a304cef3c52b5fb6cd495138a20f2af4ca9c2b60a86728934f"
+          }
+        }
+      ],
+      "region_id": "original-region-134",
+      "original_opening_line": "**27.6 定理 B:初等阈值的严格排除。** 令",
+      "current_type_attachments": [
+        {
+          "kind": "numbered entry",
+          "label": "27.6",
+          "current": {
+            "byte_start": 147144,
+            "byte_end_exclusive": 148433,
+            "line_start": 3051,
+            "line_end_inclusive": 3081,
+            "byte_count": 1289,
+            "lf_count": 31,
+            "terminal_lf_count": 2,
+            "sha256": "e27c210f0a81f478bb843f29d08e682d3dc0aa5ba72311b32715ab399418c564"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/e27c210f0a81f478bb843f29d08e682d3dc0aa5ba72311b32715ab399418c564",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e27c210f0a81f478bb843f29d08e682d3dc0aa5ba72311b32715ab399418c564.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "section_assessment_reference": "section 27",
+      "pending_overlap": false
+    },
+    {
+      "original": {
+        "byte_start": 184089,
+        "byte_end_exclusive": 185179,
+        "line_start": 3312,
+        "line_end_inclusive": 3338,
+        "byte_count": 1090,
+        "lf_count": 27,
+        "terminal_lf_count": 2,
+        "sha256": "aeb2499ef92579664fd522d7ffb4a7587f8748adca376728220ee3b794616676"
+      },
+      "active_original_bytes": 1090,
+      "classification": "mathematics / original logical-status or citation / structural grammar retained",
+      "recovery": [
+        {
+          "recovery_span_index": 509,
+          "original": {
+            "byte_start": 184089,
+            "byte_end_exclusive": 184096,
+            "line_start": 3312,
+            "line_end_inclusive": 3312,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "b66f6224c3bfe90a9510e1208f1f6b93593d8557f4b143e3fe2c6ff5cb6b96fb"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 148433,
+            "byte_end_exclusive": 148440,
+            "line_start": 3082,
+            "line_end_inclusive": 3082,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "b66f6224c3bfe90a9510e1208f1f6b93593d8557f4b143e3fe2c6ff5cb6b96fb"
+          }
+        },
+        {
+          "recovery_span_index": 510,
+          "original": {
+            "byte_start": 184096,
+            "byte_end_exclusive": 185179,
+            "line_start": 3312,
+            "line_end_inclusive": 3338,
+            "byte_count": 1083,
+            "lf_count": 27,
+            "terminal_lf_count": 2,
+            "sha256": "5ecd7b4963a4001d5703b9c2299b3f8be76d7ba7084d3f825a900ebe2ddcea71"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 148470,
+            "byte_end_exclusive": 149553,
+            "line_start": 3082,
+            "line_end_inclusive": 3108,
+            "byte_count": 1083,
+            "lf_count": 27,
+            "terminal_lf_count": 2,
+            "sha256": "5ecd7b4963a4001d5703b9c2299b3f8be76d7ba7084d3f825a900ebe2ddcea71"
+          }
+        }
+      ],
+      "region_id": "original-region-135",
+      "original_opening_line": "**27.7 更尖锐的标量阈值及箱体负裕量。** 对有限 \\(d>0\\) 定义精确实数",
+      "current_type_attachments": [
+        {
+          "kind": "numbered entry",
+          "label": "27.7",
+          "current": {
+            "byte_start": 148433,
+            "byte_end_exclusive": 149553,
+            "line_start": 3082,
+            "line_end_inclusive": 3108,
+            "byte_count": 1120,
+            "lf_count": 27,
+            "terminal_lf_count": 2,
+            "sha256": "c5754c48391212f03bd807b894d7606b63e61cf4cf914b62e44ca7ceb275a732"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/c5754c48391212f03bd807b894d7606b63e61cf4cf914b62e44ca7ceb275a732",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c5754c48391212f03bd807b894d7606b63e61cf4cf914b62e44ca7ceb275a732.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "section_assessment_reference": "section 27",
+      "pending_overlap": false
+    },
+    {
+      "original": {
+        "byte_start": 185179,
+        "byte_end_exclusive": 186137,
+        "line_start": 3339,
+        "line_end_inclusive": 3357,
+        "byte_count": 958,
+        "lf_count": 19,
+        "terminal_lf_count": 2,
+        "sha256": "d8f6ea955c84735f66ac527603412f543191fc8601c716c17232dc602516521a"
+      },
+      "active_original_bytes": 958,
+      "classification": "mathematics / original logical-status or citation / structural grammar retained",
+      "recovery": [
+        {
+          "recovery_span_index": 511,
+          "original": {
+            "byte_start": 185179,
+            "byte_end_exclusive": 185186,
+            "line_start": 3339,
+            "line_end_inclusive": 3339,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "d2db59471ade0d0a17a5b471c7fbb5ecd6a2e6f515557c765eaacf4000a2efe5"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 149553,
+            "byte_end_exclusive": 149560,
+            "line_start": 3109,
+            "line_end_inclusive": 3109,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "d2db59471ade0d0a17a5b471c7fbb5ecd6a2e6f515557c765eaacf4000a2efe5"
+          }
+        },
+        {
+          "recovery_span_index": 512,
+          "original": {
+            "byte_start": 185186,
+            "byte_end_exclusive": 186137,
+            "line_start": 3339,
+            "line_end_inclusive": 3357,
+            "byte_count": 951,
+            "lf_count": 19,
+            "terminal_lf_count": 2,
+            "sha256": "fc665c96d053791554f00fca452fe3256fdca73cc3c9554d50f26d4df22c8120"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 149590,
+            "byte_end_exclusive": 150541,
+            "line_start": 3109,
+            "line_end_inclusive": 3127,
+            "byte_count": 951,
+            "lf_count": 19,
+            "terminal_lf_count": 2,
+            "sha256": "fc665c96d053791554f00fca452fe3256fdca73cc3c9554d50f26d4df22c8120"
+          }
+        }
+      ],
+      "region_id": "original-region-136",
+      "original_opening_line": "**27.8 阈值最优性的有限含义与二坐标空前提。** 由于 \\(f\\) 严格递增,",
+      "current_type_attachments": [
+        {
+          "kind": "numbered entry",
+          "label": "27.8",
+          "current": {
+            "byte_start": 149553,
+            "byte_end_exclusive": 150541,
+            "line_start": 3109,
+            "line_end_inclusive": 3127,
+            "byte_count": 988,
+            "lf_count": 19,
+            "terminal_lf_count": 2,
+            "sha256": "eef6d5b4b6f8c83fc6373671d8669180d0af8f5ca1257c1d8a0921a5da251d3d"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/eef6d5b4b6f8c83fc6373671d8669180d0af8f5ca1257c1d8a0921a5da251d3d",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/eef6d5b4b6f8c83fc6373671d8669180d0af8f5ca1257c1d8a0921a5da251d3d.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "section_assessment_reference": "section 27",
+      "pending_overlap": false
+    },
+    {
+      "original": {
+        "byte_start": 186137,
+        "byte_end_exclusive": 186980,
+        "line_start": 3358,
+        "line_end_inclusive": 3374,
+        "byte_count": 843,
+        "lf_count": 17,
+        "terminal_lf_count": 2,
+        "sha256": "b8e334651343f3ed2309c5360c326b4dda6cf1b9d5b2cdd2d1003b60156f98a3"
+      },
+      "active_original_bytes": 843,
+      "classification": "mathematics / original logical-status or citation / structural grammar retained",
+      "recovery": [
+        {
+          "recovery_span_index": 513,
+          "original": {
+            "byte_start": 186137,
+            "byte_end_exclusive": 186144,
+            "line_start": 3358,
+            "line_end_inclusive": 3358,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "94ec5e4a9c0352b0a164d135844de1569b61bc456446c2dd2b94ef87956b0b7e"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 150541,
+            "byte_end_exclusive": 150548,
+            "line_start": 3128,
+            "line_end_inclusive": 3128,
+            "byte_count": 7,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "94ec5e4a9c0352b0a164d135844de1569b61bc456446c2dd2b94ef87956b0b7e"
+          }
+        },
+        {
+          "recovery_span_index": 514,
+          "original": {
+            "byte_start": 186144,
+            "byte_end_exclusive": 186980,
+            "line_start": 3358,
+            "line_end_inclusive": 3374,
+            "byte_count": 836,
+            "lf_count": 17,
+            "terminal_lf_count": 2,
+            "sha256": "b59dd55ffc4a2e6cd3ab446ff1e95a2d254267a57cd02648cb712ab24d9e84f9"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 150578,
+            "byte_end_exclusive": 151414,
+            "line_start": 3128,
+            "line_end_inclusive": 3144,
+            "byte_count": 836,
+            "lf_count": 17,
+            "terminal_lf_count": 2,
+            "sha256": "b59dd55ffc4a2e6cd3ab446ff1e95a2d254267a57cd02648cb712ab24d9e84f9"
+          }
+        }
+      ],
+      "region_id": "original-region-137",
+      "original_opening_line": "**27.9 定理 C 的有序三坐标几何。** 当 \\(k=3\\),按值排列",
+      "current_type_attachments": [
+        {
+          "kind": "numbered entry",
+          "label": "27.9",
+          "current": {
+            "byte_start": 150541,
+            "byte_end_exclusive": 151414,
+            "line_start": 3128,
+            "line_end_inclusive": 3144,
+            "byte_count": 873,
+            "lf_count": 17,
+            "terminal_lf_count": 2,
+            "sha256": "8babb41814eabef8e8f006181969649674233972935f611d13d159fdf579abb6"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/8babb41814eabef8e8f006181969649674233972935f611d13d159fdf579abb6",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8babb41814eabef8e8f006181969649674233972935f611d13d159fdf579abb6.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "section_assessment_reference": "section 27",
+      "pending_overlap": false
+    },
+    {
+      "original": {
+        "byte_start": 186980,
+        "byte_end_exclusive": 188327,
+        "line_start": 3375,
+        "line_end_inclusive": 3401,
+        "byte_count": 1347,
+        "lf_count": 27,
+        "terminal_lf_count": 2,
+        "sha256": "0a25105d115a6a761fb370db859a427dd4712208e7bb8935c43f5f4b74324ba6"
+      },
+      "active_original_bytes": 1347,
+      "classification": "mathematics / original logical-status or citation / structural grammar retained",
+      "recovery": [
+        {
+          "recovery_span_index": 515,
+          "original": {
+            "byte_start": 186980,
+            "byte_end_exclusive": 186988,
+            "line_start": 3375,
+            "line_end_inclusive": 3375,
+            "byte_count": 8,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "81f2adfae0482945a0a1a3499038c1278685789f1f6945bb3de5c347fb23a43f"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 151414,
+            "byte_end_exclusive": 151422,
+            "line_start": 3145,
+            "line_end_inclusive": 3145,
+            "byte_count": 8,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "81f2adfae0482945a0a1a3499038c1278685789f1f6945bb3de5c347fb23a43f"
+          }
+        },
+        {
+          "recovery_span_index": 516,
+          "original": {
+            "byte_start": 186988,
+            "byte_end_exclusive": 188327,
+            "line_start": 3375,
+            "line_end_inclusive": 3401,
+            "byte_count": 1339,
+            "lf_count": 27,
+            "terminal_lf_count": 2,
+            "sha256": "fcc160889726933beb8a6ac650c606803d83a604481c01f48e347a43937e7333"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 151452,
+            "byte_end_exclusive": 152791,
+            "line_start": 3145,
+            "line_end_inclusive": 3171,
+            "byte_count": 1339,
+            "lf_count": 27,
+            "terminal_lf_count": 2,
+            "sha256": "fcc160889726933beb8a6ac650c606803d83a604481c01f48e347a43937e7333"
+          }
+        }
+      ],
+      "region_id": "original-region-138",
+      "original_opening_line": "**27.10 不同素数的精确整数 guard 与不可能的等号。** 在原三素数箱体中,",
+      "current_type_attachments": [
+        {
+          "kind": "numbered entry",
+          "label": "27.10",
+          "current": {
+            "byte_start": 151414,
+            "byte_end_exclusive": 152791,
+            "line_start": 3145,
+            "line_end_inclusive": 3171,
+            "byte_count": 1377,
+            "lf_count": 27,
+            "terminal_lf_count": 2,
+            "sha256": "0a169a4a8d6b44d6234405400b6be9fe79c6950251e95a762310d5e316a4aecb"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/0a169a4a8d6b44d6234405400b6be9fe79c6950251e95a762310d5e316a4aecb",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0a169a4a8d6b44d6234405400b6be9fe79c6950251e95a762310d5e316a4aecb.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "section_assessment_reference": "section 27",
+      "pending_overlap": false
+    },
+    {
+      "original": {
+        "byte_start": 188327,
+        "byte_end_exclusive": 190232,
+        "line_start": 3402,
+        "line_end_inclusive": 3443,
+        "byte_count": 1905,
+        "lf_count": 42,
+        "terminal_lf_count": 2,
+        "sha256": "88f1359a3809f3f7a471bdafe29e24df5b9ba3ff18c064414d20a400972c17a1"
+      },
+      "active_original_bytes": 1905,
+      "classification": "mathematics / original logical-status or citation / structural grammar retained",
+      "recovery": [
+        {
+          "recovery_span_index": 517,
+          "original": {
+            "byte_start": 188327,
+            "byte_end_exclusive": 188335,
+            "line_start": 3402,
+            "line_end_inclusive": 3402,
+            "byte_count": 8,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "7a96495831c55b6676b9beb2df6f2b529df300870186770e7e78e55dd68f84ff"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 152791,
+            "byte_end_exclusive": 152799,
+            "line_start": 3172,
+            "line_end_inclusive": 3172,
+            "byte_count": 8,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "7a96495831c55b6676b9beb2df6f2b529df300870186770e7e78e55dd68f84ff"
+          }
+        },
+        {
+          "recovery_span_index": 518,
+          "original": {
+            "byte_start": 188335,
+            "byte_end_exclusive": 190232,
+            "line_start": 3402,
+            "line_end_inclusive": 3443,
+            "byte_count": 1897,
+            "lf_count": 42,
+            "terminal_lf_count": 2,
+            "sha256": "fd59d40249f3a68a82ba4b451d0199d663dd62c07fc2737b5791a8e3e8606cbb"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 152829,
+            "byte_end_exclusive": 154726,
+            "line_start": 3172,
+            "line_end_inclusive": 3213,
+            "byte_count": 1897,
+            "lf_count": 42,
+            "terminal_lf_count": 2,
+            "sha256": "fd59d40249f3a68a82ba4b451d0199d663dd62c07fc2737b5791a8e3e8606cbb"
+          }
+        }
+      ],
+      "region_id": "original-region-139",
+      "original_opening_line": "**27.11 定理 D:每条固定正整数指数射线的精确截断。** 固定不同素数三元组",
+      "current_type_attachments": [
+        {
+          "kind": "numbered entry",
+          "label": "27.11",
+          "current": {
+            "byte_start": 152791,
+            "byte_end_exclusive": 154726,
+            "line_start": 3172,
+            "line_end_inclusive": 3213,
+            "byte_count": 1935,
+            "lf_count": 42,
+            "terminal_lf_count": 2,
+            "sha256": "90781318d8f9b56afc106e49cf1070f5e3340c26d67dc61c678a726422c9564c"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/90781318d8f9b56afc106e49cf1070f5e3340c26d67dc61c678a726422c9564c",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/90781318d8f9b56afc106e49cf1070f5e3340c26d67dc61c678a726422c9564c.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "section_assessment_reference": "section 27",
+      "pending_overlap": false
+    },
+    {
+      "original": {
+        "byte_start": 190232,
+        "byte_end_exclusive": 191305,
+        "line_start": 3444,
+        "line_end_inclusive": 3461,
+        "byte_count": 1073,
+        "lf_count": 18,
+        "terminal_lf_count": 2,
+        "sha256": "2eeae39c6171c3e013d159a804b3b1c0d26da6bc8926c15a4f628baab45422b6"
+      },
+      "active_original_bytes": 1073,
+      "classification": "mathematics / original logical-status or citation / structural grammar retained",
+      "recovery": [
+        {
+          "recovery_span_index": 519,
+          "original": {
+            "byte_start": 190232,
+            "byte_end_exclusive": 190240,
+            "line_start": 3444,
+            "line_end_inclusive": 3444,
+            "byte_count": 8,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "6df1aa9689717893a52f1a70657ae5f2982fad909a7ef31601ef49500f501f04"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 154726,
+            "byte_end_exclusive": 154734,
+            "line_start": 3214,
+            "line_end_inclusive": 3214,
+            "byte_count": 8,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "6df1aa9689717893a52f1a70657ae5f2982fad909a7ef31601ef49500f501f04"
+          }
+        },
+        {
+          "recovery_span_index": 520,
+          "original": {
+            "byte_start": 190240,
+            "byte_end_exclusive": 191305,
+            "line_start": 3444,
+            "line_end_inclusive": 3461,
+            "byte_count": 1065,
+            "lf_count": 18,
+            "terminal_lf_count": 2,
+            "sha256": "e653265582f1ec15bc99c2d742fa34489299ff8e2aeacbc51ca1afdecfb11380"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 154764,
+            "byte_end_exclusive": 155829,
+            "line_start": 3214,
+            "line_end_inclusive": 3231,
+            "byte_count": 1065,
+            "lf_count": 18,
+            "terminal_lf_count": 2,
+            "sha256": "e653265582f1ec15bc99c2d742fa34489299ff8e2aeacbc51ca1afdecfb11380"
+          }
+        }
+      ],
+      "region_id": "original-region-140",
+      "original_opening_line": "**27.12 可选非空域界及射线量词的限制。** 令 \\(Q=\\sum_i\\log p_i\\) 固定,",
+      "current_type_attachments": [
+        {
+          "kind": "numbered entry",
+          "label": "27.12",
+          "current": {
+            "byte_start": 154726,
+            "byte_end_exclusive": 155829,
+            "line_start": 3214,
+            "line_end_inclusive": 3231,
+            "byte_count": 1103,
+            "lf_count": 18,
+            "terminal_lf_count": 2,
+            "sha256": "7caeab1342641a08d027850acee1fdeaccb28c99dca3633b3be55898f656085c"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/7caeab1342641a08d027850acee1fdeaccb28c99dca3633b3be55898f656085c",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7caeab1342641a08d027850acee1fdeaccb28c99dca3633b3be55898f656085c.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "section_assessment_reference": "section 27",
+      "pending_overlap": false
+    },
+    {
+      "original": {
+        "byte_start": 191305,
+        "byte_end_exclusive": 193056,
+        "line_start": 3462,
+        "line_end_inclusive": 3496,
+        "byte_count": 1751,
+        "lf_count": 35,
+        "terminal_lf_count": 2,
+        "sha256": "718c7a638ea53a8bb946043acc9159082172653cb462be3182c3bf52747cece7"
+      },

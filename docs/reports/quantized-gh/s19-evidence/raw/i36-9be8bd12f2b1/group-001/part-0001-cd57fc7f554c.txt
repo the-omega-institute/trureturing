@@ -1,0 +1,800 @@
+{
+  "schema": "s19-finite-distance-dual-adoption-v1",
+  "scope": {
+    "flight": "qgh0911-i36-s19-finite-distance-dual-adoption",
+    "stage": "implementation",
+    "attempt": 1,
+    "retry_budget": 1,
+    "base": "4f66754592b3a980b5a23fc14171e9357afbeca3",
+    "branch": "lane/math/quantized-gh-pure-s19-0910",
+    "work_target": "/Users/auricstudio/trureturing-qgh-pure-s19",
+    "new_address_range": [
+      "30.52",
+      "30.85"
+    ],
+    "status": "implemented paper proofs and precise body repair; independent review outstanding"
+  },
+  "prerequisite_intake": {
+    "completed_at_utc": "2026-09-10T16:41:52.283461+00:00",
+    "complete_before_any_mutation": true,
+    "files": [
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/s19-finite-distance-dual-adoption-i36-0911.md",
+        "bytes": 287435,
+        "sha256": "6ab3bb4bbb8ac4a56b60bc4ffdde8617e4370eded5f73e6736ecfa81dd024735"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/goal-s19-finite-distance-dual-adoption-c101-0911.json",
+        "bytes": 273919,
+        "sha256": "6c28cdfb8c3c6fa699b00c3bd26a8d3e6afc165eccf4c914e8da9a89b46aaaac"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/authoritative-CLAUDE-snapshot-i36-0911.md",
+        "bytes": 286521,
+        "sha256": "1377d4ce048d42dc40911bdb9a24bc5a69aa507c751913f54a0513d5930df592"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/pro-finite-distance-two-sided-recovered-visible-c95-0910.json",
+        "bytes": 29767,
+        "sha256": "256d01e524f3dff5153b8f3e994040da537c14f29263127a738f66078209d48a"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/pro-local-optimum-certificate-recovered-visible-c96-0910.json",
+        "bytes": 29604,
+        "sha256": "0bd3cb477f4671f3515da0d9b9bcf82f5f1f778b84ce4619486f4bd4857b3725"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/pro-prime-support-dual-obstruction-recovered-visible-c97-0911.json",
+        "bytes": 30200,
+        "sha256": "e06f1200c3fcb38381f64af69e50883d96c99962c88ef6b126acab747543e6aa"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/c95-recovered-two-sided-distance-full-intake-0910.json",
+        "bytes": 1991,
+        "sha256": "bc2f39e17a162ed8581393fee10835c5dbe5baa0bbf280b16c6acbe6e9587e7f"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/c96-recovered-local-optimum-full-intake-0910.json",
+        "bytes": 2192,
+        "sha256": "61ea5c286a582f38d5527f7303b0cbf0050acd41c347723c7e51b25862f789ab"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/c97-recovered-prime-support-full-intake-0911.json",
+        "bytes": 2974,
+        "sha256": "49ba86d66bbbd9994e26730e4214274efa9235bef33387fd87875dea4b85bdb6"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/s19-full-proof-review-r3-full-intake-0911.json",
+        "bytes": 3475,
+        "sha256": "b9285651267cd417162d8374ae964e5482057d4f77df39542dfb6c732b276ce1"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/s19-full-proof-quality-result-r3-0911.json",
+        "bytes": 19206,
+        "sha256": "3670add8d220a4fc9490cc32cba44da571b44ef766882c011e2c1e0b2379e24c"
+      },
+      {
+        "path": "/private/tmp/qgh-boundaries-0908/caller-baez-duarte-theorem1-1-check-0910.json",
+        "bytes": 2184,
+        "sha256": "677ac72c3bb96d5981c3ee0a3806d15e5e553d3b3bcb64ac9fd076d93afe23d8"
+      },
+      {
+        "path": "/Users/auricstudio/trureturing-qgh-pure-s19/AGENTS.md",
+        "bytes": 186,
+        "sha256": "55ea1ad3a1e3036244ead614299f85b7d4b62abb0afde1014b2f236bf47f77f7"
+      },
+      {
+        "path": "/Users/auricstudio/trureturing-qgh-pure-s19/CLAUDE.md",
+        "bytes": 275497,
+        "sha256": "0a1a7a4ea1c04e2f879165dc9ec3e1224c84dd28836a610688a306d5baeb5d9b"
+      },
+      {
+        "path": "/Users/auricstudio/trureturing-qgh-pure-s19/agents/CONTEXT.md",
+        "bytes": 3335,
+        "sha256": "c72c2bc5d0678d55a10943eaed7cc0da6ffe78fc6fda3783312b1b05d01d53c3"
+      },
+      {
+        "path": "/Users/auricstudio/trureturing-qgh-pure-s19/docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 274562,
+        "sha256": "bc500324952d4c4b7ba8120745c6d061d86c0cff650565545b5da4136e5de804"
+      },
+      {
+        "path": "/Users/auricstudio/trureturing-qgh-pure-s19/docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "bytes": 218517,
+        "sha256": "53035b35dcb1cecdbd4cf87f6dbd92645ed1b17096632f7c789cbc03f97ad617"
+      },
+      {
+        "path": "/Users/auricstudio/trureturing-qgh-pure-s19/docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+        "bytes": 7519398,
+        "sha256": "ac96c8675ae93c6eb4c76e63e010bd574d9f395d7d2742a27198bfc1982e489b"
+      },
+      {
+        "path": "/Users/auricstudio/trureturing-qgh-pure-s19/docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+        "bytes": 2386329,
+        "sha256": "9abba55e13c08d0f784a6c958416c5cfb4245872ad087ccba2f385469f23a8ec"
+      },
+      {
+        "path": "/Users/auricstudio/.claude/plugins/cache/consensus-rnd/consensus-rnd/1.0.0-beta.42/skills/sshx/SKILL.md",
+        "bytes": 63278,
+        "sha256": "8e56f6b4c5978e61f42cd3fd2e897174b45b8e69923c4e96c784a7e9e54e636b"
+      },
+      {
+        "path": "/Users/auricstudio/.claude/plugins/cache/consensus-rnd/consensus-rnd/1.0.0-beta.42/skills/sshx/CODEX_WORKER_SPEC.md",
+        "bytes": 29223,
+        "sha256": "822872abada03b36a52384978909602a601cc937e7a4063683eb4b08e350fc02"
+      },
+      {
+        "path": "/private/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-s19-full-proof-architecture-r3/attempt-1/result.json",
+        "bytes": 21638,
+        "sha256": "e4a846ed18bd1e306f9ed48d580212f69053c38925eb0304e81da48f9369b6a7"
+      },
+      {
+        "path": "/private/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-s19-full-proof-tests-r3/attempt-1/result.json",
+        "bytes": 18923,
+        "sha256": "eb64dcb256342b909a791c026d9cca3696d5eb8a4463482421602f283fc94db5"
+      }
+    ],
+    "read_coverage": {
+      "source": "All 176965 Unicode characters / 5452 LF lines read in bounded contiguous ranges.",
+      "report": "All 187004 Unicode characters read; fixed inventory [130886,175070) parsed exhaustively (234 rows), all semantic bytes displayed.",
+      "maps": "Both entire JSONs parsed; every leaf traversed. All semantic strings displayed in 75633-character exact-deduplicated projection or matched verbatim to fully read source/report. Inventories parsed; no large inventory copied into new map.",
+      "authority": "Complete local authority read; exact equal-block correspondence and all full current differences consumed, including complete 10.2 delta.",
+      "brief_and_goal": "Complete GoalArtifact; brief embedded Goal equality verified and every remaining brief byte displayed.",
+      "primary_and_evidence": "All three full primary envelopes and all eight explicit supporting evidence files read; result log_ref contents stayed opaque.",
+      "pinned": "Complete exact pinned SKILL.md and CODEX_WORKER_SPEC.md consumed; codex-cli 0.154.0."
+    },
+    "display_gaps": "Initial brief/local authority/map schema truncations closed by bounded reads. Later primary schema display truncation does not replace or affect already completed full-envelope intake.",
+    "observed_commands": "Read-only bounded Python/text/JSON/hash comparisons, rg, Git status/branch/HEAD and codex --version. No math execution, test, ingest or Git mutation.",
+    "known_exits": "All intake commands reported exit 0 except scoped nested-instruction discovery rg --files -g AGENTS.md -g CLAUDE.md docs agents Meta: exit 1 with empty output (no nested files).",
+    "scope": "No neighboring worktree, worker log, opaque log_ref or transitive store accessed."
+  },
+  "provenance_and_review_limits": {
+    "worker": "I36 implementation, Codex CLI 0.154.0; pinned sshx beta.42; repo-prior-exposed; no delegation or native subagents; no independent verdict.",
+    "primary_recovery": {
+      "C95": {
+        "failed_source_task": "993d2d90-fbc4-4eb2-ac1d-efa9f19eb9d6",
+        "completed_import": "989ad9eb-ef44-42b6-8db0-f8c25f0f290f"
+      },
+      "C96": {
+        "failed_source_task": "2ca4a859-f878-42d0-b8e2-c521335e08e3",
+        "completed_import": "8f0ad5aa-8bd6-4de5-862c-bceb3322a9d7"
+      },
+      "C97": {
+        "failed_source_task": "4b113aea-c074-4750-98bd-40363326d9eb",
+        "failure": "prompt_delivery_uncertain",
+        "completed_import": "66de8069-0171-4543-9caa-d8a065282093"
+      }
+    },
+    "faithful_input_limit": "Supplied recovered visible text is the available primary evidence, not recovered original author serialization. Original failed formal tasks and budgets stay failed/closed; completed imports and their timestamps do not attest generation time or invocation-level serving identity. Primary authors and caller checks are not independent review. External prior exposure and unknown account/project memory are not sterile-prior evidence.",
+    "literature": "Actual citation [B1] is https://arxiv.org/pdf/math/0205003v1, p.1 definitions and p.2 Theorem 1.1. Author page-image access is author-reported; the supplied caller check covers the exact closure statement and normalization. I36 performed no fresh browser/literature retrieval and does not reprove the external analytic theorem. Rendered pro-gram-proof-complete-inputs-… and arXiv+1 artifacts are not stand-alone references.",
+    "C98": {
+      "architecture": "reject",
+      "tests": "reject",
+      "quality": "abstain",
+      "grounded_common_defect": "Original active 27.18 contains operational recording, unresolved classifications and batch totals; replaced in this source with full finite-ID/cardinality definition and conditional implication.",
+      "mathematics": "No separate mathematical defect was established by those reviews; that is not approval.",
+      "unresolved_review": "Quality could not read I31 map and only partly read I33 evidence; exact canonical/CAS/YAML evidence and changed representation ownership require fresh independent full-current review. New explicit ownership/recovery representation and local checks repair the implementation artifact, not the historical access limitation or review verdict."
+    },
+    "preserved_historical_limits": "Earlier carrier failures, caller errors, I31 late cumulative intake and prior approvals retain exactly their historical scope in immutable report/map evidence. No author, caller or implementation self-check is promoted to an independent vote.",
+    "mathematical_open_obligations": [
+      "Value/sign of inf_N D_N and RH remain unresolved.",
+      "No unconditional cross-N success cutoff, finite RH decision, infinite coefficient-attainment theorem, coordinate-convergence sufficiency or squarefree-dictionary sufficiency is supplied.",
+      "Original general-prime, common-height, shape/slab and other standing mathematical questions remain unchanged."
+    ],
+    "implementation_limits": "All new algorithms and predicates are mathematical definitions with proofs. No mathematical algorithm was implemented or executed, and no numerical slot eligibility/sign certificate, software correctness, practical efficiency, optimal-constant, novelty or Lean/kernel claim is made.",
+    "ownership_and_delivery": "This map alone owns the new current adoption/recovery inventory; old maps own their immutable historical inventories. Independent proof/fidelity/representation approval, caller seal, ordinary gates, downstream integration and ordered delivery remain outstanding. No CI/MERGED or whole-goal completion claim."
+  },
+  "primary_correspondence": [
+    {
+      "input": "C95",
+      "identity": {
+        "path": "/tmp/qgh-boundaries-0908/pro-finite-distance-two-sided-recovered-visible-c95-0910.json",
+        "bytes": 29767,
+        "lf": 133,
+        "terminal_lf": 0,
+        "sha256": "256d01e524f3dff5153b8f3e994040da537c14f29263127a738f66078209d48a"
+      },
+      "leaf_correspondence": [
+        {
+          "pointer": "/conclusion/verdict",
+          "value_sha256": "b6a91f60a335157c252542f12a5fb513c001b3d74553e0f4216a2de18792370a",
+          "disposition": "author/status/transport/implementation metadata only",
+          "binding": "/provenance_and_review_limits"
+        },
+        {
+          "pointer": "/conclusion/mathematical_status",
+          "value_sha256": "5e3aec27e9921e0fa5243dc75a927ff87f67a90a1f2b63e864260d14370f2170",
+          "disposition": "author/status/transport/implementation metadata only",
+          "binding": "/provenance_and_review_limits"
+        },
+        {
+          "pointer": "/conclusion/status_scope",
+          "value_sha256": "7e7fcaef0ef69bf1ec0081500803ba4777ed417fcf9c818bf890988e4ecde46d",
+          "proof_addresses": [
+            "30.52",
+            "30.53",
+            "30.54",
+            "30.57",
+            "30.58",
+            "30.59",
+            "30.60",
+            "30.62"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/premise_check/candidate_1",
+          "value_sha256": "b34f21eb3ef3216aa894168312c825bc5f7622f84fb3fba3bc2128e358b1a57f",
+          "proof_addresses": [
+            "30.53"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/premise_check/candidate_2",
+          "value_sha256": "aac60fb32b0a2688ddca6d7c39c5d9fa9a44a7e6849b0d6ea1430c5243c46184",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/premise_check/necessary_distinctions",
+          "value_sha256": "92d0e0f83a445f7e3d4155cc6b9d9d8b43f2e211e5e6b6a15753abe94803a722",
+          "proof_addresses": [
+            "30.52",
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/premise_check/known_correct_form",
+          "value_sha256": "52c730957759216adb3da94a0cfb2f519dad42118d9e0e4dbb77c75cba8b74ef",
+          "proof_addresses": [
+            "30.57"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/premise_check/prior_results",
+          "value_sha256": "f239aff9ef3436fe81b7519a17ad631f4a951b13e1c1afee8d14d029226ba17d",
+          "proof_addresses": [
+            "30.61"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/definitions/domains_and_inner_product",
+          "value_sha256": "c96914b2b5dbf00c9531ebe5cf1d251f858bba95203690a09d0614edc5229828",
+          "proof_addresses": [
+            "30.52"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/definitions/unchanged_model",
+          "value_sha256": "6b5b4aa4eca16e1a96568f4c25b26fe93836603c24d35c247b396dcde66854de",
+          "proof_addresses": [
+            "30.52"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/definitions/unscaled_synthesis",
+          "value_sha256": "dd25acd0a548148f58ba97600bb4ca45cec43aa760c9ae7ca865fe4e63add78b",
+          "proof_addresses": [
+            "30.52"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/definitions/transformed_functions",
+          "value_sha256": "0d50db09b19b92c0498e6f4d28c7ca6283a1e2c6d794291fd8a65be67550913b",
+          "proof_addresses": [
+            "30.52"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_1_explicit_positive_distance_bound/statement",
+          "value_sha256": "c8460e448553beda3fed9a5bcce8a142708baebad9d2fbb63fa8131b10f216d1",
+          "proof_addresses": [
+            "30.53"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_1_explicit_positive_distance_bound/periodicity_and_support",
+          "value_sha256": "07109c72cced2f902dd0977b48f837759bab63e3e8710018cc053c248311fd0b",
+          "proof_addresses": [
+            "30.53"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_1_explicit_positive_distance_bound/retained_integrals",
+          "value_sha256": "14d68e44dcbfcefff7e6358cc7837755e4da0b7965a9d8cd94e9d141fa275d64",
+          "proof_addresses": [
+            "30.53"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_1_explicit_positive_distance_bound/complex_completed_square",
+          "value_sha256": "dc82ae29ae7d1a902e0855131001e11c1af3b9942737435654149c3a9ad93b78",
+          "proof_addresses": [
+            "30.53"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_1_explicit_positive_distance_bound/candidate_bound",
+          "value_sha256": "045af428d8071788a88cfed07b9ed36824f8fcfce562932a187a18ae508884c9",
+          "proof_addresses": [
+            "30.53"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_1_explicit_positive_distance_bound/stronger_rational_bound",
+          "value_sha256": "23e9d33c85812f5e98d522704f138be9f6c312fa9823a6d3ea1b0a7a6dfdb316",
+          "proof_addresses": [
+            "30.53"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_1_explicit_positive_distance_bound/endpoint_and_tail_limits",
+          "value_sha256": "6813641e218e32ac6eec01d4ea376c8bcf2bdb47adee3cefdcf32f5f2b598200",
+          "proof_addresses": [
+            "30.53"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_2_rational_coercivity_and_independence/matrix_definition",
+          "value_sha256": "bdd493bd35f694db502a59b1ff65ce6588c4b5d7bf57be6d3918f10081fdbc3f",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_2_rational_coercivity_and_independence/explicit_rational_entries",
+          "value_sha256": "834584c92af9aea70870b31453a1fe6686d484e1954905f7f32261179b6fb076",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_2_rational_coercivity_and_independence/quadratic_form",
+          "value_sha256": "504f215cf7b2358a0fd0e49a56d45ddfa65ac91add4bed7c4be85fd825454c48",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_2_rational_coercivity_and_independence/positive_definiteness_proof",
+          "value_sha256": "f5f7e1fcf60ea760880c2ecc09d39387a1a28330795babd09f230e1d1bfc53bb",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_2_rational_coercivity_and_independence/comparison_with_full_norm",
+          "value_sha256": "4df088fcd5746ccac7f5b9fbd3ab301013c3c45a2a311e8a27966bb5d0ed323c",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_2_rational_coercivity_and_independence/rational_coercivity_constant",
+          "value_sha256": "0a32615356ebe849f8b967e42b69b5e6648870879ec788b9e2bba3fef57664c6",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_2_rational_coercivity_and_independence/determinant_trace_inequality_proof",
+          "value_sha256": "d2dbcafee76c106d84882ee6ee71a377636a5f2645c035ea4777523fcfcbe487",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_2_rational_coercivity_and_independence/finite_integer_verification",
+          "value_sha256": "0f68f641df894c2524cb9ee84dd0ee7f692edf1838454e5e0fa64fbc514d59d6",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_2_rational_coercivity_and_independence/N_equals_1",
+          "value_sha256": "9f0d0bdfaf76127442a32aa88b88149bb86efb7d0d54d028a7710d4fe44e1531",
+          "proof_addresses": [
+            "30.54"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_3_optimizer_and_certified_coefficient_box/basic_norm_upper_bound",
+          "value_sha256": "14e622e1313d8f9eb79d3b83c3f390a99d6bab652f3d8ae79894e3d1ddf9649f",
+          "proof_addresses": [
+            "30.55"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_3_optimizer_and_certified_coefficient_box/existence_and_uniqueness",
+          "value_sha256": "43bb6d808429f30cf09ef22b8e434fe85b15db70a134f1e1b941643434121a48",
+          "proof_addresses": [
+            "30.55"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_3_optimizer_and_certified_coefficient_box/real_reduction",
+          "value_sha256": "f58d601fa56be566d20d929035ecdab28e8249e799551b24a341258636a33e81",
+          "proof_addresses": [
+            "30.55"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_3_optimizer_and_certified_coefficient_box/coefficient_bound",
+          "value_sha256": "239784c2ee4cfdcbb178ced8f4d27f281bc6f621cbbbb314a717694fe0481179",
+          "proof_addresses": [
+            "30.55"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_3_optimizer_and_certified_coefficient_box/no_unknown_optimizer_input",
+          "value_sha256": "5f1cc264938a50b563935512dfdef50eac68cd806e880a59b592ec0563765663",
+          "proof_addresses": [
+            "30.55"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_3_optimizer_and_certified_coefficient_box/exact_optimality_gap",
+          "value_sha256": "518b571439b07de1c411440c88bdff54588650e7423fea527ca6b4ccc21f946c",
+          "proof_addresses": [
+            "30.55"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/C93_rational_residual_envelope/definition_recalled",
+          "value_sha256": "eb1eccbde1b80ca76a6dcb25b40e6017a0db087f8b1a6c0e1bf243e0eb944070",
+          "proof_addresses": [
+            "30.56"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/C93_rational_residual_envelope/analytic_justification",
+          "value_sha256": "108ac64ee9bfbdb2ee695a0736b24a1cd8634b227816b6f0961fb1ff370b4660",
+          "proof_addresses": [
+            "30.56"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/C93_rational_residual_envelope/weighted_error_proof",
+          "value_sha256": "965436a3ad25119b1c8a09a8a3a4096a8f2e64dd292791cea1de10bd3bec1878",
+          "proof_addresses": [
+            "30.56"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/C93_rational_residual_envelope/box_uniform_constants",
+          "value_sha256": "552471ae20c7444b5b0c87bda940a6a38de657509c44e5ac0e586367ad71eafe",
+          "proof_addresses": [
+            "30.56"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/C93_rational_residual_envelope/last_inequality",
+          "value_sha256": "678752e2b411c87bb4bd7e9a52beb3d6633297c9a19592ced97df1b6dddbaae2",
+          "proof_addresses": [
+            "30.56"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/C93_rational_residual_envelope/zero_and_sign_cases",
+          "value_sha256": "5a78924429f6cd84974d5708ba39c9e011771f18fa09762efa7656be9bf9f607",
+          "proof_addresses": [
+            "30.56"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_4_complete_grid_two_sided_optimum_certificate/grid_definition",
+          "value_sha256": "3871c32ec8b875d388d9f3f377653c7cd4de2943901215d98314ca11dba7bced",
+          "proof_addresses": [
+            "30.57"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_4_complete_grid_two_sided_optimum_certificate/coverage_proof",
+          "value_sha256": "f6060e3f3a8b963e4c16944a24118a998973eafa140754683e935b1dc8c3bbde",
+          "proof_addresses": [
+            "30.57"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_4_complete_grid_two_sided_optimum_certificate/optimality_mesh_error",
+          "value_sha256": "95876599a346aad57fbf93d7f86f4a4f39977b92087a4321f6aa26317cc749dc",
+          "proof_addresses": [
+            "30.57"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_4_complete_grid_two_sided_optimum_certificate/uniform_continuity_check",
+          "value_sha256": "3a868a7cbc542ac4b45f89e6d2f39d44db2ab43b96777dc304b426f0e084ef4f",
+          "proof_addresses": [
+            "30.57"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_4_complete_grid_two_sided_optimum_certificate/finite_rational_minimum",
+          "value_sha256": "296453ef3c4cee42b81b863d834c59fc1f8a8609046c750f6b25bef3c94486e8",
+          "proof_addresses": [
+            "30.57"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_4_complete_grid_two_sided_optimum_certificate/upper_bound_proof",
+          "value_sha256": "0f7bf10879280666424c4ce509c67b250efd6155dc017551fd5495e15f67d1eb",
+          "proof_addresses": [
+            "30.57"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_4_complete_grid_two_sided_optimum_certificate/lower_bound_proof",
+          "value_sha256": "53b339f54890cbd071d9dee31bf4953b42cdece17c099a0b15dc6c3e9ec605a8",
+          "proof_addresses": [
+            "30.57"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_4_complete_grid_two_sided_optimum_certificate/why_this_certifies_the_optimum",
+          "value_sha256": "33cb911cb385e2f221bf4160e4b7deac3ea5b4fe567000963f4966d149ff3734",
+          "proof_addresses": [
+            "30.57"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/total_generation_algorithm/input_and_output",
+          "value_sha256": "0f430890aff7f55e52226216662c8648796086b24d40c0e402a36a99ce4746f9",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/total_generation_algorithm/finite_constants",
+          "value_sha256": "70e56b4877942b2c9e4e49091eab623c716bd16d62ecdb7554b19d60b7ea134d",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/total_generation_algorithm/explicit_parameters",
+          "value_sha256": "26288586b535c9c6fc571cef71ce071ebda2f8fe6d61e510cfa3c12ffd3e1051",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/total_generation_algorithm/strict_width_guarantee",
+          "value_sha256": "b2992aa68083eb96e9daa251a6ecdad206e365176f29dcb23e6fc8d158beb249",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/total_generation_algorithm/grid_and_output",
+          "value_sha256": "374f3bf813842661d9e8bf6dde5f9b333535fe9e03981116e6b6f4219c39c763",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/total_generation_algorithm/total_termination_proof",
+          "value_sha256": "a3408c5925194c2d1ef51b75752a8f1c6e78ad07ae06c160e0ded519c7b25b7d",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/total_generation_algorithm/uniformity_and_efficiency",
+          "value_sha256": "39f77b986b41cf90c0ebfd3e343b518864f2745b02065538746a87e2fcf98f69",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/natural_pairing",
+          "value_sha256": "bf59f897712fdcd5cd952b748e747e7d75703019f255d19d8a5ffb50fd6238a4",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/signed_rational_encoding",
+          "value_sha256": "c6a5462243271bb39d1ea4a230a6c677268bc25e9205a731f582e3978abf4dde",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/finite_lists",
+          "value_sha256": "50564d39d69a757b83e4441b9473bac1ebe8308aa50441ec7edf5135601186f7",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/canonical_grid_indexing",
+          "value_sha256": "af7e291179cd8f9e88f6967ec933acb3036a2509e924d6c6567e90761ff2d112",
+          "proof_addresses": [
+            "30.58"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/certificate_record",
+          "value_sha256": "b8b01d5787eeb0d61b00b7de7d2572edeed2c625e5e5c1d5a5a68172b6685c03",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/verifier_domain",
+          "value_sha256": "280576e510bbc12316d3300aa53612fdbe321776dca940c465dbc941b8bdef33",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/recompute_constants",
+          "value_sha256": "5bf23069b9eecbb282d4a8d5a92574f1a7729bca1ffb5186ed9c6fa7b2eb8de3",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/complete_table_check",
+          "value_sha256": "03b06bf21922d34393afbd99bfbc05b0a38c7abe2d34429e378b9aa35ff829b4",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/minimum_and_endpoints",
+          "value_sha256": "f7f75bd27ae444f5615bcfe2e060b4768cc90092fb9a87df8cc08a99528c7291",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/integer_arithmetic_only",
+          "value_sha256": "1d6d4efec3b07cd4bd79b5542ff51ee0022105403d393c1542da86ef335044f3",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/decidability",
+          "value_sha256": "b6017475d603dcb1e8cd52d28126ccf0324dd50508da54972a3d988247b10c46",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/soundness",
+          "value_sha256": "1aaa1efc3cfb18cae4eb964db3a3995f17ad84de7c85cf14adb8aeb628cbe9d3",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/existence_and_generation",
+          "value_sha256": "2b13956af770f292fbcfa12e782e04fb4c2c615735bd940f94dd77e843cf54aa",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/finite_integer_encoding_and_VerifyOpt/implementation_boundary",
+          "value_sha256": "394c5796b3862bea0e35b13888aa05d53e8d9c33d3cc0cc4c5529cab8f04b06c",
+          "proof_addresses": [
+            "30.59"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_rational_threshold_certification/predicates",
+          "value_sha256": "4d69460473bb1f326680de5e6a6974147365bd92dc9d9a087e95452a27f6f026",
+          "proof_addresses": [
+            "30.60"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_rational_threshold_certification/soundness",
+          "value_sha256": "38104ddace2c47c51d1297f83650481303204a59c54d10abd8f4ea306f7d790b",
+          "proof_addresses": [
+            "30.60"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_rational_threshold_certification/completeness",
+          "value_sha256": "18fc5d8a35fa3682363b8c865d9112819b297a16098a203a577cbb0a7a49ff77",
+          "proof_addresses": [
+            "30.60"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_rational_threshold_certification/termination_and_equality",
+          "value_sha256": "9ac6bb73cdd28dde72828833f7d049ad13c86c028e439206a8847d37d5e362d3",
+          "proof_addresses": [
+            "30.60"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_rational_threshold_certification/threshold_domain",
+          "value_sha256": "497d7ae30117768174a8a4c8074b3b6a1f38768eb43ea372dac01a1c0c8ed5f9",
+          "proof_addresses": [
+            "30.60"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
