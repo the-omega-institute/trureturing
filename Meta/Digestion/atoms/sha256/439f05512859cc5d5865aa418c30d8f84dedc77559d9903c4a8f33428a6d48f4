@@ -1,0 +1,57 @@
+## 40. Discrete particle counts, continuous response, and density concentration
+
+The microscopic sample space is discrete: each vertex is occupied or vacant,
+and only independent vertex subsets are allowed. The activity varies
+continuously, and a finite sum over those discrete states produces a polynomial
+in that activity. For example, on two adjacent vertices the three configurations
+are empty, left occupied and right occupied. Direct calculation gives
+
+\[
+ Z(\lambda)=1+2\lambda,\qquad
+ \mathbb E N=\frac{2\lambda}{1+2\lambda},\qquad
+ \operatorname{Var}N=\frac{2\lambda}{(1+2\lambda)^2}.
+\]
+
+Thus integer-valued occupation and smooth response functions coexist in the
+same model. The complex neighborhood is an analytic tool for controlling
+these responses uniformly. It does not assert that physical space is discrete,
+introduce dynamical time, or establish a spatial continuum limit.
+
+For a nonempty domain of size n, the new source uses the actual finite PMF to
+form the centered density moment. Exact algebra gives
+
+\[
+ \mathbb E_{V,\lambda}\left[
+   \left(\frac{N}{n}-\frac{\mathbb E N}{n}\right)^2\right]
+ =\frac{\operatorname{Var}_{V,\lambda}N}{n^2}\le\frac{C}{n}.
+\tag{40.1}
+\]
+
+Every sum is over the existing independent configurations and uses the
+existing PMF point masses. There is no independence assumption between sites.
+A finite second-moment event estimate then gives, for t>0,
+
+\[
+ \boxed{
+ \Pr_{V,\lambda}\left(
+ \left|\frac{N}{n}-\frac{\mathbb E N}{n}\right|\ge t\right)
+ \le\frac{C}{t^2 n}.
+ }
+\tag{40.2}
+\]
+
+The source also checks that its explicit event sum is between zero and one.
+The event bound is useful only when its right side is below one; (40.2) may
+always be combined with the elementary upper bound one. These formulas imply
+vanishing fluctuations about the finite-volume mean along any sequence of
+nonempty domains with size tending to infinity. This is a paper asymptotic
+consequence of the explicit finite inequalities, not a separately declared
+Lean limit theorem in this increment.
+
+Concentration about each domain's own mean is weaker than convergence to a
+common thermodynamic density. Establishing such a mean limit still requires
+boundary/tiling or other convergence control. Neither a central limit theorem
+nor a continuum field equation follows from (40.1)-(40.2) alone. The present
+research dependency remains one chain: actual configurations, partition,
+uniform complex control, occupation response, and finite-volume fluctuations.
+

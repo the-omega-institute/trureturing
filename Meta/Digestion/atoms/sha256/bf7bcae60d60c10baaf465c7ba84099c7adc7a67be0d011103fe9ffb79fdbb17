@@ -1,0 +1,14 @@
+### Why the full principal logarithm would be incorrect
+
+Even inside the tiny common activity tube, a large finite collection of isolated
+vertices has Z(z)=(1+z)^N and normalized log N*Log(1+z). At N=10^32 and
+z=i/(3*10^30), the latter has imaginary part approximately 33.3333, outside the
+principal strip. Its exponential still equals the correct partition. The
+principal logarithm of the exponential differs by 5*(2*pi*i).
+
+The supplementary regression evaluates this closed isolated-vertex formula;
+it does not enumerate an enormous graph or certify the example with interval
+arithmetic. The structural point is general: positive-real-part local factors
+can accumulate phase. The local square proof preserves that accumulated phase
+while ensuring it does not depend on deletion order.
+

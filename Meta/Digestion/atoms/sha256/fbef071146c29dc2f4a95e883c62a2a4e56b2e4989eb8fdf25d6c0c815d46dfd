@@ -1,0 +1,23 @@
+### Paper consequence: strict targets admit finite rational potentials
+
+Suppose alpha is positive rational and c_k<alpha^k. For r>=k and r>=1, let
+B_r act by summing a function over the selected-order children, and define
+
+\[
+ W(F)=\sum_{j=0}^{k-1}\alpha^{k-1-j}C_r(j,F).
+\]
+
+For every eligible F containing P, W(F)>0 and telescoping gives
+
+\[
+ B_rW(F)-\alpha W(F)=C_r(k,F)-\alpha^k
+ \le c_k-\alpha^k<0.
+\]
+
+The radius-r universe of blocker sets is finite and closed under allowed steps.
+All these potential values are rational, so a common denominator gives a finite
+integer certificate. The hierarchy result guarantees such a k for each strict
+rational target alpha>mu_infinity. This is a paper existence construction; it
+is not a new executed large-radius certificate or a polynomial-time algorithm.
+The potentially very large prefix and state enumeration costs remain real.
+
