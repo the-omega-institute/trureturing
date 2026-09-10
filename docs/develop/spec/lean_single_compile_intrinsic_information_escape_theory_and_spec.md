@@ -5906,7 +5906,7 @@ v4.3 hierarchy／structural engine modules 必须落在 GID-legal sibling
 `D5/S3/ConceptDynamics/InformationEscapeHierarchy/`，不得向该受限目录追加。counting-only
 modules 独立落在 sibling `InformationEscapeCounting/`。两处 sibling placement 都由 H10 ruling、
 上述 measured 11/12 capacity 与 governing parser rule
-`tools/StrataLint.Engine/Coordinates/Gid.cs:318-321` 共同决定；该处
+`tools/StrataLint.Engine/Coordinates/Gid.cs` 共同决定；该处
 `ParseFormalCoordinates` 当时规定 ordinary formal coordinates 只有 three or four parts(该上限已于 2026-09-08 放开为 `>= 3`,见 PR #6426;本款的落址结论此后由其自身理由承担,不再由文法深度推出)。counting
 sibling 明确 **SUPERSEDES** 工程优化规范 v1 §6.4 提出的 nested
 `InformationEscape/Counting/` proposal。
