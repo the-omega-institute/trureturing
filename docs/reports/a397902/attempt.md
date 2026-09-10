@@ -172,3 +172,21 @@ Pin SHA-256: 6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e.
 The current module produced no error or warning. The full log also contains
 replayed diagnostics from unrelated existing modules. Canonical report and
 Scribe/freeze checks are next; this does not yet claim final delivery.
+
+## Canonical report and dependency audit
+
+`make lean-report` EXIT=0, 73.74 s.
+The existing proof-edges tool completed: EDGES_OK edges=81
+kernel_nonauxiliary_constants=6. This means six authored public declarations
+(three definitions and three theorems), not 81 public theorems.
+All three public theorems have only propext, Classical.choice, Quot.sound.
+The audit expands auxiliary constants; its JSON remains run-local in /tmp,
+not duplicated as a committed Lean-report projection.
+
+After following private dependencies to the D5 boundary, generating_equation
+and integer_exists_unique have no frozen D5 theorem prerequisite.
+hanna_conjecture uses the existing CatalanCompositionSquareParity.binary_catalan
+and its catalanSeries definition; no conclusion about that module's other
+OEIS sequence is transferred. The witness paths pass through
+approximation_stable/normalized_change for construction, and through
+candidate_even/candidate_odd/power_diagonal_zero for parity.
