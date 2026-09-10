@@ -1,0 +1,19 @@
+**定义 16（部分签名与全部一孔上下文）。** 固定一个集合 $X$、一个集合签名 $\Sigma$。每个符号 $f\in\Sigma$ 指定一个有限元数 $n_f\in\mathbb N$ 和一个确定部分函数 $f:D_f\subseteq X^{n_f}\to X$。固定总读数 $q:X\to Q$，其中 $Q$ 是集合，**不要求 $q$ 满射**。上下文族 $\operatorname{Ctx}_\Sigma$ 恰由以下生成元及有限复合生成：恒等孔 $\square$；对每个 $n_f\ge1$、每个槽位 $1\le i\le n_f$ 和任意固定参数 $a_j\in X\ (j\ne i)$，基本一孔部分函数
+
+$$
+x\longmapsto f(a_1,\ldots,a_{i-1},x,a_{i+1},\ldots,a_{n_f}).
+$$
+
+复合 $C\circ B$ 仅在 $B(x)$ 有定义且 $C(B(x))$ 有定义时求值；失败严格传播，不把失败当作 $X$ 的元素供后续操作处理。零元符号没有可放孔的槽位，也不增加一孔生成元。这里的固定参数是**全部 $X$ 中的参数**，不限于常数符号可命名的值；上下文不含额外探针、不截断复合深度，不自动增加复制孔或检查语法编码的机制。每个上下文本身仍是有限的。因为签名、参数空间及有限字符串空间都是集合，这个上下文族也是集合。
+
+观察值域取不交并 $Q_\bot=(\{1\}\times Q)\sqcup\{\bot\}$；即使 $Q$ 自己包含一个名为“失败”的值，它也不等于新标签 $\bot$。定义
+
+$$
+\operatorname{obs}_C(x)=
+\begin{cases}(1,q(C(x))),&C(x)\text{ 有定义},\\ \bot,&C(x)\text{ 无定义},\end{cases}
+\qquad
+x\approx_\Sigma y\ \Longleftrightarrow\quad
+\forall C\in\operatorname{Ctx}_\Sigma,\quad
+\operatorname{obs}_C(x)=\operatorname{obs}_C(y).
+$$
+

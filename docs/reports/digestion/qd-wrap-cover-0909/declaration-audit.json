@@ -1,0 +1,482 @@
+[
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.sourceP",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "任意自然数阶的源系数符号和，不是有界枚举实例。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:50487afd5147a34d9005a5b81ca030db6a35bc4e362c16a8be2105a9c4e2f84d"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.0.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.reflected",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意实多项式的反射定义，不执行有限认证。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:195b1c75b4998c0990716f74e7f0ea1472ab0c0f79f324acda82834dfc41d53a"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.sourceQ",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "任意阶的实际源反射定义。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:622969cbf0ab6b076dd5499970cf5b0eef1e7bbf9691bdd32a2917e8d5fa70b4"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.scale",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "任意阶的符号比例，定理限定 d≥2。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:9a856116c0ac1d90f3202989d97b10f3912d00ef5e84a30ed9bf49a895b25ce7"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.sourceConstant",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "任意阶的符号系数式。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:e3baee8ba7eecf076bd17a9b278cf449ba543829d8ff28390bb036e2b2da3c56"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.sourcePrimitive",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "任意阶、任意实 x 的有向积分。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:4b02441d53ed223a0587e25fd8affd039885d4469268835af3674d25d67cf435"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.0.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_map",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶有限和的环同态规范化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:6f8337a8869e985c68ec1481cf91cc065b82eb5301d0dc8e40414b8e0dd04742"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.0.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_degree",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶多项式次数界的上游实例。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:8192aba680ebb24c8bd861e6c8f44c0b46bb078b56942a3603a84cdb8b16d437"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.0.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.scale_ne_zero",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "所有 d≥2 的域侧条件。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:04ca322ed16b87e087fb417ed216951d462af7ccd45bd3321bb3ed7d51053713"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.0.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_lowering",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意 d≥2 的冻结降阶等式经实复映射绑定。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:90b8107981101ea95f137f6eb23938652e6bb6dafcd02779952024ead9474b9f"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.0.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.reflect_transport",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意 p、r、d 的反射系数运输，没有有限实例认证。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:974b8c46bf242ffdd88a38ed0c62246556584cc036c386e640d3f0d0750d76e2"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.0.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_derivative",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意 d≥2 的反射导数绑定。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:0cfbf3513fc67b7f6587bdb6affc0ad9eefbb941a413da05955db851084e1b43"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.0.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_zero",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶的反射常数项规范化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:e51f33afe41f1973e6fcffd9acde6ccf966117d255986a9f728c6107f428bc81"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.0.D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_integral",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意 d≥2、实 x 的 FTC 绑定。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:8cb08d9d4e939d9f0954baccaa69d4686931b506ac21398e501c4bc98c38a638"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_jensen_integral_extension",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "量化无界 d 与任意实常数、实点的完整积分/平移断言。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:a8936b9e14aa7a92fc0e635fc797651d50954edfd7b5a05df5349a1a55a1455e"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.arrow",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "任意 n、任意实参数的矩阵定义；维数无界。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:df08319bed49af165e0fbb488c8bb4b6a150f7651fe2c05a08b482d338112706"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.arrow_hermitian",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意维箭头矩阵的共轭转置定义归一化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:ee2d350841db438364ca50045fa97816c8e7a4e0ce5abbd40e96ec85a9978760"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.arrow_schur",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意维、任意非节点实 x 的 Mathlib Schur 行列式实例。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:b1edb63b24fb8035a89c07f1144b3301d25e7bc9f708c4939a663495bcc2149b"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.nodal_derivative",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意次数的上游多项式插值唯一性实例。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:d8cb929f4735b426197ad6cda6f22d1685feb3b07b64cd7263c40dc7dfc93ba1"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.q_ratio_formula",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "上游 Lagrange 插值在指定 R 上的实例及域归一化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:0c2e21d955e3a551ba2e2cd1be5f7bf267959ea2c9016e4f50fdc82760bd0790"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.LaguerreAt",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意实多项式与任意实点的符号谓词。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:a202437c384f36a8b94b43957db3c5ec8b656d701288d7f54d6f338db3f8982e"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.laguerre_splits",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "上游分裂多项式对数导数的精确导数绑定，平方非负；无新估计或归纳。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:0d565f40933997e40c2ac6477b621fb03220de10727570c46581d658e0245059"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.arrow_charpoly",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "上游无限取值唯一性绑定前述两个精确等式。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:bb753b0399e0139de02379345adf5d834622588fa8bc6d48f1e32df4fcd39583"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.residue_nonneg",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶的平方符号及域归一化，非有限实例。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:63139293806bd6176d08e89504c3fdf04402aaf92b9ef7deb019489d7b221f87"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.PositiveSplit",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "任意实多项式的分裂与严格正根谓词。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:e559aa222bb9b82d220b9b6fae1b36c57ed8f4a5b67ff984b477511a95486331"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.arrow_criterion",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意维的 Schur、插值和 Hermitian 谱判据逻辑组合。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:711cb7ef83ca8ffcc110ad93104b885b629798042e53b280765e6ca3e7cf5795"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.p_coeff",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶任意合法系数下标的符号有限和规范化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:0c3a681b63202379d072268c8522f9cb431915e3cf26e435a8d6134b46937311"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.p_degree",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶的上游次数界实例。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:df91eba395bae4a6bc51a2f0cda8cb9074332e66c12bce161b5ba6137aecbacd"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.q_degree",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶的反射系数归一化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:286fcd1bef4c6d047fd07fb6d1e49758eeb9a62d813464aa1790f49c24785624"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.q_coeff",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶任意合法下标的 coeff_reflect 实例。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:b0dcdef491bcfa5bc97b7b8a8a9f2f79c72c1200c7543911746f2fd1bb6648ee"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.0.D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.q_no_nonpositive",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "正系数的符号和正性及 reflect 的非零值绑定，含单独的零点归一化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:3dccf06a765ad7275e7a8b3ea7c389edea4f35c745f57dc9ea06237b9eabd12b"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.sourceCoupling",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "任意阶任意实点的源留数定义，主声明证明分母非零。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:2c87cdac2064aa6cb2ee142bc2163450dc3ad6c8d09550bb2f61b250383c1e66"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.source_jensen_positive_extension",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "无界 n 和任意前阶根元组上的完整正延拓判据。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:aff726c2285de50e35bd19fe5256d773f97e4d4aa967a601cee7df2aeb215989"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.0.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.nodal_derivative",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意次数的上游多项式插值唯一性实例。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:02457e8147b526f6785db1ddf7a4a151ff5bbfb91adb4fd4f89a7832cc9d1238"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.0.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.residue_sum",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意次数的 Lagrange.coeff_eq_sum 实例，系数/域规范化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:f025dadde6185157db413c1551fbef5085ad7694d96d82efaae89b42f7224eb7"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.0.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.q_degree",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶的反射系数和源多项式符号和规范化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:5ecb95654ebeea51f67ee14f90bced20986539930fa39a96a190627cc29ba116"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.0.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.q_coeff",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意阶任意合法下标的 coeff_reflect 实例。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:495f97cbdb4da125879ae81443c77cb02ce94492189b0ab2a42fdbdeb1c20a55"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.0.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.source_top_three",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意 n 的源前三系数规范化；下标 0/1/2 是参数族系数投影，不是有限实例准入。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:2210a54aa4d99b6dc339479d70e0049843871639489d665b38f367d90cde13a3"
+  },
+  {
+    "declaration": "_private.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.0.D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.source_cumulant",
+    "visibility": "private",
+    "utility": "none",
+    "reason": "任意 n 的系数-矩恒等式及环规范化。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:0ebd39872ea78becea75d74087a10f78bdd31221bd87842617a59497de2f68d1"
+  },
+  {
+    "declaration": "D5.S3.Zeros.Jensen.SourceJensenCouplingBudget.source_jensen_coupling_budget",
+    "visibility": "public",
+    "utility": "none",
+    "reason": "无界 n 和任意前阶根元组上的同一留数全和等式。",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "statement_id": "sha256:354c620e951865fbc0c9968f4cfedd0d198d23ef766d931d63fb93f93f5884e7"
+  }
+]

@@ -1,0 +1,30 @@
+**定义 28（单孔 q 表达与公共过去尾，repo-derived）。** 三个范围分别如下。
+
+在 $\Sigma_{\rm mix}$ 中，$\forall B\subseteq K$ 的 q 表达平凡成立：见证就是原语 $C=F_B$（也可用 $M_{B\times K}(\square,U_0)$）；这句话不算 §34.6 的推进。
+
+命题 55 的判定对象只取定义 16 的 $\Sigma_{{\rm cau},t}$ 单孔上下文：
+
+$$
+E_q(B)\ \Longleftrightarrow\
+\exists\,\text{固定有限 }C\in\operatorname{Ctx}_{\Sigma_{{\rm cau},t}}
+\ \forall X\in\mathcal B:\quad
+C(X)\text{ 有定义且 }q(C(X))=q(F_BX).
+\tag{O-QEXPR}
+$$
+
+所有旁参数、谓词、平移量与槽位在 $X$ 之前固定；实际孔恰有一个。允许在有限项中重复同一输入的 $\operatorname{Ctx}^{\rm dup}$（如 $X\boxtimes X$）**不是定义 16 的上下文**，其 q 表达问题另列于 §36.7。
+
+定义
+
+$$
+\operatorname{Tail}(B)\ \Longleftrightarrow\
+\exists c\in\mathbb Z\ \forall p\in\mathbb Z^3\
+\forall t,t'<c:\quad \mathbf1_B(t,p)=\mathbf1_B(t',p).
+\tag{O-TAIL}
+$$
+
+等价地，存在 $c\in\mathbb Z$、$S^-\subseteq\mathbb Z^3$ 及任意 $B_+\subseteq\{t\ge c\}\times\mathbb Z^3$，使
+$B=(\{t<c\}\times S^-)\cup B_+$。等价性由每个位置在 $t<c$ 上取共同真值直接给出；这里必须是一个对全部位置有效的 $c$。
+
+命题 53 的 $H_B$ 分类的是至 $\cong_h$ 的丰富输出表达；本节 Tail 分类的是 q 表达；在 $\Gamma_t$ 上语义下降仅指摘要决定输出摘要，不提供原语言的表达构造。三者各有量词与结论，不能互相替代。
+

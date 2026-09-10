@@ -1,0 +1,1 @@
+| **仅对 §19 的 $\mathbb Z[\mathbb Z^3]$**，有限系数可经群字符作 Fourier 对应，$\widehat{\mathbb Z^3}\cong\mathbb T^3$（此处 $\mathbb T=\mathbb R/\mathbb Z$，不同于来源树集合 $T$） | 这是阿贝尔群卷积的标准字符对应，缺少 Born 规则与测量理论；不移植到 §27 非结合的来源 pair 代数。上述 Pontryagin duality 稳定入口支持群对偶框架（`literature-attested`）；与本卷空间代数的绑定及边界为 `repo-derived`

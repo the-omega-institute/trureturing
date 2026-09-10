@@ -1,0 +1,18 @@
+**命题 53（丰富输出表达性的完整分类，repo-derived）。** 以下三项等价：
+
+1. 存在固定有限 $\Sigma_{{\rm cau},t}$ 单孔上下文，对全部 $X\in\mathcal B$ 有定义且输出与 $F_B(X)$ 历史同构。
+2. $H_B$ 成立。
+3. $B=\mathbb Z\times S$（含 $S=\varnothing$），或存在 $T_B\in\mathbb Z$、$\varnothing\ne R_B\subseteq S_B$ 使
+
+$$
+B=(\{t<T_B\}\times S_B)\cup(\{T_B\}\times R_B).
+\tag{MIX-NORMAL}
+$$
+
+条件成立时有**编码等式**，强于历史同构：
+
+$$
+F_B=F_{S_B}\circ F_{\downarrow Q_B}.
+\tag{MIX-ENCODE}
+$$
+

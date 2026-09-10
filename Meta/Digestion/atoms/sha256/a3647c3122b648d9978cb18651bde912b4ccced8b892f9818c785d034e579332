@@ -1,0 +1,10 @@
+**命题 34（参考点卷积与空间单位）。** 此运算合法，$q(X\boxtimes_oY)=q(X)q(Y)$、$u(X\boxtimes_oY)=u(X)u(Y)$ 及命题 3 的档案基数均不变。空间乘法成为
+
+$$
+(c*_o d)(r)=\sum_{p+q-o=r}c(p)d(q),
+\qquad \pi(X\boxtimes_oY)=(w_X*_ow_Y,z_X*_oz_Y).
+\tag{OC}
+$$
+
+有单位空间环 $(R,+,*_o)$ 的自身单位为 $\delta_o$；$\{0\}\times R$ 的自身单位为 $(0,\delta_o)$。它们不是档案乘法单位，也不是 $P$ 的单位。
+

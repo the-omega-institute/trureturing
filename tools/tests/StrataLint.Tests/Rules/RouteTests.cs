@@ -71,9 +71,33 @@ public sealed class RouteTests
     }
 
     [Theory]
+    [InlineData("F", "lean", "", "D5/S0/Carrier/Algebra/Graded/Probe", "D5/S0/Carrier/Algebra/Graded/Probe.lean")]
+    [InlineData("B", "markdown", "", "D5/B/S0/Carrier/Algebra/Graded/Probe", "Blueprint/D5/S0/Carrier/Algebra/Graded/Probe.md")]
+    [InlineData("E", "json", "result", "D5/E/S0/Carrier/Algebra/Graded/Probe.result--json", "Evidence/D5/S0/Carrier/Algebra/Graded/Probe.result.json")]
+    public void RouteWithMultiSegmentSubDomainProducesDeeperArtifactPaths(
+        string plane,
+        string artifact,
+        string selector,
+        string expectedGid,
+        string expectedPath)
+    {
+        var manifest = new ManifestSyntax(
+            "D5", plane, "Carrier", "Probe", "G", selector, artifact, "", SubDomain: "Algebra/Graded");
+
+        var routed = Assert.IsType<RouteOutcome.Routed>(RouteEngine.Route(Policy(), manifest));
+
+        Assert.Equal(expectedGid, routed.Result.Gid.Value);
+        Assert.Equal(expectedPath, routed.Result.Path.Value);
+    }
+
+    [Theory]
     [InlineData("algebra", "subdomain must be CamelCase")]
     [InlineData("Carrier", "subdomain must differ from domain")]
     [InlineData("", "subdomain must not be empty")]
+    [InlineData("Algebra/graded", "subdomain must be CamelCase")]
+    [InlineData("Algebra//Graded", "subdomain must be CamelCase")]
+    [InlineData("Carrier/Graded", "subdomain must differ from domain")]
+    [InlineData("Algebra/Algebra", "subdomain segments must not repeat")]
     public void RouteRejectsInvalidSubDomainAtTheCoordinateAssertion(string subDomain, string expectedMessage)
     {
         var manifest = new ManifestSyntax(

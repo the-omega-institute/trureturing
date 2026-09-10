@@ -1,0 +1,12 @@
+**定理 10（完整窗口与 Zeckendorf 唯一性）。** 对每个 \(L\ge0\)，\(V\) 给出双射
+\[
+\mathcal W_L\simeq\{0,\ldots,G_L-1\}.
+\]
+每个 \(a\in\mathbb N\) 因而恰有一个数值为 \(a\) 的规范行，记为 \(s(a)\)。
+
+**证明。** \(L=0,1\) 的数值域分别为 \(\{0\}\)、\(\{0,1\}\)。对 \(L\ge2\)，最高位为零的部分由归纳给出 \([0,G_{L-1}-1]\)；最高位为一迫使次高位为零，余下给出
+\[
+G_{L-1}+[0,G_{L-2}-1]=[G_{L-1},G_L-1].
+\]
+两区间不交且各自表示唯一，完成归纳。\(G_L\) 严格递增且无界，故任意 \(a\) 落在某个窗口内；任意两个有限规范表示可同时补零到一个更大窗口，其唯一性即得全局唯一性。这是[《黄金分层算术观察理论》定理 2.2、推论 2.3](ZECKENDORF_EULER_5040.md)的窗口证明，亦与 [Zeckendorf 定理的等价表述](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html#Nat.zeckendorfEquiv)相同，其中 \(G_j=F_{j+2}\)。证毕。
+

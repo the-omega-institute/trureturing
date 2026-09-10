@@ -1,0 +1,21 @@
+### 33.2 附录实际命令与有限检查范围
+
+本席在上述工作树实际运行下列原文命令，退出码 **0**，stderr 为空；唯一 Python 块沿用 `Rich/add/mul/neg/temporal/filt` 及 `pr3_` 的 `timed=True` 辅助函数，新增段共 **313 行**，只插在原末行打印之前。
+
+```sh
+sed -n '/^```python$/,/^```$/p' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | sed '1d;$d' | python3 -
+```
+
+stdout 的 `pr4_` 行与最后一行原文为：
+
+```text
+pr4_temporal_causal: random_samples=64 cases=83 updates=2189 endpoint_updates=2189 earliest_rows=208 product_antichains=166 guard_success=121 strict_failures=128 context_reads=3548 mobius_profiles=89 mobius_coefficients=3548 xi_paths=2272 forget_paths=2272 kernel_edges=17 D11=1,0 D11_Z_times=-2,-1 common_k=-3 shifted_probe=1,0 fixed_U0=1,1 q_expression=83 B2=2,1 D10_indegrees=[1, 1],[0, 2] c_then_b=1,0
+ALL_FINITE_CHECKS_PASSED
+```
+
+计数均由执行累加。随机种子 `2026091004`，64 个随机平衡表示的当前区域大小取 0、2、4、6，当前时间取整数 −5 至 4，额外档案点数取 0、1、2，边按严格时标生成后取传递闭包，选择任意子集。加定向见证共 83 个输入；覆盖空档案、非空档案而空当前区域、负时刻、最高当前时刻在 W/Z 中抵消、未选目标、当前区域外目标及严格失败传播。更新同时比较剖面及三个端点；乘积只断言该次新当前区域反链与单点后继属性集。
+
+89 份反演核验为 83 个输入加三对对象各用共同 D 的六次恢复；恢复器只接收固定查询词汇 D 和终端上下文读数表，不接收 Rich 对象、不调用剖面函数。规范序列化后逐字节恢复两选择位的全部系数，并断言每个非零格的自身属性恰为 U 的唯一最早元素。Ξ 的 2272 次双路径比较，一条直接分别遍历 Ω/A，另一条只消费 Γ_t 系数及端点，两路不共用边缘化函数；另检查忘时推送的集合去重。83 次 q 表达式检查包含 D12 的四个选择输入，不代替命题 51 对全部有限上下文的否定证明。17 次核比较只核对具名见证的方向，不代替命题 50 的因子映射证明。
+
+原始 stdout/stderr 与命令退出码存于 runner 的 `appendix.stdout.log`、`appendix.stderr.log`、`appendix-receipt.json`。更强结论的边界仍按 §32.5–32.6：一般 F_B 分类、含 M_P 的混合闭包、Γ_t 全部实际像、物理模型和 Lean 均为“未测”，各项未测原因已在相应证明边界说明。
+

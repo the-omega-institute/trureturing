@@ -1,4 +1,4 @@
-import LeanInformationAudit.AnalysisDisposition
+import LeanInformationAudit.Census.Codec
 
 namespace LeanInformationAudit.DispositionCensus
 
@@ -22,33 +22,36 @@ structure Counts where
   noFaithfulPrimitiveRealization : Nat := 0
   deriving DecidableEq, Repr
 
+def Counts.addEntry (counts : Counts)
+    (entry : Sigma fun key : StatementKey => CensusAssessment key) : Counts :=
+  let counts := { counts with accounted := counts.accounted + 1 }
+  match entry.2 with
+  | .observed value =>
+    if value.queryCompleted then
+      let counts := { counts with observed := counts.observed + 1 }
+      { counts with observedQueryCompleted := counts.observedQueryCompleted + 1 }
+    else
+      { counts with observedQueryIncomplete := counts.observedQueryIncomplete + 1 }
+  | .certified disposition =>
+    let counts := { counts with certified := counts.certified + 1 }
+    match disposition with
+    | .finiteOccurrence _ => { counts with finiteOccurrence := counts.finiteOccurrence + 1 }
+    | .structuralOccurrence _ =>
+      { counts with structuralOccurrence := counts.structuralOccurrence + 1 }
+    | .boundedFiniteTruncation _ =>
+      { counts with boundedFiniteTruncation := counts.boundedFiniteTruncation + 1 }
+    | .unreachable value =>
+      let counts := { counts with unreachable := counts.unreachable + 1 }
+      match value.reason with
+      | .noCanonicalObjectCarrier =>
+        { counts with noCanonicalObjectCarrier := counts.noCanonicalObjectCarrier + 1 }
+      | .noFinitePrimitiveBundle =>
+        { counts with noFinitePrimitiveBundle := counts.noFinitePrimitiveBundle + 1 }
+      | .noFaithfulPrimitiveRealization =>
+        { counts with noFaithfulPrimitiveRealization := counts.noFaithfulPrimitiveRealization + 1 }
+
 def count (inventory : DispositionInventory) : Counts :=
-  inventory.entries.foldl (init := {}) fun counts entry =>
-    let counts := { counts with accounted := counts.accounted + 1 }
-    match entry.2 with
-    | .observed value =>
-      if value.queryCompleted then
-        let counts := { counts with observed := counts.observed + 1 }
-        { counts with observedQueryCompleted := counts.observedQueryCompleted + 1 }
-      else
-        { counts with observedQueryIncomplete := counts.observedQueryIncomplete + 1 }
-    | .certified disposition =>
-      let counts := { counts with certified := counts.certified + 1 }
-      match disposition with
-      | .finiteOccurrence _ => { counts with finiteOccurrence := counts.finiteOccurrence + 1 }
-      | .structuralOccurrence _ =>
-        { counts with structuralOccurrence := counts.structuralOccurrence + 1 }
-      | .boundedFiniteTruncation _ =>
-        { counts with boundedFiniteTruncation := counts.boundedFiniteTruncation + 1 }
-      | .unreachable value =>
-        let counts := { counts with unreachable := counts.unreachable + 1 }
-        match value.reason with
-        | .noCanonicalObjectCarrier =>
-          { counts with noCanonicalObjectCarrier := counts.noCanonicalObjectCarrier + 1 }
-        | .noFinitePrimitiveBundle =>
-          { counts with noFinitePrimitiveBundle := counts.noFinitePrimitiveBundle + 1 }
-        | .noFaithfulPrimitiveRealization =>
-          { counts with noFaithfulPrimitiveRealization := counts.noFaithfulPrimitiveRealization + 1 }
+  inventory.entries.foldl (init := {}) Counts.addEntry
 
 def Counts.fields (counts : Counts) : List (String × Nat) := [
   ("accounted", counts.accounted),
@@ -92,9 +95,10 @@ private def exactFields (json : Json) (fields : List String) : Except String Uni
     throw "payload_fields"
 
 /-- Strict decoding makes the dependent constructor, not a separate label, own the payload. -/
-def parseRow (row : Json) : Except String
+def parseRow (row : Json) (queryScope : Option ImportClosureScope := none) : Except String
     (Sigma fun key : StatementKey => CensusAssessment key) := do
   let key : StatementKey := ⟨← nameField row "theorem_name", ← stringField row "statement_id"⟩
+  discard <| decodeStatementId key.theoremName key.statementId
   let className ← stringField row "class"
   let parsed : Except String (CensusAssessment key) := do
     exactFields row ["theorem_name", "statement_id", "class", "payload"]
@@ -137,14 +141,17 @@ def parseRow (row : Json) : Except String
     | "observed" =>
       exactFields payload ["owning_module", "root", "import_scope", "query_completed",
         "candidates", "note"]
-      let scope := ← payload.getObjVal? "import_scope"
-      exactFields scope ["modules", "completed"]
+      let encodedScope ← payload.getObjVal? "import_scope"
+      let scope ← match encodedScope, queryScope with
+        | .null, some scope => pure scope
+        | _, _ => do
+          exactFields encodedScope ["modules", "completed"]
+          pure { modules := ← nameArrayField encodedScope "modules"
+                 completed := ← encodedScope.getObjValAs? Bool "completed" }
       return .observed {
         owningModule := ← nameField payload "owning_module"
         root := ← nameField payload "root"
-        importScope := {
-          modules := ← nameArrayField scope "modules"
-          completed := ← scope.getObjValAs? Bool "completed" }
+        importScope := scope
         queryCompleted := ← payload.getObjValAs? Bool "query_completed"
         candidates := ← nameArrayField payload "candidates"
         note := ← payload.getObjValAs? String "note" }

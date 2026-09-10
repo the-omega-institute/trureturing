@@ -1,0 +1,18 @@
+**命题 41（配对扩展仍以 $\Xi$ 为精确摘要，repo-derived）。** $M_P:\mathcal B^2\to\mathcal B$ 总定义。仍令 $g=\gamma(s_X,s_Y)$，则
+
+$$
+\Xi(M_P(X,Y))=
+(W_X\odot W_Y,Z_X\odot_P Z_Y,
+\min(m_X,m_Y),\max(M_X,M_Y,g),g).
+\tag{TS-PAIR-UPDATE}
+$$
+
+将全部这些固定操作加入语言，令
+
+$$
+\Sigma_{\rm ts}^{\rm pair}
+=\Sigma_{\rm ts}\cup\{M_P:P\subseteq K\times K\},
+$$
+
+则仍有 $\approx_{\Sigma_{\rm ts}^{\rm pair}}=\ker\Xi$，且任何对此扩展语言充分的总读数仍满足命题 40 的实际像上唯一恢复性质。
+

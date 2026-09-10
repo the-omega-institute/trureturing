@@ -1,0 +1,3 @@
+**定理 10.1(塔无封顶)**〔引〕。若 $\mathfrak A$ 一致、递归可枚举、包含 PA(或足够强的算术),且其可证性谓词满足 Hilbert–Bernays–Löb 导出条件,则 $\mathfrak A$ 不能证明自身一致性 $\mathrm{Con}_{\mathfrak A}$(Gödel 第二不完备定理,Gödel 1931,`literature-attested`;导出条件的表述 `ASSUMED-UNVERIFIED`,按记忆)。对不满足导出条件的可证性谓词(如 Rosser 谓词)结论可反转,故导出条件是承重前件。
+*读法(不承重)*。它对分层判官系统的工程读法(内化塔、$\tau=0$ 标 open)是应用安置,见第十三部评注 13.39。
+

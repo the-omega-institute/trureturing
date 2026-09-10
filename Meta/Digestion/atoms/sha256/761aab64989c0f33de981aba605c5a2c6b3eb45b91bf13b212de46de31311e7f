@@ -1,0 +1,25 @@
+### 38.4 六十张二次 Boolean Positivstellensatz 证书
+
+固定 l，把五个独立颜色类记为 `I_0,...,I_4`，为每个 `i in V_l` 引入 Boolean 选择变量 x_i。一个六元 clique 必须满足：
+
+```math
+x_i^2-x_i=0,\qquad
+x_ix_j=0\quad(i\ne j\text{ 且 }\neg O(i,j)),\qquad
+\sum_{i\in V_l}x_i-6=0.
+```
+
+令 `S_t=sum_(i in I_t) x_i`。有精确多项式恒等式：
+
+```math
+\boxed{
+-1=\sum_{t=0}^{4}(1-S_t)^2
+-\sum_{i\in V_l}(x_i^2-x_i)
+-2\sum_{t=0}^{4}\sum_{i<j,\ i,j\in I_t}x_ix_j
++\left(\sum_{i\in V_l}x_i-6\right).
+}
+```
+
+同颜色顶点不相邻，故每个二次项都有真实 nonedge 方程支持。该证书的最大次数为二，所有系数都是整数。它针对已通过连续几何包围的 Boolean 选择问题，不能据此声称普通 vector-coordinate degree-two SoS 已解决六维 MUB。
+
+本次对六十份恒等式逐单项式核验，残差恒为常数 -1。合计涉及 1718 个邻域顶点出现和 4920 个 nonedge 乘子。这个计数只是具体证书的规模，没有被当作数学新颖性或准入分数。
+

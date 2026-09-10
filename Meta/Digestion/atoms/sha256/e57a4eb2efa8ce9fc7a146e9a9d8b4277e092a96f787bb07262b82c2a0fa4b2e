@@ -1,0 +1,25 @@
+**24.6 有限支撑上的二次上界。** 对参考矩 \(0<V<k(k-1)\mu^2\),令 \(L=\mu-\sqrt{V/[k(k-1)]}>0\)、\(H=\mu+\sqrt{(k-1)V/k}>L\)。取
+
+\[
+P(x)=f(L)+f'(L)(x-L)+a(x-L)^2,\qquad
+a=\frac{f(H)-f(L)-f'(L)(H-L)}{(H-L)^2}<0.
+\]
+
+负号由 \(f''<0\) 得到。第 15 节的 Rolle/Hermite 余项及 \(f'''(x)>0\) 给出
+
+\[
+f(x)-P(x)=\frac{f'''(\xi)}6(x-L)^2(x-H)\le0
+\qquad(0<x\le H),
+\]
+
+节点上差为零,其余点的 \(\xi\) 位于 \(x,L,H\) 张成的正实区间内。特别是 \(0<x<L\) 仍合法;不在 \(x>H\) 使用这个上界。
+
+若 \(\mathcal M\) 是正支撑不超过 \(H\) 的有限非负加权和,满足 \(\mathcal M(1)=k\)、\(\mathcal M(x)=k\mu\)、\(\mathcal M((x-\mu)^2)=V_{\mathcal M}\),则与原型 \((H,L,\ldots,L)\) 比较得到
+
+\[
+\mathcal M(f)\le\mathcal M(P)
+=\Psi_k(\mu,V)+a(V_{\mathcal M}-V).
+\]
+
+因此 \(V_{\mathcal M}\ge V\) 时,因 \(a<0\),右边**不超过** \(\Psi_k(\mu,V)\)。质量是 \(k\),不是 1;不能把有多个加权支撑的对象未经矩核对直接当成 \(k\) 个实际坐标。此式只需参考矩 \(V\) 的正定义域,没有对 \(\Psi_k(\mu,V_{\mathcal M})\) 作求值要求。
+

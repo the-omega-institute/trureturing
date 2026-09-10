@@ -12,6 +12,7 @@ internal static class RawLeanReportArtifact
 {
     internal const string Schema = "stratalint-raw-lean-report-v2";
     internal const string DefaultRelativePath = ".lake/build/stratalint/raw-lean-report.json";
+    internal static readonly AsyncLocal<Action?> Reading = new();
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot)
@@ -31,6 +32,7 @@ internal static class RawLeanReportArtifact
         string? materialPath)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        Reading.Value?.Invoke();
         var text = StrictUtf8.GetString(bytes);
         ImmutableArray<byte> canonical;
         try

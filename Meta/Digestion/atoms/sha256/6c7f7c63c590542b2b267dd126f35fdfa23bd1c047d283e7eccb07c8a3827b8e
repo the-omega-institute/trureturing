@@ -1,0 +1,9 @@
+**命题 25（时间复合的强部分结合）。** 写 $G(X,Y)$ 为定义 5 的全档案 guard。两表达式 $(X\triangleright Y)\triangleright Z$ 与 $X\triangleright(Y\triangleright Z)$ 都恰在
+
+$$
+G(X,Y)\ \land\ G(X,Z)\ \land\ G(Y,Z)
+\tag{TA}
+$$
+
+上有定义；在该域上有命题 24 所述的重括号历史同构。
+

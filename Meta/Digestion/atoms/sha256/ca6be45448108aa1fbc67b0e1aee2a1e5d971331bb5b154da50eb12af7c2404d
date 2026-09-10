@@ -1,0 +1,24 @@
+### 新执行的一组数值探测
+
+为检验第 33 节的 guards，本轮用固定 seed `502820260905` 生成一个 floating-point 2-circulant Hadamard candidate，进行了 `80` 个 least-squares starts，恢复 `41` 条 distinct candidate rays。应用 projective dihedral symmetry 并去重后得到 `60` 条 rays。
+
+在 inner-product threshold `1e-7` 下，显式检验 bipartiteness 和全部边后，这个已恢复子图由：
+
+```math
+K_6\sqcup9K_{3,3}
+```
+
+组成。最大 coordinate/common-unbiased residual 约 `8.59e-12`；在检测到的正交对上，逐模内积平方和最大约 `1.98e-20`。
+
+这些数值只描述一个样本的已恢复点集合。没有证明：
+
+```text
+该参数点严格避开所有 Fourier seams；
+共同无偏方程恰好只有 60 条 rays；
+阈值下的零内积为精确代数零；
+整个连续 strict-X branch 有相同图；
+所有 noncanonical completions 都被排除。
+```
+
+因此 `K6 + 9 K3,3` 继续作为有针对性的证书发现线索，不作为文献事实或全分支定理。完整输入、seed、求解和图检验代码保留在本轮可下载的研究包中。
+

@@ -1,0 +1,4 @@
+**定理 4.10(善主体的封闭性)**〔证〕。定义主体的顺序复合 $\mathfrak S_2\circ\mathfrak S_1:=(T_2\circ T_1,\ c,\ \mathrm{Adm}_1\wedge\mathrm{Adm}_2)$,其中 $c(L,\mathcal U)=c_1(L,\mathcal U)\mathbin{+\!\!+}c_2\big(T_1L,\ \mathcal U\mathbin{+\!\!+}c_1(L,\mathcal U)\big)$,准入取合取。则恒等主体 $e=(\mathrm{id},\ \varnothing,\ \top)$ 善,善主体的复合善,复合结合,且 $e$ 是两侧单位元。故善主体在复合下构成幺半群 $\mathfrak G$。
+*证明*。诚:对账平输入,先由 $\mathfrak S_1$ 的策略性诚得 $(T_1L,\ \mathcal U\mathbin{+\!\!+}c_1)$ 账平,再由 $\mathfrak S_2$ 的得复合后账平。恕:两个身份置换不变的谓词之合取仍不变;$\top$ 不变。容许:定理 1.13。结合律:$T$ 的复合结合,$c$ 的并置结合(逐步展开),$\wedge$ 结合。单位:$\mathrm{id}\circ T=T$,空序列并置为单位,$\top\wedge\mathrm{Adm}=\mathrm{Adm}$。∎
+*读法*。两处选择都不是任意的:主体定义为**策略**而非固定轨迹(否则一个在空账本上诚实说「$p$ open」的主体,接在冻结了 $p$ 的主体之后就成了浮账);准入取**合取**而非「后者覆盖前者」(否则没有单位元:$\top$ 与 $\bot$ 两个常值准入都合规,却没有一个谓词能同时作二者的左单位)。
+

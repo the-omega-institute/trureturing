@@ -1,0 +1,1 @@
+- **钉版 mathlib(本机 `.lake/packages/mathlib`,Lean 4.33.0)**:`ClosureOperator`(`Mathlib/Order/Closure.lean:60`)、`OrderHom.gfp`(`Mathlib/Order/FixedPoints.lean:54`)、`Equiv.Perm.closure_isSwap`(`Mathlib/GroupTheory/Perm/Sign.lean:121`)三者 grep 命中;loogle/leansearch 未查。

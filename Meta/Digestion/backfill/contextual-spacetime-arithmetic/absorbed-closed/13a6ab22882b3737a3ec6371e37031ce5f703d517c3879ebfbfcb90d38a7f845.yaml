@@ -1,0 +1,67 @@
+fingerprints:
+  raw_sha256: sha256:13a6ab22882b3737a3ec6371e37031ce5f703d517c3879ebfbfcb90d38a7f845
+  normalized_sha256: sha256:13a6ab22882b3737a3ec6371e37031ce5f703d517c3879ebfbfcb90d38a7f845
+cas_ref: sha256:13a6ab22882b3737a3ec6371e37031ce5f703d517c3879ebfbfcb90d38a7f845
+coverage_gids:
+  - gid: D5/S0/History/Spacetime/CoordinateEncoding.attributes_code_equiv
+    target_statement_id: sha256:9b621e26439821d51800725ed67ab88bd2b308ef2f69ece491523f28a1024470
+  - gid: D5/S0/History/Spacetime/CoordinateEncoding.position_code_equiv
+    target_statement_id: sha256:1e0b237b49aa74a57d381aff49356571ebf0308af04d0751cc97c25bef67bc3a
+  - gid: D5/S0/History/Spacetime/HFEncoding.eventTag_inj
+    target_statement_id: sha256:cf922c921d634d364546624b29e2d93c7f3b75f24f06eae25c18cd0e375d0e2d
+  - gid: D5/S0/History/Spacetime/HFEncoding.hf_equiv
+    target_statement_id: sha256:902255dc9261e700751b799300331d6acf6356d79401c9266c754866ce23d9e0
+  - gid: D5/S0/History/Spacetime/HFEncoding.nat_code_equiv
+    target_statement_id: sha256:2f0481ec587e3d4cf244fa8000cf1ce7736f52b33c1a4ba3f591ae2bf7a1c2bc
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_add
+    target_statement_id: sha256:a710a594f7a1bae6f8a69c5f31ce5ccdca7343352e5b2aa621d5ea5d8fae0198
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_le
+    target_statement_id: sha256:17c19a8085aad33bd7eb3ce2d9db0959fd4d7380562c885fd7e6d5986c5c7aeb
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_lt
+    target_statement_id: sha256:6d66cee4bc044bcb0485e0d74d295d92a8791b990b2364682e1e95eeac09b9f5
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_max
+    target_statement_id: sha256:51de5b59379ced3e1d5967ac78e59eaf4a52c017d848cde82f1df1bd0734cc5d
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_max_add_one
+    target_statement_id: sha256:b299320c7f23f67fec18579763ec703ccb4554874baa48a8e16010402e7d22c8
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_mul
+    target_statement_id: sha256:ea921f731853459925b1fed6f6aa972ab499d0e7b834555124054997216c264e
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_neg
+    target_statement_id: sha256:bfdb06f7df6c0e327511a8adacbab762b4059b567af00702d99a66d2f82ac4a7
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_one
+    target_statement_id: sha256:271632b648525404fb374fc24f1fbb7b4bbea64833acdafd8d3308d49d2c9af2
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_order_iso
+    target_statement_id: sha256:0604f51e5c6381804fe2ddcfc2063d73b02e471d9a284db03adc20064d4117f6
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_ring_equiv
+    target_statement_id: sha256:2856d0d872cb26368b1a0aff6bb0ca9e42aac7b29926681db17b8b938e25cee5
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_sub
+    target_statement_id: sha256:0bf621e4bb53ba819caf1bc1c3c338574e7a8ee3f5c1366079fe2c77c5be4299
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.decode_zero
+    target_statement_id: sha256:9554e8fa09fe95cb6b8d8ed13f968fff6dc7f2ed37e521a413c9be9040f44b80
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_add
+    target_statement_id: sha256:01bfb9ded3e888ff3e41b6d993cad4862ba9c87bf08ed0e780f0916a9df2b926
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_le
+    target_statement_id: sha256:c5d1e76aa46350e04af21333d76a87be9a719d4fc0a967e19f94da1e900d15fe
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_lt
+    target_statement_id: sha256:3e60fc9f324bd32cb8cc72e41e162092197b892979ded970dd5f08666b4db603
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_max
+    target_statement_id: sha256:bffebfb3906dea0bf04593c7dd088ec2725efa499e948786ea30348689ebfa75
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_max_add_one
+    target_statement_id: sha256:03ec925a5f9f884ae7df0e90c36dfb3c57acf6ed2d56eac341c6c549e7bd5a47
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_mul
+    target_statement_id: sha256:3376b8229fb0faa3eadef9069e31ff803ef0e5acc70d7f0a3d5ebb33d32394cd
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_neg
+    target_statement_id: sha256:459cc5c6dbdc9133906b24cf522183f3e43cef7c13668a3a5bc1871706b1cf8f
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_one
+    target_statement_id: sha256:924e34eca459a08feed3f4419101b2d4a757d97b2dbd06251e2c2253fa1c1c98
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_sub
+    target_statement_id: sha256:93034ac619442cd105ac22395ebaf77d32b068b3f75aaecb16345aaedfe301a0
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.encode_zero
+    target_statement_id: sha256:6da4cbdd44e6553a1bbd7aae984fbdf4fca939ce9e1edad1d0da8fa26636f6f7
+  - gid: D5/S0/History/Spacetime/IntegerCodeArithmetic.instIsStrictOrderedRing
+    target_statement_id: sha256:5d00bcf5ebcbd0d28459d23c7b64b6574bdcd8d7086a60342acd0d29923157fa
+  - gid: D5/S0/History/Spacetime/IntegerEncoding.int_code_equiv
+    target_statement_id: sha256:40ca09c86d3235fac7f703b402b4a0eb84542d29a9fb7b2c90984c216d8d1fe7
+  - gid: D5/S0/History/Spacetime/SourceTreeEncoding.source_code_equiv
+    target_statement_id: sha256:f0def91c69915e9415399ae3c71d6fceeb1bafcceafa7f50520d4cc70eceacad
+receipts:
+  unresolved_subitems: []

@@ -1,3 +1,4 @@
+import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.CatalogBuilder
 import LeanInformationAudit.Sha256
 import D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness
@@ -13,33 +14,6 @@ open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape
 
 universe u v w
-
-/-- Computed theorem data retained for summaries and the optional artifact. -/
-structure SealTheoremRecord where
-  theoremName : Name
-  unitName : Name
-  realizationName : Name
-  certificateName : Name
-  registrationModuleName : Name
-  index : Nat
-  primitiveCount : Nat
-  primitiveAxes : Array String
-  primitiveKernelAddress : String
-  uniqueCaptureCount : Nat
-  fullEscapeCount : Nat
-  withoutEscapeCount : Nat
-  roleSignatureHistogram : Array (String × Nat)
-  proofMethod : String
-
-/-- Computed arena data retained for summaries and the optional artifact. -/
-structure SealArenaRecord where
-  catalog : CatalogRecord
-  irredundantCertificateName : Name
-  proofMethod : String
-  stateCard : Nat
-  offDiagonalPairCount : Nat
-  fullEscapeCount : Nat
-  theorems : Array SealTheoremRecord
 
 structure PreparedProofs where
   declarations : Array Declaration

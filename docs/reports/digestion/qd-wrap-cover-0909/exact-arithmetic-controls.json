@@ -1,0 +1,51 @@
+{
+  "scope": "generic coefficient examples, not actual theta numerics",
+  "rows": [
+    {
+      "a1": "3",
+      "a2": "4",
+      "t": "3/2",
+      "beta": "2",
+      "R_at_t": "-9/4",
+      "q_at_t": "-1/4",
+      "q_second": "2",
+      "eta": "1/4",
+      "budget": "1/4",
+      "m2": "6",
+      "m4": "96",
+      "chi4": "-12",
+      "discriminant": "1"
+    },
+    {
+      "a1": "3",
+      "a2": "6",
+      "t": "3/2",
+      "beta": "3",
+      "R_at_t": "-9/4",
+      "q_at_t": "3/4",
+      "q_second": "2",
+      "eta": "-3/4",
+      "budget": "-3/4",
+      "m2": "6",
+      "m4": "144",
+      "chi4": "36",
+      "discriminant": "-3"
+    },
+    {
+      "a1": "3",
+      "a2": "9/2",
+      "t": "3/2",
+      "beta": "9/4",
+      "R_at_t": "-9/4",
+      "q_at_t": "0",
+      "q_second": "2",
+      "eta": "0",
+      "budget": "0",
+      "m2": "6",
+      "m4": "108",
+      "chi4": "0",
+      "discriminant": "0",
+      "boundary": "zero coupling, repeated positive root 3/2, arrow diagonal (3/2,3/2)"
+    }
+  ]
+}

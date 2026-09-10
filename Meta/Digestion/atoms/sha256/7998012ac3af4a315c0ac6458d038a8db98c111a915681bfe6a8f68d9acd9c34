@@ -1,0 +1,2 @@
+**证明（2 ⇔ 3）。** 空集已属于柱集。设 $B\ne\varnothing$ 且 $H_B$ 成立。若时间投影无上界，则对每个 $p\in S_B$ 及每个整数 $t$，可取 $(s,q)\in B$ 且 $s>t$；条件迫使 $(t,p)\in B$，所以 $B=\mathbb Z\times S_B$。若时间投影有上界，它作为非空整数集有最大元 $T_B$。令 $R_B=\{p:(T_B,p)\in B\}\ne\varnothing$；$H_B$ 迫使全部活动位置含全部 $t<T_B$，最大性排除全部 $t>T_B$，恰得 (MIX-NORMAL)。反向，柱集在活动位置含全部时刻；正常形中若 $(s,q)\in B$ 且 $t<s$，则 $t<T_B$，故每个 $p\in S_B$ 都有 $(t,p)\in B$。两种形式均满足 $H_B$。证毕。
+

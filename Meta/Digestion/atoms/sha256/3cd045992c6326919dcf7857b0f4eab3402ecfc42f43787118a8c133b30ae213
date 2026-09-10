@@ -1,0 +1,4 @@
+**思考产地（caller brief 转述，未读取原始判词）：** 六席为 teleology、parsimony、fidelity、natural-ownership、proportional-containment、worth。teleology 使用 nyxid-oracle、company-chatgpt-pro 池，自报 GPT-6 Astra Pro；其余五席使用 codex-cli，自报 GPT-6／Codex，经仓内 dispatch.sh 负载门派发，其中四席曾在门内排队至他人负载回落。六席均为 revise，由 meta-judge 收敛至 R1-PR6。排队与模型身份是该次席位／caller 自报，不是本实施席对当时宿主的测量。
+
+各席均暴露 caller 候选计划，**非盲**；候选曾把 $\Sigma_{\rm mix}$、$\Sigma_{{\rm cau},t}$ 与复制孔三个范围混写，席位纠正后由 R1 分开。codex 有仓库先验暴露，oracle 的外部先验不受本席控制，不凭席数宣称先验独立。后续 architecture／quality／tests 三评审席的载体、模型、判词与分歧裁决由 caller **另记**；实施时未收到，不预报通过。
+

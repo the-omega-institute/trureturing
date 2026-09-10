@@ -37,7 +37,10 @@ internal sealed class StrictFirstSumsGapfreeOddPartsDocument : IScribeDocumentDe
                 + "takes h to 2h-1, giving exact initial odd support. Restrict the original "
                 + "equivalence to this property and to total weight n, and transport via "
                 + "the original list/partition equivalences. No extra hypothesis is needed.",
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a392707-gapfree-odd-combinatorial-bridge"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The sibling's auxiliaries are private in a legacy Lean module. "
                 + "A local elaborator resolves their unique original constants in the "
                 + "imported environment, so their definitions and proofs are reused verbatim "
@@ -47,10 +50,11 @@ internal sealed class StrictFirstSumsGapfreeOddPartsDocument : IScribeDocumentDe
                 + "outside this module.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("a392707-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));

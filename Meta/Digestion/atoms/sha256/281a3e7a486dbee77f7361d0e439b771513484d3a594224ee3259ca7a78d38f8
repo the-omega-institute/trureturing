@@ -1,0 +1,13 @@
+**反例 D18（命题：非总项的切片恒等式失效，repo-derived）。** 固定
+$Q=\{(0,+1,\operatorname{leaf}(0),1)\}$，其中首坐标 $0\in\mathbb Z^3$，令部分复制项
+\[
+D(X)=F_{\downarrow Q}(X\mathbin{\triangleright}T_1X),\qquad
+D_1(X)=F_{\downarrow Q}(X\mathbin{\triangleright}T_1 0),\qquad
+D_2(X)=F_{\downarrow Q}(0\mathbin{\triangleright}T_1X).
+\]
+$U_0$ 沿用引理 1：一正一负两个孤立当前点，时间、位置均为 $0$，来源为 $l_0$，只选正点。则对所有整数 $n\ge0$，$D(nU_0)$ 有定义且 $q(D(nU_0))=2n$，但
+\[
+q(D_1(U_0))=0,\qquad q(D_2(U_0))=1,\qquad q(D(0))=0.
+\]
+因此直线 $2z$ 的一次系数 $2$ 不等于切片和 $0+1-2\cdot0=1$。$D$ 并非总项，$Q$ 的时间投影上下界均为 $1$。
+

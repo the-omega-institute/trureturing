@@ -1,0 +1,44 @@
+**命题 55（$\Sigma_{{\rm cau},t}$ 单孔 q 表达分类，repo-derived）。**
+
+$$
+\forall B\subseteq K:\qquad E_q(B)\ \Longleftrightarrow\ \operatorname{Tail}(B).
+\tag{O-CLASSIFICATION}
+$$
+
+**证明（充分性）。** 固定 Tail 的 $c$，任取整数 $k\le c-1$，定义
+
+$$
+\begin{aligned}
+Q_{B,k}&=\{(p,\epsilon,r,n):n\ge k+1,\ (n-1,p)\in B\},\\
+C_B(X)&=F_{\downarrow Q_{B,k}}(X\boxtimes T_k(U_0)).
+\end{aligned}
+\tag{O-CONSTRUCTION}
+$$
+
+其中 $\epsilon\in\{\pm1\},r\in T$ 任取。这也等于在 $n=k+1$ 层放全部 $p\in S^-$ 的属性，再放全部 $(p,\epsilon,r,t+1)$、$t\ge k+1,(t,p)\in B$。参数均在输入前固定，表达式是总单孔上下文。
+
+乘积选中的父对恰为 $(e,u_+)$、$e\in A_X$；子点位置与符号沿 $e$，时间为 $\max(t(e),k)+1$。当前区域为反链，因果筛选只检查子点自身。若 $t(e)>k$，检查恰为原单元 $(t(e),x(e))\in B$；若 $t(e)\le k$，检查为 $(k,x(e))\in B$，而 $t(e),k<c$，Tail 使其与原单元同真值。逐选中点作有符号有限和即得 q 等式，包括负点、负时刻及空选择。
+
+**证明（必要性）。** $B=\varnothing$ 时 Tail 成立，且 $F_\varnothing$ 可由空空间筛选实现，单列结束。其余情形取 (O-QEXPR) 的固定总上下文 $C$，应用引理 4。对任意 $p$ 及 $t,t'<c_C$，两输入都只选正点 $e$，故
+
+$$
+\mathbf1_B(t,p)=q(F_BX_t)=q(C(X_t))
+=q(C(X_{t'}))=q(F_BX_{t'})=\mathbf1_B(t',p).
+$$
+
+于是 $c=c_C$ 同时适用于全部位置，得到 Tail。这里没有用有限深度搜索承担任意有限 $C$ 的否定。证毕。
+
+**继承结算。** 命题 54 的时间有下界族恰是 Tail 正常形中 $S^-=\varnothing$ 的族；命题 53 的全部丰富可表达族也满足 Tail。D14 可取 $c=1,k=0,S^-=\{p,q\}$，仍无时间下界；其 q 表达成为本命题推论，而丰富输出不可表达性原样成立。§34.6 的一般单孔 q 分类 **由命题 55 结算**。Tail 对有限交封闭（取各阈值的最小值），故 $B\cap D$ 可按 (O-CONSTRUCTION) 重造上下文；不能把单纯 q 等式代入任意后续复合来证明这条结论。
+
+**H-A 的反例族（推论例，不占 D 编号）。** “$\Sigma_{{\rm cau},t}$ 中所有 $B$ 都 q 可表达”为假。对 $d\ge2$、$\varnothing\ne R\subsetneq\mathbb Z/d\mathbb Z$，
+$B_{d,R}=\{(t,p):t\bmod d\in R\}$ 在每条过去尾仍有两种真值，故不满足 Tail；空间限制的例子 $B_{\rm even}=\{(t,0):t\text{ 偶}\}$ 同样不可表达。给定任意 $c$，可在 $c$ 以下选择属于和不属于 $R$ 的时刻，这提供每个阈值的反证。
+
+另取
+
+$$
+B_{\rm drift}=\bigcup_{n\ge0}\bigl(\{t\le-n\}\times\{(n,0,0)\}\bigr).
+\tag{O-DRIFT}
+$$
+
+每位置分别最终恒定，但无公共 $c$：给定 $c$，取 $n\ge0$ 使 $-n+1<c$，在位置 $(n,0,0)$ 比较 $-n,-n+1$，真值为 $1,0$。其时间无下界、有上界 $0$。这反驳把 $\exists c\,\forall p$ 弱化为 $\forall p\,\exists c_p$；有限核验中的塌缩读数只作对照，否定由上述任意阈值论证和命题 55 承担。
+

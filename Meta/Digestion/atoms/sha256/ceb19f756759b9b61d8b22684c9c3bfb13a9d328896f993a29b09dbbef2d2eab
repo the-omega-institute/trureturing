@@ -1,0 +1,24 @@
+**26.13 精化有限测试集。** 定义 \(\mathcal K_{\rm sharp}\) 为以下有序预算对之集合。
+第一类保留所有通过 cutoff 的相邻实际角点对:
+\[
+(\beta_{s-1},\beta_s),\qquad
+1\le s\le N-1,\quad \beta_{s-1}>B_{\rm cut}.
+\]
+第二类仅保留活跃且严格位于下一角点区间内部的反射点:
+\[
+(b,u_*),\quad b=\beta_{j-1},\ a=b/k,\ u_*=k(c_i+d_i)-b,
+\]
+\[
+1\le j\le N-2,\quad 1\le i\le k,\quad
+b>B_{\rm cut},\quad c_i<a<(c_i+d_i)/2,\quad
+\beta_j<u_*<\beta_{j+1}.
+\]
+每个成员都可容许:第一类含其两个端角点,第二类含
+\(\beta_{j-1},\beta_j\),宽度和 cutoff 均严格。
+因此原始数量上界为
+\[
+|\mathcal K_{\rm sharp}|\le (N-1)+k(N-2).
+\]
+\(k=3,N=8\) 时为 \(7+6\cdot3=25\)。
+25 是通过 guards 之前的每箱容量上界,不是每个箱体都留下 25 个节点的断言。
+

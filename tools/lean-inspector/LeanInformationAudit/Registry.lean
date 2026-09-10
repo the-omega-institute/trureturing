@@ -1,3 +1,4 @@
+import LeanInformationAudit.RegistryTypes
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import LeanInformationAudit.Sha256
 import LeanInformationAudit.FixedSnapshot
@@ -33,33 +34,6 @@ def generatedCompanionSuffixes : Array String := #[
   "__information_catalog",
   "__catalog_irredundant"
 ]
-
-abbrev CatalogId := Name
-
-inductive CatalogKind where
-  | canonicalMaximal
-  | analysisView
-  deriving BEq, Inhabited, Repr
-
-def CatalogKind.artifactName : CatalogKind -> String
-  | .canonicalMaximal => "canonical_maximal"
-  | .analysisView => "analysis_view"
-
-structure InformationRegistryEntry where
-  theoremName : Name
-  unitName : Name
-  /-- The `PrimitiveLawArena` presentation. -/
-  arenaName : Name
-  /-- The declaration holding the native realization or the legacy witness. -/
-  realizationName : Name
-  catalogId : CatalogId := .anonymous
-  catalogKind : CatalogKind := .canonicalMaximal
-  registrationModuleName : Name := .anonymous
-  objectArenaName : Name := .anonymous
-  /-- Stable identity of the elaborated theorem statement captured at registration. -/
-  statementIdentity : String := ""
-  /-- False exactly for registrations using occurrence-aware syntax. -/
-  localRegistrationNames : Bool := true
 
 def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : Name :=
   entry.arenaName

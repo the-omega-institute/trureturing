@@ -1,0 +1,39 @@
+**26.3 同一对偶、同一方差和同一比较差。** 保留
+\(f(x)=\log(1-e^{-x})\),对 \(u=M_1\) 定义
+
+\[
+D(u)=\inf_{\lambda\ge0}\left\{\lambda u+
+\sum_i\max_{x\in C_i}\bigl(f(x)-\lambda x\bigr)\right\},
+\]
+\[
+v_i=f(d_i)-f(c_i)>0,\qquad
+D(u)=\sum_i f(c_i)+\inf_{\lambda\ge0}
+\left\{\lambda(u-A)+\sum_i\max(0,v_i-\lambda h_i)\right\}.
+\]
+
+其精确分数背包形式将在 26.10-26.11 用匹配证书证明:
+
+\[
+D(u)=\max_{\substack{0\le y_i\le1\\\sum_i h_i y_i\le u-A}}
+\sum_i\bigl((1-y_i)f(c_i)+y_i f(d_i)\bigr),\qquad u\ge A.
+\]
+
+对每个可容许薄层置
+
+\[
+I=[M_0/k,u/k],\quad
+\delta_i(M_0,u)=\operatorname{dist}(I,C_i),\quad
+V_0(M_0,u)=\sum_i\delta_i(M_0,u)^2,
+\]
+\[
+\mu=u/k,\quad \rho=\sqrt{\frac{V_0}{k(k-1)}},\quad
+H=\mu+(k-1)\rho,\quad L=\mu-\rho,\quad
+\Psi(M_0,u)=f(H)+(k-1)f(L),\quad G(M_0,u)=D(u)-\Psi(M_0,u).
+\]
+
+\(V_0\) 仍是平方距离之和,没有除以 \(k\)。
+记 \(E_S=\prod_i(1-p_i^{-1})^{-1}\),则
+\(U_{\rm dual}=\log E_S+D\)、\(U_{\rm var}=\log E_S+\Psi\)。
+共同的 \(\log E_S\) 精确抵消,所以 \(G=U_{\rm dual}-U_{\rm var}\);
+这里没有更换第 18、19、24、25 节的归一化。
+

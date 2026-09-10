@@ -1,0 +1,23 @@
+**证明。** 累积输出时间不超过 $n$ 的全部项。由 (TS-PRODUCT)，两个父时间满足的条件恰为
+
+$$
+\max(a,b)+1\le n
+\quad\Longleftrightarrow\quad
+a\le n-1\ \text{且}\ b\le n-1.
+$$
+
+因此在 $R$ 中有有限双和等式
+
+$$
+\begin{aligned}
+P(c\odot d)(n)
+&=\sum_{\substack{a,b\in\mathbb Z\\\max(a,b)+1\le n}}c_a*d_b\\
+&=\sum_{a\le n-1}\sum_{b\le n-1}c_a*d_b\\
+&=\left(\sum_{a\le n-1}c_a\right)*
+  \left(\sum_{b\le n-1}d_b\right)
+=C_{n-1}*D_{n-1}.
+\end{aligned}
+$$
+
+这里非零项只来自 $T(c)\times T(d)$；每一空间卷积也只涉及有限支撑，故所有重排都是有限和重排。对 (CUM-DELAY) 在相邻输出时间 $n,n-1$ 作差，得到 (CUM-DIFFERENCE) 第一式。再加减 $C_{n-2}*D_{n-1}$，并用 $C_{n-1}-C_{n-2}=c_{n-1}$ 与 $D_{n-1}-D_{n-2}=d_{n-1}$，得到第二式。两个下标 $n-1,n-2$ 都来自默认输出延迟，不能改为无延迟的下标。证毕。
+

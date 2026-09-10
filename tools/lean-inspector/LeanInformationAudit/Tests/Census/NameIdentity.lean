@@ -13,8 +13,8 @@ def rowFor (name : Name) (id : String) : Sigma fun key : StatementKey => CensusA
     certification := .reportOnly }⟩
 
 def collision : DispositionInventory := ⟨"head", #[
-  rowFor (Name.str (Name.mkSimple "#a") "b") "id-1",
-  rowFor (Name.mkSimple "#a.b") "id-2"]⟩
+  rowFor (Name.str (Name.mkSimple "#a") "b") "sha256:000000000000000000000000000000000000000000000000000000000000001a",
+  rowFor (Name.mkSimple "#a.b") "sha256:000000000000000000000000000000000000000000000000000000000000001b"]⟩
 
 run_cmd liftTermElabM do
   for key in collision.keys do
@@ -47,7 +47,8 @@ run_cmd liftTermElabM do
 #guard_msgs in
 #eval [Name.mkSimple "#a.b", Name.str (Name.mkSimple "#a") "b",
     Name.num `A 3, Name.str `A "3", Name.anonymous].all fun name =>
-  let key : StatementKey := ⟨`T, "id"⟩
+  let key : StatementKey :=
+    ⟨`T, "sha256:0000000000000000000000000000000000000000000000000000000000000019"⟩
   let rows : Array (Sigma fun key : StatementKey => CensusAssessment key) := #[
     ⟨key, .certified <| .finiteOccurrence ⟨name, name, name, name, name⟩⟩,
     ⟨key, .certified <| .structuralOccurrence ⟨name, name, name, name, name⟩⟩,
