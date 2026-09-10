@@ -1,7 +1,7 @@
 /- GID: D5/S3/FluidDynamics/Cone/ConePositivity
    generality: G
    mirror-B: D5/B/S3/FluidDynamics/Cone/ConePositivity
-   mirror-E: none
+   mirror-E: none(waiver:upstream-proof-complete-port)
    anchors: []
    utility: none
    digest: The Navier--Stokes cone condition is equivalent to positive definiteness of an explicit symmetric two-by-two real matrix. -/
