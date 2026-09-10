@@ -34,6 +34,9 @@ run_cmd do
     | .ok value => pure value
     | .error message => throwError message
   let root := (← getEnv).header.mainModule
+  let forged := Json.mkObj ((artifact.getObj?.toOption.get!.toArray.map fun (k, v) =>
+    (k, if k == "system_catalog_irredundant" then toJson false else v)).toList)
+  unless (validateAnalysisInventory root forged).toOption.isNone do throwError "system verdict branch"
   match validateAnalysisKeySet root `system "root" #["schema", "root_id", "seal_scope",
       "registration_modules", "system_catalog_irredundant",
       "kernel_address_coincidence_classes", "catalogs"] artifact with

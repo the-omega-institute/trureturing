@@ -11,12 +11,9 @@ open D5.S3.ConceptDynamics.InformationEscapeArenas
 local macro "expect_member " t:ident " in " a:ident : command =>
   `(command| expect_information_occurrence $t in $a from "LeanInformationAudit.Tests.Seal.M3")
 section Intervention
-open D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
-open D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner
-open D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion
-open D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative
-open D5.S3.ConceptDynamics.Sufficiency.UniversalSufficiencyFactorization
-open D5.S3.ConceptDynamics.ConceptJoinUniversal
+open Interventions.InterventionCounterfactualSeparation Interventions.CounterfactualKernelStrictlyFiner
+open Interventions.CounterfactualIdentifiabilityCriterion Sufficiency.SufficiencyIsTargetRelative
+open Sufficiency.UniversalSufficiencyFactorization ConceptJoinUniversal
 open FourthFifthArenas
 attribute [local instance] modelFintype modelDecidableEq
 def interventionRealization := InformationEscapeRealizations.FourthFifthRealizations.interventionRealization
