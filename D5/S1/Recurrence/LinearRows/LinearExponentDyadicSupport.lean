@@ -484,4 +484,65 @@ theorem integer_exists_unique : ∃! A : PowerSeries ℤ, DefiningEquation A := 
 noncomputable def a (n : ℕ) : ℤ := coeff n generatingSeries
 
 
+private theorem candidate_coeff (n : ℕ) (hn : 3 < n) :
+    coeff n candidate=coeff n U+coeff (n-2) U := by
+  rw [candidate_factor, E, CharTwo.add_sq, one_pow, add_mul, one_mul, map_add]
+  rw [coeff_X_pow_mul', if_pos (by omega : 2 ≤ n)]
+
+private theorem power_four_dvd (k : ℕ) (hk : 1 < k) : 4 ∣ 2^k := by
+  obtain ⟨j, rfl⟩ : ∃ j, k=j+2 := ⟨k-2, by omega⟩
+  rw [pow_add]
+  exact dvd_mul_left 4 (2^j)
+
+private theorem high_power (n k : ℕ) (hn : 2 < n) (h : n=2^k) : 1 < k := by
+  by_contra! hk
+  interval_cases k <;> norm_num at h <;> omega
+
+private theorem support_disjoint (n : ℕ) (hn : 3 < n) :
+    ¬ (coeff n U=1 ∧ coeff (n-2) U=1) := by
+  rintro ⟨ha, hb⟩
+  obtain ⟨i, hi⟩ := (U_support n).mp ha
+  obtain ⟨j, hj⟩ := (U_support (n-2)).mp hb
+  have hi4 := power_four_dvd i (high_power (n+1) i (by omega) hi)
+  have hj4 := power_four_dvd j (high_power (n-2+1) j (by omega) hj)
+  rw [← hi] at hi4
+  rw [← hj] at hj4
+  omega
+
+private theorem binary_sum_one (a b : F2) (h : ¬ (a=1 ∧ b=1)) :
+    a+b=1 ↔ a=1 ∨ b=1 := by
+  revert a b
+  decide
+
+private theorem support_arithmetic (n : ℕ) (hn : 3 < n) :
+    ((∃ i : ℕ, n+1=2^i) ∨ (∃ j : ℕ, n-2+1=2^j)) ↔
+      ∃ k : ℕ, 1 < k ∧ (n=2^k-1 ∨ n=2^k+1) := by
+  constructor
+  · rintro (⟨i, hi⟩ | ⟨j, hj⟩)
+    · exact ⟨i, high_power (n+1) i (by omega) hi, Or.inl (by omega)⟩
+    · exact ⟨j, high_power (n-2+1) j (by omega) hj, Or.inr (by omega)⟩
+  · rintro ⟨k, hk, h | h⟩
+    · have hp : 0 < 2^k := by positivity
+      exact Or.inl ⟨k, by omega⟩
+    · exact Or.inr ⟨k, by omega⟩
+
+private theorem solution_parity (n : ℕ) (hn : 3 < n) :
+    Odd (a n) ↔ ∃ k : ℕ, 1 < k ∧ (n=2^k-1 ∨ n=2^k+1) := by
+  have hc : (a n : F2)=coeff n candidate := by
+    have h := congrArg (coeff n) solution_mod_two
+    simp only [coeff_map] at h
+    simp only [a, generatingSeries, map_sub, coeff_one, if_neg (by omega : n ≠ 0),
+      zero_sub, Int.cast_neg, CharTwo.neg_eq]
+    exact h
+  rw [← ZMod.intCast_eq_one_iff_odd, hc, candidate_coeff n hn,
+    binary_sum_one _ _ (support_disjoint n hn), U_support, U_support, support_arithmetic n hn]
+
+/-- For every integer series satisfying the exact OEIS NAME, the conjectured parity holds. -/
+theorem hanna_conjecture (A : PowerSeries ℤ) (hA : DefiningEquation A)
+    (n : ℕ) (hn : 3 < n) :
+    Odd (coeff n A) ↔ ∃ k : ℕ, 1 < k ∧ (n=2^k-1 ∨ n=2^k+1) := by
+  have h : A=generatingSeries := integer_exists_unique.unique hA generating_equation
+  rw [h]
+  exact solution_parity n hn
+
 end D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport

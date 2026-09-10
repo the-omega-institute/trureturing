@@ -95,3 +95,11 @@ normalized rows vanish. The odd rows vanish from EO=candidate. Normalized
 uniqueness then proves the proposed modulo-two identity. One algebraic repair
 was needed: the even/odd split of (1+X)U consumes (1+X) times U's equation,
 not the unmultiplied equation. The full support classification is next.
+
+The full source-domain theorem now compiles without warnings (file-level Lean
+exit 0): for arbitrary integer A satisfying DefiningEquation and every n>3,
+Odd(coeff n A) iff n=2^k-1 or n=2^k+1 for some k>1. Its support step directly
+uses frozen binary_catalan. The two shifted Catalan supports cannot overlap
+above degree three: both corresponding powers would be divisible by four
+while differing by two. This explains the source's strict n>3 cutoff.
+Full project, report, Scribe and deposit gates remain to be run.
