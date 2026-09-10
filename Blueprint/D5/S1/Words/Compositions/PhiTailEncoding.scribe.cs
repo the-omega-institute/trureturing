@@ -19,16 +19,16 @@ internal sealed class PhiTailEncodingDocument : IScribeDocumentDefinition
                 + "The resulting integer word has length 2n-1 and uses the residual alphabet "
                 + "strictly between -n and n.")),
             Node("tailWord_length", "Tail length", Q(
-                Call("length", Call("tailWord", V("n"), V("p"), V("h_n"))), Eq,
+                Call("length", Call("tailWord", V("n"), V("p"), V("hn"))), Eq,
                 Sub("2", V("n")), Minus, D(1)),
                 "The reversed tail is indexed by Fin (2*n-1), so ofFn gives exactly that length.",
                 DescribeRole.Theorem),
             Node("tailWord_entry_bounds", "Residual alphabet bounds", Q(
-                Minus, V("n"), Lt, Call("tailWord", V("n"), V("p"), V("h_n")), Lt, V("n")),
+                Minus, V("n"), Lt, Call("tailWord", V("n"), V("p"), V("hn")), Lt, V("n")),
                 "Fixing zero and injectivity of a permutation exclude the lower endpoint; "
                 + "the Fin range bound gives the upper endpoint.", DescribeRole.Theorem),
             Node("mem_phi_tailWord_bounds", "Bounds for Phi members", Q(
-                Call("p", V("inPhi")), Implies, Call("residualBounds", V("p"))),
+                Call("p", V("inphi")), Implies, Call("residualBounds", V("p"))),
                 "Membership in the source finite set supplies the fixed-zero hypothesis, "
                 + "so every tail letter satisfies the same residual bounds.", DescribeRole.Theorem))));
 
