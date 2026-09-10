@@ -1,0 +1,35 @@
+**36.38 Classical inputs, specialized paper boundaries and actual access limits.**
+Existence and uniqueness of normalized regular Haar measure, the complex
+Stone-Weierstrass theorem, unique prime factorization and elementary integer
+linear algebra are classical inputs. The classical closed-subgroup framework
+was attributed by C67 to the real Lie-group theorem recalled in Helge
+Glöckner's *Non-Lie subgroups in Lie groups over local fields of positive
+characteristic*. The needed torus-specific annihilator, rational tangent,
+finite-component and Haar-chart conclusions are proved in 36.2-36.5.
+C67 attributes the distribution context to Tom Meyerovitch,
+*Well-distribution of Polynomial maps on locally compact groups*,
+arXiv:2210.01429v2, Proposition 3.2 and Lemma 5.3. The stated homomorphism
+result uses the **closure** of the image. The required specialized uniform
+character and discontinuous-observable arguments are proved in 36.11-36.12.
+The complete-family multiplicity, boundary, counting, volume, baseline and
+application arguments are repo-derived paper deductions, not novelty claims.
+The scoped sign inputs 30.16 and 31.17 and conditional transfer input 34.20
+are inherited repo-derived paper results, not classical \(G\)-sign theorems
+or Lean/kernel admissions.
+
+All following access facts are **C67-worker-reported**, not I24 or caller
+independent retrieval. C67 reports retrieving Meyerovitch's v2 PDF and
+examining printed pages 8 and 11 with screenshots, retrieving Glöckner's
+arXiv abstract, and seeing only a lecture listing on a Raghuram course page.
+The listing was not treated as a proof source. A Tao author-site Smith-normal-
+form search and an attempted MIT Etingof lecture PDF returned Internal Error;
+neither supports a premise. C67 reports opening both supplied project-source
+addresses at immutable d79a2cd3cd3d5881dce26df9cee8266de9ae61e7 and focused
+checks of sections 30, 31 and 34, not a whole-volume audit, byte-hash check,
+checkout inspection, review-status inquiry or merge-status check. Missing
+URLs, hashes and screenshot/selector evidence are not invented. Raw citation
+fragments such as arXiv+1 and GitHub+1 remain untouched in the inert payload.
+I24 consulted the supplied raw proof and this local pinned predecessor's
+relevant statements, with zero new external accesses and zero certificate
+replays; these checks do not independently recertify earlier signs.
+

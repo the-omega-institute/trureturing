@@ -1,0 +1,40 @@
+**35.30 Implementation, report and canonical handoff boundary.** This is the
+single Codex CLI I22 implementation flight
+qgh0910-i22-near-balanced-recurrence, attempt 1, retry budget 1, under the
+caller-pinned consensus-rnd:sshx 1.0.0-beta.42 SKILL.md and
+CODEX_WORKER_SPEC.md, with CLAUDE 5.11 and the explicit no-delegation brief.
+The work target is /Users/auricstudio/trureturing-qgh-recurrence, branch
+lane/math/quantized-gh-recurrence-0910, immutable BASE
+d79a2cd3cd3d5881dce26df9cee8266de9ae61e7. The complete predecessor prefix is
+preserved: 394297 bytes, 7571 LF, SHA256
+06331627e46c9e19fbb784282b192d521cb953e4c9a34fb421f74c44c0655b9b.
+Historical source, CAS, YAML and report bytes, including partial/table atoms
+and terminal-LF variants, retain their original identities. This layer adds
+only section 35, the [single provenance and binding report](../../reports/quantized-gh/near-balanced-recurrence-0910.md),
+and the actual outputs of one canonical invocation on the finished source:
+~~~text
+make ingest BASE=d79a2cd3cd3d5881dce26df9cee8266de9ae61e7 SOURCE=arithmetic-boundary-quantization
+~~~
+The report preserves the exact C64 response as inert tilde-fenced text,
+separately identifies its delimiter-only LF, maps every new numbered unit to
+primary fields, and records whole-span CAS coverage, inherited 34.22 LF
+extension, actual children/chains if emitted, links and whitespace diagnostics.
+Byte/hash/JSON/span checks and make orchestration are structural evidence,
+not theorem proof. Mathematical code execution, sampled orbits, exponent/prime
+enumeration, historical certificates or tests replayed, CPU candidate
+generation, GPU work and runtime-state reads/writes are all zero in this flight.
+There are no tool, producer, Lean or frozen edits or broad builds/cache warmup.
+
+The worker is repo-prior-exposed. No other worktree, live source/review target,
+caller transcript, task registry, worker envelope or log/log_ref content is
+an input; the explicitly supplied complete C64 response is the permitted
+previous-stage mathematical input. No delegation, worker/oracle launch,
+independent review panel or lifecycle/termination authority is exercised.
+At this I22 handoff the changes are unstaged and not independently reviewed;
+this describes this handoff, not future delivery status. Caller sealing,
+public verification, independent review and ordinary gates remain required,
+and final S24 delivery must follow S23 MERGED. Canonical ingestion is not
+Lean absorption, independent approval, MERGED delivery or completion of the
+standing goal. The report and final structured envelope expose any coverage
+or whitespace failure without hand-editing canonical data or repeating ingest.
+

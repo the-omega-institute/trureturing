@@ -1,0 +1,19 @@
+**36.25 Complete zero-width classification.** At unshifted width zero,
+\(m_0*h_0=m_1*h_1\) with both integers positive would contradict 36.2.
+Therefore \(C_0(X)=0\) for every \(X>0\). At shifted width zero under 36.23,
+all \(q_i*h_i\) equal a common \(\tau\ge0\). If \(\tau>0\), all \(q_i\)
+are positive integers and the same irrationality contradiction applies.
+If \(\tau=0\), every \(q_i=0\), so \(m=r\). This is valid exactly when
+every \(r_i\ge1\). Consequently
+\[
+C_{a,0}(X)=
+\begin{cases}
+\mathbf1_{\{X\ge\prod_i p_i^{r_i-1}\}},&\text{if every }r_i\ge1,\\
+0,&\text{if some }r_i=0.
+\end{cases}
+\]
+Thus a shifted zero-width family has at most its height-zero baseline. The
+positive-width theorem is stated for each fixed \(\epsilon>0\); it does not
+assert a uniform asymptotic as \(\epsilon\downarrow0\) or interchange that
+limit with \(X\to\infty\).
+

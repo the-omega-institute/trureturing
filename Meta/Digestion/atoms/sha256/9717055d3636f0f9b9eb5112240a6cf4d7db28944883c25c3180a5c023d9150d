@@ -1,0 +1,12 @@
+**36.22 Full exponent-lattice density.** In the cube
+\(0\le b_i\le R\) with \(b_i=m_i-1\) and integer \(R\ge0\), there are
+only \(R+1\) possible reference indices and at most \(B_\epsilon\) tube
+tuples per index, by 36.6-36.7. The tube therefore contains at most
+\((R+1)*B_\epsilon\) of the \((R+1)^k\) tuples. Their proportion tends
+to zero for \(k\ge2\). This density in full exponent cubes, the smooth-number
+ratio in 36.21, ordinary and logarithmic integer density, support density
+\(\nu_\epsilon\), and multiplicity mean \(\kappa_\epsilon\) have different
+reference measures. A positive-width family fills a window on its actual
+compact orbit closure with positive occurrence, while remaining sparse in
+each of those larger arithmetic domains.
+

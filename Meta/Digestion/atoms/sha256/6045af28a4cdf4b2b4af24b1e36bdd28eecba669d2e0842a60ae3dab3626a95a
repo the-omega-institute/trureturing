@@ -1,0 +1,28 @@
+**36.23 Integer baselines and the exact finite nonnegative correction.** Fix
+\(r_i\in\mathbb Z_{\ge0}\), put \(a_i=r_i*h_i\), and
+\(K=\prod_i p_i^{r_i}\). Let \(C_{a,\epsilon}(X)\) count all \(m_i\ge1\)
+with \(\min_i(c_i-a_i)\ge0\), translated width at most \(\epsilon\), and
+\(N(m)\le X\). Set \(q_i=m_i-r_i\). The precise positivity conditions are
+\(q_i\ge0\) for all \(i\), and \(q_i\ge1\) whenever \(r_i=0\).
+If every \(q_i\ge1\), the map \(q\mapsto m=q+r\) bijects the unshifted
+tube with this interior part and
+\(N(m)=K*N(q)\). Its count is exactly \(C_\epsilon(X/K)\).
+
+If some \(q_i=0\), translated minimum is zero, so every coordinate satisfies
+\(0\le q_j*h_j\le\epsilon\). Let \(\mathcal B_{a,\epsilon}\) be exactly
+these integer vectors satisfying the stated positivity restrictions and
+having at least one zero. It is finite, with size at most
+\(\prod_j(\lfloor\epsilon/h_j\rfloor+1)\). Define
+\[
+E_{a,\epsilon}(X)=\sum_{q\in\mathcal B_{a,\epsilon}}
+ \mathbf1_{\{N(q+r)\le X\}}.
+\]
+Then, with no asymptotic qualification,
+\[
+C_{a,\epsilon}(X)=C_\epsilon(X/K)+E_{a,\epsilon}(X).
+\]
+The correction is nonnegative, uniformly bounded in \(X\), and eventually
+constant. It retains all nonnegative translated-boundary vectors allowed by
+\(m\ge1\); it is not an unspecified signed error. These definitions and
+the exact identity also make sense at \(\epsilon=0\).
+

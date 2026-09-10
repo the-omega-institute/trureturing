@@ -8302,3 +8302,1003 @@ and final S24 delivery must follow S23 MERGED. Canonical ingestion is not
 Lean absorption, independent approval, MERGED delivery or completion of the
 standing goal. The report and final structured envelope expose any coverage
 or whitespace failure without hand-editing canonical data or repeating ingest.
+
+## 36. Complete fixed-width prime-box tubes: multiplicity, Haar counting and baseline boundaries
+
+**36.1 Fixed data, complete family and theorem.** This S25/C70 appendix
+implements the terminal C67 primary as PAPER_ARGUMENT / repo-derived. All
+logarithms are natural. Fix an ordered list of distinct primes
+\(p_0,\ldots,p_{k-1}\), an integer \(k\ge2\), and a finite real
+\(0<\epsilon<\infty\). Write \(d=k-1\), \(h_i=\log p_i>0\),
+\(S_h=\sum_{i=0}^d h_i\), and \(h_{\max}=\max_i h_i\). For every
+\(m\in\mathbb Z_{\ge1}^k\), define
+\[
+c_i=m_i*h_i,\quad T(m)=\min_i c_i,\quad A(m)=\sum_i c_i,\quad
+\operatorname{width}(m)=\max_i c_i-\min_i c_i,\quad
+N(m)=\prod_{i=0}^d p_i^{m_i-1}.
+\]
+Let \(C_\epsilon(X)\) count all these tuples with
+\(\operatorname{width}(m)\le\epsilon\) and \(N(m)\le X\), for real \(X>0\).
+Unique factorization makes this also a count of distinct ordinary integers.
+The theorem proved below is
+\[
+C_\epsilon(X)=\frac{\kappa_\epsilon}{k*h_0}*\log X+o(\log X),
+\qquad \kappa_\epsilon>0.
+\]
+Here \(\kappa_\epsilon\) is the bounded multiplicity mean on the actual
+orbit closure defined in 36.2 and 36.6, not a visit probability. Its ratio
+\(\kappa_\epsilon/h_0\) is independent of the reference prime. Every branch
+of the fixed-width family is counted; section 35's selected nearest-rounding
+Bohr family is only a source of a lower bound. Every asymptotic fixes the
+prime list and \(\epsilon\). The explicit higher-dimensional volume formula
+is conditional on a full orbit closure; no such hypothesis enters the main
+theorem. The shifted-5040 count is unconditional, while its proposed full
+wider-domain \(G\) margin stays conditional on C61 throughout this appendix.
+
+**36.2 Pairwise irrationality and the integer annihilator.** Set
+\(\alpha_i=h_0/h_i\) for \(1\le i\le d\), and in
+\(\mathbb T^d=(\mathbb R/\mathbb Z)^d\) let
+\[
+H=\overline{\{n*\alpha:n\in\mathbb Z\}},\qquad
+\Lambda=\{\ell\in\mathbb Z^d:\ell\mathbin{\cdot}\alpha\in\mathbb Z\}.
+\]
+The closure of a subgroup is a subgroup, so \(H\) is a compact abelian group;
+\(\mu_H\) denotes its normalized regular Haar probability measure. If
+\(h_i/h_j=u/v\) for distinct indices and positive integers \(u,v\), then
+\(p_i^v=p_j^u\), contradicting unique prime factorization. Thus every such
+ratio, including each \(\alpha_i\), is irrational. This does not prove joint
+rational independence of \(1,\alpha_1,\ldots,\alpha_d\).
+
+For \(\ell\in\mathbb Z^d\), write
+\(\chi_\ell(x)=\exp(2*\pi*\mathrm i*(\ell\mathbin{\cdot}x))\).
+Continuity and orbit density show that \(\chi_\ell|_H=1\) exactly when
+\(\ell\in\Lambda\). Its Haar integral then equals 1. Otherwise choose
+\(v\in H\) with \(\chi_\ell(v)\ne1\); translating the integral multiplies
+it by \(\chi_\ell(v)\) without changing it, so its integral is zero. These
+character facts include finite-order characters on disconnected \(H\).
+
+**36.3 Exact annihilator description without a full-torus assumption.** One has
+\[
+H=\{x\in\mathbb T^d:\chi_\ell(x)=1\text{ for all }\ell\in\Lambda\}.
+\]
+The forward inclusion follows from 36.2. For the converse suppose \(x\notin H\).
+In a translation-invariant torus metric let \(g(y)=\operatorname{dist}(y,H)\).
+This continuous function is invariant under translations by \(H\), satisfies
+\(g(0)=0\), and has \(g(x)>0\). Ambient characters and their finite linear
+combinations form a conjugation-closed unital algebra separating torus points.
+The complex Stone-Weierstrass theorem gives a trigonometric polynomial \(P\)
+with \(\|P-g\|_\infty<g(x)/3\). Average \(P(y+v)\) over \(v\in H\).
+Character integration from 36.2 produces a polynomial \(Q\) using only
+\(\ell\in\Lambda\); the same error bound holds because \(g(y+v)=g(y)\).
+If \(x\) satisfied every annihilator character, then \(Q(x)=Q(0)\). But
+\(g(x)=|g(x)-g(0)|<2*g(x)/3\) would follow, a contradiction. This establishes
+the description using Haar measure and character approximation, not an
+unproved joint-independence assertion.
+
+**36.4 Rational tangent space and all finite components.** Every subgroup of
+\(\mathbb Z^d\) is finitely generated: induct on \(d\), project to the first
+coordinate, lift a generator of its nonzero image in \(\mathbb Z\) if needed,
+and add generators for the kernel by induction. Apply this to \(\Lambda\),
+put its generators in the rows of an integer matrix \(B\) with \(s\) rows,
+and set \(V=\ker_{\mathbb R}B\). The empty matrix is allowed. By 36.3,
+\[
+H=\{x\bmod\mathbb Z^d:B*x\in\mathbb Z^s\}.
+\]
+Rational row reduction gives a rational basis of \(V\); clearing denominators
+gives integer vectors spanning \(V\) over \(\mathbb R\). No saturation of
+\(\Lambda\) is assumed. In a sufficiently small injective coordinate cube
+about zero, every component of \(B*x\) has absolute value less than 1. The
+local lift of \(H\) is therefore exactly \(V\) intersected with that cube.
+For the quotient map \(\pi:\mathbb R^d\to\mathbb T^d\), the subgroup
+\(\pi(V)\) contains a neighborhood of zero in \(H\). It is open; its other
+cosets are open, so it is also closed. Compactness gives finitely many cosets.
+The image \(\pi(V)\) is connected. Conversely a connected subset of \(H\)
+cannot cross those disjoint open cosets. Thus \(H^0=\pi(V)\) is exactly the
+identity component and those finitely many cosets are all components.
+
+The discrete group \(V\cap\mathbb Z^d\) contains a real spanning set of
+integer vectors, so it is a full lattice in \(V\). The quotient
+\(V/(V\cap\mathbb Z^d)\) identifies with \(H^0\). Lebesgue measure on a
+lattice fundamental domain, normalized to total mass 1, pushes forward to
+Haar probability on \(H^0\). Haar measure on \(H\) assigns equal mass to
+its finitely many component cosets. In every local affine chart of a component,
+a hyperplane with nonzero derivative on \(V\) consequently has Haar measure
+zero. This gives the measure model needed even for proper, disconnected \(H\).
+
+**36.5 Surjective component coordinates and null seams.** The projection of
+\(H\) to coordinate circle \(i\) is a closed subgroup containing all multiples
+of irrational \(\alpha_i\), hence is the circle. To recall the elementary
+circle fact: an infinite closed subgroup has arbitrarily small nonzero
+representatives by compactness and subtraction of two nearby distinct points;
+choose their signs positive. Successive multiples of such a representative
+approximate every circle point, so closedness gives the whole circle.
+The image of the connected compact group \(H^0\) is a connected compact circle
+subgroup, hence either the trivial subgroup or the circle. If it were trivial,
+the finite component decomposition in 36.4 would make the image of \(H\)
+finite, a contradiction. Thus each projection of \(H^0\) is surjective;
+in particular \(v\mapsto v_i\) is a nonzero linear form on \(V\).
+
+The pushforward of \(\mu_H\) under this projection is circle Haar measure:
+surjectivity lifts any circle translation to a translation of \(H\), and
+Haar uniqueness applies. Every coordinate fiber is therefore Haar-null,
+including the representative seam \(x_i=0\bmod1\). Component surjectivity is
+stronger than the marginal statement and will also control mixed faces.
+
+**36.6 Bounded periodic branch multiplicity.** For representatives
+\(x_i\in[0,1)\) and a branch \(j\in\mathbb Z^d\), define
+\[
+\Delta_0=0,\qquad \Delta_i=h_i*(j_i-x_i),\qquad
+w_\epsilon(x)=\#\{j:\max_{0\le i\le d}\Delta_i-
+                         \min_{0\le i\le d}\Delta_i\le\epsilon\}.
+\]
+Because zero is among the anchored coordinates, each contributing branch has
+\(-\epsilon\le\Delta_i\le\epsilon\). Thus
+\(x_i-\epsilon/h_i\le j_i\le x_i+\epsilon/h_i\); an interval of that length
+contains at most \(\lfloor2*\epsilon/h_i\rfloor+1\) integers. Consequently
+\[
+0\le w_\epsilon\le B_\epsilon,
+\qquad B_\epsilon=\prod_{i=1}^d(\lfloor2*\epsilon/h_i\rfloor+1).
+\]
+For all representatives at once it suffices to use the finite branch set
+\(-\lceil\epsilon/h_i\rceil\le j_i\le1+\lceil\epsilon/h_i\rceil\).
+Changing a lift from \(x\) to \(x+z\), \(z\in\mathbb Z^d\), and reindexing
+\(j\) to \(j+z\) preserves every \(\Delta_i\); hence \(w_\epsilon\) is a
+well-defined periodic Borel function on the torus. Put
+\[
+\kappa_\epsilon=\int_H w_\epsilon\,d\mu_H,
+\qquad \nu_\epsilon=\mu_H(\{x:w_\epsilon(x)>0\}).
+\]
+The first is a multiplicity-weighted mean; the second is a support probability.
+
+**36.7 Exact every-branch correspondence and positivity cutoff.** For an integer
+reference exponent \(n\ge1\), take \(x=\{n*\alpha\}\) and set
+\[
+m_0=n,\qquad m_i=\lfloor n*\alpha_i\rfloor+j_i.
+\]
+Then \(m_i*h_i=n*h_0+\Delta_i\). Thus contributing branches are in bijection
+with all integer tuples at reference coordinate \(n\) whose width is at most
+\(\epsilon\), before the remaining positivity restrictions. Conversely,
+every such tuple gives the unique branch
+\(j_i=m_i-\lfloor n*\alpha_i\rfloor\). Since
+\(m_i*h_i\ge n*h_0-\epsilon\), every branch is a valid positive tuple once
+\(n*h_0>\epsilon\), equivalently for all
+\(n\ge\lfloor\epsilon/h_0\rfloor+1\). At equality the lower estimate alone
+does not certify positivity; the finitely many earlier indices are handled
+by imposing \(m_i\ge1\) exactly. There are at most \(B_\epsilon\) branches
+per such index, so the invalid initial tuples form a finite set. No nearest
+rounding, single-branch choice or presumed monotonic order of boxes is used.
+
+**36.8 All possible threshold faces and every derivative.** Away from seams,
+a fixed branch is admitted exactly when
+\(\Delta_i-\Delta_j\le\epsilon\) for every ordered pair
+\(i,j\in\{0,\ldots,d\}\). Its indicator is locally constant unless a
+threshold equality occurs. Both signs are covered by the two orders; ordinary
+ties away from the threshold do not change admission. For a tangent vector
+\(v\in V\), every distinct-index derivative is explicitly
+\[
+\begin{aligned}
+d(\Delta_i-\Delta_j)(v)&=-h_i*v_i+h_j*v_j &&(i,j>0,\ i\ne j),\\
+d(\Delta_i-\Delta_0)(v)&=-h_i*v_i &&(i>0),\\
+d(\Delta_0-\Delta_j)(v)&= h_j*v_j &&(j>0).
+\end{aligned}
+\]
+The last two forms are nonzero on \(V\) by 36.5. If a mixed form vanished
+identically, evaluate it on the integer spanning set of \(V\) in 36.4.
+For each such integer vector, \(h_i*v_i=h_j*v_j\) and irrational
+\(h_i/h_j\) force \(v_i=v_j=0\): one zero forces the other, and two nonzero
+integers would give a rational ratio. Both coordinate projections would
+then vanish on the real span \(V\), contradicting 36.5. So every mixed
+form is nonzero as well.
+
+For **every diagonal pair** \(i=j\), including each \(i>0\) and \(i=0\),
+\(\Delta_i-\Delta_i=0\) identically. Its threshold equality is
+\(0=\epsilon\), impossible for \(\epsilon>0\). The diagonal derivative is
+zero but there is no diagonal face to measure. Tied extrema at width
+\(\epsilon\) are already in the union of the distinct-index faces above.
+
+**36.9 Null boundary at every positive width, including closed width.** In each
+component chart, each possible distinct-index threshold face from 36.8 is an
+affine hyperplane with nonzero derivative on \(V\), hence is Haar-null by
+36.4. Components have countable chart covers, and there are finitely many
+components, branch indices and ordered pair types. Their union is null.
+Add the null seams from 36.5. This contains every discontinuity of
+\(w_\epsilon|_H\), proving Haar-almost-everywhere continuity for **each**
+fixed finite \(\epsilon>0\). No exceptional width, connectedness assumption
+or full-torus hypothesis is discarded.
+
+Let \(w_{<\epsilon}\) use strict width. Its branch indicators differ from
+the closed indicators only where a distinct-index difference equals
+\(\epsilon\); diagonal equalities are impossible by 36.8. Therefore
+\(\int_H w_{<\epsilon}\,d\mu_H=\kappa_\epsilon\), and their support
+probabilities agree as well. Chart seams have no effect on this conclusion.
+This is a Haar-measure argument on all of \(H\), not an inference from a
+possibly exceptional orbit's finite or zero frequency of boundary hits.
+
+**36.10 The actual strict-versus-closed correction is finite.** If a positive
+integer tuple has width exactly \(\epsilon>0\), choose its ordered distinct
+maximum/minimum pair \(i,j\). The equation
+\(m_i*h_i-m_j*h_j=\epsilon\) has at most one integer solution pair. Indeed
+subtracting two solutions gives
+\((m_i-m'_i)*h_i=(m_j-m'_j)*h_j\); irrationality in 36.2 forces both
+differences to vanish. Once this pair is fixed, every other coordinate
+\(m_l*h_l\) lies in the fixed bounded closed interval
+\([m_j*h_j,m_i*h_i]\), which contains only finitely many positive multiples
+of \(h_l\). There are finitely many ordered maximum/minimum pairs. Thus the
+actual boundary set \(\mathcal E_\epsilon\) is finite. Exactly,
+\[
+C_\epsilon(X)-C_{<\epsilon}(X)
+=\sum_{m\in\mathcal E_\epsilon}\mathbf1_{\{N(m)\le X\}}\ge0.
+\]
+This correction is bounded in \(X\) and eventually constant. Multiple extreme
+pairs count the tuple only once in \(\mathcal E_\epsilon\). It supplements
+the Haar-null proof in 36.9 and preserves every equality at the integer-size
+cutoff. Width zero is classified separately in 36.25.
+
+**36.11 Uniform distribution for continuous observables on the actual closure.**
+For a restricted character let \(t=\chi_\ell(\alpha)\). If \(t=1\), the
+character is identically 1 on \(H\). Otherwise its integral is zero and the
+finite geometric sum gives, for every \(x\in H\),
+\[
+\left|\frac1M*\sum_{n=1}^M\chi_\ell(x+n*\alpha)\right|
+\le\frac{2}{M*|1-t|}\longrightarrow0.
+\]
+This is uniform in \(x\); a nontrivial finite-order \(t\) causes no exception.
+Restricted characters form a conjugation-closed unital algebra separating
+points of \(H\). Given continuous \(f\) and \(\eta>0\), Stone-Weierstrass
+gives a finite character polynomial \(P\) with \(\|f-P\|_\infty<\eta\).
+The difference between the orbit mean and Haar integral of \(f\) is bounded
+by \(2*\eta\) plus the corresponding difference for \(P\), uniformly in the
+starting point. The latter tends to zero by the displayed estimate. Letting
+\(\eta\) decrease proves uniform convergence to \(\int_H f\,d\mu_H\).
+This proves the needed specialized classical distribution statement on proper
+or disconnected \(H\), with no assumed joint rational independence.
+
+**36.12 Uniform weighted and support-frequency means.** If a Borel set
+\(E\subset H\) has null boundary, continuous functions sandwich its indicator
+with arbitrarily small integral gap. Explicitly, on compact metric \(H\) use
+\(l_\delta(x)=\min(1,\operatorname{dist}(x,H\setminus E^\circ)/\delta)\)
+and \(u_\delta(x)=\max(0,1-\operatorname{dist}(x,\overline E)/\delta)\),
+with the empty/full-set cases treated by constant functions. They satisfy
+\(l_\delta\le\mathbf1_E\le u_\delta\), and as \(\delta\downarrow0\) their
+integrals tend to those of \(E^\circ\) and \(\overline E\). The limits agree
+because the boundary is null. Uniform convergence for continuous functions
+in 36.11, followed by squeezing, proves uniform convergence for \(\mathbf1_E\).
+
+For \(1\le t\le B_\epsilon\), set \(E_t=\{w_\epsilon\ge t\}\). At a
+continuity point the integer-valued \(w_\epsilon\) is locally constant, so
+\(\partial E_t\) is contained in its null discontinuity set from 36.9.
+Apply the indicator result to each \(E_t\) and the finite identity
+\(w_\epsilon=\sum_{t=1}^{B_\epsilon}\mathbf1_{E_t}\). Consequently
+\[
+\sup_{a\in\mathbb Z_{\ge0}}
+\left|\frac1M*\sum_{n=a+1}^{a+M}w_\epsilon(n*\alpha)-\kappa_\epsilon\right|
+\longrightarrow0,
+\]
+and replacing \(w_\epsilon\) by \(\mathbf1_{\{w_\epsilon>0\}}\) gives the
+same assertion with limit \(\nu_\epsilon\). This follows by taking starting
+point \(x=a*\alpha\) in the stronger all-starting-point statement.
+
+**36.13 Positive Bohr inclusion and an explicit Haar lower bound.** Choose any
+integer \(Q\ge3\) with \(2*h_{\max}/Q<\epsilon\), for example
+\(Q=\max(3,\lfloor2*h_{\max}/\epsilon\rfloor+1)\), and put
+\[
+U_Q=\{x\in H:\max_{1\le i\le d}\|x_i\|_{\mathbb R/\mathbb Z}<1/Q\}.
+\]
+In each coordinate of \(U_Q\) choose the unique nearest integer branch:
+\(j_i=0\) near zero and \(j_i=1\) near one in \([0,1)\). Its errors satisfy
+\(|\Delta_i|<h_i/Q\), with \(\Delta_0=0\), so the full range is strictly
+less than \(2*h_{\max}/Q<\epsilon\). Thus \(U_Q\subset\{w_\epsilon>0\}\).
+Partition \([0,1)^d\) into \(Q^d\) half-open cubes of side \(1/Q\) and
+intersect with \(H\). Some cell \(E\) has measure at least \(Q^{-d}\).
+Choose \(a\in E\); differences of representatives in the same half-open
+coordinate interval have absolute value strictly less than \(1/Q\).
+Therefore \(E-a\subset U_Q\). Translation invariance proves
+\[
+\kappa_\epsilon\ge\nu_\epsilon\ge\mu_H(U_Q)\ge Q^{-d}>0.
+\]
+This strict half-open-cell argument works on disconnected and proper \(H\).
+The Bohr family proves positivity; it does not replace the complete family
+or turn its weighted mean into this lower bound.
+
+**36.14 Multiplicity, visit density and eventual syndeticity.** The pointwise
+inequalities \(\mathbf1_{\{w>0\}}\le w\le B_\epsilon*
+\mathbf1_{\{w>0\}}\), together with 36.12-36.13, yield
+\[
+0<\nu_\epsilon\le\kappa_\epsilon\le B_\epsilon,
+\qquad \kappa_\epsilon/B_\epsilon\le\nu_\epsilon
+\le\min(\kappa_\epsilon,1).
+\]
+By 36.7, the natural density of reference indices admitting an actual box is
+\(\nu_\epsilon\), whereas their average number of boxes is \(\kappa_\epsilon\).
+The finite initial positivity correction changes neither mean. These numbers
+can differ: 36.19 proves that for \(k=2\) and \(\epsilon=h_1\),
+\(\kappa_\epsilon=2\) but \(\nu_\epsilon=1\).
+
+Uniform support-frequency convergence supplies an integer \(L\) such that
+every block of \(L\) consecutive indices with nonnegative starting index has
+support average greater than \(\nu_\epsilon/2\). Every such block contains a
+positive multiplicity. Beyond the finite positivity cutoff in 36.7, this is
+syndetic occurrence of actual boxes. The argument establishes a finite gap
+bound depending on this rotation and window; it evaluates no numerical bound.
+It is neither a Dirichlet first-return estimate nor a maximal-gap bound
+depending only on \(Q\). Section 35's distinction between those questions
+remains in force.
+
+**36.15 All-branch index count and exact logarithmic size.** Let \(F(t)\) count
+all valid width-at-most-\(\epsilon\) tuples with
+\(1\le m_0\le\lfloor t\rfloor\), and set \(F(t)=0\) for \(t<1\). The
+exact correspondence and finite positivity discard in 36.7 give
+\[
+F(t)=\sum_{1\le n\le\lfloor t\rfloor}w_\epsilon(n*\alpha)-J(t)
+=\kappa_\epsilon*t+o(t),
+\]
+where \(J(t)\) is the nonnegative count of invalid initial branches. It is
+bounded independently of \(t\) and eventually constant. There are at most
+\(B_\epsilon\) valid tuples at every reference index. For **each** such
+tuple with \(m_0=n\),
+\[
+\log N(m)=k*n*h_0-S_h+R(m),\qquad
+R(m)=\sum_{i=1}^d\Delta_i,\qquad |R(m)|\le d*\epsilon.
+\]
+This follows by summing \(c_i=n*h_0+\Delta_i\) and subtracting \(S_h\).
+It applies to every branch, including branches with non-nearest integers.
+Neither \(R(m)\) nor \(N(m)\) is assumed to have a common monotone ordering
+as the reference index changes.
+
+**36.16 Closed cutoff squeeze and reference-invariant coefficient.** Set
+\(y_X=(\log X+S_h)/(k*h_0)\) and
+\(\delta=d*\epsilon/(k*h_0)\). The exact size bound in 36.15 gives
+\[
+F(y_X-\delta)\le C_\epsilon(X)\le F(y_X+\delta).
+\]
+For the left inequality, \(n\le y_X-\delta\) forces \(\log N\le\log X\).
+For the right one, \(\log N\le\log X\) and \(R\ge-d*\epsilon\) force
+\(n\le y_X+\delta\). Both arguments allow equality. A change of real index
+cutoff by fixed \(\delta\) crosses at most \(\lceil\delta\rceil+1\) integers,
+each of multiplicity at most \(B_\epsilon\). Hence
+\[
+C_\epsilon(X)=F(y_X)+O(1)
+=\frac{\kappa_\epsilon}{k*h_0}*\log X+o(\log X).
+\]
+Floor endpoints, positivity discards and multiple branches are all included.
+If \(N(m)=N(m')\), unique factorization gives \(m_i-1=m'_i-1\) for every
+labeled prime, so no distinct tuples are identified in this count.
+
+Repeat this proved theorem with \(p_r\) as reference and write the resulting
+mean as \(\kappa_\epsilon^{(r)}\). The intrinsic counting function is unchanged
+by the coordinate permutation. Its limit divided by \(\log X\) therefore gives
+\[
+\frac{\kappa_\epsilon^{(r)}}{k*h_r}
+=\frac{\kappa_\epsilon^{(0)}}{k*h_0}.
+\]
+It is \(\kappa_\epsilon^{(r)}/h_r\) that is invariant; raw multiplicity means
+and support probabilities need not be. This fixed-parameter proof supplies no
+discrepancy rate, evaluated annihilator or uniform shrinking-window error.
+
+**36.17 Conditional full-torus unfolding.** By 36.3,
+\(H=\mathbb T^d\) exactly when \(\Lambda=\{0\}\), equivalently when
+\(1,\alpha_1,\ldots,\alpha_d\) are rationally independent. Pairwise
+logarithmic irrationality does not establish this for \(d\ge2\). Define
+\[
+\mathcal D_\epsilon=\{\Delta\in\mathbb R^d:
+\max(0,\Delta_1,\ldots,\Delta_d)-\min(0,\Delta_1,\ldots,\Delta_d)
+\le\epsilon\}.
+\]
+Under the **full-torus hypothesis**, integrate the branch sum of 36.6 over
+\([0,1)^d\). For branch \(j\), put \(y_i=j_i-x_i\) and
+\(\Delta_i=h_i*y_i\). The \(y\) cells \(\prod_i(j_i-1,j_i]\) tile
+\(\mathbb R^d\) up to null endpoints. The absolute Jacobian from \(y\) to
+\(\Delta\) is \(\prod_{i=1}^d h_i\). Summing the integrals yields
+\[
+\kappa_\epsilon=\frac{\operatorname{vol}_d(\mathcal D_\epsilon)}
+                         {\prod_{i=1}^d h_i}.
+\]
+The domain is bounded, and only the finite relevant branches can meet it
+over the fundamental cube. Thus this unfolds every branch for any fixed
+finite width; it assumes neither a small window nor multiplicity at most one.
+
+**36.18 Exact anchored-range volume.** Partition \(\mathcal D_\epsilon\)
+according to which of its \(k\) anchored coordinates
+\(0,\Delta_1,\ldots,\Delta_d\) is minimal. Equal minima lie in finitely
+many Euclidean hyperplanes and contribute zero volume. If zero is minimal,
+all \(\Delta_i\in[0,\epsilon]\), a region of volume \(\epsilon^d\).
+If \(\Delta_j\) is minimal, put \(\Delta_j=-t\), \(0\le t\le\epsilon\).
+Each remaining \(\Delta_i\) ranges independently in
+\([-t,\epsilon-t]\); the anchored zero belongs to that interval. Integrating
+\(\epsilon^{d-1}\) over \(t\) gives another \(\epsilon^d\). This also
+works for \(d=1\), with empty product equal to 1. There are \(d\) such
+regions in addition to the minimum-at-zero region. Consequently
+\[
+\operatorname{vol}_d(\mathcal D_\epsilon)
+=(d+1)*\epsilon^d=k*\epsilon^{k-1}.
+\]
+Together with 36.16-36.17 this gives, **conditionally on \(H=\mathbb T^d\)**,
+\[
+\kappa_\epsilon=\frac{k*\epsilon^{k-1}}{\prod_{i=1}^d h_i},
+\qquad C_\epsilon(X)=\frac{\epsilon^{k-1}}{\prod_{i=0}^d h_i}*\log X
++o(\log X).
+\]
+The geometric volume is unconditional as a Euclidean calculation; its use
+as the Haar integral for a prime list of dimension at least three requires
+the stated orbit-closure hypothesis.
+
+**36.19 Unconditional two-prime coefficient and its scoped comparison.** For
+\(k=2\), the irrational rotation \(\alpha_1=h_0/h_1\) has the whole circle
+as its closure, by the circle argument in 36.5. Thus 36.18 applies
+unconditionally and gives, for every finite \(\epsilon>0\),
+\[
+\kappa_\epsilon=2*\epsilon/h_1,\qquad
+C_\epsilon(X)=\frac{\epsilon}{\log p_0*\log p_1}*\log X+o(\log X).
+\]
+Here the width condition is just \(|h_1*(j_1-x_1)|\le\epsilon\).
+There is some branch exactly when the circle distance to the nearest integer
+is at most \(\epsilon/h_1\). Circle Haar measure therefore gives
+\(\nu_\epsilon=\min(1,2*\epsilon/h_1)\), including closed endpoints, whose
+measure is zero. This also proves the multiplicity/probability example in
+36.14. At a fixed logarithmic width, a smaller product
+\(\log p_0*\log p_1\) has a larger leading absolute counting coefficient;
+fixing one prime and increasing the other decreases it. This is an asymptotic
+coefficient comparison, not finite-\(X\) set inclusion, a \(G\)-sign comparison
+or positive ordinary integer density. No unconditional blanket comparison
+for \(k\ge3\) follows from a formula requiring a full torus.
+
+**36.20 All fixed-prime smooth numbers: simplex estimate with endpoint control.**
+Let \(S_P(X)\) count all integers \(\prod_i p_i^{b_i}\le X\) with
+\(b\in\mathbb Z_{\ge0}^k\). For \(L=\log X\ge0\), define
+\(\Omega(L)=\{t\in\mathbb R_{\ge0}^k:\sum_i h_i*t_i\le L\}\).
+Scaling by \(u_i=h_i*t_i\) gives
+\(\operatorname{vol}\Omega(L)=L^k/(k!*\prod_i h_i)\).
+The elementary simplex formula follows by induction: in dimension one its
+length is \(L\); integrating the \((k-1)\)-dimensional volume over the last
+coordinate gives \(\int_0^L(L-u)^{k-1}/(k-1)!\,du=L^k/k!\).
+
+For each eligible integer \(b\), take the half-open cube \(b+[0,1)^k\).
+These cubes are disjoint and their union has volume \(S_P(X)\), since unique
+factorization is injective. The union contains \(\Omega(L)\): if
+\(t\in\Omega(L)\), then \(\lfloor t\rfloor\) is eligible and its cube
+contains \(t\), including integral coordinates. The union is contained in
+\(\Omega(L+S_h)\), because \(\sum_i h_i*t_i<\sum_i h_i*b_i+S_h\)
+inside each cube. Hence
+\[
+\frac{L^k}{k!*\prod_i h_i}\le S_P(X)
+\le\frac{(L+S_h)^k}{k!*\prod_i h_i},
+\qquad
+S_P(X)=\frac{(\log X)^k}{k!*\prod_i h_i}+O((\log X)^{k-1}).
+\]
+The inequalities remain valid at \(L=0\); the error estimate is as
+\(L\to\infty\) with the prime list fixed.
+
+**36.21 Exact asymptotic smooth-family ratio and integer densities.** Divide
+36.16 by 36.20, whose leading coefficient is positive. The exact asymptotic
+ratio is
+\[
+\frac{C_\epsilon(X)}{S_P(X)}\sim
+\kappa_\epsilon*(k-1)!*\left(\prod_{i=1}^d h_i\right)*
+(\log X)^{1-k}\longrightarrow0.
+\]
+Under \(H=\mathbb T^d\) this simplifies to
+\(k!*\epsilon^{k-1}*(\log X)^{1-k}\); for \(k=2\) the simplification
+is unconditional and equals \(2*\epsilon/\log X\). Thus the leading
+proportion within a two-prime smooth family is independent of its prime
+labels even though its absolute coefficient in 36.19 depends on them.
+
+The bound \(C_\epsilon(X)=O(1+\log X)\) gives natural integer density zero.
+For the set of its distinct integers, partial summation gives
+\[
+\sum_{\substack{N\text{ in the tube}\\N\le X}}\frac1N
+=\frac{C_\epsilon(X)}X+\int_1^X\frac{C_\epsilon(t)}{t^2}\,dt.
+\]
+The integral is bounded as \(X\to\infty\), because
+\(\int_1^\infty(1+\log t)/t^2\,dt<\infty\). Consequently the total
+reciprocal sum converges, and its quotient by \(\log X\) tends to zero:
+logarithmic density is also zero. A counting function proportional to
+\(\log X\) is not positive logarithmic density. These facts do not conflict
+with positive support or weighted frequency in the reference exponent.
+
+**36.22 Full exponent-lattice density.** In the cube
+\(0\le b_i\le R\) with \(b_i=m_i-1\) and integer \(R\ge0\), there are
+only \(R+1\) possible reference indices and at most \(B_\epsilon\) tube
+tuples per index, by 36.6-36.7. The tube therefore contains at most
+\((R+1)*B_\epsilon\) of the \((R+1)^k\) tuples. Their proportion tends
+to zero for \(k\ge2\). This density in full exponent cubes, the smooth-number
+ratio in 36.21, ordinary and logarithmic integer density, support density
+\(\nu_\epsilon\), and multiplicity mean \(\kappa_\epsilon\) have different
+reference measures. A positive-width family fills a window on its actual
+compact orbit closure with positive occurrence, while remaining sparse in
+each of those larger arithmetic domains.
+
+**36.23 Integer baselines and the exact finite nonnegative correction.** Fix
+\(r_i\in\mathbb Z_{\ge0}\), put \(a_i=r_i*h_i\), and
+\(K=\prod_i p_i^{r_i}\). Let \(C_{a,\epsilon}(X)\) count all \(m_i\ge1\)
+with \(\min_i(c_i-a_i)\ge0\), translated width at most \(\epsilon\), and
+\(N(m)\le X\). Set \(q_i=m_i-r_i\). The precise positivity conditions are
+\(q_i\ge0\) for all \(i\), and \(q_i\ge1\) whenever \(r_i=0\).
+If every \(q_i\ge1\), the map \(q\mapsto m=q+r\) bijects the unshifted
+tube with this interior part and
+\(N(m)=K*N(q)\). Its count is exactly \(C_\epsilon(X/K)\).
+
+If some \(q_i=0\), translated minimum is zero, so every coordinate satisfies
+\(0\le q_j*h_j\le\epsilon\). Let \(\mathcal B_{a,\epsilon}\) be exactly
+these integer vectors satisfying the stated positivity restrictions and
+having at least one zero. It is finite, with size at most
+\(\prod_j(\lfloor\epsilon/h_j\rfloor+1)\). Define
+\[
+E_{a,\epsilon}(X)=\sum_{q\in\mathcal B_{a,\epsilon}}
+ \mathbf1_{\{N(q+r)\le X\}}.
+\]
+Then, with no asymptotic qualification,
+\[
+C_{a,\epsilon}(X)=C_\epsilon(X/K)+E_{a,\epsilon}(X).
+\]
+The correction is nonnegative, uniformly bounded in \(X\), and eventually
+constant. It retains all nonnegative translated-boundary vectors allowed by
+\(m\ge1\); it is not an unspecified signed error. These definitions and
+the exact identity also make sense at \(\epsilon=0\).
+
+**36.24 Shifted coefficient, unbounded translated heights and coset limitation.**
+For \(\epsilon>0\), 36.23 and \(\log(X/K)=\log X-\log K\) give the same
+positive leading coefficient \(\kappa_\epsilon/(k*h_0)\) for the shifted
+family. Its ratio to \(S_P(X)\) has exactly the leading factor in 36.21;
+ordinary and logarithmic densities are zero. In a full exponent cube its
+count remains \(O(R)\): for each reference translated integer \(q_0\), the
+same length-\(2*\epsilon/h_i\) branch bound applies, and the boundary set is
+finite. Put \(\tau=\min_i(c_i-a_i)=\min_i q_i*h_i\). For any fixed finite
+\(U\), tuples with \(\tau\le U\) have \(q_i*h_i\le U+\epsilon\), so
+are finite in number. The positive logarithmic asymptotic therefore forces
+infinitely many tuples at unbounded translated height, not merely repeats
+of boundary tuples. At positive threshold width the strict/closed correction
+is finite too: apply the two-solution subtraction proof of 36.10 to the
+integer coordinates \(q_i\), whose nonnegative domain only restricts choices.
+
+Integer baselines are essential to the unchanged coefficient argument.
+For arbitrary real offsets, using reference integer \(m_0=n\) would put
+the rotation in the coset \(\theta+H\), where
+\(\theta_i=(a_i-a_0)/h_i\). Indeed the translated coordinate difference is
+\(h_i*(m_i-n*\alpha_i-\theta_i)\). Here, with integer baselines,
+\(\theta_i=r_i-r_0*\alpha_i\), hence \(\theta\bmod\mathbb Z^d
+=-r_0*\alpha\in H\). The exact integer bijection of 36.23 is stronger
+than a coset argument. No equal-coefficient or positivity assertion for
+arbitrary real-offset cosets is being made.
+
+**36.25 Complete zero-width classification.** At unshifted width zero,
+\(m_0*h_0=m_1*h_1\) with both integers positive would contradict 36.2.
+Therefore \(C_0(X)=0\) for every \(X>0\). At shifted width zero under 36.23,
+all \(q_i*h_i\) equal a common \(\tau\ge0\). If \(\tau>0\), all \(q_i\)
+are positive integers and the same irrationality contradiction applies.
+If \(\tau=0\), every \(q_i=0\), so \(m=r\). This is valid exactly when
+every \(r_i\ge1\). Consequently
+\[
+C_{a,0}(X)=
+\begin{cases}
+\mathbf1_{\{X\ge\prod_i p_i^{r_i-1}\}},&\text{if every }r_i\ge1,\\
+0,&\text{if some }r_i=0.
+\end{cases}
+\]
+Thus a shifted zero-width family has at most its height-zero baseline. The
+positive-width theorem is stated for each fixed \(\epsilon>0\); it does not
+assert a uniform asymptotic as \(\epsilon\downarrow0\) or interchange that
+limit with \(X\to\infty\).
+
+**36.26 Actual 5040 arithmetic and the exact small-width edge.** Take
+\(p=(2,3,5,7)\), \(r=(5,3,2,2)\), and
+\(a=(5*\log2,3*\log3,2*\log5,2*\log7)\).
+The ordinary prime exponents of the baseline integer are \(r-\mathbf1
+=(4,2,1,1)\). The explicit arithmetic is
+\[
+5040=2^4*3^2*5*7,
+\qquad K=2^5*3^3*5^2*7^2=1058400=5040*(2*3*5*7).
+\]
+Thus \(N(r)=5040\), whereas the interior scaling factor is \(K=1058400\).
+Also \(a=(\log32,\log27,\log25,\log49)\),
+\(\min_i a_i=\log25\), and \(\sum_i a_i=\log1058400\).
+The zero-width count is exactly \(C_{a,0}(X)=\mathbf1_{\{X\ge5040\}}\).
+
+For \(0\le\epsilon<\log2\), a boundary tuple in 36.23 with some \(q_i=0\)
+must have all \(q_j=0\), since any positive \(q_j\) gives
+\(q_j*h_j\ge\log2>\epsilon\). All \(r_i\) are positive, so this single
+boundary tuple is allowed. Therefore for every \(X>0\),
+\[
+C_{a,\epsilon}(X)=C_\epsilon(X/1058400)+\mathbf1_{\{X\ge5040\}}
+\qquad(0\le\epsilon<\log2).
+\]
+In particular this covers radius \(1/500\). At \(\epsilon=\log2\), the
+additional boundary vector \(q=(1,0,0,0)\) is valid and yields
+\(N(q+r)=2*5040=10080\); the baseline-only correction must not be extended
+to that endpoint. Every fixed positive width has the previously proved
+positive logarithmic coefficient. This attainable-tube result does not make
+positive-height exact common translation attainable on the prime lattice:
+such translation would require equal positive integer multiples of distinct
+prime logarithms, excluded in 36.25.
+
+**36.27 General-dimensional box, LP and envelope definitions.** For the actual
+positive coordinates \(c_i=m_i*h_i\), use row sets
+\(\mathcal C_i=\{c_i,c_i+h_i\}\), \(T=\min_i c_i>0\),
+\(A=\sum_i c_i\), and \(f(x)=\log(1-\exp(-x))\) on \(x>0\).
+For finite real \(M_0<M_1\), put
+\[
+I=[M_0/k,M_1/k],\quad \mu=M_1/k,\quad
+\delta_i=\operatorname{dist}(I,\mathcal C_i),\quad V_0=\sum_i\delta_i^2,
+\]
+\[
+\rho=\sqrt{V_0/(k*(k-1))},\quad L_{\rm env}=\mu-\rho,\quad
+U_{\rm env}=\mu+(k-1)*\rho,\quad r_{\rm cap}=M_1-A.
+\]
+The distance is the infimum of absolute differences, and \(V_0\) has no
+additional division by \(k\). With the full fractional feasible polytope,
+\[
+\mathcal P(r_{\rm cap})=\{y\in[0,1]^k:\sum_i h_i*y_i\le r_{\rm cap}\},
+\]
+\[
+D(M_1)=\max_{y\in\mathcal P(r_{\rm cap})}
+\sum_i\big((1-y_i)*f(c_i)+y_i*f(c_i+h_i)\big),
+\]
+\[
+\Psi=f(U_{\rm env})+(k-1)*f(L_{\rm env}),\qquad G=D-\Psi.
+\]
+The lower budget enters \(I\), not another constraint on \(y\).
+These are the existing comparison definitions of sections 27, 30, 31 and 34.
+The stipulated inner product is ordinary Euclidean,
+\(\langle u,v\rangle=\sum_i u_i*v_i\), with its norm; prime labels and
+encodings do not supply orthogonality. Support and feasibility are checked
+below before using \(f(L_{\rm env})\) or any sign input.
+
+**36.28 Wider two-corner domain and all LP endpoint cases.** The wider domain
+consists of every finite \(M_0<M_1\) whose closed budget interval contains
+at least two actual endpoint-corner totals
+\(A+\sum_i e_i*h_i\), \(e\in\{0,1\}^k\). These are distinct: equality
+of two totals exponentiates to equality of prime products, forcing \(e=e'\).
+Actual corners are endpoint choices, not fractional mixtures. The domain
+permits negative lower budgets, corner equality at either endpoint, saturation
+\(M_1\ge A+S_h\), and arbitrary finite upper slack.
+
+Two distinct corners imply \(M_1>A\), hence \(r_{\rm cap}>0\). More
+generally, if \(r_{\rm cap}<0\), the polytope is empty and this appendix
+assigns it no finite maximum or \(G\) sign. At \(r_{\rm cap}=0\), it consists
+only of \(y=0\) and \(D=\sum_i f(c_i)\); an admitted corner can only be
+the lower corner, so the two-corner sign hypotheses fail. At
+\(0<r_{\rm cap}<S_h\), it is nonempty and compact, its continuous objective
+attains a maximum, and every maximizer uses full capacity. To prove the last
+claim, all gains \(f(c_i+h_i)-f(c_i)\) are strictly positive; any feasible
+vector with slack and some \(y_i<1\) can be increased slightly to improve it.
+At \(r_{\rm cap}=S_h\) or \(r_{\rm cap}>S_h\), the unique maximizing
+vector is \(\mathbf1\), and \(D=\sum_i f(c_i+h_i)\); extra capacity leaves
+this value unchanged. Possible ties of gain-per-cost ratios or nonunique
+interior maximizers need no greedy order for any argument here. Envelope
+values may still change with the budgets in the saturated regime.
+
+Closed corner inclusions and distance-branch switches are retained throughout.
+Zero-width budget slabs \(M_0=M_1\) are excluded from the stated sign domain;
+with distinct prime corner totals they cannot contain two corners. A one-corner
+or zero-variance support statement does not enlarge a two-corner sign theorem.
+
+**36.29 Positive envelope support, including ties and zero radius.** Suppose
+at least one actual corner \(v\) lies in the closed budget slab, and let
+\(\bar v=\sum_i v_i/k\). Then \(\bar v\in I\), \(v_i\in\mathcal C_i\),
+and \(u_i=v_i-T\ge0\). Thus
+\[
+\delta_i\le|v_i-\bar v|,\qquad
+V_0\le\sum_i(v_i-\bar v)^2
+=\sum_i u_i^2-k*(\bar v-T)^2
+\le k*(k-1)*(\bar v-T)^2.
+\]
+The last inequality uses \(\sum_i u_i^2\le(\sum_i u_i)^2
+=k^2*(\bar v-T)^2\), since all cross-products are nonnegative.
+Consequently \(\rho\le\bar v-T\le\mu-T\), whence
+\(U_{\rm env}\ge L_{\rm env}\ge T>0\). This proves the support directly,
+including endpoints, ties, branch changes, zero distance and \(\rho=0\),
+where \(\Psi=k*f(\mu)\). It also covers one-corner slabs and degenerate
+mean intervals when support alone is considered; their \(G\) signs are not
+supplied by the two-corner results. With no corner, this proof asserts no
+positive envelope support. The same calculation applies to the continuous
+positive-coordinate baseline and shifted grids used below.
+
+**36.30 Exact budget inverse image and strict cutoff buffers.** Fix steps
+\(h_i>0\) and a positive baseline box \(c_i^0\). Translate independently by
+\(\xi_i\ge0\) with \(\min_i\xi_i=0\), and set
+\(S_\xi=\sum_i\xi_i\), \(c_i^\xi=c_i^0+\xi_i\),
+\(A_\xi=A_0+S_\xi\). Target budgets \(M_j^\xi\) correspond exactly to
+baseline budgets \(M_j^0=M_j^\xi-S_\xi\), for \(j=0,1\). For each corner,
+\[
+M_0^\xi\le A_\xi+\sum_i e_i*h_i\le M_1^\xi
+\quad\Longleftrightarrow\quad
+M_0^0\le A_0+\sum_i e_i*h_i\le M_1^0.
+\]
+The bijection preserves each endpoint equality, the width, corner count and
+residual fractional capacity \(M_1^\xi-A_\xi=M_1^0-A_0\), including zero
+capacity, saturation and slack. It therefore identifies the full feasible
+polytopes, not just an assumed optimal face.
+
+For a fixed cutoff \(B_{\rm cut}\), however, the exact inverse image is
+\[
+M_0^\xi>B_{\rm cut}\quad\Longleftrightarrow\quad
+M_0^0>B_{\rm cut}-S_\xi.
+\]
+A baseline result restricted to \(M_0^0>B_{\rm cut}\) covers exactly the
+target subset \(M_0^\xi>B_{\rm cut}+S_\xi\), with its other hypotheses.
+If \(0\le\xi_i\le\epsilon\), then \(S_\xi\le(k-1)*\epsilon\).
+A sufficient uniform target buffer is the **strict** inequality
+\(M_0^\xi>B_{\rm cut}+(k-1)*\epsilon\); alternatively a baseline theorem
+on \(M_0^0>B_{\rm cut}-(k-1)*\epsilon\) covers the full target cutoff
+domain. Weak buffer equality can give \(M_0^0=B_{\rm cut}\) when
+\(S_\xi=(k-1)*\epsilon\), outside the strict baseline domain. Only a
+theorem on the entire wider domain permits unrestricted transfer followed
+by intersection with the original strict cutoff, as already proved in 34.17.
+
+**36.31 Every 235 tube box inherits its supplied whole-domain sign.** Fix
+\(p=(2,3,5)\) and \(0<\epsilon\le1/480\). Every tuple of the full tube
+has \(T=\min_i m_i*h_i\ge\log2\) and
+\(\xi_i=c_i-T\ge0\), \(\min_i\xi_i=0\),
+\(\max_i\xi_i=\operatorname{width}(m)\le\epsilon\). The separately supplied
+paper estimate 30.16 states
+\(\exp(T)*G<-1/120\) for **every** finite \(T\ge\log2\), closed shape
+radius \(\max_i\xi_i\le1/480\), and finite positive-width two-corner slab
+in its wider domain. The definitions, feasibility and positive support in
+36.27-36.29 match that input exactly. It follows that every such slab in
+every counted tube box satisfies
+\[
+\exp(T)*G<-1/120.
+\]
+This includes all multiplicity branches, closed tube-width equality, the
+closed radius endpoint, corner inclusions at the two budget endpoints,
+saturation and arbitrary finite upper slack. The strict inequality at the
+radius endpoint is part of 30.16's supplied theorem. No finite certificate
+is rerun and no sign for boxes outside these hypotheses is inferred.
+
+**36.32 Every 237 tube box inherits its separate whole-domain sign.** Fix
+\(p=(2,3,7)\) and \(0<\epsilon\le1/320\). Again each full-tube tuple has
+\(T=\min_i m_i*h_i\ge\log2\) and \(c_i=T+\xi_i\) with
+\(0\le\xi_i\le\epsilon\) and \(\min_i\xi_i=0\). The **separate**
+supplied paper theorem 31.17 proves \(\exp(T)*G<-1/80\) for every finite
+\(T\ge\log2\), closed shape radius \(1/320\), and every positive-width
+two-corner slab of its wider domain. Thus every such slab in every counted
+237 tube box obeys
+\[
+\exp(T)*G<-1/80.
+\]
+The same closed endpoints, saturation and slack cases are included by that
+theorem, with support checked in 36.29. This is not substitution of a new
+prime into the 235 theorem. The primary's and this appendix's use of 30.16
+and 31.17 consumes their given whole-domain paper estimates; it is not an
+independent revalidation of their finite-node certificates.
+
+**36.33 Strict SUM cutoff, equality and exact finite exclusions.** For a fixed
+distinct-prime box put \(h_* =\min_i h_i\). Its largest and second-largest
+corner totals are \(A+S_h\) and \(A+S_h-h_*\): lowering the top corner
+by a nonempty subset subtracts at least \(h_*\), attained by a minimum
+step. A slab with two corners has lower endpoint at most the second-largest
+total. Therefore a positive-width two-corner slab with
+\(S_h+\log5040<M_0<M_1\) exists **if and only if**
+\[
+A>h_*+\log5040.
+\]
+Necessity follows from \(S_h+\log5040<M_0\le A+S_h-h_*\).
+For sufficiency, the closed slab \([A+S_h-h_*,A+S_h]\) has positive width,
+two endpoint corners and lower endpoint strictly above the cutoff. Equality
+\(A=h_*+\log5040\) gives an empty original domain despite closed corner
+inclusion. This is a condition on the **sum** \(A\), not on \(T\).
+
+For either triple 235 or 237, \(h_*=\log2\). Let
+\(\mathcal F_{P,\epsilon}=\{m\ge1:\operatorname{width}(m)\le\epsilon,
+A(m)\le\log2+\log5040\}\). This is finite: each positive coordinate
+is at most the displayed bound, so each integer exponent is bounded.
+The exact number of excluded boxes up to \(X\) is
+\(\sum_{m\in\mathcal F_{P,\epsilon}}\mathbf1_{\{N(m)\le X\}}\);
+its eventual value is \(\#\mathcal F_{P,\epsilon}\), not an evaluated
+enumeration. Subtract precisely this finite count from \(C_\epsilon(X)\).
+At the respective radii in 36.31-36.32 the remaining boxes all have nonempty
+original domain and the stated sign for every admitted original slab. Their
+count remains
+\((\kappa_\epsilon/(3*\log2))*\log X+o(\log X)\), using the corresponding
+actual orbit closure. This does not count all possible negative boxes outside
+the chosen tube.
+
+**36.34 Recorded-radius occurrence bounds and vanishing unscaled gaps.** The
+positive exponential series gives
+\(\exp(2)>1+2+2+4/3+2/3=7\), so \(\log5<2\) and \(\log7<2\).
+At \(\epsilon=1/480\) for 235, choose \(Q=1920\); then
+\(2*\log5/1920<1/480\), and 36.13 gives
+\(\kappa_\epsilon\ge\nu_\epsilon\ge1920^{-2}\).
+At \(\epsilon=1/320\) for 237, \(Q=1280\) similarly gives
+\(\kappa_\epsilon\ge\nu_\epsilon\ge1280^{-2}\).
+These lower bounds on full-family occurrence are not substituted for its
+actual multiplicity mean or leading coefficient. Smaller positive widths
+use an appropriate larger \(Q\) as in 36.13.
+
+For any admitted box, all row endpoints and envelope arguments are at least
+\(T\), by 36.29. Since \(f\) is increasing and negative,
+\(D,\Psi\in[k*f(T),0]\) and \(|G|\le-k*f(T)\), uniformly over its
+admitted slabs, including the upper slack regime. In a fixed-width unshifted
+tube, \(T\le U\) forces \(c_i\le U+\epsilon\), leaving only finitely many
+tuples. Thus \(T\to\infty\) outside finite subsets, and
+\(-k*f(T)\to0\). For the two triples, original-domain nonemptiness also
+holds outside the finite set in 36.33. Their infinite families therefore
+cannot carry an unscaled negative margin bounded away from zero over all
+boxes and slabs. The supplied strictly negative margins are **scaled**.
+For an integer-baseline tube, \(T\ge\min_i a_i+\tau\) and 36.24 likewise
+implies vanishing of this absolute bound at unbounded translated height,
+without supplying any missing \(G\) sign.
+
+**36.35 The 5040 transfer remains conditional on C61's wider-domain premise.**
+Use exactly the baseline in 36.26. For a tuple in its shifted tube set
+\[
+\tau=\min_i(c_i-a_i)\ge0,\qquad \xi_i=c_i-a_i-\tau,
+\qquad c_i=a_i+\tau+\xi_i.
+\]
+Then \(\min_i\xi_i=0\) and \(0\le\xi_i\le\epsilon\). The common
+translation \(\tau\) is distinct from actual lower height
+\(T(m)=\min_i c_i\): indeed
+\(\tau+\log25\le T(m)\le\tau+\log25+\epsilon\).
+At the baseline \(\tau=0\) but \(T=\log25\). Also
+\(A=\log1058400+4*\tau+S_\xi\) and \(S_h=\log(2*3*5*7)\).
+
+The supplied general-dimensional transfer 34.20 gives, on corresponding
+wider two-corner slabs, the unconditional loss estimate
+\[
+|\exp(\tau)*(G_\xi-G_0)|\le\epsilon/8.
+\]
+Its constant is \((k-1)/(\exp(\min a)-1)=3/(25-1)=1/8\), for finite
+\(\tau\ge0\). **If C61 establishes**
+\(\exp(\tau)*G_0<-1/2000\) for every such finite height and every finite
+positive-width two-corner slab of \(c_i^0=a_i+\tau\) on the entire wider
+domain, then and only under that premise the transfer yields
+\[
+\exp(\tau)*G_\xi<-1/2000+\epsilon/8\le-1/4000
+\qquad(0\le\epsilon\le1/500).
+\]
+Strictness survives at the closed radius, since the baseline inequality is
+strict. This conditional consequence applies to every shifted-tube branch,
+including its height-zero baseline and finite boundary corrections. The
+counting theorem for that family was proved unconditionally in 36.23-36.26;
+counting and transfer do not prove the C61 premise. Section 32's fixed-box
+cutoff certificate and section 33's density ordering do not supply it.
+
+**36.36 5040 cutoff nonemptiness and the remaining sign boundary.** Here the
+fixed original cutoff is
+\(B_{\rm cut}=S_h+\log5040=\log1058400\). The exact budget inverse image
+for \(S_\xi=\sum_i\xi_i\) is 36.30:
+\(M_0^\xi>B_{\rm cut}\) corresponds to
+\(M_0^0>B_{\rm cut}-S_\xi\). A baseline sign theorem only above
+\(B_{\rm cut}\) would cover just
+\(M_0^\xi>B_{\rm cut}+S_\xi\), not the entire target original domain.
+Only the wider-domain premise explicitly retained in 36.35 allows the
+conditional transferred sign to be intersected afterward with the original
+cutoff. No same-cutoff equivalence is assumed.
+
+Every shifted-5040 tuple satisfies
+\(A\ge\sum_i a_i=\log1058400>\log2+\log5040\), since
+\(1058400=5040*(2*3*5*7)>2*5040\). With \(h_*=\log2\), the top-two-corner
+proof of 36.33 makes its original domain nonempty, including the baseline.
+There are therefore zero exclusions from this shifted family for original
+domain nonemptiness. This statement and its positive-width counting are
+unconditional. Its proposed \(1/4000\) scaled all-slab margin remains
+conditional on C61, as in 36.35. No full C61 result is supplied, consumed or
+inferred; historical C45/C49/C51 names in earlier papers do not revive their
+failed carriers or alter the current open obligation.
+
+**36.37 Fibonacci cutoffs, encoding and distinct geometric domains.** Every
+established ordinary cutoff limit persists along increasing Fibonacci
+cutoffs \(F_j\to\infty\), simply because a convergent function or sequence
+has the same limit on a subsequence. Thus
+\(C_\epsilon(F_j)/\log F_j\to\kappa_\epsilon/(k*h_0)\), and weighted
+reference-index averages over all \(1\le n\le F_j\) tend to
+\(\kappa_\epsilon\). Shifted-family limits behave the same way. None of
+these statements determines the sparsely sampled orbit \(F_j*\alpha\), or
+membership frequency among the isolated indices \(n=F_j\).
+
+Numerical-order Zeckendorf recoding leaves the underlying integers unchanged,
+so membership counts at **every** numerical cutoff are exactly preserved;
+complete Fibonacci numerical intervals inherit the proved limits. Digit
+cylinders, codeword weighting and nonnumerical enumerations ask different
+sampling questions. No golden-ratio extremality, improved density, full-torus
+distribution or new orthogonality follows from recoding. A superiority claim
+would need its own precisely attributed theorem and metric. The stipulated
+Euclidean inner product in 36.27 remains a choice. A positive-width tube,
+the zero-width equal-coordinate locus, a real budget slab and a digit cylinder
+are distinct sets; their measures, densities and geometries cannot be exchanged.
+
+**36.38 Classical inputs, specialized paper boundaries and actual access limits.**
+Existence and uniqueness of normalized regular Haar measure, the complex
+Stone-Weierstrass theorem, unique prime factorization and elementary integer
+linear algebra are classical inputs. The classical closed-subgroup framework
+was attributed by C67 to the real Lie-group theorem recalled in Helge
+Glöckner's *Non-Lie subgroups in Lie groups over local fields of positive
+characteristic*. The needed torus-specific annihilator, rational tangent,
+finite-component and Haar-chart conclusions are proved in 36.2-36.5.
+C67 attributes the distribution context to Tom Meyerovitch,
+*Well-distribution of Polynomial maps on locally compact groups*,
+arXiv:2210.01429v2, Proposition 3.2 and Lemma 5.3. The stated homomorphism
+result uses the **closure** of the image. The required specialized uniform
+character and discontinuous-observable arguments are proved in 36.11-36.12.
+The complete-family multiplicity, boundary, counting, volume, baseline and
+application arguments are repo-derived paper deductions, not novelty claims.
+The scoped sign inputs 30.16 and 31.17 and conditional transfer input 34.20
+are inherited repo-derived paper results, not classical \(G\)-sign theorems
+or Lean/kernel admissions.
+
+All following access facts are **C67-worker-reported**, not I24 or caller
+independent retrieval. C67 reports retrieving Meyerovitch's v2 PDF and
+examining printed pages 8 and 11 with screenshots, retrieving Glöckner's
+arXiv abstract, and seeing only a lecture listing on a Raghuram course page.
+The listing was not treated as a proof source. A Tao author-site Smith-normal-
+form search and an attempted MIT Etingof lecture PDF returned Internal Error;
+neither supports a premise. C67 reports opening both supplied project-source
+addresses at immutable d79a2cd3cd3d5881dce26df9cee8266de9ae61e7 and focused
+checks of sections 30, 31 and 34, not a whole-volume audit, byte-hash check,
+checkout inspection, review-status inquiry or merge-status check. Missing
+URLs, hashes and screenshot/selector evidence are not invented. Raw citation
+fragments such as arXiv+1 and GitHub+1 remain untouched in the inert payload.
+I24 consulted the supplied raw proof and this local pinned predecessor's
+relevant statements, with zero new external accesses and zero certificate
+replays; these checks do not independently recertify earlier signs.
+
+**36.39 Primary identity, unconditional settlement and remaining obligations.**
+The supplied terminal actual-PRO C67 task is
+4abf944a-5964-4f3c-8fda-45ffeb1d77fc, flight
+qgh0910-pro-full-near-balanced-tube-counting, caller attempt 1/retry budget 0.
+Its exact raw response has 39985 bytes and 119 LF bytes, SHA256
+b882817054914d14c1bf13e1fa48bc5087534c5c8b6a04704ace04a0c44b38a9,
+and no terminal LF. The supplied task-observed 6/Pro label is display evidence,
+not hidden serving telemetry. C67 itself had no independent invocation-specific
+selector observation or serving-identity evidence. Configured/requested labels
+do not supply it; no model-diversity or sterile-prior claim is made. C67 used
+the complete C64 response as previous-stage mathematical context, not as an
+independent review vote. Its raw log_ref remains opaque and is never opened.
+
+The fixed-width full-family theorem, null faces, finite strict/closed correction,
+reference-invariant coefficient, two-prime specialization, smooth-family ratio,
+integer-baseline translation and zero-width classification have the full
+paper proofs above. No unresolved premise for those unconditional statements
+is concealed. Particular elementary or numerical coefficients for \(k\ge3\)
+may require additional information about \(H\); no procedure deciding all
+reciprocal-logarithm relations, discrepancy rate, shrinking-width estimate or
+uniform comparison over changing prime lists is supplied. C53, C54, C56 and
+C61 keep their separate broader scopes. In particular 36.35-36.36 retain the
+missing 5040 wider-domain baseline margin as conditional; no general-prime or
+arbitrary-shape \(G\) sign is proved. GH remains the user's undefined label.
+Counting actual boxes and comparing these upper bounds produce no new RH
+equivalence, generalized-GH definition, RH theorem or RH progress. There is
+no novelty, priority, exhaustive literature audit, independent-review verdict,
+Lean/kernel-frozen or MERGED claim. The standing research goal remains active.
+
+**36.40 Implementation, report and canonical handoff.** This is the sole Codex
+CLI I24 implementation flight qgh0910-i24-full-tube-counting, attempt 1/retry
+budget 1, under consensus-rnd:sshx 1.0.0-beta.42 SKILL.md and
+CODEX_WORKER_SPEC.md, with CLAUDE 5.11 and the explicit no-delegation override.
+Work target: /Users/auricstudio/trureturing-qgh-full-tube; branch:
+lane/math/quantized-gh-full-tube-0910; immutable BASE and starting HEAD:
+e3c946d63039999549b4bf47f33d255854456560. Every one of the predecessor's
+432403 source bytes and 8304 LF bytes is preserved, SHA256
+09702761d0d445ab798d54d6a1d26394394aa330e219400617ea46373871dc71.
+All historical CAS/YAML/report bytes, partial/table atoms and terminal-LF
+variants retain their original identities. This layer adds section 36,
+the [single full-family proof and provenance report](../../reports/quantized-gh/full-near-balanced-tube-counting-0910.md),
+and actual canonical output from exactly one invocation on the finished source:
+~~~text
+make ingest BASE=e3c946d63039999549b4bf47f33d255854456560 SOURCE=arithmetic-boundary-quantization
+~~~
+The report links back to this source, embeds the entire exact raw C67 response
+as inert tilde-fenced text with its delimiter-only LF separately accounted,
+maps every primary field to complete numbered proof units, and records current
+whole-CAS/YAML spans including the inherited 35.30 LF extension. Actual emitted
+children/chains, concatenation evidence, missing bytes and whitespace outcomes
+are reported as observed, never reconstructed by manual canonical edits.
+
+This worker is repo-prior-exposed and exercises no delegation, oracle launch,
+independent-review or lifecycle authority. Other worktrees/live targets, caller
+transcripts, task registries, worker envelopes, peer results and logs/log_ref
+referents are excluded; the explicitly supplied C67 response is the permitted
+previous-stage primary exception. New mathematical programs, sampled orbits,
+symbolic computation, exponent/prime/candidate enumeration, CPU candidate
+generation, historical certificate/test/ingest/pilot/fixed-xi replay, GPU/runtime
+access, broad builds, Lean/cache warmup, tool/frozen edits and Git/PR mutation
+are zero. Structural byte/span/JSON/link checks and the one canonical make
+orchestration are not mathematical computation or independent proof validation.
+The caller-reported donor_behind_base 7 with matching cache pin records
+unmerged predecessors, not a request to inspect a donor or rebuild Lean.
+
+At this I24 handoff the changes are unstaged and not independently reviewed;
+this describes the handoff, not later status. Caller sealing, public byte
+verification, independent review and ordinary canonical PR/CI gates remain
+required. Final S25 delivery must follow S24 MERGED. Ingestion is not Lean
+absorption, independent approval, MERGED delivery or completion of the standing
+goal. No second ingest or manual canonical repair is authorized here.

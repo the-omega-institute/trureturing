@@ -1,0 +1,42 @@
+**36.40 Implementation, report and canonical handoff.** This is the sole Codex
+CLI I24 implementation flight qgh0910-i24-full-tube-counting, attempt 1/retry
+budget 1, under consensus-rnd:sshx 1.0.0-beta.42 SKILL.md and
+CODEX_WORKER_SPEC.md, with CLAUDE 5.11 and the explicit no-delegation override.
+Work target: /Users/auricstudio/trureturing-qgh-full-tube; branch:
+lane/math/quantized-gh-full-tube-0910; immutable BASE and starting HEAD:
+e3c946d63039999549b4bf47f33d255854456560. Every one of the predecessor's
+432403 source bytes and 8304 LF bytes is preserved, SHA256
+09702761d0d445ab798d54d6a1d26394394aa330e219400617ea46373871dc71.
+All historical CAS/YAML/report bytes, partial/table atoms and terminal-LF
+variants retain their original identities. This layer adds section 36,
+the [single full-family proof and provenance report](../../reports/quantized-gh/full-near-balanced-tube-counting-0910.md),
+and actual canonical output from exactly one invocation on the finished source:
+~~~text
+make ingest BASE=e3c946d63039999549b4bf47f33d255854456560 SOURCE=arithmetic-boundary-quantization
+~~~
+The report links back to this source, embeds the entire exact raw C67 response
+as inert tilde-fenced text with its delimiter-only LF separately accounted,
+maps every primary field to complete numbered proof units, and records current
+whole-CAS/YAML spans including the inherited 35.30 LF extension. Actual emitted
+children/chains, concatenation evidence, missing bytes and whitespace outcomes
+are reported as observed, never reconstructed by manual canonical edits.
+
+This worker is repo-prior-exposed and exercises no delegation, oracle launch,
+independent-review or lifecycle authority. Other worktrees/live targets, caller
+transcripts, task registries, worker envelopes, peer results and logs/log_ref
+referents are excluded; the explicitly supplied C67 response is the permitted
+previous-stage primary exception. New mathematical programs, sampled orbits,
+symbolic computation, exponent/prime/candidate enumeration, CPU candidate
+generation, historical certificate/test/ingest/pilot/fixed-xi replay, GPU/runtime
+access, broad builds, Lean/cache warmup, tool/frozen edits and Git/PR mutation
+are zero. Structural byte/span/JSON/link checks and the one canonical make
+orchestration are not mathematical computation or independent proof validation.
+The caller-reported donor_behind_base 7 with matching cache pin records
+unmerged predecessors, not a request to inspect a donor or rebuild Lean.
+
+At this I24 handoff the changes are unstaged and not independently reviewed;
+this describes the handoff, not later status. Caller sealing, public byte
+verification, independent review and ordinary canonical PR/CI gates remain
+required. Final S25 delivery must follow S24 MERGED. Ingestion is not Lean
+absorption, independent approval, MERGED delivery or completion of the standing
+goal. No second ingest or manual canonical repair is authorized here.

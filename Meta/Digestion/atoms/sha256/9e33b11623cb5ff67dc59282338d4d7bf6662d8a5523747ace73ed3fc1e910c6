@@ -1,0 +1,25 @@
+**36.12 Uniform weighted and support-frequency means.** If a Borel set
+\(E\subset H\) has null boundary, continuous functions sandwich its indicator
+with arbitrarily small integral gap. Explicitly, on compact metric \(H\) use
+\(l_\delta(x)=\min(1,\operatorname{dist}(x,H\setminus E^\circ)/\delta)\)
+and \(u_\delta(x)=\max(0,1-\operatorname{dist}(x,\overline E)/\delta)\),
+with the empty/full-set cases treated by constant functions. They satisfy
+\(l_\delta\le\mathbf1_E\le u_\delta\), and as \(\delta\downarrow0\) their
+integrals tend to those of \(E^\circ\) and \(\overline E\). The limits agree
+because the boundary is null. Uniform convergence for continuous functions
+in 36.11, followed by squeezing, proves uniform convergence for \(\mathbf1_E\).
+
+For \(1\le t\le B_\epsilon\), set \(E_t=\{w_\epsilon\ge t\}\). At a
+continuity point the integer-valued \(w_\epsilon\) is locally constant, so
+\(\partial E_t\) is contained in its null discontinuity set from 36.9.
+Apply the indicator result to each \(E_t\) and the finite identity
+\(w_\epsilon=\sum_{t=1}^{B_\epsilon}\mathbf1_{E_t}\). Consequently
+\[
+\sup_{a\in\mathbb Z_{\ge0}}
+\left|\frac1M*\sum_{n=a+1}^{a+M}w_\epsilon(n*\alpha)-\kappa_\epsilon\right|
+\longrightarrow0,
+\]
+and replacing \(w_\epsilon\) by \(\mathbf1_{\{w_\epsilon>0\}}\) gives the
+same assertion with limit \(\nu_\epsilon\). This follows by taking starting
+point \(x=a*\alpha\) in the stronger all-starting-point statement.
+

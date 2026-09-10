@@ -1,0 +1,20 @@
+**36.31 Every 235 tube box inherits its supplied whole-domain sign.** Fix
+\(p=(2,3,5)\) and \(0<\epsilon\le1/480\). Every tuple of the full tube
+has \(T=\min_i m_i*h_i\ge\log2\) and
+\(\xi_i=c_i-T\ge0\), \(\min_i\xi_i=0\),
+\(\max_i\xi_i=\operatorname{width}(m)\le\epsilon\). The separately supplied
+paper estimate 30.16 states
+\(\exp(T)*G<-1/120\) for **every** finite \(T\ge\log2\), closed shape
+radius \(\max_i\xi_i\le1/480\), and finite positive-width two-corner slab
+in its wider domain. The definitions, feasibility and positive support in
+36.27-36.29 match that input exactly. It follows that every such slab in
+every counted tube box satisfies
+\[
+\exp(T)*G<-1/120.
+\]
+This includes all multiplicity branches, closed tube-width equality, the
+closed radius endpoint, corner inclusions at the two budget endpoints,
+saturation and arbitrary finite upper slack. The strict inequality at the
+radius endpoint is part of 30.16's supplied theorem. No finite certificate
+is rerun and no sign for boxes outside these hypotheses is inferred.
+

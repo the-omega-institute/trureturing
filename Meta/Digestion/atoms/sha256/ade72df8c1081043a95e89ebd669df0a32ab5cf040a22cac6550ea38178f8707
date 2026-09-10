@@ -1,0 +1,26 @@
+**36.20 All fixed-prime smooth numbers: simplex estimate with endpoint control.**
+Let \(S_P(X)\) count all integers \(\prod_i p_i^{b_i}\le X\) with
+\(b\in\mathbb Z_{\ge0}^k\). For \(L=\log X\ge0\), define
+\(\Omega(L)=\{t\in\mathbb R_{\ge0}^k:\sum_i h_i*t_i\le L\}\).
+Scaling by \(u_i=h_i*t_i\) gives
+\(\operatorname{vol}\Omega(L)=L^k/(k!*\prod_i h_i)\).
+The elementary simplex formula follows by induction: in dimension one its
+length is \(L\); integrating the \((k-1)\)-dimensional volume over the last
+coordinate gives \(\int_0^L(L-u)^{k-1}/(k-1)!\,du=L^k/k!\).
+
+For each eligible integer \(b\), take the half-open cube \(b+[0,1)^k\).
+These cubes are disjoint and their union has volume \(S_P(X)\), since unique
+factorization is injective. The union contains \(\Omega(L)\): if
+\(t\in\Omega(L)\), then \(\lfloor t\rfloor\) is eligible and its cube
+contains \(t\), including integral coordinates. The union is contained in
+\(\Omega(L+S_h)\), because \(\sum_i h_i*t_i<\sum_i h_i*b_i+S_h\)
+inside each cube. Hence
+\[
+\frac{L^k}{k!*\prod_i h_i}\le S_P(X)
+\le\frac{(L+S_h)^k}{k!*\prod_i h_i},
+\qquad
+S_P(X)=\frac{(\log X)^k}{k!*\prod_i h_i}+O((\log X)^{k-1}).
+\]
+The inequalities remain valid at \(L=0\); the error estimate is as
+\(L\to\infty\) with the prime list fixed.
+

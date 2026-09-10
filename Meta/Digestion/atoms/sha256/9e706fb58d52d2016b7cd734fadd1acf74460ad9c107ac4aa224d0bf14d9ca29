@@ -1,0 +1,22 @@
+**36.17 Conditional full-torus unfolding.** By 36.3,
+\(H=\mathbb T^d\) exactly when \(\Lambda=\{0\}\), equivalently when
+\(1,\alpha_1,\ldots,\alpha_d\) are rationally independent. Pairwise
+logarithmic irrationality does not establish this for \(d\ge2\). Define
+\[
+\mathcal D_\epsilon=\{\Delta\in\mathbb R^d:
+\max(0,\Delta_1,\ldots,\Delta_d)-\min(0,\Delta_1,\ldots,\Delta_d)
+\le\epsilon\}.
+\]
+Under the **full-torus hypothesis**, integrate the branch sum of 36.6 over
+\([0,1)^d\). For branch \(j\), put \(y_i=j_i-x_i\) and
+\(\Delta_i=h_i*y_i\). The \(y\) cells \(\prod_i(j_i-1,j_i]\) tile
+\(\mathbb R^d\) up to null endpoints. The absolute Jacobian from \(y\) to
+\(\Delta\) is \(\prod_{i=1}^d h_i\). Summing the integrals yields
+\[
+\kappa_\epsilon=\frac{\operatorname{vol}_d(\mathcal D_\epsilon)}
+                         {\prod_{i=1}^d h_i}.
+\]
+The domain is bounded, and only the finite relevant branches can meet it
+over the fundamental cube. Thus this unfolds every branch for any fixed
+finite width; it assumes neither a small window nor multiplicity at most one.
+
