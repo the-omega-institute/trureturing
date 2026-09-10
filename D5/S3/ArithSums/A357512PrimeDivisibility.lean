@@ -40,4 +40,50 @@ private lemma transport {R : Type*} [CommRing R] (t x : R) (ht : t ^ 4 = 0) :
     (-2*t^3*x + t^2*x^2 + 4*t^2*x + 4*t*x^3 + 2*t*x^2 - 2*t*x -
       2*x^4 - 6*x^3 - 3*x^2) * ht
 
+private abbrev R (p : ℕ) := ZMod (p ^ 4)
+
+private lemma fourth_zero (p : ℕ) : (p : R p) ^ 4 = 0 := by
+  rw [← Nat.cast_pow, ZMod.natCast_self]
+
+private lemma index_unit (p k : ℕ) (hp : p.Prime) (hk : 0 < k) (hkp : k < p) :
+    IsUnit (k : R p) := by
+  apply (ZMod.isUnit_iff_coprime k (p ^ 4)).mpr
+  exact ((hp.coprime_iff_not_dvd.mpr (Nat.not_dvd_of_pos_of_lt hk hkp)).symm).pow_right _
+
+private lemma binomial_sq_scaled (p : ℕ) (hp : p.Prime) (k : ℕ) (hk : k < p) :
+    (k : R p) ^ 4 * (b p k : R p) ^ 2 =
+      (p : R p) ^ 2 * k ^ 2 - 2 * (p : R p) ^ 3 * k := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    by_cases hz : k = 0
+    · subst k
+      simp only [b, Nat.zero_add, Nat.choose_one_right, Nat.add_sub_cancel,
+        Nat.cast_mul, Nat.cast_one, one_pow, mul_one, one_mul]
+      rw [Nat.cast_sub hp.one_le]
+      push_cast
+      linear_combination fourth_zero p
+    have hprev := ih (by omega)
+    have hrec : ((k : R p) + 1) ^ 2 * (b p (k + 1) : R p) =
+        (((p : R p) - k - 1) * (p + k)) * (b p k : R p) := by
+      have h := congrArg (fun z : ℕ => (z : R p)) (b_step p k hp.pos)
+      push_cast [Nat.cast_sub (by omega : k ≤ p - 1), Nat.cast_sub hp.one_le] at h
+      convert h using 1 <;> ring
+    have hs := congrArg (fun z : R p => z ^ 2) hrec
+    push_cast
+    apply ((index_unit p k hp (by omega) (by omega)).pow 4).mul_left_cancel
+    calc
+      _ = (((p : R p) - k - 1) * (p + k)) ^ 2 *
+          ((k : R p) ^ 4 * (b p k : R p) ^ 2) := by
+            linear_combination (k : R p) ^ 4 * hs
+      _ = _ := by rw [hprev]; exact transport (p : R p) k (fourth_zero p)
+
+private lemma weighted_term (p : ℕ) (hp : p.Prime) (k : ℕ) (hk : k < p) :
+    (k : R p) ^ 5 * ((p - 1).choose k : R p) ^ 2 *
+        ((p + k - 1).choose k : R p) ^ 2 =
+      (p : R p) ^ 2 * k ^ 3 - 2 * (p : R p) ^ 3 * k ^ 2 := by
+  have h := binomial_sq_scaled p hp k hk
+  simp only [b, Nat.cast_mul] at h
+  linear_combination (k : R p) * h
+
 end D5.S3.ArithSums.A357512PrimeDivisibility

@@ -139,3 +139,16 @@ through the integers. Mathlib's `sum_range_pow` supplies the cube sum. The
 private `six_mul_sum_sq` in A373561 is unavailable as a public dependency.
 First Lean attempt exposed an unnecessary rewrite after `dsimp` had already
 normalized `p+(k+1)-1` to `p+k`; removing that rewrite preserves the statement.
+
+`b_step`, `transport`, `binomial_sq_scaled`, and `weighted_term` now elaborate
+with EXIT=0 and no `sorry` or added axiom. The only diagnostic is a tactic-style
+warning. The actual escape witness is `binomial_sq_scaled`, proved by induction
+and unit cancellation, and consumed by `weighted_term`.
+
+A broader repository search found a material literature lead in
+`Library/Words/oeis2026triage0910.md`: its A357512 assessment records Kutal's
+`TheSil/A357513_conjecture/proof.tex` as proving the prime subcase with `m=-3`.
+This source was absent from the brief's three-paper scope. Verification of the
+actual source is pending; no B-level novelty claim will be made. The user's
+explicit instruction permits local Lean proof after no usable library hit,
+even for published mathematical results, and authorizes B as a delivery target.
