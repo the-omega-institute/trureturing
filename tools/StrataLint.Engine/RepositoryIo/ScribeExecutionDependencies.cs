@@ -195,6 +195,15 @@ internal static class ScribeExecutionDependencies
                         unknown.Add("dynamic-or-native-dispatch:" + declaration.SyntaxTree.FilePath);
                     if (model.GetConversion(expression).MethodSymbol is { } conversion) Enqueue(conversion);
                 }
+                // Some C# calls have no invocation syntax of their own. Keep
+                // their compiler-bound operation symbols in this traversal:
+                // collection initializers lower to Add and positional patterns
+                // lower to Deconstruct.
+                if (model.GetOperation(node) is IObjectOrCollectionInitializerOperation initializer)
+                    foreach (var operation in initializer.Initializers)
+                        if (operation is IInvocationOperation invocation) Enqueue(invocation.TargetMethod);
+                if (model.GetOperation(node) is IRecursivePatternOperation { DeconstructSymbol: { } deconstruct })
+                    Enqueue(deconstruct);
                 if (node is InvocationExpressionSyntax or BaseObjectCreationExpressionSyntax or ConstructorInitializerSyntax)
                 {
                     if (model.GetOperation(node) is INameOfOperation) continue;
