@@ -5945,7 +5945,7 @@ caller 原审计记录 131 项全通过,不是 primary 的执行计数,也不是
 原审计与程序保持原字节且未重跑。新报告把相同常数改编为无 caller-local 路径依赖的
 自足可执行证书,另补固定输入到证明假设的链接,只执行改编证书一次。
 精确命令、版本、字节/hash、实际结果及各类证据分工见
-[balanced-prime-237-all-slabs-0910.md](../../reports/balanced-prime-237-all-slabs-0910.md)。
+[balanced-prime-237-all-slabs-0910.md](../../reports/quantized-gh/balanced-prime-237-all-slabs-0910.md)。
 
 **31.22 单一内容层、保留边界及 caller 交付义务。** 本层由隔离 Codex CLI 实施席 I15
 在 caller 固定的 consensus-rnd:sshx 1.0.0-beta.42 和 CODEX_WORKER_SPEC.md 下产生,
