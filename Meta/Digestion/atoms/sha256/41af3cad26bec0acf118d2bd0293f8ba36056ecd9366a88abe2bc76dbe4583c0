@@ -1,0 +1,80 @@
+### 42.5 连通组件、保留边界与局部关系桥
+
+**定义 QI-D4（组件观察商）。** 对非空连通 $A\subseteq I$，定义以下边界与限制，并对 $s\in\mathcal A(\partial A)$ 定义补集记录域：
+
+$$
+\partial A=U_A\cap U_{I\setminus A},\qquad
+\rho_A(a)=a|_{\partial A},\qquad
+\mathcal R_A(s)=
+\{r\in J_{I\setminus A}:r|_{\partial A}=s\}.
+\tag{QI-BOUNDARY}
+$$
+
+RI 给出
+
+$$
+\partial A=\bigcup_{\substack{i\in A,\ j\notin A\\\{i,j\}\in E_T}}C_{\{i,j\}}.
+\tag{QI-BOUNDARY-UNION}
+$$
+
+确实，一个同时出现在组件内外的变量沿连接路径出现在某条出边的两个端点，反向包含显然。这里保留的是该并集上的一个共同赋值。补集可能不连通，但 $J_{I\setminus A}$ 仍是整个补集上的完整相容赋值，包含各部分之间共享变量的一致性。
+
+对 $a\in J_A$ 令 $O_A(a)$ 为函数 $\mathcal R_A(\rho_A(a))\to\mathcal V_{\mathcal F}$，其值是 $r\mapsto G(a\cup r)$。取带边界的签名及等价：
+
+$$
+\begin{aligned}
+\Sigma_A(a)&=(\rho_A(a),O_A(a))
+\in\coprod_{s\in\mathcal A(\partial A)}
+\mathcal V_{\mathcal F}^{\mathcal R_A(s)},\\
+a\equiv_A a'
+&\iff \rho_A(a)=\rho_A(a')
+\ \text{且}\quad
+\forall r\in\mathcal R_A(\rho_A(a)),\
+G(a\cup r)=G(a'\cup r),\\
+q_A&:J_A\twoheadrightarrow Q_A^{\rm obs}=J_A/{\equiv_A}.
+\end{aligned}
+\tag{QI-COMPONENT-OBS}
+$$
+
+这个核保留边界相等，即使某纤维没有任何补全也不跨边界合并。逐边界应用命题 QI-P3，得到它恰为“须恢复边界并回答所有完整相容补集观察”这一契约下的最粗表示，且 $Q_A^{\rm obs}\cong\Sigma_A[J_A]$。边界读出 $\bar\rho_A$ 由图 $\{(q_A(a),\rho_A(a)):a\in J_A\}$ 定义；这是后续拼接兼容域可从商状态恢复的原因。
+
+**定义 QI-D5（局部联合边界—响应关系）。** 对单节点 $i$，$J_{\{i\}}=\Gamma_i$。令
+
+$$
+\begin{aligned}
+\beta_i(a)&=(\rho_{\{i\}}(a),h_i(a)),\\
+Q_i^{\rm rel}&=\beta_i[\Gamma_i]
+=\{(s,y):\exists a\in\Gamma_i,\
+\rho_{\{i\}}(a)=s,\ h_i(a)=y\},\\
+Q_i^{\rm obs}&=Q_{\{i\}}^{\rm obs}.
+\end{aligned}
+\tag{QI-LOCAL-RELATION}
+$$
+
+$Q_i^{\rm rel}$ 完全由一个局部记录同时见证全部边界字段与响应，不能换成各个出边边缘及响应边缘的任意乘积。
+
+**命题 QI-P4（关系到观察商的因子化桥，repo-derived）。** 对上述原始观察契约，
+
+$$
+\ker\beta_i\subseteq{\equiv_{\{i\}}},
+\qquad
+\Phi_i:Q_i^{\rm rel}\to\Sigma_{\{i\}}[\Gamma_i],
+\qquad
+Q_i^{\rm rel}/\ker\Phi_i\cong Q_i^{\rm obs}.
+\tag{QI-REL-OBS-BRIDGE}
+$$
+
+**证明。** 若两局部记录有相同 $\beta_i$，其完整边界与 $h_i$ 相同。对同一个完整补集记录，其他每个 $h_j$ 的输入不变，因此整个 $H$ 相同，进而所有 $G_c$ 相同。于是
+
+$$
+\{(\beta_i(a),\Sigma_{\{i\}}(a)):a\in\Gamma_i\}
+$$
+
+是总的单值图，定义满射 $\Phi_i$。同理，图 $\{(\beta_i(a),q_{\{i\}}(a)):a\in\Gamma_i\}$ 定义到 $Q_i^{\rm obs}$ 的映射 $\phi_i$，且 $q_{\{i\}}=\phi_i\circ\beta_i$。再由图
+
+$$
+\{([\beta_i(a)]_{\ker\Phi_i},q_{\{i\}}(a)):a\in\Gamma_i\}
+$$
+
+得到 (QI-REL-OBS-BRIDGE) 的双射：$\Phi_i$ 相等恰为签名相等，所以该图单值、单射，局部原像的存在保证满射。因而 $Q_i^{\rm rel}$ 本身最粗当且仅当 $\Phi_i$ 单射。不同关系行若有相同签名可以合并，若签名不同则边界或某完整上下文禁止合并。本结论不承诺恢复每个原始响应；若要求恢复该响应，须把它本身列为所需观察。隐藏 $K$ 的准入也尚未由本桥保证。证毕。
+
