@@ -1,0 +1,45 @@
+## 18. 新的 strict-X sharp-bound target
+
+对固定 strict-X edge `T`，定义：
+
+```math
+\alpha_{min}(T)
+=
+\inf_{C\in\mathfrak C(T)}
+\alpha_S(C).
+```
+
+若证明：
+
+```math
+\boxed{
+\alpha_{min}(T)>1,
+}
+```
+
+则任意两个 completions `C,D` 都满足：
+
+```math
+\alpha_S(C)+\alpha_S(D)>2,
+```
+
+与第 17 节的 MUB budget 矛盾。因此整个 fixed-edge branch 被排除。
+
+这个目标明显弱于“所有 completions 都 canonical”或“noncanonical fibre 为空”。它只要求一个标量下界。
+
+对闭 branch domain，还可以采用：
+
+```math
+\alpha_S(C)\ge1+\varepsilon(T)
+```
+
+或统一：
+
+```math
+\alpha_S(C)\ge1+\varepsilon
+```
+
+其中 `epsilon>0` 由 exact algebraic certificate 验证。
+
+如果只能得到 `alpha>=1`，则继续分类 equality locus，并证明两个 equality completions 不能兼容，也足以闭合。第 31 节完成了所需的条件矩阵刚性；第 32 节给出理论上的小幅稳健改进。实际 completion 下界本身仍然未证。
+
