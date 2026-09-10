@@ -1,0 +1,11 @@
+**定理 90（两叶来源相等读数超出每个有限单孔摘要）。** 固定
+\[
+L_=\{\operatorname{pair}(\operatorname{leaf}(j),\operatorname{leaf}(j)):j\in\omega\},\qquad
+H_=(X)=q(F_{L_=}(X\boxtimes X)).
+\]
+令 \(z_r(X)=\sum_{e\in A_X,\rho(e)=r}\sigma(e)\)，则
+\[
+H_=(X)=\sum_{j\in\omega}z_{\operatorname{leaf}(j)}(X)^2\in\mathcal E.
+\]
+对每个先固定的有限族 \(h_1,\ldots,h_m\in\mathcal E_1\)，存在 \(X,Y\in\mathcal B\) 使全部 \(h_i(X)=h_i(Y)\) 而 \(H_=(X)\ne H_=(Y)\)。因此任意后处理 \(g:\mathbb Z^m\to\mathbb Z\) 都不能从该族恢复 \(H_=\)，并有 \(\mathbb Z[\mathcal E_1]\subsetneq\mathcal E\)。这些式子及量词在码侧完全保留。
+
