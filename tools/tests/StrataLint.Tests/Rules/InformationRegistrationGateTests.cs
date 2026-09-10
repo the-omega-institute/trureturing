@@ -9,9 +9,12 @@ public sealed class InformationRegistrationGateTests
     private const string Ignored = "IE-C048 RealizationIgnoredByLaw key=Root/Catalog/T law_arena=A signature=A.signature domain=all reason=missing_witness";
     private const string Unused = "IE-C049 UnusedPrimitiveInBundle key=Root/Catalog/T signature=A.signature primitive=readout[0] support=[]";
 
+    private const string Provenance = "IE-C050 ClosedTruthReadout key=Root/Catalog/T readout=q reason=incomplete_closure provenance=null";
+
     [Theory]
     [InlineData(Ignored)]
     [InlineData(Unused)]
+    [InlineData(Provenance)]
     public void ChangedUnfrozenRegistrationIsRejected(string message)
     {
         var fixture = Fixture(message);
@@ -83,11 +86,11 @@ public sealed class InformationRegistrationGateTests
     [Fact]
     public void RegistrationDiagnosticsSurviveSourceBoundReportRoundTrip()
     {
-        var fixture = Fixture(Ignored, Unused);
+        var fixture = Fixture(Ignored, Unused, Provenance);
         var context = fixture.Build();
         var bytes = RawLeanReportArtifact.Write(context.Current, context.Lean.Report);
         var loaded = RawLeanReportArtifact.Read(bytes.AsSpan(), context.Current);
-        Assert.Equal(new[] { Ignored, Unused }, loaded.Files[RepoPath.CreateKnown(RuleFixture.RingPath)].InformationRegistrationErrors);
+        Assert.Equal(new[] { Ignored, Unused, Provenance }, loaded.Files[RepoPath.CreateKnown(RuleFixture.RingPath)].InformationRegistrationErrors);
     }
 
     private static RuleFixture Fixture(params string[] messages)
