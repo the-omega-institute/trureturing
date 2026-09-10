@@ -7,8 +7,11 @@
       <_CiManifest>$(CiBuildOutputRoot)/$(_CiProject).outputs</_CiManifest>
       <_CiReference Condition="'$(ProduceReferenceAssembly)' == 'true'">$(TargetRefPath)</_CiReference>
     </PropertyGroup>
+    <ItemGroup>
+      <_CiBuildInput Include="$(MSBuildAllProjects);@(Analyzer)" />
+    </ItemGroup>
     <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(_CiManifest)'))" />
     <WriteLinesToFile File="$(_CiManifest)" Overwrite="true"
-      Lines="$(MSBuildProjectFullPath);$(TargetPath);$(TargetDir);$(ProjectAssetsFile);reference=$(_CiReference);@(FileWrites->'%(FullPath)')" />
+      Lines="$(MSBuildProjectFullPath);$(TargetPath);$(TargetDir);$(ProjectAssetsFile);reference=$(_CiReference);native-inputs=1;@(ProjectReference->'project=%(FullPath)');@(_CiBuildInput->'input=%(FullPath)');@(FileWrites->'%(FullPath)')" />
   </Target>
 </Project>
