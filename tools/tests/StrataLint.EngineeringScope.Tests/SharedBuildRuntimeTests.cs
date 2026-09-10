@@ -21,6 +21,7 @@ public sealed class SharedBuildRuntimeTests
         // This fixture exercises transport without a network package source.
         Write("NuGet.Config", "<configuration><packageSources><clear /></packageSources></configuration>\n");
         Write("global.json", File.ReadAllText(Path.Combine(repository, "global.json")));
+        Write("Meta/FILEMAP.toml", File.ReadAllText(Path.Combine(repository, "Meta/FILEMAP.toml")).Split("[[test_input_owners]]")[0]);
         Write("tools/scripts/ci-build-outputs.targets", File.ReadAllText(Path.Combine(repository, "tools/scripts/ci-build-outputs.targets")));
         foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/report/dotnet_producer.py",
                      "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/JudgeSeedTask.csproj",
@@ -97,13 +98,23 @@ public sealed class SharedBuildRuntimeTests
         // ci-stage.sh uses pwd -P; match that physical root on macOS's /var alias.
         var physicalRoot = SharedBuildContractTests.Git(root, "rev-parse", "--show-toplevel");
         var dotnet = SharedBuildContractTests.Process(root, "which", ["dotnet"]).Text.Trim();
-        var scope = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
+        var scope = typeof(Program).Assembly.Location;
         Write("build/bin/dotnet", """
             #!/bin/bash
             set -euo pipefail
             echo "$*" >> build/dotnet-calls
-            if [[ "$1" == *StrataLint.EngineeringScope.dll ]]; then shift; exec "$CONTRACT_SCOPE" "$@"; fi
-            if [[ "$1" == build ]]; then exec "$CONTRACT_DOTNET" "$@" -v:diag; fi
+            if [[ "$1" == *StrataLint.EngineeringScope.dll ]]; then
+              shift
+              if [[ "$1" == test-environment ]]; then exec "$CONTRACT_DOTNET" "$CONTRACT_SCOPE" "$@"; fi
+              exec "${CONTRACT_SCOPE%.dll}" "$@"
+            fi
+            if [[ "$1" == build ]]; then
+              args=("$@")
+              for ((i=1; i<${#args[@]}; i++)); do
+                if [[ "${args[i-1]}" == --verbosity ]]; then args[i]=diag; fi
+              done
+              exec "$CONTRACT_DOTNET" "${args[@]}" -v:diag
+            fi
             exec "$CONTRACT_DOTNET" "$@"
             """);
         File.SetUnixFileMode(Path.Combine(root, "build/bin/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
@@ -116,6 +127,12 @@ public sealed class SharedBuildRuntimeTests
             ["STRATALINT_CHECK_SUCCEEDED"] = "false", ["STRATALINT_BUILD_SUCCEEDED"] = "true" };
         var cold = Stage("cold", "build");
         Assert.Equal(projects.Length + 1, Compilers(cold)); // Utility projects plus Runtime.
+        var nativeInputs = Assert.Single(CommonExecutionEvidence.Read<TestInputManifest>(root, AffectedTestPlan.PathName).Projects);
+        foreach (var path in new[] { "build/judge-seed/compiler.targets", "build/judge-seed/seed.targets" })
+        {
+            Assert.Contains(nativeInputs.Inputs, input => input.Path == path && input.Identity == CommonExecutionEvidence.Hash(Path.Combine(root, path)));
+            Assert.DoesNotContain("filemap:unowned:" + path, nativeInputs.Unknown);
+        }
         Assert.Single(Calls(), call => call == "sln tools/StrataLint.sln list");
         var build = CommonExecutionEvidence.ValidateBuild(root);
         Assert.Equal(new[] { "restore-StrataLint", "build" }, build.Steps.Select(step => step.Name));
@@ -217,7 +234,9 @@ public sealed class SharedBuildRuntimeTests
             Assert.True(result.Exit == 0, result.Text);
         }
         string[] Calls() => File.ReadAllLines(Path.Combine(root, "build/dotnet-calls"));
-        static int Compilers(string text) => Regex.Matches(text, "Task \\\"Csc\\\"(?: \\(TaskId:\\d+\\))?").Count;
+        // The SDK emits this event only when it invokes the compiler. Metadata-only
+        // Csc tasks also appear in diagnostic logs and must not count as emission.
+        static int Compilers(string text) => Regex.Matches(text, "CompilerServer: (?:server|tool) - ").Count;
         string Stage(string label, string stage, int expected = 0)
         {
             File.Delete(Path.Combine(root, "build/dotnet-calls"));

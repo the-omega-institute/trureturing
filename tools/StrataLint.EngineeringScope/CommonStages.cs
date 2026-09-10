@@ -5,12 +5,73 @@ using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
 
+internal sealed record TestEnvironmentContext(string Identity, string Culture, string UICulture)
+{
+    [System.Text.Json.Serialization.JsonIgnore] public string Launcher { get; init; } = "dotnet";
+    public string WorkingDirectory { get; init; } = "";
+    public string RuntimeMaterial { get; init; } = "";
+    [System.Text.Json.Serialization.JsonIgnore] public string ValuesIdentity { get; init; } = "";
+    [System.Text.Json.Serialization.JsonIgnore] public IDictionary<string, string?> Inherited { get; init; } = new Dictionary<string, string?>();
+    [System.Text.Json.Serialization.JsonIgnore] public IDictionary<string, string?> Values { get; init; } = new Dictionary<string, string?>();
+    [System.Text.Json.Serialization.JsonIgnore] public int Startups { get; init; }
+    [System.Text.Json.Serialization.JsonIgnore] public double StartupSeconds { get; init; }
+    internal string ForValues(bool values) => values ? ValuesIdentity : Identity;
+    internal IDictionary<string, string?> Exposure(bool values) => values ? Values : Inherited;
+}
+
 internal sealed class CommonStages(string root, TextWriter output, CancellationToken deadlineCancellation = default,
     Action<Process>? processExited = null, TimeProvider? timeProvider = null)
 {
     private readonly List<StageStep> steps = [];
     private string stage = "input";
     private string? candidate;
+
+    internal static void NormalizeEnvironment(IDictionary<string, string?> environment) =>
+        environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+
+    internal static void InitializeTestEnvironment()
+    {
+        var environment = new ProcessStartInfo().Environment;
+        NormalizeEnvironment(environment);
+        // dotnet test applies the CLI language to its testhost. A raw runner DLL
+        // needs the same UI culture; setting an environment variable alone does not.
+        System.Globalization.CultureInfo.CurrentUICulture =
+            System.Globalization.CultureInfo.GetCultureInfo(environment["DOTNET_CLI_UI_LANGUAGE"]!);
+    }
+
+    internal static TestEnvironmentContext TestEnvironment(string? root = null)
+    {
+        // Observe fresh runtime startup under the actual launch policy. Caller
+        // thread cultures (including a containing testhost's) are not child inputs.
+        root ??= Directory.GetCurrentDirectory();
+        var inherited = new ProcessStartInfo().Environment;
+        NormalizeEnvironment(inherited);
+        var started = TimeProvider.System.GetTimestamp();
+        var launcher = (inherited.TryGetValue("PATH", out var path) ? path ?? "" : "").Split(Path.PathSeparator)
+            .Select(directory => Path.Combine(directory, OperatingSystem.IsWindows() ? "dotnet.exe" : "dotnet"))
+            .FirstOrDefault(File.Exists) ?? throw new InvalidDataException("dotnet launcher is absent from PATH");
+        launcher = Path.GetFullPath(launcher);
+        var result = new CommonStages(root, TextWriter.Null).Capture(launcher,
+            [typeof(Program).Assembly.Location, "test-environment"], environment: inherited);
+        if (result.Exit != 0) throw new InvalidDataException("test environment observation failed: " + result.Text);
+        var child = JsonSerializer.Deserialize<TestEnvironmentContext>(result.Text)
+            ?? throw new InvalidDataException("missing test environment observation");
+        root = child.WorkingDirectory;
+        if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
+            inherited["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
+        var values = inherited.Where(pair => RuntimeVariable(pair.Key) || pair.Key.StartsWith("LC_", StringComparison.Ordinal)
+            || pair.Key is "PATH" or "HOME" or "TMPDIR" or "TMP" or "TEMP" or "LANG" or "TZ" or "SystemRoot" or "WINDIR" or "NUGET_PACKAGES")
+            .ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        return child with { Launcher = launcher, Inherited = inherited, Values = values, Startups = 1,
+            StartupSeconds = TimeProvider.System.GetElapsedTime(started).TotalSeconds,
+            ValuesIdentity = AffectedTestPlan.Digest([AffectedTestPlan.EnvironmentKey(values, child.Culture, child.UICulture, true),
+                root, child.Identity, launcher, CommonExecutionEvidence.Hash(launcher), child.RuntimeMaterial]) };
+    }
+
+    internal static bool RuntimeVariable(string key) => key.StartsWith("DOTNET_", StringComparison.Ordinal)
+        || key.StartsWith("COMPlus_", StringComparison.Ordinal) || key.StartsWith("VSTEST_", StringComparison.Ordinal)
+        || key.StartsWith("CORECLR_", StringComparison.Ordinal) || key.StartsWith("COREHOST_", StringComparison.Ordinal)
+        || key.StartsWith("LD_", StringComparison.Ordinal) || key.StartsWith("DYLD_", StringComparison.Ordinal);
 
     internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
     {
@@ -78,15 +139,28 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
 
     private CommonStageRecord Build()
     {
+        var clock = timeProvider ?? TimeProvider.System;
+        var started = clock.GetTimestamp();
         ClearEvidence("build", "engineering", "current");
         File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
         var outputs = Path.Combine(root, CommonBuildOutputs.RootPath);
         if (Directory.Exists(outputs)) Directory.Delete(outputs, recursive: true);
         Step("restore-StrataLint", "dotnet", ["restore", "tools/StrataLint.sln", "--locked-mode"]);
-        Step("build", "dotnet", ["build", "tools/StrataLint.sln", "--configuration", "Release", "--no-restore", "--warnaserror",
+        var restored = clock.GetTimestamp();
+        Step("build", "dotnet", ["build", "tools/StrataLint.sln", "--configuration", "Release", "--no-restore", "--warnaserror", "--verbosity", "normal",
             "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
-            "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
-        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root), steps.ToArray());
+            "-p:ProvideCommandLineArgs=true", "-p:EmitCompilerGeneratedFiles=true", "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
+        var built = clock.GetTimestamp();
+        var products = CommonBuildOutputs.Collect(root);
+        var collected = clock.GetTimestamp();
+        var record = CommonExecutionEvidence.SealBuild(root, candidate!, products, steps.ToArray());
+        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.RootPath + "/build-cost.json", new {
+            restore_seconds = clock.GetElapsedTime(started, restored).TotalSeconds,
+            native_seconds = clock.GetElapsedTime(restored, built).TotalSeconds,
+            collect_seconds = clock.GetElapsedTime(built, collected).TotalSeconds,
+            seal_seconds = clock.GetElapsedTime(collected).TotalSeconds,
+            build_seconds = clock.GetElapsedTime(started).TotalSeconds });
+        return record;
     }
 
     private void Engineering(string? buildRound)
@@ -106,6 +180,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         foreach (var project in new[] { "tools/tests/CompileFailProof/CompileFailProof.csproj", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj" })
             Step("restore-" + Path.GetFileNameWithoutExtension(project), "dotnet", ["restore", project, "--locked-mode"]);
         Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--all", "--build-round", build.Round]);
+        var testCoverage = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath);
+        if (testCoverage.Projects.All(project => project.Executed == 0))
+            steps[^1] = steps[^1] with { Status = "reused" };
         var first = Step("selftest-first", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
         var second = Step("selftest-second", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
         if (first != second) throw new StageFailure(1, "selftest outputs differ");
@@ -175,7 +252,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         return result.Text;
     }
 
-    private (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null)
+    internal (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null,
+        IDictionary<string, string?>? environment = null)
     {
         var clock = timeProvider ?? TimeProvider.System;
         if (deadlineCancellation.IsCancellationRequested) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
@@ -191,10 +269,17 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             if (timeout <= TimeSpan.Zero) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
         }
         var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false };
-        start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+        if (environment is not null)
+        {
+            start.Environment.Clear();
+            foreach (var pair in environment) start.Environment[pair.Key] = pair.Value;
+        }
+        NormalizeEnvironment(start.Environment);
         if (stage != "build" && Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var arg in arguments) start.ArgumentList.Add(arg);
+        if (arguments.Contains("--build-round", StringComparer.Ordinal))
+            AffectedEnvironmentObservation.Write(root, "runner-launch", launched: start.Environment);
         var startedAt = clock.GetTimestamp();
         double Elapsed() => clock.GetElapsedTime(startedAt).TotalMilliseconds;
         using var process = Process.Start(start) ?? throw new IOException("cannot start " + executable);

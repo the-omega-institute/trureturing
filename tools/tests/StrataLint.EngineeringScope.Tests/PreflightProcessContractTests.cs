@@ -49,6 +49,7 @@ public sealed class PreflightProcessContractTests
         var result = fixture.Preflight("push", "");
         Assert.Equal(0, result.Exit);
         Assert.Equal(new[] { "engineering", "current" }, fixture.Calls());
+        Assert.Contains("cache=" + fixture.Git("rev-parse", "--show-toplevel").Trim() + "/.lake/test-cache", result.Text, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -66,6 +67,7 @@ public sealed class PreflightProcessContractTests
         var result = fixture.Preflight("pr", basis);
         Assert.True(result.Exit == 0, result.Text);
         Assert.Equal(new[] { "engineering", "current", "delta" }, fixture.Calls());
+        Assert.Contains("cache=" + fixture.Git("rev-parse", "--show-toplevel").Trim() + "/.lake/test-cache", result.Text, StringComparison.Ordinal);
         Assert.Contains("merged=yes", result.Text, StringComparison.Ordinal);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, "base-only")));
         Assert.Empty(fixture.Git("status", "--porcelain"));
@@ -150,6 +152,7 @@ public sealed class PreflightProcessContractTests
             Write("tools/scripts/ci-stage.sh", """
                 #!/bin/bash
                 printf '%s\n' "$1" >> "$CONTRACT_CALLS"
+                printf 'cache=%s\n' "$STRATALINT_TEST_CACHE_ROOT"
                 if [[ -f base-only && -f head-only ]]; then printf 'merged=yes\n'; fi
                 exit "${CONTRACT_EXIT:-0}"
                 """);

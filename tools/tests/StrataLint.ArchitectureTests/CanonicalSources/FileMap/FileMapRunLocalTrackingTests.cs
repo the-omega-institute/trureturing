@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Scribe;

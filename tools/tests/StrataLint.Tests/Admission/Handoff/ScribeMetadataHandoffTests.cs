@@ -38,8 +38,22 @@ public sealed class ScribeMetadataHandoffTests
             Directory.CreateDirectory(Path.Combine(producer, "build/ci"));
             File.WriteAllText(Path.Combine(producer, log), "executed\n");
             var candidate = CommonExecutionEvidence.Candidate(producer);
-            CommonExecutionEvidence.SealBuild(producer, candidate, [], CommonExecutionEvidence.BuildSteps
+            // Synthetic native inventory: the handoff references the build owner's
+            // package files and must not produce another package tree.
+            var references = new List<string>();
+            foreach (var (id, version, assembly) in new[] {
+                         ("xunit.extensibility.core", "2.9.3", typeof(Xunit.FactAttribute).Assembly.Location),
+                         ("xunit.assert", "2.9.3", typeof(Xunit.Assert).Assembly.Location),
+                         ("xunit.abstractions", "2.0.3", typeof(Xunit.Abstractions.ITest).Assembly.Location) })
+            {
+                var path = CommonBuildOutputs.PackagesPath + "/" + id + "/" + version + "/lib/netstandard2.0/" + Path.GetFileName(assembly);
+                Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(producer, path))!);
+                File.WriteAllBytes(Path.Combine(producer, path), System.IO.File.ReadAllBytes(assembly));
+                references.Add(path);
+            }
+            CommonExecutionEvidence.SealBuild(producer, candidate, references, CommonExecutionEvidence.BuildSteps
                 .Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
+            Assert.False(Directory.Exists(Path.Combine(producer, "build/ci/compile-metadata/packages")));
             var materials = CommonExecutionEvidence.ValidateBuild(producer).Materials;
             Assert.Contains(materials, item => item.Path.EndsWith("/xunit.core.dll", StringComparison.Ordinal));
             var commit = Git(producer, "rev-parse", "HEAD");
@@ -82,7 +96,7 @@ public sealed class ScribeMetadataHandoffTests
             foreach (var path in inputs(ScribeProjectCompilationContext.Create(snapshot.Files.Values
                          .Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray(),
                          new Dictionary<string, string>(), new HashSet<string>()).Projects))
-                Assert.True(platform.Contains(path) || path.StartsWith(Path.Combine(recipient, "build/ci/compile-metadata/packages")
+                Assert.True(platform.Contains(path) || path.StartsWith(Path.Combine(recipient, CommonBuildOutputs.PackagesPath)
                     + Path.DirectorySeparatorChar, StringComparison.Ordinal), path);
             var calls = new List<string>();
             ProcessOutput Evaluate(string host, IEnumerable<string> arguments, string root, TimeSpan timeout,
@@ -134,7 +148,7 @@ public sealed class ScribeMetadataHandoffTests
         try
         {
             var failure = Assert.Throws<InvalidDataException>(() => CommonCompileMetadata.Export(root,
-                Snapshot(true), (id, version) => Path.Combine(root, "empty-packages", id, version)));
+                Snapshot(true), []));
             Assert.Contains("compile metadata package is unavailable", failure.Message, StringComparison.Ordinal);
             Assert.False(File.Exists(Path.Combine(root, CommonCompileMetadata.ManifestPath)));
         }

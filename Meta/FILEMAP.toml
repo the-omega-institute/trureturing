@@ -406,6 +406,17 @@ verified_by = ["StrataLint"]
 artifact_id = "none"
 runtime_disposition = "run-local"
 
+# dotnet_producer.seed_targets emits the SDK adapter and its import driver.
+[[files]]
+pattern = "build/judge-seed/*.targets"
+kind = "generated"
+admission_plane = "judge"
+produced_by = "automation"
+consumed_by = ["AffectedTestPlan", "dotnet"]
+verified_by = ["AffectedTestPlan", "automation"]
+artifact_id = "none"
+runtime_disposition = "run-local"
+
 [[files]]
 pattern = "build/lean-cache/**"
 kind = "generated"
@@ -727,3 +738,14 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+
+# Reviewed ExplicitValues contract: compiled values and local providers, with
+# pinned ordinary .NET/xUnit semantics. Known ambient effects remain execute.
+[[test_input_owners]]
+project = "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+contract = "ExplicitValues"
+version = 1
+producer = "StrataLint.Engine.ScribeExecutionDependencies.Derive"
+verifier = "StrataLint.EngineeringScope.AffectedTestCache.ValidateSource"
+runner = "StrataLint.EngineeringScope.Program.RunTests"
+runner_contract = "StandardXunitInline-v1"

@@ -10,7 +10,11 @@ internal sealed record ScribeCompilationProject(
     string AssemblyName,
     IReadOnlyList<string> ProjectReferences,
     IReadOnlyList<ScribeTrackedSource> Sources,
-    string? PackageLockContent);
+    string? PackageLockContent)
+{
+    internal CSharpCommandLineArguments? NativeArguments { get; init; }
+    internal IReadOnlyList<string>? NativeReferences { get; init; }
+}
 
 internal sealed record ScribeProjectCompilation(
     string ProjectPath,
@@ -23,6 +27,8 @@ internal sealed record ScribeProjectCompilationContext(
     IReadOnlyList<ScribeCompilationProject> Projects,
     IReadOnlySet<string> ProductionAssemblies)
 {
+    internal Action<string, CSharpCompilation>? ObserveCompilation { get; init; }
+
     internal Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? DescribeMetadataInputs { get; init; }
 
     internal static ScribeProjectCompilationContext Create(
@@ -132,8 +138,19 @@ internal static class ScribeProjectCompilationBuilder
     {
         if (context is null) return BuildSynthetic(governedSources);
 
-        var governedByPath = governedSources.ToDictionary(static source => source.Path, StringComparer.Ordinal);
         var projectsByPath = context.Projects.ToDictionary(static project => project.Path, StringComparer.Ordinal);
+        var governedByPath = governedSources.GroupBy(static source => source.Path, StringComparer.Ordinal)
+            .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
+        TestMapSource? Governed(string project, string path)
+        {
+            if (!governedByPath.TryGetValue(path, out var candidates)) return null;
+            // Scribe partition keys are semantic labels; native execution uses
+            // project addresses to disambiguate compiler inputs shared by projects.
+            // An excluded native project can share inputs without governing them.
+            if (projectsByPath[project].NativeReferences is not null)
+                return candidates.SingleOrDefault(source => source.PartitionKey == project);
+            return candidates.Length == 1 ? candidates[0] : candidates.Single(source => source.PartitionKey == project);
+        }
         var compilations = new Dictionary<string, CSharpCompilation>(StringComparer.Ordinal);
         var degradations = new Dictionary<string, ScribeMetadataDegradation?>(StringComparer.Ordinal);
         var visiting = new HashSet<string>(StringComparer.Ordinal);
@@ -158,10 +175,13 @@ internal static class ScribeProjectCompilationBuilder
             var projectReferences = TransitiveProjectReferences(project, projectsByPath)
                 .Select(reference => compilations[reference.Path].ToMetadataReference());
             var trees = project.Sources
-                .Select(source => CSharpSyntaxTree.ParseText(source.Content, ParseOptions, source.Path))
-                .Append(ImplicitUsingsTree(project.Path))
+                .Select(source => CSharpSyntaxTree.ParseText(source.Content, project.NativeArguments?.ParseOptions ?? ParseOptions, source.Path))
+                .Concat(project.NativeArguments is null ? [ImplicitUsingsTree(project.Path)] : Array.Empty<SyntaxTree>())
                 .ToList();
-            var resolution = ScribeMetadataReferenceResolver.Resolve(project, context.DescribeMetadataInputs);
+            var resolution = project.NativeReferences is null
+                ? ScribeMetadataReferenceResolver.Resolve(project, context.DescribeMetadataInputs)
+                : new ScribeMetadataReferenceResolution(project.NativeReferences.Select(path =>
+                    (MetadataReference)MetadataReference.CreateFromFile(path)).ToArray(), null);
             if (resolution.Degradation?.NeedsXunitAttributeFallback == true)
             {
                 trees.Add(XunitAttributeFallbackTree(project.Path));
@@ -173,9 +193,10 @@ internal static class ScribeProjectCompilationBuilder
                 project.AssemblyName,
                 trees,
                 references,
-                CompilationOptions());
+                project.NativeArguments?.CompilationOptions ?? CompilationOptions());
             visiting.Remove(path);
             compilations.Add(path, compilation);
+            context.ObserveCompilation?.Invoke(path, compilation);
             degradations.Add(path, resolution.Degradation);
             return compilation;
         }
@@ -185,8 +206,8 @@ internal static class ScribeProjectCompilationBuilder
         {
             var compilation = compilations[project.Path];
             var sources = compilation.SyntaxTrees
-                .Where(tree => governedByPath.ContainsKey(tree.FilePath))
-                .Select(tree => (governedByPath[tree.FilePath], tree))
+                .Where(tree => Governed(project.Path, tree.FilePath) is not null)
+                .Select(tree => (Governed(project.Path, tree.FilePath)!, tree))
                 .ToArray();
             var projectSources = project.Sources.ToDictionary(static source => source.Path, StringComparer.Ordinal);
             var callableSources = compilation.SyntaxTrees
@@ -195,7 +216,7 @@ internal static class ScribeProjectCompilationBuilder
                 {
                     var source = projectSources[tree.FilePath];
                     return (
-                        governedByPath.GetValueOrDefault(source.Path)
+                        Governed(project.Path, source.Path)
                             ?? new TestMapSource(source.Path, source.Content, project.Path),
                         tree);
                 })

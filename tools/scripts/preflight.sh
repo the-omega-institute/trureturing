@@ -72,6 +72,8 @@ if [[ -f "$ROOT/tools/scripts/lib/resource-observation-lib.sh" ]]; then
   source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
   resource_observe preflight-start "$CANDIDATE" || true
 fi
+# Isolated PR candidates share only optional successful computation memory.
+export STRATALINT_TEST_CACHE_ROOT="${STRATALINT_TEST_CACHE_ROOT:-$ROOT/.lake/test-cache}"
 cd "$CANDIDATE"
 for stage in engineering current; do
   /bin/bash tools/scripts/ci-stage.sh "$stage"

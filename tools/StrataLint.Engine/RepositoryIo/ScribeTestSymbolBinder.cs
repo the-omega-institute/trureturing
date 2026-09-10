@@ -33,6 +33,7 @@ internal sealed class ScribeBoundCallable
         InspectionNodes = inspectionNodes;
     }
 
+    internal IMethodSymbol? Symbol { get; set; }
     internal string Path { get; }
     internal string PartitionKey { get; }
     internal string TypeName { get; }
@@ -229,6 +230,7 @@ internal static partial class ScribeTestSymbolBinder
             model,
             semanticModels,
             InspectionNodes(declaration));
+        callable.Symbol = normalized;
         callablesBySymbol.Add(normalized, callable);
         symbolsByCallable.Add(callable, normalized);
         AddCompileTimeInputUniverses(normalized, callable.CompileTimeInputUniverses);

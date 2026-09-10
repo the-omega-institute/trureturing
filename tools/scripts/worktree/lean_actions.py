@@ -17,7 +17,7 @@ from lean_cache_release import cache_guard
 from cache_material import files, sha
 
 LAYERS = ("dependency", "project", "report")
-ALL_LAYERS = (*LAYERS, "judge")
+ALL_LAYERS = (*LAYERS, "judge", "tests")
 
 
 def actions_keys(root: pathlib.Path) -> dict:
@@ -44,7 +44,8 @@ def actions_keys(root: pathlib.Path) -> dict:
               # A compilation seed attests production, never engineering/current checks.
               "judge_save_allowed": writer_allowed and os.environ.get("STRATALINT_BUILD_SUCCEEDED") == "true"}
     paths = {"dependency": ".lake/packages", "project": ".lake/build",
-             "report": ".lake/report-cache", "judge": ".judge-binaries"}
+             "report": ".lake/report-cache", "judge": ".judge-binaries",
+             "tests": ".lake/test-cache/" + partition_path(root)}
     for layer, path in paths.items():
         prefix = f"lean-{layer}-v3-{revision}-{system}-{machine}-"
         result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
