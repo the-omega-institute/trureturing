@@ -61,6 +61,8 @@ def main():
     chunks.extend(check_bucket_negatives(repository, directory))
     from Certificate.publication_fixtures import prepare_publication, check_publication_negatives
     prepare_publication(repository, directory)
+    from tests.derivational_fixture import check_noninterference
+    derivational = check_noninterference(repository, directory)
     negatives.extend(check_publication_negatives(repository, directory))
     from Structure.fixtures import check_structure
     structure = check_structure(repository, directory)
@@ -70,6 +72,7 @@ def main():
               "observed_theorem_absent_from_publication": True,
               "artifact_determinism": True, "partial_certified_denominator": "passed",
               "structure_fixtures": structure}
+    result["derivational_noninterference"] = derivational
     (directory / "fixtures.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result), flush=True)
 
