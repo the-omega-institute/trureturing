@@ -8,7 +8,7 @@ internal sealed class HarmonicGammaTailDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/GoldenResource/HarmonicGammaTail.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/nist2026asymptotic");
+        LibraryNoteRef.Create("D5/L/Analytic/nist2026asymptotic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A signed estimate for the harmonic-logarithmic tail gives a rational upper bound for Euler's constant.",

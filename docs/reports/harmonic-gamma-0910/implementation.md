@@ -155,8 +155,8 @@ directly, so the new dependency list is empty. The existing Robin module state w
 matches the brief's statement_id. Its identity is a downstream contextual anchor, not a
 claimed proof dependency. The earlier honest limitation about its coarse hgamma remains.
 
-Provenance implementation: `Library/Arith/nist2026asymptotic.md` supplies the supported
-L-plane note `D5/L/Arith/nist2026asymptotic`. The uniform classical result uses
+Provenance implementation: `Library/Analytic/nist2026asymptotic.md` supplies the supported
+L-plane note `D5/L/Analytic/nist2026asymptotic`. The uniform classical result uses
 `FromLiterature`; the newly calculated named corollary uses `FromRepo(Source)` to attribute
 its derivation to that same literature basis without pretending the source printed N=128.
 No unsupported-note obstacle and no unreferenced fallback occurred; no suspected-novel label.
@@ -181,3 +181,21 @@ The public declaration statement identities are:
 markers, the literature citation, and the corollary's repository derivation were checked.
 Only this new Blueprint mirror is a tracked emission change. Local gate receipt follows
 when complete.
+
+
+## Gate capacity correction
+
+The first full `make gate BASE=248a800843acf89ed184074d66a8d577fc028f99` completed
+its engineering build, full tests (760 s), selftest, and Lean report phases successfully,
+but rejected the two new files at their initial locations: `Library/Arith` and
+`docs/reports` each contained 49 files, exceeding the admission limit of 48 (SL-003).
+The inner gate exited 1; make returned 2. SL-032 passed. The Scribe source also has the
+ordinary SL-022 protected-surface classification.
+
+Moved only this attempt's new literature note to the existing `Library/Analytic` bucket
+and this report to `docs/reports/harmonic-gamma-0910/implementation.md`; updated the
+LibraryNoteRef accordingly. No mathematical declaration or proof changed. The original
+full-gate log is retained as `harmonic-gamma-gate-initial.log`. The subsequent gate rerun
+uses the supported `GATE_ARGS=--skip-engineering`, preserving the already successful full
+engineering receipt while rerunning report validation, Scribe, and admission for the
+corrected paths. No harness or policy changes were made.
