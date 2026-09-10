@@ -63,9 +63,10 @@ Vacuity evidence is shared by definitional equality of each arena's occurrence b
 | Same root with the two expected-error guards absent | 1 | Exactly two IE-C007 errors: IC full/without 0/0 and OI full/without 24/24; no proof errors. |
 | `make lean-report` | 0 | Fresh canonical report includes the new root; all its proofs are closed. |
 | `make emit` | 0 | Emits `Blueprint/D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.md` from its scribe source. |
-| `make gate` | ASSUMED-UNVERIFIED | Capacity correction awaits verification; the reports occupy a lane subdirectory. |
+| `make gate` | 2 | Engineering tests/self-tests pass; the flat report layout triggers SL-003 (50 direct files, limit 48). |
+| `make gate GATE_ARGS=--skip-engineering` | 0 | The corrected lane subdirectory passes admission, SL-004, SL-008, and SL-031; the supported option reuses the passed engineering run. SL-022 is the ordinary accepted Blueprint annotation. |
 
-The gate classifies the Blueprint source with its ordinary SL-022 annotation; this is distinct from judge/content partition, which passes. The flat `docs/reports` directory exceeds its admission capacity with two additional files, so this lane keeps its report and inventory in one subdirectory.
+The gate classifies the Blueprint source with its ordinary SL-022 annotation; this is distinct from judge/content partition, which passes. The report and inventory occupy `docs/reports/regprog-m3-0910/`, leaving 48 direct files in `docs/reports`.
 
 The negative finding refutes positive shared-arena admission for these five registrations with the fixed canonical readouts. Reuse reduces bridge authorship, while identical peer kernels prevent unique capture. Any change of semantic arena or readouts belongs to a separately justified change of Γ. Further registrations stop at the five-pick budget; independent blind review and global inventory completeness are ASSUMED-UNVERIFIED.
 
