@@ -8364,6 +8364,9 @@ IE-C045--IE-C047 仍为 reserved/open，不进入三表，也不得由现有 com
 
 IE-C048 的 `reason` 取 `missing_witness`／`invalid_witness`／`signature_mismatch`／`outside_domain`；
 IE-C049 的 `primitive` 标识 signature 内的 readout index 或 anchor，`slot_support` 是 exact generated support。
+sensitivity 见证缺失或未通过 kernel 检查时，`primitive` 取首个无有效见证的 readout index 或 anchor，
+`slot_support` 取已通过 kernel 检查的见证所覆盖的 primitive 集合（checked support），不是语义 exact support；
+判官不枚举 realization 补全语义支持，两个字段不得为 `null`。
 IE-C050 的 `reason` 取 `forbidden_dependency`／`incomplete_closure`；`provenance_closure` 是 readout
 定义的传递常量闭包，按 canonical sort 输出，闭包不完整时为 `null`。
 
