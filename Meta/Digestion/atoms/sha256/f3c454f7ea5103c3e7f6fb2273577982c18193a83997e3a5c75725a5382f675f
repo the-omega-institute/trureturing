@@ -1,0 +1,43 @@
+### 43.1 定义：全记录域、严格标签与分离基（FT-D1）
+
+在经典集合论中，固定记录空间 $P=\mathbb Q^2$ 与任意测试集 $R\subseteq\mathbb Q^2$；$R$ 可以为空、有限或无限。每个 $p=(a,b)$ 的两个坐标均为任意有理数，没有独立的 $b\ne0$ 条件；每个实际测试 $r=(c,d)\in R$ 也允许 $d=0$。未加标签的部分函数恰有定义域
+
+$$
+\Delta_R=\{((a,b),(c,d))\in P\times R:b+d\ne0\},
+\qquad G_R:\Delta_R\longrightarrow\mathbb Q,\qquad
+G_R(p,r)=\frac{a+c}{b+d}.
+$$
+
+令 $\operatorname{Tag}(\mathbb Q)=\{\bot\}\sqcup\{\operatorname{ok}(z):z\in\mathbb Q\}$，其中 $\operatorname{ok}$ 单射且其像与 $\bot$ 不交，特别是 $\bot\ne\operatorname{ok}(0)$。总标签函数为
+
+$$
+F:P\times\mathbb Q^2\longrightarrow\operatorname{Tag}(\mathbb Q),\qquad
+F_p(c,d)=
+\begin{cases}
+\bot,&b+d=0,\\
+\operatorname{ok}\!\left(\frac{a+c}{b+d}\right),&b+d\ne0.
+\end{cases}
+$$
+
+所有 $P\times R$ 配对在唯一守卫之前都属于本抽象接口；实际观察映射、实际像及等价关系定义为
+
+$$
+O_R:P\longrightarrow\operatorname{Tag}(\mathbb Q)^R,\qquad
+O_R(p)(r)=F_p(r),\qquad I_R=O_R[P],
+$$
+
+$$
+p\sim_R p'\ \Longleftrightarrow\
+\forall r\in R,\ F_p(r)=F_{p'}(r),\qquad
+\operatorname{Sep}(S,R)\ \Longleftrightarrow\
+S\subseteq R\ \land\ \sim_S=\sim_R,
+$$
+
+$$
+\tau(R)=\min\{\lvert S\rvert:S\subseteq R,\ \operatorname{Sep}(S,R)\}.
+$$
+
+$R$ 先固定，一组 $S$ 必须对全部 $p,p'\in\mathbb Q^2$ 同时有效，不能随被比较记录对改变。由于 $S=R$ 总分离且 $R$ 可数，$\tau(R)$ 为非负整数或 $\aleph_0$。$I_R$ 是实际观察像，不声称等于完整函数积；$\operatorname{Sep}$ 只保持等价核，不承诺每个记录在两测试集上的结果集合相等。
+
+这是独立定义的抽象守卫消费者；其运算为 $\frac{a+c}{b+d}$，与普通分数加法 $\frac{ad+cb}{bd}$ 不同。丰富分数坐标的整数或非零限制不属于本定义。这里的记录量词是全 $P$，测试量词是固定 $R$，不以存在某个具体记录生成映射为前提；受限实际像、相关联合域及额外约束的专门化假设见 FT-A1。$\operatorname{Sep}$ 的定义只涉及此消费者的等价核，更丰富操作语言的同余另有保持这些操作的数学条件。
+

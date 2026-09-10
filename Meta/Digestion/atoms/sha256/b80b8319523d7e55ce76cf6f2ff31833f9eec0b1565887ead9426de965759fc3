@@ -1,0 +1,8 @@
+### 43.17 命题：有限维交叉乘表达式与守卫极点（FT-P11）
+
+交叉乘表达式位于三维仿射函数空间，但其零点不能记住“恰有一侧失败”的守卫位置；有限维的代数表达式不蕴含普遍有限观察基，也不蕴含测试张成仿射包就足以分离。
+
+证明。FT-P1 的交叉乘表达式是 $c,d,1$ 的线性组合；异分母时，其零点集仍包含两个必须排除的守卫点。FT-P2 的 $P_x$ 族将所有成功值固定为 $u$，只让失败极点移动；FT-CE1 给出仿射包相同而删点后不分离的四点见证，FT-P4 给出非水平无限线集无有限基的结论。这正是有限维代数未能给出普遍有限观察基的原因。测试必须来自固定的实际 $R$，不能为取得三点上界而添加 $R$ 外的测试。
+
+本命题所用独立、基与维数的线性代数背景见 Gilbert Strang，MIT 18.06 Linear Algebra（Spring 2010），[Lecture 9: Independence, basis, and dimension](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/resources/lecture-9-independence-basis-and-dimension/)。
+

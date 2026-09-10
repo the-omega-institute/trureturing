@@ -1,0 +1,16 @@
+### 43.6 命题：非共线测试集与无限例外（FT-P5）
+
+若 $R$ 含非共线三点，则 $\sim_R$ 是恒等核；有限 $S\subseteq R$ 分离当且仅当 $S$ 含非共线三点，且 $\tau(R)=3$。对任意（也可无限）$S\subseteq R$，准确条件为
+
+$$
+\operatorname{Sep}(S,R)\ \Longleftrightarrow\
+\bigl(S\text{ contains a noncollinear triple}\bigr)
+\ \lor\
+\bigl(\exists u,v\in\mathbb Q:\ S\subseteq L_{u,v}
+\ \land\ \lvert L_{u,v}\setminus S\rvert\le1\bigr).
+$$
+
+证明。FT-P1 说明不同记录的等值域包含于一条线，不能包含非共线三点。因此任何这样的三点都给恒等核，包含它们的 $R$ 也如此。这给三测试的充分性。反向，分离此 $R$ 就要求 $\sim_S$ 恒等。空 $S$、单点 $S$ 均非恒等（单点可用 FT-P3 水平见证在唯一点上的相等）；至少两点且水平时有非平凡的 $B_h$。至少两点且非水平共线时，FT-P2 给恒等当且仅当缺失极点至多一个。若 $S$ 不共线，任取两点及该直线外一点便得到非共线三点，故上式穷尽全部可能，并且两种允许情形都充分。
+
+有限的共线 $S$ 不可能是整条非水平有理线或其去一点，故有限 $S$ 的条件简化为包含非共线三点，最小值至少三、至多三。
+
