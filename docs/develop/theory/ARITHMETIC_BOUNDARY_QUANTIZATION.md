@@ -7187,9 +7187,9 @@ Thus \(A_0\ge R\). Substitution into the displayed bound for \(B\) proves
 \]
 For \(k=2\), the negative-high-shift case is impossible because \(u+t\ge0\).
 If \(S=0\) or \(\epsilon=0\), nonnegativity forces \(\xi=0\), \(u=t=B=0\).
-Nothing was divided by either of these quantities. The historical single
-symbolic audit concerns only the displayed polynomial identity; the radius
-connection and nonnegative square-root premises are the analytical proof above.
+Nothing was divided by either of these quantities. The polynomial identity
+yields the weighted bound only with the actual-radius estimates and the
+nonnegative square-root and square-comparison premises established above.
 
 **34.8 The mixed-objective increment is nonnegative and bounded.** For
 \(x\ge m+T>0\),
@@ -7441,14 +7441,14 @@ family has \(A=B_{\rm cut}=\log1058400\) by 32.3, so this exact witness
 applies. It uses neither an unproved mass/tail sign nor a claim of
 prime-lattice attainability for the translated box.
 
-**34.19 Recovery of the published three-dimensional constants.** For
+**34.19 Recovery of the three-dimensional constants.** For
 \(k=3\), all \(a_i=0\), and \(T_{\min}=\log2\), one has
 \[
 m=0,\qquad d_{\min}=1-\tfrac12=\tfrac12,\qquad
 |e^T(G_\xi-G_0)|\le4\epsilon.
 \]
 The zero coordinate and \(0\le\xi_i\le\epsilon\) are as in 34.1.
-Use the separately published positive-width two-corner wider domains:
+Use the positive-width two-corner wider domains of the cited theorems:
 30.2 and 30.11 for \((\log2,\log3,\log5)\), and 31.2 and 31.13 for
 \((\log2,\log3,\log7)\). The baseline margins, closed radii and retained
 strict margins are exactly
@@ -7462,9 +7462,8 @@ strict margins are exactly
 \]
 Indeed \((\eta-\eta/2)d_{\min}/2=\eta/8\) in dimension three.
 Thus 34.16 recovers 30.16 and 31.17, including closed radius and
-\(T=\log2\) simultaneously. Their finite-node sign certificates are
-inherited facts, not re-executed or independently revalidated in this layer.
-Their strict-width and two-corner hypotheses remain in force.
+\(T=\log2\) simultaneously. The cited finite-node sign results retain
+their strict-width and two-corner hypotheses.
 Intersection with the original strict 5040 domain is legitimate because
 these particular baselines already hold on their respective wider domains.
 
@@ -7498,74 +7497,49 @@ radius boundary. A subsequent intersection with
 A baseline result limited to the old cutoff instead supports only
 inverse-image-covered slabs, such as the buffers of 34.17-34.18.
 
-The raw C47 response calls this open mass/tail obligation C45.
-That is its historical name: the original C45 and later C49 carriers
-failed, and the still-open full mathematical obligation is now carried
-by C51. No old flight is revived or relabeled. No C51 result is supplied
-or inferred here. Section 32's fixed \(T=0\), cutoff-restricted certificate
-and section 33's density order do not establish this wider-domain margin.
+The full wider-domain margin is an additional unproved hypothesis here.
+Section 32's fixed \(T=0\), cutoff-restricted certificate covers neither
+all translated heights nor every slab without the cutoff. Section 33's
+density order determines the fractional optimizer, but does not by itself
+bound the difference \(G=D-\Psi\). Neither establishes the required margin.
 
-**34.21 Proof attribution and preserved primary evidence.** The lower-support
+**34.21 Mathematical dependencies and classical references.** The lower-support
 theorem is reused from 27.4-27.5 and the envelope derivative signs from 26.5.
-The projection/distance and paired-nonnegative-increment method already
-appears in 30.12-30.15 and 31.14-31.16 within their stated three-dimensional
-domains. The arbitrary-\(k\) two-radius estimate, weighted displacement
-with its signed square comparison, and precise closed-margin/cutoff
-combination are the specialized repo-derived extension validated by C47.
+The projection/distance and paired-nonnegative-increment method appears in
+30.12-30.15 and 31.14-31.16 within their stated three-dimensional domains.
+The arbitrary-\(k\) two-radius estimate and signed weighted-displacement
+proof are given in 34.5-34.7; their closed-margin and cutoff consequences
+are proved in 34.15-34.18. Reuse of the three-dimensional sign theorems
+requires their particular steps and wider-domain hypotheses, as in 34.19.
 
 Triangle and reverse-triangle inequalities, elementary calculus and
-comparison of maxima over a common set are classical. For inherited
-literature evidence, 26.28 attests Boyd/Vandenberghe's
+comparison of maxima over a common set are classical. For norms, convexity
+and Jensen, see 26.28 and Boyd/Vandenberghe's
 [Convex functions](https://web.stanford.edu/class/ee364a/lectures/functions.pdf),
-slides 3.4 and 3.14 (PDF pages 6 and 16), for norms/convexity and Jensen;
-26.28 and 33.20 attest HKUST's
+slides 3.4 and 3.14 (PDF pages 6 and 16). For fractional knapsack, see
+26.28, 33.20 and HKUST's
 [Lecture 14](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf),
-PDF pages 4-7, for fractional knapsack. The latter locates the inherited
-interpretation of \(D\); this proof uses the full polytope directly.
-These are inherited source-attested references, not documents freshly
-retrieved by I18 and not literature proofs of this particular transfer theorem.
-No necessary new classical premise required an external query.
-The actual I18 literature work was bounded consultation of the pinned
-source and those recorded attributions; external retrievals and priority
-searches were zero. No novelty or priority claim is made.
+PDF pages 4-7. The latter gives the inherited interpretation of \(D\);
+the transfer proof compares the full feasible polytope directly.
+For the inherited price-formulation context only, see 33.20 and
+Boyd/Vandenberghe's
+[Duality](https://web.stanford.edu/class/ee364a/lectures/duality.pdf),
+PDF pages 14 and 21-23; no price-order premise is required here.
+These references provide the stated classical ingredients, not a
+literature proof of this particular arbitrary-dimensional transfer theorem.
 
-The completed previous-stage actual PRO primary is task
-192f8575-55cf-4bc0-b180-dd0589f9c31f, conversation conv_efec2f91277779d1,
-completed 2026-09-09T23:55:45.528Z, original envelope SHA256
-e5d84e0dc8c6935b329694f3cf278151543a4ce4460cf0e1d42d4371cd5ce822.
-Its task-observed display was 6/Pro: invocation-display evidence only,
-not hidden serving identity or independent model-family diversity.
-The [single report](../../reports/quantized-gh/dimension-general-transfer-0910.md)
-preserves the raw response as TEXT data, including etadmin and the
-historical C45 label, the exact symbolic program with final LF and SHA,
-and its original one-run receipt and preregistration.
-No historical mathematical certificate is executed by this implementation.
+**34.22 Domain of the transfer and limits of its sign consequences.** The
+perturbation estimate applies on the finite positive-support, one-corner
+domain of 34.1, including the boundary cases of 34.12-34.13. A strict
+negative-sign consequence additionally requires a baseline on every
+inverse-image slab specified in 34.15-34.18. The one-corner example in
+34.14 has \(G=0\), so the transfer estimate alone supplies no general
+all-grid negative-sign theorem. The full wider-domain 5040 margin needed
+in 34.20 remains an additional unproved hypothesis.
 
-**34.22 Implementation scope and remaining obligations.** This is the
-assigned Codex CLI I18 flight qgh0910-i18-dimension-general-transfer,
-attempt 1, retry budget 1, implementation stage, under the caller-pinned
-consensus-rnd:sshx 1.0.0-beta.42 skill and worker specification,
-with CLAUDE 5.11's repository overrides. It is repo-prior-exposed;
-there is no delegation, independent source-review vote, sterile-context
-or model-diversity claim. The layer consists of section 34, one report,
-and the canonical ingestion outputs, preserving the entire predecessor
-source prefix and all historical atoms, entries, reports and LF variants.
-The report records the one canonical ingest, complete new-unit and
-inherited-final-unit CAS coverage, and all observed whitespace diagnostics.
-Structural byte/hash/span checks are not mathematical theorem proofs.
-Implementation mathematical-code executions, numerical probes, searches
-and GPU dispatches are zero; the caller's original single symbolic
-execution belongs to its different historical stage.
-
-The theorem does not imply a general all-grid sign, sharp \(G\) constant,
-arbitrary nonzero-shape prime-lattice density, exact common prime
-translation, encoding-induced orthogonality, uniform unscaled negative
-margin, a new GH definition, an RH result or Lean/kernel certification.
-C51's full wider-domain 5040 margin remains open; pending C53 and C54
-results are not imported. The historical statement in 33.22 that C47 was
-unreturned describes that I17 handoff and is preserved unchanged.
-At this I18 handoff the changes are unstaged, the index is unchanged,
-and S23 has not been delivered. The caller owns sealing, public verification,
-independent review, ordinary gates and Git/PR delivery; final S23 delivery
-requires S22 MERGED. This finite implementation has no lifecycle or
-termination authority and does not end the standing continuous goal.
+The theorem does not imply a sharp \(G\) constant, arbitrary nonzero-shape
+prime-lattice density, exact common prime translation, encoding-induced
+orthogonality, a uniform unscaled negative margin, a new GH definition
+or an RH result. Continuous grid translations and actual prime-exponent
+points remain distinct domains; the stated perturbation bound does not
+establish arithmetic attainability of an arbitrary translated shape.

@@ -708,3 +708,320 @@ This placement repair adds no mathematics or review vote and leaves the
 conditional 5040 boundary intact. Changes are unstaged; caller sealing,
 independent review and ordinary gates remain ahead of delivery after S22 MERGED.
 No MERGED delivery or termination of the standing goal is asserted here.
+
+## I44 / C117 owned-body repair overlay
+
+This append supersedes the earlier current-reference descriptions only for
+this repair; every byte above remains the original I20 report, including
+I18 inventories, filenames, claims, corrections and execution observations.
+The current source is [ARITHMETIC_BOUNDARY_QUANTIZATION.md](../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md).
+The companion [migration map](theory-body-migration-s23-0911.json) resolves
+every current numbered span, all five archived originals, all historical
+table rows and all C47 nodes. It gives exact source/report reconstruction
+through I20 to I18. No old table is silently rewritten as current evidence.
+
+Only whole units 34.7, 34.19, 34.20, 34.21 and 34.22 are replaced. The
+mathematical expansion, radius and nonnegative prerequisites, both exact
+three-dimensional substitutions, all cited mathematical dependencies and
+the conditional four-dimensional calculation remain in the source.
+The 1/500 radius and strict 1/4000 margin still require the full wider-domain
+1/2000 baseline; the fixed-height certificate and density order do not
+supply it. The inherited price-formulation reference is retained with its
+context-only scope, alongside the two classical citations from old 34.21.
+
+Operational narration is retained in the exact original units below:
+34.7's symbolic-audit history; 34.19's certificate execution status;
+34.20's terminal C45/C49 carriers and transfer of the obligation to C51;
+34.21's I18 consultations, PRO task/display, source-attestation process,
+dates, hashes and raw-evidence preservation; and 34.22's implementation,
+ingestion, review, execution, kernel, index, publication and continuous-goal
+status. All such historical statements retain their original stage scope.
+The original C47 raw response, program, receipt and gate were not executed
+or edited. The historical etadmin correction and C45 label remain exact.
+
+This is flight qgh0911-i44-s23-owned-body-repair, attempt 1, retry budget 1,
+implementation only under pinned consensus-rnd:sshx 1.0.0-beta.42 and the
+current authoritative CLAUDE snapshot (286521 bytes, SHA256
+1377d4ce048d42dc40911bdb9a24bc5a69aa507c751913f54a0513d5930df592).
+The worker read that authority, agents/CONTEXT.md and the pinned skill/spec.
+The original S23 settlement remains architecture approve / quality reject /
+tests approve. This repair is implementation evidence with no independent
+review vote, new primary call, mathematical execution, certificate replay,
+candidate search, GPU dispatch, delegation or Git lifecycle action.
+No log or opaque log_ref content was opened.
+
+The complete inherited pure S19-S22 composition remains caller-owned work.
+Untouched material, including inherited 33.22 and the process wording in
+34.1 and 34.16, is preserved under the five-unit limit; this overlay makes
+no complete-volume pure-body or independent-approval claim. Fresh complete
+review, ordinary gates and ordered S19 through S26 delivery remain pending;
+S23 delivery requires S22 MERGED. C107/C108/C111/C114 are separate pending
+mathematical adoptions. No RH, kernel, delivery or goal completion follows.
+
+### Exact original whole-unit archive
+
+Each payload below is inert TEXT, archived once. Byte offsets in the map
+exclude labels and fences. Every terminal LF belongs to the payload;
+delimiter-only LF bytes are recorded separately as numeric counts. The
+five source spans are complete producer units, including their separators.
+
+#### Original 34.7
+
+~~~~~~~~text
+**34.7 Dimension-general weighted displacement with signs checked before squaring.**
+For the \(u,t\) in 34.5-34.6 define
+\[
+B=(k-1)|u-t|+|u+(k-1)t|.
+\]
+We prove \(B\le(k-1)\epsilon\). Since \(u\ge|t|\), the first absolute value is
+\(u-t\). If \(u+(k-1)t\ge0\), cancellation gives
+\[
+B=(k-1)(u-t)+u+(k-1)t=ku=S\le(k-1)\epsilon.
+\]
+Otherwise \(t<0\), and the second actual-radius bound gives
+\[
+B=(k-2)u-2(k-1)t
+\le\frac{(k-2)S+2\sqrt{(k-1)S(k\epsilon-S)}}k.
+\]
+Set
+\[
+A_0=k(k-1)\epsilon-(k-2)S,\qquad
+R=2\sqrt{(k-1)S(k\epsilon-S)}.
+\]
+Before comparing squares, \(k-2\ge0\) and \(S\le(k-1)\epsilon\) imply
+\[
+A_0\ge2(k-1)\epsilon\ge0,\qquad R\ge0.
+\]
+Direct polynomial expansion proves
+\[
+\begin{aligned}
+A_0^2-R^2
+&=k^2(k-1)^2\epsilon^2
+ -2k^2(k-1)\epsilon S+k^2S^2\\
+&=k^2\big(S-(k-1)\epsilon\big)^2\ge0.
+\end{aligned}
+\]
+Thus \(A_0\ge R\). Substitution into the displayed bound for \(B\) proves
+\[
+\boxed{(k-1)|L_\xi-L_0|+|H_\xi-H_0|\le(k-1)\epsilon.}
+\]
+For \(k=2\), the negative-high-shift case is impossible because \(u+t\ge0\).
+If \(S=0\) or \(\epsilon=0\), nonnegativity forces \(\xi=0\), \(u=t=B=0\).
+Nothing was divided by either of these quantities. The historical single
+symbolic audit concerns only the displayed polynomial identity; the radius
+connection and nonnegative square-root premises are the analytical proof above.
+
+~~~~~~~~
+
+#### Original 34.19
+
+~~~~~~~~text
+**34.19 Recovery of the published three-dimensional constants.** For
+\(k=3\), all \(a_i=0\), and \(T_{\min}=\log2\), one has
+\[
+m=0,\qquad d_{\min}=1-\tfrac12=\tfrac12,\qquad
+|e^T(G_\xi-G_0)|\le4\epsilon.
+\]
+The zero coordinate and \(0\le\xi_i\le\epsilon\) are as in 34.1.
+Use the separately published positive-width two-corner wider domains:
+30.2 and 30.11 for \((\log2,\log3,\log5)\), and 31.2 and 31.13 for
+\((\log2,\log3,\log7)\). The baseline margins, closed radii and retained
+strict margins are exactly
+\[
+(\eta,\epsilon_{\max},\gamma)
+=(1/60,1/480,1/120)\quad\text{for }(2,3,5),
+\]
+\[
+(\eta,\epsilon_{\max},\gamma)
+=(1/40,1/320,1/80)\quad\text{for }(2,3,7).
+\]
+Indeed \((\eta-\eta/2)d_{\min}/2=\eta/8\) in dimension three.
+Thus 34.16 recovers 30.16 and 31.17, including closed radius and
+\(T=\log2\) simultaneously. Their finite-node sign certificates are
+inherited facts, not re-executed or independently revalidated in this layer.
+Their strict-width and two-corner hypotheses remain in force.
+Intersection with the original strict 5040 domain is legitimate because
+these particular baselines already hold on their respective wider domains.
+
+~~~~~~~~
+
+#### Original 34.20
+
+~~~~~~~~text
+**34.20 The four-dimensional 5040 consequence remains conditional.** Take
+\[
+k=4,\qquad h=(\log2,\log3,\log5,\log7),\qquad
+a=(5\log2,3\log3,2\log5,2\log7)
+=(\log32,\log27,\log25,\log49),\qquad T_{\min}=0.
+\]
+These are the lower coordinates associated with ordinary exponents
+\((4,2,1,1)\) in 32.2-32.3; subsequent common translation is a continuous
+family. Here
+\[
+m=\log25,\qquad d_{\min}=24,\qquad
+|e^T(G_\xi-G_0)|\le3\epsilon/24=\epsilon/8.
+\]
+Only if a separate theorem establishes the full wider-domain bound
+\[
+e^TG_0<-1/2000
+\]
+for every finite \(T\ge0\) and every corresponding finite positive-width
+real slab containing two actual translated corners, without the fixed
+lower cutoff, does 34.16 imply
+\[
+0\le\epsilon\le1/500\quad\Longrightarrow\quad e^TG_\xi<-1/4000
+\]
+on that whole translated class. The calculation is
+\((1/2000-1/4000)\,24/3=1/500\); it includes \(T=0\) and the closed
+radius boundary. A subsequent intersection with
+\(\log1058400<M_0^\xi<M_1^\xi\) is then valid.
+A baseline result limited to the old cutoff instead supports only
+inverse-image-covered slabs, such as the buffers of 34.17-34.18.
+
+The raw C47 response calls this open mass/tail obligation C45.
+That is its historical name: the original C45 and later C49 carriers
+failed, and the still-open full mathematical obligation is now carried
+by C51. No old flight is revived or relabeled. No C51 result is supplied
+or inferred here. Section 32's fixed \(T=0\), cutoff-restricted certificate
+and section 33's density order do not establish this wider-domain margin.
+
+~~~~~~~~
+
+#### Original 34.21
+
+~~~~~~~~text
+**34.21 Proof attribution and preserved primary evidence.** The lower-support
+theorem is reused from 27.4-27.5 and the envelope derivative signs from 26.5.
+The projection/distance and paired-nonnegative-increment method already
+appears in 30.12-30.15 and 31.14-31.16 within their stated three-dimensional
+domains. The arbitrary-\(k\) two-radius estimate, weighted displacement
+with its signed square comparison, and precise closed-margin/cutoff
+combination are the specialized repo-derived extension validated by C47.
+
+Triangle and reverse-triangle inequalities, elementary calculus and
+comparison of maxima over a common set are classical. For inherited
+literature evidence, 26.28 attests Boyd/Vandenberghe's
+[Convex functions](https://web.stanford.edu/class/ee364a/lectures/functions.pdf),
+slides 3.4 and 3.14 (PDF pages 6 and 16), for norms/convexity and Jensen;
+26.28 and 33.20 attest HKUST's
+[Lecture 14](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf),
+PDF pages 4-7, for fractional knapsack. The latter locates the inherited
+interpretation of \(D\); this proof uses the full polytope directly.
+These are inherited source-attested references, not documents freshly
+retrieved by I18 and not literature proofs of this particular transfer theorem.
+No necessary new classical premise required an external query.
+The actual I18 literature work was bounded consultation of the pinned
+source and those recorded attributions; external retrievals and priority
+searches were zero. No novelty or priority claim is made.
+
+The completed previous-stage actual PRO primary is task
+192f8575-55cf-4bc0-b180-dd0589f9c31f, conversation conv_efec2f91277779d1,
+completed 2026-09-09T23:55:45.528Z, original envelope SHA256
+e5d84e0dc8c6935b329694f3cf278151543a4ce4460cf0e1d42d4371cd5ce822.
+Its task-observed display was 6/Pro: invocation-display evidence only,
+not hidden serving identity or independent model-family diversity.
+The [single report](../../reports/quantized-gh/dimension-general-transfer-0910.md)
+preserves the raw response as TEXT data, including etadmin and the
+historical C45 label, the exact symbolic program with final LF and SHA,
+and its original one-run receipt and preregistration.
+No historical mathematical certificate is executed by this implementation.
+
+~~~~~~~~
+
+#### Original 34.22
+
+~~~~~~~~text
+**34.22 Implementation scope and remaining obligations.** This is the
+assigned Codex CLI I18 flight qgh0910-i18-dimension-general-transfer,
+attempt 1, retry budget 1, implementation stage, under the caller-pinned
+consensus-rnd:sshx 1.0.0-beta.42 skill and worker specification,
+with CLAUDE 5.11's repository overrides. It is repo-prior-exposed;
+there is no delegation, independent source-review vote, sterile-context
+or model-diversity claim. The layer consists of section 34, one report,
+and the canonical ingestion outputs, preserving the entire predecessor
+source prefix and all historical atoms, entries, reports and LF variants.
+The report records the one canonical ingest, complete new-unit and
+inherited-final-unit CAS coverage, and all observed whitespace diagnostics.
+Structural byte/hash/span checks are not mathematical theorem proofs.
+Implementation mathematical-code executions, numerical probes, searches
+and GPU dispatches are zero; the caller's original single symbolic
+execution belongs to its different historical stage.
+
+The theorem does not imply a general all-grid sign, sharp \(G\) constant,
+arbitrary nonzero-shape prime-lattice density, exact common prime
+translation, encoding-induced orthogonality, uniform unscaled negative
+margin, a new GH definition, an RH result or Lean/kernel certification.
+C51's full wider-domain 5040 margin remains open; pending C53 and C54
+results are not imported. The historical statement in 33.22 that C47 was
+unreturned describes that I17 handoff and is preserved unchanged.
+At this I18 handoff the changes are unstaged, the index is unchanged,
+and S23 has not been delivered. The caller owns sealing, public verification,
+independent review, ordinary gates and Git/PR delivery; final S23 delivery
+requires S22 MERGED. This finite implementation has no lifecycle or
+termination authority and does not end the standing continuous goal.
+~~~~~~~~
+
+### I44 single-ingest result and fixed verification
+
+The finalized source was ingested exactly once with
+`make ingest BASE=d79a2cd3cd3d5881dce26df9cee8266de9ae61e7 SOURCE=arithmetic-boundary-quantization`.
+The invocation ran from 2026-09-10T21:07:53.459013+00:00 to
+2026-09-10T21:08:14.600066+00:00, exit 0, ordinal 1.
+It emitted five new whole-unit CAS objects and five new YAML bindings.
+There was no second ingest, subsequent source edit or manual canonical edit.
+The source remains 392486 bytes / 7545 LF, SHA256
+72c87c810126d23ea157a7687ba99768ecbd7e8a56720df8437d8f27289cb98f.
+The 18 unchanged owned units retain their established bindings; together
+with the five replacements they cover all 22 section-34 units and inherited
+33.22. The structural heading remains a separate byte span. Every current
+pair is checked against the whole source span and actual seven-line YAML:
+raw and normalized fingerprints equal cas_ref, with empty coverage and
+unresolved fields and no children or chains. The 24 prior pairs remain exact.
+Broad inherited objects retain the original passed inventory identities;
+no 32156-file or other historical-corpus rescan was performed.
+
+This table is the current five-unit overlay. Earlier inventory rows retain
+their historical source offsets, report address and canonical identities.
+Full paths and actual YAML identities are in the migration map.
+
+| Unit | Current source span | Bytes / LF / terminal LF bytes | Current CAS SHA256 | YAML SHA256 |
+| --- | --- | --- | --- | --- |
+| 34.7 | [374616,375946) | 1330 / 43 / 2 | 32d914ac75f2a980560e718053e45d4a6351bbdebc0b4975ee2a96951b522cb2 | 0d0c9cb715ae656dea22969d094e73f31f3ba42103c1fb024aa25532542a71ec |
+| 34.19 | [387427,388478) | 1051 / 26 / 2 | ced43801ef6fe0c85c41164817879b33033d1cc348a52bcab17b32a1a70e3705 | e1dddd25335677fa6273837adae729d81f80fd6278cd55f62af662d1d4551ea5 |
+| 34.20 | [388478,389969) | 1491 / 36 / 2 | 054323012000e2df623d411cab1b742099241072c3a5916c89eff48f56cbd751 | 685d1cef0f09d04a42511f23c5d933a3099dcbbb3443ce54c8f0513f3ad22136 |
+| 34.21 | [389969,391504) | 1535 / 25 / 2 | 74683a68fb84b18b5034af8e74f31aee8b78e90919f52f5f8bf6f53dfecfbf03 | f18e8ca624aa55b3e9a4abab5ad5626339c6ca8ee2a465efaa019aadec142ef5 |
+| 34.22 | [391504,392486) | 982 / 15 / 1 | de75ae2acaa7c9ca34d6ee910d58998de11d3d2c5c8778d53b253fbfdbf83ffa | 4f5146ea5e816720ac3df121d98153965c2492feca78c0f2316b83fe732b6009 |
+
+Tracked `git diff --check BASE --` exited 0. The ten new canonical files
+were checked separately using `git diff --no-index --check -- /dev/null PATH`:
+six exited 1 without diagnostics (five YAMLs and the final 34.22 CAS), and
+four exited 3 with the following producer EOF diagnostics. These actual
+nonzero statuses are preserved, not called exit 0 or silently normalized.
+
+| Unit | CAS line | Diagnostic | Actual exit |
+| --- | ---: | --- | ---: |
+| 34.7 | 43 | new blank line at EOF. | 3 |
+| 34.19 | 26 | new blank line at EOF. | 3 |
+| 34.20 | 36 | new blank line at EOF. | 3 |
+| 34.21 | 25 | new blank line at EOF. | 3 |
+
+These four complete source units end in two LF bytes; final 34.22 ends in
+one. All producer separators remain untouched. The original report prefix
+is exactly 64694 bytes with its original SHA256, and the five original
+whole-unit archives reconstruct the exact I20 source. Removing only the
+historical 13-byte source-link insertion recovers I18's source; removing
+only the 3637-byte I20 report append and 3-byte backlink insertion recovers
+I18's report. The seven raw payloads, all original table rows and errors
+remain byte-exact. Numeric terminal-LF counts never stand for booleans.
+
+The raw ingest streams are preserved as opaque attempt artifacts, identified
+in the structured receipt; they were not reopened as logs or used as hidden
+proof. Fixed verification consists only of byte/hash/span, JSON/YAML, Git
+scope/index and current-pair checks. No check failed except the disclosed
+producer EOF whitespace diagnostics; historical failed checks retain their
+original attribution. Initial large prerequisite displays were truncated
+and completed by bounded overlapping reads, without a missing authority span.
+The report and map final external identities belong in the result envelope;
+neither artifact includes its own recursive hash. Changes remain unstaged,
+HEAD and index unchanged. The original rejection and all pending predecessor,
+complete-review, ordinary-gate and delivery obligations above remain in force.
