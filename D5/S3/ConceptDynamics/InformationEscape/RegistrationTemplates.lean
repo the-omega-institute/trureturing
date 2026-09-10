@@ -7,7 +7,9 @@
    digest: Typed registration constructors generate primitive inventories and realization-dependent laws on explicit canonical arenas. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
-import Mathlib.Tactic.FinCases
+import D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
+import D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
+import Mathlib.Data.Fintype.Option
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -201,5 +203,125 @@ theorem contextSelectionLegacy (A : Arena) {Y Z : Type} [DecidableEq Y] [Decidab
   refine ⟨?_⟩
   simp only [contextSelectionArena, contextSelectionRealization,
     admit_readout_eq_true_iff P, admit_readout_eq_true_iff Q]
+
+open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
+open D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
+open D5.S3.ConceptDynamics.Sufficiency.MinimalPredictiveCompletionQuotient
+
+abbrev exactDesignSignature (X : Type) : PrimitiveSignature X where
+  Index := Fin 2
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  Output := fun _ => Bool
+  outputDecidableEq := fun _ => inferInstance
+  axis := fun _ => .cut
+  readoutAxisNotAnchor := by simp
+  AnchorIndex := Fin 0
+  anchorFintype := inferInstance
+  anchorDecidableEq := inferInstance
+
+def exactDesignRealization {X : Type} (f g : X → Bool) :
+    PrimitiveRealization (exactDesignSignature X) :=
+  ⟨fun i => if i = 0 then f else g, Fin.elim0⟩
+
+/-- Two individually insufficient readouts whose joint experiment is minimal. -/
+def exactDesignArena (A : Arena) : PrimitiveLawArena where
+  toArena := A
+  signature := exactDesignSignature A.State
+  Law := fun r =>
+    (∀ e : Bool, ¬ Function.Injective (fun x => if e then r.readout 1 x else r.readout 0 x)) ∧
+    Function.Injective (jointReadout (fun e : Bool => if e then r.readout 1 else r.readout 0)) ∧
+    ∀ selected : Finset Bool,
+      Function.Injective (jointReadout (fun e : {e // e ∈ selected} =>
+        if e.1 then r.readout 1 else r.readout 0)) → selected = {false, true}
+
+theorem exactDesignLegacy (A : Arena) (f g : A.State → Bool) :
+    LegacyPrimitiveRealization (exactDesignArena A)
+      ((∀ e : Bool, ¬ Function.Injective (fun x => if e then g x else f x)) ∧
+        Function.Injective (jointReadout (fun e : Bool => if e then g else f)) ∧
+        ∀ selected : Finset Bool,
+          Function.Injective (jointReadout (fun e : {e // e ∈ selected} =>
+            if e.1 then g else f)) → selected = {false, true})
+      (exactDesignRealization f g) := ⟨Iff.rfl⟩
+
+abbrev completionExchangeSignature (X Y : Type) [DecidableEq X] [DecidableEq Y] :
+    PrimitiveSignature X where
+  Index := Option Bool
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  Output | none => Y | some _ => X
+  outputDecidableEq := by intro i; cases i <;> infer_instance
+  axis | none => .cut | some _ => .flow
+  readoutAxisNotAnchor := by intro i; cases i <;> simp
+  AnchorIndex := Fin 0
+  anchorFintype := inferInstance
+  anchorDecidableEq := inferInstance
+
+def completionExchangeRealization {X Y : Type} [DecidableEq X] [DecidableEq Y]
+    (F G : X → X) (f : X → Y) : PrimitiveRealization (completionExchangeSignature X Y) where
+  readout | none => f | some false => F | some true => G
+  anchor := Fin.elim0
+
+/-- Completion-order obstruction; the unbounded completion operation is reused verbatim. -/
+def completionExchangeArena (A : Arena) (Y : Type) [DecidableEq Y] : PrimitiveLawArena := by
+  letI := A.stateDecidableEq
+  exact {
+    toArena := A
+    signature := completionExchangeSignature A.State Y
+    Law := fun r => ¬ Function.Commute (r.readout (some false)) (r.readout (some true)) ∧
+      ¬ KernelEquivalent
+        (predictiveProjection (r.readout (some false))
+          (predictiveProjection (r.readout (some true)) (r.readout none)))
+        (predictiveProjection (r.readout (some true))
+          (predictiveProjection (r.readout (some false)) (r.readout none))) }
+
+theorem completionExchangeLegacy (A : Arena) {Y : Type} [DecidableEq Y]
+    (F G : A.State → A.State) (f : A.State → Y) :
+    letI := A.stateDecidableEq
+    LegacyPrimitiveRealization (completionExchangeArena A Y)
+      (¬ Function.Commute F G ∧ ¬ KernelEquivalent
+        (predictiveProjection F (predictiveProjection G f))
+        (predictiveProjection G (predictiveProjection F f)))
+      (@completionExchangeRealization A.State Y A.stateDecidableEq _ F G f) := ⟨Iff.rfl⟩
+
+abbrev scopeTableSignature (X : Type) : PrimitiveSignature X where
+  Index := Fin 3
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  Output := fun _ => Bool
+  outputDecidableEq := fun _ => inferInstance
+  axis := fun _ => .admit
+  readoutAxisNotAnchor := by simp
+  AnchorIndex := Fin 0
+  anchorFintype := inferInstance
+  anchorDecidableEq := inferInstance
+
+def scopeTableRealization {X : Type} (P Q R : X → Prop)
+    [DecidablePred P] [DecidablePred Q] [DecidablePred R] :
+    PrimitiveRealization (scopeTableSignature X) where
+  readout | 0 => fun x => decide (P x) | 1 => fun x => decide (Q x) | 2 => fun x => decide (R x)
+  anchor := Fin.elim0
+
+/-- Three local scopes with matching marginals and no joint admitted state.
+Coordinates are explicit semantic input, not additional primitive readouts. -/
+def scopeTableArena (A : Arena) (first middle last : A.State → Bool) : PrimitiveLawArena where
+  toArena := A
+  signature := scopeTableSignature A.State
+  Law := fun r =>
+    (∀ b, (∃ x, r.readout 0 x = true ∧ middle x = b) ↔ (∃ x, r.readout 1 x = true ∧ middle x = b)) ∧
+    (∀ b, (∃ x, r.readout 0 x = true ∧ first x = b) ↔ (∃ x, r.readout 2 x = true ∧ first x = b)) ∧
+    (∀ b, (∃ x, r.readout 1 x = true ∧ last x = b) ↔ (∃ x, r.readout 2 x = true ∧ last x = b)) ∧
+    ¬ ∃ x, r.readout 0 x = true ∧ r.readout 1 x = true ∧ r.readout 2 x = true
+
+theorem scopeTableLegacy (A : Arena) (first middle last : A.State → Bool)
+    (P Q R : A.State → Prop) [DecidablePred P] [DecidablePred Q] [DecidablePred R] :
+    LegacyPrimitiveRealization (scopeTableArena A first middle last)
+      ((∀ b, (∃ x, P x ∧ middle x = b) ↔ (∃ x, Q x ∧ middle x = b)) ∧
+        (∀ b, (∃ x, P x ∧ first x = b) ↔ (∃ x, R x ∧ first x = b)) ∧
+        (∀ b, (∃ x, Q x ∧ last x = b) ↔ (∃ x, R x ∧ last x = b)) ∧
+        ¬ ∃ x, P x ∧ Q x ∧ R x) (scopeTableRealization P Q R) := by
+  refine ⟨?_⟩
+  simp only [scopeTableArena, scopeTableRealization,
+    admit_readout_eq_true_iff P, admit_readout_eq_true_iff Q, admit_readout_eq_true_iff R]
 
 end D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates

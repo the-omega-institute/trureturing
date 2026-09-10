@@ -220,4 +220,99 @@ example : context_parameters_can_select_distinct_fixed_points.__information_unit
       context_parameters_can_select_distinct_fixed_points).Statement := rfl
 end Context
 
+section Static
+open D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign
+open InformationEscapeArenas.StaticExactExperimentDesign
+def staticRealization := exactDesignRealization (fun x : Fin 3 => decide (x = 1)) (fun x => decide (x = 2))
+theorem static_bridge : LegacyPrimitiveRealization staticExactExperimentArena
+    StaticExactDesignStatement staticRealization :=
+  exactDesignLegacy staticExactExperimentArena.toArena _ _
+example : (exactDesignArena staticExactExperimentArena.toArena).toArena = staticExactExperimentArena.toArena := rfl
+example : ∀ x y, staticRealization.toPrimitiveBundle.agrees x y ↔
+    InformationEscapeRealizations.StaticExactExperimentDesign.staticExactExperimentRealization.toPrimitiveBundle.agrees x y := by decide
+theorem static_nondegenerate : staticExactExperimentArena.toArena.Nondegenerate := by decide
+def staticEnumeration : Arena.StateEnumeration staticExactExperimentArena.toArena :=
+  staticExactExperimentArena.__state_enumeration
+theorem static_lawSensitive : staticExactExperimentArena.Law staticRealization ∧
+    ¬ staticExactExperimentArena.Law (exactDesignRealization (fun _ => false) (fun _ => false)) := by
+  refine ⟨static_bridge.equivalence.mp static_exact_design, ?_⟩
+  intro h
+  apply (by decide : (0 : Fin 3) ≠ 1)
+  apply h.2.1
+  funext e
+  cases e <;> rfl
+example : ¬ staticRealization.toPrimitiveBundle.agrees (0 : Fin 3) 1 := by decide
+register_information_theorem static_exact_design in staticExactExperimentArena
+  primitives staticRealization.toPrimitiveBundle realization static_bridge
+example : static_exact_design.__information_unit.Statement =
+    (InformationEscapeRealizations.StaticExactExperimentDesign.static_exact_design_realization.toTheoremUnit
+      static_exact_design).Statement := rfl
+end Static
+
+section Completion
+open D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
+open InformationEscapeArenas.CommutingCompletionExchange
+def completionTemplate := completionExchangeRealization counterexampleF counterexampleG counterexampleReadout
+def completionRealization : PrimitiveRealization completionSignature where
+  readout | .flowF => completionTemplate.readout (some false)
+          | .flowG => completionTemplate.readout (some true) | .cut => completionTemplate.readout none
+  anchor := Fin.elim0
+theorem completion_bridge : LegacyPrimitiveRealization commutingCompletionArena
+    CommutativityNecessaryStatement completionRealization :=
+  ⟨(completionExchangeLegacy commutingCompletionArena.toArena counterexampleF counterexampleG counterexampleReadout).equivalence⟩
+example : (completionExchangeArena commutingCompletionArena.toArena Bool).toArena = commutingCompletionArena.toArena := rfl
+example : ∀ x y, completionTemplate.toPrimitiveBundle.agrees x y ↔
+    InformationEscapeRealizations.CommutingCompletionExchange.commutingCompletionRealization.toPrimitiveBundle.agrees x y := by decide
+theorem completion_nondegenerate : commutingCompletionArena.toArena.Nondegenerate := by decide
+def completionEnumeration : Arena.StateEnumeration commutingCompletionArena.toArena :=
+  commutingCompletionArena.__state_enumeration
+theorem completion_lawSensitive : commutingCompletionArena.Law completionRealization ∧
+    ¬ commutingCompletionArena.Law ⟨(fun i _ => completionRealization.readout i .d), Fin.elim0⟩ := by
+  refine ⟨completion_bridge.equivalence.mp commutativity_hypothesis_is_necessary, ?_⟩
+  intro h
+  exact h.1 (fun _ => rfl)
+example : ¬ completionTemplate.toPrimitiveBundle.agrees FourState.a FourState.b := by decide
+register_information_theorem commutativity_hypothesis_is_necessary in commutingCompletionArena
+  primitives completionRealization.toPrimitiveBundle realization completion_bridge
+example : commutativity_hypothesis_is_necessary.__information_unit.Statement =
+    (InformationEscapeRealizations.CommutingCompletionExchange.commutativity_hypothesis_is_necessary_realization.toTheoremUnit
+      commutativity_hypothesis_is_necessary).Statement := rfl
+end Completion
+
+section Gluing
+open D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction
+open InformationEscapeArenas.LocalLawGluingObstruction
+def gluingTemplate := scopeTableRealization
+  (fun s : Bool × Bool × Bool => s.1 = s.2.1) (fun s => s.2.1 = s.2.2) (fun s => s.1 ≠ s.2.2)
+def gluingRealization : PrimitiveRealization localLawGluingSignature where
+  readout | .admit01 => gluingTemplate.readout 0 | .admit12 => gluingTemplate.readout 1
+          | .admit02 => gluingTemplate.readout 2
+  anchor := Fin.elim0
+theorem gluing_bridge : LegacyPrimitiveRealization localLawGluingArena
+    LocalLawGluingStatement gluingRealization := by
+  refine ⟨Iff.trans ?_ (scopeTableLegacy localLawGluingArena.toArena
+    (fun s => s.1) (fun s => s.2.1) (fun s => s.2.2)
+    (fun s => s.1 = s.2.1) (fun s => s.2.1 = s.2.2) (fun s => s.1 ≠ s.2.2)).equivalence⟩
+  simp only [LocalLawGluingStatement, sameLaw, differentLaw, Set.ext_iff, Set.mem_image, Set.mem_ofPred_eq]
+  dsimp [localLawGluingArena, Arena.ofFintype]
+  simp [Bool.exists_bool, Prod.exists]
+example : (scopeTableArena localLawGluingArena.toArena
+    (fun s => s.1) (fun s => s.2.1) (fun s => s.2.2)).toArena = localLawGluingArena.toArena := rfl
+example : ∀ x y, gluingTemplate.toPrimitiveBundle.agrees x y ↔
+    InformationEscapeRealizations.LocalLawGluingObstruction.localLawGluingRealization.toPrimitiveBundle.agrees x y := by decide
+theorem gluing_nondegenerate : localLawGluingArena.toArena.Nondegenerate := by decide
+def gluingEnumeration : Arena.StateEnumeration localLawGluingArena.toArena := localLawGluingArena.__state_enumeration
+theorem gluing_lawSensitive : localLawGluingArena.Law gluingRealization ∧
+    ¬ localLawGluingArena.Law ⟨(fun _ _ => true), Fin.elim0⟩ := by
+  refine ⟨gluing_bridge.equivalence.mp compatible_local_laws_can_lack_global_state, ?_⟩
+  intro h
+  exact h.2.2.2 ⟨(false, false, false), rfl, rfl, rfl⟩
+example : ¬ gluingTemplate.toPrimitiveBundle.agrees (false, false, false) (false, false, true) := by decide
+register_information_theorem compatible_local_laws_can_lack_global_state in localLawGluingArena
+  primitives gluingRealization.toPrimitiveBundle realization gluing_bridge
+example : compatible_local_laws_can_lack_global_state.__information_unit.Statement =
+    (InformationEscapeRealizations.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state_realization.toTheoremUnit
+      compatible_local_laws_can_lack_global_state).Statement := rfl
+end Gluing
+
 end D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
