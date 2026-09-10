@@ -78,3 +78,18 @@ donor=/Users/chronoai/trureturing；完整日志 /tmp/gibbsvar-cache.log。
 迹代数已接入仓内熵分解；目前候选尚在编译修复，未声称 kernel 通过。
 route 实测返回 `D5/S3/Quantum/Divergence/GibbsVariationalIdentity.lean`，generality=G，utility=none。
 全部声明为任意有限非空指标类型的一般算子结果，不属于有界枚举、检查器、数值归约或认证实例。
+
+- https://arxiv.org/pdf/1505.07835 status=200, bytes=1536088, sha256=055b7441287bccc7ff27a3a76363eac9344e2dd047db5142c6cd5ff4574d2498
+
+## Kernel 证明检查点
+
+热树 `lake env lean D5/S3/Quantum/Divergence/GibbsVariationalIdentity.lean` EXIT=0。
+主恒等式与 H=0 伴随式的公理检查均只有 propext、Classical.choice、Quot.sound；
+无 sorry、私 axiom、native_decide。实际定义复用仓内 DensityState，故 ρ 可为任意半正定归一态；
+Gibbs 参考态另证正定，所需正定 ρ 子域自然包含其中。
+检索后的判形调整：谱对数候选见证已由 mathlib 提供，不主张 content；
+模块采用 `proof_shape: bind-only`、`escape_witness: null`、
+`admission_basis: rule-11-upstream-wrapper`。具体上游为 CFC.log_smul'、CFC.log_exp
+和仓内 quantum_relative_entropy_eq_neg_entropy_sub_cross；必要性为 atom (二) 的
+Gibbs 归一参考态与现有 DensityState/熵 API 之间尚缺的接口。
+完整 make 门与冻结待后续记录。

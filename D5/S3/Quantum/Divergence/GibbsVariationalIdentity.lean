@@ -39,7 +39,7 @@ private theorem posDef_of_strictly_positive {A : CStarMatrix n n ℂ}
   have hn : 0 ≤ CStarMatrix.ofMatrix.symm A :=
     map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm hA.nonneg
   apply (Matrix.nonneg_iff_posSemidef.mp hn).posDef_iff_isUnit.mpr
-  exact hA.isUnit.map CStarMatrix.ofMatrixRingEquiv.symm.toMonoidHom
+  exact hA.isUnit.map (CStarMatrix.ofMatrixRingEquiv (n := n) (A := ℂ)).symm.toMonoidHom
 
 /-- The partition function of a Hermitian matrix is strictly positive. -/
 theorem partition_function_pos (H : CStarMatrix n n ℂ) (hH : IsSelfAdjoint H) :
@@ -78,7 +78,9 @@ theorem log_gibbs_state (H : CStarMatrix n n ℂ) (hH : IsSelfAdjoint H) :
   change CFC.log ((partitionFunction H)⁻¹ • exp H) = _
   erw [CFC.log_smul' (A := CStarMatrix n n ℂ) (exp H) (inv_pos.mpr (partition_function_pos H hH))
     (exp_strictly_positive H hH), CFC.log_exp H hH, Real.log_inv]
-  simp [Algebra.algebraMap_eq_smul_one, sub_eq_add_neg, add_comm]
+  simp only [Algebra.algebraMap_eq_smul_one, sub_eq_add_neg, add_comm]
+  exact congrArg (H + ·)
+    (neg_smul (Real.log (partitionFunction H)) (1 : CStarMatrix n n ℂ))
 
 /-- The Gibbs variational identity in nats. It holds for every density state, in particular
 for every positive definite density matrix, even when it does not commute with `H`. -/
@@ -104,6 +106,7 @@ theorem gibbs_variational_identity (H : CStarMatrix n n ℂ) (hH : IsSelfAdjoint
   rw [hcross]
   ring
 
+omit [Nonempty n] in
 /-- At zero Hamiltonian the partition function is the dimension. -/
 theorem partition_function_zero :
     partitionFunction (0 : CStarMatrix n n ℂ) = Fintype.card n := by
