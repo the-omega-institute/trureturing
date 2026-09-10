@@ -115,14 +115,15 @@ nonexistent `ZMod.eq_zero_or_eq_one` name. These were repaired using explicit
 Mathlib coefficient rewrites and a private kernel `decide` on `ZMod 2`.
 The file-level hot-cache compilation now exits 0 and proves `defect_f_zero`
 without `sorry` or added axioms. This is an unbounded structural lemma, not
-a finite-check progress claim; the target theorem is still pending.
+a finite-check progress claim. At that early checkpoint the target theorem
+was still pending; it is proved at the next checkpoint below.
 
 Next checkpoint: both public theorems `generating_coeff_pair` and
 `a393867_odd` compile (file-level EXIT=0), with `#print axioms` reporting only
 `propext`, `Classical.choice`, and `Quot.sound` for each. The main theorem
 uses `generating_coeff_pair` through `paired_derivative` and
 `log_mod_two_identity`; the paired result is on the live derivation path.
-Project build, report, emission, content checks, and freezing remain pending.
+The subsequent project, report, emission, content, and freeze receipts follow.
 
 Formal project gate: `make lean` EXIT=0, wall time 403.526 seconds on this
 macOS worktree. `LEAN_CACHE` status=present, method=none, stamp_miss=null,
@@ -154,6 +155,17 @@ Markdown checks; Describe reports `red=0`, and KaTeX reports
 delta (no projection JSON or producer change). The offline DOI observations
 concern repository library notes; they do not constitute online verification
 or a failed check.
+
+`make deposit-uncovered` with the exact base above and the final theorem GID:
+EXIT=0, 83.949 seconds. It reused the same canonical report, passed
+`deposit-header-check`, emitted, and ran `ledger-align --add` with
+`added=1 changed=0 conflicts=0`. The terminal receipt is
+`PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED ... reason=NO_ATOM`.
+New module state pin:
+`sha256:8d8e0580a33519efbae105858590a5ef7cebfcd05aa73156de1e4cde70e31bdd`.
+Accepted v5 event:
+`75306b440b9877089c4b3d32c9a6bb102782b818296b410e8c61b6cc8311d810`.
+Only this new module was frozen; no atom or theory volume was created.
 
 ### Elaborated dependency query
 
