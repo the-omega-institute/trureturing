@@ -698,3 +698,139 @@ status. Caller retains staging/seal, public verification, independent review
 and ordinary canonical publication/CI ownership; final S25 delivery requires
 S24 MERGED first. No donor/cache rebuild or predecessor worktree inspection
 is owed by the reported donor_behind_base 7. The standing goal remains active.
+
+
+## S25-owned body migration archive (I39 / C110)
+
+This appendix records the complete original units 36.38, 36.39 and 36.40 exactly once. The active source retains the mathematical content of 36.38 and 36.39 at those addresses; all operational, retrieval, worker, model, retry, hash, ingestion, review, delivery and handoff material is archived here. Address 36.40 is permanently reserved outside the active theory body because its original unit is wholly operational. The inherited body and earlier owned migrations remain separate obligations; this archive does not certify whole-book purity, independent approval, or ordered MERGED delivery.
+
+### Original whole unit 36.38 (bytes [480046,482456), SHA256 6affd5090f83b7aa120ebfff418b5af3d8e764ed3ce89f77b3bde043145f57d5)
+
+~~~text
+**36.38 Classical inputs, specialized paper boundaries and actual access limits.**
+Existence and uniqueness of normalized regular Haar measure, the complex
+Stone-Weierstrass theorem, unique prime factorization and elementary integer
+linear algebra are classical inputs. The classical closed-subgroup framework
+was attributed by C67 to the real Lie-group theorem recalled in Helge
+Glöckner's *Non-Lie subgroups in Lie groups over local fields of positive
+characteristic*. The needed torus-specific annihilator, rational tangent,
+finite-component and Haar-chart conclusions are proved in 36.2-36.5.
+C67 attributes the distribution context to Tom Meyerovitch,
+*Well-distribution of Polynomial maps on locally compact groups*,
+arXiv:2210.01429v2, Proposition 3.2 and Lemma 5.3. The stated homomorphism
+result uses the **closure** of the image. The required specialized uniform
+character and discontinuous-observable arguments are proved in 36.11-36.12.
+The complete-family multiplicity, boundary, counting, volume, baseline and
+application arguments are repo-derived paper deductions, not novelty claims.
+The scoped sign inputs 30.16 and 31.17 and conditional transfer input 34.20
+are inherited repo-derived paper results, not classical \(G\)-sign theorems
+or Lean/kernel admissions.
+
+All following access facts are **C67-worker-reported**, not I24 or caller
+independent retrieval. C67 reports retrieving Meyerovitch's v2 PDF and
+examining printed pages 8 and 11 with screenshots, retrieving Glöckner's
+arXiv abstract, and seeing only a lecture listing on a Raghuram course page.
+The listing was not treated as a proof source. A Tao author-site Smith-normal-
+form search and an attempted MIT Etingof lecture PDF returned Internal Error;
+neither supports a premise. C67 reports opening both supplied project-source
+addresses at immutable d79a2cd3cd3d5881dce26df9cee8266de9ae61e7 and focused
+checks of sections 30, 31 and 34, not a whole-volume audit, byte-hash check,
+checkout inspection, review-status inquiry or merge-status check. Missing
+URLs, hashes and screenshot/selector evidence are not invented. Raw citation
+fragments such as arXiv+1 and GitHub+1 remain untouched in the inert payload.
+I24 consulted the supplied raw proof and this local pinned predecessor's
+relevant statements, with zero new external accesses and zero certificate
+replays; these checks do not independently recertify earlier signs.
+
+~~~
+
+### Original whole unit 36.39 (bytes [482456,484462), SHA256 4e256cb56ce3d714ce3f56d36ea2d8126ac65236e0c5949f7baaf63dbed2e951)
+
+~~~text
+**36.39 Primary identity, unconditional settlement and remaining obligations.**
+The supplied terminal actual-PRO C67 task is
+4abf944a-5964-4f3c-8fda-45ffeb1d77fc, flight
+qgh0910-pro-full-near-balanced-tube-counting, caller attempt 1/retry budget 0.
+Its exact raw response has 39985 bytes and 119 LF bytes, SHA256
+b882817054914d14c1bf13e1fa48bc5087534c5c8b6a04704ace04a0c44b38a9,
+and no terminal LF. The supplied task-observed 6/Pro label is display evidence,
+not hidden serving telemetry. C67 itself had no independent invocation-specific
+selector observation or serving-identity evidence. Configured/requested labels
+do not supply it; no model-diversity or sterile-prior claim is made. C67 used
+the complete C64 response as previous-stage mathematical context, not as an
+independent review vote. Its raw log_ref remains opaque and is never opened.
+
+The fixed-width full-family theorem, null faces, finite strict/closed correction,
+reference-invariant coefficient, two-prime specialization, smooth-family ratio,
+integer-baseline translation and zero-width classification have the full
+paper proofs above. No unresolved premise for those unconditional statements
+is concealed. Particular elementary or numerical coefficients for \(k\ge3\)
+may require additional information about \(H\); no procedure deciding all
+reciprocal-logarithm relations, discrepancy rate, shrinking-width estimate or
+uniform comparison over changing prime lists is supplied. C53, C54, C56 and
+C61 keep their separate broader scopes. In particular 36.35-36.36 retain the
+missing 5040 wider-domain baseline margin as conditional; no general-prime or
+arbitrary-shape \(G\) sign is proved. GH remains the user's undefined label.
+Counting actual boxes and comparing these upper bounds produce no new RH
+equivalence, generalized-GH definition, RH theorem or RH progress. There is
+no novelty, priority, exhaustive literature audit, independent-review verdict,
+Lean/kernel-frozen or MERGED claim. The standing research goal remains active.
+
+~~~
+
+### Original whole unit 36.40 (bytes [484462,487402), SHA256 73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35)
+
+~~~~text
+**36.40 Implementation, report and canonical handoff.** This is the sole Codex
+CLI I24 implementation flight qgh0910-i24-full-tube-counting, attempt 1/retry
+budget 1, under consensus-rnd:sshx 1.0.0-beta.42 SKILL.md and
+CODEX_WORKER_SPEC.md, with CLAUDE 5.11 and the explicit no-delegation override.
+Work target: /Users/auricstudio/trureturing-qgh-full-tube; branch:
+lane/math/quantized-gh-full-tube-0910; immutable BASE and starting HEAD:
+e3c946d63039999549b4bf47f33d255854456560. Every one of the predecessor's
+432403 source bytes and 8304 LF bytes is preserved, SHA256
+09702761d0d445ab798d54d6a1d26394394aa330e219400617ea46373871dc71.
+All historical CAS/YAML/report bytes, partial/table atoms and terminal-LF
+variants retain their original identities. This layer adds section 36,
+the [single full-family proof and provenance report](../../reports/quantized-gh/full-near-balanced-tube-counting-0910.md),
+and actual canonical output from exactly one invocation on the finished source:
+~~~text
+make ingest BASE=e3c946d63039999549b4bf47f33d255854456560 SOURCE=arithmetic-boundary-quantization
+~~~
+The report links back to this source, embeds the entire exact raw C67 response
+as inert tilde-fenced text with its delimiter-only LF separately accounted,
+maps every primary field to complete numbered proof units, and records current
+whole-CAS/YAML spans including the inherited 35.30 LF extension. Actual emitted
+children/chains, concatenation evidence, missing bytes and whitespace outcomes
+are reported as observed, never reconstructed by manual canonical edits.
+
+This worker is repo-prior-exposed and exercises no delegation, oracle launch,
+independent-review or lifecycle authority. Other worktrees/live targets, caller
+transcripts, task registries, worker envelopes, peer results and logs/log_ref
+referents are excluded; the explicitly supplied C67 response is the permitted
+previous-stage primary exception. New mathematical programs, sampled orbits,
+symbolic computation, exponent/prime/candidate enumeration, CPU candidate
+generation, historical certificate/test/ingest/pilot/fixed-xi replay, GPU/runtime
+access, broad builds, Lean/cache warmup, tool/frozen edits and Git/PR mutation
+are zero. Structural byte/span/JSON/link checks and the one canonical make
+orchestration are not mathematical computation or independent proof validation.
+The caller-reported donor_behind_base 7 with matching cache pin records
+unmerged predecessors, not a request to inspect a donor or rebuild Lean.
+
+At this I24 handoff the changes are unstaged and not independently reviewed;
+this describes the handoff, not later status. Caller sealing, public byte
+verification, independent review and ordinary canonical PR/CI gates remain
+required. Final S25 delivery must follow S24 MERGED. Ingestion is not Lean
+absorption, independent approval, MERGED delivery or completion of the standing
+goal. No second ingest or manual canonical repair is authorized here.
+~~~~
+
+The three fenced payloads above are inert archival byte strings. Removing the fence delimiters and section labels recovers each original unit exactly. The mathematical 36.38 and 36.39 paragraphs retained in the active body are mapped to their original spans; their removed operational paragraphs are recoverable only from the corresponding full-unit archives. Unit 36.40 has no active theorem or placeholder.
+
+## I40 report/map repair note (C112)
+
+This append-only note records the two representation repairs applied to the I39 candidate. For archive 36.40, the exact 2,940-byte payload remains unchanged (old report span [103144,106084), SHA256 73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35). Its payload contains a line-start three-tilde run at old byte 104235 and no run longer than three; the outer opener and closer are therefore four-tilde lines. In the repaired report the exact payload is [103145,106085), the inner run is at 104236, and the outer lines are `~~~~text` and `~~~~`. Removing this note, replacing those two four-tilde lines by the original three-tilde lines, and undoing the one-byte opener shift recovers the complete I39 report byte-for-byte: 106498 bytes, SHA256 60e1d3943749ea59f9ca07b4060bff994c626a897b0735a1353945be2dfd4c85. No raw C67 byte, inner fence, source byte, canonical byte, or command was rewritten.
+
+The companion map now carries the complete C67 leaf/table binding. Its leaf convention is RFC 6901 JSON pointers (including escaped keys and array indices), and every raw conclusion leaf is assigned to its current mathematical proof unit, its exact inert original-unit archive, and/or the exact raw-primary field as applicable. The table has 40 rows, 99 path occurrences, 89 unique leaves, zero unknown paths and zero missing leaves. The map's own hash is intentionally bound externally in the I40 result to avoid a recursive self-hash.
+
+The six non-map changed files (source, report, two atom files and two YAML files) are bound by exact bytes/SHA256 outside that self-reference; the two YAML records retain their parsed raw_sha256, normalized_sha256, cas_ref, empty coverage_gids and empty unresolved_subitems. The new36.38 atom's no-index whitespace check exit 3 with its preserved blank-at-EOF diagnostic remains distinct from the three other addition-only exit 1 results without diagnostics; tracked diff --check exit 0 was not treated as an all-file pass. This is a report/map-only fidelity repair: no ingest, mathematical evaluator, historical scan or replay occurred. Inherited full-body composition, independent review, conditional C61 baseline, CI/MERGED and the standing research goal remain open.

@@ -1,0 +1,3987 @@
+{
+  "schema": "theory-body-migration-s25-0911-v1",
+  "flight": "qgh0911-i39-s25-owned-body-migration",
+  "attempt": 1,
+  "stage": "implementation",
+  "verdict": "no-verdict-required",
+  "scope": "C110 S25-owned body migration only",
+  "source": {
+    "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+    "base": "7ff447a0520a4ac5e6b923d5ebb78f3e14afc8ec",
+    "original_bytes": 487402,
+    "original_sha256": "db909da51b30f89c0e7d349d17e8589a3582b66589632d10826ade5f85031bf0",
+    "unchanged_prefix_bytes": 480046,
+    "unchanged_prefix_sha256": "832e4d9a3421cf4ac54205ed17e98cc3bbd535465c917da5565db6c7c660225b",
+    "current_bytes": 482519,
+    "current_sha256": "04253c70aa13d8c61161d2429cbed2a6a1b86fc4051261f75613bb289f751334",
+    "current_prefix_matches_original": true
+  },
+  "report": {
+    "path": "docs/reports/quantized-gh/full-near-balanced-tube-counting-0910.md",
+    "old_prefix_bytes": 97663,
+    "old_prefix_sha256": "b95a1a682ac403c9505478b6854c6a1d05995d431d429d45725715ea6ece3547",
+    "current_bytes": 108759,
+    "current_sha256": "f241d91137b693d61be30a74f954bdb14e2d952723c8b1ed421b072f86d03713",
+    "prefix_matches": true,
+    "raw_payload_interval_is_prefix_stable": true
+  },
+  "raw_primary": {
+    "report_span": [
+      17040,
+      57025
+    ],
+    "bytes": 39985,
+    "sha256": "b882817054914d14c1bf13e1fa48bc5087534c5c8b6a04704ace04a0c44b38a9",
+    "terminal_lf": false,
+    "occurrences": 1
+  },
+  "original_units": [
+    {
+      "address": "36.1",
+      "original_source_span": [
+        432502,
+        434088
+      ],
+      "bytes": 1586,
+      "sha256": "f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+        "normalized_sha256": "sha256:f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+        "cas_ref": "sha256:f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b.yaml",
+        "atom_bytes": 1586
+      }
+    },
+    {
+      "address": "36.2",
+      "original_source_span": [
+        434088,
+        435259
+      ],
+      "bytes": 1171,
+      "sha256": "ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+        "normalized_sha256": "sha256:ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+        "cas_ref": "sha256:ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297.yaml",
+        "atom_bytes": 1171
+      }
+    },
+    {
+      "address": "36.3",
+      "original_source_span": [
+        435259,
+        436353
+      ],
+      "bytes": 1094,
+      "sha256": "57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+        "normalized_sha256": "sha256:57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+        "cas_ref": "sha256:57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28.yaml",
+        "atom_bytes": 1094
+      }
+    },
+    {
+      "address": "36.4",
+      "original_source_span": [
+        436353,
+        438266
+      ],
+      "bytes": 1913,
+      "sha256": "4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+        "normalized_sha256": "sha256:4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+        "cas_ref": "sha256:4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f.yaml",
+        "atom_bytes": 1913
+      }
+    },
+    {
+      "address": "36.5",
+      "original_source_span": [
+        438266,
+        439529
+      ],
+      "bytes": 1263,
+      "sha256": "05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+        "normalized_sha256": "sha256:05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+        "cas_ref": "sha256:05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383.yaml",
+        "atom_bytes": 1263
+      }
+    },
+    {
+      "address": "36.6",
+      "original_source_span": [
+        439529,
+        440716
+      ],
+      "bytes": 1187,
+      "sha256": "5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+        "normalized_sha256": "sha256:5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+        "cas_ref": "sha256:5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904.yaml",
+        "atom_bytes": 1187
+      }
+    },
+    {
+      "address": "36.7",
+      "original_source_span": [
+        440716,
+        441720
+      ],
+      "bytes": 1004,
+      "sha256": "3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+        "normalized_sha256": "sha256:3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+        "cas_ref": "sha256:3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554.yaml",
+        "atom_bytes": 1004
+      }
+    },
+    {
+      "address": "36.8",
+      "original_source_span": [
+        441720,
+        443169
+      ],
+      "bytes": 1449,
+      "sha256": "8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+        "normalized_sha256": "sha256:8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+        "cas_ref": "sha256:8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa.yaml",
+        "atom_bytes": 1449
+      }
+    },
+    {
+      "address": "36.9",
+      "original_source_span": [
+        443169,
+        444303
+      ],
+      "bytes": 1134,
+      "sha256": "ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+        "normalized_sha256": "sha256:ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+        "cas_ref": "sha256:ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3.yaml",
+        "atom_bytes": 1134
+      }
+    },
+    {
+      "address": "36.10",
+      "original_source_span": [
+        444303,
+        445400
+      ],
+      "bytes": 1097,
+      "sha256": "9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+        "normalized_sha256": "sha256:9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+        "cas_ref": "sha256:9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4.yaml",
+        "atom_bytes": 1097
+      }
+    },
+    {
+      "address": "36.11",
+      "original_source_span": [
+        445400,
+        446522
+      ],
+      "bytes": 1122,
+      "sha256": "4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+        "normalized_sha256": "sha256:4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+        "cas_ref": "sha256:4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e.yaml",
+        "atom_bytes": 1122
+      }
+    },
+    {
+      "address": "36.12",
+      "original_source_span": [
+        446522,
+        447969
+      ],
+      "bytes": 1447,
+      "sha256": "9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+        "normalized_sha256": "sha256:9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+        "cas_ref": "sha256:9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6.yaml",
+        "atom_bytes": 1447
+      }
+    },
+    {
+      "address": "36.13",
+      "original_source_span": [
+        447969,
+        449144
+      ],
+      "bytes": 1175,
+      "sha256": "1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+        "normalized_sha256": "sha256:1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+        "cas_ref": "sha256:1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab.yaml",
+        "atom_bytes": 1175
+      }
+    },
+    {
+      "address": "36.14",
+      "original_source_span": [
+        449144,
+        450429
+      ],
+      "bytes": 1285,
+      "sha256": "201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+        "normalized_sha256": "sha256:201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+        "cas_ref": "sha256:201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce.yaml",
+        "atom_bytes": 1285
+      }
+    },
+    {
+      "address": "36.15",
+      "original_source_span": [
+        450429,
+        451378
+      ],
+      "bytes": 949,
+      "sha256": "d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+        "normalized_sha256": "sha256:d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+        "cas_ref": "sha256:d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c.yaml",
+        "atom_bytes": 949
+      }
+    },
+    {
+      "address": "36.16",
+      "original_source_span": [
+        451378,
+        452799
+      ],
+      "bytes": 1421,
+      "sha256": "79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+        "normalized_sha256": "sha256:79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+        "cas_ref": "sha256:79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b.yaml",
+        "atom_bytes": 1421
+      }
+    },
+    {
+      "address": "36.17",
+      "original_source_span": [
+        452799,
+        453868
+      ],
+      "bytes": 1069,
+      "sha256": "9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+        "normalized_sha256": "sha256:9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+        "cas_ref": "sha256:9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29.yaml",
+        "atom_bytes": 1069
+      }
+    },
+    {
+      "address": "36.18",
+      "original_source_span": [
+        453868,
+        455111
+      ],
+      "bytes": 1243,
+      "sha256": "370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+        "normalized_sha256": "sha256:370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+        "cas_ref": "sha256:370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803.yaml",
+        "atom_bytes": 1243
+      }
+    },
+    {
+      "address": "36.19",
+      "original_source_span": [
+        455111,
+        456280
+      ],
+      "bytes": 1169,
+      "sha256": "ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+        "normalized_sha256": "sha256:ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+        "cas_ref": "sha256:ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7.yaml",
+        "atom_bytes": 1169
+      }
+    },
+    {
+      "address": "36.20",
+      "original_source_span": [
+        456280,
+        457549
+      ],
+      "bytes": 1269,
+      "sha256": "ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+        "normalized_sha256": "sha256:ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+        "cas_ref": "sha256:ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707.yaml",
+        "atom_bytes": 1269
+      }
+    },
+    {
+      "address": "36.21",
+      "original_source_span": [
+        457549,
+        458828
+      ],
+      "bytes": 1279,
+      "sha256": "e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+        "normalized_sha256": "sha256:e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+        "cas_ref": "sha256:e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5.yaml",
+        "atom_bytes": 1279
+      }
+    },
+    {
+      "address": "36.22",
+      "original_source_span": [
+        458828,
+        459578
+      ],
+      "bytes": 750,
+      "sha256": "9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+        "normalized_sha256": "sha256:9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+        "cas_ref": "sha256:9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d.yaml",
+        "atom_bytes": 750
+      }
+    },
+    {
+      "address": "36.23",
+      "original_source_span": [
+        459578,
+        460948
+      ],
+      "bytes": 1370,
+      "sha256": "6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+        "normalized_sha256": "sha256:6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+        "cas_ref": "sha256:6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a.yaml",
+        "atom_bytes": 1370
+      }
+    },
+    {
+      "address": "36.24",
+      "original_source_span": [
+        460948,
+        462570
+      ],
+      "bytes": 1622,
+      "sha256": "ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+        "normalized_sha256": "sha256:ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+        "cas_ref": "sha256:ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b.yaml",
+        "atom_bytes": 1622
+      }
+    },
+    {
+      "address": "36.25",
+      "original_source_span": [
+        462570,
+        463426
+      ],
+      "bytes": 856,
+      "sha256": "8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+        "normalized_sha256": "sha256:8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+        "cas_ref": "sha256:8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6.yaml",
+        "atom_bytes": 856
+      }
+    },
+    {
+      "address": "36.26",
+      "original_source_span": [
+        463426,
+        464904
+      ],
+      "bytes": 1478,
+      "sha256": "8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+        "normalized_sha256": "sha256:8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+        "cas_ref": "sha256:8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b.yaml",
+        "atom_bytes": 1478
+      }
+    },
+    {
+      "address": "36.27",
+      "original_source_span": [
+        464904,
+        466194
+      ],
+      "bytes": 1290,
+      "sha256": "0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+        "normalized_sha256": "sha256:0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+        "cas_ref": "sha256:0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5.yaml",
+        "atom_bytes": 1290
+      }
+    },
+    {
+      "address": "36.28",
+      "original_source_span": [
+        466194,
+        468074
+      ],
+      "bytes": 1880,
+      "sha256": "4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+        "normalized_sha256": "sha256:4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+        "cas_ref": "sha256:4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4.yaml",
+        "atom_bytes": 1880
+      }
+    },
+    {
+      "address": "36.29",
+      "original_source_span": [
+        468074,
+        469112
+      ],
+      "bytes": 1038,
+      "sha256": "2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+        "normalized_sha256": "sha256:2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+        "cas_ref": "sha256:2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960.yaml",
+        "atom_bytes": 1038
+      }
+    },
+    {
+      "address": "36.30",
+      "original_source_span": [
+        469112,
+        470738
+      ],
+      "bytes": 1626,
+      "sha256": "e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+        "normalized_sha256": "sha256:e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+        "cas_ref": "sha256:e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3.yaml",
+        "atom_bytes": 1626
+      }
+    },
+    {
+      "address": "36.31",
+      "original_source_span": [
+        470738,
+        471775
+      ],
+      "bytes": 1037,
+      "sha256": "c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+        "normalized_sha256": "sha256:c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+        "cas_ref": "sha256:c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528.yaml",
+        "atom_bytes": 1037
+      }
+    },
+    {
+      "address": "36.32",
+      "original_source_span": [
+        471775,
+        472661
+      ],
+      "bytes": 886,
+      "sha256": "969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+        "normalized_sha256": "sha256:969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+        "cas_ref": "sha256:969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a.yaml",
+        "atom_bytes": 886
+      }
+    },
+    {
+      "address": "36.33",
+      "original_source_span": [
+        472661,
+        474361
+      ],
+      "bytes": 1700,
+      "sha256": "424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+        "normalized_sha256": "sha256:424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+        "cas_ref": "sha256:424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d.yaml",
+        "atom_bytes": 1700
+      }
+    },
+    {
+      "address": "36.34",
+      "original_source_span": [
+        474361,
+        475859
+      ],
+      "bytes": 1498,
+      "sha256": "0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+        "normalized_sha256": "sha256:0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+        "cas_ref": "sha256:0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc.yaml",
+        "atom_bytes": 1498
+      }
+    },
+    {
+      "address": "36.35",
+      "original_source_span": [
+        475859,
+        477413
+      ],
+      "bytes": 1554,
+      "sha256": "b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+        "normalized_sha256": "sha256:b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+        "cas_ref": "sha256:b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e.yaml",
+        "atom_bytes": 1554
+      }
+    },
+    {
+      "address": "36.36",
+      "original_source_span": [
+        477413,
+        478685
+      ],
+      "bytes": 1272,
+      "sha256": "4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+        "normalized_sha256": "sha256:4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+        "cas_ref": "sha256:4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd.yaml",
+        "atom_bytes": 1272
+      }
+    },
+    {
+      "address": "36.37",
+      "original_source_span": [
+        478685,
+        480046
+      ],
+      "bytes": 1361,
+      "sha256": "e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+      "disposition": "retained byte-exact in unchanged source prefix",
+      "original_canonical": {
+        "raw_sha256": "sha256:e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+        "normalized_sha256": "sha256:e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+        "cas_ref": "sha256:e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28.yaml",
+        "atom_bytes": 1361
+      }
+    },
+    {
+      "address": "36.38",
+      "original_source_span": [
+        480046,
+        482456
+      ],
+      "bytes": 2410,
+      "sha256": "6affd5090f83b7aa120ebfff418b5af3d8e764ed3ce89f77b3bde043145f57d5",
+      "disposition": "full original whole-unit archived once in report; mathematical paragraphs retained at same active address",
+      "archive": {
+        "address": "36.38",
+        "report_payload_span": [
+          98446,
+          100856
+        ],
+        "bytes": 2410,
+        "sha256": "6affd5090f83b7aa120ebfff418b5af3d8e764ed3ce89f77b3bde043145f57d5",
+        "occurrences": 1
+      },
+      "original_canonical": {
+        "raw_sha256": "sha256:6affd5090f83b7aa120ebfff418b5af3d8e764ed3ce89f77b3bde043145f57d5",
+        "normalized_sha256": "sha256:6affd5090f83b7aa120ebfff418b5af3d8e764ed3ce89f77b3bde043145f57d5",
+        "cas_ref": "sha256:6affd5090f83b7aa120ebfff418b5af3d8e764ed3ce89f77b3bde043145f57d5",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/6affd5090f83b7aa120ebfff418b5af3d8e764ed3ce89f77b3bde043145f57d5",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6affd5090f83b7aa120ebfff418b5af3d8e764ed3ce89f77b3bde043145f57d5.yaml",
+        "atom_bytes": 2410
+      }
+    },
+    {
+      "address": "36.39",
+      "original_source_span": [
+        482456,
+        484462
+      ],
+      "bytes": 2006,
+      "sha256": "4e256cb56ce3d714ce3f56d36ea2d8126ac65236e0c5949f7baaf63dbed2e951",
+      "disposition": "full original whole-unit archived once in report; mathematical paragraphs retained at same active address",
+      "archive": {
+        "address": "36.39",
+        "report_payload_span": [
+          100997,
+          103003
+        ],
+        "bytes": 2006,
+        "sha256": "4e256cb56ce3d714ce3f56d36ea2d8126ac65236e0c5949f7baaf63dbed2e951",
+        "occurrences": 1
+      },
+      "original_canonical": {
+        "raw_sha256": "sha256:4e256cb56ce3d714ce3f56d36ea2d8126ac65236e0c5949f7baaf63dbed2e951",
+        "normalized_sha256": "sha256:4e256cb56ce3d714ce3f56d36ea2d8126ac65236e0c5949f7baaf63dbed2e951",
+        "cas_ref": "sha256:4e256cb56ce3d714ce3f56d36ea2d8126ac65236e0c5949f7baaf63dbed2e951",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/4e256cb56ce3d714ce3f56d36ea2d8126ac65236e0c5949f7baaf63dbed2e951",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4e256cb56ce3d714ce3f56d36ea2d8126ac65236e0c5949f7baaf63dbed2e951.yaml",
+        "atom_bytes": 2006
+      }
+    },
+    {
+      "address": "36.40",
+      "original_source_span": [
+        484462,
+        487402
+      ],
+      "bytes": 2940,
+      "sha256": "73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35",
+      "disposition": "full original whole-unit archived once in report; address permanently reserved outside active body",
+      "archive": {
+        "address": "36.40",
+        "report_payload_span": [
+          103144,
+          106084
+        ],
+        "bytes": 2940,
+        "sha256": "73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35",
+        "occurrences": 1
+      },
+      "original_canonical": {
+        "raw_sha256": "sha256:73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35",
+        "normalized_sha256": "sha256:73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35",
+        "cas_ref": "sha256:73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35.yaml",
+        "atom_bytes": 2940
+      }
+    }
+  ],
+  "current_units": [
+    {
+      "address": "36.1",
+      "current_source_span": [
+        432502,
+        434088
+      ],
+      "bytes": 1586,
+      "sha256": "f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+        "normalized_sha256": "sha256:f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+        "cas_ref": "sha256:f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/f9b3af9b59cdee0f68c3876ed5573fffee2149cac41674acdeb646b2d505185b.yaml",
+        "atom_bytes": 1586
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.2",
+      "current_source_span": [
+        434088,
+        435259
+      ],
+      "bytes": 1171,
+      "sha256": "ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+        "normalized_sha256": "sha256:ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+        "cas_ref": "sha256:ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ff379a220b9fec4f1133a13c6910352d199a9279ca5359a49e7105955c73d297.yaml",
+        "atom_bytes": 1171
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.3",
+      "current_source_span": [
+        435259,
+        436353
+      ],
+      "bytes": 1094,
+      "sha256": "57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+        "normalized_sha256": "sha256:57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+        "cas_ref": "sha256:57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/57fa24f4e21ec98aab21437aa8c4eb5475552c296c0f67ffb52576ac397b1e28.yaml",
+        "atom_bytes": 1094
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.4",
+      "current_source_span": [
+        436353,
+        438266
+      ],
+      "bytes": 1913,
+      "sha256": "4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+        "normalized_sha256": "sha256:4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+        "cas_ref": "sha256:4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4dca13c66f270e7ef08f52340d4fad2e9c920fb693ec8fa4e79e0552ada3863f.yaml",
+        "atom_bytes": 1913
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.5",
+      "current_source_span": [
+        438266,
+        439529
+      ],
+      "bytes": 1263,
+      "sha256": "05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+        "normalized_sha256": "sha256:05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+        "cas_ref": "sha256:05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/05f294b88ed5443e48add13308bd28499cc450906be58a7702bebf0184a85383.yaml",
+        "atom_bytes": 1263
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.6",
+      "current_source_span": [
+        439529,
+        440716
+      ],
+      "bytes": 1187,
+      "sha256": "5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+        "normalized_sha256": "sha256:5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+        "cas_ref": "sha256:5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5a3956cd920f4035fafaa3c6e824a20515db8df1e42a48deb9edbde3679f1904.yaml",
+        "atom_bytes": 1187
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.7",
+      "current_source_span": [
+        440716,
+        441720
+      ],
+      "bytes": 1004,
+      "sha256": "3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+        "normalized_sha256": "sha256:3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+        "cas_ref": "sha256:3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/3f0d793d19e0105564904379cd31e38f965f57a89db67f3b1b65eccccf74f554.yaml",
+        "atom_bytes": 1004
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.8",
+      "current_source_span": [
+        441720,
+        443169
+      ],
+      "bytes": 1449,
+      "sha256": "8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+        "normalized_sha256": "sha256:8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+        "cas_ref": "sha256:8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8f88d237f109c75d9929304b983167d01761d0cb0d2868b855a8597e2eb5d7fa.yaml",
+        "atom_bytes": 1449
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.9",
+      "current_source_span": [
+        443169,
+        444303
+      ],
+      "bytes": 1134,
+      "sha256": "ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+        "normalized_sha256": "sha256:ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+        "cas_ref": "sha256:ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ecadef999eb8324c79c78a7e5d93b930f3ac6e2331997c2c299a7649948af4f3.yaml",
+        "atom_bytes": 1134
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.10",
+      "current_source_span": [
+        444303,
+        445400
+      ],
+      "bytes": 1097,
+      "sha256": "9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+        "normalized_sha256": "sha256:9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+        "cas_ref": "sha256:9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9497ee58986c2e2bc22a1f68eb8b5b9f138faa23008a4b79e56cc522aa7e95c4.yaml",
+        "atom_bytes": 1097
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.11",
+      "current_source_span": [
+        445400,
+        446522
+      ],
+      "bytes": 1122,
+      "sha256": "4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+        "normalized_sha256": "sha256:4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+        "cas_ref": "sha256:4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4aec3166830b90c5450a74abd388999fc270ce59ede5a8180aa43c5f213e6b1e.yaml",
+        "atom_bytes": 1122
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.12",
+      "current_source_span": [
+        446522,
+        447969
+      ],
+      "bytes": 1447,
+      "sha256": "9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+        "normalized_sha256": "sha256:9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+        "cas_ref": "sha256:9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9e33b11623cb5ff67dc59282338d4d7bf6662d8a5523747ace73ed3fc1e910c6.yaml",
+        "atom_bytes": 1447
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.13",
+      "current_source_span": [
+        447969,
+        449144
+      ],
+      "bytes": 1175,
+      "sha256": "1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+        "normalized_sha256": "sha256:1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+        "cas_ref": "sha256:1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1706eb0f1fee1e9fdbc782ce1dfc33d462b95d7d8e19172fc603cfcd9c9ce4ab.yaml",
+        "atom_bytes": 1175
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.14",
+      "current_source_span": [
+        449144,
+        450429
+      ],
+      "bytes": 1285,
+      "sha256": "201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+        "normalized_sha256": "sha256:201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+        "cas_ref": "sha256:201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/201816d087d0fceee38d86d729743a00894078c367221adb56a3185af94693ce.yaml",
+        "atom_bytes": 1285
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.15",
+      "current_source_span": [
+        450429,
+        451378
+      ],
+      "bytes": 949,
+      "sha256": "d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+        "normalized_sha256": "sha256:d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+        "cas_ref": "sha256:d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d6dce82b6f8218b6bafc7b5545196e5b222c0bc4cb94e680d777e704b024f89c.yaml",
+        "atom_bytes": 949
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.16",
+      "current_source_span": [
+        451378,
+        452799
+      ],
+      "bytes": 1421,
+      "sha256": "79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+        "normalized_sha256": "sha256:79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+        "cas_ref": "sha256:79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/79b48cf987062479ecd96f4795e72ea31365e95c1bb68550e86c6418b932508b.yaml",
+        "atom_bytes": 1421
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.17",
+      "current_source_span": [
+        452799,
+        453868
+      ],
+      "bytes": 1069,
+      "sha256": "9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+        "normalized_sha256": "sha256:9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+        "cas_ref": "sha256:9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9e706fb58d52d2016b7cd734fadd1acf74460ad9c107ac4aa224d0bf14d9ca29.yaml",
+        "atom_bytes": 1069
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.18",
+      "current_source_span": [
+        453868,
+        455111
+      ],
+      "bytes": 1243,
+      "sha256": "370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+        "normalized_sha256": "sha256:370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+        "cas_ref": "sha256:370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/370ba04e9c8ad16db6b1a961e24367e86c72d4ee26c2778f847d9e46a39b3803.yaml",
+        "atom_bytes": 1243
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.19",
+      "current_source_span": [
+        455111,
+        456280
+      ],
+      "bytes": 1169,
+      "sha256": "ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+        "normalized_sha256": "sha256:ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+        "cas_ref": "sha256:ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ed2e5efeeb275c5618efe6b13cc88420425e131777a6eb6495e2a4cc1ed809b7.yaml",
+        "atom_bytes": 1169
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.20",
+      "current_source_span": [
+        456280,
+        457549
+      ],
+      "bytes": 1269,
+      "sha256": "ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+        "normalized_sha256": "sha256:ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+        "cas_ref": "sha256:ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ade72df8c1081043a95e89ebd669df0a32ab5cf040a22cac6550ea38178f8707.yaml",
+        "atom_bytes": 1269
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.21",
+      "current_source_span": [
+        457549,
+        458828
+      ],
+      "bytes": 1279,
+      "sha256": "e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+        "normalized_sha256": "sha256:e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+        "cas_ref": "sha256:e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e692de2bfc1c8aa581bc9144b57acb4a553647c9818dc43edd8cc3d8bc9c6cb5.yaml",
+        "atom_bytes": 1279
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.22",
+      "current_source_span": [
+        458828,
+        459578
+      ],
+      "bytes": 750,
+      "sha256": "9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+        "normalized_sha256": "sha256:9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+        "cas_ref": "sha256:9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9717055d3636f0f9b9eb5112240a6cf4d7db28944883c25c3180a5c023d9150d.yaml",
+        "atom_bytes": 750
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.23",
+      "current_source_span": [
+        459578,
+        460948
+      ],
+      "bytes": 1370,
+      "sha256": "6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+        "normalized_sha256": "sha256:6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+        "cas_ref": "sha256:6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6045af28a4cdf4b2b4af24b1e36bdd28eecba669d2e0842a60ae3dab3626a95a.yaml",
+        "atom_bytes": 1370
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.24",
+      "current_source_span": [
+        460948,
+        462570
+      ],
+      "bytes": 1622,
+      "sha256": "ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+        "normalized_sha256": "sha256:ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+        "cas_ref": "sha256:ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ecad62794c86311ce138849d343e48439c877c88dfd1a7a0b36f37d487b5a61b.yaml",
+        "atom_bytes": 1622
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.25",
+      "current_source_span": [
+        462570,
+        463426
+      ],
+      "bytes": 856,
+      "sha256": "8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+        "normalized_sha256": "sha256:8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+        "cas_ref": "sha256:8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8fd3c3c257afebaa3d952aa7f9aee99e83fc394d7684f3296d23e8ba1369e8a6.yaml",
+        "atom_bytes": 856
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.26",
+      "current_source_span": [
+        463426,
+        464904
+      ],
+      "bytes": 1478,
+      "sha256": "8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+        "normalized_sha256": "sha256:8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+        "cas_ref": "sha256:8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8f4ae3d4ba686a5453ff279f21567c6efc022337ffbe7217506d41edfa23a77b.yaml",
+        "atom_bytes": 1478
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.27",
+      "current_source_span": [
+        464904,
+        466194
+      ],
+      "bytes": 1290,
+      "sha256": "0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+        "normalized_sha256": "sha256:0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+        "cas_ref": "sha256:0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0cdaff16803f84a00aa1161b07519d3044992373123aefacfbd21e5842e94ee5.yaml",
+        "atom_bytes": 1290
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.28",
+      "current_source_span": [
+        466194,
+        468074
+      ],
+      "bytes": 1880,
+      "sha256": "4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+        "normalized_sha256": "sha256:4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+        "cas_ref": "sha256:4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4aeec770abc1283e374a8b25966445275a167d9844e1b5fbbf32637ac81177d4.yaml",
+        "atom_bytes": 1880
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.29",
+      "current_source_span": [
+        468074,
+        469112
+      ],
+      "bytes": 1038,
+      "sha256": "2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+        "normalized_sha256": "sha256:2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+        "cas_ref": "sha256:2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/2678bca79b991f62ade1790e102c236274a3104778361b56267fe685684fc960.yaml",
+        "atom_bytes": 1038
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.30",
+      "current_source_span": [
+        469112,
+        470738
+      ],
+      "bytes": 1626,
+      "sha256": "e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+        "normalized_sha256": "sha256:e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+        "cas_ref": "sha256:e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e80ea4d666c6f23e02b2db2dce6814bb3131edbe8dd2fa1e7416da1e835d8af3.yaml",
+        "atom_bytes": 1626
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.31",
+      "current_source_span": [
+        470738,
+        471775
+      ],
+      "bytes": 1037,
+      "sha256": "c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+        "normalized_sha256": "sha256:c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+        "cas_ref": "sha256:c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c6c3e0486890459de931570c642d504d414d30c40d9287980965fcccc5194528.yaml",
+        "atom_bytes": 1037
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.32",
+      "current_source_span": [
+        471775,
+        472661
+      ],
+      "bytes": 886,
+      "sha256": "969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+        "normalized_sha256": "sha256:969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+        "cas_ref": "sha256:969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/969f090605b6645a37bdca8e3dd3cdfab34596715692be423b076f6ef64f3a3a.yaml",
+        "atom_bytes": 886
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.33",
+      "current_source_span": [
+        472661,
+        474361
+      ],
+      "bytes": 1700,
+      "sha256": "424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+        "normalized_sha256": "sha256:424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+        "cas_ref": "sha256:424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/424f32145951b1cba74613b6994394296b901a4033fa76a934c666a09ab2829d.yaml",
+        "atom_bytes": 1700
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.34",
+      "current_source_span": [
+        474361,
+        475859
+      ],
+      "bytes": 1498,
+      "sha256": "0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+        "normalized_sha256": "sha256:0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+        "cas_ref": "sha256:0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0e1ae38eda4a1b9c54f2504bd7b7489aac30c1ead566f2a90a50be90988253bc.yaml",
+        "atom_bytes": 1498
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.35",
+      "current_source_span": [
+        475859,
+        477413
+      ],
+      "bytes": 1554,
+      "sha256": "b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+        "normalized_sha256": "sha256:b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+        "cas_ref": "sha256:b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/b375df638162a82ba99745868daf56a6bbf7f0baecd1f1a2482fa5cf62c7c34e.yaml",
+        "atom_bytes": 1554
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.36",
+      "current_source_span": [
+        477413,
+        478685
+      ],
+      "bytes": 1272,
+      "sha256": "4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+        "normalized_sha256": "sha256:4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+        "cas_ref": "sha256:4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4da40748f5d02142f33c937431c6729823a136630662377a0dc70f4c504828cd.yaml",
+        "atom_bytes": 1272
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.37",
+      "current_source_span": [
+        478685,
+        480046
+      ],
+      "bytes": 1361,
+      "sha256": "e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+        "normalized_sha256": "sha256:e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+        "cas_ref": "sha256:e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e315e70e67474939aaee5c4d173fa81923efe3343c8d7318215a03ed68356c28.yaml",
+        "atom_bytes": 1361
+      },
+      "mathematical_coverage": "unchanged inherited mathematical unit; current prefix binding"
+    },
+    {
+      "address": "36.38",
+      "current_source_span": [
+        480046,
+        481350
+      ],
+      "bytes": 1304,
+      "sha256": "5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+        "normalized_sha256": "sha256:5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+        "cas_ref": "sha256:5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3.yaml",
+        "atom_bytes": 1304
+      },
+      "mathematical_coverage": "classical inputs/citations and repo-derived scope; unconditional limitations and conditional wider-domain boundary retained"
+    },
+    {
+      "address": "36.39",
+      "current_source_span": [
+        481350,
+        482519
+      ],
+      "bytes": 1169,
+      "sha256": "5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+      "whole_unit_occurrence": 1,
+      "canonical": {
+        "raw_sha256": "sha256:5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+        "normalized_sha256": "sha256:5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+        "cas_ref": "sha256:5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "children_present": false,
+        "chain_atoms_present": false,
+        "atom_path": "Meta/Digestion/atoms/sha256/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7.yaml",
+        "atom_bytes": 1169
+      },
+      "mathematical_coverage": "classical inputs/citations and repo-derived scope; unconditional limitations and conditional wider-domain boundary retained"
+    }
+  ],
+  "archives": [
+    {
+      "address": "36.38",
+      "report_payload_span": [
+        98446,
+        100856
+      ],
+      "bytes": 2410,
+      "sha256": "6affd5090f83b7aa120ebfff418b5af3d8e764ed3ce89f77b3bde043145f57d5",
+      "occurrences": 1
+    },
+    {
+      "address": "36.39",
+      "report_payload_span": [
+        100997,
+        103003
+      ],
+      "bytes": 2006,
+      "sha256": "4e256cb56ce3d714ce3f56d36ea2d8126ac65236e0c5949f7baaf63dbed2e951",
+      "occurrences": 1
+    },
+    {
+      "address": "36.40",
+      "report_payload_span": [
+        103145,
+        106085
+      ],
+      "bytes": 2940,
+      "sha256": "73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35",
+      "occurrences": 1
+    }
+  ],
+  "canonical_ingest": {
+    "command": "make ingest BASE=7ff447a0520a4ac5e6b923d5ebb78f3e14afc8ec SOURCE=arithmetic-boundary-quantization",
+    "exit_code": 0,
+    "stdout": "INGEST residual_open_added=2 skipped_existing=402 coarse_fallbacks=0 open_genres=0 cas_objects_written=2 ledger_changed=true",
+    "new_pairs": [
+      "sha256:5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+      "sha256:5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7"
+    ],
+    "new_pair_count": 2,
+    "children_or_chains_emitted": false,
+    "source_edit_after_ingest": false
+  },
+  "changed_paths": [
+    "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+    "docs/reports/quantized-gh/full-near-balanced-tube-counting-0910.md",
+    "docs/reports/quantized-gh/theory-body-migration-s25-0911.json",
+    "Meta/Digestion/atoms/sha256/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+    "Meta/Digestion/atoms/sha256/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+    "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3.yaml",
+    "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7.yaml"
+  ],
+  "recovery": {
+    "original_source_recovered": true,
+    "formula": "original prefix [0,480046) + archived original whole units 36.38,36.39,36.40 in report",
+    "archived_unit_occurrences_exactly_once": true,
+    "active_math_units": [
+      "36.38",
+      "36.39"
+    ],
+    "reserved_addresses": [
+      "36.40"
+    ],
+    "old_report_prefix_preserved": true,
+    "raw_c67_payload_preserved": true,
+    "other_reports_unchanged": "not modified by this flight",
+    "original_source_reconstruction": {
+      "bytes": 487402,
+      "sha256": "db909da51b30f89c0e7d349d17e8589a3582b66589632d10826ade5f85031bf0",
+      "exact_match": true,
+      "components": [
+        "source original prefix [0,480046)",
+        "report archive payload 36.38",
+        "report archive payload 36.39",
+        "report archive payload 36.40"
+      ]
+    }
+  },
+  "limitations": [
+    "Inherited sections 1-35 and predecessor-owned composition remain separate obligations; this map does not certify whole-book purity, independent approval or MERGED delivery.",
+    "C61 wider-domain 5040 sign premise remains conditional.",
+    "Historical execution, review, public byte and lifecycle claims retain their supplied historical scope; no replay was performed.",
+    "No mathematical execution or new proof beyond faithful body migration was performed."
+  ],
+  "other_reports": [
+    {
+      "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+      "bytes": 64694,
+      "sha256": "536c310803bbc8933cc1f2ca0dabd176eb7e83482d2611e9c31d591b733c8653",
+      "status": "unchanged"
+    },
+    {
+      "path": "docs/reports/quantized-gh/near-balanced-recurrence-0910.md",
+      "bytes": 88644,
+      "sha256": "d2f8da398f59f3e89190a53dd3c8a0313b88f5d5896f5377bbc2c460b4ce20d4",
+      "status": "unchanged"
+    }
+  ],
+  "old_canonical_preservation": {
+    "status": "unchanged/reconstructible",
+    "historical_pairs_and_terminal_lf_variants": "preserved; no manual canonical edits or deletions",
+    "new_emitted_pair_count": 2,
+    "new_emitted_pair_hashes": [
+      "5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+      "5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7"
+    ]
+  },
+  "repair": {
+    "clause": "C112",
+    "implementation": "I40",
+    "source_mutations": 0,
+    "ingest_performed": false,
+    "old_report": {
+      "bytes": 106498,
+      "sha256": "60e1d3943749ea59f9ca07b4060bff994c626a897b0735a1353945be2dfd4c85"
+    },
+    "new_report": {
+      "bytes": 108759,
+      "sha256": "f241d91137b693d61be30a74f954bdb14e2d952723c8b1ed421b072f86d03713"
+    },
+    "report_note_span": [
+      106500,
+      108759
+    ],
+    "archive_fence_repair": {
+      "address": "36.40",
+      "payload_bytes": 2940,
+      "payload_sha256": "73930c5b6c5f757bd4fcded0b32c41519d03ad27edd4ff4c1078c1e898582b35",
+      "old_payload_span": [
+        103144,
+        106084
+      ],
+      "new_payload_span": [
+        103145,
+        106085
+      ],
+      "max_inner_closing_run": 3,
+      "old_outer_open": "~~~text",
+      "old_outer_close": "~~~",
+      "new_outer_open": "~~~~text",
+      "new_outer_close": "~~~~",
+      "delta": "replace opener line 103136:103144 (~~~text\\n) with four-tilde opener (+1 byte); after that shift replace outer closer at 106085:106089 (~~~\\n) with four-tilde closer (+1 byte); payload unchanged",
+      "recovery": "remove appended I40 note and reverse both delimiter edits to recover old report exactly"
+    },
+    "primary_mapping": {
+      "raw_primary_span": [
+        17040,
+        57025
+      ],
+      "raw_primary_bytes": 39985,
+      "raw_primary_sha256": "b882817054914d14c1bf13e1fa48bc5087534c5c8b6a04704ace04a0c44b38a9",
+      "table_report_span": [
+        7477,
+        13676
+      ],
+      "table_row_count": 40,
+      "table_path_occurrence_count": 99,
+      "unique_leaf_count": 89,
+      "unknown_field_count": 0,
+      "missing_field_count": 0,
+      "leaf_convention": "RFC 6901 JSON Pointer from /conclusion; ~ escaped as ~0, / as ~1, arrays use decimal indices; scalar leaves only; every array-valued branch is traversed completely",
+      "raw_primary_field_paths_are_complete": true,
+      "leaf_bindings": [
+        {
+          "pointer": "/conclusion/access_and_provenance/access_failures",
+          "table_rows": [
+            "36.38"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.38"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/access_and_provenance/access_failures"
+          }
+        },
+        {
+          "pointer": "/conclusion/access_and_provenance/classical_access",
+          "table_rows": [
+            "36.38"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.38"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/access_and_provenance/classical_access"
+          }
+        },
+        {
+          "pointer": "/conclusion/access_and_provenance/execution_limitations",
+          "table_rows": [
+            "36.40"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.40"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/access_and_provenance/execution_limitations"
+          }
+        },
+        {
+          "pointer": "/conclusion/access_and_provenance/invocation_status",
+          "table_rows": [
+            "36.39"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.39"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/access_and_provenance/invocation_status"
+          }
+        },
+        {
+          "pointer": "/conclusion/access_and_provenance/pinned_source_access",
+          "table_rows": [
+            "36.38"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.38"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/access_and_provenance/pinned_source_access"
+          }
+        },
+        {
+          "pointer": "/conclusion/access_and_provenance/supplied_inputs",
+          "table_rows": [
+            "36.39"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.39"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/access_and_provenance/supplied_inputs"
+          }
+        },
+        {
+          "pointer": "/conclusion/classical_inputs_and_attribution/compact_subgroups",
+          "table_rows": [
+            "36.38"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.38"
+          ],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.38"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/classical_inputs_and_attribution/compact_subgroups"
+          }
+        },
+        {
+          "pointer": "/conclusion/classical_inputs_and_attribution/equidistribution",
+          "table_rows": [
+            "36.38"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.38"
+          ],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.38"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/classical_inputs_and_attribution/equidistribution"
+          }
+        },
+        {
+          "pointer": "/conclusion/classical_inputs_and_attribution/foundational_tools",
+          "table_rows": [
+            "36.38"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.38"
+          ],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.38"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/classical_inputs_and_attribution/foundational_tools"
+          }
+        },
+        {
+          "pointer": "/conclusion/density_encoding_and_geometric_interpretation/fibonacci_cutoffs",
+          "table_rows": [
+            "36.37"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.37"
+          ],
+          "original_source_units": [
+            "36.37"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/density_encoding_and_geometric_interpretation/fibonacci_cutoffs"
+          }
+        },
+        {
+          "pointer": "/conclusion/density_encoding_and_geometric_interpretation/inner_product",
+          "table_rows": [
+            "36.37"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.37"
+          ],
+          "original_source_units": [
+            "36.37"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/density_encoding_and_geometric_interpretation/inner_product"
+          }
+        },
+        {
+          "pointer": "/conclusion/density_encoding_and_geometric_interpretation/what_dense_filling_means_here",
+          "table_rows": [
+            "36.22",
+            "36.37"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.22",
+            "36.37"
+          ],
+          "original_source_units": [
+            "36.22",
+            "36.37"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/density_encoding_and_geometric_interpretation/what_dense_filling_means_here"
+          }
+        },
+        {
+          "pointer": "/conclusion/density_encoding_and_geometric_interpretation/zeckendorf_recoding",
+          "table_rows": [
+            "36.37"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.37"
+          ],
+          "original_source_units": [
+            "36.37"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/density_encoding_and_geometric_interpretation/zeckendorf_recoding"
+          }
+        },
+        {
+          "pointer": "/conclusion/notation_and_main_statement/complete_family",
+          "table_rows": [
+            "36.1"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.1"
+          ],
+          "original_source_units": [
+            "36.1"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/notation_and_main_statement/complete_family"
+          }
+        },
+        {
+          "pointer": "/conclusion/notation_and_main_statement/fixed_data",
+          "table_rows": [
+            "36.1"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.1"
+          ],
+          "original_source_units": [
+            "36.1"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/notation_and_main_statement/fixed_data"
+          }
+        },
+        {
+          "pointer": "/conclusion/notation_and_main_statement/main_conclusions",
+          "table_rows": [
+            "36.1"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.1"
+          ],
+          "original_source_units": [
+            "36.1"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/notation_and_main_statement/main_conclusions"
+          }
+        },
+        {
+          "pointer": "/conclusion/notation_and_main_statement/multiplicity",
+          "table_rows": [
+            "36.6"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.6"
+          ],
+          "original_source_units": [
+            "36.6"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/notation_and_main_statement/multiplicity"
+          }
+        },
+        {
+          "pointer": "/conclusion/notation_and_main_statement/rotation",
+          "table_rows": [
+            "36.2"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.2"
+          ],
+          "original_source_units": [
+            "36.2"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/notation_and_main_statement/rotation"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/annihilator_description",
+          "table_rows": [
+            "36.3"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.3"
+          ],
+          "original_source_units": [
+            "36.3"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/annihilator_description"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/closed_group_and_characters",
+          "table_rows": [
+            "36.2"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.2"
+          ],
+          "original_source_units": [
+            "36.2"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/closed_group_and_characters"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/coordinate_marginals_and_seams",
+          "table_rows": [
+            "36.5"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.5"
+          ],
+          "original_source_units": [
+            "36.5"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/coordinate_marginals_and_seams"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/coordinate_projections",
+          "table_rows": [
+            "36.5"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.5"
+          ],
+          "original_source_units": [
+            "36.5"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/coordinate_projections"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/finite_integer_matrix",
+          "table_rows": [
+            "36.4"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.4"
+          ],
+          "original_source_units": [
+            "36.4"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/finite_integer_matrix"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/haar_measure_on_components",
+          "table_rows": [
+            "36.4"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.4"
+          ],
+          "original_source_units": [
+            "36.4"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/haar_measure_on_components"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/identity_component_and_finite_components",
+          "table_rows": [
+            "36.4"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.4"
+          ],
+          "original_source_units": [
+            "36.4"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/identity_component_and_finite_components"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/pairwise_irrationality",
+          "table_rows": [
+            "36.2"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.2"
+          ],
+          "original_source_units": [
+            "36.2"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_1_actual_orbit_closure_and_rational_components/pairwise_irrationality"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/exact_box_correspondence",
+          "table_rows": [
+            "36.7"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.7"
+          ],
+          "original_source_units": [
+            "36.7"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/exact_box_correspondence"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/faces_involving_the_reference",
+          "table_rows": [
+            "36.8"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.8"
+          ],
+          "original_source_units": [
+            "36.8"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/faces_involving_the_reference"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/mixed_faces",
+          "table_rows": [
+            "36.8"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.8"
+          ],
+          "original_source_units": [
+            "36.8"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/mixed_faces"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/periodicity_and_bound",
+          "table_rows": [
+            "36.6"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.6"
+          ],
+          "original_source_units": [
+            "36.6"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/periodicity_and_bound"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/possible_discontinuities",
+          "table_rows": [
+            "36.8"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.8"
+          ],
+          "original_source_units": [
+            "36.8"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/possible_discontinuities"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/regularity_conclusion",
+          "table_rows": [
+            "36.9"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.9"
+          ],
+          "original_source_units": [
+            "36.9"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/regularity_conclusion"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/strict_versus_closed_width",
+          "table_rows": [
+            "36.9",
+            "36.10"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.10",
+            "36.9"
+          ],
+          "original_source_units": [
+            "36.9",
+            "36.10"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_2_multiplicity_and_all_boundary_faces/strict_versus_closed_width"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/bohr_inclusion",
+          "table_rows": [
+            "36.13"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.13"
+          ],
+          "original_source_units": [
+            "36.13"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/bohr_inclusion"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/continuous_observables",
+          "table_rows": [
+            "36.11"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.11"
+          ],
+          "original_source_units": [
+            "36.11"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/continuous_observables"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/extension_to_w",
+          "table_rows": [
+            "36.12"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.12"
+          ],
+          "original_source_units": [
+            "36.12"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/extension_to_w"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/haar_lower_bound",
+          "table_rows": [
+            "36.13"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.13"
+          ],
+          "original_source_units": [
+            "36.13"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/haar_lower_bound"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/syndeticity",
+          "table_rows": [
+            "36.14"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.14"
+          ],
+          "original_source_units": [
+            "36.14"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/syndeticity"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/weighted_mean_not_probability",
+          "table_rows": [
+            "36.14"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.14"
+          ],
+          "original_source_units": [
+            "36.14"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_3_uniform_means_positive_occurrence_and_syndeticity/weighted_mean_not_probability"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/bounded_cutoff_squeeze",
+          "table_rows": [
+            "36.16"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.16"
+          ],
+          "original_source_units": [
+            "36.16"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/bounded_cutoff_squeeze"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/exact_logarithmic_size",
+          "table_rows": [
+            "36.15"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.15"
+          ],
+          "original_source_units": [
+            "36.15"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/exact_logarithmic_size"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/index_count",
+          "table_rows": [
+            "36.15"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.15"
+          ],
+          "original_source_units": [
+            "36.15"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/index_count"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/injectivity",
+          "table_rows": [
+            "36.16"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.16"
+          ],
+          "original_source_units": [
+            "36.16"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/injectivity"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/reference_prime_invariance",
+          "table_rows": [
+            "36.16"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.16"
+          ],
+          "original_source_units": [
+            "36.16"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/reference_prime_invariance"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/scope_of_effectiveness",
+          "table_rows": [
+            "36.16"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.16"
+          ],
+          "original_source_units": [
+            "36.16"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_4_complete_family_count_and_reference_invariance/scope_of_effectiveness"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/conditional_formula",
+          "table_rows": [
+            "36.18"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.18"
+          ],
+          "original_source_units": [
+            "36.18"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/conditional_formula"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/small_prime_comparison",
+          "table_rows": [
+            "36.19"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.19"
+          ],
+          "original_source_units": [
+            "36.19"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/small_prime_comparison"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/unconditional_k_equals_2",
+          "table_rows": [
+            "36.19"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.19"
+          ],
+          "original_source_units": [
+            "36.19"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/unconditional_k_equals_2"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/unfolding",
+          "table_rows": [
+            "36.17"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.17"
+          ],
+          "original_source_units": [
+            "36.17"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/unfolding"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/volume_calculation",
+          "table_rows": [
+            "36.18"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.18"
+          ],
+          "original_source_units": [
+            "36.18"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/volume_calculation"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/when_full_torus_is_available",
+          "table_rows": [
+            "36.17"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.17"
+          ],
+          "original_source_units": [
+            "36.17"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_5_full_torus_volume_and_two_prime_case/when_full_torus_is_available"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_6_comparison_with_all_fixed_prime_smooth_numbers/full_exponent_space",
+          "table_rows": [
+            "36.22"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.22"
+          ],
+          "original_source_units": [
+            "36.22"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_6_comparison_with_all_fixed_prime_smooth_numbers/full_exponent_space"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_6_comparison_with_all_fixed_prime_smooth_numbers/ordinary_and_logarithmic_density",
+          "table_rows": [
+            "36.21"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.21"
+          ],
+          "original_source_units": [
+            "36.21"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_6_comparison_with_all_fixed_prime_smooth_numbers/ordinary_and_logarithmic_density"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_6_comparison_with_all_fixed_prime_smooth_numbers/precise_ratio",
+          "table_rows": [
+            "36.21"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.21"
+          ],
+          "original_source_units": [
+            "36.21"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_6_comparison_with_all_fixed_prime_smooth_numbers/precise_ratio"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_6_comparison_with_all_fixed_prime_smooth_numbers/simplex_estimate",
+          "table_rows": [
+            "36.20"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.20"
+          ],
+          "original_source_units": [
+            "36.20"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_6_comparison_with_all_fixed_prime_smooth_numbers/simplex_estimate"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/actual_5040_baseline",
+          "table_rows": [
+            "36.26"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.26"
+          ],
+          "original_source_units": [
+            "36.26"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/actual_5040_baseline"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/arithmetic_interpretation",
+          "table_rows": [
+            "36.26"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.26"
+          ],
+          "original_source_units": [
+            "36.26"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/arithmetic_interpretation"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/finite_boundary_correction",
+          "table_rows": [
+            "36.23"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.23"
+          ],
+          "original_source_units": [
+            "36.23"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/finite_boundary_correction"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/general_shifted_zero_width",
+          "table_rows": [
+            "36.25"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.25"
+          ],
+          "original_source_units": [
+            "36.25"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/general_shifted_zero_width"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/interior_translation",
+          "table_rows": [
+            "36.23"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.23"
+          ],
+          "original_source_units": [
+            "36.23"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/interior_translation"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/leading_coefficient",
+          "table_rows": [
+            "36.24"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.24"
+          ],
+          "original_source_units": [
+            "36.24"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/leading_coefficient"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/shifted_definition",
+          "table_rows": [
+            "36.23"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.23"
+          ],
+          "original_source_units": [
+            "36.23"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/shifted_definition"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/small_positive_width_edge",
+          "table_rows": [
+            "36.26"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.26"
+          ],
+          "original_source_units": [
+            "36.26"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/small_positive_width_edge"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/unshifted_zero_width",
+          "table_rows": [
+            "36.25"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.25"
+          ],
+          "original_source_units": [
+            "36.25"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/unshifted_zero_width"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/why_integer_baselines_are_special",
+          "table_rows": [
+            "36.24"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.24"
+          ],
+          "original_source_units": [
+            "36.24"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_7_integer_baseline_shifts_and_zero_width/why_integer_baselines_are_special"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/5040_nonemptiness_and_remaining_sign",
+          "table_rows": [
+            "36.36"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.36"
+          ],
+          "original_source_units": [
+            "36.36"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/5040_nonemptiness_and_remaining_sign"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/application_235",
+          "table_rows": [
+            "36.31"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.31"
+          ],
+          "original_source_units": [
+            "36.31"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/application_235"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/application_237",
+          "table_rows": [
+            "36.32"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.32"
+          ],
+          "original_source_units": [
+            "36.32"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/application_237"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/budget_inverse_image_and_cutoff",
+          "table_rows": [
+            "36.30",
+            "36.36"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.30",
+            "36.36"
+          ],
+          "original_source_units": [
+            "36.30",
+            "36.36"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/budget_inverse_image_and_cutoff"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/conditional_5040_application",
+          "table_rows": [
+            "36.35"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.35"
+          ],
+          "original_source_units": [
+            "36.35"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/conditional_5040_application"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/conditional_5040_input",
+          "table_rows": [
+            "36.35"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.35"
+          ],
+          "original_source_units": [
+            "36.35"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/conditional_5040_input"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/consumed_235_input",
+          "table_rows": [
+            "36.31"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.31"
+          ],
+          "original_source_units": [
+            "36.31"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/consumed_235_input"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/consumed_237_input",
+          "table_rows": [
+            "36.32"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.32"
+          ],
+          "original_source_units": [
+            "36.32"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/consumed_237_input"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/definitions",
+          "table_rows": [
+            "36.27"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.27"
+          ],
+          "original_source_units": [
+            "36.27"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/definitions"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/exact_original_cutoff",
+          "table_rows": [
+            "36.33"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.33"
+          ],
+          "original_source_units": [
+            "36.33"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/exact_original_cutoff"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/explicit_occurrence_bounds_at_recorded_radii",
+          "table_rows": [
+            "36.34"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.34"
+          ],
+          "original_source_units": [
+            "36.34"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/explicit_occurrence_bounds_at_recorded_radii"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/full_family_original_domain_count",
+          "table_rows": [
+            "36.33"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.33"
+          ],
+          "original_source_units": [
+            "36.33"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/full_family_original_domain_count"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/no_unscaled_uniform_margin",
+          "table_rows": [
+            "36.34"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.34"
+          ],
+          "original_source_units": [
+            "36.34"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/no_unscaled_uniform_margin"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/support_and_feasibility",
+          "table_rows": [
+            "36.28",
+            "36.29"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.28",
+            "36.29"
+          ],
+          "original_source_units": [
+            "36.28",
+            "36.29"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/support_and_feasibility"
+          }
+        },
+        {
+          "pointer": "/conclusion/proof_8_scoped_G_applications/wider_domain",
+          "table_rows": [
+            "36.28"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.28"
+          ],
+          "original_source_units": [
+            "36.28"
+          ],
+          "original_report_archives": [],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/proof_8_scoped_G_applications/wider_domain"
+          }
+        },
+        {
+          "pointer": "/conclusion/reasoning_discipline_note",
+          "table_rows": [
+            "36.39",
+            "36.40"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.39",
+            "36.40"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/reasoning_discipline_note"
+          }
+        },
+        {
+          "pointer": "/conclusion/remaining_obligations_and_status/G_and_RH",
+          "table_rows": [
+            "36.39"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.39"
+          ],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.39"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/remaining_obligations_and_status/G_and_RH"
+          }
+        },
+        {
+          "pointer": "/conclusion/remaining_obligations_and_status/admission_and_delivery",
+          "table_rows": [
+            "36.39",
+            "36.40"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.39",
+            "36.40"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/remaining_obligations_and_status/admission_and_delivery"
+          }
+        },
+        {
+          "pointer": "/conclusion/remaining_obligations_and_status/c67_counting",
+          "table_rows": [
+            "36.39"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.39"
+          ],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.39"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/remaining_obligations_and_status/c67_counting"
+          }
+        },
+        {
+          "pointer": "/conclusion/remaining_obligations_and_status/higher_dimensional_explicit_values",
+          "table_rows": [
+            "36.39"
+          ],
+          "disposition": "mathematical_current_source",
+          "current_mathematical_units": [
+            "36.39"
+          ],
+          "original_source_units": [],
+          "original_report_archives": [
+            "36.39"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/remaining_obligations_and_status/higher_dimensional_explicit_values"
+          }
+        },
+        {
+          "pointer": "/conclusion/role",
+          "table_rows": [
+            "36.1",
+            "36.39"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [
+            "36.1"
+          ],
+          "original_report_archives": [
+            "36.39"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/role"
+          }
+        },
+        {
+          "pointer": "/conclusion/settlement",
+          "table_rows": [
+            "36.1",
+            "36.39"
+          ],
+          "disposition": "mixed_mathematical_and_archival",
+          "current_mathematical_units": [
+            "36.1",
+            "36.39"
+          ],
+          "original_source_units": [
+            "36.1"
+          ],
+          "original_report_archives": [
+            "36.39"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/settlement"
+          }
+        },
+        {
+          "pointer": "/conclusion/verdict",
+          "table_rows": [
+            "36.1",
+            "36.39"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [
+            "36.1"
+          ],
+          "original_report_archives": [
+            "36.39"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/verdict"
+          }
+        },
+        {
+          "pointer": "/conclusion/worker_flight_ref",
+          "table_rows": [
+            "36.1",
+            "36.39"
+          ],
+          "disposition": "archival_raw_field",
+          "current_mathematical_units": [],
+          "original_source_units": [
+            "36.1"
+          ],
+          "original_report_archives": [
+            "36.39"
+          ],
+          "raw_primary": {
+            "span": [
+              17040,
+              57025
+            ],
+            "field_pointer": "/conclusion/worker_flight_ref"
+          }
+        }
+      ]
+    },
+    "changed_file_identities_external_binding": {
+      "map_path": "docs/reports/quantized-gh/theory-body-migration-s25-0911.json",
+      "map_sha256": "omitted intentionally; bind externally in the complete I40 result to avoid recursive self-hash",
+      "non_map_files": [
+        {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "bytes": 482519,
+          "sha256": "04253c70aa13d8c61161d2429cbed2a6a1b86fc4051261f75613bb289f751334"
+        },
+        {
+          "path": "docs/reports/quantized-gh/full-near-balanced-tube-counting-0910.md",
+          "bytes": 108759,
+          "sha256": "f241d91137b693d61be30a74f954bdb14e2d952723c8b1ed421b072f86d03713"
+        },
+        {
+          "path": "Meta/Digestion/atoms/sha256/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+          "bytes": 1304,
+          "sha256": "5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3"
+        },
+        {
+          "path": "Meta/Digestion/atoms/sha256/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+          "bytes": 1169,
+          "sha256": "5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7"
+        },
+        {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3.yaml",
+          "bytes": 328,
+          "sha256": "75a7a2132cb8c7b064e1db92753ca7320394c8c5fbc97e6c832aa311a550313e"
+        },
+        {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7.yaml",
+          "bytes": 328,
+          "sha256": "44ea6b3489f54d1692423606b06537e877bca27a5b53e15cffd10a870addad14"
+        }
+      ]
+    },
+    "parsed_yaml_bindings": [
+      {
+        "address": "36.38",
+        "atom_path": "Meta/Digestion/atoms/sha256/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3.yaml",
+        "yaml_bytes": 328,
+        "yaml_sha256": "75a7a2132cb8c7b064e1db92753ca7320394c8c5fbc97e6c832aa311a550313e",
+        "parsed": {
+          "raw_sha256": "sha256:5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+          "normalized_sha256": "sha256:5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+          "cas_ref": "sha256:5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+          "coverage_gids": [],
+          "unresolved_subitems": []
+        },
+        "whole_unit_occurrence": 1
+      },
+      {
+        "address": "36.39",
+        "atom_path": "Meta/Digestion/atoms/sha256/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7.yaml",
+        "yaml_bytes": 328,
+        "yaml_sha256": "44ea6b3489f54d1692423606b06537e877bca27a5b53e15cffd10a870addad14",
+        "parsed": {
+          "raw_sha256": "sha256:5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+          "normalized_sha256": "sha256:5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+          "cas_ref": "sha256:5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+          "coverage_gids": [],
+          "unresolved_subitems": []
+        },
+        "whole_unit_occurrence": 1
+      }
+    ],
+    "whitespace_observations": [
+      {
+        "path": "Meta/Digestion/atoms/sha256/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3",
+        "no_index_check_exit": 3,
+        "diagnostic": "line 19: new blank line at EOF",
+        "trimmed": false
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7",
+        "no_index_check_exit": 1,
+        "diagnostic": "",
+        "trimmed": false
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5b0591c4c701e417d51e268319e9abe646459d69d499f9300dbfdc62bbe48ac3.yaml",
+        "no_index_check_exit": 1,
+        "diagnostic": "",
+        "trimmed": false
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5fdbd8b7614d9d6451abf845d256899aa2c758ca5e385738e4adbb9703f2d5a7.yaml",
+        "no_index_check_exit": 1,
+        "diagnostic": "",
+        "trimmed": false
+      }
+    ],
+    "map_self_binding": "external-only in final I40 conclusion; no recursive self-hash field"
+  }
+}
