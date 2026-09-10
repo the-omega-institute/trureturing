@@ -354,7 +354,7 @@ Q_m[T]=\begin{pmatrix}1&1&1-h\\1&1&1\\1-h&1&1\end{pmatrix}.
 
 任何维数的 Gram 矩阵的主块都半正定。因此,只要保持上述**已舍入的三次观测块**不变,增加隐藏状态或扩大 Hilbert 空间都不能赋予它共同的酉回返实现。该结论限定于 unitary-return/Gram 实现,不覆盖所有量子可观测量。
 
-证明的有限核对说明：这些是精确抽查;全称命题由上面的构造和不等式证明承担。它本身没有证明实际 ξ 序列在每种分辨率上都失败。
+全称命题由上面的构造和不等式证明承担；它本身没有证明实际 ξ 序列在每种分辨率上都失败。
 
 ## 6. 实际 ξ 的三阶专门化: Arb 严格区间证据
 
@@ -469,30 +469,7 @@ r_2\in(397/400,399/400).
 
 不能把 Robin/Lagarias 余量放到一个对角算子上,再把其正性重命名为量子证明;那只重新编码目标不等式。即使构造了保正的近似核,也必须另外证明其与原实际序列的关系足以传递所需全称结论。
 
-**未证数学目标（原文整体保留）。** 下列距离算子目标仍待完整证明；不作为已证定理或假设使用。
-
-### PRO 提供的下一篇纸面目标: 距离的算子实现
-
-以下留作后续附录目标,本轮不宣称已完成新的谱判据。使用第 3 节的 \(\mathcal H,\chi,f_k,D_N\),在 \(\ell^2(\mathbb N_0)\) 的标准基上设
-
-\[
-h_0=\chi,\quad h_k=f_k/k\ (k\ge1),\qquad T e_k=h_k.
-\]
-
-因为 \(\|f_k\|_{\mathcal H}^2=\|f_1\|_{\mathcal H}^2/k\),且 \(f_1\) 在 \((0,1]\) 有界、在 \((1,\infty)\) 等于 \(1/x\),候选合成算子 \(T:\ell^2\to\mathcal H\) 的 Hilbert-Schmidt 范数平方为
-
-\[
-1+\|f_1\|_{\mathcal H}^2\sum_{k\ge1}k^{-3}<\infty.
-\]
-
-正确的正迹类对象是 **\(A=T^*T\)**,作用在 \(\ell^2\);不能写成类型不匹配的 `A=TT`。若 \(P_N\) 投影到 \(e_0,\ldots,e_N\),令 \(A_N=P_NAP_N\) 视为有限矩阵,待系统写明的目标是
-
-\[
-D_N=\sup\{\delta\ge0:A_N-\delta e_0e_0^*\succeq0\},
-\qquad \mathrm{RH}\iff\inf_{N\ge1}D_N=0.
-\]
-
-目标必须使用全半轴范数,并处理有限 Gram 块奇异时的距离与减秩阈值;不能依赖未经证明的可逆性。缩放 \(f_k\mapsto f_k/k\) 不改变任何有限线性张成空间。即使上述实现全部写成证明,\(A\succeq0\) 本来就由 \(T^*T\) 自动成立,RH 内容仍在距离阈值趋零的全局条件,不会因“已有正算子”自动解决。
+**定理与证明的引用：距离的算子实现。** 第 30.22–30.26 条证明任意复 Hilbert 空间有限 Gram 距离与减秩阈值的等价，包括奇异块的范围条件、伪逆、全部最小化系数、核及退化情形。第 30.27–30.35 条在第 3 节的全半轴模型中证明有界 Hilbert–Schmidt 合成、正迹类 Gram 算子、有限压缩与原距离、闭包极限及全局闭阈值，并区分无限端点与系数达到性。第 30.36–30.40 条给出引用 [B1] 的准确 RH 闭包等价和严格有理见证；自动 Gram 正性及普通最小特征值趋零并不决定 RH。第 30.41–30.51 条证明带符号有限有理证书的可靠性、严格完备性及全部自然数容差的等价式。全半轴系数平方尾完整保留；这些定理不解决上表的算术桥、实际 Li 全阶正性或物理检测问题。
 
 ## 8. 数学引文（附第 2–6 节及其后续引用）
 
@@ -669,7 +646,7 @@ Schur 的全域 PSD 已由第 11 节代数证明。对本次实际输入,在 \(m
 
 证明附引：[xi-quantization-0908.md](../../reports/xi-quantization-0908.md)。
 
-“对这一固定三阶块的所有分辨率”是有限完整枚举加尾界的数值库/纸面结论。它没有证明 RH,没有证明更高阶实际 xi 截面正性,没有解决全历史 Schur 误差传输、奇异 pivot 的高阶控制或统一尾估计。第 7 节其它算术桥、物理检测与 距离算子义务仍 open。
+“对这一固定三阶块的所有分辨率”是有限完整枚举加尾界的数值库/纸面结论。它没有证明 RH,没有证明更高阶实际 xi 截面正性,没有解决全历史 Schur 误差传输、奇异 pivot 的高阶控制或统一尾估计。第 7 节的算术桥与物理检测义务仍 open；距离算子的有限、无限阈值及其 RH 闭包联系见 30.22–30.40 的完整证明。
 
 ## 15. 均值与平方偏差的尖锐因数丰度上包络
 
@@ -1423,7 +1400,7 @@ U_{\rm var}=\log E_S+\Psi_2(\mu_1,V_0).
 
 **定义、定理与证明（保留原有证据地位及开放限制）。**
 
-**24.1 定义（记号、范围及证明地位）：状态与精确问题域。** 状态为 **PAPER_ARGUMENT / repo-derived 参考输入**。沿用第 15-23 节的函数、平方偏差之和及预算约定。第 22-23 节的二坐标全域结算、第 21 节的人工实数网格反例和所有历史记录保持有效;一般真实素数 \(k\ge3\) 的无条件比较仍 **OPEN**。GH 仍只有第 1 节的工作 RH 解释,不另造 GH 定义,不主张 RH 进展、全球新颖性或 Lean 冻结。
+**24.1 定义（记号、范围及证明地位）：状态与精确问题域。** 状态为 **PAPER_ARGUMENT / repo-derived 参考输入**。沿用第 15-23 节的函数、平方偏差之和及预算约定。第 22-23 节的二坐标全域结算、第 21 节的人工实数网格反例保持有效;一般真实素数 \(k\ge3\) 的无条件比较仍 **OPEN**。GH 仍只有第 1 节的工作 RH 解释,不另造 GH 定义,不主张 RH 进展、全球新颖性或 Lean 冻结。
 
 取整数 \(k\ge2\),每行恰为正实二点网格
 
@@ -2919,7 +2896,7 @@ Doikov 陈述 p.2 / 证明 p.3。
 **27.1 定义（记号、范围及证明地位）：命题范围。** PAPER_ARGUMENT / repo-derived。第 26 节已有实际角点给出的正定义域、分数背包对偶和固定箱体的有限薄层归约;
 这里复用这些事实,新增下包络端点的逐坐标单调性、无步宽损失的箱体下界、
 两个严格排除阈值、三坐标整数 guard 和固定正整数方向的最终排除。
-本地对照范围是本卷第 1-26 节,没有作全库或文献的穷尽新颖性断言。
+不主张全库或文献范围的新颖性。
 GH 仍是用户的原标签;RH 等价判据只是工作背景,没有新增 GH 定义或 RH 结论。
 
 **27.2 定义（记号、范围及证明地位）：较弱分析域与原可容许域。** 全部对数均为自然对数。
@@ -3841,7 +3818,7 @@ Appendix A.1.2 印刷 p.634 的范数公理,§3.1.5 印刷 pp.72-73 的范数凸
 全部专门化结论是本研究设置中的纸面推导,无新颖性、优先权、Lean、formal 或
 kernel-frozen 主张。GH 仍是用户未另作数学定义的原标签。
 \(G\) 只比较两个已有上界,不是 RH 等价判据,本节不构成 RH 进展。
-后来的整箱全薄层邻域、实际 5040 箱体和第三素数射线问题均不进入本层。
+本节只证明所选薄层邻域；整箱全薄层邻域、实际 5040 箱体和第三素数射线不由本节定理覆盖。
 
 **29.2 定义（记号、范围及证明地位）：相对形状、真实端点角点和同一比较差。** 全部对数为自然对数,
 内积为通常欧氏内积。固定有限正步长 \(h_i>0\) 和有限相对形状
@@ -4961,11 +4938,10 @@ T\to\infty,\qquad0\le\max_i\xi_i\le(b+c)/N\longrightarrow0.
 GH 仍是用户的原标签,本节不为它发明数学定义。
 两个上界之差为负既不是 RH 等价判据也不是 RH 证明或 RH 进展。
 其它素数三元组、一般素数、其余形状和 RH 仍 OPEN;
-后来的 \((2,3,7)\)、实际 fixed5040、translated5040 和第三素数射线结果不属于本层。
+本节的素数专门化仅为 \((2,3,5)\)，不覆盖 \((2,3,7)\)、实际 fixed5040、translated5040 或第三素数射线。
 
 **30.20 证明附引（附 30.4–30.17）：经典方法附引。**
-本节专门的八节点、裕量、扰动组合及格点应用当前标为 repo-derived,
-没有以历史的未评定原始措辞作为现行 provenance 标签。
+本节专门的八节点、裕量、扰动组合及格点应用的证明地位为 repo-derived。
 经典分数背包、范数凸性和严格端点论证的已有核对直接引用 26.28;
 新增的聚合积分比较使用经典递增凸序:Gushchin–Borzykh,
 *Integrated quantile functions: properties and applications*,
@@ -4981,3 +4957,496 @@ NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
 这些出处只支持经典工具,不被说成含有本节专门素数比较定理。
 
 [balanced-prime-235-all-slabs-0910.md](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md)。
+
+**30.22 定义与定理：复 Hilbert 空间的有限 Gram 距离阈值。** 本条至 30.26 对任意复 Hilbert 空间 \(H\)、整数 \(N\ge0\) 及任意向量 \(u,v_1,\ldots,v_N\in H\) 成立；允许线性相关、零向量及 \(H=\{0\}\)。内积 \(\operatorname{inner}(x,y)\) 对第一变量共轭线性、第二变量线性；在 \(\mathbb C^N\) 中为 \(\sum_j\overline{x_j}y_j\)。记 \(\operatorname{compose}(X,Y)=X\circ Y\)，伴随由
+\[
+\operatorname{inner}(Xx,y)=\operatorname{inner}(x,\operatorname{adj}(X)y)
+\]
+定义。所有阈值 \(\delta\) 是有限实数；正性指自伴算子的二次型非负。令
+\[
+V:\mathbb C^N\to H,\quad Vb=\sum_{j=1}^N b_jv_j,\qquad
+(\operatorname{adj}(V)y)_j=\operatorname{inner}(v_j,y),
+\]
+\[
+a=\|u\|^2,\quad C=\operatorname{compose}(\operatorname{adj}(V),V),\quad
+g=\operatorname{adj}(V)u,\quad C_{ij}=\operatorname{inner}(v_i,v_j).
+\]
+把列向量 \(g\) 同时视为 \(\alpha\mapsto\alpha g\)，于是 \(\operatorname{adj}(g)b=\operatorname{inner}(g,b)\)。在 \(\mathbb C\oplus\mathbb C^N\) 定义
+\[
+B=\begin{pmatrix}a&\operatorname{adj}(g)\\g&C\end{pmatrix},\qquad
+B(\alpha,b)=(a\alpha+\operatorname{inner}(g,b),\alpha g+Cb),\quad
+E_{00}(\alpha,b)=(\alpha,0).
+\]
+这是 \(u,v_1,\ldots,v_N\) 的 Gram 矩阵。准确的复二次型展开为
+\[
+\begin{aligned}
+\operatorname{inner}((\alpha,b),B(\alpha,b))
+&=a|\alpha|^2+\overline\alpha\operatorname{inner}(g,b)
+ +\alpha\operatorname{inner}(b,g)+\operatorname{inner}(b,Cb)\\
+&=a|\alpha|^2+2\operatorname{Re}\bigl(\overline\alpha\operatorname{inner}(g,b)\bigr)+\|Vb\|^2
+=\|\alpha u+Vb\|^2.
+\end{aligned}
+\]
+设 \(d=\operatorname{dist}(u,\operatorname{Ran}V)^2\)。有限阈值定理是
+\[
+\boxed{\{\delta\ge0:B-\delta E_{00}\succeq0\}=[0,d].}
+\]
+以下给出距离达到、奇异块、核及全部退化情形的证明，不预设 \(C\) 可逆。
+
+**30.23 证明：有限投影与距离达到。** 对有限维子空间 \(M=\operatorname{Ran}V\) 选一组正交单位基 \(w_1,\ldots,w_s\)，空基允许。令
+\[
+p=\sum_{j=1}^s\operatorname{inner}(w_j,u)w_j,\qquad r=u-p.
+\]
+逐个内积给 \(r\perp M\)。因 \(p\in M\)，存在 \(b_0\in\mathbb C^N\) 使 \(Vb_0=p\)。任意 \(b\) 满足
+\[
+\|u-Vb\|^2=\|r\|^2+\|p-Vb\|^2.
+\]
+故 \(d=\|r\|^2\) 是达到的最小值，所有最小化系数恰为 \(b_0+\ker V\)。对任意 \(\alpha,b\)，同一正交分解给
+\[
+\|\alpha u+Vb\|^2-\delta|\alpha|^2
+=\|V(b+\alpha b_0)\|^2+(d-\delta)|\alpha|^2.
+\]
+\(\delta\le d\) 时右边非负；\(\delta>d\) 时取 \((\alpha,b)=(1,-b_0)\) 得严格负值 \(d-\delta\)。这证明 30.22，包括端点 \(d\) 本身。有限闭子空间的投影达到不意味着某个有限距离必须为零。
+
+**30.24 定理与证明：有限伪逆、范围条件和全部最小化系数。** \(C\succeq0\)，且
+\[
+\operatorname{inner}(b,Cb)=\|Vb\|^2,\qquad \ker C=\ker V.
+\]
+若 \(z\in\ker C\)，则 \(\operatorname{inner}(z,g)=\operatorname{inner}(Vz,u)=0\)。有限维自伴矩阵有 \(\operatorname{Ran}C=(\ker C)^\perp\)，故 \(g\in\operatorname{Ran}C\)。在 \(C\) 的正交谱分解中，将正特征值 \(\lambda\) 替换为 \(1/\lambda\)、零特征值仍取零，定义 \(\operatorname{pinv}(C)\)。它自伴且非负。置
+\[
+\beta=\operatorname{pinv}(C)g,\qquad C\beta=g,\qquad \beta\perp\ker C.
+\]
+\(\operatorname{adj}(V)(u-V\beta)=g-C\beta=0\)，故 \(u-V\beta\perp M\)，从投影唯一性得 \(V\beta=p\)。因此
+\[
+\boxed{d=a-\operatorname{inner}(g,\operatorname{pinv}(C)g),\qquad
+\operatorname*{argmin}_{b\in\mathbb C^N}\|u-Vb\|^2=\beta+\ker C.}
+\]
+这里 \(\operatorname{inner}(g,\beta)=\operatorname{inner}(\beta,C\beta)=\|p\|^2\) 为非负实数，故公式的减项及其方向明确。又 \(\|\beta+z\|^2=\|\beta\|^2+\|z\|^2\) 对 \(z\in\ker C\) 成立，\(\beta\) 是唯一最小系数范数解。只有 \(C\) 可逆时才可把 \(\operatorname{pinv}(C)\) 写成通常逆；线性相关时没有这种许可。
+
+**30.25 定理与证明：完成平方、有限核和退化端点。** 对每个实 \(\delta\)，30.23–30.24 给
+\[
+\boxed{\operatorname{inner}((\alpha,b),(B-\delta E_{00})(\alpha,b))
+=\operatorname{inner}(b+\alpha\beta,C(b+\alpha\beta))+(d-\delta)|\alpha|^2.}
+\]
+对非负矩阵，二次型为零当且仅当向量在核中，这由正交特征分解逐项看出。因此当 \(\delta<d\) 时（尤其 \(0\le\delta<d\)），
+\[
+\ker(B-\delta E_{00})=\{0\}\oplus\ker C;
+\]
+此时正定当且仅当 \(\ker C=0\)，即 \(v_1,\ldots,v_N\) 线性无关。当 \(\delta=d\) 时，
+\[
+\ker(B-dE_{00})=\{(\alpha,-\alpha\beta+z):\alpha\in\mathbb C,\ z\in\ker C\}.
+\]
+端点总是奇异，\((1,-\beta)\) 是非零核向量。\(d=0\) 当且仅当 \(u\in M\)，非负阈值集恰为 \(\{0\}\)。\(u=0\) 时 \(a=g=\beta=d=0\)，核公式成为 \(\mathbb C\oplus\ker C\)。\(C=0\) 时所有 \(v_j=0\)、\(g=\beta=0\)、\(d=a\)，端点矩阵为零，低于端点的核为 \(\{0\}\oplus\mathbb C^N\)。\(N=0\) 时系数空间为零维、\(M=\{0\}\)、\(d=a\)，矩阵就是 \([a]\)，阈值集 \([0,a]\)，端点核为 \(\mathbb C\)。\(H=\{0\}\) 时所有向量为零，仍由这些式子覆盖。负的 \(\delta\) 也由完成平方正确处理；30.22 只把所问集合限制为 \(\delta\ge0\)。
+
+**30.26 定理与反例：一般 Hermitian 块的条件及复共轭的必要性。** 对任意有限 Hermitian 块
+\(\mathcal B=\left(\begin{smallmatrix}a&\operatorname{adj}(g)\\g&C\end{smallmatrix}\right)\)，其中 \(a\in\mathbb R\)、\(C=\operatorname{adj}(C)\)，对每个实 \(\delta\) 有
+\[
+\mathcal B-\delta E_{00}\succeq0
+\iff C\succeq0,\quad g\in\operatorname{Ran}C,\quad
+ a-\delta-\operatorname{inner}(g,\operatorname{pinv}(C)g)\ge0.
+\]
+证明：测试 \((0,b)\) 给 \(C\succeq0\)。对 \(z\in\ker C\)，测试 \((1,tz)\)；若 \(\operatorname{inner}(g,z)\ne0\)，可选复数 \(t\) 的相位及任意大的模，使交叉项 \(2\operatorname{Re}(t\operatorname{inner}(g,z))\) 趋向负无穷，矛盾。所以 \(g\perp\ker C\)，得到范围条件。设 \(\beta=\operatorname{pinv}(C)g\)，按 30.25 展开并取 \((1,-\beta)\) 给最后条件；反向直接完成平方。故一般块若 \(C\not\succeq0\)，或范围条件失败，或满足范围条件但 \(a-\operatorname{inner}(g,\operatorname{pinv}(C)g)<0\)，非负阈值集为空；不能无条件写成一个非空距离区间。
+
+范围条件不可省：\(a=1,C=[0],g=[1]\) 满足形式上的伪逆余量 \(1\ge0\)，但 \(\mathcal B=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)\) 在 \((1,-1)\) 的二次型为 \(-1\)。复共轭也不可省：取 \(H=\mathbb C,u=1,v_1=i\)，则 \(Vb=ib\)、\(\operatorname{adj}(V)y=-iy\)、\(C=1,g=-i\)，而 \(\operatorname{compose}(V,V)=-1\)；正确的 Gram 块上右元为 \(i\)、下左元为 \(-i\)。更简单地，\(N=0,B=[1],z=i\) 时正确二次型 \(\overline z z=1\)，漏掉共轭的 \(zz=-1\) 会反转正性。一般复定理不能因后面的具体函数为实值而略去这些条件。上述定理延续第 11 节及 [Q] 的 Schur 几何，奇异情形由这里的范围证明承担。
+
+**30.27 定义与证明：同一个全半轴模型及不可丢弃的系数平方尾。** 现在严格使用第 3 节的
+\[
+H=L^2((0,\infty),dx),\quad\operatorname{inner}(f,g)=\int_0^\infty\overline{f(x)}g(x)\,dx,
+\quad\chi=\mathbf1_{(0,1]},\quad f_k(x)=\{1/(kx)\},\quad h_0=\chi,\ h_k=f_k/k.
+\]
+这些可测函数满足 \(0\le f_k<1\)。在 \((0,1/k)\) 的平方积分至多 \(1/k\)，在 \((1/k,\infty)\) 除一个端点外等于 \(1/(kx)\)，平方积分为 \(1/k\)，所以属于 \(H\)。换元 \(y=kx\) 给
+\[
+c:=\|f_1\|^2\in[1,2],\qquad \|f_k\|^2=c/k,\qquad \|h_k\|^2=c/k^3.
+\]
+\(c\ge1\) 来自 \(x>1\) 的积分。对每个有限 \(N\ge1\) 及 \(a\in\mathbb C^N\)，定义原残差平方
+\[
+R_N(a)=\left\|\chi-\sum_{k=1}^Na_kf_k\right\|^2.
+\]
+在 \(x>1\) 有 \(\chi=0,f_k=1/(kx)\)，故精确地
+\[
+\boxed{R_N(a)=\int_0^1\left|1-\sum_{k=1}^Na_k\{1/(kx)\}\right|^2dx
++\left|\sum_{k=1}^N\frac{a_k}{k}\right|^2.}
+\]
+第二项来自 \(\int_1^\infty x^{-2}dx=1\)。不添加 \(\sum a_k/k=0\) 约束，也不把全半轴距离换成 \((0,1)\) 上的另一个问题。
+
+**30.28 定理与证明：有界 Hilbert–Schmidt 合成和正确伴随。** 令
+\[
+S_0=1+c\sum_{k=1}^\infty k^{-3}<\infty.
+\]
+对 \(z\in\ell^2(\mathbb N_0)\)，Cauchy–Schwarz 给
+\[
+\sum_{k\ge0}|z_k|\|h_k\|\le\|z\|_2\sqrt{S_0}.
+\]
+所以 \(\sum z_kh_k\) 在 \(H\) 中绝对范数收敛；定义 \(Tz\) 为此和。这给线性有界算子，\(Te_k=h_k\)，且是有限支持上的合成映射的唯一连续延拓。对 \(y\in H\)，
+\[
+\sum_{k\ge0}|\operatorname{inner}(h_k,y)|^2\le S_0\|y\|^2,
+\qquad \operatorname{adj}(T)y=(\operatorname{inner}(h_k,y))_{k\ge0}.
+\]
+先对有限和验证伴随恒等式，再由连续性传到全部 \(z\)。特别地
+\[
+\|T\|_{\rm HS}^2=\sum_{k\ge0}\|Te_k\|^2=S_0,\qquad
+1\le\|T\|_{\rm op}\le\sqrt{S_0}.
+\]
+下界用 \(Te_0=\chi,\|e_0\|=\|\chi\|=1\)。Hilbert–Schmidt 范数与算子范数在这里没有被断言相等。
+
+**30.29 定理与证明：系数空间上的正迹类 Gram 算子。** 定义
+\[
+A=\operatorname{compose}(\operatorname{adj}(T),T):\ell^2(\mathbb N_0)\to\ell^2(\mathbb N_0).
+\]
+它有界自伴，\(A_{ij}=\operatorname{inner}(h_i,h_j)\)，且 \(\operatorname{inner}(z,Az)=\|Tz\|^2\ge0\)。若 \(P_N\) 投影到 \(e_0,\ldots,e_N\)，则
+\[
+\|T-TP_N\|_{\rm op}\le\left(\sum_{k>N}\|h_k\|^2\right)^{1/2}\longrightarrow0.
+\]
+故 \(T\) 是有限秩算子的范数极限，紧致；\(A\) 亦紧致。用正紧算子的谱定理，取非零特征值 \(\lambda_j>0\) 及相应正交单位特征向量 \(u_j\)，余空间在核中。Parseval 和非负项 Tonelli 给
+\[
+\begin{aligned}
+\sum_{k\ge0}\operatorname{inner}(e_k,Ae_k)
+&=\sum_{k\ge0}\sum_j\lambda_j|\operatorname{inner}(u_j,e_k)|^2\\
+&=\sum_j\lambda_j\sum_{k\ge0}|\operatorname{inner}(u_j,e_k)|^2
+=\sum_j\lambda_j=S_0.
+\end{aligned}
+\]
+因此特征值可求和，\(A\) 为正迹类，
+\[
+\boxed{\operatorname{tr}A=\|A\|_1=\|T\|_{\rm HS}^2=S_0,\qquad
+\|A\|_{\rm op}=\|T\|_{\rm op}^2.}
+\]
+最后的范数等式：一向由伴随范数和复合次乘性，另一向由
+\(\|Tz\|^2=\operatorname{inner}(z,Az)\le\|A\|_{\rm op}\|z\|^2\) 取上确界。这里的正迹类对象在系数空间上；它不是类型不匹配的 \(TT\)，也不把 \(T\operatorname{adj}(T)\) 所在的 \(H\) 与系数空间混同。
+
+**30.30 定理与证明：有限压缩等于原来的 \(D_N\)。** 令
+\(J_N:\mathbb C^{N+1}\to\ell^2(\mathbb N_0)\) 为前缀等距嵌入，
+\[
+A_N=\operatorname{compose}(\operatorname{adj}(J_N),\operatorname{compose}(A,J_N)).
+\]
+这是 \(h_0,\ldots,h_N\) 的有限 Gram 矩阵，不附加无限维零块。取
+\(V_Nb=\sum_{k=1}^Nb_kh_k\)、\(C_N=\operatorname{compose}(\operatorname{adj}(V_N),V_N)\)、\(g_N=\operatorname{adj}(V_N)\chi\)。有限维换元 \(b_k=ka_k\) 是双射，故
+\[
+\begin{aligned}
+D_N&=\min_{a\in\mathbb C^N}R_N(a)
+=\min_{b\in\mathbb C^N}\|\chi-V_Nb\|^2\\
+&=1-\operatorname{inner}(g_N,\operatorname{pinv}(C_N)g_N)\\
+&=\max\{\delta\ge0:A_N-\delta E_{00}\succeq0\}
+=\min_{x_0=1}\operatorname{inner}(x,A_Nx).
+\end{aligned}
+\]
+最后取 \(x=(1,-b)\)；这是固定一个坐标的变分问题，非单位球上的最小特征值问题。全部最小化 \(b\) 为 \(\operatorname{pinv}(C_N)g_N+\ker C_N\)，最小化 \(a\) 逐坐标除以 \(k\)；相应 \(x\) 用其负号。所有有限核与奇异端点由 30.25 适用。原 \(D_N\) 的定义域仍是 \(N\ge1\)；可另记辅助 \(D_0=1\)，此时 \(A_0=[1]\)、阈值集 \([0,1]\)。有限缩放不建立无界对角乘法 \((a_k)\mapsto(ka_k)\) 在 \(\ell^2\) 上的有界可逆性，也不为无限最小化提供系数解。
+
+**30.31 定理与证明：每个有限前缀的距离严格正。** 对每个有限 \(N\ge1\)，\(D_N>0\)。若反之，由有限最小值达到，存在复数 \(a_k\) 使 \(\chi=\sum_{k=1}^Na_kf_k\) 几乎处处。换元 \(t=1/x\) 得
+\[
+F(t):=\sum_{k=1}^Na_k\{t/k\}=\mathbf1_{[1,\infty)}(t)
+\quad\text{几乎处处于 }(0,\infty).
+\]
+该换元及其逆在任意远离零的紧区间局部 Lipschitz；可数个这样的区间覆盖正半轴，故零测例外仍为零测。取 \(1,\ldots,N\) 的正整数公倍数 \(L\)。每一项逐点满足 \(\{(t+L)/k\}=\{t/k\}\)，所以 \(F(t+L)=F(t)\)。但右侧阶跃函数在 \((0,1)\) 几乎处处为零、在 \((L,L+1)\) 几乎处处为一。平移保零测，矛盾。此证允许任意复系数，无需证明各 \(f_k\) 线性无关；有限维闭性和达到性才把“不等于”提升为正距离。
+
+**30.32 定理与证明：递增张成空间的距离极限和闭包投影。** 令
+\[
+M_N=\operatorname{span}\{f_1,\ldots,f_N\},\quad
+M=\overline{\bigcup_{N\ge1}M_N}^{H},\quad d_\infty=\operatorname{dist}(\chi,M)^2.
+\]
+零近似和包含关系给 \(1\ge D_N\ge D_{N+1}\ge0\)。设极限为 \(l\)。因 \(M_N\subset M\)，\(l\ge d_\infty\)。任意 \(y\in M\) 可由并集中的 \(y_j\) 范数逼近；相应 \(D_{N_j}\le\|\chi-y_j\|^2\)，故 \(l\le\|\chi-y\|^2\)。对 \(y\) 取下确界得
+\[
+\boxed{D_N\downarrow d_\infty=\inf_{N\ge1}D_N.}
+\]
+为明确闭包中的达到性，取最小化序列 \(y_j\in M\)，使 \(\|\chi-y_j\|^2\to d_\infty\)。平行四边形恒等式及 \((y_j+y_l)/2\in M\) 给
+\[
+\|y_j-y_l\|^2\le2\|\chi-y_j\|^2+2\|\chi-y_l\|^2-4d_\infty\longrightarrow0.
+\]
+闭性与完备性给极限 \(p\in M\)，且 \(\|\chi-p\|^2=d_\infty\)。对任意 \(v\in M\)，最小性应用于 \(p+tv\)（\(t\) 为任意复数）使线性项为零，故 \(\chi-p\perp M\)。这也证明投影唯一。\(p\) 存在于闭包不等于它属于某个有限 \(M_N\)，也不等于有一个 \(\ell^2\) 合成系数表示它。
+
+**30.33 定理与证明：有界正性与全部有限压缩的等价。** 对任意有界自伴算子 \(F\) 作用于 \(\ell^2(\mathbb N_0)\)，以下等价：\(F\succeq0\)；每个前缀 \(\operatorname{compose}(\operatorname{adj}(J_N),\operatorname{compose}(F,J_N))\succeq0\)（\(N\ge1\)）；每个有限指标集的主压缩非负；每个有限维子空间的正交压缩非负。由全局正性推出各压缩是限制二次型。反向对 \(z^{(N)}=P_Nz\to z\)，有
+\[
+|\operatorname{inner}(z,Fz)-\operatorname{inner}(z^{(N)},Fz^{(N)})|
+\le\|F\|_{\rm op}\|z-z^{(N)}\|(\|z\|+\|z^{(N)}\|)\longrightarrow0.
+\]
+因此前缀二次型非负传到全部 \(z\)。有限指标集包含于一个前缀；取所有有限维子空间时也包含这些前缀，故等价链完整。空指标集是零维空真压缩，不能单独建立全局正性。用于 \(F=A-\delta E_{00}\) 时，若有限指标集不含零坐标，秩一减项的压缩为零，其非负性只是 \(A\) 的自动正性；含零坐标时需保留那个减项。
+
+**30.34 定理与证明：全局闭阈值与有限负见证。** 由 30.30、30.32、30.33，对每个 \(\delta\ge0\)，
+\[
+A-\delta E_{00}\succeq0\iff\forall N\ge1:\delta\le D_N\iff\delta\le d_\infty,
+\]
+\[
+\boxed{\{\delta\ge0:A-\delta E_{00}\succeq0\}=[0,d_\infty].}
+\]
+端点 \(d_\infty\) 属于该集合，最大值与上确界相等。若 \(\delta>d_\infty\)，极限定义给某个有限 \(N\) 使 \(D_N<\delta\)；有限最小化系数产生 \(A_N-\delta E_{00}\) 的严格负向量，零填充即为全局的有限支持负见证。反过来任何有限负见证都说明该 \(\delta\) 超出全局区间。以上只用有界算子和稠密有限支持，不使用无限伪逆或闭合成范围的假设。
+
+**30.35 定理与完整反例：无限端点的核与系数不达到。** 令尾合成
+\(W:\ell^2(\mathbb N_+)\to H\)，\(Wb=\sum_{k\ge1}b_kh_k\)。有限和属于 \(M\)，连续极限仍在 \(M\)；另一方面每个有限张成向量都在 \(\operatorname{Ran}W\)，故 \(\overline{\operatorname{Ran}W}=M\)。用 30.32 的 \(p\) 及 \(r=\chi-p\)，对每个实 \(\delta\) 有
+\[
+\operatorname{inner}((\alpha,b),(A-\delta E_{00})(\alpha,b))
+=\|\alpha p+Wb\|^2+(d_\infty-\delta)|\alpha|^2.
+\]
+当 \(\delta<d_\infty\) 时核为 \(\{0\}\oplus\ker W\)；端点核恰为
+\[
+\{(\alpha,b):Wb=-\alpha p\}.
+\]
+对有界非负算子，零二次型与核等价，例如由正平方根的范数平方得出。端点存在 \(\alpha\ne0\) 的核向量当且仅当 \(p\in\operatorname{Ran}W\)：一向除以 \(-\alpha\)，反向取一个合成系数。若 \(Wb_p=p\)，端点核可写成 \((\alpha,-\alpha b_p+z)\)、\(z\in\ker W\)。因此闭包投影达到、阈值端点达到、\(\ell^2\) 系数最小化达到是三个不同的陈述。对于此具体分数部分模型，这里没有判定 \(p\in\operatorname{Ran}W\)。
+
+完整的解析反例在另一 Hilbert 空间中给出。取正交单位基 \(w_0,w_1,\ldots\)，令
+\[
+v_k=w_k/k,\qquad p_0=\sum_{k\ge1}w_k/k,\qquad u_0=w_0+p_0.
+\]
+平方可和保证 \(p_0\) 存在，且这些列的平方范数总和有限。尾合成 \(W_0b=\sum b_kw_k/k\)，其范围的闭包为 \(\overline{\operatorname{span}}\{w_k:k\ge1\}\)。\(u_0\) 的闭包投影为 \(p_0\)，全局距离平方为 1；有限前缀距离平方为
+\[
+1+\sum_{k>N}k^{-2}>1,\qquad \inf_N\left(1+\sum_{k>N}k^{-2}\right)=1.
+\]
+若 \(W_0b=p_0\)，逐坐标必有 \(b_k=1\)，不属于 \(\ell^2\)，故系数最小值不达到。全局阈值端点仍为 1。若 \(A^{(0)}\) 是 \(u_0,v_1,v_2,\ldots\) 的 Gram 算子，则
+\[
+\operatorname{inner}((\alpha,b),(A^{(0)}-E_{00})(\alpha,b))
+=\sum_{k\ge1}\frac{|\alpha+b_k|^2}{k^2}.
+\]
+和为零迫使 \(b_k=-\alpha\) 对所有 \(k\) 成立；\(b\in\ell^2\) 迫使 \(\alpha=0,b=0\)。所以无限端点甚至可以没有非零核向量。这里尾块 \(C_0=\operatorname{diag}(k^{-2})\)，\(g_0=(k^{-2})_{k\ge1}\)；解 \(C_0b=g_0\) 同样要求常数序列，故 \(g_0\notin\operatorname{Ran}C_0\)，不能把有限范围/伪逆公式无条件搬到无限块。这一反例不对原分数部分模型作未达到的额外断言。
+
+**30.36 文献定理与推论：RH 的实际闭包条件。** 唯一在此引入的解析数论等价定理是 Luis Báez-Duarte，*A strengthening of the Nyman–Beurling criterion for the Riemann hypothesis, 2*，2002，arXiv [math/0205003v1](https://arxiv.org/pdf/math/0205003v1)，第 1 页的 \(H,\chi,\rho_a\) 定义和第 2 页 Theorem 1.1，即第 3 节的 [B1]。其整数生成族 \(\rho_k(x)=\{1/(kx)\}=f_k(x)\)，空间是 \(L^2((0,\infty),dx)\)。准确输入为
+\[
+\mathrm{RH}\iff\chi\in\overline{\operatorname{span}\{f_k:k\in\mathbb N_+\}}^{H}=M.
+\]
+这不是 \(M=H\) 的稠密张成断言。结合闭包投影及阈值证明，得
+\[
+\boxed{\mathrm{RH}\iff d_\infty=0
+\iff\inf_{N\ge1}D_N=0
+\iff\max\{\delta\ge0:A-\delta E_{00}\succeq0\}=0.}
+\]
+最后也等价于不存在正的 \(\delta\) 使减秩算子非负。这些是引用 [B1] 后的推论；[B1] 的完整解析数论证明不由有限线性代数或以下编码重新证明。本卷没有决定 \(d_\infty\) 是否为零。
+
+**30.37 定理与证明：严格残差的有理系数稠密性。** 记 \(\mathbb Q(i)=\{a+ib:a,b\in\mathbb Q\}\)。对固定有限 \(N\)，任意 \(a,q\in\mathbb C^N\) 满足
+\[
+\left\|\sum_{k=1}^N(a_k-q_k)f_k\right\|
+\le\left(\sum_{k=1}^N|a_k-q_k|^2\right)^{1/2}
+K_N,\qquad K_N=\left(c\sum_{k=1}^N k^{-1}\right)^{1/2}.
+\]
+这是逐项范数三角不等式后应用 Cauchy–Schwarz。若 \(R_N(a)<\delta\)，则 \(\delta>0\)。选 \(q\in\mathbb Q(i)^N\) 足够近，使上界严格小于 \(\sqrt\delta-\sqrt{R_N(a)}>0\)；残差范数的三角不等式给 \(R_N(q)<\delta\)。故
+\[
+D_N=\inf_{q\in\mathbb Q(i)^N}R_N(q).
+\]
+此式没有断言有理系数达到下确界。在此具体实值函数模型，若 \(a=x+iy\) 且 \(x,y\in\mathbb R^N\)，逐点实虚部正交给
+\[
+R_N(a)=R_N(x)+\left\|\sum_{k=1}^Ny_kf_k\right\|^2\ge R_N(x).
+\]
+所以先取实部，再用 \(\mathbb Q^N\) 在 \(\mathbb R^N\) 中稠密，也得
+\(D_N=\inf_{q\in\mathbb Q^N}R_N(q)\)，并保持每个严格不等式。这个实化步骤仅属于实值模型；30.22–30.26 的一般复定理及其复共轭反例仍完整适用。
+
+**30.38 定理与证明：严格负二次型和残差的双向见证。** 对 \(q\in\mathbb Q(i)^N\) 定义
+\[
+Z_N(q)=(1,-q_1,-2q_2,\ldots,-Nq_N).
+\]
+由 \(h_k=f_k/k\) 有精确恒等式
+\[
+\boxed{\operatorname{inner}(Z_N(q),(A_N-\delta E_{00})Z_N(q))=R_N(q)-\delta.}
+\]
+反之，若 \((\alpha,b)\) 有严格负二次型，则 \(\alpha\ne0\)，因为 \(\alpha=0\) 时值为 \(\|V_Nb\|^2\ge0\)。取
+\(a_k=-b_k/(k\alpha)\)，有
+\[
+\operatorname{inner}((\alpha,b),(A_N-\delta E_{00})(\alpha,b))
+=|\alpha|^2(R_N(a)-\delta).
+\]
+故 \(R_N(a)<\delta\)；若原向量在 \(\mathbb Q(i)^{N+1}\)，除以非零 \(\alpha\) 后仍在这个域。任意复向量也可用 30.37 得有理严格残差，继而得实有理的 \(Z_N(q)\)。因此每个固定 \(N\ge1,\delta\ge0\) 满足
+\[
+D_N<\delta\iff A_N-\delta E_{00}\not\succeq0
+\iff\exists q\in\mathbb Q^N:R_N(q)<\delta.
+\]
+也等价于存在复有理负二次型向量。\(\delta=0\) 时各式均假；\(\delta=D_N\) 时矩阵仍非负且有限端点有核，零二次型不算严格负见证；\(\delta<D_N\) 时也没有严格见证。负 \(\delta\) 不在该等价式的指定域，且因 \(R_N\ge0\) 同样不可能有严格残差见证。
+
+**30.39 定理与证明：全部自然数容差和互补量词。** 以下在同一个全半轴模型中等价：
+\[
+\begin{aligned}
+\mathrm{RH}
+&\iff\forall\varepsilon>0\ \exists N\ge1\ \exists q\in\mathbb Q^N:R_N(q)<\varepsilon\\
+&\iff\forall m\in\mathbb N_+\ \exists N\ge1\ \exists q\in\mathbb Q^N:R_N(q)<1/m\\
+&\iff\forall m\ge1\ \exists N\ge1:A_N-(1/m)E_{00}\not\succeq0\\
+&\iff\forall\delta>0:A-\delta E_{00}\not\succeq0.
+\end{aligned}
+\]
+证明：30.36–30.38 给任意正容差的严格近似；取 \(\varepsilon=1/m\) 得一向。反向给定 \(\varepsilon>0\)，由 Archimedean 性选 \(m\) 使 \(1/m<\varepsilon\)。各有理见证可零填充到更长前缀，残差不变。全局式由 30.34 等价于 \(d_\infty=0\)。互补陈述为
+\[
+\neg\mathrm{RH}\iff d_\infty>0
+\iff\exists m\ge1\ \forall N\ge1:A_N-(1/m)E_{00}\succeq0.
+\]
+若 \(d_\infty>0\)，取 \(1/m\le d_\infty\)；反向由所有有限阈值得 \(d_\infty\ge1/m>0\)。等号 \(1/m=d_\infty\) 属于非负侧。每个固定 \(N\) 有 \(D_N>0\)，可取 \(m\) 使 \(1/m\le D_N\)，所以不能交换成一个固定有限 \(N\) 对所有 \(m\) 有效。这些全称存在式没有给出一个有效全局成功上限。
+
+**30.40 定理与完整反例：自动 Gram 正性及普通最小特征值极限不是 RH。** \(A\succeq0\) 由 \(\operatorname{inner}(z,Az)=\|Tz\|^2\) 无条件成立。对实际模型的有限矩阵，单位向量 \(e_N\) 给
+\[
+0\le\lambda_{\min}(A_N)\le\operatorname{inner}(e_N,A_Ne_N)=c/N^3\longrightarrow0.
+\]
+此处最小特征值的变分约束为单位范数，与 30.30 的 \(x_0=1\) 不同。因此该极限同样无条件成立，不能代替 \(D_N\to0\)。
+
+一完整解析反例是取正交单位基 \(w_0,w_1,\ldots\)，列向量
+\(h'_0=w_0,h'_k=k^{-3/2}w_k\)（\(k\ge1\)）。列平方范数和为 \(1+\sum k^{-3}<\infty\)，故对应合成为 Hilbert–Schmidt，
+\[
+A'=\operatorname{diag}(1,1,2^{-3},3^{-3},\ldots)
+\]
+为正迹类，且每个有限前缀正定，\(\lambda_{\min}(A'_N)=N^{-3}\to0\)。然而 \(w_0\) 与全部尾列及其闭包正交，所以每个有限距离平方及全局距离平方都为 1；阈值集始终是 \([0,1]\)。故自动正性、正迹类、所有有限前缀正定和普通最小特征值趋零合在一起，仍不迫使距离阈值趋零。这不是原模型的 RH 反例，而是对错误的一般谱推论的反例。
+
+**30.41 定义与定理：带符号有理残差的精确区间分解和两种尾部。** 以下 \(N\ge1,J\ge2,K\ge1\) 均为整数，\(q=(q_1,\ldots,q_N)\in\mathbb Q^N\) 为任意带符号实有理向量。定义
+\[
+b=b(q)=\sum_{k=1}^Nq_k/k,\quad Q_q=\sum_{k=1}^N|q_k|,\quad M=1+Q_q,
+\]
+\[
+A_j=A_j(q)=1+\sum_{k=1}^Nq_k\lfloor j/k\rfloor,\quad
+d_j=-2A_jb,\quad P_j=\frac{A_j^2}{j(j+1)}+b^2\quad(j\ge1).
+\]
+这里标量 \(A_j\) 不等于 30.29 的算子 \(A\) 或 30.30 的有限 Gram 矩阵 \(A_N\)，下文标量 \(B(N,q,J,K)\) 也不等于 30.22 的 Gram 块 \(B\)。精确公式为
+\[
+\boxed{R_N(q)=b^2+\sum_{j=1}^{J-1}\left(P_j+d_j\log\frac{j+1}{j}\right)+E_J(q),}
+\]
+\[
+E_J(q)=\int_J^\infty\left|1-\sum_{k=1}^Nq_k\{t/k\}\right|^2\frac{dt}{t^2},
+\qquad 0\le E_J(q)\le M^2/J.
+\]
+证明：令 \(t=1/x\)，则 \(dx=dt/t^2\)（反转积分端点），目标函数变为 \(\mathbf1_{[1,\infty)}(t)\)。在 \(0<t<1\)，所有 \(\{t/k\}=t/k\)，残差为 \(-bt\)，贡献 \(\int_0^1b^2dt=b^2\)，正是原 \(x>1\) 的尾部。对 \(j<t<j+1\)，写 \(j=k\ell+r\)、\(0\le r<k\)。因 \(0<(r+t-j)/k<1\)，\(\lfloor t/k\rfloor=\lfloor j/k\rfloor=\ell\)；断点只在整数，测度为零。因此残差为 \(A_j-bt\)，直接积分得到
+\[
+\int_j^{j+1}\frac{(A_j-bt)^2}{t^2}\,dt
+=\frac{A_j^2}{j(j+1)}-2A_jb\log\frac{j+1}{j}+b^2.
+\]
+对剩余 \(t\ge J\)，\(|1-\sum q_k\{t/k\}|\le1+\sum|q_k|=M\)，且 \(\int_J^\infty t^{-2}dt=1/J\)。这个 \(E_J\) 对应 \(0<x<1/J\)，与单独的 \(x>1\) 系数平方尾不同。所有符号都允许为负，未把绝对值改为无符号和。还得到整体可积界 \(R_N(q)\le b^2+M^2\)。上面的展开只对有限 \(j\) 求和；不可把相互抵消的各项拆成几个可能发散的无限级数。
+
+**30.42 定理与证明：仅由整数运算形成的有理对数包围。** 对 \(j\ge1,K\ge1\)，令 \(w=2j+1\ge3,z=1/w\)，定义
+\[
+L_{j,K}=2\sum_{\ell=0}^{K-1}\frac{z^{2\ell+1}}{2\ell+1},\quad
+\rho_{j,K}=\frac{2z^{2K+1}}{(2K+1)(1-z^2)},\quad U_{j,K}=L_{j,K}+\rho_{j,K}.
+\]
+则
+\[
+L_{j,K}\le\log\frac{j+1}{j}\le U_{j,K}.
+\]
+自含推导从有限几何恒等式开始：对 \(0\le s\le z<1\)，
+\[
+\frac1{1-s^2}=\sum_{\ell=0}^{K-1}s^{2\ell}+\frac{s^{2K}}{1-s^2}.
+\]
+乘以 2 并从零积到 \(z\)，左侧为 \(\log((1+z)/(1-z))=\log((j+1)/j)\)。余项非负且
+\[
+0\le2\int_0^z\frac{s^{2K}}{1-s^2}ds
+\le\frac2{1-z^2}\int_0^zs^{2K}ds=\rho_{j,K}.
+\]
+这同时证明包围与其误差，不依赖浮点对数或无限级数交换。其整数形式明确为
+\[
+L_{j,K}=2\sum_{\ell=0}^{K-1}\frac1{(2\ell+1)w^{2\ell+1}},\qquad
+\rho_{j,K}=\frac2{(2K+1)w^{2K-1}(w^2-1)}.
+\]
+分母都是严格正整数，有限和、幂、乘除足以求值。
+
+**30.43 定理与证明：符号正确的有理上界及可靠性。** 记 \(d_j^+=\max(d_j,0)\)，定义完全有理的标量
+\[
+\boxed{B(N,q,J,K)=b^2+\sum_{j=1}^{J-1}
+\left(P_j+d_jL_{j,K}+d_j^+\rho_{j,K}\right)+M^2/J.}
+\]
+\(d_j\ge0\) 时相应对数乘子取上界 \(d_jU_{j,K}\)；\(d_j<0\) 时取 \(d_jL_{j,K}\)；\(d_j=0\) 时为零，不须判断对数。由 30.42，各替换值与真值之差落在 \([0,|d_j|\rho_{j,K}]\)，30.41 的尾项上界再给
+\[
+0\le B-R_N(q)\le\Delta:=M^2/J+\sum_{j=1}^{J-1}|d_j|\rho_{j,K}.
+\]
+可选的双侧有理包围为 \(B-\Delta\le R_N(q)\le B\)，其中
+\[
+B-\Delta=b^2+\sum_{j=1}^{J-1}
+\left(P_j+d_jL_{j,K}+\min(d_j,0)\rho_{j,K}\right).
+\]
+故 \(B<1/m\) 对 \(m\ge1\) 保证 \(R_N(q)<1/m\)，并由 30.38 的 \(Z_N(q)\) 给 \(A_N-(1/m)E_{00}\) 的严格负二次型。无需计算 Gram 的伪逆或假设其可逆。\(B=1/m\) 不是验收；\(R_N(q)=1/m\) 时任何可靠上界也不能通过严格验收。
+
+**30.44 定理与证明：对所有带符号有限系数的加权误差界。** 有
+\[
+\boxed{0\le B-R_N(q)\le\frac{M^2}{J}
++\frac{3|b|M}{8}\,9^{1-K}.}
+\]
+证明：\(\lfloor j/k\rfloor\le j\)，故 \(|A_j|\le1+jQ_q\le jM\)、\(|d_j|\le2|b|Mj\)。又 \(w\ge3\)、\(K\ge1\)，
+\[
+\rho_{j,K}=\frac{2w^{-(2K+1)}}{(2K+1)(1-w^{-2})}
+\le\frac34\,9^{1-K}w^{-3}.
+\]
+这里 \(2/(2K+1)\le2/3\)，\((1-w^{-2})^{-1}\le9/8\)，\(w^{-(2K-2)}\le9^{1-K}\)。因此
+\[
+\sum_{j=1}^{J-1}|d_j|\rho_{j,K}
+\le\frac32|b|M9^{1-K}\sum_{j=1}^{J-1}\frac{j}{(2j+1)^3}
+\le\frac{3|b|M}{8}9^{1-K}.
+\]
+最后用 \(j/(2j+1)^3\le1/(8j^2)\)；有限部分和满足
+\(\sum_{j=1}^L j^{-2}\le2\)，因为 \(j\ge2\) 时 \(j^{-2}\le1/[j(j-1)]=1/(j-1)-1/j\)，望远镜求和给界。故前面的加权和至多 \(1/4\)。估计控制整个 \(j\) 和，不是先固定 \(J\) 再令 \(K\) 增大的非一致论证。
+
+**30.45 定理与证明：不读取未知残差的确定精度安排。** 写 \(\Lambda=3|b|M/8\)。对每个整数 \(r\ge1\)，规定
+\[
+J=r+1,\qquad K=r,\qquad B_r=B(N,q,r+1,r).
+\]
+则
+\[
+0\le B_r-R_N(q)\le\frac{M^2}{r+1}+\Lambda9^{1-r}
+\le\frac{M^2+\Lambda}{r}\longrightarrow0.
+\]
+最后用 \(9^{r-1}\ge r\)：\(r=1\) 成立，若对 \(r\) 成立，则 \(9^r\ge9r\ge r+1\)。这证明收敛而没有断言 \(B_r\) 单调。给定任意有理 \(\eta>0\)，显式整数
+\[
+r_\eta=\left\lfloor\frac{M^2+\Lambda}{\eta}\right\rfloor+1
+\]
+满足 \((M^2+\Lambda)/r_\eta<\eta\)，所以同一安排保证 \(B_{r_\eta}-R_N(q)<\eta\)。计算只读有限有理 \(q,\eta\)，不读真实残差或成功余量。
+
+**30.46 定理与证明：每个严格残差的证书完备性。** 对每个 \(N\ge1,q\in\mathbb Q^N,m\ge1\)，
+\[
+\boxed{R_N(q)<1/m\iff\exists J\ge2,K\ge1:B(N,q,J,K)<1/m
+\iff\exists r\ge1:B_r<1/m.}
+\]
+右向左是 30.43 的可靠性。若 \(R_N(q)<1/m\)，证明中记正实数 \(\gamma=1/m-R_N(q)>0\)。30.45 的误差上界趋零，所以存在 \(r_0\) 使对每个 \(r\ge r_0\) 都有 \(B_r-R_N(q)<\gamma\)，从而 \(B_r<1/m\)。\(\gamma\) 仅用于存在性证明；验收和枚举安排都不以它为输入，也不要求从实数残差读出它。一般 \(J,K\) 允许该安排，等价成立。\(R_N(q)\ge1/m\)（包括等号）时任何 \(J,K\) 都不通过。一个粗截断未通过，对真实严格残差是否成立没有反向结论。
+
+可靠上界和确定收敛进一步给
+\[
+\inf_{J\ge2,K\ge1}B(N,q,J,K)=R_N(q),\qquad
+\inf_{q\in\mathbb Q^N,J\ge2,K\ge1}B(N,q,J,K)=D_N.
+\]
+第一式由下界与 \(B_r\to R_N(q)\) 夹逼，第二式再用 30.37；不保证这些下确界由一个有限截断或有理最小化向量达到。
+
+**30.47 定义与证明：有限自然数编码。** 令 \(\mathbb N_0=\{0,1,\ldots\}\)。定义
+\[
+\operatorname{Pair}(a,b)=2^a(2b+1)-1\quad(a,b\in\mathbb N_0).
+\]
+对任意 \(n\ge0\)，将正整数 \(n+1\) 反复除以 2，直到商为奇数，唯一得到 \(n+1=2^a(2b+1)\)。每次除法使正整数严格减小，故解码终止；奇偶性及唯一的 2 因子次数证明双射。整数符号编码为
+\[
+\operatorname{SignCode}(p)=\begin{cases}2p,&p\ge0,\\-2p-1,&p<0.\end{cases}
+\]
+偶数 \(s\) 解为 \(s/2\)，奇数解为 \(-(s+1)/2\)，因此正、零、负整数都唯一覆盖。对 \(p\in\mathbb Z,d\ge1\)，令
+\[
+\operatorname{RatCode}(p,d)=\operatorname{Pair}(\operatorname{SignCode}(p),d-1).
+\]
+它编码有理数表示 \(p/d\)，无需约分；不同表示可有相同有理值，每个自然数都解出合法的正分母有理表示。有限自然数列表递归编码为
+\[
+\operatorname{ListCode}([])=0,\qquad
+\operatorname{ListCode}([a]\mathbin{+\!+}L)
+=1+\operatorname{Pair}(a,\operatorname{ListCode}(L))
+=2^a(2\operatorname{ListCode}(L)+1).
+\]
+非零列表码 \(n\) 用 \(\operatorname{Pair}\) 的逆解 \(n-1\)，得到头码及尾码 \(t\)；因 \(n=2^a(2t+1)>t\)，递归尾解码严格下降并在零终止。这证明唯一解码及每个有限列表的可编码性。
+
+若 \(q_k=p_k/d_k\)，证书的单个自然数为
+\[
+e=\operatorname{Pair}\bigl(N-1,\operatorname{Pair}(J-2,
+\operatorname{Pair}(K-1,\operatorname{ListCode}([
+\operatorname{RatCode}(p_1,d_1),\ldots,\operatorname{RatCode}(p_N,d_N)])))\bigr).
+\]
+连续三次逆配对得到 \(N-1,J-2,K-1\) 及列表码，再作列表及有理解码。因此整数域自动满足 \(N\ge1,J\ge2,K\ge1\)；解出的列表长度是否为 \(N\) 则另行检查。这里是有限编码定理，不是无穷序列或实数的编码假设。
+
+**30.48 定义与证明：全定义的有限算术验收谓词。** 定义
+\(\operatorname{Verify}:\mathbb N_0^2\to\{\mathrm{false},\mathrm{true}\}\)。输入 \((m,e)\) 时，若 \(m=0\) 返回 false；否则按 30.47 解码，列表长度不等于 \(N\) 时返回 false。对合法长度，用解出的有理系数及 \(N,J,K\) 计算 30.41–30.43 的有限公式，得到 \(B=P/D\)，其中 \(P\in\mathbb Z,D\in\mathbb N_+\)，然后规定
+\[
+\boxed{\operatorname{Verify}(m,e)=\mathrm{true}\iff mP<D.}
+\]
+有理运算全部可写为整数运算：\(p/d+r/s=(ps+rd)/(ds)\)、乘积为 \(pr/(ds)\)，正分母下符号与绝对值由分子决定，比较用交叉乘法；\(\lfloor j/k\rfloor\) 用正整数除法。对数包围用 30.42 的整数幂和有限和，不求实对数。所有分母严格正；\(N,J,K\) 及解码列表虽可任意大，每次输入仍有限。解码严格下降，各有限循环和整数运算终止，所以 Verify 对每对自然数均终止且给唯一布尔值。它不访问真实残差、Gram 矩阵、伪逆、实数比较或未知余量的 oracle。等号 \(mP=D\) 返回 false。本条定义数学上的可判定谓词，没有声称已经实现或运行验收软件。其整数语义允许任意精度；固定字长溢出、浮点替代或无误差控制的舍入不属于这个谓词。
+
+**30.49 定理与证明：完全离散的 RH 等价式。** 引用 30.36 的 [B1]，有
+\[
+\boxed{\mathrm{RH}\iff\forall m\in\mathbb N_+\ \exists e\in\mathbb N_0:
+\operatorname{Verify}(m,e)=\mathrm{true}.}
+\]
+正向：RH 给 \(d_\infty=0\)，30.39 对每个 \(m\) 给某个有限 \(N\) 及实有理 \(q\) 满足严格残差 \(R_N(q)<1/m\)。30.46 给有限 \(J,K\)（也可取 \(J=r+1,K=r\)）使 \(B<1/m\)，30.47 编成 \(e\)，30.48 的整数比较接受。反向：每个被接受的 \(e\) 解出一个合法有限数据组，且 \(R_N(q)\le B<1/m\)。于是对全部 \(m\) 有严格近似，30.39 及 [B1] 推出 RH。每个通过的证书同时给明确的有限向量 \(Z_N(q)\)，其对 \(A_N-(1/m)E_{00}\) 的二次型严格负；此联系不需有限块可逆。这里证明的是两个全称陈述的等价，没有证明其中的全称存在证书陈述成立；任何有限个容差的通过也不填补剩余量词。
+
+**30.50 边界情形及证明。** 若 \(q=0\)，则 \(b=0,A_j=1,M=1\)，真实残差为 1，而
+\[
+B=\sum_{j=1}^{J-1}\frac1{j(j+1)}+\frac1J=1,
+\qquad E_J=1/J.
+\]
+故对所有 \(m\ge1\) 都不通过，包括 \(m=1\) 的等号。若 \(b=0\) 而 \(q\ne0\)，则 \(d_j=0\)，所有对数项消失，\(K\) 不影响上界；具体有 \(R_N(q)=\sum_{j=1}^{J-1}A_j^2/[j(j+1)]+E_J\)、\(B=\sum_{j=1}^{J-1}A_j^2/[j(j+1)]+M^2/J\)，故 \(0\le B-R_N(q)\le M^2/J\)。\(E_J\) 及其上界仍保留，系数平方尾确为零。任意负系数、负 \(b\)、负或零 \(A_j\) 均由有符号展开及 30.43 的符号选择覆盖，不能附加正系数限制。公式对 \(J<N\) 和 \(J\ge N\) 都成立，最小 \(J=2,K=1\) 合法；整数断点仅改变零测集上的函数值。可在验收域外另记空系数 \(N=0\) 的残差与上界均为 1，但 Verify 的编码坚持 \(N\ge1\)。
+
+若某截断给 \(B\ge1/m\)，本次不接受；即使真残差严格小也可能如此，30.46 保证严格情形最终由确定安排接受。若 \(R_N(q)=1/m\) 或更大，则无截断接受；零或负阈值同样不可能有非负残差的严格见证。由 30.31，任意固定有限 \(N\) 都有 \(D_N>0\)，且 \(B\ge R_N(q)\ge D_N\)。因而取 \(1/m\le D_N\) 时，该 \(N\) 下所有系数、精度和编码均不能通过；同样，对任意固定 \(N_0\)，取 \(1/m\le D_{N_0}\)，因 \(D_N\ge D_{N_0}\) 对所有 \(N\le N_0\) 成立，这些较短前缀也全都不能通过。一个固定证书也必在足够大的 \(m\) 失败。不能用固定有限维度代替 30.49 中随 \(m\) 变化的存在量词。
+
+**30.51 定理与范围界定：一致精度与尚未证明的全局成功界。** 给定有理 \(Q_0\ge0\)，对所有有限 \(N\) 及 \(\sum_{k=1}^N|q_k|\le Q_0\)，有 \(|b|\le Q_0\)、\(M\le1+Q_0\)，故
+\[
+M^2+\Lambda\le C(Q_0):=(1+Q_0)^2+\frac{3Q_0(1+Q_0)}8.
+\]
+于是对任意有理 \(\eta>0\)，同一整数
+\(r=\lfloor C(Q_0)/\eta\rfloor+1\) 在全部这些 \(N,q\) 上保证
+\(0\le B(N,q,r+1,r)-R_N(q)<\eta\)。这是真正关于系数有界族的一致精度界，不依赖维度或实际残差。但它不构造随 \(m\) 成功的 \(N,q\)，不证明成功证书有某个已知全局截止值。严格完备性的证明使用正余量的存在性；验收和精度安排不把未知余量作为输入。
+
+因为 Verify 全定义，可以在数学上按 \(e=0,1,2,\ldots\) 依次检查，对每个固定 \(m\) 在首次 true 时输出；每次检查有限，若存在证书则该过程终止。条件于 RH，30.49 保证这给一个对全部 \(m\ge1\) 总定义的可计算证书选择函数。本条不无条件证明该过程对每个 \(m\) 终止，也不给出无条件的全局运行时间或成功截止界，更不据此宣称 RH 可判定或不可判定。这个编码等价式不是 RH 的证明、核冻结的形式化定理、效率或新颖性结论；原模型的无限系数达到性及本卷其它尚未解决的算术/物理问题不由它解决。数学出处及本组证明的输入对应见 [本节资料报告](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md)。

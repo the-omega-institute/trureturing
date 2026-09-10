@@ -1,0 +1,18 @@
+**30.20 证明附引（附 30.4–30.17）：经典方法附引。**
+本节专门的八节点、裕量、扰动组合及格点应用的证明地位为 repo-derived。
+经典分数背包、范数凸性和严格端点论证的已有核对直接引用 26.28;
+新增的聚合积分比较使用经典递增凸序:Gushchin–Borzykh,
+*Integrated quantile functions: properties and applications*,
+Modern Stochastics: Theory and Applications 4(4) (2017),285–314,
+DOI [10.15559/17-VMSTA88](https://doi.org/10.15559/17-VMSTA88),
+[原文](https://arxiv.org/pdf/1801.00977) §2.3 Theorem 5(ii) 及其证明
+(PDF p.10 / 期刊 p.294),核对递增凸序、正部积分及积分分位函数的等价关系。
+把质量 3 的测度除以 3 后可与其概率约定对照;30.8 已直接证明本节所需版本。
+NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
+及 Encyclopedia of Mathematics 的
+[Dirichlet theorem](https://encyclopediaofmath.org/wiki/Dirichlet_theorem)
+中同时逼近与抽屉原理小节。30.17 只用已自足证明的 \(Q=N^2\) 齐次特例。
+这些出处只支持经典工具,不被说成含有本节专门素数比较定理。
+
+[balanced-prime-235-all-slabs-0910.md](../../reports/quantized-gh/balanced-prime-235-all-slabs-0910.md)。
+

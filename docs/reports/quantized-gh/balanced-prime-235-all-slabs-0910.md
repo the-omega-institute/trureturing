@@ -3695,3 +3695,100 @@ Only assigned worktree, its pinned Git objects, three expressly supplied I27 fid
 No stage, commit, push, branch mutation, rebase, merge, PR action or make pr. Caller owns lifecycle; final tree remains unstaged on pinned HEAD. No source edits after the single canonical ingest; report/map finalization is append/metadata only.
 
 No automatic approval rejection was observed. Final implementation evidence remains fallible self-inspection. The exact Gram proof dependency, caller seal/audit, complete composed independent review, ordinary gates, faithful downstream integration and ordered S19-through-S25 MERGED remain outstanding. This partial migration is progress toward the unchanged full goal and is not an accepted whole-book result.
+
+
+## S19 complete proof adoption (C94 / I33)
+
+The active mathematical source now contains complete proofs at 30.22–30.51. This is source preparation, with the general complex singular cases, infinite endpoint/nonattainment distinction and all finite rational-certificate quantifiers preserved. The original envelopes remain immutable caller inputs; this report does not reproduce them.
+
+The mathematical authorship is the recovered actual-PRO C88 proof, corrected by all five C90 items and incorporated unchanged by valid C92, together with recovered C93. C88 original task 7da5f586-e75f-4b16-9971-e8cb8ed73725 and C93 original task 604cbba9-113f-4371-b804-0977c4534969 remain failed carriers without a mathematical rejection. Their recoveries are 6700a985-d020-4e3e-afce-31675e057216 (conv_45d699acc8264d78) and 16e953cc-6dc4-4cef-9205-0acf6b9177bf (conv_1aded136c3f591e2). C90 task 474db6d9-2b27-4cf5-86fe-152eda16d7f8 completed the mathematics but its caller-origin null-log_ref defect leaves that formal flight abstained; C92 task 9661f1d7-961b-4764-afa0-d994993266eb repaired packaging, without changing its proofs or budgets. C88's deployment correction and I31's late cumulative intake remain recorded in the immutable report prefix.
+
+The supplied visible envelopes are the exact available primary inputs; unavailable original author serialization is not reconstructed. Actual-PRO attribution rests on supplied task evidence, with hidden serving identity ASSUMED-UNVERIFIED and no model-diversity claim. The Baez-Duarte Theorem 1.1 normalization uses the supplied primary and caller original-paper check; this implementation made no fresh literature retrieval. The full cumulative brief/GoalArtifact, current authority snapshot, local instructions, pinned beta.42 skill/spec and every supplied envelope/supporting input were read before target mutation; the attempt intake receipt records the distinction between initial byte reads and completed semantic intake.
+
+The new adoption map is the single authoritative inventory of exact input identities, proof-to-primary correspondence, source addresses, changed bytes, canonical pairs/chains and recovery bindings. The older I31 map is an immutable earlier snapshot. Existing mathematical hypotheses, proofs, tables, numerical-evidence qualifications and open questions remain active; the source changes below close the old Gram obligations and remove process wording while retaining its mathematical scope. Mathematical software, performance guarantees, formalization, RH resolution, global certificate-success bounds, independent review, downstream integration and ordered delivery are not established by this implementation.
+
+### Inactive byte-exact source fragments
+
+These archived fragments are historical, not active hypotheses or pending obligations. Delimiter lines are external to each preserved span; the map records exact boundaries, including the protected 1253-byte Gram subspan.
+
+I33 archive 01.
+
+````text
+证明的有限核对说明：这些是精确抽查;全称命题由上面的构造和不等式证明承担。它本身没有证明实际 ξ 序列在每种分辨率上都失败。
+````
+
+I33 archive 02.
+
+````text
+**未证数学目标（原文整体保留）。** 下列距离算子目标仍待完整证明；不作为已证定理或假设使用。
+
+### PRO 提供的下一篇纸面目标: 距离的算子实现
+
+以下留作后续附录目标,本轮不宣称已完成新的谱判据。使用第 3 节的 \(\mathcal H,\chi,f_k,D_N\),在 \(\ell^2(\mathbb N_0)\) 的标准基上设
+
+\[
+h_0=\chi,\quad h_k=f_k/k\ (k\ge1),\qquad T e_k=h_k.
+\]
+
+因为 \(\|f_k\|_{\mathcal H}^2=\|f_1\|_{\mathcal H}^2/k\),且 \(f_1\) 在 \((0,1]\) 有界、在 \((1,\infty)\) 等于 \(1/x\),候选合成算子 \(T:\ell^2\to\mathcal H\) 的 Hilbert-Schmidt 范数平方为
+
+\[
+1+\|f_1\|_{\mathcal H}^2\sum_{k\ge1}k^{-3}<\infty.
+\]
+
+正确的正迹类对象是 **\(A=T^*T\)**,作用在 \(\ell^2\);不能写成类型不匹配的 `A=TT`。若 \(P_N\) 投影到 \(e_0,\ldots,e_N\),令 \(A_N=P_NAP_N\) 视为有限矩阵,待系统写明的目标是
+
+\[
+D_N=\sup\{\delta\ge0:A_N-\delta e_0e_0^*\succeq0\},
+\qquad \mathrm{RH}\iff\inf_{N\ge1}D_N=0.
+\]
+
+目标必须使用全半轴范数,并处理有限 Gram 块奇异时的距离与减秩阈值;不能依赖未经证明的可逆性。缩放 \(f_k\mapsto f_k/k\) 不改变任何有限线性张成空间。即使上述实现全部写成证明,\(A\succeq0\) 本来就由 \(T^*T\) 自动成立,RH 内容仍在距离阈值趋零的全局条件,不会因“已有正算子”自动解决。
+
+
+````
+
+I33 archive 03.
+
+````text
+第 7 节其它算术桥、物理检测与 距离算子义务仍 open。
+````
+
+I33 archive 04.
+
+````text
+和所有历史记录保持有效
+````
+
+I33 archive 05.
+
+````text
+本地对照范围是本卷第 1-26 节,没有作全库或文献的穷尽新颖性断言。
+````
+
+I33 archive 06.
+
+````text
+后来的整箱全薄层邻域、实际 5040 箱体和第三素数射线问题均不进入本层。
+````
+
+I33 archive 07.
+
+````text
+后来的 \((2,3,7)\)、实际 fixed5040、translated5040 和第三素数射线结果不属于本层。
+````
+
+I33 archive 08.
+
+````text
+本节专门的八节点、裕量、扰动组合及格点应用当前标为 repo-derived,
+没有以历史的未评定原始措辞作为现行 provenance 标签。
+````
+
+### Adoption evidence and scope
+
+The single authorized ingest exited 0: residual_open_added=40, skipped_existing=197, coarse_fallbacks=0, open_genres=0, cas_objects_written=40. The source was frozen before that invocation. Structural verification binds all 228 current whole units and their ordered chains; each newly emitted pair is accounted for. Exact current and pre-I31 source recovery, the protected Gram archive, the original report prefix and bounded historical bindings are independently described in the map. Producer-owned CAS/YAML/LF bytes were not repaired or normalized.
+
+CPU activity was structural text/JSON/YAML/Git verification and intrinsic ingest orchestration only. No mathematical program, test, search or historical replay was executed. The map retains the pre-write scratch failures and corrected exits; they are representation failures, not rejected mathematics. No source edit followed ingest. All changes remain unstaged on the assigned BASE; implementation supplies no independent-review verdict or approval and does not complete the continuing goal or downstream delivery.
+
+Authoritative adoption map: [theory-proof-adoption-s19-0910.json](theory-proof-adoption-s19-0910.json), SHA256 `9abba55e13c08d0f784a6c958416c5cfb4245872ad087ccba2f385469f23a8ec`. The result envelope binds the full final source, report and map identities.
