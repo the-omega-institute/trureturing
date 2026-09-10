@@ -189,4 +189,12 @@ run_cmd do
   unless forbidden && closure.isSome do
     throwError "[FAIL] AppliedDecidable: {forbidden}, {closure.isSome}"
   logInfo "[PASS] AppliedDecidable"
+noncomputable def parameterDecision (p : Prop) (_ : Bool) : Decidable p := Classical.propDecidable p
+noncomputable def openDecision (_ : Unit) (x : Bool) : Bool :=
+  if @decide specificStatement (parameterDecision specificStatement x) then x else true
+run_cmd do
+  let (forbidden, closure) := RegistrationGates.readoutClosure (← getEnv)
+    ``specificTruth (mkConst ``openDecision)
+  unless forbidden && closure.isSome do throwError "[FAIL] OpenAppliedDecidable"
+  logInfo "[PASS] OpenAppliedDecidable"
 end RegistrationProvenance
