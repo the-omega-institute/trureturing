@@ -16,7 +16,11 @@ triage: anchor
 
 ## Verified locator
 
-This is a repository derivation. Its source is
+This note is not a literature statement but a repository derivation, so `doi: null`.
+The canonical locator is the repository itself:
+https://github.com/the-omega-institute/trureturing
+
+Its source is
 `D5/S1/Words/Compositions/AlternatingResidualBridge.lean`, specifically
 `encode_rule_iff`, `encode_injective`, and `encoded_product_sign_sum`.
 The prerequisite is `ResidualPermutationSign.signed_residual_sum` in the same directory.
