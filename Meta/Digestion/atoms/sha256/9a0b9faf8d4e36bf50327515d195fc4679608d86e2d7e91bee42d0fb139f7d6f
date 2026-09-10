@@ -1,0 +1,32 @@
+## 29. 更新后的形式化顺序
+
+历史队列：
+
+```text
+SupportFaceFlatnessDefect
+  -> exact row-mass certificate
+  -> six-row sharp margin 72
+
+ZaunerAggregateFlatnessCertificate
+  -> instantiate structural zeros
+  -> require scaled row-Gram explicitly
+  -> sharp three-frame margin 72
+
+RelativeModeTransportDefect
+  -> coarse 2 x 2 block averaging
+  -> defect >= centered mode energy
+  -> robust leakage and commutator forms
+
+ZaunerThreeFramePotentialDecomposition
+  -> exact phase remainder
+  -> equality locus e_i in {+i,-i}
+  -> paired-column binary constraints
+
+FiniteAtlasPotentialCover
+  -> branchwise support/coarse certificates
+  -> positive finite minimum
+  -> global no-zero theorem
+```
+
+`72` 证书只排除 canonical two-mode support face。六维四 MUB 全局结论仍依赖 noncanonical branch、exceptional loci 和 complete atlas cover。为避免增加同义包装，当前优先级转向第 31 节的矩阵主定理及第 33 节尚未闭合的 orthogonal-pair 证书。
+

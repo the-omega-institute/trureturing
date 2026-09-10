@@ -1,0 +1,4 @@
+**Do not reverse this simulation.** Lower bounds on the relaxed memory tree do
+not give lower bounds on the actual square-grid Weitz tree. The memory barrier
+restricts this chosen approximation strategy, not the physical critical point.
+

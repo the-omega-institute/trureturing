@@ -1,0 +1,20 @@
+### 5. 新的跨账号 canonical Li 来源与仍需证明的算术连接
+
+本轮检索发现 `fkst-loning-s-chrono-macbook-pro[bot]` 的 PR #6172，回读时 open、未合并，head `04104c13633054227c697d2b1234e133b377865d`。实际回读 `Zeros/Endpoints/CanonicalLiLocalExpansion.lean`，blob `0fb04eb79f87389016b51af25cdf6078d5616b7c`：它从实际 `xiReading` 的高阶导数定义 canonicalLiCoefficient，证明全部阶数的局部生成展开及首系数正性。其作者报告的编译不是本轮执行的验证。
+
+因此，先前“canonical Li 定义尚无来源”的描述应按版本修订：当前已有这条在途候选真源。这里没有抄写该定义，也没有把未合并文件默默放进本分支的 import closure。它的局部解析展开仍未提供 RH 与全序列非负性的等价，或归一化实际曲率在全部阶数上的正性。
+
+`normalized_curvature_quadratic_bound` 另从同一个概率表示证明全序列界
+
+\[
+0\le L_n\le L_1 n^2.
+\]
+
+证明只使用原几何和的模长不超过 n，再对质量为一的 sigma 积分。它不等于上一节用于排除恒等点的次二次渐近，因为 quadratic upper bound 允许非零 n^2 项。
+
+这一界提示了与 #6172 的更直接解析接点，以下仍为纸面推导，未计入本轮 Lean 定理。若将 L 识别为该 canonical 序列，则 G(z)=sum_(n>=0) L_(n+1) z^n 由二次界在单位圆盘内正规收敛。设 F(z)=xiReading(1/(1-z))，它在同一圆盘全纯。#6172 的局部展开给出 F'=G F 在零附近成立；全纯恒等定理可把等式延到整个圆盘。F(0)=xiReading(1)=1/2 非零；全纯方程 F'=G F 不允许有限阶零点，因为导数使零点阶数减一，而右侧的阶数不会下降。因此这条路线可把 canonical 曲率的全部 Toeplitz 正性直接转成 Re(s)>1/2 的实际无零点结论，再用反射处理另一侧。
+
+所需新 Lean 义务是正规收敛、实际复合函数的全域全纯性、局部识别的恒等延拓及零阶排除。这里尚未实现这些步骤，且 canonical 全阶曲率正性本身依然是未证明的算术条件；二次界没有自动证明它。该路线可以减少单独把完整 Li 判据作为外部假设的需要，而不是增加另一份同名的 canonical 系数定义。
+
+Nakamura–Suzuki 的 arXiv:2306.08317 使用实际 g_zeta 的实线无穷可分分布判据；Suzuki 的 arXiv:2606.09096 继续研究实际 screw 核与 Weil 形式。本轮仅核对其主要记录和定位，没有把当前圆周 rho_t 等同于这些实线分布，也没有重新证明两篇论文的完整结果。下一项应使用共享 canonicalLiCoefficient 来源，把真实算术曲率、递推和零点测度识别接到本节已完成的概率分析链上。黄金周期观测丢失的尺度层数也不会被圆周半群自动恢复。
+

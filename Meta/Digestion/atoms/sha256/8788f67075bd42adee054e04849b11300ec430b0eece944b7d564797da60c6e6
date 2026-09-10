@@ -1,0 +1,24 @@
+- three negative controls for branch wrapping, inferring log equality from
+  exponential equality alone, and reusing an undeleted sibling domain.
+
+```sh
+python research/hard_core_weitz/verify_normalized_partition_log.py
+```
+
+Two final runs on the assembled source bytes produced identical JSON. The
+maximum square-log and complete-order errors were respectively
+2.85746847821e-101 and 5.71493695641e-101. These numbers describe finite numerical
+regressions. They do not establish the universal statements or validate their
+proof terms. The implementation is by the same assistant, not an independent
+author review. Existing coefficient, geometric and holomorphic proof scripts
+remain dependencies and were not recompiled or rerun by this verifier.
+
+The source proofs were logically reviewed against the pinned Mathlib logarithm
+branch, finite-product, permutation and derivative interfaces. No Lean/lake
+executable is available in this runtime, so Lean elaboration, kernel acceptance,
+executed axiom closure and Scribe emission remain unperformed. The current result
+is a candidate formalization of the normalized finite-volume log and its bounds.
+It does not claim a new numerical zero-free threshold, mathematical priority or
+an established thermodynamic limit.
+
+

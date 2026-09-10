@@ -1,0 +1,46 @@
+## 9. Zauner local fibre
+
+一个 mode block 可参数化为：
+
+```math
+S(u,v,x,y)
+=
+\frac12
+\begin{pmatrix}
+u+v&y(u-v)\\
+(u-v)/x&y(u+v)/x
+\end{pmatrix}.
+```
+
+对固定 matrix entries `a,b,c,d`，直接消元得到：
+
+```math
+\boxed{cdx^2=ab,}
+```
+
+```math
+\boxed{acy^2=bd.}
+```
+
+在非零 generic locus，若两组参数表示同一 block，则：
+
+```math
+x'=\pm x,
+\qquad
+y'=\pm y.
+```
+
+继续利用 `u+v` 与 `u-v` 可得到更强的二点 fibre：
+
+```math
+(u',v',x',y')=(u,v,x,y)
+```
+
+或：
+
+```math
+(u',v',x',y')=(v,u,-x,-y).
+```
+
+这些 local identities 已写入 Lean。它们将每个 generic mode 的 factor ambiguity 降到一个 involution。`x` 与 `y` 的符号相互关联，不能把二者独立相乘以推出 labelled fibre degree `4^3=64`。完整 completion fibre 的次数仍需独立消元和 gauge 记账。
+

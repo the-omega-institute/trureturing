@@ -1,0 +1,23 @@
+### 3. Fourier 数据构造实际概率卷积演化
+
+`CircleProbabilitySemigroup.circleMoment_mconv` 对 Mathlib 的实际乘法卷积证明
+
+\[
+\widehat{\mu\mathbin{*_m}\nu}(n)=\widehat\mu(n)\widehat\nu(n).
+\]
+
+卷积是乘积测度在圆周乘法下的推前，证明使用有限测度的可积性及 Fubini。
+
+若 c_t(n) 在 t>=0 连续，满足 c_t(0)=1、c_0(n)=1、c_(s+t)(n)=c_s(n)c_t(n)，且每个 t 的全部 Toeplitz 矩阵正半定，那么 `circle_probability_semigroup_of_fourier` 构造唯一的实际概率族 mu_t，并同时证明
+
+\[
+\widehat\mu_t(n)=c_t(n),\qquad \mu_0=\delta_1,\qquad
+\mu_{s+t}=\mu_s\mathbin{*_m}\mu_t,
+\]
+
+以及 mu_t 的弱连续性。唯一性甚至不要求竞争概率族先具有连续性。
+
+对于任意实序列 psi，psi(0)=0，`exponential_toeplitz_iff_probability_semigroup` 得到全部指数矩阵正性与指定系数 exp(-t psi(n)) 的实际弱连续半群存在性的等价。这一部分没有调用或证明 Schoenberg 定理，指数矩阵的正性仍是前件。
+
+逐项 psi(n)>=0 远弱于该正定条件。精确负对照取 psi(+-2)=1，其余整数为零，在 t=log(2) 时 c_0=c_(+-1)=1、c_(+-2)=1/2。向量 (1,-2,1) 在三阶 Toeplitz 矩阵上的二次型恰为 -1。另一方面，`exponential_probability_forces_nonnegative` 从实际概率矩的模长不超过一导出每个 psi(n)>=0，明确只证明必要方向。
+

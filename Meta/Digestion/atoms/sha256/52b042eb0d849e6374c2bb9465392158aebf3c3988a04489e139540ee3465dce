@@ -1,0 +1,53 @@
+## 41. Source, literature and verification of this continuation
+
+Two Lean owners, Holomorphic/LinearVolumeVariance and
+Holomorphic/OccupationConcentration, have two canonical Scribe companions and
+17 explicitly named public declarations. The first imports the existing
+OccupationResponse owner and Mathlib.Analysis.Complex.Liouville; the second
+consumes the first and the already-owned actual Gibbs PMF. No finite geometric
+payload is changed. The endpoint variance and concentration statements have
+only the finite-domain, real-activity-interval and positive-threshold premises
+appropriate to their assertions, with nonemptiness required for density bounds.
+The analytic and probability ingredients are concrete proof dependencies.
+
+The Cauchy derivative API was read at the existing Mathlib pin
+`db584cd6d46c92f209a44c0f1c829460d327499d`. In particular, the proof checks the
+closed-disk inclusion before applying DifferentiableOn.diffContOnCl_ball and
+Complex.norm_deriv_le_of_forall_mem_sphere_norm_le. Cauchy's theorem and the
+second-moment event inequality are established mathematics; no novelty in
+those general tools is asserted.
+
+The literature versions read include Davies, Sandhu and Tan [7], v2, and
+Zhang and Xu [8], v2 revised 5 June 2026. They study occupancy and variance as
+actual hard-core observables. Their extremal graph results are distinct from
+this sufficient upper bound on finite induced square-grid domains in a
+specified activity interval. No claim to solve those separate extremal
+problems or improve their constants is made.
+
+The supplementary verifier enumerates actual independent configurations of
+all 512 subdomains of a 3-by-3 grid. It evaluates polynomial derivatives
+coefficientwise and uses exact rational/Gaussian-rational arithmetic. It checks
+16384 rational points on the chosen Cauchy boundary circles, 2048 actual
+variance-response and linear-bound instances, 2044 nonempty density second
+moments and 10220 actual Gibbs tail probabilities. The boundary samples
+supplement the universal closed-disk proof; finite sampling does not establish
+holomorphy, Cauchy's theorem, or the all-domain variance assertion.
+
+Five elementary diagnostics exercise mistakes involving a size-dependent
+radius, discrete support alone, incorrect density normalization, a boundary
+pole, or using only the value at the disk center. They are fixed diagnostic
+examples, not a claim of exhaustive mutation coverage. Two complete executions
+of the final verifier produced byte-identical JSON.
+
+```sh
+python research/hard_core_weitz/verify_linear_volume_variance.py
+```
+
+The verifier reuses the earlier actual configuration enumerator and exact
+Gaussian-rational arithmetic. It never reads a saved success verdict as an
+input. It is another implementation by the same assistant, not independent
+researcher review. The local environment has no Lean/lake executable; new and
+inherited Lean proof terms have not been elaborated or kernel-checked here.
+No executed axiom-closure report or Scribe emission is claimed. The delivered
+result is a logically reviewed candidate formalization with supplementary
+finite regressions, inheriting the existing zero-free chain's validation status.

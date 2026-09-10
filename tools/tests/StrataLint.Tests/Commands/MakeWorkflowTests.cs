@@ -74,10 +74,12 @@ public sealed partial class MakeWorkflowTests
         "settle-clear",
         "worktree",
         "worktree-clean",
+        "worktree-remove",
         "pr-open",
         "pr-watch",
         "preflight",
         "gate",
+        "census",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -98,6 +100,7 @@ public sealed partial class MakeWorkflowTests
         "prime-slab-device-test",
         "prime-slab-verify",
         "prime-slab-mutation-test",
+        "census-test",
     ];
 
     [Fact]

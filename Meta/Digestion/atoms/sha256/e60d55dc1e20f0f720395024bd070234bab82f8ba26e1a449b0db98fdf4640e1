@@ -1,0 +1,36 @@
+### 42.1 完整赋值、原始连接与全分隔集
+
+**定义 QI-D1（原始记录与世界）。** 令 $I$ 为有限非空节点集，$T=(I,E_T)$ 为树。每个源变量 $v$ 有值集 $V_v$；对变量集 $D$ 定义
+
+$$
+\mathcal A(D)=
+\{a:\operatorname{dom}(a)=D,\ a(v)\in V_v\text{ 对每个 }v\in D\},
+\qquad \mathcal A(\varnothing)=\{\varnothing\}.
+\tag{QI-ASSIGN}
+$$
+
+节点 $i$ 的作用域为 $S_i$，局部关系为 $\Gamma_i\subseteq\mathcal A(S_i)$。记录是整个作用域上的完整赋值，作用域、值集和关系均不要求有限，局部关系也允许为空。对任意 $A\subseteq I$ 令
+
+$$
+\begin{aligned}
+U_A&=\bigcup_{i\in A}S_i,\\
+J_A&=\{a\in\mathcal A(U_A):a|_{S_i}\in\Gamma_i\text{ 对每个 }i\in A\},\\
+J_\varnothing&=\{\varnothing\},\qquad J=J_I,\\
+K&\subseteq\mathcal A(U_I),\qquad W=J\cap K.
+\end{aligned}
+\tag{QI-JOIN}
+$$
+
+这里 $J_A$ 是原始组件连接，$J$ 是原始全局连接；$K$ 排除的记录不属于实际世界 $W$，这种排除不是算术失败。将完整组件记录直接识别为 $a\in J_A$，并从它导出响应，初始即保留了记录中的来源与依赖数据。压缩这些数据所需的条件见 §42.9。
+
+假设运行交集性质（RI）：对每个出现的变量 $v$，集合 $\{i\in I:v\in S_i\}$ 在树中连通。每条边 $e=\{i,j\}$ 保留完整分隔集 $C_e=S_i\cap S_j$，不先将其投影成更小的字段集。
+
+**命题 QI-P1（分隔集恰为割的完整重叠，repo-derived）。** 删除边 $e$ 后的节点分割记为 $L\mid R$，则
+
+$$
+U_L\cap U_R=C_e.
+\tag{QI-CUT}
+$$
+
+**证明。** 若变量同时出现在 $L$ 的一个节点和 $R$ 的一个节点，RI 使连接这两个节点的唯一路径上每个节点都含该变量。路径经过 $e$ 的两个端点，所以该变量属于 $C_e$。反向包含由两个端点各在一侧立即得到。因此 $a\in J_L$、$r\in J_R$ 在 $C_e$ 上相等时，$a\cup r$ 是定义良好的完整赋值；其每个局部限制仍属于对应 $\Gamma_i$，故 $a\cup r\in J$。证毕。
+
