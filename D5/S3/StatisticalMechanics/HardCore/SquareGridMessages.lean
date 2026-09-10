@@ -29,18 +29,18 @@ def neighborOrder (a : Fin 6) : List (Fin 3) :=
   else if a = 2 then [1, 0, 2] else if a = 3 then [1, 2, 0]
   else if a = 4 then [2, 0, 1] else [2, 1, 0]
 
-private def prefix (a : Fin 6) (d : Fin 3) : List Point :=
+private def «prefix» (a : Fin 6) (d : Fin 3) : List Point :=
   (0, 0) :: ((neighborOrder a).take (position a d)).map direction
 
 private theorem order_geometry :
     (∀ a : Fin 6, ((neighborOrder a).map direction).toFinset =
       {(1, 0), (0, -1), (0, 1)}) ∧
-    (∀ (a : Fin 6) (d : Fin 3), (prefix a d).toFinset = deleted a d) ∧
+    (∀ (a : Fin 6) (d : Fin 3), («prefix» a d).toFinset = deleted a d) ∧
     (∀ (a : Fin 6) (d : Fin 3), direction d ∉ deleted a d) := by
   decide +kernel
 
 private theorem before_eq_prefix (V : Finset Point) (a : Fin 6) (d : Fin 3) :
-    V \ deleted a d = afterErases V (prefix a d) := by
+    V \ deleted a d = afterErases V («prefix» a d) := by
   rw [afterErases_eq_sdiff, order_geometry.2.1 a d]
 
 /-- The child value is a ratio of actual independent-set sums on the exact
@@ -67,7 +67,7 @@ theorem ordered_product_children {K : Type*} [Field K]
   rw [Fin.prod_univ_three]
   simp_rw [child_vacancy_before, before_eq_prefix]
   fin_cases a <;>
-    simp [neighborOrder, prefix, position, direction, vacancyProduct, afterErases,
+    simp [neighborOrder, «prefix», position, direction, vacancyProduct, afterErases,
       gridVacancy] <;> ring
 
 private theorem origin_neighbors (p : Point) :
@@ -120,18 +120,18 @@ theorem grid_partition_recursion {K : Type*} [Field K]
     _ = gridPartition (V.erase (0, 0)) z +
         z * gridPartition (closedComplement squareGrid V (0, 0)) z :=
       partition_delete squareGrid V (0, 0) h0 (fun _ => z)
-    _ = _ := by rw [ht]; field_simp [hne]; ring
+    _ = _ := by rw [ht]; field_simp [hne]
 
 /-- The actual real parent vacancy equals the reciprocal product recursion.
 All nonzero hypotheses are derived from nonnegative independent-set weights. -/
 theorem grid_real_recursion (V : Finset Point) (h0 : (0, 0) ∈ V)
-    (hp : (-1, 0) ∉ V) (a : Fin 6) (λ : ℝ) (hλ : 0 ≤ λ) :
-    gridVacancy V (0, 0) λ = (1 + λ * ∏ d, childVacancy V a d λ)⁻¹ := by
-  have hn (U : Finset Point) : gridPartition U λ ≠ 0 :=
+    (hp : (-1, 0) ∉ V) (a : Fin 6) («λ» : ℝ) («hλ» : 0 ≤ «λ») :
+    gridVacancy V (0, 0) «λ» = (1 + «λ» * ∏ d, childVacancy V a d «λ»)⁻¹ := by
+  have hn (U : Finset Point) : gridPartition U «λ» ≠ 0 :=
     ne_of_gt (lt_of_lt_of_le zero_lt_one
-      (one_le_partition squareGrid U (fun _ => λ) (fun _ _ => hλ)))
-  have he := grid_partition_recursion V h0 hp a λ (fun U _ => hn U)
-  have hd : 1 + λ * ∏ d, childVacancy V a d λ ≠ 0 := by
+      (one_le_partition squareGrid U (fun _ => «λ») (fun _ _ => «hλ»)))
+  have he := grid_partition_recursion V h0 hp a «λ» (fun U _ => hn U)
+  have hd : 1 + «λ» * ∏ d, childVacancy V a d «λ» ≠ 0 := by
     intro hd
     exact hn V (by simpa [hd] using he)
   unfold gridVacancy
@@ -141,12 +141,12 @@ theorem grid_real_recursion (V : Finset Point) (h0 : (0, 0) ∈ V)
 /-- An absent actual neighbor gives the neutral child value one, not an
 arbitrary boundary value. This follows from its two identical positive partitions. -/
 theorem child_vacancy_absent (V : Finset Point) (a : Fin 6) (d : Fin 3)
-    (hd : direction d ∉ V) (λ : ℝ) (hλ : 0 ≤ λ) : childVacancy V a d λ = 1 := by
+    (hd : direction d ∉ V) («λ» : ℝ) («hλ» : 0 ≤ «λ») : childVacancy V a d «λ» = 1 := by
   rw [child_vacancy_before]
   have hnot : direction d ∉ V \ deleted a d := fun h => hd (Finset.mem_sdiff.mp h).1
-  have hn : gridPartition (V \ deleted a d) λ ≠ 0 :=
+  have hn : gridPartition (V \ deleted a d) «λ» ≠ 0 :=
     ne_of_gt (lt_of_lt_of_le zero_lt_one
-      (one_le_partition squareGrid _ (fun _ => λ) (fun _ _ => hλ)))
+      (one_le_partition squareGrid _ (fun _ => «λ») (fun _ _ => «hλ»)))
   simp [gridVacancy, Finset.erase_eq_of_notMem hnot, hn]
 
 /-- The actual finite-domain pruning subset of nonparent directions. -/
@@ -170,7 +170,7 @@ theorem typed_child_context (V : Finset Point) (i : Fin 881)
       exact False.elim ((Finset.disjoint_left.mp hdis) hd hg)
   | some j =>
       rw [hs] at hg
-      refine ⟨j, hs, ?_, ?_, advance_card_lt V h0 (radiusFourChoice i) d⟩
+      refine ⟨j, rfl, ?_, ?_, advance_card_lt V h0 (radiusFourChoice i) d⟩
       · exact Finset.mem_image.mpr ⟨direction d,
           Finset.mem_sdiff.mpr ⟨hd, order_geometry.2.2 (radiusFourChoice i) d⟩,
           recenter_direction d⟩
@@ -182,14 +182,14 @@ and child graph ratios. Recursion, real input bounds, absent-child values and
 actual pruning are derived, not supplied as message-semantics hypotheses. -/
 theorem actual_grid_affine_contraction (V : Finset Point) (i : Fin 881)
     (h0 : (0, 0) ∈ V) (hdis : Disjoint V (radiusFourMask i))
-    (λ : ℝ) (hλ : 0 ≤ λ ∧ λ ≤ 51 / 20) :
-    (1 - gridVacancy V (0, 0) λ) *
+    («λ» : ℝ) («hλ» : 0 ≤ «λ» ∧ «λ» ≤ 51 / 20) :
+    (1 - gridVacancy V (0, 0) «λ») *
         (∑ d ∈ availableDirections V,
-          childMessage i d (childVacancy V (radiusFourChoice i) d λ)) /
-      affineMessage i (gridVacancy V (0, 0) λ) < 999 / 1000 := by
-  let x : Fin 3 → ℝ := fun d => childVacancy V (radiusFourChoice i) d λ
+          childMessage i d (childVacancy V (radiusFourChoice i) d «λ»)) /
+      affineMessage i (gridVacancy V (0, 0) «λ») < 999 / 1000 := by
+  let x : Fin 3 → ℝ := fun d => childVacancy V (radiusFourChoice i) d «λ»
   have hx (d) : (20 / 71 : ℝ) ≤ x d ∧ x d ≤ 1 :=
-    real_255_message_box squareGrid (advance V (radiusFourChoice i) d) (0, 0) λ hλ
+    real_255_message_box squareGrid (advance V (radiusFourChoice i) d) (0, 0) «λ» «hλ»
   have hp : (-1, 0) ∉ V := by
     intro hv
     exact (Finset.disjoint_left.mp hdis) hv (radiusFour_geometry.2.2.2.1 i).2.2.1
@@ -197,13 +197,13 @@ theorem actual_grid_affine_contraction (V : Finset Point) (i : Fin 881)
     funext d
     by_cases hd : direction d ∈ V
     · simp [availableDirections, hd]
-    · have hv := child_vacancy_absent V (radiusFourChoice i) d hd λ hλ.1
+    · have hv := child_vacancy_absent V (radiusFourChoice i) d hd «λ» «hλ».1
       simp [availableDirections, hd, x, hv]
-  have hy : vacancy λ (fun d => if d ∈ availableDirections V then x d else 1) =
-      gridVacancy V (0, 0) λ := by
-    rw [hmask, grid_real_recursion V h0 hp (radiusFourChoice i) λ hλ.1]
+  have hy : vacancy «λ» (fun d => if d ∈ availableDirections V then x d else 1) =
+      gridVacancy V (0, 0) «λ» := by
+    rw [hmask, grid_real_recursion V h0 hp (radiusFourChoice i) «λ» «hλ».1]
     simp only [vacancy, x, one_div]
-  have h := affine_pruned_row_contraction i (availableDirections V) λ hλ x hx
+  have h := affine_pruned_row_contraction i (availableDirections V) «λ» «hλ» x hx
   dsimp only at h
   rw [hy] at h
   exact h

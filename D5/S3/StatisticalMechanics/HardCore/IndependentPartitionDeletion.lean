@@ -56,13 +56,16 @@ private theorem insert_configuration (V S : Finset α) (v : α) (hv : v ∈ V)
     · exact hv
     · exact ((mem_closedComplement G V v u).mp (hsub hu)).1
   · intro x hx y hy hxy
-    rcases Finset.mem_insert.mp hx with rfl | hx
-    · rcases Finset.mem_insert.mp hy with rfl | hy
-      · exact False.elim (hxy rfl)
+    rcases Finset.mem_insert.mp hx with hxv | hx
+    · subst x
+      rcases Finset.mem_insert.mp hy with hyv | hy
+      · subst y
+        exact False.elim (hxy rfl)
       · exact ((mem_closedComplement G V v y).mp (hsub hy)).2.2
-    · rcases Finset.mem_insert.mp hy with rfl | hy
-      · intro hadj
-        exact ((mem_closedComplement G V v x).mp (hsub hx)).2.2 (G.symm hadj)
+    · rcases Finset.mem_insert.mp hy with hyv | hy
+      · subst y
+        intro hadj
+        exact ((mem_closedComplement G V v x).mp (hsub hx)).2.2 (G.adj_symm hadj)
       · exact hind hx hy hxy
 
 private theorem erase_configuration (V S : Finset α) (v : α)
@@ -141,7 +144,8 @@ theorem partition_delete [CommSemiring R] (V : Finset α) (v : α)
 /-- The empty configuration gives the empty domain partition value one. -/
 theorem partition_empty [CommSemiring R] (w : α → R) :
     partition G ∅ w = 1 := by
-  simp [partition, configurations, SimpleGraph.IsIndepSet, Set.Pairwise]
+  simp [partition, configurations, Finset.filter_singleton, SimpleGraph.IsIndepSet,
+    Set.Pairwise]
 
 /-- A scalar homomorphism evaluates the same independent-set sum, so an
 algebraic identity is transported without changing its configuration semantics. -/
@@ -151,7 +155,7 @@ theorem map_partition [CommSemiring R] [CommSemiring T]
   simp [partition]
 
 /-- The ordinary independence polynomial on the same finite induced domain. -/
-def independencePolynomial (V : Finset α) : Polynomial ℤ :=
+noncomputable def independencePolynomial (V : Finset α) : Polynomial ℤ :=
   partition G V (fun _ => Polynomial.X)
 
 /-- Complex evaluation is exactly the hard-core sum used by the deletion

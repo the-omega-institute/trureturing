@@ -1,0 +1,55 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.HardCoreHolomorphic;
+
+internal sealed class AdaptiveComplexNeighborhoodDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Explicit holomorphic hard-core coordinates and uniform complex neighborhoods.",
+        H("AdaptiveComplexNeighborhood"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-actual-coefficient-bounds"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.actual_coefficient_bounds"),
+                H("actual coefficient bounds"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The analytic estimate uses this additional exact bound on the same payload. The lower bound and slope sign are reused from the existing full-box certificate."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-pruning"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.Pruning"),
+                H("Pruning"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A subset of actual geometric children. The root is separately treated."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-child-type"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.childType"),
+                H("childType"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Total accessor, used only on genuine children by Pruning."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-omega"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.Omega"),
+                H("Omega"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Explicit open tube around each actual type's compact real chart image."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-activity-tube"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.ActivityTube"),
+                H("ActivityTube"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("One open activity neighborhood, independent of graph size and recursion depth."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-adaptive-map"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.adaptiveMap"),
+                H("adaptiveMap"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual transformed map for the supplied geometric parent and child subset."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-neighborhoods-open"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.neighborhoods_open"),
+                H("neighborhoods open"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The constructed message and activity domains really are open."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-adaptive-uniform-invariant"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.adaptive_uniform_invariant"),
+                H("adaptive uniform invariant"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every actual type and every allowed pruning has the same invariant complex neighborhood. Its widths are explicit: delta=10^-20, epsilon=10^-30. No existence, Lipschitz, holomorphy or complex-invariance premise is supplied."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-omega-chart-inverse"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.omega_chart_inverse"),
+                H("omega chart inverse"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The principal logarithm is the true inverse throughout each constructed message neighborhood. Imaginary phase wrapping is excluded by the actual width."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-adaptive-holomorphic-recovery"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.adaptive_holomorphic_recovery"),
+                H("adaptive holomorphic recovery"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("On the constructed neighborhood, the map is jointly holomorphic and its inverse coordinate is exactly the hard-core vacancy, with both poles excluded."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hc-holo-adaptivecomplexneighborhood-four-child-root-nonzero"),
+                DeclarationHandle.Create("D5/S3/HardCoreHolomorphic/AdaptiveComplexNeighborhood.four_child_root_nonzero"),
+                H("four child root nonzero"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Four root factors need nonvanishing, not a three-child contraction claim. Every first child may use the already-owned initial type zero."))), DescribeRole.Theorem))));
+}

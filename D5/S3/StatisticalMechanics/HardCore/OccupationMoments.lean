@@ -116,8 +116,8 @@ theorem moment_hasDerivAt [NontriviallyNormedField 𝕜]
         (S.card : 𝕜) ^ k * ((S.card : 𝕜) * z ^ (S.card - 1))) z := by
   unfold moment
   exact HasDerivAt.fun_sum (fun S _ => by
-    simpa only [mul_one] using
-      ((hasDerivAt_id z).pow S.card).const_mul ((S.card : 𝕜) ^ k))
+    convert!
+      ((hasDerivAt_id z).pow S.card).const_mul ((S.card : 𝕜) ^ k) using 1 <;> simp)
 
 /-- Euler differentiation raises the occupation moment order. No division by
 activity or nonzero-activity assumption occurs, for any order k. -/
@@ -157,14 +157,16 @@ theorem normalized_moment_response [NontriviallyNormedField 𝕜]
         (moment G V k z / moment G V 0 z) * (moment G V 1 z / moment G V 0 z) := by
   have hk := (moment_hasDerivAt G V k z).differentiableAt.hasDerivAt
   have h0 := (moment_hasDerivAt G V 0 z).differentiableAt.hasDerivAt
-  rw [(hk.div h0 hne).deriv]
+  have hd := (hk.div h0 hne).deriv
+  change deriv (fun t : 𝕜 => moment G V k t / moment G V 0 t) z = _ at hd
+  rw [hd]
   calc
     _ = ((z * deriv (moment G V k) z) * moment G V 0 z -
           moment G V k z * (z * deriv (moment G V 0) z)) / (moment G V 0 z) ^ 2 := by ring
     _ = (moment G V (k + 1) z * moment G V 0 z -
           moment G V k z * moment G V 1 z) / (moment G V 0 z) ^ 2 := by
-      rw [euler_moment, euler_moment]; simp only [zero_add]
-    _ = _ := by field_simp [hne]; ring
+      rw [euler_moment, euler_moment]
+    _ = _ := by field_simp [hne]
 
 #print axioms weighted_cardinality_eq_partition_differences
 #print axioms euler_moment

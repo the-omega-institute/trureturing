@@ -40,7 +40,7 @@ theorem recenter_radius_bound (d : Fin 3) (p : Point) :
   have hp := abs_succ_bound p.2
   have hn : (-p.2 - 1).natAbs = (p.2 + 1).natAbs := by
     rw [show -p.2 - 1 = -(p.2 + 1) by ring]
-    simp
+    exact Int.natAbs_neg _
   fin_cases d <;> simp [gridRadius, recenter, hn] <;> omega
 
 /-- The blocker sets agree on every vertex that can be reached within n steps. -/

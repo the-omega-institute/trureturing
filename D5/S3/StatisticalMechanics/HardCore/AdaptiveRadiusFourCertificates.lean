@@ -56,6 +56,13 @@ def radiusFourStep (i : Fin 881) (_a : Fin 6) (d : Fin 3) : Option (Fin 881) :=
 /-- Positive integer upper potential. All values are at most one hundred thousand. -/
 def radiusFourWeight (i : Fin 881) : ℕ := (row i).2.1
 
+private instance geometry_step_decidable (i : Fin 881) (d : Fin 3) :
+    Decidable (match radiusFourStep i (radiusFourChoice i) d with
+    | none => direction d ∈ radiusFourMask i
+    | some j => direction d ∉ radiusFourMask i ∧
+        radiusFourMask j = memoryStep 4 (radiusFourMask i) (radiusFourChoice i) d) := by
+  cases radiusFourStep i (radiusFourChoice i) d <;> infer_instance
+
 /-- Complete selected-controller closure on the actual geometry. The finite
 lookup is not allowed to omit an unblocked geometric successor. -/
 theorem radiusFour_geometry :

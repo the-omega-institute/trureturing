@@ -53,7 +53,8 @@ theorem affine_message_certificate :
         (affineCoefficients i).1 (affineCoefficients i).2
         (fun d => (childCoefficients i d).1)
         (fun d => (childCoefficients i d).2) (rowWitness i) := by
-  decide +kernel
+  intro i
+  fin_cases i <;> decide +kernel
 
 /-- The positive affine message associated with an actual geometric state. -/
 noncomputable def affineMessage (i : Fin 881) (x : ℝ) : ℝ :=
@@ -75,7 +76,8 @@ theorem affine_message_positive (i : Fin 881) (x : ℝ) (hx : x ≤ 1) :
     exact_mod_cast (affine_message_certificate i).1
   have hb : (10577 / 1000000 : ℝ) ≤
       ((affineCoefficients i).2 : ℝ) - ((affineCoefficients i).1 : ℝ) := by
-    exact_mod_cast (affine_message_certificate i).2.1
+    have h := (Rat.cast_le (K := ℝ)).mpr (affine_message_certificate i).2.1
+    simpa only [Rat.cast_div, Rat.cast_sub, Rat.cast_ofNat] using h
   dsimp [affineMessage]
   nlinarith [mul_le_mul_of_nonneg_left hx ha]
 
@@ -100,10 +102,12 @@ theorem affine_polynomial_margin (i : Fin 881) (lam : ℝ)
       lam * (∏ d, x d) * ((999 / 1000 : ℝ) * (affineCoefficients i).2 -
         (∑ d, ((childCoefficients i d).2 : ℝ)) +
         ∑ d, ((childCoefficients i d).1 : ℝ) * x d) := by
-  simpa using checked_row_sound (20 / 71) (51 / 20) (999 / 1000) (3 / 1000)
+  simpa only [Rat.cast_div, Rat.cast_ofNat] using checked_row_sound (20 / 71) (51 / 20) (999 / 1000) (3 / 1000)
     (affineCoefficients i).1 (affineCoefficients i).2
     (fun d => (childCoefficients i d).1) (fun d => (childCoefficients i d).2)
-    (rowWitness i) (by norm_num) (affine_message_certificate i).2.2 lam hlam x hx
+    (rowWitness i) (by norm_num) (affine_message_certificate i).2.2 lam
+    (by simpa only [Rat.cast_div, Rat.cast_ofNat] using hlam) x
+    (by simpa only [Rat.cast_div, Rat.cast_ofNat] using hx)
 
 private theorem product_bounds (x : Fin 3 → ℝ)
     (hx : ∀ d, (20 / 71 : ℝ) ≤ x d ∧ x d ≤ 1) :

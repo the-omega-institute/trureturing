@@ -34,7 +34,7 @@ theorem partition_mono (w : α → ℝ) (U V : Finset α) (hUV : U ⊆ V)
   exact hw v (hsub hv)
 
 /-- The real vacancy message is the ratio of two actual independent-set sums. -/
-def vacancyRatio (V : Finset α) (v : α) (w : α → ℝ) : ℝ :=
+noncomputable def vacancyRatio (V : Finset α) (v : α) (w : α → ℝ) : ℝ :=
   partition G (V.erase v) w / partition G V w
 
 /-- The invariant real box follows from actual graph partitions, with no
@@ -89,11 +89,11 @@ theorem real_ordered_vacancy (w : α → ℝ) (V : Finset α) (v : α)
 
 /-- Every actual finite-graph message at activities in [0,2.55] belongs to
 exactly the box used by the 881-state affine-message certificate. -/
-theorem real_255_message_box (V : Finset α) (v : α) (λ : ℝ)
-    (hλ : 0 ≤ λ ∧ λ ≤ 51 / 20) :
-    vacancyRatio G V v (fun _ => λ) ∈ Set.Icc (20 / 71) 1 := by
-  have h := vacancy_bounds G (fun _ => λ) V v (51 / 20)
-    (by norm_num) (fun _ _ => hλ.1) hλ.2
+theorem real_255_message_box (V : Finset α) (v : α) («λ» : ℝ)
+    («hλ» : 0 ≤ «λ» ∧ «λ» ≤ 51 / 20) :
+    vacancyRatio G V v (fun _ => «λ») ∈ Set.Icc (20 / 71) 1 := by
+  have h := vacancy_bounds G (fun _ => «λ») V v (51 / 20)
+    (by norm_num) (fun _ _ => «hλ».1) «hλ».2
   norm_num at h
   exact h
 

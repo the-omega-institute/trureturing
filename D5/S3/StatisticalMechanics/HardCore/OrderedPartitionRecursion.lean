@@ -25,19 +25,19 @@ def afterErases (V : Finset α) : List α → Finset α
 /-- Product of the vacant numerators along the successive actual domains. -/
 def numeratorProduct [CommSemiring R] (w : α → R) (V : Finset α) : List α → R
   | [] => 1
-  | v :: l => partition G (V.erase v) w * numeratorProduct G w (V.erase v) l
+  | v :: l => partition G (V.erase v) w * numeratorProduct w (V.erase v) l
 
 /-- Product of the corresponding pre-deletion partitions. -/
 def denominatorProduct [CommSemiring R] (w : α → R) (V : Finset α) : List α → R
   | [] => 1
-  | v :: l => partition G V w * denominatorProduct G w (V.erase v) l
+  | v :: l => partition G V w * denominatorProduct w (V.erase v) l
 
 /-- The actual product of vacancy ratios, retaining the ordered intermediate
 subgraphs. The field inverse is only used with nonzero denominators downstream. -/
 def vacancyProduct [Field K] (w : α → K) (V : Finset α) : List α → K
   | [] => 1
   | v :: l => (partition G (V.erase v) w / partition G V w) *
-      vacancyProduct G w (V.erase v) l
+      vacancyProduct w (V.erase v) l
 
 /-- The final deleted set depends on the listed vertices, while intermediate
 subgraphs and individual vacancy ratios may depend on their order. -/
@@ -139,7 +139,7 @@ theorem partition_ordered_recursion [Field K] (w : α → K)
         (denominatorProduct G w (V.erase v) l +
           w v * numeratorProduct G w (V.erase v) l) :=
       ordered_partition_cross G w V v hv l hl
-    _ = _ := by field_simp [hD]; ring
+    _ = _ := by field_simp [hD]
 
 /-- The exact induction step needed by zero-freeness: smaller-domain
 nonvanishing and a nonzero local recursion denominator imply nonvanishing of

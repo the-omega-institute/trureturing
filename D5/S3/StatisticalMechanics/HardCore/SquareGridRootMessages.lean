@@ -71,6 +71,7 @@ theorem root_child_vacancy {K : Type*} [Field K]
   rw [(root_table.2.1 e).1] at he
   unfold gridVacancy
   rw [← he]
+  unfold gridPartition
   rw [partition_relabel squareGrid squareGrid (rootFrame e) (root_frame_adj_iff e),
     partition_relabel squareGrid squareGrid (rootFrame e) (root_frame_adj_iff e)]
 
@@ -105,7 +106,7 @@ theorem root_partition_recursion {K : Type*} [Field K]
     _ = gridPartition (V.erase (0, 0)) z +
         z * gridPartition (closedComplement squareGrid V (0, 0)) z :=
       partition_delete squareGrid V (0, 0) h0 (fun _ => z)
-    _ = _ := by rw [ht]; field_simp [hn]; ring
+    _ = _ := by rw [ht]; field_simp [hn]
 
 /-- Every present first child is a smaller, origin-rooted instance compatible
 with the existing initial geometric type zero. Extra earlier-neighbor deletions
@@ -114,7 +115,7 @@ theorem root_child_context (V : Finset Point) (h0 : (0, 0) ∈ V)
     (e : Fin 4) (he : rootDirection e ∈ V) :
     (0, 0) ∈ rootDomain V e ∧ Disjoint (rootDomain V e) (radiusFourMask 0) ∧
       (rootDomain V e).card < V.card := by
-  have hd : rootDirection e ≠ (0, 0) := by fin_cases e <;> norm_num [rootDirection]
+  have hd : rootDirection e ≠ (0, 0) := by fin_cases e <;> decide
   have hs : afterErases (V.erase (0, 0)) (rootEarlier e) ⊆ V.erase (0, 0) := by
     rw [afterErases_eq_sdiff]
     exact Finset.sdiff_subset

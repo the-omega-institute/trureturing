@@ -75,10 +75,8 @@ private theorem child_has_parent (r : ℕ) (hr : 1 ≤ r)
     (hs : geometricStep r F a d = some G) : (-1, 0) ∈ G := by
   unfold geometricStep at hs
   split_ifs at hs with hd
-  · simp at hs
-  · have he := Option.some.inj hs
-    rw [← he]
-    exact parent_retained r hr F a d
+  rw [← Option.some.inj hs]
+  exact parent_retained r hr F a d
 
 private theorem count_le_three_pow (r n : ℕ) (a : Fin 6)
     (h : List (Fin 3)) (F : Finset Point) :

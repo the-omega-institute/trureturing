@@ -60,6 +60,13 @@ below; modulo merely makes the data accessor total. -/
 def radiusThreeChoice (i : Fin 483) : Fin 6 :=
   ⟨(row i).2.2.2.2 % 6, Nat.mod_lt _ (by decide)⟩
 
+private instance geometry_step_decidable (i : Fin 483) (a : Fin 6) (d : Fin 3) :
+    Decidable (match radiusThreeStep i a d with
+    | none => direction d ∈ radiusThreeMask i
+    | some j => direction d ∉ radiusThreeMask i ∧
+        radiusThreeMask j = memoryStep 3 (radiusThreeMask i) a d) := by
+  cases radiusThreeStep i a d <;> infer_instance
+
 /-- Full geometric closure, not bounded-depth sampling. Every unblocked move
 has a represented successor with exactly the required truncated blocked set. -/
 theorem radiusThree_geometry :

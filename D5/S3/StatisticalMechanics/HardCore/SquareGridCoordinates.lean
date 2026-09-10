@@ -23,8 +23,8 @@ def squareGrid : SimpleGraph Point where
   Adj p q :=
     (p.1 + 1 = q.1 ∧ p.2 = q.2) ∨ (q.1 + 1 = p.1 ∧ p.2 = q.2) ∨
     (p.2 + 1 = q.2 ∧ p.1 = q.1) ∨ (q.2 + 1 = p.2 ∧ p.1 = q.1)
-  symm := by intro p q h; dsimp at h ⊢; omega
-  loopless := by intro p h; dsimp at h; omega
+  symm := ⟨by intro p q h; omega⟩
+  loopless := ⟨by intro p h; omega⟩
 
 instance : DecidableRel squareGrid.Adj := by
   intro p q
@@ -55,7 +55,7 @@ def recenterEquiv (d : Fin 3) : Point ≃ Point where
 /-- Translation preserves and reflects every grid edge. -/
 theorem shift_adj_iff (v p q : Point) :
     squareGrid.Adj (shiftTo v p) (shiftTo v q) ↔ squareGrid.Adj p q := by
-  simp only [squareGrid, shiftTo]
+  dsimp [squareGrid, shiftTo]
   omega
 
 /-- The actual translation and quarter-turn used by memoryStep preserve and
@@ -107,6 +107,7 @@ theorem vacancy_shift {K : Type*} [Field K]
   rw [hv] at he
   unfold gridVacancy
   rw [← he]
+  unfold gridPartition
   rw [partition_relabel squareGrid squareGrid (shiftTo v) (shift_adj_iff v),
     partition_relabel squareGrid squareGrid (shiftTo v) (shift_adj_iff v)]
 

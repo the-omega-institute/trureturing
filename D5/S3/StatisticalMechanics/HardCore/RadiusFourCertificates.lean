@@ -64,7 +64,11 @@ theorem radiusFour_geometry :
     (∀ i : Fin 851, (-1, 0) ∈ radiusFourMask i ∧ (0, 0) ∉ radiusFourMask i) ∧
     (∀ (i : Fin 851) (d : Fin 3),
       (radiusFourStep i 0 d).map radiusFourMask = geometricStep 4 (radiusFourMask i) 0 d) := by
-  decide +kernel
+  refine ⟨by decide +kernel, by decide +kernel, by decide +kernel, ?_, ?_⟩
+  · intro i
+    fin_cases i <;> decide +kernel
+  · intro i
+    fin_cases i <;> decide +kernel
 
 /-- Every row is checked with integers. The root weight and a uniform weight
 cap are exactly twenty thousand. Equality in some rows is permitted. -/
@@ -74,7 +78,11 @@ theorem radiusFour_potential :
       10000 * childWeight radiusFourStep radiusFourWeight i 0 ≤
         24827 * radiusFourWeight i) ∧
     radiusFourWeight 0 = 20000 := by
-  decide +kernel
+  refine ⟨?_, ?_, by decide +kernel⟩
+  · intro i
+    fin_cases i <;> decide +kernel
+  · intro i
+    fin_cases i <;> decide +kernel
 
 /-- The actual represented branching system has the stated all-depth bound. -/
 theorem radiusFour_table_upper (n : ℕ) (h : List (Fin 3)) (i : Fin 851) :
@@ -113,8 +121,7 @@ theorem radiusFour_finite_domain_upper (n : ℕ) (V : Finset Point)
     intro F a d G hs
     unfold geometricStep at hs
     split_ifs at hs with hd
-    · simp at hs
-    · exact (Option.some.inj hs).symm
+    exact (Option.some.inj hs).symm
   have hd : Disjoint V ({(-1, 0)} : Finset Point) := by
     apply Finset.disjoint_left.mpr
     intro p hpV hp

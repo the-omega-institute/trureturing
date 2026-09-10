@@ -10,19 +10,19 @@ internal sealed class ControllerShadowDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("hc-controller-trace"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/ControllerShadow.controllerTrace"),
-                H("Coarse history replay"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                H("Coarse history replay"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The newest-first direction history determines a coarse mask by replaying actual memoryStep updates. The function is total on illegal histories; only legal branches contribute to path counts."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("hc-lifted-policy"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/ControllerShadow.liftedPolicy"),
-                H("A constructed history policy"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                H("A constructed history policy"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The fine controller reads the replayed coarse mask. It never substitutes the current fine mask's projection for forgotten coarse history."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("hc-lifted-controller-refines"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/ControllerShadow.lifted_controller_refines"),
-                H("All-depth refinement"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                H("All-depth refinement"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For nested initial blocker sets and increasing radius, the constructed history policy has no more fine-memory descendants than the original coarse state policy. MemoryRefinement owns the synchronized-history comparison and is reused."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("hc-coarse-shadow-projection-failure"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/ControllerShadow.coarse_shadow_is_not_current_projection"),
-                H("An exact legal geometric diagnostic"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                H("An exact legal geometric diagnostic"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The chronological SRL walk straight, straight, right, right is legal in both radii. The point (2,-1) remains in the radius-four state after projection into the radius-three disk, but the radius-three process has already forgotten it. The finite proof script requests kernel reduction."))), DescribeRole.Theorem),
             Paragraph(Text("This source is a logically reviewed candidate. Lean elaboration, executed axiom closure and Scribe emission have not been obtained in the authoring runtime.")))));
 }
