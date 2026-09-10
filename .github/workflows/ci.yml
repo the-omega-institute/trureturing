@@ -744,3 +744,32 @@ jobs:
           path: ${{ runner.temp }}/gate-timing.jsonl
           if-no-files-found: warn
           retention-days: 7
+
+  notify-mdbook:
+    name: Request mdBook publication
+    if: github.event_name == 'push' && github.repository == 'the-omega-institute/trureturing'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    # Independent of admission: dev already contains the merged result. The site
+    # captures current dev itself, so delayed or successive notifications cannot
+    # select an older source snapshot. Site concurrency serializes publication.
+    steps:
+      - name: Dispatch the Pages workflow on main
+        shell: bash
+        env:
+          # Dedicated fine-grained token: destination repository Actions:write only.
+          GH_TOKEN: ${{ secrets.MDBOOK_DISPATCH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo '::error::MDBOOK_DISPATCH_TOKEN is required; no Pages notification was sent.'
+            exit 1
+          fi
+          gh api --hostname github.com --method POST \
+            repos/the-omega-institute/trureturing-mdbook/actions/workflows/pages.yml/dispatches \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            -f ref=main --silent
+          printf '%s\n' 'Pages dispatch accepted. Deployment status: https://github.com/the-omega-institute/trureturing-mdbook/actions/workflows/pages.yml' \
+            | tee -a "$GITHUB_STEP_SUMMARY"
