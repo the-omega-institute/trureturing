@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using StrataLint.EngineeringScope;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Lean.Tests;
 
 public sealed class DirectoryClonerTests
 {
