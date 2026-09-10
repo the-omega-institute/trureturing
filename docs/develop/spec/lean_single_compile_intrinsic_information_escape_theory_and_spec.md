@@ -1247,8 +1247,8 @@ localization loss 误标 boundary escape，以及未证明存在唯一极限的 
 
 本层是 level 1 的 Law-content contract。level 0 是 §5 与 §6.2 的 states/readouts；level 1
 是本款定义的 Law layer；level ≥ 2 是关于 level-1 objects 的 statements，并各自冻结
-自己的 Γ、domain、support 与 variation certificates。每一层都有自己的 escape：该层的所有
-选定 readouts 在一对不同 admissible objects 上相等。上层不消除下层 escape；层间没有
+自己的 Γ、domain、support 与 variation certificates。每一层定义自己的 escape relation（可为空）：一对不同的 admissible objects 在该层所有
+选定 readouts 上相等；非空 escape 须有这样一对的见证。上层不消除下层 escape；层间没有
 completeness 或 progress guarantee。
 
 固定 root、canonical arena $A$ 与 bundle signature $\sigma$。冻结 Law interface
@@ -1305,7 +1305,7 @@ positive point $a$ 定向，因为 $P$ 与 $\neg P$ 有相同 kernel。exclusion
 是不同 verdict：在 $\mathrm{Bool}\times\mathrm{Bool}$ 上令 $L(a,b)=a$、
 $Q(a,b)=a\land b$，则 $Q\Rightarrow L$，所以 $L$ 无 unique exclusion，但 pair
 $((\mathrm{false},\mathrm{false}),(\mathrm{true},\mathrm{false}))$ 对 $Q$ agreement 而对 $L$
-disagreement，故 $L$ 有 positive pair capture。kernel triviality 在 common positive point
+disagreement，故 $L$ 有 positive pair capture。$\operatorname{LawUniquePair}_i=\varnothing$（等价于 $KL_I=KL_{I\setminus\{i\}}$）在 common positive point
 下蕴含 exclusion triviality，反之不成立。
 
 §5 的精确实例取 $Z=D_X=\{(x,y)\mid x\ne y\}$ 与
@@ -1340,7 +1340,12 @@ level-1 verdicts 仅是 report fields：`law_unique_exclusion`、`law_entailed_i
 `law_pair_capture`、`law_entailment`。它们永不作为 seal input、AC-023 或 closed reason；
 observed/certified accounting 不变，当前无 consumer。
 
-规范 fixture：同一 arena 的 readouts $f,g$ 有两个 distinct level-1 objects：
+规范 fixture：取 $A=\mathrm{Fin}\,3$，$\sigma$ 为两个 Bool 值 readouts $f,g$，$\Omega_\Gamma$ 为全部
+$(f,g)$ 对。下列两个开放 schema 是 distinct level-1 objects，当且仅当 $\Omega_\Gamma$ 含满足
+separation 而不满足 reverse inclusion 的 realization；此域中 $f=(\mathrm{false},\mathrm{false},\mathrm{true})$、
+$g=(\mathrm{false},\mathrm{true},\mathrm{true})$ 即是：pair $(0,1)$ 见证 separation，pair $(1,2)$ 反驳 reverse
+inclusion。common positive realization 取 $f=(\mathrm{false},\mathrm{false},\mathrm{false})$、
+$g=(\mathrm{false},\mathrm{true},\mathrm{true})$，它同时满足两个 schema：
 
 $$
 \text{separation}:\ \exists x\ y,\ f(x)=f(y)\land g(x)\ne g(y),
