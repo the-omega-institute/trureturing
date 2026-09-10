@@ -165,14 +165,38 @@ private def mex_unique (s : Finset ℕ) (n : ℕ)
   · exact h
   · exact False.elim (hn (hsmall _ h))
 
-private abbrev Certificate := List (Position × ℕ)
-private def domain (c : Certificate) := c.map Prod.fst
-private def value (c : Certificate) (p : Position) := (c.lookup p).getD 0
+private inductive Certificate where
+  | empty
+  | branch (position : Position) (candidate : ℕ) (left right : Certificate)
+
+private def domain : Certificate → List Position
+  | .empty => []
+  | .branch p _ left right => domain left ++ p :: domain right
+
+private def lookup (p : Position) : Certificate → Option ℕ
+  | .empty => none
+  | .branch q n left right =>
+    if p = q then some n else
+      if compare p q = .lt then lookup p left else lookup p right
+
+-- Soundness of successful lookup needs no assumption about tree ordering.
+private def lookup_mem (c : Certificate) (p : Position)
+    (h : (lookup p c).isSome = true) : p ∈ domain c := by
+  induction c with
+  | empty => simp [lookup] at h
+  | branch q n left right ihl ihr =>
+    simp only [lookup] at h
+    split_ifs at h with hp hlt
+    · simp [domain, hp]
+    · simp [domain, ihl h]
+    · simp [domain, ihr h]
+
+private def value (c : Certificate) (p : Position) := (lookup p c).getD 0
 
 private def check (c : Certificate) (p : Position) : Bool :=
   let options := moves p
   let used := options.map (value c)
-  options.all (fun q => (domain c).contains q) &&
+  options.all (fun q => (lookup q c).isSome) &&
     !used.contains (value c p) &&
     (List.range (value c p)).all (fun n => used.contains n)
 
@@ -189,7 +213,7 @@ private def certificate_correct (c : Certificate)
     have he : (moves p).map grundy = (moves p).map (value c) := by
       apply List.map_congr_left
       intro q hq
-      exact ih q (move_decreases p q hq) (hclosed q hq)
+      exact ih q (move_decreases p q hq) (lookup_mem c q (hclosed q hq))
     rw [he]
     apply mex_unique
     · simpa using hmissing
@@ -207,384 +231,385 @@ def claim : Prop :=
     grundy (rectair r (r - 1) k) = if k = r - 2 ∧ r % 2 = 1 then 3 else 1
 
 -- Candidate values only: every entry is checked against all actual moves below.
-private def certificate : Certificate := [
-  ([], 0),
-  ([1], 1),
-  ([1, 1], 2),
-  ([2], 2),
-  ([1, 1, 1], 1),
-  ([2, 1], 0),
-  ([3], 1),
-  ([1, 1, 1, 1], 2),
-  ([2, 1, 1], 3),
-  ([2, 2], 0),
-  ([3, 1], 3),
-  ([4], 2),
-  ([1, 1, 1, 1, 1], 1),
-  ([2, 1, 1, 1], 0),
-  ([2, 2, 1], 3),
-  ([3, 1, 1], 0),
-  ([3, 2], 3),
-  ([4, 1], 0),
-  ([5], 1),
-  ([1, 1, 1, 1, 1, 1], 2),
-  ([2, 1, 1, 1, 1], 3),
-  ([2, 2, 1, 1], 0),
-  ([2, 2, 2], 2),
-  ([3, 1, 1, 1], 3),
-  ([3, 2, 1], 1),
-  ([3, 3], 2),
-  ([4, 1, 1], 3),
-  ([4, 2], 0),
-  ([5, 1], 3),
-  ([6], 2),
-  ([1, 1, 1, 1, 1, 1, 1], 1),
-  ([2, 1, 1, 1, 1, 1], 0),
-  ([2, 2, 1, 1, 1], 3),
-  ([2, 2, 2, 1], 0),
-  ([3, 1, 1, 1, 1], 0),
-  ([3, 2, 1, 1], 2),
-  ([3, 2, 2], 1),
-  ([3, 3, 1], 1),
-  ([4, 1, 1, 1], 0),
-  ([4, 2, 1], 2),
-  ([4, 3], 0),
-  ([5, 1, 1], 0),
-  ([5, 2], 3),
-  ([6, 1], 0),
-  ([2, 2, 1, 1, 1, 1], 0),
-  ([2, 2, 2, 1, 1], 2),
-  ([2, 2, 2, 2], 0),
-  ([3, 2, 1, 1, 1], 1),
-  ([3, 2, 2, 1], 2),
-  ([3, 3, 1, 1], 2),
-  ([3, 3, 2], 0),
-  ([4, 2, 1, 1], 0),
-  ([4, 2, 2], 2),
-  ([4, 3, 1], 2),
-  ([4, 4], 0),
-  ([5, 2, 1], 1),
-  ([5, 3], 2),
-  ([6, 2], 0),
-  ([2, 2, 1, 1, 1, 1, 1], 3),
-  ([2, 2, 2, 1, 1, 1], 0),
-  ([2, 2, 2, 2, 1], 3),
-  ([3, 2, 1, 1, 1, 1], 2),
-  ([3, 2, 2, 1, 1], 1),
-  ([3, 2, 2, 2], 3),
-  ([3, 3, 1, 1, 1], 1),
-  ([3, 3, 2, 1], 2),
-  ([3, 3, 3], 0),
-  ([4, 2, 1, 1, 1], 2),
-  ([4, 2, 2, 1], 1),
-  ([4, 3, 1, 1], 1),
-  ([4, 3, 2], 2),
-  ([4, 4, 1], 3),
-  ([5, 2, 1, 1], 2),
-  ([5, 2, 2], 1),
-  ([5, 3, 1], 1),
-  ([5, 4], 3),
-  ([6, 2, 1], 2),
-  ([6, 3], 0),
-  ([2, 2, 2, 1, 1, 1, 1], 2),
-  ([2, 2, 2, 2, 1, 1], 0),
-  ([2, 2, 2, 2, 2], 2),
-  ([3, 2, 2, 1, 1, 1], 2),
-  ([3, 2, 2, 2, 1], 1),
-  ([3, 3, 1, 1, 1, 1], 2),
-  ([3, 3, 2, 1, 1], 0),
-  ([3, 3, 2, 2], 2),
-  ([3, 3, 3, 1], 3),
-  ([4, 2, 2, 1, 1], 2),
-  ([4, 2, 2, 2], 0),
-  ([4, 3, 1, 1, 1], 2),
-  ([4, 3, 2, 1], 0),
-  ([4, 3, 3], 3),
-  ([4, 4, 1, 1], 0),
-  ([4, 4, 2], 2),
-  ([5, 2, 2, 1], 2),
-  ([5, 3, 1, 1], 2),
-  ([5, 3, 2], 0),
-  ([5, 4, 1], 1),
-  ([5, 5], 2),
-  ([6, 3, 1], 2),
-  ([6, 4], 0),
-  ([2, 2, 2, 2, 1, 1, 1], 3),
-  ([2, 2, 2, 2, 2, 1], 0),
-  ([3, 2, 2, 2, 1, 1], 3),
-  ([3, 2, 2, 2, 2], 1),
-  ([3, 3, 2, 1, 1, 1], 2),
-  ([3, 3, 2, 2, 1], 1),
-  ([3, 3, 3, 1, 1], 0),
-  ([3, 3, 3, 2], 1),
-  ([4, 2, 2, 2, 1], 2),
-  ([4, 3, 2, 1, 1], 3),
-  ([4, 3, 2, 2], 0),
-  ([4, 3, 3, 1], 0),
-  ([4, 4, 1, 1, 1], 3),
-  ([4, 4, 2, 1], 0),
-  ([4, 4, 3], 1),
-  ([5, 3, 2, 1], 3),
-  ([5, 3, 3], 0),
-  ([5, 4, 1, 1], 2),
-  ([5, 4, 2], 1),
-  ([5, 5, 1], 1),
-  ([6, 3, 2], 2),
-  ([6, 4, 1], 3),
-  ([6, 5], 0),
-  ([2, 2, 2, 2, 2, 1, 1], 2),
-  ([2, 2, 2, 2, 2, 2], 0),
-  ([3, 2, 2, 2, 2, 1], 2),
-  ([3, 3, 2, 1, 1, 1, 1], 0),
-  ([3, 3, 2, 2, 1, 1], 2),
-  ([3, 3, 2, 2, 2], 0),
-  ([3, 3, 3, 1, 1, 1], 3),
-  ([3, 3, 3, 2, 1], 4),
-  ([3, 3, 3, 3], 1),
-  ([4, 3, 2, 1, 1, 1], 0),
-  ([4, 3, 2, 2, 1], 3),
-  ([4, 3, 3, 1, 1], 3),
-  ([4, 3, 3, 2], 4),
-  ([4, 4, 2, 1, 1], 2),
-  ([4, 4, 2, 2], 0),
-  ([4, 4, 3, 1], 4),
-  ([4, 4, 4], 1),
-  ([5, 3, 2, 1, 1], 0),
-  ([5, 3, 2, 2], 2),
-  ([5, 3, 3, 1], 3),
-  ([5, 4, 2, 1], 3),
-  ([5, 4, 3], 4),
-  ([5, 5, 1, 1], 2),
-  ([5, 5, 2], 0),
-  ([6, 3, 2, 1], 0),
-  ([6, 4, 2], 2),
-  ([6, 5, 1], 2),
-  ([6, 6], 0),
-  ([2, 2, 2, 2, 2, 2, 1], 3),
-  ([3, 3, 2, 2, 1, 1, 1], 1),
-  ([3, 3, 2, 2, 2, 1], 2),
-  ([3, 3, 3, 2, 1, 1], 1),
-  ([3, 3, 3, 2, 2], 0),
-  ([3, 3, 3, 3, 1], 2),
-  ([4, 3, 2, 2, 1, 1], 0),
-  ([4, 3, 2, 2, 2], 2),
-  ([4, 3, 3, 2, 1], 3),
-  ([4, 3, 3, 3], 2),
-  ([4, 4, 2, 1, 1, 1], 0),
-  ([4, 4, 2, 2, 1], 3),
-  ([4, 4, 3, 1, 1], 2),
-  ([4, 4, 3, 2], 0),
-  ([4, 4, 4, 1], 2),
-  ([5, 3, 2, 2, 1], 1),
-  ([5, 3, 3, 2], 2),
-  ([5, 4, 2, 1, 1], 1),
-  ([5, 4, 2, 2], 3),
-  ([5, 4, 3, 1], 3),
-  ([5, 4, 4], 2),
-  ([5, 5, 2, 1], 2),
-  ([5, 5, 3], 0),
-  ([6, 4, 2, 1], 0),
-  ([6, 4, 3], 1),
-  ([6, 5, 2], 2),
-  ([6, 6, 1], 3),
-  ([3, 3, 2, 2, 2, 1, 1], 0),
-  ([3, 3, 2, 2, 2, 2], 2),
-  ([3, 3, 3, 2, 1, 1, 1], 4),
-  ([3, 3, 3, 2, 2, 1], 3),
-  ([3, 3, 3, 3, 1, 1], 1),
-  ([3, 3, 3, 3, 2], 0),
-  ([4, 3, 2, 2, 2, 1], 0),
-  ([4, 3, 3, 2, 1, 1], 4),
-  ([4, 3, 3, 2, 2], 3),
-  ([4, 3, 3, 3, 1], 4),
-  ([4, 4, 2, 2, 1, 1], 0),
-  ([4, 4, 2, 2, 2], 2),
-  ([4, 4, 3, 1, 1, 1], 1),
-  ([4, 4, 3, 2, 1], 3),
-  ([4, 4, 3, 3], 0),
-  ([4, 4, 4, 1, 1], 1),
-  ([4, 4, 4, 2], 0),
-  ([5, 3, 3, 2, 1], 0),
-  ([5, 4, 2, 2, 1], 0),
-  ([5, 4, 3, 1, 1], 0),
-  ([5, 4, 3, 2], 3),
-  ([5, 4, 4, 1], 4),
-  ([5, 5, 2, 1, 1], 0),
-  ([5, 5, 2, 2], 2),
-  ([5, 5, 3, 1], 3),
-  ([5, 5, 4], 0),
-  ([6, 4, 3, 1], 4),
-  ([6, 5, 2, 1], 0),
-  ([6, 5, 3], 3),
-  ([6, 6, 2], 2),
-  ([3, 3, 2, 2, 2, 2, 1], 1),
-  ([3, 3, 3, 2, 2, 1, 1], 0),
-  ([3, 3, 3, 2, 2, 2], 1),
-  ([3, 3, 3, 3, 2, 1], 1),
-  ([3, 3, 3, 3, 3], 0),
-  ([4, 3, 3, 2, 2, 1], 0),
-  ([4, 3, 3, 3, 2], 3),
-  ([4, 4, 2, 2, 2, 1], 0),
-  ([4, 4, 3, 2, 1, 1], 0),
-  ([4, 4, 3, 2, 2], 1),
-  ([4, 4, 3, 3, 1], 3),
-  ([4, 4, 4, 2, 1], 1),
-  ([4, 4, 4, 3], 0),
-  ([5, 4, 3, 2, 1], 1),
-  ([5, 4, 3, 3], 1),
-  ([5, 4, 4, 2], 3),
-  ([5, 5, 2, 2, 1], 1),
-  ([5, 5, 3, 1, 1], 0),
-  ([5, 5, 3, 2], 1),
-  ([5, 5, 4, 1], 3),
-  ([5, 5, 5], 0),
-  ([6, 4, 3, 2], 0),
-  ([6, 5, 3, 1], 0),
-  ([6, 5, 4], 1),
-  ([6, 6, 2, 1], 0),
-  ([6, 6, 3], 1),
-  ([3, 3, 3, 2, 2, 2, 1], 4),
-  ([3, 3, 3, 3, 2, 1, 1], 0),
-  ([3, 3, 3, 3, 2, 2], 1),
-  ([3, 3, 3, 3, 3, 1], 1),
-  ([4, 3, 3, 3, 2, 1], 0),
-  ([4, 4, 3, 2, 1, 1, 1], 3),
-  ([4, 4, 3, 2, 2, 1], 4),
-  ([4, 4, 3, 3, 1, 1], 0),
-  ([4, 4, 3, 3, 2], 2),
-  ([4, 4, 4, 2, 1, 1], 0),
-  ([4, 4, 4, 2, 2], 1),
-  ([4, 4, 4, 3, 1], 3),
-  ([4, 4, 4, 4], 0),
-  ([5, 4, 3, 2, 1, 1], 2),
-  ([5, 4, 3, 2, 2], 4),
-  ([5, 4, 3, 3, 1], 2),
-  ([5, 4, 4, 2, 1], 2),
-  ([5, 4, 4, 3], 3),
-  ([5, 5, 3, 2, 1], 4),
-  ([5, 5, 3, 3], 1),
-  ([5, 5, 4, 1, 1], 0),
-  ([5, 5, 4, 2], 2),
-  ([5, 5, 5, 1], 3),
-  ([6, 4, 3, 2, 1], 2),
-  ([6, 5, 3, 2], 4),
-  ([6, 5, 4, 1], 0),
-  ([6, 6, 3, 1], 4),
-  ([6, 6, 4], 1),
-  ([3, 3, 3, 3, 2, 2, 1], 2),
-  ([3, 3, 3, 3, 3, 2], 1),
-  ([4, 4, 3, 2, 2, 1, 1], 1),
-  ([4, 4, 3, 2, 2, 2], 0),
-  ([4, 4, 3, 3, 2, 1], 0),
-  ([4, 4, 3, 3, 3], 1),
-  ([4, 4, 4, 2, 2, 1], 2),
-  ([4, 4, 4, 3, 1, 1], 0),
-  ([4, 4, 4, 3, 2], 1),
-  ([4, 4, 4, 4, 1], 3),
-  ([5, 4, 3, 2, 2, 1], 2),
-  ([5, 4, 3, 3, 2], 0),
-  ([5, 4, 4, 3, 1], 0),
-  ([5, 5, 3, 2, 1, 1], 1),
-  ([5, 5, 3, 2, 2], 0),
-  ([5, 5, 3, 3, 1], 2),
-  ([5, 5, 4, 2, 1], 0),
-  ([5, 5, 4, 3], 1),
-  ([5, 5, 5, 2], 1),
-  ([6, 5, 3, 2, 1], 2),
-  ([6, 5, 4, 2], 0),
-  ([6, 6, 3, 2], 0),
-  ([6, 6, 4, 1], 2),
-  ([6, 6, 5], 1),
-  ([3, 3, 3, 3, 3, 2, 1], 4),
-  ([4, 4, 3, 2, 2, 2, 1], 3),
-  ([4, 4, 3, 3, 2, 1, 1], 2),
-  ([4, 4, 3, 3, 2, 2], 0),
-  ([4, 4, 3, 3, 3, 1], 5),
-  ([4, 4, 4, 3, 2, 1], 0),
-  ([4, 4, 4, 3, 3], 1),
-  ([4, 4, 4, 4, 2], 1),
-  ([5, 4, 3, 3, 2, 1], 4),
-  ([5, 4, 4, 3, 2], 2),
-  ([5, 5, 3, 2, 2, 1], 3),
-  ([5, 5, 3, 3, 2], 0),
-  ([5, 5, 4, 2, 1, 1], 2),
-  ([5, 5, 4, 2, 2], 0),
-  ([5, 5, 4, 3, 1], 2),
-  ([5, 5, 4, 4], 1),
-  ([5, 5, 5, 2, 1], 0),
-  ([5, 5, 5, 3], 1),
-  ([6, 5, 4, 2, 1], 4),
-  ([6, 5, 4, 3], 0),
-  ([6, 6, 3, 2, 1], 3),
-  ([6, 6, 4, 2], 0),
-  ([6, 6, 5, 1], 4),
-  ([4, 4, 3, 3, 2, 2, 1], 3),
-  ([4, 4, 3, 3, 3, 2], 0),
-  ([4, 4, 4, 3, 2, 1, 1], 1),
-  ([4, 4, 4, 3, 2, 2], 0),
-  ([4, 4, 4, 3, 3, 1], 2),
-  ([4, 4, 4, 4, 2, 1], 0),
-  ([4, 4, 4, 4, 3], 1),
-  ([5, 4, 4, 3, 2, 1], 5),
-  ([5, 5, 3, 3, 2, 1], 1),
-  ([5, 5, 4, 2, 2, 1], 3),
-  ([5, 5, 4, 3, 1, 1], 1),
-  ([5, 5, 4, 3, 2], 0),
-  ([5, 5, 4, 4, 1], 2),
-  ([5, 5, 5, 3, 1], 2),
-  ([5, 5, 5, 4], 1),
-  ([6, 5, 4, 3, 1], 5),
-  ([6, 6, 4, 2, 1], 1),
-  ([6, 6, 4, 3], 0),
-  ([6, 6, 5, 2], 0),
-  ([4, 4, 3, 3, 3, 2, 1], 3),
-  ([4, 4, 4, 3, 2, 2, 1], 3),
-  ([4, 4, 4, 3, 3, 2], 0),
-  ([4, 4, 4, 4, 3, 1], 2),
-  ([5, 5, 4, 3, 2, 1], 5),
-  ([5, 5, 4, 3, 3], 0),
-  ([5, 5, 4, 4, 2], 0),
-  ([5, 5, 5, 3, 2], 0),
-  ([5, 5, 5, 4, 1], 2),
-  ([6, 5, 4, 3, 2], 5),
-  ([6, 6, 4, 3, 1], 3),
-  ([6, 6, 5, 2, 1], 1),
-  ([6, 6, 5, 3], 0),
-  ([4, 4, 4, 3, 3, 2, 1], 1),
-  ([4, 4, 4, 4, 3, 2], 0),
-  ([5, 5, 4, 3, 2, 1, 1], 0),
-  ([5, 5, 4, 3, 2, 2], 1),
-  ([5, 5, 4, 3, 3, 1], 3),
-  ([5, 5, 4, 4, 2, 1], 1),
-  ([5, 5, 4, 4, 3], 0),
-  ([5, 5, 5, 3, 2, 1], 3),
-  ([5, 5, 5, 4, 2], 0),
-  ([6, 5, 4, 3, 2, 1], 0),
-  ([6, 6, 4, 3, 2], 1),
-  ([6, 6, 5, 3, 1], 1),
-  ([6, 6, 5, 4], 0),
-  ([4, 4, 4, 4, 3, 2, 1], 3),
-  ([5, 5, 4, 3, 2, 2, 1], 4),
-  ([5, 5, 4, 3, 3, 2], 1),
-  ([5, 5, 4, 4, 3, 1], 1),
-  ([5, 5, 5, 4, 2, 1], 1),
-  ([5, 5, 5, 4, 3], 0),
-  ([6, 6, 4, 3, 2, 1], 0),
-  ([6, 6, 5, 3, 2], 1),
-  ([6, 6, 5, 4, 1], 3),
-  ([5, 5, 4, 3, 3, 2, 1], 0),
-  ([5, 5, 4, 4, 3, 2], 1),
-  ([5, 5, 5, 4, 3, 1], 3),
-  ([6, 6, 5, 3, 2, 1], 4),
-  ([6, 6, 5, 4, 2], 1),
-  ([5, 5, 4, 4, 3, 2, 1], 4),
-  ([5, 5, 5, 4, 3, 2], 1),
-  ([6, 6, 5, 4, 2, 1], 0),
-  ([6, 6, 5, 4, 3], 1),
-  ([5, 5, 5, 4, 3, 2, 1], 2),
-  ([6, 6, 5, 4, 3, 1], 2),
-  ([6, 6, 5, 4, 3, 2], 0),
-  ([6, 6, 5, 4, 3, 2, 1], 1)]
+-- Balanced by lexicographic position order; all entries remain candidate data.
+private def certificate : Certificate :=
+  .branch [4, 4, 4, 3, 2, 2, 1] 3
+    (.branch [3, 3, 3, 3, 3, 1] 1
+      (.branch [3, 2, 2, 1, 1, 1] 2
+        (.branch [2, 2, 2, 1, 1, 1] 0
+          (.branch [2, 1, 1, 1] 0
+            (.branch [1, 1, 1, 1, 1] 1
+              (.branch [1, 1] 2
+                (.branch [1] 1
+                  (.branch [] 0 .empty .empty) .empty)
+                (.branch [1, 1, 1, 1] 2
+                  (.branch [1, 1, 1] 1 .empty .empty) .empty))
+              (.branch [2] 2
+                (.branch [1, 1, 1, 1, 1, 1, 1] 1
+                  (.branch [1, 1, 1, 1, 1, 1] 2 .empty .empty) .empty)
+                (.branch [2, 1, 1] 3
+                  (.branch [2, 1] 0 .empty .empty) .empty)))
+            (.branch [2, 2, 1, 1, 1] 3
+              (.branch [2, 2] 0
+                (.branch [2, 1, 1, 1, 1, 1] 0
+                  (.branch [2, 1, 1, 1, 1] 3 .empty .empty) .empty)
+                (.branch [2, 2, 1, 1] 0
+                  (.branch [2, 2, 1] 3 .empty .empty) .empty))
+              (.branch [2, 2, 2] 2
+                (.branch [2, 2, 1, 1, 1, 1, 1] 3
+                  (.branch [2, 2, 1, 1, 1, 1] 0 .empty .empty) .empty)
+                (.branch [2, 2, 2, 1, 1] 2
+                  (.branch [2, 2, 2, 1] 0 .empty .empty) .empty))))
+          (.branch [3, 1] 3
+            (.branch [2, 2, 2, 2, 2] 2
+              (.branch [2, 2, 2, 2, 1] 3
+                (.branch [2, 2, 2, 2] 0
+                  (.branch [2, 2, 2, 1, 1, 1, 1] 2 .empty .empty) .empty)
+                (.branch [2, 2, 2, 2, 1, 1, 1] 3
+                  (.branch [2, 2, 2, 2, 1, 1] 0 .empty .empty) .empty))
+              (.branch [2, 2, 2, 2, 2, 2] 0
+                (.branch [2, 2, 2, 2, 2, 1, 1] 2
+                  (.branch [2, 2, 2, 2, 2, 1] 0 .empty .empty) .empty)
+                (.branch [3] 1
+                  (.branch [2, 2, 2, 2, 2, 2, 1] 3 .empty .empty) .empty)))
+            (.branch [3, 2, 1, 1] 2
+              (.branch [3, 1, 1, 1, 1] 0
+                (.branch [3, 1, 1, 1] 3
+                  (.branch [3, 1, 1] 0 .empty .empty) .empty)
+                (.branch [3, 2, 1] 1
+                  (.branch [3, 2] 3 .empty .empty) .empty))
+              (.branch [3, 2, 2] 1
+                (.branch [3, 2, 1, 1, 1, 1] 2
+                  (.branch [3, 2, 1, 1, 1] 1 .empty .empty) .empty)
+                (.branch [3, 2, 2, 1, 1] 1
+                  (.branch [3, 2, 2, 1] 2 .empty .empty) .empty)))))
+        (.branch [3, 3, 2, 2, 2, 2, 1] 1
+          (.branch [3, 3, 2, 1] 2
+            (.branch [3, 3] 2
+              (.branch [3, 2, 2, 2, 1, 1] 3
+                (.branch [3, 2, 2, 2, 1] 1
+                  (.branch [3, 2, 2, 2] 3 .empty .empty) .empty)
+                (.branch [3, 2, 2, 2, 2, 1] 2
+                  (.branch [3, 2, 2, 2, 2] 1 .empty .empty) .empty))
+              (.branch [3, 3, 1, 1, 1] 1
+                (.branch [3, 3, 1, 1] 2
+                  (.branch [3, 3, 1] 1 .empty .empty) .empty)
+                (.branch [3, 3, 2] 0
+                  (.branch [3, 3, 1, 1, 1, 1] 2 .empty .empty) .empty)))
+            (.branch [3, 3, 2, 2, 1, 1] 2
+              (.branch [3, 3, 2, 1, 1, 1, 1] 0
+                (.branch [3, 3, 2, 1, 1, 1] 2
+                  (.branch [3, 3, 2, 1, 1] 0 .empty .empty) .empty)
+                (.branch [3, 3, 2, 2, 1] 1
+                  (.branch [3, 3, 2, 2] 2 .empty .empty) .empty))
+              (.branch [3, 3, 2, 2, 2, 1] 2
+                (.branch [3, 3, 2, 2, 2] 0
+                  (.branch [3, 3, 2, 2, 1, 1, 1] 1 .empty .empty) .empty)
+                (.branch [3, 3, 2, 2, 2, 2] 2
+                  (.branch [3, 3, 2, 2, 2, 1, 1] 0 .empty .empty) .empty))))
+          (.branch [3, 3, 3, 2, 2, 2] 1
+            (.branch [3, 3, 3, 2, 1] 4
+              (.branch [3, 3, 3, 1, 1] 0
+                (.branch [3, 3, 3, 1] 3
+                  (.branch [3, 3, 3] 0 .empty .empty) .empty)
+                (.branch [3, 3, 3, 2] 1
+                  (.branch [3, 3, 3, 1, 1, 1] 3 .empty .empty) .empty))
+              (.branch [3, 3, 3, 2, 2] 0
+                (.branch [3, 3, 3, 2, 1, 1, 1] 4
+                  (.branch [3, 3, 3, 2, 1, 1] 1 .empty .empty) .empty)
+                (.branch [3, 3, 3, 2, 2, 1, 1] 0
+                  (.branch [3, 3, 3, 2, 2, 1] 3 .empty .empty) .empty)))
+            (.branch [3, 3, 3, 3, 2, 1] 1
+              (.branch [3, 3, 3, 3, 1] 2
+                (.branch [3, 3, 3, 3] 1
+                  (.branch [3, 3, 3, 2, 2, 2, 1] 4 .empty .empty) .empty)
+                (.branch [3, 3, 3, 3, 2] 0
+                  (.branch [3, 3, 3, 3, 1, 1] 1 .empty .empty) .empty))
+              (.branch [3, 3, 3, 3, 2, 2, 1] 2
+                (.branch [3, 3, 3, 3, 2, 2] 1
+                  (.branch [3, 3, 3, 3, 2, 1, 1] 0 .empty .empty) .empty)
+                (.branch [3, 3, 3, 3, 3] 0 .empty .empty))))))
+      (.branch [4, 4, 2, 1, 1] 2
+        (.branch [4, 3, 2, 2] 0
+          (.branch [4, 2, 2, 1] 1
+            (.branch [4, 1, 1, 1] 0
+              (.branch [4] 2
+                (.branch [3, 3, 3, 3, 3, 2, 1] 4
+                  (.branch [3, 3, 3, 3, 3, 2] 1 .empty .empty) .empty)
+                (.branch [4, 1, 1] 3
+                  (.branch [4, 1] 0 .empty .empty) .empty))
+              (.branch [4, 2, 1, 1] 0
+                (.branch [4, 2, 1] 2
+                  (.branch [4, 2] 0 .empty .empty) .empty)
+                (.branch [4, 2, 2] 2
+                  (.branch [4, 2, 1, 1, 1] 2 .empty .empty) .empty)))
+            (.branch [4, 3, 1, 1] 1
+              (.branch [4, 2, 2, 2, 1] 2
+                (.branch [4, 2, 2, 2] 0
+                  (.branch [4, 2, 2, 1, 1] 2 .empty .empty) .empty)
+                (.branch [4, 3, 1] 2
+                  (.branch [4, 3] 0 .empty .empty) .empty))
+              (.branch [4, 3, 2, 1] 0
+                (.branch [4, 3, 2] 2
+                  (.branch [4, 3, 1, 1, 1] 2 .empty .empty) .empty)
+                (.branch [4, 3, 2, 1, 1, 1] 0
+                  (.branch [4, 3, 2, 1, 1] 3 .empty .empty) .empty))))
+          (.branch [4, 3, 3, 2, 2, 1] 0
+            (.branch [4, 3, 3, 1] 0
+              (.branch [4, 3, 2, 2, 2] 2
+                (.branch [4, 3, 2, 2, 1, 1] 0
+                  (.branch [4, 3, 2, 2, 1] 3 .empty .empty) .empty)
+                (.branch [4, 3, 3] 3
+                  (.branch [4, 3, 2, 2, 2, 1] 0 .empty .empty) .empty))
+              (.branch [4, 3, 3, 2, 1] 3
+                (.branch [4, 3, 3, 2] 4
+                  (.branch [4, 3, 3, 1, 1] 3 .empty .empty) .empty)
+                (.branch [4, 3, 3, 2, 2] 3
+                  (.branch [4, 3, 3, 2, 1, 1] 4 .empty .empty) .empty)))
+            (.branch [4, 4, 1] 3
+              (.branch [4, 3, 3, 3, 2] 3
+                (.branch [4, 3, 3, 3, 1] 4
+                  (.branch [4, 3, 3, 3] 2 .empty .empty) .empty)
+                (.branch [4, 4] 0
+                  (.branch [4, 3, 3, 3, 2, 1] 0 .empty .empty) .empty))
+              (.branch [4, 4, 2] 2
+                (.branch [4, 4, 1, 1, 1] 3
+                  (.branch [4, 4, 1, 1] 0 .empty .empty) .empty)
+                (.branch [4, 4, 2, 1] 0 .empty .empty)))))
+        (.branch [4, 4, 3, 3, 2, 1] 0
+          (.branch [4, 4, 3, 2, 1] 3
+            (.branch [4, 4, 2, 2, 2, 1] 0
+              (.branch [4, 4, 2, 2, 1] 3
+                (.branch [4, 4, 2, 2] 0
+                  (.branch [4, 4, 2, 1, 1, 1] 0 .empty .empty) .empty)
+                (.branch [4, 4, 2, 2, 2] 2
+                  (.branch [4, 4, 2, 2, 1, 1] 0 .empty .empty) .empty))
+              (.branch [4, 4, 3, 1, 1] 2
+                (.branch [4, 4, 3, 1] 4
+                  (.branch [4, 4, 3] 1 .empty .empty) .empty)
+                (.branch [4, 4, 3, 2] 0
+                  (.branch [4, 4, 3, 1, 1, 1] 1 .empty .empty) .empty)))
+            (.branch [4, 4, 3, 2, 2, 2] 0
+              (.branch [4, 4, 3, 2, 2] 1
+                (.branch [4, 4, 3, 2, 1, 1, 1] 3
+                  (.branch [4, 4, 3, 2, 1, 1] 0 .empty .empty) .empty)
+                (.branch [4, 4, 3, 2, 2, 1, 1] 1
+                  (.branch [4, 4, 3, 2, 2, 1] 4 .empty .empty) .empty))
+              (.branch [4, 4, 3, 3, 1] 3
+                (.branch [4, 4, 3, 3] 0
+                  (.branch [4, 4, 3, 2, 2, 2, 1] 3 .empty .empty) .empty)
+                (.branch [4, 4, 3, 3, 2] 2
+                  (.branch [4, 4, 3, 3, 1, 1] 0 .empty .empty) .empty))))
+          (.branch [4, 4, 4, 2, 1] 1
+            (.branch [4, 4, 3, 3, 3, 2] 0
+              (.branch [4, 4, 3, 3, 2, 2, 1] 3
+                (.branch [4, 4, 3, 3, 2, 2] 0
+                  (.branch [4, 4, 3, 3, 2, 1, 1] 2 .empty .empty) .empty)
+                (.branch [4, 4, 3, 3, 3, 1] 5
+                  (.branch [4, 4, 3, 3, 3] 1 .empty .empty) .empty))
+              (.branch [4, 4, 4, 1] 2
+                (.branch [4, 4, 4] 1
+                  (.branch [4, 4, 3, 3, 3, 2, 1] 3 .empty .empty) .empty)
+                (.branch [4, 4, 4, 2] 0
+                  (.branch [4, 4, 4, 1, 1] 1 .empty .empty) .empty)))
+            (.branch [4, 4, 4, 3, 1, 1] 0
+              (.branch [4, 4, 4, 2, 2, 1] 2
+                (.branch [4, 4, 4, 2, 2] 1
+                  (.branch [4, 4, 4, 2, 1, 1] 0 .empty .empty) .empty)
+                (.branch [4, 4, 4, 3, 1] 3
+                  (.branch [4, 4, 4, 3] 0 .empty .empty) .empty))
+              (.branch [4, 4, 4, 3, 2, 1, 1] 1
+                (.branch [4, 4, 4, 3, 2, 1] 0
+                  (.branch [4, 4, 4, 3, 2] 1 .empty .empty) .empty)
+                (.branch [4, 4, 4, 3, 2, 2] 0 .empty .empty)))))))
+    (.branch [5, 5, 4, 3, 2, 2] 1
+      (.branch [5, 4, 3, 2, 2, 1] 2
+        (.branch [5, 3, 2] 0
+          (.branch [4, 4, 4, 4, 3, 2, 1] 3
+            (.branch [4, 4, 4, 4, 1] 3
+              (.branch [4, 4, 4, 3, 3, 2] 0
+                (.branch [4, 4, 4, 3, 3, 1] 2
+                  (.branch [4, 4, 4, 3, 3] 1 .empty .empty) .empty)
+                (.branch [4, 4, 4, 4] 0
+                  (.branch [4, 4, 4, 3, 3, 2, 1] 1 .empty .empty) .empty))
+              (.branch [4, 4, 4, 4, 3] 1
+                (.branch [4, 4, 4, 4, 2, 1] 0
+                  (.branch [4, 4, 4, 4, 2] 1 .empty .empty) .empty)
+                (.branch [4, 4, 4, 4, 3, 2] 0
+                  (.branch [4, 4, 4, 4, 3, 1] 2 .empty .empty) .empty)))
+            (.branch [5, 2, 1, 1] 2
+              (.branch [5, 1, 1] 0
+                (.branch [5, 1] 3
+                  (.branch [5] 1 .empty .empty) .empty)
+                (.branch [5, 2, 1] 1
+                  (.branch [5, 2] 3 .empty .empty) .empty))
+              (.branch [5, 3] 2
+                (.branch [5, 2, 2, 1] 2
+                  (.branch [5, 2, 2] 1 .empty .empty) .empty)
+                (.branch [5, 3, 1, 1] 2
+                  (.branch [5, 3, 1] 1 .empty .empty) .empty))))
+          (.branch [5, 4, 2] 1
+            (.branch [5, 3, 3, 1] 3
+              (.branch [5, 3, 2, 2] 2
+                (.branch [5, 3, 2, 1, 1] 0
+                  (.branch [5, 3, 2, 1] 3 .empty .empty) .empty)
+                (.branch [5, 3, 3] 0
+                  (.branch [5, 3, 2, 2, 1] 1 .empty .empty) .empty))
+              (.branch [5, 4] 3
+                (.branch [5, 3, 3, 2, 1] 0
+                  (.branch [5, 3, 3, 2] 2 .empty .empty) .empty)
+                (.branch [5, 4, 1, 1] 2
+                  (.branch [5, 4, 1] 1 .empty .empty) .empty)))
+            (.branch [5, 4, 3, 1] 3
+              (.branch [5, 4, 2, 2] 3
+                (.branch [5, 4, 2, 1, 1] 1
+                  (.branch [5, 4, 2, 1] 3 .empty .empty) .empty)
+                (.branch [5, 4, 3] 4
+                  (.branch [5, 4, 2, 2, 1] 0 .empty .empty) .empty))
+              (.branch [5, 4, 3, 2, 1] 1
+                (.branch [5, 4, 3, 2] 3
+                  (.branch [5, 4, 3, 1, 1] 0 .empty .empty) .empty)
+                (.branch [5, 4, 3, 2, 2] 4
+                  (.branch [5, 4, 3, 2, 1, 1] 2 .empty .empty) .empty)))))
+        (.branch [5, 5, 3, 2] 1
+          (.branch [5, 4, 4, 3, 2, 1] 5
+            (.branch [5, 4, 4, 1] 4
+              (.branch [5, 4, 3, 3, 2] 0
+                (.branch [5, 4, 3, 3, 1] 2
+                  (.branch [5, 4, 3, 3] 1 .empty .empty) .empty)
+                (.branch [5, 4, 4] 2
+                  (.branch [5, 4, 3, 3, 2, 1] 4 .empty .empty) .empty))
+              (.branch [5, 4, 4, 3] 3
+                (.branch [5, 4, 4, 2, 1] 2
+                  (.branch [5, 4, 4, 2] 3 .empty .empty) .empty)
+                (.branch [5, 4, 4, 3, 2] 2
+                  (.branch [5, 4, 4, 3, 1] 0 .empty .empty) .empty)))
+            (.branch [5, 5, 2, 1, 1] 0
+              (.branch [5, 5, 1, 1] 2
+                (.branch [5, 5, 1] 1
+                  (.branch [5, 5] 2 .empty .empty) .empty)
+                (.branch [5, 5, 2, 1] 2
+                  (.branch [5, 5, 2] 0 .empty .empty) .empty))
+              (.branch [5, 5, 3] 0
+                (.branch [5, 5, 2, 2, 1] 1
+                  (.branch [5, 5, 2, 2] 2 .empty .empty) .empty)
+                (.branch [5, 5, 3, 1, 1] 0
+                  (.branch [5, 5, 3, 1] 3 .empty .empty) .empty))))
+          (.branch [5, 5, 4, 2] 2
+            (.branch [5, 5, 3, 3, 1] 2
+              (.branch [5, 5, 3, 2, 2] 0
+                (.branch [5, 5, 3, 2, 1, 1] 1
+                  (.branch [5, 5, 3, 2, 1] 4 .empty .empty) .empty)
+                (.branch [5, 5, 3, 3] 1
+                  (.branch [5, 5, 3, 2, 2, 1] 3 .empty .empty) .empty))
+              (.branch [5, 5, 4] 0
+                (.branch [5, 5, 3, 3, 2, 1] 1
+                  (.branch [5, 5, 3, 3, 2] 0 .empty .empty) .empty)
+                (.branch [5, 5, 4, 1, 1] 0
+                  (.branch [5, 5, 4, 1] 3 .empty .empty) .empty)))
+            (.branch [5, 5, 4, 3, 1] 2
+              (.branch [5, 5, 4, 2, 2] 0
+                (.branch [5, 5, 4, 2, 1, 1] 2
+                  (.branch [5, 5, 4, 2, 1] 0 .empty .empty) .empty)
+                (.branch [5, 5, 4, 3] 1
+                  (.branch [5, 5, 4, 2, 2, 1] 3 .empty .empty) .empty))
+              (.branch [5, 5, 4, 3, 2, 1] 5
+                (.branch [5, 5, 4, 3, 2] 0
+                  (.branch [5, 5, 4, 3, 1, 1] 1 .empty .empty) .empty)
+                (.branch [5, 5, 4, 3, 2, 1, 1] 0 .empty .empty))))))
+      (.branch [6, 5, 1] 2
+        (.branch [5, 5, 5, 4, 2] 0
+          (.branch [5, 5, 4, 4, 3, 2] 1
+            (.branch [5, 5, 4, 4] 1
+              (.branch [5, 5, 4, 3, 3, 1] 3
+                (.branch [5, 5, 4, 3, 3] 0
+                  (.branch [5, 5, 4, 3, 2, 2, 1] 4 .empty .empty) .empty)
+                (.branch [5, 5, 4, 3, 3, 2, 1] 0
+                  (.branch [5, 5, 4, 3, 3, 2] 1 .empty .empty) .empty))
+              (.branch [5, 5, 4, 4, 2, 1] 1
+                (.branch [5, 5, 4, 4, 2] 0
+                  (.branch [5, 5, 4, 4, 1] 2 .empty .empty) .empty)
+                (.branch [5, 5, 4, 4, 3, 1] 1
+                  (.branch [5, 5, 4, 4, 3] 0 .empty .empty) .empty)))
+            (.branch [5, 5, 5, 3] 1
+              (.branch [5, 5, 5, 1] 3
+                (.branch [5, 5, 5] 0
+                  (.branch [5, 5, 4, 4, 3, 2, 1] 4 .empty .empty) .empty)
+                (.branch [5, 5, 5, 2, 1] 0
+                  (.branch [5, 5, 5, 2] 1 .empty .empty) .empty))
+              (.branch [5, 5, 5, 3, 2, 1] 3
+                (.branch [5, 5, 5, 3, 2] 0
+                  (.branch [5, 5, 5, 3, 1] 2 .empty .empty) .empty)
+                (.branch [5, 5, 5, 4, 1] 2
+                  (.branch [5, 5, 5, 4] 1 .empty .empty) .empty))))
+          (.branch [6, 3, 2] 2
+            (.branch [6] 2
+              (.branch [5, 5, 5, 4, 3, 1] 3
+                (.branch [5, 5, 5, 4, 3] 0
+                  (.branch [5, 5, 5, 4, 2, 1] 1 .empty .empty) .empty)
+                (.branch [5, 5, 5, 4, 3, 2, 1] 2
+                  (.branch [5, 5, 5, 4, 3, 2] 1 .empty .empty) .empty))
+              (.branch [6, 2, 1] 2
+                (.branch [6, 2] 0
+                  (.branch [6, 1] 0 .empty .empty) .empty)
+                (.branch [6, 3, 1] 2
+                  (.branch [6, 3] 0 .empty .empty) .empty)))
+            (.branch [6, 4, 3] 1
+              (.branch [6, 4, 1] 3
+                (.branch [6, 4] 0
+                  (.branch [6, 3, 2, 1] 0 .empty .empty) .empty)
+                (.branch [6, 4, 2, 1] 0
+                  (.branch [6, 4, 2] 2 .empty .empty) .empty))
+              (.branch [6, 4, 3, 2, 1] 2
+                (.branch [6, 4, 3, 2] 0
+                  (.branch [6, 4, 3, 1] 4 .empty .empty) .empty)
+                (.branch [6, 5] 0 .empty .empty)))))
+        (.branch [6, 6, 4, 1] 2
+          (.branch [6, 5, 4, 3, 1] 5
+            (.branch [6, 5, 3, 2, 1] 2
+              (.branch [6, 5, 3] 3
+                (.branch [6, 5, 2, 1] 0
+                  (.branch [6, 5, 2] 2 .empty .empty) .empty)
+                (.branch [6, 5, 3, 2] 4
+                  (.branch [6, 5, 3, 1] 0 .empty .empty) .empty))
+              (.branch [6, 5, 4, 2] 0
+                (.branch [6, 5, 4, 1] 0
+                  (.branch [6, 5, 4] 1 .empty .empty) .empty)
+                (.branch [6, 5, 4, 3] 0
+                  (.branch [6, 5, 4, 2, 1] 4 .empty .empty) .empty)))
+            (.branch [6, 6, 2, 1] 0
+              (.branch [6, 6] 0
+                (.branch [6, 5, 4, 3, 2, 1] 0
+                  (.branch [6, 5, 4, 3, 2] 5 .empty .empty) .empty)
+                (.branch [6, 6, 2] 2
+                  (.branch [6, 6, 1] 3 .empty .empty) .empty))
+              (.branch [6, 6, 3, 2] 0
+                (.branch [6, 6, 3, 1] 4
+                  (.branch [6, 6, 3] 1 .empty .empty) .empty)
+                (.branch [6, 6, 4] 1
+                  (.branch [6, 6, 3, 2, 1] 3 .empty .empty) .empty))))
+          (.branch [6, 6, 5, 3, 1] 1
+            (.branch [6, 6, 4, 3, 2, 1] 0
+              (.branch [6, 6, 4, 3] 0
+                (.branch [6, 6, 4, 2, 1] 1
+                  (.branch [6, 6, 4, 2] 0 .empty .empty) .empty)
+                (.branch [6, 6, 4, 3, 2] 1
+                  (.branch [6, 6, 4, 3, 1] 3 .empty .empty) .empty))
+              (.branch [6, 6, 5, 2] 0
+                (.branch [6, 6, 5, 1] 4
+                  (.branch [6, 6, 5] 1 .empty .empty) .empty)
+                (.branch [6, 6, 5, 3] 0
+                  (.branch [6, 6, 5, 2, 1] 1 .empty .empty) .empty)))
+            (.branch [6, 6, 5, 4, 2, 1] 0
+              (.branch [6, 6, 5, 4] 0
+                (.branch [6, 6, 5, 3, 2, 1] 4
+                  (.branch [6, 6, 5, 3, 2] 1 .empty .empty) .empty)
+                (.branch [6, 6, 5, 4, 2] 1
+                  (.branch [6, 6, 5, 4, 1] 3 .empty .empty) .empty))
+              (.branch [6, 6, 5, 4, 3, 2] 0
+                (.branch [6, 6, 5, 4, 3, 1] 2
+                  (.branch [6, 6, 5, 4, 3] 1 .empty .empty) .empty)
+                (.branch [6, 6, 5, 4, 3, 2, 1] 1 .empty .empty)))))))
 
 set_option maxHeartbeats 4000000 in
 -- Checks all 377 positions against their complete CRIM option lists.
