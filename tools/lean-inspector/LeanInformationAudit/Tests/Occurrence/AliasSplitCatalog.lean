@@ -64,8 +64,7 @@ expect_information_occurrence sndTheorem
 #guard_msgs (error) in
 #seal_information_theory
 
-/-- error: IE-C002 DuplicateRegistration:
-LeanInformationAudit.Tests.AliasSplitCatalog.fstTheorem -/
+/-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.AliasSplitCatalog.objectArena theorem_name=LeanInformationAudit.Tests.AliasSplitCatalog.fstTheorem registration_modules=["LeanInformationAudit.Tests.Occurrence.AliasSplitCatalog"] count=2 -/
 #guard_msgs (error) in
 information_theorem fstTheorem
   in lawArena

@@ -47,24 +47,60 @@ def InformationRegistryEntry.effectiveCatalogId
     (entry : InformationRegistryEntry) : CatalogId :=
   if entry.catalogId.isAnonymous then entry.canonicalObjectArenaName else entry.catalogId
 
-/-- Follow declaration aliases without identifying separately constructed arenas.
-Delta/beta/iota/zeta steps stop at a named target before unfolding that target.
-Factories reaching a structure value (even on the same carrier) keep their own
-declaration owner; forwarding applications such as `id arena` remain aliases. -/
+/-- A correctness bound, independent of host speed and caller heartbeat options.
+Every head transition, declaration lookup and environment lookup spends one unit. -/
+def arenaAliasWorkBudget : Nat := 4096
+
+/-- Elaboration provenance for a structure literal, retained across olean imports.
+Lean's structure elaborator eta-contracts field-copy literals before storing them. -/
+def arenaConstructionMarker : Name := `LeanInformationAudit.arenaConstruction
+
+private inductive AliasClosure where
+  | mk (term : Expr) (bindings : List AliasClosure)
+
+/-- Fuelled weak-head reduction of forwarding aliases only (delta/beta/zeta).
+Closures avoid substitution and never traverse or normalize argument subtrees.
+Unlike unrestricted `whnfR`, this stops at constructors, projections and recursors,
+and never performs structure eta. A bare named target becomes the next owner;
+an application that constructs a value retains the last named owner.
+The single budget covers both outer aliases and all work inside applications. -/
 def resolveCanonicalArenaName (spelling : Name) : MetaM Name := do
-  unless (← getEnv).contains spelling do return spelling
-  let mut current ← mkConstWithFreshMVarLevels spelling
-  repeat
-    let name := current.constName!
-    let some value ← unfoldDefinition? current (ignoreTransparency := true)
-      | return name
-    let mut value ← whnfCore value
-    while !value.isConst do
-      let some unfolded ← unfoldDefinition? value (ignoreTransparency := true)
-        | return name
-      value ← whnfCore unfolded
-    current := value
-  return spelling
+  let env ← getEnv
+  unless env.contains spelling do return spelling
+  let mut owner := spelling
+  let mut current := AliasClosure.mk (mkConst spelling) []
+  let mut arguments : List AliasClosure := []
+  let mut fuel := arenaAliasWorkBudget
+  while fuel > 0 do
+    fuel := fuel - 1
+    let .mk term bindings := current
+    match term with
+    | .mdata data body =>
+      if data.contains arenaConstructionMarker then return owner
+      current := .mk body bindings
+    | .app fn arg =>
+      arguments := .mk arg bindings :: arguments
+      current := .mk fn bindings
+    | .letE _ _ value body _ =>
+      current := .mk body (.mk value bindings :: bindings)
+    | .lam _ _ body _ =>
+      match arguments with
+      | [] => return owner
+      | arg :: rest =>
+        arguments := rest
+        current := .mk body (arg :: bindings)
+    | .bvar index =>
+      match bindings with
+      | [] => throwError "IE-C003 ArenaResolutionFailed: {spelling}"
+      | value :: rest =>
+        current := if index == 0 then value else .mk (.bvar (index - 1)) rest
+    | .const name _ =>
+      if arguments.isEmpty then owner := name
+      match env.find? name with
+      | some (.defnInfo info) => current := .mk info.value []
+      | _ => return owner
+    | _ => return owner
+  throwError "IE-C003 ArenaResolutionBudgetExceeded arena={spelling} limit={arenaAliasWorkBudget}"
 
 def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=
@@ -205,8 +241,28 @@ def isCompanionName : Name -> Bool
       generatedCompanionSuffixes.contains suffix
   | _ => false
 
-private def duplicateError (name : Name) : String :=
-  s!"IE-C002 DuplicateRegistration: {name}"
+/-- Complete, deterministic payload shared by prechecks, insertion and sealing.
+`entries` contains every contributing registration, including a prospective one
+when rejecting insertion; module names are a sorted set, count counts entries. -/
+def duplicateRegistrationError (entry : InformationRegistryEntry)
+    (entries : Array InformationRegistryEntry) : String :=
+  let modules := entries.map (·.registrationModuleName.toString)
+    |>.toList.eraseDups.toArray |>.qsort (· < ·)
+  s!"IE-C002 DuplicateRegistration object_arena={entry.canonicalObjectArenaName} \
+theorem_name={entry.theoremName} registration_modules={jsonStringArray modules} \
+count={entries.size}"
+
+/-- Resolve the prospective owner before any admission precheck. -/
+def prepareRegistrationEntry (env : Environment)
+    (entry : InformationRegistryEntry) : MetaM InformationRegistryEntry := do
+  let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName
+    else entry.objectArenaName
+  let resolvedArenaName ← resolveCanonicalArenaName spelling
+  return { entry with
+    resolvedArenaName
+    registrationModuleName := if entry.registrationModuleName.isAnonymous then
+      env.header.mainModule else entry.registrationModuleName }
+
 
 private def statementMismatchError (name : Name) : String :=
   s!"IE-C006 StatementProofMismatch: {name}"
@@ -354,22 +410,6 @@ private def sameEntry (left right : InformationRegistryEntry) : Bool :=
     left.statementIdentity == right.statementIdentity &&
     left.localRegistrationNames == right.localRegistrationNames
 
-private def normalizedEntry (env : Environment)
-    (entry : InformationRegistryEntry) : MetaM InformationRegistryEntry := do
-  let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName
-    else entry.objectArenaName
-  let resolvedArenaName ← resolveCanonicalArenaName spelling
-  return { entry with
-    resolvedArenaName
-    registrationModuleName := if entry.registrationModuleName.isAnonymous then
-      env.header.mainModule
-    else
-      entry.registrationModuleName
-    statementIdentity := if entry.statementIdentity.isEmpty then
-      theoremStatementIdentity env entry.theoremName
-    else
-      entry.statementIdentity }
-
 /-- Validate a prospective entry before insertion; neither registry key may exist yet. -/
 def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
@@ -381,7 +421,7 @@ def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
     candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&
       candidate.theoremName == entry.theoremName
   if !occurrenceMatches.isEmpty then
-    return .error (duplicateError entry.theoremName)
+    return .error (duplicateRegistrationError entry (occurrenceMatches.push entry))
   let unitMatches := entries.filter fun candidate =>
     candidate.unitName == entry.unitName
   if !unitMatches.isEmpty then
@@ -407,8 +447,8 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
   match occurrenceMatches.toList with
   | [candidate] =>
     unless sameEntry candidate entry do
-      return .error (duplicateError entry.theoremName)
-  | _ => return .error (duplicateError entry.theoremName)
+      return .error (duplicateRegistrationError entry occurrenceMatches)
+  | _ => return .error (duplicateRegistrationError entry occurrenceMatches)
   let unitMatches := entries.filter fun candidate => candidate.unitName == entry.unitName
   match unitMatches.toList with
   | [candidate] =>
@@ -430,7 +470,12 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
 
 def registerValidatedEntry (entry : InformationRegistryEntry) :
     Lean.Elab.Command.CommandElabM Unit := do
-  let entry ← Lean.Elab.Command.liftTermElabM <| normalizedEntry (← getEnv) entry
+  let env ← getEnv
+  let entry ← if entry.resolvedArenaName.isAnonymous then
+      Lean.Elab.Command.liftTermElabM <| prepareRegistrationEntry env entry
+    else pure entry
+  let entry := { entry with statementIdentity := if entry.statementIdentity.isEmpty then
+    theoremStatementIdentity env entry.theoremName else entry.statementIdentity }
   let result <- Lean.Elab.Command.liftTermElabM <|
     validateNewEntry (← getEnv) entry
   match result with
