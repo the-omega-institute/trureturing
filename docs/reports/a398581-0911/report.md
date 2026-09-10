@@ -91,6 +91,12 @@ Freeze event `Golden/Frozen/accepted/8fb5d9f8e17e7ec35f64a0ac2719762d7b236ad32e3
 
 Pre-PR D5 repeat search `rg -n 'A398581|first_maximum_separation_mod_five|first_maximal|near_bound' D5 --glob '*.lean'` returned only this new module. After fetching dev, its tip was `45ca4ae3b012cb1f59ff74a84e845691a3f0c99c`; the only intervening D5/Blueprint/Library/Golden path was the separate `Library/Words/oeis2026triage0911.md`. Gate receipts remain tied to the immutable starting base, not silently retargeted. No source or frozen proof was rewritten.
 
+## Outcome
+
+**成**, under the task's stated endpoint: the full theorem is proved, `make lean` returned zero with no sorry or private axiom, and [PR #6765](https://github.com/the-omega-institute/trureturing/pull/6765) is open to `dev`. Formal delivery commit `c929024ff5cf3bc0625316f54fae1b0191b0815a` was pushed. `git merge-tree --write-tree origin/dev HEAD` returned zero with tree `0b9d6effbea1c2a1f75f433b7959360883b15ca6`. The working tree was clean before the PR receipt was added.
+
+The PR was created through `make pr-open`, with auto-merge disabled. At this report checkpoint CI is running; no CI-green or merged claim is made. The terminal CI receipt will be in the runner-owned result envelope and `pr-open.log`. The user's explicit PR-open completion criterion takes precedence over the repository's default merged endpoint. This remains a single-worker implementation with self-checks, not independent review.
+
 ## Unclaimed
 
 No all-k solvability, converse, universal maximality across all residues, literature novelty beyond checked sources, or independent review consensus is claimed. All unopened external pages remain ASSUMED-UNVERIFIED. The brief's proposed comparison route has now been proved in the exact form described above; no claim is made about an unexamined derivation from the triage seat.
