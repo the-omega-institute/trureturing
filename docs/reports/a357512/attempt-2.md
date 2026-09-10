@@ -154,3 +154,11 @@ by three, and fourth-power conclusion. The Library note uses the fetched
 OEIS JSON URL and includes a nonempty `## Verified locator` containing both
 frontmatter locator lines verbatim. Scribe content checks are run separately
 before freeze/PR; `make emit` alone is not their evidence.
+
+`bash tools/scripts/workflow/scribe-content-checks.sh
+.lake/build/stratalint/raw-lean-report.json ""
+d6836dd2ae403f006f1f2d6ae5ddef3af56c5e46`: EXIT=0, 24.029 seconds.
+The delta-selected Describe checks pass, and the real KaTeX markdown check
+reports `judged=1 formula(s)=1 red=0`. The script's separate projection-fixture
+check is outside this delta (no projection fixture or producer changes).
+No `sorry`, private `axiom`, or `native_decide` occurs in the module.
