@@ -1,5 +1,7 @@
 # 相关-税恒等式实施结果
 
+本轮结算：**成**（用户给定的 implementation 标准；不表示已经合并）。
+
 产地：Codex 实施席，使用 lean4 skill；本席亲跑数值与 Lean/门链。
 无独立评审席，不主张异模型共识。预登记见 preregistration-v1.md，数值见 numerics.md。
 
@@ -99,3 +101,37 @@ route 返回 D5/S3/Quantum/Information/CoherentCopyCorrelationTax.lean，S3/Quan
 新增前 D5/Information、Blueprint/Information（不计 .md）、Library/Quantum 分别为 1、1、16；
 新增后分别 2、2、17，均小于 SL-003 的 48。直接 import 的两个模块均 generality:G。
 Lean 七行头部次序与 utility:none 合规；Lean 每行不超过 100 字符。
+
+## 门链与冻结读数
+
+| 顺序 | 命令/仪器 | 结果 |
+| --- | --- | --- |
+| 1 | bash tools/scripts/agent/serial-lean.sh /Users/chronoai/trureturing-qmutualinfo | exit 0；SERIAL_LEAN status=complete built=1 failed=0 missing=1 |
+| 2 | make lean-report | exit 0；新报告 7 个增量模块；本模块全部声明只有标准三公理 |
+| 3 | make emit | exit 0；发射 1 个新 Blueprint |
+| 4 | make deposit-uncovered GID=D5/S3/Quantum/Information/CoherentCopyCorrelationTax.coherent_copy_correlation_tax BASE=53ae8e3983bb738c24410db792dce23f9cbc3753 | exit 0；LEDGER_ALIGN changed=0 added=1 conflicts=0 |
+| 5 | 指定 scribe-content-checks.sh，第三参数为精确 merge-base | exit 0；DESCRIBE_STATUS status=classified nodes=11090 red=0；Markdown 检查通过 |
+| 6 | agents/CONTEXT.md 的候选 CLI check --candidate-lean-report ... --protected-base 53ae8e3983bb738c24410db792dce23f9cbc3753 | exit 3；内容规则全部通过，SL-022 标注新增 .scribe.cs 保护面 |
+
+第六项的 3 **不是退出 0，也不是内容红项**：原文为
+`PROTECTED_SURFACE_CHANGE count=1`，唯一具名标注是新 Scribe 文件。
+未降低检查、未改判官、未使用绕过或管理员操作。
+串行构建只扫描缺失产物；修改本模块后仅移除了该新模块自己的可重建 .olean，
+使串行器真正重建当前源码。没有删除/重建用户指出的两个大内存模块。
+
+冻结状态片：Golden/Frozen/state/D5/S3/Quantum/Information/CoherentCopyCorrelationTax.lean.json。
+模块 statement_id：sha256:515e26b6d8e1b83bf165408fa389b250fd98e12f77fcb42d95532c8250a7de46。
+主定理 statement_id：sha256:cc3d1a3a93c455ec90e6ccc8a358f94e907eaf02a2e0c1a5f34c37b62f96b90d。
+形态是 deposit-uncovered：源 atom 的三个子句中只做相关-税这一条；未改 coverage，
+不声称整个 atom 已消化。无数学剩余子命题。
+
+远程分支已推送；本 implementation 席未开 PR、未运行远程 PR CI、未合并，
+独立评审未由本席执行，不把本地判词冒充这些后续阶段的判词。
+
+原始日志与完整数值样本位于 runner attempt：
+`/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/corrtax-1/attempt-1/`。
+文件：serial-lean-final.log、lean-report.log、emit.log、deposit.log、
+scribe-content.log、admission.log、merge-base.txt、numeric.py、numeric.json、numeric-floor-log.json。
+
+即时提交的数学单元：b2fc1cb8fb（态与边缘）、327b7346eb（保熵与恒等式）；
+冻结及证据：50fd603e3c。最终工作树提交身份由 result.json 的 conclusion.head 记录。
