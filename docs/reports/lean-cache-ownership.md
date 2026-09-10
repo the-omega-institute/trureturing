@@ -4,8 +4,12 @@ The target policy is that cache is an optional accelerator and Lake remains the
 correctness path. The local worktree cache, scheduled archive, explicit archive
 consumer, and candidate report cache keep cache availability outside required admission.
 
-下文 report cache 与 judge binary cache 描述集成候选；实际 CI/发布验收及 dev
-交付仍为 **PENDING**。
+下文 report cache 与 judge binary cache 的 integration 安装已有
+[PR #6750](https://github.com/the-omega-institute/trureturing/pull/6750) 和
+[native push run #34433813347](https://github.com/the-omega-institute/trureturing/actions/runs/34433813347)
+的成功观测。整体 CI 资格验证与 dev 交付仍为 **PENDING**；当前进展见
+[跟踪 Draft #6694](https://github.com/the-omega-institute/trureturing/pull/6694)，验证期间保持
+Draft 且关闭 auto-merge。这些历史安装观测不代表已部署到 dev。
 
 **Known gap:** the two CI Lean artifact restore actions, `lake-deps-cache` and
 `lake-build-cache`, run inside the required `lean-inspect` job when report reuse
@@ -28,13 +32,12 @@ judge binary guards do not repair it.
 | Lean report cache | Report reuse; `make lean-report`, explicit report cache targets, and CI | Actions uses repository input `R`; the local store and provenance use input `A`. Both come from the canonical report input owner and have distinct schemas and non-interchangeable hex values. Normal production enables a UID-owned local store and optional shared Release acquisition. Existing validation and the delta producer control reuse; report storage is separate from Lean build/dependency stores, donor selection, ensure, and writer ownership. See the [Lean report cache usage guide](lean-report-cache.md). |
 | CI judge binary cache | Candidate tools; `candidate-engineering` and `lean-inspect` | An exact judge binary hit skips the redundant report-job tools build. Engineering staging requires `build-candidate` success within the existing push scope, and saving also requires staging success. Locked restores, test execution, selftest, and compile-failure proofs retain their existing conditions. |
 
-Lean `.olean` 复用减少的是编译工作；完整报告仍需 Inspector 加载依赖并产出材料。
-最终本地观测中，全量生产虽为 `Built=0`，仍有 `Inspector=3961`；精确报告复用
-跳过 Inspector，真实源码增量则由既有 delta owner 按权威重检闭包合成完整 bundle，
-private、excluded、opaque 及所需材料均保留。内存取决于加载的依赖与材料，
-不能按模块数线性推算；正常 make 仍运行 ensure 和输入寻址。
-三模式读数和测量边界见上方用法指南。已确认的 ZIP 合并进程内存下降不代表全程
-内存改善，实测 RSS 也不能推出最低 RAM 要求。
+Lean `.olean` 复用由 Lake 负责，不能替代 Inspector 报告生产。报告增量由既有
+delta owner 按权威重检闭包合成完整 bundle，保留 private、excluded、opaque 声明
+及所需材料。已接受的 Linux P0/S1 探针覆盖了一次损坏报告的 expected-SHA 拒绝
+（**退出码为 2**）、恢复/复用和单模块增量；两者均关闭未合并，不计稳定资格。
+Lean workflow 与 report producer 的计数分属不同阶段，详细结果、内存与 ZIP 优化
+的测量边界及公开 run 证据见上方用法指南。
 
 `ASSUMED-UNVERIFIED`: no repository test proves that, at the current pin, Lake
 regenerates a missing required mathlib olean without a correctness error. The writer

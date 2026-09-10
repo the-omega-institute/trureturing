@@ -1,7 +1,12 @@
 # Lean report cache
 
-本文描述待交付候选。最终源码审查、实际 CI/发布验收及 dev 交付仍为 **PENDING**；
-功能资格还需完整功能覆盖、可比 CI 性能，以及最终候选 CI 下连续 12 条正常合入的集成 PR。
+本文描述正在 integration 验证的报告缓存候选。整体 CI 资格验证与 dev 交付仍为
+**PENDING**，当前进展见[跟踪 Draft #6694](https://github.com/the-omega-institute/trureturing/pull/6694)；
+验证期间该 Draft 保持 Draft 且关闭 auto-merge。
+[PR #6750](https://github.com/the-omega-institute/trureturing/pull/6750) 已正常合入 integration
+（merge `5f89ce2`），其 [native push run #34433813347](https://github.com/the-omega-institute/trureturing/actions/runs/34433813347)
+的四个 job、Actions report/judge 保存和 Release 上传均成功。这些是已接受的历史安装
+观测，不代表整体资格通过或已部署到 dev。
 
 `make lean-report` produces or reuses the canonical report at
 `.lake/build/stratalint/raw-lean-report.json`, together with its required sidecars
@@ -58,6 +63,41 @@ Normal report production follows these paths:
    ordinary incremental production. Successful production stores the complete
    bundle for later reuse.
 
+Linux 单模块增量的已接受证据为 [S1 PR #6768](https://github.com/the-omega-institute/trureturing/pull/6768)
+及其 [native pull_request run #34439636556](https://github.com/the-omega-institute/trureturing/actions/runs/34439636556)。
+在 GitHub `ubuntu-24.04-arm` 上使用已验证的 parent report seed，
+`D5.S3.Zeros.MirrorPairIdentity` 的 delta 为 changed=1、added=0、removed=0、recheck=1。
+以下计数分属两个阶段，不能合并为全局计数：
+
+| 阶段 | Built / Replayed | Inspector | 耗时 |
+|---|---:|---:|---:|
+| Lean workflow build | 1 / 3217 | — | 100 s |
+| Report producer | 0 / 3218 | 1 | 67 s |
+
+producer 的采样 supervisor RSS 为 3978160 KiB（3.793869 GiB）。三门均成功：
+engineering/report/admission 为 617/375/133 s（总计 622 s），七个 engineering project
+共 4937 passed、0 failed、0 skipped。三个 job 均命中 exact judge cache；普通测试
+529 s 是关键路径，report job 还含 project/dependency restore 74/46 s。完整 bundle
+无缺失、多余或重复成员，当前 source hash 与输入、provenance 和 artifact 绑定一致。
+
+[P0 PR #6761](https://github.com/the-omega-institute/trureturing/pull/6761) 的
+[native run #34436572024](https://github.com/the-omega-institute/trureturing/actions/runs/34436572024)
+中，一份故意损坏的报告被 expected-SHA 校验拒绝，**退出码为 2**。随后 full recovery
+为 producer/Inspector=1/3961，local-exact 复用为 0/0；source/seed fingerprint 未变，
+normal、recovery、reuse 的 raw、ZIP 和 input-attestation 字节相同，checksum basename
+规范化与 reuse provenance 的 `produced`→`cached` 差异已解释。private copy 缺 DLL 的
+O1 退出码为 2，Linux 缺 runtimeconfig 的 O2 退出码为 131；O3 在 missing-build-output
+retry 后取得 positive TRX receipt 26 并恢复原 DLL，七项目仍全部通过。这些是
+source-equivalent freshly-built/private-copy omission 探针，不声称在 exact restored
+archive 内注入。P0/S1 均已关闭未合并，不计稳定资格。
+
+同候选的 [default pull_request_target run #34439636832](https://github.com/the-omega-institute/trureturing/actions/runs/34439636832)
+实际入口来自 default dev `0df1fdcb`/blob `dbd66d`，native 的 workflow 修订为
+merge `M=80e78fd`/blob `e53346`。default full fallback producer 为 737 s、采样 RSS
+13615216 KiB，raw SHA 与 native 相同；未独立采集 default Inspector count。
+两次 cache scope、Lean seeds 和 hosts 不同，不能作受控的全流程因果比较，证据只覆盖
+各自事件与权限下的行为；最终交付后的 dev 首次运行仍待观察。
+
 复用已编译的 Lean `.olean` 与生成或复用完整 Inspector 报告是两件事。
 本次全量 `make lean-report` 即使 `Built=0`，仍有 `Inspector=3961` 并占用大量内存。
 精确报告命中在验证、暂存完整 bundle 后跳过 Inspector；真实源码增量由既有 delta owner
@@ -78,9 +118,9 @@ Lean 4.33.0、Python 3.9.6、.NET SDK 10.0.400；复用原有热 `.lake`，
 
 | 模式 | 墙钟秒 | 实际 Built / Inspector | 采样进程树峰值 GiB | 采样最大单进程 GiB |
 |---|---:|---:|---:|---:|
-| 全量生产 | 609.614 | 0 / 3961 | 16.219 | 15.158 |
-| 本地 exact 复用 | 13.986 | 0 / 0 | 0.314 | 0.248 |
-| 单叶注释 delta | 65.535 | 1 / 1 | 3.426 | 2.429 |
+| 全量生产 | 609.613798 | 0 / 3961 | 16.218857 | 15.158 |
+| 本地 exact 复用 | 13.985564 | 0 / 0 | 0.313675 | 0.248 |
+| 单叶注释 delta | 65.535379 | 1 / 1 | 3.425659 | 2.429 |
 
 进程树读数是当前 make 后代的近似同步 RSS 采样，目标间隔 250 ms，full 最大间隔
 1.575 s；不含观测器和其他 worker，可能漏掉短暂峰值。原生观测器通过真实子/孙进程
@@ -102,10 +142,11 @@ provenance 为 `cached`，先前 Actions exact 服务保留原始 `produced` pro
 有界拷贝。两种顺序的耗时比为 1.056951 / 1.007084，未触发预登记的「两种顺序均
 变慢 >20% 且 >20 ms」判据，不据此声称提速或全程内存下降。
 
-首次 full 的 make / Inspector 均退出 2，仍记失败；后续诊断明确遇到 ENOSPC，
-但原 Inspector 退出原因未明。该轮 PID 计数错误的采样仍无效，上表使用修正并校准
-后的重测。原基线 full 的 `Built=21`，本次为 0；主机负载、构建/缓存、磁盘与
-观测条件不同，不能相减得出全程改善。共享磁盘读数变化未作原因归属。
+较早 full 尝试的 make / Inspector 退出码为 2，**当时 Inspector 的退出原因仍未知**。
+后续诊断观察到 ENOSPC，但不足以完整归因该次失败；其 PID 计数错误的采样已丢弃，
+上表是修正并校准后的重测。原基线 full 的 `Built=21` 与本次 0
+来自不同主机负载、构建/缓存、磁盘和观测条件，不能相减得出全程改善；共享磁盘读数
+不作原因归属。
 
 Rejected local entries and failed automatic acquisition fall through to ordinary
 production. Missing assets, rejected transport bundles, authentication/network
@@ -169,9 +210,7 @@ selftest, and compile-failure proofs under their normal step conditions and
 failure behavior. The engineering solution restore remains guarded by
 `github.event_name != 'schedule'`. A judge binary hit does not imply zero .NET
 invocations: restore, test execution, selftest, compile-failure proofs, and report
-input addressing still have their own work. Final comparable CI hot-hit
-performance and complete CI negative-case coverage remain pending; the local
-observations above do not settle them.
+input addressing still have their own work.
 
 The optional `publish-lean-report-cache` job runs only within its configured push
 scope after `candidate-engineering`, `lean-inspect`, and `baseline-admission`
