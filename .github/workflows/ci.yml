@@ -3,7 +3,7 @@ name: admission
 
 on:
   push:
-    branches: [dev]
+    branches: [dev, 'integration-**']
   pull_request_target:
     branches: [dev, 'integration-**']
     types: [opened, synchronize, reopened]
@@ -140,9 +140,9 @@ jobs:
         id: build-candidate
         if: steps.judge-cache.outputs.cache-hit != 'true' && github.event_name != 'schedule'
         run: make -C candidate/tools dotnet
-      - name: Stage judge binaries for the shared cache (dev push only)
+      - name: Stage judge binaries for the shared cache (push only)
         id: stage-judge
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))
         shell: bash
         run: |
           set -euo pipefail
@@ -153,8 +153,8 @@ jobs:
             --configuration Release --output .judge-binaries/scribe
           test -s .judge-binaries/cli/StrataLint.dll
           test -s .judge-binaries/scribe/StrataLint.Scribe.Documents.dll
-      - name: Save judge binaries and candidate build outputs by content address (dev push only)
-        if: steps.build-candidate.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save judge binaries and candidate build outputs by content address (push only)
+        if: steps.build-candidate.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))
         uses: actions/cache/save@v4
         with:
           path: |
@@ -216,8 +216,8 @@ jobs:
             test "${actual_lines[$index]}" = "$expected_line"
             ((index += 1))
           done
-      - name: Save elan toolchain for engineering checks (dev push only)
-        if: always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save elan toolchain for engineering checks (push only)
+        if: always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
@@ -460,16 +460,16 @@ jobs:
           PATH="$HOME/.elan/bin:$PATH" make -C candidate lean
       # Only a successful build materializes Lean artifacts. A report hit skips
       # that build; later report failures cannot revoke its completed cache supply.
-      - name: Save Lean project build artifacts (dev push only)
-        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save Lean project build artifacts (push only)
+        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
         with:
           path: candidate/.lake/build
           key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ steps.lean-input.outputs.sources_sha256 }}
-      - name: Save Lean dependency artifacts (dev push only)
-        if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save Lean dependency artifacts (push only)
+        if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -525,8 +525,8 @@ jobs:
 
       # pull_request_target runs get a token without cache-write scope, so this save can only ever fail there: run 31389667812 logged "cache write denied: token has no writable scopes". The two saves below already carry this exact guard; this one was missing it, so every PR attempted a write it could not perform. dev-push runs do write it successfully (run 31389340892).
       # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
-      - name: Save candidate canonical Lean report (dev push only)
-        if: success() && steps.lean-report-input.outputs.address != '' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save candidate canonical Lean report (push only)
+        if: success() && steps.lean-report-input.outputs.address != '' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
@@ -553,10 +553,10 @@ jobs:
           retention-days: 7
 
       # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
-      - name: Save elan toolchains (dev push only)
+      - name: Save elan toolchains (push only)
         # 不挂在 success() 上:elan 装成功就该存。否则一次下载失败会让 job 红、缓存不写、
         # 下次继续 miss,故障自我延续。
-        if: always() && steps.install-elan.outcome == 'success' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: always() && steps.install-elan.outcome == 'success' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
