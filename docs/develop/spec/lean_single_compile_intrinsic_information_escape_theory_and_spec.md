@@ -1228,7 +1228,7 @@ pair counts、denominators、exact rates、数值 gain／overlap／spectra 没�
 本款不引入 entropy、measure 或概率；测度接口中的 $\mu$ 只绑定该接口，不产生逃逸率。
 
 **诊断边界。** 本款使用 CIRPT-42 与第 31 节分配的诊断，不把契约定义冒充现役执法。
-IE-C007 仅指既有 finite zero unique capture；IE-C024 指同一 canonical arena（含定义性别名展开）的 catalog 拆分；
+IE-C007 指 zero unique capture 的逐成员 disposition record（finite context 带计数，structural context 带 negated-strictness certificate、无计数）；IE-C024 指同一 canonical arena（含定义性别名展开）的 catalog 拆分；
 IE-C029 仅指既有跨 arena realization 未 faithful 消费 hypothesis 或缺 injection／restriction 方程；
 IE-C038 仅指 structural inclusion／pair witness 缺失、不成立或不满足 without／full 两侧。
 M0 新增结构门的诊断码由本规范分配（IE-C048、IE-C049、IE-C050）：Law-variation witness 缺失、
@@ -1634,8 +1634,7 @@ $$
 \neg\left(K_I\subsetneq K_{I\setminus\{i\}}\right).
 $$
 
-它不是 theorem declaration 的全局标签，并且对 membership 非单调：加入更细 peer 可以使
-旧 occurrence 可由 membership 变化从 positive 变成 zero 或恢复，因此受影响的整个 maximal catalog 必须重新 seal；当前 census exact-key row 替换为 `certified (.trivialInCatalog payload)` 或 positive row，旧 scope/certificate（含 singleton certificate）不得作为 enlarged catalog evidence。
+它不是 theorem declaration 的全局标签，并且对 membership 非单调，方向由不变的 unique-capture 定义决定：固定既有 kernels，$I\subseteq J$ 蕴含 $U_i(J)\subseteq U_i(I)$，故加入 peer 只能使旧 occurrence 由 positive 变为 zero，不能恢复；只有删除或替换 peer 并重算完整 catalog 才可恢复 positivity。任一 membership 变化都使受影响的整个 maximal catalog 必须重新 seal；当前 census exact-key row 替换为 `certified (.trivialInCatalog payload)` 或 positive row，旧 scope/certificate（含 singleton certificate）不得作为 enlarged catalog evidence。
 冻结 pin 绑定 theorem statement identity，不绑定 disposition；多 arena occurrences 全部保留，census 按当前 query root 内 canonical occurrence 顺序确定一行，绝不回退到缺 peer 的旧 catalog。
 level-0 trivial occurrence 的 `law_*` 按 §6.3 在同一完整 catalog 与冻结 Γ 上计算；open schema 不预先加入待测 law 的 inclusion 假设，level-1 verdict 永不把 level-0 trivial 升为 level-0 positive。
 level-1 fields carry the same complete catalog, including positive and trivial members; they never discharge `ObjectNovelty`.
@@ -7016,7 +7015,7 @@ catalog；该有限 family 的 membership 来自 `rootId` 的 import closure，�
 seal occurrence record 携带 positive/trivial typed certificate 分支；catalog record 携带 positive/negative verdict 分支，不再以不可选的 irredundant certificate Name 代表 seal 成功。serializer、parser、analysis bindings 与 census query 共同检查此分支及确切命题。
 payload.root 是证书所属 sealing root，census query root 另行绑定；导入 seal 仅在成员、顺序、arena、realizations 覆盖当前 query scope 的完整 catalog 时可复用。
 canonical payload fields are `key`, `root`, `canonicalArena`, `catalog`, `index`, `registration`, `realization`, `catalogSeal`, `trivialityCertificate`; finite context carries nondegeneracy and state-enumeration certificates, structural context carries the structural catalog and required realization evidence. `catalogSeal` binds the classification seal in both contexts and must not require an all-positive irredundancy certificate. The validator resolves every evidence name, checks the actual `Catalog.TrivialInCatalog C i` or `StructuralCatalog.TrivialInCatalog C i` proposition and occurrence index, and binds it to the current complete catalog and frozen statement key; positive validation checks a genuinely positive proposition, so a zero certificate cannot satisfy `finite_occurrence`.
-Positive occurrences alone emit `__lowers_escape` and `__escape_enriched`; zero occurrences emit `__trivial_in_catalog` and one IE-C007 record containing theorem, arena, full and leave-one-out counts, provable same-kernel/closure candidates, and no scoring advice. `__catalog_irredundant` exists iff every member is positive; otherwise emit `__catalog_redundant : Catalog.CatalogRedundant C` and a typed negative verdict; consumers needing `¬ CatalogIrredundant C` use `catalogRedundant_iff_not_catalogIrredundant`. `SystemCatalogIrredundant`, `SystemWidePositive`, and IE-039 retain their meanings; any redundant designated catalog yields `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant`. staging/export accept either catalog verdict.
+Positive occurrences alone emit `__lowers_escape` and `__escape_enriched`; zero occurrences emit `__trivial_in_catalog` and one IE-C007 record containing theorem, arena, provable same-kernel/closure candidates, and no scoring advice; in the finite context the record also carries full and leave-one-out counts with state-enumeration evidence, in the structural context it carries the negated-strictness certificate and catalog/realization provenance and no numeric count fields. `__catalog_irredundant` exists iff every member is positive; otherwise emit `__catalog_redundant : Catalog.CatalogRedundant C` and a typed negative verdict; consumers needing `¬ CatalogIrredundant C` use `catalogRedundant_iff_not_catalogIrredundant`. `SystemCatalogIrredundant`, `SystemWidePositive`, and IE-039 retain their meanings; any redundant designated catalog yields `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant`. staging/export accept either catalog verdict.
 
 **Phase 11 现役入口**：`make census` 提供全库查询与证书发布。
 全库查询是**读取 elaborated 输出(olean)的流式查询**。下列 J2 assessment、evidence 与
@@ -8258,8 +8257,8 @@ $$
 
 - theorem 名；
 - arena 名；
-- full escape count；
-- leave-one-out escape count；
+- finite context：full escape count、leave-one-out escape count 与 state-enumeration 证据；
+- structural context：`StructuralCatalog.TrivialInCatalog C i` 的 negated-strictness certificate 与 catalog／realization provenance，不含数值 count 字段；State 可为无穷类型，不得伪造零计数；
 - 同核／闭包候选（若可证明）；
 - 不得建议提高人工分数。
 
