@@ -182,3 +182,42 @@ compilation is being tested locally without copying upstream code into Git.
 | https://raw.githubusercontent.com/TheSil/A357513_conjecture/59c677df3563c4c506dfafcdf45237475140bb86/Proof.lean | 200 | 51901 | `c375d541a9b14a18d591a0516bc9fb32784985fb75146eef42985cf5e9d4b1d0` |
 | https://raw.githubusercontent.com/TheSil/A357513_conjecture/59c677df3563c4c506dfafcdf45237475140bb86/lean-toolchain | 200 | 24 | `85b71aa934e019c03eac6ec5ed97526956b4dff51b54c5d558fca8a5b34703e6` |
 | https://raw.githubusercontent.com/TheSil/A357513_conjecture/59c677df3563c4c506dfafcdf45237475140bb86/lakefile.lean | 200 | 267 | `f2d179098dcb525a3799fd65bebbfcac45204ed0445c51ab2fd7c1da79f3ce37` |
+
+## Kernel check of the exact B specialization
+
+The unchanged upstream `Proof.lean` compiles on this tree's v4.33.0, EXIT=0.
+An attempt-local wrapper identifies `generalizedSum (-3) n` with the rational
+cast of A357512, specializes `u_prime_sub_one_dvd_of_good`, and converts its
+integer divisibility back to natural divisibility. Its theorem is exactly
+`∀ p, p.Prime → 5 ≤ p → p^4 ∣ a (p-1)`. Compilation EXIT=0;
+`#print axioms` reports only `[propext, Classical.choice, Quot.sound]`.
+The first wrapper attempt failed in the zero-term simplification and a redundant
+`dvd_neg` conversion after `norm_num`; those local proof errors were repaired.
+This is a kernel-checked B proof via direct application, not a new B result,
+and not yet a repository admission or freeze.
+
+The latest upstream tree is still `59c677df3563c4c506dfafcdf45237475140bb86`.
+A fresh GitHub repository/tree read confirms `license: null` and only
+`.gitignore`, `Proof.lean`, `README.md`, Lake files, `proof.pdf`, and `proof.tex`.
+No license terms were inferred from public accessibility or AI attribution.
+Toolchain inequality blocks dependency form under spec A17.2 even though the
+compatibility compilation succeeds; transplant would require the upstream
+copyright/license terms mandated by A17.2(1), which the inspected source lacks.
+
+## A-level termwise-route obstruction
+
+The prime induction requires `IsUnit (k : ZMod (n^4))`. Extending the hypotheses
+to `Odd n`, `¬3∣n`, and `0<k<n` leaves the precise goal `k.Coprime n` after
+`ZMod.isUnit_iff_coprime` and `Nat.Coprime.pow_right`. This proposed intermediate
+is false: kernel checking proves `Odd 25 ∧ ¬3∣25 ∧ ¬IsUnit (5 : ZMod (25^4))`.
+Moreover, at the unit index `k=6`, the actual weighted summand has residue
+72500 modulo `25^4`, whereas the prime-route expression
+`25^2*6^3 - 2*25^3*6^2` has residue 181875. Both exact residues were proved by
+`norm_num`, EXIT=0, without `native_decide`. These witnesses refute only the
+termwise extension, not target A. The full A sum at 25 still passes its probe.
+The remaining A route must account for contributions across nonunit indices;
+a separate whole-sum telescoping route is being examined.
+
+Attempt-local source receipts (not admitted/frozen modules):
+- `/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a357512-impl-0912/attempt-1/UpstreamSpecialization.lean`: 53064 bytes, SHA-256 `1bc1c8a986f29b5b87df22472753a1c103cb0a2e86c7d157e7c3033c10dcd204`.
+- `/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a357512-impl-0912/attempt-1/CompositeObstruction.lean`: 751 bytes, SHA-256 `6a4734a267566c47bfde9120212728287772e81b08881dd90d73e9b983ef9077`.
