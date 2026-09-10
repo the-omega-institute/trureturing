@@ -1,0 +1,3851 @@
+{
+  "schema": "s20-theory-body-archival-migration-v1",
+  "authority": {
+    "task": "C85/I29",
+    "current_guidance_blob": "7fda0813773083e59b3783843c16b55f560f7805",
+    "repair_base": "db8037532d5dea5067e0edfb3fcaebc671eccbf2",
+    "representation_parent": "fe3f12abe8bc2e14628a93990fee2755c30da2bd",
+    "scientific_base_historical_only": "7b443a1764e5756c670b3912300a71f5b2e470f3",
+    "disposition": "Explicit archival exception for identified section31 process content and necessary mathematical type/citation metadata only; single active source, no mathematical correction/new proof."
+  },
+  "byte_convention": "zero-based UTF-8 intervals [start,end), exclusive end; line intervals are one-based inclusive",
+  "original_source": {
+    "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+    "byte_count": 316737,
+    "lf_count": 5974,
+    "sha256": "3f27fbd4bef498d995cd7e1bd566c960ad8a384c5f04f8b5b2a91cb1625dc351"
+  },
+  "immutable_prefix": {
+    "byte_span": [
+      0,
+      286327
+    ],
+    "sha256": "731be813ad24c47bec760cb7dff17ee02731cd8d2df4ba7556c7a2e403b0304f",
+    "includes_separator_lf": true,
+    "pure_mathematics": false,
+    "s19_original_byte_equality_assumed": false
+  },
+  "original_report_prefix": {
+    "path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+    "byte_span": [
+      0,
+      39335
+    ],
+    "sha256": "25ebbf523de8731ace65c4ee3125bc915b70203bc2096ca2e383685bc8d57461"
+  },
+  "current_source": {
+    "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+    "byte_count": 312957,
+    "lf_count": 5939,
+    "sha256": "28ee1eb94e166ef4f8b4f2b01408779b2fdfe0d05ee692a0158790841e2fe894"
+  },
+  "reconstruction": {
+    "algorithm": "For each original_byte_partition item in order, read destination_path[destination_byte_span[0]:destination_byte_span[1]] and concatenate. Check each original_sha256 and full original_source length/hash. No embedded duplicate active source.",
+    "segment_count": 84
+  },
+  "original_byte_partition": [
+    {
+      "original_source_byte_span": [
+        0,
+        286327
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        0,
+        286327
+      ],
+      "original_sha256": "731be813ad24c47bec760cb7dff17ee02731cd8d2df4ba7556c7a2e403b0304f",
+      "original_unit": null,
+      "destination_line_span": [
+        1,
+        5392
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        286327,
+        286396
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        286327,
+        286396
+      ],
+      "original_sha256": "15a6f2a11e0a41aab6e2850b2a228b6cb0b29486b94d56d0718e39d252a3e289",
+      "original_unit": null,
+      "destination_line_span": [
+        5393,
+        5394
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        286396,
+        286403
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        286396,
+        286403
+      ],
+      "original_sha256": "45086047715955ceb2ab106c170b195b4d5a313e116a82f88ada736e541d0025",
+      "original_unit": "31.1",
+      "destination_line_span": [
+        5395,
+        5395
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        286403,
+        286409
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        286412,
+        286418
+      ],
+      "original_sha256": "bb7ef73495dd8a74eead9a021f2739832271393fe393708fe5c50f995749649f",
+      "original_unit": "31.1",
+      "destination_line_span": [
+        5395,
+        5395
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        286409,
+        286418
+      ],
+      "kind": "historical_archive",
+      "reason": "Operational status title fragment",
+      "original_sha256": "f3a6ff241f6e449505d4b283d5fba6ea6ef6b13ff237602c1e2b37835b46edea",
+      "original_unit": "31.1",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        42824,
+        42833
+      ],
+      "archive_id": "archive-004",
+      "destination_line_span": [
+        520,
+        520
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        286418,
+        286457
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        286418,
+        286457
+      ],
+      "original_sha256": "fefb9b88683809a8b647dfd49fc63cc79a5ef9366cd6373456a255f16d89874d",
+      "original_unit": "31.1",
+      "destination_line_span": [
+        5395,
+        5395
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        286457,
+        286653
+      ],
+      "kind": "historical_archive",
+      "reason": "Model, task, implementation and prior execution provenance",
+      "original_sha256": "454ae3af6106240d559c372aa40fe6ddbf73c0b689be4156586e98ef83813cc9",
+      "original_unit": "31.1",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        42986,
+        43182
+      ],
+      "archive_id": "archive-006",
+      "destination_line_span": [
+        528,
+        530
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        286653,
+        287807
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        286457,
+        287611
+      ],
+      "original_sha256": "de34bba2b87901533993682f9173304c50563dcccc1d842dacb20b90e5bbf481",
+      "original_unit": "31.1",
+      "destination_line_span": [
+        5395,
+        5409
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        287807,
+        287831
+      ],
+      "kind": "historical_archive",
+      "reason": "Priority and novelty nonclaims",
+      "original_sha256": "5b8c88a483d43aec47825779bf27a6d423215393588ba3da1a401ae0f84818df",
+      "original_unit": "31.1",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        43307,
+        43331
+      ],
+      "archive_id": "archive-008",
+      "destination_line_span": [
+        539,
+        539
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        287831,
+        287833
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        287611,
+        287613
+      ],
+      "original_sha256": "5ba37872b8da4055745d4a9ab7d9c472471e8a8a5555f00c68d4e304b642605e",
+      "original_unit": "31.1",
+      "destination_line_span": [
+        5409,
+        5409
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        287833,
+        287856
+      ],
+      "kind": "historical_archive",
+      "reason": "Formal admission status nonclaim",
+      "original_sha256": "0601305267155f81c80ad62c692402e5f36b70cc5f505232c5c5cd70a3d77df5",
+      "original_unit": "31.1",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        43458,
+        43481
+      ],
+      "archive_id": "archive-010",
+      "destination_line_span": [
+        547,
+        547
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        287856,
+        287868
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        287613,
+        287625
+      ],
+      "original_sha256": "7242e11e5129ccf0504d4bec1c31e36849a6ba4bcea951d4bccd5d2280282239",
+      "original_unit": "31.1",
+      "destination_line_span": [
+        5409,
+        5410
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        287868,
+        287875
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        287716,
+        287723
+      ],
+      "original_sha256": "b1ce1407c62bac4e373b91295becc7b66535a7ea373003b07b3d4e7dd9b8fcc9",
+      "original_unit": "31.2",
+      "destination_line_span": [
+        5413,
+        5413
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        287875,
+        289745
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        287732,
+        289602
+      ],
+      "original_sha256": "d05059d004c58c9d719f816d9bf15efe5801728729d2026a67ca8a2ecec9e032",
+      "original_unit": "31.2",
+      "destination_line_span": [
+        5413,
+        5452
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        289745,
+        289752
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        289602,
+        289609
+      ],
+      "original_sha256": "a008d6de17de81c69b52341802fde4facc9f9fc40593e3e3c89e365c1216063b",
+      "original_unit": "31.3",
+      "destination_line_span": [
+        5453,
+        5453
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        289752,
+        290770
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        289618,
+        290636
+      ],
+      "original_sha256": "f58455f85f82ad2fd0a104a73f00e86a421c3339dcb6d28eb30219dff5315336",
+      "original_unit": "31.3",
+      "destination_line_span": [
+        5453,
+        5474
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        290770,
+        290777
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        290636,
+        290643
+      ],
+      "original_sha256": "83ef3dcdd75e694a242359a89659c79bd2594e5ea2eba10240ce9373c6fa1e9b",
+      "original_unit": "31.4",
+      "destination_line_span": [
+        5475,
+        5475
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        290777,
+        291950
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        290652,
+        291825
+      ],
+      "original_sha256": "645aae9b313505c9d46e4e2eeb78c267f19966c6493c3a7074a46a2e58e017bc",
+      "original_unit": "31.4",
+      "destination_line_span": [
+        5475,
+        5497
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        291950,
+        291957
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        292012,
+        292019
+      ],
+      "original_sha256": "ce69b725bc8455d598f19ab8e6c83525b7563d91d61c07e6552061d2ee8bad5f",
+      "original_unit": "31.5",
+      "destination_line_span": [
+        5502,
+        5502
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        291957,
+        293373
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        292028,
+        293444
+      ],
+      "original_sha256": "7f4ea547262820cb9fad94118f62b713235e3370b2c40a7844fe55f3b878163d",
+      "original_unit": "31.5",
+      "destination_line_span": [
+        5502,
+        5527
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        293373,
+        293380
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        293444,
+        293451
+      ],
+      "original_sha256": "d19c1b7c5ca77437a17ca7368de3e7cf91e6ca64ea2cea2a914ac980f3fb5f4b",
+      "original_unit": "31.6",
+      "destination_line_span": [
+        5528,
+        5528
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        293380,
+        295092
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        293460,
+        295172
+      ],
+      "original_sha256": "1103b338c096cc0517b7dd62de0feb0054d095fbc0758b6d1d5e44531994db25",
+      "original_unit": "31.6",
+      "destination_line_span": [
+        5528,
+        5559
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        295092,
+        295099
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        295366,
+        295373
+      ],
+      "original_sha256": "be7c8ebd8536be39dbd867dc207ab6830a8344cfb421f32d21448c0a500e98b4",
+      "original_unit": "31.7",
+      "destination_line_span": [
+        5564,
+        5564
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        295099,
+        296401
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        295382,
+        296684
+      ],
+      "original_sha256": "3e5dbc3525ca12883c330c224e91f110b7ce8dd7deb9da0afb1385b9b57ff732",
+      "original_unit": "31.7",
+      "destination_line_span": [
+        5564,
+        5589
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        296401,
+        296408
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        296684,
+        296691
+      ],
+      "original_sha256": "4c5ed77bda0c1b4f8b79d6e92dfccc2e87a49e560ee4149dd4df3818333d1817",
+      "original_unit": "31.8",
+      "destination_line_span": [
+        5590,
+        5590
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        296408,
+        297435
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        296700,
+        297727
+      ],
+      "original_sha256": "c6e4e6828c25dd1c5caf8aa509e6addd47f2ff5187ff1bdba0551f559d8e503a",
+      "original_unit": "31.8",
+      "destination_line_span": [
+        5590,
+        5614
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        297435,
+        297460
+      ],
+      "kind": "historical_archive",
+      "reason": "Execution nonclaim; all-positive-height optimality retained",
+      "original_sha256": "fecbbc608665ee70cc2f3f5e9153c4ba0daa0c4bd091b0c02f5856657edecb68",
+      "original_unit": "31.8",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        43635,
+        43660
+      ],
+      "archive_id": "archive-026",
+      "destination_line_span": [
+        555,
+        555
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        297460,
+        297465
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        297727,
+        297732
+      ],
+      "original_sha256": "e2af4ac098b069dc223f9cbb9b87f0af3a6af1f5d154b7e16ed4f46240f18543",
+      "original_unit": "31.8",
+      "destination_line_span": [
+        5614,
+        5615
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        297465,
+        297472
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        297732,
+        297739
+      ],
+      "original_sha256": "0d5efb58e5234317c173ef53fd8f6b1cc44907df9d3cb9401e4b22b9649b46cd",
+      "original_unit": "31.9",
+      "destination_line_span": [
+        5616,
+        5616
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        297472,
+        298829
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        297757,
+        299114
+      ],
+      "original_sha256": "adc2b6febd167eec14f8b89e141f3a396b1ddb8407fe574d049b535dfc54bf75",
+      "original_unit": "31.9",
+      "destination_line_span": [
+        5616,
+        5642
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        298829,
+        298837
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        299114,
+        299122
+      ],
+      "original_sha256": "10a3430f705f3870483a494b18a30b337de5c65f39b9f7d1d66bba9fd798fbe8",
+      "original_unit": "31.10",
+      "destination_line_span": [
+        5643,
+        5643
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        298837,
+        300258
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        299131,
+        300552
+      ],
+      "original_sha256": "43ecde05131c815b9be7e81cf7e2224383ff29fefb8553087fadbaa9039ca778",
+      "original_unit": "31.10",
+      "destination_line_span": [
+        5643,
+        5674
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        300258,
+        300266
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        301064,
+        301072
+      ],
+      "original_sha256": "0ed1561bc1b90c2b8f15c96ecaabdbda809fe53da0b63d7a3f64ce7c27d309ad",
+      "original_unit": "31.11",
+      "destination_line_span": [
+        5684,
+        5684
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        300266,
+        300596
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        301081,
+        301411
+      ],
+      "original_sha256": "b9b49fa769551ee427345dc2167e4b999eca319f01f8706d8161c1bdef85b586",
+      "original_unit": "31.11",
+      "destination_line_span": [
+        5684,
+        5693
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        300596,
+        300621
+      ],
+      "kind": "historical_archive",
+      "reason": "Arithmetic execution modality; exact rational proof retained",
+      "original_sha256": "0852ee7cb6b2ee0dd44f4c7630f94e23e259a47a446c8d282b8fa375fce70c0f",
+      "original_unit": "31.11",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        43816,
+        43841
+      ],
+      "archive_id": "archive-034",
+      "destination_line_span": [
+        563,
+        563
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        300621,
+        302112
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        301411,
+        302902
+      ],
+      "original_sha256": "c2d049fad709f24dcc4f999777b53cefc3caaa9bf96091e041b7f8125c80c780",
+      "original_unit": "31.11",
+      "destination_line_span": [
+        5693,
+        5736
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        302112,
+        302244
+      ],
+      "kind": "historical_archive",
+      "reason": "Report executable placement and execution-scope nonclaim; all series, constants, inequalities and proof steps retained",
+      "original_sha256": "1c3b766898aca5282aa26a33310cd3c6d3b44357e214e89e15613c05f05ac9d4",
+      "original_unit": "31.11",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        44055,
+        44187
+      ],
+      "archive_id": "archive-036",
+      "destination_line_span": [
+        571,
+        572
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        302244,
+        302246
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        302902,
+        302904
+      ],
+      "original_sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+      "original_unit": "31.11",
+      "destination_line_span": [
+        5736,
+        5737
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        302246,
+        302254
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        303079,
+        303087
+      ],
+      "original_sha256": "465adc9f867e067ba2907f8f4433c7d4c044d254b3fdf8ca70a626bbce39121e",
+      "original_unit": "31.12",
+      "destination_line_span": [
+        5743,
+        5743
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        302254,
+        303397
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        303096,
+        304239
+      ],
+      "original_sha256": "219319c28ebc9198a711afcb72ae8cfd4feab8769c4236ecba9bb8d99f1c758b",
+      "original_unit": "31.12",
+      "destination_line_span": [
+        5743,
+        5767
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        303397,
+        303445
+      ],
+      "kind": "historical_archive",
+      "reason": "Historical adapted-certificate provenance; full weight-domain obligation and sign linkage retained",
+      "original_sha256": "88d116a611420118e0635a93d79e5253ca1b1516f72776ad644a053dba2771d5",
+      "original_unit": "31.12",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        44381,
+        44429
+      ],
+      "archive_id": "archive-040",
+      "destination_line_span": [
+        580,
+        580
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        303445,
+        303641
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        304239,
+        304435
+      ],
+      "original_sha256": "cd127237371037a7b972d7f5b798042da5c399f2c8121bb6f8958d86adb53f4c",
+      "original_unit": "31.12",
+      "destination_line_span": [
+        5767,
+        5773
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        303641,
+        303649
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        304435,
+        304443
+      ],
+      "original_sha256": "ced68b81d7ae221029ac7bf5635884ca8d76d0c81eb4749d4beb2f30cb76cb8e",
+      "original_unit": "31.13",
+      "destination_line_span": [
+        5774,
+        5774
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        303649,
+        304186
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        304452,
+        304989
+      ],
+      "original_sha256": "0ed7b518bd72c6d479fdeb79adebfead4681e13f0056d93f577ffa1ffa9606c7",
+      "original_unit": "31.13",
+      "destination_line_span": [
+        5774,
+        5788
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        304186,
+        304247
+      ],
+      "kind": "historical_archive",
+      "reason": "Execution/diagnostic nonclaim; analytical infinite quantifier retained in 31.9–31.13",
+      "original_sha256": "0a66206a590c668d81d37f2865cf41c9348324961f7b9bf557e6fe2f148217e4",
+      "original_unit": "31.13",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        44611,
+        44672
+      ],
+      "archive_id": "archive-044",
+      "destination_line_span": [
+        588,
+        588
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        304247,
+        304248
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        304989,
+        304990
+      ],
+      "original_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "original_unit": "31.13",
+      "destination_line_span": [
+        5789,
+        5789
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        304248,
+        304256
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        304990,
+        304998
+      ],
+      "original_sha256": "2f28582c431846b35418ae420282e6f9da94bc9625921f75bdbf227161d286da",
+      "original_unit": "31.14",
+      "destination_line_span": [
+        5790,
+        5790
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        304256,
+        304866
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        305007,
+        305617
+      ],
+      "original_sha256": "56461e2df93d99e24389edec19c03aa2480cc937f246737eab214d50100ad033",
+      "original_unit": "31.14",
+      "destination_line_span": [
+        5790,
+        5800
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        304866,
+        304874
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        305617,
+        305625
+      ],
+      "original_sha256": "9cee8bb9953605631cc8489871d26eac7ae8781c9d5ed8a863a8e0a178ebba59",
+      "original_unit": "31.15",
+      "destination_line_span": [
+        5801,
+        5801
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        304874,
+        305962
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        305634,
+        306722
+      ],
+      "original_sha256": "3dff935542ad79f125be33cdf5d361f8018fd3a10593e4966c22382bb17474d7",
+      "original_unit": "31.15",
+      "destination_line_span": [
+        5801,
+        5824
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        305962,
+        305970
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        306722,
+        306730
+      ],
+      "original_sha256": "2a09f8dbe360acb8eb75e9f740fc2b2629bb4ad88fd62fbd2ac5050a792d4fee",
+      "original_unit": "31.16",
+      "destination_line_span": [
+        5825,
+        5825
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        305970,
+        307430
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        306739,
+        308199
+      ],
+      "original_sha256": "702cce25c7ac27fd3fa80c49f505b6d72762b85510874aa8dfbf6ef12cfa59a8",
+      "original_unit": "31.16",
+      "destination_line_span": [
+        5825,
+        5853
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        307430,
+        307438
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        308199,
+        308207
+      ],
+      "original_sha256": "53988c2e8bc6354a61a7b98883c17c00c0d2e128b2c282c520117155c58bb396",
+      "original_unit": "31.17",
+      "destination_line_span": [
+        5854,
+        5854
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        307438,
+        307975
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        308216,
+        308753
+      ],
+      "original_sha256": "ded87936f83d649cda77b5fe5164688b27829e4ab0e4fd06fcfcfd32b61b6caf",
+      "original_unit": "31.17",
+      "destination_line_span": [
+        5854,
+        5868
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        307975,
+        307983
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        308753,
+        308761
+      ],
+      "original_sha256": "d43510656fad38d629b07d43bbb2e1b21676618ccc50fa4e541b6365b0d4ffdf",
+      "original_unit": "31.18",
+      "destination_line_span": [
+        5869,
+        5869
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        307983,
+        309341
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        308770,
+        310128
+      ],
+      "original_sha256": "96fb45fb132db7f30ca85b1c6574a3c9034e6a6e914bf3453b9cdb229e62d591",
+      "original_unit": "31.18",
+      "destination_line_span": [
+        5869,
+        5891
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        309341,
+        309399
+      ],
+      "kind": "historical_archive",
+      "reason": "Execution nonclaim; non-effective scope and full existence proof retained",
+      "original_sha256": "e423c8f2429af4ea011ce61ad540b76efc6bc74a874e896085a6fa60cea64098",
+      "original_unit": "31.18",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        44841,
+        44899
+      ],
+      "archive_id": "archive-056",
+      "destination_line_span": [
+        597,
+        597
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        309399,
+        309521
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        310128,
+        310250
+      ],
+      "original_sha256": "3fee24cd32f465551484419304c39e7677397524a5ab410b0038caad32914e89",
+      "original_unit": "31.18",
+      "destination_line_span": [
+        5892,
+        5894
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        309521,
+        309529
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        310486,
+        310494
+      ],
+      "original_sha256": "55ebf7a13f435254aecb28b1fcc0780213e88df78f18dd9417549a88ef2119f1",
+      "original_unit": "31.19",
+      "destination_line_span": [
+        5899,
+        5899
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        309529,
+        310682
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        310503,
+        311656
+      ],
+      "original_sha256": "c19334270f2c7e76b846c17e4aab2e49549688d1519b16666ab6da0305bc63ce",
+      "original_unit": "31.19",
+      "destination_line_span": [
+        5899,
+        5921
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        310682,
+        310690
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        311656,
+        311664
+      ],
+      "original_sha256": "51f8026b04552e5e230c87e8290a84a6e9d00efd48b6a4c38b380cdc0bc110fb",
+      "original_unit": "31.20",
+      "destination_line_span": [
+        5922,
+        5922
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        310690,
+        311489
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        311673,
+        312472
+      ],
+      "original_sha256": "088ad4ad61eb9297a348abe9fa8cccac64c087dbda635f0edd6c7755f372faed",
+      "original_unit": "31.20",
+      "destination_line_span": [
+        5922,
+        5932
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        311489,
+        311496
+      ],
+      "kind": "historical_archive",
+      "reason": "Ticket identifier; third-prime-ray exclusion retained",
+      "original_sha256": "912d8531fa04469c54b7c42b1c2230c971b3154f231e19e329cbc9cc2924cf0d",
+      "original_unit": "31.20",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        45048,
+        45055
+      ],
+      "archive_id": "archive-062",
+      "destination_line_span": [
+        605,
+        605
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        311496,
+        311570
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        312472,
+        312546
+      ],
+      "original_sha256": "b0511729a86342610eb63f0c0505dfb59733c7dfbfc42220e902971b79e7b9ca",
+      "original_unit": "31.20",
+      "destination_line_span": [
+        5932,
+        5933
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        311570,
+        311592
+      ],
+      "kind": "historical_archive",
+      "reason": "Search/program scope statement; mathematical exclusions retained",
+      "original_sha256": "bfddabe8874c7bd7c46c87701722a0f525942ab12e89555eb10821aad002fdcb",
+      "original_unit": "31.20",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        45215,
+        45237
+      ],
+      "archive_id": "archive-064",
+      "destination_line_span": [
+        613,
+        613
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        311592,
+        311998
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        312546,
+        312952
+      ],
+      "original_sha256": "1243807ae16064d9e1eed352ffa2f0cc81303f862b866fecd149a357b6f5c3fe",
+      "original_unit": "31.20",
+      "destination_line_span": [
+        5933,
+        5938
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        311998,
+        312038
+      ],
+      "kind": "historical_archive",
+      "reason": "Implementation/standing-goal status; mathematical OPEN scope retained",
+      "original_sha256": "56dd67bb89822b0857860c6ede73432feb968eb3f84a6e9bedecb91162d791e7",
+      "original_unit": "31.20",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        45402,
+        45442
+      ],
+      "archive_id": "archive-066",
+      "destination_line_span": [
+        621,
+        621
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        312038,
+        312043
+      ],
+      "kind": "retained_source",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        312952,
+        312957
+      ],
+      "original_sha256": "e2af4ac098b069dc223f9cbb9b87f0af3a6af1f5d154b7e16ed4f46240f18543",
+      "original_unit": "31.20",
+      "destination_line_span": [
+        5938,
+        5939
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        312043,
+        312250
+      ],
+      "kind": "historical_archive",
+      "reason": "31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally",
+      "original_sha256": "95edbff40c5c71e1d54baf7c36c310474ea0df0192e63fd86b2512366d41f50e",
+      "original_unit": "31.21",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        45635,
+        45842
+      ],
+      "archive_id": "archive-068",
+      "destination_line_span": [
+        629,
+        630
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        312250,
+        312401
+      ],
+      "kind": "citation_rebound",
+      "reason": "rebound mathematical citation",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        291859,
+        292010
+      ],
+      "original_sha256": "b014ff6ab7a43a208d6c78372d3619b60f38a262759ed15513a27c673f7d61b0",
+      "original_unit": "31.21",
+      "destination_line_span": [
+        5499,
+        5500
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        312401,
+        312402
+      ],
+      "kind": "historical_archive",
+      "reason": "31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally",
+      "original_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "original_unit": "31.21",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        46035,
+        46036
+      ],
+      "archive_id": "archive-070",
+      "destination_line_span": [
+        639,
+        639
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        312402,
+        312560
+      ],
+      "kind": "citation_rebound",
+      "reason": "rebound mathematical citation",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        295206,
+        295364
+      ],
+      "original_sha256": "300eeeb08ad5bd2671af85f84007f6d800e079f8cc23ed44d2879c2a8d87871c",
+      "original_unit": "31.21",
+      "destination_line_span": [
+        5561,
+        5562
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        312560,
+        312561
+      ],
+      "kind": "historical_archive",
+      "reason": "31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally",
+      "original_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "original_unit": "31.21",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        46229,
+        46230
+      ],
+      "archive_id": "archive-072",
+      "destination_line_span": [
+        648,
+        648
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        312561,
+        312953
+      ],
+      "kind": "citation_rebound",
+      "reason": "rebound mathematical citation",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        300586,
+        300978
+      ],
+      "original_sha256": "f402f57f5f7f62697235a2f1255ba61d945cff05ab418feac12a2618df85ef8d",
+      "original_unit": "31.21",
+      "destination_line_span": [
+        5676,
+        5680
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        312953,
+        312964
+      ],
+      "kind": "historical_archive",
+      "reason": "31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally",
+      "original_sha256": "3b23cbd5c6539f60996615abfc7949e495865882404c523104014b042de67f67",
+      "original_unit": "31.21",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        46423,
+        46434
+      ],
+      "archive_id": "archive-074",
+      "destination_line_span": [
+        657,
+        658
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        312964,
+        313032
+      ],
+      "kind": "citation_rebound",
+      "reason": "rebound mathematical citation",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        302938,
+        303006
+      ],
+      "original_sha256": "22adc516df6966d6ddeec08ffa160cbef53383c4711c740519f3e92d4831d040",
+      "original_unit": "31.21",
+      "destination_line_span": [
+        5739,
+        5739
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        313032,
+        313041
+      ],
+      "kind": "historical_archive",
+      "reason": "31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally",
+      "original_sha256": "62076570b6fca72612411bdd942269c30c70ce639fd563abd45b26adc922f4dd",
+      "original_unit": "31.21",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        46627,
+        46636
+      ],
+      "archive_id": "archive-076",
+      "destination_line_span": [
+        666,
+        667
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        313041,
+        313241
+      ],
+      "kind": "citation_rebound",
+      "reason": "rebound mathematical citation",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        310284,
+        310484
+      ],
+      "original_sha256": "bfbf0265d5eadc963d0dd942149883b40fc776186570dcbe7667cbe56155a9d5",
+      "original_unit": "31.21",
+      "destination_line_span": [
+        5896,
+        5897
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        313241,
+        313242
+      ],
+      "kind": "historical_archive",
+      "reason": "31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally",
+      "original_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "original_unit": "31.21",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        46829,
+        46830
+      ],
+      "archive_id": "archive-078",
+      "destination_line_span": [
+        675,
+        675
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        313242,
+        313324
+      ],
+      "kind": "citation_rebound",
+      "reason": "rebound mathematical citation",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        300980,
+        301062
+      ],
+      "original_sha256": "a33cfdd85b6bfe692c48be95d56aa438e5e015690cd6185ca340225baa1c229b",
+      "original_unit": "31.21",
+      "destination_line_span": [
+        5682,
+        5682
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        313324,
+        313460
+      ],
+      "kind": "historical_archive",
+      "reason": "31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally",
+      "original_sha256": "6aaa87a9da98c9f5d3bff1d3df08a45cd2c0c46c2bc91ada8ab7a3eddf7cf402",
+      "original_unit": "31.21",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        47023,
+        47159
+      ],
+      "archive_id": "archive-080",
+      "destination_line_span": [
+        684,
+        686
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        313460,
+        313529
+      ],
+      "kind": "citation_rebound",
+      "reason": "rebound mathematical citation",
+      "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "destination_byte_span": [
+        303008,
+        303077
+      ],
+      "original_sha256": "a77f4487caf576fd59ab6f289ad0d1edde6a7beb8bb9baeece58a22d5d31009f",
+      "original_unit": "31.21",
+      "destination_line_span": [
+        5741,
+        5741
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        313529,
+        314731
+      ],
+      "kind": "historical_archive",
+      "reason": "31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally",
+      "original_sha256": "043a38df2657061ec21dacab4edb0bfc6f8069a5988a95f784563e024a9cd8b8",
+      "original_unit": "31.21",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        47352,
+        48554
+      ],
+      "archive_id": "archive-082",
+      "destination_line_span": [
+        694,
+        710
+      ]
+    },
+    {
+      "original_source_byte_span": [
+        314731,
+        316737
+      ],
+      "kind": "historical_archive",
+      "reason": "31.22 wholly operational historical entry; number permanently reserved externally",
+      "original_sha256": "eae7985cf6b6ca0ed4b57eca118b4b48b116ff73442ea4cf699dec0cea6ff3c9",
+      "original_unit": "31.22",
+      "destination_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "destination_byte_span": [
+        48731,
+        50737
+      ],
+      "archive_id": "archive-083",
+      "destination_line_span": [
+        719,
+        743
+      ]
+    }
+  ],
+  "mathematical_type_and_attachment_additions": [
+    {
+      "current_source_byte_span": [
+        286403,
+        286412
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        287625,
+        287716
+      ],
+      "text": "证明的记号与适用假设见 31.2；两项缩放界分别由 31.13、31.17 证明。\n\n",
+      "reason": "Proof and hypothesis cross-reference for existing overview theorem, not a new claim."
+    },
+    {
+      "current_source_byte_span": [
+        287723,
+        287732
+      ],
+      "text": "定义：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        289609,
+        289618
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        290643,
+        290652
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        291825,
+        291859
+      ],
+      "text": "数学引文（经典工具）：\n",
+      "reason": "Fractional-knapsack citation attached to matching-price/greedy proof; no specialized theorem attribution. — attachment label only."
+    },
+    {
+      "current_source_byte_span": [
+        292010,
+        292012
+      ],
+      "text": "\n\n",
+      "reason": "Citation paragraph separation."
+    },
+    {
+      "current_source_byte_span": [
+        292019,
+        292028
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        293451,
+        293460
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        295172,
+        295206
+      ],
+      "text": "数学引文（经典工具）：\n",
+      "reason": "Norm, strict Jensen and monotone-composition citation attached to finite-domination proof. — attachment label only."
+    },
+    {
+      "current_source_byte_span": [
+        295364,
+        295366
+      ],
+      "text": "\n\n",
+      "reason": "Citation paragraph separation."
+    },
+    {
+      "current_source_byte_span": [
+        295373,
+        295382
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        296691,
+        296700
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        297739,
+        297757
+      ],
+      "text": "定义与定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        299122,
+        299131
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        300552,
+        300586
+      ],
+      "text": "数学引文（经典工具）：\n",
+      "reason": "Increasing convex order citation with mass-three/probability normalization retained. — attachment label only."
+    },
+    {
+      "current_source_byte_span": [
+        300978,
+        300980
+      ],
+      "text": "\n\n",
+      "reason": "Citation paragraph separation."
+    },
+    {
+      "current_source_byte_span": [
+        301062,
+        301064
+      ],
+      "text": "\n\n",
+      "reason": "Citation scope paragraph separation."
+    },
+    {
+      "current_source_byte_span": [
+        301072,
+        301081
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        302904,
+        302938
+      ],
+      "text": "数学引文（经典工具）：\n",
+      "reason": "Classical logarithm series citation attached to rational enclosure proof. — attachment label only."
+    },
+    {
+      "current_source_byte_span": [
+        303006,
+        303008
+      ],
+      "text": "\n\n",
+      "reason": "Citation paragraph separation."
+    },
+    {
+      "current_source_byte_span": [
+        303077,
+        303079
+      ],
+      "text": "\n\n",
+      "reason": "Mathematical dependency paragraph separation."
+    },
+    {
+      "current_source_byte_span": [
+        303087,
+        303096
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        304443,
+        304452
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        304998,
+        305007
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        305625,
+        305634
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        306730,
+        306739
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        308207,
+        308216
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        308761,
+        308770
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        310250,
+        310284
+      ],
+      "text": "数学引文（经典工具）：\n",
+      "reason": "Homogeneous two-dimensional Dirichlet citation retains exact special-case scope. — attachment label only."
+    },
+    {
+      "current_source_byte_span": [
+        310484,
+        310486
+      ],
+      "text": "\n\n",
+      "reason": "Citation paragraph separation."
+    },
+    {
+      "current_source_byte_span": [
+        310494,
+        310503
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    },
+    {
+      "current_source_byte_span": [
+        311664,
+        311673
+      ],
+      "text": "定理：",
+      "reason": "Mathematical type metadata; existing number and mathematical wording retained."
+    }
+  ],
+  "numbered_identities": [
+    {
+      "old_unit": "31.1",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        286396,
+        287868
+      ],
+      "old_sha256": "a3d2dfbbd30f2b02f3cd0cb0de014f2d39a4dcda70da8dd821cf2efbadc9a393",
+      "old_binding": {
+        "unit": "31.1",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 286396,
+          "byte_end_exclusive": 287868,
+          "line_start": 5395,
+          "line_end_inclusive": 5413
+        },
+        "source_bytes": 1472,
+        "source_LF": 19,
+        "cas_path": "Meta/Digestion/atoms/sha256/a3d2dfbbd30f2b02f3cd0cb0de014f2d39a4dcda70da8dd821cf2efbadc9a393",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a3d2dfbbd30f2b02f3cd0cb0de014f2d39a4dcda70da8dd821cf2efbadc9a393.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:a3d2dfbbd30f2b02f3cd0cb0de014f2d39a4dcda70da8dd821cf2efbadc9a393",
+          "normalized_sha256": "sha256:a3d2dfbbd30f2b02f3cd0cb0de014f2d39a4dcda70da8dd821cf2efbadc9a393"
+        },
+        "cas_ref": "sha256:a3d2dfbbd30f2b02f3cd0cb0de014f2d39a4dcda70da8dd821cf2efbadc9a393",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.1",
+        "source_byte_span": [
+          286396,
+          287716
+        ],
+        "source_line_span": [
+          5395,
+          5412
+        ],
+        "sha256": "e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9",
+        "cas_path": "Meta/Digestion/atoms/sha256/e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9.yaml",
+        "yaml_sha256": "d6176ec47753c6d2f10ab44d5e56afd4a64fe9139d4d6c50ebd9c82034ae1f6f",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9",
+        "fingerprints": {
+          "raw_sha256": "sha256:e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9",
+          "normalized_sha256": "sha256:e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9"
+        }
+      },
+      "destination_segment_indices": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "mathematical_correspondence": "Both announced scaled bounds and all literal dependency domains retained. Only task/model/status/priority/formal-status fragments archived; RH scope retained. Proof/hypothesis cross-reference added.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.1",
+        "original_cas_ref": "sha256:a3d2dfbbd30f2b02f3cd0cb0de014f2d39a4dcda70da8dd821cf2efbadc9a393"
+      }
+    },
+    {
+      "old_unit": "31.2",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        287868,
+        289745
+      ],
+      "old_sha256": "0be59d21c69aa72d67f4ec597dacf58c88edf66db8232bc8dc1fc71efe04a21b",
+      "old_binding": {
+        "unit": "31.2",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 287868,
+          "byte_end_exclusive": 289745,
+          "line_start": 5414,
+          "line_end_inclusive": 5453
+        },
+        "source_bytes": 1877,
+        "source_LF": 40,
+        "cas_path": "Meta/Digestion/atoms/sha256/0be59d21c69aa72d67f4ec597dacf58c88edf66db8232bc8dc1fc71efe04a21b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0be59d21c69aa72d67f4ec597dacf58c88edf66db8232bc8dc1fc71efe04a21b.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:0be59d21c69aa72d67f4ec597dacf58c88edf66db8232bc8dc1fc71efe04a21b",
+          "normalized_sha256": "sha256:0be59d21c69aa72d67f4ec597dacf58c88edf66db8232bc8dc1fc71efe04a21b"
+        },
+        "cas_ref": "sha256:0be59d21c69aa72d67f4ec597dacf58c88edf66db8232bc8dc1fc71efe04a21b",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.2",
+        "source_byte_span": [
+          287716,
+          289602
+        ],
+        "source_line_span": [
+          5413,
+          5452
+        ],
+        "sha256": "74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80",
+        "cas_path": "Meta/Digestion/atoms/sha256/74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80.yaml",
+        "yaml_sha256": "10ddc5a87e054ed5f37be81f691f868b0141ece7fe90be8cd822db967c765171",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80",
+        "fingerprints": {
+          "raw_sha256": "sha256:74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80",
+          "normalized_sha256": "sha256:74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80"
+        }
+      },
+      "destination_segment_indices": [
+        12,
+        13
+      ],
+      "mathematical_correspondence": "Finite T>=log2, finite nonnegative normalized shape, two distinct actual endpoint-corner budgets, all real slabs, negative lower budgets, saturation/slack, separate integer and strict cutoff domains; exact D,V0,rho,L,H,G and common-log cancellation retained.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.2",
+        "original_cas_ref": "sha256:0be59d21c69aa72d67f4ec597dacf58c88edf66db8232bc8dc1fc71efe04a21b"
+      }
+    },
+    {
+      "old_unit": "31.3",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        289745,
+        290770
+      ],
+      "old_sha256": "2a3f7444911832698e244eb782de1a8714ec6ecf0ffbc0b0bf7cf2226d940e3c",
+      "old_binding": {
+        "unit": "31.3",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 289745,
+          "byte_end_exclusive": 290770,
+          "line_start": 5454,
+          "line_end_inclusive": 5475
+        },
+        "source_bytes": 1025,
+        "source_LF": 22,
+        "cas_path": "Meta/Digestion/atoms/sha256/2a3f7444911832698e244eb782de1a8714ec6ecf0ffbc0b0bf7cf2226d940e3c",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/2a3f7444911832698e244eb782de1a8714ec6ecf0ffbc0b0bf7cf2226d940e3c.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:2a3f7444911832698e244eb782de1a8714ec6ecf0ffbc0b0bf7cf2226d940e3c",
+          "normalized_sha256": "sha256:2a3f7444911832698e244eb782de1a8714ec6ecf0ffbc0b0bf7cf2226d940e3c"
+        },
+        "cas_ref": "sha256:2a3f7444911832698e244eb782de1a8714ec6ecf0ffbc0b0bf7cf2226d940e3c",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.3",
+        "source_byte_span": [
+          289602,
+          290636
+        ],
+        "source_line_span": [
+          5453,
+          5474
+        ],
+        "sha256": "28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223",
+        "cas_path": "Meta/Digestion/atoms/sha256/28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223.yaml",
+        "yaml_sha256": "db554c6d14e561b6d034c99cf0b0569aeceb3002d19e8a7a2eddace929ba7265",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223",
+        "fingerprints": {
+          "raw_sha256": "sha256:28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223",
+          "normalized_sha256": "sha256:28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223"
+        }
+      },
+      "destination_segment_indices": [
+        14,
+        15
+      ],
+      "mathematical_correspondence": "One-corner variance/support proof, zero coordinates/variance/endpoints, equal-shape two-corner v>=a split u<=0 and u>0, strict L>T retained.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.3",
+        "original_cas_ref": "sha256:2a3f7444911832698e244eb782de1a8714ec6ecf0ffbc0b0bf7cf2226d940e3c"
+      }
+    },
+    {
+      "old_unit": "31.4",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        290770,
+        291950
+      ],
+      "old_sha256": "1a54a6183ad88b96e803453e73cfe6b74c491fafaf1ac0dd69c5c5c5a9c6162c",
+      "old_binding": {
+        "unit": "31.4",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 290770,
+          "byte_end_exclusive": 291950,
+          "line_start": 5476,
+          "line_end_inclusive": 5498
+        },
+        "source_bytes": 1180,
+        "source_LF": 23,
+        "cas_path": "Meta/Digestion/atoms/sha256/1a54a6183ad88b96e803453e73cfe6b74c491fafaf1ac0dd69c5c5c5a9c6162c",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1a54a6183ad88b96e803453e73cfe6b74c491fafaf1ac0dd69c5c5c5a9c6162c.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:1a54a6183ad88b96e803453e73cfe6b74c491fafaf1ac0dd69c5c5c5a9c6162c",
+          "normalized_sha256": "sha256:1a54a6183ad88b96e803453e73cfe6b74c491fafaf1ac0dd69c5c5c5a9c6162c"
+        },
+        "cas_ref": "sha256:1a54a6183ad88b96e803453e73cfe6b74c491fafaf1ac0dd69c5c5c5a9c6162c",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.4",
+        "source_byte_span": [
+          290636,
+          292012
+        ],
+        "source_line_span": [
+          5475,
+          5501
+        ],
+        "sha256": "4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f",
+        "cas_path": "Meta/Digestion/atoms/sha256/4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f.yaml",
+        "yaml_sha256": "9a1358e3a00ed378580ef80866180b7fc03ed859d237e22e579abade29d9aceb",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f",
+        "fingerprints": {
+          "raw_sha256": "sha256:4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f",
+          "normalized_sha256": "sha256:4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f"
+        }
+      },
+      "destination_segment_indices": [
+        16,
+        17
+      ],
+      "mathematical_correspondence": "Derivative-average strict density order for every positive height, matching nonnegative dual price, clipped weights, zero/prefix/full capacity cases and perturbation limitation retained; HKUST classical citation attached.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.4",
+        "original_cas_ref": "sha256:1a54a6183ad88b96e803453e73cfe6b74c491fafaf1ac0dd69c5c5c5a9c6162c"
+      }
+    },
+    {
+      "old_unit": "31.5",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        291950,
+        293373
+      ],
+      "old_sha256": "5a64fb3857c7fdf6efd603c05a197b4bb55098c9279416cc5b6d2ee5a7cf2245",
+      "old_binding": {
+        "unit": "31.5",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 291950,
+          "byte_end_exclusive": 293373,
+          "line_start": 5499,
+          "line_end_inclusive": 5524
+        },
+        "source_bytes": 1423,
+        "source_LF": 26,
+        "cas_path": "Meta/Digestion/atoms/sha256/5a64fb3857c7fdf6efd603c05a197b4bb55098c9279416cc5b6d2ee5a7cf2245",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5a64fb3857c7fdf6efd603c05a197b4bb55098c9279416cc5b6d2ee5a7cf2245.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:5a64fb3857c7fdf6efd603c05a197b4bb55098c9279416cc5b6d2ee5a7cf2245",
+          "normalized_sha256": "sha256:5a64fb3857c7fdf6efd603c05a197b4bb55098c9279416cc5b6d2ee5a7cf2245"
+        },
+        "cas_ref": "sha256:5a64fb3857c7fdf6efd603c05a197b4bb55098c9279416cc5b6d2ee5a7cf2245",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.5",
+        "source_byte_span": [
+          292012,
+          293444
+        ],
+        "source_line_span": [
+          5502,
+          5527
+        ],
+        "sha256": "faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9",
+        "cas_path": "Meta/Digestion/atoms/sha256/faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9.yaml",
+        "yaml_sha256": "678a763bfc8447ae6c15d401e7a2b4e5681110b864391b7eda254c9c4df54306",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9",
+        "fingerprints": {
+          "raw_sha256": "sha256:faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9",
+          "normalized_sha256": "sha256:faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9"
+        }
+      },
+      "destination_segment_indices": [
+        18,
+        19
+      ],
+      "mathematical_correspondence": "Separate 2,3,7 corner geometry; joint strict concavity, different-radius strict decrease including zero, saturation equality iff all row distances unchanged, full finite upper tail retained.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.5",
+        "original_cas_ref": "sha256:5a64fb3857c7fdf6efd603c05a197b4bb55098c9279416cc5b6d2ee5a7cf2245"
+      }
+    },
+    {
+      "old_unit": "31.6",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        293373,
+        295092
+      ],
+      "old_sha256": "32afc62c98de321b1a38b77a2063f24ea7f5005c75186f499353cab39e10ec22",
+      "old_binding": {
+        "unit": "31.6",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 293373,
+          "byte_end_exclusive": 295092,
+          "line_start": 5525,
+          "line_end_inclusive": 5556
+        },
+        "source_bytes": 1719,
+        "source_LF": 32,
+        "cas_path": "Meta/Digestion/atoms/sha256/32afc62c98de321b1a38b77a2063f24ea7f5005c75186f499353cab39e10ec22",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/32afc62c98de321b1a38b77a2063f24ea7f5005c75186f499353cab39e10ec22.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:32afc62c98de321b1a38b77a2063f24ea7f5005c75186f499353cab39e10ec22",
+          "normalized_sha256": "sha256:32afc62c98de321b1a38b77a2063f24ea7f5005c75186f499353cab39e10ec22"
+        },
+        "cas_ref": "sha256:32afc62c98de321b1a38b77a2063f24ea7f5005c75186f499353cab39e10ec22",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.6",
+        "source_byte_span": [
+          293444,
+          295366
+        ],
+        "source_line_span": [
+          5528,
+          5563
+        ],
+        "sha256": "ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90",
+        "cas_path": "Meta/Digestion/atoms/sha256/ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90.yaml",
+        "yaml_sha256": "1439de61f9b8fd62cb0a80e869cefb1d80c88fd3f803bb30c8de9dc12c5b49a7",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90",
+        "fingerprints": {
+          "raw_sha256": "sha256:ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90",
+          "normalized_sha256": "sha256:ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90"
+        }
+      },
+      "destination_segment_indices": [
+        20,
+        21
+      ],
+      "mathematical_correspondence": "All distance branches, strict internal-switch guards, equalities/zero seams/ties, convex norm and strict Jensen proof, endpoint resaturation and unbounded finite upper-tail domination retained; classical convexity citation attached.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.6",
+        "original_cas_ref": "sha256:32afc62c98de321b1a38b77a2063f24ea7f5005c75186f499353cab39e10ec22"
+      }
+    },
+    {
+      "old_unit": "31.7",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        295092,
+        296401
+      ],
+      "old_sha256": "53296486ed232186fcd6a5839bc00537a418662da699351e42f6c8ede80467c0",
+      "old_binding": {
+        "unit": "31.7",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 295092,
+          "byte_end_exclusive": 296401,
+          "line_start": 5557,
+          "line_end_inclusive": 5582
+        },
+        "source_bytes": 1309,
+        "source_LF": 26,
+        "cas_path": "Meta/Digestion/atoms/sha256/53296486ed232186fcd6a5839bc00537a418662da699351e42f6c8ede80467c0",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/53296486ed232186fcd6a5839bc00537a418662da699351e42f6c8ede80467c0.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:53296486ed232186fcd6a5839bc00537a418662da699351e42f6c8ede80467c0",
+          "normalized_sha256": "sha256:53296486ed232186fcd6a5839bc00537a418662da699351e42f6c8ede80467c0"
+        },
+        "cas_ref": "sha256:53296486ed232186fcd6a5839bc00537a418662da699351e42f6c8ede80467c0",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.7",
+        "source_byte_span": [
+          295366,
+          296684
+        ],
+        "source_line_span": [
+          5564,
+          5589
+        ],
+        "sha256": "e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3",
+        "cas_path": "Meta/Digestion/atoms/sha256/e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3.yaml",
+        "yaml_sha256": "aee5d54f372fc72ca4d8ee9ce91bbf3767496793751c7508292d43be6d0d4b16",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3",
+        "fingerprints": {
+          "raw_sha256": "sha256:e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3",
+          "normalized_sha256": "sha256:e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3"
+        }
+      },
+      "destination_segment_indices": [
+        22,
+        23
+      ],
+      "mathematical_correspondence": "All eighteen exact integer eligibility cases, products and failures, strict guards, j-major numbering, slots 0–6/10/24 and nine-node completeness retained. Mathematical guard table is not archived.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.7",
+        "original_cas_ref": "sha256:53296486ed232186fcd6a5839bc00537a418662da699351e42f6c8ede80467c0"
+      }
+    },
+    {
+      "old_unit": "31.8",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        296401,
+        297465
+      ],
+      "old_sha256": "1b9fcc68044e7d95c433e3ab46e24840d411663c818add48a5d6bcaac7b760a3",
+      "old_binding": {
+        "unit": "31.8",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 296401,
+          "byte_end_exclusive": 297465,
+          "line_start": 5583,
+          "line_end_inclusive": 5608
+        },
+        "source_bytes": 1064,
+        "source_LF": 26,
+        "cas_path": "Meta/Digestion/atoms/sha256/1b9fcc68044e7d95c433e3ab46e24840d411663c818add48a5d6bcaac7b760a3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1b9fcc68044e7d95c433e3ab46e24840d411663c818add48a5d6bcaac7b760a3.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:1b9fcc68044e7d95c433e3ab46e24840d411663c818add48a5d6bcaac7b760a3",
+          "normalized_sha256": "sha256:1b9fcc68044e7d95c433e3ab46e24840d411663c818add48a5d6bcaac7b760a3"
+        },
+        "cas_ref": "sha256:1b9fcc68044e7d95c433e3ab46e24840d411663c818add48a5d6bcaac7b760a3",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.8",
+        "source_byte_span": [
+          296684,
+          297732
+        ],
+        "source_line_span": [
+          5590,
+          5615
+        ],
+        "sha256": "ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db",
+        "cas_path": "Meta/Digestion/atoms/sha256/ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db.yaml",
+        "yaml_sha256": "efb32731f519962db7377ebfeb9e87fae892ae60a3c9f22f905a679af46f8dca",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db",
+        "fingerprints": {
+          "raw_sha256": "sha256:ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db",
+          "normalized_sha256": "sha256:ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db"
+        }
+      },
+      "destination_segment_indices": [
+        24,
+        25,
+        26,
+        27
+      ],
+      "mathematical_correspondence": "All nine exact q rows, both theta types and true [0,1] domains, v=a+b compatibility, reflected ties and normalized R/lambda/eta retained. Only no-height-sampling statement archived.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.8",
+        "original_cas_ref": "sha256:1b9fcc68044e7d95c433e3ab46e24840d411663c818add48a5d6bcaac7b760a3"
+      }
+    },
+    {
+      "old_unit": "31.9",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        297465,
+        298829
+      ],
+      "old_sha256": "45f91b8b5474b7afd95e7b0b00d16ceac3aefca1e0146f0c90574d1639c72868",
+      "old_binding": {
+        "unit": "31.9",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 297465,
+          "byte_end_exclusive": 298829,
+          "line_start": 5609,
+          "line_end_inclusive": 5635
+        },
+        "source_bytes": 1364,
+        "source_LF": 27,
+        "cas_path": "Meta/Digestion/atoms/sha256/45f91b8b5474b7afd95e7b0b00d16ceac3aefca1e0146f0c90574d1639c72868",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/45f91b8b5474b7afd95e7b0b00d16ceac3aefca1e0146f0c90574d1639c72868.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:45f91b8b5474b7afd95e7b0b00d16ceac3aefca1e0146f0c90574d1639c72868",
+          "normalized_sha256": "sha256:45f91b8b5474b7afd95e7b0b00d16ceac3aefca1e0146f0c90574d1639c72868"
+        },
+        "cas_ref": "sha256:45f91b8b5474b7afd95e7b0b00d16ceac3aefca1e0146f0c90574d1639c72868",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.9",
+        "source_byte_span": [
+          297732,
+          299114
+        ],
+        "source_line_span": [
+          5616,
+          5642
+        ],
+        "sha256": "020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda",
+        "cas_path": "Meta/Digestion/atoms/sha256/020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda.yaml",
+        "yaml_sha256": "2bbe226e3b7198938bcf5f86720f74f8bef1bc740d731a64c73a86df13c90572",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda",
+        "fingerprints": {
+          "raw_sha256": "sha256:020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda",
+          "normalized_sha256": "sha256:020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda"
+        }
+      },
+      "destination_segment_indices": [
+        28,
+        29
+      ],
+      "mathematical_correspondence": "Positive mass-three endpoint measure, finite signed measure, E-W direction, all positive integer moments, absolute coefficient bound three, absolute convergence and clipped arbitrary-slab/full-capacity scope retained.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.9",
+        "original_cas_ref": "sha256:45f91b8b5474b7afd95e7b0b00d16ceac3aefca1e0146f0c90574d1639c72868"
+      }
+    },
+    {
+      "old_unit": "31.10",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        298829,
+        300258
+      ],
+      "old_sha256": "aef948efeeebd9af5b667646d176b4ef4c92e1e74a9f3c6a716ae992c5f036d8",
+      "old_binding": {
+        "unit": "31.10",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 298829,
+          "byte_end_exclusive": 300258,
+          "line_start": 5636,
+          "line_end_inclusive": 5667
+        },
+        "source_bytes": 1429,
+        "source_LF": 32,
+        "cas_path": "Meta/Digestion/atoms/sha256/aef948efeeebd9af5b667646d176b4ef4c92e1e74a9f3c6a716ae992c5f036d8",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/aef948efeeebd9af5b667646d176b4ef4c92e1e74a9f3c6a716ae992c5f036d8.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:aef948efeeebd9af5b667646d176b4ef4c92e1e74a9f3c6a716ae992c5f036d8",
+          "normalized_sha256": "sha256:aef948efeeebd9af5b667646d176b4ef4c92e1e74a9f3c6a716ae992c5f036d8"
+        },
+        "cas_ref": "sha256:aef948efeeebd9af5b667646d176b4ef4c92e1e74a9f3c6a716ae992c5f036d8",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.10",
+        "source_byte_span": [
+          299114,
+          301064
+        ],
+        "source_line_span": [
+          5643,
+          5683
+        ],
+        "sha256": "1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8",
+        "cas_path": "Meta/Digestion/atoms/sha256/1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8.yaml",
+        "yaml_sha256": "1c85e97f18dcc2692433cbb5539082446a04d667cab9da0805090f2b7b38de38",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8",
+        "fingerprints": {
+          "raw_sha256": "sha256:1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8",
+          "normalized_sha256": "sha256:1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8"
+        }
+      },
+      "destination_segment_indices": [
+        30,
+        31
+      ],
+      "mathematical_correspondence": "Concave top-mass K(s), comparisons at 0/2/3, positive-part maximum identity, nonnegative integral proof for all n>=2 and n=1 hypothesis, strict atom bounds and non-equal-first-moment scope retained; exact classical citation and divide-by-three normalization rebound.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.10",
+        "original_cas_ref": "sha256:aef948efeeebd9af5b667646d176b4ef4c92e1e74a9f3c6a716ae992c5f036d8"
+      }
+    },
+    {
+      "old_unit": "31.11",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        300258,
+        302246
+      ],
+      "old_sha256": "9df3ed2502f24227234912ddc76091d92dbcf57cc37041885f4891fa5dbdc57e",
+      "old_binding": {
+        "unit": "31.11",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 300258,
+          "byte_end_exclusive": 302246,
+          "line_start": 5668,
+          "line_end_inclusive": 5722
+        },
+        "source_bytes": 1988,
+        "source_LF": 55,
+        "cas_path": "Meta/Digestion/atoms/sha256/9df3ed2502f24227234912ddc76091d92dbcf57cc37041885f4891fa5dbdc57e",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9df3ed2502f24227234912ddc76091d92dbcf57cc37041885f4891fa5dbdc57e.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:9df3ed2502f24227234912ddc76091d92dbcf57cc37041885f4891fa5dbdc57e",
+          "normalized_sha256": "sha256:9df3ed2502f24227234912ddc76091d92dbcf57cc37041885f4891fa5dbdc57e"
+        },
+        "cas_ref": "sha256:9df3ed2502f24227234912ddc76091d92dbcf57cc37041885f4891fa5dbdc57e",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.11",
+        "source_byte_span": [
+          301064,
+          303079
+        ],
+        "source_line_span": [
+          5684,
+          5742
+        ],
+        "sha256": "aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082",
+        "cas_path": "Meta/Digestion/atoms/sha256/aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082.yaml",
+        "yaml_sha256": "318d34ab4f6e433531a1bdd70d040cecc5d15d8a72fa729795353afdde3ac21a",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082",
+        "fingerprints": {
+          "raw_sha256": "sha256:aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082",
+          "normalized_sha256": "sha256:aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082"
+        }
+      },
+      "destination_segment_indices": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "mathematical_correspondence": "All three exact rational log intervals, 80-term series and strict exponent-161 tail, all nine radius/offset/atom rows and denominators, nonnegative outward distances, exact zero-radius case, squared-radius inequalities, degree-12 positive exponential polynomial and reciprocal direction retained; only execution/placement prose archived. DLMF and self-contained-formula dependency attached.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.11",
+        "original_cas_ref": "sha256:9df3ed2502f24227234912ddc76091d92dbcf57cc37041885f4891fa5dbdc57e"
+      }
+    },
+    {
+      "old_unit": "31.12",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        302246,
+        303641
+      ],
+      "old_sha256": "126bc3571bcbac93f7fdb5a0d533f90c804323969953128cc652b26a35a5ef45",
+      "old_binding": {
+        "unit": "31.12",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 302246,
+          "byte_end_exclusive": 303641,
+          "line_start": 5723,
+          "line_end_inclusive": 5753
+        },
+        "source_bytes": 1395,
+        "source_LF": 31,
+        "cas_path": "Meta/Digestion/atoms/sha256/126bc3571bcbac93f7fdb5a0d533f90c804323969953128cc652b26a35a5ef45",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/126bc3571bcbac93f7fdb5a0d533f90c804323969953128cc652b26a35a5ef45.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:126bc3571bcbac93f7fdb5a0d533f90c804323969953128cc652b26a35a5ef45",
+          "normalized_sha256": "sha256:126bc3571bcbac93f7fdb5a0d533f90c804323969953128cc652b26a35a5ef45"
+        },
+        "cas_ref": "sha256:126bc3571bcbac93f7fdb5a0d533f90c804323969953128cc652b26a35a5ef45",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.12",
+        "source_byte_span": [
+          303079,
+          304435
+        ],
+        "source_line_span": [
+          5743,
+          5773
+        ],
+        "sha256": "7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b",
+        "cas_path": "Meta/Digestion/atoms/sha256/7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b.yaml",
+        "yaml_sha256": "911a1d8fddd0b7a31ad1a74dccc3838bf064e0710ee1f63afa0c307918ebfdeb",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b",
+        "fingerprints": {
+          "raw_sha256": "sha256:7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b",
+          "normalized_sha256": "sha256:7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b"
+        }
+      },
+      "destination_segment_indices": [
+        38,
+        39,
+        40,
+        41
+      ],
+      "mathematical_correspondence": "Both W1 and top-two-mass formulas, theta endpoint cases, outward numerator/denominator sign linkage, genuine weight-domain obligation versus outward theta endpoints, both strict mass inequalities and >1/40 first-moment margin retained; adapted-report provenance archived.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.12",
+        "original_cas_ref": "sha256:126bc3571bcbac93f7fdb5a0d533f90c804323969953128cc652b26a35a5ef45"
+      }
+    },
+    {
+      "old_unit": "31.13",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        303641,
+        304248
+      ],
+      "old_sha256": "ed4edb6d9cccc93dee709af5f20edf5ee3bab995acd19e9dfb90e0661d5ddfd8",
+      "old_binding": {
+        "unit": "31.13",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 303641,
+          "byte_end_exclusive": 304248,
+          "line_start": 5754,
+          "line_end_inclusive": 5770
+        },
+        "source_bytes": 607,
+        "source_LF": 17,
+        "cas_path": "Meta/Digestion/atoms/sha256/ed4edb6d9cccc93dee709af5f20edf5ee3bab995acd19e9dfb90e0661d5ddfd8",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ed4edb6d9cccc93dee709af5f20edf5ee3bab995acd19e9dfb90e0661d5ddfd8.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:ed4edb6d9cccc93dee709af5f20edf5ee3bab995acd19e9dfb90e0661d5ddfd8",
+          "normalized_sha256": "sha256:ed4edb6d9cccc93dee709af5f20edf5ee3bab995acd19e9dfb90e0661d5ddfd8"
+        },
+        "cas_ref": "sha256:ed4edb6d9cccc93dee709af5f20edf5ee3bab995acd19e9dfb90e0661d5ddfd8",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.13",
+        "source_byte_span": [
+          304435,
+          304990
+        ],
+        "source_line_span": [
+          5774,
+          5789
+        ],
+        "sha256": "c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f",
+        "cas_path": "Meta/Digestion/atoms/sha256/c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f.yaml",
+        "yaml_sha256": "db4e9460d4bc8b6e7f00a28240512440062d31b9c18ba703ce89298317a0a6b0",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f",
+        "fingerprints": {
+          "raw_sha256": "sha256:c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f",
+          "normalized_sha256": "sha256:c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f"
+        }
+      },
+      "destination_segment_indices": [
+        42,
+        43,
+        44,
+        45
+      ],
+      "mathematical_correspondence": "Every integer moment and strict first coefficient, absolute convergence, same-height node domination, all finite heights/all real slabs, T=log2, closed corners, reflected ties, zero seams and whole upper tail retain strict scaled 1/40 bound.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.13",
+        "original_cas_ref": "sha256:ed4edb6d9cccc93dee709af5f20edf5ee3bab995acd19e9dfb90e0661d5ddfd8"
+      }
+    },
+    {
+      "old_unit": "31.14",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        304248,
+        304866
+      ],
+      "old_sha256": "213738e1deed74d55481b5af448c8953fe4e9853fe3ef6f01d1c05e1d67f9801",
+      "old_binding": {
+        "unit": "31.14",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 304248,
+          "byte_end_exclusive": 304866,
+          "line_start": 5771,
+          "line_end_inclusive": 5781
+        },
+        "source_bytes": 618,
+        "source_LF": 11,
+        "cas_path": "Meta/Digestion/atoms/sha256/213738e1deed74d55481b5af448c8953fe4e9853fe3ef6f01d1c05e1d67f9801",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/213738e1deed74d55481b5af448c8953fe4e9853fe3ef6f01d1c05e1d67f9801.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:213738e1deed74d55481b5af448c8953fe4e9853fe3ef6f01d1c05e1d67f9801",
+          "normalized_sha256": "sha256:213738e1deed74d55481b5af448c8953fe4e9853fe3ef6f01d1c05e1d67f9801"
+        },
+        "cas_ref": "sha256:213738e1deed74d55481b5af448c8953fe4e9853fe3ef6f01d1c05e1d67f9801",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.14",
+        "source_byte_span": [
+          304990,
+          305617
+        ],
+        "source_line_span": [
+          5790,
+          5800
+        ],
+        "sha256": "9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb",
+        "cas_path": "Meta/Digestion/atoms/sha256/9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb.yaml",
+        "yaml_sha256": "c81bb7ba2fc008fc686800ed440767a6a462db502a1094b433e3021d45de1d32",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb",
+        "fingerprints": {
+          "raw_sha256": "sha256:9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb",
+          "normalized_sha256": "sha256:9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb"
+        }
+      },
+      "destination_segment_indices": [
+        46,
+        47
+      ],
+      "mathematical_correspondence": "Exact subtract-X bijection of wide domains and feasible mixtures, all endpoint/negative-lower/upper-slack cases, and failure of a strict-cutoff-domain bijection retained.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.14",
+        "original_cas_ref": "sha256:213738e1deed74d55481b5af448c8953fe4e9853fe3ef6f01d1c05e1d67f9801"
+      }
+    },
+    {
+      "old_unit": "31.15",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        304866,
+        305962
+      ],
+      "old_sha256": "cba3c1a89589e252a81fc3b8abb0f2a4cd1baafa88b4794a24e992cba4168f5b",
+      "old_binding": {
+        "unit": "31.15",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 304866,
+          "byte_end_exclusive": 305962,
+          "line_start": 5782,
+          "line_end_inclusive": 5805
+        },
+        "source_bytes": 1096,
+        "source_LF": 24,
+        "cas_path": "Meta/Digestion/atoms/sha256/cba3c1a89589e252a81fc3b8abb0f2a4cd1baafa88b4794a24e992cba4168f5b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/cba3c1a89589e252a81fc3b8abb0f2a4cd1baafa88b4794a24e992cba4168f5b.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:cba3c1a89589e252a81fc3b8abb0f2a4cd1baafa88b4794a24e992cba4168f5b",
+          "normalized_sha256": "sha256:cba3c1a89589e252a81fc3b8abb0f2a4cd1baafa88b4794a24e992cba4168f5b"
+        },
+        "cas_ref": "sha256:cba3c1a89589e252a81fc3b8abb0f2a4cd1baafa88b4794a24e992cba4168f5b",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.15",
+        "source_byte_span": [
+          305617,
+          306722
+        ],
+        "source_line_span": [
+          5801,
+          5824
+        ],
+        "sha256": "51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2",
+        "cas_path": "Meta/Digestion/atoms/sha256/51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2.yaml",
+        "yaml_sha256": "06b3417952892488109333942ad90378b4bc7ecc0fefca95db44967a670548fb",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2",
+        "fingerprints": {
+          "raw_sha256": "sha256:51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2",
+          "normalized_sha256": "sha256:51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2"
+        }
+      },
+      "destination_segment_indices": [
+        48,
+        49
+      ],
+      "mathematical_correspondence": "Translation 1-Lipschitz/reverse-triangle proof without differentiating min or zero norm, Euclidean projection, centered-shape identity, exact constants and Lxi>=L0>T, prime-label and topology-change conditions retained.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.15",
+        "original_cas_ref": "sha256:cba3c1a89589e252a81fc3b8abb0f2a4cd1baafa88b4794a24e992cba4168f5b"
+      }
+    },
+    {
+      "old_unit": "31.16",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        305962,
+        307430
+      ],
+      "old_sha256": "8c61b20e7390ed05bd75dadb4f509f09dbc5a25b02eb071773c741a59afb9837",
+      "old_binding": {
+        "unit": "31.16",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 305962,
+          "byte_end_exclusive": 307430,
+          "line_start": 5806,
+          "line_end_inclusive": 5834
+        },
+        "source_bytes": 1468,
+        "source_LF": 29,
+        "cas_path": "Meta/Digestion/atoms/sha256/8c61b20e7390ed05bd75dadb4f509f09dbc5a25b02eb071773c741a59afb9837",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8c61b20e7390ed05bd75dadb4f509f09dbc5a25b02eb071773c741a59afb9837.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:8c61b20e7390ed05bd75dadb4f509f09dbc5a25b02eb071773c741a59afb9837",
+          "normalized_sha256": "sha256:8c61b20e7390ed05bd75dadb4f509f09dbc5a25b02eb071773c741a59afb9837"
+        },
+        "cas_ref": "sha256:8c61b20e7390ed05bd75dadb4f509f09dbc5a25b02eb071773c741a59afb9837",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.16",
+        "source_byte_span": [
+          306722,
+          308199
+        ],
+        "source_line_span": [
+          5825,
+          5853
+        ],
+        "sha256": "0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab",
+        "cas_path": "Meta/Digestion/atoms/sha256/0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab.yaml",
+        "yaml_sha256": "3af6ae3e16ca0a305ced65533b564d530325d599e4fa85d3d42155dab58aec21",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab",
+        "fingerprints": {
+          "raw_sha256": "sha256:0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab",
+          "normalized_sha256": "sha256:0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab"
+        }
+      },
+      "destination_segment_indices": [
+        50,
+        51
+      ],
+      "mathematical_correspondence": "Whole common feasible-set comparison including all six permutations, possibly different maximizers, two nonnegative increments in the same interval, positive support in radius-decrease comparison and weighted displacement proof giving constant two retained.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.16",
+        "original_cas_ref": "sha256:8c61b20e7390ed05bd75dadb4f509f09dbc5a25b02eb071773c741a59afb9837"
+      }
+    },
+    {
+      "old_unit": "31.17",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        307430,
+        307975
+      ],
+      "old_sha256": "8bae706cc82dbe8a812fa9b0974a27bb2139f9223426e195a4f223d8c9ce0095",
+      "old_binding": {
+        "unit": "31.17",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 307430,
+          "byte_end_exclusive": 307975,
+          "line_start": 5835,
+          "line_end_inclusive": 5849
+        },
+        "source_bytes": 545,
+        "source_LF": 15,
+        "cas_path": "Meta/Digestion/atoms/sha256/8bae706cc82dbe8a812fa9b0974a27bb2139f9223426e195a4f223d8c9ce0095",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8bae706cc82dbe8a812fa9b0974a27bb2139f9223426e195a4f223d8c9ce0095.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:8bae706cc82dbe8a812fa9b0974a27bb2139f9223426e195a4f223d8c9ce0095",
+          "normalized_sha256": "sha256:8bae706cc82dbe8a812fa9b0974a27bb2139f9223426e195a4f223d8c9ce0095"
+        },
+        "cas_ref": "sha256:8bae706cc82dbe8a812fa9b0974a27bb2139f9223426e195a4f223d8c9ce0095",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.17",
+        "source_byte_span": [
+          308199,
+          308753
+        ],
+        "source_line_span": [
+          5854,
+          5868
+        ],
+        "sha256": "dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785",
+        "cas_path": "Meta/Digestion/atoms/sha256/dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785.yaml",
+        "yaml_sha256": "9fbea11b7f695537c22eb39857d2ab1a7fbd2dc78fc549f2d088b7edb5150e83",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785",
+        "fingerprints": {
+          "raw_sha256": "sha256:dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785",
+          "normalized_sha256": "sha256:dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785"
+        }
+      },
+      "destination_segment_indices": [
+        52,
+        53
+      ],
+      "mathematical_correspondence": "Strict 1/40 baseline and 2 epsilon/(1-z) transfer yield strict 1/80 over closed radius 1/320, including simultaneous boundary T=log2, zero-shape stronger bound and original-domain G=0 exclusion.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.17",
+        "original_cas_ref": "sha256:8bae706cc82dbe8a812fa9b0974a27bb2139f9223426e195a4f223d8c9ce0095"
+      }
+    },
+    {
+      "old_unit": "31.18",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        307975,
+        309521
+      ],
+      "old_sha256": "edc19ada48d671aa3902f203f9f210c0fbd1f36c2dec82dcea7a067b41acd80b",
+      "old_binding": {
+        "unit": "31.18",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 307975,
+          "byte_end_exclusive": 309521,
+          "line_start": 5850,
+          "line_end_inclusive": 5875
+        },
+        "source_bytes": 1546,
+        "source_LF": 26,
+        "cas_path": "Meta/Digestion/atoms/sha256/edc19ada48d671aa3902f203f9f210c0fbd1f36c2dec82dcea7a067b41acd80b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/edc19ada48d671aa3902f203f9f210c0fbd1f36c2dec82dcea7a067b41acd80b.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:edc19ada48d671aa3902f203f9f210c0fbd1f36c2dec82dcea7a067b41acd80b",
+          "normalized_sha256": "sha256:edc19ada48d671aa3902f203f9f210c0fbd1f36c2dec82dcea7a067b41acd80b"
+        },
+        "cas_ref": "sha256:edc19ada48d671aa3902f203f9f210c0fbd1f36c2dec82dcea7a067b41acd80b",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.18",
+        "source_byte_span": [
+          308753,
+          310486
+        ],
+        "source_line_span": [
+          5869,
+          5898
+        ],
+        "sha256": "cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5",
+        "cas_path": "Meta/Digestion/atoms/sha256/cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5.yaml",
+        "yaml_sha256": "7eeb83422d6f041fb00f42548c2466d6f1aaceccabe49810f0fb92ea2bcad757",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5",
+        "fingerprints": {
+          "raw_sha256": "sha256:cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5",
+          "normalized_sha256": "sha256:cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5"
+        }
+      },
+      "destination_segment_indices": [
+        54,
+        55,
+        56,
+        57
+      ],
+      "mathematical_correspondence": "Full all-N two-dimensional homogeneous pigeonhole argument, 1<=q<=N^2 and strict b/N,c/N errors, irrationality forcing any selected q to infinity, eventual positive exponents, infinitely many distinct actual boxes and shape convergence retained. Non-effective/noninhomogeneous scope retained; execution nonclaim archived; Dirichlet citation attached.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.18",
+        "original_cas_ref": "sha256:edc19ada48d671aa3902f203f9f210c0fbd1f36c2dec82dcea7a067b41acd80b"
+      }
+    },
+    {
+      "old_unit": "31.19",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        309521,
+        310682
+      ],
+      "old_sha256": "393537011e7bd06dbb3b66e60b5ea0d74500ce0bfe3c290da266cea124868c02",
+      "old_binding": {
+        "unit": "31.19",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 309521,
+          "byte_end_exclusive": 310682,
+          "line_start": 5876,
+          "line_end_inclusive": 5898
+        },
+        "source_bytes": 1161,
+        "source_LF": 23,
+        "cas_path": "Meta/Digestion/atoms/sha256/393537011e7bd06dbb3b66e60b5ea0d74500ce0bfe3c290da266cea124868c02",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/393537011e7bd06dbb3b66e60b5ea0d74500ce0bfe3c290da266cea124868c02.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:393537011e7bd06dbb3b66e60b5ea0d74500ce0bfe3c290da266cea124868c02",
+          "normalized_sha256": "sha256:393537011e7bd06dbb3b66e60b5ea0d74500ce0bfe3c290da266cea124868c02"
+        },
+        "cas_ref": "sha256:393537011e7bd06dbb3b66e60b5ea0d74500ce0bfe3c290da266cea124868c02",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.19",
+        "source_byte_span": [
+          310486,
+          311656
+        ],
+        "source_line_span": [
+          5899,
+          5921
+        ],
+        "sha256": "bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd",
+        "cas_path": "Meta/Digestion/atoms/sha256/bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd.yaml",
+        "yaml_sha256": "cd2a12f3bfcfbb0831ba0b35c0efa838eac61e15443776a33a5919b036a9909d",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd",
+        "fingerprints": {
+          "raw_sha256": "sha256:bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd",
+          "normalized_sha256": "sha256:bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd"
+        }
+      },
+      "destination_segment_indices": [
+        58,
+        59
+      ],
+      "mathematical_correspondence": "Original strict 5040 cutoff nonemptiness iff A>log2+log5040, empty continuous equality case, separate integer-domain requirement, actual 10080 threshold and impossible equality from missing prime 5, eventual nonempty actual sequence retained.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.19",
+        "original_cas_ref": "sha256:393537011e7bd06dbb3b66e60b5ea0d74500ce0bfe3c290da266cea124868c02"
+      }
+    },
+    {
+      "old_unit": "31.20",
+      "permanently_reserved": false,
+      "old_source_byte_span": [
+        310682,
+        312043
+      ],
+      "old_sha256": "023e3b1466025fc225d800c3dd465c445efb19b600cf5e8ca5f28e7a02fc4daf",
+      "old_binding": {
+        "unit": "31.20",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 310682,
+          "byte_end_exclusive": 312043,
+          "line_start": 5899,
+          "line_end_inclusive": 5916
+        },
+        "source_bytes": 1361,
+        "source_LF": 18,
+        "cas_path": "Meta/Digestion/atoms/sha256/023e3b1466025fc225d800c3dd465c445efb19b600cf5e8ca5f28e7a02fc4daf",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/023e3b1466025fc225d800c3dd465c445efb19b600cf5e8ca5f28e7a02fc4daf.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:023e3b1466025fc225d800c3dd465c445efb19b600cf5e8ca5f28e7a02fc4daf",
+          "normalized_sha256": "sha256:023e3b1466025fc225d800c3dd465c445efb19b600cf5e8ca5f28e7a02fc4daf"
+        },
+        "cas_ref": "sha256:023e3b1466025fc225d800c3dd465c445efb19b600cf5e8ca5f28e7a02fc4daf",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": {
+        "unit": "31.20",
+        "source_byte_span": [
+          311656,
+          312957
+        ],
+        "source_line_span": [
+          5922,
+          5939
+        ],
+        "sha256": "b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46",
+        "cas_path": "Meta/Digestion/atoms/sha256/b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46.yaml",
+        "yaml_sha256": "41d8b042a9b20a7f7f1d3847601a6b7f6d24ce37e81cbdbfda8edfc5b412823f",
+        "yaml_byte_count": 328,
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "ordered_children": [],
+        "chain_atoms": [],
+        "cas_ref": "sha256:b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46",
+        "fingerprints": {
+          "raw_sha256": "sha256:b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46",
+          "normalized_sha256": "sha256:b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46"
+        }
+      },
+      "destination_segment_indices": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "mathematical_correspondence": "Fixed-slab and actual-sequence unscaled-to-zero proof and last-adjacent counterexample retained, with infinite T/z=0 only limits; shape/prime/ray/5040/density/metric/KL/attainability/GH/RH/open scope retained. Only ticket, search/program and delivery-status fragments archived.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.20",
+        "original_cas_ref": "sha256:023e3b1466025fc225d800c3dd465c445efb19b600cf5e8ca5f28e7a02fc4daf"
+      }
+    },
+    {
+      "old_unit": "31.21",
+      "permanently_reserved": true,
+      "old_source_byte_span": [
+        312043,
+        314731
+      ],
+      "old_sha256": "f2fab9d4d570e602fa98a391dc85e63152f7caa22cbd49a7aa43d47ee3b38493",
+      "old_binding": {
+        "unit": "31.21",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 312043,
+          "byte_end_exclusive": 314731,
+          "line_start": 5917,
+          "line_end_inclusive": 5949
+        },
+        "source_bytes": 2688,
+        "source_LF": 33,
+        "cas_path": "Meta/Digestion/atoms/sha256/f2fab9d4d570e602fa98a391dc85e63152f7caa22cbd49a7aa43d47ee3b38493",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/f2fab9d4d570e602fa98a391dc85e63152f7caa22cbd49a7aa43d47ee3b38493.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:f2fab9d4d570e602fa98a391dc85e63152f7caa22cbd49a7aa43d47ee3b38493",
+          "normalized_sha256": "sha256:f2fab9d4d570e602fa98a391dc85e63152f7caa22cbd49a7aa43d47ee3b38493"
+        },
+        "cas_ref": "sha256:f2fab9d4d570e602fa98a391dc85e63152f7caa22cbd49a7aa43d47ee3b38493",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": null,
+      "destination_segment_indices": [
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82
+      ],
+      "mathematical_correspondence": "All five mathematical citations, exact pages/DOI/normalization/special-case scope, classical-only attribution and self-contained specialized-proof dependency rebound to 31.4/31.6/31.10/31.11/31.18. All other original bytes archived; original number permanently reserved externally.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.21",
+        "original_cas_ref": "sha256:f2fab9d4d570e602fa98a391dc85e63152f7caa22cbd49a7aa43d47ee3b38493"
+      },
+      "reservation": "Permanent external reservation; never reuse the old number. Resolve mathematical citations by this item’s partition segments and all remaining bytes through the report archive."
+    },
+    {
+      "old_unit": "31.22",
+      "permanently_reserved": true,
+      "old_source_byte_span": [
+        314731,
+        316737
+      ],
+      "old_sha256": "eae7985cf6b6ca0ed4b57eca118b4b48b116ff73442ea4cf699dec0cea6ff3c9",
+      "old_binding": {
+        "unit": "31.22",
+        "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "source_span": {
+          "byte_start": 314731,
+          "byte_end_exclusive": 316737,
+          "line_start": 5950,
+          "line_end_inclusive": 5974
+        },
+        "source_bytes": 2006,
+        "source_LF": 25,
+        "cas_path": "Meta/Digestion/atoms/sha256/eae7985cf6b6ca0ed4b57eca118b4b48b116ff73442ea4cf699dec0cea6ff3c9",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/eae7985cf6b6ca0ed4b57eca118b4b48b116ff73442ea4cf699dec0cea6ff3c9.yaml",
+        "fingerprints": {
+          "raw_sha256": "sha256:eae7985cf6b6ca0ed4b57eca118b4b48b116ff73442ea4cf699dec0cea6ff3c9",
+          "normalized_sha256": "sha256:eae7985cf6b6ca0ed4b57eca118b4b48b116ff73442ea4cf699dec0cea6ff3c9"
+        },
+        "cas_ref": "sha256:eae7985cf6b6ca0ed4b57eca118b4b48b116ff73442ea4cf699dec0cea6ff3c9",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        },
+        "ordered_children": [],
+        "source_bytes_equal_full_CAS": true
+      },
+      "current_unit": null,
+      "destination_segment_indices": [
+        83
+      ],
+      "mathematical_correspondence": "Entire operational entry archived verbatim, including old carrier, worktree, BASE, make command, preservation, prior execution and caller delivery facts; original number permanently reserved externally.",
+      "old_source_address": {
+        "source_id": "arithmetic-boundary-quantization",
+        "numbered_item": "31.22",
+        "original_cas_ref": "sha256:eae7985cf6b6ca0ed4b57eca118b4b48b116ff73442ea4cf699dec0cea6ff3c9"
+      },
+      "reservation": "Permanent external reservation; never reuse the old number. Resolve mathematical citations by this item’s partition segments and all remaining bytes through the report archive."
+    }
+  ],
+  "historical_c72_recovery": {
+    "source_remove_byte_span": [
+      314676,
+      314689
+    ],
+    "source_removed_literal": "quantized-gh/",
+    "recovered_source_byte_count": 316724,
+    "recovered_source_sha256": "9229e2affc81243efcdcbd228058d8ca19cea395630a94ae943afde374157dd2",
+    "report_take_byte_span": [
+      0,
+      31714
+    ],
+    "report_remove_byte_span": [
+      124,
+      127
+    ],
+    "report_removed_literal": "../",
+    "recovered_report_byte_count": 31711,
+    "recovered_report_sha256": "2b100f9d29e4d481fe7f76433ddbd3644eb925975f52bd7655584a839b49c0fa",
+    "placement_note_byte_span": [
+      31714,
+      39335
+    ],
+    "status": "Historical inverse only; old audits and ingests not rerun."
+  },
+  "fixed_certificate": {
+    "byte_count": 12265,
+    "lf_count": 271,
+    "sha256": "cd3f0d53cc0bbad4ceb0f1563d64021e059b0afe5c297fa69ed794d4efb24af0",
+    "execution_count_this_attempt": 0,
+    "original_caller_predicate_count": 131,
+    "historical_adapted_predicate_count": 152
+  },
+  "analytical_review": {
+    "reviewed_original_unit_count": 22,
+    "retained_numbered_unit_count": 20,
+    "externally_reserved_unit_count": 2,
+    "new_mathematical_claim_count": 0,
+    "identified_new_proof_obstruction_count": 0,
+    "basis": "Complete semantic passage review against original wording and inherited literal domains; byte partition independently checks exact preservation, not mathematical truth. No arithmetic program or finite-moment sample substituted for proofs."
+  },
+  "remaining_obligations": [
+    "Actual C82 PRO proof obligation and complete S19-first mathematical-body migration.",
+    "Reconcile actual inherited mathematical/source mappings and complete pure-predecessor integration; current prefix remains mixed.",
+    "Fresh independent complete-source review and ordinary delivery gates; caller owns Git/PR and S19-before-S20 MERGED."
+  ],
+  "producer": {
+    "status": "completed",
+    "required_invocation": "make ingest BASE=db8037532d5dea5067e0edfb3fcaebc671eccbf2 SOURCE=arithmetic-boundary-quantization",
+    "invocation_count": 1,
+    "exit_code": 0,
+    "started_utc": "2026-09-10T10:21:10Z",
+    "ended_utc": "2026-09-10T10:22:47Z",
+    "stdout_summary": "INGEST residual_open_added=20 skipped_existing=248 coarse_fallbacks=0 open_genres=0 cas_objects_written=20 ledger_changed=true\n",
+    "stdout_byte_count": 127,
+    "stdout_sha256": "3a83e5d9e8776eeeb21690020f8e55ccc35f85fca81434b30f037ccb1325eede",
+    "stderr_byte_count": 647,
+    "stderr_sha256": "9751ba2d59d23b3b05ae8ec10eb079abec98bd8c535737acbc24eefbcb31c46d",
+    "sdk_version_observed": "10.0.400",
+    "unchanged_repository_producer_files": [
+      {
+        "path": "Makefile",
+        "byte_count": 7674,
+        "sha256": "e57b07eb8813b7aa22c48dd77cd2292ef7bdf169cbcdcc7920b8abacd9265a15"
+      },
+      {
+        "path": "tools/scripts/ingest.sh",
+        "byte_count": 2008,
+        "sha256": "2377f28ac22d099a0e2cd3264d55fd57dd5322c3565809b5fdcb7b266bd2070c"
+      },
+      {
+        "path": "tools/StrataLint.Cli/Commands/Digestion/Ingest/IngestCommand.ReportFree.cs",
+        "byte_count": 11035,
+        "sha256": "432647ca21e4d84d5f12cce5f09a27a23cfbac7151494e0912483884e9fcb35c"
+      },
+      {
+        "path": "tools/StrataLint.Cli/Commands/Digestion/Ingest/IngestCommand.AppendOnly.cs",
+        "byte_count": 12263,
+        "sha256": "5adeb8f4febfa4d9895568b270aca74362b4ea7e4a1c0df46aab646f2058d032"
+      },
+      {
+        "path": "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.LedgerIo.cs",
+        "byte_count": 12572,
+        "sha256": "5c69077c7fb819355e62e181f3090743ce7a6fe43c0e59b1204f4938a4659a95"
+      },
+      {
+        "path": "tools/StrataLint.Engine/Digestion/Atomizers/GenericAtomizer.cs",
+        "byte_count": 7598,
+        "sha256": "a22f6d9942ec14281f0347acfa6bda525558c406a3dbc100fbf8075568c83d4b"
+      },
+      {
+        "path": "tools/StrataLint.Engine/Digestion/Atomizers/MarkdownAstAtomizer.cs",
+        "byte_count": 12567,
+        "sha256": "60234f9b669bf58ebdc9741b3ab742c7d3bdd86077152f4a623a4f6e3c90fd4a"
+      }
+    ],
+    "actual_attempt_assemblies": [
+      {
+        "attempt_relative_path": "dotnet-artifacts/bin/stratalint.cli/release/StrataLint.dll",
+        "byte_count": 658432,
+        "sha256": "9e267aacabc45ed332413707cabc54b80c198f5c55581b9067ab843e9774e781"
+      },
+      {
+        "attempt_relative_path": "dotnet-artifacts/bin/stratalint.cli/release/StrataLint.Engine.dll",
+        "byte_count": 1865216,
+        "sha256": "2abda45b7a4ec68c58a9d79819e99c5404c88ebb25601d6c6792b55d28c9ba02"
+      },
+      {
+        "attempt_relative_path": "dotnet-artifacts/bin/stratalint.cli/release/StrataLint.runtimeconfig.json",
+        "byte_count": 330,
+        "sha256": "9950d4583cfc9a106857c0d5b8a75b53e8774852b57b80bc3823a74d44a4d87f"
+      }
+    ],
+    "environment_overrides": {
+      "TMPDIR": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-i29-s20-pure-mathematical-tail/attempt-1/tmp",
+      "DOTNET_CLI_HOME": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-i29-s20-pure-mathematical-tail/attempt-1/dotnet-cli",
+      "UseArtifactsOutput": "true",
+      "ArtifactsPath": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-i29-s20-pure-mathematical-tail/attempt-1/dotnet-artifacts",
+      "NUGET_PACKAGES": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-i29-s20-pure-mathematical-tail/attempt-1/nuget-packages",
+      "NUGET_HTTP_CACHE_PATH": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-i29-s20-pure-mathematical-tail/attempt-1/nuget-http",
+      "NUGET_SCRATCH": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0910-i29-s20-pure-mathematical-tail/attempt-1/nuget-scratch",
+      "MSBUILDDISABLENODEREUSE": "1",
+      "DOTNET_CLI_DO_NOT_USE_MSBUILD_SERVER": "1",
+      "UseSharedCompilation": "false",
+      "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+      "DOTNET_SKIP_FIRST_TIME_EXPERIENCE": "1",
+      "DOTNET_CLI_WORKLOAD_UPDATE_NOTIFY_DISABLE": "true"
+    },
+    "actual_cas_object_count": 20,
+    "actual_ledger_entry_count": 20,
+    "skipped_existing_count": 248,
+    "coarse_fallback_count": 0,
+    "open_genre_count": 0,
+    "new_child_count": 0,
+    "new_chain_count": 0,
+    "new_coverage_gid_count": 0,
+    "new_unresolved_subitem_count": 0,
+    "changed_predecessor_boundary_count": 0,
+    "manual_canonical_edit_count": 0,
+    "source_changed_after_ingest": false,
+    "emitted_paths": [
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda",
+        "byte_count": 1382,
+        "sha256": "020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab",
+        "byte_count": 1477,
+        "sha256": "0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8",
+        "byte_count": 1950,
+        "sha256": "1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223",
+        "byte_count": 1034,
+        "sha256": "28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f",
+        "byte_count": 1376,
+        "sha256": "4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2",
+        "byte_count": 1105,
+        "sha256": "51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80",
+        "byte_count": 1886,
+        "sha256": "74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b",
+        "byte_count": 1356,
+        "sha256": "7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb",
+        "byte_count": 627,
+        "sha256": "9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082",
+        "byte_count": 2015,
+        "sha256": "aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46",
+        "byte_count": 1301,
+        "sha256": "b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd",
+        "byte_count": 1170,
+        "sha256": "bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f",
+        "byte_count": 555,
+        "sha256": "c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5",
+        "byte_count": 1733,
+        "sha256": "cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785",
+        "byte_count": 554,
+        "sha256": "dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9",
+        "byte_count": 1320,
+        "sha256": "e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3",
+        "byte_count": 1318,
+        "sha256": "e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90",
+        "byte_count": 1922,
+        "sha256": "ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9",
+        "byte_count": 1432,
+        "sha256": "faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db",
+        "byte_count": 1048,
+        "sha256": "ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda.yaml",
+        "byte_count": 328,
+        "sha256": "2bbe226e3b7198938bcf5f86720f74f8bef1bc740d731a64c73a86df13c90572"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab.yaml",
+        "byte_count": 328,
+        "sha256": "3af6ae3e16ca0a305ced65533b564d530325d599e4fa85d3d42155dab58aec21"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8.yaml",
+        "byte_count": 328,
+        "sha256": "1c85e97f18dcc2692433cbb5539082446a04d667cab9da0805090f2b7b38de38"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223.yaml",
+        "byte_count": 328,
+        "sha256": "db554c6d14e561b6d034c99cf0b0569aeceb3002d19e8a7a2eddace929ba7265"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f.yaml",
+        "byte_count": 328,
+        "sha256": "9a1358e3a00ed378580ef80866180b7fc03ed859d237e22e579abade29d9aceb"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2.yaml",
+        "byte_count": 328,
+        "sha256": "06b3417952892488109333942ad90378b4bc7ecc0fefca95db44967a670548fb"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80.yaml",
+        "byte_count": 328,
+        "sha256": "10ddc5a87e054ed5f37be81f691f868b0141ece7fe90be8cd822db967c765171"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b.yaml",
+        "byte_count": 328,
+        "sha256": "911a1d8fddd0b7a31ad1a74dccc3838bf064e0710ee1f63afa0c307918ebfdeb"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb.yaml",
+        "byte_count": 328,
+        "sha256": "c81bb7ba2fc008fc686800ed440767a6a462db502a1094b433e3021d45de1d32"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082.yaml",
+        "byte_count": 328,
+        "sha256": "318d34ab4f6e433531a1bdd70d040cecc5d15d8a72fa729795353afdde3ac21a"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46.yaml",
+        "byte_count": 328,
+        "sha256": "41d8b042a9b20a7f7f1d3847601a6b7f6d24ce37e81cbdbfda8edfc5b412823f"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd.yaml",
+        "byte_count": 328,
+        "sha256": "cd2a12f3bfcfbb0831ba0b35c0efa838eac61e15443776a33a5919b036a9909d"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f.yaml",
+        "byte_count": 328,
+        "sha256": "db4e9460d4bc8b6e7f00a28240512440062d31b9c18ba703ce89298317a0a6b0"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5.yaml",
+        "byte_count": 328,
+        "sha256": "7eeb83422d6f041fb00f42548c2466d6f1aaceccabe49810f0fb92ea2bcad757"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785.yaml",
+        "byte_count": 328,
+        "sha256": "9fbea11b7f695537c22eb39857d2ab1a7fbd2dc78fc549f2d088b7edb5150e83"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9.yaml",
+        "byte_count": 328,
+        "sha256": "d6176ec47753c6d2f10ab44d5e56afd4a64fe9139d4d6c50ebd9c82034ae1f6f"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3.yaml",
+        "byte_count": 328,
+        "sha256": "aee5d54f372fc72ca4d8ee9ce91bbf3767496793751c7508292d43be6d0d4b16"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90.yaml",
+        "byte_count": 328,
+        "sha256": "1439de61f9b8fd62cb0a80e869cefb1d80c88fd3f803bb30c8de9dc12c5b49a7"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9.yaml",
+        "byte_count": 328,
+        "sha256": "678a763bfc8447ae6c15d401e7a2b4e5681110b864391b7eda254c9c4df54306"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db.yaml",
+        "byte_count": 328,
+        "sha256": "efb32731f519962db7377ebfeb9e87fae892ae60a3c9f22f905a679af46f8dca"
+      }
+    ],
+    "observed_sdk_side_effect": "The first-use SDK stderr reports 已安装 ASP.NET Core HTTPS 开发证书。 No certificate trust command was run. The store/location or actual host-side effects were not independently inspected; no cleanup was attempted. This prevents a blanket claim that the producer made no hidden runtime-state change.",
+    "producer_internal_state": "The unchanged producer uses a per-worktree Git-directory stratalint-ingest.lock and same-directory temporary YAML publication. They are intrinsic to the authorized canonical producer, not worker-created scratch or manually edited canonical files. No hidden-state inspection/cleanup was performed."
+  },
+  "fixed_fidelity_evidence": {
+    "draft_check_count": 314,
+    "draft_passed_count": 314,
+    "post_ingest_recovery_check_count": 314,
+    "post_ingest_recovery_passed_count": 314,
+    "final_canonical_check_count": 606,
+    "final_canonical_passed_count": 606,
+    "all_current_numbered_span_count": 166,
+    "current_s20_span_count": 20,
+    "historical_canonical_path_count": 50,
+    "display_math_block_count": 52,
+    "display_math_blocks_exact_and_ordered": true,
+    "inline_math_literal_count": 292,
+    "all_inline_math_literals_exact": true,
+    "original_source_reconstructed": true,
+    "source_and_report_c72_inverses_exact": true,
+    "entire_original_report_and_certificate_exact": true,
+    "note": "These fixed byte/span/link/schema checks supplement the complete analytical passage review; they are not mathematical certificate execution or proof by sampling."
+  },
+  "observed_checks_and_failures": [
+    {
+      "check": "Applicable nested AGENTS.md/CLAUDE.md discovery under docs, Meta, agents",
+      "exit_code": 1,
+      "finding": "No matching nested instruction files; expected rg no-match status."
+    },
+    {
+      "check": "First independent whole-current-span checker",
+      "exit_code": 1,
+      "passed_check_count": 602,
+      "fixed_check_count": 605,
+      "finding": "False boundary for inherited 24.2 omitted its nested subsection heading; CAS/YAML span checks failed. Tracked whitespace check also failed on source EOF and two verbatim archive payloads. Source/canonical bytes were not repaired."
+    },
+    {
+      "check": "Second whole-current-span checker",
+      "exit_code": 1,
+      "passed_check_count": 597,
+      "fixed_check_count": 603,
+      "finding": "Overbroad heading correction included peer-level subsection headings after inherited 24.5,24.9,24.13; their CAS/YAML span checks failed. Reading the unchanged producer established the proper scoped-heading boundary."
+    },
+    {
+      "check": "Corrected whole-current-span checker",
+      "exit_code": 0,
+      "passed_check_count": 606,
+      "fixed_check_count": 606,
+      "finding": "End each numbered item at the next numbered claim or heading at or above its actual enclosing heading level. All166 current whole spans match CAS/YAML; no source/producer/canonical edits or second ingest."
+    },
+    {
+      "check": "git diff --check",
+      "exit_code": 2,
+      "diagnostic": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md:5939: new blank line at EOF.\ndocs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md:658: trailing whitespace.\n+另核对 \ndocs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md:667: trailing whitespace.\n+以及 \n",
+      "finding": "Exact terminal LF and original verbatim payload spaces retained; no normalization."
+    },
+    {
+      "check": "git diff --no-index --check /dev/null each new canonical file",
+      "cas_exit_code": 3,
+      "cas_file_count": 20,
+      "yaml_exit_code": 1,
+      "yaml_file_count": 20,
+      "finding": "Each CAS has only the producer-owned terminal blank-LF diagnostic; each YAML has a difference exit with no diagnostic."
+    },
+    {
+      "check": "Bounded read/output recovery",
+      "exit_code": 0,
+      "finding": "Truncated prerequisite output was recovered completely before target action. A later own-attempt assembly filename listing exceeded its output bound; exact assembly-name glob discovery replaced it. No omitted filename content was used as evidence."
+    }
+  ],
+  "current_report": {
+    "path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+    "byte_count": 58191,
+    "lf_count": 792,
+    "sha256": "29d239c8f3f0bb3cde6bc8fb780360856955846ecc8c48ffe1f7f16b218a73c6",
+    "immutable_prefix_byte_count": 39335,
+    "append_byte_span": [
+      39335,
+      58191
+    ]
+  }
+}

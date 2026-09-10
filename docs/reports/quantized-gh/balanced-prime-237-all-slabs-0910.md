@@ -497,3 +497,296 @@ All 23 old S20 pairs remain exact BASE bytes: the 21 unchanged 31.x IDs above, o
 I25 ran exactly once: `make ingest BASE=fe3f12abe8bc2e14628a93990fee2755c30da2bd SOURCE=arithmetic-boundary-quantization`, exit 0; the writer reported `residual_open_added=1`, `skipped_existing=269`, `coarse_fallbacks=0`, `open_genres=0`, `cas_objects_written=1`, `ledger_changed=true`. No second ingest or manual canonical edit occurred. Tracked `git diff --check` exited 0 without diagnostics. Untracked `git diff --no-index --check /dev/null <path>` exited 1 without diagnostics for this report and the YAML (ordinary addition-only differences); the new CAS exited 3 with `:33: new blank line at EOF.` Its two terminal LF bytes are the exact source-span ending and remain unnormalized. The worker handoff supplies complete identities and command receipts.
 
 The caller’s original terminal/three-approve settlement is dispatch provenance only; I25 did not open reviewer envelopes and it does not approve this placement. All changes remain unstaged. Caller retains sealing/push, public byte verification, fresh complete representation review, inherited-address integration, current capacity and ordinary CI/PR gates, and S19-before-S20 MERGED delivery. This repair makes no fresh independent-review, MERGED, model-diversity, RH, Lean, novelty or continuous-goal completion claim.
+
+## C85 / S20 section 31 archival representation (I29, 2026-09-10)
+
+This is historical report ownership, not a second active theory source. The complete preceding 39,335 bytes, including the original fixed executable certificate and the C72 placement note, remain verbatim. Records inside the archive below describe their original I15/I25 periods; none describes a certificate, literature retrieval, historical audit or old ingest executed by I29.
+
+C85 explicitly supersedes active-source byte equality only for the mapped section 31 operational passages and necessary mathematical type/citation metadata. All mathematical wording, numbers, tables, proofs and actual scope limitations remain active; classical citations from 31.21 are attached to their corresponding proofs. The original 31.21 address now resolves through those attachments plus its historical remainder; 31.22 is wholly archived. Both numbers are permanently reserved and must never be reused. The JSON companion records every original source byte, every current addition and each old/new numbered identity. Intervals are zero-based UTF-8 byte offsets with exclusive ends; payload boundaries exclude the surrounding archive labels and fences. Reconstruct the original source by concatenating destination slices in original-byte order.
+
+The preserved 286,327-byte prefix includes the separator LF and is the inherited S20 representation, SHA256 731be813ad24c47bec760cb7dff17ee02731cd8d2df4ba7556c7a2e403b0304f. It is still mixed mathematical/process prose. It is not assumed byte-identical to the original C78/S19 source. This downstream tail preparation neither repairs the complete inherited body nor settles the C82 proof obligation. Actual C82 PRO work, S19-first complete-body migration, reconciliation of mathematical/source mappings, complete pure-predecessor integration, fresh full-source review, ordinary delivery gates and S19-before-S20 MERGED remain pending with the caller. Earlier reviews remain historical; this implementation is not independent approval, new primary research, Lean admission, an RH/novelty claim or standing-goal completion.
+
+Historical C72 recovery remains exact: after reconstructing the 316,737-byte source (SHA256 3f27fbd4bef498d995cd7e1bd566c960ad8a384c5f04f8b5b2a91cb1625dc351), remove [314676,314689), the 13 bytes `quantized-gh/`, to recover 316,724 bytes / SHA256 9229e2affc81243efcdcbd228058d8ca19cea395630a94ae943afde374157dd2. Take report [0,31714), remove [124,127), the three bytes `../`, to recover the 31,711-byte original / SHA256 2b100f9d29e4d481fe7f76433ddbd3644eb925975f52bd7655584a839b49c0fa. The preceding placement note [31714,39335) remains 7,621 bytes. This is a recovery recipe, not a replay or a relabeling of prior execution.
+
+All original CAS/YAML, including both 30.21 terminal-LF variants and both historical 31.21 identities, remain immutable. The caller's original 131 predicates and I15's adapted 152 = 131 + 21 predicates remain distinct historical evidence. The primary's two DisabledError retrieval failures, I15's five limited HTTP 200 requests, unavailable pdftotext, pypdf/font/glyph warnings, and all I25/caller process and audit deviations disclosed in the preceding report/placement note remain in force. No fresh literature retrieval or arithmetic execution supports this migration.
+
+### Verbatim relocated source payloads
+
+#### Archive 004: 31.1, original bytes [286409,286418)
+
+Operational status title fragment. Verbatim payload:
+
+~~~~~text
+、状态
+~~~~~
+
+#### Archive 006: 31.1, original bytes [286457,286653)
+
+Model, task, implementation and prior execution provenance. Verbatim payload:
+
+~~~~~text
+本节为 C43 / S20 的
+PAPER_ARGUMENT / repo-derived 参考输入,实施已完成的实际 GPT PRO primary
+107ae020-e13b-4e13-a174-c5f1544a39d1 和既有 caller 固定核验所支持的数学。
+
+~~~~~
+
+#### Archive 008: 31.1, original bytes [287807,287831)
+
+Priority and novelty nonclaims. Verbatim payload:
+
+~~~~~text
+优先权、新颖性、
+~~~~~
+
+#### Archive 010: 31.1, original bytes [287833,287856)
+
+Formal admission status nonclaim. Verbatim payload:
+
+~~~~~text
+ 或 Lean/kernel-frozen
+~~~~~
+
+#### Archive 026: 31.8, original bytes [297435,297460)
+
+Execution nonclaim; all-positive-height optimality retained. Verbatim payload:
+
+~~~~~text
+;本表没有采样高度
+~~~~~
+
+#### Archive 034: 31.11, original bytes [300596,300621)
+
+Arithmetic execution modality; exact rational proof retained. Verbatim payload:
+
+~~~~~text
+认证不用浮点对数:
+~~~~~
+
+#### Archive 036: 31.11, original bytes [302112,302244)
+
+Report executable placement and execution-scope nonclaim; all series, constants, inequalities and proof steps retained. Verbatim payload:
+
+~~~~~text
+报告嵌入全部固定常数和可执行有理运算;
+80 项对数证书和 12 次指数多项式均不是高度或矩阶扫描。
+~~~~~
+
+#### Archive 040: 31.12, original bytes [303397,303445)
+
+Historical adapted-certificate provenance; full weight-domain obligation and sign linkage retained. Verbatim payload:
+
+~~~~~text
+报告的改编证书明确补上这一链接。
+~~~~~
+
+#### Archive 044: 31.13, original bytes [304186,304247)
+
+Execution/diagnostic nonclaim; analytical infinite quantifier retained in 31.9–31.13. Verbatim payload:
+
+~~~~~text
+没有以有限若干矩或浮点诊断外推无穷量词。
+
+~~~~~
+
+#### Archive 056: 31.18, original bytes [309341,309399)
+
+Execution nonclaim; non-effective scope and full existence proof retained. Verbatim payload:
+
+~~~~~text
+没有执行上述抽屉构造或产生任何指数见证,
+~~~~~
+
+#### Archive 062: 31.20, original bytes [311489,311496)
+
+Ticket identifier; third-prime-ray exclusion retained. Verbatim payload:
+
+~~~~~text
+C39 的
+~~~~~
+
+#### Archive 064: 31.20, original bytes [311570,311592)
+
+Search/program scope statement; mathematical exclusions retained. Verbatim payload:
+
+~~~~~text
+及搜索/程序工作
+~~~~~
+
+#### Archive 066: 31.20, original bytes [311998,312038)
+
+Implementation/standing-goal status; mathematical OPEN scope retained. Verbatim payload:
+
+~~~~~text
+,本次实施不完成长期研究目标
+~~~~~
+
+#### Archive 068: 31.21, original bytes [312043,312250)
+
+31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally. Verbatim payload:
+
+~~~~~text
+**31.21 经典出处、历史访问失败和固定核验的产地。** 专门九节点、两项缩放裕量、
+整箱传递和实际格点应用标为 repo-derived。经典工具当场作聚焦只读核对:
+
+~~~~~
+
+#### Archive 070: 31.21, original bytes [312401,312402)
+
+31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally. Verbatim payload:
+
+~~~~~text
+
+
+~~~~~
+
+#### Archive 072: 31.21, original bytes [312560,312561)
+
+31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally. Verbatim payload:
+
+~~~~~text
+
+
+~~~~~
+
+#### Archive 074: 31.21, original bytes [312953,312964)
+
+31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally. Verbatim payload:
+
+~~~~~text
+
+另核对 
+~~~~~
+
+#### Archive 076: 31.21, original bytes [313032,313041)
+
+31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally. Verbatim payload:
+
+~~~~~text
+,
+以及 
+~~~~~
+
+#### Archive 078: 31.21, original bytes [313241,313242)
+
+31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally. Verbatim payload:
+
+~~~~~text
+
+
+~~~~~
+
+#### Archive 080: 31.21, original bytes [313324,313460)
+
+31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally. Verbatim payload:
+
+~~~~~text
+
+PDF 文本提取有字体解码警告,HKUST 若干公式字形不全;实际可读的算法文字与
+其它指定定理/公式已核对,
+~~~~~
+
+#### Archive 082: 31.21, original bytes [313529,314731)
+
+31.21 historical provenance/retrieval/execution remainder; number permanently reserved externally. Verbatim payload:
+
+~~~~~text
+
+检索收据及其适用范围见报告,不作穷尽文献或优先权声明。
+
+primary envelope 的 SHA256 为
+7170e171ad3596e697ff4d515393606b935fb6d5237505d7191b464c46852439;
+只消费其 conclusion,log_ref 不透明。它原报两次公开获取均失败于 DisabledError:
+封存 feb497ec31f68e09ccc547a08810c398e66f3ee6 的本源文件 URL,
+及封存 391f7355698085c6500b46838a093dad05947ffb 的
+docs/reports/prime-slab-finite-design-0909.md URL。它没有读取这些源字节;
+本实施对本树的读取不改变这一历史事实。primary 自报九个指定节点的浮点计算
+仅作有界诊断,另有 Fraction 固定证书与十八项整数资格核对;不把诊断列为证明前提。
+caller 原审计记录 131 项全通过,不是 primary 的执行计数,也不是本轮独立评审票。
+原审计与程序保持原字节且未重跑。新报告把相同常数改编为无 caller-local 路径依赖的
+自足可执行证书,另补固定输入到证明假设的链接,只执行改编证书一次。
+精确命令、版本、字节/hash、实际结果及各类证据分工见
+[balanced-prime-237-all-slabs-0910.md](../../reports/quantized-gh/balanced-prime-237-all-slabs-0910.md)。
+
+
+~~~~~
+
+#### Archive 083: 31.22, original bytes [314731,316737)
+
+31.22 wholly operational historical entry; number permanently reserved externally. Verbatim payload:
+
+~~~~~text
+**31.22 单一内容层、保留边界及 caller 交付义务。** 本层由隔离 Codex CLI 实施席 I15
+在 caller 固定的 consensus-rnd:sshx 1.0.0-beta.42 和 CODEX_WORKER_SPEC.md 下产生,
+flight qgh0910-i15-balanced-prime-237,attempt 1。遵照 CLAUDE 5.11 和明确 brief,
+无 native subagent、委派、额外 oracle 或本轮评审票;repo-prior-exposed,
+不声称上下文无先验或模型族多样性。实际 GPT PRO 来源取自 caller 既有身份记录,
+本实施未独立鉴定 serving model。准备输入中旧的 predecessor-in-flight 描述属于其准备时刻,
+本层实际 immutable BASE 为 7b443a1764e5756c670b3912300a71f5b2e470f3,
+工作树为 /Users/auricstudio/trureturing-qgh-balanced-prime-237,
+分支 lane/math/quantized-gh-balanced-prime-237-0910。
+
+第 1-30 节完整前缀保留 286326 字节、5391 个 LF,SHA256
+4856aba958844029d1c7150f610104d3652dcfd25139bdfb53e4346cd905db0a;
+全部历史 CAS、entry 和报告保留。只追加本节、单一报告和以下命令的实际 canonical 输出:
+~~~sh
+make ingest BASE=7b443a1764e5756c670b3912300a71f5b2e470f3 SOURCE=arithmetic-boundary-quantization
+~~~
+源语义、固定证书及其 CAS/YAML 绑定属于同一可审查内容层,不拆出脱离源的派生地址。
+全部自动 children、历史末单元 terminal-LF 变体和 producer EOF 均保留原字节,
+指纹与 cas_ref 带 sha256: 前缀,子 atom_id 为裸 hash;完整映射由实施结论提供。
+摄入不等于 Lean 吸收或冻结。CPU 仅用于固定证明核验和必要编排,
+无候选搜索、旧搜索重放、GPU、daemon、工具/Lean/frozen 编辑或广泛 build/preflight。
+没有读取任何 worker 日志、log_ref 内容、caller 转录、同轮 peer 结果或其它 live target。
+本层返回 unstaged;caller 负责其后封存、独立评审、普通仓库门、push/PR/发布,
+最终 S20 交付等待 S19 MERGED。本实施不作 review 或 termination 判词,
+不执行暂存、commit、push、PR、merge 或生命周期命令。
+
+~~~~~
+
+### I29 current migration and producer receipt
+
+I29 used codex-cli 0.154.0 and the pinned consensus-rnd:sshx 1.0.0-beta.42 worker contract. Target CLAUDE.md, agents/CONTEXT.md and both pinned skill files were completely read before target actions; truncated prerequisite outputs were recovered in bounded chunks. The caller-supplied current 3.8/5.11 override (guidance blob 7fda0813773083e59b3783843c16b55f560f7805) governs this explicit disposition. Starting HEAD/repair BASE is db8037532d5dea5067e0edfb3fcaebc671eccbf2 on lane/math/quantized-gh-balanced-prime-237-0910; initial status was clean. The scientific BASE is historical only.
+
+The only current ingest invocation was:
+
+```sh
+make ingest BASE=db8037532d5dea5067e0edfb3fcaebc671eccbf2 SOURCE=arithmetic-boundary-quantization
+```
+
+It exited 0 and printed `INGEST residual_open_added=20 skipped_existing=248 coarse_fallbacks=0 open_genres=0 cas_objects_written=20 ledger_changed=true`. The unchanged producer emitted exactly 20 CAS/YAML pairs; no predecessor-boundary pair, child, chain, coverage GID or unresolved subitem was added. All 166 current numbered spans match their full canonical bodies; every new YAML is the complete seven-line empty-receipts structure. Current source SHA256 is 28ee1eb94e166ef4f8b4f2b01408779b2fdfe0d05ee692a0158790841e2fe894 (312,957 bytes / 5,939 LF). No source edit followed ingest.
+
+Both pre-ingest and post-ingest fixed recovery checks passed 314/314: exact full original reconstruction, original prefix/report/certificate preservation, C72 inverses, all 52 display-math blocks unchanged in order, all 292 inline-math literals preserved, every mapped current addition accounted for, and all 50 separately pinned historical canonical paths unchanged. The complete analytical review covers all 22 original units, including mathematical prose, examples, limits and dependencies; literal formulas alone are not its substitute. No new mathematical claim, easier assumption or new proof was introduced.
+
+Current entire-unit bindings (one CAS and one matching YAML per SHA256) are below. CAS paths use `Meta/Digestion/atoms/sha256/<SHA256>`; YAML paths use `Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/<SHA256>.yaml`. Exact old/new and archive addresses, all changed canonical paths, file identities, source byte partitions and citation/type additions are recorded in [theory-body-migration-s20-0910.json](theory-body-migration-s20-0910.json).
+
+| Unit | Current source bytes [start,end) | Current source lines | CAS/YAML SHA256 identity |
+|---|---|---|---|
+| 31.1 | [286396,287716) | 5395–5412 | `e203a5fdc570e70bc107641b7c0aa5ab1e66d9f83b23c75a46db819d2c31c3a9` |
+| 31.2 | [287716,289602) | 5413–5452 | `74b30d5f33553ada17490d2dbd669a36cc5d98342c1b6ca57b8af89b36382b80` |
+| 31.3 | [289602,290636) | 5453–5474 | `28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223` |
+| 31.4 | [290636,292012) | 5475–5501 | `4e93abc85901724bc34ef7bfbc4eeb7a80d59894310295600607edd58a88836f` |
+| 31.5 | [292012,293444) | 5502–5527 | `faf2dd9aa53dcbbb7655830f4bead0ebe479e98441b83658cd6990d559ece2e9` |
+| 31.6 | [293444,295366) | 5528–5563 | `ed92624998d14e9206a6f63096dd75eed9187f3bea27cf9f9bc6de0543b58e90` |
+| 31.7 | [295366,296684) | 5564–5589 | `e4456d5e7c99e47cb1d52fa62650b401d8e52d1766b0090979ac037294fc89d3` |
+| 31.8 | [296684,297732) | 5590–5615 | `ff96fb9f894a4be2a0e4e89e397130c9aa75859e43d7f28625bcb30ebc9a15db` |
+| 31.9 | [297732,299114) | 5616–5642 | `020d834706e562c524e2c5a85dc7e1afbfdbfa88e2e692d1a8fd738003667dda` |
+| 31.10 | [299114,301064) | 5643–5683 | `1354efff2359ce7e651c3da6604e346644b9b5e0eac9b790d3971d986efd6fc8` |
+| 31.11 | [301064,303079) | 5684–5742 | `aaa5c1e2d362254798ef93f6912a968fe376a81085719573f07dd3f743e10082` |
+| 31.12 | [303079,304435) | 5743–5773 | `7a568d646a3f73f21196340d3b310008e6078132fdb70a9cc83941956f59b82b` |
+| 31.13 | [304435,304990) | 5774–5789 | `c4370324efffbd29226372285085a59f4b37121d47409e8f4952f4ed8895317f` |
+| 31.14 | [304990,305617) | 5790–5800 | `9a7622e2188ec059d639e90b52d45c687a5a31789cc1f1a663104410da9507eb` |
+| 31.15 | [305617,306722) | 5801–5824 | `51e024ecf2bac9615eb77aaf3436725490e37d13948b4c5cdcea7c4b981945f2` |
+| 31.16 | [306722,308199) | 5825–5853 | `0b42e820527004ab3e7244c3c02f2f2892f612f21c45e84f6ca616831351a0ab` |
+| 31.17 | [308199,308753) | 5854–5868 | `dfc9b7f0fe8d10470a9210f46cc79b8f82205f3a6bcdda79b13b12b62917e785` |
+| 31.18 | [308753,310486) | 5869–5898 | `cdc610937f5756f7321801922d966f4d21d0b6acc2bf73ea23fa45daa7558ec5` |
+| 31.19 | [310486,311656) | 5899–5921 | `bdc653a8245dd48a3f82bc00d5d05326f69e59583a891594c0da7b791360dbbd` |
+| 31.20 | [311656,312957) | 5922–5939 | `b8003665e354e4b0cdba7d5bd42652ae1d60879902b6d997e7e33e99891dff46` |
+
+The first wide canonical checker exited 1 (602/605) because it omitted a nested heading from inherited 24.2 and treated preserved whitespace diagnostics as defects. The second exited 1 (597/603) because its correction wrongly included peer-level headings after 24.5, 24.9 and 24.13. The unchanged producer's scoped-heading rule resolved these checker errors; the final checker exited 0 (606/606). No source/canonical repair or ingest replay followed these checks. These failed check receipts remain disclosed.
+
+`git diff --check` exited 2: the active source line 5939 has a new blank line at EOF; report lines 658 and 667 have trailing spaces in the exact original payloads `另核对 ` and `以及 `. Each of the 20 new CAS `git diff --no-index --check /dev/null` calls exited 3 with only the producer-owned terminal blank-LF diagnostic; each of the 20 YAML calls exited 1 with no diagnostic. Those statuses are preserved, not reported as a clean whitespace pass. Nested instruction discovery returned rg exit 1 for no matches. The own-attempt assembly filename listing was initially overlong; narrowed exact-name discovery supplied the complete relevant result.
+
+The canonical Make invocation used .NET SDK 10.0.400. Worker scratch, compiler outputs and SDK/NuGet locations were directed to the runner attempt directory, and shared compilation/node reuse were disabled; no separate build, test or cache/preflight command was run. Unexpectedly, the SDK first-use stderr reported `已安装 ASP.NET Core HTTPS 开发证书。` No trust command was run. The certificate store/location and actual host-side effects were not independently inspected; no cleanup was attempted. Thus this record makes no blanket no-hidden-runtime-state-change claim. The unchanged canonical producer also owns its normal per-worktree Git-directory ingest lock and atomic YAML temporary publication; I29 did not inspect, modify or clean that state manually.
+
+All process logs and complete command receipts remain in the runner attempt artifacts. Only scoped source/report/JSON changes and the 40 actual canonical paths are returned, unstaged. No certificate, historical 131/152 audit, test, mathematical search, old ingest, GPU/runtime campaign, Lean or external literature retrieval was executed. No other physical target, peer output, caller transcript/registry or opaque log content was accessed, and no worker delegation or Git/PR/lifecycle action was performed. The inherited mixed-prefix, actual C82 proof/full S19 migration, complete pure-predecessor integration, fresh full-source review and S19-before-S20 MERGED obligations remain pending; this is section31 preparation only.
