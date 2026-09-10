@@ -20,7 +20,7 @@ internal sealed class PhiTailEncodingDocument : IScribeDocumentDefinition
                 + "strictly between -n and n.")),
             Node("tailWord_length", "Tail length", Q(
                 Call("length", Call("tailWord", V("n"), V("p"), V("hn"))), Eq,
-                Sub("2", V("n")), Minus, D(1)),
+                Call("twoMul", V("n")), Minus, D(1)),
                 "The reversed tail is indexed by Fin (2*n-1), so ofFn gives exactly that length.",
                 DescribeRole.Theorem),
             Node("tailWord_entry_bounds", "Residual alphabet bounds", Q(
