@@ -98,10 +98,11 @@ noncomputable def marginalLeft
     [Fintype B] [DecidableEq B]
     (rho : DensityState (A × B)) : DensityState B := by
   refine ⟨CStarMatrix.ofMatrix (partialTraceLeft rho.1), ?_, ?_⟩
-  · change (partialTraceLeft rho.1 - 0).PosSemidef
-    rw [sub_zero]
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    apply Matrix.PosSemidef.nonneg
     apply partialTraceLeft_posSemidef
-    simpa only [sub_zero] using rho.2.1
+    exact Matrix.nonneg_iff_posSemidef.mp
+      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1)
   · exact (trace_partialTraceLeft rho.1).trans rho.2.2
 
 /-- Trace out the right factor, retaining the state on `A`. -/
@@ -110,10 +111,11 @@ noncomputable def marginalRight
     [Fintype B] [DecidableEq B]
     (rho : DensityState (A × B)) : DensityState A := by
   refine ⟨CStarMatrix.ofMatrix (partialTraceRight rho.1), ?_, ?_⟩
-  · change (partialTraceRight rho.1 - 0).PosSemidef
-    rw [sub_zero]
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    apply Matrix.PosSemidef.nonneg
     apply partialTraceRight_posSemidef
-    simpa only [sub_zero] using rho.2.1
+    exact Matrix.nonneg_iff_posSemidef.mp
+      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1)
   · exact (trace_partialTraceRight rho.1).trans rho.2.2
 
 /-- Mutual information of a joint state, with both marginals obtained by partial trace. -/
