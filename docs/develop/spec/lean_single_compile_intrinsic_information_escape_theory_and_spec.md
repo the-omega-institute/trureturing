@@ -9248,16 +9248,21 @@ report-only／transfer theorem，真正不可达者使用 closed reason。finite
 
 ### AC-023　Disposition census completeness
 
-必须分别给出两个命题，不得互相冒充；`DispositionInventory.ExactlyCovers` 与 artifact 的
-`certified_complete` 分别见 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`、
-`tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`：
+必须分别给出两个命题，不得互相冒充。全库记账的 kernel claim 恰为
+`strictlyAscending ids = true ∧ ids.length = requested ∧ ids = reportIds`，ids 为
+`statement_id` 的 256-bit Nat；完整 key 的 Name↔hex↔Nat 绑定与 report-side authority
+由 elaborator 的 strict codec／structural binder 承担，不在 kernel 命题中加入 theorem Name。
+分桶证书与绑定契约见第 23.6 节及 [#6664](https://github.com/the-omega-institute/trureturing/pull/6664)。
+J2 局部 `DispositionInventory.ExactlyCovers` 与 artifact 的 `certified_complete` 分别见
+`tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`、
+`tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`；二者的义务保持如下：
 
 1. **记账完备（accounting completeness）**：从 frozen elaborated truth export 中
    先选择 `freeze_status=frozen` 的 nodes（模块），再选择其 `declarations` 中 `kind=theorem`
    的声明，以 declaration 的 `declaration_name_key` 与 `statement_id` 取得全部
    `(structured Name, statement_id)` keys，与 `CensusAssessment` inventory keys 完全相等，
    每 key 恰一次，并保持第 23.6 节的 HEAD／report inputs／root 绑定与唯一性约束。
-   `ExactlyCovers` 证明 HEAD 相等、keys 与 statement IDs 唯一以及 key 集合精确覆盖，report bytes 与 root
+   J2 局部 `ExactlyCovers` 证明 HEAD 相等、keys 与 statement IDs 唯一以及 key 集合精确覆盖，report bytes 与 root
    分别由命令及 evidence validator 核查，见
    `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`、
    `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`；
@@ -9278,12 +9283,18 @@ observation，永不计作 classified、永不计入本 AC、永不算 closed re
 arena 仍来自显式 realization，不从 carrier／statement syntax 推断（第 8.7 节）。
 artifact 的 `counts` 报告 `accounted`、`certified`、四类与 unreachable reason 的 flat 分项、
 `observed`、`observed_query_completed` 与 `observed_query_incomplete`，另有 exact `rows`；
-记账完备由命令和 kernel coverage proof 确认，认证完备使用 `certified_complete`，
+全库记账完备由命令的报告／rows／Name 绑定和 id 集 kernel certificate 共同确认，认证完备使用 `certified_complete`，
 `observed > 0` 时必为 `false`。计数、rows 与 flag 见
 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean`、
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`。
 census 只作报告，永不作为 seal input 或 required gate。
 （J2 落地形态,2026-09-08:S0 的 generic semantic-contract／candidate-domain 字段改为具名 typed obligation；absence-status 分项未采用，现役输出 query-completion 分项与单一 `certified_complete`，没有 `accounting_complete` flag。）
+
+2026-09-10 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 落地的全库
+22,524 keys 已全部入账：certified 10、observed/query-completed 22,514、query-incomplete 0。
+查询层 `status=complete` 与 id 集证书确认的是记账完成，`certified_complete=false`，
+本 AC 仍未满足。第 23.7 节的结构 sidecar 即使某行 `status=complete` 或 support 为正，
+也不增加 classified／certified 数量；owner 的「observed 永远不算完成」原义不变。
 
 ### AC-024　Bounded kernel projection
 
