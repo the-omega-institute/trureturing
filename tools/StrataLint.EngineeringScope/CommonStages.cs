@@ -12,6 +12,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private string stage = "input";
     private string? candidate;
 
+    internal static void NormalizeEnvironment(IDictionary<string, string?> environment) =>
+        environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+
     internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
     {
         0 => 0,
@@ -177,7 +180,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         return result.Text;
     }
 
-    private (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null)
+    internal (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null)
     {
         var clock = timeProvider ?? TimeProvider.System;
         if (deadlineCancellation.IsCancellationRequested) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
@@ -193,7 +196,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             if (timeout <= TimeSpan.Zero) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
         }
         var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false };
-        start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+        NormalizeEnvironment(start.Environment);
         if (stage != "build" && Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var arg in arguments) start.ArgumentList.Add(arg);

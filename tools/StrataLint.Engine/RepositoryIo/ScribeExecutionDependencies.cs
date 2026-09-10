@@ -19,6 +19,17 @@ internal static class ScribeExecutionDependencies
         var unknown = new SortedSet<string>(StringComparer.Ordinal);
         if (compilation.GetDiagnostics().Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error))
             unknown.Add("compiler:semantic-errors:" + compilation.AssemblyName);
+        // xUnit discovers these contracts regardless of the assembly defining
+        // the attribute. Their lifecycle is outside the test-callable closure.
+        var contracts = new[] { "Xunit.Sdk.ITestFrameworkAttribute", "Xunit.Sdk.ITraitAttribute",
+            "Xunit.Sdk.BeforeAfterTestAttribute", "Xunit.CollectionBehaviorAttribute",
+            "Xunit.TestCaseOrdererAttribute", "Xunit.TestCollectionOrdererAttribute" }
+            .Select(compilation.GetTypeByMetadataName).OfType<INamedTypeSymbol>()
+            .ToHashSet(SymbolEqualityComparer.Default);
+        foreach (var attribute in compilation.Assembly.GetAttributes())
+            for (var type = attribute.AttributeClass; type is not null; type = type.BaseType)
+                if (contracts.Contains(type) || type.AllInterfaces.Any(contracts.Contains))
+                    unknown.Add("test-lifecycle:assembly-adapter-attribute");
         foreach (var tree in compilation.SyntaxTrees)
         {
             var model = compilation.GetSemanticModel(tree);
@@ -49,12 +60,11 @@ internal static class ScribeExecutionDependencies
         var pending = new Stack<ScribeBoundCallable>(roots);
         var visited = new HashSet<ScribeBoundCallable>();
         var type = roots[0].Symbol!.ContainingType;
-        if (type.IsGenericType || type.ContainingType is not null || type.BaseType?.SpecialType != SpecialType.System_Object
+        if (type.IsAbstract || type.IsGenericType || type.ContainingType is not null || type.BaseType?.SpecialType != SpecialType.System_Object
             || type.AllInterfaces.Length != 0)
             unknown.Add("test-lifecycle:inheritance-or-fixture");
-        if (type.GetAttributes().Length != 0 || type.ContainingAssembly.GetAttributes().Any(attribute =>
-                attribute.AttributeClass?.ContainingAssembly.Name.StartsWith("xunit", StringComparison.Ordinal) == true))
-            unknown.Add("test-lifecycle:class-or-assembly-adapter-attribute");
+        if (type.GetAttributes().Length != 0)
+            unknown.Add("test-lifecycle:class-adapter-attribute");
         foreach (var root in roots)
         {
             if (root.Symbol!.IsAsync || root.Symbol.Parameters.Length != 0)

@@ -25,8 +25,8 @@ internal sealed class AffectedExecutionFixture : IDisposable
         Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"1111111111111111111111111111111111111111\"}]}\n");
         Write("README.md", "a\n");
         Write("Meta/FILEMAP.toml", File.ReadAllText(Path.Combine(repository, "Meta/FILEMAP.toml")));
-        foreach (var path in new[] { "tools/scripts/ci-build-outputs.targets", "tools/scripts/report/dotnet_producer.py" })
-            Write(path, File.ReadAllText(Path.Combine(repository, path)));
+        Write("tools/scripts/ci-build-outputs.targets", File.ReadAllText(Path.Combine(repository, "tools/scripts/ci-build-outputs.targets")));
+        Write("tools/scripts/report/dotnet_producer.py", File.ReadAllText(Path.Combine(repository, "tools/scripts/report/dotnet_producer.py")));
         foreach (var (name, assembly) in new[] { ("StrataLint.Cli", "StrataLint"),
                      ("StrataLint.EngineeringScope", "StrataLint.EngineeringScope"), ("StrataLint.Scribe.Documents", "StrataLint.Scribe.Documents") })
         {
@@ -72,11 +72,21 @@ internal sealed class AffectedExecutionFixture : IDisposable
         return record;
     }
 
-    internal TestExecutionRecord Tests(CommonStageRecord build, int expectedExit = 0)
+    internal TestExecutionRecord Tests(CommonStageRecord build, int? expectedExit = 0, bool subprocess = false)
     {
-        var exit = Program.Run(["--repository", Root, "--all", "--build-round", build.Round], TestResultEvidence.Load, Output, Output);
+        string[] arguments = ["--repository", Root, "--all", "--build-round", build.Round];
+        int exit;
+        if (subprocess)
+        {
+            using var deadline = new CancellationTokenSource(TestBudgets.WorkflowProcessHangGuard);
+            var result = new CommonStages(Root, Output, deadline.Token).Capture("dotnet", [typeof(Program).Assembly.Location, .. arguments]);
+            Output.WriteLine(result.Text);
+            exit = result.Exit;
+        }
+        else exit = Program.Run(arguments, TestResultEvidence.Load, Output, Output);
+        Output.WriteLine($"FIXTURE_TEST_EXIT invocation={testNumber + 1} subprocess={subprocess} exit={exit}");
         Retain("tests-" + ++testNumber);
-        Assert.True(exit == expectedExit, Output.ToString());
+        if (expectedExit is not null) Assert.True(exit == expectedExit, Output.ToString());
         return CommonExecutionEvidence.Read<TestExecutionRecord>(Root, CommonExecutionEvidence.TestsPath);
     }
 

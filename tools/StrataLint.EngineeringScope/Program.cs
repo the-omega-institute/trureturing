@@ -130,7 +130,7 @@ internal static class Program
     private static int RunTests(string root, string project, string results, string? filter = null)
     {
         var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
-        start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+        CommonStages.NormalizeEnvironment(start.Environment);
         if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var argument in BuildTestArguments(project, results, filter)) start.ArgumentList.Add(argument);
