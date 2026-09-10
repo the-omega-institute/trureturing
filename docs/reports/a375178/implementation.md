@@ -82,8 +82,10 @@ congruence; (iii) these statements concern weighted inverse sums and one
 binomial summand, not the final sequence congruence; (iv) the expanded sum
 is rewritten using h13 to kill its second term. Removing this rewrite
 leaves that summand undischarged. The witnesses are used in the live proof,
-not attached as unused conjunction components. Kernel edge audit receipts
-will be attached after the module build and freeze.
+not attached as unused conjunction components. The repository proof-edges.sh audit returns
+EDGES_OK edges=25 kernel_nonauxiliary_constants=2. The two authored public
+constants are the definition a and theorem supercongruence. Raw graph
+projections stay in the runner attempt directory, not tracked reports.
 
 The public definition a is the exact sequence, not a second theorem.
 All supporting lemmas are private and analyzed inside the public theorem.
@@ -120,3 +122,6 @@ translation required normalizing Nat.cast_one before change. These were
 elaboration issues in the same proof route, not remaining mathematical gaps.
 Every successful unit was committed and pushed. No finite probe is counted
 as partial mathematical progress.
+
+Capacity audit at the proof/document checkpoint: make -C tools capacity-audit
+returned CAPACITY_AUDIT_RESULT exit=0 reason=clean.

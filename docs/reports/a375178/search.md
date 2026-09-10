@@ -85,7 +85,7 @@ evidence about the theorem.
 Authenticated GitHub code search harmonic ZMod language:Lean returned 92 hits
 within the requested 100 results. Search metadata was examined; most hits were
 mathlib copies/import collections. The candidate
-https://github.com/dwrensha/compfiles/blob/master/Compfiles/Usa2019P5.lean
+https://github.com/dwrensha/compfiles/blob/51c8803ed93c0a350d110fffe4c3804b473bba78/Compfiles/Usa2019P5.lean
 was read completely, including its public helper interfaces: it concerns
 arithmetic/harmonic means and coprimality, not finite harmonic sum congruences.
 Not all 92 file bodies were read; those bodies are ASSUMED-UNVERIFIED.
