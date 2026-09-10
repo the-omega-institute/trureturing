@@ -6419,7 +6419,7 @@ D10 型机制的短注：取 $r,s\ge1$，$E=\Omega$，$r$ 个选中正点 $a@0$�
 
 本批产地三项按 CLAUDE.md 第 5.2 条完整披露。思考六席为：`natural-ownership = nyxid-oracle`（`company-chatgpt-pro` 池，自报 **GPT-6 Astra Pro**）；`teleology`、`parsimony`、`fidelity`、`proportional-containment`、`worth` 均为 `codex-cli`（自报 **GPT-6/Codex**）。六席并发、互不可见，均看到 caller 暴露的候选计划，故属于非盲独立修订；六席均回报 revise，独立收敛为 **6/6 revise**。meta-judge 在 caller 上下文中运行。分歧裁决为：D17 保留短对照（4:1）；D18 采纳（`fidelity` 唯一提出，`teleology` 删除反事实佐证）；命题 65 单立短命题（5:1）；41 键字面集合（6:0）。由此形成 `GoalArtifact` 修订 **R1-PR7**。
 
-抽签种子依次为：思考 `11430298646913755845`；评审 round 1 `212890107019809590`（`architecture=codex`、`quality=nyxid`、`tests=codex`）；评审 round 2 `14374724714442980988`（`architecture=nyxid`、`quality=codex`、`tests=codex`）。载体均自报 GPT-6 家族；这不构成异模型共识声明。
+抽签种子依次为：思考 `11430298646913755845`；评审 round 1 `212890107019809590`（`architecture=codex`、`quality=nyxid`、`tests=codex`）；评审 round 2 `14374724714442980988`（`architecture=nyxid`、`quality=codex`、`tests=codex`）。载体自报包含 GPT-6 家族与 GPT-5.6 Sol（仅该次调用的自报证据）；这不构成异模型共识声明。
 
 四个实施阶段均由 `codex-cli` 单席承重，并逐项保留自查范围：初稿 `csa-pr7-impl-0910` 完成 PR7 正文、唯一 Python 块及初始附录收据；fix1 `csa-pr7-fix1-0910` 收敛复制多项式、D17/D18 与 pullback 对照并同步 stdout；fix2 `csa-pr7-fix2-0910` 合并当时的 dev 尾部、重编号 §§42–43、清理失效摄入产物并复核范围；本 fix3 `csa-pr7-fix3-0910` 逐项处置 F-1–F-6，重做共同饱和见证、同一双档案守卫输入、D17/D10 文字和 F-6 运算控制，并复跑唯一 Python 块、hunk、重复定义与 merge-tree。各阶段的承重产物和自查读数均由该单席自报；caller 亲验与席位自报分栏如下。
 
@@ -6428,7 +6428,7 @@ D10 型机制的短注：取 $r,s\ge1$，$E=\Omega$，$r$ 个选中正点 $a@0$�
 | caller 亲验 | 两个纯插入 hunk；`uniq -d` 为空；差分范围；`git merge-tree --write-tree`；附录命令退出码、PR7 行 SHA-1；41 个字面键集合。 |
 | 席位自报／转述 | ingest 计数；删除与保留路径；各阶段承重和自查范围。 |
 
-round 1 评审中，`architecture`（`codex`）的 attempt-1 因载体过载 `turn.failed`，attempt-2 给出 reject；`tests`（`codex`）给出 reject；`quality`（`nyxid`）判词由 caller 另记，本 fix 即为其处置。未由 caller 核实的项目标为 **ASSUMED-UNVERIFIED**。后续评审、CI 与合入只留待后续记录，不在本节预报。
+round 1 评审中，`architecture`（`codex`）的 attempt-1 因载体过载 `turn.failed`，attempt-2 给出 reject；`tests`（`codex`）给出 reject；quality(nyxid-oracle):**abstained**——ask 提交至 macstudio3-trureturing 池后等待超时,fetch 续等再次超时(company-chatgpt-pro 池 10/10 满额),按 nyx.sh 契约未重投;任务未取消,若后续机会性取回只作附加意见,不回写为 round-1 判词。fix3 的 F-1..F-6 全部来自 architecture(codex)与 tests(codex)两席已取得的 findings,quality 席未提供 findings。round 2 评审中，architecture(nyxid-oracle,chrono-chatgpt-pro-pool,自报 GPT-5.6 Sol,ask 超时后 fetch 续等取得)reject 1 material(即本条);quality(codex-cli)reject 2 material(F-1 实现:夹具失衡、粗摘要/非空首乘无钉子);tests(codex-cli)reject 3 material + 1 minor(平衡、temporal(x,x) 守卫检查、函数型枚举、CAS 空白诊断);处置为 fix4(codex-cli)与本 fix5;round 3 按 rotation-review-r3.json(seed 15601493124212581291:architecture=codex、quality=nyxid、tests=codex)另记,不预报。两种载体自报的模型现含 GPT-6 家族(Astra Pro / Codex)与 GPT-5.6 Sol(仅该次调用的自报证据),仍按协议不宣称异模型共识已核验;凡 caller 未亲验的席位陈述标 ASSUMED-UNVERIFIED。未由 caller 核实的项目标为 **ASSUMED-UNVERIFIED**。后续评审、CI 与合入只留待后续记录，不在本节预报。
 
 ### 43.2 附录命令与 stdout
 
