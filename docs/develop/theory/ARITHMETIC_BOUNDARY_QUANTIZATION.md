@@ -7572,9 +7572,7 @@ termination authority and does not end the standing continuous goal.
 
 ## 35. Fixed-prime recurrence, actual near-balanced boxes and logarithmic counting
 
-**35.1 Statement and inherited scope.** This S24/C66 reference-input appendix
-implements the completed C64 analytical primary as PAPER_ARGUMENT / repo-derived.
-For every fixed ordered list of distinct primes \(p_0,\ldots,p_{k-1}\), every
+**35.1 Theorem (Statement and inherited scope).** For every fixed ordered list of distinct primes \(p_0,\ldots,p_{k-1}\), every
 integer \(k\ge2\), and every fixed integer \(Q\ge3\), the strict simultaneous
 return set defined in 35.2 has positive natural density on its actual compact
 orbit closure, uniformly over consecutive blocks. Its density is at least
@@ -7585,15 +7583,10 @@ Their distinct lower-corner integers have counting function
 No joint independence of reciprocal prime logarithms is assumed.
 
 Sections 30.17 and 31.18 already give qualitative homogeneous approximation
-near zero relative shape. Their arguments are not replayed as a new search;
-the present addition supplies fixed-neighborhood frequency, return gaps and
-integer counting. Sections 30.16 and 31.17 are the only inherited sign inputs
-to the applications in 35.19-35.23, after their domains are checked. Their
-finite-node and moment certificates are not independently recertified here.
-Classical tools and the specialized deductions are distinguished in 35.28.
-This is neither independent review nor a Lean/kernel-frozen or RH theorem.
+near zero relative shape. Sections 30.16 and 31.17 are the only inherited sign inputs
+to the applications in 35.19-35.23, after their domains are checked.
 
-**35.2 Fixed parameters and distinct height symbols.** All logarithms are
+**35.2 Definition (Fixed parameters and distinct height symbols).** All logarithms are
 natural. Fix the primes, \(k\) and \(Q\) as in 35.1 throughout all limits, and set
 \[
 d=k-1,\qquad h_i=\log p_i>0,\qquad
@@ -7620,7 +7613,7 @@ confused with the integer recurrence parameter. For each rounded box below,
 \(T_n=\min_i c_i\) is its lower height and \(A_n=\sum_i c_i\) is its total;
 these two quantities have different roles and are never identified.
 
-**35.3 Individual irrationality and Haar probability.** If
+**35.3 Proposition (Individual irrationality and Haar probability).** If
 \(\alpha_i=u/v\in\mathbb Q\), positivity permits positive integers \(u,v\)
 with \(v\log p_0=u\log p_i\). Exponentiating gives
 \(p_0^v=p_i^u\), contradicting unique prime factorization. Thus each
@@ -7634,7 +7627,11 @@ and metrizable, as a closed subset of a compact metrizable torus. The classical
 Haar theorem supplies a unique translation-invariant regular Borel probability
 \(\mu_H\). No connectedness or ambient positive-volume premise is used.
 
-**35.4 Restricted characters and uniform geometric sums.** For
+Mathematical citation: Christopher White,
+*Ergodic Theory and Topological Groups*, Theorem 1.1 (Haar probability
+and invariance).
+
+**35.4 Proposition (Restricted characters and uniform geometric sums).** For
 \(\ell\in\mathbb Z^d\), restrict the character
 \(\chi_\ell(x)=\exp(2\pi\mathrm i\,\ell\cdot x)\) to \(H\), and let
 \(w=\chi_\ell(\alpha)\). If \(w=1\), this character is 1 on the entire
@@ -7656,7 +7653,7 @@ can occur for characters of disconnected closures, are covered by this same
 calculation. A nonzero ambient \(\ell\) may restrict to the trivial character;
 the \(w=1\) case handles that possibility explicitly.
 
-**35.5 Stone-Weierstrass passage to continuous functions.** Finite complex
+**35.5 Proposition (Stone-Weierstrass passage to continuous functions).** Finite complex
 linear combinations of the restricted characters form a unital algebra:
 products add their integer indices and complex conjugation negates them.
 The coordinate characters separate distinct torus points, hence separate
@@ -7675,7 +7672,13 @@ Letting \(\varepsilon\downarrow0\) proves uniform continuous
 equidistribution on the actual group \(H\). This is the classical character
 form of the Weyl criterion, here proved in the precise form needed.
 
-**35.6 Full Haar support and every positive forward tail.** Every nonempty
+Mathematical citation: Tom Meyerovitch,
+*Well-distribution of polynomial maps on locally compact groups*,
+arXiv:2210.01429v2, Proposition 3.2 (PDF page 8), for Haar distribution
+on the closure of a homomorphism's image, and Lemma 5.3 (PDF page 11),
+for the compact metrizable abelian character criterion.
+
+**35.6 Proposition (Full Haar support and every positive forward tail).** Every nonempty
 relatively open \(V\subseteq H\) has positive Haar measure. Its translates
 cover \(H\); a finite subcover exists by compactness. If \(\mu_H(V)=0\),
 translation invariance would then give \(\mu_H(H)=0\), a contradiction.
@@ -7695,7 +7698,7 @@ any prescribed nonnegative integer \(M_0\), proves the same assertion for
 every forward tail. All positive forward orbits and their tails are dense;
 in particular \(H\) is also the closure of the positive orbit of 0.
 
-**35.7 Surjective coordinates and Haar marginals.** For each \(1\le i\le d\),
+**35.7 Proposition (Surjective coordinates and Haar marginals).** For each \(1\le i\le d\),
 \(\pi_i(H)\) is a compact, hence closed, circle subgroup containing all
 integer multiples of the irrational \(\alpha_i\). It is infinite, since
 two equal multiples would give a nonzero integer multiple in \(\mathbb Z\).
@@ -7714,7 +7717,7 @@ probability, hence normalized circle length by Haar uniqueness. In particular
 \(\mu_H(\pi_i^{-1}(\{t\}))=0\) for every \(t\). These are marginal
 statements, not independence or ambient-dimensional volume statements.
 
-**35.8 Null boundary and uniform consecutive-block density.** The continuous
+**35.8 Proposition (Null boundary and uniform consecutive-block density).** The continuous
 function \(g(x)=\max_i\|x_i\|_{\mathbb T}\) has
 \[
 \partial_H U_Q\subseteq\{g=r\}
@@ -7747,7 +7750,7 @@ the same density. Merely observing that an orbit avoids the boundary would
 not have justified the indicator passage; the Haar-null boundary is essential
 to this proof.
 
-**35.9 Strict half-open-cell lower bound.** Represent torus points uniquely
+**35.9 Proposition (Strict half-open-cell lower bound).** Represent torus points uniquely
 in \([0,1)^d\) and partition it into the \(Q^d\) Borel half-open cubes
 \[
 C_j=\prod_{i=1}^d[j_i/Q,(j_i+1)/Q),\qquad 0\le j_i<Q.
@@ -7766,7 +7769,7 @@ marginal also gives \(d_Q\le2/Q\). For \(k=2\), 35.7 gives \(H=\mathbb T\)
 and \(d_Q=2/Q\). For larger \(k\), the value \((2/Q)^{k-1}\) is justified
 under a separately established full-torus hypothesis; it is not inferred here.
 
-**35.10 A proper disconnected closure is compatible with irrational coordinates.**
+**35.10 Proposition (A proper disconnected closure is compatible with irrational coordinates).**
 As an illustration outside the prime setting, let \(\beta\) be irrational
 and \(\alpha=(\beta,\beta+1/2)\). The even orbit subsequence is dense in
 \(\{(t,t):t\in\mathbb T\}\), since \(2\beta\) is irrational; the odd
@@ -7777,7 +7780,7 @@ and both rotation coordinates are irrational. The proof in 35.3-35.9 covers
 this situation. This example makes no assertion about which closure occurs
 for any particular prime-logarithm vector.
 
-**35.11 Rotation-dependent forward syndeticity.** The relatively open
+**35.11 Proposition (Rotation-dependent forward syndeticity).** The relatively open
 neighborhood \(U_Q\) is nonempty, since it contains 0. By 35.6 every positive
 forward orbit meets it. Thus \(\{U_Q-j\alpha:j\ge1\}\) covers \(H\).
 Compactness gives a finite nonempty set \(J\subseteq\mathbb Z_{\ge1}\)
@@ -7794,7 +7797,10 @@ density and the uniform block limit: the block count changes by at most the
 total number removed, independently of its starting index. This proof gives
 existence of \(L\); it evaluates no numerical maximum-gap bound.
 
-**35.12 Dirichlet's first return is a different assertion.** Place the
+Mathematical citation: Terence Tao, *254A Lecture 3*, Lemma 1 and
+Theorem 2 (minimal recurrence and torus return sets).
+
+**35.12 Proposition (Dirichlet's first return is a different assertion).** Place the
 \(Q^d+1\) points \(j\alpha\), \(0\le j\le Q^d\), in the half-open cubes
 of 35.9. Two share a cube. Subtract the smaller index from the larger to get
 an integer \(q\) with
@@ -7808,7 +7814,7 @@ translated block again gives a difference of two indices, which need not
 belong to that block. It proves neither \(L\le Q^{k-1}\) nor the location
 of the first rounded box surviving positivity or the strict original cutoff.
 
-**35.13 Generic irrational rotations refute a uniform maximum-gap inference.**
+**35.13 Proposition (Generic irrational rotations refute a uniform maximum-gap inference).**
 Fix \(Q\ge3\), any integer \(R\ge1\), and \(r=1/Q\). Choose an irrational
 \[
 0<\beta<\min\bigl(r,(1-2r)/(R+1)\bigr).
@@ -7833,7 +7839,7 @@ irrational steps. The rotation changes with \(R\), so this is consistent
 with 35.11 for each fixed rotation. It is not a counterexample for any fixed
 prime tuple and does not refute a separately proved prime-specific estimate.
 
-**35.14 Unique rounding, finite positivity discard and actual boxes.** For
+**35.14 Proposition (Unique rounding, finite positivity discard and actual boxes).** For
 every integer \(n\ge1\), each \(n\alpha_i\) is irrational, hence never a
 half-integer. Its nearest integer is unique. Set
 \[
@@ -7855,10 +7861,9 @@ N_n=\prod_{i=0}^{k-1}p_i^{m_i(n)-1}.
 \]
 Only the finite initial indices with a nonpositive \(m_i\) are removed;
 write \(B_Q^{\rm valid}=B_Q\cap[n_0,\infty)\). This retains all density
-and eventual syndeticity conclusions of 35.8-35.11. No exponent enumeration
-or numerical first valid index is supplied by the construction.
+and eventual syndeticity conclusions of 35.8-35.11. No numerical first valid index is supplied by the construction.
 
-**35.15 Errors, minimum height, total height and relative shape.** For
+**35.15 Proposition (Errors, minimum height, total height and relative shape).** For
 \(n\in B_Q^{\rm valid}\), nearest rounding and the strict return condition give
 \[
 \Delta_0=0,\qquad\Delta_i=c_i-nh_0,
@@ -7886,7 +7891,7 @@ box converge to zero. That stronger convergence belongs to a separate
 approximation subsequence or to a different target, not to a varying-\(Q\)
 limit silently inserted into this theorem.
 
-**35.16 Monotone exponents, strict integer order and exact logarithmic size.**
+**35.16 Proposition (Monotone exponents, strict integer order and exact logarithmic size).**
 Each floor \(m_i(n)\) is nondecreasing in \(n\), and \(m_0(n)=n\) increases
 strictly. For any \(n'>n\ge n_0\), even without a return assumption,
 \[
@@ -7903,10 +7908,10 @@ For every selected valid index, 35.15 gives
 \[
 \boxed{\log N_n=A_n-S_h=knh_0-S_h+R_n,\qquad |R_n|<E_Q.}
 \]
-In particular the requested error \(O((\sum_{i>0}h_i)/Q)\) has absolute
+In particular the error \(O((\sum_{i>0}h_i)/Q)\) has absolute
 implied constant 1, uniformly in these indices at the fixed parameters.
 
-**35.17 Full squeeze proof of integer counting.** For real \(t\), put
+**35.17 Proposition (Full squeeze proof of integer counting).** For real \(t\), put
 \(F(t)=\#\{n\in B_Q^{\rm valid}:n\le t\}\), with zero count below the
 valid range. The density theorem and finite discard give
 \(F(t)=d_Qt+o(t)\) as real \(t\to\infty\); passing from integer to real
@@ -7934,7 +7939,7 @@ By 35.16 this is the number of distinct constructed integers at most \(X\).
 Removing any further fixed finite prefix preserves the coefficient. The
 primes and \(Q\) remain fixed; no shrinking-target statement follows.
 
-**35.18 Bounded exponent and log-size gaps, divergent additive integer gaps.**
+**35.18 Proposition (Bounded exponent and log-size gaps, divergent additive integer gaps).**
 Let \(n<n'\) be consecutive sufficiently late selected indices. By 35.11,
 \(n'-n\le L(\alpha,Q)\). For \(i>0\), the elementary floor inequality
 \(\lfloor x+t\rfloor-\lfloor x\rfloor\le\lceil t\rceil\), \(t\ge0\),
@@ -7956,7 +7961,7 @@ N_{n'}-N_n\ge(p_0-1)N_n\longrightarrow\infty.
 Bounded gaps in the reference exponent, in rounded exponents or in logarithmic
 size do not become bounded additive gaps among ordinary integers.
 
-**35.19 The exact three-coordinate comparison and wider domain.** For either
+**35.19 Definition (The exact three-coordinate comparison and wider domain).** For either
 ordered triple \((2,3,5)\) or \((2,3,7)\), take a selected valid box from
 35.14-35.15. For \(e\in\{0,1\}^3\), its endpoint corner is
 \(v(e)=(c_i+e_i h_i)_{i=0}^2\), with total \(A_n+\sum_i e_i h_i\).
@@ -7991,7 +7996,7 @@ There is no extra division by 3 in \(V_0\). The projection explicitly uses
 on real logarithmic coordinates. These are precisely the definitions of
 30.2 and 31.2; the lower budget is not an additional LP constraint on \(y\).
 
-**35.20 Feasibility, nonempty wider domains and positive support.** The least
+**35.20 Proposition (Feasibility, nonempty wider domains and positive support).** The least
 corner total is \(A_n\). Two distinct admitted totals imply \(M_1>A_n\),
 so \(y=0\) is feasible in 35.19. The feasible polytope is closed and bounded;
 its objective is continuous on positive endpoints, so \(D\) exists as an
@@ -8017,13 +8022,12 @@ support. The proof includes budget endpoints at corners, negative lower
 budgets, zero radius, saturated LPs, ties of optimal mixtures and any finite
 upper slack; no stable greedy order or critical-node topology is assumed.
 
-**35.21 Two scoped strict scaled margins.** The exponential series, with
+**35.21 Proposition (Two scoped strict scaled margins).** The exponential series, with
 its strictly positive remainder after degree four, gives
 \[
 e^2>1+2+2+4/3+2/3=7.
 \]
-Hence \(\log5<2\) and \(\log7<2\), analytically, without numerical
-logarithms or an exponent search. In the \((2,3,5)\) family set \(Q=1920\)
+Hence \(\log5<2\) and \(\log7<2\). In the \((2,3,5)\) family set \(Q=1920\)
 and \(d_{235}=\mu_{H_{235}}(U_{1920})\). Equations 35.9 and 35.15 give
 \[
 d_{235}\ge1/1920^2,\qquad
@@ -8053,7 +8057,7 @@ inside them. All permitted endpoint and saturation cases remain included.
 The second sign is not an unproved substitution into the first triple's
 theorem. Neither inequality is a bound on unscaled \(G\).
 
-**35.22 Exact strict original-domain threshold and 10080.** For either triple,
+**35.22 Proposition (Exact strict original-domain threshold and 10080).** For either triple,
 define the original-domain intersection
 \[
 \mathscr S_n=\{(M_0,M_1)\in\mathscr W_n:S_h+\log5040<M_0\}.
@@ -8093,7 +8097,7 @@ C_{237}(X)=\frac{d_{237}}{3\log2}\log X+o(\log X).
 Here the counts concern exactly the constructed valid boxes with nonempty
 original domain, represented injectively by their lower-corner integers.
 
-**35.23 Wider estimates precede cutoff intersection; unscaled gaps vanish.**
+**35.23 Proposition (Wider estimates precede cutoff intersection; unscaled gaps vanish).**
 In section 34 take \(k=3\), baseline offsets \(a_i=0\) and
 \(T_{\min}=\log2\). Its paired-increment theorem gives
 \(|e^T(G_\xi-G_0)|\le4\epsilon\) when \(\epsilon=\max_i\xi_i\).
@@ -8126,7 +8130,7 @@ at unbounded heights, so no unscaled negative margin bounded away from zero
 can hold on this family. The constants constrain \(e^{T_n}G\). Infinite
 height, or \(e^{-T_n}=0\), is a limit and never an admitted parameter.
 
-**35.24 Three density meanings.** The positive density \(d_Q\) concerns the
+**35.24 Proposition (Three density meanings).** The positive density \(d_Q\) concerns the
 one-dimensional reference exponent \(n\). Let
 \(\mathcal N_Q=\{N_n:n\in B_Q^{\rm valid}\}\). Its counting function is
 of order \(\log X\) by 35.17 and \(d_Q>0\), so its ordinary natural
@@ -8149,7 +8153,7 @@ These statements describe the constructed subfamily, not all boxes that
 might satisfy a \(G\) inequality. Finite validity/cutoff removal does not
 change any of these density conclusions.
 
-**35.25 Fibonacci cutoffs are inherited limits, not sparse orbit sampling.**
+**35.25 Proposition (Fibonacci cutoffs are inherited limits, not sparse orbit sampling).**
 Let \(F_j\to\infty\) be increasing Fibonacci numerical cutoffs. Substituting
 this sequence of cutoffs into already established limits immediately gives
 \[
@@ -8164,7 +8168,7 @@ instead asks about \(F_j\alpha\) and
 \(d_Q\) is not proved here; uniform consecutive-block frequency does not
 answer this different sparse-sampling question.
 
-**35.26 Numerical-order Zeckendorf recoding preserves every finite count.**
+**35.26 Proposition (Numerical-order Zeckendorf recoding preserves every finite count).**
 Use the stipulated Zeckendorf bijection: Fibonacci weights \(1,2,3,5,\ldots\),
 digits in \(\{0,1\}\) with no adjacent occupied weights, and unique decoding
 to the original integer. Under numerical-order enumeration the first \(M\)
@@ -8180,7 +8184,7 @@ weights assigned to codewords, or enumerating codes in an arbitrary different
 order changes the sampling operation and needs separate analysis. Bijectivity
 alone does not preserve density under arbitrary reordering.
 
-**35.27 Golden-ratio frequency, other metrics and chosen orthogonality.**
+**35.27 Proposition (Golden-ratio frequency, other metrics and chosen orthogonality).**
 For every irrational one-dimensional step \(\beta\) and every circle
 interval \(I\), 35.4-35.8 in dimension one give limiting visit frequency
 equal to the circle length of \(I\); its boundary has at most two points.
@@ -8198,57 +8202,10 @@ product nor new orthogonality or a new KL-loss identity. A lattice slice,
 a positive-width budget slab, a numerical-order cutoff and a digit cylinder
 remain different constructions, as in the existing section 10 discussion.
 
-**35.28 Classical attribution and exact source-access limits.** Unique prime
-factorization, Haar existence/uniqueness, compactness, Stone-Weierstrass,
-the character/Weyl criterion and Dirichlet pigeonholing are classical tools.
-C64 attributes Haar probability and invariance to Christopher White,
-*Ergodic Theory and Topological Groups*, Theorem 1.1. It attributes Haar
-distribution on the closure of a homomorphism's image to Tom Meyerovitch,
-*Well-distribution of polynomial maps on locally compact groups*,
-arXiv:2210.01429v2, Proposition 3.2 (PDF page 8), and the compact metrizable
-abelian character criterion to Lemma 5.3 (PDF page 11). For minimal recurrence
-and torus return sets it cites Terence Tao's *254A Lecture 3*, Lemma 1 and
-Theorem 2. The specialized restricted-group/null-boundary/half-open-cell
-combination, rounded prime-box counting and scoped \(G\) applications are
-the repo-derived paper deductions written out here, with no novelty or
-priority claim. The finite geometric series, elementary exponential series,
-floor inequalities and squeeze arguments are classical elementary steps.
-
-The complete primary reports successful retrieval of the pinned raw Markdown
-and rendered GitHub page at d79a2cd3cd3d5881dce26df9cee8266de9ae61e7,
-focused checking of 30.1-30.3, 30.16-30.19, 31.1-31.2, 31.17-31.20 and relevant
-section 34 statements; it expressly does not claim a whole-paper audit or
-independent source byte-hash verification. Its retrieval of the Meyerovitch
-PDF, screenshots of the indicated closure notation, Tao's lecture and White's
-university-hosted notes is worker-reported evidence. It is not caller-independent
-retrieval or retrieval performed by I22. C64 reports a supplementary Steif PDF
-HTTP 403 and attempted Meyerovitch HTML HTTP 404; neither unavailable text
-supports a premise. Caller EoM attempts timed out, as supplied in this brief.
-No missing URL, screenshot or hash is reconstructed. I22's fresh consultation
-is of this pinned local source and the explicitly supplied complete C64
-response; new external reference accesses are zero, since no new premise
-requires a focused lookup. These classical attributions do not independently
-certify the inherited specialized \(G\) estimates.
-
-**35.29 Primary identity and remaining mathematical obligations.** The supplied
-completed actual-PRO C64 task is 72c4fe58-e7c0-4e6a-ab0f-fb5d446ecb48,
-flight qgh0910-pro-near-balanced-recurrence-capacity-recovery,
-caller attempt 1/retry budget 0. Its complete raw response is 25631 bytes,
-SHA256 4402fa6cc3d85c184f775a34441488dbcc7c8276ffb81fca3d7bba8219ba3604.
-The caller-supplied captured task display was 6/Pro. This is display evidence;
-no independent invocation-specific selector observation or serving-identity
-telemetry was available, and neither requested model nor pool label attests
-hidden serving identity. There is no sterile-prior or model-diversity claim.
-The supplied carrier history remains: C62 was terminally abstained after
-navigation failure without mathematics; C63 was prepared, never dispatched,
-and superseded before launch after company capacity was exhausted; C64 used
-the distinct capacity-recovery flight. No C56 or other failed task is revived,
-no retry budget reset, and no current review vote or live merge state read.
-
+**35.29 Theorem (Recurrence and counting: mathematical scope).**
 The fixed-prime/fixed-\(Q\) recurrence and counting arguments have no residual
 mathematical premise beyond the classical tools proved or attributed above;
-they do not depend on any \(G\) sign. This primary proved verdict is still
-subject to independent source review. No numerical \(d_Q\) beyond its bounds
+they do not depend on any \(G\) sign. No numerical \(d_Q\) beyond its bounds
 is asserted without identifying \(H\); no evaluated gap bound, first valid
 box, discrepancy rate, shrinking target, arbitrary nonzero-shape density or
 continuously realizable prime-lattice translation family is supplied. General
@@ -8256,49 +8213,10 @@ prime-data gap estimates remain distinct from the generic rotation example.
 Sparse Fibonacci sampling and changed code order/weighting retain their
 separate questions. Full translated/wider-domain 5040, uniform-third-prime,
 density/optimizer-stability, arbitrary-fixed-prime-triple and arbitrary-shape
-sign obligations remain open in their assigned scopes, including C61, C53,
-C54 and C56. GH remains the user's undefined label. Neither recurrence nor
-a negative difference of the supplied upper bounds is an RH theorem,
-an RH-equivalent criterion or RH progress. No exhaustive literature audit,
-novelty, priority, independent certificate verification or kernel freeze is
-claimed; the standing continuous research goal remains active.
+sign obligations remain open in their assigned scopes. Neither recurrence nor
+a negative difference of the supplied upper bounds is an RH theorem
+or an RH-equivalent criterion.
 
-**35.30 Implementation, report and canonical handoff boundary.** This is the
-single Codex CLI I22 implementation flight
-qgh0910-i22-near-balanced-recurrence, attempt 1, retry budget 1, under the
-caller-pinned consensus-rnd:sshx 1.0.0-beta.42 SKILL.md and
-CODEX_WORKER_SPEC.md, with CLAUDE 5.11 and the explicit no-delegation brief.
-The work target is /Users/auricstudio/trureturing-qgh-recurrence, branch
-lane/math/quantized-gh-recurrence-0910, immutable BASE
-d79a2cd3cd3d5881dce26df9cee8266de9ae61e7. The complete predecessor prefix is
-preserved: 394297 bytes, 7571 LF, SHA256
-06331627e46c9e19fbb784282b192d521cb953e4c9a34fb421f74c44c0655b9b.
-Historical source, CAS, YAML and report bytes, including partial/table atoms
-and terminal-LF variants, retain their original identities. This layer adds
-only section 35, the [single provenance and binding report](../../reports/quantized-gh/near-balanced-recurrence-0910.md),
-and the actual outputs of one canonical invocation on the finished source:
-~~~text
-make ingest BASE=d79a2cd3cd3d5881dce26df9cee8266de9ae61e7 SOURCE=arithmetic-boundary-quantization
-~~~
-The report preserves the exact C64 response as inert tilde-fenced text,
-separately identifies its delimiter-only LF, maps every new numbered unit to
-primary fields, and records whole-span CAS coverage, inherited 34.22 LF
-extension, actual children/chains if emitted, links and whitespace diagnostics.
-Byte/hash/JSON/span checks and make orchestration are structural evidence,
-not theorem proof. Mathematical code execution, sampled orbits, exponent/prime
-enumeration, historical certificates or tests replayed, CPU candidate
-generation, GPU work and runtime-state reads/writes are all zero in this flight.
-There are no tool, producer, Lean or frozen edits or broad builds/cache warmup.
+**Proof reference.** 35.3-35.18. The remaining statements specify the scope
+of these arguments and of the applications in 35.19-35.27.
 
-The worker is repo-prior-exposed. No other worktree, live source/review target,
-caller transcript, task registry, worker envelope or log/log_ref content is
-an input; the explicitly supplied complete C64 response is the permitted
-previous-stage mathematical input. No delegation, worker/oracle launch,
-independent review panel or lifecycle/termination authority is exercised.
-At this I22 handoff the changes are unstaged and not independently reviewed;
-this describes this handoff, not future delivery status. Caller sealing,
-public verification, independent review and ordinary gates remain required,
-and final S24 delivery must follow S23 MERGED. Canonical ingestion is not
-Lean absorption, independent approval, MERGED delivery or completion of the
-standing goal. The report and final structured envelope expose any coverage
-or whitespace failure without hand-editing canonical data or repeating ingest.
