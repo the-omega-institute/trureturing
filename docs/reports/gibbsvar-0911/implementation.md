@@ -93,3 +93,5 @@ Gibbs 参考态另证正定，所需正定 ρ 子域自然包含其中。
 和仓内 quantum_relative_entropy_eq_neg_entropy_sub_cross；必要性为 atom (二) 的
 Gibbs 归一参考态与现有 DensityState/熵 API 之间尚缺的接口。
 完整 make 门与冻结待后续记录。
+
+- https://arxiv.org/abs/1505.07835 status=200, bytes=42187, sha256=4858b33a7a8efba9743e224c5db54c65671949dcd78764f3c09bdfa38800130c
