@@ -93,3 +93,17 @@ vanishing argument, not `coeff_pow` alone. No admission claimed yet.
 Cache preheat succeeded: `make lean-cache-ensure` EXIT=0;
 LEAN_CACHE status=seeded, method=clonefile, clonefile_attempts=1,
 project_olean_state=warm, mathlib_olean_state=warm, stamp_miss=null.
+
+## First checked Lean unit
+
+See `normalization-attempt.md` for the exact successful source. It proves
+coefficient divisibility for coprime degree/exponent and exact row normalization,
+without assuming integer division. This is not integer existence of the whole
+sequence, nor the parity theorem. No D5 module has been frozen.
+
+Additional GitHub all-language request `"A397902"`: HTTP 200, 151399 bytes,
+SHA-256 `a267c1271024763b98ce0482d657741749254520fe940059619127b0c8ff605a`,
+426 indexed hits, incomplete_results=false; only the first 30 returned items
+were screened. Includes our existing triage note and unrelated hex matches.
+This query is not negative evidence and was not exhaustively paginated.
+Unopened linked contents are ASSUMED-UNVERIFIED.
