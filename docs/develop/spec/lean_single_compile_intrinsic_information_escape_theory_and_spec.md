@@ -8208,7 +8208,7 @@ IE-C045--IE-C047 仍为 reserved/open，不进入三表，也不得由现有 com
 | IE-C043 | `KernelProjectionUsedForAdmission` | admission consumer 读取任何 hierarchy presentation 字段 |
 | IE-C044 | `DispositionCensusMismatch` | frozen report 的 `statement_id` 不唯一、coverage/totals/flag 不精确，或 observation root/owner/scope/completion/candidates 不符 |
 | IE-C048 | `RealizationIgnoredByLaw` | finite／structural 注册缺少同 signature、声明 intervention domain 内的 kernel-checked Law-variation witness；结构路径两 realizations 均须在 Γ domain，Iff.rfl 不算见证 |
-| IE-C049 | `UnusedPrimitiveInBundle` | signature 的 readout index／anchor 不在 Law 的 exact generated slot support 中，删除后 Law 在声明域外延不变而 bundle kernel 改变 |
+| IE-C049 | `UnusedPrimitiveInBundle` | signature 的 readout index／anchor 不在 Law 的 exact generated slot support 中，删除后 Law 在声明域外延不变而 bundle kernel 改变；优先序 `IE-C048 > IE-C049`，IE-C048 触发时不判 |
 | IE-C050 | `ClosedTruthReadout` | readout 传递常量闭包到达注册 theorem、其 truth／proof、statement 的 Decidable instances 或 theorem-specific certificate／statement identity，或闭包无法完整取得 |
 
 | code | exact deterministic message shape |
