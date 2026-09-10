@@ -92,7 +92,14 @@ toward the unbounded theorem.
 `make lean-cache-ensure`: EXIT=0; `LEAN_CACHE` status=seeded,
 method=clonefile, donor=/Users/chronoai/trureturing, clonefile_attempts=1,
 stamp_miss=null; project and mathlib olean states both warm.
-No Lean proof has yet been attempted at this checkpoint.
+The first genuine Lean attempt implemented the defect power rule and the
+strong induction `defect_f_zero`. Initial errors were zero-coefficient
+rewrites, the distinction between `constantCoeff` and `coeff 0`, and a
+nonexistent `ZMod.eq_zero_or_eq_one` name. These were repaired using explicit
+Mathlib coefficient rewrites and a private kernel `decide` on `ZMod 2`.
+The file-level hot-cache compilation now exits 0 and proves `defect_f_zero`
+without `sorry` or added axioms. This is an unbounded structural lemma, not
+a finite-check progress claim; the target theorem is still pending.
 
 ## Unclaimed and unverified
 
