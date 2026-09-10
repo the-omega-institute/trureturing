@@ -13,7 +13,7 @@
 
 本规范定义一个完全位于 Lean 4 内部的数学系统。系统的输入不是论文、自然语言标签、人工评分或历史版本差分，而是同一次编译中已经 elaborated 的 Lean 定理对象及其数学概念读出。
 
-v4.2 把“当前完整定理族”精确化为 sealing root $R$ 的 import closure 与 canonical object
+“当前完整定理族”是 sealing root $R$ 的 import closure 与 canonical object
 `Arena` declaration $A$ 下的单个最大 catalog：
 
 $$
@@ -23,11 +23,11 @@ $$
 这里的成员是 $R$ 的 import closure 中持久可见的登记 occurrence，而不是裸 theorem 名。
 occurrence identity 是 `(canonical Arena declaration, theoremName)`。所有未显式写出上标、下标的
 $I,K,E,U,\delta,D_A$ 都是固定同一个 $(R,A)$ 后的简写；不同 arena 之间不存在
-默认标量。v4.2 同时给出共享 arena 上的 exclusive-capture vector、overlap、kernel
-refinement、multiplicity spectrum、role histogram 与 ordered layered capture。新产物使用
-additive schema v3；已落地 schema v2 产物及其十一项 singleton 计数的语义不变。
+默认标量。共享 arena 分析包括 exclusive-capture vector、overlap、kernel
+refinement、multiplicity spectrum、role histogram 与 ordered layered capture。共享分析产物使用
+第 30 节的 additive schema；冻结 theorem-record 产物及其十一项 singleton 计数的语义不变。
 
-v4.3 在上述 flat 与 ordered analysis 上固定层级对象：每个 maximal canonical catalog 的
+在上述 flat 与 ordered analysis 上，层级对象的定义如下：每个 maximal canonical catalog 的
 generated joint kernels 按**关系外延相等**取商，形成有限闭包格；其全部 strict generator
 transitions 组成可含 shortcut edges 的 DAG，Hasse cover graph 是该格的传递约简。Hasse diagram
 为 path（因而为 tree）当且仅当格为 chain；存在不可比 kernels 时出现 diamond，因而同一终局
@@ -561,8 +561,8 @@ $$
 
 这里的“完整族”是 sealing root $R$ 的 import closure 中全部持久可见、归属于 $A$ 的 theorem
 occurrences 所成的 canonical maximal catalog $C_{R,A}$。imported `.olean` 中持久可见的登记
-就是该 seal 的成员；analysis sub-catalog 不能替代它或用于证明 positivity。已落地 v4.1
-registry 的导入行为就是 v4.2 contract；相关 seal checks 见第 25.2、37、39 节。
+就是该 seal 的成员；analysis sub-catalog 不能替代它或用于证明 positivity。
+registry 的导入行为构成 import-closure seal membership contract；相关 seal checks 见第 25.2、37、39 节。
 
 ### 5.1 完整族
 
@@ -1019,7 +1019,7 @@ $$
 
 ### 6.1 StructuralArena / StructuralCatalog
 
-上一段已有的 `Catalog.StructurallyLowersEscape` 仍以 finite `Arena` 为参数，因而已落地的
+`Catalog.StructurallyLowersEscape` 以 finite `Arena` 为参数，因而
 `D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty.lean` **只是 finite catalog 的
 Set-level characterization，不是 universal structural engine**。v4.3 另设不要求
 `Fintype State`、`DecidableEq State` 或关系可计算的层：
@@ -1263,8 +1263,7 @@ frozen theorem key 的 identity 是
 类型与覆盖谓词见 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`，
 frozen selector 见 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`。
 
-按 owner 2026-09-08 的 [τ=0 裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5580271314)
-“选 A;observed 永远不算完成;开 J2”，必须分开两个完备命题：
+必须分开两个完备命题：
 
 - **记账完备（accounting completeness）**：每个 frozen theorem key 恰有一个
   `CensusAssessment` row，inventory keys 与 frozen theorem keys 完全相等，缺失与重复均失败；
@@ -1279,8 +1278,6 @@ assessment 分支由 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposit
 CensusAssessment key = certified (AnalysisDisposition key) | observed (AnalysisObservation key)
 ```
 
-〔2026-09-10 已落地：[查询 PR #6660](https://github.com/the-omega-institute/trureturing/pull/6660)
-经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 进入 dev。〕
 `observed` 是绑定 exact key、owning module、census root 与 import-closure query scope 的
 elaboration observation，query 必须标为 completed；它只记录该范围内缺少已登记的
 realization／certificate。**observed ≠ classified：observed 永不算已分类，永不计入 AC-023，
@@ -1303,7 +1300,7 @@ canonical identity 是 `Arena`／`StructuralArena` declaration。替代表示只
 | `bounded_finite_truncation` | truncation family、bound、与原对象的方向明确的 comparison statement | 默认 `report-only`；只有另有 kernel-checked transfer theorem 时才可报告该 theorem 明确传输的结论 |
 | `unreachable` | `UnreachableElaborationEvidence` 指向 reason-specific failed obligation，核对 theorem、statement 与显式候选；exact key 由 report coverage 绑定 | 只报告该 obligation 证明的候选边界，不得伪造 novelty verdict |
 
-（J2 落地形态,2026-09-08:unreachable 使用具名 failed obligation；S0 的通用 semantic contract／candidate domain 字段未落地，结论范围以该 obligation 为限。）
+`unreachable` 使用具名 failed obligation，结论范围以该 obligation 为限。
 
 `UnreachableReason` 是 closed enum，其唯一 canonical declaration 位于
 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`，第 23.6 节列出其 API；只允许
@@ -1314,17 +1311,17 @@ canonical identity 是 `Arena`／`StructuralArena` declaration。替代表示只
   proposition 的 proof truth 不得作常值 readout。声明见
   `tools/lean-inspector/LeanInformationAudit/StructuralRealization.lean`，检查见
   `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
-  （J2 落地形态,2026-09-08:本 reason 认证未提供对象变化的闭合数值边界，不证明 S0 所述任意 semantic domain 内所有 carrier 均不存在；该更强结论仍须另证。）
+  本 reason 认证不提供对象变化的闭合数值边界。本证书不证明任意 semantic domain 内所有 carrier 均不存在；该更强结论须另证。
 - `noFinitePrimitiveBundle`：`InfinitePrimitiveObligation` 绑定显式 arena、无限 Index、kernels
   与 statement，证明 statement 与 law 等价，且任一 finite subfamily 都不能保持完整 joint
   kernel；声明见 `tools/lean-inspector/LeanInformationAudit/StructuralRealization.lean`，检查见
   `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
-  （J2 落地形态,2026-09-08:证书排除给定 family 的 finite subfamily；S0 所要求的全部等价 finite 表示排除仍须另证，不能由本证书外推。）
+  证书排除给定 family 的 finite subfamily。本证书不证明全部等价 finite 表示均可排除；该结论须另证，不能由本证书外推。
 - `noFaithfulPrimitiveRealization`：`UnfaithfulPrimitiveObligation` 证明指定 statement 与指定
   law arena／realization 之间不存在 faithful bridge；声明见
   `tools/lean-inspector/LeanInformationAudit/StructuralRealization.lean`，检查见
   `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
-  （J2 落地形态,2026-09-08:证书是该候选的 `no_bridge`，不量化 S0 所述整个 candidate domain；全域不可达结论仍须另证。）
+  证书是该候选的 `no_bridge`，不量化整个 candidate domain。本证书不证明全域不可达；全域不可达结论须另证。
 
 `unreachable` 是 certified disposition，以上每个 reason 均须由其专属 closed-reason 证书
 成立。registry absence 单独不能产生它；“没有显式 carrier”“尚未登记 finite bundle／bridge”
@@ -1342,19 +1339,14 @@ query-completion 分项：`counts.observed_query_completed` 与
 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean` 与
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`。
 
-**全库输出（2026-09-10，落地于 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767)）**：
-`make census` 已以读取 elaborated 输出(olean)的流式查询覆盖全部 22,524 个 frozen theorem keys：
-`accounted=22,524`、`certified=10`、`observed=22,514`，其中
-`observed_query_completed=22,514`、`observed_query_incomplete=0`。
-`status=complete` 表示本次记账完成；query-completion 表示规定 scope 的查询完成，
-二者都不是认证完备，`certified_complete=false`，AC-023 仍未满足。
-owner 2026-09-08 的原句「observed 永远不算完成」保持有效。
-[#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 的有界样本中，普查阶段约 75 s，
-安静宿主上全入口约 2.5 min，改一个模块后的增量重跑约 37 s；这些是该输入与宿主的读数，
-不是时限或性能判词，也不包含可选结构 sidecar 与证书发布的全管线成本。
-[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 已发布分桶 id 集记账证书；
-[#6717](https://github.com/the-omega-institute/trureturing/pull/6717) 已提供独立的 report-only
-证明依赖结构读数（第 23.7 节），不增加 certified 数量，不把 observed 转成 classified。
+**全库输出**：`make census` 以读取 elaborated 输出(olean)的流式查询覆盖全部 frozen theorem keys，
+输出 `accounted`、`certified`、`observed` 与 query-completion 分项；有效输出的
+`observed_query_incomplete=0`。`status=complete` 表示记账完成，query-completion 表示规定 scope
+的查询完成，二者都不表示认证完备。`observed > 0` 时 `certified_complete=false`，AC-023 不满足。
+observed 永远不算完成。查询与增量复用的验收见第 35 节 T-036 的生产查询 fixtures。
+特定输入与宿主的性能样本不构成一般时限或性能保证；可选结构 sidecar 与证书发布成本另计。
+全库发布分桶 id 集记账证书，并提供独立的 report-only 证明依赖结构读数（第 23.7 节）；
+结构读数不增加 certified 数量，不把 observed 转成 classified。
 
 定义 catalog-relative triviality：
 
@@ -4140,7 +4132,7 @@ H^R_A(s)=\sum_iH^R_{A,i}(s).
 $$
 
 `RoleProfileEq(i,j)` 当且仅当每个 signature column 都相等；pairwise difference 是
-$H_i(s)-H_j(s)$ 的 exact integer vector，不压成 score。由已落地的
+$H_i(s)-H_j(s)$ 的 exact integer vector，不压成 score。由
 `roleHistogram_sum_eq_uniqueCaptureCount` 逐行求和：
 
 $$
@@ -4481,8 +4473,7 @@ theorem agreesB_eq_true_iff :
     bundle.agrees left right
 ```
 
-反射证明必须使用 pin 中已存在的 `Finset.fold_op_rel_iff_and`（或同强度、已在 pin
-实测存在的引理）。
+反射证明必须使用 pin 中存在的 `Finset.fold_op_rel_iff_and`（或同强度、在 pin 中存在的引理）。
 
 以及：
 
@@ -4599,7 +4590,7 @@ def PrimitiveBundle.roleSignature
 ```
 
 `separatesOnAxis_eq_true_iff` 的反射证明必须使用 pin 中已存在的
-`Finset.fold_op_rel_iff_or`（或同强度、已在 pin 实测存在的引理）。
+`Finset.fold_op_rel_iff_or`（或同强度、在 pin 中存在的引理）。
 
 必须证明：
 
@@ -4925,7 +4916,7 @@ failed obligation；证据语义见 `tools/lean-inspector/LeanInformationAudit/D
 `UnreachableDisposition`、`AnalysisDisposition`、`CensusAssessment` 与 `AnalysisObservation`
 只采用 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean` 的声明，第 23.6 节列出
 其 API。census consumer 必须以 frozen elaborated truth export 的真实 `StatementKey` 构造 assessment。
-（J2 落地形态,2026-09-08:保留 `evidence : Name`，没有 S0 sketch 的 dependent `ClosedReasonEvidence key reason` 类型。）
+`evidence : Name` 由 consumer 解析并检查具名证据，类型本身不依赖 key 与 reason。
 
 ---
 
@@ -5029,7 +5020,7 @@ escape-count 的 seal artifact 使用 schema `lean-intrinsic-information-escape-
 两种 schema 按职责并存；seal artifact 的字段与语义保持有效，analysis 字段单独写入 analysis artifact。
 analysis artifact 的规范形状为：
 
-〔勘注 2026-09-07：上述职责命名遵循 owner 2026-09-06「源码不带版本号」裁决及已落地源码 #6032；census report schema 为 `lean-information-disposition-census`，serializer tag 为 `primitive-kernel-ordinal-partition`。〕
+源码按职责命名，不带版本号；census report schema 为 `lean-information-disposition-census`，serializer tag 为 `primitive-kernel-ordinal-partition`。
 
 ```json
 {
@@ -5176,7 +5167,7 @@ analysis artifact 的规范形状为：
 | catalog membership | `catalog_id` | enclosing catalog identity | E |
 
 上表中的每个 v3 occurrence 记录必须包含对应字段；以下仅展示 role 分解的示意结构,
-数值由封印实测：
+数值由封印计算：
 
 ```json
 {
@@ -5400,7 +5391,7 @@ frozen report 自身重复的 `statement_id` 以本码的 `frozen_keys` componen
 observation 检查见 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`，
 计数与容器检查见 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean`、
 `tools/lean-inspector/LeanInformationAudit/Projection/AnalysisInventory.lean`。
-（J2 落地形态,2026-09-08:S0 拟把 excluded rows 改为 IE-C044 的映射未采用，仍为 IE-C036；状态分项是 query completion，且只发射 `certified_complete`。）
+excluded rows 使用 IE-C036；状态分项是 query completion，完备标志只发射 `certified_complete`。
 
 ### IE-C045…IE-C047　DualNoveltyGate（RESERVED / OPEN）
 
@@ -5508,7 +5499,7 @@ leave-one-out verdict 符合
 
 ### T-034　unified causal strict chain
 
-第 43.1 节 literal `CfU` 的四层 escape counts 与三段 increments 使用 H9 measured values；
+第 43.1 节 literal `CfU` 的四层 escape counts 与三段 increments 按第 35 节 T-034 验收；
 chain partition/telescope 通过，flat $U_{Obs}=U_{Int}=0$。
 
 ### T-035　structural witness
@@ -5534,7 +5525,7 @@ inventory 只能记账完备，不能满足 AC-023。删除、复制、令两个
 额外未冻结 theorem／frozen definition row 由 identity 检查发出 IE-C036，检查见
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`。
 第 35 节同号 fixture 固定正反例，report 不进入 seal 或 required gate。
-（J2 落地形态,2026-09-08:四类正例与 `5/2/3` mixed 正例是不同 fixtures，S0 的单个四类加 observed fixture 未采用；excluded-row 诊断仍为 IE-C036。）
+四类正例与 `5/2/3` mixed 正例是不同 fixtures；excluded-row 诊断为 IE-C036。
 
 ### T-037　generated-node extensional quotient
 
@@ -5655,7 +5646,7 @@ IE-040--IE-055 覆盖。
 
 任意 State 的 theorem 可进入 `StructuralArena`／`StructuralCatalog`，只要它有 finite primitive
 bundle 与 faithful realization；acceptance 由 strict inclusion 和 pair witness证明。finite
-`Arena` embedding 保持同一判词，已落地 finite-only `StructuralNovelty` 不再冒称 universal。
+`Arena` embedding 保持同一判词，finite-only `StructuralNovelty` 不冒称 universal。
 
 ### AC-CIRPT-019　Disposition totality
 
@@ -5665,11 +5656,7 @@ bundle 与 faithful realization；acceptance 由 strict inclusion 和 pair witne
 reasons 只计入 certified 分项；observed 另按 query-completion 计数，字段为
 `counts.observed_query_completed` 与 `counts.observed_query_incomplete`，且不履行 AC-023。
 认证 totality 的目标不变，完整记账本身不是认证 totality，report 不进入 seal 或 required gate。
-2026-09-10，[#6660](https://github.com/the-omega-institute/trureturing/pull/6660)、
-[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 经
-[#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 落地后的全库输出为
-accounted 22,524、certified 10、observed/query-completed 22,514、query-incomplete 0。
-`status=complete` 只报记账完成；`certified_complete=false`，认证 totality 与 AC-023 仍未满足。
+`make census` 的 `status=complete` 只报记账完成；`observed > 0` 时 `certified_complete=false`，认证 totality 与 AC-023 不满足。
 第 23.7 节的 report-only 结构读数不改变上述分栏或完成语义。
 assessment 与覆盖谓词见 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`，
 计数与输出见 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean`、
@@ -5688,10 +5675,9 @@ $2^m$ materialization。
 
 ### AC-CIRPT-021　Dual-novelty governance boundary
 
-`AnalysisDisposition`／object novelty 与 5⁗ `AdmissionCertificate` 被规格为独立合取；delta-first、
-legacy debt ratchet 与 mutation matrix 已固定。但 required-check activation、IE-C045--IE-C047
-active status 与 full-tree switch 的治理变更保持 **OPEN pending owner $\tau$ ruling**；本版本没有
-以文档设计冒领现役 gate。
+`AnalysisDisposition`／object novelty 与 5⁗ `AdmissionCertificate` 是独立合取；delta-first、
+legacy debt ratchet 与 mutation matrix 按第 39 节 GATE 定义。required check 不激活该 gate，
+IE-C045--IE-C047 不作为 active errors，full-tree switch 不执行；activation 的条件见第 39 节 GATE。
 
 ---
 
@@ -5822,7 +5808,7 @@ lake build D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 15. 在 designated root 中组装全部 maximal catalogs 的 `SystemCatalogIrredundant`；
 16. 新共享结果写 schema v3，且不改写 frozen v4.1 schema-v2 singleton baseline。
 17. 为每个 maximal catalog 构造 generated-kernel closure，并输出 bounded hierarchy projection 与 ASCII projection；
-18. 〔2026-09-10 已由 [#6660](https://github.com/the-omega-institute/trureturing/pull/6660)、[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 落地。〕为完整 frozen theorem report 生成 exactly-one `CensusAssessment` census，分别报告记账完备与认证完备；其 artifact 只作报告，永不作为 seal input 或 required gate；
+18. 为完整 frozen theorem report 生成 exactly-one `CensusAssessment` census，分别报告记账完备与认证完备；其 artifact 只作报告，永不作为 seal input 或 required gate；
 19. finite occurrences 继续精确计数，structural occurrences 以 strict inclusion pair witness 认证，truncations 与 unreachable reasons 诚实分栏；
 20. 保持 hierarchy projection 对 admission 的单向性，并把 5⁗ dual-novelty gate 标为 OPEN，直到 owner $\tau$ ruling。
 
@@ -5901,15 +5887,12 @@ tools/lean-inspector/LeanInformationAudit/
 D5/S3/ConceptDynamics/InformationEscape/SharedInformationRoot.lean
 ```
 
-`D5/S3/ConceptDynamics/InformationEscape/` 在 v4.2 landing 后实测为 11/12 files，故全部五个
-v4.3 hierarchy／structural engine modules 必须落在 GID-legal sibling
-`D5/S3/ConceptDynamics/InformationEscapeHierarchy/`，不得向该受限目录追加。counting-only
-modules 独立落在 sibling `InformationEscapeCounting/`。两处 sibling placement 都由 H10 ruling、
-上述 measured 11/12 capacity 与 governing parser rule
-`tools/StrataLint.Engine/Coordinates/Gid.cs` 共同决定；该处
-`ParseFormalCoordinates` 当时规定 ordinary formal coordinates 只有 three or four parts(该上限已于 2026-09-08 放开为 `>= 3`,见 PR #6426;本款的落址结论此后由其自身理由承担,不再由文法深度推出)。counting
-sibling 明确 **SUPERSEDES** 工程优化规范 v1 §6.4 提出的 nested
-`InformationEscape/Counting/` proposal。
+全部五个 hierarchy／structural engine modules 必须落在 GID-legal sibling
+`D5/S3/ConceptDynamics/InformationEscapeHierarchy/`，不得向受容量约束的
+`D5/S3/ConceptDynamics/InformationEscape/` 目录追加。counting-only modules 独立落在 sibling
+`InformationEscapeCounting/`，不采用 nested `InformationEscape/Counting/` 布局。
+`tools/StrataLint.Engine/Coordinates/Gid.cs` 的 `ParseFormalCoordinates` 要求 ordinary formal
+coordinates 至少三段；上述 sibling placement 是布局约束，不由文法深度推出。
 
 `D5/S3/ConceptDynamics/InformationEscape/SharedInformationRoot.lean` 是新的 designated
 v4.2 root；它必须导入固定仓库快照的完整 registration closure，使其 import closure 与
@@ -6283,7 +6266,7 @@ def Catalog.roleHistogramDifference (catalog : Catalog arena)
     catalog.roleHistogram right signature
 ```
 
-复用已落地 `roleHistogram` 与 `roleHistogram_sum_eq_uniqueCaptureCount`。必须认证每行、
+复用 `roleHistogram` 与 `roleHistogram_sum_eq_uniqueCaptureCount`。必须认证每行、
 catalog column total 及 unweighted difference vector；不得生成 role score 或 weight。
 
 ### 20.10 Capture-multiplicity spectrum
@@ -6727,10 +6710,7 @@ catalog；该有限 family 的 membership 来自 `rootId` 的 import closure，�
 
 ### 23.6 AnalysisDisposition 与 census API
 
-**Phase 11 现役入口（2026-09-10）**：`make census` 已由
-[#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 的查询、
-[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 的证书发布，经
-[#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 合入 dev。
+**Phase 11 现役入口**：`make census` 提供全库查询与证书发布。
 全库查询是**读取 elaborated 输出(olean)的流式查询**。下列 J2 assessment、evidence 与
 `DispositionInventory.ExactlyCovers` API 仍是局部命令及 fixtures 的 Name-level 语义契约，
 不是局部命令产出的 kernel 命题；局部命令在 elaborator 中检查完整 key 覆盖并产出 id 集
@@ -6853,7 +6833,7 @@ def DispositionInventory.ExactlyCovers
   inventory.keys.toFinset = frozenTheorems
 ```
 
-（J2 落地形态,2026-09-08:S0 的 `ClosedReasonEvidence`、`AnalysisObservationStatus`、`CensusInventory` 与 `CertifiedComplete` 未作为声明落地；现役形态为上述 `Name` evidence、scope record 与 `DispositionInventory`。）
+assessment 使用上述 `Name` evidence、scope record 与 `DispositionInventory`。
 
 J2 局部 `#disposition_census` 的现役命令形状见
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`：
@@ -6883,7 +6863,7 @@ report input identity 来自实际 bytes 的 SHA-256，不是 generator 自报�
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
 两个不同 theorem `Name` 不能复用同一个 `statement_id` 来规避 IE-C035；certified 与 observed
 使用同一个 key 空间，不能各自另列 inventory 来绕过唯一性。
-（J2 落地形态,2026-09-08:S0 把 report identity／root 放在 `ExactlyCovers` 内；现役的同名声明是 Name-level 语义契约，非局部命令的 kernel 命题。现役命令在 id 集证书之外分别核查这两项，inventory 无 `reportInputId` 或 `censusRoot` 字段。）
+`ExactlyCovers` 是 Name-level 语义契约，非局部命令的 kernel 命题。命令在 id 集证书之外分别核查 report identity 与 root；inventory 无 `reportInputId` 或 `censusRoot` 字段。
 
 dependent constructors 只决定 payload shape，consumer 仍须逐 constructor 核验证书语义。
 `UnreachableDisposition.evidence` 必须解析为当前 statement 上的 `UnreachableElaborationEvidence`，
@@ -6894,7 +6874,7 @@ reason 匹配、explanation 非空，且 `failedObligation=some name` 指向 ker
 也不能被该 unreachable row 隐藏。证据类型与检查见
 `tools/lean-inspector/LeanInformationAudit/StructuralRealization.lean`、
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
-（J2 落地形态,2026-09-08:没有 S0 的 `semanticContract`／`candidateDomain` 字段；具名 typed obligation 承担对应的候选语义，超出其范围的 closed reason 仍须另证。）
+具名 typed obligation 承担对应的候选语义，不设 `semanticContract`／`candidateDomain` 字段。本证书不证明超出该 obligation 范围的 closed reason；该结论须另证。
 
 `AnalysisObservation key` 绑定同一 HEAD／report inputs 的 elaborated 输出及其查询作用域。
 `owningModule` 必须是该 key 的真实所属模块，`root` 必须等于命令 root，
@@ -6908,17 +6888,16 @@ IE-C044。字段见 `tools/lean-inspector/LeanInformationAudit/AnalysisDispositi
 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean`，语义检查见
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
 空 candidates 可在这些检查通过后入账，但不证明 registry absence 或候选列表穷尽性。
-Phase 11 已由读取 elaborated 输出(olean)的流式查询产生完整 rows：空列表或自报 completed 不能代替查询，
+Phase 11 通过读取 elaborated 输出(olean)的流式查询产生完整 rows：空列表或自报 completed 不能代替查询，
 查询失败、不完整或未完成不能计为 absence；若报告缺 realization、缺 certificate 或两者皆缺，
 必须由查询结果支持，两者皆有时不能报告 absence，已登记但无效的证书仍须报告验证失败，
 不能以 observed 隐藏。
-（J2 落地形态,2026-09-08:S0 的 `censusRoot`／`importClosure`／absence-status enum 未采用；现役 validator 核查 scope 和所列 candidates，不自行生成或证明穷尽的 absence 查询。）
+局部 validator 核查 scope 和所列 candidates，不自行生成或证明穷尽的 absence 查询；查询完备性由全库查询承担。
 
-**全库查询的归属、新鲜性与增量契约**（[#6660](https://github.com/the-omega-institute/trureturing/pull/6660)）：
+**全库查询的归属、新鲜性与增量契约**：
 流式索引以 `readModuleDataParts` 按顺序读取 olean parts，不对每个分区调用 `importModules`。
 owner 以声明在记录模块的 `ModuleData` 中的成员身份判定；同一 `Name` 的多个 owner 用
 报告生产器的 statement identity 消歧，不能把首次 import 出处当作唯一归属。
-落地全库样本中原有的 50 个冲突 keys 全部消歧，不再形成 incomplete rows。
 新鲜性的权威是 lake：生产入口经 `make lean` 的增量构建，缺失 tracked olean 时 fail closed，
 不以时间戳猜测 source 与 olean 一致。raw Lean report 在 truth-export 之前须通过 producer
 attestation 校验；失败即重新生成并验证报告，后续消费者使用这一份已验证报告。
@@ -6955,12 +6934,10 @@ consumer 必须复核，不信任 generator 自报的 totals 或 flags：
 | `counts.observed_query_completed`、`counts.observed_query_incomplete` | query completion 分项；未完成查询拒绝发射，有效 artifact 中后者恒为零 |
 | `certified_complete` | 有效 artifact 中 `counts.observed == 0`；`observed > 0` 时必为 `false` |
 
-（J2 落地形态,2026-09-08:S0 的 nested class／reason／absence-status maps 与 `accounting_complete` 未发射，也没有 `CertifiedComplete` 声明；记账完备由 elaborator 的完整 key 覆盖检查和 kernel 的 id 集 `Certificate` 体现，`ExactlyCovers` 是语义契约而非该 kernel 命题，JSON 只有上述 flat counts 与 `certified_complete`。）
+记账完备由 elaborator 的完整 key 覆盖检查和 kernel 的 id 集 `Certificate` 体现；`ExactlyCovers` 是语义契约而非该 kernel 命题。JSON 只发射上述 flat counts 与 `certified_complete`，不发射 nested maps 或 `accounting_complete`，也不另设 `CertifiedComplete` 声明。
 
-**全库 kernel 证书只证明 id 集记账**（[#6664](https://github.com/the-omega-institute/trureturing/pull/6664)）。
-owner [2026-09-09 裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5597487855)
-原句为「定理名不在会怎么样, 我感觉你这只是在防止一些不存在的攻击」。kernel-facing identity
-是 `statement_id` 的 256-bit `Nat`；ids 以 packed big-Nat literals 传入，在 kernel 中解码。
+**全库 kernel 证书只证明 id 集记账**。kernel-facing identity 是 `statement_id` 的 256-bit `Nat`；
+ids 以 packed big-Nat literals 传入，在 kernel 中解码。
 最终 `CensusRun.accountingCertificate` 的命题恰为：
 
 ```lean
@@ -6978,25 +6955,24 @@ Lean publisher 与 Python entrypoint 都遵守诊断优先序
 `IE-C044 > IE-C035 > IE-C036 > IE-C034`：query／receipt 完整性先于重复，重复先于 identity
 绑定错误，identity 错误先于缺行；不得因换入口或 codec 提前运行而改变这一顺序。
 
-owner [2026-09-09 增量裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5606788311)
-原句为「这种编译一定得增量, 不能一次要求太大内存, 因为这个库还在不断膨胀」。
-证书按 id range 自适应分裂：每叶至多 $M$ 个 ids，内部节点二叉组合；Init-only 通用引理
+证书编译按叶与组合节点增量进行：
+证书按 id range 自适应分裂：每叶至多 $M=128$ 个 ids，内部节点二叉组合；Init-only 通用引理
 一次证明「有序范围中的有序子段蕴含父段有序」、长度相加与 congruence，再由各节点实例化。
 每个叶与组合节点都是单独编译、内容寻址的模块；新增一个 key 只重编受影响叶、其祖先与 Root。
 最终环境是 Init + `Census.Certificate` + range modules，公理闭包为 `[propext]`。
-证书编译的每进程工作集受单叶上限与二叉组合接口约束，上界不随全库 key 总数增长；
-[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 的落地全库 bucket build／assembly
-样本每进程峰值为 294,453,248 B（0.274231 GiB，约 0.27 GiB）。
-这不是整管线常量内存的主张：报告校验 driver 仍保留 $O(\mathrm{rows})$ 的校验及元数据，
-实测约 2.06 GiB，是已记录的剩余项；流式索引约 1.01 GiB 的读数也未冒称达到 1 GiB 目标。
+单叶证明的输入与编译不依赖其他叶的内容；组合节点通过两个子节点的接口组合证明。
+导入接口与元数据随 range modules 数量增长；上述局部不变量不提供整进程工作集的常量上界。
+性能实验读数不作为功能测试的挂钟或 RSS 判词。
+增量与分桶验收见第 35 节 T-036 的 `test_buckets.py` 与 `test_review_fixes.py`。
+这不证明整管线常量内存：报告校验 driver 保留 $O(\mathrm{rows})$ 的校验及元数据；
+流式索引的 1 GiB 目标未满足。
 
 发布消费全流收据 `receipt.json` 绑定的紧凑 `rows.jsonl`，不再需要 per-partition receipts。
 现役 handoff 从收据以 `rows_sha256` 绑定的紧凑 `rows.jsonl` 单次读取并校验每行，
 不打开或解析展开的 `census.json`；receipt digest、HEAD、export 与 rows digest
 必须一致。发布不改写 `census.json`，对该展开文件只检查 nonmutation。
-2026-09-10 记录的展开 `census.json` 大小为 21,810,544,658 B（约 21.8 GB），
-每行内联 import scope 列表是已知的归一剩余项，记在
-[#6748](https://github.com/the-omega-institute/trureturing/issues/6748)，不由证书的每进程上界掩盖。
+展开的 `census.json` 在每行内联 import scope 列表；该展开 artifact 的归一为开放限制（#6748），
+不由分桶证书的局部不变量消除。
 
 有效 artifact 必须复核 `accounted = certified + observed`、class 分项之和等于 certified、reason 分项之和
 等于 certified unreachable、query-completion 分项之和等于 observed，且 incomplete 分项为零；
@@ -7005,7 +6981,7 @@ owner [2026-09-09 增量裁决](https://github.com/the-omega-institute/trureturi
 `tools/lean-inspector/LeanInformationAudit/Projection/AnalysisInventory.lean`。
 census 是 read-only report consumer，artifact 永不作为 seal input 或 required gate；它不推断
 object arena，不把缺 realization 自动归到 finite／structural／unreachable。
-（J2 落地形态,2026-09-08:S0 的 status 总和改为实际 query-completion 分项；未完成 observation 先拒绝，不能用计数平衡把它变成有效 row。）
+query-completion 分项只计有效 observation；未完成 observation 先拒绝，不能用计数平衡把它变成有效 row。
 
 finite 与 structural constructors 都必须由指定 root maximal catalog occurrence discharge
 `TrivialInCatalog`；bounded truncation 只有 `transferred` constructor 的具名 theorem 所明确
@@ -7017,8 +6993,7 @@ consumer 仍待第 39 节 GATE 的 owner $\tau$ ruling。
 证书可以认证其分类，但不因此取得全对象结论、transfer 或 positivity，原有 truncation 限制不变。
 comparison 与 transfer 的方向检查见 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
 
-**结构 sidecar 与 assessment 分栏**：[#6717](https://github.com/the-omega-institute/trureturing/pull/6717)
-已提供独立 run-local `census-structure.json`，绑定 `head_sha`、`report_sha256` 与 `census_sha256`。
+**结构 sidecar 与 assessment 分栏**：独立 run-local `census-structure.json` 绑定 `head_sha`、`report_sha256` 与 `census_sha256`。
 这些证明依赖结构读数只作 report（定义见第 23.7 节），不是 `AnalysisDisposition` evidence，
 不改变 `census.json`、assessment rows／counts、`certified_complete` 或 Name-level 语义契约
 `ExactlyCovers`（非局部命令的 kernel 命题）。
@@ -7026,11 +7001,7 @@ observed 永不因结构读数而成为 classified；core support、深度或后
 
 ### 23.7 证明依赖结构读数(report-only)
 
-owner [2026-09-09 方向裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5607374209)
-原句为「给 observed 行加一层从证明项依赖闭包自动算出的结构读数, 我感觉只能这个方向吧」。
-依 [#5214 面板汇总](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5608154632)，
-这些读数已由 [#6717](https://github.com/the-omega-institute/trureturing/pull/6717) 实现，并于
-2026-09-10 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 合入 dev。
+结构 sidecar 从证明项依赖闭包自动计算结构读数；observed 行同样具有这些读数。
 产物是独立 run-local `census-structure.json`，绑定 `head_sha`、`report_sha256` 与实际
 `census.json` bytes 的 `census_sha256`；`source_inputs` 另绑定 olean-part manifests、reader、
 ownership、core set 与 projection 的指纹。展示 join 只按完整
@@ -7063,7 +7034,7 @@ import scope；无法唯一解析时显式不可用，自边不得静默删除�
 
 **direct ≠ folded**：若 $b$ 只引用仓内非冻结 helper $h$，而 $h$ 引用冻结 $a$，
 则 $b$ 没有 direct frozen prerequisite，却有 folded prerequisite $a$。
-已落地五节点 fixture 取 $F=\{a,b,c,d,g\}$，另有 $c\to a$、$d\to b,c$、$g\to b$：
+五节点 fixture 取 $F=\{a,b,c,d,g\}$，另有 $c\to a$、$d\to b,c$、$g\to b$：
 direct 图为 4 条边，folded 图补入 $b\to a$ 后为 5 条边；按 $a,b,c,d,g$ 顺序，
 direct 深度为 $(0,0,1,2,1)$，folded 深度为 $(0,1,1,2,2)$，
 folded 后代数为 $(4,2,1,0,0)$。不得拿 direct 根数或 direct depth 代替 folded 读数。
@@ -7096,7 +7067,7 @@ depth histogram 或后代数混名、互换或据此宣称取得其证书。
 
 generated policy 的现役值是 `in_denominator`：所有 frozen theorem keys 仍在分母，
 `generated_candidate` 只是 `.congr_simp` substring 的候选标签，不能证明 generated origin。
-落地样本有 307 个此标签；私有性、拼写或 `isInternalDetail` 也不是改分母的依据。
+私有性、拼写或 `isInternalDetail` 也不是改分母的依据。
 将 generated 排除出分类分母须另有 owner 的语义裁决，不由本 sidecar 自动施行。
 
 **缓存与失效**：raw summary 按 olean-part 内容摘要、同模块有序 part layout 与 reader／
@@ -7116,13 +7087,9 @@ unavailable reasons 的闭合集合为 `missing_olean_part`、`constant_missing`
 它们是 sidecar 字段，不分配新 IE-C codes，不构造 `UnreachableReason` 或 closed-reason proof。
 提取错误不能被解释为 registry absence，也不能修改 query 层的认证与观察分栏。
 
-**落地全库读数（2026-09-10，[#6717](https://github.com/the-omega-institute/trureturing/pull/6717)
-及 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767)）**：22,524 行中
-22,437 complete、74 partial、13 unavailable（12 `dependency_unresolved`、1 `frozen_key_ambiguous`）；
-direct edges 28,149，folded edges 39,647；folded depth histogram 为
-0:8,819 · 1:4,255 · 2:2,717 · … · 27:2；support 正例 46，其余 22,478 为 undetermined。
-这些数是该 frozen key 集上的结构测量；启用／关闭 sidecar 时 `census.json` 字节完全相同，
-主 census 仍为 certified 10、observed 22,514，`certified_complete=false`。
+结构 sidecar 的 complete／partial／unavailable 分栏与主 census 的认证分栏独立；
+启用／关闭 sidecar 时 `census.json` 必须逐字节相同，`certified_complete` 不变。
+验收采用第 35 节 T-036 的结构 sidecar 非干涉 fixtures。
 
 ---
 
@@ -7261,11 +7228,11 @@ snapshot coverage check，绝不用于过滤 seal membership。grouping key 只�
 
 ### 25.2 持久性
 
-已落地 v4.1 的事实是：`Registry.lean` 使用 `SimplePersistentEnvExtension`，其
+`Registry.lean` 使用 `SimplePersistentEnvExtension`，其
 `addImportedFn` 拼接 imported registrations；`CatalogBuilder.lean` 当前消费全部
 `InformationRegistry.entries`。因此 imported entries 对 consumers 可见且会进入 v4.1 seal。
 
-该已落地行为就是 v4.2 的 **import-closure seal membership** contract：
+该行为构成 **import-closure seal membership** contract：
 
 - 每个 seal 消费其 root import closure 中全部 `InformationRegistry.entries`，不得过滤 imported entries；
 - import 某个已经 sealed 的 `.olean` 会使其 entries 成为当前 seal members；
@@ -7619,7 +7586,7 @@ read-only JSON / CSV / DOT artifacts
 }
 ```
 
-v3 catalog record 必须另含。下列为示意结构,数值由封印实测：
+共享分析的 catalog record 必须另含下列示意结构，数值由封印计算：
 
 ```json
 {
@@ -7780,8 +7747,7 @@ LOO CfU node=K_int unique=44/2256 cert=causal_loo_cf
 CHAIN obs-int-cf generators=(ObsU,IntU,CfU) classes=(strict,strict,strict) increments=(2120,92,44) terminal_escape=0 cert=causal_telescope
 ```
 
-这些是第 43.1 节 literal `CfU | .inr N => .inr N` 的 H9 实测值：escape counts
-$2256/136/44/0$；H6 的预登记预测已被实验推翻。
+上述 causal mock 使用第 43.1 节 literal `CfU | .inr N => .inr N`，按第 35 节 T-034 的固定 counts 验收。
 
 ```text
 CATALOG e1-fst-snd-id arena=BoolPair verdict=redundant
@@ -7855,7 +7821,7 @@ SINGLETON[11] engine_census_self_application K_empty --[capture=<v2-certified-co
 }
 ```
 
-上面的 JSON block 与已落地 v2 theorem-record contract byte-for-byte 相同。冻结 v2 artifact
+上面的 JSON block 与本节冻结 theorem-record contract byte-for-byte 相同。该冻结 artifact
 不得要求、允许或容忍任何 v3-only 字段；尤其不得出现 `catalog_membership`、catalog-qualified
 `unit`/`certificate`、shared matrix、spectrum、layer-chain 或 root verdict。
 
@@ -8111,7 +8077,7 @@ IE-C036／IE-C037／IE-C044 的 message 定义见
 | IE-C038 | `MissingStructuralWitness` | structural strictness 或 witness declaration 缺失，或其类型不符合当前 catalog／index 的证书义务 |
 | IE-C044 | `DispositionCensusMismatch` | frozen report 的 `statement_id` 不唯一、coverage/totals/`certified_complete` 不精确、容器字段不符，或 observation root/owner/scope/completion/candidates 不符；inventory 重复先用 IE-C035，额外 excluded row 先用 IE-C036 |
 
-（J2 落地形态,2026-09-08:S0 拟议的 excluded-row IE-C044 映射未采用；observation 使用 completion／candidate 检查而非 absence-status enum，本 contract 的诊断为 IE-C034／035／036／037／038／044。）
+excluded rows 使用 IE-C036；observation 使用 completion／candidate 检查，诊断为 IE-C034／035／036／037／038／044。
 
 ---
 
@@ -8551,7 +8517,7 @@ fixture 同时覆盖 `equal`、`strictly_finer`、`strictly_coarser`、`incompar
 
 ### T-028　cross-arena address coincidence
 
-使用已落地 residue/commuting 的相同 kernel address 作为 diagnostic class；期望输出
+使用 residue/commuting 的相同 kernel address 作为 diagnostic class；期望输出
 `diagnostic_only: true`，且无法由此得到 `Equiv`、semantic transport、refinement、rate
 aggregation 或 admission evidence。尝试消费该地址得 IE-C030。
 
@@ -8589,7 +8555,7 @@ intervention members 为零。可选 512-state product 必须因 261,632 pairs �
 
 ### T-032　v2 baseline preservation
 
-已落地 `InformationRoot` 的十一项 singleton theorem counts、字段与语义在 schema-v2
+`InformationRoot` 的十一项 singleton theorem counts、字段与语义在本节的
 compatibility fixture 中 byte-for-byte 保持；schema-v3 shared results 使用不同 root/catalog
 identity，不覆盖 v2。
 
@@ -8614,7 +8580,7 @@ $h=(0,0,8,4)$，即 $h(0)=0,h(1)=0,h(2)=8,h(3)=4$。
 
 ### T-034　causal measured hierarchy
 
-使用第 43.1 节 literal `CfU`，不得改 readout 追旧预测。48 states、2,256 ordered pairs 上：
+使用第 43.1 节 literal `CfU`，readout 不因预期计数而改变。48 states、2,256 ordered pairs 上：
 
 | layer | escape count | edge capture |
 |---|---:|---:|
@@ -8626,7 +8592,7 @@ $h=(0,0,8,4)$，即 $h(0)=0,h(1)=0,h(2)=8,h(3)=4$。
 branch cross-check 固定为：IC branch 在 obs/int/cf 后 escape $80/20/0$，OI branch为
 $56/24/0$。证明 $K_{cf}\subsetneq K_{int}\subsetneq K_{obs}$、increments 两两不交且
 $2120+92+44=2256$。恰含三个 cumulative readouts 的 flat view 中
-$U_{Obs}=U_{Int}=0$、$U_{CF}=44$；H6 的预登记预测已被实验推翻。
+$U_{Obs}=U_{Int}=0$、$U_{CF}=44$。
 
 ### T-035　structural witness fixture
 
@@ -8661,7 +8627,7 @@ fixture 中被排除。selector 见 `tools/lean-inspector/LeanInformationAudit/D
 unreachable 由 `noCarrier` 指向绑定 theorem／statement 的 `closedObligation`，不能用 absence
 充作证据。observed 绑定真实 owner／root／完整 scope；structural observed row 还列出 matching
 registration 与 realization，说明 observed 本身不宣称缺席。两个 mixed fixture 分母均为 5，不能是空集。
-（J2 落地形态,2026-09-08:S0 的五类单一 fixture 未采用，selector 与两种 mixed fixture 分开；合成 keys 使用上述字符串，生产 `statement_id` 仍须取 elaborated export 的真实 `sha256:` identity，不以 fixture 标签代替。）
+selector 与两种 mixed fixture 分开；合成 keys 使用上述字符串，生产 `statement_id` 必须取 elaborated export 的真实 `sha256:` identity，不以 fixture 标签代替。
 
 两个 mixed fixture 都期望 `accounted=5`、`certified=2`、`observed=3`、
 `observed_query_completed=3`、`observed_query_incomplete=0`、`certified_complete=false`，
@@ -8673,7 +8639,7 @@ $(0,0,1,1)$，`no_canonical_object_carrier=1`，其余 reasons 为零。
 前者另以四类全 certified fixture 得 `4/4/0` 与 `certified_complete=true`；后者以真实 bounded／
 unreachable 证据的全 certified fixture 得 `2/2/0` 与 `certified_complete=true`。
 认证完备要求每行真实证据通过，不能只改 tag／flag；没有 `accounting_complete` JSON 字段。
-（J2 落地形态,2026-09-08:S0 的 `5/4/1`、absence-status counts 与替换为 `5/5/0` 的正例未落地；实际 mixed 为 `5/2/3`，全 certified 正例分别为 `4/4/0` 与 `2/2/0`。）
+mixed fixture 为 `5/2/3`，全 certified 正例分别为 `4/4/0` 与 `2/2/0`，分项使用 query completion。
 
 删除、复制（含同 key 的 certified／observed 重复）、stale identity、伪改 class payload
 依次触发 IE-C034--IE-C037；不同 theorem `Name` 复用同一 `statement_id` 仍触发 IE-C035。
@@ -8694,12 +8660,9 @@ theorem／statement／reason，用 IE-C037。候选 arena 身份不匹配用 IE-
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean` 的 identity 检查发出 IE-C036。
 所有拒绝均为报告校验，
 census fixture 不把 artifact 接成 seal input 或 required gate。
-（J2 落地形态,2026-09-08:S0 的空列表一律拒绝、absence-status IE-C044 与 excluded-row IE-C044 未采用；现役检查区分 observation schema 的 IE-C037、scope／candidate 的 IE-C044 和 excluded identity 的 IE-C036。）
+报告校验区分 observation schema 的 IE-C037、scope／candidate 的 IE-C044 和 excluded identity 的 IE-C036。
 
-**Phase 11 全库查询与发布 fixtures 已落地（2026-09-10，
-[#6660](https://github.com/the-omega-institute/trureturing/pull/6660)、
-[#6664](https://github.com/the-omega-institute/trureturing/pull/6664)，经
-[#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 进入 dev）**。
+**Phase 11 全库查询与发布 fixtures**：
 上述合成 J2 inventories 保留其局部 API 断言；生产查询 fixtures 从真实 olean parts 生成 rows，
 不能把手填空列表或 fixture identity 当作完成查询。覆盖面包括 `ModuleData` owner 成员、
 同名不同 statement 的消歧与分批隔离、nested evidence 的 root scope、缺 tracked olean 的
@@ -8718,12 +8681,13 @@ validated rows 和 report。多故障 fixtures 在 Lean publisher 与 Python ent
 `statement_id_nat` 绑定错误先于 missing row；class／evidence 的 IE-C037 义务不变。
 具名 Lean 反例见 `tools/lean-inspector/LeanInformationAudit/Tests/Census/Manifest/Precedence.lean`。
 
-range fixtures 检查每叶至多 $M$ ids、自适应分裂、错误 range 归属被拒、二叉组合的有序性／
+range fixtures 检查每叶至多 $M=128$ ids、自适应分裂、错误 range 归属被拒、二叉组合的有序性／
 长度／report 等式，以及删除任一合取不能继续通过。每叶／节点独立编译并内容寻址，
-增量 fixture 新增一个 key 时只重编受影响叶、祖先与 Root；第 23.6 节所引落地全库
-bucket build／assembly 的每进程峰值约 0.27 GiB 是性能实验读数，不作为功能测试的挂钟或 RSS 判词。
+增量 fixture 新增一个 key 时只重编受影响叶、祖先与 Root。
+bucket build／assembly 按第 23.6 节验收单叶独立性与二叉组合；导入接口与元数据随 range modules 数量增长。
+性能实验读数不作为功能测试的挂钟或 RSS 判词。
 最终环境只能是 Init + `Census.Certificate` + range modules，axioms 为 `[propext]`；
-不得把外层 $O(\mathrm{rows})$ 报告校验 driver 的内存算进单叶上界后宣称整管线常量内存。
+不得由单叶界宣称整进程或整管线常量内存；外层报告校验 driver 仍保留 $O(\mathrm{rows})$ 的校验及元数据。
 发布 fixture 消费全流收据绑定的 `rows.jsonl`，拒绝 rows／receipt 篡改，不再走 per-partition
 receipt 协议；展开的 `census.json` 不被 handoff 重新解析，发布前后 bytes 不变。
 全流与分桶回归见 `tools/lean-inspector/Census/tests/test_pipeline.py`、
@@ -8869,11 +8833,10 @@ $$
 
 `trureturing_engineering_optimization_v1.md` §6/§8 的 fused per-pair scan、`CertifiedCounts`
 与 proof sharing 实现本规范 seal 的计算；本文仍唯一负责数学定义与 admission semantics。
-H10 ruling、measured `InformationEscape` 11/12 capacity 与 governing parser rule
-`tools/StrataLint.Engine/Coordinates/Gid.cs`（`ParseFormalCoordinates`：ordinary formal
-coordinates 有 three or four parts;该上限已于 2026-09-08 放开为 `>= 3`(PR #6426),下述落址结论此后由其自身理由承担）要求 counting modules 落在 canonical-depth sibling
-`D5/S3/ConceptDynamics/InformationEscapeCounting/`；此裁决明确 **SUPERSEDES** 工程规范 v1
-§6.4 的 nested `InformationEscape/Counting/` proposal。schema v3 的 `proof_method` 必须报告
+counting modules 必须落在 sibling `D5/S3/ConceptDynamics/InformationEscapeCounting/`，
+不采用 nested `InformationEscape/Counting/` 布局。该布局独立于目录占用读数；
+`tools/StrataLint.Engine/Coordinates/Gid.cs` 的 `ParseFormalCoordinates` 要求 ordinary formal
+coordinates 至少三段，sibling placement 不由文法深度推出。`proof_method` 必须报告
 实际 direct、fused、partition 或 reflected certificate route，不得为字节对照伪装成旧方法
 （工程规范 §8）。工程规范 §9／§16 的 import-closure seal 义务保持有效。
 §19 的 $m\le N-1$ 约束逐 maximal catalog 保持，§20 的分包只能改变实施顺序，不能缩小
@@ -8967,7 +8930,6 @@ register_information_theorem
 
 ### Phase 9　v4.1 singleton baseline 到 v4.2 shared catalogs
 
-已落地的
 `D5.S3.ConceptDynamics.InformationEscape.InformationRoot` 保持冻结。它在一个模块中显式
 登记十个 frozen legacy theorems 与 `engine_census_self_application`，每个 occurrence
 独占一个 arena，因此其十一项 `unique_capture_count` 都是 singleton 语义：
@@ -8978,7 +8940,7 @@ K_{-i}=A.\mathrm{State}^2,
 U_i=D_A\setminus K_i.
 $$
 
-这些 schema-v2 数值证明了 realization 与正 capture baseline；它们从未声称共享 peers
+这些 singleton 数值证明 realization 与正 capture baseline；它们不声称共享 peers
 之间不可冗余。v4.2 不修改、重标、覆盖或拿它们冒充 peer-relative count。shared results
 由一个**新** designated system root 导入固定仓库快照的完整 registration closure，并另写
 schema v3；已在 imports 中持久可见的 occurrences 不得重新登记。
@@ -9006,15 +8968,15 @@ semantics：imported registrations 对 environment consumers 可见且进入 sea
 
 ### Phase 10　v4.3 generated-kernel hierarchy
 
-v4.2 dependency chain 落地后，Phase 10--11 只采用以下一个七步顺序：
+Phase 10--11 依赖前述 dependency chain，并采用以下一个七步顺序：
 
-1. 已完成的 refutation experiment 固定 T-033 E1 预测，并以 H9 measured causal counts 勘正 T-034；
-2. 本 v4.3 spec-only content PR；
+1. refutation experiment：固定 T-033 E1 与 T-034 literal causal counts 的验收值；
+2. 本 spec 的 content contract；
 3. hierarchy／structural engine deposits：在
-   `D5/S3/ConceptDynamics/InformationEscapeHierarchy/` 落地 `GeneratedKernel` lattice、
+   `D5/S3/ConceptDynamics/InformationEscapeHierarchy/` 提供 `GeneratedKernel` lattice、
    `KernelChain`（`GeneratorSchedule`／`StrictKernelChain` API）、spectrum/overlap/refinement laws、
    `StructuralArena` 与 `StructuralCatalog`；
-4. 〔2026-09-10 已由 [#6660](https://github.com/the-omega-institute/trureturing/pull/6660)、[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 落地。〕disposition census tool 与完整 inventory：只读 frozen elaborated truth export，建立 exactly-one
+4. disposition census tool 与完整 inventory：只读 frozen elaborated truth export，建立 exactly-one
    `CensusAssessment` census；记账先完备、认证分类逐步增加，两者按 Phase 11 明确分栏；
 5. judge v3 `kernel_projection` 与 covers-only ASCII renderer；
 6. E1、causal、disposition 与十一 singleton compatibility fixtures；
@@ -9025,71 +8987,58 @@ root、catalog projection 或 occurrence census 必须等待 v4.2 step 3 的 imp
 grouping mechanics。auxiliary root 不得通过避开 imported registrations 冒充完整 root。
 所有 D5 layers 各自 deposit，且不得修改 frozen modules 或 `Trureturing.lean`。
 
-counting 优化若参与 hierarchy reflected values，只能依 H10 ruling、measured
-`InformationEscape` 11/12 capacity 与 governing parser rule
-`tools/StrataLint.Engine/Coordinates/Gid.cs`（`ParseFormalCoordinates`：ordinary formal
-coordinates 有 three or four parts;该上限已于 2026-09-08 放开为 `>= 3`(PR #6426),下述落址结论此后由其自身理由承担）落在 sibling
-`D5/S3/ConceptDynamics/InformationEscapeCounting/`；此位置明确 **SUPERSEDES** 工程优化规范
-v1 §6.4 的 nested `InformationEscape/Counting/` proposal，`proof_method` 仍依工程规范 §8 写真实
-路线，import closure 仍依 §9／§16 seal。
+counting 优化若参与 hierarchy reflected values，必须落在 sibling
+`D5/S3/ConceptDynamics/InformationEscapeCounting/`，不采用 nested
+`InformationEscape/Counting/` 布局。该布局独立于目录占用读数；
+`tools/StrataLint.Engine/Coordinates/Gid.cs` 的 `ParseFormalCoordinates` 要求 ordinary formal
+coordinates 至少三段，sibling placement 不由文法深度推出。`proof_method` 依工程规范 §8 写真实
+路线，import closure 依 §9／§16 seal。
 
 ### Phase 11　disposition census
 
-〔2026-09-10 已由 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 落地，现役三层契约见第 23.6–23.7 节。〕本阶段只细化上述固定顺序的第 4 步，不改变各步依赖。在 import-closure identity／grouping
-mechanics 与第 3 步 structural engine 都存在后，依第 8.7 节 owner 2026-09-08 裁决，census 必须：
+本阶段细化上述固定顺序的第 4 步，各步依赖不变；三层契约见第 23.6–23.7 节。
+census 依赖 import-closure identity／grouping mechanics 与第 3 步 structural engine，并按第 8.7 节要求：
 
-1. 〔2026-09-10 accounting 已由 [#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 完成。〕先完成 accounting：Lean Meta tool 只读当前 truth export dialect 的完整 elaborated nodes，
+1. accounting：Lean Meta tool 只读当前 truth export dialect 的完整 elaborated nodes，
    先选择 `freeze_status=frozen` 的 nodes（模块），再选择其 `declarations` 中 `kind=theorem`
    的声明，由 declaration 的 `declaration_name_key` 与 `statement_id` 派生
    `(structured Name, statement_id)` keys；每个 key 恰有一个 `CensusAssessment`，observed
    允许入账，但其完整 scope 与 completed query 必须由 census 自己核实；
-2. 〔2026-09-10 已按 [#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 的真实证据分栏，认证完备目标不变。〕certified classification 逐步增加：只有证据成立才写 finite／structural／bounded truncation／
+2. certified classification：只有证据成立才写 finite／structural／bounded truncation／
    unreachable disposition；其余按实际完成查询写 observed，永不计作 classified、AC-023 完成
    或 closed reason。认证完备目标持续 open，直到全部 key 都有 certified disposition；
-3. 〔2026-09-10 按 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 的现役输出勘正：两个完备命题不等于两个 JSON flags。〕成功判据是 honest complete accounting **且**显式 certified／observed split；报告
+3. 成功判据是 honest complete accounting **且**显式 certified／observed split；报告
    `accounted`、certified class／unreachable reason 分项、observed query-completion 分项与 exact rows，
    核实 keys equality，分别报告记账完成（命令绑定、id 集证书与 `status=complete`）及认证完备
    （`certified_complete`），不发射 `accounting_complete` flag。`observed > 0` 时
    `certified_complete=false`，即使所有 keys 已入账也不例外；
 4. assessment records 绑定 immutable HEAD/report inputs；census report 不回写数学，永不作为
    seal input 或 required gate；现役命令见 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`；
-5. 〔2026-09-10 上述前置已由 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 满足；后续依赖顺序保留。〕上述记账与分栏里程碑成立后才进入第 5 步 judge projection／ASCII；其后依次只能是第 6 步 fixtures 与
-   第 7 步保持 OPEN 的 dual-novelty gate design／owner $\tau$ ruling request。
+5. 第 5 步 judge projection／ASCII 以记账与显式分栏为前置；其后依次为第 6 步 fixtures 与
+   第 7 步 dual-novelty gate design，activation 条件见第 39 节 GATE。
 
-〔2026-09-10 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 已达成记账与显式分栏里程碑，未宣称认证完备。〕里程碑不以 finite percentage 定义，也不以“所有 rows 都是 observed”定义；成功要求完整诚实
+记账与分栏的成功不以 finite percentage 定义，也不以“所有 rows 都是 observed”定义；成功要求完整诚实
 记账、已有证据的认证及显式分栏，不能把已有认证退回 observed 来声称完成。它与 AC-023 的
 认证完备是两个命题。Real dynamics、function spaces 或 unbounded-index families 只有具备
 structural 所需证据才进入该 class；未有证据不自动分类。只有满足专属 closed-reason proof
 的对象才进入 unreachable；bounded experiment 在无 transfer theorem 时仍明确 `report-only`。
 
-本步骤内的落地顺序固定为：S0 先把裁决写入本 spec（content plane）；J1 为已落地的 current
-truth export 读取与 frozen 过滤（#6340）；**J2 已由 #6389／#6403 于 dev `5e5d5e07c5` 落地**，
-assessment／closed-reason evidence contract 与合成 fixtures 的现役形态见第 23.6、35 节及
+本步骤的依赖顺序为 content contract、truth export 读取与 frozen 过滤、局部 assessment／
+closed-reason evidence contract 与合成 fixtures、生产查询。局部 API 与 fixtures 见第 23.6、35 节及
 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`、
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
-**J3 在 J2 之后已落地**：[#6446](https://github.com/the-omega-institute/trureturing/pull/6446)
-先实现查询，其按 module group 分区装载的形态已由
-[#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 的流式 olean 查询取代；
-generator／loader 位于 `tools/**`，从 export 与 elaborated 输出产生并核查 assessment inventory。
-observation query、`make census`、run-local census projections 及全仓 census 读数已有生产实现，
-不能由 J2 fixtures 冒领。[#6664](https://github.com/the-omega-institute/trureturing/pull/6664)
-提供全流收据绑定与自适应分桶 id 集证书，
-[#6717](https://github.com/the-omega-institute/trureturing/pull/6717) 提供 report-only 结构 sidecar；
-三者于 2026-09-10 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 合入 dev。
-J2／J3 均为独立 judge-plane PR，依 `CLAUDE.md` 器律⑦″先在 `integration-census-0908` 验证；
-不与内容行同 PR。真实内容行只在证据存在时落于 `D5/**`，每模块最多 100 条内容行且满足
+生产 generator／loader 位于 `tools/**`，流式读取 export 与 elaborated 输出(olean)，产生并核查
+assessment inventory。observation query、`make census`、run-local census projections 与全仓查询
+由生产 fixtures 验收，局部合成 fixtures 不证明这些生产行为。
+发布使用全流收据绑定与自适应分桶 id 集证书；结构 sidecar 只作 report。
+局部校验与生产查询的 judge-plane 变更按 `CLAUDE.md` 的判官集成规则独立验证，不与内容行同 PR。
+真实内容行只在证据存在时落于 `D5/**`，每模块最多 100 条内容行且满足
 SL-003 的模块与目录容量约束；generator 不以空列表为完成证据，不为满足计数生成无证据的内容行。
-上述 S0／J2／J3 只细分第 4 步，不提前激活第 7 步 GATE。
+上述依赖只细分第 4 步，不激活第 7 步 GATE。
 
-**落地读数（2026-09-10，[#6767](https://github.com/the-omega-institute/trureturing/pull/6767)）**：
-22,524 frozen theorem keys 全部 accounted，certified 10、observed/query-completed 22,514、
-query-incomplete 0，`certified_complete=false`。结构行另为 22,437 complete／74 partial／
-13 unavailable；它们是第 23.7 节的读数状态，不是新的 disposition class 或完成豁免。
-
-**实测基线（2026-09-08，dev `f222885ccb`，第 8.7 节裁决所据读数）**：
-`accounted=22,195`、`certified=11`（全部 finite；structural、bounded truncation 与 certified
-unreachable 均为 0）、`observed=22,184`。这是首张全库图的测量基线，非目标数量。
-该次历史计数并非由当时尚未落地的 J2／J3 产生；按本裁决其 `certified_complete=false`，AC-023 未满足。
+全库查询与 id 集证书确认记账完成；`observed > 0` 时 `certified_complete=false`，AC-023 不满足。
+结构行的 complete／partial／unavailable 是第 23.7 节的读数状态，不是 disposition class 或完成豁免。
+全库查询、分桶证书与结构 sidecar 的验收入口见第 35 节 T-036。
 
 ---
 
@@ -9279,7 +9228,7 @@ report-only／transfer theorem，真正不可达者使用 closed reason。finite
 `strictlyAscending ids = true ∧ ids.length = requested ∧ ids = reportIds`，ids 为
 `statement_id` 的 256-bit Nat；完整 key 的 Name↔hex↔Nat 绑定与 report-side authority
 由 elaborator 的 strict codec／structural binder 承担，不在 kernel 命题中加入 theorem Name。
-分桶证书与绑定契约见第 23.6 节及 [#6664](https://github.com/the-omega-institute/trureturing/pull/6664)。
+分桶证书与绑定契约见第 23.6 节。
 J2 局部的 Name-level 语义契约 `DispositionInventory.ExactlyCovers`（非局部命令的 kernel 命题）
 与 artifact 的 `certified_complete` 分别见
 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`、
@@ -9317,13 +9266,11 @@ artifact 的 `counts` 报告 `accounted`、`certified`、四类与 unreachable r
 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean`、
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`。
 census 只作报告，永不作为 seal input 或 required gate。
-（J2 落地形态,2026-09-08:S0 的 generic semantic-contract／candidate-domain 字段改为具名 typed obligation；absence-status 分项未采用，现役输出 query-completion 分项与单一 `certified_complete`，没有 `accounting_complete` flag。）
+候选语义由具名 typed obligation 承担；输出使用 query-completion 分项与单一 `certified_complete`，没有 `accounting_complete` flag。
 
-2026-09-10 经 [#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 落地的全库
-22,524 keys 已全部入账：certified 10、observed/query-completed 22,514、query-incomplete 0。
-查询层 `status=complete` 与 id 集证书确认的是记账完成，`certified_complete=false`，
-本 AC 仍未满足。第 23.7 节的结构 sidecar 即使某行 `status=complete` 或 support 为正，
-也不增加 classified／certified 数量；owner 的「observed 永远不算完成」原义不变。
+查询层 `status=complete` 与 id 集证书确认记账完成；`observed > 0` 时 `certified_complete=false`，
+本 AC 不满足。第 23.7 节的结构 sidecar 即使某行 `status=complete` 或 support 为正，
+也不增加 classified／certified 数量；observed 永远不算完成。验收入口见第 35 节 T-036。
 
 ### AC-024　Bounded kernel projection
 
@@ -9355,13 +9302,12 @@ JSON 与 ASCII 按第 30 节规则 byte-stable；IE-C034--IE-C044 的 trigger、
 inventory → judge v3 projection／covers-only ASCII → fixtures → **OPEN** gate design 与 owner ruling
 request。registry consumers 必须等待 v4.2 import-closure identity／grouping mechanics；hierarchy
 engine 与 counting modules 分别留在 GID-compliant siblings `InformationEscapeHierarchy/` 与
-`InformationEscapeCounting/`；此布局依 H10 ruling、measured `InformationEscape` 11/12 capacity
-与 governing parser rule `tools/StrataLint.Engine/Coordinates/Gid.cs`
-（`ParseFormalCoordinates`：ordinary formal coordinates 有 three or four parts;该上限已于 2026-09-08 放开为 `>= 3`(PR #6426),下述落址结论此后由其自身理由承担），且 counting
-sibling 明确 **SUPERSEDES** 工程规范 v1 §6.4 的 nested `InformationEscape/Counting/` proposal；
+`InformationEscapeCounting/`；该布局独立于目录占用读数，且 counting modules 不采用 nested
+`InformationEscape/Counting/` 布局。`tools/StrataLint.Engine/Coordinates/Gid.cs` 的
+`ParseFormalCoordinates` 要求 ordinary formal coordinates 至少三段；sibling placement 不由文法深度推出；
 frozen D5 与 `Trureturing.lean` 零修改。
 
-### GATE　delta-first dual novelty gate（OPEN pending owner $\tau$ ruling）
+### GATE　delta-first dual novelty gate
 
 设计对象只包含 base 无现役 Freeze、candidate HEAD 新增首次 Freeze 的 declarations。对每个
 此类 `statement_id`，未来 gate 必须原子验证以下合取，任一项不蕴含另一项：
@@ -9701,7 +9647,7 @@ $$
 
 ## 43.1 统一 Boolean causal alignment 与三层捕获
 
-精确使用两个已落地 carrier：
+精确使用两个 carrier：
 
 ```lean
 namespace IC
@@ -10241,7 +10187,7 @@ v4.3 不修改第 48、49 节的任何字节；它在 v4.2 shared-arena／analys
 5. node payload 是 `escapeAt`，edge payload 是 `edgeCapture`；terminal escape、leave-one-out
    $U_i$、$h(k)$、overlap/refinement matrices 与 catalog verdict 是 chain-independent invariants；
 6. finite State 使用 exact reflected counts/rates；任意 State 使用
-   `StructuralArena`／`StructuralCatalog` 与 strict-inclusion pair witness。已落地
+   `StructuralArena`／`StructuralCatalog` 与 strict-inclusion pair witness。
    `StructuralNovelty` 仍是 finite-only bridge，不称 universal；
 7. frozen elaborated truth export 中每个 theorem `(structured Name, statement_id)` 恰有一个
    `CensusAssessment`；记账完备与认证完备按第 8.7、23.6 节分开。只有 certified 分支的
@@ -10259,20 +10205,17 @@ v4.3 不修改第 48、49 节的任何字节；它在 v4.2 shared-arena／analys
    leave-one-out node 与 certified-schedule node reference 都须由 `S` schema validation 解析到
    materialized `node_key`。JSON／ASCII 是 projection，永不成为 admission input。node keys、
    chain IDs 及其引用、layout、hash、timing 与 heuristic orders 均 report-only；
-10. T-034 采用 literal causal readouts 的实测 escape counts $2256/136/44/0$ 与 captures
+10. T-034 按第 43.1 节 literal causal readouts 验收 escape counts $2256/136/44/0$ 与 captures
     $2120/92/44$，branch escapes 为 $80/20/0$ 与 $56/24/0$，flat unique counts 为 $0/0/44$；
-    H6 的预登记预测已被实验推翻；
-11. sealing scope 始终是 import closure（工程优化规范 v1 §9／§16）；H10 ruling、measured
-    `InformationEscape` 11/12 capacity 与 governing parser rule
-    `tools/StrataLint.Engine/Coordinates/Gid.cs`（`ParseFormalCoordinates`：ordinary formal
-    coordinates 有 three or four parts;该上限已于 2026-09-08 放开为 `>= 3`(PR #6426),下述落址结论此后由其自身理由承担）要求 hierarchy／structural modules 位于 GID-compliant
-    sibling `InformationEscapeHierarchy/`，counting modules 位于 `InformationEscapeCounting/`；
-    后者明确 **SUPERSEDES** 工程优化规范 v1 §6.4 的 nested
-    `InformationEscape/Counting/` proposal。`proof_method` 依工程规范 §8 如实报告真实路线；
-    strict chain 的 $\ell\le N-1$ 是 §19 的 lattice fact；
-12. object-level novelty 与 `CLAUDE.md` 5⁗ `proof_shape` 正交，未来 admission 是二者连同
-    exactly-one disposition 的合取。delta-first/debt-ratchet 设计已固定，但 required-check
-    activation 是 admission-policy／$\tau$ 变更，保持 **OPEN pending owner ruling**；
+11. sealing scope 始终是 import closure（工程优化规范 §9／§16）；hierarchy／structural modules 位于
+    GID-compliant sibling `InformationEscapeHierarchy/`，counting modules 位于 `InformationEscapeCounting/`，
+    不采用 nested `InformationEscape/Counting/` 布局。该布局独立于目录占用读数；
+    `tools/StrataLint.Engine/Coordinates/Gid.cs` 的 `ParseFormalCoordinates` 要求 ordinary formal
+    coordinates 至少三段，sibling placement 不由文法深度推出。
+    `proof_method` 依工程规范 §8 如实报告真实路线；strict chain 的 $\ell\le N-1$ 是 §19 的 lattice fact；
+12. object-level novelty 与 `CLAUDE.md` 5⁗ `proof_shape` 正交，admission 设计是二者连同
+    exactly-one disposition 的合取。delta-first/debt-ratchet 设计按第 39 节 GATE 定义，required check
+    不激活该 gate；activation 是 admission-policy／$\tau$ 变更，条件见第 39 节 GATE；
 13. frozen v4.1 schema-v2 artifact、十一 singleton counts、frozen D5 modules、
     `Trureturing.lean` 与第 48、49 节原文均保持不变。
 
