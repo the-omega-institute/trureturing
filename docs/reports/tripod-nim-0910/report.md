@@ -1,6 +1,6 @@
 # Tripod Nim implementation report
 
-The kernel theorem refutes only printed Conjecture 2 of arXiv:2401.07943v1. The paper's transition at n=10 has a least-period-264 orbit, and 264 does not divide 3280. Both independent integer computations agree with all four supplied checkpoints. `make lean` and the final `make lean-report` pass; the latter confirms the closed negation and exactly one included theorem. Blueprint emission also passes. The requested local gate is the remaining validation step at this checkpoint.
+The kernel theorem refutes only printed Conjecture 2 of arXiv:2401.07943v1. The paper's transition at n=10 has a least-period-264 orbit, and 264 does not divide 3280. Both independent integer computations agree with all four supplied checkpoints. `make lean` and the final `make lean-report` pass; the latter confirms the closed negation and exactly one included theorem. Blueprint emission also passes. The final local gate exits 0 with content checks passed and the documented SL-022 protected-surface outcome; full engineering tests passed in the preceding run. This is an implementation delivery, without a deposit or CI/PR approval claim.
 
 ## Preregistration v1 (preserved initial record)
 
@@ -105,3 +105,20 @@ The full local gate will use the immutable initial base `248a800843acf89ed184074
 The full `make gate BASE=248a800843acf89ed184074d66a8d577fc028f99` run completed all engineering stages successfully: 5,092 tests passed across eight test projects (including the main 4,154-test suite and 232 architecture tests), and engineering selftests passed. Candidate report loading, Scribe verification, SL-031 typed utility admission, and SL-032 narrative checks passed. The run took 909 seconds; the gate script exited 1 and Make exited 2 because this new report raised the `docs/reports` direct-file count to 49, exceeding the admission cap of 48 (SL-003). The report is therefore moved to `docs/reports/tripod-nim-0910/report.md`, with its library-note reference updated. Existing report files are untouched.
 
 The other finding is SL-022 for the new `.scribe.cs` protected surface; the local wrapper explicitly treats a sole SL-022 verdict as its documented exit-0 protected-surface outcome. This is not a CI approval. After this documentation-only correction, the admission flow will be rerun with the supported `GATE_ARGS=--skip-engineering` option, preserving the successful engineering evidence from the full run. No gate rule, inspector, test or protection setting is changed.
+
+
+## Final validation and delivery
+The second local gate (`make gate BASE=248a800843acf89ed184074d66a8d577fc028f99 GATE_ARGS=--skip-engineering`) exits 0 after 117 seconds on commit `8701065db6`. It explicitly reports `protected-surface change (SL-022); content checks passed`. SL-003 is resolved; SL-031 observes the certified-instance/refutes target, and SL-032 passes. The retained SL-022 marker concerns the requested new `.scribe.cs` file. SL-034 observes the missing frozen state because this task explicitly excludes deposit. Neither observation is represented as a freeze or CI approval. The first full gate checked engineering on `f63ee7b3ac`; only report location/content and its library-note link changed afterward. The final report-only commit records these results and is not claimed as a separately tested CI revision.
+
+All required build routes were used: final `make lean` exits 0; final `make lean-report` exits 0 with source-bound typed negation evidence; all three `make emit` runs exit 0. The third emit, after the report relocation, changes no Blueprint. No bare `lake build` was invoked by the worker. No source or gate change follows the successful content checks.
+
+The numerical obstruction is `264 = 2³ × 3 × 11` and `3280 = 12 × 264 + 112`. Every proper divisor of 264 divides 132, 88 or 24, so the transferred return and three transferred nonreturns force the minimal period to be 264. The result uses the preregistered semantic/evaluator bridge on its live proof path. `proof_shape: content`; `escape_witness: transition/evaluator correctness plus the four kernel-checked orbit facts`; `admission_basis: escape-witness`; direct frozen dependencies (GID + statement_id): `[]`.
+
+Delivery files:
+- `D5/S0/Certificates/TripodNimPeriodRefutation.lean`
+- `Blueprint/D5/S0/Certificates/TripodNimPeriodRefutation.scribe.cs`
+- `Blueprint/D5/S0/Certificates/TripodNimPeriodRefutation.md`
+- `Library/Certificates/hennessey2024tree.md`
+- `docs/reports/tripod-nim-0910/report.md`
+
+Worker-owned source, computation, semantic and validation receipts are under `/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/tripod-nim-0910/attempt-1`. The final result envelope and completion sentinel are published there atomically after the final report commit is pushed. No initial-state binding, native_decide, deposit, cover or PR was performed. Literature remains bounded as recorded above; the MathDB note was not independently retrieved, and no novelty claim or independent-review claim is made.
