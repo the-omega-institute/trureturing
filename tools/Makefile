@@ -31,7 +31,7 @@ check-fast:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln --filter "$(CHECK_FAST_FILTER)"
 
 test:
-	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln
+	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln $(if $(TEST_FILTER),--filter "$(TEST_FILTER)")
 
 ci-build:
 	@/bin/bash "$(HERE)/scripts/ci-stage.sh" build
