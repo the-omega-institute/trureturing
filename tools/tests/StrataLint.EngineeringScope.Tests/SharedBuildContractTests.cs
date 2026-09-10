@@ -241,13 +241,13 @@ public sealed class SharedBuildContractTests
     }
 
     internal static (int Exit, string Text) Process(string root, string executable, string[] arguments,
-        IReadOnlyDictionary<string, string>? environment = null)
+        IReadOnlyDictionary<string, string>? environment = null, TimeSpan? hangGuard = null)
     {
         var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (var argument in arguments) start.ArgumentList.Add(argument);
         foreach (var pair in environment ?? new Dictionary<string, string>()) start.Environment[pair.Key] = pair.Value;
         using var process = System.Diagnostics.Process.Start(start)!;
-        using var deadline = new CancellationTokenSource(TestBudgets.ScriptProcessHangGuard);
+        using var deadline = new CancellationTokenSource(hangGuard ?? TestBudgets.ScriptProcessHangGuard);
         var stdout = process.StandardOutput.ReadToEndAsync(deadline.Token);
         var stderr = process.StandardError.ReadToEndAsync(deadline.Token);
         try

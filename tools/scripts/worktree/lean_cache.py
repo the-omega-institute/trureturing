@@ -41,17 +41,19 @@ def actions_keys(root: pathlib.Path) -> dict:
     attempt = os.environ.get("GITHUB_RUN_ATTEMPT", "")
     if not re.fullmatch(r"[0-9]+", run) or not re.fullmatch(r"[0-9]+", attempt):
         raise ValueError("snapshot keys require GITHUB_RUN_ID and GITHUB_RUN_ATTEMPT")
+    writer_allowed = (os.environ.get("GITHUB_EVENT_NAME") == "push"
+        and os.environ.get("GITHUB_REF") in (
+            "refs/heads/dev",
+            # Integration-only rollout binding; exclude from dev delivery.
+            "refs/heads/integration-ci-current-stability-0909-tests")
+        and os.environ.get("STRATALINT_CACHE_WRITES", "true") == "true")
     result = {"mathlib_revision": revision, "os": system, "arch": machine,
               "partition": partition_path(root),
-              "save_allowed": os.environ.get("GITHUB_EVENT_NAME") == "push"
-                  and os.environ.get("GITHUB_REF") in (
-                      "refs/heads/dev",
-                      # Integration-only rollout binding; exclude from dev delivery.
-                      "refs/heads/integration-ci-current-stability-0909-tests")
-                  and os.environ.get("STRATALINT_CACHE_WRITES", "true") == "true"
-                  and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true"}
+              "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
+              # A compilation seed attests production, never engineering/current checks.
+              "judge_save_allowed": writer_allowed and os.environ.get("STRATALINT_BUILD_SUCCEEDED") == "true"}
     paths = {"dependency": ".lake/packages", "project": ".lake/build",
-             "report": ".lake/report-cache"}
+             "report": ".lake/report-cache", "judge": ".judge-binaries"}
     for layer, path in paths.items():
         prefix = f"lean-{layer}-v3-{revision}-{system}-{machine}-"
         result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",

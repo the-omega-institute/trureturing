@@ -21,16 +21,20 @@ fi
 case "$stage" in
   build|engineering)
     [[ $# == 1 ]] || exit 2
-    export CI=true
+    export CI=true DOTNET_CLI_UI_LANGUAGE=en-US
     if [[ "$stage" == engineering && -n "${CI_BUILD_ROUND:-}" ]]; then
       [[ -f "$runner" ]] || exit 2
       dotnet "$runner" "$stage" --repository "$ROOT" --build-round "$CI_BUILD_ROUND"
       exit $?
     fi
+    python3 tools/scripts/report/dotnet_producer.py prepare "$ROOT"
+    export CustomAfterMicrosoftCSharpTargets="$ROOT/build/judge-seed/seed.targets"
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-restore -- \
       dotnet restore tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode
+    # Match the solution's import graph so its bootstrap compiler seed is reusable.
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-build -- \
-      dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror
+      dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror \
+        -p:CustomAfterMicrosoftCommonTargets="$ROOT/tools/scripts/ci-build-outputs.targets"
     dotnet "$runner" "$stage" --repository "$ROOT"
     ;;
   current)
