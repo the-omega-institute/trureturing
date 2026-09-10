@@ -88,6 +88,7 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
             "path": source_path,
             "source_sha256": source_sha,
             "imports": imports,
+            "materials": {"sha256/" + value["type_sha256"][7:] for value in declarations},
             "refutation_claim_path": None,
         }
         refutation = item.get("utility_refutation")

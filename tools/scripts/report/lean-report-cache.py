@@ -101,6 +101,17 @@ def checked_root(root):
         raise ValueError("cache-root-untrusted")
 
 
+def validate_transport_report(report):
+    # The report owner supplies material references; transport checks membership
+    # without reimplementing report or statement semantics.
+    modules, _ = delta_owner().parse_json_modules(report)
+    expected = {name for module in modules.values() for name in module["materials"]}
+    with zipfile.ZipFile(member(report, ".materials.zip")) as materials:
+        names = materials.namelist()
+        if len(names) != len(expected) or set(names) != expected:
+            raise ValueError("material-members-mismatch")
+
+
 def copy_bundle(report, directory, transport):
     bundle_metadata(report, transport)
     target = directory / RAW
@@ -109,7 +120,7 @@ def copy_bundle(report, directory, transport):
     member(target, ".sha256").write_text(digest(target) + "  " + RAW + "\n", encoding="ascii")
     bundle_metadata(target, transport)
     if transport:
-        delta_owner().parse_json_modules(target)
+        validate_transport_report(target)
     return target
 
 
@@ -159,7 +170,7 @@ def pack(report, archive):
     if report.name != RAW or archive.name != asset_name(repository, provenance["producer_sha256"],
             provenance["repository_inspector_sha256"], provenance["lean_config_sha256"]):
         raise ValueError("archive-coordinate-mismatch")
-    delta_owner().parse_json_modules(report)
+    validate_transport_report(report)
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, allowZip64=True) as bundle:
         bundle.comment = json.dumps({"producer_commit_sha": os.environ.get("GITHUB_SHA", ""),
                                     "workflow_run_id": os.environ.get("GITHUB_RUN_ID", "")}).encode("utf-8")
@@ -188,7 +199,7 @@ def unpack(archive, directory):
     if archive.name != asset_name(repository, provenance["producer_sha256"],
             provenance["repository_inspector_sha256"], provenance["lean_config_sha256"]):
         raise ValueError("archive-coordinate-mismatch")
-    delta_owner().parse_json_modules(report)
+    validate_transport_report(report)
 
 
 def asset_inventory(path):

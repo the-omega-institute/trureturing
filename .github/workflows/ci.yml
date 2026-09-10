@@ -359,10 +359,9 @@ jobs:
           source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
-          for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
-            test -s "${source}${suffix}"
-          done
+          # Validate the complete transport bundle before a hit can skip production.
+          source="$(python3 "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-cache.py" stage \
+            --bundle "$source" --staging-directory "$RUNNER_TEMP/validated-lean-report-cache" --transport)"
           helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
           "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
@@ -478,7 +477,7 @@ jobs:
           export STRATALINT_REPORT_CACHE_REMOTE=1
           "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-ci-baseline.sh" \
             --bundle "$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json" \
-            --cache-root "$STRATALINT_REPORT_CACHE_ROOT" >/dev/null || true
+            --cache-root "$STRATALINT_REPORT_CACHE_ROOT" --transport >/dev/null || true
           producer="$GITHUB_WORKSPACE/candidate/tools/lean-inspector/inspect.sh"
           pair_producer="$GITHUB_WORKSPACE/candidate/tools/scripts/lean-report-pair.sh"
           test -x "$producer"
@@ -503,15 +502,8 @@ jobs:
           target="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           mkdir -p "$(dirname "$target")"
           rm -rf -- "${target}.logs"
-          for suffix in '' .input.attestation .provenance.json .materials.zip; do
-            test -s "${source}${suffix}"
-            cp "${source}${suffix}" "${target}${suffix}"
-          done
-          read -r declaredSha256 declaredName < "${source}.sha256"
-          reportSha256="$(sha256sum "$target" | cut -d ' ' -f 1)"
-          test "$declaredSha256" = "$reportSha256"
-          test "$declaredName" = "$(basename "$source")"
-          printf '%s  %s\n' "$reportSha256" "$(basename "$target")" > "${target}.sha256"
+          python3 "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-cache.py" stage \
+            --bundle "$source" --staging-directory "$(dirname "$target")" --transport >/dev/null
           "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"

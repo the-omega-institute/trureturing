@@ -115,7 +115,7 @@ internal sealed class LeanReportTransportFixture : IDisposable
             input_address = "sha256:" + PairAddress, producer_sha256 = Address[1], repository_inspector_sha256 = Address[1],
             lean_sources_sha256 = Address[2], lean_config_sha256 = Address[3], report_sha256 = digest,
         }) + "\n");
-        File.WriteAllBytes(bundle + ".materials.zip", Zip(new Dictionary<string, byte[]> { ["sha256/fixture"] = [1, 2, 3] }));
+        File.WriteAllBytes(bundle + ".materials.zip", Zip(new Dictionary<string, byte[]>()));
         Directory.CreateDirectory(bundle + ".logs");
         File.WriteAllText(bundle + ".logs/producer.log", "diagnostic only\n");
         return bundle;
@@ -323,7 +323,7 @@ internal sealed class LeanReportTransportFixture : IDisposable
         out.write_text('{"modules": ['+', '.join(json.dumps(m) for m in modules)+'], "schema": "stratalint-raw-lean-report-v2"}\n')
         pathlib.Path(str(out)+'.sha256').write_text(hashlib.sha256(out.read_bytes()).hexdigest()+'  '+out.name+'\n')
         with zipfile.ZipFile(str(out)+'.materials.zip', 'w') as z:
-            z.writestr(zipfile.ZipInfo('sha256/fixture'), b'material')
+            pass
         logs = pathlib.Path(str(out)+'.logs')
         logs.mkdir()
         (logs/'producer.log').write_text('diagnostic\n')
