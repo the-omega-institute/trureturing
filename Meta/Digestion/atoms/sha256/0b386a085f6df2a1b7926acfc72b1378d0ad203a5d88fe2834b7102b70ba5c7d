@@ -1,0 +1,4 @@
+- **混合方式**:评审席并发、互不可见;每席产出 `approve` / `comment` / `reject` 与 findings;orchestrator 逐条亲核 findings 后修订正文(合并前修订计入 v1.0)。**六轮票数**:第一轮 reject/reject/reject(50 blocking),第二轮 reject/reject/reject(20),第三轮 reject/reject/reject(24),第四轮 reject/reject/reject(8),第五轮 reject/comment/comment(1),第六轮 comment/comment/comment(0);逐轮 findings 与处置见追加账本。全部 blocking 经 orchestrator 亲核成立并修订,无被拒绝的 blocking。
+
+---
+

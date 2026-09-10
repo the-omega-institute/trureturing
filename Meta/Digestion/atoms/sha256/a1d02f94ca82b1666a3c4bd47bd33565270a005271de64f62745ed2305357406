@@ -1,0 +1,9 @@
+## Physical contract
+
+One finite complex memory H, one unit initial vector, and one fixed isometry
+V:H -> C^k tensor H are used for |a| emissions. The output is exactly the
+uniform equal-phase superposition of all words of occupation a, tensor one
+common unit final memory. No postselection, uncounted memory, or varying
+external control is allowed. The final memory need not be a prescribed reset.
+For5040, there are840 words and each has amplitude1/sqrt(840).
+

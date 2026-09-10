@@ -1,0 +1,43 @@
+### 2. Exact invariant-sector energy and readout lifting
+
+Let iota,M:D->H be complex-linear maps on an actual linear domain. Let J be
+a linear involution on D and U a compatible complex-linear Hilbert isometry:
+
+    J^2=I,  iota(Jf)=U(iota(f)),  M(Jf)=U(M(f)),
+    <Ux,Uy>=<x,y>.
+
+Write q(f)=Re<iota(f),M(f)> and
+
+    f_+=(f+Jf)/2,       f_-=(f-Jf)/2.
+
+Domain linearity and inner-product invariance prove
+
+    Jf_+=f_+,  Jf_-=-f_-,  q(f)=q(f_+)+q(f_-).             (IS1)
+
+The identity needs no positivity or gap. If Jk=k and Ug=g, then
+
+    <iota(k),iota(f_+)>=<iota(k),iota(f)>,
+    <g,iota(f_+)>=<g,iota(f)>.
+
+Suppose an actual dual certificate on the invariant sector gives
+
+    |<g,iota(v)>|^2<=C_+ q(v),
+    Jv=v, v perpendicular to k, C_+>=0.
+
+If q is nonnegative on the opposite sector, then for every f perpendicular
+to k, IS1 implies
+
+    |<g,iota(f)>|^2<=C_+ q(f).                            (IS2)
+
+No positive opposite-sector gap appears in this lift. Its nonnegative
+SHIFTED energy remains essential. The conclusion concerns the readout,
+not a stronger full-space coercivity estimate. Dropping invariance of g,
+commutation of the action, or opposite-sector nonnegativity invalidates the
+argument; all three have explicit negative controls in the local diagnostics.
+
+For the arithmetic application J is reflection, M=A-ell, and the existing
+whole-space lower bound at a=log(3)/2 supplies shifted nonnegativity. The
+centered even Riesz vector is invariant because both its Fourier component
+and origin component are invariant. The original actual-mode evenness and
+Fourier/kernel identification still have their existing analytic scope.
+

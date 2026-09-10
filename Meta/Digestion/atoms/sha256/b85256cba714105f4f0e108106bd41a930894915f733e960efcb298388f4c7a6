@@ -1,0 +1,20 @@
+## proposition 3: Attainment
+
+Choose a head coordinate of maximum capacity A. Set z_(h e_head)=1 for
+1<=h<=A and every other nonzero z_d=0. B splits into blocks by the remaining
+tail occupation b. Each block has entries m_min(j,k), where m_j=M(j,b), and
+the exact factorization
+
+    B_b = L diag(m_0,m_1-m_0,...,m_A-m_(A-1)) L^T,
+
+where L has ones on and below its diagonal. The zero-tail block has rank1;
+each other block has full rank A+1 because m_j/m_(j-1)=(j+|b|)/j>1.
+Thus total rank is product_i(a_i+1)-A, or1+11*5=56 in the concrete case.
+
+Its Gram vectors define the same fixed isometry through
+V phi_r=sum_i sqrt(r_i/|r|)|i> tensor phi_(r-e_i). The Gram recurrence preserves
+all dependencies. In this construction phi_0=phi_e_head, so the nonterminal
+vectors already span H when A>0. Iteration telescopes to the required word
+amplitudes and common final vector. The all-zero occupation uses memory C.
+The separately audited last-tail padding construction gives the same bound.
+

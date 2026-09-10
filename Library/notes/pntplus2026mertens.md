@@ -239,6 +239,47 @@ Retirement condition: once this repository's own pinned Mathlib contains
 equivalent declarations, replace the matching source port with imports and
 applications of those declarations. Upstream acceptance alone is not the trigger.
 
+## Errata 2026-09-08: the upper-envelope gap table is closed
+
+The `Gronwall Upper-Envelope Gap` table above was written before the two
+assembly modules landed. Every row it marks `self` is now a public theorem in
+`origin/dev`, and both modules carry a frozen state pin
+(`Golden/Frozen/state/D5/S3/Weil/GronwallUpperEnvelope.lean.json` and
+`GronwallLowerEnvelope.lean.json`). This section is an addition, not a rewrite:
+the table is retained as the record of the route as it was planned.
+
+| Table row | Landed declaration |
+| --- | --- |
+| Extend the product over small prime divisors to all primes at most `y` | `D5/S3/Weil/GronwallUpperEnvelope.small_prime_product_le` |
+| Count prime divisors greater than `y` | `GronwallUpperEnvelope.large_prime_count_le` |
+| Bound the large-prime product by `exp(2*log(n)/(y*log(y)))` | `GronwallUpperEnvelope.large_prime_product_le` |
+| SigmaSplit | `GronwallUpperEnvelope.sigma_split` |
+| Gronwall upper envelope | `GronwallUpperEnvelope.gronwall_upper_envelope` |
+| `sigma(p^a)/p^a <= (1-1/p)^(-1)` | absorbed into the `sigma_split` proof; no separate public declaration |
+
+The module's own header records the companion edges
+`sigma_split -> small_prime_product_le`,
+`large_prime_product_le -> large_prime_count_le`,
+`sigma_split -> large_prime_product_le`, and
+`gronwall_upper_envelope -> sigma_split`, and states that the finite estimates
+reuse the `gronwall-step1-0907/attempt-1` and `gronwall-step2-0907/attempt-1`
+measurements. The `GronwallLeaf.lean` probe recorded above therefore has no
+remaining consumer; it is kept as the measurement that produced the estimate.
+
+The paragraph above the leaf says the lower half "is separate and was not proved
+in this attempt". That remains true of that attempt, and it has since been
+proved elsewhere: `D5/S3/Weil/GronwallLowerEnvelope` supplies
+`gronwall_lower_envelope`, `gronwall_envelopes`, and `robin_log_margin_liminf`.
+
+Why this erratum exists: a standing dispatch loop reads this table to pick the
+leaf-most unproved sublemma. Left as written, it names six targets that are all
+already frozen, so each pass would spend a seat re-proving library theorems.
+The reading that produced this section was taken against `origin/dev` at
+`45e7b20dd95dd8b2d7b8784392c1814193b80515`; the declaration list came from
+`git show origin/dev:D5/S3/Weil/GronwallUpperEnvelope.lean` and the frozen pins
+from `ls Golden/Frozen/state/D5/S3/Weil/`. No mathematical claim of this note is
+changed, and no upstream port or license text is touched.
+
 ## NOTICE
 
 This distribution contains portions of PrimeNumberTheoremAnd,

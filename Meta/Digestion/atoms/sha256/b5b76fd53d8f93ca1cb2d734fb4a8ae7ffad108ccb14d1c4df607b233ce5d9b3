@@ -1,0 +1,6 @@
+### 18. 形式化接入与证据边界
+
+保留 P0–P5。广义 Li 和整函数条目复用 canonical Li、实际 ξ、Jensen 与 Newton–Hankel；Hardy/Nyman 共用 Mellin 与有界变换；Salem 使用实际 ζ 的 Mellin 核和独立唯一性；极值整数复用算术函数、primorial、Gronwall/Robin；Landau 构造实际有限群与 prime-power 优化的对应；平滑参数族复用 Möbius 卷积与完整可和性。每个新 Lean 真源配套 Scribe，理论继续追加本卷。
+
+本轮没有新增 Lean、运行编译或核验传递公理闭包。93 个节点是文献与数学规格，不能包装成接收 92 个未知等价式参数的结构后宣称形式化完成。完整终点仍是每个原始命题与 `RiemannHypothesis` 的两个方向。
+

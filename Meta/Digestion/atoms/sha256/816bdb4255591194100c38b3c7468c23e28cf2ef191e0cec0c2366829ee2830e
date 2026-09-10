@@ -1,0 +1,1 @@
+| `D5/S3/Observer/Hilbert/NymanBeurlingFiniteGramDistance.lean` | 实际复数半直线 L² 载体、分数部分向量、目标指示函数、有限 Gram 与伪逆距离公式；blob `0bec9ac0ed53094607b7e34a7555aac7a3ebd6c8` | 在真实算术函数上完成 Nyman–Beurling 解析桥，直接消费已有有限距离。 

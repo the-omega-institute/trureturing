@@ -1,0 +1,1 @@
+| Q01 | Amoroso（1995）的分圆多项式乘积高度，AIM C3a | \(F_N=\prod_{n\le N}\Phi_n\) 的 \((2\pi)^{-1}\int_{-\pi}^{\pi}\log^+\vert F_N(e^{it})\vert dt=O_\epsilon(N^{1/2+\epsilon})\) 已见专家纲要；原始全文和全部条件未核完。 

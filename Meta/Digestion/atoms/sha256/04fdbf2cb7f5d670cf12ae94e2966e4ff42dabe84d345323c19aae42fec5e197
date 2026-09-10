@@ -1,0 +1,13 @@
+# 2026-09-07：穿过素数 3 激活点的完整区间 Schur 证书与奇块三次抑制
+
+本节的两个源码为 `D5/S3/Weil/ZetaBridge/WeilPrimeThresholdParity.lean` 及其同名 Scribe。数值源为 `research/weil_ground_mode/certify_prime3_scale_interval.py`，独立表达式诊断为 `test_prime3_scale_interval.py`。下面给出的有限区间数字已在 70、100 位定向区间精度执行；Lean elaboration、Scribe emission 和传递公理报告没有执行。完整 Fourier/闭形式实现、Neumann 比较和以下无穷 Schur 推导仍为纸面桥，不能视作端到端内核结果。
+
+本次对一个非退化参数区间直接认证，而不从上节的最坏情形 resolvent 模量逐步传播：
+
+\[
+I_*=[a_*-2\cdot10^{-8},a_*+2\cdot10^{-8}],\qquad a_*=\tfrac12\log3.
+\tag{PT1}
+\]
+
+在整个区间中，明确的同一 Fourier 系数候选族满足 q_a(k_a)<1.2e-6，整个候选正交形式域满足 q_a(f)>=6e-6||f||^2。因此真实最低模态简单、偶，并有统一间隔大于 4.8e-6。此数值证书不假设旧的数值谱间隔或最低值包络。区间仍很窄，尚未认证这里的真模态/prolate 误差，也未成为无界尺度证明。
+

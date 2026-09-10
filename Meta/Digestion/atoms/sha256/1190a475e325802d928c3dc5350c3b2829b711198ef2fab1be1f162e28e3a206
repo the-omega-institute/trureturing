@@ -1,0 +1,21 @@
+### 1. 从 RH 导出实际 canonical 全盘展开
+
+令 λ_n 是既有导数定义的 canonical 系数，F(z)=xiReading((1-z)^(-1))，G 使用既有 liGenerator。本轮 `CanonicalLiDiskEquivalence` 先证明 |z|<1 蕴含 Re((1-z)^(-1))>1/2。标准 RH 与既有 xi/nontrivial-zero 识别给出 F 在全盘非零。因此此方向下，实际 G 在全盘全纯。
+
+Mathlib 钉版 `db584cd6d46c92f209a44c0f1c829460d327499d` 的 Taylor 定理提供 G 的全盘展开，#6172 已证明的全阶系数恒等式将它识别为
+
+\[
+G(z)=\sum_{n\ge0}\lambda_{n+1}z^n,\qquad |z|<1.
+\]
+
+`rh_canonical_li_global_expansion` 保留实际 HasSum。复数是有限维实范数空间，钉版 `summable_norm_iff` 将其无条件可和性转成绝对可和性；这里没有把任意条件收敛级数误当成绝对收敛。
+
+结合上一轮通过 F'=GF 和零点阶数排除得到的反向，`rh_iff_canonical_li_disk_summable` 证明
+
+\[
+\mathrm{RH}\iff
+\forall r\in[0,1),\quad\sum_{n\ge0}|\lambda_{n+1}|r^n<\infty.
+\]
+
+`rh_iff_canonical_li_global_expansion` 同时将实际全盘 HasSum 等式与 RH 等价起来。这个反向不使用 RH，也没有外加抽象 Li 判据。本轮闭合的是全盘收敛判据的两向，并非 RH 与完整 canonical 曲率矩阵正性的两向。
+

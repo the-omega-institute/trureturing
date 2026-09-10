@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bef1666e4771d139d8c2326a50c4bcf98d04e87e352d683944666d505cc78fc8
+  normalized_sha256: sha256:bef1666e4771d139d8c2326a50c4bcf98d04e87e352d683944666d505cc78fc8
+cas_ref: sha256:bef1666e4771d139d8c2326a50c4bcf98d04e87e352d683944666d505cc78fc8
+coverage_gids:
+  - gid: D5/S3/Analytic/Characterizations/GoldenDynamicalDeterminant.golden_dynamical_determinant
+    target_statement_id: sha256:e1cddc81ea40af775cf4a1e0cf76f80470a8d61997bb1f9c47a85d23acdd23be
+receipts:
+  unresolved_subitems: []

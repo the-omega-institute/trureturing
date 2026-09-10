@@ -1,0 +1,2 @@
+**定义 14（关系限制的乘积选择）。** 给定 $R\subseteq\Omega_X\times\Omega_Y$，使用定义 6 的**完整乘积情境**，只把选择改为 $\{p_{ab}:(a,b)\in(A_X\times A_Y)\cap R\}$，记 $X\boxtimes_RY$。例如 $R$ 可由空间距离、来源匹配或明定的跨情境关系给出。
+

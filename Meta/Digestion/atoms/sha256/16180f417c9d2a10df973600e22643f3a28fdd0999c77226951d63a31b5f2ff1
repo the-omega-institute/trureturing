@@ -1,0 +1,1 @@
+| [RelativeComplement.lean](../../../D5/S3/ConceptDynamics/Negation/RelativeComplement.lean) | `relativeComplement_domain_extension` 的新增区域分解，`preimage_relativeComplement` 与 `image_complement_counterexample` 对逆像、直接像的区分 

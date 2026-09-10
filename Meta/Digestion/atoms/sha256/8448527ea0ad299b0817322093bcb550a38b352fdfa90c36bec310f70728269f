@@ -1,0 +1,1 @@
+| Andrew M. Pitts, “Operational Semantics and Program Equivalence”, *Applied Semantics*, LNCS 2395 (2002)，[§3 定义 3.1／备注 3.2](https://www.cl.cam.ac.uk/~amp12/papers/opespe/opespe-lncs.pdf) | `literature-attested`：用上下文及终止观察刻画程序等价的成熟方法。这里采用确定部分函数与带标签失败观察，未把程序语言语义或其定理无条件搬到本载体。 

@@ -1,0 +1,78 @@
+### 可执行复现
+
+在 `/tmp` 中执行下面完整命令即可复现。依赖固定为 `python-flint==0.8.0`;Python 标准库的 `Fraction` 负责精确有理运算。实施 worker 独立执行同一程序,退出码 0,最后输出 `python-flint=0.8.0 precision=256 cap=4 PASS`。信任边界包括 Python-FLINT 的接口、FLINT/Arb 特殊函数及级数球包围实现、Python 和运行环境;这没有生成 Lean 证明项。
+
+```sh
+uv run --with python-flint==0.8.0 python - <<'PY'
+from fractions import Fraction as F
+from math import floor, prod
+import flint
+from flint import arb, arb_series, ctx
+
+def toeplitz(x, y):
+    return [[F(1), x, y], [x, F(1), x], [y, x, F(1)]]
+
+def det3(a):
+    return (a[0][0] * (a[1][1] * a[2][2] - a[1][2] * a[2][1])
+            - a[0][1] * (a[1][0] * a[2][2] - a[1][2] * a[2][0])
+            + a[0][2] * (a[1][0] * a[2][1] - a[1][1] * a[2][0]))
+
+def witness(a):
+    v = [1, -2, 1]
+    return sum(v[i] * a[i][j] * v[j] for i in range(3) for j in range(3))
+
+def q(x, m):
+    return F(floor(m * x + F(1, 2)), m)
+
+assert prod(p**a for p, a in zip([2, 3, 5, 7], [4, 2, 1, 1])) == 5040
+assert prod(a + 1 for a in [4, 2, 1, 1]) == 60
+assert prod(sum(p**j for j in range(a + 1))
+            for p, a in zip([2, 3, 5, 7], [4, 2, 1, 1])) == 19344
+assert 4181 + 610 + 233 + 13 + 3 == 70 * 3**2 * 2**3 == 5040
+assert 2**4 * 3**2 * 5 * 11 == 7920
+print("arithmetic: 5040, tau=60, sigma=19344, both encodings, 7920 OK")
+
+for m in [1, 2, 10, 200, 1000000]:
+    h, eta, t = F(1, m), F(1, 12 * m), 1 - F(1, 3 * m)
+    r1, r2 = (1 - eta) * t, (1 - eta) * (2 * t*t - 1)
+    assert 0 < (1-r1)/h == F(5, 12)-h/36 < F(1, 2)
+    assert F(1, 2) < (1-r2)/h == F(17, 12)-h/3+h*h/54 < F(3, 2)
+    a = toeplitz(r1, r2)
+    assert 1-r1*r1 > 0 and det3(a) > 0
+    rounded = [[q(x, m) for x in row] for row in a]
+    assert rounded == toeplitz(F(1), 1-h)
+    assert det3(rounded) == -h*h and witness(rounded) == -2*h
+    print("family", m, "PD=True", "det=", det3(rounded), "vTv=", witness(rounded))
+
+ctx.prec, ctx.cap = 256, 4
+t = arb_series([0, 1])
+s = 1 + t
+x = s * (-s * arb.pi().log() / 2).exp() * (s/2).gamma() * (1+t*s.zeta(deflate=True)) / 2
+assert x[0].contains(arb(1)/2)
+f = (x/x[0]).log()
+assert f[1] > 0
+r1, r2 = f[2]/f[1], (2*f[2]+3*f[3])/(2*f[1])
+gap = r2 - (2*r1*r1-1)
+d = 10**18
+endpoints = [(999196806720852614, 999196806720852615),
+             (996790337371607624, 996790337371607625),
+             (1820249309832, 1820249309833)]
+for name, value, (lo, hi) in zip(["r1", "r2", "gap"], [r1, r2, gap], endpoints):
+    assert arb(lo)/d < value and value < arb(hi)/d
+    print(name, str(lo)+"/"+str(d), "< value <", str(hi)+"/"+str(d))
+bounds = [(F(lo, d), F(hi, d)) for lo, hi in endpoints]
+assert 0 < bounds[0][0] < bounds[0][1] < 1
+assert 0 < bounds[1][0] < bounds[1][1] < 1
+assert bounds[1][0] - (2*bounds[0][1]**2-1) > 0
+assert 1-r1*r1 > 0 and (1-r2)*gap > 0
+for (lo, hi), expected in zip(bounds[:2], [F(1), F(199, 200)]):
+    assert q(lo, 200) == q(hi, 200) == expected
+rounded = toeplitz(F(1), F(199, 200))
+assert q(F(1), 200) == 1
+assert det3(rounded) == -F(1, 40000)
+assert witness(rounded) == -F(1, 100)
+print("actual xi: PD=True, Q_200 det=-1/40000, vTv=-1/100")
+print("python-flint="+flint.__version__, "precision="+str(ctx.prec), "cap="+str(ctx.cap), "PASS")
+PY
+```
+

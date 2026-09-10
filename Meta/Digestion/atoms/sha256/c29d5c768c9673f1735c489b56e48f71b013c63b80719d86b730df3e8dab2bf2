@@ -1,0 +1,38 @@
+### 固定素数标签、预算与加权度量
+
+固定有限非空素数集 \(S\),\(k=|S|\),取 \(a_p\in\mathbb Z_{\ge0}\),允许零指数及 \(n=1\)。所有对数都是自然对数,定义
+
+\[
+n=\prod_{p\in S}p^{a_p},\quad T=\log n,\quad
+x_p=(a_p+1)\log p>0,\quad
+\mu=\frac1k\sum_{p\in S}x_p=\frac{T+\sum_{p\in S}\log p}{k},
+\]
+\[
+B=e^\mu>1,\quad s_p=x_p-\mu,\quad V=\sum_{p\in S}s_p^2,\quad
+E_S=\prod_{p\in S}(1-p^{-1})^{-1},\quad f(x)=\log(1-e^{-x}).
+\]
+
+\(V\) 是平方偏差之和,统计学的平均方差是 \(V/k\)。有限几何级数给出
+
+\[
+F:=\log\frac{\sigma(n)}n=\log E_S+\sum_{p\in S}f(x_p),\qquad
+J:=\log E_S+kf(\mu)\ge F.
+\]
+
+零指数对应的真实局部因子为 1。这里的 \(S\) 可以比实际支撑大,不要求是连续素数前缀;必须保留准确的素数标签与 \(E_S\)。添加零指数素数虽不改变 \(F\),却改变 \(k,\mu,V,J\) 及下述包络,没有证书单调增强的结论。
+
+本节在 \(x\) 坐标中选 Euclidean 内积。\(x=\mu\mathbf1+s\)、\(\mathbf1\cdot s=0\) 给出 \(\sum_px_p^2=k\mu^2+V\)。令 \(a_p^0=\mu/\log p-1\),则拉回指数空间得到明确的加权距离
+
+\[
+\langle u,v\rangle_w=\sum_p(\log p)^2u_pv_p,\qquad
+V=\sum_p(\log p)^2(a_p-a_p^0)^2.
+\]
+
+这不同于第 10 节未经加权的原点法向投影;那个投影一般不是因数丰度的连续最优点。对两组位编码的差 \(\delta a_p=\sum_jF_j\delta b_{pj}\),同一度量拉回为
+
+\[
+\|\delta a\|_w^2=\sum_p(\log p)^2\left(\sum_jF_j\delta b_{pj}\right)^2.
+\]
+
+同一素数行的交叉项 \(2(\log p)^2F_iF_j\delta b_{pi}\delta b_{pj}\) 必须保留。中心 \(a^0\) 可以是实数,并不要求有整数位编码。关于精确 \(T\) 截面至多一个整数点及薄层才容纳多个配置,沿用第 10 节,不把编码当成新增正交方向。
+

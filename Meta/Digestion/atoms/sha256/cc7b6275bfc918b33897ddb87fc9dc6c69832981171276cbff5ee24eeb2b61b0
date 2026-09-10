@@ -1,0 +1,11 @@
+**定义 1.5(真值账本)**。一个账本是四元组
+
+$$
+L=(N,\ E,\ w,\ O)
+$$
+
+其中:$N\subseteq\mathcal P$ 有限,称**冻结集**;$w:N\to\Pi$ 是见证,满足 $\forall v\in N,\ K(w(v),v)=\mathsf{acc}\wedge\mathrm{ax}(w(v))\subseteq\mathfrak A$ 且 $\mathrm{refs}(w(v))\subseteq N$(**引用闭合**);$E\subseteq N\times N$ 是见证的**直接引用关系** $E=\{(u,v)\mid u\in\mathrm{refs}(w(v))\}$,$(u,v)\in E$ 读作「$v$ 依赖 $u$」——$E$ 由 $w$ 派生,不是独立数据;账本**要求** $E$ 无环(这是对 $w$ 的选择的约束:两份各自合格的见证互相引用时不得同时入账);$O\subseteq\mathcal P\setminus N$ 是**登记前沿**——被显式标为 `open` 的命题集。
+
+记 $\mathrm{Frozen}(L)=N$,$\mathrm{Anc}_L(v)$ 为 $v$ 在 $E$ 下的祖先集(不含 $v$),$\mathrm{Desc}_L(v)$ 为后代集(不含 $v$)。
+*近邻(先库后证)*。`INTERFACE_PHILOSOPHY` 定义 7.1「账本史」(可数语句集只增、分级函数逐时刻)是本卷账本去掉核与见证 DAG 后的分级形;PZG 定义 11.2「账本」$\mathsf L(\Delta)=(\text{source},\text{detector},\text{status},\text{next})$ 是 residual 的工作流账目。本卷固定核 $K$、要求见证与引用闭合,是与二者**相关的重建**而非同义重复:相对 INTERFACE 7.1 它是单一快照(而非整条分级历史)且多出核与见证图;相对 PZG 11.2 它没有 source/detector/next 三字段——两个方向的结构映射尚未给出,`ASSUMED-UNVERIFIED`。D5 已有 `S0/History/LedgerLimit.lean` 的 `LedgerHistory`、`S0/History/ResidualLedger.lean` 的 `ResidualLedgerEntry`、`S3/ConceptDynamics/GovernanceFixedPoint/Core.lean` 的 `LedgerEntry`,义务 X-A 落地前须逐一比对复用。
+

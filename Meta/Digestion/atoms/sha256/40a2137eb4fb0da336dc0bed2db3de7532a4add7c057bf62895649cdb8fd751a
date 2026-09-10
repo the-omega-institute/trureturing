@@ -1,0 +1,23 @@
+### PRO 提供的下一篇纸面目标: 距离的算子实现
+
+以下留作后续附录目标,本轮不宣称已完成新的谱判据。使用第 3 节的 \(\mathcal H,\chi,f_k,D_N\),在 \(\ell^2(\mathbb N_0)\) 的标准基上设
+
+\[
+h_0=\chi,\quad h_k=f_k/k\ (k\ge1),\qquad T e_k=h_k.
+\]
+
+因为 \(\|f_k\|_{\mathcal H}^2=\|f_1\|_{\mathcal H}^2/k\),且 \(f_1\) 在 \((0,1]\) 有界、在 \((1,\infty)\) 等于 \(1/x\),候选合成算子 \(T:\ell^2\to\mathcal H\) 的 Hilbert-Schmidt 范数平方为
+
+\[
+1+\|f_1\|_{\mathcal H}^2\sum_{k\ge1}k^{-3}<\infty.
+\]
+
+正确的正迹类对象是 **\(A=T^*T\)**,作用在 \(\ell^2\);不能写成类型不匹配的 `A=TT`。若 \(P_N\) 投影到 \(e_0,\ldots,e_N\),令 \(A_N=P_NAP_N\) 视为有限矩阵,待系统写明的目标是
+
+\[
+D_N=\sup\{\delta\ge0:A_N-\delta e_0e_0^*\succeq0\},
+\qquad \mathrm{RH}\iff\inf_{N\ge1}D_N=0.
+\]
+
+目标必须使用全半轴范数,并处理有限 Gram 块奇异时的距离与减秩阈值;不能依赖未经证明的可逆性。缩放 \(f_k\mapsto f_k/k\) 不改变任何有限线性张成空间。即使上述实现全部写成证明,\(A\succeq0\) 本来就由 \(T^*T\) 自动成立,RH 内容仍在距离阈值趋零的全局条件,不会因“已有正算子”自动解决。
+

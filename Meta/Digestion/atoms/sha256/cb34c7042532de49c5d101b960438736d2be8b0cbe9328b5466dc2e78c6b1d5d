@@ -1,0 +1,10 @@
+## theorem 1: Exact stationary occupation-memory minimum
+
+For a finite nonempty alphabet and capacities a_i>=0, the exact minimum is
+
+    D_min = product_i(a_i+1) - max_i a_i.
+
+For a=(4,2,1,1), this gives60-4=56. It replaces the earlier ordinary interval
+20<=D_min<=56 for this specific model. Time-dependent controls still belong
+to the separate minimum12 problem.
+

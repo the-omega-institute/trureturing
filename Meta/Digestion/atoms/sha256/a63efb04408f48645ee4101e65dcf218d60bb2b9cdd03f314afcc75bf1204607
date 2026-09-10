@@ -1,0 +1,11 @@
+#### F09. Riesz 与离散 Báez-Duarte 变换（A048–A049）
+
+定义
+
+\[
+R(x)=x\sum_{j\ge0}\frac{(-1)^jx^j}{j!\zeta(2j+2)},\qquad
+b_k=\sum_{j=0}^k(-1)^j\binom kj\frac1{\zeta(2j+2)}.
+\]
+
+| ID | 类别 | 精确目标 |
+| --- | --- | --- |

@@ -1,0 +1,26 @@
+## Evidence and corrections
+
+Producer: stationary-minimality-oracle-result.json, via NyxID task
+2260c8d2-e53d-40b0-8fe6-1401a8bda816. Independent review and exact checks:
+stationary-minimum56-audit-result.json. The reviewer used exact integer and
+Gaussian-integer probes, including all65536 words and3136 isometry entries.
+The universal lower bound rests on the ordinary proof, not those finite probes.
+
+The producer's unannotated uBu expression omitted conjugate transposes; the
+correct sesquilinear formula is given above. Its optional Cayley formula also
+omitted adjoints: with A=I+P and C=P A^(-1), the correct identity is
+G=A(I-CC^*)A^*. That formula is not used by the lower bound. The printed
+arithmetic1+115=56 was corrected to1+11*5=56. The original envelope is retained
+unchanged so these defects are not erased.
+
+The dispatcher retained and reran the independent exact checker with exit0:
+stationary-minimum56-exact-check.py, SHA256
+ac1bb764eb1ad30615aeca5af58114ddc7f916fa74457ad9146a202ea1d849c3.
+Its JSON output matches the reviewer's retained report, SHA256
+cffb081ab03cc8ca41de7cfaa0005fa169e5b0febfc7ae86a10554c57e3ad294.
+The existing sub56 GPU runs now provide numerical approximation research.
+They cannot establish an exact sub56 construction in this model, and their
+best fidelities are not proved global optima. A separately audited exact55
+machine attains approximate fidelity279/280; see
+stationary-approximation55-audit-proof.md. Formalization remains future work
+separate from the ongoing time-dependent history atom.

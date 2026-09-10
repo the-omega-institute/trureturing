@@ -1,0 +1,7 @@
+**命题 33（完整二叉构造树的根时刻）。** 给一棵有限完整二叉树（每个内部节点恰有两子节点），叶 $i$ 的输入时刻为 $t_i\in\mathbb Z$，每个内部节点按默认规则计算。以叶到根的边数为 $\operatorname{depth}_i$，则
+
+$$
+t_{\rm root}=\max_i(t_i+\operatorname{depth}_i).
+\tag{TREE}
+$$
+

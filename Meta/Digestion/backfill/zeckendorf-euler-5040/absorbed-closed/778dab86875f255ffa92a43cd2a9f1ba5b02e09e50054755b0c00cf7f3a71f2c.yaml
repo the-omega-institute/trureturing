@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:778dab86875f255ffa92a43cd2a9f1ba5b02e09e50054755b0c00cf7f3a71f2c
+  normalized_sha256: sha256:778dab86875f255ffa92a43cd2a9f1ba5b02e09e50054755b0c00cf7f3a71f2c
+cas_ref: sha256:778dab86875f255ffa92a43cd2a9f1ba5b02e09e50054755b0c00cf7f3a71f2c
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone.golden_upper_price_eq_finite_max
+    target_statement_id: sha256:3d4dc531dcda752fe91f946422f44cc421b637dfe49effad7acc7fd26671f680
+  - gid: D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone.log_add_one_div_log_strictAnti_of_prime
+    target_statement_id: sha256:92748f539415a8fb03bad9f9fbac32e81fb741a8534a1cb42a6a11f523762124
+receipts:
+  unresolved_subitems: []

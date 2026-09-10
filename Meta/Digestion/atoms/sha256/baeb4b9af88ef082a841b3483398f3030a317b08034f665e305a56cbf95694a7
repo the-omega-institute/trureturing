@@ -1,0 +1,3 @@
+**定理 13.4(准入反单调:污染只会增加不可用的判者)**〔引〕。扩大一个判断的依赖闭包只会取消判者资格,不会增加:对任何判者,若其在较大闭包下可准入,则在较小闭包下亦可准入。
+*出处*。本仓冻结定理 `dependency_closure_admission_antitone`(GID `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/DependencyClosureAdmissionAntitone`)。本卷不重证;母仓第 2.7 条「准入反单调」即其运营读法:自己判断的依赖越被污染,自我裁决资格越收紧。
+

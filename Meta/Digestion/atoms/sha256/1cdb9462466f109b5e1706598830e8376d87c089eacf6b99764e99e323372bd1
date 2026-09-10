@@ -1,0 +1,40 @@
+### 从 Taylor 系数到 Li 回返
+
+沿用
+
+\[
+\lambda_0=0,\quad c_0=2\lambda_1,\quad
+c_j=\lambda_{j+1}-2\lambda_j+\lambda_{j-1}\ (j\ge1),\quad r_j=c_j/c_0.
+\]
+
+这里 \(c_j\) 不是第 3 节的 \(c_k^{\mathrm{BD}}\)。写
+
+\[
+\log\frac{\xi(1+t)}{\xi(1)}=\sum_{q\ge1}b_qt^q.
+\]
+
+从 Li 的导数定义提取 \((1+t)^{n-1}\log\xi(1+t)\) 的 \(t^n\) 系数,得到
+
+\[
+\lambda_n=n\sum_{q=1}^n\binom{n-1}{q-1}b_q.
+\]
+
+常数 \(\log\xi(1)\) 乘以次数 \(n-1\) 的多项式,对该系数无贡献。因此
+
+\[
+\lambda_1=b_1,\quad\lambda_2=2b_1+2b_2,\quad
+\lambda_3=3b_1+6b_2+3b_3,
+\]
+\[
+c_0=2b_1,\quad c_1=2b_2,\quad c_2=2b_2+3b_3,\quad
+r_1=\frac{b_2}{b_1},\quad r_2=\frac{2b_2+3b_3}{2b_1}.
+\]
+
+程序认证 \(b_1>0\),所以除法合法。取 \(s=1+t\),`zeta(deflate=True)` 表示 \(\zeta(s)-1/(s-1)\);因而
+
+\[
+1+t\,\zeta_{\rm deflated}(1+t)=t\zeta(1+t)
+\]
+
+在 \(t=0\) 正则。程序中的 `x` 正是 \(\xi(1+t)\),常数项含精确值 \(1/2\)。`ctx.cap=4` 保留到三次幂,已足够计算上面三项;这不是截取未知零点或假设尾部为零。
+

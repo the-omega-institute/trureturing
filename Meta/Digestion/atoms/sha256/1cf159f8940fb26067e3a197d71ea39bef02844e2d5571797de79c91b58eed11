@@ -1,0 +1,28 @@
+**26.2 实际角点、闭薄层与预算平移。** 固定整数 \(k\ge2\)、两两不同的素数 \(p_1,\ldots,p_k\)、整数 \(b_i\ge0\),置
+
+\[
+h_i=\log p_i,\quad c_i=(b_i+1)h_i,\quad d_i=(b_i+2)h_i,\quad
+C_i=\{c_i,d_i\},\quad A=\sum_i c_i,
+\]
+\[
+P=\prod_i p_i,\qquad Q=\log P=\sum_i h_i,\qquad N=2^k.
+\]
+
+全部对数为自然对数。实际角点为 \(x_i=c_i+e_i h_i\),\(e_i\in\{0,1\}\)。唯一分解保证不同二进制向量给出不同乘积,故可严格排列
+
+\[
+R_s=\prod_i p_i^{\,b_i+e_i^{(s)}},\qquad
+\beta_s=\sum_i(c_i+e_i^{(s)}h_i)=\log(PR_s),
+\quad 0\le s<N,
+\]
+\[
+R_0<\cdots<R_{N-1},\qquad
+\beta_0=A<\cdots<\beta_{N-1}=A+Q.
+\]
+
+令 \(B_{\rm cut}=Q+\log5040\)。本节的可容许域 \(\mathscr S\) 是所有有限实数对
+\((M_0,M_1)\),满足 \(B_{\rm cut}<M_0<M_1\),且闭区间
+\([M_0,M_1]\) 至少含两个实际角点预算 \(\beta_s\)。原指数预算为
+\(T_j=M_j-Q\),故严格 cutoff 恰为 \(\log5040<T_0<T_1\)。
+两端预算均为实数,不要求 \(e^{T_j}\) 为整数;“两个实际角点”也不能用两个混合支撑点替代。
+

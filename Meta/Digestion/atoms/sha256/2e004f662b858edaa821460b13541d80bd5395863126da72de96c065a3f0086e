@@ -1,0 +1,9 @@
+**假设 4.3(诚:账平律)**。主体 $\mathfrak S=(T,c,\mathrm{Adm})$ **诚**,当且仅当它对一切账平的合法输入保持账平:
+
+$$
+\forall (L,\mathcal U),\ \mathrm{Balanced}(\mathcal U,L)\ \Rightarrow\ \mathrm{Balanced}\big(\mathcal U\mathbin{+\!\!+}c(L,\mathcal U),\ T(L)\big).
+$$
+
+由此,从账平初态 $\mathrm{Balanced}(\mathcal U_0,L_0)$ 出发的轨迹沿时间每一时刻账平(对 $t$ 归纳);**初态条件不可省**。
+*读法*。「诚」在此只管「说的都对得上账」。日常语言里「诚」还包括「该说的都说了」(异常必登记),但那需要一个观察事件流作为主体数据,本卷的主体(定义 4.1)没有这项数据,故不把它写进律(它是应用层的规范);凡下文由「诚」推出的结论都只用本条。
+

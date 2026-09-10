@@ -1,0 +1,4 @@
+# 2026-09-07 增补：对角研究的类型区分与实际 Gamma 对角正则化
+
+本节继续 PR 6029，回应仓内多条“对角线”路线与当前 Fourier 自相关的关系。新增 `WeilDiagonalGammaRegularization.lean` 及同名 Scribe，直接消费上一节的实际 `windowCorrelation`。本节补齐每个对角核在有限窗口原点附近的可积性，并将相对零模态的 Gamma 对角增量写成正能量，给出显式上界和端点条带预算。规范算子域、完整 Gamma 频域识别与实际全尺度模态比较仍分别保留。
+

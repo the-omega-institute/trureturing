@@ -64,6 +64,7 @@ public sealed partial class MakeWorkflowTests
         "truth-export",
         "deliver-check",
         "deposit",
+        "deposit-uncovered",
         "cover",
         "cover-batch",
         "decompose",
@@ -91,6 +92,13 @@ public sealed partial class MakeWorkflowTests
         "capacity-audit",
         "update-renderer-contract",
         "clean-lanes",
+        "xi-quantization",
+        "xi-quantization-test",
+        "prime-slab-search",
+        "prime-slab-test",
+        "prime-slab-device-test",
+        "prime-slab-verify",
+        "prime-slab-mutation-test",
         "census-test",
     ];
 

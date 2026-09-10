@@ -1,0 +1,1 @@
+| A046 | C | 对每个整数 \(n\ge1\)，\(\sigma(n)\le H_n+e^{H_n}\log H_n\)。 

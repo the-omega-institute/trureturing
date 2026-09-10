@@ -1,0 +1,9 @@
+#### F19：自逼近
+
+令 \(S=\{s:1/2<\Re s<1\}\)。对补集连通的非空紧集 \(K\subset S\)，定义
+
+\[
+d_{K,\epsilon}(T)=T^{-1}\operatorname{meas}\{\tau\in[0,T]:
+\sup_{s\in K}|\zeta(s+i\tau)-\zeta(s)|<\epsilon\}.
+\]
+

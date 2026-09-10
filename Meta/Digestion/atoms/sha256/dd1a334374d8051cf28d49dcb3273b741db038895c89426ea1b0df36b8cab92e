@@ -1,0 +1,34 @@
+### 4. Recompute the actual centered coefficient with the relevant gap
+
+At a=log(3)/2 retain the exact historical ell and the SAME candidate, trial,
+genuine model e, and centered readout h_(e,z) from the preceding appendix.
+The original complete residual is replayed, including its covariance-corrected
+finite head and every exterior mode. The model approximation and original
+whole-space spectral records remain inherited analytic premises.
+
+The even trial and even residual can use
+
+    kappa_+=1/1000-ell >999/1000000.
+
+The actual upper data are
+
+    J<=1173667110482754901/10^18,
+    R^2<=1273652293764969/10^18.
+
+The new complete coefficient is
+
+    C_+<=J+R^2/kappa_+
+       <=100239558744515453640283630281893 /
+           40957747186193000000000000000000
+       <49/20.                                         (IS6)
+
+It is about 2.4473894594062675. The same centered residual with the old
+whole-space gap gave about 107.800065579058. This compares two sufficient
+coefficients, not the unknown optimal coefficient or actual Fourier error.
+The residual did not become smaller and no high mode was dropped.
+
+The energy-dual theorem is applied on the invariant linear domain. IS2 then
+lifts this readout inequality to the whole candidate complement. Crucially,
+the OLD global model-recentering factor and origin certificate are retained.
+We never substitute T_+ into a theorem requiring full-space coercivity.
+

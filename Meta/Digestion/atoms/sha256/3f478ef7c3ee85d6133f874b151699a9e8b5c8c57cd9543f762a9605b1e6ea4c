@@ -1,0 +1,1 @@
+| `D5/S3/Weil/TestFunctions/LiCurvatureCriterion.lean` | 有限 Toeplitz Gram 恒等式、几何多项式能量、二阶差分重建；blob `b509cde8c62c3ed60756cfc9264b98cf357102d2` | 主等价定理目前仍接收 Li 判据、RH 下 Fourier 表示和无限 Herglotz 表示。第 6 节给出更短的反向证明。 

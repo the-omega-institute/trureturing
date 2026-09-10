@@ -13,7 +13,9 @@ internal static class DescribeRepositoryValidator
         LeanAxiomReport? leanReport = null,
         LibraryNoteCatalogInspection? libraryInspection = null,
         DeclarationCatalog? declarationCatalog = null,
-        ProblemCandidateCatalogInspection? problemInspection = null)
+        ProblemCandidateCatalogInspection? problemInspection = null,
+        FrozenStateCatalog? frozenState = null,
+        FrozenStatementIndex? frozenStatements = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(documents);
@@ -111,9 +113,10 @@ internal static class DescribeRepositoryValidator
         findings.AddRange(inspectedProblems.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
         var resolutionClaims = EnumerateResolutionClaims(material).ToImmutableArray();
-        var frozenState = inspectedProblems.Candidates.IsEmpty && resolutionClaims.IsEmpty
-            ? null
-            : LoadFrozenStateCatalog(repositoryRoot);
+        if (!inspectedProblems.Candidates.IsEmpty || !resolutionClaims.IsEmpty)
+        {
+            frozenState ??= LoadFrozenStateCatalog(repositoryRoot);
+        }
         foreach (var candidate in inspectedProblems.Candidates)
         {
             foreach (var reference in candidate.MotivationGids)
@@ -137,6 +140,7 @@ internal static class DescribeRepositoryValidator
             leanReport,
             resolvedDeclarationCatalog,
             frozenState,
+            frozenStatements,
             findings);
 
         return findings
@@ -152,6 +156,7 @@ internal static class DescribeRepositoryValidator
         LeanAxiomReport? leanReport,
         DeclarationCatalog? declarationCatalog,
         FrozenStateCatalog? frozenState,
+        FrozenStatementIndex? frozenStatements,
         ImmutableArray<DescribeRedFinding>.Builder findings)
     {
         if (sources.IsEmpty)
@@ -163,9 +168,9 @@ internal static class DescribeRepositoryValidator
             static problem => problem.Slug,
             StringComparer.Ordinal);
         var firstClaimBySlug = new Dictionary<string, string>(StringComparer.Ordinal);
-        var frozenStatements = leanReport is null
+        frozenStatements = leanReport is null
             ? null
-            : FrozenStatementIndex.Create(
+            : frozenStatements ?? FrozenStatementIndex.Create(
                 frozenState ?? throw new InvalidOperationException(
                     "Resolution claim validation requires the frozen-state catalog."),
                 leanReport);

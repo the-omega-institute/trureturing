@@ -1,0 +1,17 @@
+**命题。** 按 \(\rho_p\) 非增排序,相等时按素数大小递增固定顺序 \(p_1,\ldots,p_k\)。若 \(B\ge\sum_p\ell_p\),则
+\(U_{\rm dual}=F_b+\sum_p\Delta_p\),可取 \(\lambda_*=0\)。否则令
+\(q_m=\sum_{i=1}^m\ell_{p_i}\),\(q_0=0\),取唯一的 \(m\in\{0,\ldots,k-1\}\) 使 \(q_m\le B<q_{m+1}\),并置
+
+\[
+J=\{p_1,\ldots,p_m\},\quad j=p_{m+1},\quad
+\theta=(B-q_m)/\ell_j\in[0,1).
+\]
+
+则有达到的原始 LP 值和对偶值
+
+\[
+\max_{\substack{0\le t_p\le1\\\sum_p\ell_pt_p\le B}}
+\left(F_b+\sum_p\Delta_pt_p\right)
+=U_{\rm dual}=F_b+\sum_{p\in J}\Delta_p+\theta\Delta_j.
+\]
+

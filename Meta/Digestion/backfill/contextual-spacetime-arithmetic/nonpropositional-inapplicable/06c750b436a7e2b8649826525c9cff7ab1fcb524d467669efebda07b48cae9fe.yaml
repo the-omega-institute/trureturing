@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06c750b436a7e2b8649826525c9cff7ab1fcb524d467669efebda07b48cae9fe
+  normalized_sha256: sha256:06c750b436a7e2b8649826525c9cff7ab1fcb524d467669efebda07b48cae9fe
+cas_ref: sha256:06c750b436a7e2b8649826525c9cff7ab1fcb524d467669efebda07b48cae9fe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The full raw text is only the section13 heading plus two table-header/separator lines. It has no stronger-claim row and no mathematical sentence. All sixteen following stronger-claim atoms remain mathematical/refutation or foundational-scope obligations, individually mapped in this audit.
+    previous_atom_id: 228d3428c3cfea8b8142e332dc76ec755d3bf1ca76ea0c35950070843788db9d
+    next_atom_id: 6cc4cc460b793f7b14808128b013ffc0eee563ad8d59f9894c88d804716f575c

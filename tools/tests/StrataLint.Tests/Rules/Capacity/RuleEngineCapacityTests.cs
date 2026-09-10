@@ -10,11 +10,12 @@ public sealed class RuleEngineCapacityTests
     private const int L = RepositoryRules.DirectoryFileLimit;
 
     [Fact]
-    public void Sl003CapacityHardBlocksAtEightHundredAndSoftWarnsAtSixHundred()
+    public void Sl003CapacityHardBlocksPastTheHardLimitAndSoftWarnsPastTheSoftLimit()
     {
-        // 600 < n <= 800: a non-blocking soft warning, not a rejection.
+        // Past the soft limit but not the hard one: a warning, not a rejection.
+        // Pads derive from the constants so a threshold change moves them along.
         var soft = new RuleFixture();
-        soft.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 700));
+        soft.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", RepositoryRules.ArtifactSoftLineLimit + 1));
         var softDiag = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), soft.Build()).Diagnostics);
         Assert.Equal(AdmissionEffect.Observe, softDiag.AdmissionEffect);
@@ -24,13 +25,13 @@ public sealed class RuleEngineCapacityTests
             softDiag.Message,
             StringComparison.Ordinal);
 
-        // > 800: a hard block.
+        // Past the hard limit: a hard block.
         var hard = new RuleFixture();
-        hard.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 801));
+        hard.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", RepositoryRules.ArtifactHardLineLimit + 1));
         var hardDiag = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), hard.Build()).Diagnostics);
         Assert.Equal(AdmissionEffect.Block, hardDiag.AdmissionEffect);
-        Assert.Equal("artifact exceeds 800 lines", hardDiag.Message);
+        Assert.Equal($"artifact exceeds {RepositoryRules.ArtifactHardLineLimit} lines", hardDiag.Message);
     }
 
     [Fact]
@@ -120,6 +121,66 @@ public sealed class RuleEngineCapacityTests
             fixture.Build()).Diagnostics;
 
         Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == directory);
+    }
+
+    [Fact]
+    public void Sl003DoesNotTreatCanonicalProblemPoolDossiersAsASplittableModule()
+    {
+        var fixture = new RuleFixture();
+        for (var index = 1; index <= 60; index++)
+        {
+            var path = $"Problems/oeis-a000001-sample-slug-{index:0000}.md";
+            fixture.Files[path] = "fixture\n";
+            fixture.Changes.Add(path);
+        }
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Sl003StillBoundsCanonicalProblemPoolDossierLength()
+    {
+        var fixture = new RuleFixture();
+        const string path = "Problems/oeis-a363560-cubic-ninth-power-substitution-mod-three.md";
+        fixture.Baseline[path] = string.Empty;
+        fixture.Files[path] = string.Concat(Enumerable.Repeat("pad\n", RepositoryRules.ArtifactHardLineLimit + 1));
+        fixture.Changes.Add(path);
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+
+        Assert.Equal(path, diagnostic.Path);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal($"artifact exceeds {RepositoryRules.ArtifactHardLineLimit} lines", diagnostic.Message);
+    }
+
+    [Fact]
+    public void Sl003StillCountsNonCanonicalProblemPoolPaths()
+    {
+        var fixture = new RuleFixture();
+        for (var index = 1; index <= 60; index++)
+        {
+            foreach (var path in new[] { $"Problems/Foo{index:0000}.md", $"Problems/sub/x{index:0000}.md" })
+            {
+                fixture.Files[path] = "fixture\n";
+                fixture.Changes.Add(path);
+            }
+        }
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        foreach (var directory in new[] { "Problems", "Problems/sub" })
+        {
+            var diagnostic = Assert.Single(diagnostics, item => item.Path == directory);
+            Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+            Assert.Contains("directory contains 60 files", diagnostic.Message, StringComparison.Ordinal);
+        }
     }
 
     [Fact]
@@ -610,7 +671,7 @@ public sealed class RuleEngineCapacityTests
     {
         var fixture = new RuleFixture();
         var oversize = fixture.Files[RuleFixture.RingPath]
-            + string.Concat(Enumerable.Repeat("-- pad\n", 801));
+            + string.Concat(Enumerable.Repeat("-- pad\n", RepositoryRules.ArtifactHardLineLimit + 1));
         fixture.Files[RuleFixture.RingPath] = oversize;
         fixture.Baseline[RuleFixture.RingPath] = oversize;
 
@@ -625,14 +686,14 @@ public sealed class RuleEngineCapacityTests
     {
         var fixture = new RuleFixture();
         var baselineOversize = fixture.Files[RuleFixture.RingPath]
-            + string.Concat(Enumerable.Repeat("-- pad\n", 801));
+            + string.Concat(Enumerable.Repeat("-- pad\n", RepositoryRules.ArtifactHardLineLimit + 1));
         fixture.Files[RuleFixture.RingPath] = baselineOversize + "-- one more line\n";
         fixture.Baseline[RuleFixture.RingPath] = baselineOversize;
 
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal("artifact exceeds 800 lines", diagnostic.Message);
+        Assert.Equal($"artifact exceeds {RepositoryRules.ArtifactHardLineLimit} lines", diagnostic.Message);
     }
 
     // Baseline absence means this change created the file, so the artifact grew and blocks.
@@ -641,7 +702,7 @@ public sealed class RuleEngineCapacityTests
     {
         var fixture = new RuleFixture();
         fixture.Files["Meta/NewOversize.txt"] =
-            string.Concat(Enumerable.Repeat("pad\n", 801));
+            string.Concat(Enumerable.Repeat("pad\n", RepositoryRules.ArtifactHardLineLimit + 1));
         fixture.Changes.Add("Meta/NewOversize.txt");
 
         var diagnostic = Assert.Single(

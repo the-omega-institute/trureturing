@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:22e3ae71002abb0e59bb60da31839475a9750e59ad2d4c01aedb4429724adcfd
+  normalized_sha256: sha256:22e3ae71002abb0e59bb60da31839475a9750e59ad2d4c01aedb4429724adcfd
+cas_ref: sha256:22e3ae71002abb0e59bb60da31839475a9750e59ad2d4c01aedb4429724adcfd
+coverage_gids:
+  - gid: D5/S1/Recurrence/Parity/RatajczakDoublingZero.exists_zero_iff_modulus_pow_two
+    target_statement_id: sha256:3c7ec80c21c082c7bb7bd4484b8175b6ed6e17d92ca27a28793ca0ab9c08a235
+receipts:
+  unresolved_subitems: []

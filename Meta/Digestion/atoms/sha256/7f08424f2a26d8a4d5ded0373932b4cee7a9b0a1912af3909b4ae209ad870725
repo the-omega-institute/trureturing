@@ -1,0 +1,44 @@
+## 96. Full identified interval when the fair outcome law and mediator coupling are both unknown
+
+Retain the original equations `M=f_M(A,U_M)`, `Y=f_Y(M,U_Y)` and independent U_M,U_Y. Let alpha and beta be the fixed rational laws of M_0 and M_1. The full coupling pi of (M_0,M_1) is unknown. The outcome disturbance carries one complete table y:M->Bool, also with unknown law nu, subject to P_nu(Y_m=1)=1/2 for every original mediator value. Fairness here denotes that probability, not an algorithmic fairness criterion.
+
+For a Boolean partition y, write
+
+```text
+W(y) = sum_(m:y_m=1) [alpha(m)+beta(m)],
+S(y) = 1-abs(W(y)-1).
+```
+
+`UnknownCouplingFairMediation.lean` proves the exact rational identified image
+
+```text
+{J(pi,nu) : pi has marginals alpha,beta; nu has every coordinate fair}
+  = [0, (max_y S(y))/2] intersect Q.
+```
+
+Both independent mechanism laws range in the existential statement. A finite maximizing partition is constructed using the existing Finite.exists_max; no optimal plan, fixed coupling or optimal table is supplied as a theorem premise. The query is the existing completeMediatorBenefit, with its previously proved actual response-cell interpretation and no-direct-effect embedding.
+
+For a fixed partition set S, put a=alpha(S) and b=beta(S). Every compatible mediator coupling obeys
+
+```text
+Cut_pi(S) <= min(a+b,2-a-b) = 1-abs(a+b-1).
+```
+
+The first two bounds follow from the pointwise inequalities `1[y_i!=y_j]<=y_i+y_j` and `1[y_i!=y_j]<=2-y_i-y_j`, then the actual original marginals. This is uniform over the whole unknown-coupling family. The existing fair-cut identity `2J=E_nu[Cut_pi(Y)]` then gives the same global upper bound for every outcome law.
+
+Attainment uses a coarse two-by-two mediator plan. With t=max(0,a+b-1), its cells in order 00,01,10,11 are
+
+```text
+(1-a-b+t, b-t, a-t, t).
+```
+
+The existing Boolean Frechet construction supplies this maximal-crossing law. The new lift distributes its four masses back to every original mediator state without changing alpha or beta. A fair mixture of the optimizing partition table and its complement supplies the outcome mechanism. The two disturbances are independent by the existing product law. One constructed mediator coupling already realizes every intermediate rational target by the prior fixed-coupling outcome-mixture theorem.
+
+`unknown_coupling_half_iff_partition` further proves
+
+```text
+J=1/2 is attainable iff some subset S has alpha(S)+beta(S)=1.
+```
+
+This exact criterion concerns only the marginal-only fair model. Additional pair support, rank preservation, outcome-table restrictions, or mixed data constraints can invalidate the constructed lift and must remain explicit in any extension.
+

@@ -1,0 +1,1 @@
+| A058 | D | 存在 \(PF_\infty(k)\) 和 \(a>0\)，使 \(\int_{\mathbb R}k(x)e^{-sx}dx=1/\Xi(s)\) 在整个 \(\vert \Re s\vert <a\) 内绝对收敛并成立。 

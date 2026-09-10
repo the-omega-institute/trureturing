@@ -1,0 +1,13 @@
+**定理。** 对任意 \(k\ge2\) 个正实坐标 \(x_1,\ldots,x_k\),令 \(\mu,V\) 如上,并置
+
+\[
+r=\sqrt{\frac{V}{k(k-1)}},\quad L=\mu-r,\quad H=\mu+(k-1)r,\qquad
+\Psi_k(\mu,V)=f(H)+(k-1)f(L).
+\]
+
+则 \(L>0\),且 \(\sum_if(x_i)\le\Psi_k(\mu,V)\)。这是指定 \(k,\mu,V\) 的正实坐标类中的最优上界。对整数指数因此有
+
+\[
+\frac{\sigma(n)}n\le E_S(1-e^{-H})(1-e^{-L})^{k-1}.
+\]
+

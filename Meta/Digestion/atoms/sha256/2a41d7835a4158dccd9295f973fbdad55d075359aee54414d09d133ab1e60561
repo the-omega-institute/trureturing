@@ -1,0 +1,55 @@
+## 23. 两个不同素数的严格专门化与本次来源边界
+
+**推论。** 在第 18 节完整素数域中取 \(S=\{p,q\}\),\(p\ne q\) 为素数,\(b_p,b_q\in\mathbb Z_{\ge0}\),\(A_i=\{b_i,b_i+1\}\)。保留有限的 \(\log5040<T_0<T_1\),并要求至少两个不同的实际指数配置满足 \(T_0\le a_p\log p+a_q\log q\le T_1\)。则同一箱体和薄层的最优离散可分离对偶满足
+
+\[
+U_{\rm dual}<U_{\rm var}.
+\]
+
+**证明:预算与常数的精确平移。** 对 \(i\in\{p,q\}\) 置
+
+\[
+\ell_i=\log i,\quad x_i=(a_i+1)\ell_i,\quad
+c_i=(b_i+1)\ell_i>0,\quad d_i=(b_i+2)\ell_i>c_i,
+\]
+\[
+M_j=T_j+\ell_p+\ell_q\quad(j=0,1),\qquad
+E_S=(1-p^{-1})^{-1}(1-q^{-1})^{-1}.
+\]
+
+因 \(a_p\ell_p+a_q\ell_q=x_p+x_q-\ell_p-\ell_q\),指数薄层与 \(M_0\le x_p+x_q\le M_1\) 的实际角点一一对应;两个实际配置和严格宽度都保留。\(\mu_j=M_j/2\)、\(I\)、\(V_0\) 恰是第 16/19 节原来的量,没有另换度量或方差归一化。又 \(g_i(a)=f((a+1)\ell_i)-\log(1-i^{-1})\),对每个 \(\lambda\ge0\) 都逐项精确有
+
+\[
+\lambda T_1+\sum_{i\in S}\max_{a\in A_i}[g_i(a)-\lambda a\ell_i]
+=\log E_S+\lambda M_1+\sum_{i\in S}\max_{x\in C_i}[f(x)-\lambda x].
+\]
+
+取下确界得到
+
+\[
+U_{\rm dual}=\log E_S+D(M_1),\qquad
+U_{\rm var}=\log E_S+\Psi_2(\mu_1,V_0).
+\]
+
+第 22 节给出弱占优,等号则要求某个允许指数对满足
+
+\[
+(a_p+1)\log p=(a_q+1)\log q=\mu_1,
+\qquad p^{a_p+1}=q^{a_q+1}.
+\]
+
+两个幂指数都是正整数,与不同素数的唯一分解矛盾,所以严格。允许相邻指数选择包含零,因为 \(a_i+1\ge1\)、\(x_i>0\),且 \(g_i(0)=0\) 无需例外。假设 \(T_0>\log5040\) 完整继承,其具体数值不是这条比较所需的额外条件。证明只用两个不同配置确实落在薄层内,不要求它们预算相等;一般实数定理允许等预算角点。证毕。
+
+**本次来源与核验限度。** 主输入是 caller 提供的已完成 browser-PRO structured conclusion:task `6f6085dc-6f5a-473f-a229-072469c98c75`,conversation `conv_fc5fcce44d2bc103`,载体 `company-chatgpt-pro` browser Work,实际返回模型 `GPT-6 Astra`,完成时间 `2026-09-08T16:20:22.227+00:00`,opaque primary log_ref `qgh0909:k2-dominance:14c8e7b2`。这些是该次调用的来源记录,不是新的模型调用或独立批准票;该 opaque 引用及原始对话均未打开。主输入自报 `external-prior-exposed; sterile-context-unverified`。实施者是 caller 已应用的 `consensus-rnd:sshx` 下的委派 Codex implementation,为 `repo-prior-exposed`,没有新面板、子席、独立模型或 sterile-prior 声明。I5 的源和报告作为实施输入读取,不充作独立评审证据;caller 已有核对也只作支持。
+
+本次纸面审核展开了实际角点计数、内点正性、上端权重、质量为 2 的矩匹配、Hermite 余项符号及等号的双向证明,并将整数情形统一记为 \(m^*,V^*\)。经典分数背包归属沿用第 18 节;实施时还读取 [Hermite interpolation](https://en.wikipedia.org/wiki/Hermite_interpolation) 的摘要接口,仅核对以函数值和导数值插值的经典方法归属,没有从摘要取得本定理。所需余项的自含 Rolle 证明已在第 15 节。本次是具体函数与网格条件下的仓内纸面推导,不主张文献穷尽、全球新颖性、RH 进展或 Lean 冻结。
+
+工作树仍为 `/Users/auricstudio/trureturing-qgh-variance`,分支 `lane/math/quantized-gh-dual-0909`。本次唯一摄入基线是已终态提交的 I5 `ba80db594e632ae67aad496a3d68bab506769478`;其完整前缀为 1297 行、81750 字节、SHA256 `c112c2a0f0aa190845d05e80b67ad36e784aa894730c3b4d0e5ec017277713d0`。除追加本卷,新 atom 与消化条目只通过以下 canonical 命令生成,所有历史 atoms/条目保留:
+
+```sh
+make ingest BASE=ba80db594e632ae67aad496a3d68bab506769478 SOURCE=arithmetic-boundary-quantization
+```
+
+本次无 CPU/GPU 候选搜索,不重跑 xi、5040 或人工网格实验,不修改既有报告、数值证据、工具、测试套件、其它理论、形式根或冻结状态。一般真实素数 \(k\ge3\) 仍 **OPEN**;未将另行进行的 primary follow-up 结论纳入本增量。反驳本结算须在完整二点域内给出 \(D>\Psi_2\),或在无等坐标角点时给出等号;真实二素数域中经精确匹配证书认证的 \(U_{\rm dual}\ge U_{\rm var}\) 也会反驳严格推论,只有一个实际薄层角点的例子不在定理域内。
+
+这关闭的是一个二坐标参数族的纸面比较,不产生新的 Robin 有限证书或无限整数覆盖,也不完成长期研究目标。I5/I6 组合源的独立复审、CI 三门和 PR MERGED 落地仍由 caller 承担;本次实施不声明这些义务已履行,也不为已解决的二素数比较安排 GPU 搜索。

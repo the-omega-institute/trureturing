@@ -1,0 +1,39 @@
+**27.4 定理 A:全 \(\mathbb R^k\) 的单调性及精确增量等号。** 对任意
+\(x\in\mathbb R^k\)、坐标 \(i\)、实数 \(u\ge0\),有
+\[
+\boxed{\ell(x+u e_i)\ge\ell(x).}
+\]
+\(u=0\) 时恒等;\(u>0\) 时取等当且仅当
+\[
+\Pi x=\lambda\Pi e_i\quad\text{对某个 }\lambda\ge0
+\quad\Longleftrightarrow\quad x=a\mathbf1+\lambda e_i
+\quad\text{对某个 }a\in\mathbb R,\ \lambda\ge0.
+\]
+这里 \(a\) 是自由平移量,不必是 \(\bar x\)。
+
+证明。直接计算
+\[
+\|\Pi e_i\|_2^2=(1-1/k)^2+(k-1)/k^2=(k-1)/k,
+\qquad \frac{\|\Pi e_i\|_2}{\sqrt{k(k-1)}}=1/k.
+\]
+为使所用范数论证自足,对 \(w\ne0\) 将
+\(\|v-tw\|_2^2\ge0\) 取 \(t=\langle v,w\rangle/\|w\|_2^2\),
+得到 Cauchy-Schwarz;继而
+\[
+\|v+w\|_2^2=\|v\|_2^2+2\langle v,w\rangle+\|w\|_2^2
+\le(\|v\|_2+\|w\|_2)^2.
+\]
+两边非负,开方即三角不等式。\(w\ne0\) 时取等恰要求
+\(v=\lambda w\)、\(\lambda\ge0\),包括 \(v=0\)。
+用于 \(v=\Pi x,w=u\Pi e_i\),均值增加量 \(u/k\) 恰抵消范数增长上界,
+所以
+\[
+\ell(x+u e_i)-\ell(x)
+=\frac uk-\frac{\|\Pi x+u\Pi e_i\|_2-\|\Pi x\|_2}{\sqrt{k(k-1)}}\ge0.
+\]
+\(u>0\) 时 \(w\ne0\),三角等号给出所述非负共线条件;
+再用 \(\ker\Pi=\mathbb R\mathbf1\) 得等价表示。
+逐个增加坐标即证 \(x\le x'\Rightarrow\ell(x)\le\ell(x')\)。
+因此是非减而非每个方向严格增加,零方差 \(\Pi x=0\) 也在等号内。
+这一定理自身不需要正性、素性或互异性。证毕。
+

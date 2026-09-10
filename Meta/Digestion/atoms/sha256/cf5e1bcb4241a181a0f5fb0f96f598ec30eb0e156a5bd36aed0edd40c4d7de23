@@ -1,0 +1,11 @@
+**命题 35（整数仿射正向与双向运输）。** 给任意整数矩阵 $M\in\operatorname{Mat}_{3\times3}(\mathbb Z)$、整数向量 $v$，令 $F(x)=Mx+v$。将全部事件位置经 $F$ 运输而保持事件身份及其他数据，参考点同时变为 $F(o)$，定义 $\mathcal F:\mathcal B_o\to\mathcal B_{F(o)}$。它对全部这种 $M$ 都是合法的正向运输，且
+
+$$
+F(x+y-o)=F(x)+F(y)-F(o),
+\qquad
+\mathcal F(X\boxtimes_oY)=\mathcal F(X)\boxtimes_{F(o)}\mathcal F(Y).
+\tag{AFF}
+$$
+
+整数坐标上的双向运输恰在 $M\in GL_3(\mathbb Z)$ 时保证。
+

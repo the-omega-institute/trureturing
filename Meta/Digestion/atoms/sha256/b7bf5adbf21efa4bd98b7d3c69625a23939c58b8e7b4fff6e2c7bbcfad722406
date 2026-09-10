@@ -1,0 +1,8 @@
+**A092：** 对每个固定 \(k\ge1,\ell>0\)，令 \(P_{k,\ell}(x)=\sum_{n\ge1}\mu(n)n^{-k}e^{-x/n^\ell}\)。RH 等价于
+
+\[
+\forall\epsilon>0,\quad P_{k,\ell}(x)=O_{k,\ell,\epsilon}(x^{-k/\ell+1/(2\ell)+\epsilon}).
+\]
+
+[E12, Theorem 3.10 的 zeta 特化] 每个许可参数对各自给出等价定理；\(k=1\) 的自然部分和极限不能误称绝对收敛。
+

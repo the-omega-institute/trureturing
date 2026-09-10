@@ -1,0 +1,1 @@
+| A011 | D | 对每个 \(0<R<1\)，存在 \(C_R\ge0\)，使所有 \(n\ge0\) 满足 \(\vert \lambda_{n+1}\vert R^n\le C_R\)。 

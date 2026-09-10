@@ -4,9 +4,10 @@ authors: John M. Campbell, James Currie, Narad Rampersad
 year: 2025
 title: Reduced complexities for sequences over finite alphabets
 doi: 10.48550/arXiv.2509.16034
-claim: Section 3 proposes the odd-index recurrence for the reduced abelian complexity of the Thue-Morse word without proving it.
+claim: Section 3 leaves the odd-index recurrence and equation (11) for the reduced abelian complexity of the Thue-Morse word unproved.
 strata_touched:
   - D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd
+  - D5/S1/Words/Complexity/ThueMorseReducedAbelianEven
 license: citation-only
 triage: anchor
 ---
@@ -23,9 +24,54 @@ page 15 of arXiv:2509.16034v1, for
 > rho^{ab,red}_t(n) seems to be challenging.
 
 The caller reports that the odd equality is not proved anywhere in the paper.
-The full recursion and the paragraph's four further open items are outside
-this anchor: the sign of `rho(4n+2) - rho(4n)` when nonzero, a recursion for
-`rho(4n)`, equation (11), and non-k-automaticity of sequence (10).
+The same paragraph leaves four further items. Two of them stay outside this
+note: the sign of `rho(4n+2) - rho(4n)` when nonzero, and a recursion for
+`rho(4n)`. Non-k-automaticity of sequence (10) also stays outside. Equation
+(11) is now inside, and the next section records it.
+
+## Equation (11)
+
+Read on September 8, 2026 from the full-text rendering at
+`https://arxiv.org/html/2509.16034v1`. The LaTeX source of the display, in the
+Conclusion, is
+
+    \left|\rho^{ab,red}_{t}(4n+2)-\rho^{ab,red}_{t}(4n)\right|
+      = \begin{cases}0&\text{if $t_{n+1}=t_{3n+1}$},\\
+                      1&\text{otherwise},\end{cases}
+
+and the sentence carrying it reads "It appears that [(11)] holds, but it is
+unclear how the sign of ...". The authors state a few lines later that they
+leave proving equation (11) as an open problem.
+
+Sequence (10) is printed as
+`(2, 3, 3, 4, 3, 5, 4, 5, 3, 4, 5, 6, 4, 6, 5, 4, 3, 5, 4, ...)`.
+
+### The index base, measured rather than assumed
+
+The paper indexes both the complexity values and the Thue-Morse letters from
+one; this repository indexes `thueMorse` from zero. The caller measured the
+offset rather than inferring it, by computing the reduced Parikh vectors of
+all factors directly and comparing seven candidate readings over `n = 1..299`:
+
+| candidate reading, zero-indexed | disagreements |
+| --- | --- |
+| `t(n+1) = t(3n+1)` | 102 |
+| `t(n) = t(3n)` | 0 |
+| `t(n+1) = t(3n+2)` | 96 |
+| four further shifts | 199 to 201 |
+
+The same computation reproduces the printed sequence (10) term by term for
+`n = 1..19` and satisfies the odd recurrence throughout, which is what pins
+the complexity index to one as well. So in this repository's convention the
+display reads `thueMorse n = thueMorse (3 * n)`.
+
+The index `n = 0` sits outside the paper's range and outside the theorem:
+there the difference is `R 2 - R 0 = 3 - 1 = 2`, so the hypothesis `0 < n` is
+not cosmetic.
+
+This comparison is an arithmetic reading over a bounded window together with a
+human reading of the printed text. It is not a machine proof that the paper's
+`rho` and this repository's `R` denote the same function.
 
 On page 2, `red(w)` collapses every maximal constant run to one character.
 Reduced abelian complexity counts equivalence classes of all length-`n`

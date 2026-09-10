@@ -1,0 +1,1 @@
+| `D5/S3/Zeros/Jensen/JensenPolynomialObstruction.lean` | Jensen 多项式定义与有限失败见证的逻辑；blob `cb40a8e7c32caa84b36e1d86730fc2d45e903157` | 当前两个 Jensen–Pólya 桥仍是参数，且 RH 参数可为任意命题。最终端点必须使用实际 ξ 系数与标准 RH。 

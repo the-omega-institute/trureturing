@@ -1,0 +1,17 @@
+**24.7 均值向量已满足方差下界。** 以下固定 24.2 存在的那个最优解,写 \(c=c_j,d=d_j\),并置
+
+\[
+y_j=z=\mu+s,\quad y_i=t_i\ (i\ne j),\qquad
+W=\sum_{i\ne j}(t_i-\mu)^2,\quad
+\overline V=\sum_i(y_i-\mu)^2=s^2+W.
+\]
+
+所有 \(y_i>0\),均值为 \(\mu\),故 \(\overline V<k(k-1)\mu^2\)。这是均值向量的平方偏差,不是原混合的中心二阶矩;后者为 \(\overline V+\theta(1-\theta)h_j^2\)。若 \(\overline V\ge V_0\),真正分数行的严格凹性与第 15 节给出
+
+\[
+D(M_1)=(1-\theta)f(c)+\theta f(d)+\sum_{i\ne j}f(t_i)
+<\sum_i f(y_i)\le\Psi_k(\mu,\overline V)\le\Psi_k(\mu,V_0).
+\]
+
+这包括 \(\overline V=V_0\)、\(V_0=0\) 及 \(\overline V=V_0=0\)。严格性来自 \(c<d\)、\(0<\theta<1\),无需非零方差,也不使用退化的 Hermite 插值或除以零距离。
+

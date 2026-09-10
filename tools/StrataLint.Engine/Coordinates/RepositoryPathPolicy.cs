@@ -327,7 +327,7 @@ internal static partial class RepositoryPathPolicy
         {
             scope = "special";
         }
-        else if (coordinates.Length is 3 or 4
+        else if (coordinates.Length >= 3
             && coordinates[0] is var stratum
             && coordinates[1] is var domain
             && Enum.TryParse<Stratum>(stratum, ignoreCase: false, out var parsedStratum)

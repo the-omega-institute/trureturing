@@ -1,0 +1,5 @@
+source_id = "fixed-point-philosophy"
+path = "docs/develop/theory/FIXED_POINT_PHILOSOPHY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

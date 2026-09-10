@@ -1,0 +1,2 @@
+**A054，C：** 对每个 \(\varepsilon>0\)，\(\vert \det A_N\vert =O_\varepsilon(N^{1/2+\varepsilon})\)。精确桥为 \(\det A_N=M(N)\)，见第 8 节。[L15, L16]
+

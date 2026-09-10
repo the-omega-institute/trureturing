@@ -87,13 +87,13 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.Route(["manifest.json"]);
 
         Assert.Contains(
-            "choose a sibling domain or new domain, or create a subdomain in this domain",
+            "choose a sibling bucket or a new bucket, or create a subdomain in this bucket",
             result.Error,
             StringComparison.Ordinal);
     }
 
     [Fact]
-    public void RouteCapacityHintForFourSegmentFormalBucketAllowsOnlySiblingOrNewSubdomain()
+    public void RouteCapacityHintForFourSegmentFormalBucketStillOffersADeeperSubdomain()
     {
         using var temporary = RouteRepository(Manifest(
             "F", "Carrier", "CapacityHintProbe", "", "lean", "", subdomain: "SyntheticCapacity"));
@@ -106,11 +106,11 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.Route(["manifest.json"]);
 
         Assert.Contains(
-            "choose a sibling subdomain or new subdomain; nesting is limited to one subdomain level",
+            "choose a sibling bucket or a new bucket, or create a subdomain in this bucket",
             result.Error,
             StringComparison.Ordinal);
         Assert.DoesNotContain(
-            "create a subdomain in this domain",
+            "nesting is limited",
             result.Error,
             StringComparison.Ordinal);
     }
@@ -127,13 +127,13 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.Route(["manifest.json"]);
 
         Assert.Contains(
-            "choose a sibling domain or new domain, or create a subdomain in this domain",
+            "choose a sibling bucket or a new bucket, or create a subdomain in this bucket",
             result.Error,
             StringComparison.Ordinal);
     }
 
     [Fact]
-    public void RouteCapacityHintForFourSegmentBlueprintBucketAllowsOnlySiblingOrNewSubdomain()
+    public void RouteCapacityHintForFourSegmentBlueprintBucketStillOffersADeeperSubdomain()
     {
         using var temporary = RouteRepository(Manifest(
             "B", "Carrier", "CapacityHintProbe", "", "markdown", "", subdomain: "SyntheticCapacity"));
@@ -146,11 +146,11 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.Route(["manifest.json"]);
 
         Assert.Contains(
-            "choose a sibling subdomain or new subdomain; nesting is limited to one subdomain level",
+            "choose a sibling bucket or a new bucket, or create a subdomain in this bucket",
             result.Error,
             StringComparison.Ordinal);
         Assert.DoesNotContain(
-            "create a subdomain in this domain",
+            "nesting is limited",
             result.Error,
             StringComparison.Ordinal);
     }

@@ -1,0 +1,10 @@
+**命题 15（定义性保守扩展）。** 若新词汇仅由本文的 ZFC 公式定义，而本文命题以其证明加入，则对任一原集合论语言句子 $\varphi$，
+
+$$
+\mathrm{ZFC}+\mathrm{CSA\ definitions}\vdash\varphi
+\quad\Longrightarrow\quad \mathrm{ZFC}\vdash\varphi.
+$$
+
+因而在通常元理论中有相对一致性蕴含
+$\operatorname{Con}(\mathrm{ZFC})\Rightarrow\operatorname{Con}(\mathrm{ZFC}+\mathrm{CSA\ definitions})$；反向因后者包含前者也成立。这里没有从无条件前提证明任一一致性断言。
+

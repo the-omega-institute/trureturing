@@ -1,0 +1,5 @@
+### 12. 原始文献与精确定位
+
+以下文献按本节用途引用。2026 新稿使用实际版本记录；引文支持指定数学陈述，不表示本次独立重证了每篇全文。经典结果的完整移植仍按第 10 节推进。
+
+- **[L01]** Masatoshi Suzuki, *Weil's quadratic form via the screw function*, [arXiv:2606.09096v2](https://arxiv.org/abs/2606.09096v2), revised 2026-08-17. Theorems 1.1, 1.3, 1.4，形式核心与最终谱极限猜想。相关 PR 中 v1 引用应在实际采用新定理时更新。

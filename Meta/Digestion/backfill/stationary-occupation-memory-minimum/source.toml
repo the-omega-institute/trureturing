@@ -1,0 +1,5 @@
+source_id = "stationary-occupation-memory-minimum"
+path = "docs/develop/theory/STATIONARY_OCCUPATION_MEMORY_MINIMUM.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

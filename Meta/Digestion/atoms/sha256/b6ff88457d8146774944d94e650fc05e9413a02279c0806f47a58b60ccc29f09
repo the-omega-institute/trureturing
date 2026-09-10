@@ -1,0 +1,1 @@
+| A010 | D | 对每个 \(0\le r<1\)，\(\sum_{n\ge0}\vert \lambda_{n+1}\vert r^n<\infty\)。 

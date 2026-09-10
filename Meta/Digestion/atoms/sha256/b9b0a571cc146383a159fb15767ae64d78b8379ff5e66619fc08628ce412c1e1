@@ -1,0 +1,9 @@
+**命题 22（语言决定观察核，repo-derived）。**
+
+$$
+\approx_{\Sigma_{\rm arith}}=\ker q,\qquad
+\approx_{\Sigma_z}=\ker z,\qquad
+\approx_{\Sigma_{\rm sp}}=\ker\pi.
+\tag{LANG}
+$$
+

@@ -1,0 +1,30 @@
+### 12. 原始文献与精确定位
+
+以下文献按本节用途引用。2026 新稿使用实际版本记录；引文支持指定数学陈述，不表示本次独立重证了每篇全文。经典结果的完整移植仍按第 10 节推进。
+
+- **[L01]** Masatoshi Suzuki, *Weil's quadratic form via the screw function*, [arXiv:2606.09096v2](https://arxiv.org/abs/2606.09096v2), revised 2026-08-17. Theorems 1.1, 1.3, 1.4，形式核心与最终谱极限猜想。相关 PR 中 v1 引用应在实际采用新定理时更新。
+- **[L02]** Jeffrey C. Lagarias, *Li Coefficients for Automorphic L-Functions*, [arXiv:math/0404394](https://arxiv.org/abs/math/0404394), Annales de l'Institut Fourier 57 (2007), 1689–1740. Li 导数、零点表达与增长判据的经典来源。
+- **[L03]** Masatoshi Suzuki, *Li coefficients as norms of functions in a model space*, [arXiv:2301.05779v2](https://arxiv.org/html/2301.05779v2), 2023. Theorem 1.1；Propositions 2.1–2.2；Li–Weil 特殊测试函数恒等式。该特殊测试函数不属于原始光滑紧支撑类，使用时另证正则化和尾部运输。
+- **[L04]** Takashi Nakamura and Masatoshi Suzuki, *On infinitely divisible distributions related to the Riemann hypothesis*, [arXiv:2306.08317v1](https://arxiv.org/html/2306.08317v1), 2023. Theorem 1.1、算术 screw function、实际零点展开及实线无穷可分分布。
+- **[L05]** Michael Griffin, Ken Ono, Larry Rolen and Don Zagier, *Jensen polynomials for the Riemann zeta function and other sequences*, [arXiv:1902.07321v2](https://arxiv.org/html/1902.07321v2), 2019. 系数归一化、Jensen 实根塔及固定次数的大 shift 定理。
+- **[L06]** Karlheinz Gröchenig, *Schoenberg's Theory of Totally Positive Functions and the Riemann Zeta Function*, [arXiv:2007.12889v1](https://arxiv.org/html/2007.12889v1), 2020. Theorems 1, 3, 4, 8；倒数矩 Hankel 必要条件与充分性的区别。
+- **[L07]** Luis Báez-Duarte, *A strengthening of the Nyman-Beurling criterion for the Riemann hypothesis*, [arXiv:math/0202141](https://arxiv.org/abs/math/0202141), 2002. 实际半直线 L² 载体与整数 dilation 强化。
+- **[L08]** J. Brian Conrey, *Riemann's Hypothesis*, [author-hosted text](https://aimath.org/~kaur/publications/90.pdf), 2019. 素数计数、Chebyshev 误差与 Möbius 部分和的等价表述；不采用其发表时的有限零点计算数量作为当前数据。
+- **[L09]** Jeffrey C. Lagarias, *An Elementary Problem Equivalent to the Riemann Hypothesis*, [arXiv:math/0008177v2](https://arxiv.org/html/math/0008177v2). Main theorem；Robin 判据、Gronwall 与约数和极值背景。
+- **[L10]** YoungJu Choie, Michel Planat and Patrick Solé, *On Nicolas criterion for the Riemann Hypothesis*, [arXiv:1012.3613v2](https://arxiv.org/abs/1012.3613v2). Primorial 输入与正反两种 RH 情况下的符号结论。
+- **[L11]** Jan Cisło and Marek Wolf, *On the Riesz and Baez-Duarte criteria for the Riemann Hypothesis*, [arXiv:0807.2971v1](https://arxiv.org/abs/0807.2971v1), 2008. 指数生成恒等式、Möbius 表达、Lemma 3 与 Theorem 1 的完整误差运输。
+- **[L12]** Farr and Pauli, *Zeros of the derivatives of the Riemann zeta function on the left half plane*, [author-hosted text](https://mat112.uncg.edu/pauli/publications/farr-pauli_zeta-deriv-left-half-plane.pdf). Theorem 1 重述 Speiser 等价；这里只使用该经典零点带判据。
+- **[L13]** H. M. Bui, S. J. Lester and M. B. Milinovich, *On Balazard, Saias, and Yor's equivalence to the Riemann Hypothesis*, [arXiv:1306.0856v1](https://arxiv.org/html/1306.0856v1), 2013. Eqs. (1.1)–(1.2)；Theorem 1.2 给出带全部尾项的截断关系。其结果亦说明不能任意假定更强截断衰减率。
+- **[L14]** Bittu Chahal, Tapas Chatterjee and Sneha Chaubey, *Distribution of Farey fractions with k-free denominators*, [arXiv:2507.00228v3](https://arxiv.org/html/2507.00228v3), revised 2026-09-02. 本节只消费引言准确列出的普通 Franel–Landau 判据；其带同余类推广不混作普通 RH。
+- **[L15]** Herbert S. Wilf, *The Redheffer matrix of a partially ordered set*, [arXiv:math/0408263v1](https://arxiv.org/abs/math/0408263v1), 2004. 算术 incidence 结构与行列式。
+- **[L16]** François Clément and Stefan Steinerberger, *On the largest singular vector of the Redheffer matrix*, [arXiv:2502.09489v1](https://arxiv.org/html/2502.09489v1), 2025. 原始矩阵定义、Möbius 行列式背景与独立的奇异向量问题。
+- **[L17]** Brad Rodgers and Terence Tao, *The de Bruijn-Newman constant is non-negative*, [arXiv:1801.05914v5](https://arxiv.org/abs/1801.05914v5), revised 2021-07-03. 热核归一化、阈值与无条件下界。
+- **[L18]** Yang-Hui He, Vishnu Jejjala and Djordje Minic, *From Veneziano to Riemann: A String Theory Statement of the Riemann Hypothesis*, [arXiv:1501.01975v2](https://arxiv.org/html/1501.01975v2), 2015. Eq. (2.1) 重述 Volchkov 的嵌套对数积分。本文不消费其中推测性的物理解释。
+- **[L19]** Alain Connes, Caterina Consani and Henri Moscovici, *Zeta Spectral Triples*, [arXiv:2511.22755v1](https://arxiv.org/abs/2511.22755v1), 2025. 真实谱模型与极限研究背景。
+- **[L20]** Alain Connes, *The Riemann Hypothesis*, [arXiv:2602.04022v1](https://arxiv.org/abs/2602.04022v1), 2026. 当前谱路线与算术结构的综述背景。
+
+本图谱的下一步是逐条补齐真实解析边并消费已有真源。完成一个判据族的端到端证明，就将该族的规范对象、双向定理和见证运输接回这里的共同图谱，保留全部尚未完成的量词与分析义务。
+
+
+---
+

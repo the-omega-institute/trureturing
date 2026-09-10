@@ -1,0 +1,4 @@
+**A074，经典广义 Laguerre 判据：** 对全部 \(k\ge0,x\in\mathbb R\)，\(L_k[\Xi](x)\ge0\)。完整阶数塔等价于 RH；单个 Turán/Laguerre 不等式只提供必要条件。[E05, Section 2]
+
+复用前文 \(a_n=n!\xi^{(2n)}(1/2)/(2n)!>0\)。
+

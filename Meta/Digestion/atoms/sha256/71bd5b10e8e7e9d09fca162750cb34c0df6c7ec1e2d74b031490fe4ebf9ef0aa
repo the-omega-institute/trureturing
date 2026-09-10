@@ -1,0 +1,7 @@
+**命题。** 置 \(N_-=\sum_{s_p<0}s_p^2\),则
+
+\[
+J-F\ge\frac{BN_-}{2(B-1)^2}
+\ge\frac{BV}{2k(B-1)^2}\ge\frac{V}{2kB}.
+\]
+

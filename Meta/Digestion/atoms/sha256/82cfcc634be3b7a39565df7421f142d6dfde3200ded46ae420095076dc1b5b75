@@ -1,0 +1,6 @@
+**定理 3.6(知蕴含真,信不蕴含真)**〔证〕。在假设 1.3 下,知 $P\Rightarrow\forall\mathfrak M\models\mathfrak A,\mathrm{True}_{\mathfrak M}(P)$;并且,只要存在 $\mathfrak M\models\mathfrak A$ 与在其中为假的 $P\in\mathcal P$(显式前件),就存在信 $P$ 而 $\neg\mathrm{True}_{\mathfrak M}(P)$ 的主体。
+*证明*。前半由定理 2.2(i)。后半:取空账本与主张记录 $\{(P,\mathsf{unverified})\}$——它账平(定义 3.2 允许 $\mathsf{unverified}$),该主体信 $P$ 而 $\mathfrak M\not\models P$。∎
+*读法(非承重)*。经验回声:PZG 观察 6.67「φ 假象」——在被反驳之前对之持 $\mathsf{unverified}$ 主张的主体,正是「信而不知」。
+
+*与 FCD 的关系*。FCD 66.6 定义「知识 = 真理在证据余纤维上的稳定」,是关于**经验知识**在证据变动下的稳定性;本卷的知是关于**账本知识**的可取得性。两者不冲突:账本知识的「证据纤维」退化为单点(见证本身),稳定性平凡成立。
+

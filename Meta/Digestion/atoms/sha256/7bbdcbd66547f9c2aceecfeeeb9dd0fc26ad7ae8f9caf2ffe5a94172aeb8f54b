@@ -1,0 +1,13 @@
+### 5. 文献定位、实际复用与验证范围
+
+Li 系数、增长与 Weil 形式的联系已有成熟文献，例如 Lagarias, *Li Coefficients for Automorphic L-Functions*, Annales de l'Institut Fourier 57 (2007), 1689–1740, arXiv:math/0404394v4。Suzuki, *Li coefficients as norms of functions in a model space*, arXiv:2301.05779v2 (2023)，研究具体范数表示与 RH 判据。当前主要记录及摘要已核对；本轮不冒领这些经典解析关系的优先权，也未宣称重新审定两篇论文的全部证明。贡献是沿已合并 canonical 定义完成可组合的实际函数证明端点和尾段障碍。
+
+两份新 Lean 共 321 行、15 个公共定理，配套两个 Scribe 共 84 行，15 个 `StatementSource.FromLean()` 绑定全部匹配。四份代码通过字符串/注释感知的括号检查；新源码没有自定义 axiom、sorry、admit 或 native_decide。没有 Lean、Lake 或 dotnet 可执行程序，因此没有执行 elaboration、内核接受、传递公理报告或 Scribe emission。旧候选依赖也不因新增消费者而获得新的验证状态。
+
+seed 20260907 的 Fraction/有理复数重放通过 90 个有限解析多项式模型、3240 项 F'=GF 有限 jet 恒等式、1080 项精确几何余项、6480 项加权半径比较、864 项指定尾段越界实例、240 项 Möbius 往返、720 项原 s 平面圆盘测试、21 项临界线边界以及 90 项边界零点有界包络。五个负对照保留严格半径、全索引而非有限前缀、正半径、非零初值及完整复数零点位置等条件。完整重跑与结果文件逐字节一致。诊断是作者的第二实现，未计算真实 zeta 零点或 canonical 全序列，也不是独立审稿或 Lean 抽取代码。
+
+诊断源码 SHA-256：`1912d84a162e5328ac588487d17d0cc163265b26342d18dc4208aa27d1d48fad`；结果 SHA-256：`c197242b343bded46173e6286a745266d4fec049f769ecfdc0091481169f3662`。上一轮交付 ZIP 内的原诊断已另行重跑，JSON 与原包逐字节一致。研究产物保持在本 PR 的 Lean、配套 Scribe 和本卷追加；没有修改 CI 或冻结登记。
+
+- https://arxiv.org/abs/2607.23850 , primary abstract only; output-specific
+  adjoint estimation as a methodological comparison, without its PDE premises.
+

@@ -1,0 +1,6 @@
+# 2026-09-08：真实 prolate 尺度族与移动算术窗口的定量 Fourier 传递
+
+本节补齐已在研究分支提交的 `WeilMellinScaleFlow.lean`、同名 Scribe 与 `certify_prime3_prolate_scale_transport.py` 的解析依据。处理的是同一个真正 prolate 模型随尺度的变化；前节提供的真实 Weil 最低模态谱分离是另一个结果。两者不能未经误差桥接就合并为同尺度 ground/prolate 逼近。
+
+本次回读确认，前一轮未交付的六个 `WeilPrimeThresholdParity` / `prime3_scale_interval` 工作产物和原理论卷的 184 行追加已经位于远端，后续 `5d22480c06da2ae5716d804129153ba47e115f2a` 又包含本节六个 scale-flow 工作产物。旧 Lean 真源字节保持不变；Scribe 的过时半径改为 2e-8，Python 仅删去说明注释，结果源哈希同步更新。验证了现行源码，并实际重放 70、100 位的统一 Weil 区间程序和 110、130 位的真实 prolate 尺度程序。以下数学内容追加到原卷，不覆盖并行成果。
+

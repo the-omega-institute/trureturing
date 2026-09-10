@@ -133,7 +133,7 @@ internal static class DirectoryLedgerTestSupport
     internal static string Image(string repositoryRoot)
     {
         var root = Path.GetFullPath(repositoryRoot);
-        var paths = Directory.EnumerateFiles(
+        var paths = TemporaryFileSystem.Directory.EnumerateFiles(
                 Path.Combine(root, BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar)),
                 "*",
                 SearchOption.AllDirectories)
@@ -141,7 +141,7 @@ internal static class DirectoryLedgerTestSupport
         return string.Concat(paths.Select(path =>
             Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/')
             + "\0"
-            + Convert.ToBase64String(File.ReadAllBytes(path))
+            + Convert.ToBase64String(TemporaryFileSystem.File.ReadAllBytes(path))
             + "\n"));
     }
 

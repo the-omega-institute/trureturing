@@ -1,0 +1,31 @@
+### Nyman-Beurling-Baez-Duarte
+
+令 \(\{u\}=u-\lfloor u\rfloor\),在整个正半轴取
+
+\[
+\mathcal H=L^2((0,\infty),dx),\quad
+\chi=\mathbf1_{(0,1]},\quad f_k(x)=\{1/(kx)\},\quad k\ge1.
+\]
+
+[B1] 定理 1.1 给出
+
+\[
+\mathrm{RH}\iff\chi\in\overline{\operatorname{span}\{f_k:k\ge1\}}^{\mathcal H}.
+\]
+
+令 \(N\ge1\),并定义**平方距离**
+
+\[
+D_N=\inf_{a_1,\ldots,a_N\in\mathbb C}
+\int_0^\infty\left|\chi(x)-\sum_{k=1}^Na_k f_k(x)\right|^2dx.
+\]
+
+子空间递增给出 \(D_{N+1}\le D_N\),且 \(D_N\ge0\)。等价条件为 \(D_N\downarrow0\),即
+
+\[
+\forall\varepsilon>0\ \exists N\ge1\ \exists(a_1,\ldots,a_N)\in\mathbb C^N:
+\quad\int_0^\infty\left|\chi-\sum_{k=1}^Na_kf_k\right|^2dx<\varepsilon.
+\]
+
+取实系数也等价,因为丢掉虚部不增大误差。不能未经换算把范数改成 \((0,1)\) 上的范数;当 \(x>1\) 时,\(f_k(x)=1/(kx)\),尾部仍贡献积分。
+

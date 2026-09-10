@@ -1,0 +1,17 @@
+#### 8.2 Redheffer 行列式精确等于 Möbius 部分和
+
+令 \(D_{ij}=1_{i\mid j}\)，\(1\le i,j\le N\)。它是单位上三角矩阵，且
+
+\[
+(D^{-1})_{ij}=\begin{cases}\mu(j/i),&i\mid j,\\0,&\text{其他}.\end{cases}
+\]
+
+令 \(u=(0,1,\ldots,1)^T\)，则 \(A_N=D+u e_1^T\)。矩阵行列式引理给出
+
+\[
+\boxed{\det A_N=\det D\,(1+e_1^TD^{-1}u)=\sum_{n=1}^N\mu(n)=M(N).}
+\tag{E16}
+\]
+
+所需核心是除数卷积 \(\mu*1=\varepsilon\)，可以消费已有算术函数库。A054 的有限对象与 A041 的完整渐近完全一致。[L15, L16] 的奇异值研究不替代这一行列式身份。
+

@@ -1,0 +1,6 @@
+## A. 已有对角研究的实际类型
+
+本轮实际读取的源包括 `D5/S0/Diagonal/EscapeCount`、`Quantum/Tomography/ObserverDiagonalSeparation`、`Observer/Completion/ClosureNonimplicationTriple`、`Observer/Conditioning/UnreadStateOrthogonalProjection`、`Weil/Pick/DiagonalSignNegativeIndex`、`Weil/Budget/MultiscaleLoewnerConstraint` 与 `Weil/TestFunctions/ConvolutionSquarePositivity`。
+
+| 原有研究 | 当前可用的关系 | 需要保留的区别 |
+|---|---|---|

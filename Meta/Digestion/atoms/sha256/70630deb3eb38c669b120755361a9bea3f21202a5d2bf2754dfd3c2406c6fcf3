@@ -1,0 +1,4 @@
+**机器一侧**。模块头部按 SL-031 声明 `basis=refutes=atom:H-3`。校验器 `UtilityDeclarationValidator` 逐条要求:①`claim` 必须是 `def`,`result` 必须是 `theorem`;②`result` 必须是 `claim` 的**闭合否定**(`IsClosedNegation`,否则判 `not-a-closed-proof-of-not-claim`);③首次冻结时,该 atom 必须有一条**恰好指向 `result` 那条声明**的覆盖边(`HasExactCoverage(atom, declaration.Result, …)`,否则判 `UTILITY-REFUTES-ATOM-NO-COVERAGE`)。
+
+三条合起来:**H-3 的覆盖边必须指向那条形如 `¬claim` 的定理**,别无选择。实测两次:把 `result` 改指整条属主 → `not-a-closed-proof-of-not-claim`;把那条边删掉 → `UTILITY-REFUTES-ATOM-NO-COVERAGE`。
+

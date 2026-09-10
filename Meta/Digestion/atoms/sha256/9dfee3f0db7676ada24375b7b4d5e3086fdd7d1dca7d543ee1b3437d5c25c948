@@ -1,0 +1,25 @@
+#### 2.4 Nyman–Beurling 的两个真实载体
+
+在 \(L^2(0,1)\) 中，令 \(B_0\) 为所有有限复线性组合
+
+\[
+\sum_{j=1}^r u_j\{\theta_j/x\},\qquad
+0<\theta_j\le1,\qquad \sum_j u_j\theta_j=0.
+\]
+
+在 \(H=L^2((0,\infty),dx;\mathbb C)\) 中，定义
+
+\[
+\chi=\mathbf1_{(0,1)},\quad v_a(x)=\{1/(ax)\}\ (a\ge1),\quad
+S_N=\operatorname{span}\{v_1,\ldots,v_N\},\quad d_N=\operatorname{dist}(\chi,S_N).
+\]
+
+\(G_N\) 和 \(b_N\) 分别是这些实际向量的 Gram 矩阵与目标内积列，\(G_N^\dagger\) 是 Moore–Penrose 伪逆。已有真源给出
+
+\[
+d_N^2=1-b_N^*G_N^\dagger b_N.
+\tag{E2}
+\]
+
+Gram 矩阵的半正定性在这里无条件成立；RH 所要求的是完整逼近残差趋零。[L07]
+

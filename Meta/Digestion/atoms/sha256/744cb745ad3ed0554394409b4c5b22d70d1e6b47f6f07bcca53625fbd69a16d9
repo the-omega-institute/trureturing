@@ -1,0 +1,7 @@
+### 3. 64 个规格节点及其数学等价关系
+
+标签：**R** 为标准根命题，**C** 为文献中的经典判据，**D** 为由本节指明桥梁得到的派生表达。每行都是未来具体端点的目标陈述；实现进度由第 1、10 节的真源与解析义务决定。
+
+所有大 O 都在趋于无穷时使用，\(O_\varepsilon\) 明确表示
+\(\forall\varepsilon>0\;\exists C_\varepsilon,X_\varepsilon\;\forall x\ge X_\varepsilon\)，常数允许依赖 \(\varepsilon\)。复数表达的非负性按实 Hermitian 二次型解释。
+

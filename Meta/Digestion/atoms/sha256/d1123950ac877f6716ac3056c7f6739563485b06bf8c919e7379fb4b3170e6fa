@@ -1,0 +1,16 @@
+## C. 先在每个对角内完成原点减法
+
+记实际对角偶自相关 q_n(t)=C_{n,n}(t)+C_{n,n}(−t)，则 q_n(0)=2，且 0≤t≤L 时 q_n(t)=2(1−t/L)cos(ω_nt)，ω_n=2πn/L。新定义只给原分布公式的被积项命名：
+\[
+R_{L,n}(t)=\frac{e^{t/2}\operatorname{Re}q_n(t)-\operatorname{Re}q_n(0)}{e^t-e^{-t}}.
+\]
+这是已有实际卷积的表达式。不能把分子拆成两个发散积分。`diagonal_gamma_origin_subtraction` 由原卷积定理验证原点值与完整简式；`diagonal_gamma_integrable` 证明 R 在整个 (0,L] 上可积。
+
+证明的统一包络是
+\[
+\boxed{|R_{L,n}(t)|\le C_{L,n}:=e^{L/2}\left(1+\frac2L+\omega_n^2L\right),\qquad 0<t\le L.}
+\]
+使用 t≤e^t−e^{-t}、|e^{t/2}−1|≤(t/2)e^{L/2} 和 0≤1−cos(ωt)≤ω²t²/2，先控制零模态，再控制相对频率项。这个证明没有给最终被积函数的可积性设置输入前提，也没有删除零附近区间。
+
+纸面 Taylor 展开进一步给出 R_{L,n}(t)→1/2−1/L，当 t↓0，极限与 n 无关。源码未把这个极限额外声明为 Lean 定理；全定义除法在单点 t=0 的值也没有被当作此极限。
+

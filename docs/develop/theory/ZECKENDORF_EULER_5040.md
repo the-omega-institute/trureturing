@@ -35348,3 +35348,43 @@ F-1 至 F-4 各自可独立落地,次序为 F-1、F-2、F-3、F-4。若 F-2 的�
 **停止判据**:H-1 至 H-4 各自可独立落地,次序 H-3、H-1、H-2、H-4。若 H-4 的右端点构造连续两周无进展,按预算包络换 \(\Gamma\):只落地 H-1 至 H-3,把 H-4 降级为对具体不动点的条件命题,**不得声称已给出一般纤维刻画**。
 
 ---
+
+---
+
+# 四十三、勘注:H-3 拆为三条;并记一处机器规则与评审判据互相拉扯的形态
+
+本节把第四十二节的 **H-3** 拆开,理由不是措辞偏好,而是**它当前的写法使机器规则与评审判据无法同时满足**。
+
+## 一、事实:两条要求指向相反的方向
+
+H-3 原文是一句四条断言:反驳(非乘性 ∧ 不动点上不结合,附两个见证值),故不构成幺半群,故格同余不升级为乘法同余。
+
+**机器一侧**。模块头部按 SL-031 声明 `basis=refutes=atom:H-3`。校验器 `UtilityDeclarationValidator` 逐条要求:①`claim` 必须是 `def`,`result` 必须是 `theorem`;②`result` 必须是 `claim` 的**闭合否定**(`IsClosedNegation`,否则判 `not-a-closed-proof-of-not-claim`);③首次冻结时,该 atom 必须有一条**恰好指向 `result` 那条声明**的覆盖边(`HasExactCoverage(atom, declaration.Result, …)`,否则判 `UTILITY-REFUTES-ATOM-NO-COVERAGE`)。
+
+三条合起来:**H-3 的覆盖边必须指向那条形如 `¬claim` 的定理**,别无选择。实测两次:把 `result` 改指整条属主 → `not-a-closed-proof-of-not-claim`;把那条边删掉 → `UTILITY-REFUTES-ATOM-NO-COVERAGE`。
+
+**评审一侧**。两席(codex tests 与 ChatGPT Pro quality)各自独立判:那条 `¬claim` 定理**不能作为四子句 atom 的属主**,因为它的陈述里没有不动点归属、没有两个见证值、也没有两条推论。
+
+**两侧都对。** 冲突不在任何一方,在**我把四条断言写进了一个 atom**:一个 `¬claim` 形状的定理无论如何都装不下四条断言,而 `¬(A ∨ B)` 也无法把 `IsGolden` 这类正面事实纳入其中——否定不能生成正面合取项。
+
+## 二、拆分
+
+**H-3a**:反驳。观测不是乘性的,且它在不动点上诱导的运算 \(x\star y=\mathrm{Gobs}(xy)\) 不结合:\((2\star2)\star4=16\) 而 \(2\star(2\star4)=4\)。
+
+**H-3b**:不动点集在 \(\star\) 下不构成幺半群,即 \(\star\) 在 \(\{g:\mathrm{Gobs}\,g=g\}\) 上不满足结合律。
+
+**H-3c**:格同余不升级为乘法同余:存在 \(m,n\) 使 \(\mathrm{Gobs}\,m=\mathrm{Gobs}\,n\) 而 \(\mathrm{Gobs}(km)\ne\mathrm{Gobs}(kn)\);见证为 \(m=4,n=8,k=2\)。
+
+**三条各有一个能独立拥有它的定理**,于是 SL-031 的三项要求与覆盖保真同时成立:H-3a 的属主就是那条 `¬claim` 定理,H-3b 与 H-3c 各由其对应定理拥有。
+
+## 三、判形与落地依据(承第四十二节的诚实边界,不新立)
+
+第四十二节已写:「H-1 与 H-2 若最终只是『`b_monotone` 加一条 Mathlib 的 min/max 引理』的复合,则应判为绑定即得,**其落地依据改为伴随声明或 `atom-required-bridge`**」。实施证实二者正是该复合,故**本模块的落地依据为 `atom-required-bridge`**,不是 escape-witness。该分支是实施前就写好的,本节只是执行它,不是事后改标。
+
+同节亦已写「**H-3 的落地依据是反驳边(refutes),不另称新内容**」;H-3a/b/c 沿用该判定,其对应定理不作为新内容主张。
+
+## 四、机器侧的残余,如实记 `open`
+
+上述冲突在**任何**「一个 atom 同时含反驳与其推论」的场合都会重现,而 SL-031 现在没有表达「该 atom 由多个属主分担、其中之一是 `result`」的方式。本节以拆分绕开它,**不主张已修好那条规则**。是否该让 `HasExactCoverage` 接受「`result` 是该 atom 诸属主之一」,留 `open`,不在本节裁决。
+
+---

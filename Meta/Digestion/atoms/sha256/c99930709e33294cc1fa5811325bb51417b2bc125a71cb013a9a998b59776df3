@@ -1,0 +1,4 @@
+**定理 5.5(美不是真的函数)**〔证〕。设表述集上存在两对 $(\rho_1,\rho_2)$、$(\rho_3,\rho_4)$:$s(\rho_1)=s(\rho_2)$ 而 $\rho_1\succ\rho_2$(同态异美);$\rho_3\succ\rho_4$ 而 $s(\rho_3)=\mathsf{refuted}$、$s(\rho_4)=\mathsf{frozen}$(美者假、丑者真)。则 $\succeq$ 不经 $s\times s$ 因子化——不存在二元函数 $f$ 使 $\rho_1\succeq\rho_2\iff f(s(\rho_1),s(\rho_2))$。
+*证明*。若 $\succeq$ 经 $s\times s$ 因子化,则由 $s(\rho_1)=s(\rho_2)$ 得 $\rho_1\succeq\rho_2$ 与 $\rho_2\succeq\rho_1$ 同时成立,与 $\rho_1\succ\rho_2$ 矛盾。前件可实现:取定理 1.18 的命题逻辑模型($\mathrm{refs}\equiv\varnothing$,故一切账本 $E=\varnothing$、一切 $g=0$),账本 $N=\{p,\ q,\ \neg r\}$,其中 $p:=a\vee\neg a$、$q:=(a\vee\neg a)\wedge(b\vee\neg b)$、$r:=a\wedge\neg a$,见证取各自真值表。表述文本取上述写法:$\ell(p)<\ell(q)$、$g$ 皆 $0$、二者皆 $\mathsf{frozen}$,严格支配由 $-\ell$ 坐标给出,得 $(\rho_1,\rho_2)=(p,q)$。候选 $r$ 的文本比 $q$ 短、$g=0$,而 $s(r)=\mathsf{refuted}$(因 $\neg r\in N$),得 $(\rho_3,\rho_4)=(r,q)$。四个表述的其余坐标取相等。∎
+*读法*。美与真是两根独立的轴;定理只靠可实现的有限见证,判例是它的经验回声。
+

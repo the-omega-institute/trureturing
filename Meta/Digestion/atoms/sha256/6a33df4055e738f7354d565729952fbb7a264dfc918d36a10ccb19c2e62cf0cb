@@ -1,0 +1,26 @@
+### 4. 从实际 canonical 曲率矩阵导出所需界
+
+定义 c_0=1，对于 n≠0 取
+
+\[
+c_n=\frac{\lambda_{|n|+1}-2\lambda_{|n|}+\lambda_{|n|-1}}{2\lambda_1}.
+\]
+
+这是实际 canonical 序列的实值偶延拓，λ_1>0 复用已有首系数定理。在原 Toeplitz 约定 T_N(c)_(jk)=c_(j-k) 下，从第 n 阶矩阵取索引 0、n 的主压缩，即
+
+\[
+\begin{pmatrix}1&c_n\\c_n&1\end{pmatrix}.
+\]
+
+若原矩阵正半定，向量 (1,1) 与 (1,−1) 给出 2+2c_n≥0 和 2−2c_n≥0。因此
+
+\[
+|\lambda_{n+1}-2\lambda_n+\lambda_{n-1}|\le2\lambda_1.
+\]
+
+对一般实序列 L，假设 L_0=0、|L_1|≤a，且全部二阶差分绝对值≤2a。第一次归纳得到 |L_(n+1)−L_n|≤a(2n+1)，第二次归纳得到 |L_n|≤an²。系数可以带符号。
+
+由此得到候选端点 `canonical_curvature_posSemidef_implies_rh`：全部实际 canonical 曲率 Toeplitz 矩阵正半定蕴含标准 RH。共同 Herglotz 测度、抽象 Li 判据、期望中的递推和零点测度识别不再是该端点的额外输入。
+
+这仍然没有证明全部实际矩阵正半定。单项 |c_n|≤1 对一般序列也不能反推全矩阵正性。本轮采用正性到二点界的方向，然后使用这一个实际 canonical 序列已有的解析展开。
+

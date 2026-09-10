@@ -25,6 +25,11 @@ internal static class RepositoryCapacityAudit
                     + $"{RepositoryRules.ArtifactHardLineLimit})"));
             }
 
+            if (RepositoryRules.IsDirectoryCapacityExcluded(path))
+            {
+                continue;
+            }
+
             var slash = path.LastIndexOf('/');
             var directory = slash < 0 ? "." : path[..slash];
             directories[directory] = directories.GetValueOrDefault(directory) + 1;

@@ -416,6 +416,8 @@ internal sealed partial class BackfillInventoryDocument
 
 internal static partial class BackfillInventoryLoader
 {
+    internal static readonly AsyncLocal<Action<RepositorySnapshot, bool>?> DocumentLoading = new();
+
     private const string LegacyStorageMessage =
         "legacy digestion ledger is unsupported; migrate to directory storage";
 
@@ -613,6 +615,7 @@ internal static partial class BackfillInventoryLoader
         Func<string, string, ParsedSourceMetadata> parseSourceMetadata,
         bool projectBaselineReferences = false)
     {
+        DocumentLoading.Value?.Invoke(snapshot, projectBaselineReferences);
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
                 && pair.Key.Value.EndsWith("/source.toml", StringComparison.Ordinal))

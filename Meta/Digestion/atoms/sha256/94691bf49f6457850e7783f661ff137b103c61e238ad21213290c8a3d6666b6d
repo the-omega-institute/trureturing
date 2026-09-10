@@ -1,0 +1,9 @@
+## 8. 最新相关研究与剩余开放目标
+
+实际读取 #5895 at `023e6d1eccb223a563939590d301085a220b38f2` 的 `InvariantSectorEnergyReadout.lean`：不变 readout 可只支付本 sector 的 coercivity，但不能把该阈值充当全空间间隔。本节保留这一分工，并对更宽的前节 I 重做完整偶检查；未隐式导入未合并模块。#5882 的 `ProjectiveEnergyDual.lean` at `65339a3acbe99e661c6955dbb21728c4c62dfe76` 使用绝对 ell 和 U-ell，本节改用 (UG3)-(UG5) 中实际 residual 的双能量输入，未重复其通用读出包装。
+
+5040 研究 #6398 的 `PrimeValuationGap.lean` at `efd0a8a82d885491b22497822ad25da8cc2ee0bd` 已有固定素数/有界指数类的 Robin 尖锐渐近上包络。实际源码先固定 boost，再取整数阈值，保留量词顺序；该标量结果没有被移作当前谱假设。本节也不把“每个窄区间可认证”误写成无界尺度统一收敛。
+
+再次核对 CCM arXiv:2511.22755v1 Sections 7-8 的实际模型和缺失步骤，以及 Dusson-Sigal-Stamm arXiv:2008.10871 的 Schur 方法背景。残差后验估计、逆单调性和 block 配方为经典工具；这里的工作是同一算术对象的完整兑现，不宣称方法优先权。任何外部 Schrödinger 正则性假设均未移入本算子。
+
+本节完成的连接是：在一个跨 prime-3 激活的连续参数区间上，统一谱分离、真实模型尺度流和同尺度规范化 Fourier 误差终于同时可用。区间仍窄，复圆盘仍小，不能给出 Xi 极限。下一承重任务是扩展实际可认证的参数跨度，或在无界尺度序列上同时控制残差逆能量 E_a、centered 观察预算 C_(a,K)、非零原点 b_a 和正确模型识别，使 E_a C_(a,K)/b_a^2 趋零。本节不证明该全尺度率、一般简单偶最低族或 RH。

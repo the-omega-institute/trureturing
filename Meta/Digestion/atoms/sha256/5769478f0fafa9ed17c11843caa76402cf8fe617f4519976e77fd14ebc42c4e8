@@ -1,0 +1,10 @@
+**命题 26（卷积极值与无零因子）。** 对非零 $a,b\in R$，记支撑极值为 $a_-,a_+,b_-,b_+$，则
+
+$$
+\min\operatorname{supp}(a*b)=a_-+b_-,\qquad
+\max\operatorname{supp}(a*b)=a_++b_+.
+\tag{EXT}
+$$
+
+两极值点分别只有这一种来自两支撑的拆分，系数分别为 $a(a_-)b(b_-)$ 与 $a(a_+)b(b_+)$，均非零。因此 $R$ 无零因子。
+

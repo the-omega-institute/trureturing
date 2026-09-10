@@ -1,0 +1,20 @@
+### 固定坐标的常数不能丢
+
+若 \(S=S_{\rm fix}\sqcup S_{\rm free}\),固定指数为 \(b_p\),精确保留
+
+\[
+g_p(a)=\log\frac{1-p^{-a-1}}{1-p^{-1}},\quad
+T_{\rm fix}=\sum_{p\in S_{\rm fix}}b_p\log p,\quad
+F_{\rm fix}=\sum_{p\in S_{\rm fix}}g_p(b_p).
+\]
+
+令 \(h=|S_{\rm free}|\ge2\),并以残余预算端点 \(T_i-T_{\rm fix}\) 形成
+\(\widetilde\mu_i=(T_i-T_{\rm fix}+\sum_{p\in S_{\rm free}}\log p)/h\)、\(\widetilde I\) 与仅在自由坐标上的 \(\widetilde V_0\)。若 \(\widetilde\mu_1\le0\),正实自由坐标不可能存在;否则同样先检查 \(\widetilde V_0<h(h-1)\widetilde\mu_1^2\),失败即交集为空。通过后完整目标的上界是
+
+\[
+F\le F_{\rm fix}+\log E_{S_{\rm free}}+
+\Psi_h(\widetilde\mu_1,\widetilde V_0).
+\]
+
+仍与全局 \(\gamma+\log(\log T_0)\) 比较,绝不对可能非正的残余预算取 Robin 对数,也不删掉 \(F_{\rm fix}\)。此版本只覆盖 \(h\ge2\);\(h=0\) 直接检查唯一固定配置的总预算与 \(F_{\rm fix}\),\(h=1\) 对唯一自由行的有限允许指数直接计算总预算与 \(F_{\rm fix}+g_p(a)\)。维数下降不是无限素数尾部已受控。
+

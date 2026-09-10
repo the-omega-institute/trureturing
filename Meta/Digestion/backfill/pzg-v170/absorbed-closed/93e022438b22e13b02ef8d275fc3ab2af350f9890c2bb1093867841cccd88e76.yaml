@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:93e022438b22e13b02ef8d275fc3ab2af350f9890c2bb1093867841cccd88e76
+  normalized_sha256: sha256:93e022438b22e13b02ef8d275fc3ab2af350f9890c2bb1093867841cccd88e76
+cas_ref: sha256:93e022438b22e13b02ef8d275fc3ab2af350f9890c2bb1093867841cccd88e76
+coverage_gids:
+  - gid: D5/S3/Arith/ArtinSchreierTracePowersOfTwo.a396808_first_conjecture
+    target_statement_id: sha256:7bd689f1e860f161c028bef318857e6defe1a2d2a84dcf7855b64a54f5300e8a
+receipts:
+  unresolved_subitems: []

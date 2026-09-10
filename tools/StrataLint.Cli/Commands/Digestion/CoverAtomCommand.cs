@@ -240,7 +240,9 @@ internal static partial class CoverAtomCommand
             session.Scribe.Verify(
                 current,
                 report,
-                receiptVerificationChanges);
+                receiptVerificationChanges,
+                session.FrozenState,
+                session.FrozenStatements);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
                 evaluationScope,
                 document,
@@ -366,7 +368,7 @@ internal static partial class CoverAtomCommand
                     truthStates);
             }
 
-            var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
+            var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw, document, finalDocument);
             var changed = ledgerUpdates.Length > 0;
             session.Commit(finalRaw, finalSnapshot, finalDocument, ledgerUpdates);
 
@@ -487,8 +489,10 @@ internal static partial class CoverAtomCommand
             });
         var dispositionRaw = IngestCommand.ReplaceLedger(session.CurrentRaw, session.Document, dispositionDocument);
         var dispositionSnapshot = Decode(dispositionRaw);
-        var ledgerUpdates = IngestCommand.LedgerUpdates(session.CurrentRaw, dispositionRaw);
-        session.Commit(dispositionRaw, dispositionSnapshot, LoadDocument(dispositionSnapshot), ledgerUpdates);
+        var finalDispositionDocument = LoadDocument(dispositionSnapshot);
+        var ledgerUpdates = IngestCommand.LedgerUpdates(
+            session.CurrentRaw, dispositionRaw, session.Document, finalDispositionDocument);
+        session.Commit(dispositionRaw, dispositionSnapshot, finalDispositionDocument, ledgerUpdates);
     }
 
     private sealed record CoverArguments(
@@ -540,7 +544,7 @@ internal static partial class CoverAtomCommand
         "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...] --base REV");
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
-        BackfillInventoryLoader.Load(snapshot);
+        IngestCommand.LoadDocument(snapshot);
 
     private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
     {

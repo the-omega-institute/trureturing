@@ -1,0 +1,9 @@
+**引理 4（后继饱和与首乘塌缩，repo-derived）。** 对每个在全部 $\mathcal B$ 上有定义的固定有限 $C\in\operatorname{Ctx}_{\Sigma_{{\rm cau},t}}$，存在 $c_C\in\mathbb Z$，使任意 $p\in\mathbb Z^3$ 及 $t,t'<c_C$ 都有下述两输入 $X_t,X_{t'}$：唯一选中事件是同来源正点 $e@(t,p)$、$e@(t',p)$，其余当前事件共同且未选，全部档案端点共同，并且
+
+$$
+q(C(X_t))=q(C(X_{t'})).
+\tag{O-SATURATION}
+$$
+
+量词次序为 $\forall C\ \exists c_C\ \forall p\ \forall t,t'<c_C\ \exists X_t,X_{t'}$；只有最后的输入见证可以依赖 $p,t,t'$。
+

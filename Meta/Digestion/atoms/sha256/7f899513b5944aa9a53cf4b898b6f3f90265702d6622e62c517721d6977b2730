@@ -1,0 +1,20 @@
+## 4. 对接新的 model-centered 读出，而不冻结错误的中心系数
+
+本轮实际读取 #5895 提交 `44a831a15abe4d00268d973976101e0d62d66fd2` 中 `GenuineModelDualTransport.lean` 的 `model_centered_readout_identity` 和 `annihilating_energy_dual_transport`。其系数必须是同一真实模型的比值，且其对偶预算必须另行认证。
+
+在共同空间 L2([-1,1])，定义 g_(a,z)(y)=conjugate(cos(a z y))，g0=1，以及 h_(a,z)=g_(a,z)-conjugate(P_a(z))*g0。对真实模型的酉伸缩向量 e_a，严格有 <h_(a,z),e_a>=0，sqrt(a) 因子在原点比值中消去。由复指数核导数与 (SF9)，
+
+\[
+\|h_{a,z}-h_{a0,z}\|_2
+\le\sqrt2\,|z|e^{a_+b}|a-a0|+\sqrt2\,|P_a(z)-P_{a0}(z)|.
+\]
+
+定向程序证明
+
+\[
+\boxed{\sup_{a\in I,\ z\in D}\|h_{a,z}-h_{a0,z}\|_2<15/10^6.}
+\tag{SF10}
+\]
+
+这是实际中心化代表元的变化预算。它没有证明全对偶残差，因为还需要同一试探函数上的 (A_a-A_a0)v，以及正移位、候选/模型正交补和分母界的统一组合。不能将中心 z、a0 的旧 C 值无修改地用于整个参数区间。
+

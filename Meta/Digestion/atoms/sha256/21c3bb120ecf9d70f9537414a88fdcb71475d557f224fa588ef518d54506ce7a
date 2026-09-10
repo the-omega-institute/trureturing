@@ -1,0 +1,37 @@
+### 2. Signed identity with the actual eigenvalue uncertainty
+
+Let iota,M:E->H be complex-linear maps on an actual operator domain, symmetric
+there. Inner products are conjugate-linear in their first argument. Suppress
+iota in the equations. Let e be a unit model and p an aligned eigenvector,
+
+    Mp=lambda p,       <e,p>=1,       w=p-e perpendicular to e.
+
+For g0 and g the actual origin and target readouts, put
+
+    h=g-conj(<g,e>/<g0,e>)*g0,       <h,e>=0.
+
+Choose a domain trial v perpendicular to e and ANY real spectral center sigma.
+Define the complete quantities
+
+    r_sigma=Me-sigma e,
+    s_sigma=P_(e-perp)(h-(Mv-sigma v)),
+    D=<v,r_sigma>.
+
+Symmetry and the actual eigenvalue equation give the exact complex identity
+
+    <h,p> + D = <s_sigma,w> + (lambda-sigma)<v,w>.          (SG1)
+
+The correction is -D. Dropping lambda-sigma is invalid unless it is zero
+or has been separately budgeted. Dropping the exterior of s_sigma is also
+invalid. No scalar norm inequality or approximation theorem is assumed to
+produce SG1.
+
+For certified bounds ||s_sigma||<=S, |lambda-sigma|<=eta, ||v||<=V and
+||w||<=R, Cauchy--Schwarz yields
+
+    |<h,p> + D| <= (S+eta V)R.                             (SG2)
+
+The right side is a product of the actual mode-error radius and the full
+dual-residual/shift uncertainty. A small signed pairing does not by itself
+make this remainder small, nor does it determine the actual output sign.
+

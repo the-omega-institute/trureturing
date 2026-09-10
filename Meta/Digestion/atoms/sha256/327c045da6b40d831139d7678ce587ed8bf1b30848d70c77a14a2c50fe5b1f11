@@ -1,0 +1,9 @@
+**命题 12（遗漏对电荷与普适性障碍）。** 对固定输入情境与固定 $R$，
+
+$$
+q(X\boxtimes_RY)=q(X)q(Y)-
+\sum_{(a,b)\in(A_X\times A_Y)\setminus R}\sigma_X(a)\sigma_Y(b).
+$$
+
+对所有选择都与普通乘法兼容，当且仅当 $R=\Omega_X\times\Omega_Y$。
+

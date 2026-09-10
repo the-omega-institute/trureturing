@@ -1,0 +1,39 @@
+### 固定支撑损失不等于任意全局损失
+
+第 10 节及 [Z] 第十二章的精确 Bernoulli-KL 分解是既有输入。定义
+\(D_{\rm Ber}(u\Vert v)=u\log(u/v)+(1-u)\log((1-u)/(1-v))\)。这里的固定支撑同型恒等式为
+
+\[
+J-F=\frac1{1-B^{-1}}\sum_{p\in S}
+D_{\rm Ber}(B^{-1}\Vert e^{-x_p}).
+\]
+
+逐项展开右边为 \(f(\mu)-f(x_p)+s_p/(B-1)\),线性项和为零。方差包络是用少量矩信息压缩这个精确损失,不增加它已有的信息;已给定全部指数时,直接 \(F\) 或精确 KL 保留更多信息。
+
+为与 [Z] 定义 12.1、定理 12.3、推论 12.4 对齐,此处 \(F=W(n)\),\(g_p\) 取第 10 节的实指数解析延拓,并明确写
+
+\[
+\Phi(T)=\max_{\substack{u_p\in\mathbb R_{\ge0},\ u\text{ 有限支撑}\\\sum_pu_p\log p\le T}}
+\sum_pg_p(u_p)\quad(T>0),\qquad
+\mathfrak D(n)=\Phi(\log n)-F\quad(n>1),
+\]
+\[
+\mathfrak Q(T)=\Phi(T)-\gamma-\log(\log T)\quad(T>1),\qquad
+\Delta(n):=\gamma+\log(\log(\log n))-F
+=\mathfrak D(n)-\mathfrak Q(\log n).
+\]
+
+最后一式在 \(\log n>1\) 上使用。任意 \(S\) 的 \(J\) 不一定等于 \(\Phi(T)\);正确的估计是
+\(\mathfrak D(n)\ge\Phi(T)-\log E_S-\Psi_k(\mu,V)\),可与既有 \(\mathfrak D\ge0\) 取较强者。只有核对 [Z] 活跃集合及预算条件后,才能将 \(J-F\) 认作全局 \(\mathfrak D\)。
+
+剩余全局义务仍是对**每个整数 \(n>5040\)** 证明 \(\mathfrak D(n)>\mathfrak Q(\log n)\)。本节没有在增长的支撑、指数和预算上给出足以压过 \(\mathfrak Q\) 的统一格距离估计。唯一分解排除精确等号,不提供所需的定量间隔;漏掉的素数也不能凭近似 Euler 乘积补回。
+
+维数损失有一个仅在正实松弛中的限制:固定 \(\mu=2\),取 \(x=(k+1,1,\ldots,1)\),则 \(V=k(k-1)\),而
+
+\[
+J-F=kf(2)-f(k+1)-(k-1)f(1)=O(k),\qquad
+\frac{e^2(J-F)}{V}\longrightarrow0.
+\]
+
+所以不能在所有维数的正实域上用某个正常数代替粗界中 \(1/k\) 的因子。这不是素数整数格的反例。尖锐连续包络已经达到其矩信息所能给出的最优值;RH 义务仍需额外的算术或全尺度误差信息。
+

@@ -1,0 +1,11 @@
+**定义 10（丰富实数表示）。** 令
+
+$$
+\mathcal R^{\rm rich}=
+\{R:\mathbb N\to\mathcal Q^{\rm rich}:a_n=v(R_n)\text{ 在 }\mathbb Q\text{ 中为 Cauchy 序列}\}.
+$$
+
+“Cauchy”指对每个有理 $\varepsilon>0$，存在 $N$，使所有 $m,n\ge N$ 满足 $|a_m-a_n|<\varepsilon$。这里取的是**全部**满足条件的序列，不限于可计算序列或有限程序可命名的序列。定义 $R\sim_{\mathbb R}S$ 当且仅当 $v(R_n)-v(S_n)\to0$。序列指标 $n$ 表示近似精度，不是事件的物理时间；不把这些有限图说成具有已证明的连续时空极限。
+
+加、乘、负逐项使用第 6 节的丰富公式。常数嵌入是有理表示的常值序列。按 ZFC 中的标准有理 Cauchy 完备化记 $\widehat{\mathbb Q}$；其元素是 Cauchy 序列模零序列差的等价类。暂记 $\ell(R)=[(v(R_n))]\in\widehat{\mathbb Q}$，不先假定每个实数已经有某个有限事件编码。
+

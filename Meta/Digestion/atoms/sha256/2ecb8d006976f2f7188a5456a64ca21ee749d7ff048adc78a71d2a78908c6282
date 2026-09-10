@@ -1,0 +1,30 @@
+### 3. The model-origin correction and the actual denominator
+
+Write d_e=<g0,e> and d_p=<g0,p>. From ||g0||<=G0 and the actual error bound,
+
+    |d_p-d_e|<=G0 R.
+
+If b,b0>0 and b+G0 R<=b0<=|d_e|, then |d_p|>=b. The existing centered-readout
+identity supplies the quotient difference. Normalizing the computable
+correction by the MODEL origin gives
+
+    |<g,p>/<g0,p> - <g,e>/<g0,e> + D/d_e|
+      <= (S+eta V)R/b + |D| G0 R/(b0 b).                 (SG3)
+
+The second term is the cost of replacing d_p by d_e. It remains even if the
+unscaled dual remainder vanishes. It is derived from the exact identity
+
+    H/d_p + D/d_e = (H+D)/d_p + D(d_p-d_e)/(d_e d_p),
+    H=<h,p>.
+
+The public projective consumer constructs p=u/<e,u> using the existing
+Rayleigh enclosure, derives the error radius from nu<=kap*R^2, and obtains
+SG3 for the ACTUAL raw eigenvector ratios. Arbitrary complex phase and scale
+cancel. The old eigenpair, spectral placement, domain and unit-model
+conditions are retained; the theorem does not manufacture an eigenvector.
+
+A scale limit to the ORIGINAL prolate model requires the normalized correction
+D_a/d_(e,a) to tend uniformly to zero, as well as the product remainder in
+SG3. Convergence to a newly corrected model alone does not establish the
+original Xi/Xi(0) limit. The model has not been silently redefined here.
+

@@ -1,0 +1,13 @@
+### 2. 全索引增长控制与全域解析延拓
+
+若实际系数满足对所有 n 的 |λ_n|≤Cn²，则对每个 0≤r<1，有
+
+\[
+\sum_{n\ge0}|\lambda_{n+1}|r^n
+\le C\sum_{n\ge0}(n+1)^2r^n<\infty.
+\]
+
+候选真源 `AnalyticLogarithmicContinuation` 复用钉版 Mathlib 的标量 formal series 收敛半径 API，证明原系数之和在单位圆盘上全纯。实际 F 由 ξ 为整函数而全纯。F' 与 GF 都在全盘全纯，因此局部 F'=GF 经恒等定理延拓到整个连通圆盘。
+
+注意延拓的对象是 F'−GF。即便正在排查 F 的零点，这个函数仍然全纯；不需要事先把 F'/F 延到全盘。
+

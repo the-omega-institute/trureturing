@@ -1,0 +1,9 @@
+**定义 5（有守卫的时间复合）。** $X\triangleright Y$ 使用同一带标签并集，但增加全部关系 $\iota_0(e)\prec\iota_1(f)$，其中 $e\in E_X,f\in E_Y$。它的定义域恰为
+
+$$
+\forall e\in E_X\ \forall f\in E_Y,\quad t_X(e)<t_Y(f).
+\tag{T}
+$$
+
+这个条件检查整个档案，空输入时按空真解释。不暗中平移绝对时间。若使用显式时间平移 $T_k(C)$（把所有 $t(e)$ 换成 $t(e)+k$，$k\in\mathbb Z$），则表达式必须写为 $X\triangleright T_k(Y)$。非空有限档案总可选 $k>\max t_X-\min t_Y$ 使之合法，但这已是不同的坐标数据。
+

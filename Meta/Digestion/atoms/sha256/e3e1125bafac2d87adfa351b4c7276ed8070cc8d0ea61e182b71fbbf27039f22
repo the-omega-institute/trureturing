@@ -1,0 +1,20 @@
+### 2. Center against the actual model before bounding
+
+Let g0,g_z be the actual Riesz vectors for the origin and target readouts.
+The inner product is conjugate-linear in its first entry. For the genuine
+unit model e, assume d_e=<g0,e> is nonzero and set
+
+    r_e(z)=<g_z,e>/<g0,e>,
+    h_(e,z)=g_z-conj(r_e(z))*g0.
+
+The SAME model appears on both sides of the exact identities
+
+    <h_(e,z),e>=0,
+    <g_z,p>/<g0,p>-r_e(z)=<h_(e,z),p>/<g0,p>.             (CE1)
+
+The second identity applies when the actual denominator is nonzero. The
+source derives that nonvanishing in the eigenmode consumer below. The complex
+conjugation in h is essential. The old complete dual coefficient for g_z is
+not automatically a coefficient for h_(e,z); it must be recomputed for this
+centered readout, retaining its correlation with g0.
+

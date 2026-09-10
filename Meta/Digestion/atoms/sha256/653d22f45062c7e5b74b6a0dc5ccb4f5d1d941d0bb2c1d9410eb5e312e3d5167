@@ -1,0 +1,4 @@
+**A066，Laurinčikas：** 对每个上述 \(K\)，存在至多可数 \(E_K\subset(0,\infty)\)，使每个正数 \(\epsilon\notin E_K\) 对应的 \(\lim_{T\to\infty}d_{K,\epsilon}(T)\) 存在且严格为正。[E01, Theorem 4]
+
+两条分别与 RH 等价。可数例外集合、密度归一化和全部紧集的量词必须保留；其他平移比例的自逼近可能无条件成立。
+

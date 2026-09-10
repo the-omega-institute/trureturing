@@ -1,0 +1,28 @@
+### 8. Candidate sources and execution boundary
+
+This continuation adds eight public theorem scripts to the existing
+GenuineModelDualTransport.lean and eight matching canonical Scribe handles.
+All original source text is preserved except the syntactic closing delimiter
+needed to append Scribe entries. No new Fourier or dualBudget definition is
+introduced. This theory text is now appended to the existing volume.
+No Lean elaboration, transitive axiom audit or Scribe emitter was executed.
+
+Executed checks include 600 exact Hermitian eigenpair cases and signed
+identities, 600 product and ratio bounds, 600 repaired arbitrary-shift
+pairings, 480 captured-head model-tail checks, 1800 raw phase/scale checks,
+and negative controls for omitted eigenvalue uncertainty and omitted
+actual-denominator correction. Wrong signs and complex-conjugation mutations
+are detected. These are single-author finite diagnostics, not independent
+proof review or a universal kernel verdict.
+
+The previous exact centered diagnostics and 100-digit interval transport
+were rerun in the original computation. The 512-mode scalar calculation was
+run at 110 and 120 digits. At delivery the exact diagnostics, source/patch
+checks and rational budget assembly were rerun. The original full spectral,
+genuine-prolate and graph-norm verifiers were not rerun. Their input scope
+remains explicit. The local input projections are not misrepresented as
+complete upstream-file attestations.
+
+Primary references read in the original computation:
+
+- https://arxiv.org/html/2511.22755v1 , Lemma 7.3 and Section 8.

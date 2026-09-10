@@ -1,0 +1,1 @@
+| `D5/S3/Constants/NewtonHankelRealRootCriterion.lean` | 共轭稳定有限根族的实根性与 Newton–Hankel 半正定双向证明；blob `1b30a277e90ec2fdca2e10712bdc543c37acc195` | 复用其插值负方向；为实际 Jensen 多项式构造根枚举或 companion-trace 适配器。 

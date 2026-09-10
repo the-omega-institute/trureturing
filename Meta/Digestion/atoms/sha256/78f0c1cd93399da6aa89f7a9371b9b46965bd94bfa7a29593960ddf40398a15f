@@ -1,0 +1,15 @@
+#### 扩展 F02：完整实参数族
+
+固定 \(a\in\mathbb R\setminus\{1/2\}\)，使用实际非平凡零点及解析重数定义
+
+\[
+S_n(a)=\lim_{T\to\infty}\sum_{|\Im\rho|\le T}m_\rho
+\left[1-\left(\frac{\rho-a}{\rho+a-1}\right)^n\right],\quad
+D_n(a)=\left.\frac1{(n-1)!}\frac{d^n}{ds^n}
+\bigl((s-a)^{n-1}\log\xi(s)\bigr)\right|_{s=1-a}.
+\]
+
+对称极限、实值性和局部对数先证明合法。每个固定许可参数下，以下三条各自与 RH 等价。[E04, Theorems 1、2、5]
+
+| ID | 精确陈述 |
+| --- | --- |

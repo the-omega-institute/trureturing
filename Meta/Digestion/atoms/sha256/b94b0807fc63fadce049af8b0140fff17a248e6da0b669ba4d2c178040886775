@@ -1,0 +1,7 @@
+- Actual #5895 `GenuineModelDualTransport.lean`, blob `d6940d2ee2cc91ebe1f6faed01b75b9adc8cd7e3`; #6204 `GronwallUpperEnvelope.lean`, blob `75eb28885ee1250985d9dbd19b73fa76f3502d04`.
+
+参考：Connes-Consani-Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 7-8；Connes, arXiv:2602.04022；既有 `WeilPolynomialMellinWindow`、`WeilMellinScaleFlow` 和本卷 prolate Jacobi 实现。
+
+
+---
+

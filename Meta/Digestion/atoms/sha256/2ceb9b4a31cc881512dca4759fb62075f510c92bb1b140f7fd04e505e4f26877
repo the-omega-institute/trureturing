@@ -1,0 +1,4 @@
+## [PR #6219] Canonical Li curvature and actual analytic zero-freeness
+
+本节补入上一轮已经完成的数学追加。基准 dev 为 `55a96922002fdbf5644c47264702e325d0b475c9`，已有六份 Lean/Scribe 在本次补写前的远端提交为 `b14a5818d44baadbdb28367e97825548367babb5`。本轮复用已合并 #6172 的实际 `canonicalLiCoefficient`、`xiReading`、局部 Keiper–Li 展开和首系数正性。这里没有另造一份 Li 序列，也不主张经典生成函数方法的文献优先权。
+

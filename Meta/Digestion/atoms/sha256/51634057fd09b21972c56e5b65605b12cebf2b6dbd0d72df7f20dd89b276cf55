@@ -1,0 +1,22 @@
+## 8. 复验、形式化范围和未解决部分
+
+最终交付数值源 SHA-256：`0bbadda0977f11052c7c492d2d44f958f6318b89954587486edc4bc6db796688`。诊断源 SHA-256：`5467e6f5b50395ebcfb033e5d4f92949458f8a9ce953c784fca4814c03c19257`。本次补交只删除了若干 Python 注释，并纠正 Scribe 中过时的区间半径说明；程序执行逻辑未改，最终版本重新在 70、100 位精度运行通过，诊断也重新运行通过。结果 JSON 的排版不作为数值精度证据。
+
+诊断通过三个符号恒等式、800 个精确 parity 列等式、120 个精确 Gram 半径例子、36 个独立原符号参考值、45 个原对角参考值和 72 个原 prime 相位比较。另有 20 个直接物理奇轮廓积分与 (PT5) 的对照。后面的点值与求积使用非定向高精度，仅为另一表达式的诊断，不是 (PT11) 的区间证明。其 Gamma 指数参考尾小于 3.28e-248。三个不定/奇异矩阵均被严格 LDL 拒绝。
+
+Lean 的三个公开定义/定理有三个对应 FromLean Scribe 项。区间认证器复用原算术例程的固定源码，新的中点 Cholesky 只产生待验证坐标；它不运行 eigensolver、不使用 zeta 零点、不用旧的数值谱结论，也没有把 CI 或 Scribe 状态计为数学证据。不存在已执行的新 Lean 内核、传递公理或独立作者审稿声明。
+
+本节推进的是：保留实际 parity 抵消、全高块下界和低高耦合后，可以跨过真实素数激活点直接得到一个连续参数族的完整余维一强制性。剩余任务是将该区间方法与真实 prolate 族和既有能量对偶读出联合，扩大跨度并控制归一化 Fourier 差。无界尺度上的 Xi 极限或 RH 未由本节建立。
+
+参考：
+
+- Connes, Consani, Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 3-4 and 8. https://arxiv.org/html/2511.22755v1
+- Dusson, Sigal, Stamm, *Analysis of the Feshbach-Schur method for the Fourier spectral discretizations of Schrödinger operators*, arXiv:2008.10871. https://arxiv.org/abs/2008.10871
+- NIST DLMF 5.7.6, digamma partial fractions; mathematical constants and tail identities retain the pinned arithmetic source conventions. https://dlmf.nist.gov/5.7.E6
+- Actual #5895 `GenuineModelDualTransport.lean` at `83f2bd4c2059bbe555447a594abc492fb16f6452`; loning research #6171 `Mertens/Third.lean`, blob `435484ecbfc11097a057d6b435045728a6e41f01`.
+- Parallel #5602 source at `4804c4020d7d9f165a2e2683c42b01e3d47a8be4`: `WeilPrimeActivationEdge.lean`, blob `5cd36bfeef88311e1f5e6c140fc11e52b16e8881`; `certify_prime3_scale_schur.py`, blob `496333f97d20a6898d47f848a2abd839249e9207`.
+
+上一轮交付包内的标准库精确诊断现已重放：119 个多项式几何尾式、86 组带符号二阶差分序列、180 个有理复数 Möbius 往返、216 个复 Toeplitz Gram 恒等式及 96 个有限零阶障碍。重放是作者自检，不是独立复核或 Lean 内核证据。源码与该数学追加的远端身份另外通过 commit/blob 回读核对。
+
+---
+

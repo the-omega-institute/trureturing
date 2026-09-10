@@ -150,7 +150,10 @@ jobs:
         run: |
           set -euo pipefail
           source_commit="$(git rev-parse HEAD)"
-          source_tree="$(git cat-file -p HEAD | sed -n 's/^tree //p')"
+          # Ask git for the tree directly. Parsing the commit object for a line starting with
+          # "tree " also matches any such line in the commit MESSAGE, which produced a two-line
+          # value and a malformed GITHUB_OUTPUT write on 6e81408402.
+          source_tree="$(git rev-parse HEAD^{tree})"
           if git symbolic-ref -q HEAD >/dev/null; then
             printf '%s\n' 'protected dev source must be checked out detached' >&2
             exit 1

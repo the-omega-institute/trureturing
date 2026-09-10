@@ -1,0 +1,15 @@
+## 98. Paper continuation: a uniform nonfair-kernel envelope
+
+The following extension is a paper derivation with exact finite diagnostics, not an additional Lean theorem in this increment. Write U(r) for the upper benefit optimum with the same mediator marginals alpha,beta and arbitrary prescribed outcome means r_i in [0,1]. Put w_i=alpha_i+beta_i and d_i=beta_i-alpha_i. For any two prescribed mean vectors r,s,
+
+```text
+abs(U(s)-U(r) - (1/2)*sum_i d_i*(s_i-r_i))
+  <= (1/2)*sum_i w_i*abs(s_i-r_i).
+```
+
+To prove this, transform any complete outcome law with means r into one with means s by local monotone bit flips. When s_i>r_i, flip a zero to one with probability (s_i-r_i)/(1-r_i); when s_i<r_i, keep an existing one with probability s_i/r_i. Equal means require no change. The impossible denominator-zero cases never occur in the corresponding strict branches. The construction uses extra randomness inside the outcome disturbance, independent of the mediator disturbance. It preserves arbitrary original table dependence except where the chosen local channels modify it, and each coordinate changes with probability exactly abs(s_i-r_i).
+
+For any fixed compatible pi, a cut edge can change only when at least one endpoint changes. Consequently the absolute expected-cut change is at most sum_i w_i*abs(s_i-r_i). The existing full cut identity retains the exact mean-drift change sum_i d_i*(s_i-r_i). Dividing by two gives the displayed bound for the two constructed models. Applying the construction in both directions and maximizing over all original couplings yields the optimum bound. Finite rational bilinear optima exist at pairs of rational polytope vertices; no numerical limiting argument is needed for this paper derivation.
+
+Taking r_i=1/2 gives a globally valid upper envelope around the new exact endpoint, and transforming its attaining outcome law gives a feasible lower witness for U(s). If every abs(s_i-1/2)<=epsilon, the error radius is at most epsilon because sum_i w_i=2. The exact drift term must be retained. This is a deterministic model-family sensitivity bound, not a confidence interval or an exact solution for every nonfair kernel. Extra outcome restrictions may be destroyed by local flips, so the construction is restricted to the stated marginal-only family.
+

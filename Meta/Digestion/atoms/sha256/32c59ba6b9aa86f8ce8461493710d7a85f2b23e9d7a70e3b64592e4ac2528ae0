@@ -1,0 +1,31 @@
+## 102. Sharper sensitivity weights exclude forced diagonal mass
+
+Write alpha,beta for the two original mediator marginal laws, with coupling pi allowed to vary over all laws having those marginals. Self-pairs (i,i) contribute no cut change. The off-diagonal mass incident at i is the singleton cut `Cut_pi({i})`. The previously proved partition bound yields
+
+```text
+Cut_pi({i}) <= c_i,
+c_i = 1-abs(alpha_i+beta_i-1)
+    = min(alpha_i+beta_i, 2-alpha_i-beta_i).
+```
+
+This improves the earlier weight alpha_i+beta_i whenever their sum exceeds one. It is also valid for a one-state mediator, where c_i=0. `CompleteMediatorKernelStability.lean` compares old and new cut indicators pointwise: an off-diagonal edge can change only when at least one endpoint changes. Finite sum interchange and the exact mismatch probabilities then give a uniform cut-expectation difference bound with weights c_i.
+
+Retain the exact directed mean drift
+
+```text
+D(r,s) = (1/2)*sum_i (beta_i-alpha_i)*(s_i-r_i),
+R(r,s) = (1/2)*sum_i c_i*abs(s_i-r_i).
+```
+
+The existing complete-mediation identity is rewritten using the original marginal rows as `2J=E[Cut]+sum_i(beta_i-alpha_i)*r_i`. The main theorem `exists_uniform_kernel_transport` constructs one transformed outcome law nu_s before quantifying over all pi. It has the target means and satisfies
+
+```text
+abs(J(pi,nu_s)-J(pi,nu_r)-D(r,s)) <= R(r,s)
+```
+
+for every pi with the original alpha,beta. The transformation never changes pi. Thus the two source mechanisms remain independent in every compared model, without convexifying their joint law. The construction is uniform over the whole unknown-coupling family; it is not a certificate valid only at a tested slice.
+
+`NonfairMediationEnclosure.transfer_kernel_upper_bound` transports any valid source-family upper bound into a bound on the target family. When actual greatest values for two kernel families are supplied, `attained_kernel_optima_stability` proves `abs(U(s)-U(r)-D(r,s))<=R(r,s)`. This corollary does not establish general nonfair optimizer existence. The principal enclosure in the next section does not require such a premise.
+
+The source also proves 0<=c_i<=alpha_i+beta_i. Therefore a coordinatewise error abs(s_i-r_i)<=epsilon implies R(r,s)<=epsilon, since the combined mediator mass totals two. There is no factor equal to the number of mediator states.
+

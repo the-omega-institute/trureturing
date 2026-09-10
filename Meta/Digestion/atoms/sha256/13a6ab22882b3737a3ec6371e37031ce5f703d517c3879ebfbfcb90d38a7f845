@@ -1,0 +1,11 @@
+## 1. 有限情境、整体与类型
+
+固定空间维数 $d=3$。一般结论对任一预先固定的有限 $d\geq1$ 同样成立。令 $HF=V_\omega$ 为遗传有限集合的集合，自然数取有限 von Neumann 序数，有序对取 Kuratowski 编码，有限元组由有序对编码。为保证整数坐标也是有限编码，取 $\mathbb Z_{\rm code}=(\{0\}\times\mathbb N)\cup(\{1\}\times\mathbb N_{>0})$，其中 $(0,m)$ 表示 $m$，$(1,m)$ 表示 $-m$。它与通常整数显式双射，序和算术沿此双射运输；全文把这份实现简记为 $\mathbb Z$。不把通常整数的无限等价类表示直接塞入 $HF$。来源树集合 $T\subset HF$ 由下列有限构造生成：
+
+$$
+\operatorname{leaf}(n)\quad(n\in\mathbb N),\qquad
+\operatorname{pair}(r,s)\quad(r,s\in T).
+$$
+
+叶与有序二叉节点使用不同标签。来源树中的重复叶表示重复引用同一来源；它既不创建新的随机变量，也不证明概率独立。事件出现标识 $e\in HF$ 与来源标识 $\rho(e)\in T$ 是不同数据，多个事件可以具有同一来源树。
+

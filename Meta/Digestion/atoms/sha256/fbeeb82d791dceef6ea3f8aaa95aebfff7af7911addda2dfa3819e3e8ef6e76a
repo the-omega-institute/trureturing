@@ -1,0 +1,2 @@
+**定义 3.1(主张)**。一条主张是三元组 $(k,P,\sigma)$:序号 $k\in\mathbb N$(全局严格递增的时间戳),$P\in\mathcal P$,$\sigma\in\{\mathsf{frozen},\mathsf{refuted},\mathsf{open},\mathsf{unverified}\}$。(关于世界的经验断言不是本定义的主张;它们的信息由定义 3.8 单独处理。)主体的**主张记录** $\mathcal U$ 是主张的有限序列,按 $k$ 严格递增;记录**只追加**:$\mathcal U_{t+1}$ 以 $\mathcal U_t$ 为前缀。$\mathrm{last}_{\mathcal U}(P)$ 是记录中关于 $P$ 的序号最大者——部分函数,$P$ 无主张时无定义;$\mathrm{dom}(\mathcal U)$ 为出现过的命题集。下文写 $(P,\sigma)$ 时省略序号。
+

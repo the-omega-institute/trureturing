@@ -1,0 +1,1 @@
+| A048 | C | 对每个 \(\varepsilon>0\)，\(R(x)=O_\varepsilon(x^{1/4+\varepsilon})\)，\(x\to+\infty\)。 

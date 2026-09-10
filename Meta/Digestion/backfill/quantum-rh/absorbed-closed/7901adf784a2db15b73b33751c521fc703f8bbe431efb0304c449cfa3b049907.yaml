@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7901adf784a2db15b73b33751c521fc703f8bbe431efb0304c449cfa3b049907
+  normalized_sha256: sha256:7901adf784a2db15b73b33751c521fc703f8bbe431efb0304c449cfa3b049907
+cas_ref: sha256:7901adf784a2db15b73b33751c521fc703f8bbe431efb0304c449cfa3b049907
+coverage_gids:
+  - gid: D5/S3/Zeros/Convolution/GribinskiDegreeTwo.g1_explicit_coefficients
+    target_statement_id: sha256:f0c48dabfe28b97557cf918888a05d1312ee879f080238ed386cd9726773f78a
+receipts:
+  unresolved_subitems: []

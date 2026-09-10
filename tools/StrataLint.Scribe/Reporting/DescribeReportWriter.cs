@@ -70,7 +70,8 @@ internal static class DescribeReportWriter
             var claim = node.OpenProblemResolutionClaim!;
             writer.WriteLine(
                 $"OPEN_PROBLEM_RESOLUTION node={node.NodeId} problem_slug={claim.ProblemSlug.Value} "
-                + $"resolution_kind={DescribeVocabulary.CanonicalName(claim.ResolutionKind)}");
+                + $"resolution_kind={DescribeVocabulary.CanonicalName(claim.ResolutionKind)} "
+                + $"declaration_gid={node.DeclarationGid}");
         }
         foreach (var finding in report.RedFindings)
         {
@@ -103,6 +104,8 @@ internal static class DescribeReportWriter
             : new
             {
                 problem_slug = claim.ProblemSlug.Value,
+                // Describe IDs are narrative identities, not resolving Lean declaration selectors.
+                declaration_gid = node.DeclarationGid,
                 resolution_kind = DescribeVocabulary.CanonicalName(claim.ResolutionKind),
             },
     };

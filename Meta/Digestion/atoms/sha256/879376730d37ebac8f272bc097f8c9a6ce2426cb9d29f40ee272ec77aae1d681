@@ -1,0 +1,3 @@
+**定理 13.8(多方案比较:逐坐标弱支配与路径无关)**〔引〕。(i) 增益向量上的逐坐标弱支配是自反、传递的预序;(ii) 增益之差满足 $\Delta(a,a)=0$ 与 cocycle $\Delta(a,c)=\Delta(a,b)+\Delta(b,c)$。
+*出处*。冻结定理 `pareto_weak_reflexive_transitive`(GID `…/DefinitionEscapeAdjudication/ParetoWeakPreorder`)与 `gain_difference_self_zero_and_cocycle`(GID `…/DefinitionEscapeAdjudication/GainDifferenceCocycle`)。母仓第 2.7 条:「不拍单标量」「同一改动沿不同叙事路径算出的收益必须相等,不等即账错」——后者就是 cocycle 条件在账目上的读法:「增益账须路径无关」是本仓采纳的核算方法(推论 13.22),不是假设 4.3 的结论。
+

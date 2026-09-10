@@ -1,0 +1,9 @@
+**命题 10（直接像补集的精确边界）。** 若 $f:\Omega\twoheadrightarrow B$ 满射、$A\subseteq\Omega$，则
+
+$$
+f[\Omega\setminus A]=B\setminus f[A]
+\quad\Longleftrightarrow\quad A=f^{-1}[f[A]].
+$$
+
+右端称为纤维饱和，即每个纤维全选或全不选。
+

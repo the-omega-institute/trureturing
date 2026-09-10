@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66fd622e5d54c25826af9d416db18df1d8eecf9c71288d80ff0460237e3e95d2
+  normalized_sha256: sha256:66fd622e5d54c25826af9d416db18df1d8eecf9c71288d80ff0460237e3e95d2
+cas_ref: sha256:66fd622e5d54c25826af9d416db18df1d8eecf9c71288d80ff0460237e3e95d2
+coverage_gids:
+  - gid: D5/S3/Zeros/Convolution/GribinskiDegreeTwo.discriminant_eq_output
+    target_statement_id: sha256:f1485302da7dad7c340240c52ed1003a06a757b6795d07e8bc9d605fde7e4a9f
+  - gid: D5/S3/Zeros/Convolution/GribinskiDegreeTwo.g2_discriminant_bound
+    target_statement_id: sha256:0da02bd7a338b4c210dec5b5e2512019e7ea5d99f32295ff662fdfb7ed00e790
+receipts:
+  unresolved_subitems: []

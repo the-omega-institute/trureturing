@@ -1,0 +1,13 @@
+## 7. 源码复用、复验与边界
+
+原 `certify_prime3_scale_interval.py` 只增加关键字 `with_components` 返回已经完成全部 checks 的新鲜算术矩阵、symbols、shells 和耦合列，避免复制其计算或读取旧 JSON。默认执行和数学结论保持不变；单独重新执行 70 位后，解析后的结果与原记录唯一差异为源哈希。现行结果记录随之更新，排版变化不承担精度。原有 Lean/Scribe 字节不修改。
+
+新主程序最终源码在 100、120 位分别执行通过。每次都重跑全部 full-space Weil interval、两个真正 prolate 验证器、完整 loads、逆 Schur、增强偶 coercivity、原点与 Fourier 预算。旧绝对 ell、旧中心 ground 下界和旧能量对偶成功 JSON 均不作为数值前提。没有 zeta 零点、未验证 eigensolver 或随机采样作为全称证明。
+
+同一作者的第二表达检查通过 60 个精确复 Schur 恒等式、60 个高块逆单调比较、180 个残差能量例子、4 个原始列代数恒等式及9个完整尾原函数。60 个错误交叉符号都被发现；去掉非正 shifted eigenvalue 有一个精确失败例子。三个不允许的精度和一个错误输入 pin 均在重计算前拒绝；启用 Python -O 也实际拒绝。人工矩阵只检验代数，不被称为实际 Weil 数值证据或独立作者审稿。
+
+Lean 的唯一公开定理有同名 FromLean Scribe 条目。当前环境未取得 Lean/lake 执行，故没有 elaboration、公理闭包或 Scribe 发射成功声明。新定理是逻辑审查后的 Candidate；原 Fourier/core、完整高空间下界、逆形式和无限 block 消元继续属于明确的纸面桥。精确/区间重放不是内核验收。
+
+主程序 SHA-256：`9dd3a99fc5881b2acf59853633821a705d3416bc7d0f1b0b69d9ae43bdd74e15`。
+新鲜矩阵生产者 SHA-256：`13b50abcec06663e35ad8f704cac6de9f3c1a2c37159e7f63e8c24fee4681993`。
+

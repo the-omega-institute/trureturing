@@ -1,0 +1,12 @@
+**命题 8（扩张的补集缺项）。** 记新增当前区域 $R=\Omega_D\setminus j[\Omega_C]$。则
+
+$$
+\begin{aligned}
+q_D(j[A])&=q_C(A),\\
+\Omega_D\setminus j[A]&=j[\Omega_C\setminus A]\sqcup R,\\
+q_D(\Omega_D\setminus j[A])-q_C(\Omega_C\setminus A)&=\sum_{e\in R}\sigma_D(e).
+\end{aligned}
+$$
+
+所以补集精确交换运输当且仅当 $R=\varnothing$；补集读数交换运输当且仅当新增区域电荷为零。如果 $C,D$ 都平衡，后一条件自动成立，但前一条件仍可能失败。
+

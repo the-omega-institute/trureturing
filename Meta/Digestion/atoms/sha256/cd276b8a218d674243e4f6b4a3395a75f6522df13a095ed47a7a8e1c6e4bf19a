@@ -1,0 +1,14 @@
+## 95. Exact lifting of a coarse coupling to the original probability laws
+
+`FiniteCouplingPushforwardLift.lean` supplies the original-carrier attainment obligation. Let alpha on X and beta on Y be normalized rational laws, let f:X->A and g:Y->B be finite readouts, and let gamma on A times B have the actual pushforward marginals a=f_*alpha and b=g_*beta. Define
+
+```text
+pi(x,y) = gamma(f(x),g(y)) * alpha(x)/a(f(x)) * beta(y)/b(g(y)).
+```
+
+The source proves normalization, nonnegativity, every original X and Y marginal, and equality of expectations for every function of (f(x),g(y)) with its expectation under gamma. The output uses the existing FiniteResponseLaw and linearObjective, not a parallel coupling semantics.
+
+No positive-fiber premise is imposed. If a fiber has zero mass, finite nonnegativity forces every original atom there to have zero mass; compatibility forces every incident coarse coupling cell to vanish. The proof treats these cases before cancelling denominators. Total rational division at zero is therefore harmless here, rather than being mistaken for a conditional probability at a null event.
+
+The same lift is chosen before the paired-readout query. It preserves all such queries, including every coarse cell. It does not preserve arbitrary original cross-coordinate restrictions that were not represented by the coarse plan. For the new mediation theorem all mediator-pair couplings with the given original marginals are allowed, so this explicit lift is admissible.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:937abccd3570503c88aaac8b088e687e6f79db29ca9f67f887b72a028bd4f866
+  normalized_sha256: sha256:937abccd3570503c88aaac8b088e687e6f79db29ca9f67f887b72a028bd4f866
+cas_ref: sha256:937abccd3570503c88aaac8b088e687e6f79db29ca9f67f887b72a028bd4f866
+coverage_gids:
+  - gid: D5/S3/Quantum/Matrix/SchurMinimum.schur_quadratic_is_least
+    target_statement_id: sha256:7effd928ee93243f9d8eef5970f90dfe83ac9b352064fd919f4e3c89ac3cc46e
+receipts:
+  unresolved_subitems: []

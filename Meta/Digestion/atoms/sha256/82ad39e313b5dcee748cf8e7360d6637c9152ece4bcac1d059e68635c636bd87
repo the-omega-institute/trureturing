@@ -1,0 +1,9 @@
+**命题 16（观察等价的最大性，repo-derived）。** $\approx_\Sigma$ 是 $\ker q$ 内最大的强保域同余。
+
+**证明。** 它是各总函数 $\operatorname{obs}_C:X\to Q_\bot$ 的核的交，故是等价关系；恒等孔使它包含于 $\ker q$。先只替换一个槽位，写基本上下文为 $B$。若 $x\approx_\Sigma y$，则 $\operatorname{obs}_B(x)=\operatorname{obs}_B(y)$。严格失败与所有正常值分离，故 $B(x),B(y)$ 同时有定义或同时无定义。若二者有定义，对任意 $C\in\operatorname{Ctx}_\Sigma$，$C\circ B$ 仍属该族，于是
+$\operatorname{obs}_C(B(x))=\operatorname{obs}_C(B(y))$，即 $B(x)\approx_\Sigma B(y)$。
+
+对逐坐标等价的 $n_f$ 元输入，从 $\boldsymbol x$ 到 $\boldsymbol y$ 每次只替换一个坐标，其余坐标取这一步实际的固定参数。上段使定义性沿有限链相同；有定义时输出也沿链等价，传递性给出 (SC)。这一步正是需要所有槽位与全部固定参数的地方。
+
+反之，设 $\theta\subseteq\ker q$ 满足 (SC)。对上下文的生成作归纳：恒等孔保持 $\theta$；基本上下文由 (SC) 保域，并在域内保持 $\theta$。复合时，若内层失败，两侧均严格失败；否则内层输出相关，外层由归纳假设同域且在域内输出相关。最后用 $\theta\subseteq\ker q$，两侧正常读数也相同。因此 $x\mathrel\theta y$ 蕴含每个上下文的观察相同，即 $\theta\subseteq\approx_\Sigma$。全过程没有使用满射或挑选 $Q$ 中未被命中的值。证毕。
+

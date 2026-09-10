@@ -1,0 +1,29 @@
+#### 7.2 直接作用于项目半直线载体的分离泛函
+
+为避免把 (E10) 的范数常数未经证明转移到另一个载体，在原始 \(H=L^2(0,\infty)\) 上直接构造
+
+\[
+\mathcal J_\rho f=
+\int_0^1f(x)x^{\rho-1}dx
+-\frac1{\rho-1}\int_1^\infty\frac{f(x)}x\,dx.
+\]
+
+两项的 Riesz 向量支撑不交，故
+
+\[
+\|\mathcal J_\rho\|^2=\frac1{2\beta-1}+\frac1{|\rho-1|^2}.
+\]
+
+由于 \(v_a(x)=1/(ax)\) 在 \(x>1\) 上成立，(E9) 在 \(s=\rho\) 给出 \(\mathcal J_\rho v_a=0\) 对所有实 \(a\ge1\)；同时 \(\mathcal J_\rho\chi=1/\rho\)。因此对项目中的每个有限整数空间都有
+
+\[
+\begin{aligned}
+d_N^2&\ge\frac{1}{|\rho|^2\left((2\beta-1)^{-1}+|\rho-1|^{-2}\right)}\\
+&=\frac{(2\beta-1)|\rho-1|^2}{|\rho|^4}
+=\boxed{r^2(1-r^2)}>0.
+\end{aligned}
+\tag{E11}
+\]
+
+同一界也适用于完整闭包的距离。这是实际半直线函数的连续分离证明，不依赖 Gram 矩阵可逆或有限数值条件数。它应复用仓库的实际 `target`、`sourceVector` 和 `distance` 定义。
+

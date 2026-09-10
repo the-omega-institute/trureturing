@@ -1,0 +1,6 @@
+#### F07. Möbius 抵消与素数分布误差（A041–A044）
+
+记 \(M(x)=\sum_{n\le x}\mu(n)\)，\(\psi_{\rm vM}(x)=\sum_{n\le x}\Lambda(n)\)，\(\vartheta(x)=\sum_{p\le x}\log p\)，\(\operatorname{li}_2(x)=\int_2^xdt/\log t\)，\(x\ge2\)。
+
+| ID | 类别 | 精确目标 |
+| --- | --- | --- |

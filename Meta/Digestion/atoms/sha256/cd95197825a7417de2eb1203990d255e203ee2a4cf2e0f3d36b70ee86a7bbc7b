@@ -1,0 +1,43 @@
+### 1. The open problem and the role of the old sufficient rate
+
+The target is still the actual lowest-Weil-mode comparison with the same
+correctly normalized prolate family in Connes, Consani and Moscovici,
+Zeta Spectral Triples, arXiv:2511.22755v1, Section 8. The explicit-model
+transform limit of Lemma 7.3 is a separate step. This increment preserves the
+signed complex primal/dual pairing before estimating the remaining error.
+It does not establish that pairing's decay along unbounded physical windows.
+
+The preceding condition nu*C_centered/b^2 -> 0 is sufficient. It is not a
+necessary condition for the actual normalized readout error to vanish.
+Directional residual cancellation may be lost when the full model error is
+bounded first by a single energy budget. The following exact identity is a
+complementary certificate; all earlier inequalities remain valid.
+
+The primary methodological reference is Wu and Zhang, Goal-Oriented Error
+Estimation for Least-Squares Finite Element Methods via Physically Meaningful
+Adjoint PDEs, arXiv:2607.23850v1 (26 July 2026), Section 4, especially the
+corrected-output and product-remainder statements. That paper explicitly
+retains the classical Giles--Suli lineage. Its elliptic PDE assumptions and
+least-squares estimates are not used as hypotheses for the Weil operator.
+The domain-level identity here needs neither a Galerkin solution nor an exact
+dual inverse. No priority for residual correction is claimed.
+
+Cross-session readback: #6029 at 99b3e1ca03e88f42a9b7c6ccadecc545e8c64a97
+identifies actual zero-extended Fourier convolutions with the exterior
+arithmetic column; it still separates the diagonal regularization and actual
+operator-domain realization. #5602 at 5b1c54e84706acdca64e2ec042b51a5d52c5fcea
+retains the complete genuine prolate model residual and newer scale work.
+Those results are not reimplemented or counted as this continuation's work.
+The numerical inputs below are the previously pinned c=3 records, not
+unverified values inferred from a more recent PR title or description.
+
+The final concurrent readback found #5895 advanced to
+e6a7b1837783c6b9b4eb00d90240ae53e4543045, adding only the separate
+InvariantSectorEnergyReadout Lean/Scribe pair. Its actual first 100 source
+lines were read: the invariant-sector split keeps opposite-sector shifted
+positivity separate from a positive gap. This contribution is not ours.
+No numerical sector improvement is substituted into SG7-SG9. The three
+paths proposed here were unchanged by that concurrent commit. This payload
+was subsequently delivered on top of 023e6d1eccb223a563939590d301085a220b38f2,
+preserving the completed parallel sector computation and theory appendix.
+
