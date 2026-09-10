@@ -115,7 +115,7 @@ public sealed class SharedBuildRuntimeTests
             ["GITHUB_REF"] = "refs/heads/integration-ci-current-stability-0909-tests", ["STRATALINT_CACHE_WRITES"] = "true",
             ["STRATALINT_CHECK_SUCCEEDED"] = "false", ["STRATALINT_BUILD_SUCCEEDED"] = "true" };
         var cold = Stage("cold", "build");
-        Assert.Equal(4, Compilers(cold));
+        Assert.Equal(projects.Length + 1, Compilers(cold)); // Utility projects plus Runtime.
         Assert.Single(Calls(), call => call == "sln tools/StrataLint.sln list");
         var build = CommonExecutionEvidence.ValidateBuild(root);
         Assert.Equal(new[] { "restore-StrataLint", "build" }, build.Steps.Select(step => step.Name));
