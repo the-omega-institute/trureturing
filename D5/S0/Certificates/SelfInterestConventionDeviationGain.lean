@@ -48,14 +48,15 @@ def FvA : Convention := (false, true)
 def AvA : Convention := (true, true)
 
 /-- Role reversal at every move. -/
-def dual (convention : Convention) : Convention := (convention.2, convention.1)
+def dual (convention : Convention) : Convention := Prod.swap convention
 
-theorem dual_involutive (convention : Convention) : dual (dual convention) = convention := rfl
+theorem dual_involutive (convention : Convention) : dual (dual convention) = convention :=
+  Prod.swap_swap convention
 
 theorem dual_fixed_iff (convention : Convention) :
     dual convention = convention ↔ convention = FvF ∨ convention = AvA := by
   rcases convention with ⟨first, second⟩
-  cases first <;> cases second <;> decide
+  cases first <;> simp [dual, Prod.swap, Prod.mk.injEq, FvF, AvA, eq_comm]
 
 /-- Own total is primary; the mover chooses the direction of the opponent tie-break. -/
 def Preferred (convention : Convention) (chosen alternative : Nat × Nat) : Prop :=
