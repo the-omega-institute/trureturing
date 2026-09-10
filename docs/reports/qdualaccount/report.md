@@ -133,7 +133,8 @@ emit.log、deposit.log。合并试算 `git merge-tree --write-tree HEAD origin/d
 形态是 deposit-uncovered：没有摄入自写理论，没有变更 source atom 或 coverage 账。
 源 atom 同含另外两条定理，不能以本次两条结果宣称整 atom 已 absorbed。
 
-本次差异为一个 Lean 模块、一个对应 Scribe 文档及其投影、一个冻结状态片、
+本次差异为一个 Lean 模块、一个对应 Scribe 文档及其投影、一个冻结状态片及
+`ledger-align` 同次生成的 accepted 事件（现行写入器仍保留该过渡产物）、
 以及同一命题的预登记/核验收据。文件数超过仓内 p75 的部分全是该单一实施单元的
 复现材料；没有混入第二个数学目标或工具改造，无可独立落地的另一层。
 尚未主张远端 required-CI 通过、独立评审通过或 PR 合并；PR/提交终态由 runner 工件记录。
