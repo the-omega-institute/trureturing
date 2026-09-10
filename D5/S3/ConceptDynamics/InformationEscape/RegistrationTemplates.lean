@@ -324,4 +324,13 @@ theorem scopeTableLegacy (A : Arena) (first middle last : A.State → Bool)
   simp only [scopeTableArena, scopeTableRealization,
     admit_readout_eq_true_iff P, admit_readout_eq_true_iff Q, admit_readout_eq_true_iff R]
 
+#print axioms bijectiveLegacy
+#print axioms separationLegacy
+#print axioms admittedSurjectionLegacy
+#print axioms anchoredSeparationLegacy
+#print axioms contextSelectionLegacy
+#print axioms exactDesignLegacy
+#print axioms completionExchangeLegacy
+#print axioms scopeTableLegacy
+
 end D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
