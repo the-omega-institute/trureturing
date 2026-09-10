@@ -7,6 +7,16 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    [InlineData(true, true)]
+    public void GitCliPairUsesProtectedParentForDemandedChar(bool explicitBase, bool unchanged)
+        => CheckAnonymousSource("decide", 0,
+            "import Init\nexample : ')' =')' := by decide\n", modified: true,
+            prepareContext: true, demandContext: !unchanged, pairBase: explicitBase, unchanged: unchanged);
+
+    [Theory]
     [InlineData("native_decide", 1)]
     [InlineData("decide", 0)]
     public void GitCliAnonymousEmptyReportDispatchesSourceRule(string tactic, int expected)
@@ -62,7 +72,7 @@ public sealed partial class ProductionEnvironmentTests
 
     private static void CheckAnonymousSource(string tactic, int expected, string prefix = "",
         bool modified = false, bool prepareContext = false, bool demandContext = true,
-        int? contextErrorLine = null, int diagnosticLine = 8)
+        int? contextErrorLine = null, int diagnosticLine = 8, bool? pairBase = null, bool unchanged = false)
     {
         using var temporary = new TemporaryDirectory();
         var root = Path.Combine(temporary.Path, "repository");
@@ -80,7 +90,8 @@ public sealed partial class ProductionEnvironmentTests
             + "   generality: G\n   mirror-B: none(waiver:test-fixture)\n   mirror-E: none(waiver:test-fixture)\n"
             + "   anchors: []\n   utility: none\n   digest: Anonymous source admission fixture. -/\n";
         if (modified)
-            File.WriteAllText(Path.Combine(root, path), header + "example : True := by decide\n", new UTF8Encoding(false));
+            File.WriteAllText(Path.Combine(root, path), header + (unchanged ? prefix : "")
+                + "example : True := by decide\n", new UTF8Encoding(false));
         if (prepareContext)
         {
             foreach (var relative in new[] { "lakefile.toml", "lean-toolchain", "lake-manifest.json",
@@ -95,6 +106,7 @@ public sealed partial class ProductionEnvironmentTests
             }
             File.WriteAllText(Path.Combine(root, ".gitignore"), ".lake/\n");
         }
+        var pair = pairBase.HasValue ? new PairSourcePreparationFixture(temporary.Path, root) : null;
         Git("init", "--quiet");
         Git("add", ".");
         Git("-c", "user.name=Source Context Fixture", "-c", "user.email=source-context@example.invalid",
@@ -102,10 +114,22 @@ public sealed partial class ProductionEnvironmentTests
         var baseline = Git("rev-parse", "HEAD").Trim();
         File.WriteAllText(Path.Combine(root, path), header + prefix + $"example : True := by {tactic}\n", new UTF8Encoding(false));
         Git("add", path);
+        if (pair is not null)
+        {
+            Git("-c", "user.name=Source Context Fixture", "-c", "user.email=source-context@example.invalid",
+                "commit", "--quiet", "--no-gpg-sign", "--allow-empty", "-m", "source fixture candidate");
+            var candidate = Git("rev-parse", "HEAD").Trim();
+            var tree = Git("rev-parse", "HEAD^{tree}").Trim();
+            var merge = Git("-c", "user.name=Source Context Fixture", "-c", "user.email=source-context@example.invalid",
+                "commit-tree", tree, "-p", baseline, "-p", candidate, "-m", "checked fixture merge").Trim();
+            Git("update-ref", "HEAD", merge);
+            Assert.Equal(baseline, Git("rev-parse", "HEAD^1").Trim());
+        }
         var gateway = new GitRepositoryGateway(root);
         var snapshot = Decode(gateway.ReadCurrent());
         fixture.Reports[path] = new LeanFileReport(prefix.Length == 0 ? [] :
             [prefix.StartsWith("import Lean\n", StringComparison.Ordinal) ? "Lean" : "Init"], []);
+        if (pair is not null) fixture.Reports["Trureturing.lean"] = new LeanFileReport(["D5.S0.Carrier.Anonymous"], []);
         const string reportName = "report.json";
         var report = Path.Combine(temporary.Path, reportName);
         RawLeanReportArtifact.WriteFile(report, snapshot, LeanAxiomReport.Create(fixture.Reports));
@@ -118,9 +142,11 @@ public sealed partial class ProductionEnvironmentTests
             RunPreparation("compile", path);
             Console.WriteLine($"SOURCE_ATTRIBUTE_COMPILE path={path} compile_errors=0 source_sha256="
                 + LeanSourceContextInput.SourceHash(snapshot.Files[RepoPath.CreateKnown(path)]));
-            RunPreparation("first");
+            if (pair is null) RunPreparation("first");
+            else pair.Prepare(report, pairBase == true ? baseline : null, demandContext);
             // Keep the sidecar read visibly rooted in the temporary fixture.
             preparedContext = File.ReadAllBytes(Path.Combine(temporary.Path, reportName + ".source-context.json"));
+            if (pair is not null) Directory.Delete(Path.Combine(root, ".lake"), recursive: true);
         }
         // Observe every boundary before the acceptance assertion, including a
         // located producer failure that preparation truthfully publishes at exit 0.
@@ -168,6 +194,24 @@ public sealed partial class ProductionEnvironmentTests
         else if (expected == 1)
             Assert.Contains($"NATIVE_DECIDE_SOURCE line={diagnosticLine}", console.Output, StringComparison.Ordinal);
         else Assert.DoesNotContain("NATIVE_DECIDE_SOURCE", console.Output, StringComparison.Ordinal);
+        if (pair is not null && demandContext)
+        {
+            // Admission must still refuse missing and stale demanded data offline.
+            File.Delete(Path.Combine(temporary.Path, reportName + ".source-context.json"));
+            AssertContextRejected("missing demanded commands input");
+            var stale = System.Text.Json.Nodes.JsonNode.Parse(preparedContext!)!;
+            stale["files"]![0]!["sourceSha256"] = new string('0', 64);
+            File.WriteAllText(Path.Combine(temporary.Path, reportName + ".source-context.json"), stale.ToJsonString());
+            AssertContextRejected("NATIVE_DECIDE_CONTEXT_ERROR");
+        }
+
+        void AssertContextRejected(string message)
+        {
+            var rejected = new BufferedConsole();
+            Assert.Equal(1, CliApplication.Run(["check", "--protected-base", baseline, "--candidate-lean-report", report],
+                new ProductionCliEnvironment(root, gateway, new FakeLeanReportSource(null)), rejected));
+            Assert.Contains(message, rejected.Output, StringComparison.Ordinal);
+        }
 
         void RunPreparation(params string[] arguments)
         {
