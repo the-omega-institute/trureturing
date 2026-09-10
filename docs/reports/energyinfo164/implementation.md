@@ -1,5 +1,8 @@
 # 定理 164.1 实施报告
 
+**结算：成。** (164.1) 四步完整证明，串行构建、Lean report、发射、冻结与指定
+CI 同层内容检查全部通过。此结算采用用户的 implementation 判据，不表示 PR 已合并。
+
 产地：Codex 主循环，使用 lean4 skill；runner implementation 席，零独立评审席。
 本报告的数值与本地门读数均由本席亲跑。原 orchestrator 数值只作输入，未照抄。
 
@@ -119,5 +122,32 @@ Micadei 等 2019 年文章的 Crossref 与 Nature 正文已打开；Methods (6)�
   已按指定模板改为 `doi: null` 与非空 DOI URL；定位段含同一 URL。
   未修改解析器或任何门。Scribe 词法常量在发射前按真实 DSL 校正。
 
-后续发射、冻结和 CI 同层内容检查的终局读数在下方追加；原始日志由本席
-保存在本次 runner attempt 目录，不由 runner 代建或修补。
+## 最终门链
+
+- 修正后的 `make emit`：EXIT=0；恰好 1 个新增 Blueprint，四条声明显示 std3。
+- `make deposit-uncovered`：EXIT=0；`LEDGER_ALIGN selectors_considered=4043
+  changed=0 added=1 unchanged=4042 conflicts=0`；终态为
+  `PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED`。内部复用 cached Lean report，再运行
+  deposit-header-check、emit 和 ledger-align，未运行裸 make lean。
+- 冻结状态 `statement_id`：
+  `sha256:81e5d4c3c54523623d1cb3ffa11631f8043a86425e6161a03f1519b3710777e3`。
+  accepted 事件：`4c490c983069ff05e10ca489072a7326c77a6e94654b924f146d9b1a90fd5fbc`。
+  冻结产物即时提交：`cde44cc563`。
+- 用户指定的 `scribe-content-checks.sh`：EXIT=0；第三参数为实际
+  `git merge-base HEAD origin/dev` = `ea50faf34c76b4e446b2a9e64d3f7ad0d7f0867a`。
+  判词：`DESCRIBE_STATUS case=DESCRIBE-NODES status=classified nodes=11097
+  suspected_novel=0 formula_content_slots=66 formula_statements=32 red=0 observe=4994`。
+  `^RED` 零行；4994 条 Observe 不冒充红或绿的判词。
+- 落点复核：Lean Information 3 文件、Blueprint Information 3 个计算名额
+  （不计 .md）、Library/Quantum 18 文件，均小于 48。Quantum 已注册为 S3；
+  三个直接 D5 import 均为 G。新 Lean 145 行，最长行 94 字符，七行头合法。
+- `git diff --check`：EXIT=0。无冻结前置、工具、理论卷或消化 atom 改动。
+
+数学缺口：无（限定于 (164.1)）。失败仅为已修正的 JSON 序列化、route 路径
+与 Library URL 空值格式；未发生构建被杀，因此不需要孤儿清理。
+未运行全量 engineering 或远端 required CI；本次没有修改 harness。
+分支已推送，独立评审与 PR 生命周期交由调用方继续。
+
+原始日志与 result.json/completion.sentinel 由本席保存到用户指定的
+`/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/einfo164-1/attempt-1`。
+结构化核验、数值与叙事源均已提交；没有将原始全库日志写入仓库。
