@@ -264,3 +264,15 @@ Its source acknowledgement resolves to the versioned Library URL. The script
 does not select projections for these changed paths, so `projections --check`
 was also run explicitly: EXIT=0, 10.856 seconds. These gates do not claim online
 verification of unrelated Library notes that the Describe tool marks OBSERVE.
+
+## No-atom freeze
+
+`make deposit-uncovered GID=D5/S0/Certificates/Polynomials/QProductNecessityRefutation.result
+BASE=248a800843acf89ed184074d66a8d577fc028f99` EXIT=0, 84.068 seconds.
+The canonical command reused the cached report, passed deposit-header-check,
+emitted no changed Blueprint, then ran `ledger-align --add` for this module:
+`added=1 changed=0 conflicts=0`; final sentinel has `reason=NO_ATOM`.
+Freeze event: `e7223612e75583c5d1c68a6cfb9f02cbfb143ce219afcbea0206b4846ca1ab80`.
+State pin: `Golden/Frozen/state/D5/S0/Certificates/Polynomials/QProductNecessityRefutation.lean.json`.
+No atom or coverage edge was created; the delivery is an uncovered deposit of
+the external named assertion's refutation.
